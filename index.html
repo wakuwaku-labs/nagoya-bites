@@ -70,9 +70,9 @@ nav a:hover{color:var(--text);}
 .card{background:var(--bg);cursor:pointer;position:relative;transition:background .25s;}
 .card:hover{background:var(--surface);}
 .ci{height:210px;overflow:hidden;position:relative;background:var(--surface);}
-.ci img{width:100%;height:100%;object-fit:cover;filter:brightness(.88) saturate(.8);transition:filter .5s,transform .65s;display:block;}
+.ci img{width:100%;height:100%;object-fit:cover;filter:brightness(.78) saturate(.75);transition:filter .5s,transform .65s;display:block;}
 .card:hover .ci img{filter:brightness(.98) saturate(.9);transform:scale(1.05);}
-.ci::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(247,245,241,.88) 0%,transparent 50%);}
+.ci::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(28,28,26,.75) 0%,transparent 55%);}
 .badge{position:absolute;top:.9rem;left:.9rem;font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.14em;color:var(--gold);border:1px solid rgba(201,169,110,.4);padding:.2rem .55rem;text-transform:uppercase;background:rgba(10,10,8,.7);backdrop-filter:blur(6px);z-index:2;}
 .pref-badge{position:absolute;top:.9rem;right:.9rem;font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;color:var(--dim);background:rgba(10,10,8,.7);border:1px solid var(--border);padding:.2rem .5rem;z-index:2;}
 .cb{padding:1.2rem 1.4rem 0;}
@@ -100,7 +100,7 @@ nav a:hover{color:var(--text);}
 @keyframes min{from{opacity:0;transform:translateY(22px) scale(.98);}to{opacity:1;transform:none;}}
 .mhi{height:250px;position:relative;overflow:hidden;}
 .mhi img{width:100%;height:100%;object-fit:cover;filter:brightness(.82) saturate(.72);}
-.mhi::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(247,245,241,1) 0%,rgba(247,245,241,.05) 60%,transparent);}
+.mhi::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(28,28,26,1) 0%,rgba(28,28,26,.05) 60%,transparent);}
 .mit{position:absolute;bottom:1.4rem;left:1.8rem;z-index:2;}
 .mig{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.35rem;}
 .min2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--white);line-height:1.1;}
