@@ -228,16 +228,31 @@ var FILTERED   = [];
 // CSVテキストをパース（ダブルクォート・カンマ対応）
 function parseCSV(text) {
   var lines = text.trim().split('\n');
-  var headers = lines[0].split(',').map(function(h){ return h.trim().replace(/^"|"$/g,''); });
+  var headers = splitCSVLine(lines[0]).map(function(h){ return h.trim().replace(/^"|"$/g,''); });
   var stores = [];
   for (var i = 1; i < lines.length; i++) {
-    var cols = lines[i].split(',');
-    if (!cols[0] || cols[0].trim() === '') continue;
+    if (!lines[i].trim()) continue;
+    var cols = splitCSVLine(lines[i]);
+    if (!cols[0] || cols[0].replace(/^"|"$/g,'').trim() === '') continue;
     var store = {};
-    headers.forEach(function(h, j){ store[h] = (cols[j] || '').trim().replace(/^"|"$/g,''); });
+    headers.forEach(function(h, j){ store[h] = (cols[j] || '').replace(/^"|"$/g,'').trim(); });
     stores.push(store);
   }
   return stores;
+}
+
+function splitCSVLine(line) {
+  var cols = [], cur = '', inQ = false;
+  for (var i = 0; i < line.length; i++) {
+    var ch = line[i];
+    if (ch === '"') {
+      if (inQ && line[i+1] === '"') { cur += '"'; i++; }
+      else { inQ = !inQ; }
+    } else if (ch === ',' && !inQ) { cols.push(cur); cur = ''; }
+    else { cur += ch; }
+  }
+  cols.push(cur);
+  return cols;
 }
 
 var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRof98u7WlzdwLEZ0GnY47kH4-hi9odkNZlDGVyzjrPb5FSGAwLTfzp9QRwg8tG4_ZqMEC_yetvgcfy/pub?output=csv';
@@ -288,18 +303,21 @@ function loadStores(stores) {
 // ================================================================
 function buildPrefTabs() {
   var prefs = ['全国'];
-  ALL_STORES.forEach(function(s){ if(s['都道府県'] && prefs.indexOf(s['都道府県'])<0) prefs.push(s['都道府県']); });
-  var container = document.getElementById('pref-tabs');
-  container.innerHTML = prefs.map(function(p){
-    return '<div class="pt' + (p==='全国'?' on':'') + '" data-pref="' + p + '">' + p + '</div>';
-  }).join('');
-  container.querySelectorAll('.pt').forEach(function(t){
-    t.addEventListener('click', function(){
-      container.querySelectorAll('.pt').forEach(function(x){ x.classList.remove('on'); });
-      this.classList.add('on');
-      applyFilters();
-    });
+  ALL_STORES.forEach(function(s){
+    var p = s['都道府県'];
+    if (p && prefs.indexOf(p) < 0) prefs.push(p);
   });
+  var container = document.getElementById('pref-tabs');
+  container.innerHTML = prefs.map(function(p, i){
+    return '<div class="pt' + (i===0?' on':'') + '" data-pref="' + p + '">' + p + '</div>';
+  }).join('');
+  container.onclick = function(e) {
+    var t = e.target;
+    if (!t.classList.contains('pt')) return;
+    container.querySelectorAll('.pt').forEach(function(x){ x.classList.remove('on'); });
+    t.classList.add('on');
+    applyFilters();
+  };
 }
 
 // ================================================================
@@ -308,37 +326,44 @@ function buildPrefTabs() {
 function buildGenreTabs() {
   var genres = ['All'];
   ALL_STORES.forEach(function(s){
-    if(s['ジャンル']) s['ジャンル'].split('・').forEach(function(g){
-      if(genres.indexOf(g)<0) genres.push(g);
-    });
+    if (s['ジャンル']) {
+      s['ジャンル'].split('・').forEach(function(g){
+        g = g.trim();
+        if (g && genres.indexOf(g) < 0) genres.push(g);
+      });
+    }
   });
   var bar = document.querySelector('.filter-bar');
-  bar.innerHTML = '<span class="fl">Genre</span>' + genres.map(function(g){
-    return '<div class="ft' + (g==='All'?' on':'') + '" data-f="' + g + '">' + g + '</div>';
+  bar.innerHTML = '<span class="fl">Genre</span>' + genres.map(function(g, i){
+    return '<div class="ft' + (i===0?' on':'') + '" data-f="' + g + '">' + g + '</div>';
   }).join('');
-  bar.querySelectorAll('.ft').forEach(function(t){
-    t.addEventListener('click', function(){
-      bar.querySelectorAll('.ft').forEach(function(x){ x.classList.remove('on'); });
-      this.classList.add('on');
-      applyFilters();
-    });
-  });
+  bar.onclick = function(e) {
+    var t = e.target;
+    if (!t.classList.contains('ft')) return;
+    bar.querySelectorAll('.ft').forEach(function(x){ x.classList.remove('on'); });
+    t.classList.add('on');
+    applyFilters();
+  };
 }
 
 // ================================================================
 // フィルター適用（都道府県 × ジャンル × 検索ワード）
 // ================================================================
 function applyFilters() {
-  if (!ALL_STORES || ALL_STORES.length === 0) { return; }
+  if (!ALL_STORES || ALL_STORES.length === 0) return;
   var prefEl  = document.querySelector('.pt.on');
   var genreEl = document.querySelector('.ft.on');
-  var pref    = prefEl  ? prefEl.dataset.pref  : 'all';
-  var genre   = genreEl ? genreEl.dataset.f    : 'all';
-  var q       = document.getElementById('si') ? document.getElementById('si').value.trim().toLowerCase() : '';
+  var pref    = prefEl  ? prefEl.dataset.pref : '全国';
+  var genre   = genreEl ? genreEl.dataset.f   : 'All';
+  var siEl    = document.getElementById('si');
+  var q       = siEl ? siEl.value.trim().toLowerCase() : '';
   FILTERED = ALL_STORES.filter(function(s){
-    var okPref  = pref === 'all' || pref === '全国' || s['都道府県'] === pref;
-    var okGenre = genre === 'all' || (s['ジャンル'] || '').includes(genre);
-    var okQ     = !q || (s['店名']||'').toLowerCase().includes(q) || (s['ジャンル']||'').toLowerCase().includes(q) || (s['エリア']||'').toLowerCase().includes(q);
+    var okPref  = pref === '全国' || (s['都道府県'] || '') === pref;
+    var okGenre = genre === 'All' || (s['ジャンル'] || '').indexOf(genre) !== -1;
+    var okQ     = !q
+      || (s['店名']||'').toLowerCase().indexOf(q) !== -1
+      || (s['ジャンル']||'').toLowerCase().indexOf(q) !== -1
+      || (s['エリア']||'').toLowerCase().indexOf(q) !== -1;
     return okPref && okGenre && okQ;
   });
   renderGrid(FILTERED);
