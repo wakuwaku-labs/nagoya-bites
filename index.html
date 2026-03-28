@@ -358,7 +358,7 @@ function applyFilters() {
   var siEl    = document.getElementById('si');
   var q       = siEl ? siEl.value.trim().toLowerCase() : '';
   FILTERED = ALL_STORES.filter(function(s){
-    var okPref  = pref === '全国' || (s['都道府県'] || '') === pref;
+    var okPref = (pref === '全国' || pref === 'all') || (s['都道府県'] || '') === pref;
     var okGenre = genre === 'All' || (s['ジャンル'] || '').indexOf(genre) !== -1;
     var okQ     = !q
       || (s['店名']||'').toLowerCase().indexOf(q) !== -1
