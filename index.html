@@ -6,7 +6,7 @@
 <title>NAGOYA BITES</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0a08;--bg2:#111110;--surface:#161614;--border:rgba(255,255,255,0.07);--border-h:rgba(255,255,255,0.18);--text:#e8e4dc;--muted:rgba(232,228,220,0.45);--dim:rgba(232,228,220,0.25);--gold:#c9a96e;--gold2:#e2c99a;--white:#f5f2ec;}
+:root{--bg:#0f0f0d;--bg2:#181816;--surface:#222220;--border:rgba(255,255,255,0.12);--border-h:rgba(255,255,255,0.28);--text:#f0ece4;--muted:rgba(240,236,228,0.72);--dim:rgba(240,236,228,0.48);--gold:#d4aa72;--gold2:#e8c98a;--white:#faf7f2;}
 *{margin:0;padding:0;box-sizing:border-box;}
 ::selection{background:var(--gold);color:var(--bg);}
 html{scroll-behavior:smooth;}
@@ -329,16 +329,32 @@ function buildGenreTabs() {
 // フィルター適用（都道府県 × ジャンル × 検索ワード）
 // ================================================================
 function applyFilters() {
-  var pref  = (document.querySelector('.pt.on') || {}).dataset.pref || 'all';
-  var genre = (document.querySelector('.ft.on') || {}).dataset.f   || 'all';
-  var q     = document.getElementById('si').value.trim().toLowerCase();
+  var prefEl  = document.querySelector('.pt.on');
+  var genreEl = document.querySelector('.ft.on');
+  var pref    = prefEl  ? (prefEl.dataset.pref  || 'all') : 'all';
+  var genre   = genreEl ? (genreEl.dataset.f    || 'all') : 'all';
+  var q       = (document.getElementById('si').value || '').trim().toLowerCase();
 
-  FILTERED = ALL_STORES.filter(function(s){
-    var okPref  = pref  === 'all' || pref  === '全国' || s['都道府県'] === pref;
-    var okGenre = genre === 'all' || (s['ジャンル'] || '').includes(genre);
-    var okQ     = !q || s['店名'].toLowerCase().includes(q) || (s['ジャンル']||'').toLowerCase().includes(q) || (s['エリア']||'').toLowerCase().includes(q);
+  var source = (ALL_STORES && ALL_STORES.length > 0) ? ALL_STORES : LOCAL_STORES;
+
+  FILTERED = source.filter(function(s) {
+    if (!s) return false;
+    var keys = Object.keys(s);
+    var nameKey  = keys.find(function(k){ return k.indexOf('店名') !== -1 && k.indexOf('英') === -1; }) || '店名';
+    var prefKey  = keys.find(function(k){ return k.indexOf('都') !== -1; }) || '都道府県';
+    var genreKey = keys.find(function(k){ return k.indexOf('ジャン') !== -1; }) || 'ジャンル';
+    var areaKey  = keys.find(function(k){ return k.indexOf('エリア') !== -1; }) || 'エリア';
+    var sName  = (s[nameKey]  || '');
+    var sPref  = (s[prefKey]  || '');
+    var sGenre = (s[genreKey] || '');
+    var sArea  = (s[areaKey]  || '');
+    var okPref  = pref  === 'all' || pref  === '全国' || sPref  === pref;
+    var okGenre = genre === 'all' || sGenre.indexOf(genre) !== -1;
+    var okQ     = !q || sName.toLowerCase().indexOf(q) !== -1 || sGenre.toLowerCase().indexOf(q) !== -1 || sArea.toLowerCase().indexOf(q) !== -1;
     return okPref && okGenre && okQ;
   });
+
+  document.getElementById('cnt').textContent = String(FILTERED.length).padStart(2,'0') + ' Restaurants';
   renderGrid(FILTERED);
 }
 
