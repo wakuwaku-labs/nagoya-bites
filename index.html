@@ -403,8 +403,8 @@ function renderGrid(data) {
     var area    = r['エリア']   || '';
     var mediaLinks =
       '<a class="ml hp" href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation()">🌶 Hotpepper</a>' +
-      '<a class="ml tb" href="' + (r['食べログURL']||'#') + '" target="_blank" onclick="event.stopPropagation()">🍽 食べログ</a>' +
-      '<a class="ml ig" href="' + (r['Instagram']||'#') + '" target="_blank" onclick="event.stopPropagation()">📸 Instagram</a>' +
+      '<a class="ml tb" href="' + (r['食べログURL'] || 'https://tabelog.com/aichi/A2301/A230101/rstLst/?vs=1&sa=%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85&sw=' + encodeURIComponent(r['店名'])) + '" target="_blank" onclick="event.stopPropagation()">🍽 食べログ</a>' +
+      '<a class="ml ig" href="' + (r['Instagram'] || 'https://www.instagram.com/explore/search/keyword/?q=' + encodeURIComponent(r['店名'] + ' 名古屋')) + '" target="_blank" onclick="event.stopPropagation()">📸 Instagram</a>' +
       '<a class="ml tk" href="' + (r['TikTok検索']||'#') + '" target="_blank" onclick="event.stopPropagation()">🎵 TikTok</a>' +
       '<a class="ml xx" href="' + (r['X検索']||'#') + '" target="_blank" onclick="event.stopPropagation()">𝕏 X</a>' +
       '<a class="ml gm" href="' + gmap(r['店名'], area) + '" target="_blank" onclick="event.stopPropagation()">📍 Google</a>';
@@ -440,7 +440,7 @@ function openM(i) {
   document.getElementById('mac2').textContent = r['アクセス'] || '';
   var items = [
     {url:hpUrl,              icon:'🌶',label:'Hotpepper'},
-    {url:r['食べログURL'],   icon:'🍽',label:'食べログ'},
+    {url:r['食べログURL'] || 'https://tabelog.com/aichi/A2301/A230101/rstLst/?vs=1&sa=%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85&sw=' + encodeURIComponent(r['店名']), icon:'🍽',label:'食べログ'},
     {url:r['Instagram'],     icon:'📸',label:'Instagram'},
     {url:r['TikTok検索'],    icon:'🎵',label:'TikTok'},
     {url:r['X検索'],         icon:'𝕏',label:'X'},
