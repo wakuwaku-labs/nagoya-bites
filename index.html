@@ -138,6 +138,23 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;justi
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--border-h);border-radius:2px;}
+
+/* ── TAG FILTER ── */
+.tag-filter{padding:.8rem 3rem;display:flex;flex-direction:column;gap:.55rem;border-bottom:1px solid var(--border);background:var(--bg2);}
+.tag-group{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;}
+.tag-label{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;width:70px;flex-shrink:0;}
+.tg{font-size:.65rem;letter-spacing:.05em;color:var(--muted);border:1px solid var(--border);padding:.38rem .9rem;border-radius:2px;cursor:pointer;transition:all .2s;user-select:none;min-height:32px;display:inline-flex;align-items:center;}
+.tg:hover{color:var(--text);border-color:var(--border-h);}
+.tg.on{color:var(--gold);border-color:var(--gold);background:rgba(201,169,110,.1);}
+.tag-reset-wrap{padding-top:.2rem;}
+.tag-reset{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.12em;color:var(--dim);border:1px solid var(--border);padding:.32rem .85rem;border-radius:1px;cursor:pointer;transition:all .2s;background:transparent;}
+.tag-reset:hover{color:var(--text);border-color:var(--border-h);}
+@media(max-width:640px){
+  .tag-filter{padding:.8rem 1rem;}
+  .filter-bar{padding:.8rem 1rem;}
+  .tag-label{width:55px;font-size:.48rem;}
+  .tg{font-size:.7rem;padding:.42rem .75rem;min-height:36px;}
+}
 </style>
 </head>
 <body>
@@ -172,6 +189,8 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;justi
   <div class="ft on" data-f="all">All</div>
   <!-- JS で動的追加 -->
 </div>
+
+<div class="tag-filter" id="tag-filter"></div>
 
 <div class="sec-head">
   <h2>掲載<em>店舗</em></h2>
@@ -227,6 +246,7 @@ var LOCAL_STORES = [{"店名": "金肉 名古屋駅店", "英語名": "KIN-NIKU"
 // 全データキャッシュ
 var ALL_STORES = [];
 var FILTERED   = [];
+var ACTIVE_TAGS = [];
 
 // ================================================================
 // 初期化：API_URLがあればスプレッドシートから、なければローカル
@@ -301,6 +321,7 @@ function loadStores(stores) {
   FILTERED   = ALL_STORES.slice();
   buildPrefTabs();
   buildGenreTabs();
+  buildTagFilter();
   renderGrid(FILTERED);
 }
 
@@ -353,7 +374,41 @@ function buildGenreTabs() {
 }
 
 // ================================================================
-// フィルター適用（都道府県 × ジャンル × 検索ワード）
+// タグフィルターを動的生成
+// ================================================================
+function buildTagFilter() {
+  var cats = [
+    {label:'シーン',   tags:['デート','女子会','接待','誕生日・記念日','歓送迎会','忘年会・新年会','家族・子連れ']},
+    {label:'人数',     tags:['1人OK','2〜4名','5〜10名','10〜20名','20名以上','貸切']},
+    {label:'席・空間', tags:['個室','半個室','カウンター','テラス席','座敷','貸切可','隠れ家']},
+    {label:'予算',     tags:['〜1000円','1000〜2000円','2000〜3000円','3000〜5000円','5000円以上']}
+  ];
+  var html = cats.map(function(c){
+    return '<div class="tag-group"><span class="tag-label">' + c.label + '</span>' +
+      c.tags.map(function(t){ return '<div class="tg" data-tag="' + t + '">' + t + '</div>'; }).join('') +
+    '</div>';
+  }).join('') + '<div class="tag-reset-wrap"><button class="tag-reset" onclick="resetTags()">タグをリセット</button></div>';
+  var el = document.getElementById('tag-filter');
+  el.innerHTML = html;
+  el.addEventListener('click', function(e){
+    var t = e.target;
+    if (!t.classList.contains('tg')) return;
+    t.classList.toggle('on');
+    var tag = t.dataset.tag;
+    var idx = ACTIVE_TAGS.indexOf(tag);
+    if (idx >= 0) ACTIVE_TAGS.splice(idx, 1); else ACTIVE_TAGS.push(tag);
+    applyFilters();
+  });
+}
+
+function resetTags() {
+  ACTIVE_TAGS = [];
+  document.querySelectorAll('.tg.on').forEach(function(el){ el.classList.remove('on'); });
+  applyFilters();
+}
+
+// ================================================================
+// フィルター適用（都道府県 × ジャンル × タグ × 検索ワード）
 // ================================================================
 function applyFilters() {
   if (!ALL_STORES || ALL_STORES.length === 0) return;
@@ -364,13 +419,15 @@ function applyFilters() {
   var siEl    = document.getElementById('si');
   var q       = siEl ? siEl.value.trim().toLowerCase() : '';
   FILTERED = ALL_STORES.filter(function(s){
-    var okPref = (pref === '全国' || pref === 'all') || (s['都道府県'] || '') === pref;
+    var okPref  = (pref === '全国' || pref === 'all') || (s['都道府県'] || '') === pref;
     var okGenre = genre === 'All' || (s['ジャンル'] || '').indexOf(genre) !== -1;
     var okQ     = !q
       || (s['店名']||'').toLowerCase().indexOf(q) !== -1
       || (s['ジャンル']||'').toLowerCase().indexOf(q) !== -1
       || (s['エリア']||'').toLowerCase().indexOf(q) !== -1;
-    return okPref && okGenre && okQ;
+    var storeTags = (s['タグ']||'').split(',').map(function(t){ return t.trim(); });
+    var okTags  = ACTIVE_TAGS.length === 0 || ACTIVE_TAGS.every(function(tag){ return storeTags.indexOf(tag) !== -1; });
+    return okPref && okGenre && okQ && okTags;
   });
   renderGrid(FILTERED);
 }
