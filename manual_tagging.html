@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAGOYA BITES — 手動タグ付け管理画面</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:      #f5f4f0;
+    --surface: #ffffff;
+    --border:  #ddd;
+    --text:    #1a1a1a;
+    --muted:   #666;
+    --gold:    #7a5c10;
+    --gold-bg: #fdf8ef;
+    --blue:    #2563eb;
+    --green:   #16a34a;
+    --red:     #dc2626;
+    --tag-on:  #7a5c10;
+  }
+
+  body {
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── ヘッダー ── */
+  header {
+    background: #1a1a1a;
+    padding: 0 2rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  header h1 {
+    font-size: .85rem;
+    letter-spacing: .2em;
+    color: #fff;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+  #progress-header {
+    font-size: .8rem;
+    color: #aaa;
+    letter-spacing: .05em;
+  }
+  #progress-bar-wrap {
+    position: sticky;
+    top: 56px;
+    z-index: 99;
+    background: var(--border);
+    height: 4px;
+  }
+  #progress-bar {
+    height: 4px;
+    background: var(--gold);
+    transition: width .4s ease;
+    width: 0%;
+  }
+
+  /* ── メインレイアウト ── */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── 読み込み画面 ── */
+  #load-screen {
+    text-align: center;
+    padding: 5rem 2rem;
+  }
+  #load-screen h2 {
+    font-size: 1.4rem;
+    font-weight: 300;
+    margin-bottom: .5rem;
+  }
+  #load-screen p {
+    color: var(--muted);
+    font-size: .9rem;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+  }
+  #file-input-btn {
+    display: inline-block;
+    background: var(--gold);
+    color: #fff;
+    padding: .8rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: .9rem;
+    letter-spacing: .05em;
+    transition: background .2s;
+  }
+  #file-input-btn:hover { background: #6b4f0d; }
+  #file-input { display: none; }
+
+  /* ── タグ付け画面 ── */
+  #tagging-screen { display: none; }
+
+  .store-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.8rem 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .store-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .store-index {
+    font-size: .72rem;
+    letter-spacing: .15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    background: var(--bg);
+    padding: .2rem .6rem;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+  }
+  .store-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .search-links {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    margin-top: .6rem;
+  }
+  .search-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    font-size: .75rem;
+    padding: .3rem .75rem;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    text-decoration: none;
+    color: var(--muted);
+    transition: all .2s;
+    cursor: pointer;
+    background: var(--bg);
+  }
+  .search-link:hover { border-color: var(--blue); color: var(--blue); background: #eff6ff; }
+  .search-link.tabelog:hover { border-color: #e11d48; color: #e11d48; background: #fff1f2; }
+
+  /* ── タグカテゴリ ── */
+  .tag-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .tag-category {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+  }
+  .tag-category h3 {
+    font-size: .68rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .75rem;
+    font-weight: 500;
+  }
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+  }
+  .tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    padding: .3rem .7rem;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: .78rem;
+    cursor: pointer;
+    user-select: none;
+    transition: all .15s;
+    background: var(--surface);
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .tag-chip:hover { border-color: var(--gold); color: var(--gold); }
+  .tag-chip.selected {
+    background: var(--gold-bg);
+    border-color: var(--gold);
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .tag-chip input { display: none; }
+
+  /* ── 選択中タグ表示 ── */
+  .selected-tags-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .selected-tags-label {
+    font-size: .7rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .selected-tag-badge {
+    background: var(--gold);
+    color: #fff;
+    font-size: .75rem;
+    padding: .2rem .65rem;
+    border-radius: 20px;
+  }
+  .no-tags-msg {
+    font-size: .82rem;
+    color: #aaa;
+  }
+
+  /* ── アクションバー ── */
+  .action-bar {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .65rem 1.4rem;
+    border-radius: 4px;
+    font-size: .85rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all .2s;
+    letter-spacing: .03em;
+  }
+  .btn-primary { background: var(--gold); color: #fff; }
+  .btn-primary:hover { background: #6b4f0d; }
+  .btn-success { background: var(--green); color: #fff; }
+  .btn-success:hover { background: #15803d; }
+  .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-outline:hover { border-color: var(--text); background: var(--bg); }
+  .btn-skip { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .btn-skip:hover { border-color: var(--red); color: var(--red); }
+  .btn:disabled { opacity: .4; cursor: not-allowed; }
+
+  .action-spacer { flex: 1; }
+
+  /* ── 完了画面 ── */
+  #done-screen {
+    display: none;
+    text-align: center;
+    padding: 5rem 2rem;
+  }
+  #done-screen h2 {
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: .75rem;
+  }
+  #done-screen p {
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: .95rem;
+  }
+
+  /* ── サイドパネル（完了一覧） ── */
+  #sidebar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    margin-top: 1rem;
+  }
+  #sidebar h3 {
+    font-size: .72rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .8rem;
+  }
+  .done-list { list-style: none; }
+  .done-list li {
+    font-size: .82rem;
+    padding: .35rem 0;
+    border-bottom: 1px solid var(--bg);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .done-list li:last-child { border-bottom: none; }
+  .done-store-name { color: var(--text); font-weight: 500; }
+  .done-tags { color: var(--gold); font-size: .75rem; }
+  .done-skip { color: var(--red); font-size: .75rem; }
+
+  /* ── CSV ダウンロードエリア ── */
+  #export-area {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    display: none;
+  }
+  #export-area h3 {
+    font-size: .8rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .5rem;
+  }
+  #export-area p {
+    font-size: .85rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  /* ── メッセージ ── */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: #1a1a1a;
+    color: #fff;
+    padding: .75rem 1.4rem;
+    border-radius: 6px;
+    font-size: .85rem;
+    z-index: 500;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all .3s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Nagoya Bites — 手動タグ付け</h1>
+  <span id="progress-header">—</span>
+</header>
+<div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+<main>
+
+  <!-- ① 読み込み画面 -->
+  <div id="load-screen">
+    <h2>手動確認リストを読み込む</h2>
+    <p>
+      <code>手動確認リスト.txt</code> を選択してください。<br>
+      タグ付けの進捗はブラウザに自動保存されます。
+    </p>
+    <label id="file-input-btn">
+      📂 &nbsp;ファイルを選択
+      <input type="file" id="file-input" accept=".txt">
+    </label>
+    <p style="margin-top:1.5rem;font-size:.8rem;color:#aaa;">
+      ※ ファイルはブラウザ内だけで処理されます。外部送信はしません。
+    </p>
+  </div>
+
+  <!-- ② タグ付け画面 -->
+  <div id="tagging-screen">
+
+    <!-- エクスポートエリア（タグ付け後に表示） -->
+    <div id="export-area">
+      <h3>💾 &nbsp;Sheetsへの書き込み</h3>
+      <p>
+        CSVをダウンロードして、スプレッドシートの「タグ」列を更新してください。<br>
+        <strong>方法：</strong>スプレッドシートを開く → 「ファイル」→「インポート」→「更新」を選択
+      </p>
+      <button class="btn btn-success" onclick="downloadCSV()">⬇ &nbsp;CSV ダウンロード</button>
+    </div>
+
+    <!-- 店舗カード -->
+    <div class="store-card" id="store-card">
+      <div class="store-meta">
+        <span class="store-index" id="store-index">1 / 1</span>
+      </div>
+      <div class="store-name" id="store-name">—</div>
+      <div class="search-links">
+        <a class="search-link" id="link-map" href="#" target="_blank">🗺 Google マップ</a>
+        <a class="search-link tabelog" id="link-tabelog" href="#" target="_blank">🍽 食べログ</a>
+        <a class="search-link" id="link-gmap-search" href="#" target="_blank">🔍 Google 検索</a>
+      </div>
+    </div>
+
+    <!-- タグ選択 -->
+    <div class="store-card">
+      <div class="tag-section" id="tag-section"></div>
+    </div>
+
+    <!-- 選択中タグ -->
+    <div class="selected-tags-wrap">
+      <span class="selected-tags-label">選択中</span>
+      <span id="selected-display"><span class="no-tags-msg">タグ未選択</span></span>
+    </div>
+
+    <!-- アクションバー -->
+    <div class="action-bar">
+      <button class="btn btn-outline" id="btn-prev" onclick="navigate(-1)">← 前の店舗</button>
+      <button class="btn btn-skip" onclick="skipStore()">スキップ</button>
+      <div class="action-spacer"></div>
+      <button class="btn btn-success" onclick="saveAndNext()">✓ 保存して次へ</button>
+      <button class="btn btn-outline" id="btn-next" onclick="navigate(1)">次の店舗 →</button>
+    </div>
+
+    <!-- 完了済みサイドパネル -->
+    <div id="sidebar" style="margin-top:2rem;display:none;">
+      <h3>完了済み店舗</h3>
+      <ul class="done-list" id="done-list"></ul>
+    </div>
+
+  </div>
+
+  <!-- ③ 完了画面 -->
+  <div id="done-screen">
+    <h2>🎉 &nbsp;全件完了</h2>
+    <p>全ての店舗のタグ付けが完了しました。<br>CSVをダウンロードしてスプレッドシートに反映してください。</p>
+    <button class="btn btn-success" style="margin:0 auto;" onclick="downloadCSV()">⬇ &nbsp;CSV ダウンロード</button>
+    <p style="margin-top:1.5rem;font-size:.82rem;color:#aaa;">
+      ファイルを読み込み直すと最初からやり直せます。
+    </p>
+    <div id="final-done-list" style="text-align:left;max-width:600px;margin:2rem auto 0;"></div>
+  </div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ================================================================
+// タグ定義
+// ================================================================
+var TAG_CATEGORIES = [
+  {
+    label: 'シーン',
+    tags: ['デート', '女子会', '接待', '誕生日・記念日', '歓送迎会', '忘年会・新年会', '家族・子連れ']
+  },
+  {
+    label: '人数',
+    tags: ['1人OK', '2〜4名', '5〜10名', '10〜20名', '20名以上', '貸切']
+  },
+  {
+    label: '席・空間',
+    tags: ['個室', '半個室', 'カウンター', 'テラス席', '座敷', '貸切可', '隠れ家']
+  },
+  {
+    label: '予算',
+    tags: ['〜1000円', '1000〜2000円', '2000〜3000円', '3000〜5000円', '5000円以上']
+  }
+];
+
+// ================================================================
+// 状態管理
+// ================================================================
+var STORES    = [];   // [{ name, done, tags, skipped }]
+var CUR_INDEX = 0;
+var SAVE_KEY  = 'nagoya_tagging_v1';
+
+// ================================================================
+// ファイル読み込み
+// ================================================================
+document.getElementById('file-input').addEventListener('change', function(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    var lines = ev.target.result
+      .split('\n')
+      .map(function(l){ return l.trim().replace(/\s*\[.*?\]$/, '').trim(); })
+      .filter(function(l){ return l && !l.startsWith('#'); });
+
+    if (lines.length === 0) {
+      showToast('⚠️ 店舗が見つかりませんでした');
+      return;
+    }
+
+    // localStorage に保存済みの進捗があれば復元
+    var saved = loadProgress(file.name);
+    if (saved && saved.stores.length === lines.length) {
+      STORES = saved.stores;
+      CUR_INDEX = saved.curIndex;
+      showToast('✅ 前回の進捗を復元しました（' + countDone() + '件完了）');
+    } else {
+      STORES = lines.map(function(name){ return { name: name, done: false, tags: [], skipped: false }; });
+      CUR_INDEX = 0;
+    }
+
+    startTagging();
+  };
+  reader.readAsText(file, 'UTF-8');
+});
+
+// ================================================================
+// タグ付け画面の初期化
+// ================================================================
+function startTagging() {
+  document.getElementById('load-screen').style.display   = 'none';
+  document.getElementById('tagging-screen').style.display = 'block';
+
+  buildTagUI();
+  renderStore();
+  updateProgress();
+  renderSidebar();
+}
+
+function buildTagUI() {
+  var section = document.getElementById('tag-section');
+  section.innerHTML = TAG_CATEGORIES.map(function(cat) {
+    return '<div class="tag-category">'
+      + '<h3>' + cat.label + '</h3>'
+      + '<div class="tag-list">'
+      + cat.tags.map(function(tag) {
+          return '<label class="tag-chip" data-tag="' + tag + '">'
+            + '<input type="checkbox" value="' + tag + '">'
+            + tag
+            + '</label>';
+        }).join('')
+      + '</div>'
+      + '</div>';
+  }).join('');
+
+  // チェックボックス イベント
+  section.querySelectorAll('.tag-chip').forEach(function(chip) {
+    chip.addEventListener('click', function(e) {
+      e.preventDefault();
+      chip.classList.toggle('selected');
+      var cb = chip.querySelector('input');
+      cb.checked = !cb.checked;
+      syncSelectedDisplay();
+      autosave();
+    });
+  });
+}
+
+// ================================================================
+// 店舗表示
+// ================================================================
+function renderStore() {
+  // 未完了の店舗を探す
+  var store = STORES[CUR_INDEX];
+  if (!store) return;
+
+  document.getElementById('store-index').textContent = (CUR_INDEX + 1) + ' / ' + STORES.length;
+  document.getElementById('store-name').textContent  = store.name;
+
+  var q = encodeURIComponent(store.name + ' 名古屋');
+  document.getElementById('link-map').href         = 'https://maps.google.com/search?q=' + q;
+  document.getElementById('link-tabelog').href     = 'https://tabelog.com/aichi/A2301/rstLst/?vs=1&sa=名古屋&sw=' + encodeURIComponent(store.name);
+  document.getElementById('link-gmap-search').href = 'https://www.google.com/search?q=' + q;
+
+  // チェックボックスをリセット
+  document.querySelectorAll('.tag-chip').forEach(function(chip) {
+    var isSelected = store.tags && store.tags.indexOf(chip.dataset.tag) >= 0;
+    chip.classList.toggle('selected', isSelected);
+    chip.querySelector('input').checked = isSelected;
+  });
+
+  syncSelectedDisplay();
+  updateNavButtons();
+}
+
+function syncSelectedDisplay() {
+  var selected = getSelectedTags();
+  var el = document.getElementById('selected-display');
+  if (selected.length === 0) {
+    el.innerHTML = '<span class="no-tags-msg">タグ未選択</span>';
+  } else {
+    el.innerHTML = selected.map(function(t){
+      return '<span class="selected-tag-badge">' + t + '</span>';
+    }).join('');
+  }
+}
+
+function getSelectedTags() {
+  var tags = [];
+  document.querySelectorAll('.tag-chip.selected').forEach(function(chip) {
+    tags.push(chip.dataset.tag);
+  });
+  return tags;
+}
+
+// ================================================================
+// 保存・ナビゲーション
+// ================================================================
+function saveAndNext() {
+  var tags = getSelectedTags();
+  STORES[CUR_INDEX].tags    = tags;
+  STORES[CUR_INDEX].done    = true;
+  STORES[CUR_INDEX].skipped = false;
+  autosave();
+  renderSidebar();
+  updateProgress();
+
+  showToast('✅ 保存しました（' + (tags.length > 0 ? tags.join(', ') : 'タグなし') + '）');
+
+  // CSVダウンロードボタンを表示
+  if (countDone() > 0) {
+    document.getElementById('export-area').style.display = 'block';
+  }
+
+  // 次の未完了店舗へ
+  var next = findNext(CUR_INDEX + 1);
+  if (next >= 0) {
+    CUR_INDEX = next;
+    renderStore();
+  } else {
+    showDoneScreen();
+  }
+}
+
+function skipStore() {
+  STORES[CUR_INDEX].skipped = true;
+  STORES[CUR_INDEX].done    = true;
+  STORES[CUR_INDEX].tags    = [];
+  autosave();
+  renderSidebar();
+  updateProgress();
+  showToast('⏭ スキップしました');
+
+  var next = findNext(CUR_INDEX + 1);
+  if (next >= 0) {
+    CUR_INDEX = next;
+    renderStore();
+  } else {
+    showDoneScreen();
+  }
+}
+
+function navigate(dir) {
+  var newIdx = CUR_INDEX + dir;
+  if (newIdx < 0 || newIdx >= STORES.length) return;
+
+  // 現在のタグを一時保存
+  STORES[CUR_INDEX].tags = getSelectedTags();
+  autosave();
+
+  CUR_INDEX = newIdx;
+  renderStore();
+}
+
+function findNext(fromIdx) {
+  for (var i = fromIdx; i < STORES.length; i++) {
+    if (!STORES[i].done) return i;
+  }
+  return -1;
+}
+
+function updateNavButtons() {
+  document.getElementById('btn-prev').disabled = (CUR_INDEX <= 0);
+  document.getElementById('btn-next').disabled = (CUR_INDEX >= STORES.length - 1);
+}
+
+// ================================================================
+// 進捗
+// ================================================================
+function countDone() {
+  return STORES.filter(function(s){ return s.done; }).length;
+}
+
+function updateProgress() {
+  var done  = countDone();
+  var total = STORES.length;
+  var pct   = total > 0 ? (done / total * 100) : 0;
+
+  document.getElementById('progress-header').textContent = done + ' / ' + total + ' 件完了';
+  document.getElementById('progress-bar').style.width    = pct + '%';
+}
+
+// ================================================================
+// サイドパネル
+// ================================================================
+function renderSidebar() {
+  var doneStores = STORES.filter(function(s){ return s.done; });
+  var sidebar    = document.getElementById('sidebar');
+  var list       = document.getElementById('done-list');
+
+  if (doneStores.length === 0) { sidebar.style.display = 'none'; return; }
+  sidebar.style.display = 'block';
+
+  list.innerHTML = doneStores.map(function(s) {
+    return '<li>'
+      + '<span class="done-store-name">' + esc(s.name) + '</span>'
+      + (s.skipped
+          ? '<span class="done-skip">スキップ</span>'
+          : '<span class="done-tags">' + (s.tags.length > 0 ? s.tags.join(', ') : 'タグなし') + '</span>')
+      + '</li>';
+  }).reverse().join('');
+}
+
+// ================================================================
+// 完了画面
+// ================================================================
+function showDoneScreen() {
+  document.getElementById('tagging-screen').style.display = 'none';
+  document.getElementById('done-screen').style.display    = 'block';
+
+  var html = '<div id="sidebar"><h3>タグ付け結果</h3><ul class="done-list">'
+    + STORES.map(function(s) {
+        return '<li>'
+          + '<span class="done-store-name">' + esc(s.name) + '</span>'
+          + (s.skipped
+              ? '<span class="done-skip">スキップ</span>'
+              : '<span class="done-tags">' + (s.tags.length > 0 ? s.tags.join(', ') : 'タグなし') + '</span>')
+          + '</li>';
+      }).join('')
+    + '</ul></div>';
+  document.getElementById('final-done-list').innerHTML = html;
+}
+
+// ================================================================
+// CSV ダウンロード
+// ================================================================
+function downloadCSV() {
+  var rows = [['店名', 'タグ', '状態']];
+  STORES.forEach(function(s) {
+    if (s.done) {
+      rows.push([
+        '"' + s.name.replace(/"/g, '""') + '"',
+        '"' + s.tags.join(',').replace(/"/g, '""') + '"',
+        s.skipped ? 'スキップ' : '完了'
+      ]);
+    }
+  });
+
+  var csv    = '\uFEFF' + rows.map(function(r){ return r.join(','); }).join('\n');
+  var blob   = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  var url    = URL.createObjectURL(blob);
+  var a      = document.createElement('a');
+  a.href     = url;
+  a.download = 'nagoya_tags_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('⬇ CSVをダウンロードしました');
+}
+
+// ================================================================
+// ローカルストレージ（進捗保存）
+// ================================================================
+function autosave() {
+  var key  = SAVE_KEY + '_' + STORES.length;
+  var data = { stores: STORES, curIndex: CUR_INDEX, savedAt: Date.now() };
+  try { localStorage.setItem(key, JSON.stringify(data)); } catch(e) {}
+}
+
+function loadProgress(filename) {
+  var key  = SAVE_KEY + '_';
+  for (var i = 0; i < localStorage.length; i++) {
+    var k = localStorage.key(i);
+    if (k && k.startsWith(SAVE_KEY + '_')) {
+      try {
+        var data = JSON.parse(localStorage.getItem(k));
+        if (data && data.stores) return data;
+      } catch(e) {}
+    }
+  }
+  return null;
+}
+
+// ================================================================
+// ユーティリティ
+// ================================================================
+function esc(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2500);
+}
+</script>
+</body>
+</html>
