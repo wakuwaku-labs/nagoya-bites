@@ -155,6 +155,13 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;justi
   .tag-label{width:55px;font-size:.48rem;}
   .tg{font-size:.7rem;padding:.42rem .75rem;min-height:36px;}
 }
+
+/* 人数タブ */
+.cap-tabs{padding:.75rem 3rem;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--border);background:var(--bg2);overflow-x:auto;}
+.cap-label{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;color:var(--dim);margin-right:.4rem;text-transform:uppercase;}
+.ct{font-size:.6rem;letter-spacing:.08em;color:var(--dim);border:1px solid var(--border);padding:.22rem .65rem;border-radius:1px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.ct:hover{color:var(--muted);border-color:var(--border-h);}
+.ct.on{color:var(--gold);border-color:var(--gold);background:rgba(122,92,16,.07);}
 </style>
 </head>
 <body>
@@ -184,6 +191,10 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;justi
   <!-- JS で動的追加 -->
 </div>
 
+<div class="cap-tabs" id="cap-tabs">
+  <span class="cap-label">人数</span>
+  <div class="ct on" data-cap="all">All</div>
+</div>
 <div class="filter-bar">
   <span class="fl">Genre</span>
   <div class="ft on" data-f="all">All</div>
@@ -328,6 +339,32 @@ function loadStores(stores) {
 // ================================================================
 // 都道府県タブを動的生成
 // ================================================================
+function buildCapTabs() {
+  var capOrder = ['2〜4名','5〜10名','10〜20名','20〜30名','30〜40名',
+    '40〜50名','50〜60名','60〜70名','70〜80名','80〜90名','90〜100名','100名以上'];
+  var found = [];
+  ALL_STORES.forEach(function(s) {
+    var tags = (s['タグ'] || '').split(/[,、，\/]/);
+    tags.forEach(function(t) {
+      t = t.trim();
+      if (capOrder.indexOf(t) !== -1 && found.indexOf(t) === -1) found.push(t);
+    });
+  });
+  found.sort(function(a, b) { return capOrder.indexOf(a) - capOrder.indexOf(b); });
+  var container = document.getElementById('cap-tabs');
+  container.innerHTML = '<span class="cap-label">人数</span>' +
+    '<div class="ct on" data-cap="all">All</div>' +
+    found.map(function(c) {
+      return '<div class="ct" data-cap="' + c + '">' + c + '</div>';
+    }).join('');
+  container.onclick = function(e) {
+    var t = e.target;
+    if (!t.classList.contains('ct')) return;
+    container.querySelectorAll('.ct').forEach(function(x) { x.classList.remove('on'); });
+    t.classList.add('on');
+    applyFilters();
+  };
+}
 function buildPrefTabs() {
   var prefs = ['全国'];
   ALL_STORES.forEach(function(s){
@@ -414,13 +451,16 @@ function applyFilters() {
   if (!ALL_STORES || ALL_STORES.length === 0) return;
   var prefEl  = document.querySelector('.pt.on');
   var genreEl = document.querySelector('.ft.on');
+  var capEl   = document.querySelector('.ct.on');
   var pref    = prefEl  ? prefEl.dataset.pref : '全国';
   var genre   = genreEl ? genreEl.dataset.f   : 'All';
+  var cap     = capEl   ? capEl.dataset.cap   : 'all';
   var siEl    = document.getElementById('si');
   var q       = siEl ? siEl.value.trim().toLowerCase() : '';
   FILTERED = ALL_STORES.filter(function(s){
     var okPref  = (pref === '全国' || pref === 'all') || (s['都道府県'] || '') === pref;
     var okGenre = genre === 'All' || (s['ジャンル'] || '').indexOf(genre) !== -1;
+    var okCap   = cap === 'all' || (s['タグ'] || '').split(/[,、，\/]/).map(function(t){ return t.trim(); }).indexOf(cap) !== -1;
     var okQ     = !q
       || (s['店名']||'').toLowerCase().indexOf(q) !== -1
       || (s['ジャンル']||'').toLowerCase().indexOf(q) !== -1
