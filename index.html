@@ -333,6 +333,7 @@ function loadStores(stores) {
   buildPrefTabs();
   buildGenreTabs();
   buildTagFilter();
+  buildCapTabs();
   renderGrid(FILTERED);
 }
 
@@ -467,7 +468,7 @@ function applyFilters() {
       || (s['エリア']||'').toLowerCase().indexOf(q) !== -1;
     var storeTags = (s['タグ']||'').split(',').map(function(t){ return t.trim(); });
     var okTags  = ACTIVE_TAGS.length === 0 || ACTIVE_TAGS.every(function(tag){ return storeTags.indexOf(tag) !== -1; });
-    return okPref && okGenre && okQ && okTags;
+    return okPref && okGenre && okCap && okQ && okTags;
   });
   renderGrid(FILTERED);
 }
