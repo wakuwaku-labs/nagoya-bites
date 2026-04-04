@@ -180,7 +180,7 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;justi
   <h1>日本の<br><em>うまい</em>を、<br><span class="fade">全部ここに。</span></h1>
   <p class="hero-sub">Instagram・ホットペッパー・食べログ・TikTok<br>すべての媒体をワンクリックで確認できる<br>全国対応グルメメディア。</p>
   <div class="search-wrap">
-    <input id="si" type="text" placeholder="店名・エリア・ジャンルで検索…">
+    <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…">
     <button onclick="doSearch()">Search</button>
   </div>
 </section>
@@ -465,7 +465,8 @@ function applyFilters() {
     var okQ     = !q
       || (s['店名']||'').toLowerCase().indexOf(q) !== -1
       || (s['ジャンル']||'').toLowerCase().indexOf(q) !== -1
-      || (s['エリア']||'').toLowerCase().indexOf(q) !== -1;
+      || (s['エリア']||'').toLowerCase().indexOf(q) !== -1
+      || (s['タグ']||'').toLowerCase().indexOf(q) !== -1;
     var storeTags = (s['タグ']||'').split(',').map(function(t){ return t.trim(); });
     var okTags  = ACTIVE_TAGS.length === 0 || ACTIVE_TAGS.every(function(tag){ return storeTags.indexOf(tag) !== -1; });
     return okPref && okGenre && okCap && okQ && okTags;
