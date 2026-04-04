@@ -192,10 +192,7 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;justi
   <!-- JS で動的追加 -->
 </div>
 
-<div class="cap-tabs" id="cap-tabs">
-  <span class="cap-label">人数</span>
-  <div class="ct on" data-cap="all">All</div>
-</div>
+<div class="cap-tabs" id="cap-tabs"></div>
 <div class="filter-bar">
   <span class="fl">Genre</span>
   <div class="ft on" data-f="all">All</div>
@@ -450,7 +447,7 @@ function applyFilters() {
         var m2 = t.match(/^(\d+)名以上$/);
         if (m2) return true;
         return false;
-      }); }).indexOf(cap) !== -1;
+      });
     var okQ     = !q
       || (s['店名']||'').toLowerCase().indexOf(q) !== -1
       || (s['ジャンル']||'').toLowerCase().indexOf(q) !== -1
