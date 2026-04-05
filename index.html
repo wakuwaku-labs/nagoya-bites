@@ -105,6 +105,17 @@ nav a:hover{color:var(--text);}
 .tk:hover{color:#fff;border-color:rgba(255,255,255,.35);background:#010101;}
 .xx:hover{color:#fff;border-color:rgba(255,255,255,.3);background:#111;}
 .gm:hover{color:#4285F4;border-color:rgba(66,133,244,.4);}
+
+/* ── SCORES ── */
+.cscore{padding:.5rem 1.4rem .65rem;display:flex;flex-wrap:wrap;gap:.5rem 1.2rem;border-bottom:1px solid var(--border);}
+.sc-item{display:flex;flex-direction:column;gap:.12rem;}
+.sc-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;}
+.sc-val{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;color:var(--gold);}
+.sns-ct{font-family:'DM Mono',monospace;font-size:.48rem;color:var(--dim);letter-spacing:.04em;background:var(--surface);border-radius:1px;padding:.1rem .3rem;margin-left:.25rem;pointer-events:none;vertical-align:middle;}
+.mscore-row{display:flex;flex-wrap:wrap;gap:.6rem 1.6rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border);margin-bottom:1.2rem;}
+.mscore-item label{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;display:block;margin-bottom:.3rem;}
+.mscore-item span{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--gold);}
+
 /* ── MODAL ── */
 .ov{display:none;position:fixed;inset:0;z-index:500;background:rgba(5,5,4,.9);backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:1.5rem;}
 .ov.open{display:flex;}
@@ -243,6 +254,7 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;justi
         <div class="mic"><label>Hours</label><span id="mh"></span></div>
         <div class="mic"><label>Access</label><span id="mac2"></span></div>
       </div>
+      <div id="mscores"></div>
       <div class="mml">Media Links — 各媒体で見る</div>
       <div class="mmg" id="mmg"></div>
     </div>
@@ -264,24 +276,32 @@ var ALL_STORES = [];
 var FILTERED = [];
 var ACTIVE_TAGS = [];
 
-var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRof98u7WlzdwLEZ0GnY47kH4-hi9odkNZlDGVyzjrPb5FSGAwLTfzp9QRwg8tG4_ZqMEC_yetvgcfy/pub?output=csv';
+var CSV_URL = 'https://docs.google.com/spreadsheets/d/1VUk4bRTPoIc7pHywzIJTwZr9WyUX7ioxlZzbxQHsjCQ/export?format=csv&gid=415662614';
+
+function splitCSVLine(line) {
+  var cols = [], cur = '', inQ = false;
+  for (var i = 0; i < line.length; i++) {
+    var ch = line[i];
+    if (ch === '"') {
+      if (inQ && line[i+1] === '"') { cur += '"'; i++; }
+      else { inQ = !inQ; }
+    } else if (ch === ',' && !inQ) { cols.push(cur); cur = ''; }
+    else { cur += ch; }
+  }
+  cols.push(cur);
+  return cols;
+}
 
 function parseCSV(text) {
   var lines = text.trim().split('\n');
-  var headers = lines[0].split(',').map(function(h){ return h.trim().replace(/^"|"$/g,''); });
+  var headers = splitCSVLine(lines[0]).map(function(h){ return h.trim().replace(/^"|"$/g,''); });
   var stores = [];
   for (var i = 1; i < lines.length; i++) {
-    var cols = [], cur = '', inQ = false;
-    for (var ci = 0; ci < lines[i].length; ci++) {
-      var ch = lines[i][ci];
-      if (ch === '"') { inQ = !inQ; }
-      else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
-      else { cur += ch; }
-    }
-    cols.push(cur.trim());
-    if (!cols[0] || cols[0].replace(/^"|"$/g,'') === '') continue;
+    if (!lines[i].trim()) continue;
+    var cols = splitCSVLine(lines[i]);
+    if (!cols[0] || cols[0].replace(/^"|"$/g,'').trim() === '') continue;
     var store = {};
-    headers.forEach(function(h, j) { store[h] = (cols[j]||'').replace(/^"|"$/g,'').trim(); });
+    headers.forEach(function(h, j){ store[h] = (cols[j] || '').replace(/^"|"$/g,'').trim(); });
     stores.push(store);
   }
   return stores;
@@ -426,31 +446,49 @@ function renderGrid(data) {
     document.getElementById('grid').innerHTML = '<div style="padding:3rem;color:var(--dim);font-family:monospace;font-size:.75rem;letter-spacing:.1em;">No results found.</div>';
     return;
   }
-  document.getElementById('grid').innerHTML = data.map(function(r) {
-    var idx = ALL_STORES.indexOf(r);
-    var photo = r['写真URL'] || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80';
-    var hpUrl = 'https://www.hotpepper.jp/str' + (r['ホットペッパーID']||'') + '/';
-    var genre = (r['ジャンル']||'').split('・')[0];
-    var pref = r['都道府県'] || '';
-    var area = r['エリア'] || '';
-    var mediaLinks = '<a class="ml hp" href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation()">🌶 Hotpepper</a>'
-      + '<a class="ml tb" href="' + (r['食べログURL'] || 'https://tabelog.com/aichi/A2301/A230101/rstLst/?vs=1&sa=%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85&sw=' + encodeURIComponent(r['店名'])) + '" target="_blank" onclick="event.stopPropagation()">🍽 食べログ</a>'
-      + '<a class="ml ig" href="' + (r['Instagram'] || 'https://www.instagram.com/explore/search/keyword/?q=' + encodeURIComponent(r['店名'] + ' 名古屋')) + '" target="_blank" onclick="event.stopPropagation()">📸 Instagram</a>'
-      + '<a class="ml tk" href="' + (r['TikTok検索']||'#') + '" target="_blank" onclick="event.stopPropagation()">🎵 TikTok</a>'
-      + '<a class="ml xx" href="' + (r['X検索']||'#') + '" target="_blank" onclick="event.stopPropagation()">𝕏 X</a>'
-      + '<a class="ml gm" href="' + gmap(r['店名'], area) + '" target="_blank" onclick="event.stopPropagation()">📍 Google</a>';
-    return '<div class="card" onclick="openM(' + idx + ')">'
-      + '<div class="ci"><img src="' + photo + '" alt="' + r['店名'] + '" loading="lazy" onerror="this.style.opacity=\'.1\'"></div>'
-      + '<span class="badge">' + genre + '</span>'
-      + (pref ? '<span class="pref-badge">' + pref + '</span>' : '')
-      + '<div class="cb">'
-      + '<div class="cn">' + r['店名'] + '</div>'
-      + '<div class="ce">' + (r['英語名']||'') + '</div>'
-      + '<div class="cmeta"><span data-l="Area">' + area + '</span><span data-l="Price">' + (r['価格帯']||'') + '</span></div>'
-      + '<div class="cbook"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation()">🌶 ホットペッパーで予約</a></div>'
-      + '</div>'
-      + '<div class="mrow">' + mediaLinks + '</div>'
-      + '</div>';
+  document.getElementById('grid').innerHTML = data.map(function(r, i) {
+    var idx     = ALL_STORES.indexOf(r);
+    var photo   = r['写真URL'] || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80';
+    var hpUrl   = 'https://www.hotpepper.jp/str' + (r['ホットペッパーID']||'') + '/';
+    var genre   = (r['ジャンル']||'').split('・')[0];
+    var pref    = r['都道府県'] || '';
+    var area    = r['エリア']   || '';
+    // SNS投稿数バッジ
+    var igCt = r['Instagram投稿数'] ? '<span class="sns-ct">' + r['Instagram投稿数'] + '</span>' : '';
+    var tkCt = r['TikTok投稿数']   ? '<span class="sns-ct">' + r['TikTok投稿数']   + '</span>' : '';
+
+    var mediaLinks =
+      '<a class="ml hp" href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation()">🌶 Hotpepper</a>' +
+      '<a class="ml tb" href="' + (r['食べログURL'] || 'https://tabelog.com/aichi/A2301/A230101/rstLst/?vs=1&sa=%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85&sw=' + encodeURIComponent(r['店名'])) + '" target="_blank" onclick="event.stopPropagation()">🍽 食べログ</a>' +
+      '<a class="ml ig" href="' + (r['Instagram'] || 'https://www.instagram.com/explore/search/keyword/?q=' + encodeURIComponent(r['店名'] + ' 名古屋')) + '" target="_blank" onclick="event.stopPropagation()">📸 Instagram' + igCt + '</a>' +
+      '<a class="ml tk" href="' + (r['TikTok検索']||'#') + '" target="_blank" onclick="event.stopPropagation()">🎵 TikTok' + tkCt + '</a>' +
+      '<a class="ml xx" href="' + (r['X検索']||'#') + '" target="_blank" onclick="event.stopPropagation()">𝕏 X</a>' +
+      '<a class="ml gm" href="' + gmap(r['店名'], area) + '" target="_blank" onclick="event.stopPropagation()">📍 Google</a>';
+
+    // 点数セクション（スプレッドシートに列があれば表示）
+    var scoreItems = [];
+    if (r['食べログ点数'])  scoreItems.push({label:'食べログ', val:'★ ' + r['食べログ点数']});
+    if (r['Google評価'])    scoreItems.push({label:'Google',   val:'★ ' + r['Google評価']});
+    if (r['編集部スコア'])  scoreItems.push({label:'編集部',   val:'★ ' + r['編集部スコア']});
+    var scoreHtml = scoreItems.length
+      ? '<div class="cscore">' + scoreItems.map(function(s){
+          return '<div class="sc-item"><span class="sc-label">' + s.label + '</span><span class="sc-val">' + s.val + '</span></div>';
+        }).join('') + '</div>'
+      : '';
+
+    return '<div class="card" onclick="openM(' + idx + ')">' +
+      '<div class="ci"><img src="' + photo + '" alt="' + r['店名'] + '" loading="lazy" onerror="this.style.opacity=\'.1\'"></div>' +
+      '<span class="badge">' + genre + '</span>' +
+      (pref ? '<span class="pref-badge">' + pref + '</span>' : '') +
+      '<div class="cb">' +
+        '<div class="cn">' + r['店名'] + '</div>' +
+        '<div class="ce">' + (r['英語名']||'') + '</div>' +
+        '<div class="cmeta"><span data-l="Area">' + area + '</span><span data-l="Price">' + (r['価格帯']||'') + '</span></div>' +
+        '<div class="cbook"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation()">🌶 ホットペッパーで予約</a></div>' +
+      '</div>' +
+      scoreHtml +
+      '<div class="mrow">' + mediaLinks + '</div>' +
+    '</div>';
   }).join('');
 }
 
@@ -465,12 +503,26 @@ function openM(i) {
   document.getElementById('mp').textContent = r['価格帯'] || '';
   document.getElementById('mh').textContent = r['営業時間'] || '';
   document.getElementById('mac2').textContent = r['アクセス'] || '';
+  // モーダル内点数表示
+  var mScoreItems = [];
+  if (r['食べログ点数'])  mScoreItems.push({label:'食べログ', val:'★ ' + r['食べログ点数']});
+  if (r['Google評価'])    mScoreItems.push({label:'Google',   val:'★ ' + r['Google評価']});
+  if (r['編集部スコア'])  mScoreItems.push({label:'編集部',   val:'★ ' + r['編集部スコア']});
+  document.getElementById('mscores').innerHTML = mScoreItems.length
+    ? '<div class="mscore-row">' + mScoreItems.map(function(s){
+        return '<div class="mscore-item"><label>' + s.label + '</label><span>' + s.val + '</span></div>';
+      }).join('') + '</div>'
+    : '';
+
+  // モーダル内メディアリンク（SNS投稿数付き）
+  var igCt2 = r['Instagram投稿数'] ? ' ' + r['Instagram投稿数'] : '';
+  var tkCt2 = r['TikTok投稿数']   ? ' ' + r['TikTok投稿数']   : '';
   var items = [
     {url:hpUrl, icon:'🌶',label:'Hotpepper'},
     {url:r['食べログURL'] || 'https://tabelog.com/aichi/A2301/A230101/rstLst/?vs=1&sa=%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85&sw=' + encodeURIComponent(r['店名']), icon:'🍽',label:'食べログ'},
-    {url:r['Instagram'], icon:'📸',label:'Instagram'},
-    {url:r['TikTok検索'], icon:'🎵',label:'TikTok'},
-    {url:r['X検索'], icon:'𝕏',label:'X'},
+    {url:r['Instagram'],     icon:'📸',label:'Instagram' + igCt2},
+    {url:r['TikTok検索'],    icon:'🎵',label:'TikTok' + tkCt2},
+    {url:r['X検索'],         icon:'𝕏',label:'X'},
     {url:gmap(r['店名'],r['エリア']), icon:'📍',label:'Google'}
   ];
   document.getElementById('mmg').innerHTML = items.map(function(m){
