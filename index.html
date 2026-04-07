@@ -355,9 +355,7 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;justi
       </div>
       <div id="mig-wrap" style="display:none">
         <div class="mml">Instagram — 代表投稿</div>
-        <div class="mig-embed-box">
-          <iframe id="mig-frame" src="" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true"></iframe>
-        </div>
+        <div class="mig-embed-box" id="mig-container"></div>
       </div>
       <div class="mml">Media Links — 各媒体で見る</div>
       <div class="mmg" id="mmg"></div>
@@ -586,12 +584,19 @@ function openM(i) {
   document.getElementById('mgscore-row').style.display = gscore ? '' : 'none';
   var igPost = (r['Instagram投稿URL'] || '').trim();
   var igWrap = document.getElementById('mig-wrap');
-  var igFrame = document.getElementById('mig-frame');
+  var igContainer = document.getElementById('mig-container');
   if (igPost && (igPost.includes('/p/') || igPost.includes('/reel/'))) {
-    igFrame.src = igPost.replace(/\/?$/, '/embed/');
+    // リール/投稿IDを抽出して正規のURL形式に変換
+    var reelM = igPost.match(/\/reel\/([A-Za-z0-9_-]+)/);
+    var postM = igPost.match(/\/p\/([A-Za-z0-9_-]+)/);
+    var embedUrl = reelM
+      ? 'https://www.instagram.com/reel/' + reelM[1] + '/'
+      : 'https://www.instagram.com/p/' + postM[1] + '/';
+    igContainer.innerHTML = '<blockquote class="instagram-media" data-instgrm-permalink="' + embedUrl + '" data-instgrm-version="14" style="max-width:400px;width:100%;margin:0 auto;border-radius:12px;"></blockquote>';
     igWrap.style.display = '';
+    if (window.instgrm) window.instgrm.Embeds.process();
   } else {
-    igFrame.src = '';
+    igContainer.innerHTML = '';
     igWrap.style.display = 'none';
   }
   var items = [
@@ -612,7 +617,8 @@ function openM(i) {
 function closeM() {
   document.getElementById('ov').classList.remove('open');
   document.body.style.overflow = '';
-  document.getElementById('mig-frame').src = '';
+  document.getElementById('mig-container').innerHTML = '';
+  document.getElementById('mig-wrap').style.display = 'none';
 }
 document.getElementById('ov').addEventListener('click', function(e){ if(e.target===this) closeM(); });
 
@@ -668,5 +674,6 @@ window.addEventListener('appinstalled', function() {
 // ================================================================
 init();
 </script>
+<script async src="//www.instagram.com/embed.js"></script>
 </body>
 </html>
