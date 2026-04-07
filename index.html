@@ -100,8 +100,9 @@ nav a:hover{color:var(--text);}
 .cb{padding:1.2rem 1.4rem 0;}
 .cn{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.25rem;letter-spacing:.02em;color:var(--white);margin-bottom:.15rem;line-height:1.2;}
 .ce{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.13em;color:var(--dim);text-transform:uppercase;margin-bottom:.8rem;}
-.cmeta{display:flex;gap:1rem;font-size:.66rem;color:var(--muted);margin-bottom:.7rem;}
+.cmeta{display:flex;gap:1rem;font-size:.66rem;color:var(--muted);margin-bottom:.7rem;flex-wrap:wrap;}
 .cmeta span::before{content:attr(data-l)' ';color:var(--dim);font-size:.56rem;text-transform:uppercase;}
+.gscore{color:#f5a623;font-weight:500;}
 .cbook{padding-bottom:.85rem;border-bottom:1px solid var(--border);}
 .cbook a{font-size:.65rem;color:var(--gold);text-decoration:none;border:1px solid rgba(201,169,110,.38);padding:.22rem .65rem;border-radius:1px;transition:background .2s;}
 .cbook a:hover{background:rgba(201,169,110,.12);}
@@ -348,6 +349,7 @@ footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;justi
         <div class="mic"><label>Price</label><span id="mp"></span></div>
         <div class="mic"><label>Hours</label><span id="mh"></span></div>
         <div class="mic"><label>Access</label><span id="mac2"></span></div>
+        <div class="mic" id="mgscore-row" style="display:none"><label>Google評価</label><span id="mgscore"></span></div>
       </div>
       <div class="mml">Media Links — 各媒体で見る</div>
       <div class="mmg" id="mmg"></div>
@@ -370,7 +372,7 @@ var ALL_STORES = [];
 var FILTERED = [];
 var ACTIVE_TAGS = [];
 
-var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRof98u7WlzdwLEZ0GnY47kH4-hi9odkNZlDGVyzjrPb5FSGAwLTfzp9QRwg8tG4_ZqMEC_yetvgcfy/pub?output=csv';
+var CSV_URL = 'https://docs.google.com/spreadsheets/d/1VUk4bRTPoIc7pHywzIJTwZr9WyUX7ioxlZzbxQHsjCQ/export?format=csv&gid=415662614';
 
 function parseCSV(text) {
   var lines = text.trim().split('\n');
@@ -552,7 +554,7 @@ function renderGrid(data) {
       + '<div class="cb">'
       + '<div class="cn">' + r['店名'] + '</div>'
       + '<div class="ce">' + (r['英語名']||'') + '</div>'
-      + '<div class="cmeta"><span data-l="Area">' + area + '</span><span data-l="Price">' + (r['価格帯']||'') + '</span></div>'
+      + '<div class="cmeta"><span data-l="Area">' + area + '</span><span data-l="Price">' + (r['価格帯']||'') + '</span>' + (r['Google評価'] ? '<span class="gscore">⭐ ' + r['Google評価'] + '</span>' : '') + '</div>'
       + '<div class="cbook"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation()">🌶 ホットペッパーで予約</a></div>'
       + '</div>'
       + '<div class="mrow">' + mediaLinks + '</div>'
@@ -571,6 +573,9 @@ function openM(i) {
   document.getElementById('mp').textContent = r['価格帯'] || '';
   document.getElementById('mh').textContent = r['営業時間'] || '';
   document.getElementById('mac2').textContent = r['アクセス'] || '';
+  var gscore = r['Google評価'] || '';
+  document.getElementById('mgscore').textContent = gscore ? '⭐ ' + gscore : '';
+  document.getElementById('mgscore-row').style.display = gscore ? '' : 'none';
   var items = [
     {url:hpUrl, icon:'🌶',label:'Hotpepper'},
     {url:r['食べログURL'] || 'https://tabelog.com/aichi/A2301/A230101/rstLst/?vs=1&sa=%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85&sw=' + encodeURIComponent(r['店名']), icon:'🍽',label:'食べログ'},
