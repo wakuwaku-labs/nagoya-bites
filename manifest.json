@@ -1,34 +1,71 @@
 {
-  "name": "NAGOYA BITES",
+  "name": "NAGOYA BITES — 名古屋グルメガイド",
   "short_name": "NAGOYA BITES",
-  "description": "名古屋グルメ・飲食店の完全ガイド【現役飲食人監修】",
-  "start_url": "./",
+  "description": "名古屋の居酒屋・宴会場・個室グルメ完全ガイド。1000店以上を掲載。【現役飲食人監修】",
+  "start_url": "/nagoya-bites/",
+  "scope": "/nagoya-bites/",
   "display": "standalone",
   "background_color": "#f7f5f1",
   "theme_color": "#7a5c10",
   "lang": "ja",
+  "dir": "ltr",
   "orientation": "portrait-primary",
   "icons": [
     {
       "src": "icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "categories": ["food", "lifestyle"],
+  "screenshots": [
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "名古屋グルメ一覧"
+    }
+  ],
   "shortcuts": [
     {
-      "name": "全国の店舗を見る",
-      "short_name": "全国",
-      "url": "./?pref=all",
-      "description": "全国の掲載店舗一覧"
+      "name": "居酒屋を探す",
+      "short_name": "居酒屋",
+      "url": "/nagoya-bites/#genre=%E5%B1%85%E9%85%92%E5%B1%8B",
+      "description": "名古屋の居酒屋一覧"
+    },
+    {
+      "name": "個室のあるお店",
+      "short_name": "個室",
+      "url": "/nagoya-bites/#tag=%E5%80%8B%E5%AE%A4",
+      "description": "個室対応店舗一覧"
+    },
+    {
+      "name": "焼肉を探す",
+      "short_name": "焼肉",
+      "url": "/nagoya-bites/#genre=%E7%84%BC%E8%82%89",
+      "description": "名古屋の焼肉店一覧"
     }
-  ]
+  ],
+  "prefer_related_applications": false,
+  "related_applications": []
 }
