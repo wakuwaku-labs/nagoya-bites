@@ -517,7 +517,17 @@ function applyFilters() {
       || (s['エリア']||'').toLowerCase().indexOf(q) !== -1
       || (s['タグ']||'').toLowerCase().indexOf(q) !== -1;
     var storeTags = (s['タグ']||'').split(',').map(function(t){ return t.trim(); });
-    var okTags = ACTIVE_TAGS.length === 0 || ACTIVE_TAGS.every(function(tag){ return storeTags.indexOf(tag) !== -1; });
+    var access = s['アクセス'] || '';
+    var notes  = s['備考'] || '';
+    var okTags = ACTIVE_TAGS.length === 0 || ACTIVE_TAGS.every(function(tag){
+      if (storeTags.indexOf(tag) !== -1) return true;
+      // 「個室」はアクセス・備考列にある場合も一致、半個室もカバー
+      if (tag === '個室') return storeTags.indexOf('半個室') !== -1 || access.includes('個室') || notes.includes('個室');
+      // 「半個室」選択時は個室も含む
+      if (tag === '半個室') return storeTags.indexOf('個室') !== -1 || access.includes('半個室') || notes.includes('半個室');
+      // その他のタグはアクセス・備考列も確認
+      return access.includes(tag) || notes.includes(tag);
+    });
     return okPref && okGenre && okCap && okQ && okTags;
   });
   renderGrid(FILTERED);
