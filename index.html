@@ -589,12 +589,11 @@ function openM(i) {
     // リール/投稿IDを抽出して正規のURL形式に変換
     var reelM = igPost.match(/\/reel\/([A-Za-z0-9_-]+)/);
     var postM = igPost.match(/\/p\/([A-Za-z0-9_-]+)/);
-    var embedUrl = reelM
-      ? 'https://www.instagram.com/reel/' + reelM[1] + '/'
-      : 'https://www.instagram.com/p/' + postM[1] + '/';
-    igContainer.innerHTML = '<blockquote class="instagram-media" data-instgrm-permalink="' + embedUrl + '" data-instgrm-version="14" style="max-width:400px;width:100%;margin:0 auto;border-radius:12px;"></blockquote>';
+    var embedSrc = reelM
+      ? 'https://www.instagram.com/reel/' + reelM[1] + '/embed/'
+      : 'https://www.instagram.com/p/' + postM[1] + '/embed/';
+    igContainer.innerHTML = '<iframe src="' + embedSrc + '" width="100%" height="560" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true" style="border-radius:12px;display:block;"></iframe>';
     igWrap.style.display = '';
-    if (window.instgrm) window.instgrm.Embeds.process();
   } else {
     igContainer.innerHTML = '';
     igWrap.style.display = 'none';
@@ -674,6 +673,5 @@ window.addEventListener('appinstalled', function() {
 // ================================================================
 init();
 </script>
-<script async src="//www.instagram.com/embed.js"></script>
 </body>
 </html>
