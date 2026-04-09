@@ -175,6 +175,12 @@ nav a:hover{color:var(--text);}
 .mic label{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;display:block;margin-bottom:.35rem;}
 .mic span{font-size:.78rem;color:var(--text);line-height:1.5;}
 .mml{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
+/* おすすめポイント */
+.mpoint-box{background:rgba(122,92,16,.07);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:.95rem 1.1rem;margin-bottom:1.4rem;}
+.mpoint-box .mpoint-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:.5rem;}
+.mpoint-box p{font-size:.82rem;line-height:1.85;color:var(--text);}
+/* card snippet */
+.card-point{font-size:.68rem;color:var(--muted);line-height:1.6;padding:.3rem 1.4rem .55rem;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 .mmg{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;}
 .mb{display:flex;flex-direction:column;align-items:center;gap:.4rem;padding:.9rem .4rem;border:1px solid var(--border);text-decoration:none;transition:all .2s;border-radius:1px;}
 .mb:hover{border-color:var(--border-h);background:var(--surface);}
@@ -537,6 +543,10 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
         <div class="mic"><label>Hours</label><span id="mh"></span></div>
         <div class="mic"><label>Access</label><span id="mac2"></span></div>
         <div class="mic" id="mgscore-row" style="display:none"><label>Google評価</label><span id="mgscore"></span></div>
+      </div>
+      <div class="mpoint-box" id="mpoint-row" style="display:none">
+        <span class="mpoint-label">おすすめポイント</span>
+        <p id="mpoint"></p>
       </div>
       <div id="mig-wrap" style="display:none">
         <div class="mml">Instagram — 代表投稿</div>
@@ -1012,6 +1022,7 @@ function renderGrid(data) {
       + '<div class="cmeta"><span data-l="Area">' + area + '</span><span data-l="Price">' + (r['価格帯']||'') + '</span></div>'
       + '</div>'
       + tagHtml
+      + (r['おすすめポイント'] ? '<div class="card-point">' + r['おすすめポイント'] + '</div>' : '')
       + '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation()" aria-label="' + r['店名'] + 'をホットペッパーで予約">ホットペッパーで予約</a></div>'
       + '<div class="mrow">' + mediaLinks + '</div>'
       + '</div>';
@@ -1032,6 +1043,9 @@ function openM(i) {
   var gscore = r['Google評価'] || '';
   document.getElementById('mgscore').textContent = gscore ? '⭐ ' + gscore : '';
   document.getElementById('mgscore-row').style.display = gscore ? '' : 'none';
+  var point = (r['おすすめポイント'] || '').trim();
+  document.getElementById('mpoint').textContent = point;
+  document.getElementById('mpoint-row').style.display = point ? '' : 'none';
   var igPost = (r['Instagram投稿URL'] || '').trim();
   var igWrap = document.getElementById('mig-wrap');
   var igContainer = document.getElementById('mig-container');
