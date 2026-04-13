@@ -295,8 +295,44 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 </style>
 
 <!-- ======================================================= -->
-<!-- JSON-LD 構造化データ — SEO リッチ結果対応              -->
+<!-- JSON-LD 構造化データ — SEO / LLMO 対応                -->
 <!-- ======================================================= -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "NAGOYA BITES",
+  "alternateName": "ナゴヤバイツ",
+  "url": "https://wakuwaku-labs.github.io/nagoya-bites/",
+  "foundingDate": "2025",
+  "description": "現役飲食店経営者が厳選する名古屋グルメメディア。名古屋駅・栄エリアの居酒屋・宴会場・個室グルメをプロの視点で掲載。Instagram・食べログ・ホットペッパーの情報をワンストップで確認できます。",
+  "founder": {
+    "@type": "Person",
+    "name": "片桐 若登",
+    "jobTitle": "飲食店経営者・NAGOYA BITES編集長",
+    "description": "名古屋で8ブランドの飲食店を運営する現役経営者。業界の内側を知るプロの目線で、本当に価値あるお店だけを厳選掲載。",
+    "knowsAbout": ["飲食店経営", "名古屋グルメ", "居酒屋", "宴会", "接待", "コース料理"]
+  },
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://wakuwaku-labs.github.io/nagoya-bites/icons/icon-512.png",
+    "width": 512,
+    "height": 512
+  },
+  "areaServed": [
+    {"@type": "City", "name": "名古屋市"},
+    {"@type": "Place", "name": "名古屋駅"},
+    {"@type": "Place", "name": "栄"},
+    {"@type": "Place", "name": "大須"},
+    {"@type": "Place", "name": "伏見"},
+    {"@type": "Place", "name": "金山"}
+  ],
+  "knowsAbout": [
+    "居酒屋", "焼肉", "宴会場", "個室", "忘年会", "接待", "コース料理", "和食",
+    "大人数宴会", "名古屋グルメ", "飲食店検索", "レストラン情報"
+  ]
+}
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -617,6 +653,49 @@ function loadStores(stores) {
   buildCapTabs();
   readHash();       // restore filter state from URL hash
   applyFilters();   // apply restored state (replaces the initial renderGrid call)
+  injectDynamicJsonLd(ALL_STORES);
+}
+
+// ================================================================
+// 動的 JSON-LD 生成 — LLMO / AI 検索最適化
+// ChatGPT・Perplexity・Gemini が個別店舗を引用できるようにする
+// ================================================================
+function injectDynamicJsonLd(stores) {
+  var itemList = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    'name': 'NAGOYA BITES 掲載レストラン一覧',
+    'description': '現役飲食店経営者が厳選した名古屋エリアのレストラン・居酒屋・宴会場。ジャンル・エリア・人数・シーンで絞り込み検索可能。',
+    'url': 'https://wakuwaku-labs.github.io/nagoya-bites/',
+    'numberOfItems': stores.length,
+    'itemListElement': stores.slice(0, 80).map(function(s, i) {
+      var hpUrl = 'https://www.hotpepper.jp/str' + (s['ホットペッパーID'] || '') + '/';
+      return {
+        '@type': 'ListItem',
+        'position': i + 1,
+        'item': {
+          '@type': 'Restaurant',
+          'name': s['店名'] || '',
+          'alternateName': s['英語名'] || '',
+          'servesCuisine': s['ジャンル'] || '',
+          'priceRange': s['価格帯'] || '',
+          'address': {
+            '@type': 'PostalAddress',
+            'addressLocality': s['エリア'] || '',
+            'addressRegion': s['都道府県'] || '',
+            'addressCountry': 'JP'
+          },
+          'image': s['写真URL'] || '',
+          'url': hpUrl,
+          'openingHours': s['営業時間'] || ''
+        }
+      };
+    })
+  };
+  var script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.textContent = JSON.stringify(itemList);
+  document.head.appendChild(script);
 }
 
 function buildCapTabs() {
