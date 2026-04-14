@@ -199,6 +199,14 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--border-h);border-radius:2px;}
+/* ── AREA (区) FILTER ── */
+.area-filter-bar{padding:.65rem 1.5rem;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--border);background:var(--bg2);}
+.area-fl{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;color:var(--dim);margin-right:.4rem;text-transform:uppercase;white-space:nowrap;}
+.at{font-size:.68rem;letter-spacing:.09em;color:var(--muted);border:1px solid var(--border);padding:.42rem .9rem;border-radius:2px;cursor:pointer;transition:all .2s;user-select:none;min-height:36px;display:inline-flex;align-items:center;flex-direction:column;gap:.1rem;}
+.at:hover{color:var(--text);border-color:var(--border-h);}
+.at.on{color:var(--gold);border-color:var(--gold);background:rgba(201,169,110,.07);}
+.at-sub{font-family:'DM Mono',monospace;font-size:.46rem;letter-spacing:.06em;color:var(--dim);line-height:1;}
+.at.on .at-sub{color:rgba(122,92,16,.7);}
 /* ── TAG FILTER ── */
 .tag-filter{padding:.75rem 1.5rem;display:flex;flex-direction:column;gap:.5rem;border-bottom:1px solid var(--border);background:var(--bg2);}
 .tag-group{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;}
@@ -540,6 +548,8 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   <div class="pt on" data-pref="all">全国</div>
 </div>
 
+<div class="area-filter-bar" id="area-filter-bar"></div>
+
 <div class="cap-tabs" id="cap-tabs"></div>
 
 <div class="filter-bar">
@@ -610,6 +620,14 @@ var LOCAL_STORES = [{"店名":"居酒屋 ヒノカミ 名古屋駅前店","英�
 var ALL_STORES = [];
 var FILTERED = [];
 var ACTIVE_TAGS = [];
+var ACTIVE_WARD = 'all';
+var AREA_TO_WARD = {'栄':'中区','大須':'中区','名古屋駅':'中村区','金山':'熱田区'};
+var WARD_AREAS = {
+  'all': null,
+  '中区': ['栄','大須'],
+  '中村区': ['名古屋駅'],
+  '熱田区': ['金山']
+};
 var FILTER_PANEL_OPEN = false;
 
 var CSV_URL = 'https://docs.google.com/spreadsheets/d/1VUk4bRTPoIc7pHywzIJTwZr9WyUX7ioxlZzbxQHsjCQ/export?format=csv&gid=415662614';
@@ -651,6 +669,7 @@ function loadStores(stores) {
   FILTERED = ALL_STORES.slice();
   buildPrefTabs();
   buildGenreTabs();
+  buildAreaFilter();
   buildTagFilter();
   buildCapTabs();
   readHash();       // restore filter state from URL hash
@@ -742,6 +761,35 @@ function buildGenreTabs() {
   };
 }
 
+function buildAreaFilter() {
+  var wardDefs = [
+    {ward:'all', label:'エリアすべて', sub:''},
+    {ward:'中区', label:'中区', sub:'栄・大須'},
+    {ward:'中村区', label:'中村区', sub:'名古屋駅'},
+    {ward:'熱田区', label:'熱田区', sub:'金山'}
+  ];
+  var counts = {};
+  ALL_STORES.forEach(function(s){
+    var w = AREA_TO_WARD[s['エリア']];
+    if (w) counts[w] = (counts[w]||0) + 1;
+  });
+  var bar = document.getElementById('area-filter-bar');
+  bar.innerHTML = '<span class="area-fl">エリア（区）</span>'
+    + wardDefs.map(function(d,i){
+        var cnt = d.ward === 'all' ? ALL_STORES.length : (counts[d.ward]||0);
+        var sub = d.sub ? '<span class="at-sub">' + d.sub + '</span>' : '<span class="at-sub">' + cnt + '件</span>';
+        return '<div class="at' + (i===0?' on':'') + '" data-ward="' + d.ward + '">' + d.label + sub + '</div>';
+      }).join('');
+  bar.onclick = function(e) {
+    var t = e.target.closest('.at');
+    if (!t) return;
+    bar.querySelectorAll('.at').forEach(function(x){ x.classList.remove('on'); });
+    t.classList.add('on');
+    ACTIVE_WARD = t.dataset.ward;
+    applyFilters();
+  };
+}
+
 function buildTagFilter() {
   var cats = [
     {label:'シーン', tags:['デート','女子会','接待','誕生日・記念日','歓送迎会','忘年会・新年会','家族・子連れ']},
@@ -783,6 +831,7 @@ function applyFilters() {
   var q = siEl ? siEl.value.trim().toLowerCase() : '';
   FILTERED = ALL_STORES.filter(function(s){
     var okPref = (pref === '全国' || pref === 'all') || (s['都道府県'] || '') === pref;
+    var okWard = ACTIVE_WARD === 'all' || (AREA_TO_WARD[s['エリア']] === ACTIVE_WARD);
     var okGenre = genre === 'All' || (s['ジャンル'] || '').indexOf(genre) !== -1;
     var okCap = (isNaN(capNum) || capNum <= 0) ? true : (s['タグ'] || '').split(/[,、，\/]/).some(function(t) {
       t = t.trim();
@@ -806,7 +855,7 @@ function applyFilters() {
       // その他のタグはアクセス・備考列も確認
       return access.includes(tag) || notes.includes(tag);
     });
-    return okPref && okGenre && okCap && okQ && okTags;
+    return okPref && okWard && okGenre && okCap && okQ && okTags;
   });
   renderGrid(FILTERED);
   pushHash();
@@ -828,6 +877,7 @@ function pushHash() {
   var params = [];
   if (pref  && pref  !== '全国') params.push('pref='  + encodeURIComponent(pref));
   if (genre && genre !== 'All')  params.push('genre=' + encodeURIComponent(genre));
+  if (ACTIVE_WARD && ACTIVE_WARD !== 'all') params.push('ward=' + encodeURIComponent(ACTIVE_WARD));
   if (ACTIVE_TAGS.length > 0)   params.push('tag='   + ACTIVE_TAGS.map(encodeURIComponent).join(','));
   if (cap)                       params.push('cap='   + encodeURIComponent(cap));
   if (q)                         params.push('q='     + encodeURIComponent(q));
@@ -860,6 +910,15 @@ function readHash() {
     if (genreEl) {
       document.querySelectorAll('.ft').forEach(function(x){ x.classList.remove('on'); });
       genreEl.classList.add('on');
+    }
+  }
+  // ward (area filter)
+  if (params.ward) {
+    var wardEl = document.querySelector('.at[data-ward="' + params.ward + '"]');
+    if (wardEl) {
+      document.querySelectorAll('.at').forEach(function(x){ x.classList.remove('on'); });
+      wardEl.classList.add('on');
+      ACTIVE_WARD = params.ward;
     }
   }
   // tags (comma-separated)
