@@ -174,6 +174,13 @@ nav a:hover{color:var(--text);}
 .minfo{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;padding-bottom:1.4rem;border-bottom:1px solid var(--border);margin-bottom:1.4rem;}
 .mic label{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;display:block;margin-bottom:.35rem;}
 .mic span{font-size:.78rem;color:var(--text);line-height:1.5;}
+.photo-grid-wrap{margin-bottom:1.6rem;}
+.photo-grid-label{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.7rem;}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.photo-grid-item{position:relative;overflow:hidden;border-radius:2px;background:var(--surface);aspect-ratio:4/5;}
+.photo-grid-item iframe{width:100%;height:100%;border:none;display:block;pointer-events:none;}
+.photo-grid-item-label{font-family:'DM Mono',monospace;font-size:.46rem;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;text-align:center;margin-top:.3rem;}
+@media(max-width:768px){.photo-grid{grid-template-columns:1fr;}.photo-grid-item{aspect-ratio:4/3;}}
 .mml{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
 /* おすすめポイント */
 .mpoint-box{background:rgba(122,92,16,.07);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:.95rem 1.1rem;margin-bottom:1.4rem;}
@@ -595,6 +602,12 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="mpoint-box" id="mpoint-row" style="display:none">
         <span class="mpoint-label">おすすめポイント</span>
         <p id="mpoint"></p>
+      </div>
+      <div id="photo-gallery-row" style="display:none">
+        <div class="photo-grid-wrap">
+          <div class="photo-grid-label">Photos</div>
+          <div class="photo-grid" id="photo-grid"></div>
+        </div>
       </div>
       <div id="mig-wrap" style="display:none">
         <div class="mml">Instagram — 代表投稿</div>
@@ -1183,6 +1196,31 @@ function openM(i) {
   var gscore = r['Google評価'] || '';
   document.getElementById('mgscore').textContent = gscore ? '⭐ ' + gscore : '';
   document.getElementById('mgscore-row').style.display = gscore ? '' : 'none';
+  // ── 写真グリッド（内観・料理①・料理②）──
+  var photoFields = [
+    {key:'内観写真URL', label:'内観'},
+    {key:'料理写真URL1', label:'料理①'},
+    {key:'料理写真URL2', label:'料理②'}
+  ];
+  var photoGridEl = document.getElementById('photo-grid');
+  var photoGalleryRow = document.getElementById('photo-gallery-row');
+  var photoItems = photoFields.map(function(f) {
+    return {url: (r[f.key]||'').trim(), label: f.label};
+  }).filter(function(f){ return f.url; });
+  if (photoItems.length > 0) {
+    photoGridEl.innerHTML = photoItems.map(function(item) {
+      var m = item.url.match(/instagram\.com\/(p|reel)\/([A-Za-z0-9_-]+)/);
+      if (!m) return '';
+      var embedSrc = 'https://www.instagram.com/' + m[1] + '/' + m[2] + '/embed/captioned/';
+      return '<div><div class="photo-grid-item"><iframe src="' + embedSrc + '" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>'
+        + '<div class="photo-grid-item-label">' + item.label + '</div></div>';
+    }).join('');
+    photoGalleryRow.style.display = '';
+  } else {
+    photoGridEl.innerHTML = '';
+    photoGalleryRow.style.display = 'none';
+  }
+
   var point = (r['おすすめポイント'] || '').trim();
   document.getElementById('mpoint').textContent = point;
   document.getElementById('mpoint-row').style.display = point ? '' : 'none';
@@ -1226,6 +1264,8 @@ function openM(i) {
 function closeM() {
   document.getElementById('ov').classList.remove('open');
   document.body.style.overflow = '';
+  document.getElementById('photo-grid').innerHTML = '';
+  document.getElementById('photo-gallery-row').style.display = 'none';
   document.getElementById('mig-container').innerHTML = '';
   document.getElementById('mig-wrap').style.display = 'none';
 }
