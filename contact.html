@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お問い合わせ | NAGOYA BITES</title>
+<meta name="description" content="NAGOYA BITESへのお問い合わせはこちら。掲載内容の修正・追加依頼・ご意見・ご感想などお気軽にどうぞ。">
+<link rel="canonical" href="https://wakuwaku-labs.github.io/nagoya-bites/contact.html">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7a5c10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="NAGOYA BITES">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--border-h:rgba(0,0,0,0.28);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;}
+*{margin:0;padding:0;box-sizing:border-box;}
+::selection{background:var(--gold);color:var(--bg);}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
+header{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;letter-spacing:.35em;color:var(--white);text-decoration:none;text-transform:uppercase;}
+.logo em{font-style:italic;color:var(--gold);}
+nav{display:flex;gap:2rem;align-items:center;}
+nav a{font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+nav a:hover,nav a.active{color:var(--text);}
+.page{padding:100px 2rem 80px;max-width:680px;margin:0 auto;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1.4rem;opacity:0;animation:up .8s .1s forwards;}
+.page-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.4rem,5vw,3.8rem);line-height:1.05;color:var(--white);margin-bottom:1rem;opacity:0;animation:up .9s .2s forwards;}
+.page-title em{font-style:italic;color:var(--gold);}
+.page-desc{font-size:.78rem;letter-spacing:.05em;color:var(--muted);line-height:2;margin-bottom:2.8rem;opacity:0;animation:up .9s .3s forwards;}
+.contact-form{opacity:0;animation:up .9s .4s forwards;}
+.field{margin-bottom:1.4rem;}
+.field label{display:block;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.22em;color:var(--dim);text-transform:uppercase;margin-bottom:.55rem;}
+.field label span{color:var(--gold);margin-left:.25rem;}
+.field input,.field select,.field textarea{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.8rem 1rem;font-size:.82rem;font-family:'Noto Sans JP',sans-serif;border-radius:2px;outline:none;transition:border-color .2s,background .2s;-webkit-appearance:none;}
+.field input::placeholder,.field textarea::placeholder{color:var(--dim);}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);background:var(--bg2);}
+.field textarea{resize:vertical;min-height:140px;line-height:1.8;}
+.field select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='rgba(28,28,26,0.38)' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;}
+.field select option{background:var(--bg2);}
+.submit-btn{background:var(--gold);border:none;color:var(--bg);padding:.9rem 2.2rem;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;border-radius:2px;cursor:pointer;font-family:'DM Mono',monospace;font-weight:400;transition:background .2s,transform .15s;min-height:44px;}
+.submit-btn:hover{background:var(--gold2);}
+.submit-btn:active{transform:scale(.98);}
+.submit-btn:disabled{opacity:.45;cursor:not-allowed;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-bottom:2.5rem;border:1px solid var(--border);}
+.info-box{background:var(--bg2);padding:1.2rem 1.4rem;}
+.info-box dt{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.5rem;}
+.info-box dd{font-size:.78rem;color:var(--muted);line-height:1.7;}
+.msg{display:none;padding:1rem 1.2rem;border-radius:2px;font-size:.78rem;line-height:1.7;margin-bottom:1.4rem;}
+.msg.success{background:rgba(122,92,16,.1);border:1px solid rgba(122,92,16,.4);color:var(--gold);}
+.msg.error{background:rgba(180,50,50,.07);border:1px solid rgba(180,50,50,.3);color:#9b3333;}
+.msg.show{display:block;}
+footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
+.fl2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:.95rem;letter-spacing:.28em;color:var(--dim);text-transform:uppercase;}
+.fc{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.1em;color:var(--dim);}
+@keyframes up{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@media(max-width:600px){nav{gap:1rem;}nav a{font-size:.6rem;}.info-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="./">Nagoya <em>Bites</em></a>
+  <nav>
+    <a href="./#pref=%E6%84%9B%E7%9F%A5%E7%9C%8C">Area</a>
+    <a href="./#genre=%E5%B1%85%E9%85%92%E5%B1%8B">Genre</a>
+    <a href="./#tag=%E5%80%8B%E5%AE%A4">個室</a>
+    <a href="contact.html" class="active">Contact</a>
+  </nav>
+</header>
+
+<main class="page">
+  <div class="eyebrow">Get in Touch</div>
+  <h1 class="page-title">お<em>問い合わせ</em></h1>
+  <p class="page-desc">
+    掲載内容の修正・追加依頼、ご意見・ご感想など<br>
+    お気軽にご連絡ください。通常2〜3営業日以内にご返信いたします。
+  </p>
+
+  <dl class="info-grid">
+    <div class="info-box">
+      <dt>掲載・修正依頼</dt>
+      <dd>店舗情報の追加や<br>変更はこちらから</dd>
+    </div>
+    <div class="info-box">
+      <dt>返信について</dt>
+      <dd>2〜3営業日以内を<br>目安にご返信します</dd>
+    </div>
+  </dl>
+
+  <div id="msg-success" class="msg success">
+    お問い合わせを受け付けました。ありがとうございます。<br>
+    2〜3営業日以内にご返信いたします。
+  </div>
+  <div id="msg-error" class="msg error">
+    送信に失敗しました。時間をおいて再度お試しいただくか、<br>
+    直接メールにてご連絡ください。
+  </div>
+
+  <form id="contact-form" class="contact-form" novalidate>
+    <div class="field">
+      <label for="name">お名前 <span>*</span></label>
+      <input type="text" id="name" name="name" placeholder="山田 太郎" required autocomplete="name">
+    </div>
+    <div class="field">
+      <label for="email">メールアドレス <span>*</span></label>
+      <input type="email" id="email" name="email" placeholder="example@email.com" required autocomplete="email">
+    </div>
+    <div class="field">
+      <label for="category">お問い合わせ種別 <span>*</span></label>
+      <select id="category" name="category" required>
+        <option value="" disabled selected>選択してください</option>
+        <option value="listing-add">掲載依頼（新規追加）</option>
+        <option value="listing-fix">掲載内容の修正依頼</option>
+        <option value="listing-remove">掲載削除依頼</option>
+        <option value="feedback">ご意見・ご感想</option>
+        <option value="other">その他</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="shop">店舗名（任意）</label>
+      <input type="text" id="shop" name="shop" placeholder="対象の店舗名があればご記入ください">
+    </div>
+    <div class="field">
+      <label for="message">メッセージ <span>*</span></label>
+      <textarea id="message" name="message" placeholder="お問い合わせ内容をご記入ください…" required></textarea>
+    </div>
+    <button type="submit" class="submit-btn" id="submit-btn">送信する</button>
+  </form>
+</main>
+
+<footer>
+  <div class="fl2">Nagoya Bites</div>
+  <div class="fc">© 2025 All Rights Reserved</div>
+</footer>
+
+<script>
+var FORMSPREE_ENDPOINT = 'https://formspree.io/f/xaqaygze';
+
+var form = document.getElementById('contact-form');
+var btn  = document.getElementById('submit-btn');
+var msgSuccess = document.getElementById('msg-success');
+var msgError   = document.getElementById('msg-error');
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  var name     = form.name.value.trim();
+  var email    = form.email.value.trim();
+  var category = form.category.value;
+  var message  = form.message.value.trim();
+
+  if (!name || !email || !category || !message) {
+    alert('必須項目をすべて入力してください。');
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    alert('メールアドレスの形式が正しくありません。');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '送信中…';
+  msgSuccess.classList.remove('show');
+  msgError.classList.remove('show');
+
+  fetch(FORMSPREE_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: name,
+      email: email,
+      category: category,
+      shop: form.shop.value.trim(),
+      message: message
+    })
+  })
+  .then(function(res) {
+    if (res.ok) {
+      msgSuccess.classList.add('show');
+      form.reset();
+    } else {
+      msgError.classList.add('show');
+    }
+  })
+  .catch(function() {
+    msgError.classList.add('show');
+  })
+  .finally(function() {
+    btn.disabled = false;
+    btn.textContent = '送信する';
+  });
+});
+</script>
+
+</body>
+</html>
