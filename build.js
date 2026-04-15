@@ -96,19 +96,14 @@ async function main() {
   fs.writeFileSync(HTML, html, 'utf8');
   console.log('index.html 更新完了');
 
-  // 4. sitemap.xmlの lastmod を更新
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://wakuwaku-labs.github.io/nagoya-bites/</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-</urlset>
-`;
-  fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemap, 'utf8');
-  console.log('sitemap.xml 更新完了');
+  // 4. sitemap.xml は build_features.js が全ページ含めて生成するため、ここでは触らない
+  // 5. 特集記事を最新データで自動更新
+  try {
+    require('./build_features.js');
+  } catch (e) {
+    console.log('build_features.js の実行中にエラー:', e.message);
+    console.log('（特集記事の更新はスキップされました）');
+  }
 }
 
 main().catch(e => { console.error(e.message); process.exit(1); });
