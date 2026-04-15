@@ -30,8 +30,6 @@ jobs:
 
       - name: Step 1 — DataKeeper（node build.js）
         run: node build.js
-        env:
-          GOOGLE_SHEETS_API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
 
       - name: Step 2 & 3 — Inspector + Builder（Claude Code）
         run: |
