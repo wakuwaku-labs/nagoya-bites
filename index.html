@@ -594,7 +594,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 
 <!-- 権威性バー -->
 <div class="authority-bar">
-  <span class="auth-item">📍 <strong>名古屋限定</strong> 1,096店掲載</span>
+  <span class="auth-item">📍 <strong>名古屋限定</strong> <span id="auth-total">5,354</span>店掲載</span>
   <span class="auth-sep">|</span>
   <span class="auth-item"><span class="auth-icon">👨‍🍳</span><strong>現役飲食店経営者</strong>が自ら選定</span>
   <span class="auth-sep">|</span>
@@ -818,6 +818,9 @@ function init() {
 function loadStores(stores) {
   ALL_STORES = stores.filter(function(s){ return s['公開フラグ'] !== 'FALSE'; });
   FILTERED = ALL_STORES.slice();
+  // 権威性バーの総店舗数を実データから動的に反映
+  var authTotalEl = document.getElementById('auth-total');
+  if (authTotalEl) authTotalEl.textContent = ALL_STORES.length.toLocaleString();
   buildPrefTabs();
   buildGenreTabs();
   buildAreaFilter();
