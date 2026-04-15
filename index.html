@@ -796,6 +796,11 @@ var ALL_STORES = [];
 var FILTERED = [];
 var ACTIVE_TAGS = [];
 var ACTIVE_WARD = 'all';
+// ── 仮想スクロール用（プログレッシブ・レンダリング）──
+var RENDER_BATCH = 30;
+var RENDER_CURSOR = 0;
+var RENDER_DATA = [];
+var RENDER_IO = null;
 var AREA_TO_WARD = {'栄':'中区','大須':'中区','名古屋駅':'中村区','金山':'熱田区'};
 var WARD_AREAS = {
   'all': null,
@@ -1287,25 +1292,7 @@ function renderSkeletons() {
 
 function gmap(name, area) { return 'https://maps.google.com/search?q=' + encodeURIComponent(name + ' ' + (area||'')); }
 
-function renderGrid(data) {
-  var cntEl = document.getElementById('cnt');
-  if (cntEl) {
-    cntEl.classList.add('fading');
-    setTimeout(function() {
-      cntEl.textContent = String(data.length).padStart(2,'0') + ' Restaurants';
-      cntEl.classList.remove('fading');
-    }, 120);
-  }
-  if (!data.length) {
-    document.getElementById('grid').innerHTML = '<div class="empty-state">'
-      + '<div class="empty-state-icon">🍽</div>'
-      + '<h3>該当するお店が見つかりませんでした</h3>'
-      + '<p>検索条件を変えるか、フィルターをリセットしてお試しください。</p>'
-      + '<button class="empty-state-reset" onclick="clearAllFilters()">フィルターをリセット</button>'
-      + '</div>';
-    return;
-  }
-  document.getElementById('grid').innerHTML = data.map(function(r) {
+function buildCardHtml(r) {
     var idx = ALL_STORES.indexOf(r);
     var photo = r['写真URL'] || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80';
     var hpUrl = 'https://www.hotpepper.jp/str' + (r['ホットペッパーID']||'') + '/';
@@ -1341,7 +1328,70 @@ function renderGrid(data) {
       + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation()" aria-label="' + r['店名'] + 'をホットペッパーで予約">ホットペッパーで予約</a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area) + '" target="_blank" onclick="event.stopPropagation()" aria-label="' + r['店名'] + 'をGoogleマップで確認" style="background:#4285F4">Googleマップで確認</a></div>')
       + '<div class="mrow">' + mediaLinks + '</div>'
       + '</div>';
-  }).join('');
+}
+
+function renderGrid(data) {
+  var cntEl = document.getElementById('cnt');
+  if (cntEl) {
+    cntEl.classList.add('fading');
+    setTimeout(function() {
+      cntEl.textContent = String(data.length).padStart(2,'0') + ' Restaurants';
+      cntEl.classList.remove('fading');
+    }, 120);
+  }
+  var gridEl = document.getElementById('grid');
+  // 既存のObserverをクリーンアップ
+  if (RENDER_IO) { RENDER_IO.disconnect(); RENDER_IO = null; }
+  if (!data.length) {
+    gridEl.innerHTML = '<div class="empty-state">'
+      + '<div class="empty-state-icon">🍽</div>'
+      + '<h3>該当するお店が見つかりませんでした</h3>'
+      + '<p>検索条件を変えるか、フィルターをリセットしてお試しください。</p>'
+      + '<button class="empty-state-reset" onclick="clearAllFilters()">フィルターをリセット</button>'
+      + '</div>';
+    return;
+  }
+  RENDER_DATA = data;
+  RENDER_CURSOR = 0;
+  gridEl.innerHTML = '';
+  renderNextBatch();
+}
+
+function renderNextBatch() {
+  var gridEl = document.getElementById('grid');
+  if (!gridEl) return;
+  var end = Math.min(RENDER_CURSOR + RENDER_BATCH, RENDER_DATA.length);
+  var html = '';
+  for (var i = RENDER_CURSOR; i < end; i++) {
+    html += buildCardHtml(RENDER_DATA[i]);
+  }
+  // 既存sentinelがあれば削除してから追記
+  var oldSentinel = gridEl.querySelector('.grid-sentinel');
+  if (oldSentinel) oldSentinel.remove();
+  gridEl.insertAdjacentHTML('beforeend', html);
+  RENDER_CURSOR = end;
+  // まだ続きがあればsentinelを置いて監視
+  if (RENDER_CURSOR < RENDER_DATA.length) {
+    var sentinel = document.createElement('div');
+    sentinel.className = 'grid-sentinel';
+    sentinel.style.cssText = 'grid-column:1/-1;height:1px;visibility:hidden;';
+    gridEl.appendChild(sentinel);
+    if ('IntersectionObserver' in window) {
+      if (!RENDER_IO) {
+        RENDER_IO = new IntersectionObserver(function(entries) {
+          if (entries[0] && entries[0].isIntersecting) {
+            renderNextBatch();
+          }
+        }, { rootMargin: '600px 0px' });
+      }
+      RENDER_IO.observe(sentinel);
+    } else {
+      // IntersectionObserver非対応ブラウザは全件一気に描画
+      while (RENDER_CURSOR < RENDER_DATA.length) { renderNextBatch(); }
+    }
+  } else {
+    if (RENDER_IO) { RENDER_IO.disconnect(); RENDER_IO = null; }
+  }
 }
 
 function openM(i) {
