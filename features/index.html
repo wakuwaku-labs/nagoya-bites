@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>特集記事一覧 | NAGOYA BITES — 名古屋グルメ専門メディア</title>
+<meta name="description" content="NAGOYA BITESの特集記事一覧。宴会・忘年会・デートディナー・女子会・誕生日・個室グルメなど、シーン別に名古屋のおすすめレストランをまとめています。">
+<link rel="canonical" href="https://wakuwaku-labs.github.io/nagoya-bites/features/">
+<meta property="og:title" content="特集記事一覧｜NAGOYA BITES">
+<meta property="og:description" content="宴会・デート・女子会・誕生日など、シーン別名古屋グルメ特集。現役飲食店経営者監修の保存版リスト集。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wakuwaku-labs.github.io/nagoya-bites/features/">
+<meta property="og:site_name" content="NAGOYA BITES">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
+header{position:sticky;top:0;z-index:200;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;letter-spacing:.35em;color:var(--white);text-transform:uppercase;text-decoration:none;}
+.logo em{font-style:italic;color:var(--gold);}
+nav{display:flex;gap:1.5rem;align-items:center;}
+nav a{font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+nav a:hover,nav a.active{color:var(--text);}
+.page-hero{padding:3.5rem 1.5rem 2.5rem;max-width:900px;margin:0 auto;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;}
+.page-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,4vw,3.2rem);line-height:1.15;color:var(--white);margin-bottom:.8rem;}
+.page-title em{font-style:italic;color:var(--gold);}
+.page-desc{font-size:.82rem;line-height:2;color:var(--muted);max-width:600px;}
+.articles-grid{max-width:900px;margin:0 auto;padding:1rem 1.5rem 4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+.article-card{background:#fff;border:0.5px solid #D3D1C7;border-radius:8px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:box-shadow .2s,transform .15s;}
+.article-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1);transform:translateY(-2px);}
+.card-badge{padding:.85rem 1.2rem .6rem;border-bottom:1px solid var(--border);background:var(--bg2);}
+.card-icon{font-size:1.8rem;line-height:1;margin-bottom:.4rem;}
+.card-category{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;}
+.card-body{padding:1rem 1.2rem 1.2rem;flex:1;display:flex;flex-direction:column;}
+.card-title{font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:.9rem;color:var(--white);line-height:1.5;margin-bottom:.5rem;}
+.card-desc{font-size:.74rem;line-height:1.8;color:var(--muted);flex:1;margin-bottom:.8rem;}
+.card-meta{display:flex;justify-content:space-between;align-items:center;}
+.card-count{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.1em;color:var(--dim);}
+.card-cta{font-size:.68rem;color:var(--gold);font-family:'DM Mono',monospace;letter-spacing:.1em;}
+footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
+.fl2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:.95rem;letter-spacing:.28em;color:var(--dim);text-transform:uppercase;}
+.fc{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.1em;color:var(--dim);}
+@media(max-width:768px){.articles-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.articles-grid{grid-template-columns:1fr;}nav{display:none;}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+  <nav>
+    <a href="../index.html">すべての店舗</a>
+    <a href="index.html" class="active">特集</a>
+    <a href="../about.html">About</a>
+    <a href="../contact.html">Contact</a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <p class="eyebrow">Feature Articles</p>
+  <h1 class="page-title">シーン別<em>特集記事</em></h1>
+  <p class="page-desc">
+    宴会・デート・女子会・誕生日……シーンに合わせた名古屋グルメを
+    現役飲食店経営者が厳選したリスト集。Google評価4.3以上の実力店のみ掲載。
+  </p>
+</div>
+
+<div class="articles-grid">
+  <a class="article-card" href="banquet.html">
+    <div class="card-badge">
+      <div class="card-icon">🍻</div>
+      <div class="card-category">Banquet · 宴会</div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">宴会・忘年会おすすめ居酒屋15選</div>
+      <p class="card-desc">忘年会・新年会・送別会に使える個室完備・飲み放題対応の居酒屋を厳選。幹事必見の保存版リスト。</p>
+      <div class="card-meta">
+        <span class="card-count">15店掲載</span>
+        <span class="card-cta">読む →</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="article-card" href="private-room.html">
+    <div class="card-badge">
+      <div class="card-icon">🚪</div>
+      <div class="card-category">Private Room · 個室</div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">個室グルメおすすめ10選</div>
+      <p class="card-desc">接待・女子会・デートで使える完全個室・半個室を完備したレストランを厳選。プライベートな時間に。</p>
+      <div class="card-meta">
+        <span class="card-count">10店掲載</span>
+        <span class="card-cta">読む →</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="article-card" href="birthday.html">
+    <div class="card-badge">
+      <div class="card-icon">🎂</div>
+      <div class="card-category">Birthday · 誕生日</div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">誕生日・記念日ディナーおすすめ10選</div>
+      <p class="card-desc">サプライズ演出・記念日ケーキ対応のレストランをGoogle評価4.3以上から厳選。特別な夜に。</p>
+      <div class="card-meta">
+        <span class="card-count">10店掲載</span>
+        <span class="card-cta">読む →</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="article-card" href="date.html">
+    <div class="card-badge">
+      <div class="card-icon">💑</div>
+      <div class="card-category">Date Night · デート</div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">デートディナーおすすめ10選</div>
+      <p class="card-desc">雰囲気抜群・個室対応・料理クオリティにこだわったデートに最適なレストランを厳選。初デートから記念日まで。</p>
+      <div class="card-meta">
+        <span class="card-count">10店掲載</span>
+        <span class="card-cta">読む →</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="article-card" href="girls-party.html">
+    <div class="card-badge">
+      <div class="card-icon">✨</div>
+      <div class="card-category">Girls' Night · 女子会</div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">女子会おすすめレストラン10選</div>
+      <p class="card-desc">おしゃれ・映え・個室の三条件を満たす女子会向けレストランを厳選。ランチ〜ディナーまで使えるお店のみ。</p>
+      <div class="card-meta">
+        <span class="card-count">10店掲載</span>
+        <span class="card-cta">読む →</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="article-card" href="large-group.html">
+    <div class="card-badge">
+      <div class="card-icon">👥</div>
+      <div class="card-category">Large Group · 大人数</div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">大人数宴会・20人以上対応10選</div>
+      <p class="card-desc">会社宴会・同窓会・サークルコンパに対応する個室・貸切プランありのお店を厳選。大人数の幹事必見。</p>
+      <div class="card-meta">
+        <span class="card-count">10店掲載</span>
+        <span class="card-cta">読む →</span>
+      </div>
+    </div>
+  </a>
+</div>
+
+<footer>
+  <div class="fl2">Nagoya Bites</div>
+  <div class="fc" id="fc-year"></div>
+</footer>
+<script>(function(){var fc=document.getElementById('fc-year');if(fc)fc.textContent='\u00A9 '+new Date().getFullYear()+' All Rights Reserved';})();</script>
+</body>
+</html>
