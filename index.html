@@ -334,22 +334,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .card-tags{padding:.35rem 0 .5rem;}
 .card-cta{padding:0;margin-bottom:12px;}
 }
-/* ── FAQ SECTION ── */
-.faq-section{padding:2.5rem 1.5rem;border-top:1px solid var(--border);background:var(--bg2);}
-.faq-section h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.9rem;letter-spacing:.04em;color:var(--white);margin-bottom:.4rem;}
-.faq-section h2 em{font-style:italic;color:var(--gold);}
-.faq-sub{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:1.5rem;}
-.faq-item{border-bottom:1px solid var(--border);}
-.faq-q{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;font-family:'Noto Sans JP',sans-serif;font-size:.85rem;font-weight:500;color:var(--text);padding:.95rem 0;cursor:pointer;text-align:left;line-height:1.6;gap:.8rem;}
-.faq-q:hover{color:var(--gold);}
-.faq-q::after{content:'+';font-family:'DM Mono',monospace;font-size:1rem;color:var(--gold);flex-shrink:0;transition:transform .25s;}
-.faq-item.open .faq-q::after{content:'\2212';transform:rotate(180deg);}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;}
-.faq-item.open .faq-a{max-height:300px;padding:0 0 1rem;}
-.faq-a p{font-size:.78rem;line-height:1.9;color:var(--muted);}
-.faq-a a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.3);transition:border-color .2s;}
-.faq-a a:hover{border-color:var(--gold);}
-@media(max-width:768px){.faq-section{padding:2rem 1rem;}.faq-q{font-size:.8rem;padding:.85rem 0;}}
 /* ── SHARE BUTTONS (MODAL) ── */
 .share-bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);}
 .share-bar-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;width:100%;margin-bottom:.2rem;}
@@ -485,70 +469,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   }
 }
 </script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "NAGOYA BITESにはいくつのお店が掲載されていますか？",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "NAGOYA BITESには名古屋市内（名古屋駅・栄・大須・伏見・金山など）の飲食店・レストランが1000軒以上掲載されています。ホットペッパーグルメと連携し、データは定期的に更新されます。"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "名古屋駅周辺で個室がある居酒屋はどこですか？",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "NAGOYA BITESでは名古屋駅（名駅）周辺の個室対応居酒屋を多数掲載しています。「席・空間」フィルターで「個室」を選択し、エリアで「名古屋駅」を絞り込むとすぐに見つかります。2名〜大人数まで対応した個室プランをご確認いただけます。"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "名古屋で30人以上の宴会ができるお店はありますか？",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "はい。NAGOYA BITESでは30人・50人・100人以上の大人数宴会に対応したお店を掲載しています。「Capacity（人数）」入力フィルターに人数を入力することで、ご要望の人数規模に対応した宴会場・居酒屋をすぐに絞り込めます。"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "名古屋で忘年会・新年会向けのお店は？",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "NAGOYA BITESでは「シーン」フィルターの「忘年会・新年会」タグで絞り込めます。居酒屋・和食・イタリアンなどジャンルを問わず、飲み放題込みのコースプランを提供している店舗を多数掲載中です。"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "名古屋で接待に使える個室のお店を探しています",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "NAGOYA BITESの「シーン」フィルターで「接待」、「席・空間」フィルターで「個室」を組み合わせて選択すると、接待・会食に適した名古屋の和食・フレンチ・鉄板焼きなどの個室レストランをすぐに見つけられます。"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "名古屋でデートにおすすめのお店は？",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "NAGOYA BITESの「シーン」フィルターで「デート」を選択すると、雰囲気の良いレストランやバーを絞り込めます。イタリアン・フレンチ・焼肉・鉄板焼きなど、様々なジャンルのデート向けお店が掲載されています。"
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "NAGOYA BITESで検索した条件を保存・シェアできますか？",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "はい。NAGOYA BITESではフィルター（エリア・ジャンル・シーン・人数）を選択した状態でURLが自動的に更新されます。「この条件をシェア」ボタンを押すか、URLをそのままコピーすることで、同じ絞り込み条件を保存・シェアできます。"
-      }
-    }
-  ]
-}
-</script>
 <!-- ======================================================= -->
 <!-- JSON-LD 構造化データ — ここまで -->
 <!-- ======================================================= -->
@@ -652,6 +572,22 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="feature-card-body">
         <div class="feature-card-title">大人数宴会20人以上10選</div>
         <div class="feature-card-sub">貸切・飲み放題対応</div>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/meieki.html">
+      <div class="feature-card-icon">🚄</div>
+      <div class="feature-card-body">
+        <div class="feature-card-title">名駅グルメおすすめ15選</div>
+        <div class="feature-card-sub">出張・接待・仕事帰りに</div>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/sakae.html">
+      <div class="feature-card-icon">🌃</div>
+      <div class="feature-card-body">
+        <div class="feature-card-title">栄・錦グルメおすすめ15選</div>
+        <div class="feature-card-sub">名古屋最大の繁華街</div>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
