@@ -1,0 +1,84 @@
+name: NAGOYA BITES — 週次エージェントパイプライン
+
+on:
+  schedule:
+    # 毎週月曜 9:00 JST = 月曜 00:00 UTC
+    - cron: '0 0 * * 1'
+  workflow_dispatch: # 手動実行も可能
+
+jobs:
+  weekly-pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 依存関係インストール
+        run: npm install
+
+      - name: Claude Code インストール
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Step 1 — DataKeeper（node build.js）
+        run: node build.js
+        env:
+          GOOGLE_SHEETS_API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
+
+      - name: Step 2 & 3 — Inspector + Builder（Claude Code）
+        run: |
+          claude --print "
+          NAGOYA BITESの週次改善エージェントとして動いてください。
+          このリポジトリはGitHub Pages で公開している名古屋グルメ発見サイトです。
+
+          以下の順序で実行してください:
+
+          ## Inspector（サイト監査）
+          1. CLAUDE.md を読む
+          2. agents/inspector.md を読む
+          3. index.html を読んでサイトを監査する
+          4. 新たな課題があれば agent-backlog.md に追記する
+
+          ## Builder（課題実装）
+          1. agents/builder.md を読む
+          2. agent-backlog.md の status:ready かつ P0 または P1 の課題をすべて実装する
+          3. 実装後QAゲートを確認:
+             - var LOCAL_STORES が壊れていないか
+             - フィルター・検索・モーダルが動作するか（コードを目視確認）
+
+          ## デプロイ
+          QAゲート通過後のみ:
+          git add index.html agent-backlog.md
+          git commit -m '[agent] 週次パイプライン: 実装内容の要約'
+          git push origin main
+
+          ## 制約（厳守）
+          - index.html は単一ファイルで維持（新ファイル追加禁止）
+          - var LOCAL_STORES = [...]; のパターンを絶対に壊さない
+          - テキストはすべて日本語
+          - QAゲートを通過するまでデプロイしない
+          " --no-update-sonnet
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: 実行ログを保存
+        if: always()
+        run: |
+          echo "$(date '+%Y-%m-%d %H:%M:%S JST') — 週次パイプライン完了" >> agent-run.log
+
+      - name: ログをコミット
+        if: always()
+        run: |
+          git config user.name "NAGOYA BITES Agent"
+          git config user.email "agent@nagoya-bites"
+          git add agent-run.log || true
+          git diff --staged --quiet || git commit -m "[agent] 週次ログ更新"
+          git push origin main || true
