@@ -26,6 +26,18 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 1.5rem;height:5
 nav{display:flex;gap:2rem;align-items:center;}
 nav a{font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
 nav a:hover,nav a.active{color:var(--text);}
+/* ── HAMBURGER ── */
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;z-index:201;}
+.hamburger svg{width:24px;height:24px;stroke:var(--text);stroke-width:1.8;stroke-linecap:round;}
+.nav-overlay{display:none;}
+@media(max-width:768px){
+.hamburger{display:block;}
+nav{position:fixed;top:0;right:-100%;width:70vw;max-width:280px;height:100vh;background:var(--bg);flex-direction:column;gap:0;padding:5rem 2rem 2rem;border-left:1px solid var(--border);box-shadow:-4px 0 24px rgba(0,0,0,.08);transition:right .3s ease;z-index:200;align-items:flex-start;}
+nav a{font-size:.82rem;padding:.9rem 0;border-bottom:1px solid var(--border);width:100%;letter-spacing:.12em;}
+nav.open{right:0;}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:199;}
+.nav-overlay.open{display:block;}
+}
 .page{padding:100px 2rem 80px;max-width:680px;margin:0 auto;}
 .eyebrow{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1.4rem;opacity:0;animation:up .8s .1s forwards;}
 .page-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.4rem,5vw,3.8rem);line-height:1.05;color:var(--white);margin-bottom:1rem;opacity:0;animation:up .9s .2s forwards;}
@@ -62,12 +74,16 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 </head>
 <body>
 
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="./">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="./#pref=%E6%84%9B%E7%9F%A5%E7%9C%8C">Area</a>
-    <a href="./#genre=%E5%B1%85%E9%85%92%E5%B1%8B">Genre</a>
-    <a href="./#tag=%E5%80%8B%E5%AE%A4">個室</a>
+  <button class="hamburger" id="hamburger-btn" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav">
+    <a href="./">Top</a>
+    <a href="features/banquet.html">特集</a>
+    <a href="about.html">About</a>
     <a href="contact.html" class="active">Contact</a>
   </nav>
 </header>
@@ -134,10 +150,30 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
 <footer>
   <div class="fl2">Nagoya Bites</div>
-  <div class="fc">© 2025 All Rights Reserved</div>
+  <div class="fc" id="fc-year"></div>
 </footer>
 
 <script>
+(function(){var fc=document.getElementById('fc-year');if(fc)fc.textContent='\u00A9 '+new Date().getFullYear()+' All Rights Reserved';})();
+function toggleNav(){
+  var nav=document.getElementById('main-nav');
+  var ov=document.getElementById('nav-overlay');
+  var btn=document.getElementById('hamburger-btn');
+  var open=nav.classList.toggle('open');
+  ov.classList.toggle('open',open);
+  btn.setAttribute('aria-expanded',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeNav(){
+  var nav=document.getElementById('main-nav');
+  var ov=document.getElementById('nav-overlay');
+  var btn=document.getElementById('hamburger-btn');
+  nav.classList.remove('open');
+  ov.classList.remove('open');
+  btn.setAttribute('aria-expanded','false');
+  document.body.style.overflow='';
+}
+
 var FORMSPREE_ENDPOINT = 'https://formspree.io/f/xaqaygze';
 
 var form = document.getElementById('contact-form');

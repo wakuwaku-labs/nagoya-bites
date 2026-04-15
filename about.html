@@ -46,13 +46,25 @@
 ::selection{background:var(--gold);color:var(--bg);}
 html{scroll-behavior:smooth;}
 body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
-header{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 3rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+header{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
 .logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;letter-spacing:.35em;color:var(--white);text-transform:uppercase;text-decoration:none;}
 .logo em{font-style:italic;color:var(--gold);}
 nav{display:flex;gap:2rem;align-items:center;}
 nav a{font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
 nav a:hover{color:var(--text);}
 nav a.active{color:var(--gold);}
+/* ── HAMBURGER ── */
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;z-index:201;}
+.hamburger svg{width:24px;height:24px;stroke:var(--text);stroke-width:1.8;stroke-linecap:round;}
+.nav-overlay{display:none;}
+@media(max-width:768px){
+.hamburger{display:block;}
+nav{position:fixed;top:0;right:-100%;width:70vw;max-width:280px;height:100vh;background:var(--bg);flex-direction:column;gap:0;padding:5rem 2rem 2rem;border-left:1px solid var(--border);box-shadow:-4px 0 24px rgba(0,0,0,.08);transition:right .3s ease;z-index:200;align-items:flex-start;}
+nav a{font-size:.82rem;padding:.9rem 0;border-bottom:1px solid var(--border);width:100%;letter-spacing:.12em;}
+nav.open{right:0;}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:199;}
+.nav-overlay.open{display:block;}
+}
 .hero{padding:160px 3rem 80px;position:relative;overflow:hidden;min-height:50vh;display:flex;flex-direction:column;justify-content:flex-end;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 72% 38%,rgba(201,169,110,.07) 0%,transparent 65%);}
 .eyebrow{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1.8rem;opacity:0;animation:up .8s .2s forwards;}
@@ -96,7 +108,7 @@ nav a.active{color:var(--gold);}
 .contact-val{font-size:.78rem;color:var(--text);}
 .contact-val a{color:var(--gold);text-decoration:none;}
 .contact-val a:hover{text-decoration:underline;}
-footer{border-top:1px solid var(--border);padding:2.2rem 3rem;display:flex;justify-content:space-between;align-items:center;}
+footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
 .fl2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:.95rem;letter-spacing:.28em;color:var(--dim);text-transform:uppercase;}
 .fc{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.1em;color:var(--dim);}
 @media(max-width:640px){
@@ -112,11 +124,17 @@ footer{padding:1.8rem 1.5rem;flex-direction:column;gap:.6rem;}
 </style>
 </head>
 <body>
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a href="./" class="logo">Nagoya <em>Bites</em></a>
-  <nav>
+  <button class="hamburger" id="hamburger-btn" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav">
     <a href="./">Top</a>
+    <a href="features/banquet.html">特集</a>
     <a href="about.html" class="active">About</a>
+    <a href="contact.html">Contact</a>
   </nav>
 </header>
 <section class="hero">
@@ -193,13 +211,31 @@ footer{padding:1.8rem 1.5rem;flex-direction:column;gap:.6rem;}
 
 <footer>
   <div class="fl2">Nagoya Bites</div>
-  <div class="fc"></div>
+  <div class="fc" id="fc-year"></div>
 </footer>
 <script>
 (function(){
-  var fc = document.querySelector('.fc');
+  var fc = document.getElementById('fc-year');
   if (fc) fc.textContent = '\u00A9 ' + new Date().getFullYear() + ' All Rights Reserved';
 })();
+function toggleNav(){
+  var nav=document.getElementById('main-nav');
+  var ov=document.getElementById('nav-overlay');
+  var btn=document.getElementById('hamburger-btn');
+  var open=nav.classList.toggle('open');
+  ov.classList.toggle('open',open);
+  btn.setAttribute('aria-expanded',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeNav(){
+  var nav=document.getElementById('main-nav');
+  var ov=document.getElementById('nav-overlay');
+  var btn=document.getElementById('hamburger-btn');
+  nav.classList.remove('open');
+  ov.classList.remove('open');
+  btn.setAttribute('aria-expanded','false');
+  document.body.style.overflow='';
+}
 </script>
 </body>
 </html>
