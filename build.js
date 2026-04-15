@@ -212,6 +212,42 @@ function isNagoyaStore(s) {
 }
 
 // ────────────────────────────────────────────────────
+// データ品質サニタイゼーション
+// ────────────────────────────────────────────────────
+// 以前の週次エージェントが不適切に自動生成/流用した情報をクリアする。
+// 検証不能な Instagram/写真URL は一律クリアして安全な検索フォールバックに委ねる。
+// おすすめポイントは自動生成パターンにマッチした場合のみクリア。
+
+const AUTOGEN_POINT_PATTERNS = [
+  /が楽しめる.*。.*空間で.*最適/,
+  /が楽しめる.*居酒屋.*活気ある/,
+  /広々とした.*空間.*お楽しみ/,
+  /な雰囲気の.*店.*おすすめ/,
+  /活気ある空間/,
+  /落ち着いた雰囲気.*空間/,
+  /^[\s\S]{1,20}円～?$/
+];
+
+function isAutoGenPoint(text) {
+  if (!text) return false;
+  return AUTOGEN_POINT_PATTERNS.some(re => re.test(text));
+}
+
+function sanitizeStore(s) {
+  // Instagram 関連は検証不能なため全件クリア
+  s['Instagram'] = '';
+  s['Instagram投稿URL'] = '';
+  s['内観写真URL'] = '';
+  s['料理写真URL1'] = '';
+  s['料理写真URL2'] = '';
+  // おすすめポイントが自動生成パターンに該当するならクリア
+  if (isAutoGenPoint(s['おすすめポイント'])) {
+    s['おすすめポイント'] = '';
+  }
+  return s;
+}
+
+// ────────────────────────────────────────────────────
 // Hot Pepper Gourmet API 連携
 // ────────────────────────────────────────────────────
 
@@ -353,6 +389,15 @@ async function main() {
     }
   }
   console.log(`品質フィルタ: ${stores.length}件通過 / ${rejected.length}件除外`);
+
+  // データサニタイゼーション（検証不能なInstagram/写真URL・自動生成推薦文のクリア）
+  let sanitizedPoints = 0;
+  for (const s of stores) {
+    const hadPoint = !!s['おすすめポイント'];
+    sanitizeStore(s);
+    if (hadPoint && !s['おすすめポイント']) sanitizedPoints++;
+  }
+  console.log(`サニタイゼーション: Instagram/写真URL=全件クリア / おすすめポイント=${sanitizedPoints}件自動生成パターンをクリア`);
   if (rejected.length > 0 && rejected.length <= 30) {
     console.log('除外された店舗（最大30件）:');
     rejected.slice(0, 30).forEach(s => {
