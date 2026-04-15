@@ -22,6 +22,8 @@ jobs:
 
       - name: Build (embed store data & update sitemap)
         run: node build.js
+        env:
+          HOTPEPPER_API_KEY: ${{ secrets.HOTPEPPER_API_KEY }}
 
       - name: Commit & push if changed
         run: |
