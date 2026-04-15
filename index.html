@@ -334,6 +334,34 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .card-tags{padding:.35rem 0 .5rem;}
 .card-cta{padding:0;margin-bottom:12px;}
 }
+/* ── FAQ SECTION ── */
+.faq-section{padding:2.5rem 1.5rem;border-top:1px solid var(--border);background:var(--bg2);}
+.faq-section h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.9rem;letter-spacing:.04em;color:var(--white);margin-bottom:.4rem;}
+.faq-section h2 em{font-style:italic;color:var(--gold);}
+.faq-sub{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:1.5rem;}
+.faq-item{border-bottom:1px solid var(--border);}
+.faq-q{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;font-family:'Noto Sans JP',sans-serif;font-size:.85rem;font-weight:500;color:var(--text);padding:.95rem 0;cursor:pointer;text-align:left;line-height:1.6;gap:.8rem;}
+.faq-q:hover{color:var(--gold);}
+.faq-q::after{content:'+';font-family:'DM Mono',monospace;font-size:1rem;color:var(--gold);flex-shrink:0;transition:transform .25s;}
+.faq-item.open .faq-q::after{content:'\2212';transform:rotate(180deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;}
+.faq-item.open .faq-a{max-height:300px;padding:0 0 1rem;}
+.faq-a p{font-size:.78rem;line-height:1.9;color:var(--muted);}
+.faq-a a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.3);transition:border-color .2s;}
+.faq-a a:hover{border-color:var(--gold);}
+@media(max-width:768px){.faq-section{padding:2rem 1rem;}.faq-q{font-size:.8rem;padding:.85rem 0;}}
+/* ── SHARE BUTTONS (MODAL) ── */
+.share-bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);}
+.share-bar-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;width:100%;margin-bottom:.2rem;}
+.sbtn{display:inline-flex;align-items:center;gap:.35rem;padding:.45rem .85rem;font-size:.68rem;letter-spacing:.06em;border:1px solid var(--border);border-radius:2px;background:transparent;color:var(--muted);cursor:pointer;text-decoration:none;transition:all .2s;font-family:'Noto Sans JP',sans-serif;}
+.sbtn:hover{color:var(--text);border-color:var(--border-h);background:var(--surface);}
+.sbtn-x:hover{color:#000;border-color:rgba(0,0,0,.3);}
+.sbtn-line:hover{color:#06c755;border-color:rgba(6,199,85,.4);}
+.sbtn-copy:hover{color:var(--gold);border-color:rgba(122,92,16,.4);}
+.sbtn-copy.copied{color:var(--gold);border-color:var(--gold);background:rgba(122,92,16,.08);}
+/* ── SEASONAL BADGE ── */
+.feature-card-season{position:absolute;top:-.35rem;right:-.35rem;background:var(--gold);color:var(--bg);font-family:'DM Mono',monospace;font-size:.46rem;letter-spacing:.08em;padding:.15rem .45rem;border-radius:2px;white-space:nowrap;}
+.feature-card{position:relative;}
 </style>
 
 <!-- ======================================================= -->
@@ -713,9 +741,45 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       </div>
       <div class="mml">Media Links — 各媒体で見る</div>
       <div class="mmg" id="mmg"></div>
+      <div class="share-bar" id="share-bar">
+        <div class="share-bar-label">Share — このお店をシェア</div>
+        <button class="sbtn sbtn-x" id="share-x" onclick="shareToX()">𝕏 ポスト</button>
+        <button class="sbtn sbtn-line" id="share-line" onclick="shareToLINE()">LINE で送る</button>
+        <button class="sbtn sbtn-copy" id="share-copy" onclick="copyShareLink()">🔗 リンクをコピー</button>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- ── FAQ セクション ── -->
+<section class="faq-section" id="faq">
+  <h2>よくある<em>質問</em></h2>
+  <div class="faq-sub">Frequently Asked Questions</div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')" aria-expanded="false">名古屋で宴会・忘年会におすすめの居酒屋は？</button>
+    <div class="faq-a"><p>NAGOYA BITESでは、名駅・栄・金山エリアの宴会向け居酒屋を厳選してご紹介しています。個室完備・飲み放題付きのお店も多数掲載中。<a href="features/banquet.html">宴会・忘年会おすすめ特集はこちら</a></p></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')" aria-expanded="false">名駅周辺で個室のある居酒屋は？</button>
+    <div class="faq-a"><p>名古屋駅周辺の個室対応居酒屋を多数掲載しています。「席・空間」フィルターで「個室」を選択し、エリアで絞り込むと簡単に見つかります。<a href="features/private-room.html">個室グルメ特集はこちら</a></p></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')" aria-expanded="false">名古屋でデートにおすすめのレストランは？</button>
+    <div class="faq-a"><p>雰囲気の良いレストランやバーを「シーン」フィルターの「デート」で絞り込めます。イタリアン・フレンチ・焼肉など多彩なジャンルから選べます。<a href="features/date.html">デートディナー特集はこちら</a></p></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')" aria-expanded="false">名古屋の焼肉でおすすめは？</button>
+    <div class="faq-a"><p>NAGOYA BITESのジャンルフィルターで「焼肉」を選択すると、名古屋市内の焼肉店を一覧で確認できます。Google評価・価格帯・エリアでさらに絞り込みが可能です。<a href="#" onclick="event.preventDefault();selectGenre('焼肉');window.scrollTo({top:0,behavior:'smooth'});">焼肉を検索する</a></p></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')" aria-expanded="false">NAGOYA BITESはどんなサイトですか？</button>
+    <div class="faq-a"><p>名古屋で8ブランドの飲食店を自ら運営する現役経営者が、業界の内側を知るプロの目線で本当に価値あるお店だけを厳選掲載しているグルメメディアです。広告掲載ではなく、実際の品質で選定しています。</p></div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')" aria-expanded="false">掲載店舗の選定基準は？</button>
+    <div class="faq-a"><p>Google評価を基準としつつ、飲食業界で長年培った経験と独自のネットワークを活かし、料理の質・サービス・コストパフォーマンスを総合的に評価しています。ホットペッパーグルメのデータと連携し、1,000軒以上を掲載中です。</p></div>
+  </div>
+</section>
 
 <footer>
   <div class="fl2">Nagoya Bites</div>
@@ -1366,6 +1430,7 @@ function openM(i) {
   document.getElementById('mmg').innerHTML = items.map(function(m){
     return '<a href="' + (m.url||'#') + '" target="_blank" class="mb"><span class="mbi">' + m.icon + '</span><span class="mbl">' + m.label + '</span></a>';
   }).join('');
+  setShareStore(r['店名'] || '');
   document.getElementById('ov').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1387,6 +1452,32 @@ function closeM() {
   document.getElementById('mig-wrap').style.display = 'none';
 }
 document.getElementById('ov').addEventListener('click', function(e){ if(e.target===this) closeM(); });
+
+// ================================================================
+// SNS シェア機能
+// ================================================================
+var _shareStoreName = '';
+function setShareStore(name) { _shareStoreName = name; }
+function shareToX() {
+  var text = '名古屋の「' + _shareStoreName + '」が気になる！ #NAGOYABITES #名古屋グルメ';
+  var url = 'https://wakuwaku-labs.github.io/nagoya-bites/';
+  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url), '_blank', 'noopener,width=550,height=420');
+}
+function shareToLINE() {
+  var text = '名古屋の「' + _shareStoreName + '」をチェック！\nhttps://wakuwaku-labs.github.io/nagoya-bites/';
+  window.open('https://line.me/R/msg/text/?' + encodeURIComponent(text), '_blank', 'noopener');
+}
+function copyShareLink() {
+  var url = 'https://wakuwaku-labs.github.io/nagoya-bites/';
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(function() {
+      var btn = document.getElementById('share-copy');
+      btn.classList.add('copied');
+      btn.textContent = 'コピーしました!';
+      setTimeout(function(){ btn.classList.remove('copied'); btn.innerHTML = '🔗 リンクをコピー'; }, 2000);
+    });
+  }
+}
 
 // ================================================================
 // PWA — Service Worker 登録 & インストールバナー

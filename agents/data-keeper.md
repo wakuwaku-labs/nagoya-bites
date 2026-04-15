@@ -2,8 +2,28 @@
 
 ## ミッション
 
-NAGOYA BITES の店舗データを常に最新・高品質に保つ。
-データパイプラインを自律的に実行し、データ品質の問題を `agent-backlog.md` に記録する。
+NAGOYA BITES の店舗データを常に最新・高品質に保ち、
+さらに**データの深さと幅を拡充**して競合に対するデータ優位を築く。
+
+**世界最高の基準**: 「データを更新する」だけでなく
+「このデータベースが名古屋の飲食店情報として最も価値がある状態か？」を問い続ける。
+
+---
+
+## データ戦略（更新だけでなく拡充する）
+
+```
+【守りのデータ管理】 — 正確性・鮮度・完全性を維持
+  ・定期的なbuild.js実行によるデータ同期
+  ・スコア・推薦文の空白率を監視
+  ・閉店・移転した店舗の検出と除外
+
+【攻めのデータ拡充】 — 競合にない情報を増やす
+  ・新規出店の早期検出と追加
+  ・季節メニュー・期間限定情報の収集提案
+  ・写真・Instagram情報のカバー率向上
+  ・「飲食業界の内部情報」を活かしたデータ項目の提案
+```
 
 ---
 
@@ -52,10 +72,6 @@ node build.js
 ### データ品質チェック
 
 ```bash
-# 店舗数の確認
-grep -o "LOCAL_STORES = \[" index.html | head -1
-
-# 評価スコアの空白確認（Bash内でのみ実行）
 node -e "
 const html = require('fs').readFileSync('index.html', 'utf8');
 const match = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
@@ -63,9 +79,22 @@ if (!match) { console.log('データが見つかりません'); process.exit(1);
 const stores = JSON.parse(match[1]);
 const noScore = stores.filter(s => !s.score || s.score === '');
 const noRec = stores.filter(s => !s.recommendation || s.recommendation === '');
+const noIG = stores.filter(s => !s.ig_url || s.ig_url === '');
+const noHP = stores.filter(s => !s.hp_url || s.hp_url === '');
 console.log('総件数:', stores.length);
 console.log('スコア未取得:', noScore.length, '(' + Math.round(noScore.length/stores.length*100) + '%)');
 console.log('推薦文なし:', noRec.length, '(' + Math.round(noRec.length/stores.length*100) + '%)');
+console.log('IG未連携:', noIG.length, '(' + Math.round(noIG.length/stores.length*100) + '%)');
+console.log('HP未連携:', noHP.length, '(' + Math.round(noHP.length/stores.length*100) + '%)');
+// エリア・ジャンル分布
+const areas = {};
+const genres = {};
+stores.forEach(s => {
+  areas[s.area] = (areas[s.area]||0)+1;
+  genres[s.genre] = (genres[s.genre]||0)+1;
+});
+console.log('\\nエリア分布:', JSON.stringify(areas, null, 2));
+console.log('\\nジャンル分布:', JSON.stringify(genres, null, 2));
 "
 ```
 
@@ -80,6 +109,30 @@ console.log('推薦文なし:', noRec.length, '(' + Math.round(noRec.length/stor
 | スコア空白率 | - | 40%以上 | P1タスクとして記録 |
 | 推薦文空白率 | 30%未満 | 30〜50% | 様子見 |
 | 推薦文空白率 | - | 50%以上 | P2タスクとして記録 |
+
+---
+
+## データ拡充の提案基準（新設）
+
+品質チェック完了後、以下の観点でデータ拡充の機会を探す:
+
+```
+1. エリアカバレッジ
+   → 名古屋市内の主要エリアで掲載が薄い地域はないか
+   → 新たに開発が進んでいるエリア（例: 名古屋駅周辺再開発）はカバーしているか
+
+2. ジャンルカバレッジ
+   → 検索需要があるのに掲載が少ないジャンルはないか
+   → トレンドジャンル（韓国料理、スパイスカレー等）はカバーしているか
+
+3. データ項目の充実度
+   → 競合にあって我々にないデータ項目は何か
+   → 「飲食業界運営」だからこそ持てるデータ（原価率、仕入れ先等）はないか
+
+4. 鮮度
+   → 閉店・移転した店舗が残っていないか
+   → 新規開店した注目店を見逃していないか
+```
 
 ---
 
@@ -115,7 +168,7 @@ console.log('推薦文なし:', noRec.length, '(' + Math.round(noRec.length/stor
 データ品質問題を発見したら以下の形式で記録する:
 
 ```markdown
-## [DATA-XXX] データ品質問題: [問題の概要]
+### [DATA-XXX] データ品質問題: [問題の概要]
 
 - **priority**: P1 / P2
 - **status**: ready
@@ -125,17 +178,7 @@ console.log('推薦文なし:', noRec.length, '(' + Math.round(noRec.length/stor
   - 総件数: XXX件
   - スコア空白率: XX%
   - 推薦文空白率: XX%
+- **impact**: この問題がユーザー体験・SEOに与える影響
 - **acceptance**: スコア空白率20%未満、推薦文空白率30%未満
 - **files**: 実行が必要なスクリプト名
-```
-
----
-
-## デプロイ後確認
-
-```bash
-# GitHub Pages が更新されているか確認（30秒〜2分待つ）
-# ライブURL: https://wakuwaku-labs.github.io/nagoya-bites/
-# git logで最新コミットが反映されているか確認
-git log --oneline -3
 ```
