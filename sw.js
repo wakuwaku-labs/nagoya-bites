@@ -1,6 +1,6 @@
 // NAGOYA BITES — Service Worker
 // バージョンを上げると古いキャッシュが自動削除されます
-const CACHE_NAME = 'nagoya-bites-v1';
+const CACHE_NAME = 'nagoya-bites-v2';
 
 // オフライン時でも表示できるようにキャッシュするファイル
 const STATIC_ASSETS = [
@@ -70,19 +70,18 @@ self.addEventListener('fetch', function(event) {
     return;
   }
 
-  // それ以外：キャッシュ優先、なければネットワーク
+  // それ以外：ネットワーク優先、失敗したらキャッシュから（常に最新データを表示）
   event.respondWith(
-    caches.match(event.request).then(function(cached) {
-      if (cached) return cached;
-      return fetch(event.request).then(function(response) {
-        if (response && response.status === 200 && response.type === 'basic') {
-          var responseClone = response.clone();
-          caches.open(CACHE_NAME).then(function(cache) {
-            cache.put(event.request, responseClone);
-          });
-        }
-        return response;
-      });
+    fetch(event.request).then(function(response) {
+      if (response && response.status === 200 && response.type === 'basic') {
+        var responseClone = response.clone();
+        caches.open(CACHE_NAME).then(function(cache) {
+          cache.put(event.request, responseClone);
+        });
+      }
+      return response;
+    }).catch(function() {
+      return caches.match(event.request);
     })
   );
 });
