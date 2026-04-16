@@ -59,6 +59,22 @@ function isMassMarket(tags) {
   return tags.includes('100名以上');
 }
 
+/** おすすめポイントが宣伝文句だけかチェック（true=使えない） */
+function isPromoOnly(text) {
+  if (!text || text.length < 3) return true;
+  // 価格・割引・クーポン系だけの文は宣伝
+  if (/^\d{3,5}円/.test(text)) return true;
+  if (/^[\d,円税込~～＋\s\-−★☆♪◎●◆▼▲※!！%％OFF]+$/.test(text)) return true;
+  return false;
+}
+
+/** おすすめポイントをサニタイズ（宣伝文句なら空文字を返す） */
+function sanitizeRec(text) {
+  if (!text) return '';
+  if (isPromoOnly(text)) return '';
+  return text.trim();
+}
+
 /** 価格帯から数値を推定 */
 function estimatePrice(priceStr) {
   if (!priceStr) return 0;
@@ -110,7 +126,7 @@ function generateReason(store, featureType) {
   const genre = store['ジャンル'] || '';
   const score = store['Google評価'] || '';
   const price = store['価格帯'] || '';
-  const rec = store['おすすめポイント'] || '';
+  const rec = sanitizeRec(store['おすすめポイント'] || '');
   const reasons = [];
 
   switch(featureType) {
@@ -307,7 +323,8 @@ const FEATURE_CONFIGS = [
       const genre = s['ジャンル'] || '';
       const score = parseFloat(s['Google評価']) || 0;
       const price = estimatePrice(s['価格帯']);
-      const rec = (s['おすすめポイント'] || '').toLowerCase();
+      const rawRec = (s['おすすめポイント'] || '');
+      const rec = rawRec.toLowerCase();
       // 厳格基準:
       // 1. 記念日ジャンル（イタリアン/フレンチ/ダイニング/和食/洋食/カフェ）のみ
       // 2. 焼肉・ホルモン・ラーメン・大衆系は完全除外

@@ -1508,6 +1508,8 @@ function openM(i) {
   }
 
   var point = (r['おすすめポイント'] || '').trim();
+  // 宣伝文句だけのおすすめポイントは非表示（チャージ・割引・円表記のみ等）
+  if (/^[\d,円税込~～＋\s\-−★☆♪◎●◆▼▲※!！%％OFF]+$/.test(point) || /^\d{3,5}円/.test(point)) point = '';
   document.getElementById('mpoint').textContent = point;
   document.getElementById('mpoint-row').style.display = point ? '' : 'none';
   var igPost = (r['Instagram投稿URL'] || '').trim();
