@@ -10,9 +10,6 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 // カスタムイベント送信ヘルパー
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
 </script>
-<script>
-if('serviceWorker'in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(reg){reg.unregister()})});caches.keys().then(function(n){n.forEach(function(name){caches.delete(name)})})}
-</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>【最新版】名古屋グルメ・飲食店4500軒以上｜NAGOYA BITES</title>
 <meta name="description" content="名古屋（名駅・栄・大須・伏見ほか）の居酒屋・焼肉・和食・宴会場・個室グルメを1000軒以上掲載。ジャンル・エリア・シーン・人数で絞り込み検索。忘年会・接待・デートにも対応。現役飲食人が監修した名古屋グルメの決定版ガイド。">
