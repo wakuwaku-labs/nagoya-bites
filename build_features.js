@@ -67,6 +67,109 @@ function estimatePrice(priceStr) {
   return Math.max(...nums.map(Number));
 }
 
+/** 系列店チェック（店名の主要部分が同じなら系列と判断） */
+function getChainKey(name) {
+  // 「XXX 栄店」「XXX 名駅店」→「XXX」に正規化
+  return name.replace(/\s+/g, '')
+    .replace(/(栄店|名駅店|名古屋駅前店|金山店|栄東店|新栄店|栄錦店|伏見店|大須店|住吉店|錦店|2号店|3号店|本店|南口店|西口店)$/g, '')
+    .replace(/[　\s]/g, '');
+}
+
+/** ジャンル多様性を確保した選別（同ジャンルは最大N件） */
+function diversifyGenres(stores, maxPerGenre) {
+  const genreCount = {};
+  return stores.filter(s => {
+    const g = s['ジャンル'] || 'その他';
+    genreCount[g] = (genreCount[g] || 0) + 1;
+    return genreCount[g] <= maxPerGenre;
+  });
+}
+
+/** 系列店を排除した重複排除 */
+function dedupWithChain(stores) {
+  const seen = new Set();
+  const chainSeen = new Set();
+  return stores.filter(s => {
+    const name = (s['店名'] || '').replace(/\s+/g, '');
+    if (seen.has(name)) return false;
+    seen.add(name);
+    const hpid = s['ホットペッパーID'];
+    if (hpid && seen.has('hp:' + hpid)) return false;
+    if (hpid) seen.add('hp:' + hpid);
+    // 系列店チェック
+    const chain = getChainKey(s['店名']);
+    if (chain.length > 3 && chainSeen.has(chain)) return false;
+    if (chain.length > 3) chainSeen.add(chain);
+    return true;
+  });
+}
+
+/** 選定理由を生成（なぜこの特集に入っているか） */
+function generateReason(store, featureType) {
+  const tags = (store['タグ'] || '').split(',').map(t => t.trim());
+  const genre = store['ジャンル'] || '';
+  const score = store['Google評価'] || '';
+  const price = store['価格帯'] || '';
+  const rec = store['おすすめポイント'] || '';
+  const reasons = [];
+
+  switch(featureType) {
+    case 'date':
+      if (tags.includes('個室')) reasons.push('個室完備で二人の時間を確保');
+      if (tags.includes('隠れ家')) reasons.push('隠れ家的な雰囲気');
+      if (tags.includes('誕生日・記念日')) reasons.push('記念日演出に対応');
+      if (/イタリアン|フレンチ/.test(genre)) reasons.push(genre + 'の本格料理');
+      if (/ダイニングバー|バル/.test(genre)) reasons.push('おしゃれな空間で食事');
+      if (estimatePrice(price) >= 6000) reasons.push('特別感のある価格帯');
+      break;
+    case 'birthday':
+      if (tags.includes('誕生日・記念日')) reasons.push('誕生日・記念日プランあり');
+      if (/ケーキ|サプライズ|お祝い/.test(rec)) reasons.push('サプライズ演出に対応');
+      if (tags.includes('個室')) reasons.push('個室で特別な空間');
+      if (/イタリアン|フレンチ/.test(genre)) reasons.push('記念日にふさわしい料理');
+      break;
+    case 'girls':
+      if (/カフェ|スイーツ/.test(genre)) reasons.push('SNS映えする空間');
+      if (tags.includes('個室')) reasons.push('周りを気にせず楽しめる個室');
+      if (/ダイニングバー|バル|イタリアン/.test(genre)) reasons.push('おしゃれな雰囲気');
+      if (tags.includes('女子会')) reasons.push('女子会プランあり');
+      break;
+    case 'private':
+      if (tags.includes('個室')) reasons.push('完全個室で周りを気にしない空間');
+      if (tags.includes('接待')) reasons.push('接待にも使える格式');
+      if (/和食/.test(genre)) reasons.push('落ち着いた和の空間');
+      if (/イタリアン|フレンチ|ダイニング/.test(genre)) reasons.push('洗練された雰囲気');
+      if (estimatePrice(price) >= 5000) reasons.push('しっかりしたコース料理');
+      break;
+    case 'banquet':
+      const capMatch = (store['タグ']||'').match(/(\d+)〜(\d+)名/);
+      const cap100 = tags.includes('100名以上');
+      if (cap100) reasons.push('100名以上の大宴会に対応');
+      else if (capMatch) reasons.push(capMatch[1] + '〜' + capMatch[2] + '名の宴会に対応');
+      if (tags.includes('飲み放題')) reasons.push('飲み放題プランあり');
+      if (tags.includes('忘年会・新年会')) reasons.push('忘年会・新年会に最適');
+      if (tags.includes('歓送迎会')) reasons.push('歓送迎会にも対応');
+      break;
+    case 'large':
+      if (tags.includes('100名以上')) reasons.push('100名以上の超大人数に対応');
+      else {
+        const m2 = (store['タグ']||'').match(/(\d+)〜(\d+)名/);
+        if (m2 && parseInt(m2[2]) >= 70) reasons.push(m2[1]+'〜'+m2[2]+'名の大人数に対応');
+      }
+      if (tags.includes('飲み放題')) reasons.push('飲み放題込みのコースあり');
+      if (tags.includes('貸切可')) reasons.push('貸切対応');
+      break;
+  }
+
+  if (score && parseFloat(score) >= 4.5) reasons.push('Google★' + score + 'の高評価');
+
+  // 理由がなければおすすめポイントをフォールバック
+  if (reasons.length === 0 && rec) return rec;
+  if (reasons.length === 0) return genre + 'の人気店。';
+
+  return reasons.slice(0, 3).join('。') + '。';
+}
+
 /** 重複排除（店名の類似度で判定） */
 function dedup(stores) {
   const seen = new Set();
@@ -117,15 +220,34 @@ const FEATURE_CONFIGS = [
     count: 15,
     filter: s => {
       const tags = s['タグ'] || '';
-      // 大人数対応 or 宴会系タグ
-      return (tags.includes('100名') || tags.includes('50〜') ||
-              tags.includes('60〜') || tags.includes('70〜') ||
-              tags.includes('80〜') || tags.includes('90〜') ||
-              tags.includes('忘年会') || tags.includes('歓送迎会')) &&
+      const score = parseFloat(s['Google評価']) || 0;
+      // 厳格基準:
+      // 1. 30名以上対応 or 宴会系タグ or 飲み放題
+      // 2. 評価4.0以上
+      // 3. コース料理がある（価格帯にコース/宴会の数字がある）
+      const hasBanquetCapacity = /30〜|40〜|50〜|60〜|70〜|80〜|90〜|100名/.test(tags);
+      const hasBanquetTag = tags.includes('忘年会') || tags.includes('歓送迎会') || tags.includes('飲み放題');
+      return (hasBanquetCapacity || hasBanquetTag) &&
+             score >= 4.0 &&
              isNagoyaArea(s['エリア'], s['アクセス']);
     },
-    sort: (a, b) => (parseFloat(b['Google評価']) || 0) - (parseFloat(a['Google評価']) || 0),
-    descGenerator: s => s['おすすめポイント'] || `宴会対応の${s['ジャンル']}。`,
+    sort: (a, b) => {
+      // 宴会に最適な店を上位に（収容人数×評価でスコアリング）
+      function banquetScore(s) {
+        let sc = (parseFloat(s['Google評価']) || 0) * 10;
+        const tags = s['タグ'] || '';
+        if (tags.includes('飲み放題')) sc += 3;
+        if (tags.includes('忘年会・新年会')) sc += 2;
+        if (tags.includes('歓送迎会')) sc += 2;
+        if (tags.includes('100名以上')) sc += 3;
+        else if (/70〜|80〜|90〜/.test(tags)) sc += 2;
+        else if (/50〜|60〜/.test(tags)) sc += 1;
+        return sc;
+      }
+      return banquetScore(b) - banquetScore(a);
+    },
+    descGenerator: s => generateReason(s, 'banquet'),
+    postFilter: stores => diversifyGenres(stores, 6), // 居酒屋多めOKだが上限あり
   },
   {
     file: 'private-room.html',
@@ -133,15 +255,39 @@ const FEATURE_CONFIGS = [
     count: 10,
     filter: s => {
       const tags = s['タグ'] || '';
+      const genre = s['ジャンル'] || '';
       const score = parseFloat(s['Google評価']) || 0;
-      // 厳格基準: 個室タグ + 評価4.0以上 + 大箱除外
+      const price = estimatePrice(s['価格帯']);
+      // 厳格基準:
+      // 1. 個室タグ必須
+      // 2. 評価4.2以上（個室は質の高い店だけ）
+      // 3. 大箱チェーン除外
+      // 4. 価格帯3000円以上（個室にふさわしい格）
+      // 5. 居酒屋は半分まで（ジャンル多様性）
       return tags.includes('個室') &&
-             score >= 4.0 &&
+             score >= 4.2 &&
+             price >= 3000 &&
              !isMassMarket(tags) &&
              isNagoyaArea(s['エリア'], s['アクセス']);
     },
-    sort: (a, b) => (parseFloat(b['Google評価']) || 0) - (parseFloat(a['Google評価']) || 0),
-    descGenerator: s => s['おすすめポイント'] || `個室完備の${s['ジャンル']}。`,
+    sort: (a, b) => {
+      // 接待・和食・イタリアンなど格のある店を優先
+      function privScore(s) {
+        let sc = (parseFloat(s['Google評価']) || 0) * 10;
+        const tags = s['タグ'] || '';
+        const genre = s['ジャンル'] || '';
+        if (tags.includes('接待')) sc += 4;
+        if (/和食|イタリアン|フレンチ/.test(genre)) sc += 3;
+        if (/ダイニングバー|バル|創作/.test(genre)) sc += 2;
+        if (estimatePrice(s['価格帯']) >= 5000) sc += 2;
+        // 居酒屋はやや減点（多様性のため）
+        if (isIzakaya(genre)) sc -= 2;
+        return sc;
+      }
+      return privScore(b) - privScore(a);
+    },
+    descGenerator: s => generateReason(s, 'private'),
+    postFilter: stores => diversifyGenres(stores, 3), // 同ジャンル最大3件
   },
   {
     file: 'birthday.html',
@@ -173,7 +319,7 @@ const FEATURE_CONFIGS = [
       if (sb !== sa) return sb - sa;
       return estimatePrice(b['価格帯']) - estimatePrice(a['価格帯']);
     },
-    descGenerator: s => s['おすすめポイント'] || `記念日におすすめの${s['ジャンル']}。`,
+    descGenerator: s => generateReason(s, 'birthday'),
   },
   {
     file: 'date.html',
@@ -214,7 +360,7 @@ const FEATURE_CONFIGS = [
       }
       return dateScore(b) - dateScore(a);
     },
-    descGenerator: s => s['おすすめポイント'] || `デートにおすすめの${s['ジャンル']}。`,
+    descGenerator: s => generateReason(s, 'date'),
   },
   {
     file: 'girls-party.html',
@@ -235,7 +381,7 @@ const FEATURE_CONFIGS = [
              isNagoyaArea(s['エリア'], s['アクセス']);
     },
     sort: (a, b) => (parseFloat(b['Google評価']) || 0) - (parseFloat(a['Google評価']) || 0),
-    descGenerator: s => s['おすすめポイント'] || `女子会におすすめの${s['ジャンル']}。`,
+    descGenerator: s => generateReason(s, 'girls'),
   },
   {
     file: 'large-group.html',
@@ -243,12 +389,30 @@ const FEATURE_CONFIGS = [
     count: 10,
     filter: s => {
       const tags = s['タグ'] || '';
+      const score = parseFloat(s['Google評価']) || 0;
+      // 厳格基準: 70名以上対応のみ（本当の大人数）+ 評価4.0以上
       return (tags.includes('100名') || tags.includes('80〜') ||
               tags.includes('90〜') || tags.includes('70〜')) &&
+             score >= 4.0 &&
              isNagoyaArea(s['エリア'], s['アクセス']);
     },
-    sort: (a, b) => (parseFloat(b['Google評価']) || 0) - (parseFloat(a['Google評価']) || 0),
-    descGenerator: s => s['おすすめポイント'] || `大人数対応の${s['ジャンル']}。`,
+    sort: (a, b) => {
+      // 収容人数が大きい店を優先
+      function capScore(s) {
+        let sc = (parseFloat(s['Google評価']) || 0) * 10;
+        const tags = s['タグ'] || '';
+        if (tags.includes('100名以上')) sc += 5;
+        else if (/90〜/.test(tags)) sc += 4;
+        else if (/80〜/.test(tags)) sc += 3;
+        else if (/70〜/.test(tags)) sc += 2;
+        if (tags.includes('飲み放題')) sc += 2;
+        if (tags.includes('貸切可')) sc += 2;
+        return sc;
+      }
+      return capScore(b) - capScore(a);
+    },
+    descGenerator: s => generateReason(s, 'large'),
+    postFilter: stores => diversifyGenres(stores, 4),
   },
 ];
 
@@ -358,7 +522,9 @@ function updateFeatureArticle(stores, config) {
   let html = fs.readFileSync(filePath, 'utf8');
 
   // 1. フィルタ・重複排除・ソート
-  const filtered = dedup(stores.filter(config.filter)).sort(config.sort).slice(0, config.count);
+  let filtered = dedupWithChain(stores.filter(config.filter)).sort(config.sort);
+  if (config.postFilter) filtered = config.postFilter(filtered);
+  filtered = filtered.slice(0, config.count);
   if (filtered.length === 0) {
     console.log(`  ⚠ ${config.file}: 該当店舗0件（スキップ）`);
     return null;
