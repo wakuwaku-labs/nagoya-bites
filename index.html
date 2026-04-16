@@ -2,6 +2,14 @@
 <html lang="ja" prefix="og: https://ogp.me/ns#">
 <head>
 <meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<!-- GA4_MEASUREMENT_ID を取得したら下の G-XXXXXXXXXX を差し替える -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');
+// カスタムイベント送信ヘルパー
+function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
+</script>
 <script>
 if('serviceWorker'in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(reg){reg.unregister()})});caches.keys().then(function(n){n.forEach(function(name){caches.delete(name)})})}
 </script>
@@ -1216,7 +1224,7 @@ function selectTag(tag) {
   }
   el && el.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
-function doSearch(){ applyFilters(); }
+function doSearch(){ var q=document.getElementById('si2').value||document.getElementById('si').value||''; if(q)trackEvent('search',{search_term:q}); applyFilters(); }
 document.getElementById('si').addEventListener('keydown', function(e){ if(e.key==='Enter') applyFilters(); });
 document.getElementById('si').addEventListener('input', function(){
   var si2 = document.getElementById('si2');
@@ -1389,7 +1397,7 @@ function buildCardHtml(r) {
       + '</div>'
       + tagHtml
       + (r['おすすめポイント'] ? '<div class="card-point">' + r['おすすめポイント'] + '</div>' : '')
-      + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation()" aria-label="' + r['店名'] + 'をホットペッパーで予約">ホットペッパーで予約</a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area) + '" target="_blank" onclick="event.stopPropagation()" aria-label="' + r['店名'] + 'をGoogleマップで確認" style="background:#4285F4">Googleマップで確認</a></div>')
+      + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をホットペッパーで予約">ホットペッパーで予約</a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をGoogleマップで確認" style="background:#4285F4">Googleマップで確認</a></div>')
       + '<div class="mrow">' + mediaLinks + '</div>'
       + '</div>';
 }
@@ -1462,6 +1470,7 @@ function openM(i) {
   // ハートボタン経由のクリックならモーダルを開かない
   if (window.event && window.event.target && window.event.target.closest && window.event.target.closest('.fav-btn')) return;
   var r = ALL_STORES[i];
+  trackEvent('modal_open', {store_name: r['店名'], genre: r['ジャンル'], area: r['エリア']});
   var photo = r['写真URL'] || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80';
   var hpUrl = 'https://www.hotpepper.jp/str' + (r['ホットペッパーID']||'') + '/';
   document.getElementById('mi').src = photo;
@@ -1580,15 +1589,18 @@ document.getElementById('ov').addEventListener('click', function(e){ if(e.target
 var _shareStoreName = '';
 function setShareStore(name) { _shareStoreName = name; }
 function shareToX() {
+  trackEvent('share_x', {store_name: _shareStoreName});
   var text = '名古屋の「' + _shareStoreName + '」が気になる！ #NAGOYABITES #名古屋グルメ';
   var url = 'https://wakuwaku-labs.github.io/nagoya-bites/';
   window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url), '_blank', 'noopener,width=550,height=420');
 }
 function shareToLINE() {
+  trackEvent('share_line', {store_name: _shareStoreName});
   var text = '名古屋の「' + _shareStoreName + '」をチェック！\nhttps://wakuwaku-labs.github.io/nagoya-bites/';
   window.open('https://line.me/R/msg/text/?' + encodeURIComponent(text), '_blank', 'noopener');
 }
 function copyShareLink() {
+  trackEvent('share_copy', {store_name: _shareStoreName});
   var url = 'https://wakuwaku-labs.github.io/nagoya-bites/';
   if (navigator.clipboard) {
     navigator.clipboard.writeText(url).then(function() {
@@ -1873,7 +1885,8 @@ function toggleFav(name, e) {
   if (e) { e.stopPropagation(); e.preventDefault(); }
   var favs = getFavs();
   var idx = favs.indexOf(name);
-  if (idx === -1) { favs.push(name); } else { favs.splice(idx, 1); }
+  if (idx === -1) { favs.push(name); trackEvent('fav_add', {store_name: name}); }
+  else { favs.splice(idx, 1); trackEvent('fav_remove', {store_name: name}); }
   saveFavs(favs);
   // Update button state
   // Update all fav buttons with matching name
