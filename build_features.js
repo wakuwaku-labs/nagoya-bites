@@ -161,12 +161,21 @@ function generateReason(store, featureType) {
       break;
   }
 
+  // おすすめポイント（店固有の特徴）を最優先で使用
+  // 選定理由は補足として末尾に追加
+  const reasonTag = reasons.length > 0 ? reasons[0] : '';
+
+  if (rec && rec.length > 5) {
+    // おすすめポイントが十分な長さならそれをメインに使い、選定理由を1つ補足
+    if (reasonTag && !rec.includes(reasonTag)) {
+      return rec + '（' + reasonTag + '）';
+    }
+    return rec;
+  }
+
+  // おすすめポイントがない場合のみ選定理由で構成
   if (score && parseFloat(score) >= 4.5) reasons.push('Google★' + score + 'の高評価');
-
-  // 理由がなければおすすめポイントをフォールバック
-  if (reasons.length === 0 && rec) return rec;
   if (reasons.length === 0) return genre + 'の人気店。';
-
   return reasons.slice(0, 3).join('。') + '。';
 }
 
