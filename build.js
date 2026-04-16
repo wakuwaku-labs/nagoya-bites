@@ -177,11 +177,14 @@ const NAME_NAGOYA_PATTERNS = [
   /千種店/,/鶴舞店/,/星ヶ丘店/,/新栄店/,/東桜店/,/大曽根店/,/神宮前店/
 ];
 
+// 半角カナ→全角カナ等を統一（ﾉ→ノ, ｾﾝﾀｰ→センター 等）
+function norm(str) { return (str || '').normalize('NFKC'); }
+
 function isNagoyaStore(s) {
-  const access = s['アクセス'] || '';
-  const price = s['価格帯'] || '';
-  const name = s['店名'] || '';
-  const notes = s['備考'] || '';
+  const access = norm(s['アクセス']);
+  const price = norm(s['価格帯']);
+  const name = norm(s['店名']);
+  const notes = norm(s['備考']);
   const area = s['エリア'] || '';
   const pref = s['都道府県'] || '';
 
