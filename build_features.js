@@ -62,9 +62,8 @@ function isMassMarket(tags) {
 /** おすすめポイントが宣伝文句だけかチェック（true=使えない） */
 function isPromoOnly(text) {
   if (!text || text.length < 3) return true;
-  // 価格・割引・クーポン系だけの文は宣伝
-  if (/^\d{3,5}円/.test(text)) return true;
-  if (/^[\d,円税込~～＋\s\-−★☆♪◎●◆▼▲※!！%％OFF]+$/.test(text)) return true;
+  if (/チャージ|無料|0円|クーポン|割引|OFF|半額|ポイント|円～|食べ放題.*円|飲み放題.*円|コース.*円|\d{4}円/.test(text)) return true;
+  if (/^[\d,円税込~～＋\s\-−★☆♪◎●◆▼▲※!！%％]+$/.test(text)) return true;
   return false;
 }
 
