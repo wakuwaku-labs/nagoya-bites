@@ -332,6 +332,10 @@ footer{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));}
 #pwa-banner{display:none;position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);z-index:999;background:var(--text);color:var(--bg);padding:.8rem 1.4rem;border-radius:2px;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;display:flex;align-items:center;gap:1rem;box-shadow:0 4px 24px rgba(0,0,0,.3);}
 #pwa-banner button{background:var(--gold);color:var(--bg);border:none;padding:.4rem .9rem;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border-radius:1px;}
 #pwa-banner .dismiss{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.2);}
+#pwa-banner-ios{display:none;position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);z-index:999;background:var(--text);color:var(--bg);padding:.8rem 1.4rem;border-radius:2px;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;flex-direction:column;align-items:center;gap:.5rem;box-shadow:0 4px 24px rgba(0,0,0,.3);text-align:center;max-width:92vw;}
+.pwa-ios-steps{color:var(--gold);font-size:.6rem;}
+.pwa-ios-icon{font-size:.8rem;vertical-align:middle;}
+#pwa-banner-ios .dismiss{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.2);padding:.3rem .8rem;font-size:.55rem;cursor:pointer;border-radius:1px;}
 /* ── FEATURE STRIP ── */
 .feature-strip{padding:.75rem 1.5rem;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
 .feature-strip-label{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.22em;color:var(--dim);text-transform:uppercase;white-space:nowrap;}
@@ -610,11 +614,17 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <!-- スクロールトップボタン -->
 <button id="scroll-top" aria-label="ページトップへ戻る" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-<!-- PWA インストールバナー -->
+<!-- PWA インストールバナー（Android） -->
 <div id="pwa-banner" style="display:none">
   📱 ホーム画面に追加してアプリとして使えます
   <button id="pwa-install-btn">追加する</button>
   <button class="dismiss" id="pwa-dismiss">後で</button>
+</div>
+<!-- PWA インストールバナー（iOS） -->
+<div id="pwa-banner-ios" style="display:none">
+  <div class="pwa-ios-text">📱 ホーム画面に追加してアプリとして使えます</div>
+  <div class="pwa-ios-steps">共有ボタン <span class="pwa-ios-icon">⬆</span> → 「ホーム画面に追加」をタップ</div>
+  <button class="dismiss" id="pwa-dismiss-ios">閉じる</button>
 </div>
 
 <div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
@@ -1700,6 +1710,25 @@ document.getElementById('pwa-install-btn').addEventListener('click', function() 
 // 「後で」ボタン
 document.getElementById('pwa-dismiss').addEventListener('click', function() {
   document.getElementById('pwa-banner').style.display = 'none';
+  localStorage.setItem('pwa-banner-dismissed', Date.now());
+});
+
+// iOS Safari 検出 & バナー表示
+var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+var isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+if (isIOS && !isStandalone) {
+  var dismissed = localStorage.getItem('pwa-banner-dismissed');
+  var showBanner = !dismissed || (Date.now() - Number(dismissed)) > 7 * 24 * 60 * 60 * 1000;
+  if (showBanner) {
+    setTimeout(function() {
+      var b = document.getElementById('pwa-banner-ios');
+      if (b) b.style.display = 'flex';
+    }, 3000);
+  }
+}
+document.getElementById('pwa-dismiss-ios').addEventListener('click', function() {
+  document.getElementById('pwa-banner-ios').style.display = 'none';
+  localStorage.setItem('pwa-banner-dismissed', Date.now());
 });
 
 // インストール完了後バナーを非表示
