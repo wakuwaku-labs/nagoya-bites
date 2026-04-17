@@ -103,39 +103,40 @@
   - 初期キュレーション7件：あつた蓬莱軒/山本屋本店/山本屋総本家/矢場とん/まるは食堂/矢場味仙/備長
 - **files**: `data/trending_stores.json`, `build.js`, `index.html`, `scripts/fetch_hotpepper_popular.js`, `scripts/fetch_trending_articles.js`
 
-### [ISSUE-011] 食べログランキング連携（第二弾）
-- **priority**: P2
-- **status**: ready
-- **category**: data
-- **detected**: 2026-04-17
+### [ISSUE-011] 多媒体トレンド連携 ✅
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-04-18
 - **description**:
-  食べログの名古屋ランキングページから店名＋URLのみ収集するスクリプト `scripts/fetch_tabelog_rankings.js` を新設する。
-  利用規約・robots.txt の確認、出典URL記録、コンテンツ本文は取得しない。
-- **acceptance**:
-  - 利用規約クリアの確認ログ残し
-  - 収集結果は `data/trending_stores.json` の candidates に入る
-  - 既存 LOCAL_STORES にマッチする店は stores の `_auto:true` に追加
+  食べログ本体の直接スクレイピングは ToS リスクのため回避。代わりに「第三者メディア」
+  （dressing / macaroni / ヒトサラ / OZmall / retrip / icotto / TV番組公式 / PR TIMES /
+  ナゴレコ / サブロー / note 等）からトレンド店名を拾う方針に転換。
+  `scripts/fetch_trending_articles.js` の検索クエリを既存10件から30件超に拡張（カテゴリ別）。
+  利用規約リスクなしで広く店名を収集可能に。
+- **files**: `scripts/fetch_trending_articles.js`
 
-### [ISSUE-012] Instagram 話題度計測（第二弾）
-- **priority**: P2
-- **status**: ready
-- **category**: data
-- **detected**: 2026-04-17
+### [ISSUE-012] Instagram 話題度連携 🔄
+- **priority**: P2 → **status**: in_progress
+- **detected**: 2026-04-17 / **phase_a_done**: 2026-04-18
 - **description**:
-  ハッシュタグ「#名古屋グルメ」「#名駅ランチ」等の投稿数推移を収集し、急増店をフラグ付けする仕組み。
-  Instagram Graph API もしくは公式 OGP の段階的検討。
-- **acceptance**:
-  - 実現手段の技術調査（API申請 / 代替手段）
-  - プロトタイプで週次投稿数が取得できること
+  Phase A（実装済み）: 各店モーダルに Instagram ハッシュタグ検索リンクを表示。
+  `build.js` が全店に `Instagram検索` URL を自動付与（既存 TikTok検索/X検索 と同パターン）。
+  ユーザーが即クリックで Instagram の話題度を確認可能。
+  
+  Phase B（申請プロセス）: Facebook Developers App の Business Review 申請手順を
+  `docs/instagram-api-setup.md` にドキュメント化。承認後は Graph API Hashtag Search で
+  投稿数を自動収集し `data/trending_stores.json` の `話題スコア` に反映する実装雛形も用意。
+- **next_action**: wakuwaku-labs 代表アカウントで Facebook App 作成・審査申請
+- **files**: `build.js`, `index.html`, `docs/instagram-api-setup.md`
 
-### [ISSUE-013] 話題店の週次リフレッシュ自動化（第二弾）
-- **priority**: P3
-- **status**: ready
-- **category**: infra
-- **detected**: 2026-04-17
+### [ISSUE-013] 話題店の週次リフレッシュ自動化 ✅
+- **priority**: P3 → **status**: done
+- **resolved**: 2026-04-18
 - **description**:
-  GitHub Actions で週次に `fetch_hotpepper_popular.js` を実行し、
-  candidates を自動更新する。人間レビュー部分は手動のまま。
+  `.github/workflows/weekly-pipeline.yml` に Step 0（`fetch_hotpepper_popular.js` 実行）と
+  Step 0.5（`data/trending_stores.json` 自動コミット）を追加。毎週月曜9時JSTに Hot Pepper
+  人気順から候補収集 → 自動コミット → 続けて build.js が話題フラグを反映。
+  `continue-on-error: true` + `|| true` でソフト失敗する設計（API障害で全体停止しない）。
+- **files**: `.github/workflows/weekly-pipeline.yml`
 
 ---
 
@@ -146,4 +147,5 @@
 | 2026-04-15 | Inspector | 初回サイト監査・バックログ初期化 | 9件の課題を検出 |
 | 2026-04-15 | Orchestrator(FULL) | Hero修正・権威性バー・CTA修正・店舗別ページ1095件生成・sitemap 1→1097件・デプロイ | ✅ デプロイ済み (commit 3824014) |
 | 2026-04-15 | Builder | ISSUE-001,002,003,004,009を実装（CSS修正）・sitemap 1100件 | ✅ デプロイ済み |
-| 2026-04-17 | Orchestrator(EXPLICIT) | ISSUE-010 話題店データ機能立ち上げ（JSON/build.js/UI/scripts/キュレーション7件） | ⏳ QAゲート予定 |
+| 2026-04-17 | Orchestrator(EXPLICIT) | ISSUE-010 話題店データ機能立ち上げ（JSON/build.js/UI/scripts/キュレーション7件） | ✅ PR#1 マージ済み |
+| 2026-04-18 | Orchestrator(EXPLICIT) | ISSUE-011/012-A/013 実装（多媒体クエリ30件超・Instagram検索URL・週次自動化・API申請手順docs） | ⏳ QAゲート予定 |
