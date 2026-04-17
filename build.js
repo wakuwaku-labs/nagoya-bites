@@ -323,6 +323,7 @@ function hpShopToStoreRecord(shop) {
     '食べログURL': '',
     'TikTok検索': `https://www.tiktok.com/search?q=${searchQ}`,
     'X検索': `https://x.com/search?q=${searchQ}`,
+    'Instagram検索': `https://www.instagram.com/explore/search/keyword/?q=${searchQ}`,
     '公開フラグ': 'TRUE',
     '備考': '',
     'タグ': '',
@@ -455,6 +456,18 @@ async function main() {
     if (hadPoint && !s['おすすめポイント']) sanitizedPoints++;
   }
   console.log(`サニタイゼーション: Instagram/写真URL=全件クリア / おすすめポイント=${sanitizedPoints}件自動生成パターンをクリア`);
+
+  // Instagram 検索URL バックフィル — 全店に Instagram検索 を付与（既存 TikTok検索/X検索 と同パターン）
+  let igBackfilled = 0;
+  for (const s of stores) {
+    if (!s['Instagram検索']) {
+      const areaForSearch = s['エリア'] || '名古屋';
+      const q = encodeURIComponent((s['店名'] || '') + ' ' + areaForSearch);
+      s['Instagram検索'] = `https://www.instagram.com/explore/search/keyword/?q=${q}`;
+      igBackfilled++;
+    }
+  }
+  console.log(`Instagram検索URL: ${igBackfilled}件をバックフィル`);
 
   // 話題店JSONをマージ（店名＋エリアで既存店舗にマッチングさせ、話題フラグを付与）
   const trendingPath = path.join(__dirname, 'data/trending_stores.json');

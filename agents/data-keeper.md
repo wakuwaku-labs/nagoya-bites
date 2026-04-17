@@ -85,6 +85,44 @@ node scripts/fetch_trending_articles.js promote '店名'
 
 ---
 
+## 週次自動収集（ISSUE-013 実装済み）
+
+`.github/workflows/weekly-pipeline.yml` に以下が毎週月曜9時JSTで自動実行:
+1. `node scripts/fetch_hotpepper_popular.js` — Hot Pepper 人気順で話題候補収集
+2. `data/trending_stores.json` に差分があれば自動コミット（`[skip ci]` 付き）
+3. `node build.js` が続けて話題フラグを `LOCAL_STORES` に反映
+
+**人間がやること**:
+- 週次で `data/trending_stores.json` の `_auto:true` エントリーをレビュー
+- 妥当なら `話題フラグ: true` に昇格 → commit
+- 不要なエントリーは削除
+
+---
+
+## 多媒体トレンド収集（ISSUE-011 対応）
+
+`scripts/fetch_trending_articles.js` は**「第三者メディア」**（食べログでも我々でもない中立媒体）から店名を拾う半自動ツール。
+
+対象媒体カテゴリ:
+- グルメ雑誌系: dressing / macaroni / ヒトサラ / OZmall
+- トレンド紹介系: retrip / icotto / MATCHA
+- 名古屋ローカル: ナゴレコ / サブロー
+- TV番組公式: 東海テレビ / CBC / メ〜テレ
+- ニュース: PR TIMES / livedoor news
+- ブログ: note
+
+使い方は [agents/data-keeper.md](./data-keeper.md) の「話題店データ運用」参照。
+
+---
+
+## Instagram 話題度連携（ISSUE-012 対応）
+
+**Phase A（実装済み）**: 各店モーダルに Instagram ハッシュタグ検索リンク。build.js が全店に `Instagram検索` URL を自動付与。
+
+**Phase B（申請中）**: Instagram Graph API Hashtag Search で投稿数を自動収集。申請手順と実装雛形は [docs/instagram-api-setup.md](../docs/instagram-api-setup.md) 参照。
+
+---
+
 ## 実行手順
 
 ### 基本データ更新（毎週）
