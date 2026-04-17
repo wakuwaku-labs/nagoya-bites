@@ -359,8 +359,14 @@ function calcTrendScore(store, isNew) {
   const socialCount = [store['TikTok検索'], store['X検索'], store['Instagram']]
     .filter(u => u && u !== '#' && u !== '').length;
   score += (socialCount / 3) * 10;
-  // 新着ボーナス（30%）— Hot Pepperから新規取得された店舗
-  if (isNew) score += 30;
+  // 新着ボーナス — 単なる新着は魅力担保にならないため +10 に抑制（旧: +30）
+  if (isNew) score += 10;
+  // 話題フラグ（外部シグナル）— メディア露出・食べログ高順位等。+40 加点、かつ話題スコアがあれば反映
+  if (store['話題フラグ'] === true) {
+    score += 40;
+    const buzz = parseInt(store['話題スコア']) || 0;
+    if (buzz > 0) score = Math.max(score, buzz);
+  }
   return Math.round(Math.min(score, 100));
 }
 
@@ -449,6 +455,42 @@ async function main() {
     if (hadPoint && !s['おすすめポイント']) sanitizedPoints++;
   }
   console.log(`サニタイゼーション: Instagram/写真URL=全件クリア / おすすめポイント=${sanitizedPoints}件自動生成パターンをクリア`);
+
+  // 話題店JSONをマージ（店名＋エリアで既存店舗にマッチングさせ、話題フラグを付与）
+  const trendingPath = path.join(__dirname, 'data/trending_stores.json');
+  let buzzApplied = 0, buzzMissing = [];
+  if (fs.existsSync(trendingPath)) {
+    try {
+      const trendingRaw = JSON.parse(fs.readFileSync(trendingPath, 'utf8'));
+      const buzzList = (trendingRaw.stores || []).filter(t => t['話題フラグ'] === true);
+      const today = new Date().toISOString().slice(0, 10);
+      for (const buzz of buzzList) {
+        // 有効期限切れはスキップ
+        if (buzz['有効期限'] && buzz['有効期限'] < today) continue;
+        const hit = stores.find(s =>
+          s['店名'] === buzz['店名'] &&
+          (buzz['エリア'] ? s['エリア'] === buzz['エリア'] : true)
+        );
+        if (hit) {
+          hit['話題フラグ'] = true;
+          hit['トレンド情報源'] = buzz['トレンド情報源'] || [];
+          hit['話題スコア'] = buzz['話題スコア'] || 0;
+          hit['話題コメント'] = buzz['コメント'] || '';
+          buzzApplied++;
+        } else {
+          buzzMissing.push(buzz['店名']);
+        }
+      }
+      console.log(`話題フラグ付与: ${buzzApplied}件 / マッチ失敗: ${buzzMissing.length}件`);
+      if (buzzMissing.length) {
+        console.log('  マッチ失敗の店名（要確認）:', buzzMissing.slice(0, 10).join(' / '));
+      }
+    } catch (e) {
+      console.error(`data/trending_stores.json の読み込み失敗: ${e.message}`);
+    }
+  } else {
+    console.log('data/trending_stores.json なし（話題フラグスキップ）');
+  }
 
   // トレンドスコア算出
   const newHpIds = new Set(newStores.map(s => s['ホットペッパーID']).filter(Boolean));

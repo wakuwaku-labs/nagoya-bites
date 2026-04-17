@@ -89,6 +89,56 @@
 
 ---
 
+## 進行中タスク（追加）
+
+### [ISSUE-010] 話題店データ機能の立ち上げ ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-17
+- **description**:
+  - `data/trending_stores.json` を新設（話題店マスター・人間編集可能）
+  - `build.js` にトレンドJSONマージ処理・`calcTrendScore` 改訂（話題フラグで +40）
+  - `index.html`: 「🔥 今週の話題店」セクション化、buildTrendRanking を話題フラグ優先、デフォルトソートを話題フラグ→トレンドスコア→おすすめ文→Google評価に改修
+  - `scripts/fetch_hotpepper_popular.js` 新設（HP 人気順収集）
+  - `scripts/fetch_trending_articles.js` 新設（Web記事取り込み運用ヘルパー）
+  - 初期キュレーション7件：あつた蓬莱軒/山本屋本店/山本屋総本家/矢場とん/まるは食堂/矢場味仙/備長
+- **files**: `data/trending_stores.json`, `build.js`, `index.html`, `scripts/fetch_hotpepper_popular.js`, `scripts/fetch_trending_articles.js`
+
+### [ISSUE-011] 食べログランキング連携（第二弾）
+- **priority**: P2
+- **status**: ready
+- **category**: data
+- **detected**: 2026-04-17
+- **description**:
+  食べログの名古屋ランキングページから店名＋URLのみ収集するスクリプト `scripts/fetch_tabelog_rankings.js` を新設する。
+  利用規約・robots.txt の確認、出典URL記録、コンテンツ本文は取得しない。
+- **acceptance**:
+  - 利用規約クリアの確認ログ残し
+  - 収集結果は `data/trending_stores.json` の candidates に入る
+  - 既存 LOCAL_STORES にマッチする店は stores の `_auto:true` に追加
+
+### [ISSUE-012] Instagram 話題度計測（第二弾）
+- **priority**: P2
+- **status**: ready
+- **category**: data
+- **detected**: 2026-04-17
+- **description**:
+  ハッシュタグ「#名古屋グルメ」「#名駅ランチ」等の投稿数推移を収集し、急増店をフラグ付けする仕組み。
+  Instagram Graph API もしくは公式 OGP の段階的検討。
+- **acceptance**:
+  - 実現手段の技術調査（API申請 / 代替手段）
+  - プロトタイプで週次投稿数が取得できること
+
+### [ISSUE-013] 話題店の週次リフレッシュ自動化（第二弾）
+- **priority**: P3
+- **status**: ready
+- **category**: infra
+- **detected**: 2026-04-17
+- **description**:
+  GitHub Actions で週次に `fetch_hotpepper_popular.js` を実行し、
+  candidates を自動更新する。人間レビュー部分は手動のまま。
+
+---
+
 ## エージェント実行ログ
 
 | 日付 | エージェント | 実行内容 | 結果 |
@@ -96,3 +146,4 @@
 | 2026-04-15 | Inspector | 初回サイト監査・バックログ初期化 | 9件の課題を検出 |
 | 2026-04-15 | Orchestrator(FULL) | Hero修正・権威性バー・CTA修正・店舗別ページ1095件生成・sitemap 1→1097件・デプロイ | ✅ デプロイ済み (commit 3824014) |
 | 2026-04-15 | Builder | ISSUE-001,002,003,004,009を実装（CSS修正）・sitemap 1100件 | ✅ デプロイ済み |
+| 2026-04-17 | Orchestrator(EXPLICIT) | ISSUE-010 話題店データ機能立ち上げ（JSON/build.js/UI/scripts/キュレーション7件） | ⏳ QAゲート予定 |
