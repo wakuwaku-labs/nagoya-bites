@@ -25,24 +25,86 @@ const path = require('path');
 const TRENDING_PATH = path.join(__dirname, '..', 'data', 'trending_stores.json');
 const INDEX_PATH = path.join(__dirname, '..', 'index.html');
 
+// 「第三者メディア」＝食べログでも我々でもない、中立な第三の媒体。
+// 食べログ本体を直接スクレイピングせず、第三者メディアが食べログを「引用している」記事から店名を拾う。
 const RECOMMENDED_QUERIES = [
+  // === 一般トレンド ===
   '名古屋 話題 飲食店 2026',
   '名古屋 新店 オープン',
   '名古屋 行列ができる店',
-  '名古屋 メディア 紹介 グルメ',
-  '名古屋 インスタ映え 飲食店',
   '名古屋 予約 取れない',
-  '名古屋 雑誌 特集 グルメ',
   '名古屋 トレンド レストラン',
   '栄 話題の店',
-  '名駅 新店 2026'
+  '名駅 新店 2026',
+
+  // === 食べログ言及系（第三者記事内の引用） ===
+  '名古屋 食べログ ランキング 2026',
+  '名古屋 食べログ 百名店',
+  '栄 食べログ 高評価',
+  '名駅 食べログ 人気',
+
+  // === グルメ雑誌・レビュー系 ===
+  '名古屋 雑誌 掲載 レストラン',
+  '名古屋 dressing 特集',
+  '名古屋 マカロニ グルメ',
+  '名古屋 ヒトサラ おすすめ',
+  '名古屋 OZmall 特集',
+
+  // === 名古屋ローカルメディア ===
+  '名古屋 ナゴレコ 新店',
+  'サブロー 名古屋 グルメ',
+  '名古屋ジャーニー 特集',
+
+  // === TV番組系 ===
+  '東海テレビ グルメ 名古屋',
+  'CBC 名古屋 紹介',
+  'メ〜テレ 飲食店',
+  'ケンミンショー 名古屋',
+
+  // === 観光・まとめ系 ===
+  '名古屋 retrip 人気',
+  '名古屋 icotto おすすめ',
+  '名古屋 MATCHA 訪日',
+  '名古屋 tabi-labo グルメ',
+
+  // === SNS話題系 ===
+  '名古屋 Twitter バズった 飲食店',
+  '名古屋 TikTok 話題',
+  '名古屋 インスタ映え カフェ',
+
+  // === ニュース・PR系 ===
+  'PR TIMES 名古屋 レストラン オープン',
+  '名古屋 オープン ニュース',
+
+  // === シーン別 ===
+  '名古屋 デート レストラン 雑誌',
+  '名古屋 接待 おすすめ 特集'
 ];
 
 const RECOMMENDED_SITES = [
-  'https://news.livedoor.com/topics/keyword/?k=%E5%90%8D%E5%8F%A4%E5%B1%8B+%E3%82%B0%E3%83%AB%E3%83%A1',
-  'https://prtimes.jp/search?search_type=1&search_word=%E5%90%8D%E5%8F%A4%E5%B1%8B+%E9%A3%B2%E9%A3%9F',
+  // グルメ雑誌・レビュー系
+  'https://dressing.media/search?q=%E5%90%8D%E5%8F%A4%E5%B1%8B',
+  'https://macaro-ni.jp/search?q=%E5%90%8D%E5%8F%A4%E5%B1%8B',
+  'https://www.hitosara.com/search/?area=nagoya',
+  'https://www.ozmall.co.jp/restaurant/nagoya/',
+
+  // トレンド紹介系
   'https://retrip.jp/articles/search/?query=%E5%90%8D%E5%8F%A4%E5%B1%8B',
-  'https://icotto.jp/search?q=%E5%90%8D%E5%8F%A4%E5%B1%8B'
+  'https://icotto.jp/search?q=%E5%90%8D%E5%8F%A4%E5%B1%8B',
+  'https://matcha-jp.com/jp/search?q=%E5%90%8D%E5%8F%A4%E5%B1%8B',
+
+  // ニュース・PR系
+  'https://prtimes.jp/search?search_type=1&search_word=%E5%90%8D%E5%8F%A4%E5%B1%8B+%E9%A3%B2%E9%A3%9F',
+  'https://news.livedoor.com/topics/keyword/?k=%E5%90%8D%E5%8F%A4%E5%B1%8B+%E3%82%B0%E3%83%AB%E3%83%A1',
+
+  // TV番組公式
+  'https://hicbc.com/gourmet/',
+
+  // 観光協会系
+  'https://www.nagoya-info.jp/eat/',
+
+  // ブログ・note
+  'https://note.com/search?context=note&q=%E5%90%8D%E5%8F%A4%E5%B1%8B+%E3%82%B0%E3%83%AB%E3%83%A1'
 ];
 
 function loadTrending() {
