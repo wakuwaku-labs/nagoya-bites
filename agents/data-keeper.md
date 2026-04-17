@@ -47,11 +47,41 @@ GitHub Pages 公開
 
 | スクリプト | 役割 | 頻度 |
 |-----------|------|------|
-| `build.js` | Google SheetsデータをHTMLに埋め込む | 毎週必須 |
+| `build.js` | Google SheetsデータをHTMLに埋め込む（`data/trending_stores.json` もマージ） | 毎週必須 |
 | `fetch_scores.js` | Google評価スコアを取得 | 月1回推奨 |
 | `write_recommendations.js` | Claude APIで推薦文生成 | 必要時 |
 | `gen_recommendations_hp.js` | ホットペッパーから推薦文生成 | 必要時 |
 | `fill_recommendations.js` | 空の推薦文を補完 | 必要時 |
+| `scripts/fetch_hotpepper_popular.js` | Hot Pepper 人気順（order=4）で上位店を話題候補に | 月1回推奨 |
+| `scripts/fetch_trending_articles.js` | Web記事から話題店名を取り込む運用ヘルパー | 必要時 |
+
+---
+
+## 話題店データ（data/trending_stores.json）運用
+
+`data/trending_stores.json` は git 管理の人間編集可能な話題店マスター。
+`build.js` が読み込み、`店名＋エリア` で LOCAL_STORES にマッチングして `話題フラグ` を付与する。
+
+### ファイル構造
+- `stores[]`: 既存 LOCAL_STORES にマッチする話題店。`話題フラグ: true` のみが UI に反映される。
+- `candidates[]`: LOCAL_STORES に未登録の新規候補。人間レビュー後 Google Sheets に追加する運用。
+
+### スクリプト実行例
+```bash
+# Hot Pepper 人気順で候補収集（HOTPEPPER_API_KEY が必要）
+node scripts/fetch_hotpepper_popular.js
+
+# Web記事から話題店名を取り込む（3ステップ運用）
+node scripts/fetch_trending_articles.js queries    # 推奨クエリ一覧を見る
+# Claude Code の WebSearch/WebFetch で店名を /tmp/buzz.txt に抽出
+node scripts/fetch_trending_articles.js ingest /tmp/buzz.txt
+node scripts/fetch_trending_articles.js promote '店名'
+```
+
+### 品質ゲート（人間レビュー必須）
+- スクリプトが追加した `_auto:true` エントリーは `話題フラグ:false` で止まる。
+- 人間が店舗情報を確認し、信頼できる場合のみ `話題フラグ:true` に昇格させる。
+- `有効期限` 過ぎは `build.js` が自動でフラグを外す（生鮮性担保）。
 
 ---
 
