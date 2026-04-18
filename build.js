@@ -489,6 +489,10 @@ async function main() {
           hit['トレンド情報源'] = buzz['トレンド情報源'] || [];
           hit['話題スコア'] = buzz['話題スコア'] || 0;
           hit['話題コメント'] = buzz['コメント'] || '';
+          // おすすめポイントが空の場合のみ、trending_stores.json の手動キュレーション文で補完
+          if (buzz['おすすめポイント'] && (!hit['おすすめポイント'] || !hit['おすすめポイント'].trim())) {
+            hit['おすすめポイント'] = buzz['おすすめポイント'];
+          }
           buzzApplied++;
         } else {
           buzzMissing.push(buzz['店名']);
