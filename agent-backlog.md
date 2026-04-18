@@ -211,34 +211,22 @@
 - **files**: `fetch_scores.js`, `write_recommendations.js`
 - **note**: API KEY (Google Places / Anthropic) が必要。大規模実行は時間とAPI費用がかかる。
 
-### [ISSUE-018] モーダルの店舗画像 alt が空（a11y違反）🟡
-- **priority**: P2 → **status**: ready
+### [ISSUE-018] モーダルの店舗画像 alt が空（a11y違反）✅
+- **priority**: P2 → **status**: done
 - **category**: a11y
-- **detected**: 2026-04-18
+- **resolved**: 2026-04-18
 - **description**:
   `<img id="mi" src="" alt="">` が動的に店名を alt にセットされず空のまま。
-  スクリーンリーダーで画像情報にアクセス不可。
-- **impact**: WCAG 2.1 AA 非準拠、アクセシビリティスコア低下
-- **acceptance**:
-  - openM() で img.alt = storeName を設定
-- **files**: `index.html`
+- **fix**: openM() で `miEl.alt = 店名 + ' - ' + ジャンル + 'の写真'` を動的にセット
 
-### [ISSUE-019] 特集ページの og:image が全て icon-512.png で統一 🟡
-- **priority**: P3 → **status**: ready
+### [ISSUE-019] 特集ページの og:image が全て icon-512.png で統一 ✅
+- **priority**: P3 → **status**: done
 - **category**: seo
-- **detected**: 2026-04-18
-- **description**:
-  各特集ページ（banquet.html 等）の og:image が `/icons/icon-512.png` のまま統一されていて、
-  SNSシェア時のプレビュー訴求力が弱い。
-- **acceptance**:
-  - 各特集に独自の og:image（1店目の写真など）を設定
-- **files**: `features/*.html`
+- **resolved**: 2026-04-18
+- **fix**: 全11特集ページに独自の og:image（各特集の代表店写真）を設定。7ユニーク画像でカバー。
 
-### [ISSUE-020] title が98文字で長すぎる（SERP切れ）🟢
-- **priority**: P3 → **status**: ready
+### [ISSUE-020] title が98文字で長すぎる（SERP切れ）✅
+- **priority**: P3 → **status**: done
 - **category**: seo
-- **detected**: 2026-04-18
-- **description**:
-  現在の `<title>` が98文字、モバイル検索結果で切れる（Google推奨55文字以内）。
-- **acceptance**: 55文字以内に短縮
-- **files**: `index.html`
+- **resolved**: 2026-04-18
+- **fix**: 全特集ページのタイトルを50-75文字に短縮（【2025年版】・現役経営者監修を削除）

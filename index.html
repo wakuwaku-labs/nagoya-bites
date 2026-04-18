@@ -1567,7 +1567,9 @@ function openM(i) {
   trackEvent('modal_open', {store_name: r['店名'], genre: r['ジャンル'], area: r['エリア']});
   var photo = r['写真URL'] || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80';
   var hpUrl = 'https://www.hotpepper.jp/str' + (r['ホットペッパーID']||'') + '/';
-  document.getElementById('mi').src = photo;
+  var miEl = document.getElementById('mi');
+  miEl.src = photo;
+  miEl.alt = (r['店名'] || '店舗') + ' - ' + (r['ジャンル'] || '飲食店') + 'の写真';
   document.getElementById('mg').textContent = r['ジャンル'] || '';
   document.getElementById('mn').textContent = r['店名'] || '';
   document.getElementById('ma').textContent = (r['都道府県']||'') + ' ' + (r['エリア']||'');
