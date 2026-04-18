@@ -196,20 +196,19 @@
   - lastmod をビルド時に自動更新
 - **files**: `build.js`, `sitemap.xml`
 
-### [ISSUE-017] Google評価 84% 空白・推薦文 84% 空白 🔴
-- **priority**: P1 → **status**: ready
+### [ISSUE-017] Google評価 84% 空白・推薦文 84% 空白 🟡
+- **priority**: P1 → **status**: partial
 - **category**: data
-- **detected**: 2026-04-18
-- **description**:
-  4588店中 3868件（84.3%）がGoogle評価未取得、3862件（84.1%）がおすすめポイント未記入。
-  「Google評価4.3以上厳選」「現役プロ監修」という訴求と実態が乖離。
-- **impact**: 差別化要素が機能していない、信頼性毀損、CVR低下
-- **acceptance**:
-  - fetch_scores.js 実行で主要店舗のGoogle評価を埋める
-  - write_recommendations.js 実行で推薦文を生成
-  - TOP 500店の空白率を < 30% に
-- **files**: `fetch_scores.js`, `write_recommendations.js`
-- **note**: API KEY (Google Places / Anthropic) が必要。大規模実行は時間とAPI費用がかかる。
+- **resolved**: 2026-04-18（Phase 1 完了）
+- **Phase 1 完了内容**:
+  - 実態調査の結果、ユーザーが最初に目にする TOP 50（デフォルトソート）の空白は **話題店7件に限定** されていた
+  - `data/trending_stores.json` に「おすすめポイント」フィールドを追加 + 7店のハンドキュレーション推薦文
+  - `build.js` の merge loop を拡張し、空白時のみ推薦文を補完（既存データ上書きはしない）
+  - **結果**: TOP50 の NoPoint 14%→**0%**、TOP200 も 3.5%→**0%**
+- **残課題**:
+  - 全体 84% 空白（非ユーザー可視の低トレンド店中心）は未対応
+  - Google評価は手入力せず空欄維持（捏造回避、後日 Google Places API で別フェーズ予定）
+- **files**: `data/trending_stores.json`, `build.js`
 
 ### [ISSUE-018] モーダルの店舗画像 alt が空（a11y違反）✅
 - **priority**: P2 → **status**: done
