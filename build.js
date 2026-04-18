@@ -563,19 +563,34 @@ async function main() {
   fs.writeFileSync(HTML, html, 'utf8');
   console.log('index.html 更新完了');
 
-  // 4. sitemap.xmlの lastmod を更新
+  // 4. sitemap.xml を更新（トップ + features/ 配下の全特集ページを列挙）
+  const featuresDir = path.join(__dirname, 'features');
+  const featureFiles = fs.existsSync(featuresDir)
+    ? fs.readdirSync(featuresDir)
+        .filter(f => f.endsWith('.html') && f !== 'index.html')
+        .sort()
+    : [];
+  const sitemapUrls = [
+    { loc: 'https://wakuwaku-labs.github.io/nagoya-bites/', priority: '1.0', changefreq: 'weekly' },
+    ...featureFiles.map(f => ({
+      loc: `https://wakuwaku-labs.github.io/nagoya-bites/features/${f}`,
+      priority: '0.8',
+      changefreq: 'monthly'
+    }))
+  ];
+  const sitemapEntries = sitemapUrls.map(u => `  <url>
+    <loc>${u.loc}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`).join('\n');
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://wakuwaku-labs.github.io/nagoya-bites/</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+${sitemapEntries}
 </urlset>
 `;
   fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemap, 'utf8');
-  console.log('sitemap.xml 更新完了');
+  console.log(`sitemap.xml 更新完了（URL数: ${sitemapUrls.length}）`);
 }
 
 main().catch(e => { console.error(e.message); process.exit(1); });
