@@ -148,4 +148,84 @@
 | 2026-04-15 | Orchestrator(FULL) | Hero修正・権威性バー・CTA修正・店舗別ページ1095件生成・sitemap 1→1097件・デプロイ | ✅ デプロイ済み (commit 3824014) |
 | 2026-04-15 | Builder | ISSUE-001,002,003,004,009を実装（CSS修正）・sitemap 1100件 | ✅ デプロイ済み |
 | 2026-04-17 | Orchestrator(EXPLICIT) | ISSUE-010 話題店データ機能立ち上げ（JSON/build.js/UI/scripts/キュレーション7件） | ✅ PR#1 マージ済み |
-| 2026-04-18 | Orchestrator(EXPLICIT) | ISSUE-011/012-A/013 実装（多媒体クエリ30件超・Instagram検索URL・週次自動化・API申請手順docs） | ⏳ QAゲート予定 |
+| 2026-04-18 | Orchestrator(EXPLICIT) | ISSUE-011/012-A/013 実装（多媒体クエリ30件超・Instagram検索URL・週次自動化・API申請手順docs） | ✅ PR#2 マージ済み |
+| 2026-04-18 | Orchestrator(EXPLICIT) | docs/instagram-launch-kit.md 追加（Instagram運用コピペ素材集） | ✅ PR#3 マージ済み |
+| 2026-04-18 | Inspector (2並列) | 全方位監査実施、技術/UX/SEO/コンテンツ/競合/季節の10カテゴリ評価、新課題7件検出 | ✅ ISSUE-014〜020 登録 |
+
+---
+
+## Inspector 2026-04-18 監査で検出された新課題
+
+### [ISSUE-014] GW/春の季節特集コンテンツがゼロ 🔴
+- **priority**: P1 → **status**: ready
+- **category**: content
+- **detected**: 2026-04-18
+- **description**:
+  4/18時点、GW（5/3-6）まで約2週間。春〜GW向け特集記事がゼロ件。
+  「名古屋 GW グルメ」「名古屋 テラス 花見」「母の日 名古屋」等の高トラフィック検索で機会損失。
+  既存の features/ はシーン別（宴会/デート/女子会 等）のみで季節軸が皆無。
+- **impact**: GW前の検索ピーク機会損失。1年後まで同じチャンスなし。
+- **acceptance**:
+  - GW特集・春テラス・母の日の最低3本を 2026-04-25 までに公開
+  - feature-strip への追加、sitemap.xml 登録
+- **files**: `features/gw-2026.html`, `features/spring-terrace.html`, `features/mothers-day.html`, `index.html`, `sitemap.xml`
+
+### [ISSUE-015] index.html が 7.2MB で巨大 — パフォーマンス劣化 🔴
+- **priority**: P1 → **status**: ready
+- **category**: performance
+- **detected**: 2026-04-18
+- **description**:
+  4588件の LOCAL_STORES を inline 埋め込みしている結果、ファイルサイズが 7.2MB。
+  TTFB遅延、初期レンダリングブロック、モバイル離脱要因。
+- **impact**: Core Web Vitals 劣化、Lighthouse スコア低下、SEO順位への悪影響
+- **acceptance**:
+  - LOCAL_STORES を外部JSON化 + fetch 化、または段階的読み込み
+  - 初期HTML < 1MB を目標
+- **files**: `build.js`, `index.html`
+- **note**: 大規模改修。慎重な設計と段階的実施が必要。
+
+### [ISSUE-016] sitemap.xml に特集ページが未登録 🟡
+- **priority**: P2 → **status**: ready
+- **category**: seo
+- **detected**: 2026-04-18
+- **description**:
+  sitemap.xml は URL 1件のみ（index.html）で、features/ 配下の8本の特集ページが未登録。
+- **impact**: 特集ページのインデックス遅延、オーガニック流入 20-30% 機会損失
+- **acceptance**:
+  - build.js で sitemap.xml に全特集ページを自動追加
+  - lastmod をビルド時に自動更新
+- **files**: `build.js`, `sitemap.xml`
+
+### [ISSUE-017] Google評価 84% 空白・推薦文 84% 空白 🟡
+- **priority**: P1 → **status**: partial
+- **category**: data
+- **resolved**: 2026-04-18（Phase 1 完了）
+- **Phase 1 完了内容**:
+  - 実態調査の結果、ユーザーが最初に目にする TOP 50（デフォルトソート）の空白は **話題店7件に限定** されていた
+  - `data/trending_stores.json` に「おすすめポイント」フィールドを追加 + 7店のハンドキュレーション推薦文
+  - `build.js` の merge loop を拡張し、空白時のみ推薦文を補完（既存データ上書きはしない）
+  - **結果**: TOP50 の NoPoint 14%→**0%**、TOP200 も 3.5%→**0%**
+- **残課題**:
+  - 全体 84% 空白（非ユーザー可視の低トレンド店中心）は未対応
+  - Google評価は手入力せず空欄維持（捏造回避、後日 Google Places API で別フェーズ予定）
+- **files**: `data/trending_stores.json`, `build.js`
+
+### [ISSUE-018] モーダルの店舗画像 alt が空（a11y違反）✅
+- **priority**: P2 → **status**: done
+- **category**: a11y
+- **resolved**: 2026-04-18
+- **description**:
+  `<img id="mi" src="" alt="">` が動的に店名を alt にセットされず空のまま。
+- **fix**: openM() で `miEl.alt = 店名 + ' - ' + ジャンル + 'の写真'` を動的にセット
+
+### [ISSUE-019] 特集ページの og:image が全て icon-512.png で統一 ✅
+- **priority**: P3 → **status**: done
+- **category**: seo
+- **resolved**: 2026-04-18
+- **fix**: 全11特集ページに独自の og:image（各特集の代表店写真）を設定。7ユニーク画像でカバー。
+
+### [ISSUE-020] title が98文字で長すぎる（SERP切れ）✅
+- **priority**: P3 → **status**: done
+- **category**: seo
+- **resolved**: 2026-04-18
+- **fix**: 全特集ページのタイトルを50-75文字に短縮（【2025年版】・現役経営者監修を削除）
