@@ -425,7 +425,10 @@ function hpShopToStoreRecord(shop) {
   const pref = prefMatch ? prefMatch[1] : '愛知県';
   const budget = (shop.budget && shop.budget.name) || '';
   const photo = (shop.photo && shop.photo.pc && (shop.photo.pc.l || shop.photo.pc.m || shop.photo.pc.s)) || '';
-  const searchQ = encodeURIComponent(name + ' ' + (areaName || '名古屋'));
+  // areaName は "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄" のように複数エリアが連結されており、
+  // 外部サービス（Instagram/TikTok/X）の検索に含めると一致しないため
+  // 検索クエリは「店名 + 名古屋」で固定する
+  const searchQ = encodeURIComponent(name + ' 名古屋');
   return {
     '店名': name,
     '英語名': '',
@@ -576,11 +579,11 @@ async function main() {
   console.log(`サニタイゼーション: Instagram/写真URL=全件クリア / おすすめポイント=${sanitizedPoints}件自動生成パターンをクリア`);
 
   // Instagram 検索URL バックフィル — 全店に Instagram検索 を付与（既存 TikTok検索/X検索 と同パターン）
+  // エリアは複数連結（"栄ｷﾀ錦/伏見丸の内/..."）でクエリに含めると一致しないため、店名＋名古屋に固定
   let igBackfilled = 0;
   for (const s of stores) {
     if (!s['Instagram検索']) {
-      const areaForSearch = s['エリア'] || '名古屋';
-      const q = encodeURIComponent((s['店名'] || '') + ' ' + areaForSearch);
+      const q = encodeURIComponent((s['店名'] || '') + ' 名古屋');
       s['Instagram検索'] = `https://www.instagram.com/explore/search/keyword/?q=${q}`;
       igBackfilled++;
     }
