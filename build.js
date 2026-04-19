@@ -248,6 +248,122 @@ function isAutoGenPoint(text) {
   return AUTOGEN_POINT_PATTERNS.some(re => re.test(text));
 }
 
+// ────────────────────────────────────────────────────
+// 価格帯の正規化
+// ────────────────────────────────────────────────────
+// 入力の「価格帯」欄には店舗ごとに様々な表記が混在する（マーケティングコピー、
+// 平均予算の注釈、全角/半角の混在、価格帯なしの誘導文など）。
+// 表示とソートを安定させるため、一貫した14種類の標準バケットに寄せる。
+// 数値が特定できないマーケティングコピーは空文字にクリアする。
+
+const PRICE_BUCKETS = [
+  { max: 500,   label: '～500円' },
+  { max: 1000,  label: '501～1000円' },
+  { max: 1500,  label: '1001～1500円' },
+  { max: 2000,  label: '1501～2000円' },
+  { max: 3000,  label: '2001～3000円' },
+  { max: 4000,  label: '3001～4000円' },
+  { max: 5000,  label: '4001～5000円' },
+  { max: 7000,  label: '5001～7000円' },
+  { max: 10000, label: '7001～10000円' },
+  { max: 15000, label: '10001～15000円' },
+  { max: 20000, label: '15001～20000円' },
+  { max: 30000, label: '20001～30000円' }
+];
+const PRICE_BUCKET_LABELS = new Set(PRICE_BUCKETS.map(b => b.label).concat(['30001円～']));
+const PRICE_RANGE_DASH = '[~\\-–—―ー〜～]';
+
+function priceBucketOf(n) {
+  for (const b of PRICE_BUCKETS) if (n <= b.max) return b.label;
+  return '30001円～';
+}
+
+function normalizePrice(raw) {
+  if (!raw) return '';
+  const original = String(raw).trim();
+  if (!original) return '';
+  if (PRICE_BUCKET_LABELS.has(original)) return original;
+
+  // NFKC で全角/半角の差を吸収（全角コロン・空白・チルダ・数字）
+  let s = original.normalize('NFKC');
+  // WAVE DASH (U+301C) を半角チルダへ
+  s = s.replace(/[〜]/g, '~');
+  // 数字中のカンマを除去
+  s = s.replace(/(\d),(\d)/g, '$1$2').replace(/(\d),(\d)/g, '$1$2');
+
+  function maxYenIn(str) {
+    const nums = [];
+    let m;
+    const r1 = /(\d{2,6})\s*円/g;
+    while ((m = r1.exec(str)) !== null) {
+      const n = parseInt(m[1], 10);
+      if (n >= 100 && n <= 100000) nums.push(n);
+    }
+    const r2 = /[¥￥](\d{2,6})/g;
+    while ((m = r2.exec(str)) !== null) {
+      const n = parseInt(m[1], 10);
+      if (n >= 100 && n <= 100000) nums.push(n);
+    }
+    return nums.length ? Math.max(...nums) : null;
+  }
+
+  function rangeMidpointIn(str) {
+    const r = new RegExp('(\\d{2,6})\\s*円?\\s*' + PRICE_RANGE_DASH + '\\s*(\\d{2,6})\\s*円');
+    const m = str.match(r);
+    if (m) {
+      const lo = parseInt(m[1], 10), hi = parseInt(m[2], 10);
+      if (lo >= 100 && hi <= 100000 && hi >= lo) return Math.round((lo + hi) / 2);
+    }
+    return null;
+  }
+
+  // Priority 1: ディナー系のラベルがあればその直後の価格を優先
+  const dinnerLabels = [
+    /ディナー[^ランチ昼]*/,
+    /夜[:：／\/][^ランチ昼]*/,
+    /dinner[^a-zA-Z]*/i,
+    /宴会[^ランチ昼]*/,
+    /通常[:：／\/][^ランチ昼]*/
+  ];
+  for (const lbl of dinnerLabels) {
+    const m = s.match(lbl);
+    if (m) {
+      const seg = m[0];
+      const mid = rangeMidpointIn(seg);
+      if (mid != null) return priceBucketOf(mid);
+      const n = maxYenIn(seg);
+      if (n != null) return priceBucketOf(n);
+    }
+  }
+
+  // Priority 2: 明示的な範囲は中央値で丸める
+  const mid = rangeMidpointIn(s);
+  if (mid != null) return priceBucketOf(mid);
+
+  const noYenRange = s.match(new RegExp('^(\\d{2,6})\\s*' + PRICE_RANGE_DASH + '\\s*(\\d{2,6})$'));
+  if (noYenRange) {
+    const lo = parseInt(noYenRange[1], 10), hi = parseInt(noYenRange[2], 10);
+    if (lo >= 100 && hi <= 100000 && hi >= lo) return priceBucketOf(Math.round((lo + hi) / 2));
+  }
+
+  // Priority 3: 「円」付き数値の最大値を採用
+  const maxN = maxYenIn(s);
+  if (maxN != null) {
+    // 500円未満かつ長文はメニュー単品のキャッチコピーと判定してクリア
+    if (maxN < 500 && original.length >= 15) return '';
+    return priceBucketOf(maxN);
+  }
+
+  // 数字のみの文字列
+  if (/^\d{2,6}$/.test(s)) {
+    const n = parseInt(s, 10);
+    if (n >= 100 && n <= 100000) return priceBucketOf(n);
+  }
+
+  // 価格に該当する数値が取れない=マーケティングコピー → クリア
+  return '';
+}
+
 function sanitizeStore(s) {
   // Instagram 関連は検証不能なため全件クリア
   s['Instagram'] = '';
@@ -259,6 +375,8 @@ function sanitizeStore(s) {
   if (isAutoGenPoint(s['おすすめポイント'])) {
     s['おすすめポイント'] = '';
   }
+  // 価格帯の曖昧表記を14種類の標準バケットに正規化
+  s['価格帯'] = normalizePrice(s['価格帯']);
   return s;
 }
 
