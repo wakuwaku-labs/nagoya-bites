@@ -590,6 +590,33 @@ async function main() {
   }
   console.log(`Instagram検索URL: ${igBackfilled}件をバックフィル`);
 
+  // Instagram 公式アカウントURL 事前解決の結果をマージ
+  // scripts/resolve_instagram.js が data/instagram_resolved.json に書き出したキャッシュを読み込み、
+  // ホットペッパーIDで一致した店の Instagram フィールドに公式プロフィールURLを焼き付ける。
+  // index.html の instagramSearchUrl(r) が r['Instagram'] を最優先するため、render時に直リンとして使われる。
+  const resolvedPath = path.join(__dirname, 'data/instagram_resolved.json');
+  let igResolved = 0, igResolvedSkipped = 0;
+  if (fs.existsSync(resolvedPath)) {
+    try {
+      const resolvedMap = JSON.parse(fs.readFileSync(resolvedPath, 'utf8'));
+      for (const s of stores) {
+        const id = s['ホットペッパーID'];
+        if (!id) continue;
+        const entry = resolvedMap[id];
+        if (!entry || !entry.instagram || entry.failed) continue;
+        // Instagram フィールドに既に手動設定がある場合は尊重（上書きしない）
+        if (s['Instagram'] && s['Instagram'].trim()) { igResolvedSkipped++; continue; }
+        s['Instagram'] = entry.instagram;
+        igResolved++;
+      }
+      console.log(`Instagram公式URL: ${igResolved}件をマージ（手動設定済み ${igResolvedSkipped}件はスキップ）`);
+    } catch (e) {
+      console.warn(`Instagram公式URLマージ失敗: ${e.message}`);
+    }
+  } else {
+    console.log(`Instagram公式URL: ${resolvedPath} がないためマージスキップ（node scripts/resolve_instagram.js で生成）`);
+  }
+
   // 話題店JSONをマージ（店名＋エリアで既存店舗にマッチングさせ、話題フラグを付与）
   const trendingPath = path.join(__dirname, 'data/trending_stores.json');
   let buzzApplied = 0, buzzMissing = [];
