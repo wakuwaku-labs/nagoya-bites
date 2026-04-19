@@ -715,21 +715,50 @@ async function main() {
   fs.writeFileSync(HTML, html, 'utf8');
   console.log('index.html 更新完了');
 
-  // 4. sitemap.xml を更新（トップ + features/ 配下の全特集ページを列挙）
+  // 4. sitemap.xml を更新
+  //    トップ + 静的ページ + features/ 全件 + stores/ 全件 を列挙
   const featuresDir = path.join(__dirname, 'features');
-  const featureFiles = fs.existsSync(featuresDir)
-    ? fs.readdirSync(featuresDir)
-        .filter(f => f.endsWith('.html') && f !== 'index.html')
-        .sort()
-    : [];
+  const storesDir = path.join(__dirname, 'stores');
+  const baseUrl = 'https://wakuwaku-labs.github.io/nagoya-bites';
+
   const sitemapUrls = [
-    { loc: 'https://wakuwaku-labs.github.io/nagoya-bites/', priority: '1.0', changefreq: 'weekly' },
-    ...featureFiles.map(f => ({
-      loc: `https://wakuwaku-labs.github.io/nagoya-bites/features/${f}`,
-      priority: '0.8',
-      changefreq: 'monthly'
-    }))
+    { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'weekly' },
+    { loc: `${baseUrl}/about.html`, priority: '0.7', changefreq: 'monthly' },
+    { loc: `${baseUrl}/contact.html`, priority: '0.6', changefreq: 'monthly' },
+    { loc: `${baseUrl}/faq.html`, priority: '0.7', changefreq: 'monthly' },
   ];
+
+  // features/ インデックス + 個別特集ページ
+  if (fs.existsSync(featuresDir)) {
+    sitemapUrls.push({ loc: `${baseUrl}/features/`, priority: '0.9', changefreq: 'weekly' });
+    const featureFiles = fs.readdirSync(featuresDir)
+      .filter(f => f.endsWith('.html') && f !== 'index.html')
+      .sort();
+    for (const f of featureFiles) {
+      sitemapUrls.push({
+        loc: `${baseUrl}/features/${f}`,
+        priority: '0.8',
+        changefreq: 'monthly'
+      });
+    }
+  }
+
+  // stores/*.html を全件登録（P0-B: 店舗ページをクロール対象に）
+  let storeCount = 0;
+  if (fs.existsSync(storesDir)) {
+    const storeFiles = fs.readdirSync(storesDir)
+      .filter(f => f.endsWith('.html') && f !== 'index.html')
+      .sort();
+    for (const f of storeFiles) {
+      sitemapUrls.push({
+        loc: `${baseUrl}/stores/${f}`,
+        priority: '0.6',
+        changefreq: 'monthly'
+      });
+    }
+    storeCount = storeFiles.length;
+  }
+
   const sitemapEntries = sitemapUrls.map(u => `  <url>
     <loc>${u.loc}</loc>
     <lastmod>${today}</lastmod>
@@ -742,7 +771,7 @@ ${sitemapEntries}
 </urlset>
 `;
   fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemap, 'utf8');
-  console.log(`sitemap.xml 更新完了（URL数: ${sitemapUrls.length}）`);
+  console.log(`sitemap.xml 更新完了（URL数: ${sitemapUrls.length}、うち店舗: ${storeCount}）`);
 }
 
 main().catch(e => { console.error(e.message); process.exit(1); });
