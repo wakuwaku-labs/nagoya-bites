@@ -626,14 +626,31 @@ function updateSitemap(stores) {
   const baseUrl = 'https://wakuwaku-labs.github.io/nagoya-bites';
   const urls = [
     { loc: `${baseUrl}/`, priority: '1.0', freq: 'weekly' },
+    { loc: `${baseUrl}/about.html`, priority: '0.7', freq: 'monthly' },
+    { loc: `${baseUrl}/contact.html`, priority: '0.6', freq: 'monthly' },
     { loc: `${baseUrl}/faq.html`, priority: '0.7', freq: 'monthly' },
   ];
+
+  // 特集記事インデックス + 個別特集ページ
   urls.push({ loc: `${baseUrl}/features/`, priority: '0.9', freq: 'weekly' });
   const featureFiles = fs.readdirSync(FEATURES_DIR)
     .filter(f => f.endsWith('.html') && f !== 'index.html');
   for (const f of featureFiles) {
     urls.push({ loc: `${baseUrl}/features/${f}`, priority: '0.8', freq: 'monthly' });
   }
+
+  // 店舗個別ページ（stores/*.html を全件登録）
+  const storesDir = path.join(__dirname, 'stores');
+  if (fs.existsSync(storesDir)) {
+    const storeFiles = fs.readdirSync(storesDir)
+      .filter(f => f.endsWith('.html') && f !== 'index.html')
+      .sort();
+    for (const f of storeFiles) {
+      urls.push({ loc: `${baseUrl}/stores/${f}`, priority: '0.6', freq: 'monthly' });
+    }
+    console.log(`  ✅ sitemap.xml: 店舗ページ ${storeFiles.length}件を登録`);
+  }
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url>
@@ -645,7 +662,7 @@ ${urls.map(u => `  <url>
 </urlset>
 `;
   fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), xml, 'utf8');
-  console.log(`  ✅ sitemap.xml: ${urls.length}ページ登録`);
+  console.log(`  ✅ sitemap.xml: 合計 ${urls.length}ページ登録（トップ+その他4 + 特集${featureFiles.length + 1} + 店舗${urls.length - featureFiles.length - 5}）`);
 }
 
 // ─────────────────────────────────────────────
