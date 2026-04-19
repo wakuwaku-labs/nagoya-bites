@@ -444,6 +444,20 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .fav-btn.faved{color:#e74c3c;text-shadow:0 0 6px rgba(231,76,60,.5);}
 .grid.list-mode .fav-btn{position:static;width:28px;height:28px;font-size:.85rem;flex-shrink:0;align-self:center;background:var(--surface);color:var(--dim);}
 .grid.list-mode .fav-btn.faved{color:#e74c3c;background:rgba(231,76,60,.08);}
+/* ── PAGINATION ── */
+.pagination{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;align-items:center;padding:1.5rem 1.5rem 2.5rem;}
+.pagination:empty{display:none;}
+.pg-btn{background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:.78rem;min-width:38px;height:38px;padding:0 .8rem;border-radius:2px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;justify-content:center;line-height:1;}
+.pg-btn:hover:not(:disabled):not(.active){border-color:var(--gold);color:var(--gold);}
+.pg-btn.active{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:600;cursor:default;}
+.pg-btn:disabled{opacity:.35;cursor:not-allowed;}
+.pg-nav{font-size:.74rem;letter-spacing:.04em;}
+.pg-ellipsis{color:var(--dim);font-size:.85rem;padding:0 .25rem;user-select:none;}
+.pg-info{flex-basis:100%;text-align:center;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-top:.5rem;}
+@media(max-width:480px){
+.pagination{padding:1rem .8rem 2rem;gap:.3rem;}
+.pg-btn{min-width:34px;height:34px;font-size:.74rem;padding:0 .6rem;}
+}
 .nav-fav{color:var(--gold) !important;font-size:.72rem !important;letter-spacing:.08em !important;}
 /* ── GEOLOCATION BUTTON ── */
 .geo-btn{display:inline-flex;align-items:center;gap:.4rem;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:'Noto Sans JP',sans-serif;font-size:.68rem;padding:.42rem .9rem;border-radius:2px;cursor:pointer;transition:all .2s;white-space:nowrap;min-height:36px;}
@@ -882,6 +896,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 </div>
 
 <div class="grid" id="grid"></div>
+<div class="pagination" id="pagination" role="navigation" aria-label="ページネーション"></div>
 
 <!-- モーダル -->
 <div class="ov" id="ov" role="dialog" aria-modal="true" aria-label="店舗詳細">
@@ -959,10 +974,9 @@ var FILTERED = [];
 var ACTIVE_TAGS = [];
 var ACTIVE_WARD = 'all';
 // ── 仮想スクロール用（プログレッシブ・レンダリング）──
-var RENDER_BATCH = 30;
-var RENDER_CURSOR = 0;
+var PAGE_SIZE = 30;
+var CURRENT_PAGE = 1;
 var RENDER_DATA = [];
-var RENDER_IO = null;
 var AREA_TO_WARD = {'栄':'中区','大須':'中区','名古屋駅':'中村区','金山':'熱田区'};
 var WARD_AREAS = {
   'all': null,
@@ -1549,8 +1563,7 @@ function renderGrid(data) {
     }, 120);
   }
   var gridEl = document.getElementById('grid');
-  // 既存のObserverをクリーンアップ
-  if (RENDER_IO) { RENDER_IO.disconnect(); RENDER_IO = null; }
+  var pagEl = document.getElementById('pagination');
   if (!data.length) {
     gridEl.innerHTML = '<div class="empty-state">'
       + '<div class="empty-state-icon">🍽</div>'
@@ -1558,49 +1571,77 @@ function renderGrid(data) {
       + '<p>検索条件を変えるか、フィルターをリセットしてお試しください。</p>'
       + '<button class="empty-state-reset" onclick="clearAllFilters()">フィルターをリセット</button>'
       + '</div>';
+    if (pagEl) pagEl.innerHTML = '';
     return;
   }
   RENDER_DATA = data;
-  RENDER_CURSOR = 0;
-  gridEl.innerHTML = '';
-  renderNextBatch();
+  CURRENT_PAGE = 1;
+  renderPage(1);
 }
 
-function renderNextBatch() {
+function renderPage(pageNum) {
   var gridEl = document.getElementById('grid');
   if (!gridEl) return;
-  var end = Math.min(RENDER_CURSOR + RENDER_BATCH, RENDER_DATA.length);
+  var totalPages = Math.max(1, Math.ceil(RENDER_DATA.length / PAGE_SIZE));
+  if (pageNum < 1) pageNum = 1;
+  if (pageNum > totalPages) pageNum = totalPages;
+  CURRENT_PAGE = pageNum;
+  var start = (pageNum - 1) * PAGE_SIZE;
+  var end = Math.min(start + PAGE_SIZE, RENDER_DATA.length);
   var html = '';
-  for (var i = RENDER_CURSOR; i < end; i++) {
+  for (var i = start; i < end; i++) {
     html += buildCardHtml(RENDER_DATA[i]);
   }
-  // 既存sentinelがあれば削除してから追記
-  var oldSentinel = gridEl.querySelector('.grid-sentinel');
-  if (oldSentinel) oldSentinel.remove();
-  gridEl.insertAdjacentHTML('beforeend', html);
-  RENDER_CURSOR = end;
-  // まだ続きがあればsentinelを置いて監視
-  if (RENDER_CURSOR < RENDER_DATA.length) {
-    var sentinel = document.createElement('div');
-    sentinel.className = 'grid-sentinel';
-    sentinel.style.cssText = 'grid-column:1/-1;height:1px;visibility:hidden;';
-    gridEl.appendChild(sentinel);
-    if ('IntersectionObserver' in window) {
-      if (!RENDER_IO) {
-        RENDER_IO = new IntersectionObserver(function(entries) {
-          if (entries[0] && entries[0].isIntersecting) {
-            renderNextBatch();
-          }
-        }, { rootMargin: '600px 0px' });
-      }
-      RENDER_IO.observe(sentinel);
-    } else {
-      // IntersectionObserver非対応ブラウザは全件一気に描画
-      while (RENDER_CURSOR < RENDER_DATA.length) { renderNextBatch(); }
-    }
-  } else {
-    if (RENDER_IO) { RENDER_IO.disconnect(); RENDER_IO = null; }
+  gridEl.innerHTML = html;
+  renderPagination(totalPages);
+}
+
+function goToPage(pageNum) {
+  renderPage(pageNum);
+  // ページ切替時はグリッドの先頭までスクロール
+  var gridEl = document.getElementById('grid');
+  if (gridEl) {
+    var rect = gridEl.getBoundingClientRect();
+    var top = rect.top + window.pageYOffset - 110; // ヘッダ＆stickyバー分オフセット
+    window.scrollTo({ top: top, behavior: 'smooth' });
   }
+}
+
+function renderPagination(totalPages) {
+  var pagEl = document.getElementById('pagination');
+  if (!pagEl) return;
+  if (totalPages <= 1) { pagEl.innerHTML = ''; return; }
+
+  var p = CURRENT_PAGE;
+  var pages = [];
+  // 先頭・末尾と現在ページ周辺のみ表示
+  var add = function(n) { if (pages.indexOf(n) === -1) pages.push(n); };
+  add(1);
+  for (var i = p - 2; i <= p + 2; i++) {
+    if (i > 1 && i < totalPages) add(i);
+  }
+  if (totalPages > 1) add(totalPages);
+  pages.sort(function(a,b){return a-b;});
+
+  var html = '';
+  // 前へ
+  html += '<button class="pg-btn pg-nav" ' + (p <= 1 ? 'disabled' : 'onclick="goToPage(' + (p-1) + ')"') + ' aria-label="前のページ">‹ 前へ</button>';
+  // ページ番号
+  var prev = 0;
+  pages.forEach(function(n){
+    if (prev && n - prev > 1) {
+      html += '<span class="pg-ellipsis">…</span>';
+    }
+    html += '<button class="pg-btn pg-num' + (n === p ? ' active' : '') + '" ' + (n === p ? 'aria-current="page"' : 'onclick="goToPage(' + n + ')"') + ' aria-label="' + n + 'ページ目">' + n + '</button>';
+    prev = n;
+  });
+  // 次へ
+  html += '<button class="pg-btn pg-nav" ' + (p >= totalPages ? 'disabled' : 'onclick="goToPage(' + (p+1) + ')"') + ' aria-label="次のページ">次へ ›</button>';
+  // 件数情報
+  var startItem = (p - 1) * PAGE_SIZE + 1;
+  var endItem = Math.min(p * PAGE_SIZE, RENDER_DATA.length);
+  html += '<div class="pg-info">' + startItem + '–' + endItem + ' / 全' + RENDER_DATA.length + '件</div>';
+  pagEl.innerHTML = html;
 }
 
 function openM(i) {
