@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "nagoya-bites-vigorous",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["http-server", "-p", "8085", "-c-1", "--no-dotfiles"],
+      "port": 8085
+    }
+  ]
+}

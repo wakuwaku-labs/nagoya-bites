@@ -154,6 +154,12 @@ function renderStorePage(s, slug) {
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
+function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${title}</title>
 <meta name="description" content="${desc.replace(/"/g, '&quot;')}">
