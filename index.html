@@ -1458,7 +1458,41 @@ function renderSkeletons() {
   }).join('');
 }
 
-function gmap(name, area) { return 'https://maps.google.com/search?q=' + encodeURIComponent(name + ' ' + (area||'')); }
+// エリアから1つ目の地名のみを抽出（"栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄" → "栄"）
+// Hotpepperの middle_area.name は複数エリアがスラッシュ区切り＋半角カナで連結されており
+// 外部検索（Instagram/食べログ/TikTok/X/Google）にそのまま渡すと一致しなくなるため整形する
+function cleanArea(area) {
+  if (!area) return '';
+  // 半角カナ・記号で先に分割が壊れないよう、まず "/" で分割
+  var first = String(area).split('/')[0] || '';
+  // 半角カナ（ｱ-ﾝ等）を除去（例: "栄ｷﾀ" → "栄"）
+  first = first.replace(/[\uFF61-\uFF9F]+/g, '').trim();
+  return first;
+}
+// 外部サービス（Instagram/食べログ/TikTok/X）の検索クエリは「店名 + 名古屋」で固定する。
+// Hotpepperのエリア名は "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄" のように複数地名が連結されており、
+// そのまま検索クエリに含めると一致しないため、汎用ワード「名古屋」で位置補完する方が確実。
+function searchKeyword(name) {
+  return (name || '').trim() + ' 名古屋';
+}
+// 既存の Instagram検索 / TikTok検索 / X検索 URL は build 時にゴミエリアを含んだまま
+// 焼き付けられているため、レンダー時に常に再計算したURLを優先する
+function instagramSearchUrl(r) {
+  if (r['Instagram'] && r['Instagram'].trim()) return r['Instagram'];
+  return 'https://www.instagram.com/explore/search/keyword/?q=' + encodeURIComponent(searchKeyword(r['店名']));
+}
+function tabelogSearchUrl(r) {
+  if (r['食べログURL'] && r['食べログURL'].trim()) return r['食べログURL'];
+  // 名古屋駅エリア固定だと栄等のお店がヒットしないので、愛知県全域の検索URLにする
+  return 'https://tabelog.com/aichi/rstLst/?sw=' + encodeURIComponent(searchKeyword(r['店名']));
+}
+function tiktokSearchUrl(r) {
+  return 'https://www.tiktok.com/search?q=' + encodeURIComponent(searchKeyword(r['店名']));
+}
+function xSearchUrl(r) {
+  return 'https://x.com/search?q=' + encodeURIComponent(searchKeyword(r['店名']));
+}
+function gmap(name, area) { return 'https://maps.google.com/search?q=' + encodeURIComponent((name || '') + ' ' + (cleanArea(area) || '名古屋')); }
 
 function buildCardHtml(r) {
     var idx = ALL_STORES.indexOf(r);
@@ -1468,10 +1502,10 @@ function buildCardHtml(r) {
     var pref = r['都道府県'] || '';
     var area = r['エリア'] || '';
     var mediaLinks = '<a class="ml hp" href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation()">🌶 Hotpepper</a>'
-      + '<a class="ml tb" href="' + (r['食べログURL'] || 'https://tabelog.com/aichi/A2301/A230101/rstLst/?vs=1&sa=%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85&sw=' + encodeURIComponent(r['店名'])) + '" target="_blank" onclick="event.stopPropagation()">🍽 食べログ</a>'
-      + '<a class="ml ig" href="' + (r['Instagram'] || r['Instagram検索'] || 'https://www.instagram.com/explore/search/keyword/?q=' + encodeURIComponent(r['店名'] + ' 名古屋')) + '" target="_blank" onclick="event.stopPropagation()">📸 Instagram</a>'
-      + '<a class="ml tk" href="' + (r['TikTok検索']||'#') + '" target="_blank" onclick="event.stopPropagation()">🎵 TikTok</a>'
-      + '<a class="ml xx" href="' + (r['X検索']||'#') + '" target="_blank" onclick="event.stopPropagation()">𝕏 X</a>'
+      + '<a class="ml tb" href="' + tabelogSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()">🍽 食べログ</a>'
+      + '<a class="ml ig" href="' + instagramSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()">📸 Instagram</a>'
+      + '<a class="ml tk" href="' + tiktokSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()">🎵 TikTok</a>'
+      + '<a class="ml xx" href="' + xSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()">𝕏 X</a>'
       + '<a class="ml gm" href="' + gmap(r['店名'], area) + '" target="_blank" onclick="event.stopPropagation()">📍 Google</a>';
     var tags = (r['タグ']||'').split(',').map(function(t){return t.trim();}).filter(Boolean);
     var sceneTags = ['デート','女子会','接待','誕生日・記念日','歓送迎会','忘年会・新年会','家族・子連れ'];
@@ -1667,10 +1701,10 @@ function openM(i) {
   }
   var items = [
     {url:hpUrl, icon:'🌶',label:'Hotpepper'},
-    {url:r['食べログURL'] || 'https://tabelog.com/aichi/A2301/A230101/rstLst/?vs=1&sa=%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85&sw=' + encodeURIComponent(r['店名']), icon:'🍽',label:'食べログ'},
-    {url:r['Instagram'] || r['Instagram検索'] || ('https://www.instagram.com/explore/search/keyword/?q=' + encodeURIComponent((r['店名']||'') + ' 名古屋')), icon:'📸',label:'Instagram'},
-    {url:r['TikTok検索'], icon:'🎵',label:'TikTok'},
-    {url:r['X検索'], icon:'𝕏',label:'X'},
+    {url:tabelogSearchUrl(r), icon:'🍽',label:'食べログ'},
+    {url:instagramSearchUrl(r), icon:'📸',label:'Instagram'},
+    {url:tiktokSearchUrl(r), icon:'🎵',label:'TikTok'},
+    {url:xSearchUrl(r), icon:'𝕏',label:'X'},
     {url:gmap(r['店名'],r['エリア']), icon:'📍',label:'Google'}
   ];
   document.getElementById('mmg').innerHTML = items.map(function(m){
