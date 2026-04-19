@@ -53,6 +53,24 @@
 - **resolved**: 2026-04-15
 - モバイルで photo-grid を 2列表示に変更、3枚目を非表示に（iframe 2枚のみロード）
 
+### [ISSUE-018] 外部検索URL（Instagram/食べログ/TikTok/X）が公式アカウントに辿り着けない ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-19
+- **report**: ユーザーから「店舗のIGボタンを押しても検索結果が出ない」報告
+- **root cause**: `店名` フィールドに読み仮名（例: "壺中天 こちゅうてん"）が混入しており、外部サービスの検索クエリAND条件にひっかかってヒットせず
+- **fix Phase 1 (PR #8)**: `エリア` の生データ混入を除去、検索クエリを「店名 + 名古屋」固定に
+- **fix Phase 2 (このPR)**:
+  - `cleanStoreName()` ヘルパーで読み仮名・パレン括り読み・ダッシュ括り読みを除去
+  - `scripts/resolve_instagram.js` でビルド時に各店の公式IGアカウントURLを Yahoo!検索経由で事前解決
+  - `data/instagram_resolved.json` にキャッシュ
+  - `build.js` のサニタイズ後に解決済みURLをマージ
+  - `instagramSearchUrl(r)` は既に `r['Instagram']` を最優先するため、render時に直リンとして使われる
+  - 解決失敗店舗は `cleanStoreName + 名古屋` の検索URLにフォールバック
+- **next steps (フォローアップ)**:
+  - `node scripts/resolve_instagram.js` の長時間バッチ走行（4585店、〜4-5h）
+  - 食べログ・TikTok・Xの公式URL事前解決（同パターン）
+  - 自動再解決のCI化
+
 ---
 
 ## 未着手タスク（ready）
