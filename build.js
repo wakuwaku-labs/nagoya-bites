@@ -728,18 +728,10 @@ async function main() {
     `var LOCAL_STORES = ${jsonStr};`
   );
 
-  // 2. SEOクロール用の隠しリスト（noscript内に店舗名・エリア・ジャンルを列挙）
-  const noscriptItems = stores.map(s =>
-    `<li><a href="${escapeHtml('https://wakuwaku-labs.github.io/nagoya-bites/')}">${escapeHtml(s['店名'])}（${escapeHtml(s['エリア'] || '')} ${escapeHtml(s['ジャンル'] || '')}）</a></li>`
-  ).join('\n');
-  const noscriptHtml = `<noscript><ul id="seo-store-list">\n${noscriptItems}\n</ul></noscript>`;
-
-  // 既存のnoscriptブロックを置き換え or 挿入
-  if (html.includes('<noscript><ul id="seo-store-list">')) {
-    html = html.replace(/<noscript><ul id="seo-store-list">[\s\S]*?<\/ul><\/noscript>/, noscriptHtml);
-  } else {
-    html = html.replace('<div id="grid">', noscriptHtml + '\n<div id="grid">');
-  }
+  // 2. SEOクロール用の内部リンク集は scripts/inject_store_links.js が
+  //    stores/*.html を元に正規リンク（stores/{slug}.html）で生成・挿入する。
+  //    ここでは仮埋めせず、ファイル書き込み後に呼び出す（以前の実装は全リンクが
+  //    トップページURLになっていたため、スラグへの直リンクに修正）。
 
   // 3. lastmod を今日の日付に更新
   const today = new Date().toISOString().slice(0, 10);
@@ -750,6 +742,14 @@ async function main() {
 
   fs.writeFileSync(HTML, html, 'utf8');
   console.log('index.html 更新完了');
+
+  // 2b. 内部リンク集（noscript#seo-store-list + section#store-index）を再生成
+  try {
+    const { execSync } = require('child_process');
+    execSync('node ' + JSON.stringify(path.join(__dirname, 'scripts', 'inject_store_links.js')), { stdio: 'inherit' });
+  } catch (e) {
+    console.warn('inject_store_links.js の実行に失敗しました:', e.message);
+  }
 
   // 4. sitemap.xml を更新
   //    トップ + 静的ページ + features/ 全件 + stores/ 全件 を列挙
