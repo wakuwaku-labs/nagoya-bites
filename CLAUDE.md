@@ -47,7 +47,7 @@
 ## 絶対に守る制約（エージェント全員共通）
 
 ```
-1. index.html は単一ファイルで維持する（サイト用の新ファイル追加禁止 ※features/配下の特集記事は例外）
+1. index.html は単一ファイルで維持する（サイト用の新ファイル追加禁止 ※features/配下の特集記事・journal/配下の日次記事は例外）
 2. var LOCAL_STORES = [...]; のパターンを壊さない
 3. テキストはすべて日本語
 4. サイト用の新npm依存関係を追加しない（CDNリンクはOK）
@@ -113,4 +113,7 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `agents/editor.md` | Editor の編集方針・コンテンツ基準 |
 | `index.html` | サイト本体（編集対象） |
 | `features/` | 特集記事ディレクトリ（Editor管轄） |
+| `journal/` | 日次記事ディレクトリ（Editor管轄・毎日1本公開） |
+| `docs/daily-posts/` | 日次SNS原稿（Note/Instagram/X 3種、コピペ投稿用） |
+| `.claude/commands/journal-today.md` | `/journal-today` スラッシュコマンド（日次起動） |
 | `build.js` | データ埋め込みスクリプト（DataKeeper管轄） |

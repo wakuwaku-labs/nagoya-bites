@@ -554,8 +554,18 @@ async function main() {
   console.log(`Hot Pepper 新規: ${newStores.length}件（重複除外:${dupCount} / 名古屋市外除外:${outsideCount}）`);
 
   // 結合（Google Sheets → Hot Pepper新規の順）
-  const mergedStores = gsStores.concat(newStores);
+  let mergedStores = gsStores.concat(newStores);
   console.log(`結合後: ${mergedStores.length}件`);
+
+  // pending_stores.json (journal 経由で追加された外部媒体由来の話題店) をマージ
+  try {
+    const { mergePendingStores } = require('./scripts/merge_pending_stores.js');
+    const pendingResult = mergePendingStores(mergedStores);
+    mergedStores = pendingResult.merged;
+    console.log(`pending_stores: ${pendingResult.addedCount}件追加 / ${pendingResult.skippedCount}件既存`);
+  } catch (e) {
+    console.warn(`pending_stores マージ失敗: ${e.message}`);
+  }
 
   // 品質フィルタ：名古屋市内と確信できるものだけ残す
   const stores = [];
@@ -718,6 +728,7 @@ async function main() {
   // 4. sitemap.xml を更新
   //    トップ + 静的ページ + features/ 全件 + stores/ 全件 を列挙
   const featuresDir = path.join(__dirname, 'features');
+  const journalDir = path.join(__dirname, 'journal');
   const storesDir = path.join(__dirname, 'stores');
   const baseUrl = 'https://wakuwaku-labs.github.io/nagoya-bites';
 
@@ -738,6 +749,21 @@ async function main() {
       sitemapUrls.push({
         loc: `${baseUrl}/features/${f}`,
         priority: '0.8',
+        changefreq: 'monthly'
+      });
+    }
+  }
+
+  // journal/ インデックス + 個別日次記事 (drafts/ と _template.html は除外)
+  if (fs.existsSync(journalDir)) {
+    sitemapUrls.push({ loc: `${baseUrl}/journal/`, priority: '0.9', changefreq: 'daily' });
+    const journalFiles = fs.readdirSync(journalDir)
+      .filter(f => f.endsWith('.html') && f !== 'index.html' && f !== '_template.html')
+      .sort();
+    for (const f of journalFiles) {
+      sitemapUrls.push({
+        loc: `${baseUrl}/journal/${f}`,
+        priority: '0.7',
         changefreq: 'monthly'
       });
     }
