@@ -53,6 +53,32 @@
 - **resolved**: 2026-04-15
 - モバイルで photo-grid を 2列表示に変更、3枚目を非表示に（iframe 2枚のみロード）
 
+### [EDT-001] 編集規約（マニフェスト）ページ新設 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-20
+- **category**: editorial / differentiation
+- **description**:
+  「業界人運営」という差別化が claim のままで弱い問題を解決するため、編集規約ページを新設。
+  匿名性をミシュラン型で「編集倫理の担保」として肯定的に提示し、
+  編集部を集団軸（役職のみ開示）でブランド人格化する。
+- **positioning shift**:
+  - 武器を「現場取材量」ではなく「業界人の解釈力」として定義
+  - 公開情報を業界知識で読み解くキュレーターとしての立ち位置
+  - 実地訪問は編集判断の一要素（必須ではない）
+- **content sections**:
+  01. Editorial Principles（3柱）/ 02. Selection Criteria（5基準、他メディア実績を含む）
+  / 03. Independence（金銭関係・広告の扱い）/ 04. Why Anonymous（匿名の理由・編集部構成）
+  / 05. Inside Perspective（解釈力の宣言）/ 06. The Courage to Decline（ランキング非採用等）
+  / 07. What We Never Do（NG 6項目）/ 08. Amendments
+- **files**:
+  - `features/editorial-policy.html`（新規）
+  - `features/index.html`（Editorial カードを最上部に追加）
+  - `index.html`（グローバルナビに Editorial リンクを追加）
+- **follow-up**:
+  - 将来 about.html を個人軸→集団軸へ段階移行（別タスク）
+  - 各特集記事末から editorial-policy.html を参照する動線追加を検討
+  - 「編集部が今月最も通った店」など実感指標の公開記事を作る
+
 ### [ISSUE-018] 外部検索URL（Instagram/食べログ/TikTok/X）が公式アカウントに辿り着けない ✅
 - **priority**: P1 → **status**: done
 - **resolved**: 2026-04-19
