@@ -53,6 +53,33 @@
 - **resolved**: 2026-04-15
 - モバイルで photo-grid を 2列表示に変更、3枚目を非表示に（iframe 2枚のみロード）
 
+### [EDT-002] 編集部ピックフィールド追加（editor_picks.json） ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-20
+- **category**: editorial / proof
+- **description**:
+  EDT-001 で公開した編集規約の原則（他メディア掲載実績・業界人の解釈力・選ばない勇気・編集部の来店実績）を
+  個別店舗レベルで可視化するため、4 フィールドを追加。規約を claim から proof に転換。
+- **new fields**:
+  - `editorReason`: 掲載判断の根拠（60〜120字）
+  - `mediaFeatures`: 他メディア掲載履歴 `[{name, year?, url?}]`
+  - `insiderNote`: 業界人視点の解釈メモ（40〜100字）
+  - `visitStatus`: `visited | interview | desk`（編集部の実感指標）
+- **architecture**:
+  - `data/editor_picks.json`（新規）: C案（trending_stores.json と同パターンのオーバーレイ）
+  - `build.js`: trending マージブロック直後に editor_picks マージブロック追加
+  - `index.html`: CSS 5クラス追加・モーダル 3ブロック + visitStatus 行・sort 優先度更新
+- **mvp scope**: サンプル 5 店（あつた蓬莱軒/山本屋本店/まるは食堂/備長/矢場味仙）
+- **long-term**: 全 4588 店カバーを目標。上位→ジャンル別→全体の順で段階拡充
+- **files**:
+  - `data/editor_picks.json`（新規）
+  - `build.js`（+40行）
+  - `index.html`（+100行）
+- **follow-up**:
+  - 上位 100 店への editor_picks 拡充（EDT-003）
+  - editorial-policy.html から「編集部ピック一覧」への導線追加
+  - `avoidedReason`（選ばない勇気の裏表示）フィールドを後続 PR で検討
+
 ### [EDT-001] 編集規約（マニフェスト）ページ新設 ✅
 - **priority**: P1 → **status**: done
 - **resolved**: 2026-04-20

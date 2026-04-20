@@ -657,6 +657,42 @@ async function main() {
     console.log('data/trending_stores.json なし（話題フラグスキップ）');
   }
 
+  // 編集部ピックJSONをマージ（店名＋エリアで既存店舗にマッチングさせ、編集部フィールドを付与）
+  const editorPicksPath = path.join(__dirname, 'data/editor_picks.json');
+  if (fs.existsSync(editorPicksPath)) {
+    try {
+      const editorRaw = JSON.parse(fs.readFileSync(editorPicksPath, 'utf8'));
+      const picks = editorRaw.stores || [];
+      const today = new Date().toISOString().slice(0, 10);
+      let epApplied = 0, epMissing = [];
+      for (const p of picks) {
+        // 有効期限切れはスキップ
+        if (p['有効期限'] && p['有効期限'] < today) continue;
+        const hit = stores.find(s =>
+          s['店名'] === p['店名'] &&
+          (p['エリア'] ? s['エリア'] === p['エリア'] : true)
+        );
+        if (hit) {
+          if (p.editorReason) hit.editorReason = p.editorReason;
+          if (p.mediaFeatures) hit.mediaFeatures = p.mediaFeatures;
+          if (p.insiderNote) hit.insiderNote = p.insiderNote;
+          if (p.visitStatus) hit.visitStatus = p.visitStatus;
+          epApplied++;
+        } else {
+          epMissing.push(p['店名']);
+        }
+      }
+      console.log(`編集部ピック付与: ${epApplied}件 / マッチ失敗: ${epMissing.length}件`);
+      if (epMissing.length) {
+        console.log('  マッチ失敗の店名（要確認）:', epMissing.slice(0, 10).join(' / '));
+      }
+    } catch (e) {
+      console.error(`data/editor_picks.json の読み込み失敗: ${e.message}`);
+    }
+  } else {
+    console.log('data/editor_picks.json なし（編集部ピックスキップ）');
+  }
+
   // トレンドスコア算出
   const newHpIds = new Set(newStores.map(s => s['ホットペッパーID']).filter(Boolean));
   let trendHot = 0, trendRising = 0, trendWarm = 0;
