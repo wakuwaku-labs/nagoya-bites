@@ -463,6 +463,152 @@ function hpShopToStoreRecord(shop) {
 }
 
 // ────────────────────────────────────────────────────
+// 手動キュレーション店舗（data/manual_stores.json）
+// ────────────────────────────────────────────────────
+
+// JSON の1エントリを LOCAL_STORES の26フィールドスキーマへ射影
+function manualStoreToRecord(m) {
+  const searchQ = encodeURIComponent((m['店名'] || '') + ' 名古屋');
+  let score = parseInt(m['話題スコア']);
+  if (!Number.isFinite(score) || score < 0 || score > 100) score = 85;
+  const sources = Array.isArray(m['トレンド情報源']) && m['トレンド情報源'].length
+    ? m['トレンド情報源']
+    : ['手動キュレーション'];
+  return {
+    '店名': m['店名'] || '',
+    '英語名': m['英語名'] || '',
+    'ジャンル': m['ジャンル'] || '',
+    'エリア': m['エリア'] || '',
+    '都道府県': m['都道府県'] || '',
+    '価格帯': m['価格帯'] || '',
+    '営業時間': m['営業時間'] || '',
+    'アクセス': m['アクセス'] || '',
+    'ホットペッパーID': m['ホットペッパーID'] || '',
+    '写真URL': m['写真URL'] || '',
+    'Instagram': m['Instagram'] || '',
+    '食べログURL': m['食べログURL'] || '',
+    'TikTok検索': `https://www.tiktok.com/search?q=${searchQ}`,
+    'X検索': `https://x.com/search?q=${searchQ}`,
+    'Instagram検索': `https://www.instagram.com/explore/search/keyword/?q=${searchQ}`,
+    '公開フラグ': 'TRUE',
+    '備考': m['備考'] || '',
+    'タグ': m['タグ'] || '',
+    'Google評価': m['Google評価'] != null ? String(m['Google評価']) : '',
+    'Instagram投稿URL': '',
+    'おすすめポイント': m['おすすめポイント'] || '',
+    '内観写真URL': '',
+    '料理写真URL1': '',
+    '料理写真URL2': '',
+    '口コミ数': '',
+    // フラグ類（manual 側で焼き込み）
+    '話題フラグ': m['話題フラグ'] === true,
+    '編集部推薦': m['編集部推薦'] === true,
+    '話題スコア': score,
+    '話題コメント': m['コメント'] || '',
+    'トレンド情報源': sources,
+    'キュレーター': m['キュレーター'] || '',
+    '追加日': m['追加日'] || '',
+    // サニタイゼーション迂回用の一時フラグ（LOCAL_STORES 書き込み前に削除）
+    '__manual': true
+  };
+}
+
+// manual_stores.json を読み込みバリデーション付きで返す
+function loadManualStores() {
+  const result = { stores: [], invalid: 0, warnings: 0, enriched: 0 };
+  const manualPath = path.join(__dirname, 'data/manual_stores.json');
+  if (!fs.existsSync(manualPath)) {
+    console.log('手動キュレーション: data/manual_stores.json なし（スキップ）');
+    return result;
+  }
+  let raw;
+  try {
+    raw = JSON.parse(fs.readFileSync(manualPath, 'utf8'));
+  } catch (e) {
+    console.error(`[manual] JSON構文エラー: ${e.message}（手動追加ゼロ件で build 継続）`);
+    return result;
+  }
+  const list = Array.isArray(raw.stores) ? raw.stores : [];
+  if (!list.length) {
+    console.log('手動キュレーション: stores 配列が空（スキップ）');
+    return result;
+  }
+  const today = new Date().toISOString().slice(0, 10);
+  const required = ['店名', 'エリア', '都道府県', 'ジャンル', 'アクセス', 'キュレーター', '追加日', 'おすすめポイント'];
+  for (const entry of list) {
+    if (!entry || typeof entry !== 'object') { result.invalid++; continue; }
+    // 必須欠如チェック
+    const missing = required.filter(k => !entry[k] || !String(entry[k]).trim());
+    if (missing.length) {
+      console.warn(`[manual] 必須欠如: ${entry['店名'] || '(店名なし)'} — 欠如: ${missing.join(', ')}`);
+      result.invalid++;
+      continue;
+    }
+    let m = entry;
+    // 有効期限切れ
+    if (m['有効期限'] && m['有効期限'] < today) {
+      console.warn(`[manual] 有効期限切れ: ${m['店名']} (${m['有効期限']}) — フラグ類を落として投入`);
+      m = { ...m, '話題フラグ': false, '編集部推薦': false };
+      result.warnings++;
+    }
+    // 日付形式チェック（警告のみ）
+    if (m['追加日'] && !/^\d{4}-\d{2}-\d{2}$/.test(m['追加日'])) {
+      console.warn(`[manual] 追加日がYYYY-MM-DD形式でない: ${m['店名']} (${m['追加日']})`);
+      result.warnings++;
+    }
+    // 愛知県外の警告
+    if (m['都道府県'] && m['都道府県'] !== '愛知県') {
+      console.warn(`[manual] 都道府県が愛知県でない: ${m['店名']} (${m['都道府県']})`);
+      result.warnings++;
+    }
+    // アクセス欄に名古屋シグナルがあるかの軽チェック
+    const access = m['アクセス'] || '';
+    if (!/名古屋/.test(access)) {
+      console.warn(`[manual] アクセス欄に「名古屋」を含まない: ${m['店名']} — isNagoyaStoreで弾かれる可能性あり`);
+      result.warnings++;
+    }
+    result.stores.push(manualStoreToRecord(m));
+  }
+  return result;
+}
+
+// mergedStores に合流。衝突は上書き拡充、新規は return
+function mergeManualStores(mergedStores, manualStores, existingHpIds) {
+  const newRecords = [];
+  for (const m of manualStores) {
+    // 衝突キー1: ホットペッパーID
+    let hit = null;
+    if (m['ホットペッパーID']) {
+      hit = mergedStores.find(s => s['ホットペッパーID'] && s['ホットペッパーID'] === m['ホットペッパーID']);
+    }
+    // 衝突キー2: 店名＋エリア
+    if (!hit) {
+      hit = mergedStores.find(s => s['店名'] === m['店名'] && s['エリア'] === m['エリア']);
+    }
+    if (hit) {
+      // 上書き拡充（店名は既存優先、Instagram/写真URL/おすすめポイント/フラグは manual 優先）
+      if (m['Instagram']) hit['Instagram'] = m['Instagram'];
+      if (m['写真URL']) hit['写真URL'] = m['写真URL'];
+      if (m['食べログURL']) hit['食べログURL'] = m['食べログURL'];
+      if (m['Google評価']) hit['Google評価'] = m['Google評価'];
+      if (m['タグ']) hit['タグ'] = m['タグ'];
+      if (m['おすすめポイント']) hit['おすすめポイント'] = m['おすすめポイント'];
+      if (m['話題フラグ'] === true) hit['話題フラグ'] = true;
+      if (m['編集部推薦'] === true) hit['編集部推薦'] = true;
+      if (typeof m['話題スコア'] === 'number') hit['話題スコア'] = m['話題スコア'];
+      if (m['話題コメント']) hit['話題コメント'] = m['話題コメント'];
+      if (m['トレンド情報源']) hit['トレンド情報源'] = m['トレンド情報源'];
+      hit['__manual'] = true;  // サニタイゼーション迂回
+      continue;
+    }
+    // 新規追加
+    if (m['ホットペッパーID']) existingHpIds.add(m['ホットペッパーID']);
+    newRecords.push(m);
+  }
+  return newRecords;
+}
+
+// ────────────────────────────────────────────────────
 // トレンドスコア算出
 // ────────────────────────────────────────────────────
 function calcTrendScore(store, isNew) {
@@ -489,6 +635,12 @@ function calcTrendScore(store, isNew) {
   if (isNew) score += 10;
   // 話題フラグ（外部シグナル）— メディア露出・食べログ高順位等。+40 加点、かつ話題スコアがあれば反映
   if (store['話題フラグ'] === true) {
+    score += 40;
+    const buzz = parseInt(store['話題スコア']) || 0;
+    if (buzz > 0) score = Math.max(score, buzz);
+  }
+  // 編集部推薦（業界人目利きシグナル）— 話題フラグと同格で +40。両方 true でも二重加点はしない
+  if (store['編集部推薦'] === true && store['話題フラグ'] !== true) {
     score += 40;
     const buzz = parseInt(store['話題スコア']) || 0;
     if (buzz > 0) score = Math.max(score, buzz);
@@ -571,6 +723,13 @@ async function main() {
     console.warn(`pending_stores マージ失敗: ${e.message}`);
   }
 
+  // 手動キュレーション店の合流（Hot Pepper/GSheetsに載っていない高品質店）
+  const manualResult = loadManualStores();
+  const manualNew = mergeManualStores(mergedStores, manualResult.stores, existingHpIds);
+  mergedStores.push(...manualNew);
+  const manualEnriched = manualResult.stores.length - manualNew.length;
+  console.log(`手動キュレーション: 新規${manualNew.length}件 / 既存拡充${manualEnriched}件 / 無効${manualResult.invalid}件 (警告${manualResult.warnings}件)`);
+
   // 品質フィルタ：名古屋市内と確信できるものだけ残す
   const stores = [];
   const rejected = [];
@@ -584,13 +743,23 @@ async function main() {
   console.log(`品質フィルタ: ${stores.length}件通過 / ${rejected.length}件除外`);
 
   // データサニタイゼーション（検証不能なInstagram/写真URL・自動生成推薦文のクリア）
+  // 手動キュレーション店（__manual=true）はバイパス（公式URLが手動指定されているため）
   let sanitizedPoints = 0;
+  let manualBypassed = 0;
   for (const s of stores) {
+    if (s.__manual) {
+      // 価格帯の正規化のみ実施
+      s['価格帯'] = normalizePrice(s['価格帯']);
+      manualBypassed++;
+      continue;
+    }
     const hadPoint = !!s['おすすめポイント'];
     sanitizeStore(s);
     if (hadPoint && !s['おすすめポイント']) sanitizedPoints++;
   }
-  console.log(`サニタイゼーション: Instagram/写真URL=全件クリア / おすすめポイント=${sanitizedPoints}件自動生成パターンをクリア`);
+  // 一時フラグ __manual を LOCAL_STORES から除去
+  for (const s of stores) { delete s.__manual; }
+  console.log(`サニタイゼーション: Instagram/写真URL=全件クリア / おすすめポイント=${sanitizedPoints}件自動生成パターンをクリア / 手動キュレーション${manualBypassed}件はバイパス`);
 
   // Instagram 検索URL バックフィル — 全店に Instagram検索 を付与（既存 TikTok検索/X検索 と同パターン）
   // エリアは複数連結（"栄ｷﾀ錦/伏見丸の内/..."）でクエリに含めると一致しないため、店名＋名古屋に固定
