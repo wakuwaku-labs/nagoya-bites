@@ -1,0 +1,18 @@
+{
+  "name": "nagoya-bites-tools",
+  "version": "1.0.0",
+  "description": "Nagoya Bites 管理ツール",
+  "scripts": {
+    "tag-server": "node manual_tagging_server.js",
+    "hotpepper": "node hotpepper_fetch.js",
+    "claude-tag": "node claude_tagging.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "express": "^4.18.2",
+    "googleapis": "^140.0.0",
+    "puppeteer": "^24.40.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}

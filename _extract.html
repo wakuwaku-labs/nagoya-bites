@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head><title>Data Extract</title></head>
+<body>
+<h1>Extracting store data...</h1>
+<pre id="output">Loading...</pre>
+<script>
+// Load index.html's LOCAL_STORES
+var script = document.createElement('script');
+script.onload = function() {
+  if (typeof LOCAL_STORES === 'undefined') {
+    document.getElementById('output').textContent = 'LOCAL_STORES not found';
+    return;
+  }
+  extract();
+};
+
+// We'll parse the file directly
+fetch('/index.html')
+  .then(r => r.text())
+  .then(html => {
+    var match = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);\s*(?:var|let|const|function|\/\/)/);
+    if (!match) {
+      document.getElementById('output').textContent = 'Pattern not found';
+      return;
+    }
+    var stores = JSON.parse(match[1]);
+
+    var meieki = stores.filter(function(s) {
+      var area = s['\u30a8\u30ea\u30a2'] || '';
+      return area.indexOf('\u540d\u99c5') >= 0 || area.indexOf('\u540d\u53e4\u5c4b\u99c5') >= 0;
+    });
+
+    var sakae = stores.filter(function(s) {
+      var area = s['\u30a8\u30ea\u30a2'] || '';
+      return area.indexOf('\u6804') >= 0 || area.indexOf('\u9326') >= 0;
+    });
+
+    function sortByScore(arr) {
+      return arr.sort(function(a, b) {
+        return (parseFloat(b['Google\u8a55\u4fa1']) || 0) - (parseFloat(a['Google\u8a55\u4fa1']) || 0);
+      });
+    }
+
+    var out = '=== MEIEKI (' + meieki.length + ' total) TOP 15 ===\n';
+    sortByScore(meieki).slice(0, 15).forEach(function(s, i) {
+      out += JSON.stringify({
+        n: i + 1,
+        name: s['\u5e97\u540d'],
+        genre: s['\u30b8\u30e3\u30f3\u30eb'],
+        area: s['\u30a8\u30ea\u30a2'],
+        score: s['Google\u8a55\u4fa1'],
+        tags: s['\u30bf\u30b0'],
+        hpid: s['\u30db\u30c3\u30c8\u30da\u30c3\u30d1\u30fcID'],
+        point: s['\u304a\u3059\u3059\u3081\u30dd\u30a4\u30f3\u30c8']
+      }) + '\n';
+    });
+
+    out += '\n=== SAKAE (' + sakae.length + ' total) TOP 15 ===\n';
+    sortByScore(sakae).slice(0, 15).forEach(function(s, i) {
+      out += JSON.stringify({
+        n: i + 1,
+        name: s['\u5e97\u540d'],
+        genre: s['\u30b8\u30e3\u30f3\u30eb'],
+        area: s['\u30a8\u30ea\u30a2'],
+        score: s['Google\u8a55\u4fa1'],
+        tags: s['\u30bf\u30b0'],
+        hpid: s['\u30db\u30c3\u30c8\u30da\u30c3\u30d1\u30fcID'],
+        point: s['\u304a\u3059\u3059\u3081\u30dd\u30a4\u30f3\u30c8']
+      }) + '\n';
+    });
+
+    document.getElementById('output').textContent = out;
+  });
+</script>
+</body>
+</html>
