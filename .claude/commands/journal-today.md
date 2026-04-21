@@ -121,7 +121,7 @@ node build.js
 ```bash
 git add journal/ data/journal_published.json data/pending_stores.json docs/daily-posts/ index.html sitemap.xml
 git commit -m "journal: YYYY-MM-DD — <テーマ短縮> <主題>"
-git push origin main
+git push origin HEAD:main
 ```
 
 ### 11. SNS投稿案内
