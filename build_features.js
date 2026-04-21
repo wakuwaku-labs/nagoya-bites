@@ -449,6 +449,25 @@ function escapeHtml(s) {
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+const SITE_BASE_URL = 'https://wakuwaku-labs.github.io/nagoya-bites';
+
+/** gen-store-pages.js の toSlug と同じロジック。両方で slugs を揃えるため重複定義 */
+function toStoreSlug(store) {
+  if (store['ホットペッパーID']) return store['ホットペッパーID'];
+  if (store['英語名']) {
+    return store['英語名'].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  }
+  const ascii = (store['店名'] || '').replace(/[^\x00-\x7F]/g, '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  if (ascii.length >= 3) return ascii;
+  return 'store-' + Buffer.from(store['店名'] || '', 'utf8').toString('hex').slice(0, 16);
+}
+
+/** 自サイト内の店舗詳細ページURL — 構造化データ・内部リンク両方で使用 */
+function getInternalStoreUrl(store) {
+  return `${SITE_BASE_URL}/stores/${toStoreSlug(store)}.html`;
+}
+
+/** 外部予約URL（カード内の「予約」ボタン用） */
 function getStoreUrl(store) {
   const hpid = store['ホットペッパーID'];
   if (hpid) return `https://www.hotpepper.jp/str${hpid}/`;
@@ -473,7 +492,8 @@ function generateStoreCard(store, index, config) {
   const price = escapeHtml(store['価格帯'] || '');
   const desc = escapeHtml(config.descGenerator(store));
   const tags = (store['タグ'] || '').split(',').map(t => t.trim()).filter(Boolean).slice(0, 3);
-  const url = getStoreUrl(store);
+  const externalUrl = getStoreUrl(store);
+  const internalUrl = getInternalStoreUrl(store);
   const photo = getPhotoUrl(store);
 
   const scoreMeta = score ? `<span class="score">★ ${escapeHtml(score)}</span>` : '';
@@ -488,11 +508,14 @@ function generateStoreCard(store, index, config) {
         <div class="store-num">${num}</div>
         ${photoHtml}
         <div class="store-info">
-          <div class="store-name">${name}</div>
+          <div class="store-name"><a href="${escapeHtml(internalUrl)}">${name}</a></div>
           <div class="store-meta"><span>${area}</span><span>${genre}</span>${scoreMeta}${priceMeta}</div>
           <p class="store-desc">${desc}</p>
           <div class="store-tags">${tagsHtml}</div>
-          <a class="store-link" href="${escapeHtml(url)}" target="_blank" rel="noopener">予約・詳細を見る →</a>
+          <div class="store-actions">
+            <a class="store-link store-link-internal" href="${escapeHtml(internalUrl)}">詳細ページを見る →</a>
+            <a class="store-link" href="${escapeHtml(externalUrl)}" target="_blank" rel="noopener">予約はこちら →</a>
+          </div>
         </div>
       </div>`;
 }
@@ -502,7 +525,7 @@ function generateItemListJsonLd(stores, config) {
     '@type': 'ListItem',
     position: i + 1,
     name: s['店名'],
-    url: getStoreUrl(s),
+    url: getInternalStoreUrl(s),
   }));
   return JSON.stringify({
     '@context': 'https://schema.org',
@@ -514,12 +537,105 @@ function generateItemListJsonLd(stores, config) {
 }
 
 // ─────────────────────────────────────────────
+// FAQ 読み込み・差し込み処理
+//   data/feature_faqs.json に特集ファイル名をキーとして Q&A 配列を定義すると、
+//   各特集HTMLに以下を自動差し込み:
+//     1. <!-- FAQ-LD:START/END --> マーカー (<head>内) に FAQPage JSON-LD
+//     2. <!-- FAQ-HTML:START/END --> マーカーがあればそこに可視 Q&A セクション
+//        マーカーがなければ最初に見つかる </article> または </main> 直前に挿入
+// ─────────────────────────────────────────────
+const FAQ_JSON_PATH = path.join(__dirname, 'data', 'feature_faqs.json');
+
+function loadFeatureFAQs() {
+  try {
+    if (!fs.existsSync(FAQ_JSON_PATH)) return {};
+    return JSON.parse(fs.readFileSync(FAQ_JSON_PATH, 'utf8'));
+  } catch (e) {
+    console.warn(`  ⚠ feature_faqs.json 読み込み失敗: ${e.message}`);
+    return {};
+  }
+}
+
+function generateFAQPageJsonLd(items) {
+  if (!items || !items.length) return '';
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a }
+    }))
+  });
+}
+
+function generateFAQHtmlBlock(items) {
+  if (!items || !items.length) return '';
+  const itemsHtml = items.map(({ q, a }) =>
+    `    <div class="faq-item">
+      <div class="faq-q">${escapeHtml(q)}</div>
+      <div class="faq-a">${escapeHtml(a)}</div>
+    </div>`
+  ).join('\n');
+  return `  <section class="faq-section" aria-label="よくある質問">
+    <h2>よくある質問</h2>
+${itemsHtml}
+  </section>`;
+}
+
+/** 特集HTMLに FAQ JSON-LD と可視セクションを差し込む */
+function injectFAQ(html, featureFile, faqMap) {
+  const items = faqMap[featureFile];
+  if (!items || !items.length) return html;
+
+  // 1. JSON-LD（<head>内）
+  const ldRe = /<!--\s*FAQ-LD:START\s*-->[\s\S]*?<!--\s*FAQ-LD:END\s*-->/;
+  const jsonLd = generateFAQPageJsonLd(items);
+  const ldReplacement = `<!-- FAQ-LD:START -->\n<script type="application/ld+json">\n${jsonLd}\n</script>\n<!-- FAQ-LD:END -->`;
+  if (html.match(ldRe)) {
+    html = html.replace(ldRe, ldReplacement);
+  } else {
+    html = html.replace('</head>', ldReplacement + '\n</head>');
+  }
+
+  // 2. 可視 FAQ セクション
+  const htmlRe = /<!--\s*FAQ-HTML:START\s*-->[\s\S]*?<!--\s*FAQ-HTML:END\s*-->/;
+  const faqBlock = generateFAQHtmlBlock(items);
+  const htmlReplacement = `<!-- FAQ-HTML:START -->\n${faqBlock}\n<!-- FAQ-HTML:END -->`;
+  if (html.match(htmlRe)) {
+    html = html.replace(htmlRe, htmlReplacement);
+  } else {
+    // マーカーなし → </article> 直前、なければ </main> 直前に挿入（冪等化のためマーカー付きで入れる）
+    const injectBeforeMain = htmlReplacement + '\n';
+    if (html.includes('</article>')) {
+      html = html.replace('</article>', injectBeforeMain + '</article>');
+    } else if (html.includes('</main>')) {
+      html = html.replace('</main>', injectBeforeMain + '</main>');
+    }
+  }
+  return html;
+}
+
+// ─────────────────────────────────────────────
 // CSS追加: 写真表示用スタイル
 // ─────────────────────────────────────────────
 const PHOTO_CSS = `
 .store-photo{flex-shrink:0;width:160px;height:120px;border-radius:4px;overflow:hidden;background:var(--bg2);}
 .store-photo img{width:100%;height:100%;object-fit:cover;}
-@media(max-width:640px){.store-photo{width:100%;height:180px;}}`;
+@media(max-width:640px){.store-photo{width:100%;height:180px;}}
+.store-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.4rem;}
+.store-link-internal{background:transparent;border:1px solid rgba(122,92,16,.4);color:var(--gold,#7a5c10);}
+.store-link-internal:hover{background:rgba(122,92,16,.08);}
+.store-name a{color:inherit;text-decoration:none;}
+.store-name a:hover{color:var(--gold,#7a5c10);}
+.faq-section{margin:2.4rem 0;padding:1.6rem;background:rgba(122,92,16,.04);border-left:3px solid var(--gold,#7a5c10);border-radius:0 4px 4px 0;}
+.faq-section h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.4rem;margin-bottom:1.2rem;color:var(--text,#1c1c1a);}
+.faq-section .faq-item{margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid rgba(0,0,0,.08);}
+.faq-section .faq-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.faq-section .faq-q{font-weight:500;margin-bottom:.5rem;color:var(--text,#1c1c1a);}
+.faq-section .faq-q::before{content:'Q. ';color:var(--gold,#7a5c10);font-weight:600;}
+.faq-section .faq-a{font-size:.92rem;line-height:1.8;color:rgba(28,28,26,.78);}
+.faq-section .faq-a::before{content:'A. ';color:var(--gold,#7a5c10);font-weight:600;}`;
 
 function ensurePhotoCSS(html) {
   if (html.includes('.store-photo')) return html;
@@ -537,7 +653,7 @@ function readStores() {
   return JSON.parse(match[1]);
 }
 
-function updateFeatureArticle(stores, config) {
+function updateFeatureArticle(stores, config, faqMap) {
   const filePath = path.join(FEATURES_DIR, config.file);
   if (!fs.existsSync(filePath)) {
     console.log(`  ⏭ ${config.file}: ファイルなし（スキップ）`);
@@ -600,6 +716,9 @@ function updateFeatureArticle(stores, config) {
     );
   }
 
+  // 6. FAQ 差し込み(data/feature_faqs.json に定義があれば)
+  html = injectFAQ(html, config.file, faqMap || {});
+
   fs.writeFileSync(filePath, html, 'utf8');
   console.log(`  ✅ ${config.file}: ${filtered.length}件更新`);
   return filtered.length;
@@ -621,31 +740,186 @@ function updateFeaturesIndex(results) {
   console.log('  ✅ features/index.html: 店舗数を更新');
 }
 
+function escapeXml(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+}
+
+/** 店舗HTMLの og:image を正規表現抽出(parseエラー安全) */
+function extractOgImage(html) {
+  const m = html.match(/<meta\s+property=["']og:image["']\s+content=["']([^"']+)["']/i);
+  return m ? m[1] : '';
+}
+
+/** journal HTML から公開日を抽出(YYYY-MM-DD) */
+function extractJournalDate(filename, html) {
+  const fnMatch = filename.match(/^(\d{4}-\d{2}-\d{2})/);
+  if (fnMatch) return fnMatch[1];
+  const metaMatch = html.match(/<meta\s+(?:property|name)=["'](?:article:published_time|date)["']\s+content=["']([^"']+)["']/i);
+  if (metaMatch) return metaMatch[1].slice(0, 10);
+  return '';
+}
+
+/** journal HTML からタイトルを抽出 */
+function extractTitle(html) {
+  const m = html.match(/<title>([^<]+)<\/title>/);
+  if (!m) return '';
+  return m[1].replace(/\s*[｜|]\s*.*$/, '').trim();
+}
+
 function updateSitemap(stores) {
   const today = new Date().toISOString().slice(0, 10);
   const baseUrl = 'https://wakuwaku-labs.github.io/nagoya-bites';
+
+  // ──────────────────────────────────────────
+  // 1. メイン sitemap.xml (URLリスト)
+  // ──────────────────────────────────────────
   const urls = [
     { loc: `${baseUrl}/`, priority: '1.0', freq: 'weekly' },
+    { loc: `${baseUrl}/about.html`, priority: '0.7', freq: 'monthly' },
+    { loc: `${baseUrl}/contact.html`, priority: '0.6', freq: 'monthly' },
     { loc: `${baseUrl}/faq.html`, priority: '0.7', freq: 'monthly' },
   ];
+
   urls.push({ loc: `${baseUrl}/features/`, priority: '0.9', freq: 'weekly' });
   const featureFiles = fs.readdirSync(FEATURES_DIR)
     .filter(f => f.endsWith('.html') && f !== 'index.html');
   for (const f of featureFiles) {
     urls.push({ loc: `${baseUrl}/features/${f}`, priority: '0.8', freq: 'monthly' });
   }
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+
+  const journalDir = path.join(__dirname, 'journal');
+  let journalFiles = [];
+  if (fs.existsSync(journalDir)) {
+    urls.push({ loc: `${baseUrl}/journal/`, priority: '0.9', freq: 'daily' });
+    journalFiles = fs.readdirSync(journalDir)
+      .filter(f => f.endsWith('.html') && f !== 'index.html' && f !== '_template.html')
+      .sort();
+    for (const f of journalFiles) {
+      urls.push({ loc: `${baseUrl}/journal/${f}`, priority: '0.7', freq: 'monthly' });
+    }
+  }
+
+  const storesDir = path.join(__dirname, 'stores');
+  let storeFiles = [];
+  if (fs.existsSync(storesDir)) {
+    storeFiles = fs.readdirSync(storesDir)
+      .filter(f => f.endsWith('.html') && f !== 'index.html')
+      .sort();
+    for (const f of storeFiles) {
+      urls.push({ loc: `${baseUrl}/stores/${f}`, priority: '0.6', freq: 'monthly' });
+    }
+  }
+
+  const mainSitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url>
-    <loc>${u.loc}</loc>
+    <loc>${escapeXml(u.loc)}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>${u.freq}</changefreq>
     <priority>${u.priority}</priority>
   </url>`).join('\n')}
 </urlset>
 `;
-  fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), xml, 'utf8');
-  console.log(`  ✅ sitemap.xml: ${urls.length}ページ登録`);
+  fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), mainSitemap, 'utf8');
+
+  // ──────────────────────────────────────────
+  // 2. sitemap-images.xml — 店舗+特集の og:image を添付
+  // ──────────────────────────────────────────
+  const imageEntries = [];
+  for (const f of storeFiles) {
+    try {
+      const html = fs.readFileSync(path.join(storesDir, f), 'utf8');
+      const img = extractOgImage(html);
+      if (img && /^https?:\/\//.test(img)) {
+        imageEntries.push({ loc: `${baseUrl}/stores/${f}`, image: img });
+      }
+    } catch (e) { /* skip */ }
+  }
+  for (const f of featureFiles) {
+    try {
+      const html = fs.readFileSync(path.join(FEATURES_DIR, f), 'utf8');
+      const img = extractOgImage(html);
+      if (img && /^https?:\/\//.test(img)) {
+        imageEntries.push({ loc: `${baseUrl}/features/${f}`, image: img });
+      }
+    } catch (e) { /* skip */ }
+  }
+  const imagesSitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${imageEntries.map(e => `  <url>
+    <loc>${escapeXml(e.loc)}</loc>
+    <image:image>
+      <image:loc>${escapeXml(e.image)}</image:loc>
+    </image:image>
+  </url>`).join('\n')}
+</urlset>
+`;
+  fs.writeFileSync(path.join(__dirname, 'sitemap-images.xml'), imagesSitemap, 'utf8');
+
+  // ──────────────────────────────────────────
+  // 3. sitemap-news.xml — 直近48時間以内の journal 記事のみ
+  // ──────────────────────────────────────────
+  const now = Date.now();
+  const newsEntries = [];
+  for (const f of journalFiles) {
+    try {
+      const html = fs.readFileSync(path.join(journalDir, f), 'utf8');
+      const date = extractJournalDate(f, html);
+      if (!date) continue;
+      const t = Date.parse(date + 'T00:00:00+09:00');
+      if (!Number.isFinite(t)) continue;
+      if (now - t > 48 * 3600 * 1000) continue; // 48時間を超える記事は除外
+      newsEntries.push({
+        loc: `${baseUrl}/journal/${f}`,
+        pubDate: date,
+        title: extractTitle(html) || f.replace(/\.html$/, '')
+      });
+    } catch (e) { /* skip */ }
+  }
+  const newsSitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+${newsEntries.map(e => `  <url>
+    <loc>${escapeXml(e.loc)}</loc>
+    <news:news>
+      <news:publication>
+        <news:name>NAGOYA BITES</news:name>
+        <news:language>ja</news:language>
+      </news:publication>
+      <news:publication_date>${e.pubDate}</news:publication_date>
+      <news:title>${escapeXml(e.title)}</news:title>
+    </news:news>
+  </url>`).join('\n')}
+</urlset>
+`;
+  fs.writeFileSync(path.join(__dirname, 'sitemap-news.xml'), newsSitemap, 'utf8');
+
+  // ──────────────────────────────────────────
+  // 4. sitemap-index.xml — 3つのsitemapを束ねる
+  // ──────────────────────────────────────────
+  const indexXml = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>${baseUrl}/sitemap.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${baseUrl}/sitemap-images.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${baseUrl}/sitemap-news.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>
+</sitemapindex>
+`;
+  fs.writeFileSync(path.join(__dirname, 'sitemap-index.xml'), indexXml, 'utf8');
+
+  console.log(`  ✅ sitemap.xml: 合計 ${urls.length}ページ(特集${featureFiles.length + 1}, journal${journalFiles.length}, 店舗${storeFiles.length})`);
+  console.log(`  ✅ sitemap-images.xml: ${imageEntries.length}画像`);
+  console.log(`  ✅ sitemap-news.xml: ${newsEntries.length}件(直近48h)`);
+  console.log(`  ✅ sitemap-index.xml: 3 sub-sitemap`);
 }
 
 // ─────────────────────────────────────────────
@@ -657,9 +931,29 @@ function main() {
   console.log(`データ読み込み: ${stores.length}件`);
   console.log('');
 
+  const faqMap = loadFeatureFAQs();
+  if (Object.keys(faqMap).length) {
+    console.log(`FAQ定義ロード: ${Object.keys(faqMap).length}特集`);
+  }
+
   const results = {};
   for (const config of FEATURE_CONFIGS) {
-    results[config.file] = updateFeatureArticle(stores, config);
+    results[config.file] = updateFeatureArticle(stores, config, faqMap);
+  }
+
+  // FEATURE_CONFIGS に載っていないが faqMap にある特集（mothers-day, gw-2026 等）に
+  // FAQ だけを単発で差し込む
+  const configFiles = new Set(FEATURE_CONFIGS.map(c => c.file));
+  for (const featureFile of Object.keys(faqMap)) {
+    if (configFiles.has(featureFile)) continue;
+    const fp = path.join(__dirname, 'features', featureFile);
+    if (!fs.existsSync(fp)) continue;
+    let html = fs.readFileSync(fp, 'utf8');
+    const updated = injectFAQ(html, featureFile, faqMap);
+    if (updated !== html) {
+      fs.writeFileSync(fp, updated, 'utf8');
+      console.log(`  ✅ ${featureFile}: FAQ のみ差し込み (${faqMap[featureFile].length}件)`);
+    }
   }
 
   console.log('');

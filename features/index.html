@@ -2,6 +2,13 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
+function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>特集記事一覧 | NAGOYA BITES — 名古屋グルメ専門メディア</title>
 <meta name="description" content="NAGOYA BITESの特集記事一覧。宴会・忘年会・デートディナー・女子会・誕生日・個室グルメなど、シーン別に名古屋のおすすめレストランをまとめています。">
@@ -120,6 +127,21 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 </div>
 
 <div class="articles-grid">
+  <a class="article-card" href="editorial-policy.html">
+    <div class="card-badge">
+      <div class="card-icon">📖</div>
+      <div class="card-category">Editorial · 編集規約</div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">編集規約</div>
+      <p class="card-desc">編集部がどう選び、何を載せないか、なぜ匿名で運営しているのか。広告や忖度に左右されない独立した編集倫理を公開しています。</p>
+      <div class="card-meta">
+        <span class="card-count">編集部より</span>
+        <span class="card-cta">読む →</span>
+      </div>
+    </div>
+  </a>
+
   <a class="article-card" href="meieki.html">
     <div class="card-badge">
       <div class="card-icon">🚄</div>

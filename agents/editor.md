@@ -163,6 +163,22 @@ SEO:
    - テーマに合致する店舗を10〜15件選出
    - 各店舗の「中の人ポイント」を作成
 
+3.5. 写真候補の調査（特集記事用）
+   - 掲載各店舗について以下を調査し、記事HTML の `<head>` 末尾に HTML コメントとして埋め込む:
+     ```html
+     <!-- PHOTO SUGGESTIONS:
+       [店名A]
+         - store_instagram: https://www.instagram.com/... (公式アカウントURL or 検索URL)
+         - google_maps: https://www.google.com/maps/search/<店名>+<エリア>
+         - shot_type: ①<看板料理アップ> ②<店内雰囲気> ③<外観>
+       [非店舗テーマ / 背景画像]
+         - stock_keyword: 「<日本語キーワード>」「<English keyword>」
+         - unsplash: https://unsplash.com/s/photos/<keyword>
+     -->
+     ```
+   - ⚠️ 権利確認: 他メディア・公式サイト写真の転載不可。Unsplash は商用可（クレジット推奨）。
+     Instagram公式写真はリポスト申請が必要。自撮り写真が最も確実。
+
 4. 記事HTMLを作成
    - features/ ディレクトリに配置
    - index.htmlのデザイントーンに合わせる
@@ -206,3 +222,89 @@ SEO:
 ❌ SEOのために読みにくい不自然な文章を書く
 ❌ 他メディアのコンテンツを模倣・盗用する
 ```
+
+---
+
+## 日次運用(Journal) — /journal-today で起動
+
+journal/ 配下に **毎朝1本** 記事を配信する。
+ユーザーがローカル Claude Code で `/journal-today` を実行 → Editor が以下を実行する。
+
+### テーマローテ
+
+| 曜日 | テーマ | 分量 | ファイル参照 |
+|---|---|---|---|
+| 月 | 🔥 週次の話題店ダイジェスト | 800-1200字 | trending_stores.json |
+| 火 | 🍶 今日の1軒 | 700-1000字 | LOCAL_STORES + 外部媒体 |
+| 水 | 🗝 業界の裏側コラム | 500-900字 | editorial_column_backlog.json |
+| 木 | 🍶 今日の1軒 | 700-1000字 | 同上 |
+| 金 | 🗓 季節・イベント短信 | 300-600字 | seasonal_events.json |
+| 土 | 🍶 今日の1軒 | 700-1000字 | 同上 |
+| 日 | 🍶 今日の1軒 or 🗓 季節短信 | 短〜中 | 柔軟判断 |
+
+オーバーライド: seasonal_events の priority>=80 該当日は seasonal 強制 /
+trending_stores の buzz_score>=90 は today_one に差し替え。
+
+### 独自性3要件（「今日の1軒」テーマで必須）
+
+1. **価格帯の読み方** — コース vs アラカルト、ドリンク別 vs 飲み放題の判断軸を数字ベースで
+2. **オペの裏側** — 席配置・予約の取り方・繁忙時間帯・回転意識を業界人視点で
+3. **シーン適性** — 接待 / デート / 一人飲みのどれに向き、「なぜ」向くかを明示
+
+validator(`scripts/validate_journal_draft.js`) がキーワード出現で近似チェック。
+独自性が薄い記事は公開しない。
+
+### 新規店舗追加フロー（外部媒体からの採用）
+
+話題性重視のため、LOCAL_STORES に無い店でも **他メディア**（dressing / macaroni /
+retrip / ヒトサラ / PR TIMES / 番組公式 / note 等）から採用OK。
+
+1. 採用した外部店は `data/pending_stores.json` の `pending[]` に必ず追記:
+   ```json
+   {
+     "店名": "〇〇",
+     "ジャンル": "〇〇",
+     "エリア": "栄 / 名駅 等",
+     "情報源": "https://元記事URL",
+     "おすすめポイント": "60-120字",
+     "営業状況": "営業中",
+     "追加日": "YYYY-MM-DD",
+     "journal_url": "journal/YYYY-MM-DD-slug.html",
+     "merged": false
+   }
+   ```
+2. 次回 `node build.js` 実行時に `scripts/merge_pending_stores.js` のロジックで
+   LOCAL_STORES にマージされる(`データソース="外部媒体"` を付与)
+3. 記事末尾の `sources` に **必ず** 情報源URLを明記(信頼性担保)
+4. Instagram公式アカウント・ホットペッパーID・Google Place ID は後追いで
+   `resolve_instagram.js` / DataKeeper が解決
+
+### 匿名運営の徹底（EDT-001 整合）
+
+- オーナー名 / 大将名 / シェフ名を本文に**書かない**
+- 「業界人」「編集部」で統一
+- `features/editorial-policy.html` の編集規約と整合
+
+### 日次作業フロー
+
+```
+1. agents/orchestrator.md / agents/editor.md を読む
+2. node scripts/pick_daily_topic.js                     # テーマと候補を取得
+3. Editor が本文を執筆(独自性3要件を満たす)
+4. input.json を /tmp に書く
+5. node scripts/generate_daily_draft.js /tmp/input.json # HTML + md 生成
+6. node scripts/validate_journal_draft.js <html> <md>   # 10項目QA
+7. ドラフトを journal/ へ移動
+8. data/journal_published.json に追記
+9. node scripts/build_journal_index.js                  # 一覧+RSS+トップ更新
+10. node build.js                                        # sitemap + pending取込
+11. ユーザー承認 → git push
+12. docs/daily-posts/YYYY-MM-DD.md を Note/IG/X にコピペ投稿
+```
+
+### 失敗しないための注意点
+
+- 30日以内の再掲禁止 → `journal_published.json` を `pick_daily_topic.js` が自動判定
+- 連続2日同ジャンル禁止 → Editor が目視確認
+- 閉店店舗の掲載禁止 → validator と `audit_journal.js`(月次) の二重チェック
+- 業界コラムは同カテゴリ60日以内の連投禁止

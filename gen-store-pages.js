@@ -82,6 +82,49 @@ function toSlug(store) {
 }
 
 // ================================================================
+// 価格帯を Schema.org priceRange シンボルにマップ
+// ================================================================
+function mapPriceToSchemaRange(price) {
+  if (!price) return '';
+  const nums = price.match(/(\d{3,6})/g);
+  if (!nums) return '';
+  const max = Math.max(...nums.map(Number));
+  if (max >= 15000) return '¥¥¥¥';
+  if (max >= 8000)  return '¥¥¥';
+  if (max >= 3500)  return '¥¥';
+  return '¥';
+}
+
+// ================================================================
+// タグ/エリア → 関連特集ページの逆引きマッピング
+// ================================================================
+const TAG_TO_FEATURES = [
+  { match: s => (s['タグ']||'').includes('個室'),           file: 'private-room.html', label: '個室のある名古屋グルメ10選' },
+  { match: s => (s['タグ']||'').includes('接待'),           file: 'private-room.html', label: '個室のある名古屋グルメ10選' },
+  { match: s => /30〜|40〜|50〜|60〜|70〜|80〜|90〜|100名/.test(s['タグ']||'') || (s['タグ']||'').includes('忘年会') || (s['タグ']||'').includes('歓送迎会') || (s['タグ']||'').includes('飲み放題'), file: 'banquet.html', label: '名古屋の宴会・忘年会15選' },
+  { match: s => (s['タグ']||'').includes('100名') || /70〜|80〜|90〜/.test(s['タグ']||''), file: 'large-group.html', label: '名古屋・大人数宴会20人以上10選' },
+  { match: s => (s['タグ']||'').includes('誕生日・記念日') || /誕生日|記念日|サプライズ/.test(s['おすすめポイント']||''), file: 'birthday.html', label: '名古屋・誕生日/記念日ディナー10選' },
+  { match: s => (s['タグ']||'').includes('女子会'),         file: 'girls-party.html', label: '名古屋・女子会ランチ&ディナー10選' },
+  { match: s => /イタリアン|フレンチ|ダイニングバー|バル|創作料理/.test(s['ジャンル']||''), file: 'date.html', label: '名古屋・デートディナー10選' },
+  { match: s => /名古屋駅|名駅|中村区/.test(s['エリア']||''), file: 'meieki.html', label: '名駅グルメ15選' },
+  { match: s => /栄|錦|矢場町|東桜|新栄/.test(s['エリア']||''), file: 'sakae.html', label: '栄グルメ15選' },
+];
+
+function buildRelatedFeatures(store) {
+  const hits = [];
+  const seen = new Set();
+  for (const entry of TAG_TO_FEATURES) {
+    if (seen.has(entry.file)) continue;
+    if (entry.match(store)) {
+      hits.push(entry);
+      seen.add(entry.file);
+    }
+    if (hits.length >= 3) break;
+  }
+  return hits;
+}
+
+// ================================================================
 // メタ説明文生成
 // ================================================================
 function buildDescription(s) {
@@ -97,48 +140,100 @@ function buildDescription(s) {
 // HTML テンプレート
 // ================================================================
 function renderStorePage(s, slug) {
-  const name   = s['店名'] || '';
-  const genre  = s['ジャンル'] || '';
-  const area   = s['エリア'] || '';
-  const pref   = s['都道府県'] || '愛知県';
-  const price  = s['価格帯'] || '';
-  const hours  = s['営業時間'] || '';
-  const access = s['アクセス'] || '';
-  const score  = s['Google評価'] || '';
-  const point  = s['おすすめポイント'] || '';
-  const tags   = (s['タグ'] || '').split(',').map(t => t.trim()).filter(Boolean);
-  const photo  = s['写真URL'] || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80';
-  const hpId   = s['ホットペッパーID'] || '';
-  const hpUrl  = hpId ? `https://www.hotpepper.jp/str${hpId}/` : '';
-  const igUrl  = s['Instagram'] || '';
-  const tbUrl  = s['食べログURL'] || '';
-  const tkUrl  = s['TikTok検索'] || '';
-  const xUrl   = s['X検索'] || '';
-  const gmUrl  = `https://www.google.com/maps/search/${encodeURIComponent(name + ' ' + area)}`;
-  const pageUrl = `${BASE_URL}/stores/${slug}.html`;
-  const title  = `${name}（${area}・${genre}）| NAGOYA BITES`;
-  const desc   = buildDescription(s);
+  const name     = s['店名'] || '';
+  const genre    = s['ジャンル'] || '';
+  const area     = s['エリア'] || '';
+  const pref     = s['都道府県'] || '愛知県';
+  const locality = s['市区町村'] || '';
+  const street   = s['住所'] || '';
+  const lat      = s['緯度'] || '';
+  const lng      = s['経度'] || '';
+  const tel      = s['電話'] || '';
+  const price    = s['価格帯'] || '';
+  const hours    = s['営業時間'] || '';
+  const access   = s['アクセス'] || '';
+  const score    = s['Google評価'] || '';
+  const reviewCountRaw = parseInt(s['口コミ数'] || '', 10);
+  const reviewCount    = Number.isFinite(reviewCountRaw) && reviewCountRaw > 0 ? reviewCountRaw : 0;
+  const point    = s['おすすめポイント'] || '';
+  const tags     = (s['タグ'] || '').split(',').map(t => t.trim()).filter(Boolean);
+  const photo    = s['写真URL'] || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80';
+  const hpId     = s['ホットペッパーID'] || '';
+  const hpUrl    = hpId ? `https://www.hotpepper.jp/str${hpId}/` : '';
+  const igUrl    = s['Instagram'] || '';
+  const tbUrl    = s['食べログURL'] || '';
+  const tkUrl    = s['TikTok検索'] || '';
+  const xUrl     = s['X検索'] || '';
+  const gmUrl    = `https://www.google.com/maps/search/${encodeURIComponent(name + ' ' + area)}`;
+  const pageUrl  = `${BASE_URL}/stores/${slug}.html`;
+  const title    = `${name}（${area}・${genre}）| NAGOYA BITES`;
+  const desc     = buildDescription(s);
+  const priceRangeSym = mapPriceToSchemaRange(price);
 
-  // JSON-LD
+  // Restaurant JSON-LD — aggregateRating は実データ(口コミ数が正の整数)のみ出力
+  const address = {
+    '@type': 'PostalAddress',
+    'addressRegion': pref,
+    'addressCountry': 'JP'
+  };
+  if (locality) address.addressLocality = locality;
+  else if (area) address.addressLocality = area;
+  if (street) address.streetAddress = street;
+  if (area && locality && area !== locality) address.addressArea = area;
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Restaurant',
     'name': name,
     'servesCuisine': genre,
-    'priceRange': price,
-    'address': {
-      '@type': 'PostalAddress',
-      'addressLocality': area,
-      'addressRegion': pref,
-      'addressCountry': 'JP'
-    },
+    'address': address,
     'image': photo,
-    'url': hpUrl || gmUrl,
-    'openingHours': hours,
-    ...(score ? { 'aggregateRating': { '@type': 'AggregateRating', 'ratingValue': score, 'bestRating': '5', 'ratingCount': '1' } } : {}),
-    ...(igUrl ? { 'sameAs': [igUrl] } : {}),
+    'url': pageUrl,
     'description': point || `${area}の${genre}。${access}`
   };
+  if (priceRangeSym) jsonLd.priceRange = priceRangeSym;
+  else if (price) jsonLd.priceRange = price;
+  if (hours) jsonLd.openingHours = hours;
+  if (tel) jsonLd.telephone = tel;
+  if (lat && lng) {
+    jsonLd.geo = { '@type': 'GeoCoordinates', 'latitude': lat, 'longitude': lng };
+  }
+  if (hpUrl) jsonLd.acceptsReservations = true;
+  const sameAs = [];
+  if (igUrl) sameAs.push(igUrl);
+  if (tbUrl) sameAs.push(tbUrl);
+  if (hpUrl) sameAs.push(hpUrl);
+  if (sameAs.length) jsonLd.sameAs = sameAs;
+  if (score && reviewCount > 0) {
+    jsonLd.aggregateRating = {
+      '@type': 'AggregateRating',
+      'ratingValue': score,
+      'bestRating': '5',
+      'ratingCount': String(reviewCount)
+    };
+  }
+
+  // BreadcrumbList JSON-LD
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      { '@type': 'ListItem', 'position': 1, 'name': 'NAGOYA BITES', 'item': BASE_URL + '/' },
+      ...(genre ? [{ '@type': 'ListItem', 'position': 2, 'name': genre, 'item': `${BASE_URL}/#genre=${encodeURIComponent(genre)}` }] : []),
+      ...(area  ? [{ '@type': 'ListItem', 'position': genre ? 3 : 2, 'name': area + 'エリア', 'item': `${BASE_URL}/#area=${encodeURIComponent(area)}` }] : []),
+      { '@type': 'ListItem', 'position': (genre ? 1 : 0) + (area ? 1 : 0) + 2, 'name': name, 'item': pageUrl }
+    ]
+  };
+
+  // 関連特集(最大3本)
+  const relatedFeatures = buildRelatedFeatures(s);
+  const relatedHtml = relatedFeatures.length ? `
+  <div class="related-features">
+    <h2>この店舗が登場する特集</h2>
+    <ul>
+      ${relatedFeatures.map(f => `<li><a href="../features/${f.file}">${f.label}</a></li>`).join('\n      ')}
+    </ul>
+  </div>` : '';
 
   const tagPills = tags.map(t => `<span class="tag">${t}</span>`).join('');
   const linksHtml = [
@@ -154,6 +249,13 @@ function renderStorePage(s, slug) {
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
+function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${title}</title>
 <meta name="description" content="${desc.replace(/"/g, '&quot;')}">
@@ -174,7 +276,7 @@ function renderStorePage(s, slug) {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-<script type="application/ld+json">${JSON.stringify(jsonLd, null, 2)}</script>
+<script type="application/ld+json">${JSON.stringify([jsonLd, breadcrumbLd], null, 2)}</script>
 <style>
 :root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--border-h:rgba(0,0,0,0.28);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;}
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -209,6 +311,12 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:#e6002d;color:#fff;border-color:#e6002d;}
 .link-btn.hp:hover{background:#c0001f;border-color:#c0001f;}
+.related-features{margin:2rem 0 1.8rem;padding:1.3rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
+.related-features h2{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
+.related-features ul{list-style:none;padding:0;margin:0;}
+.related-features li{margin:.5rem 0;}
+.related-features a{font-size:.82rem;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.25);padding-bottom:2px;transition:color .2s;}
+.related-features a:hover{color:var(--gold2);border-bottom-color:var(--gold2);}
 .back-section{border-top:1px solid var(--border);padding-top:1.8rem;text-align:center;}
 .back-section a{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
 .back-section a:hover{color:var(--gold);}
@@ -227,8 +335,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <a href="../">NAGOYA BITES</a>
-    <span>›</span>
-    <a href="../#genre=${encodeURIComponent(genre)}">${genre}</a>
+    ${genre ? `<span>›</span><a href="../#genre=${encodeURIComponent(genre)}">${genre}</a>` : ''}
+    ${area  ? `<span>›</span><a href="../#area=${encodeURIComponent(area)}">${area}</a>` : ''}
     <span>›</span>
     <span>${name}</span>
   </nav>
@@ -240,9 +348,11 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   ${point ? `<div class="point-box"><p>${point}</p></div>` : ''}
 
   <div class="info-grid">
-    ${area ? `<div class="info-cell"><label>エリア</label><span>${pref} ${area}</span></div>` : ''}
+    ${area ? `<div class="info-cell"><label>エリア</label><span>${pref}${locality ? ' ' + locality : ''} ${area}</span></div>` : ''}
+    ${street ? `<div class="info-cell"><label>住所</label><span>${street}</span></div>` : ''}
     ${price ? `<div class="info-cell"><label>価格帯</label><span>${price}</span></div>` : ''}
     ${hours ? `<div class="info-cell"><label>営業時間</label><span>${hours}</span></div>` : ''}
+    ${tel ? `<div class="info-cell"><label>電話</label><span><a href="tel:${tel.replace(/[^0-9+]/g,'')}" style="color:var(--gold);text-decoration:none;">${tel}</a></span></div>` : ''}
     ${access ? `<div class="info-cell"><label>アクセス・特徴</label><span>${access}</span></div>` : ''}
   </div>
 
@@ -252,6 +362,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <h2>予約・情報を確認</h2>
     ${linksHtml}
   </div>
+
+  ${relatedHtml}
 
   <div class="back-section">
     <a href="../?area=${encodeURIComponent(area)}&genre=${encodeURIComponent(genre)}">← ${area}の${genre}をもっと見る</a>

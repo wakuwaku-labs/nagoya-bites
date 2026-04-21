@@ -1,0 +1,44 @@
+{
+  "description": "journal/ で公開済みの記事ログ。validator が30日再掲禁止・同ジャンル連投禁止の判定に使う。generate_daily_draft.js が追記、build_journal_index.js がindex生成に使用。",
+  "schema": {
+    "slug": "YYYY-MM-DD-slug形式",
+    "date": "YYYY-MM-DD",
+    "theme": "today_one | industry_insider | weekly_digest | seasonal | flexible",
+    "title": "記事タイトル",
+    "description": "概要(120字)",
+    "eyebrow": "テーマラベル",
+    "store_ids": ["LOCAL_STORES の店舗ID配列"],
+    "pending_store_keys": ["pending_stores.json の店名配列(外部媒体採用時)"],
+    "column_id": "業界裏側コラム使用時のみ COL-XXX-NNN",
+    "published_at": "ISO8601",
+    "cta_links": ["内部リンクURL配列"]
+  },
+  "entries": [
+    {
+      "slug": "2026-04-21-yabamisen-nagoya-insider",
+      "date": "2026-04-21",
+      "theme": "today_one",
+      "title": "名古屋業界人の〆はここ一択 — 矢場味仙を正しく頼む",
+      "description": "台湾ラーメン発祥の名店・矢場味仙。深夜に通う飲食業界人が教える、コスパ最大化の頼み方・混雑を避ける時間帯・接待と一人飲み後の使い分け。",
+      "eyebrow": "🍶 今日の1軒",
+      "store_ids": ["J000389487"],
+      "pending_store_keys": [],
+      "column_id": "",
+      "published_at": "2026-04-21T00:00:00+09:00",
+      "cta_links": []
+    },
+    {
+      "slug": "2026-04-22-nagoya-course-5000-real-cost",
+      "date": "2026-04-22",
+      "theme": "industry_insider",
+      "title": "名古屋の『コース5,000円』は結局いくら払うのか",
+      "description": "コース料金と実際の会計の差を、サービス料・お通し・ドリンク構造から業界人が解剖。5,000円が8,000〜9,000円になる仕組みを知れば、次の予約がラクになる。",
+      "eyebrow": "🗝 業界の裏側",
+      "store_ids": [],
+      "pending_store_keys": [],
+      "column_id": "COL-PRICE-001",
+      "published_at": "2026-04-22T00:00:00+09:00",
+      "cta_links": []
+    }
+  ]
+}

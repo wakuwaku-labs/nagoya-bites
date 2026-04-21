@@ -2,6 +2,13 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
+function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>長楽亭（栄・お好み焼き・もんじゃ）| NAGOYA BITES</title>
 <meta name="description" content="鉄板焼きと相性◎のお酒 広島焼＆和牛ステーキ。栄のお好み焼き・もんじゃ（3000円）。Instagram・ホットペッパー・食べログをまとめてチェック。">
@@ -22,29 +29,59 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-<script type="application/ld+json">{
-  "@context": "https://schema.org",
-  "@type": "Restaurant",
-  "name": "長楽亭",
-  "servesCuisine": "お好み焼き・もんじゃ",
-  "priceRange": "3000円",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "栄",
-    "addressRegion": "愛知県",
-    "addressCountry": "JP"
+<script type="application/ld+json">[
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "長楽亭",
+    "servesCuisine": "お好み焼き・もんじゃ",
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": "愛知県",
+      "addressCountry": "JP",
+      "addressLocality": "栄"
+    },
+    "image": "https://imgfp.hotp.jp/IMGH/10/29/P019911029/P019911029_480.jpg",
+    "url": "https://wakuwaku-labs.github.io/nagoya-bites/stores/J000015203.html",
+    "description": "鉄板焼きと相性◎のお酒 広島焼＆和牛ステーキ",
+    "priceRange": "¥",
+    "openingHours": "月～土: 18:00～22:30 （料理L.O. 21:30 ドリンクL.O. 22:00）",
+    "acceptsReservations": true,
+    "sameAs": [
+      "https://www.hotpepper.jp/strJ000015203/"
+    ]
   },
-  "image": "https://imgfp.hotp.jp/IMGH/10/29/P019911029/P019911029_480.jpg",
-  "url": "https://www.hotpepper.jp/strJ000015203/",
-  "openingHours": "月～土: 18:00～22:30 （料理L.O. 21:30 ドリンクL.O. 22:00）",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.2",
-    "bestRating": "5",
-    "ratingCount": "1"
-  },
-  "description": "鉄板焼きと相性◎のお酒 広島焼＆和牛ステーキ"
-}</script>
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "NAGOYA BITES",
+        "item": "https://wakuwaku-labs.github.io/nagoya-bites/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "お好み焼き・もんじゃ",
+        "item": "https://wakuwaku-labs.github.io/nagoya-bites/#genre=%E3%81%8A%E5%A5%BD%E3%81%BF%E7%84%BC%E3%81%8D%E3%83%BB%E3%82%82%E3%82%93%E3%81%98%E3%82%83"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "栄エリア",
+        "item": "https://wakuwaku-labs.github.io/nagoya-bites/#area=%E6%A0%84"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "長楽亭",
+        "item": "https://wakuwaku-labs.github.io/nagoya-bites/stores/J000015203.html"
+      }
+    ]
+  }
+]</script>
 <style>
 :root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--border-h:rgba(0,0,0,0.28);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;}
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -79,6 +116,12 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:#e6002d;color:#fff;border-color:#e6002d;}
 .link-btn.hp:hover{background:#c0001f;border-color:#c0001f;}
+.related-features{margin:2rem 0 1.8rem;padding:1.3rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
+.related-features h2{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
+.related-features ul{list-style:none;padding:0;margin:0;}
+.related-features li{margin:.5rem 0;}
+.related-features a{font-size:.82rem;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.25);padding-bottom:2px;transition:color .2s;}
+.related-features a:hover{color:var(--gold2);border-bottom-color:var(--gold2);}
 .back-section{border-top:1px solid var(--border);padding-top:1.8rem;text-align:center;}
 .back-section a{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
 .back-section a:hover{color:var(--gold);}
@@ -97,8 +140,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <a href="../">NAGOYA BITES</a>
-    <span>›</span>
-    <a href="../#genre=%E3%81%8A%E5%A5%BD%E3%81%BF%E7%84%BC%E3%81%8D%E3%83%BB%E3%82%82%E3%82%93%E3%81%98%E3%82%83">お好み焼き・もんじゃ</a>
+    <span>›</span><a href="../#genre=%E3%81%8A%E5%A5%BD%E3%81%BF%E7%84%BC%E3%81%8D%E3%83%BB%E3%82%82%E3%82%93%E3%81%98%E3%82%83">お好み焼き・もんじゃ</a>
+    <span>›</span><a href="../#area=%E6%A0%84">栄</a>
     <span>›</span>
     <span>長楽亭</span>
   </nav>
@@ -111,8 +154,10 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
 
   <div class="info-grid">
     <div class="info-cell"><label>エリア</label><span>愛知県 栄</span></div>
+    
     <div class="info-cell"><label>価格帯</label><span>3000円</span></div>
     <div class="info-cell"><label>営業時間</label><span>月～土: 18:00～22:30 （料理L.O. 21:30 ドリンクL.O. 22:00）</span></div>
+    
     <div class="info-cell"><label>アクセス・特徴</label><span>地下鉄栄駅8番出口徒歩3分</span></div>
   </div>
 
@@ -124,6 +169,14 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <a class="link-btn gm" href="https://www.google.com/maps/search/%E9%95%B7%E6%A5%BD%E4%BA%AD%20%E6%A0%84" target="_blank" rel="noopener">📍 Googleマップ</a>
     <a class="link-btn tk" href="https://www.tiktok.com/search?q=%E9%95%B7%E6%A5%BD%E4%BA%AD%20%E6%A0%84" target="_blank" rel="noopener">🎵 TikTok</a>
     <a class="link-btn xx" href="https://x.com/search?q=%E9%95%B7%E6%A5%BD%E4%BA%AD%20%E6%A0%84" target="_blank" rel="noopener">𝕏 X</a>
+  </div>
+
+  
+  <div class="related-features">
+    <h2>この店舗が登場する特集</h2>
+    <ul>
+      <li><a href="../features/sakae.html">栄グルメ15選</a></li>
+    </ul>
   </div>
 
   <div class="back-section">

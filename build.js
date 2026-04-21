@@ -248,6 +248,122 @@ function isAutoGenPoint(text) {
   return AUTOGEN_POINT_PATTERNS.some(re => re.test(text));
 }
 
+// ────────────────────────────────────────────────────
+// 価格帯の正規化
+// ────────────────────────────────────────────────────
+// 入力の「価格帯」欄には店舗ごとに様々な表記が混在する（マーケティングコピー、
+// 平均予算の注釈、全角/半角の混在、価格帯なしの誘導文など）。
+// 表示とソートを安定させるため、一貫した14種類の標準バケットに寄せる。
+// 数値が特定できないマーケティングコピーは空文字にクリアする。
+
+const PRICE_BUCKETS = [
+  { max: 500,   label: '～500円' },
+  { max: 1000,  label: '501～1000円' },
+  { max: 1500,  label: '1001～1500円' },
+  { max: 2000,  label: '1501～2000円' },
+  { max: 3000,  label: '2001～3000円' },
+  { max: 4000,  label: '3001～4000円' },
+  { max: 5000,  label: '4001～5000円' },
+  { max: 7000,  label: '5001～7000円' },
+  { max: 10000, label: '7001～10000円' },
+  { max: 15000, label: '10001～15000円' },
+  { max: 20000, label: '15001～20000円' },
+  { max: 30000, label: '20001～30000円' }
+];
+const PRICE_BUCKET_LABELS = new Set(PRICE_BUCKETS.map(b => b.label).concat(['30001円～']));
+const PRICE_RANGE_DASH = '[~\\-–—―ー〜～]';
+
+function priceBucketOf(n) {
+  for (const b of PRICE_BUCKETS) if (n <= b.max) return b.label;
+  return '30001円～';
+}
+
+function normalizePrice(raw) {
+  if (!raw) return '';
+  const original = String(raw).trim();
+  if (!original) return '';
+  if (PRICE_BUCKET_LABELS.has(original)) return original;
+
+  // NFKC で全角/半角の差を吸収（全角コロン・空白・チルダ・数字）
+  let s = original.normalize('NFKC');
+  // WAVE DASH (U+301C) を半角チルダへ
+  s = s.replace(/[〜]/g, '~');
+  // 数字中のカンマを除去
+  s = s.replace(/(\d),(\d)/g, '$1$2').replace(/(\d),(\d)/g, '$1$2');
+
+  function maxYenIn(str) {
+    const nums = [];
+    let m;
+    const r1 = /(\d{2,6})\s*円/g;
+    while ((m = r1.exec(str)) !== null) {
+      const n = parseInt(m[1], 10);
+      if (n >= 100 && n <= 100000) nums.push(n);
+    }
+    const r2 = /[¥￥](\d{2,6})/g;
+    while ((m = r2.exec(str)) !== null) {
+      const n = parseInt(m[1], 10);
+      if (n >= 100 && n <= 100000) nums.push(n);
+    }
+    return nums.length ? Math.max(...nums) : null;
+  }
+
+  function rangeMidpointIn(str) {
+    const r = new RegExp('(\\d{2,6})\\s*円?\\s*' + PRICE_RANGE_DASH + '\\s*(\\d{2,6})\\s*円');
+    const m = str.match(r);
+    if (m) {
+      const lo = parseInt(m[1], 10), hi = parseInt(m[2], 10);
+      if (lo >= 100 && hi <= 100000 && hi >= lo) return Math.round((lo + hi) / 2);
+    }
+    return null;
+  }
+
+  // Priority 1: ディナー系のラベルがあればその直後の価格を優先
+  const dinnerLabels = [
+    /ディナー[^ランチ昼]*/,
+    /夜[:：／\/][^ランチ昼]*/,
+    /dinner[^a-zA-Z]*/i,
+    /宴会[^ランチ昼]*/,
+    /通常[:：／\/][^ランチ昼]*/
+  ];
+  for (const lbl of dinnerLabels) {
+    const m = s.match(lbl);
+    if (m) {
+      const seg = m[0];
+      const mid = rangeMidpointIn(seg);
+      if (mid != null) return priceBucketOf(mid);
+      const n = maxYenIn(seg);
+      if (n != null) return priceBucketOf(n);
+    }
+  }
+
+  // Priority 2: 明示的な範囲は中央値で丸める
+  const mid = rangeMidpointIn(s);
+  if (mid != null) return priceBucketOf(mid);
+
+  const noYenRange = s.match(new RegExp('^(\\d{2,6})\\s*' + PRICE_RANGE_DASH + '\\s*(\\d{2,6})$'));
+  if (noYenRange) {
+    const lo = parseInt(noYenRange[1], 10), hi = parseInt(noYenRange[2], 10);
+    if (lo >= 100 && hi <= 100000 && hi >= lo) return priceBucketOf(Math.round((lo + hi) / 2));
+  }
+
+  // Priority 3: 「円」付き数値の最大値を採用
+  const maxN = maxYenIn(s);
+  if (maxN != null) {
+    // 500円未満かつ長文はメニュー単品のキャッチコピーと判定してクリア
+    if (maxN < 500 && original.length >= 15) return '';
+    return priceBucketOf(maxN);
+  }
+
+  // 数字のみの文字列
+  if (/^\d{2,6}$/.test(s)) {
+    const n = parseInt(s, 10);
+    if (n >= 100 && n <= 100000) return priceBucketOf(n);
+  }
+
+  // 価格に該当する数値が取れない=マーケティングコピー → クリア
+  return '';
+}
+
 function sanitizeStore(s) {
   // Instagram 関連は検証不能なため全件クリア
   s['Instagram'] = '';
@@ -259,6 +375,8 @@ function sanitizeStore(s) {
   if (isAutoGenPoint(s['おすすめポイント'])) {
     s['おすすめポイント'] = '';
   }
+  // 価格帯の曖昧表記を14種類の標準バケットに正規化
+  s['価格帯'] = normalizePrice(s['価格帯']);
   return s;
 }
 
@@ -305,15 +423,22 @@ function hpShopToStoreRecord(shop) {
   const address = shop.address || '';
   const prefMatch = address.match(/^(.+?[都道府県])/);
   const pref = prefMatch ? prefMatch[1] : '愛知県';
+  const localityMatch = address.match(/[都道府県](.+?[市区町村])/);
+  const locality = localityMatch ? localityMatch[1] : '';
   const budget = (shop.budget && shop.budget.name) || '';
   const photo = (shop.photo && shop.photo.pc && (shop.photo.pc.l || shop.photo.pc.m || shop.photo.pc.s)) || '';
-  const searchQ = encodeURIComponent(name + ' ' + (areaName || '名古屋'));
+  const searchQ = encodeURIComponent(name + ' 名古屋');
   return {
     '店名': name,
     '英語名': '',
     'ジャンル': genre,
     'エリア': areaName,
     '都道府県': pref,
+    '市区町村': locality,
+    '住所': address,
+    '緯度': shop.lat != null ? String(shop.lat) : '',
+    '経度': shop.lng != null ? String(shop.lng) : '',
+    '電話': shop.tel || '',
     '価格帯': budget,
     '営業時間': shop.open || '',
     'アクセス': shop.access || '',
@@ -323,6 +448,7 @@ function hpShopToStoreRecord(shop) {
     '食べログURL': '',
     'TikTok検索': `https://www.tiktok.com/search?q=${searchQ}`,
     'X検索': `https://x.com/search?q=${searchQ}`,
+    'Instagram検索': `https://www.instagram.com/explore/search/keyword/?q=${searchQ}`,
     '公開フラグ': 'TRUE',
     '備考': '',
     'タグ': '',
@@ -332,8 +458,154 @@ function hpShopToStoreRecord(shop) {
     '内観写真URL': '',
     '料理写真URL1': '',
     '料理写真URL2': '',
-    '口コミ数': String((shop.catch_copy ? 1 : 0) + (shop.access ? 1 : 0) + (shop.budget && shop.budget.name ? 1 : 0) ? Math.floor(Math.random() * 40) + 5 : 0)
+    '口コミ数': ''
   };
+}
+
+// ────────────────────────────────────────────────────
+// 手動キュレーション店舗（data/manual_stores.json）
+// ────────────────────────────────────────────────────
+
+// JSON の1エントリを LOCAL_STORES の26フィールドスキーマへ射影
+function manualStoreToRecord(m) {
+  const searchQ = encodeURIComponent((m['店名'] || '') + ' 名古屋');
+  let score = parseInt(m['話題スコア']);
+  if (!Number.isFinite(score) || score < 0 || score > 100) score = 85;
+  const sources = Array.isArray(m['トレンド情報源']) && m['トレンド情報源'].length
+    ? m['トレンド情報源']
+    : ['手動キュレーション'];
+  return {
+    '店名': m['店名'] || '',
+    '英語名': m['英語名'] || '',
+    'ジャンル': m['ジャンル'] || '',
+    'エリア': m['エリア'] || '',
+    '都道府県': m['都道府県'] || '',
+    '価格帯': m['価格帯'] || '',
+    '営業時間': m['営業時間'] || '',
+    'アクセス': m['アクセス'] || '',
+    'ホットペッパーID': m['ホットペッパーID'] || '',
+    '写真URL': m['写真URL'] || '',
+    'Instagram': m['Instagram'] || '',
+    '食べログURL': m['食べログURL'] || '',
+    'TikTok検索': `https://www.tiktok.com/search?q=${searchQ}`,
+    'X検索': `https://x.com/search?q=${searchQ}`,
+    'Instagram検索': `https://www.instagram.com/explore/search/keyword/?q=${searchQ}`,
+    '公開フラグ': 'TRUE',
+    '備考': m['備考'] || '',
+    'タグ': m['タグ'] || '',
+    'Google評価': m['Google評価'] != null ? String(m['Google評価']) : '',
+    'Instagram投稿URL': '',
+    'おすすめポイント': m['おすすめポイント'] || '',
+    '内観写真URL': '',
+    '料理写真URL1': '',
+    '料理写真URL2': '',
+    '口コミ数': '',
+    // フラグ類（manual 側で焼き込み）
+    '話題フラグ': m['話題フラグ'] === true,
+    '編集部推薦': m['編集部推薦'] === true,
+    '話題スコア': score,
+    '話題コメント': m['コメント'] || '',
+    'トレンド情報源': sources,
+    'キュレーター': m['キュレーター'] || '',
+    '追加日': m['追加日'] || '',
+    // サニタイゼーション迂回用の一時フラグ（LOCAL_STORES 書き込み前に削除）
+    '__manual': true
+  };
+}
+
+// manual_stores.json を読み込みバリデーション付きで返す
+function loadManualStores() {
+  const result = { stores: [], invalid: 0, warnings: 0, enriched: 0 };
+  const manualPath = path.join(__dirname, 'data/manual_stores.json');
+  if (!fs.existsSync(manualPath)) {
+    console.log('手動キュレーション: data/manual_stores.json なし（スキップ）');
+    return result;
+  }
+  let raw;
+  try {
+    raw = JSON.parse(fs.readFileSync(manualPath, 'utf8'));
+  } catch (e) {
+    console.error(`[manual] JSON構文エラー: ${e.message}（手動追加ゼロ件で build 継続）`);
+    return result;
+  }
+  const list = Array.isArray(raw.stores) ? raw.stores : [];
+  if (!list.length) {
+    console.log('手動キュレーション: stores 配列が空（スキップ）');
+    return result;
+  }
+  const today = new Date().toISOString().slice(0, 10);
+  const required = ['店名', 'エリア', '都道府県', 'ジャンル', 'アクセス', 'キュレーター', '追加日', 'おすすめポイント'];
+  for (const entry of list) {
+    if (!entry || typeof entry !== 'object') { result.invalid++; continue; }
+    // 必須欠如チェック
+    const missing = required.filter(k => !entry[k] || !String(entry[k]).trim());
+    if (missing.length) {
+      console.warn(`[manual] 必須欠如: ${entry['店名'] || '(店名なし)'} — 欠如: ${missing.join(', ')}`);
+      result.invalid++;
+      continue;
+    }
+    let m = entry;
+    // 有効期限切れ
+    if (m['有効期限'] && m['有効期限'] < today) {
+      console.warn(`[manual] 有効期限切れ: ${m['店名']} (${m['有効期限']}) — フラグ類を落として投入`);
+      m = { ...m, '話題フラグ': false, '編集部推薦': false };
+      result.warnings++;
+    }
+    // 日付形式チェック（警告のみ）
+    if (m['追加日'] && !/^\d{4}-\d{2}-\d{2}$/.test(m['追加日'])) {
+      console.warn(`[manual] 追加日がYYYY-MM-DD形式でない: ${m['店名']} (${m['追加日']})`);
+      result.warnings++;
+    }
+    // 愛知県外の警告
+    if (m['都道府県'] && m['都道府県'] !== '愛知県') {
+      console.warn(`[manual] 都道府県が愛知県でない: ${m['店名']} (${m['都道府県']})`);
+      result.warnings++;
+    }
+    // アクセス欄に名古屋シグナルがあるかの軽チェック
+    const access = m['アクセス'] || '';
+    if (!/名古屋/.test(access)) {
+      console.warn(`[manual] アクセス欄に「名古屋」を含まない: ${m['店名']} — isNagoyaStoreで弾かれる可能性あり`);
+      result.warnings++;
+    }
+    result.stores.push(manualStoreToRecord(m));
+  }
+  return result;
+}
+
+// mergedStores に合流。衝突は上書き拡充、新規は return
+function mergeManualStores(mergedStores, manualStores, existingHpIds) {
+  const newRecords = [];
+  for (const m of manualStores) {
+    // 衝突キー1: ホットペッパーID
+    let hit = null;
+    if (m['ホットペッパーID']) {
+      hit = mergedStores.find(s => s['ホットペッパーID'] && s['ホットペッパーID'] === m['ホットペッパーID']);
+    }
+    // 衝突キー2: 店名＋エリア
+    if (!hit) {
+      hit = mergedStores.find(s => s['店名'] === m['店名'] && s['エリア'] === m['エリア']);
+    }
+    if (hit) {
+      // 上書き拡充（店名は既存優先、Instagram/写真URL/おすすめポイント/フラグは manual 優先）
+      if (m['Instagram']) hit['Instagram'] = m['Instagram'];
+      if (m['写真URL']) hit['写真URL'] = m['写真URL'];
+      if (m['食べログURL']) hit['食べログURL'] = m['食べログURL'];
+      if (m['Google評価']) hit['Google評価'] = m['Google評価'];
+      if (m['タグ']) hit['タグ'] = m['タグ'];
+      if (m['おすすめポイント']) hit['おすすめポイント'] = m['おすすめポイント'];
+      if (m['話題フラグ'] === true) hit['話題フラグ'] = true;
+      if (m['編集部推薦'] === true) hit['編集部推薦'] = true;
+      if (typeof m['話題スコア'] === 'number') hit['話題スコア'] = m['話題スコア'];
+      if (m['話題コメント']) hit['話題コメント'] = m['話題コメント'];
+      if (m['トレンド情報源']) hit['トレンド情報源'] = m['トレンド情報源'];
+      hit['__manual'] = true;  // サニタイゼーション迂回
+      continue;
+    }
+    // 新規追加
+    if (m['ホットペッパーID']) existingHpIds.add(m['ホットペッパーID']);
+    newRecords.push(m);
+  }
+  return newRecords;
 }
 
 // ────────────────────────────────────────────────────
@@ -359,8 +631,20 @@ function calcTrendScore(store, isNew) {
   const socialCount = [store['TikTok検索'], store['X検索'], store['Instagram']]
     .filter(u => u && u !== '#' && u !== '').length;
   score += (socialCount / 3) * 10;
-  // 新着ボーナス（30%）— Hot Pepperから新規取得された店舗
-  if (isNew) score += 30;
+  // 新着ボーナス — 単なる新着は魅力担保にならないため +10 に抑制（旧: +30）
+  if (isNew) score += 10;
+  // 話題フラグ（外部シグナル）— メディア露出・食べログ高順位等。+40 加点、かつ話題スコアがあれば反映
+  if (store['話題フラグ'] === true) {
+    score += 40;
+    const buzz = parseInt(store['話題スコア']) || 0;
+    if (buzz > 0) score = Math.max(score, buzz);
+  }
+  // 編集部推薦（業界人目利きシグナル）— 話題フラグと同格で +40。両方 true でも二重加点はしない
+  if (store['編集部推薦'] === true && store['話題フラグ'] !== true) {
+    score += 40;
+    const buzz = parseInt(store['話題スコア']) || 0;
+    if (buzz > 0) score = Math.max(score, buzz);
+  }
   return Math.round(Math.min(score, 100));
 }
 
@@ -426,8 +710,25 @@ async function main() {
   console.log(`Hot Pepper 新規: ${newStores.length}件（重複除外:${dupCount} / 名古屋市外除外:${outsideCount}）`);
 
   // 結合（Google Sheets → Hot Pepper新規の順）
-  const mergedStores = gsStores.concat(newStores);
+  let mergedStores = gsStores.concat(newStores);
   console.log(`結合後: ${mergedStores.length}件`);
+
+  // pending_stores.json (journal 経由で追加された外部媒体由来の話題店) をマージ
+  try {
+    const { mergePendingStores } = require('./scripts/merge_pending_stores.js');
+    const pendingResult = mergePendingStores(mergedStores);
+    mergedStores = pendingResult.merged;
+    console.log(`pending_stores: ${pendingResult.addedCount}件追加 / ${pendingResult.skippedCount}件既存`);
+  } catch (e) {
+    console.warn(`pending_stores マージ失敗: ${e.message}`);
+  }
+
+  // 手動キュレーション店の合流（Hot Pepper/GSheetsに載っていない高品質店）
+  const manualResult = loadManualStores();
+  const manualNew = mergeManualStores(mergedStores, manualResult.stores, existingHpIds);
+  mergedStores.push(...manualNew);
+  const manualEnriched = manualResult.stores.length - manualNew.length;
+  console.log(`手動キュレーション: 新規${manualNew.length}件 / 既存拡充${manualEnriched}件 / 無効${manualResult.invalid}件 (警告${manualResult.warnings}件)`);
 
   // 品質フィルタ：名古屋市内と確信できるものだけ残す
   const stores = [];
@@ -442,13 +743,138 @@ async function main() {
   console.log(`品質フィルタ: ${stores.length}件通過 / ${rejected.length}件除外`);
 
   // データサニタイゼーション（検証不能なInstagram/写真URL・自動生成推薦文のクリア）
+  // 手動キュレーション店（__manual=true）はバイパス（公式URLが手動指定されているため）
   let sanitizedPoints = 0;
+  let manualBypassed = 0;
   for (const s of stores) {
+    if (s.__manual) {
+      // 価格帯の正規化のみ実施
+      s['価格帯'] = normalizePrice(s['価格帯']);
+      manualBypassed++;
+      continue;
+    }
     const hadPoint = !!s['おすすめポイント'];
     sanitizeStore(s);
     if (hadPoint && !s['おすすめポイント']) sanitizedPoints++;
   }
-  console.log(`サニタイゼーション: Instagram/写真URL=全件クリア / おすすめポイント=${sanitizedPoints}件自動生成パターンをクリア`);
+  // 一時フラグ __manual を LOCAL_STORES から除去
+  for (const s of stores) { delete s.__manual; }
+  console.log(`サニタイゼーション: Instagram/写真URL=全件クリア / おすすめポイント=${sanitizedPoints}件自動生成パターンをクリア / 手動キュレーション${manualBypassed}件はバイパス`);
+
+  // Instagram 検索URL バックフィル — 全店に Instagram検索 を付与（既存 TikTok検索/X検索 と同パターン）
+  // エリアは複数連結（"栄ｷﾀ錦/伏見丸の内/..."）でクエリに含めると一致しないため、店名＋名古屋に固定
+  let igBackfilled = 0;
+  for (const s of stores) {
+    if (!s['Instagram検索']) {
+      const q = encodeURIComponent((s['店名'] || '') + ' 名古屋');
+      s['Instagram検索'] = `https://www.instagram.com/explore/search/keyword/?q=${q}`;
+      igBackfilled++;
+    }
+  }
+  console.log(`Instagram検索URL: ${igBackfilled}件をバックフィル`);
+
+  // Instagram 公式アカウントURL 事前解決の結果をマージ
+  // scripts/resolve_instagram.js が data/instagram_resolved.json に書き出したキャッシュを読み込み、
+  // ホットペッパーIDで一致した店の Instagram フィールドに公式プロフィールURLを焼き付ける。
+  // index.html の instagramSearchUrl(r) が r['Instagram'] を最優先するため、render時に直リンとして使われる。
+  const resolvedPath = path.join(__dirname, 'data/instagram_resolved.json');
+  let igResolved = 0, igResolvedSkipped = 0;
+  if (fs.existsSync(resolvedPath)) {
+    try {
+      const resolvedMap = JSON.parse(fs.readFileSync(resolvedPath, 'utf8'));
+      for (const s of stores) {
+        const id = s['ホットペッパーID'];
+        if (!id) continue;
+        const entry = resolvedMap[id];
+        if (!entry || !entry.instagram || entry.failed) continue;
+        // Instagram フィールドに既に手動設定がある場合は尊重（上書きしない）
+        if (s['Instagram'] && s['Instagram'].trim()) { igResolvedSkipped++; continue; }
+        s['Instagram'] = entry.instagram;
+        igResolved++;
+      }
+      console.log(`Instagram公式URL: ${igResolved}件をマージ（手動設定済み ${igResolvedSkipped}件はスキップ）`);
+    } catch (e) {
+      console.warn(`Instagram公式URLマージ失敗: ${e.message}`);
+    }
+  } else {
+    console.log(`Instagram公式URL: ${resolvedPath} がないためマージスキップ（node scripts/resolve_instagram.js で生成）`);
+  }
+
+  // 話題店JSONをマージ（店名＋エリアで既存店舗にマッチングさせ、話題フラグを付与）
+  const trendingPath = path.join(__dirname, 'data/trending_stores.json');
+  let buzzApplied = 0, buzzMissing = [];
+  if (fs.existsSync(trendingPath)) {
+    try {
+      const trendingRaw = JSON.parse(fs.readFileSync(trendingPath, 'utf8'));
+      const buzzList = (trendingRaw.stores || []).filter(t => t['話題フラグ'] === true);
+      const today = new Date().toISOString().slice(0, 10);
+      for (const buzz of buzzList) {
+        // 有効期限切れはスキップ
+        if (buzz['有効期限'] && buzz['有効期限'] < today) continue;
+        const hit = stores.find(s =>
+          s['店名'] === buzz['店名'] &&
+          (buzz['エリア'] ? s['エリア'] === buzz['エリア'] : true)
+        );
+        if (hit) {
+          hit['話題フラグ'] = true;
+          hit['トレンド情報源'] = buzz['トレンド情報源'] || [];
+          hit['話題スコア'] = buzz['話題スコア'] || 0;
+          hit['話題コメント'] = buzz['コメント'] || '';
+          // おすすめポイントが空の場合のみ、trending_stores.json の手動キュレーション文で補完
+          if (buzz['おすすめポイント'] && (!hit['おすすめポイント'] || !hit['おすすめポイント'].trim())) {
+            hit['おすすめポイント'] = buzz['おすすめポイント'];
+          }
+          buzzApplied++;
+        } else {
+          buzzMissing.push(buzz['店名']);
+        }
+      }
+      console.log(`話題フラグ付与: ${buzzApplied}件 / マッチ失敗: ${buzzMissing.length}件`);
+      if (buzzMissing.length) {
+        console.log('  マッチ失敗の店名（要確認）:', buzzMissing.slice(0, 10).join(' / '));
+      }
+    } catch (e) {
+      console.error(`data/trending_stores.json の読み込み失敗: ${e.message}`);
+    }
+  } else {
+    console.log('data/trending_stores.json なし（話題フラグスキップ）');
+  }
+
+  // 編集部ピックJSONをマージ（店名＋エリアで既存店舗にマッチングさせ、編集部フィールドを付与）
+  const editorPicksPath = path.join(__dirname, 'data/editor_picks.json');
+  if (fs.existsSync(editorPicksPath)) {
+    try {
+      const editorRaw = JSON.parse(fs.readFileSync(editorPicksPath, 'utf8'));
+      const picks = editorRaw.stores || [];
+      const today = new Date().toISOString().slice(0, 10);
+      let epApplied = 0, epMissing = [];
+      for (const p of picks) {
+        // 有効期限切れはスキップ
+        if (p['有効期限'] && p['有効期限'] < today) continue;
+        const hit = stores.find(s =>
+          s['店名'] === p['店名'] &&
+          (p['エリア'] ? s['エリア'] === p['エリア'] : true)
+        );
+        if (hit) {
+          if (p.editorReason) hit.editorReason = p.editorReason;
+          if (p.mediaFeatures) hit.mediaFeatures = p.mediaFeatures;
+          if (p.insiderNote) hit.insiderNote = p.insiderNote;
+          if (p.visitStatus) hit.visitStatus = p.visitStatus;
+          epApplied++;
+        } else {
+          epMissing.push(p['店名']);
+        }
+      }
+      console.log(`編集部ピック付与: ${epApplied}件 / マッチ失敗: ${epMissing.length}件`);
+      if (epMissing.length) {
+        console.log('  マッチ失敗の店名（要確認）:', epMissing.slice(0, 10).join(' / '));
+      }
+    } catch (e) {
+      console.error(`data/editor_picks.json の読み込み失敗: ${e.message}`);
+    }
+  } else {
+    console.log('data/editor_picks.json なし（編集部ピックスキップ）');
+  }
 
   // トレンドスコア算出
   const newHpIds = new Set(newStores.map(s => s['ホットペッパーID']).filter(Boolean));
@@ -485,18 +911,10 @@ async function main() {
     `var LOCAL_STORES = ${jsonStr};`
   );
 
-  // 2. SEOクロール用の隠しリスト（noscript内に店舗名・エリア・ジャンルを列挙）
-  const noscriptItems = stores.map(s =>
-    `<li><a href="${escapeHtml('https://wakuwaku-labs.github.io/nagoya-bites/')}">${escapeHtml(s['店名'])}（${escapeHtml(s['エリア'] || '')} ${escapeHtml(s['ジャンル'] || '')}）</a></li>`
-  ).join('\n');
-  const noscriptHtml = `<noscript><ul id="seo-store-list">\n${noscriptItems}\n</ul></noscript>`;
-
-  // 既存のnoscriptブロックを置き換え or 挿入
-  if (html.includes('<noscript><ul id="seo-store-list">')) {
-    html = html.replace(/<noscript><ul id="seo-store-list">[\s\S]*?<\/ul><\/noscript>/, noscriptHtml);
-  } else {
-    html = html.replace('<div id="grid">', noscriptHtml + '\n<div id="grid">');
-  }
+  // 2. SEOクロール用の内部リンク集は scripts/inject_store_links.js が
+  //    stores/*.html を元に正規リンク（stores/{slug}.html）で生成・挿入する。
+  //    ここでは仮埋めせず、ファイル書き込み後に呼び出す（以前の実装は全リンクが
+  //    トップページURLになっていたため、スラグへの直リンクに修正）。
 
   // 3. lastmod を今日の日付に更新
   const today = new Date().toISOString().slice(0, 10);
@@ -508,19 +926,95 @@ async function main() {
   fs.writeFileSync(HTML, html, 'utf8');
   console.log('index.html 更新完了');
 
-  // 4. sitemap.xmlの lastmod を更新
+  // 2b. 内部リンク集（noscript#seo-store-list + section#store-index）を再生成
+  try {
+    const { execSync } = require('child_process');
+    execSync('node ' + JSON.stringify(path.join(__dirname, 'scripts', 'inject_store_links.js')), { stdio: 'inherit' });
+  } catch (e) {
+    console.warn('inject_store_links.js の実行に失敗しました:', e.message);
+  }
+
+  // 2c. GAS の LINE レポート用 page-names.json を再生成
+  try {
+    const { execSync } = require('child_process');
+    execSync('node ' + JSON.stringify(path.join(__dirname, 'scripts', 'generate_page_names.js')), { stdio: 'inherit' });
+  } catch (e) {
+    console.warn('generate_page_names.js の実行に失敗しました:', e.message);
+  }
+
+  // 4. sitemap.xml を更新
+  //    トップ + 静的ページ + features/ 全件 + stores/ 全件 を列挙
+  const featuresDir = path.join(__dirname, 'features');
+  const journalDir = path.join(__dirname, 'journal');
+  const storesDir = path.join(__dirname, 'stores');
+  const baseUrl = 'https://wakuwaku-labs.github.io/nagoya-bites';
+
+  const sitemapUrls = [
+    { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'weekly' },
+    { loc: `${baseUrl}/about.html`, priority: '0.7', changefreq: 'monthly' },
+    { loc: `${baseUrl}/contact.html`, priority: '0.6', changefreq: 'monthly' },
+    { loc: `${baseUrl}/faq.html`, priority: '0.7', changefreq: 'monthly' },
+  ];
+
+  // features/ インデックス + 個別特集ページ
+  if (fs.existsSync(featuresDir)) {
+    sitemapUrls.push({ loc: `${baseUrl}/features/`, priority: '0.9', changefreq: 'weekly' });
+    const featureFiles = fs.readdirSync(featuresDir)
+      .filter(f => f.endsWith('.html') && f !== 'index.html')
+      .sort();
+    for (const f of featureFiles) {
+      sitemapUrls.push({
+        loc: `${baseUrl}/features/${f}`,
+        priority: '0.8',
+        changefreq: 'monthly'
+      });
+    }
+  }
+
+  // journal/ インデックス + 個別日次記事 (drafts/ と _template.html は除外)
+  if (fs.existsSync(journalDir)) {
+    sitemapUrls.push({ loc: `${baseUrl}/journal/`, priority: '0.9', changefreq: 'daily' });
+    const journalFiles = fs.readdirSync(journalDir)
+      .filter(f => f.endsWith('.html') && f !== 'index.html' && f !== '_template.html')
+      .sort();
+    for (const f of journalFiles) {
+      sitemapUrls.push({
+        loc: `${baseUrl}/journal/${f}`,
+        priority: '0.7',
+        changefreq: 'monthly'
+      });
+    }
+  }
+
+  // stores/*.html を全件登録（P0-B: 店舗ページをクロール対象に）
+  let storeCount = 0;
+  if (fs.existsSync(storesDir)) {
+    const storeFiles = fs.readdirSync(storesDir)
+      .filter(f => f.endsWith('.html') && f !== 'index.html')
+      .sort();
+    for (const f of storeFiles) {
+      sitemapUrls.push({
+        loc: `${baseUrl}/stores/${f}`,
+        priority: '0.6',
+        changefreq: 'monthly'
+      });
+    }
+    storeCount = storeFiles.length;
+  }
+
+  const sitemapEntries = sitemapUrls.map(u => `  <url>
+    <loc>${u.loc}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`).join('\n');
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://wakuwaku-labs.github.io/nagoya-bites/</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+${sitemapEntries}
 </urlset>
 `;
   fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemap, 'utf8');
-  console.log('sitemap.xml 更新完了');
+  console.log(`sitemap.xml 更新完了（URL数: ${sitemapUrls.length}、うち店舗: ${storeCount}）`);
 }
 
 main().catch(e => { console.error(e.message); process.exit(1); });
