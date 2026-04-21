@@ -163,6 +163,22 @@ SEO:
    - テーマに合致する店舗を10〜15件選出
    - 各店舗の「中の人ポイント」を作成
 
+3.5. 写真候補の調査（特集記事用）
+   - 掲載各店舗について以下を調査し、記事HTML の `<head>` 末尾に HTML コメントとして埋め込む:
+     ```html
+     <!-- PHOTO SUGGESTIONS:
+       [店名A]
+         - store_instagram: https://www.instagram.com/... (公式アカウントURL or 検索URL)
+         - google_maps: https://www.google.com/maps/search/<店名>+<エリア>
+         - shot_type: ①<看板料理アップ> ②<店内雰囲気> ③<外観>
+       [非店舗テーマ / 背景画像]
+         - stock_keyword: 「<日本語キーワード>」「<English keyword>」
+         - unsplash: https://unsplash.com/s/photos/<keyword>
+     -->
+     ```
+   - ⚠️ 権利確認: 他メディア・公式サイト写真の転載不可。Unsplash は商用可（クレジット推奨）。
+     Instagram公式写真はリポスト申請が必要。自撮り写真が最も確実。
+
 4. 記事HTMLを作成
    - features/ ディレクトリに配置
    - index.htmlのデザイントーンに合わせる
