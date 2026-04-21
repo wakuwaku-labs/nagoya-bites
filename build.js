@@ -423,11 +423,10 @@ function hpShopToStoreRecord(shop) {
   const address = shop.address || '';
   const prefMatch = address.match(/^(.+?[都道府県])/);
   const pref = prefMatch ? prefMatch[1] : '愛知県';
+  const localityMatch = address.match(/[都道府県](.+?[市区町村])/);
+  const locality = localityMatch ? localityMatch[1] : '';
   const budget = (shop.budget && shop.budget.name) || '';
   const photo = (shop.photo && shop.photo.pc && (shop.photo.pc.l || shop.photo.pc.m || shop.photo.pc.s)) || '';
-  // areaName は "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄" のように複数エリアが連結されており、
-  // 外部サービス（Instagram/TikTok/X）の検索に含めると一致しないため
-  // 検索クエリは「店名 + 名古屋」で固定する
   const searchQ = encodeURIComponent(name + ' 名古屋');
   return {
     '店名': name,
@@ -435,6 +434,11 @@ function hpShopToStoreRecord(shop) {
     'ジャンル': genre,
     'エリア': areaName,
     '都道府県': pref,
+    '市区町村': locality,
+    '住所': address,
+    '緯度': shop.lat != null ? String(shop.lat) : '',
+    '経度': shop.lng != null ? String(shop.lng) : '',
+    '電話': shop.tel || '',
     '価格帯': budget,
     '営業時間': shop.open || '',
     'アクセス': shop.access || '',
@@ -454,7 +458,7 @@ function hpShopToStoreRecord(shop) {
     '内観写真URL': '',
     '料理写真URL1': '',
     '料理写真URL2': '',
-    '口コミ数': String((shop.catch_copy ? 1 : 0) + (shop.access ? 1 : 0) + (shop.budget && shop.budget.name ? 1 : 0) ? Math.floor(Math.random() * 40) + 5 : 0)
+    '口コミ数': ''
   };
 }
 
