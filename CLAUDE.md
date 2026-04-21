@@ -117,3 +117,18 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `docs/daily-posts/` | 日次SNS原稿（Note/Instagram/X 3種、コピペ投稿用） |
 | `.claude/commands/journal-today.md` | `/journal-today` スラッシュコマンド（日次起動） |
 | `build.js` | データ埋め込みスクリプト（DataKeeper管轄） |
+| `data/manual_stores.json` | 手動キュレーション店舗マスター（Editor/DataKeeper 共管） |
+| `data/trending_stores.json` | 既存店舗への話題フラグ後付けマスター（DataKeeper管轄） |
+
+---
+
+## 手動キュレーション店舗の追加運用（`data/manual_stores.json`）
+
+Hot Pepper / Google Sheets に載っていない高品質店（新店・隠れ家・インフル露出店・予約困難店）は、
+`data/manual_stores.json` の `stores` 配列に直接エントリを追加して `node build.js` を実行するだけで反映される。
+
+- **必須フィールド**: 店名 / エリア / 都道府県 / ジャンル / アクセス / キュレーター / 追加日 / おすすめポイント
+- **フラグ**: `話題フラグ`（既存の🔥話題沸騰に合流）/ `編集部推薦`（新バッジ「✦ 編集部推薦」を表示）。両方 true 可
+- **衝突解決**: ホットペッパーID または 店名+エリア 一致で既存店を上書き拡充、なければ新規追加
+- **追加条件**: メディア・インフル露出の裏付け / Google評価4.2以上 or 明確な差別化要素 / 業界人目利きの観点
+- `アクセス` には必ず「名古屋」または名古屋固有駅名を含める（品質フィルタ通過条件）
