@@ -28,6 +28,14 @@
  *     "insider_points": ["業界人視点1", "業界人視点2", "業界人視点3"],
  *     "stores": [{ "name": "店名", "id": "", "genre": "", "area": "", "score": "★4.3", "desc": "", "link": "https://..." }],
  *     "sources": [{ "label": "情報源名", "url": "https://..." }],
+ *     "photo_suggestions": [
+ *       {
+ *         "type": "store_instagram | google_maps | stock_keyword | shot_type",
+ *         "label": "ラベル(例: 店舗Instagram検索)",
+ *         "url": "https://... (任意)",
+ *         "note": "使用上のメモ(例: 公式または来店客の料理写真を検索)"
+ *       }
+ *     ],
  *     "sns": {
  *       "note_title": "Note記事タイトル",
  *       "note_body": "Note本文(2000-5000字目安)",
@@ -84,6 +92,30 @@ function buildSources(sources) {
   return `<div class="source-note"><strong>情報源:</strong> ${items}</div>`;
 }
 
+function buildPhotoSuggestionsHtmlComment(suggestions) {
+  if (!suggestions || suggestions.length === 0) return '';
+  const lines = suggestions.map(s => {
+    let line = `  - [${s.type || 'tip'}] ${s.label}`;
+    if (s.url) line += `: ${s.url}`;
+    if (s.note) line += ` — ${s.note}`;
+    return line;
+  });
+  return `\n<!-- PHOTO SUGGESTIONS (編集メモ — 読者には非表示):\n${lines.join('\n')}\n-->`;
+}
+
+function buildPhotoSuggestionsMd(suggestions) {
+  if (!suggestions || suggestions.length === 0) {
+    return '*(写真候補データなし — Unsplash等で撮影テーマに合う素材を検索してください)*';
+  }
+  return suggestions.map(s => {
+    const typeEmoji = { store_instagram: '📸', google_maps: '🗺', stock_keyword: '🔍', shot_type: '🎬' }[s.type] || '📷';
+    let line = `- ${typeEmoji} **${s.label}**`;
+    if (s.url) line += `\n  リンク: ${s.url}`;
+    if (s.note) line += `\n  > ${s.note}`;
+    return line;
+  }).join('\n');
+}
+
 function renderHtml(input) {
   let html = fs.readFileSync(HTML_TEMPLATE, 'utf8');
   const themeLabel = ({
@@ -105,7 +137,8 @@ function renderHtml(input) {
     '{{BODY}}': input.body_html || '',
     '{{INSIDER_POINTS}}': buildInsiderPoints(input.insider_points),
     '{{STORES}}': buildStores(input.stores),
-    '{{SOURCES}}': buildSources(input.sources)
+    '{{SOURCES}}': buildSources(input.sources),
+    '{{PHOTO_SUGGESTIONS_HTML}}': buildPhotoSuggestionsHtmlComment(input.photo_suggestions)
   };
   Object.entries(replacements).forEach(([k, v]) => { html = html.split(k).join(v); });
   return html;
@@ -129,7 +162,8 @@ function renderMd(input) {
     '{{NOTE_TITLE}}': sns.note_title || input.title,
     '{{NOTE}}': sns.note_body || '(Note本文)',
     '{{INSTAGRAM}}': igBody,
-    '{{X}}': xThread || '(Xスレッド)'
+    '{{X}}': xThread || '(Xスレッド)',
+    '{{PHOTO_SUGGESTIONS}}': buildPhotoSuggestionsMd(input.photo_suggestions)
   };
   Object.entries(replacements).forEach(([k, v]) => { md = md.split(k).join(v); });
   return md;
