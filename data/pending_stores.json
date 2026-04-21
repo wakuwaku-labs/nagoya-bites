@@ -1,0 +1,18 @@
+{
+  "description": "LOCAL_STORES 未収録で、journal 記事に採用した話題店のキュー。build.js 実行時に merge_pending_stores.js が LOCAL_STORES フォーマットへ整形してマージ。マージ済み(merged:true)のエントリは整理してよい。",
+  "schema": {
+    "店名": "必須。正式店名",
+    "ジャンル": "必須。焼肉 / 寿司 / 居酒屋 等",
+    "エリア": "必須。栄 / 名駅 / 伏見 等",
+    "情報源": "必須。採用元のURL(他メディア記事/公式サイト)",
+    "おすすめポイント": "必須。60-120字",
+    "営業状況": "営業中 | 休業中 | 閉店",
+    "追加日": "YYYY-MM-DD",
+    "journal_url": "採用した journal 記事のパス (journal/YYYY-MM-DD-slug.html)",
+    "google_place_id": "後追いで DataKeeper が解決 (任意)",
+    "instagram_handle": "後追いで resolve_instagram.js が解決 (任意)",
+    "hotpepper_id": "後追いで DataKeeper が解決 (任意)",
+    "merged": "build.js で LOCAL_STORES に取り込まれたか (boolean)"
+  },
+  "pending": []
+}

@@ -1,0 +1,35 @@
+{
+  "description": "向こう14日分のテーマスロット。曜日ローテ(月:週次話題店 / 火:今日の1軒 / 水:業界の裏側 / 木:今日の1軒 / 金:季節短信 / 土:今日の1軒 / 日:flexible)をベースに、seasonal_events.json や trending_stores.json で上書きされる。候補店は手動で事前にメモしておくと Editor の選定精度が上がる。",
+  "generated_at": "2026-04-20",
+  "rotation_rules": {
+    "月": { "theme": "weekly_digest", "label": "🔥 週次の話題店ダイジェスト", "length": "800-1200字" },
+    "火": { "theme": "today_one", "label": "🍶 今日の1軒", "length": "700-1000字" },
+    "水": { "theme": "industry_insider", "label": "🗝 業界の裏側コラム", "length": "500-900字" },
+    "木": { "theme": "today_one", "label": "🍶 今日の1軒", "length": "700-1000字" },
+    "金": { "theme": "seasonal", "label": "🗓 季節・イベント短信", "length": "300-600字" },
+    "土": { "theme": "today_one", "label": "🍶 今日の1軒", "length": "700-1000字" },
+    "日": { "theme": "flexible", "label": "🍶 今日の1軒 or 🗓 季節短信", "length": "短〜中" }
+  },
+  "override_rules": [
+    "seasonal_events.json 該当日 → 季節短信を強制",
+    "trending_stores.json で話題スコア>=90の新着 → その店を今日の1軒に採用",
+    "連続2日同ジャンル禁止",
+    "同一店30日以内再掲禁止"
+  ],
+  "queue": [
+    { "date": "2026-04-21", "weekday": "火", "theme": "today_one", "candidate_store_ids": [], "candidate_external": [], "notes": "初回公開日。手動下書き推奨（Editor few-shot 学習用）" },
+    { "date": "2026-04-22", "weekday": "水", "theme": "industry_insider", "column_category": "価格", "notes": "editorial_column_backlog.json から選ぶ" },
+    { "date": "2026-04-23", "weekday": "木", "theme": "today_one", "candidate_store_ids": [], "candidate_external": [] },
+    { "date": "2026-04-24", "weekday": "金", "theme": "seasonal", "notes": "GW直前。予約動向に触れる短信" },
+    { "date": "2026-04-25", "weekday": "土", "theme": "today_one", "candidate_store_ids": [], "candidate_external": [] },
+    { "date": "2026-04-26", "weekday": "日", "theme": "flexible", "notes": "GW中のおすすめ。季節短信 or 今日の1軒" },
+    { "date": "2026-04-27", "weekday": "月", "theme": "weekly_digest", "notes": "先週の話題店3-5軒をダイジェスト" },
+    { "date": "2026-04-28", "weekday": "火", "theme": "today_one", "candidate_store_ids": [], "candidate_external": [] },
+    { "date": "2026-04-29", "weekday": "水", "theme": "industry_insider", "column_category": "席", "notes": "GW中の客単価と回転の話" },
+    { "date": "2026-04-30", "weekday": "木", "theme": "today_one", "candidate_store_ids": [], "candidate_external": [] },
+    { "date": "2026-05-01", "weekday": "金", "theme": "seasonal", "notes": "GW本番。遅めの予約でも入れる店" },
+    { "date": "2026-05-02", "weekday": "土", "theme": "today_one", "candidate_store_ids": [], "candidate_external": [] },
+    { "date": "2026-05-03", "weekday": "日", "theme": "flexible" },
+    { "date": "2026-05-04", "weekday": "月", "theme": "weekly_digest" }
+  ]
+}
