@@ -300,3 +300,85 @@
 - **category**: seo
 - **resolved**: 2026-04-18
 - **fix**: 全特集ページのタイトルを50-75文字に短縮（【2025年版】・現役経営者監修を削除）
+
+---
+
+## 日次ジャーナル運用（CTN-DAILY-*）
+
+NAGOYA BITES の毎日更新パイプライン。`/journal-today` スラッシュコマンドで起動、
+Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → Note/Instagram/X へ手動コピペ投稿。
+コストゼロ運用（Claude API 有料プラン不要、SNS API 不要）。
+
+### [CTN-DAILY-001] journal/ 基盤構築 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-20
+- **owner**: Builder
+- **deliverables**: journal/_template.html / journal/index.html / journal/feed.xml 生成基盤
+
+### [CTN-DAILY-002] data/ 初期JSONファイル群 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-20
+- **owner**: DataKeeper
+- **deliverables**: journal_queue.json / editorial_column_backlog.json(50本ストック) /
+  journal_published.json / pending_stores.json / hashtag_pool.json / seasonal_events.json
+
+### [CTN-DAILY-003] 日次運用スクリプト群 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-20
+- **owner**: Builder + DataKeeper
+- **deliverables**: pick_daily_topic.js / generate_daily_draft.js / validate_journal_draft.js /
+  build_journal_index.js / merge_pending_stores.js / audit_journal.js
+
+### [CTN-DAILY-004] docs/daily-posts/ テンプレ＋README ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-20
+- **owner**: Marketer
+- **deliverables**: _template.md(Note/IG/X 3原稿) + README.md(手動運用手順、10,000フォロワー戦略)
+
+### [CTN-DAILY-005] /journal-today スラッシュコマンド ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-20
+- **owner**: Orchestrator
+- **deliverables**: .claude/commands/journal-today.md(11ステップ実行フロー)
+
+### [CTN-DAILY-006] build.js 拡張 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-20
+- **owner**: Builder
+- **deliverables**: pending_stores.json のマージ処理 / sitemap.xml に journal/ 追加
+
+### [CTN-DAILY-007] index.html に Journal 動線追加 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-20
+- **owner**: Builder
+- **deliverables**: ナビに Journal リンク / トップに最新3件セクション(LATEST_JOURNAL マーカー)
+
+### [CTN-DAILY-008] agents/editor.md 日次運用章 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-20
+- **owner**: Editor
+- **deliverables**: テーマローテ表 / 独自性3要件 / 新規店舗追加フロー / 匿名運営徹底
+
+### [CTN-DAILY-009] 初週7日分の人間下書き
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-04-20
+- **owner**: Editor (人間運営側)
+- **description**: Editor の few-shot 学習素材として、初週7日分(2026-04-21〜04-27)の
+  記事を人間が手で下書き。以後の AI ドラフト品質を底上げ
+- **blocks**: 本番運用開始を7日遅らせてでも実施する価値あり
+
+### [CTN-DAILY-010] 連続7日の運用検証
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-04-20
+- **owner**: Orchestrator
+- **description**: `/journal-today` → validator PASS → push → SNS投稿 を7日連続できるか検証
+- **完了条件**: 7日連続で journal_published.json に entry 追加、SNS3媒体に投稿完了
+
+### [CTN-DAILY-011] 月次監査パイプライン統合
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-04-20
+- **owner**: DataKeeper
+- **description**: `.github/workflows/weekly-pipeline.yml` に `scripts/audit_journal.js` と
+  `scripts/merge_pending_stores.js` のドライラン実行を月曜に追加。閉店店舗検出時は
+  該当journal記事末尾に脚注を自動追記
+- **注意**: LLM は呼ばない(コストゼロ維持)。純ロジックのみ

@@ -1,0 +1,25 @@
+{
+  "description": "季節・イベントカレンダー。pick_daily_topic.js が該当日に seasonal テーマを強制オーバーライドする。2026年対応、以降は年次で追記。",
+  "events": [
+    { "date_range": "2026-03-20/2026-04-10", "name": "桜シーズン", "theme_hint": "花見・桜スポット近くの店", "priority": 70 },
+    { "date_range": "2026-04-24/2026-04-28", "name": "GW直前", "theme_hint": "予約動向・今から取れる店", "priority": 85 },
+    { "date_range": "2026-04-29/2026-05-06", "name": "GW本番", "theme_hint": "連休中の営業・予約なしOK店", "priority": 90 },
+    { "date_range": "2026-05-10/2026-05-31", "name": "新緑・初夏", "theme_hint": "テラス・ビアガーデン初動", "priority": 60 },
+    { "date_range": "2026-06-01/2026-06-30", "name": "梅雨", "theme_hint": "雨の日に嬉しい地下・屋内店", "priority": 55 },
+    { "date_range": "2026-07-01/2026-08-31", "name": "夏本番", "theme_hint": "冷房・ビアガーデン・鰻", "priority": 70 },
+    { "date_range": "2026-07-20/2026-07-31", "name": "土用の丑の日前後", "theme_hint": "名古屋の鰻店特集", "priority": 85 },
+    { "date_range": "2026-09-15/2026-10-15", "name": "秋の新酒・行楽", "theme_hint": "秋メニュー・新酒入荷店", "priority": 70 },
+    { "date_range": "2026-10-20/2026-11-10", "name": "秋の接待シーズン", "theme_hint": "接待向きの店・個室特集", "priority": 75 },
+    { "date_range": "2026-11-15/2026-12-05", "name": "忘年会予約開幕", "theme_hint": "忘年会の取り方・幹事向け", "priority": 95 },
+    { "date_range": "2026-12-06/2026-12-30", "name": "忘年会本番", "theme_hint": "当日予約・滑り込みできる店", "priority": 85 },
+    { "date_range": "2026-12-31/2027-01-03", "name": "年末年始", "theme_hint": "年始営業・初詣後に寄れる店", "priority": 80 },
+    { "date_range": "2027-01-04/2027-01-15", "name": "新年会", "theme_hint": "新年会向き・リニューアルメニュー", "priority": 75 },
+    { "date_range": "2027-02-10/2027-02-14", "name": "バレンタイン", "theme_hint": "カップル向き・記念日ディナー", "priority": 75 },
+    { "date_range": "2027-03-01/2027-03-20", "name": "歓送迎会シーズン", "theme_hint": "大人数対応店・予約戦略", "priority": 85 }
+  ],
+  "weekly_hints": {
+    "月曜": "週末の話題を拾うダイジェスト向き",
+    "金曜": "週末ディナー予約が伸びる日。短信でフック",
+    "日曜": "翌週の外食予定に向けたロング記事が強い"
+  }
+}
