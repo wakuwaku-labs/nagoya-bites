@@ -45,7 +45,7 @@
  */
 
 // ─── 設定（ここを変更する） ───
-const GA4_PROPERTY_ID = '143787045';
+const GA4_PROPERTY_ID = '533244445';
 const LINE_CHANNEL_TOKEN = 'YOUR_CHANNEL_ACCESS_TOKEN';  // Messaging APIのチャネルアクセストークン
 const LINE_USER_ID = 'YOUR_LINE_USER_ID';  // あなたのLINE User ID
 const REPORT_EMAIL = '';  // Gmail送信も併用する場合はメールアドレスを設定（空ならLINEのみ）
@@ -113,6 +113,7 @@ function fetchGA4Report(startDate, endDate) {
       { name: 'eventCount' },
     ],
     dimensions: [{ name: 'pagePath' }],
+    metricAggregations: ['TOTAL'],  // これが無いと response.totals が返らず、LINEに undefined / NaN が出る
     orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
     limit: 20,
   }, 'properties/' + GA4_PROPERTY_ID);
@@ -157,15 +158,17 @@ function parseReport(response) {
 }
 
 function parseTotals(response) {
-  if (!response.totals || !response.totals[0]) return {};
+  // 万一 totals が返ってこなくても undefined/NaN を出さないゼロ埋めフォールバック
+  const zero = { users: 0, pageviews: 0, sessions: 0, avgDuration: 0, bounceRate: 0, events: 0 };
+  if (!response.totals || !response.totals[0]) return zero;
   const vals = response.totals[0].metricValues.map(m => m.value);
   return {
-    users: parseInt(vals[0]) || 0,
-    pageviews: parseInt(vals[1]) || 0,
-    sessions: parseInt(vals[2]) || 0,
+    users:       parseInt(vals[0])   || 0,
+    pageviews:   parseInt(vals[1])   || 0,
+    sessions:    parseInt(vals[2])   || 0,
     avgDuration: parseFloat(vals[3]) || 0,
-    bounceRate: parseFloat(vals[4]) || 0,
-    events: parseInt(vals[5]) || 0,
+    bounceRate:  parseFloat(vals[4]) || 0,
+    events:      parseInt(vals[5])   || 0,
   };
 }
 
@@ -254,25 +257,56 @@ function getDateStr(daysOffset) {
   return Utilities.formatDate(d, 'Asia/Tokyo', 'yyyy-MM-dd');
 }
 
+// GitHub Pages に置いた page-names.json を取得（1時間キャッシュ）
+// 店舗1,095件 + 特集12件 + 静的ページ を網羅したマスター対応表
+const PAGE_NAMES_URL = 'https://wakuwaku-labs.github.io/nagoya-bites/page-names.json';
+let PAGE_NAMES_MEMO = null;  // 1回のGAS実行内のメモリキャッシュ
+
+function fetchPageNames() {
+  if (PAGE_NAMES_MEMO) return PAGE_NAMES_MEMO;
+  try {
+    const cache = CacheService.getScriptCache();
+    const cached = cache.get('page_names_v1');
+    if (cached) {
+      PAGE_NAMES_MEMO = JSON.parse(cached);
+      return PAGE_NAMES_MEMO;
+    }
+    const res = UrlFetchApp.fetch(PAGE_NAMES_URL, { muteHttpExceptions: true });
+    if (res.getResponseCode() === 200) {
+      const json = res.getContentText();
+      cache.put('page_names_v1', json, 3600);  // 1時間キャッシュ（GH Pages は max-age=600）
+      PAGE_NAMES_MEMO = JSON.parse(json);
+      return PAGE_NAMES_MEMO;
+    }
+    Logger.log('page-names.json 取得失敗: HTTP ' + res.getResponseCode());
+  } catch (e) {
+    Logger.log('page-names.json 取得例外: ' + e);
+  }
+  PAGE_NAMES_MEMO = {};
+  return PAGE_NAMES_MEMO;
+}
+
 function pagePathToName(path) {
-  const map = {
-    '/nagoya-bites/': 'トップページ',
-    '/nagoya-bites/index.html': 'トップページ',
-    '/nagoya-bites/features/': '特集一覧',
-    '/nagoya-bites/features/index.html': '特集一覧',
-    '/nagoya-bites/features/meieki.html': '名駅特集',
-    '/nagoya-bites/features/sakae.html': '栄特集',
-    '/nagoya-bites/features/banquet.html': '宴会特集',
-    '/nagoya-bites/features/private-room.html': '個室特集',
-    '/nagoya-bites/features/birthday.html': '誕生日特集',
-    '/nagoya-bites/features/date.html': 'デート特集',
-    '/nagoya-bites/features/girls-party.html': '女子会特集',
-    '/nagoya-bites/features/large-group.html': '大人数特集',
-    '/nagoya-bites/about.html': 'About',
-    '/nagoya-bites/faq.html': 'Q&A',
-    '/nagoya-bites/contact.html': 'Contact',
-  };
-  return map[path] || path;
+  if (!path) return '(不明)';
+  const names = fetchPageNames();
+  if (names[path]) return names[path];
+
+  // フォールバック1: 末尾スラッシュの揺れを吸収
+  if (path.endsWith('/')) {
+    const alt = path + 'index.html';
+    if (names[alt]) return names[alt];
+  }
+
+  // フォールバック2: 店舗ページ（マスター未取得時）
+  const storeMatch = /^\/nagoya-bites\/stores\/(.+)\.html$/.exec(path);
+  if (storeMatch) return '🍽 店舗ID: ' + storeMatch[1];
+
+  // フォールバック3: 特集ページ（マスター未取得時）
+  const featureMatch = /^\/nagoya-bites\/features\/(.+)\.html$/.exec(path);
+  if (featureMatch) return '📰 特集: ' + featureMatch[1];
+
+  // その他：パスをそのまま
+  return path;
 }
 
 function eventToName(event) {

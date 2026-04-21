@@ -715,6 +715,14 @@ async function main() {
     console.warn('inject_store_links.js の実行に失敗しました:', e.message);
   }
 
+  // 2c. GAS の LINE レポート用 page-names.json を再生成
+  try {
+    const { execSync } = require('child_process');
+    execSync('node ' + JSON.stringify(path.join(__dirname, 'scripts', 'generate_page_names.js')), { stdio: 'inherit' });
+  } catch (e) {
+    console.warn('generate_page_names.js の実行に失敗しました:', e.message);
+  }
+
   // 4. sitemap.xml を更新
   //    トップ + 静的ページ + features/ 全件 + stores/ 全件 を列挙
   const featuresDir = path.join(__dirname, 'features');
