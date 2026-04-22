@@ -91,6 +91,11 @@ nav a:hover,nav a.active{color:var(--text);}
 .store-link:hover{background:rgba(122,92,16,.08);}
 .source-note{background:var(--bg2);border:1px solid var(--border);padding:.8rem 1rem;border-radius:4px;margin:1.5rem 0;font-size:.7rem;line-height:1.7;color:var(--dim);}
 .source-note a{color:var(--gold);text-decoration:none;}
+.art-hero-img{margin:0;width:100%;background:var(--bg2);overflow:hidden;}
+.art-hero-img img{width:100%;max-height:420px;object-fit:cover;display:block;}
+.art-img-credit{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;color:var(--dim);text-align:right;padding:.3rem 1rem;}
+.art-img-credit a{color:var(--dim);text-decoration:none;}
+.art-img-credit a:hover{color:var(--gold);}
 .related{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;}
 .related-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;color:var(--white);margin-bottom:1rem;}
 .related-links{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;}
@@ -138,6 +143,8 @@ nav{display:none;}
     </div>
     <p class="art-lead">{{LEAD}}</p>
   </div>
+
+  {{HERO_IMAGE_SECTION}}
 
   <div class="art-body">
     {{BODY}}
