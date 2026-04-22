@@ -1,0 +1,84 @@
+name: NAGOYA BITES — 日次ジャーナル自動生成
+
+on:
+  schedule:
+    # 毎日 22:00 UTC = 翌朝 7:00 JST
+    # ローカル Routine (9:00 JST) より2時間早く実行し重複を防ぐ
+    - cron: '0 22 * * *'
+  workflow_dispatch: # 手動実行（テスト・リカバリ用）
+
+jobs:
+  daily-journal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 本日記事の存在確認（重複生成防止）
+        id: check
+        run: |
+          TODAY_JST=$(TZ=Asia/Tokyo date +%Y-%m-%d)
+          COUNT=$(ls journal/${TODAY_JST}-*.html 2>/dev/null | wc -l | tr -d ' ')
+          echo "today_jst=${TODAY_JST}" >> $GITHUB_OUTPUT
+          echo "exists=${COUNT}" >> $GITHUB_OUTPUT
+          if [ "$COUNT" -gt 0 ]; then
+            echo "本日($TODAY_JST)の記事は既に存在します。スキップします。"
+          else
+            echo "本日($TODAY_JST)の記事を生成します。"
+          fi
+
+      - name: Claude Code インストール
+        if: steps.check.outputs.exists == '0'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: 依存パッケージインストール
+        if: steps.check.outputs.exists == '0'
+        run: npm install
+
+      - name: 日次ジャーナル生成（/journal-today 相当）
+        if: steps.check.outputs.exists == '0'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          # front matter（1-4行）を除いた journal-today.md の内容をプロンプトとして使用
+          PROMPT=$(tail -n +5 .claude/commands/journal-today.md)
+          claude --print "$PROMPT" --no-update-sonnet
+        continue-on-error: false
+
+      - name: 生成ファイルをコミット & プッシュ
+        if: steps.check.outputs.exists == '0'
+        run: |
+          git config user.name  "NAGOYA BITES Daily"
+          git config user.email "daily@nagoya-bites"
+          # ジャーナル記事・SNS原稿・ペンディング店舗・バックログを対象
+          git add journal/ docs/daily-posts/ 2>/dev/null || true
+          git add data/pending_stores.json agent-backlog.md 2>/dev/null || true
+          # 変更がない場合はスキップ
+          if git diff --staged --quiet; then
+            echo "コミット対象の変更がありません。"
+            exit 0
+          fi
+          git commit -m "[agent] 日次ジャーナル自動生成: ${{ steps.check.outputs.today_jst }}"
+          # 競合回避のため rebase してからプッシュ
+          git pull --rebase origin main || true
+          git push || (sleep 10 && git pull --rebase origin main && git push)
+
+      - name: 実行ログ
+        if: always()
+        run: |
+          echo "$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M JST') — 日次ジャーナルパイプライン完了" >> agent-run.log
+          git config user.name  "NAGOYA BITES Daily" 2>/dev/null || true
+          git config user.email "daily@nagoya-bites" 2>/dev/null || true
+          git add agent-run.log 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "[agent] 日次ログ更新 [skip ci]"
+          git push || true

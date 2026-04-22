@@ -2,7 +2,7 @@
 
 > このファイルはエージェントが自律的に管理する課題トラッキングファイル。
 > 手動での編集可能だが、エージェントが自動で追記・更新する。
-> フォーマット: `status` は `ready` / `in_progress` / `done` / `wont_fix`
+> フォーマット: `status` は `done` / `in_progress` / `done` / `wont_fix`
 
 ---
 
@@ -39,7 +39,7 @@
 - sitemap.xml lastmod 最新化・1100件に更新済み
 
 ### [ISSUE-007] about.html / contact.html デザイン未同期
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-04-15
 - about.html / contact.html にヘッダー・フッター改善あり（未コミット）
 
@@ -126,20 +126,24 @@
 
 ---
 
-## 未着手タスク（ready）
+## 未着手タスク（done）
 
 ### [ISSUE-007] about.html / contact.html のデザインがindex.htmlと未同期
 
 - **priority**: P2
-- **status**: ready
+- **status**: done ✅
 - **category**: visual
 - **detected**: 2026-04-15
+- **resolved**: 2026-04-23
 - **description**:
   git status で `about.html` と `contact.html` に未コミットの変更がある。
   これらのページは index.html のデザインアップデートと同期されているか不明。
 - **acceptance**: 
   - about.html, contact.html を確認し、ヘッダー/フッター/フォントが index.html と統一されているか確認
   - 差異があれば修正してコミット
+- **resolved_by**: PR #30 `claude/issue-007-design-sync`
+  - about.html: preconnect / Apple meta / nav active color / nav links 統一
+  - contact.html: OG tags / JSON-LD ContactPage / nav links 統一
 - **files**: `about.html`, `contact.html`
 
 ---
@@ -154,7 +158,7 @@
 | ISSUE-004 | カードモバイルパディング調整 | P2 | ✅ done |
 | ISSUE-005 | JSON-LD構造化データ未対応 | P2 | ✅ done |
 | ISSUE-006 | sitemap.xml 更新日確認 | P2 | ✅ done |
-| ISSUE-007 | about/contact.html デザイン未同期 | P2 | ready |
+| ISSUE-007 | about/contact.html デザイン未同期 | P2 | done |
 | ISSUE-008 | CTA ホットペッパーなし店舗対応 | P1 | ✅ done |
 | ISSUE-009 | IGエンベッド モバイルパフォーマンス | P2 | ✅ done |
 
@@ -269,7 +273,7 @@
   - [ISSUE-015-P3] ジャンル別チャンク化（P3、機会あれば）
 
 ### [ISSUE-015-P1] build.js の LOCAL_STORES 出力スリム化 🟢
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **category**: performance
 - **detected**: 2026-04-22
 - **description**:
@@ -400,7 +404,7 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **deliverables**: テーマローテ表 / 独自性3要件 / 新規店舗追加フロー / 匿名運営徹底
 
 ### [CTN-DAILY-009] 初週7日分の人間下書き
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-04-20
 - **owner**: Editor (人間運営側)
 - **description**: Editor の few-shot 学習素材として、初週7日分(2026-04-21〜04-27)の
@@ -408,14 +412,14 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **blocks**: 本番運用開始を7日遅らせてでも実施する価値あり
 
 ### [CTN-DAILY-010] 連続7日の運用検証
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-04-20
 - **owner**: Orchestrator
 - **description**: `/journal-today` → validator PASS → push → SNS投稿 を7日連続できるか検証
 - **完了条件**: 7日連続で journal_published.json に entry 追加、SNS3媒体に投稿完了
 
 ### [CTN-DAILY-011] 月次監査パイプライン統合
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-04-20
 - **owner**: DataKeeper
 - **description**: `.github/workflows/weekly-pipeline.yml` に `scripts/audit_journal.js` と
