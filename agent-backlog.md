@@ -227,19 +227,28 @@
 
 ## Inspector 2026-04-18 監査で検出された新課題
 
-### [ISSUE-014] GW/春の季節特集コンテンツがゼロ 🔴
-- **priority**: P1 → **status**: ready
-- **category**: content
-- **detected**: 2026-04-18
+### [ISSUE-021] features/ インデックスページに季節特集3本が未登録 ✅
+- **priority**: P1 → **status**: done
+- **category**: seo / ux
+- **resolved**: 2026-04-22
 - **description**:
-  4/18時点、GW（5/3-6）まで約2週間。春〜GW向け特集記事がゼロ件。
-  「名古屋 GW グルメ」「名古屋 テラス 花見」「母の日 名古屋」等の高トラフィック検索で機会損失。
-  既存の features/ はシーン別（宴会/デート/女子会 等）のみで季節軸が皆無。
-- **impact**: GW前の検索ピーク機会損失。1年後まで同じチャンスなし。
-- **acceptance**:
-  - GW特集・春テラス・母の日の最低3本を 2026-04-25 までに公開
-  - feature-strip への追加、sitemap.xml 登録
-- **files**: `features/gw-2026.html`, `features/spring-terrace.html`, `features/mothers-day.html`, `index.html`, `sitemap.xml`
+  トップ [index.html](index.html) の feature-strip には GW 2026・母の日・春テラスの季節特集が掲載済みだったが、
+  [features/index.html](features/index.html)（特集一覧ページ）の article-grid と JSON-LD ItemList には未登録で、
+  特集一覧ページから季節コンテンツに辿り着けない機会損失が発生していた。
+- **fix**:
+  - 季節3カードを article-grid の先頭に追加（金のシーズンバッジ付き、`is-season` クラスで強調）
+  - JSON-LD ItemList を 6 → 12 件に拡張（GW・母の日・春テラス・編集規約・名駅・栄を追加）
+  - CTA 文言の古い「全1095店舗」表記を修正
+- **files**: `features/index.html`
+
+### [ISSUE-014] GW/春の季節特集コンテンツがゼロ ✅
+- **priority**: P1 → **status**: done
+- **category**: content
+- **resolved**: 2026-04-22（先行公開＋ISSUE-021 で features/ 一覧登録完了）
+- **description**:
+  `features/gw-2026.html`・`features/spring-terrace.html`・`features/mothers-day.html` の3本を公開済み。
+  トップの feature-strip 先頭に配置済み。ISSUE-021 で features/ 一覧にも登録。
+- **files**: `features/gw-2026.html`, `features/spring-terrace.html`, `features/mothers-day.html`, `index.html`, `features/index.html`, `sitemap.xml`
 
 ### [ISSUE-015] index.html が 7.2MB で巨大 — パフォーマンス劣化 🔴
 - **priority**: P1 → **status**: ready
@@ -255,17 +264,15 @@
 - **files**: `build.js`, `index.html`
 - **note**: 大規模改修。慎重な設計と段階的実施が必要。
 
-### [ISSUE-016] sitemap.xml に特集ページが未登録 🟡
-- **priority**: P2 → **status**: ready
+### [ISSUE-016] sitemap.xml に特集ページが未登録 ✅
+- **priority**: P2 → **status**: done
 - **category**: seo
-- **detected**: 2026-04-18
+- **resolved**: 2026-04-22
 - **description**:
-  sitemap.xml は URL 1件のみ（index.html）で、features/ 配下の8本の特集ページが未登録。
-- **impact**: 特集ページのインデックス遅延、オーガニック流入 20-30% 機会損失
-- **acceptance**:
-  - build.js で sitemap.xml に全特集ページを自動追加
-  - lastmod をビルド時に自動更新
-- **files**: `build.js`, `sitemap.xml`
+  検証の結果、build.js には features/・journal/・stores/ の自動列挙ロジックが既に実装済み。
+  現状 sitemap.xml には 1,115 URL 登録（features:13 / journal:3 / stores:1,095 / 静的:4）。
+  ビルド毎に lastmod と URL リストが再生成される。
+- **files**: `build.js:947-1017`, `sitemap.xml`
 
 ### [ISSUE-017] Google評価 84% 空白・推薦文 84% 空白 🟡
 - **priority**: P1 → **status**: partial
