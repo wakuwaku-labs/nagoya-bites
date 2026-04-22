@@ -12,12 +12,42 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>お問い合わせ | NAGOYA BITES</title>
 <meta name="description" content="NAGOYA BITESへのお問い合わせはこちら。掲載内容の修正・追加依頼・ご意見・ご感想などお気軽にどうぞ。">
+<meta property="og:title" content="お問い合わせ | NAGOYA BITES">
+<meta property="og:description" content="掲載内容の修正・追加依頼、ご意見・ご感想などお気軽にご連絡ください。名古屋グルメ発見サイト NAGOYA BITES へのお問い合わせはこちら。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wakuwaku-labs.github.io/nagoya-bites/contact.html">
+<meta property="og:site_name" content="NAGOYA BITES">
+<meta property="og:locale" content="ja_JP">
 <link rel="canonical" href="https://wakuwaku-labs.github.io/nagoya-bites/contact.html">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#7a5c10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="NAGOYA BITES">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+<!-- JSON-LD: ContactPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "お問い合わせ | NAGOYA BITES",
+  "url": "https://wakuwaku-labs.github.io/nagoya-bites/contact.html",
+  "description": "掲載内容の修正・追加依頼、ご意見・ご感想などお気軽にご連絡ください。",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "NAGOYA BITES",
+    "url": "https://wakuwaku-labs.github.io/nagoya-bites/"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "NAGOYA BITES", "item": "https://wakuwaku-labs.github.io/nagoya-bites/"},
+      {"@type": "ListItem", "position": 2, "name": "Contact", "item": "https://wakuwaku-labs.github.io/nagoya-bites/contact.html"}
+    ]
+  }
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -89,7 +119,8 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
   </button>
   <nav id="main-nav">
     <a href="./">Top</a>
-    <a href="features/banquet.html">特集</a>
+    <a href="journal/index.html">Journal</a>
+    <a href="features/index.html">特集</a>
     <a href="about.html">About</a>
     <a href="contact.html" class="active">Contact</a>
   </nav>
