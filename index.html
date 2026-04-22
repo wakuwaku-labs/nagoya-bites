@@ -4126,6 +4126,42 @@ function openM(i) {
   var isMFav = getFavs().indexOf(storeName) !== -1;
   mfavBtn.classList.toggle('faved', isMFav);
   mfavBtn.textContent = isMFav ? '♥' : '♡';
+  // ── Restaurant JSON-LD（モーダル開時に動的注入 / LLMO・AI検索最適化）──
+  (function() {
+    var prev = document.getElementById('modal-store-jsonld');
+    if (prev) prev.parentNode.removeChild(prev);
+    var schema = {
+      '@context': 'https://schema.org',
+      '@type': 'Restaurant',
+      'name': r['店名'] || '',
+      'servesCuisine': r['ジャンル'] || '',
+      'priceRange': r['価格帯'] || '',
+      'address': {
+        '@type': 'PostalAddress',
+        'addressLocality': r['エリア'] || '',
+        'addressRegion': r['都道府県'] || '',
+        'addressCountry': 'JP'
+      },
+      'url': r['ホットペッパーID'] ? 'https://www.hotpepper.jp/str' + r['ホットペッパーID'] + '/' : undefined,
+      'image': r['写真URL'] || undefined,
+      'openingHours': r['営業時間'] || undefined,
+      'description': r['おすすめポイント'] || r['editorReason'] || undefined,
+      'aggregateRating': r['Google評価'] ? {
+        '@type': 'AggregateRating',
+        'ratingValue': r['Google評価'],
+        'bestRating': '5',
+        'worstRating': '1',
+        'ratingCount': '10'
+      } : undefined
+    };
+    // undefined を除去
+    Object.keys(schema).forEach(function(k){ if (schema[k] === undefined) delete schema[k]; });
+    var el = document.createElement('script');
+    el.type = 'application/ld+json';
+    el.id = 'modal-store-jsonld';
+    el.textContent = JSON.stringify(schema);
+    document.head.appendChild(el);
+  })();
   document.getElementById('ov').classList.add('open');
   document.body.style.overflow = 'hidden';
   document.getElementById('mobile-cta-bar').style.display='none';
