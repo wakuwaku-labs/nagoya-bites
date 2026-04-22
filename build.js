@@ -707,7 +707,13 @@ async function fetchHotPepperNagoyaStores() {
 async function main() {
   console.log('CSVを取得中...');
   const csv = await fetchUrl(CSV_URL);
-  const gsStores = parseCSV(csv).filter(s => s['公開フラグ'] !== 'FALSE');
+  // 名古屋以外の誤掲載店舗を永続的に除外（Google Sheetsデータを修正するまでの対処）
+  const EXCLUDED_HP_IDS = new Set([
+    'J004469034', // サザンクラウン（沖縄・竹富町）
+  ]);
+  const gsStores = parseCSV(csv)
+    .filter(s => s['公開フラグ'] !== 'FALSE')
+    .filter(s => !EXCLUDED_HP_IDS.has(s['ホットペッパーID']));
   console.log(`Google Sheets: ${gsStores.length}件`);
 
   // Hot Pepperから名古屋店舗取得
