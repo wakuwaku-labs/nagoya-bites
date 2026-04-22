@@ -31,7 +31,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   "mainEntity": {
     "@type": "ItemList",
     "name": "NAGOYA BITES シーン別・エリア別・季節特集記事",
-    "numberOfItems": 12,
+    "numberOfItems": 15,
     "itemListElement": [
       {"@type":"ListItem","position":1,"name":"GW・連休おすすめグルメ12選","url":"https://wakuwaku-labs.github.io/nagoya-bites/features/gw-2026.html"},
       {"@type":"ListItem","position":2,"name":"母の日ディナー・ランチ10選","url":"https://wakuwaku-labs.github.io/nagoya-bites/features/mothers-day.html"},
@@ -44,7 +44,10 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       {"@type":"ListItem","position":9,"name":"誕生日・記念日ディナーおすすめ10選","url":"https://wakuwaku-labs.github.io/nagoya-bites/features/birthday.html"},
       {"@type":"ListItem","position":10,"name":"デートディナーおすすめ10選","url":"https://wakuwaku-labs.github.io/nagoya-bites/features/date.html"},
       {"@type":"ListItem","position":11,"name":"女子会おすすめレストラン10選","url":"https://wakuwaku-labs.github.io/nagoya-bites/features/girls-party.html"},
-      {"@type":"ListItem","position":12,"name":"大人数宴会・20人以上対応10選","url":"https://wakuwaku-labs.github.io/nagoya-bites/features/large-group.html"}
+      {"@type":"ListItem","position":12,"name":"大人数宴会・20人以上対応10選","url":"https://wakuwaku-labs.github.io/nagoya-bites/features/large-group.html"},
+      {"@type":"ListItem","position":13,"name":"名古屋ランチ 和食おすすめ10選","url":"https://wakuwaku-labs.github.io/nagoya-bites/features/nagoya-lunch-washoku.html"},
+      {"@type":"ListItem","position":14,"name":"名古屋 誕生日サプライズにおすすめの店10選","url":"https://wakuwaku-labs.github.io/nagoya-bites/features/birthday-surprise.html"},
+      {"@type":"ListItem","position":15,"name":"大須 食べ歩きおすすめ10選","url":"https://wakuwaku-labs.github.io/nagoya-bites/features/osu-food-walk.html"}
     ]
   }
 }
@@ -112,8 +115,8 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
   <nav>
     <a href="../index.html">すべての店舗</a>
     <a href="index.html" class="active">特集</a>
+    <a href="../journal/index.html">Journal</a>
     <a href="../about.html">About</a>
-    <a href="../contact.html">Contact</a>
   </nav>
 </header>
 
@@ -311,6 +314,51 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
     <div class="card-body">
       <div class="card-title">大人数宴会・20人以上対応10選</div>
       <p class="card-desc">会社宴会・同窓会・サークルコンパに対応する個室・貸切プランありのお店を厳選。大人数の幹事必見。</p>
+      <div class="card-meta">
+        <span class="card-count">10店掲載</span>
+        <span class="card-cta">読む →</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="article-card" href="nagoya-lunch-washoku.html">
+    <div class="card-badge">
+      <div class="card-icon">🍱</div>
+      <div class="card-category">Lunch · 和食ランチ</div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">名古屋ランチ 和食おすすめ10選</div>
+      <p class="card-desc">うなぎ・しゃぶしゃぶ・割烹・居酒屋ランチ。Google評価4.4以上の和食ランチを飲食店経営者が厳選。接待から一人ランチまで対応。</p>
+      <div class="card-meta">
+        <span class="card-count">10店掲載</span>
+        <span class="card-cta">読む →</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="article-card" href="birthday-surprise.html">
+    <div class="card-badge">
+      <div class="card-icon">🎉</div>
+      <div class="card-category">Birthday · 誕生日サプライズ</div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">名古屋 誕生日サプライズにおすすめの店10選</div>
+      <p class="card-desc">Google評価5.0〜4.6。サプライズ対応・個室・非日常演出ありの名古屋の誕生日向け10軒。予約のコツも業界人が解説。</p>
+      <div class="card-meta">
+        <span class="card-count">10店掲載</span>
+        <span class="card-cta">読む →</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="article-card" href="osu-food-walk.html">
+    <div class="card-badge">
+      <div class="card-icon">🚶</div>
+      <div class="card-category">Area Guide · 大須食べ歩き</div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">大須 食べ歩きおすすめ10選</div>
+      <p class="card-desc">大須観音〜エキニシ〜矢場町のグルメ街道を地元飲食業界人がナビ。居酒屋・中華・バル・そば屋のはしごコースプランつき。</p>
       <div class="card-meta">
         <span class="card-count">10店掲載</span>
         <span class="card-cta">読む →</span>

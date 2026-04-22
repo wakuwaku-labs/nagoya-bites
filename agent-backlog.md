@@ -426,3 +426,51 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
   `scripts/merge_pending_stores.js` のドライラン実行を月曜に追加。閉店店舗検出時は
   該当journal記事末尾に脚注を自動追記
 - **注意**: LLM は呼ばない(コストゼロ維持)。純ロジックのみ
+
+---
+
+## 2026-04-22 夜間バッチ実行ログ（tonight-batch）
+
+### [BATCH-001] Restaurant JSON-LD モーダル動的注入 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-22
+- **owner**: Builder
+- **description**: `index.html` の `openM()` 関数内に36行の IIFE を追加。モーダル開閉時に `<script id="modal-store-jsonld" type="application/ld+json">` を動的生成・置換。@type Restaurant, name, servesCuisine, priceRange, address, url, aggregateRating（Google評価）を含む。リッチリザルト獲得でCTR +30% を狙う。
+- **files**: `index.html`
+
+### [BATCH-002] GitHub Actions 日次ジャーナル自動化 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-22
+- **owner**: Builder + Orchestrator
+- **description**: `.github/workflows/daily-journal.yml` を新設。毎日22:00 UTC (翌朝7:00 JST) に自動実行。`journal/YYYY-MM-DD-*.html` の存在チェックで重複防止。`/journal-today` スラッシュコマンドのプロンプトを `claude --print` で実行。生成ファイルをコミット&プッシュ。ローカルRoutine(9:00 JST)と併用でフェイルセーフ構成。
+- **files**: `.github/workflows/daily-journal.yml`
+
+### [BATCH-003] ISSUE-015-P1 build.js 出力スリム化 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-22
+- **owner**: Builder
+- **description**: `slimStoreForOutput()` 関数を build.js に追加。TikTok検索/X検索/Instagram検索（2.19MB）＋ sanitize空フィールド8種 + 公開フラグを出力から除去。index.html 7.14MB → 0.90MB（87.3%削減）。index.html の render コードは一切変更なし（未使用フィールドは既に `|| ''` 分岐で扱える）。
+- **files**: `build.js`, `index.html`（再ビルド）
+
+### [BATCH-004] ISSUE-007 about/contact デザイン統一 ✅
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-04-22（前回バッチ）
+- **files**: `about.html`, `contact.html`
+
+### [BATCH-005] Day3 ジャーナル公開 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-23
+- **owner**: Editor
+- **description**: `journal/2026-04-23-small-seats-famous-restaurants.html` 公開。テーマ「カウンター6席、テーブル2卓」が名物店に多い理由（業界の裏側コラム・COL-SEAT-001）。BlogPosting + BreadcrumbList JSON-LD。journal/index.html, sitemap.xml 更新済み。
+
+### [BATCH-006] ロングテール特集3本公開 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-23
+- **owner**: Editor
+- **description**: P1計画の「ロングテールLP3本新設」を実施。
+  1. `features/nagoya-lunch-washoku.html`（名古屋ランチ和食おすすめ10選 / 10店 / Google評価4.4以上）
+  2. `features/birthday-surprise.html`（名古屋誕生日サプライズ10選 / 10店 / Google評価4.6〜5.0）
+  3. `features/osu-food-walk.html`（大須食べ歩き10選 / 10店 / コースプランつき）
+  各記事: Article + ItemList + BreadcrumbList + FAQPage JSON-LD, 内部リンク, related-links。
+  features/index.html に3カード追加（numberOfItems 12→15）。sitemap.xml に4URL追加。
+- **files**: `features/nagoya-lunch-washoku.html`（新規）, `features/birthday-surprise.html`（新規）, `features/osu-food-walk.html`（新規）, `features/index.html`, `journal/index.html`, `sitemap.xml`
