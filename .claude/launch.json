@@ -4,8 +4,9 @@
     {
       "name": "nagoya-bites",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["http-server", "-p", "8081", "-c-1", "--no-dotfiles"],
-      "port": 8081
+      "runtimeArgs": ["http-server", "-c-1", "--no-dotfiles"],
+      "port": 8082,
+      "autoPort": true
     }
   ]
 }
