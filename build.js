@@ -701,7 +701,8 @@ async function main() {
   const existingHpIds = new Set(
     gsStores.map(s => s['ホットペッパーID']).filter(Boolean)
   );
-  const seen = new Set(existingHpIds);
+  // 除外リストのIDも seen に追加し、Hot Pepper API 経由での再追加を防ぐ
+  const seen = new Set([...existingHpIds, ...EXCLUDED_HP_IDS]);
   const newStores = [];
   let dupCount = 0;
   let outsideCount = 0;
