@@ -251,18 +251,51 @@
 - **files**: `features/gw-2026.html`, `features/spring-terrace.html`, `features/mothers-day.html`, `index.html`, `features/index.html`, `sitemap.xml`
 
 ### [ISSUE-015] index.html が 7.2MB で巨大 — パフォーマンス劣化 🔴
+- **priority**: P1 → **status**: in_progress（設計完了・段階実装へ）
+- **category**: performance
+- **detected**: 2026-04-18 / **designed**: 2026-04-22
+- **description**:
+  4586件の LOCAL_STORES (4.85MB) を inline 埋め込みしている結果、ファイルサイズが 7.2MB。
+  TTFB遅延・LCP 劣化・モバイル離脱要因。
+- **impact**: Core Web Vitals 劣化、Lighthouse スコア低下、SEO順位への悪影響
+- **design_doc**: `docs/issue-015-design.md`（3段階の段階実装計画）
+- **key_insight**: 計測の結果、`TikTok検索`・`X検索`・`Instagram検索` の3フィールド (2.19MB) は
+  レンダー時に常に `tiktokSearchUrl(r)` 等で再計算されており、焼き付けデータは**完全に未使用**。
+  加えて sanitizeStore で強制クリアされる5フィールドも空のまま出力されている。
+  → コード無修正でも build.js のシリアライズ最適化だけで **2.5〜2.7MB 削減 (36〜37%減)** 可能。
+- **phases**:
+  - [ISSUE-015-P1] build.js の出力スリム化（低リスク）→ 4.5MB へ
+  - [ISSUE-015-P2] 外部JSON化 + TOP50 インライン（中リスク）→ 800KB 以下へ
+  - [ISSUE-015-P3] ジャンル別チャンク化（P3、機会あれば）
+
+### [ISSUE-015-P1] build.js の LOCAL_STORES 出力スリム化 🟢
 - **priority**: P1 → **status**: ready
 - **category**: performance
-- **detected**: 2026-04-18
+- **detected**: 2026-04-22
 - **description**:
-  4588件の LOCAL_STORES を inline 埋め込みしている結果、ファイルサイズが 7.2MB。
-  TTFB遅延、初期レンダリングブロック、モバイル離脱要因。
-- **impact**: Core Web Vitals 劣化、Lighthouse スコア低下、SEO順位への悪影響
+  未使用の検索URL3種と空フィールドを LOCAL_STORES 出力から除去する。
+  index.html のコードは一切変更しない（渡ってこない値は既に `|| ''` 分岐で扱えている）。
+- **strip fields**:
+  - `TikTok検索` / `X検索` / `Instagram検索`（render 時に再計算される未使用URL）
+  - `Instagram投稿URL` / `内観写真URL` / `料理写真URL1` / `料理写真URL2`（sanitizeで全件空）
+  - `公開フラグ`（build 時に FALSE 除外済み）
+  - 空文字列 (`""`) フィールド
 - **acceptance**:
-  - LOCAL_STORES を外部JSON化 + fetch 化、または段階的読み込み
-  - 初期HTML < 1MB を目標
-- **files**: `build.js`, `index.html`
-- **note**: 大規模改修。慎重な設計と段階的実施が必要。
+  - index.html サイズ < 5MB（目標 4.5MB）
+  - 店舗数・フィルタ・モーダル・全外部リンク・JSON-LD が回帰なし
+  - Lighthouse Performance が +5pt 以上
+- **files**: `build.js`
+
+### [ISSUE-015-P2] 外部JSON化 + TOP50 インライン方式 🟡
+- **priority**: P1 → **status**: blocked（P1完了＆観察後に着手）
+- **category**: performance
+- **detected**: 2026-04-22
+- **description**:
+  Phase 1 デプロイ後 1週間 GA4 で UU / LCP / 直帰率を観察してから着手。
+  `data/stores.json` を新設、index.html には TOP50 のみインラインし、残りは fetch で遅延読み込み。
+  詳細は `docs/issue-015-design.md` 参照。
+- **acceptance**: 初期 HTML < 800KB、全機能の動作維持、Lighthouse Performance > 75 (mobile)
+- **files**: `build.js`, `index.html`, `data/stores.json`（新規）
 
 ### [ISSUE-016] sitemap.xml に特集ページが未登録 ✅
 - **priority**: P2 → **status**: done
