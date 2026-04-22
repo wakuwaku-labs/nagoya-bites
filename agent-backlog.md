@@ -227,45 +227,85 @@
 
 ## Inspector 2026-04-18 監査で検出された新課題
 
-### [ISSUE-014] GW/春の季節特集コンテンツがゼロ 🔴
-- **priority**: P1 → **status**: ready
-- **category**: content
-- **detected**: 2026-04-18
+### [ISSUE-021] features/ インデックスページに季節特集3本が未登録 ✅
+- **priority**: P1 → **status**: done
+- **category**: seo / ux
+- **resolved**: 2026-04-22
 - **description**:
-  4/18時点、GW（5/3-6）まで約2週間。春〜GW向け特集記事がゼロ件。
-  「名古屋 GW グルメ」「名古屋 テラス 花見」「母の日 名古屋」等の高トラフィック検索で機会損失。
-  既存の features/ はシーン別（宴会/デート/女子会 等）のみで季節軸が皆無。
-- **impact**: GW前の検索ピーク機会損失。1年後まで同じチャンスなし。
-- **acceptance**:
-  - GW特集・春テラス・母の日の最低3本を 2026-04-25 までに公開
-  - feature-strip への追加、sitemap.xml 登録
-- **files**: `features/gw-2026.html`, `features/spring-terrace.html`, `features/mothers-day.html`, `index.html`, `sitemap.xml`
+  トップ [index.html](index.html) の feature-strip には GW 2026・母の日・春テラスの季節特集が掲載済みだったが、
+  [features/index.html](features/index.html)（特集一覧ページ）の article-grid と JSON-LD ItemList には未登録で、
+  特集一覧ページから季節コンテンツに辿り着けない機会損失が発生していた。
+- **fix**:
+  - 季節3カードを article-grid の先頭に追加（金のシーズンバッジ付き、`is-season` クラスで強調）
+  - JSON-LD ItemList を 6 → 12 件に拡張（GW・母の日・春テラス・編集規約・名駅・栄を追加）
+  - CTA 文言の古い「全1095店舗」表記を修正
+- **files**: `features/index.html`
+
+### [ISSUE-014] GW/春の季節特集コンテンツがゼロ ✅
+- **priority**: P1 → **status**: done
+- **category**: content
+- **resolved**: 2026-04-22（先行公開＋ISSUE-021 で features/ 一覧登録完了）
+- **description**:
+  `features/gw-2026.html`・`features/spring-terrace.html`・`features/mothers-day.html` の3本を公開済み。
+  トップの feature-strip 先頭に配置済み。ISSUE-021 で features/ 一覧にも登録。
+- **files**: `features/gw-2026.html`, `features/spring-terrace.html`, `features/mothers-day.html`, `index.html`, `features/index.html`, `sitemap.xml`
 
 ### [ISSUE-015] index.html が 7.2MB で巨大 — パフォーマンス劣化 🔴
+- **priority**: P1 → **status**: in_progress（設計完了・段階実装へ）
+- **category**: performance
+- **detected**: 2026-04-18 / **designed**: 2026-04-22
+- **description**:
+  4586件の LOCAL_STORES (4.85MB) を inline 埋め込みしている結果、ファイルサイズが 7.2MB。
+  TTFB遅延・LCP 劣化・モバイル離脱要因。
+- **impact**: Core Web Vitals 劣化、Lighthouse スコア低下、SEO順位への悪影響
+- **design_doc**: `docs/issue-015-design.md`（3段階の段階実装計画）
+- **key_insight**: 計測の結果、`TikTok検索`・`X検索`・`Instagram検索` の3フィールド (2.19MB) は
+  レンダー時に常に `tiktokSearchUrl(r)` 等で再計算されており、焼き付けデータは**完全に未使用**。
+  加えて sanitizeStore で強制クリアされる5フィールドも空のまま出力されている。
+  → コード無修正でも build.js のシリアライズ最適化だけで **2.5〜2.7MB 削減 (36〜37%減)** 可能。
+- **phases**:
+  - [ISSUE-015-P1] build.js の出力スリム化（低リスク）→ 4.5MB へ
+  - [ISSUE-015-P2] 外部JSON化 + TOP50 インライン（中リスク）→ 800KB 以下へ
+  - [ISSUE-015-P3] ジャンル別チャンク化（P3、機会あれば）
+
+### [ISSUE-015-P1] build.js の LOCAL_STORES 出力スリム化 🟢
 - **priority**: P1 → **status**: ready
 - **category**: performance
-- **detected**: 2026-04-18
+- **detected**: 2026-04-22
 - **description**:
-  4588件の LOCAL_STORES を inline 埋め込みしている結果、ファイルサイズが 7.2MB。
-  TTFB遅延、初期レンダリングブロック、モバイル離脱要因。
-- **impact**: Core Web Vitals 劣化、Lighthouse スコア低下、SEO順位への悪影響
+  未使用の検索URL3種と空フィールドを LOCAL_STORES 出力から除去する。
+  index.html のコードは一切変更しない（渡ってこない値は既に `|| ''` 分岐で扱えている）。
+- **strip fields**:
+  - `TikTok検索` / `X検索` / `Instagram検索`（render 時に再計算される未使用URL）
+  - `Instagram投稿URL` / `内観写真URL` / `料理写真URL1` / `料理写真URL2`（sanitizeで全件空）
+  - `公開フラグ`（build 時に FALSE 除外済み）
+  - 空文字列 (`""`) フィールド
 - **acceptance**:
-  - LOCAL_STORES を外部JSON化 + fetch 化、または段階的読み込み
-  - 初期HTML < 1MB を目標
-- **files**: `build.js`, `index.html`
-- **note**: 大規模改修。慎重な設計と段階的実施が必要。
+  - index.html サイズ < 5MB（目標 4.5MB）
+  - 店舗数・フィルタ・モーダル・全外部リンク・JSON-LD が回帰なし
+  - Lighthouse Performance が +5pt 以上
+- **files**: `build.js`
 
-### [ISSUE-016] sitemap.xml に特集ページが未登録 🟡
-- **priority**: P2 → **status**: ready
-- **category**: seo
-- **detected**: 2026-04-18
+### [ISSUE-015-P2] 外部JSON化 + TOP50 インライン方式 🟡
+- **priority**: P1 → **status**: blocked（P1完了＆観察後に着手）
+- **category**: performance
+- **detected**: 2026-04-22
 - **description**:
-  sitemap.xml は URL 1件のみ（index.html）で、features/ 配下の8本の特集ページが未登録。
-- **impact**: 特集ページのインデックス遅延、オーガニック流入 20-30% 機会損失
-- **acceptance**:
-  - build.js で sitemap.xml に全特集ページを自動追加
-  - lastmod をビルド時に自動更新
-- **files**: `build.js`, `sitemap.xml`
+  Phase 1 デプロイ後 1週間 GA4 で UU / LCP / 直帰率を観察してから着手。
+  `data/stores.json` を新設、index.html には TOP50 のみインラインし、残りは fetch で遅延読み込み。
+  詳細は `docs/issue-015-design.md` 参照。
+- **acceptance**: 初期 HTML < 800KB、全機能の動作維持、Lighthouse Performance > 75 (mobile)
+- **files**: `build.js`, `index.html`, `data/stores.json`（新規）
+
+### [ISSUE-016] sitemap.xml に特集ページが未登録 ✅
+- **priority**: P2 → **status**: done
+- **category**: seo
+- **resolved**: 2026-04-22
+- **description**:
+  検証の結果、build.js には features/・journal/・stores/ の自動列挙ロジックが既に実装済み。
+  現状 sitemap.xml には 1,115 URL 登録（features:13 / journal:3 / stores:1,095 / 静的:4）。
+  ビルド毎に lastmod と URL リストが再生成される。
+- **files**: `build.js:947-1017`, `sitemap.xml`
 
 ### [ISSUE-017] Google評価 84% 空白・推薦文 84% 空白 🟡
 - **priority**: P1 → **status**: partial
