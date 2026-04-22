@@ -381,6 +381,33 @@ function sanitizeStore(s) {
 }
 
 // ────────────────────────────────────────────────────
+// ISSUE-015-P1: index.html 書き込み時のフィールド間引き
+// ────────────────────────────────────────────────────
+// 以下のキーは LOCAL_STORES に含める必要がないため除外する:
+//   - TikTok検索 / X検索 / Instagram検索: ランタイムで tiktokSearchUrl(r) 等で再生成される
+//   - Instagram / Instagram投稿URL / 内観写真URL / 料理写真URL1 / 料理写真URL2:
+//     sanitizeStore() により全件 '' にクリアされている
+//   - 公開フラグ: build時点で FALSE 除外済み
+// 併せて、値が空文字・null・undefined のキーも出力から除外する（runtimeは
+// `r['foo'] || ''` パターンで参照しているため undefined でも同じ挙動になる）
+const STORE_OUTPUT_OMIT_KEYS = new Set([
+  'TikTok検索', 'X検索', 'Instagram検索',
+  'Instagram', 'Instagram投稿URL',
+  '内観写真URL', '料理写真URL1', '料理写真URL2',
+  '公開フラグ'
+]);
+function slimStoreForOutput(s) {
+  const out = {};
+  for (const k of Object.keys(s)) {
+    if (STORE_OUTPUT_OMIT_KEYS.has(k)) continue;
+    const v = s[k];
+    if (v === '' || v === null || v === undefined) continue;
+    out[k] = v;
+  }
+  return out;
+}
+
+// ────────────────────────────────────────────────────
 // Hot Pepper Gourmet API 連携
 // ────────────────────────────────────────────────────
 
@@ -904,8 +931,11 @@ async function main() {
   console.log(`最終: ${stores.length}件`);
 
   // 1. LOCAL_STORESを全店舗データで置き換え
+  //    ISSUE-015-P1: 出力時に不要フィールド・空値を除去して serialize 量を削減
   let html = fs.readFileSync(HTML, 'utf8');
-  const jsonStr = JSON.stringify(stores);
+  const slimStores = stores.map(slimStoreForOutput);
+  const jsonStr = JSON.stringify(slimStores);
+  console.log(`LOCAL_STORES serialize: ${stores.length}件, ${(jsonStr.length / 1024 / 1024).toFixed(2)}MB`);
   html = html.replace(
     /var LOCAL_STORES = \[[\s\S]*?\];/,
     `var LOCAL_STORES = ${jsonStr};`
