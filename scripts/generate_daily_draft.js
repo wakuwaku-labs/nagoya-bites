@@ -252,7 +252,43 @@ async function tryUnsplashApi(genre) {
 }
 
 /** 記事に合う写真を自動取得 */
+/**
+ * HotPepper写真URL (_480.jpg) からフルサイズURLへ変換し疎通確認する。
+ * フルサイズが取れない場合は _480 をそのまま使う。
+ */
+async function tryStorePhoto(photoUrl) {
+  if (!photoUrl) return null;
+  // _480.jpg → サイズなし（フルサイズ）に変換して試みる
+  const fullUrl = photoUrl.replace(/_\d+\.jpg$/, '.jpg');
+  const targetUrl = fullUrl !== photoUrl ? fullUrl : photoUrl;
+  return new Promise((resolve) => {
+    const req = https.get(targetUrl, { timeout: 6000 }, (res) => {
+      res.resume();
+      if (res.statusCode === 200) {
+        resolve({ url: targetUrl, credit_name: '店舗公式写真', credit_url: 'https://www.hotpepper.jp', is_store_photo: true });
+      } else if (targetUrl !== photoUrl) {
+        // フルサイズ失敗 → _480 にフォールバック
+        resolve({ url: photoUrl, credit_name: '店舗公式写真', credit_url: 'https://www.hotpepper.jp', is_store_photo: true });
+      } else {
+        resolve(null);
+      }
+    });
+    req.on('error', () => resolve(null));
+    req.on('timeout', () => { req.destroy(); resolve(null); });
+  });
+}
+
 async function fetchPhotoForArticle(input) {
+  // 0. stores[0].photo_url が明示指定されている場合（HotPepper実店舗写真）
+  const storePhotoUrl = (input.stores || [])[0]?.photo_url;
+  if (storePhotoUrl) {
+    const storePhoto = await tryStorePhoto(storePhotoUrl);
+    if (storePhoto) {
+      process.stdout.write(` 📷 店舗公式写真 (HotPepper)\n`);
+      return storePhoto;
+    }
+  }
+
   const genre = (input.stores || [])[0]?.genre || '';
 
   // 1. Unsplash API（環境変数あり時のみ）
@@ -271,12 +307,17 @@ async function fetchPhotoForArticle(input) {
 function buildHeroImageSection(input) {
   const imgUrl = input.hero_image_url;
   if (!imgUrl) return '';
+  const isStorePhoto = input.hero_image_is_store_photo;
   const creditUrl  = input.hero_image_credit_url  || 'https://unsplash.com';
   const creditName = input.hero_image_credit_name || 'Unsplash';
-  const creditSite = creditUrl.includes('unsplash') ? 'Unsplash' : 'Loremflickr';
+  // 店舗公式写真はHotPepperへリンク、Unsplashはunsplash.com
+  const creditSite = isStorePhoto ? 'HotPepper' : (creditUrl.includes('unsplash') ? 'Unsplash' : '');
+  const creditHtml = isStorePhoto
+    ? `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">店舗公式写真</a> / <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">HotPepper</a>`
+    : `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>`;
   return `<figure class="art-hero-img">
-  <img src="${esc(imgUrl)}" alt="${esc(input.title)}" loading="lazy" decoding="async" width="1200" height="630">
-  <figcaption class="art-img-credit">Photo: <a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="${esc(creditUrl.includes('unsplash') ? 'https://unsplash.com' : 'https://loremflickr.com')}" target="_blank" rel="noopener">${creditSite}</a></figcaption>
+  <img src="${esc(imgUrl)}" alt="${esc(input.title)}" loading="lazy" decoding="async">
+  <figcaption class="art-img-credit">Photo: ${creditHtml}</figcaption>
 </figure>`;
 }
 
@@ -370,9 +411,10 @@ async function main() {
     process.stdout.write('  📷 画像を自動取得中...');
     const photo = await fetchPhotoForArticle(input);
     if (photo) {
-      input.hero_image_url         = photo.url;
-      input.hero_image_credit_url  = photo.credit_url;
-      input.hero_image_credit_name = photo.credit_name;
+      input.hero_image_url           = photo.url;
+      input.hero_image_credit_url    = photo.credit_url;
+      input.hero_image_credit_name   = photo.credit_name;
+      input.hero_image_is_store_photo = photo.is_store_photo || false;
       input.og_image = input.og_image || photo.url;
     }
   } else {
