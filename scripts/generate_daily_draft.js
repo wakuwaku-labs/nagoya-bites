@@ -167,11 +167,8 @@ async function tryLoremflickr(keywords, lock) {
     const kw = keywords.split(',').slice(0, 4).join(',');
     const srcUrl = `https://loremflickr.com/1200/630/${encodeURIComponent(kw)}?lock=${lock}`;
     const req = https.get(srcUrl, { timeout: 8000 }, (res) => {
-      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        const loc = res.headers.location;
-        const stableUrl = loc.startsWith('http') ? loc : `https://loremflickr.com${loc}`;
-        resolve({ url: stableUrl, credit_name: 'Flickr CC / Loremflickr', credit_url: 'https://loremflickr.com' });
-      } else if (res.statusCode === 200) {
+      // リダイレクト先キャッシュURLは不安定 (404になる) → 元のsrcUrlを使う
+      if (res.statusCode >= 200 && res.statusCode < 400) {
         resolve({ url: srcUrl, credit_name: 'Flickr CC / Loremflickr', credit_url: 'https://loremflickr.com' });
       } else {
         resolve(null);
