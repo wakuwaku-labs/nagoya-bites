@@ -16,6 +16,7 @@ const ROOT = path.join(__dirname, '..');
 const PUBLISHED = path.join(ROOT, 'data', 'journal_published.json');
 const JOURNAL_INDEX = path.join(ROOT, 'journal', 'index.html');
 const FEED = path.join(ROOT, 'journal', 'feed.xml');
+const ATOM_FEED = path.join(ROOT, 'journal', 'feed.atom');
 const SITE_URL = 'https://wakuwaku-labs.github.io/nagoya-bites';
 
 function esc(s) {
@@ -75,6 +76,38 @@ ${items}
 `;
 }
 
+function buildAtomFeed(entries) {
+  const sorted = (entries || []).slice().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 30);
+  const updated = sorted.length > 0
+    ? new Date(sorted[0].published_at || sorted[0].date).toISOString()
+    : new Date().toISOString();
+  const entriesXml = sorted.map(e => {
+    const url = `${SITE_URL}/journal/${esc(e.slug)}.html`;
+    const pub = new Date(e.published_at || e.date).toISOString();
+    return `  <entry>
+    <title>${esc(e.title)}</title>
+    <link href="${url}"/>
+    <id>${url}</id>
+    <updated>${pub}</updated>
+    <published>${pub}</published>
+    <summary>${esc(e.description || '')}</summary>
+    <category term="${esc(e.theme)}" label="${esc(themeLabel(e.theme))}"/>
+  </entry>`;
+  }).join('\n');
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ja">
+  <title>NAGOYA BITES Journal</title>
+  <subtitle>名古屋の飲食業界の中の人が毎日配信する目利きジャーナル</subtitle>
+  <link href="${SITE_URL}/journal/" rel="alternate"/>
+  <link href="${SITE_URL}/journal/feed.atom" rel="self"/>
+  <id>${SITE_URL}/journal/</id>
+  <updated>${updated}</updated>
+  <author><name>NAGOYA BITES 編集部</name></author>
+${entriesXml}
+</feed>
+`;
+}
+
 function updateJournalIndex(listHtml) {
   const src = fs.readFileSync(JOURNAL_INDEX, 'utf8');
   const out = src.replace(
@@ -112,6 +145,7 @@ function main() {
   const listHtml = buildList(entries);
   updateJournalIndex(listHtml);
   fs.writeFileSync(FEED, buildFeed(entries));
+  fs.writeFileSync(ATOM_FEED, buildAtomFeed(entries));
   const rootUpdated = updateRootLatestSection(entries);
   console.log(`✅ journal/index.html (${entries.length}件) + feed.xml 更新${rootUpdated ? ' + index.html 最新3件' : ''}`);
 }
