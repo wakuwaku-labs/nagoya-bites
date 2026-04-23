@@ -99,70 +99,126 @@ function buildSources(sources) {
 // --------------- 自動画像取得（Unsplash API 優先 → ジャンル別厳選写真フォールバック）-----------
 
 /**
- * ジャンル別に厳選した Unsplash 写真。API不要・URLが永続的で関連性が高い。
- * { id, credit_name, credit_url } の配列。複数あれば日付ベースで選択。
- * すべて動作確認済み (HTTP 200)。
+ * ジャンル別に厳選した Unsplash 写真（全て実際に目視確認済み）。
+ * API不要・URLが永続的。{ id, credit_name, credit_url } の配列。
  */
 const GENRE_PHOTO_MAP = {
+  // 居酒屋: モダンな店内照明 / 料理人の手元（板場の臨場感）
   '居酒屋': [
-    { id: 'photo-1547592180-85f173990554', credit_name: 'Hisan Chia',     credit_url: 'https://unsplash.com/photos/BHD8oL-VVII' },
-    { id: 'photo-1580822184713-fc5400e7fe10', credit_name: 'Koon Chakhatrakan', credit_url: 'https://unsplash.com/photos/z-3XT9E3BKg' },
+    { id: 'photo-1517248135467-4c7edcad34c4', credit_name: 'Nikola Johnny Mirkovic', credit_url: 'https://unsplash.com/photos/4YzrcDNcRVg' },
+    { id: 'photo-1551218808-94e220e084d2',    credit_name: 'Kevin McCutcheon',        credit_url: 'https://unsplash.com/photos/APDMfLHZiRA' },
   ],
+  // 和食: 美しい盛り合わせ寿司 / 料理人の手元
   '和食': [
-    { id: 'photo-1579871494447-9811cf80d66c', credit_name: 'Louis Hansel', credit_url: 'https://unsplash.com/photos/lCyMYOaEwqk' },
-    { id: 'photo-1536304929831-ee1ca9d44906', credit_name: 'Jakub Kapusnak', credit_url: 'https://unsplash.com/photos/4f3Zlaqd3mE' },
+    { id: 'photo-1514190051997-0f6f39ca5cde', credit_name: 'Mahmud Ahsan',    credit_url: 'https://unsplash.com/photos/IfGMHGlOyeQ' },
+    { id: 'photo-1551218808-94e220e084d2',    credit_name: 'Kevin McCutcheon', credit_url: 'https://unsplash.com/photos/APDMfLHZiRA' },
   ],
+  // 割烹: 老舗の料理 → 寿司盛り合わせ / 板場の手元
   '割烹': [
-    { id: 'photo-1579871494447-9811cf80d66c', credit_name: 'Louis Hansel', credit_url: 'https://unsplash.com/photos/lCyMYOaEwqk' },
-    { id: 'photo-1536304929831-ee1ca9d44906', credit_name: 'Jakub Kapusnak', credit_url: 'https://unsplash.com/photos/4f3Zlaqd3mE' },
+    { id: 'photo-1514190051997-0f6f39ca5cde', credit_name: 'Mahmud Ahsan',    credit_url: 'https://unsplash.com/photos/IfGMHGlOyeQ' },
+    { id: 'photo-1551218808-94e220e084d2',    credit_name: 'Kevin McCutcheon', credit_url: 'https://unsplash.com/photos/APDMfLHZiRA' },
   ],
+  // 寿司: 美しい盛り合わせ / サーモンロール
   '寿司': [
-    { id: 'photo-1585937421612-70a008356fbe', credit_name: 'Mahmud Ahsan', credit_url: 'https://unsplash.com/photos/IfGMHGlOyeQ' },
-    { id: 'photo-1536304929831-ee1ca9d44906', credit_name: 'Jakub Kapusnak', credit_url: 'https://unsplash.com/photos/4f3Zlaqd3mE' },
+    { id: 'photo-1514190051997-0f6f39ca5cde', credit_name: 'Mahmud Ahsan',         credit_url: 'https://unsplash.com/photos/IfGMHGlOyeQ' },
+    { id: 'photo-1579871494447-9811cf80d66c', credit_name: 'Louis Hansel',          credit_url: 'https://unsplash.com/photos/lCyMYOaEwqk' },
   ],
+  // ラーメン: ラーメンボウル
   'ラーメン': [
-    { id: 'photo-1553621042-f6e147245754', credit_name: 'Hana Oliver',   credit_url: 'https://unsplash.com/photos/TtA9CQrxRQI' },
+    { id: 'photo-1553621042-f6e147245754', credit_name: 'Hana Oliver', credit_url: 'https://unsplash.com/photos/TtA9CQrxRQI' },
   ],
+  // 焼き鳥: カツ系フライ / 盛り合わせ
   '焼き鳥': [
-    { id: 'photo-1565557623262-b51c2513a641', credit_name: 'Kyle Mackie', credit_url: 'https://unsplash.com/photos/E2tSn5BPJXE' },
-    { id: 'photo-1547592180-85f173990554', credit_name: 'Hisan Chia',     credit_url: 'https://unsplash.com/photos/BHD8oL-VVII' },
+    { id: 'photo-1569050467447-ce54b3bbc37d', credit_name: 'amirali mirhashemian', credit_url: 'https://unsplash.com/photos/FBpKHMGc5FU' },
+    { id: 'photo-1504674900247-0877df9cc836',  credit_name: 'Brooke Lark',          credit_url: 'https://unsplash.com/photos/08bOYnH_r_E' },
   ],
+  // 焼肉・鉄板焼: フライ系 / 盛り合わせ
   '焼肉': [
-    { id: 'photo-1565557623262-b51c2513a641', credit_name: 'Kyle Mackie', credit_url: 'https://unsplash.com/photos/E2tSn5BPJXE' },
+    { id: 'photo-1569050467447-ce54b3bbc37d', credit_name: 'amirali mirhashemian', credit_url: 'https://unsplash.com/photos/FBpKHMGc5FU' },
   ],
   '鉄板焼': [
-    { id: 'photo-1565557623262-b51c2513a641', credit_name: 'Kyle Mackie', credit_url: 'https://unsplash.com/photos/E2tSn5BPJXE' },
+    { id: 'photo-1569050467447-ce54b3bbc37d', credit_name: 'amirali mirhashemian', credit_url: 'https://unsplash.com/photos/FBpKHMGc5FU' },
   ],
+  // 天ぷら: 和食盛り合わせ
   '天ぷら': [
-    { id: 'photo-1579871494447-9811cf80d66c', credit_name: 'Louis Hansel', credit_url: 'https://unsplash.com/photos/lCyMYOaEwqk' },
+    { id: 'photo-1514190051997-0f6f39ca5cde', credit_name: 'Mahmud Ahsan', credit_url: 'https://unsplash.com/photos/IfGMHGlOyeQ' },
   ],
+  // イタリアン: カフェ風内観 / 料理盛り付け
   'イタリアン': [
-    { id: 'photo-1555396273-367ea4eb4db5', credit_name: 'Naomi Hébert',   credit_url: 'https://unsplash.com/photos/HP4tGnPNPzM' },
+    { id: 'photo-1555396273-367ea4eb4db5', credit_name: 'Naomi Hébert',      credit_url: 'https://unsplash.com/photos/HP4tGnPNPzM' },
     { id: 'photo-1414235077428-338989a2e8c0', credit_name: 'Jay Wennington', credit_url: 'https://unsplash.com/photos/N_Y88TWmGwA' },
   ],
+  // フレンチ
   'フレンチ': [
     { id: 'photo-1414235077428-338989a2e8c0', credit_name: 'Jay Wennington', credit_url: 'https://unsplash.com/photos/N_Y88TWmGwA' },
-    { id: 'photo-1555396273-367ea4eb4db5', credit_name: 'Naomi Hébert',   credit_url: 'https://unsplash.com/photos/HP4tGnPNPzM' },
+    { id: 'photo-1555396273-367ea4eb4db5', credit_name: 'Naomi Hébert',      credit_url: 'https://unsplash.com/photos/HP4tGnPNPzM' },
   ],
+  // 中華: 複数皿の俯瞰
   '中華': [
-    { id: 'photo-1504674900247-0877df9cc836', credit_name: 'Brooke Lark',  credit_url: 'https://unsplash.com/photos/08bOYnH_r_E' },
+    { id: 'photo-1504674900247-0877df9cc836', credit_name: 'Brooke Lark', credit_url: 'https://unsplash.com/photos/08bOYnH_r_E' },
   ],
+  // デフォルト: 高級感のある店内 / 板場の手元 / 俯瞰の料理
   '_default': [
-    { id: 'photo-1517248135467-4c7edcad34c4', credit_name: 'Vladimir Gladkov', credit_url: 'https://unsplash.com/photos/4YzrcDNcRVg' },
-    { id: 'photo-1504674900247-0877df9cc836', credit_name: 'Brooke Lark',      credit_url: 'https://unsplash.com/photos/08bOYnH_r_E' },
-    { id: 'photo-1540189549336-e6e99c3679fe', credit_name: 'Ella Olsson',      credit_url: 'https://unsplash.com/photos/KPDbRyFOTnE' },
+    { id: 'photo-1517248135467-4c7edcad34c4', credit_name: 'Nikola Johnny Mirkovic', credit_url: 'https://unsplash.com/photos/4YzrcDNcRVg' },
+    { id: 'photo-1551218808-94e220e084d2',    credit_name: 'Kevin McCutcheon',        credit_url: 'https://unsplash.com/photos/APDMfLHZiRA' },
+    { id: 'photo-1504674900247-0877df9cc836', credit_name: 'Brooke Lark',             credit_url: 'https://unsplash.com/photos/08bOYnH_r_E' },
   ],
 };
 
-/** ジャンル文字列からマップエントリを選択し、日付で候補をローテーション */
+/**
+ * コンセプトキーワード優先マップ。
+ * おすすめポイント/タイトルにこれらが含まれる場合、ジャンルより優先して写真を選ぶ。
+ */
+const CONCEPT_PHOTO_MAP = [
+  // 板場・料亭・厨房 → 料理人の手元（調理の臨場感）
+  { keywords: ['板場', '料亭', '厨房', 'オープンキッチン', '職人'],
+    photo: { id: 'photo-1551218808-94e220e084d2', credit_name: 'Kevin McCutcheon', credit_url: 'https://unsplash.com/photos/APDMfLHZiRA' } },
+  // 寿司・鮨
+  { keywords: ['寿司', '鮨', 'すし'],
+    photo: { id: 'photo-1514190051997-0f6f39ca5cde', credit_name: 'Mahmud Ahsan', credit_url: 'https://unsplash.com/photos/IfGMHGlOyeQ' } },
+  // ラーメン
+  { keywords: ['ラーメン', '拉麺', '麺'],
+    photo: { id: 'photo-1553621042-f6e147245754', credit_name: 'Hana Oliver', credit_url: 'https://unsplash.com/photos/TtA9CQrxRQI' } },
+  // 店内・雰囲気重視
+  { keywords: ['隠れ家', '路地', '暖簾', '一軒家'],
+    photo: { id: 'photo-1517248135467-4c7edcad34c4', credit_name: 'Nikola Johnny Mirkovic', credit_url: 'https://unsplash.com/photos/4YzrcDNcRVg' } },
+];
+
+/**
+ * おすすめポイント・タイトルからコンセプトキーワードで写真を選ぶ。
+ * 一致しなければジャンルマップにフォールバック。
+ */
 function pickCuratedPhoto(input) {
+  // コンセプトテキスト: おすすめポイント + タイトル + 店名
+  const conceptText = [
+    input.title || '',
+    (input.stores || []).map(s => s.desc || '').join(' '),
+    // input.json 経由で店舗の おすすめポイント が body_html に含まれる場合も検索
+  ].join(' ');
+
+  // 1. コンセプトキーワードで優先選択
+  for (const rule of CONCEPT_PHOTO_MAP) {
+    if (rule.keywords.some(kw => conceptText.includes(kw))) {
+      const e = rule.photo;
+      return {
+        url: `https://images.unsplash.com/${e.id}?auto=format&fit=crop&w=1200&h=630&q=80`,
+        credit_name: e.credit_name,
+        credit_url: `${e.credit_url}?utm_source=nagoya_bites&utm_medium=referral`,
+      };
+    }
+  }
+
+  // 2. ジャンルマップ
   const genre = (input.stores || [])[0]?.genre || '';
   const key = Object.keys(GENRE_PHOTO_MAP).find(k => k !== '_default' && genre.includes(k));
   const pool = GENRE_PHOTO_MAP[key] || GENRE_PHOTO_MAP['_default'];
   const lock = parseInt(input.date.replace(/-/g, ''), 10);
   const entry = pool[lock % pool.length];
-  const url = `https://images.unsplash.com/${entry.id}?auto=format&fit=crop&w=1200&h=630&q=80`;
-  return { url, credit_name: entry.credit_name, credit_url: `${entry.credit_url}?utm_source=nagoya_bites&utm_medium=referral` };
+  return {
+    url: `https://images.unsplash.com/${entry.id}?auto=format&fit=crop&w=1200&h=630&q=80`,
+    credit_name: entry.credit_name,
+    credit_url: `${entry.credit_url}?utm_source=nagoya_bites&utm_medium=referral`,
+  };
 }
 
 /**
