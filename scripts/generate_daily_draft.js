@@ -356,8 +356,9 @@ async function tryGoogleMapsPhoto(storeName, area) {
 function buildInstagramEmbedHtml(postUrl) {
   const cleanUrl = postUrl.replace(/\?.*$/, '').replace(/\/$/, '');
   const embedUrl = `${cleanUrl}/?utm_source=ig_embed&utm_campaign=loading`;
+  // data-instgrm-captioned を省略 → 写真のみ表示（キャプション非表示）
   return `<div class="art-hero-ig">
-  <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="${esc(embedUrl)}" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);margin:0 auto;max-width:540px;padding:0;width:calc(100% - 2px);">
+  <blockquote class="instagram-media" data-instgrm-permalink="${esc(embedUrl)}" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);margin:0 auto;max-width:540px;padding:0;width:calc(100% - 2px);">
     <a href="${esc(embedUrl)}" target="_blank" rel="noopener">Instagramで見る</a>
   </blockquote>
   <script async src="//www.instagram.com/embed.js"></script>
