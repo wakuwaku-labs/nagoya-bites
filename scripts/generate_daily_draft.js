@@ -278,27 +278,107 @@ async function tryStorePhoto(photoUrl) {
   });
 }
 
+/**
+ * Google Places API で店舗写真を取得。
+ * 要 GOOGLE_MAPS_API_KEY 環境変数。
+ * 優先度: HotPepper写真なし → Google Maps写真 → Unsplash curated
+ *
+ * 流れ: findplacefromtext → place/details (photos) → place/photo (redirect) → CDN URL
+ */
+async function tryGoogleMapsPhoto(storeName, area) {
+  const key = process.env.GOOGLE_MAPS_API_KEY;
+  if (!key) return null;
+
+  function getJson(url) {
+    return new Promise((resolve) => {
+      let body = '';
+      const req = https.get(url, { timeout: 8000 }, (res) => {
+        res.on('data', d => { body += d; });
+        res.on('end', () => { try { resolve(JSON.parse(body)); } catch { resolve(null); } });
+      });
+      req.on('error', () => resolve(null));
+      req.on('timeout', () => { req.destroy(); resolve(null); });
+    });
+  }
+
+  // Step 1: 店名+エリアで Place ID を取得
+  const query = encodeURIComponent(`${storeName} ${area} 名古屋`);
+  const findRes = await getJson(
+    `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${query}&inputtype=textquery&fields=place_id&key=${key}`
+  );
+  const placeId = findRes?.candidates?.[0]?.place_id;
+  if (!placeId) return null;
+
+  // Step 2: Place Details → photos[0].photo_reference と html_attributions
+  const detailRes = await getJson(
+    `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=photos,name&key=${key}`
+  );
+  const photo = detailRes?.result?.photos?.[0];
+  if (!photo?.photo_reference) return null;
+  const attribution = photo.html_attributions?.[0]
+    ? photo.html_attributions[0].replace(/<[^>]+>/g, '') // HTMLタグ除去
+    : 'Google Maps';
+
+  // Step 3: place/photo → リダイレクト先の CDN URL を取得（APIキーをHTMLに埋め込まない）
+  const photoApiUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=${photo.photo_reference}&key=${key}`;
+  const cdnUrl = await new Promise((resolve) => {
+    const req = https.get(photoApiUrl, { timeout: 8000 }, (res) => {
+      res.resume();
+      // Places Photo APIは302でGoogleusercontent CDNへリダイレクト
+      if ((res.statusCode === 301 || res.statusCode === 302) && res.headers.location) {
+        resolve(res.headers.location);
+      } else if (res.statusCode === 200) {
+        resolve(photoApiUrl); // 直接返る場合はAPIキー含むURLになるが稀
+      } else {
+        resolve(null);
+      }
+    });
+    req.on('error', () => resolve(null));
+    req.on('timeout', () => { req.destroy(); resolve(null); });
+  });
+  if (!cdnUrl) return null;
+
+  const mapsUrl = `https://www.google.com/maps/place/?q=place_id:${placeId}`;
+  return {
+    url: cdnUrl,
+    credit_name: attribution,
+    credit_url: mapsUrl,
+    is_store_photo: true,
+    credit_source: 'Google Maps',
+  };
+}
+
 async function fetchPhotoForArticle(input) {
+  const store = (input.stores || [])[0] || {};
+
   // 0. stores[0].photo_url が明示指定されている場合（HotPepper実店舗写真）
-  const storePhotoUrl = (input.stores || [])[0]?.photo_url;
-  if (storePhotoUrl) {
-    const storePhoto = await tryStorePhoto(storePhotoUrl);
+  if (store.photo_url) {
+    const storePhoto = await tryStorePhoto(store.photo_url);
     if (storePhoto) {
       process.stdout.write(` 📷 店舗公式写真 (HotPepper)\n`);
       return storePhoto;
     }
   }
 
-  const genre = (input.stores || [])[0]?.genre || '';
+  // 1. Google Maps写真（GOOGLE_MAPS_API_KEY 設定時）
+  if (store.name) {
+    const googlePhoto = await tryGoogleMapsPhoto(store.name, store.area || '');
+    if (googlePhoto) {
+      process.stdout.write(` 📷 Googleマップ写真: ${googlePhoto.credit_name}\n`);
+      return googlePhoto;
+    }
+  }
 
-  // 1. Unsplash API（環境変数あり時のみ）
+  const genre = store.genre || '';
+
+  // 2. Unsplash API（環境変数あり時のみ）
   const unsplash = await tryUnsplashApi(genre);
   if (unsplash) {
     process.stdout.write(` 📷 Unsplash API: ${unsplash.credit_name}\n`);
     return unsplash;
   }
 
-  // 2. ジャンル別厳選写真（API不要・Unsplash直接URL・永続的）
+  // 3. ジャンル別厳選写真（API不要・Unsplash直接URL・永続的）
   const curated = pickCuratedPhoto(input);
   process.stdout.write(` 📷 Unsplash (curated): ${curated.credit_name}\n`);
   return curated;
@@ -307,14 +387,23 @@ async function fetchPhotoForArticle(input) {
 function buildHeroImageSection(input) {
   const imgUrl = input.hero_image_url;
   if (!imgUrl) return '';
-  const isStorePhoto = input.hero_image_is_store_photo;
-  const creditUrl  = input.hero_image_credit_url  || 'https://unsplash.com';
-  const creditName = input.hero_image_credit_name || 'Unsplash';
-  // 店舗公式写真はHotPepperへリンク、Unsplashはunsplash.com
-  const creditSite = isStorePhoto ? 'HotPepper' : (creditUrl.includes('unsplash') ? 'Unsplash' : '');
-  const creditHtml = isStorePhoto
-    ? `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">店舗公式写真</a> / <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">HotPepper</a>`
-    : `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>`;
+  const isStorePhoto  = input.hero_image_is_store_photo;
+  const creditSource  = input.hero_image_credit_source; // 'Google Maps' | null
+  const creditUrl     = input.hero_image_credit_url  || 'https://unsplash.com';
+  const creditName    = input.hero_image_credit_name || 'Unsplash';
+
+  let creditHtml;
+  if (creditSource === 'Google Maps') {
+    // Googleマップ写真: 撮影者名（attributionから）/ Google Maps へリンク
+    creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="https://maps.google.com" target="_blank" rel="noopener">Google Maps</a>`;
+  } else if (isStorePhoto) {
+    // HotPepper写真
+    creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">店舗公式写真</a> / <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">HotPepper</a>`;
+  } else {
+    // Unsplash写真
+    creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>`;
+  }
+
   return `<figure class="art-hero-img">
   <img src="${esc(imgUrl)}" alt="${esc(input.title)}" loading="lazy" decoding="async">
   <figcaption class="art-img-credit">Photo: ${creditHtml}</figcaption>
@@ -411,10 +500,11 @@ async function main() {
     process.stdout.write('  📷 画像を自動取得中...');
     const photo = await fetchPhotoForArticle(input);
     if (photo) {
-      input.hero_image_url           = photo.url;
-      input.hero_image_credit_url    = photo.credit_url;
-      input.hero_image_credit_name   = photo.credit_name;
+      input.hero_image_url            = photo.url;
+      input.hero_image_credit_url     = photo.credit_url;
+      input.hero_image_credit_name    = photo.credit_name;
       input.hero_image_is_store_photo = photo.is_store_photo || false;
+      input.hero_image_credit_source  = photo.credit_source || null;
       input.og_image = input.og_image || photo.url;
     }
   } else {
