@@ -229,6 +229,42 @@
 
 ---
 
+## Inspector 2026-04-23 監査で検出された新課題
+
+### [ISSUE-022] journal/feed.xml lastBuildDate が固定値 ❌ 誤検出
+- **priority**: P2 → **status**: wont_fix
+- **resolved**: 2026-04-23（誤検出として却下）
+- **description**: 確認の結果、`scripts/build_journal_index.js` で既に `new Date().toUTCString()` を動的注入していた。
+
+### [ISSUE-023] trending_stores.json 有効期限チェック未実装 ❌ 誤検出
+- **priority**: P2 → **status**: wont_fix
+- **resolved**: 2026-04-23（誤検出として却下）
+- **description**: `build.js` に既に有効期限チェックが実装済み（trending/manual/pending すべて）。
+
+### [ISSUE-024] stores/*.html の og:image がホットペッパー固定
+- **priority**: P3 → **status**: ready
+- **category**: SEO・OGP
+- **detected**: 2026-04-23
+- **description**: stores/ 1095店舗の og:image が全て `https://imgfp.hotp.jp/IMGH/...`。SNS シェア時の visuals が単調で差別化にならない。Hot Pepper 画像のホットリンクは規約違反リスクもあり。
+- **fix**: ジャンル別・エリア別のデフォルト OG画像（自家製）を用意し、写真URL未設定店はこれをフォールバック
+
+### [ISSUE-025] stores/ ページの meta description が過少
+- **priority**: P3 → **status**: redefined (2026-04-23)
+- **category**: SEO
+- **detected**: 2026-04-23
+- **redefined_description**: description は 48〜110字（median 76字、p90 96字）で全体的に短すぎる。Google SERP の理想レンジ 120〜155字を大幅に下回る。1047/1095 店が 100字未満。
+- **redefined_fix**: 店舗ページ生成スクリプトを再構築し description を 120〜150字に拡張する。
+- **blocker**: 店舗ページ生成スクリプトが repo 未コミットで同定必要。
+
+### [ISSUE-026] journal feed が RSS2.0 のみで Atom 1.0 なし
+- **priority**: P3 → **status**: done (2026-04-23)
+- **category**: 標準準拠
+- **detected**: 2026-04-23
+- **resolution**: `scripts/build_journal_index.js` に `buildAtomFeed()` 追加、`journal/feed.atom` を並行生成。`journal/index.html` に `<link rel="alternate" type="application/atom+xml">` を追加。
+- **files**: `scripts/build_journal_index.js`, `journal/index.html`, `journal/feed.atom`
+
+---
+
 ## Inspector 2026-04-18 監査で検出された新課題
 
 ### [ISSUE-021] features/ インデックスページに季節特集3本が未登録 ✅
