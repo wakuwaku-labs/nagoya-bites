@@ -349,78 +349,25 @@ async function tryGoogleMapsPhoto(storeName, area) {
 }
 
 /**
- * 食べログHTML検索で店舗og:imageを取得（完全無料・APIキー不要）。
- * 検索 → 最初の店舗ページ → og:image meta の順で抽出。
+ * Instagram 公式 embed HTML を生成（API不要・完全無料）。
+ * Instagram の利用規約上、embed.js を使った埋め込みは明示的に許可されている。
+ * 参照: https://help.instagram.com/1521786464576692
  */
-async function tryTabelogPhoto(storeName, area) {
-  function fetchHtml(url) {
-    return new Promise((resolve) => {
-      let reqUrl;
-      try { reqUrl = new URL(url); } catch { return resolve(null); }
-      const opts = {
-        hostname: reqUrl.hostname,
-        path: reqUrl.pathname + reqUrl.search,
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept': 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8',
-          'Accept-Language': 'ja-JP,ja;q=0.9,en;q=0.5',
-          'Accept-Encoding': 'identity',
-        },
-        timeout: 10000,
-      };
-      let body = '';
-      const req = https.request(opts, (res) => {
-        res.setEncoding('utf8');
-        res.on('data', d => { body += d; });
-        res.on('end', () => resolve({ status: res.statusCode, body }));
-      });
-      req.on('error', () => resolve(null));
-      req.on('timeout', () => { req.destroy(); resolve(null); });
-      req.end();
-    });
-  }
-
-  try {
-    // Step1: 食べログ愛知エリア検索
-    const query = encodeURIComponent(`${storeName} ${area}`);
-    const searchUrl = `https://tabelog.com/aichi/rstLst/search/?vs=1&sk=${query}`;
-    const searchRes = await fetchHtml(searchUrl);
-    if (!searchRes || searchRes.status !== 200) return null;
-
-    // Step2: 検索結果から最初のレストランURLを抽出
-    const urlMatch = searchRes.body.match(/href="(https:\/\/tabelog\.com\/aichi\/A[0-9]+\/A[0-9]+\/[0-9]+\/)"/);
-    if (!urlMatch) return null;
-    const restUrl = urlMatch[1];
-
-    // Step3: レストランページからog:imageを取得
-    const restRes = await fetchHtml(restUrl);
-    if (!restRes || restRes.status !== 200) return null;
-
-    const ogMatch = restRes.body.match(/<meta[^>]+property="og:image"[^>]+content="([^"]+)"/i)
-      || restRes.body.match(/<meta[^>]+content="([^"]+)"[^>]+property="og:image"/i);
-    if (!ogMatch) return null;
-
-    const imageUrl = ogMatch[1].replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
-    if (!imageUrl || !imageUrl.startsWith('http')) return null;
-    // 食べログのデフォルト・ノーイメージ・ロゴは除外
-    if (/noimage|logo|common\/img|tabelogssl\.com\/icon/i.test(imageUrl)) return null;
-
-    return {
-      url: imageUrl,
-      credit_name: '食べログ',
-      credit_url: restUrl,
-      is_store_photo: true,
-      credit_source: 'Tabelog',
-    };
-  } catch {
-    return null;
-  }
+function buildInstagramEmbedHtml(postUrl) {
+  const cleanUrl = postUrl.replace(/\?.*$/, '').replace(/\/$/, '');
+  const embedUrl = `${cleanUrl}/?utm_source=ig_embed&utm_campaign=loading`;
+  return `<div class="art-hero-ig">
+  <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="${esc(embedUrl)}" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);margin:0 auto;max-width:540px;padding:0;width:calc(100% - 2px);">
+    <a href="${esc(embedUrl)}" target="_blank" rel="noopener">Instagramで見る</a>
+  </blockquote>
+  <script async src="//www.instagram.com/embed.js"></script>
+</div>`;
 }
 
 async function fetchPhotoForArticle(input) {
   const store = (input.stores || [])[0] || {};
 
-  // 0. stores[0].photo_url が明示指定されている場合（HotPepper実店舗写真）
+  // 0. HotPepper 実店舗写真（stores[0].photo_url 指定時）
   if (store.photo_url) {
     const storePhoto = await tryStorePhoto(store.photo_url);
     if (storePhoto) {
@@ -429,7 +376,17 @@ async function fetchPhotoForArticle(input) {
     }
   }
 
-  // 1. Google Maps写真（GOOGLE_MAPS_API_KEY 設定時）
+  // 1. Instagram 公式 embed（stores[0].instagram_post_url 指定時）
+  if (store.instagram_post_url) {
+    process.stdout.write(` 📷 Instagram embed\n`);
+    return {
+      is_instagram: true,
+      url: store.instagram_post_url,
+      embed_html: buildInstagramEmbedHtml(store.instagram_post_url),
+    };
+  }
+
+  // 2. Google Maps写真（GOOGLE_MAPS_API_KEY 設定時）
   if (store.name) {
     const googlePhoto = await tryGoogleMapsPhoto(store.name, store.area || '');
     if (googlePhoto) {
@@ -438,31 +395,27 @@ async function fetchPhotoForArticle(input) {
     }
   }
 
-  // 1.5. 食べログスクレイピング（完全無料・APIキー不要）
-  if (store.name) {
-    const tabelogPhoto = await tryTabelogPhoto(store.name, store.area || '');
-    if (tabelogPhoto) {
-      process.stdout.write(` 📷 食べログ写真\n`);
-      return tabelogPhoto;
-    }
-  }
-
   const genre = store.genre || '';
 
-  // 2. Unsplash API（環境変数あり時のみ）
+  // 3. Unsplash API（環境変数あり時のみ）
   const unsplash = await tryUnsplashApi(genre);
   if (unsplash) {
     process.stdout.write(` 📷 Unsplash API: ${unsplash.credit_name}\n`);
     return unsplash;
   }
 
-  // 3. ジャンル別厳選写真（API不要・Unsplash直接URL・永続的）
+  // 4. ジャンル別厳選写真（API不要・Unsplash直接URL・永続的）
   const curated = pickCuratedPhoto(input);
   process.stdout.write(` 📷 Unsplash (curated): ${curated.credit_name}\n`);
   return curated;
 }
 
 function buildHeroImageSection(input) {
+  // Instagram embed（blockquote をそのまま返す）
+  if (input.hero_image_is_instagram && input.hero_image_embed_html) {
+    return input.hero_image_embed_html;
+  }
+
   const imgUrl = input.hero_image_url;
   if (!imgUrl) return '';
   const isStorePhoto  = input.hero_image_is_store_photo;
@@ -473,13 +426,9 @@ function buildHeroImageSection(input) {
   let creditHtml;
   if (creditSource === 'Google Maps') {
     creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="https://maps.google.com" target="_blank" rel="noopener">Google Maps</a>`;
-  } else if (creditSource === 'Tabelog') {
-    creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">食べログ掲載写真</a>`;
   } else if (isStorePhoto) {
-    // HotPepper写真
     creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">店舗公式写真</a> / <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">HotPepper</a>`;
   } else {
-    // Unsplash写真
     creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>`;
   }
 
@@ -579,12 +528,19 @@ async function main() {
     process.stdout.write('  📷 画像を自動取得中...');
     const photo = await fetchPhotoForArticle(input);
     if (photo) {
-      input.hero_image_url            = photo.url;
-      input.hero_image_credit_url     = photo.credit_url;
-      input.hero_image_credit_name    = photo.credit_name;
-      input.hero_image_is_store_photo = photo.is_store_photo || false;
-      input.hero_image_credit_source  = photo.credit_source || null;
-      input.og_image = input.og_image || photo.url;
+      if (photo.is_instagram) {
+        input.hero_image_is_instagram = true;
+        input.hero_image_embed_html   = photo.embed_html;
+        input.hero_image_url          = photo.url; // ログ用のみ
+        // Instagram embed は og:image に使えないのでデフォルトのまま
+      } else {
+        input.hero_image_url            = photo.url;
+        input.hero_image_credit_url     = photo.credit_url;
+        input.hero_image_credit_name    = photo.credit_name;
+        input.hero_image_is_store_photo = photo.is_store_photo || false;
+        input.hero_image_credit_source  = photo.credit_source || null;
+        input.og_image = input.og_image || photo.url;
+      }
     }
   } else {
     input.og_image = input.og_image || input.hero_image_url;
