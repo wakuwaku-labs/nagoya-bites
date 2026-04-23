@@ -929,6 +929,46 @@ async function main() {
     console.log('data/editor_picks.json なし（編集部ピックスキップ）');
   }
 
+  // 業界人レビューJSONをマージ（店名+エリア または ホットペッパーID でマッチ、insiderReviews 配列を付与）
+  const insiderReviewsPath = path.join(__dirname, 'data/insider_reviews.json');
+  if (fs.existsSync(insiderReviewsPath)) {
+    try {
+      const irRaw = JSON.parse(fs.readFileSync(insiderReviewsPath, 'utf8'));
+      const entries = irRaw.stores || [];
+      let irApplied = 0, irReviewsTotal = 0, irMissing = [];
+      for (const entry of entries) {
+        const hpId = entry['ホットペッパーID'];
+        let hit = null;
+        if (hpId) hit = stores.find(s => s['ホットペッパーID'] === hpId);
+        if (!hit) {
+          hit = stores.find(s =>
+            s['店名'] === entry['店名'] &&
+            (entry['エリア'] ? s['エリア'] === entry['エリア'] : true)
+          );
+        }
+        if (hit) {
+          const approved = (entry.reviews || []).filter(rv => rv.approved === true);
+          if (approved.length) {
+            hit.insiderReviews = (hit.insiderReviews || []).concat(approved);
+            hit.insiderReviewCount = hit.insiderReviews.length;
+            irApplied++;
+            irReviewsTotal += approved.length;
+          }
+        } else {
+          irMissing.push(entry['店名']);
+        }
+      }
+      console.log(`業界人レビュー付与: ${irApplied}店 / ${irReviewsTotal}件 / マッチ失敗: ${irMissing.length}件`);
+      if (irMissing.length) {
+        console.log('  マッチ失敗の店名（要確認）:', irMissing.slice(0, 10).join(' / '));
+      }
+    } catch (e) {
+      console.error(`data/insider_reviews.json の読み込み失敗: ${e.message}`);
+    }
+  } else {
+    console.log('data/insider_reviews.json なし（業界人レビュースキップ）');
+  }
+
   // トレンドスコア算出
   const newHpIds = new Set(newStores.map(s => s['ホットペッパーID']).filter(Boolean));
   let trendHot = 0, trendRising = 0, trendWarm = 0;
