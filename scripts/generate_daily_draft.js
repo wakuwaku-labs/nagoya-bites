@@ -96,47 +96,84 @@ function buildSources(sources) {
   return `<div class="source-note"><strong>情報源:</strong> ${items}</div>`;
 }
 
-// --------------- 自動画像取得（Unsplash API 優先 → Loremflickr フォールバック）---------------
+// --------------- 自動画像取得（Unsplash API 優先 → ジャンル別厳選写真フォールバック）-----------
 
-const THEME_KEYWORDS_EN = {
-  today_one:        'japanese,izakaya,food,restaurant',
-  industry_insider: 'japanese,restaurant,interior',
-  weekly_digest:    'japanese,food,restaurant',
-  seasonal:         'japanese,seasonal,food',
-  flexible:         'japanese,restaurant,food'
+/**
+ * ジャンル別に厳選した Unsplash 写真。API不要・URLが永続的で関連性が高い。
+ * { id, credit_name, credit_url } の配列。複数あれば日付ベースで選択。
+ * すべて動作確認済み (HTTP 200)。
+ */
+const GENRE_PHOTO_MAP = {
+  '居酒屋': [
+    { id: 'photo-1547592180-85f173990554', credit_name: 'Hisan Chia',     credit_url: 'https://unsplash.com/photos/BHD8oL-VVII' },
+    { id: 'photo-1580822184713-fc5400e7fe10', credit_name: 'Koon Chakhatrakan', credit_url: 'https://unsplash.com/photos/z-3XT9E3BKg' },
+  ],
+  '和食': [
+    { id: 'photo-1579871494447-9811cf80d66c', credit_name: 'Louis Hansel', credit_url: 'https://unsplash.com/photos/lCyMYOaEwqk' },
+    { id: 'photo-1536304929831-ee1ca9d44906', credit_name: 'Jakub Kapusnak', credit_url: 'https://unsplash.com/photos/4f3Zlaqd3mE' },
+  ],
+  '割烹': [
+    { id: 'photo-1579871494447-9811cf80d66c', credit_name: 'Louis Hansel', credit_url: 'https://unsplash.com/photos/lCyMYOaEwqk' },
+    { id: 'photo-1536304929831-ee1ca9d44906', credit_name: 'Jakub Kapusnak', credit_url: 'https://unsplash.com/photos/4f3Zlaqd3mE' },
+  ],
+  '寿司': [
+    { id: 'photo-1585937421612-70a008356fbe', credit_name: 'Mahmud Ahsan', credit_url: 'https://unsplash.com/photos/IfGMHGlOyeQ' },
+    { id: 'photo-1536304929831-ee1ca9d44906', credit_name: 'Jakub Kapusnak', credit_url: 'https://unsplash.com/photos/4f3Zlaqd3mE' },
+  ],
+  'ラーメン': [
+    { id: 'photo-1553621042-f6e147245754', credit_name: 'Hana Oliver',   credit_url: 'https://unsplash.com/photos/TtA9CQrxRQI' },
+  ],
+  '焼き鳥': [
+    { id: 'photo-1565557623262-b51c2513a641', credit_name: 'Kyle Mackie', credit_url: 'https://unsplash.com/photos/E2tSn5BPJXE' },
+    { id: 'photo-1547592180-85f173990554', credit_name: 'Hisan Chia',     credit_url: 'https://unsplash.com/photos/BHD8oL-VVII' },
+  ],
+  '焼肉': [
+    { id: 'photo-1565557623262-b51c2513a641', credit_name: 'Kyle Mackie', credit_url: 'https://unsplash.com/photos/E2tSn5BPJXE' },
+  ],
+  '鉄板焼': [
+    { id: 'photo-1565557623262-b51c2513a641', credit_name: 'Kyle Mackie', credit_url: 'https://unsplash.com/photos/E2tSn5BPJXE' },
+  ],
+  '天ぷら': [
+    { id: 'photo-1579871494447-9811cf80d66c', credit_name: 'Louis Hansel', credit_url: 'https://unsplash.com/photos/lCyMYOaEwqk' },
+  ],
+  'イタリアン': [
+    { id: 'photo-1555396273-367ea4eb4db5', credit_name: 'Naomi Hébert',   credit_url: 'https://unsplash.com/photos/HP4tGnPNPzM' },
+    { id: 'photo-1414235077428-338989a2e8c0', credit_name: 'Jay Wennington', credit_url: 'https://unsplash.com/photos/N_Y88TWmGwA' },
+  ],
+  'フレンチ': [
+    { id: 'photo-1414235077428-338989a2e8c0', credit_name: 'Jay Wennington', credit_url: 'https://unsplash.com/photos/N_Y88TWmGwA' },
+    { id: 'photo-1555396273-367ea4eb4db5', credit_name: 'Naomi Hébert',   credit_url: 'https://unsplash.com/photos/HP4tGnPNPzM' },
+  ],
+  '中華': [
+    { id: 'photo-1504674900247-0877df9cc836', credit_name: 'Brooke Lark',  credit_url: 'https://unsplash.com/photos/08bOYnH_r_E' },
+  ],
+  '_default': [
+    { id: 'photo-1517248135467-4c7edcad34c4', credit_name: 'Vladimir Gladkov', credit_url: 'https://unsplash.com/photos/4YzrcDNcRVg' },
+    { id: 'photo-1504674900247-0877df9cc836', credit_name: 'Brooke Lark',      credit_url: 'https://unsplash.com/photos/08bOYnH_r_E' },
+    { id: 'photo-1540189549336-e6e99c3679fe', credit_name: 'Ella Olsson',      credit_url: 'https://unsplash.com/photos/KPDbRyFOTnE' },
+  ],
 };
 
-const GENRE_KEYWORDS_MAP = {
-  '焼肉': 'yakiniku,japanese,bbq',
-  'ラーメン': 'ramen,noodle,japan',
-  '居酒屋': 'izakaya,japanese,bar',
-  '和食': 'japanese,cuisine',
-  '割烹': 'japanese,kappo',
-  '寿司': 'sushi,japanese',
-  '鉄板焼': 'teppanyaki,grill',
-  '天ぷら': 'tempura,japanese',
-  'イタリアン': 'italian,restaurant,pasta',
-  'フレンチ': 'french,cuisine,restaurant',
-  '焼き鳥': 'yakitori,japanese,skewer',
-  '中華': 'chinese,food,restaurant',
-};
-
-function buildPhotoKeywords(input) {
-  const base = THEME_KEYWORDS_EN[input.theme] || 'japanese,restaurant,food';
+/** ジャンル文字列からマップエントリを選択し、日付で候補をローテーション */
+function pickCuratedPhoto(input) {
   const genre = (input.stores || [])[0]?.genre || '';
-  const genreKw = Object.entries(GENRE_KEYWORDS_MAP).find(([jp]) => genre.includes(jp))?.[1];
-  return genreKw ? `${genreKw},${base}` : base;
+  const key = Object.keys(GENRE_PHOTO_MAP).find(k => k !== '_default' && genre.includes(k));
+  const pool = GENRE_PHOTO_MAP[key] || GENRE_PHOTO_MAP['_default'];
+  const lock = parseInt(input.date.replace(/-/g, ''), 10);
+  const entry = pool[lock % pool.length];
+  const url = `https://images.unsplash.com/${entry.id}?auto=format&fit=crop&w=1200&h=630&q=80`;
+  return { url, credit_name: entry.credit_name, credit_url: `${entry.credit_url}?utm_source=nagoya_bites&utm_medium=referral` };
 }
 
 /**
  * Unsplash API (要 UNSPLASH_ACCESS_KEY 環境変数 — 無料プランで50req/h)
  * https://unsplash.com/developers で無料取得可能
  */
-async function tryUnsplashApi(keywords) {
+async function tryUnsplashApi(genre) {
   const key = process.env.UNSPLASH_ACCESS_KEY;
   if (!key) return null;
   return new Promise((resolve) => {
-    const q = encodeURIComponent(keywords.replace(/,/g, ' '));
+    const q = encodeURIComponent(`japanese ${genre || 'restaurant food'}`);
     const apiUrl = `https://api.unsplash.com/photos/random?query=${q}&orientation=landscape&client_id=${key}`;
     let body = '';
     const req = https.get(apiUrl, { timeout: 8000 }, (res) => {
@@ -158,49 +195,21 @@ async function tryUnsplashApi(keywords) {
   });
 }
 
-/**
- * Loremflickr フォールバック (APIキー不要 / CC ライセンス Flickr 写真)
- * lock パラメータで記事ごとに安定した画像を取得する
- */
-async function tryLoremflickr(keywords, lock) {
-  return new Promise((resolve) => {
-    const kw = keywords.split(',').slice(0, 4).join(',');
-    const srcUrl = `https://loremflickr.com/1200/630/${encodeURIComponent(kw)}?lock=${lock}`;
-    const req = https.get(srcUrl, { timeout: 8000 }, (res) => {
-      // リダイレクト先キャッシュURLは不安定 (404になる) → 元のsrcUrlを使う
-      if (res.statusCode >= 200 && res.statusCode < 400) {
-        resolve({ url: srcUrl, credit_name: 'Flickr CC / Loremflickr', credit_url: 'https://loremflickr.com' });
-      } else {
-        resolve(null);
-      }
-      res.resume();
-    });
-    req.on('error', () => resolve(null));
-    req.on('timeout', () => { req.destroy(); resolve(null); });
-  });
-}
-
 /** 記事に合う写真を自動取得 */
 async function fetchPhotoForArticle(input) {
-  const keywords = buildPhotoKeywords(input);
-  const lock = input.date.replace(/-/g, ''); // e.g. 20260423 → 安定した記事ごとの画像
+  const genre = (input.stores || [])[0]?.genre || '';
 
   // 1. Unsplash API（環境変数あり時のみ）
-  const unsplash = await tryUnsplashApi(keywords);
+  const unsplash = await tryUnsplashApi(genre);
   if (unsplash) {
-    process.stdout.write(` 📷 Unsplash: ${unsplash.credit_name}\n`);
+    process.stdout.write(` 📷 Unsplash API: ${unsplash.credit_name}\n`);
     return unsplash;
   }
 
-  // 2. Loremflickr（APIキー不要・CC ライセンス）
-  const flickr = await tryLoremflickr(keywords, lock);
-  if (flickr) {
-    process.stdout.write(` 📷 Loremflickr (CC)\n`);
-    return flickr;
-  }
-
-  process.stdout.write(' スキップ（ネットワーク未接続）\n');
-  return null;
+  // 2. ジャンル別厳選写真（API不要・Unsplash直接URL・永続的）
+  const curated = pickCuratedPhoto(input);
+  process.stdout.write(` 📷 Unsplash (curated): ${curated.credit_name}\n`);
+  return curated;
 }
 
 function buildHeroImageSection(input) {
