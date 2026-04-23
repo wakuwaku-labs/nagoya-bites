@@ -239,9 +239,36 @@ nav.open{right:0;}
 .ir-body{font-size:.8rem;line-height:1.85;color:var(--text);margin:0;white-space:pre-wrap;}
 .ir-meta{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.08em;color:var(--dim);margin-top:.35rem;text-transform:uppercase;}
 .ir-empty{font-size:.75rem;color:var(--dim);margin:.3rem 0 .2rem;line-height:1.7;}
-.insider-cta{display:inline-block;margin-top:.9rem;padding:.55rem .95rem;border:1px solid #2a6a5a;color:#2a6a5a;font-size:.7rem;letter-spacing:.08em;text-decoration:none;border-radius:2px;font-family:'DM Mono',monospace;text-transform:uppercase;transition:all .2s;}
-.insider-cta:hover{background:#2a6a5a;color:#fff;}
+.insider-cta{display:inline-block;margin-top:.9rem;padding:.6rem 1.1rem;background:#2a6a5a;color:#fff;font-size:.82rem;font-weight:600;text-decoration:none;border:none;border-radius:4px;cursor:pointer;transition:background .2s;}
+.insider-cta:hover{background:#1e5145;color:#fff;}
 .insider-badge{position:absolute;top:.9rem;left:.9rem;font-size:.58rem;font-weight:700;padding:.22rem .55rem;border-radius:2px;z-index:3;background:rgba(42,106,90,.92);color:#fff;letter-spacing:.06em;}
+/* レビュー投稿フォーム */
+.ir-form-wrap{margin-top:1rem;padding:1rem 1.1rem;background:rgba(255,255,255,.6);border:1px solid rgba(42,106,90,.25);border-radius:4px;}
+.ir-form-wrap[hidden]{display:none;}
+.ir-form-intro{font-size:.72rem;color:var(--dim);line-height:1.7;margin:0 0 .9rem;}
+.ir-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+.ir-form-grid .full{grid-column:1 / -1;}
+.ir-field{display:flex;flex-direction:column;gap:.25rem;}
+.ir-field label{font-size:.72rem;color:var(--text);font-weight:600;}
+.ir-field .req{color:#c0392b;font-size:.62rem;margin-left:.2rem;font-weight:600;}
+.ir-field .opt{color:var(--dim);font-size:.62rem;margin-left:.2rem;font-weight:400;}
+.ir-field input[type=text],.ir-field select,.ir-field textarea{padding:.55rem .7rem;font-size:.82rem;border:1px solid rgba(0,0,0,.18);border-radius:3px;background:#fff;color:var(--text);font-family:inherit;box-sizing:border-box;width:100%;}
+.ir-field input[type=text]:focus,.ir-field select:focus,.ir-field textarea:focus{outline:none;border-color:#2a6a5a;box-shadow:0 0 0 2px rgba(42,106,90,.15);}
+.ir-field textarea{min-height:7rem;resize:vertical;line-height:1.7;}
+.ir-field .hint{font-size:.62rem;color:var(--dim);line-height:1.5;}
+.ir-consent{display:flex;align-items:flex-start;gap:.5rem;margin-top:.8rem;padding:.6rem;background:rgba(42,106,90,.05);border-radius:3px;}
+.ir-consent input{margin-top:.15rem;flex-shrink:0;}
+.ir-consent label{font-size:.7rem;color:var(--text);line-height:1.6;cursor:pointer;}
+.ir-actions{display:flex;align-items:center;gap:.8rem;margin-top:1rem;flex-wrap:wrap;}
+.ir-submit{padding:.7rem 1.6rem;background:#2a6a5a;color:#fff;font-size:.82rem;font-weight:600;border:none;border-radius:4px;cursor:pointer;transition:background .2s;}
+.ir-submit:hover:not(:disabled){background:#1e5145;}
+.ir-submit:disabled{background:#8aada3;cursor:not-allowed;}
+.ir-cancel{padding:.65rem 1rem;background:transparent;color:var(--dim);font-size:.75rem;border:1px solid rgba(0,0,0,.15);border-radius:4px;cursor:pointer;}
+.ir-cancel:hover{background:rgba(0,0,0,.04);}
+.ir-status{font-size:.75rem;line-height:1.6;padding:.7rem .9rem;border-radius:3px;margin-top:.7rem;display:none;}
+.ir-status.ok{display:block;background:rgba(42,106,90,.12);color:#2a6a5a;border:1px solid rgba(42,106,90,.35);}
+.ir-status.ng{display:block;background:rgba(192,57,43,.08);color:#c0392b;border:1px solid rgba(192,57,43,.35);}
+@media (max-width:640px){.ir-form-grid{grid-template-columns:1fr;}}
 @media(max-width:768px){.editor-note{font-size:.42rem;}.card-editor-lead{-webkit-line-clamp:2;max-height:52px;}}
 .mmg{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;}
 .mb{display:flex;flex-direction:column;align-items:center;gap:.4rem;padding:.9rem .4rem;border:1px solid var(--border);text-decoration:none;transition:all .2s;border-radius:1px;}
@@ -2202,7 +2229,67 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
         <span class="mpoint-label">INSIDER REVIEWS — 業界人レビュー</span>
         <ul class="ir-list" id="m-insider-reviews-list"></ul>
         <p class="ir-empty" id="m-insider-reviews-empty" style="display:none">飲食業界で経験のある方の最初のレビューをお待ちしています。</p>
-        <a id="m-insider-cta" class="insider-cta" href="#" target="_blank" rel="noopener noreferrer">このお店にレビューを書く（業界人向け）</a>
+        <button type="button" id="m-insider-cta" class="insider-cta">このお店にレビューを書く</button>
+        <div class="ir-form-wrap" id="m-insider-form" hidden>
+          <p class="ir-form-intro">飲食業界で経験のある方向けの投稿フォームです。送信後、編集部が内容を確認したうえで掲載します（即時公開ではありません）。</p>
+          <form id="ir-form" novalidate>
+            <div class="ir-form-grid">
+              <div class="ir-field full">
+                <label for="ir-reviewer">お名前（ペンネーム可）<span class="req">必須</span></label>
+                <input type="text" id="ir-reviewer" name="reviewer" maxlength="40" required>
+                <span class="hint">例）佐藤 健 / 和食職人A</span>
+              </div>
+              <div class="ir-field">
+                <label for="ir-genre">経験のあるジャンル<span class="req">必須</span></label>
+                <select id="ir-genre" name="genre" required>
+                  <option value="">選択してください</option>
+                  <option value="和食">和食</option>
+                  <option value="寿司">寿司</option>
+                  <option value="イタリアン">イタリアン</option>
+                  <option value="フレンチ">フレンチ</option>
+                  <option value="中華">中華</option>
+                  <option value="焼肉">焼肉</option>
+                  <option value="居酒屋">居酒屋</option>
+                  <option value="カフェ">カフェ</option>
+                  <option value="バー">バー</option>
+                  <option value="ラーメン">ラーメン</option>
+                  <option value="その他">その他</option>
+                </select>
+              </div>
+              <div class="ir-field">
+                <label for="ir-years">経験年数<span class="opt">任意</span></label>
+                <input type="text" id="ir-years" name="years" maxlength="20" placeholder="例）15年">
+              </div>
+              <div class="ir-field full">
+                <label for="ir-title">肩書き・所属<span class="opt">任意</span></label>
+                <input type="text" id="ir-title" name="title" maxlength="60" placeholder="例）和食店オーナーシェフ">
+                <span class="hint">公開してよい表記でお願いします。空欄の場合は表示しません。</span>
+              </div>
+              <div class="ir-field full">
+                <label for="ir-body">レビュー本文<span class="req">必須</span></label>
+                <textarea id="ir-body" name="body" maxlength="800" required placeholder="業界人目線で「なぜこの店を推すのか」を具体的に（食材の目利き、技術、接客、価格帯の適正など）"></textarea>
+                <span class="hint">150〜500字程度を目安に。</span>
+              </div>
+              <div class="ir-field">
+                <label for="ir-visited">訪問時期<span class="opt">任意</span></label>
+                <input type="text" id="ir-visited" name="visited" maxlength="10" placeholder="例）2026-03">
+              </div>
+              <div class="ir-field">
+                <label for="ir-email">連絡先メール<span class="opt">任意・非公開</span></label>
+                <input type="text" id="ir-email" name="email" maxlength="80" placeholder="編集部からの確認連絡用">
+              </div>
+            </div>
+            <div class="ir-consent">
+              <input type="checkbox" id="ir-consent" name="consent" required>
+              <label for="ir-consent">上記内容を NAGOYA BITES に掲載することに同意します（肩書き記入時は肩書きの表示にも同意します）</label>
+            </div>
+            <div class="ir-actions">
+              <button type="submit" class="ir-submit" id="ir-submit">送信する</button>
+              <button type="button" class="ir-cancel" id="ir-cancel">キャンセル</button>
+            </div>
+            <div class="ir-status" id="ir-status" role="status" aria-live="polite"></div>
+          </form>
+        </div>
       </div>
       <div id="photo-gallery-row" style="display:none">
         <div class="photo-grid-wrap">
@@ -3365,7 +3452,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <footer>
   <div class="fl2">Nagoya Bites</div>
   <div class="fc" id="fc"></div>
-  <div class="fc"><a href="https://github.com/wakuwaku-labs/nagoya-bites/issues/new?template=insider-review.yml&labels=review:pending,insider-review" target="_blank" rel="noopener noreferrer" style="color:var(--dim);font-size:.7rem;text-decoration:underline;">業界人レビューを投稿（飲食業界人向け）</a></div>
 </footer>
 
 <script>
@@ -4186,16 +4272,14 @@ function openM(i) {
   var irList = r.insiderReviews || [];
   var irListEl = document.getElementById('m-insider-reviews-list');
   var irEmpty = document.getElementById('m-insider-reviews-empty');
-  var irCta = document.getElementById('m-insider-cta');
   var irEsc = function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');};
-  var irRepoBase = 'https://github.com/wakuwaku-labs/nagoya-bites/issues/new';
-  var irQs = '?template=insider-review.yml'
-    + '&title=' + encodeURIComponent('[insider-review] ' + (r['店名'] || ''))
-    + '&labels=' + encodeURIComponent('review:pending,insider-review')
-    + '&store-name=' + encodeURIComponent(r['店名'] || '')
-    + '&area=' + encodeURIComponent(r['エリア'] || '')
-    + '&hp-id=' + encodeURIComponent(r['ホットペッパーID'] || '');
-  irCta.href = irRepoBase + irQs;
+  window._irCurrentStore = {name: r['店名'] || '', area: r['エリア'] || '', hpId: r['ホットペッパーID'] || ''};
+  var irFormWrap = document.getElementById('m-insider-form');
+  var irFormEl = document.getElementById('ir-form');
+  var irStatusEl = document.getElementById('ir-status');
+  if (irFormWrap) irFormWrap.hidden = true;
+  if (irFormEl) irFormEl.reset();
+  if (irStatusEl) { irStatusEl.textContent = ''; irStatusEl.className = 'ir-status'; }
   if (irList.length > 0) {
     irListEl.innerHTML = irList.map(function(rv){
       var head = '<div class="ir-head">'
@@ -4357,6 +4441,91 @@ function copyShareLink() {
     });
   }
 }
+
+// ================================================================
+// 業界人レビュー投稿フォーム — Formspree 送信（contact.html と同一エンドポイント）
+// ================================================================
+(function(){
+  var FORMSPREE_INSIDER = 'https://formspree.io/f/xaqaygze';
+  var ctaBtn = document.getElementById('m-insider-cta');
+  var formWrap = document.getElementById('m-insider-form');
+  var form = document.getElementById('ir-form');
+  var cancelBtn = document.getElementById('ir-cancel');
+  var submitBtn = document.getElementById('ir-submit');
+  var statusEl = document.getElementById('ir-status');
+  if (!ctaBtn || !formWrap || !form) return;
+
+  ctaBtn.addEventListener('click', function(){
+    var willShow = formWrap.hidden;
+    formWrap.hidden = !willShow;
+    if (willShow) {
+      setTimeout(function(){
+        formWrap.scrollIntoView({behavior: 'smooth', block: 'start'});
+        var first = document.getElementById('ir-reviewer');
+        if (first) first.focus({preventScroll: true});
+      }, 50);
+    }
+  });
+
+  cancelBtn.addEventListener('click', function(){
+    formWrap.hidden = true;
+    form.reset();
+    statusEl.textContent = '';
+    statusEl.className = 'ir-status';
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var store = window._irCurrentStore || {name: '', area: '', hpId: ''};
+    var reviewer = (document.getElementById('ir-reviewer').value || '').trim();
+    var genre = (document.getElementById('ir-genre').value || '').trim();
+    var body = (document.getElementById('ir-body').value || '').trim();
+    var consent = document.getElementById('ir-consent').checked;
+    if (!reviewer || !genre || !body || !consent) {
+      statusEl.textContent = '必須項目（お名前・ジャンル・本文・同意）をご確認ください。';
+      statusEl.className = 'ir-status ng';
+      return;
+    }
+    var payload = {
+      _subject: '[insider-review] ' + store.name + ' — ' + reviewer,
+      storeName: store.name,
+      area: store.area,
+      hpId: store.hpId,
+      reviewer: reviewer,
+      genre: genre,
+      years: (document.getElementById('ir-years').value || '').trim(),
+      title: (document.getElementById('ir-title').value || '').trim(),
+      body: body,
+      visited: (document.getElementById('ir-visited').value || '').trim(),
+      email: (document.getElementById('ir-email').value || '').trim(),
+      submittedAt: new Date().toISOString()
+    };
+    submitBtn.disabled = true;
+    var originalLabel = submitBtn.textContent;
+    submitBtn.textContent = '送信中…';
+    statusEl.textContent = '';
+    statusEl.className = 'ir-status';
+    fetch(FORMSPREE_INSIDER, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify(payload)
+    }).then(function(res){
+      if (res.ok) {
+        statusEl.textContent = '送信しました。編集部が確認のうえ、承認後に掲載します。ご協力ありがとうございます。';
+        statusEl.className = 'ir-status ok';
+        form.reset();
+      } else {
+        return res.json().then(function(d){ throw new Error((d && d.error) || ('HTTP ' + res.status)); });
+      }
+    }).catch(function(err){
+      statusEl.textContent = '送信に失敗しました。時間をおいて再度お試しください。' + (err && err.message ? '（' + err.message + '）' : '');
+      statusEl.className = 'ir-status ng';
+    }).then(function(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    });
+  });
+})();
 
 // ================================================================
 // PWA — Service Worker 登録 & インストールバナー
