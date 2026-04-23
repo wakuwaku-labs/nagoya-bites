@@ -3839,8 +3839,18 @@ function instagramSearchUrl(r) {
 }
 function tabelogSearchUrl(r) {
   if (r['食べログURL'] && r['食べログURL'].trim()) return r['食べログURL'];
-  // 名古屋駅エリア固定だと栄等のお店がヒットしないので、愛知県全域の検索URLにする
-  return 'https://tabelog.com/aichi/rstLst/?sw=' + encodeURIComponent(searchKeyword(r['店名']));
+  // /aichi/ で既に愛知県絞り込み済みのため「名古屋」は不要（むしろヒット率を下げる）
+  // 末尾の支店サフィックス（栄店・名古屋駅前店・本店 等）も除去して検索精度を向上
+  var name = cleanStoreName(r['店名']);
+  var tokens = name.split(/\s+/).filter(Boolean);
+  while (tokens.length > 1) {
+    var last = tokens[tokens.length - 1];
+    if (/店$/.test(last) || /^(本店|総本店|別館|新館|分店|別邸)$/.test(last)) {
+      tokens.pop();
+    } else { break; }
+  }
+  var q = tokens.join(' ').trim() || name;
+  return 'https://tabelog.com/aichi/rstLst/?sw=' + encodeURIComponent(q);
 }
 function tiktokSearchUrl(r) {
   return 'https://www.tiktok.com/search?q=' + encodeURIComponent(searchKeyword(r['店名']));
