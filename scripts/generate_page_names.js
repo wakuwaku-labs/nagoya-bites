@@ -18,10 +18,11 @@
 const fs   = require('fs');
 const path = require('path');
 
-const ROOT        = path.join(__dirname, '..');
-const STORES_DIR  = path.join(ROOT, 'stores');
-const FEATURES_DIR= path.join(ROOT, 'features');
-const OUT_PATH    = path.join(ROOT, 'page-names.json');
+const ROOT         = path.join(__dirname, '..');
+const STORES_DIR   = path.join(ROOT, 'stores');
+const FEATURES_DIR = path.join(ROOT, 'features');
+const JOURNAL_DIR  = path.join(ROOT, 'journal');
+const OUT_PATH     = path.join(ROOT, 'page-names.json');
 
 const BASE = '/nagoya-bites';
 
@@ -58,13 +59,20 @@ function shortenFeatureTitle(title) {
   return `📰 ${clean}`;
 }
 
+// Journal記事の title 例: 「400年の料亭が産んだ居酒屋 — 丸の内・勝手口 河内屋｜NAGOYA BITES Journal」
+// → 末尾の「｜NAGOYA BITES Journal」を落として短く（中間の「—」は保持）
+function shortenJournalTitle(title) {
+  const clean = title.replace(/\s*[｜|]\s*NAGOYA BITES.*$/, '').trim();
+  return `📝 ${clean}`;
+}
+
 // ================================================================
 // メイン
 // ================================================================
 function main() {
   const map = {};
 
-  // 静的ページ（トップ／About／FAQ／Contact／features/index）
+  // 静的ページ（トップ／About／FAQ／Contact／features/index／journal/index）
   map[`${BASE}/`]                              = '🏠 トップページ';
   map[`${BASE}/index.html`]                    = '🏠 トップページ';
   map[`${BASE}/about.html`]                    = 'ℹ️ About';
@@ -72,6 +80,8 @@ function main() {
   map[`${BASE}/contact.html`]                  = '✉️ Contact';
   map[`${BASE}/features/`]                     = '📚 特集一覧';
   map[`${BASE}/features/index.html`]           = '📚 特集一覧';
+  map[`${BASE}/journal/`]                      = '📝 Journal一覧';
+  map[`${BASE}/journal/index.html`]            = '📝 Journal一覧';
 
   // 特集記事
   if (fs.existsSync(FEATURES_DIR)) {
@@ -82,6 +92,18 @@ function main() {
       const title = readTitle(path.join(FEATURES_DIR, f));
       if (!title) continue;
       map[`${BASE}/features/${f}`] = shortenFeatureTitle(title);
+    }
+  }
+
+  // Journal記事
+  if (fs.existsSync(JOURNAL_DIR)) {
+    const files = fs.readdirSync(JOURNAL_DIR)
+      .filter(f => f.endsWith('.html') && f !== 'index.html' && !f.startsWith('_') && !/ 2\.html$/.test(f))
+      .sort();
+    for (const f of files) {
+      const title = readTitle(path.join(JOURNAL_DIR, f));
+      if (!title) continue;
+      map[`${BASE}/journal/${f}`] = shortenJournalTitle(title);
     }
   }
 
