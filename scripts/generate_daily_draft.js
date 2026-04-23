@@ -348,6 +348,75 @@ async function tryGoogleMapsPhoto(storeName, area) {
   };
 }
 
+/**
+ * 食べログHTML検索で店舗og:imageを取得（完全無料・APIキー不要）。
+ * 検索 → 最初の店舗ページ → og:image meta の順で抽出。
+ */
+async function tryTabelogPhoto(storeName, area) {
+  function fetchHtml(url) {
+    return new Promise((resolve) => {
+      let reqUrl;
+      try { reqUrl = new URL(url); } catch { return resolve(null); }
+      const opts = {
+        hostname: reqUrl.hostname,
+        path: reqUrl.pathname + reqUrl.search,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8',
+          'Accept-Language': 'ja-JP,ja;q=0.9,en;q=0.5',
+          'Accept-Encoding': 'identity',
+        },
+        timeout: 10000,
+      };
+      let body = '';
+      const req = https.request(opts, (res) => {
+        res.setEncoding('utf8');
+        res.on('data', d => { body += d; });
+        res.on('end', () => resolve({ status: res.statusCode, body }));
+      });
+      req.on('error', () => resolve(null));
+      req.on('timeout', () => { req.destroy(); resolve(null); });
+      req.end();
+    });
+  }
+
+  try {
+    // Step1: 食べログ愛知エリア検索
+    const query = encodeURIComponent(`${storeName} ${area}`);
+    const searchUrl = `https://tabelog.com/aichi/rstLst/search/?vs=1&sk=${query}`;
+    const searchRes = await fetchHtml(searchUrl);
+    if (!searchRes || searchRes.status !== 200) return null;
+
+    // Step2: 検索結果から最初のレストランURLを抽出
+    const urlMatch = searchRes.body.match(/href="(https:\/\/tabelog\.com\/aichi\/A[0-9]+\/A[0-9]+\/[0-9]+\/)"/);
+    if (!urlMatch) return null;
+    const restUrl = urlMatch[1];
+
+    // Step3: レストランページからog:imageを取得
+    const restRes = await fetchHtml(restUrl);
+    if (!restRes || restRes.status !== 200) return null;
+
+    const ogMatch = restRes.body.match(/<meta[^>]+property="og:image"[^>]+content="([^"]+)"/i)
+      || restRes.body.match(/<meta[^>]+content="([^"]+)"[^>]+property="og:image"/i);
+    if (!ogMatch) return null;
+
+    const imageUrl = ogMatch[1].replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+    if (!imageUrl || !imageUrl.startsWith('http')) return null;
+    // 食べログのデフォルト・ノーイメージ・ロゴは除外
+    if (/noimage|logo|common\/img|tabelogssl\.com\/icon/i.test(imageUrl)) return null;
+
+    return {
+      url: imageUrl,
+      credit_name: '食べログ',
+      credit_url: restUrl,
+      is_store_photo: true,
+      credit_source: 'Tabelog',
+    };
+  } catch {
+    return null;
+  }
+}
+
 async function fetchPhotoForArticle(input) {
   const store = (input.stores || [])[0] || {};
 
@@ -366,6 +435,15 @@ async function fetchPhotoForArticle(input) {
     if (googlePhoto) {
       process.stdout.write(` 📷 Googleマップ写真: ${googlePhoto.credit_name}\n`);
       return googlePhoto;
+    }
+  }
+
+  // 1.5. 食べログスクレイピング（完全無料・APIキー不要）
+  if (store.name) {
+    const tabelogPhoto = await tryTabelogPhoto(store.name, store.area || '');
+    if (tabelogPhoto) {
+      process.stdout.write(` 📷 食べログ写真\n`);
+      return tabelogPhoto;
     }
   }
 
@@ -394,8 +472,9 @@ function buildHeroImageSection(input) {
 
   let creditHtml;
   if (creditSource === 'Google Maps') {
-    // Googleマップ写真: 撮影者名（attributionから）/ Google Maps へリンク
     creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="https://maps.google.com" target="_blank" rel="noopener">Google Maps</a>`;
+  } else if (creditSource === 'Tabelog') {
+    creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">食べログ掲載写真</a>`;
   } else if (isStorePhoto) {
     // HotPepper写真
     creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">店舗公式写真</a> / <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">HotPepper</a>`;
