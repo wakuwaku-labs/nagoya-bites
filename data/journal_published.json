@@ -7,11 +7,17 @@
     "title": "記事タイトル",
     "description": "概要(120字)",
     "eyebrow": "テーマラベル",
-    "store_ids": ["LOCAL_STORES の店舗ID配列"],
-    "pending_store_keys": ["pending_stores.json の店名配列(外部媒体採用時)"],
+    "store_ids": [
+      "LOCAL_STORES の店舗ID配列"
+    ],
+    "pending_store_keys": [
+      "pending_stores.json の店名配列(外部媒体採用時)"
+    ],
     "column_id": "業界裏側コラム使用時のみ COL-XXX-NNN",
     "published_at": "ISO8601",
-    "cta_links": ["内部リンクURL配列"]
+    "cta_links": [
+      "内部リンクURL配列"
+    ]
   },
   "entries": [
     {
@@ -21,7 +27,9 @@
       "title": "名古屋業界人の〆はここ一択 — 矢場味仙を正しく頼む",
       "description": "台湾ラーメン発祥の名店・矢場味仙。深夜に通う飲食業界人が教える、コスパ最大化の頼み方・混雑を避ける時間帯・接待と一人飲み後の使い分け。",
       "eyebrow": "🍶 今日の1軒",
-      "store_ids": ["J000389487"],
+      "store_ids": [
+        "J000389487"
+      ],
       "pending_store_keys": [],
       "column_id": "",
       "published_at": "2026-04-21T00:00:00+09:00",
@@ -39,6 +47,18 @@
       "column_id": "COL-PRICE-001",
       "published_at": "2026-04-22T00:00:00+09:00",
       "cta_links": []
+    },
+    {
+      "slug": "2026-04-23-katteguchi-kawachiya-marunouchi",
+      "date": "2026-04-23",
+      "theme": "today_one",
+      "title": "400年の料亭が産んだ居酒屋 — 丸の内・勝手口 河内屋",
+      "description": "名古屋・丸の内に佇む400年の歴史ある料亭「河文」の板場を改装した居酒屋。勝手口という入り口からして遊び心全開。創作和食×銘酒の組み合わせが業界人に刺さる理由を解説する。",
+      "eyebrow": "🍶 今日の1軒",
+      "store_ids": [],
+      "pending_store_keys": [],
+      "column_id": "",
+      "published_at": "2026-04-23T07:00:00+09:00"
     }
   ]
 }

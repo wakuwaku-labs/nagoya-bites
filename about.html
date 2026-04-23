@@ -22,7 +22,12 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <link rel="canonical" href="https://wakuwaku-labs.github.io/nagoya-bites/about.html">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#7a5c10">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="NAGOYA BITES">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 
 <!-- JSON-LD: AboutPage -->
 <script type="application/ld+json">
@@ -58,8 +63,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 1.5rem;height:5
 .logo em{font-style:italic;color:var(--gold);}
 nav{display:flex;gap:2rem;align-items:center;}
 nav a{font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
-nav a:hover{color:var(--text);}
-nav a.active{color:var(--gold);}
+nav a:hover,nav a.active{color:var(--text);}
 /* ── HAMBURGER ── */
 .hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;z-index:201;}
 .hamburger svg{width:24px;height:24px;stroke:var(--text);stroke-width:1.8;stroke-linecap:round;}
@@ -139,7 +143,8 @@ footer{padding:1.8rem 1.5rem;flex-direction:column;gap:.6rem;}
   </button>
   <nav id="main-nav">
     <a href="./">Top</a>
-    <a href="features/banquet.html">特集</a>
+    <a href="journal/index.html">Journal</a>
+    <a href="features/index.html">特集</a>
     <a href="about.html" class="active">About</a>
     <a href="contact.html">Contact</a>
   </nav>

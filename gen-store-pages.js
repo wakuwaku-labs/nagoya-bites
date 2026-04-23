@@ -204,12 +204,12 @@ function renderStorePage(s, slug) {
   if (tbUrl) sameAs.push(tbUrl);
   if (hpUrl) sameAs.push(hpUrl);
   if (sameAs.length) jsonLd.sameAs = sameAs;
-  if (score && reviewCount > 0) {
+  if (score) {
     jsonLd.aggregateRating = {
       '@type': 'AggregateRating',
       'ratingValue': score,
       'bestRating': '5',
-      'ratingCount': String(reviewCount)
+      ...(reviewCount > 0 ? { 'ratingCount': String(reviewCount) } : {})
     };
   }
 

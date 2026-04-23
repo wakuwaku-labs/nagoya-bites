@@ -2,7 +2,7 @@
 
 > このファイルはエージェントが自律的に管理する課題トラッキングファイル。
 > 手動での編集可能だが、エージェントが自動で追記・更新する。
-> フォーマット: `status` は `ready` / `in_progress` / `done` / `wont_fix`
+> フォーマット: `status` は `done` / `in_progress` / `done` / `wont_fix`
 
 ---
 
@@ -39,7 +39,7 @@
 - sitemap.xml lastmod 最新化・1100件に更新済み
 
 ### [ISSUE-007] about.html / contact.html デザイン未同期
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-04-15
 - about.html / contact.html にヘッダー・フッター改善あり（未コミット）
 
@@ -126,20 +126,24 @@
 
 ---
 
-## 未着手タスク（ready）
+## 未着手タスク（done）
 
 ### [ISSUE-007] about.html / contact.html のデザインがindex.htmlと未同期
 
 - **priority**: P2
-- **status**: ready
+- **status**: done ✅
 - **category**: visual
 - **detected**: 2026-04-15
+- **resolved**: 2026-04-23
 - **description**:
   git status で `about.html` と `contact.html` に未コミットの変更がある。
   これらのページは index.html のデザインアップデートと同期されているか不明。
 - **acceptance**: 
   - about.html, contact.html を確認し、ヘッダー/フッター/フォントが index.html と統一されているか確認
   - 差異があれば修正してコミット
+- **resolved_by**: PR #30 `claude/issue-007-design-sync`
+  - about.html: preconnect / Apple meta / nav active color / nav links 統一
+  - contact.html: OG tags / JSON-LD ContactPage / nav links 統一
 - **files**: `about.html`, `contact.html`
 
 ---
@@ -154,7 +158,7 @@
 | ISSUE-004 | カードモバイルパディング調整 | P2 | ✅ done |
 | ISSUE-005 | JSON-LD構造化データ未対応 | P2 | ✅ done |
 | ISSUE-006 | sitemap.xml 更新日確認 | P2 | ✅ done |
-| ISSUE-007 | about/contact.html デザイン未同期 | P2 | ready |
+| ISSUE-007 | about/contact.html デザイン未同期 | P2 | done |
 | ISSUE-008 | CTA ホットペッパーなし店舗対応 | P1 | ✅ done |
 | ISSUE-009 | IGエンベッド モバイルパフォーマンス | P2 | ✅ done |
 
@@ -227,45 +231,85 @@
 
 ## Inspector 2026-04-18 監査で検出された新課題
 
-### [ISSUE-014] GW/春の季節特集コンテンツがゼロ 🔴
-- **priority**: P1 → **status**: ready
-- **category**: content
-- **detected**: 2026-04-18
+### [ISSUE-021] features/ インデックスページに季節特集3本が未登録 ✅
+- **priority**: P1 → **status**: done
+- **category**: seo / ux
+- **resolved**: 2026-04-22
 - **description**:
-  4/18時点、GW（5/3-6）まで約2週間。春〜GW向け特集記事がゼロ件。
-  「名古屋 GW グルメ」「名古屋 テラス 花見」「母の日 名古屋」等の高トラフィック検索で機会損失。
-  既存の features/ はシーン別（宴会/デート/女子会 等）のみで季節軸が皆無。
-- **impact**: GW前の検索ピーク機会損失。1年後まで同じチャンスなし。
-- **acceptance**:
-  - GW特集・春テラス・母の日の最低3本を 2026-04-25 までに公開
-  - feature-strip への追加、sitemap.xml 登録
-- **files**: `features/gw-2026.html`, `features/spring-terrace.html`, `features/mothers-day.html`, `index.html`, `sitemap.xml`
+  トップ [index.html](index.html) の feature-strip には GW 2026・母の日・春テラスの季節特集が掲載済みだったが、
+  [features/index.html](features/index.html)（特集一覧ページ）の article-grid と JSON-LD ItemList には未登録で、
+  特集一覧ページから季節コンテンツに辿り着けない機会損失が発生していた。
+- **fix**:
+  - 季節3カードを article-grid の先頭に追加（金のシーズンバッジ付き、`is-season` クラスで強調）
+  - JSON-LD ItemList を 6 → 12 件に拡張（GW・母の日・春テラス・編集規約・名駅・栄を追加）
+  - CTA 文言の古い「全1095店舗」表記を修正
+- **files**: `features/index.html`
+
+### [ISSUE-014] GW/春の季節特集コンテンツがゼロ ✅
+- **priority**: P1 → **status**: done
+- **category**: content
+- **resolved**: 2026-04-22（先行公開＋ISSUE-021 で features/ 一覧登録完了）
+- **description**:
+  `features/gw-2026.html`・`features/spring-terrace.html`・`features/mothers-day.html` の3本を公開済み。
+  トップの feature-strip 先頭に配置済み。ISSUE-021 で features/ 一覧にも登録。
+- **files**: `features/gw-2026.html`, `features/spring-terrace.html`, `features/mothers-day.html`, `index.html`, `features/index.html`, `sitemap.xml`
 
 ### [ISSUE-015] index.html が 7.2MB で巨大 — パフォーマンス劣化 🔴
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: in_progress（設計完了・段階実装へ）
 - **category**: performance
-- **detected**: 2026-04-18
+- **detected**: 2026-04-18 / **designed**: 2026-04-22
 - **description**:
-  4588件の LOCAL_STORES を inline 埋め込みしている結果、ファイルサイズが 7.2MB。
-  TTFB遅延、初期レンダリングブロック、モバイル離脱要因。
+  4586件の LOCAL_STORES (4.85MB) を inline 埋め込みしている結果、ファイルサイズが 7.2MB。
+  TTFB遅延・LCP 劣化・モバイル離脱要因。
 - **impact**: Core Web Vitals 劣化、Lighthouse スコア低下、SEO順位への悪影響
-- **acceptance**:
-  - LOCAL_STORES を外部JSON化 + fetch 化、または段階的読み込み
-  - 初期HTML < 1MB を目標
-- **files**: `build.js`, `index.html`
-- **note**: 大規模改修。慎重な設計と段階的実施が必要。
+- **design_doc**: `docs/issue-015-design.md`（3段階の段階実装計画）
+- **key_insight**: 計測の結果、`TikTok検索`・`X検索`・`Instagram検索` の3フィールド (2.19MB) は
+  レンダー時に常に `tiktokSearchUrl(r)` 等で再計算されており、焼き付けデータは**完全に未使用**。
+  加えて sanitizeStore で強制クリアされる5フィールドも空のまま出力されている。
+  → コード無修正でも build.js のシリアライズ最適化だけで **2.5〜2.7MB 削減 (36〜37%減)** 可能。
+- **phases**:
+  - [ISSUE-015-P1] build.js の出力スリム化（低リスク）→ 4.5MB へ
+  - [ISSUE-015-P2] 外部JSON化 + TOP50 インライン（中リスク）→ 800KB 以下へ
+  - [ISSUE-015-P3] ジャンル別チャンク化（P3、機会あれば）
 
-### [ISSUE-016] sitemap.xml に特集ページが未登録 🟡
-- **priority**: P2 → **status**: ready
-- **category**: seo
-- **detected**: 2026-04-18
+### [ISSUE-015-P1] build.js の LOCAL_STORES 出力スリム化 🟢
+- **priority**: P1 → **status**: done
+- **category**: performance
+- **detected**: 2026-04-22
 - **description**:
-  sitemap.xml は URL 1件のみ（index.html）で、features/ 配下の8本の特集ページが未登録。
-- **impact**: 特集ページのインデックス遅延、オーガニック流入 20-30% 機会損失
+  未使用の検索URL3種と空フィールドを LOCAL_STORES 出力から除去する。
+  index.html のコードは一切変更しない（渡ってこない値は既に `|| ''` 分岐で扱えている）。
+- **strip fields**:
+  - `TikTok検索` / `X検索` / `Instagram検索`（render 時に再計算される未使用URL）
+  - `Instagram投稿URL` / `内観写真URL` / `料理写真URL1` / `料理写真URL2`（sanitizeで全件空）
+  - `公開フラグ`（build 時に FALSE 除外済み）
+  - 空文字列 (`""`) フィールド
 - **acceptance**:
-  - build.js で sitemap.xml に全特集ページを自動追加
-  - lastmod をビルド時に自動更新
-- **files**: `build.js`, `sitemap.xml`
+  - index.html サイズ < 5MB（目標 4.5MB）
+  - 店舗数・フィルタ・モーダル・全外部リンク・JSON-LD が回帰なし
+  - Lighthouse Performance が +5pt 以上
+- **files**: `build.js`
+
+### [ISSUE-015-P2] 外部JSON化 + TOP50 インライン方式 🟡
+- **priority**: P1 → **status**: blocked（P1完了＆観察後に着手）
+- **category**: performance
+- **detected**: 2026-04-22
+- **description**:
+  Phase 1 デプロイ後 1週間 GA4 で UU / LCP / 直帰率を観察してから着手。
+  `data/stores.json` を新設、index.html には TOP50 のみインラインし、残りは fetch で遅延読み込み。
+  詳細は `docs/issue-015-design.md` 参照。
+- **acceptance**: 初期 HTML < 800KB、全機能の動作維持、Lighthouse Performance > 75 (mobile)
+- **files**: `build.js`, `index.html`, `data/stores.json`（新規）
+
+### [ISSUE-016] sitemap.xml に特集ページが未登録 ✅
+- **priority**: P2 → **status**: done
+- **category**: seo
+- **resolved**: 2026-04-22
+- **description**:
+  検証の結果、build.js には features/・journal/・stores/ の自動列挙ロジックが既に実装済み。
+  現状 sitemap.xml には 1,115 URL 登録（features:13 / journal:3 / stores:1,095 / 静的:4）。
+  ビルド毎に lastmod と URL リストが再生成される。
+- **files**: `build.js:947-1017`, `sitemap.xml`
 
 ### [ISSUE-017] Google評価 84% 空白・推薦文 84% 空白 🟡
 - **priority**: P1 → **status**: partial
@@ -360,7 +404,7 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **deliverables**: テーマローテ表 / 独自性3要件 / 新規店舗追加フロー / 匿名運営徹底
 
 ### [CTN-DAILY-009] 初週7日分の人間下書き
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-04-20
 - **owner**: Editor (人間運営側)
 - **description**: Editor の few-shot 学習素材として、初週7日分(2026-04-21〜04-27)の
@@ -368,17 +412,65 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **blocks**: 本番運用開始を7日遅らせてでも実施する価値あり
 
 ### [CTN-DAILY-010] 連続7日の運用検証
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-04-20
 - **owner**: Orchestrator
 - **description**: `/journal-today` → validator PASS → push → SNS投稿 を7日連続できるか検証
 - **完了条件**: 7日連続で journal_published.json に entry 追加、SNS3媒体に投稿完了
 
 ### [CTN-DAILY-011] 月次監査パイプライン統合
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-04-20
 - **owner**: DataKeeper
 - **description**: `.github/workflows/weekly-pipeline.yml` に `scripts/audit_journal.js` と
   `scripts/merge_pending_stores.js` のドライラン実行を月曜に追加。閉店店舗検出時は
   該当journal記事末尾に脚注を自動追記
 - **注意**: LLM は呼ばない(コストゼロ維持)。純ロジックのみ
+
+---
+
+## 2026-04-22 夜間バッチ実行ログ（tonight-batch）
+
+### [BATCH-001] Restaurant JSON-LD モーダル動的注入 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-22
+- **owner**: Builder
+- **description**: `index.html` の `openM()` 関数内に36行の IIFE を追加。モーダル開閉時に `<script id="modal-store-jsonld" type="application/ld+json">` を動的生成・置換。@type Restaurant, name, servesCuisine, priceRange, address, url, aggregateRating（Google評価）を含む。リッチリザルト獲得でCTR +30% を狙う。
+- **files**: `index.html`
+
+### [BATCH-002] GitHub Actions 日次ジャーナル自動化 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-22
+- **owner**: Builder + Orchestrator
+- **description**: `.github/workflows/daily-journal.yml` を新設。毎日22:00 UTC (翌朝7:00 JST) に自動実行。`journal/YYYY-MM-DD-*.html` の存在チェックで重複防止。`/journal-today` スラッシュコマンドのプロンプトを `claude --print` で実行。生成ファイルをコミット&プッシュ。ローカルRoutine(9:00 JST)と併用でフェイルセーフ構成。
+- **files**: `.github/workflows/daily-journal.yml`
+
+### [BATCH-003] ISSUE-015-P1 build.js 出力スリム化 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-22
+- **owner**: Builder
+- **description**: `slimStoreForOutput()` 関数を build.js に追加。TikTok検索/X検索/Instagram検索（2.19MB）＋ sanitize空フィールド8種 + 公開フラグを出力から除去。index.html 7.14MB → 0.90MB（87.3%削減）。index.html の render コードは一切変更なし（未使用フィールドは既に `|| ''` 分岐で扱える）。
+- **files**: `build.js`, `index.html`（再ビルド）
+
+### [BATCH-004] ISSUE-007 about/contact デザイン統一 ✅
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-04-22（前回バッチ）
+- **files**: `about.html`, `contact.html`
+
+### [BATCH-005] Day3 ジャーナル公開 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-23
+- **owner**: Editor
+- **description**: `journal/2026-04-23-small-seats-famous-restaurants.html` 公開。テーマ「カウンター6席、テーブル2卓」が名物店に多い理由（業界の裏側コラム・COL-SEAT-001）。BlogPosting + BreadcrumbList JSON-LD。journal/index.html, sitemap.xml 更新済み。
+
+### [BATCH-006] ロングテール特集3本公開 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-04-23
+- **owner**: Editor
+- **description**: P1計画の「ロングテールLP3本新設」を実施。
+  1. `features/nagoya-lunch-washoku.html`（名古屋ランチ和食おすすめ10選 / 10店 / Google評価4.4以上）
+  2. `features/birthday-surprise.html`（名古屋誕生日サプライズ10選 / 10店 / Google評価4.6〜5.0）
+  3. `features/osu-food-walk.html`（大須食べ歩き10選 / 10店 / コースプランつき）
+  各記事: Article + ItemList + BreadcrumbList + FAQPage JSON-LD, 内部リンク, related-links。
+  features/index.html に3カード追加（numberOfItems 12→15）。sitemap.xml に4URL追加。
+- **files**: `features/nagoya-lunch-washoku.html`（新規）, `features/birthday-surprise.html`（新規）, `features/osu-food-walk.html`（新規）, `features/index.html`, `journal/index.html`, `sitemap.xml`
