@@ -121,6 +121,18 @@ function fetchGA4Report(startDate, endDate) {
       { name: 'eventCount' },
     ],
     dimensions: [{ name: 'pagePath' }],
+    // /nagoya-bites/ プレフィックス付きのページだけを対象にする
+    // → localhost プレビュー (例: "/", "/features/", "/index.html") を
+    //   集計から完全に除外。totals もこの条件下で再計算される
+    dimensionFilter: {
+      filter: {
+        fieldName: 'pagePath',
+        stringFilter: {
+          matchType: 'BEGINS_WITH',
+          value: '/nagoya-bites/',
+        },
+      },
+    },
     metricAggregations: ['TOTAL'],  // これが無いと response.totals が返らず、LINEに undefined / NaN が出る
     orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
     limit: 20,
@@ -178,6 +190,22 @@ function parseTotals(response) {
     bounceRate:  parseFloat(vals[4]) || 0,
     events:      parseInt(vals[5])   || 0,
   };
+}
+
+// TOP N を取得（同じ表示名の行を合算して重複行を解消）
+// 例: /nagoya-bites/ と /nagoya-bites/index.html はどちらも "🏠 トップページ" に
+//     マッピングされるため、PVを足し合わせて1行にまとめる
+function mergeTopPages(pages, n) {
+  const byName = {};
+  pages.forEach(p => {
+    const name = pagePathToName(p.dimensions[0]);
+    const pv = parseInt(p.metrics[1]) || 0;
+    byName[name] = (byName[name] || 0) + pv;
+  });
+  return Object.keys(byName)
+    .map(name => ({ name: name, pv: byName[name] }))
+    .sort((a, b) => b.pv - a.pv)
+    .slice(0, n);
 }
 
 // ─── 健全性の基準値（素人でも良し悪しがわかる目安） ───
@@ -397,9 +425,9 @@ function formatDailyReport(data, date) {
   msg += '　（70%超＝要注意、50%未満＝良好）\n\n';
 
   msg += '【人気だったページ TOP5】\n';
-  data.pages.slice(0, 5).forEach((p, i) => {
+  mergeTopPages(data.pages, 5).forEach((p, i) => {
     const medal = ['🥇','🥈','🥉','④','⑤'][i] || (i+1);
-    msg += medal + ' ' + pagePathToName(p.dimensions[0]) + '（' + p.metrics[1] + '回閲覧）\n';
+    msg += medal + ' ' + p.name + '（' + p.pv + '回閲覧）\n';
   });
 
   if (a.nonBaseEvents.length > 0) {
@@ -469,9 +497,9 @@ function formatWeeklyReport(data, prevData, startDate, endDate) {
     healthIcon(t.bounceRate, BENCHMARKS.bounceRate, true) + '\n\n';
 
   msg += '【人気ページ TOP5】\n';
-  data.pages.slice(0, 5).forEach((p, i) => {
+  mergeTopPages(data.pages, 5).forEach((p, i) => {
     const medal = ['🥇','🥈','🥉','④','⑤'][i] || (i+1);
-    msg += medal + ' ' + pagePathToName(p.dimensions[0]) + '（' + p.metrics[1] + '回）\n';
+    msg += medal + ' ' + p.name + '（' + p.pv + '回）\n';
   });
 
   if (a.nonBaseEvents.length > 0) {

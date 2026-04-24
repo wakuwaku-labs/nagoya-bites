@@ -1,0 +1,19 @@
+{
+  "_comment": "業界人レビュー。訪問者が index.html 内のフォームから Formspree 経由で投稿 → 編集部メールで受信 → 承認後に editor が本ファイル stores[] に追記 → node build.js → デプロイ。自動公開はしない（必ず編集部モデレーション経由）。",
+  "_schema": {
+    "店名": "LOCAL_STORES の店名と完全一致",
+    "エリア": "LOCAL_STORES のエリアと一致（マッチング精度向上）",
+    "ホットペッパーID": "任意。あれば主キーとして優先マッチ",
+    "reviews[].reviewer": "投稿者名（ペンネーム可）",
+    "reviews[].genre": "経験ジャンル（和食/寿司/イタリアン/フレンチ/中華/焼肉/居酒屋/カフェ/バー/ラーメン/その他）",
+    "reviews[].yearsOfExperience": "経験年数（任意、例: '15年'）",
+    "reviews[].title": "肩書き・所属（任意、例: '和食店オーナーシェフ'）。公開同意済のもののみ",
+    "reviews[].body": "レビュー本文（150〜500字目安）",
+    "reviews[].visitedAt": "訪問時期（任意、YYYY-MM）",
+    "reviews[].publishedAt": "JSON追記日（YYYY-MM-DD）",
+    "reviews[].sourceFormspree": "Formspree メールのタイムスタンプまたは通し番号（監査用）",
+    "reviews[].approvedBy": "承認者（編集部イニシャル）",
+    "reviews[].approved": "true 固定（JSONに載る=承認済の意味）"
+  },
+  "stores": []
+}

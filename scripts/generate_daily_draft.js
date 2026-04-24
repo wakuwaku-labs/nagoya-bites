@@ -96,47 +96,140 @@ function buildSources(sources) {
   return `<div class="source-note"><strong>情報源:</strong> ${items}</div>`;
 }
 
-// --------------- 自動画像取得（Unsplash API 優先 → Loremflickr フォールバック）---------------
+// --------------- 自動画像取得（Unsplash API 優先 → ジャンル別厳選写真フォールバック）-----------
 
-const THEME_KEYWORDS_EN = {
-  today_one:        'japanese,izakaya,food,restaurant',
-  industry_insider: 'japanese,restaurant,interior',
-  weekly_digest:    'japanese,food,restaurant',
-  seasonal:         'japanese,seasonal,food',
-  flexible:         'japanese,restaurant,food'
+/**
+ * ジャンル別に厳選した Unsplash 写真（全て実際に目視確認済み）。
+ * API不要・URLが永続的。{ id, credit_name, credit_url } の配列。
+ */
+const GENRE_PHOTO_MAP = {
+  // 居酒屋: モダンな店内照明 / 料理人の手元（板場の臨場感）
+  '居酒屋': [
+    { id: 'photo-1517248135467-4c7edcad34c4', credit_name: 'Nikola Johnny Mirkovic', credit_url: 'https://unsplash.com/photos/4YzrcDNcRVg' },
+    { id: 'photo-1551218808-94e220e084d2',    credit_name: 'Kevin McCutcheon',        credit_url: 'https://unsplash.com/photos/APDMfLHZiRA' },
+  ],
+  // 和食: 美しい盛り合わせ寿司 / 料理人の手元
+  '和食': [
+    { id: 'photo-1514190051997-0f6f39ca5cde', credit_name: 'Mahmud Ahsan',    credit_url: 'https://unsplash.com/photos/IfGMHGlOyeQ' },
+    { id: 'photo-1551218808-94e220e084d2',    credit_name: 'Kevin McCutcheon', credit_url: 'https://unsplash.com/photos/APDMfLHZiRA' },
+  ],
+  // 割烹: 老舗の料理 → 寿司盛り合わせ / 板場の手元
+  '割烹': [
+    { id: 'photo-1514190051997-0f6f39ca5cde', credit_name: 'Mahmud Ahsan',    credit_url: 'https://unsplash.com/photos/IfGMHGlOyeQ' },
+    { id: 'photo-1551218808-94e220e084d2',    credit_name: 'Kevin McCutcheon', credit_url: 'https://unsplash.com/photos/APDMfLHZiRA' },
+  ],
+  // 寿司: 美しい盛り合わせ / サーモンロール
+  '寿司': [
+    { id: 'photo-1514190051997-0f6f39ca5cde', credit_name: 'Mahmud Ahsan',         credit_url: 'https://unsplash.com/photos/IfGMHGlOyeQ' },
+    { id: 'photo-1579871494447-9811cf80d66c', credit_name: 'Louis Hansel',          credit_url: 'https://unsplash.com/photos/lCyMYOaEwqk' },
+  ],
+  // ラーメン: ラーメンボウル
+  'ラーメン': [
+    { id: 'photo-1553621042-f6e147245754', credit_name: 'Hana Oliver', credit_url: 'https://unsplash.com/photos/TtA9CQrxRQI' },
+  ],
+  // 焼き鳥: カツ系フライ / 盛り合わせ
+  '焼き鳥': [
+    { id: 'photo-1569050467447-ce54b3bbc37d', credit_name: 'amirali mirhashemian', credit_url: 'https://unsplash.com/photos/FBpKHMGc5FU' },
+    { id: 'photo-1504674900247-0877df9cc836',  credit_name: 'Brooke Lark',          credit_url: 'https://unsplash.com/photos/08bOYnH_r_E' },
+  ],
+  // 焼肉・鉄板焼: フライ系 / 盛り合わせ
+  '焼肉': [
+    { id: 'photo-1569050467447-ce54b3bbc37d', credit_name: 'amirali mirhashemian', credit_url: 'https://unsplash.com/photos/FBpKHMGc5FU' },
+  ],
+  '鉄板焼': [
+    { id: 'photo-1569050467447-ce54b3bbc37d', credit_name: 'amirali mirhashemian', credit_url: 'https://unsplash.com/photos/FBpKHMGc5FU' },
+  ],
+  // 天ぷら: 和食盛り合わせ
+  '天ぷら': [
+    { id: 'photo-1514190051997-0f6f39ca5cde', credit_name: 'Mahmud Ahsan', credit_url: 'https://unsplash.com/photos/IfGMHGlOyeQ' },
+  ],
+  // イタリアン: カフェ風内観 / 料理盛り付け
+  'イタリアン': [
+    { id: 'photo-1555396273-367ea4eb4db5', credit_name: 'Naomi Hébert',      credit_url: 'https://unsplash.com/photos/HP4tGnPNPzM' },
+    { id: 'photo-1414235077428-338989a2e8c0', credit_name: 'Jay Wennington', credit_url: 'https://unsplash.com/photos/N_Y88TWmGwA' },
+  ],
+  // フレンチ
+  'フレンチ': [
+    { id: 'photo-1414235077428-338989a2e8c0', credit_name: 'Jay Wennington', credit_url: 'https://unsplash.com/photos/N_Y88TWmGwA' },
+    { id: 'photo-1555396273-367ea4eb4db5', credit_name: 'Naomi Hébert',      credit_url: 'https://unsplash.com/photos/HP4tGnPNPzM' },
+  ],
+  // 中華: 複数皿の俯瞰
+  '中華': [
+    { id: 'photo-1504674900247-0877df9cc836', credit_name: 'Brooke Lark', credit_url: 'https://unsplash.com/photos/08bOYnH_r_E' },
+  ],
+  // デフォルト: 高級感のある店内 / 板場の手元 / 俯瞰の料理
+  '_default': [
+    { id: 'photo-1517248135467-4c7edcad34c4', credit_name: 'Nikola Johnny Mirkovic', credit_url: 'https://unsplash.com/photos/4YzrcDNcRVg' },
+    { id: 'photo-1551218808-94e220e084d2',    credit_name: 'Kevin McCutcheon',        credit_url: 'https://unsplash.com/photos/APDMfLHZiRA' },
+    { id: 'photo-1504674900247-0877df9cc836', credit_name: 'Brooke Lark',             credit_url: 'https://unsplash.com/photos/08bOYnH_r_E' },
+  ],
 };
 
-const GENRE_KEYWORDS_MAP = {
-  '焼肉': 'yakiniku,japanese,bbq',
-  'ラーメン': 'ramen,noodle,japan',
-  '居酒屋': 'izakaya,japanese,bar',
-  '和食': 'japanese,cuisine',
-  '割烹': 'japanese,kappo',
-  '寿司': 'sushi,japanese',
-  '鉄板焼': 'teppanyaki,grill',
-  '天ぷら': 'tempura,japanese',
-  'イタリアン': 'italian,restaurant,pasta',
-  'フレンチ': 'french,cuisine,restaurant',
-  '焼き鳥': 'yakitori,japanese,skewer',
-  '中華': 'chinese,food,restaurant',
-};
+/**
+ * コンセプトキーワード優先マップ。
+ * おすすめポイント/タイトルにこれらが含まれる場合、ジャンルより優先して写真を選ぶ。
+ */
+const CONCEPT_PHOTO_MAP = [
+  // 板場・料亭・厨房 → 料理人の手元（調理の臨場感）
+  { keywords: ['板場', '料亭', '厨房', 'オープンキッチン', '職人'],
+    photo: { id: 'photo-1551218808-94e220e084d2', credit_name: 'Kevin McCutcheon', credit_url: 'https://unsplash.com/photos/APDMfLHZiRA' } },
+  // 寿司・鮨
+  { keywords: ['寿司', '鮨', 'すし'],
+    photo: { id: 'photo-1514190051997-0f6f39ca5cde', credit_name: 'Mahmud Ahsan', credit_url: 'https://unsplash.com/photos/IfGMHGlOyeQ' } },
+  // ラーメン
+  { keywords: ['ラーメン', '拉麺', '麺'],
+    photo: { id: 'photo-1553621042-f6e147245754', credit_name: 'Hana Oliver', credit_url: 'https://unsplash.com/photos/TtA9CQrxRQI' } },
+  // 店内・雰囲気重視
+  { keywords: ['隠れ家', '路地', '暖簾', '一軒家'],
+    photo: { id: 'photo-1517248135467-4c7edcad34c4', credit_name: 'Nikola Johnny Mirkovic', credit_url: 'https://unsplash.com/photos/4YzrcDNcRVg' } },
+];
 
-function buildPhotoKeywords(input) {
-  const base = THEME_KEYWORDS_EN[input.theme] || 'japanese,restaurant,food';
+/**
+ * おすすめポイント・タイトルからコンセプトキーワードで写真を選ぶ。
+ * 一致しなければジャンルマップにフォールバック。
+ */
+function pickCuratedPhoto(input) {
+  // コンセプトテキスト: おすすめポイント + タイトル + 店名
+  const conceptText = [
+    input.title || '',
+    (input.stores || []).map(s => s.desc || '').join(' '),
+    // input.json 経由で店舗の おすすめポイント が body_html に含まれる場合も検索
+  ].join(' ');
+
+  // 1. コンセプトキーワードで優先選択
+  for (const rule of CONCEPT_PHOTO_MAP) {
+    if (rule.keywords.some(kw => conceptText.includes(kw))) {
+      const e = rule.photo;
+      return {
+        url: `https://images.unsplash.com/${e.id}?auto=format&fit=crop&w=1200&h=630&q=80`,
+        credit_name: e.credit_name,
+        credit_url: `${e.credit_url}?utm_source=nagoya_bites&utm_medium=referral`,
+      };
+    }
+  }
+
+  // 2. ジャンルマップ
   const genre = (input.stores || [])[0]?.genre || '';
-  const genreKw = Object.entries(GENRE_KEYWORDS_MAP).find(([jp]) => genre.includes(jp))?.[1];
-  return genreKw ? `${genreKw},${base}` : base;
+  const key = Object.keys(GENRE_PHOTO_MAP).find(k => k !== '_default' && genre.includes(k));
+  const pool = GENRE_PHOTO_MAP[key] || GENRE_PHOTO_MAP['_default'];
+  const lock = parseInt(input.date.replace(/-/g, ''), 10);
+  const entry = pool[lock % pool.length];
+  return {
+    url: `https://images.unsplash.com/${entry.id}?auto=format&fit=crop&w=1200&h=630&q=80`,
+    credit_name: entry.credit_name,
+    credit_url: `${entry.credit_url}?utm_source=nagoya_bites&utm_medium=referral`,
+  };
 }
 
 /**
  * Unsplash API (要 UNSPLASH_ACCESS_KEY 環境変数 — 無料プランで50req/h)
  * https://unsplash.com/developers で無料取得可能
  */
-async function tryUnsplashApi(keywords) {
+async function tryUnsplashApi(genre) {
   const key = process.env.UNSPLASH_ACCESS_KEY;
   if (!key) return null;
   return new Promise((resolve) => {
-    const q = encodeURIComponent(keywords.replace(/,/g, ' '));
+    const q = encodeURIComponent(`japanese ${genre || 'restaurant food'}`);
     const apiUrl = `https://api.unsplash.com/photos/random?query=${q}&orientation=landscape&client_id=${key}`;
     let body = '';
     const req = https.get(apiUrl, { timeout: 8000 }, (res) => {
@@ -158,63 +251,191 @@ async function tryUnsplashApi(keywords) {
   });
 }
 
+/** 記事に合う写真を自動取得 */
 /**
- * Loremflickr フォールバック (APIキー不要 / CC ライセンス Flickr 写真)
- * lock パラメータで記事ごとに安定した画像を取得する
+ * HotPepper写真URL (_480.jpg) からフルサイズURLへ変換し疎通確認する。
+ * フルサイズが取れない場合は _480 をそのまま使う。
  */
-async function tryLoremflickr(keywords, lock) {
+async function tryStorePhoto(photoUrl) {
+  if (!photoUrl) return null;
+  // _480.jpg → サイズなし（フルサイズ）に変換して試みる
+  const fullUrl = photoUrl.replace(/_\d+\.jpg$/, '.jpg');
+  const targetUrl = fullUrl !== photoUrl ? fullUrl : photoUrl;
   return new Promise((resolve) => {
-    const kw = keywords.split(',').slice(0, 4).join(',');
-    const srcUrl = `https://loremflickr.com/1200/630/${encodeURIComponent(kw)}?lock=${lock}`;
-    const req = https.get(srcUrl, { timeout: 8000 }, (res) => {
-      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        const loc = res.headers.location;
-        const stableUrl = loc.startsWith('http') ? loc : `https://loremflickr.com${loc}`;
-        resolve({ url: stableUrl, credit_name: 'Flickr CC / Loremflickr', credit_url: 'https://loremflickr.com' });
-      } else if (res.statusCode === 200) {
-        resolve({ url: srcUrl, credit_name: 'Flickr CC / Loremflickr', credit_url: 'https://loremflickr.com' });
+    const req = https.get(targetUrl, { timeout: 6000 }, (res) => {
+      res.resume();
+      if (res.statusCode === 200) {
+        resolve({ url: targetUrl, credit_name: '店舗公式写真', credit_url: 'https://www.hotpepper.jp', is_store_photo: true });
+      } else if (targetUrl !== photoUrl) {
+        // フルサイズ失敗 → _480 にフォールバック
+        resolve({ url: photoUrl, credit_name: '店舗公式写真', credit_url: 'https://www.hotpepper.jp', is_store_photo: true });
       } else {
         resolve(null);
       }
-      res.resume();
     });
     req.on('error', () => resolve(null));
     req.on('timeout', () => { req.destroy(); resolve(null); });
   });
 }
 
-/** 記事に合う写真を自動取得 */
-async function fetchPhotoForArticle(input) {
-  const keywords = buildPhotoKeywords(input);
-  const lock = input.date.replace(/-/g, ''); // e.g. 20260423 → 安定した記事ごとの画像
+/**
+ * Google Places API で店舗写真を取得。
+ * 要 GOOGLE_MAPS_API_KEY 環境変数。
+ * 優先度: HotPepper写真なし → Google Maps写真 → Unsplash curated
+ *
+ * 流れ: findplacefromtext → place/details (photos) → place/photo (redirect) → CDN URL
+ */
+async function tryGoogleMapsPhoto(storeName, area) {
+  const key = process.env.GOOGLE_MAPS_API_KEY;
+  if (!key) return null;
 
-  // 1. Unsplash API（環境変数あり時のみ）
-  const unsplash = await tryUnsplashApi(keywords);
+  function getJson(url) {
+    return new Promise((resolve) => {
+      let body = '';
+      const req = https.get(url, { timeout: 8000 }, (res) => {
+        res.on('data', d => { body += d; });
+        res.on('end', () => { try { resolve(JSON.parse(body)); } catch { resolve(null); } });
+      });
+      req.on('error', () => resolve(null));
+      req.on('timeout', () => { req.destroy(); resolve(null); });
+    });
+  }
+
+  // Step 1: 店名+エリアで Place ID を取得
+  const query = encodeURIComponent(`${storeName} ${area} 名古屋`);
+  const findRes = await getJson(
+    `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${query}&inputtype=textquery&fields=place_id&key=${key}`
+  );
+  const placeId = findRes?.candidates?.[0]?.place_id;
+  if (!placeId) return null;
+
+  // Step 2: Place Details → photos[0].photo_reference と html_attributions
+  const detailRes = await getJson(
+    `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=photos,name&key=${key}`
+  );
+  const photo = detailRes?.result?.photos?.[0];
+  if (!photo?.photo_reference) return null;
+  const attribution = photo.html_attributions?.[0]
+    ? photo.html_attributions[0].replace(/<[^>]+>/g, '') // HTMLタグ除去
+    : 'Google Maps';
+
+  // Step 3: place/photo → リダイレクト先の CDN URL を取得（APIキーをHTMLに埋め込まない）
+  const photoApiUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=${photo.photo_reference}&key=${key}`;
+  const cdnUrl = await new Promise((resolve) => {
+    const req = https.get(photoApiUrl, { timeout: 8000 }, (res) => {
+      res.resume();
+      // Places Photo APIは302でGoogleusercontent CDNへリダイレクト
+      if ((res.statusCode === 301 || res.statusCode === 302) && res.headers.location) {
+        resolve(res.headers.location);
+      } else if (res.statusCode === 200) {
+        resolve(photoApiUrl); // 直接返る場合はAPIキー含むURLになるが稀
+      } else {
+        resolve(null);
+      }
+    });
+    req.on('error', () => resolve(null));
+    req.on('timeout', () => { req.destroy(); resolve(null); });
+  });
+  if (!cdnUrl) return null;
+
+  const mapsUrl = `https://www.google.com/maps/place/?q=place_id:${placeId}`;
+  return {
+    url: cdnUrl,
+    credit_name: attribution,
+    credit_url: mapsUrl,
+    is_store_photo: true,
+    credit_source: 'Google Maps',
+  };
+}
+
+/**
+ * Instagram 公式 embed HTML を生成（API不要・完全無料）。
+ * Instagram の利用規約上、embed.js を使った埋め込みは明示的に許可されている。
+ * 参照: https://help.instagram.com/1521786464576692
+ */
+function buildInstagramEmbedHtml(postUrl) {
+  const cleanUrl = postUrl.replace(/\?.*$/, '').replace(/\/$/, '');
+  const embedUrl = `${cleanUrl}/?utm_source=ig_embed&utm_campaign=loading`;
+  // data-instgrm-captioned を省略 → 写真のみ表示（キャプション非表示）
+  return `<div class="art-hero-ig">
+  <blockquote class="instagram-media" data-instgrm-permalink="${esc(embedUrl)}" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);margin:0 auto;max-width:540px;padding:0;width:calc(100% - 2px);">
+    <a href="${esc(embedUrl)}" target="_blank" rel="noopener">Instagramで見る</a>
+  </blockquote>
+  <script async src="//www.instagram.com/embed.js"></script>
+</div>`;
+}
+
+async function fetchPhotoForArticle(input) {
+  const store = (input.stores || [])[0] || {};
+
+  // 0. HotPepper 実店舗写真（stores[0].photo_url 指定時）
+  if (store.photo_url) {
+    const storePhoto = await tryStorePhoto(store.photo_url);
+    if (storePhoto) {
+      process.stdout.write(` 📷 店舗公式写真 (HotPepper)\n`);
+      return storePhoto;
+    }
+  }
+
+  // 1. Instagram 公式 embed（stores[0].instagram_post_url 指定時）
+  if (store.instagram_post_url) {
+    process.stdout.write(` 📷 Instagram embed\n`);
+    return {
+      is_instagram: true,
+      url: store.instagram_post_url,
+      embed_html: buildInstagramEmbedHtml(store.instagram_post_url),
+    };
+  }
+
+  // 2. Google Maps写真（GOOGLE_MAPS_API_KEY 設定時）
+  if (store.name) {
+    const googlePhoto = await tryGoogleMapsPhoto(store.name, store.area || '');
+    if (googlePhoto) {
+      process.stdout.write(` 📷 Googleマップ写真: ${googlePhoto.credit_name}\n`);
+      return googlePhoto;
+    }
+  }
+
+  const genre = store.genre || '';
+
+  // 3. Unsplash API（環境変数あり時のみ）
+  const unsplash = await tryUnsplashApi(genre);
   if (unsplash) {
-    process.stdout.write(` 📷 Unsplash: ${unsplash.credit_name}\n`);
+    process.stdout.write(` 📷 Unsplash API: ${unsplash.credit_name}\n`);
     return unsplash;
   }
 
-  // 2. Loremflickr（APIキー不要・CC ライセンス）
-  const flickr = await tryLoremflickr(keywords, lock);
-  if (flickr) {
-    process.stdout.write(` 📷 Loremflickr (CC)\n`);
-    return flickr;
-  }
-
-  process.stdout.write(' スキップ（ネットワーク未接続）\n');
-  return null;
+  // 4. ジャンル別厳選写真（API不要・Unsplash直接URL・永続的）
+  const curated = pickCuratedPhoto(input);
+  process.stdout.write(` 📷 Unsplash (curated): ${curated.credit_name}\n`);
+  return curated;
 }
 
 function buildHeroImageSection(input) {
+  // Instagram embed（blockquote をそのまま返す）
+  if (input.hero_image_is_instagram && input.hero_image_embed_html) {
+    return input.hero_image_embed_html;
+  }
+
   const imgUrl = input.hero_image_url;
   if (!imgUrl) return '';
-  const creditUrl  = input.hero_image_credit_url  || 'https://unsplash.com';
-  const creditName = input.hero_image_credit_name || 'Unsplash';
-  const creditSite = creditUrl.includes('unsplash') ? 'Unsplash' : 'Loremflickr';
+  const isStorePhoto  = input.hero_image_is_store_photo;
+  const creditSource  = input.hero_image_credit_source; // 'Google Maps' | null
+  const creditUrl     = input.hero_image_credit_url  || 'https://unsplash.com';
+  const creditName    = input.hero_image_credit_name || 'Unsplash';
+
+  let creditHtml;
+  if (creditSource === 'Google Maps') {
+    creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="https://maps.google.com" target="_blank" rel="noopener">Google Maps</a>`;
+  } else if (isStorePhoto) {
+    creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">店舗公式写真</a> / <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">HotPepper</a>`;
+  } else {
+    creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>`;
+  }
+
   return `<figure class="art-hero-img">
-  <img src="${esc(imgUrl)}" alt="${esc(input.title)}" loading="lazy" decoding="async" width="1200" height="630">
-  <figcaption class="art-img-credit">Photo: <a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="${esc(creditUrl.includes('unsplash') ? 'https://unsplash.com' : 'https://loremflickr.com')}" target="_blank" rel="noopener">${creditSite}</a></figcaption>
+  <img src="${esc(imgUrl)}" alt="${esc(input.title)}" loading="lazy" decoding="async">
+  <figcaption class="art-img-credit">Photo: ${creditHtml}</figcaption>
 </figure>`;
 }
 
@@ -308,10 +529,19 @@ async function main() {
     process.stdout.write('  📷 画像を自動取得中...');
     const photo = await fetchPhotoForArticle(input);
     if (photo) {
-      input.hero_image_url         = photo.url;
-      input.hero_image_credit_url  = photo.credit_url;
-      input.hero_image_credit_name = photo.credit_name;
-      input.og_image = input.og_image || photo.url;
+      if (photo.is_instagram) {
+        input.hero_image_is_instagram = true;
+        input.hero_image_embed_html   = photo.embed_html;
+        input.hero_image_url          = photo.url; // ログ用のみ
+        // Instagram embed は og:image に使えないのでデフォルトのまま
+      } else {
+        input.hero_image_url            = photo.url;
+        input.hero_image_credit_url     = photo.credit_url;
+        input.hero_image_credit_name    = photo.credit_name;
+        input.hero_image_is_store_photo = photo.is_store_photo || false;
+        input.hero_image_credit_source  = photo.credit_source || null;
+        input.og_image = input.og_image || photo.url;
+      }
     }
   } else {
     input.og_image = input.og_image || input.hero_image_url;

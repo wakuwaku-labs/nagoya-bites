@@ -931,6 +931,63 @@ async function main() {
     console.log('data/editor_picks.json なし（編集部ピックスキップ）');
   }
 
+  // おすすめポイントJSONをマージ（HP ID → 店名 の順でマッチ、空欄の場合のみ上書き）
+  const recoPath = path.join(__dirname, 'data/recommendations.json');
+  if (fs.existsSync(recoPath)) {
+    try {
+      const recoMap = JSON.parse(fs.readFileSync(recoPath, 'utf8'));
+      let recoApplied = 0;
+      for (const store of stores) {
+        if (store['おすすめポイント'] && store['おすすめポイント'].trim()) continue;
+        const point = recoMap[store['ホットペッパーID']] || recoMap[store['店名']];
+        if (point) { store['おすすめポイント'] = point; recoApplied++; }
+      }
+      console.log(`おすすめポイント補完: ${recoApplied}件`);
+    } catch (e) {
+      console.error(`data/recommendations.json の読み込み失敗: ${e.message}`);
+    }
+  }
+
+  // 業界人レビューJSONをマージ（店名+エリア または ホットペッパーID でマッチ、insiderReviews 配列を付与）
+  const insiderReviewsPath = path.join(__dirname, 'data/insider_reviews.json');
+  if (fs.existsSync(insiderReviewsPath)) {
+    try {
+      const irRaw = JSON.parse(fs.readFileSync(insiderReviewsPath, 'utf8'));
+      const entries = irRaw.stores || [];
+      let irApplied = 0, irReviewsTotal = 0, irMissing = [];
+      for (const entry of entries) {
+        const hpId = entry['ホットペッパーID'];
+        let hit = null;
+        if (hpId) hit = stores.find(s => s['ホットペッパーID'] === hpId);
+        if (!hit) {
+          hit = stores.find(s =>
+            s['店名'] === entry['店名'] &&
+            (entry['エリア'] ? s['エリア'] === entry['エリア'] : true)
+          );
+        }
+        if (hit) {
+          const approved = (entry.reviews || []).filter(rv => rv.approved === true);
+          if (approved.length) {
+            hit.insiderReviews = (hit.insiderReviews || []).concat(approved);
+            hit.insiderReviewCount = hit.insiderReviews.length;
+            irApplied++;
+            irReviewsTotal += approved.length;
+          }
+        } else {
+          irMissing.push(entry['店名']);
+        }
+      }
+      console.log(`業界人レビュー付与: ${irApplied}店 / ${irReviewsTotal}件 / マッチ失敗: ${irMissing.length}件`);
+      if (irMissing.length) {
+        console.log('  マッチ失敗の店名（要確認）:', irMissing.slice(0, 10).join(' / '));
+      }
+    } catch (e) {
+      console.error(`data/insider_reviews.json の読み込み失敗: ${e.message}`);
+    }
+  } else {
+    console.log('data/insider_reviews.json なし（業界人レビュースキップ）');
+  }
+
   // トレンドスコア算出
   const newHpIds = new Set(newStores.map(s => s['ホットペッパーID']).filter(Boolean));
   let trendHot = 0, trendRising = 0, trendWarm = 0;

@@ -229,6 +229,41 @@
 
 ---
 
+## Inspector 2026-04-23 監査で検出された新課題
+
+### [ISSUE-022] journal/feed.xml lastBuildDate が固定値 ❌ 誤検出
+- **priority**: P2 → **status**: wont_fix
+- **resolved**: 2026-04-23（誤検出として却下）
+- **description**: 確認の結果、`scripts/build_journal_index.js` で既に `new Date().toUTCString()` を動的注入していた。
+
+### [ISSUE-023] trending_stores.json 有効期限チェック未実装 ❌ 誤検出
+- **priority**: P2 → **status**: wont_fix
+- **resolved**: 2026-04-23（誤検出として却下）
+- **description**: `build.js` に既に有効期限チェックが実装済み（trending/manual/pending すべて）。
+
+### [ISSUE-024] stores/*.html の og:image がホットペッパー固定
+- **priority**: P3 → **status**: ready
+- **category**: SEO・OGP
+- **detected**: 2026-04-23
+- **description**: stores/ 1095店舗の og:image が全て `https://imgfp.hotp.jp/IMGH/...`。SNS シェア時の visuals が単調で差別化にならない。Hot Pepper 画像のホットリンクは規約違反リスクもあり。
+- **fix**: ジャンル別・エリア別のデフォルト OG画像（自家製）を用意し、写真URL未設定店はこれをフォールバック
+
+### [ISSUE-025] stores/ ページの meta description が過少 ✅
+- **priority**: P3 → **status**: done (2026-04-24)
+- **category**: SEO
+- **detected**: 2026-04-23
+- **resolution**: `gen-store-pages.js` の `buildDescription()` を刷新。`scripts/patch_store_descriptions.js` で 714 件を一括パッチ。変更前: 平均 ~60 字 → 変更後: 100-119 字（おすすめポイント + エリア/ジャンル/価格 + Google評価 + タグ + CTA）。
+- **files**: `gen-store-pages.js`, `scripts/patch_store_descriptions.js`, `stores/*.html` (714件)
+
+### [ISSUE-026] journal feed が RSS2.0 のみで Atom 1.0 なし
+- **priority**: P3 → **status**: done (2026-04-23)
+- **category**: 標準準拠
+- **detected**: 2026-04-23
+- **resolution**: `scripts/build_journal_index.js` に `buildAtomFeed()` 追加、`journal/feed.atom` を並行生成。`journal/index.html` に `<link rel="alternate" type="application/atom+xml">` を追加。
+- **files**: `scripts/build_journal_index.js`, `journal/index.html`, `journal/feed.atom`
+
+---
+
 ## Inspector 2026-04-18 監査で検出された新課題
 
 ### [ISSUE-021] features/ インデックスページに季節特集3本が未登録 ✅
@@ -462,6 +497,20 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **resolved**: 2026-04-23
 - **owner**: Editor
 - **description**: `journal/2026-04-23-small-seats-famous-restaurants.html` 公開。テーマ「カウンター6席、テーブル2卓」が名物店に多い理由（業界の裏側コラム・COL-SEAT-001）。BlogPosting + BreadcrumbList JSON-LD。journal/index.html, sitemap.xml 更新済み。
+
+### [BATCH-007] 業界人レビュー投稿フォーム（Formspree）✅
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-04-24
+- **owner**: Builder
+- **description**: モーダル内に業界人向け投稿フォームを実装。GitHub Issue Form を廃止し、Formspree（contact.html と同一エンドポイント）経由でメール受信 → 編集部モデレーション → insider_reviews.json 追記 → ビルド → 公開のフローを確立。フォームトグル・バリデーション・送信中 UI・成功/エラーメッセージ実装。
+- **files**: `index.html`, `data/insider_reviews.json`, `.github/ISSUE_TEMPLATE/insider-review.yml`（削除）
+
+### [BATCH-008] ISSUE-025 meta description 拡張 ✅
+- **priority**: P3 → **status**: done
+- **resolved**: 2026-04-24
+- **owner**: Builder
+- **description**: `gen-store-pages.js` の `buildDescription()` 刷新 + `scripts/patch_store_descriptions.js` で 714 件の stores/*.html を一括パッチ。~60字 → 100-119字。おすすめポイント＋エリア/ジャンル/価格帯＋Google評価＋タグ＋CTA。
+- **files**: `gen-store-pages.js`, `scripts/patch_store_descriptions.js`, `stores/*.html` (714件)
 
 ### [BATCH-006] ロングテール特集3本公開 ✅
 - **priority**: P1 → **status**: done
