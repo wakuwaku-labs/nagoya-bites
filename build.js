@@ -929,6 +929,23 @@ async function main() {
     console.log('data/editor_picks.json なし（編集部ピックスキップ）');
   }
 
+  // おすすめポイントJSONをマージ（HP ID → 店名 の順でマッチ、空欄の場合のみ上書き）
+  const recoPath = path.join(__dirname, 'data/recommendations.json');
+  if (fs.existsSync(recoPath)) {
+    try {
+      const recoMap = JSON.parse(fs.readFileSync(recoPath, 'utf8'));
+      let recoApplied = 0;
+      for (const store of stores) {
+        if (store['おすすめポイント'] && store['おすすめポイント'].trim()) continue;
+        const point = recoMap[store['ホットペッパーID']] || recoMap[store['店名']];
+        if (point) { store['おすすめポイント'] = point; recoApplied++; }
+      }
+      console.log(`おすすめポイント補完: ${recoApplied}件`);
+    } catch (e) {
+      console.error(`data/recommendations.json の読み込み失敗: ${e.message}`);
+    }
+  }
+
   // 業界人レビューJSONをマージ（店名+エリア または ホットペッパーID でマッチ、insiderReviews 配列を付与）
   const insiderReviewsPath = path.join(__dirname, 'data/insider_reviews.json');
   if (fs.existsSync(insiderReviewsPath)) {
