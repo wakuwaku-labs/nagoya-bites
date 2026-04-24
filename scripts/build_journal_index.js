@@ -139,15 +139,28 @@ function updateRootLatestSection(entries) {
   return true;
 }
 
+function todayJST() {
+  const d = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
 function main() {
   const published = JSON.parse(fs.readFileSync(PUBLISHED, 'utf8'));
-  const entries = published.entries || [];
+  const allEntries = published.entries || [];
+  const today = todayJST();
+  // 未来日付のエントリは掲載しない
+  const entries = allEntries.filter(e => e.date <= today);
   const listHtml = buildList(entries);
   updateJournalIndex(listHtml);
   fs.writeFileSync(FEED, buildFeed(entries));
   fs.writeFileSync(ATOM_FEED, buildAtomFeed(entries));
   const rootUpdated = updateRootLatestSection(entries);
-  console.log(`✅ journal/index.html (${entries.length}件) + feed.xml 更新${rootUpdated ? ' + index.html 最新3件' : ''}`);
+  const futureCount = allEntries.length - entries.length;
+  const futureNote = futureCount > 0 ? ` (未来${futureCount}件は非表示)` : '';
+  console.log(`✅ journal/index.html (${entries.length}件) + feed.xml 更新${rootUpdated ? ' + index.html 最新3件' : ''}${futureNote}`);
 }
 
 if (require.main === module) main();
