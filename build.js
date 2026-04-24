@@ -386,14 +386,16 @@ function sanitizeStore(s) {
 // ────────────────────────────────────────────────────
 // 以下のキーは LOCAL_STORES に含める必要がないため除外する:
 //   - TikTok検索 / X検索 / Instagram検索: ランタイムで tiktokSearchUrl(r) 等で再生成される
-//   - Instagram / Instagram投稿URL / 内観写真URL / 料理写真URL1 / 料理写真URL2:
+//   - Instagram投稿URL / 内観写真URL / 料理写真URL1 / 料理写真URL2:
 //     sanitizeStore() により全件 '' にクリアされている
 //   - 公開フラグ: build時点で FALSE 除外済み
+// ※ Instagram / 食べログURL は slimStoreForOutput 後に instagram_resolved.json /
+//   tabelog_resolved.json から復元するため OMIT_KEYS には含めない
 // 併せて、値が空文字・null・undefined のキーも出力から除外する（runtimeは
 // `r['foo'] || ''` パターンで参照しているため undefined でも同じ挙動になる）
 const STORE_OUTPUT_OMIT_KEYS = new Set([
   'TikTok検索', 'X検索', 'Instagram検索',
-  'Instagram', 'Instagram投稿URL',
+  'Instagram投稿URL',
   '内観写真URL', '料理写真URL1', '料理写真URL2',
   '公開フラグ'
 ]);
@@ -1017,6 +1019,49 @@ async function main() {
   //    ISSUE-015-P1: 出力時に不要フィールド・空値を除去して serialize 量を削減
   let html = fs.readFileSync(HTML, 'utf8');
   const slimStores = stores.map(slimStoreForOutput);
+
+  // ─── キャッシュからInstagram/食べログURLをマージ ─────────────────────────
+  // resolve_instagram.js / resolve_tabelog.js で事前解決したURLをビルド時に焼き付ける
+  // （build.js は毎回 Instagram/食べログURLをクリアするため、キャッシュから復元する）
+  const igCachePath = path.join(__dirname, 'data', 'instagram_resolved.json');
+  const tblCachePath = path.join(__dirname, 'data', 'tabelog_resolved.json');
+  let igMerged = 0, tblMerged = 0;
+  if (fs.existsSync(igCachePath)) {
+    try {
+      const igCache = JSON.parse(fs.readFileSync(igCachePath, 'utf8'));
+      for (const s of slimStores) {
+        const id = s['ホットペッパーID'];
+        if (!id || s['Instagram']) continue; // IDなし or 手動設定済みはスキップ
+        const entry = igCache[id];
+        if (entry && entry.instagram && !entry.failed) {
+          s['Instagram'] = entry.instagram;
+          igMerged++;
+        }
+      }
+      console.log(`Instagram URLマージ: ${igMerged}件`);
+    } catch (e) {
+      console.warn(`instagram_resolved.json マージ失敗: ${e.message}`);
+    }
+  }
+  if (fs.existsSync(tblCachePath)) {
+    try {
+      const tblCache = JSON.parse(fs.readFileSync(tblCachePath, 'utf8'));
+      for (const s of slimStores) {
+        const id = s['ホットペッパーID'];
+        if (!id || s['食べログURL']) continue; // IDなし or 手動設定済みはスキップ
+        const entry = tblCache[id];
+        if (entry && entry.tabelog && !entry.failed) {
+          s['食べログURL'] = entry.tabelog;
+          tblMerged++;
+        }
+      }
+      console.log(`食べログURLマージ: ${tblMerged}件`);
+    } catch (e) {
+      console.warn(`tabelog_resolved.json マージ失敗: ${e.message}`);
+    }
+  }
+  // ─────────────────────────────────────────────────────────────────────────
+
   const jsonStr = JSON.stringify(slimStores);
   console.log(`LOCAL_STORES serialize: ${stores.length}件, ${(jsonStr.length / 1024 / 1024).toFixed(2)}MB`);
   html = html.replace(
