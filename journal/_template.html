@@ -92,6 +92,14 @@ nav a:hover,nav a.active{color:var(--text);}
 .source-note{background:var(--bg2);border:1px solid var(--border);padding:.8rem 1rem;border-radius:4px;margin:1.5rem 0;font-size:.7rem;line-height:1.7;color:var(--dim);}
 .source-note a{color:var(--gold);text-decoration:none;}
 .art-hero-ig{max-width:760px;margin:0 auto;padding:0 1.5rem 1rem;display:flex;justify-content:center;}
+.art-ig-cta{display:flex;align-items:center;gap:1rem;background:var(--bg2);border:1px solid var(--border);border-left:3px solid #C13584;padding:1rem 1.2rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
+.art-ig-cta .ig-icon{font-size:1.4rem;flex-shrink:0;}
+.art-ig-cta-body{flex:1;}
+.art-ig-cta-label{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.18em;color:#C13584;text-transform:uppercase;margin-bottom:.3rem;}
+.art-ig-cta-handle{font-size:.82rem;font-weight:500;color:var(--white);margin-bottom:.2rem;}
+.art-ig-cta-note{font-size:.72rem;color:var(--muted);}
+.art-ig-cta a{text-decoration:none;color:inherit;}
+.art-ig-cta a:hover .art-ig-cta-handle{color:#C13584;}
 .art-hero-img{margin:0 auto;max-width:760px;width:100%;background:var(--bg2);overflow:hidden;}
 .art-hero-img img{width:100%;height:auto;display:block;max-height:460px;object-fit:cover;object-position:center 40%;}
 .art-img-credit{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;color:var(--dim);text-align:right;padding:.3rem 0;max-width:760px;margin:0 auto;}
@@ -162,6 +170,7 @@ nav{display:none;}
     </div>
 
     {{SOURCES}}
+    {{INSTAGRAM_CTA}}
   </div>
 </article>
 

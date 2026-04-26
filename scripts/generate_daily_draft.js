@@ -439,6 +439,38 @@ function buildHeroImageSection(input) {
 </figure>`;
 }
 
+// --------------- Instagram CTA（アカウントリンク）---------------
+
+/**
+ * stores[0].instagram_account_url または input.instagram_account_url があれば
+ * Instagram プロフィールへのCTAブロックを生成する。
+ * instagram_post_url がある場合は embed を優先するため、CTAは出力しない。
+ */
+function buildInstagramCta(input) {
+  const store = (input.stores || [])[0] || {};
+  // embedがある場合はCTA不要
+  if (store.instagram_post_url || input.hero_image_is_instagram) return '';
+
+  const accountUrl = store.instagram_account_url || input.instagram_account_url;
+  if (!accountUrl) return '';
+
+  // @handle を抽出
+  const handle = accountUrl.match(/instagram\.com\/([^/?#]+)/)?.[1] || accountUrl;
+  const storeName = store.name || input.title || '';
+  const noteText = store.genre ? `${store.genre}の料理写真・雰囲気はこちら` : '料理写真・店内雰囲気はこちら';
+
+  return `<div class="art-ig-cta">
+      <div class="ig-icon">📸</div>
+      <div class="art-ig-cta-body">
+        <a href="${esc(accountUrl)}" target="_blank" rel="noopener">
+          <p class="art-ig-cta-label">Instagram</p>
+          <p class="art-ig-cta-handle">@${esc(handle)}</p>
+          <p class="art-ig-cta-note">${esc(noteText)}</p>
+        </a>
+      </div>
+    </div>`;
+}
+
 // --------------- 写真候補メモ ---------------
 
 function buildPhotoSuggestionsHtmlComment(suggestions) {
@@ -488,6 +520,7 @@ function renderHtml(input) {
     '{{STORES}}': buildStores(input.stores),
     '{{SOURCES}}': buildSources(input.sources),
     '{{HERO_IMAGE_SECTION}}': buildHeroImageSection(input),
+    '{{INSTAGRAM_CTA}}': buildInstagramCta(input),
     '{{PHOTO_SUGGESTIONS_HTML}}': buildPhotoSuggestionsHtmlComment(input.photo_suggestions)
   };
   Object.entries(replacements).forEach(([k, v]) => { html = html.split(k).join(v); });

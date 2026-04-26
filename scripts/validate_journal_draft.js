@@ -114,6 +114,19 @@ function checkJournal(htmlPath, mdPath) {
     pass(10, true, '今日の1軒以外のためスキップ');
   }
 
+  // 11. ヒーロー画像の存在と品質チェック
+  const hasHeroImg = /class="art-hero-img"/.test(html);
+  const heroSrc = (html.match(/class="art-hero-img"[\s\S]*?<img[^>]*src="([^"]+)"/) || [])[1] || '';
+  // 失効するLoremflickrキャッシュURL（/cache/resized/）はWARNとして検出
+  const hasStaleCache = heroSrc.includes('loremflickr.com/cache/resized/');
+  if (!hasHeroImg) {
+    pass(11, false, '⚠️ ヒーロー画像がありません (art-hero-img が見つからない) — 写真の自動取得が失敗した可能性があります');
+  } else if (hasStaleCache) {
+    pass(11, false, `⚠️ 失効しやすいLoremflickrキャッシュURLが使われています: ${heroSrc.slice(0,80)}... → source URLへ差し替えてください`);
+  } else {
+    pass(11, true, `ヒーロー画像OK: ${heroSrc.slice(0, 80)}...`);
+  }
+
   return results;
 }
 
