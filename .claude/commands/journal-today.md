@@ -147,7 +147,7 @@ git push origin HEAD:main
 
 ユーザーに以下を伝える:
 ```
-✅ ジャーナル公開完了: https://wakuwaku-labs.github.io/nagoya-bites/journal/YYYY-MM-DD-slug.html
+✅ ジャーナル公開完了: https://nagoya-bites.com/journal/YYYY-MM-DD-slug.html
 
 次に docs/daily-posts/YYYY-MM-DD.md を開いて、下記3つに手動コピペ投稿してください:
   1. Note: note.com

@@ -13,7 +13,7 @@
 - Open `index.html` in any modern browser (no server needed — static file)
 - To refresh store data: `cd ~/Desktop/nagoya-bites && node build.js`
 - To deploy: `git add index.html sitemap.xml && git commit && git push`
-- Live site: https://wakuwaku-labs.github.io/nagoya-bites/
+- Live site: https://nagoya-bites.com/
 
 ## What Was Built
 

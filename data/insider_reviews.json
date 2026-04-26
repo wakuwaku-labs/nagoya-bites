@@ -1,5 +1,5 @@
 {
-  "_comment": "業界人レビュー。訪問者が GitHub Issue Form で投稿 → 編集部が承認 → このJSONに追記。build.js が店名+エリア または ホットペッパーID で LOCAL_STORES にマージし insiderReviews: [...] として焼き付ける。自動公開はしない（必ず編集部モデレーション経由）。",
+  "_comment": "業界人レビュー。訪問者が index.html 内のフォームから Formspree 経由で投稿 → 編集部メールで受信 → 承認後に editor が本ファイル stores[] に追記 → node build.js → デプロイ。自動公開はしない（必ず編集部モデレーション経由）。",
   "_schema": {
     "店名": "LOCAL_STORES の店名と完全一致",
     "エリア": "LOCAL_STORES のエリアと一致（マッチング精度向上）",
@@ -11,28 +11,9 @@
     "reviews[].body": "レビュー本文（150〜500字目安）",
     "reviews[].visitedAt": "訪問時期（任意、YYYY-MM）",
     "reviews[].publishedAt": "JSON追記日（YYYY-MM-DD）",
-    "reviews[].sourceIssue": "元 GitHub Issue 番号（監査用）",
+    "reviews[].sourceFormspree": "Formspree メールのタイムスタンプまたは通し番号（監査用）",
     "reviews[].approvedBy": "承認者（編集部イニシャル）",
     "reviews[].approved": "true 固定（JSONに載る=承認済の意味）"
-  },
-  "_schema_example": {
-    "店名": "（例）焼肉Nick 錦店",
-    "エリア": "栄",
-    "ホットペッパーID": "J004536033",
-    "reviews": [
-      {
-        "reviewer": "佐藤 健（ペンネーム）",
-        "genre": "焼肉",
-        "yearsOfExperience": "15年",
-        "title": "焼肉店オーナーシェフ",
-        "body": "中落ちカルビのカット厚が 8mm 前後に揃っており、噛み切りと脂の残し方のバランスが業界標準より一段上。タレは甘さを抑えた醤油ベースで、肉の質を殺さない設計になっている。焼き場の温度管理が安定していて、回転の速い時間帯でも火入れが崩れないのは現場力の証。",
-        "visitedAt": "2026-03",
-        "publishedAt": "2026-04-24",
-        "sourceIssue": 123,
-        "approvedBy": "editor:ym",
-        "approved": true
-      }
-    ]
   },
   "stores": []
 }
