@@ -13,11 +13,11 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <title>{{TITLE}}｜NAGOYA BITES Journal</title>
 <meta name="description" content="{{DESCRIPTION}}">
 <meta name="keywords" content="{{KEYWORDS}}">
-<link rel="canonical" href="https://wakuwaku-labs.github.io/nagoya-bites/journal/{{SLUG}}.html">
+<link rel="canonical" href="https://nagoya-bites.com/journal/{{SLUG}}.html">
 <meta property="og:title" content="{{TITLE}}｜NAGOYA BITES">
 <meta property="og:description" content="{{DESCRIPTION}}">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://wakuwaku-labs.github.io/nagoya-bites/journal/{{SLUG}}.html">
+<meta property="og:url" content="https://nagoya-bites.com/journal/{{SLUG}}.html">
 <meta property="og:site_name" content="NAGOYA BITES">
 <meta property="og:image" content="{{OG_IMAGE}}">
 <meta name="twitter:card" content="summary_large_image">
@@ -31,11 +31,11 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   "headline": "{{TITLE}}",
   "description": "{{DESCRIPTION}}",
   "author": {"@type": "Organization", "name": "NAGOYA BITES"},
-  "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://wakuwaku-labs.github.io/nagoya-bites/"},
-  "url": "https://wakuwaku-labs.github.io/nagoya-bites/journal/{{SLUG}}.html",
+  "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
+  "url": "https://nagoya-bites.com/journal/{{SLUG}}.html",
   "datePublished": "{{DATE}}",
   "dateModified": "{{DATE}}",
-  "mainEntityOfPage": "https://wakuwaku-labs.github.io/nagoya-bites/journal/{{SLUG}}.html"
+  "mainEntityOfPage": "https://nagoya-bites.com/journal/{{SLUG}}.html"
 }
 </script>
 <script type="application/ld+json">
@@ -43,8 +43,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    {"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://wakuwaku-labs.github.io/nagoya-bites/"},
-    {"@type":"ListItem","position":2,"name":"Journal","item":"https://wakuwaku-labs.github.io/nagoya-bites/journal/"},
+    {"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},
+    {"@type":"ListItem","position":2,"name":"Journal","item":"https://nagoya-bites.com/journal/"},
     {"@type":"ListItem","position":3,"name":"{{TITLE}}"}
   ]
 }
@@ -92,6 +92,14 @@ nav a:hover,nav a.active{color:var(--text);}
 .source-note{background:var(--bg2);border:1px solid var(--border);padding:.8rem 1rem;border-radius:4px;margin:1.5rem 0;font-size:.7rem;line-height:1.7;color:var(--dim);}
 .source-note a{color:var(--gold);text-decoration:none;}
 .art-hero-ig{max-width:760px;margin:0 auto;padding:0 1.5rem 1rem;display:flex;justify-content:center;}
+.art-ig-cta{display:flex;align-items:center;gap:1rem;background:var(--bg2);border:1px solid var(--border);border-left:3px solid #C13584;padding:1rem 1.2rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
+.art-ig-cta .ig-icon{font-size:1.4rem;flex-shrink:0;}
+.art-ig-cta-body{flex:1;}
+.art-ig-cta-label{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.18em;color:#C13584;text-transform:uppercase;margin-bottom:.3rem;}
+.art-ig-cta-handle{font-size:.82rem;font-weight:500;color:var(--white);margin-bottom:.2rem;}
+.art-ig-cta-note{font-size:.72rem;color:var(--muted);}
+.art-ig-cta a{text-decoration:none;color:inherit;}
+.art-ig-cta a:hover .art-ig-cta-handle{color:#C13584;}
 .art-hero-img{margin:0 auto;max-width:760px;width:100%;background:var(--bg2);overflow:hidden;}
 .art-hero-img img{width:100%;height:auto;display:block;max-height:460px;object-fit:cover;object-position:center 40%;}
 .art-img-credit{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;color:var(--dim);text-align:right;padding:.3rem 0;max-width:760px;margin:0 auto;}
@@ -162,6 +170,7 @@ nav{display:none;}
     </div>
 
     {{SOURCES}}
+    {{INSTAGRAM_CTA}}
   </div>
 </article>
 

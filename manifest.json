@@ -2,8 +2,8 @@
   "name": "NAGOYA BITES — 名古屋グルメガイド",
   "short_name": "NAGOYA BITES",
   "description": "名古屋の居酒屋・宴会場・個室グルメ完全ガイド。1000店以上を掲載。【現役飲食人監修】",
-  "start_url": "/nagoya-bites/",
-  "scope": "/nagoya-bites/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#f7f5f1",
   "theme_color": "#7a5c10",
@@ -50,19 +50,19 @@
     {
       "name": "居酒屋を探す",
       "short_name": "居酒屋",
-      "url": "/nagoya-bites/#genre=%E5%B1%85%E9%85%92%E5%B1%8B",
+      "url": "/#genre=%E5%B1%85%E9%85%92%E5%B1%8B",
       "description": "名古屋の居酒屋一覧"
     },
     {
       "name": "個室のあるお店",
       "short_name": "個室",
-      "url": "/nagoya-bites/#tag=%E5%80%8B%E5%AE%A4",
+      "url": "/#tag=%E5%80%8B%E5%AE%A4",
       "description": "個室対応店舗一覧"
     },
     {
       "name": "焼肉を探す",
       "short_name": "焼肉",
-      "url": "/nagoya-bites/#genre=%E7%84%BC%E8%82%89",
+      "url": "/#genre=%E7%84%BC%E8%82%89",
       "description": "名古屋の焼肉店一覧"
     }
   ],

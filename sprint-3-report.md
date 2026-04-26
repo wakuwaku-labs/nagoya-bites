@@ -26,5 +26,5 @@
 - Committed as e40412b and pushed to origin/main
 
 ## Deploy
-- GitHub Pages: https://wakuwaku-labs.github.io/nagoya-bites/
+- GitHub Pages: https://nagoya-bites.com/
 - Changes live within ~1-2 minutes of push

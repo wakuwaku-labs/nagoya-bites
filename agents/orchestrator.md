@@ -499,7 +499,7 @@ Phase 4: デプロイと報告
 
 ### デプロイ
 - ステータス: ✅ デプロイ済み / ⏸ 見送り / ❌ 失敗
-- URL: https://wakuwaku-labs.github.io/nagoya-bites/
+- URL: https://nagoya-bites.com/
 
 ### バックログ状況
 - 解消した課題: X件

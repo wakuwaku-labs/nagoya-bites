@@ -14,7 +14,7 @@ const fs    = require('fs');
 const path  = require('path');
 
 const CSV_URL     = 'https://docs.google.com/spreadsheets/d/1VUk4bRTPoIc7pHywzIJTwZr9WyUX7ioxlZzbxQHsjCQ/export?format=csv&gid=415662614';
-const BASE_URL    = 'https://wakuwaku-labs.github.io/nagoya-bites';
+const BASE_URL    = 'https://nagoya-bites.com';
 const OUT_DIR     = path.join(__dirname, 'stores');
 const SITEMAP_OUT = path.join(__dirname, 'sitemap.xml');
 
@@ -128,12 +128,39 @@ function buildRelatedFeatures(store) {
 // メタ説明文生成
 // ================================================================
 function buildDescription(s) {
-  const point = s['おすすめポイント'] || '';
+  const name  = s['店名'] || '';
+  const point = (s['おすすめポイント'] || '').trim();
   const genre = s['ジャンル'] || '';
   const area  = s['エリア'] || '';
   const price = s['価格帯'] || '';
-  if (point) return `${point}。${area}の${genre}（${price}）。Instagram・ホットペッパー・食べログをまとめてチェック。`;
-  return `${area}の${genre}「${s['店名']}」の情報まとめ。${price}。Instagram・ホットペッパー・食べログ・Googleマップをワンクリックで確認。NAGOYA BITES掲載。`;
+  const score = s['Google評価'] || '';
+  const tags  = (s['タグ'] || '').split(',').map(t => t.trim()).filter(Boolean);
+  const parts = [];
+
+  // Part1: おすすめポイント（長すぎる場合は80字で切る）
+  if (point) parts.push(point.length > 80 ? point.slice(0, 79) + '…' : point);
+
+  // Part2: エリア + ジャンル + 価格帯
+  const ctx = area && genre ? `${area}の${genre}` : (area + genre);
+  if (ctx) parts.push(ctx + (price ? `（${price}）` : ''));
+
+  // Part3: Google評価
+  if (score) parts.push(`Googleで${score}評価`);
+
+  // Part4: 有用タグ先頭1件
+  const usefulTags = ['個室', '貸切', '飲み放題', '食べ放題', '女子会', '接待', 'テラス'].filter(t => tags.includes(t));
+  if (usefulTags.length) parts.push(usefulTags[0] + '対応');
+
+  let desc = parts.join('。') + (parts.length ? '。' : '');
+
+  // 短い場合はアクション文を補完
+  const cta = 'ホットペッパー・食べログ・Googleマップをまとめてチェック。NAGOYA BITES掲載。';
+  if (desc.length < 100) desc += cta;
+
+  // 155字超は切り詰め
+  if (desc.length > 155) desc = desc.slice(0, 154) + '…';
+
+  return desc;
 }
 
 // ================================================================

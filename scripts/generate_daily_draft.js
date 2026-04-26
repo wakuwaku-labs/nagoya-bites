@@ -439,6 +439,38 @@ function buildHeroImageSection(input) {
 </figure>`;
 }
 
+// --------------- Instagram CTA（アカウントリンク）---------------
+
+/**
+ * stores[0].instagram_account_url または input.instagram_account_url があれば
+ * Instagram プロフィールへのCTAブロックを生成する。
+ * instagram_post_url がある場合は embed を優先するため、CTAは出力しない。
+ */
+function buildInstagramCta(input) {
+  const store = (input.stores || [])[0] || {};
+  // embedがある場合はCTA不要
+  if (store.instagram_post_url || input.hero_image_is_instagram) return '';
+
+  const accountUrl = store.instagram_account_url || input.instagram_account_url;
+  if (!accountUrl) return '';
+
+  // @handle を抽出
+  const handle = accountUrl.match(/instagram\.com\/([^/?#]+)/)?.[1] || accountUrl;
+  const storeName = store.name || input.title || '';
+  const noteText = store.genre ? `${store.genre}の料理写真・雰囲気はこちら` : '料理写真・店内雰囲気はこちら';
+
+  return `<div class="art-ig-cta">
+      <div class="ig-icon">📸</div>
+      <div class="art-ig-cta-body">
+        <a href="${esc(accountUrl)}" target="_blank" rel="noopener">
+          <p class="art-ig-cta-label">Instagram</p>
+          <p class="art-ig-cta-handle">@${esc(handle)}</p>
+          <p class="art-ig-cta-note">${esc(noteText)}</p>
+        </a>
+      </div>
+    </div>`;
+}
+
 // --------------- 写真候補メモ ---------------
 
 function buildPhotoSuggestionsHtmlComment(suggestions) {
@@ -477,7 +509,7 @@ function renderHtml(input) {
     '{{DESCRIPTION}}': esc(input.description),
     '{{KEYWORDS}}': esc(input.keywords || ''),
     '{{SLUG}}': esc(input.slug),
-    '{{OG_IMAGE}}': esc(input.og_image || 'https://wakuwaku-labs.github.io/nagoya-bites/icons/icon-512.png'),
+    '{{OG_IMAGE}}': esc(input.og_image || 'https://nagoya-bites.com/icons/icon-512.png'),
     '{{DATE}}': esc(input.date),
     '{{DATE_JA}}': esc(toDateJa(input.date)),
     '{{EYEBROW}}': esc(input.eyebrow || themeLabel),
@@ -488,6 +520,7 @@ function renderHtml(input) {
     '{{STORES}}': buildStores(input.stores),
     '{{SOURCES}}': buildSources(input.sources),
     '{{HERO_IMAGE_SECTION}}': buildHeroImageSection(input),
+    '{{INSTAGRAM_CTA}}': buildInstagramCta(input),
     '{{PHOTO_SUGGESTIONS_HTML}}': buildPhotoSuggestionsHtmlComment(input.photo_suggestions)
   };
   Object.entries(replacements).forEach(([k, v]) => { html = html.split(k).join(v); });
@@ -508,7 +541,7 @@ function renderMd(input) {
     '{{DATE}}': input.date,
     '{{TITLE}}': input.title,
     '{{SLUG}}': input.slug,
-    '{{JOURNAL_URL}}': `https://wakuwaku-labs.github.io/nagoya-bites/journal/${input.slug}.html`,
+    '{{JOURNAL_URL}}': `https://nagoya-bites.com/journal/${input.slug}.html`,
     '{{NOTE_TITLE}}': sns.note_title || input.title,
     '{{NOTE}}': sns.note_body || '(Note本文)',
     '{{INSTAGRAM}}': igBody,

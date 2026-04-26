@@ -53,7 +53,7 @@ wakuwaku-labs.github.io/nagoya-bites
 「デジタルクリエイター」または「レストラン / グルメ」
 
 ### リンク
-`https://wakuwaku-labs.github.io/nagoya-bites/`
+`https://nagoya-bites.com/`
 
 ---
 
