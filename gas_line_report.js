@@ -49,7 +49,7 @@ const GA4_PROPERTY_ID = '533244445';
 const LINE_CHANNEL_TOKEN = 'YOUR_CHANNEL_ACCESS_TOKEN';  // Messaging APIのチャネルアクセストークン
 const LINE_USER_ID = 'YOUR_LINE_USER_ID';  // あなたのLINE User ID
 const REPORT_EMAIL = '';  // Gmail送信も併用する場合はメールアドレスを設定（空ならLINEのみ）
-const SITE_URL = 'https://wakuwaku-labs.github.io/nagoya-bites/';
+const SITE_URL = 'https://nagoya-bites.com/';
 
 // ─── LINE Messaging API でメッセージ送信 ───
 function sendLineMessage(text) {
@@ -545,7 +545,7 @@ function getDateStr(daysOffset) {
 
 // GitHub Pages に置いた page-names.json を取得（1時間キャッシュ）
 // 店舗1,095件 + 特集12件 + 静的ページ を網羅したマスター対応表
-const PAGE_NAMES_URL = 'https://wakuwaku-labs.github.io/nagoya-bites/page-names.json';
+const PAGE_NAMES_URL = 'https://nagoya-bites.com/page-names.json';
 let PAGE_NAMES_MEMO = null;  // 1回のGAS実行内のメモリキャッシュ
 
 function fetchPageNames() {

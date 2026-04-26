@@ -1105,7 +1105,7 @@ async function main() {
   const featuresDir = path.join(__dirname, 'features');
   const journalDir = path.join(__dirname, 'journal');
   const storesDir = path.join(__dirname, 'stores');
-  const baseUrl = 'https://wakuwaku-labs.github.io/nagoya-bites';
+  const baseUrl = 'https://nagoya-bites.com';
 
   const sitemapUrls = [
     { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'weekly' },

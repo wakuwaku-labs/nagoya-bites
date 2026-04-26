@@ -21,7 +21,7 @@
 | 項目 | 内容 |
 |------|------|
 | サービス名 | NAGOYA BITES |
-| URL | https://wakuwaku-labs.github.io/nagoya-bites/ |
+| URL | https://nagoya-bites.com/ |
 | 内容 | 名古屋の飲食店1100件以上を掲載する発見サイト |
 | 構成 | `index.html` 一枚（Vanilla JS/CSS）+ `features/` 特集記事 |
 | データ源 | Google Sheets → `build.js` → `index.html` 内 `var LOCAL_STORES = [...]` |

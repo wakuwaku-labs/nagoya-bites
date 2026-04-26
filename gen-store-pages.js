@@ -14,7 +14,7 @@ const fs    = require('fs');
 const path  = require('path');
 
 const CSV_URL     = 'https://docs.google.com/spreadsheets/d/1VUk4bRTPoIc7pHywzIJTwZr9WyUX7ioxlZzbxQHsjCQ/export?format=csv&gid=415662614';
-const BASE_URL    = 'https://wakuwaku-labs.github.io/nagoya-bites';
+const BASE_URL    = 'https://nagoya-bites.com';
 const OUT_DIR     = path.join(__dirname, 'stores');
 const SITEMAP_OUT = path.join(__dirname, 'sitemap.xml');
 

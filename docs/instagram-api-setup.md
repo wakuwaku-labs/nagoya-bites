@@ -61,7 +61,7 @@ Phase B（本ドキュメント）: 承認後に Graph API から投稿数を自
 
 **Business Verification** が必要になる場合あり:
 - 法人登記情報（履歴事項全部証明書 等）
-- 事業ウェブサイトURL: `https://wakuwaku-labs.github.io/nagoya-bites/`
+- 事業ウェブサイトURL: `https://nagoya-bites.com/`
 - 事業メールアドレス
 
 ### Step 5. ユースケース記述（App Review Submission）
@@ -71,7 +71,7 @@ Phase B（本ドキュメント）: 承認後に Graph API から投稿数を自
 ```
 Use Case Description:
 ---
-NAGOYA BITES (https://wakuwaku-labs.github.io/nagoya-bites/) は
+NAGOYA BITES (https://nagoya-bites.com/) は
 名古屋市内の飲食店4500件以上を掲載する発見サイトです。
 
 We will use Instagram Hashtag Search API to:

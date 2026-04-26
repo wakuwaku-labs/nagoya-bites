@@ -12,7 +12,7 @@
  *   node scripts/generate_page_names.js
  *
  * GitHub Pages 公開後、GAS からは以下のURLで取得できる：
- *   https://wakuwaku-labs.github.io/nagoya-bites/page-names.json
+ *   https://nagoya-bites.com/page-names.json
  */
 
 const fs   = require('fs');

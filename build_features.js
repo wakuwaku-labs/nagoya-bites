@@ -449,7 +449,7 @@ function escapeHtml(s) {
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-const SITE_BASE_URL = 'https://wakuwaku-labs.github.io/nagoya-bites';
+const SITE_BASE_URL = 'https://nagoya-bites.com';
 
 /** gen-store-pages.js の toSlug と同じロジック。両方で slugs を揃えるため重複定義 */
 function toStoreSlug(store) {
@@ -768,7 +768,7 @@ function extractTitle(html) {
 
 function updateSitemap(stores) {
   const today = new Date().toISOString().slice(0, 10);
-  const baseUrl = 'https://wakuwaku-labs.github.io/nagoya-bites';
+  const baseUrl = 'https://nagoya-bites.com';
 
   // ──────────────────────────────────────────
   // 1. メイン sitemap.xml (URLリスト)

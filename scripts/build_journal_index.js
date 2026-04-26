@@ -17,7 +17,7 @@ const PUBLISHED = path.join(ROOT, 'data', 'journal_published.json');
 const JOURNAL_INDEX = path.join(ROOT, 'journal', 'index.html');
 const FEED = path.join(ROOT, 'journal', 'feed.xml');
 const ATOM_FEED = path.join(ROOT, 'journal', 'feed.atom');
-const SITE_URL = 'https://wakuwaku-labs.github.io/nagoya-bites';
+const SITE_URL = 'https://nagoya-bites.com';
 
 function esc(s) {
   return String(s || '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
