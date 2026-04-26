@@ -115,14 +115,24 @@ function checkJournal(htmlPath, mdPath) {
   }
 
   // 11. ヒーロー画像の存在と品質チェック
+  // art-hero-img（通常の画像）または art-hero-ig（Instagramエンベッド）のどちらかがあればOK
   const hasHeroImg = /class="art-hero-img"/.test(html);
+  const hasHeroIg = /class="art-hero-ig"/.test(html);
+  const hasHero = hasHeroImg || hasHeroIg;
   const heroSrc = (html.match(/class="art-hero-img"[\s\S]*?<img[^>]*src="([^"]+)"/) || [])[1] || '';
   // 失効するLoremflickrキャッシュURL（/cache/resized/）はWARNとして検出
   const hasStaleCache = heroSrc.includes('loremflickr.com/cache/resized/');
-  if (!hasHeroImg) {
-    pass(11, false, '⚠️ ヒーロー画像がありません (art-hero-img が見つからない) — 写真の自動取得が失敗した可能性があります');
-  } else if (hasStaleCache) {
-    pass(11, false, `⚠️ 失効しやすいLoremflickrキャッシュURLが使われています: ${heroSrc.slice(0,80)}... → source URLへ差し替えてください`);
+  // OG imageのloremflickrも検出
+  const ogImageSrc = (html.match(/<meta property="og:image" content="([^"]+)"/) || [])[1] || '';
+  const hasStaleOgCache = ogImageSrc.includes('loremflickr.com/cache/resized/');
+  if (!hasHero) {
+    pass(11, false, '⚠️ ヒーロー画像がありません (art-hero-img / art-hero-ig が見つからない) — 写真の自動取得が失敗した可能性があります');
+  } else if (hasStaleCache || hasStaleOgCache) {
+    const staleUrl = hasStaleCache ? heroSrc : ogImageSrc;
+    pass(11, false, `⚠️ 失効しやすいLoremflickrキャッシュURLが使われています: ${staleUrl.slice(0,80)}... → source URLへ差し替えてください`);
+  } else if (hasHeroIg) {
+    const igPermalink = (html.match(/data-instgrm-permalink="([^"]+)"/) || [])[1] || '';
+    pass(11, true, `Instagramエンベッドあり: ${igPermalink.slice(0, 80)}...`);
   } else {
     pass(11, true, `ヒーロー画像OK: ${heroSrc.slice(0, 80)}...`);
   }
