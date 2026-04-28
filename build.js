@@ -365,10 +365,19 @@ function normalizePrice(raw) {
   return '';
 }
 
+// Instagram 投稿/リール URL は厳密パターン一致のみ採用
+//   https://www.instagram.com/<account>/(p|reel)/<shortcode>/
+// fetch_ig_posts.js が Sheets S列 に書き込むフォーマットと一致。
+// index.html 側は /p/ または /reel/ を含むかで埋め込み可否を判定するため、
+// プロフィールトップやハッシュタグページのような無関係 URL を除外する。
+const IG_POST_URL_RE = /^https:\/\/www\.instagram\.com\/[A-Za-z0-9_.]+\/(p|reel)\/[A-Za-z0-9_-]+\/?(\?.*)?$/;
+
 function sanitizeStore(s) {
-  // Instagram 関連は検証不能なため全件クリア
+  // Instagram 公式アカウント URL は instagram_resolved.json から再注入するため一旦クリア
   s['Instagram'] = '';
-  s['Instagram投稿URL'] = '';
+  // Instagram 投稿/リール URL は形式チェックを通ったものだけ残す
+  const igPost = (s['Instagram投稿URL'] || '').trim();
+  s['Instagram投稿URL'] = IG_POST_URL_RE.test(igPost) ? igPost.replace(/\?.*$/, '') : '';
   s['内観写真URL'] = '';
   s['料理写真URL1'] = '';
   s['料理写真URL2'] = '';
@@ -386,16 +395,15 @@ function sanitizeStore(s) {
 // ────────────────────────────────────────────────────
 // 以下のキーは LOCAL_STORES に含める必要がないため除外する:
 //   - TikTok検索 / X検索 / Instagram検索: ランタイムで tiktokSearchUrl(r) 等で再生成される
-//   - Instagram投稿URL / 内観写真URL / 料理写真URL1 / 料理写真URL2:
-//     sanitizeStore() により全件 '' にクリアされている
+//   - 内観写真URL / 料理写真URL1 / 料理写真URL2: sanitizeStore() で全件クリア
 //   - 公開フラグ: build時点で FALSE 除外済み
-// ※ Instagram / 食べログURL は slimStoreForOutput 後に instagram_resolved.json /
-//   tabelog_resolved.json から復元するため OMIT_KEYS には含めない
+// ※ Instagram / 食べログURL / Instagram投稿URL は出力対象。
+//   - Instagram は instagram_resolved.json からマージされる
+//   - Instagram投稿URL は sanitizeStore() で /p/・/reel/ 形式のみ通過
 // 併せて、値が空文字・null・undefined のキーも出力から除外する（runtimeは
 // `r['foo'] || ''` パターンで参照しているため undefined でも同じ挙動になる）
 const STORE_OUTPUT_OMIT_KEYS = new Set([
   'TikTok検索', 'X検索', 'Instagram検索',
-  'Instagram投稿URL',
   '内観写真URL', '料理写真URL1', '料理写真URL2',
   '公開フラグ'
 ]);
