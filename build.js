@@ -1100,11 +1100,27 @@ async function main() {
     console.warn('generate_page_names.js の実行に失敗しました:', e.message);
   }
 
+  // 3b. stores/ の古いファイルを削除（現在の店舗リストに存在しないファイルを除去）
+  //     ビルドのたびに不要な幽霊ページが蓄積しないよう自動クリーンアップ
+  const storesDir = path.join(__dirname, 'stores');
+  if (fs.existsSync(storesDir)) {
+    const currentHpIds = new Set(stores.map(s => s['ホットペッパーID']).filter(Boolean));
+    const existingFiles = fs.readdirSync(storesDir).filter(f => f.endsWith('.html') && f !== 'index.html');
+    let removed = 0;
+    for (const f of existingFiles) {
+      const id = f.replace(/\.html$/, '');
+      if (!currentHpIds.has(id)) {
+        fs.unlinkSync(path.join(storesDir, f));
+        removed++;
+      }
+    }
+    if (removed > 0) console.log(`stores/ クリーンアップ: ${removed}件の古いファイルを削除`);
+  }
+
   // 4. sitemap.xml を更新
   //    トップ + 静的ページ + features/ 全件 + stores/ 全件 を列挙
   const featuresDir = path.join(__dirname, 'features');
   const journalDir = path.join(__dirname, 'journal');
-  const storesDir = path.join(__dirname, 'stores');
   const baseUrl = 'https://nagoya-bites.com';
 
   const sitemapUrls = [
