@@ -27,7 +27,25 @@
  *   - 「チャネル基本設定」タブ → 「あなたのユーザーID」に表示されている
  *   → 下の LINE_USER_ID に設定
  *
- * 【STEP 2】Google Apps Script にデプロイ
+ * 【STEP 2】自分の閲覧をレポートから除外する（オーナー除外）
+ *
+ *   ① サイト初回アクセス（1回だけやれば以後ずっと有効）
+ *      https://nagoya-bites.com/?nb_owner=1
+ *      にアクセスするだけ。localStorage に記録され、
+ *      以後そのブラウザからのアクセスはGA4に「internal」として送信される。
+ *
+ *   ② GA4 側でフィルタを作成（管理画面で1回だけ設定）
+ *      https://analytics.google.com/ → 管理（歯車）→ データ設定 → データフィルタ
+ *      → 「フィルタを作成」→ 「内部トラフィック」→
+ *         フィルタ名: オーナー除外
+ *         フィルタ操作: 除外
+ *         パラメータ名: traffic_type  /  値: internal
+ *      → 「有効」に設定して保存
+ *
+ *   ③ 設定後は nagoya-bites.com/?nb_owner=1 にアクセスした
+ *      ブラウザからの閲覧がレポートから消える
+ *
+ * 【STEP 3】Google Apps Script にデプロイ
  *   1. https://script.google.com/ で新しいプロジェクトを作成
  *   2. プロジェクト名を「NAGOYA BITES レポート」に変更
  *   3. このファイルの内容をすべてコピー＆ペースト

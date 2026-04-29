@@ -24,7 +24,8 @@ const FEATURES_DIR = path.join(ROOT, 'features');
 const JOURNAL_DIR  = path.join(ROOT, 'journal');
 const OUT_PATH     = path.join(ROOT, 'page-names.json');
 
-const BASE = '/nagoya-bites';
+// 独自ドメイン nagoya-bites.com に移行済み → パスはルート始まり
+const BASE = '';
 
 const RE_TITLE = /<title>([^<]+?)<\/title>/;
 
@@ -119,9 +120,9 @@ function main() {
     }
   }
 
-  // ローカルプレビュー・誤検出マーカー（開発中に出るやつ）
-  map['/']            = '🧪 ローカル / (開発時のプレビュー)';
-  map['/index.html']  = '🧪 ローカル /index.html (開発時のプレビュー)';
+  // 旧 GitHub Pages サブパス (/nagoya-bites/...) も念のため残す
+  map['/nagoya-bites/']           = '🏠 トップページ（旧URL）';
+  map['/nagoya-bites/index.html'] = '🏠 トップページ（旧URL）';
 
   fs.writeFileSync(OUT_PATH, JSON.stringify(map, null, 2), 'utf8');
   const entries = Object.keys(map).length;

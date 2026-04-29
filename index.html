@@ -3,12 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <!-- Google Analytics 4 -->
-<!-- GA4_MEASUREMENT_ID を取得したら下の G-3LCZNGZPWJ を差し替える -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
 <script>
-window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
-// カスタムイベント送信ヘルパー
-function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+// ─── オーナー除外: ?nb_owner=1 を付けてアクセスすると以降の閲覧がGA4から除外される ───
+(function(){
+  var p=new URLSearchParams(location.search);
+  if(p.get('nb_owner')==='1'){localStorage.setItem('nb_internal','1');history.replaceState(null,'',location.pathname);}
+  if(localStorage.getItem('nb_internal')==='1'){
+    // traffic_type=internal にしておくとGA4側フィルタで除外できる
+    gtag('js',new Date());gtag('config','G-3LCZNGZPWJ',{traffic_type:'internal'});
+  } else {
+    gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
+  }
+})();
+// カスタムイベント送信ヘルパー（内部トラフィック時は何もしない）
+function trackEvent(name,params){if(localStorage.getItem('nb_internal')==='1')return;if(typeof gtag==='function')gtag('event',name,params||{});}
 // outbound_click: 外部リンククリックを自動計測（全ページ共通）
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
