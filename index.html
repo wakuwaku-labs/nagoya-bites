@@ -111,6 +111,14 @@ nav.open{right:0;}
 /* ── ACTIVE FILTER CHIPS ── */
 .active-chips{display:flex;flex-wrap:wrap;gap:.35rem;padding:.5rem 1.5rem;background:rgba(247,245,241,.97);border-bottom:1px solid var(--border);}
 .active-chips:empty{display:none;}
+/* MAGAZINE MODE — トップは検索/フィルター操作が無いとグリッド系を出さない */
+body:not(.search-active) #sticky-search,
+body:not(.search-active) #active-chips,
+body:not(.search-active) #filter-toggle-wrap,
+body:not(.search-active) #filter-panel,
+body:not(.search-active) #results-block,
+body:not(.search-active) #grid,
+body:not(.search-active) #pagination{display:none !important;}
 .chip{display:inline-flex;align-items:center;gap:.3rem;background:rgba(122,92,16,.12);border:1px solid rgba(122,92,16,.35);color:var(--gold);font-size:.62rem;letter-spacing:.06em;padding:.22rem .6rem;border-radius:2px;cursor:pointer;transition:all .15s;}
 .chip:hover{background:rgba(122,92,16,.22);}
 .chip-x{font-size:.7rem;opacity:.7;line-height:1;}
@@ -833,7 +841,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <section class="hero">
   <div class="eyebrow">名古屋専門 × 飲食のプロが選ぶ</div>
   <h1>飲食の<em>プロ</em>が、<br>名古屋<em>だけ</em>を<br><span class="fade">深く選んだ。</span></h1>
-  <p class="hero-sub">他の街は扱いません。<br>名古屋で8ブランドを自ら運営する現役飲食店経営者が、<br>業界の内側から本当に価値ある店だけを厳選しています。<br>Instagram・ホットペッパー・食べログ・TikTokをワンクリックで。</p>
+  <p class="hero-sub">名古屋で8ブランドを運営する現役飲食店経営者が、<br>業界の内側から本当に価値ある店だけを厳選しています。</p>
   <div class="search-wrap">
     <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
     <button onclick="doSearch()" aria-label="検索">Search</button>
@@ -851,24 +859,12 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 
 <!-- 権威性バー -->
 <div class="authority-bar">
-  <span class="auth-item">📍 <strong>名古屋グルメ</strong> <span id="auth-total">4,559</span>店掲載</span>
-  <span class="auth-sep">|</span>
-  <span class="auth-item"><span class="auth-icon">👨‍🍳</span><strong>現役飲食店経営者</strong>が自ら選定</span>
-  <span class="auth-sep">|</span>
-  <span class="auth-item"><strong>8ブランド</strong>運営実績</span>
-  <span class="auth-sep">|</span>
+  <span class="auth-item"><strong>名古屋グルメ</strong> <span id="auth-total">4,559</span>店掲載</span>
+  <span class="auth-sep">·</span>
+  <span class="auth-item"><strong>現役飲食店経営者</strong>が自ら選定</span>
+  <span class="auth-sep">·</span>
   <span class="auth-item">広告なし・業界目線</span>
 </div>
-
-<!-- 名古屋グルメ完全ガイド ハブ導線 -->
-<a href="features/nagoya-gourmet-guide.html" class="gourmet-hub-banner" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;max-width:1100px;margin:1rem auto;padding:1rem 1.3rem;background:linear-gradient(135deg,#fbf8f0 0%,#f2ebd9 100%);border:1px solid rgba(122,92,16,.35);border-left:4px solid var(--gold);border-radius:4px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .15s;">
-  <div style="flex:1;min-width:0;">
-    <div style="font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.3rem;">Complete Guide · 2026年最新版</div>
-    <div style="font-weight:700;font-size:.98rem;color:var(--white);line-height:1.4;margin-bottom:.2rem;">名古屋グルメ完全ガイド — エリア・ジャンル・シーン別の決定版</div>
-    <div style="font-size:.72rem;color:var(--muted);line-height:1.6;">ひつまぶし・味噌煮込みうどんから、名駅/栄/大須/伏見の使い分け、宴会・接待・デートまで、現役飲食店経営者が4,559軒から網羅解説</div>
-  </div>
-  <div style="font-family:'DM Mono',monospace;font-size:.7rem;color:var(--gold);white-space:nowrap;">読む →</div>
-</a>
 
 <!-- ランキングセクション -->
 <section class="ranking-section" id="ranking-section" style="display:none">
@@ -965,38 +961,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
-    <a class="feature-card" href="features/birthday.html">
-      <div class="feature-card-icon">🎂</div>
-      <div class="feature-card-body">
-        <div class="feature-card-title">誕生日・記念日ディナー10選</div>
-        <div class="feature-card-sub">サプライズ・特別な夜に</div>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/date.html">
-      <div class="feature-card-icon">💑</div>
-      <div class="feature-card-body">
-        <div class="feature-card-title">デートディナーおすすめ10選</div>
-        <div class="feature-card-sub">雰囲気抜群・個室あり</div>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/girls-party.html">
-      <div class="feature-card-icon">✨</div>
-      <div class="feature-card-body">
-        <div class="feature-card-title">女子会おすすめ10選</div>
-        <div class="feature-card-sub">おしゃれ・映え・個室</div>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/large-group.html">
-      <div class="feature-card-icon">👥</div>
-      <div class="feature-card-body">
-        <div class="feature-card-title">大人数宴会20人以上10選</div>
-        <div class="feature-card-sub">貸切・飲み放題対応</div>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
     <a class="feature-card" href="features/meieki.html">
       <div class="feature-card-icon">🚄</div>
       <div class="feature-card-body">
@@ -1021,13 +985,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   <input id="si2" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
   <button class="geo-btn" id="geo-btn" onclick="geoSearch()" aria-label="現在地から探す">📍 現在地</button>
   <button class="sticky-search-btn" onclick="doSearch()" aria-label="検索">検索</button>
-  <div class="sticky-suggest">
-    <span class="suggest-label">人気:</span>
-    <span class="suggest-pill" onclick="suggestSearch('個室')">個室</span>
-    <span class="suggest-pill" onclick="suggestSearch('焼肉')">焼肉</span>
-    <span class="suggest-pill" onclick="suggestSearch('デート')">デート</span>
-    <span class="suggest-pill" onclick="suggestSearch('名古屋駅')">名駅</span>
-  </div>
 </div>
 <div class="active-chips" id="active-chips"></div>
 
@@ -1061,29 +1018,30 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 
 </div><!-- /filter-panel -->
 
-<div class="sec-head">
-  <h2>掲載<em>店舗</em></h2>
-  <span class="cnt" id="cnt">-- Restaurants</span>
-</div>
+<div class="results-block" id="results-block">
+  <div class="sec-head">
+    <h2>掲載<em>店舗</em></h2>
+    <span class="cnt" id="cnt">-- Restaurants</span>
+  </div>
 
-<div class="hpc">
-  <span>Powered by</span>
-  <a href="https://webservice.recruit.co.jp/" target="_blank">ホットペッパーグルメ Webサービス</a>
-</div>
-
-<div class="sort-bar" id="sort-bar">
-  <label for="sort-select">並び替え</label>
-  <select class="sort-select" id="sort-select" onchange="applySort()">
-    <option value="recommend">おすすめ順</option>
-    <option value="trend-desc">🔥 トレンド順</option>
-    <option value="rating-desc">Google評価順（高い順）</option>
-    <option value="price-asc">価格帯順（安い順）</option>
-    <option value="price-desc">価格帯順（高い順）</option>
-  </select>
-  <button class="notify-btn" id="notify-btn" onclick="showNotifyToast()">🔔 この条件で通知</button>
-  <div class="view-toggle" id="view-toggle">
-    <button id="vt-grid" class="active" onclick="setViewMode('grid')" aria-label="グリッド表示" title="グリッド表示"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="6" height="6" rx="1"/><rect x="8" y="0" width="6" height="6" rx="1"/><rect x="0" y="8" width="6" height="6" rx="1"/><rect x="8" y="8" width="6" height="6" rx="1"/></svg></button>
-    <button id="vt-list" onclick="setViewMode('list')" aria-label="リスト表示" title="リスト表示"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="14" height="3" rx="1"/><rect x="0" y="5.5" width="14" height="3" rx="1"/><rect x="0" y="11" width="14" height="3" rx="1"/></svg></button>
+  <div class="sort-bar" id="sort-bar">
+    <label for="sort-select">並び替え</label>
+    <select class="sort-select" id="sort-select" onchange="applySort()">
+      <option value="recommend">おすすめ順</option>
+      <option value="trend-desc">🔥 トレンド順</option>
+      <option value="rating-desc">Google評価順（高い順）</option>
+      <option value="price-asc">価格帯順（安い順）</option>
+      <option value="price-desc">価格帯順（高い順）</option>
+    </select>
+    <button class="notify-btn" id="notify-btn" onclick="showNotifyToast()">🔔 この条件で通知</button>
+    <div class="view-toggle" id="view-toggle">
+      <button id="vt-grid" class="active" onclick="setViewMode('grid')" aria-label="グリッド表示" title="グリッド表示"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="6" height="6" rx="1"/><rect x="8" y="0" width="6" height="6" rx="1"/><rect x="0" y="8" width="6" height="6" rx="1"/><rect x="8" y="8" width="6" height="6" rx="1"/></svg></button>
+      <button id="vt-list" onclick="setViewMode('list')" aria-label="リスト表示" title="リスト表示"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="14" height="3" rx="1"/><rect x="0" y="5.5" width="14" height="3" rx="1"/><rect x="0" y="11" width="14" height="3" rx="1"/></svg></button>
+    </div>
+    <div class="hpc">
+      <span>Powered by</span>
+      <a href="https://webservice.recruit.co.jp/" target="_blank">ホットペッパーグルメ Webサービス</a>
+    </div>
   </div>
 </div>
 
@@ -1933,7 +1891,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 </div>
 
 <div class="mobile-cta-bar" id="mobile-cta-bar">
-  <input class="cta-search" type="text" placeholder="店名・エリア・ジャンルで検索…" onfocus="window.scrollTo({top:0,behavior:'smooth'});document.getElementById('si2').focus();">
+  <input class="cta-search" type="text" placeholder="店名・エリア・ジャンルで検索…" onfocus="window.scrollTo({top:0,behavior:'smooth'});var t=document.body.classList.contains('search-active')?document.getElementById('si2'):document.getElementById('si');if(t)t.focus();">
   <button class="cta-filter" onclick="toggleFilterPanel();window.scrollTo({top:document.getElementById('filter-toggle-wrap').offsetTop-60,behavior:'smooth'});">絞り込み</button>
 </div>
 
@@ -2950,6 +2908,14 @@ function applyFilters() {
   renderGrid(FILTERED);
   pushHash();
   updateFilterUI();
+  // MAGAZINE MODE — 検索/フィルターのいずれかが有効ならグリッド系を表示
+  var hasActiveFilter = (q !== '')
+    || (pref !== '全国' && pref !== 'all')
+    || (ACTIVE_WARD !== 'all')
+    || (genre !== 'All')
+    || (ACTIVE_TAGS.length > 0)
+    || (!isNaN(capNum) && capNum > 0);
+  document.body.classList.toggle('search-active', hasActiveFilter);
 }
 
 // ================================================================
