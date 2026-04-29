@@ -111,11 +111,8 @@ nav.open{right:0;}
 /* ── ACTIVE FILTER CHIPS ── */
 .active-chips{display:flex;flex-wrap:wrap;gap:.35rem;padding:.5rem 1.5rem;background:rgba(247,245,241,.97);border-bottom:1px solid var(--border);}
 .active-chips:empty{display:none;}
-/* MAGAZINE MODE — トップは検索/フィルター操作が無いとグリッド系を出さない */
+/* MAGAZINE MODE — トップは検索/フィルター操作が無いとグリッド系を出さない（フィルターUIは常時表示） */
 body:not(.search-active) #sticky-search,
-body:not(.search-active) #active-chips,
-body:not(.search-active) #filter-toggle-wrap,
-body:not(.search-active) #filter-panel,
 body:not(.search-active) #results-block,
 body:not(.search-active) #grid,
 body:not(.search-active) #pagination{display:none !important;}
@@ -866,6 +863,38 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   <span class="auth-item">広告なし・業界目線</span>
 </div>
 
+<!-- アクティブフィルターチップ -->
+<div class="active-chips" id="active-chips"></div>
+
+<!-- フィルター折りたたみ（検索欄直下のエントリポイント） -->
+<div class="filter-toggle-wrap" id="filter-toggle-wrap">
+  <button class="filter-toggle-btn" id="filter-toggle-btn" onclick="toggleFilterPanel()" aria-expanded="false" aria-controls="filter-panel">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 3h12M3 7h8M5 11h4"/></svg>
+    絞り込み
+    <span class="filter-badge" id="filter-badge" style="display:none">0</span>
+  </button>
+  <button class="clear-all-btn" id="clear-all-btn" onclick="clearAllFilters()" style="display:none" aria-label="すべてのフィルターをクリア">すべてリセット</button>
+</div>
+
+<!-- 折りたたみ式フィルターパネル -->
+<div class="filter-panel" id="filter-panel">
+<div class="pref-tabs" id="pref-tabs">
+  <div class="pt on" data-pref="all">全国</div>
+</div>
+
+<div class="area-filter-bar" id="area-filter-bar"></div>
+
+<div class="cap-tabs" id="cap-tabs"></div>
+
+<div class="filter-bar">
+  <span class="fl">Genre</span>
+  <div class="ft on" data-f="all">All</div>
+</div>
+
+<div class="tag-filter" id="tag-filter"></div>
+
+</div><!-- /filter-panel -->
+
 <!-- ランキングセクション -->
 <section class="ranking-section" id="ranking-section" style="display:none">
   <div class="ranking-header">
@@ -986,37 +1015,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   <button class="geo-btn" id="geo-btn" onclick="geoSearch()" aria-label="現在地から探す">📍 現在地</button>
   <button class="sticky-search-btn" onclick="doSearch()" aria-label="検索">検索</button>
 </div>
-<div class="active-chips" id="active-chips"></div>
-
-<!-- フィルター折りたたみ -->
-<div class="filter-toggle-wrap" id="filter-toggle-wrap">
-  <button class="filter-toggle-btn" id="filter-toggle-btn" onclick="toggleFilterPanel()" aria-expanded="false" aria-controls="filter-panel">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 3h12M3 7h8M5 11h4"/></svg>
-    絞り込み
-    <span class="filter-badge" id="filter-badge" style="display:none">0</span>
-  </button>
-  <button class="clear-all-btn" id="clear-all-btn" onclick="clearAllFilters()" style="display:none" aria-label="すべてのフィルターをクリア">すべてリセット</button>
-</div>
-
-<!-- 折りたたみ式フィルターパネル -->
-<div class="filter-panel" id="filter-panel">
-<!-- 都道府県タブ（スプレッドシートのデータから動的生成） -->
-<div class="pref-tabs" id="pref-tabs">
-  <div class="pt on" data-pref="all">全国</div>
-</div>
-
-<div class="area-filter-bar" id="area-filter-bar"></div>
-
-<div class="cap-tabs" id="cap-tabs"></div>
-
-<div class="filter-bar">
-  <span class="fl">Genre</span>
-  <div class="ft on" data-f="all">All</div>
-</div>
-
-<div class="tag-filter" id="tag-filter"></div>
-
-</div><!-- /filter-panel -->
 
 <div class="results-block" id="results-block">
   <div class="sec-head">
