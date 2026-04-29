@@ -110,6 +110,8 @@ function sendWeeklyReport() {
 
 // ─── GA4 Data API ───
 function fetchGA4Report(startDate, endDate) {
+  // 独自ドメイン nagoya-bites.com 移行後はパスが "/" 始まりになる。
+  // localhost / staging を除外したい場合は hostName で絞る（pagePathの prefix では落ちない）
   const request = AnalyticsData.Properties.runReport({
     dateRanges: [{ startDate: startDate, endDate: endDate }],
     metrics: [
@@ -121,15 +123,12 @@ function fetchGA4Report(startDate, endDate) {
       { name: 'eventCount' },
     ],
     dimensions: [{ name: 'pagePath' }],
-    // /nagoya-bites/ プレフィックス付きのページだけを対象にする
-    // → localhost プレビュー (例: "/", "/features/", "/index.html") を
-    //   集計から完全に除外。totals もこの条件下で再計算される
     dimensionFilter: {
       filter: {
-        fieldName: 'pagePath',
+        fieldName: 'hostName',
         stringFilter: {
-          matchType: 'BEGINS_WITH',
-          value: '/nagoya-bites/',
+          matchType: 'EXACT',
+          value: 'nagoya-bites.com',
         },
       },
     },
@@ -138,10 +137,19 @@ function fetchGA4Report(startDate, endDate) {
     limit: 20,
   }, 'properties/' + GA4_PROPERTY_ID);
 
+  // 共通の host フィルタ（本番ドメインのみ集計）
+  const HOST_FILTER = {
+    filter: {
+      fieldName: 'hostName',
+      stringFilter: { matchType: 'EXACT', value: 'nagoya-bites.com' },
+    },
+  };
+
   const eventRequest = AnalyticsData.Properties.runReport({
     dateRanges: [{ startDate: startDate, endDate: endDate }],
     metrics: [{ name: 'eventCount' }],
     dimensions: [{ name: 'eventName' }],
+    dimensionFilter: HOST_FILTER,
     orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
     limit: 30,
   }, 'properties/' + GA4_PROPERTY_ID);
@@ -150,6 +158,7 @@ function fetchGA4Report(startDate, endDate) {
     dateRanges: [{ startDate: startDate, endDate: endDate }],
     metrics: [{ name: 'activeUsers' }, { name: 'sessions' }],
     dimensions: [{ name: 'sessionSource' }, { name: 'sessionMedium' }],
+    dimensionFilter: HOST_FILTER,
     orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
     limit: 10,
   }, 'properties/' + GA4_PROPERTY_ID);
@@ -158,6 +167,7 @@ function fetchGA4Report(startDate, endDate) {
     dateRanges: [{ startDate: startDate, endDate: endDate }],
     metrics: [{ name: 'activeUsers' }],
     dimensions: [{ name: 'deviceCategory' }],
+    dimensionFilter: HOST_FILTER,
   }, 'properties/' + GA4_PROPERTY_ID);
 
   return {
@@ -583,13 +593,20 @@ function pagePathToName(path) {
     if (names[alt]) return names[alt];
   }
 
-  // フォールバック2: 店舗ページ（マスター未取得時）
-  const storeMatch = /^\/nagoya-bites\/stores\/(.+)\.html$/.exec(path);
+  // フォールバック2: 店舗ページ（マスター未取得時）— ルート / と /nagoya-bites/ 両対応
+  const storeMatch = /^\/(?:nagoya-bites\/)?stores\/(.+)\.html$/.exec(path);
   if (storeMatch) return '🍽 店舗ID: ' + storeMatch[1];
 
   // フォールバック3: 特集ページ（マスター未取得時）
-  const featureMatch = /^\/nagoya-bites\/features\/(.+)\.html$/.exec(path);
+  const featureMatch = /^\/(?:nagoya-bites\/)?features\/(.+)\.html$/.exec(path);
   if (featureMatch) return '📰 特集: ' + featureMatch[1];
+
+  // フォールバック4: ジャーナル
+  const journalMatch = /^\/(?:nagoya-bites\/)?journal\/(.+)\.html$/.exec(path);
+  if (journalMatch) return '📓 ジャーナル: ' + journalMatch[1];
+
+  // フォールバック5: トップ
+  if (path === '/' || path === '/index.html') return '🏠 トップページ';
 
   // その他：パスをそのまま
   return path;
