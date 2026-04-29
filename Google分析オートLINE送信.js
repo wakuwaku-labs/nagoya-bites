@@ -165,7 +165,7 @@ function parseReport(response) {
 }
 
 function parseTotals(response) {
-  if (!response.totals || !response.totals[0]) return {};
+  if (!response.totals || !response.totals[0] || !response.totals[0].metricValues) return {};
   const vals = response.totals[0].metricValues.map(m => m.value);
   return {
     users: parseInt(vals[0]) || 0,
