@@ -444,21 +444,20 @@ footer{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));}
 .pwa-ios-arrow-down{width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid #1a1a1a;position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);}
 #pwa-banner-ios .dismiss{background:transparent;color:rgba(247,245,241,.4);border:none;padding:.3rem 1rem;font-size:.52rem;cursor:pointer;letter-spacing:.1em;}
 /* ── FEATURE STRIP ── */
-.feature-strip{padding:.75rem 1.5rem;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
-.feature-strip-label{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.22em;color:var(--dim);text-transform:uppercase;white-space:nowrap;}
-.feature-strip-cards{display:flex;gap:.85rem;flex-wrap:wrap;flex:1;}
-.feature-card{display:flex;align-items:center;gap:.9rem;padding:.85rem 1.15rem;background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;text-decoration:none;transition:transform .3s ease,box-shadow .3s ease,border-color .3s;flex:1;min-width:280px;}
+.feature-strip{padding:1.2rem 1.5rem;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;flex-direction:column;align-items:stretch;gap:.9rem;}
+.feature-strip-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.22em;color:var(--dim);text-transform:uppercase;white-space:nowrap;}
+.feature-strip-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;width:100%;}
+.feature-card{display:flex;flex-direction:column;background:#fff;border:0.5px solid #D3D1C7;border-radius:8px;text-decoration:none;transition:transform .3s ease,box-shadow .3s ease,border-color .3s;overflow:hidden;}
 .feature-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(184,84,31,.16),0 1px 3px rgba(0,0,0,.06);border-color:var(--ember);}
 .feature-card-icon{font-size:1.5rem;line-height:1;flex-shrink:0;transition:transform .3s ease;}
 .feature-card:hover .feature-card-icon{transform:scale(1.12);}
-.feature-card-thumb{width:72px;height:72px;object-fit:cover;border-radius:6px;flex-shrink:0;display:block;background:#f0ede4;transition:transform .3s ease;}
-.feature-card:hover .feature-card-thumb{transform:scale(1.06);}
-.feature-card-body{flex:1;}
-.feature-card-title{font-size:.95rem;font-weight:600;color:var(--white);line-height:1.35;}
-.feature-card-sub{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:var(--dim);margin-top:.3rem;}
-.feature-card-arrow{font-size:.95rem;color:var(--gold);flex-shrink:0;transition:transform .3s ease,color .3s;}
-.feature-card:hover .feature-card-arrow{transform:translateX(3px);color:var(--ember);}
-@media(max-width:640px){.feature-strip{padding:.7rem 1rem;gap:.55rem;}.feature-card{min-width:calc(50% - .3rem);padding:.6rem .75rem;gap:.65rem;}.feature-card-thumb{width:56px;height:56px;}.feature-card-title{font-size:.82rem;}.feature-card-sub{font-size:.55rem;}}
+.feature-card-thumb{width:100%;height:160px;object-fit:cover;display:block;background:#f0ede4;transition:transform .5s ease;}
+.feature-card:hover .feature-card-thumb{transform:scale(1.04);}
+.feature-card-body{padding:.9rem 1.05rem 1.05rem;display:flex;flex-direction:column;gap:.3rem;flex:1;}
+.feature-card-title{font-size:1rem;font-weight:600;color:var(--text);line-height:1.4;}
+.feature-card-sub{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:var(--dim);}
+.feature-card-arrow{display:none;}
+@media(max-width:640px){.feature-strip{padding:.9rem 1rem;gap:.7rem;}.feature-strip-cards{grid-template-columns:repeat(2,1fr);gap:.7rem;}.feature-card-thumb{height:120px;}.feature-card-body{padding:.7rem .8rem .85rem;}.feature-card-title{font-size:.85rem;}.feature-card-sub{font-size:.55rem;}}
 /* ── LATEST JOURNAL (最新の日次ジャーナル3件) ── */
 .latest-journal-section{padding:1.2rem 1.5rem;background:var(--bg);border-bottom:1px solid var(--border);}
 .latest-journal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;max-width:1100px;margin-left:auto;margin-right:auto;}
@@ -530,7 +529,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .sbtn-copy:hover{color:var(--gold);border-color:rgba(122,92,16,.4);}
 .sbtn-copy.copied{color:var(--gold);border-color:var(--gold);background:rgba(122,92,16,.08);}
 /* ── SEASONAL BADGE ── */
-.feature-card-season{position:absolute;top:-.35rem;right:-.35rem;background:var(--gold);color:var(--bg);font-family:'DM Mono',monospace;font-size:.46rem;letter-spacing:.08em;padding:.15rem .45rem;border-radius:2px;white-space:nowrap;}
+.feature-card-season{position:absolute;top:.55rem;right:.55rem;background:var(--gold);color:var(--bg);font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.08em;padding:.22rem .55rem;border-radius:3px;white-space:nowrap;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,.18);}
 .feature-card{position:relative;}
 
 /* ── SORT BAR ── */
