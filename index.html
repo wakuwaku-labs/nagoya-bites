@@ -446,17 +446,19 @@ footer{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));}
 /* ── FEATURE STRIP ── */
 .feature-strip{padding:.75rem 1.5rem;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
 .feature-strip-label{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.22em;color:var(--dim);text-transform:uppercase;white-space:nowrap;}
-.feature-strip-cards{display:flex;gap:.6rem;flex-wrap:wrap;flex:1;}
-.feature-card{display:flex;align-items:center;gap:.6rem;padding:.5rem .9rem;background:#fff;border:0.5px solid #D3D1C7;border-radius:4px;text-decoration:none;transition:transform .3s ease,box-shadow .3s ease,border-color .3s;flex:1;min-width:200px;}
+.feature-strip-cards{display:flex;gap:.85rem;flex-wrap:wrap;flex:1;}
+.feature-card{display:flex;align-items:center;gap:.9rem;padding:.85rem 1.15rem;background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;text-decoration:none;transition:transform .3s ease,box-shadow .3s ease,border-color .3s;flex:1;min-width:280px;}
 .feature-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(184,84,31,.16),0 1px 3px rgba(0,0,0,.06);border-color:var(--ember);}
-.feature-card-icon{font-size:1.1rem;line-height:1;flex-shrink:0;transition:transform .3s ease;}
+.feature-card-icon{font-size:1.5rem;line-height:1;flex-shrink:0;transition:transform .3s ease;}
 .feature-card:hover .feature-card-icon{transform:scale(1.12);}
+.feature-card-thumb{width:72px;height:72px;object-fit:cover;border-radius:6px;flex-shrink:0;display:block;background:#f0ede4;transition:transform .3s ease;}
+.feature-card:hover .feature-card-thumb{transform:scale(1.06);}
 .feature-card-body{flex:1;}
-.feature-card-title{font-size:.75rem;font-weight:600;color:var(--white);line-height:1.3;}
-.feature-card-sub{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.06em;color:var(--dim);margin-top:.15rem;}
-.feature-card-arrow{font-size:.7rem;color:var(--gold);flex-shrink:0;transition:transform .3s ease,color .3s;}
+.feature-card-title{font-size:.95rem;font-weight:600;color:var(--white);line-height:1.35;}
+.feature-card-sub{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:var(--dim);margin-top:.3rem;}
+.feature-card-arrow{font-size:.95rem;color:var(--gold);flex-shrink:0;transition:transform .3s ease,color .3s;}
 .feature-card:hover .feature-card-arrow{transform:translateX(3px);color:var(--ember);}
-@media(max-width:640px){.feature-strip{padding:.6rem 1rem;gap:.5rem;}.feature-card{min-width:calc(50% - .3rem);padding:.45rem .7rem;}.feature-card-title{font-size:.7rem;}}
+@media(max-width:640px){.feature-strip{padding:.7rem 1rem;gap:.55rem;}.feature-card{min-width:calc(50% - .3rem);padding:.6rem .75rem;gap:.65rem;}.feature-card-thumb{width:56px;height:56px;}.feature-card-title{font-size:.82rem;}.feature-card-sub{font-size:.55rem;}}
 /* ── LATEST JOURNAL (最新の日次ジャーナル3件) ── */
 .latest-journal-section{padding:1.2rem 1.5rem;background:var(--bg);border-bottom:1px solid var(--border);}
 .latest-journal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;max-width:1100px;margin-left:auto;margin-right:auto;}
@@ -985,7 +987,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   <div class="feature-strip-cards">
     <a class="feature-card" href="features/gw-2026.html">
       <span class="feature-card-season">5/3〜5/6</span>
-      <div class="feature-card-icon">🎏</div>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/09/39/P012150939/P012150939_238.jpg" alt="" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">GW 2026・連休おすすめグルメ12選</div>
         <div class="feature-card-sub">家族・帰省・デートに</div>
@@ -994,7 +996,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
     </a>
     <a class="feature-card" href="features/spring-terrace.html">
       <span class="feature-card-season">春限定</span>
-      <div class="feature-card-icon">🌸</div>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/69/97/P042136997/P042136997_480.jpg" alt="" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">春テラス・屋外グルメ10選</div>
         <div class="feature-card-sub">ビアガーデン・ルーフトップ</div>
@@ -1003,7 +1005,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
     </a>
     <a class="feature-card" href="features/mothers-day.html">
       <span class="feature-card-season">5/10</span>
-      <div class="feature-card-icon">💐</div>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/86/07/P012298607/P012298607_238.jpg" alt="" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">母の日ディナー・ランチ10選</div>
         <div class="feature-card-sub">個室・お母さんに感謝を</div>
@@ -1011,7 +1013,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/banquet.html">
-      <div class="feature-card-icon">🍻</div>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/19/50/P046751950/P046751950_480.jpg" alt="" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">宴会・忘年会おすすめ15選</div>
         <div class="feature-card-sub">名駅・栄・金山 個室完備</div>
@@ -1019,7 +1021,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/private-room.html">
-      <div class="feature-card-icon">🚪</div>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/89/88/P047618988/P047618988_480.jpg" alt="" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">個室グルメおすすめ10選</div>
         <div class="feature-card-sub">接待・女子会・デートに</div>
@@ -1027,7 +1029,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/meieki.html">
-      <div class="feature-card-icon">🚄</div>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/18/08/P046851808/P046851808_480.jpg" alt="" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名駅グルメおすすめ15選</div>
         <div class="feature-card-sub">出張・接待・仕事帰りに</div>
@@ -1035,7 +1037,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/sakae.html">
-      <div class="feature-card-icon">🌃</div>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/44/67/P049564467/P049564467_480.jpg" alt="" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">栄・錦グルメおすすめ15選</div>
         <div class="feature-card-sub">名古屋最大の繁華街</div>
