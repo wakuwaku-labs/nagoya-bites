@@ -143,8 +143,8 @@ body:not(.search-active) #pagination{display:none !important;}
 .chip:hover{background:rgba(122,92,16,.22);}
 .chip-x{font-size:.7rem;opacity:.7;line-height:1;}
 /* ── FILTER TOGGLE BUTTON ── */
-.filter-toggle-wrap{position:sticky;top:56px;z-index:149;background:var(--bg2);border-bottom:1px solid var(--border);padding:.55rem 1.5rem;display:flex;align-items:center;justify-content:space-between;}
-.filter-toggle-btn{display:flex;align-items:center;gap:.5rem;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:.4rem .85rem;border-radius:2px;cursor:pointer;transition:all .25s;min-height:36px;}
+.filter-toggle-wrap{position:sticky;top:56px;z-index:149;background:var(--bg2);border-bottom:1px solid var(--border);padding:.85rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.filter-toggle-btn{display:flex;align-items:center;gap:.55rem;background:#fff;border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:.85rem;letter-spacing:.04em;padding:.7rem 1.4rem;border-radius:6px;cursor:pointer;transition:all .25s;min-height:46px;font-weight:600;}
 .filter-toggle-btn:hover{color:var(--text);border-color:var(--border-h);}
 .filter-toggle-btn.has-filters{color:#fff;background:var(--warm-grad);border-color:transparent;box-shadow:0 2px 8px rgba(184,84,31,.25);font-weight:600;}
 .filter-toggle-btn.has-filters:hover{filter:brightness(1.06);box-shadow:var(--warm-glow);}
@@ -901,6 +901,72 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   <span class="auth-item">広告なし・業界目線</span>
 </div>
 
+<!-- 特集記事バナー（ヒトサラ風：ヒーロー直下の入り口導線） -->
+<section class="feature-strip">
+  <div class="feature-strip-label">特集記事</div>
+  <div class="feature-strip-cards">
+    <a class="feature-card" href="features/gw-2026.html">
+      <span class="feature-card-season">5/3〜5/6</span>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/09/39/P012150939/P012150939_238.jpg" alt="" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">GW 2026・連休おすすめグルメ12選</div>
+        <div class="feature-card-sub">家族・帰省・デートに</div>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/spring-terrace.html">
+      <span class="feature-card-season">春限定</span>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/69/97/P042136997/P042136997_480.jpg" alt="" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">春テラス・屋外グルメ10選</div>
+        <div class="feature-card-sub">ビアガーデン・ルーフトップ</div>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/mothers-day.html">
+      <span class="feature-card-season">5/10</span>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/86/07/P012298607/P012298607_238.jpg" alt="" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">母の日ディナー・ランチ10選</div>
+        <div class="feature-card-sub">個室・お母さんに感謝を</div>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/banquet.html">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/19/50/P046751950/P046751950_480.jpg" alt="" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">宴会・忘年会おすすめ15選</div>
+        <div class="feature-card-sub">名駅・栄・金山 個室完備</div>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/private-room.html">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/89/88/P047618988/P047618988_480.jpg" alt="" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">個室グルメおすすめ10選</div>
+        <div class="feature-card-sub">接待・女子会・デートに</div>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/meieki.html">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/18/08/P046851808/P046851808_480.jpg" alt="" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名駅グルメおすすめ15選</div>
+        <div class="feature-card-sub">出張・接待・仕事帰りに</div>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/sakae.html">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/44/67/P049564467/P049564467_480.jpg" alt="" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">栄・錦グルメおすすめ15選</div>
+        <div class="feature-card-sub">名古屋最大の繁華街</div>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+  </div>
+</section>
+
 <!-- アクティブフィルターチップ -->
 <div class="active-chips" id="active-chips"></div>
 
@@ -978,72 +1044,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
           <span class="ljc-theme">🗓 季節短信</span>
         </a>
       <!-- LATEST_JOURNAL_END -->
-  </div>
-</section>
-
-<!-- 特集記事バナー -->
-<section class="feature-strip">
-  <div class="feature-strip-label">特集記事</div>
-  <div class="feature-strip-cards">
-    <a class="feature-card" href="features/gw-2026.html">
-      <span class="feature-card-season">5/3〜5/6</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/09/39/P012150939/P012150939_238.jpg" alt="" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">GW 2026・連休おすすめグルメ12選</div>
-        <div class="feature-card-sub">家族・帰省・デートに</div>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/spring-terrace.html">
-      <span class="feature-card-season">春限定</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/69/97/P042136997/P042136997_480.jpg" alt="" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">春テラス・屋外グルメ10選</div>
-        <div class="feature-card-sub">ビアガーデン・ルーフトップ</div>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/mothers-day.html">
-      <span class="feature-card-season">5/10</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/86/07/P012298607/P012298607_238.jpg" alt="" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">母の日ディナー・ランチ10選</div>
-        <div class="feature-card-sub">個室・お母さんに感謝を</div>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/banquet.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/19/50/P046751950/P046751950_480.jpg" alt="" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">宴会・忘年会おすすめ15選</div>
-        <div class="feature-card-sub">名駅・栄・金山 個室完備</div>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/private-room.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/89/88/P047618988/P047618988_480.jpg" alt="" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">個室グルメおすすめ10選</div>
-        <div class="feature-card-sub">接待・女子会・デートに</div>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/meieki.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/18/08/P046851808/P046851808_480.jpg" alt="" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名駅グルメおすすめ15選</div>
-        <div class="feature-card-sub">出張・接待・仕事帰りに</div>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/sakae.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/44/67/P049564467/P049564467_480.jpg" alt="" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">栄・錦グルメおすすめ15選</div>
-        <div class="feature-card-sub">名古屋最大の繁華街</div>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
   </div>
 </section>
 
