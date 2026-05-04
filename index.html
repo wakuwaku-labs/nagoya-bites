@@ -892,6 +892,38 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   </div>
 </section>
 
+<!-- アクティブフィルターチップ -->
+<div class="active-chips" id="active-chips"></div>
+
+<!-- フィルター折りたたみ（検索欄直下のエントリポイント） -->
+<div class="filter-toggle-wrap" id="filter-toggle-wrap">
+  <button class="filter-toggle-btn" id="filter-toggle-btn" onclick="toggleFilterPanel()" aria-expanded="false" aria-controls="filter-panel">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 3h12M3 7h8M5 11h4"/></svg>
+    絞り込み
+    <span class="filter-badge" id="filter-badge" style="display:none">0</span>
+  </button>
+  <button class="clear-all-btn" id="clear-all-btn" onclick="clearAllFilters()" style="display:none" aria-label="すべてのフィルターをクリア">すべてリセット</button>
+</div>
+
+<!-- 折りたたみ式フィルターパネル -->
+<div class="filter-panel" id="filter-panel">
+<div class="pref-tabs" id="pref-tabs">
+  <div class="pt on" data-pref="all">全国</div>
+</div>
+
+<div class="area-filter-bar" id="area-filter-bar"></div>
+
+<div class="cap-tabs" id="cap-tabs"></div>
+
+<div class="filter-bar">
+  <span class="fl">Genre</span>
+  <div class="ft on" data-f="all">All</div>
+</div>
+
+<div class="tag-filter" id="tag-filter"></div>
+
+</div><!-- /filter-panel -->
+
 <!-- 権威性バー -->
 <div class="authority-bar">
   <span class="auth-item"><strong>名古屋グルメ</strong> <span id="auth-total">4,559</span>店掲載</span>
@@ -967,37 +999,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   </div>
 </section>
 
-<!-- アクティブフィルターチップ -->
-<div class="active-chips" id="active-chips"></div>
-
-<!-- フィルター折りたたみ（検索欄直下のエントリポイント） -->
-<div class="filter-toggle-wrap" id="filter-toggle-wrap">
-  <button class="filter-toggle-btn" id="filter-toggle-btn" onclick="toggleFilterPanel()" aria-expanded="false" aria-controls="filter-panel">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 3h12M3 7h8M5 11h4"/></svg>
-    絞り込み
-    <span class="filter-badge" id="filter-badge" style="display:none">0</span>
-  </button>
-  <button class="clear-all-btn" id="clear-all-btn" onclick="clearAllFilters()" style="display:none" aria-label="すべてのフィルターをクリア">すべてリセット</button>
-</div>
-
-<!-- 折りたたみ式フィルターパネル -->
-<div class="filter-panel" id="filter-panel">
-<div class="pref-tabs" id="pref-tabs">
-  <div class="pt on" data-pref="all">全国</div>
-</div>
-
-<div class="area-filter-bar" id="area-filter-bar"></div>
-
-<div class="cap-tabs" id="cap-tabs"></div>
-
-<div class="filter-bar">
-  <span class="fl">Genre</span>
-  <div class="ft on" data-f="all">All</div>
-</div>
-
-<div class="tag-filter" id="tag-filter"></div>
-
-</div><!-- /filter-panel -->
+<!-- フィルターブロックは検索欄直下に移動済み（hero直後） -->
 
 <!-- ランキングセクション -->
 <section class="ranking-section" id="ranking-section" style="display:none">
