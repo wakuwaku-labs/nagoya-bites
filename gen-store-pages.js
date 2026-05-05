@@ -292,7 +292,11 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="${pageUrl}">
 <meta property="og:image" content="${photo}">
-<meta property="og:site_name" content="NAGOYA BITES">
+${/imgfp\.hotp\.jp\/.+_480\.jpg/.test(photo) ? '<meta property="og:image:width" content="480">\n<meta property="og:image:height" content="320">\n' :
+  /imgfp\.hotp\.jp\/.+_238\.jpg/.test(photo) ? '<meta property="og:image:width" content="238">\n<meta property="og:image:height" content="158">\n' :
+  /[?&]w=(\d+)&h=(\d+)/.test(photo) ? (m=>`<meta property="og:image:width" content="${m[1]}">\n<meta property="og:image:height" content="${m[2]}">\n`)(photo.match(/[?&]w=(\d+)&h=(\d+)/)) :
+  /icon-512\.png/.test(photo) ? '<meta property="og:image:width" content="512">\n<meta property="og:image:height" content="512">\n' :
+  ''}<meta property="og:site_name" content="NAGOYA BITES">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${title}">
@@ -436,15 +440,31 @@ ${storeUrls}
 // メイン
 // ================================================================
 async function main() {
+  // ─── CLI args ───
+  // --limit N: 最初のN件だけページを生成（テスト用、sitemap.xmlは更新しない）
+  // --dry-run: ファイル書き込みをせず件数だけ表示
+  const args = process.argv.slice(2);
+  const limitArg = args.find(a => a.startsWith('--limit='));
+  const LIMIT = limitArg ? parseInt(limitArg.split('=')[1], 10) : null;
+  const DRY_RUN = args.includes('--dry-run');
+  const TEST_MODE = LIMIT !== null;
+
   console.log('Google Sheets からデータ取得中...');
   const csv = await fetchUrl(CSV_URL);
   const stores = parseCSV(csv);
   // 公開フラグが「非公開」や「0」のものを除外
-  const visible = stores.filter(s => {
+  let visible = stores.filter(s => {
     const flag = (s['公開フラグ'] || '').trim();
     return flag !== '非公開' && flag !== '0' && flag !== 'false';
   });
   console.log(`取得: ${stores.length}件 → 公開対象: ${visible.length}件`);
+  if (TEST_MODE) {
+    visible = visible.slice(0, LIMIT);
+    console.log(`★ テストモード: 先頭${LIMIT}件のみ処理（sitemap.xmlは更新しません）`);
+  }
+  if (DRY_RUN) {
+    console.log('★ DRY-RUN: 実際のファイル書き込みは行いません');
+  }
 
   // stores/ ディレクトリ作成
   if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -467,17 +487,19 @@ async function main() {
     slugs.push(uniqueSlug);
 
     const html = renderStorePage(s, uniqueSlug);
-    fs.writeFileSync(path.join(OUT_DIR, `${uniqueSlug}.html`), html, 'utf8');
+    if (!DRY_RUN) fs.writeFileSync(path.join(OUT_DIR, `${uniqueSlug}.html`), html, 'utf8');
     generated++;
     if (generated % 100 === 0) process.stdout.write(`\r  ${generated}件生成済み...`);
   }
 
   console.log(`\n\n店舗ページ生成完了: ${generated}件 (スキップ: ${skipped}件)`);
 
-  // sitemap.xml 更新
-  const sitemapXml = buildSitemap(slugs);
-  fs.writeFileSync(SITEMAP_OUT, sitemapXml, 'utf8');
-  console.log(`sitemap.xml 更新完了: ${slugs.length + 2}件のURL`);
+  // sitemap.xml 更新（テストモード/DRY-RUN ではスキップ）
+  if (!TEST_MODE && !DRY_RUN) {
+    const sitemapXml = buildSitemap(slugs);
+    fs.writeFileSync(SITEMAP_OUT, sitemapXml, 'utf8');
+    console.log(`sitemap.xml 更新完了: ${slugs.length + 2}件のURL`);
+  }
   console.log(`\n次のステップ:`);
   console.log(`  git add stores/ sitemap.xml && git commit -m "店舗別SEOページを生成 (${generated}件)" && git push`);
 }
