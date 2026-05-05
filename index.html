@@ -184,6 +184,8 @@ body:not(.search-active) #pagination{display:none !important;}
 .filter-panel-cta-reset:hover{color:var(--text);border-color:var(--border-h);}
 @media(max-width:480px){.filter-panel-cta{padding:.6rem 1rem;}.filter-panel-cta-main{font-size:.85rem;padding:.7rem 1rem;}}
 @keyframes up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+/* A11y: 動きを減らす設定の利用者には全アニメーション/トランジションを無効化 */
+@media (prefers-reduced-motion:reduce){*,::before,::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}}
 /* ── FILTER BAR ── */
 .filter-bar{padding:.75rem 1.5rem;display:flex;gap:.45rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--border);background:var(--bg2);}
 .fl{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;color:var(--dim);margin-right:.4rem;text-transform:uppercase;}
