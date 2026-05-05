@@ -264,12 +264,12 @@ function renderStorePage(s, slug) {
 
   const tagPills = tags.map(t => `<span class="tag">${t}</span>`).join('');
   const linksHtml = [
-    hpUrl && `<a class="link-btn hp" href="${hpUrl}" target="_blank" rel="noopener">🌶 ホットペッパーで予約</a>`,
-    gmUrl && `<a class="link-btn gm" href="${gmUrl}" target="_blank" rel="noopener">📍 Googleマップ</a>`,
-    igUrl && `<a class="link-btn ig" href="${igUrl}" target="_blank" rel="noopener">📸 Instagram</a>`,
-    tbUrl && `<a class="link-btn tb" href="${tbUrl}" target="_blank" rel="noopener">🍽 食べログ</a>`,
-    tkUrl && tkUrl !== '#' && `<a class="link-btn tk" href="${tkUrl}" target="_blank" rel="noopener">🎵 TikTok</a>`,
-    xUrl  && xUrl  !== '#' && `<a class="link-btn xx" href="${xUrl}" target="_blank" rel="noopener">𝕏 X</a>`,
+    hpUrl && `<a class="link-btn hp" href="${hpUrl}" target="_blank" rel="noopener noreferrer">🌶 ホットペッパーで予約</a>`,
+    gmUrl && `<a class="link-btn gm" href="${gmUrl}" target="_blank" rel="noopener noreferrer">📍 Googleマップ</a>`,
+    igUrl && `<a class="link-btn ig" href="${igUrl}" target="_blank" rel="noopener noreferrer">📸 Instagram</a>`,
+    tbUrl && `<a class="link-btn tb" href="${tbUrl}" target="_blank" rel="noopener noreferrer">🍽 食べログ</a>`,
+    tkUrl && tkUrl !== '#' && `<a class="link-btn tk" href="${tkUrl}" target="_blank" rel="noopener noreferrer">🎵 TikTok</a>`,
+    xUrl  && xUrl  !== '#' && `<a class="link-btn xx" href="${xUrl}" target="_blank" rel="noopener noreferrer">𝕏 X</a>`,
   ].filter(Boolean).join('\n    ');
 
   return `<!DOCTYPE html>
