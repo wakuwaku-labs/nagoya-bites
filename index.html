@@ -34,6 +34,19 @@ function trackEvent(name,params){
 }
 // outbound_click: 外部リンククリックを自動計測（全ページ共通）
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+// keyboard: role="button" + tabindex="0" のカードで Enter / Space を click と同等に扱う（WCAG 2.1.1）
+document.addEventListener('keydown',function(e){
+  if(e.key!=='Enter'&&e.key!==' '&&e.key!=='Spacebar')return;
+  var t=e.target;
+  if(!t||!t.closest)return;
+  var btn=t.closest('[role="button"][tabindex="0"]');
+  if(!btn)return;
+  // フォーム要素やリンク内では既定動作を尊重
+  var inner=t.closest('a,button,input,textarea,select');
+  if(inner&&inner!==btn)return;
+  e.preventDefault();
+  btn.click();
+},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>名古屋グルメ決定版｜飲食店4,500軒以上を業界人が厳選【NAGOYA BITES】</title>
@@ -69,6 +82,9 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <!-- PWA                                                      -->
 <!-- ======================================================= -->
 <link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+<link rel="shortcut icon" href="icons/icon-192.png">
 <meta name="theme-color" content="#7a5c10">
 <!-- iOS Safari -->
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -457,6 +473,16 @@ footer{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));}
 .feature-card-title{font-size:1.15rem;font-weight:600;color:var(--text);line-height:1.4;}
 .feature-card-sub{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.06em;color:var(--dim);}
 .feature-card-arrow{display:none;}
+.feature-card-cta{margin-top:auto;padding-top:.45rem;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.16em;color:var(--ember);text-transform:uppercase;font-weight:600;display:inline-flex;align-items:center;gap:.35rem;transition:gap .25s ease,color .25s ease;}
+.feature-card:hover .feature-card-cta{gap:.55rem;color:var(--ember-deep);}
+.feature-card-cta::after{content:"→";font-size:.85rem;line-height:1;}
+@media(max-width:640px){.feature-card-cta{font-size:.52rem;letter-spacing:.12em;padding-top:.3rem;}}
+/* ── VISUALLY HIDDEN (A11y form labels) ── */
+.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+/* ── h3 reset for store card title ── */
+h3.cn{margin:0 0 6px;font-family:'Noto Sans JP',sans-serif;}
+/* ── Google rating source label ── */
+.card-rating .gs-src{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.1em;color:var(--dim);text-transform:uppercase;font-weight:500;margin-right:.15rem;}
 @media(max-width:900px){.feature-strip-cards{grid-template-columns:repeat(2,1fr);gap:1rem;}}
 @media(max-width:640px){.feature-strip{padding:.9rem 1rem;gap:.7rem;}.feature-strip-cards{grid-template-columns:repeat(2,1fr);gap:.7rem;}.feature-card-body{padding:.75rem .85rem .9rem;}.feature-card-title{font-size:.88rem;}.feature-card-sub{font-size:.58rem;}}
 /* ── LATEST JOURNAL (最新の日次ジャーナル3件) ── */
@@ -878,6 +904,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   <h1>飲食の<em>プロ</em>が、<br>名古屋<em>だけ</em>を<br><span class="fade">深く選んだ。</span></h1>
   <p class="hero-sub">名古屋で8ブランドを運営する現役飲食店経営者が、<br>業界の内側から本当に価値ある店だけを厳選しています。</p>
   <div class="search-wrap">
+    <label for="si" class="visually-hidden">レストランを検索</label>
     <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
     <button onclick="doSearch()" aria-label="検索">Search</button>
     <div class="search-suggest" id="hero-suggest">
@@ -943,6 +970,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="feature-card-body">
         <div class="feature-card-title">GW 2026・連休おすすめグルメ12選</div>
         <div class="feature-card-sub">家族・帰省・デートに</div>
+        <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
@@ -952,6 +980,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="feature-card-body">
         <div class="feature-card-title">春テラス・屋外グルメ10選</div>
         <div class="feature-card-sub">ビアガーデン・ルーフトップ</div>
+        <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
@@ -961,6 +990,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="feature-card-body">
         <div class="feature-card-title">母の日ディナー・ランチ10選</div>
         <div class="feature-card-sub">個室・お母さんに感謝を</div>
+        <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
@@ -969,6 +999,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="feature-card-body">
         <div class="feature-card-title">宴会・忘年会おすすめ15選</div>
         <div class="feature-card-sub">名駅・栄・金山 個室完備</div>
+        <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
@@ -977,6 +1008,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="feature-card-body">
         <div class="feature-card-title">個室グルメおすすめ10選</div>
         <div class="feature-card-sub">接待・女子会・デートに</div>
+        <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
@@ -985,6 +1017,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="feature-card-body">
         <div class="feature-card-title">名駅グルメおすすめ15選</div>
         <div class="feature-card-sub">出張・接待・仕事帰りに</div>
+        <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
@@ -993,6 +1026,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="feature-card-body">
         <div class="feature-card-title">栄・錦グルメおすすめ15選</div>
         <div class="feature-card-sub">名古屋最大の繁華街</div>
+        <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
@@ -1051,6 +1085,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 
 <!-- スティッキー検索バー + アクティブフィルターチップ -->
 <div class="sticky-search" id="sticky-search">
+  <label for="si2" class="visually-hidden">レストランを検索（追従バー）</label>
   <input id="si2" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
   <button class="geo-btn" id="geo-btn" onclick="geoSearch()" aria-label="現在地から探す">📍 現在地</button>
   <button class="sticky-search-btn" onclick="doSearch()" aria-label="検索">検索</button>
@@ -11093,7 +11128,7 @@ function buildCardHtml(r) {
       var cls = sceneTags.indexOf(t)!==-1 ? 'ctag scene' : 'ctag';
       return '<span class="' + cls + '">' + t + '</span>';
     }).join('') + '</div>' : '';
-    var ratingHtml = r['Google評価'] ? '<span class="card-rating"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' + r['Google評価'] + '</span>' : '';
+    var ratingHtml = r['Google評価'] ? '<span class="card-rating" title="Googleマップ評価"><span class="gs-src">Google</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' + r['Google評価'] + '</span>' : '';
     var trendLabel = r['トレンドラベル'] || '';
     var trendBadgeHtml = '';
     if (trendLabel === '話題沸騰') trendBadgeHtml = '<span class="trend-badge trend-hot">🔥 話題沸騰</span>';
@@ -11109,7 +11144,7 @@ function buildCardHtml(r) {
       + (r['編集部推薦'] === true ? '<span class="editor-pick">編集部推薦</span>' : '')
       + (r.insiderReviewCount ? '<span class="insider-badge">🎓 業界人' + r.insiderReviewCount + '名推薦</span>' : '')
       + '<div class="cb">'
-      + '<div class="cn">' + r['店名'] + ' ' + ratingHtml + '</div>'
+      + '<h3 class="cn">' + r['店名'] + ' ' + ratingHtml + '</h3>'
       + '<div class="ce">' + (r['英語名']||'') + '</div>'
       + '<div class="cmeta"><span data-l="Area">' + area + '</span><span data-l="Price">' + (r['価格帯']||'') + '</span></div>'
       + '</div>'
