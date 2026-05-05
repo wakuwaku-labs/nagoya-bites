@@ -441,13 +441,17 @@ ${storeUrls}
 // ================================================================
 async function main() {
   // ─── CLI args ───
-  // --limit N: 最初のN件だけページを生成（テスト用、sitemap.xmlは更新しない）
+  // --limit=N: 最初のN件だけページを生成（テスト用、sitemap.xmlは更新しない）
   // --dry-run: ファイル書き込みをせず件数だけ表示
+  // --check-orphans: 生成終了後、シートに無い既存HTMLを一覧表示（削除はしない）
+  // --delete-orphans: シートに無い既存HTMLを実際に削除（破壊的、明示指定が必要）
   const args = process.argv.slice(2);
   const limitArg = args.find(a => a.startsWith('--limit='));
   const LIMIT = limitArg ? parseInt(limitArg.split('=')[1], 10) : null;
   const DRY_RUN = args.includes('--dry-run');
   const TEST_MODE = LIMIT !== null;
+  const CHECK_ORPHANS = args.includes('--check-orphans');
+  const DELETE_ORPHANS = args.includes('--delete-orphans');
 
   console.log('Google Sheets からデータ取得中...');
   const csv = await fetchUrl(CSV_URL);
@@ -500,6 +504,33 @@ async function main() {
     fs.writeFileSync(SITEMAP_OUT, sitemapXml, 'utf8');
     console.log(`sitemap.xml 更新完了: ${slugs.length + 2}件のURL`);
   }
+
+  // ─── ゴーストページ（孤児）検出・削除 ───
+  if (CHECK_ORPHANS || DELETE_ORPHANS) {
+    const expected = new Set(slugs);
+    const onDisk = fs.readdirSync(OUT_DIR).filter(f => /\.html$/.test(f)).map(f => f.replace(/\.html$/, ''));
+    const orphans = onDisk.filter(s => !expected.has(s));
+    if (orphans.length === 0) {
+      console.log(`\n孤児ページ: 0件 ✓`);
+    } else {
+      console.log(`\n孤児ページ: ${orphans.length}件（シートに無い既存HTML）`);
+      orphans.slice(0, 10).forEach(s => console.log(`  - stores/${s}.html`));
+      if (orphans.length > 10) console.log(`  ...ほか ${orphans.length - 10} 件`);
+      if (DELETE_ORPHANS && !DRY_RUN && !TEST_MODE) {
+        let deleted = 0;
+        for (const s of orphans) {
+          fs.unlinkSync(path.join(OUT_DIR, `${s}.html`));
+          deleted++;
+        }
+        console.log(`★ ${deleted}件の孤児ページを削除しました`);
+      } else if (DELETE_ORPHANS) {
+        console.log(`(--limit / --dry-run 中は削除をスキップしました)`);
+      } else {
+        console.log(`削除する場合は --delete-orphans を付けて再実行（破壊的）`);
+      }
+    }
+  }
+
   console.log(`\n次のステップ:`);
   console.log(`  git add stores/ sitemap.xml && git commit -m "店舗別SEOページを生成 (${generated}件)" && git push`);
 }
