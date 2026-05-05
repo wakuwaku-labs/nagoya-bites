@@ -11255,7 +11255,7 @@ function buildCardHtml(r) {
     else if (trendLabel === '注目上昇中') trendBadgeHtml = '<span class="trend-badge trend-rising">📈 注目上昇中</span>';
     else if (trendLabel === 'じわじわ人気') trendBadgeHtml = '<span class="trend-badge trend-warm">✨ じわじわ人気</span>';
     return '<div class="card" onclick="openM(' + idx + ')" role="button" tabindex="0" aria-label="' + r['店名'] + 'の詳細を見る">'
-      + '<div class="ci"><img src="' + photo + '" alt="' + r['店名'] + '" loading="lazy" onerror="nbImgFallback(this)"></div>'
+      + '<div class="ci"><img src="' + photo + '" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)"></div>'
       + '<span class="badge">' + genre + '</span>'
       + trendBadgeHtml
       + (pref ? '<span class="pref-badge">' + pref + '</span>' : '')
@@ -12175,7 +12175,7 @@ function buildRanking() {
     var genre = (r['ジャンル']||'').split('・')[0];
     return '<div class="rank-card" onclick="openM(' + idx + ')" role="button" tabindex="0">'
       + '<span class="rank-num">' + (i+1) + '</span>'
-      + '<img class="rank-img" src="' + photo + '" alt="' + (r['店名']||'') + '" loading="lazy" onerror="nbImgFallback(this)">'
+      + '<img class="rank-img" src="' + photo + '" alt="' + (r['店名']||'') + '" loading="lazy" decoding="async" width="280" height="160" onerror="nbImgFallback(this)">'
       + '<div class="rank-name">' + (r['店名']||'') + '</div>'
       + '<div class="rank-meta"><span class="rank-score">★ ' + r['Google評価'] + '</span><span>' + genre + '</span><span>' + (r['エリア']||'') + '</span></div>'
       + '</div>';
@@ -12234,7 +12234,7 @@ function buildTrendRanking() {
     else if (trendLabel === 'じわじわ人気') labelHtml = '<span style="color:#eab308;font-weight:700">✨ ' + trendLabel + '</span>';
     return '<div class="trend-rank-card" onclick="openM(' + idx + ')" role="button" tabindex="0" style="position:relative">'
       + '<span class="rank-num">' + (i+1) + '</span>'
-      + '<img class="rank-img" src="' + photo + '" alt="' + (r['店名']||'') + '" loading="lazy" onerror="nbImgFallback(this)">'
+      + '<img class="rank-img" src="' + photo + '" alt="' + (r['店名']||'') + '" loading="lazy" decoding="async" width="280" height="160" onerror="nbImgFallback(this)">'
       + '<div class="rank-name">' + (r['店名']||'') + '</div>'
       + '<div class="rank-meta">' + labelHtml + '<span>' + genre + '</span><span>' + (r['エリア']||'') + '</span></div>'
       + '</div>';
@@ -12270,7 +12270,7 @@ function renderHistory() {
     var idx = ALL_STORES.indexOf(store);
     var photo = store['写真URL'] || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=60';
     cards.push('<div class="hist-card" onclick="openM(' + idx + ')" role="button" tabindex="0">'
-      + '<img src="' + photo + '" alt="' + name + '" loading="lazy" onerror="nbImgFallback(this)">'
+      + '<img src="' + photo + '" alt="' + name + '" loading="lazy" decoding="async" width="240" height="140" onerror="nbImgFallback(this)">'
       + '<div class="hist-name">' + name + '</div>'
       + '<div class="hist-area">' + (store['エリア']||'') + '</div>'
       + '</div>');
