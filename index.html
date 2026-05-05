@@ -169,7 +169,17 @@ body:not(.search-active) #pagination{display:none !important;}
 .clear-all-btn:hover{color:var(--text);border-color:var(--border-h);}
 /* ── COLLAPSIBLE FILTER PANEL ── */
 .filter-panel{overflow:hidden;max-height:0;transition:max-height .35s ease;background:var(--bg2);}
-.filter-panel.open{max-height:1200px;}
+.filter-panel.open{max-height:1400px;}
+/* ── FILTER PANEL CTA (sticky bottom) ── */
+.filter-panel-cta{display:none;position:sticky;bottom:0;z-index:50;background:rgba(247,245,241,.97);backdrop-filter:saturate(1.1) blur(6px);border-top:1px solid var(--border);padding:.75rem 1.5rem;gap:.6rem;align-items:center;justify-content:space-between;box-shadow:0 -2px 12px rgba(0,0,0,.06);}
+.filter-panel.open .filter-panel-cta{display:flex;}
+.filter-panel-cta-main{flex:1;background:var(--warm-grad);border:none;color:#fff;font-family:inherit;font-size:.92rem;letter-spacing:.04em;padding:.85rem 1.2rem;border-radius:6px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;gap:.4rem;box-shadow:0 2px 8px rgba(184,84,31,.28);transition:transform .15s,filter .2s,box-shadow .25s;min-height:48px;}
+.filter-panel-cta-main:hover{filter:brightness(1.06);box-shadow:var(--warm-glow);}
+.filter-panel-cta-main:active{transform:translateY(1px);}
+.filter-panel-cta-main .cnt-num{font-weight:800;font-size:1.05rem;}
+.filter-panel-cta-reset{background:transparent;border:1px solid var(--border);color:var(--dim);font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:.55rem .9rem;border-radius:3px;cursor:pointer;transition:all .2s;min-height:40px;white-space:nowrap;}
+.filter-panel-cta-reset:hover{color:var(--text);border-color:var(--border-h);}
+@media(max-width:480px){.filter-panel-cta{padding:.6rem 1rem;}.filter-panel-cta-main{font-size:.85rem;padding:.7rem 1rem;}}
 @keyframes up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 /* ── FILTER BAR ── */
 .filter-bar{padding:.75rem 1.5rem;display:flex;gap:.45rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--border);background:var(--bg2);}
@@ -182,7 +192,20 @@ body:not(.search-active) #pagination{display:none !important;}
 .sec-head{padding:2rem 1.5rem 1.2rem;display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--border);}
 .sec-head h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.9rem;letter-spacing:.04em;color:var(--white);}
 .sec-head h2 em{font-style:italic;color:var(--gold);}
-.cnt{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.18em;color:var(--dim);}
+.cnt{font-family:'DM Mono',monospace;font-size:.78rem;letter-spacing:.14em;color:var(--text);font-weight:600;}
+/* ── RESULTS SUMMARY BAR (filter active landing area) ── */
+.results-summary{display:none;padding:1.1rem 1.5rem 1.2rem;background:linear-gradient(180deg,rgba(184,84,31,.06),transparent);border-bottom:1px solid var(--border);}
+body.search-active .results-summary{display:block;}
+.results-summary-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.22em;color:var(--ember-deep,var(--gold));text-transform:uppercase;margin-bottom:.45rem;font-weight:700;}
+.results-summary-cond{display:flex;flex-wrap:wrap;gap:.4rem .55rem;align-items:center;font-size:.85rem;color:var(--text);margin-bottom:.7rem;line-height:1.6;}
+.results-summary-cond .rs-pill{display:inline-flex;align-items:center;background:#fff;border:1px solid var(--border);color:var(--text);padding:.3rem .7rem;border-radius:3px;font-size:.78rem;font-weight:600;}
+.results-summary-cond .rs-sep{color:var(--dim);font-size:.7rem;}
+.results-summary-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.results-summary-count{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.6rem;color:var(--text);letter-spacing:.02em;}
+.results-summary-count em{font-style:normal;font-weight:700;color:var(--ember-deep,var(--gold));font-size:1.9rem;margin-right:.15rem;}
+.results-summary-reset{background:transparent;border:1px solid var(--border);color:var(--dim);font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:.55rem 1rem;border-radius:3px;cursor:pointer;transition:all .2s;min-height:38px;}
+.results-summary-reset:hover{color:var(--text);border-color:var(--border-h);}
+@media(max-width:640px){.results-summary{padding:.9rem 1rem 1rem;}.results-summary-count{font-size:1.35rem;}.results-summary-count em{font-size:1.65rem;}}
 /* ── HP CREDIT ── */
 .hpc{padding:.6rem 1.5rem;display:flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border);background:var(--bg2);}
 .hpc span,.hpc a{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:var(--dim);}
@@ -949,6 +972,14 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 
 <div class="tag-filter" id="tag-filter"></div>
 
+<!-- パネル下部のスティッキーCTA：操作後すぐ「結果を見る」動線を提供 -->
+<div class="filter-panel-cta" id="filter-panel-cta">
+  <button class="filter-panel-cta-reset" type="button" onclick="clearAllFilters()" aria-label="絞り込み条件をリセット">リセット</button>
+  <button class="filter-panel-cta-main" type="button" id="filter-panel-cta-main" onclick="applyAndShowResults()" aria-label="絞り込み結果を見る">
+    <span class="cnt-num" id="filter-panel-cta-count">--</span>件のお店を見る →
+  </button>
+</div>
+
 </div><!-- /filter-panel -->
 
 <!-- 権威性バー -->
@@ -1094,7 +1125,17 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <div class="results-block" id="results-block">
   <div class="sec-head">
     <h2>掲載<em>店舗</em></h2>
-    <span class="cnt" id="cnt">-- Restaurants</span>
+    <span class="cnt" id="cnt">-- 件</span>
+  </div>
+
+  <!-- 絞り込み結果サマリー帯（フィルター有効時のみ表示・スクロール先の着地点） -->
+  <div class="results-summary" id="results-summary" aria-live="polite">
+    <div class="results-summary-label">絞り込み結果</div>
+    <div class="results-summary-cond" id="results-summary-cond"></div>
+    <div class="results-summary-foot">
+      <div class="results-summary-count"><em id="results-summary-count">--</em>件 のお店</div>
+      <button class="results-summary-reset" type="button" onclick="clearAllFilters()" aria-label="絞り込みをすべてリセット">すべてリセット</button>
+    </div>
   </div>
 
   <div class="sort-bar" id="sort-bar">
@@ -10784,6 +10825,24 @@ function applyFilters() {
     || (ACTIVE_TAGS.length > 0)
     || (!isNaN(capNum) && capNum > 0);
   document.body.classList.toggle('search-active', hasActiveFilter);
+
+  // パネル外からのフィルター変更時は結果まで自動スクロール（操作の手応えを出す）
+  // - パネル open 中は連続操作の邪魔にならないようスクロールしない（CTA経由で誘導）
+  // - 既に結果ブロックより十分下にいる場合（ページネーション操作中など）も省略
+  if (hasActiveFilter) {
+    var panel = document.getElementById('filter-panel');
+    var panelOpen = panel && panel.classList.contains('open');
+    var resultsBlock = document.getElementById('results-block');
+    if (!panelOpen && resultsBlock) {
+      var blockTop = resultsBlock.getBoundingClientRect().top + window.pageYOffset;
+      // 結果より上にいるとき or 結果直前にいるときのみスクロール（既に深く下にいるなら邪魔しない）
+      if (window.pageYOffset < blockTop - 60) {
+        // applyFilters は連続呼出されることがあるのでデバウンス
+        if (window.__scrollToResultsTimer) clearTimeout(window.__scrollToResultsTimer);
+        window.__scrollToResultsTimer = setTimeout(scrollToResults, 80);
+      }
+    }
+  }
 }
 
 // ================================================================
@@ -10923,6 +10982,33 @@ function toggleFilterPanel() {
   }
 }
 
+// パネルを閉じるユーティリティ（CTAクリック時など）
+function closeFilterPanel() {
+  FILTER_PANEL_OPEN = false;
+  var panel = document.getElementById('filter-panel');
+  var btn = document.getElementById('filter-toggle-btn');
+  if (panel) panel.classList.remove('open');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+}
+
+// 結果ブロック先頭へスムーズスクロール（既存パターンを踏襲：ヘッダ＆stickyバー -110px オフセット）
+function scrollToResults() {
+  var target = document.getElementById('results-summary');
+  var summaryVisible = target && target.offsetParent !== null;
+  if (!summaryVisible) target = document.getElementById('results-block');
+  if (!target) return;
+  var rect = target.getBoundingClientRect();
+  var top = rect.top + window.pageYOffset - 110;
+  window.scrollTo({ top: top, behavior: 'smooth' });
+}
+
+// パネル下部CTAから呼ばれる：パネルを閉じて結果へジャンプ
+function applyAndShowResults() {
+  closeFilterPanel();
+  // パネル閉じアニメ後にスクロール（max-heightトランジションは .35s）
+  setTimeout(scrollToResults, 60);
+}
+
 function clearAllFilters() {
   // Clear pref
   document.querySelectorAll('.pt').forEach(function(x){ x.classList.remove('on'); });
@@ -10997,6 +11083,37 @@ function updateFilterUI() {
     html += '<span class="chip" data-clear="q">&ldquo;' + q + '&rdquo; <span class="chip-x">×</span></span>';
   }
   chips.innerHTML = html;
+
+  // 結果ブロック上端の「絞り込み結果サマリー帯」を更新
+  var condEl = document.getElementById('results-summary-cond');
+  if (condEl) {
+    var parts = [];
+    if (pref !== '全国' && pref !== 'all') parts.push(pref);
+    if (typeof ACTIVE_WARD !== 'undefined' && ACTIVE_WARD && ACTIVE_WARD !== 'all') parts.push(ACTIVE_WARD);
+    if (genre !== 'All' && genre !== 'all') parts.push(genre);
+    ACTIVE_TAGS.forEach(function(tag) { parts.push(tag); });
+    if (cap) parts.push(cap + '名以上');
+    if (q) parts.push('「' + q + '」');
+    if (parts.length === 0) {
+      condEl.innerHTML = '<span class="rs-pill">条件なし</span>';
+    } else {
+      var pillHtml = '';
+      parts.forEach(function(p, i) {
+        if (i > 0) pillHtml += '<span class="rs-sep">×</span>';
+        pillHtml += '<span class="rs-pill">' + p + '</span>';
+      });
+      condEl.innerHTML = pillHtml;
+    }
+  }
+
+  // 件数（サマリー帯 + パネル下部CTA）をリアルタイム反映
+  var summaryCount = document.getElementById('results-summary-count');
+  var ctaCount = document.getElementById('filter-panel-cta-count');
+  var ctaBtn = document.getElementById('filter-panel-cta-main');
+  var n = (typeof FILTERED !== 'undefined' && FILTERED) ? FILTERED.length : 0;
+  if (summaryCount) summaryCount.textContent = n.toLocaleString('ja-JP');
+  if (ctaCount) ctaCount.textContent = n.toLocaleString('ja-JP');
+  if (ctaBtn) ctaBtn.disabled = (n === 0);
 }
 
 // Chip click handler (delegated)
@@ -11161,7 +11278,7 @@ function renderGrid(data) {
   if (cntEl) {
     cntEl.classList.add('fading');
     setTimeout(function() {
-      cntEl.textContent = String(data.length).padStart(2,'0') + ' Restaurants';
+      cntEl.textContent = data.length.toLocaleString('ja-JP') + ' 件';
       cntEl.classList.remove('fading');
     }, 120);
   }
@@ -11811,6 +11928,12 @@ function applySort() {
   var sel = document.getElementById('sort-select');
   SORT_MODE = sel ? sel.value : 'recommend';
   sortAndRender();
+  // 結果より上にいる場合のみ先頭へ戻す（既に結果内をスクロール中なら邪魔しない）
+  var rb = document.getElementById('results-block');
+  if (rb) {
+    var rbTop = rb.getBoundingClientRect().top + window.pageYOffset;
+    if (window.pageYOffset < rbTop - 200) scrollToResults();
+  }
 }
 function sortAndRender() {
   var arr = FILTERED.slice();
