@@ -1068,6 +1068,29 @@ async function main() {
       console.warn(`tabelog_resolved.json マージ失敗: ${e.message}`);
     }
   }
+
+  // Instagram 投稿URL キャッシュ（data/instagram_posts.json）をマージ
+  // scripts/fetch_ig_posts_resolved.js が HP ID → postUrl を書き込む
+  // Sheets S列（sanitize後も残る）を優先し、未設定の店舗にのみ補完する
+  const igPostsCachePath = path.join(__dirname, 'data', 'instagram_posts.json');
+  let igPostsMerged = 0;
+  if (fs.existsSync(igPostsCachePath)) {
+    try {
+      const igPostsCache = JSON.parse(fs.readFileSync(igPostsCachePath, 'utf8'));
+      for (const s of slimStores) {
+        const id = s['ホットペッパーID'];
+        if (!id || s['Instagram投稿URL']) continue; // IDなし or 既に値あり はスキップ
+        const entry = igPostsCache[id];
+        if (entry && entry.postUrl && IG_POST_URL_RE.test(entry.postUrl)) {
+          s['Instagram投稿URL'] = entry.postUrl.replace(/\?.*$/, '');
+          igPostsMerged++;
+        }
+      }
+      console.log(`Instagram投稿URLマージ: ${igPostsMerged}件`);
+    } catch (e) {
+      console.warn(`instagram_posts.json マージ失敗: ${e.message}`);
+    }
+  }
   // ─────────────────────────────────────────────────────────────────────────
 
   const jsonStr = JSON.stringify(slimStores);
