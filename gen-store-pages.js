@@ -292,6 +292,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="${pageUrl}">
 <meta property="og:image" content="${photo}">
+<meta property="og:image:alt" content="${name.replace(/"/g, '&quot;')} の店舗写真">
+<meta name="twitter:image:alt" content="${name.replace(/"/g, '&quot;')} の店舗写真">
 ${/imgfp\.hotp\.jp\/.+_480\.jpg/.test(photo) ? '<meta property="og:image:width" content="480">\n<meta property="og:image:height" content="320">\n' :
   /imgfp\.hotp\.jp\/.+_238\.jpg/.test(photo) ? '<meta property="og:image:width" content="238">\n<meta property="og:image:height" content="158">\n' :
   /[?&]w=(\d+)&h=(\d+)/.test(photo) ? (m=>`<meta property="og:image:width" content="${m[1]}">\n<meta property="og:image:height" content="${m[2]}">\n`)(photo.match(/[?&]w=(\d+)&h=(\d+)/)) :
