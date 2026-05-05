@@ -533,6 +533,9 @@ h3.cn{margin:0 0 6px;font-family:'Noto Sans JP',sans-serif;}
 .auth-item .auth-icon{font-size:.9rem;line-height:1;}
 .auth-sep{color:rgba(247,245,241,.25);font-size:.7rem;}
 @media(max-width:640px){.authority-bar{padding:.55rem 1rem;font-size:.55rem;gap:.35rem 1rem;}.auth-sep{display:none;}}
+/* ── A11y: SKIP LINK ── */
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+.skip-link:focus{position:fixed;left:1rem;top:1rem;width:auto;height:auto;z-index:9999;background:var(--gold);color:#fff;padding:.7rem 1.2rem;border-radius:4px;font-weight:600;font-size:.9rem;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25);}
 /* ── FOCUS RING ── */
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:focus-visible,.tg:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
@@ -877,6 +880,9 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 </head>
 <body>
 
+<!-- A11y: スキップリンク（キーボード/スクリーンリーダー利用者向け、Tabで最初に表示） -->
+<a href="#main-content" class="skip-link">本文へスキップ</a>
+
 <!-- スクロールトップボタン -->
 <button id="scroll-top" aria-label="ページトップへ戻る" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
@@ -925,7 +931,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   </nav>
 </header>
 
-<section class="hero">
+<section class="hero" id="main-content">
   <div class="eyebrow">名古屋専門 × 飲食のプロが選ぶ</div>
   <h1>飲食の<em>プロ</em>が、<br>名古屋<em>だけ</em>を<br><span class="fade">深く選んだ。</span></h1>
   <p class="hero-sub">名古屋で8ブランドを運営する現役飲食店経営者が、<br>業界の内側から本当に価値ある店だけを厳選しています。</p>
