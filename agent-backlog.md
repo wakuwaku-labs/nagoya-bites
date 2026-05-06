@@ -213,6 +213,23 @@
   `continue-on-error: true` + `|| true` でソフト失敗する設計（API障害で全体停止しない）。
 - **files**: `.github/workflows/weekly-pipeline.yml`
 
+### [ISSUE-038] 「今日の話題店」TOP5 日次ピックアップ機構 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-05-06
+- **description**:
+  既存「🔥 今週の話題店」セクションを「📰 今日の話題店」枠として作り替え、
+  毎朝5:30 JSTに5店を自動選出。**Google評価は使わず**、「鮮度」と「多媒体露出」だけで選定。
+  - スコア: 鮮度50点 + 多媒体露出35点 + 編集部推薦10点 + 既存話題スコア5点 - 連日ペナ15点
+  - 候補プール: trending_stores.json + manual_stores.json（話題フラグ true & 期限内）
+  - 過去7日のピック履歴を `data/daily_trending5.json` に保持し連日ペナルティに使用
+  - UI: 各カードに鮮度バッジ「⏱ 3日前」と媒体数バッジ「📚 4媒体」を表示
+- **files**: `scripts/pick_daily_trending5.js`(新規), `data/daily_trending5.json`(新規),
+  `build.js`(L905周辺・L1100周辺結線), `index.html`(L1090セクション + buildTrendRanking 全面置換),
+  `.github/workflows/daily-trending5.yml`(新規), `agents/data-keeper.md`, `agents/editor.md`
+- **次サイクル宿題**:
+  - サザンクラウン（栄）の Nagoya 実体が LOCAL_STORES に無くマッチ失敗中。Editor が Hot Pepper等で正しい栄店データを補完
+  - `出典URL[]` が空配列の店が多く、媒体数スコアが「トレンド情報源[]」依存。`fetch_trending_articles.js` の自動反映強化（別ISSUE）
+
 ---
 
 ## エージェント実行ログ

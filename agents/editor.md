@@ -254,6 +254,16 @@ trending_stores の buzz_score>=90 は today_one に差し替え。
 validator(`scripts/validate_journal_draft.js`) がキーワード出現で近似チェック。
 独自性が薄い記事は公開しない。
 
+### 「今日の話題店」TOP5 鮮度の維持（**最重要**）
+
+トップページの `📰 今日の話題店` は **鮮度＋多媒体露出だけ**で選定される（Google評価不問）。
+Editor は鮮度ソースを腐らせない責任を持つ:
+
+- 外部メディアで話題店を確認したら `data/trending_stores.json` の **`検出日`** を必ず**当日の日付**に更新する（古い検出日のままだと TOP5 から落ちる）
+- 同じ店が新しい媒体で取り上げられたら `出典URL[]` にURLを追記して媒体数スコアを上げる
+- 新規話題店を発見したら `data/trending_stores.json` の `stores[]` に直接追加（または `pending_stores.json` 経由→翌日 trending に昇格）
+- スコア配分・運用ルール詳細は [agents/data-keeper.md](./data-keeper.md) の「日次『今日の話題店』TOP5」参照
+
 ### 新規店舗追加フロー（外部媒体からの採用）
 
 話題性重視のため、LOCAL_STORES に無い店でも **他メディア**（dressing / macaroni /
