@@ -118,7 +118,9 @@ agent-backlog.md が変わった結果、`/sync-backlog` を再実行：
 node scripts/sync_backlog_to_notion.js --if-changed
 ```
 
-`plan.archives` に当該 ID が含まれているはず。`/sync-backlog` Step 2 の手順でアーカイブを実施し、state から `--remove <ID>` で page_id_map を整理。
+`plan.archives` に当該 ID が含まれているはず。`/sync-backlog` Step 2 の手順（**ISSUE-039 で確立した `notion-move-pages` でデータソース外へ退避**）でアーカイブを実施し、state から `--remove <ID>` で page_id_map を整理。
+
+**重要**: アーカイブ完了後、Notion ダッシュボードから当該ページが消えていることを必ず確認する。「タイトルに ✅ を付けるだけ」では不十分（ISSUE-027 で発覚した不具合）。
 
 ### Step 11: 完了報告（orchestrator.md の報告フォーマット使用）
 
