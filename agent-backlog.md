@@ -754,6 +754,22 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
   - GitHub Actions の `weekly-pipeline.yml` にトリガーを組み込み、月曜のパイプラインで Marketer が必ず動く仕組みにする
 - **files**: `agents/marketer.md`, `agent-backlog.md`, `.github/workflows/weekly-pipeline.yml`
 
+### [ISSUE-039] /sync-backlog のアーカイブ処理を notion-move-pages ベースに刷新 ✅
+- **priority**: P1 → **status**: done
+- **category**: ops / notion
+- **detected**: 2026-05-07
+- **resolved**: 2026-05-07
+- **resolved_by**: /solve-next フォローアップ（Orchestrator）
+- **description**:
+  ISSUE-027 を done にした際、`/sync-backlog` の Step 2 が「タイトルに ✅ を付けるだけ」で実際には Notion ダッシュボードからページを取り除けず、ユーザーから「ノーションから削除されてない」指摘を受けた。
+  Notion DB のステータス select に `done` 選択肢が無いため、`update_properties` でステータス変更も不可（validation_error）。
+- **resolution**:
+  - 緊急対応: `notion-move-pages` で ISSUE-027 を親ページ（35826260-227a-81e5-95aa-f5d9fc4caa6c）へ移動 → ダッシュボードから消滅確認
+  - 恒久対応: `.claude/commands/sync-backlog.md` Step 2 を `notion-move-pages` ベースに書き換え
+  - `/solve-next` Step 10 のリファレンスも更新
+- **files**: `.claude/commands/sync-backlog.md`, `.claude/commands/solve-next.md`, `agent-backlog.md`
+- **owner**: Orchestrator
+
 ---
 
 ## Notion ダッシュボード連携

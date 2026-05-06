@@ -22,28 +22,32 @@ node scripts/sync_backlog_to_notion.js --if-changed
 
 ### Step 2: アーカイブ（done になった課題を Notion から消す）
 
-`plan.archives` の各エントリに対して、`mcp__61895424-82d3-4b62-a9e3-719e9d42cb74__notion-update-page` を呼ぶ：
+**ISSUE-039 で確立した正規手順**：done になったページはデータソース外の親ページに退避する。
+これにより課題トラッカーのダッシュボードビューから即座に消える（ページ自体は監査用に残存）。
+
+#### Step 2-A: ページをデータソース外へ移動
+
+`plan.archives` の page_id を全件まとめて 1回の `mcp__61895424-82d3-4b62-a9e3-719e9d42cb74__notion-move-pages` 呼び出しに渡す：
 
 ```
-command: "update_properties"
-page_id: <archives[i].page_id>
-properties: {} (空でOK)
-content_updates: []
+page_or_database_ids: [<archives[0].page_id>, <archives[1].page_id>, ...]
+new_parent: { type: "page_id", page_id: "35826260-227a-81e5-95aa-f5d9fc4caa6c" }
 ```
 
-**重要**: アーカイブは `notion-update-data-source` の `in_trash: true` ではなく、ページ単位で削除するため、現状の MCP ツール仕様では「ステータスを done に更新するだけ」で代替する場合がある。
-**正しいアーカイブ手順**: Notion ページの archive は MCP の `update_page` 経由では直接できないため、**state ファイルから page_id_map のエントリを削除**することで「次回 sync で creates 扱いされない」状態にする。
+- `35826260-227a-81e5-95aa-f5d9fc4caa6c` = 課題トラッカーの**親ページ**（`plan.notion_parent_page_id` と同値）
+- 移動後、ページはデータソース（DB）の子ではなくなり、ダッシュボード一覧から消える
+- ページの中身（タイトル / 本文 / アイコン）は全て保持される。後日参照したい時は親ページから辿れる
 
-→ 実装は次の通り：
-1. `notion-update-page` でステータスを「done」相当の表現にする（このDBには done が無いので、ページのアイコンを ✅ に変えてタイトル先頭に "[DONE] " を付ける形でもよい）
-2. 確実な削除には Notion UI 上で手動アーカイブを推奨。または将来的に Notion API 直接連携を実装。
+#### Step 2-B: タイトルにアーカイブ印を付与（任意・監査性向上）
 
-**簡易実装**: 現時点では各 archive エントリに対して以下を実行：
-- `notion-update-page` で `properties: {"タイトル": "✅ " + 既存タイトル}` に変更
-- ページアイコンを ✅ に変更
-- ステータス select に "done" 値を追加して設定する場合は事前に `notion-update-data-source` でオプション追加が必要
+各 archive エントリに対して `notion-update-page`（command: `update_properties`）でアイコンを `✅` に、タイトル先頭に `✅ ` を付ける。
+失敗してもダッシュボードからの除去には影響しないため、エラーは無視して次に進む。
 
-→ **シンプル運用**: archives の page_id をリスト化してユーザーに通知し、Notion 上で手動でゴミ箱に移すよう促す。並行して state ファイルから該当 ID を削除して、agent-backlog.md 上は done のままなので次回以降の sync で再生成されない。
+#### Step 2-C: 注意事項
+
+- このDBの `ステータス` select には `done` 値が無く、`update_properties` で `ステータス: "done"` をセットしようとすると validation_error になる。状態変更で消そうとしないこと
+- `notion-update-data-source` の `in_trash: true` は **データソース全体**の削除を意味するため絶対に使わない
+- ページ単位のゴミ箱送り（trash）が必要なら、現状は Notion UI からの手動操作のみ。本フローの「親ページ退避」で運用上は十分
 
 ### Step 3: 既存ページの更新（updates）
 
