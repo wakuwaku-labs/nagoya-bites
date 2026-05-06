@@ -112,10 +112,17 @@ node scripts/pick_daily_trending5.js run      # data/daily_trending5.json に書
 `.github/workflows/daily-trending5.yml` が毎朝5:30 JSTに `pick → build → commit & push` を実行。
 `daily-journal.yml`（7:00 JST）より1時間半早く走り、journal が最新の5選を参照できる。
 
-### 鮮度を保つための運用ルール（**最重要**）
-- 外部メディアで話題店として確認したら `data/trending_stores.json` の **`検出日`** を必ず**当日の日付**に更新
-- 同じ店が新しい媒体で取り上げられたら `出典URL[]` に追記して媒体数を増やす
+### 鮮度を保つための運用ルール（**A案：自動繰り上げ**）
+- **基本運用**: 外部メディアで話題店を確認したら、**`出典URL[]` にURLを追記するだけでOK**
+- 翌朝5:30 JSTの自動実行で `pick_daily_trending5.js` が新URLを検出し、**`検出日` を当日の日付に自動繰り上げ**する
+- 仕組み: `data/trending_url_history.json` がURLごとの初回検出日を追跡。`出典URL[]` 内のURLのうち最も新しい初回検出日を `検出日` として採用
+- `検出日` を手動で書き換える必要はない（自動管理）
 - 6ヶ月超は `有効期限` で自動的に候補プールから外れる
+- `data/trending_url_history.json` は**手動編集不要**の管理ファイル
+
+### 鮮度を保てない例（避けるべきパターン）
+- 媒体露出を確認しても `出典URL[]` を更新しない → 検出日が古いまま、鮮度スコアが下がり続ける
+- URL を削除する → 履歴から消えはしないが「現在の `出典URL[]` にあるURLの最新初回検出日」を採用するため、削除した分は鮮度に寄与しなくなる
 
 ---
 
