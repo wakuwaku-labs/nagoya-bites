@@ -434,6 +434,12 @@ function buildSitemap(slugs) {
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>${BASE_URL}/stores/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
 ${storeUrls}
 </urlset>`;
 }
