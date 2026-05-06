@@ -243,6 +243,7 @@
 | 2026-04-18 | Orchestrator(EXPLICIT) | ISSUE-011/012-A/013 実装（多媒体クエリ30件超・Instagram検索URL・週次自動化・API申請手順docs） | ✅ PR#2 マージ済み |
 | 2026-04-18 | Orchestrator(EXPLICIT) | docs/instagram-launch-kit.md 追加（Instagram運用コピペ素材集） | ✅ PR#3 マージ済み |
 | 2026-04-18 | Inspector (2並列) | 全方位監査実施、技術/UX/SEO/コンテンツ/競合/季節の10カテゴリ評価、新課題7件検出 | ✅ ISSUE-014〜020 登録 |
+| 2026-05-07 | Orchestrator(/solve-next) | ISSUE-027 競合認識フレームを6カテゴリ制に更新（CLAUDE.md / orchestrator.md / 4分類施策判断追加） | ✅ デプロイ済み |
 
 ---
 
@@ -549,16 +550,20 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 > 6カテゴリ × 6軸の全方位ベンチマークを実施し、消費者の選択経路（大手ポータル・マップ系・地域メディア・SNS・個人ブログ・生成AI）と比較。
 > 4分類（Catch-up / Strategic Skip / Moat / Quality Gap）に整理し、以下の課題を抽出。
 
-### [ISSUE-027] CLAUDE.md / orchestrator.md の競合認識フレームを6カテゴリ制に更新
+### [ISSUE-027] CLAUDE.md / orchestrator.md の競合認識フレームを6カテゴリ制に更新 ✅
 
-- **priority**: P1
-- **status**: ready
+- **priority**: P1 → **status**: done
 - **category**: competitive / brand
 - **detected**: 2026-05-06
+- **resolved**: 2026-05-07
+- **resolved_by**: /solve-next（Orchestrator）
 - **description**:
-  CLAUDE.md と agents/orchestrator.md は競合を「タベログ・ホットペッパー・Retty・Google Maps」の4社に限定しているが、実際の消費者選択経路はSNS（ナゴレコIG 20万・ナゴグルTikTok 10万超）、地域メディア（ナゴレコ・大人の名古屋・名古屋情報通3,522記事）、生成AI引用まで広がっている。フレーム自体を6カテゴリ制に更新し、戦わない領域（匿名口コミ・クーポン経済・高級セグメント・女性向け装飾）も明示する。
-- **impact**: 全エージェントの競合認識のずれを是正。今後の Inspector / Marketer / Editor / Strategist の意思決定の基盤になる。
-- **acceptance**: CLAUDE.md と agents/orchestrator.md の「競合の弱点」「我々が勝つ領域」セクションを 6カテゴリ制に書き換え、Moat と Strategic Skip を明示
+  CLAUDE.md と agents/orchestrator.md は競合を「タベログ・ホットペッパー・Retty・Google Maps」の4社に限定していたが、実際の消費者選択経路はSNS（ナゴレコIG 20万・ナゴグルTikTok 10万超）、地域メディア（ナゴレコ・大人の名古屋・名古屋情報通3,522記事）、生成AI引用まで広がっている。フレーム自体を6カテゴリ制に更新し、戦わない領域（匿名口コミ・クーポン経済・高級セグメント・女性向け装飾）も明示。
+- **resolution**:
+  - CLAUDE.md「競争優位」を 6カテゴリ制に書き換え。Moat 5項目・Strategic Skip 6項目を明記
+  - agents/orchestrator.md 経営哲学 Q2 を 6カテゴリ参照に更新
+  - 「競合の弱点」セクションを 6カテゴリ × 主要プレイヤー網羅に拡張（食べログ/ホットペッパー/Retty/ヒトサラ/一休/ぐるなび/OZmall/まとめ系/Maps/ナゴレコ/大人の名古屋/名古屋情報通/SNS/個人ブログ/生成AI）
+  - 「4分類で施策を判断する」セクション新設（Catch-up / Strategic Skip / Moat / Quality Gap）
 - **files**: `CLAUDE.md`, `agents/orchestrator.md`
 - **owner**: Orchestrator
 - **ref**: `docs/competitive-analysis-2026-05-06.md` 第 6章
