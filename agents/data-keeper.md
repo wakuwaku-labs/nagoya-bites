@@ -85,6 +85,40 @@ node scripts/fetch_trending_articles.js promote '店名'
 
 ---
 
+## 日次「今日の話題店」TOP5（鮮度＋多媒体露出のみで選定）
+
+トップページ `📰 今日の話題店` セクションは毎朝5:30 JSTに自動更新される。**Google評価は使わない**。
+
+### スコア配分（最大100点 + 編集部推薦10点、連日ペナ -15点）
+| 要素 | 配点 | 算出ロジック |
+|------|------|-------------|
+| 鮮度 | 50点 | `検出日`からの経過日数で減衰（0日=50 / 7日=33 / 30日=8 / 60日超=0） |
+| 多媒体露出 | 35点 | `トレンド情報源[]` + `出典URL[]` の distinct host を合算した媒体数（4媒体以上で満点） |
+| 編集部推薦 | 10点 | `編集部推薦=true` で +10 |
+| 既存話題スコア | 5点 | `話題スコア × 0.05`（補正） |
+| 連日ペナルティ | -15点 | 過去7日に5選入りした店は減点 |
+
+### 候補プール
+- `data/trending_stores.json` の `話題フラグ=true` & 期限内
+- `data/manual_stores.json` の `話題フラグ=true` or `編集部推薦=true` & 期限内
+
+### CLI
+```bash
+node scripts/pick_daily_trending5.js dryrun   # スコアを stdout に表示し書き出さない
+node scripts/pick_daily_trending5.js run      # data/daily_trending5.json に書き出し
+```
+
+### 自動実行
+`.github/workflows/daily-trending5.yml` が毎朝5:30 JSTに `pick → build → commit & push` を実行。
+`daily-journal.yml`（7:00 JST）より1時間半早く走り、journal が最新の5選を参照できる。
+
+### 鮮度を保つための運用ルール（**最重要**）
+- 外部メディアで話題店として確認したら `data/trending_stores.json` の **`検出日`** を必ず**当日の日付**に更新
+- 同じ店が新しい媒体で取り上げられたら `出典URL[]` に追記して媒体数を増やす
+- 6ヶ月超は `有効期限` で自動的に候補プールから外れる
+
+---
+
 ## 週次自動収集（ISSUE-013 実装済み）
 
 `.github/workflows/weekly-pipeline.yml` に以下が毎週月曜9時JSTで自動実行:

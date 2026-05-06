@@ -1,0 +1,62 @@
+name: NAGOYA BITES — 日次「今日の話題店」TOP5 更新
+
+on:
+  schedule:
+    # 毎日 20:30 UTC = 翌朝 5:30 JST
+    # daily-journal.yml (22:00 UTC = 7:00 JST) より1時間半早く実行し、
+    # journal が最新の5選を参照できるようにする
+    - cron: '30 20 * * *'
+  workflow_dispatch: # 手動実行（テスト・リカバリ用）
+
+jobs:
+  daily-trending5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 依存パッケージインストール
+        run: npm install
+
+      - name: TOP5 をピックアップ（鮮度＋多媒体露出）
+        run: node scripts/pick_daily_trending5.js run
+
+      - name: build.js で LOCAL_STORES に焼き込み
+        run: node build.js
+        env:
+          HOTPEPPER_API_KEY: ${{ secrets.HOTPEPPER_API_KEY }}
+
+      - name: 変更をコミット & プッシュ
+        run: |
+          git config user.name  "NAGOYA BITES Daily"
+          git config user.email "daily@nagoya-bites"
+          git add data/daily_trending5.json index.html sitemap.xml stores/ 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "コミット対象の変更がありません。"
+            exit 0
+          fi
+          TODAY_JST=$(TZ=Asia/Tokyo date +%Y-%m-%d)
+          git commit -m "[agent] 今日の話題店TOP5: ${TODAY_JST}"
+          # 競合回避のため rebase してからプッシュ
+          git pull --rebase origin main || true
+          git push || (sleep 10 && git pull --rebase origin main && git push)
+
+      - name: 実行ログ
+        if: always()
+        run: |
+          echo "$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M JST') — 日次TOP5パイプライン完了" >> agent-run.log
+          git config user.name  "NAGOYA BITES Daily" 2>/dev/null || true
+          git config user.email "daily@nagoya-bites" 2>/dev/null || true
+          git add agent-run.log 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "[agent] 日次TOP5ログ更新 [skip ci]"
+          git push || true

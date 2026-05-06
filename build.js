@@ -903,6 +903,42 @@ async function main() {
     console.log('data/trending_stores.json なし（話題フラグスキップ）');
   }
 
+  // 「今日の話題店」TOP5 を LOCAL_STORES に焼き込み（鮮度+多媒体露出のみで選定。Google評価不問）
+  // 生成元: scripts/pick_daily_trending5.js → data/daily_trending5.json
+  const dailyTrendingPath = path.join(__dirname, 'data/daily_trending5.json');
+  let dailyTrendingDate = '';
+  if (fs.existsSync(dailyTrendingPath)) {
+    try {
+      const dt = JSON.parse(fs.readFileSync(dailyTrendingPath, 'utf8'));
+      dailyTrendingDate = dt.date || '';
+      let dailyApplied = 0, dailyMissing = [];
+      for (const pick of (dt.stores || [])) {
+        const hit = stores.find(s =>
+          s['店名'] === pick['店名'] &&
+          (pick['エリア'] ? s['エリア'] === pick['エリア'] : true)
+        );
+        if (hit) {
+          hit['今日の話題'] = true;
+          hit['今日の話題順位'] = pick['順位'];
+          hit['今日の話題鮮度'] = pick['鮮度日数'];
+          hit['今日の話題媒体数'] = pick['媒体数'];
+          hit['話題ハイライト'] = pick['話題ハイライト'] || '';
+          dailyApplied++;
+        } else {
+          dailyMissing.push(pick['店名']);
+        }
+      }
+      console.log(`今日の話題TOP5付与: ${dailyApplied}件 / マッチ失敗: ${dailyMissing.length}件 (date=${dailyTrendingDate})`);
+      if (dailyMissing.length) {
+        console.log('  マッチ失敗の店名（要確認）:', dailyMissing.join(' / '));
+      }
+    } catch (e) {
+      console.error(`data/daily_trending5.json の読み込み失敗: ${e.message}`);
+    }
+  } else {
+    console.log('data/daily_trending5.json なし（今日の話題TOP5スキップ）');
+  }
+
   // 編集部ピックJSONをマージ（店名＋エリアで既存店舗にマッチングさせ、編集部フィールドを付与）
   const editorPicksPath = path.join(__dirname, 'data/editor_picks.json');
   if (fs.existsSync(editorPicksPath)) {
@@ -1099,6 +1135,21 @@ async function main() {
     /var LOCAL_STORES = \[[\s\S]*?\];/,
     `var LOCAL_STORES = ${jsonStr};`
   );
+
+  // 「今日の話題店」更新日付を埋め込む（YYYY/M/D 形式。JS依存なしの静的置換）
+  if (dailyTrendingDate) {
+    const m = dailyTrendingDate.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    const labelDate = m ? `${m[1]}/${parseInt(m[2],10)}/${parseInt(m[3],10)}` : dailyTrendingDate;
+    html = html.replace(
+      /(<em id="trend-ranking-date">)[^<]*(<\/em>)/,
+      `$1${labelDate}$2`
+    );
+  } else {
+    html = html.replace(
+      /(<em id="trend-ranking-date">)[^<]*(<\/em>)/,
+      `$1$2`
+    );
+  }
 
   // 2. SEOクロール用の内部リンク集は scripts/inject_store_links.js が
   //    stores/*.html を元に正規リンク（stores/{slug}.html）で生成・挿入する。
