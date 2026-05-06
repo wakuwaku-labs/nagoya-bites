@@ -84,9 +84,13 @@ function parseFields(task) {
   const st = body.match(/\*\*status\*\*\s*[:：]\s*([a-z_]+)/);
   if (st) task.status = st[1];
 
-  // owner
-  const ow = body.match(/\*\*owner\*\*\s*[:：]\s*([A-Za-z][A-Za-z\s+]*?)\s*(?:\n|$|\()/);
-  if (ow) task.owner = ow[1].trim().split(/\s*\+\s*/)[0]; // 共同作業の場合は最初を主担当に
+  // owner — 行全体を取って先頭の英字部分だけ抽出（"Marketer 主導 + Editor 連携" のような日本語混入に対応）
+  const ow = body.match(/\*\*owner\*\*\s*[:：]\s*([^\n]+)/);
+  if (ow) {
+    const raw = ow[1].trim().split(/\s*\+\s*/)[0]; // 共同作業の場合は最初を主担当に
+    const m = raw.match(/^([A-Za-z]+)/);
+    if (m) task.owner = m[1];
+  }
 
   // category
   const cat = body.match(/\*\*category\*\*\s*[:：]\s*([^\n]+)/);
