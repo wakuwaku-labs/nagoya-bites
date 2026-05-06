@@ -14,8 +14,14 @@
  *   - 既存話題スコア: 最大5点（補正）
  *   - 連日ピックペナ: 過去7日に5選入りしていれば -15点
  *
- * 入力: data/trending_stores.json, data/manual_stores.json, data/daily_trending5.json（前回値）
- * 出力: data/daily_trending5.json
+ * 鮮度の自動更新（A案）:
+ *   `data/trending_url_history.json` を管理し、`出典URL[]` に新しいURLが
+ *   追加されたら自動で `検出日` を当日に繰り上げる。Editor は新しい媒体URLを
+ *   `出典URL[]` に追記するだけで OK。`検出日` を手動で書き換える必要はない。
+ *
+ * 入力: data/trending_stores.json, data/manual_stores.json, data/daily_trending5.json, data/trending_url_history.json
+ * 出力: data/daily_trending5.json, data/trending_url_history.json,
+ *       (検出日が新しくなった場合のみ) data/trending_stores.json と data/manual_stores.json も更新
  *
  * 使い方:
  *   node scripts/pick_daily_trending5.js dryrun   # スコアを stdout に表示し書き出さない
@@ -28,6 +34,7 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const TRENDING_PATH = path.join(ROOT, 'data', 'trending_stores.json');
 const MANUAL_PATH = path.join(ROOT, 'data', 'manual_stores.json');
+const URL_HISTORY_PATH = path.join(ROOT, 'data', 'trending_url_history.json');
 const OUT_PATH = path.join(ROOT, 'data', 'daily_trending5.json');
 
 const TOP_N = 5;
@@ -86,9 +93,103 @@ function loadJSON(p, fallback) {
   catch (e) { console.error(`読み込み失敗: ${p}: ${e.message}`); return fallback; }
 }
 
-function buildCandidates(today) {
+function storeKey(store) {
+  return (store['店名'] || '') + '|' + (store['エリア'] || '');
+}
+
+function loadUrlHistory() {
+  const fallback = {
+    _comment: '出典URLの初回検出日を追跡する管理ファイル。pick_daily_trending5.js が自動更新するため手動編集不要。Editor が trending_stores.json / manual_stores.json の 出典URL[] に新URLを追記すると、ここに当日の日付で記録され、対象店舗の 検出日 が自動的に繰り上がる。',
+    stores: {},
+  };
+  if (!fs.existsSync(URL_HISTORY_PATH)) return fallback;
+  try {
+    const h = JSON.parse(fs.readFileSync(URL_HISTORY_PATH, 'utf8'));
+    if (!h.stores) h.stores = {};
+    return h;
+  } catch (e) {
+    console.error(`url history 読み込み失敗: ${e.message}`);
+    return fallback;
+  }
+}
+
+// 出典URLの履歴を更新し、新URL分の最新日付を返す
+// returns: { newestUrlDate: string|null, newUrls: number, knownUrls: number }
+function syncStoreUrls(store, history, today) {
+  const key = storeKey(store);
+  const urls = (store['出典URL'] || []).filter(u => u && typeof u === 'string');
+  if (!history.stores[key]) history.stores[key] = { urls: {} };
+  const entry = history.stores[key];
+  let newUrls = 0;
+  for (const u of urls) {
+    if (!entry.urls[u]) {
+      entry.urls[u] = today;
+      newUrls++;
+    }
+  }
+  // 現在 出典URL[] にある URL の初回検出日 のうち最新を採用（削除されたURLは無視）
+  const currentSet = new Set(urls);
+  const dates = Object.entries(entry.urls)
+    .filter(([u, d]) => currentSet.has(u))
+    .map(([u, d]) => d)
+    .filter(Boolean)
+    .sort();
+  const newestUrlDate = dates.length ? dates[dates.length - 1] : null;
+  return { newestUrlDate, newUrls, knownUrls: urls.length };
+}
+
+// 検出日 を必要に応じて bump し、変更があれば true を返す
+function maybeBumpDetectionDate(store, newestUrlDate) {
+  if (!newestUrlDate) return false;
+  const orig = store['検出日'] || '';
+  if (newestUrlDate > orig) {
+    store['検出日'] = newestUrlDate;
+    return true;
+  }
+  return false;
+}
+
+// ソースファイル全体を返す（書き戻し用に元構造を保持）。
+// URL履歴を更新し、必要に応じて 検出日 を bump する。
+// returns: { trending, manual, urlHistory, trendingDirty, manualDirty, urlHistoryDirty, bumpedKeys[] }
+function loadAndSyncSources(today) {
+  const trending = loadJSON(TRENDING_PATH, { stores: [], candidates: [] });
+  const manual = loadJSON(MANUAL_PATH, { stores: [] });
+  const urlHistory = loadUrlHistory();
+  let trendingDirty = false;
+  let manualDirty = false;
+  let urlHistoryDirty = false;
+  const bumpedKeys = [];
+
+  function processStore(store, dateField, onDirty) {
+    const before = JSON.stringify(urlHistory.stores[storeKey(store)] || null);
+    const { newestUrlDate, newUrls } = syncStoreUrls(store, urlHistory, today);
+    const after = JSON.stringify(urlHistory.stores[storeKey(store)] || null);
+    if (before !== after) urlHistoryDirty = true;
+    if (newUrls > 0) {
+      console.log(`  [URL履歴] ${storeKey(store)} に新URL ${newUrls}件を記録`);
+    }
+    if (maybeBumpDetectionDate(store, newestUrlDate)) {
+      bumpedKeys.push(`${storeKey(store)} → ${store['検出日']}`);
+      onDirty();
+    }
+  }
+
+  for (const s of (trending.stores || [])) {
+    processStore(s, '検出日', () => { trendingDirty = true; });
+  }
+  for (const s of (manual.stores || [])) {
+    // manual_stores は「検出日」と「追加日」の両方を持ちうる。話題鮮度に使うのは「検出日」
+    // 検出日フィールドが無ければ「追加日」をシードとして使い、新URL検出時に「検出日」を生やす
+    if (!s['検出日'] && s['追加日']) s['検出日'] = s['追加日'];
+    processStore(s, '検出日', () => { manualDirty = true; });
+  }
+
+  return { trending, manual, urlHistory, trendingDirty, manualDirty, urlHistoryDirty, bumpedKeys };
+}
+
+function buildCandidatesFromSynced(trending, manual, today) {
   const candidates = [];
-  const trending = loadJSON(TRENDING_PATH, { stores: [] });
   for (const s of (trending.stores || [])) {
     if (s['話題フラグ'] !== true) continue;
     if (s['有効期限'] && s['有効期限'] < today) continue;
@@ -104,7 +205,6 @@ function buildCandidates(today) {
       _source: 'trending',
     });
   }
-  const manual = loadJSON(MANUAL_PATH, { stores: [] });
   for (const s of (manual.stores || [])) {
     const hasBuzz = s['話題フラグ'] === true || s['編集部推薦'] === true;
     if (!hasBuzz) continue;
@@ -112,7 +212,7 @@ function buildCandidates(today) {
     candidates.push({
       店名: s['店名'],
       エリア: s['エリア'] || '',
-      検出日: s['追加日'] || s['検出日'] || '',
+      検出日: s['検出日'] || s['追加日'] || '',
       情報源: s['トレンド情報源'] || [],
       出典URL: s['出典URL'] || [],
       話題スコア: parseInt(s['話題スコア']) || 0,
@@ -177,18 +277,25 @@ function score(c, today, recentSet) {
   };
 }
 
-function pickTop(today) {
-  const history = loadHistory(today);
-  const recent = recentlyPickedNames(history);
-  const candidates = buildCandidates(today);
-  const scored = candidates.map(c => ({ c, ...score(c, today, recent) }));
-  scored.sort((a, b) => b.score - a.score);
-  return { scored, history };
-}
-
 function run({ write }) {
   const today = todayJST();
-  const { scored, history } = pickTop(today);
+
+  // ステップ1: ソースファイルを読み URL履歴をシンクして 検出日 を自動bump
+  console.log(`=== URL履歴シンク (today=${today}) ===`);
+  const synced = loadAndSyncSources(today);
+  if (synced.bumpedKeys.length) {
+    console.log(`  検出日を ${synced.bumpedKeys.length} 件繰り上げ:`);
+    for (const k of synced.bumpedKeys) console.log(`    ${k}`);
+  } else {
+    console.log('  検出日の繰り上げなし（新URLなし or 既に最新）');
+  }
+
+  // ステップ2: スコアリング
+  const history = loadHistory(today);
+  const recent = recentlyPickedNames(history);
+  const candidates = buildCandidatesFromSynced(synced.trending, synced.manual, today);
+  const scored = candidates.map(c => ({ c, ...score(c, today, recent) }));
+  scored.sort((a, b) => b.score - a.score);
 
   if (scored.length === 0) {
     console.log('候補ゼロ。書き出ししない。');
@@ -240,8 +347,23 @@ function run({ write }) {
   if (write) {
     fs.writeFileSync(OUT_PATH, JSON.stringify(out, null, 2) + '\n', 'utf8');
     console.log(`\n書き出し完了: ${OUT_PATH}`);
+    if (synced.urlHistoryDirty) {
+      fs.writeFileSync(URL_HISTORY_PATH, JSON.stringify(synced.urlHistory, null, 2) + '\n', 'utf8');
+      console.log(`URL履歴書き出し: ${URL_HISTORY_PATH}`);
+    }
+    if (synced.trendingDirty) {
+      fs.writeFileSync(TRENDING_PATH, JSON.stringify(synced.trending, null, 2) + '\n', 'utf8');
+      console.log(`trending_stores.json 検出日を更新: ${TRENDING_PATH}`);
+    }
+    if (synced.manualDirty) {
+      fs.writeFileSync(MANUAL_PATH, JSON.stringify(synced.manual, null, 2) + '\n', 'utf8');
+      console.log(`manual_stores.json 検出日を更新: ${MANUAL_PATH}`);
+    }
   } else {
     console.log('\n(dryrun: 書き出しスキップ)');
+    if (synced.urlHistoryDirty) console.log(`  → URL履歴に変更あり (write モードで保存される)`);
+    if (synced.trendingDirty) console.log(`  → trending_stores.json の 検出日 に変更あり (write モードで保存される)`);
+    if (synced.manualDirty) console.log(`  → manual_stores.json の 検出日 に変更あり (write モードで保存される)`);
   }
 }
 
