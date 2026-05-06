@@ -697,3 +697,66 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **files**: `CLAUDE.md`, `agents/strategist.md`
 - **owner**: Strategist + Orchestrator
 - **ref**: `docs/competitive-analysis-2026-05-06.md` 第 3章 B 節
+
+---
+
+## 組織運営課題（ORG-XXX）— 2026-05-06 検出
+
+agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strategist 部門の起票実績がゼロ、未完了タスクが15〜20日塩漬け、という組織運営上の構造課題を Orchestrator が検出。
+連携の仕組みは整っているが「事業の方向性を考える層」と「集客する層」が稼働していないため、毎日サイトが進化しても事業ゴールへの到達が判定できていない。
+
+### [ORG-001] CEO の実行ログ運用を再開する
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-05-06
+- **owner**: Orchestrator
+- **category**: 組織
+- **description**:
+  agent-backlog.md の「エージェント実行ログ」表が 2026-04-18 で更新停止。
+  実際には 5/4 (11件) / 5/5 (7件) / 5/6 (17件) のコミットがあるのに、議事録に1行も追記されていない。
+  Orchestrator が orchestrator.md で自ら定めた報告フォーマットを守っていない状態。
+- **acceptance**:
+  - 4/19〜5/6 の活動を「エージェント実行ログ」表に1行ずつ追記する
+  - Stop hook 経由で「ターン終了時に必ず実行ログを更新する」運用フローを orchestrator.md に明記
+  - 以後は `/solve-next` 実行ごとに自動で実行ログ行を追加するロジックを solve-next コマンドに組み込む
+- **files**: `agent-backlog.md`, `agents/orchestrator.md`, `.claude/commands/solve-next.md`
+
+### [ORG-002] Strategist に月次 KPI スナップショット業務を持たせる
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-05-06
+- **owner**: Strategist
+- **category**: 組織 / 戦略
+- **description**:
+  orchestrator.md で「月間UU」「CTAクリック率」が北極星指標と定義されているのに、
+  agent-backlog.md には実測値の記録が一度も存在しない。「目標値あり・計測値なし」状態。
+  Strategist の起票実績は 0件で、事実上稼働していない。
+- **acceptance**:
+  - 毎月1日に Strategist が `STR-MONTHLY-YYYY-MM` として KPI スナップショットを agent-backlog.md に追記する運用を agents/strategist.md に明記
+  - 初回は 2026-05-01 時点のベースライン値を Google Analytics / Search Console から取得して記録
+  - スナップショット項目: 月間UU / セッション / CTA クリック数 / 指名検索数 / 上位10キーワード順位 / 掲載店舗数 / 特集記事数
+- **files**: `agents/strategist.md`, `agent-backlog.md`
+
+### [ORG-003] Marketer に週次 SEO/SNS チェック業務を持たせる
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-05-06
+- **owner**: Marketer
+- **category**: 組織 / マーケティング
+- **description**:
+  Marketer の起票実績は 0件。orchestrator.md で MARKETING モードと役割は定義済みだが、
+  「いつ・何をきっかけに・何を起票するか」のトリガーが決まっていないため起動されない。
+- **acceptance**:
+  - 毎週月曜に Marketer が `MKT-WEEKLY-YYYY-WW` として「SEO順位 + SNSエンゲージメント + トラフィック流入元」のチェックレポートを agent-backlog.md に追記する運用を agents/marketer.md に明記
+  - レポートで「順位下落」「エンゲージメント急落」「機会キーワード発見」があれば個別に `MKT-XXX` を起票
+  - GitHub Actions の `weekly-pipeline.yml` にトリガーを組み込み、月曜のパイプラインで Marketer が必ず動く仕組みにする
+- **files**: `agents/marketer.md`, `agent-backlog.md`, `.github/workflows/weekly-pipeline.yml`
+
+---
+
+## Notion ダッシュボード連携
+
+このバックログは [Notion DB「課題トラッカー」](#) に常時自動同期される。
+詳細な運用ルールは [agents/orchestrator.md](agents/orchestrator.md) の「Notion ダッシュボード運用」章を参照。
+
+- 同期スクリプト: [scripts/sync_backlog_to_notion.js](scripts/sync_backlog_to_notion.js)
+- 1件ずつ解く: `/solve-next` スラッシュコマンド
+- agent-backlog.md が**マスター**、Notion は確認用ダッシュボード
+- `status: done` になった課題は Notion からアーカイブされて表示から消える

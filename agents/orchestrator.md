@@ -105,6 +105,10 @@ Claude Codeでこのプロジェクトを開いたとき、または何かを頼
 **まず以下を実行してから判断する**。スキップ禁止。
 
 ```
+Step 0: .notion_sync_pending ファイルが存在するか確認
+         → 存在すれば即座に /sync-backlog を実行（前回ターンで agent-backlog.md が変わった証拠）
+         → これが ORG-001（CEO の運用ルール再開）を技術的に強制する
+
 Step 1: agent-backlog.md を読む
          → 未解決タスクの数・最高優先度・直近のログを確認
 
@@ -468,6 +472,8 @@ Phase 4: デプロイと報告
 ❌ ユーザーの承認なしにマネタイズ施策を実装する
 ❌ 競合の動向を無視して内向きの改善だけに終始する
 ❌ 短期施策だけ追って長期的なブランド資産を毀損する
+❌ 課題発見後、agent-backlog.md に追記しないまま会話を閉じる（ORG-001 違反）
+❌ agent-backlog.md を編集した後、Notion 同期を行わずにターンを終える
 ```
 
 ---
@@ -540,3 +546,57 @@ Phase 4: デプロイと報告
 | P1 | UX劣化・CVR低下・SEO順位下落 | 次の実装サイクルで必ず修正 |
 | P2 | SEO改善・パフォーマンス・A11y・コンテンツ拡充 | 計画的に改善 |
 | P3 | デザイン磨き・文言調整・nice-to-have | 時間があれば |
+
+---
+
+## Notion ダッシュボード運用
+
+agent-backlog.md（マスター）を Notion DB「課題トラッカー」に常時自動同期する仕組みを 2026-05-06 に導入。
+
+### 構造
+
+```
+[agent-backlog.md] ← マスター（リポジトリ内、永続履歴）
+        ↓ scripts/sync_backlog_to_notion.js
+[Notion DB「課題トラッカー」] ← ダッシュボード（残課題のみ表示）
+   親ページ: https://www.notion.so/35826260227a81e595aaf5d9fc4caa6c
+```
+
+### 3つのスラッシュコマンド
+
+| コマンド | 用途 |
+|---|---|
+| `/sync-backlog` | agent-backlog.md → Notion を手動同期。done になった課題は Notion から消える |
+| `/solve-next` | 優先度最高の未着手タスクを1件解いてデプロイし、Notion に反映 |
+| `/journal-today` | 既存の日次運用（変更なし） |
+
+### 自動同期の仕組み（Stop hook）
+
+`.claude/settings.json` に Stop hook が登録されている。
+Claude Code のターン終了時に毎回 `node scripts/sync_backlog_to_notion.js --if-changed` が走り、
+agent-backlog.md が変わっていれば `.notion_sync_pending` マーカーが立つ。
+
+次回ターン開始時、Orchestrator は **Step 0 で必ずこのマーカーを確認**し、存在すれば `/sync-backlog` を最初に実行する。
+これにより「課題が起票されたら絶対 Notion に反映される」が技術的に保証される。
+
+### 運用ルール
+
+1. **agent-backlog.md がマスター** — Notion を直接編集してもリポジトリには反映されない
+2. **done タスクは Notion から消える** — アーカイブされて「やるべきこと」だけが画面に映る
+3. **agent-backlog.md の編集後は必ず /sync-backlog** — Stop hook が忘れない仕組みを担保
+4. **`/solve-next` で1件ずつ消化** — 1ターン1件の原則。暴走防止
+5. **新規課題発見時は agent-backlog.md に追記** — Notion 直入力ではない（マスター違反）
+
+### ID 接頭辞と起票責任
+
+| 接頭辞 | 起票元 | 例 |
+|---|---|---|
+| `ISSUE-XXX` | Inspector / Builder | `ISSUE-024` |
+| `EDT-XXX` | Editor | `EDT-002` |
+| `CTN-XXX` / `CTN-DAILY-XXX` | Editor | `CTN-DAILY-009` |
+| `BATCH-XXX` | 夜間バッチ実行 | `BATCH-008` |
+| `ORG-XXX` | Orchestrator（組織課題） | `ORG-001` |
+| `MKT-XXX` | Marketer | `MKT-WEEKLY-2026-19` |
+| `STR-XXX` | Strategist | `STR-MONTHLY-2026-05` |
+
+`MKT-XXX` と `STR-XXX` は ORG-002 / ORG-003 完了後に定期起票される予定。
