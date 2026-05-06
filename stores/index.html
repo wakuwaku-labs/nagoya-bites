@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}(function(){var p=new URLSearchParams(location.search);if(p.get('nb_owner')==='1'){localStorage.setItem('nb_internal','1');history.replaceState(null,'',location.pathname);}if(localStorage.getItem('nb_internal')==='1'){gtag('js',new Date());gtag('config','G-3LCZNGZPWJ',{traffic_type:'internal'});}else{gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');}})();function trackEvent(name,params){if(localStorage.getItem('nb_internal')==='1')return;if(typeof gtag==='function')gtag('event',name,params||{});}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>店舗一覧 | NAGOYA BITES — 名古屋の飲食店データベース</title>
+<meta name="description" content="NAGOYA BITES 掲載の名古屋飲食店一覧。栄・名古屋駅・金山・大須など主要エリア別、ジャンル別に厳選レストランを掲載。1,000軒以上の個別店舗ページから予約・口コミ・地図情報を確認できます。">
+<link rel="canonical" href="https://nagoya-bites.com/stores/">
+<meta property="og:title" content="店舗一覧｜NAGOYA BITES">
+<meta property="og:description" content="名古屋の飲食店1,000軒以上を、栄・名古屋駅・金山・大須など主要エリア別に掲載。現役飲食店経営者による厳選レストランデータベース。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nagoya-bites.com/stores/">
+<meta property="og:site_name" content="NAGOYA BITES">
+<meta property="og:image" content="https://nagoya-bites.com/icons/icon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:image:alt" content="NAGOYA BITES 店舗一覧">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="店舗一覧｜NAGOYA BITES">
+<meta name="twitter:description" content="名古屋の飲食店1,000軒以上を、栄・名古屋駅・金山・大須など主要エリア別に掲載。現役飲食店経営者による厳選レストランデータベース。">
+<meta name="twitter:image" content="https://nagoya-bites.com/icons/icon-512.png">
+<meta name="twitter:image:alt" content="NAGOYA BITES 店舗一覧">
+<link rel="manifest" href="../manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192.png">
+<meta name="theme-color" content="#7a5c10">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "店舗一覧｜NAGOYA BITES",
+  "description": "名古屋の飲食店1,000軒以上を、栄・名古屋駅・金山・大須など主要エリア別に掲載。現役飲食店経営者による厳選レストランデータベース。",
+  "url": "https://nagoya-bites.com/stores/",
+  "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "名古屋の主要エリア別 飲食店リスト",
+    "numberOfItems": 4
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},
+    {"@type":"ListItem","position":2,"name":"店舗一覧"}
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;--ember:#b8541f;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;}
+header{position:sticky;top:0;z-index:100;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.1rem;letter-spacing:.3em;color:var(--white);text-decoration:none;text-transform:uppercase;}
+.logo em{font-style:italic;color:var(--gold);}
+.back-link{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.14em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.back-link:hover{color:var(--gold);}
+.container{max-width:920px;margin:0 auto;padding:3rem 1.5rem 4rem;}
+.breadcrumb{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.1em;color:var(--dim);margin-bottom:1.6rem;display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;}
+.breadcrumb a{color:var(--dim);text-decoration:none;transition:color .2s;}
+.breadcrumb a:hover{color:var(--gold);}
+.breadcrumb span{color:var(--dim);opacity:.5;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:.7rem;}
+h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,5vw,3.2rem);line-height:1.15;color:var(--white);margin-bottom:1rem;}
+h1 em{font-style:italic;color:var(--gold);}
+.lead{font-size:.92rem;line-height:1.85;color:var(--muted);margin-bottom:2.4rem;max-width:680px;}
+.area-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-bottom:3rem;}
+.area-card{display:flex;flex-direction:column;padding:1.2rem 1.3rem;background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;text-decoration:none;color:inherit;transition:transform .25s,box-shadow .25s,border-color .25s;}
+.area-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(122,92,16,.16);border-color:rgba(184,84,31,.45);}
+.area-name{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.5rem;color:var(--white);margin-bottom:.2rem;}
+.area-name em{font-style:italic;color:var(--gold);}
+.area-jp{font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:.6rem;}
+.area-count{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:.5rem;}
+.area-desc{font-size:.72rem;line-height:1.7;color:var(--muted);}
+h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.5rem;color:var(--white);margin:2.4rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+.cta-block{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.6rem 1.4rem;text-align:center;margin-bottom:2rem;}
+.cta-block p{font-size:.86rem;line-height:1.85;color:var(--muted);margin-bottom:1.1rem;}
+.cta-btn{display:inline-block;padding:.8rem 1.6rem;background:linear-gradient(135deg,#d97a3a 0%,#b8541f 55%,#8c3a14 100%);color:#fff;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;border-radius:3px;text-decoration:none;font-weight:600;box-shadow:0 1px 3px rgba(140,58,20,.25);transition:transform .2s,box-shadow .25s;}
+.cta-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(184,84,31,.28);}
+.feature-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.6rem;margin-bottom:2.4rem;}
+.feature-link{display:block;padding:.85rem 1rem;background:#fff;border:0.5px solid #D3D1C7;border-radius:4px;text-decoration:none;font-size:.82rem;color:var(--text);transition:all .2s;}
+.feature-link:hover{background:rgba(122,92,16,.06);border-color:var(--gold);color:var(--gold);}
+footer{padding:2rem 1.5rem;text-align:center;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.16em;color:var(--dim);text-transform:uppercase;border-top:1px solid var(--border);margin-top:3rem;}
+footer a{color:var(--gold);text-decoration:none;}
+@media(max-width:640px){.container{padding:1.5rem 1rem 3rem;}.area-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html" class="logo">Nagoya <em>Bites</em></a>
+  <a href="../index.html" class="back-link">← TOP</a>
+</header>
+
+<div class="container">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <a href="../index.html">NAGOYA BITES</a>
+    <span>›</span>
+    店舗一覧
+  </nav>
+
+  <p class="eyebrow">Restaurant Database</p>
+  <h1>名古屋の<em>飲食店</em>を、エリアから探す。</h1>
+  <p class="lead">NAGOYA BITES 掲載の飲食店 1,000軒以上を、主要エリア別に整理しています。各店舗ページには、Google評価、営業時間、推薦コメント、ホットペッパーや食べログへの予約導線まで集約。シーン別に深掘りしたい方は <a href="../features/" style="color:var(--gold);text-decoration:underline">特集記事</a> もご利用ください。</p>
+
+  <h2>主要エリア</h2>
+  <div class="area-grid">
+    <a class="area-card" href="../index.html#area=%E6%A0%84">
+      <div class="area-name">Sakae</div>
+      <div class="area-jp">栄・錦エリア</div>
+      <div class="area-count">767店掲載</div>
+      <div class="area-desc">名古屋最大の繁華街。デート・女子会・接待まで幅広く対応。</div>
+    </a>
+    <a class="area-card" href="../index.html#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85">
+      <div class="area-name">Meieki</div>
+      <div class="area-jp">名古屋駅エリア</div>
+      <div class="area-count">176店掲載</div>
+      <div class="area-desc">新幹線・地下鉄ハブ。出張・接待・仕事帰り向けの個室が充実。</div>
+    </a>
+    <a class="area-card" href="../index.html#area=%E9%87%91%E5%B1%B1">
+      <div class="area-name">Kanayama</div>
+      <div class="area-jp">金山エリア</div>
+      <div class="area-count">115店掲載</div>
+      <div class="area-desc">中部国際空港アクセス良好。大型宴会場と地元店が混在。</div>
+    </a>
+    <a class="area-card" href="../index.html#area=%E5%A4%A7%E9%A0%88">
+      <div class="area-name">Osu</div>
+      <div class="area-jp">大須エリア</div>
+      <div class="area-count">30店掲載</div>
+      <div class="area-desc">食べ歩き・ランチ・カジュアル向け。多国籍グルメも豊富。</div>
+    </a>
+  </div>
+
+  <div class="cta-block">
+    <p>エリア・ジャンル・人数・タグから細かく絞り込みたい場合はトップページの検索をご利用ください。お気に入り保存・現在地検索にも対応しています。</p>
+    <a class="cta-btn" href="../index.html">トップページで全店舗を検索</a>
+  </div>
+
+  <h2>人気のシーン別特集</h2>
+  <div class="feature-list">
+    <a class="feature-link" href="../features/banquet.html">宴会・忘年会おすすめ15選</a>
+    <a class="feature-link" href="../features/private-room.html">個室グルメおすすめ10選</a>
+    <a class="feature-link" href="../features/date.html">デートディナーおすすめ10選</a>
+    <a class="feature-link" href="../features/girls-party.html">女子会おすすめ10選</a>
+    <a class="feature-link" href="../features/birthday.html">誕生日・記念日10選</a>
+    <a class="feature-link" href="../features/large-group.html">大人数宴会20人以上10選</a>
+    <a class="feature-link" href="../features/nagoya-hitsumabushi.html">ひつまぶし完全ガイド9選</a>
+    <a class="feature-link" href="../features/nagoya-miso-nikomi-udon.html">味噌煮込みうどん完全ガイド5選</a>
+    <a class="feature-link" href="../features/nagoya-tebasaki.html">手羽先完全ガイド8選</a>
+  </div>
+
+  <h2>編集について</h2>
+  <p style="font-size:.86rem;line-height:1.85;color:var(--muted);margin-bottom:1rem;">NAGOYA BITES は名古屋で8ブランドを運営する現役飲食店経営者が編集する、名古屋専門の飲食店データベースです。広告掲載料による順位操作はなく、Google評価・メディア露出・SNS話題度を統合した独自のキュレーションで店舗を選定しています。詳細は <a href="../features/editorial-policy.html" style="color:var(--gold);text-decoration:underline">編集規約</a> をご覧ください。</p>
+</div>
+
+<footer>
+  © 2026 <a href="../index.html">NAGOYA BITES</a> — 名古屋グルメの決定版ガイド
+</footer>
+
+</body>
+</html>
