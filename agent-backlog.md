@@ -523,3 +523,160 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
   各記事: Article + ItemList + BreadcrumbList + FAQPage JSON-LD, 内部リンク, related-links。
   features/index.html に3カード追加（numberOfItems 12→15）。sitemap.xml に4URL追加。
 - **files**: `features/nagoya-lunch-washoku.html`（新規）, `features/birthday-surprise.html`（新規）, `features/osu-food-walk.html`（新規）, `features/index.html`, `journal/index.html`, `sitemap.xml`
+
+---
+
+## 競合分析（2026-05-06）から追加された課題
+
+> 出典: `docs/competitive-analysis-2026-05-06.md`
+> 6カテゴリ × 6軸の全方位ベンチマークを実施し、消費者の選択経路（大手ポータル・マップ系・地域メディア・SNS・個人ブログ・生成AI）と比較。
+> 4分類（Catch-up / Strategic Skip / Moat / Quality Gap）に整理し、以下の課題を抽出。
+
+### [ISSUE-027] CLAUDE.md / orchestrator.md の競合認識フレームを6カテゴリ制に更新
+
+- **priority**: P1
+- **status**: ready
+- **category**: competitive / brand
+- **detected**: 2026-05-06
+- **description**:
+  CLAUDE.md と agents/orchestrator.md は競合を「タベログ・ホットペッパー・Retty・Google Maps」の4社に限定しているが、実際の消費者選択経路はSNS（ナゴレコIG 20万・ナゴグルTikTok 10万超）、地域メディア（ナゴレコ・大人の名古屋・名古屋情報通3,522記事）、生成AI引用まで広がっている。フレーム自体を6カテゴリ制に更新し、戦わない領域（匿名口コミ・クーポン経済・高級セグメント・女性向け装飾）も明示する。
+- **impact**: 全エージェントの競合認識のずれを是正。今後の Inspector / Marketer / Editor / Strategist の意思決定の基盤になる。
+- **acceptance**: CLAUDE.md と agents/orchestrator.md の「競合の弱点」「我々が勝つ領域」セクションを 6カテゴリ制に書き換え、Moat と Strategic Skip を明示
+- **files**: `CLAUDE.md`, `agents/orchestrator.md`
+- **owner**: Orchestrator
+- **ref**: `docs/competitive-analysis-2026-05-06.md` 第 6章
+
+### [ISSUE-028] SNS 公式アカウント（Instagram / X）の開設と日次連動運用
+
+- **priority**: P1
+- **status**: ready（要ユーザー判断）
+- **category**: competitive / marketing
+- **detected**: 2026-05-06
+- **description**:
+  消費者の発見導線の半分以上が SNS に移行している中、NAGOYA BITES の SNS は事実上ゼロ。ナゴレコ IG 20万、名古屋情報通 X、ナゴグル TikTok 10万超に対して、我々はジャーナル日次更新という素材があるのに外に出していない。Instagram と X 公式アカウントを開設し、`docs/daily-posts/` の既存原稿を日次クロスポストする運用を立ち上げる。TikTok は次フェーズ。
+- **impact**: 月間 UU 1.5〜3倍ポテンシャル、指名検索数の継続的増加、AI 引用候補化の前提条件
+- **acceptance**: IG / X アカウント開設、運用テンプレート（投稿時刻・ハッシュタグ規則・スポンサー受理 NG ルール）整備、初回 30投稿の制作完了
+- **files**: 新規運用（コード変更なし）。`docs/sns-playbook.md` を新規作成検討
+- **owner**: Marketer 主導 + Editor 連携
+- **blocker**: アカウント名・運用方針はユーザー承認が必要
+- **ref**: `docs/competitive-analysis-2026-05-06.md` 推奨アクション #1
+
+### [ISSUE-029] editor_picks を 5店 → 100店規模に段階拡充
+
+- **priority**: P1
+- **status**: ready
+- **category**: competitive / data / editorial
+- **detected**: 2026-05-06
+- **description**:
+  業界視点（editorReason / mediaFeatures / insiderNote / visitStatus）は他競合 30+ サイトを調査した中で唯一無二の Moat だが、現在 5店止まりで「製品として薄い」状態。100店あれば「どのジャンルでも業界人推薦が見つかる」体感が出て、Moat が初めて消費者に届く。EDT-002 のフォローアップ。
+- **impact**: モーダル開封時の体感価値の劇的向上。editorial-policy の proof としての説得力。
+- **acceptance**: `data/editor_picks.json` を 100店規模に拡充（6月末50店・9月末100店の段階目標）。各エントリは editorReason 60〜120字 + mediaFeatures + insiderNote 必須
+- **files**: `data/editor_picks.json`, `build.js` の処理確認
+- **owner**: Editor 主導 + DataKeeper 連携
+
+### [ISSUE-030] 「業界人視点」コンテンツの SNS 用ショートフォーマット化
+
+- **priority**: P1
+- **status**: ready
+- **category**: competitive / content / marketing
+- **detected**: 2026-05-06
+- **description**:
+  ナゴレコ・名古屋情報通の SNS は「店舗紹介」止まり。我々は insiderNote / editorReason という他にない解釈層があるので、「なぜこの店は予約困難なのか」「業界人だけが知る◯◯の見極め」型のショートフォーマット（Instagram 9:16・X 画像+140字）でテンプレ化する。コンテンツ × チャネルの掛け算で SNS と Moat を同時に活かす。
+- **impact**: SNS フォロワー獲得 + ブランド認知 + AI Overviews 引用候補化の同時達成
+- **acceptance**: テンプレ設計書 + 初回 30投稿の制作完了。ISSUE-028 と並走
+- **files**: `docs/sns-content-template.md`（新規）
+- **owner**: Editor + Marketer
+
+### [ISSUE-031] ロングテール独自 KW での SEO 1位獲得戦略
+
+- **priority**: P1
+- **status**: ready
+- **category**: competitive / seo
+- **detected**: 2026-05-06
+- **description**:
+  「名古屋 居酒屋」「名古屋 個室」など競合過密 KW（食べログ・ホットペッパー・ヒトサラ・OZmall・くふうトリップが TOP10 占有）は追わず、「名古屋 業界人 推薦」「名古屋 飲食人 おすすめ」「名古屋 予約困難 理由」「名駅 接待 失敗しない」など我々しか書けない KW で 1位を取りに行く。既存特集 20本の URL/タイトル/見出しを再設計し、新規ロングテール特集 5本を追加。
+- **impact**: 中期で月間 UU 1.5〜2倍。AI 引用元としての権威性向上。
+- **acceptance**: 6ヶ月で独自 KW 5本以上で Google TOP3、Search Console で順位追跡
+- **files**: `features/*.html`（既存リライト）, `features/index.html`, `sitemap.xml`
+- **owner**: Marketer + Editor
+
+### [ISSUE-032] editorial-policy の対外発信と Google Search Console 整備
+
+- **priority**: P2
+- **status**: ready
+- **category**: competitive / seo / brand
+- **detected**: 2026-05-06
+- **description**:
+  WebSearch で `site:nagoya-bites.com` がゼロヒット → サイト全体のインデックス・サイトリンク獲得が不十分の可能性。editorial-policy.html を「現役飲食人による編集規約」としてプレスリリース・note・業界メディア寄稿で外部発信し、被リンク獲得 + Search Console で順位とサイトリンク表示を取りに行く。AI 引用と SEO の両輪を権威性で攻める。
+- **impact**: AI Overviews 引用候補化、指名検索数の継続的増加、長期ドメインオーソリティ
+- **acceptance**: 6ヶ月で外部被リンク 30本、指名検索月間 100回、Google Search Console のクエリレポート整備
+- **files**: 外部施策中心（コード変更なし）。`docs/press-release-2026.md` 草稿
+- **owner**: Strategist + Marketer
+
+### [ISSUE-033] 推薦文カバー率 16% → 50% への引き上げ（D1 / Quality Gap）
+
+- **priority**: P1
+- **status**: ready（既存 ISSUE-017 の昇格・更新）
+- **category**: competitive / data / content
+- **detected**: 2026-05-06（再評価）
+- **description**:
+  ISSUE-017 で「推薦文 84% 空白」を P1 計上していたが、競合分析の結果、推薦文は食べログ口コミ・ナゴレコ記事と直接競合する Quality Gap として最重要級と再評価。`fill_recommendations.js` / `gen_recommendations_text.js` の生成ロジックを再点検し、優先度上位 1,000店から推薦文を埋めていく。
+- **impact**: Moat（業界視点）の体感品質が劇的に向上。SEO ロングテール KW のヒット率向上。
+- **acceptance**: 6ヶ月で推薦文カバー率 50% 以上
+- **files**: `fill_recommendations.js`, `gen_recommendations_text.js`, `data/manual_stores.json`
+- **owner**: DataKeeper 主導 + Editor 監修
+- **note**: 既存 ISSUE-017 とマージ。本 ISSUE-033 を採用、ISSUE-017 は status:duplicate へ
+
+### [ISSUE-034] 「2026年最新」型の鮮度シグナル強化（lastmod / pubDate / 年号）
+
+- **priority**: P2
+- **status**: ready
+- **category**: competitive / seo / content
+- **detected**: 2026-05-06
+- **description**:
+  「名古屋 グルメ おすすめ 2026」KW で TOP10 を tabemaro / kelly-net / jalan ニュース / くふうトリップが「2026年最新」型タイトルで占拠している。我々の特集記事のタイトルに「2026年版」を入れる、Article 構造化データの datePublished / dateModified を四半期ごとに更新する、sitemap.xml の lastmod を継続的に更新する仕組みを整備。
+- **impact**: 鮮度 KW での順位上昇、Discover / News 系流入の獲得
+- **acceptance**: 既存特集 20本のタイトルとメタを 2026年版に更新、sitemap.xml lastmod の自動更新スクリプト整備
+- **files**: `features/*.html`, `sitemap.xml`, `build.js`
+- **owner**: Marketer + Builder
+
+### [ISSUE-035] シーン分類の細粒度化（推し活 / ママ会 / 撮影会 / オフ会など）
+
+- **priority**: P2
+- **status**: ready
+- **category**: competitive / ux / content
+- **detected**: 2026-05-06
+- **description**:
+  OZmall は「女子会／推し活／ママ会」、ホットペッパーは「カップルシート」「大人の隠れ家」など細粒度シーン分類を持つ。我々のシーンは「デート／女子会／接待／誕生日／GW／母の日」止まり。「推し活」「オフ会」「同窓会」「両家顔合わせ」「壮行会」など名古屋の生活シーンに合うタグを 5〜10個追加。既存 LOCAL_STORES のタグ層に追加するか、特集記事として新設するかは Builder と Editor で判断。
+- **impact**: ロングテール検索流入の獲得、フィルター粒度の差別化
+- **acceptance**: シーンタグ 5〜10個追加、または対応する特集記事を 3本以上新設
+- **files**: `index.html`（フィルター層）, `data/manual_stores.json`（タグ追加）, `features/*.html`（新規）
+- **owner**: Builder + Editor
+
+### [ISSUE-036] og:image の店舗個別自家製化（既存 ISSUE-024 の昇格）
+
+- **priority**: P2
+- **status**: ready（既存 ISSUE-024 の優先度引き上げ）
+- **category**: competitive / seo / brand
+- **detected**: 2026-05-06（再評価）
+- **description**:
+  競合分析で SNS シェア時の「映え」設計が D3 Quality Gap として浮上。stores/*.html の og:image がホットペッパー画像固定では、SNS シェア時にホットペッパーのブランドが拡散される。NAGOYA BITES オリジナルの店舗個別 og:image を生成（店名 + 業界人推薦バッジ + 価格帯ラベル等の合成）。1,096店すべてのスケールに対応する自動生成スクリプト要。
+- **impact**: SNS シェア時のブランド一貫性、SNS 経由のサイト流入の質向上
+- **acceptance**: og:image 生成スクリプト整備、1,096店すべてに自家製画像配信
+- **files**: `assets/og/*`（新規生成）, `gen-store-pages.js`, `stores/*.html`
+- **owner**: Builder + DataKeeper
+- **note**: 既存 ISSUE-024（P3）から P2 に昇格。本 ISSUE-036 が後継
+
+### [ISSUE-037] 戦わない領域（Strategic Skip）の明文化と過剰追従の防止
+
+- **priority**: P3
+- **status**: ready
+- **category**: competitive / governance
+- **detected**: 2026-05-06
+- **description**:
+  競合分析で「追わない判断」を 6項目特定（匿名口コミ大量集積 / クーポン経済 / 高級セグメント特化 / 女性向け装飾演出 / 雑誌印刷連動 / 月刊スピード）。今後 Marketer や Editor が個別施策を提案する際に、これらの領域に過剰追従しないよう、CLAUDE.md または `agents/strategist.md` に「戦わない領域」セクションを明記する。
+- **impact**: 戦略の一貫性維持、リソース無駄遣いの防止
+- **acceptance**: CLAUDE.md または agents/strategist.md に Strategic Skip 6項目を明記
+- **files**: `CLAUDE.md`, `agents/strategist.md`
+- **owner**: Strategist + Orchestrator
+- **ref**: `docs/competitive-analysis-2026-05-06.md` 第 3章 B 節
