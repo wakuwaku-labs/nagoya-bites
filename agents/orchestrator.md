@@ -534,7 +534,35 @@ Phase 4: デプロイと報告
 ❌ 短期施策だけ追って長期的なブランド資産を毀損する
 ❌ 課題発見後、agent-backlog.md に追記しないまま会話を閉じる（ORG-001 違反）
 ❌ agent-backlog.md を編集した後、Notion 同期を行わずにターンを終える
+❌ デプロイした実装を「エージェント実行ログ」表に記録しないまま会話を閉じる（ORG-001 違反）
 ```
+
+---
+
+## ターン終了時の必須運用ルール（ORG-001 で確立）
+
+Orchestrator が**ターンを閉じる前に必ず行う**チェックリスト。これを守ることで「実装したのに実行ログに残っていない」という議事録の断絶を防ぐ。
+
+```
+☑ Step A: 実装/デプロイを伴った場合 → 「エージェント実行ログ」表に1行追加
+   - 形式: | YYYY-MM-DD | <Owner>(<モード名>) | <ID> 概要 | ✅ デプロイ済み (commit hash) |
+   - /solve-next 経由なら Step 9 で自動的に追加される
+   - 手動実装（EXPLICIT/EMERGENCY 等）でも CEO が忘れずに記録する
+
+☑ Step B: agent-backlog.md を編集した場合 → /sync-backlog を実行
+   - Stop hook が `node scripts/sync_backlog_to_notion.js --if-changed` を自動実行
+   - changed:true なら .notion_sync_pending マーカーが立つ
+   - 次ターン Step 0 で必ず /sync-backlog を最初に実行
+
+☑ Step C: done になった課題があった場合 → Notion ダッシュボードから消えたか確認
+   - ISSUE-039 で確立した notion-move-pages フローでデータソース外へ退避
+   - 「タイトルに ✅ を付けるだけ」では不十分（ISSUE-027 で発覚）
+
+☑ Step D: 完了報告を出す（orchestrator.md「報告フォーマット」章に従う）
+```
+
+このチェックリストは Stop hook と /solve-next Step 9 で技術的に強制されるが、
+手動運用（EXPLICIT/EMERGENCY モード等）では CEO が意識的に守る。
 
 ---
 

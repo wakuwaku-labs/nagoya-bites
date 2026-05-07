@@ -243,7 +243,26 @@
 | 2026-04-18 | Orchestrator(EXPLICIT) | ISSUE-011/012-A/013 実装（多媒体クエリ30件超・Instagram検索URL・週次自動化・API申請手順docs） | ✅ PR#2 マージ済み |
 | 2026-04-18 | Orchestrator(EXPLICIT) | docs/instagram-launch-kit.md 追加（Instagram運用コピペ素材集） | ✅ PR#3 マージ済み |
 | 2026-04-18 | Inspector (2並列) | 全方位監査実施、技術/UX/SEO/コンテンツ/競合/季節の10カテゴリ評価、新課題7件検出 | ✅ ISSUE-014〜020 登録 |
-| 2026-05-07 | Orchestrator(/solve-next) | ISSUE-027 競合認識フレームを6カテゴリ制に更新（CLAUDE.md / orchestrator.md / 4分類施策判断追加） | ✅ デプロイ済み |
+| 2026-04-19 | Builder + DataKeeper | GA4計測タグ全1,110ページ展開(P0-A) / sitemap 1,095店登録(P0-B) / outbound_click 計測(P1-E) / 店舗一覧ページネーション化 / Instagram URL事前解決#1〜#3(累計416店) / 外部検索URLバグ修正 | ✅ デプロイ済み |
+| 2026-04-20 | Editor + Builder | EDT-001 編集規約ページ新設 / index.html→stores/* 内部リンク1,095本(P1-B) / Instagram URL解決#4(累計943店) | ✅ デプロイ済み |
+| 2026-04-21 | Editor + Builder + DataKeeper | EDT-002 editor_picks フィールド追加 / EDT-003 編集部ピック5→100店達成 / 日次ジャーナル運用パイプライン公開 / 構造化データ5施策(Breadcrumb/Restaurant拡張/ItemList/FAQPage/sitemap分割) / 手動キュレーション機構 / Instagram URL解決#5最終(累計2,203店) / LINEレポート機能拡張 / モーダル×ボタン視認性改善 | ✅ デプロイ済み |
+| 2026-04-22 | Builder | ISSUE-015 設計書 + ISSUE-015-P1 LOCAL_STORES slim serializer (index.html 7.2MB→0.9MB / 87%削減) / 季節特集導線拡充とKPI週次記録基盤 / 食べログURL事前解決#1(965件) / journal hero photo auto-embed / GitHub Pages デプロイ修正 | ✅ デプロイ済み |
+| 2026-04-23 | Inspector + Builder + Editor | Inspector 2026-04-23 監査(ISSUE-021〜026 登録) / SEO「名古屋 グルメ」ハブ+詳細3本(PR#36) / Atom 1.0 feed(ISSUE-026) / Instagram公式embed + 食べログスクレイピング削除 / Google Maps写真自動取得 / 写真表示根本修正 / 食べログURL事前解決#2(累計2,948店) / GW導線+editorial-policy相互リンク / 愛知県外15店舗除外 | ✅ デプロイ済み |
+| 2026-04-24 | Builder + DataKeeper | ISSUE-025 store meta description 100〜119字拡張(714件) / 業界人レビュー Formspreeフォーム(BATCH-007) / 全店舗おすすめポイント生成(4,589/4,598件 99.8%) / data/recommendations.json 永続化 + build.js マージ / build_journal_index 日付フィルタ / LINEレポート localhost除外(PR#37) | ✅ デプロイ済み |
+| 2026-04-26 | Builder + Editor | カスタムドメイン nagoya-bites.com 完全移行 / Instagram embed + photo QA check / 手動キュレーション機構 + 勝手口河内屋投入 / wakamaru hero画像 Instagram embed化 | ✅ デプロイ済み |
+| 2026-04-27 | Editor | journal 4/27「GW直前 まだ間に合う穴場ジャンル」公開 | ✅ デプロイ済み |
+| 2026-04-28 | Editor + DataKeeper | journal 4/28「GW夜が無理なら昼を取れ」 / stores/幽霊ページ381件削除 + build.js 自動クリーンアップ機能 | ✅ デプロイ済み |
+| 2026-04-29 | Builder + Editor | journal 4/29「GW本番予約なしOK店」 / トップをマガジン型ランディングに整理 / 絞り込みUI復活 / Instagram投稿URL「料理/内観」スコアリング選定 / GA4ホストフィルタ修正 + 自分の閲覧除外 | ✅ デプロイ済み |
+| 2026-04-30 | Editor + Builder | journal 4/30「GWの谷間日を取り戻せ」 / trackEvent engagement_time_msec 自動付与で GA4 直帰判定是正 | ✅ デプロイ済み |
+| 2026-05-01 | Editor + Builder | journal 5/1「GW後半5連休 取れる席を今夜決める」 / 食欲を刺激する派手さでビジュアル強化 | ✅ デプロイ済み |
+| 2026-05-02 | Editor | journal 5/2「GW土曜の予約難民へ」 | ✅ デプロイ済み |
+| 2026-05-03 | Editor + Builder | journal 5/3「祝日も通常営業3シグナル」 / 特集記事をヒーロー直下移動 / 特集カード絵文字→料理写真サムネイル | ✅ デプロイ済み |
+| 2026-05-04 | Editor + Builder | journal 5/4「みどりの日 早夕の隙間戦略」 / store-index エリア別一覧4,588店拡張 / 特集カード写真品質向上(Unsplash高解像度・縦型レイアウト・絞り込みボタン直下化) | ✅ デプロイ済み |
+| 2026-05-05 | Editor + Builder + DataKeeper | journal 5/5「GW最終日 地元の夜に戻る」 / instagram_posts.json 全店拡大(623件取得) / プロ評価レポート即効性Sprint(favicon/h3/keyboard/CTA) / journal関連ブロック直近3本リンク | ✅ デプロイ済み |
+| 2026-05-06 | Inspector + Orchestrator + Builder + Editor | journal 5/6「GW最終夜 軽め近場予約なし」 / 競合分析6カテゴリ全方位レポート + ISSUE-027〜037/ORG-001〜003 起票 / Notion連携 + /solve-next/sync-backlog 自動消化フロー(c001ac5) / ISSUE-038「今日の話題店」TOP5 機構新設 / 全店舗静的ページ再生成1,095件 / og:image 全特集正規化 + alt 拡張 / 絞り込み3段改善 / カード画像 width/height/decoding=async / rel=noopener 全リンク / メインナビ「店舗一覧」追加 / sitemap-index lastmod / 600w srcset / prefers-reduced-motion / 孤児ページ検出 / sync owner パーサー修正 | ✅ デプロイ済み |
+| 2026-05-07 | Orchestrator(/solve-next) | ISSUE-027 競合認識フレームを6カテゴリ制に更新（CLAUDE.md / orchestrator.md / 4分類施策判断追加） | ✅ デプロイ済み (76e45b1) |
+| 2026-05-07 | Orchestrator(/solve-next) | ISSUE-039 /sync-backlog アーカイブ処理を notion-move-pages ベースに刷新（ISSUE-027 ダッシュボード非表示の恒久対策） | ✅ デプロイ済み (d6fd605) |
+| 2026-05-08 | Orchestrator(/solve-next) | ORG-001 CEO 実行ログ運用再開（4/19〜5/6 の18日分追記 + orchestrator.md にターン終了時運用ルール明記） | ✅ デプロイ済み |
 
 ---
 
@@ -710,19 +729,22 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strategist 部門の起票実績がゼロ、未完了タスクが15〜20日塩漬け、という組織運営上の構造課題を Orchestrator が検出。
 連携の仕組みは整っているが「事業の方向性を考える層」と「集客する層」が稼働していないため、毎日サイトが進化しても事業ゴールへの到達が判定できていない。
 
-### [ORG-001] CEO の実行ログ運用を再開する
-- **priority**: P1 → **status**: ready
+### [ORG-001] CEO の実行ログ運用を再開する ✅
+- **priority**: P1 → **status**: done
 - **detected**: 2026-05-06
+- **resolved**: 2026-05-08
+- **resolved_by**: /solve-next（Orchestrator）
 - **owner**: Orchestrator
 - **category**: 組織
 - **description**:
   agent-backlog.md の「エージェント実行ログ」表が 2026-04-18 で更新停止。
-  実際には 5/4 (11件) / 5/5 (7件) / 5/6 (17件) のコミットがあるのに、議事録に1行も追記されていない。
-  Orchestrator が orchestrator.md で自ら定めた報告フォーマットを守っていない状態。
-- **acceptance**:
-  - 4/19〜5/6 の活動を「エージェント実行ログ」表に1行ずつ追記する
-  - Stop hook 経由で「ターン終了時に必ず実行ログを更新する」運用フローを orchestrator.md に明記
-  - 以後は `/solve-next` 実行ごとに自動で実行ログ行を追加するロジックを solve-next コマンドに組み込む
+  実際には 4/19〜5/6 の間に大量のコミットがあるのに、議事録に1行も追記されていない状態だった。
+- **resolution**:
+  - 4/19〜5/6 の活動を git log から抽出し、日次サマリー形式で18行を実行ログ表に追記
+  - `agents/orchestrator.md` に「ターン終了時の必須運用ルール（ORG-001 で確立）」セクションを新設
+    （Step A〜D のチェックリスト：実行ログ追加 / Notion 同期 / done アーカイブ確認 / 完了報告）
+  - 「やってはいけないこと」リストに「デプロイした実装を実行ログに記録しないまま閉じる」を追加
+  - `/solve-next` Step 9 は既に自動ログ追加ロジックを実装済みであることを再確認
 - **files**: `agent-backlog.md`, `agents/orchestrator.md`, `.claude/commands/solve-next.md`
 
 ### [ORG-002] Strategist に月次 KPI スナップショット業務を持たせる
