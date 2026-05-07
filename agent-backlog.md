@@ -264,8 +264,37 @@
 | 2026-05-07 | Orchestrator(/solve-next) | ISSUE-039 /sync-backlog アーカイブ処理を notion-move-pages ベースに刷新（ISSUE-027 ダッシュボード非表示の恒久対策） | ✅ デプロイ済み (d6fd605) |
 | 2026-05-08 | Orchestrator(/solve-next) | ORG-001 CEO 実行ログ運用再開（4/19〜5/6 の18日分追記 + orchestrator.md にターン終了時運用ルール明記） | ✅ デプロイ済み |
 | 2026-05-08 | Orchestrator(/solve-next) | ISSUE-029 editor_picks 100店達成確認（EDT-003 で先行完了済みを検証）/ ISSUE-040 mediaFeatures カバー率向上を新規起票 | ✅ クローズ |
+| 2026-05-08 | Builder + DataKeeper (auto) | ISSUE-041 SEO indexing大幅改善: gen-store-pages.js を LOCAL_STORES ソースに切替 / 静的店舗ページ 715→4,584 件 (3,869件新規) / sitemap.xml 4,586 URL / 内部リンク 9,167 件全て直リンク化 / stores/index.html を11エリア+12ジャンル網羅型に拡張 / 「4,500軒以上」表記とSEO実体の乖離を完全解消 (commit 4a33b82) | ✅ デプロイ済み |
 
 ---
+
+## SEO追跡（2026-05-08 大規模改善後）
+
+### [ISSUE-041] 静的店舗ページの網羅率改善（実施完了）
+- **priority**: P0 → **status**: done
+- **detected**: 2026-05-08（Search Console 直接確認でインデックス率 1.5% (17/1134) 判明）
+- **resolved**: 2026-05-08
+- **問題**:
+  - LOCAL_STORES (4,584店) と静的HTML (715件) の乖離 → 「4,500軒以上掲載」表記がGoogle視点では誇大表記化
+  - HP-only 3,869店分のランディングページ無し → ロングテールKW でインデックス機会損失
+- **対応**:
+  1. `gen-store-pages.js` を LOCAL_STORES 主軸に変更（CSV はリッチデータ補完用）
+  2. 全 4,584 店分の static HTML 再生成（既存715件は CSV データで enrichment、新規3,869件は HP API データのみ）
+  3. `sitemap.xml` を 4,586 URL に拡張、`sitemap-index.xml` lastmod 更新
+  4. `scripts/inject_store_links.js` 再実行 → index.html 内部リンク 9,167件全て直リンク化
+  5. `stores/index.html` を 4店舗カード → 11エリア + 12ジャンル の網羅型ナビへ刷新
+- **QA**: JSON-LD 10/10 OK / 内部リンク 0 切れ / sitemap URL 0 不在
+- **期待効果**:
+  - インデックス可能ページ: 1,134 → 4,584+ (約4倍)
+  - 「{店名} 名古屋」のロングテール KW で 3,869 ページが新たにインデックス候補に
+  - 内部リンク密度向上で crawl budget 配分改善
+- **次に観測すべき指標**（2026-05-22 以降に確認）:
+  - Search Console インデックス済みページ数（目標: 1ヶ月で 1,000+ 到達）
+  - クリック数（目標: 1ヶ月で月間 100+ クリック）
+  - 「名古屋 居酒屋」「名古屋駅 個室」等のメインKW順位
+- **未決の判断事項（次セッションで判断）**:
+  - **P0-B (LLMO・ChatGPT流入最大化)**: GA4 で openai/ChatGPT から 3 セッション確認済み。FAQPage / HowTo / 構造化Q&A の拡充で LLM 引用を狙うか
+  - **Search Console CSV エクスポート分析**: 今回はCSVなしで原因特定→修正まで完遂。CSV を取得して「どのクエリで表示されているか」を後追い分析するか
 
 ## Inspector 2026-04-23 監査で検出された新課題
 
