@@ -644,17 +644,25 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **owner**: Editor 主導
 - **note**: ISSUE-029 のフォローアップ（クローズ時点で発覚した品質ギャップ）
 
-### [ISSUE-030] 「業界人視点」コンテンツの SNS 用ショートフォーマット化
+### [ISSUE-030] 「業界人視点」コンテンツの SNS 用ショートフォーマット化 🔄
 
 - **priority**: P1
-- **status**: ready
+- **status**: in_progress（テンプレ設計 v0.1 完了 / 初回 30 投稿の制作と公開は ISSUE-028 のアカウント開設後）
 - **category**: competitive / content / marketing
 - **detected**: 2026-05-06
+- **last_update**: 2026-05-08
 - **description**:
   ナゴレコ・名古屋情報通の SNS は「店舗紹介」止まり。我々は insiderNote / editorReason という他にない解釈層があるので、「なぜこの店は予約困難なのか」「業界人だけが知る◯◯の見極め」型のショートフォーマット（Instagram 9:16・X 画像+140字）でテンプレ化する。コンテンツ × チャネルの掛け算で SNS と Moat を同時に活かす。
+- **progress 2026-05-08**:
+  - `docs/sns-content-template.md` v0.1 草稿完成。Series A〜E（予約困難の理由 / 業界人見極め / editor_picks 解説 / シーン別ショート / ジャーナル切り出し）の 5 シリーズを定義
+  - 投稿頻度・ハッシュタグ規約・編集独立性ルール・写真出典別使用可否・KPI・立ち上げチェックリスト整備
+  - ユーザー判断 5 項目を末尾に明示（朝レビュー待ち）
+- **next**:
+  - ユーザーが朝レビュー → Series 採択・運用頻度・アカウント名を確定
+  - ISSUE-028 でアカウント開設後、初回 30 投稿の制作に着手
 - **impact**: SNS フォロワー獲得 + ブランド認知 + AI Overviews 引用候補化の同時達成
-- **acceptance**: テンプレ設計書 + 初回 30投稿の制作完了。ISSUE-028 と並走
-- **files**: `docs/sns-content-template.md`（新規）
+- **acceptance**: テンプレ設計書 ✅ + 初回 30投稿の制作完了 ⏳。ISSUE-028 と並走
+- **files**: `docs/sns-content-template.md`（v0.1 草稿）
 - **owner**: Editor + Marketer
 
 ### [ISSUE-031] ロングテール独自 KW での SEO 1位獲得戦略
@@ -697,17 +705,23 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **owner**: DataKeeper 主導 + Editor 監修
 - **note**: 既存 ISSUE-017 とマージ。本 ISSUE-033 を採用、ISSUE-017 は status:duplicate へ
 
-### [ISSUE-034] 「2026年最新」型の鮮度シグナル強化（lastmod / pubDate / 年号）
+### [ISSUE-034] 「2026年最新」型の鮮度シグナル強化（lastmod / pubDate / 年号）✅
 
-- **priority**: P2
-- **status**: ready
+- **priority**: P2 → **status**: done（第1次対応・自動更新スクリプトは別 ISSUE で）
+- **resolved**: 2026-05-08
 - **category**: competitive / seo / content
 - **detected**: 2026-05-06
 - **description**:
-  「名古屋 グルメ おすすめ 2026」KW で TOP10 を tabemaro / kelly-net / jalan ニュース / くふうトリップが「2026年最新」型タイトルで占拠している。我々の特集記事のタイトルに「2026年版」を入れる、Article 構造化データの datePublished / dateModified を四半期ごとに更新する、sitemap.xml の lastmod を継続的に更新する仕組みを整備。
+  「名古屋 グルメ おすすめ 2026」KW で TOP10 を tabemaro / kelly-net / jalan ニュース / くふうトリップが「2026年最新」型タイトルで占拠している。我々の特集記事のタイトルに「2026年版」を入れる、Article 構造化データの dateModified を更新する、sitemap.xml の lastmod を更新する。
+- **resolution 2026-05-08**:
+  - features/banquet.html, birthday.html, date.html, girls-party.html, large-group.html, meieki.html, private-room.html, sakae.html の 8本について:
+    - `<title>` に「【2026年版】」を追加（既に「2025年版」だった og:title を「2026年版」に統一）
+    - JSON-LD の dateModified を `2026-05-08` に更新（datePublished は元のまま保持）
+  - sitemap.xml の対応 8 URL の lastmod を `2026-05-08` に更新
+  - 既に 2026 年版で運用されていた 11 本（spring-terrace, gw-2026, mothers-day, nagoya-gourmet-guide, nagoya-hitsumabushi, nagoya-lunch-washoku, nagoya-miso-nikomi-udon, nagoya-tebasaki, osu-food-walk, birthday-surprise, editorial-policy）はそのまま
 - **impact**: 鮮度 KW での順位上昇、Discover / News 系流入の獲得
-- **acceptance**: 既存特集 20本のタイトルとメタを 2026年版に更新、sitemap.xml lastmod の自動更新スクリプト整備
-- **files**: `features/*.html`, `sitemap.xml`, `build.js`
+- **follow-up**: 四半期ごとの dateModified 自動更新スクリプトは別 ISSUE で扱う
+- **files**: `features/*.html`（8本）, `sitemap.xml`
 - **owner**: Marketer + Builder
 
 ### [ISSUE-035] シーン分類の細粒度化（推し活 / ママ会 / 撮影会 / オフ会など）
