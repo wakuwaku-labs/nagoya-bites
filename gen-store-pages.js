@@ -461,15 +461,65 @@ async function main() {
   const CHECK_ORPHANS = args.includes('--check-orphans');
   const DELETE_ORPHANS = args.includes('--delete-orphans');
 
-  console.log('Google Sheets からデータ取得中...');
+  // ─── データソース戦略 ───
+  // SOURCE OF TRUTH = index.html の LOCAL_STORES（build.js が生成、ライブサイトの表示と完全一致）
+  // CSV はリッチデータ（住所/緯度経度/電話/口コミ数）の補完用
+  // → LOCAL_STORES に無い CSV 店舗はライブサイトに無いので除外（名古屋市外などの誤掲載防止）
+  console.log('Google Sheets からCSVデータ取得中（リッチデータ補完用）...');
   const csv = await fetchUrl(CSV_URL);
-  const stores = parseCSV(csv);
-  // 公開フラグが「非公開」や「0」のものを除外
-  let visible = stores.filter(s => {
-    const flag = (s['公開フラグ'] || '').trim();
-    return flag !== '非公開' && flag !== '0' && flag !== 'false';
-  });
-  console.log(`取得: ${stores.length}件 → 公開対象: ${visible.length}件`);
+  const csvStores = parseCSV(csv);
+  console.log(`CSV取得: ${csvStores.length}件`);
+
+  // CSV を ホットペッパーID / 店名 で索引化
+  const csvByHpId = new Map();
+  const csvByName = new Map();
+  for (const c of csvStores) {
+    const flag = (c['公開フラグ'] || '').trim();
+    if (flag === '非公開' || flag === '0' || flag === 'false') continue;
+    if (c['ホットペッパーID']) csvByHpId.set(c['ホットペッパーID'], c);
+    const nm = (c['店名'] || '').trim();
+    if (nm) csvByName.set(nm, c);
+  }
+
+  // index.html から LOCAL_STORES を読み込む
+  const indexPath = path.join(__dirname, 'index.html');
+  if (!fs.existsSync(indexPath)) {
+    throw new Error('index.html が見つかりません。先に build.js を実行してください。');
+  }
+  const indexHtml = fs.readFileSync(indexPath, 'utf8');
+  const lsMatch = indexHtml.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
+  if (!lsMatch) {
+    throw new Error('index.html に LOCAL_STORES が見つかりません。');
+  }
+  const localStores = JSON.parse(lsMatch[1]);
+  console.log(`LOCAL_STORES: ${localStores.length}件`);
+
+  // 各 LOCAL_STORE を CSV で補完してマージ
+  let visible = [];
+  let csvEnrichedCount = 0;
+  for (const ls of localStores) {
+    if (!ls['店名']) continue;
+    const hpId = ls['ホットペッパーID'];
+    const name = (ls['店名'] || '').trim();
+    let csvMatch = (hpId && csvByHpId.get(hpId)) || csvByName.get(name) || null;
+    if (csvMatch) {
+      // CSV のリッチデータ（住所/緯度経度/電話/口コミ数/英語名/市区町村）を LOCAL_STORE に補完
+      // LOCAL_STORE の値があれば優先、無いものだけ CSV から借用
+      const merged = { ...csvMatch, ...ls };
+      // ただしリッチフィールドは CSV を優先（LOCAL_STORE には無いことが多い）
+      ['住所','緯度','経度','電話','口コミ数','英語名','市区町村','タグ','おすすめポイント'].forEach(k => {
+        if (csvMatch[k] && !ls[k]) merged[k] = csvMatch[k];
+      });
+      merged['公開フラグ'] = '公開';
+      visible.push(merged);
+      csvEnrichedCount++;
+    } else {
+      // CSV に無い → LOCAL_STORE のデータのみで生成
+      ls['公開フラグ'] = '公開';
+      visible.push(ls);
+    }
+  }
+  console.log(`公開対象: ${visible.length}件（CSV補完: ${csvEnrichedCount}件 / HP-only: ${visible.length - csvEnrichedCount}件）`);
   if (TEST_MODE) {
     visible = visible.slice(0, LIMIT);
     console.log(`★ テストモード: 先頭${LIMIT}件のみ処理（sitemap.xmlは更新しません）`);
@@ -514,10 +564,13 @@ async function main() {
   }
 
   // ─── ゴーストページ（孤児）検出・削除 ───
+  // stores/index.html は店舗一覧ランディングページなので保護
+  // _template.html も保護
+  const PROTECTED_SLUGS = new Set(['index', '_template']);
   if (CHECK_ORPHANS || DELETE_ORPHANS) {
     const expected = new Set(slugs);
     const onDisk = fs.readdirSync(OUT_DIR).filter(f => /\.html$/.test(f)).map(f => f.replace(/\.html$/, ''));
-    const orphans = onDisk.filter(s => !expected.has(s));
+    const orphans = onDisk.filter(s => !expected.has(s) && !PROTECTED_SLUGS.has(s));
     if (orphans.length === 0) {
       console.log(`\n孤児ページ: 0件 ✓`);
     } else {
