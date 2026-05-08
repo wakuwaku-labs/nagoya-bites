@@ -1009,15 +1009,17 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 </div>
 
 <!-- 特集記事バナー（ヒトサラ風：ヒーロー直下の入り口導線） -->
+<!-- ↓ このストリップは data/featured.json + scripts/build_featured.js が自動生成。手で編集しない。 -->
 <section class="feature-strip">
   <div class="feature-strip-label">特集記事</div>
   <div class="feature-strip-cards">
-    <a class="feature-card" href="features/gw-2026.html">
-      <span class="feature-card-season">5/3〜5/6</span>
-      <img class="feature-card-thumb" src="assets/features/gw-2026.jpg" srcset="assets/features/gw-2026-600.jpg 600w, assets/features/gw-2026.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="GW連休に家族・大切な人と囲む食卓" width="900" height="600" loading="eager" decoding="async" fetchpriority="high">
+    <!-- FEATURED_START -->
+    <a class="feature-card" href="features/mothers-day.html">
+      <span class="feature-card-season">5/10</span>
+      <img class="feature-card-thumb" src="assets/features/mothers-day.jpg" srcset="assets/features/mothers-day-600.jpg 600w, assets/features/mothers-day.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="母の日に贈る華やかなブーケ" width="900" height="1350" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
-        <div class="feature-card-title">GW 2026・連休おすすめグルメ12選</div>
-        <div class="feature-card-sub">家族・帰省・デートに</div>
+        <div class="feature-card-title">母の日ディナー・ランチ10選</div>
+        <div class="feature-card-sub">個室・お母さんに感謝を</div>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
@@ -1032,18 +1034,8 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
-    <a class="feature-card" href="features/mothers-day.html">
-      <span class="feature-card-season">5/10</span>
-      <img class="feature-card-thumb" src="assets/features/mothers-day.jpg" srcset="assets/features/mothers-day-600.jpg 600w, assets/features/mothers-day.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="母の日に贈る華やかなブーケ" width="900" height="1350" loading="eager" decoding="async" fetchpriority="high">
-      <div class="feature-card-body">
-        <div class="feature-card-title">母の日ディナー・ランチ10選</div>
-        <div class="feature-card-sub">個室・お母さんに感謝を</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
     <a class="feature-card" href="features/banquet.html">
-      <img class="feature-card-thumb" src="assets/features/banquet.jpg" srcset="assets/features/banquet-600.jpg 600w, assets/features/banquet.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="ビールジョッキで乾杯する宴会・忘年会の華やかなシーン" width="900" height="599" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="assets/features/banquet.jpg" srcset="assets/features/banquet-600.jpg 600w, assets/features/banquet.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="ビールジョッキで乾杯する宴会・忘年会の華やかなシーン" width="900" height="599" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
         <div class="feature-card-title">宴会・忘年会おすすめ15選</div>
         <div class="feature-card-sub">名駅・栄・金山 個室完備</div>
@@ -1078,6 +1070,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
+<!-- FEATURED_END -->
   </div>
 </section>
 
