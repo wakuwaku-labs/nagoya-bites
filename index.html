@@ -12330,7 +12330,18 @@ function geoSearch() {
 // [4] 閲覧数ランキング TOP10（このデバイスでの閲覧回数。Google評価は使わない）
 // ================================================================
 function getViewCounts() {
-  try { return JSON.parse(localStorage.getItem('nb_view_counts') || '{}'); } catch(e) { return {}; }
+  try {
+    var raw = localStorage.getItem('nb_view_counts');
+    if (raw) return JSON.parse(raw);
+    // 既存の閲覧履歴（nb_history）から初回シード — 過去に見た店を 1 回ずつ計上
+    var seed = {};
+    try {
+      var hist = JSON.parse(localStorage.getItem('nb_history') || '[]');
+      hist.forEach(function(name) { if (name) seed[name] = (seed[name] || 0) + 1; });
+    } catch(e) {}
+    localStorage.setItem('nb_view_counts', JSON.stringify(seed));
+    return seed;
+  } catch(e) { return {}; }
 }
 function incrementViewCount(storeName) {
   if (!storeName) return;
@@ -12352,8 +12363,8 @@ function buildRanking() {
     .filter(function(x) { return x && x.count > 0; })
     .sort(function(a, b) { return b.count - a.count; })
     .slice(0, 10);
-  // 履歴が3店舗未満の新規訪問者にはセクションを出さない
-  if (ranked.length < 3) { sectionEl.style.display = 'none'; return; }
+  // 1店舗も閲覧していない新規訪問者にはセクションを出さない
+  if (ranked.length < 1) { sectionEl.style.display = 'none'; return; }
   scrollEl.innerHTML = ranked.map(function(item, i) {
     var r = item.store;
     var idx = ALL_STORES.indexOf(r);
