@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}(function(){var p=new URLSearchParams(location.search);if(p.get('nb_owner')==='1'){localStorage.setItem('nb_internal','1');history.replaceState(null,'',location.pathname);}if(localStorage.getItem('nb_internal')==='1'){gtag('js',new Date());gtag('config','G-3LCZNGZPWJ',{traffic_type:'internal'});}else{gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');}})();function trackEvent(name,params){if(localStorage.getItem('nb_internal')==='1')return;if(typeof gtag==='function')gtag('event',name,params||{});}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>なぜ食べログ・Googleの口コミは信用できないのか — 飲食業界の「桜」の実態と、開示義務で抜け道を塞ぐ仕組み｜NAGOYA BITES</title>
+<meta name="description" content="飲食店で働く者の視点から、業界に蔓延する「桜（やらせ口コミ）」の実態を解説。なぜ既存プラットフォームでは止められないのか、NAGOYA BITES が選んだ3層防衛モデル（構造・開示・検証）と、読者が桜を見抜く5つのチェックポイント。">
+<meta name="keywords" content="桜,やらせ口コミ,ステマ,ステルスマーケティング,食べログ,Google口コミ,PR記事,飲食業界,NAGOYA BITES,編集独立,名古屋グルメ">
+<link rel="canonical" href="https://nagoya-bites.com/features/no-fake-reviews.html">
+<meta property="og:title" content="なぜ食べログ・Googleの口コミは信用できないのか｜NAGOYA BITES">
+<meta property="og:description" content="飲食業界に蔓延する「桜」の実態と、開示義務で抜け道を塞ぐ仕組み。業界人視点で、桜を見抜く5つのチェックポイントも公開。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nagoya-bites.com/features/no-fake-reviews.html">
+<meta property="og:site_name" content="NAGOYA BITES">
+<meta property="og:image" content="https://nagoya-bites.com/icons/icon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "なぜ食べログ・Googleの口コミは信用できないのか — 飲食業界の「桜」の実態と、開示義務で抜け道を塞ぐ仕組み",
+  "description": "飲食店で働く者の視点から、業界に蔓延する「桜（やらせ口コミ）」の実態を解説。NAGOYA BITES の3層防衛モデルと、桜を見抜く5つのチェックポイント。",
+  "author": {"@type": "Organization", "name": "NAGOYA BITES"},
+  "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
+  "url": "https://nagoya-bites.com/features/no-fake-reviews.html",
+  "datePublished": "2026-05-08",
+  "dateModified": "2026-05-08",
+  "mainEntityOfPage": "https://nagoya-bites.com/features/no-fake-reviews.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},
+    {"@type":"ListItem","position":2,"name":"特集記事","item":"https://nagoya-bites.com/features/"},
+    {"@type":"ListItem","position":3,"name":"桜ゼロ宣言"}
+  ]
+}
+</script>
+<style>
+:root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--border-h:rgba(0,0,0,0.28);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
+header{position:sticky;top:0;z-index:200;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;letter-spacing:.35em;color:var(--white);text-transform:uppercase;text-decoration:none;}
+.logo em{font-style:italic;color:var(--gold);}
+nav{display:flex;gap:1.5rem;align-items:center;}
+nav a{font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+nav a:hover{color:var(--text);}
+.art-hero{padding:3rem 1.5rem 2.5rem;max-width:800px;margin:0 auto;}
+.art-eyebrow{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;}
+.art-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.9rem,4vw,3rem);line-height:1.2;color:var(--white);margin-bottom:1rem;}
+.art-title em{font-style:italic;color:var(--gold);}
+.art-meta{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--dim);margin-bottom:1.5rem;display:flex;gap:1.2rem;flex-wrap:wrap;}
+.art-lead{font-size:.88rem;line-height:2;color:var(--muted);max-width:680px;border-left:2px solid var(--gold);padding-left:1.2rem;}
+.art-lead p{margin-bottom:.8rem;}
+.art-lead p:last-child{margin-bottom:0;}
+.art-body{max-width:800px;margin:0 auto;padding:0 1.5rem 4rem;}
+.section-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2.8rem 0 .8rem;}
+.section-h{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-weight:400;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.45;color:var(--white);margin-bottom:1rem;}
+.art-intro{font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:1.4rem;}
+.art-intro strong{color:var(--text);font-weight:500;}
+.tips-box{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);padding:1.2rem 1.4rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
+.tips-title{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;}
+.tips-box ul{padding-left:1.2rem;}
+.tips-box li{font-size:.8rem;line-height:1.9;color:var(--muted);margin-bottom:.4rem;}
+.tips-box li strong{color:var(--text);font-weight:500;}
+.sub-principle{background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;padding:1rem 1.2rem;margin:.8rem 0;}
+.sub-principle h4{font-size:.84rem;font-weight:500;color:var(--text);margin-bottom:.35rem;}
+.sub-principle p{font-size:.78rem;line-height:1.9;color:var(--muted);}
+.body-para{font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:1rem;}
+.body-para strong{color:var(--text);font-weight:500;}
+.callout{background:#fdfaf3;border:1px solid rgba(122,92,16,.25);border-left:3px solid var(--gold);padding:1.2rem 1.4rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
+.callout p{font-size:.86rem;line-height:1.95;color:var(--text);}
+.callout p strong{color:var(--gold);font-weight:600;}
+.related{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center;}
+.related-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.3rem;color:var(--white);margin-bottom:1.2rem;}
+.related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}
+.related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}
+.related-link:hover{background:rgba(122,92,16,.08);}
+.breadcrumb{padding:.6rem 1.5rem;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.1em;color:var(--dim);max-width:800px;margin:0 auto;}
+.breadcrumb a{color:var(--dim);text-decoration:none;}
+.breadcrumb a:hover{color:var(--gold);}
+.breadcrumb span{margin:0 .4rem;}
+footer{background:var(--white);color:rgba(247,245,241,.5);padding:2rem 1.5rem;text-align:center;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.14em;}
+footer a{color:rgba(201,169,110,.7);text-decoration:none;}
+@media(max-width:640px){
+  nav{display:none;}
+}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+  <nav>
+    <a href="../index.html">すべての店舗</a>
+    <a href="index.html">特集記事</a>
+    <a href="../journal/index.html">Journal</a>
+    <a href="../about.html">About</a>
+  </nav>
+</header>
+
+<nav aria-label="パンくずリスト">
+  <div class="breadcrumb">
+    <a href="../index.html">NAGOYA BITES</a>
+    <span>›</span>
+    <a href="index.html">特集記事</a>
+    <span>›</span>
+    桜ゼロ宣言
+  </div>
+</nav>
+
+<article>
+  <div class="art-hero">
+    <p class="art-eyebrow">No Sakura Pledge</p>
+    <h1 class="art-title">なぜ口コミは<em>信用できない</em>のか</h1>
+    <div class="art-meta">
+      <span>公開 2026年5月8日</span>
+      <span>NAGOYA BITES 編集部</span>
+      <span>業界視点コラム</span>
+    </div>
+    <div class="art-lead">
+      <p>飲食店で働く立場から言わせてもらえば、いま消費者が目にしている口コミの中には<strong style="color:var(--text);">「桜（やらせ）」が想像以上に混じっています</strong>。</p>
+      <p>SNS で報酬を受け取って投稿する人、食べログや Google で PR 案件として書き込む人、無償で食事を提供される代わりに高評価を残す人——こうした投稿を、消費者が普通の口コミと並べて見せられている。これが現状です。</p>
+      <p>NAGOYA BITES は、桜が混じれない構造と、嘘がついても発覚する構造を併せ持つ媒体としてつくっています。このページでは、その仕組みと、読者の皆さんが桜を見抜くためのチェックポイントを公開します。</p>
+    </div>
+  </div>
+
+  <div class="art-body">
+
+    <p class="section-label">01 — Why This Matters</p>
+    <h2 class="section-h">飲食店で働く者として、桜は本当にある</h2>
+    <p class="body-para">
+      これは綺麗事ではなく、飲食業界の内側にいる人間として実感している現実です。
+      新しく店をオープンしたとき、SNS でフォロワーの多い人に投稿を依頼する。
+      食べログの上位を狙うために、関係者に声をかけて口コミを書いてもらう。
+      Google マップの星評価を上げるために、知人に頼んで星 5 をつけてもらう——
+      <strong>これらは「特別な悪事」ではなく、業界では普通の販促手段として存在しています。</strong>
+    </p>
+    <p class="body-para">
+      問題は、消費者から見て<strong>その投稿が桜なのか本心の口コミなのかを見分ける手段がない</strong>ことです。
+      投稿に「PR」や「ご招待」と書かれていない以上、消費者は普通のレビューとして読んでしまう。
+      その結果、行ってみたら期待と違った、写真と全然違った、という体験が量産されます。
+      これは消費者にとって損失であり、まじめにやっている飲食店にとっても不公平な競争環境です。
+    </p>
+
+    <p class="section-label">02 — Three Types of Sakura</p>
+    <h2 class="section-h">桜の3類型</h2>
+    <p class="art-intro">
+      ひとくちに「桜」と言っても、業界の現場では大きく 3 種類に分かれます。
+      それぞれ違法性のグラデーションがありますが、<strong>消費者から見ればすべて「実体と違う情報」を見せられている</strong>点で同じです。
+    </p>
+
+    <div class="sub-principle">
+      <h4>① 金銭授受型</h4>
+      <p>店舗または広告代理店が、口コミ投稿者に対して直接報酬を払うパターン。SNS のインフルエンサー投稿、食べログ・Google マップへの星評価依頼、まとめサイトへの記事掲載などが含まれます。報酬の対価として「PR」表記を伴うべき投稿が多いものの、表記が落ちていることが少なくない。これは景品表示法の規制対象です。</p>
+    </div>
+    <div class="sub-principle">
+      <h4>② 無償提供型</h4>
+      <p>飲食代を店側が負担する代わりに、好意的な投稿を期待するパターン。直接「書いてくれ」と頼まないことも多いですが、無償提供を受けた以上、書く側には心理的に好意的な評価へ寄せるバイアスがかかります。<strong>「ご招待です、感想は自由です」という形でも、実質は対価関係</strong>です。</p>
+    </div>
+    <div class="sub-principle">
+      <h4>③ 関係者投稿型</h4>
+      <p>家族・友人・取引先・元従業員などが、関係性を伏せて口コミを投稿するパターン。金銭は動かないため①②より発覚しにくいのですが、評価の公平性は明確に歪みます。新規オープン直後の口コミに集中して現れることが多く、業界内ではほぼ常識的な手法として運用されています。</p>
+    </div>
+
+    <p class="section-label">03 — Why Platforms Can't Stop It</p>
+    <h2 class="section-h">なぜ既存プラットフォームでは止められないのか</h2>
+    <p class="body-para">
+      消費者から見て一番疑問なのは、「食べログや Google はなぜこれを排除しないのか」だと思います。
+      答えは単純で、<strong>排除する強い動機がプラットフォーム側にない</strong>からです。
+    </p>
+    <div class="tips-box">
+      <p class="tips-title">構造的な3つの理由</p>
+      <ul>
+        <li><strong>利用者数を増やすことが優先される。</strong>口コミの厳格な検証は、投稿のハードルを上げて投稿数を減らします。プラットフォームの広告価値は投稿数に比例するため、検証よりも量を優先する力学が働きます。</li>
+        <li><strong>広告主依存モデル。</strong>店舗から広告料を受け取っているプラットフォームは、店舗側に強く出られません。「あなたの店の口コミに桜が混じっている」と店舗を疑う調査を本気でやれば、広告主との関係が壊れます。</li>
+        <li><strong>開示文化がない。</strong>「お店から提供を受けました」「私はこの店の元従業員です」と書く文化が、そもそも日本の口コミプラットフォームには根付いていません。書かない方が「自然なレビューに見える」ため、書かないほうが得をする構造になっています。</li>
+      </ul>
+    </div>
+    <p class="body-para">
+      つまり既存プラットフォームの問題は<strong>仕組みの問題</strong>であって、運営会社が悪意を持っているわけではありません。
+      ただ、消費者が信頼できる口コミ環境をつくるには、別の構造を持った媒体が必要だということです。
+    </p>
+
+    <p class="section-label">04 — Our Three-Layer Defense</p>
+    <h2 class="section-h">NAGOYA BITES の3層防衛</h2>
+    <p class="art-intro">
+      私たちが選んだのは、「口コミを集めない」ではなく「<strong>桜が混じれない構造と、嘘がついても発覚する構造を併用する</strong>」という設計です。
+      具体的には A・B・C の 3 層で守ります。
+    </p>
+
+    <div class="tips-box">
+      <p class="tips-title">層A — 構造防衛（書く側に金銭が流れない）</p>
+      <ul>
+        <li>掲載料・PR 費を店舗から一切受け取らない。</li>
+        <li>レビュワーが店舗から金銭・無償提供を受けることを禁止。</li>
+        <li>違反時は寄稿者を永久追放（再登録不可）。</li>
+      </ul>
+    </div>
+
+    <div class="tips-box">
+      <p class="tips-title">層B — 開示義務（仮に何かを受け取った場合は必ず明記）</p>
+      <ul>
+        <li><strong>訪問日</strong>を必ず記載すること。</li>
+        <li><strong>店舗との関係性</strong>を以下の 7 択から必ず 1 つ選ぶこと（自由記述は不可）。
+          <ol style="margin-top:.4rem;padding-left:1.2rem;">
+            <li>無関係（一般客として訪問）</li>
+            <li>家族・親族</li>
+            <li>友人・知人</li>
+            <li>取引先・業界関係者</li>
+            <li>店舗関係者（オーナー・スタッフ・元スタッフ）</li>
+            <li>招待客（店から無償招待・無償提供を受けた）</li>
+            <li>PR 案件（金銭授受あり）</li>
+          </ol>
+        </li>
+        <li>選択肢 4〜7 を選んだ場合、記事内に<strong>該当ラベルを目立つ形で必ず併記</strong>。ラベル無しの掲載は規約違反。</li>
+        <li>※ 支払い金額の記載は求めません。プライバシーへの配慮および検証コストの観点から、訪問日と関係性で十分な開示水準とします。</li>
+      </ul>
+    </div>
+
+    <div class="tips-box">
+      <p class="tips-title">層C — 検証メカニズム（嘘がバレる構造）</p>
+      <ul>
+        <li>業界人レビュワー認証制度（経歴・ハンドルを公開、本人確認は編集部内で実施）。</li>
+        <li>店舗側からの異議申立て窓口を公開。「このレビューは事実誤認」「関係性が開示されていない」と申し立て可能。</li>
+        <li>読者からの通報窓口を公開。「これは桜では」と感じた投稿を匿名で通報できる。</li>
+        <li>編集部によるファクトチェック・矛盾検出。レビュワーごとの投稿履歴を透明化することで、1 店舗だけ高評価をつけ続ける典型的な桜パターンを可視化する。</li>
+        <li>違反が発覚した場合は該当レビュー削除＋寄稿者永久追放、違反事実をサイト内で公表。</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <p>これらの仕組みの詳細は <a href="editorial-policy.html#trust-mechanisms" style="color:var(--gold);">編集規約 04 — Trust Mechanisms</a> に明文化しています。<strong>「業界で初めて開示義務を明文化した名古屋グルメ媒体」</strong>として運用していきます。</p>
+    </div>
+
+    <p class="section-label">05 — How To Spot Sakura</p>
+    <h2 class="section-h">読者が桜を見抜く5つのチェックポイント</h2>
+    <p class="art-intro">
+      食べログ・Google マップ・SNS で口コミを読むときに、業界人として「これは桜の可能性が高い」と判断する観点を 5 つにまとめました。
+      日々の店選びで使ってください。
+    </p>
+
+    <div class="sub-principle">
+      <h4>① 文章が広告コピー調になっている</h4>
+      <p>本心で書かれた口コミは、必ず具体的な体験の細部が入ります。「席の間隔」「料理が出てくる速度」「店員さんの声色」など、その場にいないと書けない描写です。逆に「最高の空間と最高の料理を提供してくれます」のような、ホームページにそのまま載りそうな美辞麗句が並ぶ投稿は要注意です。</p>
+    </div>
+    <div class="sub-principle">
+      <h4>② 訪問日や関係性の開示が書かれていない</h4>
+      <p>本気で参考になる口コミは、いつ訪問したか（最近か数年前か）を書きます。逆に時間軸が曖昧で、店との関係性（一般客か、招待か、関係者か）にも触れていない投稿は、その情報を意図的に隠している可能性が高いです。</p>
+    </div>
+    <div class="sub-principle">
+      <h4>③ 投稿者が1店舗だけに高評価を集中させている</h4>
+      <p>普通の利用者は、いろんな店に行って、評価もばらつきます。しかし桜は「依頼された店だけ」に高評価を集中投下するため、投稿履歴を見ると不自然です。Google マップなら投稿者プロフィールから過去レビューが見られますし、食べログでも投稿者ページを辿ると傾向が分かります。</p>
+    </div>
+    <div class="sub-principle">
+      <h4>④ 店舗の弱点・改善点が一切書かれていない</h4>
+      <p>本心で 100% 完璧な店は存在しません。「席が狭い」「混雑時は待つ」「○○がもう少しあると」など、何かしら気になる点があるのが本物の口コミです。完璧さしか書かれていない投稿は、依頼された立場で書いている可能性を疑ってください。</p>
+    </div>
+    <div class="sub-principle">
+      <h4>⑤「PR」「提供」「ご招待」の表記がない高評価インフルエンサー投稿</h4>
+      <p>SNS で食事写真を頻繁に投稿しているフォロワー数の多いアカウントが、特定の店だけ「PR」表記なしで絶賛している場合、それは PR 案件である可能性が高いです。景品表示法では PR 表記が義務化されていますが、いまだに表記が落ちている投稿は珍しくありません。</p>
+    </div>
+
+    <p class="section-label">06 — Help Us Build A Cleaner Field</p>
+    <h2 class="section-h">読者の皆さんへ — 通報をお願いします</h2>
+    <p class="body-para">
+      この仕組みは、編集部だけで完結するものではありません。
+      読者の皆さんの目こそが、桜を見抜く最大のセンサーです。
+      NAGOYA BITES のサイト内・記事内のレビューについて、<strong>「これは桜ではないか」と感じる投稿があれば、ぜひ通報してください</strong>。
+      匿名での通報を歓迎します。
+    </p>
+    <div class="tips-box">
+      <p class="tips-title">通報・異議申立て窓口</p>
+      <ul>
+        <li><strong>読者からの通報：</strong><a href="mailto:editor@nagoya-bites.com" style="color:var(--gold);">editor@nagoya-bites.com</a> 宛にメール（匿名可）。</li>
+        <li><strong>店舗側からの異議申立て：</strong>同じく <a href="mailto:editor@nagoya-bites.com" style="color:var(--gold);">editor@nagoya-bites.com</a>。事実誤認・利害関係の不開示について申し立てできます。</li>
+        <li>受け付けた申立て・通報はすべて記録し、<strong>10 営業日以内に一次回答</strong>します。</li>
+      </ul>
+    </div>
+    <p class="body-para">
+      飲食店で働く側の人間として、業界が広告と口コミの境界を曖昧にしてきたことには責任を感じています。
+      消費者が安心して店を選べる場をつくるのは、業界の側がやらなければいけない仕事です。
+      NAGOYA BITES は、その責任を引き受ける媒体として運営を続けます。
+    </p>
+
+  </div>
+</article>
+
+<div class="related">
+  <p class="related-title">関連ページ</p>
+  <div class="related-links">
+    <a class="related-link" href="editorial-policy.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;">📖 編集規約（信頼の仕組み）</a>
+    <a class="related-link" href="../journal/index.html">Journal（毎日1本）</a>
+    <a class="related-link" href="index.html">特集記事一覧</a>
+    <a class="related-link" href="../about.html">About NAGOYA BITES</a>
+    <a class="related-link" href="../contact.html">お問い合わせ</a>
+  </div>
+  <p style="margin-top:1.5rem;">
+    <a class="related-link" href="../index.html" style="background:rgba(122,92,16,.06);">トップページで全店舗を検索する →</a>
+  </p>
+</div>
+
+<footer>
+  <a href="../index.html">NAGOYA BITES</a> &nbsp;—&nbsp; <span id="fc-year"></span>
+</footer>
+<script>(function(){var fc=document.getElementById('fc-year');if(fc)fc.textContent='© '+new Date().getFullYear()+' All Rights Reserved';})();</script>
+</body>
+</html>
