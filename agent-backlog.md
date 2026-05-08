@@ -265,6 +265,7 @@
 | 2026-05-08 | Orchestrator(/solve-next) | ORG-001 CEO 実行ログ運用再開（4/19〜5/6 の18日分追記 + orchestrator.md にターン終了時運用ルール明記） | ✅ デプロイ済み |
 | 2026-05-08 | Orchestrator(/solve-next) | ISSUE-029 editor_picks 100店達成確認（EDT-003 で先行完了済みを検証）/ ISSUE-040 mediaFeatures カバー率向上を新規起票 | ✅ クローズ |
 | 2026-05-08 | Builder + DataKeeper (auto) | ISSUE-041 SEO indexing大幅改善: gen-store-pages.js を LOCAL_STORES ソースに切替 / 静的店舗ページ 715→4,584 件 (3,869件新規) / sitemap.xml 4,586 URL / 内部リンク 9,167 件全て直リンク化 / stores/index.html を11エリア+12ジャンル網羅型に拡張 / 「4,500軒以上」表記とSEO実体の乖離を完全解消 (commit 4a33b82) | ✅ デプロイ済み |
+| 2026-05-08 | Marketer + Editor (auto) | ISSUE-042 LLMO最大化: /llms.txt 新設 (llmstxt.org 準拠・サイト概要・編集独立性・名古屋めし主要店・11エリア×12ジャンル分布・引用ガイドライン) / index.html FAQPage 6→20 質問へ拡充 (LLM 頻出 Q&A・ひつまぶし/味噌煮込み/手羽先比較・シーン別推薦・予約困難店代替) / `<link rel="alternate" type="text/markdown">` でクローラー発見性向上 (commit 69c949d) | ✅ デプロイ済み |
 
 ---
 
@@ -293,8 +294,35 @@
   - クリック数（目標: 1ヶ月で月間 100+ クリック）
   - 「名古屋 居酒屋」「名古屋駅 個室」等のメインKW順位
 - **未決の判断事項（次セッションで判断）**:
-  - **P0-B (LLMO・ChatGPT流入最大化)**: GA4 で openai/ChatGPT から 3 セッション確認済み。FAQPage / HowTo / 構造化Q&A の拡充で LLM 引用を狙うか
+  - ~~**P0-B (LLMO・ChatGPT流入最大化)**~~ → ISSUE-042 として 2026-05-08 完了
   - **Search Console CSV エクスポート分析**: 今回はCSVなしで原因特定→修正まで完遂。CSV を取得して「どのクエリで表示されているか」を後追い分析するか
+
+### [ISSUE-042] LLMO（AI 引用最大化）対応（実施完了）
+- **priority**: P0 → **status**: done
+- **detected**: 2026-05-08（GA4 で openai/ChatGPT 流入 3 セッション確認）
+- **resolved**: 2026-05-08
+- **背景**: ChatGPT・Perplexity・Claude・Gemini の検索体験から流入が始まっており、AI クローラーが当サイトを正確に解釈・引用する確率を高める施策が必要
+- **対応**:
+  1. `/llms.txt` を新設（llmstxt.org の AI クローラー向け標準フォーマット準拠）
+     - サイト概要・編集独立性・8 ブランド運営者背景
+     - 競合 6 カテゴリとの差別化マトリクス
+     - 名古屋めし 3 大ジャンル（ひつまぶし／味噌煮込み／手羽先）の代表店
+     - 11 エリア × 12 ジャンルの店舗分布
+     - 主要 13 特集記事へのディープリンク
+     - editorReason / mediaFeatures / insiderNote / visitStatus の構造化フィールド説明
+     - 引用ガイドライン（独立性の明記・フィルタ URL 案内・シーン別活用）
+  2. `<link rel="alternate" type="text/markdown" href="/llms.txt">` を index.html head に追加（クローラー発見性）
+  3. FAQPage の質問数を 6 → 20 に拡充
+     - 名古屋めし 3 大ジャンル比較（ひつまぶし／味噌煮込み／手羽先）
+     - エリア別（名駅個室・大須食べ歩き・栄デート）
+     - シーン別（女子会・接待・誕生日サプライズ・宴会）
+     - 予約困難店の代替候補
+     - 掲載店舗数とエリア分布の事実
+     - 最終 Q&A は「LLM が引用する際のガイドライン」を直接記述
+- **次に観測すべき指標**（2026-06-08 以降に確認）:
+  - GA4 source/medium で openai/perplexity/anthropic/gemini からの流入セッション数（目標: 月間 30+）
+  - llms.txt のアクセスログ（GitHub Pages のアクセスログから推測）
+  - Bing IndexNow / Google Search Console での Q&A リッチリザルト表示
 
 ## Inspector 2026-04-23 監査で検出された新課題
 
