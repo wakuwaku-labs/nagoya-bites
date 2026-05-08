@@ -876,6 +876,40 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
   - GitHub Actions の `weekly-pipeline.yml` にトリガーを組み込み、月曜のパイプラインで Marketer が必ず動く仕組みにする
 - **files**: `agents/marketer.md`, `agent-backlog.md`, `.github/workflows/weekly-pipeline.yml`
 
+### [STR-001] 桜ゼロ宣言 — 桜が混じれない構造と嘘がバレる構造を明文化 ✅
+- **priority**: P1 → **status**: done
+- **category**: strategy / brand / editorial
+- **detected**: 2026-05-08
+- **resolved**: 2026-05-08
+- **owner**: Strategist + Editor + Builder
+- **description**:
+  ユーザー（現役飲食人）からの戦略的問題提起。飲食業界の広告媒体に「桜（金銭授受・無償提供型・関係者投稿型のやらせ口コミ）」が蔓延しており、消費者の信頼が毀損されている。
+  NAGOYA BITES の Moat である「広告ゼロ・PR ゼロ」を、業界初の「**開示義務を明文化した媒体**」へ昇格させる。
+- **strategy**: 3層防衛モデル
+  - 層A 構造防衛: 掲載料・PR 費・店舗からの金銭授受を一切受けない／違反時永久追放
+  - 層B 開示義務: 訪問日 + 関係性 7択 + 金銭・無償提供の有無を必須申告。選択肢4〜7はラベル併記必須
+  - 層C 検証メカニズム: 業界人レビュワー認証／店舗異議申立て／読者通報／ファクトチェック／違反公表
+  - ※ 関係性は **自由記述不可・7択必須**（無関係 / 家族・親族 / 友人・知人 / 取引先・業界関係者 / 店舗関係者 / 招待客 / PR案件）
+  - ※ 支払い金額の記載は求めない（プライバシー配慮 + 検証コスト）
+- **resolution**:
+  - `features/editorial-policy.html`: 「Section 04 — Trust Mechanisms」を新設挿入（既存 04 以降を 05〜09 に繰り下げ）
+  - `index.html`: ヒーロー権威性バー直下に `.no-sakura-banner` セクション新設（CSS含む、3 pillar 表示 + 編集規約・コラムへの導線）
+  - `features/no-fake-reviews.html`: 新規執筆（業界人視点の桜批判コラム、約4000字、6セクション + 桜を見抜く5チェック）
+  - 通報窓口: `mailto:editor@nagoya-bites.com` を仮置き（Google Forms 化はフェーズ2）
+- **files**:
+  - `features/editorial-policy.html`（編集）
+  - `index.html`（編集）
+  - `features/no-fake-reviews.html`（新規）
+- **verification**:
+  - `node build.js` exit 0、715 件 serialize、index.html 更新完了確認
+  - HTML 構文タグバランス OK（div/article/body/html）
+  - editorial-policy.html セクション 01〜09 連番確認
+- **follow-up**:
+  - 通報フォームを Google Forms 化（mailto: からの差し替え）
+  - 業界人レビュワー認証制度の運用フロー策定（編集部内オフライン認証）
+  - レビュワー登録ページ `features/become-reviewer.html` の追加
+  - 投稿履歴の透明化（誰がどの店をいつ書いたかの一覧ページ）
+
 ### [ISSUE-039] /sync-backlog のアーカイブ処理を notion-move-pages ベースに刷新 ✅
 - **priority**: P1 → **status**: done
 - **category**: ops / notion

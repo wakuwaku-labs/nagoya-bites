@@ -541,6 +541,21 @@ h3.cn{margin:0 0 6px;font-family:'Noto Sans JP',sans-serif;}
 .auth-item .auth-icon{font-size:.9rem;line-height:1;}
 .auth-sep{color:rgba(247,245,241,.25);font-size:.7rem;}
 @media(max-width:640px){.authority-bar{padding:.55rem 1rem;font-size:.55rem;gap:.35rem 1rem;}.auth-sep{display:none;}}
+/* ── NO-SAKURA BANNER ── */
+.no-sakura-banner{background:#fdfaf3;color:#1f1b18;padding:1.6rem 1.5rem 1.8rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.no-sakura-inner{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:1.1rem;}
+.no-sakura-eyebrow{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;}
+.no-sakura-title{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-weight:300;font-size:clamp(1.15rem,2.6vw,1.55rem);line-height:1.45;color:#1f1b18;}
+.no-sakura-title strong{color:var(--gold);font-weight:500;font-style:italic;}
+.no-sakura-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-top:.3rem;}
+.no-sakura-pillar{background:#fff;border:0.5px solid #d8d3c4;border-radius:6px;padding:.9rem 1rem;}
+.no-sakura-pillar-label{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:.4rem;}
+.no-sakura-pillar-title{font-size:.85rem;font-weight:600;color:#1f1b18;margin-bottom:.35rem;}
+.no-sakura-pillar-body{font-size:.72rem;line-height:1.75;color:rgba(31,27,24,.7);}
+.no-sakura-links{display:flex;flex-wrap:wrap;gap:.6rem .9rem;margin-top:.4rem;}
+.no-sakura-link{font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.12em;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem .95rem;border-radius:2px;transition:background .2s;}
+.no-sakura-link:hover{background:rgba(122,92,16,.08);}
+@media(max-width:720px){.no-sakura-pillars{grid-template-columns:1fr;}.no-sakura-banner{padding:1.3rem 1rem 1.5rem;}}
 /* ── A11y: SKIP LINK ── */
 .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
 .skip-link:focus{position:fixed;left:1rem;top:1rem;width:auto;height:auto;z-index:9999;background:var(--gold);color:#fff;padding:.7rem 1.2rem;border-radius:4px;font-weight:600;font-size:.9rem;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25);}
@@ -1120,6 +1135,37 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   <span class="auth-sep">·</span>
   <span class="auth-item">広告なし・業界目線</span>
 </div>
+
+<!-- 桜ゼロ宣言バナー：飲食業界の桜（やらせ口コミ）を排除する仕組みの可視化 -->
+<section class="no-sakura-banner" aria-labelledby="no-sakura-title">
+  <div class="no-sakura-inner">
+    <p class="no-sakura-eyebrow">No Sakura Pledge</p>
+    <h2 class="no-sakura-title" id="no-sakura-title">
+      <strong>桜ゼロ宣言</strong> ― このサイトに、やらせ口コミは1件もありません。
+    </h2>
+    <div class="no-sakura-pillars">
+      <div class="no-sakura-pillar">
+        <div class="no-sakura-pillar-label">A. Structure</div>
+        <div class="no-sakura-pillar-title">広告ゼロ</div>
+        <div class="no-sakura-pillar-body">掲載料・PR 費・店舗からの金銭授受は一切受け取りません。</div>
+      </div>
+      <div class="no-sakura-pillar">
+        <div class="no-sakura-pillar-label">B. Disclosure</div>
+        <div class="no-sakura-pillar-title">開示義務</div>
+        <div class="no-sakura-pillar-body">招待・無償提供・関係者投稿があれば、ラベルで必ず明記します。</div>
+      </div>
+      <div class="no-sakura-pillar">
+        <div class="no-sakura-pillar-label">C. Verification</div>
+        <div class="no-sakura-pillar-title">違反は永久追放</div>
+        <div class="no-sakura-pillar-body">嘘が発覚した寄稿者は二度と書けません。通報窓口も公開しています。</div>
+      </div>
+    </div>
+    <div class="no-sakura-links">
+      <a class="no-sakura-link" href="features/editorial-policy.html#trust-mechanisms">→ 信頼の仕組みを読む</a>
+      <a class="no-sakura-link" href="features/no-fake-reviews.html">→ 桜の実態を読む</a>
+    </div>
+  </div>
+</section>
 
 <!-- 特集記事バナー（ヒトサラ風：ヒーロー直下の入り口導線） -->
 <!-- ↓ このストリップは data/featured.json + scripts/build_featured.js が自動生成。手で編集しない。 -->
