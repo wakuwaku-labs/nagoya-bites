@@ -906,9 +906,39 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
   - editorial-policy.html セクション 01〜09 連番確認
 - **follow-up**:
   - 通報フォームを Google Forms 化（mailto: からの差し替え）
-  - 業界人レビュワー認証制度の運用フロー策定（編集部内オフライン認証）
-  - レビュワー登録ページ `features/become-reviewer.html` の追加
+  - ~~レビュワー登録ページ `features/become-reviewer.html` の追加~~ → STR-002 で完了
   - 投稿履歴の透明化（誰がどの店をいつ書いたかの一覧ページ）
+
+### [STR-002] 業界人レビュワー認証制度の運用フローを明文化・公開ページ化 ✅
+- **priority**: P1 → **status**: done
+- **category**: strategy / brand / editorial / recruiting
+- **detected**: 2026-05-08
+- **resolved**: 2026-05-08
+- **owner**: Strategist + Editor + Builder
+- **parent**: STR-001（フォローアップ）
+- **description**:
+  STR-001 で「業界人レビュワー認証制度」を編集規約に明文化したが、
+  応募方法・必須義務・認証フロー・公開される情報・報酬の有無といった具体的運用が公開されていなかった。
+  これを公開ページ化し、業界人からの応募を実際に受け付けられる状態に昇格させる。
+- **resolution**:
+  - `features/become-reviewer.html` を新規作成（約 311 行 / 約 4500 字）
+  - 構成: 募集対象 / 必須義務 / 公開される情報 / 報酬とインセンティブ / 認証フロー（5 ステップ）/ 応募方法 + CTA
+  - 必須義務は STR-001 の関係性 7 択を再掲し、レビュワー本人への金銭授受禁止条項を追加
+  - 報酬は **無報酬** と明記。非金銭的インセンティブ（業界第三者発信チャネル / 同業者ネットワーク等）を提示
+  - 認証フロー: 応募メール → 経歴確認 → 規約同意 → 試験投稿 1〜3 件 → 合格・公開
+  - CTA: `mailto:editor@nagoya-bites.com?subject=...` で件名プリセット付き応募リンク
+  - クロスリンク: `editorial-policy.html` Trust Mechanisms 末尾＋関連リンク／`no-fake-reviews.html` 終盤 callout＋関連リンク
+- **files**:
+  - `features/become-reviewer.html`（新規）
+  - `features/editorial-policy.html`（編集 — クロスリンク追加 2 箇所）
+  - `features/no-fake-reviews.html`（編集 — callout＋関連リンク追加）
+- **verification**:
+  - HTML タグバランス OK（div 17/17, article 1/1, body 1/1）
+  - 既存特集記事と同一テンプレート（OGP / breadcrumb / structured data / フォント / 配色）
+- **follow-up**:
+  - 応募が増えてきたら mailto を Google Forms 化
+  - 認証済みレビュワー一覧ページ `features/reviewers.html` の追加（レビュワーが集まり次第）
+  - レビュー投稿フォーム（バックエンド前提）
 
 ### [ISSUE-039] /sync-backlog のアーカイブ処理を notion-move-pages ベースに刷新 ✅
 - **priority**: P1 → **status**: done
