@@ -55,20 +55,31 @@ jobs:
           claude --print "$PROMPT" --no-update-sonnet
         continue-on-error: false
 
+      - name: 季節特集の自動ローテーション（期間切れの seasonal 特集を外す）
+        # ジャーナル生成の有無に関わらず毎日実行する。
+        # data/featured.json を見て今日の JST 日付で特集ストリップを再生成する。
+        run: node scripts/build_featured.js
+
       - name: 生成ファイルをコミット & プッシュ
-        if: steps.check.outputs.exists == '0'
+        if: always()
         run: |
           git config user.name  "NAGOYA BITES Daily"
           git config user.email "daily@nagoya-bites"
-          # ジャーナル記事・SNS原稿・ペンディング店舗・バックログを対象
+          # ジャーナル記事・SNS原稿・ペンディング店舗・バックログ・特集ローテーション対象
           git add journal/ docs/daily-posts/ 2>/dev/null || true
           git add data/pending_stores.json agent-backlog.md 2>/dev/null || true
+          git add index.html features/index.html 2>/dev/null || true
           # 変更がない場合はスキップ
           if git diff --staged --quiet; then
             echo "コミット対象の変更がありません。"
             exit 0
           fi
-          git commit -m "[agent] 日次ジャーナル自動生成: ${{ steps.check.outputs.today_jst }}"
+          # ジャーナル新規生成あり/なしでメッセージを切替
+          if [ "${{ steps.check.outputs.exists }}" = "0" ]; then
+            git commit -m "[agent] 日次ジャーナル自動生成: ${{ steps.check.outputs.today_jst }}"
+          else
+            git commit -m "[agent] 特集ローテーション更新: ${{ steps.check.outputs.today_jst }}"
+          fi
           # 競合回避のため rebase してからプッシュ
           git pull --rebase origin main || true
           git push || (sleep 10 && git pull --rebase origin main && git push)

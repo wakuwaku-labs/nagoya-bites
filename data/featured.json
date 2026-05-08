@@ -1,0 +1,93 @@
+{
+  "_README": "特集ストリップの自動ローテーション設定。season.start/end は JST 基準の包含的期間。当日が範囲外なら自動的に非表示になる。evergreen 特集は season を省略。priority(数値・大きいほど優先) 順に表示し、最大 maxSlots 件まで採用。同一 priority は items 配列の出現順。新しい季節特集を追加するには items 配列に追記して node scripts/build_featured.js を実行。GitHub Actions の daily-journal.yml が毎朝 7:00 JST に自動実行する。",
+  "maxSlots": 7,
+  "items": [
+    {
+      "id": "mothers-day",
+      "href": "features/mothers-day.html",
+      "title": "母の日ディナー・ランチ10選",
+      "sub": "個室・お母さんに感謝を",
+      "thumb": "assets/features/mothers-day.jpg",
+      "thumb600": "assets/features/mothers-day-600.jpg",
+      "alt": "母の日に贈る華やかなブーケ",
+      "thumbW": 900,
+      "thumbH": 1350,
+      "priority": 100,
+      "season": { "start": "2026-04-25", "end": "2026-05-10", "badge": "5/10" }
+    },
+    {
+      "id": "spring-terrace",
+      "href": "features/spring-terrace.html",
+      "title": "春テラス・屋外グルメ10選",
+      "sub": "ビアガーデン・ルーフトップ",
+      "thumb": "assets/features/spring-terrace.jpg",
+      "thumb600": "assets/features/spring-terrace-600.jpg",
+      "alt": "春のテラス席で味わう屋外グルメの心地よい空間",
+      "thumbW": 900,
+      "thumbH": 1350,
+      "priority": 90,
+      "season": { "start": "2026-03-15", "end": "2026-05-31", "badge": "春限定" }
+    },
+    {
+      "id": "gw-2026",
+      "href": "features/gw-2026.html",
+      "title": "GW 2026・連休おすすめグルメ12選",
+      "sub": "家族・帰省・デートに",
+      "thumb": "assets/features/gw-2026.jpg",
+      "thumb600": "assets/features/gw-2026-600.jpg",
+      "alt": "GW連休に家族・大切な人と囲む食卓",
+      "thumbW": 900,
+      "thumbH": 600,
+      "priority": 95,
+      "season": { "start": "2026-04-25", "end": "2026-05-06", "badge": "5/3〜5/6" }
+    },
+    {
+      "id": "banquet",
+      "href": "features/banquet.html",
+      "title": "宴会・忘年会おすすめ15選",
+      "sub": "名駅・栄・金山 個室完備",
+      "thumb": "assets/features/banquet.jpg",
+      "thumb600": "assets/features/banquet-600.jpg",
+      "alt": "ビールジョッキで乾杯する宴会・忘年会の華やかなシーン",
+      "thumbW": 900,
+      "thumbH": 599,
+      "priority": 60
+    },
+    {
+      "id": "private-room",
+      "href": "features/private-room.html",
+      "title": "個室グルメおすすめ10選",
+      "sub": "接待・女子会・デートに",
+      "thumb": "assets/features/private-room.jpg",
+      "thumb600": "assets/features/private-room-600.jpg",
+      "alt": "温かい灯りに包まれた上質な個室ダイニング",
+      "thumbW": 900,
+      "thumbH": 600,
+      "priority": 55
+    },
+    {
+      "id": "meieki",
+      "href": "features/meieki.html",
+      "title": "名駅グルメおすすめ15選",
+      "sub": "出張・接待・仕事帰りに",
+      "thumb": "assets/features/meieki.jpg",
+      "thumb600": "assets/features/meieki-600.jpg",
+      "alt": "名駅エリアで接待・出張・仕事帰りに集う夜のグループ食事",
+      "thumbW": 900,
+      "thumbH": 601,
+      "priority": 50
+    },
+    {
+      "id": "sakae",
+      "href": "features/sakae.html",
+      "title": "栄・錦グルメおすすめ15選",
+      "sub": "名古屋最大の繁華街",
+      "thumb": "assets/features/sakae.jpg",
+      "thumb600": "assets/features/sakae-600.jpg",
+      "alt": "栄・錦の繁華街を彩る夜のネオン街並み",
+      "thumbW": 900,
+      "thumbH": 1350,
+      "priority": 45
+    }
+  ]
+}
