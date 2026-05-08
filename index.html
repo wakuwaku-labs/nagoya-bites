@@ -1235,10 +1235,10 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 
 <!-- フィルターブロックは検索欄直下に移動済み（hero直後） -->
 
-<!-- ランキングセクション -->
+<!-- ランキングセクション（このデバイスでの閲覧数。Google評価は使わない） -->
 <section class="ranking-section" id="ranking-section" style="display:none">
   <div class="ranking-header">
-    <h2>Google評価 <em>TOP 10</em></h2>
+    <h2>あなたがよく見ている店 <em>TOP 10</em></h2>
   </div>
   <div class="ranking-scroll" id="ranking-scroll"></div>
 </section>
@@ -12327,18 +12327,35 @@ function geoSearch() {
 }
 
 // ================================================================
-// [4] 人気ランキング TOP10
+// [4] 閲覧数ランキング TOP10（このデバイスでの閲覧回数。Google評価は使わない）
 // ================================================================
+function getViewCounts() {
+  try { return JSON.parse(localStorage.getItem('nb_view_counts') || '{}'); } catch(e) { return {}; }
+}
+function incrementViewCount(storeName) {
+  if (!storeName) return;
+  var counts = getViewCounts();
+  counts[storeName] = (counts[storeName] || 0) + 1;
+  try { localStorage.setItem('nb_view_counts', JSON.stringify(counts)); } catch(e) {}
+}
 function buildRanking() {
   if (!ALL_STORES || ALL_STORES.length === 0) return;
-  var sorted = ALL_STORES.filter(function(s) { return s['Google評価'] && parseFloat(s['Google評価']) > 0; })
-    .sort(function(a,b) { return parseFloat(b['Google評価']) - parseFloat(a['Google評価']); })
-    .slice(0, 10);
-  if (sorted.length === 0) return;
   var scrollEl = document.getElementById('ranking-scroll');
   var sectionEl = document.getElementById('ranking-section');
   if (!scrollEl || !sectionEl) return;
-  scrollEl.innerHTML = sorted.map(function(r, i) {
+  var counts = getViewCounts();
+  var ranked = Object.keys(counts)
+    .map(function(name) {
+      var store = ALL_STORES.find(function(s) { return s['店名'] === name; });
+      return store ? { store: store, count: counts[name] } : null;
+    })
+    .filter(function(x) { return x && x.count > 0; })
+    .sort(function(a, b) { return b.count - a.count; })
+    .slice(0, 10);
+  // 履歴が3店舗未満の新規訪問者にはセクションを出さない
+  if (ranked.length < 3) { sectionEl.style.display = 'none'; return; }
+  scrollEl.innerHTML = ranked.map(function(item, i) {
+    var r = item.store;
     var idx = ALL_STORES.indexOf(r);
     var photo = r['写真URL'] || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=60';
     var genre = (r['ジャンル']||'').split('・')[0];
@@ -12346,7 +12363,7 @@ function buildRanking() {
       + '<span class="rank-num">' + (i+1) + '</span>'
       + '<img class="rank-img" src="' + photo + '" alt="' + (r['店名']||'') + '" loading="lazy" decoding="async" width="280" height="160" onerror="nbImgFallback(this)">'
       + '<div class="rank-name">' + (r['店名']||'') + '</div>'
-      + '<div class="rank-meta"><span class="rank-score">★ ' + r['Google評価'] + '</span><span>' + genre + '</span><span>' + (r['エリア']||'') + '</span></div>'
+      + '<div class="rank-meta"><span class="rank-score">👁 ' + item.count + '回</span><span>' + genre + '</span><span>' + (r['エリア']||'') + '</span></div>'
       + '</div>';
   }).join('');
   sectionEl.style.display = '';
@@ -12418,7 +12435,9 @@ function addHistory(storeName) {
   hist.unshift(storeName);
   if (hist.length > 10) hist = hist.slice(0, 10);
   localStorage.setItem('nb_history', JSON.stringify(hist));
+  incrementViewCount(storeName);
   renderHistory();
+  buildRanking();
 }
 function renderHistory() {
   var hist = getHistory();
