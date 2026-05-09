@@ -758,7 +758,7 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 ### [ISSUE-031] ロングテール独自 KW での SEO 1位獲得戦略
 
 - **priority**: P1
-- **status**: ready
+- **status**: in_progress
 - **category**: competitive / seo
 - **detected**: 2026-05-06
 - **description**:
