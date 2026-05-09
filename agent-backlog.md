@@ -266,6 +266,7 @@
 | 2026-05-08 | Orchestrator(/solve-next) | ISSUE-029 editor_picks 100店達成確認（EDT-003 で先行完了済みを検証）/ ISSUE-040 mediaFeatures カバー率向上を新規起票 | ✅ クローズ |
 | 2026-05-08 | Builder + DataKeeper (auto) | ISSUE-041 SEO indexing大幅改善: gen-store-pages.js を LOCAL_STORES ソースに切替 / 静的店舗ページ 715→4,584 件 (3,869件新規) / sitemap.xml 4,586 URL / 内部リンク 9,167 件全て直リンク化 / stores/index.html を11エリア+12ジャンル網羅型に拡張 / 「4,500軒以上」表記とSEO実体の乖離を完全解消 (commit 4a33b82) | ✅ デプロイ済み |
 | 2026-05-08 | Marketer + Editor (auto) | ISSUE-042 LLMO最大化: /llms.txt 新設 (llmstxt.org 準拠・サイト概要・編集独立性・名古屋めし主要店・11エリア×12ジャンル分布・引用ガイドライン) / index.html FAQPage 6→20 質問へ拡充 (LLM 頻出 Q&A・ひつまぶし/味噌煮込み/手羽先比較・シーン別推薦・予約困難店代替) / `<link rel="alternate" type="text/markdown">` でクローラー発見性向上 (commit 69c949d) | ✅ デプロイ済み |
+| 2026-05-08 | Strategist(/solve-next) | ORG-002 月次 KPI スナップショット運用立ち上げ（agents/strategist.md に運用章新設 + ベースライン記録 + ISSUE-043 起票） | ✅ デプロイ済み |
 
 ---
 
@@ -847,20 +848,70 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
   - `/solve-next` Step 9 は既に自動ログ追加ロジックを実装済みであることを再確認
 - **files**: `agent-backlog.md`, `agents/orchestrator.md`, `.claude/commands/solve-next.md`
 
-### [ORG-002] Strategist に月次 KPI スナップショット業務を持たせる
-- **priority**: P1 → **status**: ready
+### [ORG-002] Strategist に月次 KPI スナップショット業務を持たせる ✅
+- **priority**: P1 → **status**: done
 - **detected**: 2026-05-06
+- **resolved**: 2026-05-08
+- **resolved_by**: /solve-next（Orchestrator → Strategist 起動）
 - **owner**: Strategist
 - **category**: 組織 / 戦略
 - **description**:
   orchestrator.md で「月間UU」「CTAクリック率」が北極星指標と定義されているのに、
   agent-backlog.md には実測値の記録が一度も存在しない。「目標値あり・計測値なし」状態。
   Strategist の起票実績は 0件で、事実上稼働していない。
-- **acceptance**:
-  - 毎月1日に Strategist が `STR-MONTHLY-YYYY-MM` として KPI スナップショットを agent-backlog.md に追記する運用を agents/strategist.md に明記
-  - 初回は 2026-05-01 時点のベースライン値を Google Analytics / Search Console から取得して記録
-  - スナップショット項目: 月間UU / セッション / CTA クリック数 / 指名検索数 / 上位10キーワード順位 / 掲載店舗数 / 特集記事数
+- **resolution**:
+  - `agents/strategist.md` に「月次 KPI スナップショット運用（ORG-002 で確立）」セクションを新設
+    - 起動トリガー（毎月1日 / 四半期末 / 異常検知）
+    - スナップショット必須 7 項目（月間UU / セッション / CTA / 指名検索 / 上位10KW / 掲載店舗数 / 特集数）
+    - 起票フォーマット（STR-MONTHLY-YYYY-MM テンプレ）
+    - Phase 2 自動化計画（GitHub Actions + GA4/GSC API）
+    - Strategist 月次稼働の最低基準
+  - 「やってはいけないこと」リストに「月次 KPI を記録せず月をまたぐ（ORG-002 違反）」を追加
+  - 確認可能なストック指標のベースラインを記録（下記 STR-MONTHLY-2026-05-BASELINE）
+  - GA4 / Search Console 実値取得は ISSUE-043 として分離（要アクセス権・別作業）
 - **files**: `agents/strategist.md`, `agent-backlog.md`
+
+### [STR-MONTHLY-2026-05-BASELINE] 2026-05-01 締め KPI ベースライン（ストック指標のみ）
+
+- **priority**: P2 → **status**: done（記録のみ）
+- **recorded**: 2026-05-08
+- **owner**: Strategist
+- **category**: KPI / monitoring
+
+#### ストック指標（agent-backlog 記録時点で確認可能）
+- 掲載店舗数: **4,584店**（`index.html` LOCAL_STORES）
+- 特集記事数: **20本**（`features/*.html`）
+- ジャーナル記事数: **18本**（`journal/*.html`）
+- editor_picks 件数: **100店**（`data/editor_picks.json`）
+- 推薦文カバー率: **約99.8%**（4,589/4,598、2026-04-24 時点・ISSUE-017 Phase 1 + 全店生成）
+- SNS フォロワー: IG=0 / X=0 / TikTok=0（ISSUE-028 未着手）
+
+#### フロー指標（取得待ち）
+- 月間 UU: 取得待ち（GA4 アクセス → ISSUE-043）
+- 月間セッション: 同上
+- CTA クリック数: 同上
+- 指名検索数: 取得待ち（Search Console → ISSUE-043）
+- 上位 10 KW: 同上
+
+#### 解釈メモ
+- ストック指標は「素材は揃っているが外向きに届ける仕組みが不足」を裏付け（competitive analysis 2026-05-06 と整合）
+- フロー指標が空白のままでは Phase 1（基盤固め / 月間UU 5,000）の進捗判定が不可能 → ISSUE-043 を最優先
+
+### [ISSUE-043] STR-MONTHLY 用 GA4 / Search Console 実値取得とベースライン確定
+
+- **priority**: P1
+- **status**: ready
+- **category**: 組織 / KPI
+- **detected**: 2026-05-08
+- **owner**: Strategist + DataKeeper
+- **description**:
+  ORG-002 で月次 KPI スナップショット運用を確立したが、GA4 / Search Console の実値取得は権限取得作業を伴うため別タスクに分離した。本タスクで初回ベースライン（2026-05-01 締め）の月間 UU / セッション / CTA クリック数 / 指名検索数 / 上位10KW を取得し、`STR-MONTHLY-2026-05-BASELINE` を完成させる。
+- **acceptance**:
+  - GA4 から 2026-04-01〜2026-04-30 の UU / セッション / outbound_click イベント数を取得
+  - Search Console から指名検索（"NAGOYA BITES" / "ナゴヤバイツ"）月間合計、および上位 10 KW を取得
+  - `STR-MONTHLY-2026-05-BASELINE` セクションのフロー指標欄を埋める
+  - 将来の自動化に向け `.github/workflows/monthly-kpi.yml` の設計メモを `docs/kpi-automation-design.md` として作成（実装は別タスク）
+- **files**: `agent-backlog.md`, `docs/kpi-automation-design.md`（新規）
 
 ### [ORG-003] Marketer に週次 SEO/SNS チェック業務を持たせる
 - **priority**: P1 → **status**: ready
