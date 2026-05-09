@@ -227,4 +227,106 @@ Phase 3（6〜12ヶ月）: スケール
 ❌ 短期収益のために長期ブランドを犠牲にする
 ❌ 実現不可能な成長目標を設定する
 ❌ 競合の模倣だけで差別化のない戦略を立てる
+❌ 月次 KPI スナップショットを記録しないまま月をまたぐ（ORG-002 違反）
 ```
+
+---
+
+## 月次 KPI スナップショット運用（ORG-002 で確立）
+
+NAGOYA BITES の北極星指標は orchestrator.md で「月間 UU × CTA クリック率」と定義されているが、
+ORG-002 検出時点（2026-05-06）まで実測値が agent-backlog.md に**一度も記録されていなかった**。
+「目標値あり・計測値なし」状態を解消するため、Strategist が **毎月1日に KPI スナップショット**を起票する運用を確立する。
+
+### 起動トリガー
+
+| トリガー | 内容 |
+|---|---|
+| **毎月1日（自動）** | 前月締めの KPI を取得し `STR-MONTHLY-YYYY-MM` として記録 |
+| **四半期末（手動）** | 四半期総括レビュー `STR-QUARTERLY-YYYY-Q*` を Orchestrator と共同で起票 |
+| **異常検知時（緊急）** | 月間 UU 30% 以上の急減 / CTA クリック率 50% 以上の急減 → `STR-ALERT-XXX` で即時起票 |
+
+### スナップショット項目（必須 7 項目）
+
+毎月、以下の 7 項目を `agent-backlog.md` に追記する。値が取れない項目は `(取得不可: 理由)` と明記。
+
+| # | 項目 | データソース | 補足 |
+|---|---|---|---|
+| 1 | **月間 UU**（ユニークユーザー数） | Google Analytics 4 | 北極星指標の前段 |
+| 2 | **月間セッション数** | Google Analytics 4 | 流入の総量 |
+| 3 | **CTA クリック数**（HP予約 / Google Maps / IG / 食べログ等の outbound 合計） | GA4 `outbound_click` イベント | 北極星指標の後段 |
+| 4 | **指名検索数**（"NAGOYA BITES" 等） | Google Search Console | ブランド資産の指標 |
+| 5 | **上位 10 KW の順位**（Search Console クエリレポート） | Google Search Console | SEO 健全性 |
+| 6 | **掲載店舗数** | `index.html` の LOCAL_STORES 件数 | データ規模 |
+| 7 | **特集記事数** | `features/` ディレクトリ + `journal/` ディレクトリ | コンテンツ蓄積 |
+
+加えて、参考値として:
+- editor_picks 件数（業界視点 Moat の規模）
+- 推薦文カバー率（Quality Gap 進捗）
+- SNS フォロワー（IG / X / TikTok・ISSUE-028 着手後）
+
+### 起票フォーマット
+
+```markdown
+### [STR-MONTHLY-2026-05] 月次 KPI スナップショット（2026-05-01 締め）
+
+- **priority**: P2 → **status**: done（記録のみ・施策ではない）
+- **detected/recorded**: 2026-06-01
+- **owner**: Strategist
+- **category**: KPI / monitoring
+
+#### 1. 北極星指標
+- 月間 UU: XXXX
+- CTA クリック数: XXXX
+- 月間 UU × CTA クリック率: XX.X%
+
+#### 2. 成長指標
+- 月間セッション: XXXX
+- 指名検索数（"NAGOYA BITES"）: XX/月
+- 上位 10 KW（Search Console）:
+  1. 名古屋 業界人 推薦 — X位
+  2. 名古屋 飲食人 おすすめ — X位
+  ...
+
+#### 3. ストック指標
+- 掲載店舗数: 4,584店
+- 特集記事数: 20本
+- ジャーナル記事数: 18本（累計）
+- editor_picks: 100店
+- 推薦文カバー率: XX%
+- SNS フォロワー: IG=XXX / X=XXX / TikTok=XXX
+
+#### 4. 前月比サマリー
+- 最も改善した指標: 〜〜
+- 最も悪化した指標: 〜〜
+- 次月の打ち手提案: 〜〜（必要なら個別 STR-XXX として起票）
+```
+
+### Phase 1: 2026-05-01 ベースライン（初回・要 GA / GSC 取得）
+
+ORG-002 着手時点で以下の参考値が確認できた（ストック指標のみ・GA / GSC 値は別タスクで取得）:
+
+```
+【2026-05-08 時点 確認可能なベースライン】
+・掲載店舗数: 4,584店（index.html LOCAL_STORES）
+・特集記事数: 20本（features/*.html）
+・ジャーナル記事数: 18本（journal/*.html）
+・editor_picks: 100店（data/editor_picks.json）
+・GA4 / Search Console 値: ISSUE-041 で別途取得
+```
+
+### Phase 2: 自動化（Strategist + GitHub Actions）
+
+将来的には `.github/workflows/monthly-kpi.yml` で毎月1日 9:00 JST に GA4 API + Search Console API から
+自動取得し、agent-backlog.md に PR を生成する仕組みを整備する（ISSUE-041 のフォローアップ）。
+
+### Strategist の月次稼働の最低基準
+
+```
+☑ 毎月1日に STR-MONTHLY-YYYY-MM を起票（実値取得が遅れる場合も「取得待ち」状態で起票）
+☑ スナップショット 7 項目のうち、最低 5 項目は実値で埋める
+☑ 前月比で重大な変化があれば個別 STR-XXX を起票
+☑ 四半期末に Orchestrator と共同で総括レビュー
+```
+
+これを守らずに月をまたぐと ORG-002 違反として実行ログに記録される。
