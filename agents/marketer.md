@@ -163,6 +163,109 @@ Builderと連携して実行:
 
 ---
 
+## 週次 SEO/SNS チェック運用（ORG-003 で確立）
+
+NAGOYA BITES のトラフィック健全性を毎週モニタリングし、問題を早期発見・個別タスク化する運用を定義する。
+
+### 起動トリガー
+
+| トリガー | 内容 |
+|---|---|
+| **毎週月曜（自動）** | 前週分の SEO + SNS + トラフィック指標を取得し `MKT-WEEKLY-YYYY-WW` として記録 |
+| **順位急落時（緊急）** | 主要 KW が 3位以上下落 → 個別 `MKT-XXX` を起票して即日 Orchestrator に報告 |
+| **機会発見時（随時）** | 検索需要ありコンテンツなし KW を発見 → `MKT-XXX` で Editor へ記事依頼 |
+
+### 週次チェック項目（必須 6項目）
+
+毎週月曜、以下を `agent-backlog.md` に追記する。値が取れない項目は `(取得不可: 理由)` と明記。
+
+| # | 項目 | データソース | 補足 |
+|---|---|---|---|
+| 1 | **主要 KW 順位変動**（Tier 1/2/3 代表 5〜10 KW） | Google Search Console | 前週比 |
+| 2 | **オーガニック流入数** | GA4 セッション（organic のみ） | 前週比 |
+| 3 | **CTA クリック数** | GA4 `outbound_click` | 前週比 |
+| 4 | **SNS エンゲージメント**（IG: リーチ / いいね / 保存 / X: インプレッション / RT） | IG Insights / X Analytics | 前週投稿分 |
+| 5 | **新規流入 KW**（クリック急増キーワード） | Search Console クエリレポート | 機会発見用 |
+| 6 | **要注意ページ**（直帰率急上昇 or 滞在時間急減） | GA4 ページレポート | UX 劣化早期検知 |
+
+### 起票フォーマット
+
+```markdown
+### [MKT-WEEKLY-2026-W19] 週次 SEO/SNS チェック（2026-05-04〜10）
+
+- **priority**: P3 → **status**: done（記録のみ・施策ではない）
+- **detected/recorded**: 2026-05-12（月曜）
+- **owner**: Marketer
+- **category**: seo / sns / monitoring
+
+#### 1. SEO 順位（代表 KW）
+| キーワード | 今週 | 前週 | 変動 |
+|---|---|---|---|
+| 名古屋 グルメ 業界人 | X位 | X位 | ±0 |
+| 名古屋 居酒屋 個室 | X位 | X位 | ±0 |
+| ... | | | |
+
+#### 2. トラフィック
+- オーガニック流入: XXXX セッション（前週比: +X%）
+- CTA クリック数: XXXX（前週比: +X%）
+
+#### 3. SNS エンゲージメント
+- Instagram: リーチ XXX / いいね XX / 保存 XX
+- X: インプレ XXXX / RT X / いいね XX
+
+#### 4. 機会・リスク
+- 機会 KW: 〜〜（個別 MKT-XXX として起票）
+- 要注意ページ: 〜〜（個別 MKT-XXX として起票）
+- 次週の打ち手: 〜〜
+```
+
+### エスカレーション基準
+
+| 状況 | 対応 |
+|---|---|
+| 主要 KW が 3位以上下落 | `MKT-XXX` 個別起票 → P1 として Orchestrator 報告 |
+| SNS エンゲージメントが前週比 50% 以上減 | `MKT-XXX` 起票 → 投稿戦略見直し提案 |
+| オーガニック流入が前週比 30% 以上減 | `MKT-XXX` 起票 → Inspector に技術監査依頼 |
+| 新規機会 KW 発見（月 1,000 検索以上・自サイト未対応） | `MKT-XXX` 起票 → Editor に記事依頼 |
+
+### GitHub Actions 連携（Phase 2 自動化）
+
+将来的には `.github/workflows/weekly-pipeline.yml` で毎週月曜 9:00 JST に以下を自動実行する:
+
+```yaml
+# .github/workflows/weekly-pipeline.yml（概要）
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # 月曜 09:00 JST (UTC 00:00)
+  workflow_dispatch:
+
+jobs:
+  marketer-weekly-check:
+    name: Marketer 週次 SEO/SNS チェック
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: GA4 + Search Console データ取得
+        # Google APIs で指標を取得し weekly-report.json に保存
+      - name: MKT-WEEKLY エントリを agent-backlog.md に追記
+        # スクリプトで自動起票
+      - name: PR を生成
+        # agent-backlog.md 更新を PR として提出
+```
+
+現フェーズ（Phase 1）では手動起票で運用し、GA4/Search Console アクセス確立後（ISSUE-043 完了後）に自動化に移行する。
+
+### Marketer の週次稼働の最低基準
+
+```
+☑ 毎週月曜に MKT-WEEKLY-YYYY-WW を起票（実値取得が遅れる場合も「取得待ち」状態で起票）
+☑ チェック項目 6 項目のうち最低 4 項目は実値で埋める
+☑ エスカレーション基準に該当する事象は即日個別 MKT-XXX を起票
+☑ GA4 / Search Console のアクセス権が未確立の場合は ISSUE-043 を参照
+```
+
+---
+
 ## Marketerが絶対にやってはいけないこと
 
 ```
