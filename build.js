@@ -1046,6 +1046,30 @@ async function main() {
   }
   console.log(`トレンドスコア: 🔥話題沸騰=${trendHot} / 📈注目上昇中=${trendRising} / ✨じわじわ人気=${trendWarm}`);
 
+  // ─── GA4 グローバル閲覧数をマージ（data/view_counts.json） ─────────────────
+  // scripts/fetch_ga4_views.js が GA4 の modal_open イベントを店舗別に集計したもの。
+  // ファイルが無い・空なら閲覧数 0 で進める（ランキングは隠れる）。
+  const viewCountsPath = path.join(__dirname, 'data', 'view_counts.json');
+  let viewCountsMerged = 0;
+  if (fs.existsSync(viewCountsPath)) {
+    try {
+      const vc = JSON.parse(fs.readFileSync(viewCountsPath, 'utf8'));
+      const counts = vc.counts || {};
+      for (const s of stores) {
+        const c = counts[s['店名']];
+        if (typeof c === 'number' && c > 0) {
+          s['閲覧数'] = c;
+          viewCountsMerged++;
+        }
+      }
+      console.log(`GA4 閲覧数: ${viewCountsMerged}店舗にマージ（集計期間 ${vc.lookbackDays || '?'}日 / 合計 ${vc.totalEvents || 0} イベント）`);
+    } catch (e) {
+      console.error(`data/view_counts.json の読み込み失敗: ${e.message}`);
+    }
+  } else {
+    console.log('data/view_counts.json なし（GA4 閲覧数マージスキップ）');
+  }
+
   if (rejected.length > 0 && rejected.length <= 30) {
     console.log('除外された店舗（最大30件）:');
     rejected.slice(0, 30).forEach(s => {
