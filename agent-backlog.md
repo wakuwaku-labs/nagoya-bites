@@ -232,6 +232,37 @@
 
 ---
 
+
+### [MKT-WEEKLY-2026-W19] 週次 SEO/SNS チェック（2026-05-04〜2026-05-10）
+
+- **priority**: P3 → **status**: done（記録のみ・施策ではない）
+- **detected/recorded**: 2026-05-09（月曜自動起票）
+- **owner**: Marketer
+- **category**: seo / sns / monitoring
+
+#### 1. SEO 順位（代表 KW）（取得待ち: ISSUE-043 — GA4/Search Console 未接続）
+| キーワード | 今週 | 前週 | 変動 |
+|---|---|---|---|
+| 名古屋 グルメ 業界人 | (取得待ち) | — | — |
+| 名古屋 居酒屋 個室 | (取得待ち) | — | — |
+| 名古屋 宴会 幹事 | (取得待ち) | — | — |
+| 名古屋 接待 和食 | (取得待ち) | — | — |
+| 名古屋 飲食店 おすすめ | (取得待ち) | — | — |
+
+#### 2. トラフィック（取得待ち: ISSUE-043 — GA4/Search Console 未接続）
+- オーガニック流入: (取得待ち)
+- CTA クリック数: (取得待ち)
+
+#### 3. SNS エンゲージメント（手動入力欄）
+- Instagram: リーチ — / いいね — / 保存 —
+- X: インプレ — / RT — / いいね —
+
+#### 4. 機会・リスク
+- 機会 KW: (未検出)
+- 要注意ページ: (未検出)
+- 次週の打ち手: GA4/Search Console 実値接続（ISSUE-043）完了後に実値ベース運用へ移行
+
+
 ## エージェント実行ログ
 
 | 日付 | エージェント | 実行内容 | 結果 |
@@ -914,7 +945,7 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
 - **files**: `agent-backlog.md`, `docs/kpi-automation-design.md`（新規）
 
 ### [ORG-003] Marketer に週次 SEO/SNS チェック業務を持たせる
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: in_progress
 - **detected**: 2026-05-06
 - **owner**: Marketer
 - **category**: 組織 / マーケティング

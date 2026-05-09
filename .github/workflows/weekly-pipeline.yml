@@ -42,6 +42,18 @@ jobs:
           git diff --staged --quiet || git commit -m "chore: auto-collect trending candidates [skip ci]"
         continue-on-error: true
 
+      - name: Marketer — 週次 SEO/SNS チェックエントリを起票
+        run: node scripts/marketer_weekly_check.js
+        continue-on-error: true
+
+      - name: Marketer チェックエントリをコミット
+        run: |
+          git config user.name "NAGOYA BITES Agent"
+          git config user.email "agent@nagoya-bites"
+          git add agent-backlog.md 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "chore: Marketer 週次チェック起票 [skip ci]"
+        continue-on-error: true
+
       - name: Step 1 — DataKeeper（node build.js）
         run: node build.js
         env:
