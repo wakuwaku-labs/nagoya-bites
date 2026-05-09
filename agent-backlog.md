@@ -298,6 +298,7 @@
 | 2026-05-08 | Builder + DataKeeper (auto) | ISSUE-041 SEO indexing大幅改善: gen-store-pages.js を LOCAL_STORES ソースに切替 / 静的店舗ページ 715→4,584 件 (3,869件新規) / sitemap.xml 4,586 URL / 内部リンク 9,167 件全て直リンク化 / stores/index.html を11エリア+12ジャンル網羅型に拡張 / 「4,500軒以上」表記とSEO実体の乖離を完全解消 (commit 4a33b82) | ✅ デプロイ済み |
 | 2026-05-08 | Marketer + Editor (auto) | ISSUE-042 LLMO最大化: /llms.txt 新設 (llmstxt.org 準拠・サイト概要・編集独立性・名古屋めし主要店・11エリア×12ジャンル分布・引用ガイドライン) / index.html FAQPage 6→20 質問へ拡充 (LLM 頻出 Q&A・ひつまぶし/味噌煮込み/手羽先比較・シーン別推薦・予約困難店代替) / `<link rel="alternate" type="text/markdown">` でクローラー発見性向上 (commit 69c949d) | ✅ デプロイ済み |
 | 2026-05-08 | Strategist(/solve-next) | ORG-002 月次 KPI スナップショット運用立ち上げ（agents/strategist.md に運用章新設 + ベースライン記録 + ISSUE-043 起票） | ✅ デプロイ済み |
+| 2026-05-09 | Marketer(/solve-next) | ORG-003 週次 SEO/SNS チェック業務を Marketer に追加（agents/marketer.md に運用章新設 / weekly-pipeline.yml にステップ追加 / scripts/marketer_weekly_check.js 新規作成 / MKT-WEEKLY-2026-W19 初回起票） | ✅ commit 5a12376 |
 
 ---
 
@@ -944,8 +945,10 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
   - 将来の自動化に向け `.github/workflows/monthly-kpi.yml` の設計メモを `docs/kpi-automation-design.md` として作成（実装は別タスク）
 - **files**: `agent-backlog.md`, `docs/kpi-automation-design.md`（新規）
 
-### [ORG-003] Marketer に週次 SEO/SNS チェック業務を持たせる
-- **priority**: P1 → **status**: in_progress
+### [ORG-003] Marketer に週次 SEO/SNS チェック業務を持たせる ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-05-09
+- **resolved_by**: commit 5a12376
 - **detected**: 2026-05-06
 - **owner**: Marketer
 - **category**: 組織 / マーケティング
