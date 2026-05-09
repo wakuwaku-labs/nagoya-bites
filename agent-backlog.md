@@ -299,6 +299,7 @@
 | 2026-05-08 | Marketer + Editor (auto) | ISSUE-042 LLMO最大化: /llms.txt 新設 (llmstxt.org 準拠・サイト概要・編集独立性・名古屋めし主要店・11エリア×12ジャンル分布・引用ガイドライン) / index.html FAQPage 6→20 質問へ拡充 (LLM 頻出 Q&A・ひつまぶし/味噌煮込み/手羽先比較・シーン別推薦・予約困難店代替) / `<link rel="alternate" type="text/markdown">` でクローラー発見性向上 (commit 69c949d) | ✅ デプロイ済み |
 | 2026-05-08 | Strategist(/solve-next) | ORG-002 月次 KPI スナップショット運用立ち上げ（agents/strategist.md に運用章新設 + ベースライン記録 + ISSUE-043 起票） | ✅ デプロイ済み |
 | 2026-05-09 | Marketer(/solve-next) | ORG-003 週次 SEO/SNS チェック業務を Marketer に追加（agents/marketer.md に運用章新設 / weekly-pipeline.yml にステップ追加 / scripts/marketer_weekly_check.js 新規作成 / MKT-WEEKLY-2026-W19 初回起票） | ✅ commit 5a12376 |
+| 2026-05-09 | Marketer + Editor(/solve-next) | ISSUE-031 ロングテール独自KW 特集5本新規追加（industry-insiders-pick / hard-to-book / settai-guide / kospa-insider / enmkai-kanji）/ features/index.html 5カード追加 / sitemap.xml 5エントリ追加 | ✅ commit 1aae675 |
 
 ---
 
@@ -755,10 +756,11 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **files**: `docs/sns-content-template.md`（v0.1 草稿）
 - **owner**: Editor + Marketer
 
-### [ISSUE-031] ロングテール独自 KW での SEO 1位獲得戦略
+### [ISSUE-031] ロングテール独自 KW での SEO 1位獲得戦略 ✅
 
-- **priority**: P1
-- **status**: in_progress
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-05-09
+- **resolved_by**: commit 1aae675
 - **category**: competitive / seo
 - **detected**: 2026-05-06
 - **description**:
