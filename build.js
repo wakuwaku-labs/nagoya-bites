@@ -1208,6 +1208,7 @@ async function main() {
 
   // 4. sitemap.xml を更新
   //    トップ + 静的ページ + features/ 全件 + stores/ 全件 を列挙
+  const storesDir = path.join(__dirname, 'stores');
   const featuresDir = path.join(__dirname, 'features');
   const journalDir = path.join(__dirname, 'journal');
   const baseUrl = 'https://nagoya-bites.com';
