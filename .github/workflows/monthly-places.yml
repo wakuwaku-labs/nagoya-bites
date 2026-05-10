@@ -1,0 +1,67 @@
+name: Monthly Google Places fetch
+
+# ISSUE-048 Step 2: Google Places API でレビュー件数・営業ステータスを
+# 月 1 回取得し data/places_resolved.json にキャッシュ。
+# クロスチェック整合度（crossCheckScore）の S1（★ vs 件数比率）と
+# S2（件数絶対値）シグナルを正規化するために使用する。
+#
+# コスト: 1100 店 × 月 1 回 = 月 1100 リクエスト
+#         Find Place from Text + fields (rating,user_ratings_total,business_status)
+#         ≈ $17 / 1000 リクエスト = $18.7/月（無料クレジット $200/月 内）
+#
+# 事前準備（リポジトリオーナー側で必要）:
+#   1. Google Cloud Platform でプロジェクト作成 → Places API 有効化
+#   2. API キー発行（HTTP リファラ制限なしで作成）
+#   3. GitHub Secrets に GOOGLE_PLACES_API_KEY を設定
+#   4. Google Cloud Console で予算アラート $50 設定推奨
+#
+# 注: GOOGLE_PLACES_API_KEY が未設定の場合、fetch_places.js は exit 0 で
+#     スキップするため、ワークフローは失敗扱いにならない。
+
+on:
+  schedule:
+    # 毎月 1 日 18:00 UTC（JST 翌 2 日 3:00）に実行
+    - cron: '0 18 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: monthly-places
+  cancel-in-progress: false
+
+jobs:
+  fetch_places:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch Google Places data → data/places_resolved.json
+        run: node scripts/fetch_places.js
+        env:
+          GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -f data/places_resolved.json ]; then
+            git add data/places_resolved.json
+            if git diff --cached --quiet; then
+              echo "変更なし - コミットスキップ"
+            else
+              git commit -m "chore: auto-update Places API cache [skip actions]"
+              git pull --rebase origin main || true
+              git push || (sleep 5 && git pull --rebase origin main && git push)
+            fi
+          else
+            echo "data/places_resolved.json が存在しない（GOOGLE_PLACES_API_KEY 未設定の可能性）"
+          fi
