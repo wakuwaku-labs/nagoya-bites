@@ -303,6 +303,52 @@
 | 2026-05-10 | Editor + Orchestrator(/solve-next) | ISSUE-040 監査: 既存 mediaFeatures 27 エントリの実在性を WebSearch 検証 → 「食べログ東海HIGH SCORE」「ホットペッパー焼肉賞東海」「タイムアウト名古屋」など捏造の疑い濃厚 → **全 27 エントリ空配列化（カバー率 27%→0%）** / data/editor_picks.json _schema を url 必須＋捏造禁止に更新 / _audit_2026_05_10 永続記録 / ISSUE-040 を P0 blocked に昇格（人間 Editor 検証待ち） | ✅ ブランド整合性確保 |
 | 2026-05-10 | Builder（ユーザー指摘対応） | ISSUE-044 P0緊急修正: build.js の stores/ クリーンアップブロック削除（715件セットで 4,584 件を一括削除する破壊バグ）→ stores/*.html 管理を gen-store-pages.js --delete-orphans に一元化 | ✅ commit 済み |
 | 2026-05-10 | DataKeeper(/solve-next) | ISSUE-033 推薦文カバー率引き上げ: 既存 98.93% (4,536/4,585) の残 49 件を `data/recommendations.json` に追記（ルールベース生成器 `scripts/fill_recommendations_json.js` を新設・Anthropic/Sheets 認証不要）→ post-merge カバー率 **100% (4,585/4,585)** で acceptance「6ヶ月で 50%以上」即時達成 / 後継 ISSUE-045（editorReason 業界視点 2.1%→30%）を起票 | ✅ commit 予定 |
+| 2026-05-10 | Inspector (auto) | ISSUE-041/042 大規模変更後の全方位監査（4セクション: データ品質/SEO/パフォーマンス/コンテンツ）/ features/nagoya-miso-nikomi-udon.html の切れリンク1件即時修正（5店→4店再構成・JSON-LD 整合）/ llms.txt の「8ブランド分の現場運営経験」明記で信頼性シグナル強化 / ISSUE-046〜048 起票 | ✅ 監査完了 |
+
+---
+
+## Inspector 監査 2026-05-10 で起票された課題
+
+### [ISSUE-046] HP-only 店舗の Google評価・タグ・Instagram URL 充足率向上
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-05-10（Inspector 監査）
+- **category**: data
+- **description**:
+  ISSUE-041 で HP-only 静的ページ 3,869 件を生成したが、これらの店舗は以下のオプションフィールドの充足率が極端に低い:
+  - Google評価: 704/4585 (15.4%)
+  - Instagram: 2179/4585 (47.5%)
+  - タグ: 714/4585 (15.6%)
+  HP API 由来の店舗にこれらのデータが付いていないため、SEO 観点でも「リッチコンテンツ」になりきれていない。auto-update workflow（fetch_scores.js / fetch_ig_urls.js / 既存タグ補完スクリプト）を全 HP-only 店舗に拡張する必要あり。
+- **impact**: 静的ページのコンテンツ品質が薄いままだと Google が「thin content」判定する可能性。SEO 効果がインデックス可能ページ数の増加分だけに留まる。
+- **acceptance**:
+  - Google評価充足率 50%以上（auto-update を 4584 店全件に拡張）
+  - Instagram URL 充足率 70%以上
+  - タグ充足率 60%以上
+- **files**: `fetch_scores.js`, `fetch_ig_urls.js`, `claude_tagging.js`, `.github/workflows/*.yml`
+
+### [ISSUE-047] 静的店舗ページの related-features セクション充足率向上（68%→95%）
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-05-10（Inspector 監査）
+- **category**: seo / internal-linking
+- **description**:
+  サンプル 500 件中 341 件（68%）にしか related-features の実リンクが含まれていない。32% は HP API のタグが TAG_TO_FEATURES のパターンにマッチせず空セクション化している。エリア・ジャンル単位のフォールバック追加で 95% カバーが可能。
+- **対応案**: `gen-store-pages.js` の TAG_TO_FEATURES に以下を追加
+  - エリア「名古屋（名古屋駅/西区/中村区）」「名古屋駅」 → meieki.html
+  - エリア「栄」系 → sakae.html
+  - エリア「大須」系 → osu-food-walk.html
+  - ジャンル「居酒屋」 → banquet.html (既存) を強化
+  - ジャンル「カフェ・スイーツ」 → girls-party.html
+- **acceptance**: related-features サンプル 500 件中 95% 以上で実リンクが含まれる
+- **files**: `gen-store-pages.js`
+
+### [ISSUE-048] index.html のボタン aria-label 充足率向上（50%→90%）
+- **priority**: P3 → **status**: ready
+- **detected**: 2026-05-10（Inspector 監査）
+- **category**: a11y
+- **description**:
+  index.html の `<button>` 32 件中 16 件のみ aria-label を持つ。アイコンのみのボタン（hamburger / scroll-top / fav-toggle 等）にはあるが、テキスト付きボタンの一部が抜けている。スクリーンリーダー対応の完成度を上げる。
+- **acceptance**: button 全 32 件中 90% 以上で aria-label または明示的なテキストラベルあり
+- **files**: `index.html`
 
 ---
 
