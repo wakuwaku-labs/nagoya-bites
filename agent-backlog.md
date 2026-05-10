@@ -300,6 +300,7 @@
 | 2026-05-08 | Strategist(/solve-next) | ORG-002 月次 KPI スナップショット運用立ち上げ（agents/strategist.md に運用章新設 + ベースライン記録 + ISSUE-043 起票） | ✅ デプロイ済み |
 | 2026-05-09 | Marketer(/solve-next) | ORG-003 週次 SEO/SNS チェック業務を Marketer に追加（agents/marketer.md に運用章新設 / weekly-pipeline.yml にステップ追加 / scripts/marketer_weekly_check.js 新規作成 / MKT-WEEKLY-2026-W19 初回起票） | ✅ commit 5a12376 |
 | 2026-05-09 | Marketer + Editor(/solve-next) | ISSUE-031 ロングテール独自KW 特集5本新規追加（industry-insiders-pick / hard-to-book / settai-guide / kospa-insider / enmkai-kanji）/ features/index.html 5カード追加 / sitemap.xml 5エントリ追加 | ✅ commit 1aae675 |
+| 2026-05-10 | Editor + Orchestrator(/solve-next) | ISSUE-040 監査: 既存 mediaFeatures 27 エントリの実在性を WebSearch 検証 → 「食べログ東海HIGH SCORE」「ホットペッパー焼肉賞東海」「タイムアウト名古屋」など捏造の疑い濃厚 → **全 27 エントリ空配列化（カバー率 27%→0%）** / data/editor_picks.json _schema を url 必須＋捏造禁止に更新 / _audit_2026_05_10 永続記録 / ISSUE-040 を P0 blocked に昇格（人間 Editor 検証待ち） | ✅ ブランド整合性確保 |
 
 ---
 
@@ -718,22 +719,30 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 
 ### [ISSUE-040] editor_picks の mediaFeatures カバー率 27% → 80% に引き上げ
 
-- **priority**: P2
-- **status**: ready
-- **category**: competitive / data / editorial
+- **priority**: P2 → **P0 に昇格（2026-05-10 監査による）**
+- **status**: blocked（人間 Editor による1件1件の検証が必要）
+- **category**: competitive / data / editorial / **integrity**
 - **detected**: 2026-05-08
-- **description**:
-  ISSUE-029 で 100店達成済みだが、`mediaFeatures`（他メディア掲載履歴）が 73店分で空配列のまま。
-  「他メディア掲載実績」は editorial-policy.html の選定基準 #2 として明示しており、proof としての説得力に直結する。
-  該当店をミシュラン・dressing・macaroni・ヒトサラ・ナゴレコ・OZmall・大人の名古屋・各種雑誌等で精査し、
-  最低 1件以上の `{name, year?, url?}` エントリを追加する。
-- **acceptance**:
-  - `data/editor_picks.json` の `mediaFeatures` カバー率を 27% → **80%以上**に引き上げ（80店以上で 1件以上のエントリ）
-  - 各エントリは媒体名必須・可能なら年と URL 付き
-  - 確実な裏付けが取れない店は空配列のままで OK（捏造禁止）
+- **last_update**: 2026-05-10
+- **audit_2026_05_10**:
+  /solve-next で着手時、既存 27 エントリの整合性を WebSearch で検証 → **多数が捏造の疑い濃厚**:
+    - 「食べログ 東海 焼肉 HIGH SCORE 2024」→ 該当賞は実在しない（実在は「焼肉EAST百名店」「ホットレストラン」）
+    - 「ホットペッパーグルメ 焼肉賞 東海 2024」→ 該当賞は実在しない
+    - 「タイムアウト名古屋 韓国グルメ特集 2024」→ Time Out Nagoya 自体が存在しない（Time Out Tokyo はある）
+    - 「東海テレビ アゲアゲめし 2024」→ 検索で該当回が確認できず
+    - 全 27 エントリが URL を欠落 → 検証不能
+  → ブランドの最大 Moat である「編集独立性／業界人視点」を毀損するため、**全 27 エントリの mediaFeatures を空配列に戻した**（2026-05-10）
+  → 同時に `_schema.mediaFeatures` を「URL 必須・捏造禁止」と更新、`_audit_2026_05_10` ブロックを永続記録
+- **current_coverage**: 0/100 (0%)
+- **acceptance（再定義）**:
+  - 各エントリは **`{name, year, url}` 全て必須**。url は http/https の検証可能URLを指す
+  - Editor が手動で1件1件、媒体記事 URL を踏んで確認した上で追加
+  - WebSearch / LLM の生成だけで追加することは禁止（過去事例の通り捏造に陥るため）
+  - 6ヶ月で 50% 以上を中期目標（80% は副次目標。捏造ゼロを絶対条件とする）
 - **files**: `data/editor_picks.json`
-- **owner**: Editor 主導
-- **note**: ISSUE-029 のフォローアップ（クローズ時点で発覚した品質ギャップ）
+- **owner**: Editor 主導（**人間運営側が直接編集**）
+- **blocker**: 人間 Editor の検証作業時間（AI エージェント単独では完結不可）
+- **note**: ISSUE-029 のフォローアップとして起票したが、監査の結果、品質ギャップを超えた信頼毀損リスクが発覚。優先度を P0 に昇格
 
 ### [ISSUE-030] 「業界人視点」コンテンツの SNS 用ショートフォーマット化 🔄
 
