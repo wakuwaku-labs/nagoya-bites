@@ -302,6 +302,7 @@
 | 2026-05-09 | Marketer + Editor(/solve-next) | ISSUE-031 ロングテール独自KW 特集5本新規追加（industry-insiders-pick / hard-to-book / settai-guide / kospa-insider / enmkai-kanji）/ features/index.html 5カード追加 / sitemap.xml 5エントリ追加 | ✅ commit 1aae675 |
 | 2026-05-10 | Editor + Orchestrator(/solve-next) | ISSUE-040 監査: 既存 mediaFeatures 27 エントリの実在性を WebSearch 検証 → 「食べログ東海HIGH SCORE」「ホットペッパー焼肉賞東海」「タイムアウト名古屋」など捏造の疑い濃厚 → **全 27 エントリ空配列化（カバー率 27%→0%）** / data/editor_picks.json _schema を url 必須＋捏造禁止に更新 / _audit_2026_05_10 永続記録 / ISSUE-040 を P0 blocked に昇格（人間 Editor 検証待ち） | ✅ ブランド整合性確保 |
 | 2026-05-10 | Builder（ユーザー指摘対応） | ISSUE-044 P0緊急修正: build.js の stores/ クリーンアップブロック削除（715件セットで 4,584 件を一括削除する破壊バグ）→ stores/*.html 管理を gen-store-pages.js --delete-orphans に一元化 | ✅ commit 済み |
+| 2026-05-10 | DataKeeper(/solve-next) | ISSUE-033 推薦文カバー率引き上げ: 既存 98.93% (4,536/4,585) の残 49 件を `data/recommendations.json` に追記（ルールベース生成器 `scripts/fill_recommendations_json.js` を新設・Anthropic/Sheets 認証不要）→ post-merge カバー率 **100% (4,585/4,585)** で acceptance「6ヶ月で 50%以上」即時達成 / 後継 ISSUE-045（editorReason 業界視点 2.1%→30%）を起票 | ✅ commit 予定 |
 
 ---
 
@@ -793,19 +794,39 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **files**: 外部施策中心（コード変更なし）。`docs/press-release-2026.md` 草稿
 - **owner**: Strategist + Marketer
 
-### [ISSUE-033] 推薦文カバー率 16% → 50% への引き上げ（D1 / Quality Gap）
+### [ISSUE-033] 推薦文カバー率 16% → 50% への引き上げ（D1 / Quality Gap）✅
 
-- **priority**: P1
-- **status**: ready（既存 ISSUE-017 の昇格・更新）
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-05-10
 - **category**: competitive / data / content
 - **detected**: 2026-05-06（再評価）
 - **description**:
   ISSUE-017 で「推薦文 84% 空白」を P1 計上していたが、競合分析の結果、推薦文は食べログ口コミ・ナゴレコ記事と直接競合する Quality Gap として最重要級と再評価。`fill_recommendations.js` / `gen_recommendations_text.js` の生成ロジックを再点検し、優先度上位 1,000店から推薦文を埋めていく。
+- **resolution 2026-05-10**:
+  - 計測: 既存 LOCAL_STORES 4,585件中、`おすすめポイント` 充足は 4,536件（98.93%）。残 49件は全て HP_ID あり・`data/recommendations.json` 未登録の店舗（名駅・栄エリアのチェーン系・カラオケ系・カフェ系等）。
+  - 実装: `scripts/fill_recommendations_json.js` を新設。Google Sheets / Anthropic API 認証なしで動く Node-only ルールベース生成器（`gen_recommendations_text.js` のロジックを移植・エリア表記の正規化を強化）。
+  - 適用: 49件の HP_ID → 推薦文を `data/recommendations.json` に追記（4,586 → 4,635 エントリ）。`build.js` の既存マージ処理（line 978-993, HP ID → 店名の順）が次回 CI ビルドで自動的に LOCAL_STORES へ焼き込む。
+  - 検証: シミュレーション結果 — post-merge カバー率 **100% (4,585/4,585)**。acceptance「6ヶ月で 50% 以上」を即時達成。
 - **impact**: Moat（業界視点）の体感品質が劇的に向上。SEO ロングテール KW のヒット率向上。
-- **acceptance**: 6ヶ月で推薦文カバー率 50% 以上
-- **files**: `fill_recommendations.js`, `gen_recommendations_text.js`, `data/manual_stores.json`
+- **acceptance**: 6ヶ月で推薦文カバー率 50% 以上 → 達成（100%）
+- **files**: `data/recommendations.json`（49件追加）, `scripts/fill_recommendations_json.js`（新規）, `agent-backlog.md`
 - **owner**: DataKeeper 主導 + Editor 監修
+- **follow-up**: 業界視点の 1段深い推薦文（editorReason 2.1% / 97件 のみ）は別途 ISSUE-045 で扱う
 - **note**: 既存 ISSUE-017 とマージ。本 ISSUE-033 を採用、ISSUE-017 は status:duplicate へ
+
+### [ISSUE-045] editorReason（業界視点コメント）カバー率 2.1% → 30% への引き上げ
+
+- **priority**: P1
+- **status**: ready
+- **category**: competitive / data / content / moat
+- **detected**: 2026-05-10（ISSUE-033 解決時のデータ監査）
+- **description**:
+  ISSUE-033 で基本「おすすめポイント」は 100% 達成したが、Moat の本丸である `editorReason`（飲食業界人視点の推薦理由）/ `insiderNote`（内部情報）/ `visitStatus`（訪問ステータス）はいずれも 2.1%（97/4,585）止まり。これは食べログ口コミ・ナゴレコ記事と差別化する核心であり、ここを 30% 以上に引き上げないと「業界人運営」の Moat が体感されない。`data/editor_picks.json`（現 1,022 行）の拡張、または insider_reviews 投稿フォームからの収集が手段。
+- **impact**: Moat（業界視点）の体感品質。食べログ口コミと「我々にしかない情報」の差別化。LLM 引用時の独自性。
+- **acceptance**: editorReason カバー率 30% 以上（≒ 1,376 店）。優先度は GA4 view 上位 + manual_stores 編集部推薦 + editor_picks 既登録の順。
+- **files**: `data/editor_picks.json`, `data/insider_reviews.json`, `agents/editor.md`
+- **owner**: Editor 主導（人間運営側）+ DataKeeper 連携
+- **note**: ISSUE-040（mediaFeatures 捏造除去）と同じ「Moat の体感品質」課題群。捏造禁止・検証済みのみ追記の原則を踏襲する。
 
 ### [ISSUE-034] 「2026年最新」型の鮮度シグナル強化（lastmod / pubDate / 年号）✅
 
