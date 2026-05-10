@@ -1210,6 +1210,47 @@ async function main() {
     console.log('data/insider_reviews.json なし（業界人レビュースキップ）');
   }
 
+  // ─── Google Places API キャッシュをマージ（data/places_resolved.json） ─────
+  // ISSUE-048 Step 2: scripts/fetch_places.js が月次で取得した公式 API 結果を
+  // LOCAL_STORES に反映する。rating と user_ratings_total を公式値で上書きし、
+  // クロスチェック整合度の S1・S2 シグナルを正規化する。
+  // business_status が CLOSED_PERMANENTLY の店は最終リストから除外。
+  const placesPath = path.join(__dirname, 'data', 'places_resolved.json');
+  let placesApplied = 0, placesClosed = 0, placesNoMatch = 0, placesRejected = 0;
+  if (fs.existsSync(placesPath)) {
+    try {
+      const placesCache = JSON.parse(fs.readFileSync(placesPath, 'utf8'));
+      // 後ろから削除するため逆順ループ
+      for (let i = stores.length - 1; i >= 0; i--) {
+        const s = stores[i];
+        const id = s['ホットペッパーID'];
+        if (!id) continue;
+        const entry = placesCache[id];
+        if (!entry) { placesNoMatch++; continue; }
+        if (entry.notFound || entry.error) { placesNoMatch++; continue; }
+        if (entry.rejected) { placesRejected++; continue; }
+        // 閉店確定店は LOCAL_STORES から除外
+        if (entry.business_status === 'CLOSED_PERMANENTLY') {
+          console.log(`  [Places] ${s['店名']}（${id}）: business_status=CLOSED_PERMANENTLY のため除外`);
+          stores.splice(i, 1);
+          placesClosed++;
+          continue;
+        }
+        // 公式 API 値で Google評価 と 口コミ数 を上書き
+        if (typeof entry.rating === 'number') s['Google評価'] = String(entry.rating);
+        if (typeof entry.user_ratings_total === 'number') s['口コミ数'] = String(entry.user_ratings_total);
+        if (entry.business_status) s['営業ステータス'] = entry.business_status;
+        if (entry.placeId) s['placeId'] = entry.placeId;
+        placesApplied++;
+      }
+      console.log(`Places API マージ: 適用=${placesApplied} / 閉店除外=${placesClosed} / 住所却下=${placesRejected} / マッチなし=${placesNoMatch}`);
+    } catch (e) {
+      console.error(`data/places_resolved.json の読み込み失敗: ${e.message}`);
+    }
+  } else {
+    console.log('data/places_resolved.json なし（Places API マージスキップ・scripts/fetch_places.js で生成）');
+  }
+
   // トレンドスコア算出
   const newHpIds = new Set(newStores.map(s => s['ホットペッパーID']).filter(Boolean));
   let trendHot = 0, trendRising = 0, trendWarm = 0;
