@@ -301,6 +301,7 @@
 | 2026-05-09 | Marketer(/solve-next) | ORG-003 週次 SEO/SNS チェック業務を Marketer に追加（agents/marketer.md に運用章新設 / weekly-pipeline.yml にステップ追加 / scripts/marketer_weekly_check.js 新規作成 / MKT-WEEKLY-2026-W19 初回起票） | ✅ commit 5a12376 |
 | 2026-05-09 | Marketer + Editor(/solve-next) | ISSUE-031 ロングテール独自KW 特集5本新規追加（industry-insiders-pick / hard-to-book / settai-guide / kospa-insider / enmkai-kanji）/ features/index.html 5カード追加 / sitemap.xml 5エントリ追加 | ✅ commit 1aae675 |
 | 2026-05-10 | Editor + Orchestrator(/solve-next) | ISSUE-040 監査: 既存 mediaFeatures 27 エントリの実在性を WebSearch 検証 → 「食べログ東海HIGH SCORE」「ホットペッパー焼肉賞東海」「タイムアウト名古屋」など捏造の疑い濃厚 → **全 27 エントリ空配列化（カバー率 27%→0%）** / data/editor_picks.json _schema を url 必須＋捏造禁止に更新 / _audit_2026_05_10 永続記録 / ISSUE-040 を P0 blocked に昇格（人間 Editor 検証待ち） | ✅ ブランド整合性確保 |
+| 2026-05-10 | Builder（ユーザー指摘対応） | ISSUE-044 P0緊急修正: build.js の stores/ クリーンアップブロック削除（715件セットで 4,584 件を一括削除する破壊バグ）→ stores/*.html 管理を gen-store-pages.js --delete-orphans に一元化 | ✅ commit 済み |
 
 ---
 
@@ -1035,6 +1036,25 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
   - 応募が増えてきたら mailto を Google Forms 化
   - 認証済みレビュワー一覧ページ `features/reviewers.html` の追加（レビュワーが集まり次第）
   - レビュー投稿フォーム（バックエンド前提）
+
+### [ISSUE-044] build.js の stores/ クリーンアップが gen-store-pages.js 管理ファイルを大量削除する ✅
+- **priority**: P0 → **status**: done
+- **category**: infrastructure / data-integrity
+- **detected**: 2026-05-10
+- **resolved**: 2026-05-10
+- **resolved_by**: Builder（ユーザー指摘→即時修正）
+- **description**:
+  `build.js` 末尾のクリーンアップ処理（旧 1209-1224 行）が、Nagoya フィルタ適用後の `stores`（約 715 件）の HP ID セットを使って `stores/*.html` を削除していた。
+  一方 `gen-store-pages.js`（ISSUE-041 導入）は `index.html` の `LOCAL_STORES`（4,585 件）を基に全店舗の静的ページを生成しており、`build.js` 実行のたびに約 3,870 件が削除される破壊的なサイクルが発生していた。
+  実測: `build.js` 実行後 → `stores/*.html` が 4,584 件から 715 件へ激減（QA-2 違反レベル、-85%）。
+- **root_cause**:
+  `build.js` の `stores` 変数は名古屋エリアフィルタ適用後のサブセット。
+  `gen-store-pages.js` が管理する全量（4,585 件）とは異なるため、クリーンアップ判定が常に誤りを生む。
+- **resolution**:
+  `build.js` の `stores/` クリーンアップブロックを完全削除。
+  `stores/*.html` の管理責任を `gen-store-pages.js` の `--delete-orphans` フラグに一元化。
+  削除したブロック: `// 3b. stores/ の古いファイルを削除` セクション（6行）。
+- **files**: `build.js`
 
 ### [ISSUE-039] /sync-backlog のアーカイブ処理を notion-move-pages ベースに刷新 ✅
 - **priority**: P1 → **status**: done
