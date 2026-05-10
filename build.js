@@ -693,6 +693,184 @@ function getTrendLabel(score) {
   return '';
 }
 
+// ────────────────────────────────────────────────────
+// クロスチェック整合度（Step 1 / scoreVersion 1.0）
+// ────────────────────────────────────────────────────
+// サクラチェッカー方式の機械統計を NAGOYA BITES 流に再構成したもの。
+// 食べログ・Retty 本文の取得は一切行わず、公式 API（Hot Pepper / 将来 Step 2 で
+// Google Places）と既に取得済みのデータ（mediaFeatures / visitStatus /
+// insiderReviews）だけで 6 シグナルから 0〜100 の整合度を算出する。
+// 「サクラ確率」とは表記せず、「クロスチェック整合度」と中立に呼ぶ。
+//   S1: Google★ vs 件数比率   (max 25)
+//   S2: レビュー件数絶対値     (max 15)
+//   S3: 編集部来店との整合性   (max 20)
+//   S4: 他媒体掲載クロスチェック(max 15)
+//   S5: 営業実態継続           (max 10)
+//   S6: 業界人レビュー整合性   (max 15)
+function computeCrossCheckScore(store) {
+  const breakdown = {
+    s1_googleRatingVsCount: { score: 0, max: 25, reason: '' },
+    s2_reviewCountAbs:      { score: 0, max: 15, reason: '' },
+    s3_editorVisitConsistency: { score: 0, max: 20, reason: '' },
+    s4_mediaCrossCheck:     { score: 0, max: 15, reason: '' },
+    s5_operationContinuity: { score: 0, max: 10, reason: '' },
+    s6_insiderReviewConsistency: { score: 0, max: 15, reason: '' }
+  };
+
+  const rating = parseFloat(store['Google評価']) || 0;
+  const count = parseInt(store['口コミ数']) || 0;
+  const visitStatus = store.visitStatus || '';
+  const mediaFeatures = Array.isArray(store.mediaFeatures) ? store.mediaFeatures : [];
+  const hpId = store['ホットペッパーID'] || '';
+  const insiderCount = store.insiderReviewCount || 0;
+
+  // S1: Google★ vs 件数比率
+  if (count > 0 && rating > 0) {
+    if (rating >= 4.6 && count < 50) {
+      breakdown.s1_googleRatingVsCount.score = 5;
+      breakdown.s1_googleRatingVsCount.reason = `★${rating}・件数${count}件（少件数で高評価のためガチャレビュー疑い）`;
+    } else if (rating >= 4.0 && count >= 100) {
+      breakdown.s1_googleRatingVsCount.score = 25;
+      breakdown.s1_googleRatingVsCount.reason = `★${rating}・件数${count}件（高評価と十分な件数で整合）`;
+    } else if (rating >= 4.0 && count >= 30) {
+      breakdown.s1_googleRatingVsCount.score = 18;
+      breakdown.s1_googleRatingVsCount.reason = `★${rating}・件数${count}件（評価と件数のバランス良好）`;
+    } else if (rating >= 3.5 && count >= 30) {
+      breakdown.s1_googleRatingVsCount.score = 12;
+      breakdown.s1_googleRatingVsCount.reason = `★${rating}・件数${count}件（標準的な評価分布）`;
+    } else if (rating >= 3.0) {
+      breakdown.s1_googleRatingVsCount.score = 8;
+      breakdown.s1_googleRatingVsCount.reason = `★${rating}・件数${count}件（評価は標準）`;
+    } else {
+      breakdown.s1_googleRatingVsCount.score = 3;
+      breakdown.s1_googleRatingVsCount.reason = `★${rating}・件数${count}件（低評価）`;
+    }
+  } else if (rating > 0) {
+    // 件数不明・評価のみ — Step 2 で Google Places API から取得すれば解消
+    // 件数なしは「不利な情報がない」と解釈し中立寄りで評価する
+    if (rating >= 4.5) {
+      breakdown.s1_googleRatingVsCount.score = 20;
+      breakdown.s1_googleRatingVsCount.reason = `★${rating}（件数情報なし、Step 2 で Places API 取得予定）`;
+    } else if (rating >= 4.0) {
+      breakdown.s1_googleRatingVsCount.score = 18;
+      breakdown.s1_googleRatingVsCount.reason = `★${rating}（件数情報なし、Step 2 で Places API 取得予定）`;
+    } else if (rating >= 3.5) {
+      breakdown.s1_googleRatingVsCount.score = 14;
+      breakdown.s1_googleRatingVsCount.reason = `★${rating}（件数情報なし、Step 2 で Places API 取得予定）`;
+    } else {
+      breakdown.s1_googleRatingVsCount.score = 10;
+      breakdown.s1_googleRatingVsCount.reason = `★${rating}（件数情報なし、Step 2 で Places API 取得予定）`;
+    }
+  } else {
+    // Google評価なしの店も Step 2 で Places API 取得予定。中立扱い。
+    breakdown.s1_googleRatingVsCount.score = 8;
+    breakdown.s1_googleRatingVsCount.reason = 'Google評価なし（Step 2 で取得予定）';
+  }
+
+  // S2: レビュー件数絶対値
+  if (count >= 200) {
+    breakdown.s2_reviewCountAbs.score = 15;
+    breakdown.s2_reviewCountAbs.reason = `${count}件（豊富なサンプル）`;
+  } else if (count >= 100) {
+    breakdown.s2_reviewCountAbs.score = 12;
+    breakdown.s2_reviewCountAbs.reason = `${count}件（十分なサンプル）`;
+  } else if (count >= 50) {
+    breakdown.s2_reviewCountAbs.score = 9;
+    breakdown.s2_reviewCountAbs.reason = `${count}件（標準的なサンプル）`;
+  } else if (count >= 30) {
+    breakdown.s2_reviewCountAbs.score = 6;
+    breakdown.s2_reviewCountAbs.reason = `${count}件（最低限のサンプル）`;
+  } else if (count > 0) {
+    breakdown.s2_reviewCountAbs.score = 3;
+    breakdown.s2_reviewCountAbs.reason = `${count}件（サンプル不足）`;
+  } else {
+    // 件数情報なしは中立扱い（罰しすぎない・Step 2 で Places API から取得予定）
+    breakdown.s2_reviewCountAbs.score = 10;
+    breakdown.s2_reviewCountAbs.reason = '件数情報なし（Step 2 で Places API 取得予定）';
+  }
+
+  // S3: 編集部来店との整合性
+  if (visitStatus === 'visited') {
+    if (rating >= 4.0) {
+      breakdown.s3_editorVisitConsistency.score = 20;
+      breakdown.s3_editorVisitConsistency.reason = '編集部来店済み・Google評価と整合';
+    } else if (rating >= 3.0) {
+      breakdown.s3_editorVisitConsistency.score = 15;
+      breakdown.s3_editorVisitConsistency.reason = '編集部来店済み';
+    } else {
+      breakdown.s3_editorVisitConsistency.score = 12;
+      breakdown.s3_editorVisitConsistency.reason = '編集部来店済み（評価は控えめ）';
+    }
+  } else if (visitStatus === 'interview') {
+    breakdown.s3_editorVisitConsistency.score = 14;
+    breakdown.s3_editorVisitConsistency.reason = '編集部取材実施';
+  } else if (visitStatus === 'desk') {
+    breakdown.s3_editorVisitConsistency.score = 8;
+    breakdown.s3_editorVisitConsistency.reason = '編集部リサーチ済み';
+  } else {
+    breakdown.s3_editorVisitConsistency.score = 0;
+    breakdown.s3_editorVisitConsistency.reason = '編集部視察なし';
+  }
+
+  // S4: 他媒体掲載クロスチェック
+  const mfCount = mediaFeatures.length;
+  if (mfCount >= 4) {
+    breakdown.s4_mediaCrossCheck.score = 15;
+    breakdown.s4_mediaCrossCheck.reason = `${mfCount}媒体に掲載（強い第三者検証）`;
+  } else if (mfCount >= 2) {
+    breakdown.s4_mediaCrossCheck.score = 12;
+    breakdown.s4_mediaCrossCheck.reason = `${mfCount}媒体に掲載`;
+  } else if (mfCount === 1) {
+    breakdown.s4_mediaCrossCheck.score = 7;
+    breakdown.s4_mediaCrossCheck.reason = '1媒体に掲載';
+  } else {
+    breakdown.s4_mediaCrossCheck.score = 0;
+    breakdown.s4_mediaCrossCheck.reason = 'メディア掲載情報なし';
+  }
+
+  // S5: 営業実態継続
+  // Hot Pepper API は毎日取得され、閉店店舗は次回ビルドで除外される
+  // → HP IDがある＝営業継続シグナル
+  if (hpId) {
+    breakdown.s5_operationContinuity.score = 10;
+    breakdown.s5_operationContinuity.reason = 'Hot Pepper 営業継続中';
+  } else {
+    breakdown.s5_operationContinuity.score = 5;
+    breakdown.s5_operationContinuity.reason = '営業実態は手動キュレーションで確認';
+  }
+
+  // S6: 業界人レビュー整合性
+  if (insiderCount >= 3) {
+    breakdown.s6_insiderReviewConsistency.score = 15;
+    breakdown.s6_insiderReviewConsistency.reason = `業界人${insiderCount}名のレビューあり`;
+  } else if (insiderCount === 2) {
+    breakdown.s6_insiderReviewConsistency.score = 12;
+    breakdown.s6_insiderReviewConsistency.reason = '業界人2名のレビューあり';
+  } else if (insiderCount === 1) {
+    breakdown.s6_insiderReviewConsistency.score = 8;
+    breakdown.s6_insiderReviewConsistency.reason = '業界人1名のレビューあり';
+  } else {
+    breakdown.s6_insiderReviewConsistency.score = 0;
+    breakdown.s6_insiderReviewConsistency.reason = '業界人レビューなし';
+  }
+
+  const total = Object.values(breakdown).reduce((sum, b) => sum + b.score, 0);
+
+  // 内部フラグ（Inspector 月次レビュー用・LOCAL_STORES には焼き付けない）
+  // gachaReviewSuspicion: ★≥4.6 ＋ 件数<50 = ガチャレビュー疑い
+  // mediaDiscrepancy: 食べログURLあり ＋ Google★≤3.2 = 媒体間評価乖離
+  const flags = {};
+  if (rating >= 4.6 && count > 0 && count < 50) flags.gachaReviewSuspicion = true;
+  if (store['食べログURL'] && rating > 0 && rating <= 3.2) flags.mediaDiscrepancy = true;
+
+  return {
+    crossCheckScore: total,
+    crossCheckBreakdown: breakdown,
+    crossCheckFlags: flags,
+    crossCheckScoreVersion: '1.0'
+  };
+}
+
 async function fetchHotPepperNagoyaStores() {
   if (!HP_API_KEY) {
     console.log('HOTPEPPER_API_KEY未設定のためHot Pepper取得をスキップ');
@@ -1045,6 +1223,53 @@ async function main() {
     else if (score >= 40) trendWarm++;
   }
   console.log(`トレンドスコア: 🔥話題沸騰=${trendHot} / 📈注目上昇中=${trendRising} / ✨じわじわ人気=${trendWarm}`);
+
+  // ─── クロスチェック整合度算出（Step 1: 裏スコア・全店フィールド付与） ──────
+  // 6 シグナルから 0〜100 の整合度を全店に付与し、内部フラグは
+  // data/cross_check_flags.json に分離保存（Inspector 月次レビュー用・公開しない）。
+  // Step 1 段階では LOCAL_STORES に焼き付けるのみで UI 表示は Step 3 で実装する。
+  const crossCheckFlagList = [];
+  const ccDist = { t90: 0, t70: 0, t50: 0, lt50: 0 };
+  let ccTotal = 0;
+  for (const s of stores) {
+    const result = computeCrossCheckScore(s);
+    s['crossCheckScore'] = result.crossCheckScore;
+    s['crossCheckBreakdown'] = result.crossCheckBreakdown;
+    s['crossCheckScoreVersion'] = result.crossCheckScoreVersion;
+    if (Object.keys(result.crossCheckFlags).length > 0) {
+      crossCheckFlagList.push({
+        '店名': s['店名'],
+        'エリア': s['エリア'],
+        'ホットペッパーID': s['ホットペッパーID'] || '',
+        'crossCheckScore': result.crossCheckScore,
+        'flags': result.crossCheckFlags,
+        'rating': parseFloat(s['Google評価']) || 0,
+        'reviewCount': parseInt(s['口コミ数']) || 0,
+        '食べログURL': s['食べログURL'] || ''
+      });
+    }
+    ccTotal += result.crossCheckScore;
+    if (result.crossCheckScore >= 90) ccDist.t90++;
+    else if (result.crossCheckScore >= 70) ccDist.t70++;
+    else if (result.crossCheckScore >= 50) ccDist.t50++;
+    else ccDist.lt50++;
+  }
+  const ccAvg = stores.length ? (ccTotal / stores.length).toFixed(1) : '0';
+  console.log(`クロスチェック整合度: 平均=${ccAvg} / T90+=${ccDist.t90} / T70-89=${ccDist.t70} / T50-69=${ccDist.t50} / <50=${ccDist.lt50}`);
+  console.log(`内部フラグ（Inspector 月次レビュー用）: ${crossCheckFlagList.length}件`);
+  // 内部フラグを data/cross_check_flags.json に書き出す（公開しない・Inspector のみ参照）
+  try {
+    const flagsPath = path.join(__dirname, 'data', 'cross_check_flags.json');
+    fs.writeFileSync(flagsPath, JSON.stringify({
+      generatedAt: new Date().toISOString(),
+      version: '1.0',
+      total: crossCheckFlagList.length,
+      flags: crossCheckFlagList
+    }, null, 2), 'utf8');
+    console.log(`data/cross_check_flags.json 書き込み完了`);
+  } catch (e) {
+    console.warn(`cross_check_flags.json 書き込み失敗: ${e.message}`);
+  }
 
   // ─── GA4 グローバル閲覧数をマージ（data/view_counts.json） ─────────────────
   // scripts/fetch_ga4_views.js が GA4 の modal_open イベントを店舗別に集計したもの。
