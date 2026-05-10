@@ -8,6 +8,76 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-048] サクラチェッカー方式・媒体横断「クロスチェック整合度」レイヤー導入
+- **priority**: P1 → **status**: in_progress
+- **detected**: 2026-05-10
+- **category**: trust / proof / differentiation
+- **owner**: DataKeeper + Builder + Editor + Strategist + Inspector
+- **plan file**: `/Users/katagirijakutou/.claude/plans/https-sakura-checker-jp-article-shinraid-cheerful-willow.md`
+- **rationale**:
+  ユーザー要望「飲食媒体のサクラを排除して信頼できる評価を反映したい」（参考: sakura-checker.jp）。
+  食べログ・Retty 等の本文スクレイピングは TOS 違反リスクと Strategic Skip 宣言と矛盾するため実施せず、
+  公式 API（Google Places）と既に取得済みのデータ（mediaFeatures / visitStatus / insiderReviews）だけで
+  6 シグナルから 0〜100 の「クロスチェック整合度」を算出する。
+  「サクラ確率」と直接表記せず中立的な「整合度」と表現することで名誉毀損リスクを最小化。
+- **signal design** (6 シグナル → max 100):
+  - S1: Google★ vs 件数比率（max 25）
+  - S2: レビュー件数絶対値（max 15）
+  - S3: 編集部来店との整合性（max 20）
+  - S4: 他媒体掲載クロスチェック（max 15）
+  - S5: 営業実態継続（max 10）
+  - S6: 業界人レビュー整合性（max 15）
+- **roadmap**:
+  - **Step 1 (DONE 2026-05-11)**: 機械統計の裏側基盤
+    - `build.js`: `computeCrossCheckScore()` 関数追加（+200行）
+    - 全店に `crossCheckScore` / `crossCheckBreakdown` / `crossCheckScoreVersion` フィールド付与
+    - 内部フラグ（`gachaReviewSuspicion` / `mediaDiscrepancy`）は `data/cross_check_flags.json` に分離保存
+    - 初回ビルド実測分布: 平均 37.9 / T70+=0 / T50-69=4 / <50=711（Step 2 で件数取得すれば S1+S2 が正規化される想定）
+    - 内部フラグ: 0件（editor_picks の mediaFeatures が現状空配列のため）
+  - **Step 2 (TODO)**: Google Places API 統合
+    - `scripts/fetch_places.js` 新規作成（HTTP fetch 単体・npm 依存追加なし）
+    - 評価値・件数・営業ステータスを公式 API で月次取得
+    - GitHub Actions の env に `GOOGLE_PLACES_API_KEY` 追加・月次スケジュール
+    - 月コスト 0 円維持（1100店 × 月1回 < 無料枠 11,000）
+  - **Step 3 (TODO)**: 公開ロジックと UI 実装
+    - `index.html`: カードに `✓ 整合度 N` バッジ追加（90+/70-89/50-69 の3段階・<50 は表示しない）
+    - モーダルに「クロスチェックの内訳」アコーディオン
+    - ヘッダーに「整合度高い順」ソート追加
+    - 異議申し立てフォーム（Formspree 経由・既存 insider_reviews と同パターン）
+  - **Step 4 (TODO)**: 透明化と法的セーフガード
+    - `features/integrity-method.html` 新規作成（方法論全公開・6 シグナル詳細・計算式・除外ルール）
+    - `features/editorial-policy.html#trust-mechanisms` に「クロスチェック整合度」セクション追記
+    - `features/no-fake-reviews.html` 末尾に「整合度スコアの読み方」追記
+    - `agents/inspector.md` に月次「異議申し立てレビュー」プロセス追記
+    - `agents/strategist.md` に「整合度スコアの法的リスク管理」追記
+- **strategic skip**（やらない判断）:
+  - 食べログ・Retty・OZmall・ぐるなび本文の取得・スクレイピング
+  - 「サクラ確率 N%」「サクラ判定」「フェイクレビュー検出」などの直接表現
+  - 個別媒体名で「サクラあり」と断定
+  - 整合度 50 未満店へのネガティブバッジ表示
+  - 新規 npm 依存の追加
+  - 店舗一覧から低スコア店を除外
+- **risk mitigation**:
+  - 中立表現「クロスチェック整合度」採用 → 誤判定の名誉毀損リスク低減
+  - 異議申し立てフォーム必須 → 誤判定の即時補正フロー
+  - `features/integrity-method.html` で計算式全公開 → 第三者検証可能
+  - 50 未満はバッジ非表示 → 攻撃的にならない
+  - `scoreVersion` で計算ロジック変更履歴を管理
+- **files**:
+  - `build.js`（+200行・Step 1 完了）
+  - `data/cross_check_flags.json`（Step 1 で自動生成）
+  - `scripts/fetch_places.js`（Step 2 で新規）
+  - `index.html`（Step 3 で +120行）
+  - `data/dispute_requests.json`（Step 3 で新規）
+  - `.github/workflows/build.yml`（Step 2 で env 追加）
+  - `features/integrity-method.html`（Step 4 で新規）
+  - `features/editorial-policy.html` / `features/no-fake-reviews.html`（Step 4 で追記）
+  - `agents/inspector.md` / `agents/strategist.md`（Step 4 で追記）
+- **prerequisites for Step 2**:
+  - ユーザー側で Google Cloud Platform でプロジェクト作成 → Places API 有効化 → API キー発行
+  - GitHub Secrets `GOOGLE_PLACES_API_KEY` 設定
+  - Google Cloud Console で予算アラート $50 設定推奨
+
 ### [ISSUE-001] ヒーローセクションがモバイルで縦長すぎる ✅
 - **priority**: P1 → **status**: done
 - **resolved**: 2026-04-15
