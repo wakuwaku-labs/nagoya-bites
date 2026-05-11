@@ -274,6 +274,26 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
       </div>
     </div>
 
+    <p class="section-label" id="cross-check-integrity" style="margin-top:2.4rem;">04-D — Cross-Check Integrity（機械統計レイヤー）</p>
+    <p class="art-intro">
+      上記 A / B / C の 3 本柱に加え、サイト上の各店舗に対して<strong>複数媒体・複数シグナルでの整合度を機械的に算出する仕組み</strong>を運用しています。
+      Google Places API / Hot Pepper API / 編集部来店履歴 / 他メディア掲載履歴 / 業界人レビュー件数 — 取得可能な公式 API と既に編集部が確認しているデータだけを使い、
+      <strong>食べログ・Retty 等の口コミ本文は一切取得せず</strong>、6 シグナルの合計（0〜100）として「クロスチェック整合度」を表示します。
+    </p>
+    <p class="art-intro">
+      重要なのは、これを「サクラ確率」とは呼ばないことです。誤判定で誠実な店を傷つけるリスクがあるため、機械統計を借りながらも<strong>個別店を「サクラ」と名指しする表現は採用しません</strong>。
+      整合度 50 未満の店にはバッジも表示せず、ネガティブな指標として使わない設計にしています。
+      算出ロジック・シグナル定義・計算式・異議申立て窓口のすべてを公開しています。
+    </p>
+    <div class="tips-box">
+      <p class="tips-title">仕組みの全公開（第三者検証可能）</p>
+      <ul>
+        <li><strong><a href="integrity-method.html" style="color:var(--gold);">クロスチェック整合度の作り方</a></strong> — 6 シグナルの定義・計算式・段階表示・戦わない領域・異議申立て窓口を完全公開</li>
+        <li>実装は公開リポジトリ <a href="https://github.com/wakuwaku-labs/nagoya-bites" target="_blank" rel="noopener noreferrer" style="color:var(--gold);">wakuwaku-labs/nagoya-bites</a> の <code>build.js</code> 内 <code>computeCrossCheckScore()</code> 関数で第三者再現可能</li>
+        <li>誤判定が疑われる場合は <a href="mailto:editor@nagoya-bites.com?subject=%E3%82%AF%E3%83%AD%E3%82%B9%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E6%95%B4%E5%90%88%E5%BA%A6%E3%81%AE%E4%BF%AE%E6%AD%A3%E4%BE%9D%E9%A0%BC" style="color:var(--gold);">editor@nagoya-bites.com</a> 宛にメール — 10 営業日以内に一次回答</li>
+      </ul>
+    </div>
+
     <div class="tips-box">
       <p class="tips-title">レビュワー必須申告事項</p>
       <ul>

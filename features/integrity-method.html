@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}(function(){var p=new URLSearchParams(location.search);if(p.get('nb_owner')==='1'){localStorage.setItem('nb_internal','1');history.replaceState(null,'',location.pathname);}if(localStorage.getItem('nb_internal')==='1'){gtag('js',new Date());gtag('config','G-3LCZNGZPWJ',{traffic_type:'internal'});}else{gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');}})();function trackEvent(name,params){if(localStorage.getItem('nb_internal')==='1')return;if(typeof gtag==='function')gtag('event',name,params||{});}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クロスチェック整合度の作り方｜NAGOYA BITES — サクラ口コミ問題に第三者として向き合う</title>
+<meta name="description" content="食べログ・Googleマップなどの口コミからサクラを排除して、複数媒体・複数シグナルでの整合度を機械的に算出する仕組みを完全公開。なぜ「サクラ確率」と呼ばないのか、何をしないと決めたのかを含めて、第三者検証可能な形で開示します。">
+<meta name="keywords" content="NAGOYA BITES,クロスチェック整合度,サクラチェッカー,飲食店,口コミ,信頼度,名古屋グルメ,編集独立性">
+<link rel="canonical" href="https://nagoya-bites.com/features/integrity-method.html">
+<meta property="og:title" content="クロスチェック整合度の作り方｜NAGOYA BITES">
+<meta property="og:description" content="複数媒体・複数シグナルでの口コミ整合度を機械的に算出する仕組みを完全公開。サクラを「確率」で名指しせず、中立な参考指標として開示する設計判断。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nagoya-bites.com/features/integrity-method.html">
+<meta property="og:site_name" content="NAGOYA BITES">
+<meta property="og:image" content="https://nagoya-bites.com/icons/icon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "クロスチェック整合度の作り方｜NAGOYA BITES",
+  "description": "複数媒体・複数シグナルでの口コミ整合度を機械的に算出する仕組み。サクラを「確率」で名指しせず、中立な参考指標として開示する設計判断を完全公開。",
+  "author": {"@type": "Organization", "name": "NAGOYA BITES"},
+  "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
+  "url": "https://nagoya-bites.com/features/integrity-method.html",
+  "datePublished": "2026-05-11",
+  "dateModified": "2026-05-11",
+  "mainEntityOfPage": "https://nagoya-bites.com/features/integrity-method.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},
+    {"@type":"ListItem","position":2,"name":"特集記事","item":"https://nagoya-bites.com/features/"},
+    {"@type":"ListItem","position":3,"name":"クロスチェック整合度の作り方"}
+  ]
+}
+</script>
+<style>
+:root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--border-h:rgba(0,0,0,0.28);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;--green:#2e7d32;--green-dim:#558b2f;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
+header{position:sticky;top:0;z-index:200;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;letter-spacing:.35em;color:var(--white);text-transform:uppercase;text-decoration:none;}
+.logo em{font-style:italic;color:var(--gold);}
+nav{display:flex;gap:1.5rem;align-items:center;}
+nav a{font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+nav a:hover{color:var(--text);}
+.art-hero{padding:3rem 1.5rem 2.5rem;max-width:800px;margin:0 auto;}
+.art-eyebrow{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;color:var(--green);text-transform:uppercase;margin-bottom:1.2rem;}
+.art-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.9rem,4vw,3rem);line-height:1.2;color:var(--white);margin-bottom:1rem;}
+.art-title em{font-style:italic;color:var(--green);}
+.art-meta{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--dim);margin-bottom:1.5rem;display:flex;gap:1.2rem;flex-wrap:wrap;}
+.art-lead{font-size:.88rem;line-height:2;color:var(--muted);max-width:680px;border-left:2px solid var(--green);padding-left:1.2rem;}
+.art-lead p{margin-bottom:.8rem;}
+.art-lead p:last-child{margin-bottom:0;}
+.art-body{max-width:800px;margin:0 auto;padding:0 1.5rem 4rem;}
+.section-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2.8rem 0 .8rem;}
+.art-intro{font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:1.4rem;}
+.art-intro strong{color:var(--text);font-weight:500;}
+.body-para{font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:1.2rem;}
+.body-para strong{color:var(--text);font-weight:500;}
+.tips-box{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--green);padding:1.2rem 1.4rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
+.tips-title{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--green);text-transform:uppercase;margin-bottom:.6rem;}
+.tips-box ul{padding-left:1.2rem;}
+.tips-box li{font-size:.8rem;line-height:1.9;color:var(--muted);margin-bottom:.25rem;}
+.tips-box li strong{color:var(--text);font-weight:500;}
+.signal-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.78rem;}
+.signal-table th,.signal-table td{padding:.7rem .8rem;border:1px solid var(--border);text-align:left;line-height:1.6;}
+.signal-table th{background:rgba(46,125,50,.08);color:var(--green);font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.1em;font-weight:600;text-transform:uppercase;}
+.signal-table .max{font-family:'DM Mono',monospace;font-weight:700;color:var(--green);text-align:center;width:4rem;}
+.signal-table tbody tr:nth-child(odd){background:rgba(46,125,50,.025);}
+.tier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.9rem;margin:1.4rem 0;}
+.tier-card{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--green);padding:1rem 1.1rem;border-radius:0 4px 4px 0;}
+.tier-card.tier-mid{border-left-color:var(--green-dim);}
+.tier-card.tier-low{border-left-color:#888;}
+.tier-card.tier-hidden{border-left-color:#bbb;}
+.tier-num{font-family:'DM Mono',monospace;font-size:1.05rem;font-weight:700;color:var(--green);margin-bottom:.2rem;}
+.tier-card.tier-mid .tier-num{color:var(--green-dim);}
+.tier-card.tier-low .tier-num{color:#888;}
+.tier-card.tier-hidden .tier-num{color:#bbb;}
+.tier-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:.45rem;}
+.tier-body{font-size:.74rem;line-height:1.75;color:var(--muted);}
+.callout{background:rgba(122,92,16,.08);border:1px solid rgba(122,92,16,.25);border-left:3px solid var(--gold);padding:1.1rem 1.3rem;border-radius:0 4px 4px 0;margin:1.6rem 0;font-size:.82rem;line-height:1.9;color:var(--text);}
+.callout strong{color:var(--gold);font-weight:600;}
+.related{max-width:800px;margin:2.5rem auto 0;padding:0 1.5rem 3rem;border-top:1px solid var(--border);padding-top:2rem;}
+.related-title{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.22em;color:var(--dim);text-transform:uppercase;margin-bottom:1rem;}
+.related-links{display:flex;flex-wrap:wrap;gap:.6rem;}
+.related-link{display:inline-block;font-size:.78rem;padding:.5rem 1rem;background:var(--bg2);border:1px solid var(--border);border-radius:2px;color:var(--text);text-decoration:none;transition:border-color .2s;}
+.related-link:hover{border-color:var(--border-h);}
+footer{padding:2rem 1.5rem;text-align:center;font-size:.62rem;letter-spacing:.16em;color:var(--dim);border-top:1px solid var(--border);}
+footer a{color:var(--muted);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html" class="logo">NAGOYA <em>BITES</em></a>
+  <nav>
+    <a href="../index.html">店舗を探す</a>
+    <a href="index.html">特集</a>
+    <a href="editorial-policy.html">編集規約</a>
+  </nav>
+</header>
+
+<article class="art-hero">
+  <p class="art-eyebrow">SAKURA-FREE / TRUST METHODOLOGY</p>
+  <h1 class="art-title">クロスチェック<em>整合度</em>の作り方</h1>
+  <p class="art-meta"><span>更新 2026-05-11</span><span>NAGOYA BITES 編集部</span><span>方法論全公開</span></p>
+  <div class="art-lead">
+    <p>食べログ・Googleマップ・Hot Pepper・SNS — 飲食店の評価情報は複数の媒体に分散しており、各媒体には<strong>金銭授受や無償提供を背景にした口コミ（いわゆる「桜」）</strong>が混じっている、というのが業界の率直な現実です。</p>
+    <p>NAGOYA BITES では、各媒体の口コミ本文を取得することはせず（運営側の利用規約と表現の自由を尊重するため）、<strong>取得可能な公式 API と既に編集部が確認しているデータだけを使い、複数シグナルでの整合度を機械的に算出</strong>する仕組みを導入しました。</p>
+    <p>このページでは、その仕組みのすべて — シグナル定義、計算式、何をやらないと決めたか、誤判定が起きたときの異議申立て手順 — を第三者が検証できる形で開示します。</p>
+  </div>
+</article>
+
+<div class="art-body">
+
+  <p class="section-label">01 — Why We Don't Call It "Sakura Score"</p>
+  <p class="body-para">
+    一般的な「サクラチェッカー」型のサービスは、各レビューや店舗ごとに <strong>「サクラ確率 87%」</strong> のような数値を出します。
+    NAGOYA BITES では、機械統計の発想を借りつつも、<strong>同じ数値を「サクラ確率」とは呼びません</strong>。代わりに「クロスチェック整合度」と中立的な名前を採用しています。
+  </p>
+  <p class="body-para">
+    理由は 3 つあります。
+  </p>
+  <div class="tips-box">
+    <p class="tips-title">「サクラ確率」を採用しない 3 つの理由</p>
+    <ul>
+      <li><strong>誤判定リスク。</strong> 機械統計は必ず偽陽性・偽陰性を含みます。誠実に営業している優良店に「サクラ確率 80%」と表示してしまった場合、店舗側にとっての名誉毀損リスク・経営リスクは甚大です。</li>
+      <li><strong>媒体名指しのリスク。</strong> 「この店のサクラは食べログに多い」のような名指しは、当該媒体との関係性も含めて訴訟リスクを高めます。NAGOYA BITES は<strong>個別媒体名で「サクラあり」と断定する表現を一切採用しません</strong>。</li>
+      <li><strong>本質は確率ではなく整合度。</strong> 我々が機械で測れるのは「複数媒体・複数シグナルでの一致度」であって、個別レビューの真贋ではありません。表現を実態と一致させることが、長く運営するうえでの誠実さです。</li>
+    </ul>
+  </div>
+
+  <p class="section-label">02 — 6 Signals: 6 つのシグナル</p>
+  <p class="art-intro">
+    整合度は次の 6 シグナルの合計（0〜100 点）で表現します。各シグナルは独立に評価され、合計値が高いほど「複数の根拠が同じ方向を指している」状態を意味します。
+  </p>
+
+  <table class="signal-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>シグナル名</th>
+        <th>取得元</th>
+        <th class="max">満点</th>
+        <th>判定の趣旨</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>S1</td>
+        <td>Google★ vs 件数比率</td>
+        <td>Google Places API（rating × user_ratings_total）</td>
+        <td class="max">25</td>
+        <td>★ が極端に高いのに件数が少ない（&lt;50 件）はガチャレビュー疑い。逆に件数 100+ で ★4.0+ は強い整合シグナル。</td>
+      </tr>
+      <tr>
+        <td>S2</td>
+        <td>レビュー件数絶対値</td>
+        <td>Google Places API（user_ratings_total）</td>
+        <td class="max">15</td>
+        <td>30 件未満はサンプル不足、200+ は豊富なサンプル。件数だけで★が高すぎる場合は減点。</td>
+      </tr>
+      <tr>
+        <td>S3</td>
+        <td>編集部来店との整合性</td>
+        <td>editor_picks.json の visitStatus × Google★</td>
+        <td class="max">20</td>
+        <td>編集部来店「visited」かつ Google★ も高ければ最大点。来店時の評価と Google 評価が乖離していれば内部フラグ。</td>
+      </tr>
+      <tr>
+        <td>S4</td>
+        <td>他媒体掲載クロスチェック</td>
+        <td>editor_picks.json の mediaFeatures</td>
+        <td class="max">15</td>
+        <td>第三者媒体への掲載が複数あるほど、独立した検証が効いていると評価。</td>
+      </tr>
+      <tr>
+        <td>S5</td>
+        <td>営業実態継続</td>
+        <td>Hot Pepper API 取得継続 + Places business_status</td>
+        <td class="max">10</td>
+        <td>毎日の Hot Pepper 取得で店舗情報が維持されている＝営業実態あり。CLOSED_PERMANENTLY は除外。</td>
+      </tr>
+      <tr>
+        <td>S6</td>
+        <td>業界人レビュー整合性</td>
+        <td>insider_reviews.json の編集部承認済みレビュー数</td>
+        <td class="max">15</td>
+        <td>飲食業界経験者からのレビューが複数件ある店は、業界目線でのクロスチェックが効いていると評価。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>裏ロジック（公開しない内部フラグ）。</strong>
+    上記 6 シグナルとは別に、<code>gachaReviewSuspicion</code>（★4.6+ かつ件数 50 未満）と
+    <code>mediaDiscrepancy</code>（食べログURLあり かつ Google★ 3.2 以下）という 2 つの内部フラグを <code>data/cross_check_flags.json</code> に分離保存しています。
+    これらは Inspector の月次レビュー素材として使われるだけで、サイト上には表示しません — 機械判定で個別店を「サクラ疑い」と名指しすることのリスクが大きすぎるためです。
+  </div>
+
+  <p class="section-label">03 — Scoring Formula</p>
+  <p class="body-para">
+    整合度の算出式は、ソースコードベースで完全に公開されています。実装は <code>build.js</code> 内の
+    <code>computeCrossCheckScore()</code> 関数で、リポジトリは公開リポジトリ
+    <a href="https://github.com/wakuwaku-labs/nagoya-bites" target="_blank" rel="noopener noreferrer" style="color:var(--green);text-decoration:underline;">wakuwaku-labs/nagoya-bites</a>
+    から第三者が再現可能です。
+  </p>
+  <p class="body-para">
+    各シグナルは段階関数で 0〜満点の範囲にマップされ、最後に単純和を取ります（重み付け平均ではなく、合計）。
+    シグナルが取得できない場合は<strong>「不利な情報がない」と解釈し中立寄りで評価</strong>します — 件数情報が取得できないだけで店舗を不利に扱うのは公平でないためです。
+  </p>
+
+  <p class="section-label">04 — Tier Definition: 表示の段階</p>
+  <p class="art-intro">
+    算出された整合度（0〜100）は、サイト上では次の 4 段階で表現されます。
+  </p>
+  <div class="tier-grid">
+    <div class="tier-card">
+      <div class="tier-num">90 — 100</div>
+      <div class="tier-label">High</div>
+      <div class="tier-body">複数媒体・編集部来店・業界人レビューが揃って高評価。最も整合度が高い店。</div>
+    </div>
+    <div class="tier-card tier-mid">
+      <div class="tier-num">70 — 89</div>
+      <div class="tier-label">Mid</div>
+      <div class="tier-body">複数のシグナルで高評価。一部のシグナルがまだ未確認の状態。</div>
+    </div>
+    <div class="tier-card tier-low">
+      <div class="tier-num">50 — 69</div>
+      <div class="tier-label">Verifying</div>
+      <div class="tier-body">基準クリア。シグナルがまだ十分集まっておらず追加検証待ち。</div>
+    </div>
+    <div class="tier-card tier-hidden">
+      <div class="tier-num">— 49</div>
+      <div class="tier-label">Not Shown</div>
+      <div class="tier-body">バッジ非表示。検証が浅いだけで、店の品質が低いという意味ではない。</div>
+    </div>
+  </div>
+  <p class="body-para">
+    <strong>50 未満の店にはバッジを表示しません</strong>。これは「検証が浅い」「シグナルがまだ揃っていない」だけのケースが多く、機械判定でネガティブな表示を出すことで誠実な店を誤って傷つけるリスクを避けるためです。
+  </p>
+
+  <p class="section-label">05 — What We Don't Do（戦わない領域）</p>
+  <div class="tips-box">
+    <p class="tips-title">この仕組みで意図的にやらないと決めたこと</p>
+    <ul>
+      <li><strong>食べログ・Retty・OZmall・ぐるなびの口コミ本文を取得しない。</strong>各媒体の利用規約に対する敬意と、本文取得が引き起こす法的リスクを回避するため。</li>
+      <li><strong>「サクラ確率 N%」という数値を一切公開しない。</strong>誤判定の名誉毀損リスクが甚大なため。</li>
+      <li><strong>個別媒体名で「この媒体にはサクラが多い」と断定しない。</strong>構造的な指摘にとどめる。</li>
+      <li><strong>整合度 50 未満の店にネガティブバッジを表示しない。</strong>攻撃的な指標は採用しない。</li>
+      <li><strong>整合度ランキングを別建てで作らない。</strong>既存のソート選択肢に「整合度順」を 1 つ追加するだけ。</li>
+      <li><strong>店舗一覧から低スコア店を除外しない。</strong>ユーザーの判断を奪わない。</li>
+    </ul>
+  </div>
+
+  <p class="section-label">06 — Dispute & Correction（異議申立てと修正）</p>
+  <p class="body-para">
+    機械統計には必ず誤判定が含まれます。NAGOYA BITES では誤判定をすみやかに発見・修正するため、次のセーフガードを用意しています。
+  </p>
+  <div class="tips-box">
+    <p class="tips-title">スコアに違和感があった場合の窓口</p>
+    <ul>
+      <li><strong>店舗側からの修正依頼：</strong><a href="mailto:editor@nagoya-bites.com?subject=%E3%82%AF%E3%83%AD%E3%82%B9%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E6%95%B4%E5%90%88%E5%BA%A6%E3%81%AE%E4%BF%AE%E6%AD%A3%E4%BE%9D%E9%A0%BC" style="color:var(--green);">editor@nagoya-bites.com</a> 宛にメール。事実誤認・誤判定があれば即時補正します。</li>
+      <li><strong>読者からの通報：</strong>同じく <a href="mailto:editor@nagoya-bites.com?subject=%E6%95%B4%E5%90%88%E5%BA%A6%E3%82%B9%E3%82%B3%E3%82%A2%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E3%81%AE%E9%80%9A%E5%A0%B1" style="color:var(--green);">editor@nagoya-bites.com</a>。匿名通報を歓迎します。</li>
+      <li><strong>受付した申立て・通報はすべて記録し、10 営業日以内に一次回答します。</strong></li>
+      <li><strong>Inspector の月次レビュー。</strong>編集部 Inspector が毎月 <code>data/cross_check_flags.json</code> の内部フラグを目視確認し、誤検知が疑われる店は <code>editor_picks.json</code> の手動補正で対応します。</li>
+    </ul>
+  </div>
+
+  <p class="body-para">
+    また、スコア算出ロジックは <code>scoreVersion</code> でバージョン管理されており、重大な変更を加える際は <code>agent-backlog.md</code> に変更履歴を記録します。
+    アルゴリズム変更によって特定店舗のスコアが急変するリスクを最小化するためです。
+  </p>
+
+  <p class="section-label">07 — 設計の根本にある立場</p>
+  <p class="body-para">
+    NAGOYA BITES は飲食業界の中で働いてきた人間が運営している媒体です。
+    広告と口コミの境界が曖昧になってきた業界の現状に対して、業界側がやらなければいけない仕事として、この仕組みを設計しました。
+  </p>
+  <p class="body-para">
+    重要なのは、<strong>機械が個別の口コミの真贋を判定できるとは思っていない</strong>ということです。
+    我々ができるのは、複数の根拠が同じ方向を指している「整合性」を測ることだけです。
+    最終的に「この店に行くかどうか」を決めるのは読者の皆さんであり、整合度は判断材料の 1 つにすぎません。
+  </p>
+  <p class="body-para">
+    だからこそ、この仕組みのすべてをこのページで公開しています。
+    機械の判断を信じてもらうのではなく、<strong>仕組みを公開することで第三者が検証できる状態</strong>を維持することが、信頼の作り方だと考えています。
+  </p>
+
+</div>
+
+<div class="related">
+  <p class="related-title">関連ページ</p>
+  <div class="related-links">
+    <a class="related-link" href="no-fake-reviews.html" style="background:rgba(46,125,50,.08);border-color:var(--green);font-weight:500;">🚫 桜ゼロ宣言（3 層防衛）</a>
+    <a class="related-link" href="editorial-policy.html">📖 編集規約（信頼の仕組み）</a>
+    <a class="related-link" href="become-reviewer.html">業界人レビュワー募集</a>
+    <a class="related-link" href="../journal/index.html">Journal（毎日1本）</a>
+    <a class="related-link" href="index.html">特集記事一覧</a>
+    <a class="related-link" href="../about.html">About NAGOYA BITES</a>
+  </div>
+  <p style="margin-top:1.5rem;">
+    <a class="related-link" href="../index.html" style="background:rgba(46,125,50,.06);">トップページで全店舗を検索する →</a>
+  </p>
+</div>
+
+<footer>
+  <a href="../index.html">NAGOYA BITES</a> &nbsp;—&nbsp; <span id="fc-year"></span>
+</footer>
+<script>(function(){var fc=document.getElementById('fc-year');if(fc)fc.textContent='© '+new Date().getFullYear()+' All Rights Reserved';})();</script>
+</body>
+</html>
