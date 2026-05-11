@@ -36,7 +36,34 @@ function trackEvent(name,params){
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 // 画像404時のプレースホルダ（透明化ではなく on-brand なSVGに差し替え）
 var NB_IMG_FALLBACK="data:image/svg+xml;utf8,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#eeebe5"/><stop offset="100%" stop-color="#d9d4c5"/></linearGradient></defs><rect width="120" height="90" fill="url(%23g)"/><text x="60" y="58" text-anchor="middle" font-family="serif" font-size="36" fill="%237a5c10">🍽</text></svg>');
-function nbImgFallback(img){if(img&&img.src!==NB_IMG_FALLBACK){img.src=NB_IMG_FALLBACK;img.style.objectFit="cover";img.removeAttribute("onerror");}}
+function nbImgFallback(img){if(img&&img.src!==NB_IMG_FALLBACK){img.src=NB_IMG_FALLBACK;img.style.objectFit="cover";img.removeAttribute("onerror");img.removeAttribute("srcset");}}
+// 画像 CDN プロキシ — wsrv.nl 経由でリサイズ + シャープニング + WebP 配信。
+// Hot Pepper API は店舗によって L サイズが _238.jpg / _480.jpg と分かれるため、
+// 一旦 _480.jpg への昇格を試み、404 時は wsrv.nl の default パラメータで元 URL にフォールバック。
+// CDN 切替時はこの関数 1 箇所だけ書き換えれば、全レンダリング箇所が追従する。
+var NB_IMG_CDN="https://wsrv.nl/";
+function nbImage(url,width){
+  if(!url||typeof url!=="string")return url;
+  if(url.indexOf("data:")===0)return url;
+  if(url.indexOf("wsrv.nl")!==-1)return url;
+  var w=width||1200;
+  var cleanUrl=url.replace(/^https?:\/\//,"");
+  var primary=cleanUrl;
+  var fallback="";
+  // Hot Pepper の縮小画像は L (_480) への昇格を試みる
+  var hpMatch=cleanUrl.match(/^(imgfp\.hotp\.jp\/.+?)_(\d+)\.jpg(\?.*)?$/);
+  if(hpMatch&&hpMatch[2]!=="480"){
+    primary=hpMatch[1]+"_480.jpg";
+    fallback=cleanUrl;
+  }
+  var qs="?url="+encodeURIComponent(primary)+"&w="+w+"&output=webp&q=82&we=1&sharp=2";
+  if(fallback)qs+="&default="+encodeURIComponent(fallback);
+  return NB_IMG_CDN+qs;
+}
+function nbSrcset(url,widths){
+  if(!url||typeof url!=="string"||url.indexOf("data:")===0)return"";
+  return widths.map(function(w){return nbImage(url,w)+" "+w+"w";}).join(", ");
+}
 // keyboard: role="button" + tabindex="0" のカードで Enter / Space を click と同等に扱う（WCAG 2.1.1）
 document.addEventListener('keydown',function(e){
   if(e.key!=='Enter'&&e.key!==' '&&e.key!=='Spacebar')return;
@@ -102,6 +129,7 @@ document.addEventListener('keydown',function(e){
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://imgfp.hotp.jp">
+<link rel="preconnect" href="https://wsrv.nl" crossorigin>
 <link rel="preconnect" href="https://docs.google.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -11466,7 +11494,7 @@ function buildCardHtml(r) {
     else if (ccScore >= 70) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-mid" title="クロスチェック整合度">' + ccScore + '</span>';
     else if (ccScore >= 50) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-low" title="クロスチェック整合度">' + ccScore + '</span>';
     return '<div class="card" onclick="openM(' + idx + ')" role="button" tabindex="0" aria-label="' + r['店名'] + 'の詳細を見る">'
-      + '<div class="ci"><img src="' + photo + '" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)"></div>'
+      + '<div class="ci"><img src="' + nbImage(photo, 600) + '" srcset="' + nbSrcset(photo, [400, 600, 800]) + '" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)"></div>'
       + '<span class="badge">' + genre + '</span>'
       + trendBadgeHtml
       + (pref ? '<span class="pref-badge">' + pref + '</span>' : '')
@@ -11586,7 +11614,9 @@ function openM(i) {
   var photo = r['写真URL'] || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80';
   var hpUrl = 'https://www.hotpepper.jp/str' + (r['ホットペッパーID']||'') + '/';
   var miEl = document.getElementById('mi');
-  miEl.src = photo;
+  miEl.src = nbImage(photo, 1200);
+  miEl.srcset = nbSrcset(photo, [800, 1200, 1600]);
+  miEl.sizes = '(max-width:768px) 100vw, 680px';
   miEl.alt = (r['店名'] || '店舗') + ' - ' + (r['ジャンル'] || '飲食店') + 'の写真';
   document.getElementById('mg').textContent = r['ジャンル'] || '';
   document.getElementById('mn').textContent = r['店名'] || '';
@@ -12429,7 +12459,7 @@ function buildRanking() {
     var genre = (r['ジャンル']||'').split('・')[0];
     return '<div class="rank-card" onclick="openM(' + idx + ')" role="button" tabindex="0">'
       + '<span class="rank-num">' + (i+1) + '</span>'
-      + '<img class="rank-img" src="' + photo + '" alt="' + (r['店名']||'') + '" loading="lazy" decoding="async" width="280" height="160" onerror="nbImgFallback(this)">'
+      + '<img class="rank-img" src="' + nbImage(photo, 560) + '" srcset="' + nbSrcset(photo, [280, 560]) + '" sizes="280px" alt="' + (r['店名']||'') + '" loading="lazy" decoding="async" width="280" height="160" onerror="nbImgFallback(this)">'
       + '<div class="rank-name">' + (r['店名']||'') + '</div>'
       + '<div class="rank-meta"><span class="rank-score">👁 ' + item.count + '</span><span>' + genre + '</span><span>' + (r['エリア']||'') + '</span></div>'
       + '</div>';
@@ -12481,7 +12511,7 @@ function buildTrendRanking() {
     var highlight = r['話題ハイライト'] || '';
     return '<div class="trend-rank-card" onclick="openM(' + idx + ')" role="button" tabindex="0" style="position:relative">'
       + '<span class="rank-num">' + (i+1) + '</span>'
-      + '<img class="rank-img" src="' + photo + '" alt="' + (r['店名']||'') + '" loading="lazy" decoding="async" width="280" height="160" onerror="nbImgFallback(this)">'
+      + '<img class="rank-img" src="' + nbImage(photo, 560) + '" srcset="' + nbSrcset(photo, [280, 560]) + '" sizes="280px" alt="' + (r['店名']||'') + '" loading="lazy" decoding="async" width="280" height="160" onerror="nbImgFallback(this)">'
       + '<div class="rank-name">' + (r['店名']||'') + '</div>'
       + '<div class="rank-meta">' + meta + '</div>'
       + (highlight ? '<div class="rank-highlight">' + highlight + '</div>' : '')
