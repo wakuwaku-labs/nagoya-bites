@@ -375,6 +375,7 @@
 | 2026-05-10 | Builder（ユーザー指摘対応） | ISSUE-044 P0緊急修正: build.js の stores/ クリーンアップブロック削除（715件セットで 4,584 件を一括削除する破壊バグ）→ stores/*.html 管理を gen-store-pages.js --delete-orphans に一元化 | ✅ commit 済み |
 | 2026-05-10 | DataKeeper(/solve-next) | ISSUE-033 推薦文カバー率引き上げ: 既存 98.93% (4,536/4,585) の残 49 件を `data/recommendations.json` に追記（ルールベース生成器 `scripts/fill_recommendations_json.js` を新設・Anthropic/Sheets 認証不要）→ post-merge カバー率 **100% (4,585/4,585)** で acceptance「6ヶ月で 50%以上」即時達成 / 後継 ISSUE-045（editorReason 業界視点 2.1%→30%）を起票 | ✅ commit 予定 |
 | 2026-05-10 | Inspector (auto) | ISSUE-041/042 大規模変更後の全方位監査（4セクション: データ品質/SEO/パフォーマンス/コンテンツ）/ features/nagoya-miso-nikomi-udon.html の切れリンク1件即時修正（5店→4店再構成・JSON-LD 整合）/ llms.txt の「8ブランド分の現場運営経験」明記で信頼性シグナル強化 / ISSUE-046〜048 起票 | ✅ 監査完了 |
+| 2026-05-11 | Builder + Orchestrator（ユーザー要望対応） | ISSUE-049 店舗画像品質改善: wsrv.nl 経由で全店画像を WebP + シャープニング配信 / Hot Pepper URL の `_238.jpg` → `_480.jpg` 自動昇格（default fallback で404安全）/ カード `400/600/800w`・モーダル `800/1200/1600w`・ランキング `280/560w` の srcset 対応 / 切替容易性のため `nbImage()` ヘルパーで CDN 抽象化 / ISSUE-024（Hot Pepper ホットリンク懸念）への副次的緩和 | ✅ デプロイ予定 |
 
 ---
 
