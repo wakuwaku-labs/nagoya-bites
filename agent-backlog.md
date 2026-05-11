@@ -8,9 +8,10 @@
 
 ## 進行中・完了タスク
 
-### [ISSUE-048] サクラチェッカー方式・媒体横断「クロスチェック整合度」レイヤー導入
-- **priority**: P1 → **status**: in_progress
+### [ISSUE-048] サクラチェッカー方式・媒体横断「クロスチェック整合度」レイヤー導入 ✅
+- **priority**: P1 → **status**: done
 - **detected**: 2026-05-10
+- **resolved**: 2026-05-11
 - **category**: trust / proof / differentiation
 - **owner**: DataKeeper + Builder + Editor + Strategist + Inspector
 - **plan file**: `/Users/katagirijakutou/.claude/plans/https-sakura-checker-jp-article-shinraid-cheerful-willow.md`
@@ -28,23 +29,23 @@
   - S5: 営業実態継続（max 10）
   - S6: 業界人レビュー整合性（max 15）
 - **roadmap**:
-  - **Step 1 (DONE 2026-05-11)**: 機械統計の裏側基盤
+  - **Step 1 (DONE 2026-05-11 / commit cd2a961)**: 機械統計の裏側基盤
     - `build.js`: `computeCrossCheckScore()` 関数追加（+200行）
     - 全店に `crossCheckScore` / `crossCheckBreakdown` / `crossCheckScoreVersion` フィールド付与
     - 内部フラグ（`gachaReviewSuspicion` / `mediaDiscrepancy`）は `data/cross_check_flags.json` に分離保存
     - 初回ビルド実測分布: 平均 37.9 / T70+=0 / T50-69=4 / <50=711（Step 2 で件数取得すれば S1+S2 が正規化される想定）
     - 内部フラグ: 0件（editor_picks の mediaFeatures が現状空配列のため）
-  - **Step 2 (TODO)**: Google Places API 統合
+  - **Step 2 (DONE 2026-05-11 / commit 1804327)**: Google Places API 統合
     - `scripts/fetch_places.js` 新規作成（HTTP fetch 単体・npm 依存追加なし）
     - 評価値・件数・営業ステータスを公式 API で月次取得
     - GitHub Actions の env に `GOOGLE_PLACES_API_KEY` 追加・月次スケジュール
     - 月コスト 0 円維持（1100店 × 月1回 < 無料枠 11,000）
-  - **Step 3 (TODO)**: 公開ロジックと UI 実装
+  - **Step 3 (DONE 2026-05-11 / commit bf70d4c)**: 公開ロジックと UI 実装
     - `index.html`: カードに `✓ 整合度 N` バッジ追加（90+/70-89/50-69 の3段階・<50 は表示しない）
     - モーダルに「クロスチェックの内訳」アコーディオン
     - ヘッダーに「整合度高い順」ソート追加
     - 異議申し立てフォーム（Formspree 経由・既存 insider_reviews と同パターン）
-  - **Step 4 (TODO)**: 透明化と法的セーフガード
+  - **Step 4 (DONE 2026-05-11 / commit 631a1c7)**: 透明化と法的セーフガード
     - `features/integrity-method.html` 新規作成（方法論全公開・6 シグナル詳細・計算式・除外ルール）
     - `features/editorial-policy.html#trust-mechanisms` に「クロスチェック整合度」セクション追記
     - `features/no-fake-reviews.html` 末尾に「整合度スコアの読み方」追記
