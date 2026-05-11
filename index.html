@@ -360,6 +360,31 @@ body.search-active .results-summary{display:block;}
 .pro-pick{position:absolute;bottom:.6rem;right:.9rem;font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.16em;color:var(--bg);background:var(--gold);padding:.15rem .5rem;border-radius:1px;z-index:2;text-transform:uppercase;}
 /* ── TREND BADGE ── */
 .trend-badge{position:absolute;top:.9rem;right:.9rem;font-size:.58rem;font-weight:700;padding:.2rem .55rem;border-radius:2px;z-index:3;backdrop-filter:blur(6px);letter-spacing:.06em;animation:trendPulse 2s ease-in-out infinite;}
+/* ── ISSUE-048 クロスチェック整合度（カードの cmeta セル + モーダル内訳） ── */
+.cmeta .cc-cell{font-weight:700;padding:0 .15rem;}
+.cmeta .cc-cell.cc-high{color:#2e7d32;}
+.cmeta .cc-cell.cc-mid{color:#558b2f;}
+.cmeta .cc-cell.cc-low{color:#888;}
+.cross-check-box{background:rgba(46,125,50,.05);border-left:3px solid #2e7d32;border-radius:0 4px 4px 0;padding:.95rem 1.1rem;margin-bottom:1rem;}
+.cross-check-box .mpoint-label{color:#2e7d32;}
+.cross-check-box .cc-summary{display:flex;align-items:baseline;gap:.6rem;margin:.4rem 0 .55rem;}
+.cross-check-box .cc-score{font-size:1.55rem;font-weight:700;font-family:'DM Mono',monospace;line-height:1;}
+.cross-check-box .cc-score.cc-high{color:#2e7d32;}
+.cross-check-box .cc-score.cc-mid{color:#558b2f;}
+.cross-check-box .cc-score.cc-low{color:#888;}
+.cross-check-box .cc-score-suffix{font-size:.72rem;color:var(--dim);letter-spacing:.08em;}
+.cross-check-box details{margin-top:.35rem;}
+.cross-check-box summary{cursor:pointer;padding:.25rem 0;font-size:.74rem;color:var(--dim);outline:none;}
+.cross-check-box summary:hover{color:var(--text);}
+.cross-check-box summary::-webkit-details-marker{color:#2e7d32;}
+.cross-check-box .cc-breakdown{list-style:none;padding:0;margin:.5rem 0 0;font-size:.76rem;}
+.cross-check-box .cc-breakdown li{display:flex;gap:.6rem;padding:.4rem 0;border-top:1px solid rgba(46,125,50,.1);}
+.cross-check-box .cc-breakdown li:first-child{border-top:none;}
+.cross-check-box .cc-breakdown .cc-sig-score{font-family:'DM Mono',monospace;font-weight:700;color:#2e7d32;min-width:3.2rem;flex-shrink:0;}
+.cross-check-box .cc-breakdown .cc-sig-reason{flex:1;color:var(--text);line-height:1.55;}
+.cross-check-box .cc-breakdown .cc-sig-reason strong{color:var(--dim);font-weight:600;margin-right:.3rem;}
+.cross-check-box .cc-note{font-size:.7rem;color:var(--dim);margin:.7rem 0 0;line-height:1.65;}
+.cross-check-box .cc-note a{color:#2e7d32;text-decoration:underline;}
 .trend-hot{background:rgba(220,38,38,.88);color:#fff;}
 .trend-rising{background:rgba(234,128,28,.88);color:#fff;}
 .trend-warm{background:rgba(202,168,62,.85);color:#1a1a18;}
@@ -1312,9 +1337,10 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
     <label for="sort-select">並び替え</label>
     <select class="sort-select" id="sort-select" onchange="applySort()">
       <option value="recommend">おすすめ順</option>
+      <option value="cc-desc">✓ 整合度順（高い順）</option>
       <option value="trend-desc">🔥 トレンド順</option>
       <option value="rating-desc">Google評価順（高い順）</option>
-      <option value="price-asc">価格帯順（安い順）</option>
+      <option value="price-asc">価格帯順(安い順)</option>
       <option value="price-desc">価格帯順（高い順）</option>
     </select>
     <button class="notify-btn" id="notify-btn" onclick="showNotifyToast()">🔔 この条件で通知</button>
@@ -5932,6 +5958,22 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="insider-note-box" id="m-insider-note" style="display:none">
         <span class="mpoint-label">INSIDER — 業界人メモ</span>
         <p id="m-insider-note-body"></p>
+      </div>
+      <div class="cross-check-box" id="m-cross-check" style="display:none">
+        <span class="mpoint-label">CROSS-CHECK — クロスチェック整合度</span>
+        <div class="cc-summary">
+          <span class="cc-score" id="m-cc-score">--</span>
+          <span class="cc-score-suffix">/ 100（複数媒体・複数シグナルでの整合度）</span>
+        </div>
+        <details>
+          <summary>内訳を見る — 6 シグナルの根拠</summary>
+          <ul class="cc-breakdown" id="m-cc-breakdown"></ul>
+        </details>
+        <p class="cc-note">
+          Google・Hot Pepper・編集部来店・他メディア掲載・業界人レビューの整合度から機械的に算出した参考指標です。
+          「サクラ確率」ではなく中立な指標として表示しています。詳しい計算式は<a href="features/integrity-method.html">クロスチェック整合度の作り方</a>を参照。
+          スコアに違和感がある場合は<a href="features/editorial-policy.html#contact">編集部へ修正依頼</a>をお送りください。
+        </p>
       </div>
       <div class="insider-reviews-box" id="m-insider-reviews">
         <span class="mpoint-label">INSIDER REVIEWS — 業界人レビュー</span>
@@ -11375,6 +11417,12 @@ function buildCardHtml(r) {
     if (trendLabel === '話題沸騰') trendBadgeHtml = '<span class="trend-badge trend-hot">🔥 話題沸騰</span>';
     else if (trendLabel === '注目上昇中') trendBadgeHtml = '<span class="trend-badge trend-rising">📈 注目上昇中</span>';
     else if (trendLabel === 'じわじわ人気') trendBadgeHtml = '<span class="trend-badge trend-warm">✨ じわじわ人気</span>';
+    // ── ISSUE-048 クロスチェック整合度（cmeta 内のセル・50 未満は非表示） ──
+    var ccScore = typeof r.crossCheckScore === 'number' ? r.crossCheckScore : 0;
+    var ccMetaHtml = '';
+    if (ccScore >= 90) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-high" title="クロスチェック整合度（複数媒体・複数シグナルでの整合度・タップで内訳）">' + ccScore + '</span>';
+    else if (ccScore >= 70) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-mid" title="クロスチェック整合度">' + ccScore + '</span>';
+    else if (ccScore >= 50) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-low" title="クロスチェック整合度">' + ccScore + '</span>';
     return '<div class="card" onclick="openM(' + idx + ')" role="button" tabindex="0" aria-label="' + r['店名'] + 'の詳細を見る">'
       + '<div class="ci"><img src="' + photo + '" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)"></div>'
       + '<span class="badge">' + genre + '</span>'
@@ -11387,7 +11435,7 @@ function buildCardHtml(r) {
       + '<div class="cb">'
       + '<h3 class="cn">' + r['店名'] + ' ' + ratingHtml + '</h3>'
       + '<div class="ce">' + (r['英語名']||'') + '</div>'
-      + '<div class="cmeta"><span data-l="Area">' + area + '</span><span data-l="Price">' + (r['価格帯']||'') + '</span></div>'
+      + '<div class="cmeta"><span data-l="Area">' + area + '</span><span data-l="Price">' + (r['価格帯']||'') + '</span>' + ccMetaHtml + '</div>'
       + '</div>'
       + tagHtml
       + (r['おすすめポイント'] ? '<div class="card-point">' + r['おすすめポイント'] + '</div>' : '')
@@ -11581,6 +11629,41 @@ function openM(i) {
   var insiderNote = (r.insiderNote || '').trim();
   document.getElementById('m-insider-note-body').textContent = insiderNote;
   document.getElementById('m-insider-note').style.display = insiderNote ? '' : 'none';
+  // ── ISSUE-048 クロスチェック整合度（50 未満は非表示） ──
+  var mCcScore = typeof r.crossCheckScore === 'number' ? r.crossCheckScore : null;
+  var mCcBreakdown = r.crossCheckBreakdown || null;
+  var ccBoxEl = document.getElementById('m-cross-check');
+  var ccScoreEl = document.getElementById('m-cc-score');
+  var ccBreakdownEl = document.getElementById('m-cc-breakdown');
+  if (ccBoxEl && typeof mCcScore === 'number' && mCcScore >= 50) {
+    ccScoreEl.textContent = mCcScore;
+    ccScoreEl.className = 'cc-score ' + (mCcScore >= 90 ? 'cc-high' : (mCcScore >= 70 ? 'cc-mid' : 'cc-low'));
+    var ccSigLabels = {
+      s1_googleRatingVsCount: 'Google★ vs 件数',
+      s2_reviewCountAbs:      'レビュー件数',
+      s3_editorVisitConsistency: '編集部来店整合',
+      s4_mediaCrossCheck:     '他媒体掲載',
+      s5_operationContinuity: '営業実態継続',
+      s6_insiderReviewConsistency: '業界人レビュー'
+    };
+    var ccSigKeys = ['s1_googleRatingVsCount','s2_reviewCountAbs','s3_editorVisitConsistency','s4_mediaCrossCheck','s5_operationContinuity','s6_insiderReviewConsistency'];
+    if (mCcBreakdown && ccBreakdownEl) {
+      ccBreakdownEl.innerHTML = ccSigKeys.map(function(k){
+        var sig = mCcBreakdown[k];
+        if (!sig) return '';
+        var label = ccSigLabels[k] || k;
+        return '<li>'
+          + '<span class="cc-sig-score">' + sig.score + ' / ' + sig.max + '</span>'
+          + '<span class="cc-sig-reason"><strong>' + label + '</strong>: ' + (sig.reason || '') + '</span>'
+          + '</li>';
+      }).join('');
+    } else if (ccBreakdownEl) {
+      ccBreakdownEl.innerHTML = '';
+    }
+    ccBoxEl.style.display = '';
+  } else if (ccBoxEl) {
+    ccBoxEl.style.display = 'none';
+  }
   // 業界人レビュー（訪問者投稿／編集部モデレーション済み）
   var irList = r.insiderReviews || [];
   var irListEl = document.getElementById('m-insider-reviews-list');
@@ -12062,6 +12145,9 @@ function applySort() {
 function sortAndRender() {
   var arr = FILTERED.slice();
   switch (SORT_MODE) {
+    case 'cc-desc':
+      arr.sort(function(a,b){ return (b.crossCheckScore||0) - (a.crossCheckScore||0); });
+      break;
     case 'trend-desc':
       arr.sort(function(a,b){ return (parseInt(b['トレンドスコア'])||0) - (parseInt(a['トレンドスコア'])||0); });
       break;
