@@ -148,9 +148,10 @@ footer a{color:var(--muted);text-decoration:none;}
     </ul>
   </div>
 
-  <p class="section-label">02 — 6 Signals: 6 つのシグナル</p>
+  <p class="section-label">02 — 8 Signals: 8 つのシグナル（scoreVersion 2.0）</p>
   <p class="art-intro">
-    整合度は次の 6 シグナルの合計（0〜100 点）で表現します。各シグナルは独立に評価され、合計値が高いほど「複数の根拠が同じ方向を指している」状態を意味します。
+    整合度は次の 8 シグナルの合計（0〜100 点）で表現します。各シグナルは独立に評価され、合計値が高いほど「複数の根拠が同じ方向を指している」状態を意味します。
+    <strong>S7・S8 は「点数の変動・時系列パターン（★5/★1 の異常多発、オープン時の急増失速、化粧剥がれ）」を真のサクラ判定要素として組み込んだ新規シグナル</strong>です。
   </p>
 
   <table class="signal-table">
@@ -168,52 +169,101 @@ footer a{color:var(--muted);text-decoration:none;}
         <td>S1</td>
         <td>Google★ vs 件数比率</td>
         <td>Google Places API（rating × user_ratings_total）</td>
-        <td class="max">25</td>
-        <td>★ が極端に高いのに件数が少ない（&lt;50 件）はガチャレビュー疑い。逆に件数 100+ で ★4.0+ は強い整合シグナル。</td>
+        <td class="max">15</td>
+        <td>★ が極端に高いのに件数が少ない（&lt;50 件）はガチャレビュー疑い。件数 100+ で ★4.0+ は強い整合シグナル。</td>
       </tr>
       <tr>
         <td>S2</td>
         <td>レビュー件数絶対値</td>
         <td>Google Places API（user_ratings_total）</td>
-        <td class="max">15</td>
-        <td>30 件未満はサンプル不足、200+ は豊富なサンプル。件数だけで★が高すぎる場合は減点。</td>
+        <td class="max">10</td>
+        <td>30 件未満はサンプル不足、200+ は豊富なサンプル。</td>
       </tr>
       <tr>
         <td>S3</td>
-        <td>編集部来店との整合性</td>
-        <td>editor_picks.json の visitStatus × Google★</td>
-        <td class="max">20</td>
-        <td>編集部来店「visited」かつ Google★ も高ければ最大点。来店時の評価と Google 評価が乖離していれば内部フラグ。</td>
+        <td>データ充実度</td>
+        <td>LOCAL_STORES のフィールド埋まり率</td>
+        <td class="max">15</td>
+        <td>タグ ≥3 個・Instagram URL・食べログ URL・おすすめポイント・写真 URL の 5 要素 × 3 点。データキーパーの拡充状態を客観的に測る。</td>
       </tr>
       <tr>
         <td>S4</td>
         <td>他媒体掲載クロスチェック</td>
         <td>editor_picks.json の mediaFeatures</td>
-        <td class="max">15</td>
-        <td>第三者媒体への掲載が複数あるほど、独立した検証が効いていると評価。</td>
+        <td class="max">10</td>
+        <td>第三者媒体への掲載が複数あるほど独立検証が効いていると評価。</td>
       </tr>
       <tr>
         <td>S5</td>
         <td>営業実態継続</td>
         <td>Hot Pepper API 取得継続 + Places business_status</td>
-        <td class="max">10</td>
-        <td>毎日の Hot Pepper 取得で店舗情報が維持されている＝営業実態あり。CLOSED_PERMANENTLY は除外。</td>
+        <td class="max">5</td>
+        <td>Hot Pepper 取得継続＝営業実態あり。CLOSED_PERMANENTLY は除外。</td>
       </tr>
       <tr>
         <td>S6</td>
-        <td>業界人レビュー整合性</td>
-        <td>insider_reviews.json の編集部承認済みレビュー数</td>
+        <td>Instagram 実在シグナル</td>
+        <td>instagram_resolved.json + Instagram投稿URL</td>
+        <td class="max">10</td>
+        <td>公式 IG アカウント解決済み（+7）+ 最新投稿 URL あり（+3）。実在性 + 集客活動の客観シグナル。</td>
+      </tr>
+      <tr style="background:rgba(46,125,50,.06);">
+        <td><strong>S7</strong></td>
+        <td><strong>レビュー時系列健全性</strong></td>
+        <td>places_history.json（月次差分）+ 最新 5 件レビュー</td>
+        <td class="max">20</td>
+        <td><strong>(a) 投稿ペース安定性 ／ (b) 最新★ vs 全体★ の乖離 ／ (c) 最新★の標準偏差。</strong>オープン時の急増→失速、サクラ継続投入、化粧剥がれパターンを検知。</td>
+      </tr>
+      <tr style="background:rgba(46,125,50,.06);">
+        <td><strong>S8</strong></td>
+        <td><strong>評価分布の自然性</strong></td>
+        <td>Google Places API reviews（最新 5 件）</td>
         <td class="max">15</td>
-        <td>飲食業界経験者からのレビューが複数件ある店は、業界目線でのクロスチェックが効いていると評価。</td>
+        <td><strong>★5 と ★1 が混在し中間が薄い U 字型分布</strong>は評価操作の典型パターン。最新 5 件からの近似判定で減点。</td>
       </tr>
     </tbody>
   </table>
 
+  <p class="section-label">02-A — S7 の詳細: 時系列シグナル</p>
+  <p class="body-para">
+    S7 は<strong>毎月 1 回 Google Places API から取得した結果を <code>data/places_history.json</code> に蓄積し、月次差分から算出</strong>します。最大 12 ヶ月分のリングバッファで履歴を保持し、次の 3 サブシグナルを合算します。
+  </p>
+  <div class="tips-box">
+    <p class="tips-title">S7 サブシグナル（max 20）</p>
+    <ul>
+      <li><strong>S7-a 投稿ペース安定性（max 8）：</strong>月次の <code>user_ratings_total</code> 増加ペースを分析。<strong>初月だけ +20 件、直近 +2 件以下のような急増→失速</strong>パターンを検知 → 1 点まで減点。変動係数 ≤ 0.5 で安定なら 8 点。</li>
+      <li><strong>S7-b 最新★ vs 全体★ の乖離（max 6）：</strong>最新 5 件の平均★ と全体★ の差を判定。<strong>+0.8 以上高い場合はサクラ継続投入疑い</strong>、-0.8 以下なら「化粧剥がれ」（初期サクラの効果が薄れて本来の評価が出てきた）パターン → どちらも 1 点まで減点。</li>
+      <li><strong>S7-c 最新★の標準偏差（max 6）：</strong>標準偏差 0.5〜1.5 が自然な分布。<strong>0.5 未満（全部 ★5 など一様）または 2.0+（★1 と ★5 だけ）</strong>は評価操作疑い → 2 点まで減点。</li>
+    </ul>
+  </div>
+  <p class="body-para">
+    <strong>S7 は稼働開始から 2〜3 ヶ月後に本格機能します</strong>。初月は月次差分が取れないため、中立スコア（10/20）を返します。これは「履歴が無いだけで店舗を不利に扱わない」公平性のための設計です。
+  </p>
+
+  <p class="section-label">02-B — S8 の詳細: U 字型分布の近似判定</p>
+  <p class="body-para">
+    Google Places API は<strong>★1〜5 の完全な件数分布を返しません</strong>。そのため、最新 5 件のレビュー（取得可能な最大件数）から U 字型分布を近似判定します。
+  </p>
+  <div class="tips-box">
+    <p class="tips-title">S8 判定ロジック（max 15）</p>
+    <ul>
+      <li><strong>U 字型疑い（2 点）：</strong>最新 5 件に ★5 系（≥4.5）が 2 件以上 + ★1 系（≤1.5）が 2 件以上 + 中間（★2-4）が 0〜1 件 → 評価操作の典型パターン</li>
+      <li><strong>自然な分布（15 点）：</strong>中間（★2-4）が 3 件以上 → 健全な評価分布</li>
+      <li><strong>高評価集中（11 点）：</strong>★5 系 4 件以上 + ★1 系 0 件 → 良店だが U 字型ではない</li>
+      <li><strong>判定不可（7 点）：</strong>最新レビューが 5 件未満、または取得失敗 → 中立扱い</li>
+    </ul>
+  </div>
+
   <div class="callout">
     <strong>裏ロジック（公開しない内部フラグ）。</strong>
-    上記 6 シグナルとは別に、<code>gachaReviewSuspicion</code>（★4.6+ かつ件数 50 未満）と
-    <code>mediaDiscrepancy</code>（食べログURLあり かつ Google★ 3.2 以下）という 2 つの内部フラグを <code>data/cross_check_flags.json</code> に分離保存しています。
+    上記 8 シグナルとは別に、次の 4 つの内部フラグを <code>data/cross_check_flags.json</code> に分離保存しています。
     これらは Inspector の月次レビュー素材として使われるだけで、サイト上には表示しません — 機械判定で個別店を「サクラ疑い」と名指しすることのリスクが大きすぎるためです。
+    <ul style="margin-top:.6rem;padding-left:1.4rem;">
+      <li><code>gachaReviewSuspicion</code>: ★≥4.6 かつ件数 &lt;50 = ガチャレビュー疑い</li>
+      <li><code>mediaDiscrepancy</code>: 食べログ URL あり かつ Google★ ≤3.2 = 媒体間評価乖離</li>
+      <li><code>openingBurstPattern</code>: 投稿急増 → 失速パターン（S7-a 検知）</li>
+      <li><code>uShapedDistribution</code>: ★5/★1 偏在で中間が薄い（S8 検知）</li>
+    </ul>
   </div>
 
   <p class="section-label">03 — Scoring Formula</p>
