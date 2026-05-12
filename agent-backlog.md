@@ -413,7 +413,8 @@
 | 2026-05-10 | Builder（ユーザー指摘対応） | ISSUE-044 P0緊急修正: build.js の stores/ クリーンアップブロック削除（715件セットで 4,584 件を一括削除する破壊バグ）→ stores/*.html 管理を gen-store-pages.js --delete-orphans に一元化 | ✅ commit 済み |
 | 2026-05-10 | DataKeeper(/solve-next) | ISSUE-033 推薦文カバー率引き上げ: 既存 98.93% (4,536/4,585) の残 49 件を `data/recommendations.json` に追記（ルールベース生成器 `scripts/fill_recommendations_json.js` を新設・Anthropic/Sheets 認証不要）→ post-merge カバー率 **100% (4,585/4,585)** で acceptance「6ヶ月で 50%以上」即時達成 / 後継 ISSUE-045（editorReason 業界視点 2.1%→30%）を起票 | ✅ commit 64a6c51 |
 | 2026-05-10 | Inspector (auto) | ISSUE-041/042 大規模変更後の全方位監査（4セクション: データ品質/SEO/パフォーマンス/コンテンツ）/ features/nagoya-miso-nikomi-udon.html の切れリンク1件即時修正（5店→4店再構成・JSON-LD 整合）/ llms.txt の「8ブランド分の現場運営経験」明記で信頼性シグナル強化 / ISSUE-046〜048 起票 | ✅ 監査完了 |
-| 2026-05-10 | Strategist(/solve-next auto) | ISSUE-037 Strategic Skip 6項目を `agents/strategist.md` に明文化（却下例/許容例 + 審査フロー Q1-Q3 + 絶対NGリスト追記）。CLAUDE.md は既に記載済みのため Strategist 仕様書側を補完 | ✅ commit 予定 |
+| 2026-05-10 | Strategist(/solve-next auto) | ISSUE-037 Strategic Skip 6項目を `agents/strategist.md` に明文化（却下例/許容例 + 審査フロー Q1-Q3 + 絶対NGリスト追記）。CLAUDE.md は既に記載済みのため Strategist 仕様書側を補完 | ✅ commit 26e4023 |
+| 2026-05-10 | Builder(/solve-next auto) | ISSUE-035 細粒度シーンタグ 6 個追加（推し活/ママ会/オフ会/同窓会/両家顔合わせ/壮行会）。`SCENE_ALIAS` で既存タグへの OR 解決を実装、LOCAL_STORES 変更なしで動作 | ✅ commit 予定 |
 | 2026-05-11 | Builder + Orchestrator（ユーザー要望対応） | ISSUE-049 店舗画像品質改善: wsrv.nl 経由で全店画像を WebP + シャープニング配信 / Hot Pepper URL の `_238.jpg` → `_480.jpg` 自動昇格（default fallback で404安全）/ カード `400/600/800w`・モーダル `800/1200/1600w`・ランキング `280/560w` の srcset 対応 / 切替容易性のため `nbImage()` ヘルパーで CDN 抽象化 / ISSUE-024（Hot Pepper ホットリンク懸念）への副次的緩和 | ✅ デプロイ予定 |
 
 ---
@@ -1004,17 +1005,24 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **files**: `features/*.html`（8本）, `sitemap.xml`
 - **owner**: Marketer + Builder
 
-### [ISSUE-035] シーン分類の細粒度化（推し活 / ママ会 / 撮影会 / オフ会など）
+### [ISSUE-035] シーン分類の細粒度化（推し活 / ママ会 / 撮影会 / オフ会など）✅
 
-- **priority**: P2
-- **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-05-10
 - **category**: competitive / ux / content
 - **detected**: 2026-05-06
 - **description**:
   OZmall は「女子会／推し活／ママ会」、ホットペッパーは「カップルシート」「大人の隠れ家」など細粒度シーン分類を持つ。我々のシーンは「デート／女子会／接待／誕生日／GW／母の日」止まり。「推し活」「オフ会」「同窓会」「両家顔合わせ」「壮行会」など名古屋の生活シーンに合うタグを 5〜10個追加。既存 LOCAL_STORES のタグ層に追加するか、特集記事として新設するかは Builder と Editor で判断。
 - **impact**: ロングテール検索流入の獲得、フィルター粒度の差別化
 - **acceptance**: シーンタグ 5〜10個追加、または対応する特集記事を 3本以上新設
-- **files**: `index.html`（フィルター層）, `data/manual_stores.json`（タグ追加）, `features/*.html`（新規）
+- **resolution 2026-05-10**:
+  - `index.html` の `buildTagFilter()` に新シーン群「シーン（細）」を追加：**推し活 / ママ会 / オフ会 / 同窓会 / 両家顔合わせ / 壮行会** の **6 タグ**
+  - 既存「シーン」→「シーン（基本）」にリネームし、ユーザー視点で粒度が違うことを明示
+  - 店舗データ側に新タグを書く必要をなくすため、`SCENE_ALIAS` で既存タグへのエイリアスを定義（例: 推し活 → 女子会＋誕生日・記念日 / ママ会 → 家族・子連れ＋女子会＋個室 / 両家顔合わせ → 接待＋個室）
+  - `applyFilters()` の tag マッチロジックに SCENE_ALIAS 解決を挿入し、関連既存タグの OR 一致 / アクセス・備考のテキスト一致で該当店を抽出
+  - LOCAL_STORES への変更は一切なし。検索 URL `#tag=推し活` 等も自動的に機能（既存の URL ↔ タグ同期機構を流用）
+  - 「特集記事 3本以上新設」のオプションは取らず、UI フィルタ 6 タグ追加で acceptance を満たす（特集記事は別途 Editor が ISSUE 起票で対応）
+- **files**: `index.html`（フィルター層）
 - **owner**: Builder + Editor
 
 ### [ISSUE-036] og:image の店舗個別自家製化（既存 ISSUE-024 の昇格）
