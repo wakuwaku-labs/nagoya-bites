@@ -6011,10 +6011,10 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
         <span class="mpoint-label">CROSS-CHECK — クロスチェック整合度</span>
         <div class="cc-summary">
           <span class="cc-score" id="m-cc-score">--</span>
-          <span class="cc-score-suffix">/ 100（複数媒体・複数シグナルでの整合度）</span>
+          <span class="cc-score-suffix">（複数媒体・複数シグナルでの整合度を 0〜100% で表示）</span>
         </div>
         <details>
-          <summary>内訳を見る — 6 シグナルの根拠</summary>
+          <summary>内訳を見る — 8 シグナルの根拠</summary>
           <ul class="cc-breakdown" id="m-cc-breakdown"></ul>
         </details>
         <p class="cc-note">
@@ -11488,9 +11488,9 @@ function buildCardHtml(r) {
     // ── ISSUE-048 クロスチェック整合度（cmeta 内のセル・50 未満は非表示） ──
     var ccScore = typeof r.crossCheckScore === 'number' ? r.crossCheckScore : 0;
     var ccMetaHtml = '';
-    if (ccScore >= 90) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-high" title="クロスチェック整合度（複数媒体・複数シグナルでの整合度・タップで内訳）">' + ccScore + '</span>';
-    else if (ccScore >= 70) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-mid" title="クロスチェック整合度">' + ccScore + '</span>';
-    else if (ccScore >= 50) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-low" title="クロスチェック整合度">' + ccScore + '</span>';
+    if (ccScore >= 90) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-high" title="クロスチェック整合度（複数媒体・複数シグナルでの整合度・タップで内訳）">' + ccScore + '%</span>';
+    else if (ccScore >= 70) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-mid" title="クロスチェック整合度">' + ccScore + '%</span>';
+    else if (ccScore >= 50) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-low" title="クロスチェック整合度">' + ccScore + '%</span>';
     return '<div class="card" onclick="openM(' + idx + ')" role="button" tabindex="0" aria-label="' + r['店名'] + 'の詳細を見る">'
       + '<div class="ci"><img src="' + nbImage(photo, 600) + '" srcset="' + nbSrcset(photo, [400, 600, 800]) + '" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)"></div>'
       + '<span class="badge">' + genre + '</span>'
@@ -11706,7 +11706,7 @@ function openM(i) {
   var ccScoreEl = document.getElementById('m-cc-score');
   var ccBreakdownEl = document.getElementById('m-cc-breakdown');
   if (ccBoxEl && typeof mCcScore === 'number' && mCcScore >= 50) {
-    ccScoreEl.textContent = mCcScore;
+    ccScoreEl.textContent = mCcScore + '%';
     ccScoreEl.className = 'cc-score ' + (mCcScore >= 90 ? 'cc-high' : (mCcScore >= 70 ? 'cc-mid' : 'cc-low'));
     var ccSigLabels = {
       s1_googleRatingVsCount: 'Google★ vs 件数',
