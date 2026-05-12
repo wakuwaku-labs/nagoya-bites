@@ -39,7 +39,10 @@ const https = require('https');
 
 const ROOT = path.resolve(__dirname, '..');
 const PLACES_CACHE = path.join(ROOT, 'data', 'places_resolved.json');
+const PLACES_HISTORY = path.join(ROOT, 'data', 'places_history.json');
 const INDEX_HTML = path.join(ROOT, 'index.html');
+// 月次履歴のリングバッファ長（12 ヶ月分保持）
+const HISTORY_MAX_SNAPSHOTS = 12;
 
 // ─── CLI ───
 const args = process.argv.slice(2);
@@ -75,8 +78,7 @@ function fetchJson(url) {
   });
 }
 
-// Google Places "Find Place from Text" を 1 リクエストで叩く
-// fields に rating, user_ratings_total, business_status を含めることで詳細リクエストを節約
+// Google Places "Find Place from Text" で place_id を解決（fields は最小限）
 async function findPlace(name, address) {
   const query = encodeURIComponent(`${name} ${address}`.trim());
   const fields = 'place_id,name,formatted_address,rating,user_ratings_total,business_status';
@@ -89,6 +91,26 @@ async function findPlace(name, address) {
     throw new Error(`Places API status=${res.status} | ${res.error_message || ''}`);
   }
   return (res.candidates && res.candidates[0]) || null;
+}
+
+// Place Details で最新 5 件のレビュー（rating + time）を取得
+// ISSUE-049: クロスチェック整合度 S7（時系列健全性）と S8（評価分布自然性）に使用
+async function fetchPlaceDetails(placeId) {
+  const fields = 'reviews';
+  const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=${fields}&language=ja&reviews_no_translations=true&key=${API_KEY}`;
+  const res = await fetchJson(url);
+  if (res.status === 'OVER_QUERY_LIMIT' || res.status === 'REQUEST_DENIED') {
+    throw new Error(`Places Details API ${res.status}: ${res.error_message || '(no message)'}`);
+  }
+  if (res.status !== 'OK' && res.status !== 'ZERO_RESULTS') {
+    return [];
+  }
+  const reviews = (res.result && res.result.reviews) || [];
+  return reviews.map(r => ({
+    rating: typeof r.rating === 'number' ? r.rating : null,
+    time: typeof r.time === 'number' ? r.time : null,
+    relativeTime: r.relative_time_description || ''
+  }));
 }
 
 // 住所マッチ: 名古屋市が両方に含まれていれば採用
@@ -111,7 +133,7 @@ async function main() {
   const stores = loadStoresFromIndex();
   console.log(`LOCAL_STORES: ${stores.length}件`);
 
-  // 既存キャッシュ
+  // 既存キャッシュ（最新スナップショット）
   let cache = {};
   if (fs.existsSync(PLACES_CACHE) && !opts.force) {
     try {
@@ -120,6 +142,18 @@ async function main() {
     } catch (e) {
       console.warn(`既存キャッシュ読み込み失敗: ${e.message} — 新規作成します`);
       cache = {};
+    }
+  }
+
+  // 月次履歴（time-series 用・リングバッファ 12 ヶ月分）
+  let history = {};
+  if (fs.existsSync(PLACES_HISTORY)) {
+    try {
+      history = JSON.parse(fs.readFileSync(PLACES_HISTORY, 'utf8'));
+      console.log(`月次履歴: ${Object.keys(history).length}件分の履歴を読込`);
+    } catch (e) {
+      console.warn(`月次履歴読み込み失敗: ${e.message} — 新規作成します`);
+      history = {};
     }
   }
 
@@ -155,15 +189,41 @@ async function main() {
         };
         rejected++;
       } else {
+        // Place Details で最新 5 件のレビューを取得（S7・S8 用）
+        let latestReviews = [];
+        if (candidate.place_id) {
+          try {
+            latestReviews = await fetchPlaceDetails(candidate.place_id);
+          } catch (detailErr) {
+            console.warn(`  [${id}] Place Details 失敗: ${detailErr.message}`);
+            if (/REQUEST_DENIED|OVER_QUERY_LIMIT/.test(detailErr.message)) throw detailErr;
+          }
+          await sleep(opts.delayMs);
+        }
+        const now = new Date().toISOString();
         cache[id] = {
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: now,
           placeId: candidate.place_id,
           name: candidate.name,
           formatted_address: candidate.formatted_address,
           rating: candidate.rating != null ? candidate.rating : null,
           user_ratings_total: candidate.user_ratings_total != null ? candidate.user_ratings_total : null,
-          business_status: candidate.business_status || null
+          business_status: candidate.business_status || null,
+          latestReviews: latestReviews
         };
+        // 月次履歴に追加（リングバッファ）
+        if (!history[id]) history[id] = { snapshots: [] };
+        history[id].snapshots.push({
+          ts: now,
+          rating: candidate.rating != null ? candidate.rating : null,
+          total: candidate.user_ratings_total != null ? candidate.user_ratings_total : null,
+          businessStatus: candidate.business_status || null
+        });
+        if (history[id].snapshots.length > HISTORY_MAX_SNAPSHOTS) {
+          history[id].snapshots = history[id].snapshots.slice(-HISTORY_MAX_SNAPSHOTS);
+        }
+        // 最新レビューも history に上書き保存（古いものは破棄）
+        if (latestReviews.length > 0) history[id].latestReviews = latestReviews;
         succeeded++;
       }
     } catch (e) {
@@ -180,14 +240,17 @@ async function main() {
     if ((i + 1) % 100 === 0) {
       console.log(`  進捗: ${i + 1}/${queue.length} (OK=${succeeded} 却下=${rejected} なし=${zeroResults} エラー=${errors})`);
       fs.writeFileSync(PLACES_CACHE, JSON.stringify(cache, null, 2), 'utf8');
+      fs.writeFileSync(PLACES_HISTORY, JSON.stringify(history, null, 2), 'utf8');
     }
     await sleep(opts.delayMs);
   }
 
   // 最終保存
   fs.writeFileSync(PLACES_CACHE, JSON.stringify(cache, null, 2), 'utf8');
+  fs.writeFileSync(PLACES_HISTORY, JSON.stringify(history, null, 2), 'utf8');
   console.log(`完了: 成功${succeeded} / 住所却下${rejected} / 該当なし${zeroResults} / エラー${errors}`);
   console.log(`キャッシュ書き込み: ${PLACES_CACHE}`);
+  console.log(`月次履歴書き込み: ${PLACES_HISTORY}`);
 }
 
 main().catch(e => { console.error(e.message); process.exit(1); });

@@ -55,10 +55,11 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           if [ -f data/places_resolved.json ]; then
             git add data/places_resolved.json
+            [ -f data/places_history.json ] && git add data/places_history.json
             if git diff --cached --quiet; then
               echo "変更なし - コミットスキップ"
             else
-              git commit -m "chore: auto-update Places API cache [skip actions]"
+              git commit -m "chore: auto-update Places API cache & history [skip actions]"
               git pull --rebase origin main || true
               git push || (sleep 5 && git pull --rebase origin main && git push)
             fi
