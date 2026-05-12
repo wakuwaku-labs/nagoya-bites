@@ -6,24 +6,24 @@
  * data/media_appearances.json にキャッシュする（S4 他媒体掲載クロスチェック用）。
  *
  * 採用ソース（動作検証済み）:
- *   - note.com ハッシュタグ RSS（#名古屋グルメ等 10 タグ）
- *     → 記事タイトルに店名が直接入るため店名マッチング精度が高い
- *   - Google News RSS（名古屋グルメ関連クエリ 5 種）
- *     → 媒体名を自動抽出し、複数メディアをそれぞれ 1 カウント
+ *   - note.com ハッシュタグ RSS（25 タグ: エリア別 + ジャンル別 + シーン別）
+ *   - Google News RSS（20 クエリ: エリア×ジャンル別）
  *
- * 除外したソース（動作不可確認済み）:
- *   - nagoreco.com, otona-nagoya.com: ドメイン未解決 or プレースホルダー
- *   - kelly-net.jp, macaro-ni.jp, dressing.media, retrip.jp: React SPA / 403 / 404
- *   - 各サイトサイトマップ: URL スラグが英数字のため日本語店名マッチング不可
+ * マッチング方式:
+ *   - タイトル（title）と記事要約（description 先頭 600 文字）の両方を照合
+ *   - タイトルマッチ: 店名 3 文字以上
+ *   - 説明文マッチ: 店名 4 文字以上（false positive 抑制）
+ *   → まとめ記事（「名古屋のおすすめ 5 選」等）でも description に個別店名が出るため
+ *     タイトルのみより 3〜5 倍のカバレッジが見込める
  *
- * 制約: npm 依存ゼロ / スクレイピングなし / TOS 違反なし
+ * 制約: npm 依存ゼロ / スクレイピングなし / TOS 違反なし / 全ソース無料
  *
  * 使い方:
- *   node scripts/fetch_media_appearances.js           # RSS 取得・差分更新（推奨）
+ *   node scripts/fetch_media_appearances.js           # RSS 取得・差分更新
  *   node scripts/fetch_media_appearances.js --force   # キャッシュ全破棄して再取得
  *   node scripts/fetch_media_appearances.js --dry-run # 統計のみ（ファイル更新なし）
  *   node scripts/fetch_media_appearances.js --store J000729743  # 1 店のマッチング確認
- *   node scripts/fetch_media_appearances.js --delay 400         # レート制御 ms（既定 300）
+ *   node scripts/fetch_media_appearances.js --delay 400         # レート制御 ms（既定 250）
  */
 
 'use strict';
@@ -36,63 +36,112 @@ const ROOT = path.resolve(__dirname, '..');
 const CACHE_PATH = path.join(ROOT, 'data', 'media_appearances.json');
 const INDEX_HTML = path.join(ROOT, 'index.html');
 
-const MIN_NAME_LEN = 3;
+// タイトルマッチの最小店名文字数
+const MIN_NAME_TITLE = 3;
+// 説明文マッチの最小店名文字数（false positive 抑制のため長め）
+const MIN_NAME_DESC = 4;
+// 説明文は先頭 N 文字のみ参照（長い本文が入るケース対策）
+const DESC_MAX = 600;
 
-// Google News 経由で引っかかることがあるリスティングプラットフォーム
-// これらは店舗自身が登録するため「第三者メディア掲載」とは見なさない
+// リスティングプラットフォーム除外リスト（店舗自己登録のため第三者メディア掲載と見なさない）
 const BLOCKED_SOURCES = new Set([
   'ホットペッパーグルメ', 'ホットペッパー', 'Hot Pepper',
-  '食べログ', 'Tabelog',
+  '食べログ', 'Tabelog', '食べログニュース',
   'ぐるなび', 'Gurunavi',
   'Retty', 'レティ',
   'Yelp', 'Google マップ', 'TripAdvisor',
-  'じゃらん', 'Yahoo!ロコ',
+  'じゃらん', 'Yahoo!ロコ', 'NAVITIME',
 ]);
+
+// Google News ベース URL
+const GN = (q) => `https://news.google.com/rss/search?hl=ja&gl=JP&ceid=JP:ja&q=${encodeURIComponent(q)}`;
 
 /**
  * フィード設定
  *   name:          mediaFeatures に格納する媒体名
- *                  note.com 系は全て "note" に統一（S4 は媒体数カウントのため同一ソースは1カウント）
- *   rssUrl:        RSS フィード URL（動作確認済みのみ）
- *   extractSource: true = Google News 形式「タイトル - 媒体名」から媒体名を自動抽出して name を上書き
+ *                  note 系は全て "note" に統一（S4 は distinct 媒体名カウント）
+ *   rssUrl:        RSS フィード URL
+ *   extractSource: Google News 形式「タイトル - 媒体名」から媒体名を自動抽出
  */
 const MEDIA_FEEDS = [
-  // ─── note.com ハッシュタグ RSS（動作確認済み）────────────────────────────────
-  // 記事タイトルに店名が直接入るためマッチング精度が高い
-  // 全タグを "note" で統一 → 複数タグに同じ店が出現しても S4 は 1 カウント
-  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋グルメ/rss'  },
-  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋飯/rss'      },
-  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋めし/rss'    },
-  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋ランチ/rss'  },
-  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋ディナー/rss'},
-  { name: 'note', rssUrl: 'https://note.com/hashtag/愛知グルメ/rss'    },
-  { name: 'note', rssUrl: 'https://note.com/hashtag/栄グルメ/rss'      },
-  { name: 'note', rssUrl: 'https://note.com/hashtag/名駅グルメ/rss'    },
-  { name: 'note', rssUrl: 'https://note.com/hashtag/大須グルメ/rss'    },
-  { name: 'note', rssUrl: 'https://note.com/hashtag/金山グルメ/rss'    },
+  // ════════════════════════════════════════════════════════════════════════
+  // note.com ハッシュタグ RSS（25 タグ）
+  // ════════════════════════════════════════════════════════════════════════
 
-  // ─── Google News RSS（動作確認済み）──────────────────────────────────────────
-  // タイトル末尾「 - 媒体名」から発行元を自動抽出 → 媒体ごとに 1 カウント
-  { name: '_gnews', rssUrl: 'https://news.google.com/rss/search?q=名古屋+グルメ+話題&hl=ja&gl=JP&ceid=JP:ja',             extractSource: true },
-  { name: '_gnews', rssUrl: 'https://news.google.com/rss/search?q=名古屋+新店+レストラン&hl=ja&gl=JP&ceid=JP:ja',          extractSource: true },
-  { name: '_gnews', rssUrl: 'https://news.google.com/rss/search?q=名古屋+おすすめ+グルメ+ランキング&hl=ja&gl=JP&ceid=JP:ja', extractSource: true },
-  { name: '_gnews', rssUrl: 'https://news.google.com/rss/search?q=名古屋+ミシュラン+食べログ&hl=ja&gl=JP&ceid=JP:ja',       extractSource: true },
-  { name: '_gnews', rssUrl: 'https://news.google.com/rss/search?q=名古屋+グルメ+テレビ&hl=ja&gl=JP&ceid=JP:ja',            extractSource: true },
+  // エリア別
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋グルメ/rss'      },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋飯/rss'          },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋めし/rss'        },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/愛知グルメ/rss'        },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/栄グルメ/rss'          },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名駅グルメ/rss'        },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/大須グルメ/rss'        },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/金山グルメ/rss'        },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/覚王山グルメ/rss'      },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/今池グルメ/rss'        },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/千種グルメ/rss'        },
+
+  // シーン別
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋ランチ/rss'      },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋ディナー/rss'    },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋ランチ巡り/rss'  },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋グルメ巡り/rss'  },
+
+  // ジャンル別
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋ラーメン/rss'    },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋焼肉/rss'        },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋カフェ/rss'      },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋居酒屋/rss'      },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋寿司/rss'        },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋イタリアン/rss'  },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋焼き鳥/rss'      },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋中華/rss'        },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋スイーツ/rss'    },
+  { name: 'note', rssUrl: 'https://note.com/hashtag/名古屋記録/rss'        },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // Google News RSS（20 クエリ）
+  // ════════════════════════════════════════════════════════════════════════
+
+  // 一般トレンド
+  { name: '_gnews', rssUrl: GN('名古屋 グルメ 話題'),                    extractSource: true },
+  { name: '_gnews', rssUrl: GN('名古屋 新店 レストラン'),                extractSource: true },
+  { name: '_gnews', rssUrl: GN('名古屋 おすすめ グルメ ランキング'),     extractSource: true },
+  { name: '_gnews', rssUrl: GN('名古屋 グルメ テレビ'),                  extractSource: true },
+  { name: '_gnews', rssUrl: GN('名古屋 ミシュラン 食べログ'),            extractSource: true },
+  { name: '_gnews', rssUrl: GN('名古屋 グルメ オープン'),                extractSource: true },
+
+  // エリア別新店
+  { name: '_gnews', rssUrl: GN('栄 グルメ 新店 名古屋'),                 extractSource: true },
+  { name: '_gnews', rssUrl: GN('名駅 グルメ 新店 名古屋'),               extractSource: true },
+  { name: '_gnews', rssUrl: GN('覚王山 グルメ 名古屋'),                  extractSource: true },
+  { name: '_gnews', rssUrl: GN('大須 グルメ 名古屋'),                    extractSource: true },
+
+  // ジャンル別
+  { name: '_gnews', rssUrl: GN('名古屋 ラーメン 新店 話題'),             extractSource: true },
+  { name: '_gnews', rssUrl: GN('名古屋 焼肉 新店 オープン'),             extractSource: true },
+  { name: '_gnews', rssUrl: GN('名古屋 寿司 おすすめ 話題'),             extractSource: true },
+  { name: '_gnews', rssUrl: GN('名古屋 カフェ 新店 話題'),               extractSource: true },
+  { name: '_gnews', rssUrl: GN('名古屋 居酒屋 オープン 話題'),           extractSource: true },
+  { name: '_gnews', rssUrl: GN('名古屋 イタリアン フレンチ オープン'),   extractSource: true },
+
+  // プレスリリース系
+  { name: '_gnews', rssUrl: GN('名古屋 新規オープン 飲食店'),            extractSource: true },
+  { name: '_gnews', rssUrl: GN('愛知 レストラン グランドオープン'),       extractSource: true },
+  { name: '_gnews', rssUrl: GN('名古屋 リニューアルオープン 飲食'),      extractSource: true },
+  { name: '_gnews', rssUrl: GN('名古屋 初出店 グルメ'),                  extractSource: true },
 ];
 
 // ─── CLI ─────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
-const opts = { force: false, dryRun: false, store: null, delayMs: 300 };
+const opts = { force: false, dryRun: false, store: null, delayMs: 250 };
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
   if (a === '--force') opts.force = true;
   else if (a === '--dry-run') opts.dryRun = true;
   else if (a === '--store') opts.store = args[++i];
   else if (a === '--delay') opts.delayMs = parseInt(args[++i], 10);
-  else if (a === '--mode') {
-    const m = args[++i];
-    if (m !== 'rss') console.warn(`[INFO] --mode ${m} は現バージョンでは rss と同じ動作をします`);
-  }
+  else if (a === '--mode') { i++; /* 後方互換: 無視 */ }
 }
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -126,13 +175,13 @@ function fetchText(url, depth = 0) {
   });
 }
 
-// RSS 2.0 / Atom 1.0 パーサ（npm 依存なし）
+// RSS 2.0 / Atom 1.0 パーサ（description も取得する）
 function parseRssItems(xml) {
   const items = [];
   const blocks = (xml.match(/<item[\s>][\s\S]*?<\/item>/gi) || [])
     .concat(xml.match(/<entry[\s>][\s\S]*?<\/entry>/gi) || []);
   for (const block of blocks) {
-    const getField = tag => {
+    const getField = (tag) => {
       const cdata = block.match(new RegExp(`<${tag}[^>]*>\\s*<!\\[CDATA\\[([\\s\\S]*?)\\]\\]>\\s*<\\/${tag}>`, 'i'));
       if (cdata) return cdata[1].trim();
       const plain = block.match(new RegExp(`<${tag}[^>]*>([^<]*)<\\/${tag}>`, 'i'));
@@ -140,21 +189,22 @@ function parseRssItems(xml) {
     };
     const title = getField('title');
     let link = getField('link');
-    if (!link) {
-      const href = block.match(/<link[^>]+href=["']([^"']+)["']/i);
-      if (href) link = href[1];
-    }
-    if (!link) {
-      const bare = block.match(/<link>\s*(https?:\/\/[^\s<]+)/i);
-      if (bare) link = bare[1];
-    }
+    if (!link) { const m = block.match(/<link[^>]+href=["']([^"']+)["']/i); if (m) link = m[1]; }
+    if (!link) { const m = block.match(/<link>\s*(https?:\/\/[^\s<]+)/i);  if (m) link = m[1]; }
+
+    // description / summary: HTML タグを除去してテキストにする
+    const rawDesc = getField('description') || getField('summary') || getField('content');
+    const desc = rawDesc
+      ? rawDesc.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, DESC_MAX)
+      : '';
+
     const pubDate = getField('pubDate') || getField('published') || getField('updated') || getField('dc:date');
     let year = new Date().getFullYear();
     if (pubDate) {
       const p = new Date(pubDate).getFullYear();
       if (!isNaN(p) && p >= 2010 && p <= 2040) year = p;
     }
-    if (title && link) items.push({ title, link, year });
+    if (title && link) items.push({ title, desc, link, year });
   }
   return items;
 }
@@ -188,14 +238,16 @@ async function main() {
     process.exit(1);
   }
 
-  // 店名 → キー のマップ（3 文字未満はノイズになるため除外）
-  const nameToKey = new Map();
+  // 店名 → キー のマップ（同名が複数エリアにある場合は先着）
+  const nameToKey = new Map();   // (全店名用)  MIN_NAME_TITLE 以上
+  const nameToKeyDesc = new Map(); // (説明文用) MIN_NAME_DESC 以上
   for (const s of targetStores) {
     const name = (s['店名'] || '').trim();
-    if (name.length < MIN_NAME_LEN) continue;
-    if (!nameToKey.has(name)) nameToKey.set(name, storeKey(s));
+    const key = storeKey(s);
+    if (name.length >= MIN_NAME_TITLE && !nameToKey.has(name))     nameToKey.set(name, key);
+    if (name.length >= MIN_NAME_DESC  && !nameToKeyDesc.has(name)) nameToKeyDesc.set(name, key);
   }
-  console.log(`マッチング対象店名: ${nameToKey.size}件（${MIN_NAME_LEN}文字以上）`);
+  console.log(`マッチング対象: タイトル=${nameToKey.size}件 / 説明文=${nameToKeyDesc.size}件`);
 
   // 既存キャッシュ読み込み
   let cache = {};
@@ -215,8 +267,8 @@ async function main() {
     console.log(`\n=== dry-run: 既存キャッシュ統計 ===`);
     console.log(`掲載情報あり店舗数: ${entries.length}`);
     for (const [k, v] of entries) {
-      const mediaNames = Array.isArray(v) ? [...new Set(v.map(a => a.name))].join(', ') : '?';
-      console.log(`  ${k}: [${mediaNames}]（${Array.isArray(v) ? v.length : 0}件）`);
+      const media = Array.isArray(v) ? [...new Set(v.map(a => a.name))].join(', ') : '?';
+      console.log(`  ${k}: [${media}]（${Array.isArray(v) ? v.length : 0}件）`);
     }
     return;
   }
@@ -225,13 +277,15 @@ async function main() {
   const feedsOk = [], feedsFailed = [];
 
   for (const feed of MEDIA_FEEDS) {
-    console.log(`\n取得中: ${feed.name} — ${feed.rssUrl.slice(0, 80)}`);
+    const feedLabel = feed.name === '_gnews' ? 'Google News' : feed.name;
+    const urlSnip = feed.rssUrl.replace(/https:\/\/[^/]+\//, '').slice(0, 60);
+    console.log(`\n取得中: ${feedLabel} — ${urlSnip}`);
+
     let xml;
-    try {
-      xml = await fetchText(feed.rssUrl);
-    } catch (e) {
+    try { xml = await fetchText(feed.rssUrl); }
+    catch (e) {
       console.warn(`  [SKIP] ${e.message}`);
-      feedsFailed.push(feed.name === '_gnews' ? 'Google News' : feed.name);
+      feedsFailed.push(feedLabel);
       await sleep(opts.delayMs);
       continue;
     }
@@ -239,8 +293,8 @@ async function main() {
     const items = parseRssItems(xml);
     console.log(`  記事数: ${items.length}`);
     if (items.length === 0) {
-      console.warn(`  [WARN] 記事 0 件 — RSS 形式の変化の可能性`);
-      feedsFailed.push(feed.name === '_gnews' ? 'Google News' : feed.name);
+      console.warn(`  [WARN] 記事 0 件`);
+      feedsFailed.push(feedLabel);
       await sleep(opts.delayMs);
       continue;
     }
@@ -249,43 +303,42 @@ async function main() {
     for (const item of items) {
       totalScanned++;
 
-      // Google News の場合、タイトルから媒体名を抽出
+      // Google News: タイトルから媒体名を抽出（失敗やBLOCKEDはスキップ）
       let mediaName = feed.name;
       if (feed.extractSource) {
-        const source = extractSourceFromGNewsTitle(item.title);
-        if (!source) continue; // 媒体名抽出できない記事はスキップ
-        if (BLOCKED_SOURCES.has(source)) continue; // リスティングプラットフォームは除外
-        mediaName = source;
+        const src = extractSourceFromGNewsTitle(item.title);
+        if (!src || BLOCKED_SOURCES.has(src)) continue;
+        mediaName = src;
       }
 
+      // ── タイトルマッチ (MIN_NAME_TITLE 以上) ───────────────────────────
       for (const [storeName, key] of nameToKey) {
         if (!item.title.includes(storeName)) continue;
-
         if (!Array.isArray(cache[key])) cache[key] = [];
-        // 同一 URL の重複除去
         if (cache[key].some(a => a.url === item.link)) continue;
+        cache[key].push({ name: mediaName, url: item.link, title: item.title.slice(0, 100), year: item.year, matchedBy: 'title' });
+        feedNew++; totalNewMatches++;
+        if (opts.store) console.log(`  ✓[title] "${storeName}" → "${item.title.slice(0, 55)}" / ${mediaName}`);
+      }
 
-        cache[key].push({
-          name: mediaName,
-          url: item.link,
-          title: item.title.slice(0, 100),
-          year: item.year
-        });
-        feedNew++;
-        totalNewMatches++;
-
-        if (opts.store) {
-          console.log(`  ✓ "${storeName}" → "${item.title.slice(0, 60)}"`);
-          console.log(`    媒体: ${mediaName} / URL: ${item.link}`);
+      // ── 説明文マッチ (MIN_NAME_DESC 以上・description がある場合のみ) ──
+      if (item.desc) {
+        for (const [storeName, key] of nameToKeyDesc) {
+          if (!item.desc.includes(storeName)) continue;
+          if (!Array.isArray(cache[key])) cache[key] = [];
+          // 同一 URL の重複除去（タイトルマッチ済みのものも含む）
+          if (cache[key].some(a => a.url === item.link)) continue;
+          cache[key].push({ name: mediaName, url: item.link, title: item.title.slice(0, 100), year: item.year, matchedBy: 'desc' });
+          feedNew++; totalNewMatches++;
+          if (opts.store) console.log(`  ✓[desc] "${storeName}" → "${item.title.slice(0, 55)}" / ${mediaName}`);
         }
       }
     }
     console.log(`  新規マッチ: ${feedNew}件`);
-    feedsOk.push(feed.name === '_gnews' ? 'Google News' : feed.name);
+    feedsOk.push(feedLabel);
     await sleep(opts.delayMs);
   }
 
-  // メタ情報
   const storeCount = Object.keys(cache).filter(k => k !== '_meta').length;
   cache['_meta'] = {
     lastFetchedAt: new Date().toISOString(),
@@ -297,9 +350,9 @@ async function main() {
   };
 
   console.log(`\n=== 完了 ===`);
-  console.log(`成功ソース: ${[...new Set(feedsOk)].join(', ')}`);
+  console.log(`成功: ${[...new Set(feedsOk)].join(', ')}`);
   if (feedsFailed.length) console.log(`失敗: ${[...new Set(feedsFailed)].join(', ')}`);
-  console.log(`記事スキャン: ${totalScanned}件 / 新規マッチ: ${totalNewMatches}件`);
+  console.log(`記事スキャン: ${totalScanned}件 / 新規マッチ: ${totalNewMatches}件（タイトル+説明文）`);
   console.log(`掲載情報あり店舗数（累積）: ${storeCount}件`);
 
   fs.writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2), 'utf8');
