@@ -414,7 +414,8 @@
 | 2026-05-10 | DataKeeper(/solve-next) | ISSUE-033 推薦文カバー率引き上げ: 既存 98.93% (4,536/4,585) の残 49 件を `data/recommendations.json` に追記（ルールベース生成器 `scripts/fill_recommendations_json.js` を新設・Anthropic/Sheets 認証不要）→ post-merge カバー率 **100% (4,585/4,585)** で acceptance「6ヶ月で 50%以上」即時達成 / 後継 ISSUE-045（editorReason 業界視点 2.1%→30%）を起票 | ✅ commit 64a6c51 |
 | 2026-05-10 | Inspector (auto) | ISSUE-041/042 大規模変更後の全方位監査（4セクション: データ品質/SEO/パフォーマンス/コンテンツ）/ features/nagoya-miso-nikomi-udon.html の切れリンク1件即時修正（5店→4店再構成・JSON-LD 整合）/ llms.txt の「8ブランド分の現場運営経験」明記で信頼性シグナル強化 / ISSUE-046〜048 起票 | ✅ 監査完了 |
 | 2026-05-10 | Strategist(/solve-next auto) | ISSUE-037 Strategic Skip 6項目を `agents/strategist.md` に明文化（却下例/許容例 + 審査フロー Q1-Q3 + 絶対NGリスト追記）。CLAUDE.md は既に記載済みのため Strategist 仕様書側を補完 | ✅ commit 26e4023 |
-| 2026-05-10 | Builder(/solve-next auto) | ISSUE-035 細粒度シーンタグ 6 個追加（推し活/ママ会/オフ会/同窓会/両家顔合わせ/壮行会）。`SCENE_ALIAS` で既存タグへの OR 解決を実装、LOCAL_STORES 変更なしで動作 | ✅ commit 予定 |
+| 2026-05-10 | Builder(/solve-next auto) | ISSUE-035 細粒度シーンタグ 6 個追加（推し活/ママ会/オフ会/同窓会/両家顔合わせ/壮行会）。`SCENE_ALIAS` で既存タグへの OR 解決を実装、LOCAL_STORES 変更なしで動作 | ✅ commit e4e19b2 |
+| 2026-05-10 | Builder + DataKeeper(/solve-next auto) | ISSUE-036 og:image 自家製化: `scripts/gen_store_og_svg.js` + `scripts/patch_store_og_images.js` 新設 / `assets/og/*.svg` 4,581 件生成 (1200×630 SVG・店名/ジャンル/エリア/評価/編集部推薦/業界人運営訴求) / stores/*.html 4,540 件を wsrv.nl 経由 PNG 配信に切替 / gen-store-pages.js テンプレも将来再生成用に更新 / SNS シェア時のホットペッパー画像拡散を停止 | ✅ commit 予定 |
 | 2026-05-11 | Builder + Orchestrator（ユーザー要望対応） | ISSUE-049 店舗画像品質改善: wsrv.nl 経由で全店画像を WebP + シャープニング配信 / Hot Pepper URL の `_238.jpg` → `_480.jpg` 自動昇格（default fallback で404安全）/ カード `400/600/800w`・モーダル `800/1200/1600w`・ランキング `280/560w` の srcset 対応 / 切替容易性のため `nbImage()` ヘルパーで CDN 抽象化 / ISSUE-024（Hot Pepper ホットリンク懸念）への副次的緩和 | ✅ デプロイ予定 |
 
 ---
@@ -1025,17 +1026,26 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **files**: `index.html`（フィルター層）
 - **owner**: Builder + Editor
 
-### [ISSUE-036] og:image の店舗個別自家製化（既存 ISSUE-024 の昇格）
+### [ISSUE-036] og:image の店舗個別自家製化（既存 ISSUE-024 の昇格）✅
 
-- **priority**: P2
-- **status**: ready（既存 ISSUE-024 の優先度引き上げ）
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-05-10
 - **category**: competitive / seo / brand
 - **detected**: 2026-05-06（再評価）
 - **description**:
   競合分析で SNS シェア時の「映え」設計が D3 Quality Gap として浮上。stores/*.html の og:image がホットペッパー画像固定では、SNS シェア時にホットペッパーのブランドが拡散される。NAGOYA BITES オリジナルの店舗個別 og:image を生成（店名 + 業界人推薦バッジ + 価格帯ラベル等の合成）。1,096店すべてのスケールに対応する自動生成スクリプト要。
 - **impact**: SNS シェア時のブランド一貫性、SNS 経由のサイト流入の質向上
-- **acceptance**: og:image 生成スクリプト整備、1,096店すべてに自家製画像配信
-- **files**: `assets/og/*`（新規生成）, `gen-store-pages.js`, `stores/*.html`
+- **acceptance**: og:image 生成スクリプト整備、1,096店すべてに自家製画像配信（実規模 4,584 店）
+- **resolution 2026-05-10**:
+  - `scripts/gen_store_og_svg.js` 新設: LOCAL_STORES から各店 1200×630 SVG を生成（ゴールド帯・店名・ジャンル・エリア・価格帯・Google評価バッジ・編集部推薦バッジ・「業界人運営 ・ 広告ゼロ」フッター）
+  - `assets/og/{slug}.svg` を 4,581 件生成（HP ID ベースのスラグ、衝突は -N サフィックス、18MB）
+  - `scripts/patch_store_og_images.js` 新設: 既存 stores/*.html の og:image / twitter:image / og:image:alt / 寸法メタを in-place で置換（gen-store-pages.js の完全再実行を回避）
+  - 配信は wsrv.nl 経由で SVG → PNG 変換: `https://wsrv.nl/?url=...og/{slug}.svg&output=png&w=1200&h=630`
+  - stores/*.html 4,540 件を patcher で更新（SVG 未生成の 44 件はフォールバックで既存 photo URL を維持）
+  - `gen-store-pages.js` テンプレートも更新: 次回再生成時に SVG 存在チェックして自家製 og:image を優先採用、無ければ photo にフォールバック
+  - 結果: SNS シェア時に NAGOYA BITES ブランド（金色アクセント・業界人運営の訴求）が露出。ホットペッパーのブランド拡散が止まる。
+- **follow-up**: wsrv.nl 障害時のフォールバック自動化、SVG 内日本語フォント埋め込みの検討（現状は wsrv.nl サーバー側フォント依存）
+- **files**: `scripts/gen_store_og_svg.js`（新規）, `scripts/patch_store_og_images.js`（新規）, `assets/og/*.svg`（新規 4,581 件）, `gen-store-pages.js`, `stores/*.html`（4,540 件更新）
 - **owner**: Builder + DataKeeper
 - **note**: 既存 ISSUE-024（P3）から P2 に昇格。本 ISSUE-036 が後継
 
