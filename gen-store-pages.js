@@ -291,19 +291,41 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:description" content="${desc.replace(/"/g, '&quot;')}">
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="${pageUrl}">
-<meta property="og:image" content="${photo}">
+${(() => {
+  // ISSUE-036: NAGOYA BITES オリジナル og:image（assets/og/{slug}.svg を wsrv.nl 経由で PNG 配信）
+  // SVG が存在する店舗は自家製ブランド画像、なければ photo（Hot Pepper 等）にフォールバック
+  const ogSvgPath = path.join(__dirname, 'assets', 'og', `${slug}.svg`);
+  const hasCustomOg = fs.existsSync(ogSvgPath);
+  if (hasCustomOg) {
+    const ogPng = `https://wsrv.nl/?url=${encodeURIComponent('https://nagoya-bites.com/assets/og/' + slug + '.svg')}&output=png&w=1200&h=630`;
+    return `<meta property="og:image" content="${ogPng}">
+<meta property="og:image:alt" content="${name.replace(/"/g, '&quot;')} | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
+<meta name="twitter:image:alt" content="${name.replace(/"/g, '&quot;')} | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+`;
+  }
+  // フォールバック（自家製 SVG 未生成の店舗）
+  return `<meta property="og:image" content="${photo}">
 <meta property="og:image:alt" content="${name.replace(/"/g, '&quot;')} の店舗写真">
 <meta name="twitter:image:alt" content="${name.replace(/"/g, '&quot;')} の店舗写真">
 ${/imgfp\.hotp\.jp\/.+_480\.jpg/.test(photo) ? '<meta property="og:image:width" content="480">\n<meta property="og:image:height" content="320">\n' :
   /imgfp\.hotp\.jp\/.+_238\.jpg/.test(photo) ? '<meta property="og:image:width" content="238">\n<meta property="og:image:height" content="158">\n' :
   /[?&]w=(\d+)&h=(\d+)/.test(photo) ? (m=>`<meta property="og:image:width" content="${m[1]}">\n<meta property="og:image:height" content="${m[2]}">\n`)(photo.match(/[?&]w=(\d+)&h=(\d+)/)) :
   /icon-512\.png/.test(photo) ? '<meta property="og:image:width" content="512">\n<meta property="og:image:height" content="512">\n' :
-  ''}<meta property="og:site_name" content="NAGOYA BITES">
+  ''}`;
+})()}<meta property="og:site_name" content="NAGOYA BITES">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${title}">
 <meta name="twitter:description" content="${desc.replace(/"/g, '&quot;')}">
-<meta name="twitter:image" content="${photo}">
+<meta name="twitter:image" content="${(() => {
+  const ogSvgPath = path.join(__dirname, 'assets', 'og', `${slug}.svg`);
+  if (fs.existsSync(ogSvgPath)) {
+    return `https://wsrv.nl/?url=${encodeURIComponent('https://nagoya-bites.com/assets/og/' + slug + '.svg')}&output=png&w=1200&h=630`;
+  }
+  return photo;
+})()}">
 <link rel="manifest" href="../manifest.json">
 <meta name="theme-color" content="#7a5c10">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -538,18 +560,18 @@ async function main() {
 
   for (const s of visible) {
     if (!s['店名']) { skipped++; continue; }
-    let slug = toSlug(s);
+    const baseSlug = toSlug(s);
     // 重複スラグ対策
-    let uniqueSlug = slug;
+    let slug = baseSlug;
     let counter = 2;
-    while (slugsSeen.has(uniqueSlug)) {
-      uniqueSlug = `${slug}-${counter++}`;
+    while (slugsSeen.has(slug)) {
+      slug = `${baseSlug}-${counter++}`;
     }
-    slugsSeen.add(uniqueSlug);
-    slugs.push(uniqueSlug);
+    slugsSeen.add(slug);
+    slugs.push(slug);
 
-    const html = renderStorePage(s, uniqueSlug);
-    if (!DRY_RUN) fs.writeFileSync(path.join(OUT_DIR, `${uniqueSlug}.html`), html, 'utf8');
+    const html = renderStorePage(s, slug);
+    if (!DRY_RUN) fs.writeFileSync(path.join(OUT_DIR, `${slug}.html`), html, 'utf8');
     generated++;
     if (generated % 100 === 0) process.stdout.write(`\r  ${generated}件生成済み...`);
   }

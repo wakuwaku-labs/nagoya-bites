@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7f5f1"/>
+      <stop offset="100%" stop-color="#eeebe5"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <!-- ゴールド帯 -->
+  <rect x="0" y="0" width="1200" height="8" fill="#7a5c10"/>
+  <rect x="0" y="622" width="1200" height="8" fill="#7a5c10"/>
+  <!-- ロゴ＋タグライン -->
+  <g transform="translate(80,80)">
+    <text x="0" y="0" font-size="34" font-weight="300" font-family="'Cormorant Garamond','Times New Roman',serif" letter-spacing="8" fill="#1c1c1a">NAGOYA <tspan font-style="italic" fill="#7a5c10">BITES</tspan></text>
+    <text x="0" y="42" font-size="18" font-family="'Noto Sans JP','Hiragino Sans','Yu Gothic','Meiryo',sans-serif" fill="rgba(28,28,26,0.6)">名古屋の飲食店選びの最終回答</text>
+  </g>
+  <!-- 店名 -->
+  <g transform="translate(80,260)">
+    <text x="0" y="0" font-size="72" font-weight="500" font-family="'Noto Sans JP','Hiragino Sans','Yu Gothic','Meiryo',sans-serif" fill="#1c1c1a">花梨 ANAクラウンプラザホ…</text>
+  </g>
+  <!-- ジャンル ・ エリア ・ 価格帯 -->
+  <g transform="translate(80,330)">
+    <text x="0" y="0" font-size="28" font-family="'Noto Sans JP','Hiragino Sans','Yu Gothic','Meiryo',sans-serif" fill="rgba(28,28,26,0.7)">中華 ・ 金山・神宮前・熱田区 ・ 10001～15000円</text>
+  </g>
+  <!-- バッジ群 -->
+  
+  
+  <!-- フッター -->
+  <g transform="translate(80,580)">
+    <text x="0" y="0" font-size="20" font-family="'Noto Sans JP','Hiragino Sans','Yu Gothic','Meiryo',sans-serif" fill="rgba(28,28,26,0.5)">業界人運営 ・ 広告ゼロ ・ nagoya-bites.com</text>
+  </g>
+</svg>
