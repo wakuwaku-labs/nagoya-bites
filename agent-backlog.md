@@ -411,8 +411,9 @@
 | 2026-05-09 | Marketer + Editor(/solve-next) | ISSUE-031 ロングテール独自KW 特集5本新規追加（industry-insiders-pick / hard-to-book / settai-guide / kospa-insider / enmkai-kanji）/ features/index.html 5カード追加 / sitemap.xml 5エントリ追加 | ✅ commit 1aae675 |
 | 2026-05-10 | Editor + Orchestrator(/solve-next) | ISSUE-040 監査: 既存 mediaFeatures 27 エントリの実在性を WebSearch 検証 → 「食べログ東海HIGH SCORE」「ホットペッパー焼肉賞東海」「タイムアウト名古屋」など捏造の疑い濃厚 → **全 27 エントリ空配列化（カバー率 27%→0%）** / data/editor_picks.json _schema を url 必須＋捏造禁止に更新 / _audit_2026_05_10 永続記録 / ISSUE-040 を P0 blocked に昇格（人間 Editor 検証待ち） | ✅ ブランド整合性確保 |
 | 2026-05-10 | Builder（ユーザー指摘対応） | ISSUE-044 P0緊急修正: build.js の stores/ クリーンアップブロック削除（715件セットで 4,584 件を一括削除する破壊バグ）→ stores/*.html 管理を gen-store-pages.js --delete-orphans に一元化 | ✅ commit 済み |
-| 2026-05-10 | DataKeeper(/solve-next) | ISSUE-033 推薦文カバー率引き上げ: 既存 98.93% (4,536/4,585) の残 49 件を `data/recommendations.json` に追記（ルールベース生成器 `scripts/fill_recommendations_json.js` を新設・Anthropic/Sheets 認証不要）→ post-merge カバー率 **100% (4,585/4,585)** で acceptance「6ヶ月で 50%以上」即時達成 / 後継 ISSUE-045（editorReason 業界視点 2.1%→30%）を起票 | ✅ commit 予定 |
+| 2026-05-10 | DataKeeper(/solve-next) | ISSUE-033 推薦文カバー率引き上げ: 既存 98.93% (4,536/4,585) の残 49 件を `data/recommendations.json` に追記（ルールベース生成器 `scripts/fill_recommendations_json.js` を新設・Anthropic/Sheets 認証不要）→ post-merge カバー率 **100% (4,585/4,585)** で acceptance「6ヶ月で 50%以上」即時達成 / 後継 ISSUE-045（editorReason 業界視点 2.1%→30%）を起票 | ✅ commit 64a6c51 |
 | 2026-05-10 | Inspector (auto) | ISSUE-041/042 大規模変更後の全方位監査（4セクション: データ品質/SEO/パフォーマンス/コンテンツ）/ features/nagoya-miso-nikomi-udon.html の切れリンク1件即時修正（5店→4店再構成・JSON-LD 整合）/ llms.txt の「8ブランド分の現場運営経験」明記で信頼性シグナル強化 / ISSUE-046〜048 起票 | ✅ 監査完了 |
+| 2026-05-10 | Strategist(/solve-next auto) | ISSUE-037 Strategic Skip 6項目を `agents/strategist.md` に明文化（却下例/許容例 + 審査フロー Q1-Q3 + 絶対NGリスト追記）。CLAUDE.md は既に記載済みのため Strategist 仕様書側を補完 | ✅ commit 予定 |
 | 2026-05-11 | Builder + Orchestrator（ユーザー要望対応） | ISSUE-049 店舗画像品質改善: wsrv.nl 経由で全店画像を WebP + シャープニング配信 / Hot Pepper URL の `_238.jpg` → `_480.jpg` 自動昇格（default fallback で404安全）/ カード `400/600/800w`・モーダル `800/1200/1600w`・ランキング `280/560w` の srcset 対応 / 切替容易性のため `nbImage()` ヘルパーで CDN 抽象化 / ISSUE-024（Hot Pepper ホットリンク懸念）への副次的緩和 | ✅ デプロイ予定 |
 
 ---
@@ -1030,16 +1031,21 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **owner**: Builder + DataKeeper
 - **note**: 既存 ISSUE-024（P3）から P2 に昇格。本 ISSUE-036 が後継
 
-### [ISSUE-037] 戦わない領域（Strategic Skip）の明文化と過剰追従の防止
+### [ISSUE-037] 戦わない領域（Strategic Skip）の明文化と過剰追従の防止 ✅
 
-- **priority**: P3
-- **status**: ready
+- **priority**: P3 → **status**: done
+- **resolved**: 2026-05-10
 - **category**: competitive / governance
 - **detected**: 2026-05-06
 - **description**:
   競合分析で「追わない判断」を 6項目特定（匿名口コミ大量集積 / クーポン経済 / 高級セグメント特化 / 女性向け装飾演出 / 雑誌印刷連動 / 月刊スピード）。今後 Marketer や Editor が個別施策を提案する際に、これらの領域に過剰追従しないよう、CLAUDE.md または `agents/strategist.md` に「戦わない領域」セクションを明記する。
 - **impact**: 戦略の一貫性維持、リソース無駄遣いの防止
 - **acceptance**: CLAUDE.md または agents/strategist.md に Strategic Skip 6項目を明記
+- **resolution 2026-05-10**:
+  - CLAUDE.md には既に「戦わない領域 — Strategic Skip（追わない判断）」セクションが 2026-05-06 時点で記載済み（L41-49）
+  - `agents/strategist.md` に新セクション「戦わない領域（Strategic Skip）— 過剰追従の防止」を追加（各 6 項目に「却下例 / 許容例」を明記）
+  - 同時に「審査フロー（Q1: Strategic Skip 該当 → Q2: 3本柱強化 → Q3: 信頼毀損リスク）」を追加し、施策提案の機械的な審査基準を明文化
+  - 「Strategistが絶対にやってはいけないこと」リストにも「Strategic Skip 該当施策を承認する」を追記
 - **files**: `CLAUDE.md`, `agents/strategist.md`
 - **owner**: Strategist + Orchestrator
 - **ref**: `docs/competitive-analysis-2026-05-06.md` 第 3章 B 節
