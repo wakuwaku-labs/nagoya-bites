@@ -786,7 +786,9 @@ function computeCrossCheckScore(store, placesHistoryEntry) {
   breakdown.s3_dataCompleteness.reason = dcParts.length ? dcParts.join('・') + ' あり' : 'データ拡充未着手';
 
   // ─── S4: 他媒体掲載クロスチェック（max 10・据え置き） ───
-  const mfCount = mediaFeatures.length;
+  // 媒体数は「記事数」ではなく「異なる媒体名の数」でカウント
+  // （同一 note.com 記事が複数タグに出ても 1 カウント）
+  const mfCount = new Set(mediaFeatures.map(m => m.name).filter(Boolean)).size;
   if (mfCount >= 4)      { breakdown.s4_mediaCrossCheck.score = 10; breakdown.s4_mediaCrossCheck.reason = `${mfCount}媒体に掲載（強い第三者検証）`; }
   else if (mfCount >= 2) { breakdown.s4_mediaCrossCheck.score = 8;  breakdown.s4_mediaCrossCheck.reason = `${mfCount}媒体に掲載`; }
   else if (mfCount === 1){ breakdown.s4_mediaCrossCheck.score = 5;  breakdown.s4_mediaCrossCheck.reason = '1媒体に掲載'; }
