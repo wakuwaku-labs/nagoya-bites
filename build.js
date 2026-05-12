@@ -1204,7 +1204,8 @@ async function main() {
         );
         if (hit) {
           if (p.editorReason) hit.editorReason = p.editorReason;
-          if (p.mediaFeatures) hit.mediaFeatures = p.mediaFeatures;
+          // 空配列は無視し、後続の media_appearances 自動マージに委ねる
+          if (p.mediaFeatures && p.mediaFeatures.length > 0) hit.mediaFeatures = p.mediaFeatures;
           if (p.insiderNote) hit.insiderNote = p.insiderNote;
           if (p.visitStatus) hit.visitStatus = p.visitStatus;
           epApplied++;
@@ -1221,6 +1222,36 @@ async function main() {
     }
   } else {
     console.log('data/editor_picks.json なし（編集部ピックスキップ）');
+  }
+
+  // ─── media_appearances.json をマージ（S4 RSS 自動検出・ISSUE-048 自動取得） ──────
+  // scripts/fetch_media_appearances.js が週次で各メディア RSS を取得し蓄積したキャッシュ。
+  // editor_picks.json の mediaFeatures（手動）と合わせて、全店舗に掲載情報を付与する。
+  const mediaAppPath = path.join(__dirname, 'data', 'media_appearances.json');
+  if (fs.existsSync(mediaAppPath)) {
+    try {
+      const mediaAppRaw = JSON.parse(fs.readFileSync(mediaAppPath, 'utf8'));
+      delete mediaAppRaw._meta;
+      let mediaAppMerged = 0;
+      for (const s of stores) {
+        const hpId = s['ホットペッパーID'];
+        const nameKey = `_manual_${s['店名']}_${s['エリア'] || ''}`;
+        const autoApps = mediaAppRaw[hpId] || mediaAppRaw[nameKey] || [];
+        if (autoApps.length === 0) continue;
+        const existing = Array.isArray(s.mediaFeatures) ? s.mediaFeatures : [];
+        const existingUrls = new Set(existing.map(m => m.url).filter(Boolean));
+        const newItems = autoApps.filter(a => !existingUrls.has(a.url));
+        if (newItems.length > 0 || existing.length === 0) {
+          s.mediaFeatures = [...existing, ...newItems];
+          mediaAppMerged++;
+        }
+      }
+      console.log(`メディア掲載RSS自動マージ: ${mediaAppMerged}店舗に掲載情報を付与`);
+    } catch (e) {
+      console.warn(`data/media_appearances.json の読み込み失敗: ${e.message}`);
+    }
+  } else {
+    console.log('data/media_appearances.json なし（S4 は手動設定分のみ・scripts/fetch_media_appearances.js で生成）');
   }
 
   // おすすめポイントJSONをマージ（HP ID → 店名 の順でマッチ、空欄の場合のみ上書き）
