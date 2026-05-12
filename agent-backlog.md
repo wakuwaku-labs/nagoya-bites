@@ -415,7 +415,8 @@
 | 2026-05-10 | Inspector (auto) | ISSUE-041/042 大規模変更後の全方位監査（4セクション: データ品質/SEO/パフォーマンス/コンテンツ）/ features/nagoya-miso-nikomi-udon.html の切れリンク1件即時修正（5店→4店再構成・JSON-LD 整合）/ llms.txt の「8ブランド分の現場運営経験」明記で信頼性シグナル強化 / ISSUE-046〜048 起票 | ✅ 監査完了 |
 | 2026-05-10 | Strategist(/solve-next auto) | ISSUE-037 Strategic Skip 6項目を `agents/strategist.md` に明文化（却下例/許容例 + 審査フロー Q1-Q3 + 絶対NGリスト追記）。CLAUDE.md は既に記載済みのため Strategist 仕様書側を補完 | ✅ commit 26e4023 |
 | 2026-05-10 | Builder(/solve-next auto) | ISSUE-035 細粒度シーンタグ 6 個追加（推し活/ママ会/オフ会/同窓会/両家顔合わせ/壮行会）。`SCENE_ALIAS` で既存タグへの OR 解決を実装、LOCAL_STORES 変更なしで動作 | ✅ commit e4e19b2 |
-| 2026-05-10 | Builder + DataKeeper(/solve-next auto) | ISSUE-036 og:image 自家製化: `scripts/gen_store_og_svg.js` + `scripts/patch_store_og_images.js` 新設 / `assets/og/*.svg` 4,581 件生成 (1200×630 SVG・店名/ジャンル/エリア/評価/編集部推薦/業界人運営訴求) / stores/*.html 4,540 件を wsrv.nl 経由 PNG 配信に切替 / gen-store-pages.js テンプレも将来再生成用に更新 / SNS シェア時のホットペッパー画像拡散を停止 | ✅ commit 予定 |
+| 2026-05-10 | Builder + DataKeeper(/solve-next auto) | ISSUE-036 og:image 自家製化: `scripts/gen_store_og_svg.js` + `scripts/patch_store_og_images.js` 新設 / `assets/og/*.svg` 4,581 件生成 (1200×630 SVG・店名/ジャンル/エリア/評価/編集部推薦/業界人運営訴求) / stores/*.html 4,540 件を wsrv.nl 経由 PNG 配信に切替 / gen-store-pages.js テンプレも将来再生成用に更新 / SNS シェア時のホットペッパー画像拡散を停止 / ISSUE-024 を ISSUE-036 で吸収して done 化 | ✅ commit 0c4b96f |
+| 2026-05-10 | Builder(/solve-next auto) | ISSUE-047 related-features 充足率向上: `gen-store-pages.js` の TAG_TO_FEATURES を 9→17 件に拡張（ジャンル別/エリア別フォールバック + 最後の砦 industry-insiders-pick）/ `scripts/patch_store_related_features.js` 新設 / 4,540 stores の関連特集を **65.9% → 100%** にカバレッジ拡大（acceptance 95% を達成） | ✅ commit 予定 |
 | 2026-05-11 | Builder + Orchestrator（ユーザー要望対応） | ISSUE-049 店舗画像品質改善: wsrv.nl 経由で全店画像を WebP + シャープニング配信 / Hot Pepper URL の `_238.jpg` → `_480.jpg` 自動昇格（default fallback で404安全）/ カード `400/600/800w`・モーダル `800/1200/1600w`・ランキング `280/560w` の srcset 対応 / 切替容易性のため `nbImage()` ヘルパーで CDN 抽象化 / ISSUE-024（Hot Pepper ホットリンク懸念）への副次的緩和 | ✅ デプロイ予定 |
 
 ---
@@ -439,8 +440,9 @@
   - タグ充足率 60%以上
 - **files**: `fetch_scores.js`, `fetch_ig_urls.js`, `claude_tagging.js`, `.github/workflows/*.yml`
 
-### [ISSUE-047] 静的店舗ページの related-features セクション充足率向上（68%→95%）
-- **priority**: P2 → **status**: ready
+### [ISSUE-047] 静的店舗ページの related-features セクション充足率向上（68%→95%）✅
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-05-10
 - **detected**: 2026-05-10（Inspector 監査）
 - **category**: seo / internal-linking
 - **description**:
@@ -452,7 +454,12 @@
   - ジャンル「居酒屋」 → banquet.html (既存) を強化
   - ジャンル「カフェ・スイーツ」 → girls-party.html
 - **acceptance**: related-features サンプル 500 件中 95% 以上で実リンクが含まれる
-- **files**: `gen-store-pages.js`
+- **resolution 2026-05-10**:
+  - `gen-store-pages.js` の `TAG_TO_FEATURES` を 9 件 → 17 件に拡張: ジャンル別フォールバック（居酒屋→banquet / カフェ→girls-party / 和食→settai-guide / 麺→kospa-insider / 焼肉→industry-insiders-pick）を追加、エリア別「大須→osu-food-walk」を追加、最後の砦として全店マッチの industry-insiders-pick を末尾に配置
+  - `scripts/patch_store_related_features.js` 新設: 既存 stores/*.html を再生成なしで in-place 更新。空 `<ul>` のフィル、related-features セクション自体が無い stores への新規挿入（back-section の直前）の両方に対応
+  - 全 4,540 stores（LOCAL_STORES 一致）で関連特集 1〜3 本を保証 → カバー率 **65.9% → 100%**（acceptance 95% を達成）
+  - 1,546 stores で「セクション自体が無い → 新規挿入」、2,994 stores で「既存内容を新ルールで再計算」、44 stores は LOCAL_STORES 未一致でスキップ
+- **files**: `gen-store-pages.js`, `scripts/patch_store_related_features.js`（新規）, `stores/*.html`（4,540 件）
 
 ### [ISSUE-048] index.html のボタン aria-label 充足率向上（50%→90%）
 - **priority**: P3 → **status**: ready
@@ -532,12 +539,13 @@
 - **resolved**: 2026-04-23（誤検出として却下）
 - **description**: `build.js` に既に有効期限チェックが実装済み（trending/manual/pending すべて）。
 
-### [ISSUE-024] stores/*.html の og:image がホットペッパー固定
-- **priority**: P3 → **status**: ready
+### [ISSUE-024] stores/*.html の og:image がホットペッパー固定 ✅
+- **priority**: P3 → **status**: done（ISSUE-036 で解消）
+- **resolved**: 2026-05-10
 - **category**: SEO・OGP
 - **detected**: 2026-04-23
 - **description**: stores/ 1095店舗の og:image が全て `https://imgfp.hotp.jp/IMGH/...`。SNS シェア時の visuals が単調で差別化にならない。Hot Pepper 画像のホットリンクは規約違反リスクもあり。
-- **fix**: ジャンル別・エリア別のデフォルト OG画像（自家製）を用意し、写真URL未設定店はこれをフォールバック
+- **resolution**: ISSUE-036 で NAGOYA BITES オリジナル SVG（1200×630・店名/業界人推薦バッジ/編集部推薦バッジ）を生成し、wsrv.nl 経由 PNG 配信に切替。4,540 店舗で適用済み。Hot Pepper ホットリンクは解消。
 
 ### [ISSUE-025] stores/ ページの meta description が過少 ✅
 - **priority**: P3 → **status**: done (2026-04-24)

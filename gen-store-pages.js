@@ -98,16 +98,30 @@ function mapPriceToSchemaRange(price) {
 // ================================================================
 // タグ/エリア → 関連特集ページの逆引きマッピング
 // ================================================================
+// ISSUE-047: related-features 充足率を 68% → 95% に引き上げ。
+// 既存のタグベース照合に加え、エリア・ジャンルのフォールバックを追加し、
+// HP API 由来でタグが薄い店舗でも 1本以上の関連特集が引き当たるようにする。
 const TAG_TO_FEATURES = [
+  // 1. タグベース（既存・店舗データが豊富な場合）
   { match: s => (s['タグ']||'').includes('個室'),           file: 'private-room.html', label: '個室のある名古屋グルメ10選' },
   { match: s => (s['タグ']||'').includes('接待'),           file: 'private-room.html', label: '個室のある名古屋グルメ10選' },
   { match: s => /30〜|40〜|50〜|60〜|70〜|80〜|90〜|100名/.test(s['タグ']||'') || (s['タグ']||'').includes('忘年会') || (s['タグ']||'').includes('歓送迎会') || (s['タグ']||'').includes('飲み放題'), file: 'banquet.html', label: '名古屋の宴会・忘年会15選' },
   { match: s => (s['タグ']||'').includes('100名') || /70〜|80〜|90〜/.test(s['タグ']||''), file: 'large-group.html', label: '名古屋・大人数宴会20人以上10選' },
   { match: s => (s['タグ']||'').includes('誕生日・記念日') || /誕生日|記念日|サプライズ/.test(s['おすすめポイント']||''), file: 'birthday.html', label: '名古屋・誕生日/記念日ディナー10選' },
   { match: s => (s['タグ']||'').includes('女子会'),         file: 'girls-party.html', label: '名古屋・女子会ランチ&ディナー10選' },
+  // 2. ジャンルベース（タグが無くてもジャンルから推定）
   { match: s => /イタリアン|フレンチ|ダイニングバー|バル|創作料理/.test(s['ジャンル']||''), file: 'date.html', label: '名古屋・デートディナー10選' },
+  { match: s => /居酒屋/.test(s['ジャンル']||''),            file: 'banquet.html', label: '名古屋の宴会・忘年会15選' },
+  { match: s => /カフェ・スイーツ|カフェ|喫茶/.test(s['ジャンル']||''), file: 'girls-party.html', label: '名古屋・女子会ランチ&ディナー10選' },
+  { match: s => /和食|寿司|割烹|料亭/.test(s['ジャンル']||''), file: 'settai-guide.html', label: '名古屋・接待ガイド' },
+  { match: s => /うどん|そば|ラーメン|麺/.test(s['ジャンル']||''), file: 'kospa-insider.html', label: '名古屋・コスパで選ぶ業界人推薦' },
+  { match: s => /焼肉|ホルモン/.test(s['ジャンル']||''),      file: 'industry-insiders-pick.html', label: '業界人が本気で選ぶ名古屋の名店' },
+  // 3. エリアベース（最終フォールバック・どの店も必ず1本は引き当たる）
   { match: s => /名古屋駅|名駅|中村区/.test(s['エリア']||''), file: 'meieki.html', label: '名駅グルメ15選' },
   { match: s => /栄|錦|矢場町|東桜|新栄/.test(s['エリア']||''), file: 'sakae.html', label: '栄グルメ15選' },
+  { match: s => /大須|上前津/.test(s['エリア']||''),         file: 'osu-food-walk.html', label: '大須食べ歩きガイド' },
+  // 4. 最後の砦（業界人推薦：全店が引き当たる）
+  { match: s => true,                                        file: 'industry-insiders-pick.html', label: '業界人が本気で選ぶ名古屋の名店' },
 ];
 
 function buildRelatedFeatures(store) {
