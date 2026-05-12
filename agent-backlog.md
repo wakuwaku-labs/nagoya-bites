@@ -933,24 +933,45 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **resolved_by**: commit 1aae675
 - **category**: competitive / seo
 - **detected**: 2026-05-06
+- **last_update**: 2026-05-08
 - **description**:
-  「名古屋 居酒屋」「名古屋 個室」など競合過密 KW（食べログ・ホットペッパー・ヒトサラ・OZmall・くふうトリップが TOP10 占有）は追わず、「名古屋 業界人 推薦」「名古屋 飲食人 おすすめ」「名古屋 予約困難 理由」「名駅 接待 失敗しない」など我々しか書けない KW で 1位を取りに行く。既存特集 20本の URL/タイトル/見出しを再設計し、新規ロングテール特集 5本を追加。
+  「名古屋 居酒屋」「名古屋 個室」など競合過密 KW（食べログ・ホットペッパー・ヒトサラ・OZmall・くふうトリップが TOP10 占有）は追わず、「名古屋 業界人 推薦」「名古屋 飲食人 おすすめ」「名古屋 予約困難 理由」「名駅 接待 失敗しない」など我々しか書けない KW で 1位を取りに行く。既存特集 20本の URL/タイトル/見出しを再設計し、新規ロングテール特集を追加。
+- **progress 2026-05-08**:
+  - 新規ロングテール特集 **3 本公開**:
+    1. `features/nagoya-industry-pick-izakaya.html` — 業界人が推薦する名古屋の居酒屋10選（KW: 名古屋 居酒屋 業界人 / プロ / 飲食人）
+    2. `features/nagoya-settai-secret.html` — 失敗しない名古屋・接待の店10選（KW: 名古屋 接待 失敗しない / 名古屋 接待 個室）
+    3. `features/nagoya-reservation-difficult.html` — 名古屋・予約困難店の見極め方ガイド（KW: 名古屋 予約困難）
+  - 各記事は editor_picks の 業界視点 4 要素（editorReason / mediaFeatures / insiderNote / visitStatus）を全面活用
+  - Article + ItemList + BreadcrumbList + FAQPage の 4 種 JSON-LD 完備
+  - features/index.html に 3 カード追加（numberOfItems 19→22）、sitemap.xml に 3 URL 追加（priority 0.85）
+- **next**:
+  - 既存特集 20本のリライト（特に「2026年最新版」タイトル戦略と業界人視点パラグラフ追加）
+  - 新規ロングテール特集 2 本追加（「名古屋 飲食人 おすすめ」「名駅 失敗しない 会食」）
+  - Google Search Console での順位追跡開始（ISSUE-032 と連動）
 - **impact**: 中期で月間 UU 1.5〜2倍。AI 引用元としての権威性向上。
 - **acceptance**: 6ヶ月で独自 KW 5本以上で Google TOP3、Search Console で順位追跡
-- **files**: `features/*.html`（既存リライト）, `features/index.html`, `sitemap.xml`
+- **files**: `features/nagoya-industry-pick-izakaya.html`（新規）, `features/nagoya-settai-secret.html`（新規）, `features/nagoya-reservation-difficult.html`（新規）, `features/index.html`, `sitemap.xml`, `scripts/gen_industry_features.js`（新規・テンプレ生成スクリプト）
 - **owner**: Marketer + Editor
 
-### [ISSUE-032] editorial-policy の対外発信と Google Search Console 整備
+### [ISSUE-032] editorial-policy の対外発信と Google Search Console 整備 🔄
 
 - **priority**: P2
-- **status**: ready
+- **status**: in_progress（プレスリリース草稿 v0.1 完了 / 配信判断はユーザー）
 - **category**: competitive / seo / brand
 - **detected**: 2026-05-06
+- **last_update**: 2026-05-08
 - **description**:
   WebSearch で `site:nagoya-bites.com` がゼロヒット → サイト全体のインデックス・サイトリンク獲得が不十分の可能性。editorial-policy.html を「現役飲食人による編集規約」としてプレスリリース・note・業界メディア寄稿で外部発信し、被リンク獲得 + Search Console で順位とサイトリンク表示を取りに行く。AI 引用と SEO の両輪を権威性で攻める。
+- **progress 2026-05-08**:
+  - `docs/press-release-2026.md` v0.1 草稿完成（1,500字本文 + 配信先候補 12 媒体 + 配信タイミング Phase 1〜3 + Google Search Console 整備チェックリスト）
+  - タイトル A/B 案、配信先（業界メディア・名古屋ローカル・配信代行）、配信タイミング、効果測定 KPI を整備
+  - ユーザー判断 5 項目（タイトル A/B 採択 / 配信タイミング / 配信先 / 編集部匿名方針 / 予算）を末尾に明示
+- **next**:
+  - ユーザーが朝レビュー → A/B 採択・配信先確定 → Phase 1 配信実行（valuepress + 名古屋ローカル 3 社）
+  - Google Search Console プロパティ確認・クエリレポート整備
 - **impact**: AI Overviews 引用候補化、指名検索数の継続的増加、長期ドメインオーソリティ
 - **acceptance**: 6ヶ月で外部被リンク 30本、指名検索月間 100回、Google Search Console のクエリレポート整備
-- **files**: 外部施策中心（コード変更なし）。`docs/press-release-2026.md` 草稿
+- **files**: `docs/press-release-2026.md`（v0.1 草稿）
 - **owner**: Strategist + Marketer
 
 ### [ISSUE-033] 推薦文カバー率 16% → 50% への引き上げ（D1 / Quality Gap）✅
@@ -972,6 +993,23 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **owner**: DataKeeper 主導 + Editor 監修
 - **follow-up**: 業界視点の 1段深い推薦文（editorReason 2.1% / 97件 のみ）は別途 ISSUE-045 で扱う
 - **note**: 既存 ISSUE-017 とマージ。本 ISSUE-033 を採用、ISSUE-017 は status:duplicate へ
+
+### [ISSUE-041] Google 評価カバー率 15% → 50% への引き上げ（D1 Quality Gap・別軸）
+
+- **priority**: P1
+- **status**: ready
+- **category**: competitive / data / content
+- **detected**: 2026-05-08（ISSUE-033 解決時の再観測で発覚した別軸の Gap）
+- **description**:
+  ISSUE-033 で「推薦文（おすすめポイント）」のカバー率は 100% 達成済み。一方で **Google 評価のカバー率は依然 15.4%（704/4,584）** に留まる。食べログ点数・Google Maps 評価が消費者の店選びの第一指標である中、84.6% の店舗が評価未取得なのは決定的な Quality Gap。
+  既存スクリプト（`fetch_scores.js`, `gas_scores.js`）の自動取得ロジックを再点検し、優先度上位 1,500 店から段階的に評価を埋める。ISSUE-045（editorReason 拡充）とは別軸で並走可能。
+- **acceptance**:
+  - 6ヶ月で Google 評価カバー率 50% 以上（4,584 × 50% = 2,292 店以上）
+  - 既存 `fetch_scores.js` / `gas_scores.js` のロジック改善・自動化
+  - 推薦文（100% カバー済み）× Google 評価 × editorReason の三段重ねで信頼性訴求
+- **files**: `fetch_scores.js`, `gas_scores.js`, `data/manual_stores.json`
+- **owner**: DataKeeper 主導
+- **ref**: ISSUE-033 解決時のデータ観測（2026-05-08）から切り出し
 
 ### [ISSUE-045] editorReason（業界視点コメント）カバー率 2.1% → 30% への引き上げ
 
@@ -1007,6 +1045,8 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **owner**: Marketer + Builder
 
 ### [ISSUE-035] シーン分類の細粒度化（推し活 / ママ会 / 撮影会 / オフ会など）✅
+
+- **prior_design**: 2026-05-08 に `docs/scene-tags-expansion.md` v0.1 として設計草稿（新規シーン 8 個提案 + Strategic Skip 3 個 + 実装方式 3 案）を作成。本実装はその方針に近い形で 6 タグを採択。
 
 - **priority**: P2 → **status**: done
 - **resolved**: 2026-05-10
