@@ -416,7 +416,8 @@
 | 2026-05-10 | Strategist(/solve-next auto) | ISSUE-037 Strategic Skip 6項目を `agents/strategist.md` に明文化（却下例/許容例 + 審査フロー Q1-Q3 + 絶対NGリスト追記）。CLAUDE.md は既に記載済みのため Strategist 仕様書側を補完 | ✅ commit 26e4023 |
 | 2026-05-10 | Builder(/solve-next auto) | ISSUE-035 細粒度シーンタグ 6 個追加（推し活/ママ会/オフ会/同窓会/両家顔合わせ/壮行会）。`SCENE_ALIAS` で既存タグへの OR 解決を実装、LOCAL_STORES 変更なしで動作 | ✅ commit e4e19b2 |
 | 2026-05-10 | Builder + DataKeeper(/solve-next auto) | ISSUE-036 og:image 自家製化: `scripts/gen_store_og_svg.js` + `scripts/patch_store_og_images.js` 新設 / `assets/og/*.svg` 4,581 件生成 (1200×630 SVG・店名/ジャンル/エリア/評価/編集部推薦/業界人運営訴求) / stores/*.html 4,540 件を wsrv.nl 経由 PNG 配信に切替 / gen-store-pages.js テンプレも将来再生成用に更新 / SNS シェア時のホットペッパー画像拡散を停止 / ISSUE-024 を ISSUE-036 で吸収して done 化 | ✅ commit 0c4b96f |
-| 2026-05-10 | Builder(/solve-next auto) | ISSUE-047 related-features 充足率向上: `gen-store-pages.js` の TAG_TO_FEATURES を 9→17 件に拡張（ジャンル別/エリア別フォールバック + 最後の砦 industry-insiders-pick）/ `scripts/patch_store_related_features.js` 新設 / 4,540 stores の関連特集を **65.9% → 100%** にカバレッジ拡大（acceptance 95% を達成） | ✅ commit 予定 |
+| 2026-05-10 | Builder(/solve-next auto) | ISSUE-047 related-features 充足率向上: `gen-store-pages.js` の TAG_TO_FEATURES を 9→17 件に拡張（ジャンル別/エリア別フォールバック + 最後の砦 industry-insiders-pick）/ `scripts/patch_store_related_features.js` 新設 / 4,540 stores の関連特集を **65.9% → 100%** にカバレッジ拡大（acceptance 95% を達成） | ✅ commit 886a79f |
+| 2026-05-10 | Builder(/solve-next auto) | ISSUE-048 (aria-label / a11y) ボタン aria-label 充足率: 16件のテキスト付きボタンに具体的なラベル追加 (pwa/filter/notify/review/share/tag-reset/empty-state-reset)。aria-label 付与率 **50%→96.9%** で acceptance 90% を達成。※ ID 衝突: 別エージェントが 2026-05-11 に同 ID でサクラチェッカー task を起票 — 整理は別 ISSUE で対応 | ✅ commit b165201 |
 | 2026-05-11 | Builder + Orchestrator（ユーザー要望対応） | ISSUE-049 店舗画像品質改善: wsrv.nl 経由で全店画像を WebP + シャープニング配信 / Hot Pepper URL の `_238.jpg` → `_480.jpg` 自動昇格（default fallback で404安全）/ カード `400/600/800w`・モーダル `800/1200/1600w`・ランキング `280/560w` の srcset 対応 / 切替容易性のため `nbImage()` ヘルパーで CDN 抽象化 / ISSUE-024（Hot Pepper ホットリンク懸念）への副次的緩和 | ✅ デプロイ予定 |
 
 ---
@@ -461,13 +462,19 @@
   - 1,546 stores で「セクション自体が無い → 新規挿入」、2,994 stores で「既存内容を新ルールで再計算」、44 stores は LOCAL_STORES 未一致でスキップ
 - **files**: `gen-store-pages.js`, `scripts/patch_store_related_features.js`（新規）, `stores/*.html`（4,540 件）
 
-### [ISSUE-048] index.html のボタン aria-label 充足率向上（50%→90%）
-- **priority**: P3 → **status**: ready
+### [ISSUE-048] index.html のボタン aria-label 充足率向上（50%→90%）✅
+- **priority**: P3 → **status**: done
+- **resolved**: 2026-05-10
 - **detected**: 2026-05-10（Inspector 監査）
 - **category**: a11y
+- **note**: ID 衝突あり — 上部 L49 にも別の ISSUE-048（サクラチェッカー方式・2026-05-11 別エージェント起票）が存在。本タスクは Inspector audit 由来の元 ISSUE-048。ID 整理は別 ISSUE で対応
 - **description**:
   index.html の `<button>` 32 件中 16 件のみ aria-label を持つ。アイコンのみのボタン（hamburger / scroll-top / fav-toggle 等）にはあるが、テキスト付きボタンの一部が抜けている。スクリーンリーダー対応の完成度を上げる。
 - **acceptance**: button 全 32 件中 90% 以上で aria-label または明示的なテキストラベルあり
+- **resolution 2026-05-10**:
+  - 16 件の aria-label 未付与ボタンに具体的なラベルを追加（pwa-install / pwa-dismiss / pwa-dismiss-ios / filter-toggle-btn / notify-btn / m-insider-cta / ir-submit / ir-cancel / share-x / share-line / share-copy / cta-filter / tag-reset / share-btn / empty-state-reset）
+  - 各ボタンの「何が起きるか」が分かるラベル文（例: 「NAGOYA BITES をホーム画面に追加する」「この絞り込み条件に合致する新店舗を通知設定する」「すべてのフィルターをリセットして全店舗を表示する」）
+  - 結果: aria-label 付与率 **50% → 96.9%（31/32 件）**。残り 1 件は JS テンプレートリテラル内のページネーション disabled 状態（active 状態には既存 aria-label="次のページ" あり）
 - **files**: `index.html`
 
 ---
