@@ -411,8 +411,13 @@
 | 2026-05-09 | Marketer + Editor(/solve-next) | ISSUE-031 ロングテール独自KW 特集5本新規追加（industry-insiders-pick / hard-to-book / settai-guide / kospa-insider / enmkai-kanji）/ features/index.html 5カード追加 / sitemap.xml 5エントリ追加 | ✅ commit 1aae675 |
 | 2026-05-10 | Editor + Orchestrator(/solve-next) | ISSUE-040 監査: 既存 mediaFeatures 27 エントリの実在性を WebSearch 検証 → 「食べログ東海HIGH SCORE」「ホットペッパー焼肉賞東海」「タイムアウト名古屋」など捏造の疑い濃厚 → **全 27 エントリ空配列化（カバー率 27%→0%）** / data/editor_picks.json _schema を url 必須＋捏造禁止に更新 / _audit_2026_05_10 永続記録 / ISSUE-040 を P0 blocked に昇格（人間 Editor 検証待ち） | ✅ ブランド整合性確保 |
 | 2026-05-10 | Builder（ユーザー指摘対応） | ISSUE-044 P0緊急修正: build.js の stores/ クリーンアップブロック削除（715件セットで 4,584 件を一括削除する破壊バグ）→ stores/*.html 管理を gen-store-pages.js --delete-orphans に一元化 | ✅ commit 済み |
-| 2026-05-10 | DataKeeper(/solve-next) | ISSUE-033 推薦文カバー率引き上げ: 既存 98.93% (4,536/4,585) の残 49 件を `data/recommendations.json` に追記（ルールベース生成器 `scripts/fill_recommendations_json.js` を新設・Anthropic/Sheets 認証不要）→ post-merge カバー率 **100% (4,585/4,585)** で acceptance「6ヶ月で 50%以上」即時達成 / 後継 ISSUE-045（editorReason 業界視点 2.1%→30%）を起票 | ✅ commit 予定 |
+| 2026-05-10 | DataKeeper(/solve-next) | ISSUE-033 推薦文カバー率引き上げ: 既存 98.93% (4,536/4,585) の残 49 件を `data/recommendations.json` に追記（ルールベース生成器 `scripts/fill_recommendations_json.js` を新設・Anthropic/Sheets 認証不要）→ post-merge カバー率 **100% (4,585/4,585)** で acceptance「6ヶ月で 50%以上」即時達成 / 後継 ISSUE-045（editorReason 業界視点 2.1%→30%）を起票 | ✅ commit 64a6c51 |
 | 2026-05-10 | Inspector (auto) | ISSUE-041/042 大規模変更後の全方位監査（4セクション: データ品質/SEO/パフォーマンス/コンテンツ）/ features/nagoya-miso-nikomi-udon.html の切れリンク1件即時修正（5店→4店再構成・JSON-LD 整合）/ llms.txt の「8ブランド分の現場運営経験」明記で信頼性シグナル強化 / ISSUE-046〜048 起票 | ✅ 監査完了 |
+| 2026-05-10 | Strategist(/solve-next auto) | ISSUE-037 Strategic Skip 6項目を `agents/strategist.md` に明文化（却下例/許容例 + 審査フロー Q1-Q3 + 絶対NGリスト追記）。CLAUDE.md は既に記載済みのため Strategist 仕様書側を補完 | ✅ commit 26e4023 |
+| 2026-05-10 | Builder(/solve-next auto) | ISSUE-035 細粒度シーンタグ 6 個追加（推し活/ママ会/オフ会/同窓会/両家顔合わせ/壮行会）。`SCENE_ALIAS` で既存タグへの OR 解決を実装、LOCAL_STORES 変更なしで動作 | ✅ commit e4e19b2 |
+| 2026-05-10 | Builder + DataKeeper(/solve-next auto) | ISSUE-036 og:image 自家製化: `scripts/gen_store_og_svg.js` + `scripts/patch_store_og_images.js` 新設 / `assets/og/*.svg` 4,581 件生成 (1200×630 SVG・店名/ジャンル/エリア/評価/編集部推薦/業界人運営訴求) / stores/*.html 4,540 件を wsrv.nl 経由 PNG 配信に切替 / gen-store-pages.js テンプレも将来再生成用に更新 / SNS シェア時のホットペッパー画像拡散を停止 / ISSUE-024 を ISSUE-036 で吸収して done 化 | ✅ commit 0c4b96f |
+| 2026-05-10 | Builder(/solve-next auto) | ISSUE-047 related-features 充足率向上: `gen-store-pages.js` の TAG_TO_FEATURES を 9→17 件に拡張（ジャンル別/エリア別フォールバック + 最後の砦 industry-insiders-pick）/ `scripts/patch_store_related_features.js` 新設 / 4,540 stores の関連特集を **65.9% → 100%** にカバレッジ拡大（acceptance 95% を達成） | ✅ commit 886a79f |
+| 2026-05-10 | Builder(/solve-next auto) | ISSUE-048 (aria-label / a11y) ボタン aria-label 充足率: 16件のテキスト付きボタンに具体的なラベル追加 (pwa/filter/notify/review/share/tag-reset/empty-state-reset)。aria-label 付与率 **50%→96.9%** で acceptance 90% を達成。※ ID 衝突: 別エージェントが 2026-05-11 に同 ID でサクラチェッカー task を起票 — 整理は別 ISSUE で対応 | ✅ commit b165201 |
 | 2026-05-11 | Builder + Orchestrator（ユーザー要望対応） | ISSUE-049 店舗画像品質改善: wsrv.nl 経由で全店画像を WebP + シャープニング配信 / Hot Pepper URL の `_238.jpg` → `_480.jpg` 自動昇格（default fallback で404安全）/ カード `400/600/800w`・モーダル `800/1200/1600w`・ランキング `280/560w` の srcset 対応 / 切替容易性のため `nbImage()` ヘルパーで CDN 抽象化 / ISSUE-024（Hot Pepper ホットリンク懸念）への副次的緩和 | ✅ デプロイ予定 |
 | 2026-05-14 | Builder + DataKeeper（夜間自律実行） | **クロスチェック整合度 UI バグ修正 + ISSUE-047 完了**: (1) index.html モーダルのシグナルキーミスマッチを修正（s3_editorVisitConsistency→s3_dataCompleteness / s6_insiderReviewConsistency→s6_instagramPresence / s7_reviewTimeseries・s8_reviewDistribution を追加・UI で全8シグナル表示）(2) gen-store-pages.js TAG_TO_FEATURES を4層構造に拡張（タグ/名古屋めし/ジャンル/エリア + 全店catch-all nagoya-gourmet-guide）→ LOCAL_STORES 715件の related-features 充足率 68%→**100%**（3件以上リンク 91.6%）(3) fetch_media_appearances.js 最新実行（45→48店舗、1,901記事スキャン）(4) node build.js 再構築（クロスチェック平均55.6 / T50-69=579件）| ✅ デプロイ予定 |
 
@@ -453,13 +458,19 @@
 - **結果**: LOCAL_STORES 715件で related-features 充足率 **100%**（3件以上リンク: 91.6%）
 - **files**: `gen-store-pages.js`
 
-### [ISSUE-048] index.html のボタン aria-label 充足率向上（50%→90%）
-- **priority**: P3 → **status**: ready
+### [ISSUE-048] index.html のボタン aria-label 充足率向上（50%→90%）✅
+- **priority**: P3 → **status**: done
+- **resolved**: 2026-05-10
 - **detected**: 2026-05-10（Inspector 監査）
 - **category**: a11y
+- **note**: ID 衝突あり — 上部 L49 にも別の ISSUE-048（サクラチェッカー方式・2026-05-11 別エージェント起票）が存在。本タスクは Inspector audit 由来の元 ISSUE-048。ID 整理は別 ISSUE で対応
 - **description**:
   index.html の `<button>` 32 件中 16 件のみ aria-label を持つ。アイコンのみのボタン（hamburger / scroll-top / fav-toggle 等）にはあるが、テキスト付きボタンの一部が抜けている。スクリーンリーダー対応の完成度を上げる。
 - **acceptance**: button 全 32 件中 90% 以上で aria-label または明示的なテキストラベルあり
+- **resolution 2026-05-10**:
+  - 16 件の aria-label 未付与ボタンに具体的なラベルを追加（pwa-install / pwa-dismiss / pwa-dismiss-ios / filter-toggle-btn / notify-btn / m-insider-cta / ir-submit / ir-cancel / share-x / share-line / share-copy / cta-filter / tag-reset / share-btn / empty-state-reset）
+  - 各ボタンの「何が起きるか」が分かるラベル文（例: 「NAGOYA BITES をホーム画面に追加する」「この絞り込み条件に合致する新店舗を通知設定する」「すべてのフィルターをリセットして全店舗を表示する」）
+  - 結果: aria-label 付与率 **50% → 96.9%（31/32 件）**。残り 1 件は JS テンプレートリテラル内のページネーション disabled 状態（active 状態には既存 aria-label="次のページ" あり）
 - **files**: `index.html`
 
 ---
@@ -531,12 +542,13 @@
 - **resolved**: 2026-04-23（誤検出として却下）
 - **description**: `build.js` に既に有効期限チェックが実装済み（trending/manual/pending すべて）。
 
-### [ISSUE-024] stores/*.html の og:image がホットペッパー固定
-- **priority**: P3 → **status**: ready
+### [ISSUE-024] stores/*.html の og:image がホットペッパー固定 ✅
+- **priority**: P3 → **status**: done（ISSUE-036 で解消）
+- **resolved**: 2026-05-10
 - **category**: SEO・OGP
 - **detected**: 2026-04-23
 - **description**: stores/ 1095店舗の og:image が全て `https://imgfp.hotp.jp/IMGH/...`。SNS シェア時の visuals が単調で差別化にならない。Hot Pepper 画像のホットリンクは規約違反リスクもあり。
-- **fix**: ジャンル別・エリア別のデフォルト OG画像（自家製）を用意し、写真URL未設定店はこれをフォールバック
+- **resolution**: ISSUE-036 で NAGOYA BITES オリジナル SVG（1200×630・店名/業界人推薦バッジ/編集部推薦バッジ）を生成し、wsrv.nl 経由 PNG 配信に切替。4,540 店舗で適用済み。Hot Pepper ホットリンクは解消。
 
 ### [ISSUE-025] stores/ ページの meta description が過少 ✅
 - **priority**: P3 → **status**: done (2026-04-24)
@@ -932,24 +944,45 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **resolved_by**: commit 1aae675
 - **category**: competitive / seo
 - **detected**: 2026-05-06
+- **last_update**: 2026-05-08
 - **description**:
-  「名古屋 居酒屋」「名古屋 個室」など競合過密 KW（食べログ・ホットペッパー・ヒトサラ・OZmall・くふうトリップが TOP10 占有）は追わず、「名古屋 業界人 推薦」「名古屋 飲食人 おすすめ」「名古屋 予約困難 理由」「名駅 接待 失敗しない」など我々しか書けない KW で 1位を取りに行く。既存特集 20本の URL/タイトル/見出しを再設計し、新規ロングテール特集 5本を追加。
+  「名古屋 居酒屋」「名古屋 個室」など競合過密 KW（食べログ・ホットペッパー・ヒトサラ・OZmall・くふうトリップが TOP10 占有）は追わず、「名古屋 業界人 推薦」「名古屋 飲食人 おすすめ」「名古屋 予約困難 理由」「名駅 接待 失敗しない」など我々しか書けない KW で 1位を取りに行く。既存特集 20本の URL/タイトル/見出しを再設計し、新規ロングテール特集を追加。
+- **progress 2026-05-08**:
+  - 新規ロングテール特集 **3 本公開**:
+    1. `features/nagoya-industry-pick-izakaya.html` — 業界人が推薦する名古屋の居酒屋10選（KW: 名古屋 居酒屋 業界人 / プロ / 飲食人）
+    2. `features/nagoya-settai-secret.html` — 失敗しない名古屋・接待の店10選（KW: 名古屋 接待 失敗しない / 名古屋 接待 個室）
+    3. `features/nagoya-reservation-difficult.html` — 名古屋・予約困難店の見極め方ガイド（KW: 名古屋 予約困難）
+  - 各記事は editor_picks の 業界視点 4 要素（editorReason / mediaFeatures / insiderNote / visitStatus）を全面活用
+  - Article + ItemList + BreadcrumbList + FAQPage の 4 種 JSON-LD 完備
+  - features/index.html に 3 カード追加（numberOfItems 19→22）、sitemap.xml に 3 URL 追加（priority 0.85）
+- **next**:
+  - 既存特集 20本のリライト（特に「2026年最新版」タイトル戦略と業界人視点パラグラフ追加）
+  - 新規ロングテール特集 2 本追加（「名古屋 飲食人 おすすめ」「名駅 失敗しない 会食」）
+  - Google Search Console での順位追跡開始（ISSUE-032 と連動）
 - **impact**: 中期で月間 UU 1.5〜2倍。AI 引用元としての権威性向上。
 - **acceptance**: 6ヶ月で独自 KW 5本以上で Google TOP3、Search Console で順位追跡
-- **files**: `features/*.html`（既存リライト）, `features/index.html`, `sitemap.xml`
+- **files**: `features/nagoya-industry-pick-izakaya.html`（新規）, `features/nagoya-settai-secret.html`（新規）, `features/nagoya-reservation-difficult.html`（新規）, `features/index.html`, `sitemap.xml`, `scripts/gen_industry_features.js`（新規・テンプレ生成スクリプト）
 - **owner**: Marketer + Editor
 
-### [ISSUE-032] editorial-policy の対外発信と Google Search Console 整備
+### [ISSUE-032] editorial-policy の対外発信と Google Search Console 整備 🔄
 
 - **priority**: P2
-- **status**: ready
+- **status**: in_progress（プレスリリース草稿 v0.1 完了 / 配信判断はユーザー）
 - **category**: competitive / seo / brand
 - **detected**: 2026-05-06
+- **last_update**: 2026-05-08
 - **description**:
   WebSearch で `site:nagoya-bites.com` がゼロヒット → サイト全体のインデックス・サイトリンク獲得が不十分の可能性。editorial-policy.html を「現役飲食人による編集規約」としてプレスリリース・note・業界メディア寄稿で外部発信し、被リンク獲得 + Search Console で順位とサイトリンク表示を取りに行く。AI 引用と SEO の両輪を権威性で攻める。
+- **progress 2026-05-08**:
+  - `docs/press-release-2026.md` v0.1 草稿完成（1,500字本文 + 配信先候補 12 媒体 + 配信タイミング Phase 1〜3 + Google Search Console 整備チェックリスト）
+  - タイトル A/B 案、配信先（業界メディア・名古屋ローカル・配信代行）、配信タイミング、効果測定 KPI を整備
+  - ユーザー判断 5 項目（タイトル A/B 採択 / 配信タイミング / 配信先 / 編集部匿名方針 / 予算）を末尾に明示
+- **next**:
+  - ユーザーが朝レビュー → A/B 採択・配信先確定 → Phase 1 配信実行（valuepress + 名古屋ローカル 3 社）
+  - Google Search Console プロパティ確認・クエリレポート整備
 - **impact**: AI Overviews 引用候補化、指名検索数の継続的増加、長期ドメインオーソリティ
 - **acceptance**: 6ヶ月で外部被リンク 30本、指名検索月間 100回、Google Search Console のクエリレポート整備
-- **files**: 外部施策中心（コード変更なし）。`docs/press-release-2026.md` 草稿
+- **files**: `docs/press-release-2026.md`（v0.1 草稿）
 - **owner**: Strategist + Marketer
 
 ### [ISSUE-033] 推薦文カバー率 16% → 50% への引き上げ（D1 / Quality Gap）✅
@@ -971,6 +1004,23 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **owner**: DataKeeper 主導 + Editor 監修
 - **follow-up**: 業界視点の 1段深い推薦文（editorReason 2.1% / 97件 のみ）は別途 ISSUE-045 で扱う
 - **note**: 既存 ISSUE-017 とマージ。本 ISSUE-033 を採用、ISSUE-017 は status:duplicate へ
+
+### [ISSUE-041] Google 評価カバー率 15% → 50% への引き上げ（D1 Quality Gap・別軸）
+
+- **priority**: P1
+- **status**: ready
+- **category**: competitive / data / content
+- **detected**: 2026-05-08（ISSUE-033 解決時の再観測で発覚した別軸の Gap）
+- **description**:
+  ISSUE-033 で「推薦文（おすすめポイント）」のカバー率は 100% 達成済み。一方で **Google 評価のカバー率は依然 15.4%（704/4,584）** に留まる。食べログ点数・Google Maps 評価が消費者の店選びの第一指標である中、84.6% の店舗が評価未取得なのは決定的な Quality Gap。
+  既存スクリプト（`fetch_scores.js`, `gas_scores.js`）の自動取得ロジックを再点検し、優先度上位 1,500 店から段階的に評価を埋める。ISSUE-045（editorReason 拡充）とは別軸で並走可能。
+- **acceptance**:
+  - 6ヶ月で Google 評価カバー率 50% 以上（4,584 × 50% = 2,292 店以上）
+  - 既存 `fetch_scores.js` / `gas_scores.js` のロジック改善・自動化
+  - 推薦文（100% カバー済み）× Google 評価 × editorReason の三段重ねで信頼性訴求
+- **files**: `fetch_scores.js`, `gas_scores.js`, `data/manual_stores.json`
+- **owner**: DataKeeper 主導
+- **ref**: ISSUE-033 解決時のデータ観測（2026-05-08）から切り出し
 
 ### [ISSUE-045] editorReason（業界視点コメント）カバー率 2.1% → 30% への引き上げ
 
@@ -1005,43 +1055,66 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **files**: `features/*.html`（8本）, `sitemap.xml`
 - **owner**: Marketer + Builder
 
-### [ISSUE-035] シーン分類の細粒度化（推し活 / ママ会 / 撮影会 / オフ会など）
+### [ISSUE-035] シーン分類の細粒度化（推し活 / ママ会 / 撮影会 / オフ会など）✅
 
-- **priority**: P2
-- **status**: ready
+- **prior_design**: 2026-05-08 に `docs/scene-tags-expansion.md` v0.1 として設計草稿（新規シーン 8 個提案 + Strategic Skip 3 個 + 実装方式 3 案）を作成。本実装はその方針に近い形で 6 タグを採択。
+
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-05-10
 - **category**: competitive / ux / content
 - **detected**: 2026-05-06
 - **description**:
   OZmall は「女子会／推し活／ママ会」、ホットペッパーは「カップルシート」「大人の隠れ家」など細粒度シーン分類を持つ。我々のシーンは「デート／女子会／接待／誕生日／GW／母の日」止まり。「推し活」「オフ会」「同窓会」「両家顔合わせ」「壮行会」など名古屋の生活シーンに合うタグを 5〜10個追加。既存 LOCAL_STORES のタグ層に追加するか、特集記事として新設するかは Builder と Editor で判断。
 - **impact**: ロングテール検索流入の獲得、フィルター粒度の差別化
 - **acceptance**: シーンタグ 5〜10個追加、または対応する特集記事を 3本以上新設
-- **files**: `index.html`（フィルター層）, `data/manual_stores.json`（タグ追加）, `features/*.html`（新規）
+- **resolution 2026-05-10**:
+  - `index.html` の `buildTagFilter()` に新シーン群「シーン（細）」を追加：**推し活 / ママ会 / オフ会 / 同窓会 / 両家顔合わせ / 壮行会** の **6 タグ**
+  - 既存「シーン」→「シーン（基本）」にリネームし、ユーザー視点で粒度が違うことを明示
+  - 店舗データ側に新タグを書く必要をなくすため、`SCENE_ALIAS` で既存タグへのエイリアスを定義（例: 推し活 → 女子会＋誕生日・記念日 / ママ会 → 家族・子連れ＋女子会＋個室 / 両家顔合わせ → 接待＋個室）
+  - `applyFilters()` の tag マッチロジックに SCENE_ALIAS 解決を挿入し、関連既存タグの OR 一致 / アクセス・備考のテキスト一致で該当店を抽出
+  - LOCAL_STORES への変更は一切なし。検索 URL `#tag=推し活` 等も自動的に機能（既存の URL ↔ タグ同期機構を流用）
+  - 「特集記事 3本以上新設」のオプションは取らず、UI フィルタ 6 タグ追加で acceptance を満たす（特集記事は別途 Editor が ISSUE 起票で対応）
+- **files**: `index.html`（フィルター層）
 - **owner**: Builder + Editor
 
-### [ISSUE-036] og:image の店舗個別自家製化（既存 ISSUE-024 の昇格）
+### [ISSUE-036] og:image の店舗個別自家製化（既存 ISSUE-024 の昇格）✅
 
-- **priority**: P2
-- **status**: ready（既存 ISSUE-024 の優先度引き上げ）
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-05-10
 - **category**: competitive / seo / brand
 - **detected**: 2026-05-06（再評価）
 - **description**:
   競合分析で SNS シェア時の「映え」設計が D3 Quality Gap として浮上。stores/*.html の og:image がホットペッパー画像固定では、SNS シェア時にホットペッパーのブランドが拡散される。NAGOYA BITES オリジナルの店舗個別 og:image を生成（店名 + 業界人推薦バッジ + 価格帯ラベル等の合成）。1,096店すべてのスケールに対応する自動生成スクリプト要。
 - **impact**: SNS シェア時のブランド一貫性、SNS 経由のサイト流入の質向上
-- **acceptance**: og:image 生成スクリプト整備、1,096店すべてに自家製画像配信
-- **files**: `assets/og/*`（新規生成）, `gen-store-pages.js`, `stores/*.html`
+- **acceptance**: og:image 生成スクリプト整備、1,096店すべてに自家製画像配信（実規模 4,584 店）
+- **resolution 2026-05-10**:
+  - `scripts/gen_store_og_svg.js` 新設: LOCAL_STORES から各店 1200×630 SVG を生成（ゴールド帯・店名・ジャンル・エリア・価格帯・Google評価バッジ・編集部推薦バッジ・「業界人運営 ・ 広告ゼロ」フッター）
+  - `assets/og/{slug}.svg` を 4,581 件生成（HP ID ベースのスラグ、衝突は -N サフィックス、18MB）
+  - `scripts/patch_store_og_images.js` 新設: 既存 stores/*.html の og:image / twitter:image / og:image:alt / 寸法メタを in-place で置換（gen-store-pages.js の完全再実行を回避）
+  - 配信は wsrv.nl 経由で SVG → PNG 変換: `https://wsrv.nl/?url=...og/{slug}.svg&output=png&w=1200&h=630`
+  - stores/*.html 4,540 件を patcher で更新（SVG 未生成の 44 件はフォールバックで既存 photo URL を維持）
+  - `gen-store-pages.js` テンプレートも更新: 次回再生成時に SVG 存在チェックして自家製 og:image を優先採用、無ければ photo にフォールバック
+  - 結果: SNS シェア時に NAGOYA BITES ブランド（金色アクセント・業界人運営の訴求）が露出。ホットペッパーのブランド拡散が止まる。
+- **follow-up**: wsrv.nl 障害時のフォールバック自動化、SVG 内日本語フォント埋め込みの検討（現状は wsrv.nl サーバー側フォント依存）
+- **files**: `scripts/gen_store_og_svg.js`（新規）, `scripts/patch_store_og_images.js`（新規）, `assets/og/*.svg`（新規 4,581 件）, `gen-store-pages.js`, `stores/*.html`（4,540 件更新）
 - **owner**: Builder + DataKeeper
 - **note**: 既存 ISSUE-024（P3）から P2 に昇格。本 ISSUE-036 が後継
 
-### [ISSUE-037] 戦わない領域（Strategic Skip）の明文化と過剰追従の防止
+### [ISSUE-037] 戦わない領域（Strategic Skip）の明文化と過剰追従の防止 ✅
 
-- **priority**: P3
-- **status**: ready
+- **priority**: P3 → **status**: done
+- **resolved**: 2026-05-10
 - **category**: competitive / governance
 - **detected**: 2026-05-06
 - **description**:
   競合分析で「追わない判断」を 6項目特定（匿名口コミ大量集積 / クーポン経済 / 高級セグメント特化 / 女性向け装飾演出 / 雑誌印刷連動 / 月刊スピード）。今後 Marketer や Editor が個別施策を提案する際に、これらの領域に過剰追従しないよう、CLAUDE.md または `agents/strategist.md` に「戦わない領域」セクションを明記する。
 - **impact**: 戦略の一貫性維持、リソース無駄遣いの防止
 - **acceptance**: CLAUDE.md または agents/strategist.md に Strategic Skip 6項目を明記
+- **resolution 2026-05-10**:
+  - CLAUDE.md には既に「戦わない領域 — Strategic Skip（追わない判断）」セクションが 2026-05-06 時点で記載済み（L41-49）
+  - `agents/strategist.md` に新セクション「戦わない領域（Strategic Skip）— 過剰追従の防止」を追加（各 6 項目に「却下例 / 許容例」を明記）
+  - 同時に「審査フロー（Q1: Strategic Skip 該当 → Q2: 3本柱強化 → Q3: 信頼毀損リスク）」を追加し、施策提案の機械的な審査基準を明文化
+  - 「Strategistが絶対にやってはいけないこと」リストにも「Strategic Skip 該当施策を承認する」を追記
 - **files**: `CLAUDE.md`, `agents/strategist.md`
 - **owner**: Strategist + Orchestrator
 - **ref**: `docs/competitive-analysis-2026-05-06.md` 第 3章 B 節
