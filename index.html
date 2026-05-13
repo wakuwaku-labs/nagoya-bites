@@ -1077,8 +1077,8 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <!-- PWA インストールバナー（Android） -->
 <div id="pwa-banner" style="display:none">
   📱 ホーム画面に追加してアプリとして使えます
-  <button id="pwa-install-btn">追加する</button>
-  <button class="dismiss" id="pwa-dismiss">後で</button>
+  <button id="pwa-install-btn" aria-label="NAGOYA BITES をホーム画面に追加する">追加する</button>
+  <button class="dismiss" id="pwa-dismiss" aria-label="ホーム画面追加の案内を閉じる">後で</button>
 </div>
 <!-- PWA インストールバナー（iOS） -->
 <div id="pwa-banner-ios" style="display:none">
@@ -1096,7 +1096,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
     </div>
   </div>
   <div class="pwa-ios-arrow-down"></div>
-  <button class="dismiss" id="pwa-dismiss-ios">後で</button>
+  <button class="dismiss" id="pwa-dismiss-ios" aria-label="iOS でのホーム画面追加の案内を閉じる">後で</button>
 </div>
 
 <div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
@@ -1145,7 +1145,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 
 <!-- フィルター折りたたみ（検索欄直下のエントリポイント） -->
 <div class="filter-toggle-wrap" id="filter-toggle-wrap">
-  <button class="filter-toggle-btn" id="filter-toggle-btn" onclick="toggleFilterPanel()" aria-expanded="false" aria-controls="filter-panel">
+  <button class="filter-toggle-btn" id="filter-toggle-btn" onclick="toggleFilterPanel()" aria-expanded="false" aria-controls="filter-panel" aria-label="絞り込みパネルを開閉する">
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 3h12M3 7h8M5 11h4"/></svg>
     絞り込み
     <span class="filter-badge" id="filter-badge" style="display:none">0</span>
@@ -1313,6 +1313,13 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   </div>
   <div class="latest-journal-cards">
     <!-- LATEST_JOURNAL_START -->
+        <a class="latest-journal-card" href="journal/2026-05-13-counter-six-seats-formula.html">
+          <div class="ljc-date">2026-05-13</div>
+          <h3 class="ljc-title">「カウンター6席、テーブル2卓」が名物店に多い理由 — 名古屋の少席舗が高単価で回るカラクリ</h3>
+          <p class="ljc-desc">名古屋の予約困難店をマップ上で並べると、客席10〜12席という構成が極端に多い。これは偶然ではなく、業界の必勝設計だ。経済・オペ・ブランドの3軸で構造を読み解く。</p>
+          <span class="ljc-theme">🗝 業界の裏側</span>
+        </a>
+
         <a class="latest-journal-card" href="journal/2026-05-12-katteguchi-kawachiya-marunouchi.html">
           <div class="ljc-date">2026-05-12</div>
           <h3 class="ljc-title">料亭『河文』の板場が&quot;勝手口&quot;の隠れ家になった意味 — 丸の内『勝手口 河内屋』を業界人視点で読み解く</h3>
@@ -1325,13 +1332,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
           <h3 class="ljc-title">GW明けに名古屋で『満点評価』が並ぶ4軒 — 業界人が読み解く絞り込みの正体</h3>
           <p class="ljc-desc">GW明けの月曜、Google評価が満点近い名古屋の話題店4軒。焼肉・手羽先・旬の居酒屋・ワンタン専門店——ジャンルの違う4店が同じ評価軸で並ぶ理由を、業界人視点で読み解く週次ダイジェスト。</p>
           <span class="ljc-theme">🔥 週次話題店</span>
-        </a>
-
-        <a class="latest-journal-card" href="journal/2026-05-10-mikan-sakae-nishiki-fushimi.html">
-          <div class="ljc-date">2026-05-10</div>
-          <h3 class="ljc-title">5000円台のカウンターに『お晩菜』が並ぶ意味 — 栄『みかん』を業界人目線で読み解く</h3>
-          <p class="ljc-desc">栄・錦のビル2階、5000円台のカウンターに大鉢のお晩菜が並ぶ居酒屋『みかん』。なぜこの価格帯で食べログ4.9を維持できているのか、業界人が価格帯・オペ・シーン適性の3軸で読み解く。</p>
-          <span class="ljc-theme">🍶 今日の1軒</span>
         </a>
       <!-- LATEST_JOURNAL_END -->
   </div>
@@ -1371,7 +1371,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <option value="price-asc">価格帯順(安い順)</option>
       <option value="price-desc">価格帯順（高い順）</option>
     </select>
-    <button class="notify-btn" id="notify-btn" onclick="showNotifyToast()">🔔 この条件で通知</button>
+    <button class="notify-btn" id="notify-btn" onclick="showNotifyToast()" aria-label="この絞り込み条件に合致する新店舗を通知設定する">🔔 この条件で通知</button>
     <div class="view-toggle" id="view-toggle">
       <button id="vt-grid" class="active" onclick="setViewMode('grid')" aria-label="グリッド表示" title="グリッド表示"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="6" height="6" rx="1"/><rect x="8" y="0" width="6" height="6" rx="1"/><rect x="0" y="8" width="6" height="6" rx="1"/><rect x="8" y="8" width="6" height="6" rx="1"/></svg></button>
       <button id="vt-list" onclick="setViewMode('list')" aria-label="リスト表示" title="リスト表示"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="14" height="3" rx="1"/><rect x="0" y="5.5" width="14" height="3" rx="1"/><rect x="0" y="11" width="14" height="3" rx="1"/></svg></button>
@@ -2161,7 +2161,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
         <span class="mpoint-label">INSIDER REVIEWS — 業界人レビュー</span>
         <ul class="ir-list" id="m-insider-reviews-list"></ul>
         <p class="ir-empty" id="m-insider-reviews-empty" style="display:none">飲食業界で経験のある方の最初のレビューをお待ちしています。</p>
-        <button type="button" id="m-insider-cta" class="insider-cta">このお店にレビューを書く</button>
+        <button type="button" id="m-insider-cta" class="insider-cta" aria-label="この店舗に業界人レビューを投稿する">このお店にレビューを書く</button>
         <div class="ir-form-wrap" id="m-insider-form" hidden>
           <p class="ir-form-intro">飲食業界で経験のある方向けの投稿フォームです。送信後、編集部が内容を確認したうえで掲載します（即時公開ではありません）。</p>
           <form id="ir-form" novalidate>
@@ -2216,8 +2216,8 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
               <label for="ir-consent">上記内容を NAGOYA BITES に掲載することに同意します（肩書き記入時は肩書きの表示にも同意します）</label>
             </div>
             <div class="ir-actions">
-              <button type="submit" class="ir-submit" id="ir-submit">送信する</button>
-              <button type="button" class="ir-cancel" id="ir-cancel">キャンセル</button>
+              <button type="submit" class="ir-submit" id="ir-submit" aria-label="レビューを送信する">送信する</button>
+              <button type="button" class="ir-cancel" id="ir-cancel" aria-label="レビュー投稿をキャンセルする">キャンセル</button>
             </div>
             <div class="ir-status" id="ir-status" role="status" aria-live="polite"></div>
           </form>
@@ -2237,9 +2237,9 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="mmg" id="mmg"></div>
       <div class="share-bar" id="share-bar">
         <div class="share-bar-label">Share — このお店をシェア</div>
-        <button class="sbtn sbtn-x" id="share-x" onclick="shareToX()">𝕏 ポスト</button>
-        <button class="sbtn sbtn-line" id="share-line" onclick="shareToLINE()">LINE で送る</button>
-        <button class="sbtn sbtn-copy" id="share-copy" onclick="copyShareLink()">🔗 リンクをコピー</button>
+        <button class="sbtn sbtn-x" id="share-x" onclick="shareToX()" aria-label="この店舗を X (旧 Twitter) でシェアする">𝕏 ポスト</button>
+        <button class="sbtn sbtn-line" id="share-line" onclick="shareToLINE()" aria-label="この店舗を LINE でシェアする">LINE で送る</button>
+        <button class="sbtn sbtn-copy" id="share-copy" onclick="copyShareLink()" aria-label="この店舗ページのリンクをコピーする">🔗 リンクをコピー</button>
       </div>
     </div>
   </div>
@@ -2247,7 +2247,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 
 <div class="mobile-cta-bar" id="mobile-cta-bar">
   <input class="cta-search" type="text" placeholder="店名・エリア・ジャンルで検索…" onfocus="window.scrollTo({top:0,behavior:'smooth'});var t=document.body.classList.contains('search-active')?document.getElementById('si2'):document.getElementById('si');if(t)t.focus();">
-  <button class="cta-filter" onclick="toggleFilterPanel();window.scrollTo({top:document.getElementById('filter-toggle-wrap').offsetTop-60,behavior:'smooth'});">絞り込み</button>
+  <button class="cta-filter" onclick="toggleFilterPanel();window.scrollTo({top:document.getElementById('filter-toggle-wrap').offsetTop-60,behavior:'smooth'});" aria-label="絞り込みパネルを開いて条件を変更する">絞り込み</button>
 </div>
 
 <!-- 最近チェックしたお店 -->
@@ -3190,16 +3190,20 @@ function buildAreaFilter() {
   };
 }
 
+// ISSUE-035: 細粒度シーンタグ — 既存の基本シーンに加え、名古屋の生活シーンに合う新タグを 6 個追加。
+// 新タグは store-side の「タグ」フィールドに直接付与されない代わりに、
+// SCENE_ALIAS（applyFilters 内）で関連する既存タグの OR マッチで解決する。
 function buildTagFilter() {
   var cats = [
-    {label:'シーン', tags:['デート','女子会','接待','誕生日・記念日','歓送迎会','忘年会・新年会','家族・子連れ']},
-    {label:'席・空間', tags:['個室','半個室','カウンター','テラス席','座敷','貸切可','隠れ家']},
-    {label:'予算', tags:['〜1000円','1001〜2000円','2001〜3000円','3001〜5000円','5001〜7000円','7001〜10000円','10001円以上']}
+    {label:'シーン（基本）', tags:['デート','女子会','接待','誕生日・記念日','歓送迎会','忘年会・新年会','家族・子連れ']},
+    {label:'シーン（細）',   tags:['推し活','ママ会','オフ会','同窓会','両家顔合わせ','壮行会']},
+    {label:'席・空間',       tags:['個室','半個室','カウンター','テラス席','座敷','貸切可','隠れ家']},
+    {label:'予算',           tags:['〜1000円','1001〜2000円','2001〜3000円','3001〜5000円','5001〜7000円','7001〜10000円','10001円以上']}
   ];
   var html = cats.map(function(c){
     return '<div class="tag-group"><span class="tag-label">' + c.label + '</span>'
       + c.tags.map(function(t){ return '<div class="tg" data-tag="' + t + '">' + t + '</div>'; }).join('') + '</div>';
-  }).join('') + '<div class="tag-reset-wrap"><button class="tag-reset" onclick="resetTags()">タグをリセット</button><button class="share-btn" onclick="shareURL()">この条件をシェア</button></div>';
+  }).join('') + '<div class="tag-reset-wrap"><button class="tag-reset" onclick="resetTags()" aria-label="選択中のタグをすべて解除する">タグをリセット</button><button class="share-btn" onclick="shareURL()" aria-label="現在の絞り込み条件をシェアする">この条件をシェア</button></div>';
   var el = document.getElementById('tag-filter');
   el.innerHTML = html;
   el.addEventListener('click', function(e){
@@ -3218,6 +3222,18 @@ function resetTags() {
   document.querySelectorAll('.tg.on').forEach(function(el){ el.classList.remove('on'); });
   applyFilters();
 }
+
+// ISSUE-035: 細粒度シーンタグ → 既存タグへのエイリアス
+// 新タグを選んだ際、関連する既存タグのいずれかが付いている店を「該当あり」とみなす（OR 一致）。
+// 同時に access / 備考 / 店舗側「タグ」のテキスト一致も拾うため、店舗データ側の変更は不要。
+var SCENE_ALIAS = {
+  '推し活':       ['女子会', '誕生日・記念日'],
+  'ママ会':       ['家族・子連れ', '女子会', '半個室', '個室'],
+  'オフ会':       ['貸切可', '個室', '歓送迎会'],
+  '同窓会':       ['歓送迎会', '忘年会・新年会', '個室'],
+  '両家顔合わせ': ['接待', '個室', '誕生日・記念日'],
+  '壮行会':       ['歓送迎会', '忘年会・新年会']
+};
 
 function applyFilters() {
   if (!ALL_STORES || ALL_STORES.length === 0) return;
@@ -3256,6 +3272,18 @@ function applyFilters() {
       if (tag === '5001〜7000円')    return priceNum >= 5001 && priceNum <= 7000;
       if (tag === '7001〜10000円')   return priceNum >= 7001 && priceNum <= 10000;
       if (tag === '10001円以上')     return priceNum >= 10001 && priceNum < 99999;
+      // ISSUE-035: 細粒度シーンタグは関連既存タグの OR 一致で解決
+      if (SCENE_ALIAS[tag]) {
+        var aliases = SCENE_ALIAS[tag];
+        for (var ai = 0; ai < aliases.length; ai++) {
+          var at = aliases[ai];
+          if (storeTags.indexOf(at) !== -1) return true;
+          if (access.includes(at) || notes.includes(at)) return true;
+        }
+        // 店舗データ側で明示的に新タグが書かれている場合もカバー
+        if (access.includes(tag) || notes.includes(tag)) return true;
+        return false;
+      }
       if (storeTags.indexOf(tag) !== -1) return true;
       // 「個室」はアクセス・備考列にある場合も一致、半個室もカバー
       if (tag === '個室') return storeTags.indexOf('半個室') !== -1 || access.includes('個室') || notes.includes('個室');
@@ -3747,7 +3775,7 @@ function renderGrid(data) {
       + '<div class="empty-state-icon">🍽</div>'
       + '<h3>該当するお店が見つかりませんでした</h3>'
       + '<p>検索条件を変えるか、フィルターをリセットしてお試しください。</p>'
-      + '<button class="empty-state-reset" onclick="clearAllFilters()">フィルターをリセット</button>'
+      + '<button class="empty-state-reset" onclick="clearAllFilters()" aria-label="すべてのフィルターをリセットして全店舗を表示する">フィルターをリセット</button>'
       + '</div>';
     if (pagEl) pagEl.innerHTML = '';
     return;
