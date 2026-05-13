@@ -414,6 +414,7 @@
 | 2026-05-10 | DataKeeper(/solve-next) | ISSUE-033 推薦文カバー率引き上げ: 既存 98.93% (4,536/4,585) の残 49 件を `data/recommendations.json` に追記（ルールベース生成器 `scripts/fill_recommendations_json.js` を新設・Anthropic/Sheets 認証不要）→ post-merge カバー率 **100% (4,585/4,585)** で acceptance「6ヶ月で 50%以上」即時達成 / 後継 ISSUE-045（editorReason 業界視点 2.1%→30%）を起票 | ✅ commit 予定 |
 | 2026-05-10 | Inspector (auto) | ISSUE-041/042 大規模変更後の全方位監査（4セクション: データ品質/SEO/パフォーマンス/コンテンツ）/ features/nagoya-miso-nikomi-udon.html の切れリンク1件即時修正（5店→4店再構成・JSON-LD 整合）/ llms.txt の「8ブランド分の現場運営経験」明記で信頼性シグナル強化 / ISSUE-046〜048 起票 | ✅ 監査完了 |
 | 2026-05-11 | Builder + Orchestrator（ユーザー要望対応） | ISSUE-049 店舗画像品質改善: wsrv.nl 経由で全店画像を WebP + シャープニング配信 / Hot Pepper URL の `_238.jpg` → `_480.jpg` 自動昇格（default fallback で404安全）/ カード `400/600/800w`・モーダル `800/1200/1600w`・ランキング `280/560w` の srcset 対応 / 切替容易性のため `nbImage()` ヘルパーで CDN 抽象化 / ISSUE-024（Hot Pepper ホットリンク懸念）への副次的緩和 | ✅ デプロイ予定 |
+| 2026-05-14 | Builder + DataKeeper（夜間自律実行） | **クロスチェック整合度 UI バグ修正 + ISSUE-047 完了**: (1) index.html モーダルのシグナルキーミスマッチを修正（s3_editorVisitConsistency→s3_dataCompleteness / s6_insiderReviewConsistency→s6_instagramPresence / s7_reviewTimeseries・s8_reviewDistribution を追加・UI で全8シグナル表示）(2) gen-store-pages.js TAG_TO_FEATURES を4層構造に拡張（タグ/名古屋めし/ジャンル/エリア + 全店catch-all nagoya-gourmet-guide）→ LOCAL_STORES 715件の related-features 充足率 68%→**100%**（3件以上リンク 91.6%）(3) fetch_media_appearances.js 最新実行（45→48店舗、1,901記事スキャン）(4) node build.js 再構築（クロスチェック平均55.6 / T50-69=579件）| ✅ デプロイ予定 |
 
 ---
 
@@ -436,19 +437,20 @@
   - タグ充足率 60%以上
 - **files**: `fetch_scores.js`, `fetch_ig_urls.js`, `claude_tagging.js`, `.github/workflows/*.yml`
 
-### [ISSUE-047] 静的店舗ページの related-features セクション充足率向上（68%→95%）
-- **priority**: P2 → **status**: ready
+### [ISSUE-047] 静的店舗ページの related-features セクション充足率向上（68%→100%）✅
+- **priority**: P2 → **status**: done
 - **detected**: 2026-05-10（Inspector 監査）
+- **resolved**: 2026-05-14
 - **category**: seo / internal-linking
 - **description**:
   サンプル 500 件中 341 件（68%）にしか related-features の実リンクが含まれていない。32% は HP API のタグが TAG_TO_FEATURES のパターンにマッチせず空セクション化している。エリア・ジャンル単位のフォールバック追加で 95% カバーが可能。
-- **対応案**: `gen-store-pages.js` の TAG_TO_FEATURES に以下を追加
-  - エリア「名古屋（名古屋駅/西区/中村区）」「名古屋駅」 → meieki.html
-  - エリア「栄」系 → sakae.html
-  - エリア「大須」系 → osu-food-walk.html
-  - ジャンル「居酒屋」 → banquet.html (既存) を強化
-  - ジャンル「カフェ・スイーツ」 → girls-party.html
-- **acceptance**: related-features サンプル 500 件中 95% 以上で実リンクが含まれる
+- **対応**: `gen-store-pages.js` の TAG_TO_FEATURES を4層構造（タグ直接→名古屋めし→ジャンルフォールバック→エリアフォールバック→全店catch-all）に拡張。
+  - タグ: 接待→settai-guide.html、テラス→spring-terrace.html 追加
+  - 名古屋めし: ひつまぶし→nagoya-hitsumabushi.html、手羽先→nagoya-tebasaki.html、味噌煮込み→nagoya-miso-nikomi-udon.html
+  - ジャンルフォールバック: 居酒屋/焼き鳥→banquet.html、カフェ/スイーツ→girls-party.html、和食→nagoya-lunch-washoku.html、焼肉→kospa-insider.html
+  - エリアフォールバック: 大須→osu-food-walk.html、覚王山/本山/千種→nagoya-gourmet-guide.html
+  - 全店catch-all: nagoya-gourmet-guide.html
+- **結果**: LOCAL_STORES 715件で related-features 充足率 **100%**（3件以上リンク: 91.6%）
 - **files**: `gen-store-pages.js`
 
 ### [ISSUE-048] index.html のボタン aria-label 充足率向上（50%→90%）

@@ -97,17 +97,60 @@ function mapPriceToSchemaRange(price) {
 
 // ================================================================
 // タグ/エリア → 関連特集ページの逆引きマッピング
+// ISSUE-047: タグベース → ジャンルフォールバック → エリアフォールバック → catch-all の 4 層構造
 // ================================================================
 const TAG_TO_FEATURES = [
-  { match: s => (s['タグ']||'').includes('個室'),           file: 'private-room.html', label: '個室のある名古屋グルメ10選' },
-  { match: s => (s['タグ']||'').includes('接待'),           file: 'private-room.html', label: '個室のある名古屋グルメ10選' },
-  { match: s => /30〜|40〜|50〜|60〜|70〜|80〜|90〜|100名/.test(s['タグ']||'') || (s['タグ']||'').includes('忘年会') || (s['タグ']||'').includes('歓送迎会') || (s['タグ']||'').includes('飲み放題'), file: 'banquet.html', label: '名古屋の宴会・忘年会15選' },
-  { match: s => (s['タグ']||'').includes('100名') || /70〜|80〜|90〜/.test(s['タグ']||''), file: 'large-group.html', label: '名古屋・大人数宴会20人以上10選' },
-  { match: s => (s['タグ']||'').includes('誕生日・記念日') || /誕生日|記念日|サプライズ/.test(s['おすすめポイント']||''), file: 'birthday.html', label: '名古屋・誕生日/記念日ディナー10選' },
-  { match: s => (s['タグ']||'').includes('女子会'),         file: 'girls-party.html', label: '名古屋・女子会ランチ&ディナー10選' },
-  { match: s => /イタリアン|フレンチ|ダイニングバー|バル|創作料理/.test(s['ジャンル']||''), file: 'date.html', label: '名古屋・デートディナー10選' },
-  { match: s => /名古屋駅|名駅|中村区/.test(s['エリア']||''), file: 'meieki.html', label: '名駅グルメ15選' },
-  { match: s => /栄|錦|矢場町|東桜|新栄/.test(s['エリア']||''), file: 'sakae.html', label: '栄グルメ15選' },
+  // ─── 1. タグ直接マッチ（最優先） ───────────────────────────────
+  { match: s => (s['タグ']||'').includes('個室'),
+    file: 'private-room.html', label: '個室のある名古屋グルメ10選' },
+  { match: s => (s['タグ']||'').includes('接待'),
+    file: 'settai-guide.html', label: '接待で失敗しない名古屋の店選び完全マニュアル' },
+  { match: s => /30〜|40〜|50〜|60〜|70〜|80〜|90〜|100名/.test(s['タグ']||'') || (s['タグ']||'').includes('忘年会') || (s['タグ']||'').includes('歓送迎会') || (s['タグ']||'').includes('飲み放題'),
+    file: 'banquet.html', label: '名古屋の宴会・忘年会15選' },
+  { match: s => (s['タグ']||'').includes('100名') || /70〜|80〜|90〜/.test(s['タグ']||''),
+    file: 'large-group.html', label: '名古屋・大人数宴会20人以上10選' },
+  { match: s => (s['タグ']||'').includes('誕生日・記念日') || /誕生日|記念日|サプライズ/.test(s['おすすめポイント']||''),
+    file: 'birthday.html', label: '名古屋・誕生日/記念日ディナー10選' },
+  { match: s => (s['タグ']||'').includes('女子会'),
+    file: 'girls-party.html', label: '名古屋・女子会ランチ&ディナー10選' },
+  { match: s => /テラス|テラス席|屋外/.test(s['タグ']||''),
+    file: 'spring-terrace.html', label: '名古屋 テラス席・屋外グルメ10選' },
+
+  // ─── 2. 名古屋めし・ジャンル直接マッチ ──────────────────────────
+  { match: s => /ひつまぶし|鰻|うなぎ/.test((s['タグ']||'') + (s['ジャンル']||'') + (s['おすすめポイント']||'')),
+    file: 'nagoya-hitsumabushi.html', label: '名古屋ひつまぶし完全ガイド' },
+  { match: s => /手羽先|からあげ/.test((s['タグ']||'') + (s['ジャンル']||'') + (s['おすすめポイント']||'')),
+    file: 'nagoya-tebasaki.html', label: '名古屋 手羽先完全ガイド' },
+  { match: s => /味噌煮込み/.test((s['タグ']||'') + (s['ジャンル']||'') + (s['おすすめポイント']||'')),
+    file: 'nagoya-miso-nikomi-udon.html', label: '名古屋 味噌煮込みうどん完全ガイド' },
+
+  // ─── 3. ジャンルフォールバック（HP-only 店舗向け） ──────────────
+  { match: s => /イタリアン|フレンチ|ダイニングバー|バル|創作料理|ビストロ/.test(s['ジャンル']||''),
+    file: 'date.html', label: '名古屋・デートディナー10選' },
+  { match: s => /居酒屋|焼き鳥|焼鳥|串焼き/.test(s['ジャンル']||''),
+    file: 'banquet.html', label: '名古屋の宴会・忘年会15選' },
+  { match: s => /カフェ|スイーツ|パティスリー|ケーキ/.test(s['ジャンル']||''),
+    file: 'girls-party.html', label: '名古屋・女子会ランチ&ディナー10選' },
+  { match: s => /和食|割烹|日本料理|寿司|鮨|うどん|そば/.test(s['ジャンル']||''),
+    file: 'nagoya-lunch-washoku.html', label: '名古屋ランチ 和食おすすめ10選' },
+  { match: s => /焼肉|鉄板焼|ステーキ/.test(s['ジャンル']||''),
+    file: 'kospa-insider.html', label: '現役飲食人が選ぶ名古屋のコスパ最強グルメ' },
+  { match: s => /フレンチ|鉄板焼|日本料理|割烹/.test(s['ジャンル']||''),
+    file: 'settai-guide.html', label: '接待で失敗しない名古屋の店選び完全マニュアル' },
+
+  // ─── 4. エリアフォールバック ─────────────────────────────────────
+  { match: s => /名古屋駅|名駅|中村区|西区/.test(s['エリア']||''),
+    file: 'meieki.html', label: '名駅グルメ15選' },
+  { match: s => /栄|錦|矢場町|東桜|新栄/.test(s['エリア']||''),
+    file: 'sakae.html', label: '栄グルメ15選' },
+  { match: s => /大須|鶴舞|上前津/.test(s['エリア']||''),
+    file: 'osu-food-walk.html', label: '大須 食べ歩きおすすめ10選' },
+  { match: s => /覚王山|本山|千種|藤が丘|東山|今池/.test(s['エリア']||''),
+    file: 'nagoya-gourmet-guide.html', label: '名古屋グルメ完全ガイド' },
+
+  // ─── 5. 全店キャッチオール（エリア・ジャンル不問） ──────────────
+  { match: () => true,
+    file: 'nagoya-gourmet-guide.html', label: '名古屋グルメ完全ガイド' },
 ];
 
 function buildRelatedFeatures(store) {
