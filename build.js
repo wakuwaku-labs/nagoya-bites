@@ -391,6 +391,59 @@ function sanitizeStore(s) {
 }
 
 // ────────────────────────────────────────────────────
+// ISSUE-046: ジャンル/価格帯/おすすめポイントから自動タグ生成
+// HP-only 店舗はタグが空なため、ジャンルベースのタグを自動付与して
+// フィルター充足率（目標 60%）を引き上げる。既存タグがある店は対象外。
+// ────────────────────────────────────────────────────
+function genreToAutoTags(store) {
+  const g  = store['ジャンル']     || '';
+  const pr = store['価格帯']       || '';
+  const pt = store['おすすめポイント'] || '';
+  const ac = store['アクセス']     || '';
+  const tags = new Set();
+
+  // ジャンルタグ
+  if (/居酒屋/.test(g))                      tags.add('居酒屋');
+  if (/焼肉|ホルモン/.test(g))               tags.add('焼肉');
+  if (/和食|日本料理|割烹|懐石|小料理|料亭/.test(g)) tags.add('和食');
+  if (/カフェ|喫茶|スイーツ|甘味/.test(g))   tags.add('カフェ');
+  if (/イタリアン/.test(g))                  tags.add('イタリアン');
+  if (/中華/.test(g))                        tags.add('中華料理');
+  if (/バー|バル/.test(g))                   tags.add('バー');
+  if (/ラーメン|つけ麺/.test(g))             tags.add('ラーメン');
+  if (/うどん|そば/.test(g))                 tags.add('うどん・そば');
+
+  // 価格帯タグ（Hot Pepper の budget.name パターン: 「3001〜4000円」など）
+  const pmatch = pr.match(/(\d+)[〜～](\d+)|(\d{4,})/);
+  if (pmatch) {
+    const maxP = parseInt(pmatch[2] || pmatch[3] || pmatch[1], 10);
+    if (maxP >= 5001)      tags.add('5000円以上');
+    else if (maxP >= 3001) tags.add('3000〜5000円');
+    else if (maxP >= 2001) tags.add('2000〜3000円');
+  }
+
+  // おすすめポイント/アクセスのキーワードタグ
+  const ctx = pt + ' ' + ac;
+  if (/個室/.test(ctx))           tags.add('個室');
+  if (/飲み放題/.test(ctx))       tags.add('飲み放題');
+  if (/食べ放題/.test(ctx))       tags.add('食べ放題');
+  if (/誕生日|記念日|サプライズ/.test(ctx)) tags.add('誕生日・記念日');
+  if (/女子会/.test(ctx))         tags.add('女子会');
+  if (/忘年会|新年会/.test(ctx))  tags.add('忘年会・新年会');
+  if (/歓送迎会|歓迎会|送別会/.test(ctx)) tags.add('歓送迎会');
+  if (/100名/.test(ctx))          tags.add('100名以上');
+  else if (/80[〜～]|90[〜～]名/.test(ctx)) tags.add('80〜90名');
+  else if (/60[〜～]|70[〜～]名/.test(ctx)) tags.add('60〜70名');
+  else if (/50[〜～]|60[〜～]名/.test(ctx)) tags.add('50〜60名');
+  else if (/40[〜～]|50[〜～]名/.test(ctx)) tags.add('40〜50名');
+  else if (/30[〜～]|40[〜～]名/.test(ctx)) tags.add('30〜40名');
+  else if (/20[〜～]|30[〜～]名/.test(ctx)) tags.add('20〜30名');
+  else if (/10[〜～]|20[〜～]名/.test(ctx)) tags.add('10〜20名');
+
+  return Array.from(tags).join(',');
+}
+
+// ────────────────────────────────────────────────────
 // ISSUE-015-P1: index.html 書き込み時のフィールド間引き
 // ────────────────────────────────────────────────────
 // 以下のキーは LOCAL_STORES に含める必要がないため除外する:
@@ -1470,6 +1523,16 @@ async function main() {
     });
   }
   console.log(`最終: ${stores.length}件`);
+
+  // ISSUE-046: タグが空のストアに自動タグを付与（HP-only ストア対応）
+  let autoTagCount = 0;
+  for (const s of stores) {
+    if (!s['タグ'] || !s['タグ'].trim()) {
+      s['タグ'] = genreToAutoTags(s);
+      if (s['タグ']) autoTagCount++;
+    }
+  }
+  console.log(`自動タグ付与: ${autoTagCount}件（タグなし → ジャンル/価格帯ベース）`);
 
   // 1. LOCAL_STORESを全店舗データで置き換え
   //    ISSUE-015-P1: 出力時に不要フィールド・空値を除去して serialize 量を削減
