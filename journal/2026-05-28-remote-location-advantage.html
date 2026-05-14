@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
+function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>駅から遠い店が良い店である理由 — 立地不利を補うものとは何か｜NAGOYA BITES Journal</title>
+<meta name="description" content="なぜ「駅から徒歩15分」の店に本当の実力店が多いのか。駅近の家賃高・立地依存の業態と、駅遠の家賃低・コンテンツ依存の業態の違い。業界人が足を使って探しに行く店の構造的優位性とは。">
+<meta name="keywords" content="名古屋,グルメ,飲食店,駅から遠い,立地,家賃,業界人,コスパ">
+<link rel="canonical" href="https://nagoya-bites.com/journal/2026-05-28-remote-location-advantage.html">
+<meta property="og:title" content="駅から遠い店が良い店である理由 — 立地不利を補うものとは何か｜NAGOYA BITES">
+<meta property="og:description" content="なぜ「駅から徒歩15分」の店に本当の実力店が多いのか。駅近と駅遠の構造的優位性の違いを業界人の視点から解説。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nagoya-bites.com/journal/2026-05-28-remote-location-advantage.html">
+<meta property="og:site_name" content="NAGOYA BITES">
+<meta property="og:image" content="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "駅から遠い店が良い店である理由 — 立地不利を補うものとは何か",
+  "description": "なぜ駅から徒歩15分の店に実力店が多いのか。駅近の立地依存型業態と駅遠のコンテンツ依存型業態の違いを解説。",
+  "author": {"@type": "Organization", "name": "NAGOYA BITES"},
+  "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
+  "url": "https://nagoya-bites.com/journal/2026-05-28-remote-location-advantage.html",
+  "datePublished": "2026-05-28",
+  "dateModified": "2026-05-28",
+  "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80",
+  "mainEntityOfPage": "https://nagoya-bites.com/journal/2026-05-28-remote-location-advantage.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},
+    {"@type":"ListItem","position":2,"name":"Journal","item":"https://nagoya-bites.com/journal/"},
+    {"@type":"ListItem","position":3,"name":"駅から遠い店が良い店である理由"}
+  ]
+}
+</script>
+<style>
+:root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--border-h:rgba(0,0,0,0.28);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
+header{position:sticky;top:0;z-index:200;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;letter-spacing:.35em;color:var(--white);text-transform:uppercase;text-decoration:none;}
+.logo em{font-style:italic;color:var(--gold);}
+nav{display:flex;gap:1.5rem;align-items:center;}
+nav a{font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+nav a:hover,nav a.active{color:var(--text);}
+.breadcrumb{padding:.6rem 1.5rem;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.1em;color:var(--dim);max-width:800px;margin:0 auto;}
+.breadcrumb a{color:var(--dim);text-decoration:none;}.breadcrumb a:hover{color:var(--gold);}.breadcrumb span{margin:0 .4rem;}
+.art-hero{padding:2.5rem 1.5rem 2rem;max-width:760px;margin:0 auto;}
+.art-eyebrow{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
+.art-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.25;color:var(--white);margin-bottom:.8rem;}
+.art-title em{font-style:italic;color:var(--gold);}
+.art-meta{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--dim);margin-bottom:1.2rem;display:flex;gap:1rem;flex-wrap:wrap;}
+.art-lead{font-size:.88rem;line-height:2;color:var(--muted);border-left:2px solid var(--gold);padding-left:1.1rem;}
+.art-body{max-width:760px;margin:0 auto;padding:0 1.5rem 3rem;}
+.section-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2rem 0 .8rem;}
+.art-body p{font-size:.86rem;line-height:2;color:var(--muted);margin-bottom:1.2rem;}
+.art-body h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.3rem;color:var(--white);margin:2rem 0 .8rem;}
+.art-body h3{font-family:'Noto Sans JP',sans-serif;font-weight:500;font-size:1rem;color:var(--white);margin:1.5rem 0 .6rem;}
+.insider-box{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);padding:1.1rem 1.3rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
+.insider-title{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;}
+.insider-box p{margin-bottom:0 !important;}
+.divider{border:none;border-top:1px solid var(--border);margin:2rem 0;}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;}
+footer p{font-size:.68rem;color:var(--dim);letter-spacing:.08em;}
+footer a{color:var(--dim);text-decoration:none;}footer a:hover{color:var(--gold);}
+@media(max-width:600px){.art-title{font-size:1.55rem;}.art-hero{padding:1.8rem 1rem 1.5rem;}.art-body{padding:0 1rem 2.5rem;}}
+</style>
+</head>
+<body>
+<header>
+  <a href="https://nagoya-bites.com/" class="logo">Nagoya <em>Bites</em></a>
+  <nav>
+    <a href="https://nagoya-bites.com/">店舗を探す</a>
+    <a href="https://nagoya-bites.com/features/">特集</a>
+    <a href="https://nagoya-bites.com/journal/" class="active">Journal</a>
+  </nav>
+</header>
+<div class="breadcrumb">
+  <a href="https://nagoya-bites.com/">TOP</a><span>›</span>
+  <a href="https://nagoya-bites.com/journal/">Journal</a><span>›</span>
+  駅から遠い店が良い店である理由
+</div>
+<article>
+  <div class="art-hero">
+    <p class="art-eyebrow">🗝 業界の裏側</p>
+    <h1 class="art-title"><em>駅から遠い店</em>が<br>良い店である理由</h1>
+    <div class="art-meta">
+      <span>2026-05-28</span>
+      <span>NAGOYA BITES 編集部</span>
+      <span>4 min read</span>
+    </div>
+    <p class="art-lead">なぜ「駅から徒歩15分」の店に本当の実力店が多いのか。駅近の高家賃・立地依存型業態と、駅遠の低家賃・コンテンツ依存型業態の構造的違い。業界人が足を使って探しに行く店の経済学。</p>
+  </div>
+  <div class="art-body">
+    <p class="section-label">01 — The Location Equation</p>
+    <h2>飲食店の立地は「家賃の方程式」で決まる</h2>
+    <p>飲食店の家賃は、立地の人流に比例する。名古屋駅徒歩1分の一等地と、徒歩15分の路地裏では、坪単価が2〜5倍異なることも珍しくない。この差額は、毎月の固定費として運営に重くのしかかる。</p>
+    <p>駅近の店は、その家賃を回収するために「立地に来る人」を最大限に取り込まなければならない。自然と、通行客・観光客・初回利用客を対象にした業態になる。回転率・キャッチコピー・見た目のインパクトが優先される。これは経済的に合理的な判断だ。</p>
+    <p>一方、駅遠の店が選ぶのは別の道だ。低家賃によって固定費を下げた分、食材コストに回せる。もしくはシェフ一人で運営できるオペレーションを維持できる。駅遠の店は「わざわざ来る人」しか来ない前提で設計されており、そのためにコンテンツ（料理・雰囲気・体験）に投資する。</p>
+
+    <hr class="divider">
+    <p class="section-label">02 — The Economics of Distance</p>
+    <h2>「わざわざ来る」客が店を育てる</h2>
+    <p>業界人が駅遠の店を好む理由の一つは、客層の質だ。駅遠まで足を運ぶ客は、「この店に行きたい」という明確な意図がある。偶然通りがかった客や、時間潰しの客ではない。</p>
+    <p>この意図ある来客が何をもたらすかというと——食べた後の満足感が高い傾向がある（来ようとした期待値と実体験の差が小さい）、リピーターになりやすい、口コミの質が高い（「わざわざ行く価値あり」という文脈の口コミ）の3点だ。</p>
+    <p>また、シェフや料理人にとっても「わざわざ来てくれた客」は動機づけになる。自分の料理を目的として来た客に向き合う料理は、通行客への提供と異なる緊張感を持つ。</p>
+
+    <h3>名古屋の駅遠名店の傾向</h3>
+    <p>名古屋の飲食業界で「あそこは本当に良い」と話題になる店の多くは、覚王山・本山・御器所・天白・瑞穂区の住宅街に点在している。名駅・栄から一本外れた路地にも多い。Googleマップの「おすすめ」には出にくい。業界人の口コミか、常連から紹介されることで知られる。</p>
+
+    <div class="insider-box">
+      <p class="insider-title">Insider Note</p>
+      <p>業界人が「今度一緒に行きましょう」と言う店の住所を確認すると、駅から15〜25分のケースが多い。名古屋は車社会でもあるため、駅近の概念が東京より薄い。それもあって、駅遠の良店が「普通の選択肢」として業界人の行動圏に入っている。</p>
+    </div>
+
+    <hr class="divider">
+    <p class="section-label">03 — How to Find Them</p>
+    <h2>駅遠の実力店を見つける方法</h2>
+    <p>駅遠の良店は、ホットペッパーや食べログの上位に出てきにくい。大手ポータルは「検索ユーザーが検索している」上位を表示するため、認知されていない駅遠店は埋もれる。</p>
+    <p>見つけ方は3つ。①業界人の口コミ・紹介——これが最も精度が高い。②Googleマップで「エリア名+ジャンル」で広域検索し、評価4.3以上・件数50件未満の店を探す——「知る人ぞ知る」層が固まっていることが多い。③Instagram で「#名古屋ランチ」「#覚王山グルメ」などの地名タグから探す——SNS発の駅遠名店は、アカウントフォロワーが少なくても投稿のリアリティで判断できる。</p>
+    <p>NAGOYA BITES に掲載している1100件以上の店の中には、駅遠の隠れた実力店が相当数含まれている。エリアフィルター（覚王山・千種・本山など）で絞り込んで探してみてほしい。</p>
+
+    <hr class="divider">
+    <p style="font-size:.78rem;color:var(--dim);line-height:1.8;">
+      <a href="https://nagoya-bites.com/journal/" style="color:var(--gold);text-decoration:none;">← Journal 一覧に戻る</a>
+      　｜
+      <a href="https://nagoya-bites.com/" style="color:var(--gold);text-decoration:none;">店舗を探す</a>
+    </p>
+  </div>
+</article>
+<footer>
+  <p><a href="https://nagoya-bites.com/">NAGOYA BITES</a> — 名古屋の飲食業界人が本当に通う店、1100件以上。</p>
+  <p style="margin-top:.5rem;"><a href="https://nagoya-bites.com/features/editorial-policy.html">編集方針</a> ／ <a href="https://nagoya-bites.com/features/no-fake-reviews.html">フェイクレビューゼロ宣言</a></p>
+</footer>
+</body>
+</html>
