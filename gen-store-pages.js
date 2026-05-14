@@ -226,6 +226,8 @@ function renderStorePage(s, slug) {
   const hours    = s['営業時間'] || '';
   const access   = s['アクセス'] || '';
   const score    = s['Google評価'] || '';
+  const ccs      = Number(s['crossCheckScore'] || 0);
+  const ccsLabel = ccs >= 90 ? '✓✓✓ 整合度 高' : ccs >= 70 ? '✓✓ 整合度 中' : ccs >= 50 ? '✓ 整合度 検証中' : '';
   const reviewCountRaw = parseInt(s['口コミ数'] || '', 10);
   const reviewCount    = Number.isFinite(reviewCountRaw) && reviewCountRaw > 0 ? reviewCountRaw : 0;
   const point    = s['おすすめポイント'] || '';
@@ -398,6 +400,7 @@ header{position:sticky;top:0;z-index:100;padding:0 1.5rem;height:56px;display:fl
 h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,5vw,2.8rem);line-height:1.15;color:var(--white);margin-bottom:.6rem;}
 .score{display:inline-flex;align-items:center;gap:.3rem;font-size:.85rem;font-weight:600;color:#d4a017;margin-bottom:1.2rem;}
 .score svg{width:14px;height:14px;fill:#d4a017;}
+.ccs-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.12em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.18rem .6rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
 .point-box{background:rgba(122,92,16,.07);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:.9rem 1.1rem;margin-bottom:1.6rem;}
 .point-box p{font-size:.85rem;line-height:1.9;color:var(--text);}
 .info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.6rem;padding:1.2rem;background:var(--bg2);border:1px solid var(--border);}
@@ -444,7 +447,10 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
 
   <div class="genre-badge">${genre}</div>
   <h1>${name}</h1>
-  ${score ? `<div class="score"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>${score}</div>` : ''}
+  <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
+    ${score ? `<div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>${score}</div>` : ''}
+    ${ccsLabel ? `<span class="ccs-badge" title="クロスチェック整合度: 複数媒体シグナルによる客観評価">${ccsLabel}</span>` : ''}
+  </div>
 
   ${point ? `<div class="point-box"><p>${point}</p></div>` : ''}
 
@@ -484,9 +490,31 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
 // ================================================================
 function buildSitemap(slugs) {
   const today = new Date().toISOString().slice(0, 10);
+
+  // store pages
   const storeUrls = slugs.map(slug =>
     `  <url>\n    <loc>${BASE_URL}/stores/${slug}.html</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`
   ).join('\n');
+
+  // features/ articles (exclude index.html)
+  const featuresDir = path.join(__dirname, 'features');
+  const featureUrls = fs.existsSync(featuresDir)
+    ? fs.readdirSync(featuresDir)
+        .filter(f => /^[^_].*\.html$/.test(f) && f !== 'index.html')
+        .sort()
+        .map(f => `  <url>\n    <loc>${BASE_URL}/features/${f}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>\n  </url>`)
+        .join('\n')
+    : '';
+
+  // journal/ articles (exclude index.html, _template.html, and feed files)
+  const journalDir = path.join(__dirname, 'journal');
+  const journalUrls = fs.existsSync(journalDir)
+    ? fs.readdirSync(journalDir)
+        .filter(f => /^\d{4}-\d{2}-\d{2}.*\.html$/.test(f))
+        .sort().reverse()
+        .map(f => `  <url>\n    <loc>${BASE_URL}/journal/${f}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>`)
+        .join('\n')
+    : '';
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -502,6 +530,20 @@ function buildSitemap(slugs) {
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>${BASE_URL}/features/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+${featureUrls}
+  <url>
+    <loc>${BASE_URL}/journal/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+${journalUrls}
   <url>
     <loc>${BASE_URL}/stores/</loc>
     <lastmod>${today}</lastmod>
@@ -628,7 +670,8 @@ async function main() {
   if (!TEST_MODE && !DRY_RUN) {
     const sitemapXml = buildSitemap(slugs);
     fs.writeFileSync(SITEMAP_OUT, sitemapXml, 'utf8');
-    console.log(`sitemap.xml 更新完了: ${slugs.length + 2}件のURL`);
+    const sitemapUrlCount = (sitemapXml.match(/<url>/g) || []).length;
+    console.log(`sitemap.xml 更新完了: ${sitemapUrlCount}件のURL（stores:${slugs.length} + features/journal/main含む）`);
   }
 
   // ─── ゴーストページ（孤児）検出・削除 ───
