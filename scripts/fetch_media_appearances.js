@@ -53,15 +53,26 @@ const BLOCKED_SOURCES = new Set([
   'じゃらん', 'Yahoo!ロコ', 'NAVITIME',
 ]);
 
+// URL ドメインベースの除外リスト（Hatena RSS の extractSourceFromUrl 用）
+const BLOCKED_DOMAINS = new Set([
+  'hotpepper.jp', 'tabelog.com', 'gnavi.co.jp', 'retty.me',
+  'yelp.com', 'tripadvisor.jp', 'jalan.net', 'navitime.co.jp',
+  'b.hatena.ne.jp', 'maps.google.com', 'google.com',
+  'google.co.jp', 'yahoo.co.jp',
+]);
+
 // Google News ベース URL
 const GN = (q) => `https://news.google.com/rss/search?hl=ja&gl=JP&ceid=JP:ja&q=${encodeURIComponent(q)}`;
+// はてなブックマーク検索 RSS ベース URL（スペースは + に変換、日本語はそのまま）
+const HB = (q) => `https://b.hatena.ne.jp/q/${q.replace(/ /g, '+')}?mode=rss`;
 
 /**
  * フィード設定
- *   name:          mediaFeatures に格納する媒体名
- *                  note 系は全て "note" に統一（S4 は distinct 媒体名カウント）
- *   rssUrl:        RSS フィード URL
- *   extractSource: Google News 形式「タイトル - 媒体名」から媒体名を自動抽出
+ *   name:                mediaFeatures に格納する媒体名
+ *                        note 系は全て "note" に統一（S4 は distinct 媒体名カウント）
+ *   rssUrl:              RSS フィード URL
+ *   extractSource:       Google News 形式「タイトル - 媒体名」から媒体名を自動抽出
+ *   extractSourceFromUrl: item.link URL のドメインを媒体名として使用（Hatena 用）
  */
 const MEDIA_FEEDS = [
   // ════════════════════════════════════════════════════════════════════════
@@ -130,6 +141,20 @@ const MEDIA_FEEDS = [
   { name: '_gnews', rssUrl: GN('愛知 レストラン グランドオープン'),       extractSource: true },
   { name: '_gnews', rssUrl: GN('名古屋 リニューアルオープン 飲食'),      extractSource: true },
   { name: '_gnews', rssUrl: GN('名古屋 初出店 グルメ'),                  extractSource: true },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // はてなブックマーク RSS（ブックマーク記事の link ドメインを媒体名として使用）
+  // ※ Hatena 検索は複合語タグ形式のみ有効（スペース区切りは 0 件になる）
+  // ════════════════════════════════════════════════════════════════════════
+  { name: '_hatena', rssUrl: HB('名古屋グルメ'),   extractSourceFromUrl: true },
+  { name: '_hatena', rssUrl: HB('名古屋めし'),     extractSourceFromUrl: true },
+  { name: '_hatena', rssUrl: HB('名古屋ランチ'),   extractSourceFromUrl: true },
+  { name: '_hatena', rssUrl: HB('名古屋ラーメン'), extractSourceFromUrl: true },
+  { name: '_hatena', rssUrl: HB('名古屋居酒屋'),   extractSourceFromUrl: true },
+  { name: '_hatena', rssUrl: HB('名古屋カフェ'),   extractSourceFromUrl: true },
+  { name: '_hatena', rssUrl: HB('名古屋焼肉'),     extractSourceFromUrl: true },
+  { name: '_hatena', rssUrl: HB('名古屋スイーツ'), extractSourceFromUrl: true },
+  { name: '_hatena', rssUrl: HB('愛知グルメ'),     extractSourceFromUrl: true },
 ];
 
 // ─── CLI ─────────────────────────────────────────────────────────────────
@@ -175,6 +200,15 @@ function fetchText(url, depth = 0) {
   });
 }
 
+// HTML エンティティデコード（&#xNNNN; / &#NNN; / 名前付きエンティティ）
+function decodeEntities(s) {
+  return s
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
+    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"').replace(/&apos;/g, "'");
+}
+
 // RSS 2.0 / Atom 1.0 パーサ（description も取得する）
 function parseRssItems(xml) {
   const items = [];
@@ -183,9 +217,9 @@ function parseRssItems(xml) {
   for (const block of blocks) {
     const getField = (tag) => {
       const cdata = block.match(new RegExp(`<${tag}[^>]*>\\s*<!\\[CDATA\\[([\\s\\S]*?)\\]\\]>\\s*<\\/${tag}>`, 'i'));
-      if (cdata) return cdata[1].trim();
+      if (cdata) return decodeEntities(cdata[1].trim());
       const plain = block.match(new RegExp(`<${tag}[^>]*>([^<]*)<\\/${tag}>`, 'i'));
-      return plain ? plain[1].replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').trim() : '';
+      return plain ? decodeEntities(plain[1]).trim() : '';
     };
     const title = getField('title');
     let link = getField('link');
@@ -213,6 +247,16 @@ function parseRssItems(xml) {
 function extractSourceFromGNewsTitle(title) {
   const m = title.match(/\s[-–]\s([^-–]{3,30})\s*$/);
   return m ? m[1].trim() : null;
+}
+
+// item.link の URL からドメイン名を媒体名として抽出（Hatena RSS 用）
+function extractSourceFromItemUrl(link) {
+  try {
+    const url = new URL(link);
+    return url.hostname.replace(/^www\./, '');
+  } catch {
+    return null;
+  }
 }
 
 function loadStoresFromIndex() {
@@ -277,7 +321,9 @@ async function main() {
   const feedsOk = [], feedsFailed = [];
 
   for (const feed of MEDIA_FEEDS) {
-    const feedLabel = feed.name === '_gnews' ? 'Google News' : feed.name;
+    const feedLabel = feed.name === '_gnews'   ? 'Google News'
+      : feed.name === '_hatena' ? 'はてなブックマーク'
+      : feed.name;
     const urlSnip = feed.rssUrl.replace(/https:\/\/[^/]+\//, '').slice(0, 60);
     console.log(`\n取得中: ${feedLabel} — ${urlSnip}`);
 
@@ -309,6 +355,12 @@ async function main() {
         const src = extractSourceFromGNewsTitle(item.title);
         if (!src || BLOCKED_SOURCES.has(src)) continue;
         mediaName = src;
+      }
+      // Hatena Bookmark: item.link ドメインを媒体名として抽出（BLOCKED_DOMAINSはスキップ）
+      if (feed.extractSourceFromUrl) {
+        const domain = extractSourceFromItemUrl(item.link);
+        if (!domain || BLOCKED_DOMAINS.has(domain)) continue;
+        mediaName = domain;
       }
 
       // ── タイトルマッチ (MIN_NAME_TITLE 以上) ───────────────────────────
