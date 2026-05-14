@@ -142,6 +142,8 @@ const TAG_TO_FEATURES = [
     file: 'nagoya-solo-dining.html', label: '名古屋 一人飲み完全ガイド 2026' },
   { match: s => /韓国料理|コリアン/.test(s['ジャンル']||''),
     file: 'nagoya-korean.html', label: '名古屋 韓国料理おすすめ 2026' },
+  { match: s => /海鮮|魚介|寿司|鮨/.test(s['ジャンル']||''),
+    file: 'nagoya-seafood.html', label: '名古屋 海鮮・魚介おすすめ 2026' },
   { match: s => /フレンチ|鉄板焼|日本料理|割烹/.test(s['ジャンル']||''),
     file: 'settai-guide.html', label: '接待で失敗しない名古屋の店選び完全マニュアル' },
 
