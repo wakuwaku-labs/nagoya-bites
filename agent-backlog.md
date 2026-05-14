@@ -421,10 +421,39 @@
 | 2026-05-11 | Builder + Orchestrator（ユーザー要望対応） | ISSUE-049 店舗画像品質改善: wsrv.nl 経由で全店画像を WebP + シャープニング配信 / Hot Pepper URL の `_238.jpg` → `_480.jpg` 自動昇格（default fallback で404安全）/ カード `400/600/800w`・モーダル `800/1200/1600w`・ランキング `280/560w` の srcset 対応 / 切替容易性のため `nbImage()` ヘルパーで CDN 抽象化 / ISSUE-024（Hot Pepper ホットリンク懸念）への副次的緩和 | ✅ デプロイ予定 |
 | 2026-05-14 | Builder + DataKeeper（夜間自律実行） | **クロスチェック整合度 UI バグ修正 + ISSUE-047 完了**: (1) index.html モーダルのシグナルキーミスマッチを修正（s3_editorVisitConsistency→s3_dataCompleteness / s6_insiderReviewConsistency→s6_instagramPresence / s7_reviewTimeseries・s8_reviewDistribution を追加・UI で全8シグナル表示）(2) gen-store-pages.js TAG_TO_FEATURES を4層構造に拡張（タグ/名古屋めし/ジャンル/エリア + 全店catch-all nagoya-gourmet-guide）→ LOCAL_STORES 715件の related-features 充足率 68%→**100%**（3件以上リンク 91.6%）(3) fetch_media_appearances.js 最新実行（45→48店舗、1,901記事スキャン）(4) node build.js 再構築（クロスチェック平均55.6 / T50-69=579件）| ✅ デプロイ済み |
 | 2026-05-14 | DataKeeper + Editor（夜間自律実行 継続）| **はてなブックマーク RSS 統合 + journal 5/14 公開**: (1) fetch_media_appearances.js に Hatena bookmark RSS 9 フィード追加（HB() ヘルパー・extractSourceFromUrl オプション・BLOCKED_DOMAINS セット・decodeEntities() 関数で HTML エンティティデコード対応）(2) MEDIA_FEEDS 25+20+9=54 フィード体制（note/Google News/Hatena）(3) build.js 再実行（メディア掲載 9 店舗・自動タグ付与 1件・クロスチェック平均 55.7）(4) journal/2026-05-14-reservation-platform-exit.html 公開（業界の裏側：予約サイト離脱の経済合理性・フィルター効果・評価コントロール 3 軸）(5) ISSUE-046 LOCAL_STORES 充足率確認: タグ 99.9%・Instagram 71.9%・Google評価 98.5%（全項目 acceptance 達成）| ✅ デプロイ済み |
+| 2026-05-14 | DataKeeper + Builder（夜間自律実行 第3フェーズ）| **ISSUE-050 orphan pages 削除 + 店舗ページ品質向上 + sitemap 全体化**: (1) stores/ 孤児ページ **3,909 件を削除**（LOCAL_STORES 715件に正規化、thin content リスク解消）(2) gen-store-pages.js に `crossCheckScore` バッジ追加（50-69→"✓ 整合度 検証中"・70-89→"✓✓ 整合度 中"・90+→"✓✓✓ 整合度 高"）で店舗個別ページでも信頼シグナル表示 (3) gen-store-pages.js `buildSitemap()` を全サイト対応に拡張（stores/のみ→features/+journal/+stores/ 776URL体制）(4) `features/nagoya-yakiniku-guide.html` 新規公開（業界人が通う名古屋焼肉8選・炭火/和牛/ホルモン/知多牛/前沢牛・FAQ+ItemList JSON-LD完備）(5) features/index.html にカード追加・JSON-LD ItemList 更新 | ✅ デプロイ済み |
 
 ---
 
 ## Inspector 監査 2026-05-10 で起票された課題
+
+### [ISSUE-050] stores/ 孤児ページ（thin content）削除 ✅
+- **priority**: P1 → **status**: done
+- **detected**: 2026-05-14（ISSUE-046 resolved 時の残課題メモから起票）
+- **resolved**: 2026-05-14
+- **category**: seo / content-quality
+- **owner**: DataKeeper + Builder
+- **rationale**:
+  ISSUE-041（2026-05-08）で `gen-store-pages.js` が LOCAL_STORES 715件ベースに切り替わった際、
+  旧パイプライン由来の `stores/*.html` 3,909件が孤児ページとして残存していた。
+  これらは Google Sheets 元データのみで生成された thin content（タグなし・推薦文なし・Google評価なし）であり、
+  Google のコンテンツ品質シグナルを下げるリスクがあった。
+- **actions**:
+  - `node gen-store-pages.js --delete-orphans` で 3,909件を削除（LOCAL_STORES 715件のみ残存）
+  - `gen-store-pages.js` の `renderStorePage()` に `crossCheckScore` バッジ追加
+  - `buildSitemap()` を stores/ のみ → features/ + journal/ + stores/ 776URL 全体化
+  - `features/nagoya-yakiniku-guide.html` 新規公開（業界人焼肉特集 8軒）
+  - `features/index.html` にカード追加・JSON-LD 更新
+- **before**: 4,625 store pages（715件 LOCAL_STORES + 3,910件 thin content 孤児）
+- **after**: 716 store pages（715件 + index.html のみ）
+- **sitemap before**: 717 URLs（stores のみ）
+- **sitemap after**: 776 URLs（stores + features 29本 + journal 29本 + 4 index）
+- **files**:
+  - `gen-store-pages.js`（--delete-orphans / crossCheckScore バッジ / buildSitemap 全体化）
+  - `sitemap.xml`（776 URLs）
+  - `features/nagoya-yakiniku-guide.html`（新規）
+  - `features/index.html`（カード追加）
+  - `agent-backlog.md`（このエントリ）
 
 ### [ISSUE-046] HP-only 店舗の Google評価・タグ・Instagram URL 充足率向上 ✅
 - **priority**: P1 → **status**: done
