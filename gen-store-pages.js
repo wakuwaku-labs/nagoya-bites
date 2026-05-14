@@ -144,6 +144,8 @@ const TAG_TO_FEATURES = [
     file: 'nagoya-korean.html', label: '名古屋 韓国料理おすすめ 2026' },
   { match: s => /海鮮|魚介|寿司|鮨/.test(s['ジャンル']||''),
     file: 'nagoya-seafood.html', label: '名古屋 海鮮・魚介おすすめ 2026' },
+  { match: s => /中華|チャイニーズ|台湾料理|点心|餃子|担々麺|麻婆|上海|四川/.test(s['ジャンル']||''),
+    file: 'nagoya-chinese-guide.html', label: '名古屋 中華料理おすすめ 2026' },
   { match: s => /フレンチ|鉄板焼|日本料理|割烹/.test(s['ジャンル']||''),
     file: 'settai-guide.html', label: '接待で失敗しない名古屋の店選び完全マニュアル' },
 
