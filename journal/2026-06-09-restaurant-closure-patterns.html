@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
+function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「閉店ラッシュ」が起きる業態と起きない業態の違い — 生存率の構造｜NAGOYA BITES Journal</title>
+<meta name="description" content="飲食店は3年以内に70%が閉店すると言われる。しかしこの数字は業態によって大きく異なる。なぜ居酒屋は閉まりやすく、鮨屋は閉まりにくいのか。生存率を左右する構造を解説。">
+<meta name="keywords" content="名古屋,飲食店,閉店,業態,グルメ,業界人,経営,鮨,居酒屋">
+<link rel="canonical" href="https://nagoya-bites.com/journal/2026-06-09-restaurant-closure-patterns.html">
+<meta property="og:title" content="閉店ラッシュが起きる業態と起きない業態の違い｜NAGOYA BITES">
+<meta property="og:description" content="居酒屋は閉まりやすく鮨屋は閉まりにくい。飲食店の生存率を左右する業態別構造。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nagoya-bites.com/journal/2026-06-09-restaurant-closure-patterns.html">
+<meta property="og:site_name" content="NAGOYA BITES">
+<meta property="og:image" content="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "「閉店ラッシュ」が起きる業態と起きない業態の違い — 生存率の構造",
+  "description": "居酒屋は閉まりやすく鮨屋は閉まりにくい。飲食店の生存率を左右する業態別構造。",
+  "author": {"@type": "Organization", "name": "NAGOYA BITES"},
+  "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
+  "url": "https://nagoya-bites.com/journal/2026-06-09-restaurant-closure-patterns.html",
+  "datePublished": "2026-06-09",
+  "dateModified": "2026-06-09",
+  "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80",
+  "mainEntityOfPage": "https://nagoya-bites.com/journal/2026-06-09-restaurant-closure-patterns.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},
+    {"@type":"ListItem","position":2,"name":"Journal","item":"https://nagoya-bites.com/journal/"},
+    {"@type":"ListItem","position":3,"name":"閉店ラッシュが起きる業態と起きない業態の違い"}
+  ]
+}
+</script>
+<style>
+:root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--border-h:rgba(0,0,0,0.28);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
+header{position:sticky;top:0;z-index:200;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;letter-spacing:.35em;color:var(--white);text-transform:uppercase;text-decoration:none;}
+.logo em{font-style:italic;color:var(--gold);}
+nav{display:flex;gap:1.5rem;align-items:center;}
+nav a{font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+nav a:hover,nav a.active{color:var(--text);}
+.breadcrumb{padding:.6rem 1.5rem;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.1em;color:var(--dim);max-width:800px;margin:0 auto;}
+.breadcrumb a{color:var(--dim);text-decoration:none;}.breadcrumb a:hover{color:var(--gold);}.breadcrumb span{margin:0 .4rem;}
+.art-hero{padding:2.5rem 1.5rem 2rem;max-width:760px;margin:0 auto;}
+.art-eyebrow{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
+.art-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.25;color:var(--white);margin-bottom:.8rem;}
+.art-title em{font-style:italic;color:var(--gold);}
+.art-meta{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--dim);margin-bottom:1.2rem;display:flex;gap:1rem;flex-wrap:wrap;}
+.art-lead{font-size:.88rem;line-height:2;color:var(--muted);border-left:2px solid var(--gold);padding-left:1.1rem;}
+.art-body{max-width:760px;margin:0 auto;padding:0 1.5rem 3rem;}
+.section-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2rem 0 .8rem;}
+.art-body p{font-size:.86rem;line-height:2;color:var(--muted);margin-bottom:1.2rem;}
+.art-body h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.3rem;color:var(--white);margin:2rem 0 .8rem;}
+.art-body h3{font-family:'Noto Sans JP',sans-serif;font-weight:500;font-size:1rem;color:var(--white);margin:1.5rem 0 .6rem;}
+.insider-box{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);padding:1.1rem 1.3rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
+.insider-title{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;}
+.insider-box p{margin-bottom:0 !important;}
+.divider{border:none;border-top:1px solid var(--border);margin:2rem 0;}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;}
+footer p{font-size:.68rem;color:var(--dim);letter-spacing:.08em;}
+footer a{color:var(--dim);text-decoration:none;}footer a:hover{color:var(--gold);}
+@media(max-width:600px){.art-title{font-size:1.55rem;}.art-hero{padding:1.8rem 1rem 1.5rem;}.art-body{padding:0 1rem 2.5rem;}}
+</style>
+</head>
+<body>
+<header>
+  <a href="https://nagoya-bites.com/" class="logo">Nagoya <em>Bites</em></a>
+  <nav>
+    <a href="https://nagoya-bites.com/">店舗を探す</a>
+    <a href="https://nagoya-bites.com/features/">特集</a>
+    <a href="https://nagoya-bites.com/journal/" class="active">Journal</a>
+  </nav>
+</header>
+<div class="breadcrumb">
+  <a href="https://nagoya-bites.com/">TOP</a><span>›</span>
+  <a href="https://nagoya-bites.com/journal/">Journal</a><span>›</span>
+  閉店ラッシュが起きる業態の違い
+</div>
+<article>
+  <div class="art-hero">
+    <p class="art-eyebrow">🗝 業界の裏側</p>
+    <h1 class="art-title">「閉店ラッシュ」が起きる業態と<br><em>起きない業態</em>の違い</h1>
+    <div class="art-meta">
+      <span>2026-06-09</span>
+      <span>NAGOYA BITES 編集部</span>
+      <span>5 min read</span>
+    </div>
+    <p class="art-lead">「飲食店の3年以内廃業率は70%」という数字がある。しかしこの数字は業態によって大きく異なる。居酒屋・カジュアルダイニングは高い閉店率だが、鮨・割烹・専門業態は驚くほど長く続く。この差を生む構造とは何か。</p>
+  </div>
+  <div class="art-body">
+    <p class="section-label">01 — The Closure Rate Problem</p>
+    <h2>「70%廃業」の数字が見せない現実</h2>
+    <p>飲食業界の廃業率の高さは有名だが、この数字は業態・立地・規模・コンセプトを区別せずに集計された平均値だ。実際には「閉まりやすい業態」と「閉まりにくい業態」の差は、数字が示す以上に大きい。</p>
+    <p>業界人として複数の業態を経営していると、この差の原因が「参入障壁の高さ」と「客単価の構造」に集約されることがわかる。</p>
+
+    <hr class="divider">
+    <p class="section-label">02 — High Risk Formats</p>
+    <h2>閉店ラッシュが起きやすい業態の構造</h2>
+
+    <h3>居酒屋・カジュアルダイニング</h3>
+    <p>参入障壁が低く、初期投資が比較的小さい。しかし「他の居酒屋との差別化」が難しく、価格競争に巻き込まれやすい。客単価が低く、席数を回さないと利益が出ない。スタッフ採用・定着も難しい業態で、人手不足が直撃する。競合が多く、近隣に類似業態が新規オープンするたびに既存客が流れる。</p>
+
+    <h3>トレンド系・SNS映え店</html3>
+    <p>インスタ映えをコンセプトにした店は、トレンドが続く間は集客できるが、流行が去ると一気に客足が遠のく。「話題性」を集客の軸にした業態は、構造的に「次の話題性」を常に必要とし、投資が続く。差別化の根拠が「見た目」だけになると持続性がない。</p>
+
+    <hr class="divider">
+    <p class="section-label">03 — Durable Formats</p>
+    <h2>長続きしやすい業態の条件</h2>
+
+    <h3>鮨・割烹・専門職人業態</h3>
+    <p>参入に長い修行期間が必要で、技術の習得コストが高い。これは「参入障壁の高さ」そのものだ。また、一度技術が認められると「職人」として固定ファンが生まれやすく、価格競争に入りにくい。客単価が高く、席数が少なくても一定の売上が確保できる構造を持つ。</p>
+
+    <div class="insider-box">
+      <p class="insider-title">Insider Note</p>
+      <p>8ブランドを運営していると、業態ごとの「経営の難易度の差」が体感として蓄積される。居酒屋は集客は取れるが粗利が薄く、スタッフ管理コストが高い。専門業態は集客の難しさはあるが、一度軌道に乗ると安定する。「始めやすい業態ほど続けにくい」という逆説が飲食業界にはある。</p>
+    </div>
+
+    <hr class="divider">
+    <p class="section-label">04 — What This Means for Diners</p>
+    <h2>客として外食選びに活かす視点</h2>
+    <p>長く続いている店は、構造的に「生き残れる理由がある」店だ。創業10年・20年の専門業態はその証明を何度も経てきた。「長く続いていること」を一つの品質指標として使うと、外れが減る。</p>
+    <p>逆に、新規オープンして半年以内の居酒屋・カジュアルダイニングを接待に使う際は、「6か月後も同じ品質を維持しているか」という不確定要素が残る。新店でも差別化が明確な専門業態は例外だ。業態と歴史を組み合わせると、外食の「読み」の精度が上がる。</p>
+    <p style="font-size:.78rem;color:var(--dim);line-height:1.8;">
+      <a href="https://nagoya-bites.com/journal/" style="color:var(--gold);text-decoration:none;">← Journal 一覧に戻る</a>
+      　｜
+      <a href="https://nagoya-bites.com/features/nagoya-reservation-difficult.html" style="color:var(--gold);text-decoration:none;">名古屋・予約困難店ガイド →</a>
+    </p>
+  </div>
+</article>
+<footer>
+  <p><a href="https://nagoya-bites.com/">NAGOYA BITES</a> — 名古屋の飲食業界人が本当に通う店、1100件以上。</p>
+  <p style="margin-top:.5rem;"><a href="https://nagoya-bites.com/features/editorial-policy.html">編集方針</a> ／ <a href="https://nagoya-bites.com/features/no-fake-reviews.html">フェイクレビューゼロ宣言</a></p>
+</footer>
+</body>
+</html>
