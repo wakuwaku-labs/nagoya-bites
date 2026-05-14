@@ -1,0 +1,32 @@
+{
+  "_comment": "クロスチェック整合度スコアへの異議申し立てモデレーション。申し立て者が integrity-method.html 末尾フォーム（Formspree経由）から投稿 → 編集部メール受信 → Inspector が月次レビュー → 判定（accept/reject/escalate）後に本ファイルへ追記 → 必要に応じて data/manual_stores.json の scoreOverride を更新 → node build.js → デプロイ。自動反映はしない（必ず編集部モデレーション経由）。",
+  "_schema": {
+    "id": "通し番号 DIS-YYYY-NNN",
+    "receivedAt": "Formspree メール受信日時（ISO 8601）",
+    "storeName": "申し立て対象の店名",
+    "storeArea": "エリア（マッチング用）",
+    "hotpepperId": "任意。ホットペッパーID",
+    "submitter": "申し立て者の自称（ペンネーム可・非公開）",
+    "submitterType": "store_owner / customer / industry_person / other",
+    "currentScore": "申し立て時点のクロスチェック整合度スコア（0-100）",
+    "claimedScore": "申し立て者が主張する妥当スコアまたは 'higher' / 'lower' / 'remove'",
+    "reason": "申し立て理由の要約（編集部記入）",
+    "rawBody": "Formspree 経由の本文（最初の 500 字まで）",
+    "status": "pending / reviewing / accepted / rejected / escalated",
+    "reviewedAt": "Inspector レビュー日（YYYY-MM-DD）",
+    "reviewedBy": "担当 Inspector のイニシャル",
+    "decision": "判定理由の要約（編集部記入）",
+    "action": "no_change / score_adjusted / flags_updated / removed",
+    "resolvedAt": "クローズ日（YYYY-MM-DD）"
+  },
+  "_process": {
+    "step1": "申し立てフォーム送信（features/integrity-method.html 末尾 → Formspree 経由）",
+    "step2": "編集部がメール受信後 48 時間以内に受領確認メール返信",
+    "step3": "Inspector が月次レビュースロット（毎月第1月曜）で全 pending 案件を審査",
+    "step4": "data/manual_stores.json の scoreOverride フィールドで補正値を上書き可能（0.0〜1.0 の係数 or 絶対値）",
+    "step5": "node build.js → GitHub Pages デプロイ → 申し立て者にメール通知",
+    "escalation": "Strategist 判断が必要な場合（名誉毀損リスク・法的懸念）は escalated に昇格し、別途ユーザー（オーナー）に報告"
+  },
+  "_integrity": "捏造・圧力による不正申し立ては受理しない。申し立て内容・判定・対応は全件このファイルで永続記録。",
+  "requests": []
+}
