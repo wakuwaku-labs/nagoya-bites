@@ -136,8 +136,10 @@ const TAG_TO_FEATURES = [
     file: 'girls-party.html', label: '名古屋・女子会ランチ&ディナー10選' },
   { match: s => /和食|割烹|日本料理|寿司|鮨|うどん|そば/.test(s['ジャンル']||''),
     file: 'nagoya-lunch-washoku.html', label: '名古屋ランチ 和食おすすめ10選' },
-  { match: s => /焼肉|鉄板焼|ステーキ/.test(s['ジャンル']||''),
-    file: 'kospa-insider.html', label: '現役飲食人が選ぶ名古屋のコスパ最強グルメ' },
+  { match: s => /焼肉|ホルモン|鉄板焼|ステーキ/.test(s['ジャンル']||''),
+    file: 'nagoya-yakiniku.html', label: '名古屋 焼肉おすすめ 2026' },
+  { match: s => /居酒屋|焼き鳥|焼鳥|バー|バル/.test(s['ジャンル']||'') && (s['価格帯']||'').match(/[〜～](\d+)/) && parseInt((s['価格帯']||'').match(/[〜～](\d+)/)?.[1]||'9999') <= 5000,
+    file: 'nagoya-solo-dining.html', label: '名古屋 一人飲み完全ガイド 2026' },
   { match: s => /フレンチ|鉄板焼|日本料理|割烹/.test(s['ジャンル']||''),
     file: 'settai-guide.html', label: '接待で失敗しない名古屋の店選び完全マニュアル' },
 
