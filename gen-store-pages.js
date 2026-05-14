@@ -128,6 +128,16 @@ const TAG_TO_FEATURES = [
     file: 'nagoya-miso-nikomi-udon.html', label: '名古屋 味噌煮込みうどん完全ガイド' },
 
   // ─── 3. ジャンルフォールバック（HP-only 店舗向け） ──────────────
+  // 新ガイド（より具体的なマッチを先に置く）
+  { match: s => /寿司|鮨|カウンター寿司|江戸前/.test(s['ジャンル']||''),
+    file: 'nagoya-sushi-guide.html', label: '名古屋で本当に美味しい鮨8選【2026年版】' },
+  { match: s => /イタリアン|パスタ|ピッツァ|リストランテ|トラットリア|オステリア/.test(s['ジャンル']||''),
+    file: 'nagoya-italian-guide.html', label: '名古屋のイタリアン10選【2026年版】' },
+  { match: s => /フレンチ|フランス料理|ビストロ/.test(s['ジャンル']||''),
+    file: 'nagoya-french-guide.html', label: '名古屋のフレンチ8選【2026年版】' },
+  { match: s => /バー|ワインバー|ウイスキーバー|スピークイージー/.test(s['ジャンル']||''),
+    file: 'nagoya-bar-guide.html', label: '名古屋のバー・ワインバー10選【2026年版】' },
+  // 既存フォールバック
   { match: s => /イタリアン|フレンチ|ダイニングバー|バル|創作料理|ビストロ/.test(s['ジャンル']||''),
     file: 'date.html', label: '名古屋・デートディナー10選' },
   { match: s => /居酒屋|焼き鳥|焼鳥|串焼き/.test(s['ジャンル']||''),
