@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
+function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>夏に「原価率」が上昇する仕組みと店の対応策｜NAGOYA BITES Journal</title>
+<meta name="description" content="飲食店の原価率は夏に上昇しやすい。高温による食材ロス、冷房コスト、繁忙期の人件費——この構造を知ると、夏メニューの価格設定が見えてくる。">
+<meta name="keywords" content="名古屋,飲食店,原価率,夏,食材ロス,メニュー,業界,コスト">
+<link rel="canonical" href="https://nagoya-bites.com/journal/2026-07-10-summer-cost-ratio.html">
+<meta property="og:title" content="夏に「原価率」が上昇する仕組みと店の対応策｜NAGOYA BITES">
+<meta property="og:description" content="夏の飲食店原価率上昇の構造を業界人視点で解説。夏メニューの価格設定の裏側がわかる。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nagoya-bites.com/journal/2026-07-10-summer-cost-ratio.html">
+<meta property="og:site_name" content="NAGOYA BITES">
+<meta property="og:image" content="https://images.unsplash.com/photo-1432139509613?w=1200&q=80">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "夏に「原価率」が上昇する仕組みと店の対応策",
+  "description": "飲食店の原価率は夏に上昇しやすい。高温による食材ロス、冷房コスト、繁忙期の人件費——この構造を知ると、夏メニューの価格設定が見えてくる。",
+  "author": {"@type": "Organization", "name": "NAGOYA BITES"},
+  "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
+  "url": "https://nagoya-bites.com/journal/2026-07-10-summer-cost-ratio.html",
+  "datePublished": "2026-07-10",
+  "dateModified": "2026-07-10",
+  "image": "https://images.unsplash.com/photo-1432139509613?w=1200&q=80",
+  "mainEntityOfPage": "https://nagoya-bites.com/journal/2026-07-10-summer-cost-ratio.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},
+    {"@type":"ListItem","position":2,"name":"Journal","item":"https://nagoya-bites.com/journal/"},
+    {"@type":"ListItem","position":3,"name":"夏に原価率が上昇する仕組みと店の対応策"}
+  ]
+}
+</script>
+<style>
+:root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--border-h:rgba(0,0,0,0.28);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
+header{position:sticky;top:0;z-index:200;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;letter-spacing:.35em;color:var(--white);text-transform:uppercase;text-decoration:none;}
+.logo em{font-style:italic;color:var(--gold);}
+nav{display:flex;gap:1.5rem;align-items:center;}
+nav a{font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+nav a:hover,nav a.active{color:var(--text);}
+.breadcrumb{padding:.6rem 1.5rem;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.1em;color:var(--dim);max-width:800px;margin:0 auto;}
+.breadcrumb a{color:var(--dim);text-decoration:none;}.breadcrumb a:hover{color:var(--gold);}.breadcrumb span{margin:0 .4rem;}
+.art-hero{padding:2.5rem 1.5rem 2rem;max-width:760px;margin:0 auto;}
+.art-eyebrow{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
+.art-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.25;color:var(--white);margin-bottom:.8rem;}
+.art-title em{font-style:italic;color:var(--gold);}
+.art-meta{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--dim);margin-bottom:1.2rem;display:flex;gap:1rem;flex-wrap:wrap;}
+.art-lead{font-size:.88rem;line-height:2;color:var(--muted);border-left:2px solid var(--gold);padding-left:1.1rem;}
+.art-body{max-width:760px;margin:0 auto;padding:0 1.5rem 3rem;}
+.section-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2rem 0 .8rem;}
+.art-body p{font-size:.86rem;line-height:2;color:var(--muted);margin-bottom:1.2rem;}
+.art-body h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.3rem;color:var(--white);margin:2rem 0 .8rem;}
+.art-body h3{font-family:'Noto Sans JP',sans-serif;font-weight:500;font-size:1rem;color:var(--white);margin:1.5rem 0 .6rem;}
+.insider-box{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);padding:1.1rem 1.3rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
+.insider-title{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;}
+.insider-box p{margin-bottom:0 !important;}
+.divider{border:none;border-top:1px solid var(--border);margin:2rem 0;}
+.journal-footer{max-width:760px;margin:0 auto;padding:0 1.5rem 2rem;}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;}
+footer p{font-size:.68rem;color:var(--dim);letter-spacing:.08em;}
+footer a{color:var(--dim);text-decoration:none;}footer a:hover{color:var(--gold);}
+@media(max-width:600px){.art-title{font-size:1.55rem;}.art-hero{padding:1.8rem 1rem 1.5rem;}.art-body{padding:0 1rem 2.5rem;}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+  <nav>
+    <a href="../index.html">店舗を探す</a>
+    <a href="../features/index.html">特集</a>
+    <a href="index.html" class="active">Journal</a>
+    <a href="../about.html">About</a>
+  </nav>
+</header>
+<div class="breadcrumb">
+  <a href="../index.html">NAGOYA BITES</a><span>›</span>
+  <a href="index.html">Journal</a><span>›</span>
+  夏に原価率が上昇する仕組みと店の対応策
+</div>
+<article>
+  <div class="art-hero">
+    <p class="art-eyebrow">🗝 業界の裏側</p>
+    <h1 class="art-title">夏に「<em>原価率</em>」が<br>上昇する仕組みと店の対応策</h1>
+    <div class="art-meta">
+      <span>2026-07-10</span>
+      <span>NAGOYA BITES 編集部</span>
+      <span>6 min read</span>
+    </div>
+    <p class="art-lead">飲食店の原価率は、季節によって静かに変動する。特に夏は、気温・湿度・繁忙の三つが重なり、通年で最も原価率が上昇しやすい季節だ。名古屋で複数の業態を運営してきた立場から、夏の原価率上昇の構造と、真摯な店がどう対応しているかを解説する。</p>
+  </div>
+  <div class="art-body">
+    <p class="section-label">01 — The Temperature Factor</p>
+    <h2>気温35度が食材ロスを生む仕組み</h2>
+    <p>名古屋の夏は過酷だ。7月・8月の日中気温は35度を超える日が続き、厨房内の温度は体感40度に達することもある。この環境が食材の鮮度に直撃する。葉物野菜は冷蔵庫から出した瞬間から劣化が加速し、刺身用の魚は管理時間がさらに短くなる。生クリームやバターの扱いにも細心の注意が必要になる。</p>
+    <p>飲食業界では食材廃棄を「ロス」と呼ぶ。通常時のロス率（食材購入費に対する廃棄の割合）は2〜4%程度が目安とされるが、夏季は5〜8%まで上昇することがある。仮に月間食材費が100万円の店なら、夏季には追加で3〜4万円が文字通り「捨てられる」計算になる。これは直接的に原価率を押し上げる。</p>
+    <p>対処法として真剣な店は、夏季だけ発注頻度を上げる。月曜・水曜・金曜の週3回発注から、月・火・水・木・金の毎日発注に切り替えることで、在庫期間を短縮し鮮度ロスを最小化する。この変更により物流コストは上がるが、廃棄ロスとのトレードオフで採算が合う。</p>
+
+    <hr class="divider">
+    <p class="section-label">02 — Energy Costs</p>
+    <h2>冷房・冷蔵の電力費が跳ね上がる現実</h2>
+    <p>飲食店の固定費の中で、夏季に最も変動が大きいのが光熱費だ。客席の冷房はもちろんのこと、厨房の冷蔵庫・冷凍庫は夏季に消費電力が30〜40%増加することが業界内のデータで知られている。外気温が高いほど冷却システムへの負荷が増すためだ。</p>
+    <p>名古屋のような都市部では、飲食店の電力契約は「低圧電力」か「高圧電力」かで大きく料金体系が変わるが、どちらの契約であっても7月・8月の電力費は年間平均の1.3〜1.5倍になる店が多い。客席50席規模の店なら、夏季の追加電力費だけで月10万円を超えることも珍しくない。</p>
+    <p>この光熱費の上昇は原価とは別の話だが、FL比率（食材費＋人件費の売上に対する比率）という視点で見れば、利益に対する圧力として同じ方向に働く。賢い店は夏季のメニュー改訂でこのコスト増を吸収する設計をしている。</p>
+
+    <hr class="divider">
+    <p class="section-label">03 — Smart Menu Engineering</p>
+    <h2>原価率を下げずに夏を乗り切る「メニュー設計」</h2>
+    <p>夏季の原価上昇を単純に価格転嫁するのは、最善策ではない。賢い店は夏向けのメニュー設計で対応する。具体的には、「旬の食材で原価が下がるもの」をメニューの主軸に据えることだ。</p>
+    <p>夏が旬で、かつ比較的安価に仕入れられる食材には、茄子・ズッキーニ・とうもろこし・枝豆・トマト・おくらなどがある。これらは夏に流通量が増え、品質が上がるにもかかわらず価格が安定しやすい。高温でのロスリスクも葉物野菜より低い。これらを前面に出したメニューは、原価率を抑えながら「季節感」を演出できる優秀な設計だ。</p>
+    <p>逆に注意が必要なのは、夏に品質が下がりやすい食材を高単価メニューに使い続けることだ。たとえばバターを多用する料理や、繊細な生食材を中心にした料理は、夏季の管理コストが上昇する。こうした料理を「夏の定番」として売り続けると、知らず知らずのうちに原価率が上がり続ける。</p>
+
+    <div class="insider-box">
+      <p class="insider-title">Insider Note</p>
+      <p>飲食業界では「夏のランチはきつい」という認識が共有されている。理由のひとつが、ランチ客は価格感度が高く、高温管理が必要な食材を使った高単価メニューを注文しにくいという構造にある。ランチの客単価が上がらない一方で、冷房・食材管理コストは夜営業と同じかそれ以上にかかる。これが夏季のランチ営業を難しくさせている。名古屋の賢い店の中には、7月・8月だけランチ営業を休止するか、ランチのメニューを思い切って絞り込んで管理コストを下げる戦略を取るところもある。「夏にランチをやっていない店」は手抜きではなく、経営の合理的判断である場合が多い。</p>
+    </div>
+
+    <hr class="divider">
+    <p class="section-label">04 — What to Look For</p>
+    <h2>夏のメニューから店の「経営力」を読む</h2>
+    <p>夏のメニューを見れば、その店の経営センスがある程度わかる。夏野菜を積極的に使い、冷たい料理と温かい料理のバランスが工夫されており、価格帯が通年と大きく変わっていない店は、原価率管理の仕組みが整っている可能性が高い。</p>
+    <p>一方、冬のメニューとほとんど変わらないのに価格だけが上がっている店、あるいは「夏季限定」と称して食材管理コストの高いメニューを追加している店は、原価率上昇を表面的にしか対処していないことがある。お客として通う価値がある店かどうかを判断する一つの指標として、「夏のメニューの設計」を観察することを勧める。</p>
+    <p style="font-size:.78rem;color:var(--dim);line-height:1.8;">
+      <a href="index.html" style="color:var(--gold);text-decoration:none;">← Journal 一覧に戻る</a>
+      　｜
+      <a href="2026-07-14-menu-change-cycle.html" style="color:var(--gold);text-decoration:none;">メニュー変更サイクル →</a>
+    </p>
+  </div>
+</article>
+<section class="journal-footer">
+  <hr class="divider">
+  <p style="font-size:.75rem;color:var(--dim);line-height:2;">関連記事：
+    <a href="2026-07-14-menu-change-cycle.html" style="color:var(--gold);text-decoration:none;">メニュー変更サイクル：業界の理想頻度とは</a>
+    　／
+    <a href="2026-07-11-outdoor-seating-guide.html" style="color:var(--gold);text-decoration:none;">夏の名古屋、テラス席と屋外席のある店の選び方</a>
+  </p>
+</section>
+<footer>
+  <p><a href="../index.html">NAGOYA BITES</a> — 名古屋の飲食業界人が本当に通う店、1100件以上。</p>
+  <p style="margin-top:.5rem;"><a href="../features/editorial-policy.html">編集方針</a> ／ <a href="../features/no-fake-reviews.html">フェイクレビューゼロ宣言</a></p>
+</footer>
+</body>
+</html>
