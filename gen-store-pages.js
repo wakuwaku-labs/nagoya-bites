@@ -137,6 +137,15 @@ const TAG_TO_FEATURES = [
     file: 'nagoya-french-guide.html', label: '名古屋のフレンチ8選【2026年版】' },
   { match: s => /バー|ワインバー|ウイスキーバー|スピークイージー/.test(s['ジャンル']||''),
     file: 'nagoya-bar-guide.html', label: '名古屋のバー・ワインバー10選【2026年版】' },
+  // 新ガイド追加（2026-05-14）
+  { match: s => /ラーメン|らーめん|つけ麺|台湾まぜそば|担々麺|ちゃんぽん/.test(s['ジャンル']||''),
+    file: 'nagoya-ramen.html', label: '名古屋ラーメン おすすめ12選【2026年版】' },
+  { match: s => /とんかつ|トンカツ|カツ丼|味噌かつ/.test(s['ジャンル']||''),
+    file: 'nagoya-tonkatsu.html', label: '名古屋とんかつ・味噌かつ おすすめ10選【2026年版】' },
+  { match: s => /焼き鳥|焼鳥|串焼き|鳥料理/.test(s['ジャンル']||''),
+    file: 'nagoya-yakitori.html', label: '名古屋焼き鳥 おすすめ10選【2026年版】' },
+  { match: s => /カフェ|珈琲|コーヒー|喫茶|スイーツ|パティスリー|ケーキ/.test(s['ジャンル']||''),
+    file: 'nagoya-cafe.html', label: '名古屋カフェ おすすめ10選【2026年版】' },
   // 既存フォールバック
   { match: s => /イタリアン|フレンチ|ダイニングバー|バル|創作料理|ビストロ/.test(s['ジャンル']||''),
     file: 'date.html', label: '名古屋・デートディナー10選' },
