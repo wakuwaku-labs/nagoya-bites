@@ -43,11 +43,16 @@ jobs:
         env:
           HOTPEPPER_API_KEY: ${{ secrets.HOTPEPPER_API_KEY }}
 
+      - name: 季節特集の自動ローテーション（期間切れ特集を外す）
+        # data/featured.json を JST 当日で評価し index.html / features/index.html の特集ブロックを再生成。
+        # daily-journal.yml でも 7:00 JST に走る冗長な保険ステップ。スクリプトは冪等。
+        run: node scripts/build_featured.js
+
       - name: Commit & push if changed
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html sitemap.xml data/view_counts.json data/cross_check_flags.json
+          git add index.html features/index.html sitemap.xml data/view_counts.json data/cross_check_flags.json
           git diff --cached --quiet || git commit -m "chore: auto-update store data [skip actions]"
           git pull --rebase origin main || true
           git push || (sleep 5 && git pull --rebase origin main && git push)
