@@ -32,7 +32,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   "mainEntity": {
     "@type": "ItemList",
     "name": "NAGOYA BITES シーン別・エリア別・季節特集記事",
-    "numberOfItems": 48,
+    "numberOfItems": 50,
     "itemListElement": [
       {"@type":"ListItem","position":1,"name":"名古屋グルメ完全ガイド｜エリア・ジャンル・シーン別の決定版","url":"https://nagoya-bites.com/features/nagoya-gourmet-guide.html"},
       {"@type":"ListItem","position":2,"name":"母の日ディナー・ランチ10選","url":"https://nagoya-bites.com/features/mothers-day.html"},
@@ -81,7 +81,9 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       {"@type":"ListItem","position":45,"name":"名古屋 すき焼き・しゃぶしゃぶ おすすめ10選【2026年版】黒毛和牛・個室・接待・記念日 業界人厳選","url":"https://nagoya-bites.com/features/nagoya-sukiyaki.html"},
       {"@type":"ListItem","position":46,"name":"名古屋の餃子おすすめ10選【2026年版】一口餃子・手羽餃子・羽根つき 名古屋独自の餃子文化 業界人厳選","url":"https://nagoya-bites.com/features/nagoya-gyoza.html"},
       {"@type":"ListItem","position":47,"name":"名古屋 秋グルメ 2026 おすすめ10選 — 松茸・秋刀魚・栗・新米 食欲の秋 業界人厳選","url":"https://nagoya-bites.com/features/nagoya-autumn-2026.html"},
-      {"@type":"ListItem","position":48,"name":"名古屋 ステーキおすすめ10選【2026年版】黒毛和牛・熟成・炭火 接待・誕生日・記念日 業界人厳選","url":"https://nagoya-bites.com/features/nagoya-steak.html"}
+      {"@type":"ListItem","position":48,"name":"名古屋 ステーキおすすめ10選【2026年版】黒毛和牛・熟成・炭火 接待・誕生日・記念日 業界人厳選","url":"https://nagoya-bites.com/features/nagoya-steak.html"},
+      {"@type":"ListItem","position":49,"name":"名古屋 スイーツ・デザートおすすめ10選【2026年版】カフェ・パティスリー・和スイーツ 業界人厳選","url":"https://nagoya-bites.com/features/nagoya-sweets.html"},
+      {"@type":"ListItem","position":50,"name":"名古屋 接待ランチおすすめ10選【2026年版】個室・和食・創作 ビジネス会食 業界人厳選","url":"https://nagoya-bites.com/features/nagoya-settai-lunch.html"}
     ]
   }
 }
@@ -295,22 +297,6 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <!-- 季節特集ブロック: data/featured.json + scripts/build_featured.js が自動生成。期間外は自動的に消える。 -->
   <!-- FEATURED_SEASONAL_START -->
-  <a class="article-card is-season" href="mothers-day.html">
-    <div class="card-badge">
-      <span class="season-flag">5/10</span>
-      <div class="card-icon">💐</div>
-      <div class="card-category">Seasonal · 母の日</div>
-    </div>
-    <div class="card-body">
-      <div class="card-title">母の日ディナー・ランチ10選</div>
-      <p class="card-desc">個室・お母さんに感謝を</p>
-      <div class="card-meta">
-        <span class="card-count"></span>
-        <span class="card-cta">読む →</span>
-      </div>
-    </div>
-  </a>
-
   <a class="article-card is-season" href="spring-terrace.html">
     <div class="card-badge">
       <span class="season-flag">春限定</span>
@@ -970,6 +956,38 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
       <span class="season-flag">接待 · 誕生日</span>
       <div class="card-title">名古屋 ステーキおすすめ10選【2026年版】— 黒毛和牛・熟成・炭火 接待・誕生日 業界人厳選</div>
       <p class="card-desc">名古屋のステーキを現役飲食店経営者が厳選。熟成の透明性・火入れ技術・価格と体験のバランス——接待から誕生日まで対応できる10軒。</p>
+      <div class="card-meta">
+        <span class="card-count">10店掲載</span>
+        <span class="card-cta">読む →</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="article-card" href="nagoya-sweets.html">
+    <div class="card-badge">
+      <div class="card-icon">🍰</div>
+      <div class="card-category">スイーツ · デザート · カフェ 2026</div>
+    </div>
+    <div class="card-body">
+      <span class="season-flag">カフェ · パティスリー</span>
+      <div class="card-title">名古屋 スイーツ・デザートおすすめ10選【2026年版】— カフェ・パティスリー・和スイーツ 業界人厳選</div>
+      <p class="card-desc">名古屋のスイーツシーンを業界人が厳選。ケーキ・モンブラン・パフェ・和スイーツまで、本当においしい10店を素材・職人技術・店の個性で選定。</p>
+      <div class="card-meta">
+        <span class="card-count">10店掲載</span>
+        <span class="card-cta">読む →</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="article-card is-season" href="nagoya-settai-lunch.html">
+    <div class="card-badge">
+      <div class="card-icon">🍱</div>
+      <div class="card-category">接待ランチ · ビジネス会食 2026</div>
+    </div>
+    <div class="card-body">
+      <span class="season-flag">接待 · ビジネス</span>
+      <div class="card-title">名古屋 接待ランチおすすめ10選【2026年版】— 個室・和食・創作 ビジネス会食 業界人厳選</div>
+      <p class="card-desc">名古屋の接待ランチを現役飲食人が厳選。個室の確保可能性・サービス水準・価格と格の整合性で選んだ10軒。ビジネス会食に本当に使えるガイド。</p>
       <div class="card-meta">
         <span class="card-count">10店掲載</span>
         <span class="card-cta">読む →</span>
