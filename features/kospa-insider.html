@@ -114,7 +114,7 @@ nav{display:none;}
 .store-photo{flex-shrink:0;width:160px;height:120px;border-radius:4px;overflow:hidden;background:var(--bg2);}
 .store-photo img{width:100%;height:100%;object-fit:cover;}
 @media(max-width:640px){.store-photo{width:100%;height:180px;}}
-</style>
+.art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}.art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}@media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}</style>
 </head>
 <body>
 <header>
@@ -138,7 +138,10 @@ nav{display:none;}
 </nav>
 
 <article>
-  <div class="art-hero">
+  <div class="art-hero-image">
+  <img src="https://images.pexels.com/photos/9914198/pexels-photo-9914198.jpeg?auto=compress&cs=tinysrgb&w=1600&h=700&fit=crop" alt="コスパグルメ" loading="eager" fetchpriority="high">
+</div>
+<div class="art-hero">
     <p class="art-eyebrow">Cost Performance Analysis — 業界人のコスパ論</p>
     <h1 class="art-title">現役飲食人が選ぶ<br>名古屋のコスパ<em>最強</em>グルメ</h1>
     <div class="art-meta">
