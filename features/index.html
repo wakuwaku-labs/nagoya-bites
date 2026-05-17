@@ -121,9 +121,13 @@ nav a:hover,nav a.active{color:var(--text);}
 .articles-grid{max-width:900px;margin:0 auto;padding:1rem 1.5rem 4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
 .article-card{background:#fff;border:0.5px solid #D3D1C7;border-radius:8px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:box-shadow .2s,transform .15s;}
 .article-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1);transform:translateY(-2px);}
-.card-badge{padding:.85rem 1.2rem .6rem;border-bottom:1px solid var(--border);background:var(--bg2);}
-.card-icon{font-size:1.8rem;line-height:1;margin-bottom:.4rem;}
-.card-category{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;}
+.card-badge{position:relative;overflow:hidden;border-bottom:1px solid var(--border);height:130px;background:var(--bg2);}
+.card-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s;}
+.article-card:hover .card-img{transform:scale(1.05);}
+.card-badge .season-flag{position:absolute;top:.5rem;left:.75rem;z-index:1;}
+[style*="grid-column"] .card-badge{height:220px;}
+.card-icon{display:none;}
+.card-category{position:absolute;bottom:0;left:0;right:0;padding:.35rem .75rem;background:linear-gradient(transparent,rgba(0,0,0,.6));font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.2em;color:rgba(255,255,255,.9);text-transform:uppercase;}
 .card-body{padding:1rem 1.2rem 1.2rem;flex:1;display:flex;flex-direction:column;}
 .card-title{font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:.9rem;color:var(--white);line-height:1.5;margin-bottom:.5rem;}
 .card-desc{font-size:.74rem;line-height:1.8;color:var(--muted);flex:1;margin-bottom:.8rem;}
@@ -177,8 +181,8 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 <div class="articles-grid">
   <a class="article-card is-season" href="nagoya-gourmet-guide.html" style="grid-column:1/-1;border-color:rgba(122,92,16,.5);background:linear-gradient(135deg,#fff 0%,#fbf8f0 100%);">
     <div class="card-badge">
+      <img class="card-img" src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋グルメ" loading="lazy">
       <span class="season-flag">決定版ガイド</span>
-      <div class="card-icon">🍜</div>
       <div class="card-category">Complete Guide · 名古屋グルメ総合</div>
     </div>
     <div class="card-body">
@@ -193,7 +197,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-hitsumabushi.html">
     <div class="card-badge">
-      <div class="card-icon">🍱</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&h=260&q=80" alt="ひつまぶし" loading="lazy">
       <div class="card-category">名古屋めし · ひつまぶし</div>
     </div>
     <div class="card-body">
@@ -208,7 +212,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-miso-nikomi-udon.html">
     <div class="card-badge">
-      <div class="card-icon">🍲</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?auto=format&fit=crop&w=600&h=260&q=80" alt="味噌煮込みうどん" loading="lazy">
       <div class="card-category">名古屋めし · 味噌煮込み</div>
     </div>
     <div class="card-body">
@@ -223,7 +227,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-tebasaki.html">
     <div class="card-badge">
-      <div class="card-icon">🍗</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1562802378-063ec186a863?auto=format&fit=crop&w=600&h=260&q=80" alt="手羽先" loading="lazy">
       <div class="card-category">名古屋めし · 手羽先</div>
     </div>
     <div class="card-body">
@@ -238,7 +242,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-industry-pick-izakaya.html">
     <div class="card-badge">
-      <div class="card-icon">🍶</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1476224203421-74177e9d01ff?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋居酒屋" loading="lazy">
       <div class="card-category">業界人コラム · 居酒屋</div>
     </div>
     <div class="card-body">
@@ -253,7 +257,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-yakiniku-guide.html">
     <div class="card-badge">
-      <div class="card-icon">🔥</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1529694157872-4ac4b58d7e09?auto=format&fit=crop&w=600&h=260&q=80" alt="焼肉" loading="lazy">
       <div class="card-category">業界人コラム · 焼肉</div>
     </div>
     <div class="card-body">
@@ -268,7 +272,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-settai-secret.html">
     <div class="card-badge">
-      <div class="card-icon">🍷</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&h=260&q=80" alt="接待ディナー" loading="lazy">
       <div class="card-category">業界人コラム · 接待</div>
     </div>
     <div class="card-body">
@@ -283,7 +287,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-reservation-difficult.html">
     <div class="card-badge">
-      <div class="card-icon">🔥</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&h=260&q=80" alt="予約困難店" loading="lazy">
       <div class="card-category">業界人コラム · 予約困難の理由</div>
     </div>
     <div class="card-body">
@@ -300,8 +304,8 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
   <!-- FEATURED_SEASONAL_START -->
   <a class="article-card is-season" href="spring-terrace.html">
     <div class="card-badge">
+      <img class="card-img" src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&h=260&q=80" alt="春のテラス" loading="lazy">
       <span class="season-flag">春限定</span>
-      <div class="card-icon">🌸</div>
       <div class="card-category">Seasonal · 春テラス</div>
     </div>
     <div class="card-body">
@@ -317,7 +321,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="editorial-policy.html">
     <div class="card-badge">
-      <div class="card-icon">📖</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=600&h=260&q=80" alt="編集規約" loading="lazy">
       <div class="card-category">Editorial · 編集規約</div>
     </div>
     <div class="card-body">
@@ -332,7 +336,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="meieki.html">
     <div class="card-badge">
-      <div class="card-icon">🚄</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=600&h=260&q=80" alt="名駅エリア" loading="lazy">
       <div class="card-category">Area Guide · 名駅</div>
     </div>
     <div class="card-body">
@@ -347,7 +351,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="sakae.html">
     <div class="card-badge">
-      <div class="card-icon">🌃</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1549925126-a3b9de82fe89?auto=format&fit=crop&w=600&h=260&q=80" alt="栄・錦エリア" loading="lazy">
       <div class="card-category">Area Guide · 栄・錦</div>
     </div>
     <div class="card-body">
@@ -362,7 +366,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="banquet.html">
     <div class="card-badge">
-      <div class="card-icon">🍻</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1555396273-b5d0cd5f19f3?auto=format&fit=crop&w=600&h=260&q=80" alt="宴会・忘年会" loading="lazy">
       <div class="card-category">Banquet · 宴会</div>
     </div>
     <div class="card-body">
@@ -377,7 +381,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="private-room.html">
     <div class="card-badge">
-      <div class="card-icon">🚪</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&h=260&q=80" alt="個室グルメ" loading="lazy">
       <div class="card-category">Private Room · 個室</div>
     </div>
     <div class="card-body">
@@ -392,7 +396,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="birthday.html">
     <div class="card-badge">
-      <div class="card-icon">🎂</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1464349153174-2b9d97a0b4a9?auto=format&fit=crop&w=600&h=260&q=80" alt="誕生日ディナー" loading="lazy">
       <div class="card-category">Birthday · 誕生日</div>
     </div>
     <div class="card-body">
@@ -407,7 +411,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="date.html">
     <div class="card-badge">
-      <div class="card-icon">💑</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&h=260&q=80" alt="デートディナー" loading="lazy">
       <div class="card-category">Date Night · デート</div>
     </div>
     <div class="card-body">
@@ -422,7 +426,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="girls-party.html">
     <div class="card-badge">
-      <div class="card-icon">✨</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1555396273-b5d0cd5f19f3?auto=format&fit=crop&w=600&h=260&q=80" alt="女子会" loading="lazy">
       <div class="card-category">Girls' Night · 女子会</div>
     </div>
     <div class="card-body">
@@ -437,7 +441,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="large-group.html">
     <div class="card-badge">
-      <div class="card-icon">👥</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1555396273-b5d0cd5f19f3?auto=format&fit=crop&w=600&h=260&q=80" alt="大人数宴会" loading="lazy">
       <div class="card-category">Large Group · 大人数</div>
     </div>
     <div class="card-body">
@@ -452,7 +456,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-lunch-washoku.html">
     <div class="card-badge">
-      <div class="card-icon">🍱</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&h=260&q=80" alt="和食ランチ" loading="lazy">
       <div class="card-category">Lunch · 和食ランチ</div>
     </div>
     <div class="card-body">
@@ -467,7 +471,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="birthday-surprise.html">
     <div class="card-badge">
-      <div class="card-icon">🎉</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1464349153174-2b9d97a0b4a9?auto=format&fit=crop&w=600&h=260&q=80" alt="誕生日サプライズ" loading="lazy">
       <div class="card-category">Birthday · 誕生日サプライズ</div>
     </div>
     <div class="card-body">
@@ -482,7 +486,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="osu-food-walk.html">
     <div class="card-badge">
-      <div class="card-icon">🚶</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&h=260&q=80" alt="大須食べ歩き" loading="lazy">
       <div class="card-category">Area Guide · 大須食べ歩き</div>
     </div>
     <div class="card-body">
@@ -497,7 +501,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="industry-insiders-pick.html">
     <div class="card-badge">
-      <div class="card-icon">👨‍🍳</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&h=260&q=80" alt="業界人推薦" loading="lazy">
       <div class="card-category">Industry Insider · 業界人推薦</div>
     </div>
     <div class="card-body">
@@ -512,7 +516,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="hard-to-book.html">
     <div class="card-badge">
-      <div class="card-icon">📅</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&h=260&q=80" alt="予約困難店攻略" loading="lazy">
       <div class="card-category">Reservation Guide · 予約困難攻略</div>
     </div>
     <div class="card-body">
@@ -527,7 +531,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="settai-guide.html">
     <div class="card-badge">
-      <div class="card-icon">🤝</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&h=260&q=80" alt="接待完全マニュアル" loading="lazy">
       <div class="card-category">Business Dining · 接待完全攻略</div>
     </div>
     <div class="card-body">
@@ -542,7 +546,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="kospa-insider.html">
     <div class="card-badge">
-      <div class="card-icon">💡</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1476224203421-74177e9d01ff?auto=format&fit=crop&w=600&h=260&q=80" alt="コスパ最強グルメ" loading="lazy">
       <div class="card-category">Cost Performance · 業界人のコスパ論</div>
     </div>
     <div class="card-body">
@@ -557,7 +561,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="enmkai-kanji.html">
     <div class="card-badge">
-      <div class="card-icon">🎉</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1555396273-b5d0cd5f19f3?auto=format&fit=crop&w=600&h=260&q=80" alt="宴会幹事マニュアル" loading="lazy">
       <div class="card-category">Banquet Planning · 幹事完全攻略</div>
     </div>
     <div class="card-body">
@@ -572,7 +576,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-yakiniku.html">
     <div class="card-badge">
-      <div class="card-icon">🥩</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1529694157872-4ac4b58d7e09?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋焼肉" loading="lazy">
       <div class="card-category">Yakiniku · 焼肉完全ガイド</div>
     </div>
     <div class="card-body">
@@ -587,7 +591,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-solo-dining.html">
     <div class="card-badge">
-      <div class="card-icon">🍶</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1476224203421-74177e9d01ff?auto=format&fit=crop&w=600&h=260&q=80" alt="一人飲み" loading="lazy">
       <div class="card-category">Solo Dining · 一人飲み完全ガイド</div>
     </div>
     <div class="card-body">
@@ -602,7 +606,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-korean.html">
     <div class="card-badge">
-      <div class="card-icon">🇰🇷</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1563563240-68a7e7e05a48?auto=format&fit=crop&w=600&h=260&q=80" alt="韓国料理" loading="lazy">
       <div class="card-category">Korean Cuisine · 韓国料理完全ガイド</div>
     </div>
     <div class="card-body">
@@ -617,7 +621,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-sushi-guide.html">
     <div class="card-badge">
-      <div class="card-icon">🍣</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋の鮨" loading="lazy">
       <div class="card-category">Sushi · 鮨・おまかせガイド【2026年版】</div>
     </div>
     <div class="card-body">
@@ -632,7 +636,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-italian-guide.html">
     <div class="card-badge">
-      <div class="card-icon">🍝</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1555396273-b5d0cd5f19f3?auto=format&fit=crop&w=600&h=260&q=80" alt="イタリアン" loading="lazy">
       <div class="card-category">Italian · 本格イタリアン【2026年版】</div>
     </div>
     <div class="card-body">
@@ -647,7 +651,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-seafood.html">
     <div class="card-badge">
-      <div class="card-icon">🐟</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1534766555764-ce878a5e3a2b?auto=format&fit=crop&w=600&h=260&q=80" alt="海鮮・魚介" loading="lazy">
       <div class="card-category">Seafood · 海鮮・魚介完全ガイド【2026年版】</div>
     </div>
     <div class="card-body">
@@ -662,7 +666,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-french-guide.html">
     <div class="card-badge">
-      <div class="card-icon">🥂</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&h=260&q=80" alt="フレンチ" loading="lazy">
       <div class="card-category">French · フレンチ接待・デートガイド【2026年版】</div>
     </div>
     <div class="card-body">
@@ -677,7 +681,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-bar-guide.html">
     <div class="card-badge">
-      <div class="card-icon">🥃</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=600&h=260&q=80" alt="バー・ワインバー" loading="lazy">
       <div class="card-category">Bar · バー・ワインバー完全ガイド【2026年版】</div>
     </div>
     <div class="card-body">
@@ -692,7 +696,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-chinese-guide.html">
     <div class="card-badge">
-      <div class="card-icon">🥢</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&h=260&q=80" alt="中華料理" loading="lazy">
       <div class="card-category">Chinese · 中華料理接待・宴会ガイド【2026年版】</div>
     </div>
     <div class="card-body">
@@ -707,7 +711,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-ramen.html">
     <div class="card-badge">
-      <div class="card-icon">🍜</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋ラーメン" loading="lazy">
       <div class="card-category">Ramen · 名古屋ラーメンガイド【2026年版】</div>
     </div>
     <div class="card-body">
@@ -722,7 +726,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-cafe.html">
     <div class="card-badge">
-      <div class="card-icon">☕</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1495474472930-4204df73b6e6?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋カフェ" loading="lazy">
       <div class="card-category">Cafe · 名古屋カフェガイド【2026年版】</div>
     </div>
     <div class="card-body">
@@ -737,7 +741,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-tonkatsu.html">
     <div class="card-badge">
-      <div class="card-icon">🥩</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&h=260&q=80" alt="とんかつ・味噌かつ" loading="lazy">
       <div class="card-category">Tonkatsu · 名古屋とんかつ・味噌かつガイド【2026年版】</div>
     </div>
     <div class="card-body">
@@ -752,7 +756,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-yakitori.html">
     <div class="card-badge">
-      <div class="card-icon">🍢</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1519984388953-d2406bc725e1?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋焼き鳥" loading="lazy">
       <div class="card-category">Yakitori · 名古屋焼き鳥ガイド【2026年版】</div>
     </div>
     <div class="card-body">
@@ -767,7 +771,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="fathers-day-2026.html">
     <div class="card-badge">
-      <div class="card-icon">👔</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&h=260&q=80" alt="父の日ディナー" loading="lazy">
       <div class="card-category">Seasonal · 父の日 名古屋 2026</div>
     </div>
     <div class="card-body">
@@ -782,7 +786,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-bar.html">
     <div class="card-badge">
-      <div class="card-icon">🍸</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=600&h=260&q=80" alt="バー・カクテル" loading="lazy">
       <div class="card-category">Bar &amp; Cocktail · バー・カクテル 2026</div>
     </div>
     <div class="card-body">
@@ -797,7 +801,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-unaju.html">
     <div class="card-badge">
-      <div class="card-icon">🐟</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&h=260&q=80" alt="うなぎ・ひつまぶし" loading="lazy">
       <div class="card-category">うなぎ · ひつまぶし 2026</div>
     </div>
     <div class="card-body">
@@ -812,7 +816,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-summer-2026.html">
     <div class="card-badge">
-      <div class="card-icon">☀️</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋夏グルメ" loading="lazy">
       <div class="card-category">夏グルメ · Summer 2026</div>
     </div>
     <div class="card-body">
@@ -827,7 +831,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-dining-bar.html">
     <div class="card-badge">
-      <div class="card-icon">🍷</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&h=260&q=80" alt="ダイニングバー・バル" loading="lazy">
       <div class="card-category">ダイニングバー · バル 2026</div>
     </div>
     <div class="card-body">
@@ -842,7 +846,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-morning.html">
     <div class="card-badge">
-      <div class="card-icon">☕</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1495474472930-4204df73b6e6?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋モーニング" loading="lazy">
       <div class="card-category">名古屋モーニング · 喫茶文化 2026</div>
     </div>
     <div class="card-body">
@@ -857,7 +861,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card is-season" href="nagoya-teppanyaki.html">
     <div class="card-badge">
-      <div class="card-icon">🥩</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋鉄板焼き" loading="lazy">
       <div class="card-category">鉄板焼き · 接待 · 個室 2026</div>
     </div>
     <div class="card-body">
@@ -873,7 +877,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-yoshoku.html">
     <div class="card-badge">
-      <div class="card-icon">🍳</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋洋食" loading="lazy">
       <div class="card-category">洋食 · ハンバーグ · オムライス 2026</div>
     </div>
     <div class="card-body">
@@ -888,7 +892,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-kakuozan.html">
     <div class="card-badge">
-      <div class="card-icon">🌿</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1476224203421-74177e9d01ff?auto=format&fit=crop&w=600&h=260&q=80" alt="覚王山グルメ" loading="lazy">
       <div class="card-category">覚王山 · 本山 · エリア特集 2026</div>
     </div>
     <div class="card-body">
@@ -903,7 +907,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card is-season" href="nagoya-sukiyaki.html">
     <div class="card-badge">
-      <div class="card-icon">🍲</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&h=260&q=80" alt="すき焼き・しゃぶしゃぶ" loading="lazy">
       <div class="card-category">すき焼き · しゃぶしゃぶ · 個室 2026</div>
     </div>
     <div class="card-body">
@@ -919,7 +923,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-gyoza.html">
     <div class="card-badge">
-      <div class="card-icon">🥟</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋餃子" loading="lazy">
       <div class="card-category">餃子 · 一口餃子 · 手羽餃子 2026</div>
     </div>
     <div class="card-body">
@@ -934,7 +938,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card is-season" href="nagoya-autumn-2026.html">
     <div class="card-badge">
-      <div class="card-icon">🍂</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1534766555764-ce878a5e3a2b?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋秋グルメ" loading="lazy">
       <div class="card-category">秋グルメ · 松茸 · 秋刀魚 2026</div>
     </div>
     <div class="card-body">
@@ -950,7 +954,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card is-season" href="nagoya-steak.html">
     <div class="card-badge">
-      <div class="card-icon">🥩</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋ステーキ" loading="lazy">
       <div class="card-category">ステーキ · 熟成肉 · 黒毛和牛 2026</div>
     </div>
     <div class="card-body">
@@ -966,7 +970,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-sweets.html">
     <div class="card-badge">
-      <div class="card-icon">🍰</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1464349153174-2b9d97a0b4a9?auto=format&fit=crop&w=600&h=260&q=80" alt="スイーツ・デザート" loading="lazy">
       <div class="card-category">スイーツ · デザート · カフェ 2026</div>
     </div>
     <div class="card-body">
@@ -982,7 +986,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card is-season" href="nagoya-settai-lunch.html">
     <div class="card-badge">
-      <div class="card-icon">🍱</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&h=260&q=80" alt="接待ランチ" loading="lazy">
       <div class="card-category">接待ランチ · ビジネス会食 2026</div>
     </div>
     <div class="card-body">
@@ -998,7 +1002,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 
   <a class="article-card" href="nagoya-izakaya.html">
     <div class="card-badge">
-      <div class="card-icon">🍶</div>
+      <img class="card-img" src="https://images.unsplash.com/photo-1476224203421-74177e9d01ff?auto=format&fit=crop&w=600&h=260&q=80" alt="名古屋居酒屋" loading="lazy">
       <div class="card-category">居酒屋 · 日本酒 · 名古屋コーチン 2026</div>
     </div>
     <div class="card-body">

@@ -184,7 +184,45 @@ SEO:
    - index.htmlのデザイントーンに合わせる
    - SEO要素を全て含める
 
-5. features/index.html にカードを追加
+5. features/index.html にカードを追加（写真カードのパターン）
+
+   カードの HTML テンプレートは以下の通り（絵文字は使わない）:
+
+   ```html
+   <a class="article-card" href="SLUG.html">
+     <div class="card-badge">
+       <img class="card-img" src="https://images.unsplash.com/photo-UNSPLASH_ID?auto=format&fit=crop&w=600&h=260&q=80" alt="記事の説明" loading="lazy">
+       <!-- 季節・シーン限定の場合のみ season-flag を追加 -->
+       <!-- <span class="season-flag">季節ラベル</span> -->
+       <div class="card-category">カテゴリ英語 · 日本語サブ</div>
+     </div>
+     <div class="card-body">
+       <!-- 季節フラグをここに入れることもできる -->
+       <div class="card-title">記事タイトル</div>
+       <p class="card-desc">120字以内の説明文。</p>
+       <div class="card-meta">
+         <span class="card-count">N店掲載</span>
+         <span class="card-cta">読む →</span>
+       </div>
+     </div>
+   </a>
+   ```
+
+   **Unsplash 写真の選び方:**
+   - `https://images.unsplash.com/photo-{ID}?auto=format&fit=crop&w=600&h=260&q=80` 形式
+   - 記事カテゴリに合う食べ物・店内の写真を選ぶ
+   - 主要 ID 参照表（よく使うもの）:
+     - 和食・日本料理一般: `1547592180-85f173990554`
+     - 焼肉・グリル肉: `1529694157872-4ac4b58d7e09`
+     - 鮨・海鮮: `1553621042-f6e147245754` / `1534766555764-ce878a5e3a2b`
+     - ラーメン・麺: `1569050467447-ce54b3bbc37d`
+     - バー・カクテル: `1546171753-97d7676e4602`
+     - カフェ・コーヒー: `1495474472930-4204df73b6e6`
+     - ステーキ・とんかつ: `1546069901-ba9599a7e63c`
+     - 高級ダイニング・接待: `1414235077428-338989a2e8c0`
+     - 宴会・グループ: `1555396273-b5d0cd5f19f3`
+     - デザート・誕生日: `1464349153174-2b9d97a0b4a9`
+     - 屋外・テラス・夏: `1530103862676-de8c9debad1d`
 
 6. Orchestratorに品質レビューを依頼
 ```
