@@ -8,6 +8,9 @@ on:
     - cron: '30 20 * * *'
   workflow_dispatch: # 手動実行（テスト・リカバリ用）
 
+permissions:
+  contents: write
+
 jobs:
   daily-trending5:
     runs-on: ubuntu-latest
@@ -40,15 +43,17 @@ jobs:
         run: |
           git config user.name  "NAGOYA BITES Daily"
           git config user.email "daily@nagoya-bites"
-          git add data/daily_trending5.json index.html sitemap.xml stores/ 2>/dev/null || true
+          git add data/daily_trending5.json index.html sitemap.xml stores/ page-names.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "コミット対象の変更がありません。"
             exit 0
           fi
           TODAY_JST=$(TZ=Asia/Tokyo date +%Y-%m-%d)
           git commit -m "[agent] 今日の話題店TOP5: ${TODAY_JST}"
-          # 競合回避のため rebase してからプッシュ
+          # 競合回避: 残った未追跡/未ステージの変更を stash してから rebase
+          git stash --include-untracked 2>/dev/null || true
           git pull --rebase origin main || true
+          git stash pop 2>/dev/null || true
           git push || (sleep 10 && git pull --rebase origin main && git push)
 
       - name: 実行ログ
