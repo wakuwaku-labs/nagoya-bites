@@ -50,10 +50,10 @@ jobs:
           fi
           TODAY_JST=$(TZ=Asia/Tokyo date +%Y-%m-%d)
           git commit -m "[agent] 今日の話題店TOP5: ${TODAY_JST}"
-          # 競合回避: 残った未追跡/未ステージの変更を stash してから rebase
-          git stash --include-untracked 2>/dev/null || true
-          git pull --rebase origin main || true
-          git stash pop 2>/dev/null || true
+          # build.js が生成する残余ファイルを破棄してから rebase（再実行時に再生成されるため安全）
+          git checkout -- . 2>/dev/null || true
+          git clean -fd 2>/dev/null || true
+          git pull --rebase origin main
           git push || (sleep 10 && git pull --rebase origin main && git push)
 
       - name: 実行ログ
