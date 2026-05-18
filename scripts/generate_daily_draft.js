@@ -126,9 +126,10 @@ const GENRE_PHOTO_MAP = {
     { id: 'photo-1514190051997-0f6f39ca5cde', credit_name: 'Mahmud Ahsan',         credit_url: 'https://unsplash.com/photos/IfGMHGlOyeQ' },
     { id: 'photo-1579871494447-9811cf80d66c', credit_name: 'Louis Hansel',          credit_url: 'https://unsplash.com/photos/lCyMYOaEwqk' },
   ],
-  // ラーメン: ラーメンボウル
+  // ラーメン: ラーメンボウル（卵入りクローズアップ／具材豊富な俯瞰）
   'ラーメン': [
-    { id: 'photo-1553621042-f6e147245754', credit_name: 'Hana Oliver', credit_url: 'https://unsplash.com/photos/TtA9CQrxRQI' },
+    { id: 'photo-1569718212165-3a8278d5f624', credit_name: 'Michele Blackwell', credit_url: 'https://unsplash.com/photos/rAyCBQTH7ws' },
+    { id: 'photo-1638866281450-3933540af86a', credit_name: 'Marek Studzinski',  credit_url: 'https://unsplash.com/photos/NHEL1M1Cv-A' },
   ],
   // 焼き鳥: カツ系フライ / 盛り合わせ
   '焼き鳥': [
@@ -181,7 +182,7 @@ const CONCEPT_PHOTO_MAP = [
     photo: { id: 'photo-1514190051997-0f6f39ca5cde', credit_name: 'Mahmud Ahsan', credit_url: 'https://unsplash.com/photos/IfGMHGlOyeQ' } },
   // ラーメン
   { keywords: ['ラーメン', '拉麺', '麺'],
-    photo: { id: 'photo-1553621042-f6e147245754', credit_name: 'Hana Oliver', credit_url: 'https://unsplash.com/photos/TtA9CQrxRQI' } },
+    photo: { id: 'photo-1569718212165-3a8278d5f624', credit_name: 'Michele Blackwell', credit_url: 'https://unsplash.com/photos/rAyCBQTH7ws' } },
   // 店内・雰囲気重視
   { keywords: ['隠れ家', '路地', '暖簾', '一軒家'],
     photo: { id: 'photo-1517248135467-4c7edcad34c4', credit_name: 'Nikola Johnny Mirkovic', credit_url: 'https://unsplash.com/photos/4YzrcDNcRVg' } },
