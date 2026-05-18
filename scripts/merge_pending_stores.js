@@ -27,15 +27,23 @@ const PENDING = path.join(ROOT, 'data', 'pending_stores.json');
 function toLocalStoreShape(p) {
   const name = p['店名'] || '';
   const q = encodeURIComponent(name + ' 名古屋');
+  // アクセスは品質フィルタ通過条件（CLAUDE.md）— 未設定なら エリア＋「名古屋」を補完
+  const area = p['エリア'] || '';
+  let access = p['アクセス'] || '';
+  if (!access) {
+    access = area ? `${area}（名古屋市内）` : '名古屋市内';
+  } else if (!/名古屋/.test(access) && area) {
+    access = `${access}（${area} / 名古屋市内）`;
+  }
   return {
     '店名': name,
     '英語名': '',
     'ジャンル': p['ジャンル'] || '',
-    'エリア': p['エリア'] || '',
+    'エリア': area,
     '都道府県': '愛知県',
     '価格帯': p['価格帯'] || '',
     '営業時間': '',
-    'アクセス': p['アクセス'] || '',
+    'アクセス': access,
     'ホットペッパーID': p.hotpepper_id || '',
     '写真URL': '',
     'Instagram': p.instagram_handle ? `https://www.instagram.com/${p.instagram_handle}/` : '',

@@ -30,7 +30,7 @@
  *     "body_html": "<p>本文HTML</p>",
  *     "insider_points": ["業界人視点1", "業界人視点2", "業界人視点3"],
  *     "stores": [{ "name": "店名", "id": "", "genre": "", "area": "", "score": "★4.3", "desc": "", "link": "https://..." }],
- *     "sources": [{ "label": "情報源名", "url": "https://..." }],
+ *     "sources": [{ "label": "情報源名", "url": "https://...", "date": "2026-05-15 (任意 — 掲載日。表示時に併記される)" }],
  *     "photo_suggestions": [
  *       {
  *         "type": "store_instagram | google_maps | stock_keyword | shot_type",
@@ -92,7 +92,10 @@ function buildInsiderPoints(points) {
 
 function buildSources(sources) {
   if (!sources || sources.length === 0) return '';
-  const items = sources.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join('、 ');
+  const items = sources.map(s => {
+    const link = `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`;
+    return s.date ? `${link}<span class="source-date">（${esc(s.date)}掲載）</span>` : link;
+  }).join('、 ');
   return `<div class="source-note"><strong>情報源:</strong> ${items}</div>`;
 }
 
