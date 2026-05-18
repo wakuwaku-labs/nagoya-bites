@@ -103,6 +103,7 @@ jobs:
           - var LOCAL_STORES = [...]; のパターンを絶対に壊さない
           - テキストはすべて日本語
           - QAゲートを通過するまでデプロイしない
+          - ナビゲーション（#main-nav 内）のリンク構成を変更・追加・削除しない。現在の構成をそのまま維持すること
           " --no-update-sonnet
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
