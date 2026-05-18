@@ -114,7 +114,31 @@ function checkJournal(htmlPath, mdPath) {
     pass(10, true, '今日の1軒以外のためスキップ');
   }
 
-  // 11. ヒーロー画像の存在と品質チェック
+  // 11. sources 必須（最低3件）
+  const sourceNoteMatch = html.match(/<div class="source-note">([\s\S]*?)<\/div>/);
+  const sourceLinks = sourceNoteMatch ? Array.from(sourceNoteMatch[1].matchAll(/<a\s[^>]*href="[^"]+"/g)) : [];
+  pass('11_sources_required', sourceLinks.length >= 3,
+    sourceLinks.length >= 3 ? `情報源 ${sourceLinks.length}件 OK` : `情報源が${sourceLinks.length}件しかありません (最低3件必要 — X/Note/PR TIMES/各メディアから引用してください)`);
+
+  // 12. 最新情報フレーズ（本文に「2026年X月」「直近」「最近」「先週」「今週」のいずれか）
+  const artBodyMatch = html.match(/<div class="art-body">([\s\S]*?)<\/div>\s*<footer/);
+  const artBody = artBodyMatch ? artBodyMatch[1] : html;
+  const recencyPhraseRe = /20\d{2}年\s*\d{1,2}\s*月|直近|最近|先週|今週/;
+  pass('12_recency_phrase', recencyPhraseRe.test(artBody),
+    recencyPhraseRe.test(artBody) ? '最新情報フレーズあり OK' : '本文に最新情報フレーズ（「2026年X月」「直近」「最近」「先週」「今週」のいずれか）が見つかりません');
+
+  // 13. 直近30日ソース（WARNING — 失敗しても他がPASSなら全体PASS）
+  const today13 = path.basename(htmlPath).slice(0, 10);
+  const dateRefs = sourceNoteMatch ? Array.from(sourceNoteMatch[1].matchAll(/(20\d{2}-\d{2}-\d{2})/g)).map(m => m[1]) : [];
+  let hasRecent30 = false;
+  for (const d of dateRefs) {
+    const days = Math.abs(new Date(d + 'T00:00:00+09:00') - new Date(today13 + 'T00:00:00+09:00')) / 86400000;
+    if (days <= 30) { hasRecent30 = true; break; }
+  }
+  results.push({ id: '13_recent_source_warn', ok: true, warn: !hasRecent30,
+    msg: hasRecent30 ? '直近30日のソースあり OK' : `⚠️ WARNING: 直近30日のソース日付が見つかりません（sources[].date を設定してください）` });
+
+  // 14. ヒーロー画像の存在と品質チェック
   // art-hero-img（通常の画像）または art-hero-ig（Instagramエンベッド）のどちらかがあればOK
   const hasHeroImg = /class="art-hero-img"/.test(html);
   const hasHeroIg = /class="art-hero-ig"/.test(html);
@@ -126,15 +150,15 @@ function checkJournal(htmlPath, mdPath) {
   const ogImageSrc = (html.match(/<meta property="og:image" content="([^"]+)"/) || [])[1] || '';
   const hasStaleOgCache = ogImageSrc.includes('loremflickr.com/cache/resized/');
   if (!hasHero) {
-    pass(11, false, '⚠️ ヒーロー画像がありません (art-hero-img / art-hero-ig が見つからない) — 写真の自動取得が失敗した可能性があります');
+    pass(14, false, '⚠️ ヒーロー画像がありません (art-hero-img / art-hero-ig が見つからない) — 写真の自動取得が失敗した可能性があります');
   } else if (hasStaleCache || hasStaleOgCache) {
     const staleUrl = hasStaleCache ? heroSrc : ogImageSrc;
-    pass(11, false, `⚠️ 失効しやすいLoremflickrキャッシュURLが使われています: ${staleUrl.slice(0,80)}... → source URLへ差し替えてください`);
+    pass(14, false, `⚠️ 失効しやすいLoremflickrキャッシュURLが使われています: ${staleUrl.slice(0,80)}... → source URLへ差し替えてください`);
   } else if (hasHeroIg) {
     const igPermalink = (html.match(/data-instgrm-permalink="([^"]+)"/) || [])[1] || '';
-    pass(11, true, `Instagramエンベッドあり: ${igPermalink.slice(0, 80)}...`);
+    pass(14, true, `Instagramエンベッドあり: ${igPermalink.slice(0, 80)}...`);
   } else {
-    pass(11, true, `ヒーロー画像OK: ${heroSrc.slice(0, 80)}...`);
+    pass(14, true, `ヒーロー画像OK: ${heroSrc.slice(0, 80)}...`);
   }
 
   return results;
@@ -144,13 +168,14 @@ if (require.main === module) {
   const [htmlPath, mdPath] = process.argv.slice(2);
   if (!htmlPath) { console.error('使い方: node scripts/validate_journal_draft.js <html> [md]'); process.exit(2); }
   const results = checkJournal(htmlPath, mdPath);
-  let failed = 0;
+  let failed = 0, warned = 0;
   results.forEach(r => {
-    const mark = r.ok ? '✅' : '❌';
+    const mark = !r.ok ? '❌' : r.warn ? '⚠️ ' : '✅';
     console.log(`${mark} [${r.id}] ${r.msg}`);
     if (!r.ok) failed++;
+    if (r.warn) warned++;
   });
-  console.log(`\n${failed === 0 ? '✅ PASS' : '❌ FAIL (' + failed + '件)'}`);
+  console.log(`\n${failed === 0 ? '✅ PASS' : '❌ FAIL (' + failed + '件)'}${warned ? ` / WARN ${warned}件` : ''}`);
   process.exit(failed === 0 ? 0 : 1);
 }
 

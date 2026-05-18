@@ -313,6 +313,8 @@ retrip / ヒトサラ / PR TIMES / 番組公式 / note 等）から採用OK。
      "店名": "〇〇",
      "ジャンル": "〇〇",
      "エリア": "栄 / 名駅 等",
+     "アクセス": "〇〇駅 徒歩X分（名古屋市〇区）",
+     "価格帯": "1001～2000円",
      "情報源": "https://元記事URL",
      "おすすめポイント": "60-120字",
      "営業状況": "営業中",
@@ -321,6 +323,8 @@ retrip / ヒトサラ / PR TIMES / 番組公式 / note 等）から採用OK。
      "merged": false
    }
    ```
+   - **`アクセス` 必須**（CLAUDE.md「品質フィルタ通過条件」）— 文字列に「名古屋」または名古屋固有駅名を含める。未指定時は merge_pending_stores.js がエリアから補完するが、できる限り情報源から手動記入
+   - **`価格帯` も推定でよいので入れる**（「1001～2000円」「3001～5000円」等）。空だと予算フィルタに引っかからない
 2. 次回 `node build.js` 実行時に `scripts/merge_pending_stores.js` のロジックで
    LOCAL_STORES にマージされる(`データソース="外部媒体"` を付与)
 3. 記事末尾の `sources` に **必ず** 情報源URLを明記(信頼性担保)
@@ -336,23 +340,49 @@ retrip / ヒトサラ / PR TIMES / 番組公式 / note 等）から採用OK。
 ### 日次作業フロー
 
 ```
-1. agents/orchestrator.md / agents/editor.md を読む
-2. node scripts/pick_daily_topic.js                     # テーマと候補を取得
-3. Editor が本文を執筆(独自性3要件を満たす)
-4. input.json を /tmp に書く
-5. node scripts/generate_daily_draft.js /tmp/input.json # HTML + md 生成
-6. node scripts/validate_journal_draft.js <html> <md>   # 10項目QA
-7. ドラフトを journal/ へ移動
-8. data/journal_published.json に追記
-9. node scripts/build_journal_index.js                  # 一覧+RSS+トップ更新
-10. node build.js                                        # sitemap + pending取込
-11. ユーザー承認 → git push
-12. docs/daily-posts/YYYY-MM-DD.md を Note/IG/X にコピペ投稿
+1.  agents/orchestrator.md / agents/editor.md を読む
+2.  node scripts/pick_daily_topic.js                     # テーマと候補を取得
+2.5 最新情報リサーチ（必須）
+    a. node scripts/fetch_trending_articles.js suggest-queries <theme> [genre] [area]
+    b. WebSearch / WebFetch で X / Note / PR TIMES / 各メディアを直近1週間で確認
+    c. /tmp/research-notes-YYYY-MM-DD.md に保存
+    d. 新規話題店があれば node scripts/fetch_trending_articles.js ingest-json /tmp/buzz.json
+3.  候補アングル5本を /tmp/journal-candidates-YYYY-MM-DD.json に書き出す
+3.5 node scripts/score_journal_candidates.js → 95点以上の候補を採用
+    < 95点なら追加候補→拡張リサーチ→救援プール→最終救援の4ラウンドで必ず95+到達
+    （**当日公開スキップは禁止**）
+4.  採用候補1本のみ本文を執筆（独自性3要件 + 最新情報フレーズ + sources≥3件）
+5.  input.json を /tmp に書く
+6.  node scripts/generate_daily_draft.js /tmp/input.json # HTML + md 生成
+7.  node scripts/validate_journal_draft.js <html> <md>   # 14項目QA（sources/最新情報含む）
+8.  ドラフトを journal/ へ移動
+9.  data/journal_published.json に追記
+10. node scripts/build_journal_index.js                  # 一覧+RSS+トップ更新
+11. node build.js                                        # sitemap + pending取込
+12. ユーザー承認 → git push
+13. docs/daily-posts/YYYY-MM-DD.md を Note/IG/X にコピペ投稿
 ```
+
+### 最新情報リサーチ（Step 2.5）の運用ルール
+
+- **WebSearch クエリの優先順**: `site:x.com` → `site:twitter.com` → `site:note.com` → `site:prtimes.jp` → 一般トレンド → 各メディア
+- **フォールバック順序**: X が失敗（クエリ結果ゼロ）の日は Note / PR TIMES / メディアでカバー
+- **直近30日以内のソース1件以上は必須**（validator が WARN を出す）
+- リサーチ結果の話題店は `trending_stores.json` に `ingest-json` で取り込む（出典URLも保存）
+
+### 候補生成 → 採点 → 95点ゲート（Step 3）の運用ルール
+
+- 候補は最低5本生成。本文は書かず、**リード150字 + angle 1行 + sources 3件以上** のみ
+- スコアリングは決定的（`scripts/score_journal_candidates.js`）。LLM ジャッジなし
+- **重複は採点前に「即失格」**（同一店舗90日 / 同一コラム180日 / タイトル類似 / リード類似 / theme+店+angle 一致）
+- **95点未達ならリトライ必須**（公開スキップは禁止）
+- 救援プール用に `editorial_column_backlog.json` の未使用ストックを **常時20本以上維持**（使用後は補充）
 
 ### 失敗しないための注意点
 
+- **重複は即失格ゲートで弾く** → 同店90日 / 同コラム180日 / タイトル類似 / リード類似（`score_journal_candidates.js` が判定）
 - 30日以内の再掲禁止 → `journal_published.json` を `pick_daily_topic.js` が自動判定
 - 連続2日同ジャンル禁止 → Editor が目視確認
 - 閉店店舗の掲載禁止 → validator と `audit_journal.js`(月次) の二重チェック
 - 業界コラムは同カテゴリ60日以内の連投禁止
+- **当日公開ゼロは絶対NG** → 4ラウンドフォールバックで必ず95+到達させる
