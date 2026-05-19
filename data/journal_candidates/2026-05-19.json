@@ -1,0 +1,212 @@
+{
+  "date": "2026-05-19",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄『かき氷 うと』名古屋初出店を業界人視点で読む",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=50 → 10",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (価格帯,席,予約,シーン,繁忙,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 5件 +4",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "庄内緑地公園『Nero』を業界人視点で読む",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=50 → 10",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (価格帯,席,予約,シーン,デート,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 21字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "大須『ヨアジョン』韓国400店ブランドを業界人視点で読む",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=60 → 10",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (価格帯,席,予約,シーン,デート,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 5件 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "『かき氷 うと』栄出店の業態経済を読む",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=50 → 10",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (価格帯,予約,シーン,デート,繁忙,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 4件 +4",
+          "title 19字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "庄内『Nero』名古屋初の塩パン専門業態を読む",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=50 → 10",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 5件 (価格帯,席,予約,シーン,デート)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 23字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "fallback_needed": false
+}
