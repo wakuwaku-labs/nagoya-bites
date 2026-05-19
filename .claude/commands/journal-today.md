@@ -142,24 +142,40 @@ node scripts/score_journal_candidates.js /tmp/journal-candidates-YYYY-MM-DD.json
 
 外部媒体から引用する場合、記事末尾の `sources` に情報源URL（と掲載日 `date`）を必ず明記。
 
-### 3.6. 写真候補の調査
+### 3.6. 写真調査 — **実店舗写真の取得を必須化**
 
-input.json の `photo_suggestions[]` に含めるため、以下を調査してから記事執筆に進む。
+**ジャーナル記事は店舗の実写真を使う**（編集独立性・読者信頼の担保）。汎用ストック写真（Unsplash / Pexels）は店舗紹介テーマでは使わない。validator が `images.unsplash.com` 等を検出すると FAIL する。
 
-**`today_one` / `weekly_digest` テーマ（店舗あり）の場合**:
-1. LOCAL_STORES の該当店舗の `公式Instagram` フィールドを確認 → URLがあれば `store_instagram` タイプで追加
-2. Google Maps 検索URL（`https://www.google.com/maps/search/<店名>+<エリア>`）を `google_maps` タイプで追加
-3. 推奨撮影シーン3点を `shot_type` タイプで提案:
-   - 例: ①看板料理のアップ ②店内の雰囲気（カウンター/テーブル） ③外観・暖簾・看板
+#### `today_one` / `weekly_digest` テーマ（店舗あり）— 以下のいずれか1つを必ず取得
 
-**`industry_insider` / `seasonal` / `flexible` テーマ（店舗なし）の場合**:
-1. テーマに合うフリー素材キーワード（日本語＋英語）を `stock_keyword` タイプで提案
-   - 例 `industry_insider`: 「コース料理 テーブル 俯瞰」「restaurant course meal japan」
-   - Unsplash 検索URL（`https://unsplash.com/s/photos/<keyword>`）を `url` フィールドに記載
-2. 記事コンセプトに合う撮影イメージを `shot_type` タイプで2点提案
+**優先1: Instagram 公式 embed**（最も推奨・Instagram規約上明確に許可）
+- 店舗公式アカウントの**特定の投稿URL**（`/p/XXX/` または `/reel/XXX/`）を見つける
+- input.json `stores[0].instagram_post_url` に設定
+- Instagram の `embed.js` を使った埋め込みは規約上明示的に許可されている: https://help.instagram.com/1521786464576692
 
-> **⚠️ 権利確認を必ず案内する**: 他メディア・飲食店公式サイトからの写真転載は不可。
-> Unsplash は商用利用可・クレジット記載推奨。Instagram の公式アカウント写真はリポスト申請が必要。
+**優先2: HotPepper 公式写真**（LOCAL_STORES に登録済みの店）
+- LOCAL_STORES の `写真URL` フィールドの `imgfp.hotp.jp/...` URL
+- input.json `stores[0].photo_url` に設定
+
+**優先3: Google Maps Places API 写真**（環境変数 `GOOGLE_MAPS_API_KEY` 設定時）
+- generate_daily_draft.js が自動取得（store.name + area で検索 → Places Photo）
+- 自動なので追加設定不要、ただし API key が必要
+
+**優先4: 店舗から許諾を取得した独自URL**
+- 店舗 owner に連絡 → 許諾を得た上で input.json `stores[0].photo_url` に設定
+
+**Instagram 投稿URLの探し方**:
+1. 店舗の公式 IG アカウント URL を確認（LOCAL_STORES `公式Instagram` / Web検索）
+2. アカウントページで看板料理が映る投稿を1件選ぶ
+3. その投稿の URL（`https://www.instagram.com/p/XXX/` または `/reel/XXX/`）をコピー
+4. input.json に貼り付け
+
+> **⚠️ 禁止事項**: 他メディア（dressing/macaroni/retrip等）の記事内写真の転用は著作権侵害。店舗公式サイトの写真も無許諾転載不可。Instagram は **公式embed.js経由のみ** 許可（スクリーンショット・画像ダウンロードは不可）。
+
+#### `industry_insider` / `seasonal` / `flexible` テーマ（店舗なし）の場合
+- 店舗が紐づかないため、Unsplash の curated ストック写真でOK（validator では item 15 がスキップされる）
+- `stock_keyword` タイプ + Unsplash 検索URL（`https://unsplash.com/s/photos/<keyword>`）を `photo_suggestions[]` に追加
+- 撮影イメージを `shot_type` タイプで2点提案
 
 ### 4. 記事本文の執筆(Editor として)
 

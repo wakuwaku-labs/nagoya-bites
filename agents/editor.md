@@ -370,6 +370,23 @@ retrip / ヒトサラ / PR TIMES / 番組公式 / note 等）から採用OK。
 - **直近30日以内のソース1件以上は必須**（validator が WARN を出す）
 - リサーチ結果の話題店は `trending_stores.json` に `ingest-json` で取り込む（出典URLも保存）
 
+### 実店舗写真の必須化（Step 3.6）
+
+ジャーナル記事は店舗の実写真を使う。汎用ストック写真（Unsplash/Pexels）は店舗紹介テーマでは禁止。validator が項目15で FAIL する。
+
+**取得手段の優先順**:
+1. **Instagram 公式 embed**（最推奨・規約上明確に許可）— 店舗公式アカウントの特定の投稿URL（`/p/XXX/` または `/reel/XXX/`）を input.json `stores[0].instagram_post_url` に設定
+2. **HotPepper 公式写真** — LOCAL_STORES の `写真URL` を `stores[0].photo_url` に設定
+3. **Google Maps Places 写真** — `GOOGLE_MAPS_API_KEY` 設定時は自動取得
+4. **店舗owner からの許諾済み独自URL** — `stores[0].photo_url` に設定
+
+**禁止事項**:
+- 他メディア（dressing/macaroni/retrip等）の記事内写真の転用 → 著作権侵害
+- 店舗公式サイトの写真の無許諾転載
+- Instagram スクリーンショット・画像ダウンロード（embed.js 経由のみ可）
+
+**Instagram投稿URLの探し方**: 店舗公式IGアカウント（LOCAL_STORES `公式Instagram` / Web検索）→ 看板料理が映る投稿を1件選択 → URL（`/p/XXX/` or `/reel/XXX/`）をコピー → input.json へ。
+
 ### 候補生成 → 採点 → 95点ゲート（Step 3）の運用ルール
 
 - 候補は最低5本生成。本文は書かず、**リード150字 + angle 1行 + sources 3件以上** のみ
