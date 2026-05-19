@@ -164,4 +164,7 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { buildList, buildFeed };
+
+// build.js から呼ぶための export — トップ Daily Journal セクションの
+// 同期忘れを防ぐため、build.js 末尾でも自動実行される。
+module.exports = { buildList, buildFeed, main };
