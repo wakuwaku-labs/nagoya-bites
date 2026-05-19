@@ -1730,6 +1730,16 @@ ${sitemapEntries}
 `;
   fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemap, 'utf8');
   console.log(`sitemap.xml 更新完了（URL数: ${sitemapUrls.length}、うち店舗: ${storeCount}）`);
+
+  // Daily Journal セクション（index.html トップの最新3件）と journal/index.html / feed を
+  // 必ず同期する。これを抜くと chore: auto-update store data 系の自動更新で
+  // index.html が再生成された時に Daily Journal だけ古いまま取り残される。
+  try {
+    const { main: buildJournalIndex } = require('./scripts/build_journal_index.js');
+    buildJournalIndex();
+  } catch (e) {
+    console.warn(`⚠️ build_journal_index 失敗: ${e.message} — トップ Daily Journal が古いまま残る可能性があります`);
+  }
 }
 
 main().catch(e => { console.error(e.message); process.exit(1); });

@@ -28,13 +28,29 @@ jobs:
         id: check
         run: |
           TODAY_JST=$(TZ=Asia/Tokyo date +%Y-%m-%d)
-          COUNT=$(ls journal/${TODAY_JST}-*.html 2>/dev/null | wc -l | tr -d ' ')
+          # journal_published.json に本日付エントリがあるかで判定する。
+          # 旧ロジック（journal/${TODAY_JST}-*.html のファイル存在チェック）は
+          # 事前生成された未登録オーファンファイルに阻害される問題があったため
+          # 「published.json に登録済みかどうか」を信頼の源とする。
+          PUBLISHED=$(node -e "
+            const p = require('./data/journal_published.json');
+            const today = '${TODAY_JST}';
+            const hit = (p.entries || []).some(e => e.date === today);
+            process.stdout.write(hit ? '1' : '0');
+          ")
           echo "today_jst=${TODAY_JST}" >> $GITHUB_OUTPUT
-          echo "exists=${COUNT}" >> $GITHUB_OUTPUT
-          if [ "$COUNT" -gt 0 ]; then
-            echo "本日($TODAY_JST)の記事は既に存在します。スキップします。"
+          echo "exists=${PUBLISHED}" >> $GITHUB_OUTPUT
+          if [ "$PUBLISHED" = "1" ]; then
+            echo "本日($TODAY_JST)の記事は published.json に登録済みです。スキップします。"
           else
             echo "本日($TODAY_JST)の記事を生成します。"
+            # 古いオーファンファイル（同日付の未公開HTML）があれば削除
+            ORPHANS=$(ls journal/${TODAY_JST}-*.html 2>/dev/null || true)
+            if [ -n "$ORPHANS" ]; then
+              echo "⚠️ 未公開オーファンを検出 — 削除します:"
+              echo "$ORPHANS"
+              rm -f journal/${TODAY_JST}-*.html
+            fi
           fi
 
       - name: Claude Code インストール
