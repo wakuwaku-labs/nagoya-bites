@@ -161,6 +161,29 @@ function checkJournal(htmlPath, mdPath) {
     pass(14, true, `ヒーロー画像OK: ${heroSrc.slice(0, 80)}...`);
   }
 
+  // 15. 実店舗写真の強制（today_one / weekly_digest で店舗指定ありの場合）
+  //     ジャンル別Unsplash の汎用ストック写真は、店舗を紹介する記事では不適切。
+  //     許可: Instagram embed (art-hero-ig) / Google Maps CDN (googleusercontent.com) /
+  //           HotPepper imgfp.hotp.jp / 店舗から許諾を得た独自URL
+  //     禁止: images.unsplash.com / images.pexels.com / loremflickr.com 等のストック
+  const isStoreArticle = /今日の1軒|週次の話題店/.test(eyebrow);
+  if (isStoreArticle) {
+    const isStockHero = /images\.unsplash\.com|images\.pexels\.com|loremflickr\.com/.test(heroSrc);
+    if (hasHeroIg) {
+      pass('15_real_store_photo', true, '実店舗写真OK（Instagram embed）');
+    } else if (isStockHero) {
+      pass('15_real_store_photo', false,
+        `❌ 店舗紹介記事で汎用ストック写真（${(heroSrc.match(/(unsplash|pexels|loremflickr)/) || [])[1]}）を使用しています。\n` +
+        `   → input.json の stores[0].instagram_post_url に店舗公式IGの投稿URLを指定するか、\n` +
+        `     stores[0].photo_url に HotPepper / 店舗から許諾済みの画像URLを設定してください。\n` +
+        `     どうしても入手できない場合は theme を industry_insider に変更してください。`);
+    } else {
+      pass('15_real_store_photo', true, '実店舗写真OK（Instagram/Google Maps/HotPepper/許諾済み）');
+    }
+  } else {
+    pass('15_real_store_photo', true, '店舗紹介テーマ以外のためスキップ');
+  }
+
   return results;
 }
 
