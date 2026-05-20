@@ -8,6 +8,33 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-052] 店舗データ大量消失（4643→779）の復元と再発防止 ✅
+- **priority**: P0（データ消失） → **status**: done
+- **detected**: 2026-05-20
+- **resolved**: 2026-05-20
+- **category**: data-loss / pipeline / brand
+- **owner**: DataKeeper + Builder
+- **症状**: `index.html` の `LOCAL_STORES` が 4643 店 → 779 店に激減。本番(`origin/main`)も779店で約3,800店が欠落していた。
+- **根本原因**:
+  build.js は店舗の大半（4643中4578店）を Hot Pepper API（CI専用シークレット `HOTPEPPER_API_KEY`）からライブ取得する。
+  エージェントが機能ブランチでキー無し/ネット不通のままローカル `node build.js` を実行すると、
+  Google Sheets(約1094) + manual(64) のみの **779店縮小版** が生成される。それをコミットし main にマージすると
+  全件版(4643)を上書きしてしまう。直近の引き金は `52befdf50`（写真移行コミット）が縮小版でリビルドしていたこと。
+  写真移行コミットは「店舗データ縮小」と「テンプレのストック写真除去」を1コミットに混在させており検知が遅れた。
+- **復元手順（今回）**:
+  - 最後の正常コミット `8b9ed856e`（4643店・crossCheckScore付き）から `LOCAL_STORES` を抽出し、現HEADの最新テンプレートへ注入
+  - 移植元データに残っていたストック写真URL **61件**（Pexels等）を除去（写真移行ルール遵守）
+  - 全店 SEO 内部リンク群（`<ul id="seo-store-list">`）も全件版へ復元（`stores/*.html` は4683ファイル健在のため404なし）
+  - 検証: LOCAL_STORES=4643 / バッジ・整合度ソート・桜ゼロ宣言・モーダル内訳すべて維持 / ストック写真DOM内0件 / コンソールエラー0
+- **再発防止（恒久対策）**:
+  - `build.js` に **店舗大量消失ガードレール** を追加（L1607付近）。
+    既存 index.html の店舗数の70%未満しか生成されない場合は `throw` して書き込み中断。
+    意図的な縮小は `ALLOW_STORE_SHRINK=1` で明示上書き可。
+    → キー無しローカルビルドが全件版を二度と上書きできない。
+- **残課題（次のCIビルドで自己修復）**:
+  - 復元データは `8b9ed856e` 時点（5/20頃のビルド）。5/20以降の Google Sheets 最新編集と Places API 月次更新は次回CI `build.yml` 実行で取り込まれる。
+- **files**: `index.html`（LOCAL_STORES + seo-store-list）/ `build.js`（ガードレール）
+
 ### [ISSUE-049] クロスチェック整合度の V3 化（時系列シグナル追加・編集判断依存の解消）✅
 - **priority**: P1 → **status**: done
 - **detected**: 2026-05-12
