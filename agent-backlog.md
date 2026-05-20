@@ -30,7 +30,16 @@
 - **関連**: [ISSUE-043]（GA4/GSC接続・modal_open分は実質解決済み）/ [ISSUE-015]（CWV）
 
 ### [ISSUE-054] GSC インデックスカバレッジ確認と週次記録運用の整備 🟡
-- **priority**: P2 → **status**: 未着手
+- **priority**: P2 → **status**: in_progress（自動取得スクリプト実装済み・SA連携待ち）
+- **progress 2026-05-21**:
+  - `scripts/fetch_gsc_metrics.js` を新設。GA4 のサービスアカウント（`GA4_SERVICE_ACCOUNT_KEY`）を流用し
+    Search Console API で clicks/impressions/CTR/平均順位/トップクエリ/トップページを
+    `data/gsc_metrics.json` に日次出力。build.yml に取得ステップ + git add 追加済み。
+  - `docs/gsc-metrics-setup.md` にセットアップ手順（SA を GSC ユーザーに追加 + API 有効化の2ステップ）を記載。
+  - `docs/kpi-weekly.md` に GA4 実数ベースライン（UU203/PV773/AI流入24 等・2026-05-21）を記録。
+  - **残（ユーザー作業）**: GA4 用サービスアカウントを GSC「ユーザーと権限」に追加 + GCP で Search Console API 有効化。
+    完了後の次回 CI ビルドで `gsc_metrics.json` に実数が入る。
+  - **注記**: インデックス被覆数の一括取得は本 API では不可（URL Inspection は1URLずつ）。被覆全体像は当面 GSC 画面で確認。
 - **detected**: 2026-05-20
 - **category**: SEO / indexing
 - **owner**: Marketer
