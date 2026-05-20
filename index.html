@@ -439,6 +439,7 @@ body.search-active .results-summary{display:block;}
 .cmeta .cc-cell.cc-high{color:#2e7d32;}
 .cmeta .cc-cell.cc-mid{color:#558b2f;}
 .cmeta .cc-cell.cc-low{color:#888;}
+.cmeta .cc-cell.cc-pending{color:#9a9a9a;font-weight:600;}
 .cross-check-box{background:rgba(46,125,50,.05);border-left:3px solid #2e7d32;border-radius:0 4px 4px 0;padding:.95rem 1.1rem;margin-bottom:1rem;}
 .cross-check-box .mpoint-label{color:#2e7d32;}
 .cross-check-box .cc-summary{display:flex;align-items:baseline;gap:.6rem;margin:.4rem 0 .55rem;}
@@ -446,6 +447,11 @@ body.search-active .results-summary{display:block;}
 .cross-check-box .cc-score.cc-high{color:#2e7d32;}
 .cross-check-box .cc-score.cc-mid{color:#558b2f;}
 .cross-check-box .cc-score.cc-low{color:#888;}
+.cross-check-box .cc-score.cc-pending{color:#9a9a9a;}
+.cross-check-box.cc-box-pending{background:rgba(120,120,120,.05);border-left-color:#9a9a9a;}
+.cross-check-box.cc-box-pending .mpoint-label{color:#777;}
+.cross-check-box.cc-box-pending summary::-webkit-details-marker{color:#9a9a9a;}
+.cross-check-box .cc-pending-note{font-size:.7rem;color:var(--dim);margin:.55rem 0 0;line-height:1.6;font-style:italic;}
 .cross-check-box .cc-score-suffix{font-size:.72rem;color:var(--dim);letter-spacing:.08em;}
 .cross-check-box details{margin-top:.35rem;}
 .cross-check-box summary{cursor:pointer;padding:.25rem 0;font-size:.74rem;color:var(--dim);outline:none;}
@@ -6156,6 +6162,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
           <summary>内訳を見る — 8 シグナルの根拠</summary>
           <ul class="cc-breakdown" id="m-cc-breakdown"></ul>
         </details>
+        <p class="cc-pending-note" id="m-cc-pending-note" style="display:none">※ この店舗はクロスチェックのデータ蓄積がまだ少なく、現時点では参考値です（評価が低いことを示すものではありません）。</p>
         <p class="cc-note">
           Google・Hot Pepper・編集部来店・他メディア掲載・業界人レビューの整合度から機械的に算出した参考指標です。
           「サクラ確率」ではなく中立な指標として表示しています。詳しい計算式は<a href="features/integrity-method.html">クロスチェック整合度の作り方</a>を参照。
@@ -11938,6 +11945,7 @@ function buildCardHtml(r) {
     if (ccScore >= 90) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-high" title="クロスチェック整合度（複数媒体・複数シグナルでの整合度・タップで内訳）">' + ccScore + '%</span>';
     else if (ccScore >= 70) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-mid" title="クロスチェック整合度">' + ccScore + '%</span>';
     else if (ccScore >= 50) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-low" title="クロスチェック整合度">' + ccScore + '%</span>';
+    else if (typeof r.crossCheckScore === 'number') ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-pending" title="クロスチェック整合度（参考値・データ蓄積中）">' + ccScore + '%</span>';
     return '<div class="card" onclick="openM(' + idx + ')" role="button" tabindex="0" aria-label="' + r['店名'] + 'の詳細を見る">'
       + '<div class="ci"><img src="' + nbImage(photo, 600) + '" srcset="' + nbSrcset(photo, [400, 600, 800]) + '" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)"></div>'
       + '<span class="badge">' + genre + '</span>'
@@ -12154,18 +12162,24 @@ function openM(i) {
   var ccBoxEl = document.getElementById('m-cross-check');
   var ccScoreEl = document.getElementById('m-cc-score');
   var ccBreakdownEl = document.getElementById('m-cc-breakdown');
-  if (ccBoxEl && typeof mCcScore === 'number' && mCcScore >= 50) {
+  var ccPendingNoteEl = document.getElementById('m-cc-pending-note');
+  if (ccBoxEl && typeof mCcScore === 'number') {
+    var ccIsPending = mCcScore < 50;
     ccScoreEl.textContent = mCcScore + '%';
-    ccScoreEl.className = 'cc-score ' + (mCcScore >= 90 ? 'cc-high' : (mCcScore >= 70 ? 'cc-mid' : 'cc-low'));
+    ccScoreEl.className = 'cc-score ' + (mCcScore >= 90 ? 'cc-high' : (mCcScore >= 70 ? 'cc-mid' : (mCcScore >= 50 ? 'cc-low' : 'cc-pending')));
+    ccBoxEl.className = 'cross-check-box' + (ccIsPending ? ' cc-box-pending' : '');
+    if (ccPendingNoteEl) ccPendingNoteEl.style.display = ccIsPending ? '' : 'none';
     var ccSigLabels = {
       s1_googleRatingVsCount: 'Google評価 vs 件数',
       s2_reviewCountAbs:      'レビュー件数',
-      s3_editorVisitConsistency: '編集部来店整合',
+      s3_dataCompleteness:    'データ充実度',
       s4_mediaCrossCheck:     '他媒体掲載',
       s5_operationContinuity: '営業実態継続',
-      s6_insiderReviewConsistency: '業界人レビュー'
+      s6_instagramPresence:   'Instagram実在',
+      s7_reviewTimeseries:    'レビュー時系列健全性',
+      s8_reviewDistribution:  '評価分布の自然性'
     };
-    var ccSigKeys = ['s1_googleRatingVsCount','s2_reviewCountAbs','s3_editorVisitConsistency','s4_mediaCrossCheck','s5_operationContinuity','s6_insiderReviewConsistency'];
+    var ccSigKeys = ['s1_googleRatingVsCount','s2_reviewCountAbs','s3_dataCompleteness','s4_mediaCrossCheck','s5_operationContinuity','s6_instagramPresence','s7_reviewTimeseries','s8_reviewDistribution'];
     if (mCcBreakdown && ccBreakdownEl) {
       ccBreakdownEl.innerHTML = ccSigKeys.map(function(k){
         var sig = mCcBreakdown[k];
