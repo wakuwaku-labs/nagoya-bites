@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-05-20T10:23:00.133Z",
+  "generatedAt": "2026-05-20T15:23:29.039Z",
   "lookbackDays": 30,
   "totals": {
     "activeUsers": 203,
-    "pageViews": 773,
-    "sessions": 321,
-    "avgSessionDuration": 375.8,
-    "bounceRate": 0.52,
-    "pagesPerSession": 2.41
+    "pageViews": 751,
+    "sessions": 318,
+    "avgSessionDuration": 387.6,
+    "bounceRate": 0.525,
+    "pagesPerSession": 2.36
   },
   "channels": {
     "sessions": {
-      "organic": 49,
-      "direct": 264,
+      "organic": 51,
+      "direct": 263,
       "social": 4,
       "referral": 13,
       "paid": 0,
       "other": 1
     },
     "pct": {
-      "organic": 14.8,
-      "direct": 79.8,
+      "organic": 15.4,
+      "direct": 79.2,
       "social": 1.2,
       "referral": 3.9,
       "paid": 0,
@@ -31,22 +31,22 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 222
+      "sessions": 217
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 36
+      "sessions": 38
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 22
     },
     {
       "source": "chatgpt.com",
       "medium": "(not set)",
       "sessions": 19
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 18
     },
     {
       "source": "yahoo",
@@ -82,18 +82,18 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 295,
-      "sessions": 176
+      "pageViews": 279,
+      "sessions": 175
     },
     {
       "path": "/index.html",
-      "pageViews": 98,
+      "pageViews": 99,
       "sessions": 46
     },
     {
       "path": "/nagoya-bites/index.html",
-      "pageViews": 48,
-      "sessions": 18
+      "pageViews": 47,
+      "sessions": 17
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -101,8 +101,8 @@
       "sessions": 18
     },
     {
-      "path": "/nagoya-bites/",
-      "pageViews": 26,
+      "path": "/features/private-room.html",
+      "pageViews": 19,
       "sessions": 16
     }
   ],
