@@ -83,7 +83,7 @@ function renderIndexBlock(grouped, total) {
       const genre = s['ジャンル'] ? `・${escapeHtml(s['ジャンル'])}` : '';
       return `<li><a href="${href}">${name}（${escapeHtml(area)}${genre}）</a></li>`;
     }).join('\n');
-    return `<details class="store-index-area">
+    return `<details class="store-index-area" data-area="${escapeHtml(area)}">
 <summary>${escapeHtml(area)}（${list.length}店）</summary>
 <ul class="store-index-list">
 ${items}
