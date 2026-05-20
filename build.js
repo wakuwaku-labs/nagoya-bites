@@ -460,13 +460,34 @@ const STORE_OUTPUT_OMIT_KEYS = new Set([
   '内観写真URL', '料理写真URL1', '料理写真URL2',
   '公開フラグ'
 ]);
+
+// ISSUE-015 退行対策: crossCheckBreakdown は V3(ISSUE-049)で 8 シグナルに拡張され
+// 全 4,643 店にインライン焼き付けされた結果 ~2.6MB を占めるが、index.html のモーダル
+// （buildStoreModal の ccSigKeys）が実際に描画するのは下記 4 シグナルのみ。
+// 残り（s3_dataCompleteness / s6_instagramPresence / s7_reviewTimeseries /
+// s8_reviewDistribution）は runtime 未参照の死蔵データなので出力から除外する。
+// ※ crossCheckScore（最終スコア）は別フィールドで温存されるため整合度表示・ソートは不変。
+//   モーダルでより多くのシグナルを見せたくなった場合は、ここのキー集合と
+//   index.html 側 ccSigKeys/ccSigLabels を揃えて拡張すること。
+const CC_BREAKDOWN_OUTPUT_KEYS = new Set([
+  's1_googleRatingVsCount', 's2_reviewCountAbs',
+  's4_mediaCrossCheck', 's5_operationContinuity'
+]);
+function slimCrossCheckBreakdown(breakdown) {
+  if (!breakdown || typeof breakdown !== 'object') return breakdown;
+  const out = {};
+  for (const k of Object.keys(breakdown)) {
+    if (CC_BREAKDOWN_OUTPUT_KEYS.has(k)) out[k] = breakdown[k];
+  }
+  return out;
+}
 function slimStoreForOutput(s) {
   const out = {};
   for (const k of Object.keys(s)) {
     if (STORE_OUTPUT_OMIT_KEYS.has(k)) continue;
     const v = s[k];
     if (v === '' || v === null || v === undefined) continue;
-    out[k] = v;
+    out[k] = (k === 'crossCheckBreakdown') ? slimCrossCheckBreakdown(v) : v;
   }
   return out;
 }

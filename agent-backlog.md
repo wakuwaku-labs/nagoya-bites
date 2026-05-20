@@ -8,6 +8,42 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-053] サイト全体メトリクス（PV/UU/流入元）の可視化 — fetch スクリプト拡張 🔴
+- **priority**: P1 → **status**: 未着手
+- **detected**: 2026-05-20
+- **category**: analytics / measurement / SEO
+- **owner**: Builder + Marketer
+- **背景**: SEO施策を打ちたいが効果測定の数字が見えない。GA4(G-3LCZNGZPWJ)連携は稼働中だが、
+  `scripts/fetch_ga4_views.js` は `modal_open` の店舗別集計しか取得していない
+  （直近30日 totalEvents=34 / 17店のみ閲覧あり / 残4,666店は0）。
+  サイト全体の PV / UU / セッション / 流入元4分類 / トップ5ランディングは GA4 内にあるが
+  リポジトリにも `docs/kpi-weekly.md` にも未記録（ベースライン取得日 2026-04-22 以降「要取得」のまま）。
+- **現状の数字（読み取れる範囲）**: modal_open 月34回 → 推定セッションは月数十〜数百規模。明確に立ち上げ初期。
+- **良し悪しの基準（地域グルメメディア・月間UU）**:
+  ~500=Phase0基盤づくり / 500〜3,000=離陸 / 3,000〜15,000=健全 / 15,000〜=強い。
+  GSC基準: 表示回数<100/日=弱・数千=良 / CTR<1%=弱・2〜5%=普通・5%超=良 / 平均順位 1ページ目(〜10位)=良。
+- **アクション**: `fetch_ga4_views.js` を拡張し、screenPageViews / activeUsers / sessions /
+  sessionSource×sessionMedium / トップ5 landingPage を `data/site_metrics.json` に出力。
+  GA4 Secrets は既に通っているので追加設定不要。build.yml の git add 対象に追加。
+  取得値を `docs/kpi-weekly.md` の週次テンプレに転記する運用に乗せる。
+- **参考**: 既存 `Google分析オートLINE送信.js`(GAS) が同等の runReport を実装済み → ロジック流用可。
+- **関連**: [ISSUE-043]（GA4/GSC接続・modal_open分は実質解決済み）/ [ISSUE-015]（CWV）
+
+### [ISSUE-054] GSC インデックスカバレッジ確認と週次記録運用の整備 🟡
+- **priority**: P2 → **status**: 未着手
+- **detected**: 2026-05-20
+- **category**: SEO / indexing
+- **owner**: Marketer
+- **背景**: サイトマップは 4,682店 + 224ジャーナル + 63特集（計4,973 URL・lastmod 2026-05-20 最新）と
+  網羅的で、店舗ページも軽量(16K)・title/description/canonical/構造化データ完備・相互内部リンクあり。
+  技術SEOの衛生状態は良好。にも関わらず流入が極小（modal 月34）なのは、
+  ①ドメインが若く被リンク・権威が育っていない ②インデックス被覆が未確認、の2点が疑われる。
+- **アクション**:
+  1. GSC「ページのインデックス登録」で 4,973 URL のうち実際に登録された数 / 除外理由を確認
+  2. GSC「検索パフォーマンス」直近28日の 表示回数 / CTR / 平均順位 / 主要KW を `docs/kpi-weekly.md` に記録
+  3. Phase0(数字蓄積期)として4週ベースラインを取り、3週連続悪化指標を P1 化する運用ルール（kpi-weekly既定）を起動
+- **注記**: GSCはAPI/サービスアカウント未連携。当面は手動取得 → 将来 GSC Search Analytics API 自動化を検討。
+
 ### [ISSUE-052] 店舗データ大量消失（4643→779）の復元と再発防止 ✅
 - **priority**: P0（データ消失） → **status**: done
 - **detected**: 2026-05-20
@@ -710,9 +746,22 @@
 - **files**: `features/gw-2026.html`, `features/spring-terrace.html`, `features/mothers-day.html`, `index.html`, `features/index.html`, `sitemap.xml`
 
 ### [ISSUE-015] index.html が 7.2MB で巨大 — パフォーマンス劣化 🔴
-- **priority**: P1 → **status**: in_progress（設計完了・段階実装へ）
+- **priority**: P1 → **status**: in_progress（⚠️ 退行検知・再対応要）
 - **category**: performance
 - **detected**: 2026-04-18 / **designed**: 2026-04-22
+- **⚠️ 退行 (2026-05-20 検知) → 是正済み**:
+  index.html がディスク 10.35MB（日本語マルチバイトで `ls` は 9.9M 表示）に膨張。
+  調査の結果、肥大の正体は ISSUE-052 復元データの未スリム化ではなく、**`crossCheckBreakdown`（2.66MB）**だった。
+  これは ISSUE-049 の V3 クロスチェックで 8 シグナルに拡張され全 4,643 店に焼き付けられたが、
+  ISSUE-015-P1 のスリムリスト（`STORE_OUTPUT_OMIT_KEYS`）が V3 拡張**前**に定義されていたため対象外だった。
+  さらに index.html のモーダル（`ccSigKeys`）は V1 の古いキー名を参照しており、V3 データと一致して描画されるのは
+  s1/s2/s4/s5 の 4 シグナルのみ。s3/s6/**s7/s8** は runtime 完全未参照の死蔵データだった（ISSUE-015 と同じパターン）。
+  - **是正 (2026-05-20)**: `build.js` の `slimStoreForOutput` に `slimCrossCheckBreakdown()` を追加し、
+    出力時に breakdown を描画対象 4 キーのみへ間引き（`CC_BREAKDOWN_OUTPUT_KEYS`）。
+    既存 index.html にも同ロジックを一回適用し再注入（4,643 店維持 / crossCheckScore 温存）。
+    → **ディスク 10.35MB → 8.0MB**（LOCAL_STORES 配列 5.75→4.42MB）。モーダルのクロスチェック4行表示は不変（preview検証済み）。
+  - **残**: 0.9MB 級まで下げるのは ISSUE-015-P2（外部JSON化）の領域。本件はあくまで V3 由来の退行是正。
+    モーダルで s7/s8（時系列・分布の反サクラシグナル）を見せたい場合は ccSigKeys と CC_BREAKDOWN_OUTPUT_KEYS を揃えて拡張する別タスク。
 - **description**:
   4586件の LOCAL_STORES (4.85MB) を inline 埋め込みしている結果、ファイルサイズが 7.2MB。
   TTFB遅延・LCP 劣化・モバイル離脱要因。
