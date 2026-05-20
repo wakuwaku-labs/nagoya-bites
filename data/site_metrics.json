@@ -1,0 +1,138 @@
+{
+  "generatedAt": "2026-05-20T10:23:00.133Z",
+  "lookbackDays": 30,
+  "totals": {
+    "activeUsers": 203,
+    "pageViews": 773,
+    "sessions": 321,
+    "avgSessionDuration": 375.8,
+    "bounceRate": 0.52,
+    "pagesPerSession": 2.41
+  },
+  "channels": {
+    "sessions": {
+      "organic": 49,
+      "direct": 264,
+      "social": 4,
+      "referral": 13,
+      "paid": 0,
+      "other": 1
+    },
+    "pct": {
+      "organic": 14.8,
+      "direct": 79.8,
+      "social": 1.2,
+      "referral": 3.9,
+      "paid": 0,
+      "other": 0.3
+    }
+  },
+  "sourceBreakdown": [
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 222
+    },
+    {
+      "source": "google",
+      "medium": "organic",
+      "sessions": 36
+    },
+    {
+      "source": "chatgpt.com",
+      "medium": "(not set)",
+      "sessions": 19
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 18
+    },
+    {
+      "source": "yahoo",
+      "medium": "organic",
+      "sessions": 10
+    },
+    {
+      "source": "openai",
+      "medium": "(not set)",
+      "sessions": 5
+    },
+    {
+      "source": "bing",
+      "medium": "organic",
+      "sessions": 3
+    },
+    {
+      "source": "service.smt.docomo.ne.jp",
+      "medium": "referral",
+      "sessions": 2
+    },
+    {
+      "source": "t.co",
+      "medium": "referral",
+      "sessions": 2
+    },
+    {
+      "source": "ansearch.com",
+      "medium": "referral",
+      "sessions": 1
+    }
+  ],
+  "topPages": [
+    {
+      "path": "/",
+      "pageViews": 295,
+      "sessions": 176
+    },
+    {
+      "path": "/index.html",
+      "pageViews": 98,
+      "sessions": 46
+    },
+    {
+      "path": "/nagoya-bites/index.html",
+      "pageViews": 48,
+      "sessions": 18
+    },
+    {
+      "path": "/features/nagoya-hitsumabushi.html",
+      "pageViews": 28,
+      "sessions": 18
+    },
+    {
+      "path": "/nagoya-bites/",
+      "pageViews": 26,
+      "sessions": 16
+    }
+  ],
+  "stageAssessment": {
+    "metric": "activeUsers",
+    "value": 203,
+    "stage": "phase0",
+    "thresholds": {
+      "phase0": 500,
+      "takeoff": 3000,
+      "healthy": 15000
+    }
+  },
+  "benchmarks": {
+    "bounceRate": {
+      "good": 0.5,
+      "warn": 0.7
+    },
+    "avgDuration": {
+      "good": 60,
+      "warn": 30
+    },
+    "pagesPerSession": {
+      "good": 2,
+      "warn": 1.3
+    },
+    "monthlyUU": {
+      "phase0": 500,
+      "takeoff": 3000,
+      "healthy": 15000
+    }
+  }
+}
