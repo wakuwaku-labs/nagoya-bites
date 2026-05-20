@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="8月最終週末、名古屋の夜が「夏の総括」モードに入る">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a3a5a"/>
+      <stop offset="100%" stop-color="#3a7aa0"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#0a3a5a"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#fde8a0" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+  
+        <g opacity=".55" fill="#fde8a0">
+          <circle cx="510" cy="200" r="28"/>
+          <g stroke="#fde8a0" stroke-width="3">
+            <line x1="510" y1="160" x2="510" y2="148"/>
+            <line x1="510" y1="240" x2="510" y2="252"/>
+            <line x1="470" y1="200" x2="458" y2="200"/>
+            <line x1="550" y1="200" x2="562" y2="200"/>
+            <line x1="482" y1="172" x2="473" y2="163"/>
+            <line x1="538" y1="172" x2="547" y2="163"/>
+            <line x1="482" y1="228" x2="473" y2="237"/>
+            <line x1="538" y1="228" x2="547" y2="237"/>
+          </g>
+        </g>
+  <rect x="36" y="36" width="3" height="145" fill="#fde8a0" opacity=".9"/>
+  <text x="46" y="108" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">8月最終週末、名古屋の夜が</text><text x="46" y="146" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">「夏の総括」モードに入る</text>
+  <text x="46" y="60" fill="#fde8a0" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+</svg>

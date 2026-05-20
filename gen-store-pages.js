@@ -261,7 +261,7 @@ function renderStorePage(s, slug) {
   const reviewCount    = Number.isFinite(reviewCountRaw) && reviewCountRaw > 0 ? reviewCountRaw : 0;
   const point    = s['おすすめポイント'] || '';
   const tags     = (s['タグ'] || '').split(',').map(t => t.trim()).filter(Boolean);
-  const photo    = s['写真URL'] || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80';
+  const photo    = s['写真URL'] || '/assets/store-figures/_fallback.svg';
   const hpId     = s['ホットペッパーID'] || '';
   const hpUrl    = hpId ? `https://www.hotpepper.jp/str${hpId}/` : '';
   const igUrl    = s['Instagram'] || '';
@@ -463,7 +463,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="${photo}" alt="${name}" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80'">
+<img class="hero-img" src="${photo}" alt="${name}" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="this.onerror=null;this.src='/assets/store-figures/_fallback.svg'">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">

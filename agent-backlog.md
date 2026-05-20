@@ -237,6 +237,51 @@
 
 ## 未着手タスク（done）
 
+### [EDT-PHOTO-001] 既存記事の Unsplash/Pexels 写真を実写 / 記事固有のイメージ図へ段階的差し替え
+
+- **priority**: P2
+- **status**: done ✅（Phase 1-4 完了 / 出力物のストック写真ゼロ）
+- **category**: editorial / content-quality
+- **detected**: 2026-05-20
+- **description**:
+  CLAUDE.md 制約 #9（実写優先・汎用ストック禁止）の追加に伴い、既存の
+  `features/*.html`（特集記事）と `journal/*.html`（日次記事）で
+  `images.unsplash.com` / `images.pexels.com` / `loremflickr.com` を使っている
+  箇所を段階的に置き換える必要がある。
+- **infrastructure**:
+  - 仕組みは `scripts/replace_feature_card_images.js` と `scripts/replace_feature_hero_images.js` に集約
+  - ジャンル別 SVG ジェネレータ（46+ ジャンル分類・モチーフ・カラーパレット）
+  - 生成物は `assets/feature-figures/<slug>.svg` に self-host
+- **進捗**:
+  - ✅ Phase 1: `features/index.html` カード 54枚（5 実写 + 49 SVG イメージ図）
+  - ✅ Phase 2: `features/*.html` 62ファイルの hero / og:image / twitter:image / JSON-LD image
+  - ✅ Phase 4: `journal/*.html` 225ファイルの hero / og:image / twitter:image / JSON-LD image
+    （art-hero-img / hero-image / figure ラッパ + Unsplashクレジット figcaption も同時削除）
+  - ✅ Phase 3: `features/*.html` の **個別店舗カード**（12ファイル / 98箇所）＋ `stores/*.html`（4681ファイル）
+    → 店名(alt)で LOCAL_STORES / manual_stores と照合し解決:
+       実写HotPepper 27枚 / 店舗固有SVG 61枚 / データ無し店の店名入り個別SVG 10枚
+    → `stores/*.html` の onerror Unsplash フォールバック 4619件を `_fallback.svg` に置換
+    → manual_stores.json の `写真URL` を店舗固有SVGに修正（62件）→ build.js で全段に反映
+    → 生成元テンプレも修正（gen-store-pages.js / build_features.js）で再生成も準拠
+- **生成元修正（恒久対策）**:
+  - `gen-store-pages.js`: 写真URL 空時 / onerror フォールバックを `_fallback.svg` に
+  - `build_features.js`: `getPhotoUrl` が `/assets/` self-host を通し、stock は `_fallback.svg` に倒す
+  - `data/manual_stores.json`: 新規手動店も `写真URL` に実写 or `/assets/store-figures/` を入れる運用
+- **追加スクリプト**:
+  - `scripts/replace_manual_store_photos.js` / `scripts/patch_static_store_photos.js`
+  - `scripts/store_figure_palettes.js`（共通パレット）
+- **生成SVG**: feature-figures 55 / journal-figures 226 / store-figures 72
+- **残（サイト未リンクの整理対象）**:
+  - macOS 重複ファイル `*​ 2.html`（features/journal に計14件）にストック残存。サイトからは未リンク。要削除確認
+- **acceptance**:
+  - `grep -rn "images.unsplash.com\|images.pexels.com\|loremflickr.com" features/ journal/` が 0 件
+  - 全置き換え後に Inspector で OG プレビュー / カード表示の崩れがないことを確認
+- **files**: `features/**/*.html`, `journal/**/*.html`
+- **note**:
+  - `features/nagoya-yakitori-guide 2.html`（macOS の重複ファイル）が存在。中身は本物と差分あり。要確認・整理
+
+---
+
 ### [ISSUE-007] about.html / contact.html のデザインがindex.htmlと未同期
 
 - **priority**: P2

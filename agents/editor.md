@@ -163,21 +163,32 @@ SEO:
    - テーマに合致する店舗を10〜15件選出
    - 各店舗の「中の人ポイント」を作成
 
-3.5. 写真候補の調査（特集記事用）
-   - 掲載各店舗について以下を調査し、記事HTML の `<head>` 末尾に HTML コメントとして埋め込む:
-     ```html
-     <!-- PHOTO SUGGESTIONS:
-       [店名A]
-         - store_instagram: https://www.instagram.com/... (公式アカウントURL or 検索URL)
-         - google_maps: https://www.google.com/maps/search/<店名>+<エリア>
-         - shot_type: ①<看板料理アップ> ②<店内雰囲気> ③<外観>
-       [非店舗テーマ / 背景画像]
-         - stock_keyword: 「<日本語キーワード>」「<English keyword>」
-         - unsplash: https://unsplash.com/s/photos/<keyword>
-     -->
-     ```
-   - ⚠️ 権利確認: 他メディア・公式サイト写真の転載不可。Unsplash は商用可（クレジット推奨）。
-     Instagram公式写真はリポスト申請が必要。自撮り写真が最も確実。
+3.5. 写真候補の調査（特集記事用）— **実写最優先・汎用ストック禁止**（CLAUDE.md 制約 #9）
+
+   特集記事もジャーナル同様、**汎用ストック写真（Unsplash / Pexels / loremflickr 等）の新規使用は禁止**。
+   掲載各店舗について以下を調査し、記事HTML の `<head>` 末尾に HTML コメントとして埋め込む:
+
+   ```html
+   <!-- PHOTO SUGGESTIONS:
+     [店名A]
+       - instagram_post: https://www.instagram.com/p/XXX/   (店舗公式 IG の特定投稿URL)
+       - hotpepper_photo: https://imgfp.hotp.jp/...         (LOCAL_STORES の 写真URL)
+       - google_maps_place: https://www.google.com/maps/search/<店名>+<エリア>
+       - shot_type: ①<看板料理アップ> ②<店内雰囲気> ③<外観>
+     [非店舗テーマ / 背景画像]
+       - figure_concept: 「<記事固有の図解アイディア>」（例: 名古屋エリア×ジャンルのマトリクス）
+       - figure_path: /assets/feature-figures/<slug>.svg     (self-host が必須)
+   -->
+   ```
+
+   **権利と優先順**:
+   - 優先1: 店舗公式 Instagram embed（`embed.js` 経由・規約上明示的に許可）
+   - 優先2: HotPepper / Google Maps Places の公式写真
+   - 優先3: 店舗オーナーから許諾済みの独自写真
+   - 最終手段: その記事専用に作成した「記事固有のイメージ図」（self-host SVG/PNG）
+   - ❌ 他メディアの記事内写真・店舗公式サイト写真の無許諾転載は不可
+   - ❌ Instagram のスクリーンショット / 画像ダウンロードは不可（embed.js のみ）
+   - ❌ Unsplash / Pexels / loremflickr / Pixabay 等の汎用ストックは新規使用不可
 
 4. 記事HTMLを作成
    - features/ ディレクトリに配置
@@ -191,7 +202,8 @@ SEO:
    ```html
    <a class="article-card" href="SLUG.html">
      <div class="card-badge">
-       <img class="card-img" src="https://images.unsplash.com/photo-UNSPLASH_ID?auto=format&fit=crop&w=600&h=260&q=80" alt="記事の説明" loading="lazy">
+       <!-- card-img の src は「実写」または「記事固有のイメージ図」のみ。Unsplash 等は禁止 -->
+       <img class="card-img" src="<実写URL or /assets/feature-figures/SLUG.svg>" alt="記事の説明" loading="lazy">
        <!-- 季節・シーン限定の場合のみ season-flag を追加 -->
        <!-- <span class="season-flag">季節ラベル</span> -->
        <div class="card-category">カテゴリ英語 · 日本語サブ</div>
@@ -208,21 +220,16 @@ SEO:
    </a>
    ```
 
-   **Unsplash 写真の選び方:**
-   - `https://images.unsplash.com/photo-{ID}?auto=format&fit=crop&w=600&h=260&q=80` 形式
-   - 記事カテゴリに合う食べ物・店内の写真を選ぶ
-   - 主要 ID 参照表（よく使うもの）:
-     - 和食・日本料理一般: `1547592180-85f173990554`
-     - 焼肉・グリル肉: `1529694157872-4ac4b58d7e09`
-     - 鮨・海鮮: `1553621042-f6e147245754` / `1534766555764-ce878a5e3a2b`
-     - ラーメン・麺: `1569050467447-ce54b3bbc37d`
-     - バー・カクテル: `1546171753-97d7676e4602`
-     - カフェ・コーヒー: `1495474472930-4204df73b6e6`
-     - ステーキ・とんかつ: `1546069901-ba9599a7e63c`
-     - 高級ダイニング・接待: `1414235077428-338989a2e8c0`
-     - 宴会・グループ: `1555396273-b5d0cd5f19f3`
-     - デザート・誕生日: `1464349153174-2b9d97a0b4a9`
-     - 屋外・テラス・夏: `1530103862676-de8c9debad1d`
+   **`card-img` に使える画像（優先順 / CLAUDE.md 制約 #9 準拠）:**
+   1. 掲載店舗の Instagram 公式投稿サムネ（embed.js は使えない箇所ではサムネ画像URL）
+   2. HotPepper 公式写真（`imgfp.hotp.jp/...`）
+   3. Google Maps Places API 経由の写真（`*.googleusercontent.com`）
+   4. 店舗オーナー許諾済みの独自URL
+   5. 編集部の取材写真（`/assets/feature-photos/` に self-host）
+   6. **最終手段**: その特集専用に作成したイメージ図（`/assets/feature-figures/SLUG.svg` 等で self-host）
+
+   **❌ 禁止**: Unsplash / Pexels / loremflickr / Pixabay 等の汎用ストック画像の新規使用。
+   既存特集記事の置き換えは段階的に進める（agent-backlog.md に課題化）。
 
 6. Orchestratorに品質レビューを依頼
 ```
@@ -370,22 +377,31 @@ retrip / ヒトサラ / PR TIMES / 番組公式 / note 等）から採用OK。
 - **直近30日以内のソース1件以上は必須**（validator が WARN を出す）
 - リサーチ結果の話題店は `trending_stores.json` に `ingest-json` で取り込む（出典URLも保存）
 
-### 実店舗写真の必須化（Step 3.6）
+### 実写真の必須化（Step 3.6）— **全テーマ共通**（CLAUDE.md 制約 #9）
 
-ジャーナル記事は店舗の実写真を使う。汎用ストック写真（Unsplash/Pexels）は店舗紹介テーマでは禁止。validator が項目15で FAIL する。
+ジャーナル記事は **全テーマ** で実写真を使う。汎用ストック写真（Unsplash / Pexels / loremflickr / Pixabay 等）は新規使用禁止。validator が項目15で **全テーマに対して** FAIL する。
 
-**取得手段の優先順**:
+**取得手段の優先順（店舗紹介テーマ: today_one / weekly_digest）**:
 1. **Instagram 公式 embed**（最推奨・規約上明確に許可）— 店舗公式アカウントの特定の投稿URL（`/p/XXX/` または `/reel/XXX/`）を input.json `stores[0].instagram_post_url` に設定
 2. **HotPepper 公式写真** — LOCAL_STORES の `写真URL` を `stores[0].photo_url` に設定
 3. **Google Maps Places 写真** — `GOOGLE_MAPS_API_KEY` 設定時は自動取得
 4. **店舗owner からの許諾済み独自URL** — `stores[0].photo_url` に設定
 
-**禁止事項**:
-- 他メディア（dressing/macaroni/retrip等）の記事内写真の転用 → 著作権侵害
-- 店舗公式サイトの写真の無許諾転載
-- Instagram スクリーンショット・画像ダウンロード（embed.js 経由のみ可）
+**取得手段の優先順（非店舗テーマ: industry_insider / seasonal / flexible）**:
+1. **代表店舗の Instagram embed** — テーマを象徴する 1 店舗を選んでその投稿を使う（実写最優先）
+2. **編集部の取材写真** — `/assets/journal-photos/<date>-<slug>.jpg` 等に self-host
+3. **記事固有のイメージ図**（最終手段） — `/assets/journal-figures/<date>-<slug>.svg` に self-host。
+   汎用ストックの寄せ集めではなく「記事テーマを説明する図解 / インフォグラフィック / 構造図」であること
+
+**禁止事項（全テーマ共通）**:
+- ❌ 汎用ストック写真（Unsplash / Pexels / loremflickr / Pixabay 等）の新規使用
+- ❌ 他メディア（dressing / macaroni / retrip / 食べログ / ヒトサラ等）の記事内写真の転用 → 著作権侵害
+- ❌ 店舗公式サイトの写真の無許諾転載
+- ❌ Instagram スクリーンショット・画像ダウンロード（embed.js 経由のみ可）
 
 **Instagram投稿URLの探し方**: 店舗公式IGアカウント（LOCAL_STORES `公式Instagram` / Web検索）→ 看板料理が映る投稿を1件選択 → URL（`/p/XXX/` or `/reel/XXX/`）をコピー → input.json へ。
+
+**例外プロセス**: 4つの優先順すべてを試行して入手できない場合のみ、Orchestrator に相談して theme 変更 or 公開延期 or イメージ図フォールバックを判断する。「面倒だから Unsplash」は不可。
 
 ### 候補生成 → 採点 → 95点ゲート（Step 3）の運用ルール
 

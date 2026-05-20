@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="名古屋ラーメン">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8a2818"/>
+      <stop offset="100%" stop-color="#d65a2a"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#8a2818"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#fde8a8" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+  
+        <ellipse cx="500" cy="220" rx="80" ry="14" fill="#fde8a8" opacity=".25"/>
+        <path d="M420 210 q80 60 160 0 v-10 q-80 28 -160 0 z" fill="#fde8a8" opacity=".55"/>
+        <path d="M450 150 q5 -20 -5 -30 q-10 -10 0 -25" stroke="#fde8a8" stroke-width="3" fill="none" opacity=".5"/>
+        <path d="M500 145 q-5 -20 5 -30 q10 -10 0 -25" stroke="#fde8a8" stroke-width="3" fill="none" opacity=".5"/>
+        <path d="M550 155 q5 -20 -5 -30 q-10 -10 0 -25" stroke="#fde8a8" stroke-width="3" fill="none" opacity=".5"/>
+  <rect x="36" y="36" width="3" height="110" fill="#fde8a8" opacity=".9"/>
+  <text x="46" y="130" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">名古屋ラーメン</text>
+  <text x="46" y="60" fill="#fde8a8" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+</svg>

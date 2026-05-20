@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="デートディナー">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3a0a2a"/>
+      <stop offset="100%" stop-color="#80306a"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#3a0a2a"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#fdd0e0" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+  
+        <g opacity=".55" fill="#fdd0e0">
+          <rect x="480" y="190" width="14" height="50"/>
+          <path d="M487 188 q-6 -10 0 -22 q6 12 0 22"/>
+          <path d="M530 200 q12 0 12 14 t-12 14 t-12 -14 t12 -14"/>
+        </g>
+  <rect x="36" y="36" width="3" height="110" fill="#fdd0e0" opacity=".9"/>
+  <text x="46" y="130" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">デートディナー</text>
+  <text x="46" y="60" fill="#fdd0e0" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+</svg>

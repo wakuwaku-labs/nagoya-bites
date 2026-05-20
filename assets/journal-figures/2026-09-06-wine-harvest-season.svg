@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="ワインの「ヴィンテージ解禁」前夜、名古屋のワインバー">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a1a3a"/>
+      <stop offset="100%" stop-color="#2a3a70"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#0a1a3a"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#e8d098" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+  
+        <g opacity=".55" fill="#e8d098">
+          <path d="M460 160 l60 60 l60 -60 z"/>
+          <rect x="516" y="220" width="8" height="35"/>
+          <rect x="494" y="252" width="52" height="6"/>
+        </g>
+  <rect x="36" y="36" width="3" height="145" fill="#e8d098" opacity=".9"/>
+  <text x="46" y="108" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">ワインの「ヴィンテージ解禁</text><text x="46" y="146" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">」前夜、名古屋のワインバー</text>
+  <text x="46" y="60" fill="#e8d098" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+</svg>

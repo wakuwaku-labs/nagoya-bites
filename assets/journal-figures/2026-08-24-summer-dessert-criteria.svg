@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="夏のデザートに何を頼むか、業界人の判断基準">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6a1a3a"/>
+      <stop offset="100%" stop-color="#c45a8a"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#6a1a3a"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#fde0e8" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+  
+        <g opacity=".55" fill="#fde0e8">
+          <rect x="450" y="200" width="120" height="40" rx="4"/>
+          <rect x="460" y="180" width="100" height="22"/>
+          <circle cx="510" cy="172" r="3"/>
+          <rect x="508" y="160" width="4" height="14"/>
+        </g>
+  <rect x="36" y="36" width="3" height="145" fill="#fde0e8" opacity=".9"/>
+  <text x="46" y="108" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">夏のデザートに何を頼む</text><text x="46" y="146" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">か、業界人の判断基準</text>
+  <text x="46" y="60" fill="#fde0e8" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+</svg>

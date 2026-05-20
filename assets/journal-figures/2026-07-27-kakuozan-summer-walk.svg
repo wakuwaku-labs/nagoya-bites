@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="名古屋の夏、覚王山エリアで暑さを避ける散歩グルメ">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2a1a3a"/>
+      <stop offset="100%" stop-color="#5a3a7a"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#2a1a3a"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#f4e0a8" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+  
+        <g opacity=".5" fill="#f4e0a8">
+          <polygon points="420,250 470,180 510,220 550,170 590,250"/>
+        </g>
+  <rect x="36" y="36" width="3" height="145" fill="#f4e0a8" opacity=".9"/>
+  <text x="46" y="108" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">名古屋の夏、覚王山エリア</text><text x="46" y="146" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">で暑さを避ける散歩グルメ</text>
+  <text x="46" y="60" fill="#f4e0a8" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+</svg>

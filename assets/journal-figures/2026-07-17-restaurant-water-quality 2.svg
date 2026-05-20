@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="飲食店の「水」にうるさい業界人の基準 — 水が旨い店は料理も旨い">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a1a2a"/>
+      <stop offset="100%" stop-color="#2a4a6a"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#0a1a2a"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#e8c890" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+  
+        <g opacity=".4" fill="none" stroke="#e8c890" stroke-width="2">
+          <rect x="430" y="160" width="160" height="90"/>
+          <line x1="430" y1="178" x2="590" y2="178"/>
+          <line x1="430" y1="232" x2="590" y2="232"/>
+        </g>
+        <text x="510" y="220" text-anchor="middle" fill="#e8c890" opacity=".6"
+              font-family="'Hiragino Mincho ProN', 'Yu Mincho', serif"
+              font-size="42" font-weight="700">NB</text>
+  <rect x="36" y="36" width="3" height="145" fill="#e8c890" opacity=".9"/>
+  <text x="46" y="108" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">飲食店の「水」にうるさい業界人</text><text x="46" y="146" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">の基準—水が旨い店は料理も旨い</text>
+  <text x="46" y="60" fill="#e8c890" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+</svg>

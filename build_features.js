@@ -478,8 +478,11 @@ function getPhotoUrl(store) {
   // ホットペッパーの写真URLを優先（安定してる）
   const hp = store['写真URL'] || '';
   if (hp && hp.startsWith('https://imgfp.hotp.jp')) return hp;
+  // 記事固有の店舗イメージ図（手動店）など root 相対の self-host パス
+  if (hp && hp.startsWith('/assets/')) return hp;
+  // 汎用ストック写真（Unsplash/Pexels等）は使わない（CLAUDE.md 制約 #9）
+  if (hp && /unsplash|pexels|loremflickr|pixabay/i.test(hp)) return '/assets/store-figures/_fallback.svg';
   if (hp && hp.startsWith('http')) return hp;
-  // 料理写真（IGベースは不安定なので避ける）
   return '';
 }
 
