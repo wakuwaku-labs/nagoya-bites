@@ -7,6 +7,11 @@ on:
     - cron: '0 22 * * *'
   workflow_dispatch: # 手動実行（テスト・リカバリ用）
 
+# 既定の GITHUB_TOKEN は contents:read のため push が 403 になる。
+# 自動コミット & プッシュのために write を明示する（daily-trending5.yml と同様）。
+permissions:
+  contents: write
+
 jobs:
   daily-journal:
     runs-on: ubuntu-latest
@@ -65,11 +70,33 @@ jobs:
         if: steps.check.outputs.exists == '0'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DISABLE_AUTOUPDATER: "1" # CI では自動アップデータを無効化（旧 --no-update-sonnet の意図を env で代替）
         run: |
           # front matter（1-4行）を除いた journal-today.md の内容をプロンプトとして使用
           PROMPT=$(tail -n +5 .claude/commands/journal-today.md)
-          claude --print "$PROMPT" --no-update-sonnet
+          # --print は非対話モード。CI には承認者がいないため
+          # --dangerously-skip-permissions で Write/Edit/Bash/WebSearch を自律実行可能にする。
+          # （旧コードの --no-update-sonnet は claude CLI に存在しない不正フラグで
+          #  生成ステップが毎回 exit 1 になり、GitHub Actions 経由のジャーナル生成は一度も成功していなかった）
+          claude --print "$PROMPT" --dangerously-skip-permissions
         continue-on-error: false
+
+      - name: 生成結果の検証（サイレントスキップ検知）
+        # 生成を試みた（exists==0）のに published.json に本日分が登録されていなければ
+        # 「ジョブは緑だが記事は出来ていない」状態。明示的に失敗させて気付けるようにする。
+        if: steps.check.outputs.exists == '0'
+        run: |
+          TODAY_JST="${{ steps.check.outputs.today_jst }}"
+          OK=$(node -e "
+            const p = require('./data/journal_published.json');
+            const hit = (p.entries || []).some(e => e.date === '${TODAY_JST}');
+            process.stdout.write(hit ? '1' : '0');
+          ")
+          if [ "$OK" != "1" ]; then
+            echo "::error::ジャーナル生成を試みましたが $TODAY_JST が journal_published.json に登録されていません（生成失敗 or サイレントスキップ）。"
+            exit 1
+          fi
+          echo "✅ $TODAY_JST のジャーナルが published.json に登録されています。"
 
       - name: 季節特集の自動ローテーション（期間切れの seasonal 特集を外す）
         # ジャーナル生成の有無に関わらず毎日実行する。
