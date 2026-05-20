@@ -749,11 +749,19 @@
 - **priority**: P1 → **status**: in_progress（⚠️ 退行検知・再対応要）
 - **category**: performance
 - **detected**: 2026-04-18 / **designed**: 2026-04-22
-- **⚠️ 退行 (2026-05-20 検知)**: ISSUE-015-P1 のスリム化で一度 0.9MB まで圧縮済みだったが、
-  現在の index.html は **9.9MB** に膨張。原因は ISSUE-052 のデータ復元時、`8b9ed856e` から
-  LOCAL_STORES を全量インライン注入したことでスリムシリアライザの出力形態が失われたため。
-  → SEO上は単一最重要ページの Core Web Vitals 破壊。次回 CI ビルドでスリム化が再適用されるか要検証。
-    されない場合は build.js のスリムシリアライズ経路を ISSUE-052 復元データに対して再適用する。
+- **⚠️ 退行 (2026-05-20 検知) → 是正済み**:
+  index.html がディスク 10.35MB（日本語マルチバイトで `ls` は 9.9M 表示）に膨張。
+  調査の結果、肥大の正体は ISSUE-052 復元データの未スリム化ではなく、**`crossCheckBreakdown`（2.66MB）**だった。
+  これは ISSUE-049 の V3 クロスチェックで 8 シグナルに拡張され全 4,643 店に焼き付けられたが、
+  ISSUE-015-P1 のスリムリスト（`STORE_OUTPUT_OMIT_KEYS`）が V3 拡張**前**に定義されていたため対象外だった。
+  さらに index.html のモーダル（`ccSigKeys`）は V1 の古いキー名を参照しており、V3 データと一致して描画されるのは
+  s1/s2/s4/s5 の 4 シグナルのみ。s3/s6/**s7/s8** は runtime 完全未参照の死蔵データだった（ISSUE-015 と同じパターン）。
+  - **是正 (2026-05-20)**: `build.js` の `slimStoreForOutput` に `slimCrossCheckBreakdown()` を追加し、
+    出力時に breakdown を描画対象 4 キーのみへ間引き（`CC_BREAKDOWN_OUTPUT_KEYS`）。
+    既存 index.html にも同ロジックを一回適用し再注入（4,643 店維持 / crossCheckScore 温存）。
+    → **ディスク 10.35MB → 8.0MB**（LOCAL_STORES 配列 5.75→4.42MB）。モーダルのクロスチェック4行表示は不変（preview検証済み）。
+  - **残**: 0.9MB 級まで下げるのは ISSUE-015-P2（外部JSON化）の領域。本件はあくまで V3 由来の退行是正。
+    モーダルで s7/s8（時系列・分布の反サクラシグナル）を見せたい場合は ccSigKeys と CC_BREAKDOWN_OUTPUT_KEYS を揃えて拡張する別タスク。
 - **description**:
   4586件の LOCAL_STORES (4.85MB) を inline 埋め込みしている結果、ファイルサイズが 7.2MB。
   TTFB遅延・LCP 劣化・モバイル離脱要因。
