@@ -309,10 +309,25 @@ validator(`scripts/validate_journal_draft.js`) がキーワード出現で近似
 - 新規話題店を発見したら `data/trending_stores.json` の `stores[]` に直接追加（または `pending_stores.json` 経由→翌日 trending に昇格）
 - スコア配分・自動繰り上げの仕組みは [agents/data-keeper.md](./data-keeper.md) の「日次『今日の話題店』TOP5」参照
 
+### 🚫 実在検証は必須（架空店ブロック・CLAUDE.md 整合）
+
+> 2026-05 に「実在しない店」をAIが大量生成・掲載する事故が発生した。Editor は店を追加・掲載する前に
+> **必ず実在を一次情報で確認**すること。確認できない店は載せない（P0違反）。
+
+- **掲載前チェック**: WebSearch で店名＋エリア＋名古屋を検索し、食べログ / ホットペッパー / Retty /
+  ぐるなび / 公式サイト / 公式Instagram / 地域メディアの**一次情報で実在を確認**してから採用する
+- **手動店追加後**: `GOOGLE_MAPS_API_KEY=... node scripts/fetch_manual_store_photos.js` を実行し、
+  店名一致＋名古屋/愛知の住所＋飲食店業態の三重検証を通った店だけ実写が付く。通らない＝実在不明として掲載しない
+- **特集記事**: 原則 LOCAL_STORES にある実在店だけを使う。無い店は先に manual_stores.json へ追加し検証を通す
+- **監査**: `node scripts/audit_feature_stores.js` で特集の掲載店を LOCAL_STORES と照合（実在不明ゼロを維持）
+- **架空店の典型サイン**: 説明的・テンプレ的店名（「個室居酒屋 和の宴」「和食 秋月」「Bar 夜更け」等）/
+  同日大量追加 / 他都市の有名店名 / 一次情報にヒットしない → これらは即・実在検証
+- **禁止**: 実在確認していない店を掲載する / もっともらしい店名を創作する / 実在不明な店に写真を付けて取り繕う
+
 ### 新規店舗追加フロー（外部媒体からの採用）
 
 話題性重視のため、LOCAL_STORES に無い店でも **他メディア**（dressing / macaroni /
-retrip / ヒトサラ / PR TIMES / 番組公式 / note 等）から採用OK。
+retrip / ヒトサラ / PR TIMES / 番組公式 / note 等）から採用OK。**ただし上記の実在検証を必ず通すこと。**
 
 1. 採用した外部店は `data/pending_stores.json` の `pending[]` に必ず追記:
    ```json
