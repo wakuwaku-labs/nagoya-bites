@@ -1,10 +1,12 @@
 name: NAGOYA BITES — 週次エージェントパイプライン
 
 on:
-  schedule:
-    # 毎週月曜 9:00 JST = 月曜 00:00 UTC
-    - cron: '0 0 * * 1'
-  workflow_dispatch: # 手動実行も可能
+  # 毎週の schedule は停止中。
+  # Inspector/Builder ステップが claude CLI を使い ANTHROPIC_API_KEY（有料 API）を要するが
+  # 未設定のため cron で回すと失敗する。API キー設定時に下記 schedule のコメントを外せば復活する。
+  # schedule:
+  #   - cron: '0 0 * * 1'   # 毎週月曜 9:00 JST = 月曜 00:00 UTC
+  workflow_dispatch: # 手動実行（API キー設定時のみ Claude ステップが成功）
 
 # 自動コミット & プッシュのため write を明示（既定は contents:read で push が 403 になる）
 permissions:
