@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="宴会幹事マニュアル">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2a1a08"/>
+      <stop offset="100%" stop-color="#704818"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#2a1a08"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#f8d0a0" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+  
+        <g opacity=".5" fill="#f8d0a0">
+          <rect x="420" y="190" width="160" height="40" rx="6"/>
+          <circle cx="440" cy="180" r="6"/>
+          <circle cx="475" cy="180" r="6"/>
+          <circle cx="510" cy="180" r="6"/>
+          <circle cx="545" cy="180" r="6"/>
+          <circle cx="440" cy="240" r="6"/>
+          <circle cx="475" cy="240" r="6"/>
+          <circle cx="510" cy="240" r="6"/>
+          <circle cx="545" cy="240" r="6"/>
+        </g>
+  <rect x="36" y="36" width="3" height="110" fill="#f8d0a0" opacity=".9"/>
+  <text x="46" y="130" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">宴会幹事マニュアル</text>
+  <text x="46" y="60" fill="#f8d0a0" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+</svg>

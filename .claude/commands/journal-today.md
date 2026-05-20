@@ -142,9 +142,9 @@ node scripts/score_journal_candidates.js /tmp/journal-candidates-YYYY-MM-DD.json
 
 外部媒体から引用する場合、記事末尾の `sources` に情報源URL（と掲載日 `date`）を必ず明記。
 
-### 3.6. 写真調査 — **実店舗写真の取得を必須化**
+### 3.6. 写真調査 — **実写真の取得を必須化（全テーマ共通）**
 
-**ジャーナル記事は店舗の実写真を使う**（編集独立性・読者信頼の担保）。汎用ストック写真（Unsplash / Pexels）は店舗紹介テーマでは使わない。validator が `images.unsplash.com` 等を検出すると FAIL する。
+**ジャーナル記事は全テーマで実写真を使う**（CLAUDE.md 制約 #9 / 編集独立性・読者信頼の担保）。汎用ストック写真（Unsplash / Pexels / loremflickr / Pixabay 等）は **テーマを問わず** 新規使用禁止。validator 項目15 が `images.unsplash.com` / `images.pexels.com` / `loremflickr.com` / `pixabay.com` を検出すると **全テーマで** FAIL する。
 
 #### `today_one` / `weekly_digest` テーマ（店舗あり）— 以下のいずれか1つを必ず取得
 
@@ -172,10 +172,19 @@ node scripts/score_journal_candidates.js /tmp/journal-candidates-YYYY-MM-DD.json
 
 > **⚠️ 禁止事項**: 他メディア（dressing/macaroni/retrip等）の記事内写真の転用は著作権侵害。店舗公式サイトの写真も無許諾転載不可。Instagram は **公式embed.js経由のみ** 許可（スクリーンショット・画像ダウンロードは不可）。
 
-#### `industry_insider` / `seasonal` / `flexible` テーマ（店舗なし）の場合
-- 店舗が紐づかないため、Unsplash の curated ストック写真でOK（validator では item 15 がスキップされる）
-- `stock_keyword` タイプ + Unsplash 検索URL（`https://unsplash.com/s/photos/<keyword>`）を `photo_suggestions[]` に追加
-- 撮影イメージを `shot_type` タイプで2点提案
+#### `industry_insider` / `seasonal` / `flexible` テーマ（店舗なし）の場合 — **Unsplash 例外は廃止**
+
+非店舗テーマでも汎用ストック写真は使わない。優先順は以下:
+
+1. **代表店舗の Instagram embed** — テーマを象徴する 1 店舗を選んで投稿を使う（実写最優先）
+   - 例: 「閑散期の使い方」コラムなら、平日昼に空席が映る店舗の公式 IG 投稿を 1 件
+2. **編集部の取材写真** — `/assets/journal-photos/<date>-<slug>.jpg` に self-host
+3. **記事固有のイメージ図**（最終手段） — `/assets/journal-figures/<date>-<slug>.svg` に self-host
+   - 記事テーマを説明する図解・構造図・インフォグラフィック等
+   - 汎用ストック画像の寄せ集めや、Unsplash 画像をベースに加工したものは不可
+   - input.json には `stores[0].photo_url: "/assets/journal-figures/<date>-<slug>.svg"` の形で設定
+
+4 つの優先順すべてを試行しても入手できない場合のみ Orchestrator に相談（公開延期 or theme 変更を含む）。「店舗が紐づかないから Unsplash」は不可。
 
 ### 4. 記事本文の執筆(Editor として)
 
