@@ -70,10 +70,21 @@ function dice(a, b) {
   for (const [, c] of B) total += c;
   return (2 * inter) / total;
 }
+// 既知の表記ゆれ許可リスト（手動で実在・同一店を確認済み。ローマ字↔カタカナ等）
+// key: 店名, value: マッチ店名に含まれていれば同一店とみなすトークン配列
+const VERIFIED_ALIASES = {
+  '麺や 六三六': ['六三六'],
+  'COFFEE KAJITA': ['カジタ', 'kajita'],
+  'TRUNK COFFEE': ['トランクコーヒー', 'trunk coffee'],
+};
+
 // 店名 vs マッチ店名 の一致判定
 function namesMatch(storeName, matchedName) {
   const sn = norm(storeName), mn = norm(matchedName);
   if (!mn) return { ok: false, sim: 0 };
+  // 確認済みの表記ゆれ
+  const aliases = VERIFIED_ALIASES[storeName];
+  if (aliases && aliases.some(a => mn.includes(norm(a)))) return { ok: true, sim: 1 };
   if (sn === mn || sn.includes(mn) || mn.includes(sn)) return { ok: true, sim: 1 };
   const sc = core(storeName), mc = core(matchedName);
   // コア（ジャンル語除去後）の包含 or 高Dice
