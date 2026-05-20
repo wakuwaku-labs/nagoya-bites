@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="夏の終わりを感じる食材と名古屋の日本料理">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a2a4a"/>
+      <stop offset="100%" stop-color="#3a5a8a"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#1a2a4a"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#e8d8b8" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+  
+        <g opacity=".5" fill="#e8d8b8">
+          <rect x="420" y="180" width="160" height="60" rx="4" fill="none" stroke="#e8d8b8" stroke-width="2"/>
+          <circle cx="460" cy="210" r="16"/>
+          <circle cx="510" cy="210" r="12"/>
+          <circle cx="550" cy="210" r="10"/>
+        </g>
+  <rect x="36" y="36" width="3" height="145" fill="#e8d8b8" opacity=".9"/>
+  <text x="46" y="108" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">夏の終わりを感じる食</text><text x="46" y="146" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">材と名古屋の日本料理</text>
+  <text x="46" y="60" fill="#e8d8b8" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+</svg>

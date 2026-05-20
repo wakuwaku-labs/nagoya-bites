@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" width="800" height="380" role="img" aria-label="NAGOYA BITES">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2a1a08"/><stop offset="100%" stop-color="#5a3a18"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="380" fill="url(#bg)"/>
+  <g opacity=".4" fill="#c4a060">
+    <ellipse cx="560" cy="300" rx="120" ry="20"/>
+    <ellipse cx="560" cy="276" rx="86" ry="13" fill="none" stroke="#c4a060" stroke-width="2"/>
+  </g>
+  <rect x="56" y="120" width="3" height="140" fill="#c4a060" opacity=".9"/>
+  <text x="72" y="160" fill="#c4a060" opacity=".8" font-family="'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+  <text x="72" y="220" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="40" font-weight="700">名古屋の一軒</text>
+</svg>
