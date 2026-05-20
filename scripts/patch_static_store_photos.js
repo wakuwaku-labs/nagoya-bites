@@ -56,6 +56,8 @@ function loadManual() {
 
 const isStock = (u) => /unsplash|pexels|loremflickr|pixabay/i.test(u);
 const isUsable = (u) => u && !isStock(u);
+// 再解決対象: ストック写真 または 既存の店舗図SVG（実写が後から取れた店を差し替えるため）
+const isReplaceable = (u) => isStock(u) || (typeof u === 'string' && u.includes('/assets/store-figures/'));
 
 function resolvePhoto({ storeId, alt }, L, M) {
   // 1. 店舗ID が HotPepper（J始まり）→ LOCAL_STORES 実写
@@ -81,12 +83,12 @@ function patchFeatures(L, M, dryRun) {
   for (const f of files) {
     const file = path.join(dir, f);
     const html = fs.readFileSync(file, 'utf8');
-    if (!isStock(html)) continue;
+    if (!isStock(html) && !html.includes('/assets/store-figures/')) continue;
 
-    // stock src を持つ全 <img> を alt（店名）ベースで解決（J店も byName で実写へ）
+    // stock src または店舗図SVG を持つ全 <img> を alt（店名）ベースで解決（実写が取れた店は実写へ）
     // 店舗カード写真は class が shop-card-photo / store-card-img / 無印（.store-photo 内）など多様なため class 非依存
     let out = html.replace(/<img\b([^>]*?)\bsrc="([^"]+)"([^>]*?)>/g, (tag, pre, src, post) => {
-      if (!isStock(src)) return tag;
+      if (!isReplaceable(src)) return tag;
       const alt = ((pre + post).match(/alt="([^"]+)"/) || [, ''])[1];
       let resolved = resolvePhoto({ storeId: '', alt }, L, M);
       if (resolved === FALLBACK) resolved = ensureFigureFor(alt, dryRun); // データ無し店は店名入り個別図
@@ -111,14 +113,14 @@ function patchStores(L, M, dryRun) {
   for (const f of files) {
     const file = path.join(dir, f);
     const html = fs.readFileSync(file, 'utf8');
-    if (!isStock(html)) continue;
+    if (!isStock(html) && !html.includes('/assets/store-figures/')) continue;
     const storeId = f.replace(/\.html$/, '');
 
     let out = html;
 
-    // primary hero src が stock（手動店）→ 解決
+    // primary hero src が stock or 店舗図SVG（手動店）→ 解決（実写が取れた店は実写へ）
     out = out.replace(/(<img\s+class="hero-img"\s+src=")([^"]+)(")/g, (m, pre, src, post) => {
-      if (!isStock(src)) return m;
+      if (!isReplaceable(src)) return m;
       const alt = (html.match(/<img\s+class="hero-img"[^>]*\balt="([^"]+)"/) || [, ''])[1];
       const resolved = resolvePhoto({ storeId, alt }, L, M);
       primaryCount++;
@@ -131,12 +133,17 @@ function patchStores(L, M, dryRun) {
       return `onerror="this.onerror=null;this.src='${FALLBACK}'"`;
     });
 
-    // og:image / twitter:image / JSON-LD image の stock も差し替え（絶対URLが必要）
-    const siteAbs = 'https://nagoya-bites.com' + (resolveForMeta(out, storeId, L, M) || FALLBACK);
+    // og:image / twitter:image / JSON-LD image を hero に合わせて絶対URL化
+    // （stock もしくは store-figures を指している場合のみ差し替え）
+    const heroNow = (out.match(/<img\s+class="hero-img"\s+src="([^"]+)"/) || [, ''])[1];
+    const ogAbs = !heroNow ? 'https://nagoya-bites.com' + FALLBACK
+      : heroNow.startsWith('http') ? heroNow
+      : 'https://nagoya-bites.com' + heroNow;
+    const ogReplaceable = (url) => isStock(url) || url.includes('/assets/store-figures/');
     out = out.replace(/(<meta\s+(?:property|name)="(?:og:image|twitter:image)"\s+content=")([^"]+)(")/g,
-      (m, pre, url, post) => isStock(url) ? pre + siteAbs + post : m);
+      (m, pre, url, post) => ogReplaceable(url) ? pre + ogAbs + post : m);
     out = out.replace(/("image"\s*:\s*")([^"]+)(")/g,
-      (m, pre, url, post) => isStock(url) ? pre + siteAbs + post : m);
+      (m, pre, url, post) => ogReplaceable(url) ? pre + ogAbs + post : m);
 
     if (out !== html) {
       if (!dryRun) fs.writeFileSync(file, out, 'utf8');
