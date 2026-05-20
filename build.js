@@ -1606,6 +1606,34 @@ async function main() {
 
   const jsonStr = JSON.stringify(slimStores);
   console.log(`LOCAL_STORES serialize: ${stores.length}件, ${(jsonStr.length / 1024 / 1024).toFixed(2)}MB`);
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // 店舗大量消失ガードレール（再発防止）
+  // build.js の店舗の大半は Hot Pepper API（CI専用 HOTPEPPER_API_KEY）由来。
+  // キー無し / ネットワーク不通の環境でビルドすると数千店が欠落した縮小版が
+  // 生成され、それをコミット→マージで全件版を上書きしてしまう事故が過去発生した。
+  // 既存 index.html の店舗数より大幅に少ない場合は書き込みを中断する。
+  // 意図的な縮小（テスト等）が必要な場合は ALLOW_STORE_SHRINK=1 で明示的に上書き可。
+  // ──────────────────────────────────────────────────────────────────────────
+  const SHRINK_THRESHOLD = 0.7; // 既存の70%未満なら異常とみなす
+  const existingMatch = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
+  let existingCount = 0;
+  if (existingMatch) {
+    try { existingCount = JSON.parse(existingMatch[1]).length; } catch (_) { existingCount = 0; }
+  }
+  if (existingCount > 0 && slimStores.length < existingCount * SHRINK_THRESHOLD) {
+    const msg =
+      `[ABORT] 店舗数が異常に減少しました: 既存 ${existingCount}件 → 新規 ${slimStores.length}件 ` +
+      `(${Math.round((slimStores.length / existingCount) * 100)}%)。` +
+      `Hot Pepper API キー未設定 / ネットワーク不通の可能性があります。` +
+      `index.html は書き換えません。意図的な縮小なら ALLOW_STORE_SHRINK=1 を指定してください。`;
+    if (process.env.ALLOW_STORE_SHRINK === '1') {
+      console.warn(msg + ' → ALLOW_STORE_SHRINK=1 のため続行します。');
+    } else {
+      throw new Error(msg);
+    }
+  }
+
   html = html.replace(
     /var LOCAL_STORES = \[[\s\S]*?\];/,
     `var LOCAL_STORES = ${jsonStr};`
