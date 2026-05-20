@@ -40,6 +40,42 @@ const OUT_PATH = path.join(ROOT, 'data', 'daily_trending5.json');
 const TOP_N = 5;
 const HISTORY_DAYS = 7;
 const REPEAT_PENALTY = -15;
+const MAX_PER_CATEGORY = 2; // TOP5 内で同一の粗ジャンルは最大2件まで（一極集中防止）
+
+// 粗ジャンル分類。trending_stores は ジャンル を持たないため 店名 でも判定する。
+// 上から順にマッチ判定するので、より具体的なルールを上に置く。
+const CATEGORY_RULES = [
+  ['ラーメン', /らーめん|ラーメン|ramen|menya|中華そば|つけ麺|まぜそば|担々|担担|二郎|煮干し|鶏白湯|豚骨|Wスープ|黒醤油|清湯|醤油|味噌|塩|麺/i],
+  ['餃子', /餃子|ぎょうざ|ワンタン/i],
+  ['焼肉・鉄板', /焼肉|鉄板|ホルモン|神戸牛|和牛|ステーキ/i],
+  ['寿司・和食', /鮨|寿司|割烹|懐石|和食|季節料理|料亭/i],
+  ['焼鳥', /焼鳥|焼き鳥|手羽|串/i],
+  ['スイーツ', /スイーツ|大福|プリン|チーズケーキ|パフェ|ジェラート|クレープ|かき氷|氷|抹茶|チョコレート|チョコ|ケーキ|甘味|トースト/i],
+  ['カフェ・喫茶', /喫茶|カフェ|cafe|coffee|コーヒー|珈琲|焙煎|モーニング|スペシャルティ|シングルオリジン/i],
+  ['イタリアン・洋食', /イタリアン|フレンチ|ビストロ|パスタ|スパゲティ|洋食|ピザ|ピッツァ|ワイン/i],
+  ['カレー', /カレー|スパイス/i],
+  ['居酒屋・バー', /居酒屋|酒場|バー|\bbar\b|日本酒|焼酎/i],
+];
+
+function coarseCategory(c) {
+  const hay = `${c.ジャンル || ''} ${c.店名 || ''}`;
+  for (const [name, re] of CATEGORY_RULES) {
+    if (re.test(hay)) return name;
+  }
+  return 'その他';
+}
+
+// 店名+日付から決まる安定した [0,1) のジッター。同点店の並びを日替わりでローテーションさせ、
+// 「いつも同じ先頭の店が出続ける（ファイル順固定）」状態を防ぐ。
+function dailyJitter(name, today) {
+  let h = 2166136261;
+  const s = `${name}|${today}`;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0) / 4294967296;
+}
 
 function todayJST() {
   const tz = new Date(Date.now() + 9 * 3600 * 1000);
@@ -196,6 +232,7 @@ function buildCandidatesFromSynced(trending, manual, today) {
     candidates.push({
       店名: s['店名'],
       エリア: s['エリア'] || '',
+      ジャンル: s['ジャンル'] || '',
       検出日: s['検出日'] || '',
       情報源: s['トレンド情報源'] || [],
       出典URL: s['出典URL'] || [],
@@ -212,6 +249,7 @@ function buildCandidatesFromSynced(trending, manual, today) {
     candidates.push({
       店名: s['店名'],
       エリア: s['エリア'] || '',
+      ジャンル: s['ジャンル'] || '',
       検出日: s['検出日'] || s['追加日'] || '',
       情報源: s['トレンド情報源'] || [],
       出典URL: s['出典URL'] || [],
@@ -277,6 +315,30 @@ function score(c, today, recentSet) {
   };
 }
 
+// スコア順を尊重しつつ、同一の粗ジャンルが MAX_PER_CATEGORY を超えないよう TOP_N 件を選ぶ。
+// 候補のジャンル多様性が足りずキャップだけでは TOP_N に満たない場合は、残りをスコア順で補充する。
+function selectDiverse(scored, n) {
+  const selected = [];
+  const catCount = {};
+  for (const x of scored) {
+    if (selected.length >= n) break;
+    const cat = x.category || 'その他';
+    if ((catCount[cat] || 0) >= MAX_PER_CATEGORY) continue;
+    selected.push(x);
+    catCount[cat] = (catCount[cat] || 0) + 1;
+  }
+  if (selected.length < n) {
+    const chosen = new Set(selected);
+    for (const x of scored) {
+      if (selected.length >= n) break;
+      if (chosen.has(x)) continue;
+      selected.push(x);
+      chosen.add(x);
+    }
+  }
+  return selected;
+}
+
 function run({ write }) {
   const today = todayJST();
 
@@ -294,8 +356,14 @@ function run({ write }) {
   const history = loadHistory(today);
   const recent = recentlyPickedNames(history);
   const candidates = buildCandidatesFromSynced(synced.trending, synced.manual, today);
-  const scored = candidates.map(c => ({ c, ...score(c, today, recent) }));
-  scored.sort((a, b) => b.score - a.score);
+  const scored = candidates.map(c => ({
+    c,
+    ...score(c, today, recent),
+    category: coarseCategory(c),
+    jitter: dailyJitter(c.店名, today),
+  }));
+  // スコア降順。同点はファイル順固定にせず、日替わりジッターでローテーションさせる。
+  scored.sort((a, b) => (b.score - a.score) || (b.jitter - a.jitter));
 
   if (scored.length === 0) {
     console.log('候補ゼロ。書き出ししない。');
@@ -312,7 +380,7 @@ function run({ write }) {
     );
   }
 
-  const top = scored.slice(0, TOP_N);
+  const top = selectDiverse(scored, TOP_N);
   const outStores = top.map((x, i) => ({
     順位: i + 1,
     店名: x.c.店名,
