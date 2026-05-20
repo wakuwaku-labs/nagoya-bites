@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="秋の居酒屋メニューをどう読むか——業界人の注文戦略">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3a1808"/>
+      <stop offset="100%" stop-color="#80401a"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#3a1808"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#fde2a8" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+  
+        <g opacity=".55">
+          <ellipse cx="510" cy="190" rx="46" ry="55" fill="#fde2a8"/>
+          <rect x="496" y="135" width="28" height="6" fill="#fde2a8"/>
+          <rect x="496" y="244" width="28" height="6" fill="#fde2a8"/>
+          <line x1="510" y1="125" x2="510" y2="135" stroke="#fde2a8" stroke-width="2"/>
+        </g>
+  <rect x="36" y="36" width="3" height="145" fill="#fde2a8" opacity=".9"/>
+  <text x="46" y="108" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">秋の居酒屋メニューをどう読</text><text x="46" y="146" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">むか——業界人の注文戦略</text>
+  <text x="46" y="60" fill="#fde2a8" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+</svg>

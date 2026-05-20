@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="名古屋の焼き鳥×日本酒ペアリング — 業界人が教える「串の順番」の正解">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5a2a0a"/>
+      <stop offset="100%" stop-color="#a0501a"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#5a2a0a"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#fde2a0" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+  
+        <g opacity=".45" stroke="#fde2a0" stroke-width="3" fill="none">
+          <line x1="420" y1="210" x2="580" y2="210"/>
+          <line x1="420" y1="195" x2="580" y2="195"/>
+          <line x1="420" y1="180" x2="580" y2="180"/>
+          <line x1="430" y1="170" x2="430" y2="225"/>
+          <line x1="470" y1="170" x2="470" y2="225"/>
+          <line x1="510" y1="170" x2="510" y2="225"/>
+          <line x1="550" y1="170" x2="550" y2="225"/>
+        </g>
+  <rect x="36" y="36" width="3" height="145" fill="#fde2a0" opacity=".9"/>
+  <text x="46" y="108" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">名古屋の焼き鳥×日本酒ペアリング—</text><text x="46" y="146" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">業界人が教える「串の順番」の正解</text>
+  <text x="46" y="60" fill="#fde2a0" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+</svg>

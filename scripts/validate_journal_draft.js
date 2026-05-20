@@ -161,27 +161,32 @@ function checkJournal(htmlPath, mdPath) {
     pass(14, true, `ヒーロー画像OK: ${heroSrc.slice(0, 80)}...`);
   }
 
-  // 15. 実店舗写真の強制（today_one / weekly_digest で店舗指定ありの場合）
-  //     ジャンル別Unsplash の汎用ストック写真は、店舗を紹介する記事では不適切。
+  // 15. 汎用ストック写真の全面禁止（全テーマ共通・CLAUDE.md 制約 #9）
   //     許可: Instagram embed (art-hero-ig) / Google Maps CDN (googleusercontent.com) /
-  //           HotPepper imgfp.hotp.jp / 店舗から許諾を得た独自URL
-  //     禁止: images.unsplash.com / images.pexels.com / loremflickr.com 等のストック
+  //           HotPepper imgfp.hotp.jp / 店舗から許諾を得た独自URL /
+  //           リポジトリ内 self-host の「記事固有のイメージ図」（/assets/ 等）/ data: の SVG
+  //     禁止: images.unsplash.com / images.pexels.com / loremflickr.com / pixabay.com 等
   const isStoreArticle = /今日の1軒|週次の話題店/.test(eyebrow);
-  if (isStoreArticle) {
-    const isStockHero = /images\.unsplash\.com|images\.pexels\.com|loremflickr\.com/.test(heroSrc);
-    if (hasHeroIg) {
-      pass('15_real_store_photo', true, '実店舗写真OK（Instagram embed）');
-    } else if (isStockHero) {
-      pass('15_real_store_photo', false,
-        `❌ 店舗紹介記事で汎用ストック写真（${(heroSrc.match(/(unsplash|pexels|loremflickr)/) || [])[1]}）を使用しています。\n` +
-        `   → input.json の stores[0].instagram_post_url に店舗公式IGの投稿URLを指定するか、\n` +
-        `     stores[0].photo_url に HotPepper / 店舗から許諾済みの画像URLを設定してください。\n` +
-        `     どうしても入手できない場合は theme を industry_insider に変更してください。`);
-    } else {
-      pass('15_real_store_photo', true, '実店舗写真OK（Instagram/Google Maps/HotPepper/許諾済み）');
-    }
+  const stockHostRe = /images\.unsplash\.com|images\.pexels\.com|loremflickr\.com|cdn\.pixabay\.com|pixabay\.com\/photos/;
+  const isStockHero = stockHostRe.test(heroSrc) || stockHostRe.test(ogImageSrc);
+  if (hasHeroIg) {
+    pass('15_real_store_photo', true, '実写真OK（Instagram embed）');
+  } else if (isStockHero) {
+    const matched = (heroSrc.match(/(unsplash|pexels|loremflickr|pixabay)/) ||
+                     ogImageSrc.match(/(unsplash|pexels|loremflickr|pixabay)/) || [])[1];
+    const guidance = isStoreArticle
+      ? `   → input.json の stores[0].instagram_post_url に店舗公式IGの投稿URLを指定するか、\n` +
+        `     stores[0].photo_url に HotPepper / 店舗から許諾済みの画像URLを設定してください。\n`
+      : `   → 記事テーマを表現する self-host の「記事固有のイメージ図」(/assets/journal-figures/*.svg|png) を\n` +
+        `     用意して photo_url に設定してください（汎用ストックの寄せ集めは不可）。\n`;
+    pass('15_real_store_photo', false,
+      `❌ 汎用ストック写真（${matched}）の使用を検出しました。CLAUDE.md 制約 #9 違反。\n` +
+      guidance +
+      `     実写が手配できない場合のみ、その記事専用のオリジナル図解（self-host）を作成してください。`);
   } else {
-    pass('15_real_store_photo', true, '店舗紹介テーマ以外のためスキップ');
+    pass('15_real_store_photo', true,
+      isStoreArticle ? '実店舗写真OK（Instagram/Google Maps/HotPepper/許諾済み）'
+                     : '写真OK（実写 or 記事固有のイメージ図）');
   }
 
   return results;
