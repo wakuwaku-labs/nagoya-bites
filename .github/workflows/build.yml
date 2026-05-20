@@ -38,6 +38,13 @@ jobs:
           GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
         continue-on-error: true
 
+      - name: Fetch GSC search performance → data/gsc_metrics.json
+        run: node scripts/fetch_gsc_metrics.js
+        env:
+          GA4_SERVICE_ACCOUNT_KEY: ${{ secrets.GA4_SERVICE_ACCOUNT_KEY }}
+          GSC_SITE_URL: ${{ secrets.GSC_SITE_URL }}
+        continue-on-error: true
+
       - name: Build (embed store data & update sitemap)
         run: node build.js
         env:
@@ -52,7 +59,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html features/index.html sitemap.xml data/view_counts.json data/site_metrics.json data/cross_check_flags.json
+          git add index.html features/index.html sitemap.xml data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/cross_check_flags.json
           git diff --cached --quiet || git commit -m "chore: auto-update store data [skip actions]"
           git pull --rebase origin main || true
           git push || (sleep 5 && git pull --rebase origin main && git push)
