@@ -841,6 +841,18 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .store-index-list a{color:var(--muted);text-decoration:none;border-bottom:1px dotted transparent;}
 .store-index-list a:hover{color:var(--gold);border-bottom-color:var(--gold);}
 @media(max-width:640px){.store-index{padding:1.2rem .8rem;}.store-index-list{grid-template-columns:1fr;}.store-index-list li{font-size:.66rem;}}
+.store-index-area.cards-on>.store-index-list{display:none;}
+.si-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;padding:.7rem 0 .5rem 1.3rem;}
+.si-actions{display:flex;gap:.6rem;flex-wrap:wrap;padding:.1rem 0 1rem 1.3rem;}
+.si-more,.si-viewall{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--gold);border:1px solid rgba(201,169,110,.4);padding:.42rem .95rem;border-radius:1px;cursor:pointer;background:transparent;transition:background .2s;}
+.si-more:hover,.si-viewall:hover{background:rgba(201,169,110,.1);}
+.si-subbar{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;padding:.5rem 0 .2rem 1.3rem;}
+.si-sublabel{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.16em;color:var(--dim);margin-right:.3rem;text-transform:uppercase;white-space:nowrap;}
+.si-sub{font-size:.66rem;letter-spacing:.02em;color:var(--muted);border:1px solid var(--border);padding:.28rem .7rem;border-radius:1px;cursor:pointer;background:transparent;transition:all .2s;}
+.si-sub:hover{color:var(--gold);border-color:var(--gold);}
+.si-sub.on{color:var(--gold);border-color:var(--gold);background:rgba(201,169,110,.08);}
+.si-sub .si-sub-cnt{color:var(--dim);font-size:.56rem;margin-left:.25rem;}
+@media(max-width:640px){.si-cards{grid-template-columns:1fr;padding-left:0;}.si-actions,.si-subbar{padding-left:0;}}
 </style>
 
 <!-- ======================================================= -->
@@ -2392,7 +2404,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
 <h2 class="store-index-title">エリア別 全店舗一覧（779店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
-<details class="store-index-area">
+<details class="store-index-area" data-area="栄">
 <summary>栄（423店）</summary>
 <ul class="store-index-list">
 <li><a href="stores/J003474639.html">【栄限定】食べ飲み放題2500円 ひねり蛇口ハイ×食べ飲み放題 大衆酒泉テルマエ（栄・居酒屋）</a></li>
@@ -2820,7 +2832,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="stores/J003649458.html">鮨食人 五と二 栄店（栄・居酒屋）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="名古屋駅">
 <summary>名古屋駅（183店）</summary>
 <ul class="store-index-list">
 <li><a href="stores/J001280293.html">2000円 食べ放題飲み放題 居酒屋 おすすめ屋 名古屋駅店（名古屋駅・居酒屋）</a></li>
@@ -3008,7 +3020,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="stores/J001294780.html">餃子酒場 カワヨシ 名駅店（名古屋駅・居酒屋）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="金山">
 <summary>金山（116店）</summary>
 <ul class="store-index-list">
 <li><a href="stores/J003959063.html">【喫煙可】居酒屋魚と鶏ヤロー金山小町店（金山・居酒屋）</a></li>
@@ -3129,7 +3141,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="stores/J001059197.html">餃子居酒屋 ブタ野郎 チキン野郎 沖縄バカヤロー 金山店（金山・居酒屋）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="覚王山">
 <summary>覚王山（14店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=COFFEE%20KAJITA">COFFEE KAJITA（覚王山・スペシャルティ）</a></li>
@@ -3148,7 +3160,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="index.html#q=%E9%A4%83%E5%AD%90%E5%B0%82%E9%96%80%20%E5%BC%90">餃子専門 弐（覚王山・変わり種餃子）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="大須">
 <summary>大須（12店）</summary>
 <ul class="store-index-list">
 <li><a href="stores/J004067845.html">World Dining Bar ゑびす（大須・ダイニングバー・バル）</a></li>
@@ -3165,7 +3177,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="index.html#q=%E9%A4%83%E5%AD%90%E3%81%AE%E7%8E%8B%E5%B0%86%20%E5%A4%A7%E9%A0%88%E8%A6%B3%E9%9F%B3%E5%BA%97">餃子の王将 大須観音店（大須・定番・ボリューム）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="本山">
 <summary>本山（7店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=WIFE%26HUSBAND%20COFFEE">WIFE&amp;HUSBAND COFFEE（本山・夫婦運営）</a></li>
@@ -3177,7 +3189,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="index.html#q=%E6%8B%89%E9%BA%BA%20%E8%B5%A4%E7%83%8F%E5%B8%BD%E5%AD%90">拉麺 赤烏帽子（本山・黒醤油）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="千種">
 <summary>千種（6店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=RA-MEN%20HERO'S">RA-MEN HERO&#39;S（千種・豚骨清湯）</a></li>
@@ -3188,7 +3200,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="index.html#q=%E9%BA%BA%E5%B1%8B%20%E5%BA%84%E5%A4%AA">麺屋 庄太（千種・二郎系）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="今池">
 <summary>今池（4店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=TRUNK%20COFFEE">TRUNK COFFEE（今池・スペシャルティ焙煎）</a></li>
@@ -3197,7 +3209,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="index.html#q=%E5%B0%8F%E5%80%89%E3%83%88%E3%83%BC%E3%82%B9%E3%83%88%E3%82%B5%E3%83%B3%E3%83%89%20%E8%B1%86%E9%A6%99">小倉トーストサンド 豆香（今池・小倉トーストの進化系）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="伏見">
 <summary>伏見（3店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=Elephant%20Factory%20Coffee">Elephant Factory Coffee（伏見・隠れ家）</a></li>
@@ -3205,57 +3217,57 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="index.html#q=%E5%A4%A9%E3%81%B7%E3%82%89%20%E6%98%AF%E5%B1%B1%E5%B1%85">天ぷら 是山居（伏見・¥18,000〜）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="丸の内">
 <summary>丸の内（2店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=%E5%8B%9D%E6%89%8B%E5%8F%A3%20%E6%B2%B3%E5%86%85%E5%B1%8B">勝手口 河内屋（丸の内・居酒屋）</a></li>
 <li><a href="index.html#q=%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%AE%A8%20%E3%81%8A%E3%81%BE%E3%81%8B%E3%81%9B%E3%82%AB%E3%82%A6%E3%83%B3%E3%82%BF%E3%83%BC">名古屋鮨 おまかせカウンター（丸の内・¥20,000〜）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="錦">
 <summary>錦（2店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%95%E3%83%AC%E3%83%B3%E3%83%81%E3%83%88%E3%83%BC%E3%82%B9%E3%83%88%20%E7%99%BD%E6%B3%A2">名古屋フレンチトースト 白波（錦・分厚いフレンチトースト）</a></li>
 <li><a href="index.html#q=%E9%A4%83%E5%AD%90%E9%85%92%E5%A0%B4%20%E4%B8%B8%E6%BA%90">餃子酒場 丸源（錦・クラフトビールと餃子）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="千種区 吹上">
 <summary>千種区 吹上（1店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=%E9%BA%BA%E5%B1%8B%E3%81%BE%E3%81%A4%E3%82%8A%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%BA%97">麺屋まつり 名古屋店（千種区 吹上・ラーメン）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="中区 栄">
 <summary>中区 栄（1店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=%E3%81%8B%E3%81%8D%E6%B0%B7%20%E3%81%86%E3%81%A8%EF%BC%88%E6%A0%84%E3%83%9E%E3%83%AB%E3%82%A8%E3%82%A4%E3%82%AC%E3%83%AC%E3%83%AA%E3%82%A2%E5%BA%97%EF%BC%89">かき氷 うと（栄マルエイガレリア店）（中区 栄・かき氷・スイーツ）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="今池・複数店舗">
 <summary>今池・複数店舗（1店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=%E9%BA%BA%E5%B1%8B%E3%81%AF%E3%81%AA%E3%81%B3">麺屋はなび（今池・複数店舗・台湾まぜそば元祖）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="名東区">
 <summary>名東区（1店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=%E3%82%B3%E3%83%A1%E3%83%80%E7%8F%88%E7%90%B2%20%E6%9C%AC%E5%BA%97">コメダ珈琲 本店（名東区・名古屋モーニング総本山）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="瑞穂区">
 <summary>瑞穂区（1店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=%E5%96%AB%E8%8C%B6%E3%83%9E%E3%82%A6%E3%83%B3%E3%83%86%E3%83%B3">喫茶マウンテン（瑞穂区・甘口スパゲティ聖地）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="勝川">
 <summary>勝川（1店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=%E7%84%BC%E9%A4%83%E5%AD%90%20%E5%8B%9D%E5%B7%9D">焼餃子 勝川（勝川・地元老舗）</a></li>
 </ul>
 </details>
-<details class="store-index-area">
+<details class="store-index-area" data-area="熱田">
 <summary>熱田（1店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=%E3%81%86%E3%81%AA%E3%81%8E%20%E5%82%99%E9%95%B7%E7%82%AD%E7%84%BC%E3%81%8D">うなぎ 備長炭焼き（熱田・¥15,000〜）</a></li>
@@ -3333,6 +3345,130 @@ function loadStores(stores) {
   readHash();       // restore filter state from URL hash
   applyFilters();   // apply restored state (replaces the initial renderGrid call)
   injectDynamicJsonLd(ALL_STORES);
+  enhanceStoreIndex();
+}
+
+// エリア名（HotPepper middle_area）をサブエリアのトークンに分解する。
+// 例: "名古屋（名古屋駅/西区/中村区）" → ["名古屋","名古屋駅","西区","中村区"]
+//     "大曽根・千種・今池・池下・守山区" → ["大曽根","千種",...]
+// 半角カナ（ｷﾀ/ﾐﾅﾐ 等）はノイズなので除去してから区切り文字で分割する。
+function parseSubAreas(area) {
+  var s = String(area || '').replace(/[｡-ﾟ]+/g, '');
+  var parts = s.split(/[（）()\/・,、\s]+/).map(function(t){ return t.trim(); }).filter(Boolean);
+  var seen = {}, out = [];
+  parts.forEach(function(p){ if (!seen[p]) { seen[p] = 1; out.push(p); } });
+  return out;
+}
+// 店舗がサブエリアに属するか。エリア欄は複合名で全トークンを含むため判定に使えない。
+// アクセス（最寄り駅・区名が書かれている）と店名のテキスト一致で推定する。
+function inSubArea(store, token) {
+  var hay = (store['アクセス'] || '') + ' ' + (store['店名'] || '');
+  return hay.indexOf(token) !== -1;
+}
+
+// 店舗インデックス（エリア別アコーディオン）を、展開時に店舗カードでレンダーする。
+// 複合エリア（"名古屋（名古屋駅/西区/中村区）"等）はサブエリアのチップで枝分かれ絞り込みできる。
+// テキストリンク（.store-index-list）はクローラ用に DOM へ残し、表示のみカードへ差し替える。
+// カードは初回展開時に遅延生成し、12 件ずつ追加読み込み（800 店規模でも初期表示を軽く保つ）。
+function enhanceStoreIndex() {
+  var SI_PAGE = 12;
+  document.querySelectorAll('details.store-index-area').forEach(function(d){
+    var area = d.getAttribute('data-area');
+    if (!area) return;
+    var matches = ALL_STORES.filter(function(s){ return (s['エリア']||'') === area; });
+    if (!matches.length) return;
+    // 親プレフィックス（"名古屋（…）" の "名古屋"）はサブエリアではなくエリア全体なのでチップから除く
+    var prefixMatch = area.match(/^([^（(]+)[（(]/);
+    var parentPrefix = prefixMatch ? prefixMatch[1].replace(/[｡-ﾟ]+/g, '').trim() : null;
+    // サブエリア候補：店舗が実在し（アクセス一致）かつエリア全体より少ない＝意味のある絞り込みになるものだけ
+    var subTokens = parseSubAreas(area);
+    var subChips = subTokens.length >= 2
+      ? subTokens.filter(function(tok){ return tok !== parentPrefix; }).map(function(tok){
+          return { token: tok, list: matches.filter(function(s){ return inSubArea(s, tok); }) };
+        }).filter(function(c){ return c.list.length > 0 && c.list.length < matches.length; })
+      : [];
+    var rendered = false;
+    d.addEventListener('toggle', function(){
+      if (!d.open || rendered) return;
+      rendered = true;
+      d.classList.add('cards-on');
+      var ul = d.querySelector('.store-index-list');
+      var activeToken = null;       // null = エリア全体
+      var current = matches;        // 現在表示中の絞り込み結果
+      var shown = 0;
+
+      var cardWrap = document.createElement('div');
+      cardWrap.className = 'si-cards';
+      var actions = document.createElement('div');
+      actions.className = 'si-actions';
+      var moreBtn = document.createElement('button');
+      moreBtn.className = 'si-more';
+      moreBtn.type = 'button';
+      moreBtn.addEventListener('click', renderMore);
+      var viewAll = document.createElement('button');
+      viewAll.className = 'si-viewall';
+      viewAll.type = 'button';
+      viewAll.addEventListener('click', function(){
+        var q = activeToken || area;
+        var si = document.getElementById('si'), si2 = document.getElementById('si2');
+        if (si) si.value = q;
+        if (si2) si2.value = q;
+        applyFilters();
+        var grid = document.getElementById('grid');
+        if (grid) window.scrollTo({ top: grid.getBoundingClientRect().top + window.pageYOffset - 110, behavior:'smooth' });
+      });
+
+      function syncViewAllLabel(){
+        viewAll.textContent = (activeToken ? '「' + activeToken + '」' : 'このエリア') + 'を検索結果で見る（' + current.length + '店）';
+      }
+      function renderMore(){
+        var next = current.slice(shown, shown + SI_PAGE);
+        cardWrap.insertAdjacentHTML('beforeend', next.map(buildCardHtml).join(''));
+        shown += next.length;
+        if (shown >= current.length) moreBtn.style.display = 'none';
+        else { moreBtn.style.display = ''; moreBtn.textContent = 'もっと見る（残り ' + (current.length - shown) + '店）'; }
+      }
+      function selectSub(token, list){
+        activeToken = token;
+        current = list;
+        shown = 0;
+        cardWrap.innerHTML = '';
+        syncViewAllLabel();
+        renderMore();
+      }
+
+      // サブエリアの枝分かれチップ（複合エリアのみ）
+      if (subChips.length) {
+        var subbar = document.createElement('div');
+        subbar.className = 'si-subbar';
+        subbar.innerHTML = '<span class="si-sublabel">エリアを絞り込む</span>';
+        var chipDefs = [{ token: null, label: 'すべて', list: matches }].concat(
+          subChips.map(function(c){ return { token: c.token, label: c.token, list: c.list }; })
+        );
+        var chipEls = chipDefs.map(function(def){
+          var b = document.createElement('button');
+          b.className = 'si-sub' + (def.token === null ? ' on' : '');
+          b.type = 'button';
+          b.innerHTML = def.label + (def.token === null ? '' : '<span class="si-sub-cnt">' + def.list.length + '</span>');
+          b.addEventListener('click', function(){
+            chipEls.forEach(function(x){ x.classList.remove('on'); });
+            b.classList.add('on');
+            selectSub(def.token, def.list);
+          });
+          subbar.appendChild(b);
+          return b;
+        });
+        d.insertBefore(subbar, ul);
+      }
+
+      syncViewAllLabel();
+      d.insertBefore(cardWrap, ul);
+      actions.appendChild(moreBtn);
+      actions.appendChild(viewAll);
+      d.insertBefore(actions, ul);
+      renderMore();
+    });
+  });
 }
 
 // ================================================================
@@ -3516,6 +3652,7 @@ function applyFilters() {
     var okQ = !q || (s['店名']||'').toLowerCase().indexOf(q) !== -1
       || (s['ジャンル']||'').toLowerCase().indexOf(q) !== -1
       || (s['エリア']||'').toLowerCase().indexOf(q) !== -1
+      || (s['アクセス']||'').toLowerCase().indexOf(q) !== -1
       || (s['タグ']||'').toLowerCase().indexOf(q) !== -1;
     var storeTags = (s['タグ']||'').split(',').map(function(t){ return t.trim(); });
     var access = s['アクセス'] || '';
