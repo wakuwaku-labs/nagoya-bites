@@ -460,13 +460,34 @@ const STORE_OUTPUT_OMIT_KEYS = new Set([
   '内観写真URL', '料理写真URL1', '料理写真URL2',
   '公開フラグ'
 ]);
+
+// ISSUE-015 退行対策: crossCheckBreakdown は V3(ISSUE-049)で 8 シグナルに拡張され
+// 全 4,643 店にインライン焼き付けされた結果 ~2.6MB を占めるが、index.html のモーダル
+// （buildStoreModal の ccSigKeys）が実際に描画するのは下記 4 シグナルのみ。
+// 残り（s3_dataCompleteness / s6_instagramPresence / s7_reviewTimeseries /
+// s8_reviewDistribution）は runtime 未参照の死蔵データなので出力から除外する。
+// ※ crossCheckScore（最終スコア）は別フィールドで温存されるため整合度表示・ソートは不変。
+//   モーダルでより多くのシグナルを見せたくなった場合は、ここのキー集合と
+//   index.html 側 ccSigKeys/ccSigLabels を揃えて拡張すること。
+const CC_BREAKDOWN_OUTPUT_KEYS = new Set([
+  's1_googleRatingVsCount', 's2_reviewCountAbs',
+  's4_mediaCrossCheck', 's5_operationContinuity'
+]);
+function slimCrossCheckBreakdown(breakdown) {
+  if (!breakdown || typeof breakdown !== 'object') return breakdown;
+  const out = {};
+  for (const k of Object.keys(breakdown)) {
+    if (CC_BREAKDOWN_OUTPUT_KEYS.has(k)) out[k] = breakdown[k];
+  }
+  return out;
+}
 function slimStoreForOutput(s) {
   const out = {};
   for (const k of Object.keys(s)) {
     if (STORE_OUTPUT_OMIT_KEYS.has(k)) continue;
     const v = s[k];
     if (v === '' || v === null || v === undefined) continue;
-    out[k] = v;
+    out[k] = (k === 'crossCheckBreakdown') ? slimCrossCheckBreakdown(v) : v;
   }
   return out;
 }
@@ -1606,6 +1627,34 @@ async function main() {
 
   const jsonStr = JSON.stringify(slimStores);
   console.log(`LOCAL_STORES serialize: ${stores.length}件, ${(jsonStr.length / 1024 / 1024).toFixed(2)}MB`);
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // 店舗大量消失ガードレール（再発防止）
+  // build.js の店舗の大半は Hot Pepper API（CI専用 HOTPEPPER_API_KEY）由来。
+  // キー無し / ネットワーク不通の環境でビルドすると数千店が欠落した縮小版が
+  // 生成され、それをコミット→マージで全件版を上書きしてしまう事故が過去発生した。
+  // 既存 index.html の店舗数より大幅に少ない場合は書き込みを中断する。
+  // 意図的な縮小（テスト等）が必要な場合は ALLOW_STORE_SHRINK=1 で明示的に上書き可。
+  // ──────────────────────────────────────────────────────────────────────────
+  const SHRINK_THRESHOLD = 0.7; // 既存の70%未満なら異常とみなす
+  const existingMatch = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
+  let existingCount = 0;
+  if (existingMatch) {
+    try { existingCount = JSON.parse(existingMatch[1]).length; } catch (_) { existingCount = 0; }
+  }
+  if (existingCount > 0 && slimStores.length < existingCount * SHRINK_THRESHOLD) {
+    const msg =
+      `[ABORT] 店舗数が異常に減少しました: 既存 ${existingCount}件 → 新規 ${slimStores.length}件 ` +
+      `(${Math.round((slimStores.length / existingCount) * 100)}%)。` +
+      `Hot Pepper API キー未設定 / ネットワーク不通の可能性があります。` +
+      `index.html は書き換えません。意図的な縮小なら ALLOW_STORE_SHRINK=1 を指定してください。`;
+    if (process.env.ALLOW_STORE_SHRINK === '1') {
+      console.warn(msg + ' → ALLOW_STORE_SHRINK=1 のため続行します。');
+    } else {
+      throw new Error(msg);
+    }
+  }
+
   html = html.replace(
     /var LOCAL_STORES = \[[\s\S]*?\];/,
     `var LOCAL_STORES = ${jsonStr};`
