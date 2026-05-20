@@ -358,14 +358,25 @@ async function tryGoogleMapsPhoto(storeName, area) {
  * 参照: https://help.instagram.com/1521786464576692
  */
 function buildInstagramEmbedHtml(postUrl) {
-  const cleanUrl = postUrl.replace(/\?.*$/, '').replace(/\/$/, '');
-  const embedUrl = `${cleanUrl}/?utm_source=ig_embed&utm_campaign=loading`;
+  // Instagram embed は正規パーマリンク形式（https://www.instagram.com/p/SHORTCODE/ または
+  // /reel/SHORTCODE/）でないと埋め込みが描画されない。ユーザー名入りURL
+  // （/tsubaki_kanayama/p/XXX/）や末尾スラッシュ無し等を正規化する。
+  const m = postUrl.match(/instagram\.com\/(?:[^/]+\/)?(p|reel|tv)\/([A-Za-z0-9_-]+)/);
+  let canonicalUrl;
+  if (m) {
+    const kind = m[1] === 'tv' ? 'tv' : m[1]; // p / reel / tv
+    canonicalUrl = `https://www.instagram.com/${kind}/${m[2]}/`;
+  } else {
+    // パーマリンクが抽出できない場合はそのまま（末尾スラッシュ整形のみ）
+    canonicalUrl = postUrl.replace(/\?.*$/, '').replace(/\/?$/, '/');
+  }
+  const embedUrl = `${canonicalUrl}?utm_source=ig_embed&utm_campaign=loading`;
   // data-instgrm-captioned を省略 → 写真のみ表示（キャプション非表示）
   return `<div class="art-hero-ig">
-  <blockquote class="instagram-media" data-instgrm-permalink="${esc(embedUrl)}" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);margin:0 auto;max-width:540px;padding:0;width:calc(100% - 2px);">
+  <blockquote class="instagram-media" data-instgrm-permalink="${esc(embedUrl)}" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);margin:0 auto;max-width:540px;min-width:326px;padding:0;width:calc(100% - 2px);">
     <a href="${esc(embedUrl)}" target="_blank" rel="noopener">Instagramで見る</a>
   </blockquote>
-  <script async src="//www.instagram.com/embed.js"></script>
+  <script async src="https://www.instagram.com/embed.js"></script>
 </div>`;
 }
 
@@ -561,16 +572,32 @@ async function main() {
   if (!fs.existsSync(DRAFTS_DIR)) fs.mkdirSync(DRAFTS_DIR, { recursive: true });
   if (!fs.existsSync(POSTS_DIR)) fs.mkdirSync(POSTS_DIR, { recursive: true });
 
-  // --- 自動画像取得（Unsplash API → Loremflickr フォールバック）---
-  if (!input.hero_image_url) {
+  // --- ヒーロー画像の決定 ---
+  // 優先順位:
+  //   1. stores[0].instagram_post_url → Instagram 公式 embed（実投稿が記事内に表示される）
+  //   2. stores[0].photo_url（HotPepper / 許諾済み）/ Google Maps Places 写真
+  //   3. 明示的に指定された hero_image_url（手動指定のストック等）
+  //   4. ジャンル別 curated Unsplash（フォールバック）
+  // instagram_post_url は手動指定の hero_image_url より優先する（実店舗写真を最優先）。
+  const store0 = (input.stores || [])[0] || {};
+  const hasRealPhotoSource = store0.instagram_post_url || store0.photo_url || process.env.GOOGLE_MAPS_API_KEY;
+
+  if (store0.instagram_post_url) {
+    // 実投稿の embed を最優先（手動 hero_image_url があっても上書き）
+    process.stdout.write('  📷 Instagram embed（公式投稿）\n');
+    input.hero_image_is_instagram = true;
+    input.hero_image_embed_html   = buildInstagramEmbedHtml(store0.instagram_post_url);
+    input.hero_image_url          = store0.instagram_post_url; // ログ用のみ
+    // Instagram embed は og:image に使えないので og_image は維持（未指定なら空）
+  } else if (!input.hero_image_url || hasRealPhotoSource) {
+    // hero_image_url 未指定、または実写真ソース（photo_url/Maps）がある場合は自動取得
     process.stdout.write('  📷 画像を自動取得中...');
     const photo = await fetchPhotoForArticle(input);
     if (photo) {
       if (photo.is_instagram) {
         input.hero_image_is_instagram = true;
         input.hero_image_embed_html   = photo.embed_html;
-        input.hero_image_url          = photo.url; // ログ用のみ
-        // Instagram embed は og:image に使えないのでデフォルトのまま
+        input.hero_image_url          = photo.url;
       } else {
         input.hero_image_url            = photo.url;
         input.hero_image_credit_url     = photo.credit_url;
