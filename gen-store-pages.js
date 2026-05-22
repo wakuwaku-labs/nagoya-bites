@@ -739,4 +739,8 @@ async function main() {
   console.log(`  git add stores/ sitemap.xml && git commit -m "店舗別SEOページを生成 (${generated}件)" && git push`);
 }
 
-main().catch(err => { console.error('エラー:', err); process.exit(1); });
+if (require.main === module) {
+  main().catch(err => { console.error('エラー:', err); process.exit(1); });
+}
+
+module.exports = { renderStorePage, toSlug };
