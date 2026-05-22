@@ -49,6 +49,41 @@ jobs:
         env:
           GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
 
+      # ISSUE-056: 取得後の Google評価 カバレッジ見込みを可視化（50% 目標への進捗確認）。
+      # 追加シークレット不要 — index.html の LOCAL_STORES と places_resolved.json だけで算出。
+      - name: Google評価 カバレッジ見込み
+        if: always()
+        run: |
+          if [ ! -f data/places_resolved.json ]; then
+            echo "::warning::data/places_resolved.json が無い — GOOGLE_PLACES_API_KEY 未設定の可能性。docs/places-api-setup.md 参照"
+            exit 0
+          fi
+          node -e '
+            const fs = require("fs");
+            const html = fs.readFileSync("index.html", "utf8");
+            const m = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
+            if (!m) { console.log("LOCAL_STORES 抽出失敗（スキップ）"); process.exit(0); }
+            const stores = JSON.parse(m[1]);
+            const cache = JSON.parse(fs.readFileSync("data/places_resolved.json", "utf8"));
+            const total = stores.length;
+            const haveNow = stores.filter(s => s["Google評価"] && String(s["Google評価"]).trim() !== "").length;
+            let projected = 0;
+            for (const s of stores) {
+              const cur = s["Google評価"] && String(s["Google評価"]).trim() !== "";
+              const e = cache[s["ホットペッパーID"]];
+              const fromApi = e && typeof e.rating === "number";
+              if (cur || fromApi) projected++;
+            }
+            const pct = n => (n / total * 100).toFixed(1) + "%";
+            console.log(`総店舗数: ${total}`);
+            console.log(`現状の Google評価 充足: ${haveNow} (${pct(haveNow)})`);
+            console.log(`build.js 反映後の見込み: ${projected} (${pct(projected)})  ← 目標 50%`);
+            const cached = Object.keys(cache).length;
+            const rated = Object.values(cache).filter(e => e && typeof e.rating === "number").length;
+            const rejected = Object.values(cache).filter(e => e && e.rejected).length;
+            console.log(`Places キャッシュ: ${cached}件（rating有 ${rated} / 住所却下 ${rejected}）`);
+          '
+
       - name: Commit & push if changed
         run: |
           git config user.name  "github-actions[bot]"
