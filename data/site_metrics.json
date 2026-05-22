@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-05-20T15:57:45.881Z",
+  "generatedAt": "2026-05-21T19:53:24.677Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 203,
-    "pageViews": 751,
-    "sessions": 318,
-    "avgSessionDuration": 387.6,
-    "bounceRate": 0.525,
-    "pagesPerSession": 2.36
+    "activeUsers": 214,
+    "pageViews": 787,
+    "sessions": 329,
+    "avgSessionDuration": 368.9,
+    "bounceRate": 0.514,
+    "pagesPerSession": 2.39
   },
   "channels": {
     "sessions": {
-      "organic": 51,
-      "direct": 263,
+      "organic": 55,
+      "direct": 262,
       "social": 4,
       "referral": 13,
       "paid": 0,
       "other": 1
     },
     "pct": {
-      "organic": 15.4,
-      "direct": 79.2,
+      "organic": 16.4,
+      "direct": 78.2,
       "social": 1.2,
       "referral": 3.9,
       "paid": 0,
@@ -31,22 +31,22 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 217
+      "sessions": 226
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 38
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 22
+      "sessions": 42
     },
     {
       "source": "chatgpt.com",
       "medium": "(not set)",
       "sessions": 19
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 12
     },
     {
       "source": "yahoo",
@@ -82,18 +82,18 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 279,
-      "sessions": 175
+      "pageViews": 290,
+      "sessions": 181
     },
     {
       "path": "/index.html",
-      "pageViews": 99,
-      "sessions": 46
+      "pageViews": 105,
+      "sessions": 51
     },
     {
       "path": "/nagoya-bites/index.html",
-      "pageViews": 47,
-      "sessions": 17
+      "pageViews": 34,
+      "sessions": 12
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -101,14 +101,14 @@
       "sessions": 18
     },
     {
-      "path": "/features/private-room.html",
-      "pageViews": 19,
-      "sessions": 16
+      "path": "/features/index.html",
+      "pageViews": 20,
+      "sessions": 11
     }
   ],
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 203,
+    "value": 214,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
