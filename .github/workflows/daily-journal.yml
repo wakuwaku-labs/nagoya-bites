@@ -1,11 +1,14 @@
 name: NAGOYA BITES — 日次ジャーナル自動生成
 
 on:
-  schedule:
-    # 毎日 22:00 UTC = 翌朝 7:00 JST
-    # ローカル Routine (9:00 JST) より2時間早く実行し重複を防ぐ
-    - cron: '0 22 * * *'
-  workflow_dispatch: # 手動実行（テスト・リカバリ用）
+  # 毎日の schedule は停止中。
+  # この生成は claude CLI を要し ANTHROPIC_API_KEY（有料 API）が必須だが未設定のため、
+  # cron で回すと毎朝失敗する。コストゼロ運用としてジャーナル生成は
+  # ローカル launchd（scripts/run_journal_local.sh / サブスク認証）を主経路にする。
+  # 将来 ANTHROPIC_API_KEY を設定したら下記 schedule のコメントを外せば即復活する。
+  # schedule:
+  #   - cron: '0 22 * * *'   # 毎日 22:00 UTC = 翌朝 7:00 JST
+  workflow_dispatch: # 手動実行（テスト・リカバリ用 / API キー設定時のみ成功）
 
 # 既定の GITHUB_TOKEN は contents:read のため push が 403 になる。
 # 自動コミット & プッシュのために write を明示する（daily-trending5.yml と同様）。
