@@ -63,6 +63,9 @@ async function query(searchconsole, body) {
 async function main() {
   const { google } = require('googleapis');
   const credentials = JSON.parse(KEY_RAW);
+  // 診断用: GSC に追加すべき正しい SA メールをログで確定させる（メールは秘密情報ではない）
+  console.log(`使用中のサービスアカウント: ${credentials.client_email}`);
+  console.log(`対象プロパティ(GSC_SITE_URL): ${SITE_URL}`);
   const auth = new google.auth.JWT({
     email: credentials.client_email,
     key: credentials.private_key,
@@ -132,8 +135,11 @@ async function main() {
 
 main().catch(err => {
   console.error('GSC 集計エラー:', err.message);
-  // CI の `git add data/gsc_metrics.json` が落ちないよう、未存在時のみスタブを置く
-  if (!fs.existsSync(OUT_PATH)) {
+  // まだ正常データが無い（未存在 or エラースタブ）場合のみ最新エラーで更新する。
+  // 既に totals 入りの正常データがある場合は、transient エラーで上書きしない。
+  let hasGoodData = false;
+  try { hasGoodData = !!(JSON.parse(fs.readFileSync(OUT_PATH, 'utf8')).totals); } catch (_) {}
+  if (!hasGoodData) {
     fs.mkdirSync(path.dirname(OUT_PATH), { recursive: true });
     fs.writeFileSync(OUT_PATH, JSON.stringify({
       generatedAt: new Date().toISOString(),
