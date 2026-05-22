@@ -567,7 +567,8 @@
 | 2026-05-20〜22 | Editor + Builder（夜間自律実行 第5フェーズ）| **ジャーナル3本公開 + 中華特集新規作成**: (1) `journal/2026-05-20-tuesday-is-the-best-dining-night.html` 新規（火曜夜が名古屋グルメの黄金時間帯・客層/仕入れ鮮度/料理人コンディション3条件）(2) `journal/2026-05-21-prep-day-knowledge.html` 新規（仕込み日を知ると食べ頃が変わる・出汁/煮込み/漬けの時間軸）(3) `journal/2026-05-22-nagoya-lunch-settai-guide.html` 新規（接待ランチ3原則・90分/アルコールなし/照明の設計）(4) journal/index.html + feed.xml + feed.atom 更新（lastBuildDate: 2026-05-22）(5) `features/nagoya-chinese-guide.html` 新規（中華料理おすすめ10選・ワンタン★4.9/餃子★4.8/麻婆/小籠包/台湾料理/火鍋 業界人厳選）(6) features/index.html numberOfItems 28→29・中華カード追加・JSON-LD更新 (7) gen-store-pages.js TAG_TO_FEATURES: 中華/点心/餃子フォールバック追加 (8) llms.txt: 中華料理特集リスト追加 | ✅ デプロイ済み |
 | 2026-05-14〜15 | Editor + Builder（夜間自律実行 第4フェーズ）| **ジャーナル5日分先行公開 + 特集3本追加 + crossCheckScore Step4完了**: (1) journal/2026-05-15（金曜夜の使える店・使えない店）公開・feed.xml/atom 更新・sitemap 780→780URL (2) journal/2026-05-16（土曜夜の2段構え戦略）公開 (3) journal/2026-05-17（日曜ランチ業界人の穴）公開 (4) journal/2026-05-18（月曜夜に動く業界人）公開 (5) journal/2026-05-19（インスタ映え店を選ぶと後悔する理由）公開 (6) `features/nagoya-sushi-guide.html` 新規（名古屋鮨8選・三河湾/豊洲/赤酢シャリ・FAQPage+ItemList）(7) `features/nagoya-italian-guide.html` 新規（名古屋イタリアン10選・栄/伏見/名駅/池下・3選定軸）(8) `features/nagoya-seafood.html` リモートエージェント公開分を features/index.html に統合（numberOfItems 25→28・カード追加・JSON-LD位置28）(9) `data/dispute_requests.json` 新規作成（クロスチェック整合度異議申し立てモデレーション台帳・Step4完了）(10) sitemap.xml 786→812 URL | ✅ デプロイ済み |
 | 2026-05-20 | Orchestrator(EMERGENCY) | **ISSUE-051 今日の話題店TOP5 ラーメン一極集中バグ修正**: 原因＝候補69件が全て同点55点（鮮度45+編集部推薦10・0媒体）で、安定ソートにより `manual_stores.json` 先頭のラーメン12連店がそのままTOP5化。ジャンル多様性制約もタイブレークも不在。修正＝`pick_daily_trending5.js` に (1) 粗ジャンル分類 `coarseCategory()`（店名+ジャンルで11カテゴリ判定） (2) TOP5内 同一ジャンル最大2件キャップ `selectDiverse()` (3) 店名+日付の決定的ジッターで同点店を日替わりローテーション。candidates に `ジャンル` を伝播。再生成後 TOP5＝餃子2/カフェ1/ラーメン1/スイーツ1 に多様化。build.js 779件・付与5件/失敗0・console error 0・preview目視OK | ✅ デプロイ済み (commit pending) |
-| 2026-05-22 | DataKeeper(/solve-next) | **ISSUE-056（旧 ISSUE-041 ready・Google評価カバー率 15%→50%）を起動可能化**: Places API 取得パイプライン（`scripts/fetch_places.js`→`build.js` rating補完→`monthly-places.yml` 月次CI）が3段すべて実装済みと検証 / 唯一の blocker＝`GOOGLE_PLACES_API_KEY` 未設定（`places_resolved.json` が一度も生成されず15.3%停滞）と特定 / 起動 runbook `docs/places-api-setup.md` 新規作成（鍵発行→Secret登録→手動初回実行→効果確認・コスト見積）/ `monthly-places.yml` に「Google評価 カバレッジ見込み」ステップ追加（追加シークレット不要・50%目標への進捗を毎回可視化）/ 重複ID ISSUE-041 を ISSUE-056 に採番し直し Notion同期破綻を解消 | ✅ デプロイ済み (commit pending) |
+| 2026-05-22 | DataKeeper(/solve-next) | **ISSUE-056（旧 ISSUE-041 ready・Google評価カバー率 15%→50%）を起動可能化**: Places API 取得パイプライン（`scripts/fetch_places.js`→`build.js` rating補完→`monthly-places.yml` 月次CI）が3段すべて実装済みと検証 / 唯一の blocker＝`GOOGLE_PLACES_API_KEY` 未設定（`places_resolved.json` が一度も生成されず15.3%停滞）と特定 / 起動 runbook `docs/places-api-setup.md` 新規作成（鍵発行→Secret登録→手動初回実行→効果確認・コスト見積）/ `monthly-places.yml` に「Google評価 カバレッジ見込み」ステップ追加（追加シークレット不要・50%目標への進捗を毎回可視化）/ 重複ID ISSUE-041 を ISSUE-056 に採番し直し Notion同期破綻を解消 | ✅ デプロイ済み (6b200e85f) |
+| 2026-05-22 | DataKeeper(/solve-next) | **ISSUE-056 acceptance 即時達成・クローズ**: オペレーターが GOOGLE_PLACES_API_KEY 設定 → monthly-places.yml 手動実行（全4,593店取得・rating有4,437/住所却下77/閉店除外170）→ places_resolved.json コミット(4f5d2c385) → build.yml 手動実行で index.html 反映(a5d941ff5)。**Google評価カバー率 15.3%→98.3%（4,348/4,423）** で目標50%を大幅超過。閉店170店除外で総数4,593→4,423(-3.7%・QA閾値内) | ✅ デプロイ済み (a5d941ff5) |
 
 ---
 
@@ -1204,12 +1205,19 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **follow-up**: 業界視点の 1段深い推薦文（editorReason 2.1% / 97件 のみ）は別途 ISSUE-045 で扱う
 - **note**: 既存 ISSUE-017 とマージ。本 ISSUE-033 を採用、ISSUE-017 は status:duplicate へ
 
-### [ISSUE-056] Google 評価カバー率 15% → 50% への引き上げ（D1 Quality Gap・旧 ISSUE-041 ready）
+### [ISSUE-056] Google 評価カバー率 15% → 50% への引き上げ（D1 Quality Gap・旧 ISSUE-041 ready）✅
 
-- **priority**: P1
-- **status**: in_progress
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-05-22
+- **resolved_by**: commit a5d941ff5（Places fetch 4f5d2c385 → build.js 反映）
 - **category**: competitive / data / content
 - **detected**: 2026-05-08（ISSUE-033 解決時の再観測で発覚した別軸の Gap）
+- **resolution 2026-05-22 — acceptance 即時達成（50% 目標 → 実績 98.3%）**:
+  オペレーターが `GOOGLE_PLACES_API_KEY` を GitHub Secrets に設定 → `monthly-places.yml` を手動実行。
+  全 4,593 店を Places API で取得し、rating 有 **4,437 店** / 住所却下 77 店 / 閉店確定（CLOSED_PERMANENTLY）**170 店を除外**。
+  `data/places_resolved.json`・`places_history.json` をコミット（4f5d2c385）→ `build.js` 手動実行で `index.html` に反映（a5d941ff5）。
+  結果: **Google評価 カバー率 15.3%（704/4,593）→ 98.3%（4,348/4,423）**。閉店店除外で総数は 4,593→4,423（-3.7%・QA-2 閾値内・品質改善）。
+  以降は `monthly-places.yml`（毎月1日）+ 週次 build で自動維持・自然増。
 - **renumber**: 2026-05-22 — 旧 ID は `ISSUE-041`。done 済みの「静的店舗ページ網羅率改善」と ID が重複し
   Notion 同期が破綻していたため `ISSUE-056` に採番し直した（重複ID解消）。
 - **description**:
