@@ -37,9 +37,31 @@
     `data/gsc_metrics.json` に日次出力。build.yml に取得ステップ + git add 追加済み。
   - `docs/gsc-metrics-setup.md` にセットアップ手順（SA を GSC ユーザーに追加 + API 有効化の2ステップ）を記載。
   - `docs/kpi-weekly.md` に GA4 実数ベースライン（UU203/PV773/AI流入24 等・2026-05-21）を記録。
-  - **残（ユーザー作業）**: GA4 用サービスアカウントを GSC「ユーザーと権限」に追加 + GCP で Search Console API 有効化。
-    完了後の次回 CI ビルドで `gsc_metrics.json` に実数が入る。
+  - **更新 2026-05-22 — 自動連携は保留**: GCP で Search Console API は有効化済み（プロジェクト 450186210260
+    ＝optimal-transit-447015-e9）。ただし GSC が UI 上でサービスアカウント
+    `nagoya-bites-ga4@optimal-transit-447015-e9.iam.gserviceaccount.com` を「メールアドレスが見つかりません」で
+    弾き、ユーザー追加できず → `fetch_gsc_metrics.js` は permission エラー。GA4 では同 SA が稼働しているため
+    SA 自体は実在。GSC 側の既知制約とみて自動連携は一旦保留し、**当面はスクショからの手動記録**に切替。
+    将来やるなら OWNER アカウント(OAuth refresh token)経由を検討。
+  - **手動取得ベースライン（2026-05-22 / 過去28日）**: クリック283 / 表示35,700 / CTR0.8% / 平均順位11位。
+    5/13に検索流入が離陸。表示トップは**ほぼ店名検索で多くが0クリック**（クリック価値低）。発見型KWは `名古屋 一人飲み` のみ。
+    → `docs/kpi-weekly.md` 2026-05-22 枠に記録。
   - **注記**: インデックス被覆数の一括取得は本 API では不可（URL Inspection は1URLずつ）。被覆全体像は当面 GSC 画面で確認。
+
+### [ISSUE-055] 発見型ハブページの中身強化（organic 本筋・段階展開）🟡
+- **priority**: P2 → **status**: in_progress（solo-dining 着手）
+- **detected**: 2026-05-22
+- **category**: SEO / content
+- **owner**: Editor + Builder
+- **背景**: GSC 分析（ISSUE-054）で、35,700表示の大半は店名ナビゲーショナル検索＝クリック価値が低いと判明。
+  organic を伸ばす本筋は「シーン/エリア/ジャンル」の**発見型KW**で、これは個別店ページではなく**ハブ/特集ページ**の役割。
+  ハブ30本はタイトル・構造化データとも良好だが、若いドメインゆえまだ上位表示されていない。
+- **進捗 2026-05-22**: 既に発見型KW `名古屋 一人飲み` で芽が出ている `features/nagoya-solo-dining.html` を最初の強化対象に。
+  - 可視 FAQ セクションを新設（FAQPage JSON-LD と内容一致＝リッチリザルト適格性向上）
+  - 未カバー検索意図の新規 Q&A 3問追加（女性一人 / 深夜・終電後 / 栄・大須エリア）→ クエリ網羅拡大
+  - dateModified を更新（鮮度シグナル）。捏造ゼロの一般アドバイスで voice 一致・preview 検証済み
+- **次**: 数週間の順位推移を見て効果検証 → 接待・デート・エリア別など他ハブへ同パターンを展開
+- **acceptance**: 発見型KW（例 `名古屋 一人飲み`）で平均順位が page1（10位以内）に改善。CTR 0.8% → 2%超を目標
 - **detected**: 2026-05-20
 - **category**: SEO / indexing
 - **owner**: Marketer
