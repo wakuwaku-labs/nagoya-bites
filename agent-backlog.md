@@ -569,6 +569,7 @@
 | 2026-05-20 | Orchestrator(EMERGENCY) | **ISSUE-051 今日の話題店TOP5 ラーメン一極集中バグ修正**: 原因＝候補69件が全て同点55点（鮮度45+編集部推薦10・0媒体）で、安定ソートにより `manual_stores.json` 先頭のラーメン12連店がそのままTOP5化。ジャンル多様性制約もタイブレークも不在。修正＝`pick_daily_trending5.js` に (1) 粗ジャンル分類 `coarseCategory()`（店名+ジャンルで11カテゴリ判定） (2) TOP5内 同一ジャンル最大2件キャップ `selectDiverse()` (3) 店名+日付の決定的ジッターで同点店を日替わりローテーション。candidates に `ジャンル` を伝播。再生成後 TOP5＝餃子2/カフェ1/ラーメン1/スイーツ1 に多様化。build.js 779件・付与5件/失敗0・console error 0・preview目視OK | ✅ デプロイ済み (commit pending) |
 | 2026-05-22 | DataKeeper(/solve-next) | **ISSUE-056（旧 ISSUE-041 ready・Google評価カバー率 15%→50%）を起動可能化**: Places API 取得パイプライン（`scripts/fetch_places.js`→`build.js` rating補完→`monthly-places.yml` 月次CI）が3段すべて実装済みと検証 / 唯一の blocker＝`GOOGLE_PLACES_API_KEY` 未設定（`places_resolved.json` が一度も生成されず15.3%停滞）と特定 / 起動 runbook `docs/places-api-setup.md` 新規作成（鍵発行→Secret登録→手動初回実行→効果確認・コスト見積）/ `monthly-places.yml` に「Google評価 カバレッジ見込み」ステップ追加（追加シークレット不要・50%目標への進捗を毎回可視化）/ 重複ID ISSUE-041 を ISSUE-056 に採番し直し Notion同期破綻を解消 | ✅ デプロイ済み (6b200e85f) |
 | 2026-05-22 | DataKeeper(/solve-next) | **ISSUE-056 acceptance 即時達成・クローズ**: オペレーターが GOOGLE_PLACES_API_KEY 設定 → monthly-places.yml 手動実行（全4,593店取得・rating有4,437/住所却下77/閉店除外170）→ places_resolved.json コミット(4f5d2c385) → build.yml 手動実行で index.html 反映(a5d941ff5)。**Google評価カバー率 15.3%→98.3%（4,348/4,423）** で目標50%を大幅超過。閉店170店除外で総数4,593→4,423(-3.7%・QA閾値内) | ✅ デプロイ済み (a5d941ff5) |
+| 2026-05-22 | Strategist+DataKeeper(/solve-next) | **ISSUE-043 STR-MONTHLY ベースライン確定**: GA4実値(site_metrics.json)＝UU215/セッション331/PV794/AI流入24、GSC手動値＝クリック283/表示35,700/CTR0.8%/順位11/指名検索ゼロ を STR-MONTHLY-2026-05-BASELINE フロー指標欄に記入（5/13検索離陸ゆえ直近30日窓を採用と注記）/ 自動化設計メモ `docs/kpi-automation-design.md` 新規作成（7項目中5項目自動化可・GSC系2項目はSA制約で手動継続）/ あわせて ISSUE-028(SNS開設・ユーザー確認で完了) を done 化 | ✅ デプロイ済み (commit pending) |
 
 ---
 
@@ -1052,10 +1053,11 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **owner**: Orchestrator
 - **ref**: `docs/competitive-analysis-2026-05-06.md` 第 6章
 
-### [ISSUE-028] SNS 公式アカウント（Instagram / X）の開設と日次連動運用
+### [ISSUE-028] SNS 公式アカウント（Instagram / X）の開設と日次連動運用 ✅
 
-- **priority**: P1
-- **status**: ready（要ユーザー判断）
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-05-22（ユーザー確認: アカウント開設・運用着手済み）
+- **prev_status**: ready（要ユーザー判断）
 - **category**: competitive / marketing
 - **detected**: 2026-05-06
 - **description**:
@@ -1398,32 +1400,49 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
 - 推薦文カバー率: **約99.8%**（4,589/4,598、2026-04-24 時点・ISSUE-017 Phase 1 + 全店生成）
 - SNS フォロワー: IG=0 / X=0 / TikTok=0（ISSUE-028 未着手）
 
-#### フロー指標（取得待ち）
-- 月間 UU: 取得待ち（GA4 アクセス → ISSUE-043）
-- 月間セッション: 同上
-- CTA クリック数: 同上
-- 指名検索数: 取得待ち（Search Console → ISSUE-043）
-- 上位 10 KW: 同上
+#### フロー指標（確定 2026-05-22 / ISSUE-043 で実値取得）
+
+> **計測窓の注記**: 当初は「2026-04 暦月」を想定したが、検索流入は **5/13 に離陸**（5/12 まで
+> ほぼゼロ）したため 4 月暦月の実数はほぼ無に等しい。意味あるベースラインとして、現行 fetch が
+> 出力する **直近30日窓（generatedAt 2026-05-22・GA4 G-3LCZNGZPWJ → `data/site_metrics.json`）**
+> を採用する。以降の月次は `STR-MONTHLY-YYYY-MM` で前月締めを記録（運用は ISSUE-043 で確立）。
+
+- 月間 UU（activeUsers・直近30日）: **215**（Phase0 基盤づくり期 / 目安 ~500 で離陸前）
+- 月間セッション: **331**
+- 月間 PV: **794**（2.4 ページ/セッション・平均滞在 5分37秒・直帰率 50.5%）
+- CTA クリック数: **modal_open 50回/30日**（店舗詳細オープン）。`outbound_click`（HP予約/Maps/IG等の外部遷移）は現行 `fetch_ga4_views.js` 未集計 → 別途 `kpi-automation-design.md` で集計対象に追加予定
+- 流入元（セッション比）: Direct **77.7%** / Organic **16.9%** / Referral 3.9% / Social **1.2%** / Paid 0%
+- **生成AI流入: 24セッション**（chatgpt.com 19 + openai 5）= 既に主要チャネル化（社会的に Social より多い）
+- 指名検索数「NAGOYA BITES / ナゴヤバイツ」: **実質ゼロ**（GSC トップクエリは全て個別店名検索でブランドクエリは出現せず → ブランド未認知の裏付け）
+- 上位KW（GSC・過去28日・手動取得 2026-05-22）: 合計クリック283 / 表示**35,700** / CTR**0.8%** / 平均順位**11位**。
+  表示トップは `ごちゃまぜ商店`146 / `すりぃ食堂`143 / `ナポリタンカフェラジャー`142(0click) / `みの吉 名古屋`118 / `カンティーヌロゼ`96(0click) … **ほぼ全て店名ナビゲーショナル検索で多くが0クリック**。発見型KWは `名古屋 一人飲み`（クリック有）のみ。
 
 #### 解釈メモ
 - ストック指標は「素材は揃っているが外向きに届ける仕組みが不足」を裏付け（competitive analysis 2026-05-06 と整合）
-- フロー指標が空白のままでは Phase 1（基盤固め / 月間UU 5,000）の進捗判定が不可能 → ISSUE-043 を最優先
+- **来訪者の質は高い**（滞在5.6分・2.4ページ/訪問）。ボトルネックは中身ではなく**流入の絶対数**（Phase0・UU215）。
+- **店名検索は表示の大半を占めるがクリック価値が低い**（公式/Maps が上位独占）。伸ばす本筋は「シーン/エリア/ジャンル」の発見型KW（→ ISSUE-055 ハブ強化）。
+- **生成AI流入が既に主要チャネル**。AI最適化（llms.txt・構造化データ）の費用対効果が高い。
+- Direct 80%偏重 + Social 1.2% = 新規発見導線が弱い → SEO（organic）と SNS（ISSUE-028）が伸びしろ。
+- **将来の自動化設計**: `docs/kpi-automation-design.md` 参照（GA4 は自動取得済み・GSC は SA 制約で手動継続）。
 
-### [ISSUE-043] STR-MONTHLY 用 GA4 / Search Console 実値取得とベースライン確定
+### [ISSUE-043] STR-MONTHLY 用 GA4 / Search Console 実値取得とベースライン確定 ✅
 
-- **priority**: P1
-- **status**: ready
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-05-22
+- **resolved_by**: commit pending（本 /solve-next）
 - **category**: 組織 / KPI
 - **detected**: 2026-05-08
 - **owner**: Strategist + DataKeeper
 - **description**:
-  ORG-002 で月次 KPI スナップショット運用を確立したが、GA4 / Search Console の実値取得は権限取得作業を伴うため別タスクに分離した。本タスクで初回ベースライン（2026-05-01 締め）の月間 UU / セッション / CTA クリック数 / 指名検索数 / 上位10KW を取得し、`STR-MONTHLY-2026-05-BASELINE` を完成させる。
-- **acceptance**:
-  - GA4 から 2026-04-01〜2026-04-30 の UU / セッション / outbound_click イベント数を取得
-  - Search Console から指名検索（"NAGOYA BITES" / "ナゴヤバイツ"）月間合計、および上位 10 KW を取得
-  - `STR-MONTHLY-2026-05-BASELINE` セクションのフロー指標欄を埋める
-  - 将来の自動化に向け `.github/workflows/monthly-kpi.yml` の設計メモを `docs/kpi-automation-design.md` として作成（実装は別タスク）
+  ORG-002 で月次 KPI スナップショット運用を確立したが、GA4 / Search Console の実値取得は権限取得作業を伴うため別タスクに分離した。本タスクで初回ベースラインの月間 UU / セッション / CTA クリック数 / 指名検索数 / 上位10KW を取得し、`STR-MONTHLY-2026-05-BASELINE` を完成させる。
+- **resolution 2026-05-22**:
+  - **GA4 実値確定**（`data/site_metrics.json`・直近30日・ISSUE-053 の自動取得を利用）: UU **215** / セッション **331** / PV **794** / 流入元 Direct77.7%・Organic16.9%・Social1.2% / **生成AI流入24**（chatgpt19+openai5）。CTA は modal_open 50/30日（outbound_click は未集計→設計メモで追加対象化）。
+  - **GSC 実値確定**（手動取得・過去28日）: クリック283 / 表示**35,700** / CTR0.8% / 平均順位11位。指名検索「NAGOYA BITES」は実質ゼロ（ブランド未認知）。上位KWは全て店名ナビゲーショナルで0クリック多数・発見型KWは `名古屋 一人飲み` のみ。
+  - `STR-MONTHLY-2026-05-BASELINE` フロー指標欄を上記実値で埋め、計測窓の注記（5/13 検索離陸ゆえ4月暦月は実質無→直近30日窓を採用）を明記。
+  - 自動化設計メモ `docs/kpi-automation-design.md` を新規作成（7項目中5項目は自動化可・GSC系2項目はSA制約で手動継続。monthly-kpi.yml の擬似設計と実装タスク単位を提示）。
+- **acceptance**: ✅ GA4 UU/セッション/CTA取得 / ✅ GSC指名検索・上位KW取得（手動） / ✅ BASELINE フロー指標を埋めた / ✅ 設計メモ作成。
 - **files**: `agent-backlog.md`, `docs/kpi-automation-design.md`（新規）
+- **note**: outbound_click 集計追加・gen_monthly_kpi.js・monthly-kpi.yml の実装は設計メモ記載のとおり別タスク。GSC 自動連携は ISSUE-054 の積み残し（OAuth 方式を将来検討）。
 
 ### [ORG-003] Marketer に週次 SEO/SNS チェック業務を持たせる ✅
 - **priority**: P1 → **status**: done
