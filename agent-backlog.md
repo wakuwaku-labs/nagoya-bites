@@ -569,7 +569,8 @@
 | 2026-05-20 | Orchestrator(EMERGENCY) | **ISSUE-051 今日の話題店TOP5 ラーメン一極集中バグ修正**: 原因＝候補69件が全て同点55点（鮮度45+編集部推薦10・0媒体）で、安定ソートにより `manual_stores.json` 先頭のラーメン12連店がそのままTOP5化。ジャンル多様性制約もタイブレークも不在。修正＝`pick_daily_trending5.js` に (1) 粗ジャンル分類 `coarseCategory()`（店名+ジャンルで11カテゴリ判定） (2) TOP5内 同一ジャンル最大2件キャップ `selectDiverse()` (3) 店名+日付の決定的ジッターで同点店を日替わりローテーション。candidates に `ジャンル` を伝播。再生成後 TOP5＝餃子2/カフェ1/ラーメン1/スイーツ1 に多様化。build.js 779件・付与5件/失敗0・console error 0・preview目視OK | ✅ デプロイ済み (commit pending) |
 | 2026-05-22 | DataKeeper(/solve-next) | **ISSUE-056（旧 ISSUE-041 ready・Google評価カバー率 15%→50%）を起動可能化**: Places API 取得パイプライン（`scripts/fetch_places.js`→`build.js` rating補完→`monthly-places.yml` 月次CI）が3段すべて実装済みと検証 / 唯一の blocker＝`GOOGLE_PLACES_API_KEY` 未設定（`places_resolved.json` が一度も生成されず15.3%停滞）と特定 / 起動 runbook `docs/places-api-setup.md` 新規作成（鍵発行→Secret登録→手動初回実行→効果確認・コスト見積）/ `monthly-places.yml` に「Google評価 カバレッジ見込み」ステップ追加（追加シークレット不要・50%目標への進捗を毎回可視化）/ 重複ID ISSUE-041 を ISSUE-056 に採番し直し Notion同期破綻を解消 | ✅ デプロイ済み (6b200e85f) |
 | 2026-05-22 | DataKeeper(/solve-next) | **ISSUE-056 acceptance 即時達成・クローズ**: オペレーターが GOOGLE_PLACES_API_KEY 設定 → monthly-places.yml 手動実行（全4,593店取得・rating有4,437/住所却下77/閉店除外170）→ places_resolved.json コミット(4f5d2c385) → build.yml 手動実行で index.html 反映(a5d941ff5)。**Google評価カバー率 15.3%→98.3%（4,348/4,423）** で目標50%を大幅超過。閉店170店除外で総数4,593→4,423(-3.7%・QA閾値内) | ✅ デプロイ済み (a5d941ff5) |
-| 2026-05-22 | Strategist+DataKeeper(/solve-next) | **ISSUE-043 STR-MONTHLY ベースライン確定**: GA4実値(site_metrics.json)＝UU215/セッション331/PV794/AI流入24、GSC手動値＝クリック283/表示35,700/CTR0.8%/順位11/指名検索ゼロ を STR-MONTHLY-2026-05-BASELINE フロー指標欄に記入（5/13検索離陸ゆえ直近30日窓を採用と注記）/ 自動化設計メモ `docs/kpi-automation-design.md` 新規作成（7項目中5項目自動化可・GSC系2項目はSA制約で手動継続）/ あわせて ISSUE-028(SNS開設・ユーザー確認で完了) を done 化 | ✅ デプロイ済み (commit pending) |
+| 2026-05-22 | Strategist+DataKeeper(/solve-next) | **ISSUE-043 STR-MONTHLY ベースライン確定**: GA4実値(site_metrics.json)＝UU215/セッション331/PV794/AI流入24、GSC手動値＝クリック283/表示35,700/CTR0.8%/順位11/指名検索ゼロ を STR-MONTHLY-2026-05-BASELINE フロー指標欄に記入（5/13検索離陸ゆえ直近30日窓を採用と注記）/ 自動化設計メモ `docs/kpi-automation-design.md` 新規作成（7項目中5項目自動化可・GSC系2項目はSA制約で手動継続）/ あわせて ISSUE-028(SNS開設・ユーザー確認で完了) を done 化 | ✅ デプロイ済み (7ffddb1b4) |
+| 2026-05-22 | Orchestrator(/solve-next) | **ISSUE-017 クローズ**: 残課題「全体84%空白」は推薦文100%(ISSUE-033)+Google評価98.3%(ISSUE-056)で2軸とも完全解消済みのため done 化（追加対応不要） | ✅ デプロイ済み (commit pending) |
 
 ---
 
@@ -849,11 +850,16 @@
   ビルド毎に lastmod と URL リストが再生成される。
 - **files**: `build.js:947-1017`, `sitemap.xml`
 
-### [ISSUE-017] Google評価 84% 空白・推薦文 84% 空白 🟡
-- **priority**: P1 → **status**: partial
+### [ISSUE-017] Google評価 84% 空白・推薦文 84% 空白 ✅
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-05-22（残課題2軸とも別 ISSUE で完全解消）
+- **resolved_by**: ISSUE-033（推薦文100%・commit 64a6c51）+ ISSUE-056（Google評価98.3%・commit a5d941ff5）
+- **closure 2026-05-22**: 本件の残課題だった「全体84%空白」は2軸とも解消済み:
+  - 推薦文（おすすめポイント）: ISSUE-033 で **100%（4,585/4,585）** 達成
+  - Google評価: 残課題に明記の「後日 Google Places API で別フェーズ」が ISSUE-056 として完了し **15.3%→98.3%（4,348/4,423）**。捏造回避方針も維持（公式 Places API 値のみ）
+  → 追加対応不要のためクローズ。
 - **category**: data
-- **resolved**: 2026-04-18（Phase 1 完了）
-- **Phase 1 完了内容**:
+- **Phase 1 完了内容（2026-04-18）**:
   - 実態調査の結果、ユーザーが最初に目にする TOP 50（デフォルトソート）の空白は **話題店7件に限定** されていた
   - `data/trending_stores.json` に「おすすめポイント」フィールドを追加 + 7店のハンドキュレーション推薦文
   - `build.js` の merge loop を拡張し、空白時のみ推薦文を補完（既存データ上書きはしない）
