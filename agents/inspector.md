@@ -145,13 +145,13 @@ P3 (LOW): 時間があれば
 
 ---
 
-## 月次「クロスチェック整合度」レビュー（ISSUE-048 由来）
+## 月次「スコア信頼度」レビュー（ISSUE-048 由来）
 
 毎月 1 日に、以下の 3 つの順序で実施する。漏らした月は ORG 違反として `agent-backlog.md` に記録する。
 
 ### Step A: 異議申立てメールの確認
 
-1. `editor@nagoya-bites.com` 宛に届いた「クロスチェック整合度の修正依頼」を当月分まとめて確認する
+1. `editor@nagoya-bites.com` 宛に届いた「スコア信頼度の修正依頼」を当月分まとめて確認する
 2. 各申立てに対して、次の判断を下す:
    - **事実誤認**（rating/件数/visitStatus が現実と乖離）→ `editor_picks.json` または手動キュレーションで補正、次回ビルドで反映
    - **算出ロジックへの異議**（重み付け・段階表示への疑問）→ Strategist にエスカレートして合議
@@ -188,7 +188,7 @@ P3 (LOW): 時間があれば
 ### 月次レビューの出力
 
 ```markdown
-### [ISSUE-XXX] クロスチェック整合度 月次レビュー YYYY-MM
+### [ISSUE-XXX] スコア信頼度 月次レビュー YYYY-MM
 - **priority**: P2
 - **status**: done
 - **resolved**: YYYY-MM-DD

@@ -9,12 +9,12 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>クロスチェック整合度の作り方｜NAGOYA BITES — サクラ口コミ問題に第三者として向き合う</title>
-<meta name="description" content="食べログ・Googleマップなどの口コミからサクラを排除して、複数媒体・複数シグナルでの整合度を機械的に算出する仕組みを完全公開。なぜ「サクラ確率」と呼ばないのか、何をしないと決めたのかを含めて、第三者検証可能な形で開示します。">
-<meta name="keywords" content="NAGOYA BITES,クロスチェック整合度,サクラチェッカー,飲食店,口コミ,信頼度,名古屋グルメ,編集独立性">
+<title>スコア信頼度の作り方｜NAGOYA BITES — サクラ口コミ問題に第三者として向き合う</title>
+<meta name="description" content="食べログ・Googleマップなどの口コミからサクラを排除して、複数媒体・複数シグナルで裏付けたスコア信頼度を機械的に算出する仕組みを完全公開。なぜ「サクラ確率」と呼ばないのか、何をしないと決めたのかを含めて、第三者検証可能な形で開示します。">
+<meta name="keywords" content="NAGOYA BITES,スコア信頼度,サクラチェッカー,飲食店,口コミ,信頼度,名古屋グルメ,編集独立性">
 <link rel="canonical" href="https://nagoya-bites.com/features/integrity-method.html">
-<meta property="og:title" content="クロスチェック整合度の作り方｜NAGOYA BITES">
-<meta property="og:description" content="複数媒体・複数シグナルでの口コミ整合度を機械的に算出する仕組みを完全公開。サクラを「確率」で名指しせず、中立な参考指標として開示する設計判断。">
+<meta property="og:title" content="スコア信頼度の作り方｜NAGOYA BITES">
+<meta property="og:description" content="複数媒体・複数シグナルで裏付けたスコア信頼度を機械的に算出する仕組みを完全公開。サクラを「確率」で名指しせず、中立な参考指標として開示する設計判断。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://nagoya-bites.com/features/integrity-method.html">
 <meta property="og:site_name" content="NAGOYA BITES">
@@ -29,8 +29,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "クロスチェック整合度の作り方｜NAGOYA BITES",
-  "description": "複数媒体・複数シグナルでの口コミ整合度を機械的に算出する仕組み。サクラを「確率」で名指しせず、中立な参考指標として開示する設計判断を完全公開。",
+  "headline": "スコア信頼度の作り方｜NAGOYA BITES",
+  "description": "複数媒体・複数シグナルで裏付けたスコア信頼度を機械的に算出する仕組み。サクラを「確率」で名指しせず、中立な参考指標として開示する設計判断を完全公開。",
   "author": {"@type": "Organization", "name": "NAGOYA BITES"},
   "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
   "url": "https://nagoya-bites.com/features/integrity-method.html",
@@ -46,7 +46,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   "itemListElement": [
     {"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},
     {"@type":"ListItem","position":2,"name":"特集記事","item":"https://nagoya-bites.com/features/"},
-    {"@type":"ListItem","position":3,"name":"クロスチェック整合度の作り方"}
+    {"@type":"ListItem","position":3,"name":"スコア信頼度の作り方"}
   ]
 }
 </script>
@@ -124,7 +124,7 @@ footer a{color:var(--muted);text-decoration:none;}
 </div>
 <article class="art-hero">
   <p class="art-eyebrow">SAKURA-FREE / TRUST METHODOLOGY</p>
-  <h1 class="art-title">クロスチェック<em>整合度</em>の作り方</h1>
+  <h1 class="art-title">スコア<em>信頼度</em>の作り方</h1>
   <p class="art-meta"><span>更新 2026-05-11</span><span>NAGOYA BITES 編集部</span><span>方法論全公開</span></p>
   <div class="art-lead">
     <p>食べログ・Googleマップ・Hot Pepper・SNS — 飲食店の評価情報は複数の媒体に分散しており、各媒体には<strong>金銭授受や無償提供を背景にした口コミ（いわゆる「桜」）</strong>が混じっている、というのが業界の率直な現実です。</p>
@@ -138,7 +138,7 @@ footer a{color:var(--muted);text-decoration:none;}
   <p class="section-label">01 — Why We Don't Call It "Sakura Score"</p>
   <p class="body-para">
     一般的な「サクラチェッカー」型のサービスは、各レビューや店舗ごとに <strong>「サクラ確率 87%」</strong> のような数値を出します。
-    NAGOYA BITES では、機械統計の発想を借りつつも、<strong>同じ数値を「サクラ確率」とは呼びません</strong>。代わりに「クロスチェック整合度」と中立的な名前を採用しています。
+    NAGOYA BITES では、機械統計の発想を借りつつも、<strong>同じ数値を「サクラ確率」とは呼びません</strong>。代わりに「スコア信頼度」と中立的な名前を採用しています。
   </p>
   <p class="body-para">
     理由は 3 つあります。
