@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-05-23T03:05:21.143Z",
+  "generatedAt": "2026-05-23T03:17:16.503Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 216,
-    "pageViews": 782,
-    "sessions": 331,
-    "avgSessionDuration": 338.9,
-    "bounceRate": 0.511,
-    "pagesPerSession": 2.36
+    "activeUsers": 217,
+    "pageViews": 785,
+    "sessions": 334,
+    "avgSessionDuration": 335.4,
+    "bounceRate": 0.503,
+    "pagesPerSession": 2.35
   },
   "channels": {
     "sessions": {
-      "organic": 57,
+      "organic": 58,
       "direct": 260,
       "social": 4,
       "referral": 13,
@@ -19,8 +19,8 @@
       "other": 1
     },
     "pct": {
-      "organic": 17,
-      "direct": 77.6,
+      "organic": 17.3,
+      "direct": 77.4,
       "social": 1.2,
       "referral": 3.9,
       "paid": 0,
@@ -31,27 +31,27 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 222
+      "sessions": 224
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 45
+      "sessions": 46
     },
     {
       "source": "chatgpt.com",
       "medium": "(not set)",
-      "sessions": 22
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 11
+      "sessions": 23
     },
     {
       "source": "yahoo",
       "medium": "organic",
       "sessions": 10
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 8
     },
     {
       "source": "openai",
@@ -82,18 +82,18 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 288,
-      "sessions": 180
+      "pageViews": 289,
+      "sessions": 181
     },
     {
       "path": "/index.html",
-      "pageViews": 107,
-      "sessions": 52
+      "pageViews": 108,
+      "sessions": 53
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 30,
-      "sessions": 20
+      "pageViews": 31,
+      "sessions": 21
     },
     {
       "path": "/nagoya-bites/index.html",
@@ -108,7 +108,7 @@
   ],
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 216,
+    "value": 217,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
