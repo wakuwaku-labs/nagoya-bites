@@ -5,7 +5,7 @@
  * Google Places API (Find Place from Text) で各店舗の評価値・件数・営業ステータスを
  * 取得して data/places_resolved.json にキャッシュする。
  *
- * 用途: ISSUE-048（クロスチェック整合度）Step 2。Sheets 手動入力の Google評価 から
+ * 用途: ISSUE-048（スコア信頼度）Step 2。Sheets 手動入力の Google評価 から
  *      公式 API 取得への移行と、レビュー件数 user_ratings_total の補完で
  *      S1（★ vs 件数比率）と S2（件数絶対値）シグナルを正規化する。
  *
@@ -94,7 +94,7 @@ async function findPlace(name, address) {
 }
 
 // Place Details で最新 5 件のレビュー（rating + time）を取得
-// ISSUE-049: クロスチェック整合度 S7（時系列健全性）と S8（評価分布自然性）に使用
+// ISSUE-049: スコア信頼度 S7（時系列健全性）と S8（評価分布自然性）に使用
 async function fetchPlaceDetails(placeId) {
   const fields = 'reviews';
   const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=${fields}&language=ja&reviews_no_translations=true&key=${API_KEY}`;

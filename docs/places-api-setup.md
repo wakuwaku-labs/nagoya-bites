@@ -107,5 +107,5 @@ node build.js                               # index.html に反映
 ## 関連
 
 - ISSUE-056（旧 ISSUE-041 ready 版）: Google 評価カバー率 15% → 50%
-- ISSUE-048 / ISSUE-049: クロスチェック整合度（Places の口コミ数・履歴を利用）
+- ISSUE-048 / ISSUE-049: スコア信頼度（Places の口コミ数・履歴を利用）
 - `docs/kpi-weekly.md`: カバー率推移の記録先

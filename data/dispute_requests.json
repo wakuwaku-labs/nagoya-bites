@@ -1,5 +1,5 @@
 {
-  "_comment": "クロスチェック整合度スコアへの異議申し立てモデレーション。申し立て者が integrity-method.html 末尾フォーム（Formspree経由）から投稿 → 編集部メール受信 → Inspector が月次レビュー → 判定（accept/reject/escalate）後に本ファイルへ追記 → 必要に応じて data/manual_stores.json の scoreOverride を更新 → node build.js → デプロイ。自動反映はしない（必ず編集部モデレーション経由）。",
+  "_comment": "スコア信頼度スコアへの異議申し立てモデレーション。申し立て者が integrity-method.html 末尾フォーム（Formspree経由）から投稿 → 編集部メール受信 → Inspector が月次レビュー → 判定（accept/reject/escalate）後に本ファイルへ追記 → 必要に応じて data/manual_stores.json の scoreOverride を更新 → node build.js → デプロイ。自動反映はしない（必ず編集部モデレーション経由）。",
   "_schema": {
     "id": "通し番号 DIS-YYYY-NNN",
     "receivedAt": "Formspree メール受信日時（ISO 8601）",
@@ -8,7 +8,7 @@
     "hotpepperId": "任意。ホットペッパーID",
     "submitter": "申し立て者の自称（ペンネーム可・非公開）",
     "submitterType": "store_owner / customer / industry_person / other",
-    "currentScore": "申し立て時点のクロスチェック整合度スコア（0-100）",
+    "currentScore": "申し立て時点のスコア信頼度スコア（0-100）",
     "claimedScore": "申し立て者が主張する妥当スコアまたは 'higher' / 'lower' / 'remove'",
     "reason": "申し立て理由の要約（編集部記入）",
     "rawBody": "Formspree 経由の本文（最初の 500 字まで）",

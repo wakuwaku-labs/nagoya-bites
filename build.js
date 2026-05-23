@@ -771,7 +771,7 @@ function getTrendLabel(score) {
 }
 
 // ────────────────────────────────────────────────────
-// クロスチェック整合度（ISSUE-049 / scoreVersion 2.0 / V3）
+// スコア信頼度（ISSUE-049 / scoreVersion 2.0 / V3）
 // ────────────────────────────────────────────────────
 // V1 (ISSUE-048) の編集部手動運用依存（S3 visitStatus / S6 insiderReviews）を解消し、
 // 機械的に取れる客観シグナルと、ユーザー要望「点数の変動・時系列パターン」を
@@ -1393,7 +1393,7 @@ async function main() {
   // ─── Google Places API キャッシュをマージ（data/places_resolved.json） ─────
   // ISSUE-048 Step 2: scripts/fetch_places.js が月次で取得した公式 API 結果を
   // LOCAL_STORES に反映する。rating と user_ratings_total を公式値で上書きし、
-  // クロスチェック整合度の S1・S2 シグナルを正規化する。
+  // スコア信頼度の S1・S2 シグナルを正規化する。
   // business_status が CLOSED_PERMANENTLY の店は最終リストから除外。
   const placesPath = path.join(__dirname, 'data', 'places_resolved.json');
   let placesApplied = 0, placesClosed = 0, placesNoMatch = 0, placesRejected = 0;
@@ -1463,8 +1463,8 @@ async function main() {
     console.log('places_history.json なし（S7/S8 は中立スコアで算出）');
   }
 
-  // ─── クロスチェック整合度算出（ISSUE-049 V3 / scoreVersion 2.0） ──────
-  // 8 シグナルから 0〜100 の整合度を全店に付与し、内部フラグは
+  // ─── スコア信頼度算出（ISSUE-049 V3 / scoreVersion 2.0） ──────
+  // 8 シグナルから 0〜100 のスコア信頼度を全店に付与し、内部フラグは
   // data/cross_check_flags.json に分離保存（Inspector 月次レビュー用・公開しない）。
   const crossCheckFlagList = [];
   const ccDist = { t90: 0, t70: 0, t50: 0, lt50: 0 };
@@ -1495,7 +1495,7 @@ async function main() {
     else ccDist.lt50++;
   }
   const ccAvg = stores.length ? (ccTotal / stores.length).toFixed(1) : '0';
-  console.log(`クロスチェック整合度: 平均=${ccAvg} / T90+=${ccDist.t90} / T70-89=${ccDist.t70} / T50-69=${ccDist.t50} / <50=${ccDist.lt50}`);
+  console.log(`スコア信頼度: 平均=${ccAvg} / T90+=${ccDist.t90} / T70-89=${ccDist.t70} / T50-69=${ccDist.t50} / <50=${ccDist.lt50}`);
   console.log(`内部フラグ（Inspector 月次レビュー用）: ${crossCheckFlagList.length}件`);
   // 内部フラグを data/cross_check_flags.json に書き出す（公開しない・Inspector のみ参照）
   try {
