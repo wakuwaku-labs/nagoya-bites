@@ -573,7 +573,8 @@
 | 2026-05-22 | Orchestrator(/solve-next) | **ISSUE-017 クローズ**: 残課題「全体84%空白」は推薦文100%(ISSUE-033)+Google評価98.3%(ISSUE-056)で2軸とも完全解消済みのため done 化（追加対応不要） | ✅ デプロイ済み (3d6bc17a2) |
 | 2026-05-23 | Builder(/solve-next) | **ISSUE-015-P2 第一段＝crossCheckBreakdown 外部化**: LOCAL_STORES 内最大占有フィールド(1.66MB/36%)を data/crosscheck.json に切り出し、モーダル初回展開時に fetch + 再描画。当初の全件外部化(`data/stores.json`)は LOCAL_STORES をパースする 19 スクリプトを破壊するため別ISSUEへ。**index.html 8.6MB→6.43MB(-25%、-2.18MB)** / 4,423店維持 / モーダルcc・Google評価・フィルタ・検索すべて preview検証OK・consoleエラー0 | ✅ デプロイ済み (ccf9d0aed) |
 | 2026-05-23 | Builder | **ISSUE-015-P2 Stage 1: data/stores.json canonical化 + 19スクリプト repoint**: scripts/lib/load_stores.js 新設で `data/stores.json` 優先・index.html フォールバックの統一ローダーを提供。build.js + 19 スクリプト + monthly-places.yml の LOCAL_STORES パースを共有ヘルパーに置換。書き戻し系2件(cleanup/register)は data/stores.json も同期更新。audit_feature_stores.js が両経路で同結果（実在不明8店）を確認 | ✅ デプロイ済み (7c163f836) |
-| 2026-05-23 | Builder | **ISSUE-015-P2 Stage 2: TOP50インライン+全件遅延fetch でクローズ**: build.js が priority ソート(話題→編集部推薦→トレンド→Google評価)後 TOP50 のみインライン、全件は data/stores.json へ。index.html init() が fetchFullCatalog() で遅延ロード後 loadStores(full) 再初期化。**index.html 6.43MB→1.45MB(-77%) / 累計 8.6MB→1.45MB(-83%)**。LOCAL_STORES インライン 4.85MB→36KB(99.3%減)。preview 検証: 155ms で全件拡張・cc 遅延OK・モーダルOK・console error 0。shrink-guard も data/stores.json 比較に拡張済み | ✅ デプロイ済み (commit pending) |
+| 2026-05-23 | Builder | **ISSUE-015-P2 Stage 2: TOP50インライン+全件遅延fetch でクローズ**: build.js が priority ソート(話題→編集部推薦→トレンド→Google評価)後 TOP50 のみインライン、全件は data/stores.json へ。index.html init() が fetchFullCatalog() で遅延ロード後 loadStores(full) 再初期化。**index.html 6.43MB→1.45MB(-77%) / 累計 8.6MB→1.45MB(-83%)**。LOCAL_STORES インライン 4.85MB→36KB(99.3%減)。preview 検証: 155ms で全件拡張・cc 遅延OK・モーダルOK・console error 0。shrink-guard も data/stores.json 比較に拡張済み | ✅ デプロイ済み (8a75257f6) |
+| 2026-05-24 | Editor+DataKeeper(/solve-next) | **ISSUE-045 収集パイプライン整備 + 第1バッチ昇格**: editorReason 収集の3スクリプト新設（list_editorreason_candidates / import_editorreason_todo / promote_manual_to_editorreason）+ 作業表テンプレ docs/editorreason-todo.md 生成。manual_stores の編集部推薦店 12 件（勝手口河内屋・麺や六三六・麺屋はなび・山岡家・COFFEE KAJITA・TRUNK COFFEE・コメダ本店・喫茶ユキ・喫茶マウンテン・大須王将・弁才天・花わさび）の おすすめポイント を editorReason に昇格（捏造ゼロ・既に編集部が書いた文章のカテゴリ昇格）。editor_picks 100→112 件 / CI反映後 editorReason 2.2%→2.5% | ✅ デプロイ済み (commit pending) |
 
 ---
 
@@ -1279,7 +1280,19 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 ### [ISSUE-045] editorReason（業界視点コメント）カバー率 2.1% → 30% への引き上げ
 
 - **priority**: P1
-- **status**: ready
+- **status**: in_progress（収集パイプライン整備済み・段階的な人間 Editor 投入で前進）
+- **progress 2026-05-24 — 収集パイプライン整備 + 第1バッチ 12 件昇格**:
+  - **収集パイプライン整備（3 スクリプト + 作業表テンプレ）**:
+    - `scripts/list_editorreason_candidates.js` 新設 — GA4 閲覧上位 + 編集部推薦 + picks 既登録 + 高評価 で優先順 TOP N を抽出し、`docs/editorreason-todo.md` に作業表を生成
+    - `scripts/import_editorreason_todo.js` 新設 — 作業表の editorReason / insiderNote / visitStatus 欄に書かれた業界知見を `data/editor_picks.json` に取り込み（捏造禁止 / LOCAL_STORES 未マッチは skip）
+    - `scripts/promote_manual_to_editorreason.js` 新設 — `data/manual_stores.json` 内の「編集部推薦 ∩ おすすめポイント 40字以上」店を、既存推薦文を editorReason として `data/editor_picks.json` に昇格（捏造ゼロ・既に編集部が書いた文章のカテゴリ昇格）
+  - **第1バッチ実行**: manual_stores の編集部推薦店 12 件を editor_picks に昇格 →
+    勝手口 河内屋 / 麺や 六三六 / 麺屋はなび / ラーメン 山岡家 名古屋 / COFFEE KAJITA / TRUNK COFFEE /
+    コメダ珈琲 本店 / 喫茶ユキ / 喫茶マウンテン / 餃子の王将 大須観音店 / 覚王山フルーツ大福 弁才天 / 割烹 季節料理 花わさび
+  - editor_picks 100 → **112 件**（editorReason 全件保持）
+  - **CI 反映後の見込み**: editorReason カバー率 97 → **109/4,424 = 2.46%**
+- **次の手**: `docs/editorreason-todo.md` の TOP50 候補（GA4 閲覧上位中心）に対し、人間 Editor（あなた）が
+  業界知見をバッチ追記 → `import_editorreason_todo.js` で取り込む流れ。週 50 件で約 6 ヶ月、週 100 件で約 3 ヶ月で 30% 到達。
 - **category**: competitive / data / content / moat
 - **detected**: 2026-05-10（ISSUE-033 解決時のデータ監査）
 - **description**:
