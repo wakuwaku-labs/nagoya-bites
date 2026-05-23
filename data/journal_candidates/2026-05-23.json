@@ -1,0 +1,212 @@
+{
+  "date": "2026-05-23",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1-rafu",
+      "title_draft": "鶴里『焼きそばスタンド らふ』を業界人視点で読む",
+      "verdict": "PASS",
+      "total": 96,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 24,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=6 → 4",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 5件 (価格帯,席,シーン,一人飲み,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 4件 +4",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c5-wabisabi",
+      "title_draft": "千種今池『侘び寂び』15席を業界人視点で読む",
+      "verdict": "PASS",
+      "total": 96,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 24,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=3 → 4",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (価格帯,席,シーン,接待,デート,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 22字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c2-karaan",
+      "title_draft": "丸の内『刺激的な辛餡ラーメン』を業界人視点で読む",
+      "verdict": "FAIL",
+      "total": 91,
+      "breakdown": {
+        "recency": 20,
+        "topicality": 24,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 6日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=4 → 4",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 8件 (価格帯,席,予約,シーン,接待,デート,一人飲み,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c3-matsukentei",
+      "title_draft": "千種『松軒亭』を業界人視点で読む — 古民家×和食出身カレー",
+      "verdict": "FAIL",
+      "total": 91,
+      "breakdown": {
+        "recency": 20,
+        "topicality": 24,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 5日前"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=7 → 4",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (価格帯,席,シーン,デート,一人飲み,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 4件 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c4-nero",
+      "title_draft": "庄内緑地公園『Nero』を業界人視点で読む",
+      "verdict": "FAIL",
+      "total": 91,
+      "breakdown": {
+        "recency": 20,
+        "topicality": 24,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 4日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=5 → 4",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (価格帯,席,シーン,接待,デート,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 21字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1-rafu",
+  "fallback_needed": false
+}
