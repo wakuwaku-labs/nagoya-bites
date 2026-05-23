@@ -458,7 +458,12 @@ function genreToAutoTags(store) {
 const STORE_OUTPUT_OMIT_KEYS = new Set([
   'TikTok検索', 'X検索', 'Instagram検索',
   '内観写真URL', '料理写真URL1', '料理写真URL2',
-  '公開フラグ'
+  '公開フラグ',
+  // ISSUE-015-P2: crossCheckBreakdown（~1.66MB・全体の36%）はモーダルを開いた時だけ
+  // 必要なため data/crosscheck.json に外部化し、index.html からは除外する。
+  // crossCheckScoreVersion は runtime 未参照の定数（"2.0"）なので併せて除外。
+  // ※ crossCheckScore（最終スコア）は表示・ソートに使うためインライン維持。
+  'crossCheckBreakdown', 'crossCheckScoreVersion'
 ]);
 
 // ISSUE-015 退行対策: crossCheckBreakdown は V3(ISSUE-049)で 8 シグナルに拡張され
@@ -1559,6 +1564,25 @@ async function main() {
   //    ISSUE-015-P1: 出力時に不要フィールド・空値を除去して serialize 量を削減
   let html = fs.readFileSync(HTML, 'utf8');
   const slimStores = stores.map(slimStoreForOutput);
+
+  // ─── ISSUE-015-P2: crossCheckBreakdown を外部化（data/crosscheck.json） ─────
+  // モーダル展開時のみ必要な breakdown（~1.66MB）を index.html から切り出し、
+  // ホットペッパーID をキーにした map として書き出す。index.html は初回モーダル
+  // 展開時にこれを fetch して描画する（遅延ロード）。表示するシグナルは
+  // CC_BREAKDOWN_OUTPUT_KEYS の4種のみ（モーダルの描画対象と一致）。
+  const crossCheckMap = {};
+  let ccExported = 0;
+  for (const s of stores) {
+    const id = s['ホットペッパーID'];
+    const bd = s['crossCheckBreakdown'];
+    if (!id || !bd || typeof bd !== 'object') continue;
+    const slim = slimCrossCheckBreakdown(bd);
+    if (slim && Object.keys(slim).length > 0) { crossCheckMap[id] = slim; ccExported++; }
+  }
+  const crossCheckPath = path.join(__dirname, 'data', 'crosscheck.json');
+  fs.writeFileSync(crossCheckPath, JSON.stringify(crossCheckMap), 'utf8');
+  console.log(`crosscheck 外部化: ${ccExported}件 → data/crosscheck.json (${(fs.statSync(crossCheckPath).size/1024/1024).toFixed(2)}MB)`);
+  // ───────────────────────────────────────────────────────────────────────────
 
   // ─── キャッシュからInstagram/食べログURLをマージ ─────────────────────────
   // resolve_instagram.js / resolve_tabelog.js で事前解決したURLをビルド時に焼き付ける

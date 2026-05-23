@@ -570,7 +570,8 @@
 | 2026-05-22 | DataKeeper(/solve-next) | **ISSUE-056（旧 ISSUE-041 ready・Google評価カバー率 15%→50%）を起動可能化**: Places API 取得パイプライン（`scripts/fetch_places.js`→`build.js` rating補完→`monthly-places.yml` 月次CI）が3段すべて実装済みと検証 / 唯一の blocker＝`GOOGLE_PLACES_API_KEY` 未設定（`places_resolved.json` が一度も生成されず15.3%停滞）と特定 / 起動 runbook `docs/places-api-setup.md` 新規作成（鍵発行→Secret登録→手動初回実行→効果確認・コスト見積）/ `monthly-places.yml` に「Google評価 カバレッジ見込み」ステップ追加（追加シークレット不要・50%目標への進捗を毎回可視化）/ 重複ID ISSUE-041 を ISSUE-056 に採番し直し Notion同期破綻を解消 | ✅ デプロイ済み (6b200e85f) |
 | 2026-05-22 | DataKeeper(/solve-next) | **ISSUE-056 acceptance 即時達成・クローズ**: オペレーターが GOOGLE_PLACES_API_KEY 設定 → monthly-places.yml 手動実行（全4,593店取得・rating有4,437/住所却下77/閉店除外170）→ places_resolved.json コミット(4f5d2c385) → build.yml 手動実行で index.html 反映(a5d941ff5)。**Google評価カバー率 15.3%→98.3%（4,348/4,423）** で目標50%を大幅超過。閉店170店除外で総数4,593→4,423(-3.7%・QA閾値内) | ✅ デプロイ済み (a5d941ff5) |
 | 2026-05-22 | Strategist+DataKeeper(/solve-next) | **ISSUE-043 STR-MONTHLY ベースライン確定**: GA4実値(site_metrics.json)＝UU215/セッション331/PV794/AI流入24、GSC手動値＝クリック283/表示35,700/CTR0.8%/順位11/指名検索ゼロ を STR-MONTHLY-2026-05-BASELINE フロー指標欄に記入（5/13検索離陸ゆえ直近30日窓を採用と注記）/ 自動化設計メモ `docs/kpi-automation-design.md` 新規作成（7項目中5項目自動化可・GSC系2項目はSA制約で手動継続）/ あわせて ISSUE-028(SNS開設・ユーザー確認で完了) を done 化 | ✅ デプロイ済み (7ffddb1b4) |
-| 2026-05-22 | Orchestrator(/solve-next) | **ISSUE-017 クローズ**: 残課題「全体84%空白」は推薦文100%(ISSUE-033)+Google評価98.3%(ISSUE-056)で2軸とも完全解消済みのため done 化（追加対応不要） | ✅ デプロイ済み (commit pending) |
+| 2026-05-22 | Orchestrator(/solve-next) | **ISSUE-017 クローズ**: 残課題「全体84%空白」は推薦文100%(ISSUE-033)+Google評価98.3%(ISSUE-056)で2軸とも完全解消済みのため done 化（追加対応不要） | ✅ デプロイ済み (3d6bc17a2) |
+| 2026-05-23 | Builder(/solve-next) | **ISSUE-015-P2 第一段＝crossCheckBreakdown 外部化**: LOCAL_STORES 内最大占有フィールド(1.66MB/36%)を data/crosscheck.json に切り出し、モーダル初回展開時に fetch + 再描画。当初の全件外部化(`data/stores.json`)は LOCAL_STORES をパースする 19 スクリプトを破壊するため別ISSUEへ。**index.html 8.6MB→6.43MB(-25%、-2.18MB)** / 4,423店維持 / モーダルcc・Google評価・フィルタ・検索すべて preview検証OK・consoleエラー0 | ✅ デプロイ済み (commit pending) |
 
 ---
 
@@ -830,15 +831,29 @@
 - **files**: `build.js`
 
 ### [ISSUE-015-P2] 外部JSON化 + TOP50 インライン方式 🟡
-- **priority**: P1 → **status**: blocked（P1完了＆観察後に着手）
+- **priority**: P1 → **status**: partial（第一段＝crossCheckBreakdown 外部化を完了。残＝全件外部化）
 - **category**: performance
 - **detected**: 2026-04-22
-- **description**:
-  Phase 1 デプロイ後 1週間 GA4 で UU / LCP / 直帰率を観察してから着手。
-  `data/stores.json` を新設、index.html には TOP50 のみインラインし、残りは fetch で遅延読み込み。
-  詳細は `docs/issue-015-design.md` 参照。
-- **acceptance**: 初期 HTML < 800KB、全機能の動作維持、Lighthouse Performance > 75 (mobile)
-- **files**: `build.js`, `index.html`, `data/stores.json`（新規）
+- **last_update**: 2026-05-23
+- **progress 2026-05-23 — 第一段「crossCheckBreakdown 外部化」を実装**:
+  当初設計（`data/stores.json` への全件外部化 + TOP50 インライン）は、index.html から `var LOCAL_STORES` を
+  パースしている **19 個のスクリプト**（`gen-store-pages.js` 静的ページ生成 / `audit_feature_stores.js` 架空店監査 /
+  `scripts/fetch_places.js` / 各種リゾルバ / `monthly-places.yml` カバレッジ計測 等）を一斉に壊すため
+  大規模リファクタが必要と判明（19 スクリプトを `data/stores.json` 参照に張替え）→ 別 ISSUE で慎重に行う。
+  本ターンでは**LOCAL_STORES 内最大占有フィールド `crossCheckBreakdown`（1.66MB＝全体の36%）**を外部化:
+  - `build.js`: `STORE_OUTPUT_OMIT_KEYS` に `crossCheckBreakdown` / `crossCheckScoreVersion` を追加し、
+    `data/crosscheck.json`（HPID→{4シグナル×{score,max,reason}}）を書き出し。`crossCheckScore`（表示・ソートに使用）はインライン維持。
+  - `index.html`: モーダル初回展開時に `data/crosscheck.json` を fetch して `CROSSCHECK_MAP` に格納し、
+    breakdown 描画は `_renderCcBreakdown()` で map から参照。同一店舗が表示中の場合に限り再描画して
+    クローズ後の遅延再描画を防止。
+  - **結果**: index.html **8.6MB → 6.43MB（-25%、-2.18MB）** / `data/crosscheck.json` 1.62MB（4,409エントリ）。
+    19 スクリプト群は不変動作（crossCheckBreakdown 非依存）。modal cc score・breakdown 4 行・Google評価表示・
+    フィルタ・検索・LOCAL_STORES 件数（4,423）すべて preview 検証 OK・console エラー 0。
+- **次段（別 ISSUE 化候補）**: 残りの大物（営業時間 0.58MB / おすすめポイント 0.49MB / アクセス 0.40MB / 写真URL 0.33MB ...）を
+  含む全件外部化で <0.8MB 目標達成。19 スクリプトの参照先を `data/stores.json` へ統一する移行プロジェクト。
+- **acceptance（最終目標）**: 初期 HTML < 800KB、全機能の動作維持、Lighthouse Performance > 75 (mobile)
+- **acceptance（本ターン到達）**: ✅ 25% 削減（-2.18MB）/ ✅ 全機能維持 / ✅ 19 スクリプト群非依存
+- **files**: `build.js`, `index.html`, `data/crosscheck.json`（新規）
 
 ### [ISSUE-016] sitemap.xml に特集ページが未登録 ✅
 - **priority**: P2 → **status**: done
