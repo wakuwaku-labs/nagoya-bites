@@ -137,14 +137,28 @@ for f in "${TRACKED_UPDATES[@]}"; do
   [ -e "$f" ] && git add "$f" 2>>"$LOG" || true
 done
 
-# ステージに差分が無ければ「claude が直接 commit/push 済みだった」可能性。検証。
+# ステージに差分が無ければ「claude が既に commit 済み」の可能性。
+# その場合は HEAD が origin/main より進んでいるはずなので、未push分を push する。
 if git diff --staged --quiet; then
+  # 念のため origin の最新を取得（push前提条件の比較に必要）
+  git fetch origin main >>"$LOG" 2>&1 || true
+  AHEAD=$(git rev-list --count origin/main..HEAD 2>/dev/null || echo 0)
   REMOTE_HAS=$(git log origin/main --oneline -- "journal/${TODAY_JST}-"*.html 2>/dev/null | head -1)
-  if [ -n "$REMOTE_HAS" ]; then
+  if [ "$AHEAD" -gt 0 ]; then
+    log "ローカル HEAD が origin/main より ${AHEAD} コミット進んでいます（claude が commit 済み）。push します。"
+    if ! git push origin main >>"$LOG" 2>&1; then
+      log "push 拒否。pull --rebase --autostash で再同期して再 push します。"
+      git pull --rebase --autostash origin main >>"$LOG" 2>&1 || die "再同期に失敗"
+      git push origin main >>"$LOG" 2>&1 || die "再 push に失敗"
+    fi
+    log "🚀 既存ローカルコミットを main へ push 完了。"
+    exit 0
+  elif [ -n "$REMOTE_HAS" ]; then
     log "origin/main に既に本日記事のコミットあり: ${REMOTE_HAS}"
     exit 0
+  else
+    die "ステージ差分なし・HEAD は origin と同位・origin にも本日記事なし。状態が不明のため手動確認してください。"
   fi
-  die "ステージ差分なしかつ origin にも本日記事なし。状態が不明のため手動確認してください。"
 fi
 
 git -c user.name="NAGOYA BITES Daily" -c user.email="daily@nagoya-bites" \
