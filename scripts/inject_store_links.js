@@ -30,10 +30,10 @@ function escapeHtml(s) {
     .replace(/'/g, '&#39;');
 }
 
-function loadLocalStores(html) {
-  const m = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
-  if (!m) throw new Error('var LOCAL_STORES が index.html に見つかりません');
-  return JSON.parse(m[1]);
+// ISSUE-015-P2 第二段: data/stores.json を canonical として読込、無ければ index.html フォールバック
+const { loadStores: _loadStoresShared } = require('./lib/load_stores');
+function loadLocalStores(_html) {
+  return _loadStoresShared();
 }
 
 function loadDetailPageSet() {

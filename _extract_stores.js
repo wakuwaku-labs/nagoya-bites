@@ -1,8 +1,7 @@
 const fs = require('fs');
-const html = fs.readFileSync(__dirname + '/index.html', 'utf8');
-const match = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);\s*(?:var|let|const|function|\/\/)/);
-if (!match) { fs.writeFileSync(__dirname + '/_store_data.txt', 'Pattern not found'); process.exit(1); }
-const stores = JSON.parse(match[1]);
+// ISSUE-015-P2 第二段: data/stores.json を canonical として読込、無ければ index.html フォールバック
+const { loadStores } = require('./scripts/lib/load_stores');
+const stores = loadStores();
 
 let out = '';
 

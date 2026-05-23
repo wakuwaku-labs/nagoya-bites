@@ -52,7 +52,12 @@ function main() {
   }
   const jsonStr = JSON.stringify(filtered);
   html = html.replace(/var LOCAL_STORES = \[[\s\S]*?\];/, 'var LOCAL_STORES = ' + jsonStr + ';');
-  if (!dryRun) fs.writeFileSync(INDEX, html, 'utf8');
+  if (!dryRun) {
+    fs.writeFileSync(INDEX, html, 'utf8');
+    // ISSUE-015-P2 第二段: data/stores.json も同期更新（canonical を最新化）
+    const storesJsonPath = path.join(path.dirname(INDEX), 'data', 'stores.json');
+    fs.writeFileSync(storesJsonPath, jsonStr, 'utf8');
+  }
 
   // ── 2) stores/M*.html 削除 ────────────────────────────────────
   if (fs.existsSync(STORES_DIR)) {

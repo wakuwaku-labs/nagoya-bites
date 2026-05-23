@@ -15,9 +15,10 @@ const STORES_DIR = path.join(ROOT, 'stores');
 
 const norm = (s) => String(s || '').replace(/\s|　/g, '').replace(/&amp;/g, '&').toLowerCase();
 
+const { loadStores } = require('./lib/load_stores');
 function loadRealNames() {
-  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-  const L = JSON.parse(html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/)[1]);
+  // ISSUE-015-P2: data/stores.json 優先・index.html フォールバック
+  const L = loadStores();
   return new Set(L.map(s => norm(s['店名'])));
 }
 

@@ -39,9 +39,10 @@ const CONFIG = {
   'nagoya-summer-2026':   { jp: '夏グルメ', em: '夏', en: 'Summer 2026', re: /居酒屋|海鮮|ビアガーデン|ダイニング/, n: 10 },
 };
 
+// ISSUE-015-P2 第二段: data/stores.json を canonical として読込、無ければ index.html フォールバック
+const { loadStores: _loadStoresShared } = require('./lib/load_stores');
 function loadStores() {
-  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-  return JSON.parse(html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/)[1]);
+  return _loadStoresShared();
 }
 function pageIdFor(s, manualMap) {
   if (s['ホットペッパーID']) return s['ホットペッパーID'];

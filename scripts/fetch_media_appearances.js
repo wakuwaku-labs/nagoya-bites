@@ -259,11 +259,10 @@ function extractSourceFromItemUrl(link) {
   }
 }
 
+// ISSUE-015-P2 第二段: data/stores.json を canonical として読込、無ければ index.html フォールバック
+const { loadStores: _loadStoresShared } = require('./lib/load_stores');
 function loadStoresFromIndex() {
-  const html = fs.readFileSync(INDEX_HTML, 'utf8');
-  const match = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
-  if (!match) throw new Error('LOCAL_STORES not found in index.html');
-  return JSON.parse(match[1]);
+  return _loadStoresShared();
 }
 
 function storeKey(s) {

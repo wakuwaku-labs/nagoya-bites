@@ -649,11 +649,10 @@ function ensurePhotoCSS(html) {
 // ─────────────────────────────────────────────
 // メイン処理
 // ─────────────────────────────────────────────
+// ISSUE-015-P2 第二段: data/stores.json を canonical として読込、無ければ index.html フォールバック
+const { loadStores: _loadStoresShared } = require('./scripts/lib/load_stores');
 function readStores() {
-  const html = fs.readFileSync(HTML, 'utf8');
-  const match = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
-  if (!match) throw new Error('LOCAL_STORES が見つかりません');
-  return JSON.parse(match[1]);
+  return _loadStoresShared();
 }
 
 function updateFeatureArticle(stores, config, faqMap) {
