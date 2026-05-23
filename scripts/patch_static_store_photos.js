@@ -34,10 +34,10 @@ function ensureFigureFor(name, dryRun) {
 }
 const STOCK_RE = /https?:\/\/(?:images\.|cdn\.)?(?:unsplash|pexels|loremflickr|pixabay)\.com[^"'\s]*/g;
 
+// ISSUE-015-P2 第二段: data/stores.json を canonical として読込、無ければ index.html フォールバック
+const { loadStores: _loadStoresShared } = require('./lib/load_stores');
 function loadLocalStores() {
-  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-  const m = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
-  const stores = JSON.parse(m[1]);
+  const stores = _loadStoresShared();
   const byHpId = new Map();
   const byName = new Map();
   for (const s of stores) {

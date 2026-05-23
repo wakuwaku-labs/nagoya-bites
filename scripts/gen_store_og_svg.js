@@ -66,11 +66,10 @@ function shortArea(area) {
     .trim();
 }
 
+// ISSUE-015-P2 第二段: data/stores.json を canonical として読込、無ければ index.html フォールバック
+const { loadStores: _loadStoresShared } = require('./lib/load_stores');
 function loadStores() {
-  const html = fs.readFileSync(INDEX, 'utf8');
-  const m = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
-  if (!m) throw new Error('LOCAL_STORES が見つかりません');
-  return JSON.parse(m[1]);
+  return _loadStoresShared();
 }
 
 // ── SVG テンプレート ──────────────────────────────────────

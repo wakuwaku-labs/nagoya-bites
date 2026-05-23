@@ -18,11 +18,10 @@ const ROOT      = path.join(__dirname, '..');
 const INDEX     = path.join(ROOT, 'index.html');
 const RECO_PATH = path.join(ROOT, 'data', 'recommendations.json');
 
+// ISSUE-015-P2 第二段: data/stores.json を canonical として読込、無ければ index.html フォールバック
+const { loadStores: _loadStoresShared } = require('./lib/load_stores');
 function loadStores() {
-  const html = fs.readFileSync(INDEX, 'utf8');
-  const m = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
-  if (!m) throw new Error('LOCAL_STORES が index.html に見つかりません');
-  return JSON.parse(m[1]);
+  return _loadStoresShared();
 }
 
 function generate(s) {

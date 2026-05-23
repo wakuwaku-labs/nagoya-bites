@@ -458,7 +458,12 @@ function genreToAutoTags(store) {
 const STORE_OUTPUT_OMIT_KEYS = new Set([
   'TikTok検索', 'X検索', 'Instagram検索',
   '内観写真URL', '料理写真URL1', '料理写真URL2',
-  '公開フラグ'
+  '公開フラグ',
+  // ISSUE-015-P2: crossCheckBreakdown（~1.66MB・全体の36%）はモーダルを開いた時だけ
+  // 必要なため data/crosscheck.json に外部化し、index.html からは除外する。
+  // crossCheckScoreVersion は runtime 未参照の定数（"2.0"）なので併せて除外。
+  // ※ crossCheckScore（最終スコア）は表示・ソートに使うためインライン維持。
+  'crossCheckBreakdown', 'crossCheckScoreVersion'
 ]);
 
 // ISSUE-049 → ISSUE-XXX(2026-05-23): crossCheckBreakdown を 8 シグナル全て出力に復活。
@@ -1563,6 +1568,25 @@ async function main() {
   let html = fs.readFileSync(HTML, 'utf8');
   const slimStores = stores.map(slimStoreForOutput);
 
+  // ─── ISSUE-015-P2: crossCheckBreakdown を外部化（data/crosscheck.json） ─────
+  // モーダル展開時のみ必要な breakdown を index.html から切り出し、
+  // ホットペッパーID をキーにした map として書き出す。index.html は初回モーダル
+  // 展開時にこれを fetch して描画する（遅延ロード）。出力するシグナルは
+  // CC_BREAKDOWN_OUTPUT_KEYS 全 8 種（モーダルの描画対象と一致）。
+  const crossCheckMap = {};
+  let ccExported = 0;
+  for (const s of stores) {
+    const id = s['ホットペッパーID'];
+    const bd = s['crossCheckBreakdown'];
+    if (!id || !bd || typeof bd !== 'object') continue;
+    const slim = slimCrossCheckBreakdown(bd);
+    if (slim && Object.keys(slim).length > 0) { crossCheckMap[id] = slim; ccExported++; }
+  }
+  const crossCheckPath = path.join(__dirname, 'data', 'crosscheck.json');
+  fs.writeFileSync(crossCheckPath, JSON.stringify(crossCheckMap), 'utf8');
+  console.log(`crosscheck 外部化: ${ccExported}件 → data/crosscheck.json (${(fs.statSync(crossCheckPath).size/1024/1024).toFixed(2)}MB)`);
+  // ───────────────────────────────────────────────────────────────────────────
+
   // ─── キャッシュからInstagram/食べログURLをマージ ─────────────────────────
   // resolve_instagram.js / resolve_tabelog.js で事前解決したURLをビルド時に焼き付ける
   // （build.js は毎回 Instagram/食べログURLをクリアするため、キャッシュから復元する）
@@ -1628,22 +1652,64 @@ async function main() {
   }
   // ─────────────────────────────────────────────────────────────────────────
 
-  const jsonStr = JSON.stringify(slimStores);
-  console.log(`LOCAL_STORES serialize: ${stores.length}件, ${(jsonStr.length / 1024 / 1024).toFixed(2)}MB`);
+  // ─── ISSUE-015-P2 第二段: 優先度順ソート（TOP50 インライン用） ──────────
+  // 並び順: 話題フラグ → 編集部推薦 → トレンドスコア → Google評価
+  // インライン TOP50 と data/stores.json の先頭50件が一致するように同一順序で書き出す。
+  // → モーダル展開時の openM(i) が TOP50 期間と全件ロード後で同じ店舗を指す（HPID 整合）。
+  function _p2PriorityScore(s) {
+    let v = 0;
+    const topic = s['話題フラグ'];
+    if (topic === true || topic === 'TRUE' || topic === 'true') v += 1e9;
+    const ed = s['編集部推薦'];
+    if (ed === true || ed === 'TRUE' || ed === 'true') v += 1e6;
+    v += (parseFloat(s['トレンドスコア']) || 0) * 1000;
+    v += (parseFloat(s['Google評価']) || 0);
+    return v;
+  }
+  slimStores.sort((a, b) => _p2PriorityScore(b) - _p2PriorityScore(a));
+  const TOP_N_INLINE = 50;
+  const top50 = slimStores.slice(0, TOP_N_INLINE);
+  const fullJsonStr = JSON.stringify(slimStores);
+  const top50JsonStr = JSON.stringify(top50);
+  console.log(`LOCAL_STORES serialize: 全${slimStores.length}件=${(fullJsonStr.length/1024/1024).toFixed(2)}MB | インライン TOP${TOP_N_INLINE}=${(top50JsonStr.length/1024).toFixed(0)}KB`);
+
+  // ─── 全件 canonical を data/stores.json に書き出す ───────────────────────
+  // 19 スクリプトはこちらを第一読込元にし、無ければ index.html にフォールバック
+  // （scripts/lib/load_stores.js）。第二段では index.html には TOP50 のみインライン。
+  const storesJsonPath = path.join(__dirname, 'data', 'stores.json');
+  // ガードレール用に書き込み前の内容を退避（縮小検知時は復元する）
+  let _prevStoresContent = null;
+  let _prevStoresCount = 0;
+  if (fs.existsSync(storesJsonPath)) {
+    try {
+      _prevStoresContent = fs.readFileSync(storesJsonPath, 'utf8');
+      const _prev = JSON.parse(_prevStoresContent);
+      if (Array.isArray(_prev)) _prevStoresCount = _prev.length;
+    } catch (_) { /* 壊れていれば 0 扱い */ }
+  }
+  fs.writeFileSync(storesJsonPath, fullJsonStr, 'utf8');
+  console.log(`data/stores.json 書き出し: ${slimStores.length}件 (${(fullJsonStr.length / 1024 / 1024).toFixed(2)}MB)`);
+  // ────────────────────────────────────────────────────────────────────────────
 
   // ──────────────────────────────────────────────────────────────────────────
   // 店舗大量消失ガードレール（再発防止）
   // build.js の店舗の大半は Hot Pepper API（CI専用 HOTPEPPER_API_KEY）由来。
   // キー無し / ネットワーク不通の環境でビルドすると数千店が欠落した縮小版が
   // 生成され、それをコミット→マージで全件版を上書きしてしまう事故が過去発生した。
-  // 既存 index.html の店舗数より大幅に少ない場合は書き込みを中断する。
-  // 意図的な縮小（テスト等）が必要な場合は ALLOW_STORE_SHRINK=1 で明示的に上書き可。
+  // ISSUE-015-P2 第二段以降は index.html インラインが TOP50 のみになったため、
+  // 比較対象は data/stores.json（canonical）優先・無ければ index.html を fallback。
   // ──────────────────────────────────────────────────────────────────────────
   const SHRINK_THRESHOLD = 0.7; // 既存の70%未満なら異常とみなす
-  const existingMatch = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
-  let existingCount = 0;
-  if (existingMatch) {
-    try { existingCount = JSON.parse(existingMatch[1]).length; } catch (_) { existingCount = 0; }
+  let existingCount = _prevStoresCount; // 直前 canonical 優先
+  if (existingCount <= TOP_N_INLINE) {
+    // data/stores.json が未生成 or TOP50 のみ等で信頼できない → index.html 経由で見る
+    const existingMatch = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
+    if (existingMatch) {
+      try {
+        const inlineCount = JSON.parse(existingMatch[1]).length;
+        if (inlineCount > existingCount) existingCount = inlineCount;
+      } catch (_) { /* ignore */ }
+    }
   }
   if (existingCount > 0 && slimStores.length < existingCount * SHRINK_THRESHOLD) {
     const msg =
@@ -1654,13 +1720,21 @@ async function main() {
     if (process.env.ALLOW_STORE_SHRINK === '1') {
       console.warn(msg + ' → ALLOW_STORE_SHRINK=1 のため続行します。');
     } else {
+      // data/stores.json は既に書き込んでしまっているため、バックアップから復元
+      if (_prevStoresContent !== null) {
+        try {
+          fs.writeFileSync(storesJsonPath, _prevStoresContent, 'utf8');
+          console.warn('data/stores.json を直前バックアップから復元しました。');
+        } catch (_) {}
+      }
       throw new Error(msg);
     }
   }
 
+  // index.html には TOP50 のみインライン化（残りは data/stores.json から遅延 fetch）
   html = html.replace(
     /var LOCAL_STORES = \[[\s\S]*?\];/,
-    `var LOCAL_STORES = ${jsonStr};`
+    `var LOCAL_STORES = ${top50JsonStr};`
   );
 
   // 「今日の話題店」更新日付を埋め込む（YYYY/M/D 形式。JS依存なしの静的置換）
