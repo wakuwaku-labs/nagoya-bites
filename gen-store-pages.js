@@ -258,7 +258,7 @@ function renderStorePage(s, slug) {
   const ccs      = Number(s['crossCheckScore'] || 0);
   const ccsHasScore = typeof s['crossCheckScore'] === 'number';
   const ccsPending  = ccsHasScore && ccs < 50;
-  const ccsLabel = ccs >= 90 ? '✓✓✓ 整合度 高' : ccs >= 70 ? '✓✓ 整合度 中' : ccs >= 50 ? '✓ 整合度 検証中' : (ccsPending ? `整合度 ${ccs} ／ 参考値` : '');
+  const ccsLabel = ccs >= 90 ? '✓✓✓ 信頼度 高' : ccs >= 70 ? '✓✓ 信頼度 中' : ccs >= 50 ? '✓ 信頼度 検証中' : (ccsPending ? `信頼度 ${ccs} ／ 参考値` : '');
   const reviewCountRaw = parseInt(s['口コミ数'] || '', 10);
   const reviewCount    = Number.isFinite(reviewCountRaw) && reviewCountRaw > 0 ? reviewCountRaw : 0;
   const point    = s['おすすめポイント'] || '';
@@ -481,7 +481,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <h1>${name}</h1>
   <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
     ${score ? `<div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>${score}</div>` : ''}
-    ${ccsLabel ? `<span class="ccs-badge${ccsPending ? ' ccs-badge-pending' : ''}" title="クロスチェック整合度: 複数媒体シグナルによる客観評価${ccsPending ? '（データ蓄積中の参考値・低評価を示すものではありません）' : ''}">${ccsLabel}</span>` : ''}
+    ${ccsLabel ? `<span class="ccs-badge${ccsPending ? ' ccs-badge-pending' : ''}" title="スコア信頼度: 複数媒体シグナルによる客観評価${ccsPending ? '（データ蓄積中の参考値・低評価を示すものではありません）' : ''}">${ccsLabel}</span>` : ''}
   </div>
 
   ${point ? `<div class="point-box"><p>${point}</p></div>` : ''}

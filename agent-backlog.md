@@ -102,7 +102,7 @@
   - 復元データは `8b9ed856e` 時点（5/20頃のビルド）。5/20以降の Google Sheets 最新編集と Places API 月次更新は次回CI `build.yml` 実行で取り込まれる。
 - **files**: `index.html`（LOCAL_STORES + seo-store-list）/ `build.js`（ガードレール）
 
-### [ISSUE-049] クロスチェック整合度の V3 化（時系列シグナル追加・編集判断依存の解消）✅
+### [ISSUE-049] スコア信頼度の V3 化（時系列シグナル追加・編集判断依存の解消）✅
 - **priority**: P1 → **status**: done
 - **detected**: 2026-05-12
 - **resolved**: 2026-05-12
@@ -140,7 +140,7 @@
   - `build.js`（computeCrossCheckScore V3 化）
   - `features/integrity-method.html`（8 シグナル仕様に更新）
 
-### [ISSUE-048] サクラチェッカー方式・媒体横断「クロスチェック整合度」レイヤー導入 ✅
+### [ISSUE-048] サクラチェッカー方式・媒体横断「スコア信頼度」レイヤー導入 ✅
 - **priority**: P1 → **status**: done
 - **detected**: 2026-05-10
 - **resolved**: 2026-05-11
@@ -151,7 +151,7 @@
   ユーザー要望「飲食媒体のサクラを排除して信頼できる評価を反映したい」（参考: sakura-checker.jp）。
   食べログ・Retty 等の本文スクレイピングは TOS 違反リスクと Strategic Skip 宣言と矛盾するため実施せず、
   公式 API（Google Places）と既に取得済みのデータ（mediaFeatures / visitStatus / insiderReviews）だけで
-  6 シグナルから 0〜100 の「クロスチェック整合度」を算出する。
+  6 シグナルから 0〜100 の「スコア信頼度」を算出する。
   「サクラ確率」と直接表記せず中立的な「整合度」と表現することで名誉毀損リスクを最小化。
 - **signal design** (6 シグナル → max 100):
   - S1: Google★ vs 件数比率（max 25）
@@ -179,7 +179,7 @@
     - 異議申し立てフォーム（Formspree 経由・既存 insider_reviews と同パターン）
   - **Step 4 (DONE 2026-05-11 / commit 631a1c7)**: 透明化と法的セーフガード
     - `features/integrity-method.html` 新規作成（方法論全公開・6 シグナル詳細・計算式・除外ルール）
-    - `features/editorial-policy.html#trust-mechanisms` に「クロスチェック整合度」セクション追記
+    - `features/editorial-policy.html#trust-mechanisms` に「スコア信頼度」セクション追記
     - `features/no-fake-reviews.html` 末尾に「整合度スコアの読み方」追記
     - `agents/inspector.md` に月次「異議申し立てレビュー」プロセス追記
     - `agents/strategist.md` に「整合度スコアの法的リスク管理」追記
@@ -191,7 +191,7 @@
   - 新規 npm 依存の追加
   - 店舗一覧から低スコア店を除外
 - **risk mitigation**:
-  - 中立表現「クロスチェック整合度」採用 → 誤判定の名誉毀損リスク低減
+  - 中立表現「スコア信頼度」採用 → 誤判定の名誉毀損リスク低減
   - 異議申し立てフォーム必須 → 誤判定の即時補正フロー
   - `features/integrity-method.html` で計算式全公開 → 第三者検証可能
   - 50 未満はバッジ非表示 → 攻撃的にならない
@@ -558,14 +558,14 @@
 | 2026-05-10 | Builder(/solve-next auto) | ISSUE-047 related-features 充足率向上: `gen-store-pages.js` の TAG_TO_FEATURES を 9→17 件に拡張（ジャンル別/エリア別フォールバック + 最後の砦 industry-insiders-pick）/ `scripts/patch_store_related_features.js` 新設 / 4,540 stores の関連特集を **65.9% → 100%** にカバレッジ拡大（acceptance 95% を達成） | ✅ commit 886a79f |
 | 2026-05-10 | Builder(/solve-next auto) | ISSUE-048 (aria-label / a11y) ボタン aria-label 充足率: 16件のテキスト付きボタンに具体的なラベル追加 (pwa/filter/notify/review/share/tag-reset/empty-state-reset)。aria-label 付与率 **50%→96.9%** で acceptance 90% を達成。※ ID 衝突: 別エージェントが 2026-05-11 に同 ID でサクラチェッカー task を起票 — 整理は別 ISSUE で対応 | ✅ commit b165201 |
 | 2026-05-11 | Builder + Orchestrator（ユーザー要望対応） | ISSUE-049 店舗画像品質改善: wsrv.nl 経由で全店画像を WebP + シャープニング配信 / Hot Pepper URL の `_238.jpg` → `_480.jpg` 自動昇格（default fallback で404安全）/ カード `400/600/800w`・モーダル `800/1200/1600w`・ランキング `280/560w` の srcset 対応 / 切替容易性のため `nbImage()` ヘルパーで CDN 抽象化 / ISSUE-024（Hot Pepper ホットリンク懸念）への副次的緩和 | ✅ デプロイ予定 |
-| 2026-05-14 | Builder + DataKeeper（夜間自律実行） | **クロスチェック整合度 UI バグ修正 + ISSUE-047 完了**: (1) index.html モーダルのシグナルキーミスマッチを修正（s3_editorVisitConsistency→s3_dataCompleteness / s6_insiderReviewConsistency→s6_instagramPresence / s7_reviewTimeseries・s8_reviewDistribution を追加・UI で全8シグナル表示）(2) gen-store-pages.js TAG_TO_FEATURES を4層構造に拡張（タグ/名古屋めし/ジャンル/エリア + 全店catch-all nagoya-gourmet-guide）→ LOCAL_STORES 715件の related-features 充足率 68%→**100%**（3件以上リンク 91.6%）(3) fetch_media_appearances.js 最新実行（45→48店舗、1,901記事スキャン）(4) node build.js 再構築（クロスチェック平均55.6 / T50-69=579件）| ✅ デプロイ済み |
+| 2026-05-14 | Builder + DataKeeper（夜間自律実行） | **スコア信頼度 UI バグ修正 + ISSUE-047 完了**: (1) index.html モーダルのシグナルキーミスマッチを修正（s3_editorVisitConsistency→s3_dataCompleteness / s6_insiderReviewConsistency→s6_instagramPresence / s7_reviewTimeseries・s8_reviewDistribution を追加・UI で全8シグナル表示）(2) gen-store-pages.js TAG_TO_FEATURES を4層構造に拡張（タグ/名古屋めし/ジャンル/エリア + 全店catch-all nagoya-gourmet-guide）→ LOCAL_STORES 715件の related-features 充足率 68%→**100%**（3件以上リンク 91.6%）(3) fetch_media_appearances.js 最新実行（45→48店舗、1,901記事スキャン）(4) node build.js 再構築（クロスチェック平均55.6 / T50-69=579件）| ✅ デプロイ済み |
 | 2026-05-14 | DataKeeper + Editor（夜間自律実行 継続）| **はてなブックマーク RSS 統合 + journal 5/14 公開**: (1) fetch_media_appearances.js に Hatena bookmark RSS 9 フィード追加（HB() ヘルパー・extractSourceFromUrl オプション・BLOCKED_DOMAINS セット・decodeEntities() 関数で HTML エンティティデコード対応）(2) MEDIA_FEEDS 25+20+9=54 フィード体制（note/Google News/Hatena）(3) build.js 再実行（メディア掲載 9 店舗・自動タグ付与 1件・クロスチェック平均 55.7）(4) journal/2026-05-14-reservation-platform-exit.html 公開（業界の裏側：予約サイト離脱の経済合理性・フィルター効果・評価コントロール 3 軸）(5) ISSUE-046 LOCAL_STORES 充足率確認: タグ 99.9%・Instagram 71.9%・Google評価 98.5%（全項目 acceptance 達成）| ✅ デプロイ済み |
 | 2026-05-14 | Editor + Builder（夜間自律実行 継続③）| **SEO特集4本新規追加 + TAG_TO_FEATURES拡張 + llms.txt更新**: (1) `features/nagoya-yakiniku.html` 新規（A5和牛〜ホルモン 厳選10店・炭火解説・価格帯表・FAQ6問・JSON-LD）(2) `features/nagoya-solo-dining.html` 新規（カウンター〜立ち飲み 厳選10店・業態別ガイド・カウンター礼儀）(3) `features/nagoya-korean.html` 新規（サムギョプサル〜参鶏湯 厳選10店・業態別ガイド・価格帯表・FAQ6問・JSON-LD）(4) `features/nagoya-seafood.html` 新規（刺身〜割烹〜藁焼き 厳選10店・鮮度の見極め方・割烹vs居酒屋・FAQ6問・JSON-LD）(5) gen-store-pages.js TAG_TO_FEATURES: 焼肉/韓国料理/海鮮/一人飲み の4フォールバック追加 (6) features/index.html: numberOfItems 21→28・4特集カード追加（vigorous-pasteur既存27本と統合） (7) llms.txt: 焼肉/一人飲み/韓国料理/海鮮/鮨/イタリアン 特集リスト更新 | ✅ デプロイ済み |
 | 2026-05-14 | DataKeeper + Builder（夜間自律実行 第3フェーズ）| **ISSUE-050 orphan pages 削除 + 店舗ページ品質向上 + sitemap 全体化**: (1) stores/ 孤児ページ **3,909 件を削除**（LOCAL_STORES 715件に正規化、thin content リスク解消）(2) gen-store-pages.js に `crossCheckScore` バッジ追加（50-69→"✓ 整合度 検証中"・70-89→"✓✓ 整合度 中"・90+→"✓✓✓ 整合度 高"）で店舗個別ページでも信頼シグナル表示 (3) gen-store-pages.js `buildSitemap()` を全サイト対応に拡張（stores/のみ→features/+journal/+stores/ 776URL体制）(4) `features/nagoya-yakiniku-guide.html` 新規公開（業界人が通う名古屋焼肉8選・炭火/和牛/ホルモン/知多牛/前沢牛・FAQ+ItemList JSON-LD完備）(5) features/index.html にカード追加・JSON-LD ItemList 更新 | ✅ デプロイ済み |
 | 2026-05-14（深夜）| Editor + Builder（夜間自律実行 Phase 6）| **ジャーナル5/23-5/29先行7本 + 特集5本新設 + TAG_TO_FEATURES拡張 + sitemap 4670 URLs**: (1) journal 7本新規公開: 老舗vs新店見分け方(5/23) / 土曜昼酒の流儀(5/24) / 月曜定休の秘密(5/25) / 長続きする店の3要素(5/26) / 名古屋めし観光vs地元(5/27) / 駅遠の実力店(5/28) / カウンター席の厨房温度(5/29) (2) journal/index.html + feed.xml + feed.atom 全更新（lastBuildDate: 2026-05-29）(3) `features/nagoya-ramen.html` 新規（ラーメン12選・煮干し/豚骨/鶏白湯/台湾まぜそば/担々麺・FAQPage+ItemList）(4) `features/nagoya-cafe.html` 新規（カフェ10選・スペシャルティ/モーニング/隠れ家・覚王山/本山/栄/名駅）(5) `features/nagoya-tonkatsu.html` 新規（とんかつ・味噌かつ10選・豚の仕入れ先/味噌ダレ独自性/揚げ精度3軸）(6) `features/nagoya-yakitori.html` 新規（焼き鳥10選・名古屋コーチン/炭火/串打ち精度3軸）(7) `features/fathers-day-2026.html` 新規（父の日2026・6月21日・焼肉/鉄板焼き/鮨/うなぎ/割烹）(8) features/index.html: numberOfItems 31→36・5カード追加・JSON-LD更新 (9) gen-store-pages.js TAG_TO_FEATURES: ラーメン/とんかつ/焼き鳥/カフェ 4フォールバック追加 → 全4,577店店舗ページの関連特集リンクを更新 (10) sitemap.xml: 4658→4670 URLs | ✅ commit 7ac57d5b・デプロイ済み |
 | 2026-05-14（翌日）| Editor + Builder（夜間自律実行 第6フェーズ）| **焼き鳥特集 + ジャーナル3本公開 + sitemap 4661 URLs**: (1) `features/nagoya-yakitori-guide.html` 新規（焼き鳥炭火・地鶏・個室 業界人厳選10店・炭火の香りの見極め方・地鶏vs一般鶏・大衆居酒屋vs個室焼き鳥の3軸解説・FAQ6問・ItemList JSON-LD）(2) `journal/2026-05-23-sake-pairing-yakitori.html` 新規（焼き鳥×日本酒ペアリング・塩→タレ→内臓系の串順番・愛知地酒との相性）(3) `journal/2026-05-24-nagoya-counter-dining-rules.html` 新規（カウンター席一人飲み5法則・おまかせ/沈黙観察/魔法の質問/混雑回避/再訪予告）(4) `journal/2026-05-25-sunday-dinner-strategy.html` 新規（日曜夜グルメ攻略・仕入れ業者連動の定休日構造・エリア別営業率data-table）(5) features/index.html numberOfItems 36→37・焼き鳥ガイドカード追加（並列エージェントが追加した36本と共存）(6) journal/index.html + feed.xml + feed.atom: 3エントリを並列エージェントの5/23-5/29に割り込みで追加 (7) gen-store-pages.js: 焼き鳥フォールバック追加（nagoya-yakitori-guide.html） (8) sitemap.xml: 4661 URLs (9) llms.txt: 焼き鳥ガイド追加 | ✅ commit e65f1f45・デプロイ済み |
 | 2026-05-20〜22 | Editor + Builder（夜間自律実行 第5フェーズ）| **ジャーナル3本公開 + 中華特集新規作成**: (1) `journal/2026-05-20-tuesday-is-the-best-dining-night.html` 新規（火曜夜が名古屋グルメの黄金時間帯・客層/仕入れ鮮度/料理人コンディション3条件）(2) `journal/2026-05-21-prep-day-knowledge.html` 新規（仕込み日を知ると食べ頃が変わる・出汁/煮込み/漬けの時間軸）(3) `journal/2026-05-22-nagoya-lunch-settai-guide.html` 新規（接待ランチ3原則・90分/アルコールなし/照明の設計）(4) journal/index.html + feed.xml + feed.atom 更新（lastBuildDate: 2026-05-22）(5) `features/nagoya-chinese-guide.html` 新規（中華料理おすすめ10選・ワンタン★4.9/餃子★4.8/麻婆/小籠包/台湾料理/火鍋 業界人厳選）(6) features/index.html numberOfItems 28→29・中華カード追加・JSON-LD更新 (7) gen-store-pages.js TAG_TO_FEATURES: 中華/点心/餃子フォールバック追加 (8) llms.txt: 中華料理特集リスト追加 | ✅ デプロイ済み |
-| 2026-05-14〜15 | Editor + Builder（夜間自律実行 第4フェーズ）| **ジャーナル5日分先行公開 + 特集3本追加 + crossCheckScore Step4完了**: (1) journal/2026-05-15（金曜夜の使える店・使えない店）公開・feed.xml/atom 更新・sitemap 780→780URL (2) journal/2026-05-16（土曜夜の2段構え戦略）公開 (3) journal/2026-05-17（日曜ランチ業界人の穴）公開 (4) journal/2026-05-18（月曜夜に動く業界人）公開 (5) journal/2026-05-19（インスタ映え店を選ぶと後悔する理由）公開 (6) `features/nagoya-sushi-guide.html` 新規（名古屋鮨8選・三河湾/豊洲/赤酢シャリ・FAQPage+ItemList）(7) `features/nagoya-italian-guide.html` 新規（名古屋イタリアン10選・栄/伏見/名駅/池下・3選定軸）(8) `features/nagoya-seafood.html` リモートエージェント公開分を features/index.html に統合（numberOfItems 25→28・カード追加・JSON-LD位置28）(9) `data/dispute_requests.json` 新規作成（クロスチェック整合度異議申し立てモデレーション台帳・Step4完了）(10) sitemap.xml 786→812 URL | ✅ デプロイ済み |
+| 2026-05-14〜15 | Editor + Builder（夜間自律実行 第4フェーズ）| **ジャーナル5日分先行公開 + 特集3本追加 + crossCheckScore Step4完了**: (1) journal/2026-05-15（金曜夜の使える店・使えない店）公開・feed.xml/atom 更新・sitemap 780→780URL (2) journal/2026-05-16（土曜夜の2段構え戦略）公開 (3) journal/2026-05-17（日曜ランチ業界人の穴）公開 (4) journal/2026-05-18（月曜夜に動く業界人）公開 (5) journal/2026-05-19（インスタ映え店を選ぶと後悔する理由）公開 (6) `features/nagoya-sushi-guide.html` 新規（名古屋鮨8選・三河湾/豊洲/赤酢シャリ・FAQPage+ItemList）(7) `features/nagoya-italian-guide.html` 新規（名古屋イタリアン10選・栄/伏見/名駅/池下・3選定軸）(8) `features/nagoya-seafood.html` リモートエージェント公開分を features/index.html に統合（numberOfItems 25→28・カード追加・JSON-LD位置28）(9) `data/dispute_requests.json` 新規作成（スコア信頼度異議申し立てモデレーション台帳・Step4完了）(10) sitemap.xml 786→812 URL | ✅ デプロイ済み |
 | 2026-05-20 | Orchestrator(EMERGENCY) | **ISSUE-051 今日の話題店TOP5 ラーメン一極集中バグ修正**: 原因＝候補69件が全て同点55点（鮮度45+編集部推薦10・0媒体）で、安定ソートにより `manual_stores.json` 先頭のラーメン12連店がそのままTOP5化。ジャンル多様性制約もタイブレークも不在。修正＝`pick_daily_trending5.js` に (1) 粗ジャンル分類 `coarseCategory()`（店名+ジャンルで11カテゴリ判定） (2) TOP5内 同一ジャンル最大2件キャップ `selectDiverse()` (3) 店名+日付の決定的ジッターで同点店を日替わりローテーション。candidates に `ジャンル` を伝播。再生成後 TOP5＝餃子2/カフェ1/ラーメン1/スイーツ1 に多様化。build.js 779件・付与5件/失敗0・console error 0・preview目視OK | ✅ デプロイ済み (commit pending) |
 | 2026-05-22 | DataKeeper(/solve-next) | **ISSUE-056（旧 ISSUE-041 ready・Google評価カバー率 15%→50%）を起動可能化**: Places API 取得パイプライン（`scripts/fetch_places.js`→`build.js` rating補完→`monthly-places.yml` 月次CI）が3段すべて実装済みと検証 / 唯一の blocker＝`GOOGLE_PLACES_API_KEY` 未設定（`places_resolved.json` が一度も生成されず15.3%停滞）と特定 / 起動 runbook `docs/places-api-setup.md` 新規作成（鍵発行→Secret登録→手動初回実行→効果確認・コスト見積）/ `monthly-places.yml` に「Google評価 カバレッジ見込み」ステップ追加（追加シークレット不要・50%目標への進捗を毎回可視化）/ 重複ID ISSUE-041 を ISSUE-056 に採番し直し Notion同期破綻を解消 | ✅ デプロイ済み (6b200e85f) |
 | 2026-05-22 | DataKeeper(/solve-next) | **ISSUE-056 acceptance 即時達成・クローズ**: オペレーターが GOOGLE_PLACES_API_KEY 設定 → monthly-places.yml 手動実行（全4,593店取得・rating有4,437/住所却下77/閉店除外170）→ places_resolved.json コミット(4f5d2c385) → build.yml 手動実行で index.html 反映(a5d941ff5)。**Google評価カバー率 15.3%→98.3%（4,348/4,423）** で目標50%を大幅超過。閉店170店除外で総数4,593→4,423(-3.7%・QA閾値内) | ✅ デプロイ済み (a5d941ff5) |
