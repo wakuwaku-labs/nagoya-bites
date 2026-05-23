@@ -50,11 +50,10 @@ function buildDescription(s) {
 // ================================================================
 // index.html から LOCAL_STORES を抽出
 // ================================================================
-function extractLocalStores(htmlPath) {
-  const html = fs.readFileSync(htmlPath, 'utf8');
-  const m = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);\s*\n/);
-  if (!m) throw new Error('LOCAL_STORES not found in index.html');
-  return JSON.parse(m[1]);
+// ISSUE-015-P2 第二段: data/stores.json を canonical として読込、無ければ index.html フォールバック
+const { loadStores: _loadStoresShared } = require('./lib/load_stores');
+function extractLocalStores(_htmlPath) {
+  return _loadStoresShared();
 }
 
 // ================================================================

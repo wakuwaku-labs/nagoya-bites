@@ -1655,6 +1655,14 @@ async function main() {
   const jsonStr = JSON.stringify(slimStores);
   console.log(`LOCAL_STORES serialize: ${stores.length}件, ${(jsonStr.length / 1024 / 1024).toFixed(2)}MB`);
 
+  // ─── ISSUE-015-P2 第二段: 全件 canonical を data/stores.json に書き出す ─────
+  // index.html LOCAL_STORES と同一スリム形式の全件配列。19 スクリプトはこちらを
+  // 第一読込元にし、無ければ index.html にフォールバック（scripts/lib/load_stores.js）。
+  const storesJsonPath = path.join(__dirname, 'data', 'stores.json');
+  fs.writeFileSync(storesJsonPath, jsonStr, 'utf8');
+  console.log(`data/stores.json 書き出し: ${slimStores.length}件 (${(jsonStr.length / 1024 / 1024).toFixed(2)}MB)`);
+  // ────────────────────────────────────────────────────────────────────────────
+
   // ──────────────────────────────────────────────────────────────────────────
   // 店舗大量消失ガードレール（再発防止）
   // build.js の店舗の大半は Hot Pepper API（CI専用 HOTPEPPER_API_KEY）由来。

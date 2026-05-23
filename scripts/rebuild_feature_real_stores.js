@@ -13,9 +13,10 @@ const ROOT = path.resolve(__dirname, '..');
 const norm = (s) => String(s || '').replace(/\s|　/g, '').replace(/&amp;/g, '&').toLowerCase();
 const esc = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+// ISSUE-015-P2 第二段: data/stores.json を canonical として読込、無ければ index.html フォールバック
+const { loadStores: _loadStoresShared } = require('./lib/load_stores');
 function loadStores() {
-  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-  return JSON.parse(html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/)[1]);
+  return _loadStoresShared();
 }
 const manualPageId = fs.existsSync('/tmp/manual_pageid_map.json')
   ? JSON.parse(fs.readFileSync('/tmp/manual_pageid_map.json', 'utf8')) : {};

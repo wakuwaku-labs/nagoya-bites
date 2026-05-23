@@ -63,8 +63,11 @@ function main() {
   }
 
   if (!dryRun) {
-    html = html.replace(/var LOCAL_STORES = \[[\s\S]*?\];/, 'var LOCAL_STORES = ' + JSON.stringify(stores) + ';');
+    const storesJson = JSON.stringify(stores);
+    html = html.replace(/var LOCAL_STORES = \[[\s\S]*?\];/, 'var LOCAL_STORES = ' + storesJson + ';');
     fs.writeFileSync(INDEX, html, 'utf8');
+    // ISSUE-015-P2 第二段: data/stores.json も同期更新（canonical を最新化）
+    fs.writeFileSync(path.join(ROOT, 'data', 'stores.json'), storesJson, 'utf8');
     fs.writeFileSync('/tmp/manual_pageid_map.json', JSON.stringify(pageIdMap, null, 2));
   }
 

@@ -71,11 +71,10 @@ async function fetchPopularShopsInMiddleArea(maCode, maName, count = 30) {
   }
 }
 
+// ISSUE-015-P2 第二段: data/stores.json を canonical として読込、無ければ index.html フォールバック
+const { loadStores: _loadStoresShared } = require('./lib/load_stores');
 function loadLocalStores() {
-  const html = fs.readFileSync(INDEX_PATH, 'utf8');
-  const m = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
-  if (!m) throw new Error('LOCAL_STORES not found in index.html');
-  return JSON.parse(m[1]);
+  return _loadStoresShared();
 }
 
 function loadTrending() {
