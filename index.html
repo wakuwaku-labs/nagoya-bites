@@ -440,7 +440,7 @@ body.search-active .results-summary{display:block;}
 .pro-pick{position:absolute;bottom:.6rem;right:.9rem;font-family:'DM Mono',monospace;font-size:.48rem;letter-spacing:.16em;color:var(--bg);background:var(--gold);padding:.15rem .5rem;border-radius:1px;z-index:2;text-transform:uppercase;}
 /* ── TREND BADGE ── */
 .trend-badge{position:absolute;top:.9rem;right:.9rem;font-size:.58rem;font-weight:700;padding:.2rem .55rem;border-radius:2px;z-index:3;backdrop-filter:blur(6px);letter-spacing:.06em;animation:trendPulse 2s ease-in-out infinite;}
-/* ── ISSUE-048 クロスチェック整合度（カードの cmeta セル + モーダル内訳） ── */
+/* ── ISSUE-048 スコア信頼度（カードの cmeta セル + モーダル内訳） ── */
 .cmeta .cc-cell{font-weight:700;padding:0 .15rem;}
 .cmeta .cc-cell.cc-high{color:#2e7d32;}
 .cmeta .cc-cell.cc-mid{color:#558b2f;}
@@ -5940,20 +5940,20 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
         <p id="m-insider-note-body"></p>
       </div>
       <div class="cross-check-box" id="m-cross-check" style="display:none">
-        <span class="mpoint-label">CROSS-CHECK — クロスチェック整合度</span>
+        <span class="mpoint-label">TRUST SCORE — スコア信頼度</span>
         <div class="cc-summary">
           <span class="cc-score" id="m-cc-score">--</span>
-          <span class="cc-score-suffix">（複数媒体・複数シグナルでの整合度を 0〜100% で表示）</span>
+          <span class="cc-score-suffix">（複数媒体・複数シグナルで裏付けた信頼度を 0〜100% で表示）</span>
         </div>
         <details>
           <summary>内訳を見る — 8 シグナルの根拠</summary>
           <ul class="cc-breakdown" id="m-cc-breakdown"></ul>
         </details>
-        <p class="cc-pending-note" id="m-cc-pending-note" style="display:none">※ この店舗はクロスチェックのデータ蓄積がまだ少なく、現時点では参考値です（評価が低いことを示すものではありません）。</p>
+        <p class="cc-pending-note" id="m-cc-pending-note" style="display:none">※ この店舗は信頼度データの蓄積がまだ少なく、現時点では参考値です（評価が低いことを示すものではありません）。</p>
         <p class="cc-note">
-          Google・Hot Pepper・編集部来店・他メディア掲載・業界人レビューの整合度から機械的に算出した参考指標です。
-          「サクラ確率」ではなく中立な指標として表示しています。詳しい計算式は<a href="features/integrity-method.html">クロスチェック整合度の作り方</a>を参照。
-          スコアに違和感がある場合は<a href="mailto:editor@nagoya-bites.com?subject=%E3%82%AF%E3%83%AD%E3%82%B9%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E6%95%B4%E5%90%88%E5%BA%A6%E3%81%AE%E4%BF%AE%E6%AD%A3%E4%BE%9D%E9%A0%BC">編集部へ修正依頼</a>（editor@nagoya-bites.com）をお送りください。
+          Google・Hot Pepper・編集部来店・他メディア掲載・業界人レビューを照合し、機械的に算出した信頼度の参考指標です。
+          「サクラ確率」ではなく中立な指標として表示しています。詳しい計算式は<a href="features/integrity-method.html">スコア信頼度の作り方</a>を参照。
+          スコアに違和感がある場合は<a href="mailto:editor@nagoya-bites.com?subject=%E3%82%B9%E3%82%B3%E3%82%A2%E4%BF%A1%E9%A0%BC%E5%BA%A6%E3%81%AE%E4%BF%AE%E6%AD%A3%E4%BE%9D%E9%A0%BC">編集部へ修正依頼</a>（editor@nagoya-bites.com）をお送りください。
         </p>
       </div>
       <div class="insider-reviews-box" id="m-insider-reviews">
@@ -11527,13 +11527,13 @@ function buildCardHtml(r) {
     if (trendLabel === '話題沸騰') trendBadgeHtml = '<span class="trend-badge trend-hot">話題沸騰</span>';
     else if (trendLabel === '注目上昇中') trendBadgeHtml = '<span class="trend-badge trend-rising">注目上昇中</span>';
     else if (trendLabel === 'じわじわ人気') trendBadgeHtml = '<span class="trend-badge trend-warm">じわじわ人気</span>';
-    // ── ISSUE-048 クロスチェック整合度（cmeta 内のセル・50 未満は非表示） ──
+    // ── ISSUE-048 スコア信頼度（cmeta 内のセル・50 未満は非表示） ──
     var ccScore = typeof r.crossCheckScore === 'number' ? r.crossCheckScore : 0;
     var ccMetaHtml = '';
-    if (ccScore >= 90) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-high" title="クロスチェック整合度（複数媒体・複数シグナルでの整合度・タップで内訳）">' + ccScore + '%</span>';
-    else if (ccScore >= 70) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-mid" title="クロスチェック整合度">' + ccScore + '%</span>';
-    else if (ccScore >= 50) ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-low" title="クロスチェック整合度">' + ccScore + '%</span>';
-    else if (typeof r.crossCheckScore === 'number') ccMetaHtml = '<span data-l="整合度" class="cc-cell cc-pending" title="クロスチェック整合度（参考値・データ蓄積中）">' + ccScore + '%</span>';
+    if (ccScore >= 90) ccMetaHtml = '<span data-l="信頼度" class="cc-cell cc-high" title="スコア信頼度（複数媒体・複数シグナルで裏付け・タップで内訳）">' + ccScore + '%</span>';
+    else if (ccScore >= 70) ccMetaHtml = '<span data-l="信頼度" class="cc-cell cc-mid" title="スコア信頼度">' + ccScore + '%</span>';
+    else if (ccScore >= 50) ccMetaHtml = '<span data-l="信頼度" class="cc-cell cc-low" title="スコア信頼度">' + ccScore + '%</span>';
+    else if (typeof r.crossCheckScore === 'number') ccMetaHtml = '<span data-l="信頼度" class="cc-cell cc-pending" title="スコア信頼度（参考値・データ蓄積中）">' + ccScore + '%</span>';
     return '<div class="card" onclick="openM(' + idx + ')" role="button" tabindex="0" aria-label="' + r['店名'] + 'の詳細を見る">'
       + '<div class="ci"><img src="' + nbImage(photo, 600) + '" srcset="' + nbSrcset(photo, [400, 600, 800]) + '" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)"></div>'
       + '<span class="badge">' + genre + '</span>'
@@ -11744,7 +11744,7 @@ function openM(i) {
   var insiderNote = (r.insiderNote || '').trim();
   document.getElementById('m-insider-note-body').textContent = insiderNote;
   document.getElementById('m-insider-note').style.display = insiderNote ? '' : 'none';
-  // ── ISSUE-048 クロスチェック整合度（50 未満は非表示） ──
+  // ── ISSUE-048 スコア信頼度（50 未満は非表示） ──
   // ISSUE-015-P2: breakdown は data/crosscheck.json から遅延ロード。
   // 初回モーダル展開時に fetch、以降は CROSSCHECK_MAP から即時参照。
   var mCcScore = typeof r.crossCheckScore === 'number' ? r.crossCheckScore : null;
