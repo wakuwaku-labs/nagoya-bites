@@ -466,17 +466,20 @@ const STORE_OUTPUT_OMIT_KEYS = new Set([
   'crossCheckBreakdown', 'crossCheckScoreVersion'
 ]);
 
-// ISSUE-015 退行対策: crossCheckBreakdown は V3(ISSUE-049)で 8 シグナルに拡張され
-// 全 4,643 店にインライン焼き付けされた結果 ~2.6MB を占めるが、index.html のモーダル
-// （buildStoreModal の ccSigKeys）が実際に描画するのは下記 4 シグナルのみ。
-// 残り（s3_dataCompleteness / s6_instagramPresence / s7_reviewTimeseries /
-// s8_reviewDistribution）は runtime 未参照の死蔵データなので出力から除外する。
-// ※ crossCheckScore（最終スコア）は別フィールドで温存されるため整合度表示・ソートは不変。
-//   モーダルでより多くのシグナルを見せたくなった場合は、ここのキー集合と
-//   index.html 側 ccSigKeys/ccSigLabels を揃えて拡張すること。
+// ISSUE-049 → ISSUE-XXX(2026-05-23): crossCheckBreakdown を 8 シグナル全て出力に復活。
+// 旧設計（ISSUE-015 退行対策）では S1/S2/S4/S5 のみ出力していたが、
+// モーダル側（index.html の ccSigKeys/ccSigLabels）は元々 8 シグナル全対応で
+// 「死蔵」になっていた。実測で +1.38MB raw（gzip 配信時 +約200KB）と
+// 受容範囲のため、S3/S6/S7/S8 も焼き付けてモーダルで根拠を見せる。
+//
+// 注: S7 の a（投稿ペース安定性）は places_history.json の月次 snapshot ≥ 3 が条件。
+// 月次 cron（.github/workflows/monthly-places.yml）で 2026-07 初旬に蓄積完了予定で、
+// それまでは全店が「履歴未蓄積（初月）」表示となる（仕様通り）。
 const CC_BREAKDOWN_OUTPUT_KEYS = new Set([
   's1_googleRatingVsCount', 's2_reviewCountAbs',
-  's4_mediaCrossCheck', 's5_operationContinuity'
+  's3_dataCompleteness',    's4_mediaCrossCheck',
+  's5_operationContinuity', 's6_instagramPresence',
+  's7_reviewTimeseries',    's8_reviewDistribution'
 ]);
 function slimCrossCheckBreakdown(breakdown) {
   if (!breakdown || typeof breakdown !== 'object') return breakdown;
