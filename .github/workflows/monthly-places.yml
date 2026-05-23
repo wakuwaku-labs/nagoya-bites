@@ -59,11 +59,10 @@ jobs:
             exit 0
           fi
           node -e '
+            // ISSUE-015-P2 第二段: data/stores.json 優先・無ければ index.html フォールバック（共有ヘルパー）
             const fs = require("fs");
-            const html = fs.readFileSync("index.html", "utf8");
-            const m = html.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
-            if (!m) { console.log("LOCAL_STORES 抽出失敗（スキップ）"); process.exit(0); }
-            const stores = JSON.parse(m[1]);
+            const { loadStores } = require("./scripts/lib/load_stores");
+            const stores = loadStores();
             const cache = JSON.parse(fs.readFileSync("data/places_resolved.json", "utf8"));
             const total = stores.length;
             const haveNow = stores.filter(s => s["Google評価"] && String(s["Google評価"]).trim() !== "").length;

@@ -623,17 +623,9 @@ async function main() {
     if (nm) csvByName.set(nm, c);
   }
 
-  // index.html から LOCAL_STORES を読み込む
-  const indexPath = path.join(__dirname, 'index.html');
-  if (!fs.existsSync(indexPath)) {
-    throw new Error('index.html が見つかりません。先に build.js を実行してください。');
-  }
-  const indexHtml = fs.readFileSync(indexPath, 'utf8');
-  const lsMatch = indexHtml.match(/var LOCAL_STORES = (\[[\s\S]*?\]);/);
-  if (!lsMatch) {
-    throw new Error('index.html に LOCAL_STORES が見つかりません。');
-  }
-  const localStores = JSON.parse(lsMatch[1]);
+  // ISSUE-015-P2 第二段: data/stores.json を canonical として読込、無ければ index.html フォールバック
+  const { loadStores } = require('./scripts/lib/load_stores');
+  const localStores = loadStores();
   console.log(`LOCAL_STORES: ${localStores.length}件`);
 
   // 各 LOCAL_STORE を CSV で補完してマージ
