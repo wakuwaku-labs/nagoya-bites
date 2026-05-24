@@ -8,6 +8,35 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-058] build.yml が data/stores.json と stores/*.html をコミットしない問題（修正済み）✅
+- **priority**: P0（フロント検索からの店舗発見不能） → **status**: done
+- **detected**: 2026-05-24
+- **resolved**: 2026-05-24
+- **category**: ci / data-pipeline / silent-bug
+- **owner**: Builder + DataKeeper
+- **症状**: 話題店ロット1追加で4店を manual_stores.json に入れ、CI 完走後も
+  ・index.html (TOP50 inline) には4店すべて反映 ✓
+  ・data/stores.json (canonical 全件カタログ) には4店すべて **未反映** ✗
+  ・stores/*.html (個別店舗ページ) も4店分 **未生成** ✗
+  → フロントの fetchFullCatalog() で取得する全件カタログに新店が無く、検索・フィルタからヒットしない。
+  → 個別店舗 URL を踏んでも 404。
+- **根本原因**: `.github/workflows/build.yml` の "Commit & push if changed" ステップの `git add` 行が
+  `index.html features/index.html sitemap.xml data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/cross_check_flags.json`
+  のみで、build.js が再生成する `data/stores.json` と `stores/*.html` が **commit 対象に入っていなかった**。
+  data/stores.json の最終更新は 2026-05-23 (`8a75257f6` ISSUE-015-P2 Stage 2) — 以降 CI で毎日生成されているが
+  push されないため repo 上はずっと stale。これがフロントの全件取得経路で見えない理由。
+- **修正内容**:
+  1. ワンショット修復: ローカルで data/stores.json に inline TOP50 から4店を抽出して prepend、
+     `node gen-store-pages.js` を実行して個別ページ (ryan.html / store-{hex}.html × 3) を生成
+  2. 恒久対応: build.yml に `node gen-store-pages.js` ステップを追加し、
+     `git add data/stores.json` と `git add stores/` を Commit ステップに追加
+- **生成された4店の個別ページ URL**:
+  - 熱田味噌拉麺ぶりゆ: `stores/store-e786b1e794b0e591.html`
+  - 鶏そば 啜る 丸の内本店: `stores/store-e9b68fe3819de381.html`
+  - 中華そば 雷杏 -RYAN- 名駅店: `stores/ryan.html`
+  - キング軒 名古屋大須店: `stores/store-e382ade383b3e382.html`
+- **files**: `.github/workflows/build.yml` / `data/stores.json` / `stores/*.html` / `sitemap.xml`
+
 ### [ISSUE-057] build.js ACCESS_HARD_NEGATIVE の部分一致バグ（上前津駅等が暗黙除外）🟡
 - **priority**: P2 → **status**: 未着手
 - **detected**: 2026-05-24
