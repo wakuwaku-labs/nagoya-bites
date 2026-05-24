@@ -60,11 +60,21 @@ jobs:
         # daily-journal.yml でも 7:00 JST に走る冗長な保険ステップ。スクリプトは冪等。
         run: node scripts/build_featured.js
 
+      - name: 個別店舗ページ再生成（manual_stores 追加分を stores/*.html に反映）
+        # build.js が data/stores.json を更新した後、その canonical カタログを source に
+        # 個別店舗ページを生成する。これがないと manual_stores.json に追加した店が
+        # フロント検索ヒット時の詳細ページから 404 になる（ISSUE-058 の再発防止）。
+        run: node gen-store-pages.js
+
       - name: Commit & push if changed
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html features/index.html sitemap.xml data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/cross_check_flags.json
+          # ISSUE-058: data/stores.json (canonical full catalog) と stores/*.html (個別店舗ページ) も
+          # commit 対象に追加。これらが入っていないと manual_stores 追加分が
+          # フロント検索 (fetchFullCatalog) や個別ページ URL から到達不能になる。
+          git add index.html features/index.html sitemap.xml data/stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/cross_check_flags.json
+          git add stores/ || true
           git diff --cached --quiet || git commit -m "chore: auto-update store data [skip actions]"
           git pull --rebase origin main || true
           git push || (sleep 5 && git pull --rebase origin main && git push)
