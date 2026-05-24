@@ -189,6 +189,15 @@ function isNagoyaStore(s) {
   const area = s['エリア'] || '';
   const pref = s['都道府県'] || '';
 
+  // STEP 0 (POSITIVE-FIRST · ISSUE-057): アクセス欄に**名古屋確定シグナル**があれば
+  // NEGATIVE substring の誤判定（例: `'津'` が `上前津駅` にヒット、`'天神'` が
+  // `天神山` にヒット 等）に先んじて accept する。これ以前は STEP 1 の NEGATIVE が
+  // 常に先で、`上前津駅` 利用店が `'津'` で暗黙除外される silent-bug があった。
+  if (access.includes('名古屋')) return true;
+  for (const good of ACCESS_NAGOYA_POSITIVE) {
+    if (access.includes(good)) return true;
+  }
+
   // STEP 1: アクセス欄に他都市の駅/路線があれば即除外
   for (const bad of ACCESS_HARD_NEGATIVE) {
     if (access.includes(bad)) return false;
@@ -203,11 +212,11 @@ function isNagoyaStore(s) {
     if (re.test(name)) return false;
   }
 
-  // ここまで通過 = 他都市の明確なシグナルなし
+  // ここまで通過 = アクセス欄に明示的シグナルなし・他都市の明確なシグナルもなし
 
-  // STEP 4: アクセス欄に「名古屋」が含まれていれば確定
+  // STEP 4: アクセス欄に「名古屋」が含まれていれば確定（STEP 0 で吸収済み・冗長安全網）
   if (access.includes('名古屋')) return true;
-  // STEP 5: アクセス欄に名古屋固有の鉄道/駅があれば確定
+  // STEP 5: アクセス欄に名古屋固有の鉄道/駅があれば確定（STEP 0 で吸収済み・冗長安全網）
   for (const good of ACCESS_NAGOYA_POSITIVE) {
     if (access.includes(good)) return true;
   }
