@@ -31,6 +31,33 @@
   ALL_STORES=4428 / 4店全件ヒット / 「ぶりゆ」検索 cardCount=1 / 熱田味噌拉麺ぶりゆ 表示 OK / console error 0
 - **files**: `build.js`, `index.html`, `agent-backlog.md`
 
+### [ISSUE-059] features/nagoya-settai-lunch.html の JSON-LD 全体が「名古屋ラーメン」になっている重大スキーマ汚染 🔴
+- **priority**: P1（schema 汚染・Google の信頼毀損・他ファイルにも波及疑い）→ **status**: 未着手
+- **detected**: 2026-05-25
+- **category**: seo / schema / content-quality / silent-bug
+- **owner**: Editor + Builder
+- **症状**:
+  - `features/nagoya-settai-lunch.html` の見た目（title / h1 / meta description / hero / 本文）は **「名古屋接待ランチ おすすめ10選」**として正しく整備されている。
+  - しかし JSON-LD のすべて（Article / ItemList / BreadcrumbList / FAQPage）が**「名古屋ラーメン12選」**のテンプレを copy-paste したまま：
+    - `Article.headline` = "名古屋ラーメン おすすめ12選【2026年版】業界人が通う煮干し・豚骨・台湾系まで"
+    - `Article.url` = `nagoya-ramen.html`（本来は `nagoya-settai-lunch.html`）
+    - `ItemList` = 12 件すべてラーメン店（油そば歌志軒・麺屋はなび・拉ノ刻 等）
+    - `FAQPage` = 5 問すべてラーメン Q&A（台湾まぜそば発祥・激戦区・担々麺 等）
+    - `BreadcrumbList.position[3].name` = "名古屋ラーメン おすすめ12選【2026年版】"
+- **影響**:
+  1. **Google のページ理解が完全に混乱**：構造化データと可視コンテンツが矛盾 → 接待 KW・ラーメン KW 両方で順位毀損リスク
+  2. **架空のリッチリザルト誤発火**：ラーメン店12件の ItemList を「接待ランチ」検索結果に出すと spam 判定の温床
+  3. **架空店疑い**：本文の店舗リストに `大衆酒場春田屋 江古田店` がある。`江古田` は東京都中野区の駅名で名古屋に該当エリア無し。実在検証（GOOGLE_MAPS_API_KEY + Dice≥0.85 + 名古屋住所）を通せていない可能性（CLAUDE.md 架空店ブロックの違反疑い）
+- **アクション**:
+  1. JSON-LD（Article/ItemList/BreadcrumbList/FAQPage）を**接待ランチ用の正しい内容**に全面置換
+  2. 本文の 10 店舗を `data/stores.json` ／ `data/manual_stores.json` ／ Hot Pepper ID で実在検証
+  3. 検証不能 / 他都市の店（江古田店等）は body から除去 → 既存検証済み接待ランチ向け店で補充
+  4. `scripts/audit_feature_stores.js` を拡張 — features/*.html の本文ヒアラント店名と LOCAL_STORES の照合をエラーレベルに引き上げ
+  5. **同種スキーマ汚染の features/ 横断 audit**: `features/*.html` 全件で `<title>` / `<h1>` / `Article.headline` の語彙一致を機械検証する新 audit スクリプト追加（再発防止）
+- **acceptance**: nagoya-settai-lunch.html の JSON-LD が見た目と一致 / 本文 10 店が全件 LOCAL_STORES と一致 or 検証ログ付きで manual_stores 経由 / features 横断 audit が 0 件の mismatch を返す
+- **files**: `features/nagoya-settai-lunch.html`, `scripts/audit_feature_stores.js`（拡張）, 新規 `scripts/audit_feature_schema_alignment.js`
+- **note**: 発覚経緯は ISSUE-055 ハブ強化展開中。同じ copy-paste テンプレ事故が他の features に潜んでいる可能性が高く、horizontal audit を最優先。
+
 ### [ISSUE-058] build.yml が data/stores.json と stores/*.html をコミットしない問題（修正済み）✅
 - **priority**: P0（フロント検索からの店舗発見不能） → **status**: done
 - **detected**: 2026-05-24
