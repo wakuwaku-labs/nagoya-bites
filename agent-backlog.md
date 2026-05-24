@@ -8,6 +8,29 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-059] data/stores.json fetch の cache-buster 欠落（新店検索ヒット 0件問題）✅
+- **priority**: P0（ユーザー体感バグ・新店追加が見えない） → **status**: done
+- **detected**: 2026-05-25
+- **resolved**: 2026-05-25
+- **category**: frontend / cache / browser-cache
+- **owner**: Builder
+- **症状**: 話題店ロット1追加 + ISSUE-058 修復後、本番 data/stores.json には4店揃っているのに、
+  ユーザーが本番サイトで「ぶりゆ」を検索すると **0件** と表示される（スクショ提供あり）。
+- **根本原因**: `index.html` の `fetchFullCatalog()` が
+  `fetch('data/stores.json', { cache: 'force-cache' })` で取得していた。
+  `force-cache` は「キャッシュがあれば期限を無視して常にそれを使う」設定で、
+  かつ URL に cache buster が無いため、過去アクセス済みのブラウザは
+  **古い data/stores.json（4店追加前）を永久に使い続ける** 状態だった。
+  init() の流れは「inline TOP50 で起動 → fetchFullCatalog() の結果で上書き」なので、
+  新店は一瞬 inline には載るがすぐ stale 全件カタログで上書きされて消失する。
+- **修正**:
+  1. build.js: data/stores.json 全文を sha1 → 先頭12桁を `STORES_JSON_VERSION` として index.html に inject
+  2. index.html: `fetchFullCatalog()` の URL を `data/stores.json?v=' + STORES_JSON_VERSION` に変更
+  3. 内容が変わるとハッシュ→URL→cache key が変わり、自動再取得。同一内容なら以前のキャッシュ続用で帯域節約
+- **preview 検証**: ローカル `npx http-server` 起動 → `STORES_JSON_VERSION='dev'` で fetch、
+  ALL_STORES=4428 / 4店全件ヒット / 「ぶりゆ」検索 cardCount=1 / 熱田味噌拉麺ぶりゆ 表示 OK / console error 0
+- **files**: `build.js`, `index.html`, `agent-backlog.md`
+
 ### [ISSUE-058] build.yml が data/stores.json と stores/*.html をコミットしない問題（修正済み）✅
 - **priority**: P0（フロント検索からの店舗発見不能） → **status**: done
 - **detected**: 2026-05-24

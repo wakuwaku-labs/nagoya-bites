@@ -10721,9 +10721,14 @@ function init() {
 // TOP50 と data/stores.json の先頭50件は build.js で同一順序にしているため、
 // openM(i) は両モードで同じ店舗を指す（HPID 整合）。
 var FULL_CATALOG_LOADED = false;
+// ISSUE-059: build.js が data/stores.json の sha1(先頭12桁) を埋め込む cache buster。
+// 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
+// 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
+// このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
+var STORES_JSON_VERSION = 'dev';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
-  fetch('data/stores.json', { cache: 'force-cache' })
+  fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
     .then(function(r){ return r.ok ? r.json() : null; })
     .then(function(full){
       if (!full || !Array.isArray(full) || full.length <= LOCAL_STORES.length) return;
