@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-05-24T00:17:38.541Z",
+  "generatedAt": "2026-05-24T08:38:33.577Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 226,
-    "pageViews": 758,
-    "sessions": 344,
-    "avgSessionDuration": 291.9,
-    "bounceRate": 0.52,
+    "activeUsers": 230,
+    "pageViews": 769,
+    "sessions": 349,
+    "avgSessionDuration": 283.9,
+    "bounceRate": 0.507,
     "pagesPerSession": 2.2
   },
   "channels": {
     "sessions": {
-      "organic": 64,
-      "direct": 270,
+      "organic": 67,
+      "direct": 269,
       "social": 4,
       "referral": 13,
       "paid": 0,
       "other": 1
     },
     "pct": {
-      "organic": 18.2,
-      "direct": 76.7,
+      "organic": 18.9,
+      "direct": 76,
       "social": 1.1,
       "referral": 3.7,
       "paid": 0,
@@ -31,27 +31,27 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 227
+      "sessions": 229
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 50
+      "sessions": 52
     },
     {
       "source": "chatgpt.com",
       "medium": "(not set)",
-      "sessions": 23
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 15
+      "sessions": 24
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 12
+      "sessions": 13
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 11
     },
     {
       "source": "openai",
@@ -87,13 +87,13 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 115,
-      "sessions": 58
+      "pageViews": 117,
+      "sessions": 60
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
       "pageViews": 34,
-      "sessions": 23
+      "sessions": 24
     },
     {
       "path": "/nagoya-bites/index.html",
@@ -108,7 +108,7 @@
   ],
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 226,
+    "value": 230,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
