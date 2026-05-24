@@ -1,0 +1,208 @@
+{
+  "date": "2026-05-24",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "業界人が選ぶ初夏のビアガーデンは柳橋市場直結",
+      "verdict": "PASS",
+      "total": 95,
+      "breakdown": {
+        "recency": 23,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=15 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 9件 (価格帯,コース,席,予約,シーン,接待,アラカルト,繁忙,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 4件 +4",
+          "title 22字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "三越屋上の老舗ビアガーデンマイアミ栄店",
+      "verdict": "FAIL",
+      "total": 76,
+      "breakdown": {
+        "recency": 10,
+        "topicality": 19,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 23日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=4 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (コース,席,シーン,接待,繁忙,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 19字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "伏見・納屋橋の水辺ビアガーデン COLORS 366",
+      "verdict": "FAIL",
+      "total": 69,
+      "breakdown": {
+        "recency": 10,
+        "topicality": 14,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 23日前"
+        ],
+        "topicality": [
+          "media_count=2 → 10",
+          "x_mentions=2 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 9件 (価格帯,コース,席,シーン,デート,アラカルト,一人飲み,繁忙,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 2件 +2",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "大須に上陸した広島の汁なし担担麺・キング軒",
+      "verdict": "FAIL",
+      "total": 66,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 19,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 39日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=8 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 5件 (価格帯,席,シーン,一人飲み,繁忙)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 21字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "栄ルーフトップのTHE TOWER BEER GARDEN NAGOYA",
+      "verdict": "FAIL",
+      "total": 57,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 14,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 6,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 34日前"
+        ],
+        "topicality": [
+          "media_count=2 → 10",
+          "x_mentions=3 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 9件 (価格帯,コース,席,シーン,接待,デート,アラカルト,一人飲み,繁忙)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 2件 +2",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "fallback_needed": false
+}
