@@ -131,12 +131,13 @@
 
 ### [ISSUE-055] 発見型ハブページの中身強化（organic 本筋・段階展開）🟡
 - **priority**: P2 → **status**: in_progress（solo-dining + date 完了 / 接待・エリア別へ展開中）
-- **progress 2026-05-25 — date.html へ展開**:
+- **progress 2026-05-25 — date.html + settai-guide.html へ展開**:
   - `features/date.html` の FAQPage JSON-LD を 5問 → **8問**に拡張（ドレスコード / コース vs アラカルト / 駐車場・タクシー利用 の3問追加）
-  - 可視 FAQ セクション（`.faq-section`）を `.related` セクション直前に新設 — JSON-LD と Q&A 内容が verbatim 一致（リッチリザルト適格性向上）
-  - 各 A は 100〜220 字に拡張し、業界視点の具体情報（栄→名駅のタクシー実勢価格 1,200〜1,800円・ペアリング +3,000〜5,000円相場・名駅階指定 ゲートタワー15F 等）を盛り込み、ハブ独自の解釈層を強化
+  - `features/settai-guide.html` の FAQPage JSON-LD を 4問 → **8問**に拡張（予約タイミング / 席順 / 支払いタイミング / 手土産 の4問追加）
+  - 両ファイルとも 可視 FAQ セクション（`.faq-section`）を `.related` セクション直前に新設 — JSON-LD と Q&A 内容が verbatim 一致（リッチリザルト適格性向上）
+  - 各 A は 100〜250 字に拡張し、業界視点の具体情報（栄→名駅のタクシー実勢価格 1,200〜1,800円・ペアリング +3,000〜5,000円相場・名駅階指定 ゲートタワー15F・接待手土産名古屋名物 両口屋是清/川村屋/大須ういろ 等）を盛り込み、ハブ独自の解釈層を強化
   - `dateModified` を 2026-05-25 に更新（鮮度シグナル）
-  - FAQ CSS は solo-dining と同パターン（`Q. / A.` 接頭辞・ゴールド色）で統一
+  - FAQ CSS は solo-dining と同パターン（`Q. / A.` 接頭辞・ゴールド色）で統一・各ファイルのテーマ（明/暗）に合わせて `var(--white)`/`var(--muted)` を使用
 - **detected**: 2026-05-22
 - **category**: SEO / content
 - **owner**: Editor + Builder
@@ -665,6 +666,7 @@
 | 2026-05-24 | Editor+DataKeeper(EXPLICIT) | **manual-stores 話題店ロット1追加（4件）**: ネット最新の話題店を多重ソース検証ゲート（2ソース以上 + 名古屋住所 + 話題根拠）で精査し manual_stores.json に追加。(1)熱田味噌拉麺ぶりゆ＝食べログ ラーメン AICHI 百名店 2025 初選出・神宮前 (2)鶏そば 啜る 丸の内本店＝同百名店2025(3.59/598件) (3)中華そば 雷杏 -RYAN- 名駅店＝同百名店2025初選出 (4)キング軒 名古屋大須店＝2026/4/3 オープン・広島汁なし担担麺 東海2号店。各店 出典URL 4本以上で実在保証・GOOGLE_MAPS_API_KEY 未設定下のためローカルでは shrink-guard 発火・index.html は無変更で CI 側ビルド+Places写真補完に委任。manual_stores 33→37件 | ✅ デプロイ済み (9e2063433) |
 | 2026-05-24 | Editor+Builder | **ISSUE-045 web 自動収集パイプライン整備（業界人知識の大規模自動化）**: Google CSE + Claude API + 引用必須プロンプト + 人手レビューゲートの4-stage 自動化パイプライン構築（lib/google_cse / lib/anthropic_extractor / build_editorreason_drafts / approve_editorreason_drafts）/ editor_picks.json _schema 拡張（sources/source/automation 追加・捏造防止監査証跡）/ .github/workflows/editorreason-batch.yml 週次起動 / docs/editorreason-automation-setup.md 運用 runbook / 実演 3 件（麺屋まつり名古屋店 OK confidence 0.88・Ponte と パル/8 は正しく INSUFFICIENT 棄却）→ editor_picks 112→113 件 / 起動には GOOGLE_CSE_KEY/CX + ANTHROPIC_API_KEY 設定が必要（コスト 月~$4・歩留まり 30-50% で 1 年 750-1,300 件追加見込み） | ✅ デプロイ済み (daa9ecfa4) |
 | 2026-05-24 | DataKeeper(EXPLICIT) | **キング軒のアクセス修正（'津' 部分一致除外回避）+ ISSUE-057 起票**: CI ビルド後検証で「キング軒 名古屋大須店」だけ LOCAL_STORES に反映されないと判明。原因＝build.js `ACCESS_HARD_NEGATIVE` の `'津'`（津市除外用）が `上前津駅` の `津` 字に部分一致して isNagoyaStore() で reject されていた。即時対応として アクセスを `大須観音駅／矢場町駅 徒歩圏内` に書き換え（実態と乖離なし）。これに伴い ISSUE-057 起票（HARD_NEGATIVE 部分一致バグ・他にも上前津駅利用の Hot Pepper 店が暗黙除外されている疑い・要 audit） | ✅ デプロイ済み (commit pending) |
+| 2026-05-25 | Editor+Builder(/solve-next) | **ISSUE-055 settai-guide.html へ FAQ 強化展開**: 接待ガイドの FAQPage を 4問 → 8問に拡張（予約タイミング 2週間〜1ヶ月前 / 席順上座下座 / 支払いタイミング 中座中・請求書払い / 手土産 両口屋是清・川村屋・大須ういろ・パティスリーグラム 2,000〜5,000円 の4問追加）。`.faq-section` を `.related` 直前に新設し JSON-LD と verbatim 一致 8/8。dateModified 2026-05-25。テーマカラー（暗背景）用に `var(--white)` `var(--muted)` を使い分けて統一感維持。発見型 KW『名古屋 接待』『接待 名古屋 個室』『接待 席順』『接待 手土産』のクエリ網羅拡大 | ✅ デプロイ済み (commit pending) |
 | 2026-05-25 | Editor+Builder(/solve-next) | **ISSUE-055 date.html へ FAQ 強化展開**: solo-dining で確立したパターン（可視 FAQ + JSON-LD 一致 + 業界視点 A）を `features/date.html` に適用。FAQPage を 5問 → 8問に拡張（ドレスコード / コース vs アラカルト / 駐車場・タクシー実勢価格 の3問追加）。`.faq-section` を `.related` 直前に新設し JSON-LD と Q&A verbatim 一致（リッチリザルト適格性向上）。dateModified を 2026-05-25 に更新。検証: 可視 Q 8件 = JSON-LD 8件 = verbatim 一致 8/8 確認スクリプトで pass。発見型 KW『名古屋 デート ディナー』『名古屋 デート 個室』『名古屋 デート ドレスコード』のクエリ網羅を拡大 | ✅ デプロイ済み (commit pending) |
 | 2026-05-25 | Builder(/solve-next) | **ISSUE-015 親 ISSUE クローズ（P1/P2 完了 + 5/20 退行修正済み・現状 1.45MB を確認）**: index.html サイズを ls -lh で 1.45MB と実測（10.35MB 退行ピークから -86%・8.6MB 起点から -83%）。サブタスク P1（出力スリム化）/ P2 Stage 1（19スクリプト repoint・stores.json canonical 化）/ P2 Stage 2（TOP50 インライン + 全件遅延 fetch）すべて done。crossCheckBreakdown 退行は slimCrossCheckBreakdown() で是正済み。shrink-guard も stores.json 比較に拡張済み。残（1.45MB→800KB は CSS/JS 最適化領域）は Phase 0 優先順位として P2 以下扱い・新規 ISSUE 化は不要 | ✅ backlog 整合のみ |
 | 2026-05-25 | DataKeeper+Builder(/solve-next) | **ISSUE-057 ACCESS_HARD_NEGATIVE 部分一致バグ修正**: `isNagoyaStore()` に STEP 0 を新設し、アクセス欄に `'名古屋'` または `ACCESS_NAGOYA_POSITIVE`（上前津駅 / 大須観音駅 / 池下駅 等 40+ 駅）が含まれる場合は NEGATIVE substring チェック前に accept する POSITIVE-FIRST 方式へ転換。`'津'` が `上前津駅` に false-positive ヒットして silent-reject していた構造を解消。再発防止 `scripts/audit_isnagoya_filter.js` 新設（15ケース単体テスト・上前津駅/池下駅/大須観音駅 等 POSITIVE 9件 + 銀座駅/梅田駅/JR紀勢本線津駅 等 NEGATIVE 6件 全 pass）。三重県津市は引き続き正しく reject。次回 CI で Hot Pepper 全件から `上前津駅` 利用店が LOCAL_STORES に再出現する経路を解放 | ✅ デプロイ済み (commit pending) |
