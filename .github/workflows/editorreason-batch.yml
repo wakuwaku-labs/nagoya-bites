@@ -1,0 +1,82 @@
+name: editorReason batch
+
+# ISSUE-045 自動化: 上位候補 50 店の業界系エビデンスを Google CSE で取得 →
+# Claude API で「引用ベースの editorReason draft」を生成 →
+# docs/editorreason-drafts.md を更新してコミット。
+#
+# 人手レビュー後、scripts/approve_editorreason_drafts.js で editor_picks.json に反映。
+#
+# 必要 Secrets:
+#   GOOGLE_CSE_KEY   — Custom Search JSON API キー
+#   GOOGLE_CSE_CX    — 検索エンジン ID
+#   ANTHROPIC_API_KEY — Claude API キー
+# 未設定の場合は build_editorreason_drafts.js が exit 0 でスキップ（CI 失敗扱いにしない）。
+#
+# セットアップ手順: docs/editorreason-automation-setup.md
+
+on:
+  schedule:
+    # 毎週月曜 18:00 UTC（JST 火 3:00）
+    - cron: '0 18 * * 1'
+  workflow_dispatch:
+    inputs:
+      top:
+        description: '対象件数（上位 N 候補）'
+        required: false
+        default: '50'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: editorreason-batch
+  cancel-in-progress: false
+
+jobs:
+  build_drafts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps (Anthropic SDK)
+        run: npm install --no-save @anthropic-ai/sdk
+
+      - name: Build editorReason drafts
+        env:
+          GOOGLE_CSE_KEY: ${{ secrets.GOOGLE_CSE_KEY }}
+          GOOGLE_CSE_CX: ${{ secrets.GOOGLE_CSE_CX }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          TOP="${{ github.event.inputs.top || '50' }}"
+          node scripts/build_editorreason_drafts.js --top "$TOP"
+
+      - name: Summary
+        if: always()
+        run: |
+          if [ -f docs/editorreason-drafts.md ]; then
+            echo "=== drafts file summary ==="
+            head -20 docs/editorreason-drafts.md
+          else
+            echo "::warning::docs/editorreason-drafts.md が無い — シークレット未設定の可能性。docs/editorreason-automation-setup.md 参照"
+          fi
+
+      - name: Commit drafts & sources cache
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/editorreason-drafts.md data/industry_sources/ data/editorreason_drafts/ || true
+          if git diff --cached --quiet; then
+            echo "変更なし - コミットスキップ"
+          else
+            git commit -m "chore(editorreason): weekly batch drafts $(date +%Y-%m-%d) [skip actions]"
+            git pull --rebase origin main || true
+            git push || (sleep 5 && git pull --rebase origin main && git push)
+            echo "::notice::editorReason drafts 更新済み。docs/editorreason-drafts.md をレビューして [approved] を付け、approve_editorreason_drafts.js を実行してください。"
+          fi

@@ -6,9 +6,12 @@
     "editorReason": "編集判断の根拠。60〜120字。なぜこの店を選んだか（規約2 掲載基準）",
     "mediaFeatures": "他メディア掲載履歴の配列。[{name, year?, url}] 形式。url は必須（http/https の検証可能URL）。規約3 掲載基準。捏造禁止 — 検証できないエントリは追加せず空配列のまま",
     "insiderNote": "業界人視点の解釈メモ。40〜100字（規約5 解釈力）",
-    "visitStatus": "visited | interview | desk のいずれか（規約6 実感指標）",
+    "visitStatus": "visited | interview | desk | industry_known | desk_automated のいずれか（規約6 実感指標）",
     "検出日": "YYYY-MM-DD",
-    "有効期限": "YYYY-MM-DD。この日付を過ぎるとマージ対象から外れる"
+    "有効期限": "YYYY-MM-DD。この日付を過ぎるとマージ対象から外れる",
+    "sources": "ISSUE-045 自動収集エントリの引用元。[{url, snippet, fetched_at, source_type?}]。`source` フィールドが 'industry_automation' のエントリは必須（2件以上推奨・捏造防止のための監査証跡）",
+    "source": "エントリ由来。'editorial_manual' | 'manual_stores_promotion' | 'industry_automation' のいずれか。industry_automation は web 検索 + LLM 抽出で生成・人手レビュー通過のみ採用",
+    "automation": "自動収集メタ。{method: 'google_cse+claude', confidence: 0.0-1.0, generated_at: ISO, reviewed_by?: string, reviewed_at?: ISO} 。confidence < 0.85 は picks に入れず drafts キューで人手レビュー必須"
   },
   "stores": [
     {
@@ -1142,6 +1145,44 @@
       "検出日": "2026-05-23",
       "有効期限": "2027-05-23",
       "source": "manual_stores promotion (ISSUE-045)"
+    },
+    {
+      "店名": "麺屋まつり 名古屋店",
+      "エリア": "千種区 吹上",
+      "editorReason": "三重県伊賀市で確立した「鶏ガラ100kg・48時間煮込み」の濃厚鶏白湯と伊賀ブラックラーメンを、名古屋市千種区吹上に持ち込んだ越境出店。中京テレビ主催「名古屋ラーメンまつり2026」にも出店ラインナップ入りしており、東海エリアの業界認知度は既に確立されている。",
+      "mediaFeatures": [],
+      "insiderNote": "100kg/48時間の煮込みスペックは業界水準で見ても重い設計で、レンゲが立つ粘度は単独店規模では物理的にも稼働率・回転率の管理が難しい。これを成立させている運営力は本気度の高い指標。",
+      "visitStatus": "desk_automated",
+      "検出日": "2026-05-24",
+      "有効期限": "2027-05-24",
+      "source": "industry_automation",
+      "sources": [
+        {
+          "url": "https://jouhou.nagoya/menya-matsuri/",
+          "snippet": "三重県伊賀市発祥の濃厚鶏白湯・伊賀ブラックラーメンの人気店『麺屋まつり』が名古屋市千種区吹上に2026年4月22日オープン。100kg以上の鶏ガラを48時間煮込むレンゲが立つほど濃厚な鶏白湯が特徴。",
+          "supports": "伊賀発祥・名古屋出店日・調理スペック（鶏ガラ100kg・48時間）の裏付け",
+          "fetched_at": "2026-05-24T00:00:00.000Z"
+        },
+        {
+          "url": "https://tabelog.com/aichi/A2301/A230104/23096111/",
+          "snippet": "麺屋まつり 名古屋店（吹上駅徒歩10分・千種区）。鶏白湯系ラーメン専門店。2026年4月オープン。",
+          "supports": "立地・ジャンル・オープン時期の裏付け（独立媒体）",
+          "fetched_at": "2026-05-24T00:00:00.000Z"
+        },
+        {
+          "url": "https://www.ctv.co.jp/nagoya-ramen/ramen.html",
+          "snippet": "東海エリア最大級のラーメンイベント『名古屋ラーメンまつり2026』に出店ラインナップとして掲載。",
+          "supports": "中京テレビ主催イベント出店＝東海エリアの業界認知度の裏付け（一次ソース）",
+          "fetched_at": "2026-05-24T00:00:00.000Z"
+        }
+      ],
+      "automation": {
+        "method": "google_cse+claude",
+        "confidence": 0.88,
+        "generated_at": "2026-05-24T00:00:00.000Z",
+        "reviewed_by": "katagirijakutou",
+        "reviewed_at": "2026-05-24T08:34:29.220Z"
+      }
     }
   ],
   "_audit_2026_05_10": {
