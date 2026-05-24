@@ -1737,6 +1737,19 @@ async function main() {
     `var LOCAL_STORES = ${top50JsonStr};`
   );
 
+  // ISSUE-059: data/stores.json の cache buster バージョン文字列を埋め込む。
+  // 'force-cache' で fetch していると、stale な古い data/stores.json が返り続けて
+  // 新規追加店がフロント検索からヒットしない（実害例 2026-05-25 「ぶりゆ」検索 0件）。
+  // 中身をハッシュして URL に ?v=<hash> を付けることで、内容が変わったときだけ
+  // ブラウザが再取得するようにする（同一内容なら以前のキャッシュをそのまま使う）。
+  const _crypto = require('crypto');
+  const storesJsonVersion = _crypto.createHash('sha1').update(fullJsonStr).digest('hex').slice(0, 12);
+  html = html.replace(
+    /var STORES_JSON_VERSION = '[^']*';/,
+    `var STORES_JSON_VERSION = '${storesJsonVersion}';`
+  );
+  console.log(`STORES_JSON_VERSION = ${storesJsonVersion}（data/stores.json の cache buster）`);
+
   // 「今日の話題店」更新日付を埋め込む（YYYY/M/D 形式。JS依存なしの静的置換）
   if (dailyTrendingDate) {
     const m = dailyTrendingDate.match(/^(\d{4})-(\d{2})-(\d{2})$/);
