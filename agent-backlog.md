@@ -574,8 +574,9 @@
 | 2026-05-23 | Builder(/solve-next) | **ISSUE-015-P2 第一段＝crossCheckBreakdown 外部化**: LOCAL_STORES 内最大占有フィールド(1.66MB/36%)を data/crosscheck.json に切り出し、モーダル初回展開時に fetch + 再描画。当初の全件外部化(`data/stores.json`)は LOCAL_STORES をパースする 19 スクリプトを破壊するため別ISSUEへ。**index.html 8.6MB→6.43MB(-25%、-2.18MB)** / 4,423店維持 / モーダルcc・Google評価・フィルタ・検索すべて preview検証OK・consoleエラー0 | ✅ デプロイ済み (ccf9d0aed) |
 | 2026-05-23 | Builder | **ISSUE-015-P2 Stage 1: data/stores.json canonical化 + 19スクリプト repoint**: scripts/lib/load_stores.js 新設で `data/stores.json` 優先・index.html フォールバックの統一ローダーを提供。build.js + 19 スクリプト + monthly-places.yml の LOCAL_STORES パースを共有ヘルパーに置換。書き戻し系2件(cleanup/register)は data/stores.json も同期更新。audit_feature_stores.js が両経路で同結果（実在不明8店）を確認 | ✅ デプロイ済み (7c163f836) |
 | 2026-05-23 | Builder | **ISSUE-015-P2 Stage 2: TOP50インライン+全件遅延fetch でクローズ**: build.js が priority ソート(話題→編集部推薦→トレンド→Google評価)後 TOP50 のみインライン、全件は data/stores.json へ。index.html init() が fetchFullCatalog() で遅延ロード後 loadStores(full) 再初期化。**index.html 6.43MB→1.45MB(-77%) / 累計 8.6MB→1.45MB(-83%)**。LOCAL_STORES インライン 4.85MB→36KB(99.3%減)。preview 検証: 155ms で全件拡張・cc 遅延OK・モーダルOK・console error 0。shrink-guard も data/stores.json 比較に拡張済み | ✅ デプロイ済み (8a75257f6) |
-| 2026-05-24 | Editor+DataKeeper(/solve-next) | **ISSUE-045 収集パイプライン整備 + 第1バッチ昇格**: editorReason 収集の3スクリプト新設（list_editorreason_candidates / import_editorreason_todo / promote_manual_to_editorreason）+ 作業表テンプレ docs/editorreason-todo.md 生成。manual_stores の編集部推薦店 12 件（勝手口河内屋・麺や六三六・麺屋はなび・山岡家・COFFEE KAJITA・TRUNK COFFEE・コメダ本店・喫茶ユキ・喫茶マウンテン・大須王将・弁才天・花わさび）の おすすめポイント を editorReason に昇格（捏造ゼロ・既に編集部が書いた文章のカテゴリ昇格）。editor_picks 100→112 件 / CI反映後 editorReason 2.2%→2.5% | ✅ デプロイ済み (commit pending) |
-| 2026-05-24 | Editor+DataKeeper(EXPLICIT) | **manual-stores 話題店ロット1追加（4件）**: ネット最新の話題店を多重ソース検証ゲート（2ソース以上 + 名古屋住所 + 話題根拠）で精査し manual_stores.json に追加。(1)熱田味噌拉麺ぶりゆ＝食べログ ラーメン AICHI 百名店 2025 初選出・神宮前 (2)鶏そば 啜る 丸の内本店＝同百名店2025(3.59/598件) (3)中華そば 雷杏 -RYAN- 名駅店＝同百名店2025初選出 (4)キング軒 名古屋大須店＝2026/4/3 オープン・広島汁なし担担麺 東海2号店。各店 出典URL 4本以上で実在保証・GOOGLE_MAPS_API_KEY 未設定下のためローカルでは shrink-guard 発火・index.html は無変更で CI 側ビルド+Places写真補完に委任。manual_stores 33→37件 | ✅ デプロイ済み (commit pending) |
+| 2026-05-24 | Editor+DataKeeper(/solve-next) | **ISSUE-045 収集パイプライン整備 + 第1バッチ昇格**: editorReason 収集の3スクリプト新設（list_editorreason_candidates / import_editorreason_todo / promote_manual_to_editorreason）+ 作業表テンプレ docs/editorreason-todo.md 生成。manual_stores の編集部推薦店 12 件（勝手口河内屋・麺や六三六・麺屋はなび・山岡家・COFFEE KAJITA・TRUNK COFFEE・コメダ本店・喫茶ユキ・喫茶マウンテン・大須王将・弁才天・花わさび）の おすすめポイント を editorReason に昇格（捏造ゼロ・既に編集部が書いた文章のカテゴリ昇格）。editor_picks 100→112 件 / CI反映後 editorReason 2.2%→2.5% | ✅ デプロイ済み (b28d2289c) |
+| 2026-05-24 | Editor+DataKeeper(EXPLICIT) | **manual-stores 話題店ロット1追加（4件）**: ネット最新の話題店を多重ソース検証ゲート（2ソース以上 + 名古屋住所 + 話題根拠）で精査し manual_stores.json に追加。(1)熱田味噌拉麺ぶりゆ＝食べログ ラーメン AICHI 百名店 2025 初選出・神宮前 (2)鶏そば 啜る 丸の内本店＝同百名店2025(3.59/598件) (3)中華そば 雷杏 -RYAN- 名駅店＝同百名店2025初選出 (4)キング軒 名古屋大須店＝2026/4/3 オープン・広島汁なし担担麺 東海2号店。各店 出典URL 4本以上で実在保証・GOOGLE_MAPS_API_KEY 未設定下のためローカルでは shrink-guard 発火・index.html は無変更で CI 側ビルド+Places写真補完に委任。manual_stores 33→37件 | ✅ デプロイ済み |
+| 2026-05-24 | Editor+Builder | **ISSUE-045 web 自動収集パイプライン整備（業界人知識の大規模自動化）**: Google CSE + Claude API + 引用必須プロンプト + 人手レビューゲートの4-stage 自動化パイプライン構築（lib/google_cse / lib/anthropic_extractor / build_editorreason_drafts / approve_editorreason_drafts）/ editor_picks.json _schema 拡張（sources/source/automation 追加・捏造防止監査証跡）/ .github/workflows/editorreason-batch.yml 週次起動 / docs/editorreason-automation-setup.md 運用 runbook / 実演 3 件（麺屋まつり名古屋店 OK confidence 0.88・Ponte と パル/8 は正しく INSUFFICIENT 棄却）→ editor_picks 112→113 件 / 起動には GOOGLE_CSE_KEY/CX + ANTHROPIC_API_KEY 設定が必要（コスト 月~$4・歩留まり 30-50% で 1 年 750-1,300 件追加見込み） | ✅ デプロイ済み (commit pending) |
 
 ---
 
@@ -1294,6 +1295,22 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
   - **CI 反映後の見込み**: editorReason カバー率 97 → **109/4,424 = 2.46%**
 - **次の手**: `docs/editorreason-todo.md` の TOP50 候補（GA4 閲覧上位中心）に対し、人間 Editor（あなた）が
   業界知見をバッチ追記 → `import_editorreason_todo.js` で取り込む流れ。週 50 件で約 6 ヶ月、週 100 件で約 3 ヶ月で 30% 到達。
+- **progress 2026-05-24 — 自動収集パイプライン整備（業界人知識の Web 大量収集）**:
+  「ネット上の業界人知識を膨大に集めて自動で記載する」要求に応じ、4-stage パイプラインを構築:
+  1. `scripts/lib/google_cse.js` — Google Custom Search JSON API ラッパー（名古屋系メディア優先のサイト指定可）
+  2. `scripts/lib/anthropic_extractor.js` — Claude API による「引用元 URL 必須・捏造禁止・INSUFFICIENT 強制」プロンプト付き抽出器
+  3. `scripts/build_editorreason_drafts.js` — 上位 N 候補に対し discovery + draft 生成 → `docs/editorreason-drafts.md` レビュー表
+  4. `scripts/approve_editorreason_drafts.js` — 承認済み draft を editor_picks.json に取込（`source: industry_automation` / `sources: [...]` / `automation.confidence` 監査証跡付き）
+  - `.github/workflows/editorreason-batch.yml` で **毎週月曜 18:00 UTC（JST 火 3:00）** に自動実行
+  - editor_picks.json `_schema` を拡張: `sources`（引用元 URL/snippet 必須）, `source`（'editorial_manual' | 'manual_stores_promotion' | 'industry_automation'）, `automation`（method/confidence/reviewed_by/reviewed_at）
+  - **ISSUE-040 教訓の継承**: mediaFeatures は自動生成禁止（受賞歴・掲載歴は人手検証必須）。editorReason / insiderNote のみ自動化対象
+  - **安全策**: ① 引用元 URL 必須 ② 2 ソース以上原則 ③ confidence < 0.85 は人手レビュー必須 ④ LLM プロンプトで `INSUFFICIENT_EVIDENCE` 強制 ⑤ LOCAL_STORES 実在検証 ⑥ source 識別子で取消可能
+  - **実演**（Claude Code WebSearch を CSE 代替に使用・3 件処理）: 麺屋まつり名古屋店（confidence 0.88・3 source 裏取り済み）を OK 判定 → editor_picks 反映成功 / 炭火焼ハンバーグPonte と 韓国酒場パル/8 は INSUFFICIENT で正しく棄却（リスティング系サイトのみで業界視点情報なし）
+  - editor_picks 112 → **113 件**（うち 1 件は自動化由来・sources 付き）
+  - **起動方法**: `docs/editorreason-automation-setup.md` の通り `GOOGLE_CSE_KEY` / `GOOGLE_CSE_CX` / `ANTHROPIC_API_KEY` を設定するだけ（ISSUE-041/056 と同じ運用パターン）
+  - **コスト見積**: CSE 約 $1.25/月 + Claude API 約 $2.4/月 = 月 ~$4 で週 50 件処理
+  - **歩留まり想定**: 30〜50%（週 50 件 → 15〜25 件追加 → 1 年で 750〜1,300 件 → 30% カバー率到達）
+  - INSUFFICIENT は「品質フィルタとして機能」（業界視点情報が薄い店を自動的に弾く）
 - **category**: competitive / data / content / moat
 - **detected**: 2026-05-10（ISSUE-033 解決時のデータ監査）
 - **description**:
