@@ -8,6 +8,30 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-057] build.js ACCESS_HARD_NEGATIVE の部分一致バグ（上前津駅等が暗黙除外）🟡
+- **priority**: P2 → **status**: 未着手
+- **detected**: 2026-05-24
+- **category**: data / quality-filter / silent-bug
+- **owner**: DataKeeper + Builder
+- **背景**: 話題店ロット1追加で「キング軒 名古屋大須店」だけ index.html に反映されない事象を発見。
+  原因＝build.js L84 の `ACCESS_HARD_NEGATIVE` 配列に `'津'`（三重県津市除外用）が単独で含まれており、
+  `access.includes(bad)` の部分一致判定で名古屋市営地下鉄「**上前津駅**」の `津` に false-positive ヒット。
+  isNagoyaStore() が即 false を返し、品質フィルタで除外されていた。
+  対症療法として該当店のアクセス欄を `大須観音駅／矢場町駅` に書き換えて回避済みだが、
+  Hot Pepper 由来データで `上前津駅` を含む店も同様に暗黙除外されている可能性がある
+  （現本番 LOCAL_STORES で `"アクセス":"..上前津駅.."` ヒット 0件 = 全部消えている疑い）。
+- **影響範囲（要 audit）**:
+  - `上前津駅` (`津` トリガー) — Hot Pepper にあるはずの大須南部店が全部消えている疑い
+  - 他にも `'津'` だけでなく `'堺'`(大阪府堺市)、`'天神'`(福岡)、`'福島'`(福島県/大阪福島区) など
+    1〜2文字キーワードは部分一致で他の駅名・地名を巻き込む可能性
+- **アクション案**:
+  1. ACCESS_HARD_NEGATIVE を「単独使用禁止リスト」化し、`津市` `堺市` `福岡市` 等の「市」付き or
+     `近鉄四日市駅` のような完全駅名にする
+  2. もしくは `isNagoyaStore` 内で「先に POSITIVE 駅名にヒットしたら NEGATIVE をスキップ」する
+     優先順位ロジックを入れる（現在は NEGATIVE が常に先で REJECT）
+  3. 過去 build ログから rejected件数 (763件) の内訳を audit → false-positive 件数を測る
+- **acceptance**: 上前津駅利用の Hot Pepper 店が LOCAL_STORES に再出現すること / 既存 763 件除外の妥当性が検証されること
+
 ### [ISSUE-053] サイト全体メトリクス（PV/UU/流入元）の可視化 — fetch スクリプト拡張 🔴
 - **priority**: P1 → **status**: 未着手
 - **detected**: 2026-05-20
@@ -575,8 +599,9 @@
 | 2026-05-23 | Builder | **ISSUE-015-P2 Stage 1: data/stores.json canonical化 + 19スクリプト repoint**: scripts/lib/load_stores.js 新設で `data/stores.json` 優先・index.html フォールバックの統一ローダーを提供。build.js + 19 スクリプト + monthly-places.yml の LOCAL_STORES パースを共有ヘルパーに置換。書き戻し系2件(cleanup/register)は data/stores.json も同期更新。audit_feature_stores.js が両経路で同結果（実在不明8店）を確認 | ✅ デプロイ済み (7c163f836) |
 | 2026-05-23 | Builder | **ISSUE-015-P2 Stage 2: TOP50インライン+全件遅延fetch でクローズ**: build.js が priority ソート(話題→編集部推薦→トレンド→Google評価)後 TOP50 のみインライン、全件は data/stores.json へ。index.html init() が fetchFullCatalog() で遅延ロード後 loadStores(full) 再初期化。**index.html 6.43MB→1.45MB(-77%) / 累計 8.6MB→1.45MB(-83%)**。LOCAL_STORES インライン 4.85MB→36KB(99.3%減)。preview 検証: 155ms で全件拡張・cc 遅延OK・モーダルOK・console error 0。shrink-guard も data/stores.json 比較に拡張済み | ✅ デプロイ済み (8a75257f6) |
 | 2026-05-24 | Editor+DataKeeper(/solve-next) | **ISSUE-045 収集パイプライン整備 + 第1バッチ昇格**: editorReason 収集の3スクリプト新設（list_editorreason_candidates / import_editorreason_todo / promote_manual_to_editorreason）+ 作業表テンプレ docs/editorreason-todo.md 生成。manual_stores の編集部推薦店 12 件（勝手口河内屋・麺や六三六・麺屋はなび・山岡家・COFFEE KAJITA・TRUNK COFFEE・コメダ本店・喫茶ユキ・喫茶マウンテン・大須王将・弁才天・花わさび）の おすすめポイント を editorReason に昇格（捏造ゼロ・既に編集部が書いた文章のカテゴリ昇格）。editor_picks 100→112 件 / CI反映後 editorReason 2.2%→2.5% | ✅ デプロイ済み (b28d2289c) |
-| 2026-05-24 | Editor+DataKeeper(EXPLICIT) | **manual-stores 話題店ロット1追加（4件）**: ネット最新の話題店を多重ソース検証ゲート（2ソース以上 + 名古屋住所 + 話題根拠）で精査し manual_stores.json に追加。(1)熱田味噌拉麺ぶりゆ＝食べログ ラーメン AICHI 百名店 2025 初選出・神宮前 (2)鶏そば 啜る 丸の内本店＝同百名店2025(3.59/598件) (3)中華そば 雷杏 -RYAN- 名駅店＝同百名店2025初選出 (4)キング軒 名古屋大須店＝2026/4/3 オープン・広島汁なし担担麺 東海2号店。各店 出典URL 4本以上で実在保証・GOOGLE_MAPS_API_KEY 未設定下のためローカルでは shrink-guard 発火・index.html は無変更で CI 側ビルド+Places写真補完に委任。manual_stores 33→37件 | ✅ デプロイ済み |
-| 2026-05-24 | Editor+Builder | **ISSUE-045 web 自動収集パイプライン整備（業界人知識の大規模自動化）**: Google CSE + Claude API + 引用必須プロンプト + 人手レビューゲートの4-stage 自動化パイプライン構築（lib/google_cse / lib/anthropic_extractor / build_editorreason_drafts / approve_editorreason_drafts）/ editor_picks.json _schema 拡張（sources/source/automation 追加・捏造防止監査証跡）/ .github/workflows/editorreason-batch.yml 週次起動 / docs/editorreason-automation-setup.md 運用 runbook / 実演 3 件（麺屋まつり名古屋店 OK confidence 0.88・Ponte と パル/8 は正しく INSUFFICIENT 棄却）→ editor_picks 112→113 件 / 起動には GOOGLE_CSE_KEY/CX + ANTHROPIC_API_KEY 設定が必要（コスト 月~$4・歩留まり 30-50% で 1 年 750-1,300 件追加見込み） | ✅ デプロイ済み (commit pending) |
+| 2026-05-24 | Editor+DataKeeper(EXPLICIT) | **manual-stores 話題店ロット1追加（4件）**: ネット最新の話題店を多重ソース検証ゲート（2ソース以上 + 名古屋住所 + 話題根拠）で精査し manual_stores.json に追加。(1)熱田味噌拉麺ぶりゆ＝食べログ ラーメン AICHI 百名店 2025 初選出・神宮前 (2)鶏そば 啜る 丸の内本店＝同百名店2025(3.59/598件) (3)中華そば 雷杏 -RYAN- 名駅店＝同百名店2025初選出 (4)キング軒 名古屋大須店＝2026/4/3 オープン・広島汁なし担担麺 東海2号店。各店 出典URL 4本以上で実在保証・GOOGLE_MAPS_API_KEY 未設定下のためローカルでは shrink-guard 発火・index.html は無変更で CI 側ビルド+Places写真補完に委任。manual_stores 33→37件 | ✅ デプロイ済み (9e2063433) |
+| 2026-05-24 | Editor+Builder | **ISSUE-045 web 自動収集パイプライン整備（業界人知識の大規模自動化）**: Google CSE + Claude API + 引用必須プロンプト + 人手レビューゲートの4-stage 自動化パイプライン構築（lib/google_cse / lib/anthropic_extractor / build_editorreason_drafts / approve_editorreason_drafts）/ editor_picks.json _schema 拡張（sources/source/automation 追加・捏造防止監査証跡）/ .github/workflows/editorreason-batch.yml 週次起動 / docs/editorreason-automation-setup.md 運用 runbook / 実演 3 件（麺屋まつり名古屋店 OK confidence 0.88・Ponte と パル/8 は正しく INSUFFICIENT 棄却）→ editor_picks 112→113 件 / 起動には GOOGLE_CSE_KEY/CX + ANTHROPIC_API_KEY 設定が必要（コスト 月~$4・歩留まり 30-50% で 1 年 750-1,300 件追加見込み） | ✅ デプロイ済み (daa9ecfa4) |
+| 2026-05-24 | DataKeeper(EXPLICIT) | **キング軒のアクセス修正（'津' 部分一致除外回避）+ ISSUE-057 起票**: CI ビルド後検証で「キング軒 名古屋大須店」だけ LOCAL_STORES に反映されないと判明。原因＝build.js `ACCESS_HARD_NEGATIVE` の `'津'`（津市除外用）が `上前津駅` の `津` 字に部分一致して isNagoyaStore() で reject されていた。即時対応として アクセスを `大須観音駅／矢場町駅 徒歩圏内` に書き換え（実態と乖離なし）。これに伴い ISSUE-057 起票（HARD_NEGATIVE 部分一致バグ・他にも上前津駅利用の Hot Pepper 店が暗黙除外されている疑い・要 audit） | ✅ デプロイ済み (commit pending) |
 
 ---
 
