@@ -61,26 +61,26 @@
   3. 過去 build ログから rejected件数 (763件) の内訳を audit → false-positive 件数を測る
 - **acceptance**: 上前津駅利用の Hot Pepper 店が LOCAL_STORES に再出現すること / 既存 763 件除外の妥当性が検証されること
 
-### [ISSUE-053] サイト全体メトリクス（PV/UU/流入元）の可視化 — fetch スクリプト拡張 🔴
-- **priority**: P1 → **status**: 未着手
+### [ISSUE-053] サイト全体メトリクス（PV/UU/流入元）の可視化 — fetch スクリプト拡張 ✅
+- **priority**: P1 → **status**: done
 - **detected**: 2026-05-20
+- **resolved**: 2026-05-25
+- **resolved_by**: commit 885229b01 `feat(analytics): サイト全体メトリクス(PV/UU/流入元)をGA4から日次収集 (ISSUE-053)`
 - **category**: analytics / measurement / SEO
 - **owner**: Builder + Marketer
-- **背景**: SEO施策を打ちたいが効果測定の数字が見えない。GA4(G-3LCZNGZPWJ)連携は稼働中だが、
-  `scripts/fetch_ga4_views.js` は `modal_open` の店舗別集計しか取得していない
-  （直近30日 totalEvents=34 / 17店のみ閲覧あり / 残4,666店は0）。
-  サイト全体の PV / UU / セッション / 流入元4分類 / トップ5ランディングは GA4 内にあるが
-  リポジトリにも `docs/kpi-weekly.md` にも未記録（ベースライン取得日 2026-04-22 以降「要取得」のまま）。
-- **現状の数字（読み取れる範囲）**: modal_open 月34回 → 推定セッションは月数十〜数百規模。明確に立ち上げ初期。
-- **良し悪しの基準（地域グルメメディア・月間UU）**:
-  ~500=Phase0基盤づくり / 500〜3,000=離陸 / 3,000〜15,000=健全 / 15,000〜=強い。
-  GSC基準: 表示回数<100/日=弱・数千=良 / CTR<1%=弱・2〜5%=普通・5%超=良 / 平均順位 1ページ目(〜10位)=良。
-- **アクション**: `fetch_ga4_views.js` を拡張し、screenPageViews / activeUsers / sessions /
-  sessionSource×sessionMedium / トップ5 landingPage を `data/site_metrics.json` に出力。
-  GA4 Secrets は既に通っているので追加設定不要。build.yml の git add 対象に追加。
-  取得値を `docs/kpi-weekly.md` の週次テンプレに転記する運用に乗せる。
-- **参考**: 既存 `Google分析オートLINE送信.js`(GAS) が同等の runReport を実装済み → ロジック流用可。
-- **関連**: [ISSUE-043]（GA4/GSC接続・modal_open分は実質解決済み）/ [ISSUE-015]（CWV）
+- **実装内容（既存・本ターンで完了確認）**:
+  - `scripts/fetch_ga4_views.js` に `fetchSiteMetrics()` を追加。GA4 Data API から
+    activeUsers / screenPageViews / sessions / averageSessionDuration / bounceRate / pagesPerSession
+    を取得し、source×medium 50件・top5 ランディング・チャネル4分類（organic/direct/social/referral/paid/other）
+    と段階自動判定（phase0 / takeoff / healthy / strong）を `data/site_metrics.json` に出力。
+  - `.github/workflows/build.yml` の `git add` に `data/site_metrics.json` を追加済み（ISSUE-058 で同時整備）。
+  - `docs/kpi-weekly.md` 2026-05-21 枠に GA4 実数ベースライン（UU203/PV773/AI流入24 等）を記録済み。
+- **直近の取得値（2026-05-24 / 過去30日）**:
+  UU 231 / PV 772 / Sessions 351 / 直帰率 51% / 平均滞在 282.5秒 / pages/session 2.2 /
+  organic 19% / direct 75.9% / chatgpt.com 24セッション（AI流入の継続観測） / 段階=phase0。
+- **残る運用**: 週次 `docs/kpi-weekly.md` への site_metrics 転記は ORG-003（Marketer 週次）の責務に統合済み。
+  本 ISSUE のスコープ（fetch スクリプト拡張・自動収集・CI commit 化）は完了。
+- **関連**: [ISSUE-043]（GA4/GSC接続）/ [ISSUE-054]（GSC 自動取得）/ [ISSUE-058]（build.yml git add 整備）
 
 ### [ISSUE-054] GSC インデックスカバレッジ確認と週次記録運用の整備 🟡
 - **priority**: P2 → **status**: in_progress（自動取得スクリプト実装済み・SA連携待ち）
@@ -631,6 +631,7 @@
 | 2026-05-24 | Editor+DataKeeper(EXPLICIT) | **manual-stores 話題店ロット1追加（4件）**: ネット最新の話題店を多重ソース検証ゲート（2ソース以上 + 名古屋住所 + 話題根拠）で精査し manual_stores.json に追加。(1)熱田味噌拉麺ぶりゆ＝食べログ ラーメン AICHI 百名店 2025 初選出・神宮前 (2)鶏そば 啜る 丸の内本店＝同百名店2025(3.59/598件) (3)中華そば 雷杏 -RYAN- 名駅店＝同百名店2025初選出 (4)キング軒 名古屋大須店＝2026/4/3 オープン・広島汁なし担担麺 東海2号店。各店 出典URL 4本以上で実在保証・GOOGLE_MAPS_API_KEY 未設定下のためローカルでは shrink-guard 発火・index.html は無変更で CI 側ビルド+Places写真補完に委任。manual_stores 33→37件 | ✅ デプロイ済み (9e2063433) |
 | 2026-05-24 | Editor+Builder | **ISSUE-045 web 自動収集パイプライン整備（業界人知識の大規模自動化）**: Google CSE + Claude API + 引用必須プロンプト + 人手レビューゲートの4-stage 自動化パイプライン構築（lib/google_cse / lib/anthropic_extractor / build_editorreason_drafts / approve_editorreason_drafts）/ editor_picks.json _schema 拡張（sources/source/automation 追加・捏造防止監査証跡）/ .github/workflows/editorreason-batch.yml 週次起動 / docs/editorreason-automation-setup.md 運用 runbook / 実演 3 件（麺屋まつり名古屋店 OK confidence 0.88・Ponte と パル/8 は正しく INSUFFICIENT 棄却）→ editor_picks 112→113 件 / 起動には GOOGLE_CSE_KEY/CX + ANTHROPIC_API_KEY 設定が必要（コスト 月~$4・歩留まり 30-50% で 1 年 750-1,300 件追加見込み） | ✅ デプロイ済み (daa9ecfa4) |
 | 2026-05-24 | DataKeeper(EXPLICIT) | **キング軒のアクセス修正（'津' 部分一致除外回避）+ ISSUE-057 起票**: CI ビルド後検証で「キング軒 名古屋大須店」だけ LOCAL_STORES に反映されないと判明。原因＝build.js `ACCESS_HARD_NEGATIVE` の `'津'`（津市除外用）が `上前津駅` の `津` 字に部分一致して isNagoyaStore() で reject されていた。即時対応として アクセスを `大須観音駅／矢場町駅 徒歩圏内` に書き換え（実態と乖離なし）。これに伴い ISSUE-057 起票（HARD_NEGATIVE 部分一致バグ・他にも上前津駅利用の Hot Pepper 店が暗黙除外されている疑い・要 audit） | ✅ デプロイ済み (commit pending) |
+| 2026-05-25 | Builder+Marketer(/solve-next) | **ISSUE-053 クローズ（実装は 5/21 commit 885229b01 で既に完了済みと確認）**: fetch_ga4_views.js の fetchSiteMetrics() が UU/PV/Sessions/avgDuration/bounceRate/pages-per-session + source×medium 50件 + Top5 ランディング + 4チャネル分類 + phase0/takeoff/healthy/strong 段階自動判定を data/site_metrics.json に毎日 CI 出力中（直近 2026-05-24 取得値: UU231/PV772/Sessions351/直帰51%/平均282.5秒/pages2.2/organic19%/direct75.9%/chatgpt.com 24セッション）。build.yml git add 統合済（ISSUE-058 整備時）。docs/kpi-weekly.md にも反映済。「未着手」ステータスは stale で実体は本番稼働中のため backlog を done 化 | ✅ 実装済確認・backlog 整合 |
 
 ---
 
