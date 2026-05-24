@@ -55,6 +55,18 @@ jobs:
         run: node scripts/audit_feature_stores.js
         continue-on-error: true
 
+      - name: features/*.html スキーマ整合性監査（ISSUE-059 再発防止）
+        # title/h1 と Article/ItemList/BreadcrumbList/FAQPage の語彙整合性を検査。
+        # コピペテンプレ事故（ラーメンFAQが焼き鳥ページに混入する等）を CI で都度検出。
+        # 非ブロッキング（短文 2-gram の偽陽性が混じるため警告のみ）。
+        run: node scripts/audit_feature_schema_alignment.js
+        continue-on-error: true
+
+      - name: isNagoyaStore 品質フィルタ単体テスト（ISSUE-057 再発防止）
+        # ACCESS_HARD_NEGATIVE の substring 偽陽性で名古屋確定店が暗黙除外される
+        # silent-bug を防ぐ 15 ケース単体テスト。失敗で CI を落とす。
+        run: node scripts/audit_isnagoya_filter.js
+
       - name: 季節特集の自動ローテーション（期間切れ特集を外す）
         # data/featured.json を JST 当日で評価し index.html / features/index.html の特集ブロックを再生成。
         # daily-journal.yml でも 7:00 JST に走る冗長な保険ステップ。スクリプトは冪等。
