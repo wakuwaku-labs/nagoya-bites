@@ -58,17 +58,30 @@ fi
 
 # ---- 2. main を取り込む（失敗したら fail-fast） ----
 git checkout main >>"$LOG" 2>&1 || die "git checkout main 失敗"
+
+# 既知のビルド副産物（cross_check_flags.json / crosscheck.json）は claude/build の度に変動するため、
+# pull 前に origin/main の版へ強制リセットして恒常的な UU 発生を断つ。
+# （これらは build 系スクリプトが必要時に再生成するため、ローカル差分を捨ててOK）
+git fetch origin main >>"$LOG" 2>&1 || die "git fetch origin main 失敗"
+for f in data/cross_check_flags.json data/crosscheck.json; do
+  if [ -f "$f" ] && ! git diff --quiet -- "$f"; then
+    log "ビルド副産物 ${f} のローカル差分を捨てて origin/main の版にリセット"
+    git checkout origin/main -- "$f" >>"$LOG" 2>&1 || true
+  fi
+done
+
 if ! git pull --rebase --autostash origin main >>"$LOG" 2>&1; then
   log "git pull --rebase が失敗。状態:"
   git status -sb | tee -a "$LOG"
   die "origin/main の取り込みに失敗。手動で解消してください。"
 fi
 
-# autostash の reapply 失敗（stash 残置）も検出
-LAST_STASH=$(git stash list | head -1 | grep -oE "stash@\{0\}" || true)
-if [ -n "$LAST_STASH" ] && git stash show stash@{0} 2>/dev/null | grep -q "autostash"; then
-  log "WARN: autostash が再適用されず stash@{0} に残っています。直近の差分を破棄します（build 副産物の想定）。"
-  git stash drop stash@{0} >>"$LOG" 2>&1 || true
+# pull 後の UU 再チェック（autostash 再適用で衝突した可能性）。発生したら die して以降の偽成功を防ぐ。
+UNMERGED_AFTER=$(git ls-files --unmerged | wc -l | tr -d ' ')
+if [ "$UNMERGED_AFTER" != "0" ]; then
+  log "❌ pull --rebase --autostash の reapply で衝突が発生:"
+  git diff --name-only --diff-filter=U | tee -a "$LOG"
+  die "autostash 再適用で UU が ${UNMERGED_AFTER} 件発生。手動で解消してください。"
 fi
 
 # ---- 3. 既公開ならスキップ ----
@@ -161,15 +174,38 @@ if git diff --staged --quiet; then
   fi
 fi
 
-git -c user.name="NAGOYA BITES Daily" -c user.email="daily@nagoya-bites" \
-  commit -m "journal: ${TODAY_JST} — ローカル自動生成（launchd）" >>"$LOG" 2>&1
+# commit: 失敗（UU 残置や hook エラー等）したら必ず die する。
+# 旧コードは exit 状態を見ずに進み、後続の push が no-op で「Everything up-to-date」を
+# 返したため、ラッパーが「🚀 成功」と偽の成功ログを出してしまっていた（2026-05-25 事故）。
+if ! git -c user.name="NAGOYA BITES Daily" -c user.email="daily@nagoya-bites" \
+       commit -m "journal: ${TODAY_JST} — ローカル自動生成（launchd）" >>"$LOG" 2>&1; then
+  log "❌ git commit が失敗しました。直近の状態:"
+  git status -sb | tee -a "$LOG"
+  die "commit 失敗。手動で原因を確認してください。"
+fi
+
+# 念のため、commit 後 HEAD が実際に origin/main より進んだか検証（黙って commit が空だった等を弾く）
+AHEAD_AFTER_COMMIT=$(git rev-list --count origin/main..HEAD 2>/dev/null || echo 0)
+if [ "$AHEAD_AFTER_COMMIT" -lt 1 ]; then
+  die "commit 完了とされたが HEAD が origin/main を超えていません。状態不明。"
+fi
 
 # push: rejected なら 1回だけ pull --rebase --autostash して retry
 if ! git push origin main >>"$LOG" 2>&1; then
   log "push 拒否。pull --rebase --autostash で再同期して再 push します。"
   git pull --rebase --autostash origin main >>"$LOG" 2>&1 || die "再同期に失敗"
+  # 再同期後も UU が出ていないか確認
+  UU_RETRY=$(git ls-files --unmerged | wc -l | tr -d ' ')
+  [ "$UU_RETRY" != "0" ] && die "再同期で UU 発生。手動解消してください。"
   git push origin main >>"$LOG" 2>&1 || die "再 push に失敗"
 fi
 
-log "🚀 main へ push 完了。"
+# 最終検証: origin に本当に反映されたか
+git fetch origin main >>"$LOG" 2>&1 || true
+if ! git log origin/main --oneline -1 -- "journal/${TODAY_JST}-"*.html >/dev/null 2>&1 || \
+   [ -z "$(git log origin/main --oneline -- "journal/${TODAY_JST}-"*.html 2>/dev/null)" ]; then
+  die "push 後も origin/main に本日記事の commit が見えません。状態を手動確認してください。"
+fi
+
+log "🚀 main へ push 完了（origin に本日記事の commit を確認）。"
 exit 0
