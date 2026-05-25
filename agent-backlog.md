@@ -31,6 +31,25 @@
   ALL_STORES=4428 / 4店全件ヒット / 「ぶりゆ」検索 cardCount=1 / 熱田味噌拉麺ぶりゆ 表示 OK / console error 0
 - **files**: `build.js`, `index.html`, `agent-backlog.md`
 
+### [ISSUE-061] manual_stores.json の 28 店（41%）が外部リンク・住所いずれも未設定で詳細到達不能 🟡
+- **priority**: P1（実在保証ブランド毀損リスク・「ユーザーが詳細を確認できない店」が4割）→ **status**: 未着手
+- **detected**: 2026-05-25
+- **category**: data-quality / brand / trust
+- **owner**: Editor + DataKeeper
+- **症状**: `node scripts/audit_manual_stores_links.js` 実行で、manual_stores.json 全 68 店中 **28 店（41%）** が食べログ直リンク・ホットペッパーID・アクセス欄住所のいずれも持たないと判明。これらの店はフロントの「予約はこちら」「店舗情報」リンクから具体的な店舗ページに到達できず、ユーザーが実在を確認する手段がない。CLAUDE.md の架空店ブロック規約（実在検証ゲート）の精神に反する状態。
+- **代表例（28店中先頭10）**:
+  - 麺や 六三六 / 麺屋はなび / ラーメン 山岡家 名古屋 / あつた蓬莱軒 本店 / まるや本店 名古屋駅店 / ひつまぶし名古屋備長 エスカ店 / 竹葉亭 名古屋店 / ひつまぶし 稲生 エスカ店 / やきとり大吉 今池店 / 鳥開総本家 名駅西口店
+  - これらは**本物の店ばかり**だが、データに verification path が無いため不当に疑念を招く
+- **アクション**:
+  1. 28 店の住所を Google Maps から収集して `アクセス` 欄に追加（最優先・1ヶ月で完遂可能）
+  2. 食べログ直リンク（rstdtl/数字8桁 形式）を WebSearch + 手動確認で 50%程度追加
+  3. インスタ公式アカウントが特定できる店は `Instagram` 欄に URL 追加
+  4. `scripts/audit_manual_stores_links.js` を CI に組み込み済み → 月次で再発検知
+  5. 新規 manual_stores 追加時のフォーマット強制（外部リンク 1 種類以上必須化）
+- **acceptance**: 重大欠陥（3欄全て無し）28 → 5 以下（92%減）。CI audit の警告件数が 5 以下で安定
+- **files**: `data/manual_stores.json`, `scripts/audit_manual_stores_links.js`
+- **note**: 発覚経緯は ISSUE-060 完了後の audit 棚卸し。データ拡充は人手作業を要するため、まずは CI に audit を組み込んで観測可能性を確保した（commit pending）
+
 ### [ISSUE-060] features/*.html の JSON-LD 全体が「名古屋ラーメン」になっている重大スキーマ汚染 ✅
 - **note_renumber**: 元々 ISSUE-059 として起票したが、並行で Builder が同番号で「data/stores.json cache-buster 欠落」を起票・解決（commit bcc05f852）したため ID 衝突。当エントリを ISSUE-060 に採番し直して Notion 同期破綻を解消（ISSUE-056 と同じ処置）。
 - **priority**: P1（schema 汚染・Google の信頼毀損・20 ファイルに波及）→ **status**: done
@@ -721,6 +740,7 @@
 | 2026-05-24 | Editor+DataKeeper(EXPLICIT) | **manual-stores 話題店ロット1追加（4件）**: ネット最新の話題店を多重ソース検証ゲート（2ソース以上 + 名古屋住所 + 話題根拠）で精査し manual_stores.json に追加。(1)熱田味噌拉麺ぶりゆ＝食べログ ラーメン AICHI 百名店 2025 初選出・神宮前 (2)鶏そば 啜る 丸の内本店＝同百名店2025(3.59/598件) (3)中華そば 雷杏 -RYAN- 名駅店＝同百名店2025初選出 (4)キング軒 名古屋大須店＝2026/4/3 オープン・広島汁なし担担麺 東海2号店。各店 出典URL 4本以上で実在保証・GOOGLE_MAPS_API_KEY 未設定下のためローカルでは shrink-guard 発火・index.html は無変更で CI 側ビルド+Places写真補完に委任。manual_stores 33→37件 | ✅ デプロイ済み (9e2063433) |
 | 2026-05-24 | Editor+Builder | **ISSUE-045 web 自動収集パイプライン整備（業界人知識の大規模自動化）**: Google CSE + Claude API + 引用必須プロンプト + 人手レビューゲートの4-stage 自動化パイプライン構築（lib/google_cse / lib/anthropic_extractor / build_editorreason_drafts / approve_editorreason_drafts）/ editor_picks.json _schema 拡張（sources/source/automation 追加・捏造防止監査証跡）/ .github/workflows/editorreason-batch.yml 週次起動 / docs/editorreason-automation-setup.md 運用 runbook / 実演 3 件（麺屋まつり名古屋店 OK confidence 0.88・Ponte と パル/8 は正しく INSUFFICIENT 棄却）→ editor_picks 112→113 件 / 起動には GOOGLE_CSE_KEY/CX + ANTHROPIC_API_KEY 設定が必要（コスト 月~$4・歩留まり 30-50% で 1 年 750-1,300 件追加見込み） | ✅ デプロイ済み (daa9ecfa4) |
 | 2026-05-24 | DataKeeper(EXPLICIT) | **キング軒のアクセス修正（'津' 部分一致除外回避）+ ISSUE-057 起票**: CI ビルド後検証で「キング軒 名古屋大須店」だけ LOCAL_STORES に反映されないと判明。原因＝build.js `ACCESS_HARD_NEGATIVE` の `'津'`（津市除外用）が `上前津駅` の `津` 字に部分一致して isNagoyaStore() で reject されていた。即時対応として アクセスを `大須観音駅／矢場町駅 徒歩圏内` に書き換え（実態と乖離なし）。これに伴い ISSUE-057 起票（HARD_NEGATIVE 部分一致バグ・他にも上前津駅利用の Hot Pepper 店が暗黙除外されている疑い・要 audit） | ✅ デプロイ済み (commit pending) |
+| 2026-05-25 | DataKeeper(/solve-next) | **ISSUE-061 起票 + audit を CI 統合**: manual_stores.json の 68 店中 28 店（41%）が食べログURL・ホットペッパーID・住所のいずれも未設定で詳細到達不能と判明（audit_manual_stores_links.js 実行結果）。代表例は麺や六三六・あつた蓬莱軒本店・ひつまぶし名古屋備長エスカ店等の本物の有名店だが、データに verification path 無し → 不当な疑念リスク。即時対応として audit を build.yml に統合（continue-on-error）して観測可能性を確保。データ拡充は人手作業のため P1 として ISSUE-061 起票 | ✅ 起票+CI統合 |
 | 2026-05-25 | Orchestrator(/solve-next) | **ISSUE-055 done 化（ISSUE-060 完全達成でハブ強化が当初想定の14倍規模に）**: 当初『solo-dining → 接待/デート/エリア別へ展開』のスコープを大幅超過。features/*.html 62 中 FAQPage 持つ 57 ファイル（92%）で JSON-LD ⟺ 可視 FAQ verbatim 一致 100% を達成。直接強化 3 ハブ（solo-dining/date/settai-guide 各 8Q）+ ISSUE-060 経由で 40 ファイル可視 FAQ 新設。順位推移は observational として Marketer 週次（ORG-003）へ引き継ぎ。同時に wont_fix の ISSUE-022/023 を Notion ダッシュボードからアーカイブ完了 | ✅ 整合 |
 | 2026-05-25 | Editor+Builder(/solve-next) | **ISSUE-060 完全達成: 40 features に FAQPage + 可視 FAQ 同期完了**: (A) ramen-pollution の 20 ファイル per-file FAQ 再構築（鮨/うなぎ/とんかつ/イタリアン/フレンチ/中華/居酒屋/バー/モーニング/ステーキ/洋食/ダイニングバー/懐石/鉄板/すき焼き/接待ランチ/秋/夏グルメ・各6問・業界視点コンテンツ）+ (B) 既存 FAQPage 持ち 20 ファイルへ scripts/sync_visible_faq_from_jsonld.js で可視 FAQ 自動同期（宴会/誕生日/女子会/GW/予約困難/業界人推薦/コスパ/大人数/名駅/母の日/グルメガイド/ひつまぶし/韓国/味噌煮込/海鮮/手羽先/焼肉/個室/栄）。検証: features/*.html 全 62 中 FAQPage 持つ 57 ファイル全てで JSON-LD ⟺ 可視 FAQ verbatim 一致 100%（57/57 OK・mismatch 0）。Google FAQ リッチリザルト適格性をサイト全体で確保 | ✅ デプロイ済 (838b6964e + c8b614f8f + eba0ec102) |
 | 2026-05-25 | Editor+Builder(/solve-next) | **ISSUE-060 partial 進行: nagoya-yakitori.html へ FAQPage 6問再追加（1/20 完了）**: 自動修復で除去した FAQPage の per-file 再構築を開始。`features/nagoya-yakitori.html` にエリア集中 / 名古屋コーチン真贋判定（純系 vs 交配種・部位指定・半田養鶏場仕入れ先公開）/ 予算相場（カウンター 4,000〜7,000円・大衆 3,000〜4,500円・高級コーチン 7,000〜12,000円）/ 炭火 vs ガス火見分け方（紀州備長炭・土佐備長炭の香り・焦げ目均一性）/ カウンター席マナー（串持ち上げ・塩→タレ順）/ 予約タイミングの 6問追加。JSON-LD と可視 FAQ が verbatim 一致（6/6）。残 19 ファイル（鮨/うなぎ/とんかつ/イタリアン 等）は順次 | ✅ デプロイ予定 |
