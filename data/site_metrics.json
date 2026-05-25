@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-05-24T19:16:27.293Z",
+  "generatedAt": "2026-05-25T03:37:28.993Z",
   "lookbackDays": 30,
   "totals": {
     "activeUsers": 231,
-    "pageViews": 743,
+    "pageViews": 750,
     "sessions": 346,
-    "avgSessionDuration": 270.7,
-    "bounceRate": 0.514,
-    "pagesPerSession": 2.15
+    "avgSessionDuration": 272.3,
+    "bounceRate": 0.494,
+    "pagesPerSession": 2.17
   },
   "channels": {
     "sessions": {
       "organic": 65,
-      "direct": 274,
+      "direct": 266,
       "social": 3,
       "referral": 13,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 18.3,
-      "direct": 77.2,
-      "social": 0.8,
+      "organic": 18.7,
+      "direct": 76.7,
+      "social": 0.9,
       "referral": 3.7,
       "paid": 0,
       "other": 0
@@ -31,7 +31,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 228
+      "sessions": 229
     },
     {
       "source": "google",
@@ -44,14 +44,14 @@
       "sessions": 26
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 15
-    },
-    {
       "source": "yahoo",
       "medium": "organic",
       "sessions": 13
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 6
     },
     {
       "source": "openai",
@@ -82,12 +82,12 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 278,
-      "sessions": 185
+      "pageViews": 284,
+      "sessions": 186
     },
     {
       "path": "/index.html",
-      "pageViews": 119,
+      "pageViews": 120,
       "sessions": 61
     },
     {
