@@ -1,0 +1,212 @@
+{
+  "date": "2026-05-25",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "5月第4週 名古屋話題店ダイジェスト 専門特化5軒の裏側",
+      "verdict": "PASS",
+      "total": 95,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=18 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 4件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 5件 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "業界人が選ぶ今週の名古屋3軒 接待・一人飲み・記念日のシーン別",
+      "verdict": "PASS",
+      "total": 95,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=20 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 4件 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名古屋外食の細分化が加速する5月 専門業態5軒を業界人が読む",
+      "verdict": "PASS",
+      "total": 95,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=15 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 5件 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "松阪牛二極攻勢の2026年5月 名古屋の高級と大衆を業界人が読む",
+      "verdict": "FAIL",
+      "total": 93,
+      "breakdown": {
+        "recency": 23,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=25 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 4件 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "ぐるナイ初の名古屋ゴチ ピンキオーリ予約攻略を業界人が読む",
+      "verdict": "FAIL",
+      "total": 80,
+      "breakdown": {
+        "recency": 10,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 24日前"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=22 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 4件 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "fallback_needed": false
+}
