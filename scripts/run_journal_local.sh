@@ -42,7 +42,23 @@ die() { log "❌ $*"; exit 1; }
 
 cd "$REPO" || die "repo not found: $REPO"
 
-log "=== 日次ジャーナル ローカル生成開始 ==="
+# ---- 0. 同時実行ロック（macOSにはflock無し → PIDfile方式）----
+# 重複起動（前回の実行がハングしたままlaunchdが次回発火 等）を防ぐ。
+LOCKFILE="${LOG_DIR}/run.lock"
+if [ -f "$LOCKFILE" ]; then
+  OLDPID=$(cat "$LOCKFILE" 2>/dev/null || echo "")
+  if [ -n "$OLDPID" ] && kill -0 "$OLDPID" 2>/dev/null; then
+    log "別の実行 (PID ${OLDPID}) が進行中です。終了します。"
+    exit 0
+  else
+    log "古いロックファイル (PID ${OLDPID}) を除去します"
+    rm -f "$LOCKFILE"
+  fi
+fi
+echo $$ > "$LOCKFILE"
+trap 'rm -f "$LOCKFILE"' EXIT INT TERM
+
+log "=== 日次ジャーナル ローカル生成開始 (PID $$) ==="
 TODAY_JST=$(TZ=Asia/Tokyo date +%Y-%m-%d)
 
 # ---- 1. 事前チェック: 未解決衝突 / rebase 中なら即 fail ----
@@ -104,6 +120,7 @@ CLAUDE_RC=$?
 log "claude 終了コード: ${CLAUDE_RC}"
 
 # ---- 5. 検証 ----
+# (a) published.json に本日エントリが入ったか
 OK=$(node -e "
   try {
     const p = require('./data/journal_published.json');
@@ -114,6 +131,50 @@ if [ "$OK" != "1" ]; then
   die "${TODAY_JST} が published.json に未登録。生成失敗（上記claudeログ参照）。"
 fi
 log "✅ ${TODAY_JST} のジャーナルが published.json に登録されました。"
+
+# (b) 本日エントリの slug を取得して、対応する journal/<slug>.html が実在するか確認
+TODAY_SLUG=$(node -e "
+  const p = require('./data/journal_published.json');
+  const e = (p.entries||[]).find(x=>x.date==='${TODAY_JST}');
+  process.stdout.write(e ? (e.slug||'') : '');
+")
+if [ -z "$TODAY_SLUG" ]; then
+  die "published.json に本日エントリはあるが slug が空。整合性異常。"
+fi
+ARTICLE_HTML="journal/${TODAY_SLUG}.html"
+if [ ! -f "$ARTICLE_HTML" ]; then
+  # ドラフト残置のケースを救済（claude が Step 7 の mv に失敗した想定）
+  DRAFT="journal/drafts/${TODAY_SLUG}.html"
+  if [ -f "$DRAFT" ]; then
+    log "本番に未移動のドラフトを発見。journal/ へ昇格します。"
+    mv "$DRAFT" "$ARTICLE_HTML" || die "ドラフト昇格に失敗: $DRAFT → $ARTICLE_HTML"
+  else
+    die "記事HTMLが見つかりません: $ARTICLE_HTML（drafts/ にもなし）。生成異常。"
+  fi
+fi
+log "✅ 記事HTML確認: $ARTICLE_HTML"
+
+# (c) docs/daily-posts/<date>.md が実在するか
+DAILY_MD="docs/daily-posts/${TODAY_JST}.md"
+if [ ! -f "$DAILY_MD" ]; then
+  die "SNS原稿が見つかりません: $DAILY_MD。生成異常。"
+fi
+
+# (d) 独立 validator（claude が PASS を主張しても、ラッパーが独立に検証）
+if ! node scripts/validate_journal_draft.js "$ARTICLE_HTML" "$DAILY_MD" >>"$LOG" 2>&1; then
+  die "validator が FAIL を返しました（ラッパー側の独立検証）。$LOG の末尾を確認してください。"
+fi
+log "✅ ラッパー独立 validator PASS"
+
+# (e) 記事 slug が feed.xml に載っているか。漏れていれば build_journal_index.js を走らせて救済。
+if ! grep -q "${TODAY_SLUG}" journal/feed.xml 2>/dev/null; then
+  log "feed.xml に ${TODAY_SLUG} が見当たらないため build_journal_index.js を再実行"
+  node scripts/build_journal_index.js >>"$LOG" 2>&1 || die "build_journal_index.js が失敗"
+  if ! grep -q "${TODAY_SLUG}" journal/feed.xml 2>/dev/null; then
+    die "再生成しても feed.xml に ${TODAY_SLUG} が出現せず。状態異常。"
+  fi
+  log "✅ feed.xml に ${TODAY_SLUG} を確認（再生成後）"
+fi
 
 # ---- 6. ラッパーが commit & push を確実に実行 ----
 # claude (journal-today.md Step 10) は「ユーザー承認後のみ push」と定義されているため
@@ -188,6 +249,13 @@ fi
 AHEAD_AFTER_COMMIT=$(git rev-list --count origin/main..HEAD 2>/dev/null || echo 0)
 if [ "$AHEAD_AFTER_COMMIT" -lt 1 ]; then
   die "commit 完了とされたが HEAD が origin/main を超えていません。状態不明。"
+fi
+
+# 記事HTML が今回のコミットに含まれているか（メタデータだけ commit のリンク切れを防ぐ）
+if ! git diff --name-only "origin/main..HEAD" | grep -q "^${ARTICLE_HTML}$"; then
+  log "コミット範囲に ${ARTICLE_HTML} が含まれていません:"
+  git diff --name-only "origin/main..HEAD" | tee -a "$LOG"
+  die "記事HTMLが未コミット。site でリンク切れになるため push しません。"
 fi
 
 # push: rejected なら 1回だけ pull --rebase --autostash して retry
