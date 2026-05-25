@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-05-25T04:44:36.502Z",
+  "generatedAt": "2026-05-25T09:32:40.792Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 232,
-    "pageViews": 751,
-    "sessions": 348,
-    "avgSessionDuration": 271.6,
+    "activeUsers": 233,
+    "pageViews": 753,
+    "sessions": 350,
+    "avgSessionDuration": 270.6,
     "bounceRate": 0.494,
-    "pagesPerSession": 2.16
+    "pagesPerSession": 2.15
   },
   "channels": {
     "sessions": {
       "organic": 66,
-      "direct": 268,
-      "social": 3,
+      "direct": 270,
+      "social": 4,
       "referral": 13,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 18.9,
-      "direct": 76.6,
-      "social": 0.9,
+      "organic": 18.7,
+      "direct": 76.5,
+      "social": 1.1,
       "referral": 3.7,
       "paid": 0,
       "other": 0
@@ -31,7 +31,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 230
+      "sessions": 231
     },
     {
       "source": "google",
@@ -51,7 +51,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 7
+      "sessions": 8
     },
     {
       "source": "openai",
@@ -64,6 +64,11 @@
       "sessions": 2
     },
     {
+      "source": "chatgpt.com",
+      "medium": "referral",
+      "sessions": 2
+    },
+    {
       "source": "service.smt.docomo.ne.jp",
       "medium": "referral",
       "sessions": 2
@@ -72,18 +77,13 @@
       "source": "t.co",
       "medium": "referral",
       "sessions": 2
-    },
-    {
-      "source": "ansearch.com",
-      "medium": "referral",
-      "sessions": 1
     }
   ],
   "topPages": [
     {
       "path": "/",
-      "pageViews": 284,
-      "sessions": 187
+      "pageViews": 286,
+      "sessions": 189
     },
     {
       "path": "/index.html",
@@ -108,7 +108,7 @@
   ],
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 232,
+    "value": 233,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
