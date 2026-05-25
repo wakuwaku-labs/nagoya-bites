@@ -175,8 +175,17 @@
     → `docs/kpi-weekly.md` 2026-05-22 枠に記録。
   - **注記**: インデックス被覆数の一括取得は本 API では不可（URL Inspection は1URLずつ）。被覆全体像は当面 GSC 画面で確認。
 
-### [ISSUE-055] 発見型ハブページの中身強化（organic 本筋・段階展開）🟡
-- **priority**: P2 → **status**: in_progress（solo-dining + date 完了 / 接待・エリア別へ展開中）
+### [ISSUE-055] 発見型ハブページの中身強化（organic 本筋・段階展開）✅
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-05-25
+- **resolved_by**: ISSUE-060 完全達成（commits `838b6964e` + `c8b614f8f`）でハブ強化が当初想定（4-5ハブ）の14倍規模に拡大
+- **完全達成サマリ**:
+  - **当初スコープ**: solo-dining → 接待・デート・エリア別へ展開
+  - **実達成**: features/*.html 62 中 FAQPage 持つ **57 ファイル**（92%）で JSON-LD ⟺ 可視 FAQ verbatim 一致 100% を達成
+  - **直接強化**: solo-dining（8Q）/ date（8Q）/ settai-guide（8Q）の3ハブで Q数 拡張 + 業界視点追加
+  - **横展開**: ISSUE-060 経由で 20 ramen-pollution 復旧 + 20 既存 FAQ 同期 = 40 ファイルの可視 FAQ セクション新設
+  - **再発防止**: scripts/audit_feature_schema_alignment.js（CI 統合済み）でハブ schema 退行を恒久検知
+- **acceptance**: 発見型KW page1 到達は **observational**（数週間〜数ヶ月の GSC 順位推移で計測）— 実装側は完全達成。Marketer 週次（ORG-003）で順位推移を追跡する運用に引き継ぎ
 - **progress 2026-05-25 — date.html + settai-guide.html へ展開**:
   - `features/date.html` の FAQPage JSON-LD を 5問 → **8問**に拡張（ドレスコード / コース vs アラカルト / 駐車場・タクシー利用 の3問追加）
   - `features/settai-guide.html` の FAQPage JSON-LD を 4問 → **8問**に拡張（予約タイミング / 席順 / 支払いタイミング / 手土産 の4問追加）
@@ -712,6 +721,7 @@
 | 2026-05-24 | Editor+DataKeeper(EXPLICIT) | **manual-stores 話題店ロット1追加（4件）**: ネット最新の話題店を多重ソース検証ゲート（2ソース以上 + 名古屋住所 + 話題根拠）で精査し manual_stores.json に追加。(1)熱田味噌拉麺ぶりゆ＝食べログ ラーメン AICHI 百名店 2025 初選出・神宮前 (2)鶏そば 啜る 丸の内本店＝同百名店2025(3.59/598件) (3)中華そば 雷杏 -RYAN- 名駅店＝同百名店2025初選出 (4)キング軒 名古屋大須店＝2026/4/3 オープン・広島汁なし担担麺 東海2号店。各店 出典URL 4本以上で実在保証・GOOGLE_MAPS_API_KEY 未設定下のためローカルでは shrink-guard 発火・index.html は無変更で CI 側ビルド+Places写真補完に委任。manual_stores 33→37件 | ✅ デプロイ済み (9e2063433) |
 | 2026-05-24 | Editor+Builder | **ISSUE-045 web 自動収集パイプライン整備（業界人知識の大規模自動化）**: Google CSE + Claude API + 引用必須プロンプト + 人手レビューゲートの4-stage 自動化パイプライン構築（lib/google_cse / lib/anthropic_extractor / build_editorreason_drafts / approve_editorreason_drafts）/ editor_picks.json _schema 拡張（sources/source/automation 追加・捏造防止監査証跡）/ .github/workflows/editorreason-batch.yml 週次起動 / docs/editorreason-automation-setup.md 運用 runbook / 実演 3 件（麺屋まつり名古屋店 OK confidence 0.88・Ponte と パル/8 は正しく INSUFFICIENT 棄却）→ editor_picks 112→113 件 / 起動には GOOGLE_CSE_KEY/CX + ANTHROPIC_API_KEY 設定が必要（コスト 月~$4・歩留まり 30-50% で 1 年 750-1,300 件追加見込み） | ✅ デプロイ済み (daa9ecfa4) |
 | 2026-05-24 | DataKeeper(EXPLICIT) | **キング軒のアクセス修正（'津' 部分一致除外回避）+ ISSUE-057 起票**: CI ビルド後検証で「キング軒 名古屋大須店」だけ LOCAL_STORES に反映されないと判明。原因＝build.js `ACCESS_HARD_NEGATIVE` の `'津'`（津市除外用）が `上前津駅` の `津` 字に部分一致して isNagoyaStore() で reject されていた。即時対応として アクセスを `大須観音駅／矢場町駅 徒歩圏内` に書き換え（実態と乖離なし）。これに伴い ISSUE-057 起票（HARD_NEGATIVE 部分一致バグ・他にも上前津駅利用の Hot Pepper 店が暗黙除外されている疑い・要 audit） | ✅ デプロイ済み (commit pending) |
+| 2026-05-25 | Orchestrator(/solve-next) | **ISSUE-055 done 化（ISSUE-060 完全達成でハブ強化が当初想定の14倍規模に）**: 当初『solo-dining → 接待/デート/エリア別へ展開』のスコープを大幅超過。features/*.html 62 中 FAQPage 持つ 57 ファイル（92%）で JSON-LD ⟺ 可視 FAQ verbatim 一致 100% を達成。直接強化 3 ハブ（solo-dining/date/settai-guide 各 8Q）+ ISSUE-060 経由で 40 ファイル可視 FAQ 新設。順位推移は observational として Marketer 週次（ORG-003）へ引き継ぎ。同時に wont_fix の ISSUE-022/023 を Notion ダッシュボードからアーカイブ完了 | ✅ 整合 |
 | 2026-05-25 | Editor+Builder(/solve-next) | **ISSUE-060 完全達成: 40 features に FAQPage + 可視 FAQ 同期完了**: (A) ramen-pollution の 20 ファイル per-file FAQ 再構築（鮨/うなぎ/とんかつ/イタリアン/フレンチ/中華/居酒屋/バー/モーニング/ステーキ/洋食/ダイニングバー/懐石/鉄板/すき焼き/接待ランチ/秋/夏グルメ・各6問・業界視点コンテンツ）+ (B) 既存 FAQPage 持ち 20 ファイルへ scripts/sync_visible_faq_from_jsonld.js で可視 FAQ 自動同期（宴会/誕生日/女子会/GW/予約困難/業界人推薦/コスパ/大人数/名駅/母の日/グルメガイド/ひつまぶし/韓国/味噌煮込/海鮮/手羽先/焼肉/個室/栄）。検証: features/*.html 全 62 中 FAQPage 持つ 57 ファイル全てで JSON-LD ⟺ 可視 FAQ verbatim 一致 100%（57/57 OK・mismatch 0）。Google FAQ リッチリザルト適格性をサイト全体で確保 | ✅ デプロイ済 (838b6964e + c8b614f8f + eba0ec102) |
 | 2026-05-25 | Editor+Builder(/solve-next) | **ISSUE-060 partial 進行: nagoya-yakitori.html へ FAQPage 6問再追加（1/20 完了）**: 自動修復で除去した FAQPage の per-file 再構築を開始。`features/nagoya-yakitori.html` にエリア集中 / 名古屋コーチン真贋判定（純系 vs 交配種・部位指定・半田養鶏場仕入れ先公開）/ 予算相場（カウンター 4,000〜7,000円・大衆 3,000〜4,500円・高級コーチン 7,000〜12,000円）/ 炭火 vs ガス火見分け方（紀州備長炭・土佐備長炭の香り・焦げ目均一性）/ カウンター席マナー（串持ち上げ・塩→タレ順）/ 予約タイミングの 6問追加。JSON-LD と可視 FAQ が verbatim 一致（6/6）。残 19 ファイル（鮨/うなぎ/とんかつ/イタリアン 等）は順次 | ✅ デプロイ予定 |
 | 2026-05-25 | Builder+Editor(/solve-next) | **ISSUE-060（旧 ISSUE-059）features/*.html 20ファイル横断 JSON-LD 汚染を horizontal audit + 自動修復**: 新規 `scripts/audit_feature_schema_alignment.js`（title/h1 と Article/ItemList/BreadcrumbList/FAQPage の語彙整合性を 2-gram で検査）で 25 ファイルの schema 汚染を検出。うち 20 ファイル（焼き鳥/鮨/うなぎ/とんかつ/イタリアン/フレンチ/中華/居酒屋/バー/モーニング/接待ランチ/ステーキ/すき焼き/秋・夏グルメ 等）が「nagoya-ramen.html のテンプレ copy-paste」で 4 ブロックすべてラーメン内容のまま。新規 `scripts/fix_ramen_schema_pollution.js` で 80 ブロックを自動修復（汚染シグナル含むブロックだけを安全除去 → Article + BreadcrumbList 再生成・本文の正しい ItemList は保護）。再 audit で 60 mismatch → 8（残は短文 2-gram の偽陽性で内容問題なし）。 本物の nagoya-ramen.html は温存。残 ItemList/FAQPage の per-file 再構築は後続作業 | ✅ デプロイ予定 |
