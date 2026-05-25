@@ -12392,8 +12392,22 @@ function searchKeyword(name) {
 // 既存の Instagram検索 / TikTok検索 / X検索 URL は build 時にゴミエリアを含んだまま
 // 焼き付けられているため、レンダー時に常に再計算したURLを優先する
 function instagramSearchUrl(r) {
-  if (r['Instagram'] && r['Instagram'].trim()) return r['Instagram'];
+  var ig = (r['Instagram'] || '').trim();
+  if (ig) {
+    // 完全URLならそのまま
+    if (/^https?:\/\//i.test(ig)) return ig;
+    // ハンドルのみ（@付き含む）の場合は公式アカウントURLに変換
+    var handle = ig.replace(/^@/, '').replace(/^instagram\.com\//, '').replace(/\/$/, '');
+    if (/^[A-Za-z0-9_.]+$/.test(handle)) return 'https://www.instagram.com/' + handle + '/';
+  }
   return 'https://www.instagram.com/explore/search/keyword/?q=' + encodeURIComponent(searchKeyword(r['店名']));
+}
+// ホットペッパーURL: ID 有りは直接、無しは公式検索結果ページにフォールバック
+function hotpepperUrl(r) {
+  var id = (r['ホットペッパーID'] || '').trim();
+  if (id) return 'https://www.hotpepper.jp/str' + id + '/';
+  // ID 無しは Hot Pepper 公式キーワード検索（愛知県スコープ）
+  return 'https://www.hotpepper.jp/yoyaku/SA33/keyword_' + encodeURIComponent(cleanStoreName(r['店名'] || '')) + '/';
 }
 function tabelogSearchUrl(r) {
   if (r['食べログURL'] && r['食べログURL'].trim()) return r['食べログURL'];
@@ -12416,12 +12430,25 @@ function tiktokSearchUrl(r) {
 function xSearchUrl(r) {
   return 'https://x.com/search?q=' + encodeURIComponent(searchKeyword(r['店名']));
 }
-function gmap(name, area) { return 'https://maps.google.com/search?q=' + encodeURIComponent(cleanStoreName(name) + ' ' + (cleanArea(area) || '名古屋')); }
+// Google Maps 検索: アクセス欄に住所（名古屋市XX区...）が含まれる場合は店名+住所、
+// 無い場合は店名+エリア+「名古屋」でフォールバック。manual_stores 追加店は住所を
+// アクセス欄末尾の括弧内に持つことが多いため、Maps のヒット率が大幅に上がる。
+function gmap(name, area, accessOrFullRecord) {
+  var base = cleanStoreName(name);
+  var record = (accessOrFullRecord && typeof accessOrFullRecord === 'object') ? accessOrFullRecord : null;
+  var access = record ? (record['アクセス'] || '') : (typeof accessOrFullRecord === 'string' ? accessOrFullRecord : '');
+  // アクセス文字列から住所部分（名古屋市XX区XX）を抽出
+  var addrMatch = String(access).match(/(?:愛知県)?(名古屋市[^\s（）()【】「」]+)/);
+  if (addrMatch) {
+    return 'https://maps.google.com/search?q=' + encodeURIComponent(base + ' ' + addrMatch[1]);
+  }
+  return 'https://maps.google.com/search?q=' + encodeURIComponent(base + ' ' + (cleanArea(area) || '名古屋'));
+}
 
 function buildCardHtml(r) {
     var idx = ALL_STORES.indexOf(r);
     var photo = r['写真URL'] || '/assets/store-figures/_fallback.svg';
-    var hpUrl = 'https://www.hotpepper.jp/str' + (r['ホットペッパーID']||'') + '/';
+    var hpUrl = hotpepperUrl(r);
     var genre = (r['ジャンル']||'').split('・')[0];
     var pref = r['都道府県'] || '';
     var area = r['エリア'] || '';
@@ -12430,7 +12457,7 @@ function buildCardHtml(r) {
       + '<a class="ml ig" href="' + instagramSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer">' + nbBrandImg('instagram',14) + 'Instagram</a>'
       + '<a class="ml tk" href="' + tiktokSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer">' + nbBrandImg('tiktok',14) + 'TikTok</a>'
       + '<a class="ml xx" href="' + xSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer">' + nbBrandImg('x',14) + 'X</a>'
-      + '<a class="ml gm" href="' + gmap(r['店名'], area) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer">' + nbBrandImg('gmap',14) + 'Google Maps</a>';
+      + '<a class="ml gm" href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer">' + nbBrandImg('gmap',14) + 'Google Maps</a>';
     var tags = (r['タグ']||'').split(',').map(function(t){return t.trim();}).filter(Boolean);
     var sceneTags = ['デート','女子会','接待','誕生日・記念日','歓送迎会','忘年会・新年会','家族・子連れ'];
     var spaceTags = ['個室','半個室','カウンター','テラス席','座敷','貸切可','隠れ家'];
@@ -12469,7 +12496,7 @@ function buildCardHtml(r) {
       + tagHtml
       + (r['おすすめポイント'] ? '<div class="card-point">' + r['おすすめポイント'] + '</div>' : '')
       + (r.editorReason && !r['おすすめポイント'] ? '<div class="card-editor-lead">' + r.editorReason + '</div>' : '')
-      + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をホットペッパーで予約" rel="noopener noreferrer">ホットペッパーで予約</a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をGoogleマップで確認" style="background:#4285F4" rel="noopener noreferrer">Googleマップで確認</a></div>')
+      + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をホットペッパーで予約" rel="noopener noreferrer">ホットペッパーで予約</a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をGoogleマップで確認" style="background:#4285F4" rel="noopener noreferrer">Googleマップで確認</a></div>')
       + '<div class="mrow">' + mediaLinks + '</div>'
       + '</div>';
 }
@@ -12571,7 +12598,7 @@ function openM(i) {
   var r = ALL_STORES[i];
   trackEvent('modal_open', {store_name: r['店名'], genre: r['ジャンル'], area: r['エリア']});
   var photo = r['写真URL'] || '/assets/store-figures/_fallback.svg';
-  var hpUrl = 'https://www.hotpepper.jp/str' + (r['ホットペッパーID']||'') + '/';
+  var hpUrl = hotpepperUrl(r);
   var miEl = document.getElementById('mi');
   miEl.src = nbImage(photo, 1200);
   miEl.srcset = nbSrcset(photo, [800, 1200, 1600]);
@@ -12793,7 +12820,7 @@ function openM(i) {
     {url:instagramSearchUrl(r), brand:'instagram', cls:'mb-ig', label:'Instagram'},
     {url:tiktokSearchUrl(r), brand:'tiktok', cls:'mb-tk', label:'TikTok'},
     {url:xSearchUrl(r), brand:'x', cls:'mb-xx', label:'X'},
-    {url:gmap(r['店名'],r['エリア']), brand:'gmap', cls:'mb-gm', label:'Google Maps'}
+    {url:gmap(r['店名'],r['エリア'],r), brand:'gmap', cls:'mb-gm', label:'Google Maps'}
   ];
   document.getElementById('mmg').innerHTML = items.map(function(m){
     return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '" rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,28) + '</span><span class="mbl">' + m.label + '</span></a>';

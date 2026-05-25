@@ -45,6 +45,16 @@ jobs:
           GSC_SITE_URL: ${{ secrets.GSC_SITE_URL }}
         continue-on-error: true
 
+      - name: 手動キュレーション店の実写写真を Google Places API で取得
+        # data/manual_stores.json の 写真URL が空 or SVG プレースホルダーの店を対象に、
+        # Google Places API で店名+住所マッチング → lh3.googleusercontent.com の CDN URL を取得。
+        # 取得した実写は 写真URL を上書きし、SVGプレースホルダーから実写へ自動置換される。
+        # name-mismatch / out-of-area / not-food の三重ゲートで誤マッチを防ぐ（ISSUE-060）。
+        run: node scripts/fetch_manual_store_photos.js
+        env:
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
+        continue-on-error: true
+
       - name: Build (embed store data & update sitemap)
         run: node build.js
         env:
@@ -85,7 +95,7 @@ jobs:
           # ISSUE-058: data/stores.json (canonical full catalog) と stores/*.html (個別店舗ページ) も
           # commit 対象に追加。これらが入っていないと manual_stores 追加分が
           # フロント検索 (fetchFullCatalog) や個別ページ URL から到達不能になる。
-          git add index.html features/index.html sitemap.xml data/stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/cross_check_flags.json
+          git add index.html features/index.html sitemap.xml data/stores.json data/manual_stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/cross_check_flags.json
           git add stores/ || true
           git diff --cached --quiet || git commit -m "chore: auto-update store data [skip actions]"
           git pull --rebase origin main || true
