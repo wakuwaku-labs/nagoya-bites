@@ -12400,7 +12400,10 @@ function instagramSearchUrl(r) {
     var handle = ig.replace(/^@/, '').replace(/^instagram\.com\//, '').replace(/\/$/, '');
     if (/^[A-Za-z0-9_.]+$/.test(handle)) return 'https://www.instagram.com/' + handle + '/';
   }
-  return 'https://www.instagram.com/explore/search/keyword/?q=' + encodeURIComponent(searchKeyword(r['店名']));
+  // フォールバック: Instagram の /explore/search/ は未ログインでログイン画面に
+  // 強制リダイレクトされて使えない。Google 検索で site:instagram.com に絞り、
+  // 公式アカウントを1クリックで見つけてもらう方が確実。
+  return 'https://www.google.com/search?q=' + encodeURIComponent('site:instagram.com ' + searchKeyword(r['店名']));
 }
 // ホットペッパーURL: ID 有りは直接、無しは公式検索結果ページにフォールバック
 function hotpepperUrl(r) {
