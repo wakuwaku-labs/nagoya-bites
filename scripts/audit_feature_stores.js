@@ -13,7 +13,8 @@ const ROOT = path.resolve(__dirname, '..');
 const FEATURES_DIR = path.join(ROOT, 'features');
 const STORES_DIR = path.join(ROOT, 'stores');
 
-const norm = (s) => String(s || '').replace(/\s|　/g, '').replace(/&amp;/g, '&').toLowerCase();
+// ISSUE-061 後続: NFKC で全角→半角統一（'錦３丁目' と '錦3丁目' を同一視）
+const norm = (s) => String(s || '').normalize('NFKC').replace(/\s|　/g, '').replace(/&amp;/g, '&').toLowerCase();
 
 const { loadStores } = require('./lib/load_stores');
 function loadRealNames() {
@@ -32,7 +33,17 @@ function main() {
     const src = fs.readFileSync(path.join(FEATURES_DIR, f), 'utf8');
     const names = [...src.matchAll(/class="(?:shop-name|store-name)"[^>]*>(?:<a[^>]*>)?([^<]+)/g)]
       .map(m => m[1].trim());
-    const suspect = [...new Set(names.filter(n => !realNames.has(norm(n))))];
+    // ISSUE-061 後続: 厳密一致に加え、部分一致（実在店名の prefix/suffix に suspect が含まれる）も許可
+    // 例: 特集の「個室居酒屋 地鶏と地酒 酒肴日和 かしわや」⟺ LOCAL_STORES の同名+業態接尾辞付き版
+    const realNamesArr = [...realNames];
+    const isReal = (n) => {
+      const nn = norm(n);
+      if (realNames.has(nn)) return true;
+      if (nn.length < 4) return false;
+      // どちらかが他方を完全に内包すれば実在扱い
+      return realNamesArr.some(r => r.includes(nn) || nn.includes(r));
+    };
+    const suspect = [...new Set(names.filter(n => !isReal(n)))];
     const broken = [...new Set(
       [...src.matchAll(/href="\.\.\/stores\/([A-Za-z0-9]+)\.html"/g)].map(m => m[1])
         .filter(id => !fs.existsSync(path.join(STORES_DIR, id + '.html')))
