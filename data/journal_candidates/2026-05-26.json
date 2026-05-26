@@ -1,0 +1,207 @@
+{
+  "date": "2026-05-26",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅9階の新焼肉「李昇別邸」を業界人が読む — コース価格・席・予約・接待シーンの使い方",
+      "verdict": "PASS",
+      "total": 95,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=15 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 10件 (価格帯,コース,席,予約,シーン,接待,デート,一人飲み,繁忙,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 5件 +4",
+          "title 44字 +1"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "李昇別邸の「9階・57席」が示す名駅焼肉の新ルール — 業界人の予約戦略",
+      "verdict": "FAIL",
+      "total": 92,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 22,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=12 → 7"
+        ],
+        "uniqueness": [
+          "独自性キーワード 7件 (コース,席,予約,シーン,接待,繁忙,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "李昇別邸を業界人が読む — 名駅9階の松阪牛、価格・席・予約・接待の最適解",
+      "verdict": "FAIL",
+      "total": 92,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 22,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=10 → 7"
+        ],
+        "uniqueness": [
+          "独自性キーワード 11件 (価格帯,コース,席,予約,シーン,接待,デート,アラカルト,一人飲み,繁忙,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "一人飲み歓迎の店を見抜く5つのサイン",
+      "verdict": "FAIL",
+      "total": 86,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 19,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=3 → 4"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 18字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "飲み放題の原価率から見える『本当にお得な店』の見分け方",
+      "verdict": "FAIL",
+      "total": 81,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 19,
+        "uniqueness": 15,
+        "brand_fit": 10,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=5 → 4"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "fallback_needed": false
+}
