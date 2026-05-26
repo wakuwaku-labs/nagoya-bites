@@ -236,35 +236,45 @@ ${listSnippet}
 }
 
 // ── Gemini API 呼び出し ──────────────────────────────────
-async function discoverStores(genAI, existingNames, today) {
-  const { SYSTEM, USER } = buildPrompt(existingNames, today);
+async function callGemini(genAI, systemPrompt, userPrompt, useSearch) {
+  const toolsConfig = useSearch
+    // gemini-2.0-flash: googleSearch / gemini-1.5-flash: googleSearchRetrieval
+    ? MODEL.startsWith('gemini-2') ? [{ googleSearch: {} }] : [{ googleSearchRetrieval: {} }]
+    : [];
 
-  // Google Search グラウンディング付きモデル
   const model = genAI.getGenerativeModel({
     model: MODEL,
-    tools: [{ googleSearch: {} }],
-    systemInstruction: SYSTEM,
+    ...(toolsConfig.length > 0 ? { tools: toolsConfig } : {}),
+    systemInstruction: systemPrompt,
   });
 
-  console.log(`  Gemini ${MODEL} + Google Search で探索中…`);
-
   const result = await model.generateContent({
-    contents: [{ role: 'user', parts: [{ text: USER }] }],
-    generationConfig: {
-      temperature: 0.2,      // 低めで hallucination 抑制
-      maxOutputTokens: 8192,
-    },
+    contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+    generationConfig: { temperature: 0.2, maxOutputTokens: 8192 },
   });
 
   const response = result.response;
+  if (!response.candidates || response.candidates.length === 0) return '';
+  return response.text();
+}
 
-  // 安全フィルタや空応答のハンドリング
-  if (!response.candidates || response.candidates.length === 0) {
-    console.warn('  Gemini: 候補なし（安全フィルタまたは空応答）');
-    return '';
+async function discoverStores(genAI, existingNames, today) {
+  const { SYSTEM, USER } = buildPrompt(existingNames, today);
+
+  // ① Google Search グラウンディング付きで試みる
+  console.log(`  Gemini ${MODEL} + Google Search で探索中…`);
+  try {
+    const text = await callGemini(genAI, SYSTEM, USER, true);
+    if (text) return text;
+  } catch (err) {
+    // グラウンディング非対応 or API エラー → フォールバック
+    console.warn(`  Google Search グラウンディング失敗 (${err.message.slice(0, 80)})`);
+    console.warn('  フォールバック: 検索なしモードで再試行…');
   }
 
-  return response.text();
+  // ② 検索なしフォールバック（学習データで回答）
+  const text = await callGemini(genAI, SYSTEM, USER, false);
+  return text;
 }
 
 // ── エントリポイント ────────────────────────────────────
@@ -290,6 +300,13 @@ async function main() {
     text = await discoverStores(genAI, existingNames, today);
   } catch (err) {
     console.error('❌ Gemini API エラー:', err.message);
+    // 詳細情報（APIキー・モデル名の確認用）
+    if (err.message.includes('API_KEY') || err.message.includes('403') || err.message.includes('401')) {
+      console.error('   → GEMINI_API_KEY が正しいか確認してください');
+      console.error('   → https://aistudio.google.com/apikey で再発行できます');
+    } else if (err.message.includes('404') || err.message.includes('not found')) {
+      console.error(`   → モデル「${MODEL}」が使用できません。モデル名を確認してください`);
+    }
     process.exit(1);
   }
 
