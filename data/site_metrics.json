@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-05-26T05:20:18.165Z",
+  "generatedAt": "2026-05-26T13:35:09.156Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 261,
-    "pageViews": 791,
-    "sessions": 381,
+    "activeUsers": 267,
+    "pageViews": 799,
+    "sessions": 387,
     "avgSessionDuration": 267.4,
-    "bounceRate": 0.507,
-    "pagesPerSession": 2.08
+    "bounceRate": 0.512,
+    "pagesPerSession": 2.06
   },
   "channels": {
     "sessions": {
-      "organic": 84,
-      "direct": 282,
+      "organic": 88,
+      "direct": 288,
       "social": 6,
-      "referral": 13,
+      "referral": 14,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 21.8,
-      "direct": 73.2,
-      "social": 1.6,
-      "referral": 3.4,
+      "organic": 22.2,
+      "direct": 72.7,
+      "social": 1.5,
+      "referral": 3.5,
       "paid": 0,
       "other": 0
     }
@@ -31,27 +31,27 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 237
+      "sessions": 238
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 64
+      "sessions": 66
     },
     {
       "source": "chatgpt.com",
       "medium": "(not set)",
-      "sessions": 28
+      "sessions": 29
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 18
+      "sessions": 19
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 11
+      "sessions": 15
     },
     {
       "source": "openai",
@@ -66,7 +66,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 2
+      "sessions": 3
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 295,
-      "sessions": 192
+      "pageViews": 296,
+      "sessions": 193
     },
     {
       "path": "/index.html",
@@ -97,8 +97,8 @@
     },
     {
       "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
-      "pageViews": 26,
-      "sessions": 23
+      "pageViews": 27,
+      "sessions": 24
     },
     {
       "path": "/features/private-room.html",
@@ -108,7 +108,7 @@
   ],
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 261,
+    "value": 267,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
