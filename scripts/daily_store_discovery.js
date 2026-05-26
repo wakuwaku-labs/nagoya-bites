@@ -149,127 +149,67 @@ function checkDiversity(store, accepted) {
 }
 
 // ── プロンプト ──────────────────────────────────────────
-function buildPrompt(existingNames, today) {
-  const listSnippet = existingNames.length <= 80
+
+/** Step 1用: Google Search で店舗候補をテキストで調査するプロンプト */
+function buildSearchPrompt(existingNames) {
+  const skip = existingNames.length <= 60
     ? existingNames.join('、')
-    : existingNames.slice(0, 80).join('、') + `…（他${existingNames.length - 80}件）`;
+    : existingNames.slice(0, 60).join('、') + `…（他${existingNames.length - 60}件）`;
+
+  return `名古屋の優良飲食店を以下の6カテゴリから各1〜2件、合計6〜8件を実際に検索して見つけてください。
+
+【カテゴリ】
+A: 新店（2025年末〜2026年オープン）
+B: 実力の名店（食べログ評価3.7以上 / 百名店 / ミシュラン）
+C: 予約困難・隠れ家（1ヶ月先まで満席 / 紹介制）
+D: SNS話題店（Instagram/TikTok/Xで最近バズ）
+E: メディア推薦店（ナゴレコ / Retty / 地元TV）
+F: 地元の名店・老舗（地元客に長年愛される）
+
+【各店舗について以下を調べてください】
+- 正式な店名
+- エリア（名古屋市○○区）
+- ジャンル（具体的に）
+- 最寄り駅・徒歩分数
+- 食べログURL（個別店舗ページのみ）
+- Instagram URL（あれば）
+- 公式サイトURL（あれば）
+- ホットペッパーURL（あれば）
+- 食べログ評価点
+- Google評価点
+- なぜそのカテゴリで選んだか（具体的な根拠）
+- 特徴・おすすめポイント（料理の具体的な特徴・シーン）
+
+【重要】名古屋市内の実在する飲食店のみ。大手チェーン店は除外。
+【除外済み（追加禁止）】${skip}
+
+各店舗を番号付きで、上記の項目を全て含めて日本語で詳しく説明してください。`;
+}
+
+/** Step 2用: 調査テキストをJSONに変換するプロンプト */
+function buildJsonPrompt(searchText, existingNames, today) {
+  const skip = existingNames.length <= 60
+    ? existingNames.join('、')
+    : existingNames.slice(0, 60).join('、') + `…（他${existingNames.length - 60}件）`;
 
   const SYSTEM = `あなたは名古屋の飲食業界に20年精通したフードエディターです。
-単なる「話題店」だけでなく、本物の実力と価値を持つ店を厳選してください。
+以下の調査結果を、指定のJSONフォーマットに変換してください。
+出力はJSONのみ（説明文・マークダウン・コードブロック不要）。`;
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-【選定の6つの柱】各柱から少なくとも1件ずつ選ぶこと
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  const USER = `【調査結果】
+${searchText.slice(0, 4000)}
 
-PILLAR_A【新店注目】
-  2025年末〜2026年オープン。有名シェフの独立・期待の若手・新業態など。
-  根拠: 開店記事 / 公式SNS初投稿 / 業界メディアの初報
+【変換ルール】
+- 上記の調査結果に含まれる店舗を、以下のJSONフォーマットで出力する
+- 名古屋市内でない店・大手チェーン・以下の既登録店は除外する
+- 既登録（除外）: ${skip}
+- おすすめポイントは120〜180字（業界人目線・料理の具体的特徴・シーン明記）
+- 食べログURLは個別店舗URL（tabelog.com/aichi/...）のみ。不明なら空文字
+- 選定柱はA〜Fに対応: PILLAR_A〜PILLAR_F
+- 追加日: ${today}
 
-PILLAR_B【実力の名店】
-  食べログ百名店・ミシュラン掲載・評価3.7以上の継続店。
-  一過性の話題ではなく「本物の実力」で選ぶ。
-  根拠: 食べログ百名店掲載URL / ミシュランガイド記載 / 長年の実績記事
-
-PILLAR_C【予約困難・隠れ家】
-  1ヶ月以上先まで予約が埋まっている店。完全紹介制・常連のみの隠れ家。
-  根拠: 満席言及記事 / 業界人の口コミ / 食べログの予約状況
-
-PILLAR_D【SNS・若者に人気】
-  Instagram/TikTok/Xで直近3ヶ月以内にバズった店。
-  料理ビジュアルが秀逸で若い世代が発信している。
-  根拠: 公式Instagramフォロワー数 / バズった投稿URL
-
-PILLAR_E【メディア・グルメ誌推薦】
-  ナゴレコ・Retty・地元テレビ・東海地方グルメ誌で特集された店。
-  単なるリスト掲載ではなくメイン取材として取り上げられた店。
-  根拠: ナゴレコ記事URL / Rettyベスト掲載 / テレビ特集の言及
-
-PILLAR_F【地元に愛される名店】
-  地元客リピーターに長年支持される老舗・街の名物店。
-  観光客向けでなく、名古屋の人間が「あそこは本物だ」と言う店。
-  根拠: 食べログ口コミの地元率 / 長年の営業実績
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-【品質ゲート（全て満たすこと）】
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✅ ゲートA: 実在確認（以下から2ソース以上）
-  食べログ個別店舗ページ / HotPepper店舗ページ / 公式Instagram（3ヶ月以内に投稿）
-  公式Webサイト（名古屋市内住所） / Retty店舗ページ / ナゴレコ記事URL
-
-✅ ゲートB: 住所に「名古屋市○○区」が明記されていること
-
-✅ ゲートC: 品質基準（いずれか満たす）
-  食べログ評価3.5以上 / 食べログ百名店またはミシュラン掲載 / Google評価4.0以上
-
-✅ ゲートD: 現在営業中（公式SNSまたはWebで直近3ヶ月以内の更新）
-
-❌ 除外: 大手チェーン店 / 閉業・移転の可能性 / 1ソースのみ / 情報不足で120字書けない店
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-【多様性ルール（1バッチ内）】
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  同一ジャンル: 最大2件 / 同一エリア（区）: 最大2件
-  価格帯: 〜¥3,000 / ¥3,000〜¥8,000 / ¥8,000〜 を各1件以上含む
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-【おすすめポイントの書き方】
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  120〜180字。業界人の目線で「なぜこの店が特別か」を言語化する。
-  料理の具体的特徴（食材・産地・調理法）を入れる。
-  どんなシーン・客層に最適か明示（接待・デート・女子会 等）。
-  「美味しい」「おすすめ」などの抽象語を使わず具体的事実で書く。
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-【追加禁止（既登録店）】
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${listSnippet}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-【出力フォーマット】JSONのみ出力（前後の説明文・マークダウン不要）
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-食べログURLは個別店舗ページのみ。不明なら空文字（検索URLは禁止）。
-
-{
-  "stores": [
-    {
-      "店名": "（正式店名）",
-      "エリア": "名古屋市○○区",
-      "都道府県": "愛知県",
-      "ジャンル": "（具体的に: 創作フレンチ / スペシャルティコーヒー 等）",
-      "アクセス": "名古屋市○○区〇〇 ○○駅から徒歩○分",
-      "キュレーター": "編集部",
-      "追加日": "${today}",
-      "おすすめポイント": "（120〜180字・業界人目線・具体的・シーン明記）",
-      "選定柱": "PILLAR_A",
-      "選定理由": "（なぜこの柱で選んだか・根拠1〜2文）",
-      "話題フラグ": true,
-      "編集部推薦": true,
-      "話題スコア": 82,
-      "写真URL": "",
-      "Instagram": "（https://www.instagram.com/{handle}/ または空文字）",
-      "食べログURL": "（個別ページURL または空文字）",
-      "食べログ評価": 3.8,
-      "Google評価": 4.3,
-      "価格帯目安": "¥5,000〜¥10,000",
-      "おすすめシーン": ["接待", "デート"],
-      "出典URL": ["確認ソースURL1", "確認ソースURL2"],
-      "トレンド情報源": ["食べログ百名店", "ナゴレコ"]
-    }
-  ]
-}`;
-
-  const USER = `名古屋の飲食店を厳選して${TARGET_N}件発掘してください。
-
-【作業手順】
-1. Google Search で各PILLAR（A〜F）の候補を1〜2件ずつ探す
-2. 各候補の食べログ・Instagram・Webサイト等で実在・品質・営業中を確認する
-3. 品質ゲートを全て通過した店のみを最終候補とする
-4. 多様性ルール（ジャンル・エリア・価格帯）を確認する
-5. 最終的に${TARGET_N}件をJSONのみで出力する（説明文は不要）
-
-「話題性があるから」だけでなく「本物の実力・価値があるから」で選んでください。
-食べログ百名店・ミシュラン・長年の地元人気など、裏付けのある実力を重視してください。`;
+出力フォーマット（このJSONのみ出力）:
+{"stores":[{"店名":"正式店名","エリア":"名古屋市○○区","都道府県":"愛知県","ジャンル":"具体的ジャンル","アクセス":"名古屋市○○区○○ ○○駅徒歩○分","キュレーター":"編集部","追加日":"${today}","おすすめポイント":"120〜180字の説明","選定柱":"PILLAR_B","選定理由":"選定根拠","話題フラグ":true,"編集部推薦":true,"話題スコア":80,"写真URL":"","Instagram":"https://www.instagram.com/handle/ または空","食べログURL":"個別URL または空","食べログ評価":3.8,"Google評価":4.2,"価格帯目安":"¥3,000〜¥6,000","おすすめシーン":["接待","デート"],"出典URL":["url1","url2"],"トレンド情報源":["食べログ百名店"]}]}`;
 
   return { SYSTEM, USER };
 }
@@ -322,24 +262,38 @@ async function callGemini(genAI, modelName, systemPrompt, userPrompt, useSearch)
 }
 
 async function discoverStores(genAI, existingNames, today) {
-  const { SYSTEM, USER } = buildPrompt(existingNames, today);
-
   // ① 利用可能なモデルを自動検出
   console.log('  利用可能な Gemini モデルを確認中…');
   const modelName = await findWorkingModel(genAI);
 
-  // ② Google Search グラウンディング付きで試みる
-  console.log(`  ${modelName} + Google Search で探索中…`);
+  // ② Step 1: Google Search グラウンディングでテキスト調査
+  //    ※グラウンディング時はJSONを求めず、自然言語で店舗情報を取得する
+  let searchText = '';
+  const searchPrompt = buildSearchPrompt(existingNames);
+  console.log(`  Step 1: ${modelName} + Google Search で候補を調査中…`);
   try {
-    const text = await callGemini(genAI, modelName, SYSTEM, USER, true);
-    if (text) return text;
+    searchText = await callGemini(genAI, modelName, '', searchPrompt, true);
+    console.log(`  Step 1 完了: ${searchText.length}字取得`);
+    if (searchText.length < 100) {
+      console.warn('  Step 1: 応答が短すぎます。知識ベースのみで続行します。');
+      searchText = '';
+    }
   } catch (err) {
-    console.warn(`  Google Search グラウンディング失敗: ${err.message.slice(0, 80)}`);
-    console.warn('  フォールバック: 検索なしモードで再試行…');
+    console.warn(`  Step 1 (Google Search) 失敗: ${err.message.slice(0, 80)}`);
+    console.warn('  Step 2: 知識ベースのみで続行します。');
   }
 
-  // ③ 検索なしフォールバック（学習データで回答）
-  return callGemini(genAI, modelName, SYSTEM, USER, false);
+  // ③ Step 2: 調査テキスト（またはモデルの知識）からJSON生成
+  //    ※グラウンディングなし → 純粋な JSON 出力が得られる
+  console.log(`  Step 2: JSON フォーマット生成中…`);
+  const { SYSTEM, USER } = buildJsonPrompt(searchText || '（Google Search結果なし）', existingNames, today);
+  try {
+    const jsonText = await callGemini(genAI, modelName, SYSTEM, USER, false);
+    return jsonText;
+  } catch (err) {
+    console.error(`  Step 2 失敗: ${err.message.slice(0, 80)}`);
+    return '';
+  }
 }
 
 // ── エントリポイント ────────────────────────────────────
