@@ -321,7 +321,7 @@ async function main() {
   }
 
   const today = todayJST();
-  console.log(`\n[${today}] 名古屋 厳選店舗 自動発掘 (${MODEL} / 無料枠)${DRY_RUN ? ' [DRY RUN]' : ''}`);
+  console.log(`\n[${today}] 名古屋 厳選店舗 自動発掘 (Gemini 無料枠)${DRY_RUN ? ' [DRY RUN]' : ''}`);
   console.log(`  選定: 6柱 × 品質ゲート × 多様性ルール`);
 
   const raw           = JSON.parse(fs.readFileSync(FILE, 'utf8'));
@@ -339,7 +339,7 @@ async function main() {
       console.error('   → GEMINI_API_KEY が正しいか確認してください');
       console.error('   → https://aistudio.google.com/apikey で再発行できます');
     } else if (err.message.includes('404') || err.message.includes('not found')) {
-      console.error(`   → モデル「${MODEL}」が使用できません。モデル名を確認してください`);
+      console.error(`   → 利用可能なモデルが見つかりません。GEMINI_API_KEY を確認してください`);
     }
     process.exit(1);
   }
