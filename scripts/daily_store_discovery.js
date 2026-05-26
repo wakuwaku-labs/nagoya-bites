@@ -48,7 +48,7 @@ const path      = require('path');
 const FILE     = path.join(__dirname, '..', 'data', 'manual_stores.json');
 const DRY_RUN  = process.argv.includes('--dry-run');
 const TARGET_N = 6;  // 1回あたり追加目標（6つの柱に対応）
-const MODEL    = 'gemini-2.0-flash';  // 無料枠: 15RPM / 1,500RPD
+const MODEL    = 'gemini-1.5-flash';  // 無料枠: 15RPM / 1,500RPD（2.0-flash は新規ユーザー非対応）
 
 // ── ユーティリティ ──────────────────────────────────────
 function todayJST() {
