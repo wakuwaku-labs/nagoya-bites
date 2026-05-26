@@ -48,7 +48,15 @@ const path      = require('path');
 const FILE     = path.join(__dirname, '..', 'data', 'manual_stores.json');
 const DRY_RUN  = process.argv.includes('--dry-run');
 const TARGET_N = 6;  // 1回あたり追加目標（6つの柱に対応）
-const MODEL    = 'gemini-1.5-flash';  // 無料枠: 15RPM / 1,500RPD（2.0-flash は新規ユーザー非対応）
+// 利用可能なモデルを上から順に試す（APIによって廃止・移行が変わるため複数候補を持つ）
+const MODEL_CANDIDATES = [
+  'gemini-2.5-flash-preview-05-20', // 2025-05 リリース・最新安定版
+  'gemini-2.5-flash',               // 2.5 安定版
+  'gemini-2.5-pro-preview-05-06',   // 2.5 Pro preview
+  'gemini-2.0-flash-lite',          // 2.0 lite（軽量版）
+  'gemini-1.5-flash-latest',        // 1.5 flash 最新
+  'gemini-1.5-flash-002',           // 1.5 flash 特定バージョン
+];
 
 // ── ユーティリティ ──────────────────────────────────────
 function todayJST() {
@@ -235,15 +243,39 @@ ${listSnippet}
   return { SYSTEM, USER };
 }
 
+// ── 利用可能モデルの自動検出 ────────────────────────────
+async function findWorkingModel(genAI) {
+  for (const modelName of MODEL_CANDIDATES) {
+    try {
+      const model = genAI.getGenerativeModel({ model: modelName });
+      // 短いテスト呼び出しで疎通確認
+      const result = await model.generateContent({
+        contents: [{ role: 'user', parts: [{ text: 'OK' }] }],
+        generationConfig: { maxOutputTokens: 5 },
+      });
+      result.response.text(); // 例外が出なければ OK
+      console.log(`  ✅ 利用可能なモデル: ${modelName}`);
+      return modelName;
+    } catch (err) {
+      const reason = err.message.includes('404') ? '404' :
+                     err.message.includes('403') ? '403' : err.message.slice(0, 40);
+      console.log(`  ✗ ${modelName}: ${reason}`);
+    }
+  }
+  throw new Error('利用可能な Gemini モデルが見つかりません。GEMINI_API_KEY を確認してください。');
+}
+
 // ── Gemini API 呼び出し ──────────────────────────────────
-async function callGemini(genAI, systemPrompt, userPrompt, useSearch) {
+async function callGemini(genAI, modelName, systemPrompt, userPrompt, useSearch) {
+  // 2.5系・2.0系は googleSearch / 1.5系は googleSearchRetrieval
   const toolsConfig = useSearch
-    // gemini-2.0-flash: googleSearch / gemini-1.5-flash: googleSearchRetrieval
-    ? MODEL.startsWith('gemini-2') ? [{ googleSearch: {} }] : [{ googleSearchRetrieval: {} }]
+    ? modelName.startsWith('gemini-2') || modelName.startsWith('gemini-1.5')
+      ? modelName.includes('1.5') ? [{ googleSearchRetrieval: {} }] : [{ googleSearch: {} }]
+      : []
     : [];
 
   const model = genAI.getGenerativeModel({
-    model: MODEL,
+    model: modelName,
     ...(toolsConfig.length > 0 ? { tools: toolsConfig } : {}),
     systemInstruction: systemPrompt,
   });
@@ -261,20 +293,22 @@ async function callGemini(genAI, systemPrompt, userPrompt, useSearch) {
 async function discoverStores(genAI, existingNames, today) {
   const { SYSTEM, USER } = buildPrompt(existingNames, today);
 
-  // ① Google Search グラウンディング付きで試みる
-  console.log(`  Gemini ${MODEL} + Google Search で探索中…`);
+  // ① 利用可能なモデルを自動検出
+  console.log('  利用可能な Gemini モデルを確認中…');
+  const modelName = await findWorkingModel(genAI);
+
+  // ② Google Search グラウンディング付きで試みる
+  console.log(`  ${modelName} + Google Search で探索中…`);
   try {
-    const text = await callGemini(genAI, SYSTEM, USER, true);
+    const text = await callGemini(genAI, modelName, SYSTEM, USER, true);
     if (text) return text;
   } catch (err) {
-    // グラウンディング非対応 or API エラー → フォールバック
-    console.warn(`  Google Search グラウンディング失敗 (${err.message.slice(0, 80)})`);
+    console.warn(`  Google Search グラウンディング失敗: ${err.message.slice(0, 80)}`);
     console.warn('  フォールバック: 検索なしモードで再試行…');
   }
 
-  // ② 検索なしフォールバック（学習データで回答）
-  const text = await callGemini(genAI, SYSTEM, USER, false);
-  return text;
+  // ③ 検索なしフォールバック（学習データで回答）
+  return callGemini(genAI, modelName, SYSTEM, USER, false);
 }
 
 // ── エントリポイント ────────────────────────────────────
