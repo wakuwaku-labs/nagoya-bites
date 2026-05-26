@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-05-26T16:03:32.109Z",
+  "generatedAt": "2026-05-26T20:08:41.805Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 269,
-    "pageViews": 783,
-    "sessions": 388,
-    "avgSessionDuration": 264.4,
-    "bounceRate": 0.518,
+    "activeUsers": 270,
+    "pageViews": 786,
+    "sessions": 390,
+    "avgSessionDuration": 268.4,
+    "bounceRate": 0.521,
     "pagesPerSession": 2.02
   },
   "channels": {
     "sessions": {
       "organic": 86,
-      "direct": 291,
+      "direct": 293,
       "social": 7,
       "referral": 14,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 21.6,
-      "direct": 73.1,
+      "organic": 21.5,
+      "direct": 73.3,
       "social": 1.8,
       "referral": 3.5,
       "paid": 0,
@@ -31,7 +31,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 239
+      "sessions": 241
     },
     {
       "source": "google",
@@ -87,8 +87,8 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 122,
-      "sessions": 63
+      "pageViews": 123,
+      "sessions": 64
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -108,7 +108,7 @@
   ],
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 269,
+    "value": 270,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
