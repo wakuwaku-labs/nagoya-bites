@@ -1,0 +1,58 @@
+name: NAGOYA BITES — 日次「話題店自動追加」
+
+on:
+  schedule:
+    - cron: '0 0 * * *'   # 毎日 9:00 JST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  discover-and-add:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm install --no-audit --no-fund --silent
+
+      - name: 追加前の店舗数
+        id: before
+        run: |
+          COUNT=$(node -e "const d=JSON.parse(require('fs').readFileSync('data/manual_stores.json','utf8')); process.stdout.write(String(d.stores.length))")
+          echo "count=${COUNT}" >> $GITHUB_OUTPUT
+
+      - name: 話題店を自動発掘・追記（Gemini 無料枠）
+        run: node scripts/daily_store_discovery.js
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: 追加後の店舗数
+        id: after
+        run: |
+          COUNT=$(node -e "const d=JSON.parse(require('fs').readFileSync('data/manual_stores.json','utf8')); process.stdout.write(String(d.stores.length))")
+          ADDED=$((COUNT - ${{ steps.before.outputs.count }}))
+          echo "count=${COUNT}" >> $GITHUB_OUTPUT
+          echo "added=${ADDED}" >> $GITHUB_OUTPUT
+          echo "追加後: ${COUNT}件（+${ADDED}件）"
+
+      - name: コミット & プッシュ
+        if: steps.after.outputs.added != '0'
+        run: |
+          git config user.name "NAGOYA BITES Daily Store Bot"
+          git config user.email "daily-store@nagoya-bites"
+          TODAY=$(TZ=Asia/Tokyo date +%Y-%m-%d)
+          git add data/manual_stores.json
+          git diff --staged --quiet && exit 0
+          git commit -m "[agent] 話題店 +${{ steps.after.outputs.added }}件 自動追加: ${TODAY}"
+          git pull --rebase origin main || true
+          git push || (sleep 10 && git pull --rebase origin main && git push)
