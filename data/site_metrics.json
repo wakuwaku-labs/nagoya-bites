@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-05-27T08:06:48.901Z",
+  "generatedAt": "2026-05-27T20:16:53.600Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 278,
-    "pageViews": 797,
-    "sessions": 400,
-    "avgSessionDuration": 262.9,
-    "bounceRate": 0.498,
-    "pagesPerSession": 1.99
+    "activeUsers": 270,
+    "pageViews": 793,
+    "sessions": 392,
+    "avgSessionDuration": 279.1,
+    "bounceRate": 0.487,
+    "pagesPerSession": 2.02
   },
   "channels": {
     "sessions": {
-      "organic": 91,
-      "direct": 288,
+      "organic": 92,
+      "direct": 291,
       "social": 7,
-      "referral": 14,
+      "referral": 8,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 22.8,
-      "direct": 72,
+      "organic": 23.1,
+      "direct": 73.1,
       "social": 1.8,
-      "referral": 3.5,
+      "referral": 2,
       "paid": 0,
       "other": 0
     }
@@ -31,7 +31,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 246
+      "sessions": 240
     },
     {
       "source": "google",
@@ -41,7 +41,7 @@
     {
       "source": "chatgpt.com",
       "medium": "(not set)",
-      "sessions": 30
+      "sessions": 31
     },
     {
       "source": "yahoo",
@@ -49,14 +49,14 @@
       "sessions": 21
     },
     {
-      "source": "openai",
-      "medium": "(not set)",
-      "sessions": 6
-    },
-    {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 6
+      "sessions": 13
+    },
+    {
+      "source": "openai",
+      "medium": "(not set)",
+      "sessions": 7
     },
     {
       "source": "chatgpt.com",
@@ -66,7 +66,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 3
+      "sessions": 4
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -82,13 +82,13 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 301,
-      "sessions": 197
+      "pageViews": 294,
+      "sessions": 185
     },
     {
       "path": "/index.html",
-      "pageViews": 123,
-      "sessions": 64
+      "pageViews": 122,
+      "sessions": 63
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -108,7 +108,7 @@
   ],
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 278,
+    "value": 270,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
