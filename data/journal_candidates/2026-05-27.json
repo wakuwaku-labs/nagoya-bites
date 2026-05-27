@@ -1,0 +1,210 @@
+{
+  "date": "2026-05-27",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1-chigame-cochin",
+      "title_draft": "栄『千亀』が名古屋コーチンと三河赤鶏を使い分ける理由",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=55 → 10",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 8件 (価格帯,コース,席,予約,シーン,接待,デート,一人飲み)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 5件 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c2-tori-kai-25th",
+      "title_draft": "名駅エスカ『鳥開総本家』25周年、親子丼25%増量を業界人が読む",
+      "verdict": "FAIL",
+      "total": 94,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 22,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=30 → 7"
+        ],
+        "uniqueness": [
+          "独自性キーワード 7件 (価格帯,コース,席,予約,シーン,接待,繁忙)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 4件 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c3-supply-001-column",
+      "title_draft": "名古屋コーチン『本物』を出している店の見分け方 — 仕入3系統と表記サイン",
+      "verdict": "FAIL",
+      "total": 90,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=25 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 4件 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c5-cochin-digest",
+      "title_draft": "5月最終週 名古屋コーチン3軒の業界人ダイジェスト — 見分け方と価格戦略",
+      "verdict": "FAIL",
+      "total": 90,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=40 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 5件 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c4-sanwa-share",
+      "title_draft": "名古屋『鶏三和』を業界人が読む — 全国シェア1位・自社農場一貫の価格戦略",
+      "verdict": "FAIL",
+      "total": 89,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 19,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=8 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (コース,席,シーン,接待,一人飲み,繁忙)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1-chigame-cochin",
+  "fallback_needed": false
+}
