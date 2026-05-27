@@ -743,11 +743,35 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .feature-card-season{position:absolute;top:.7rem;left:.7rem;background:rgba(255,255,255,.94);color:var(--gold);font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.22em;padding:.3rem .55rem;border-radius:2px;white-space:nowrap;z-index:2;box-shadow:0 1px 3px rgba(0,0,0,.08);text-transform:uppercase;font-weight:700;backdrop-filter:blur(4px);}
 .feature-card{position:relative;}
 
-/* ── SORT BAR ── */
-.sort-bar{display:flex;align-items:center;gap:.5rem;padding:.5rem 1.5rem;background:var(--bg);border-bottom:1px solid var(--border);}
-.sort-bar label{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.16em;color:var(--dim);text-transform:uppercase;white-space:nowrap;}
-.sort-select{font-family:'Noto Sans JP',sans-serif;font-size:.72rem;color:var(--text);background:var(--surface);border:1px solid var(--border);padding:.38rem .7rem;border-radius:2px;cursor:pointer;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .5rem center;padding-right:1.6rem;}
-.sort-select:focus{border-color:var(--gold);}
+/* ── SORT BAR (chip version) ── */
+.sort-bar{display:flex;align-items:center;gap:.7rem;padding:.65rem 1.5rem;background:var(--bg);border-bottom:1px solid var(--border);}
+.sort-bar.sticky-sort{position:sticky;top:56px;z-index:140;background:rgba(247,245,241,.97);backdrop-filter:saturate(1.1) blur(6px);-webkit-backdrop-filter:saturate(1.1) blur(6px);}
+.sort-bar-label{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;white-space:nowrap;flex-shrink:0;}
+.sort-chips{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;}
+.sort-chip{background:#fff;border:1px solid var(--border);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:.78rem;letter-spacing:.02em;padding:.42rem .85rem;border-radius:999px;cursor:pointer;transition:all .15s ease;white-space:nowrap;line-height:1.1;font-weight:500;}
+.sort-chip:hover:not(.on):not([disabled]){border-color:var(--gold);color:var(--gold);}
+.sort-chip.on{background:var(--gold);border-color:var(--gold);color:#fff;font-weight:600;box-shadow:0 1px 4px rgba(122,92,16,.18);}
+.sort-chip.loading{opacity:.6;cursor:wait;}
+.sort-chip[disabled]{opacity:.45;cursor:not-allowed;}
+.sort-meta-bar{display:flex;align-items:center;gap:.5rem;padding:.4rem 1.5rem;background:var(--bg);border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.sort-meta-bar .notify-btn{order:1;}
+.sort-meta-bar .view-toggle{order:2;margin-left:auto;}
+.sort-meta-bar .hpc{order:3;margin-left:.6rem;}
+.dist-badge{position:absolute;top:.55rem;right:.55rem;background:rgba(10,10,8,.78);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);color:#fff;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.06em;padding:.26rem .55rem;border-radius:2px;z-index:3;font-weight:600;pointer-events:none;}
+.dist-badge.approx{opacity:.85;}
+.card.has-fav .dist-badge{right:48px;}
+@media(max-width:768px){
+.sort-bar.sticky-sort{top:56px;padding:.55rem .9rem;}
+.sort-bar-label{display:none;}
+.sort-chips{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:.25rem;margin:-.25rem 0;width:100%;}
+.sort-chip{scroll-snap-align:start;flex-shrink:0;font-size:.74rem;padding:.4rem .75rem;}
+.sort-meta-bar{padding:.4rem .9rem;}
+}
+@media(max-width:480px){
+.sort-bar.sticky-sort{padding:.5rem .7rem;}
+.sort-chip{font-size:.72rem;padding:.38rem .7rem;}
+.dist-badge{font-size:.58rem;padding:.22rem .45rem;}
+}
 /* ── VIEW TOGGLE ── */
 .view-toggle{display:flex;gap:.25rem;margin-left:auto;}
 .view-toggle button{background:transparent;border:1px solid var(--border);color:var(--dim);width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:2px;transition:all .2s;padding:0;}
@@ -767,7 +791,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .grid.list-mode .mrow{display:none;}
 @media(max-width:768px){
 .grid.list-mode .ci{width:90px;min-width:90px;height:70px;}
-.sort-bar{padding:.4rem 1rem;flex-wrap:wrap;}
 }
 /* ── FAV BUTTON ── */
 .fav-btn{position:absolute;top:.6rem;right:.6rem;z-index:3;background:rgba(10,10,8,.55);backdrop-filter:blur(4px);border:none;color:#fff;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;padding:0;}
@@ -1450,16 +1473,32 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
     </div>
   </div>
 
-  <div class="sort-bar" id="sort-bar">
-    <label for="sort-select">並び替え</label>
-    <select class="sort-select" id="sort-select" onchange="applySort()">
+  <div class="sort-bar sticky-sort" id="sort-bar" role="tablist" aria-label="並び替え">
+    <span class="sort-bar-label">並び替え</span>
+    <div class="sort-chips" id="sort-chips">
+      <button class="sort-chip on" type="button" role="tab" aria-selected="true" data-sort="recommend">おすすめ順</button>
+      <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="distance" data-needs-geo="1">📍近い順</button>
+      <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="view-desc">人気順</button>
+      <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="trend-desc">話題沸騰順</button>
+      <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="new-desc">新着順</button>
+
+      <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="price-asc">予算が安い順</button>
+      <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="price-desc">予算が高い順</button>
+      <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="cc-desc">整合度順</button>
+    </div>
+    <select class="sort-select" id="sort-select" hidden onchange="applySort()" aria-hidden="true">
       <option value="recommend">おすすめ順</option>
-      <option value="cc-desc">整合度順（高い順）</option>
-      <option value="trend-desc">トレンド順</option>
-      <option value="rating-desc">Google評価順（高い順）</option>
+      <option value="distance">近い順</option>
+      <option value="view-desc">人気順</option>
+      <option value="trend-desc">話題沸騰順</option>
+      <option value="new-desc">新着順</option>
+
       <option value="price-asc">価格帯順(安い順)</option>
       <option value="price-desc">価格帯順（高い順）</option>
+      <option value="cc-desc">整合度順（高い順）</option>
     </select>
+  </div>
+  <div class="sort-meta-bar" id="sort-meta-bar">
     <button class="notify-btn" id="notify-btn" onclick="showNotifyToast()" aria-label="この絞り込み条件に合致する新店舗を通知設定する"><span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>この条件で通知</button>
     <div class="view-toggle" id="view-toggle">
       <button id="vt-grid" class="active" onclick="setViewMode('grid')" aria-label="グリッド表示" title="グリッド表示"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="6" height="6" rx="1"/><rect x="8" y="0" width="6" height="6" rx="1"/><rect x="0" y="8" width="6" height="6" rx="1"/><rect x="8" y="8" width="6" height="6" rx="1"/></svg></button>
@@ -12517,8 +12556,16 @@ function buildCardHtml(r) {
     else if (ccScore >= 70) ccMetaHtml = '<span data-l="信頼度" class="cc-cell cc-mid" title="スコア信頼度">' + ccScore + '%</span>';
     else if (ccScore >= 50) ccMetaHtml = '<span data-l="信頼度" class="cc-cell cc-low" title="スコア信頼度">' + ccScore + '%</span>';
     else if (typeof r.crossCheckScore === 'number') ccMetaHtml = '<span data-l="信頼度" class="cc-cell cc-pending" title="スコア信頼度（参考値・データ蓄積中）">' + ccScore + '%</span>';
+    var distBadge = '';
+    if (typeof SORT_MODE !== 'undefined' && SORT_MODE === 'distance' && typeof r.__dist === 'number' && isFinite(r.__dist)) {
+      var distText = r.__dist < 1
+        ? Math.max(1, Math.round(r.__dist * 1000)) + 'm'
+        : r.__dist.toFixed(1) + 'km';
+      var approx = r.__distApprox !== false;
+      distBadge = '<span class="dist-badge' + (approx ? ' approx' : '') + '" title="' + (approx ? '現在地からの概算距離（エリア中心点）' : '現在地からの直線距離') + '">' + (approx ? '~' : '') + distText + '</span>';
+    }
     return '<div class="card" onclick="openM(' + idx + ')" role="button" tabindex="0" aria-label="' + r['店名'] + 'の詳細を見る">'
-      + '<div class="ci"><img src="' + nbImage(photo, 600) + '" srcset="' + nbSrcset(photo, [400, 600, 800]) + '" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)"></div>'
+      + '<div class="ci">' + distBadge + '<img src="' + nbImage(photo, 600) + '" srcset="' + nbSrcset(photo, [400, 600, 800]) + '" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)"></div>'
       + '<span class="badge">' + genre + '</span>'
       + trendBadgeHtml
       + (pref ? '<span class="pref-badge">' + pref + '</span>' : '')
@@ -13247,24 +13294,163 @@ function closeNav(){
 // [1] ソート機能
 // ================================================================
 var SORT_MODE = 'recommend';
+var USER_GEO = null;
+
+// エリア重心座標（build.js マージ漏れ・新規エリア対応の runtime fallback）
+// 正本は data/area_centroids.json。build.js が緯度/経度を焼き込めなかった
+// 店舗に対して、これを使って距離ソート可能にする。
+var AREA_CENTROIDS = {
+  '名古屋（名古屋駅/西区/中村区）': [35.1709, 136.8815],
+  '栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄': [35.1721, 136.9050],
+  '栄(ミナミ)/矢場町/大須/上前津': [35.1610, 136.9060],
+  '大曽根･千種･今池･池下･守山区': [35.1820, 136.9420],
+  '栄': [35.1681, 136.9083],
+  '緑区・南区・天白区・瑞穂区': [35.1050, 136.9550],
+  '本山・覚王山・藤が丘': [35.1620, 136.9700],
+  '中川区・港区': [35.1080, 136.8650],
+  '金山・神宮前・熱田区': [35.1318, 136.9050],
+  '名古屋駅': [35.1709, 136.8815],
+  '鶴舞・八事・御器所': [35.1440, 136.9380],
+  '金山': [35.1432, 136.9006],
+  '大須': [35.1597, 136.9032],
+  '名駅': [35.1709, 136.8815],
+  '丸の内': [35.1764, 136.8987],
+  '東区': [35.1830, 136.9220],
+  '錦': [35.1720, 136.9050],
+  '覚王山': [35.1599, 136.9527],
+  '昭和区': [35.1380, 136.9300],
+  '名古屋市その他': [35.1815, 136.9066],
+  '新栄': [35.1707, 136.9213],
+  '熱田': [35.1280, 136.9023],
+  '西区': [35.1950, 136.8820],
+  '天白区': [35.1240, 136.9750],
+  '東桜': [35.1760, 136.9110],
+  '中川区': [35.1300, 136.8540],
+  '高畑': [35.1530, 136.8470],
+  '港区': [35.0830, 136.8800],
+  '名東区': [35.1750, 137.0020],
+  '千種区 吹上': [35.1530, 136.9410],
+  '中区 栄': [35.1681, 136.9083],
+  '南区 鶴里': [35.1100, 136.9320],
+  '千種区 今池': [35.1700, 136.9341],
+  '東区 大曽根': [35.1933, 136.9281],
+  '名古屋駅西': [35.1719, 136.8760],
+  '北区 志賀町': [35.2040, 136.9170],
+  '昭和区 川名': [35.1430, 136.9450],
+  '伏見': [35.1689, 136.8989],
+  '矢場町': [35.1635, 136.9099],
+  '今池': [35.1700, 136.9341],
+  '千種': [35.1707, 136.9304],
+  '鶴舞': [35.1573, 136.9252],
+  '本山': [35.1555, 136.9633],
+  '東山公園': [35.1546, 136.9743],
+  '星ヶ丘': [35.1559, 136.9931],
+  '藤が丘': [35.1843, 137.0179],
+  '八事': [35.1335, 136.9551],
+  '御器所': [35.1432, 136.9337],
+  '桜山': [35.1306, 136.9305],
+  '上前津': [35.1568, 136.9069],
+  '久屋大通': [35.1739, 136.9081],
+  '池下': [35.1700, 136.9442],
+  '国際センター': [35.1740, 136.8902],
+  '神宮前': [35.1240, 136.9080]
+};
+
+// 店舗の lat/lng を取得。緯度経度フィールドを優先、無ければ AREA_CENTROIDS にフォールバック
+function getStoreCoords(s) {
+  var lat = parseFloat(s['緯度']);
+  var lng = parseFloat(s['経度']);
+  if (isFinite(lat) && isFinite(lng)) {
+    return { lat: lat, lng: lng, approx: s['座標精度'] !== 'exact' };
+  }
+  var c = AREA_CENTROIDS[s['エリア']];
+  if (c) return { lat: c[0], lng: c[1], approx: true };
+  return null;
+}
+try {
+  var _cachedGeo = sessionStorage.getItem('nb_user_geo');
+  if (_cachedGeo) {
+    var _g = JSON.parse(_cachedGeo);
+    if (_g && Date.now() - (_g.timestamp || 0) < 30 * 60 * 1000) USER_GEO = _g;
+  }
+} catch(e) {}
+
 function priceToNum(p) {
   if (!p) return 99999;
   var m = (p + '').replace(/[,，]/g,'').match(/(\d+)/);
   return m ? parseInt(m[1], 10) : 99999;
 }
+
+// 地球上 2点間の直線距離 (Haversine, km)
+function calculateDistance(lat1, lng1, lat2, lng2) {
+  var R = 6371;
+  var dLat = (lat2 - lat1) * Math.PI / 180;
+  var dLng = (lng2 - lng1) * Math.PI / 180;
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2)
+        + Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180)
+        * Math.sin(dLng/2) * Math.sin(dLng/2);
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+// 現在地を取得し SORT_MODE='distance' で再描画。許可拒否時はおすすめ順に戻す
+function ensureGeoAndSort() {
+  if (USER_GEO) { SORT_MODE = 'distance'; sortAndRender(); scrollToResultsIfAbove(); return; }
+  if (!navigator.geolocation) {
+    if (window.showToast) showToast('お使いの環境では位置情報が利用できません');
+    revertSort('recommend');
+    return;
+  }
+  var distChip = document.querySelector('.sort-chip[data-sort="distance"]');
+  if (distChip) distChip.classList.add('loading');
+  if (window.showToast) showToast('現在地を取得中...');
+  navigator.geolocation.getCurrentPosition(function(pos){
+    USER_GEO = { lat: pos.coords.latitude, lng: pos.coords.longitude, timestamp: Date.now() };
+    try { sessionStorage.setItem('nb_user_geo', JSON.stringify(USER_GEO)); } catch(e){}
+    if (distChip) distChip.classList.remove('loading');
+    SORT_MODE = 'distance';
+    sortAndRender();
+    scrollToResultsIfAbove();
+    if (window.trackEvent) trackEvent('sort_distance_granted', {});
+  }, function(err){
+    if (distChip) distChip.classList.remove('loading');
+    var msg = err && err.code === 1
+      ? '位置情報の利用が許可されていません'
+      : '現在地の取得に失敗しました';
+    if (window.showToast) showToast(msg);
+    revertSort('recommend');
+    if (window.trackEvent) trackEvent('sort_distance_denied', { code: err && err.code });
+  }, { timeout: 8000, maximumAge: 5 * 60 * 1000, enableHighAccuracy: false });
+}
+
+// chip と select、SORT_MODE を同期しつつ別のモードへ戻す
+function revertSort(mode) {
+  SORT_MODE = mode;
+  var sel = document.getElementById('sort-select');
+  if (sel) sel.value = mode;
+  document.querySelectorAll('.sort-chip').forEach(function(c){
+    var on = c.dataset.sort === mode;
+    c.classList.toggle('on', on);
+    c.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  sortAndRender();
+}
+
+function scrollToResultsIfAbove() {
+  var rb = document.getElementById('results-block');
+  if (!rb) return;
+  var rbTop = rb.getBoundingClientRect().top + window.pageYOffset;
+  if (window.pageYOffset < rbTop - 200 && typeof scrollToResults === 'function') scrollToResults();
+}
+
 function applySort() {
   var sel = document.getElementById('sort-select');
   SORT_MODE = sel ? sel.value : 'recommend';
+  if (SORT_MODE === 'distance' && !USER_GEO) { ensureGeoAndSort(); return; }
   sortAndRender();
-  // 結果より上にいる場合のみ先頭へ戻す（既に結果内をスクロール中なら邪魔しない）
-  var rb = document.getElementById('results-block');
-  if (rb) {
-    var rbTop = rb.getBoundingClientRect().top + window.pageYOffset;
-    if (window.pageYOffset < rbTop - 200) scrollToResults();
-  }
+  scrollToResultsIfAbove();
 }
-function sortAndRender() {
-  var arr = FILTERED.slice();
+
+function sortStores(arr) {
   switch (SORT_MODE) {
     case 'cc-desc':
       arr.sort(function(a,b){ return (b.crossCheckScore||0) - (a.crossCheckScore||0); });
@@ -13272,14 +13458,54 @@ function sortAndRender() {
     case 'trend-desc':
       arr.sort(function(a,b){ return (parseInt(b['トレンドスコア'])||0) - (parseInt(a['トレンドスコア'])||0); });
       break;
-    case 'rating-desc':
-      arr.sort(function(a,b){ return (parseFloat(b['Google評価'])||0) - (parseFloat(a['Google評価'])||0); });
-      break;
+
     case 'price-asc':
-      arr.sort(function(a,b){ return priceToNum(a['価格帯']) - priceToNum(b['価格帯']); });
+      arr.sort(function(a,b){
+        var pa = priceToNum(a['価格帯']), pb = priceToNum(b['価格帯']);
+        var ua = pa >= 99999 ? 1 : 0, ub = pb >= 99999 ? 1 : 0;
+        if (ua !== ub) return ua - ub; // 価格不明は末尾
+        return pa - pb;
+      });
       break;
     case 'price-desc':
-      arr.sort(function(a,b){ return priceToNum(b['価格帯']) - priceToNum(a['価格帯']); });
+      arr.sort(function(a,b){
+        var pa = priceToNum(a['価格帯']), pb = priceToNum(b['価格帯']);
+        var ua = pa >= 99999 ? 1 : 0, ub = pb >= 99999 ? 1 : 0;
+        if (ua !== ub) return ua - ub; // 価格不明は末尾
+        return pb - pa;
+      });
+      break;
+    case 'view-desc':
+      arr.sort(function(a,b){ return (parseInt(b['閲覧数'])||0) - (parseInt(a['閲覧数'])||0); });
+      break;
+    case 'new-desc':
+      arr.sort(function(a,b){
+        var ad = a['追加日'] ? Date.parse(a['追加日']) : 0;
+        var bd = b['追加日'] ? Date.parse(b['追加日']) : 0;
+        if ((bd||0) !== (ad||0)) return (bd||0) - (ad||0);
+        var ae = (a['編集部推薦'] === true || a['話題フラグ'] === true) ? 1 : 0;
+        var be = (b['編集部推薦'] === true || b['話題フラグ'] === true) ? 1 : 0;
+        return be - ae;
+      });
+      break;
+    case 'distance':
+      if (USER_GEO) {
+        arr.forEach(function(s){
+          var c = getStoreCoords(s);
+          if (c) {
+            s.__dist = calculateDistance(USER_GEO.lat, USER_GEO.lng, c.lat, c.lng);
+            s.__distApprox = c.approx;
+          } else {
+            s.__dist = Infinity;
+            s.__distApprox = true;
+          }
+        });
+        arr.sort(function(a,b){
+          var da = (a.__dist == null || !isFinite(a.__dist)) ? Infinity : a.__dist;
+          var db = (b.__dist == null || !isFinite(b.__dist)) ? Infinity : b.__dist;
+          return da - db;
+        });
+      }
       break;
     default: // recommend: 話題フラグ/編集部推薦 → トレンドスコア → おすすめ文有無 → Google評価
       arr.sort(function(a,b){
@@ -13299,52 +13525,20 @@ function sortAndRender() {
       });
       break;
   }
+  return arr;
+}
+
+function sortAndRender() {
+  var arr = sortStores(FILTERED.slice());
   renderGrid(arr);
 }
 
-// Override renderGrid to apply sort
+// Override renderGrid: 並び替えを一本化（applyFilters 経由でも同じソートが当たる）
 var _origRenderGrid = renderGrid;
 renderGrid = function(data) {
-  // Store filtered data, then sort
-  if (data === FILTERED) {
-    // Called from applyFilters, apply sort
-    var arr = data.slice();
-    switch (SORT_MODE) {
-      case 'trend-desc':
-        arr.sort(function(a,b){ return (parseInt(b['トレンドスコア'])||0) - (parseInt(a['トレンドスコア'])||0); });
-        break;
-      case 'rating-desc':
-        arr.sort(function(a,b){ return (parseFloat(b['Google評価'])||0) - (parseFloat(a['Google評価'])||0); });
-        break;
-      case 'price-asc':
-        arr.sort(function(a,b){ return priceToNum(a['価格帯']) - priceToNum(b['価格帯']); });
-        break;
-      case 'price-desc':
-        arr.sort(function(a,b){ return priceToNum(b['価格帯']) - priceToNum(a['価格帯']); });
-        break;
-      default:
-        arr.sort(function(a,b){
-          var af = a['話題フラグ'] === true ? 1 : 0;
-          var bf = b['話題フラグ'] === true ? 1 : 0;
-          if (bf !== af) return bf - af;
-          var ae = a.editorReason ? 1 : 0;
-          var be = b.editorReason ? 1 : 0;
-          if (be !== ae) return be - ae;
-          var at = parseInt(a['話題スコア']) || parseInt(a['トレンドスコア']) || 0;
-          var bt = parseInt(b['話題スコア']) || parseInt(b['トレンドスコア']) || 0;
-          if (bt !== at) return bt - at;
-          var ap = a['おすすめポイント'] ? 1 : 0;
-          var bp = b['おすすめポイント'] ? 1 : 0;
-          if (bp !== ap) return bp - ap;
-          return (parseFloat(b['Google評価'])||0) - (parseFloat(a['Google評価'])||0);
-        });
-        break;
-    }
-    _origRenderGrid(arr);
-  } else {
-    _origRenderGrid(data);
-  }
-  // Show/hide notify button
+  var arr = (data === FILTERED) ? sortStores(data.slice()) : data;
+  _origRenderGrid(arr);
+  // 通知ボタン表示
   var nb = document.getElementById('notify-btn');
   if (nb) {
     var hasFilters = ACTIVE_TAGS.length > 0 || ACTIVE_WARD !== 'all' ||
@@ -13354,6 +13548,39 @@ renderGrid = function(data) {
     nb.classList.toggle('show', hasFilters);
   }
 };
+
+// chip ボタンに click ハンドラを設定（初回マウント時）
+(function bindSortChips(){
+  function bind(){
+    var chips = document.querySelectorAll('.sort-chip');
+    if (!chips.length) return;
+    chips.forEach(function(btn){
+      if (btn.__bound) return;
+      btn.__bound = true;
+      btn.addEventListener('click', function(){
+        if (btn.hasAttribute('disabled')) return;
+        var mode = btn.dataset.sort;
+        if (!mode) return;
+        document.querySelectorAll('.sort-chip').forEach(function(c){
+          var on = c === btn;
+          c.classList.toggle('on', on);
+          c.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        var sel = document.getElementById('sort-select');
+        if (sel) sel.value = mode;
+        SORT_MODE = mode;
+        if (mode === 'distance') { ensureGeoAndSort(); }
+        else { sortAndRender(); scrollToResultsIfAbove(); }
+        if (window.trackEvent) trackEvent('sort_change', { mode: mode });
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
+  }
+})();
 
 // ================================================================
 // [2] お気に入り / 保存機能

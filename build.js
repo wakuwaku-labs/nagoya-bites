@@ -1549,6 +1549,50 @@ async function main() {
     console.log('data/view_counts.json なし（GA4 閲覧数マージスキップ）');
   }
 
+  // ─── 座標データのマージ（Tier 1: エリア重心 → Tier 2: 個別店舗座標で上書き） ─────
+  // 有料 API を使わず、エリア重心（手動定義・data/area_centroids.json）で全店カバー。
+  // OSM Nominatim で個別店舗座標が取得できれば store_coordinates.json で上書き（精度向上）。
+  const centroidsPath = path.join(__dirname, 'data', 'area_centroids.json');
+  const storeCoordsPath = path.join(__dirname, 'data', 'store_coordinates.json');
+  let centroids = {};
+  let storeCoords = {};
+  if (fs.existsSync(centroidsPath)) {
+    try {
+      const raw = JSON.parse(fs.readFileSync(centroidsPath, 'utf8'));
+      centroids = raw.centroids || raw;
+    } catch (e) {
+      console.warn(`area_centroids.json 読み込み失敗: ${e.message}`);
+    }
+  }
+  if (fs.existsSync(storeCoordsPath)) {
+    try {
+      storeCoords = JSON.parse(fs.readFileSync(storeCoordsPath, 'utf8'));
+    } catch (e) {
+      console.warn(`store_coordinates.json 読み込み失敗: ${e.message}`);
+    }
+  }
+  let coordTier1 = 0, coordTier2 = 0;
+  for (const s of stores) {
+    // Tier 1: エリア重心
+    const c = centroids[s['エリア']];
+    if (c && Number.isFinite(c.lat) && Number.isFinite(c.lng)) {
+      s['緯度'] = String(c.lat);
+      s['経度'] = String(c.lng);
+      s['座標精度'] = 'area';
+      coordTier1++;
+    }
+    // Tier 2: 個別店舗座標で上書き
+    const key = s['ホットペッパーID'] || (s['店名'] + '|' + s['エリア']);
+    const ec = storeCoords[key];
+    if (ec && Number.isFinite(ec.lat) && Number.isFinite(ec.lng)) {
+      s['緯度'] = String(ec.lat);
+      s['経度'] = String(ec.lng);
+      s['座標精度'] = 'exact';
+      coordTier2++;
+    }
+  }
+  console.log(`座標マージ: Tier1(エリア) ${coordTier1} / Tier2(個別) ${coordTier2} / 全 ${stores.length}店`);
+
   if (rejected.length > 0 && rejected.length <= 30) {
     console.log('除外された店舗（最大30件）:');
     rejected.slice(0, 30).forEach(s => {
