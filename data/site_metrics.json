@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-05-27T00:18:37.119Z",
+  "generatedAt": "2026-05-27T08:06:48.901Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 272,
-    "pageViews": 788,
-    "sessions": 392,
-    "avgSessionDuration": 267,
-    "bounceRate": 0.523,
-    "pagesPerSession": 2.01
+    "activeUsers": 278,
+    "pageViews": 797,
+    "sessions": 400,
+    "avgSessionDuration": 262.9,
+    "bounceRate": 0.498,
+    "pagesPerSession": 1.99
   },
   "channels": {
     "sessions": {
-      "organic": 88,
-      "direct": 293,
+      "organic": 91,
+      "direct": 288,
       "social": 7,
       "referral": 14,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 21.9,
-      "direct": 72.9,
-      "social": 1.7,
+      "organic": 22.8,
+      "direct": 72,
+      "social": 1.8,
       "referral": 3.5,
       "paid": 0,
       "other": 0
@@ -31,12 +31,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 241
+      "sessions": 246
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 66
+      "sessions": 67
     },
     {
       "source": "chatgpt.com",
@@ -46,15 +46,15 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 19
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 16
+      "sessions": 21
     },
     {
       "source": "openai",
+      "medium": "(not set)",
+      "sessions": 6
+    },
+    {
+      "source": "(not set)",
       "medium": "(not set)",
       "sessions": 6
     },
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 297,
-      "sessions": 194
+      "pageViews": 301,
+      "sessions": 197
     },
     {
       "path": "/index.html",
@@ -97,7 +97,7 @@
     },
     {
       "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
-      "pageViews": 28,
+      "pageViews": 29,
       "sessions": 25
     },
     {
@@ -108,7 +108,7 @@
   ],
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 272,
+    "value": 278,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
