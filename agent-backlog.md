@@ -742,6 +742,7 @@
 | 2026-05-24 | Editor+DataKeeper(/solve-next) | **ISSUE-045 収集パイプライン整備 + 第1バッチ昇格**: editorReason 収集の3スクリプト新設（list_editorreason_candidates / import_editorreason_todo / promote_manual_to_editorreason）+ 作業表テンプレ docs/editorreason-todo.md 生成。manual_stores の編集部推薦店 12 件（勝手口河内屋・麺や六三六・麺屋はなび・山岡家・COFFEE KAJITA・TRUNK COFFEE・コメダ本店・喫茶ユキ・喫茶マウンテン・大須王将・弁才天・花わさび）の おすすめポイント を editorReason に昇格（捏造ゼロ・既に編集部が書いた文章のカテゴリ昇格）。editor_picks 100→112 件 / CI反映後 editorReason 2.2%→2.5% | ✅ デプロイ済み (b28d2289c) |
 | 2026-05-24 | Editor+DataKeeper(EXPLICIT) | **manual-stores 話題店ロット1追加（4件）**: ネット最新の話題店を多重ソース検証ゲート（2ソース以上 + 名古屋住所 + 話題根拠）で精査し manual_stores.json に追加。(1)熱田味噌拉麺ぶりゆ＝食べログ ラーメン AICHI 百名店 2025 初選出・神宮前 (2)鶏そば 啜る 丸の内本店＝同百名店2025(3.59/598件) (3)中華そば 雷杏 -RYAN- 名駅店＝同百名店2025初選出 (4)キング軒 名古屋大須店＝2026/4/3 オープン・広島汁なし担担麺 東海2号店。各店 出典URL 4本以上で実在保証・GOOGLE_MAPS_API_KEY 未設定下のためローカルでは shrink-guard 発火・index.html は無変更で CI 側ビルド+Places写真補完に委任。manual_stores 33→37件 | ✅ デプロイ済み (9e2063433) |
 | 2026-05-24 | Editor+Builder | **ISSUE-045 web 自動収集パイプライン整備（業界人知識の大規模自動化）**: Google CSE + Claude API + 引用必須プロンプト + 人手レビューゲートの4-stage 自動化パイプライン構築（lib/google_cse / lib/anthropic_extractor / build_editorreason_drafts / approve_editorreason_drafts）/ editor_picks.json _schema 拡張（sources/source/automation 追加・捏造防止監査証跡）/ .github/workflows/editorreason-batch.yml 週次起動 / docs/editorreason-automation-setup.md 運用 runbook / 実演 3 件（麺屋まつり名古屋店 OK confidence 0.88・Ponte と パル/8 は正しく INSUFFICIENT 棄却）→ editor_picks 112→113 件 / 起動には GOOGLE_CSE_KEY/CX + ANTHROPIC_API_KEY 設定が必要（コスト 月~$4・歩留まり 30-50% で 1 年 750-1,300 件追加見込み） | ✅ デプロイ済み (daa9ecfa4) |
+| 2026-05-24 | Editor+Marketer(/solve-next) | **ISSUE-030 第1バッチ 30 投稿原稿作成**: docs/sns-posts-batch-1.md 新規。配分 Series D 10 + Series C 5 + Series E 5 + Series B 10。Series D（シーン別）= 既存特集 meieki/settai-secret/girls-party/large-group/date/birthday-surprise/fathers-day/solo-dining/接待ランチjournal/miso-nikomi-udon を IG+X 完全ドラフト化。Series C（editor_picks 解説）= サザンクラウン・wakamaru・麺屋まつり・弁才天・喫茶マウンテン 5店をカルーセル 4 枚構成で。Series E（journal 切出）= 直近 5 本（鶴里らふ/柳橋ビアガーデン/W4ダイジェスト/利招別邸/千金 cochin）140字＋誘導。Series B 10本は AI 捏造リスク回避のためテーマ枠+業界人記入欄（30〜120字）として残し partial 扱い。憲法準拠（実写のみ・PR/案件タグ禁止）。完全ドラフト 20/30 達成 | ✅ デプロイ予定 |
 | 2026-05-24 | DataKeeper(EXPLICIT) | **キング軒のアクセス修正（'津' 部分一致除外回避）+ ISSUE-057 起票**: CI ビルド後検証で「キング軒 名古屋大須店」だけ LOCAL_STORES に反映されないと判明。原因＝build.js `ACCESS_HARD_NEGATIVE` の `'津'`（津市除外用）が `上前津駅` の `津` 字に部分一致して isNagoyaStore() で reject されていた。即時対応として アクセスを `大須観音駅／矢場町駅 徒歩圏内` に書き換え（実態と乖離なし）。これに伴い ISSUE-057 起票（HARD_NEGATIVE 部分一致バグ・他にも上前津駅利用の Hot Pepper 店が暗黙除外されている疑い・要 audit） | ✅ デプロイ済み (commit pending) |
 | 2026-05-25 | DataKeeper(/solve-next) | **ISSUE-061 即時 done 化（起票→修復まで一気通貫）**: 起票直後に修復スクリプト scripts/patch_manual_stores_addresses.js を新設し、有名店32店（あつた蓬莱軒・矢場とん本店・コメダ珈琲本店・喫茶マウンテン・麺屋はなび・大衆割烹八べゑ・ひつまぶし名古屋備長・しゃぶしゃぶ温野菜 等）のアクセス欄に区＋駅情報＋徒歩分数を一括追加。再 audit で「アクセス欄に住所: 40 → 68（全店）」「重大欠陥: 28 → 0」を達成。番地は投機的にならない範囲（駅出口・地下街等の確認可能なもののみ）。CLAUDE.md 架空店ブロック規約の精神を完全充足 | ✅ デプロイ予定 |
 | 2026-05-25 | DataKeeper(/solve-next) | **ISSUE-061 起票 + audit を CI 統合**: manual_stores.json の 68 店中 28 店（41%）が食べログURL・ホットペッパーID・住所のいずれも未設定で詳細到達不能と判明（audit_manual_stores_links.js 実行結果）。代表例は麺や六三六・あつた蓬莱軒本店・ひつまぶし名古屋備長エスカ店等の本物の有名店だが、データに verification path 無し → 不当な疑念リスク。即時対応として audit を build.yml に統合（continue-on-error）して観測可能性を確保。データ拡充は人手作業のため P1 として ISSUE-061 起票 | ✅ 起票+CI統合 |
@@ -1348,25 +1349,32 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **blocker**: 人間 Editor の検証作業時間（AI エージェント単独では完結不可）
 - **note**: ISSUE-029 のフォローアップとして起票したが、監査の結果、品質ギャップを超えた信頼毀損リスクが発覚。優先度を P0 に昇格
 
-### [ISSUE-030] 「業界人視点」コンテンツの SNS 用ショートフォーマット化 🔄
+### [ISSUE-030] 「業界人視点」コンテンツの SNS 用ショートフォーマット化 🟡
 
 - **priority**: P1
-- **status**: in_progress（テンプレ設計 v0.1 完了 / 初回 30 投稿の制作と公開は ISSUE-028 のアカウント開設後）
+- **status**: partial（30 投稿のうち 20 本フルドラフト完成 / Series B 10 本は業界人記入欄待ち）
 - **category**: competitive / content / marketing
 - **detected**: 2026-05-06
-- **last_update**: 2026-05-08
+- **last_update**: 2026-05-24
 - **description**:
   ナゴレコ・名古屋情報通の SNS は「店舗紹介」止まり。我々は insiderNote / editorReason という他にない解釈層があるので、「なぜこの店は予約困難なのか」「業界人だけが知る◯◯の見極め」型のショートフォーマット（Instagram 9:16・X 画像+140字）でテンプレ化する。コンテンツ × チャネルの掛け算で SNS と Moat を同時に活かす。
 - **progress 2026-05-08**:
   - `docs/sns-content-template.md` v0.1 草稿完成。Series A〜E（予約困難の理由 / 業界人見極め / editor_picks 解説 / シーン別ショート / ジャーナル切り出し）の 5 シリーズを定義
   - 投稿頻度・ハッシュタグ規約・編集独立性ルール・写真出典別使用可否・KPI・立ち上げチェックリスト整備
-  - ユーザー判断 5 項目を末尾に明示（朝レビュー待ち）
+- **progress 2026-05-24 — 第1バッチ 30 投稿原稿作成**:
+  - `docs/sns-posts-batch-1.md` を新規作成。配分は Series D 10 + Series C 5 + Series E 5 + Series B 10 = 30 本
+  - **Series D（シーン別ショート・10 本）**: 既存特集 meieki / settai-secret / girls-party / large-group / date / birthday-surprise / fathers-day-2026 / nagoya-solo-dining / 接待ランチ journal / nagoya-miso-nikomi-udon をベースに IG + X 投稿を完全ドラフト
+  - **Series C（editor_picks 解説・5 本）**: サザンクラウン / wakamaru / 麺屋まつり 名古屋店 / 覚王山フルーツ大福 弁才天 / 喫茶マウンテン。editorReason を引用しカルーセル 4 枚構成
+  - **Series E（ジャーナル切り出し・5 本）**: 最新 5 本 journal（鶴里らふ / 柳橋ビアガーデン / 5月W4 ダイジェスト / 利招別邸 / 千金 cochin）を 140 字に切り出し記事誘導
+  - **Series B（業界人見極め・10 本）**: テーマ + 業界人記入欄のみ。AI が想像で書くと捏造リスク（CLAUDE.md 準拠）のため、現役飲食人（あなた）の一次経験で 30〜120 字を埋める形式
+  - 全投稿でハッシュタグ規約・憲法準拠（実写のみ）・編集独立性（PR/案件タグ禁止）を遵守
 - **next**:
-  - ユーザーが朝レビュー → Series 採択・運用頻度・アカウント名を確定
-  - ISSUE-028 でアカウント開設後、初回 30 投稿の制作に着手
+  - Series B 10 本の記入欄をあなた（業界人）が埋める（音声入力 OK）→ 編集部が最終形に整形
+  - 完成次第 done に切替（acceptance 達成）
+  - 並走で Series D/C/E はそのまま公開可能
 - **impact**: SNS フォロワー獲得 + ブランド認知 + AI Overviews 引用候補化の同時達成
-- **acceptance**: テンプレ設計書 ✅ + 初回 30投稿の制作完了 ⏳。ISSUE-028 と並走
-- **files**: `docs/sns-content-template.md`（v0.1 草稿）
+- **acceptance**: テンプレ設計書 ✅ + 初回 30投稿の制作完了 🟡（20/30 完成・Series B 10 待ち）
+- **files**: `docs/sns-content-template.md`（v0.1） / `docs/sns-posts-batch-1.md`（30 投稿）
 - **owner**: Editor + Marketer
 
 ### [ISSUE-031] ロングテール独自 KW での SEO 1位獲得戦略 ✅
