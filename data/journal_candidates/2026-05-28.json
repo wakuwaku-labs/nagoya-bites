@@ -1,0 +1,208 @@
+{
+  "date": "2026-05-28",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "上前津で28年続いた『十二ヵ月』が浄心で復活した意味を業界人視点で読む",
+      "verdict": "PASS",
+      "total": 96,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 24,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=8 → 4",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (価格帯,コース,席,シーン,デート,アラカルト)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 6件 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "千種『HoshiFuru』が22時まで開ける意味を業界人視点で読む",
+      "verdict": "FAIL",
+      "total": 76,
+      "breakdown": {
+        "recency": 15,
+        "topicality": 14,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 13日前"
+        ],
+        "topicality": [
+          "media_count=2 → 10",
+          "x_mentions=6 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (席,予約,シーン,デート,アラカルト,一人飲み)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "錦三丁目『鮨 成琉』が4月開業した意味を業界人が読む",
+      "verdict": "FAIL",
+      "total": 61,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 14,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 43日前"
+        ],
+        "topicality": [
+          "media_count=2 → 10",
+          "x_mentions=5 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 7件 (コース,席,予約,シーン,接待,繁忙,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "サンモリッツ太閤店が名駅西で開業した意味を業界人が読む",
+      "verdict": "FAIL",
+      "total": 61,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 14,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 65日前"
+        ],
+        "topicality": [
+          "media_count=2 → 10",
+          "x_mentions=3 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 4件 (席,シーン,繁忙,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "JR名古屋タカシマヤB1『ロダス』東海初常設店の意味を業界人視点で読む",
+      "verdict": "FAIL",
+      "total": 51,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 14,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 106日前"
+        ],
+        "topicality": [
+          "media_count=2 → 10",
+          "x_mentions=4 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 2件 (アラカルト,繁忙)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "fallback_needed": false
+}
