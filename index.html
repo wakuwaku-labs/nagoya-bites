@@ -6382,6 +6382,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="index.html#q=%E7%82%8A%E3%81%8D%E8%82%89%E5%B1%8B%20%E3%81%97%E3%81%98%E3%81%BF%E5%80%B6%E6%A5%BD%E9%83%A8">炊き肉屋 しじみ倶楽部（名古屋駅西 肉料理・スタミナ）</a></li>
 <li><a href="index.html#q=%E3%82%AB%E3%83%84%E3%82%B5%E3%83%B3%E3%83%89%E3%80%81%E3%82%BF%E3%83%90%E3%82%BF">カツサンド、タバタ（北区 志賀町 サンドイッチ・カツサンド）</a></li>
 <li><a href="index.html#q=LYCHI">LYCHI（昭和区 川名 カフェ・ビストロ）</a></li>
+<li><a href="index.html#q=%E5%8D%81%E4%BA%8C%E3%83%B5%E6%9C%88">十二ヵ月（西区 浄心 カフェ・自家焙煎珈琲）</a></li>
 </ul></noscript>
 <div class="grid" id="grid"></div>
 <div class="pagination" id="pagination" role="navigation" aria-label="ページネーション"></div>
@@ -6543,9 +6544,9 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <!-- トースト通知 -->
 <div class="toast" id="toast"></div>
 
-<!-- STORE-INDEX:START 2026-05-27 -->
+<!-- STORE-INDEX:START 2026-05-28 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（4870店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（4871店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（824店）</summary>
@@ -11602,6 +11603,12 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="index.html#q=LYCHI">LYCHI（昭和区 川名・カフェ・ビストロ）</a></li>
 </ul>
 </details>
+<details class="store-index-area" data-area="西区 浄心">
+<summary>西区 浄心（1店）</summary>
+<ul class="store-index-list">
+<li><a href="index.html#q=%E5%8D%81%E4%BA%8C%E3%83%B5%E6%9C%88">十二ヵ月（西区 浄心・カフェ・自家焙煎珈琲）</a></li>
+</ul>
+</details>
 </section>
 <!-- STORE-INDEX:END -->
 
@@ -11687,7 +11694,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '2c3263501856';
+var STORES_JSON_VERSION = '544c363360b3';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
