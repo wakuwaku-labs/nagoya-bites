@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="上前津で28年続いた『十二ヵ月』が浄心で復活した意味 — 業界人視点の業態構造図">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1410"/>
+      <stop offset="100%" stop-color="#3d2f1f"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#1a1410"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#e8c890" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+
+  <g opacity=".55" fill="none" stroke="#e8c890" stroke-width="1.6">
+    <rect x="380" y="55" width="190" height="170"/>
+    <line x1="380" y1="140" x2="570" y2="140"/>
+    <text x="475" y="78" text-anchor="middle" fill="#e8c890" opacity=".9"
+          font-family="'Helvetica Neue', Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="0.15em">FLOOR PLAN</text>
+    <text x="475" y="115" text-anchor="middle" fill="#fff" opacity=".95"
+          font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-size="13" font-weight="700">2F カウンター＋テーブル</text>
+    <text x="475" y="132" text-anchor="middle" fill="#fff" opacity=".95"
+          font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-size="13" font-weight="700">約15席＋ギャラリー</text>
+    <text x="475" y="180" text-anchor="middle" fill="#fff" opacity=".95"
+          font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-size="13" font-weight="700">1F カウンター5席</text>
+    <text x="475" y="200" text-anchor="middle" fill="#e8c890" opacity=".85"
+          font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-size="11">＋自家焙煎機</text>
+  </g>
+
+  <rect x="36" y="36" width="3" height="155" fill="#e8c890" opacity=".9"/>
+  <text x="46" y="60" fill="#e8c890" opacity=".75"
+        font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+  <text x="46" y="100" fill="#fff"
+        font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif"
+        font-size="22" font-weight="700" letter-spacing="0.02em">上前津28年の『十二ヵ月』が</text>
+  <text x="46" y="130" fill="#fff"
+        font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif"
+        font-size="22" font-weight="700" letter-spacing="0.02em">浄心で復活した意味を読む</text>
+
+  <g font-family="'Helvetica Neue', Arial, sans-serif" fill="#e8c890" opacity=".95">
+    <text x="46" y="170" font-size="10" font-weight="700" letter-spacing="0.2em">TIMELINE</text>
+    <line x1="46" y1="180" x2="360" y2="180" stroke="#e8c890" stroke-width="1" opacity=".5"/>
+    <circle cx="60" cy="180" r="4" fill="#e8c890"/>
+    <text x="60" y="200" text-anchor="middle" font-size="11" font-weight="700">1996</text>
+    <text x="60" y="214" text-anchor="middle" font-size="9" opacity=".75">上前津</text>
+    <circle cx="200" cy="180" r="4" fill="#e8c890"/>
+    <text x="200" y="200" text-anchor="middle" font-size="11" font-weight="700">2024.8</text>
+    <text x="200" y="214" text-anchor="middle" font-size="9" opacity=".75">旧店閉店</text>
+    <circle cx="340" cy="180" r="5" fill="#fff"/>
+    <text x="340" y="200" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">2026.5.15</text>
+    <text x="340" y="214" text-anchor="middle" font-size="9" opacity=".9" fill="#fff">浄心で再開</text>
+  </g>
+
+  <text x="46" y="245" fill="#e8c890" opacity=".6"
+        font-family="'Helvetica Neue', Arial, sans-serif" font-size="9" letter-spacing="0.1em">EDITORIAL FIGURE / NAGOYA BITES 2026-05-28</text>
+</svg>
