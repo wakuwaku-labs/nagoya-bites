@@ -12293,6 +12293,11 @@ function clearAllFilters() {
   document.querySelectorAll('.pt').forEach(function(x){ x.classList.remove('on'); });
   var allPref = document.querySelector('.pt[data-pref="全国"]') || document.querySelector('.pt');
   if (allPref) allPref.classList.add('on');
+  // Clear ward
+  ACTIVE_WARD = 'all';
+  document.querySelectorAll('.at').forEach(function(x){ x.classList.remove('on'); });
+  var allWard = document.querySelector('.at[data-ward="all"]');
+  if (allWard) allWard.classList.add('on');
   // Clear genre
   document.querySelectorAll('.ft').forEach(function(x){ x.classList.remove('on'); });
   var allGenre = document.querySelector('.ft[data-f="all"]') || document.querySelector('.ft[data-f="All"]');
@@ -12321,6 +12326,7 @@ function updateFilterUI() {
   var cap = capEl ? capEl.value.trim() : '';
   var q = siEl ? siEl.value.trim() : '';
   if (pref !== '全国' && pref !== 'all') count++;
+  if (typeof ACTIVE_WARD !== 'undefined' && ACTIVE_WARD && ACTIVE_WARD !== 'all') count++;
   if (genre !== 'All' && genre !== 'all') count++;
   if (ACTIVE_TAGS.length > 0) count += ACTIVE_TAGS.length;
   if (cap) count++;
@@ -12348,6 +12354,9 @@ function updateFilterUI() {
   var html = '';
   if (pref !== '全国' && pref !== 'all') {
     html += '<span class="chip" data-clear="pref">' + pref + ' <span class="chip-x">×</span></span>';
+  }
+  if (typeof ACTIVE_WARD !== 'undefined' && ACTIVE_WARD && ACTIVE_WARD !== 'all') {
+    html += '<span class="chip" data-clear="ward">' + ACTIVE_WARD + ' <span class="chip-x">×</span></span>';
   }
   if (genre !== 'All' && genre !== 'all') {
     html += '<span class="chip" data-clear="genre">' + genre + ' <span class="chip-x">×</span></span>';
@@ -12404,6 +12413,11 @@ document.addEventListener('click', function(e) {
     document.querySelectorAll('.pt').forEach(function(x){ x.classList.remove('on'); });
     var allPref = document.querySelector('.pt[data-pref="全国"]') || document.querySelector('.pt');
     if (allPref) allPref.classList.add('on');
+  } else if (clearType === 'ward') {
+    ACTIVE_WARD = 'all';
+    document.querySelectorAll('.at').forEach(function(x){ x.classList.remove('on'); });
+    var allWardChip = document.querySelector('.at[data-ward="all"]');
+    if (allWardChip) allWardChip.classList.add('on');
   } else if (clearType === 'genre') {
     document.querySelectorAll('.ft').forEach(function(x){ x.classList.remove('on'); });
     var allGenre = document.querySelector('.ft[data-f="all"]') || document.querySelector('.ft[data-f="All"]');
