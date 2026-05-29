@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-05-29T07:32:27.917Z",
+  "generatedAt": "2026-05-29T09:13:57.950Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 266,
-    "pageViews": 847,
-    "sessions": 392,
-    "avgSessionDuration": 303.2,
-    "bounceRate": 0.436,
+    "activeUsers": 269,
+    "pageViews": 857,
+    "sessions": 396,
+    "avgSessionDuration": 300.4,
+    "bounceRate": 0.442,
     "pagesPerSession": 2.16
   },
   "channels": {
     "sessions": {
       "organic": 99,
-      "direct": 277,
+      "direct": 283,
       "social": 7,
       "referral": 10,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 25.2,
-      "direct": 70.5,
+      "organic": 24.8,
+      "direct": 70.9,
       "social": 1.8,
       "referral": 2.5,
       "paid": 0,
@@ -31,7 +31,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 226
+      "sessions": 230
     },
     {
       "source": "google",
@@ -49,14 +49,14 @@
       "sessions": 22
     },
     {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 10
+    },
+    {
       "source": "openai",
       "medium": "(not set)",
       "sessions": 9
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 8
     },
     {
       "source": "chatgpt.com",
@@ -82,13 +82,13 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 285,
-      "sessions": 168
+      "pageViews": 292,
+      "sessions": 171
     },
     {
       "path": "/index.html",
-      "pageViews": 124,
-      "sessions": 64
+      "pageViews": 127,
+      "sessions": 66
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -108,7 +108,7 @@
   ],
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 266,
+    "value": 269,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
