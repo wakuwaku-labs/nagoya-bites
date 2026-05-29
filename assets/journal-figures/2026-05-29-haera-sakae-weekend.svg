@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-labelledby="figTitle figDesc">
+  <title id="figTitle">栄・週末予約タイミング図 — HAERA（ザ・ランドマーク名古屋栄）6月11日開業 前後の人流</title>
+  <desc id="figDesc">開業前の今週末・来週末は栄が平常で予約が取りやすく、6月11日のHAERA開業から6月14日までは入場予約制で栄北側に人流が集中、6月下旬以降に平常化するという業界人視点のタイムライン図。</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1d1916"/>
+      <stop offset="1" stop-color="#120f0d"/>
+    </linearGradient>
+    <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3a6b54"/>
+      <stop offset="0.45" stop-color="#3a6b54"/>
+      <stop offset="0.55" stop-color="#b5462f"/>
+      <stop offset="0.72" stop-color="#b5462f"/>
+      <stop offset="0.85" stop-color="#8a7a52"/>
+      <stop offset="1" stop-color="#3f6f57"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- frame -->
+  <rect x="36" y="36" width="1128" height="558" rx="14" fill="none" stroke="#3a332c" stroke-width="1.5"/>
+
+  <!-- eyebrow -->
+  <text x="72" y="98" font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-size="22" letter-spacing="6" fill="#c8a96a">NAGOYA BITES ・ 季節短信 図版</text>
+
+  <!-- title -->
+  <text x="72" y="150" font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-size="44" font-weight="700" fill="#f4efe6">栄・週末予約タイミング図</text>
+  <text x="72" y="190" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="21" fill="#a89f95">HAERA（ザ・ランドマーク名古屋栄）6/11開業 前後の人流を業界人視点で読む</text>
+
+  <!-- timeline base -->
+  <line x1="110" y1="360" x2="1090" y2="360" stroke="#4a423a" stroke-width="2"/>
+  <!-- flow bar -->
+  <rect x="110" y="350" width="980" height="20" rx="10" fill="url(#flow)" opacity="0.85"/>
+
+  <!-- markers -->
+  <!-- 1: this weekend (highlight) -->
+  <g>
+    <circle cx="200" cy="360" r="11" fill="#6fae8c" stroke="#f4efe6" stroke-width="2"/>
+    <rect x="120" y="398" width="190" height="120" rx="10" fill="#21302a" stroke="#6fae8c" stroke-width="1.6"/>
+    <text x="138" y="428" font-family="'Hiragino Kaku Gothic ProN',sans-serif" font-size="20" font-weight="700" fill="#9fe0bd">5/30–31 今週末</text>
+    <text x="138" y="456" font-family="'Hiragino Kaku Gothic ProN',sans-serif" font-size="17" fill="#dfd8cd">開業前＝栄は平常。</text>
+    <text x="138" y="480" font-family="'Hiragino Kaku Gothic ProN',sans-serif" font-size="17" fill="#dfd8cd">予約が取りやすい</text>
+    <text x="138" y="504" font-family="'Hiragino Kaku Gothic ProN',sans-serif" font-size="17" font-weight="700" fill="#9fe0bd">＝狙い目</text>
+  </g>
+
+  <!-- 2: next weekend -->
+  <g>
+    <circle cx="430" cy="360" r="9" fill="#6fae8c" stroke="#1d1916" stroke-width="2"/>
+    <text x="430" y="316" text-anchor="middle" font-family="'Hiragino Kaku Gothic ProN',sans-serif" font-size="18" font-weight="700" fill="#cde9d8">6/6–7 来週末</text>
+    <text x="430" y="294" text-anchor="middle" font-family="'Hiragino Kaku Gothic ProN',sans-serif" font-size="15" fill="#9a9189">開業直前・まだ静か</text>
+  </g>
+
+  <!-- 3: opening day -->
+  <g>
+    <circle cx="660" cy="360" r="13" fill="#d96a4f" stroke="#f4efe6" stroke-width="2.4"/>
+    <rect x="560" y="398" width="200" height="120" rx="10" fill="#33211c" stroke="#d96a4f" stroke-width="1.6"/>
+    <text x="578" y="428" font-family="'Hiragino Kaku Gothic ProN',sans-serif" font-size="20" font-weight="700" fill="#f0a98f">6/11(木) 開業</text>
+    <text x="578" y="456" font-family="'Hiragino Kaku Gothic ProN',sans-serif" font-size="17" fill="#dfd8cd">商業施設HAERA</text>
+    <text x="578" y="480" font-family="'Hiragino Kaku Gothic ProN',sans-serif" font-size="17" fill="#dfd8cd">65テナント・栄駅直結</text>
+    <text x="578" y="504" font-family="'Hiragino Kaku Gothic ProN',sans-serif" font-size="17" fill="#dfd8cd">B1F改札口／B2Fサカエチカ</text>
+  </g>
+
+  <!-- 4: reservation-only window -->
+  <g>
+    <circle cx="850" cy="360" r="9" fill="#c98a4a" stroke="#1d1916" stroke-width="2"/>
+    <text x="850" y="316" text-anchor="middle" font-family="'Hiragino Kaku Gothic ProN',sans-serif" font-size="18" font-weight="700" fill="#e6c187">〜6/14 入場予約制</text>
+    <text x="850" y="294" text-anchor="middle" font-family="'Hiragino Kaku Gothic ProN',sans-serif" font-size="15" fill="#9a9189">栄北側に人流集中</text>
+  </g>
+
+  <!-- 5: normalize -->
+  <g>
+    <circle cx="1040" cy="360" r="9" fill="#6fae8c" stroke="#1d1916" stroke-width="2"/>
+    <text x="1040" y="316" text-anchor="middle" font-family="'Hiragino Kaku Gothic ProN',sans-serif" font-size="18" font-weight="700" fill="#cde9d8">6月下旬〜</text>
+    <text x="1040" y="294" text-anchor="middle" font-family="'Hiragino Kaku Gothic ProN',sans-serif" font-size="15" fill="#9a9189">平常化</text>
+  </g>
+
+  <!-- insider note -->
+  <text x="72" y="566" font-family="'Hiragino Mincho ProN',serif" font-size="18" fill="#c8a96a">業界人の読み：大型開業の初動2〜3週は、栄の既存の名店がむしろ空く。今のうちに一軒を押さえる。</text>
+</svg>
