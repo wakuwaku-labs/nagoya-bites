@@ -195,6 +195,62 @@ async function fetchSiteMetrics(analyticsdata) {
     sessions: parseInt(row.metricValues[1].value, 10) || 0,
   }));
 
+  // 4) CTA（outbound_click）= 北極星指標の後段。outbound_click 総数と
+  //    対セッションのクリック率を集計。custom dim 未登録でも落ちないよう try/catch。
+  let cta = { outboundClicks: 0, ctaClickRate: 0, byDomain: [], note: null };
+  try {
+    const ctaRes = await analyticsdata.properties.runReport({
+      property: `properties/${PROPERTY}`,
+      requestBody: {
+        dateRanges,
+        metrics: [{ name: 'eventCount' }],
+        dimensionFilter: {
+          filter: {
+            fieldName: 'eventName',
+            stringFilter: { matchType: 'EXACT', value: 'outbound_click' },
+          },
+        },
+      },
+    });
+    const ctaRow = ctaRes.data.rows && ctaRes.data.rows[0];
+    const outboundClicks = ctaRow ? (parseInt(ctaRow.metricValues[0].value, 10) || 0) : 0;
+    cta.outboundClicks = outboundClicks;
+    cta.ctaClickRate = totals.sessions > 0
+      ? Math.round((outboundClicks / totals.sessions) * 1000) / 10  // 対セッション％
+      : 0;
+
+    // 任意: link_domain カスタムディメンションが登録されていればドメイン別内訳も取る。
+    // 未登録なら API がエラーを返すので握りつぶしてスキップ。
+    try {
+      const domRes = await analyticsdata.properties.runReport({
+        property: `properties/${PROPERTY}`,
+        requestBody: {
+          dateRanges,
+          metrics: [{ name: 'eventCount' }],
+          dimensions: [{ name: 'customEvent:link_domain' }],
+          dimensionFilter: {
+            filter: {
+              fieldName: 'eventName',
+              stringFilter: { matchType: 'EXACT', value: 'outbound_click' },
+            },
+          },
+          orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+          limit: '15',
+        },
+      });
+      cta.byDomain = (domRes.data.rows || [])
+        .map(row => ({
+          domain: row.dimensionValues[0].value,
+          clicks: parseInt(row.metricValues[0].value, 10) || 0,
+        }))
+        .filter(d => d.domain && d.domain !== '(not set)');
+    } catch (domErr) {
+      cta.note = 'link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ';
+    }
+  } catch (ctaErr) {
+    cta.note = `outbound_click 集計エラー: ${ctaErr.message}`;
+  }
+
   // 月間UUの段階自動判定
   const uu = totals.activeUsers;
   let stage = 'phase0';
@@ -209,12 +265,13 @@ async function fetchSiteMetrics(analyticsdata) {
     channels: { sessions: channels, pct: channelPct },
     sourceBreakdown: sourceBreakdown.slice(0, 10),
     topPages,
+    cta,
     stageAssessment: { metric: 'activeUsers', value: uu, stage, thresholds: BENCHMARKS.monthlyUU },
     benchmarks: BENCHMARKS,
   };
 
   fs.writeFileSync(METRICS_OUT_PATH, JSON.stringify(metricsOut, null, 2));
-  console.log(`site_metrics.json 更新: UU=${uu} / PV=${totals.pageViews} / Sessions=${totals.sessions} / 段階=${stage}`);
+  console.log(`site_metrics.json 更新: UU=${uu} / PV=${totals.pageViews} / Sessions=${totals.sessions} / CTA=${cta.outboundClicks}(${cta.ctaClickRate}%) / 段階=${stage}`);
 }
 
 main().catch(err => {

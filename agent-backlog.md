@@ -8,6 +8,38 @@
 
 ## 進行中・完了タスク
 
+### [STR-001] マネタイズ第1弾実装：接待・宴会コンシェルジュLP + CTA計測 + 編集独立の透明化 ✅
+- **priority**: P1（事業健全性・Moat換金の第一歩） → **status**: done
+- **detected**: 2026-05-31
+- **resolved**: 2026-05-31
+- **category**: monetization / strategy / measurement / editorial
+- **owner**: Strategist（実装承認：ユーザー「おすすめをとりあえず実装して」2026-05-31）
+- **背景**: マネタイズ可能性マップ（plan: greedy-beaming-blum.md）の診断に基づく。実測値で
+  「来訪の質は healthy 級（滞在5分・2.16pp・直帰43.6%）だが量は phase0（266UU）」「広告/アフィリエイトは
+  healthy でも月1-2万が天井」→ 伸び代は **Moat（現役飲食人 × 4,910店構造化DB × 編集独立）の換金** に集中。
+  最有力候補 B1「接待・宴会コンシェルジュ」を、量非依存・順位非操作・広告ゼロのまま MVP 実装。
+- **実装内容**:
+  1. **B1 コンシェルジュ LP 新規**: `features/nagoya-settai-concierge.html`
+     - 無料相談 MVP（Formspree `xaqaygze`・`_subject` プレフィックス `[concierge]`）
+     - 中立性を明示（広告/PR/紹介料で順位を歪めない）・3ステップ・FAQ6問・関連特集相互リンク
+     - JSON-LD は Service + BreadcrumbList + FAQPage（各ページ固有・ラーメン汚染なし／ISSUE-060 回避）
+     - OG/ヒーロー画像は自作 SVG（`assets/feature-figures/settai-concierge.svg`・実写優先ルール準拠／ストック不使用）
+  2. **計測基盤（北極星後段）**: `scripts/fetch_ga4_views.js` に outbound_click レポート追加
+     → `data/site_metrics.json` に `cta:{outboundClicks, ctaClickRate, byDomain}` を出力（CTA率＝対セッション％）
+     - link_domain カスタムディメンション未登録でも try/catch で握りつぶす設計
+  3. **透明性**: `features/editorial-policy.html` に「03-B 収益と編集の分離」節を追加
+     （いかなる収益も掲載選定・順位・評価に影響させない旨を明文化）
+  4. **導線**: `features/index.html` に全幅カード追加 + CollectionPage ItemList を 51→52 件に更新
+- **QA**: 全変更ファイルの JSON-LD 計7ブロック valid / 新LPインラインJS 3/3 parse OK /
+  `audit_feature_stores.js`＝新LPは幽霊店ゼロ（既存7件は別ページの既知issue）/
+  `audit_feature_schema_alignment.js`＝faqpage_topic_mismatch のみ（ISSUE-059系の既知ヒューリスティック雑音・海鮮/個室/栄と同類）/
+  `node build.js` はローカルでHotPepper APIキー未設定により店舗数ガードで意図的 abort（index.html 不変更）。
+  本番は build.yml（push to main）が full build を実行し sitemap自動再生成 + GA4 cta 反映。
+- **収益と編集独立の担保**: 店舗側課金なし・広告なし・PR なし・送客手数料なし（順位非操作・ユーザー制約準拠）
+- **次の一手（未実装・要承認）**: B3 有料ガイド MVP / A1 予約アフィリエイトのASP選定 / C4 求人レイヤー / CTA率の週次KPI反映
+- **files**: `features/nagoya-settai-concierge.html`(新規), `assets/feature-figures/settai-concierge.svg`(新規),
+  `scripts/fetch_ga4_views.js`, `features/editorial-policy.html`, `features/index.html`, `agent-backlog.md`
+
 ### [ISSUE-059] data/stores.json fetch の cache-buster 欠落（新店検索ヒット 0件問題）✅
 - **priority**: P0（ユーザー体感バグ・新店追加が見えない） → **status**: done
 - **detected**: 2026-05-25
