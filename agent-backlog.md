@@ -1892,6 +1892,36 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
 
 ---
 
+## 2026-05-31 夜間自律バッチ実行ログ
+
+### [BATCH-2026-05-31] ジャーナル 6/5〜6/12 の8本一括生成 ✅
+- **priority**: P1 → **status**: done
+- **detected**: 2026-05-31（「寝ている間にできることを全て片付けて」指示による自律実行）
+- **resolved**: 2026-05-31
+- **owner**: Editor (自律エージェント)
+- **deliverables**:
+  - `journal/2026-06-05-jamstacos-bar-sakae.html` — JAM S TACOS（栄・タコスバル・Google4.9/152件）
+  - `journal/2026-06-06-fushimiya-wagyu-sakae.html` — 前沢牛舎 伏見屋（伏見・産地和牛焼肉・4.9/4277件）
+  - `journal/2026-06-07-sakahachi-sakae-izakaya.html` — サカナのハチベエ 栄3丁目（海鮮居酒屋4.8/4471件）
+  - `journal/2026-06-08-ibushigin-robata-fushimi.html` — 炉端焼き 燻銀 伏見（南部鉄器×個室4.8/4199件）
+  - `journal/2026-06-09-tokiwaya-meiekinhigashi-izakaya.html` — ときわ屋 名駅西口（地元密着和空間4.8/3549件）
+  - `journal/2026-06-10-sudaku-hormone-yakiniku-kokusai.html` — すだく国際センター（ホルモン刺し4.8/3315件）
+  - `journal/2026-06-11-gotoni-sushi-sakae-izakaya.html` — 鮨食人 五と二 栄店（居酒屋×鮨4.8/1712件）
+  - `journal/2026-06-12-umakabai-kyushu-meieki.html` — うまかばい 名駅前（九州料理4.8/2808件）
+- **全8本共通**:
+  - スコア97/100（最新性25/話題性25/独自性20/ブランド15/執筆10/新規2）達成
+  - バリデーション全15チェック PASS
+  - Instagramエンベッド＋HotPepper写真（実写ルール準拠）
+  - SNS原稿（Note/Instagram/X）各3種 docs/daily-posts/ に生成
+  - data/journal_published.json: 39件→50件（+11件・前セッション分含む）
+  - data/pending_stores.json: 8店追加（全店ハチベエ除きHotPepper実在確認済み）
+  - Unsplash photo クレジット誤挿入を全記事で修正
+- **git commits**: 8本で個別コミット（cf. feat(journal): 2026-06-05〜12）
+- **SOFT BLOCK**: git push は user authorization 待ち（ブランチ: claude/sweet-kare-d762c7）
+- **ブランチ現状**: origin/main に対し 20コミット先行（前セッション分 12 + 今セッション 8）
+
+---
+
 ## Notion ダッシュボード連携
 
 このバックログは [Notion DB「課題トラッカー」](#) に常時自動同期される。
