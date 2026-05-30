@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-30T19:01:48.483Z",
+  "generatedAt": "2026-05-30T19:15:19.345Z",
   "lookbackDays": 30,
   "totals": {
     "activeUsers": 271,
@@ -106,6 +106,12 @@
       "sessions": 12
     }
   ],
+  "cta": {
+    "outboundClicks": 56,
+    "ctaClickRate": 14.1,
+    "byDomain": [],
+    "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
+  },
   "stageAssessment": {
     "metric": "activeUsers",
     "value": 271,
