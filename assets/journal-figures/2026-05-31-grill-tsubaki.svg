@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1208;stop-opacity:1"/>
+      <stop offset="60%" style="stop-color:#221810;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#0d0d08;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7a5c10;stop-opacity:0"/>
+      <stop offset="50%" style="stop-color:#c8960e;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#7a5c10;stop-opacity:0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="45%" r="45%">
+      <stop offset="0%" style="stop-color:#e8a020;stop-opacity:0.18"/>
+      <stop offset="100%" style="stop-color:#e8a020;stop-opacity:0"/>
+    </radialGradient>
+    <filter id="blur1">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- 炭炉窯のシルエット（中央） -->
+  <g transform="translate(600, 280)">
+    <!-- 窯本体 -->
+    <ellipse cx="0" cy="40" rx="120" ry="30" fill="#2a1f0a" stroke="#6b4c0a" stroke-width="1.5"/>
+    <rect x="-90" y="-60" width="180" height="100" rx="12" fill="#1e1408" stroke="#5a3d08" stroke-width="1.5"/>
+    <ellipse cx="0" cy="-60" rx="90" ry="22" fill="#2a1f0a" stroke="#6b4c0a" stroke-width="1.5"/>
+    <!-- 炎 -->
+    <g opacity="0.85">
+      <ellipse cx="-30" cy="-68" rx="8" ry="22" fill="#e8600a" opacity="0.9"/>
+      <ellipse cx="-30" cy="-80" rx="5" ry="14" fill="#f0a020" opacity="0.8"/>
+      <ellipse cx="0" cy="-72" rx="10" ry="28" fill="#e8700a" opacity="0.9"/>
+      <ellipse cx="0" cy="-90" rx="6" ry="18" fill="#fac030" opacity="0.8"/>
+      <ellipse cx="30" cy="-68" rx="8" ry="22" fill="#e85510" opacity="0.9"/>
+      <ellipse cx="30" cy="-80" rx="5" ry="14" fill="#f0a020" opacity="0.8"/>
+    </g>
+    <!-- グリル網 -->
+    <g stroke="#8b6520" stroke-width="2" opacity="0.7">
+      <line x1="-80" y1="-30" x2="80" y2="-30"/>
+      <line x1="-80" y1="-18" x2="80" y2="-18"/>
+      <line x1="-80" y1="-6" x2="80" y2="-6"/>
+      <line x1="-60" y1="-42" x2="-60" y2="6"/>
+      <line x1="-30" y1="-42" x2="-30" y2="6"/>
+      <line x1="0" y1="-42" x2="0" y2="6"/>
+      <line x1="30" y1="-42" x2="30" y2="6"/>
+      <line x1="60" y1="-42" x2="60" y2="6"/>
+    </g>
+    <!-- 肉（ステーキ） -->
+    <ellipse cx="0" cy="-20" rx="55" ry="22" fill="#8b3a1a" opacity="0.9"/>
+    <ellipse cx="0" cy="-22" rx="50" ry="19" fill="#a04020" opacity="0.85"/>
+    <!-- 焦げ目ライン -->
+    <g stroke="#4a1a08" stroke-width="3" opacity="0.7" stroke-linecap="round">
+      <line x1="-30" y1="-32" x2="30" y2="-12"/>
+      <line x1="-40" y1="-22" x2="20" y2="-10"/>
+    </g>
+    <!-- 湯気 -->
+    <g opacity="0.4" filter="url(#blur1)">
+      <path d="M-20,-110 Q-15,-125 -20,-140" stroke="#fff" stroke-width="2" fill="none"/>
+      <path d="M0,-115 Q5,-132 0,-150" stroke="#fff" stroke-width="2.5" fill="none"/>
+      <path d="M20,-108 Q25,-123 20,-138" stroke="#fff" stroke-width="2" fill="none"/>
+    </g>
+  </g>
+
+  <!-- 装飾線（上） -->
+  <rect x="200" y="100" width="800" height="1" fill="url(#gold)" opacity="0.6"/>
+
+  <!-- メインタイトル -->
+  <text x="600" y="80" font-family="Georgia, 'Hiragino Mincho ProN', serif" font-size="13" fill="#c8960e" letter-spacing="6" text-anchor="middle" opacity="0.9">NAGOYA BITES  JOURNAL</text>
+
+  <!-- 店名 -->
+  <text x="600" y="158" font-family="Georgia, 'Hiragino Mincho ProN', serif" font-size="52" font-weight="300" fill="#f0e8d0" letter-spacing="4" text-anchor="middle">グリルつばき</text>
+
+  <!-- サブタイトル -->
+  <text x="600" y="196" font-family="'Noto Sans JP', sans-serif" font-size="16" fill="#a08040" letter-spacing="2" text-anchor="middle">Grill Tsubaki — 2026.5.30 OPEN</text>
+
+  <!-- 装飾線（下） -->
+  <rect x="200" y="218" width="800" height="1" fill="url(#gold)" opacity="0.6"/>
+
+  <!-- キャプション -->
+  <text x="600" y="548" font-family="'Noto Sans JP', sans-serif" font-size="18" fill="#e8d4a0" letter-spacing="1" text-anchor="middle">名古屋駅前に誕生した「和牛洋食の劇場」</text>
+  <text x="600" y="576" font-family="'Noto Sans JP', sans-serif" font-size="14" fill="#8a7040" letter-spacing="2" text-anchor="middle">肉屋 雪月花 10年の技を炭炉窯に乗せて</text>
+
+  <!-- 装飾コーナー -->
+  <g stroke="#6b4c0a" stroke-width="1" fill="none" opacity="0.5">
+    <path d="M40,40 L40,20 L60,20"/>
+    <path d="M1160,40 L1160,20 L1140,20"/>
+    <path d="M40,590 L40,610 L60,610"/>
+    <path d="M1160,590 L1160,610 L1140,610"/>
+  </g>
+</svg>
