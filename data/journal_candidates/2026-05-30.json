@@ -12,7 +12,7 @@
   "ranked": [
     {
       "id": "c1",
-      "title_draft": "上前津『博多豚骨 一閃』はなぜ590円で成立するのか",
+      "title_draft": "栄 焼肉酒場 番長——開業3ヶ月・5.0/129件の業態解読",
       "verdict": "PASS",
       "total": 97,
       "breakdown": {
@@ -25,24 +25,24 @@
       },
       "explain": {
         "recency": [
-          "最新ソース 2日前 / X引用 +3"
+          "最新ソース 1日前 / X引用 +3"
         ],
         "topicality": [
-          "media_count=4 → 15",
-          "x_mentions=10 → 7",
+          "media_count=3 → 15",
+          "x_mentions=12 → 7",
           "buzz_score≥90 → +5"
         ],
         "uniqueness": [
-          "独自性キーワード 6件 (価格帯,席,シーン,一人飲み,繁忙,回転)"
+          "独自性キーワード 8件 (価格帯,席,予約,シーン,接待,デート,一人飲み,繁忙)"
         ],
         "brand_fit": [
           "ベース10",
-          "業界人視点キーワード 2件 → +5"
+          "業界人視点キーワード 1件 → +5"
         ],
         "writability": [
           "main_store あり +3",
           "sources 4件 +4",
-          "title 26字 +3"
+          "title 30字 +3"
         ],
         "novelty": [
           "同テーマあり / 同店なし → 2"
@@ -51,28 +51,27 @@
     },
     {
       "id": "c4",
-      "title_draft": "上前津の博多豚骨 一閃、深夜営業の意味を読む",
+      "title_draft": "栄 メ有リー——「長居できる居酒屋」がGoogle4.9を維持する収益構造を業界人が読む",
       "verdict": "FAIL",
-      "total": 90,
+      "total": 58,
       "breakdown": {
         "recency": 25,
-        "topicality": 25,
-        "uniqueness": 15,
+        "topicality": 5,
+        "uniqueness": 5,
         "brand_fit": 15,
-        "writability": 8,
+        "writability": 6,
         "novelty": 2
       },
       "explain": {
         "recency": [
-          "最新ソース 2日前"
+          "最新ソース 1日前"
         ],
         "topicality": [
-          "media_count=4 → 15",
-          "x_mentions=10 → 7",
-          "buzz_score≥90 → +5"
+          "media_count=1 → 5",
+          "x_mentions=0 → 0"
         ],
         "uniqueness": [
-          "独自性キーワード 3件 (一人飲み,繁忙,回転)"
+          "独自性キーワード 1件 (回転)"
         ],
         "brand_fit": [
           "ベース10",
@@ -81,7 +80,7 @@
         "writability": [
           "main_store あり +3",
           "sources 2件 +2",
-          "title 22字 +3"
+          "title 44字 +1"
         ],
         "novelty": [
           "同テーマあり / 同店なし → 2"
@@ -90,103 +89,27 @@
     },
     {
       "id": "c3",
-      "title_draft": "大須『Cafe Delphis』開店——ガレットの価格帯を読む",
+      "title_draft": "名駅 炉端焼き アナタと博多——名古屋駅前で博多炉端が成立する理由を業界人目線で読む",
       "verdict": "FAIL",
-      "total": 79,
+      "total": 53,
       "breakdown": {
         "recency": 25,
-        "topicality": 9,
-        "uniqueness": 20,
+        "topicality": 5,
+        "uniqueness": 0,
         "brand_fit": 15,
-        "writability": 8,
+        "writability": 6,
         "novelty": 2
       },
       "explain": {
         "recency": [
-          "最新ソース 0日前"
+          "最新ソース 1日前"
         ],
         "topicality": [
           "media_count=1 → 5",
-          "x_mentions=1 → 4"
+          "x_mentions=0 → 0"
         ],
         "uniqueness": [
-          "独自性キーワード 5件 (価格帯,席,予約,シーン,デート)"
-        ],
-        "brand_fit": [
-          "ベース10",
-          "業界人視点キーワード 1件 → +5"
-        ],
-        "writability": [
-          "main_store あり +3",
-          "sources 1件 +2",
-          "title 31字 +3"
-        ],
-        "novelty": [
-          "同テーマあり / 同店なし → 2"
-        ]
-      }
-    },
-    {
-      "id": "c2",
-      "title_draft": "名駅『ふじさん』夜のコスパうなぎを業界人が読む",
-      "verdict": "FAIL",
-      "total": 76,
-      "breakdown": {
-        "recency": 10,
-        "topicality": 19,
-        "uniqueness": 20,
-        "brand_fit": 15,
-        "writability": 10,
-        "novelty": 2
-      },
-      "explain": {
-        "recency": [
-          "最新ソース 20日前"
-        ],
-        "topicality": [
-          "media_count=5 → 15",
-          "x_mentions=5 → 4"
-        ],
-        "uniqueness": [
-          "独自性キーワード 6件 (価格帯,コース,席,シーン,接待,アラカルト)"
-        ],
-        "brand_fit": [
-          "ベース10",
-          "業界人視点キーワード 1件 → +5"
-        ],
-        "writability": [
-          "main_store あり +3",
-          "sources 3件 +4",
-          "title 23字 +3"
-        ],
-        "novelty": [
-          "同テーマあり / 同店なし → 2"
-        ]
-      }
-    },
-    {
-      "id": "c5",
-      "title_draft": "名駅ふじさん、和牛とうなぎの二枚看板を読む",
-      "verdict": "FAIL",
-      "total": 64,
-      "breakdown": {
-        "recency": 0,
-        "topicality": 19,
-        "uniqueness": 20,
-        "brand_fit": 15,
-        "writability": 8,
-        "novelty": 2
-      },
-      "explain": {
-        "recency": [
-          "最新ソース 302日前"
-        ],
-        "topicality": [
-          "media_count=5 → 15",
-          "x_mentions=5 → 4"
-        ],
-        "uniqueness": [
-          "独自性キーワード 5件 (価格帯,コース,シーン,接待,デート)"
+          "独自性キーワード 0件 ()"
         ],
         "brand_fit": [
           "ベース10",
@@ -195,7 +118,81 @@
         "writability": [
           "main_store あり +3",
           "sources 2件 +2",
-          "title 21字 +3"
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "金山 居酒屋いくなら俺んち来い。——屋号がブランドになる日：低価格・高評価を成立させる接客設計",
+      "verdict": "FAIL",
+      "total": 52,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 5,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 5,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前"
+        ],
+        "topicality": [
+          "media_count=1 → 5",
+          "x_mentions=0 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード 0件 ()"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 2件 +2"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "栄 居酒屋 マグロ専門店 ぎょぎょ丸——「マグロ専門」を居酒屋で成立させる仕入れと原価設計を読む",
+      "verdict": "FAIL",
+      "total": 52,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 5,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 5,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前"
+        ],
+        "topicality": [
+          "media_count=1 → 5",
+          "x_mentions=0 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード 0件 ()"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 2件 +2"
         ],
         "novelty": [
           "同テーマあり / 同店なし → 2"
