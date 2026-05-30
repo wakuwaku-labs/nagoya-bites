@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="名古屋 接待・宴会コンシェルジュ">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1c1206"/>
+      <stop offset="100%" stop-color="#5e4216"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#1c1206"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#f8d0a0" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+
+  <g opacity=".45" fill="none" stroke="#f8d0a0" stroke-width="2">
+    <circle cx="500" cy="130" r="58"/>
+    <path d="M500 130 L500 78 M500 130 L545 156" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="500" cy="130" r="4" fill="#f8d0a0" stroke="none"/>
+  </g>
+  <g opacity=".5" fill="#f8d0a0">
+    <circle cx="448" cy="206" r="5"/>
+    <circle cx="472" cy="206" r="5"/>
+    <circle cx="496" cy="206" r="5"/>
+    <circle cx="520" cy="206" r="5"/>
+    <circle cx="544" cy="206" r="5"/>
+  </g>
+
+  <rect x="36" y="34" width="3" height="118" fill="#f8d0a0" opacity=".9"/>
+  <text x="46" y="62" fill="#f8d0a0" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+  <text x="46" y="112" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="34" font-weight="700" letter-spacing="0.02em">接待・宴会コンシェルジュ</text>
+  <text x="48" y="150" fill="#f8d0a0" opacity=".82" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="15" letter-spacing="0.08em">現役飲食人が、名古屋の一軒を無料で見立てる</text>
+</svg>
