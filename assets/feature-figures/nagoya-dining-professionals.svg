@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0e0e0c;stop-opacity:1"/>
+      <stop offset="55%" style="stop-color:#161410;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#0a0a08;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7a5c10;stop-opacity:0"/>
+      <stop offset="50%" style="stop-color:#c8960e;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#7a5c10;stop-opacity:0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="40%">
+      <stop offset="0%" style="stop-color:#c8960e;stop-opacity:0.10"/>
+      <stop offset="100%" style="stop-color:#c8960e;stop-opacity:0"/>
+    </radialGradient>
+    <filter id="soft">
+      <feGaussianBlur stdDeviation="1.5"/>
+    </filter>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- 中央：包丁と箸のシルエット（業界人の道具） -->
+  <g transform="translate(600, 315)">
+    <!-- プレート -->
+    <ellipse cx="0" cy="60" rx="140" ry="20" fill="#1a1608" stroke="#3a2c08" stroke-width="1"/>
+    <ellipse cx="0" cy="55" rx="110" ry="15" fill="#221c0a" opacity="0.8"/>
+
+    <!-- 包丁（斜め） -->
+    <g transform="rotate(-30)">
+      <!-- 刃 -->
+      <path d="M-10,-130 L80,50 L70,56 L-22,-120 Z" fill="#2a2a28" stroke="#5a5a58" stroke-width="0.5"/>
+      <!-- 刃の光沢 -->
+      <line x1="-6,-126" x2="76,48" stroke="#8a8a88" stroke-width="0.8" opacity="0.5"/>
+      <!-- 柄 -->
+      <rect x="-18" y="-140" width="16" height="38" rx="3" fill="#5a3010" stroke="#3a2008" stroke-width="0.5"/>
+      <rect x="-17" y="-137" width="4" height="32" fill="#6a4018" opacity="0.6"/>
+      <!-- 口金 -->
+      <rect x="-19" y="-102" width="18" height="6" rx="1" fill="#8a8a80" stroke="#6a6a60" stroke-width="0.5"/>
+    </g>
+
+    <!-- 箸（2本） -->
+    <g transform="rotate(20)" opacity="0.85">
+      <line x1="-4" y1="-150" x2="8" y2="70" stroke="#6a4820" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="4" y1="-145" x2="16" y2="75" stroke="#5a3818" stroke-width="3" stroke-linecap="round"/>
+      <!-- 箸の先端 -->
+      <ellipse cx="8" cy="70" rx="1.5" ry="2" fill="#4a2810"/>
+      <ellipse cx="16" cy="75" rx="1.2" ry="2" fill="#4a2810"/>
+    </g>
+
+    <!-- フォーク（薄く後ろに） -->
+    <g transform="rotate(-45)" opacity="0.35">
+      <rect x="-2" y="-120" width="4" height="100" fill="#6a6a60" rx="2"/>
+      <rect x="-6" y="-130" width="2" height="25" fill="#6a6a60" rx="1"/>
+      <rect x="-2" y="-132" width="2" height="28" fill="#6a6a60" rx="1"/>
+      <rect x="2" y="-130" width="2" height="25" fill="#6a6a60" rx="1"/>
+      <rect x="6" y="-128" width="2" height="23" fill="#6a6a60" rx="1"/>
+    </g>
+  </g>
+
+  <!-- 上部ライン -->
+  <rect x="150" y="98" width="900" height="1" fill="url(#gold)" opacity="0.7"/>
+
+  <!-- ヘッダーテキスト -->
+  <text x="600" y="78" font-family="Georgia, 'Hiragino Mincho ProN', serif" font-size="12" fill="#c8960e" letter-spacing="7" text-anchor="middle" opacity="0.9">NAGOYA BITES  FEATURE</text>
+
+  <!-- メインタイトル -->
+  <text x="600" y="158" font-family="Georgia, 'Hiragino Mincho ProN', serif" font-size="44" font-weight="300" fill="#f0e8d0" letter-spacing="3" text-anchor="middle">飲食人が通う名古屋の10軒</text>
+
+  <!-- サブタイトル -->
+  <text x="600" y="194" font-family="'Noto Sans JP', sans-serif" font-size="15" fill="#9a7828" letter-spacing="3" text-anchor="middle">業界の中の人が本当に足を運ぶ店 2026年版</text>
+
+  <!-- 下部ライン -->
+  <rect x="150" y="218" width="900" height="1" fill="url(#gold)" opacity="0.7"/>
+
+  <!-- 星（目利き評価） -->
+  <g fill="#c8960e" opacity="0.7" transform="translate(600, 240)">
+    <text font-family="Georgia, serif" font-size="18" text-anchor="middle" letter-spacing="8">★ ★ ★ ★ ★</text>
+  </g>
+
+  <!-- キャプション -->
+  <text x="600" y="548" font-family="'Noto Sans JP', sans-serif" font-size="17" fill="#e8d4a0" letter-spacing="2" text-anchor="middle">栄・金山エリアの厳選10店——仕入れ・職人性・業態設計の三拍子で選定</text>
+  <text x="600" y="575" font-family="'Noto Sans JP', sans-serif" font-size="13" fill="#7a6030" letter-spacing="2" text-anchor="middle">editorReason × insiderNote 完全公開</text>
+
+  <!-- コーナー装飾 -->
+  <g stroke="#6b4c0a" stroke-width="1" fill="none" opacity="0.5">
+    <path d="M40,40 L40,22 L58,22"/>
+    <path d="M1160,40 L1160,22 L1142,22"/>
+    <path d="M40,590 L40,608 L58,608"/>
+    <path d="M1160,590 L1160,608 L1142,608"/>
+  </g>
+</svg>
