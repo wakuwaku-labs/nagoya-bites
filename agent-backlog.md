@@ -708,6 +708,37 @@
 - 次週の打ち手: GA4/Search Console 実値接続（ISSUE-043）完了後に実値ベース運用へ移行
 
 
+### [MKT-WEEKLY-2026-W22] 週次 SEO/SNS チェック（2026-05-26〜2026-06-01）
+
+- **priority**: P3 → **status**: done（記録のみ・施策ではない）
+- **detected/recorded**: 2026-05-31（睡眠中自律実行ターン）
+- **owner**: Marketer
+- **category**: seo / sns / monitoring / content
+
+#### 1. コンテンツ公開実績（今週）
+| 種別 | タイトル | 公開日 |
+|---|---|---|
+| journal | グリルつばき — 雪月花が和牛洋食へ転換した理由を業界人目線で読む | 2026-05-31 |
+| feature | 名古屋 飲食人おすすめ10選【2026年版】業界の中の人が通う栄・金山の店 | 2026-05-31 |
+| feature | 名駅 失敗しない会食10選【2026年版】業界人が接待・ビジネスランチに使う名古屋駅エリアの正解 | 2026-05-31 |
+
+#### 2. SEO ターゲット KW（新規追加分）
+| キーワード | ターゲットページ | 現状 |
+|---|---|---|
+| 名古屋 飲食人 おすすめ | nagoya-dining-professionals.html | 新規インデックス待ち |
+| 名駅 失敗しない 会食 | nagoya-meieki-business-dinner.html | 新規インデックス待ち |
+| グリルつばき | journal/2026-05-31-... | 新規インデックス待ち |
+
+#### 3. SNS 原稿状況
+- `docs/daily-posts/2026-05-31.md` 作成済み（Note/Instagram/X 原稿 完備）
+- 公開はユーザー（手動コピペ）で実施
+
+#### 4. 次週の打ち手
+- 特集2本のインデックス状況をGSC で確認（1〜2週後）
+- 「名古屋 飲食人 おすすめ」「名駅 失敗しない 会食」の流入計測を開始
+- journal 6/1（日曜）の日次記事を発行（pick_daily_topic.js → 新テーマ探索）
+
+
 ## エージェント実行ログ
 
 | 日付 | エージェント | 実行内容 | 結果 |
@@ -787,6 +818,8 @@
 | 2026-05-25 | Builder(/solve-next) | **ISSUE-015 親 ISSUE クローズ（P1/P2 完了 + 5/20 退行修正済み・現状 1.45MB を確認）**: index.html サイズを ls -lh で 1.45MB と実測（10.35MB 退行ピークから -86%・8.6MB 起点から -83%）。サブタスク P1（出力スリム化）/ P2 Stage 1（19スクリプト repoint・stores.json canonical 化）/ P2 Stage 2（TOP50 インライン + 全件遅延 fetch）すべて done。crossCheckBreakdown 退行は slimCrossCheckBreakdown() で是正済み。shrink-guard も stores.json 比較に拡張済み。残（1.45MB→800KB は CSS/JS 最適化領域）は Phase 0 優先順位として P2 以下扱い・新規 ISSUE 化は不要 | ✅ backlog 整合のみ |
 | 2026-05-25 | DataKeeper+Builder(/solve-next) | **ISSUE-057 ACCESS_HARD_NEGATIVE 部分一致バグ修正**: `isNagoyaStore()` に STEP 0 を新設し、アクセス欄に `'名古屋'` または `ACCESS_NAGOYA_POSITIVE`（上前津駅 / 大須観音駅 / 池下駅 等 40+ 駅）が含まれる場合は NEGATIVE substring チェック前に accept する POSITIVE-FIRST 方式へ転換。`'津'` が `上前津駅` に false-positive ヒットして silent-reject していた構造を解消。再発防止 `scripts/audit_isnagoya_filter.js` 新設（15ケース単体テスト・上前津駅/池下駅/大須観音駅 等 POSITIVE 9件 + 銀座駅/梅田駅/JR紀勢本線津駅 等 NEGATIVE 6件 全 pass）。三重県津市は引き続き正しく reject。次回 CI で Hot Pepper 全件から `上前津駅` 利用店が LOCAL_STORES に再出現する経路を解放 | ✅ デプロイ済み (commit pending) |
 | 2026-05-25 | Builder+Marketer(/solve-next) | **ISSUE-053 クローズ（実装は 5/21 commit 885229b01 で既に完了済みと確認）**: fetch_ga4_views.js の fetchSiteMetrics() が UU/PV/Sessions/avgDuration/bounceRate/pages-per-session + source×medium 50件 + Top5 ランディング + 4チャネル分類 + phase0/takeoff/healthy/strong 段階自動判定を data/site_metrics.json に毎日 CI 出力中（直近 2026-05-24 取得値: UU231/PV772/Sessions351/直帰51%/平均282.5秒/pages2.2/organic19%/direct75.9%/chatgpt.com 24セッション）。build.yml git add 統合済（ISSUE-058 整備時）。docs/kpi-weekly.md にも反映済。「未着手」ステータスは stale で実体は本番稼働中のため backlog を done 化 | ✅ 実装済確認・backlog 整合 |
+| 2026-05-31 | Editor（睡眠中自律実行） | **日次ジャーナル 5/31 公開**: グリルつばき（名古屋駅前・5/30開業）— 「肉屋 雪月花」10年の暖簾を架け替えた理由を業界人目線で読む。SVGヒーロー画像 `/assets/journal-figures/2026-05-31-grill-tsubaki.svg` 自作。15項目バリデーション all pass。`journal/2026-05-31-grill-tsubaki-meiekimae.html` 公開 / `data/pending_stores.json` にグリルつばき追加 / `data/journal_published.json` 更新 / `journal/index.html` + `feed.xml` + `feed.atom` 更新 / `docs/daily-posts/2026-05-31.md` SNS原稿作成 / `sitemap.xml` 新エントリ追加 | ✅ commit済み（push待ち） |
+| 2026-05-31 | Editor+Marketer（睡眠中自律実行） | **ISSUE-031フォローアップ — 新規ロングテール特集2本追加**: (1) `features/nagoya-dining-professionals.html` 新規（「名古屋 飲食人 おすすめ」KW・飲食業界人が自分の資金で通う栄・金山の10軒・editorReason+insiderNote全件公開・FAQ5問・JSON-LD4種完備）(2) `features/nagoya-meieki-business-dinner.html` 新規（「名駅 失敗しない 会食」KW・名古屋駅エリア会食・接待10軒・出張者配慮とアクセス確実性で選定・FAQ4問・JSON-LD4種完備）(3) `assets/feature-figures/nagoya-dining-professionals.svg` + `assets/feature-figures/nagoya-meieki-business-dinner.svg` 新作ヒーロー画像（CLAUDE.md 実写優先ルール→最終手段SVG適用）(4) `features/index.html` numberOfItems 51→53・2カード追加 (5) `sitemap.xml` 2URL追加 | ✅ commit b5d06e31c（push待ち） |
 
 ---
 
