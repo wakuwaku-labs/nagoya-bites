@@ -1,23 +1,23 @@
 ---
-description: MEO/LINE で届く「💡今日のアドバイス」を貼り付けると、NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）を通して採用/却下を判定し、採用分を agent-backlog.md に ready で起票 → Notion 課題トラッカーへ同期する。却下は理由付きでログに残す。
+description: LINE で届く「💡今日のアドバイス」（SEO/アクセス解析）を貼り付けると、NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）を通して採用/却下を判定し、採用分を agent-backlog.md に ready で起票 → Notion 課題トラッカーへ同期する。却下は理由付きでログに残す。
 ---
 
-# /meo-triage — MEO AIアドバイスをブランドフィルターに通して課題化する
+# /seo-triage — SEOアドバイスをブランドフィルターに通して課題化する
 
-毎日 LINE に届く MEO/SEO の「💡今日のアドバイス」を、**鵜呑みにせず**
+毎日 LINE に届く SEO/アクセス解析の「💡今日のアドバイス」を、**鵜呑みにせず**
 NAGOYA BITES のブランド・方向性という総合フィルターに通し、
 適合分だけを Notion 課題トラッカーに `ready` で出す。却下は理由とともにログへ残す。
 
 **使い方**: LINE のアドバイス本文をこのコマンドに続けて貼り付ける。
-（例: `/meo-triage` のあとにアドバイスのテキストを貼る。引数が空なら「アドバイス本文を貼ってください」と尋ねる。）
+（例: `/seo-triage` のあとにアドバイスのテキストを貼る。引数が空なら「アドバイス本文を貼ってください」と尋ねる。）
 
 ---
 
 ## 前提（このループの記憶）
 
-- 採用課題マスター: `agent-backlog.md`（ID 接頭辞 `MEO-` / owner=Marketer / category=SEO）
-- ループの記憶（採用・却下・重複の全履歴）: `data/meo_advice_log.json`（append-only）
-- 決定的ヘルパー: `node scripts/meo_triage.js`（ID採番 / 重複検知 / ログ追記 / 健診レポート）
+- 採用課題マスター: `agent-backlog.md`（ID 接頭辞 `SEO-` / owner=Marketer / category=SEO）
+- ループの記憶（採用・却下・重複の全履歴）: `data/seo_advice_log.json`（append-only）
+- 決定的ヘルパー: `node scripts/seo_triage.js`（ID採番 / 重複検知 / ログ追記 / 健診レポート）
 - Notion 同期: 既存の `/sync-backlog`（スキーマ変更不要・そのまま流用）
 
 ---
@@ -43,7 +43,7 @@ NAGOYA BITES のブランド・方向性という総合フィルターに通し�
 
 各項目について:
 ```bash
-node scripts/meo_triage.js --check-dup "<その施策のテキスト>"
+node scripts/seo_triage.js --check-dup "<その施策のテキスト>"
 ```
 - `duplicate: true` → 過去に判定済み。**起票しない**。ログには `verdict: "duplicate"` で軽量追記のみ
   （毎日同じSEO提案が来てもノイズにならない。数値違いは正規化で同種扱い）
@@ -74,31 +74,32 @@ node scripts/meo_triage.js --check-dup "<その施策のテキスト>"
 
 採用が複数あるなら ID は連番。先頭IDを取得:
 ```bash
-node scripts/meo_triage.js --next-id   # 例: MEO-001。2件目以降は連番で手当て
+node scripts/seo_triage.js --next-id   # 例: SEO-001。2件目以降は連番で手当て
 ```
 
 `agent-backlog.md` の「## 進行中・完了タスク」直下に、既存パーサ準拠の形式で追記する
 （`**priority** / **status** / **detected** / **category** / **owner**` を必ず含める。これが無いと Notion 同期で欠落する）:
 
 ```markdown
-### [MEO-001] <施策を一言で・効果が伝わる動詞で>
+### [SEO-001] <施策を一言で・効果が伝わる動詞で>
 - **priority**: P2 → **status**: ready
 - **detected**: <今日の日付 YYYY-MM-DD>
 - **category**: SEO
 - **owner**: Marketer
-- **source**: MEO AIアドバイス(LINE) <日付> 原文「<アドバイス原文を短く引用>」
+- **source**: SEOアドバイス(LINE) <日付> 原文「<アドバイス原文を短く引用>」
 - **brand-filter**: ✅ 適合 — <Moat のどこを伸ばすか / なぜ順位操作でないか>
-- **acceptance**: <受け入れ条件。例: 対象特集のh1/title/本文冒頭にKWを自然挿入・JSON-LD不汚染・体感KPIは次回MEOアドバイスで再評価>
+- **acceptance**: <受け入れ条件。例: 対象特集のh1/タイトル/本文冒頭2行にKWを自然挿入・JSON-LD不汚染・体感KPIは次回SEOアドバイスで再評価>
 ```
 
-優先度の目安: 体感バグ・信頼に関わる=P1 / 集客・SEO強化=P2 / 磨き込み=P3。MEO由来は基本 **P2**。
+優先度の目安: 体感バグ・信頼に関わる=P1 / 集客・SEO強化=P2 / 磨き込み=P3。SEOアドバイス由来は基本 **P2**。
+owner は実装者で振り分けると `/solve-next` が正しいエージェント仕様を読む（index.html=Builder / journal・features=Editor / 集客企画=Marketer）。
 
 ### Step 6: 全項目をログに記録
 
 採用・却下・重複の**全項目**を1回でログ追記（配列で渡せる）:
 ```bash
-node scripts/meo_triage.js --log-append '[
-  {"id":"MEO-001","date":"<日付>","advice":"<原文>","verdict":"adopted","brand_reason":"<採用理由>","category":"SEO"},
+node scripts/seo_triage.js --log-append '[
+  {"id":"SEO-001","date":"<日付>","advice":"<原文>","verdict":"adopted","brand_reason":"<採用理由>","category":"SEO"},
   {"id":null,"date":"<日付>","advice":"<原文>","verdict":"rejected","brand_reason":"<却下理由 — どの Strategic Skip に抵触したか>","category":null}
 ]'
 ```
@@ -111,7 +112,7 @@ node scripts/meo_triage.js --log-append '[
 node scripts/sync_backlog_to_notion.js --if-changed
 ```
 `changed: true` なら `/sync-backlog` の手順で MCP 経由 create/update を実施。
-採用課題が `ready / Marketer / SEO` で Notion 課題トラッカーに出現する。
+採用課題が `ready / 担当部署 / カテゴリ` で Notion 課題トラッカーに出現する。
 （採用ゼロ＝backlog 無変更なら同期はスキップしてよい。）
 
 ### Step 8: トリアージ表を提示（可視化＋上書き余地）
@@ -119,12 +120,12 @@ node scripts/sync_backlog_to_notion.js --if-changed
 ユーザーに**採用・却下の両方**を理由付きで見せる。これが「自分の目で必要可否を判断できる」体験の核:
 
 ```
-## 🧭 MEOアドバイス トリアージ（<日付>）
+## 🧭 SEOアドバイス トリアージ（<日付>）
 
 ### ✅ 採用 → Notion に ready で起票（N件）
 | ID | 施策 | ブランド適合理由 | 優先度 |
 |----|------|------------------|--------|
-| MEO-001 | … | Moat「シーン別専門性」を強化 | P2 |
+| SEO-001 | … | Moat「シーン別専門性」を強化 | P2 |
 
 ### ⛔ 却下 → ログのみ（M件）
 | 施策 | 却下理由（抵触した方向性） |
@@ -136,9 +137,9 @@ node scripts/sync_backlog_to_notion.js --if-changed
 
 ---
 次アクション:
-- このまま実装に回すなら `/solve-next`（MEO-001 が ready 候補。着手時に YES を確認します）
-- 判定を変えたい場合は「MEO-001 は外して」「却下した○○はやっぱり採用」と言ってください → 即修正します
-- ループの健診は `node scripts/meo_triage.js --report --days 30`
+- このまま実装に回すなら `/solve-next`（SEO-001 が ready 候補。着手時に YES を確認します）
+- 判定を変えたい場合は「SEO-001 は外して」「却下した○○はやっぱり採用」と言ってください → 即修正します
+- ループの健診は `node scripts/seo_triage.js --report --days 30`
 ```
 
 **既定は自動**（採用は自動で ready 化）だが、表で全件見せることでユーザーがその場で上書きできる。
@@ -150,7 +151,7 @@ node scripts/sync_backlog_to_notion.js --if-changed
 - **鵜呑み禁止**: アドバイスは必ず Step 1 の根拠を通す。却下には必ず理由を残す（後の監査・再評価のため）
 - **実装は別ゲート**: ここで作るのは `ready` まで。実装着手は `/solve-next` の YES ゲートを通る。
   マネタイズ・信頼に関わる施策は CLAUDE.md 制約7・8により**さらにユーザー承認が必須**
-- **1ファイル制約は不変**: サイト本体は `index.html` 単一ファイル維持。MEO課題の実装時もこれを壊さない
+- **1ファイル制約は不変**: サイト本体は `index.html` 単一ファイル維持。SEO課題の実装時もこれを壊さない
 - **写真は実写優先**: KW施策で画像追加が要るなら写真ソース優先順（公式IG embed → HotPepper → Places → 自作SVG）に従う
 
 ---
