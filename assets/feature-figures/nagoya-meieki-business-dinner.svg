@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#08100e;stop-opacity:1"/>
+      <stop offset="55%" style="stop-color:#0e1614;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#060c0a;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7a5c10;stop-opacity:0"/>
+      <stop offset="50%" style="stop-color:#c8960e;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#7a5c10;stop-opacity:0"/>
+    </linearGradient>
+    <radialGradient id="cityglow" cx="50%" cy="65%" r="50%">
+      <stop offset="0%" style="stop-color:#c8960e;stop-opacity:0.12"/>
+      <stop offset="100%" style="stop-color:#c8960e;stop-opacity:0"/>
+    </radialGradient>
+    <linearGradient id="skyline" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a2820;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#0a1210;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#cityglow)"/>
+
+  <!-- 名古屋駅スカイライン（シルエット） -->
+  <g fill="url(#skyline)" opacity="0.9">
+    <!-- JRセントラルタワーズ（左） -->
+    <rect x="450" y="280" width="50" height="270"/>
+    <!-- JRセントラルタワーズ（右） -->
+    <rect x="510" y="300" width="50" height="250"/>
+    <!-- タワー最上部 -->
+    <polygon points="475,280 461,280 461,260 468,240 475,260" fill="#1a2820"/>
+    <polygon points="535,300 521,300 521,278 528,258 535,278" fill="#1a2820"/>
+    <!-- ミッドランドスクエア -->
+    <rect x="570" y="320" width="60" height="230"/>
+    <polygon points="600,320 580,320 580,300 600,280 620,300 620,320" fill="#1a2820"/>
+    <!-- その他ビル群 -->
+    <rect x="380" y="360" width="40" height="190"/>
+    <rect x="340" y="380" width="35" height="170"/>
+    <rect x="640" y="350" width="45" height="200"/>
+    <rect x="690" y="370" width="38" height="180"/>
+    <rect x="730" y="390" width="32" height="160"/>
+    <rect x="300" y="400" width="36" height="150"/>
+    <rect x="760" y="400" width="28" height="150"/>
+  </g>
+
+  <!-- ビルの窓明かり（金色の点） -->
+  <g fill="#c8960e" opacity="0.4">
+    <!-- タワー左の窓 -->
+    <rect x="456" y="285" width="4" height="3"/>
+    <rect x="463" y="285" width="4" height="3"/>
+    <rect x="470" y="285" width="4" height="3"/>
+    <rect x="456" y="293" width="4" height="3"/>
+    <rect x="463" y="293" width="4" height="3"/>
+    <rect x="470" y="293" width="4" height="3"/>
+    <rect x="456" y="301" width="4" height="3"/>
+    <rect x="470" y="301" width="4" height="3"/>
+    <!-- タワー右の窓 -->
+    <rect x="516" y="306" width="4" height="3"/>
+    <rect x="524" y="306" width="4" height="3"/>
+    <rect x="532" y="306" width="4" height="3"/>
+    <rect x="516" y="314" width="4" height="3"/>
+    <rect x="532" y="314" width="4" height="3"/>
+    <!-- ミッドランド -->
+    <rect x="576" y="328" width="4" height="3"/>
+    <rect x="584" y="328" width="4" height="3"/>
+    <rect x="592" y="328" width="4" height="3"/>
+    <rect x="600" y="328" width="4" height="3"/>
+    <rect x="576" y="338" width="4" height="3"/>
+    <rect x="592" y="338" width="4" height="3"/>
+    <rect x="608" y="338" width="4" height="3"/>
+  </g>
+
+  <!-- 地面・グランドライン -->
+  <rect x="0" y="545" width="1200" height="85" fill="#060c0a"/>
+  <rect x="0" y="543" width="1200" height="3" fill="#c8960e" opacity="0.2"/>
+
+  <!-- 上部ライン -->
+  <rect x="150" y="98" width="900" height="1" fill="url(#gold)" opacity="0.7"/>
+
+  <!-- ヘッダーテキスト -->
+  <text x="600" y="78" font-family="Georgia, 'Hiragino Mincho ProN', serif" font-size="12" fill="#c8960e" letter-spacing="7" text-anchor="middle" opacity="0.9">NAGOYA BITES  FEATURE</text>
+
+  <!-- メインタイトル -->
+  <text x="600" y="158" font-family="Georgia, 'Hiragino Mincho ProN', serif" font-size="42" font-weight="300" fill="#f0e8d0" letter-spacing="2" text-anchor="middle">名駅で失敗しない会食10軒</text>
+
+  <!-- サブタイトル -->
+  <text x="600" y="194" font-family="'Noto Sans JP', sans-serif" font-size="15" fill="#9a7828" letter-spacing="3" text-anchor="middle">業界人が接待・ビジネスランチに使う名古屋駅エリアの正解 2026年版</text>
+
+  <!-- 下部ライン -->
+  <rect x="150" y="218" width="900" height="1" fill="url(#gold)" opacity="0.7"/>
+
+  <!-- アイコン：ナイフとフォーク -->
+  <g transform="translate(600, 245)" opacity="0.6">
+    <line x1="-18" y1="-12" x2="-18" y2="12" stroke="#c8960e" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="0" y1="-12" x2="0" y2="12" stroke="#c8960e" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2,2"/>
+    <line x1="18" y1="-12" x2="18" y2="12" stroke="#c8960e" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- キャプション -->
+  <text x="600" y="520" font-family="'Noto Sans JP', sans-serif" font-size="17" fill="#e8d4a0" letter-spacing="2" text-anchor="middle">名古屋駅直近10軒——新幹線利用者への配慮とアクセス確実性で選定</text>
+  <text x="600" y="548" font-family="'Noto Sans JP', sans-serif" font-size="13" fill="#7a6030" letter-spacing="2" text-anchor="middle">接待・ビジネスランチ・会食の3シーンに対応</text>
+
+  <!-- コーナー装飾 -->
+  <g stroke="#6b4c0a" stroke-width="1" fill="none" opacity="0.5">
+    <path d="M40,40 L40,22 L58,22"/>
+    <path d="M1160,40 L1160,22 L1142,22"/>
+    <path d="M40,590 L40,608 L58,608"/>
+    <path d="M1160,590 L1160,608 L1142,608"/>
+  </g>
+</svg>
