@@ -212,6 +212,15 @@ nav.open{right:0;}
 .search-wrap input:focus{border-color:var(--gold);}
 .search-wrap button{background:var(--gold);border:none;color:var(--bg);padding:.8rem 1.4rem;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;cursor:pointer;font-weight:500;transition:background .2s;}
 .search-wrap button:hover{background:var(--gold2);}
+/* ── 常時表示のシーン/エリア導線（直帰率対策・MEO-001） ── */
+.scene-nav{margin-top:1.6rem;max-width:580px;opacity:0;animation:up .9s .8s forwards;}
+.scene-nav-row{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin-top:.7rem;}
+.scene-nav-row:first-child{margin-top:0;}
+.scene-nav-label{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.14em;color:var(--gold);white-space:nowrap;text-transform:uppercase;margin-right:.15rem;}
+.scene-chip{background:rgba(201,169,110,.08);border:1px solid rgba(201,169,110,.32);color:var(--white);font-family:inherit;font-size:.74rem;letter-spacing:.03em;padding:.46rem .9rem;border-radius:3px;cursor:pointer;transition:all .18s;min-height:38px;display:inline-flex;align-items:center;}
+.scene-chip:hover{background:rgba(201,169,110,.2);border-color:var(--gold);}
+.scene-chip:active{transform:translateY(1px);}
+@media(max-width:480px){.scene-nav{max-width:100%;margin-top:1.3rem;}.scene-chip{font-size:.72rem;padding:.42rem .78rem;}}
 /* ── STICKY SEARCH BAR ── */
 .sticky-search{position:sticky;top:56px;z-index:150;background:rgba(247,245,241,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:.6rem 1.5rem;display:flex;gap:.5rem;align-items:center;opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity .3s,transform .3s;}
 .sticky-search.visible{opacity:1;transform:translateY(0);pointer-events:auto;}
@@ -1238,9 +1247,9 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 </header>
 
 <section class="hero" id="main-content">
-  <div class="eyebrow">名古屋専門 × 飲食のプロが選ぶ</div>
+  <div class="eyebrow">名古屋専門 × 飲食のプロの目利き × シーン別</div>
   <h1>飲食の<em>プロ</em>が、<br>名古屋<em>だけ</em>を<br><span class="fade">深く選んだ。</span></h1>
-  <p class="hero-sub">名古屋で8ブランドを運営する現役飲食店経営者が、<br>業界の内側から本当に価値ある店だけを厳選しています。</p>
+  <p class="hero-sub">名古屋で8ブランドを運営する現役飲食店経営者が、業界の内側から本当に価値ある店だけを厳選。<br>宴会・接待・デートなど<em>シーンごとの専門性</em>で、最適な一軒が見つかります。</p>
   <div class="search-wrap">
     <label for="si" class="visually-hidden">レストランを検索</label>
     <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
@@ -1253,6 +1262,25 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <span class="suggest-pill" onclick="suggestSearch('忘年会')">忘年会</span>
       <span class="suggest-pill" onclick="suggestSearch('名古屋駅')">名駅</span>
       <span class="suggest-pill" onclick="suggestSearch('居酒屋')">居酒屋</span>
+    </div>
+  </div>
+  <div class="scene-nav" role="navigation" aria-label="シーン・エリアから探す">
+    <div class="scene-nav-row">
+      <span class="scene-nav-label">シーンで探す</span>
+      <button class="scene-chip" type="button" onclick="suggestSearch('宴会')">宴会・忘年会</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('接待')">接待・会食</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('デート')">デート</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('女子会')">女子会</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('記念日')">記念日</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('個室')">個室</button>
+    </div>
+    <div class="scene-nav-row">
+      <span class="scene-nav-label">エリアで探す</span>
+      <button class="scene-chip" type="button" onclick="suggestSearch('名古屋駅')">名駅</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('栄')">栄</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('大須')">大須</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('金山')">金山</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('伏見')">伏見</button>
     </div>
   </div>
 </section>

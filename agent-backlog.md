@@ -8,9 +8,18 @@
 
 ## 進行中・完了タスク
 
-### [SEO-001] トップFVで「業界人の目利き × シーン別専門性」を訴求し直帰率を下げる
-- **priority**: P1 → **status**: ready
+### [SEO-001] トップFVで「業界人の目利き × シーン別専門性」を訴求し直帰率を下げる ✅
+- **priority**: P1 → **status**: done
 - **detected**: 2026-05-31
+- **resolved**: 2026-05-31
+- **resolved_by**: /solve-next（Builder）— index.html FV にシーン/エリア常時導線 + キャッチ強化
+- **実装内容**:
+  - FV のキャッチを「業界人の目利き × シーン別専門性」に寄せて更新（eyebrow「名古屋専門 × 飲食のプロの目利き × シーン別」/ hero-sub に「宴会・接待・デートなどシーンごとの専門性で、最適な一軒が見つかります」を追記）
+  - **常時表示のシーン/エリア導線（`.scene-nav`）を新設**。従来は `.search-suggest` が検索ボックス focus 時のみ表示で、初回訪問者にはシーン/エリア導線が一切見えていなかった（直帰の主因）。これを検索ボックス直下に常時表示化。「シーンで探す」（宴会・忘年会／接待・会食／デート／女子会／記念日／個室）＋「エリアで探す」（名駅／栄／大須／金山／伏見）の2行を大きく配置
+  - 各チップは既存 `suggestSearch()` を再利用（新規JSロジックなし）。全キーワードを data/stores.json 実コーパスでヒット検証済み（宴会187 / 接待346 / デート37 / 女子会103 / 記念日216 / 個室569 / エリア各1000件超）。0件導線・架空導線なし
+  - 実装中の落とし穴: bare `nav{}` ルール（モバイルメニュー drawer 用・position:fixed/height:100vh）が新規 `<nav class="scene-nav">` を巻き込んでオフスクリーン化していたため、`<div role="navigation">` に変更して解消
+- **QA**: build.js は HOTPEPPER 鍵未設定でローカルは shrink-guard abort（index.html 不変更・仕様通り／本番CIが full build）/ LOCAL_STORES 行は無変更 / 局所ビルドが汚した data/cross_check_flags.json は revert / console error 0 / desktop・mobile(375px) 両方で scene-nav 常時表示・チップクリックで search-active 化と結果表示（宴会→72件）を preview 検証
+- **効果計測**: 次回 SEO アドバイス（LINE）の直帰率・回遊で再評価
 - **category**: UX
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-05-30 原文「🔴 直帰率57%、訪問者の半数以上がトップから離脱 👉 index.htmlのファーストビューに『業界人の目利き』『シーン別の専門性』を強く訴求するキャッチ+直感的なエリア・シーンフィルタを大きく表示」
@@ -850,6 +859,7 @@
 | 2026-05-25 | Builder+Marketer(/solve-next) | **ISSUE-053 クローズ（実装は 5/21 commit 885229b01 で既に完了済みと確認）**: fetch_ga4_views.js の fetchSiteMetrics() が UU/PV/Sessions/avgDuration/bounceRate/pages-per-session + source×medium 50件 + Top5 ランディング + 4チャネル分類 + phase0/takeoff/healthy/strong 段階自動判定を data/site_metrics.json に毎日 CI 出力中（直近 2026-05-24 取得値: UU231/PV772/Sessions351/直帰51%/平均282.5秒/pages2.2/organic19%/direct75.9%/chatgpt.com 24セッション）。build.yml git add 統合済（ISSUE-058 整備時）。docs/kpi-weekly.md にも反映済。「未着手」ステータスは stale で実体は本番稼働中のため backlog を done 化 | ✅ 実装済確認・backlog 整合 |
 | 2026-05-31 | Editor（睡眠中自律実行） | **日次ジャーナル 5/31 公開**: グリルつばき（名古屋駅前・5/30開業）— 「肉屋 雪月花」10年の暖簾を架け替えた理由を業界人目線で読む。SVGヒーロー画像 `/assets/journal-figures/2026-05-31-grill-tsubaki.svg` 自作。15項目バリデーション all pass。`journal/2026-05-31-grill-tsubaki-meiekimae.html` 公開 / `data/pending_stores.json` にグリルつばき追加 / `data/journal_published.json` 更新 / `journal/index.html` + `feed.xml` + `feed.atom` 更新 / `docs/daily-posts/2026-05-31.md` SNS原稿作成 / `sitemap.xml` 新エントリ追加 | ✅ commit済み（push待ち） |
 | 2026-05-31 | Editor+Marketer（睡眠中自律実行） | **ISSUE-031フォローアップ — 新規ロングテール特集2本追加**: (1) `features/nagoya-dining-professionals.html` 新規（「名古屋 飲食人 おすすめ」KW・飲食業界人が自分の資金で通う栄・金山の10軒・editorReason+insiderNote全件公開・FAQ5問・JSON-LD4種完備）(2) `features/nagoya-meieki-business-dinner.html` 新規（「名駅 失敗しない 会食」KW・名古屋駅エリア会食・接待10軒・出張者配慮とアクセス確実性で選定・FAQ4問・JSON-LD4種完備）(3) `assets/feature-figures/nagoya-dining-professionals.svg` + `assets/feature-figures/nagoya-meieki-business-dinner.svg` 新作ヒーロー画像（CLAUDE.md 実写優先ルール→最終手段SVG適用）(4) `features/index.html` numberOfItems 51→53・2カード追加 (5) `sitemap.xml` 2URL追加 | ✅ commit b5d06e31c（push待ち） |
+| 2026-05-31 | Builder(/solve-next) | SEO-001 実装・デプロイ — index.html FV に常時表示のシーン/エリア導線(`.scene-nav`)を新設（従来は検索ボックス focus 時しか出ず直帰主因）+ eyebrow/hero-sub を「業界人の目利き × シーン別専門性」へ更新。全チップ keyword を実コーパスでヒット検証・desktop/mobile preview 検証・QA-1〜5 pass | ✅ デプロイ済み (commit __HASH__) |
 
 ---
 
