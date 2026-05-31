@@ -1,21 +1,21 @@
 #!/usr/bin/env node
 /**
- * MEO AIアドバイス → 改善ループ 決定的ヘルパー
+ * SEO AIアドバイス → 改善ループ 決定的ヘルパー
  *
  * 設計（sync_backlog_to_notion.js と同じ思想）:
  *   - このスクリプトは「判断」をしない。ブランドフィルター（採用/却下）の判断は
- *     /meo-triage コマンド（エージェント）が CLAUDE.md の Moat/Strategic Skip を根拠に行う。
+ *     /seo-triage コマンド（エージェント）が CLAUDE.md の Moat/Strategic Skip を根拠に行う。
  *   - ここで持つのは決定的処理だけ: ID採番 / 重複検知 / ログ追記 / 健診レポート。
  *
  * サブコマンド:
- *   --next-id                  次の MEO-NNN を返す（agent-backlog.md + ログを走査）
+ *   --next-id                  次の SEO-NNN を返す（agent-backlog.md + ログを走査）
  *   --check-dup "<advice>"     正規化テキストを既存ログと照合。重複なら既存entryを返す
- *   --log-append '<json>'      entry(または配列)を meo_advice_log.json に追記
+ *   --log-append '<json>'      entry(または配列)を seo_advice_log.json に追記
  *   --report [--days N]        採用/却下サマリ＋「採用済み未done」一覧を出力
  *
  * 出力は常に JSON（stdout）。エラーは {"ok":false,"error":...} で返す。
  *
- * ログ: data/meo_advice_log.json
+ * ログ: data/seo_advice_log.json
  *   { "version": 1, "entries": [ { id, date, source, advice, verdict, brand_reason, category, fingerprint } ] }
  */
 
@@ -25,7 +25,7 @@ const crypto = require('crypto');
 
 const ROOT = path.resolve(__dirname, '..');
 const BACKLOG_PATH = path.join(ROOT, 'agent-backlog.md');
-const LOG_PATH = path.join(ROOT, 'data/meo_advice_log.json');
+const LOG_PATH = path.join(ROOT, 'data/seo_advice_log.json');
 
 // ──────────────────────────────────────────────────────────
 // 正規化 & fingerprint
@@ -35,7 +35,7 @@ const LOG_PATH = path.join(ROOT, 'data/meo_advice_log.json');
  * アドバイス文を「同種判定」用に正規化する。
  * - 絵文字 / 記号 / 数字を畳む（「流入12%」「流入15%」を同種扱いにする）
  * - 空白を畳む、小文字化
- * 数値を落とすのは意図的: MEOアドバイスは毎日数値だけ変えて同じ施策を繰り返すため。
+ * 数値を落とすのは意図的: SEOアドバイスは毎日数値だけ変えて同じ施策を繰り返すため。
  */
 function normalize(text) {
   return String(text || '')
@@ -75,10 +75,10 @@ function saveLog(log) {
 // ID 採番
 // ──────────────────────────────────────────────────────────
 
-function maxMeoNum() {
+function maxSeoNum() {
   let max = 0;
   const scan = (text) => {
-    const re = /MEO-(\d+)/g;
+    const re = /SEO-(\d+)/g;
     let m;
     while ((m = re.exec(text)) !== null) {
       const n = parseInt(m[1], 10);
@@ -92,8 +92,8 @@ function maxMeoNum() {
 }
 
 function nextId(offset = 0) {
-  const n = maxMeoNum() + 1 + offset;
-  return 'MEO-' + String(n).padStart(3, '0');
+  const n = maxSeoNum() + 1 + offset;
+  return 'SEO-' + String(n).padStart(3, '0');
 }
 
 // ──────────────────────────────────────────────────────────
@@ -111,7 +111,7 @@ function checkDup(advice) {
 // レポート（ループ健診）
 // ──────────────────────────────────────────────────────────
 
-/** agent-backlog.md から各 MEO-ID の status を読む（done 判定用） */
+/** agent-backlog.md から各 SEO-ID の status を読む（done 判定用） */
 function backlogStatusById() {
   const map = {};
   if (!fs.existsSync(BACKLOG_PATH)) return map;
@@ -119,7 +119,7 @@ function backlogStatusById() {
   const lines = md.split('\n');
   let curId = null;
   for (const line of lines) {
-    const h = line.match(/^###\s+\[(MEO-\d+)\]/);
+    const h = line.match(/^###\s+\[(SEO-\d+)\]/);
     if (h) { curId = h[1]; map[curId] = map[curId] || 'unknown'; continue; }
     if (curId) {
       const st = line.match(/\*\*status\*\*\s*[:：]\s*([a-z_]+)/);

@@ -156,7 +156,7 @@ const ID_PREFIX_TO_OWNER = {
   'BATCH': 'Builder',
   'ORG': 'Orchestrator',
   'MKT': 'Marketer',
-  'MEO': 'Marketer',
+  'SEO': 'Marketer',
   'STR': 'Strategist',
 };
 
