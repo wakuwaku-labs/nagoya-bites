@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-05-31T07:33:20.199Z",
+  "generatedAt": "2026-05-31T08:44:17.283Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 276,
-    "pageViews": 871,
-    "sessions": 405,
-    "avgSessionDuration": 282.6,
-    "bounceRate": 0.43,
+    "activeUsers": 277,
+    "pageViews": 872,
+    "sessions": 406,
+    "avgSessionDuration": 281.9,
+    "bounceRate": 0.431,
     "pagesPerSession": 2.15
   },
   "channels": {
     "sessions": {
       "organic": 118,
-      "direct": 275,
+      "direct": 276,
       "social": 5,
       "referral": 9,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 29,
+      "organic": 28.9,
       "direct": 67.6,
       "social": 1.2,
       "referral": 2.2,
@@ -31,7 +31,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 220
+      "sessions": 221
     },
     {
       "source": "google",
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 282,
-      "sessions": 160
+      "pageViews": 283,
+      "sessions": 161
     },
     {
       "path": "/index.html",
@@ -108,13 +108,13 @@
   ],
   "cta": {
     "outboundClicks": 57,
-    "ctaClickRate": 14.1,
+    "ctaClickRate": 14,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 276,
+    "value": 277,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
