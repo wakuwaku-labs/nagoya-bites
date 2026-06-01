@@ -23,36 +23,16 @@
 
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
+
+// 正規化 / fingerprint / 採番は scripts/lib/backlog_ids.js に一元化（接頭辞非依存）。
+// 後方互換のため、本ファイルは normalize/fingerprint/nextId を再エクスポートする。
+const { normalize, fingerprint, nextId: nextIdForPrefix } = require('./lib/backlog_ids');
 
 const ROOT = path.resolve(__dirname, '..');
 const BACKLOG_PATH = path.join(ROOT, 'agent-backlog.md');
 const LOG_PATH = path.join(ROOT, 'data/seo_advice_log.json');
 
-// ──────────────────────────────────────────────────────────
-// 正規化 & fingerprint
-// ──────────────────────────────────────────────────────────
-
-/**
- * アドバイス文を「同種判定」用に正規化する。
- * - 絵文字 / 記号 / 数字を畳む（「流入12%」「流入15%」を同種扱いにする）
- * - 空白を畳む、小文字化
- * 数値を落とすのは意図的: SEOアドバイスは毎日数値だけ変えて同じ施策を繰り返すため。
- */
-function normalize(text) {
-  return String(text || '')
-    .normalize('NFKC')
-    .replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2B00}-\u{2BFF}]/gu, ' ') // 絵文字・矢印
-    .replace(/[0-9０-９]+(\.[0-9]+)?\s*[%％件人軒日週月]?/g, ' ') // 数値+単位を落とす
-    .replace(/[「」『』（）()【】\[\]、。,.・:：\/／…\-—~〜!！?？\n\r\t]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .toLowerCase();
-}
-
-function fingerprint(text) {
-  return crypto.createHash('sha1').update(normalize(text)).digest('hex').slice(0, 16);
-}
+// normalize / fingerprint は ./lib/backlog_ids に移動（冒頭で require 済み）。
 
 // ──────────────────────────────────────────────────────────
 // ログ I/O
@@ -74,28 +54,15 @@ function saveLog(log) {
 }
 
 // ──────────────────────────────────────────────────────────
-// ID 採番
+// ID 採番（lib/backlog_ids に委譲。SEO は backlog に加えログの id も走査対象に含める）
 // ──────────────────────────────────────────────────────────
 
-function maxSeoNum() {
-  let max = 0;
-  const scan = (text) => {
-    const re = /SEO-(\d+)/g;
-    let m;
-    while ((m = re.exec(text)) !== null) {
-      const n = parseInt(m[1], 10);
-      if (n > max) max = n;
-    }
-  };
-  if (fs.existsSync(BACKLOG_PATH)) scan(fs.readFileSync(BACKLOG_PATH, 'utf8'));
-  const log = loadLog();
-  for (const e of log.entries) if (e.id) scan(e.id);
-  return max;
+function logIdTexts() {
+  return loadLog().entries.filter((e) => e.id).map((e) => e.id);
 }
 
 function nextId(offset = 0) {
-  const n = maxSeoNum() + 1 + offset;
-  return 'SEO-' + String(n).padStart(3, '0');
+  return nextIdForPrefix('SEO', { offset, extraTexts: logIdTexts() });
 }
 
 // ──────────────────────────────────────────────────────────

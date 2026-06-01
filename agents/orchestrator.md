@@ -247,35 +247,37 @@ Phase 1: 実装前チェック（あなたが直接行う）
   - P0 → P1 → P2 → P3 の順でソート
   - 今回実装する範囲を決定（P0は全件必須、P1は全件推奨、P2以下は時間的余裕で判断）
   - 成長への寄与度も考慮する（同じP2なら、CVRに影響するものを優先）
+  - **効果測定の baseline 取得（ORG-005）**: サイト本体を変える施策は実装前に
+    `node scripts/track_metrics.js --baseline <ID> [--metric <key> --target <値>]` を実行し、
+    着手時点の KPI（UU/直帰率/回遊/CTA率）を施策IDに固定する（data/effect_ledger.json）。
 
 Phase 2: Builderへの指示（部下に委譲）
   - agents/builder.md を読ませ、決定した課題リストを渡す
   - Builderが実装中は変更ファイルを追跡する
 
-Phase 3: 実装後QAゲート（あなたが直接検査する）★ここが重要★
-  以下を全て確認してから、初めてデプロイを承認する:
+Phase 3: 実装後QAゲート（Reviewer が独立検査し、CEO は所見を承認する）★ここが重要★
+  ★ORG-006: 従来は CEO が直接検査していたが、実装者＝審査者のセルフレビューを避けるため、
+    Reviewer ロール（agents/reviewer.md・owner≠reviewer）が独立検査し、CEO は所見を承認する立場に回る。
+    モデルは同一なので完全な独立ではない。最終的な独立性は人間オーナーの YES ゲートが担保する。
 
-  QA-1: node build.js の正常終了確認
-        → 失敗したら STOP。Builderの変更を git stash してやり直し指示
+  Step A: 決定的QA（客観証跡・自動）
+    A-0: 実装前に `node scripts/qa_gate.js --before`（件数・機能マーカーを snapshot）
+    QA-1: `node build.js` の正常終了確認 → 失敗で STOP・git stash してやり直し指示
+    QA-2〜4: `node scripts/qa_gate.js --after` を実行し JSON 証跡を得る
+       - QA-2 店舗件数が 5%以上減で fail（STOP）
+       - QA-3 git diff 範囲・LOCAL_STORES 行変更フラグ（変更ありなら要目視）
+       - QA-4 JS構文（大崩れ検知）＋機能マーカー保全（before比で半減した機能を検知）
+       → qa_gate の出力を agent-backlog.md の `review:` フィールドに証跡として貼る
 
-  QA-2: 店舗件数が減少していないか確認
-        → 実装前の件数と比較。5%以上減少したら STOP
-
-  QA-3: 変更したファイルの差分レビュー（git diff）
-        → LOCAL_STORES が変更されていないか必ず確認
-        → 意図しない変更が含まれていないか確認
-
-  QA-4: JavaScriptの構文確認
-        → HTMLのscriptタグ内を目視確認
-        → 明らかな構文エラー（unclosed brackets等）がないか確認
-
-  QA-5: UX劣化チェック（新設）
-        → 変更がモバイル表示を壊していないか
-        → CTA導線が維持されているか
+  Step B: 独立レビュー（owner ≠ reviewer）
+    - owner と異なる視点で `/code-review` を diff 入力で起動（reviewer.md の owner→reviewer 対応表）
+    - リスク高（JSロジック/データ削除/マネタイズ/LOCAL_STORES変更）は `/security-review` も
+    - QA-5（UX目視・モバイル表示/CTA導線）を人/AI が確認
+    - 所見（承認 or 指摘）を `review:` フィールドに記録
 
   [QAゲート通過条件]
-  QA-1〜5 がすべてOKの場合のみデプロイを実行する。
-  1つでも失敗したら、Builderに修正を指示し、再度QAゲートを通過させる。
+  Step A の qa_gate が全 pass ＋ build 正常 ＋ Step B の Reviewer 所見が「承認」の場合のみ、CEO がデプロイを承認する。
+  1つでも fail / 重大指摘があれば owner に差し戻し、再度ゲートを通す。
 
 Phase 4: デプロイ（QAゲート通過後のみ）
   git add index.html agent-backlog.md （変更された他ファイルも含む）
@@ -284,6 +286,9 @@ Phase 4: デプロイ（QAゲート通過後のみ）
 
 Phase 5: デプロイ後確認
   - agent-backlog.md のログを更新
+  - **効果測定の followup 予約（ORG-005）**: baseline を取った施策は、デプロイから約2週間後に
+    `node scripts/track_metrics.js --followup <ID>` で delta を計測する。数値取得は決定的だが、
+    「効果か季節要因か」の解釈と backlog の `効果計測:` フィールドへの文章化はエージェントが判断する。
   - ユーザーへの完了報告
 ```
 
@@ -660,12 +665,17 @@ agent-backlog.md（マスター）を Notion DB「課題トラッカー」に常
 
 ### 自動同期の仕組み（Stop hook）
 
-`.claude/settings.json` に Stop hook が登録されている。
-Claude Code のターン終了時に毎回 `node scripts/sync_backlog_to_notion.js --if-changed` が走り、
-agent-backlog.md が変わっていれば `.notion_sync_pending` マーカーが立つ。
+`.claude/settings.json` の Stop hook がターン終了時に毎回 2 つを実行する（**導入手順: `docs/stop-hook-setup.md`**）:
+1. `node scripts/sync_backlog_to_notion.js --if-changed` → 出力が `changed:true` のとき hook の shell が `.notion_sync_pending` マーカーを立てる
+   （sync スクリプト自体は純粋パーサーで marker を書かない。marker を立てるのは hook 層の責務として分離している）
+2. `node scripts/audit_backlog_ids.js` → 重複ID（並列起票の採番衝突）を push 前に早期検知
 
 次回ターン開始時、Orchestrator は **Step 0 で必ずこのマーカーを確認**し、存在すれば `/sync-backlog` を最初に実行する。
-これにより「課題が起票されたら絶対 Notion に反映される」が技術的に保証される。
+これにより「課題が起票されたら絶対 Notion に反映される」が保証される。
+
+> 注（2026-06-02・ORG-004）: 以前はこの節の記述に反し `settings.json` も Stop hook も**実在しなかった**（憲法と実装の乖離）。
+> エージェントは自己改変ブロックで `settings.json` を書けないため、オーナーが上記手順で導入する。
+> **hook 未導入でも重複IDは CI（build.yml の `audit_backlog_ids` ステップ）が最終防壁として検知する。**
 
 ### 運用ルール
 
@@ -688,3 +698,7 @@ agent-backlog.md が変わっていれば `.notion_sync_pending` マーカーが
 | `STR-XXX` | Strategist | `STR-MONTHLY-2026-05` |
 
 `MKT-XXX` と `STR-XXX` は ORG-002 / ORG-003 完了後に定期起票される予定。
+
+**採番は手で振らず `node scripts/lib/backlog_ids.js --next-id <PREFIX>` で発番する（ORG-004）。**
+最大番号 +1 を決定的に計算するため、並列起票での番号衝突（過去に ISSUE-048 / ISSUE-059 で実発生）を防げる。
+万一重複が混入しても `audit_backlog_ids.js`（CI=build.yml / Stop hook）が検知して再採番を促す。
