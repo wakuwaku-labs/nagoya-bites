@@ -63,8 +63,11 @@
 const GA4_PROPERTY_ID = '533244445';
 const LINE_CHANNEL_TOKEN = 'fgb0xGLaxbkgsFJoo2u/911FxfqiTwi7inkVDVElNUeZ4Usg2BhM18ocCiFVOZsxaKX6UqqB5NeFscV784eEFUOD9VhBtnUi/wV/0/kM62Z/ooyJW3whgeZVWFAHiF6MNbx07c8ZEgyPOLzI0pd1MQdB04t89/1O/w1cDnyilFU=';
 const LINE_USER_ID = 'Ufa1112c027c42c13193f30ada3988b24';
-const REPORT_EMAIL = '';  // Gmail送信も併用する場合はメールアドレスを設定（空ならLINEのみ）
+const REPORT_EMAIL = 'wakato1251999@gmail.com';  // Gmail送信も併用（空ならLINEのみ）。日次/週次レポートをメール化し、スケジュール起動したClaudeが読んでSEOトリアージ→Notion自動同期する入口にする
 const SITE_URL = 'https://nagoya-bites.com/';
+// 重要: このGASプロジェクトは単一スクリプトファイル（Code.js）で運用する。
+// 同期ツールが作る重複ファイル（"Code 2.js" 等）がプロジェクトに混入すると、
+// 同じ const/関数の二重宣言で "preparing top level objects" エラーになりコンパイル全体が落ちる。
 
 // ─── LINE Messaging API でメッセージ送信 ───
 function sendLineMessage(text) {
