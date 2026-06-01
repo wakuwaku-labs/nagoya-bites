@@ -11,7 +11,9 @@
  *   --next-id                  次の SEO-NNN を返す（agent-backlog.md + ログを走査）
  *   --check-dup "<advice>"     正規化テキストを既存ログと照合。重複なら既存entryを返す
  *   --log-append '<json>'      entry(または配列)を seo_advice_log.json に追記
- *   --report [--days N]        採用/却下サマリ＋「採用済み未done」一覧を出力
+ *   --report [--days N] [--source line-weekly]
+ *                              採用/却下サマリ＋ソース別内訳(by_source)＋「採用済み未done」一覧を出力
+ *                              --source で line-daily / line-weekly に絞り込み可能
  *
  * 出力は常に JSON（stdout）。エラーは {"ok":false,"error":...} で返す。
  *
@@ -130,12 +132,15 @@ function backlogStatusById() {
   return map;
 }
 
-function report(days) {
+function report(days, sourceFilter) {
   const log = loadLog();
   let entries = log.entries;
   if (days && Number.isFinite(days)) {
     const cutoff = new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
     entries = entries.filter((e) => (e.date || '') >= cutoff);
+  }
+  if (sourceFilter) {
+    entries = entries.filter((e) => (e.source || 'line-daily') === sourceFilter);
   }
   const adopted = entries.filter((e) => e.verdict === 'adopted');
   const rejected = entries.filter((e) => e.verdict === 'rejected');
@@ -154,15 +159,28 @@ function report(days) {
     .filter((e) => e.id && status[e.id] !== 'done')
     .map((e) => ({ id: e.id, date: e.date, status: status[e.id] || 'not_in_backlog', advice: e.advice }));
 
+  // ソース別内訳（日次=line-daily / 週次=line-weekly を分けてループ健診できるように）
+  const bySource = {};
+  for (const e of entries) {
+    const src = e.source || 'line-daily';
+    bySource[src] = bySource[src] || { adopted: 0, rejected: 0, duplicates: 0, total: 0 };
+    bySource[src].total++;
+    if (e.verdict === 'adopted') bySource[src].adopted++;
+    else if (e.verdict === 'rejected') bySource[src].rejected++;
+    else if (e.verdict === 'duplicate') bySource[src].duplicates++;
+  }
+
   return {
     ok: true,
     window: days ? `直近${days}日` : '全期間',
+    source: sourceFilter || 'all',
     totals: {
       adopted: adopted.length,
       rejected: rejected.length,
       duplicates: duplicates.length,
       total: entries.length,
     },
+    by_source: bySource,
     reject_reasons: rejectReasons,
     adopted_open: adoptedOpen,
     adopted_done: adopted.filter((e) => e.id && status[e.id] === 'done').length,
@@ -226,7 +244,10 @@ function main() {
     let days = null;
     const di = args.indexOf('--days');
     if (di >= 0 && args[di + 1]) days = parseInt(args[di + 1], 10);
-    out(report(days));
+    let source = null;
+    const si = args.indexOf('--source');
+    if (si >= 0 && args[si + 1]) source = args[si + 1];
+    out(report(days, source));
     return;
   }
 
