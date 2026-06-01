@@ -30,6 +30,156 @@
       "brand_reason": "既存CTA導線・計測の体験改善。収益化は含めず制約8の承認は別途",
       "category": "UX",
       "fingerprint": "d07a0b704d843893"
+    },
+    {
+      "id": "SEO-004",
+      "date": "2026-06-01",
+      "source": "line-weekly",
+      "advice": "🔴 1訪問あたり閲覧が前週2.4ページから1.3ページに半減しサイト回遊が悪化 👉 店舗詳細モーダル内に「似た雰囲気のお店」「この特集もおすすめ」関連リンクを複数追加し回遊を促す",
+      "verdict": "adopted",
+      "brand_reason": "構造化DBとシーン別特集の内部相互リンクをモーダルで活かす。順位操作/広告/ストック写真を伴わず実在データ間導線を増やすのみ。回遊半減=落ちトレンドでP1",
+      "category": "UX",
+      "fingerprint": "08fd23fa4448b82f"
+    },
+    {
+      "id": "SEO-005",
+      "date": "2026-06-01",
+      "source": "line-weekly",
+      "advice": "🟢 訪問者数が前週比+42%と増加し検索流入が伸びている 👉 人気特集を深掘りし「名古屋 ランチ 和食 個室」「接待」など具体ニーズのシーン別特集ページを増やす",
+      "verdict": "adopted",
+      "brand_reason": "Moat「名古屋×シーン×業界人の目利き」の独自KW(個室・接待)で検索面を広げる王道。勝ち筋(検索+42%)の横展開で実在特集の新規制作",
+      "category": "コンテンツ",
+      "fingerprint": "b5dc567444dc9e46"
+    },
+    {
+      "id": null,
+      "date": "2026-06-01",
+      "source": "line-weekly",
+      "advice": "💡 ジャーナル記事が人気だが他記事への閲覧が伸びていない 👉 journal/記事フッターに「この記事を読んだ人におすすめ」の関連記事3つをサムネイル付きで表示し記事間回遊を促す",
+      "verdict": "duplicate",
+      "brand_reason": "SEO-002(ジャーナル/特集末尾に関連記事リンク3-5件)と主旨同一。設置面=記事フッターで重複のため再起票せず二重実装を防止。サムネ付与はSEO-002実装時の付帯改善として吸収",
+      "category": null,
+      "fingerprint": "829c407f3be384b9"
+    },
+    {
+      "id": null,
+      "date": "2026-06-01",
+      "source": "line-daily",
+      "advice": "🟡 直帰率56%と高く訪問者の約半数が離脱。index.htmlのファーストビューで業界人の目利きやシーン別の強みをキャッチーなコピーで目立たせて反応を見る実験",
+      "verdict": "duplicate",
+      "brand_reason": "SEO-001（FVに業界人の目利き・シーン別キャッチ）と同一意図。再起票せず",
+      "category": null,
+      "fingerprint": "a7a41810a35d960c"
+    },
+    {
+      "id": null,
+      "date": "2026-06-01",
+      "source": "line-daily",
+      "advice": "予約ボタンクリック0回・店舗詳細閲覧2回とサイト内行動が少ない。人気店/特集掲載店カードを優先表示し店舗詳細・予約ボタンを目立たせるデザイン調整",
+      "verdict": "duplicate",
+      "brand_reason": "SEO-003（モーダルCTA視認性向上）と同一意図。再起票せず",
+      "category": null,
+      "fingerprint": "0fb259e707ce5484"
+    },
+    {
+      "id": null,
+      "date": "2026-06-01",
+      "source": "line-daily",
+      "advice": "SNS流入0%。docs/daily-posts/のSNS投稿原稿を参考にInstagramでハッシュタグを付けてジャーナル記事と店舗情報を投稿",
+      "verdict": "rejected",
+      "brand_reason": "既存の docs/daily-posts/ 日次SNS原稿生成フローで既にカバー済みの運用リマインダー。サイト改善施策としての具体性・新規性が低い汎用運用論のため却下",
+      "category": null,
+      "fingerprint": "6fc47f72ccf5b7dc"
+    },
+    {
+      "id": null,
+      "date": "2026-06-01",
+      "source": "line-weekly",
+      "advice": "予約ボタンクリック率1.7%と目標3%を下回る。予約ボタンを今すぐ予約など行動喚起文言に変え色も目立つ赤に設定",
+      "verdict": "duplicate",
+      "brand_reason": "SEO-003（CTA視認性・文言具体化）と同一意図。再起票せず",
+      "category": null,
+      "fingerprint": "a22c80999c398cbd"
+    },
+    {
+      "id": null,
+      "date": "2026-06-01",
+      "source": "line-weekly",
+      "advice": "1訪問あたり閲覧1.3ページと目標2ページ以上を下回る。店舗詳細モーダル下部にこのお店が好きな人はこちらもチェックとして関連シーンの特集記事リンクを3つ追加",
+      "verdict": "duplicate",
+      "brand_reason": "SEO-002（特集末尾に関連リンク3-5件）およびSEO-004（モーダル関連リンク回遊）と同一意図。再起票せず",
+      "category": null,
+      "fingerprint": "e70ba839a1b66b52"
+    },
+    {
+      "id": null,
+      "date": "2026-06-01",
+      "source": "line-weekly",
+      "advice": "検索流入43%が最大。features特集nagoya-lunch-washokuのタイトルを名古屋 接待 個室 ランチなど競合が少ない専門キーワードに調整しSNSで告知",
+      "verdict": "duplicate",
+      "brand_reason": "SEO-005（シーン別和食特集 個室/接待の深掘り）と同一初動。再起票せず",
+      "category": null,
+      "fingerprint": "30ef618b967cf020"
+    },
+    {
+      "id": null,
+      "date": "2026-06-01",
+      "source": "line-daily",
+      "advice": "直帰率が56%と高く、訪問者の約半数がすぐに離脱しています。母数が少ないため断定はできませんが、検索からの流入が増えるまで、index.htmlのファーストビューで「業界人の目利き」や「シーン別」の強みをキャッチーなコピーで目立たせて反応を見る実験をしましょう。",
+      "verdict": "rejected",
+      "brand_reason": "SEO-001 ✅done のFV訴求（業界人の目利き × シーン別専門性）と同方向。微差分のキャッチーコピーA/B提案は新規backlog化せず、実装後の磨き込みサイクルで吸収する。母数15人の単日データで断定不可とアドバイス自体が留保している点も含めて新規起票しない。",
+      "category": null,
+      "fingerprint": "49cb8e4cd099aaf4"
+    },
+    {
+      "id": null,
+      "date": "2026-06-01",
+      "source": "line-daily",
+      "advice": "予約ボタンクリックが0回、店舗詳細の閲覧も2回と、サイト内での行動が非常に少ないです。index.htmlの店舗一覧で、特に人気の高い店舗や、特集記事に掲載されている店舗のカードを優先的に表示させ、「店舗詳細を見る」や「予約」ボタンがより目立つようにデザイン調整を試してください。",
+      "verdict": "rejected",
+      "brand_reason": "予約ボタン視認性は SEO-003 で対応中（実装ガイダンスとして吸収）。「人気の高い店舗のカードを優先表示」は順位フィードを編集側で歪める方向で、編集独立性・サクラ排除という Moat とのトレードオフが大きい。特集掲載店優先表示は SEO-005 の新規特集増設で自然に強化されるため、新規起票しない。",
+      "category": null,
+      "fingerprint": "dba5db8bf1b8825d"
+    },
+    {
+      "id": null,
+      "date": "2026-06-01",
+      "source": "line-daily",
+      "advice": "SNS流入が0%と、強みである「編集独立性」や「業界人の目利き」が届いていません。docs/daily-posts/ にあるSNS投稿原稿を参考に、Instagramで「#名古屋グルメ」「#名古屋の店」などのハッシュタグを付けて、今日のジャーナル記事（journal/）と店舗情報を投稿しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "既存 docs/daily-posts/ は /journal-today スキルで日次自動生成済の運用フロー。投稿実行は backlog 化すべき開発課題ではなく、運用責任者（ユーザー/Marketer）の日々のオペレーション。過去にも同種アドバイスを「既存の docs/daily-posts/ で対応済」として却下した履歴あり（ログ整合）。",
+      "category": null,
+      "fingerprint": "b2fa5b794575c7e5"
+    },
+    {
+      "id": "SEO-006",
+      "date": "2026-06-01",
+      "source": "line-weekly",
+      "advice": "検索流入比率が43%と最も高い流入元です。features/にある特集記事「nagoya-lunch-washoku」のタイトルを「名古屋 接待 個室 ランチ」など、競合が少ない専門性の高いキーワードに調整し、SNSで告知しましょう。",
+      "verdict": "adopted",
+      "brand_reason": "Moat「名古屋 × シーン × 業界人の目利き」の独自KW「接待 個室」で検索面を広げる王道。既存実在特集の最適化で順位操作・広告を伴わない。SEO-005（新規シーン特化特集増設）と方向は同じだがアクションは別（既存特集のh1/title/本文/JSON-LDのKW最適化＋SNS告知）。週次トレンド: 検索流入比率43%・訪問者+42%の勝ち筋を伸ばす方向。",
+      "category": "SEO",
+      "fingerprint": "3566bc329cfd3c0e"
+    },
+    {
+      "id": null,
+      "date": "2026-06-01",
+      "source": "line-weekly",
+      "advice": "予約ボタンクリック率が1.7%と目標3%を下回っています。トップページの店舗詳細モーダルと各店舗の予約ボタンを「今すぐ予約」など行動を促す文言に変え、色も目立つ赤色に設定しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "予約ボタンCTA改善（文言・視認性）は SEO-003 で対応中。今週分の具体策「今すぐ予約」文言・赤色は SEO-003 実装時の具体候補として acceptance に吸収する。新規SEO起票は重複ノイズになるため避ける。",
+      "category": null,
+      "fingerprint": "ed6d64a2ce6bd53a"
+    },
+    {
+      "id": null,
+      "date": "2026-06-01",
+      "source": "line-weekly",
+      "advice": "1訪問あたりの閲覧ページ数が1.3ページと目標の2ページ以上を下回っています。トップページの店舗詳細モーダル下部に「このお店が好きな人はこちらもチェック」として関連シーンの特集記事へのリンクを3つ追加しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "SEO-004（店舗詳細モーダルに『似た雰囲気のお店・この特集もおすすめ』関連リンクを複数追加し回遊を回復する・ready）と完全に同一アクション。fingerprintは別だが編集判断で重複認定。新規起票せず SEO-004 で対応。",
+      "category": null,
+      "fingerprint": "5a41f8bf462ec3a4"
     }
   ]
 }
