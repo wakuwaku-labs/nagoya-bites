@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-06-01T11:16:21.389Z",
+  "generatedAt": "2026-06-01T12:15:02.769Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 292,
-    "pageViews": 891,
-    "sessions": 420,
-    "avgSessionDuration": 276.8,
-    "bounceRate": 0.44,
+    "activeUsers": 293,
+    "pageViews": 892,
+    "sessions": 421,
+    "avgSessionDuration": 276.1,
+    "bounceRate": 0.442,
     "pagesPerSession": 2.12
   },
   "channels": {
     "sessions": {
       "organic": 127,
-      "direct": 281,
+      "direct": 282,
       "social": 5,
       "referral": 9,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 30.1,
-      "direct": 66.6,
+      "organic": 30,
+      "direct": 66.7,
       "social": 1.2,
       "referral": 2.1,
       "paid": 0,
@@ -31,7 +31,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 225
+      "sessions": 226
     },
     {
       "source": "google",
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 291,
-      "sessions": 165
+      "pageViews": 292,
+      "sessions": 166
     },
     {
       "path": "/index.html",
@@ -108,13 +108,13 @@
   ],
   "cta": {
     "outboundClicks": 57,
-    "ctaClickRate": 13.6,
+    "ctaClickRate": 13.5,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 292,
+    "value": 293,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
