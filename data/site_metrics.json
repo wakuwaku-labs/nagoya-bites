@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-06-01T14:35:07.500Z",
+  "generatedAt": "2026-06-01T18:43:47.069Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 296,
-    "pageViews": 897,
-    "sessions": 426,
-    "avgSessionDuration": 273.1,
-    "bounceRate": 0.446,
-    "pagesPerSession": 2.11
+    "activeUsers": 300,
+    "pageViews": 896,
+    "sessions": 429,
+    "avgSessionDuration": 264.4,
+    "bounceRate": 0.45,
+    "pagesPerSession": 2.09
   },
   "channels": {
     "sessions": {
-      "organic": 129,
-      "direct": 287,
+      "organic": 131,
+      "direct": 290,
       "social": 5,
       "referral": 10,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 29.9,
-      "direct": 66.6,
-      "social": 1.2,
+      "organic": 30,
+      "direct": 66.5,
+      "social": 1.1,
       "referral": 2.3,
       "paid": 0,
       "other": 0
@@ -31,27 +31,27 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 228
+      "sessions": 227
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 91
+      "sessions": 92
     },
     {
       "source": "chatgpt.com",
       "medium": "(not set)",
-      "sessions": 40
+      "sessions": 41
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 34
+      "sessions": 35
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 12
+      "sessions": 15
     },
     {
       "source": "openai",
@@ -82,13 +82,13 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 296,
-      "sessions": 169
+      "pageViews": 295,
+      "sessions": 168
     },
     {
       "path": "/index.html",
-      "pageViews": 126,
-      "sessions": 70
+      "pageViews": 125,
+      "sessions": 69
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -107,14 +107,14 @@
     }
   ],
   "cta": {
-    "outboundClicks": 57,
-    "ctaClickRate": 13.4,
+    "outboundClicks": 58,
+    "ctaClickRate": 13.5,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 296,
+    "value": 300,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
