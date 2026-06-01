@@ -1,0 +1,30 @@
+{
+  "date": "2026-06-01",
+  "head": "faa6b9a4dca5d81f6b01b38a6215741383122114",
+  "verdict": "FAIL",
+  "findings": [
+    {
+      "category": "Security",
+      "owner": "DataKeeper",
+      "id": "QA-SEC-IG-COOKIES",
+      "sev": "hard",
+      "priority": "P1",
+      "title": "`.ig_cookies.json`（機密ファイル）が git 追跡されている",
+      "body": "機密ファイル `.ig_cookies.json` がリポジトリにコミットされている。履歴に残っている時点で漏洩扱い。\n- acceptance: `git rm --cached .ig_cookies.json` で追跡解除＋.gitignore 追記／関連クレデンシャルのローテーション／夜間QAセキュリティチェックの PASS で再評価"
+    },
+    {
+      "category": "Security",
+      "owner": "DataKeeper",
+      "id": "QA-SEC-NPM-AUDIT",
+      "sev": "soft",
+      "priority": "P2",
+      "title": "npm 依存に既知脆弱性 10 件（critical 0 / high 1 / moderate 9）",
+      "body": "`npm audit --omit=dev` 結果。\n- acceptance: 破壊的変更の無い範囲で `npm audit fix`／高リスクは個別精査／残存はリスク受容理由を記録／次回QAで推移を追跡（制約4: サイト用新依存は追加しない）"
+    }
+  ],
+  "created": [],
+  "existing": [
+    "QA-SEC-IG-COOKIES",
+    "QA-SEC-NPM-AUDIT"
+  ]
+}

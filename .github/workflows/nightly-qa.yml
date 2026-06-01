@@ -1,0 +1,110 @@
+name: Nightly QA (テスト/性能/セキュリティ)
+
+# 毎晩 AM 6:00 JST に回る夜間QA。3本柱:
+#   1. テスト実行（ユニットテスト・node:test 全件）
+#   2. 性能測定（静的指標・前回比の退行検知）
+#   3. セキュリティチェック（機密ファイル追跡 / シークレット混入 / npm 脆弱性）
+# QA対象の「変更スコープ」はその日の差分のみ（特集/ジャーナル/build等の関連監査）。
+# デプロイ（3時 JST の Build & Deploy）はブロックしない独立ジョブ。
+# ハード失敗時のみ Issue を起票して朝に気づけるようにする。
+
+on:
+  schedule:
+    # 06:00 JST = 21:00 UTC
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+    inputs:
+      hours:
+        description: '遡る時間窓（h）'
+        required: false
+        default: '26'
+
+permissions:
+  contents: write   # 発見事項を agent-backlog.md に起票してコミットするため
+  issues: write
+
+concurrency:
+  group: nightly-qa
+  cancel-in-progress: true
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # 時間窓モードで当日コミットを見るため履歴が要る
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps
+        run: npm install --no-audit --no-fund --silent
+
+      - name: Run nightly QA (window-only / 当日差分)
+        id: qa
+        run: |
+          node scripts/nightly_qa.js --window-only --no-advance \
+            --hours "${{ github.event.inputs.hours || '26' }}"
+
+      - name: Upload QA report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-qa-report
+          path: docs/qa/nightly-*.md
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: 発見事項の起票をコミット（agent-backlog.md → 既存sync経由でNotionへ）
+        # QA がハード失敗で exit 1 でも、その前に nightly_qa.js が backlog へ起票済みなので
+        # always() で必ずコミットする。[skip actions] でデプロイ(build.yml)は誘発しない。
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add agent-backlog.md data/qa_findings.json docs/qa/ || true
+          git diff --cached --quiet || git commit -m "chore(qa): 夜間QA発見事項を起票 [skip actions]"
+          git pull --rebase origin main || true
+          git push || (sleep 5 && git pull --rebase origin main && git push) || true
+
+      - name: ハード失敗なら Issue を起票/更新（朝の通知）
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const dir = 'docs/qa';
+            let body = '夜間QAでハード失敗が発生しました。詳細はアーティファクト `nightly-qa-report` を確認してください。';
+            try {
+              const files = fs.readdirSync(dir).filter(f => f.startsWith('nightly-') && f.endsWith('.md')).sort();
+              if (files.length) body = fs.readFileSync(path.join(dir, files[files.length - 1]), 'utf8');
+            } catch (e) {}
+            const today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+            const title = `🔴 夜間QA FAIL ${today}`;
+            const label = 'nightly-qa';
+            // 既存のオープン issue を探して更新、なければ新規作成
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: 'open', labels: label, per_page: 20,
+            });
+            const existing = issues.find(i => i.title.startsWith('🔴 夜間QA FAIL'));
+            if (existing) {
+              await github.rest.issues.update({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: existing.number, title, body,
+              });
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: existing.number,
+                body: `再発（${today}）。最新レポートで本文を更新しました。`,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title, body, labels: [label],
+              });
+            }

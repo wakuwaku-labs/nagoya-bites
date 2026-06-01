@@ -8,6 +8,26 @@
 
 ## 進行中・完了タスク
 
+### [QA-SEC-IG-COOKIES] `.ig_cookies.json`（Instagramセッションcookie）が git 追跡されている
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-06-01
+- **category**: Security
+- **owner**: DataKeeper
+- **source**: 夜間QA セキュリティチェック（scripts/security_audit.js）2026-06-01 — 「機密ファイルが git 追跡されています: .ig_cookies.json」
+- **詳細**: `.ig_cookies.json` は IG スクレイピング用のセッションcookie（`sessionid` 等）を含むが `.gitignore` に無く、リポジトリにコミットされている。コミット履歴に残っている時点でセッションは漏洩扱い。
+- **acceptance**: ①`git rm --cached .ig_cookies.json` で追跡解除＋`.gitignore` に追記 ②Instagram で再ログインし当該セッションを無効化（cookie ローテーション）／③履歴からの完全消去（git filter-repo 等）は影響範囲を確認のうえ判断／④夜間QAのセキュリティチェックが PASS になることで再評価
+- **ブランドガードレール**: 認証情報の取り扱いはサクラ排除・実在保証の信頼基盤と同じ重要度。再発防止として機密ファイル名パターンを security_audit.js が常時監視
+
+### [QA-SEC-NPM-AUDIT] npm 依存に既知脆弱性 10 件（high 1 / moderate 9）
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-06-01
+- **category**: Security
+- **owner**: DataKeeper
+- **source**: 夜間QA セキュリティチェック（scripts/security_audit.js / `npm audit --omit=dev`）2026-06-01
+- **詳細**: 管理ツール側の依存（puppeteer 系等）に high 1・moderate 9。サイト本体（CDN配信・単一HTML）への直接影響は限定的だが、ツール実行環境の供給網リスクとして放置しない。
+- **acceptance**: `npm audit` の詳細を確認し、破壊的変更の無い範囲で `npm audit fix`／高リスクは個別にバージョン精査／残存はリスク受容理由を記録／次回夜間QAで件数の推移を追跡
+- **ブランドガードレール**: 制約4（サイト用の新npm依存追加禁止）に抵触しない範囲での更新に留める
+
 ### [SEO-001] トップFVで「業界人の目利き × シーン別専門性」を訴求し直帰率を下げる ✅
 - **priority**: P1 → **status**: done
 - **detected**: 2026-05-31
