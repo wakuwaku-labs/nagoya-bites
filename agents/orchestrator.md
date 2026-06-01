@@ -247,6 +247,9 @@ Phase 1: 実装前チェック（あなたが直接行う）
   - P0 → P1 → P2 → P3 の順でソート
   - 今回実装する範囲を決定（P0は全件必須、P1は全件推奨、P2以下は時間的余裕で判断）
   - 成長への寄与度も考慮する（同じP2なら、CVRに影響するものを優先）
+  - **効果測定の baseline 取得（ORG-005）**: サイト本体を変える施策は実装前に
+    `node scripts/track_metrics.js --baseline <ID> [--metric <key> --target <値>]` を実行し、
+    着手時点の KPI（UU/直帰率/回遊/CTA率）を施策IDに固定する（data/effect_ledger.json）。
 
 Phase 2: Builderへの指示（部下に委譲）
   - agents/builder.md を読ませ、決定した課題リストを渡す
@@ -284,6 +287,9 @@ Phase 4: デプロイ（QAゲート通過後のみ）
 
 Phase 5: デプロイ後確認
   - agent-backlog.md のログを更新
+  - **効果測定の followup 予約（ORG-005）**: baseline を取った施策は、デプロイから約2週間後に
+    `node scripts/track_metrics.js --followup <ID>` で delta を計測する。数値取得は決定的だが、
+    「効果か季節要因か」の解釈と backlog の `効果計測:` フィールドへの文章化はエージェントが判断する。
   - ユーザーへの完了報告
 ```
 

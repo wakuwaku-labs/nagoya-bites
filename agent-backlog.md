@@ -49,6 +49,25 @@
 - **残**: 既知重複4件の実リネーム（Notion `page_id_map` 整合を伴うため別ISSUEで /solve-next 経由）。Stop hook はオーナー手動導入待ち（docs/stop-hook-setup.md）
 - **files**: scripts/lib/backlog_ids.js(新), scripts/audit_backlog_ids.js(新), scripts/seo_triage.js, .github/workflows/build.yml, docs/stop-hook-setup.md(新), agents/orchestrator.md
 
+### [ORG-005] KPI効果測定ループの自動化：施策ID単位の before/after 台帳（弱点1克服・フェーズ2）✅
+- **priority**: P1 → **status**: done
+- **detected**: 2026-06-02
+- **resolved**: 2026-06-02
+- **owner**: Strategist
+- **reviewer**: Marketer（独立検証・ORG-006 で正式化予定）
+- **category**: 組織
+- **背景**: PDCA の「Check（効果測定）」が外部依存で弱く、施策効果が「次回SEOアドバイスで再評価」に先送りされていた。`data/site_metrics.json` は build.yml が毎日**上書き**で履歴が残らず、施策デプロイ前後の比較ができなかった。
+- **実装内容**:
+  - `scripts/track_metrics.js` 新設（--snapshot/--baseline/--followup/--report・seo_triage 同型CLI）
+  - `data/metrics_history.json`: site_metrics の append-only 日次時系列（120日リング・同日上書き＝冪等）
+  - `data/effect_ledger.json`: 施策ID→{baseline, target_metric, target_value, followup{delta}} の台帳
+  - `.github/workflows/build.yml`: build 後に `track_metrics --snapshot` ステップ追加（毎日3:00 JSTに時系列が伸びる）+ git add に2台帳追加
+  - `agents/orchestrator.md` BUILD モード: Phase1 で baseline 取得 / Phase5 で followup 予約を組込（solve-next は「orchestrator.md 規定通り」で反映）
+- **自動/判断の線引き**: 数値の取得・append・delta算出は完全自動。「効果か季節要因か」の解釈と `効果計測:` フィールドへの文章化はエージェント判断（誤帰属防止）。
+- **検証**: --snapshot で実データ（UU293/直帰0.442/CTA13.5%）記録・再実行で冪等（total_days=1維持）/ --baseline SEO-003（target ctaClickRate=3.0）/ --report --days7 で前週比delta / --followup で baseline比delta算出 / build.yml YAML妥当（ruby確認）
+- **残（Large・別ISSUE）**: GSC権限解決（SAがGSC登録不可・手動継続）/ --followup-due 自動再計測CI / 効果計測フィールドへの半自動追記
+- **files**: scripts/track_metrics.js(新), data/metrics_history.json(新), data/effect_ledger.json(新), .github/workflows/build.yml, agents/orchestrator.md
+
 ### [SEO-001] トップFVで「業界人の目利き × シーン別専門性」を訴求し直帰率を下げる ✅
 - **priority**: P1 → **status**: done
 - **detected**: 2026-05-31

@@ -102,6 +102,12 @@ jobs:
         # フロント検索ヒット時の詳細ページから 404 になる（ISSUE-058 の再発防止）。
         run: node gen-store-pages.js
 
+      - name: KPI 日次スナップショットを時系列に追記（ORG-005・効果測定の Check）
+        # data/site_metrics.json（上の GA4 fetch で更新済み）を metrics_history.json に1日1行 append。
+        # 毎日上書きでなく追記することで、施策デプロイ前後の KPI 比較を可能にする（PDCA の Check）。
+        run: node scripts/track_metrics.js --snapshot
+        continue-on-error: true
+
       - name: Commit & push if changed
         run: |
           git config user.name  "github-actions[bot]"
@@ -109,7 +115,7 @@ jobs:
           # ISSUE-058: data/stores.json (canonical full catalog) と stores/*.html (個別店舗ページ) も
           # commit 対象に追加。これらが入っていないと manual_stores 追加分が
           # フロント検索 (fetchFullCatalog) や個別ページ URL から到達不能になる。
-          git add index.html features/index.html sitemap.xml data/stores.json data/manual_stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/cross_check_flags.json
+          git add index.html features/index.html sitemap.xml data/stores.json data/manual_stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/cross_check_flags.json data/metrics_history.json data/effect_ledger.json
           git add stores/ || true
           git diff --cached --quiet || git commit -m "chore: auto-update store data [skip actions]"
           git pull --rebase origin main || true
