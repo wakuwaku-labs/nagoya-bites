@@ -45,7 +45,14 @@
  *       "instagram": "IG本文(2200字以内)",
  *       "instagram_hashtags": ["#名古屋グルメ", ...],
  *       "x_thread": ["ツイート1(280字以内)", "ツイート2", "ツイート3"]
- *     }
+ *     },
+ *     "notebooklm_slides": [
+ *       {
+ *         "heading": "スライドの見出し(例: 輸送コストを受容する選択)",
+ *         "body": "NotebookLMに読ませる詳しい解説文(自己完結・1スライド1テーマ)",
+ *         "image_prompt": "イメージ図/図解スタイルの画像プロンプト(実写偽装・他媒体転用は禁止・文字は入れない)"
+ *       }
+ *     ]
  *   }
  */
 
@@ -512,6 +519,28 @@ function buildPhotoSuggestionsMd(suggestions) {
   }).join('\n');
 }
 
+// --------------- NotebookLM画像生成用スライド ---------------
+
+const NOTEBOOKLM_SLIDES_HEADER =
+`<!-- NotebookLM等で1枚ずつ画像を生成するための素材。各スライドに「解説文（NotebookLMに読ませる本文）」と「画像プロンプト」を用意。
+     画像方針（CLAUDE.md 制約#9）: 実在の料理・店舗の写真を偽装しない。記事テーマを"説明する"図解/インフォグラフィック/抽象イラスト（イメージ図）として生成する。
+     実在の料理・店内写真が必要なときは上の「## 写真候補」の公式Instagram embed・Googleマップ実写を使う（AI生成画像では代用しない）。
+     画像プロンプト共通スタイル: フラットでミニマルな編集的インフォグラフィック、和モダンで落ち着いた配色、画像内に文字（特に日本語）は入れない。 -->`;
+
+function buildNotebookLmSlidesMd(slides) {
+  if (!slides || slides.length === 0) {
+    return NOTEBOOKLM_SLIDES_HEADER +
+      '\n\n*(NotebookLM画像生成用スライド未作成 — Editorが各スライドの「解説文＋画像プロンプト（イメージ図・図解スタイル）」を作成して埋めること)*';
+  }
+  const blocks = slides.map((s, i) => {
+    let b = `### ${i + 1}枚目：${s.heading || ''}`;
+    b += `\n\n**解説文（NotebookLMに読ませる本文）**\n${s.body || ''}`;
+    b += `\n\n**画像プロンプト（イメージ図・図解スタイル）**\n${s.image_prompt || ''}`;
+    return b;
+  });
+  return NOTEBOOKLM_SLIDES_HEADER + '\n\n' + blocks.join('\n\n---\n\n');
+}
+
 function renderHtml(input) {
   let html = fs.readFileSync(HTML_TEMPLATE, 'utf8');
   const themeLabel = ({
@@ -561,7 +590,8 @@ function renderMd(input) {
     '{{NOTE}}': sns.note_body || '(Note本文)',
     '{{INSTAGRAM}}': igBody,
     '{{X}}': xThread || '(Xスレッド)',
-    '{{PHOTO_SUGGESTIONS}}': buildPhotoSuggestionsMd(input.photo_suggestions)
+    '{{PHOTO_SUGGESTIONS}}': buildPhotoSuggestionsMd(input.photo_suggestions),
+    '{{NOTEBOOKLM_SLIDES}}': buildNotebookLmSlidesMd(input.notebooklm_slides)
   };
   Object.entries(replacements).forEach(([k, v]) => { md = md.split(k).join(v); });
   return md;
