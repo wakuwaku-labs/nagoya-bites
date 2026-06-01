@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-05-31T19:17:08.621Z",
+  "generatedAt": "2026-06-01T08:53:08.953Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 281,
-    "pageViews": 874,
-    "sessions": 408,
-    "avgSessionDuration": 280.6,
-    "bounceRate": 0.439,
-    "pagesPerSession": 2.14
+    "activeUsers": 286,
+    "pageViews": 881,
+    "sessions": 413,
+    "avgSessionDuration": 280.9,
+    "bounceRate": 0.433,
+    "pagesPerSession": 2.13
   },
   "channels": {
     "sessions": {
-      "organic": 122,
-      "direct": 277,
+      "organic": 125,
+      "direct": 274,
       "social": 5,
       "referral": 9,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 29.5,
-      "direct": 67.1,
+      "organic": 30.3,
+      "direct": 66.3,
       "social": 1.2,
       "referral": 2.2,
       "paid": 0,
@@ -31,30 +31,30 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 218
+      "sessions": 220
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 88
+      "sessions": 90
     },
     {
       "source": "chatgpt.com",
       "medium": "(not set)",
-      "sessions": 39
+      "sessions": 40
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 30
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 13
+      "sessions": 31
     },
     {
       "source": "openai",
+      "medium": "(not set)",
+      "sessions": 7
+    },
+    {
+      "source": "(not set)",
       "medium": "(not set)",
       "sessions": 7
     },
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 281,
-      "sessions": 159
+      "pageViews": 284,
+      "sessions": 160
     },
     {
       "path": "/index.html",
@@ -108,13 +108,13 @@
   ],
   "cta": {
     "outboundClicks": 57,
-    "ctaClickRate": 14,
+    "ctaClickRate": 13.8,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 281,
+    "value": 286,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
