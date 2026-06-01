@@ -660,12 +660,17 @@ agent-backlog.md（マスター）を Notion DB「課題トラッカー」に常
 
 ### 自動同期の仕組み（Stop hook）
 
-`.claude/settings.json` に Stop hook が登録されている。
-Claude Code のターン終了時に毎回 `node scripts/sync_backlog_to_notion.js --if-changed` が走り、
-agent-backlog.md が変わっていれば `.notion_sync_pending` マーカーが立つ。
+`.claude/settings.json` の Stop hook がターン終了時に毎回 2 つを実行する（**導入手順: `docs/stop-hook-setup.md`**）:
+1. `node scripts/sync_backlog_to_notion.js --if-changed` → 出力が `changed:true` のとき hook の shell が `.notion_sync_pending` マーカーを立てる
+   （sync スクリプト自体は純粋パーサーで marker を書かない。marker を立てるのは hook 層の責務として分離している）
+2. `node scripts/audit_backlog_ids.js` → 重複ID（並列起票の採番衝突）を push 前に早期検知
 
 次回ターン開始時、Orchestrator は **Step 0 で必ずこのマーカーを確認**し、存在すれば `/sync-backlog` を最初に実行する。
-これにより「課題が起票されたら絶対 Notion に反映される」が技術的に保証される。
+これにより「課題が起票されたら絶対 Notion に反映される」が保証される。
+
+> 注（2026-06-02・ORG-004）: 以前はこの節の記述に反し `settings.json` も Stop hook も**実在しなかった**（憲法と実装の乖離）。
+> エージェントは自己改変ブロックで `settings.json` を書けないため、オーナーが上記手順で導入する。
+> **hook 未導入でも重複IDは CI（build.yml の `audit_backlog_ids` ステップ）が最終防壁として検知する。**
 
 ### 運用ルール
 
@@ -688,3 +693,7 @@ agent-backlog.md が変わっていれば `.notion_sync_pending` マーカーが
 | `STR-XXX` | Strategist | `STR-MONTHLY-2026-05` |
 
 `MKT-XXX` と `STR-XXX` は ORG-002 / ORG-003 完了後に定期起票される予定。
+
+**採番は手で振らず `node scripts/lib/backlog_ids.js --next-id <PREFIX>` で発番する（ORG-004）。**
+最大番号 +1 を決定的に計算するため、並列起票での番号衝突（過去に ISSUE-048 / ISSUE-059 で実発生）を防げる。
+万一重複が混入しても `audit_backlog_ids.js`（CI=build.yml / Stop hook）が検知して再採番を促す。

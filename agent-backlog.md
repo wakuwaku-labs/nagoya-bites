@@ -28,6 +28,27 @@
 - **acceptance**: `npm audit` の詳細を確認し、破壊的変更の無い範囲で `npm audit fix`／高リスクは個別にバージョン精査／残存はリスク受容理由を記録／次回夜間QAで件数の推移を追跡
 - **ブランドガードレール**: 制約4（サイト用の新npm依存追加禁止）に抵触しない範囲での更新に留める
 
+### [ORG-004] 並列起票の採番衝突を防ぐ統一ID採番＋重複検知ゲート（弱点2克服・フェーズ1）✅
+- **priority**: P1 → **status**: done
+- **detected**: 2026-06-02
+- **resolved**: 2026-06-02
+- **owner**: Orchestrator
+- **reviewer**: Inspector（独立検証・ORG-006 で正式化予定）
+- **category**: 組織
+- **背景**: 組織論監査で「並列実行時の採番衝突」が実害として確認（`ISSUE-007/018/048/STR-001` が agent-backlog.md に各2回出現・過去に ISSUE-048/059 の二重起票）。`SEO-` だけ自動採番で他接頭辞は手動だった。
+- **実装内容**:
+  - `scripts/lib/backlog_ids.js` 新設（seo_triage.js の normalize/fingerprint/採番を接頭辞非依存に一般化 + scanAllIds/findDuplicateIds を追加）
+  - `scripts/audit_backlog_ids.js` 新設（重複ID検知・既知4件WL・新規重複で exit 1）
+  - `scripts/seo_triage.js` を lib 利用の薄ラッパ化（CLI/module.exports 完全維持＝後方互換）
+  - `.github/workflows/build.yml` に audit_backlog_ids ステップ追加（CI最終防壁・初回 continue-on-error）
+  - Stop hook 導入手順を `docs/stop-hook-setup.md` に用意（`.claude/settings.json` はエージェント自己改変ブロックのためオーナー手動導入）
+  - `agents/orchestrator.md` の Stop hook 虚偽記述（settings.json 不在）を実態に修正＋採番ルール明文化
+- **副次効果（憲法の実体化）**: 「Stop hook が marker を立てる」が長らく虚偽だった乖離を是正。sync は marker を書かない純粋パーサーと判明し、marker は hook 層の責務に分離。
+- **制約で生じた代替**: `.claude/commands/*.md`（solve-next/seo-triage）と `.claude/settings.json` はエージェント自己改変ブロックで編集不可。運用ルールは編集可能な `agents/orchestrator.md` に集約（solve-next.md は「orchestrator.md の規定通り」と既に参照済みのため挙動は反映される）。settings.json はオーナー手動導入。
+- **検証**: `backlog_ids --next-id ISSUE→ISSUE-062 / SEO→SEO-007 / STR→STR-003` / `--scan-dups` で重複4件を行番号付き検知 / `audit_backlog_ids` 既知4件WL・新規0・EXIT 0 / `seo_triage --next-id` 後方互換OK
+- **残**: 既知重複4件の実リネーム（Notion `page_id_map` 整合を伴うため別ISSUEで /solve-next 経由）。Stop hook はオーナー手動導入待ち（docs/stop-hook-setup.md）
+- **files**: scripts/lib/backlog_ids.js(新), scripts/audit_backlog_ids.js(新), scripts/seo_triage.js, .github/workflows/build.yml, docs/stop-hook-setup.md(新), agents/orchestrator.md
+
 ### [SEO-001] トップFVで「業界人の目利き × シーン別専門性」を訴求し直帰率を下げる ✅
 - **priority**: P1 → **status**: done
 - **detected**: 2026-05-31
