@@ -68,6 +68,25 @@
 - **残（Large・別ISSUE）**: GSC権限解決（SAがGSC登録不可・手動継続）/ --followup-due 自動再計測CI / 効果計測フィールドへの半自動追記
 - **files**: scripts/track_metrics.js(新), data/metrics_history.json(新), data/effect_ledger.json(新), .github/workflows/build.yml, agents/orchestrator.md
 
+### [ORG-006] セルフレビュー利益相反の緩和：独立Reviewerロール＋QA決定化（弱点3克服・フェーズ3）✅
+- **priority**: P1 → **status**: done
+- **detected**: 2026-06-02
+- **resolved**: 2026-06-02
+- **owner**: Orchestrator
+- **reviewer**: Strategist（独立検証）
+- **category**: 組織
+- **背景**: 提案・実装・レビューが同一人格（同じ Claude）に集約され、QAゲートも実装者＝審査者（CEO専権）だった。真のチェック&バランスが成立していなかった。
+- **大前提（消せない制約）**: モデルが同一である以上、真に独立した監査は原理的に不可能。本施策は「役割分離をドキュメント＋ツールで構造化し、独立した観点での再走査を強制する」緩和策。最終的な独立性は人間オーナーの YES ゲートが担保する（reviewer.md に正直に明記）。
+- **実装内容**:
+  - `agents/reviewer.md` 新設（8人目の独立監査ロール・実装しない・owner≠reviewer・モデル同一性の限界を明記・owner→reviewer 視点対応表）
+  - `scripts/qa_gate.js` 新設（QA-2 件数5%減 / QA-3 diff・LOCAL_STORES行 / QA-4 構文＋機能マーカー保全を before/after 相対比較で決定化。自己申告QAを客観証跡化。QA-1 build・QA-5 UX は範囲外）
+  - `agents/orchestrator.md` BUILD Phase3 を二段化（Step A 決定的QA＋Step B 独立レビュー）。CEO を「直接検査者」から「Reviewer 所見の承認者」へ転換し一極集中を緩和
+  - backlog に `reviewer:` フィールド運用開始（ORG-004/005/006 で先行使用・機械強制はしない明文ルール）
+- **既存資産の活用**: /code-review /security-review スキルを solve-next QA に組込。inspector.md のエスカレーション経路を Reviewer 中継で正式化。
+- **検証**: qa_gate --before で store4916・8マーカー snapshot / --after 変更なしで全 pass・EXIT0・regressions0 / reviewer.md と orchestrator.md Phase3 が整合
+- **残（Large・見送り）**: owner≠reviewer の機械強制（exit1）は演技の強制に留まるため明文ルールに留める（段階導入）
+- **files**: agents/reviewer.md(新), scripts/qa_gate.js(新), agents/orchestrator.md
+
 ### [SEO-001] トップFVで「業界人の目利き × シーン別専門性」を訴求し直帰率を下げる ✅
 - **priority**: P1 → **status**: done
 - **detected**: 2026-05-31

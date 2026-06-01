@@ -255,30 +255,29 @@ Phase 2: Builderへの指示（部下に委譲）
   - agents/builder.md を読ませ、決定した課題リストを渡す
   - Builderが実装中は変更ファイルを追跡する
 
-Phase 3: 実装後QAゲート（あなたが直接検査する）★ここが重要★
-  以下を全て確認してから、初めてデプロイを承認する:
+Phase 3: 実装後QAゲート（Reviewer が独立検査し、CEO は所見を承認する）★ここが重要★
+  ★ORG-006: 従来は CEO が直接検査していたが、実装者＝審査者のセルフレビューを避けるため、
+    Reviewer ロール（agents/reviewer.md・owner≠reviewer）が独立検査し、CEO は所見を承認する立場に回る。
+    モデルは同一なので完全な独立ではない。最終的な独立性は人間オーナーの YES ゲートが担保する。
 
-  QA-1: node build.js の正常終了確認
-        → 失敗したら STOP。Builderの変更を git stash してやり直し指示
+  Step A: 決定的QA（客観証跡・自動）
+    A-0: 実装前に `node scripts/qa_gate.js --before`（件数・機能マーカーを snapshot）
+    QA-1: `node build.js` の正常終了確認 → 失敗で STOP・git stash してやり直し指示
+    QA-2〜4: `node scripts/qa_gate.js --after` を実行し JSON 証跡を得る
+       - QA-2 店舗件数が 5%以上減で fail（STOP）
+       - QA-3 git diff 範囲・LOCAL_STORES 行変更フラグ（変更ありなら要目視）
+       - QA-4 JS構文（大崩れ検知）＋機能マーカー保全（before比で半減した機能を検知）
+       → qa_gate の出力を agent-backlog.md の `review:` フィールドに証跡として貼る
 
-  QA-2: 店舗件数が減少していないか確認
-        → 実装前の件数と比較。5%以上減少したら STOP
-
-  QA-3: 変更したファイルの差分レビュー（git diff）
-        → LOCAL_STORES が変更されていないか必ず確認
-        → 意図しない変更が含まれていないか確認
-
-  QA-4: JavaScriptの構文確認
-        → HTMLのscriptタグ内を目視確認
-        → 明らかな構文エラー（unclosed brackets等）がないか確認
-
-  QA-5: UX劣化チェック（新設）
-        → 変更がモバイル表示を壊していないか
-        → CTA導線が維持されているか
+  Step B: 独立レビュー（owner ≠ reviewer）
+    - owner と異なる視点で `/code-review` を diff 入力で起動（reviewer.md の owner→reviewer 対応表）
+    - リスク高（JSロジック/データ削除/マネタイズ/LOCAL_STORES変更）は `/security-review` も
+    - QA-5（UX目視・モバイル表示/CTA導線）を人/AI が確認
+    - 所見（承認 or 指摘）を `review:` フィールドに記録
 
   [QAゲート通過条件]
-  QA-1〜5 がすべてOKの場合のみデプロイを実行する。
-  1つでも失敗したら、Builderに修正を指示し、再度QAゲートを通過させる。
+  Step A の qa_gate が全 pass ＋ build 正常 ＋ Step B の Reviewer 所見が「承認」の場合のみ、CEO がデプロイを承認する。
+  1つでも fail / 重大指摘があれば owner に差し戻し、再度ゲートを通す。
 
 Phase 4: デプロイ（QAゲート通過後のみ）
   git add index.html agent-backlog.md （変更された他ファイルも含む）
