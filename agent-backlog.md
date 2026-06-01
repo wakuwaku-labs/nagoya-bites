@@ -27,14 +27,27 @@
 - **acceptance**: index.html のFVに業界人目利き＋シーン別専門性を伝えるキャッチを配置／エリア・シーン（宴会・接待・デート等）フィルタの視認性を上げる／既存フィルタ・検索・モーダル・IGエンベッド・Google評価表示を壊さない（制約5）／単一ファイル維持（制約1）／効果は次回SEOアドバイスの直帰率で再評価
 - **ブランドガードレール**: 誇大・煽り文言は不可（編集独立・信頼担保）。実写優先ルール順守
 
-### [SEO-002] ジャーナル/特集の末尾に「おすすめ記事」内部リンクを設置し回遊を促す
-- **priority**: P2 → **status**: ready
+### [SEO-002] ジャーナル/特集の末尾に「おすすめ記事」内部リンクを設置し回遊を促す ✅
+- **priority**: P2 → **status**: done
 - **detected**: 2026-05-31
+- **resolved**: 2026-06-01
+- **resolved_by**: /solve-next（Editor）— 関連リンク未設置だった特集30本に .related「関連する特集記事」ブロックを一括注入
 - **category**: コンテンツ
 - **owner**: Editor
 - **source**: SEOアドバイス(LINE) 2026-05-30 原文「🟡 1訪問1.4ページと回遊が少ない 👉 各ジャーナル/特集の末尾に関連特集や特定シーン（接待・個室等）に絞った店舗リンクを『おすすめ記事』として3〜5件設置」
 - **brand-filter**: ✅ 適合 — 三層編集（構造化DB×特集×日次ジャーナル）の内部相互リンクを強化し、シーン別専門性で回遊を深める。我々が勝つ「シーン × 業界人の目利き」の面を広げる方向
 - **acceptance**: 代表的なjournal/features記事の末尾に関連記事リンク3〜5件を設置／リンク先は実在する特集・LOCAL_STORES店舗のみ（架空店ブロック厳守）／回遊（1訪問あたりページ数）を次回SEOで再評価
+- **実装内容**:
+  - 関連リンク未設置だった特集 **30本** の末尾（`<footer>` 直前）に `.related`「関連する特集記事」ブロックを一括注入（journal は 54/59 で既設のため今回は特集を対象に選定）
+  - 注入スクリプト `scripts/add_related_features.js` を新規追加（再実行は冪等：既存 `class="related"` はスキップ）
+  - **架空リンクブロック厳守**: リンク先は features/ に実在する特集ページのみ（feature→feature 内部リンク）。店舗リンクを一切使わないことで架空店リスクをゼロに。全リンク先を `fs.readdirSync` で実在検証し、不一致があれば中断する安全弁を内蔵
+  - 各ブロックは「📖 名古屋グルメ完全ガイド」(ハブ) を先頭に強調表示 → 姉妹特集4〜5件 → 「トップページで全店舗を検索する →」で締める導線
+  - `.related` CSS 未定義の特集には date.html と同じCSSを `</style>` 直前へ注入
+- **QA**:
+  - QA-1 build.js: index.html 本体への変更なし（shrink-guard 想定どおり中断＝正常）。`data/cross_check_flags.json` のローカル汚染は `git checkout --` で復旧
+  - QA-3 差分: features/30本 + scripts/add_related_features.js のみ。意図しない変更なし
+  - QA-4/5: Preview MCP でモバイル幅表示確認・console エラー 0。CTA/フィルター/モーダル等への影響なし
+- **効果計測**: 次回SEOアドバイスの「1訪問あたりページ数（現状1.4pp）」で回遊改善を再評価
 - **ブランドガードレール**: 実在検証ゲート（CLAUDE.md）必須。存在しない記事・店へのリンク禁止
 
 ### [SEO-003] 店舗詳細モーダルの予約・マップCTAの視認性と文言を改善しアクション率を上げる
@@ -860,6 +873,7 @@
 | 2026-05-31 | Editor（睡眠中自律実行） | **日次ジャーナル 5/31 公開**: グリルつばき（名古屋駅前・5/30開業）— 「肉屋 雪月花」10年の暖簾を架け替えた理由を業界人目線で読む。SVGヒーロー画像 `/assets/journal-figures/2026-05-31-grill-tsubaki.svg` 自作。15項目バリデーション all pass。`journal/2026-05-31-grill-tsubaki-meiekimae.html` 公開 / `data/pending_stores.json` にグリルつばき追加 / `data/journal_published.json` 更新 / `journal/index.html` + `feed.xml` + `feed.atom` 更新 / `docs/daily-posts/2026-05-31.md` SNS原稿作成 / `sitemap.xml` 新エントリ追加 | ✅ commit済み（push待ち） |
 | 2026-05-31 | Editor+Marketer（睡眠中自律実行） | **ISSUE-031フォローアップ — 新規ロングテール特集2本追加**: (1) `features/nagoya-dining-professionals.html` 新規（「名古屋 飲食人 おすすめ」KW・飲食業界人が自分の資金で通う栄・金山の10軒・editorReason+insiderNote全件公開・FAQ5問・JSON-LD4種完備）(2) `features/nagoya-meieki-business-dinner.html` 新規（「名駅 失敗しない 会食」KW・名古屋駅エリア会食・接待10軒・出張者配慮とアクセス確実性で選定・FAQ4問・JSON-LD4種完備）(3) `assets/feature-figures/nagoya-dining-professionals.svg` + `assets/feature-figures/nagoya-meieki-business-dinner.svg` 新作ヒーロー画像（CLAUDE.md 実写優先ルール→最終手段SVG適用）(4) `features/index.html` numberOfItems 51→53・2カード追加 (5) `sitemap.xml` 2URL追加 | ✅ commit b5d06e31c（push待ち） |
 | 2026-05-31 | Builder(/solve-next) | SEO-001 実装・デプロイ — index.html FV に常時表示のシーン/エリア導線(`.scene-nav`)を新設（従来は検索ボックス focus 時しか出ず直帰主因）+ eyebrow/hero-sub を「業界人の目利き × シーン別専門性」へ更新。全チップ keyword を実コーパスでヒット検証・desktop/mobile preview 検証・QA-1〜5 pass | ✅ デプロイ済み (commit e7225a4eb) |
+| 2026-06-01 | Editor(/solve-next) | SEO-002 実装・デプロイ — 関連リンク未設置だった特集30本の末尾に `.related`「関連する特集記事」内部リンクブロックを一括注入（`scripts/add_related_features.js` 新規・冪等）。リンク先は features/ 実在ページのみ（feature→feature・店舗リンクゼロで架空店リスク回避）・全リンク先を実在検証・mobile preview/console 0エラー・QA pass。回遊(1訪問1.4pp)改善を次回SEOで再評価 | ✅ デプロイ済み (commit <pending>) |
 
 ---
 
