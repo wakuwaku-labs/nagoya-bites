@@ -396,8 +396,9 @@ function parseAdviceJson(text) {
   }
 }
 
-// Gemini（無料枠）: generateContent。JSON強制＋thinking無効でトークン枯渇を防ぐ
-function callGeminiAdvice(apiKey, model, prompt) {
+// Gemini（無料枠）: generateContent。JSON強制＋thinking無効でトークン枯渇を防ぐ。
+// 生のJSON文字列を返す（パースは呼び出し側）。失敗時 null。
+function callGeminiJson(apiKey, model, prompt, maxTokens) {
   try {
     const url = 'https://generativelanguage.googleapis.com/v1beta/models/' +
       encodeURIComponent(model) + ':generateContent?key=' + encodeURIComponent(apiKey);
@@ -405,7 +406,7 @@ function callGeminiAdvice(apiKey, model, prompt) {
       contents: [{ parts: [{ text: prompt }] }],
       generationConfig: {
         temperature: 0.7,
-        maxOutputTokens: 1024,
+        maxOutputTokens: maxTokens || 1024,
         responseMimeType: 'application/json',
         thinkingConfig: { thinkingBudget: 0 },
       },
@@ -417,40 +418,48 @@ function callGeminiAdvice(apiKey, model, prompt) {
       muteHttpExceptions: true,
     });
     if (res.getResponseCode() !== 200) {
-      Logger.log('Geminiアドバイス失敗 HTTP ' + res.getResponseCode() + ': ' + res.getContentText().slice(0, 300));
+      Logger.log('Gemini失敗 HTTP ' + res.getResponseCode() + ': ' + res.getContentText().slice(0, 300));
       return null;
     }
     const body = JSON.parse(res.getContentText());
     const cand = body.candidates && body.candidates[0];
     const part = cand && cand.content && cand.content.parts && cand.content.parts[0];
-    return parseAdviceJson(part && part.text);
+    return (part && part.text) || null;
   } catch (e) {
     Logger.log('Gemini例外: ' + e);
     return null;
   }
 }
 
-// Claude: messages
-function callClaudeAdvice(apiKey, model, prompt) {
+// Claude: messages。生のJSON文字列を返す。失敗時 null。
+function callClaudeJson(apiKey, model, prompt, maxTokens) {
   try {
     const res = UrlFetchApp.fetch('https://api.anthropic.com/v1/messages', {
       method: 'post',
       contentType: 'application/json',
       headers: { 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' },
-      payload: JSON.stringify({ model: model, max_tokens: 900, messages: [{ role: 'user', content: prompt }] }),
+      payload: JSON.stringify({ model: model, max_tokens: maxTokens || 900, messages: [{ role: 'user', content: prompt }] }),
       muteHttpExceptions: true,
     });
     if (res.getResponseCode() !== 200) {
-      Logger.log('Claudeアドバイス失敗 HTTP ' + res.getResponseCode() + ': ' + res.getContentText().slice(0, 300));
+      Logger.log('Claude失敗 HTTP ' + res.getResponseCode() + ': ' + res.getContentText().slice(0, 300));
       return null;
     }
     const body = JSON.parse(res.getContentText());
     const block = (body.content || []).find(b => b.type === 'text');
-    return parseAdviceJson(block && block.text);
+    return (block && block.text) || null;
   } catch (e) {
     Logger.log('Claude例外: ' + e);
     return null;
   }
+}
+
+// アドバイス用ラッパ（{"advice":[...]} を期待）
+function callGeminiAdvice(apiKey, model, prompt) {
+  return parseAdviceJson(callGeminiJson(apiKey, model, prompt, 1024));
+}
+function callClaudeAdvice(apiKey, model, prompt) {
+  return parseAdviceJson(callClaudeJson(apiKey, model, prompt, 900));
 }
 
 // AIに渡すプロンプト（その日の実データ＋サイトの強みを与え、汎用論を禁止する）
@@ -630,6 +639,122 @@ function generateRuleBasedAdvice(data, a, date) {
   return cand.sort((x, y) => y.sev - x.sev).slice(0, 3).map(c => c.text);
 }
 
+// ─── ③ 週次AI分析（前週比トレンドを読み解く・週次レポート専用） ───
+// 日次の3件アドバイスと違い、prevData（前週）との比較をAIに渡して
+// 「今週の総括(narrative) ＋ 前週比を踏まえた来週の打ち手3件」を1回のAI呼び出しで生成する。
+// キー未設定 or 失敗時は null（呼び出し側がルールベースへフォールバック）。
+function generateWeeklyAiReport(data, prevData, a, startDate, endDate) {
+  const prompt = buildWeeklyAnalysisPrompt(data, prevData, a, startDate, endDate);
+
+  const geminiKey = getProp('GEMINI_API_KEY', '');
+  if (geminiKey) {
+    const r = parseWeeklyJson(callGeminiJson(geminiKey, getProp('GEMINI_MODEL', 'gemini-2.5-flash'), prompt, 1200));
+    if (r) return r;
+  }
+  const claudeKey = getProp('ANTHROPIC_API_KEY', '');
+  if (claudeKey) {
+    const r = parseWeeklyJson(callClaudeJson(claudeKey, getProp('ANTHROPIC_MODEL', 'claude-sonnet-4-5-20250929'), prompt, 1100));
+    if (r) return r;
+  }
+  return null;
+}
+
+// {"summary":"...","advice":["...","...","..."]} を取り出す
+function parseWeeklyJson(text) {
+  if (!text) return null;
+  const raw = String(text).trim().replace(/^```(?:json)?\s*/, '').replace(/```\s*$/, '');
+  try {
+    const obj = JSON.parse(raw);
+    const summary = obj && obj.summary ? String(obj.summary).trim() : '';
+    const advice = Array.isArray(obj && obj.advice) ? obj.advice.map(String).slice(0, 3) : [];
+    if (!summary && advice.length === 0) return null;
+    return { summary: summary, advice: advice };
+  } catch (e) {
+    Logger.log('週次AI分析JSON解析失敗: ' + raw.slice(0, 200));
+    return null;
+  }
+}
+
+// 前週比のパーセント（前週0なら null = 新規/比較不能）
+function pctChange(now, prev) {
+  if (!prev || prev <= 0) return null;
+  return Math.round((now - prev) / prev * 100);
+}
+function pctText(now, prev, label) {
+  const c = pctChange(now, prev);
+  if (c === null) return label + ': ' + now + '（前週データなし）';
+  return label + ': ' + now + '（前週 ' + prev + ' / ' + (c >= 0 ? '+' : '') + c + '%）';
+}
+
+// 週次AI分析のプロンプト（前週比＋実データを与え、トレンドの解釈を求める）
+function buildWeeklyAnalysisPrompt(data, prevData, a, startDate, endDate) {
+  const t = data.totals;
+  const pt = prevData.totals;
+  const pa = analyze(prevData);
+
+  const topPages = topPagesForPrompt(data.pages, 5)
+    .map((p, i) => '  ' + (i + 1) + '. ' + p.name + ' … ' + p.pv + '回').join('\n') || '  (データなし)';
+  const srcLines = (data.sources || []).slice(0, 5).map(s => {
+    const pct = a.srcTotal > 0 ? Math.round((parseInt(s.metrics[1]) || 0) / a.srcTotal * 100) : 0;
+    return '  - ' + sourceToName(s.dimensions[0], s.dimensions[1]) + ': ' + s.metrics[1] + '訪問 (' + pct + '%)';
+  }).join('\n') || '  (データなし)';
+
+  return [
+'あなたはNAGOYA BITES（名古屋の飲食店1100軒超を業界人が厳選して紹介する発見サイト）専属のグロース/SEOアナリストです。',
+'このサイトのオーナー（現役の飲食関係者・Web分析は素人）に向けて、今週(' + startDate + '〜' + endDate + ')のアクセス解析を【前週と比較】し、何が伸びて何が落ちたのか・その理由の仮説・来週の打ち手を提案してください。',
+'',
+'# サイトの構造（打ち手はこの実装に即して具体的に書く）',
+'- index.html 一枚に全店舗を掲載。検索／エリア・シーンのフィルタ／店舗詳細モーダル／予約ボタン(cta_click)／Googleマップ導線(cta_gmap_click)／Instagramエンベッドあり',
+'- features/ にシーン別特集（名駅・栄・宴会・個室・接待・誕生日・デート・女子会・大人数 など20本）',
+'- journal/ に日次ジャーナル記事（毎日1本公開）／docs/daily-posts/ にSNS投稿原稿',
+'',
+'# このサイトの強み（提案はこの路線を伸ばす方向で）',
+'- 広告ゼロ・PR記事ゼロの編集独立性／現役飲食人による「業界人の目利き」',
+'- シーン別（接待・宴会・デート・個室）の専門性。大手ポータルが書けない独自KW（例: 名古屋 接待 個室）で勝つ',
+'- 追わない領域（提案しない）: 匿名口コミの大量集積・クーポン経済・高級セグメント特化',
+'',
+'# 今週 vs 前週（最重要・ここの増減を必ず解釈する）',
+'- ' + pctText(t.users, pt.users, '訪問者'),
+'- ' + pctText(t.pageviews, pt.pageviews, 'ページ閲覧'),
+'- ' + pctText(t.sessions, pt.sessions, '訪問回数(セッション)'),
+'- 1訪問あたり閲覧: ' + a.pagesPerSession.toFixed(1) + 'ページ（前週 ' + pa.pagesPerSession.toFixed(1) + '）',
+'- 平均滞在: ' + secToText(t.avgDuration) + '（前週 ' + secToText(pt.avgDuration) + '）',
+'- 直帰率: ' + Math.round(t.bounceRate * 100) + '%（前週 ' + Math.round(pt.bounceRate * 100) + '%・低いほど良い）',
+'- 予約ボタンクリック: ' + a.ctaCount + '回（前週 ' + pa.ctaCount + '回）／ 予約クリック率 ' + (a.ctaRate * 100).toFixed(1) + '%',
+'- 検索流入比率: ' + Math.round(a.organicPct * 100) + '%（前週 ' + Math.round(pa.organicPct * 100) + '%）／ SNS流入比率: ' + Math.round(a.socialPct * 100) + '%（前週 ' + Math.round(pa.socialPct * 100) + '%）',
+'',
+'## 今週の人気ページ TOP5',
+topPages,
+'',
+'## 今週の流入元 TOP5',
+srcLines,
+'',
+'# 出力ルール',
+'- summary: 今週の総括を2〜3文で。前週比で最も大きく動いた指標を必ず1つ数値付きで引用し、その理由の仮説（どのページ/流入元/施策が効いた・効かなかったか）を述べる。素人が読んで状況が一目でわかる日本語で120字以内。精神論禁止。',
+'- advice: 来週やるべき具体策をちょうど3件。効果が大きい順。各項目は次の2行を改行(\\n)で繋いだ1つの文字列にする:',
+'    1行目: 状況の要約（絵文字 🔴/🟡/🟢/💡 で始め、上の前週比の数値を必ず1つ引用）',
+'    2行目: 「　👉 」で始まる、来週この実装で着手できる超具体的な打ち手（どのページ・どのKW・どの要素をどう変えるか）',
+'- データに無い数字を創作しない。訪問者が少ない週は「母数が少ないので◯◯を試す実験」という温度感に。各advice項目は120字以内。',
+'- 出力はJSONのみ。前後に説明文やコードフェンス(```)を付けない。',
+'',
+'# 出力フォーマット（JSONのみ）',
+'{"summary":"今週は訪問者が前週比+32%…", "advice": ["🟢 …\\n　👉 …", "🟡 …\\n　👉 …", "💡 …\\n　👉 …"]}',
+  ].join('\n');
+}
+
+// 週次サマリーのルールベース・フォールバック（AIキー未設定/失敗時）
+function ruleBasedWeeklySummary(data, prevData, a) {
+  const t = data.totals;
+  const pt = prevData.totals;
+  const uc = pctChange(t.users, pt.users);
+  if (t.users < 5) return '😶 今週は訪問者がまだ少なく、傾向の判定は難しい状況です。SNS・ジャーナルで入口を増やす週に。';
+  if (uc === null) return '📊 今週の訪問者は' + t.users + '人。前週データが少なく比較できませんが、まずは更新リズムの維持を。';
+  if (uc >= 20) return '🚀 今週は訪問者が前週比+' + uc + '%（' + pt.users + '→' + t.users + '人）と大きく伸びました。効いた流入元・人気ページの路線をさらに伸ばす週に。';
+  if (uc > 5)  return '📈 今週は訪問者が前週比+' + uc + '%（' + pt.users + '→' + t.users + '人）と順調。伸びている導線への内部リンクを増やして加速を。';
+  if (uc >= -5) return '→ 今週の訪問者は' + t.users + '人で前週とほぼ横ばい（' + uc + '%）。新しい切り口の特集/SNS投稿で次の山を作る週に。';
+  return '📉 今週は訪問者が前週比' + uc + '%（' + pt.users + '→' + t.users + '人）と減速。直帰率' + Math.round(t.bounceRate * 100) + '%と人気ページの動線を点検しましょう。';
+}
+
 // 全体の一言まとめ
 function overallVerdict(data, a) {
   const t = data.totals;
@@ -764,9 +889,18 @@ function formatWeeklyReport(data, prevData, startDate, endDate) {
     });
   }
 
+  // AI週次分析（前週比トレンドの総括＋来週の打ち手）。AI失敗時はルールベースに自動フォールバック。
+  const weekly = generateWeeklyAiReport(data, prevData, a, startDate, endDate);
+  const summary = (weekly && weekly.summary) || ruleBasedWeeklySummary(data, prevData, a);
+  const tips = (weekly && weekly.advice && weekly.advice.length)
+    ? weekly.advice
+    : generateRuleBasedAdvice(data, a, endDate);
+
   msg += '\n━━━━━━━━━━━━━━━\n';
-  msg += '💡 今週のアドバイス\n';
-  generateAdvice(data, a, endDate, true).forEach(tip => { msg += '・' + tip + '\n'; });
+  msg += '🤖 AI週次分析（前週比）\n';
+  msg += summary + '\n';
+  msg += '\n💡 今週のアドバイス\n';
+  tips.forEach(tip => { msg += '・' + tip + '\n'; });
 
   // 成長の判定
   if (pt.users >= 10) {
@@ -868,6 +1002,28 @@ function testAiAdvice() {
   let msg = '🧪 アドバイス生成テスト（' + yesterday + '）\n';
   msg += '使用エンジン: ' + (ai && ai.length ? '🤖 AI（' + provider + '）' : (provider ? '⚠️ AI失敗→ルールベース' : '📐 ルールベース（APIキー未設定）')) + '\n';
   msg += '━━━━━━━━━━━━━━━\n';
+  tips.forEach(tip => { msg += '・' + tip + '\n'; });
+  sendLineMessage(msg);
+  Logger.log(msg);
+}
+
+// 週次AI分析の動作確認（直近7日 vs 前7日でAI分析のみをLINE送信）
+function testWeeklyAiAnalysis() {
+  const endDate = getDateStr(-1);
+  const startDate = getDateStr(-7);
+  const data = fetchGA4Report(startDate, endDate);
+  const prevData = fetchGA4Report(getDateStr(-14), getDateStr(-8));
+  const a = analyze(data);
+  const provider = aiProviderName();
+  const weekly = generateWeeklyAiReport(data, prevData, a, startDate, endDate);
+  const summary = (weekly && weekly.summary) || ruleBasedWeeklySummary(data, prevData, a);
+  const tips = (weekly && weekly.advice && weekly.advice.length) ? weekly.advice : generateRuleBasedAdvice(data, a, endDate);
+
+  let msg = '🧪 週次AI分析テスト（' + startDate + '〜' + endDate + '）\n';
+  msg += '使用エンジン: ' + (weekly ? '🤖 AI（' + provider + '）' : (provider ? '⚠️ AI失敗→ルールベース' : '📐 ルールベース（APIキー未設定）')) + '\n';
+  msg += '━━━━━━━━━━━━━━━\n';
+  msg += '🤖 ' + summary + '\n';
+  msg += '\n💡 今週のアドバイス\n';
   tips.forEach(tip => { msg += '・' + tip + '\n'; });
   sendLineMessage(msg);
   Logger.log(msg);
