@@ -174,26 +174,33 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `build.js` | データ埋め込みスクリプト（DataKeeper管轄） |
 | `data/manual_stores.json` | 手動キュレーション店舗マスター（Editor/DataKeeper 共管） |
 | `data/trending_stores.json` | 既存店舗への話題フラグ後付けマスター（DataKeeper管轄） |
-| `.claude/commands/seo-triage.md` | `/seo-triage` SEO/LINEアドバイス取り込み（Marketer管轄） |
-| `data/seo_advice_log.json` | SEO改善ループの記憶（採用/却下/重複の全履歴・append-only） |
+| `.claude/commands/seo-triage.md` | `/seo-triage` 日次SEO/LINEアドバイス取り込み（Marketer管轄） |
+| `.claude/commands/seo-triage-weekly.md` | `/seo-triage-weekly` 週次レポート（AI週次分析＋今週のアドバイス）取り込み（Marketer管轄） |
+| `data/seo_advice_log.json` | SEO改善ループの記憶（採用/却下/重複の全履歴・append-only・`source`で日次/週次を区別） |
 
 ---
 
-## SEOアドバイス改善ループ（`/seo-triage`）
+## SEOアドバイス改善ループ（`/seo-triage` 日次 / `/seo-triage-weekly` 週次）
 
-毎日 LINE に届く SEO/アクセス解析の「💡今日のアドバイス」（`gas_line_report.js` 生成）を、
-**鵜呑みにせず**ブランドの総合フィルターに通して改善に回す仕組み。
+LINE に届く SEO/アクセス解析のアドバイスを、**鵜呑みにせず**ブランドの総合フィルターに
+通して改善に回す仕組み。日次・週次の**2系統が同じスクリプト・同じ Notion 同期**を共有する。
 
 ```
-1. LINE のアドバイス本文を /seo-triage に貼り付ける
+1. LINE 本文を貼り付ける
+   ・日次: 「💡今日のアドバイス」 → /seo-triage          （source=line-daily）
+   ・週次: 「🤖AI週次分析＋💡今週のアドバイス」 → /seo-triage-weekly （source=line-weekly）
 2. CLAUDE.md の Moat / Strategic Skip を根拠にエージェントが採用/却下を判定
    ・採用 → agent-backlog.md に [SEO-NNN] を status: ready で起票（owner=Marketer / category=SEO）
    ・却下 → data/seo_advice_log.json に理由付きで記録（backlog/Notion には出さない）
-   ・重複 → 過去判定済みは再起票しない（数値違いは正規化で同種扱い）
+   ・重複 → 過去判定済みは再起票しない（日次/週次を横断して衝突検知。数値違いは正規化で同種扱い）
 3. 採用分は /sync-backlog で Notion 課題トラッカーに自動同期（自分の目で必要可否を判断できる）
 4. 実装は /solve-next の YES ゲート経由（マネタイズ・信頼系は制約7・8でさらに承認必須）
-5. ループ健診: node scripts/seo_triage.js --report --days 30
+5. ループ健診: node scripts/seo_triage.js --report --days 30           （全体）
+              node scripts/seo_triage.js --report --days 90 --source line-weekly （週次のみ）
 ```
+
+**週次の肝**: 週次は「🤖 AI週次分析（前週比）」の総括も施策化対象。前週比で続く悪化/改善は
+単日のブレではなく**週トレンド**なので、落ちトレンドは原因調査を優先度高め（P1〜P2）に寄せる。
 
 却下は必ず理由を残す（後の監査・再評価のため）。「全部間に受けない」がこのループの根幹。
 
