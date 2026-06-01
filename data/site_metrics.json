@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-06-01T08:53:08.953Z",
+  "generatedAt": "2026-06-01T09:56:30.935Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 286,
-    "pageViews": 881,
-    "sessions": 413,
-    "avgSessionDuration": 280.9,
-    "bounceRate": 0.433,
-    "pagesPerSession": 2.13
+    "activeUsers": 291,
+    "pageViews": 890,
+    "sessions": 419,
+    "avgSessionDuration": 277.5,
+    "bounceRate": 0.439,
+    "pagesPerSession": 2.12
   },
   "channels": {
     "sessions": {
-      "organic": 125,
-      "direct": 274,
+      "organic": 126,
+      "direct": 281,
       "social": 5,
       "referral": 9,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 30.3,
-      "direct": 66.3,
+      "organic": 29.9,
+      "direct": 66.7,
       "social": 1.2,
-      "referral": 2.2,
+      "referral": 2.1,
       "paid": 0,
       "other": 0
     }
@@ -31,7 +31,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 220
+      "sessions": 225
     },
     {
       "source": "google",
@@ -46,15 +46,15 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 31
-    },
-    {
-      "source": "openai",
-      "medium": "(not set)",
-      "sessions": 7
+      "sessions": 32
     },
     {
       "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 9
+    },
+    {
+      "source": "openai",
       "medium": "(not set)",
       "sessions": 7
     },
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 284,
-      "sessions": 160
+      "pageViews": 291,
+      "sessions": 165
     },
     {
       "path": "/index.html",
@@ -108,13 +108,13 @@
   ],
   "cta": {
     "outboundClicks": 57,
-    "ctaClickRate": 13.8,
+    "ctaClickRate": 13.6,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 286,
+    "value": 291,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
