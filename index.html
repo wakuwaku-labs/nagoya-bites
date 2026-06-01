@@ -11827,7 +11827,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '0098d0aa93d8';
+var STORES_JSON_VERSION = '7bf212bebb1d';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
@@ -12734,7 +12734,7 @@ function buildCardHtml(r) {
       + '<div class="cb">'
       + '<h3 class="cn">' + r['店名'] + ' ' + ratingHtml + '</h3>'
       + '<div class="ce">' + (r['英語名']||'') + '</div>'
-      + '<div class="cmeta"><span data-l="Area">' + area + '</span><span data-l="Price">' + (r['価格帯']||'') + '</span>' + ccMetaHtml + '</div>'
+      + '<div class="cmeta"><span data-l="Area">' + area + '</span>' + (r['価格帯'] ? '<span data-l="Price">' + r['価格帯'] + '</span>' : '') + ccMetaHtml + '</div>'
       + '</div>'
       + tagHtml
       + (r['おすすめポイント'] ? '<div class="card-point">' + r['おすすめポイント'] + '</div>' : '')
@@ -12850,7 +12850,10 @@ function openM(i) {
   document.getElementById('mg').textContent = r['ジャンル'] || '';
   document.getElementById('mn').textContent = r['店名'] || '';
   document.getElementById('ma').textContent = (r['都道府県']||'') + ' ' + (r['エリア']||'');
-  document.getElementById('mp').textContent = r['価格帯'] || '';
+  var mpEl = document.getElementById('mp');
+  mpEl.textContent = r['価格帯'] || '';
+  var mpMic = mpEl.closest('.mic');
+  if (mpMic) mpMic.style.display = r['価格帯'] ? '' : 'none';
   document.getElementById('mh').textContent = r['営業時間'] || '';
   document.getElementById('mac2').textContent = r['アクセス'] || '';
   var gscore = r['Google評価'] || '';
