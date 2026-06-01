@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Nagoya Bites 管理ツール",
   "scripts": {
+    "test": "node --test tests/*.test.js",
+    "qa:nightly": "node scripts/nightly_qa.js",
     "tag-server": "node manual_tagging_server.js",
     "hotpepper": "node hotpepper_fetch.js",
     "claude-tag": "node claude_tagging.js"
