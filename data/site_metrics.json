@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-06-01T21:32:33.767Z",
+  "generatedAt": "2026-06-02T12:13:45.765Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 300,
-    "pageViews": 896,
-    "sessions": 429,
-    "avgSessionDuration": 264.4,
-    "bounceRate": 0.45,
-    "pagesPerSession": 2.09
+    "activeUsers": 319,
+    "pageViews": 927,
+    "sessions": 450,
+    "avgSessionDuration": 259.1,
+    "bounceRate": 0.458,
+    "pagesPerSession": 2.06
   },
   "channels": {
     "sessions": {
-      "organic": 131,
-      "direct": 290,
+      "organic": 139,
+      "direct": 301,
       "social": 5,
-      "referral": 10,
+      "referral": 11,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 30,
-      "direct": 66.5,
+      "organic": 30.5,
+      "direct": 66,
       "social": 1.1,
-      "referral": 2.3,
+      "referral": 2.4,
       "paid": 0,
       "other": 0
     }
@@ -31,27 +31,27 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 227
+      "sessions": 238
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 92
+      "sessions": 96
     },
     {
       "source": "chatgpt.com",
       "medium": "(not set)",
-      "sessions": 41
+      "sessions": 42
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 35
+      "sessions": 36
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 15
+      "sessions": 14
     },
     {
       "source": "openai",
@@ -59,14 +59,14 @@
       "sessions": 7
     },
     {
+      "source": "bing",
+      "medium": "organic",
+      "sessions": 6
+    },
+    {
       "source": "chatgpt.com",
       "medium": "referral",
       "sessions": 5
-    },
-    {
-      "source": "bing",
-      "medium": "organic",
-      "sessions": 4
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 295,
-      "sessions": 168
+      "pageViews": 308,
+      "sessions": 178
     },
     {
       "path": "/index.html",
@@ -108,13 +108,13 @@
   ],
   "cta": {
     "outboundClicks": 58,
-    "ctaClickRate": 13.5,
+    "ctaClickRate": 12.9,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 300,
+    "value": 319,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
