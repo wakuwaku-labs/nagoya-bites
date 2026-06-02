@@ -1,17 +1,8 @@
 {
-  "date": "2026-06-02",
-  "head": "5b4bade3448cf706b5a2db893aca68a3c9d36817",
-  "verdict": "FAIL",
+  "date": "2026-06-03",
+  "head": "4966b3cd7617d24f57c35758e05a0adf5ed79d23",
+  "verdict": "PASS",
   "findings": [
-    {
-      "category": "Security",
-      "owner": "DataKeeper",
-      "id": "QA-SEC-IG-COOKIES",
-      "sev": "hard",
-      "priority": "P1",
-      "title": "`.ig_cookies.json`（機密ファイル）が git 追跡されている",
-      "body": "機密ファイル `.ig_cookies.json` がリポジトリにコミットされている。履歴に残っている時点で漏洩扱い。\n- acceptance: `git rm --cached .ig_cookies.json` で追跡解除＋.gitignore 追記／関連クレデンシャルのローテーション／夜間QAセキュリティチェックの PASS で再評価"
-    },
     {
       "category": "Security",
       "owner": "DataKeeper",
@@ -24,7 +15,6 @@
   ],
   "created": [],
   "existing": [
-    "QA-SEC-IG-COOKIES",
     "QA-SEC-NPM-AUDIT"
   ]
 }
