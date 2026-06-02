@@ -875,3 +875,25 @@ function testAiAdvice() {
   sendLineMessage(msg);
   Logger.log(msg);
 }
+
+// ─── トリガー再設定（GASから1回だけ手動実行する） ───
+// 配信時刻を「毎朝8時台（JST・8:00頃）」に統一する。
+// 既存の sendDailyReport / sendWeeklyReport トリガーを削除して作り直すので、
+// 何度実行しても重複トリガーは増えない（冪等）。
+// nearMinute(0) で 8:00 付近（±15分）に寄せるため、後段の Claude SEOトリアージ（8:30）が
+// 確実に「配信後」に走る。タイムゾーンは appsscript.json の Asia/Tokyo に従う。
+function setupTriggers() {
+  ScriptApp.getProjectTriggers().forEach(function(t) {
+    var fn = t.getHandlerFunction();
+    if (fn === 'sendDailyReport' || fn === 'sendWeeklyReport') {
+      ScriptApp.deleteTrigger(t);
+    }
+  });
+  // 日次: 毎日 8:00 頃
+  ScriptApp.newTrigger('sendDailyReport')
+    .timeBased().everyDays(1).atHour(8).nearMinute(0).create();
+  // 週次: 毎週月曜 8:00 頃
+  ScriptApp.newTrigger('sendWeeklyReport')
+    .timeBased().onWeekDay(ScriptApp.WeekDay.MONDAY).atHour(8).nearMinute(0).create();
+  Logger.log('トリガー再設定完了: 日次=毎日8:00頃 / 週次=月曜8:00頃（JST）');
+}
