@@ -31,22 +31,8 @@ async function main() {
   fs.writeFileSync(COOKIE_FILE, JSON.stringify(cookies, null, 2));
   console.log(`クッキーを保存しました: ${COOKIE_FILE}`);
 
-  // テスト：投稿URLを取得してみる
-  console.log('\nテスト中...');
-  await page.goto('https://www.instagram.com/nagoya-bites-ig-scraper/', {
-    waitUntil: 'networkidle2',
-    timeout: 20000,
-  });
-
-  await new Promise(r => setTimeout(r, 3000));
-
-
-  const postUrl = await page.evaluate(() => {
-    const links = [...document.querySelectorAll('a[href*="/p/"], a[href*="/reel/"]')];
-    return links.length > 0 ? 'https://www.instagram.com' + links[0].getAttribute('href') : null;
-  });
-
-  console.log('取得した投稿URL:', postUrl);
+  console.log('\nログイン・cookie 保存完了。');
+  console.log('次のステップ: node scripts/fetch_ig_posts_resolved.js で投稿URLを一括取得してください。');
   await browser.close();
 }
 

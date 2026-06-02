@@ -10,3 +10,6 @@ service-account.json
 .env
 .notion_sync_pending
 journal/drafts/
+# Instagram セッション cookie（認証情報・絶対に追跡しない）
+.ig_cookies.json
+*cookies*.json
