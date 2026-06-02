@@ -89,7 +89,8 @@ function parseFields(task) {
   if (ow) {
     const raw = ow[1].trim().split(/\s*\+\s*/)[0]; // 共同作業の場合は最初を主担当に
     const m = raw.match(/^([A-Za-z]+)/);
-    if (m) task.owner = m[1];
+    // 先頭が英字部署名ならそれを採用。日本語担当名（片桐 等）は文字列ごと保持
+    task.owner = m ? m[1] : raw;
   }
 
   // category
@@ -122,6 +123,7 @@ const OWNER_NORMALIZE = {
   'Marketer': 'Marketer',
   'Strategist': 'Strategist',
   'Editor (人間運営側)': 'Editor',
+  '片桐': '片桐', // 人間オーナー（手動対応タスクの担当）
 };
 
 const CATEGORY_NORMALIZE = {
@@ -161,6 +163,8 @@ const ID_PREFIX_TO_OWNER = {
 };
 
 function inferOwner(task) {
+  // 手動対応タスク: owner に片桐（人間オーナー）が含まれていれば最優先で担当部署=片桐
+  if (task.owner && task.owner.includes('片桐')) return '片桐';
   if (task.owner && OWNER_NORMALIZE[task.owner]) return OWNER_NORMALIZE[task.owner];
   if (task.owner) {
     // partial match
