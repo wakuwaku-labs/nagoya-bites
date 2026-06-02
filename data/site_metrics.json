@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-06-02T12:13:45.765Z",
+  "generatedAt": "2026-06-02T20:48:20.340Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 319,
-    "pageViews": 927,
-    "sessions": 450,
-    "avgSessionDuration": 259.1,
-    "bounceRate": 0.458,
-    "pagesPerSession": 2.06
+    "activeUsers": 323,
+    "pageViews": 920,
+    "sessions": 454,
+    "avgSessionDuration": 249.7,
+    "bounceRate": 0.465,
+    "pagesPerSession": 2.03
   },
   "channels": {
     "sessions": {
-      "organic": 139,
-      "direct": 301,
+      "organic": 142,
+      "direct": 306,
       "social": 5,
       "referral": 11,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 30.5,
-      "direct": 66,
+      "organic": 30.6,
+      "direct": 65.9,
       "social": 1.1,
       "referral": 2.4,
       "paid": 0,
@@ -31,12 +31,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 238
+      "sessions": 237
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 96
+      "sessions": 97
     },
     {
       "source": "chatgpt.com",
@@ -46,22 +46,22 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 36
+      "sessions": 37
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 14
+      "sessions": 18
     },
     {
       "source": "openai",
       "medium": "(not set)",
-      "sessions": 7
+      "sessions": 8
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 6
+      "sessions": 7
     },
     {
       "source": "chatgpt.com",
@@ -82,23 +82,23 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 308,
+      "pageViews": 299,
       "sessions": 178
     },
     {
       "path": "/index.html",
-      "pageViews": 125,
-      "sessions": 69
+      "pageViews": 124,
+      "sessions": 67
+    },
+    {
+      "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
+      "pageViews": 43,
+      "sessions": 37
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
       "pageViews": 42,
       "sessions": 29
-    },
-    {
-      "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
-      "pageViews": 42,
-      "sessions": 36
     },
     {
       "path": "/features/index.html",
@@ -107,14 +107,14 @@
     }
   ],
   "cta": {
-    "outboundClicks": 58,
-    "ctaClickRate": 12.9,
+    "outboundClicks": 59,
+    "ctaClickRate": 13,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 319,
+    "value": 323,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
