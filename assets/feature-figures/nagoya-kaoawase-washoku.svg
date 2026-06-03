@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="名古屋 顔合わせ・結納 個室和食ランチ">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1c1206"/>
+      <stop offset="100%" stop-color="#5e4216"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#1c1206"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#f8d0a0" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+
+  <!-- 両家の結び＝二つの輪 -->
+  <g opacity=".5" fill="none" stroke="#f8d0a0" stroke-width="2.4">
+    <circle cx="476" cy="118" r="44"/>
+    <circle cx="524" cy="118" r="44"/>
+  </g>
+  <!-- 折敷の上の椀（個室和食の膳） -->
+  <g opacity=".55" fill="none" stroke="#f8d0a0" stroke-width="2">
+    <rect x="446" y="186" width="108" height="34" rx="4"/>
+    <path d="M470 203 a14 9 0 0 0 28 0" stroke-width="2.4"/>
+    <path d="M508 203 a14 9 0 0 0 28 0" stroke-width="2.4"/>
+  </g>
+
+  <rect x="36" y="34" width="3" height="118" fill="#f8d0a0" opacity=".9"/>
+  <text x="46" y="62" fill="#f8d0a0" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+  <text x="46" y="112" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">顔合わせ・結納の個室和食</text>
+  <text x="48" y="150" fill="#f8d0a0" opacity=".82" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="15" letter-spacing="0.08em">現役飲食人が選ぶ、名古屋の昼の一席</text>
+</svg>

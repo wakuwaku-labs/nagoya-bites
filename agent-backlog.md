@@ -29,15 +29,25 @@
   - ④ 夜間QA次回で PASS を確認予定
 - **ブランドガードレール**: 認証情報の取り扱いはサクラ排除・実在保証の信頼基盤と同じ重要度。再発防止として機密ファイル名パターンを security_audit.js が常時監視
 
-### [QA-SEC-NPM-AUDIT] npm 依存に既知脆弱性 10 件（high 1 / moderate 9）
-- **priority**: P2 → **status**: ready
+### [QA-SEC-NPM-AUDIT] npm 依存に既知脆弱性 10 件（high 1 / moderate 9）✅
+- **priority**: P2 → **status**: done
 - **detected**: 2026-06-01
+- **resolved**: 2026-06-04
+- **resolved_by**: DataKeeper（非破壊 `npm audit fix`）— high含む6件解消、残4件はリスク受容を記録
 - **category**: Security
 - **owner**: DataKeeper
 - **source**: 夜間QA セキュリティチェック（scripts/security_audit.js / `npm audit --omit=dev`）2026-06-01
 - **詳細**: 管理ツール側の依存（puppeteer 系等）に high 1・moderate 9。サイト本体（CDN配信・単一HTML）への直接影響は限定的だが、ツール実行環境の供給網リスクとして放置しない。
 - **acceptance**: `npm audit` の詳細を確認し、破壊的変更の無い範囲で `npm audit fix`／高リスクは個別にバージョン精査／残存はリスク受容理由を記録／次回夜間QAで件数の推移を追跡
-- **ブランドガードレール**: 制約4（サイト用の新npm依存追加禁止）に抵触しない範囲での更新に留める
+- **実装内容**:
+  - `npm audit fix`（**--force なし＝非破壊**）を実行。変更は `package-lock.json` のみ（21挿入/21削除・package.json の major bump なし＝semver 範囲内の patch/minor）
+  - **解消（10→4・6件）**: basic-ftp **high**（CRLF/DoS 4 advisory）/ ip-address(XSS) / qs・body-parser・express(DoS) / ws(メモリ開示) を非破壊で除去
+  - **残存 4 moderate（リスク受容）**: uuid `<11.1.1`（GHSA-w5hq-g745-h8pq）と、それに依存する gaxios / googleapis-common / googleapis の連鎖。解消には `npm audit fix --force` による **googleapis 33→173 の破壊的アップグレード**が必須。
+  - **受容理由**: ①破壊的変更が GA4/GSC データパイプライン（fetch_ga4_views.js / fetch_gsc_metrics.js が googleapis に依存）を壊すリスク大 ②uuid 脆弱性は「buf 引数指定時の境界チェック欠落」で、当該コードは uuid を buf 付きで呼ばない（googleapis 内部の transitive 依存）③moderate 止まり・管理ツール限定で CDN 配信のサイト本体（制約4）には未影響。
+  - **検証**: `npm audit fix` 後に googleapis / google-auth-library が正常ロード（GA4/GSC スクリプトの require 解決）を確認。git diff は package-lock.json のみ。
+- **再発監視**: 次回夜間QA（security_audit.js）で件数推移を追跡。googleapis メジャー更新は別ISSUEで計画的に（パイプライン回帰テスト付き）実施する。
+- **ブランドガードレール**: 制約4（サイト用の新npm依存追加禁止）に抵触しない範囲での更新に留める ✅（lock のみ・新規 site 依存なし）
+- **files**: `package-lock.json`
 
 ### [ORG-004] 並列起票の採番衝突を防ぐ統一ID採番＋重複検知ゲート（弱点2克服・フェーズ1）✅
 - **priority**: P1 → **status**: done
@@ -166,14 +176,25 @@
 - **ブランドガードレール**: 関連店選定は業界視点（同シーン/同エリア/同価格帯）。存在しない店・特集へのリンク禁止（実在検証ゲート）
 
 ### [SEO-005] シーン特化の和食ランチ特集（個室・接待）を増設し検索流入の伸びを横展開する
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-06-01
+- **resolved**: 2026-06-04
+- **resolved_by**: Editor/Builder（自律実行 2026-06-04）
 - **category**: コンテンツ
 - **owner**: Editor
 - **source**: 週次レポート(LINE) 2026-05-25〜05-31 原文「🟢 訪問者数が前週比+42%と増加し検索流入が伸びている 👉 人気特集(features/nagoya-lunch-washoku)を深掘りし『名古屋 ランチ 和食 個室』『接待』など具体ニーズのシーン別特集を増やす」
 - **brand-filter**: ✅ 適合 — Moat「名古屋 × シーン × 業界人の目利き」の独自KW（個室・接待）で検索面を広げる王道施策。伸びている勝ち筋（検索流入+42%）の横展開であり、順位操作でなく実在特集の新規制作
 - **trend**: 訪問者 前週比 +42%（検索流入主導の伸び＝勝ち筋を伸ばす方向）
+- **実装内容**:
+  1. **新規シーン特集**: `features/nagoya-kaoawase-washoku.html`（「名古屋 顔合わせ・結納 個室 和食ランチ おすすめ8選【2026年版】」）
+     - カニバリ回避: 既存の接待/個室/和食ランチ（nagoya-lunch-washoku・SEO-006）と被らない**未カバーのシーン「顔合わせ・結納」**を選定。独自KW（名古屋 顔合わせ ランチ／結納 個室／両家顔合わせ 名古屋）で新規検索面を獲得
+     - 掲載8店はすべて LOCAL_STORES の実在店のみ（架空店ブロック厳守）。各カードは食べログURLへ実リンク＋trackEvent('cta_click')
+     - JSON-LD 4種（Article / ItemList[8] / BreadcrumbList / FAQPage[4Q]）— 各ページ固有・ラーメン汚染なし（ISSUE-060 回避）。ItemListは店名のみで架空URL捏造なし
+     - OG/ヒーロー画像は自作 SVG（`assets/feature-figures/nagoya-kaoawase-washoku.svg`・両家の結び＝二輪＋膳モチーフ／実写優先ルール準拠・ストック不使用）
+  2. **特集一覧へ登録**: `features/index.html` の CollectionPage numberOfItems 54→55、ListItem position 55 追加、article-card 追加（nagoya-lunch-washoku の後）
+- **QA**: qa_gate --before/--after pass（index.html無改変・機能マーカー保持）／audit_feature_stores ghost 0/0／schema-alignment 非フラグ／JSON-LD 4ブロック valid／ブラウザ実機確認（desktop+mobile375px・console error 0・カード/食べログリンク描画OK）
 - **acceptance**: features/ にシーン特化の和食ランチ特集を増設／掲載店は LOCAL_STORES の実在店のみ（実在検証ゲート厳守）／写真は実写優先順（IG embed→HotPepper→Places→記事固有図）／独自KWを h1/title/本文冒頭に自然挿入・JSON-LD不汚染／効果は翌週の週次レポートで再評価
+- **効果計測**: 翌週の週次レポートで「名古屋 顔合わせ／結納」系の検索流入・本特集の閲覧数を再評価
 - **ブランドガードレール**: 架空店ブロック必須。広告・PR・送客手数料導線は含めない（編集独立・制約7/8）
 
 ### [SEO-006] 既存特集 nagoya-lunch-washoku のタイトル/h1/本文を「名古屋 接待 個室 ランチ」KWに最適化しSNSで告知
@@ -1008,6 +1029,8 @@
 | 2026-06-03 | Builder（自律実行） | **SEO-004 P1 実装** — index.html モーダルに「関連特集・関連店舗」リンクUIを追加。24エントリの TAG_TO_FEATURES ルックアップで同ジャンル特集を最大3本表示、同エリア・同価格帯の店舗を最大4件表示（ALL_STORES から動的選出）。回遊半減（1.3pp）への対応。CTA/フィルタ/検索/IGエンベッドへの影響なし・qa_gate PASS | ✅ デプロイ済み (commit 92d71daa) |
 | 2026-06-03 | Builder（自律実行） | **SEO-003 P2 実装** — index.html モーダルに赤（HP予約）・青（Google Maps）の2CTAボタンを追加。cta_click/cta_gmap_click 計測を維持、CTA導線を強化（予約ボタンがモーダル中段に浮上）。モバイル2列レイアウト対応 | ✅ デプロイ済み (commit 92d71daa) |
 | 2026-06-03 | Builder/Editor（自律実行） | **SEO-006 P2 実装** — `features/nagoya-lunch-washoku.html` の title/h1/meta description/OGP/JSON-LD Article/BreadcrumbList/breadcrumb nav/本文冒頭2行に独自KW「接待・個室」を自然挿入。dateModified を 2026-06-03 に更新。`docs/daily-posts/2026-06-03.md` にSNS告知原稿（Note/Instagram/X）を追記。JSON-LD 不汚染・架空店ゼロ・内部リンク維持 | ✅ デプロイ済み (このコミット) |
+| 2026-06-04 | Orchestrator/Builder（自律実行） | **QA-SEC-NPM-AUDIT 完了** — `npm audit fix`（非破壊範囲・lock-only）で脆弱性 10→4 件。basic-ftp(high)/ip-address/qs/body-parser/express/ws を解消。残 4 件（uuid→googleapis 連鎖・moderate）は googleapis 33→173 の破壊的変更が GA4/GSC データパイプラインを壊すリスクのため、CLAUDE.md「破壊的変更の無い範囲で／残存はリスク受容理由を記録」に則り受容。package.json 無変更 | ✅ done |
+| 2026-06-04 | Editor/Builder（自律実行） | **SEO-005 P2 実装** — 新規シーン特集 `features/nagoya-kaoawase-washoku.html`（顔合わせ・結納 個室和食ランチ8選）。既存の接待/個室（nagoya-lunch-washoku・SEO-006）とカニバらない未カバーKWを選定。掲載8店は LOCAL_STORES 実在店のみ（ghost 0/0）・各カード食べログ実リンク。JSON-LD 4種（Article/ItemList/BreadcrumbList/FAQPage）汚染なし。ヒーローは自作SVG（実写優先準拠）。features/index.html numberOfItems 54→55・カード追加。qa_gate pass・schema-alignment非フラグ・browser実機(desktop+375px)console 0 | ✅ デプロイ予定 (このコミット) |
 
 ---
 
