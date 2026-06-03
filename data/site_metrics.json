@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-06-03T06:24:41.836Z",
+  "generatedAt": "2026-06-03T07:52:41.427Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 329,
-    "pageViews": 930,
-    "sessions": 461,
-    "avgSessionDuration": 246.7,
-    "bounceRate": 0.443,
-    "pagesPerSession": 2.02
+    "activeUsers": 333,
+    "pageViews": 941,
+    "sessions": 467,
+    "avgSessionDuration": 244.8,
+    "bounceRate": 0.45,
+    "pagesPerSession": 2.01
   },
   "channels": {
     "sessions": {
-      "organic": 147,
-      "direct": 299,
+      "organic": 149,
+      "direct": 305,
       "social": 5,
       "referral": 11,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 31.8,
-      "direct": 64.7,
+      "organic": 31.7,
+      "direct": 64.9,
       "social": 1.1,
-      "referral": 2.4,
+      "referral": 2.3,
       "paid": 0,
       "other": 0
     }
@@ -31,12 +31,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 240
+      "sessions": 243
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 99
+      "sessions": 101
     },
     {
       "source": "chatgpt.com",
@@ -51,7 +51,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 9
+      "sessions": 12
     },
     {
       "source": "bing",
@@ -87,13 +87,13 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 124,
-      "sessions": 67
+      "pageViews": 126,
+      "sessions": 68
     },
     {
       "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
-      "pageViews": 43,
-      "sessions": 37
+      "pageViews": 47,
+      "sessions": 41
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -108,13 +108,13 @@
   ],
   "cta": {
     "outboundClicks": 59,
-    "ctaClickRate": 12.8,
+    "ctaClickRate": 12.6,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 329,
+    "value": 333,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
