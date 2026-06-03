@@ -439,6 +439,17 @@ body.search-active .results-summary{display:block;}
 .mb.mb-tk:hover{border-color:rgba(10,10,8,.55);background:#fafaf7;}
 .mb.mb-xx:hover{border-color:rgba(10,10,8,.55);background:#fafaf7;}
 .mb.mb-gm:hover{border-color:rgba(66,133,244,.45);}
+/* ── SEO-004 モーダル内 関連特集・関連店舗 ── */
+.modal-related{padding:1rem 1.5rem 1.2rem;border-top:1px solid var(--border);}
+.modal-related-title{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.16em;color:var(--dim);text-transform:uppercase;margin-bottom:.75rem;}
+.modal-related-features{display:flex;flex-direction:column;gap:0;}
+.modal-related-features a{font-size:.8rem;color:var(--gold);text-decoration:none;padding:.42rem 0;border-bottom:1px solid var(--border);display:block;line-height:1.45;}
+.modal-related-features a:last-child{border-bottom:none;}
+.modal-related-features a:hover{color:var(--gold2);}
+.modal-related-stores-label{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin:.9rem 0 .45rem;}
+.modal-related-stores{display:flex;gap:.5rem;flex-wrap:wrap;}
+.modal-rsc{font-size:.76rem;padding:.32rem .7rem;background:var(--surface);border:1px solid var(--border-h);border-radius:3px;cursor:pointer;color:var(--text);font-family:'Noto Sans JP',sans-serif;white-space:nowrap;transition:all .15s;}
+.modal-rsc:hover{border-color:var(--gold);color:var(--gold);}
 /* カード内 .ml の小サイズ favicon */
 .ml img.brand-fav{width:14px;height:14px;object-fit:contain;display:inline-block;vertical-align:-.18em;margin-right:.32rem;border-radius:2px;flex-shrink:0;}
 /* ── MODAL INFO TABLE ── */
@@ -6571,6 +6582,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       </div>
       <div class="mml">Media Links — 各媒体で見る</div>
       <div class="mmg" id="mmg"></div>
+      <div id="modal-related" style="display:none"></div>
       <div class="share-bar" id="share-bar">
         <div class="share-bar-label">Share — このお店をシェア</div>
         <button class="sbtn sbtn-x" id="share-x" onclick="shareToX()" aria-label="この店舗を X (旧 Twitter) でシェアする">𝕏 ポスト</button>
@@ -13054,6 +13066,67 @@ function openM(i) {
   var isMFav = getFavs().indexOf(storeName) !== -1;
   mfavBtn.classList.toggle('faved', isMFav);
   mfavBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="' + (isMFav ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7.5-4.5-10-9.5C.5 7 3.5 3 8 3c2.5 0 3.5 1.5 4 2 .5-.5 1.5-2 4-2 4.5 0 7.5 4 6 8.5C19.5 16.5 12 21 12 21z"/></svg>';
+  // ── SEO-004 関連特集・関連店舗（ジャンル/タグ/エリアから自動マッチ） ──
+  (function(){
+    var MF=[
+      {t:function(s){return /接待/.test(s['タグ']||'');},u:'features/settai-guide.html',l:'接待で失敗しない名古屋の店選び'},
+      {t:function(s){return /個室/.test(s['タグ']||'');},u:'features/private-room.html',l:'個室のある名古屋グルメ10選'},
+      {t:function(s){return /宴会|忘年会|飲み放題/.test(s['タグ']||'');},u:'features/banquet.html',l:'名古屋の宴会・忘年会15選'},
+      {t:function(s){return /女子会/.test(s['タグ']||'');},u:'features/girls-party.html',l:'名古屋・女子会ランチ&ディナー10選'},
+      {t:function(s){return /誕生日/.test(s['タグ']||'');},u:'features/birthday.html',l:'名古屋・誕生日ディナー10選'},
+      {t:function(s){return /ひつまぶし|鰻|うなぎ/.test((s['タグ']||'')+(s['ジャンル']||''));},u:'features/nagoya-hitsumabushi.html',l:'名古屋ひつまぶし完全ガイド'},
+      {t:function(s){return /手羽先/.test((s['タグ']||'')+(s['ジャンル']||''));},u:'features/nagoya-tebasaki.html',l:'名古屋手羽先完全ガイド'},
+      {t:function(s){return /味噌煮込み/.test((s['タグ']||'')+(s['ジャンル']||''));},u:'features/nagoya-miso-nikomi-udon.html',l:'名古屋味噌煮込みうどん完全ガイド'},
+      {t:function(s){return /ラーメン|つけ麺|台湾まぜそば/.test(s['ジャンル']||'');},u:'features/nagoya-ramen.html',l:'名古屋ラーメンおすすめ12選'},
+      {t:function(s){return /とんかつ|味噌かつ/.test(s['ジャンル']||'');},u:'features/nagoya-tonkatsu.html',l:'名古屋とんかつ・味噌かつ10選'},
+      {t:function(s){return /焼き鳥|焼鳥/.test(s['ジャンル']||'');},u:'features/nagoya-yakitori-guide.html',l:'名古屋 焼き鳥おすすめ'},
+      {t:function(s){return /カフェ|珈琲|喫茶/.test(s['ジャンル']||'');},u:'features/nagoya-cafe.html',l:'名古屋カフェ おすすめ10選'},
+      {t:function(s){return /イタリアン|パスタ/.test(s['ジャンル']||'');},u:'features/nagoya-italian-guide.html',l:'名古屋のイタリアン10選'},
+      {t:function(s){return /フレンチ|フランス料理/.test(s['ジャンル']||'');},u:'features/nagoya-french-guide.html',l:'名古屋のフレンチ8選'},
+      {t:function(s){return /バー|ワインバー/.test(s['ジャンル']||'');},u:'features/nagoya-bar-guide.html',l:'名古屋のバー・ワインバー10選'},
+      {t:function(s){return /海鮮|魚介/.test(s['ジャンル']||'');},u:'features/nagoya-seafood.html',l:'名古屋 海鮮・魚介おすすめ'},
+      {t:function(s){return /韓国料理/.test(s['ジャンル']||'');},u:'features/nagoya-korean.html',l:'名古屋 韓国料理おすすめ'},
+      {t:function(s){return /中華|餃子|台湾料理/.test(s['ジャンル']||'');},u:'features/nagoya-chinese-guide.html',l:'名古屋 中華料理おすすめ'},
+      {t:function(s){return /焼肉|ホルモン/.test(s['ジャンル']||'');},u:'features/nagoya-yakiniku-guide.html',l:'名古屋 焼肉おすすめ'},
+      {t:function(s){return /和食|割烹|日本料理/.test(s['ジャンル']||'');},u:'features/nagoya-lunch-washoku.html',l:'名古屋ランチ 和食おすすめ10選'},
+      {t:function(s){return /寿司|鮨/.test(s['ジャンル']||'');},u:'features/nagoya-sushi-guide.html',l:'名古屋で本当に美味しい鮨8選'},
+      {t:function(s){return /名古屋駅|名駅/.test(s['エリア']||'');},u:'features/meieki.html',l:'名駅グルメ15選'},
+      {t:function(s){return /大須|上前津/.test(s['エリア']||'');},u:'features/osu-food-walk.html',l:'大須 食べ歩きおすすめ10選'},
+      {t:function(){return true;},u:'features/nagoya-gourmet-guide.html',l:'名古屋グルメ完全ガイド'}
+    ];
+    var hits=[],seen={};
+    for(var fi=0;fi<MF.length;fi++){
+      if(seen[MF[fi].u])continue;
+      if(MF[fi].t(r)){hits.push(MF[fi]);seen[MF[fi].u]=true;}
+      if(hits.length>=3)break;
+    }
+    var relStores=[];
+    if(ALL_STORES&&ALL_STORES.length>1){
+      var rg=(r['ジャンル']||'').split(/[・\/]/)[0].trim();
+      for(var si2=0;si2<ALL_STORES.length&&relStores.length<3;si2++){
+        var rs2=ALL_STORES[si2];
+        if(!rs2||rs2['店名']===r['店名'])continue;
+        if(rg&&(rs2['ジャンル']||'').includes(rg))relStores.push({i:si2,n:rs2['店名']});
+      }
+    }
+    var relEl=document.getElementById('modal-related');
+    if(relEl){
+      var rh='';
+      if(hits.length>0){
+        rh+='<div class="modal-related-features">'+hits.map(function(fe){
+          return '<a href="'+fe.u+'" target="_blank" rel="noopener noreferrer">📖 '+fe.l+'</a>';
+        }).join('')+'</div>';
+      }
+      if(relStores.length>0){
+        rh+='<div class="modal-related-stores-label">似た雰囲気のお店</div>'
+          +'<div class="modal-related-stores">'+relStores.map(function(rs3){
+            return '<button class="modal-rsc" onclick="closeM();setTimeout(function(){openM('+rs3.i+');},50)">'+rs3.n+'</button>';
+          }).join('')+'</div>';
+      }
+      if(rh){relEl.innerHTML='<div class="modal-related-title">この特集もおすすめ</div>'+rh;relEl.style.display='';}
+      else{relEl.style.display='none';}
+    }
+  })();
   // ── Restaurant JSON-LD（モーダル開時に動的注入 / LLMO・AI検索最適化）──
   (function() {
     var prev = document.getElementById('modal-store-jsonld');
