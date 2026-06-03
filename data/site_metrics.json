@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-06-03T07:52:41.427Z",
+  "generatedAt": "2026-06-03T13:56:07.405Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 333,
-    "pageViews": 941,
-    "sessions": 467,
-    "avgSessionDuration": 244.8,
-    "bounceRate": 0.45,
-    "pagesPerSession": 2.01
+    "activeUsers": 342,
+    "pageViews": 982,
+    "sessions": 478,
+    "avgSessionDuration": 265.9,
+    "bounceRate": 0.458,
+    "pagesPerSession": 2.05
   },
   "channels": {
     "sessions": {
-      "organic": 149,
-      "direct": 305,
+      "organic": 151,
+      "direct": 316,
       "social": 5,
       "referral": 11,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 31.7,
-      "direct": 64.9,
-      "social": 1.1,
+      "organic": 31.3,
+      "direct": 65.4,
+      "social": 1,
       "referral": 2.3,
       "paid": 0,
       "other": 0
@@ -31,12 +31,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 243
+      "sessions": 249
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 101
+      "sessions": 103
     },
     {
       "source": "chatgpt.com",
@@ -51,7 +51,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 12
+      "sessions": 17
     },
     {
       "source": "bing",
@@ -82,18 +82,18 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 303,
-      "sessions": 182
+      "pageViews": 325,
+      "sessions": 189
     },
     {
       "path": "/index.html",
-      "pageViews": 126,
-      "sessions": 68
+      "pageViews": 128,
+      "sessions": 70
     },
     {
       "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
       "pageViews": 47,
-      "sessions": 41
+      "sessions": 42
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -102,19 +102,19 @@
     },
     {
       "path": "/features/index.html",
-      "pageViews": 37,
-      "sessions": 12
+      "pageViews": 39,
+      "sessions": 13
     }
   ],
   "cta": {
-    "outboundClicks": 59,
-    "ctaClickRate": 12.6,
+    "outboundClicks": 61,
+    "ctaClickRate": 12.8,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 333,
+    "value": 342,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
