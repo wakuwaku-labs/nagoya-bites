@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="名古屋コーチン「本物」を出している店の見分け方——仕入れルート3系統">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1008"/>
+      <stop offset="100%" stop-color="#3d2208"/>
+    </linearGradient>
+    <linearGradient id="box1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7a5c10" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#5a3e08" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+
+  <!-- 背景装飾 -->
+  <g opacity="0.12" fill="none" stroke="#c4a060" stroke-width="1">
+    <circle cx="520" cy="50" r="80"/>
+    <circle cx="520" cy="50" r="60"/>
+  </g>
+
+  <!-- タイトルエリア -->
+  <text x="30" y="40" font-family="sans-serif" font-size="11" fill="#c4a060" letter-spacing="2" opacity="0.8">INDUSTRY INSIDER / 仕入れ解剖</text>
+  <text x="30" y="72" font-family="sans-serif" font-size="18" font-weight="bold" fill="#f5e8c8" letter-spacing="0.5">名古屋コーチン「本物」の</text>
+  <text x="30" y="96" font-family="sans-serif" font-size="18" font-weight="bold" fill="#f5e8c8" letter-spacing="0.5">見分け方</text>
+
+  <!-- 仕入れルート3系統ボックス -->
+  <rect x="30" y="118" width="170" height="120" rx="4" fill="url(#box1)"/>
+  <rect x="215" y="118" width="170" height="120" rx="4" fill="url(#box1)"/>
+  <rect x="400" y="118" width="170" height="120" rx="4" fill="url(#box1)"/>
+
+  <!-- ルート①ラベル -->
+  <text x="115" y="138" font-family="sans-serif" font-size="10" fill="#c4a060" text-anchor="middle" font-weight="bold">ルート①</text>
+  <text x="115" y="155" font-family="sans-serif" font-size="9" fill="#f5e8c8" text-anchor="middle">JA全農あいち経由</text>
+  <line x1="50" y1="163" x2="180" y2="163" stroke="#c4a060" stroke-width="0.5" opacity="0.4"/>
+  <text x="115" y="178" font-family="sans-serif" font-size="8" fill="#d4c8a8" text-anchor="middle">愛知県畜産総合センター</text>
+  <text x="115" y="192" font-family="sans-serif" font-size="8" fill="#d4c8a8" text-anchor="middle">→ JA全農あいち</text>
+  <text x="115" y="206" font-family="sans-serif" font-size="8" fill="#d4c8a8" text-anchor="middle">→ 一般流通</text>
+  <text x="115" y="225" font-family="sans-serif" font-size="9" fill="#c4a060" text-anchor="middle">最正統ルート</text>
+
+  <!-- ルート②ラベル -->
+  <text x="300" y="138" font-family="sans-serif" font-size="10" fill="#c4a060" text-anchor="middle" font-weight="bold">ルート②</text>
+  <text x="300" y="155" font-family="sans-serif" font-size="9" fill="#f5e8c8" text-anchor="middle">さんわコーポレーション</text>
+  <line x1="225" y1="163" x2="375" y2="163" stroke="#c4a060" stroke-width="0.5" opacity="0.4"/>
+  <text x="300" y="178" font-family="sans-serif" font-size="8" fill="#d4c8a8" text-anchor="middle">創業明治33年の専門企業</text>
+  <text x="300" y="192" font-family="sans-serif" font-size="8" fill="#d4c8a8" text-anchor="middle">証明書付き流通</text>
+  <text x="300" y="206" font-family="sans-serif" font-size="8" fill="#d4c8a8" text-anchor="middle">業務用卸あり</text>
+  <text x="300" y="225" font-family="sans-serif" font-size="9" fill="#c4a060" text-anchor="middle">業界信頼度：高</text>
+
+  <!-- ルート③ラベル -->
+  <text x="485" y="138" font-family="sans-serif" font-size="10" fill="#c4a060" text-anchor="middle" font-weight="bold">ルート③</text>
+  <text x="485" y="155" font-family="sans-serif" font-size="9" fill="#f5e8c8" text-anchor="middle">農家直取引</text>
+  <line x1="415" y1="163" x2="560" y2="163" stroke="#c4a060" stroke-width="0.5" opacity="0.4"/>
+  <text x="485" y="178" font-family="sans-serif" font-size="8" fill="#d4c8a8" text-anchor="middle">協会登録農家との</text>
+  <text x="485" y="192" font-family="sans-serif" font-size="8" fill="#d4c8a8" text-anchor="middle">直接契約</text>
+  <text x="485" y="206" font-family="sans-serif" font-size="8" fill="#d4c8a8" text-anchor="middle">数量確保が課題</text>
+  <text x="485" y="225" font-family="sans-serif" font-size="9" fill="#c4a060" text-anchor="middle">最高の透明性</text>
+</svg>

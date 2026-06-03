@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" width="600" height="280" role="img" aria-label="コース5,000円の実際の会計分解——上乗せコストの構造">
+  <defs>
+    <linearGradient id="bg10" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1a12"/>
+      <stop offset="100%" stop-color="#1a3020"/>
+    </linearGradient>
+    <linearGradient id="bar-base" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2a6b3a"/>
+      <stop offset="100%" stop-color="#3a8a50"/>
+    </linearGradient>
+    <linearGradient id="bar-add" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8a4a10"/>
+      <stop offset="100%" stop-color="#c06018"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="280" fill="url(#bg10)"/>
+
+  <!-- 背景装飾 -->
+  <g opacity="0.08" fill="none" stroke="#80c090" stroke-width="1">
+    <circle cx="540" cy="60" r="90"/>
+    <circle cx="540" cy="60" r="65"/>
+  </g>
+
+  <!-- タイトル -->
+  <text x="30" y="38" font-family="sans-serif" font-size="10" fill="#80c090" letter-spacing="2" opacity="0.8">INDUSTRY INSIDER / 価格解剖</text>
+  <text x="30" y="66" font-family="sans-serif" font-size="17" font-weight="bold" fill="#e8f5e8" letter-spacing="0.5">コース5,000円——実際の会計はいくらか</text>
+
+  <!-- 区切り線 -->
+  <line x1="30" y1="78" x2="570" y2="78" stroke="#80c090" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- 大衆居酒屋 -->
+  <text x="30" y="100" font-family="sans-serif" font-size="10" fill="#80c090" font-weight="bold">大衆居酒屋タイプ</text>
+  <!-- コース -->
+  <rect x="30" y="108" width="240" height="18" rx="2" fill="url(#bar-base)"/>
+  <text x="276" y="121" font-family="sans-serif" font-size="9" fill="#e8f5e8">5,000円</text>
+  <!-- お通し -->
+  <rect x="30" y="130" width="30" height="14" rx="2" fill="url(#bar-add)"/>
+  <text x="66" y="141" font-family="sans-serif" font-size="8" fill="#d4b898">+お通し 400円</text>
+  <!-- 合計 -->
+  <text x="30" y="162" font-family="sans-serif" font-size="9" fill="#e8f5e8">実際の会計：<tspan fill="#80c090" font-weight="bold">5,400〜5,700円</tspan>/人</text>
+
+  <!-- 区切り -->
+  <line x1="30" y1="172" x2="570" y2="172" stroke="#80c090" stroke-width="0.3" opacity="0.3"/>
+
+  <!-- ダイニングバー -->
+  <text x="30" y="190" font-family="sans-serif" font-size="10" fill="#80c090" font-weight="bold">ダイニングバー・創作料理タイプ</text>
+  <!-- コース -->
+  <rect x="30" y="198" width="240" height="18" rx="2" fill="url(#bar-base)"/>
+  <text x="276" y="211" font-family="sans-serif" font-size="9" fill="#e8f5e8">5,000円（お通し込み）</text>
+  <!-- 個室 -->
+  <rect x="30" y="220" width="50" height="14" rx="2" fill="url(#bar-add)"/>
+  <text x="86" y="231" font-family="sans-serif" font-size="8" fill="#d4b898">+個室料 500〜1,000円/人</text>
+  <!-- 合計 -->
+  <text x="30" y="252" font-family="sans-serif" font-size="9" fill="#e8f5e8">実際の会計：<tspan fill="#80c090" font-weight="bold">5,500〜6,700円</tspan>/人</text>
+
+  <!-- 凡例 -->
+  <rect x="400" y="230" width="14" height="10" rx="1" fill="url(#bar-base)"/>
+  <text x="418" y="239" font-family="sans-serif" font-size="8" fill="#e8f5e8">コース基本料</text>
+  <rect x="400" y="248" width="14" height="10" rx="1" fill="url(#bar-add)"/>
+  <text x="418" y="257" font-family="sans-serif" font-size="8" fill="#e8f5e8">上乗せコスト</text>
+
+  <!-- 注 -->
+  <text x="30" y="272" font-family="sans-serif" font-size="7" fill="#80c090" opacity="0.7">※ 個室料・サービス料・ドリンクアップグレードは店舗・プランにより異なる</text>
+</svg>
