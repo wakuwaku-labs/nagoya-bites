@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-06-03T13:56:07.405Z",
+  "generatedAt": "2026-06-03T19:23:25.274Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 342,
-    "pageViews": 982,
-    "sessions": 478,
-    "avgSessionDuration": 265.9,
-    "bounceRate": 0.458,
+    "activeUsers": 338,
+    "pageViews": 957,
+    "sessions": 467,
+    "avgSessionDuration": 261.6,
+    "bounceRate": 0.46,
     "pagesPerSession": 2.05
   },
   "channels": {
     "sessions": {
       "organic": 151,
-      "direct": 316,
+      "direct": 308,
       "social": 5,
       "referral": 11,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 31.3,
-      "direct": 65.4,
-      "social": 1,
+      "organic": 31.8,
+      "direct": 64.8,
+      "social": 1.1,
       "referral": 2.3,
       "paid": 0,
       "other": 0
@@ -31,12 +31,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 249
+      "sessions": 240
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 103
+      "sessions": 104
     },
     {
       "source": "chatgpt.com",
@@ -46,12 +46,12 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 39
+      "sessions": 38
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 17
+      "sessions": 18
     },
     {
       "source": "bing",
@@ -82,13 +82,13 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 325,
-      "sessions": 189
+      "pageViews": 298,
+      "sessions": 177
     },
     {
       "path": "/index.html",
-      "pageViews": 128,
-      "sessions": 70
+      "pageViews": 129,
+      "sessions": 71
     },
     {
       "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
@@ -108,13 +108,13 @@
   ],
   "cta": {
     "outboundClicks": 61,
-    "ctaClickRate": 12.8,
+    "ctaClickRate": 13.1,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 342,
+    "value": 338,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
