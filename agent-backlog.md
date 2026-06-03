@@ -141,7 +141,7 @@
 - **ブランドガードレール**: 実在検証ゲート（CLAUDE.md）必須。存在しない記事・店へのリンク禁止
 
 ### [SEO-003] 店舗詳細モーダルの予約・マップCTAの視認性と文言を改善しアクション率を上げる
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-05-31
 - **category**: UX
 - **owner**: Builder
@@ -173,7 +173,7 @@
 - **ブランドガードレール**: 架空店ブロック必須。広告・PR・送客手数料導線は含めない（編集独立・制約7/8）
 
 ### [SEO-006] 既存特集 nagoya-lunch-washoku のタイトル/h1/本文を「名古屋 接待 個室 ランチ」KWに最適化しSNSで告知
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-06-01
 - **category**: SEO
 - **owner**: Editor
