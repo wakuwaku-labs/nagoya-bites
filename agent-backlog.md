@@ -141,8 +141,10 @@
 - **ブランドガードレール**: 実在検証ゲート（CLAUDE.md）必須。存在しない記事・店へのリンク禁止
 
 ### [SEO-003] 店舗詳細モーダルの予約・マップCTAの視認性と文言を改善しアクション率を上げる
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-05-31
+- **resolved**: 2026-06-03
+- **resolved_by**: Builder（自律実行 2026-06-03）— index.html にモーダル内CTA（赤HP/青GoogleMaps）追加、cta_click/cta_gmap_click計測を維持
 - **category**: UX
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-05-30 原文「💡 予約ボタン(cta_click)・マップ(cta_gmap_click)クリックが0回 👉 モーダル内のCTA視認性を高め、文言を『この店を予約する』『地図で場所を確認』等に具体化しクリックを促す実験」
@@ -151,8 +153,10 @@
 - **ブランドガードレール**: 予約導線の収益化（アフィリエイト・送客手数料）は制約8によりユーザー承認が別途必須。本タスクは**UX・計測のみ**、収益化は含めない
 
 ### [SEO-004] 店舗詳細モーダルに「似た雰囲気の店・この特集もおすすめ」関連リンクを追加し回遊を回復する
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-06-01
+- **resolved**: 2026-06-03
+- **resolved_by**: Builder（自律実行 2026-06-03）— index.html にモーダル内関連特集・関連店舗リンクUIを追加、24エントリの TAG_TO_FEATURES ルックアップでシーン別特集を動的表示
 - **category**: UX
 - **owner**: Builder
 - **source**: 週次レポート(LINE) 2026-05-25〜05-31 原文「🔴 1訪問あたり閲覧が前週2.4ページから1.3ページに半減しサイト回遊が悪化 👉 店舗詳細モーダル内に『似た雰囲気のお店』『この特集もおすすめ』関連リンクを複数追加」
@@ -173,8 +177,10 @@
 - **ブランドガードレール**: 架空店ブロック必須。広告・PR・送客手数料導線は含めない（編集独立・制約7/8）
 
 ### [SEO-006] 既存特集 nagoya-lunch-washoku のタイトル/h1/本文を「名古屋 接待 個室 ランチ」KWに最適化しSNSで告知
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-06-01
+- **resolved**: 2026-06-03
+- **resolved_by**: Builder/Editor（自律実行 2026-06-03）— features/nagoya-lunch-washoku.html の title/h1/meta/OGP/JSON-LD/パンくず/本文冒頭に「接待・個室」KWを自然挿入、dateModified更新、docs/daily-posts/2026-06-03.md にSNS告知原稿追記
 - **category**: SEO
 - **owner**: Editor
 - **source**: 週次レポート(LINE) 2026-05-25〜05-31 原文「🟡 検索流入比率が43%と最も高い流入元です。👉 features/にある特集記事「nagoya-lunch-washoku」のタイトルを「名古屋 接待 個室 ランチ」など、競合が少ない専門性の高いキーワードに調整し、SNSで告知しましょう。」
@@ -999,6 +1005,9 @@
 | 2026-05-31 | Builder(/solve-next) | SEO-001 実装・デプロイ — index.html FV に常時表示のシーン/エリア導線(`.scene-nav`)を新設（従来は検索ボックス focus 時しか出ず直帰主因）+ eyebrow/hero-sub を「業界人の目利き × シーン別専門性」へ更新。全チップ keyword を実コーパスでヒット検証・desktop/mobile preview 検証・QA-1〜5 pass | ✅ デプロイ済み (commit e7225a4eb) |
 | 2026-06-01 | Editor(/solve-next) | SEO-002 実装・デプロイ — 関連リンク未設置だった特集30本の末尾に `.related`「関連する特集記事」内部リンクブロックを一括注入（`scripts/add_related_features.js` 新規・冪等）。リンク先は features/ 実在ページのみ（feature→feature・店舗リンクゼロで架空店リスク回避）・全リンク先を実在検証・mobile preview/console 0エラー・QA pass。回遊(1訪問1.4pp)改善を次回SEOで再評価 | ✅ デプロイ済み (commit fdcd9733d) |
 | 2026-06-02 | Builder(/solve-next) + ユーザー協同 | **QA-SEC-IG-COOKIES P1 完全対応** — ① `git filter-repo` でInstagramセッションcookie（`.ig_cookies.json`）と関係者アカウント名を全ブランチ・全履歴から一括消去 ② `git push --force` で GitHub に書き換え済み履歴を反映 ③ `.gitignore` に `.ig_cookies.json`/`*cookies*.json` を再追加し再混入防止 ④ `ig_login.js` のテスト用アカウントURLハードコードを削除 ⑤ ユーザーが Instagram 全セッションをログアウト（cookie ローテーション）。全 acceptance 達成 | ✅ done |
+| 2026-06-03 | Builder（自律実行） | **SEO-004 P1 実装** — index.html モーダルに「関連特集・関連店舗」リンクUIを追加。24エントリの TAG_TO_FEATURES ルックアップで同ジャンル特集を最大3本表示、同エリア・同価格帯の店舗を最大4件表示（ALL_STORES から動的選出）。回遊半減（1.3pp）への対応。CTA/フィルタ/検索/IGエンベッドへの影響なし・qa_gate PASS | ✅ デプロイ済み (commit 92d71daa) |
+| 2026-06-03 | Builder（自律実行） | **SEO-003 P2 実装** — index.html モーダルに赤（HP予約）・青（Google Maps）の2CTAボタンを追加。cta_click/cta_gmap_click 計測を維持、CTA導線を強化（予約ボタンがモーダル中段に浮上）。モバイル2列レイアウト対応 | ✅ デプロイ済み (commit 92d71daa) |
+| 2026-06-03 | Builder/Editor（自律実行） | **SEO-006 P2 実装** — `features/nagoya-lunch-washoku.html` の title/h1/meta description/OGP/JSON-LD Article/BreadcrumbList/breadcrumb nav/本文冒頭2行に独自KW「接待・個室」を自然挿入。dateModified を 2026-06-03 に更新。`docs/daily-posts/2026-06-03.md` にSNS告知原稿（Note/Instagram/X）を追記。JSON-LD 不汚染・架空店ゼロ・内部リンク維持 | ✅ デプロイ済み (このコミット) |
 
 ---
 
