@@ -1031,6 +1031,7 @@
 | 2026-06-03 | Builder/Editor（自律実行） | **SEO-006 P2 実装** — `features/nagoya-lunch-washoku.html` の title/h1/meta description/OGP/JSON-LD Article/BreadcrumbList/breadcrumb nav/本文冒頭2行に独自KW「接待・個室」を自然挿入。dateModified を 2026-06-03 に更新。`docs/daily-posts/2026-06-03.md` にSNS告知原稿（Note/Instagram/X）を追記。JSON-LD 不汚染・架空店ゼロ・内部リンク維持 | ✅ デプロイ済み (このコミット) |
 | 2026-06-04 | Orchestrator/Builder（自律実行） | **QA-SEC-NPM-AUDIT 完了** — `npm audit fix`（非破壊範囲・lock-only）で脆弱性 10→4 件。basic-ftp(high)/ip-address/qs/body-parser/express/ws を解消。残 4 件（uuid→googleapis 連鎖・moderate）は googleapis 33→173 の破壊的変更が GA4/GSC データパイプラインを壊すリスクのため、CLAUDE.md「破壊的変更の無い範囲で／残存はリスク受容理由を記録」に則り受容。package.json 無変更 | ✅ done |
 | 2026-06-04 | Editor/Builder（自律実行） | **SEO-005 P2 実装** — 新規シーン特集 `features/nagoya-kaoawase-washoku.html`（顔合わせ・結納 個室和食ランチ8選）。既存の接待/個室（nagoya-lunch-washoku・SEO-006）とカニバらない未カバーKWを選定。掲載8店は LOCAL_STORES 実在店のみ（ghost 0/0）・各カード食べログ実リンク。JSON-LD 4種（Article/ItemList/BreadcrumbList/FAQPage）汚染なし。ヒーローは自作SVG（実写優先準拠）。features/index.html numberOfItems 54→55・カード追加。qa_gate pass・schema-alignment非フラグ・browser実機(desktop+375px)console 0 | ✅ デプロイ予定 (このコミット) |
+| 2026-06-04 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補ゼロ・エスカレーション3件** — ready タスクなし。P1 x2（ISSUE-030 Series B 業界人入力待ち → owner 片桐・ISSUE-045 editorReason 人間 Editor 入力待ち → owner 片桐）/ P2 x1（ISSUE-032 プレスリリース配信判断待ち → owner 片桐）を制約7（信頼毀損リスク・人間業界知識が必要）で自動化対象外と判定。実装 0 件 | ⚠️ 要オーナー確認 |
 
 ---
 
@@ -1651,7 +1652,7 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **impact**: SNS フォロワー獲得 + ブランド認知 + AI Overviews 引用候補化の同時達成
 - **acceptance**: テンプレ設計書 ✅ + 初回 30投稿の制作完了 🟡（20/30 完成・Series B 10 待ち）
 - **files**: `docs/sns-content-template.md`（v0.1） / `docs/sns-posts-batch-1.md`（30 投稿）
-- **owner**: Editor + Marketer
+- **owner**: 片桐 ← Editor + Marketer
 
 ### [ISSUE-031] ロングテール独自 KW での SEO 1位獲得戦略 ✅
 
@@ -1699,7 +1700,7 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **impact**: AI Overviews 引用候補化、指名検索数の継続的増加、長期ドメインオーソリティ
 - **acceptance**: 6ヶ月で外部被リンク 30本、指名検索月間 100回、Google Search Console のクエリレポート整備
 - **files**: `docs/press-release-2026.md`（v0.1 草稿）
-- **owner**: Strategist + Marketer
+- **owner**: 片桐 ← Strategist + Marketer
 
 ### [ISSUE-033] 推薦文カバー率 16% → 50% への引き上げ（D1 / Quality Gap）✅
 
@@ -1793,7 +1794,7 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 - **impact**: Moat（業界視点）の体感品質。食べログ口コミと「我々にしかない情報」の差別化。LLM 引用時の独自性。
 - **acceptance**: editorReason カバー率 30% 以上（≒ 1,376 店）。優先度は GA4 view 上位 + manual_stores 編集部推薦 + editor_picks 既登録の順。
 - **files**: `data/editor_picks.json`, `data/insider_reviews.json`, `agents/editor.md`
-- **owner**: Editor 主導（人間運営側）+ DataKeeper 連携
+- **owner**: 片桐 ← Editor 主導（人間運営側）+ DataKeeper 連携
 - **note**: ISSUE-040（mediaFeatures 捏造除去）と同じ「Moat の体感品質」課題群。捏造禁止・検証済みのみ追記の原則を踏襲する。
 
 ### [ISSUE-034] 「2026年最新」型の鮮度シグナル強化（lastmod / pubDate / 年号）✅
