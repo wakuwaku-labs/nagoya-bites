@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-06-04T00:27:33.916Z",
+  "generatedAt": "2026-06-04T20:05:41.713Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 339,
-    "pageViews": 959,
-    "sessions": 469,
-    "avgSessionDuration": 260.7,
-    "bounceRate": 0.463,
+    "activeUsers": 344,
+    "pageViews": 962,
+    "sessions": 472,
+    "avgSessionDuration": 237.6,
+    "bounceRate": 0.447,
     "pagesPerSession": 2.04
   },
   "channels": {
     "sessions": {
-      "organic": 151,
-      "direct": 310,
+      "organic": 153,
+      "direct": 305,
       "social": 5,
       "referral": 11,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 31.7,
-      "direct": 65,
-      "social": 1,
+      "organic": 32.3,
+      "direct": 64.3,
+      "social": 1.1,
       "referral": 2.3,
       "paid": 0,
       "other": 0
@@ -31,12 +31,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 240
+      "sessions": 241
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 104
+      "sessions": 106
     },
     {
       "source": "chatgpt.com",
@@ -51,7 +51,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 20
+      "sessions": 14
     },
     {
       "source": "bing",
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 299,
-      "sessions": 178
+      "pageViews": 294,
+      "sessions": 175
     },
     {
       "path": "/index.html",
@@ -92,7 +92,7 @@
     },
     {
       "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
-      "pageViews": 47,
+      "pageViews": 48,
       "sessions": 42
     },
     {
@@ -108,13 +108,13 @@
   ],
   "cta": {
     "outboundClicks": 61,
-    "ctaClickRate": 13,
+    "ctaClickRate": 12.9,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 339,
+    "value": 344,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
