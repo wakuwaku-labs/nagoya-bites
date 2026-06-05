@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-06-04T20:05:41.713Z",
+  "generatedAt": "2026-06-05T00:16:16.469Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 344,
-    "pageViews": 962,
-    "sessions": 472,
-    "avgSessionDuration": 237.6,
-    "bounceRate": 0.447,
-    "pagesPerSession": 2.04
+    "activeUsers": 348,
+    "pageViews": 966,
+    "sessions": 476,
+    "avgSessionDuration": 235.6,
+    "bounceRate": 0.452,
+    "pagesPerSession": 2.03
   },
   "channels": {
     "sessions": {
-      "organic": 153,
-      "direct": 305,
+      "organic": 154,
+      "direct": 309,
       "social": 5,
       "referral": 11,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 32.3,
-      "direct": 64.3,
-      "social": 1.1,
+      "organic": 32.2,
+      "direct": 64.5,
+      "social": 1,
       "referral": 2.3,
       "paid": 0,
       "other": 0
@@ -31,12 +31,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 241
+      "sessions": 244
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 106
+      "sessions": 107
     },
     {
       "source": "chatgpt.com",
@@ -51,7 +51,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 14
+      "sessions": 15
     },
     {
       "source": "bing",
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 294,
-      "sessions": 175
+      "pageViews": 296,
+      "sessions": 177
     },
     {
       "path": "/index.html",
@@ -108,13 +108,13 @@
   ],
   "cta": {
     "outboundClicks": 61,
-    "ctaClickRate": 12.9,
+    "ctaClickRate": 12.8,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 344,
+    "value": 348,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
