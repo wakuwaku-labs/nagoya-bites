@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-06-05T19:54:26.751Z",
+  "generatedAt": "2026-06-06T00:11:49.366Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 348,
-    "pageViews": 956,
-    "sessions": 472,
-    "avgSessionDuration": 234.6,
-    "bounceRate": 0.447,
+    "activeUsers": 349,
+    "pageViews": 959,
+    "sessions": 473,
+    "avgSessionDuration": 234.1,
+    "bounceRate": 0.448,
     "pagesPerSession": 2.03
   },
   "channels": {
     "sessions": {
-      "organic": 161,
-      "direct": 304,
+      "organic": 162,
+      "direct": 306,
       "social": 5,
       "referral": 9,
       "paid": 0,
@@ -31,12 +31,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 236
+      "sessions": 237
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 111
+      "sessions": 112
     },
     {
       "source": "chatgpt.com",
@@ -51,7 +51,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 17
+      "sessions": 18
     },
     {
       "source": "bing",
@@ -87,8 +87,8 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 127,
-      "sessions": 69
+      "pageViews": 128,
+      "sessions": 70
     },
     {
       "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
@@ -114,7 +114,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 348,
+    "value": 349,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
