@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-06-08T20:14:25.936Z",
+  "generatedAt": "2026-06-09T20:06:38.043Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 368,
-    "pageViews": 961,
-    "sessions": 484,
-    "avgSessionDuration": 230.2,
-    "bounceRate": 0.444,
+    "activeUsers": 370,
+    "pageViews": 960,
+    "sessions": 482,
+    "avgSessionDuration": 218.9,
+    "bounceRate": 0.434,
     "pagesPerSession": 1.99
   },
   "channels": {
     "sessions": {
-      "organic": 177,
-      "direct": 294,
+      "organic": 181,
+      "direct": 285,
       "social": 6,
-      "referral": 10,
+      "referral": 11,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 36.3,
-      "direct": 60.4,
+      "organic": 37.5,
+      "direct": 59,
       "social": 1.2,
-      "referral": 2.1,
+      "referral": 2.3,
       "paid": 0,
       "other": 0
     }
@@ -36,7 +36,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 118
+      "sessions": 117
     },
     {
       "source": "yahoo",
@@ -46,12 +46,12 @@
     {
       "source": "chatgpt.com",
       "medium": "(not set)",
-      "sessions": 39
+      "sessions": 36
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 15
+      "sessions": 20
     },
     {
       "source": "openai",
@@ -61,7 +61,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 13
+      "sessions": 8
     },
     {
       "source": "chatgpt.com",
@@ -82,13 +82,13 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 275,
-      "sessions": 167
+      "pageViews": 276,
+      "sessions": 166
     },
     {
       "path": "/index.html",
-      "pageViews": 118,
-      "sessions": 65
+      "pageViews": 115,
+      "sessions": 62
     },
     {
       "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
@@ -97,8 +97,8 @@
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 44,
-      "sessions": 33
+      "pageViews": 45,
+      "sessions": 34
     },
     {
       "path": "/features/index.html",
@@ -107,14 +107,14 @@
     }
   ],
   "cta": {
-    "outboundClicks": 64,
-    "ctaClickRate": 13.2,
+    "outboundClicks": 62,
+    "ctaClickRate": 12.9,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 368,
+    "value": 370,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
