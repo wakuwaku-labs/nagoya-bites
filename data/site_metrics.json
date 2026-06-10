@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-06-10T15:31:24.412Z",
+  "generatedAt": "2026-06-10T20:29:11.075Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 384,
-    "pageViews": 971,
-    "sessions": 494,
-    "avgSessionDuration": 217.7,
-    "bounceRate": 0.445,
-    "pagesPerSession": 1.97
+    "activeUsers": 387,
+    "pageViews": 976,
+    "sessions": 497,
+    "avgSessionDuration": 217.3,
+    "bounceRate": 0.447,
+    "pagesPerSession": 1.96
   },
   "channels": {
     "sessions": {
-      "organic": 186,
-      "direct": 296,
+      "organic": 187,
+      "direct": 299,
       "social": 8,
       "referral": 11,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 37.1,
-      "direct": 59.1,
+      "organic": 37,
+      "direct": 59.2,
       "social": 1.6,
       "referral": 2.2,
       "paid": 0,
@@ -31,12 +31,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 233
+      "sessions": 235
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 120
+      "sessions": 121
     },
     {
       "source": "yahoo",
@@ -56,7 +56,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 16
+      "sessions": 17
     },
     {
       "source": "openai",
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 276,
-      "sessions": 166
+      "pageViews": 279,
+      "sessions": 167
     },
     {
       "path": "/index.html",
@@ -108,13 +108,13 @@
   ],
   "cta": {
     "outboundClicks": 63,
-    "ctaClickRate": 12.8,
+    "ctaClickRate": 12.7,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 384,
+    "value": 387,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
