@@ -1352,6 +1352,16 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   <span class="auth-item">広告なし・業界目線</span>
 </div>
 
+<!-- 今日の話題店（毎朝5:30 JST更新。鮮度＋多媒体露出のみで5店ピック。Google評価は不問。絞り込み直下に配置） -->
+<section class="trend-ranking-section" id="trend-ranking-section" style="display:none">
+  <div class="trend-ranking-header">
+    <span class="eyebrow trend-eyebrow">Trending · Today</span>
+    <h2>今日の話題店 <em id="trend-ranking-date">2026/6/10</em></h2>
+    <p class="trend-ranking-sub">鮮度と多媒体露出だけで選定。Google評価は不問。</p>
+  </div>
+  <div class="trend-ranking-scroll" id="trend-ranking-scroll"></div>
+</section>
+
 <!-- 桜ゼロ宣言バナー：飲食業界の桜（やらせ口コミ）を排除する仕組みの可視化 -->
 <section class="no-sakura-banner" aria-labelledby="no-sakura-title">
   <div class="no-sakura-inner">
@@ -1438,16 +1448,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
     <h2>みんなが見ている店 <em>TOP 10</em></h2>
   </div>
   <div class="ranking-scroll" id="ranking-scroll"></div>
-</section>
-
-<!-- 今日の話題店（毎朝5:30 JST更新。鮮度＋多媒体露出のみで5店ピック。Google評価は不問） -->
-<section class="trend-ranking-section" id="trend-ranking-section" style="display:none">
-  <div class="trend-ranking-header">
-    <span class="eyebrow trend-eyebrow">Trending · Today</span>
-    <h2>今日の話題店 <em id="trend-ranking-date">2026/6/10</em></h2>
-    <p class="trend-ranking-sub">鮮度と多媒体露出だけで選定。Google評価は不問。</p>
-  </div>
-  <div class="trend-ranking-scroll" id="trend-ranking-scroll"></div>
 </section>
 
 <!-- 最新ジャーナル（毎朝配信の日次記事 最新3件。build_journal_index.js が静的挿入） -->
@@ -11854,7 +11854,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = 'b4baf500a0ac';
+var STORES_JSON_VERSION = '1dad747f4c18';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
