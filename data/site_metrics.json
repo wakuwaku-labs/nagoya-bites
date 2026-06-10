@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-06-09T20:06:38.043Z",
+  "generatedAt": "2026-06-10T05:40:52.460Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 370,
-    "pageViews": 960,
-    "sessions": 482,
-    "avgSessionDuration": 218.9,
+    "activeUsers": 374,
+    "pageViews": 965,
+    "sessions": 486,
+    "avgSessionDuration": 217.9,
     "bounceRate": 0.434,
     "pagesPerSession": 1.99
   },
   "channels": {
     "sessions": {
-      "organic": 181,
+      "organic": 183,
       "direct": 285,
-      "social": 6,
+      "social": 7,
       "referral": 11,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 37.5,
-      "direct": 59,
-      "social": 1.2,
+      "organic": 37.7,
+      "direct": 58.6,
+      "social": 1.4,
       "referral": 2.3,
       "paid": 0,
       "other": 0
@@ -31,12 +31,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 228
+      "sessions": 230
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 117
+      "sessions": 118
     },
     {
       "source": "yahoo",
@@ -51,7 +51,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 20
+      "sessions": 21
     },
     {
       "source": "openai",
@@ -61,7 +61,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 8
+      "sessions": 6
     },
     {
       "source": "chatgpt.com",
@@ -74,16 +74,16 @@
       "sessions": 4
     },
     {
-      "source": "openai",
-      "medium": "organic",
+      "source": "chatgpt.com",
+      "medium": "ai-assistant",
       "sessions": 2
     }
   ],
   "topPages": [
     {
       "path": "/",
-      "pageViews": 276,
-      "sessions": 166
+      "pageViews": 277,
+      "sessions": 167
     },
     {
       "path": "/index.html",
@@ -97,7 +97,7 @@
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 45,
+      "pageViews": 46,
       "sessions": 34
     },
     {
@@ -108,13 +108,13 @@
   ],
   "cta": {
     "outboundClicks": 62,
-    "ctaClickRate": 12.9,
+    "ctaClickRate": 12.8,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 370,
+    "value": 374,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
