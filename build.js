@@ -1479,6 +1479,45 @@ async function main() {
     console.log('data/places_resolved.json なし（Places API マージスキップ・scripts/fetch_places.js で生成）');
   }
 
+  // ─── 検証済み閉店リスト（data/closed_stores.json）で最終除外 ─────
+  // Places が OPERATIONAL を返していても（キャッシュ遅延・別支店取り違え）、公式サイト・
+  // 食べログ掲載保留・一次報道で閉店を確認できた店を確実に落とす最後の砦。
+  // CLAUDE.md「架空店ブロック / 実在検証ゲート」＋制約7（信頼毀損の禁止）対応。
+  const closedPath = path.join(__dirname, 'data', 'closed_stores.json');
+  if (fs.existsSync(closedPath)) {
+    try {
+      const closedRaw = JSON.parse(fs.readFileSync(closedPath, 'utf8'));
+      const closedList = (closedRaw.stores || []).filter(c => c && c['店名']);
+      const nrm = (v) => String(v || '').normalize('NFKC').replace(/[\s　]/g, '').toLowerCase();
+      const tabelogId = (s) => {
+        const m = String(s['食べログURL'] || '').match(/(\d{6,})\/?$/);
+        return m ? m[1] : '';
+      };
+      let closedExcluded = 0;
+      for (let i = stores.length - 1; i >= 0; i--) {
+        const s = stores[i];
+        const hit = closedList.find(c => {
+          if (c['ホットペッパーID'] && s['ホットペッパーID'] && c['ホットペッパーID'] === s['ホットペッパーID']) return true;
+          if (c['食べログID'] && tabelogId(s) && c['食べログID'] === tabelogId(s)) return true;
+          if (nrm(c['店名']) && nrm(c['店名']) === nrm(s['店名'])) {
+            // エリア指定があれば一致を要求（同名別店の誤除外を防ぐ）
+            if (c['エリア']) return nrm(c['エリア']) === nrm(s['エリア']);
+            return true;
+          }
+          return false;
+        });
+        if (hit) {
+          console.log(`  [Closed] ${s['店名']}（${s['エリア'] || ''}）: 検証済み閉店リストにより除外（${hit['理由'] || ''}）`);
+          stores.splice(i, 1);
+          closedExcluded++;
+        }
+      }
+      console.log(`検証済み閉店リスト除外: ${closedExcluded}件 / 登録 ${closedList.length}件`);
+    } catch (e) {
+      console.error(`data/closed_stores.json の読み込み失敗: ${e.message}`);
+    }
+  }
+
   // トレンドスコア算出
   const newHpIds = new Set(newStores.map(s => s['ホットペッパーID']).filter(Boolean));
   let trendHot = 0, trendRising = 0, trendWarm = 0;

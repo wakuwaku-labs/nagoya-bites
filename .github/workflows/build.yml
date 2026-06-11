@@ -77,6 +77,14 @@ jobs:
         # silent-bug を防ぐ 15 ケース単体テスト。失敗で CI を落とす。
         run: node scripts/audit_isnagoya_filter.js
 
+      - name: 営業実体監査（閉店/掲載保留の掲載を検知・DATA-LIVENESS 再発防止）
+        # 2026-06-11「餃子歩兵 名古屋泉店（2023-09-30閉店）」混入を受けて新設。
+        # data/closed_stores.json（一次情報で閉店確認）＋ Places business_status
+        # ＋ 自社テキストの閉店ワードで「掲載してはならない店」を検出。
+        # build.js が同じ closed_stores.json で除外するため通常はゼロ。
+        # CLOSED_PERMANENTLY/閉店確定が混入したら exit 1 でデプロイをブロックする（制約7・信頼担保）。
+        run: node scripts/audit_store_liveness.js
+
       - name: manual_stores.json リンク到達性監査（ISSUE-061 観測）
         # 食べログ直リンク / ホットペッパーID / 住所のいずれも持たない
         # 「ユーザーが詳細を確認できない店」の件数を可視化。
