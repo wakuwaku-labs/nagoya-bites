@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-06-13T15:42:24.186Z",
+  "generatedAt": "2026-06-13T19:25:04.359Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 415,
-    "pageViews": 995,
-    "sessions": 522,
-    "avgSessionDuration": 197,
+    "activeUsers": 417,
+    "pageViews": 998,
+    "sessions": 524,
+    "avgSessionDuration": 196.4,
     "bounceRate": 0.46,
-    "pagesPerSession": 1.91
+    "pagesPerSession": 1.9
   },
   "channels": {
     "sessions": {
-      "organic": 199,
-      "direct": 303,
+      "organic": 200,
+      "direct": 305,
       "social": 10,
       "referral": 11,
       "paid": 0,
@@ -20,7 +20,7 @@
     },
     "pct": {
       "organic": 38,
-      "direct": 57.9,
+      "direct": 58,
       "social": 1.9,
       "referral": 2.1,
       "paid": 0,
@@ -31,7 +31,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 249
+      "sessions": 250
     },
     {
       "source": "google",
@@ -41,7 +41,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 41
+      "sessions": 42
     },
     {
       "source": "chatgpt.com",
@@ -61,7 +61,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 9
+      "sessions": 10
     },
     {
       "source": "chatgpt.com",
@@ -107,14 +107,14 @@
     }
   ],
   "cta": {
-    "outboundClicks": 62,
-    "ctaClickRate": 11.9,
+    "outboundClicks": 63,
+    "ctaClickRate": 12,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 415,
+    "value": 417,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
