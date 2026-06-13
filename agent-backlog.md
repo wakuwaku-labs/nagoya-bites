@@ -8,6 +8,29 @@
 
 ## 進行中・完了タスク
 
+### [DATA-001] 閉店店の掲載検出（餃子歩兵 名古屋泉店ほか）と営業実体ゲート新設 ✅
+- **priority**: P0 → **status**: done（push はユーザー承認待ち）
+- **detected**: 2026-06-11
+- **resolved**: 2026-06-11
+- **resolved_by**: DataKeeper
+- **category**: data / 信頼担保（CLAUDE.md 制約7・実在検証ゲート）
+- **owner**: DataKeeper
+- **source**: 日次ジャーナルのバックフィル中にユーザーが発見（LOCAL_STORES に閉店店混入）
+- **発見と一次情報検証**:
+  - 「餃子歩兵 名古屋泉店」（東区泉1・高岳）は **2023-09-30 閉店**。公式 gyozahohei.com/access に泉店は不在・食べログ23076106 は掲載保留。現存名古屋店は「名古屋錦店」（中区錦3-17-19 EXIT NISHIKI 南棟1F・栄）のみ。
+  - LOCAL_STORES 監査で「世界の山ちゃん 葵店」も発見（自社おすすめポイントが「閉店済み」・移転閉店）。Places キャッシュは未更新で OPERATIONAL のまま残存していた。
+  - ライブ stores.json(4915) 全件監査: CLOSED_PERMANENTLY=0（build.js の HPID×Places 除外が機能）/ CLOSED_TEMPORARILY=29（再開ありうるため保留）/ 移転ワード=5。穴は **HPID を持たない manual/pending 店が Places 除外を素通りする**点だった。
+- **実装内容**:
+  - `data/manual_stores.json`: 泉店エントリを現存「名古屋錦店」へ差し替え（編集部推薦維持・食べログ23078018・出典更新・旧泉店のGoogle Place写真は別店舗のため除去）。
+  - `data/closed_stores.json`（新規）: 一次情報で閉店確認した店の永久除外リスト。HPID / 食べログID / 店名+エリアで照合。
+  - `build.js`: Places 除外の直後に closed_stores.json による最終除外を追加（Places が OPERATIONAL でも一次情報で閉店確認した店を確実に落とす最後の砦）。
+  - `scripts/audit_store_liveness.js`（新規）: closed_stores.json + Places business_status + 自社テキスト閉店ワードで「掲載不可の閉店店」を検出。HARD=exit1 / 一時休業・移転は WARN。
+  - `.github/workflows/build.yml`: 上記監査をハードゲートとして追加（閉店混入でデプロイをブロック）。
+  - **ライブ成果物の surgical patch**（当環境は HOTPEPPER_API_KEY 不在でフルビルド ABORT のため）: index.html インライン LOCAL_STORES 50→49（泉店除去・今日の話題ランク連番化）/ data/stores.json 4915→4913（泉店・山ちゃん葵店除去・錦店 enrich）/ data/daily_trending5.json 5→4 / STORES_JSON_VERSION 再計算。
+- **検証**: audit_store_liveness HARD=0 / inline×stores.json 先頭一致 mismatch=0 / version一致 / ブラウザ描画OK・console error 0 / 全カタログに錦店(編集部推薦)あり・泉店/山ちゃん葵店なし。
+- **残（WARN・非ブロッキング）**: CLOSED_TEMPORARILY 29件、移転 5件（うち TOP50 に「鮨 子都菜」）。再開・住所陳腐化の継続監視対象。次回フル build（CI・HotPepperキーあり）で closed_stores.json が恒久反映される。
+- **files**: data/manual_stores.json / data/closed_stores.json / build.js / scripts/audit_store_liveness.js / .github/workflows/build.yml / index.html / data/stores.json / data/daily_trending5.json
+
 ### [QA-SEC-IG-COOKIES] `.ig_cookies.json`（Instagramセッションcookie）が git 追跡されている ✅
 - **priority**: P1 → **status**: done
 - **detected**: 2026-06-01
