@@ -1,0 +1,44 @@
+<svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" font-family="'Hiragino Kaku Gothic ProN','ヒラギノ角ゴ ProN W3','Hiragino Sans','Noto Sans CJK JP',sans-serif">
+  <rect width="700" height="400" fill="#1a1a1a"/>
+  <!-- Title -->
+  <text x="350" y="44" text-anchor="middle" fill="#f5f0e8" font-size="17" font-weight="700" letter-spacing="2">焼肉2モデル：サービス設計の違い</text>
+  <line x1="50" y1="58" x2="650" y2="58" stroke="#555" stroke-width="1"/>
+
+  <!-- Left: 一般焼肉 -->
+  <rect x="50" y="72" width="280" height="290" rx="10" fill="#2a2a2a" stroke="#444" stroke-width="1"/>
+  <text x="190" y="104" text-anchor="middle" fill="#aaa" font-size="13" font-weight="600" letter-spacing="1">一般的な焼肉店</text>
+  <text x="190" y="126" text-anchor="middle" fill="#e8a04a" font-size="22" font-weight="700">¥3,000〜8,000</text>
+  <line x1="70" y1="140" x2="310" y2="140" stroke="#444" stroke-width="1"/>
+  <!-- Points -->
+  <text x="78" y="166" fill="#bbb" font-size="13">🔥  セルフで焼く</text>
+  <text x="78" y="194" fill="#bbb" font-size="13">📋  アラカルト自由注文</text>
+  <text x="78" y="222" fill="#bbb" font-size="13">⏱  回転率高め（2h制多）</text>
+  <text x="78" y="250" fill="#bbb" font-size="13">👥  大人数・カジュアル向け</text>
+  <text x="78" y="278" fill="#bbb" font-size="13">🪑  カウンター〜大テーブル</text>
+  <!-- Scene -->
+  <rect x="70" y="296" width="250" height="50" rx="6" fill="#333"/>
+  <text x="195" y="316" text-anchor="middle" fill="#888" font-size="11">向いているシーン</text>
+  <text x="195" y="336" text-anchor="middle" fill="#ccc" font-size="12">友人 / 家族 / 気軽な宴会</text>
+
+  <!-- Divider -->
+  <text x="350" y="228" text-anchor="middle" fill="#666" font-size="22">⟷</text>
+
+  <!-- Right: YORONIKU -->
+  <rect x="370" y="72" width="280" height="290" rx="10" fill="#2a2218" stroke="#c8a96e" stroke-width="1.5"/>
+  <text x="510" y="104" text-anchor="middle" fill="#c8a96e" font-size="13" font-weight="600" letter-spacing="1">YORONIKU NAGOYA</text>
+  <text x="510" y="126" text-anchor="middle" fill="#f0c060" font-size="22" font-weight="700">¥15,000〜20,000</text>
+  <line x1="390" y1="140" x2="630" y2="140" stroke="#554" stroke-width="1"/>
+  <!-- Points -->
+  <text x="398" y="166" fill="#e8d8b0" font-size="13">👨‍🍳  専属焼き手がつく</text>
+  <text x="398" y="194" fill="#e8d8b0" font-size="13">📖  コース形式（お任せ）</text>
+  <text x="398" y="222" fill="#e8d8b0" font-size="13">🕐  ゆったり設計（ゆっくり）</text>
+  <text x="398" y="250" fill="#e8d8b0" font-size="13">🚪  個室 13室（最大12名）</text>
+  <text x="398" y="278" fill="#e8d8b0" font-size="13">🥩  和牛・シャトーブリアン</text>
+  <!-- Scene -->
+  <rect x="390" y="296" width="250" height="50" rx="6" fill="#3a3020"/>
+  <text x="515" y="316" text-anchor="middle" fill="#a88855" font-size="11">向いているシーン</text>
+  <text x="515" y="336" text-anchor="middle" fill="#e8d8b0" font-size="12">接待 / 記念日 / デート</text>
+
+  <!-- Footer -->
+  <text x="350" y="390" text-anchor="middle" fill="#555" font-size="10">NAGOYA BITES 編集部作図 / YORONIKU NAGOYA (HAERA 4F) 2026年6月開業</text>
+</svg>

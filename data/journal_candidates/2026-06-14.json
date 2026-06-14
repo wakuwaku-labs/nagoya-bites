@@ -1,0 +1,211 @@
+{
+  "date": "2026-06-14",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c6",
+      "title_draft": "専属焼き手が焼く名古屋の夜 ── YORONIKU NAGOYA",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 3日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=50 → 10",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 7件 (価格帯,コース,席,シーン,接待,デート,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 4件 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c7",
+      "title_draft": "¥8,800と¥20,000の間にある夜 ── よろにく名古屋の使い方",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 3日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=50 → 10",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 7件 (コース,席,シーン,接待,デート,アラカルト,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c9",
+      "title_draft": "HAERA初日から行くべき一軒 ── よろにく名古屋",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 3日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=50 → 10",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 5件 (価格帯,席,シーン,接待,デート)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c10",
+      "title_draft": "シャトーブリアンを焼いてもらう体験 ── よろにく名古屋",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 3日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=50 → 10",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 8件 (価格帯,コース,席,シーン,接待,デート,アラカルト,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c8",
+      "title_draft": "東京焼肉の名古屋上陸 ── HAERAのよろにくを読む",
+      "verdict": "FAIL",
+      "total": 92,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 10,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 3日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=50 → 10",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 5件 (価格帯,席,シーン,接待,デート)"
+        ],
+        "brand_fit": [
+          "ベース10"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c6",
+  "fallback_needed": false
+}
