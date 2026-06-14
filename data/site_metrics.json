@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-06-13T19:25:04.359Z",
+  "generatedAt": "2026-06-14T19:26:21.625Z",
   "lookbackDays": 30,
   "totals": {
     "activeUsers": 417,
-    "pageViews": 998,
+    "pageViews": 994,
     "sessions": 524,
-    "avgSessionDuration": 196.4,
-    "bounceRate": 0.46,
+    "avgSessionDuration": 193.8,
+    "bounceRate": 0.464,
     "pagesPerSession": 1.9
   },
   "channels": {
     "sessions": {
-      "organic": 200,
-      "direct": 305,
+      "organic": 207,
+      "direct": 298,
       "social": 10,
       "referral": 11,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 38,
-      "direct": 58,
+      "organic": 39.4,
+      "direct": 56.7,
       "social": 1.9,
       "referral": 2.1,
       "paid": 0,
@@ -31,12 +31,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 250
+      "sessions": 246
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 129
+      "sessions": 134
     },
     {
       "source": "yahoo",
@@ -46,12 +46,12 @@
     {
       "source": "chatgpt.com",
       "medium": "(not set)",
-      "sessions": 32
+      "sessions": 30
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 27
+      "sessions": 29
     },
     {
       "source": "openai",
@@ -61,7 +61,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 10
+      "sessions": 9
     },
     {
       "source": "chatgpt.com",
@@ -82,23 +82,23 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 279,
-      "sessions": 171
+      "pageViews": 276,
+      "sessions": 168
     },
     {
       "path": "/index.html",
-      "pageViews": 113,
+      "pageViews": 112,
       "sessions": 62
-    },
-    {
-      "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 48,
-      "sessions": 36
     },
     {
       "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
       "pageViews": 48,
       "sessions": 42
+    },
+    {
+      "path": "/features/nagoya-hitsumabushi.html",
+      "pageViews": 47,
+      "sessions": 35
     },
     {
       "path": "/features/index.html",
@@ -107,8 +107,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 63,
-    "ctaClickRate": 12,
+    "outboundClicks": 61,
+    "ctaClickRate": 11.6,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
