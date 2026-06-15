@@ -1,7 +1,66 @@
 {
-  "_README": "特集ストリップの自動ローテーション設定。season.start/end は JST 基準の包含的期間。当日が範囲外なら自動的に非表示になる。evergreen 特集は season を省略。priority(数値・大きいほど優先) 順に表示し、最大 maxSlots 件まで採用。同一 priority は items 配列の出現順。新しい季節特集を追加するには items 配列に追記して node scripts/build_featured.js を実行。GitHub Actions の daily-journal.yml が毎朝 7:00 JST に自動実行する。",
+  "_README": "特集の鮮度を『常に』保つための設定。build.js / daily-journal の毎日ビルドが node scripts/build_featured.js を実行し、当日(JST)に応じて index.html の特集ストリップ(FEATURED)とジャンル特集(SHOWCASE)、features/index.html の季節ブロック(FEATURED_SEASONAL)を再生成する。鮮度の3本柱: (1) monthlyFeature=毎月必ず『今月の旬』特集をストリップ先頭に出す(年に依存しないので永久に空にならない)。(2) items の season.recurring=true は MM-DD で毎年判定し期限切れで自動消滅/翌年自動復活。(3) showcase は showcasePinned(名古屋めし定番・常時表示)＋showcase(プール)を ISO週で回転させ、毎週少しずつ入れ替わる。slug は features/ に実在するページのみ。画像/タイトルは items の thumb か features/index.html の該当カードから自動取得し二重管理しない。検証: node scripts/build_featured.js --check（穴・壊れ参照を検出）。",
   "maxSlots": 7,
+  "showcaseCount": 9,
+
+  "monthlyFeature": {
+    "1":  { "slug": "nagoya-sukiyaki",     "title": "名古屋 すき焼き・しゃぶしゃぶ10選", "sub": "冬の鍋 · 黒毛和牛",   "badge": "冬の鍋" },
+    "2":  { "slug": "date",                "title": "名古屋 デートディナー10選",         "sub": "記念日 · バレンタイン", "badge": "バレンタイン" },
+    "3":  { "slug": "spring-terrace",      "title": "名古屋 春テラス・屋外グルメ10選",   "sub": "送別会 · 歓迎会",     "badge": "春" },
+    "4":  { "slug": "spring-terrace",      "title": "名古屋 春テラス・屋外グルメ10選",   "sub": "お花見 · 新緑テラス", "badge": "お花見" },
+    "5":  { "slug": "mothers-day",         "title": "名古屋 母の日ディナー・ランチ10選", "sub": "母の日 · GW",        "badge": "母の日" },
+    "6":  { "slug": "fathers-day-2026",    "title": "父の日 名古屋・厳選10選",           "sub": "父の日 · 梅雨の個室", "badge": "父の日" },
+    "7":  { "slug": "nagoya-summer-2026",  "title": "名古屋 夏グルメ10選",               "sub": "ビアガーデン · 海鮮", "badge": "夏" },
+    "8":  { "slug": "nagoya-summer-2026",  "title": "名古屋 夏グルメ10選",               "sub": "真夏 · 冷麺・うなぎ", "badge": "真夏" },
+    "9":  { "slug": "nagoya-autumn-2026",  "title": "名古屋 秋グルメ10選",               "sub": "松茸 · 秋刀魚・新米", "badge": "食欲の秋" },
+    "10": { "slug": "nagoya-autumn-2026",  "title": "名古屋 秋グルメ10選",               "sub": "紅葉 · 旬の味覚",     "badge": "秋" },
+    "11": { "slug": "banquet",             "title": "名古屋 宴会・忘年会おすすめ15選",   "sub": "忘年会の幹事に",      "badge": "忘年会" },
+    "12": { "slug": "banquet",             "title": "名古屋 宴会・忘年会おすすめ15選",   "sub": "忘年会 · 新年会・個室", "badge": "忘年会シーズン" }
+  },
+
   "items": [
+    {
+      "id": "fathers-day-2026",
+      "href": "features/fathers-day-2026.html",
+      "title": "父の日 名古屋 2026・厳選10選",
+      "sub": "6/21 父と行く店",
+      "thumb": "https://imgfp.hotp.jp/IMGH/45/80/P048954580/P048954580_480.jpg",
+      "alt": "父の日に名古屋で家族と囲む特別な食卓",
+      "thumbW": 480,
+      "thumbH": 600,
+      "priority": 100,
+      "season": { "start": "2026-06-07", "end": "2026-06-21", "badge": "6/21", "recurring": true },
+      "seasonDesc": "2026年父の日（6月21日）に名古屋で父が喜ぶ10店。焼肉・鉄板焼き・寿司・うなぎ・割烹まで予算¥8,000〜¥35,000で業界人が厳選。",
+      "count": "10店掲載"
+    },
+    {
+      "id": "nagoya-summer-2026",
+      "href": "features/nagoya-summer-2026.html",
+      "title": "名古屋 夏グルメ 2026・10選",
+      "sub": "ビアガーデン・海鮮・冷麺",
+      "thumb": "https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg",
+      "alt": "名古屋の夏に味わうビアガーデンと旬の海鮮",
+      "thumbW": 480,
+      "thumbH": 600,
+      "priority": 92,
+      "season": { "start": "2026-06-01", "end": "2026-08-31", "badge": "夏限定", "recurring": true },
+      "seasonDesc": "2026年夏（6〜9月）の名古屋グルメを業界人が厳選。ビアガーデン・三河湾海鮮・冷麺・天然氷かき氷まで旬の食材と夏の空間で選んだ10軒。",
+      "count": "10店掲載"
+    },
+    {
+      "id": "nagoya-autumn-2026",
+      "href": "features/nagoya-autumn-2026.html",
+      "title": "名古屋 秋グルメ 2026・10選",
+      "sub": "松茸・秋刀魚・新米",
+      "thumb": "https://imgfp.hotp.jp/IMGH/93/41/P039939341/P039939341_480.jpg",
+      "alt": "名古屋の秋に味わう松茸と旬の味覚",
+      "thumbW": 480,
+      "thumbH": 600,
+      "priority": 90,
+      "season": { "start": "2026-09-01", "end": "2026-11-30", "badge": "食欲の秋", "recurring": true },
+      "seasonDesc": "秋（9〜11月）の名古屋グルメを業界人が厳選。松茸・戻り鰹・秋刀魚・新米・きのこ——旬の食材の扱い・空間の秋感・日本酒ペアリングで選んだ10軒。",
+      "count": "10店掲載"
+    },
     {
       "id": "mothers-day",
       "href": "features/mothers-day.html",
@@ -12,8 +71,8 @@
       "alt": "母の日に贈る華やかなブーケ",
       "thumbW": 900,
       "thumbH": 1350,
-      "priority": 100,
-      "season": { "start": "2026-04-25", "end": "2026-05-10", "badge": "5/10" }
+      "priority": 88,
+      "season": { "start": "2026-04-25", "end": "2026-05-11", "badge": "母の日", "recurring": true }
     },
     {
       "id": "spring-terrace",
@@ -25,8 +84,8 @@
       "alt": "春のテラス席で味わう屋外グルメの心地よい空間",
       "thumbW": 900,
       "thumbH": 1350,
-      "priority": 90,
-      "season": { "start": "2026-03-15", "end": "2026-05-31", "badge": "春限定" }
+      "priority": 80,
+      "season": { "start": "2026-03-15", "end": "2026-05-31", "badge": "春限定", "recurring": true }
     },
     {
       "id": "gw-2026",
@@ -38,8 +97,8 @@
       "alt": "GW連休に家族・大切な人と囲む食卓",
       "thumbW": 900,
       "thumbH": 600,
-      "priority": 95,
-      "season": { "start": "2026-04-25", "end": "2026-05-06", "badge": "5/3〜5/6" }
+      "priority": 85,
+      "season": { "start": "2026-04-27", "end": "2026-05-06", "badge": "GW", "recurring": true }
     },
     {
       "id": "banquet",
@@ -89,5 +148,32 @@
       "thumbH": 1350,
       "priority": 45
     }
+  ],
+
+  "showcasePinned": [
+    { "slug": "nagoya-hitsumabushi",    "title": "名古屋 ひつまぶし完全ガイド", "sub": "名古屋めし · 厳選9店" },
+    { "slug": "nagoya-tebasaki",        "title": "名古屋 手羽先完全ガイド",     "sub": "名古屋めし · 厳選8店" },
+    { "slug": "nagoya-miso-nikomi-udon","title": "名古屋 味噌煮込みうどん",     "sub": "名古屋めし · 厳選5店" }
+  ],
+  "showcase": [
+    { "slug": "nagoya-yakiniku",      "title": "名古屋 焼肉おすすめ10選",       "sub": "焼肉 · A5和牛〜ホルモン" },
+    { "slug": "nagoya-yakitori",      "title": "名古屋 焼き鳥おすすめ10選",     "sub": "焼き鳥 · コーチン・炭火" },
+    { "slug": "nagoya-sushi-guide",   "title": "名古屋 鮨おすすめ8選",          "sub": "鮨 · おまかせ・江戸前" },
+    { "slug": "nagoya-ramen",         "title": "名古屋ラーメンおすすめ12選",    "sub": "ラーメン · 台湾・煮干し" },
+    { "slug": "nagoya-izakaya",       "title": "名古屋 居酒屋おすすめ10選",     "sub": "居酒屋 · 日本酒・コーチン" },
+    { "slug": "nagoya-seafood",       "title": "名古屋 海鮮・魚介おすすめ10選", "sub": "海鮮 · 刺身〜割烹" },
+    { "slug": "nagoya-unaju",         "title": "名古屋 うなぎ・ひつまぶし10選", "sub": "うなぎ · 元祖〜現代割烹" },
+    { "slug": "nagoya-tonkatsu",      "title": "名古屋 とんかつ・味噌かつ10選", "sub": "味噌かつ · 揚げ精度" },
+    { "slug": "nagoya-teppanyaki",    "title": "名古屋 鉄板焼き10選",           "sub": "鉄板焼き · 黒毛和牛・個室" },
+    { "slug": "nagoya-sukiyaki",      "title": "名古屋 すき焼き・しゃぶしゃぶ10選","sub": "鍋 · 黒毛和牛・個室" },
+    { "slug": "nagoya-gyoza",         "title": "名古屋 餃子おすすめ10選",       "sub": "餃子 · 一口・手羽餃子" },
+    { "slug": "nagoya-italian-guide", "title": "名古屋 イタリアン10選",         "sub": "イタリアン · デート・接待" },
+    { "slug": "nagoya-french-guide",  "title": "名古屋 フレンチ8選",            "sub": "フレンチ · 接待・記念日" },
+    { "slug": "nagoya-chinese-guide", "title": "名古屋 中華料理10選",           "sub": "中華 · 接待・宴会" },
+    { "slug": "nagoya-korean",        "title": "名古屋 韓国料理10選",           "sub": "韓国 · サムギョプサル" },
+    { "slug": "nagoya-bar-guide",     "title": "名古屋 バー・ワインバー10選",   "sub": "バー · 〆のカウンター" },
+    { "slug": "nagoya-steak",         "title": "名古屋 ステーキ10選",           "sub": "ステーキ · 熟成・黒毛和牛" },
+    { "slug": "nagoya-morning",       "title": "名古屋 モーニング・喫茶10選",   "sub": "モーニング · 喫茶文化" },
+    { "slug": "nagoya-sweets",        "title": "名古屋 スイーツ・デザート10選", "sub": "スイーツ · 和洋パティスリー" }
   ]
 }

@@ -101,6 +101,10 @@ const MAP = {
   'nagoya-gourmet-guide': ['meieki', 'sakae', 'nagoya-solo-dining', 'date', 'nagoya-yakiniku-guide'],
 };
 
+// 回遊強化: 関連ブロックに日次ジャーナルへの導線を追加（feature→journal）。
+// .related-link スタイルは全特集が保持しているので追加CSS不要。
+const JOURNAL_LINK = '\n  <p class="related-journal" style="margin-top:1.2rem;font-size:.82rem;color:rgba(28,28,26,.62);line-height:1.7;">\n    名古屋の最新グルメは <a class="related-link" href="../journal/index.html">\u{1F4F0} デイリージャーナル</a> で毎朝更新中。\n  </p>';
+
 const CSS = ".related{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center;}.related-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.3rem;color:var(--white);margin-bottom:1.2rem;}.related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}.related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}.related-link:hover{background:rgba(122,92,16,.08);}";
 
 function buildBlock(slug) {
@@ -113,7 +117,7 @@ function buildBlock(slug) {
   for (const t of links) {
     parts.push(`    <a class="related-link" href="${t}.html">${LABEL[t]}</a>`);
   }
-  return `\n<div class="related">\n  <p class="related-title">関連する特集記事</p>\n  <div class="related-links">\n${parts.join('\n')}\n  </div>\n  <p style="margin-top:1.5rem;">\n    <a class="related-link" href="../index.html" style="background:rgba(122,92,16,.06);">トップページで全店舗を検索する →</a>\n  </p>\n</div>\n`;
+  return `\n<div class="related">\n  <p class="related-title">関連する特集記事</p>\n  <div class="related-links">\n${parts.join('\n')}\n  </div>${JOURNAL_LINK}\n  <p style="margin-top:1.5rem;">\n    <a class="related-link" href="../index.html" style="background:rgba(122,92,16,.06);">トップページで全店舗を検索する →</a>\n  </p>\n</div>\n`;
 }
 
 // 全リンク先の実在検証（架空リンクブロック）
@@ -148,4 +152,27 @@ for (const slug of Object.keys(MAP)) {
   fs.writeFileSync(fp, html);
   changed++;
 }
-console.log(`完了: 注入 ${changed} 件 / スキップ(既存) ${skipped} 件 / 対象 ${Object.keys(MAP).length} 件`);
+console.log(`新規related注入: ${changed} 件 / スキップ(既存) ${skipped} 件 / 対象 ${Object.keys(MAP).length} 件`);
+
+// ── 回遊強化: 既存の related ブロックに journal 導線を冪等付与（全特集対象）──
+let journalAdded = 0, journalSkipped = 0;
+const allFeat = fs.readdirSync(FEAT).filter(f => f.endsWith('.html') && f !== 'index.html');
+for (const file of allFeat) {
+  const fp = path.join(FEAT, file);
+  let html = fs.readFileSync(fp, 'utf8');
+  const relStart = html.indexOf('<div class="related"');
+  if (relStart === -1) continue; // related ブロック無し（通常あり得ない）
+  // related ブロックの範囲（小さいので 2000 字窓で十分）
+  const region = html.slice(relStart, relStart + 2000);
+  if (region.includes('../journal/')) { journalSkipped++; continue; } // 既にジャーナル導線あり
+  // 挿入位置: related-links の閉じ </div> 直後（新旧どちらの構造でも有効）
+  const linksOpen = html.indexOf('<div class="related-links">', relStart);
+  if (linksOpen === -1) { console.error(`related-links 無し: ${file}`); continue; }
+  const linksClose = html.indexOf('</div>', linksOpen);
+  if (linksClose === -1) { console.error(`related-links 閉じ無し: ${file}`); continue; }
+  const insertAt = linksClose + '</div>'.length;
+  html = html.slice(0, insertAt) + JOURNAL_LINK + html.slice(insertAt);
+  fs.writeFileSync(fp, html);
+  journalAdded++;
+}
+console.log(`journal導線付与: ${journalAdded} 件 / スキップ(既存) ${journalSkipped} 件 / 全特集 ${allFeat.length} 件`);
