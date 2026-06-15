@@ -10,12 +10,19 @@
  * (FEATURED_SEASONAL_START/END マーカー間) も再生成して、
  * 期間外の季節特集が一覧から自動的に消えるようにする。
  *
+ * 鮮度保証(常に最新感を保つ仕組み):
+ *   1. monthlyFeature: 毎月必ず「今月の旬」特集をストリップ先頭に立てる（年に依存せず空にならない）
+ *   2. season.recurring: MM-DD で毎年判定し、期限切れで自動消滅・翌年自動復活
+ *   3. showcase: 固定(showcasePinned)＋プールを ISO週で回転し毎週少しずつ入れ替え
+ *   4. validateConfig: カレンダーの穴・壊れた参照を検出（--check で exit 1）
+ *
  * 使い方:
  *   node scripts/build_featured.js              # 通常実行
  *   node scripts/build_featured.js --date=YYYY-MM-DD  # 任意日付でテスト
+ *   node scripts/build_featured.js --check      # 鮮度ガードのみ（書き換えなし・穴があれば exit 1）
  *
  * 自動実行:
- *   .github/workflows/daily-journal.yml から毎朝 7:00 JST に呼ばれる。
+ *   .github/workflows/build.yml が毎日 3:00 JST（＋push毎）に実行し index.html を自動コミット。
  */
 const fs = require('fs');
 const path = require('path');
@@ -35,9 +42,24 @@ function todayJST(override) {
 
 function isActive(item, today) {
   if (!item.season) return true; // evergreen
-  const { start, end } = item.season;
+  const { start, end, recurring } = item.season;
   if (!start || !end) return true;
+  if (recurring) {
+    // 年に依存せず MM-DD で毎年判定（期限切れで自動消滅・翌年自動復活）
+    const md = today.slice(5), s = start.slice(5), e = end.slice(5);
+    return s <= e ? (md >= s && md <= e) : (md >= s || md <= e); // 年跨ぎ対応
+  }
   return today >= start && today <= end;
+}
+
+// 月(1-12) と ISO週番号（ショーケースの週替わりローテーション用）
+function monthOf(today) { return parseInt(today.slice(5, 7), 10); }
+function isoWeek(today) {
+  const d = new Date(today + 'T00:00:00Z');
+  const day = (d.getUTCDay() + 6) % 7;
+  d.setUTCDate(d.getUTCDate() - day + 3);
+  const firstThu = new Date(Date.UTC(d.getUTCFullYear(), 0, 4));
+  return 1 + Math.round(((d - firstThu) / 86400000 - 3 + ((firstThu.getUTCDay() + 6) % 7)) / 7);
 }
 
 // ───────── ストリップ HTML 生成 (index.html 用) ─────────
@@ -50,11 +72,43 @@ function renderStripCard(item, idx) {
     : '';
   const w = item.thumbW || 900;
   const h = item.thumbH || 600;
+  const t600 = item.thumb600 || item.thumb; // HotPepper 等 600w 版が無い場合は同一URLにフォールバック
   return `    <a class="feature-card" href="${item.href}">${badge}
-      <img class="feature-card-thumb" src="${item.thumb}" srcset="${item.thumb600} 600w, ${item.thumb} 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="${item.alt}" width="${w}" height="${h}" loading="${loading}" decoding="async"${fp}>
+      <img class="feature-card-thumb" src="${item.thumb}" srcset="${t600} 600w, ${item.thumb} 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="${item.alt}" width="${w}" height="${h}" loading="${loading}" decoding="async"${fp}>
       <div class="feature-card-body">
         <div class="feature-card-title">${item.title}</div>
         <div class="feature-card-sub">${item.sub}</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>`;
+}
+
+// ───────── ジャンル特集ショーケース HTML 生成 (index.html 用) ─────────
+// 画像・タイトルは features/index.html の article-card から取得し二重管理を避ける。
+function parseFeatureCards(featSrc) {
+  const map = {};
+  const re = /<a class="article-card[^"]*" href="([^"]+)\.html"[^>]*>([\s\S]*?)<\/a>/g;
+  let m;
+  while ((m = re.exec(featSrc))) {
+    const slug = m[1];
+    const body = m[2];
+    const img = (body.match(/<img class="card-img" src="([^"]+)"/) || [])[1];
+    const title = (body.match(/<div class="card-title">([\s\S]*?)<\/div>/) || [])[1];
+    if (img) map[slug] = { img, title: (title || '').trim() };
+  }
+  return map;
+}
+function renderShowcaseCard(entry, info) {
+  const title = (entry.title || info.title || '').trim();
+  const sub = entry.sub || '';
+  const alt = entry.alt || title;
+  // 画像は features/index.html 由来の絶対URL(HotPepper等)を想定。HotPepper 写真は写真ルール優先2で許可。
+  return `    <a class="feature-card" href="features/${entry.slug}.html">
+      <img class="feature-card-thumb" src="${info.img}" srcset="${info.img} 480w, ${info.img} 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="${alt}" width="480" height="600" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">${title}</div>
+        <div class="feature-card-sub">${sub}</div>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
@@ -65,7 +119,7 @@ function renderStripCard(item, idx) {
 function seasonalIcon(id) {
   if (id === 'gw-2026' || id.startsWith('gw-')) return '🎏';
   if (id === 'mothers-day') return '💐';
-  if (id === 'fathers-day') return '👔';
+  if (id === 'fathers-day' || id.startsWith('fathers-day')) return '👔';
   if (id === 'spring-terrace') return '🌸';
   if (id.includes('summer') || id.includes('beer-garden')) return '🍺';
   if (id.includes('halloween')) return '🎃';
@@ -76,7 +130,7 @@ function seasonalIcon(id) {
 function seasonalCategory(id) {
   if (id === 'gw-2026' || id.startsWith('gw-')) return 'Seasonal · GW特集';
   if (id === 'mothers-day') return 'Seasonal · 母の日';
-  if (id === 'fathers-day') return 'Seasonal · 父の日';
+  if (id === 'fathers-day' || id.startsWith('fathers-day')) return 'Seasonal · 父の日';
   if (id === 'spring-terrace') return 'Seasonal · 春テラス';
   return 'Seasonal · 季節特集';
 }
@@ -115,43 +169,150 @@ function replaceBetween(src, startMark, endMark, newInner) {
   return src.replace(re, `${startMark}\n${newInner}\n${endMark}`);
 }
 
+// ───────── 鮮度保証: 今月の旬リード & ショーケース回転 ─────────
+// monthlyFeature の画像/サイズを items の thumb か features/index.html から解決する。
+function resolveThumb(slug, itemsById, featMap) {
+  const it = itemsById[slug];
+  if (it && it.thumb) return { thumb: it.thumb, thumb600: it.thumb600 || null, w: it.thumbW || 480, h: it.thumbH || 600 };
+  const info = featMap[slug];
+  if (info && info.img) return { thumb: info.img.replace(/^\.\.\//, ''), thumb600: null, w: 480, h: 600 };
+  return null;
+}
+// 「今月の旬」特集をストリップ先頭に必ず立てる合成アイテムを作る（毎月必ず最新感を担保）。
+function buildMonthLead(monthCfg, itemsById, featMap) {
+  const t = resolveThumb(monthCfg.slug, itemsById, featMap);
+  if (!t) return null;
+  return {
+    id: monthCfg.slug,
+    href: `features/${monthCfg.slug}.html`,
+    title: monthCfg.title,
+    sub: monthCfg.sub || '',
+    thumb: t.thumb, thumb600: t.thumb600, thumbW: t.w, thumbH: t.h,
+    alt: monthCfg.title,
+    season: monthCfg.badge ? { badge: monthCfg.badge } : null,
+    _monthLead: true,
+  };
+}
+// ショーケース: 固定(showcasePinned)＋プール(showcase)を ISO週で回転して count 件選ぶ。
+function selectShowcase(cfg, today) {
+  const pinned = cfg.showcasePinned || [];
+  const pool = cfg.showcase || [];
+  const count = cfg.showcaseCount || 9;
+  let rotated = pool;
+  if (pool.length) {
+    const off = ((isoWeek(today) % pool.length) + pool.length) % pool.length;
+    rotated = pool.slice(off).concat(pool.slice(0, off));
+  }
+  const seen = new Set();
+  const picks = [];
+  for (const e of [...pinned, ...rotated]) {
+    if (picks.length >= count) break;
+    if (seen.has(e.slug)) continue;
+    seen.add(e.slug);
+    picks.push(e);
+  }
+  return picks;
+}
+// 鮮度ガード: カレンダーの穴・壊れた参照を検出（--check で exit 1）。
+function validateConfig(cfg, featMap, featureSlugs) {
+  const errs = [];
+  for (let m = 1; m <= 12; m++) {
+    const mf = cfg.monthlyFeature && cfg.monthlyFeature[String(m)];
+    if (!mf) { errs.push(`monthlyFeature[${m}] が未定義（鮮度の穴）`); continue; }
+    if (!featureSlugs.has(mf.slug)) errs.push(`monthlyFeature[${m}] のページが存在しない: ${mf.slug}.html`);
+    else if (!resolveThumb(mf.slug, Object.fromEntries((cfg.items || []).map(i => [i.id, i])), featMap)) {
+      errs.push(`monthlyFeature[${m}] の画像が解決できない: ${mf.slug}`);
+    }
+  }
+  for (const e of [...(cfg.showcasePinned || []), ...(cfg.showcase || [])]) {
+    if (!featureSlugs.has(e.slug)) errs.push(`showcase のページが存在しない: ${e.slug}.html`);
+    else if (!featMap[e.slug]) errs.push(`showcase の画像が取得できない（features/index.html にカード無し）: ${e.slug}`);
+  }
+  for (const it of (cfg.items || [])) {
+    const slug = (it.href || '').replace(/^features\//, '').replace(/\.html$/, '');
+    if (slug && !featureSlugs.has(slug)) errs.push(`items のページが存在しない: ${slug}.html`);
+  }
+  return errs;
+}
+function listFeatureSlugs() {
+  const dir = path.join(ROOT, 'features');
+  return new Set(fs.readdirSync(dir).filter(f => f.endsWith('.html')).map(f => f.replace(/\.html$/, '')));
+}
+
 // ───────── メイン ─────────
 function main() {
   const dateArg = process.argv.find(a => a.startsWith('--date='));
+  const checkMode = process.argv.includes('--check');
   const today = todayJST(dateArg ? dateArg.split('=')[1] : null);
 
   const cfg = JSON.parse(fs.readFileSync(CONFIG, 'utf8'));
   const maxSlots = cfg.maxSlots || 7;
+  const itemsById = Object.fromEntries((cfg.items || []).map(i => [i.id, i]));
+  const featMap = fs.existsSync(FEATURES_INDEX)
+    ? parseFeatureCards(fs.readFileSync(FEATURES_INDEX, 'utf8'))
+    : {};
+  const featureSlugs = listFeatureSlugs();
 
+  console.log(`[build_featured] 当日(JST): ${today} / 月: ${monthOf(today)} / ISO週: ${isoWeek(today)}`);
+
+  // 鮮度ガード（穴・壊れ参照の検出）
+  const errs = validateConfig(cfg, featMap, featureSlugs);
+  if (errs.length) {
+    console.error('[build_featured] 鮮度ガード検出:');
+    errs.forEach(e => console.error(`  ✗ ${e}`));
+    if (checkMode) { process.exit(1); }
+    console.error('[build_featured] ↑ 警告として続行（--check で exit 1）');
+  } else {
+    console.log('[build_featured] 鮮度ガード: 12ヶ月カバー・参照OK ✓');
+  }
+  if (checkMode) { console.log('[build_featured] --check 完了（ファイルは書き換えません）'); return; }
+
+  // 期間内の実在 seasonal/evergreen を priority 順に
   const active = cfg.items
     .filter(it => isActive(it, today))
-    .sort((a, b) => (b.priority || 0) - (a.priority || 0))
-    .slice(0, maxSlots);
+    .sort((a, b) => (b.priority || 0) - (a.priority || 0));
 
-  console.log(`[build_featured] 当日(JST): ${today}`);
-  console.log(`[build_featured] 採用 ${active.length}件 / 設定 ${cfg.items.length}件`);
-  active.forEach((it, i) => {
-    const tag = it.season ? `[seasonal ${it.season.start}〜${it.season.end}]` : '[evergreen]';
+  // 「今月の旬」リードを先頭に必ず立てる（毎月必ず最新感・年に依存しない鮮度保証）
+  let stripList = active.slice();
+  const mf = cfg.monthlyFeature && cfg.monthlyFeature[String(monthOf(today))];
+  if (mf) {
+    const lead = buildMonthLead(mf, itemsById, featMap);
+    if (lead) {
+      stripList = [lead, ...stripList.filter(it => it.id !== lead.id)];
+    } else {
+      console.error(`[build_featured] monthlyFeature[${monthOf(today)}] の画像解決に失敗: ${mf.slug}`);
+    }
+  }
+  stripList = stripList.slice(0, maxSlots);
+
+  console.log(`[build_featured] ストリップ採用 ${stripList.length}件:`);
+  stripList.forEach((it, i) => {
+    const tag = it._monthLead ? '[今月の旬]' : (it.season ? '[seasonal]' : '[evergreen]');
     console.log(`  ${i + 1}. ${it.id} ${tag}`);
   });
-  const skipped = cfg.items.filter(it => !isActive(it, today));
-  if (skipped.length) {
-    console.log(`[build_featured] 期間外で除外: ${skipped.map(s => s.id).join(', ')}`);
+
+  // 1) index.html の特集ストリップ
+  let indexSrc = fs.readFileSync(INDEX_HTML, 'utf8');
+  const stripInner = stripList.map((it, i) => renderStripCard(it, i)).join('\n');
+  indexSrc = replaceBetween(indexSrc, '<!-- FEATURED_START -->', '<!-- FEATURED_END -->', stripInner);
+
+  // 1b) ジャンル特集ショーケース（週替わりローテーション）
+  if ((cfg.showcase || cfg.showcasePinned) && /<!-- SHOWCASE_START -->/.test(indexSrc)) {
+    const picks = selectShowcase(cfg, today);
+    const cards = [];
+    for (const entry of picks) {
+      const info = featMap[entry.slug];
+      if (!info) { console.error(`[build_featured] showcase: ${entry.slug} のカードが features/index.html に無くスキップ`); continue; }
+      cards.push(renderShowcaseCard(entry, info));
+    }
+    indexSrc = replaceBetween(indexSrc, '<!-- SHOWCASE_START -->', '<!-- SHOWCASE_END -->', cards.join('\n'));
+    console.log(`[build_featured] ショーケース ${cards.length}件 生成（週替わり）✓ ${picks.map(p => p.slug).join(', ')}`);
   }
 
-  // 1) index.html の特集ストリップを更新
-  let indexSrc = fs.readFileSync(INDEX_HTML, 'utf8');
-  const stripInner = active.map((it, i) => renderStripCard(it, i)).join('\n');
-  indexSrc = replaceBetween(
-    indexSrc,
-    '<!-- FEATURED_START -->',
-    '<!-- FEATURED_END -->',
-    stripInner
-  );
   fs.writeFileSync(INDEX_HTML, indexSrc);
   console.log(`[build_featured] index.html 更新 ✓`);
 
-  // 2) features/index.html の季節グリッドを更新（期間内の seasonal だけ）
+  // 2) features/index.html の季節グリッド（実在 seasonal のみ・期間外は自動で消える）
   if (fs.existsSync(FEATURES_INDEX)) {
     let featSrc = fs.readFileSync(FEATURES_INDEX, 'utf8');
     if (/<!-- FEATURED_SEASONAL_START -->/.test(featSrc)) {
@@ -159,20 +320,13 @@ function main() {
       const seasonalInner = activeSeasonal.length
         ? activeSeasonal.map(renderSeasonalCard).join('\n\n')
         : '  <!-- 現在表示中の季節特集はありません -->';
-      featSrc = replaceBetween(
-        featSrc,
-        '<!-- FEATURED_SEASONAL_START -->',
-        '<!-- FEATURED_SEASONAL_END -->',
-        seasonalInner
-      );
+      featSrc = replaceBetween(featSrc, '<!-- FEATURED_SEASONAL_START -->', '<!-- FEATURED_SEASONAL_END -->', seasonalInner);
       fs.writeFileSync(FEATURES_INDEX, featSrc);
       console.log(`[build_featured] features/index.html 更新 ✓`);
-    } else {
-      console.log(`[build_featured] features/index.html はマーカー未設定のためスキップ`);
     }
   }
 }
 
 if (require.main === module) main();
 
-module.exports = { isActive, todayJST };
+module.exports = { isActive, todayJST, monthOf, isoWeek, selectShowcase, validateConfig, parseFeatureCards, listFeatureSlugs };

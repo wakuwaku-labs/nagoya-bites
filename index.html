@@ -658,6 +658,10 @@ footer{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));}
 h3.cn{margin:0 0 6px;font-family:'Noto Sans JP',sans-serif;}
 /* ── Google rating source label ── */
 .card-rating .gs-src{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.1em;color:var(--dim);text-transform:uppercase;font-weight:500;margin-right:.15rem;}
+/* ── ジャンル特集ショーケース（写真付き特集グリッドの足回り） ── */
+.feature-showcase-foot{display:flex;justify-content:center;padding-top:.4rem;}
+.feature-showcase-all{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.7rem 1.6rem;border-radius:3px;transition:background .2s,color .2s,border-color .2s;}
+.feature-showcase-all:hover{background:rgba(122,92,16,.08);color:var(--ember-deep);border-color:var(--gold);}
 @media(max-width:900px){.feature-strip-cards{grid-template-columns:repeat(2,1fr);gap:1rem;}}
 @media(max-width:640px){.feature-strip{padding:.9rem 1rem;gap:.7rem;}.feature-strip-cards{grid-template-columns:repeat(2,1fr);gap:.7rem;}.feature-card-body{padding:.75rem .85rem .9rem;}.feature-card-title{font-size:.88rem;}.feature-card-sub{font-size:.58rem;}}
 /* ── LATEST JOURNAL (最新の日次ジャーナル3件) ── */
@@ -1352,53 +1356,32 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
   <span class="auth-item">広告なし・業界目線</span>
 </div>
 
-<!-- 今日の話題店（毎朝5:30 JST更新。鮮度＋多媒体露出のみで5店ピック。Google評価は不問。絞り込み直下に配置） -->
-<section class="trend-ranking-section" id="trend-ranking-section" style="display:none">
-  <div class="trend-ranking-header">
-    <span class="eyebrow trend-eyebrow">Trending · Today</span>
-    <h2>今日の話題店 <em id="trend-ranking-date">2026/6/15</em></h2>
-    <p class="trend-ranking-sub">鮮度と多媒体露出だけで選定。Google評価は不問。</p>
-  </div>
-  <div class="trend-ranking-scroll" id="trend-ranking-scroll"></div>
-</section>
-
-<!-- 桜ゼロ宣言バナー：飲食業界の桜（やらせ口コミ）を排除する仕組みの可視化 -->
-<section class="no-sakura-banner" aria-labelledby="no-sakura-title">
-  <div class="no-sakura-inner">
-    <p class="no-sakura-eyebrow">No Sakura Pledge</p>
-    <h2 class="no-sakura-title" id="no-sakura-title">
-      <strong>桜ゼロ宣言</strong> ― このサイトに、やらせ口コミは1件もありません。
-    </h2>
-    <div class="no-sakura-pillars">
-      <div class="no-sakura-pillar">
-        <div class="no-sakura-pillar-label">A. Structure</div>
-        <div class="no-sakura-pillar-title">広告ゼロ</div>
-        <div class="no-sakura-pillar-body">掲載料・PR 費・店舗からの金銭授受は一切受け取りません。</div>
-      </div>
-      <div class="no-sakura-pillar">
-        <div class="no-sakura-pillar-label">B. Disclosure</div>
-        <div class="no-sakura-pillar-title">開示義務</div>
-        <div class="no-sakura-pillar-body">招待・無償提供・関係者投稿があれば、ラベルで必ず明記します。</div>
-      </div>
-      <div class="no-sakura-pillar">
-        <div class="no-sakura-pillar-label">C. Verification</div>
-        <div class="no-sakura-pillar-title">違反は永久追放</div>
-        <div class="no-sakura-pillar-body">嘘が発覚した寄稿者は二度と書けません。通報窓口も公開しています。</div>
-      </div>
-    </div>
-    <div class="no-sakura-links">
-      <a class="no-sakura-link" href="features/editorial-policy.html#trust-mechanisms"><span class="nsl-arrow">―</span>信頼の仕組みを読む</a>
-      <a class="no-sakura-link" href="features/no-fake-reviews.html"><span class="nsl-arrow">―</span>桜の実態を読む</a>
-    </div>
-  </div>
-</section>
-
 <!-- 特集記事バナー（ヒトサラ風：ヒーロー直下の入り口導線） -->
 <!-- ↓ このストリップは data/featured.json + scripts/build_featured.js が自動生成。手で編集しない。 -->
 <section class="feature-strip">
   <div class="feature-strip-label">特集記事</div>
   <div class="feature-strip-cards">
     <!-- FEATURED_START -->
+    <a class="feature-card" href="features/fathers-day-2026.html">
+      <span class="feature-card-season">父の日</span>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/45/80/P048954580/P048954580_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/45/80/P048954580/P048954580_480.jpg 600w, https://imgfp.hotp.jp/IMGH/45/80/P048954580/P048954580_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="父の日 名古屋・厳選10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <div class="feature-card-body">
+        <div class="feature-card-title">父の日 名古屋・厳選10選</div>
+        <div class="feature-card-sub">父の日 · 梅雨の個室</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/nagoya-summer-2026.html">
+      <span class="feature-card-season">夏限定</span>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg 600w, https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋の夏に味わうビアガーデンと旬の海鮮" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 夏グルメ 2026・10選</div>
+        <div class="feature-card-sub">ビアガーデン・海鮮・冷麺</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
     <a class="feature-card" href="features/banquet.html">
       <img class="feature-card-thumb" src="assets/features/banquet.jpg" srcset="assets/features/banquet-600.jpg 600w, assets/features/banquet.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="ビールジョッキで乾杯する宴会・忘年会の華やかなシーン" width="900" height="599" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
@@ -1409,7 +1392,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/private-room.html">
-      <img class="feature-card-thumb" src="assets/features/private-room.jpg" srcset="assets/features/private-room-600.jpg 600w, assets/features/private-room.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="温かい灯りに包まれた上質な個室ダイニング" width="900" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <img class="feature-card-thumb" src="assets/features/private-room.jpg" srcset="assets/features/private-room-600.jpg 600w, assets/features/private-room.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="温かい灯りに包まれた上質な個室ダイニング" width="900" height="600" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 個室グルメおすすめ10選</div>
         <div class="feature-card-sub">接待・女子会・デートに</div>
@@ -1418,7 +1401,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/meieki.html">
-      <img class="feature-card-thumb" src="assets/features/meieki.jpg" srcset="assets/features/meieki-600.jpg 600w, assets/features/meieki.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名駅エリアで接待・出張・仕事帰りに集う夜のグループ食事" width="900" height="601" loading="eager" decoding="async" fetchpriority="high">
+      <img class="feature-card-thumb" src="assets/features/meieki.jpg" srcset="assets/features/meieki-600.jpg 600w, assets/features/meieki.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名駅エリアで接待・出張・仕事帰りに集う夜のグループ食事" width="900" height="601" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋・名駅グルメおすすめ15選</div>
         <div class="feature-card-sub">出張・接待・仕事帰りに</div>
@@ -1437,6 +1420,109 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
     </a>
 <!-- FEATURED_END -->
   </div>
+</section>
+
+<!-- ジャンル特集ショーケース（写真付き）: data/featured.json の showcase + scripts/build_featured.js が自動生成。手で編集しない。 -->
+<section class="feature-strip feature-showcase">
+  <div class="feature-strip-label">ジャンルで特集を探す</div>
+  <div class="feature-strip-cards">
+    <!-- SHOWCASE_START -->
+    <a class="feature-card" href="features/nagoya-hitsumabushi.html">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg 480w, https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 ひつまぶし完全ガイド" width="480" height="600" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 ひつまぶし完全ガイド</div>
+        <div class="feature-card-sub">名古屋めし · 厳選9店</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/nagoya-tebasaki.html">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/43/78/P047104378/P047104378_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/43/78/P047104378/P047104378_480.jpg 480w, https://imgfp.hotp.jp/IMGH/43/78/P047104378/P047104378_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 手羽先完全ガイド" width="480" height="600" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 手羽先完全ガイド</div>
+        <div class="feature-card-sub">名古屋めし · 厳選8店</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/nagoya-miso-nikomi-udon.html">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/64/36/P043876436/P043876436_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/64/36/P043876436/P043876436_480.jpg 480w, https://imgfp.hotp.jp/IMGH/64/36/P043876436/P043876436_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 味噌煮込みうどん" width="480" height="600" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 味噌煮込みうどん</div>
+        <div class="feature-card-sub">名古屋めし · 厳選5店</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/nagoya-unaju.html">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg 480w, https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 うなぎ・ひつまぶし10選" width="480" height="600" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 うなぎ・ひつまぶし10選</div>
+        <div class="feature-card-sub">うなぎ · 元祖〜現代割烹</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/nagoya-tonkatsu.html">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/66/25/P046686625/P046686625_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/66/25/P046686625/P046686625_480.jpg 480w, https://imgfp.hotp.jp/IMGH/66/25/P046686625/P046686625_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 とんかつ・味噌かつ10選" width="480" height="600" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 とんかつ・味噌かつ10選</div>
+        <div class="feature-card-sub">味噌かつ · 揚げ精度</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/nagoya-teppanyaki.html">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/24/41/P049482441/P049482441_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/24/41/P049482441/P049482441_480.jpg 480w, https://imgfp.hotp.jp/IMGH/24/41/P049482441/P049482441_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 鉄板焼き10選" width="480" height="600" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 鉄板焼き10選</div>
+        <div class="feature-card-sub">鉄板焼き · 黒毛和牛・個室</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/nagoya-sukiyaki.html">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/91/35/P048759135/P048759135_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/91/35/P048759135/P048759135_480.jpg 480w, https://imgfp.hotp.jp/IMGH/91/35/P048759135/P048759135_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 すき焼き・しゃぶしゃぶ10選" width="480" height="600" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 すき焼き・しゃぶしゃぶ10選</div>
+        <div class="feature-card-sub">鍋 · 黒毛和牛・個室</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/nagoya-gyoza.html">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/39/75/P045563975/P045563975_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/39/75/P045563975/P045563975_480.jpg 480w, https://imgfp.hotp.jp/IMGH/39/75/P045563975/P045563975_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 餃子おすすめ10選" width="480" height="600" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 餃子おすすめ10選</div>
+        <div class="feature-card-sub">餃子 · 一口・手羽餃子</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/nagoya-italian-guide.html">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/59/36/P046575936/P046575936_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/59/36/P046575936/P046575936_480.jpg 480w, https://imgfp.hotp.jp/IMGH/59/36/P046575936/P046575936_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 イタリアン10選" width="480" height="600" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 イタリアン10選</div>
+        <div class="feature-card-sub">イタリアン · デート・接待</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+<!-- SHOWCASE_END -->
+  </div>
+  <div class="feature-showcase-foot">
+    <a class="feature-showcase-all" href="features/index.html">すべての特集を見る →</a>
+  </div>
+</section>
+
+<!-- 今日の話題店（毎朝5:30 JST更新。鮮度＋多媒体露出のみで5店ピック。Google評価は不問。） -->
+<section class="trend-ranking-section" id="trend-ranking-section" style="display:none">
+  <div class="trend-ranking-header">
+    <span class="eyebrow trend-eyebrow">Trending · Today</span>
+    <h2>今日の話題店 <em id="trend-ranking-date">2026/6/15</em></h2>
+    <p class="trend-ranking-sub">鮮度と多媒体露出だけで選定。Google評価は不問。</p>
+  </div>
+  <div class="trend-ranking-scroll" id="trend-ranking-scroll"></div>
 </section>
 
 <!-- フィルターブロックは検索欄直下に移動済み（hero直後） -->
@@ -1479,6 +1565,37 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
           <span class="ljc-theme">🍶 今日の1軒</span>
         </a>
       <!-- LATEST_JOURNAL_END -->
+  </div>
+</section>
+
+<!-- 桜ゼロ宣言バナー：飲食業界の桜（やらせ口コミ）を排除する仕組みの可視化（編集独立性の訴求。回遊コンテンツの下に配置） -->
+<section class="no-sakura-banner" aria-labelledby="no-sakura-title">
+  <div class="no-sakura-inner">
+    <p class="no-sakura-eyebrow">No Sakura Pledge</p>
+    <h2 class="no-sakura-title" id="no-sakura-title">
+      <strong>桜ゼロ宣言</strong> ― このサイトに、やらせ口コミは1件もありません。
+    </h2>
+    <div class="no-sakura-pillars">
+      <div class="no-sakura-pillar">
+        <div class="no-sakura-pillar-label">A. Structure</div>
+        <div class="no-sakura-pillar-title">広告ゼロ</div>
+        <div class="no-sakura-pillar-body">掲載料・PR 費・店舗からの金銭授受は一切受け取りません。</div>
+      </div>
+      <div class="no-sakura-pillar">
+        <div class="no-sakura-pillar-label">B. Disclosure</div>
+        <div class="no-sakura-pillar-title">開示義務</div>
+        <div class="no-sakura-pillar-body">招待・無償提供・関係者投稿があれば、ラベルで必ず明記します。</div>
+      </div>
+      <div class="no-sakura-pillar">
+        <div class="no-sakura-pillar-label">C. Verification</div>
+        <div class="no-sakura-pillar-title">違反は永久追放</div>
+        <div class="no-sakura-pillar-body">嘘が発覚した寄稿者は二度と書けません。通報窓口も公開しています。</div>
+      </div>
+    </div>
+    <div class="no-sakura-links">
+      <a class="no-sakura-link" href="features/editorial-policy.html#trust-mechanisms"><span class="nsl-arrow">―</span>信頼の仕組みを読む</a>
+      <a class="no-sakura-link" href="features/no-fake-reviews.html"><span class="nsl-arrow">―</span>桜の実態を読む</a>
+    </div>
   </div>
 </section>
 
