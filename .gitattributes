@@ -1,0 +1,4 @@
+# 自動生成される共有ステートファイルは rebase/merge で競合させない（毎朝9時ルーチン停止の原因対策）
+# 中身は scripts/sync_backlog_to_notion.js が毎回再生成するため、競合時はどちらか一方を採用してよい。
+# 注意: merge=ours は各クローンで `git config merge.ours.driver true` の登録が必要（クラウドはルーチン側で登録）。
+data/.notion_sync_state.json merge=ours
