@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-06-15T00:46:28.204Z",
+  "generatedAt": "2026-06-15T07:04:32.008Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 417,
-    "pageViews": 994,
-    "sessions": 524,
-    "avgSessionDuration": 193.8,
-    "bounceRate": 0.464,
-    "pagesPerSession": 1.9
+    "activeUsers": 422,
+    "pageViews": 1000,
+    "sessions": 529,
+    "avgSessionDuration": 193.3,
+    "bounceRate": 0.461,
+    "pagesPerSession": 1.89
   },
   "channels": {
     "sessions": {
-      "organic": 207,
-      "direct": 298,
+      "organic": 210,
+      "direct": 297,
       "social": 10,
       "referral": 11,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 39.4,
-      "direct": 56.7,
+      "organic": 39.8,
+      "direct": 56.3,
       "social": 1.9,
       "referral": 2.1,
       "paid": 0,
@@ -31,7 +31,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 246
+      "sessions": 248
     },
     {
       "source": "google",
@@ -44,14 +44,14 @@
       "sessions": 42
     },
     {
+      "source": "bing",
+      "medium": "organic",
+      "sessions": 32
+    },
+    {
       "source": "chatgpt.com",
       "medium": "(not set)",
       "sessions": 30
-    },
-    {
-      "source": "bing",
-      "medium": "organic",
-      "sessions": 29
     },
     {
       "source": "openai",
@@ -59,13 +59,13 @@
       "sessions": 13
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 9
-    },
-    {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
+      "sessions": 6
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
       "sessions": 6
     },
     {
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 276,
-      "sessions": 168
+      "pageViews": 278,
+      "sessions": 170
     },
     {
       "path": "/index.html",
@@ -108,13 +108,13 @@
   ],
   "cta": {
     "outboundClicks": 61,
-    "ctaClickRate": 11.6,
+    "ctaClickRate": 11.5,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 417,
+    "value": 422,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
