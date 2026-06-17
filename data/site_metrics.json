@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-06-17T15:14:22.361Z",
+  "generatedAt": "2026-06-17T20:11:37.269Z",
   "lookbackDays": 30,
   "totals": {
     "activeUsers": 442,
-    "pageViews": 903,
-    "sessions": 537,
-    "avgSessionDuration": 166.6,
-    "bounceRate": 0.464,
-    "pagesPerSession": 1.68
+    "pageViews": 910,
+    "sessions": 540,
+    "avgSessionDuration": 168.3,
+    "bounceRate": 0.467,
+    "pagesPerSession": 1.69
   },
   "channels": {
     "sessions": {
       "organic": 237,
-      "direct": 285,
+      "direct": 288,
       "social": 10,
       "referral": 9,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 43.8,
-      "direct": 52.7,
+      "organic": 43.6,
+      "direct": 52.9,
       "social": 1.8,
       "referral": 1.7,
       "paid": 0,
@@ -31,7 +31,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 236
+      "sessions": 238
     },
     {
       "source": "google",
@@ -61,7 +61,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 10
+      "sessions": 11
     },
     {
       "source": "chatgpt.com",
@@ -82,13 +82,13 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 265,
-      "sessions": 163
+      "pageViews": 267,
+      "sessions": 165
     },
     {
       "path": "/index.html",
-      "pageViews": 84,
-      "sessions": 57
+      "pageViews": 89,
+      "sessions": 58
     },
     {
       "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
@@ -108,7 +108,7 @@
   ],
   "cta": {
     "outboundClicks": 71,
-    "ctaClickRate": 13.2,
+    "ctaClickRate": 13.1,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
