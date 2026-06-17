@@ -1057,6 +1057,8 @@
 | 2026-06-04 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補ゼロ・エスカレーション3件** — ready タスクなし。P1 x2（ISSUE-030 Series B 業界人入力待ち → owner 片桐・ISSUE-045 editorReason 人間 Editor 入力待ち → owner 片桐）/ P2 x1（ISSUE-032 プレスリリース配信判断待ち → owner 片桐）を制約7（信頼毀損リスク・人間業界知識が必要）で自動化対象外と判定。実装 0 件 | ⚠️ 要オーナー確認 |
 | 2026-06-05 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補ゼロ** — ready タスクなし。前回エスカレーション済み3件（ISSUE-030 Series B/ISSUE-045 editorReason/ISSUE-032 プレスリリース）は引き続き owner=片桐。夜間QA PASS（2026-06-05）・新規SEOアドバイスなし・SEOトリアージ open 0件。実装 0 件 | ⚠️ 待機中（安全候補なし） |
 | 2026-06-06 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補ゼロ** — ready タスクなし。夜間QA PASS（2026-06-06・ハード失敗0）。エスカレーション済み3件（ISSUE-030/ISSUE-045/ISSUE-032）owner=片桐 継続中。Notion同期 6件更新（ISSUE-054/ISSUE-012/ISSUE-040/ISSUE-030/ISSUE-032/ISSUE-045）・ISSUE-022/023 はアーカイブ済みのため更新スキップ。実装 0 件 | ⚠️ 待機中（安全候補なし） |
+| 2026-06-17 | Orchestrator/Builder（自律実行） | **npm audit 退行修正** — 夜間QAレポートで脆弱性 4→6 件（high 1 追加・moderate 2 追加）の退行を検知。`npm audit fix`（非破壊・lock-only）で form-data(high/GHSA-hmw2-7cc7-3qxx)・gaxios(moderate)・js-yaml(moderate/GHSA-h67p-54hq-rp68) を解消、6→4 件（moderate のみ）に復元。残 4 件（uuid→googleapis 連鎖）は 2026-06-04 受容済みと同一。package.json 無変更・ユニットテスト 30/30 pass・qa_gate pass | ✅ done |
+| 2026-06-17 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補 1 件実装（npm audit 退行修正）** — npm audit 退行（high 1+moderate 2）を非破壊 lock-only で修正完了。バックログ ready タスクなし。エスカレーション済み3件（ISSUE-030 Series B/ISSUE-045 editorReason/ISSUE-032 プレスリリース）owner=片桐 継続中 | ✅ done |
 
 ---
 
