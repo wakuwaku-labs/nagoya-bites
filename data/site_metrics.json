@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-06-20T19:25:47.349Z",
+  "generatedAt": "2026-06-21T19:40:14.694Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 432,
-    "pageViews": 754,
-    "sessions": 517,
-    "avgSessionDuration": 142.2,
-    "bounceRate": 0.478,
-    "pagesPerSession": 1.46
+    "activeUsers": 434,
+    "pageViews": 750,
+    "sessions": 516,
+    "avgSessionDuration": 141.6,
+    "bounceRate": 0.473,
+    "pagesPerSession": 1.45
   },
   "channels": {
     "sessions": {
-      "organic": 241,
-      "direct": 256,
+      "organic": 245,
+      "direct": 251,
       "social": 11,
-      "referral": 8,
+      "referral": 9,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 46.7,
-      "direct": 49.6,
+      "organic": 47.5,
+      "direct": 48.6,
       "social": 2.1,
-      "referral": 1.6,
+      "referral": 1.7,
       "paid": 0,
       "other": 0
     }
@@ -36,22 +36,22 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 147
+      "sessions": 148
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 49
+      "sessions": 51
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 43
+      "sessions": 44
     },
     {
       "source": "chatgpt.com",
       "medium": "(not set)",
-      "sessions": 23
+      "sessions": 20
     },
     {
       "source": "openai",
@@ -59,13 +59,13 @@
       "sessions": 12
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 9
-    },
-    {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
+      "sessions": 7
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
       "sessions": 7
     },
     {
@@ -83,12 +83,12 @@
     {
       "path": "/",
       "pageViews": 226,
-      "sessions": 150
+      "sessions": 149
     },
     {
       "path": "/index.html",
-      "pageViews": 57,
-      "sessions": 47
+      "pageViews": 53,
+      "sessions": 45
     },
     {
       "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
@@ -97,24 +97,24 @@
     },
     {
       "path": "/journal/2026-05-31-grill-tsubaki-meiekimae.html",
-      "pageViews": 35,
-      "sessions": 33
+      "pageViews": 37,
+      "sessions": 34
     },
     {
-      "path": "/features/nagoya-hitsumabushi.html",
+      "path": "/journal/2026-06-15-yoroniku-nagoya-haera.html",
       "pageViews": 30,
-      "sessions": 28
+      "sessions": 29
     }
   ],
   "cta": {
-    "outboundClicks": 55,
-    "ctaClickRate": 10.6,
+    "outboundClicks": 61,
+    "ctaClickRate": 11.8,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 432,
+    "value": 434,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
