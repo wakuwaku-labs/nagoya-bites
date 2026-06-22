@@ -22,10 +22,39 @@ function loadRealNames() {
   const L = loadStores();
   return new Set(L.map(s => norm(s['店名'])));
 }
+function loadRealRawNames() {
+  return loadStores().map(s => String(s['店名'] || ''));
+}
+
+// ISSUE-064: HP名 vs 食べログ名の表記差を「識別力トークン照合」で吸収する。
+//   例: 特集「炉端とおでん 呼炉凪来 ころなぎらい 大曽根店」
+//       ⟺ LOCAL_STORES「呼炉凪来 ころなぎらい 大曽根駅前店」
+//   業態接頭辞（炉端とおでん）と支店表記差（大曽根店 vs 大曽根駅前店）で
+//   厳密一致も包含一致も外れるが、識別力トークン（呼炉凪来 / ころなぎらい）は完全一致する。
+// 架空店検出力の維持: ①支店語（〜店で終わるトークン）と②汎用業態語は識別トークンから除外し、
+//   ③同一実在店と「2つ以上」の識別トークンを共有して初めて実在扱いにする（generic 1語被りでは通さない）。
+const GENERIC_STORE_TOKENS = new Set([
+  '炉端とおでん', '炉端焼き', '炉端焼', '個室居酒屋', '完全個室', '海鮮居酒屋', '創作居酒屋',
+  '大衆居酒屋', '個室ダイニング', 'ダイニングバー', '鉄板焼き', '鉄板焼', '中国料理', '本格中華',
+  '創作料理', '和食処', '日本料理', '焼肉ホルモン', '炭火焼鳥', '炭火焼肉', 'もつ鍋',
+].map(t => t.normalize('NFKC').toLowerCase()));
+const tokenizeDistinctive = (s) =>
+  String(s || '')
+    .normalize('NFKC').toLowerCase()
+    .replace(/&amp;/g, '&')
+    .split(/[\s　]+/)
+    .filter(Boolean)
+    // 支店語（〜店）と汎用業態語は識別力なしとして除外
+    .filter(t => t.length >= 3 && !/店$/.test(t) && !GENERIC_STORE_TOKENS.has(t));
 
 function main() {
   const toJson = process.argv.includes('--json');
   const realNames = loadRealNames();
+  const realNamesArr = [...realNames];
+  // 実在店ごとの識別力トークン集合（ISSUE-064 トークン照合用・1回だけ構築）
+  const realTokenSets = loadRealRawNames()
+    .map(name => new Set(tokenizeDistinctive(name)))
+    .filter(set => set.size > 0);
   const result = {};
   let totalSuspect = 0, totalBroken = 0;
 
@@ -35,13 +64,21 @@ function main() {
       .map(m => m[1].trim());
     // ISSUE-061 後続: 厳密一致に加え、部分一致（実在店名の prefix/suffix に suspect が含まれる）も許可
     // 例: 特集の「個室居酒屋 地鶏と地酒 酒肴日和 かしわや」⟺ LOCAL_STORES の同名+業態接尾辞付き版
-    const realNamesArr = [...realNames];
     const isReal = (n) => {
       const nn = norm(n);
       if (realNames.has(nn)) return true;
-      if (nn.length < 4) return false;
       // どちらかが他方を完全に内包すれば実在扱い
-      return realNamesArr.some(r => r.includes(nn) || nn.includes(r));
+      if (nn.length >= 4 && realNamesArr.some(r => r.includes(nn) || nn.includes(r))) return true;
+      // ISSUE-064: 識別力トークンを同一実在店と2つ以上共有すれば表記差とみなして実在扱い
+      const toks = tokenizeDistinctive(n);
+      if (toks.length >= 2) {
+        for (const rset of realTokenSets) {
+          let shared = 0;
+          for (const t of toks) if (rset.has(t)) shared++;
+          if (shared >= 2) return true;
+        }
+      }
+      return false;
     };
     const suspect = [...new Set(names.filter(n => !isReal(n)))];
     const broken = [...new Set(

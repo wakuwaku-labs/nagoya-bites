@@ -37,10 +37,15 @@
 - **files**: `scripts/run_journal_local.sh`（硬化）, メインrepo working tree（復旧）, `agent-backlog.md`
 - **関連 memory**: [[journal-daily-worktree-dirty-rebase]] / [[repo-moved-from-desktop]]（同一クラスの再発履歴）
 
-### [ISSUE-064] audit_feature_stores.js が表記差（HP名 vs 食べログ名）で実在店を実在不明と誤検知
+### [ISSUE-064] audit_feature_stores.js が表記差（HP名 vs 食べログ名）で実在店を実在不明と誤検知 ✅
 
-- **priority**: P2
-- **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-06-22
+- **resolved_by**: /solve-next（DataKeeper）— 識別力トークン照合を導入し偽陽性を正規化で解消
+- **実装内容**: `scripts/audit_feature_stores.js` の `isReal()` に「識別力トークン照合」を追加。店名を空白で分割し、**支店語（〜店で終わるトークン）と汎用業態語（炉端とおでん・個室居酒屋 等の `GENERIC_STORE_TOKENS`）を除外**した3字以上トークンを抽出。同一実在店と**2つ以上**の識別トークンを共有すれば「表記差のある同一店」とみなして実在扱いにする。これにより「炉端とおでん 呼炉凪来 ころなぎらい 大曽根店」が LOCAL_STORES「呼炉凪来 ころなぎらい 大曽根駅前店」（業態接頭辞＋大曽根店 vs 大曽根駅前店 の支店表記差）と照合され実在判定に回復。
+- **架空店検出力の維持（逆検証済）**: 「2トークン以上の共有」要件＋業態語/支店語の除外により、架空店の典型（個室居酒屋 和の宴／中国料理 個室コース／和食 秋月／Bar 夜更け／海鮮居酒屋 個室 大曽根店／居酒屋 架空亭）は全て実在不明のまま flagged。ホワイトリスト的逃げではなく正規化での解消（CLAUDE.md 準拠）。
+- **検証**: `node scripts/audit_feature_stores.js` → 実在不明 0 / リンク切れ 0 / EXIT 0（修正前は呼炉凪来1件で EXIT 1）。架空7ケースの逆検証で実在バリアント accept・架空7件 reject を確認。
+- **files**: `scripts/audit_feature_stores.js`, `agent-backlog.md`
 - **category**: technical / data-quality / qa
 - **detected**: 2026-06-22
 - **owner**: DataKeeper
@@ -1127,6 +1132,7 @@
 | 2026-06-17 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補 1 件実装（npm audit 退行修正）** — npm audit 退行（high 1+moderate 2）を非破壊 lock-only で修正完了。バックログ ready タスクなし。エスカレーション済み3件（ISSUE-030 Series B/ISSUE-045 editorReason/ISSUE-032 プレスリリース）owner=片桐 継続中 | ✅ done |
 | 2026-06-22 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補ゼロ** — ready タスクなし。エスカレーション済み3件（ISSUE-030 Series B/ISSUE-045 editorReason/ISSUE-032 プレスリリース）owner=片桐 継続中。夜間QA 2026-06-22 WARN（ハード失敗0・ソフト警告2: npm audit moderate 4件は受容済み / nagoya-kakuozan.html「呼炉凪来 大曽根」実在不明フラグは偽陽性確認=tabelog+Places両方で実在・HP名 vs 食べログ名の表記差）。実装 0 件 | ⚠️ 待機中（安全候補なし） |
 | 2026-06-22 | Editor+Builder(/solve-next) | ISSUE-065 全 acceptance を origin/main で実体確認しクローズ（hardening 268ff31db / PR#73 / 欠番5本 d5c782da3）。残課題 ISSUE-066（二重稼働一本化・P3）を分離起票 | ✅ done |
+| 2026-06-22 | DataKeeper(/solve-next) | ISSUE-064 audit_feature_stores.js に識別力トークン照合を導入（業態語/支店語除外＋2トークン共有）。呼炉凪来の偽陽性を正規化で解消、架空7ケース逆検証で検出力維持。実在不明 1→0・EXIT 0 | ✅ done |
 
 ---
 
