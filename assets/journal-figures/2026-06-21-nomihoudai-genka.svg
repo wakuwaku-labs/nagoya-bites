@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-label="飲み放題の原価構造を示した図解。全体の原価率は20から25パーセント前後。生ビールは1杯あたり原価約80円と高め、焼酎ハイボールは割り材でボリュームを出すため約60円と低い。店はドリンクの利益で料理の原価を補う。本当にお得かはメニュー構成を見れば分かる。">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#15161f"/>
+      <stop offset="1" stop-color="#1c1d28"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#d8b85a" font-family="Georgia,serif" font-size="21" font-weight="bold">飲み放題の原価は何で決まるか</text>
+  <text x="40" y="72" fill="#9a96a8" font-family="sans-serif" font-size="13">全体の原価率は20〜25%前後。1杯あたりの原価で構成が読める</text>
+
+  <!-- bars: cost per glass -->
+  <g font-family="sans-serif" font-size="12">
+    <text x="40" y="120" fill="#e6e3ee">生ビール</text>
+    <rect x="160" y="106" width="200" height="20" rx="3" fill="#c2643f"/>
+    <text x="370" y="121" fill="#e6e3ee" font-size="11">原価 約80円／杯（高め）</text>
+
+    <text x="40" y="160" fill="#e6e3ee">サワー・ハイボール</text>
+    <rect x="160" y="146" width="150" height="20" rx="3" fill="#b8923a"/>
+    <text x="320" y="161" fill="#e6e3ee" font-size="11">約60円／杯（割り材で調整）</text>
+
+    <text x="40" y="200" fill="#e6e3ee">焼酎・ウイスキー</text>
+    <rect x="160" y="186" width="120" height="20" rx="3" fill="#5a8f7a"/>
+    <text x="290" y="201" fill="#e6e3ee" font-size="11">さらに低い（ボリューム出る）</text>
+  </g>
+
+  <line x1="40" y1="232" x2="560" y2="232" stroke="#3a3b4a" stroke-width="1"/>
+
+  <text x="40" y="266" fill="#9a96a8" font-family="sans-serif" font-size="12">2時間で平均5〜7杯 → 店は「平均杯数」で利益を設計</text>
+  <text x="40" y="294" fill="#9a96a8" font-family="sans-serif" font-size="12">居酒屋の全体原価率は28〜33%。ドリンクの利益で料理の原価を補う構造</text>
+
+  <rect x="40" y="312" width="520" height="40" rx="6" fill="#23242f"/>
+  <text x="56" y="337" fill="#d8b85a" font-family="sans-serif" font-size="12">見抜き方：銘柄が選べる・料理が値段相応＝ドリンクで稼ぎすぎていない「お得」な店</text>
+
+  <text x="40" y="384" fill="#6f6b7c" font-family="sans-serif" font-size="10">図: NAGOYA BITES 編集部 — 数字は一般的な業界目安</text>
+</svg>

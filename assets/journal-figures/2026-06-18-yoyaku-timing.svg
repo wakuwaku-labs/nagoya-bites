@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-label="予約時間に対する到着タイミングと店側オペレーション負荷の関係を、コース提供店・カウンター割烹・カジュアル居酒屋の業態別に示した図解。コース店は5分前着が最適、カジュアル店は時間ジャストが望ましい。">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a1410"/>
+      <stop offset="1" stop-color="#241b13"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#e8c87a" font-family="Georgia,serif" font-size="22" font-weight="bold">到着タイミングと店のオペ負荷</text>
+  <text x="40" y="72" fill="#9b8c78" font-family="sans-serif" font-size="13">予約時間「ちょうど」を基準に、業態でズレの許容が変わる</text>
+
+  <!-- timeline axis -->
+  <line x1="120" y1="120" x2="540" y2="120" stroke="#5a4b38" stroke-width="2"/>
+  <text x="330" y="108" fill="#9b8c78" font-family="sans-serif" font-size="11" text-anchor="middle">← 早い　　予約時刻　　遅い →</text>
+  <line x1="330" y1="112" x2="330" y2="128" stroke="#e8c87a" stroke-width="2"/>
+  <text x="330" y="146" fill="#e8c87a" font-family="sans-serif" font-size="11" text-anchor="middle">0分</text>
+  <text x="180" y="146" fill="#9b8c78" font-family="sans-serif" font-size="11" text-anchor="middle">-10分</text>
+  <text x="480" y="146" fill="#9b8c78" font-family="sans-serif" font-size="11" text-anchor="middle">+15分</text>
+
+  <!-- row 1: course -->
+  <text x="40" y="196" fill="#f0e6d2" font-family="sans-serif" font-size="13" font-weight="bold">コース提供店</text>
+  <text x="40" y="214" fill="#9b8c78" font-family="sans-serif" font-size="10">一斉スタート・火入れ厳守</text>
+  <rect x="255" y="184" width="90" height="22" rx="4" fill="#3c7a4a"/>
+  <text x="300" y="199" fill="#fff" font-family="sans-serif" font-size="10" text-anchor="middle">5分前が最適</text>
+  <circle cx="470" cy="195" r="9" fill="#a8423a"/>
+  <text x="470" y="199" fill="#fff" font-family="sans-serif" font-size="10" text-anchor="middle">×</text>
+
+  <!-- row 2: kappo counter -->
+  <text x="40" y="256" fill="#f0e6d2" font-family="sans-serif" font-size="13" font-weight="bold">カウンター割烹</text>
+  <text x="40" y="274" fill="#9b8c78" font-family="sans-serif" font-size="10">握り・揚げのタイミング管理</text>
+  <rect x="280" y="244" width="86" height="22" rx="4" fill="#3c7a4a"/>
+  <text x="323" y="259" fill="#fff" font-family="sans-serif" font-size="10" text-anchor="middle">±3分が理想</text>
+  <circle cx="180" cy="255" r="9" fill="#b88a2a"/>
+  <text x="180" y="259" fill="#fff" font-family="sans-serif" font-size="10" text-anchor="middle">△</text>
+
+  <!-- row 3: casual -->
+  <text x="40" y="316" fill="#f0e6d2" font-family="sans-serif" font-size="13" font-weight="bold">カジュアル居酒屋</text>
+  <text x="40" y="334" fill="#9b8c78" font-family="sans-serif" font-size="10">アラカルト・回転重視</text>
+  <rect x="300" y="304" width="120" height="22" rx="4" fill="#3c7a4a"/>
+  <text x="360" y="319" fill="#fff" font-family="sans-serif" font-size="10" text-anchor="middle">ジャスト〜5分遅れ可</text>
+
+  <text x="40" y="378" fill="#7c6f5c" font-family="sans-serif" font-size="10">図: NAGOYA BITES 編集部 — 「早すぎる到着」も繁忙時間帯は仕込みの妨げになる</text>
+</svg>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-label="八丁味噌・赤味噌・豆味噌の関係を示した図解。赤味噌は色による分類で、米麹や麦麹のものも豆麹のものも含む。豆味噌は豆と塩と水のみを長期熟成させた味噌でほぼ愛知県産。八丁味噌は岡崎の八帖町で2年以上熟成させる豆味噌の代表。味噌の背景を説明できる店は仕入まで意識している。">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c1410"/>
+      <stop offset="1" stop-color="#251a12"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#cf9a5a" font-family="Georgia,serif" font-size="21" font-weight="bold">「赤味噌」と「八丁味噌」は同じではない</text>
+  <text x="40" y="72" fill="#a08a72" font-family="sans-serif" font-size="13">分類の層が違う——語れる店は仕入まで意識している</text>
+
+  <!-- nested circles: 赤味噌(color) ⊃ 豆味噌(material) ⊃ 八丁味噌(specific) -->
+  <ellipse cx="230" cy="240" rx="180" ry="120" fill="none" stroke="#a8423a" stroke-width="2"/>
+  <text x="230" y="145" fill="#d6766c" font-family="sans-serif" font-size="14" text-anchor="middle" font-weight="bold">赤味噌（＝色の分類）</text>
+  <text x="230" y="164" fill="#9a7a70" font-family="sans-serif" font-size="10" text-anchor="middle">米麹・麦麹・豆麹いずれも含む</text>
+
+  <ellipse cx="250" cy="255" rx="120" ry="85" fill="none" stroke="#c98a3a" stroke-width="2"/>
+  <text x="250" y="210" fill="#d6a05a" font-family="sans-serif" font-size="13" text-anchor="middle" font-weight="bold">豆味噌</text>
+  <text x="250" y="228" fill="#9a8460" font-family="sans-serif" font-size="10" text-anchor="middle">豆・塩・水のみ／長期熟成／ほぼ愛知</text>
+
+  <circle cx="270" cy="270" r="50" fill="#5a3a28" stroke="#cf9a5a" stroke-width="2"/>
+  <text x="270" y="268" fill="#f0d8b0" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="bold">八丁味噌</text>
+  <text x="270" y="285" fill="#cbb088" font-family="sans-serif" font-size="9" text-anchor="middle">岡崎・八帖町</text>
+  <text x="270" y="298" fill="#cbb088" font-family="sans-serif" font-size="9" text-anchor="middle">2年以上熟成</text>
+
+  <text x="40" y="384" fill="#7c6850" font-family="sans-serif" font-size="10">図: NAGOYA BITES 編集部 — 名古屋では豆味噌以外の赤味噌は地域名で呼ぶのが一般的</text>
+</svg>

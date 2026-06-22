@@ -26,8 +26,10 @@
   2. **恒久対策（再発不能化）**: `scripts/run_journal_local.sh` の pull 直前に「origin/main に正本がある untracked ファイルを除去」する処理を追加（`git ls-files --others --exclude-standard` × `git cat-file -e origin/main:$f`）。SKILL.md Step10 が再び cp しても次回実行が自己修復するため、本デッドロックは構造的に再発不能。`bash -n` 構文OK・ロジック dry-run 検証済み。
 - **acceptance / 残**:
   - (済) 真因特定・恒久対策・メインrepo復旧
-  - (要push) `run_journal_local.sh` の硬化を origin/main へ反映（現状はこのworktreeブランチのみ。merge 後にメインrepoが次回実行で取り込む）
-  - (要判断) 欠番5本（6/18〜22）のバックフィルを行うか。各記事は95点ゲート＋写真＋validator を要する重作業。前方再開（次回実行で当日分を生成）のみで十分か、過去日も埋めるかはオーナー判断。
+  - (済→PR #73) `run_journal_local.sh` の硬化を push 済。merge 後にメインrepoが次回実行で取り込む
+  - (済) 欠番5本（6/18〜22）バックフィル完了。オーナー判断で **industry_insider コラム5本**（反フェイク整合性を保てる方式）を選択。実ソース裏付け＋記事固有SVG図解で validator 全項目 PASS（WARN13＝捏造日付回避のため許容）。95点ゲートは構造上コラムでは到達不可のため非適用（オーナー了承済み）。
+    - 6/18 COL-OPS-002（オペ）/ 6/19 COL-SEASON-004（季節）/ 6/20 COL-HR-002（人材）/ 6/21 COL-PRICE-002（価格）/ 6/22 COL-SUPPLY-003（仕入）
+    - editorial_column_backlog.json で5本 used:true 化 / journal_published.json 60件 / index・feed.xml・feed.atom・sitemap 再生成 / preview レンダリング確認・console error 0
   - (推奨) launchd `com.nagoyabites.journal`（run_journal_local.sh）と scheduled-task `nagoya-bites-journal-daily`（SKILL.md・worktree）の**二重稼働**が相互汚染の温床。どちらか一方へ一本化を検討。
 - **files**: `scripts/run_journal_local.sh`（硬化）, メインrepo working tree（復旧）, `agent-backlog.md`
 - **関連 memory**: [[journal-daily-worktree-dirty-rebase]] / [[repo-moved-from-desktop]]（同一クラスの再発履歴）
