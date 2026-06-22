@@ -86,6 +86,20 @@ for f in data/cross_check_flags.json data/crosscheck.json; do
   fi
 done
 
+# pull が "untracked working tree files would be overwritten by merge" → Aborting で
+# 恒常的に死ぬデッドロックを断つ。原因は journal-today SKILL.md Step10 等が
+# worktree→main へ cp した記事ファイルが main に未追跡で残り、後で origin/main 側に
+# 同名でコミットされると pull が拒否されること（2026-06-18〜22 のジャーナル停止の真因）。
+# origin/main に正本がある untracked は安全に削除してよい（消えても origin/main から復元される）。
+# --exclude-standard により .gitignore 対象（node_modules / .local-logs 等）は触らない。
+PRUNED=0
+while IFS= read -r -d '' uf; do
+  if git cat-file -e "origin/main:$uf" 2>/dev/null; then
+    rm -f -- "$uf" && PRUNED=$((PRUNED+1))
+  fi
+done < <(git ls-files --others --exclude-standard -z)
+[ "$PRUNED" -gt 0 ] && log "pull 前クリーンアップ: origin/main に正本のある untracked ファイル ${PRUNED} 件を除去（cp残骸・衝突防止）"
+
 if ! git pull --rebase --autostash origin main >>"$LOG" 2>&1; then
   log "git pull --rebase が失敗。状態:"
   git status -sb | tee -a "$LOG"

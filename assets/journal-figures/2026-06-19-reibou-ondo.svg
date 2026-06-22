@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-label="夏の飲食店における業態別の体感温度の傾向を示した図解。鉄板・焼肉店は熱源が多く強冷房になりがち、寿司・割烹カウンターは適温重視、個室は席ごとに調整しやすい。デートや会食では席位置と熱源の距離が快適さを左右する。">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#101822"/>
+      <stop offset="1" stop-color="#16202b"/>
+    </linearGradient>
+    <linearGradient id="scale" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3f78c2"/>
+      <stop offset="0.5" stop-color="#5aa17a"/>
+      <stop offset="1" stop-color="#c2643f"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#7ec8e3" font-family="Georgia,serif" font-size="22" font-weight="bold">夏、店の「体感温度」は業態で違う</text>
+  <text x="40" y="72" fill="#8aa0b0" font-family="sans-serif" font-size="13">熱源の量と席の作りが、冷房の効き方を決める</text>
+
+  <!-- temperature scale bar -->
+  <rect x="120" y="100" width="420" height="14" rx="7" fill="url(#scale)"/>
+  <text x="120" y="132" fill="#8aa0b0" font-family="sans-serif" font-size="11">寒い（冷えすぎ）</text>
+  <text x="470" y="132" fill="#8aa0b0" font-family="sans-serif" font-size="11">暑い（熱がこもる）</text>
+
+  <!-- markers -->
+  <g font-family="sans-serif" font-size="12">
+    <!-- teppan/yakiniku: strong cooling -> tends cold near vents but hot near grill -->
+    <circle cx="175" cy="180" r="8" fill="#3f78c2"/>
+    <text x="195" y="184" fill="#e8eef4">鉄板・焼肉店</text>
+    <text x="195" y="200" fill="#8aa0b0" font-size="10">熱源が多く強冷房になりがち。席で寒暖差が大きい</text>
+
+    <!-- sushi/kappo counter: moderate -->
+    <circle cx="320" cy="240" r="8" fill="#5aa17a"/>
+    <text x="340" y="244" fill="#e8eef4">寿司・割烹カウンター</text>
+    <text x="340" y="260" fill="#8aa0b0" font-size="10">適温重視。ネタと客の両方に効く温度に管理</text>
+
+    <!-- private room: adjustable -->
+    <circle cx="270" cy="300" r="8" fill="#7e9c86"/>
+    <text x="290" y="304" fill="#e8eef4">個室</text>
+    <text x="290" y="320" fill="#8aa0b0" font-size="10">席ごとに調整しやすい。会食・デート向き</text>
+  </g>
+
+  <text x="40" y="366" fill="#6f8494" font-family="sans-serif" font-size="10">目安は室温28℃（＝設定温度ではない）。設定1℃で消費電力は約13%変わる</text>
+  <text x="40" y="384" fill="#6f8494" font-family="sans-serif" font-size="10">図: NAGOYA BITES 編集部 — 予約時に「窓際／熱源から遠い席」を一言添えると快適さが変わる</text>
+</svg>

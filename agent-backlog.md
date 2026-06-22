@@ -8,6 +8,56 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-065] 日次ジャーナルが 6/18〜6/22 の5日欠番（routine 再停止）
+
+- **priority**: P1
+- **status**: in_progress（真因特定＋恒久対策＋復旧 済 / 欠番バックフィルは要判断）
+- **category**: content / ops
+- **detected**: 2026-06-22
+- **owner**: Editor + Builder
+- **description**: `journal/` の最新日付つき記事は `2026-06-17-shinya-eigyo-jorei-to-genba.html` で、origin/main 上でも 6/18〜6/22 の5本が欠番。日次ジャーナル（毎日1本公開）が 6/18 以降停止。
+- **真因（確定）**: ジャーナル生成の実体は launchd `com.nagoyabites.journal`（毎朝9:00）→ `scripts/run_journal_local.sh`（サブスク認証 claude --print・API課金ゼロ・作業ディレクトリ=メインrepo `/Users/katagirijakutou/nagoya-bites`）。これが毎朝 `LastExitStatus=256`（exit 1）で失敗していた。`.local-logs/journal-2026-06-22.log` の git 生出力：
+  `error: The following untracked working tree files would be overwritten by merge: journal/2026-06-08〜17*.html ... Aborting`。
+  → journal-today SKILL.md **Step10 が worktree→メインrepo へ記事を `cp`** し、メインrepo に**未追跡のまま**残留。同名記事が後で origin/main にコミットされると `git pull --rebase` が「untracked を上書きする」と判断し Aborting → スクリプト die → 生成に到達せず**サイレント空振り**。6/18〜22 全日が同一失敗（ログ同サイズ7949B）。
+  → Desktopパス → feed.atom dirty rebase → 今回の untracked衝突 と、すべて「**メインrepo作業ツリー汚染で pull が死ぬ**」同一クラスの再発。
+- **impact**: 日次ジャーナルは Moat（構造化DB × 特集 × 日次ジャーナルの三層編集）の柱。5日連続欠番は鮮度・SEO（毎日更新シグナル）・ブランド（「日次でむしろ勝つ」前提）を直接毀損。
+- **対処済み**:
+  1. **復旧**: メインrepo の汚染（追跡修正10件＋未追跡184件・うち「 2」重複83件はすべて本体と完全一致のゴミ、衝突 untracked journal は origin/main に正本あり）を `git stash push -u`（stash@{0}・完全可逆）で退避→ `git reset --hard origin/main`。HEAD=b613a3635・作業ツリー0件・ahead0/behind0 に復旧。デッドロック解消。
+  2. **恒久対策（再発不能化）**: `scripts/run_journal_local.sh` の pull 直前に「origin/main に正本がある untracked ファイルを除去」する処理を追加（`git ls-files --others --exclude-standard` × `git cat-file -e origin/main:$f`）。SKILL.md Step10 が再び cp しても次回実行が自己修復するため、本デッドロックは構造的に再発不能。`bash -n` 構文OK・ロジック dry-run 検証済み。
+- **acceptance / 残**:
+  - (済) 真因特定・恒久対策・メインrepo復旧
+  - (済→PR #73) `run_journal_local.sh` の硬化を push 済。merge 後にメインrepoが次回実行で取り込む
+  - (済) 欠番5本（6/18〜22）バックフィル完了。オーナー判断で **industry_insider コラム5本**（反フェイク整合性を保てる方式）を選択。実ソース裏付け＋記事固有SVG図解で validator 全項目 PASS（WARN13＝捏造日付回避のため許容）。95点ゲートは構造上コラムでは到達不可のため非適用（オーナー了承済み）。
+    - 6/18 COL-OPS-002（オペ）/ 6/19 COL-SEASON-004（季節）/ 6/20 COL-HR-002（人材）/ 6/21 COL-PRICE-002（価格）/ 6/22 COL-SUPPLY-003（仕入）
+    - editorial_column_backlog.json で5本 used:true 化 / journal_published.json 60件 / index・feed.xml・feed.atom・sitemap 再生成 / preview レンダリング確認・console error 0
+  - (推奨) launchd `com.nagoyabites.journal`（run_journal_local.sh）と scheduled-task `nagoya-bites-journal-daily`（SKILL.md・worktree）の**二重稼働**が相互汚染の温床。どちらか一方へ一本化を検討。
+- **files**: `scripts/run_journal_local.sh`（硬化）, メインrepo working tree（復旧）, `agent-backlog.md`
+- **関連 memory**: [[journal-daily-worktree-dirty-rebase]] / [[repo-moved-from-desktop]]（同一クラスの再発履歴）
+
+### [ISSUE-064] audit_feature_stores.js が表記差（HP名 vs 食べログ名）で実在店を実在不明と誤検知
+
+- **priority**: P2
+- **status**: ready
+- **category**: technical / data-quality / qa
+- **detected**: 2026-06-22
+- **owner**: DataKeeper
+- **description**: `node scripts/audit_feature_stores.js` が `nagoya-kakuozan.html` の「炉端とおでん 呼炉凪来 ころなぎらい 大曽根店」を「実在不明」と毎回フラグするが、2026-06-22 夜間QAで偽陽性と確認済み（食べログ・Google Places の双方で実在。ホットペッパー表記名と食べログ表記名の差で LOCAL_STORES 突合に失敗しているだけ）。
+- **impact**: 架空店ゲートが恒久的に1件の偽陽性を出し続け、nightly QA が毎晩 WARN に張り付く。CLAUDE.md「検出ゼロを維持する／CIでも実行して退行を防ぐ」が満たせず、本物の架空店混入が雑音に埋もれて見逃されるリスク。
+- **acceptance**: 店名正規化／別名（alias）照合を導入し、表記差のある実在店が実在不明判定に落ちないようにする。本物の架空店検出力は維持（既知の実在店だけを通すホワイトリスト的逃げではなく、正規化での解消を優先）。`audit_feature_stores.js` の実在不明が 0 件になり nightly QA の架空店監査が PASS に戻る。
+- **files**: `scripts/audit_feature_stores.js`（および必要なら名寄せ用の補助）, `agent-backlog.md`
+
+### [ISSUE-063] audit_feature_schema_alignment.js の faqpage_topic_mismatch 偽陽性9件で nightly QA が恒久 WARN
+
+- **priority**: P2
+- **status**: ready
+- **category**: technical / seo / qa
+- **detected**: 2026-06-22
+- **owner**: Builder
+- **description**: `node scripts/audit_feature_schema_alignment.js` が 9/66 ファイルで `faqpage_topic_mismatch` を出すが、中身は明白にオントピック（覚王山ページのFAQは覚王山、GWページはGW、海鮮・個室・栄も同様）。FAQ と title の 2-gram 類似度で判定しているため、日本語の語彙ズレで similarity 0.0〜0.13 に落ち誤検知している（backlog 既述の「ISSUE-059系の既知ヒューリスティック雑音」）。
+- **impact**: スキーマ整合性監査が恒久的に9件の偽陽性を出し、nightly QA が毎晩 WARN。本物の schema 汚染（ISSUE-060 で修復したラーメンテンプレ汚染の類）が再発しても雑音に埋もれる。QA シグナルの信頼性が低下。
+- **acceptance**: faqpage の整合判定を title 単独 2-gram から実態に即した方式へ改善（h1＋本文キーワードとの照合／閾値見直し／FAQ設問語と本文の重なり率など）。本物の汚染（別テーマ丸ごとコピペ）は引き続き検出しつつ、現在の9件オントピック偽陽性が 0 件になる。nightly QA の schema 監査が PASS に戻る。
+- **files**: `scripts/audit_feature_schema_alignment.js`, `agent-backlog.md`
+
 ### [DATA-001] 閉店店の掲載検出（餃子歩兵 名古屋泉店ほか）と営業実体ゲート新設 ✅
 - **priority**: P0 → **status**: done（push はユーザー承認待ち）
 - **detected**: 2026-06-11
