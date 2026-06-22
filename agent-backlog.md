@@ -1059,6 +1059,7 @@
 | 2026-06-06 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補ゼロ** — ready タスクなし。夜間QA PASS（2026-06-06・ハード失敗0）。エスカレーション済み3件（ISSUE-030/ISSUE-045/ISSUE-032）owner=片桐 継続中。Notion同期 6件更新（ISSUE-054/ISSUE-012/ISSUE-040/ISSUE-030/ISSUE-032/ISSUE-045）・ISSUE-022/023 はアーカイブ済みのため更新スキップ。実装 0 件 | ⚠️ 待機中（安全候補なし） |
 | 2026-06-17 | Orchestrator/Builder（自律実行） | **npm audit 退行修正** — 夜間QAレポートで脆弱性 4→6 件（high 1 追加・moderate 2 追加）の退行を検知。`npm audit fix`（非破壊・lock-only）で form-data(high/GHSA-hmw2-7cc7-3qxx)・gaxios(moderate)・js-yaml(moderate/GHSA-h67p-54hq-rp68) を解消、6→4 件（moderate のみ）に復元。残 4 件（uuid→googleapis 連鎖）は 2026-06-04 受容済みと同一。package.json 無変更・ユニットテスト 30/30 pass・qa_gate pass | ✅ done |
 | 2026-06-17 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補 1 件実装（npm audit 退行修正）** — npm audit 退行（high 1+moderate 2）を非破壊 lock-only で修正完了。バックログ ready タスクなし。エスカレーション済み3件（ISSUE-030 Series B/ISSUE-045 editorReason/ISSUE-032 プレスリリース）owner=片桐 継続中 | ✅ done |
+| 2026-06-22 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補ゼロ** — ready タスクなし。エスカレーション済み3件（ISSUE-030 Series B/ISSUE-045 editorReason/ISSUE-032 プレスリリース）owner=片桐 継続中。夜間QA 2026-06-22 WARN（ハード失敗0・ソフト警告2: npm audit moderate 4件は受容済み / nagoya-kakuozan.html「呼炉凪来 大曽根」実在不明フラグは偽陽性確認=tabelog+Places両方で実在・HP名 vs 食べログ名の表記差）。実装 0 件 | ⚠️ 待機中（安全候補なし） |
 
 ---
 
