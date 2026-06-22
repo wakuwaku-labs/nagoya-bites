@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-06-22T02:22:18.329Z",
+  "generatedAt": "2026-06-22T03:44:22.525Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 436,
-    "pageViews": 752,
-    "sessions": 518,
-    "avgSessionDuration": 141.3,
-    "bounceRate": 0.475,
+    "activeUsers": 438,
+    "pageViews": 754,
+    "sessions": 520,
+    "avgSessionDuration": 140.3,
+    "bounceRate": 0.473,
     "pagesPerSession": 1.45
   },
   "channels": {
     "sessions": {
-      "organic": 245,
-      "direct": 252,
+      "organic": 247,
+      "direct": 253,
       "social": 11,
       "referral": 9,
       "paid": 0,
       "other": 1
     },
     "pct": {
-      "organic": 47.3,
+      "organic": 47.4,
       "direct": 48.6,
       "social": 2.1,
       "referral": 1.7,
@@ -36,7 +36,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 148
+      "sessions": 150
     },
     {
       "source": "bing",
@@ -61,7 +61,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 8
+      "sessions": 9
     },
     {
       "source": "chatgpt.com",
@@ -92,8 +92,8 @@
     },
     {
       "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
-      "pageViews": 40,
-      "sessions": 37
+      "pageViews": 41,
+      "sessions": 38
     },
     {
       "path": "/journal/2026-05-31-grill-tsubaki-meiekimae.html",
@@ -108,13 +108,13 @@
   ],
   "cta": {
     "outboundClicks": 61,
-    "ctaClickRate": 11.8,
+    "ctaClickRate": 11.7,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 436,
+    "value": 438,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
