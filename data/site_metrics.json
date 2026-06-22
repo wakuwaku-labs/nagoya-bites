@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-06-22T09:07:55.955Z",
+  "generatedAt": "2026-06-22T20:47:27.137Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 439,
-    "pageViews": 757,
-    "sessions": 522,
-    "avgSessionDuration": 139.9,
-    "bounceRate": 0.475,
-    "pagesPerSession": 1.45
+    "activeUsers": 431,
+    "pageViews": 737,
+    "sessions": 511,
+    "avgSessionDuration": 132.9,
+    "bounceRate": 0.489,
+    "pagesPerSession": 1.44
   },
   "channels": {
     "sessions": {
-      "organic": 247,
-      "direct": 255,
-      "social": 12,
+      "organic": 240,
+      "direct": 252,
+      "social": 13,
       "referral": 9,
       "paid": 0,
       "other": 1
     },
     "pct": {
-      "organic": 47.1,
-      "direct": 48.7,
-      "social": 2.3,
+      "organic": 46.6,
+      "direct": 48.9,
+      "social": 2.5,
       "referral": 1.7,
       "paid": 0,
       "other": 0.2
@@ -31,27 +31,32 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 212
+      "sessions": 207
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 150
+      "sessions": 145
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 51
+      "sessions": 52
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 44
+      "sessions": 41
     },
     {
       "source": "chatgpt.com",
       "medium": "(not set)",
-      "sessions": 20
+      "sessions": 19
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 14
     },
     {
       "source": "openai",
@@ -59,14 +64,9 @@
       "sessions": 12
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 11
-    },
-    {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 7
+      "sessions": 8
     },
     {
       "source": "chatgpt.com",
@@ -82,13 +82,13 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 226,
-      "sessions": 149
+      "pageViews": 221,
+      "sessions": 146
     },
     {
       "path": "/index.html",
-      "pageViews": 53,
-      "sessions": 46
+      "pageViews": 48,
+      "sessions": 42
     },
     {
       "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
@@ -107,14 +107,14 @@
     }
   ],
   "cta": {
-    "outboundClicks": 61,
+    "outboundClicks": 60,
     "ctaClickRate": 11.7,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 439,
+    "value": 431,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
