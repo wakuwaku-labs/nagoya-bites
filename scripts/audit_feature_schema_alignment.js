@@ -26,6 +26,11 @@ const path = require('path');
 
 const FEATURES_DIR = path.join(__dirname, '..', 'features');
 const THRESHOLD = 0.13; // 類似度がこれ未満なら mismatch（0.13 で「ラーメンテンプレ汚染」と false-positive を分離可能）
+// ISSUE-063: FAQ設問は title 単独だと語彙ズレで偽陽性になるため、title＋h1＋本文の「ページコーパス」と照合する。
+// 本文との照合は日本語の定型表現で底上げされるため、title 比較より高い閾値を用いる。
+// 計測値: オントピック FAQ は corpus 類似度 0.95〜0.98 / 別テーマ汚染（ラーメンFAQ×接待本文等）は 0.23〜0.28。
+// 0.50 が両者を安全に分離する。
+const FAQ_CORPUS_THRESHOLD = 0.50;
 
 function normalize(str) {
   // 共通ボイラープレートを除去してから 2-gram 化する（短い日本語タイトルでの偽陽性を防ぐ）
@@ -71,6 +76,15 @@ function extract(html, regex) {
   return m ? m[1].trim() : '';
 }
 
+// ISSUE-063: 可視本文テキスト（script/style/タグを除去）。FAQ・パンくずの「ページ実態」照合用コーパスに使う。
+function bodyText(html) {
+  return html
+    .replace(/<script[\s\S]*?<\/script>/g, ' ')
+    .replace(/<style[\s\S]*?<\/style>/g, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&[a-z]+;/g, ' ');
+}
+
 function extractJsonLdBlocks(html) {
   const blocks = [];
   const re = /<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/g;
@@ -92,6 +106,8 @@ function audit(filename) {
   const title = extract(html, /<title[^>]*>([^<]+)<\/title>/);
   const h1 = extract(html, /<h1[^>]*>([\s\S]*?)<\/h1>/).replace(/<[^>]+>/g, '');
   const blocks = extractJsonLdBlocks(html);
+  // ISSUE-063: ページ実態コーパス（title＋h1＋本文）。FAQ・パンくず末端の「別テーマ汚染」判定に使う。
+  const corpus = title + ' ' + h1 + ' ' + bodyText(html);
 
   const issues = [];
 
@@ -123,17 +139,30 @@ function audit(filename) {
       const items = b.itemListElement || [];
       const last = items[items.length - 1];
       if (last && last.name) {
-        const sim = similarity(title, last.name);
-        if (sim < THRESHOLD) {
+        // ISSUE-063: パンくず末端は title と語彙が異なる編集ラベル（例「桜ゼロ宣言」）でも
+        // 本文に現れていれば正当。title 一致 OR コーパス一致のどちらかで通す（別ページ用パンくずの
+        // 貼り間違いはコーパスにも出ないため引き続き検出）。
+        const sim = Math.max(similarity(title, last.name), similarity(corpus, last.name));
+        // さらに、ハブ名「名古屋グルメ完全ガイド」のように normalize() で空文字に削られる正当ラベルは
+        // 類似度が 0 に落ちるため、軽量正規化（空白・サイト名サフィックスのみ除去）で title/本文に
+        // 逐語出現するかを救済する（別ページ用パンくずは逐語出現しないので検出力は維持）。
+        const lite = (s) => String(s || '').normalize('NFKC')
+          .replace(/[\s　]/g, '')
+          .replace(/｜NAGOYA BITES.*$|\|NAGOYA BITES.*$/g, '')
+          .toLowerCase();
+        const liteLast = lite(last.name);
+        const verbatim = liteLast.length >= 3 && (lite(title).includes(liteLast) || lite(corpus).includes(liteLast));
+        if (sim < THRESHOLD && !verbatim) {
           issues.push({ kind: 'breadcrumb_last_mismatch', title, breadcrumbLast: last.name, similarity: sim.toFixed(2) });
         }
       }
     } else if (b['@type'] === 'FAQPage') {
-      // FAQPage は本文の語彙との一致が望ましい。ここでは Q の文字列を結合して title との重複を見る
+      // ISSUE-063: FAQ設問は title 単独だと語彙ズレで偽陽性になるため、ページ実態コーパス（title＋h1＋本文）と照合。
+      // 別テーマのテンプレ汚染（例: 接待ページにラーメンFAQ）は corpus 類似度も低い（~0.25）ため引き続き検出。
       const questions = (b.mainEntity || []).map(q => q.name || '').join(' ');
       if (questions) {
-        const sim = similarity(title, questions);
-        if (sim < THRESHOLD) {
+        const sim = similarity(corpus, questions);
+        if (sim < FAQ_CORPUS_THRESHOLD) {
           issues.push({ kind: 'faqpage_topic_mismatch', title, questionsPreview: questions.slice(0, 80) + '...', similarity: sim.toFixed(2) });
         }
       }

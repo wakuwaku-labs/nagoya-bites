@@ -54,10 +54,17 @@
 - **acceptance**: 店名正規化／別名（alias）照合を導入し、表記差のある実在店が実在不明判定に落ちないようにする。本物の架空店検出力は維持（既知の実在店だけを通すホワイトリスト的逃げではなく、正規化での解消を優先）。`audit_feature_stores.js` の実在不明が 0 件になり nightly QA の架空店監査が PASS に戻る。
 - **files**: `scripts/audit_feature_stores.js`（および必要なら名寄せ用の補助）, `agent-backlog.md`
 
-### [ISSUE-063] audit_feature_schema_alignment.js の faqpage_topic_mismatch 偽陽性9件で nightly QA が恒久 WARN
+### [ISSUE-063] audit_feature_schema_alignment.js の faqpage_topic_mismatch 偽陽性9件で nightly QA が恒久 WARN ✅
 
-- **priority**: P2
-- **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-06-22
+- **resolved_by**: /solve-next（Builder）— FAQ/パンくず判定を「title単独」から「ページ実態コーパス照合」へ改善
+- **実装内容**:
+  1. **FAQPage**: 判定を `similarity(title, questions)` から `similarity(corpus, questions)`（corpus = title＋h1＋本文）へ変更。専用閾値 `FAQ_CORPUS_THRESHOLD=0.50` を新設。計測でオントピックFAQは corpus 類似度 0.95〜0.98、別テーマ汚染（ラーメンFAQ×接待本文 等）は 0.23〜0.28 と明確分離するため 0.50 が安全境界。
+  2. **BreadcrumbList**: `Math.max(title, corpus)` 照合に加え、normalize() で空文字に削られる正当ハブ名（例「名古屋グルメ完全ガイド」）を救済する軽量正規化の逐語包含チェックを追加。別ページ用パンくず（「名古屋ラーメン12選」）は逐語出現しないため検出維持。
+  3. `bodyText()`（script/style/タグ除去）を追加しコーパス生成に利用。
+- **検出力の維持（E2E逆検証済）**: 汚染テスト（接待ページにラーメンFAQ＋「名古屋ラーメン12選」パンくずを注入）を実スクリプトに通し 2件 mismatch を確実に検出。クリーン状態では features/*.html 66件すべて PASS（EXIT 0）。修正前の9件オントピック偽陽性（faqpage 7 + breadcrumb 2: enmkai-kanji/gw-2026/nagoya-gourmet-guide/nagoya-kakuozan/nagoya-seafood/nagoya-settai-concierge/no-fake-reviews/private-room/sakae）が 0 件に。
+- **files**: `scripts/audit_feature_schema_alignment.js`, `agent-backlog.md`
 - **category**: technical / seo / qa
 - **detected**: 2026-06-22
 - **owner**: Builder
@@ -1133,6 +1140,7 @@
 | 2026-06-22 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補ゼロ** — ready タスクなし。エスカレーション済み3件（ISSUE-030 Series B/ISSUE-045 editorReason/ISSUE-032 プレスリリース）owner=片桐 継続中。夜間QA 2026-06-22 WARN（ハード失敗0・ソフト警告2: npm audit moderate 4件は受容済み / nagoya-kakuozan.html「呼炉凪来 大曽根」実在不明フラグは偽陽性確認=tabelog+Places両方で実在・HP名 vs 食べログ名の表記差）。実装 0 件 | ⚠️ 待機中（安全候補なし） |
 | 2026-06-22 | Editor+Builder(/solve-next) | ISSUE-065 全 acceptance を origin/main で実体確認しクローズ（hardening 268ff31db / PR#73 / 欠番5本 d5c782da3）。残課題 ISSUE-066（二重稼働一本化・P3）を分離起票 | ✅ done |
 | 2026-06-22 | DataKeeper(/solve-next) | ISSUE-064 audit_feature_stores.js に識別力トークン照合を導入（業態語/支店語除外＋2トークン共有）。呼炉凪来の偽陽性を正規化で解消、架空7ケース逆検証で検出力維持。実在不明 1→0・EXIT 0 | ✅ done |
+| 2026-06-22 | Builder(/solve-next) | ISSUE-063 schema整合監査のFAQ/パンくず判定をtitle単独→ページ実態コーパス照合へ改善（FAQ閾値0.50・ハブ名逐語救済）。オントピック偽陽性9→0・66件PASS、汚染E2E逆検証で検出力維持 | ✅ done |
 
 ---
 
