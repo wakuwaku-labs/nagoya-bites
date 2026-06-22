@@ -12250,11 +12250,46 @@ function buildPrefTabs() {
   };
 }
 
+// ── ジャンルの常識的な正規化 ──
+// 生データ（特にmanual_stores由来）は「クラシック × モダンフレンチ」「さつまいも菓子」等の
+// 細粒度ジャンルが乱立し、フィルタチップが100件超に膨張していた。そこで生ジャンル文字列を
+// 常識的な代表ジャンル1つへ正規化し、チップ・フィルタ・ハッシュ遷移を全てこれ経由にする。
+// （カードに出す生ジャンル表記そのものは変えない＝情報量は維持）
+var GENRE_ORDER = ['居酒屋','焼肉・ホルモン','和食','寿司','ラーメン','中華','イタリアン・フレンチ','洋食','カフェ・スイーツ','ダイニングバー・バル','バー・カクテル','韓国料理','アジア・エスニック料理','各国料理','お好み焼き・もんじゃ','創作料理','カラオケ・パーティ','その他グルメ'];
+// 上から順に最初に一致したルールの代表ジャンルを採用（順序＝優先度）
+var GENRE_RULES = [
+  ['寿司',               /寿司|鮨/],
+  ['ラーメン',           /ラーメン|担担麺|中華そば|まぜそば|豚骨|家系/],
+  ['焼肉・ホルモン',      /焼肉|ホルモン/],
+  ['お好み焼き・もんじゃ', /お好み焼|もんじゃ/],
+  ['ダイニングバー・バル', /ダイニングバー|バル/],
+  ['カフェ・スイーツ',    /カフェ|喫茶|スイーツ|菓子|パフェ|クレープ|ティードリンク|クリームソーダ|モーニング|ブーランジェリー|ベーカリー|パン|ケーキ|甘味|珈琲|コーヒー|焙煎|大福|サンド|かき氷/],
+  ['韓国料理',           /韓国|サムギョプサル|キンパ|スンドゥブ/],
+  ['中華',               /中華|餃子|中国料理|麻婆|麻辣/],
+  ['イタリアン・フレンチ', /イタリアン|フレンチ|フランス料理|薪火|ビストロ|トラットリア|リストランテ/],
+  ['洋食',               /洋食|ハンバーガー|ハンバーグ|ステーキ|スパゲ|オムライス|エビフライ/],
+  ['バー・カクテル',      /バー|カクテル|ワイン|ビアガーデン/],
+  ['アジア・エスニック料理', /アジア|エスニック|タイ料理|ベトナム|インド|ネパール|台湾/],
+  ['各国料理',           /各国料理|多国籍/],
+  ['カラオケ・パーティ',  /カラオケ|パーティ/],
+  ['創作料理',           /創作|イノベーティブ|フュージョン/],
+  ['居酒屋',             /居酒屋|大衆酒場|酒場|立ち飲み|立ち呑み/],
+  ['和食',               /和食|日本料理|懐石|会席|割烹|うなぎ|ひつまぶし|焼鳥|焼き鳥|そば|蕎麦|うどん|天ぷら|とんかつ|串|土鍋|定食|食堂|海鮮|和牛|肉割烹|鍋|おでん|ふぐ|しゃぶしゃぶ|すき焼/]
+];
+function normalizeGenre(raw) {
+  if (!raw || raw === 'All') return 'All';
+  for (var i = 0; i < GENRE_RULES.length; i++) {
+    if (GENRE_RULES[i][1].test(raw)) return GENRE_RULES[i][0];
+  }
+  return 'その他グルメ';
+}
+
 function buildGenreTabs() {
-  var genres = ['All'];
+  var present = {};
   ALL_STORES.forEach(function(s){
-    if (s['ジャンル']) { s['ジャンル'].split('・').forEach(function(g){ g = g.trim(); if (g && genres.indexOf(g) < 0) genres.push(g); }); }
+    if (s['ジャンル']) present[normalizeGenre(s['ジャンル'])] = true;
   });
+  var genres = ['All'].concat(GENRE_ORDER.filter(function(g){ return present[g]; }));
   var bar = document.querySelector('.filter-bar');
   bar.innerHTML = '<span class="fl">Genre</span>'
     + genres.map(function(g, i){ return '<div class="ft' + (i===0?' on':'') + '" data-f="' + g + '">' + g + '</div>'; }).join('');
@@ -12354,7 +12389,7 @@ function applyFilters() {
   FILTERED = ALL_STORES.filter(function(s){
     var okPref = (pref === '全国' || pref === 'all') || (s['都道府県'] || '') === pref;
     var okWard = ACTIVE_WARD === 'all' || (AREA_TO_WARD[s['エリア']] === ACTIVE_WARD);
-    var okGenre = genre === 'All' || (s['ジャンル'] || '').indexOf(genre) !== -1;
+    var okGenre = genre === 'All' || normalizeGenre(s['ジャンル'] || '') === genre;
     var okCap = (isNaN(capNum) || capNum <= 0) ? true : (s['タグ'] || '').split(/[,、，\/]/).some(function(t) {
       t = t.trim();
       var m1 = t.match(/^(\d+)[〜～](\d+)名$/); if (m1) return parseInt(m1[2], 10) >= capNum;
@@ -12474,9 +12509,9 @@ function readHash() {
       prefEl.classList.add('on');
     }
   }
-  // genre
+  // genre（#genre=焼肉 等の旧ハッシュも代表ジャンルへ解決）
   if (params.genre) {
-    var genreEl = document.querySelector('.ft[data-f="' + params.genre + '"]');
+    var genreEl = document.querySelector('.ft[data-f="' + normalizeGenre(params.genre) + '"]');
     if (genreEl) {
       document.querySelectorAll('.ft').forEach(function(x){ x.classList.remove('on'); });
       genreEl.classList.add('on');
@@ -12553,6 +12588,7 @@ function selectPref(pref) {
   el && el.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 function selectGenre(genre) {
+  genre = normalizeGenre(genre); // 旧・細粒度ジャンル名や別表記でも代表ジャンルに解決
   var el = document.querySelector('.ft[data-f="' + genre + '"]');
   if (el) { document.querySelectorAll('.ft').forEach(function(x){ x.classList.remove('on'); }); el.classList.add('on'); applyFilters(); }
   el && el.scrollIntoView({behavior:'smooth', block:'nearest'});
