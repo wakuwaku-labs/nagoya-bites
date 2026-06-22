@@ -8,10 +8,13 @@
 
 ## 進行中・完了タスク
 
-### [ISSUE-065] 日次ジャーナルが 6/18〜6/22 の5日欠番（routine 再停止）
+### [ISSUE-065] 日次ジャーナルが 6/18〜6/22 の5日欠番（routine 再停止）✅
 
-- **priority**: P1
-- **status**: in_progress（真因特定＋恒久対策＋復旧 済 / 欠番バックフィルは要判断）
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-06-22
+- **resolved_by**: /solve-next（Editor + Builder）— 全 acceptance 項目を origin/main で実体確認しクローズ
+- **検証（クローズ根拠）**: ① 恒久対策 `scripts/run_journal_local.sh` の自己修復ロジック（pull 前に origin/main 正本のある untracked を除去・L89-101）が origin/main に merge 済（commit 268ff31db）② PR #73（run_journal_local.sh 硬化）merge 済（a4537a7a8）③ 欠番5本 `journal/2026-06-18〜22-*.html` が origin/main に公開済（d5c782da3）。デッドロックは構造的に再発不能。
+- **残（別ISSUE化＝ISSUE-066）**: launchd `com.nagoyabites.journal` と scheduled-task `nagoya-bites-journal-daily` の二重稼働一本化（相互汚染の温床・P3 改善）。本ISSUEのブロッカーではないため分離。
 - **category**: content / ops
 - **detected**: 2026-06-22
 - **owner**: Editor + Builder
@@ -57,6 +60,19 @@
 - **impact**: スキーマ整合性監査が恒久的に9件の偽陽性を出し、nightly QA が毎晩 WARN。本物の schema 汚染（ISSUE-060 で修復したラーメンテンプレ汚染の類）が再発しても雑音に埋もれる。QA シグナルの信頼性が低下。
 - **acceptance**: faqpage の整合判定を title 単独 2-gram から実態に即した方式へ改善（h1＋本文キーワードとの照合／閾値見直し／FAQ設問語と本文の重なり率など）。本物の汚染（別テーマ丸ごとコピペ）は引き続き検出しつつ、現在の9件オントピック偽陽性が 0 件になる。nightly QA の schema 監査が PASS に戻る。
 - **files**: `scripts/audit_feature_schema_alignment.js`, `agent-backlog.md`
+
+### [ISSUE-066] 日次ジャーナル生成の二重稼働（launchd × scheduled-task）を一本化
+
+- **priority**: P3
+- **status**: ready
+- **category**: ops / reliability
+- **detected**: 2026-06-22
+- **owner**: Builder
+- **description**: ジャーナル生成経路が2系統並走している：① launchd `com.nagoyabites.journal`（毎朝9:00 → `scripts/run_journal_local.sh`・作業ディレクトリ=メインrepo）② scheduled-task `nagoya-bites-journal-daily`（journal-today SKILL.md・worktree 経由で cp）。両者が同じ `journal/` を書くため、worktree→メインrepo の cp 残骸がメインrepo の `git pull` を殺す相互汚染が ISSUE-065 の真因だった（自己修復処理で再発不能化済だが、二重稼働そのものは温床として残存）。
+- **impact**: 片方が成果を出しても他方が空振り/汚染を生む。観測性も二重化して切り分けが難しい。ISSUE-065 級デッドロックの再発リスク源。
+- **acceptance**: どちらか一方の経路に一本化（推奨は launchd 側＝API課金ゼロのサブスク認証経路を正とし、scheduled-task を停止 or 逆）。残す側の単独運用で日次1本公開が継続することを数日観測。`.claude/settings.json`・scheduled-task はエージェント自己改変ブロックのためオーナー手動操作が必要な可能性あり（その場合は手順を docs にまとめてオーナーへ依頼）。
+- **files**: `scripts/run_journal_local.sh`, launchd plist, scheduled-task 設定（オーナー領域）, `agent-backlog.md`
+- **関連**: ISSUE-065（親）/ [[journal-daily-worktree-dirty-rebase]]
 
 ### [DATA-001] 閉店店の掲載検出（餃子歩兵 名古屋泉店ほか）と営業実体ゲート新設 ✅
 - **priority**: P0 → **status**: done（push はユーザー承認待ち）
@@ -1110,6 +1126,7 @@
 | 2026-06-17 | Orchestrator/Builder（自律実行） | **npm audit 退行修正** — 夜間QAレポートで脆弱性 4→6 件（high 1 追加・moderate 2 追加）の退行を検知。`npm audit fix`（非破壊・lock-only）で form-data(high/GHSA-hmw2-7cc7-3qxx)・gaxios(moderate)・js-yaml(moderate/GHSA-h67p-54hq-rp68) を解消、6→4 件（moderate のみ）に復元。残 4 件（uuid→googleapis 連鎖）は 2026-06-04 受容済みと同一。package.json 無変更・ユニットテスト 30/30 pass・qa_gate pass | ✅ done |
 | 2026-06-17 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補 1 件実装（npm audit 退行修正）** — npm audit 退行（high 1+moderate 2）を非破壊 lock-only で修正完了。バックログ ready タスクなし。エスカレーション済み3件（ISSUE-030 Series B/ISSUE-045 editorReason/ISSUE-032 プレスリリース）owner=片桐 継続中 | ✅ done |
 | 2026-06-22 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補ゼロ** — ready タスクなし。エスカレーション済み3件（ISSUE-030 Series B/ISSUE-045 editorReason/ISSUE-032 プレスリリース）owner=片桐 継続中。夜間QA 2026-06-22 WARN（ハード失敗0・ソフト警告2: npm audit moderate 4件は受容済み / nagoya-kakuozan.html「呼炉凪来 大曽根」実在不明フラグは偽陽性確認=tabelog+Places両方で実在・HP名 vs 食べログ名の表記差）。実装 0 件 | ⚠️ 待機中（安全候補なし） |
+| 2026-06-22 | Editor+Builder(/solve-next) | ISSUE-065 全 acceptance を origin/main で実体確認しクローズ（hardening 268ff31db / PR#73 / 欠番5本 d5c782da3）。残課題 ISSUE-066（二重稼働一本化・P3）を分離起票 | ✅ done |
 
 ---
 
