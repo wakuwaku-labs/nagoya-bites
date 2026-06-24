@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-06-23T20:04:15.030Z",
+  "generatedAt": "2026-06-24T19:44:59.547Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 433,
-    "pageViews": 734,
-    "sessions": 506,
-    "avgSessionDuration": 135.7,
-    "bounceRate": 0.486,
-    "pagesPerSession": 1.45
+    "activeUsers": 427,
+    "pageViews": 708,
+    "sessions": 496,
+    "avgSessionDuration": 125,
+    "bounceRate": 0.492,
+    "pagesPerSession": 1.43
   },
   "channels": {
     "sessions": {
-      "organic": 245,
-      "direct": 242,
-      "social": 13,
+      "organic": 246,
+      "direct": 230,
+      "social": 11,
       "referral": 10,
       "paid": 0,
       "other": 1
     },
     "pct": {
-      "organic": 47.9,
-      "direct": 47.4,
-      "social": 2.5,
+      "organic": 49.4,
+      "direct": 46.2,
+      "social": 2.2,
       "referral": 2,
       "paid": 0,
       "other": 0.2
@@ -31,17 +31,17 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 201
+      "sessions": 194
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 141
+      "sessions": 138
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 58
+      "sessions": 62
     },
     {
       "source": "yahoo",
@@ -51,17 +51,17 @@
     {
       "source": "chatgpt.com",
       "medium": "(not set)",
-      "sessions": 16
+      "sessions": 14
     },
     {
       "source": "openai",
       "medium": "(not set)",
-      "sessions": 13
+      "sessions": 12
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 12
+      "sessions": 10
     },
     {
       "source": "chatgpt.com",
@@ -69,36 +69,36 @@
       "sessions": 8
     },
     {
-      "source": "chatgpt.com",
-      "medium": "referral",
-      "sessions": 4
-    },
-    {
       "source": "service.smt.docomo.ne.jp",
       "medium": "referral",
       "sessions": 3
+    },
+    {
+      "source": "chatgpt.com",
+      "medium": "referral",
+      "sessions": 2
     }
   ],
   "topPages": [
     {
       "path": "/",
-      "pageViews": 220,
-      "sessions": 146
+      "pageViews": 203,
+      "sessions": 140
     },
     {
       "path": "/index.html",
-      "pageViews": 44,
-      "sessions": 37
-    },
-    {
-      "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
-      "pageViews": 40,
-      "sessions": 37
+      "pageViews": 43,
+      "sessions": 36
     },
     {
       "path": "/journal/2026-05-31-grill-tsubaki-meiekimae.html",
       "pageViews": 39,
       "sessions": 36
+    },
+    {
+      "path": "/journal/2026-05-19-uto-kakigori-sakae.html",
+      "pageViews": 37,
+      "sessions": 35
     },
     {
       "path": "/journal/2026-06-15-yoroniku-nagoya-haera.html",
@@ -107,14 +107,14 @@
     }
   ],
   "cta": {
-    "outboundClicks": 57,
-    "ctaClickRate": 11.3,
+    "outboundClicks": 44,
+    "ctaClickRate": 8.9,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 433,
+    "value": 427,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
