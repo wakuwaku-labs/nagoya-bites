@@ -1,0 +1,209 @@
+{
+  "date": "2026-06-29",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "金曜19時の予約が取れない店、15分ずらすだけで入れる理由",
+      "verdict": "PASS",
+      "total": 95,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=12 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "金曜19時の予約が取れない構造——2部制と席割り設計の業界裏側",
+      "verdict": "FAIL",
+      "total": 92,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=12 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "ランチ1,000円の店が夜は高い理由——客単価設計の裏側",
+      "verdict": "FAIL",
+      "total": 89,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 19,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=4 → 4"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "個室が多い店 vs 一枚板カウンター——名古屋の接待シーンでどちらを選ぶか",
+      "verdict": "FAIL",
+      "total": 87,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 19,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=5 → 4"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "ソファ席の客単価が高い理由——席タイプが会計に与える影響",
+      "verdict": "FAIL",
+      "total": 84,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 14,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=2 → 10",
+          "x_mentions=3 → 4"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "fallback_needed": false
+}

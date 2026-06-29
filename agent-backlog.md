@@ -92,10 +92,11 @@
 ### [ISSUE-067] ジャーナル 6/23〜6/29 の 7日欠番（自動化経路の停止）
 
 - **priority**: P1
-- **status**: ready
+- **status**: in_progress
 - **category**: content / ops
 - **detected**: 2026-06-29
 - **owner**: Editor
+- **progress**: 2026-06-29 分（本日付）を生成・公開済み。残り 6/23〜6/28 の 6本が未完。COL-SEAT-003「金曜19時予約」テーマ、QA PASS (15/15)。
 - **description**: 日次ジャーナルが 2026-06-23〜2026-06-29 の 7日間、完全欠番。最終公開は `journal/2026-06-22-hatcho-miso-akamiso-katareru-mise.html`。ISSUE-065 の自己修復対策（run_journal_local.sh の untracked 除去ロジック）は main に反映済みだが、両方の生成経路（launchd と クラウド scheduled-task）が止まっていたと推定される。クラウド側は CronCreate の 7日有効期限切れで自然消滅（ISSUE-066 done）。launchd 側の停止原因は未確認（オーナーの Mac がスリープ状態だった可能性）。
 - **impact**: 日次ジャーナルは Moat の三層編集（構造化DB × 特集 × 日次ジャーナル）の柱。7日欠番は鮮度シグナル（毎日更新）・SEO（daily fresh content）・ブランド（「日次でむしろ勝つ」前提）を直撃。
 - **acceptance**:
@@ -1162,6 +1163,7 @@
 | 2026-06-22 | DataKeeper(/solve-next) | ISSUE-064 audit_feature_stores.js に識別力トークン照合を導入（業態語/支店語除外＋2トークン共有）。呼炉凪来の偽陽性を正規化で解消、架空7ケース逆検証で検出力維持。実在不明 1→0・EXIT 0 | ✅ done |
 | 2026-06-22 | Builder(/solve-next) | ISSUE-063 schema整合監査のFAQ/パンくず判定をtitle単独→ページ実態コーパス照合へ改善（FAQ閾値0.50・ハブ名逐語救済）。オントピック偽陽性9→0・66件PASS、汚染E2E逆検証で検出力維持 | ✅ done |
 | 2026-06-29 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補 1件実装・ISSUE-067 起票** — ISSUE-066（ジャーナル二重稼働一本化 P3）: `CronList` でアクティブジョブ 0件・`scheduled_tasks.json` 不在を確認 → クラウド側 scheduled-task が 7日有効期限で自然消滅済みと判定。一本化は完了。`docs/journal-consolidation-guide.md` 新設（launchd 確認・再起動手順）。ISSUE-066 を done 化。合わせて 6/23〜6/29 の 7日欠番を ISSUE-067（P1・ready）として起票 | ✅ commit 後 push |
+| 2026-06-29 | Editor（journal-today SKILL / ISSUE-067） | **ISSUE-067 部分完了（1/7）** — 2026-06-29 分ジャーナル生成。テーマ: flexible / COL-SEAT-003「金曜19時の予約が取れない店、15分ずらすだけで入れる理由」。候補採点: c1=95/100（flexible×業界慣習×buzz=90）で95点ゲート通過。QA PASS 15/15。SVG図解 `assets/journal-figures/2026-06-29-kinyo-reservation.svg` 新設（Unsplash 禁止制約 #9 準拠）。`data/editorial_column_backlog.json` COL-SEAT-003 used 化。残 6/23〜6/28 の 6本は次回セッションで補完 | ✅ push 済み |
 
 ---
 
