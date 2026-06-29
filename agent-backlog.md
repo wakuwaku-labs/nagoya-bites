@@ -92,19 +92,20 @@
 ### [ISSUE-067] ジャーナル 6/23〜6/29 の 7日欠番（自動化経路の停止）
 
 - **priority**: P1
-- **status**: in_progress
+- **status**: done
 - **category**: content / ops
 - **detected**: 2026-06-29
 - **owner**: Editor
-- **progress**: 2026-06-29 分（本日付）を生成・公開済み。残り 6/23〜6/28 の 6本が未完。COL-SEAT-003「金曜19時予約」テーマ、QA PASS (15/15)。
+- **progress**: 全7本完了。6/23〜6/28 の 6本（COL-OPS-004/COL-PRICE-003/COL-SUPPLY-002/COL-HR-003/COL-LAW-001/COL-SEAT-002）+ 6/29 の 1本（COL-SEAT-003）。全7本 QA PASS (15/15)。SVG hero figure 7枚追加。journal 67件体制。
 - **description**: 日次ジャーナルが 2026-06-23〜2026-06-29 の 7日間、完全欠番。最終公開は `journal/2026-06-22-hatcho-miso-akamiso-katareru-mise.html`。ISSUE-065 の自己修復対策（run_journal_local.sh の untracked 除去ロジック）は main に反映済みだが、両方の生成経路（launchd と クラウド scheduled-task）が止まっていたと推定される。クラウド側は CronCreate の 7日有効期限切れで自然消滅（ISSUE-066 done）。launchd 側の停止原因は未確認（オーナーの Mac がスリープ状態だった可能性）。
 - **impact**: 日次ジャーナルは Moat の三層編集（構造化DB × 特集 × 日次ジャーナル）の柱。7日欠番は鮮度シグナル（毎日更新）・SEO（daily fresh content）・ブランド（「日次でむしろ勝つ」前提）を直撃。
 - **acceptance**:
-  1. 6/23〜6/29 の 7日分の記事を生成・公開（各日 journal/*.html + SNS原稿）
-  2. `data/journal_published.json` に 7本登録
-  3. `journal/feed.xml` / `feed.atom` / `index.html` を更新
-  4. launchd の稼働状況をオーナーが確認（`docs/journal-consolidation-guide.md` 参照）
+  1. ✅ 6/23〜6/29 の 7日分の記事を生成・公開（各日 journal/*.html + SNS原稿）
+  2. ✅ `data/journal_published.json` に 7本登録（計 67件）
+  3. ✅ `journal/feed.xml` / `feed.atom` / `index.html` を更新
+  4. launchd の稼働状況をオーナーが確認（`docs/journal-consolidation-guide.md` 参照）— 未完（オーナーアクション待ち）
 - **files**: `journal/2026-06-2[3-9]-*.html`（7本新規）, `data/journal_published.json`, `journal/feed.xml`, `journal/feed.atom`, `journal/index.html`
+- **resolution**: 2026-06-29 自動課題消化ルーティン（2セッション）で全7本バックフィル完了。PR: `claude/wizardly-ramanujan-mwvr9c` → main（API制限でドラフトPR未作成・オーナーが手動作成必要）
 - **関連**: ISSUE-065（恒久対策済み）/ ISSUE-066（done・二重稼働解消）/ `docs/journal-consolidation-guide.md`
 
 ### [DATA-001] 閉店店の掲載検出（餃子歩兵 名古屋泉店ほか）と営業実体ゲート新設 ✅
@@ -2275,3 +2276,5 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
 - 1件ずつ解く: `/solve-next` スラッシュコマンド
 - agent-backlog.md が**マスター**、Notion は確認用ダッシュボード
 - `status: done` になった課題は Notion からアーカイブされて表示から消える
+
+| 2026-06-29 | Editor（自動課題消化ルーティン / ISSUE-067） | **ISSUE-067 完了（7/7）** — 6/23〜6/28 の 6本バックフィル。テーマ: industry_insider×5 + flexible×1。コラム: COL-OPS-004/COL-PRICE-003/COL-SUPPLY-002/COL-HR-003/COL-LAW-001/COL-SEAT-002。全6本 QA PASS (15/15)。SVG infographic 6枚追加（Unsplash禁止制約 #9 準拠）。`data/journal_published.json` 67件体制。push 完了 (claude/wizardly-ramanujan-mwvr9c)。API制限でMCP経由のPR作成不可 → オーナーが手動でPR作成要 | ✅ push 済み |
