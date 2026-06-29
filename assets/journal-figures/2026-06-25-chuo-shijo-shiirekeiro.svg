@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0f1a12"/>
+  <!-- Header -->
+  <text x="600" y="52" font-family="Georgia, serif" font-size="18" fill="#7a9e7e" text-anchor="middle" letter-spacing="3">NAGOYA BITES — 業界の裏側</text>
+  <text x="600" y="95" font-family="Georgia, serif" font-size="28" fill="#e8d5b0" text-anchor="middle" font-weight="bold">中央市場と小規模仲卸 —— 名古屋の魚料理の仕入事情</text>
+  <line x1="100" y1="115" x2="1100" y2="115" stroke="#4a6b4e" stroke-width="1"/>
+
+  <!-- Supply chain diagram -->
+  <!-- Fishing harbor (source) -->
+  <rect x="50" y="220" width="180" height="100" rx="8" fill="#1a2e1e" stroke="#4a6b4e" stroke-width="2"/>
+  <text x="140" y="260" font-family="sans-serif" font-size="14" fill="#7a9e7e" text-anchor="middle">漁港・産地</text>
+  <text x="140" y="280" font-family="sans-serif" font-size="12" fill="#e8d5b0" text-anchor="middle">豊浜/三重/石川</text>
+  <text x="140" y="300" font-family="sans-serif" font-size="20" text-anchor="middle">🐟</text>
+
+  <!-- Route 1: Market path -->
+  <line x1="230" y1="250" x2="370" y2="200" stroke="#7a2c2c" stroke-width="2" stroke-dasharray="8,4"/>
+  <polygon points="370,190 380,205 360,205" fill="#7a2c2c"/>
+  <text x="300" y="195" font-family="sans-serif" font-size="11" fill="#7a2c2c" text-anchor="middle">市場経由ルート</text>
+
+  <!-- Market box -->
+  <rect x="370" y="140" width="200" height="100" rx="8" fill="#2a1e1e" stroke="#7a2c2c" stroke-width="1.5"/>
+  <text x="470" y="178" font-family="sans-serif" font-size="14" fill="#e8a0a0" text-anchor="middle">名古屋市中央</text>
+  <text x="470" y="198" font-family="sans-serif" font-size="14" fill="#e8a0a0" text-anchor="middle">卸売市場（北部）</text>
+  <text x="470" y="218" font-family="sans-serif" font-size="11" fill="#7a9e7e" text-anchor="middle">安定供給 / 差別化困難</text>
+
+  <!-- Market to restaurant -->
+  <line x1="570" y1="190" x2="730" y2="230" stroke="#7a2c2c" stroke-width="2" stroke-dasharray="8,4"/>
+  <polygon points="730,225 735,240 720,235" fill="#7a2c2c"/>
+
+  <!-- Route 2: Direct path -->
+  <line x1="230" y1="270" x2="720" y2="295" stroke="#1d4a36" stroke-width="2.5"/>
+  <polygon points="720,288 730,300 715,305" fill="#1d4a36"/>
+  <text x="480" y="315" font-family="sans-serif" font-size="13" fill="#7fd4a8" text-anchor="middle">★ 産地直送ルート（日帰り仕入れ可）</text>
+
+  <!-- Restaurant box -->
+  <rect x="730" y="200" width="200" height="130" rx="8" fill="#1a2e1e" stroke="#4a6b4e" stroke-width="2"/>
+  <text x="830" y="240" font-family="sans-serif" font-size="14" fill="#c9956b" text-anchor="middle">名古屋の</text>
+  <text x="830" y="260" font-family="sans-serif" font-size="14" fill="#c9956b" text-anchor="middle">魚料理店</text>
+  <text x="830" y="295" font-family="sans-serif" font-size="11" fill="#7a9e7e" text-anchor="middle">仕入れルートで</text>
+  <text x="830" y="313" font-family="sans-serif" font-size="11" fill="#7a9e7e" text-anchor="middle">鮮度・個性が決まる</text>
+
+  <!-- June seasonal note -->
+  <rect x="50" y="390" width="500" height="80" rx="6" fill="#1e2e1e" stroke="#2d5a30" stroke-width="1"/>
+  <text x="300" y="418" font-family="sans-serif" font-size="14" fill="#c9956b" text-anchor="middle">6月の旬 — この時期を推す店は仕入れに強い</text>
+  <text x="300" y="445" font-family="sans-serif" font-size="15" fill="#7fd4a8" text-anchor="middle">🐟 マイワシ　🐟 ウルメイワシ　🐟 マアジ</text>
+
+  <!-- Chalkboard signal -->
+  <rect x="620" y="390" width="500" height="80" rx="6" fill="#1a2e1e" stroke="#4a6b4e" stroke-width="1"/>
+  <text x="870" y="418" font-family="sans-serif" font-size="14" fill="#c9956b" text-anchor="middle">見分けのサイン</text>
+  <text x="870" y="445" font-family="sans-serif" font-size="13" fill="#e8d5b0" text-anchor="middle">「本日の鮮魚」手書き黒板 = 毎日仕入れに動いている証拠</text>
+
+  <line x1="100" y1="490" x2="1100" y2="490" stroke="#4a6b4e" stroke-width="1"/>
+  <text x="600" y="525" font-family="sans-serif" font-size="13" fill="#7a9e7e" text-anchor="middle">業界視点：同じ市場から仕入れる限り、扱う魚は横並びになりやすい</text>
+  <text x="600" y="548" font-family="sans-serif" font-size="13" fill="#7a9e7e" text-anchor="middle">産地直送を選ぶ店は「目利き力」を武器にしている</text>
+  <text x="600" y="610" font-family="sans-serif" font-size="12" fill="#4a6b4e" text-anchor="middle">nagoya-bites.com — 名古屋飲食業界の中の人が運営する目利きメディア</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0f1a12"/>
+  <!-- Header -->
+  <text x="600" y="52" font-family="Georgia, serif" font-size="18" fill="#7a9e7e" text-anchor="middle" letter-spacing="3">NAGOYA BITES — 業界の裏側</text>
+  <text x="600" y="95" font-family="Georgia, serif" font-size="28" fill="#e8d5b0" text-anchor="middle" font-weight="bold">名古屋の深夜営業 — 条例とリアル運用の差</text>
+  <line x1="100" y1="115" x2="1100" y2="115" stroke="#4a6b4e" stroke-width="1"/>
+
+  <!-- Clock showing midnight -->
+  <circle cx="200" cy="290" r="100" fill="#1a2e1e" stroke="#c9956b" stroke-width="2"/>
+  <circle cx="200" cy="290" r="90" fill="none" stroke="#4a6b4e" stroke-width="1"/>
+  <!-- Clock hands at midnight -->
+  <line x1="200" y1="290" x2="200" y2="205" stroke="#c9956b" stroke-width="4" stroke-linecap="round"/>
+  <line x1="200" y1="290" x2="200" y2="210" stroke="#e8d5b0" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="200" cy="290" r="5" fill="#c9956b"/>
+  <!-- 12 -->
+  <text x="200" y="222" font-family="sans-serif" font-size="16" fill="#e8d5b0" text-anchor="middle">12</text>
+  <!-- 3 -->
+  <text x="282" y="296" font-family="sans-serif" font-size="14" fill="#7a9e7e" text-anchor="middle">3</text>
+  <!-- 6 -->
+  <text x="200" y="376" font-family="sans-serif" font-size="14" fill="#7a9e7e" text-anchor="middle">6</text>
+  <!-- 9 -->
+  <text x="120" y="296" font-family="sans-serif" font-size="14" fill="#7a9e7e" text-anchor="middle">9</text>
+  <text x="200" y="415" font-family="sans-serif" font-size="14" fill="#c9956b" text-anchor="middle">深夜 0:00</text>
+
+  <!-- Legal requirement box -->
+  <rect x="330" y="140" width="380" height="160" rx="8" fill="#1a1a2e" stroke="#4a6b4e" stroke-width="1.5"/>
+  <text x="520" y="172" font-family="sans-serif" font-size="15" fill="#e8a0a0" text-anchor="middle" font-weight="bold">法律上のルール</text>
+  <text x="520" y="198" font-family="sans-serif" font-size="13" fill="#e8d5b0" text-anchor="middle">「深夜酒類提供食品営業」届出が必要</text>
+  <text x="520" y="218" font-family="sans-serif" font-size="12" fill="#7a9e7e" text-anchor="middle">風営法第33条 / 0時〜6時 / 10日前に警察署へ</text>
+  <line x1="350" y1="235" x2="690" y2="235" stroke="#4a6b4e" stroke-width="1"/>
+  <text x="520" y="258" font-family="sans-serif" font-size="12" fill="#7a9e7e" text-anchor="middle">スナック・クラブは別途「風俗営業1号許可」が必要</text>
+  <text x="520" y="278" font-family="sans-serif" font-size="12" fill="#7a9e7e" text-anchor="middle">住宅・文教地区は届出不可エリアあり</text>
+
+  <!-- Real situation boxes -->
+  <rect x="730" y="140" width="430" height="320" rx="8" fill="#1a2e1e" stroke="#2d5a30" stroke-width="1.5"/>
+  <text x="945" y="172" font-family="sans-serif" font-size="15" fill="#7fd4a8" text-anchor="middle" font-weight="bold">名古屋 深夜の実態 (2026年6月)</text>
+
+  <!-- Area 1: Kinsan -->
+  <rect x="750" y="185" width="390" height="60" rx="5" fill="#1e2e1e" stroke="#4a6b4e" stroke-width="1"/>
+  <text x="945" y="212" font-family="sans-serif" font-size="14" fill="#c9956b" text-anchor="middle">錦三丁目（キンサン）</text>
+  <text x="945" y="233" font-family="sans-serif" font-size="12" fill="#e8d5b0" text-anchor="middle">深夜1〜3時 バー・クラブ・深夜食堂が稼働</text>
+
+  <!-- Area 2: Osu -->
+  <rect x="750" y="258" width="390" height="60" rx="5" fill="#1e2e1e" stroke="#4a6b4e" stroke-width="1"/>
+  <text x="945" y="285" font-family="sans-serif" font-size="14" fill="#c9956b" text-anchor="middle">大須</text>
+  <text x="945" y="306" font-family="sans-serif" font-size="12" fill="#e8d5b0" text-anchor="middle">0〜1時台まで居酒屋が残る</text>
+
+  <!-- Area 3: Nagoya Station -->
+  <rect x="750" y="331" width="390" height="60" rx="5" fill="#1e2e1e" stroke="#4a6b4e" stroke-width="1"/>
+  <text x="945" y="358" font-family="sans-serif" font-size="14" fill="#c9956b" text-anchor="middle">名古屋駅周辺</text>
+  <text x="945" y="379" font-family="sans-serif" font-size="12" fill="#e8d5b0" text-anchor="middle">朝方まで営業のラーメン店（食事主体）</text>
+
+  <text x="945" y="435" font-family="sans-serif" font-size="12" fill="#7a9e7e" text-anchor="middle">「食事がメイン」の業態はケースにより届出不要</text>
+
+  <!-- Bottom guide -->
+  <rect x="330" y="320" width="380" height="140" rx="8" fill="#1a1a1a" stroke="#4a6b4e" stroke-width="1"/>
+  <text x="520" y="348" font-family="sans-serif" font-size="14" fill="#c9956b" text-anchor="middle">深夜の実用選択肢</text>
+  <text x="380" y="380" font-family="sans-serif" font-size="13" fill="#7fd4a8">🍸 バー（届出あり）→ 栄・錦エリア</text>
+  <text x="380" y="405" font-family="sans-serif" font-size="13" fill="#7fd4a8">🍜 ラーメン（食事主体）→ 名駅周辺</text>
+  <text x="380" y="430" font-family="sans-serif" font-size="13" fill="#7fd4a8">🍛 深夜食堂 → キンサン</text>
+
+  <text x="600" y="610" font-family="sans-serif" font-size="12" fill="#4a6b4e" text-anchor="middle">nagoya-bites.com — 名古屋飲食業界の中の人が運営する目利きメディア</text>
+</svg>

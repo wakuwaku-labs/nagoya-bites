@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0f1a12"/>
+  <!-- Header -->
+  <text x="600" y="52" font-family="Georgia, serif" font-size="18" fill="#7a9e7e" text-anchor="middle" letter-spacing="3">NAGOYA BITES — 業界の裏側</text>
+  <text x="600" y="95" font-family="Georgia, serif" font-size="28" fill="#e8d5b0" text-anchor="middle" font-weight="bold">ランチ1,000円の店が夜は高い理由 —— 客単価設計の裏側</text>
+  <line x1="100" y1="115" x2="1100" y2="115" stroke="#4a6b4e" stroke-width="1"/>
+
+  <!-- Chart area -->
+  <!-- Lunch bar (high cost ratio = tall bar = bad for profit) -->
+  <text x="280" y="155" font-family="sans-serif" font-size="16" fill="#c9956b" text-anchor="middle">ランチ</text>
+  <text x="280" y="175" font-family="sans-serif" font-size="13" fill="#7a9e7e" text-anchor="middle">客単価 ¥1,000</text>
+  <!-- Lunch bar - tall (high cost ratio) -->
+  <rect x="180" y="185" width="200" height="230" rx="4" fill="#7a2c2c" opacity="0.85"/>
+  <text x="280" y="270" font-family="Georgia, serif" font-size="36" fill="#ffffff" text-anchor="middle" font-weight="bold">70%</text>
+  <text x="280" y="305" font-family="sans-serif" font-size="14" fill="#e8d5b0" text-anchor="middle">原価率</text>
+  <!-- Arrow down = low profit -->
+  <text x="280" y="410" font-family="sans-serif" font-size="13" fill="#e8a0a0" text-anchor="middle">利益: ほぼゼロ</text>
+  <text x="280" y="430" font-family="sans-serif" font-size="12" fill="#7a9e7e" text-anchor="middle">集客ツールとして機能</text>
+
+  <!-- Night bar (low cost ratio = short bar = profitable) -->
+  <text x="580" y="155" font-family="sans-serif" font-size="16" fill="#c9956b" text-anchor="middle">夜（食事）</text>
+  <text x="580" y="175" font-family="sans-serif" font-size="13" fill="#7a9e7e" text-anchor="middle">客単価 ¥4,000〜</text>
+  <rect x="480" y="275" width="200" height="140" rx="4" fill="#1d4a36" opacity="0.85"/>
+  <text x="580" y="340" font-family="Georgia, serif" font-size="36" fill="#ffffff" text-anchor="middle" font-weight="bold">35%</text>
+  <text x="580" y="375" font-family="sans-serif" font-size="14" fill="#e8d5b0" text-anchor="middle">原価率</text>
+  <text x="580" y="420" font-family="sans-serif" font-size="13" fill="#7fd4a8" text-anchor="middle">利益の柱</text>
+  <text x="580" y="440" font-family="sans-serif" font-size="12" fill="#7a9e7e" text-anchor="middle">固定費を夜に回収</text>
+
+  <!-- Alcohol bar (lowest cost ratio) -->
+  <text x="880" y="155" font-family="sans-serif" font-size="16" fill="#c9956b" text-anchor="middle">アルコール</text>
+  <text x="880" y="175" font-family="sans-serif" font-size="13" fill="#7a9e7e" text-anchor="middle">ランチにはない収益源</text>
+  <rect x="780" y="315" width="200" height="100" rx="4" fill="#c9956b" opacity="0.75"/>
+  <text x="880" y="360" font-family="Georgia, serif" font-size="36" fill="#0f1a12" text-anchor="middle" font-weight="bold">22%</text>
+  <text x="880" y="395" font-family="sans-serif" font-size="14" fill="#0f1a12" text-anchor="middle">原価率</text>
+  <text x="880" y="430" font-family="sans-serif" font-size="13" fill="#c9956b" text-anchor="middle">最高収益源</text>
+  <text x="880" y="450" font-family="sans-serif" font-size="12" fill="#7a9e7e" text-anchor="middle">グラスワイン1杯でランチ損失補填</text>
+
+  <!-- Bottom line -->
+  <line x1="100" y1="473" x2="1100" y2="473" stroke="#4a6b4e" stroke-width="1"/>
+  <rect x="150" y="483" width="900" height="55" rx="6" fill="#1a2e1e" stroke="#4a6b4e" stroke-width="1"/>
+  <text x="600" y="507" font-family="sans-serif" font-size="13" fill="#c9956b" text-anchor="middle">INSIGHT</text>
+  <text x="600" y="528" font-family="sans-serif" font-size="13" fill="#e8d5b0" text-anchor="middle">「ランチが美味しい＝夜も割安」は業界では別計算。昼と夜は別の経済圏として設計されている。</text>
+
+  <text x="600" y="610" font-family="sans-serif" font-size="12" fill="#4a6b4e" text-anchor="middle">nagoya-bites.com — 名古屋飲食業界の中の人が運営する目利きメディア</text>
+</svg>
