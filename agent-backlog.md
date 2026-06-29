@@ -76,15 +76,35 @@
 ### [ISSUE-066] 日次ジャーナル生成の二重稼働（launchd × scheduled-task）を一本化
 
 - **priority**: P3
-- **status**: ready
+- **status**: done ✅
+- **resolved**: 2026-06-29
+- **resolved_by**: 自動消化ルーティン（Builder）— クラウド側タスク自然消滅確認 + ドキュメント作成
 - **category**: ops / reliability
 - **detected**: 2026-06-22
 - **owner**: Builder
 - **description**: ジャーナル生成経路が2系統並走している：① launchd `com.nagoyabites.journal`（毎朝9:00 → `scripts/run_journal_local.sh`・作業ディレクトリ=メインrepo）② scheduled-task `nagoya-bites-journal-daily`（journal-today SKILL.md・worktree 経由で cp）。両者が同じ `journal/` を書くため、worktree→メインrepo の cp 残骸がメインrepo の `git pull` を殺す相互汚染が ISSUE-065 の真因だった（自己修復処理で再発不能化済だが、二重稼働そのものは温床として残存）。
 - **impact**: 片方が成果を出しても他方が空振り/汚染を生む。観測性も二重化して切り分けが難しい。ISSUE-065 級デッドロックの再発リスク源。
 - **acceptance**: どちらか一方の経路に一本化（推奨は launchd 側＝API課金ゼロのサブスク認証経路を正とし、scheduled-task を停止 or 逆）。残す側の単独運用で日次1本公開が継続することを数日観測。`.claude/settings.json`・scheduled-task はエージェント自己改変ブロックのためオーナー手動操作が必要な可能性あり（その場合は手順を docs にまとめてオーナーへ依頼）。
-- **files**: `scripts/run_journal_local.sh`, launchd plist, scheduled-task 設定（オーナー領域）, `agent-backlog.md`
-- **関連**: ISSUE-065（親）/ [[journal-daily-worktree-dirty-rebase]]
+- **resolution**: 2026-06-29 の自動課題消化ルーティンで `CronList` を実行 → アクティブジョブ 0件を確認。`.claude/scheduled_tasks.json` も不在（CronCreate の 7日有効期限で自然消滅）。クラウド側 scheduled-task はすでに消えており、launchd が唯一の稼働経路となっている。一本化は自然完了。`docs/journal-consolidation-guide.md` を新設して launchd の確認・再起動手順をオーナー向けに整備（acceptance の「手順を docs にまとめてオーナーへ依頼」達成）。ただし 6/23〜6/29 の 7日欠番は別 ISSUE-067 で対応。
+- **files**: `scripts/run_journal_local.sh`, launchd plist, `docs/journal-consolidation-guide.md`（新規）, `agent-backlog.md`
+- **関連**: ISSUE-065（親）/ ISSUE-067（ジャーナル 6/23〜6/29 欠番）
+
+### [ISSUE-067] ジャーナル 6/23〜6/29 の 7日欠番（自動化経路の停止）
+
+- **priority**: P1
+- **status**: ready
+- **category**: content / ops
+- **detected**: 2026-06-29
+- **owner**: Editor
+- **description**: 日次ジャーナルが 2026-06-23〜2026-06-29 の 7日間、完全欠番。最終公開は `journal/2026-06-22-hatcho-miso-akamiso-katareru-mise.html`。ISSUE-065 の自己修復対策（run_journal_local.sh の untracked 除去ロジック）は main に反映済みだが、両方の生成経路（launchd と クラウド scheduled-task）が止まっていたと推定される。クラウド側は CronCreate の 7日有効期限切れで自然消滅（ISSUE-066 done）。launchd 側の停止原因は未確認（オーナーの Mac がスリープ状態だった可能性）。
+- **impact**: 日次ジャーナルは Moat の三層編集（構造化DB × 特集 × 日次ジャーナル）の柱。7日欠番は鮮度シグナル（毎日更新）・SEO（daily fresh content）・ブランド（「日次でむしろ勝つ」前提）を直撃。
+- **acceptance**:
+  1. 6/23〜6/29 の 7日分の記事を生成・公開（各日 journal/*.html + SNS原稿）
+  2. `data/journal_published.json` に 7本登録
+  3. `journal/feed.xml` / `feed.atom` / `index.html` を更新
+  4. launchd の稼働状況をオーナーが確認（`docs/journal-consolidation-guide.md` 参照）
+- **files**: `journal/2026-06-2[3-9]-*.html`（7本新規）, `data/journal_published.json`, `journal/feed.xml`, `journal/feed.atom`, `journal/index.html`
+- **関連**: ISSUE-065（恒久対策済み）/ ISSUE-066（done・二重稼働解消）/ `docs/journal-consolidation-guide.md`
 
 ### [DATA-001] 閉店店の掲載検出（餃子歩兵 名古屋泉店ほか）と営業実体ゲート新設 ✅
 - **priority**: P0 → **status**: done（push はユーザー承認待ち）
@@ -1141,6 +1161,7 @@
 | 2026-06-22 | Editor+Builder(/solve-next) | ISSUE-065 全 acceptance を origin/main で実体確認しクローズ（hardening 268ff31db / PR#73 / 欠番5本 d5c782da3）。残課題 ISSUE-066（二重稼働一本化・P3）を分離起票 | ✅ done |
 | 2026-06-22 | DataKeeper(/solve-next) | ISSUE-064 audit_feature_stores.js に識別力トークン照合を導入（業態語/支店語除外＋2トークン共有）。呼炉凪来の偽陽性を正規化で解消、架空7ケース逆検証で検出力維持。実在不明 1→0・EXIT 0 | ✅ done |
 | 2026-06-22 | Builder(/solve-next) | ISSUE-063 schema整合監査のFAQ/パンくず判定をtitle単独→ページ実態コーパス照合へ改善（FAQ閾値0.50・ハブ名逐語救済）。オントピック偽陽性9→0・66件PASS、汚染E2E逆検証で検出力維持 | ✅ done |
+| 2026-06-29 | Orchestrator（毎朝9時 自動課題消化ルーティン） | **安全候補 1件実装・ISSUE-067 起票** — ISSUE-066（ジャーナル二重稼働一本化 P3）: `CronList` でアクティブジョブ 0件・`scheduled_tasks.json` 不在を確認 → クラウド側 scheduled-task が 7日有効期限で自然消滅済みと判定。一本化は完了。`docs/journal-consolidation-guide.md` 新設（launchd 確認・再起動手順）。ISSUE-066 を done 化。合わせて 6/23〜6/29 の 7日欠番を ISSUE-067（P1・ready）として起票 | ✅ commit 後 push |
 
 ---
 
