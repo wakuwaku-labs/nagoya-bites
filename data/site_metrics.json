@@ -1,67 +1,67 @@
 {
-  "generatedAt": "2026-06-29T19:57:05.026Z",
+  "generatedAt": "2026-06-30T19:56:25.602Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 396,
-    "pageViews": 596,
-    "sessions": 452,
-    "avgSessionDuration": 103,
-    "bounceRate": 0.496,
-    "pagesPerSession": 1.32
+    "activeUsers": 394,
+    "pageViews": 586,
+    "sessions": 449,
+    "avgSessionDuration": 99,
+    "bounceRate": 0.481,
+    "pagesPerSession": 1.31
   },
   "channels": {
     "sessions": {
-      "organic": 232,
-      "direct": 201,
-      "social": 16,
+      "organic": 227,
+      "direct": 197,
+      "social": 18,
       "referral": 7,
       "paid": 0,
-      "other": 2
+      "other": 4
     },
     "pct": {
-      "organic": 50.7,
-      "direct": 43.9,
-      "social": 3.5,
+      "organic": 50.1,
+      "direct": 43.5,
+      "social": 4,
       "referral": 1.5,
       "paid": 0,
-      "other": 0.4
+      "other": 0.9
     }
   },
   "sourceBreakdown": [
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 175
+      "sessions": 172
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 112
+      "sessions": 107
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 84
+      "sessions": 85
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 28
+      "sessions": 27
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 15
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 12
+      "sessions": 16
     },
     {
       "source": "openai",
       "medium": "(not set)",
-      "sessions": 11
+      "sessions": 12
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 10
     },
     {
       "source": "openai",
@@ -69,31 +69,31 @@
       "sessions": 8
     },
     {
-      "source": "service.smt.docomo.ne.jp",
-      "medium": "referral",
+      "source": "(data not available)",
+      "medium": "(data not available)",
       "sessions": 3
     },
     {
-      "source": "chatgpt.com",
-      "medium": "(not set)",
+      "source": "service.smt.docomo.ne.jp",
+      "medium": "referral",
       "sessions": 3
     }
   ],
   "topPages": [
     {
       "path": "/",
-      "pageViews": 169,
-      "sessions": 126
+      "pageViews": 160,
+      "sessions": 122
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 41,
-      "sessions": 41
+      "pageViews": 46,
+      "sessions": 44
     },
     {
       "path": "/journal/2026-05-31-grill-tsubaki-meiekimae.html",
-      "pageViews": 39,
-      "sessions": 36
+      "pageViews": 38,
+      "sessions": 35
     },
     {
       "path": "/index.html",
@@ -107,14 +107,14 @@
     }
   ],
   "cta": {
-    "outboundClicks": 37,
-    "ctaClickRate": 8.2,
+    "outboundClicks": 36,
+    "ctaClickRate": 8,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 396,
+    "value": 394,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
