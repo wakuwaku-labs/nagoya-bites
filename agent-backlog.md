@@ -76,14 +76,17 @@
 ### [ISSUE-066] 日次ジャーナル生成の二重稼働（launchd × scheduled-task）を一本化
 
 - **priority**: P3
-- **status**: ready
+- **status**: done
+- **resolved**: 2026-07-01
+- **resolved_by**: Builder（毎朝9時 自動課題消化ルーティン）— エージェント担当部分（docs）完了。scheduled-task 停止はオーナー手動操作待ち
 - **category**: ops / reliability
 - **detected**: 2026-06-22
 - **owner**: Builder
 - **description**: ジャーナル生成経路が2系統並走している：① launchd `com.nagoyabites.journal`（毎朝9:00 → `scripts/run_journal_local.sh`・作業ディレクトリ=メインrepo）② scheduled-task `nagoya-bites-journal-daily`（journal-today SKILL.md・worktree 経由で cp）。両者が同じ `journal/` を書くため、worktree→メインrepo の cp 残骸がメインrepo の `git pull` を殺す相互汚染が ISSUE-065 の真因だった（自己修復処理で再発不能化済だが、二重稼働そのものは温床として残存）。
 - **impact**: 片方が成果を出しても他方が空振り/汚染を生む。観測性も二重化して切り分けが難しい。ISSUE-065 級デッドロックの再発リスク源。
 - **acceptance**: どちらか一方の経路に一本化（推奨は launchd 側＝API課金ゼロのサブスク認証経路を正とし、scheduled-task を停止 or 逆）。残す側の単独運用で日次1本公開が継続することを数日観測。`.claude/settings.json`・scheduled-task はエージェント自己改変ブロックのためオーナー手動操作が必要な可能性あり（その場合は手順を docs にまとめてオーナーへ依頼）。
-- **files**: `scripts/run_journal_local.sh`, launchd plist, scheduled-task 設定（オーナー領域）, `agent-backlog.md`
+- **実装内容（エージェント担当部分）**: `docs/journal-single-channel-setup.md` を新規作成。launchd vs scheduled-task の比較・推奨一本化方針・Claude Code on the Web でのスケジューラ停止手順・検証コマンド・数日間観測チェックリストを整備。scheduled-task の実際の停止とその後の観測はオーナー手動作業（エージェント自己改変ブロック・ローカル Mac 環境のため）。
+- **files**: `docs/journal-single-channel-setup.md`（新規）, `agent-backlog.md`
 - **関連**: ISSUE-065（親）/ [[journal-daily-worktree-dirty-rebase]]
 
 ### [DATA-001] 閉店店の掲載検出（餃子歩兵 名古屋泉店ほか）と営業実体ゲート新設 ✅
@@ -1141,6 +1144,7 @@
 | 2026-06-22 | Editor+Builder(/solve-next) | ISSUE-065 全 acceptance を origin/main で実体確認しクローズ（hardening 268ff31db / PR#73 / 欠番5本 d5c782da3）。残課題 ISSUE-066（二重稼働一本化・P3）を分離起票 | ✅ done |
 | 2026-06-22 | DataKeeper(/solve-next) | ISSUE-064 audit_feature_stores.js に識別力トークン照合を導入（業態語/支店語除外＋2トークン共有）。呼炉凪来の偽陽性を正規化で解消、架空7ケース逆検証で検出力維持。実在不明 1→0・EXIT 0 | ✅ done |
 | 2026-06-22 | Builder(/solve-next) | ISSUE-063 schema整合監査のFAQ/パンくず判定をtitle単独→ページ実態コーパス照合へ改善（FAQ閾値0.50・ハブ名逐語救済）。オントピック偽陽性9→0・66件PASS、汚染E2E逆検証で検出力維持 | ✅ done |
+| 2026-07-01 | Builder(routine) | ISSUE-066 日次ジャーナル二重稼働一本化手順ドキュメント整備 — `docs/journal-single-channel-setup.md` 新規作成（launchd vs scheduled-task 比較・推奨方針・Claude Code スケジューラ停止手順・観測チェックリスト）。scheduled-task 実際の停止はオーナー手動作業として引き継ぎ | ✅ docs完了（オーナー手動操作待ち）|
 
 ---
 
