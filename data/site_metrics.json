@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-07-13T04:24:19.664Z",
+  "generatedAt": "2026-07-13T06:41:10.351Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 379,
-    "pageViews": 498,
-    "sessions": 423,
-    "avgSessionDuration": 86.9,
-    "bounceRate": 0.437,
+    "activeUsers": 382,
+    "pageViews": 503,
+    "sessions": 427,
+    "avgSessionDuration": 86.1,
+    "bounceRate": 0.443,
     "pagesPerSession": 1.18
   },
   "channels": {
     "sessions": {
-      "organic": 255,
-      "direct": 135,
+      "organic": 256,
+      "direct": 138,
       "social": 28,
       "referral": 5,
       "paid": 0,
       "other": 1
     },
     "pct": {
-      "organic": 60.1,
-      "direct": 31.8,
-      "social": 6.6,
+      "organic": 59.8,
+      "direct": 32.2,
+      "social": 6.5,
       "referral": 1.2,
       "paid": 0,
       "other": 0.2
@@ -31,12 +31,12 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 114
+      "sessions": 115
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 111
+      "sessions": 114
     },
     {
       "source": "google",
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 73,
-      "sessions": 62
+      "pageViews": 75,
+      "sessions": 64
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -101,9 +101,9 @@
       "sessions": 30
     },
     {
-      "path": "/features/nagoya-tebasaki.html",
-      "pageViews": 22,
-      "sessions": 22
+      "path": "/index.html",
+      "pageViews": 24,
+      "sessions": 17
     }
   ],
   "cta": {
@@ -114,7 +114,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 379,
+    "value": 382,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
