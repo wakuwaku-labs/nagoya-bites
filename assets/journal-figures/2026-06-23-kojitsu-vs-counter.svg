@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-label="接待の店選びにおける個室とカウンター席の機能比較図。個室は情報遮断・密談向き、カウンターは関係構築・場の温度向きであることを示す。">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a1410"/>
+      <stop offset="1" stop-color="#241b13"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#e8c87a" font-family="Georgia,serif" font-size="21" font-weight="bold">個室 vs カウンター——接待の使い分け</text>
+  <text x="40" y="72" fill="#9b8c78" font-family="sans-serif" font-size="13">商談の性質で選ぶべき席タイプは変わる</text>
+
+  <!-- column headers -->
+  <rect x="40" y="100" width="250" height="34" rx="4" fill="#3c2f1e"/>
+  <text x="165" y="122" fill="#f0e6d2" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">個室</text>
+  <rect x="310" y="100" width="250" height="34" rx="4" fill="#3c2f1e"/>
+  <text x="435" y="122" fill="#f0e6d2" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">カウンター</text>
+
+  <!-- row 1: purpose -->
+  <text x="40" y="160" fill="#9b8c78" font-family="sans-serif" font-size="11">主目的</text>
+  <text x="165" y="184" fill="#f0e6d2" font-family="sans-serif" font-size="13" text-anchor="middle">情報遮断・密談</text>
+  <text x="435" y="184" fill="#f0e6d2" font-family="sans-serif" font-size="13" text-anchor="middle">関係構築・場の温度</text>
+
+  <line x1="40" y1="200" x2="560" y2="200" stroke="#4a3c28" stroke-width="1"/>
+
+  <!-- row 2: booking -->
+  <text x="40" y="226" fill="#9b8c78" font-family="sans-serif" font-size="11">予約タイミング</text>
+  <text x="165" y="250" fill="#f0e6d2" font-family="sans-serif" font-size="13" text-anchor="middle">1〜2週間前が無難</text>
+  <text x="435" y="250" fill="#f0e6d2" font-family="sans-serif" font-size="13" text-anchor="middle">直前でも余地あり</text>
+
+  <line x1="40" y1="266" x2="560" y2="266" stroke="#4a3c28" stroke-width="1"/>
+
+  <!-- row 3: fit -->
+  <text x="40" y="292" fill="#9b8c78" font-family="sans-serif" font-size="11">向く業種・場面</text>
+  <text x="165" y="316" fill="#f0e6d2" font-family="sans-serif" font-size="13" text-anchor="middle">金融・士業・条件交渉</text>
+  <text x="435" y="316" fill="#f0e6d2" font-family="sans-serif" font-size="13" text-anchor="middle">初対面・関係強化</text>
+
+  <text x="40" y="368" fill="#7c6f5c" font-family="sans-serif" font-size="10">図: NAGOYA BITES 編集部 — 席タイプは「格」ではなく「商談の中身」で選ぶ</text>
+</svg>
