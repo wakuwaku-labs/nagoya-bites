@@ -1,0 +1,208 @@
+{
+  "date": "2026-07-13",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "今週の名古屋 新店ダイジェスト——鶴舞・栄の話題5軒",
+      "verdict": "PASS",
+      "total": 95,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=12 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 5件 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "揚げたてベニエから420円うどんまで——今週の名古屋話題店",
+      "verdict": "FAIL",
+      "total": 92,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 22,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=11 → 7"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "鶴舞が今アツい——朝うどんと完全予約パスタが同じ駅前に",
+      "verdict": "FAIL",
+      "total": 87,
+      "breakdown": {
+        "recency": 20,
+        "topicality": 22,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 7日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=14 → 7"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "名古屋・栄と鶴舞で新店ラッシュ——韓国鍋から和食まで",
+      "verdict": "FAIL",
+      "total": 87,
+      "breakdown": {
+        "recency": 20,
+        "topicality": 22,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 4日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=16 → 7"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "夏の名古屋 新店の攻略順——予約が要る店・並ぶ店・朝の店",
+      "verdict": "FAIL",
+      "total": 82,
+      "breakdown": {
+        "recency": 20,
+        "topicality": 22,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 4日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=13 → 7"
+        ],
+        "uniqueness": [
+          "angle 20-49字 → 10"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "fallback_needed": false
+}
