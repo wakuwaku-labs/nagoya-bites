@@ -1,37 +1,37 @@
 {
-  "generatedAt": "2026-07-12T19:04:52.957Z",
+  "generatedAt": "2026-07-13T04:24:19.664Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 374,
-    "pageViews": 490,
-    "sessions": 419,
-    "avgSessionDuration": 84.5,
-    "bounceRate": 0.453,
-    "pagesPerSession": 1.17
+    "activeUsers": 379,
+    "pageViews": 498,
+    "sessions": 423,
+    "avgSessionDuration": 86.9,
+    "bounceRate": 0.437,
+    "pagesPerSession": 1.18
   },
   "channels": {
     "sessions": {
-      "organic": 251,
-      "direct": 138,
-      "social": 27,
+      "organic": 255,
+      "direct": 135,
+      "social": 28,
       "referral": 5,
       "paid": 0,
-      "other": 2
+      "other": 1
     },
     "pct": {
-      "organic": 59.3,
-      "direct": 32.6,
-      "social": 6.4,
+      "organic": 60.1,
+      "direct": 31.8,
+      "social": 6.6,
       "referral": 1.2,
       "paid": 0,
-      "other": 0.5
+      "other": 0.2
     }
   },
   "sourceBreakdown": [
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 112
+      "sessions": 114
     },
     {
       "source": "(direct)",
@@ -46,27 +46,27 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 32
+      "sessions": 33
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 25
+      "sessions": 26
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 19
+      "sessions": 20
     },
     {
       "source": "openai",
       "medium": "(not set)",
-      "sessions": 17
+      "sessions": 19
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 10
+      "sessions": 5
     },
     {
       "source": "note.com",
@@ -92,8 +92,8 @@
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 59,
-      "sessions": 55
+      "pageViews": 61,
+      "sessions": 57
     },
     {
       "path": "/journal/2026-06-15-yoroniku-nagoya-haera.html",
@@ -107,14 +107,14 @@
     }
   ],
   "cta": {
-    "outboundClicks": 30,
-    "ctaClickRate": 7.2,
+    "outboundClicks": 31,
+    "ctaClickRate": 7.3,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 374,
+    "value": 379,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
