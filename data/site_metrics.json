@@ -1,47 +1,47 @@
 {
-  "generatedAt": "2026-07-13T19:22:41.396Z",
+  "generatedAt": "2026-07-14T19:18:21.315Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 376,
+    "activeUsers": 378,
     "pageViews": 496,
-    "sessions": 419,
-    "avgSessionDuration": 87,
-    "bounceRate": 0.439,
+    "sessions": 421,
+    "avgSessionDuration": 90.1,
+    "bounceRate": 0.437,
     "pagesPerSession": 1.18
   },
   "channels": {
     "sessions": {
-      "organic": 251,
-      "direct": 137,
-      "social": 27,
+      "organic": 250,
+      "direct": 139,
+      "social": 28,
       "referral": 4,
       "paid": 0,
-      "other": 2
+      "other": 4
     },
     "pct": {
-      "organic": 59.6,
-      "direct": 32.5,
-      "social": 6.4,
-      "referral": 1,
+      "organic": 58.8,
+      "direct": 32.7,
+      "social": 6.6,
+      "referral": 0.9,
       "paid": 0,
-      "other": 0.5
+      "other": 0.9
     }
   },
   "sourceBreakdown": [
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 116
+      "sessions": 121
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 112
+      "sessions": 111
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 80
+      "sessions": 76
     },
     {
       "source": "openai",
@@ -51,12 +51,7 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 25
-    },
-    {
-      "source": "yahoo",
-      "medium": "organic",
-      "sessions": 20
+      "sessions": 26
     },
     {
       "source": "openai",
@@ -64,36 +59,41 @@
       "sessions": 19
     },
     {
+      "source": "yahoo",
+      "medium": "organic",
+      "sessions": 18
+    },
+    {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 6
+      "sessions": 9
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 3
     },
     {
       "source": "note.com",
       "medium": "referral",
       "sessions": 2
-    },
-    {
-      "source": "(data not available)",
-      "medium": "(data not available)",
-      "sessions": 1
     }
   ],
   "topPages": [
     {
       "path": "/",
       "pageViews": 75,
-      "sessions": 64
+      "sessions": 65
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 62,
-      "sessions": 59
+      "pageViews": 65,
+      "sessions": 62
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 57,
-      "sessions": 54
+      "pageViews": 60,
+      "sessions": 57
     },
     {
       "path": "/journal/2026-06-15-yoroniku-nagoya-haera.html",
@@ -102,19 +102,19 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 24,
-      "sessions": 17
+      "pageViews": 23,
+      "sessions": 16
     }
   ],
   "cta": {
-    "outboundClicks": 31,
-    "ctaClickRate": 7.4,
+    "outboundClicks": 28,
+    "ctaClickRate": 6.7,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 376,
+    "value": 378,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
