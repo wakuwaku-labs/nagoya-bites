@@ -8,6 +8,39 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-067] 閲覧データ分析: 上位ランディング特集5本に予約CTA欠落 → HP直リンク41本を付与 ✅
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-07-16
+- **resolved**: 2026-07-16
+- **resolved_by**: Orchestrator 直轄（INSPECT→BUILD）— ユーザー依頼「閲覧データから改善点をあぶり出して修正」
+- **category**: cvr / ux / marketing
+- **owner**: Builder
+- **診断（data/metrics_history.json 30日トレーリング 6/1→7/16）**:
+  - セッション横ばい（429→429）に対し PV 896→503（-44%）/ 回遊 2.09→1.17 p/s / 滞在 264→80秒 / **CTAクリック率 13.5%→5.1%**（22クリック/30日）/ modal_open 6件/30日
+  - チャネル激変: direct 66.5%→32.5%、organic 30%→58.9%。organic 内訳は **Bing 131 > Google 70 > OpenAI/ChatGPT 計83（AI経由が約19%）**
+  - ランディングの主役がトップ（73PV）から特集（ひつまぶし72・一人飲み64・手羽先24）へ移行
+  - **サイト故障は否定**（preview 実測: 検索→グリッド→モーダル→modal_open 発火まで全動作・console error 0）。崩落の正体は「高回遊の direct 層の減少 ＋ 記事1枚読んで離脱する organic/AI 層の増加」というミックスシフト。よって打ち手は「記事ランディングを次の行動（予約・回遊）へ接続する」こと
+- **実装内容**: `scripts/add_feature_reservation_cta.js`（新規・冪等）で、店舗ブロックに内部詳細リンクしか持たない特集へホットペッパー予約直リンクを付与。既存慣例（banquet/date 等の `store-link` + hotpepper 直リンク）に準拠し、CSS `.store-link[href*="hotpepper"]` の既存スタイルが自動適用。**stores/JXXXX.html の実在 ＋ closed_stores.json 非掲載の J コードのみ**に付与（架空店ブロック・閉店ゲートと整合）
+  - nagoya-hitsumabushi +9 / nagoya-solo-dining +10（リンク実質ゼロの行き止まりカードを解消）/ nagoya-tebasaki +8 / nagoya-yakiniku +10 / nagoya-miso-nikomi-udon +4 ＝ **計41本**
+- **QAゲート**: audit_feature_stores 実在不明0/リンク切れ0/EXIT0 ✅ / audit_feature_schema_alignment EXIT0 ✅ / preview 実機表示（両パターン・モバイル）✅ / console error 0 ✅ / J コード⇄店名一致スポットチェック ✅ / 重複リンク0・冪等再実行0件 ✅
+- **効果計測**: `track_metrics.js --baseline ISSUE-067 --metric ctaClickRate --target 8`（2026-07-16 時点 5.1%）。約2週間後に `--followup ISSUE-067` で delta 計測
+- **files**: `scripts/add_feature_reservation_cta.js`（新規）, `features/nagoya-hitsumabushi.html`, `features/nagoya-solo-dining.html`, `features/nagoya-tebasaki.html`, `features/nagoya-yakiniku.html`, `features/nagoya-miso-nikomi-udon.html`, `data/effect_ledger.json`, `agent-backlog.md`
+
+### [ISSUE-068] 計測基盤の穴2件（GSC権限エラー・link_domainカスタムディメンション未登録）— オーナー操作依頼
+
+- **priority**: P2
+- **status**: ready
+- **category**: seo / analytics-ops
+- **detected**: 2026-07-16
+- **owner**: Marketer（実操作はオーナー）
+- **description**: 閲覧データ分析（ISSUE-067）で計測基盤の穴を2件確認。
+  1. **GSC が権限エラーで取得不能**: `data/gsc_metrics.json` が `User does not have sufficient permission for site 'https://nagoya-bites.com/'`。サービスアカウントが Search Console のユーザーに未追加。現在 **Bing(131) が Google(70) をセッション数で上回る**異常があり、Google 側の検索クエリ・順位・インデックス状況を確認できないのは P1 級の観測盲点
+  2. **GA4 `link_domain` カスタムディメンション未登録**: `site_metrics.json` の CTA ドメイン別内訳が恒久スキップ。ホットペッパー/食べログ/Google Maps 等どの予約導線が効いているか分解できず、ISSUE-067 の効果計測の解像度が落ちる
+- **acceptance**: ① GSC のプロパティ設定でサービスアカウント（GA4_SERVICE_ACCOUNT_KEY のメールアドレス）をユーザー追加 → `gsc_metrics.json` に totals が入る ② GA4 管理画面でイベントパラメータ `link_domain` をカスタムディメンション登録 → `site_metrics.json` の cta.byDomain が埋まる
+- **files**: `data/gsc_metrics.json`, `data/site_metrics.json`（確認のみ・コード変更なし）
+- **関連**: ISSUE-067（効果計測の解像度向上）
+
 ### [ISSUE-065] 日次ジャーナルが 6/18〜6/22 の5日欠番（routine 再停止）✅
 
 - **priority**: P1 → **status**: done
@@ -1141,6 +1174,7 @@
 | 2026-06-22 | Editor+Builder(/solve-next) | ISSUE-065 全 acceptance を origin/main で実体確認しクローズ（hardening 268ff31db / PR#73 / 欠番5本 d5c782da3）。残課題 ISSUE-066（二重稼働一本化・P3）を分離起票 | ✅ done |
 | 2026-06-22 | DataKeeper(/solve-next) | ISSUE-064 audit_feature_stores.js に識別力トークン照合を導入（業態語/支店語除外＋2トークン共有）。呼炉凪来の偽陽性を正規化で解消、架空7ケース逆検証で検出力維持。実在不明 1→0・EXIT 0 | ✅ done |
 | 2026-06-22 | Builder(/solve-next) | ISSUE-063 schema整合監査のFAQ/パンくず判定をtitle単独→ページ実態コーパス照合へ改善（FAQ閾値0.50・ハブ名逐語救済）。オントピック偽陽性9→0・66件PASS、汚染E2E逆検証で検出力維持 | ✅ done |
+| 2026-07-16 | Orchestrator+Builder(INSPECT→BUILD) | ISSUE-067 閲覧データ分析（CTA率13.5→5.1%崩落の真因＝direct→organic/AIミックスシフト＋記事ランディングの予約導線欠落）→ 上位ランディング特集5本にHP予約直リンク41本を冪等付与（add_feature_reservation_cta.js 新規）。baseline記録済（ctaClickRate 5.1→target 8）。ISSUE-068（GSC権限・link_domain登録＝オーナー操作）を分離起票 | ✅ デプロイ済み |
 
 ---
 

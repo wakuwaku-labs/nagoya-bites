@@ -30,6 +30,36 @@
       "target_metric": "ctaClickRate",
       "target_value": 3,
       "followup": null
+    },
+    "ISSUE-067": {
+      "baseline": {
+        "date": "2026-07-16",
+        "metrics": {
+          "totals": {
+            "activeUsers": 390,
+            "pageViews": 503,
+            "sessions": 429,
+            "avgSessionDuration": 80.4,
+            "bounceRate": 0.438,
+            "pagesPerSession": 1.17
+          },
+          "channels_pct": {
+            "organic": 58.9,
+            "direct": 32.5,
+            "social": 7,
+            "referral": 1.4,
+            "paid": 0,
+            "other": 0.2
+          },
+          "cta": {
+            "outboundClicks": 22,
+            "ctaClickRate": 5.1
+          }
+        }
+      },
+      "target_metric": "ctaClickRate",
+      "target_value": 8,
+      "followup": null
     }
   }
 }
