@@ -1,0 +1,208 @@
+{
+  "date": "2026-06-27",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "深夜3時、カウンター8席の『辛麺 華火』新栄町本店を読む",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=14 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 7件 (価格帯,席,予約,シーン,接待,一人飲み,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "深夜3時営業の飲食店、翌日仕込みはいつやるのか",
+      "verdict": "FAIL",
+      "total": 69,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 9,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=1 → 5",
+          "x_mentions=2 → 4"
+        ],
+        "uniqueness": [
+          "angle 20-49字 → 10"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 1件 +2",
+          "title 23字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "ぴよりんヴィレッジ、名古屋駅コンコースの回転設計",
+      "verdict": "FAIL",
+      "total": 59,
+      "breakdown": {
+        "recency": 15,
+        "topicality": 9,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 12日前"
+        ],
+        "topicality": [
+          "media_count=1 → 5",
+          "x_mentions=3 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 2件 (コース,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 1件 +2",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "かっぱ寿司 久屋大通店、愛知10年ぶり新店の価格帯を読む",
+      "verdict": "FAIL",
+      "total": 54,
+      "breakdown": {
+        "recency": 10,
+        "topicality": 9,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 24日前"
+        ],
+        "topicality": [
+          "media_count=1 → 5",
+          "x_mentions=5 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 2件 (シーン,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 1件 +2",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "台所 宗や 金山——単立地の居酒屋が守る食材の鮮度",
+      "verdict": "FAIL",
+      "total": 44,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 9,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 347日前"
+        ],
+        "topicality": [
+          "media_count=1 → 5",
+          "x_mentions=1 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 2件 (価格帯,席)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 1件 +2",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "fallback_needed": false
+}
