@@ -1,0 +1,207 @@
+{
+  "date": "2026-06-26",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "ポーたま HAERA店——朝650円と夜900円、二毛作の価格帯設計",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=6 → 15",
+          "x_mentions=60 → 10",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 9件 (価格帯,席,予約,シーン,接待,デート,一人飲み,繁忙,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 6件 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "居酒屋の『お通し』は拒否できるのか——名古屋の店が名物にする理由",
+      "verdict": "FAIL",
+      "total": 76,
+      "breakdown": {
+        "recency": 15,
+        "topicality": 19,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 11日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=6 → 4"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 6件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "一人飲み歓迎の店を見抜く5つのサイン——名古屋のカウンター事情",
+      "verdict": "FAIL",
+      "total": 64,
+      "breakdown": {
+        "recency": 10,
+        "topicality": 14,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 16日前"
+        ],
+        "topicality": [
+          "media_count=2 → 10",
+          "x_mentions=2 → 4"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 2件 +2",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "ぴよりんvillage 中村区に新店",
+      "verdict": "FAIL",
+      "total": 44,
+      "breakdown": {
+        "recency": 15,
+        "topicality": 9,
+        "uniqueness": 0,
+        "brand_fit": 10,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 11日前"
+        ],
+        "topicality": [
+          "media_count=1 → 5",
+          "x_mentions=1 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 0件 ()"
+        ],
+        "brand_fit": [
+          "ベース10"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 1件 +2",
+          "title 18字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "契約農家を持っている店、いない店",
+      "verdict": "FAIL",
+      "total": 30,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 0,
+        "uniqueness": 5,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 907日前"
+        ],
+        "topicality": [
+          "media_count=0 → 0",
+          "x_mentions=0 → 0"
+        ],
+        "uniqueness": [
+          "angle 短すぎ → 5"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 1件 +2",
+          "title 16字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "fallback_needed": false
+}
