@@ -6657,6 +6657,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="index.html#q=YUBUNE%20coffee">YUBUNE coffee（栄 カフェ）</a></li>
 <li><a href="index.html#q=cen">cen（栄 イノベーティブ和食）</a></li>
 <li><a href="index.html#q=%E3%83%9D%E3%83%BC%E3%81%9F%E3%81%BE%20%E5%90%8D%E5%8F%A4%E5%B1%8BHAERA%E5%BA%97">ポーたま 名古屋HAERA店（栄 軽食・惣菜）</a></li>
+<li><a href="index.html#q=%E8%BE%9B%E9%BA%BA%20%E8%8F%AF%E7%81%AB%20%E6%96%B0%E6%A0%84%E7%94%BA%E6%9C%AC%E5%BA%97">辛麺 華火 新栄町本店（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄 辛麺専門店）</a></li>
 </ul></noscript>
 <div class="grid" id="grid"></div>
 <div class="pagination" id="pagination" role="navigation" aria-label="ページネーション"></div>
@@ -6822,7 +6823,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 
 <!-- STORE-INDEX:START 2026-07-16 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（5002店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（5003店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（829店）</summary>
@@ -7659,7 +7660,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 </ul>
 </details>
 <details class="store-index-area" data-area="栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄">
-<summary>栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄（740店）</summary>
+<summary>栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄（741店）</summary>
 <ul class="store-index-list">
 <li><a href="stores/J001295266.html">【団体予約大歓迎】本鮪　海鮮と炭火焼　さくら也　丸の内/伏見（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄・居酒屋）</a></li>
 <li><a href="stores/J003323369.html">&amp;a アンドエー（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄・カフェ・スイーツ）</a></li>
@@ -8217,6 +8218,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="stores/J003958550.html">新美家（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄・居酒屋）</a></li>
 <li><a href="stores/J000024229.html">神楽家（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄・和食）</a></li>
 <li><a href="stores/J004591012.html">神戸亭 名古屋店（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄・創作料理）</a></li>
+<li><a href="index.html#q=%E8%BE%9B%E9%BA%BA%20%E8%8F%AF%E7%81%AB%20%E6%96%B0%E6%A0%84%E7%94%BA%E6%9C%AC%E5%BA%97">辛麺 華火 新栄町本店（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄・辛麺専門店）</a></li>
 <li><a href="stores/J001161668.html">水炊き 吟醸もつ鍋 由乃 ゆの 錦本店（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄・居酒屋）</a></li>
 <li><a href="stores/J001266121.html">水炊き九州居酒屋 笑時（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄・居酒屋）</a></li>
 <li><a href="stores/J001208960.html">炊き餃子と九州の炭焼酒場 晴レトキ（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄・居酒屋）</a></li>
@@ -12181,7 +12183,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = 'c6bfba0dd9bd';
+var STORES_JSON_VERSION = '725595bdb5be';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
