@@ -1,0 +1,206 @@
+{
+  "date": "2026-06-25",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "木曽路 瓦町店 — 『北海道祭り』3,850円の中身と会計の読み方",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=15 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 7件 (価格帯,コース,予約,シーン,接待,アラカルト,一人飲み)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 5件 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "木曽路 錦店 — 通し営業と組織需要の読み方",
+      "verdict": "FAIL",
+      "total": 79,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 14,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前"
+        ],
+        "topicality": [
+          "media_count=2 → 10",
+          "x_mentions=5 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 3件 (価格帯,コース,予約)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 2件 +2",
+          "title 22字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "一人飲み歓迎の店を見抜く5つのサイン",
+      "verdict": "FAIL",
+      "total": 71,
+      "breakdown": {
+        "recency": 15,
+        "topicality": 19,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 10日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=6 → 4"
+        ],
+        "uniqueness": [
+          "angle 20-49字 → 10"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 18字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "今週の話題店ダイジェスト（6月third週）",
+      "verdict": "FAIL",
+      "total": 51,
+      "breakdown": {
+        "recency": 20,
+        "topicality": 9,
+        "uniqueness": 5,
+        "brand_fit": 10,
+        "writability": 5,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 5日前"
+        ],
+        "topicality": [
+          "media_count=1 → 5",
+          "x_mentions=3 → 4"
+        ],
+        "uniqueness": [
+          "angle 短すぎ → 5"
+        ],
+        "brand_fit": [
+          "ベース10"
+        ],
+        "writability": [
+          "sources 1件 +2",
+          "title 22字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "梅雨明け前、夜の営業時間はどう変わるか",
+      "verdict": "FAIL",
+      "total": 49,
+      "breakdown": {
+        "recency": 10,
+        "topicality": 9,
+        "uniqueness": 5,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 15日前"
+        ],
+        "topicality": [
+          "media_count=1 → 5",
+          "x_mentions=2 → 4"
+        ],
+        "uniqueness": [
+          "angle 短すぎ → 5"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 1件 +2",
+          "title 19字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "fallback_needed": false
+}
