@@ -127,11 +127,37 @@ if [ "$ALREADY" = "1" ]; then
 fi
 
 # ---- 4. claude で生成 ----
+# ネットワーク瞬断（socket closed / FailedToOpenSocket 等）は claude 側の一時的な通信エラーで、
+# 認証切れ（401 Invalid authentication credentials）とは別物。前者はリトライで復旧するが、
+# 後者はリトライしても無駄なので即座に諦める（2026-07-14/07-15 のネットワーク瞬断による
+# 欠番を教訓に導入。認証エラーまでリトライすると失敗ログが埋もれて気づくのが遅れる）。
 PROMPT=$(tail -n +5 .claude/commands/journal-today.md)
-log "claude 生成を開始（サブスク認証・--dangerously-skip-permissions）"
-"$CLAUDE_BIN" --print "$PROMPT" --dangerously-skip-permissions >>"$LOG" 2>&1
-CLAUDE_RC=$?
-log "claude 終了コード: ${CLAUDE_RC}"
+MAX_CLAUDE_ATTEMPTS=3
+CLAUDE_ATTEMPT=1
+while :; do
+  log "claude 生成を開始（サブスク認証・--dangerously-skip-permissions・試行 ${CLAUDE_ATTEMPT}/${MAX_CLAUDE_ATTEMPTS}）"
+  "$CLAUDE_BIN" --print "$PROMPT" --dangerously-skip-permissions >>"$LOG" 2>&1
+  CLAUDE_RC=$?
+  log "claude 終了コード: ${CLAUDE_RC}"
+  if [ "$CLAUDE_RC" = "0" ]; then
+    break
+  fi
+  if grep -qE "Invalid authentication credentials|Failed to authenticate" "$LOG"; then
+    log "認証エラーを検出。リトライしても復旧しないため即座に諦めます。"
+    break
+  fi
+  if [ "$CLAUDE_ATTEMPT" -ge "$MAX_CLAUDE_ATTEMPTS" ]; then
+    log "最大試行回数（${MAX_CLAUDE_ATTEMPTS}）に到達。諦めます。"
+    break
+  fi
+  if ! grep -qE "socket connection was closed|FailedToOpenSocket|ECONNRESET|ETIMEDOUT|network|Unable to connect to API" "$LOG"; then
+    log "既知のネットワーク一時エラーではないためリトライしません。"
+    break
+  fi
+  log "ネットワーク一時エラーを検出。30秒待機してリトライします。"
+  sleep 30
+  CLAUDE_ATTEMPT=$((CLAUDE_ATTEMPT+1))
+done
 
 # ---- 5. 検証 ----
 # (a) published.json に本日エントリが入ったか
