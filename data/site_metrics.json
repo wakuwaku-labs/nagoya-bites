@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-07-15T19:09:29.264Z",
+  "generatedAt": "2026-07-16T00:32:10.840Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 380,
-    "pageViews": 489,
-    "sessions": 419,
-    "avgSessionDuration": 79.8,
-    "bounceRate": 0.453,
+    "activeUsers": 381,
+    "pageViews": 490,
+    "sessions": 420,
+    "avgSessionDuration": 79.6,
+    "bounceRate": 0.455,
     "pagesPerSession": 1.17
   },
   "channels": {
     "sessions": {
       "organic": 247,
-      "direct": 143,
+      "direct": 144,
       "social": 29,
       "referral": 6,
       "paid": 0,
       "other": 2
     },
     "pct": {
-      "organic": 57.8,
-      "direct": 33.5,
+      "organic": 57.7,
+      "direct": 33.6,
       "social": 6.8,
       "referral": 1.4,
       "paid": 0,
@@ -59,14 +59,14 @@
       "sessions": 19
     },
     {
-      "source": "yahoo",
-      "medium": "organic",
+      "source": "(not set)",
+      "medium": "(not set)",
       "sessions": 16
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 15
+      "source": "yahoo",
+      "medium": "organic",
+      "sessions": 16
     },
     {
       "source": "note.com",
@@ -108,13 +108,13 @@
   ],
   "cta": {
     "outboundClicks": 22,
-    "ctaClickRate": 5.3,
+    "ctaClickRate": 5.2,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 380,
+    "value": 381,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
