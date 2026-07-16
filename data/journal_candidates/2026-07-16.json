@@ -1,0 +1,169 @@
+{
+  "date": "2026-07-16",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "土用の丑の日は7/26、名駅うな富士の青うなぎを読む",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=12 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (価格帯,予約,シーン,接待,一人飲み,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 5件 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "名駅ひつまぶしを土用に並ばず食べる段取り",
+      "verdict": "FAIL",
+      "total": 91,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 19,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=8 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 4件 (価格帯,予約,シーン,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 20字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "2026はうなぎが安い土用、青うなぎで価格を読む",
+      "verdict": "FAIL",
+      "total": 84,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 22,
+        "uniqueness": 15,
+        "brand_fit": 10,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=10 → 7"
+        ],
+        "uniqueness": [
+          "独自性キーワード 3件 (価格帯,予約,シーン)"
+        ],
+        "brand_fit": [
+          "ベース10"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄の新モールHAERAの予約難度を業界人が読む",
+      "verdict": "FAIL",
+      "total": 72,
+      "breakdown": {
+        "recency": 10,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 15日前"
+        ],
+        "topicality": [
+          "media_count=2 → 10",
+          "x_mentions=12 → 7"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (価格帯,コース,予約,シーン,接待,デート)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 2件 +2",
+          "title 23字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "fallback_needed": false
+}
