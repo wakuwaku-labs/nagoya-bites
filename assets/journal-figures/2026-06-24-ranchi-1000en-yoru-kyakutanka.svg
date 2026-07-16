@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-label="同一店舗における昼ランチと夜コースの価格設計比較図。昼は固定費分散を目的に客数重視の低価格、夜は体験価値重視の高価格で利益を作ることを示す。">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a1410"/>
+      <stop offset="1" stop-color="#241b13"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg)"/>
+  <text x="40" y="48" fill="#e8c87a" font-family="Georgia,serif" font-size="19" font-weight="bold">昼と夜、同じ店の価格設計はなぜ違うか</text>
+  <text x="40" y="72" fill="#9b8c78" font-family="sans-serif" font-size="13">家賃という固定費を、昼夜で分散して回収する仕組み</text>
+
+  <!-- column headers -->
+  <rect x="40" y="100" width="250" height="34" rx="4" fill="#3c2f1e"/>
+  <text x="165" y="122" fill="#f0e6d2" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">昼（ランチ）</text>
+  <rect x="310" y="100" width="250" height="34" rx="4" fill="#3c2f1e"/>
+  <text x="435" y="122" fill="#f0e6d2" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">夜（コース）</text>
+
+  <!-- row 1: price -->
+  <text x="40" y="160" fill="#9b8c78" font-family="sans-serif" font-size="11">価格帯の目安</text>
+  <text x="165" y="184" fill="#f0e6d2" font-family="sans-serif" font-size="13" text-anchor="middle">950〜1,500円</text>
+  <text x="435" y="184" fill="#f0e6d2" font-family="sans-serif" font-size="13" text-anchor="middle">8,000〜15,000円</text>
+
+  <line x1="40" y1="200" x2="560" y2="200" stroke="#4a3c28" stroke-width="1"/>
+
+  <!-- row 2: goal -->
+  <text x="40" y="226" fill="#9b8c78" font-family="sans-serif" font-size="11">価格設計の目的</text>
+  <text x="165" y="250" fill="#f0e6d2" font-family="sans-serif" font-size="13" text-anchor="middle">客数確保・固定費分散</text>
+  <text x="435" y="250" fill="#f0e6d2" font-family="sans-serif" font-size="13" text-anchor="middle">体験価値・利益回収</text>
+
+  <line x1="40" y1="266" x2="560" y2="266" stroke="#4a3c28" stroke-width="1"/>
+
+  <!-- row 3: what customer pays for -->
+  <text x="40" y="292" fill="#9b8c78" font-family="sans-serif" font-size="11">値上げの動きやすさ</text>
+  <text x="165" y="316" fill="#f0e6d2" font-family="sans-serif" font-size="13" text-anchor="middle">相場に縛られ慎重</text>
+  <text x="435" y="316" fill="#f0e6d2" font-family="sans-serif" font-size="13" text-anchor="middle">先に価格転嫁されやすい</text>
+
+  <text x="40" y="368" fill="#7c6f5c" font-family="sans-serif" font-size="10">図: NAGOYA BITES 編集部 — 「昼が安い」は赤字ではなく、固定費分散を前提にした価格設計</text>
+</svg>
