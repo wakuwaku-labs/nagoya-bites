@@ -6656,6 +6656,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="index.html#q=%E3%82%B5%E3%82%A6%E3%82%A3%E9%A3%9F%E5%A0%82">サウィ食堂（栄 韓国料理）</a></li>
 <li><a href="index.html#q=YUBUNE%20coffee">YUBUNE coffee（栄 カフェ）</a></li>
 <li><a href="index.html#q=cen">cen（栄 イノベーティブ和食）</a></li>
+<li><a href="index.html#q=%E3%83%9D%E3%83%BC%E3%81%9F%E3%81%BE%20%E5%90%8D%E5%8F%A4%E5%B1%8BHAERA%E5%BA%97">ポーたま 名古屋HAERA店（栄 軽食・惣菜）</a></li>
 </ul></noscript>
 <div class="grid" id="grid"></div>
 <div class="pagination" id="pagination" role="navigation" aria-label="ページネーション"></div>
@@ -6821,7 +6822,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 
 <!-- STORE-INDEX:START 2026-07-16 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（5001店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（5002店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（829店）</summary>
@@ -9721,7 +9722,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 </ul>
 </details>
 <details class="store-index-area" data-area="栄">
-<summary>栄（448店）</summary>
+<summary>栄（449店）</summary>
 <ul class="store-index-list">
 <li><a href="stores/J003474639.html">【栄限定】食べ飲み放題2500円 ひねり蛇口ハイ×食べ飲み放題 大衆酒泉テルマエ（栄・居酒屋）</a></li>
 <li><a href="stores/J003625289.html">【個室完備】炉端焼き 海鮮居酒屋 魚々路 - ととろ - 釧路店（栄・居酒屋）</a></li>
@@ -9814,6 +9815,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="stores/J000025642.html">はりまや 新栄店（栄・お好み焼き・もんじゃ）</a></li>
 <li><a href="stores/J004422241.html">ひとくち餃子ストライク 栄総本店（栄・居酒屋）</a></li>
 <li><a href="stores/J001039889.html">ふぐ料理 徳福 錦店（栄・居酒屋）</a></li>
+<li><a href="index.html#q=%E3%83%9D%E3%83%BC%E3%81%9F%E3%81%BE%20%E5%90%8D%E5%8F%A4%E5%B1%8BHAERA%E5%BA%97">ポーたま 名古屋HAERA店（栄・軽食・惣菜）</a></li>
 <li><a href="stores/J000558465.html">ほく菜 ホクサイ hokusai 春吉本店（栄・居酒屋）</a></li>
 <li><a href="stores/J004403640.html">ほし乃 栄（栄・和食）</a></li>
 <li><a href="stores/J004536462.html">ホルモン高橋（栄・焼肉・ホルモン）</a></li>
@@ -12179,7 +12181,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '020435e0a20a';
+var STORES_JSON_VERSION = 'c6bfba0dd9bd';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
