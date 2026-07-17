@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-07-16T19:08:46.958Z",
+  "generatedAt": "2026-07-17T00:18:59.350Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 364,
-    "pageViews": 477,
-    "sessions": 401,
-    "avgSessionDuration": 86.8,
-    "bounceRate": 0.444,
+    "activeUsers": 365,
+    "pageViews": 478,
+    "sessions": 402,
+    "avgSessionDuration": 86.6,
+    "bounceRate": 0.445,
     "pagesPerSession": 1.19
   },
   "channels": {
     "sessions": {
-      "organic": 233,
-      "direct": 135,
+      "organic": 234,
+      "direct": 136,
       "social": 30,
       "referral": 6,
       "paid": 0,
@@ -20,7 +20,7 @@
     },
     "pct": {
       "organic": 57.5,
-      "direct": 33.3,
+      "direct": 33.4,
       "social": 7.4,
       "referral": 1.5,
       "paid": 0,
@@ -41,7 +41,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 59
+      "sessions": 60
     },
     {
       "source": "openai",
@@ -66,7 +66,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 9
+      "sessions": 10
     },
     {
       "source": "note.com",
@@ -97,8 +97,8 @@
     },
     {
       "path": "/features/nagoya-tebasaki.html",
-      "pageViews": 23,
-      "sessions": 23
+      "pageViews": 24,
+      "sessions": 24
     },
     {
       "path": "/index.html",
@@ -114,7 +114,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 364,
+    "value": 365,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
