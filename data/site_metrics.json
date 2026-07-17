@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-07-17T00:18:59.350Z",
+  "generatedAt": "2026-07-17T19:06:31.018Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 365,
-    "pageViews": 478,
-    "sessions": 402,
-    "avgSessionDuration": 86.6,
-    "bounceRate": 0.445,
-    "pagesPerSession": 1.19
+    "activeUsers": 374,
+    "pageViews": 488,
+    "sessions": 413,
+    "avgSessionDuration": 85,
+    "bounceRate": 0.446,
+    "pagesPerSession": 1.18
   },
   "channels": {
     "sessions": {
-      "organic": 234,
-      "direct": 136,
+      "organic": 236,
+      "direct": 146,
       "social": 30,
       "referral": 6,
       "paid": 0,
       "other": 1
     },
     "pct": {
-      "organic": 57.5,
-      "direct": 33.4,
-      "social": 7.4,
-      "referral": 1.5,
+      "organic": 56.3,
+      "direct": 34.8,
+      "social": 7.2,
+      "referral": 1.4,
       "paid": 0,
       "other": 0.2
     }
@@ -31,22 +31,22 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 126
+      "sessions": 133
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 106
+      "sessions": 113
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 60
+      "sessions": 53
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 34
+      "sessions": 35
     },
     {
       "source": "chatgpt.com",
@@ -61,12 +61,12 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 12
+      "sessions": 13
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 10
+      "sessions": 13
     },
     {
       "source": "note.com",
@@ -82,18 +82,18 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 73,
-      "sessions": 64
+      "pageViews": 79,
+      "sessions": 71
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 70,
-      "sessions": 65
+      "pageViews": 76,
+      "sessions": 70
     },
     {
       "path": "/features/nagoya-solo-dining.html",
       "pageViews": 64,
-      "sessions": 60
+      "sessions": 59
     },
     {
       "path": "/features/nagoya-tebasaki.html",
@@ -102,19 +102,19 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 22,
+      "pageViews": 20,
       "sessions": 15
     }
   ],
   "cta": {
     "outboundClicks": 16,
-    "ctaClickRate": 4,
+    "ctaClickRate": 3.9,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 365,
+    "value": 374,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
