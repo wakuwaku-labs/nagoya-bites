@@ -1,0 +1,207 @@
+{
+  "date": "2026-07-17",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "丑の日7/26、名古屋の鰻はなぜ安くならないのか",
+      "verdict": "FAIL",
+      "total": 90,
+      "breakdown": {
+        "recency": 20,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 7日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=60 → 10"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 5件 +4",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "土用の丑、名古屋で当日並ばず鰻を食べる段取り",
+      "verdict": "FAIL",
+      "total": 85,
+      "breakdown": {
+        "recency": 15,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 8日前"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=55 → 10"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 22字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "夏バテに効く、名古屋の鰻という選択肢2026",
+      "verdict": "FAIL",
+      "total": 82,
+      "breakdown": {
+        "recency": 15,
+        "topicality": 22,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 10日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=30 → 7"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 22字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "名古屋の夏を涼む、名駅で完結するかき氷2026",
+      "verdict": "FAIL",
+      "total": 77,
+      "breakdown": {
+        "recency": 10,
+        "topicality": 22,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 19日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=20 → 7"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 23字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "夏本番、名古屋の屋上ビアガーデン2026の選び方",
+      "verdict": "FAIL",
+      "total": 77,
+      "breakdown": {
+        "recency": 10,
+        "topicality": 22,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 27日前"
+        ],
+        "topicality": [
+          "media_count=3 → 15",
+          "x_mentions=15 → 7"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "同テーマ過去30日内ゼロ → 5"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": null,
+  "fallback_needed": true
+}
