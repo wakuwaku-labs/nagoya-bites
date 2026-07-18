@@ -62,6 +62,13 @@ function checkJournal(htmlPath, mdPath) {
   // 5. 価格帯記述(簡易チェック: "円"を含む / "無料" 単独表記でない)
   pass(5, /\d[,\d]*\s*円/.test(html), /\d[,\d]*\s*円/.test(html) ? 'OK' : '価格帯の記述が見つからない');
 
+  // 5b. UI絵文字の禁止（2026-07 全面撤去方針・ISSUE-069。AI生成感の排除）
+  //     ピクトグラム絵文字を記事HTMLに含めない。★☆✦♪等のタイポグラフィ記号は許容。
+  const pictographs = html.match(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu) || [];
+  const bannedEmojis = pictographs.filter(c => !'★☆✦✧✓✗♪♨☎✎✍✈'.includes(c));
+  pass('5b_no_emojis', bannedEmojis.length === 0,
+    bannedEmojis.length ? `絵文字が含まれる: ${[...new Set(bannedEmojis)].join(' ')} (ISSUE-069 全面撤去方針)` : 'OK');
+
   // 6. 内部リンク切れチェック
   const links = Array.from(html.matchAll(/href="((?:\.\.\/)?(?:features|journal|stores)\/[^"#?]+)"/g)).map(m => m[1]);
   const broken = links.filter(l => {
