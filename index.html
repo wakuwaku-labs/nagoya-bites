@@ -6656,6 +6656,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="index.html#q=cen">cen（栄 イノベーティブ和食）</a></li>
 <li><a href="index.html#q=%E3%83%9D%E3%83%BC%E3%81%9F%E3%81%BE%20%E5%90%8D%E5%8F%A4%E5%B1%8BHAERA%E5%BA%97">ポーたま 名古屋HAERA店（栄 軽食・惣菜）</a></li>
 <li><a href="index.html#q=%E8%BE%9B%E9%BA%BA%20%E8%8F%AF%E7%81%AB%20%E6%96%B0%E6%A0%84%E7%94%BA%E6%9C%AC%E5%BA%97">辛麺 華火 新栄町本店（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄 辛麺専門店）</a></li>
+<li><a href="index.html#q=%E7%AB%8B%E3%81%A1%E9%A3%9F%E3%81%84%E5%AF%BF%E5%8F%B8%20%E6%A5%B5">立ち食い寿司 極（名駅 寿司）</a></li>
 </ul></noscript>
 <div class="grid" id="grid"></div>
 <div class="pagination" id="pagination" role="navigation" aria-label="ページネーション"></div>
@@ -6819,9 +6820,9 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <!-- トースト通知 -->
 <div class="toast" id="toast"></div>
 
-<!-- STORE-INDEX:START 2026-07-17 -->
+<!-- STORE-INDEX:START 2026-07-18 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（5001店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（5002店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（828店）</summary>
@@ -11818,7 +11819,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 </ul>
 </details>
 <details class="store-index-area" data-area="名駅">
-<summary>名駅（13店）</summary>
+<summary>名駅（14店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=BOUL'ANGE%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%82%BF%E3%82%AB%E3%82%B7%E3%83%9E%E3%83%A4%E3%82%B2%E3%83%BC%E3%83%88%E3%82%BF%E3%83%AF%E3%83%BC%E3%83%A2%E3%83%BC%E3%83%AB%E5%BA%97">BOUL&#39;ANGE 名古屋タカシマヤゲートタワーモール店（名駅・ブーランジェリー）</a></li>
 <li><a href="index.html#q=%E3%82%A8%E3%83%8E%E3%83%86%E3%83%BC%E3%82%AB%20%E3%83%94%E3%83%B3%E3%82%AD%E3%82%AA%E3%83%BC%E3%83%AA%20%E5%90%8D%E5%8F%A4%E5%B1%8B">エノテーカ ピンキオーリ 名古屋（名駅・クラシックイタリアン）</a></li>
@@ -11833,6 +11834,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <li><a href="index.html#q=%E5%90%8D%E9%A7%85%E7%AB%8B%E5%91%91%20%E3%81%8A%E3%81%8A%E5%B3%B6">名駅立呑 おお島（名駅・立ち飲み・海鮮）</a></li>
 <li><a href="index.html#q=%E9%BA%BA%E3%82%84%20%E5%85%AD%E4%B8%89%E5%85%AD">麺や 六三六（名駅・Wスープ）</a></li>
 <li><a href="index.html#q=%E6%9D%8E%E6%98%87%20%E5%88%A5%E9%82%B8">李昇 別邸（名駅・焼肉）</a></li>
+<li><a href="index.html#q=%E7%AB%8B%E3%81%A1%E9%A3%9F%E3%81%84%E5%AF%BF%E5%8F%B8%20%E6%A5%B5">立ち食い寿司 極（名駅・寿司）</a></li>
 </ul>
 </details>
 <details class="store-index-area" data-area="名古屋市東区">
@@ -12179,7 +12181,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '9059d213fc80';
+var STORES_JSON_VERSION = '8f963c169e24';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
