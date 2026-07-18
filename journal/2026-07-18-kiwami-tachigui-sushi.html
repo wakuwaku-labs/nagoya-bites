@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
+function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>名駅の寿司、座るか立つかで会計が変わる——立ち食い『極』の使い分け設計｜NAGOYA BITES Journal</title>
+<meta name="description" content="名駅の立ち食い『極』は7席で食べログ寿司百名店。立てば1,980円、座れば5,500円。稀少魚が立ち食いで成立する値付けと、予約・シーンの使い分けを業界人目線で読む。">
+<meta name="keywords" content="名古屋,名駅,立ち食い寿司,極,寿司,寿司百名店,予約,一人飲み,接待,デート,ランチ">
+<link rel="canonical" href="https://nagoya-bites.com/journal/2026-07-18-kiwami-tachigui-sushi.html">
+<meta property="og:title" content="名駅の寿司、座るか立つかで会計が変わる——立ち食い『極』の使い分け設計｜NAGOYA BITES">
+<meta property="og:description" content="名駅の立ち食い『極』は7席で食べログ寿司百名店。立てば1,980円、座れば5,500円。稀少魚が立ち食いで成立する値付けと、予約・シーンの使い分けを業界人目線で読む。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nagoya-bites.com/journal/2026-07-18-kiwami-tachigui-sushi.html">
+<meta property="og:site_name" content="NAGOYA BITES">
+<meta property="og:image" content="https://nagoya-bites.com/icons/icon-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "名駅の寿司、座るか立つかで会計が変わる——立ち食い『極』の使い分け設計",
+  "description": "名駅の立ち食い『極』は7席で食べログ寿司百名店。立てば1,980円、座れば5,500円。稀少魚が立ち食いで成立する値付けと、予約・シーンの使い分けを業界人目線で読む。",
+  "author": {"@type": "Organization", "name": "NAGOYA BITES"},
+  "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
+  "url": "https://nagoya-bites.com/journal/2026-07-18-kiwami-tachigui-sushi.html",
+  "datePublished": "2026-07-18",
+  "dateModified": "2026-07-18",
+  "mainEntityOfPage": "https://nagoya-bites.com/journal/2026-07-18-kiwami-tachigui-sushi.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},
+    {"@type":"ListItem","position":2,"name":"Journal","item":"https://nagoya-bites.com/journal/"},
+    {"@type":"ListItem","position":3,"name":"名駅の寿司、座るか立つかで会計が変わる——立ち食い『極』の使い分け設計"}
+  ]
+}
+</script>
+<style>
+:root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--border-h:rgba(0,0,0,0.28);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
+header{position:sticky;top:0;z-index:200;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;letter-spacing:.35em;color:var(--white);text-transform:uppercase;text-decoration:none;}
+.logo em{font-style:italic;color:var(--gold);}
+nav{display:flex;gap:1.5rem;align-items:center;}
+nav a{font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+nav a:hover,nav a.active{color:var(--text);}
+.breadcrumb{padding:.6rem 1.5rem;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.1em;color:var(--dim);max-width:800px;margin:0 auto;}
+.breadcrumb a{color:var(--dim);text-decoration:none;}
+.breadcrumb a:hover{color:var(--gold);}
+.breadcrumb span{margin:0 .4rem;}
+.art-hero{padding:2.5rem 1.5rem 2rem;max-width:760px;margin:0 auto;}
+.art-eyebrow{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
+.art-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.25;color:var(--white);margin-bottom:.8rem;}
+.art-title em{font-style:italic;color:var(--gold);}
+.art-meta{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--dim);margin-bottom:1.2rem;display:flex;gap:1rem;flex-wrap:wrap;}
+.art-lead{font-size:.88rem;line-height:2;color:var(--muted);border-left:2px solid var(--gold);padding-left:1.1rem;}
+.art-body{max-width:760px;margin:0 auto;padding:0 1.5rem 3rem;}
+.section-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2rem 0 .8rem;}
+.art-body p{font-size:.86rem;line-height:2;color:var(--muted);margin-bottom:1.2rem;}
+.art-body h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.3rem;color:var(--white);margin:2rem 0 .8rem;}
+.art-body h3{font-family:'Noto Sans JP',sans-serif;font-weight:500;font-size:1rem;color:var(--white);margin:1.5rem 0 .6rem;}
+.insider-box{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);padding:1.1rem 1.3rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
+.insider-title{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;}
+.insider-box ul{padding-left:1.2rem;}
+.insider-box li{font-size:.8rem;line-height:1.9;color:var(--muted);margin-bottom:.4rem;}
+.store-list{display:flex;flex-direction:column;gap:1.3rem;margin:1.5rem 0;}
+.store-card{background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;padding:1.2rem;display:flex;gap:1rem;align-items:flex-start;}
+.store-num{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.9rem;color:var(--gold);opacity:.6;line-height:1;min-width:1.8rem;text-align:center;}
+.store-info{flex:1;}
+.store-name{font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:.98rem;color:var(--white);margin-bottom:.4rem;}
+.store-meta{display:flex;gap:.5rem;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.08em;color:var(--dim);margin-bottom:.5rem;}
+.store-meta .score{color:#f5a623;font-weight:500;}
+.store-desc{font-size:.78rem;line-height:1.8;color:var(--muted);margin-bottom:.6rem;}
+.store-link{display:inline-flex;align-items:center;gap:.3rem;font-size:.7rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.3rem .7rem;border-radius:2px;}
+.store-link:hover{background:rgba(122,92,16,.08);}
+.source-note{background:var(--bg2);border:1px solid var(--border);padding:.8rem 1rem;border-radius:4px;margin:1.5rem 0;font-size:.7rem;line-height:1.7;color:var(--dim);}
+.source-note a{color:var(--gold);text-decoration:none;}
+.art-hero-ig{max-width:760px;margin:0 auto;padding:0 1.5rem 1rem;display:flex;justify-content:center;}
+.art-ig-cta{display:flex;align-items:center;gap:1rem;background:var(--bg2);border:1px solid var(--border);border-left:3px solid #C13584;padding:1rem 1.2rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
+.art-ig-cta .ig-icon{font-size:1.4rem;flex-shrink:0;}
+.art-ig-cta-body{flex:1;}
+.art-ig-cta-label{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.18em;color:#C13584;text-transform:uppercase;margin-bottom:.3rem;}
+.art-ig-cta-handle{font-size:.82rem;font-weight:500;color:var(--white);margin-bottom:.2rem;}
+.art-ig-cta-note{font-size:.72rem;color:var(--muted);}
+.art-ig-cta a{text-decoration:none;color:inherit;}
+.art-ig-cta a:hover .art-ig-cta-handle{color:#C13584;}
+.art-hero-img{margin:0 auto;max-width:760px;width:100%;background:var(--bg2);overflow:hidden;}
+.art-hero-img img{width:100%;height:auto;display:block;max-height:460px;object-fit:cover;object-position:center 40%;}
+.art-img-credit{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;color:var(--dim);text-align:right;padding:.3rem 0;max-width:760px;margin:0 auto;}
+.art-img-credit a{color:var(--dim);text-decoration:none;}
+.art-img-credit a:hover{color:var(--gold);}
+.related{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;}
+.related-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;color:var(--white);margin-bottom:1rem;}
+.related-links{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;}
+.related-link{font-size:.76rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1rem;border-radius:2px;}
+.related-link:hover{background:rgba(122,92,16,.08);}
+footer{background:var(--white);color:rgba(247,245,241,.5);padding:1.8rem 1.5rem;text-align:center;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.14em;}
+footer a{color:rgba(201,169,110,.7);text-decoration:none;}
+@media(max-width:640px){
+.store-card{flex-direction:column;gap:.7rem;}
+.store-num{font-size:1.4rem;}
+nav{display:none;}
+}
+</style>
+
+<!-- PHOTO SUGGESTIONS (編集メモ — 読者には非表示):
+  - [store_instagram] 店舗公式Instagram（@tachigui_kiwami）: https://www.instagram.com/tachigui_kiwami/ — 看板の握り・稀少魚のアップ投稿を1件選んでembed（本文hero は reel/DIFmcRTvjde を使用）
+  - [google_maps] Googleマップ（立ち食い寿司 極 名駅）: https://www.google.com/maps/search/立ち食い寿司+極+名駅 — 外観・カウンターの雰囲気
+-->
+</head>
+<body>
+<header>
+  <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+  <nav>
+    <a href="../index.html">すべての店舗</a>
+    <a href="index.html" class="active">Journal</a>
+    <a href="../features/index.html">特集</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+  </nav>
+</header>
+
+<nav aria-label="パンくずリスト">
+  <div class="breadcrumb">
+    <a href="../index.html">NAGOYA BITES</a>
+    <span>›</span>
+    <a href="index.html">Journal</a>
+    <span>›</span>
+    名駅の寿司、座るか立つかで会計が変わる——立ち食い『極』の使い分け設計
+  </div>
+</nav>
+
+<article>
+  <div class="art-hero">
+    <p class="art-eyebrow">🍶 今日の1軒</p>
+    <h1 class="art-title">名駅の寿司、座るか立つかで会計が変わる<br>——立ち食い『極』の使い分け設計</h1>
+    <div class="art-meta">
+      <span>2026年7月18日 (土)</span>
+      <span>🍶 今日の1軒</span>
+      <span>編集部</span>
+    </div>
+    <p class="art-lead">名駅の裏路地、立ち食いでわずか7席。それが食べログ「寿司百名店」に名を連ねる『極』だ。2026年7月時点でも、飛び込みではまず座れない。だが業界人がこの店を面白がるのは「安いから」ではない。立ち食いという業態そのものが、原価とシーンの設計だからだ。</p>
+  </div>
+
+  <div class="art-hero-ig">
+  <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DIFmcRTvjde/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);margin:0 auto;max-width:540px;min-width:326px;padding:0;width:calc(100% - 2px);">
+    <a href="https://www.instagram.com/reel/DIFmcRTvjde/?utm_source=ig_embed&amp;utm_campaign=loading" target="_blank" rel="noopener">Instagramで見る</a>
+  </blockquote>
+  <script async src="https://www.instagram.com/embed.js"></script>
+</div>
+
+  <div class="art-body">
+    <p>名駅の裏路地、立ち食いでわずか7席。それが食べログ「寿司百名店」に名を連ねる『極』だ。2026年7月時点でも、飛び込みではまず座れない。だが業界人がこの店を面白がるのは「安いから」ではない。<strong>立ち食いという業態が、原価とシーンの設計そのもの</strong>だからだ。</p>
+<h2>価格帯の読み方——立てば1,980円、座れば5,500円</h2>
+<p>握りランチは1,980円。ヤイトカツオやメジマグロといった、着席の鮨屋なら数倍する稀少魚を、この価格で握る。カラクリは席にある。立ち食いは客の滞在を締め、<strong>席にかけるコストを限界まで削って、その分をネタ原価へ回す</strong>。だから同じ職人の仕事でも、栄の着席別邸「権左衛門」ではディナー5,500円帯になる。この価格帯の落差は、味の差ではなく客単価設計の差だ。まずランチ握りで軸を作り、気になったネタだけ個別（100〜550円）で足す——これが会計を膨らませない頼み方。飲み放題や特典で釣る店とは、値付けの発想が根本から違う。</p>
+<h2>オペの裏側——なぜ7席で予約必須なのか</h2>
+<p>7席なら回転を上げて席を空ければいい、と思うだろう。だが『極』は基本予約制を敷く。立ち食いでも一貫ずつ握る仕事だから、繁忙の時間帯に飛び込みを詰めると質が落ちる。だからあえて予約で流量を管理し、回転より一貫の精度を優先している。狙い目は平日の開店直後。ランチ・ディナーとも立ち上がりの時間帯は回転が読みやすく、電話も繋がりやすい。月曜が定休なので、週明けの予定には入れないこと。</p>
+<h2>シーン適性——一人飲みは本店、接待は別邸</h2>
+<p>立ち食い7席は、1〜2人で「寿司だけ手早く」というシーンにこそ最適だ。ふらりと一人飲みで数貫、仕事帰りに二人で軽く——立ち食いの気楽さが効く。逆にデートや接待で腰を据えたいなら、同じ味を着席で楽しめる栄の別邸へ回すのが業界人の使い方。2026年に入って東桜にも系列の新店が増え、シーンで店を選び分けられるようになった。<strong>同じ看板を業態で使い分ける</strong>——これが『極』を賢く攻略するコツだ。</p>
+
+    <div class="insider-box">
+      <p class="insider-title">Inside Perspective — 業界人の目利き</p>
+      <ul>
+                <li>立ち食いは席コストを削ってネタ原価に全振りする業態。ランチ握り1,980円で稀少魚が成立するのは、着席の別邸（ディナー5,500円帯）と客単価設計を分けているから。味の差ではなく設計の差だ。</li>
+        <li>7席でも基本予約制。一貫ずつ握る質を守るため、回転より流量を絞る判断。狙うなら繁忙を外した平日の開店直後、電話も繋がりやすい。月曜定休に注意。</li>
+        <li>一人・二人で寿司だけなら立ち食い本店、腰を据える接待・デートは栄の着席別邸へ。同じ看板をシーンで使い分けられるのが強み。</li>
+      </ul>
+    </div>
+
+    <div class="store-list">
+      
+      <div class="store-card">
+        <div class="store-num">01</div>
+        <div class="store-info">
+          <h3 class="store-name">立ち食い寿司 極</h3>
+          <div class="store-meta">
+            <span>寿司</span>
+            <span>名駅</span>
+            
+          </div>
+          <p class="store-desc">名駅の裏路地、立ち食い7席で食べログ寿司百名店。握りランチ1,980円、稀少魚も個別100〜550円。基本予約制。栄に着席の別邸、東桜にも系列新店。</p>
+          <a class="store-link" href="https://kiwami-nagoya.com/" target="_blank" rel="noopener">詳細を見る →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="source-note"><strong>情報源:</strong> <a href="https://kiwami-nagoya.com/" target="_blank" rel="noopener">立ち食い寿司 極 公式サイト</a><span class="source-date">（2026-07-18掲載）</span>、 <a href="https://note.com/yopparaideska/n/n32565b0a5042" target="_blank" rel="noopener">note yopparaideska — 寿司激戦区名古屋でNo.1の立ち食い寿司</a><span class="source-date">（2026-07-12掲載）</span>、 <a href="https://hitosara.com/0006128385/" target="_blank" rel="noopener">ヒトサラ — 立ち食い寿司 極 名駅</a><span class="source-date">（2026-07-10掲載）</span>、 <a href="https://jouhou.nagoya/tachigui-kiwami/" target="_blank" rel="noopener">名古屋情報通 — 立ち食い寿司 極 名駅4丁目にオープン</a><span class="source-date">（2026-02-14掲載）</span></div>
+    
+  </div>
+</article>
+
+<!-- 関連記事ブロック: scripts/refresh_journal_related.js が自動更新する。
+     ビルド後のHTMLでは直近3本の他journalへの内部リンクが自動で挿入される。 -->
+<div class="related">
+  <p class="related-title">関連記事</p>
+  <div class="related-links">
+    <a class="related-link" href="index.html" style="background:rgba(122,92,16,.08);">📰 Journal 一覧</a>
+    <a class="related-link" href="../features/index.html">📖 特集記事</a>
+    <a class="related-link" href="../index.html">🍽 全店舗を検索</a>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 <a href="../index.html">NAGOYA BITES</a> — 名古屋の飲食人による目利きメディア</p>
+</footer>
+</body>
+</html>
