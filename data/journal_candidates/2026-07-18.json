@@ -1,0 +1,208 @@
+{
+  "date": "2026-07-18",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c3",
+      "title_draft": "名駅の寿司、座るか立つかで会計が変わる——『極』の使い分け設計",
+      "verdict": "PASS",
+      "total": 96,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 24,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=6 → 15",
+          "x_mentions=8 → 4",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 8件 (価格帯,席,予約,シーン,接待,デート,一人飲み,繁忙)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 5件 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c1",
+      "title_draft": "名駅『立ち食い寿司 極』——7席・立ち食いで寿司百名店に届いた値付けと回転の読み方",
+      "verdict": "FAIL",
+      "total": 89,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 19,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=6 → 15",
+          "x_mentions=8 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (価格帯,席,予約,シーン,接待,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "予約必須の7席——名駅『極』で「並ばず座る」ための業界人の段取り",
+      "verdict": "FAIL",
+      "total": 81,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 19,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=6 → 15",
+          "x_mentions=5 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 2件 (席,予約)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "寿司百名店を「立ち食い」で獲る店——名駅『極』の稀少魚を1,980円で出せる理由",
+      "verdict": "FAIL",
+      "total": 79,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 19,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=6 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 2件 (席,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名古屋がハイコスパ寿司の街である理由——名駅『極』の稀少魚1,980円から読む",
+      "verdict": "FAIL",
+      "total": 79,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 19,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=4 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 2件 (シーン,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c3",
+  "fallback_needed": false
+}
