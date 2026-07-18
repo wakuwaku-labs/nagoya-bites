@@ -64,7 +64,7 @@ const features = [
       { q: 'タベログ・ホットペッパーのランキングとは何が違いますか？', a: 'タベログは匿名口コミの集積、ホットペッパーは予約数とクーポン経済が中心です。NAGOYA BITES は広告ゼロで、業界の中の人による解釈層（editorReason / insiderNote）を全店に付与しています。「なぜこの店が良いのか」を業界視点で説明できる点が違いです。' },
     ],
     related: [
-      { href: 'nagoya-gourmet-guide.html', text: '📖 名古屋グルメ完全ガイド', primary: true },
+      { href: 'nagoya-gourmet-guide.html', text: '名古屋グルメ完全ガイド', primary: true },
       { href: 'nagoya-settai-secret.html', text: '失敗しない接待10選' },
       { href: 'nagoya-reservation-difficult.html', text: '予約困難店の見極め方' },
       { href: 'editorial-policy.html', text: '編集規約' },
@@ -115,7 +115,7 @@ const features = [
       { q: '接待で焼肉店は失礼ではないですか？', a: '取引先の年代と関係性によります。役員クラスや初回会食では和食・創作料理が無難ですが、フランクな関係の取引先や2回目以降なら焼肉も選択肢に入ります。本特集の焼肉4軒は無煙ロースター・完全個室・接客トーンの3点が揃っており、接待での失敗リスクが低い店です。' },
     ],
     related: [
-      { href: 'nagoya-gourmet-guide.html', text: '📖 名古屋グルメ完全ガイド', primary: true },
+      { href: 'nagoya-gourmet-guide.html', text: '名古屋グルメ完全ガイド', primary: true },
       { href: 'banquet.html', text: '宴会・忘年会15選' },
       { href: 'private-room.html', text: '個室居酒屋10選' },
       { href: 'nagoya-industry-pick-izakaya.html', text: '業界人推薦の居酒屋' },
@@ -166,7 +166,7 @@ const features = [
       { q: 'SNSで話題の新店、行くべきタイミングは？', a: 'オープン直後の3ヶ月以内か、ブームが落ち着いた6ヶ月後の2択がおすすめです。オープン直後は「初動の本気」が見えるタイミング、6ヶ月後は「本物の実力」が残るタイミング。間の3〜6ヶ月は予約困難なうえに店側もオペレーションが追いつかず、体験品質が安定しない場合があります。' },
     ],
     related: [
-      { href: 'nagoya-gourmet-guide.html', text: '📖 名古屋グルメ完全ガイド', primary: true },
+      { href: 'nagoya-gourmet-guide.html', text: '名古屋グルメ完全ガイド', primary: true },
       { href: 'nagoya-industry-pick-izakaya.html', text: '業界人推薦の居酒屋' },
       { href: 'nagoya-settai-secret.html', text: '失敗しない接待10選' },
       { href: 'editorial-policy.html', text: '編集規約' },
@@ -187,7 +187,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 
 const renderStoreCard = (idx, store) => {
   const media = (store.mediaFeatures || []).map(m => `${m.name}${m.year?'（'+m.year+'）':''}`).join(' / ');
-  const mediaHtml = media ? `<p class="media-features">📰 掲載歴: ${media}</p>` : '';
+  const mediaHtml = media ? `<p class="media-features">掲載歴: ${media}</p>` : '';
   const insiderHtml = store.insiderNote ? `<p class="insider-quote">業界人ノート: ${store.insiderNote}</p>` : '';
   const visitBadge = store.visitStatus === 'visited' ? '<span class="store-badge">編集部訪問済</span>' : store.visitStatus === 'interview' ? '<span class="store-badge">取材済</span>' : '';
   return `      <div class="store-card">

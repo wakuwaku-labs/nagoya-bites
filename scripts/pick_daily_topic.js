@@ -61,7 +61,7 @@ function pickDailyTopic(date) {
   const season = seasonal.events.find(e => inRange(date, e.date_range) && e.priority >= 80);
   if (season) {
     theme = 'seasonal';
-    label = '🗓 季節・イベント短信';
+    label = '季節・イベント短信';
     source = 'seasonal_override';
   }
 
@@ -71,7 +71,7 @@ function pickDailyTopic(date) {
     trendingPick = trending.stores.find(s => (s.buzz_score || 0) >= 90 && !s.journaled);
     if (trendingPick && theme !== 'seasonal') {
       theme = 'today_one';
-      label = '🍶 今日の1軒';
+      label = '今日の1軒';
       source = 'trending_override';
     }
   }

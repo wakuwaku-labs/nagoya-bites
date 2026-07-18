@@ -25,7 +25,7 @@
  *     "hero_image_url": "https://images.unsplash.com/... (省略可 — og_image と同期)",
  *     "hero_image_credit_url": "https://unsplash.com/@photographer (省略可)",
  *     "hero_image_credit_name": "撮影者名 or Unsplash (省略可)",
- *     "eyebrow": "🍶 今日の1軒",
+ *     "eyebrow": "今日の1軒",
  *     "lead": "リード文",
  *     "body_html": "<p>本文HTML</p>",
  *     "insider_points": ["業界人視点1", "業界人視点2", "業界人視点3"],
@@ -482,7 +482,6 @@ function buildInstagramCta(input) {
   const noteText = store.genre ? `${store.genre}の料理写真・雰囲気はこちら` : '料理写真・店内雰囲気はこちら';
 
   return `<div class="art-ig-cta">
-      <div class="ig-icon">📸</div>
       <div class="art-ig-cta-body">
         <a href="${esc(accountUrl)}" target="_blank" rel="noopener">
           <p class="art-ig-cta-label">Instagram</p>
@@ -544,8 +543,8 @@ function buildNotebookLmSlidesMd(slides) {
 function renderHtml(input) {
   let html = fs.readFileSync(HTML_TEMPLATE, 'utf8');
   const themeLabel = ({
-    today_one: '🍶 今日の1軒', industry_insider: '🗝 業界の裏側',
-    weekly_digest: '🔥 週次話題店', seasonal: '🗓 季節短信', flexible: '🍶 今日の1軒'
+    today_one: '今日の1軒', industry_insider: '業界の裏側',
+    weekly_digest: '週次話題店', seasonal: '季節短信', flexible: '今日の1軒'
   })[input.theme] || '';
   const replacements = {
     '{{TITLE}}': esc(input.title),

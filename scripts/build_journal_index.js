@@ -25,11 +25,11 @@ function esc(s) {
 
 function themeLabel(theme) {
   return ({
-    today_one: '🍶 今日の1軒',
-    industry_insider: '🗝 業界の裏側',
-    weekly_digest: '🔥 週次話題店',
-    seasonal: '🗓 季節短信',
-    flexible: '🍶 今日の1軒'
+    today_one: '今日の1軒',
+    industry_insider: '業界の裏側',
+    weekly_digest: '週次話題店',
+    seasonal: '季節短信',
+    flexible: '今日の1軒'
   })[theme] || theme;
 }
 
