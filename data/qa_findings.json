@@ -1,6 +1,6 @@
 {
-  "date": "2026-07-20",
-  "head": "7e4fee909530eb91fd383f4299a2b82c1dcf311d",
+  "date": "2026-07-21",
+  "head": "14507ea6501496f2babb34555e450c399636b0ec",
   "verdict": "PASS",
   "findings": [
     {
@@ -8,8 +8,8 @@
       "owner": "DataKeeper",
       "id": "QA-SEC-NPM-AUDIT",
       "sev": "soft",
-      "priority": "P3",
-      "title": "npm 依存に既知脆弱性 4 件（critical 0 / high 0 / moderate 4）",
+      "priority": "P2",
+      "title": "npm 依存に既知脆弱性 6 件（critical 0 / high 2 / moderate 4）",
       "body": "`npm audit --omit=dev` 結果。\n- acceptance: 破壊的変更の無い範囲で `npm audit fix`／高リスクは個別精査／残存はリスク受容理由を記録／次回QAで推移を追跡（制約4: サイト用新依存は追加しない）"
     }
   ],
