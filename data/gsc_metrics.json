@@ -1,7 +1,32 @@
 {
-  "generatedAt": "2026-07-23T11:12:55.815Z",
+  "generatedAt": "2026-07-23T12:52:33.464Z",
   "siteUrl": "https://nagoya-bites.com/",
-  "error": "User does not have sufficient permission for site 'https://nagoya-bites.com/'. See also: https://support.google.com/webmasters/answer/2451999.",
-  "hint": "サービスアカウントを GSC のユーザーに追加し、Search Console API を有効化してください。",
-  "totals": null
+  "dateRange": {
+    "startDate": "2026-06-25",
+    "endDate": "2026-07-22"
+  },
+  "lookbackDays": 28,
+  "totals": {
+    "clicks": 0,
+    "impressions": 0,
+    "ctr": 0,
+    "position": 0,
+    "impressionsPerDay": 0
+  },
+  "topQueries": [],
+  "topPages": [],
+  "benchmarks": {
+    "ctr": {
+      "good": 0.05,
+      "warn": 0.01
+    },
+    "position": {
+      "good": 10,
+      "warn": 20
+    },
+    "impressionsPerDay": {
+      "weak": 100,
+      "healthy": 1000
+    }
+  }
 }

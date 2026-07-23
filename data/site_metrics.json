@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-07-23T11:12:54.985Z",
+  "generatedAt": "2026-07-23T12:52:32.288Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 415,
-    "pageViews": 570,
-    "sessions": 459,
-    "avgSessionDuration": 97.6,
-    "bounceRate": 0.399,
+    "activeUsers": 419,
+    "pageViews": 575,
+    "sessions": 464,
+    "avgSessionDuration": 96.8,
+    "bounceRate": 0.405,
     "pagesPerSession": 1.24
   },
   "channels": {
     "sessions": {
-      "organic": 269,
-      "direct": 153,
+      "organic": 270,
+      "direct": 157,
       "social": 36,
       "referral": 7,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 57.8,
-      "direct": 32.9,
+      "organic": 57.4,
+      "direct": 33.4,
       "social": 7.7,
       "referral": 1.5,
       "paid": 0,
@@ -36,7 +36,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 122
+      "sessions": 125
     },
     {
       "source": "google",
@@ -46,7 +46,7 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 43
+      "sessions": 44
     },
     {
       "source": "chatgpt.com",
@@ -66,7 +66,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 7
+      "sessions": 8
     },
     {
       "source": "cn.bing.com",
@@ -87,8 +87,8 @@
     },
     {
       "path": "/",
-      "pageViews": 84,
-      "sessions": 76
+      "pageViews": 85,
+      "sessions": 77
     },
     {
       "path": "/features/nagoya-solo-dining.html",
@@ -102,19 +102,19 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 27,
-      "sessions": 16
+      "pageViews": 28,
+      "sessions": 17
     }
   ],
   "cta": {
     "outboundClicks": 14,
-    "ctaClickRate": 3.1,
+    "ctaClickRate": 3,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 415,
+    "value": 419,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
