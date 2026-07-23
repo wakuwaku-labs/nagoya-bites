@@ -45,8 +45,8 @@
 
 ### [ISSUE-068] 計測基盤の穴2件（GSC権限エラー・link_domainカスタムディメンション未登録）— オーナー操作依頼
 
-- **priority**: P2 → **一部前進（GSC はコード側完了・オーナーGUI操作待ち）**
-- **status**: in_progress（blocked-on-owner）
+- **priority**: P2 → **①GSC 完全解決 ✅ / ②link_domain 残**
+- **status**: in_progress（①done・②オーナーGUI操作待ち）
 - **category**: seo / analytics-ops
 - **detected**: 2026-07-16
 - **owner**: Marketer（実操作はオーナー）
@@ -58,9 +58,10 @@
   - **スクリプト堅牢化** `scripts/fetch_gsc_metrics.js`: (a) `sites.list()` でアクセス可能プロパティを診断ログ出力（0件なら「SA未追加」、list自体失敗なら「API未有効化」と切り分けが CI ログだけで確定する） (b) URLプレフィックス（`https://nagoya-bites.com/`）とドメインプロパティ（`sc-domain:nagoya-bites.com`）の**自動フォールバック**を実装 → オーナーはプロパティ型を気にせず SA を追加するだけでよい（`GSC_SITE_URL` secret 設定が不要に）。`resolveTargetSiteUrl` は6ケースの単体テストで検証済 (c) エラー時 JSON に `serviceAccountToAdd` フィールドと直リンク付きヒントを埋め込み、`gsc_metrics.json` を見るだけで次の操作が分かる
   - **手順書** `docs/gsc-metrics-setup.md`: 正確な SA メール・GSC ユーザー追加の直リンク（URLプレフィックス/ドメイン両方）・GCP API 有効化直リンク・反映確認手順（CI 手動実行 or ローカル1コマンド）・診断ログの読み方を記載
   - **オーナー完了（2026-07-23）**: [1] SA を GSC に追加 [2] GCP で Search Console API 有効化。→ **permission エラーは解消**（CI run 30008735732 ログ: `アクセス可能な GSC プロパティ(1): https://nagoya-bites.com/`・`gsc_metrics.json` から error 消失・totals 構造が入った）
-  - **残課題（データ0の切り分け）**: 権限は通ったが `clicks=0 / impressions=0`。SA がアクセスできるのは URL プレフィックス型1件のみで空。GA4 の Google organic 約70セッション/28日と矛盾 → 実データは(a)ドメインプロパティ側にある or (b)新規プロパティで未反映（2〜3日で出る）のいずれか。対策として `pickBestProperty`（複数プロパティ時に impressions のある方を自動選択・PR #78・3ケース単体テスト）を追加済。オーナーが Performance にデータのあるプロパティ（多くはドメインプロパティ）に同 SA を追加すれば自動で拾う。新規プロパティなら数日待てば CI が自動取得
+  - **データ0の切り分け→完全解決（2026-07-23）**: 初回は権限が通っても `impressions=0`。原因は「SA が見えたのは空の URL プレフィックス型プロパティで、実データは別のドメインプロパティ側」だった（GSC UI で 3か月 クリック1,595/表示20.2万を確認し確定）。オーナーがデータのあるドメインプロパティにも同 SA を追加 → `pickBestProperty`（PR #78）が両プロパティの impressions を比較し `sc-domain:nagoya-bites.com`（32,958）を自動選択。**CI run 30010262835 で開通確定**: `gsc_metrics.json` に clicks=288 / impressions=32,958 / CTR=0.87% / 平均順位=17.3 / topQueries=25件（店名系: 山本屋総本家の違い・のれんとコルク・ナショナルベーカリー 等）が入った。① **完全解決 ✅**
 - **② link_domain（未着手・オーナーGUI操作）**: GA4 管理画面でイベントパラメータ `link_domain` をカスタムディメンション登録 → `site_metrics.json` の cta.byDomain が埋まる
-- **acceptance**: ① `gsc_metrics.json` に **非ゼロの** totals が入る（権限は解消済・データ反映が残） ② `site_metrics.json` の cta.byDomain が埋まる
+- **acceptance**: ① `gsc_metrics.json` に非ゼロ totals が入る ✅（達成） ② `site_metrics.json` の cta.byDomain が埋まる（残）
+- **示唆（要フォロー）**: 平均 CTR 0.87%・平均順位 17.3 は「2ページ目に大量表示（表示3.3万）だがクリックされない」状態。organic が最大チャネル化した今、タイトル/メタ改善・上位化は明確な伸びしろ。GSC 開通で日次追跡可能になったため、SEO 施策の効果測定を回せる（ISSUE-054 と接続）
 - **files**: `scripts/fetch_gsc_metrics.js`（堅牢化・自動フォールバック・診断）, `docs/gsc-metrics-setup.md`（手順最新化）, `data/gsc_metrics.json` / `data/site_metrics.json`（確認のみ）
 - **関連**: ISSUE-067（効果計測の解像度向上）/ ISSUE-054（GSC 効果測定）
 
@@ -1199,7 +1200,8 @@
 | 2026-06-22 | Builder(/solve-next) | ISSUE-063 schema整合監査のFAQ/パンくず判定をtitle単独→ページ実態コーパス照合へ改善（FAQ閾値0.50・ハブ名逐語救済）。オントピック偽陽性9→0・66件PASS、汚染E2E逆検証で検出力維持 | ✅ done |
 | 2026-07-16 | Orchestrator+Builder(INSPECT→BUILD) | ISSUE-067 閲覧データ分析（CTA率13.5→5.1%崩落の真因＝direct→organic/AIミックスシフト＋記事ランディングの予約導線欠落）→ 上位ランディング特集5本にHP予約直リンク41本を冪等付与（add_feature_reservation_cta.js 新規）。baseline記録済（ctaClickRate 5.1→target 8）。ISSUE-068（GSC権限・link_domain登録＝オーナー操作）を分離起票 | ✅ デプロイ済み (PR #75) |
 | 2026-07-18 | Builder+Editor(EXPLICIT) | ISSUE-069 UI絵文字を全5,570ページから撤去（strip_ui_emojis.js）＋分類カード28枚をジャンル検証済み実在店舗写真・クレジット・店舗リンク付きに置換（replace_type_icon_photos.js）＋生成元6本修正で再発防止。残存絵文字0・QA全PASS | ✅ デプロイ済み (PR #75) |
-| 2026-07-23 | Marketer+Builder(EXPLICIT) | ISSUE-068① GSC権限問題のボトルネック（追加すべきSAメール不明）をCIログから確定（nagoya-bites-ga4@optimal-transit-447015-e9…）。fetch_gsc_metrics.jsを堅牢化（sites.list診断＋URLプレフィックス/ドメインプロパティ自動フォールバック・6ケース単体テスト）＋docs手順を直リンク付きで最新化。残はオーナーGUI操作5分（SA追加＋API有効化） | ⏸ オーナー操作待ち |
+| 2026-07-23 | Marketer+Builder(EXPLICIT) | ISSUE-068① GSC権限問題のボトルネック（追加すべきSAメール不明）をCIログから確定（nagoya-bites-ga4@optimal-transit-447015-e9…）。fetch_gsc_metrics.jsを堅牢化（sites.list診断＋URLプレフィックス/ドメインプロパティ自動フォールバック・6ケース単体テスト）＋docs手順を直リンク付きで最新化。残はオーナーGUI操作5分（SA追加＋API有効化） | ✅ デプロイ済み (PR #77) |
+| 2026-07-23 | Builder(EXPLICIT) | ISSUE-068① GSC **完全開通**。データ0の原因＝SAが空のURLプレフィックス型のみ閲覧・実データはドメインプロパティ側と特定。pickBestProperty（複数時impressions最大を自動選択・PR #78・3ケーステスト）追加＋オーナーがドメインプロパティにSA追加→CI run 30010262835 で gsc_metrics.json に clicks=288/imp=32,958/CTR0.87%/順位17.3/クエリ25件 が入り確定 | ✅ デプロイ済み (PR #78) |
 
 ---
 
