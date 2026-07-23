@@ -57,9 +57,10 @@
   - **ボトルネック解消**: 追加すべきサービスアカウントを CI ログから確定 → `nagoya-bites-ga4@optimal-transit-447015-e9.iam.gserviceaccount.com`（GCP プロジェクト `optimal-transit-447015-e9`）。以前は「xxx@…」プレースホルダで、オーナーがどのメールを追加すべきか不明だったのが真のボトルネックだった
   - **スクリプト堅牢化** `scripts/fetch_gsc_metrics.js`: (a) `sites.list()` でアクセス可能プロパティを診断ログ出力（0件なら「SA未追加」、list自体失敗なら「API未有効化」と切り分けが CI ログだけで確定する） (b) URLプレフィックス（`https://nagoya-bites.com/`）とドメインプロパティ（`sc-domain:nagoya-bites.com`）の**自動フォールバック**を実装 → オーナーはプロパティ型を気にせず SA を追加するだけでよい（`GSC_SITE_URL` secret 設定が不要に）。`resolveTargetSiteUrl` は6ケースの単体テストで検証済 (c) エラー時 JSON に `serviceAccountToAdd` フィールドと直リンク付きヒントを埋め込み、`gsc_metrics.json` を見るだけで次の操作が分かる
   - **手順書** `docs/gsc-metrics-setup.md`: 正確な SA メール・GSC ユーザー追加の直リンク（URLプレフィックス/ドメイン両方）・GCP API 有効化直リンク・反映確認手順（CI 手動実行 or ローカル1コマンド）・診断ログの読み方を記載
-  - **残（オーナーGUI操作・5分）**: [1] GSC「設定→ユーザーと権限」で上記 SA を「制限付き」以上で追加 [2] GCP で Search Console API を有効化。→ 次回 CI で `gsc_metrics.json` に totals が入れば完了。手順は docs 参照
+  - **オーナー完了（2026-07-23）**: [1] SA を GSC に追加 [2] GCP で Search Console API 有効化。→ **permission エラーは解消**（CI run 30008735732 ログ: `アクセス可能な GSC プロパティ(1): https://nagoya-bites.com/`・`gsc_metrics.json` から error 消失・totals 構造が入った）
+  - **残課題（データ0の切り分け）**: 権限は通ったが `clicks=0 / impressions=0`。SA がアクセスできるのは URL プレフィックス型1件のみで空。GA4 の Google organic 約70セッション/28日と矛盾 → 実データは(a)ドメインプロパティ側にある or (b)新規プロパティで未反映（2〜3日で出る）のいずれか。対策として `pickBestProperty`（複数プロパティ時に impressions のある方を自動選択・PR #78・3ケース単体テスト）を追加済。オーナーが Performance にデータのあるプロパティ（多くはドメインプロパティ）に同 SA を追加すれば自動で拾う。新規プロパティなら数日待てば CI が自動取得
 - **② link_domain（未着手・オーナーGUI操作）**: GA4 管理画面でイベントパラメータ `link_domain` をカスタムディメンション登録 → `site_metrics.json` の cta.byDomain が埋まる
-- **acceptance**: ① `gsc_metrics.json` に totals が入る（SA 追加＋API 有効化後） ② `site_metrics.json` の cta.byDomain が埋まる
+- **acceptance**: ① `gsc_metrics.json` に **非ゼロの** totals が入る（権限は解消済・データ反映が残） ② `site_metrics.json` の cta.byDomain が埋まる
 - **files**: `scripts/fetch_gsc_metrics.js`（堅牢化・自動フォールバック・診断）, `docs/gsc-metrics-setup.md`（手順最新化）, `data/gsc_metrics.json` / `data/site_metrics.json`（確認のみ）
 - **関連**: ISSUE-067（効果計測の解像度向上）/ ISSUE-054（GSC 効果測定）
 
