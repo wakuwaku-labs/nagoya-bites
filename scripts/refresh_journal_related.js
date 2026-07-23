@@ -86,14 +86,14 @@ function buildRelatedHtml(currentFile, posts, postsMeta) {
     if (!meta) continue;
     lines.push(`    <a class="related-link" href="${f}">${shortLabel(meta.title)}</a>`);
   }
-  lines.push('    <a class="related-link" href="index.html" style="background:rgba(122,92,16,.08);">📰 Journal 一覧</a>');
+  lines.push('    <a class="related-link" href="index.html" style="background:rgba(122,92,16,.08);">Journal 一覧</a>');
   // タイトルにジャン/シーンが含まれれば、対応する特集へのトピックリンクを1本追加（回遊強化）
   const topic = matchTopicFeature(postsMeta[currentFile] && postsMeta[currentFile].title);
   if (topic) {
-    lines.push(`    <a class="related-link" href="../features/${topic.slug}.html" style="background:rgba(122,92,16,.08);">📖 ${topic.label}</a>`);
+    lines.push(`    <a class="related-link" href="../features/${topic.slug}.html" style="background:rgba(122,92,16,.08);">${topic.label}</a>`);
   }
-  lines.push('    <a class="related-link" href="../features/index.html">📖 特集をもっと見る</a>');
-  lines.push('    <a class="related-link" href="../index.html">🍽 全店舗を検索</a>');
+  lines.push('    <a class="related-link" href="../features/index.html">特集をもっと見る</a>');
+  lines.push('    <a class="related-link" href="../index.html">全店舗を検索</a>');
   lines.push('  </div>');
   lines.push('</div>');
   return lines.join('\n');

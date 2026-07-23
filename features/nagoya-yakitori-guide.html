@@ -127,7 +127,11 @@ footer{background:#111;color:#888;text-align:center;padding:20px;font-size:.78re
   h1{font-size:1.5rem}
   .store-card a{padding:16px}
 }
-.art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}.art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}@media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}.store-card-photo{width:calc(100% + 44px);aspect-ratio:16/9;object-fit:cover;display:block;margin:-20px -22px 14px;border-radius:6px 6px 0 0;}@media(max-width:640px){.store-card-photo{width:calc(100% + 32px);margin:-16px -16px 12px;}}.store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:.78rem !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}.store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}.store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}.store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}.store-photo{width:160px;min-width:160px;height:120px;border-radius:4px;overflow:hidden;flex-shrink:0;}.store-photo img{width:100%;height:100%;object-fit:cover;display:block;}@media(max-width:640px){.store-photo{width:100%;height:160px;}}.related{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center;}.related-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.3rem;color:var(--white);margin-bottom:1.2rem;}.related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}.related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}.related-link:hover{background:rgba(122,92,16,.08);}</style>
+.art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}.art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}@media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}.store-card-photo{width:calc(100% + 44px);aspect-ratio:16/9;object-fit:cover;display:block;margin:-20px -22px 14px;border-radius:6px 6px 0 0;}@media(max-width:640px){.store-card-photo{width:calc(100% + 32px);margin:-16px -16px 12px;}}.store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:.78rem !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}.store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}.store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}.store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}.store-photo{width:160px;min-width:160px;height:120px;border-radius:4px;overflow:hidden;flex-shrink:0;}.store-photo img{width:100%;height:100%;object-fit:cover;display:block;}@media(max-width:640px){.store-photo{width:100%;height:160px;}}.related{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center;}.related-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.3rem;color:var(--white);margin-bottom:1.2rem;}.related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}.related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}.related-link:hover{background:rgba(122,92,16,.08);}/* type-photo: 分類カードの絵文字アイコンを実在店舗写真へ置換（2026-07 絵文字全面撤去） */
+.type-photo{display:block;margin-bottom:.75rem;text-decoration:none;}
+.type-photo img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:4px;display:block;}
+.type-photo-credit{display:block;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.06em;color:#8b8578;margin-top:.35rem;}
+</style>
 </head>
 <body>
 <header class="site-header">
@@ -165,32 +169,32 @@ footer{background:#111;color:#888;text-align:center;padding:20px;font-size:.78re
     <h2>業態別・選び方ガイド</h2>
     <div class="type-grid">
       <div class="type-card">
-        <div class="type-icon">🔥</div>
+        <a class="type-photo" href="../stores/J003611005.html"><img src="https://imgfp.hotp.jp/IMGH/16/54/P048701654/P048701654_480.jpg" alt="大衆炭火系の掲載店 焼き鳥 大五郎" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 焼き鳥 大五郎</span></a>
         <div class="type-name">大衆炭火系</div>
         <div class="type-desc">1,000円前後から気軽に。治兵衛・串っ子など金山・栄に密集。</div>
       </div>
       <div class="type-card">
-        <div class="type-icon">🐔</div>
+        <a class="type-photo" href="../stores/J003873028.html"><img src="https://imgfp.hotp.jp/IMGH/47/44/P049244744/P049244744_480.jpg" alt="地鶏専門の掲載店 地鶏坊主 大曽根駅前店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 地鶏坊主 大曽根駅前店</span></a>
         <div class="type-name">地鶏専門</div>
         <div class="type-desc">銘柄鶏を強調する高価格帯。1本あたり200〜400円が目安。</div>
       </div>
       <div class="type-card">
-        <div class="type-icon">🚪</div>
+        <a class="type-photo" href="../stores/J003649255.html"><img src="https://imgfp.hotp.jp/IMGH/53/73/P047715373/P047715373_480.jpg" alt="個室焼き鳥の掲載店 炭火焼き鳥 けんしろう 栄本店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 炭火焼き鳥 けんしろう 栄本店</span></a>
         <div class="type-name">個室焼き鳥</div>
         <div class="type-desc">デート・接待・会食向け。バンクシ・かしわや等。</div>
       </div>
       <div class="type-card">
-        <div class="type-icon">🍢</div>
+        <a class="type-photo" href="../stores/J004559309.html"><img src="https://imgfp.hotp.jp/IMGH/43/12/P047274312/P047274312_480.jpg" alt="串カツ併設の掲載店 焼き鳥と串カツ 大衆居酒屋 治兵衛 金山駅店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 焼き鳥と串カツ 大衆居酒屋 治兵衛 金山駅店</span></a>
         <div class="type-name">串カツ併設</div>
         <div class="type-desc">焼き鳥+串カツの複合業態。治兵衛など宴会に使いやすい。</div>
       </div>
       <div class="type-card">
-        <div class="type-icon">🍲</div>
+        <a class="type-photo" href="../stores/J003649537.html"><img src="https://imgfp.hotp.jp/IMGH/74/58/P045407458/P045407458_480.jpg" alt="焼き鳥×おでんの掲載店 炭火焼き鳥と鶏白湯おでん 尊 みこと 栄駅店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 炭火焼き鳥と鶏白湯おでん 尊 みこと 栄駅店</span></a>
         <div class="type-name">焼き鳥×おでん</div>
         <div class="type-desc">炭火串+鶏白湯おでんの異業態。尊みこと等。</div>
       </div>
       <div class="type-card">
-        <div class="type-icon">🦅</div>
+        <a class="type-photo" href="../stores/J003649259.html"><img src="https://imgfp.hotp.jp/IMGH/20/89/P047712089/P047712089_480.jpg" alt="地鶏×鮮魚の掲載店 地鶏と鮮魚 焼き鳥職人 鳳 栄本店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 地鶏と鮮魚 焼き鳥職人 鳳 栄本店</span></a>
         <div class="type-name">地鶏×鮮魚</div>
         <div class="type-desc">焼き鳥と刺身を同席で楽しめる。鳳など。</div>
       </div>
@@ -424,14 +428,14 @@ footer{background:#111;color:#888;text-align:center;padding:20px;font-size:.78re
 <div class="related">
   <p class="related-title">関連する特集記事</p>
   <div class="related-links">
-    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;">📖 名古屋グルメ完全ガイド</a>
+    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;">名古屋グルメ完全ガイド</a>
     <a class="related-link" href="nagoya-yakitori.html">焼き鳥10選</a>
     <a class="related-link" href="nagoya-industry-pick-izakaya.html">業界人推薦の居酒屋10選</a>
     <a class="related-link" href="nagoya-izakaya.html">居酒屋10選</a>
     <a class="related-link" href="nagoya-solo-dining.html">一人飲み完全ガイド</a>
   </div>
   <p class="related-journal" style="margin-top:1.2rem;font-size:.82rem;color:rgba(28,28,26,.62);line-height:1.7;">
-    名古屋の最新グルメは <a class="related-link" href="../journal/index.html">📰 デイリージャーナル</a> で毎朝更新中。
+    名古屋の最新グルメは <a class="related-link" href="../journal/index.html">デイリージャーナル</a> で毎朝更新中。
   </p>
   <p style="margin-top:1.5rem;">
     <a class="related-link" href="../index.html" style="background:rgba(122,92,16,.06);">トップページで全店舗を検索する →</a>
