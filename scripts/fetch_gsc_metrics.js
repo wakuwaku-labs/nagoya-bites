@@ -31,7 +31,7 @@ const fs = require('fs');
 const path = require('path');
 
 const KEY_RAW  = process.env.GA4_SERVICE_ACCOUNT_KEY;
-const SITE_URL = process.env.GSC_SITE_URL || 'https://nagoya-bites.com/';
+const DEFAULT_SITE_URL = 'https://nagoya-bites.com/';
 const LOOKBACK = parseInt(process.env.GSC_LOOKBACK_DAYS || '28', 10);
 const OUT_PATH = path.join(__dirname, '..', 'data', 'gsc_metrics.json');
 
@@ -52,12 +52,24 @@ if (!KEY_RAW) {
   process.exit(0);
 }
 
-async function query(searchconsole, body) {
+async function query(searchconsole, siteUrl, body) {
   const res = await searchconsole.searchanalytics.query({
-    siteUrl: SITE_URL,
+    siteUrl,
     requestBody: body,
   });
   return res.data.rows || [];
+}
+
+// GSC_SITE_URL が明示設定されていればそれを最優先で単独使用。
+// 未設定時は sites.list() でこのサービスアカウントが実際にアクセスできる
+// プロパティを見て、URL プレフィックス / ドメインプロパティのどちらでも自動選択する。
+// （「permission エラー」の主因は ①SA 未追加 ②プロパティ形式不一致 の2つ。後者を吸収する）
+function resolveTargetSiteUrl(accessible) {
+  if (process.env.GSC_SITE_URL) return process.env.GSC_SITE_URL;
+  const preferred = [DEFAULT_SITE_URL, 'sc-domain:nagoya-bites.com'];
+  return preferred.find(u => accessible.includes(u))
+      || accessible.find(u => u.includes('nagoya-bites'))
+      || preferred[0];
 }
 
 async function main() {
@@ -65,7 +77,6 @@ async function main() {
   const credentials = JSON.parse(KEY_RAW);
   // 診断用: GSC に追加すべき正しい SA メールをログで確定させる（メールは秘密情報ではない）
   console.log(`使用中のサービスアカウント: ${credentials.client_email}`);
-  console.log(`対象プロパティ(GSC_SITE_URL): ${SITE_URL}`);
   const auth = new google.auth.JWT({
     email: credentials.client_email,
     key: credentials.private_key,
@@ -75,13 +86,29 @@ async function main() {
 
   const searchconsole = google.searchconsole({ version: 'v1', auth });
 
+  // このサービスアカウントがアクセスできるプロパティを列挙（permission 問題の切り分けに決定的）。
+  // ここが空なら「SA が GSC のユーザーにまだ追加されていない」と即断できる。
+  let accessible = [];
+  try {
+    const siteList = await searchconsole.sites.list();
+    accessible = (siteList.data.siteEntry || [])
+      .filter(s => s.permissionLevel && s.permissionLevel !== 'siteUnverifiedUser')
+      .map(s => s.siteUrl);
+    console.log(`アクセス可能な GSC プロパティ(${accessible.length}): ${accessible.join(', ') || '(なし＝SA未追加の可能性大)'}`);
+  } catch (e) {
+    console.log(`sites.list 取得失敗（Search Console API 未有効化の可能性）: ${e.message}`);
+  }
+
+  const siteUrl = resolveTargetSiteUrl(accessible);
+  console.log(`対象プロパティ: ${siteUrl}`);
+
   // GSC データは 2〜3 日遅延するため、終端は余裕を持たせる
   const startDate = isoDaysAgo(LOOKBACK);
   const endDate = isoDaysAgo(1);
   const dateRange = { startDate, endDate };
 
   // 1) 総計（ディメンションなし → 1 行）
-  const totalRows = await query(searchconsole, { ...dateRange, dimensions: [] });
+  const totalRows = await query(searchconsole, siteUrl, { ...dateRange, dimensions: [] });
   const t = totalRows[0] || { clicks: 0, impressions: 0, ctr: 0, position: 0 };
   const totals = {
     clicks: t.clicks || 0,
@@ -92,7 +119,7 @@ async function main() {
   };
 
   // 2) トップクエリ（表示回数順）
-  const queryRows = await query(searchconsole, {
+  const queryRows = await query(searchconsole, siteUrl, {
     ...dateRange, dimensions: ['query'], rowLimit: 25,
     orderBy: [{ field: 'impressions', descending: true }],
   });
@@ -105,7 +132,7 @@ async function main() {
   }));
 
   // 3) トップページ（表示回数順）
-  const pageRows = await query(searchconsole, {
+  const pageRows = await query(searchconsole, siteUrl, {
     ...dateRange, dimensions: ['page'], rowLimit: 15,
     orderBy: [{ field: 'impressions', descending: true }],
   });
@@ -119,7 +146,7 @@ async function main() {
 
   const out = {
     generatedAt: new Date().toISOString(),
-    siteUrl: SITE_URL,
+    siteUrl,
     dateRange,
     lookbackDays: LOOKBACK,
     totals,
@@ -135,6 +162,9 @@ async function main() {
 
 main().catch(err => {
   console.error('GSC 集計エラー:', err.message);
+  // 追加すべき正確な SA メールをエラー JSON にも埋め込む（オーナーが gsc_metrics.json だけで完結できるように）
+  let saEmail = '(GA4_SERVICE_ACCOUNT_KEY の client_email)';
+  try { saEmail = JSON.parse(KEY_RAW).client_email; } catch (_) {}
   // まだ正常データが無い（未存在 or エラースタブ）場合のみ最新エラーで更新する。
   // 既に totals 入りの正常データがある場合は、transient エラーで上書きしない。
   let hasGoodData = false;
@@ -143,9 +173,10 @@ main().catch(err => {
     fs.mkdirSync(path.dirname(OUT_PATH), { recursive: true });
     fs.writeFileSync(OUT_PATH, JSON.stringify({
       generatedAt: new Date().toISOString(),
-      siteUrl: SITE_URL,
+      siteUrl: process.env.GSC_SITE_URL || DEFAULT_SITE_URL,
       error: err.message,
-      hint: 'サービスアカウントを GSC のユーザーに追加し、Search Console API を有効化してください。',
+      serviceAccountToAdd: saEmail,
+      hint: `GSC の「設定→ユーザーと権限」で ${saEmail} を「制限付き」以上で追加し、GCP で Search Console API を有効化してください。ドメインプロパティ登録の場合は GitHub Secrets GSC_SITE_URL を sc-domain:nagoya-bites.com に設定。詳細は docs/gsc-metrics-setup.md。`,
       totals: null,
     }, null, 2));
   }
