@@ -1190,8 +1190,8 @@
 | 2026-06-22 | Editor+Builder(/solve-next) | ISSUE-065 全 acceptance を origin/main で実体確認しクローズ（hardening 268ff31db / PR#73 / 欠番5本 d5c782da3）。残課題 ISSUE-066（二重稼働一本化・P3）を分離起票 | ✅ done |
 | 2026-06-22 | DataKeeper(/solve-next) | ISSUE-064 audit_feature_stores.js に識別力トークン照合を導入（業態語/支店語除外＋2トークン共有）。呼炉凪来の偽陽性を正規化で解消、架空7ケース逆検証で検出力維持。実在不明 1→0・EXIT 0 | ✅ done |
 | 2026-06-22 | Builder(/solve-next) | ISSUE-063 schema整合監査のFAQ/パンくず判定をtitle単独→ページ実態コーパス照合へ改善（FAQ閾値0.50・ハブ名逐語救済）。オントピック偽陽性9→0・66件PASS、汚染E2E逆検証で検出力維持 | ✅ done |
-| 2026-07-16 | Orchestrator+Builder(INSPECT→BUILD) | ISSUE-067 閲覧データ分析（CTA率13.5→5.1%崩落の真因＝direct→organic/AIミックスシフト＋記事ランディングの予約導線欠落）→ 上位ランディング特集5本にHP予約直リンク41本を冪等付与（add_feature_reservation_cta.js 新規）。baseline記録済（ctaClickRate 5.1→target 8）。ISSUE-068（GSC権限・link_domain登録＝オーナー操作）を分離起票 | ⏸ PR #75 マージ待ち |
-| 2026-07-18 | Builder+Editor(EXPLICIT) | ISSUE-069 UI絵文字を全5,570ページから撤去（strip_ui_emojis.js）＋分類カード28枚をジャンル検証済み実在店舗写真・クレジット・店舗リンク付きに置換（replace_type_icon_photos.js）＋生成元6本修正で再発防止。残存絵文字0・QA全PASS | ⏸ PR #75 マージ待ち |
+| 2026-07-16 | Orchestrator+Builder(INSPECT→BUILD) | ISSUE-067 閲覧データ分析（CTA率13.5→5.1%崩落の真因＝direct→organic/AIミックスシフト＋記事ランディングの予約導線欠落）→ 上位ランディング特集5本にHP予約直リンク41本を冪等付与（add_feature_reservation_cta.js 新規）。baseline記録済（ctaClickRate 5.1→target 8）。ISSUE-068（GSC権限・link_domain登録＝オーナー操作）を分離起票 | ✅ デプロイ済み (PR #75) |
+| 2026-07-18 | Builder+Editor(EXPLICIT) | ISSUE-069 UI絵文字を全5,570ページから撤去（strip_ui_emojis.js）＋分類カード28枚をジャンル検証済み実在店舗写真・クレジット・店舗リンク付きに置換（replace_type_icon_photos.js）＋生成元6本修正で再発防止。残存絵文字0・QA全PASS | ✅ デプロイ済み (PR #75) |
 
 ---
 
