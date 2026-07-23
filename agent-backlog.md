@@ -81,8 +81,8 @@
 
 ### [ISSUE-068] 計測基盤の穴2件（GSC権限エラー・link_domainカスタムディメンション未登録）— オーナー操作依頼
 
-- **priority**: P2 → **①GSC 完全解決 ✅ / ②link_domain 残**
-- **status**: in_progress（①done・②オーナーGUI操作待ち）
+- **priority**: P2 → **①GSC 完全解決 ✅ / ②link_domain 登録完了・データ蓄積中 ✅**
+- **status**: done（両オーナー操作＋コード整備完了。②の cta.byDomain 実値は GA4 非遡及のため登録後 outbound_click 蓄積で自動充填）
 - **category**: seo / analytics-ops
 - **detected**: 2026-07-16
 - **owner**: Marketer（実操作はオーナー）
@@ -96,7 +96,8 @@
   - **オーナー完了（2026-07-23）**: [1] SA を GSC に追加 [2] GCP で Search Console API 有効化。→ **permission エラーは解消**（CI run 30008735732 ログ: `アクセス可能な GSC プロパティ(1): https://nagoya-bites.com/`・`gsc_metrics.json` から error 消失・totals 構造が入った）
   - **データ0の切り分け→完全解決（2026-07-23）**: 初回は権限が通っても `impressions=0`。原因は「SA が見えたのは空の URL プレフィックス型プロパティで、実データは別のドメインプロパティ側」だった（GSC UI で 3か月 クリック1,595/表示20.2万を確認し確定）。オーナーがデータのあるドメインプロパティにも同 SA を追加 → `pickBestProperty`（PR #78）が両プロパティの impressions を比較し `sc-domain:nagoya-bites.com`（32,958）を自動選択。**CI run 30010262835 で開通確定**: `gsc_metrics.json` に clicks=288 / impressions=32,958 / CTR=0.87% / 平均順位=17.3 / topQueries=25件（店名系: 山本屋総本家の違い・のれんとコルク・ナショナルベーカリー 等）が入った。① **完全解決 ✅**
 - **② link_domain（2026-07-23・コード準備完了／オーナーGUI操作のみ残）**: 調査の結果、**コード変更ゼロで良いことを確認**。(a) サイトは `outbound_click` イベントに `link_domain` パラメータを送信済（index.html）(b) `scripts/fetch_ga4_views.js:222-249` が `customEvent:link_domain` を問い合わせ、未登録なら自動スキップ・登録済みならトップ15ドメインを `cta.byDomain` に自動格納する実装。→ 残るは GA4 管理画面で「カスタムディメンション（範囲=イベント / パラメータ=`link_domain`）」を登録するだけ。手順は `docs/ga4-view-counts-setup.md` に追記。注意: GA4 は非遡及なので登録後の outbound_click から埋まる（24〜48h遅延＋件数少で数日〜2週）
-- **acceptance**: ① `gsc_metrics.json` に非ゼロ totals が入る ✅（達成） ② `site_metrics.json` の cta.byDomain が埋まる（残）
+  - **オーナー登録完了（2026-07-23）**: GA4 カスタム定義に `link_domain`（スコープ=イベント / パラメータ=link_domain）を登録済（`store_name` と並列・UI で確認）。パイプラインは既に `customEvent:link_domain` を問い合わせる実装のため、以後 GA4 の処理反映（24〜48h）＋ outbound_click 蓄積に伴い `cta.byDomain` が自動充填される。**アクション項目としては完了**（実値の充填は時間依存）
+- **acceptance**: ① `gsc_metrics.json` に非ゼロ totals が入る ✅（達成） ② カスタムディメンション `link_domain` 登録済 ✅ → cta.byDomain は登録後クリック蓄積で自動充填（時間依存・監視は継続）
 - **示唆（要フォロー）**: 平均 CTR 0.87%・平均順位 17.3 は「2ページ目に大量表示（表示3.3万）だがクリックされない」状態。organic が最大チャネル化した今、タイトル/メタ改善・上位化は明確な伸びしろ。GSC 開通で日次追跡可能になったため、SEO 施策の効果測定を回せる（ISSUE-054 と接続）
 - **files**: `scripts/fetch_gsc_metrics.js`（堅牢化・自動フォールバック・診断）, `docs/gsc-metrics-setup.md`（手順最新化）, `data/gsc_metrics.json` / `data/site_metrics.json`（確認のみ）
 - **関連**: ISSUE-067（効果計測の解像度向上）/ ISSUE-054（GSC 効果測定）
@@ -1238,6 +1239,7 @@
 | 2026-07-18 | Builder+Editor(EXPLICIT) | ISSUE-069 UI絵文字を全5,570ページから撤去（strip_ui_emojis.js）＋分類カード28枚をジャンル検証済み実在店舗写真・クレジット・店舗リンク付きに置換（replace_type_icon_photos.js）＋生成元6本修正で再発防止。残存絵文字0・QA全PASS | ✅ デプロイ済み (PR #75) |
 | 2026-07-23 | Marketer+Builder(EXPLICIT) | ISSUE-068① GSC権限問題のボトルネック（追加すべきSAメール不明）をCIログから確定（nagoya-bites-ga4@optimal-transit-447015-e9…）。fetch_gsc_metrics.jsを堅牢化（sites.list診断＋URLプレフィックス/ドメインプロパティ自動フォールバック・6ケース単体テスト）＋docs手順を直リンク付きで最新化。残はオーナーGUI操作5分（SA追加＋API有効化） | ✅ デプロイ済み (PR #77) |
 | 2026-07-23 | Builder(EXPLICIT) | ISSUE-068① GSC **完全開通**。データ0の原因＝SAが空のURLプレフィックス型のみ閲覧・実データはドメインプロパティ側と特定。pickBestProperty（複数時impressions最大を自動選択・PR #78・3ケーステスト）追加＋オーナーがドメインプロパティにSA追加→CI run 30010262835 で gsc_metrics.json に clicks=288/imp=32,958/CTR0.87%/順位17.3/クエリ25件 が入り確定 | ✅ デプロイ済み (PR #78) |
+| 2026-07-23 | Builder+Marketer(EXPLICIT) | ISSUE-068② link_domain 完了。コード変更ゼロで良いと確認（サイトが link_domain 送信済＋fetch_ga4_views.js が customEvent:link_domain を自動集計）。GA4登録手順をdocs追記（PR #80）＋オーナーがGA4カスタム定義に link_domain（イベント/param=link_domain）登録済（UI確認）。cta.byDomain は非遡及のため登録後クリック蓄積で自動充填。**ISSUE-068 クローズ** | ✅ 完了 (PR #80/#81) |
 
 ---
 
