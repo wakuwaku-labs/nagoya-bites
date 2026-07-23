@@ -1,57 +1,57 @@
 {
-  "generatedAt": "2026-07-19T19:04:30.921Z",
+  "generatedAt": "2026-07-23T00:13:10.323Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 371,
-    "pageViews": 493,
-    "sessions": 406,
-    "avgSessionDuration": 90.3,
-    "bounceRate": 0.429,
-    "pagesPerSession": 1.21
+    "activeUsers": 407,
+    "pageViews": 557,
+    "sessions": 448,
+    "avgSessionDuration": 96.6,
+    "bounceRate": 0.415,
+    "pagesPerSession": 1.24
   },
   "channels": {
     "sessions": {
-      "organic": 237,
-      "direct": 134,
-      "social": 30,
-      "referral": 6,
+      "organic": 259,
+      "direct": 153,
+      "social": 34,
+      "referral": 7,
       "paid": 0,
-      "other": 1
+      "other": 3
     },
     "pct": {
-      "organic": 58.1,
-      "direct": 32.8,
-      "social": 7.4,
+      "organic": 56.8,
+      "direct": 33.6,
+      "social": 7.5,
       "referral": 1.5,
       "paid": 0,
-      "other": 0.2
+      "other": 0.7
     }
   },
   "sourceBreakdown": [
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 135
+      "sessions": 155
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 110
+      "sessions": 120
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 50
+      "sessions": 47
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 36
+      "sessions": 40
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 28
+      "sessions": 33
     },
     {
       "source": "openai",
@@ -61,17 +61,17 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 14
+      "sessions": 15
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 4
+      "sessions": 12
     },
     {
-      "source": "note.com",
-      "medium": "referral",
-      "sessions": 2
+      "source": "openai",
+      "medium": "",
+      "sessions": 3
     },
     {
       "source": "cn.bing.com",
@@ -82,39 +82,39 @@
   "topPages": [
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 80,
-      "sessions": 74
+      "pageViews": 84,
+      "sessions": 79
     },
     {
       "path": "/",
-      "pageViews": 79,
-      "sessions": 71
+      "pageViews": 83,
+      "sessions": 74
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 63,
-      "sessions": 57
+      "pageViews": 62,
+      "sessions": 56
     },
     {
-      "path": "/features/nagoya-tebasaki.html",
-      "pageViews": 22,
-      "sessions": 22
+      "path": "/journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html",
+      "pageViews": 30,
+      "sessions": 21
     },
     {
       "path": "/index.html",
-      "pageViews": 20,
-      "sessions": 15
+      "pageViews": 27,
+      "sessions": 16
     }
   ],
   "cta": {
-    "outboundClicks": 16,
-    "ctaClickRate": 3.9,
+    "outboundClicks": 13,
+    "ctaClickRate": 2.9,
     "byDomain": [],
     "note": "link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ"
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 371,
+    "value": 407,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
