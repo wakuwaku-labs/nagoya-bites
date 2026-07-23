@@ -78,3 +78,41 @@ cat data/view_counts.json | head -30
 - **ランキングが表示されない**:
   - `data/view_counts.json` の `counts` に値があるか
   - `index.html` の各店舗データに `"閲覧数":N` が焼き付いているか（build.js のログを確認）
+
+---
+
+## 追補: `link_domain` カスタムディメンション（ISSUE-068②・CTA ドメイン別内訳）
+
+`site_metrics.json` の `cta.byDomain`（予約導線がホットペッパー/食べログ/Google Maps の
+どれで効いているかの分解）を埋めるための登録。**コードは登録済み前提で準備完了**
+（`scripts/fetch_ga4_views.js` が `customEvent:link_domain` を問い合わせ、未登録なら
+自動スキップ・登録済みならトップ15ドメインを取得）。サイトも `outbound_click` イベントに
+`link_domain` パラメータを送信済み。**残るはオーナーの GA4 管理画面の登録操作のみ**。
+
+### 登録手順（GA4 管理画面・数分）
+
+上の「store_name」登録と全く同じ流れ。パラメータ名だけ変える:
+
+1. GA4（プロパティ `G-3LCZNGZPWJ`）→「管理（歯車）」
+2. プロパティ列「カスタム定義」→「カスタム ディメンションを作成」
+3. 設定:
+   - **ディメンション名**: `link_domain`（表示名は任意）
+   - **範囲**: イベント
+   - **イベント パラメータ**: `link_domain` ← サイトが送るパラメータ名と厳密一致
+4. 保存
+
+### 反映の注意（GSC と違い「登録後の分だけ」）
+
+- GA4 のカスタムディメンションは**基本的に非遡及**。登録時点より後の `outbound_click`
+  から `byDomain` が埋まり始める（直後は空 / `(not set)`）。反映まで最大 24〜48 時間。
+- outbound_click は件数が少ない（直近 ~14〜22件/30日）ため、意味のあるドメイン別内訳が
+  揃うには数日〜2週間。登録が正しければ `cta.note` の「未登録のためスキップ」が消え、
+  `cta.byDomain` に配列が入る。
+
+### 確認
+
+```bash
+python3 -c "import json;print(json.load(open('data/site_metrics.json'))['cta'])"
+```
+
+`byDomain` に `[{domain, clicks}, ...]` が入れば完了。
