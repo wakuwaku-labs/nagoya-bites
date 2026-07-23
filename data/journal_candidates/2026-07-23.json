@@ -1,0 +1,183 @@
+{
+  "date": "2026-07-23",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "丑の日は7月26日の一度だけ——名駅『しば福や』の並び方と回転を読む",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=30 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 7件 (価格帯,コース,席,予約,シーン,繁忙,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 4件 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "丑の日の直球、東区『うなぎのしろむら 泉店』を評価4.3で選ぶ理由",
+      "verdict": "FAIL",
+      "total": 94,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 22,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=15 → 7"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (価格帯,コース,席,予約,シーン,接待)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 3件 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "丑の日に鰻屋の焼き場で起きていること——一日集中のオペを裏側から",
+      "verdict": "FAIL",
+      "total": 92,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=30 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "angle 50-200字 → 15"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "7月26日の丑の日、名古屋で鰻を待たずに食べる時間割",
+      "verdict": "FAIL",
+      "total": 87,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=30 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "angle 20-49字 → 10"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 1件 → +5"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [
+    {
+      "id": "c5",
+      "title_draft": "丸の内『ひつまぶし登河 那古野本店』、丑の日前後の席と回転を読む",
+      "verdict": "DISQUALIFIED",
+      "total": 0,
+      "disqualified_reasons": [
+        "同一店舗の再掲 (ひつまぶし 登河 那古野本店 in past title, 2026-06-09)"
+      ],
+      "breakdown": null
+    }
+  ],
+  "selected_id": "c1",
+  "fallback_needed": false
+}
