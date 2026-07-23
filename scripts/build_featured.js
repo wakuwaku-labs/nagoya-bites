@@ -11,7 +11,9 @@
  * 期間外の季節特集が一覧から自動的に消えるようにする。
  *
  * 鮮度保証(常に最新感を保つ仕組み):
- *   1. monthlyFeature: 毎月必ず「今月の旬」特集をストリップ先頭に立てる（年に依存せず空にならない）
+ *   1. monthlyScenes: 毎月「その月の飲食店探し需要シーン」(新年会/送別会/土用の丑/忘年会予約など)を
+ *      複数本ストリップ先頭に立て、見出し(FEATURED_LABEL)も「M月の特集 — シーン一覧」に自動更新
+ *      （年に依存せず空にならない。旧 monthlyFeature 形式にもフォールバック対応）
  *   2. season.recurring: MM-DD で毎年判定し、期限切れで自動消滅・翌年自動復活
  *   3. showcase: 固定(showcasePinned)＋プールを ISO週で回転し毎週少しずつ入れ替え
  *   4. validateConfig: カレンダーの穴・壊れた参照を検出（--check で exit 1）
@@ -168,6 +170,14 @@ function replaceBetween(src, startMark, endMark, newInner) {
   }
   return src.replace(re, `${startMark}\n${newInner}\n${endMark}`);
 }
+// 改行を挟まないインライン版（見出しテキストなど1行内のマーカー用）
+function replaceBetweenInline(src, startMark, endMark, newInner) {
+  const re = new RegExp(`${startMark}[\\s\\S]*?${endMark}`);
+  if (!re.test(src)) {
+    throw new Error(`マーカーが見つかりません: ${startMark}`);
+  }
+  return src.replace(re, `${startMark}${newInner}${endMark}`);
+}
 
 // ───────── 鮮度保証: 今月の旬リード & ショーケース回転 ─────────
 // monthlyFeature の画像/サイズを items の thumb か features/index.html から解決する。
@@ -178,19 +188,36 @@ function resolveThumb(slug, itemsById, featMap) {
   if (info && info.img) return { thumb: info.img.replace(/^\.\.\//, ''), thumb600: null, w: 480, h: 600 };
   return null;
 }
-// 「今月の旬」特集をストリップ先頭に必ず立てる合成アイテムを作る（毎月必ず最新感を担保）。
-function buildMonthLead(monthCfg, itemsById, featMap) {
-  const t = resolveThumb(monthCfg.slug, itemsById, featMap);
+// その月の需要シーン設定を取得する。
+// 新形式 monthlyScenes[m] = { note, scenes: [{slug,title,sub,badge,thumb?}, ...] } を優先し、
+// 無ければ旧形式 monthlyFeature[m]（単一エントリ）を scenes 1件として扱う。
+function monthScenesOf(cfg, month) {
+  const key = String(month);
+  const ms = cfg.monthlyScenes && cfg.monthlyScenes[key];
+  if (ms && Array.isArray(ms.scenes) && ms.scenes.length) return ms;
+  const mf = cfg.monthlyFeature && cfg.monthlyFeature[key];
+  if (mf) return { note: mf.sub || '', scenes: [mf] };
+  return null;
+}
+// シーン1件をストリップ用の合成アイテムにする（毎月必ず最新感を担保）。
+function buildSceneItem(scene, itemsById, featMap) {
+  let t = null;
+  if (scene.thumb) {
+    // scene 単位の画像上書き（features/index.html にカードが無いページ用の逃げ道）
+    t = { thumb: scene.thumb, thumb600: scene.thumb600 || null, w: scene.thumbW || 480, h: scene.thumbH || 600 };
+  } else {
+    t = resolveThumb(scene.slug, itemsById, featMap);
+  }
   if (!t) return null;
   return {
-    id: monthCfg.slug,
-    href: `features/${monthCfg.slug}.html`,
-    title: monthCfg.title,
-    sub: monthCfg.sub || '',
+    id: scene.slug,
+    href: `features/${scene.slug}.html`,
+    title: scene.title,
+    sub: scene.sub || '',
     thumb: t.thumb, thumb600: t.thumb600, thumbW: t.w, thumbH: t.h,
-    alt: monthCfg.title,
-    season: monthCfg.badge ? { badge: monthCfg.badge } : null,
-    _monthLead: true,
+    alt: scene.title,
+    season: scene.badge ? { badge: scene.badge } : null,
+    _monthScene: true,
   };
 }
 // ショーケース: 固定(showcasePinned)＋プール(showcase)を ISO週で回転して count 件選ぶ。
@@ -216,12 +243,15 @@ function selectShowcase(cfg, today) {
 // 鮮度ガード: カレンダーの穴・壊れた参照を検出（--check で exit 1）。
 function validateConfig(cfg, featMap, featureSlugs) {
   const errs = [];
+  const itemsById = Object.fromEntries((cfg.items || []).map(i => [i.id, i]));
   for (let m = 1; m <= 12; m++) {
-    const mf = cfg.monthlyFeature && cfg.monthlyFeature[String(m)];
-    if (!mf) { errs.push(`monthlyFeature[${m}] が未定義（鮮度の穴）`); continue; }
-    if (!featureSlugs.has(mf.slug)) errs.push(`monthlyFeature[${m}] のページが存在しない: ${mf.slug}.html`);
-    else if (!resolveThumb(mf.slug, Object.fromEntries((cfg.items || []).map(i => [i.id, i])), featMap)) {
-      errs.push(`monthlyFeature[${m}] の画像が解決できない: ${mf.slug}`);
+    const ms = monthScenesOf(cfg, m);
+    if (!ms) { errs.push(`monthlyScenes[${m}] が未定義（鮮度の穴）`); continue; }
+    for (const sc of ms.scenes) {
+      if (!featureSlugs.has(sc.slug)) errs.push(`monthlyScenes[${m}] のページが存在しない: ${sc.slug}.html`);
+      else if (!sc.thumb && !resolveThumb(sc.slug, itemsById, featMap)) {
+        errs.push(`monthlyScenes[${m}] の画像が解決できない: ${sc.slug}`);
+      }
     }
   }
   for (const e of [...(cfg.showcasePinned || []), ...(cfg.showcase || [])]) {
@@ -272,22 +302,24 @@ function main() {
     .filter(it => isActive(it, today))
     .sort((a, b) => (b.priority || 0) - (a.priority || 0));
 
-  // 「今月の旬」リードを先頭に必ず立てる（毎月必ず最新感・年に依存しない鮮度保証）
-  let stripList = active.slice();
-  const mf = cfg.monthlyFeature && cfg.monthlyFeature[String(monthOf(today))];
-  if (mf) {
-    const lead = buildMonthLead(mf, itemsById, featMap);
-    if (lead) {
-      stripList = [lead, ...stripList.filter(it => it.id !== lead.id)];
-    } else {
-      console.error(`[build_featured] monthlyFeature[${monthOf(today)}] の画像解決に失敗: ${mf.slug}`);
+  // 「今月のシーン」群を先頭に必ず立てる（毎月必ず最新感・年に依存しない鮮度保証）
+  const month = monthOf(today);
+  const ms = monthScenesOf(cfg, month);
+  const sceneItems = [];
+  if (ms) {
+    for (const sc of ms.scenes) {
+      const it = buildSceneItem(sc, itemsById, featMap);
+      if (!it) { console.error(`[build_featured] monthlyScenes[${month}] の画像解決に失敗: ${sc.slug}`); continue; }
+      if (sceneItems.some(s => s.id === it.id)) continue;
+      sceneItems.push(it);
     }
   }
-  stripList = stripList.slice(0, maxSlots);
+  const sceneIds = new Set(sceneItems.map(s => s.id));
+  let stripList = [...sceneItems, ...active.filter(it => !sceneIds.has(it.id))].slice(0, maxSlots);
 
   console.log(`[build_featured] ストリップ採用 ${stripList.length}件:`);
   stripList.forEach((it, i) => {
-    const tag = it._monthLead ? '[今月の旬]' : (it.season ? '[seasonal]' : '[evergreen]');
+    const tag = it._monthScene ? `[${month}月のシーン]` : (it.season ? '[seasonal]' : '[evergreen]');
     console.log(`  ${i + 1}. ${it.id} ${tag}`);
   });
 
@@ -295,6 +327,13 @@ function main() {
   let indexSrc = fs.readFileSync(INDEX_HTML, 'utf8');
   const stripInner = stripList.map((it, i) => renderStripCard(it, i)).join('\n');
   indexSrc = replaceBetween(indexSrc, '<!-- FEATURED_START -->', '<!-- FEATURED_END -->', stripInner);
+
+  // 1a) 特集ストリップの見出しを「M月の特集 — シーン一覧」に月替わり更新
+  if (/<!-- FEATURED_LABEL_START -->/.test(indexSrc)) {
+    const note = ms && ms.note ? `<span class="feature-strip-label-note">${ms.note}</span>` : '';
+    indexSrc = replaceBetweenInline(indexSrc, '<!-- FEATURED_LABEL_START -->', '<!-- FEATURED_LABEL_END -->', `${month}月の特集${note}`);
+    console.log(`[build_featured] 見出し更新 ✓ ${month}月の特集${ms && ms.note ? ' — ' + ms.note : ''}`);
+  }
 
   // 1b) ジャンル特集ショーケース（週替わりローテーション）
   if ((cfg.showcase || cfg.showcasePinned) && /<!-- SHOWCASE_START -->/.test(indexSrc)) {
@@ -329,4 +368,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { isActive, todayJST, monthOf, isoWeek, selectShowcase, validateConfig, parseFeatureCards, listFeatureSlugs };
+module.exports = { isActive, todayJST, monthOf, isoWeek, selectShowcase, validateConfig, parseFeatureCards, listFeatureSlugs, monthScenesOf };

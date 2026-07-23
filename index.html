@@ -635,6 +635,7 @@ footer{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));}
 .feature-strip{padding:clamp(1.5rem,3vw,2.5rem) 1.5rem clamp(1.8rem,3.5vw,3rem);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;flex-direction:column;align-items:stretch;gap:1.3rem;}
 .feature-strip-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:.7rem;}
 .feature-strip-label::before{content:"";display:inline-block;width:24px;height:1px;background:var(--gold);opacity:.55;}
+.feature-strip-label-note{font-size:.58rem;letter-spacing:.12em;color:var(--gold);opacity:.6;text-transform:none;white-space:normal;margin-left:.2rem;}
 .feature-strip-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.4rem;width:100%;}
 .feature-card{display:flex;flex-direction:column;background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;text-decoration:none;transition:transform .35s ease,box-shadow .35s ease,border-color .35s;overflow:hidden;}
 .feature-card:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(184,84,31,.14),0 2px 6px rgba(0,0,0,.06);border-color:var(--ember);}
@@ -1359,7 +1360,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <!-- 特集記事バナー（ヒトサラ風：ヒーロー直下の入り口導線） -->
 <!-- ↓ このストリップは data/featured.json + scripts/build_featured.js が自動生成。手で編集しない。 -->
 <section class="feature-strip">
-  <div class="feature-strip-label">特集記事</div>
+  <div class="feature-strip-label"><!-- FEATURED_LABEL_START -->7月の特集<span class="feature-strip-label-note">夏グルメ・土用の丑・暑気払い</span><!-- FEATURED_LABEL_END --></div>
   <div class="feature-strip-cards">
     <!-- FEATURED_START -->
     <a class="feature-card" href="features/nagoya-summer-2026.html">
@@ -1367,22 +1368,33 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
       <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg 600w, https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 夏グルメ10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 夏グルメ10選</div>
-        <div class="feature-card-sub">ビアガーデン · 海鮮</div>
+        <div class="feature-card-sub">ビアガーデン · 海鮮・冷麺</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/nagoya-unaju.html">
+      <span class="feature-card-season">土用の丑</span>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg 600w, https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 うなぎ・ひつまぶし10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 うなぎ・ひつまぶし10選</div>
+        <div class="feature-card-sub">土用の丑の日はうなぎ</div>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/banquet.html">
-      <img class="feature-card-thumb" src="assets/features/banquet.jpg" srcset="assets/features/banquet-600.jpg 600w, assets/features/banquet.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="ビールジョッキで乾杯する宴会・忘年会の華やかなシーン" width="900" height="599" loading="eager" decoding="async" fetchpriority="high">
+      <span class="feature-card-season">暑気払い</span>
+      <img class="feature-card-thumb" src="assets/features/banquet.jpg" srcset="assets/features/banquet-600.jpg 600w, assets/features/banquet.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 暑気払い・宴会おすすめ15選" width="900" height="599" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 宴会・忘年会おすすめ15選</div>
-        <div class="feature-card-sub">名駅・栄・金山 個室完備</div>
+        <div class="feature-card-title">名古屋 暑気払い・宴会おすすめ15選</div>
+        <div class="feature-card-sub">暑気払い · ビールで乾杯</div>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/private-room.html">
-      <img class="feature-card-thumb" src="assets/features/private-room.jpg" srcset="assets/features/private-room-600.jpg 600w, assets/features/private-room.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="温かい灯りに包まれた上質な個室ダイニング" width="900" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <img class="feature-card-thumb" src="assets/features/private-room.jpg" srcset="assets/features/private-room-600.jpg 600w, assets/features/private-room.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="温かい灯りに包まれた上質な個室ダイニング" width="900" height="600" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 個室グルメおすすめ10選</div>
         <div class="feature-card-sub">接待・女子会・デートに</div>

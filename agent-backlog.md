@@ -8,6 +8,22 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-070] 特集の月次シーン更新システム（monthlyScenes）— 月替わりで需要シーンに特集面が自動で組み変わる ✅
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-07-23（オーナー指摘「特集が全く最新のバージョンになっていない。一月毎にその月のシーン・飲食店探しの需要に合わせて変更する仕組みを作って」）
+- **resolved**: 2026-07-23
+- **resolved_by**: Builder + Editor（EXPLICIT モード）
+- **category**: content-freshness / ux / seo
+- **owner**: Builder
+- **診断**: 旧 monthlyFeature は月1本のリード差し替えのみで、3-4月・7-8月・9-10月・11-12月は同一特集の使い回し。見出しも「特集記事」固定のため、月が変わっても特集面に変化が見えなかった
+- **実装内容**:
+  1. **`data/featured.json` に `monthlyScenes` 新設**: 12ヶ月 × その月の飲食店探し需要シーン3本（1月=新年会/冬の鍋/接待始め、3月=送別会/春テラス/幹事、7月=夏グルメ/土用の丑/暑気払い、11月=忘年会予約/晩秋/年末会食、12月=忘年会/クリスマス/個室 等）＋月ノートを定義。全 slug は features/ 実在ページのみ
+  2. **`scripts/build_featured.js` 拡張**: monthlyScenes をストリップ先頭に展開（重複は evergreen 側を自動排除）。見出しを新マーカー FEATURED_LABEL で「M月の特集 — シーン一覧」に月替わり自動更新。旧 monthlyFeature 形式へのフォールバック維持。validateConfig は12ヶ月×全シーンの実在・画像解決を検査（--check）
+  3. **`index.html`**: 見出しに FEATURED_LABEL マーカー追加＋ `.feature-strip-label-note` CSS 1行。既存の毎日3時 build.yml がそのまま実行するため**追加の運用作業ゼロで月替わり自動化**
+- **QAゲート**: build_featured --check 12ヶ月カバー・参照OK ✅ / 6ヶ月分の --date テストでシーン展開・重複排除・見出し更新を確認 ✅ / 冪等（2回実行で diff 不変）✅ / audit_feature_stores 0/0/EXIT0 ✅ / audit_feature_schema_alignment EXIT0 ✅ / preview 実機: 見出し「7月の特集 — 夏グルメ・土用の丑・暑気払い」＋シーンカード3枚を DOM 検証・console error 0 ✅（※ヒーロー以下のスクリーンショットが空白になるのはブラウザペインのキャプチャ既知問題で、本番サイトでも同一挙動を確認済み・実描画は正常）
+- **files**: `data/featured.json`, `scripts/build_featured.js`, `index.html`, `CLAUDE.md`, `agent-backlog.md`
+
 ### [ISSUE-067] 閲覧データ分析: 上位ランディング特集5本に予約CTA欠落 → HP直リンク41本を付与 ✅
 
 - **priority**: P1 → **status**: done
