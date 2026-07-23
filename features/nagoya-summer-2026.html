@@ -112,6 +112,11 @@ footer a:hover{color:var(--gold);}
 @media(max-width:680px){.shop-grid{grid-template-columns:1fr;}.hero-title{font-size:1.6rem;}.hero{padding:2rem 1rem 1.5rem;}.content{padding:0 1rem 3rem;}}
 .art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}.art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}@media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}.store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:.78rem !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}.store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}.store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}.store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}.shop-card-photo{width:calc(100% + 2.8rem);aspect-ratio:16/9;object-fit:cover;display:block;margin:-1.4rem -1.4rem 1rem;border-radius:6px 6px 0 0;background:var(--bg2);}@media(max-width:640px){.shop-card-photo{width:100%;margin:-1rem -1rem .8rem;}}.shop-detail-link{display:inline-flex;align-items:center;gap:.35rem;margin-top:.9rem;background:var(--gold);color:#fff !important;padding:.5rem 1rem;border-radius:4px;font-size:.78rem;font-weight:500;text-decoration:none;letter-spacing:.04em;transition:background .15s,transform .1s;box-shadow:0 1px 3px rgba(122,92,16,.2);}.shop-detail-link:hover{background:var(--gold2);transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}.shop-detail-link::after{content:"→";margin-left:.15rem;}.related{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center;}.related-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.3rem;color:var(--white);margin-bottom:1.2rem;}.related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}.related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}.related-link:hover{background:rgba(122,92,16,.08);}
 /*ROSTER_BADGE_CSS*/.store-new,.shop-new{display:inline-block;margin-left:.5rem;font-size:.6rem;font-weight:700;letter-spacing:.03em;color:#fff;background:#b08d2c;padding:.1rem .45rem;border-radius:3px;vertical-align:middle;white-space:nowrap;}
+/* SEASONAL_NOTE_CSS */
+.season-note{display:flex;align-items:flex-start;gap:.7rem;margin:0 0 1.6rem;padding:.9rem 1.05rem;border:1px solid rgba(176,141,44,.35);border-left:3px solid #b08d2c;border-radius:8px;background:rgba(176,141,44,.07);}
+.season-note-flag{flex:none;font-size:.68rem;font-weight:700;letter-spacing:.04em;color:#fff;background:#b08d2c;padding:.26rem .62rem;border-radius:999px;white-space:nowrap;}
+.season-note-text{margin:0;font-size:.9rem;line-height:1.75;color:#3a3a3a;}
+@media (prefers-color-scheme:dark){.season-note-text{color:#e8e4d8;}}
 </style>
 </head>
 
@@ -146,6 +151,9 @@ footer a:hover{color:var(--gold);}
 </div>
 
 <div class="content">
+      <!-- SEASONAL_NOTE_START -->
+      <div class="season-note"><span class="season-note-flag">夏</span><p class="season-note-text">本格的な夏の到来。ビアガーデン・海鮮・冷麺で涼を取れる店を今月の需要に合わせて厳選しました。</p></div>
+      <!-- SEASONAL_NOTE_END -->
   <p class="section-label">Selection — 実在確認済み</p>
   <h2>名古屋の夏グルメ 厳選10店</h2>
   <div class="shop-grid">
@@ -192,102 +200,104 @@ footer a:hover{color:var(--gold);}
     </div>
 
     <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/69/20/P045426920/P045426920_238.jpg" alt="ニクバルダカラ 名駅シンフォニー豊田ビル" loading="lazy" decoding="async">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/20/66/P035192066/P035192066_238.jpg" alt="GRILL DINING&amp;WINE 金山テラス" loading="lazy" decoding="async">
       <div class="shop-num">04</div>
-      <div class="shop-name">ニクバルダカラ 名駅シンフォニー豊田ビル</div>
-      <div class="shop-area">名古屋（名古屋駅/西区/中村区） / ダイニングバー</div>
-      <p class="shop-desc">名駅直結でワイン×肉、3,500円の競争力は昼営業で活きる。</p>
+      <div class="shop-name">GRILL DINING&amp;WINE 金山テラス</div>
+      <div class="shop-area">金山・神宮前・熱田区 / ダイニングバー</div>
+      <p class="shop-desc">ホテル10F、5千円台のカジュアルダイニング。大人向け落ち着き空間</p>
       <div class="shop-tags">
         <span class="tag">バー</span>
-        <span class="tag">3000〜5000円</span>
-        <span class="tag">★ 4.6</span>
-      </div>
-          <a href="../stores/J001169923.html" class="shop-detail-link">詳細ページを見る</a>
-    </div>
-
-    <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/57/79/P045245779/P045245779_238.jpg" alt="セマウル食堂 名古屋栄店" loading="lazy" decoding="async">
-      <div class="shop-num">05</div>
-      <div class="shop-name">セマウル食堂 名古屋栄店</div>
-      <div class="shop-area">栄(ミナミ)/矢場町/大須/上前津 / 韓国料理</div>
-      <p class="shop-desc">矢場町駅直結1分、1,750円でランチ営業の韓国料理は単価比で回転力高い物件</p>
-      <div class="shop-tags">
-        <span class="tag">★ 4.5</span>
-      </div>
-          <a href="../stores/J003433541.html" class="shop-detail-link">詳細ページを見る</a>
-    </div>
-
-    <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/77/03/P045697703/P045697703_480.jpg" alt="炉端焼き 燻銀 金山店" loading="lazy" decoding="async">
-      <div class="shop-num">06</div>
-      <div class="shop-name">炉端焼き 燻銀 金山店<span class="shop-new">今月の新顔</span></div>
-      <div class="shop-area">金山 / 居酒屋</div>
-      <p class="shop-desc">燻銀ブランドの金山展開は栄・伏見・波寄に続く拠点として名古屋市内の炉端焼き需要を広くカバーしている。ブランドとして複数拠点が一定水準の評価を維持しているのは炉端焼きの演出と料理品質の標準化が成功している証拠。</p>
-      <div class="shop-tags">
-        <span class="tag">隠れ家</span>
-        <span class="tag">接待</span>
-        <span class="tag">★ 4.7</span>
-      </div>
-          <a href="../stores/J001186933.html" class="shop-detail-link">詳細ページを見る</a>
-    </div>
-
-    <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/22/98/P046662298/P046662298_480.jpg" alt="産直鮮魚の海鮮酒場をかし" loading="lazy" decoding="async">
-      <div class="shop-num">07</div>
-      <div class="shop-name">産直鮮魚の海鮮酒場をかし<span class="shop-new">今月の新顔</span></div>
-      <div class="shop-area">名古屋駅 / 居酒屋</div>
-      <p class="shop-desc">日本酒30種類 ご宴会コースも◎</p>
-      <div class="shop-tags">
-        <span class="tag">40〜50名</span>
-        <span class="tag">〜1000円</span>
-        <span class="tag">★ 4.8</span>
-      </div>
-          <a href="../stores/J001179548.html" class="shop-detail-link">詳細ページを見る</a>
-    </div>
-
-    <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/71/72/P044467172/P044467172_480.jpg" alt="名古屋きんしゃち 栄店" loading="lazy" decoding="async">
-      <div class="shop-num">08</div>
-      <div class="shop-name">名古屋きんしゃち 栄店<span class="shop-new">今月の新顔</span></div>
-      <div class="shop-area">栄 / 居酒屋</div>
-      <p class="shop-desc">きんしゃちブランドの栄展開は名古屋駅前店と共に名古屋めし居酒屋として複数拠点を持つ。観光客と地元客の双方に名古屋の食文化を伝える役割を果たしており4.7評価がその機能の有効性を示している。</p>
-      <div class="shop-tags">
-        <span class="tag">100名以上</span>
         <span class="tag">5000円以上</span>
-        <span class="tag">★ 4.7</span>
+        <span class="tag">★ 4.1</span>
       </div>
-          <a href="../stores/J004005753.html" class="shop-detail-link">詳細ページを見る</a>
+          <a href="../stores/J001202808.html" class="shop-detail-link">詳細ページを見る</a>
     </div>
 
     <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/83/06/P045898306/P045898306_480.jpg" alt="ときわ屋 名古屋駅西口店" loading="lazy" decoding="async">
-      <div class="shop-num">09</div>
-      <div class="shop-name">ときわ屋 名古屋駅西口店<span class="shop-new">今月の新顔</span></div>
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/76/84/P014907684/P014907684_238.jpg" alt="中国海鮮料理 彩華" loading="lazy" decoding="async">
+      <div class="shop-num">05</div>
+      <div class="shop-name">中国海鮮料理 彩華</div>
+      <div class="shop-area">栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄 / 中華</div>
+      <p class="shop-desc">久屋大通駅5分、1万超中華はランチ営業で接待客の選択肢を広げる</p>
+      <div class="shop-tags">
+        <span class="tag">中華料理</span>
+        <span class="tag">5000円以上</span>
+        <span class="tag">★ 4.2</span>
+      </div>
+          <a href="../stores/J000989122.html" class="shop-detail-link">詳細ページを見る</a>
+    </div>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/71/72/P044467172/P044467172_480.jpg" alt="名古屋きんしゃち 名古屋駅前店" loading="lazy" decoding="async">
+      <div class="shop-num">06</div>
+      <div class="shop-name">名古屋きんしゃち 名古屋駅前店<span class="shop-new">今月の新顔</span></div>
       <div class="shop-area">名古屋駅 / 居酒屋</div>
-      <p class="shop-desc">名古屋駅西口は東口と比べて飲食競合が少なく、落ち着いた和空間を求める層の取り込みがしやすい。「ゆったり過ごせる」という価値設計は、回転率よりも滞在時間と客単価を優先する戦略として合理的。</p>
+      <p class="shop-desc">きんしゃちというブランドは名古屋を象徴するシンボルを冠した地域密着の居酒屋。名古屋駅前という観光・出張客が多い立地で4.7評価を維持しているのは地元感と観光需要の双方を取り込んだメニュー設計が機能しているから。</p>
       <div class="shop-tags">
         <span class="tag">テラス席</span>
         <span class="tag">100名以上</span>
-        <span class="tag">★ 4.8</span>
+        <span class="tag">★ 4.7</span>
       </div>
-          <a href="../stores/J003763758.html" class="shop-detail-link">詳細ページを見る</a>
+          <a href="../stores/J003763757.html" class="shop-detail-link">詳細ページを見る</a>
     </div>
 
     <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/95/78/P047869578/P047869578_480.jpg" alt="韓国サムギョプサル マルエイ 栄 住吉店" loading="lazy" decoding="async">
-      <div class="shop-num">10</div>
-      <div class="shop-name">韓国サムギョプサル マルエイ 栄 住吉店<span class="shop-new">今月の新顔</span></div>
-      <div class="shop-area">栄 / 韓国料理</div>
-      <p class="shop-desc">「UFOサムギョプサル」という名古屋初上陸の調理スタイルは、食体験の差別化軸として機能している。韓国料理の本場感と演出の両立が4.8評価を支えており、フォトジェニックな食体験がSNS経由の新規集客にも貢献しているとみられる。</p>
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/43/24/P046164324/P046164324_480.jpg" alt="生ビール190円 マグロに本気の寿司酒場 まる辰 金山駅店" loading="lazy" decoding="async">
+      <div class="shop-num">07</div>
+      <div class="shop-name">生ビール190円 マグロに本気の寿司酒場 まる辰 金山駅店<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-area">金山 / 居酒屋</div>
+      <p class="shop-desc">毎日開催生ビール190円 溢れるネタのこぼれ寿司</p>
       <div class="shop-tags">
-        <span class="tag">80〜90名</span>
-        <span class="tag">2000〜3000円</span>
+        <span class="tag">10〜20名</span>
+        <span class="tag">〜1000円</span>
+        <span class="tag">★ 4.4</span>
+      </div>
+          <a href="../stores/J003959101.html" class="shop-detail-link">詳細ページを見る</a>
+    </div>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/93/80/P045609380/P045609380_480.jpg" alt="居酒屋 串焼き ちゃんぷ 金山 熱田店" loading="lazy" decoding="async">
+      <div class="shop-num">08</div>
+      <div class="shop-name">居酒屋 串焼き ちゃんぷ 金山 熱田店<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-area">金山 / 居酒屋</div>
+      <p class="shop-desc">クラフトビール×日本酒×野菜串という組み合わせは、食と酒の両方にこだわる層を取り込む設計。金山・熱田エリアで4.8評価を維持しているのは、地元固定客のリピートが安定していることを示す。</p>
+      <div class="shop-tags">
+        <span class="tag">30〜40名</span>
+        <span class="tag">3000〜5000円</span>
         <span class="tag">★ 4.7</span>
       </div>
-          <a href="../stores/J003829547.html" class="shop-detail-link">詳細ページを見る</a>
+          <a href="../stores/J003850889.html" class="shop-detail-link">詳細ページを見る</a>
+    </div>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/44/39/P046824439/P046824439_480.jpg" alt="海鮮居酒屋 親父と魚 名古屋駅前店" loading="lazy" decoding="async">
+      <div class="shop-num">09</div>
+      <div class="shop-name">海鮮居酒屋 親父と魚 名古屋駅前店<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-area">名古屋駅 / 居酒屋</div>
+      <p class="shop-desc">冬の贅を味わう 飛騨コンロ炙り</p>
+      <div class="shop-tags">
+        <span class="tag">歓送迎会</span>
+        <span class="tag">忘年会・新年会</span>
+        <span class="tag">★ 4.4</span>
+      </div>
+          <a href="../stores/J004026523.html" class="shop-detail-link">詳細ページを見る</a>
+    </div>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/33/53/P049743353/P049743353_480.jpg" alt="海鮮と日本酒の和風居酒屋 Neo和Dining MiRAI ミライ" loading="lazy" decoding="async">
+      <div class="shop-num">10</div>
+      <div class="shop-name">海鮮と日本酒の和風居酒屋 Neo和Dining MiRAI ミライ<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-area">栄 / 居酒屋</div>
+      <p class="shop-desc">市場直送刺身と全国の地酒 名物「豚角煮カツ」は必食</p>
+      <div class="shop-tags">
+        <span class="tag">50〜60名</span>
+        <span class="tag">5000円以上</span>
+        <span class="tag">★ 4.1</span>
+      </div>
+          <a href="../stores/J003324940.html" class="shop-detail-link">詳細ページを見る</a>
     </div>
     </div>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"名古屋の夏グルメおすすめ10選【2026年版】","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"name":"サカナのハチベエ 矢場町店","url":"https://nagoya-bites.com/stores/J003560374.html"},{"@type":"ListItem","position":2,"name":"サカナのハチベエ 金山店","url":"https://nagoya-bites.com/stores/J003737452.html"},{"@type":"ListItem","position":3,"name":"名駅ビアガーデン","url":"https://nagoya-bites.com/stores/J003533146.html"},{"@type":"ListItem","position":4,"name":"ニクバルダカラ 名駅シンフォニー豊田ビル","url":"https://nagoya-bites.com/stores/J001169923.html"},{"@type":"ListItem","position":5,"name":"セマウル食堂 名古屋栄店","url":"https://nagoya-bites.com/stores/J003433541.html"},{"@type":"ListItem","position":6,"name":"炉端焼き 燻銀 金山店","url":"https://nagoya-bites.com/stores/J001186933.html"},{"@type":"ListItem","position":7,"name":"産直鮮魚の海鮮酒場をかし","url":"https://nagoya-bites.com/stores/J001179548.html"},{"@type":"ListItem","position":8,"name":"名古屋きんしゃち 栄店","url":"https://nagoya-bites.com/stores/J004005753.html"},{"@type":"ListItem","position":9,"name":"ときわ屋 名古屋駅西口店","url":"https://nagoya-bites.com/stores/J003763758.html"},{"@type":"ListItem","position":10,"name":"韓国サムギョプサル マルエイ 栄 住吉店","url":"https://nagoya-bites.com/stores/J003829547.html"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"名古屋の夏グルメおすすめ10選【2026年版】","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"name":"サカナのハチベエ 矢場町店","url":"https://nagoya-bites.com/stores/J003560374.html"},{"@type":"ListItem","position":2,"name":"サカナのハチベエ 金山店","url":"https://nagoya-bites.com/stores/J003737452.html"},{"@type":"ListItem","position":3,"name":"名駅ビアガーデン","url":"https://nagoya-bites.com/stores/J003533146.html"},{"@type":"ListItem","position":4,"name":"GRILL DINING&WINE 金山テラス","url":"https://nagoya-bites.com/stores/J001202808.html"},{"@type":"ListItem","position":5,"name":"中国海鮮料理 彩華","url":"https://nagoya-bites.com/stores/J000989122.html"},{"@type":"ListItem","position":6,"name":"名古屋きんしゃち 名古屋駅前店","url":"https://nagoya-bites.com/stores/J003763757.html"},{"@type":"ListItem","position":7,"name":"生ビール190円 マグロに本気の寿司酒場 まる辰 金山駅店","url":"https://nagoya-bites.com/stores/J003959101.html"},{"@type":"ListItem","position":8,"name":"居酒屋 串焼き ちゃんぷ 金山 熱田店","url":"https://nagoya-bites.com/stores/J003850889.html"},{"@type":"ListItem","position":9,"name":"海鮮居酒屋 親父と魚 名古屋駅前店","url":"https://nagoya-bites.com/stores/J004026523.html"},{"@type":"ListItem","position":10,"name":"海鮮と日本酒の和風居酒屋 Neo和Dining MiRAI ミライ","url":"https://nagoya-bites.com/stores/J003324940.html"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"名古屋の夏に旬を迎える食材は何ですか?","acceptedAnswer":{"@type":"Answer","text":"①鮎（6月〜10月）、②鱧（6月〜8月）、③穴子（6月〜8月）、④ウニ（6月〜8月）、⑤桃・葡萄・梨（7月〜8月）、⑥トウモロコシ・茄子・トマト等の夏野菜（6月〜9月）、⑦冷やし中華・冷やし蕎麦・素麺等の冷麺類（6月〜9月限定の各和食店）、⑧鰻（土用の丑の日・7月下旬）、⑨かき氷（7月〜8月）、⑩ビアガーデン料理（6月〜9月）が夏の代表。"}},{"@type":"Question","name":"名古屋の夏は何を食べに行くのがおすすめ?","acceptedAnswer":{"@type":"Answer","text":"①鮎の塩焼き・鮎雑炊（和食・割烹）、②鱧の落とし・湯引き（懐石コースの華）、③冷やし中華・冷やし蕎麦・素麺（蕎麦専門店・うどん専門店）、④土用の丑の日のうなぎ（うなぎ専門店・要予約）、⑤かき氷（夏限定パフェ専門店・甘味処）、⑥ビアガーデン料理（屋外席のあるレストラン・ホテル屋上）。冷たい麺類と季節食材を組み合わせるのが業界の鉄則です。"}},{"@type":"Question","name":"名古屋でビアガーデンが楽しめる店は?","acceptedAnswer":{"@type":"Answer","text":"ホテル屋上系（マリオット・ヒルトン・ストリングス）が高級感とビュー、商業ビル屋上系（パルコ・松坂屋）がカジュアル価格帯、独立店舗系（栄・伏見エリア）が地元向け。営業期間は6月初旬〜9月末が標準で、料金は飲み放題込みで男性4,500〜6,500円・女性3,500〜5,500円。雨天時の屋内振替対応可否は事前確認推奨で、台風シーズンは特に注意が必要です。"}},{"@type":"Question","name":"夏限定のかき氷はどこで食べられる?","acceptedAnswer":{"@type":"Answer","text":"本格かき氷は『甘味処 おかげ庵』『甘味処 鶴亀』『パティスリー グラム』が業界内評価。台湾かき氷（マンゴーかき氷）は栄・大須エリアに専門店多数。かき氷は『天然氷使用』『シロップ自家製』『フルーツ生果使用』の3条件を満たす店が本格派。1人1,200〜2,500円が標準で、ピーク（7月下旬〜8月）は1〜2時間待ちが日常です。"}},{"@type":"Question","name":"夏のデート向きグルメは?","acceptedAnswer":{"@type":"Answer","text":"①ホテル屋上のビアガーデンディナー（夜景+風）、②冷やしフレンチコース（夏限定の鮎・鱧・夏野菜）、③懐石コースの夏の華（鱧落とし・鱧吸い・鮎塩焼き）、④鰻専門店のディナー（土用の丑の日前後の特別コース）、⑤本格かき氷スイーツ（パティスリー・カフェ）。予算1人8,000〜18,000円が夏デートの標準で、暑い時期だけに『涼を感じる演出』を意識した店選びが業界の鉄則です。"}},{"@type":"Question","name":"夏に注意すべき食品衛生のポイントは?","acceptedAnswer":{"@type":"Answer","text":"①生もの（刺身・寿司・生牡蠣等）は信頼できる店を選ぶ、②屋外ビアガーデンでは食事を長時間放置しない、③炎天下を歩いた後すぐの冷たい飲み物・氷は内臓を冷やすので注意、④脱水症状予防に水分補給を意識（アルコールは利尿作用で逆効果）、⑤夏バテ予防に滋養強壮の鰻・スタミナ料理を計画的に取る。土用の丑の日のうなぎは『夏バテ予防の伝統』として現代も意義深い習慣です。"}}]}</script>
 </div>
 
