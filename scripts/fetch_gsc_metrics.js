@@ -60,16 +60,33 @@ async function query(searchconsole, siteUrl, body) {
   return res.data.rows || [];
 }
 
-// GSC_SITE_URL が明示設定されていればそれを最優先で単独使用。
-// 未設定時は sites.list() でこのサービスアカウントが実際にアクセスできる
-// プロパティを見て、URL プレフィックス / ドメインプロパティのどちらでも自動選択する。
-// （「permission エラー」の主因は ①SA 未追加 ②プロパティ形式不一致 の2つ。後者を吸収する）
-function resolveTargetSiteUrl(accessible) {
-  if (process.env.GSC_SITE_URL) return process.env.GSC_SITE_URL;
-  const preferred = [DEFAULT_SITE_URL, 'sc-domain:nagoya-bites.com'];
-  return preferred.find(u => accessible.includes(u))
-      || accessible.find(u => u.includes('nagoya-bites'))
-      || preferred[0];
+// このサイトに対応する候補プロパティ（URL プレフィックス / ドメインプロパティ）を、
+// アクセス可能なものの中から抽出する。GSC_SITE_URL 明示時はそれ単独。
+function candidateProperties(accessible) {
+  if (process.env.GSC_SITE_URL) return [process.env.GSC_SITE_URL];
+  const mine = accessible.filter(u => u.includes('nagoya-bites'));
+  return mine.length ? mine : [DEFAULT_SITE_URL];
+}
+
+// 候補が複数あるとき（URL プレフィックスとドメインプロパティの両方に SA が追加された等）、
+// 実際に impressions を持つ方を選ぶ。片方が空プロパティでも取りこぼさないための保険。
+// 候補1件なら余計な API を叩かずそのまま返す。
+async function pickBestProperty(searchconsole, candidates, dateRange) {
+  if (candidates.length === 1) return candidates[0];
+  let best = candidates[0], bestImp = -1;
+  for (const url of candidates) {
+    let imp = 0;
+    try {
+      const rows = await query(searchconsole, url, { ...dateRange, dimensions: [] });
+      imp = (rows[0] && rows[0].impressions) || 0;
+    } catch (e) {
+      console.log(`  候補 ${url} の総計取得に失敗（スキップ）: ${e.message}`);
+      continue;
+    }
+    console.log(`  候補 ${url}: impressions=${imp}`);
+    if (imp > bestImp) { best = url; bestImp = imp; }
+  }
+  return best;
 }
 
 async function main() {
@@ -99,13 +116,14 @@ async function main() {
     console.log(`sites.list 取得失敗（Search Console API 未有効化の可能性）: ${e.message}`);
   }
 
-  const siteUrl = resolveTargetSiteUrl(accessible);
-  console.log(`対象プロパティ: ${siteUrl}`);
-
   // GSC データは 2〜3 日遅延するため、終端は余裕を持たせる
   const startDate = isoDaysAgo(LOOKBACK);
   const endDate = isoDaysAgo(1);
   const dateRange = { startDate, endDate };
+
+  const candidates = candidateProperties(accessible);
+  const siteUrl = await pickBestProperty(searchconsole, candidates, dateRange);
+  console.log(`対象プロパティ: ${siteUrl}`);
 
   // 1) 総計（ディメンションなし → 1 行）
   const totalRows = await query(searchconsole, siteUrl, { ...dateRange, dimensions: [] });
