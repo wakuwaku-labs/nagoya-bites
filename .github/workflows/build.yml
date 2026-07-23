@@ -111,6 +111,20 @@ jobs:
         # monthlyFeature(毎月の旬) と season.recurring(毎年判定) により常に最新感を保つ。冪等。
         run: node scripts/build_featured.js
 
+      - name: 特集の掲載店を月次ローテーション更新（毎月1〜3日のみ・その月の需要に合う店へ入替）
+        # data/feature_rosters.json のバランス型スコア＋ハードゲートで、シーン特集の
+        # 掲載店を「実力上位の固定コア＋今月の新顔」に再構成する（ハイブリッド方式）。
+        # 掲載を月内で安定させるため月初(1〜3日 JST)のみ実行。全掲載店は実在店のみ（架空店ブロック）。
+        # 枠割れ(--check)はビルドを止めない（データ変動で一時的に起こりうるため警告扱い）。
+        run: |
+          D=$(TZ=Asia/Tokyo date +%d)
+          if [ "$D" = "01" ] || [ "$D" = "02" ] || [ "$D" = "03" ]; then
+            node scripts/refresh_feature_rosters.js
+          else
+            echo "月初(1〜3日 JST)以外のため特集ロスター更新はスキップ（掲載を月内で安定させる）"
+          fi
+        continue-on-error: true
+
       - name: 個別店舗ページ再生成（manual_stores 追加分を stores/*.html に反映）
         # build.js が data/stores.json を更新した後、その canonical カタログを source に
         # 個別店舗ページを生成する。これがないと manual_stores.json に追加した店が
@@ -130,7 +144,9 @@ jobs:
           # ISSUE-058: data/stores.json (canonical full catalog) と stores/*.html (個別店舗ページ) も
           # commit 対象に追加。これらが入っていないと manual_stores 追加分が
           # フロント検索 (fetchFullCatalog) や個別ページ URL から到達不能になる。
-          git add index.html features/index.html sitemap.xml data/stores.json data/manual_stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/cross_check_flags.json data/metrics_history.json data/effect_ledger.json
+          git add index.html features/index.html sitemap.xml data/stores.json data/manual_stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/cross_check_flags.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json
+          # 特集本体(features/*.html)も commit 対象。月次ロスター更新の掲載店入替を反映する。
+          git add features/ || true
           git add stores/ || true
           git diff --cached --quiet || git commit -m "chore: auto-update store data [skip actions]"
           git pull --rebase origin main || true

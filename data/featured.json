@@ -1,21 +1,105 @@
 {
-  "_README": "特集の鮮度を『常に』保つための設定。build.js / daily-journal の毎日ビルドが node scripts/build_featured.js を実行し、当日(JST)に応じて index.html の特集ストリップ(FEATURED)とジャンル特集(SHOWCASE)、features/index.html の季節ブロック(FEATURED_SEASONAL)を再生成する。鮮度の3本柱: (1) monthlyFeature=毎月必ず『今月の旬』特集をストリップ先頭に出す(年に依存しないので永久に空にならない)。(2) items の season.recurring=true は MM-DD で毎年判定し期限切れで自動消滅/翌年自動復活。(3) showcase は showcasePinned(名古屋めし定番・常時表示)＋showcase(プール)を ISO週で回転させ、毎週少しずつ入れ替わる。slug は features/ に実在するページのみ。画像/タイトルは items の thumb か features/index.html の該当カードから自動取得し二重管理しない。検証: node scripts/build_featured.js --check（穴・壊れ参照を検出）。",
+  "_README": "特集の鮮度を『常に』保つための設定。build.js / daily-journal の毎日ビルドが node scripts/build_featured.js を実行し、当日(JST)に応じて index.html の特集ストリップ(FEATURED)・見出し(FEATURED_LABEL)とジャンル特集(SHOWCASE)、features/index.html の季節ブロック(FEATURED_SEASONAL)を再生成する。鮮度の3本柱: (1) monthlyScenes=毎月『その月の飲食店探し需要シーン』(新年会/送別会/土用の丑/忘年会予約など)を複数本ストリップ先頭に立て、見出しも『M月の特集 — シーン一覧』に自動更新(年に依存しないので永久に空にならない)。(2) items の season.recurring=true は MM-DD で毎年判定し期限切れで自動消滅/翌年自動復活。(3) showcase は showcasePinned(名古屋めし定番・常時表示)＋showcase(プール)を ISO週で回転させ、毎週少しずつ入れ替わる。slug は features/ に実在するページのみ。画像/タイトルは items の thumb か features/index.html の該当カードから自動取得し二重管理しない(scene 単位の thumb 上書きも可)。検証: node scripts/build_featured.js --check（穴・壊れ参照を検出）。",
   "maxSlots": 7,
   "showcaseCount": 9,
 
-  "monthlyFeature": {
-    "1":  { "slug": "nagoya-sukiyaki",     "title": "名古屋 すき焼き・しゃぶしゃぶ10選", "sub": "冬の鍋 · 黒毛和牛",   "badge": "冬の鍋" },
-    "2":  { "slug": "date",                "title": "名古屋 デートディナー10選",         "sub": "記念日 · バレンタイン", "badge": "バレンタイン" },
-    "3":  { "slug": "spring-terrace",      "title": "名古屋 春テラス・屋外グルメ10選",   "sub": "送別会 · 歓迎会",     "badge": "春" },
-    "4":  { "slug": "spring-terrace",      "title": "名古屋 春テラス・屋外グルメ10選",   "sub": "お花見 · 新緑テラス", "badge": "お花見" },
-    "5":  { "slug": "mothers-day",         "title": "名古屋 母の日ディナー・ランチ10選", "sub": "母の日 · GW",        "badge": "母の日" },
-    "6":  { "slug": "fathers-day-2026",    "title": "父の日 名古屋・厳選10選",           "sub": "父の日 · 梅雨の個室", "badge": "父の日" },
-    "7":  { "slug": "nagoya-summer-2026",  "title": "名古屋 夏グルメ10選",               "sub": "ビアガーデン · 海鮮", "badge": "夏" },
-    "8":  { "slug": "nagoya-summer-2026",  "title": "名古屋 夏グルメ10選",               "sub": "真夏 · 冷麺・うなぎ", "badge": "真夏" },
-    "9":  { "slug": "nagoya-autumn-2026",  "title": "名古屋 秋グルメ10選",               "sub": "松茸 · 秋刀魚・新米", "badge": "食欲の秋" },
-    "10": { "slug": "nagoya-autumn-2026",  "title": "名古屋 秋グルメ10選",               "sub": "紅葉 · 旬の味覚",     "badge": "秋" },
-    "11": { "slug": "banquet",             "title": "名古屋 宴会・忘年会おすすめ15選",   "sub": "忘年会の幹事に",      "badge": "忘年会" },
-    "12": { "slug": "banquet",             "title": "名古屋 宴会・忘年会おすすめ15選",   "sub": "忘年会 · 新年会・個室", "badge": "忘年会シーズン" }
+  "monthlyScenes": {
+    "1": {
+      "note": "新年会・冬の鍋・接待始め",
+      "scenes": [
+        { "slug": "banquet",          "title": "名古屋 新年会・宴会おすすめ15選",     "sub": "新年会 · 個室・飲み放題",   "badge": "新年会" },
+        { "slug": "nagoya-sukiyaki",  "title": "名古屋 すき焼き・しゃぶしゃぶ10選",   "sub": "冬の鍋 · 黒毛和牛",         "badge": "冬の鍋" },
+        { "slug": "settai-guide",     "title": "接待で失敗しない名古屋の店選び",       "sub": "新年のご挨拶・会食に",       "badge": "接待始め" }
+      ]
+    },
+    "2": {
+      "note": "バレンタイン・鍋納め・個室デート",
+      "scenes": [
+        { "slug": "date",             "title": "名古屋 デートディナー10選",           "sub": "記念日 · バレンタイン",     "badge": "バレンタイン" },
+        { "slug": "nagoya-sukiyaki",  "title": "名古屋 すき焼き・しゃぶしゃぶ10選",   "sub": "鍋納め · 黒毛和牛",         "badge": "冬の鍋" },
+        { "slug": "private-room",     "title": "名古屋 個室グルメおすすめ10選",       "sub": "二人の記念日 · 接待に",     "badge": "個室" }
+      ]
+    },
+    "3": {
+      "note": "送別会・春テラス・幹事の教科書",
+      "scenes": [
+        { "slug": "banquet",          "title": "名古屋 送別会・宴会おすすめ15選",     "sub": "送別会 · 個室・飲み放題",   "badge": "送別会" },
+        { "slug": "spring-terrace",   "title": "名古屋 春テラス・屋外グルメ10選",     "sub": "送別会後の二次会にも",       "badge": "春" },
+        { "slug": "enmkai-kanji",     "title": "宴会幹事の失敗しない店選び",           "sub": "送別会シーズンの幹事に",     "badge": "幹事必読" }
+      ]
+    },
+    "4": {
+      "note": "歓迎会・お花見・新生活",
+      "scenes": [
+        { "slug": "banquet",          "title": "名古屋 歓迎会・宴会おすすめ15選",     "sub": "歓迎会 · 個室・飲み放題",   "badge": "歓迎会" },
+        { "slug": "spring-terrace",   "title": "名古屋 春テラス・屋外グルメ10選",     "sub": "お花見 · 新緑テラス",       "badge": "お花見" },
+        { "slug": "meieki",           "title": "名古屋・名駅グルメおすすめ15選",       "sub": "新生活 · 転勤・出張に",     "badge": "新生活" }
+      ]
+    },
+    "5": {
+      "note": "GW・母の日・女子会",
+      "scenes": [
+        { "slug": "gw-2026",          "title": "名古屋 GW・連休グルメ12選",           "sub": "家族・帰省・デートに",       "badge": "GW" },
+        { "slug": "mothers-day",      "title": "名古屋 母の日ディナー・ランチ10選",   "sub": "5月第2日曜 · 感謝を込めて", "badge": "母の日" },
+        { "slug": "girls-party",      "title": "名古屋 女子会おすすめ10選",           "sub": "新年度の集まりに",           "badge": "女子会" }
+      ]
+    },
+    "6": {
+      "note": "父の日・梅雨の個室・夏先取り",
+      "scenes": [
+        { "slug": "fathers-day-2026", "title": "父の日 名古屋・厳選10選",             "sub": "父の日 · 焼肉・寿司・鰻",   "badge": "父の日" },
+        { "slug": "private-room",     "title": "名古屋 個室グルメおすすめ10選",       "sub": "梅雨でも快適な個室",         "badge": "梅雨" },
+        { "slug": "nagoya-summer-2026","title": "名古屋 夏グルメ10選",                "sub": "ビアガーデン開幕",           "badge": "夏先取り" }
+      ]
+    },
+    "7": {
+      "note": "夏グルメ・土用の丑・暑気払い",
+      "scenes": [
+        { "slug": "nagoya-summer-2026","title": "名古屋 夏グルメ10選",                "sub": "ビアガーデン · 海鮮・冷麺", "badge": "夏" },
+        { "slug": "nagoya-unaju",     "title": "名古屋 うなぎ・ひつまぶし10選",       "sub": "土用の丑の日はうなぎ",       "badge": "土用の丑" },
+        { "slug": "banquet",          "title": "名古屋 暑気払い・宴会おすすめ15選",   "sub": "暑気払い · ビールで乾杯",   "badge": "暑気払い" }
+      ]
+    },
+    "8": {
+      "note": "真夏のグルメ・お盆の家族会食",
+      "scenes": [
+        { "slug": "nagoya-summer-2026","title": "名古屋 夏グルメ10選",                "sub": "真夏 · 冷麺・かき氷",       "badge": "真夏" },
+        { "slug": "large-group",      "title": "名古屋 大人数宴会・団体10選",         "sub": "お盆 · 帰省の集まりに",     "badge": "お盆" },
+        { "slug": "nagoya-unaju",     "title": "名古屋 うなぎ・ひつまぶし10選",       "sub": "夏バテにうなぎ",             "badge": "夏うなぎ" }
+      ]
+    },
+    "9": {
+      "note": "秋グルメ・敬老の日・接待再開",
+      "scenes": [
+        { "slug": "nagoya-autumn-2026","title": "名古屋 秋グルメ10選",                "sub": "松茸 · 秋刀魚・新米",       "badge": "食欲の秋" },
+        { "slug": "nagoya-lunch-washoku","title": "名古屋 個室 和食ランチ10選",       "sub": "敬老の日 · 家族の会食に",   "badge": "敬老の日" },
+        { "slug": "settai-guide",     "title": "接待で失敗しない名古屋の店選び",       "sub": "下期の接待シーズンに",       "badge": "接待" }
+      ]
+    },
+    "10": {
+      "note": "紅葉の秋グルメ・焼肉・女子会",
+      "scenes": [
+        { "slug": "nagoya-autumn-2026","title": "名古屋 秋グルメ10選",                "sub": "紅葉 · 旬の味覚",           "badge": "秋" },
+        { "slug": "nagoya-yakiniku-guide","title": "業界人が通う名古屋の焼肉8選",     "sub": "食欲の秋 · 和牛・炭火",     "badge": "食欲の秋" },
+        { "slug": "girls-party",      "title": "名古屋 女子会おすすめ10選",           "sub": "ハロウィン女子会",           "badge": "ハロウィン" }
+      ]
+    },
+    "11": {
+      "note": "忘年会予約・晩秋の味覚・年末会食",
+      "scenes": [
+        { "slug": "banquet",          "title": "名古屋 忘年会おすすめ15選",           "sub": "忘年会予約は11月が勝負",     "badge": "忘年会予約" },
+        { "slug": "nagoya-autumn-2026","title": "名古屋 秋グルメ10選",                "sub": "秋の味覚もいよいよ最終盤",   "badge": "晩秋" },
+        { "slug": "nagoya-meieki-business-dinner","title": "名駅 失敗しない会食10選", "sub": "年末のご挨拶・会食に",       "badge": "会食" }
+      ]
+    },
+    "12": {
+      "note": "忘年会・クリスマス・年末の個室",
+      "scenes": [
+        { "slug": "banquet",          "title": "名古屋 忘年会・宴会おすすめ15選",     "sub": "忘年会 · 個室・飲み放題",   "badge": "忘年会" },
+        { "slug": "date",             "title": "名古屋 デートディナー10選",           "sub": "クリスマスディナー",         "badge": "クリスマス" },
+        { "slug": "private-room",     "title": "名古屋 個室グルメおすすめ10選",       "sub": "年末年始の集まりに",         "badge": "個室" }
+      ]
+    }
   },
 
   "items": [

@@ -1,0 +1,127 @@
+{
+  "_README": "シーン特集の掲載店を『月次で自動入れ替え』するための選定設定。scripts/refresh_feature_rosters.js が毎月1日にこの設定で各特集の店リストを再構成する。方式は【ハイブリッド】= 実力上位の固定コア(coreCount 店)は毎月残し、残り枠(slots-coreCount)を『その月に閲覧者の興味が湧く店』へローテーションで入れ替える。選定は【バランス型スコア】(scoreWeights) + ハードゲート(gates)。全掲載店は data/stores.json に実在する店のみ(架空店ブロック厳守)。検証: node scripts/refresh_feature_rosters.js --check / 内訳確認: --dry-run。",
+
+  "scoreWeights": {
+    "crossCheck":        0.30,
+    "google":            0.25,
+    "reviews":           0.15,
+    "trend":             0.10,
+    "topicBonus":        0.10,
+    "editorPickBonus":   0.10,
+    "editorReasonBonus": 0.05,
+    "sceneFitBonus":     0.12
+  },
+
+  "gates": {
+    "minGoogle":          3.9,
+    "editorExemptGoogle": true,
+    "requireOperational": true,
+    "requireHotpepper":   true,
+    "requirePhoto":       true,
+    "requireNagoya":      true
+  },
+
+  "diversity": {
+    "areaPenalty":  0.05,
+    "pricePenalty": 0.03,
+    "genrePenalty": 0.09
+  },
+
+  "features": {
+    "banquet": {
+      "format": "store-card", "container": "store-list", "slots": 15, "coreCount": 8,
+      "scene": { "genre": "居酒屋|ダイニング|海鮮|創作|中華|鍋|焼肉", "keyword": "宴会|忘年会|新年会|歓送迎|飲み放題|コース|個室|大人数|貸切|団体", "gateKeyword": true },
+      "fixed": []
+    },
+    "enmkai-kanji": {
+      "format": "store-card", "container": "store-list", "slots": 5, "coreCount": 3,
+      "scene": { "genre": "居酒屋|ダイニング|海鮮|創作|鍋", "keyword": "宴会|忘年会|新年会|歓送迎|飲み放題|コース|幹事|団体|貸切", "gateKeyword": true },
+      "fixed": []
+    },
+    "large-group": {
+      "format": "store-card", "container": "store-list", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "居酒屋|ダイニング|海鮮|中華|焼肉|鍋|バイキング", "keyword": "大人数|団体|貸切|大宴会|100名|50名|60名|70名|80名|宴会", "gateKeyword": true },
+      "fixed": []
+    },
+    "date": {
+      "format": "store-card", "container": "store-list", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "イタリアン|フレンチ|鉄板|ダイニング|ビストロ|バル|焼肉|寿司|鮨|創作|割烹", "keyword": "デート|記念日|夜景|雰囲気|個室|カップル|記念|ゆっくり|落ち着", "gateKeyword": false },
+      "fixed": []
+    },
+    "private-room": {
+      "format": "store-card", "container": "store-list", "slots": 9, "coreCount": 5,
+      "scene": { "genre": "居酒屋|ダイニング|和食|割烹|イタリアン|フレンチ|焼肉|海鮮|創作", "keyword": "個室|完全個室|半個室|掘りごたつ|座敷", "gateKeyword": true },
+      "fixed": []
+    },
+    "nagoya-sukiyaki": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "居酒屋|和食|割烹|日本料理|鍋|ダイニング|しゃぶしゃぶ|すき焼き", "keyword": "すき焼|しゃぶ", "gateKeyword": true },
+      "fixed": []
+    },
+    "settai-guide": {
+      "format": "store-card", "container": "store-list", "slots": 6, "coreCount": 4,
+      "scene": { "genre": "割烹|日本料理|懐石|フレンチ|鉄板|寿司|鮨|中華|うなぎ", "keyword": "接待|会食|個室|落ち着|大人|静か|上質|おもてなし", "gateKeyword": false, "minPrice": 5000 },
+      "fixed": []
+    },
+    "meieki": {
+      "format": "store-card", "container": "store-list", "slots": 15, "coreCount": 8,
+      "scene": { "area": "名駅|名古屋駅|中村区|ゲートタワー|ミッドランド|ルーセント", "keyword": "", "gateArea": true },
+      "fixed": []
+    },
+    "nagoya-meieki-business-dinner": {
+      "format": "store-card", "container": "store-list", "slots": 10, "coreCount": 5,
+      "scene": { "area": "名駅|名古屋駅|中村区|ゲートタワー|ミッドランド|ルーセント", "genre": "割烹|日本料理|懐石|フレンチ|鉄板|寿司|鮨|焼肉|中華|うなぎ|ステーキ|和食", "keyword": "会食|接待|個室|落ち着|上質", "gateArea": true, "minPrice": 4000 },
+      "fixed": []
+    },
+    "nagoya-unaju": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "うなぎ|鰻|ひつまぶし|和食|日本料理|割烹", "keyword": "うなぎ|鰻|ひつまぶし|うな", "gateKeyword": true },
+      "fixed": []
+    },
+    "nagoya-yakiniku-guide": {
+      "format": "store-card", "container": "store-list", "slots": 8, "coreCount": 4,
+      "scene": { "genre": "焼肉|ホルモン|ジンギスカン|肉", "keyword": "焼肉|和牛|ホルモン|A5|炭火", "gateKeyword": false },
+      "fixed": []
+    },
+    "nagoya-lunch-washoku": {
+      "format": "store-card", "container": "store-list", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "和食|割烹|日本料理|懐石|寿司|鮨|うなぎ", "keyword": "ランチ|昼|御膳|個室|会席|接待|顔合わせ", "gateKeyword": false },
+      "fixed": []
+    },
+    "mothers-day": {
+      "format": "store-card", "container": "store-list", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "フレンチ|イタリアン|和食|割烹|日本料理|懐石|鉄板|カフェ", "keyword": "記念日|個室|お祝い|ランチ|落ち着|ゆっくり|上質|雰囲気", "gateKeyword": false, "minPrice": 3000 },
+      "fixed": []
+    },
+    "girls-party": {
+      "format": "store-card", "container": "store-list", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "イタリアン|ダイニング|バル|カフェ|創作|フレンチ|中華|韓国料理", "keyword": "女子会|おしゃれ|映え|個室|チーズ|パーティ|貸切|雰囲気", "gateKeyword": true },
+      "fixed": []
+    },
+    "fathers-day-2026": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "焼肉|寿司|鮨|鉄板|うなぎ|鰻|ステーキ|割烹|日本料理|海鮮", "keyword": "個室|記念日|接待|上質|落ち着|和牛", "gateKeyword": false, "minPrice": 4000 },
+      "fixed": []
+    },
+    "spring-terrace": {
+      "format": "store-card", "container": "store-list", "slots": 10, "coreCount": 4,
+      "scene": { "genre": "居酒屋|ダイニング|イタリアン|バル|ビアガーデン|カフェ|フレンチ|海鮮", "keyword": "テラス|屋外|ビアガーデン|ルーフトップ|オープンエア|開放|バルコニー|外席", "gateKeyword": true },
+      "fixed": []
+    },
+    "nagoya-summer-2026": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "居酒屋|海鮮|ダイニング|ビアガーデン|バル|中華|韓国料理|うなぎ", "keyword": "ビアガーデン|ビアホール|海鮮|冷|夏|テラス|BBQ|ビール|うなぎ", "gateKeyword": false },
+      "fixed": []
+    },
+    "nagoya-autumn-2026": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "和食|割烹|日本料理|懐石|海鮮|居酒屋|寿司|鮨|うなぎ", "keyword": "秋|松茸|旬|新米|きのこ|栗|さんま|秋刀魚|日本酒|会席", "gateKeyword": false },
+      "fixed": []
+    },
+    "gw-2026": {
+      "format": "store-card", "container": "store-list", "slots": 11, "coreCount": 5,
+      "scene": { "genre": "居酒屋|ダイニング|イタリアン|海鮮|焼肉|寿司|鮨|和食|中華|カフェ", "keyword": "家族|個室|ランチ|連休|子連れ|記念日|集まり|大人数", "gateKeyword": false },
+      "fixed": []
+    }
+  }
+}
