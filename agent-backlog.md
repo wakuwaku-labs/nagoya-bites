@@ -45,17 +45,23 @@
 
 ### [ISSUE-068] 計測基盤の穴2件（GSC権限エラー・link_domainカスタムディメンション未登録）— オーナー操作依頼
 
-- **priority**: P2
-- **status**: ready
+- **priority**: P2 → **一部前進（GSC はコード側完了・オーナーGUI操作待ち）**
+- **status**: in_progress（blocked-on-owner）
 - **category**: seo / analytics-ops
 - **detected**: 2026-07-16
 - **owner**: Marketer（実操作はオーナー）
 - **description**: 閲覧データ分析（ISSUE-067）で計測基盤の穴を2件確認。
   1. **GSC が権限エラーで取得不能**: `data/gsc_metrics.json` が `User does not have sufficient permission for site 'https://nagoya-bites.com/'`。サービスアカウントが Search Console のユーザーに未追加。現在 **Bing(131) が Google(70) をセッション数で上回る**異常があり、Google 側の検索クエリ・順位・インデックス状況を確認できないのは P1 級の観測盲点
   2. **GA4 `link_domain` カスタムディメンション未登録**: `site_metrics.json` の CTA ドメイン別内訳が恒久スキップ。ホットペッパー/食べログ/Google Maps 等どの予約導線が効いているか分解できず、ISSUE-067 の効果計測の解像度が落ちる
-- **acceptance**: ① GSC のプロパティ設定でサービスアカウント（GA4_SERVICE_ACCOUNT_KEY のメールアドレス）をユーザー追加 → `gsc_metrics.json` に totals が入る ② GA4 管理画面でイベントパラメータ `link_domain` をカスタムディメンション登録 → `site_metrics.json` の cta.byDomain が埋まる
-- **files**: `data/gsc_metrics.json`, `data/site_metrics.json`（確認のみ・コード変更なし）
-- **関連**: ISSUE-067（効果計測の解像度向上）
+- **① GSC 進捗（2026-07-23・オーナー操作を最小化）**:
+  - **ボトルネック解消**: 追加すべきサービスアカウントを CI ログから確定 → `nagoya-bites-ga4@optimal-transit-447015-e9.iam.gserviceaccount.com`（GCP プロジェクト `optimal-transit-447015-e9`）。以前は「xxx@…」プレースホルダで、オーナーがどのメールを追加すべきか不明だったのが真のボトルネックだった
+  - **スクリプト堅牢化** `scripts/fetch_gsc_metrics.js`: (a) `sites.list()` でアクセス可能プロパティを診断ログ出力（0件なら「SA未追加」、list自体失敗なら「API未有効化」と切り分けが CI ログだけで確定する） (b) URLプレフィックス（`https://nagoya-bites.com/`）とドメインプロパティ（`sc-domain:nagoya-bites.com`）の**自動フォールバック**を実装 → オーナーはプロパティ型を気にせず SA を追加するだけでよい（`GSC_SITE_URL` secret 設定が不要に）。`resolveTargetSiteUrl` は6ケースの単体テストで検証済 (c) エラー時 JSON に `serviceAccountToAdd` フィールドと直リンク付きヒントを埋め込み、`gsc_metrics.json` を見るだけで次の操作が分かる
+  - **手順書** `docs/gsc-metrics-setup.md`: 正確な SA メール・GSC ユーザー追加の直リンク（URLプレフィックス/ドメイン両方）・GCP API 有効化直リンク・反映確認手順（CI 手動実行 or ローカル1コマンド）・診断ログの読み方を記載
+  - **残（オーナーGUI操作・5分）**: [1] GSC「設定→ユーザーと権限」で上記 SA を「制限付き」以上で追加 [2] GCP で Search Console API を有効化。→ 次回 CI で `gsc_metrics.json` に totals が入れば完了。手順は docs 参照
+- **② link_domain（未着手・オーナーGUI操作）**: GA4 管理画面でイベントパラメータ `link_domain` をカスタムディメンション登録 → `site_metrics.json` の cta.byDomain が埋まる
+- **acceptance**: ① `gsc_metrics.json` に totals が入る（SA 追加＋API 有効化後） ② `site_metrics.json` の cta.byDomain が埋まる
+- **files**: `scripts/fetch_gsc_metrics.js`（堅牢化・自動フォールバック・診断）, `docs/gsc-metrics-setup.md`（手順最新化）, `data/gsc_metrics.json` / `data/site_metrics.json`（確認のみ）
+- **関連**: ISSUE-067（効果計測の解像度向上）/ ISSUE-054（GSC 効果測定）
 
 ### [ISSUE-065] 日次ジャーナルが 6/18〜6/22 の5日欠番（routine 再停止）✅
 
@@ -1192,6 +1198,7 @@
 | 2026-06-22 | Builder(/solve-next) | ISSUE-063 schema整合監査のFAQ/パンくず判定をtitle単独→ページ実態コーパス照合へ改善（FAQ閾値0.50・ハブ名逐語救済）。オントピック偽陽性9→0・66件PASS、汚染E2E逆検証で検出力維持 | ✅ done |
 | 2026-07-16 | Orchestrator+Builder(INSPECT→BUILD) | ISSUE-067 閲覧データ分析（CTA率13.5→5.1%崩落の真因＝direct→organic/AIミックスシフト＋記事ランディングの予約導線欠落）→ 上位ランディング特集5本にHP予約直リンク41本を冪等付与（add_feature_reservation_cta.js 新規）。baseline記録済（ctaClickRate 5.1→target 8）。ISSUE-068（GSC権限・link_domain登録＝オーナー操作）を分離起票 | ✅ デプロイ済み (PR #75) |
 | 2026-07-18 | Builder+Editor(EXPLICIT) | ISSUE-069 UI絵文字を全5,570ページから撤去（strip_ui_emojis.js）＋分類カード28枚をジャンル検証済み実在店舗写真・クレジット・店舗リンク付きに置換（replace_type_icon_photos.js）＋生成元6本修正で再発防止。残存絵文字0・QA全PASS | ✅ デプロイ済み (PR #75) |
+| 2026-07-23 | Marketer+Builder(EXPLICIT) | ISSUE-068① GSC権限問題のボトルネック（追加すべきSAメール不明）をCIログから確定（nagoya-bites-ga4@optimal-transit-447015-e9…）。fetch_gsc_metrics.jsを堅牢化（sites.list診断＋URLプレフィックス/ドメインプロパティ自動フォールバック・6ケース単体テスト）＋docs手順を直リンク付きで最新化。残はオーナーGUI操作5分（SA追加＋API有効化） | ⏸ オーナー操作待ち |
 
 ---
 
