@@ -175,6 +175,7 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `data/manual_stores.json` | 手動キュレーション店舗マスター（Editor/DataKeeper 共管） |
 | `data/trending_stores.json` | 既存店舗への話題フラグ後付けマスター（DataKeeper管轄） |
 | `data/featured.json` | 特集鮮度設定。`monthlyScenes`=12ヶ月×需要シーンのカレンダー（月替わりでトップ特集面と見出しが自動更新）。検証は `node scripts/build_featured.js --check`（Editor/Builder 共管） |
+| `data/feature_rosters.json` | シーン特集の掲載店を月次で入れ替える選定基準（ハイブリッド＋バランス型スコア＋ハードゲート＋多様性補正）。`node scripts/refresh_feature_rosters.js`（毎月1〜3日 build.yml が実行）で features/*.html の掲載店を再構成。検証は `--check`/内訳は `--dry-run`（Builder/DataKeeper 共管・全掲載店は実在店のみ） |
 | `.claude/commands/seo-triage.md` | `/seo-triage` 日次SEO/LINEアドバイス取り込み（Marketer管轄） |
 | `.claude/commands/seo-triage-weekly.md` | `/seo-triage-weekly` 週次レポート（AI週次分析＋今週のアドバイス）取り込み（Marketer管轄） |
 | `data/seo_advice_log.json` | SEO改善ループの記憶（採用/却下/重複の全履歴・append-only・`source`で日次/週次を区別） |

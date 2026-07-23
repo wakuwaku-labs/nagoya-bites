@@ -8,6 +8,26 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-071] 特集『中身の掲載店』の月次自動入れ替え（ハイブリッド＋バランス型選定）— 閲覧者が興味の湧く店を毎月更新 ✅
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-07-23（オーナー依頼「特集記事の中身の店舗を月次自動化。ただし閲覧者が興味の湧く店舗に。選定基準をしっかり設定して」）
+- **resolved**: 2026-07-23
+- **resolved_by**: Builder + DataKeeper（EXPLICIT モード）
+- **category**: content-freshness / ux / seo / data
+- **owner**: Builder
+- **背景**: ISSUE-070 でトップの特集『面』は月次で組み変わるようにしたが、各特集『記事の中身の掲載店』は固定のままだった。シーン特集の掲載店を毎月「その月に閲覧者の興味が湧く店」へ自動で入れ替える。
+- **オーナーが決めた方針（3点）**: ①入れ替え方式=ハイブリッド（実力上位の固定コアは残し下位枠をローテ）②対象=シーン特集のみ（monthlyScenes 掲載の19特集）③選定=バランス型スコア
+- **実装内容**:
+  1. **`data/feature_rosters.json`（新規・選定基準の核）**: 19特集ごとに format/container/slots/coreCount とシーン条件(genre/keyword/area/価格帯)。共通の scoreWeights・gates・diversity を定義
+  2. **`scripts/refresh_feature_rosters.js`（新規・冪等）**: 【ハードゲート】実在(stores.json)/営業中/非閉店(closed_stores.json)/名古屋/写真/ホットペッパーID/Google評価3.9以上(編集部推薦・editorReason は免除)/シーン適合。【バランス型スコア】crossCheck0.30+Google0.25+log(口コミ)0.15+トレンド0.10+話題/編集部推薦/editorReason/シーン適合ボーナス。【多様性補正】同エリア・同価格・同ジャンル大分類の偏りを減点（デート特集の焼肉独占・すき焼き特集への焼肉混入を実テストで解消）。【ハイブリッド選定】固定コア(coreCount 店・月非依存の実力上位＋バランス)＋ローテ枠(実力上位候補を月シードで回転し多様性上限内で充填)。「今月の新顔」バッジCSSを各特集に冪等注入。JSON-LD ItemList も再生成
+  3. **`.github/workflows/build.yml`**: 毎月1〜3日(JST)のみ `refresh_feature_rosters.js` 実行（掲載を月内で安定）。commit 対象に features/ と data/feature_rosters.json を追加
+- **選定品質の実測（2026-07）**: すき焼き特集はすき焼き・しゃぶしゃぶ店で構成（焼肉混入0）、デート特集は焼肉3/イタリアン3/ダイニングバー2/創作2 とジャンル分散。1月↔7月で banquet はコア10店維持・5店入替（設計通り）
+- **QAゲート**: refresh --check 全19特集プール充足・枠割れ0 ✅ / 冪等（再実行で git 差分不変）✅ / audit_feature_stores 実在不明0・リンク切れ0 ✅ / audit_feature_schema_alignment EXIT0 ✅ / audit_store_liveness EXIT0 ✅ / preview 実機 DOM: 「今月の新顔」バッジ(ゴールド/白文字/7店)・カード15枚・ItemList15・console error 0 ✅
+  - ※ 実装中に harness の出力表示が不安定になり Edit/Bash が「成功」表示でも未反映という事象が続いたため、以降は git 差分・md5・comm による実ファイル検証に切り替えて全確認した
+- **files**: `data/feature_rosters.json`（新規）, `scripts/refresh_feature_rosters.js`（新規）, `.github/workflows/build.yml`, `features/*.html`(19), `CLAUDE.md`, `agent-backlog.md`
+- **関連**: [[ISSUE-070]]（特集の月次シーン更新・トップの特集面）/ ISSUE-067（架空店ブロック・実在検証ゲートと整合）
+
 ### [ISSUE-070] 特集の月次シーン更新システム（monthlyScenes）— 月替わりで需要シーンに特集面が自動で組み変わる ✅
 
 - **priority**: P1 → **status**: done
