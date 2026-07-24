@@ -96,10 +96,12 @@ function checkJournal(htmlPath, mdPath) {
     pass(8, true, 'md未指定のためスキップ');
   }
 
-  // 9. 同一店30日以内再掲なし
+  // 9. 同一店30日以内再掲なし（自分自身のエントリは比較対象から除外）
   const today = path.basename(htmlPath).slice(0, 10);
+  const todaySlug = path.basename(htmlPath, '.html');
   const recentIds = new Set();
   (published.entries || []).forEach(e => {
+    if (e.slug === todaySlug) return;
     const days = Math.abs(new Date(e.date) - new Date(today)) / 86400000;
     if (days <= 30) (e.store_ids || []).forEach(id => recentIds.add(id));
   });

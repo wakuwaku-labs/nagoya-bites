@@ -100,6 +100,24 @@ while IFS= read -r -d '' uf; do
 done < <(git ls-files --others --exclude-standard -z)
 [ "$PRUNED" -gt 0 ] && log "pull 前クリーンアップ: origin/main に正本のある untracked ファイル ${PRUNED} 件を除去（cp残骸・衝突防止）"
 
+# 前回実行が生成後・commit前（例: validator FAIL）に die した場合、その差分が
+# working tree に残ったまま次回実行を迎える。--autostash はこの残置差分を毎回
+# stash→pop するだけで根治しないため、日をまたいで別の変更（他エージェントが
+# 触った agent-backlog.md 等）と衝突し、reapply 失敗で pull ごと死ぬ
+# （2026-07-24 の実事故: agent-backlog.md で UU 発生・9時ジョブが以後停止）。
+# ここで「起動時点で残っている汚れ」は前回実行の残骸として名前付き stash に
+# 退避し、pull はクリーンな working tree に対して行う（--autostash は保険として残す
+# が、通常は空振りになるはず）。stash は pop せず残す＝データは失わず、
+# 必要なら `git stash list` から手動で拾える。
+if [ -n "$(git status --porcelain)" ]; then
+  DEBRIS_MSG="auto-cleanup-debris-$(TZ=Asia/Tokyo date +%Y%m%d-%H%M%S)"
+  log "起動時点で working tree に残置差分を検出。前回実行の残骸として stash に退避します: ${DEBRIS_MSG}"
+  git status --porcelain | tee -a "$LOG"
+  git stash push -u -m "$DEBRIS_MSG" >>"$LOG" 2>&1 \
+    && log "退避完了。git stash list で確認できます（pop はしません）。" \
+    || log "⚠️ stash 退避に失敗しましたが続行します（pull 側の --autostash に委ねます）。"
+fi
+
 if ! git pull --rebase --autostash origin main >>"$LOG" 2>&1; then
   log "git pull --rebase が失敗。状態:"
   git status -sb | tee -a "$LOG"
