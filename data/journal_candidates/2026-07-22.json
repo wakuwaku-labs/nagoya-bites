@@ -1,0 +1,94 @@
+{
+  "date": "2026-07-22",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "うなぎが安い夏——名駅『四代目菊川』、卸問屋直営という丑の日の選び方",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=12 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 7件 (価格帯,コース,席,予約,シーン,接待,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 5件 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "土用の丑の日は7月26日——今年の名古屋のうなぎは「安い年」",
+      "verdict": "FAIL",
+      "total": 82,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 10,
+        "brand_fit": 10,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=10 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "angle 20-49字 → 10"
+        ],
+        "brand_fit": [
+          "ベース10"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "sources 3件 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "fallback_needed": false
+}
