@@ -960,6 +960,36 @@
       "brand_reason": "編集判断で既存readyと重複: SEO-011『日次ジャーナルを名古屋 接待 個室等のシーン別KWで設計しSNS(docs/daily-posts)で告知』が同KW・同チャネル・同ソースを既にカバー。二重起票せず",
       "category": null,
       "fingerprint": "15521cd3b1e2b8a1"
+    },
+    {
+      "id": null,
+      "date": "2026-07-24",
+      "source": "line-daily",
+      "advice": "直帰率97%。トップページの最初の画面に人気のシーン別特集（名古屋 接待 個室）へのリンクを大きく目立つように配置し訪問者が次の行動を起こしやすくする",
+      "verdict": "duplicate",
+      "brand_reason": "SEO-009（ready・2026-07-08起票）と同一主旨。FV人気特集への大型導線は既に起票済みのため再起票しない",
+      "category": null,
+      "fingerprint": "3b18fb085276d107"
+    },
+    {
+      "id": "SEO-036",
+      "date": "2026-07-24",
+      "source": "line-daily",
+      "advice": "1訪問1.2ページと低い。人気ページTOP5の特集記事（features/nagoya-sweets）の冒頭に関連する店舗の店舗詳細を見るボタンを最低3つ追加し店舗への誘導を強化",
+      "verdict": "adopted",
+      "brand_reason": "Moat「構造化DB×特集の三層編集」の相互リンクを特集冒頭で効かせる送客強化。編集記事→実在店DBの導線増（架空店ブロック順守）。SEO-002/012の末尾関連記事リンクとは面と対象が別",
+      "category": "SEO",
+      "fingerprint": "f9371a4c8f6b9cf1"
+    },
+    {
+      "id": "SEO-037",
+      "date": "2026-07-24",
+      "source": "line-daily",
+      "advice": "予約・マップのクリックが0回。店舗カードに予約するボタンとGoogleマップボタンを常に表示させモーダルを開かなくても行動できるように変更",
+      "verdict": "adopted",
+      "brand_reason": "既存の実在店予約URL/マップを一覧カードで直接叩ける体験改善。送客手数料の新設ではなく既存導線の露出のみで制約8非抵触。SEO-010と要調整（カード直アクションがモーダル回遊を食わないバランス）",
+      "category": "SEO",
+      "fingerprint": "364ca23a47b53c5f"
     }
   ]
 }
