@@ -12,6 +12,7 @@
 const https = require('https');
 const fs    = require('fs');
 const path  = require('path');
+const { titleAreaLabel } = require('./scripts/lib/area_label');
 
 const CSV_URL     = 'https://docs.google.com/spreadsheets/d/1VUk4bRTPoIc7pHywzIJTwZr9WyUX7ioxlZzbxQHsjCQ/export?format=csv&gid=415662614';
 const BASE_URL    = 'https://nagoya-bites.com';
@@ -272,7 +273,8 @@ function renderStorePage(s, slug) {
   const xUrl     = s['X検索'] || '';
   const gmUrl    = `https://www.google.com/maps/search/${encodeURIComponent(name + ' ' + area)}`;
   const pageUrl  = `${BASE_URL}/stores/${slug}.html`;
-  const title    = `${name}（${area}・${genre}）| NAGOYA BITES`;
+  // タイトルのエリアは検索結果で切れないよう簡潔ラベルに正規化（ISSUE-072・データは不変）
+  const title    = `${name}（${titleAreaLabel(area)}・${genre}）| NAGOYA BITES`;
   const desc     = buildDescription(s);
   const priceRangeSym = mapPriceToSchemaRange(price);
 
@@ -343,12 +345,12 @@ function renderStorePage(s, slug) {
 
   const tagPills = tags.map(t => `<span class="tag">${t}</span>`).join('');
   const linksHtml = [
-    hpUrl && `<a class="link-btn hp" href="${hpUrl}" target="_blank" rel="noopener noreferrer">🌶 ホットペッパーで予約</a>`,
-    gmUrl && `<a class="link-btn gm" href="${gmUrl}" target="_blank" rel="noopener noreferrer">📍 Googleマップ</a>`,
-    igUrl && `<a class="link-btn ig" href="${igUrl}" target="_blank" rel="noopener noreferrer">📸 Instagram</a>`,
-    tbUrl && `<a class="link-btn tb" href="${tbUrl}" target="_blank" rel="noopener noreferrer">🍽 食べログ</a>`,
-    tkUrl && tkUrl !== '#' && `<a class="link-btn tk" href="${tkUrl}" target="_blank" rel="noopener noreferrer">🎵 TikTok</a>`,
-    xUrl  && xUrl  !== '#' && `<a class="link-btn xx" href="${xUrl}" target="_blank" rel="noopener noreferrer">𝕏 X</a>`,
+    hpUrl && `<a class="link-btn hp" href="${hpUrl}" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>`,
+    gmUrl && `<a class="link-btn gm" href="${gmUrl}" target="_blank" rel="noopener noreferrer">Googleマップ</a>`,
+    igUrl && `<a class="link-btn ig" href="${igUrl}" target="_blank" rel="noopener noreferrer">Instagram</a>`,
+    tbUrl && `<a class="link-btn tb" href="${tbUrl}" target="_blank" rel="noopener noreferrer">食べログ</a>`,
+    tkUrl && tkUrl !== '#' && `<a class="link-btn tk" href="${tkUrl}" target="_blank" rel="noopener noreferrer">TikTok</a>`,
+    xUrl  && xUrl  !== '#' && `<a class="link-btn xx" href="${xUrl}" target="_blank" rel="noopener noreferrer">X</a>`,
   ].filter(Boolean).join('\n    ');
 
   return `<!DOCTYPE html>

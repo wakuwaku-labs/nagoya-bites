@@ -179,6 +179,8 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `.claude/commands/seo-triage.md` | `/seo-triage` 日次SEO/LINEアドバイス取り込み（Marketer管轄） |
 | `.claude/commands/seo-triage-weekly.md` | `/seo-triage-weekly` 週次レポート（AI週次分析＋今週のアドバイス）取り込み（Marketer管轄） |
 | `data/seo_advice_log.json` | SEO改善ループの記憶（採用/却下/重複の全履歴・append-only・`source`で日次/週次を区別） |
+| `data/gsc_metrics.json` | GSC 検索実データ（表示/クリック/CTR/掲載順位・トップクエリ/ページ）。日次 build.yml が更新（Marketer管轄） |
+| `data/gsc_opportunities.json` | GSC 改善機会の抽出結果（ctr_fix=1ページ目低CTR / rank_push=2-3ページ目高需要）。`node scripts/gsc_opportunities.js`（build.yml が日次実行）。GSC改善ループの配信レイヤー（Marketer/Builder 共管） |
 
 ---
 
@@ -233,6 +235,50 @@ SEO/アクセス解析のアドバイスを、**鵜呑みにせず**ブランド
 単日のブレではなく**週トレンド**なので、落ちトレンドは原因調査を優先度高め（P1〜P2）に寄せる。
 
 却下は必ず理由を残す（後の監査・再評価のため）。「全部間に受けない」がこのループの根幹。
+
+---
+
+## GSC 検索実データ改善ループ（Google の生データを起点にした改善・ISSUE-072）
+
+上の「SEOアドバイス改善ループ」が**外部からのアドバイス**を triage するのに対し、こちらは
+**Google Search Console の自社の実測データ**（クエリ別・ページ別の 表示回数 / クリック / CTR / 掲載順位）を
+起点に「今どこを直せば一番効くか」を機械的に洗い出し、同じ Moat フィルタで施策化するループ。
+GSC 開通（ISSUE-068①）で初めて回せるようになった。
+
+### 全自動の配信レイヤー（人の集計不要）
+
+```
+[取得] build.yml が日次で scripts/fetch_gsc_metrics.js を実行 → data/gsc_metrics.json
+   ↓
+[抽出] 同ジョブが scripts/gsc_opportunities.js を実行 → data/gsc_opportunities.json
+        ・ctr_fix   … 1ページ目(pos≤10)なのに期待CTRを大きく下回るページ/クエリ
+                      → タイトル/メタ改善で拾える（低リスク・速効）
+        ・rank_push … 2〜3ページ目(pos 11〜30)で高表示のページ/クエリ
+                      → 順位を上げれば大きく伸びる（内容拡充・内部リンク）
+        ・優先度 = 取りこぼしクリック推定 =（期待CTR − 実CTR）× 表示回数
+   ↓
+[判定] エージェントが CLAUDE.md の Moat / Strategic Skip を根拠に採否を triage
+        ・採用 → agent-backlog.md に起票（owner=Marketer/Builder・category=SEO）
+        ・却下 → data/seo_advice_log.json に理由付きで記録（例: 純ナビゲーショナルな
+                他店名クエリは Strategic Skip＝公式サイトに譲る）
+   ↓
+[実装] /solve-next の YES ゲート経由。効果は翌週以降の GSC の CTR/順位の前後比で測る
+        （このループ自身が効果測定器になる）
+```
+
+### 原則（既存ループと同じ思想）
+
+- **鵜呑みにしない**: 数値が示すのは「症状」。打ち手が Moat を強めるか（業界視点・実在保証・
+  シーン専門性）で採否を判断する。ナビゲーショナルな他店名の1位争いは追わない（Strategic Skip）。
+- **低リスクから**: まず ctr_fix（タイトル/メタ）で拾えるものを優先。順位改善は計画的に。
+- **効果は数字で閉じる**: 施策 → 翌週 GSC で CTR/順位を確認、のループを回す。
+  体感ではなく `gsc_metrics.json` の前後比で判断する。
+
+### 健診コマンド
+
+```
+node scripts/gsc_opportunities.js   # data/gsc_opportunities.json を再生成（CI が日次実行）
+```
 
 ---
 
