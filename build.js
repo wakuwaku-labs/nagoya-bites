@@ -579,6 +579,17 @@ async function fetchShopsByMiddleArea(middleAreaCode, middleAreaName) {
   return shops;
 }
 
+// HotPepper API の photo.pc.l は 238px サムネイルのため、同一パスで配信されている
+// 最大サイズ _480.jpg へ昇格して画質を確保する（詳細ページのヒーロー等で引き伸ばされて
+// 粗くなるのを防ぐ）。"no image" プレースホルダー(noimage.gif)は写真なし扱いにして
+// 店舗固有SVG等の正規フォールバックに委ねる。冪等（_480 は変更なし）。
+function normalizePhotoUrl(url) {
+  const u = String(url || '').trim();
+  if (!u) return '';
+  if (/imgfp\.hotp\.jp\/.*noimage/i.test(u)) return '';
+  return u.replace(/(imgfp\.hotp\.jp\/.+?)_(?:58|100|168|238|320)\.jpg/, '$1_480.jpg');
+}
+
 function hpShopToStoreRecord(shop) {
   const name = shop.name || '';
   const areaName = (shop.middle_area && shop.middle_area.name) || (shop.small_area && shop.small_area.name) || '';
@@ -589,7 +600,7 @@ function hpShopToStoreRecord(shop) {
   const localityMatch = address.match(/[都道府県](.+?[市区町村])/);
   const locality = localityMatch ? localityMatch[1] : '';
   const budget = (shop.budget && shop.budget.name) || '';
-  const photo = (shop.photo && shop.photo.pc && (shop.photo.pc.l || shop.photo.pc.m || shop.photo.pc.s)) || '';
+  const photo = normalizePhotoUrl((shop.photo && shop.photo.pc && (shop.photo.pc.l || shop.photo.pc.m || shop.photo.pc.s)) || '');
   const searchQ = encodeURIComponent(name + ' 名古屋');
   return {
     '店名': name,
@@ -1185,6 +1196,9 @@ async function main() {
   let sanitizedPoints = 0;
   let manualBypassed = 0;
   for (const s of stores) {
+    // 写真URLの品質正規化は手動店を含む全店に適用（HP _238サムネ→_480 / noimage.gif除去。
+    // Google Places CDN・self-host SVG 等の非HP URLは無変更）
+    s['写真URL'] = normalizePhotoUrl(s['写真URL']);
     if (s.__manual) {
       // 価格帯の正規化のみ実施
       s['価格帯'] = normalizePrice(s['価格帯']);

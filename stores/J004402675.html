@@ -131,6 +131,8 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem
 .tag{font-size:.62rem;letter-spacing:.06em;color:var(--muted);border:1px solid var(--border);padding:.2rem .55rem;border-radius:2px;background:var(--surface);}
 .links-section{margin-bottom:2rem;}
 .links-section h2{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
+.ig-photos{margin:0 0 2rem;}
+.ig-photos h2{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.65rem 1.1rem;font-size:.72rem;letter-spacing:.05em;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:#e6002d;color:#fff;border-color:#e6002d;}
@@ -154,7 +156,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="https://imgfp.hotp.jp/IMGH/39/61/P048833961/P048833961_480.jpg" alt="焼肉鄭家 JEONG GA チョンガ 栄店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="this.onerror=null;this.src='/assets/store-figures/_fallback.svg'">
+<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F39%2F61%2FP048833961%2FP048833961_480.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F39%2F61%2FP048833961%2FP048833961_238.jpg" alt="焼肉鄭家 JEONG GA チョンガ 栄店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/39/61/P048833961/P048833961_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
@@ -192,9 +194,15 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <a class="link-btn ig" href="https://www.instagram.com/jeong_ga.josidai/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230103/23075036/" target="_blank" rel="noopener noreferrer">食べログ</a>
     <a class="link-btn tk" href="https://www.tiktok.com/search?q=%E7%84%BC%E8%82%89%E9%84%AD%E5%AE%B6%20JEONG%20GA%20%E3%83%81%E3%83%A7%E3%83%B3%E3%82%AC%20%E6%A0%84%E5%BA%97%20%E6%A0%84" target="_blank" rel="noopener noreferrer">TikTok</a>
-    <a class="link-btn xx" href="https://x.com/search?q=%E7%84%BC%E8%82%89%E9%84%AD%E5%AE%B6%20JEONG%20GA%20%E3%83%81%E3%83%A7%E3%83%B3%E3%82%AC%20%E6%A0%84%E5%BA%97%20%E6%A0%84" target="_blank" rel="noopener noreferrer">𝕏 X</a>
+    <a class="link-btn xx" href="https://x.com/search?q=%E7%84%BC%E8%82%89%E9%84%AD%E5%AE%B6%20JEONG%20GA%20%E3%83%81%E3%83%A7%E3%83%B3%E3%82%AC%20%E6%A0%84%E5%BA%97%20%E6%A0%84" target="_blank" rel="noopener noreferrer">X</a>
   </div>
 
+  <div class="ig-photos">
+    <h2>公式Instagramの実際の写真</h2>
+    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/yakiniku_jeongga/reel/DG5FYy-ypJI/" data-instgrm-version="14" style="margin:0 auto;max-width:540px;min-width:280px;width:100%;background:#fff;border:1px solid var(--border);border-radius:3px;">
+      <a href="https://www.instagram.com/yakiniku_jeongga/reel/DG5FYy-ypJI/" target="_blank" rel="noopener noreferrer">焼肉鄭家 JEONG GA チョンガ 栄店 の公式Instagram投稿を見る</a>
+    </blockquote>
+  </div>
   
   <div class="related-features">
     <h2>この店舗が登場する特集</h2>
@@ -214,5 +222,17 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <p class="fc">© <span id="yr"></span> NAGOYA BITES — 現役飲食店経営者監修 名古屋グルメガイド</p>
 </footer>
 <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+(function(){
+  var el=document.querySelector('.instagram-media');
+  if(!el)return;
+  var loaded=false;
+  function load(){if(loaded)return;loaded=true;var sc=document.createElement('script');sc.async=true;sc.src='https://www.instagram.com/embed.js';document.body.appendChild(sc);}
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){load();io.disconnect();}});},{rootMargin:'600px'});
+    io.observe(el);
+  }else{load();}
+})();
+</script>
 </body>
 </html>
