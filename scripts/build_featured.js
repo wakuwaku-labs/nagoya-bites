@@ -269,6 +269,66 @@ function listFeatureSlugs() {
   return new Set(fs.readdirSync(dir).filter(f => f.endsWith('.html')).map(f => f.replace(/\.html$/, '')));
 }
 
+// ───────── 季節バナー注入（記事本文がその月のシーンに「伴う」ようにする） ─────────
+// banquet 等は1年で複数シーン（新年会/送別会/暑気払い/忘年会…）に使い回されるため、
+// 記事の title/h1/SEO は恒久のまま、当月のシーン文脈(badge + sceneLeads)を記事本文の
+// 先頭に注入して「今月はこの用途の特集」であることを明示する。当月でない使い回し記事から
+// は自動削除して鮮度を保つ。毎日実行・冪等（再実行しても差分ゼロ）。
+const SEASON_NOTE_START = '<!-- SEASONAL_NOTE_START -->';
+const SEASON_NOTE_END   = '<!-- SEASONAL_NOTE_END -->';
+const SEASON_NOTE_CSS_MARK = '/* SEASONAL_NOTE_CSS */';
+const SEASON_NOTE_CSS = `${SEASON_NOTE_CSS_MARK}
+.season-note{display:flex;align-items:flex-start;gap:.7rem;margin:0 0 1.6rem;padding:.9rem 1.05rem;border:1px solid rgba(176,141,44,.35);border-left:3px solid #b08d2c;border-radius:8px;background:rgba(176,141,44,.07);}
+.season-note-flag{flex:none;font-size:.68rem;font-weight:700;letter-spacing:.04em;color:#fff;background:#b08d2c;padding:.26rem .62rem;border-radius:999px;white-space:nowrap;}
+.season-note-text{margin:0;font-size:.9rem;line-height:1.75;color:#3a3a3a;}
+@media (prefers-color-scheme:dark){.season-note-text{color:#e8e4d8;}}
+`;
+function buildSeasonNote(badge, lead) {
+  return `${SEASON_NOTE_START}\n      <div class="season-note"><span class="season-note-flag">${badge}</span><p class="season-note-text">${lead}</p></div>\n      ${SEASON_NOTE_END}`;
+}
+function stripSeasonNote(html) {
+  const re = new RegExp(`\\s*${SEASON_NOTE_START}[\\s\\S]*?${SEASON_NOTE_END}`, 'g');
+  return html.replace(re, '');
+}
+function insertSeasonNote(html, noteHtml) {
+  const re = /(<div class="(?:art-body|content)">)/;
+  if (!re.test(html)) return null; // アンカー未検出（構造が違う）→ 挿入しない
+  return html.replace(re, `$1\n      ${noteHtml}`);
+}
+function ensureSeasonCss(html) {
+  if (html.includes(SEASON_NOTE_CSS_MARK)) return html;
+  const i = html.indexOf('</style>');
+  if (i < 0) return html;
+  return html.slice(0, i) + SEASON_NOTE_CSS + html.slice(i);
+}
+// 当月シーンに合わせて全対象記事のバナーを更新（当月外の使い回し記事からは削除）。書換件数を返す。
+function refreshSeasonNotes(cfg, month) {
+  const currentLeads = (cfg.sceneLeads || {})[String(month)] || {};
+  // monthlyScenes に一度でも登場する全 slug が「バナー管理対象」（＝削除も含む母集合）
+  const allSlugs = new Set();
+  const ms = cfg.monthlyScenes || {};
+  for (const m of Object.keys(ms)) for (const sc of ms[m].scenes) allSlugs.add(sc.slug);
+  // 当月シーンの badge を引く
+  const curBadge = {};
+  const cur = monthScenesOf(cfg, month);
+  if (cur) for (const sc of cur.scenes) curBadge[sc.slug] = sc.badge || '';
+
+  let changed = 0, injected = 0;
+  for (const slug of allSlugs) {
+    const file = path.join(ROOT, 'features', `${slug}.html`);
+    if (!fs.existsSync(file)) continue;
+    const before = fs.readFileSync(file, 'utf8');
+    let html = stripSeasonNote(before); // まず既存バナーを除去（冪等・自己クリーニング）
+    if (curBadge[slug] !== undefined && currentLeads[slug]) {
+      const note = buildSeasonNote(curBadge[slug], currentLeads[slug]);
+      const withNote = insertSeasonNote(html, note);
+      if (withNote) { html = ensureSeasonCss(withNote); injected++; }
+    }
+    if (html !== before) { fs.writeFileSync(file, html); changed++; }
+  }
+  return { changed, injected };
+}
+
 // ───────── メイン ─────────
 function main() {
   const dateArg = process.argv.find(a => a.startsWith('--date='));
@@ -364,8 +424,12 @@ function main() {
       console.log(`[build_featured] features/index.html 更新 ✓`);
     }
   }
+
+  // 3) 季節バナー: 当月シーンの記事本文にその月の文脈を注入し、使い回し記事の「中身」を伴わせる
+  const note = refreshSeasonNotes(cfg, month);
+  console.log(`[build_featured] 季節バナー ✓ 書換${note.changed}件（当月シーン注入${note.injected}件・当月外は自動削除）`);
 }
 
 if (require.main === module) main();
 
-module.exports = { isActive, todayJST, monthOf, isoWeek, selectShowcase, validateConfig, parseFeatureCards, listFeatureSlugs, monthScenesOf };
+module.exports = { isActive, todayJST, monthOf, isoWeek, selectShowcase, validateConfig, parseFeatureCards, listFeatureSlugs, monthScenesOf, refreshSeasonNotes };

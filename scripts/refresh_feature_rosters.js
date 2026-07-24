@@ -126,7 +126,10 @@ function balanceScore(s, fit, W) {
 // ───────── 候補プール生成 ─────────
 function buildPool(stores, cfg, closed) {
   const G = cfg.gates, W = cfg.scoreWeights;
-  return function (featCfg) {
+  // biasKw: その月×特集の季節キーワード（該当店を seasonalBiasBonus で純加点。ヒット0は減点なし）
+  return function (featCfg, biasKw) {
+    const biasRe = biasKw ? new RegExp(biasKw, 'g') : null;
+    const bonusW = W.seasonalBiasBonus || 0;
     const pool = [];
     for (const s of stores) {
       const hp = s['ホットペッパーID'];
@@ -147,7 +150,13 @@ function buildPool(stores, cfg, closed) {
       const exempt = G.editorExemptGoogle && (s['編集部推薦'] || s['editorReason']);
       if (G.minGoogle && !exempt && (g === null || g < G.minGoogle)) continue;
 
-      pool.push({ store: s, fit: sm.fit, score: balanceScore(s, sm.fit, W) });
+      let score = balanceScore(s, sm.fit, W);
+      let seasonalHit = false;
+      if (biasRe) {
+        const hits = (sceneHaystackKeyword(s).match(biasRe) || []).length;
+        if (hits > 0) { score += bonusW * Math.min(1, hits / 2); seasonalHit = true; }
+      }
+      pool.push({ store: s, fit: sm.fit, score, seasonalHit });
     }
     pool.sort((a, b) => b.score - a.score);
     return pool;
@@ -384,6 +393,8 @@ function main() {
   const closed = loadClosedSet();
   const ym = monthJST(monthArg);
   const seed = monthSeed(ym);
+  const monthKey = String(parseInt(ym.split('-')[1], 10)); // "7"
+  const seasonalBiasOf = cfg.seasonalBias || {};
   const poolFor = buildPool(stores, cfg, closed);
 
   const targets = Object.entries(cfg.features).filter(([slug]) => !only || slug === only);
@@ -396,7 +407,8 @@ function main() {
     const file = path.join(FEATURES_DIR, `${slug}.html`);
     if (!fs.existsSync(file)) { console.error(`  ✗ ${slug}: features/${slug}.html が無い`); shortfalls++; continue; }
 
-    const pool = poolFor(fc);
+    const biasKw = seasonalBiasOf[monthKey] && seasonalBiasOf[monthKey][slug] || null;
+    const pool = poolFor(fc, biasKw);
     if (pool.length < fc.slots) {
       console.error(`  ✗ ${slug}: プール ${pool.length} < slots ${fc.slots}（シーン条件が厳しすぎ・枠割れ）`);
       shortfalls++;
@@ -411,10 +423,11 @@ function main() {
 
     if (dryRun || checkMode) {
       if (dryRun) {
-        console.log(`■ ${slug}  [${fc.format}] プール${pool.length} → ${final.length}店 (コア${coreIds.size}/ローテ${final.length - final.filter(e => coreIds.has(String(e.store['ホットペッパーID']))).length})`);
+        const seasonalN = final.filter(e => e.seasonalHit).length;
+        console.log(`■ ${slug}  [${fc.format}] プール${pool.length} → ${final.length}店 (コア${coreIds.size}/ローテ${final.length - final.filter(e => coreIds.has(String(e.store['ホットペッパーID']))).length})${biasKw ? ` / 季節適合${seasonalN}店` : ''}`);
         final.forEach((e, i) => {
           const s = e.store;
-          console.log(`   ${String(i + 1).padStart(2)}. ${e.isNew ? '🆕' : '  '} ${(s['店名'] || '').slice(0, 22).padEnd(22)} ${s['エリア'] || ''} / ${genreShort(s)} ★${s['Google評価'] || '-'} 口${s['口コミ数'] || '-'} cc${s['crossCheckScore'] || '-'} score=${e.score.toFixed(3)}`);
+          console.log(`   ${String(i + 1).padStart(2)}. ${e.isNew ? '🆕' : '  '}${e.seasonalHit ? '☀' : ' '} ${(s['店名'] || '').slice(0, 22).padEnd(22)} ${s['エリア'] || ''} / ${genreShort(s)} ★${s['Google評価'] || '-'} 口${s['口コミ数'] || '-'} cc${s['crossCheckScore'] || '-'} score=${e.score.toFixed(3)}`);
         });
         console.log('');
       }
@@ -429,7 +442,8 @@ function main() {
     html = replaceItemList(replaced, final);
     html = injectBadgeCss(html);
     fs.writeFileSync(file, html);
-    console.log(`  ✓ ${slug}: ${final.length}店に更新（コア${final.filter(e => coreIds.has(String(e.store['ホットペッパーID']))).length}/新顔${final.filter(e => e.isNew).length}）`);
+    const seasonalN = final.filter(e => e.seasonalHit).length;
+    console.log(`  ✓ ${slug}: ${final.length}店に更新（コア${final.filter(e => coreIds.has(String(e.store['ホットペッパーID']))).length}/新顔${final.filter(e => e.isNew).length}${biasKw ? `/季節適合${seasonalN}` : ''}）`);
     updated++;
   }
 
