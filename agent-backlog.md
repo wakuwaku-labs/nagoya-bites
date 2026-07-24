@@ -8,6 +8,29 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-072] GSC実データ駆動の改善ループ構築＋第1弾（店舗タイトルCTR改善・絵文字再発防止） ✅
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-07-23（GSC 開通後の初分析。ユーザー指示「Google の数字を元にした修正ルーティンを既存の改善ループに組み込む」）
+- **resolved**: 2026-07-23
+- **resolved_by**: Marketer + Builder（EXPLICIT モード）
+- **category**: seo / ops / brand
+- **owner**: Marketer + Builder
+- **背景（GSC 実データ）**: GSC 開通で「表示32,958・クリック288・CTR0.87%・平均順位17.3」＝需要はあるのに2ページ目中心で取りこぼしている実態が可視化。ページ別で「1ページ目なのに低CTR」の店舗ページ群（例 韓炉HANRO 表示925/CTR0.54%・National Bakery 表示840/CTR1.2%）が最大の伸びしろと判明。
+- **実装（① ルーティンの仕組み化）**:
+  - `scripts/gsc_opportunities.js`（新規）: `gsc_metrics.json` から改善機会を決定的に2バケット抽出 → `data/gsc_opportunities.json`。`ctr_fix`（pos≤10・期待CTR未達＝タイトル/メタで拾える）/ `rank_push`（pos11-30・高表示＝順位改善）。優先度＝取りこぼしクリック推定（(期待CTR−実CTR)×表示）。
+  - `build.yml` に日次ステップを追加（fetch_gsc_metrics.js の直後）。gsc_opportunities.json も commit 対象に。
+  - `CLAUDE.md` に「GSC 検索実データ改善ループ」章を新設（既存の SEOアドバイス改善ループと同型：配信=CI／判定=Moat・Strategic Skip／採用→backlog・却下→seo_advice_log／効果=翌週 GSC 前後比）。共有ファイル一覧にも2ファイル追記。
+- **実装（② 第1弾の施策：店舗タイトル正規化）**:
+  - 原因: `gen-store-pages.js` のタイトルが `（エリア・ジャンル）` にホットペッパー由来の冗長エリア群（「栄(ミナミ)/矢場町/大須/上前津」等）をそのまま使い、Google 表示（約30字）で店名が切れ CTR を下げていた（例 韓炉 52字→40字）。
+  - `scripts/lib/area_label.js`（新規）: タイトル表示専用のエリア簡潔化（9クラスタを明示マップで短縮・他は原文パススルー・全55種で検証）。データ（stores.json）は不変。
+  - `gen-store-pages.js`（生成元）＋ `scripts/patch_store_titles.js`（新規・既存4,136ページ適用・冪等）でタイトル/og/twitter を正規化。
+- **副次修正（絵文字再発防止・ISSUE-069 の取りこぼし）**: PR #75/#80 で静的除去した店舗ページ絵文字（🌶📍📸🍽🎵）が、CI 日次の `gen-store-pages.js` 再生成で復活していたのを発見。生成元のリンクボタン絵文字を除去、`build_featured.js` の季節 card-icon 絵文字（display:none の非表示要素）も空文字化。既存 5,016 店舗ページを strip_ui_emojis で再クリーン。**全ページ絵文字残存 0**（生成元修正済のため今後の再生成でも復活しない）。
+- **QAゲート**: audit_feature_stores 0/0/EXIT0 ✅ / schema_alignment EXIT0 ✅ / build_featured --check EXIT0 ✅ / gsc_opportunities EXIT0 ✅ / area_label 55種・resolve/pickロジック検証 ✅ / タイトルHTML健全性（title数1・og一致・二重エンコードなし）5/5 ✅ / 全サイト絵文字残存0 ✅ / patch_store_titles 冪等（再実行0件）✅
+- **効果測定**: このループ自身が測定器。翌週以降 `gsc_metrics.json` の CTR/順位を前後比。第1弾のターゲットは韓炉HANRO・National Bakery 等の1ページ目・低CTRページ（合計取りこぼし推定 約33クリック/月）。
+- **files**: `scripts/gsc_opportunities.js`（新規）, `scripts/lib/area_label.js`（新規）, `scripts/patch_store_titles.js`（新規）, `gen-store-pages.js`, `scripts/build_featured.js`, `.github/workflows/build.yml`, `CLAUDE.md`, `data/gsc_opportunities.json`（新規）, `stores/*.html`(5,016), `features/index.html`, `agent-backlog.md`
+- **関連**: ISSUE-068①（GSC 開通＝本ループの前提）/ ISSUE-067（CTR 改善の系譜）/ ISSUE-069（絵文字撤去の取りこぼし回収）
+
 ### [ISSUE-071] 特集『中身の掲載店』の月次自動入れ替え（ハイブリッド＋バランス型選定）— 閲覧者が興味の湧く店を毎月更新 ✅
 
 - **priority**: P1 → **status**: done
@@ -1240,6 +1263,7 @@
 | 2026-07-23 | Marketer+Builder(EXPLICIT) | ISSUE-068① GSC権限問題のボトルネック（追加すべきSAメール不明）をCIログから確定（nagoya-bites-ga4@optimal-transit-447015-e9…）。fetch_gsc_metrics.jsを堅牢化（sites.list診断＋URLプレフィックス/ドメインプロパティ自動フォールバック・6ケース単体テスト）＋docs手順を直リンク付きで最新化。残はオーナーGUI操作5分（SA追加＋API有効化） | ✅ デプロイ済み (PR #77) |
 | 2026-07-23 | Builder(EXPLICIT) | ISSUE-068① GSC **完全開通**。データ0の原因＝SAが空のURLプレフィックス型のみ閲覧・実データはドメインプロパティ側と特定。pickBestProperty（複数時impressions最大を自動選択・PR #78・3ケーステスト）追加＋オーナーがドメインプロパティにSA追加→CI run 30010262835 で gsc_metrics.json に clicks=288/imp=32,958/CTR0.87%/順位17.3/クエリ25件 が入り確定 | ✅ デプロイ済み (PR #78) |
 | 2026-07-23 | Builder+Marketer(EXPLICIT) | ISSUE-068② link_domain 完了。コード変更ゼロで良いと確認（サイトが link_domain 送信済＋fetch_ga4_views.js が customEvent:link_domain を自動集計）。GA4登録手順をdocs追記（PR #80）＋オーナーがGA4カスタム定義に link_domain（イベント/param=link_domain）登録済（UI確認）。cta.byDomain は非遡及のため登録後クリック蓄積で自動充填。**ISSUE-068 クローズ** | ✅ 完了 (PR #80/#81) |
+| 2026-07-23 | Marketer+Builder(EXPLICIT) | ISSUE-072 GSC実データ駆動の改善ループを既存ループに組み込み。gsc_opportunities.js（ctr_fix/rank_push抽出）＋build.yml日次化＋CLAUDE.mdに「GSC改善ループ」章。第1弾＝店舗タイトルの冗長エリア群を正規化（area_label.js・patch_store_titles.js・生成元gen-store-pages.js）で4,136ページのCTR改善。副次で絵文字再発（gen-store-pages/build_featured生成元）を根絶し全ページ残存0。効果は翌週GSC前後比で測定 | ⏸ PRレビュー待ち |
 
 ---
 

@@ -118,16 +118,10 @@ function renderShowcaseCard(entry, info) {
 }
 
 // ───────── 季節特集グリッド HTML 生成 (features/index.html 用) ─────────
-function seasonalIcon(id) {
-  if (id === 'gw-2026' || id.startsWith('gw-')) return '🎏';
-  if (id === 'mothers-day') return '💐';
-  if (id === 'fathers-day' || id.startsWith('fathers-day')) return '👔';
-  if (id === 'spring-terrace') return '🌸';
-  if (id.includes('summer') || id.includes('beer-garden')) return '🍺';
-  if (id.includes('halloween')) return '🎃';
-  if (id.includes('christmas')) return '🎄';
-  if (id.includes('year-end') || id.includes('bonenkai')) return '🎍';
-  return '🗓';
+// 注: card-icon は CSS で display:none（非表示）。絵文字は AI 生成感を出すため全廃
+//     （ISSUE-069 全ページ絵文字撤去方針）。空文字を返しても見た目は不変。
+function seasonalIcon(_id) {
+  return '';
 }
 function seasonalCategory(id) {
   if (id === 'gw-2026' || id.startsWith('gw-')) return 'Seasonal · GW特集';

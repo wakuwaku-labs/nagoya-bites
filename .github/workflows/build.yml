@@ -45,6 +45,10 @@ jobs:
           GSC_SITE_URL: ${{ secrets.GSC_SITE_URL }}
         continue-on-error: true
 
+      - name: GSC 改善機会を抽出 → data/gsc_opportunities.json（ISSUE-072 改善ループ）
+        run: node scripts/gsc_opportunities.js
+        continue-on-error: true
+
       - name: 手動キュレーション店の実写写真を Google Places API で取得
         # data/manual_stores.json の 写真URL が空 or SVG プレースホルダーの店を対象に、
         # Google Places API で店名+住所マッチング → lh3.googleusercontent.com の CDN URL を取得。
@@ -144,7 +148,7 @@ jobs:
           # ISSUE-058: data/stores.json (canonical full catalog) と stores/*.html (個別店舗ページ) も
           # commit 対象に追加。これらが入っていないと manual_stores 追加分が
           # フロント検索 (fetchFullCatalog) や個別ページ URL から到達不能になる。
-          git add index.html features/index.html sitemap.xml data/stores.json data/manual_stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/cross_check_flags.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json
+          git add index.html features/index.html sitemap.xml data/stores.json data/manual_stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/cross_check_flags.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json
           # 特集本体(features/*.html)も commit 対象。月次ロスター更新の掲載店入替を反映する。
           git add features/ || true
           git add stores/ || true
