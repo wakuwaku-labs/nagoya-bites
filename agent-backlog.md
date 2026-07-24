@@ -8,6 +8,25 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-073] 店舗写真の表示強化 — HP写真480px恒久昇格＋wsrv高画質ヒーロー＋IG実写embed＋写真カバレッジ監査 ✅
+
+- **priority**: P1 → **status**: done（PR #85 レビュー待ち）
+- **detected**: 2026-07-25（オーナー依頼「店舗毎の写真をしっかり表示させる仕組みを。写真がない店舗に実際の写真を。閲覧者にとって見やすい画質のいいものに」）
+- **resolved**: 2026-07-25
+- **resolved_by**: Builder + DataKeeper（EXPLICIT モード）
+- **category**: ux / data-quality / performance
+- **owner**: Builder
+- **真因**: HotPepper API の `photo.pc.l` が **238px サムネイル**で、canonical（data/stores.json）の 4,128店がそのまま保持 → 店舗詳細ページで 800px 幅ヒーローに引き伸ばされ粗く表示（4,494ページ）。imgfp.hotp.jp は同一パスで最大 `_480.jpg` を配信している（30サンプル HEAD 検証で全て実寸 480px 確認）。「写真ゼロ」は51店（全て編集部 manual 店・Places 三重検証ゲート未通過＝架空店ブロックの正常動作）。
+- **実装（4層の仕組み）**:
+  1. **取り込み層 `build.js normalizePhotoUrl()`（恒久対策）**: HP写真を取り込み時に `_480` へ自動昇格・noimage.gif は写真なし扱い。毎日のビルドで自動維持
+  2. **既存資産 `scripts/upgrade_photo_quality.js`（新規・冪等）**: data/stores.json / index.html / features / journal / stores 孤児ページ366枚（gen-store-pages 再生成対象外の残置ページ）の縮小サムネ **計5,283箇所を一括昇格**
+  3. **表示層 `gen-store-pages.js`**: ヒーローを wsrv.nl 経由 **WebP＋シャープ化**配信（`_238`→直URL→SVG の多段フォールバック・index.html の nbImage() と同思想）。**公式Instagram投稿の実写 embed セクションを 2,507店の詳細ページに追加**（写真ソース優先1・embed.js は IntersectionObserver で遅延ロード）
+  4. **監査層 `scripts/audit_photo_coverage.js`（新規）＋ build.yml**: 写真ソース内訳／縮小サムネ残留（=退行）／実写ゼロ店リストを日次CIで可視化（`--strict`・continue-on-error で安全開始）
+- **結果**: 実写カバレッジ **98.9%**（Google Places 95店 / HP480 4,866店）。ヒーロー `_238` 引き伸ばし 4,494→**0件**。実写ゼロ51店は検証ゲート維持のため SVG 継続（実在再検証を別タスク起票済 — 「鮨 猪/猪股/猪若/猪子」等の架空店疑いクラスタ含む）
+- **QAゲート**: qa_gate --after ok:true（店舗数5016→5016・マーカー退行なし）✅ / audit_feature_stores 0 ✅ / audit_photo_coverage サムネ残留0 ✅ / 構文チェック4ファイル ✅ / preview 実機: ヒーロー wsrv 配信・カード480px WebP 取得・console error 0 ✅（IG iframe 展開はサンドボックスブラウザ制限。本番稼働中のジャーナル埋め込みと同一パターン）
+- **files**: `build.js`, `gen-store-pages.js`, `scripts/upgrade_photo_quality.js`（新規）, `scripts/audit_photo_coverage.js`（新規）, `.github/workflows/build.yml`, `data/stores.json`, `index.html`, `features/*.html`, `journal/*.html`, `stores/*.html`(5,382), `agent-backlog.md`
+- **関連**: ISSUE-060（Places 三重検証ゲート＝実写ゼロ店の門番）/ ISSUE-067（架空店ブロックと整合）/ ISSUE-036（og:image 系譜）
+
 ### [ISSUE-072] GSC実データ駆動の改善ループ構築＋第1弾（店舗タイトルCTR改善・絵文字再発防止） ✅
 
 - **priority**: P1 → **status**: done
