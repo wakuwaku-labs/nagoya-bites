@@ -27,6 +27,26 @@
 - **files**: `build.js`, `gen-store-pages.js`, `scripts/upgrade_photo_quality.js`（新規）, `scripts/audit_photo_coverage.js`（新規）, `.github/workflows/build.yml`, `data/stores.json`, `index.html`, `features/*.html`, `journal/*.html`, `stores/*.html`(5,382), `agent-backlog.md`
 - **関連**: ISSUE-060（Places 三重検証ゲート＝実写ゼロ店の門番）/ ISSUE-067（架空店ブロックと整合）/ ISSUE-036（og:image 系譜）
 
+### [SEO-036] 閲覧上位の特集記事の冒頭に「店舗詳細を見る」導線を3件以上置き、編集記事→実在店DBへ送客する
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-07-25
+- **category**: SEO
+- **owner**: Editor
+- **source**: SEOアドバイス(LINE) 2026-07-24 原文「1訪問あたり閲覧が1.2ページと低く店舗詳細を開いたのは5回だけ 👉 人気ページTOP5の特集記事（例 features/nagoya-sweets）の冒頭に、関連する店舗の『店舗詳細を見る』ボタンを最低3つ追加し店舗への誘導を強化」
+- **brand-filter**: ✅ 適合 — Moat「構造化DB（4,500店超）×特集の三層編集」の相互リンクを、読者が最初に触れる特集冒頭で効かせる送客強化。順位操作・広告依存・ストック写真を伴わず、編集独立を保ったまま編集レイヤー→実在店DBの導線を増やすだけ。SEO-002/SEO-012（特集**末尾**の関連**記事**リンク）とは設置面（冒頭）と対象（記事→実在**店舗**）が別
+- **acceptance**: 閲覧上位の特集（nagoya-sweets / nagoya-gourmet-guide / nagoya-hitsumabushi 等）の冒頭に「店舗詳細を見る」導線を3件以上設置。リンク先は必ず LOCAL_STORES の実在店のみ（架空店ブロック厳守・`node scripts/audit_feature_stores.js` 検出ゼロ維持）。index.html への店舗ディープリンク（例 `index.html#store=<id>` でモーダル起動）が要る場合は既存モーダル/フィルタ/検索/IGエンベッド/Google評価を壊さず実装（制約1・5）。回遊（1訪問あたりページ数・店舗詳細オープン数）は次回以降のSEOアドバイスで再評価
+- **ブランドガードレール**: 存在しない店・特集へのリンク禁止（実在検証ゲート）。掲載店選定は業界視点（記事テーマに合致する実在店）
+
+### [SEO-037] トップの店舗カードに「予約」「Googleマップ」の直接アクション導線を常時表示し、モーダルを開かずに行動できるようにする（要検討）
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-07-25
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEOアドバイス(LINE) 2026-07-24 原文「予約ボタンもマップ導線もクリックが0回 👉 店舗カードに『予約する』ボタンと『Googleマップ』ボタンを常に表示させ、店舗詳細モーダルを開かなくても行動できるように変更」
+- **brand-filter**: ✅ 適合 — 既存の実在店データ（HotPepper予約URL / Googleマップ）を一覧カードで直接叩けるようにする体験改善。アフィリエイト・送客手数料の新設ではなく既存導線の露出のみなので編集独立・制約8に抵触しない。順位操作・サクラ・ストック写真も無関係
+- **要検討メモ**: SEO-010（カードに「詳細を見る」→モーダル起動ボタンを付ける・ready）と同じカードUIを触るため**要調整**。モーダル内には SEO-004 の関連店舗/特集リンク（回遊レバー）があるため、カード直アクションがモーダルオープンを食い潰して回遊を下げないバランスを実装時に検討。/solve-next 着手時に SEO-010 との統合可否を判断
+- **acceptance**: 店舗カードに「予約」「Googleマップ」導線を常時表示（リンク先は各店の実在の予約URL/マップのみ）。既存の cta_click / cta_gmap_click 計測を維持し、カード→モーダル導線（SEO-010）・フィルタ・検索・IGエンベッド・Google評価を壊さない（制約5）。index.html 単一ファイル維持（制約1）。予約導線の収益化（アフィリエイト・送客手数料）は制約8によりユーザー承認が別途必須＝本タスクはUX・計測のみ。予約/マップのクリック回復は次回以降のSEOアドバイスで再評価
+
 ### [ISSUE-072] GSC実データ駆動の改善ループ構築＋第1弾（店舗タイトルCTR改善・絵文字再発防止） ✅
 
 - **priority**: P1 → **status**: done
