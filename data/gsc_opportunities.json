@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-24T23:40:56.059Z",
+  "generatedAt": "2026-07-25T14:34:38.396Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -16,12 +16,12 @@
       },
       {
         "query": "一魚魚一 はなれ",
-        "impressions": 121,
+        "impressions": 118,
         "clicks": 2,
         "position": 8.5,
-        "ctr": 1.65,
+        "ctr": 1.69,
         "expectedCtr": 3,
-        "missedClicks": 1.6
+        "missedClicks": 1.5
       },
       {
         "query": "やきまる亭",
@@ -34,11 +34,11 @@
       },
       {
         "query": "フレンチ屋台ビストロ のれんとコルク 名古屋駅店",
-        "impressions": 76,
+        "impressions": 73,
         "clicks": 2,
-        "position": 6.9,
-        "ctr": 2.63,
-        "expectedCtr": 4.1,
+        "position": 6.8,
+        "ctr": 2.74,
+        "expectedCtr": 4.2,
         "missedClicks": 1.1
       }
     ],
@@ -53,11 +53,11 @@
       },
       {
         "query": "national bakery & canteen",
-        "impressions": 93,
+        "impressions": 88,
         "clicks": 1,
         "position": 10.4,
-        "ctr": 1.08,
-        "upsideClicks": 1.6
+        "ctr": 1.14,
+        "upsideClicks": 1.5
       },
       {
         "query": "キミトテ",
@@ -73,56 +73,47 @@
     "ctrFix": [
       {
         "page": "/stores/J004591229.html",
-        "impressions": 943,
+        "impressions": 905,
         "clicks": 4,
         "position": 9.9,
-        "ctr": 0.42,
+        "ctr": 0.44,
         "expectedCtr": 2.5,
-        "missedClicks": 19.9
+        "missedClicks": 18.9
       },
       {
         "page": "/stores/J004612794.html",
-        "impressions": 842,
+        "impressions": 815,
         "clicks": 9,
         "position": 9.6,
-        "ctr": 1.07,
+        "ctr": 1.1,
         "expectedCtr": 2.6,
-        "missedClicks": 13.1
-      },
-      {
-        "page": "/stores/J004612476.html",
-        "impressions": 237,
-        "clicks": 4,
-        "position": 8.6,
-        "ctr": 1.69,
-        "expectedCtr": 3,
-        "missedClicks": 3
+        "missedClicks": 12.4
       }
     ],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2209,
+        "impressions": 2171,
         "clicks": 6,
-        "position": 22.2,
-        "ctr": 0.27,
-        "upsideClicks": 55.9
+        "position": 22.3,
+        "ctr": 0.28,
+        "upsideClicks": 54.7
       },
       {
         "page": "/stores/J004509691.html",
-        "impressions": 335,
+        "impressions": 324,
         "clicks": 4,
         "position": 10.3,
-        "ctr": 1.19,
-        "upsideClicks": 5.4
+        "ctr": 1.23,
+        "upsideClicks": 5.1
       },
       {
         "page": "/journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html",
-        "impressions": 237,
-        "clicks": 6,
+        "impressions": 226,
+        "clicks": 4,
         "position": 10.4,
-        "ctr": 2.53,
-        "upsideClicks": 0.6
+        "ctr": 1.77,
+        "upsideClicks": 2.3
       }
     ]
   },
@@ -130,12 +121,11 @@
   "summary": {
     "queryCtrFix": 4,
     "queryRankPush": 3,
-    "pageCtrFix": 3,
+    "pageCtrFix": 2,
     "pageRankPush": 3,
     "topPageCtrFix": [
       "/stores/J004591229.html",
-      "/stores/J004612794.html",
-      "/stores/J004612476.html"
+      "/stores/J004612794.html"
     ]
   }
 }

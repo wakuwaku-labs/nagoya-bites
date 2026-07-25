@@ -1,67 +1,62 @@
 {
-  "generatedAt": "2026-07-24T23:40:54.455Z",
+  "generatedAt": "2026-07-25T14:34:36.604Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 439,
-    "pageViews": 618,
-    "sessions": 495,
-    "avgSessionDuration": 94.4,
-    "bounceRate": 0.426,
-    "pagesPerSession": 1.25
+    "activeUsers": 450,
+    "pageViews": 637,
+    "sessions": 507,
+    "avgSessionDuration": 100.3,
+    "bounceRate": 0.404,
+    "pagesPerSession": 1.26
   },
   "channels": {
     "sessions": {
-      "organic": 276,
-      "direct": 182,
-      "social": 42,
+      "organic": 283,
+      "direct": 173,
+      "social": 48,
       "referral": 8,
       "paid": 0,
-      "other": 1
+      "other": 0
     },
     "pct": {
-      "organic": 54.2,
-      "direct": 35.8,
-      "social": 8.3,
+      "organic": 55.3,
+      "direct": 33.8,
+      "social": 9.4,
       "referral": 1.6,
       "paid": 0,
-      "other": 0.2
+      "other": 0
     }
   },
   "sourceBreakdown": [
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 167
+      "sessions": 171
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 139
+      "sessions": 140
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 48
+      "sessions": 50
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 47
+      "sessions": 48
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 41
+      "sessions": 46
     },
     {
       "source": "openai",
       "medium": "(not set)",
-      "sessions": 23
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 17
+      "sessions": 24
     },
     {
       "source": "yahoo",
@@ -69,13 +64,18 @@
       "sessions": 12
     },
     {
-      "source": "chatgpt.com",
-      "medium": "(none)",
-      "sessions": 1
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 8
     },
     {
       "source": "cn.bing.com",
       "medium": "referral",
+      "sessions": 1
+    },
+    {
+      "source": "copilot.com",
+      "medium": "",
       "sessions": 1
     }
   ],
@@ -87,8 +87,8 @@
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 87,
-      "sessions": 82
+      "pageViews": 90,
+      "sessions": 86
     },
     {
       "path": "/features/nagoya-solo-dining.html",
@@ -101,20 +101,29 @@
       "sessions": 21
     },
     {
-      "path": "/journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html",
-      "pageViews": 31,
-      "sessions": 21
+      "path": "/features/nagoya-gourmet-guide.html",
+      "pageViews": 32,
+      "sessions": 31
     }
   ],
   "cta": {
-    "outboundClicks": 14,
-    "ctaClickRate": 2.8,
-    "byDomain": [],
+    "outboundClicks": 16,
+    "ctaClickRate": 3.2,
+    "byDomain": [
+      {
+        "domain": "haera.parco.jp",
+        "clicks": 1
+      },
+      {
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      }
+    ],
     "note": null
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 439,
+    "value": 450,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
