@@ -8,7 +8,7 @@
 
 ## 進行中・完了タスク
 
-### [ISSUE-073] 実写ゼロ手動店33件の実在再検証 — 架空18店を全面除去＋実在15店の表記ゆれ/汚染データ修正 ✅
+### [ISSUE-074] 実写ゼロ手動店33件の実在再検証 — 架空18店を全面除去＋実在15店の表記ゆれ/汚染データ修正 ✅
 
 - **priority**: P0（架空店掲載＝ブランド毀損・CLAUDE.md 架空店ブロック違反）→ **status**: done
 - **detected**: 2026-07-25（オーナー依頼「Google Places 三重検証ゲート未通過のSVGプレースホルダー店を再検証」。audit_photo_coverage で実写ゼロ53店を抽出、うち manual_stores 由来33店が対象）
@@ -26,6 +26,45 @@
 - **残課題（別タスク起票）**: 実写あり＝ゲート通過済みでも「旬彩」系テンプレ名の店群（日本料理 旬彩・旬菜家 楽・旬彩倶楽部 鱗・鮨赤酢かぶと・中国料理 旬彩・旬彩・旬彩料理 澤 等）は同時期AI追加の疑いがあり第2弾検証が必要
 - **files**: `data/manual_stores.json`(149→127店), `data/pending_stores.json`, `data/stores.json`, `scripts/fetch_manual_store_photos.js`(VERIFIED_ALIASES), `index.html`, `sitemap.xml`, `stores/*.html`(23削除), `features/nagoya-kaoawase-washoku.html`, `features/index.html`, `agent-backlog.md`
 - **関連**: ISSUE-067（架空店ブロックの起点事故）/ ISSUE-064（表記差の誤検知＝今回の VERIFIED_ALIASES と同系）
+
+### [ISSUE-073] 店舗写真の表示強化 — HP写真480px恒久昇格＋wsrv高画質ヒーロー＋IG実写embed＋写真カバレッジ監査 ✅
+
+- **priority**: P1 → **status**: done（PR #85 レビュー待ち）
+- **detected**: 2026-07-25（オーナー依頼「店舗毎の写真をしっかり表示させる仕組みを。写真がない店舗に実際の写真を。閲覧者にとって見やすい画質のいいものに」）
+- **resolved**: 2026-07-25
+- **resolved_by**: Builder + DataKeeper（EXPLICIT モード）
+- **category**: ux / data-quality / performance
+- **owner**: Builder
+- **真因**: HotPepper API の `photo.pc.l` が **238px サムネイル**で、canonical（data/stores.json）の 4,128店がそのまま保持 → 店舗詳細ページで 800px 幅ヒーローに引き伸ばされ粗く表示（4,494ページ）。imgfp.hotp.jp は同一パスで最大 `_480.jpg` を配信している（30サンプル HEAD 検証で全て実寸 480px 確認）。「写真ゼロ」は51店（全て編集部 manual 店・Places 三重検証ゲート未通過＝架空店ブロックの正常動作）。
+- **実装（4層の仕組み）**:
+  1. **取り込み層 `build.js normalizePhotoUrl()`（恒久対策）**: HP写真を取り込み時に `_480` へ自動昇格・noimage.gif は写真なし扱い。毎日のビルドで自動維持
+  2. **既存資産 `scripts/upgrade_photo_quality.js`（新規・冪等）**: data/stores.json / index.html / features / journal / stores 孤児ページ366枚（gen-store-pages 再生成対象外の残置ページ）の縮小サムネ **計5,283箇所を一括昇格**
+  3. **表示層 `gen-store-pages.js`**: ヒーローを wsrv.nl 経由 **WebP＋シャープ化**配信（`_238`→直URL→SVG の多段フォールバック・index.html の nbImage() と同思想）。**公式Instagram投稿の実写 embed セクションを 2,507店の詳細ページに追加**（写真ソース優先1・embed.js は IntersectionObserver で遅延ロード）
+  4. **監査層 `scripts/audit_photo_coverage.js`（新規）＋ build.yml**: 写真ソース内訳／縮小サムネ残留（=退行）／実写ゼロ店リストを日次CIで可視化（`--strict`・continue-on-error で安全開始）
+- **結果**: 実写カバレッジ **98.9%**（Google Places 95店 / HP480 4,866店）。ヒーロー `_238` 引き伸ばし 4,494→**0件**。実写ゼロ51店は検証ゲート維持のため SVG 継続（実在再検証を別タスク起票済 — 「鮨 猪/猪股/猪若/猪子」等の架空店疑いクラスタ含む）
+- **QAゲート**: qa_gate --after ok:true（店舗数5016→5016・マーカー退行なし）✅ / audit_feature_stores 0 ✅ / audit_photo_coverage サムネ残留0 ✅ / 構文チェック4ファイル ✅ / preview 実機: ヒーロー wsrv 配信・カード480px WebP 取得・console error 0 ✅（IG iframe 展開はサンドボックスブラウザ制限。本番稼働中のジャーナル埋め込みと同一パターン）
+- **files**: `build.js`, `gen-store-pages.js`, `scripts/upgrade_photo_quality.js`（新規）, `scripts/audit_photo_coverage.js`（新規）, `.github/workflows/build.yml`, `data/stores.json`, `index.html`, `features/*.html`, `journal/*.html`, `stores/*.html`(5,382), `agent-backlog.md`
+- **関連**: ISSUE-060（Places 三重検証ゲート＝実写ゼロ店の門番）/ ISSUE-067（架空店ブロックと整合）/ ISSUE-036（og:image 系譜）
+
+### [SEO-036] 閲覧上位の特集記事の冒頭に「店舗詳細を見る」導線を3件以上置き、編集記事→実在店DBへ送客する
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-07-25
+- **category**: SEO
+- **owner**: Editor
+- **source**: SEOアドバイス(LINE) 2026-07-24 原文「1訪問あたり閲覧が1.2ページと低く店舗詳細を開いたのは5回だけ 👉 人気ページTOP5の特集記事（例 features/nagoya-sweets）の冒頭に、関連する店舗の『店舗詳細を見る』ボタンを最低3つ追加し店舗への誘導を強化」
+- **brand-filter**: ✅ 適合 — Moat「構造化DB（4,500店超）×特集の三層編集」の相互リンクを、読者が最初に触れる特集冒頭で効かせる送客強化。順位操作・広告依存・ストック写真を伴わず、編集独立を保ったまま編集レイヤー→実在店DBの導線を増やすだけ。SEO-002/SEO-012（特集**末尾**の関連**記事**リンク）とは設置面（冒頭）と対象（記事→実在**店舗**）が別
+- **acceptance**: 閲覧上位の特集（nagoya-sweets / nagoya-gourmet-guide / nagoya-hitsumabushi 等）の冒頭に「店舗詳細を見る」導線を3件以上設置。リンク先は必ず LOCAL_STORES の実在店のみ（架空店ブロック厳守・`node scripts/audit_feature_stores.js` 検出ゼロ維持）。index.html への店舗ディープリンク（例 `index.html#store=<id>` でモーダル起動）が要る場合は既存モーダル/フィルタ/検索/IGエンベッド/Google評価を壊さず実装（制約1・5）。回遊（1訪問あたりページ数・店舗詳細オープン数）は次回以降のSEOアドバイスで再評価
+- **ブランドガードレール**: 存在しない店・特集へのリンク禁止（実在検証ゲート）。掲載店選定は業界視点（記事テーマに合致する実在店）
+
+### [SEO-037] トップの店舗カードに「予約」「Googleマップ」の直接アクション導線を常時表示し、モーダルを開かずに行動できるようにする（要検討）
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-07-25
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEOアドバイス(LINE) 2026-07-24 原文「予約ボタンもマップ導線もクリックが0回 👉 店舗カードに『予約する』ボタンと『Googleマップ』ボタンを常に表示させ、店舗詳細モーダルを開かなくても行動できるように変更」
+- **brand-filter**: ✅ 適合 — 既存の実在店データ（HotPepper予約URL / Googleマップ）を一覧カードで直接叩けるようにする体験改善。アフィリエイト・送客手数料の新設ではなく既存導線の露出のみなので編集独立・制約8に抵触しない。順位操作・サクラ・ストック写真も無関係
+- **要検討メモ**: SEO-010（カードに「詳細を見る」→モーダル起動ボタンを付ける・ready）と同じカードUIを触るため**要調整**。モーダル内には SEO-004 の関連店舗/特集リンク（回遊レバー）があるため、カード直アクションがモーダルオープンを食い潰して回遊を下げないバランスを実装時に検討。/solve-next 着手時に SEO-010 との統合可否を判断
+- **acceptance**: 店舗カードに「予約」「Googleマップ」導線を常時表示（リンク先は各店の実在の予約URL/マップのみ）。既存の cta_click / cta_gmap_click 計測を維持し、カード→モーダル導線（SEO-010）・フィルタ・検索・IGエンベッド・Google評価を壊さない（制約5）。index.html 単一ファイル維持（制約1）。予約導線の収益化（アフィリエイト・送客手数料）は制約8によりユーザー承認が別途必須＝本タスクはUX・計測のみ。予約/マップのクリック回復は次回以降のSEOアドバイスで再評価
 
 ### [ISSUE-072] GSC実データ駆動の改善ループ構築＋第1弾（店舗タイトルCTR改善・絵文字再発防止） ✅
 

@@ -47,7 +47,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       "streetAddress": "愛知県名古屋市北区大曽根３丁目１４－３８　FOOD FOREST OZ ONE 　４F",
       "addressArea": "大曽根･千種･今池･池下･守山区"
     },
-    "image": "https://imgfp.hotp.jp/IMGH/06/68/P046300668/P046300668_238.jpg",
+    "image": "https://imgfp.hotp.jp/IMGH/06/68/P046300668/P046300668_480.jpg",
     "url": "https://nagoya-bites.com/stores/J003649345.html",
     "description": "大曽根駅徒歩1分、3,500円帯で完全個室と喫煙分煙対応、接待利用の満足度が高い水準",
     "priceRange": "¥¥",
@@ -133,6 +133,8 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem
 .tag{font-size:.62rem;letter-spacing:.06em;color:var(--muted);border:1px solid var(--border);padding:.2rem .55rem;border-radius:2px;background:var(--surface);}
 .links-section{margin-bottom:2rem;}
 .links-section h2{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
+.ig-photos{margin:0 0 2rem;}
+.ig-photos h2{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.65rem 1.1rem;font-size:.72rem;letter-spacing:.05em;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:#e6002d;color:#fff;border-color:#e6002d;}
@@ -156,7 +158,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="https://imgfp.hotp.jp/IMGH/06/68/P046300668/P046300668_238.jpg" alt="大名古屋酒場 喰海 大曽根駅前店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="this.onerror=null;this.src='/assets/store-figures/_fallback.svg'">
+<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F06%2F68%2FP046300668%2FP046300668_480.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F06%2F68%2FP046300668%2FP046300668_238.jpg" alt="大名古屋酒場 喰海 大曽根駅前店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/06/68/P046300668/P046300668_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
@@ -195,6 +197,12 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230106/23086818/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>
 
+  <div class="ig-photos">
+    <h2>公式Instagramの実際の写真</h2>
+    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/kukai_imaike/reel/DKZCkL7Px5W/" data-instgrm-version="14" style="margin:0 auto;max-width:540px;min-width:280px;width:100%;background:#fff;border:1px solid var(--border);border-radius:3px;">
+      <a href="https://www.instagram.com/kukai_imaike/reel/DKZCkL7Px5W/" target="_blank" rel="noopener noreferrer">大名古屋酒場 喰海 大曽根駅前店 の公式Instagram投稿を見る</a>
+    </blockquote>
+  </div>
   
   <div class="related-features">
     <h2>この店舗が登場する特集</h2>
@@ -214,5 +222,17 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <p class="fc">© <span id="yr"></span> NAGOYA BITES — 現役飲食店経営者監修 名古屋グルメガイド</p>
 </footer>
 <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+(function(){
+  var el=document.querySelector('.instagram-media');
+  if(!el)return;
+  var loaded=false;
+  function load(){if(loaded)return;loaded=true;var sc=document.createElement('script');sc.async=true;sc.src='https://www.instagram.com/embed.js';document.body.appendChild(sc);}
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){load();io.disconnect();}});},{rootMargin:'600px'});
+    io.observe(el);
+  }else{load();}
+})();
+</script>
 </body>
 </html>
