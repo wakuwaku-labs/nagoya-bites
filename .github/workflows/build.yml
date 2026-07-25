@@ -135,6 +135,14 @@ jobs:
         # フロント検索ヒット時の詳細ページから 404 になる（ISSUE-058 の再発防止）。
         run: node gen-store-pages.js
 
+      - name: 店舗写真カバレッジ監査（画質退行の検知・実写ゼロ店の可視化）
+        # build.js normalizePhotoUrl() が HotPepper 縮小サムネ(_238等)を最大サイズ _480 へ
+        # 昇格するため、縮小サムネ残留は通常ゼロ。--strict で残留＝退行を検知する。
+        # 実写ゼロ店（Places三重検証ゲート未通過）のリストもログに出して編集部が追える状態を保つ。
+        # 初回は continue-on-error で安全に開始（既存監査と同じ運用）。
+        run: node scripts/audit_photo_coverage.js --strict
+        continue-on-error: true
+
       - name: KPI 日次スナップショットを時系列に追記（ORG-005・効果測定の Check）
         # data/site_metrics.json（上の GA4 fetch で更新済み）を metrics_history.json に1日1行 append。
         # 毎日上書きでなく追記することで、施策デプロイ前後の KPI 比較を可能にする（PDCA の Check）。

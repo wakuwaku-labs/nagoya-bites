@@ -131,6 +131,8 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem
 .tag{font-size:.62rem;letter-spacing:.06em;color:var(--muted);border:1px solid var(--border);padding:.2rem .55rem;border-radius:2px;background:var(--surface);}
 .links-section{margin-bottom:2rem;}
 .links-section h2{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
+.ig-photos{margin:0 0 2rem;}
+.ig-photos h2{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.65rem 1.1rem;font-size:.72rem;letter-spacing:.05em;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:#e6002d;color:#fff;border-color:#e6002d;}
@@ -154,7 +156,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="https://imgfp.hotp.jp/IMGH/39/08/P045353908/P045353908_480.jpg" alt="柳橋市場の藁焼きの店 魚柳 うおやなぎ 名古屋駅店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="this.onerror=null;this.src='/assets/store-figures/_fallback.svg'">
+<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F39%2F08%2FP045353908%2FP045353908_480.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F39%2F08%2FP045353908%2FP045353908_238.jpg" alt="柳橋市場の藁焼きの店 魚柳 うおやなぎ 名古屋駅店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/39/08/P045353908/P045353908_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
@@ -195,6 +197,12 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <a class="link-btn xx" href="https://x.com/search?q=%E6%9F%B3%E6%A9%8B%E5%B8%82%E5%A0%B4%E3%81%AE%E8%97%81%E7%84%BC%E3%81%8D%E3%81%AE%E5%BA%97%20%E9%AD%9A%E6%9F%B3%20%E3%81%86%E3%81%8A%E3%82%84%E3%81%AA%E3%81%8E%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B" target="_blank" rel="noopener noreferrer">X</a>
   </div>
 
+  <div class="ig-photos">
+    <h2>公式Instagramの実際の写真</h2>
+    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/uoyanagi/reel/DL9i_NryzY-/" data-instgrm-version="14" style="margin:0 auto;max-width:540px;min-width:280px;width:100%;background:#fff;border:1px solid var(--border);border-radius:3px;">
+      <a href="https://www.instagram.com/uoyanagi/reel/DL9i_NryzY-/" target="_blank" rel="noopener noreferrer">柳橋市場の藁焼きの店 魚柳 うおやなぎ 名古屋駅店 の公式Instagram投稿を見る</a>
+    </blockquote>
+  </div>
   
   <div class="related-features">
     <h2>この店舗が登場する特集</h2>
@@ -214,5 +222,17 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <p class="fc">© <span id="yr"></span> NAGOYA BITES — 現役飲食店経営者監修 名古屋グルメガイド</p>
 </footer>
 <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+(function(){
+  var el=document.querySelector('.instagram-media');
+  if(!el)return;
+  var loaded=false;
+  function load(){if(loaded)return;loaded=true;var sc=document.createElement('script');sc.async=true;sc.src='https://www.instagram.com/embed.js';document.body.appendChild(sc);}
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){load();io.disconnect();}});},{rootMargin:'600px'});
+    io.observe(el);
+  }else{load();}
+})();
+</script>
 </body>
 </html>
