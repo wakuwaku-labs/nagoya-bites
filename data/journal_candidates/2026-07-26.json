@@ -1,0 +1,56 @@
+{
+  "date": "2026-07-26",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "r1",
+      "title_draft": "丑の日にうなぎを逃したら、栄・釜山式ホルモンという夏の正解",
+      "verdict": "PASS",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=4 → 15",
+          "x_mentions=12 → 7",
+          "buzz_score≥90 → +5"
+        ],
+        "uniqueness": [
+          "独自性キーワード 11件 (価格帯,コース,席,予約,シーン,接待,デート,アラカルト,一人飲み,繁忙,回転)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 2件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 4件 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "r1",
+  "fallback_needed": false
+}
