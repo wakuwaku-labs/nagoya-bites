@@ -1020,6 +1020,76 @@
       "brand_reason": "SEO-013（予約ボタン・モーダル視認性の色/サイズ/文言「今すぐ予約」・ready）の題名と逐語一致。SEO-003（モーダルCTA視認性改善・done）／SEO-037（カードに予約・マップ直接導線・ready）でも多層カバー済み。母数も店舗詳細1回・訪問12人で統計的意味を持たない小サンプル。再起票せず",
       "category": null,
       "fingerprint": "bc352f53700a103c"
+    },
+    {
+      "id": null,
+      "date": "2026-07-27",
+      "source": "line-daily",
+      "advice": "直帰率が100%です。トップページ（index.html）のファーストビューで、サイトの強み「業界人の目利き」と「シーン別専門性」を強調するキャッチコピーを大きく表示しましょう",
+      "verdict": "duplicate",
+      "brand_reason": "編集判断で重複: 既存 ready SEO-014（2026-07-16『index.htmlのファーストビューに業界人の目利き・シーン別専門性を強く打ち出すキャッチコピーを追加し離脱を防ぐ』）とほぼ逐語同一。SEO-009（FVから人気特集への導線）とも同一サーフェス。fingerprintは数値差で別だが再起票せず",
+      "category": null,
+      "fingerprint": "5ad7102fd8eb7036"
+    },
+    {
+      "id": null,
+      "date": "2026-07-27",
+      "source": "line-daily",
+      "advice": "予約ボタンもマップも店舗詳細も0回クリック。人気ページ nagoya-hitsumabushi 特集の各店舗紹介に、予約ボタンとGoogleマップ導線が目立つように設置されているか確認し、無ければ追加しましょう",
+      "verdict": "duplicate",
+      "brand_reason": "編集判断で重複: 既存 ready SEO-013（人気特集ページ冒頭に紹介店舗の予約ボタンと店舗詳細モーダルへのリンクを複数設置）＋ SEO-037（店舗カードに予約・Googleマップボタンを常時表示）＋ SEO-036（特集冒頭に店舗詳細導線3件）で同一アクションを起票済。nagoya-hitsumabushi は SEO-036 の対象特集に明記済のため再起票せず",
+      "category": null,
+      "fingerprint": "b788d12637054da2"
+    },
+    {
+      "id": null,
+      "date": "2026-07-27",
+      "source": "line-daily",
+      "advice": "検索流入はBingが43%と最も多いが訪問者数が10人と少ないため、docs/daily-posts/ にある今日のSNS投稿原稿をNote・Instagram・Xのすべてに投稿し、特集ページやトップページへの導線を明確に記載しましょう",
+      "verdict": "duplicate",
+      "brand_reason": "過去に複数回判定済（2026-06-01 rejected / 06-23 rejected / 06-27 rejected / 06-28 rejected / 07-19・07-23 duplicate）。docs/daily-posts は /journal-today で日次自動生成済であり、投稿実行は運用オペレーションでコード施策のbacklog対象外。判定は据え置き、再起票せず",
+      "category": null,
+      "fingerprint": "a58f64a89d423470"
+    },
+    {
+      "id": null,
+      "date": "2026-07-27",
+      "source": "line-weekly",
+      "advice": "1訪問あたり閲覧が1.4ページと低い。index.htmlの店舗詳細モーダル下部に「このお店を見た人はこちらもチェック」として類似シーンやエリアの店舗を3つ表示する機能を今日中に実装しましょう",
+      "verdict": "duplicate",
+      "brand_reason": "編集判断で重複: 2026-06-01 週次でほぼ逐語同一の提案（『このお店が好きな人はこちらもチェック』）を SEO-004（店舗詳細モーダルに関連リンク追加・done済）と同一アクションとして判定済。回遊の追加余地は ready の SEO-036 / SEO-012 が担当。再起票せず",
+      "category": null,
+      "fingerprint": "4cfe7858215464e6"
+    },
+    {
+      "id": null,
+      "date": "2026-07-27",
+      "source": "line-weekly",
+      "advice": "予約ボタンクリック率が2.2%と目標の3%に届いていません。index.htmlの店舗詳細モーダルの予約ボタンを現在の色から視認性の高い赤色に変更し、「今すぐ予約する」と文言を強調しましょう",
+      "verdict": "duplicate",
+      "brand_reason": "編集判断で重複: 2026-06-01 週次の同一提案（『今すぐ予約』文言・目立つ色）を SEO-003（モーダルCTA視認性・文言改善・done済）の実装具体案として吸収済。現在は SEO-013 / SEO-037 が予約導線の露出を担当。再起票せず",
+      "category": null,
+      "fingerprint": "afeaf79149b7b6c8"
+    },
+    {
+      "id": null,
+      "date": "2026-07-27",
+      "source": "line-weekly",
+      "advice": "Bing検索からの流入が57訪問とGoogle検索の5倍以上あり、Bingの検索傾向を深掘りする価値がある。journal記事のSNS投稿原稿（docs/daily-posts/）にBing検索で上位表示されているキーワードを分析し、タイトルや本文に盛り込む施策を試しましょう",
+      "verdict": "duplicate",
+      "brand_reason": "過去に6回判定済（2026-06-28 rejected / 07-05・07-11・07-15・07-16・07-19 duplicate）。Bing上位KWをジャーナル・特集のタイトル/本文に盛り込む主旨は既存 ready SEO-011（シーン別専門KWで journal を設計しSNS原稿も同KW）に包含。判定据え置きで再起票せず",
+      "category": null,
+      "fingerprint": "eac410dd19ac1968"
+    },
+    {
+      "id": "SEO-038",
+      "date": "2026-07-27",
+      "source": "line-weekly",
+      "advice": "週次で訪問者+41%・閲覧+92%と急成長。公開2ヶ月経過のジャーナル記事 2026-05-23-yakisoba-stand-rafu-tsuruzato が週28回で全ページ中2位となりジャーナルのロングテール流入が主力化。高流入ジャーナル記事の勝ち筋を分析し同型テーマを今後のjournalに再現、当該記事から関連特集・店舗詳細への内部リンクを追加して回遊に変換する",
+      "verdict": "adopted",
+      "brand_reason": "AI週次総括が現状描写のみだったため週次コマンドの規定に従いアクション仮説を起票側で立案。Moat「構造化DB×特集×日次ジャーナルの三層編集」の勝ち筋を実測データから特定して伸ばす方向で、順位操作・広告依存・クーポン・ストック写真を一切伴わない。SEO-008（全記事一律の定型リード）とは異なり実データで勝っている個別記事の型の分析・横展開が主眼で新規性あり",
+      "category": "SEO",
+      "fingerprint": "cd776ca7f6ea6a5d"
     }
   ]
 }
