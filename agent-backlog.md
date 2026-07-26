@@ -8,6 +8,27 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-074] 失効した店舗写真の自動修復 — Places署名URLの生死判定＋place_idキャッシュ ✅
+
+- **priority**: P1 → **status**: done（PR #85 に同梱・CI初回実行で実修復）
+- **detected**: 2026-07-26（オーナー指摘「トップの『みんなが見ている店 TOP10』の1位に写真がつかない」）
+- **resolved**: 2026-07-26
+- **resolved_by**: Builder + DataKeeper（EXPLICIT モード）
+- **category**: data-quality / ux / seo
+- **owner**: Builder
+- **真因**: `fetch_manual_store_photos.js` が「写真URLが入っていれば取得済み」とみなしてスキップしていたため、Google Places の `lh3.googleusercontent.com` URL が 403 化しても**永久に気づけない構造**だった。ISSUE-073 の監査は URL の有無しか見ていなかったので「実写98.9%」と過大報告していた。実測: manual_stores 116件中 **62件失効** / canonical 96件中 **49件失効**。
+- **失効の性質（2026-07-26 実測で判明・重要）**: 生存56件と失効62件は**どちらも同じ 2026-05-31 に書き込まれた**URL だった。つまり「時間経過で一律に期限切れ」ではなく、**写真ごとに個別に参照不能になる**（オーナーの写真差し替え・削除、Google側ローテーション等）。2ヶ月生き残る URL が多数あるため、**日次の生死判定で十分に追随できる**（＝再取得間隔を詰める必要はない）。
+- **実装**:
+  1. **生死判定（Phase 1）**: 全写真URLに 1バイト Range GET（並列8）を投げ、失効分だけを再取得対象にする。タイムアウトは「死亡」と断定しない（一時障害で写真を捨てない）
+  2. **place_id キャッシュ**: 取得成功時に `GooglePlaceID` を保存。再取得時は `findplacefromtext` を省いて `details` 直引き → **API呼び出し半減＋再マッチのブレ（別店に化ける事故）を排除**。ただし三重ゲート（店名/エリア/業態）は place_id 経由でも必ず再検証（place_id 付け替え・業態変更の検知）
+  3. **失効URLのクリア**: 再取得できない失効URLは空にする（JSON-LD `image` / `og:image` が 403 を指し続けるのを防ぐ＝SEO正当性）。**API障害時に誤消去しない安全弁**として、Places API の応答有無（`REQUEST_DENIED`/`OVER_QUERY_LIMIT` を除く status 応答）で判定。無効キーで実証済み
+  4. **副次効果**: クリアにより build.js のマージ（`if (m['写真URL'])` で manual 優先）が外れ、**HP併合店では HotPepper の恒久写真が自動表出**する
+  5. **監査の正直化**: `audit_photo_coverage.js --check-liveness` で実配信を検査し「実際に表示される写真」を報告（写真URLあり 98.9% → **実態 97.9%**）。`--strict` は失効非ゼロで exit 1
+- **QAゲート**: qa_gate --after ok:true（5013件・マーカー退行0）✅ / 構文チェック2ファイル ✅ / 無効キーでの安全弁動作＝データ無変更を diff で実証 ✅ / build.yml 構造健全（19ステップ・インデント正常）✅
+- **未完（CI待ち）**: 実際の再取得には `GOOGLE_PLACES_API_KEY` が必要でローカル実行不可。**日次 build.yml の初回実行で62件が自動修復される**（このコミット時点では未修復）
+- **files**: `scripts/fetch_manual_store_photos.js`, `scripts/audit_photo_coverage.js`, `.github/workflows/build.yml`, `agent-backlog.md`
+- **関連**: [[ISSUE-073]]（写真表示強化・この監査の過大報告を修正）/ ISSUE-060（三重検証ゲート＝維持したまま強化）
+
 ### [ISSUE-073] 店舗写真の表示強化 — HP写真480px恒久昇格＋wsrv高画質ヒーロー＋IG実写embed＋写真カバレッジ監査 ✅
 
 - **priority**: P1 → **status**: done（PR #85 レビュー待ち）
