@@ -45,7 +45,10 @@ function toLocalStoreShape(p) {
     '営業時間': '',
     'アクセス': access,
     'ホットペッパーID': p.hotpepper_id || '',
-    '写真URL': '',
+    // fetch_manual_store_photos.js が Places 三重ゲート通過時に書き込む実写を引き継ぐ
+    // （ISSUE-076。ここを空固定にしていたため pending 由来店は恒久的に写真ゼロだった）
+    '写真URL': p['写真URL'] || '',
+    '写真クレジット': p['写真クレジット'] || '',
     'Instagram': p.instagram_handle ? `https://www.instagram.com/${p.instagram_handle}/` : '',
     '食べログURL': '',
     'TikTok検索': `https://www.tiktok.com/search?q=${q}`,

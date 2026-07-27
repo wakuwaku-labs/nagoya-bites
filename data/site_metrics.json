@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-07-26T19:08:59.098Z",
+  "generatedAt": "2026-07-27T06:58:22.577Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 434,
-    "pageViews": 626,
-    "sessions": 493,
-    "avgSessionDuration": 98.6,
-    "bounceRate": 0.402,
+    "activeUsers": 444,
+    "pageViews": 641,
+    "sessions": 504,
+    "avgSessionDuration": 96.8,
+    "bounceRate": 0.397,
     "pagesPerSession": 1.27
   },
   "channels": {
     "sessions": {
-      "organic": 282,
-      "direct": 158,
-      "social": 47,
+      "organic": 291,
+      "direct": 160,
+      "social": 49,
       "referral": 8,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 57,
-      "direct": 31.9,
-      "social": 9.5,
+      "organic": 57.3,
+      "direct": 31.5,
+      "social": 9.6,
       "referral": 1.6,
       "paid": 0,
       "other": 0
@@ -31,7 +31,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 168
+      "sessions": 174
     },
     {
       "source": "(direct)",
@@ -41,7 +41,7 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 49
+      "sessions": 51
     },
     {
       "source": "google",
@@ -51,7 +51,7 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 46
+      "sessions": 47
     },
     {
       "source": "openai",
@@ -61,12 +61,12 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 13
+      "sessions": 14
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 4
+      "sessions": 6
     },
     {
       "source": "duckduckgo",
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 98,
-      "sessions": 91
+      "pageViews": 99,
+      "sessions": 92
     },
     {
       "path": "/",
@@ -92,8 +92,8 @@
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 55,
-      "sessions": 49
+      "pageViews": 56,
+      "sessions": 50
     },
     {
       "path": "/index.html",
@@ -102,8 +102,8 @@
     },
     {
       "path": "/features/nagoya-gourmet-guide.html",
-      "pageViews": 30,
-      "sessions": 30
+      "pageViews": 31,
+      "sessions": 31
     }
   ],
   "cta": {
@@ -123,7 +123,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 434,
+    "value": 444,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,

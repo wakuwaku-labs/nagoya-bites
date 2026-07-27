@@ -49,11 +49,14 @@ jobs:
         run: node scripts/gsc_opportunities.js
         continue-on-error: true
 
-      - name: 手動キュレーション店の実写写真を Google Places API で取得
-        # data/manual_stores.json の 写真URL が空 or SVG プレースホルダーの店を対象に、
-        # Google Places API で店名+住所マッチング → lh3.googleusercontent.com の CDN URL を取得。
-        # 取得した実写は 写真URL を上書きし、SVGプレースホルダーから実写へ自動置換される。
-        # name-mismatch / out-of-area / not-food の三重ゲートで誤マッチを防ぐ（ISSUE-060）。
+      - name: 手動キュレーション店の実写写真を Google Places API で取得＋失効URLの自動修復
+        # ① 写真URLが空 or SVGプレースホルダーの店 → Google Places で店名+住所マッチングして実写取得
+        # ② 既に写真URLがある店も **毎回配信の生死を検査**（ISSUE-074）。Places の
+        #    lh3.googleusercontent.com URL は写真ごとに 403 化するため、失効分だけ再取得して自動修復する。
+        #    保存済み place_id があれば findplacefromtext を省いて details 直引き（API呼び出し半減）。
+        #    再取得できない失効URLはクリアし、JSON-LD image / og:image が 403 を指し続けるのを防ぐ
+        #    （API 障害時は誤消去しないよう応答有無で判定）。
+        # name-mismatch / out-of-area / not-food の三重ゲートは place_id 経由でも必ず再検証（ISSUE-060）。
         run: node scripts/fetch_manual_store_photos.js
         env:
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
@@ -156,7 +159,9 @@ jobs:
           # ISSUE-058: data/stores.json (canonical full catalog) と stores/*.html (個別店舗ページ) も
           # commit 対象に追加。これらが入っていないと manual_stores 追加分が
           # フロント検索 (fetchFullCatalog) や個別ページ URL から到達不能になる。
-          git add index.html features/index.html sitemap.xml data/stores.json data/manual_stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/cross_check_flags.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json
+          # ISSUE-076: data/pending_stores.json も commit 対象。ここが漏れていると
+          # Places で取得した pending 店の写真が毎回捨てられ、無駄な API 再取得が続く。
+          git add index.html features/index.html sitemap.xml data/stores.json data/manual_stores.json data/pending_stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/cross_check_flags.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json
           # 特集本体(features/*.html)も commit 対象。月次ロスター更新の掲載店入替を反映する。
           git add features/ || true
           git add stores/ || true

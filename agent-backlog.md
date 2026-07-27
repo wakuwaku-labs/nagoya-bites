@@ -8,6 +8,71 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-076] pending由来店（ジャーナル採用の話題店）が恒久的に写真ゼロだった問題 ✅
+
+- **priority**: P1 → **status**: done（PR作成・マージ後のCIで実取得）
+- **detected**: 2026-07-27（オーナー指摘「TOP10の7位・8位（焼きそばスタンド らふ / サウィ食堂）も写真が出ていない」）
+- **resolved**: 2026-07-27
+- **resolved_by**: Builder + DataKeeper（EXPLICIT モード）
+- **category**: data-quality / ux
+- **owner**: Builder
+- **真因（ISSUE-075 とは別系統）**: 写真取得スクリプトが `data/manual_stores.json` **しか**見ておらず、ジャーナル経由で採用した話題店（`data/pending_stores.json`・37件）は対象外だった。さらに `merge_pending_stores.js` が `'写真URL': ''` を**ハードコード**していたため、pending 由来店は構造的に写真ゼロのままカタログへ入っていた。実測: 写真ゼロ26件のうち **22件が pending 由来**（manual 4件）。
+- **切り分け**: pending 37件のうち **hotpepper_id 保有の15件は問題なし**（マージ時に既存 HotPepper 店へ合流し恒久写真 imgfp を継承。実測で15件すべて写真あり店に解決）。**残る22件（HPIDなし）が恒久ゼロ**だった。指摘の「サウィ食堂」は HPID 付き同名店（写真あり）と別レコードで重複していたケース。
+- **実装**:
+  1. `fetch_manual_store_photos.js`: manual と pending の**両データセットを同一の三重ゲート**（店名一致/名古屋・愛知/飲食業態）で処理。hotpepper_id 保有 pending は HP写真を継承するため対象外にして無駄な API 消費を回避。書き戻しは各マスターへ
+  2. `merge_pending_stores.js`: `写真URL` / `写真クレジット` を pending から**引き継ぐ**（ハードコード撤廃）
+  3. `build.yml`: `data/pending_stores.json` を commit 対象に追加（**漏れていたため取得結果が毎回捨てられ API を無駄打ちする状態**だった）
+  4. `audit_photo_coverage.js`: 写真ゼロ店に**由来（manual/pending）を表示**し、どのマスターを直せば付くかを一目で分かるように
+- **QAゲート**: qa_gate --after ok:true（マーカー退行0）✅ / 構文チェック3ファイル ✅ / 対象件数の実測一致（manual 129 / pending 22 / HPID継承15）✅ / 無効キー実行で manual・pending とも**内容不変**を diff で実証（書き戻しによる破損なし）✅ / merge の写真引き継ぎを単体検証 ✅ / audit_backlog_ids 重複0 ✅
+- **未完（CI待ち）**: 実取得には `GOOGLE_PLACES_API_KEY` が必要。マージ後の build.yml 実行で pending 22件に実写取得を試行（ゲート不通過店はプレースホルダー維持＝架空店ブロック順守）
+- **files**: `scripts/fetch_manual_store_photos.js`, `scripts/merge_pending_stores.js`, `scripts/audit_photo_coverage.js`, `.github/workflows/build.yml`, `agent-backlog.md`
+- **関連**: [[ISSUE-075]]（失効写真の自動修復・同スクリプトの別系統の欠陥）/ [[ISSUE-073]]（写真表示強化）
+
+### [ISSUE-075] 失効した店舗写真の自動修復 — Places署名URLの生死判定＋place_idキャッシュ ✅
+
+> 採番note: 当初 ISSUE-074 で起票したが、並行実行していた実在再検証タスクが先に
+> ISSUE-074 を main へマージしたため 075 に採番し直した（ORG-004 重複ID回避）。
+
+- **priority**: P1 → **status**: done（PR #87・マージ後の CI 実行で実修復）
+- **detected**: 2026-07-26（オーナー指摘「トップの『みんなが見ている店 TOP10』の1位に写真がつかない」）
+- **resolved**: 2026-07-27
+- **resolved_by**: Builder + DataKeeper（EXPLICIT モード）
+- **category**: data-quality / ux / seo
+- **owner**: Builder
+- **真因**: `fetch_manual_store_photos.js` が「写真URLが入っていれば取得済み」とみなしてスキップしていたため、Google Places の `lh3.googleusercontent.com` URL が 403 化しても**永久に気づけない構造**だった。ISSUE-073 の監査は URL の有無しか見ていなかったので「実写98.9%」と過大報告していた。実測: manual_stores 116件中 **62件失効** / canonical 96件中 **49件失効**。
+- **失効の性質（2026-07-26 実測で判明・重要）**: 生存56件と失効62件は**どちらも同じ 2026-05-31 に書き込まれた**URL だった。つまり「時間経過で一律に期限切れ」ではなく、**写真ごとに個別に参照不能になる**（オーナーの写真差し替え・削除、Google側ローテーション等）。2ヶ月生き残る URL が多数あるため、**日次の生死判定で十分に追随できる**（＝再取得間隔を詰める必要はない）。
+- **実装**:
+  1. **生死判定（Phase 1）**: 全写真URLに 1バイト Range GET（並列8）を投げ、失効分だけを再取得対象にする。タイムアウトは「死亡」と断定しない（一時障害で写真を捨てない）
+  2. **place_id キャッシュ**: 取得成功時に `GooglePlaceID` を保存。再取得時は `findplacefromtext` を省いて `details` 直引き → **API呼び出し半減＋再マッチのブレ（別店に化ける事故）を排除**。ただし三重ゲート（店名/エリア/業態）は place_id 経由でも必ず再検証（place_id 付け替え・業態変更の検知）
+  3. **失効URLのクリア**: 再取得できない失効URLは空にする（JSON-LD `image` / `og:image` が 403 を指し続けるのを防ぐ＝SEO正当性）。**API障害時に誤消去しない安全弁**として、Places API の応答有無（`REQUEST_DENIED`/`OVER_QUERY_LIMIT` を除く status 応答）で判定。無効キーで実証済み
+  4. **副次効果**: クリアにより build.js のマージ（`if (m['写真URL'])` で manual 優先）が外れ、**HP併合店では HotPepper の恒久写真が自動表出**する
+  5. **監査の正直化**: `audit_photo_coverage.js --check-liveness` で実配信を検査し「実際に表示される写真」を報告（写真URLあり 98.9% → **実態 97.9%**）。`--strict` は失効非ゼロで exit 1
+- **QAゲート**: qa_gate --after ok:true（マーカー退行0）✅ / 構文チェック2ファイル ✅ / 無効キーでの安全弁動作＝データ無変更を diff で実証 ✅ / build.yml 構造健全（19ステップ・インデント正常）✅
+- **経緯（手順ミスの記録）**: 当初この修正を PR #85 のブランチへ後から積んだが、#85 は既にマージ済みだったため main に反映されず、日次CIも従来動作のままだった（7/27 実測で Places 99件中 51件が失効し続けていた）。main から切り直した PR #87 で入れ直した。**マージ済みPRのブランチに追加コミットしない**こと。
+- **未完（CI待ち）**: 実際の再取得には `GOOGLE_PLACES_API_KEY` が必要でローカル実行不可。**マージによって起動する build.yml（on: push: main）で失効分が自動修復される**
+- **files**: `scripts/fetch_manual_store_photos.js`, `scripts/audit_photo_coverage.js`, `.github/workflows/build.yml`, `agent-backlog.md`
+- **関連**: [[ISSUE-073]]（写真表示強化・この監査の過大報告を修正）/ [[ISSUE-074]]（実在再検証・同じ fetch_manual_store_photos.js を並行改修）/ ISSUE-060（三重検証ゲート＝維持したまま強化）
+
+
+### [ISSUE-074] 実写ゼロ手動店33件の実在再検証 — 架空18店を全面除去＋実在15店の表記ゆれ/汚染データ修正 ✅
+
+- **priority**: P0（架空店掲載＝ブランド毀損・CLAUDE.md 架空店ブロック違反）→ **status**: done
+- **detected**: 2026-07-25（オーナー依頼「Google Places 三重検証ゲート未通過のSVGプレースホルダー店を再検証」。audit_photo_coverage で実写ゼロ53店を抽出、うち manual_stores 由来33店が対象）
+- **resolved**: 2026-07-25
+- **resolved_by**: DataKeeper + Inspector（並列WebSearch検証エージェント7班）
+- **category**: data-integrity / brand / P0
+- **owner**: DataKeeper
+- **検証方法**: 33店それぞれを WebSearch＋食べログ/ぐるなび/公式サイト/Instagram の一次情報照合。エントリ記載の食べログURLを実際に開き「別店流用/404/連番プレースホルダ」を判定。
+- **架空確定・除去（18店）**: 鮨 猪／鮨 猪股／鮨 猪若／鮨 猪子（同一パターン店名。食べログURLはマクドナルド緑区店・春日井の焼肉店・常滑のコインランドリーカフェ等の流用）、日本料理 旬／日本料理 馳走 隠れ家／日本料理 徳川／馳走 啐啄（銀座の実在店名流用）、懐石料理 かもしか／懐石料理 かもめ（実在料亭「か茂免」の変形）、旬菜料理 みつはし／旬菜料理 ぜん／旬彩料理 縁（岡山の実在店名流用）、洋食亭 塩釜／洋食亭 塩釜口店（駅名からの創作ペア）、うなぎのしろむら 柳橋店（実在ブランド＋架空支店）、喫茶、食堂、民宿。なごや（実在「なごのや」の変形・中区に付け替え）、焼肉 龍の巣 名古屋栄店（実在チェーンに名古屋店は存在しない）
+- **重複/旧名義・統合除去（4エントリ）**: Reminiscence・レミニセンス（→「レミニセンス (Reminiscence)」に一本化）、CASA OLIVA（カーサ・オリーバ）（→「カーサ・オリーバ (CASA OLIVA)」に一本化）、THE CUPS SAKAE（2023年に THE CUPS Q へ転換済み。HP由来 J004090512 が既掲載のため旧名義エントリを削除）
+- **実在確認・表記ゆれで照合落ちしていた店 → VERIFIED_ALIASES 追記（fetch_manual_store_photos.js）**: コーヒーハウス KAKO 花車本店（食べログ表記「かこ」）／中華そば 雷杏 -RYAN- 名駅店（「雷杏（ライアン）」）／BOUL'ANGE（モール公式表記「ブール アンジュ」）／ベジテジや／kitchen HAKUGA（食べログ表記「ハクガ」）／KimiTote／淡 如雲／レミニセンス／カーサ・オリーバ／鮨屋 とんぼ 住吉店 — 次回CI（build.yml 日次）の写真取得で実写が付く見込み
+- **実在だが汚染データを修正（9店）**: ベジテジや 栄店（食べログURLが別店流用→23046226へ）、KimiTote（→23096794）、kitchen HAKUGA（→23057060・矢場町住所）、淡 如雲（→23061308。現「如雲」に改名移転）、野嵯和（→23063362。2025年移転・住所非公開の完全紹介制に更新）、グリルつばき（→23095918＋pending_stores.json のエリア表記違い重複を除去）、鮨屋とんぼ→「鮨屋 とんぼ 住吉店」（「2026年5月開店」は虚偽。実在は2020年12月開店の住吉店。評価値も未検証のため0リセット）、レミニセンス (Reminiscence)（2023年移転後の東区筒井へ住所修正・公式ドメイン修正）、カーサ・オリーバ（出典を Hilton 公式へ）
+- **サイト反映**: 旧 cleanup_fabricated_stores.js は全件インライン前提で現行構造（インラインTOP50＋data/stores.json 外部化）だと stores.json を50件に破壊するため使用せず、現行構造対応の除去処理で実施 — stores.json 5,013→4,990件／インラインTOP50から8件除去＋STORES_JSON_VERSION 更新／index.html リンク集42行除去／stores/ 23ページ削除＋sitemap.xml 23URL除去／特集 nagoya-kaoawase-washoku.html を8選→7選（かもめカード除去・ItemList/連番再構成）
+- **QAゲート**: audit_feature_stores 0/0 ✅ / audit_feature_schema_alignment 66特集 EXIT0 ✅ / audit_manual_stores_links 全店到達手段確保 ✅ / audit_isnagoya_filter 15/15 ✅ / preview 実機: console error 0・架空店検索ヒット0・特集7選表示 ✅ / 実写ゼロ53→31店（残りは表記ゆれ修正待ちの実在店＋pending系）
+- **残課題（別タスク起票）**: 実写あり＝ゲート通過済みでも「旬彩」系テンプレ名の店群（日本料理 旬彩・旬菜家 楽・旬彩倶楽部 鱗・鮨赤酢かぶと・中国料理 旬彩・旬彩・旬彩料理 澤 等）は同時期AI追加の疑いがあり第2弾検証が必要
+- **files**: `data/manual_stores.json`(149→127店), `data/pending_stores.json`, `data/stores.json`, `scripts/fetch_manual_store_photos.js`(VERIFIED_ALIASES), `index.html`, `sitemap.xml`, `stores/*.html`(23削除), `features/nagoya-kaoawase-washoku.html`, `features/index.html`, `agent-backlog.md`
+- **関連**: ISSUE-067（架空店ブロックの起点事故）/ ISSUE-064（表記差の誤検知＝今回の VERIFIED_ALIASES と同系）/ [[ISSUE-075]]（同ファイルを並行改修・失効写真の自動修復）
+
 ### [SEO-038] 高流入ジャーナル記事のロングテール勝ち筋を分析し、同型テーマの横展開と関連特集への内部リンクで回遊に変換する
 - **priority**: P2 → **status**: ready
 - **detected**: 2026-07-27
