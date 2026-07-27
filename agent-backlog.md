@@ -8,6 +8,26 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-076] pending由来店（ジャーナル採用の話題店）が恒久的に写真ゼロだった問題 ✅
+
+- **priority**: P1 → **status**: done（PR作成・マージ後のCIで実取得）
+- **detected**: 2026-07-27（オーナー指摘「TOP10の7位・8位（焼きそばスタンド らふ / サウィ食堂）も写真が出ていない」）
+- **resolved**: 2026-07-27
+- **resolved_by**: Builder + DataKeeper（EXPLICIT モード）
+- **category**: data-quality / ux
+- **owner**: Builder
+- **真因（ISSUE-075 とは別系統）**: 写真取得スクリプトが `data/manual_stores.json` **しか**見ておらず、ジャーナル経由で採用した話題店（`data/pending_stores.json`・37件）は対象外だった。さらに `merge_pending_stores.js` が `'写真URL': ''` を**ハードコード**していたため、pending 由来店は構造的に写真ゼロのままカタログへ入っていた。実測: 写真ゼロ26件のうち **22件が pending 由来**（manual 4件）。
+- **切り分け**: pending 37件のうち **hotpepper_id 保有の15件は問題なし**（マージ時に既存 HotPepper 店へ合流し恒久写真 imgfp を継承。実測で15件すべて写真あり店に解決）。**残る22件（HPIDなし）が恒久ゼロ**だった。指摘の「サウィ食堂」は HPID 付き同名店（写真あり）と別レコードで重複していたケース。
+- **実装**:
+  1. `fetch_manual_store_photos.js`: manual と pending の**両データセットを同一の三重ゲート**（店名一致/名古屋・愛知/飲食業態）で処理。hotpepper_id 保有 pending は HP写真を継承するため対象外にして無駄な API 消費を回避。書き戻しは各マスターへ
+  2. `merge_pending_stores.js`: `写真URL` / `写真クレジット` を pending から**引き継ぐ**（ハードコード撤廃）
+  3. `build.yml`: `data/pending_stores.json` を commit 対象に追加（**漏れていたため取得結果が毎回捨てられ API を無駄打ちする状態**だった）
+  4. `audit_photo_coverage.js`: 写真ゼロ店に**由来（manual/pending）を表示**し、どのマスターを直せば付くかを一目で分かるように
+- **QAゲート**: qa_gate --after ok:true（マーカー退行0）✅ / 構文チェック3ファイル ✅ / 対象件数の実測一致（manual 129 / pending 22 / HPID継承15）✅ / 無効キー実行で manual・pending とも**内容不変**を diff で実証（書き戻しによる破損なし）✅ / merge の写真引き継ぎを単体検証 ✅ / audit_backlog_ids 重複0 ✅
+- **未完（CI待ち）**: 実取得には `GOOGLE_PLACES_API_KEY` が必要。マージ後の build.yml 実行で pending 22件に実写取得を試行（ゲート不通過店はプレースホルダー維持＝架空店ブロック順守）
+- **files**: `scripts/fetch_manual_store_photos.js`, `scripts/merge_pending_stores.js`, `scripts/audit_photo_coverage.js`, `.github/workflows/build.yml`, `agent-backlog.md`
+- **関連**: [[ISSUE-075]]（失効写真の自動修復・同スクリプトの別系統の欠陥）/ [[ISSUE-073]]（写真表示強化）
+
 ### [ISSUE-075] 失効した店舗写真の自動修復 — Places署名URLの生死判定＋place_idキャッシュ ✅
 
 > 採番note: 当初 ISSUE-074 で起票したが、並行実行していた実在再検証タスクが先に
