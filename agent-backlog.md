@@ -135,6 +135,41 @@
 - **files**: `data/manual_stores.json`(149→127店), `data/pending_stores.json`, `data/stores.json`, `scripts/fetch_manual_store_photos.js`(VERIFIED_ALIASES), `index.html`, `sitemap.xml`, `stores/*.html`(23削除), `features/nagoya-kaoawase-washoku.html`, `features/index.html`, `agent-backlog.md`
 - **関連**: ISSUE-067（架空店ブロックの起点事故）/ ISSUE-064（表記差の誤検知＝今回の VERIFIED_ALIASES と同系）/ [[ISSUE-075]]（同ファイルを並行改修・失効写真の自動修復）
 
+### [SEO-042] 特集冒頭のCTAを1つの設計に統合する（店舗詳細導線＋予約導線・SEO-036 + SEO-013 統合）
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-07-27（SEO改善の全体仕分けによる統合起票）
+- **category**: SEO
+- **owner**: Builder + Editor
+- **統合元**: [[SEO-036]]（特集冒頭に「店舗詳細を見る」3件以上）+ [[SEO-013]]（モーダルの予約ボタン視認性＋人気特集本文冒頭にCTA）
+- **統合理由**: 両者とも設置面が「人気特集の冒頭」で、対象店も同じ（nagoya-hitsumabushi / nagoya-solo-dining / nagoya-sweets）。別々に実装すると同じ位置に2種類のボタン群が二重に生えるか、後から実装した側が先の設置を上書きする。「読者が特集冒頭で最初に取れる行動」を1回で設計するほうが正しい
+- **brand-filter**: ✅ 適合（統合元の判定を継承）— 実在店の既存予約導線へのUX改善であり自社マネタイズではない（制約8非該当）。順位操作・広告依存・ストック写真を伴わない
+- **acceptance**: 閲覧上位の特集（hitsumabushi / solo-dining / sweets / gourmet-guide）の冒頭に、実在店3件以上への「店舗詳細」導線と予約導線を**一体のCTAブロックとして**設置／店舗詳細モーダル内の予約ボタンの視認性（色・サイズ・文言「今すぐ予約」）も同時に改善／リンク先は LOCAL_STORES 実在店のみ（`node scripts/audit_feature_stores.js` 検出ゼロ維持）／既存の cta_click・cta_gmap_click 計測を維持／フィルタ・検索・モーダル・IGエンベッド・Google評価を壊さない（制約5）・index.html 単一ファイル維持（制約1）
+- **効果測定**: `data/metrics_history.json` の `cta.ctaClickRate` と 1訪問あたりページ数の前後比
+
+### [SEO-041] 店舗カードのアクション導線を1つの設計に統合する（詳細を見る＋予約・マップ・SEO-010 + SEO-037 統合）
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-07-27（SEO改善の全体仕分けによる統合起票）
+- **category**: SEO
+- **owner**: Builder
+- **統合元**: [[SEO-010]]（カードに「詳細を見る」ボタン→モーダル起動）+ [[SEO-037]]（カードに「予約」「Googleマップ」を常時表示）
+- **統合理由**: **両者は同じ店舗カードUIを取り合う**（SEO-037 側に既に「要調整」メモがあった）。カード直アクション（予約/マップ）を足すとモーダルオープンを食い潰し、モーダル内にある SEO-004 の関連店舗・特集リンク（回遊レバー）に到達しなくなる。「カードで完結させる行動」と「モーダルへ送る行動」の配分は一度に決めないと片方が必ず無駄になる
+- **brand-filter**: ✅ 適合（統合元の判定を継承）
+- **acceptance**: 店舗カードに「詳細を見る」（モーダル起動）と「予約」「Googleマップ」を**優先順位を決めたうえで**配置／リンク先は各店の実在の予約URL・マップのみ／既存の cta_click・cta_gmap_click 計測を維持し、モーダルオープン数も併せて計測できること（カード直アクションが回遊を食っていないか判定するため）／フィルタ・検索・モーダル・IGエンベッド・Google評価を壊さない（制約5）・index.html 単一ファイル維持（制約1）／予約導線の収益化は制約8によりユーザー承認が別途必須＝本タスクはUX・計測のみ
+- **効果測定**: cta_click / cta_gmap_click / モーダルオープン数の3点セットで前後比。**モーダルオープンが減っていないことを合格条件に含める**
+
+### [SEO-040] トップのファーストビューを1つの設計に統合する（価値提案コピー＋人気特集導線・SEO-014 + SEO-009 統合）
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-07-27（SEO改善の全体仕分けによる統合起票）
+- **category**: SEO
+- **owner**: Builder
+- **統合元**: [[SEO-014]]（FVに「業界人の目利き」「シーン別専門性」の価値提案コピー・P1）+ [[SEO-009]]（FVに人気特集への大きな誘導導線）
+- **統合理由**: 統合元の双方に既に「両者を1つのファーストビュー設計として整合させる」旨のメモがあった。同じ画面の同じ領域を2回別々に改修するとレイアウトが競合する
+- **brand-filter**: ✅ 適合（統合元の判定を継承）— 誇大表現・架空実績は書かず、実在店DB規模と編集独立の事実に基づく
+- **⚠️ 母数の注意（2026-07-27 実測）**: GA4 の topPages で `/` + `/index.html` は 126PV / 645PV = **全体の約20%**、GSC ではトップページは28日で6クリック（順位23.4）。**本課題が効く範囲は流入の2割**であり、入口を増やす施策（[[SEO-011]] / [[SEO-039]]）より優先度は本来低い。P1 なのは直帰の大きさによるもので、着手順は入口系のあとで良い
+- **acceptance**: index.html 単一ファイル維持のまま、FV上部に「業界人の目利き」「シーン別専門性」を核にした簡潔なキャッチコピー（見出し＋サブコピー）と、人気特集への視認性の高い誘導（カード/バナー等）を**1つのFVブロックとして**配置／誇大表現・架空実績を書かない／フィルタ・検索・モーダル・IGエンベッド・Google評価を壊さない（制約5）
+- **注記**: キャッチコピーの文言はブランドの根幹に関わるため、実装前に案をユーザーに提示して確定させる
+- **効果測定**: `data/metrics_history.json` の bounceRate / pagesPerSession の前後比
+
 ### [SEO-039] 流入の58%を占める Bing・生成AI を観測レイヤーに載せる（エンジン別内訳の固定化＋IndexNow）
 - **priority**: P1 → **status**: 一部done（観測レイヤーはdone・Bing WMT登録とIndexNow送信の有効化はオーナー操作/承認待ち）
 - **detected**: 2026-07-27
@@ -185,7 +220,7 @@
 - **関連**: ISSUE-060（Places 三重検証ゲート＝実写ゼロ店の門番）/ ISSUE-067（架空店ブロックと整合）/ ISSUE-036（og:image 系譜）
 
 ### [SEO-036] 閲覧上位の特集記事の冒頭に「店舗詳細を見る」導線を3件以上置き、編集記事→実在店DBへ送客する
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: superseded → **統合先**: [SEO-042]
 - **detected**: 2026-07-25
 - **category**: SEO
 - **owner**: Editor
@@ -195,7 +230,7 @@
 - **ブランドガードレール**: 存在しない店・特集へのリンク禁止（実在検証ゲート）。掲載店選定は業界視点（記事テーマに合致する実在店）
 
 ### [SEO-037] トップの店舗カードに「予約」「Googleマップ」の直接アクション導線を常時表示し、モーダルを開かずに行動できるようにする（要検討）
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: superseded → **統合先**: [SEO-041]
 - **detected**: 2026-07-25
 - **category**: SEO
 - **owner**: Builder
@@ -334,7 +369,7 @@
 - **acceptance**: journal/_template.html および既存記事テンプレートの `@media(max-width:640px)` に本文可読性の指定を追加（`.art-body p` をモバイルで概ね 1rem 相当まで引き上げ、行間・段落間を維持）。日本語本文の禁則・改行が破綻しないこと。画像/店舗カードのレイアウト崩れがないこと。既存の意匠（Cormorant Garamond 見出し・ゴールド配色）を変えない。サイト用の新ファイルを追加しない（journal/ 配下は憲法の例外）。滞在時間は次回以降のSEOアドバイスで再評価
 
 ### [SEO-014] トップページのファーストビューに「業界人の目利き」「シーン別専門性」を伝える価値提案キャッチコピーを掲げ直帰を防ぐ
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: superseded → **統合先**: [SEO-040]
 - **detected**: 2026-07-16
 - **category**: SEO
 - **owner**: Builder
@@ -344,7 +379,7 @@
 - **acceptance**: index.html 単一ファイル維持のまま、ファーストビュー上部に「業界人の目利き」「シーン別専門性」を核にした簡潔なキャッチコピー（見出し＋サブコピー）を配置。誇大表現・架空実績を書かない（実在店DB規模・編集独立の事実に基づく）。フィルター・検索・モーダル・IGエンベッド・Google評価表示を壊さない。直帰率・滞在時間は次回以降のSEOアドバイスで再評価
 
 ### [SEO-013] 予約ボタン・店舗詳細モーダルの視認性を高め予約導線を強化する（色/サイズ/文言「今すぐ予約」＋人気特集本文にCTA設置）
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: superseded → **統合先**: [SEO-042]
 - **detected**: 2026-07-15
 - **category**: SEO
 - **owner**: Builder
@@ -354,7 +389,7 @@
 - **acceptance**: index.html 単一ファイル維持のまま、店舗詳細モーダル内の予約ボタンの視認性（色/サイズ/文言「今すぐ予約」）を改善。加えて人気特集（nagoya-hitsumabushi / nagoya-solo-dining / nagoya-sweets）本文冒頭に該当店舗の店舗詳細モーダル・予約への導線を自然に設置。フィルター・検索・モーダル・IGエンベッド・Google評価表示を壊さない。cta_click は次回以降のSEOアドバイスで再評価
 
 ### [SEO-009] トップページのファーストビューに人気特集（nagoya-solo-dining / nagoya-gourmet-guide）への大きな誘導導線を置き直帰を減らす
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: superseded → **統合先**: [SEO-040]
 - **detected**: 2026-07-08
 - **category**: SEO
 - **owner**: Builder
@@ -363,7 +398,7 @@
 - **acceptance**: index.html 単一ファイル維持のまま、ファーストビュー内に人気特集への視認性の高い誘導（カード/バナー等）を配置。フィルター・検索・モーダル・IGエンベッド・Google評価表示を壊さない。直帰率・回遊は次回以降のSEOアドバイスで再評価
 
 ### [SEO-010] 各店舗カードに「詳細を見る」明示ボタンを付け店舗詳細モーダルへの次の一歩を作る（まず10店舗で検証）
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: superseded → **統合先**: [SEO-041]
 - **detected**: 2026-07-08
 - **category**: SEO
 - **owner**: Builder
