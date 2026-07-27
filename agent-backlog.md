@@ -8,6 +8,32 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-075] 失効した店舗写真の自動修復 — Places署名URLの生死判定＋place_idキャッシュ ✅
+
+> 採番note: 当初 ISSUE-074 で起票したが、並行実行していた実在再検証タスクが先に
+> ISSUE-074 を main へマージしたため 075 に採番し直した（ORG-004 重複ID回避）。
+
+- **priority**: P1 → **status**: done（PR #87・マージ後の CI 実行で実修復）
+- **detected**: 2026-07-26（オーナー指摘「トップの『みんなが見ている店 TOP10』の1位に写真がつかない」）
+- **resolved**: 2026-07-27
+- **resolved_by**: Builder + DataKeeper（EXPLICIT モード）
+- **category**: data-quality / ux / seo
+- **owner**: Builder
+- **真因**: `fetch_manual_store_photos.js` が「写真URLが入っていれば取得済み」とみなしてスキップしていたため、Google Places の `lh3.googleusercontent.com` URL が 403 化しても**永久に気づけない構造**だった。ISSUE-073 の監査は URL の有無しか見ていなかったので「実写98.9%」と過大報告していた。実測: manual_stores 116件中 **62件失効** / canonical 96件中 **49件失効**。
+- **失効の性質（2026-07-26 実測で判明・重要）**: 生存56件と失効62件は**どちらも同じ 2026-05-31 に書き込まれた**URL だった。つまり「時間経過で一律に期限切れ」ではなく、**写真ごとに個別に参照不能になる**（オーナーの写真差し替え・削除、Google側ローテーション等）。2ヶ月生き残る URL が多数あるため、**日次の生死判定で十分に追随できる**（＝再取得間隔を詰める必要はない）。
+- **実装**:
+  1. **生死判定（Phase 1）**: 全写真URLに 1バイト Range GET（並列8）を投げ、失効分だけを再取得対象にする。タイムアウトは「死亡」と断定しない（一時障害で写真を捨てない）
+  2. **place_id キャッシュ**: 取得成功時に `GooglePlaceID` を保存。再取得時は `findplacefromtext` を省いて `details` 直引き → **API呼び出し半減＋再マッチのブレ（別店に化ける事故）を排除**。ただし三重ゲート（店名/エリア/業態）は place_id 経由でも必ず再検証（place_id 付け替え・業態変更の検知）
+  3. **失効URLのクリア**: 再取得できない失効URLは空にする（JSON-LD `image` / `og:image` が 403 を指し続けるのを防ぐ＝SEO正当性）。**API障害時に誤消去しない安全弁**として、Places API の応答有無（`REQUEST_DENIED`/`OVER_QUERY_LIMIT` を除く status 応答）で判定。無効キーで実証済み
+  4. **副次効果**: クリアにより build.js のマージ（`if (m['写真URL'])` で manual 優先）が外れ、**HP併合店では HotPepper の恒久写真が自動表出**する
+  5. **監査の正直化**: `audit_photo_coverage.js --check-liveness` で実配信を検査し「実際に表示される写真」を報告（写真URLあり 98.9% → **実態 97.9%**）。`--strict` は失効非ゼロで exit 1
+- **QAゲート**: qa_gate --after ok:true（マーカー退行0）✅ / 構文チェック2ファイル ✅ / 無効キーでの安全弁動作＝データ無変更を diff で実証 ✅ / build.yml 構造健全（19ステップ・インデント正常）✅
+- **経緯（手順ミスの記録）**: 当初この修正を PR #85 のブランチへ後から積んだが、#85 は既にマージ済みだったため main に反映されず、日次CIも従来動作のままだった（7/27 実測で Places 99件中 51件が失効し続けていた）。main から切り直した PR #87 で入れ直した。**マージ済みPRのブランチに追加コミットしない**こと。
+- **未完（CI待ち）**: 実際の再取得には `GOOGLE_PLACES_API_KEY` が必要でローカル実行不可。**マージによって起動する build.yml（on: push: main）で失効分が自動修復される**
+- **files**: `scripts/fetch_manual_store_photos.js`, `scripts/audit_photo_coverage.js`, `.github/workflows/build.yml`, `agent-backlog.md`
+- **関連**: [[ISSUE-073]]（写真表示強化・この監査の過大報告を修正）/ [[ISSUE-074]]（実在再検証・同じ fetch_manual_store_photos.js を並行改修）/ ISSUE-060（三重検証ゲート＝維持したまま強化）
+
+
 ### [ISSUE-074] 実写ゼロ手動店33件の実在再検証 — 架空18店を全面除去＋実在15店の表記ゆれ/汚染データ修正 ✅
 
 - **priority**: P0（架空店掲載＝ブランド毀損・CLAUDE.md 架空店ブロック違反）→ **status**: done
@@ -25,7 +51,7 @@
 - **QAゲート**: audit_feature_stores 0/0 ✅ / audit_feature_schema_alignment 66特集 EXIT0 ✅ / audit_manual_stores_links 全店到達手段確保 ✅ / audit_isnagoya_filter 15/15 ✅ / preview 実機: console error 0・架空店検索ヒット0・特集7選表示 ✅ / 実写ゼロ53→31店（残りは表記ゆれ修正待ちの実在店＋pending系）
 - **残課題（別タスク起票）**: 実写あり＝ゲート通過済みでも「旬彩」系テンプレ名の店群（日本料理 旬彩・旬菜家 楽・旬彩倶楽部 鱗・鮨赤酢かぶと・中国料理 旬彩・旬彩・旬彩料理 澤 等）は同時期AI追加の疑いがあり第2弾検証が必要
 - **files**: `data/manual_stores.json`(149→127店), `data/pending_stores.json`, `data/stores.json`, `scripts/fetch_manual_store_photos.js`(VERIFIED_ALIASES), `index.html`, `sitemap.xml`, `stores/*.html`(23削除), `features/nagoya-kaoawase-washoku.html`, `features/index.html`, `agent-backlog.md`
-- **関連**: ISSUE-067（架空店ブロックの起点事故）/ ISSUE-064（表記差の誤検知＝今回の VERIFIED_ALIASES と同系）
+- **関連**: ISSUE-067（架空店ブロックの起点事故）/ ISSUE-064（表記差の誤検知＝今回の VERIFIED_ALIASES と同系）/ [[ISSUE-075]]（同ファイルを並行改修・失効写真の自動修復）
 
 ### [ISSUE-073] 店舗写真の表示強化 — HP写真480px恒久昇格＋wsrv高画質ヒーロー＋IG実写embed＋写真カバレッジ監査 ✅
 
