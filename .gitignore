@@ -13,3 +13,7 @@ journal/drafts/
 # Instagram セッション cookie（認証情報・絶対に追跡しない）
 .ig_cookies.json
 *cookies*.json
+# run_journal_local.sh のローカル実行ログ（gitignore対象外だと"起動時残置差分クリーンアップ"が
+# ログディレクトリ自体を残骸と誤認しstash退避→ログ出力先が消えて claude 実行時のリダイレクトが
+# 失敗する事故が起きる。2026-07-25 実発生）
+.local-logs/

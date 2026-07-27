@@ -1,62 +1,62 @@
 {
-  "generatedAt": "2026-07-25T14:34:38.396Z",
+  "generatedAt": "2026-07-27T03:06:01.655Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
   "byQuery": {
     "ctrFix": [
       {
-        "query": "のれんとコルク 名古屋",
-        "impressions": 119,
+        "query": "一魚魚一 はなれ",
+        "impressions": 147,
         "clicks": 2,
-        "position": 8.2,
-        "ctr": 1.68,
+        "position": 8.3,
+        "ctr": 1.36,
         "expectedCtr": 3.1,
-        "missedClicks": 1.7
+        "missedClicks": 2.5
       },
       {
-        "query": "一魚魚一 はなれ",
-        "impressions": 118,
+        "query": "のれんとコルク 名古屋",
+        "impressions": 127,
         "clicks": 2,
-        "position": 8.5,
-        "ctr": 1.69,
-        "expectedCtr": 3,
-        "missedClicks": 1.5
+        "position": 8.2,
+        "ctr": 1.57,
+        "expectedCtr": 3.1,
+        "missedClicks": 2
       },
       {
         "query": "やきまる亭",
-        "impressions": 89,
+        "impressions": 106,
         "clicks": 1,
-        "position": 9.7,
-        "ctr": 1.12,
-        "expectedCtr": 2.6,
-        "missedClicks": 1.3
+        "position": 9.3,
+        "ctr": 0.94,
+        "expectedCtr": 2.7,
+        "missedClicks": 1.9
       },
       {
         "query": "フレンチ屋台ビストロ のれんとコルク 名古屋駅店",
-        "impressions": 73,
+        "impressions": 83,
         "clicks": 2,
-        "position": 6.8,
-        "ctr": 2.74,
-        "expectedCtr": 4.2,
-        "missedClicks": 1.1
+        "position": 7,
+        "ctr": 2.41,
+        "expectedCtr": 4,
+        "missedClicks": 1.3
       }
     ],
     "rankPush": [
       {
         "query": "ナショナルベーカリー",
-        "impressions": 217,
+        "impressions": 237,
         "clicks": 2,
-        "position": 12.6,
-        "ctr": 0.92,
-        "upsideClicks": 4.1
+        "position": 12.7,
+        "ctr": 0.84,
+        "upsideClicks": 4.6
       },
       {
         "query": "national bakery & canteen",
-        "impressions": 88,
+        "impressions": 91,
         "clicks": 1,
-        "position": 10.4,
-        "ctr": 1.14,
+        "position": 10.6,
+        "ctr": 1.1,
         "upsideClicks": 1.5
       },
       {
@@ -73,47 +73,48 @@
     "ctrFix": [
       {
         "page": "/stores/J004591229.html",
-        "impressions": 905,
+        "impressions": 850,
         "clicks": 4,
         "position": 9.9,
-        "ctr": 0.44,
+        "ctr": 0.47,
         "expectedCtr": 2.5,
-        "missedClicks": 18.9
+        "missedClicks": 17.5
       },
       {
         "page": "/stores/J004612794.html",
-        "impressions": 815,
-        "clicks": 9,
-        "position": 9.6,
-        "ctr": 1.1,
+        "impressions": 833,
+        "clicks": 10,
+        "position": 9.8,
+        "ctr": 1.2,
         "expectedCtr": 2.6,
-        "missedClicks": 12.4
+        "missedClicks": 11.3
+      },
+      {
+        "page": "/stores/J004509691.html",
+        "impressions": 345,
+        "clicks": 4,
+        "position": 10,
+        "ctr": 1.16,
+        "expectedCtr": 2.5,
+        "missedClicks": 4.6
       }
     ],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2171,
+        "impressions": 2262,
         "clicks": 6,
-        "position": 22.3,
-        "ctr": 0.28,
-        "upsideClicks": 54.7
-      },
-      {
-        "page": "/stores/J004509691.html",
-        "impressions": 324,
-        "clicks": 4,
-        "position": 10.3,
-        "ctr": 1.23,
-        "upsideClicks": 5.1
+        "position": 23.4,
+        "ctr": 0.27,
+        "upsideClicks": 57.2
       },
       {
         "page": "/journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html",
-        "impressions": 226,
+        "impressions": 230,
         "clicks": 4,
         "position": 10.4,
-        "ctr": 1.77,
-        "upsideClicks": 2.3
+        "ctr": 1.74,
+        "upsideClicks": 2.4
       }
     ]
   },
@@ -121,11 +122,12 @@
   "summary": {
     "queryCtrFix": 4,
     "queryRankPush": 3,
-    "pageCtrFix": 2,
-    "pageRankPush": 3,
+    "pageCtrFix": 3,
+    "pageRankPush": 2,
     "topPageCtrFix": [
       "/stores/J004591229.html",
-      "/stores/J004612794.html"
+      "/stores/J004612794.html",
+      "/stores/J004509691.html"
     ]
   }
 }
