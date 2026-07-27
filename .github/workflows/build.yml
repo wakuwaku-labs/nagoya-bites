@@ -49,6 +49,12 @@ jobs:
         run: node scripts/gsc_opportunities.js
         continue-on-error: true
 
+      - name: 検索・AI流入をエンジン別に集計 → data/search_channel_metrics.json（SEO-039）
+        # GSC は Google しか映さないが、実測では Bing 48.5% / 生成AI 33.3% / Google 13.8%（検索経由363セッション）。
+        # 流入の大半が既存ループの観測外にあるため、エンジン単位の内訳をここで固定化する。
+        run: node scripts/search_channel_metrics.js
+        continue-on-error: true
+
       - name: 手動キュレーション店の実写写真を Google Places API で取得＋失効URLの自動修復
         # ① 写真URLが空 or SVGプレースホルダーの店 → Google Places で店名+住所マッチングして実写取得
         # ② 既に写真URLがある店も **毎回配信の生死を検査**（ISSUE-074）。Places の
@@ -161,7 +167,7 @@ jobs:
           # フロント検索 (fetchFullCatalog) や個別ページ URL から到達不能になる。
           # ISSUE-076: data/pending_stores.json も commit 対象。ここが漏れていると
           # Places で取得した pending 店の写真が毎回捨てられ、無駄な API 再取得が続く。
-          git add index.html features/index.html sitemap.xml data/stores.json data/manual_stores.json data/pending_stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/cross_check_flags.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json
+          git add index.html features/index.html sitemap.xml data/stores.json data/manual_stores.json data/pending_stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json
           # 特集本体(features/*.html)も commit 対象。月次ロスター更新の掲載店入替を反映する。
           git add features/ || true
           git add stores/ || true

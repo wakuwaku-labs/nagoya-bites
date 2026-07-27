@@ -135,6 +135,26 @@
 - **files**: `data/manual_stores.json`(149→127店), `data/pending_stores.json`, `data/stores.json`, `scripts/fetch_manual_store_photos.js`(VERIFIED_ALIASES), `index.html`, `sitemap.xml`, `stores/*.html`(23削除), `features/nagoya-kaoawase-washoku.html`, `features/index.html`, `agent-backlog.md`
 - **関連**: ISSUE-067（架空店ブロックの起点事故）/ ISSUE-064（表記差の誤検知＝今回の VERIFIED_ALIASES と同系）/ [[ISSUE-075]]（同ファイルを並行改修・失効写真の自動修復）
 
+### [SEO-039] 流入の58%を占める Bing・生成AI を観測レイヤーに載せる（エンジン別内訳の固定化＋IndexNow）
+- **priority**: P1 → **status**: 一部done（観測レイヤーはdone・Bing WMT登録とIndexNow送信の有効化はオーナー操作/承認待ち）
+- **detected**: 2026-07-27
+- **category**: SEO
+- **owner**: Marketer
+- **source**: SEO改善の全体仕分け（2026-07-27）で、ready 12件の分類中に発覚。agent-backlog.md:289 が 2026-05 時点で「Bing(131) が Google(70) を上回るのは P1級の観測盲点」と指摘済みだったが未対応のまま3ヶ月経過していた
+- **問題（GA4 30日・実測）**: 510セッションの内訳は Bing 176 / 直接 141 / 生成AI（OpenAI+ChatGPT）121 / Google 50 / Yahoo 14。**検索・AI経由の363セッションのうち Google は 13.8% にすぎず、Bing 48.5% + 生成AI 33.3% = 82% が既存の改善ループの観測外**だった。GSCループは Google のみ、LINEアドバイスループは主に到着後の行動、`metrics_history.json`（56日分）は organic/direct/social/referral の4分類しか持たず、**エンジン単位のデータは日次上書きの `site_metrics.json` にしか存在せず毎日消えていた**（＝施策の前後比を取る土台が無い）
+- **brand-filter**: ✅ 適合 — 順位操作・広告・クーポン・ストック写真を一切伴わない純粋な観測整備。既に伸びている生成AI流入（3→121セッション）は CLAUDE.md 競合カテゴリF「生成AI引用」そのもので、唯一 Google 以外に打った手（llms.txt・ISSUE-042）が唯一の伸びている流入源になっている事実の追認でもある
+- **実装 2026-07-27（観測レイヤー・done）**:
+  1. `scripts/search_channel_metrics.js` 新設 — `site_metrics.json` の sourceBreakdown を Bing / Google / 生成AI / Yahoo / DuckDuckGo / SNS / 直接 に分類し `data/search_channel_metrics.json` に固定化。「GSCが見ているのは全体の何%か」を `blind_spots` として自動で明示する
+  2. `scripts/track_metrics.js` の `--snapshot` を拡張 — `metrics_history.json` の各エントリに `search_channels`（エンジン別セッション数）を追記。**明日以降エンジン単位の前後比が取れる**（過去分はリポジトリに残っていないため遡及不可）
+  3. `.github/workflows/build.yml` に日次実行と commit 対象を追加
+- **未実施（承認・オーナー操作が必要）**:
+  - `scripts/indexnow_ping.js` は実装済みだが**外部送信は既定 dry-run**で、`--yes` を付けたときだけ送信する。CI には未接続。有効化にはユーザー承認が必要（外部サービスへの送信のため）
+  - キーファイル `ec3ee6876b0d465ab4f7093ba5bc42d0.txt` をリポジトリ直下に生成済み（robots.txt / sitemap.xml / llms.txt と同じルート直下の配信ファイル）。デプロイして 200 を返すことが IndexNow の認証条件
+  - **Bing Webmaster Tools への登録はオーナー本人の操作が必要**（アカウント作成とサイト所有権確認＝クレデンシャルを伴うためエージェントは実行しない）。登録すると Bing 側のクエリ・掲載順位が見えるようになり、48.5% を占めるチャネルで初めて GSC 相当の改善ループが回せる
+- **検証**: `--report` で 504セッションを6エンジンに分類（Bing 34.9% / 直接 28% / 生成AI 24% / Google 9.9% / Yahoo 2.8% / DDG 0.4%）/ `--snapshot` 再実行で冪等（total_days 56 維持）/ `build.yml` YAML 妥当（ruby確認）/ IndexNow dry-run で実在7URLのみ抽出・外部通信ゼロ
+- **効果測定**: `data/search_channel_metrics.json` の `trend`（前回スナップショット比）。IndexNow 有効化後は Bing 経由セッションの推移で判定する
+- **関連**: [[SEO-011]]（入口KW・同じ「入口を増やす」系）/ ISSUE-042（llms.txt・生成AI流入の起点）/ ISSUE-072（GSCループ＝Googleのみを見ていた側）
+
 ### [SEO-038] 高流入ジャーナル記事のロングテール勝ち筋を分析し、同型テーマの横展開と関連特集への内部リンクで回遊に変換する
 - **priority**: P2 → **status**: ready
 - **detected**: 2026-07-27
