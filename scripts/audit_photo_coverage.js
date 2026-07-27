@@ -82,17 +82,33 @@ console.log(`その他URL           : ${buckets.other.length}`);
 console.log(`写真なし            : ${buckets.none.length}`);
 console.log(`IG投稿embed可       : ${igEmbed} (店舗ページに公式Instagram実写を埋め込み表示)`);
 
+// 写真ゼロ店の由来を示す（ISSUE-076: pending 由来が写真取得の対象外だった経緯があるため、
+// 「どのマスターを直せば写真が付くか」が一目で分かるようにする）
+const srcNames = { manual: new Set(), pending: new Set() };
+try {
+  const m = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'manual_stores.json'), 'utf8'));
+  (m.stores || []).forEach(s => srcNames.manual.add(s['店名']));
+} catch { /* 無ければ由来注記を省くだけ */ }
+try {
+  const p = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'pending_stores.json'), 'utf8'));
+  (p.pending || []).forEach(s => srcNames.pending.add(s['店名']));
+} catch { /* 同上 */ }
+const originOf = (n) => srcNames.manual.has(n) ? 'manual' : srcNames.pending.has(n) ? 'pending' : '由来不明';
+
 const noReal = [...buckets.svg, ...buckets.none];
 if (noReal.length) {
   console.log('\n── 実写ゼロの店舗（Google Places 三重検証ゲート未通過）──');
   console.log('   ※ 実在検証を通過するまで実写は付けない（CLAUDE.md 架空店ブロック）');
+  const byOrigin = {};
+  noReal.forEach(s => { const o = originOf(s['店名']); byOrigin[o] = (byOrigin[o] || 0) + 1; });
+  console.log(`   由来内訳: ${Object.entries(byOrigin).map(([k, v]) => `${k}=${v}`).join(' / ')}`);
   for (const s of noReal) {
     const hints = [
       s['Instagram'] ? 'IG有' : '',
       s['食べログURL'] ? '食べログ有' : '',
       s['ホットペッパーID'] ? 'HP有' : '',
     ].filter(Boolean).join('/') || '一次情報リンクなし';
-    console.log(`  - ${s['店名']}（${s['エリア']}・${s['追加日'] || '?'}追加）[${hints}]`);
+    console.log(`  - ${s['店名']}（${s['エリア']}・${s['追加日'] || '?'}追加）[${hints}]〈${originOf(s['店名'])}〉`);
   }
 }
 

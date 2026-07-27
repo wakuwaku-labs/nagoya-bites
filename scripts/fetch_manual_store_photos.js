@@ -1,6 +1,13 @@
 #!/usr/bin/env node
-// 手動キュレーション店（data/manual_stores.json）に Google Maps の実写真を取得して
-// 写真URL に設定する。Google が見つけられない店だけ既存の店舗固有SVGを維持する。
+// 編集部が足した店に Google Maps の実写真を取得して 写真URL に設定する。
+// Google が見つけられない店だけ既存の店舗固有SVG（＝プレースホルダー）を維持する。
+//
+// 【対象データ（ISSUE-076 で pending を追加）】
+//   data/manual_stores.json … 手動キュレーション店（stores 配列）
+//   data/pending_stores.json … ジャーナル経由で採用した外部媒体由来の話題店（pending 配列）
+//     ※ pending は merge_pending_stores.js でカタログに合流するが、これまで写真取得の
+//        対象外だったため「HotPepper ID を持たない店」が恒久的に写真ゼロのまま
+//        トップの人気カード等に出ていた。両方を同じ三重ゲートで処理する。
 //
 // Google Places API（findplacefromtext → place/details → place/photo CDN URL）を使用。
 // 要 GOOGLE_MAPS_API_KEY（または GOOGLE_PLACES_API_KEY）環境変数。
@@ -9,8 +16,7 @@
 // 使い方:
 //   GOOGLE_MAPS_API_KEY=xxxx node scripts/fetch_manual_store_photos.js [--force] [--limit N]
 // 取得後:
-//   node build.js && node scripts/patch_static_store_photos.js
-//   （features/ stores/ に実写を反映）
+//   node build.js && node gen-store-pages.js
 
 const fs = require('fs');
 const path = require('path');
@@ -18,6 +24,7 @@ const https = require('https');
 
 const ROOT = path.resolve(__dirname, '..');
 const MANUAL_JSON = path.join(ROOT, 'data', 'manual_stores.json');
+const PENDING_JSON = path.join(ROOT, 'data', 'pending_stores.json');
 const KEY = process.env.GOOGLE_MAPS_API_KEY || process.env.GOOGLE_PLACES_API_KEY || '';
 
 if (!KEY) {
@@ -273,7 +280,29 @@ async function main() {
   const limIdx = process.argv.indexOf('--limit');
   const limit = limIdx >= 0 ? parseInt(process.argv[limIdx + 1], 10) : Infinity;
 
-  const data = JSON.parse(fs.readFileSync(MANUAL_JSON, 'utf8'));
+  // ── 対象データセットの読み込み（manual＋pending・ISSUE-076）────────────────
+  // pending（ジャーナル採用の話題店）は写真取得の対象外だったため、HotPepper ID を
+  // 持たない店が恒久的に写真ゼロのままだった。同じ三重ゲートで一緒に処理する。
+  const datasets = [];
+  const manual = JSON.parse(fs.readFileSync(MANUAL_JSON, 'utf8'));
+  datasets.push({ label: 'manual', file: MANUAL_JSON, root: manual, list: manual.stores });
+
+  let pendingSkippedByHp = 0;
+  if (fs.existsSync(PENDING_JSON)) {
+    const pending = JSON.parse(fs.readFileSync(PENDING_JSON, 'utf8'));
+    const all = pending.pending || [];
+    // hotpepper_id を持つ pending は merge 時に既存の HotPepper 店へ合流し、
+    // そちらの恒久写真（imgfp）を引き継ぐので Places を叩く必要がない。
+    const list = all.filter(p => {
+      if (p.hotpepper_id) { pendingSkippedByHp++; return false; }
+      return true;
+    });
+    datasets.push({ label: 'pending', file: PENDING_JSON, root: pending, list });
+    console.log(`対象: manual ${manual.stores.length}件 / pending ${list.length}件（HotPepper ID 保有の ${pendingSkippedByHp}件は HP写真を継承するため対象外）\n`);
+  }
+
+  // 全データセットを串刺しにした作業リスト（判定・取得ロジックは共通）
+  const allStores = datasets.flatMap(d => d.list);
 
   // ── Phase 1: 生死判定で「本当に再取得が必要な店」を洗い出す（ISSUE-074）─────────
   // 従来は「写真URLが入っていれば OK」でスキップしていたため、Google Places の
@@ -284,7 +313,7 @@ async function main() {
     const cur = s['写真URL'] || '';
     return cur.startsWith('http') && !isSvgOrEmpty(cur) && !/unsplash|pexels|loremflickr/i.test(cur);
   };
-  const 生死確認対象 = force ? [] : data.stores.filter(hasRealPhoto);
+  const 生死確認対象 = force ? [] : allStores.filter(hasRealPhoto);
 
   let 失効 = 0, 生存 = 0;
   if (生死確認対象.length) {
@@ -303,7 +332,7 @@ async function main() {
   }
 
   // 再取得対象 = 未取得/SVG/禁止ストック（従来どおり）＋ 生死判定で失効が確認された店（新規）
-  const targets = data.stores.filter(s => force || s.__needsRefetch || !hasRealPhoto(s));
+  const targets = allStores.filter(s => force || s.__needsRefetch || !hasRealPhoto(s));
 
   // ── Phase 2: 対象店だけ Places から取得（place_id キャッシュで API 呼び出しを節約）──
   let done = 0, ok = 0, miss = 0, 復活 = 0;
@@ -344,9 +373,13 @@ async function main() {
   }
 
   // 一時フラグを保存対象から除去
-  for (const s of data.stores) { delete s.__alive; delete s.__needsRefetch; }
+  for (const s of allStores) { delete s.__alive; delete s.__needsRefetch; }
 
-  fs.writeFileSync(MANUAL_JSON, JSON.stringify(data, null, 2) + '\n', 'utf8');
+  // データセットごとに書き戻す（pending は list をフィルタしているが、要素は
+  // root の配列と同一オブジェクト参照なので root をそのまま保存すれば反映される）
+  for (const d of datasets) {
+    fs.writeFileSync(d.file, JSON.stringify(d.root, null, 2) + '\n', 'utf8');
+  }
   console.log(`\n生存 ${生存}件 / 失効検知 ${失効}件 → 処理 ${done}件 / 実写採用 ${ok}件（うち失効差し替え ${復活}件）/ 不採用(SVG維持) ${miss}件`);
   console.log('次に: node build.js && node gen-store-pages.js');
 }
