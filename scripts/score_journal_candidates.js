@@ -61,6 +61,10 @@
 const fs = require('fs');
 const path = require('path');
 
+// 検索意図（シーンKW）の採点は scripts/journal_seo_kw.js に一元化する。
+// KW は features/ の実在記事に裏付けられ、`--verify` で第三者が確認できる（自己申告値ではない）。
+const { scoreSearchIntent } = require('./journal_seo_kw');
+
 const ROOT = path.join(__dirname, '..');
 const DATA = path.join(ROOT, 'data');
 const PUBLISHED_PATH = path.join(DATA, 'journal_published.json');
@@ -76,8 +80,12 @@ const WEIGHTS = {
   uniqueness: 20,
   brand_fit: 15,
   writability: 10,
-  novelty: 5
+  novelty: 5,
+  search_intent: 10
 };
+
+// 満点（search_intent 追加で 100 → 110）。閾値は data/journal_gate_policy.json 側で管理する。
+const MAX_TOTAL = Object.values(WEIGHTS).reduce((a, b) => a + b, 0);
 
 // 段階ゲートの既定値（data/journal_gate_policy.json が無い場合のフォールバック）
 const DEFAULT_GATE_POLICY = {
@@ -490,7 +498,9 @@ function scoreOne(candidate, published, today, policy) {
   const brandFit = scoreBrandFit(candidate);
   const writability = scoreWritability(candidate);
   const novelty = scoreNovelty(candidate, published);
-  const total = recency.score + topicality.score + uniqueness.score + brandFit.score + writability.score + novelty.score;
+  const searchIntent = scoreSearchIntent(candidate.title_draft || '', candidate.lead_draft || '');
+  const total = recency.score + topicality.score + uniqueness.score + brandFit.score
+    + writability.score + novelty.score + searchIntent.score;
 
   const out = {
     id: candidate.id,
@@ -503,15 +513,19 @@ function scoreOne(candidate, published, today, policy) {
       uniqueness: uniqueness.score,
       brand_fit: brandFit.score,
       writability: writability.score,
-      novelty: novelty.score
+      novelty: novelty.score,
+      search_intent: searchIntent.score
     },
+    // 使ったKWに紐づく実在特集。記事本文からの内部リンク先としてそのまま使える。
+    search_intent_links: searchIntent.coverage.link_targets,
     explain: {
       recency: recency.reasons,
       topicality: topicality.reasons,
       uniqueness: uniqueness.reasons,
       brand_fit: brandFit.reasons,
       writability: writability.reasons,
-      novelty: novelty.reasons
+      novelty: novelty.reasons,
+      search_intent: searchIntent.reasons
     }
   };
   if (out.verdict === 'PASS_WITH_NOTE') out.gate_note = buildGateNote(out, policy);
@@ -573,9 +587,9 @@ function printRanking(result, explain) {
   }
   console.log('\n[採点結果]');
   result.ranked.forEach((r, i) => {
-    console.log(`  ${i + 1}. ${markOf(r.verdict)} [${r.total}/100] ${r.id} "${r.title_draft}"`);
+    console.log(`  ${i + 1}. ${markOf(r.verdict)} [${r.total}/${MAX_TOTAL}] ${r.id} "${r.title_draft}"`);
     if (r.breakdown) {
-      console.log(`     最新性${r.breakdown.recency}/話題性${r.breakdown.topicality}/独自性${r.breakdown.uniqueness}/ブランド${r.breakdown.brand_fit}/執筆${r.breakdown.writability}/新規${r.breakdown.novelty}`);
+      console.log(`     最新性${r.breakdown.recency}/話題性${r.breakdown.topicality}/独自性${r.breakdown.uniqueness}/ブランド${r.breakdown.brand_fit}/執筆${r.breakdown.writability}/新規${r.breakdown.novelty}/検索意図${r.breakdown.search_intent}`);
     }
     if (explain && r.explain) {
       Object.entries(r.explain).forEach(([k, lines]) => {
@@ -606,10 +620,10 @@ function cmdCalibrate() {
   const today = '2026-07-27';
   const fixtures = [
     {
-      note: '一次発表を押さえた新店記事（正直な取材の上限像）',
+      note: '一次発表を押さえた新店記事 × シーンKW完備（正直な取材の上限像）',
       c: {
         id: 'fx-strong', theme: 'today_one',
-        title_draft: '架空検証用アングルAの見出し文字列',
+        title_draft: '名駅の割烹を接待で使う——38,000円コースの席と予約の読み方',
         lead_draft: '採点キャリブレーション専用の合成リードです。カウンター席と個室の構成、コースのみで夜は38,000円からという価格設定、開業直後という条件を仮定し、価格帯・席構成・接待での使い方を業界人目線で読む想定の文章として十分な長さを確保しています。',
         angle: 'コースのみ38,000円という価格帯設計、カウンターと個室の席構成、予約導線、接待シーンでの使い方を業界人の目利きで裏側から読む',
         main_store: { name: '__calibrate_only__', id: '', area: '名駅', genre: '日本料理' },
@@ -618,6 +632,24 @@ function cmdCalibrate() {
           { label: 'X 告知', url: 'https://x.com/example/status/1', date: '2026-07-24' },
           { label: 'メディア報道', url: 'https://mantan-web.jp/article/x.html', date: '2026-07-24' },
           { label: '食べログ', url: 'https://tabelog.com/aichi/x/', date: '2026-07-24' }
+        ]
+      }
+    },
+    {
+      // SEO-011 で追加。取材の質は fx-strong と同一で、タイトルにシーンKWが無いケース。
+      // 「内輪向けの上手いタイトル」が自動公開の満点扱いにならないことを確認するための像。
+      note: '取材は同等だがシーンKW無し（＝入口が取れないタイトル）',
+      c: {
+        id: 'fx-strong-nokw', theme: 'today_one',
+        title_draft: '照明の色温度から客単価設計を読む——検証用の合成見出し',
+        lead_draft: '採点キャリブレーション専用の合成リードです。カウンター席と個室の構成、コースのみで夜は38,000円からという価格設定、開業直後という条件を仮定し、価格帯・席構成・接待での使い方を業界人目線で読む想定の文章として十分な長さを確保しています。',
+        angle: 'コースのみ38,000円という価格帯設計、カウンターと個室の席構成、予約導線、接待シーンでの使い方を業界人の目利きで裏側から読む',
+        main_store: { name: '__calibrate_only3__', id: '', area: '名駅', genre: '日本料理' },
+        sources: [
+          { label: '公式プレスリリース', url: 'https://prtimes.jp/main/html/rd/p/y.html', date: '2026-07-24' },
+          { label: 'X 告知', url: 'https://x.com/example/status/3', date: '2026-07-24' },
+          { label: 'メディア報道', url: 'https://mantan-web.jp/article/y.html', date: '2026-07-24' },
+          { label: '食べログ', url: 'https://tabelog.com/aichi/y/', date: '2026-07-24' }
         ]
       }
     },
@@ -655,9 +687,9 @@ function cmdCalibrate() {
   console.log(`ゲート: PASS>=${policy.auto_publish_min} / PASS_WITH_NOTE>=${policy.review_publish_min}\n`);
   fixtures.forEach(f => {
     const r = scoreOne(f.c, published, today, policy);
-    console.log(`${markOf(r.verdict)} [${r.total}/100] ${r.verdict.padEnd(15)} ${f.note}`);
+    console.log(`${markOf(r.verdict)} [${r.total}/${MAX_TOTAL}] ${r.verdict.padEnd(15)} ${f.note}`);
     if (r.breakdown) {
-      console.log(`      最新性${r.breakdown.recency}/話題性${r.breakdown.topicality}/独自性${r.breakdown.uniqueness}/ブランド${r.breakdown.brand_fit}/執筆${r.breakdown.writability}/新規${r.breakdown.novelty}`);
+      console.log(`      最新性${r.breakdown.recency}/話題性${r.breakdown.topicality}/独自性${r.breakdown.uniqueness}/ブランド${r.breakdown.brand_fit}/執筆${r.breakdown.writability}/新規${r.breakdown.novelty}/検索意図${r.breakdown.search_intent}`);
     }
   });
   console.log('\n期待する形: 強い記事=PASS / 一次発表なしの良記事=PASS_WITH_NOTE / 薄い記事=HOLD');

@@ -197,6 +197,8 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `docs/daily-posts/` | 日次SNS原稿（Note/Instagram/X 3種、コピペ投稿用） |
 | `.claude/commands/journal-today.md` | `/journal-today` スラッシュコマンド（日次起動） |
 | `data/journal_gate_policy.json` | 日次ジャーナルの公開ゲート方針（PASS / PASS_WITH_NOTE / HOLD の閾値）。**運用ルールの唯一の情報源**。`.claude/commands/*.md` は自己改変ブロックで編集できないため、挙動の変更はこのファイルで行う。確認は `node scripts/score_journal_candidates.js --policy`（Editor/Orchestrator 共管） |
+| `data/journal_seo_keywords.json` | 日次ジャーナルの**入口（検索意図）**を担保するシーンKWマスタ。各KWは `features/` の実在記事に紐づく。採点器の `search_intent`（10点）がこれを使う。生成/検証は `node scripts/journal_seo_kw.js --build` / `--verify`、KW提案は `--suggest`（Marketer/Editor 共管・SEO-011） |
+| `scripts/journal_seo_kw.js` | シーンKWの単一の情報源。`--verify` で「特集ファイルが実在し、そのタイトルにその語が実際に使われている」ことを機械検証（自己申告値を使わないための担保）。`--check "<title>"` でタイトルの検索意図カバレッジを判定 |
 | `scripts/register_journal_entry.js` | 記事HTMLから published.json エントリを復元登録（冪等）。「記事はあるのに未登録」で止まった日の自動復旧に使う |
 | `build.js` | データ埋め込みスクリプト（DataKeeper管轄） |
 | `data/manual_stores.json` | 手動キュレーション店舗マスター（Editor/DataKeeper 共管） |
