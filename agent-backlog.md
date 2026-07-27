@@ -135,6 +135,22 @@
 - **files**: `data/manual_stores.json`(149→127店), `data/pending_stores.json`, `data/stores.json`, `scripts/fetch_manual_store_photos.js`(VERIFIED_ALIASES), `index.html`, `sitemap.xml`, `stores/*.html`(23削除), `features/nagoya-kaoawase-washoku.html`, `features/index.html`, `agent-backlog.md`
 - **関連**: ISSUE-067（架空店ブロックの起点事故）/ ISSUE-064（表記差の誤検知＝今回の VERIFIED_ALIASES と同系）/ [[ISSUE-075]]（同ファイルを並行改修・失効写真の自動修復）
 
+### [SEO-043] GSC の取得解像度を上げ、SEO-011 の効果測定器と「トップページが何位で何のKWに出ているか」を可視化する ✅
+- **priority**: P1 → **status**: done（2026-07-27）
+- **detected**: 2026-07-27
+- **category**: SEO
+- **owner**: Marketer
+- **問題**: SEO-011 でシーンKWレイヤーを入れたが、**その効果を測る器が無かった**。`fetch_gsc_metrics.js` は `rowLimit: 25`（ページは15件）で、その上位25件は**全件が店名の指名検索**。シーンKWが表示を得ても指名検索を押しのけて上位25に入るまで数ヶ月かかる可能性が高く、それまで効いているか判別できない。同じ理由で、単体最大の伸びしろ（**トップページ 2,262表示・順位23.4・6クリック＝推定取りこぼし57クリック**）についても「3ページ目で何のクエリに出ているのか」が分からず手が打てなかった
+- **brand-filter**: ✅ 適合 — 計測解像度の向上のみ。順位操作・広告・ストック写真を伴わない
+- **実装**:
+  1. `scripts/gsc_query_intent.js` 新設 — クエリを `discovery`（シーン語 / エリア語×ジャンル語＝**我々が取りに行く面**）/ `navigational`（掲載店の店名＝Strategic Skip の面）/ `brand` / `other` に分類。**辞書は SEO-011 と共通の `data/journal_seo_keywords.json`** を使うため、「KWを入れた面が伸びたか」が記事側と直接対応する
+  2. `scripts/fetch_gsc_metrics.js` — クエリ 25→5,000件 / ページ 15→500件に拡張。`page × query` を新規取得して「どのページがどのクエリで何位か」を紐づけ。意図別集計を `intent` として出力。`topQueries`/`topPages` は従来どおり残して後方互換を維持
+- **効果指標の定義**: `intent.kpi.discovery_impressions` と `discovery_clicks` の推移で SEO-011 を判定する。**総クリックは使わない**（指名検索の増減で簡単に動き、施策の効果と混ざるため）
+- **ベースライン（2026-07-27・上位25クエリ時点）**: navigational 91.1%（19クエリ・1,236表示）/ other 8.9% / **discovery 0%**。ここが伸びるかどうかが SEO-011 の合否
+- **実装中に見つけて直した不具合**: 初版の店名マッチが `query.includes(storeName)` の片方向で、クエリ（「のれんとコルク 名古屋」）より DB の店名（「フレンチ屋台ビストロ のれんとコルク 名古屋駅店」）が長いケースで一致せず、**指名検索が discovery に誤分類されて効果指標が過大に出ていた**（初版で discovery 6.1% と表示。正しくは 0%）。双方向の識別トークン照合に変更し、`navigational` を `discovery` より先に判定する順序に修正。**迷うケースは Strategic Skip 側に倒し、効果指標が過大に出る方向の誤りを構造的に排除**した
+- **検証**: `groupPageQueries` を純関数化して認証なしでテスト（focus外ページの除外 / 1ページ15件上限 / 丸め / keys欠落行でクラッシュしない を確認）/ 分類器を実データ25クエリで検証し店名の帰属も正しいことを確認 / `gsc_opportunities.js` が拡張後の JSON でも従来どおり動作
+- **関連**: [[SEO-011]]（この測定器が測る対象）/ [[SEO-039]]（Bing・生成AI 側の観測。こちらは Google 側の解像度）
+
 ### [SEO-042] 特集冒頭のCTAを1つの設計に統合する（店舗詳細導線＋予約導線・SEO-036 + SEO-013 統合）
 - **priority**: P2 → **status**: ready
 - **detected**: 2026-07-27（SEO改善の全体仕分けによる統合起票）

@@ -35,6 +35,18 @@ const DEFAULT_SITE_URL = 'https://nagoya-bites.com/';
 const LOOKBACK = parseInt(process.env.GSC_LOOKBACK_DAYS || '28', 10);
 const OUT_PATH = path.join(__dirname, '..', 'data', 'gsc_metrics.json');
 
+// 取得解像度（SEO-043）。
+// 旧版は クエリ25件 / ページ15件しか取っておらず、上位が店名の指名検索で埋まるため
+// シーンKWの表示実態が原理的に見えなかった（＝SEO-011 の効果を測れなかった）。
+// API は 1 リクエストあたり最大 25,000 行。日次1回のジョブなのでコスト影響は無い。
+const QUERY_ROW_LIMIT = parseInt(process.env.GSC_QUERY_ROW_LIMIT || '5000', 10);
+const PAGE_ROW_LIMIT = parseInt(process.env.GSC_PAGE_ROW_LIMIT || '500', 10);
+const PAGE_QUERY_ROW_LIMIT = parseInt(process.env.GSC_PAGE_QUERY_ROW_LIMIT || '5000', 10);
+// ファイルサイズ抑制: 集計は全件で行い、生の行は上位のみ保存する
+const QUERY_STORE_LIMIT = 300;
+const PAGE_QUERY_FOCUS_PAGES = 15;
+const PAGE_QUERY_PER_PAGE = 15;
+
 // SEO 健全性の目安（素人判断用）
 const BENCHMARKS = {
   ctr:      { good: 0.05, warn: 0.01 },   // クリック率（高いほど良い）
@@ -47,7 +59,37 @@ function isoDaysAgo(n) {
   return d.toISOString().slice(0, 10);
 }
 
-if (!KEY_RAW) {
+/**
+ * page×query の生行を「表示回数上位のページ」ごとにまとめる（SEO-043）。
+ * API 認証なしでも検証できるよう純関数にして export する。
+ *
+ * pqRows は表示回数の降順で来るので、先頭から詰めれば各ページの上位クエリになる。
+ * @param {Array} pqRows  [{ keys: [page, query], clicks, impressions, ctr, position }]
+ * @param {Array} allPages [{ page, impressions, ... }] 表示回数降順
+ */
+function groupPageQueries(pqRows, allPages) {
+  const focus = new Set((allPages || []).slice(0, PAGE_QUERY_FOCUS_PAGES).map(p => p.page));
+  const byPage = new Map();
+  (pqRows || []).forEach(r => {
+    const [page, q] = r.keys || [];
+    if (!focus.has(page)) return;
+    const list = byPage.get(page) || [];
+    if (list.length >= PAGE_QUERY_PER_PAGE) return;
+    list.push({
+      query: q,
+      clicks: r.clicks || 0,
+      impressions: r.impressions || 0,
+      ctr: Math.round((r.ctr || 0) * 10000) / 10000,
+      position: Math.round((r.position || 0) * 10) / 10,
+    });
+    byPage.set(page, list);
+  });
+  return Array.from(byPage.entries()).map(([page, queries]) => ({ page, queries }));
+}
+
+// SEO-043: require されたときは終了しない（groupPageQueries を認証なしでテストするため）。
+// CLI として起動されたときの挙動（未設定ならスキップして正常終了）は従来どおり。
+if (!KEY_RAW && require.main === module) {
   console.log('GA4_SERVICE_ACCOUNT_KEY が未設定。GSC 集計をスキップします。');
   process.exit(0);
 }
@@ -136,31 +178,63 @@ async function main() {
     impressionsPerDay: Math.round(((t.impressions || 0) / LOOKBACK) * 10) / 10,
   };
 
-  // 2) トップクエリ（表示回数順）
+  // 2) クエリ（表示回数順）
+  //    SEO-043: rowLimit 25 → QUERY_ROW_LIMIT。上位25件は全件が店名の指名検索で埋まっており、
+  //    SEO-011 で狙うシーンKW（接待/宴会/個室…）が表示を得ても、指名検索を押しのけて
+  //    上位25に入るまで観測できない＝**施策の効果を測る手段が無い**状態だった。
+  //    全件取ったうえで意図別に集計する（下の 5) intent）。
   const queryRows = await query(searchconsole, siteUrl, {
-    ...dateRange, dimensions: ['query'], rowLimit: 25,
+    ...dateRange, dimensions: ['query'], rowLimit: QUERY_ROW_LIMIT,
     orderBy: [{ field: 'impressions', descending: true }],
   });
-  const topQueries = queryRows.map(r => ({
+  const allQueries = queryRows.map(r => ({
     query: r.keys[0],
     clicks: r.clicks || 0,
     impressions: r.impressions || 0,
     ctr: Math.round((r.ctr || 0) * 10000) / 10000,
     position: Math.round((r.position || 0) * 10) / 10,
   }));
+  const topQueries = allQueries.slice(0, 25); // 既存の読み手との後方互換
 
-  // 3) トップページ（表示回数順）
+  // 3) ページ（表示回数順）
   const pageRows = await query(searchconsole, siteUrl, {
-    ...dateRange, dimensions: ['page'], rowLimit: 15,
+    ...dateRange, dimensions: ['page'], rowLimit: PAGE_ROW_LIMIT,
     orderBy: [{ field: 'impressions', descending: true }],
   });
-  const topPages = pageRows.map(r => ({
+  const allPages = pageRows.map(r => ({
     page: r.keys[0],
     clicks: r.clicks || 0,
     impressions: r.impressions || 0,
     ctr: Math.round((r.ctr || 0) * 10000) / 10000,
     position: Math.round((r.position || 0) * 10) / 10,
   }));
+  const topPages = allPages.slice(0, 15); // 既存の読み手との後方互換
+
+  // 4) ページ × クエリ（SEO-043）
+  //    「どのページが、どのクエリで、何位に出ているか」。トップページは 2,262表示・
+  //    順位23.4・6クリック（推定取りこぼし57クリック＝当時の総クリックの2割超）と
+  //    単体で最大の伸びしろだが、**何のクエリで3ページ目にいるのかが分からず手が打てなかった**。
+  let pageQueries = [];
+  try {
+    const pqRows = await query(searchconsole, siteUrl, {
+      ...dateRange, dimensions: ['page', 'query'], rowLimit: PAGE_QUERY_ROW_LIMIT,
+      orderBy: [{ field: 'impressions', descending: true }],
+    });
+    pageQueries = groupPageQueries(pqRows, allPages);
+  } catch (e) {
+    console.log(`ページ×クエリの取得に失敗（スキップ）: ${e.message}`);
+  }
+
+  // 5) 検索意図の内訳（SEO-043）— SEO-011 の効果測定器
+  //    discovery（シーン語 / エリア語×ジャンル語）の 表示・クリック が伸びているかで判定する。
+  //    総クリックは指名検索の増減で簡単に動くため、施策の効果判定には使わない。
+  let intent = null;
+  try {
+    const { classifyQueries } = require('./gsc_query_intent');
+    intent = classifyQueries(allQueries);
+  } catch (e) {
+    console.log(`検索意図の集計に失敗（スキップ）: ${e.message}`);
+  }
 
   const out = {
     generatedAt: new Date().toISOString(),
@@ -170,6 +244,12 @@ async function main() {
     totals,
     topQueries,
     topPages,
+    // SEO-043 で追加した高解像度データ
+    queries: allQueries.slice(0, QUERY_STORE_LIMIT),
+    queriesFetched: allQueries.length,
+    pages: allPages,
+    pageQueries,
+    intent,
     benchmarks: BENCHMARKS,
   };
 
@@ -178,7 +258,7 @@ async function main() {
   console.log(`gsc_metrics.json 更新: clicks=${totals.clicks} / impressions=${totals.impressions} / CTR=${(totals.ctr*100).toFixed(1)}% / 平均順位=${totals.position}`);
 }
 
-main().catch(err => {
+if (require.main === module) main().catch(err => {
   console.error('GSC 集計エラー:', err.message);
   // 追加すべき正確な SA メールをエラー JSON にも埋め込む（オーナーが gsc_metrics.json だけで完結できるように）
   let saEmail = '(GA4_SERVICE_ACCOUNT_KEY の client_email)';
@@ -200,3 +280,5 @@ main().catch(err => {
   }
   process.exit(0);
 });
+
+module.exports = { groupPageQueries };

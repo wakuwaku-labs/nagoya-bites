@@ -210,6 +210,7 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `data/seo_advice_log.json` | SEO改善ループの記憶（採用/却下/重複の全履歴・append-only・`source`で日次/週次を区別） |
 | `data/gsc_metrics.json` | GSC 検索実データ（表示/クリック/CTR/掲載順位・トップクエリ/ページ）。日次 build.yml が更新（Marketer管轄） |
 | `data/gsc_opportunities.json` | GSC 改善機会の抽出結果（ctr_fix=1ページ目低CTR / rank_push=2-3ページ目高需要）。`node scripts/gsc_opportunities.js`（build.yml が日次実行）。GSC改善ループの配信レイヤー（Marketer/Builder 共管） |
+| `scripts/gsc_query_intent.js` | GSC クエリを **discovery（シーン語/エリア語×ジャンル語＝取りに行く面）/ navigational（店名＝Strategic Skip の面）/ brand / other** に分類。辞書は `data/journal_seo_keywords.json` と共通で、**SEO-011 の効果はここの `discovery` の表示・クリックで判定する**（総クリックは指名検索の増減と混ざるため使わない）。確認は `node scripts/gsc_query_intent.js`（Marketer管轄・SEO-043） |
 | `data/search_channel_metrics.json` | **検索・AI流入のエンジン別内訳**（Bing / Google / 生成AI / Yahoo / DDG / SNS / 直接）。`node scripts/search_channel_metrics.js --report`。**GSC は Google しか映さないが、実測では検索経由の 48.5% が Bing・33.3% が生成AI・Google は 13.8%** のため、GSCループだけでは流入の大半が観測外になる。その盲点を `blind_spots` として自動で明示する（Marketer管轄・SEO-039） |
 | `scripts/indexnow_ping.js` | IndexNow（Bing/Yandex 対応のプッシュ型インデックス通知）。**外部送信は既定 dry-run**で `--yes` を付けたときだけ送信する。`--init` でキー生成、`--status` で設定確認。Bing Webmaster Tools への登録はクレデンシャルを伴うため**オーナー本人の操作**が必要 |
 
