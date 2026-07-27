@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-07-27T06:58:22.577Z",
+  "generatedAt": "2026-07-27T07:26:52.315Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 444,
-    "pageViews": 641,
-    "sessions": 504,
-    "avgSessionDuration": 96.8,
-    "bounceRate": 0.397,
+    "activeUsers": 447,
+    "pageViews": 643,
+    "sessions": 508,
+    "avgSessionDuration": 96,
+    "bounceRate": 0.4,
     "pagesPerSession": 1.27
   },
   "channels": {
     "sessions": {
-      "organic": 291,
-      "direct": 160,
+      "organic": 293,
+      "direct": 163,
       "social": 49,
       "referral": 8,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 57.3,
-      "direct": 31.5,
+      "organic": 57.1,
+      "direct": 31.8,
       "social": 9.6,
       "referral": 1.6,
       "paid": 0,
@@ -31,12 +31,12 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 174
+      "sessions": 175
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 129
+      "sessions": 130
     },
     {
       "source": "openai",
@@ -46,7 +46,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 49
+      "sessions": 50
     },
     {
       "source": "chatgpt.com",
@@ -66,7 +66,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 6
+      "sessions": 8
     },
     {
       "source": "duckduckgo",
@@ -98,7 +98,7 @@
     {
       "path": "/index.html",
       "pageViews": 37,
-      "sessions": 22
+      "sessions": 23
     },
     {
       "path": "/features/nagoya-gourmet-guide.html",
@@ -107,8 +107,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 15,
-    "ctaClickRate": 3,
+    "outboundClicks": 16,
+    "ctaClickRate": 3.1,
     "byDomain": [
       {
         "domain": "haera.parco.jp",
@@ -117,13 +117,17 @@
       {
         "domain": "www.hotpepper.jp",
         "clicks": 1
+      },
+      {
+        "domain": "www.tablecheck.com",
+        "clicks": 1
       }
     ],
     "note": null
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 444,
+    "value": 447,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
