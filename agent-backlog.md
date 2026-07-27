@@ -28,6 +28,68 @@
 - **files**: `scripts/fetch_manual_store_photos.js`, `scripts/merge_pending_stores.js`, `scripts/audit_photo_coverage.js`, `.github/workflows/build.yml`, `agent-backlog.md`
 - **関連**: [[ISSUE-075]]（失効写真の自動修復・同スクリプトの別系統の欠陥）/ [[ISSUE-073]]（写真表示強化）
 
+### [ISSUE-077] 日次ジャーナルの品質ゲートが「盛れば通る／正直だと止まる」構造だった問題の是正 ✅
+
+> 採番note: 当初 ISSUE-076 で起票したが、並行実行していた写真取得タスクが先に ISSUE-076 を
+> main へマージしたため 077 に採番し直した（ORG-004 重複ID回避）。
+
+- **priority**: P0（編集独立・サクラ排除という Moat の根幹に反する構造 ＋ 日次公開の恒常停止）→ **status**: done
+- **detected**: 2026-07-27（オーナー指摘「ジャーナルが動いてない」→ 原因調査の過程で判明）
+- **resolved**: 2026-07-27
+- **resolved_by**: Orchestrator 直轄（INSPECT→BUILD）— オーナー承認のうえ A+B+C を実装
+- **category**: integrity / ops / content
+- **owner**: Editor + Builder
+
+- **発見の経緯**: 7/23以降ジャーナルが断続的に停止。日別に原因が異なった。
+  - 7/24: git衝突（既知クラス・別途修正済み）
+  - 7/25: 前日入れた「起動時クリーンアップ」が `.local-logs/`（gitignore漏れ）を残骸と誤認して stash 退避し、
+    ログ出力先ごと消滅 → claude のリダイレクトが失敗し**一度も起動されないまま** die（自作の二次障害・修正済み）
+  - 7/26: 正常公開
+  - 7/27: 記事は完成・15項目QAもPASSしていたが、**95点ゲート未達でエージェントが承認待ちのまま停止**。
+    ヘッドレスなので応答者がおらず die
+
+- **真因（構造的欠陥）**: 採点100点のうち**75点がエージェントの自己申告値**で決まり、外部から検証できるのは
+  recency(25) だけだった。とくに `trending_signals.buzz_score` は**どのデータファイルにも存在せず、
+  どのスクリプトも算出していない自由記入の数字**（`trending_stores.json` の buzz_score 保有は0件）。
+  - 正直に申告した場合の上限は **94点**、ゲートは **95点**。**設計上1点足りない**
+  - 過去にゲートを超えた候補（20日分）は**全てに `buzz_score>=90 → +5` が入っていた**
+  - 未達だった3日（5/29・7/17・7/27）は、いずれも正直に低く申告した日
+  - つまりゲートは品質を測る装置ではなく、**盛る動機を生む装置**になっていた。CLAUDE.md の
+    Moat（実在保証・サクラ排除・編集独立）と正面から矛盾する。7/27に止まったエージェントは
+    壊れたのではなく**正しく振る舞った**（盛るのを拒否し人間の判断を仰いだ）
+
+- **実装（A+B+C。オーナーが全実装を承認）**:
+  1. **A. 採点の健全化** `scripts/score_journal_candidates.js` 全面改訂
+     - `buzz_score` / `x_mentions`（ともに自己申告・出典なし）を採点から**全廃**
+     - 話題性を「話題だと主張する」→「**話題の証跡URLを sources に出せているか**」へ（独立ドメイン数15＋SNS言及URL 10）
+     - 一次情報源（PR TIMES・公式発表・一次報道）の有無を brand_fit の信頼性加点(+4)に組み込み（旧 buzz_score の5点の受け皿）
+     - uniqueness のテーマ偏り解消（旧: today_one だけ20点満点・他は angle 文字数で最大15点 ＝ メモ `journal-95-gate-theme-cap` の偏り）
+     - novelty の死点を修正（旧: 「同テーマ30日以内」判定のため today_one 毎日運用では恒久的に2点＝3点が取得不能だった）→「初掲載の店/コラムか」で判定
+     - 採点入力(`inputs`)も結果JSONに保存し、後から採点を再現・監査できるようにした
+  2. **B. 段階ゲート** `data/journal_gate_policy.json` 新設（`.claude/` は自己改変ブロックのためデータ側を唯一の情報源とする）
+     - `PASS`(95+)=無条件自動公開 / `PASS_WITH_NOTE`(85-94)=**公開してよい**＋gate_note記録 / `HOLD`(85未満)=公開しない
+     - 「捏造」か「当日公開ゼロ」かの二択をエージェントに迫らないための第三の帯
+  3. **C. ラッパーの never-stop 保証** `scripts/run_journal_local.sh` ＋ `scripts/register_journal_entry.js`（新規・冪等）
+     - 「記事は完成しているのに published.json 未登録」を検出したら、**独立 validator が PASS する限り**
+       ラッパー側で登録→索引再生成→通常フロー（commit/push）へ合流（＝7/27に手作業でやった手順の自動化）
+     - validator FAIL 時は公開せず `HOLD-<date>.md` を書き出し、**次回以降の実行でも毎朝警告**（7/24の停止が7/27まで気づかれなかった問題への対策）
+     - **validator は迂回しない**＝品質ゲートを飛ばす道具ではない
+
+- **QAゲート（実測）**:
+  - `--calibrate` の分布: 一次発表を押さえた記事=**95 PASS** / 一次発表なしの良記事=**88 PASS_WITH_NOTE** / 薄い記事=**37 HOLD** ✅
+  - **入力の数字を一切変えずに**、7/27のくろぎ候補が旧採点 **91点FAIL → 新採点 95点PASS**（問題は記事ではなくルーブリックだったことの実証）✅
+  - 復旧経路のE2E実測: 7/27エントリを削除して障害状況を再現 → validator PASS → 自動登録 → 索引再生成 → 登録確認まで通し、
+    生成されたエントリが**手動登録分と全項目一致**（provenance印 `registered_by` のみ差分）✅
+  - `register_journal_entry.js` の冪等性（登録済みならスキップ）✅ / 実記事3本からのメタ抽出精度 ✅
+  - 構文チェック: bash -n / node --check ×2 / policy JSON パース ✅
+- **95点ゲートは維持した**（緩めていない）。正直な取材で到達可能になったため、基準を下げずに解決している
+- **files**: `scripts/score_journal_candidates.js`（全面改訂）, `scripts/register_journal_entry.js`（新規）,
+  `scripts/run_journal_local.sh`, `data/journal_gate_policy.json`（新規）, `agents/editor.md`, `CLAUDE.md`, `.gitignore`, `agent-backlog.md`
+- **残（オーナー手動作業）**: `.claude/commands/journal-today.md` の Step 3c は「95点に到達するまで繰り返す」という
+  旧前提の記述が残っている（エージェント自己改変ブロックのため編集不可）。実際の挙動はスクリプト側の段階ゲートが
+  決めるため運用上の支障はないが、記述の整合を取るなら手動修正が必要。詳細は `docs/journal-gate-manual-patch.md`
+- **関連**: `journal-95-gate-theme-cap`（テーマ偏りのメモ＝本件で解消）/ [[ISSUE-065]]（ジャーナル停止の別クラス＝git汚染）
+
 ### [ISSUE-075] 失効した店舗写真の自動修復 — Places署名URLの生死判定＋place_idキャッシュ ✅
 
 > 採番note: 当初 ISSUE-074 で起票したが、並行実行していた実在再検証タスクが先に

@@ -1,0 +1,17 @@
+{
+  "description": "日次ジャーナルの公開ゲート方針（B: 段階ゲート）。scripts/score_journal_candidates.js と scripts/run_journal_local.sh が参照する。.claude/commands/*.md はエージェント自己改変ブロックで編集できないため、運用ルールはこのデータファイルを単一の情報源とする。",
+  "auto_publish_min": 95,
+  "review_publish_min": 85,
+  "policy": {
+    "PASS": "auto_publish_min 以上。無条件で自動公開する。",
+    "PASS_WITH_NOTE": "review_publish_min 以上 auto_publish_min 未満。自動公開するが、スコアと『何が足りなかったか』を data/journal_published.json の gate_note に記録する。当日公開ゼロを避けつつ、品質の推移を後から追えるようにするための帯。",
+    "HOLD": "review_publish_min 未満。公開しない。ドラフトは残し、.local-logs/HOLD-<date>.md に理由を書き出して当日中に気づけるようにする。"
+  },
+  "rationale": "2026-07-27 の調査で、旧 95点固定ゲートは『正直に申告すると上限94点で1点届かず、出典のない buzz_score を90以上と書くと通る』構造だったことが判明した（過去にゲートを超えた候補は全て buzz_score>=90 を積んでおり、正直に申告した日だけが未達だった）。ゲートを緩めるのではなく、(A) 採点を検証可能な事実だけで行うよう是正したうえで、(B) 満点でない日に『捏造』か『当日公開ゼロ』かの二択を迫らない第三の帯を設けた。",
+  "notes": [
+    "閾値を変えるときは、必ず node scripts/score_journal_candidates.js --calibrate で代表ケースの分布を確認してから変更すること。",
+    "HOLD が続く場合は閾値ではなく取材（一次情報源・話題の証跡URL）の不足を疑うこと。数字を動かして通すのは本末転倒。"
+  ],
+  "updated": "2026-07-27",
+  "related_issue": "ISSUE-077"
+}

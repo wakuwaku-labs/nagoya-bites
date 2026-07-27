@@ -40,6 +40,39 @@ export DISABLE_AUTOUPDATER=1
 log() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" | tee -a "$LOG"; }
 die() { log "❌ $*"; exit 1; }
 
+# HOLD: 「公開はしないが、当日中に人が気づける形で残す」終了経路（ISSUE-077 / C）。
+# 旧実装は die するだけだったため、記事が出ていない事実に数日後まで誰も気づかなかった
+# （7/24 の停止が発覚したのは 7/27）。HOLD メモを固定パスに書き出し、次回実行時にも警告する。
+hold() {
+  local reason="$1"
+  local holdfile="${LOG_DIR}/HOLD-${TODAY_JST}.md"
+  {
+    echo "# 日次ジャーナル HOLD — ${TODAY_JST}"
+    echo
+    echo "- 検出時刻: $(date '+%Y-%m-%d %H:%M:%S')"
+    echo "- 理由: ${reason}"
+    echo
+    echo "## 状況"
+    echo "- 記事HTML: $(ls journal/${TODAY_JST}-*.html 2>/dev/null || echo '(なし)')"
+    echo "- SNS原稿 : $(ls docs/daily-posts/${TODAY_JST}.md 2>/dev/null || echo '(なし)')"
+    echo "- 実行ログ: ${LOG}"
+    echo
+    echo "## 手動で公開する場合の手順"
+    echo '```bash'
+    echo "cd ${REPO}"
+    echo "node scripts/validate_journal_draft.js journal/${TODAY_JST}-<slug>.html docs/daily-posts/${TODAY_JST}.md"
+    echo "node scripts/register_journal_entry.js journal/${TODAY_JST}-<slug>.html"
+    echo "node scripts/build_journal_index.js"
+    echo "git add -A && git commit -m 'journal: ${TODAY_JST}' && git push origin main"
+    echo '```'
+    echo
+    echo "解消したらこのファイルを削除してください（残っている限り毎朝の実行で警告が出ます）。"
+  } > "$holdfile"
+  log "🛑 HOLD: ${reason}"
+  log "   HOLDメモを書き出しました: ${holdfile}"
+  die "本日は公開を見送りました（HOLD）。${holdfile} を確認してください。"
+}
+
 cd "$REPO" || die "repo not found: $REPO"
 
 # ---- 0. 同時実行ロック（macOSにはflock無し → PIDfile方式）----
@@ -60,6 +93,14 @@ trap 'rm -f "$LOCKFILE"' EXIT INT TERM
 
 log "=== 日次ジャーナル ローカル生成開始 (PID $$) ==="
 TODAY_JST=$(TZ=Asia/Tokyo date +%Y-%m-%d)
+
+# 過去の HOLD が未解消なら毎朝知らせる（気づかないまま欠番が積み上がるのを防ぐ）
+PREV_HOLDS=$(ls "${LOG_DIR}"/HOLD-*.md 2>/dev/null | grep -v "HOLD-${TODAY_JST}.md" || true)
+if [ -n "$PREV_HOLDS" ]; then
+  log "⚠️ 未解消の HOLD が残っています（過去に公開を見送った日があります）:"
+  echo "$PREV_HOLDS" | tee -a "$LOG"
+  log "   内容を確認し、対応後に該当ファイルを削除してください。"
+fi
 
 # ---- 1. 事前チェック: 未解決衝突 / rebase 中なら即 fail ----
 if [ -d ".git/rebase-merge" ] || [ -d ".git/rebase-apply" ]; then
@@ -186,7 +227,50 @@ OK=$(node -e "
   } catch (e) { process.stdout.write('0'); }
 ")
 if [ "$OK" != "1" ]; then
-  die "${TODAY_JST} が published.json に未登録。生成失敗（上記claudeログ参照）。"
+  # ---- 自動復旧（ISSUE-077 / C: never-stop 保証）----
+  # 「記事は完成しているのに published.json が未登録」= エージェントが登録前に停止した状態。
+  # 実例: 2026-07-22（validator の誤検知で die → 本番404）/ 2026-07-27（95点ゲート未達で
+  # 承認待ち。ヘッドレスなので誰も答えられない）。成果物が揃っていて独立 validator が
+  # PASS するなら、ラッパー側で登録して通常フローに戻す。
+  # ※ validator は迂回しない。品質ゲートを通らないものは HOLD にして公開しない。
+  log "published.json に ${TODAY_JST} が未登録。エージェントが登録前に停止した可能性があるため、成果物からの自動復旧を試みます。"
+
+  RESCUE_HTML=""
+  for f in journal/"${TODAY_JST}"-*.html; do
+    [ -e "$f" ] && RESCUE_HTML="$f" && break
+  done
+  RESCUE_MD="docs/daily-posts/${TODAY_JST}.md"
+
+  if [ -z "$RESCUE_HTML" ]; then
+    hold "記事HTML（journal/${TODAY_JST}-*.html）が存在しない。生成そのものが失敗しています。"
+  fi
+  if [ ! -f "$RESCUE_MD" ]; then
+    hold "SNS原稿（${RESCUE_MD}）が存在しない。生成が途中で止まっています。記事HTML=${RESCUE_HTML}"
+  fi
+
+  log "成果物を検出: ${RESCUE_HTML} / ${RESCUE_MD}"
+  log "独立 validator で公開可否を判定します（品質ゲートは迂回しません）。"
+  if ! node scripts/validate_journal_draft.js "$RESCUE_HTML" "$RESCUE_MD" >>"$LOG" 2>&1; then
+    hold "validator が FAIL。品質ゲートを通らないため公開しません。詳細は ${LOG} の末尾を確認してください。"
+  fi
+  log "✅ validator PASS。ラッパー側で published.json に登録します。"
+
+  node scripts/register_journal_entry.js "$RESCUE_HTML" --by-wrapper >>"$LOG" 2>&1 \
+    || hold "published.json への登録に失敗しました（register_journal_entry.js）。"
+
+  node scripts/build_journal_index.js >>"$LOG" 2>&1 \
+    || hold "索引・フィードの再生成に失敗しました（build_journal_index.js）。"
+
+  OK=$(node -e "
+    try {
+      const p = require('./data/journal_published.json');
+      process.stdout.write((p.entries||[]).some(e=>e.date==='${TODAY_JST}') ? '1' : '0');
+    } catch (e) { process.stdout.write('0'); }
+  ")
+  if [ "$OK" != "1" ]; then
+    hold "登録処理は成功したのに published.json に ${TODAY_JST} が反映されていません。状態異常です。"
+  fi
+  log "🔧 自動復旧に成功しました。通常フロー（検証 → commit → push）に合流します。"
 fi
 log "✅ ${TODAY_JST} のジャーナルが published.json に登録されました。"
 
