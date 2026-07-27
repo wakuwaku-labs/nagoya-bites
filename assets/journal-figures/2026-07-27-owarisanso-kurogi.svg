@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="予約困難な名店くろぎ、名古屋初出店の使い方">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#241a08"/>
+      <stop offset="100%" stop-color="#5a4318"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#241a08"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#c4a060" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="260" fill="url(#bg)"/>
+  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
+
+  <g opacity=".45" fill="none" stroke="#c4a060" stroke-width="1.4">
+    <rect x="428" y="150" width="70" height="70"/>
+    <text x="463" y="192" text-anchor="middle" fill="#c4a060" opacity=".8"
+          font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-size="15">8席</text>
+    <rect x="508" y="150" width="70" height="70"/>
+    <text x="543" y="192" text-anchor="middle" fill="#c4a060" opacity=".8"
+          font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-size="15">個室8</text>
+  </g>
+  <text x="463" y="140" fill="#c4a060" opacity=".55" font-family="'Helvetica Neue',Arial,sans-serif"
+        font-size="9" letter-spacing="0.12em">COUNTER</text>
+  <text x="543" y="140" fill="#c4a060" opacity=".55" font-family="'Helvetica Neue',Arial,sans-serif"
+        font-size="9" letter-spacing="0.12em">PRIVATE ROOM</text>
+
+  <rect x="36" y="36" width="3" height="145" fill="#c4a060" opacity=".9"/>
+  <text x="46" y="98" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="27" font-weight="700" letter-spacing="0.02em">予約困難な名店</text>
+  <text x="46" y="136" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="27" font-weight="700" letter-spacing="0.02em">くろぎ、名古屋初出店</text>
+  <text x="46" y="60" fill="#c4a060" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+  <text x="46" y="168" fill="#c4a060" opacity=".7" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10.5" letter-spacing="0.06em">コース3.8万円〜 / 名駅 中村区 / 2026.07.24 開業</text>
+</svg>

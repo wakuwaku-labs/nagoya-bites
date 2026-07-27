@@ -1,0 +1,55 @@
+{
+  "date": "2026-07-27",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "k1",
+      "title_draft": "予約困難な名店くろぎ、名古屋初出店の使い方",
+      "verdict": "FAIL",
+      "total": 91,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 19,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 / X引用 +3"
+        ],
+        "topicality": [
+          "media_count=5 → 15",
+          "x_mentions=2 → 4"
+        ],
+        "uniqueness": [
+          "独自性キーワード 6件 (価格帯,コース,席,予約,シーン,接待)"
+        ],
+        "brand_fit": [
+          "ベース10",
+          "業界人視点キーワード 3件 → +5"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "sources 4件 +4",
+          "title 21字 +3"
+        ],
+        "novelty": [
+          "同テーマあり / 同店なし → 2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": null,
+  "fallback_needed": true
+}
