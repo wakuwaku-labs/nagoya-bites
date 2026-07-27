@@ -1246,24 +1246,47 @@
     {
       "date": "2026-07-26",
       "totals": {
-        "activeUsers": 441,
+        "activeUsers": 434,
         "pageViews": 626,
-        "sessions": 499,
-        "avgSessionDuration": 100.5,
-        "bounceRate": 0.407,
-        "pagesPerSession": 1.25
+        "sessions": 493,
+        "avgSessionDuration": 98.6,
+        "bounceRate": 0.402,
+        "pagesPerSession": 1.27
       },
       "channels_pct": {
-        "organic": 55.2,
-        "direct": 33.7,
+        "organic": 57,
+        "direct": 31.9,
         "social": 9.5,
         "referral": 1.6,
         "paid": 0,
         "other": 0
       },
       "cta": {
-        "outboundClicks": 16,
-        "ctaClickRate": 3.2
+        "outboundClicks": 15,
+        "ctaClickRate": 3
+      }
+    },
+    {
+      "date": "2026-07-27",
+      "totals": {
+        "activeUsers": 420,
+        "pageViews": 608,
+        "sessions": 478,
+        "avgSessionDuration": 96.3,
+        "bounceRate": 0.387,
+        "pagesPerSession": 1.27
+      },
+      "channels_pct": {
+        "organic": 57.5,
+        "direct": 30.8,
+        "social": 10,
+        "referral": 1.7,
+        "paid": 0,
+        "other": 0
+      },
+      "cta": {
+        "outboundClicks": 15,
+        "ctaClickRate": 3.1
       }
     }
   ]
