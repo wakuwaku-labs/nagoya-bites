@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-07-27T07:26:52.315Z",
+  "generatedAt": "2026-07-27T07:44:12.154Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 447,
-    "pageViews": 643,
-    "sessions": 508,
-    "avgSessionDuration": 96,
-    "bounceRate": 0.4,
-    "pagesPerSession": 1.27
+    "activeUsers": 449,
+    "pageViews": 645,
+    "sessions": 510,
+    "avgSessionDuration": 96.1,
+    "bounceRate": 0.402,
+    "pagesPerSession": 1.26
   },
   "channels": {
     "sessions": {
       "organic": 293,
-      "direct": 163,
+      "direct": 166,
       "social": 49,
       "referral": 8,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 57.1,
-      "direct": 31.8,
-      "social": 9.6,
+      "organic": 56.8,
+      "direct": 32.2,
+      "social": 9.5,
       "referral": 1.6,
       "paid": 0,
       "other": 0
@@ -36,7 +36,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 130
+      "sessions": 131
     },
     {
       "source": "openai",
@@ -66,7 +66,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 8
+      "sessions": 10
     },
     {
       "source": "duckduckgo",
@@ -93,11 +93,11 @@
     {
       "path": "/features/nagoya-solo-dining.html",
       "pageViews": 56,
-      "sessions": 50
+      "sessions": 51
     },
     {
       "path": "/index.html",
-      "pageViews": 37,
+      "pageViews": 38,
       "sessions": 23
     },
     {
@@ -107,15 +107,15 @@
     }
   ],
   "cta": {
-    "outboundClicks": 16,
-    "ctaClickRate": 3.1,
+    "outboundClicks": 17,
+    "ctaClickRate": 3.3,
     "byDomain": [
       {
-        "domain": "haera.parco.jp",
-        "clicks": 1
+        "domain": "www.hotpepper.jp",
+        "clicks": 2
       },
       {
-        "domain": "www.hotpepper.jp",
+        "domain": "haera.parco.jp",
         "clicks": 1
       },
       {
@@ -127,7 +127,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 447,
+    "value": 449,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
