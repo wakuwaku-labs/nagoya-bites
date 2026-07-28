@@ -1,0 +1,378 @@
+{
+  "date": "2026-07-28",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "gate_policy": {
+    "auto_publish_min": 95,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "丑の日が終わった今こそ、名古屋の鰻は狙い目",
+      "verdict": "PASS",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 3
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 9件 (旬,時期,需要,繁忙,予約,シーン,相場,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 149字 +4",
+          "title 21字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "ひつまぶし四杯目の作法と、進化する名古屋の鰻",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 90,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 3
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 7件 (旬,時期,繁忙,予約,相場,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 130字 +4",
+          "title 22字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ]
+      },
+      "gate_note": "90点（自動公開ライン 95点）。主な不足: topicality -8 / novelty -2"
+    },
+    {
+      "id": "c3",
+      "title_draft": "うなぎ高騰の夏、名古屋で価格に納得する選び方",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 90,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 3
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 8件 (旬,時期,需要,繁忙,予約,相場,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 108字 +4",
+          "title 22字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ]
+      },
+      "gate_note": "90点（自動公開ライン 95点）。主な不足: topicality -8 / novelty -2"
+    },
+    {
+      "id": "c4",
+      "title_draft": "名古屋が鰻の街である理由を、旬の数字で読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 86,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 13,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 3
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 8件 (旬,需要,繁忙,予約,シーン,相場,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 83字 +4",
+          "title 21字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ]
+      },
+      "gate_note": "86点（自動公開ライン 95点）。主な不足: topicality -12 / novelty -2"
+    },
+    {
+      "id": "c5",
+      "title_draft": "丑の日翌週、名古屋の鰻を予約するベストな時期",
+      "verdict": "HOLD",
+      "total": 80,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 13,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 3
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 8件 (時期,需要,繁忙,予約,シーン,相場,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 79字 +2",
+          "title 22字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "丑の日が終わった今こそ、名古屋の鰻は狙い目",
+      "lead_draft": "2026年の夏土用の丑の日は7月26日、二の丑のない一発勝負の年だった。行列と価格の高騰が落ち着く丑の日直後の今こそ、名古屋の鰻は旬の需要ピークを過ぎて予約が取りやすい狙い目の時期。ひつまぶしの価格帯の相場と、繁忙を避ける回転の読み、夏バテ本番の8月に向けたシーン設計を業界人の目線で裏側から読む。",
+      "angle": "丑の日直後は旬の需要ピークが過ぎて予約が取りやすい時期。ひつまぶしの価格帯と相場、繁忙を避ける回転の読み、夏バテ本番8月に向けたシーンの選び方を業界人の裏側目線で",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": "うなぎ・ひつまぶし"
+      },
+      "sources": [
+        {
+          "label": "知多家 本邸『石焼うなぎおこげまぶし』予約開始（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000047.000023738.html",
+          "date": "2026-07-14"
+        },
+        {
+          "label": "うなぎ百名店2026 発表・愛知12店（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001043.000001455.html",
+          "date": "2026-07-22"
+        },
+        {
+          "label": "NHKニュース『土用の丑の日 ことしのうなぎ 価格は』（X）",
+          "url": "https://x.com/nhk_news/status/2079866812117008714",
+          "date": "2026-07-26"
+        },
+        {
+          "label": "PR TIMES GOURMET 土用の丑の日特別企画（X）",
+          "url": "https://x.com/PRTIMES_GOURMET/status/2078021158885298401",
+          "date": "2026-07-24"
+        },
+        {
+          "label": "名古屋ひつまぶしおすすめ12選 2026（じゃらん）",
+          "url": "https://www.jalan.net/news/article/203704/",
+          "date": "2026-07-01"
+        },
+        {
+          "label": "土用の丑の日2026はいつ（tabemaro）",
+          "url": "https://www.tabemaro.jp/column/doyouno-ushinohi/",
+          "date": "2026-07-10"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "ひつまぶし四杯目の作法と、進化する名古屋の鰻",
+      "lead_draft": "ひつまぶしは一杯目そのまま、二杯目薬味、三杯目出汁、四杯目お好み、という食べ方の設計そのものが名古屋の鰻文化の核。2026年7月に予約が始まった石焼おこげまぶしは、この四杯目を商品化した進化形だ。丑の日の時期に、価格帯の相場と予約・繁忙の読み方を業界人目線で。",
+      "angle": "ひつまぶし四杯の作法という食べ方の設計を旬の時期に読み解く。四杯目の進化、価格帯の相場、予約と繁忙・回転の読みを業界人の裏側目線で",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": "うなぎ・ひつまぶし"
+      },
+      "sources": [
+        {
+          "label": "知多家 本邸『石焼うなぎおこげまぶし』予約開始（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000047.000023738.html",
+          "date": "2026-07-14"
+        },
+        {
+          "label": "NHKニュース 土用の丑の日 うなぎ価格（X）",
+          "url": "https://x.com/nhk_news/status/2079866812117008714",
+          "date": "2026-07-26"
+        },
+        {
+          "label": "名古屋ひつまぶし12選 2026（じゃらん）",
+          "url": "https://www.jalan.net/news/article/203704/",
+          "date": "2026-07-01"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "うなぎ高騰の夏、名古屋で価格に納得する選び方",
+      "lead_draft": "2026年の丑の日はうなぎ価格の高騰が話題になった。夏の需要ピークが過ぎる丑の日直後は、価格帯の相場を見極めやすい時期でもある。名古屋のひつまぶしを、コースとアラカルトの価格帯、予約と繁忙の回転から業界人目線で選ぶ。",
+      "angle": "うなぎ高騰の夏に価格帯の相場を見極める。需要と旬の時期、予約と繁忙・回転の読みを業界人の裏側目線で",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": "うなぎ・ひつまぶし"
+      },
+      "sources": [
+        {
+          "label": "NHKニュース 土用の丑の日 うなぎ価格（X）",
+          "url": "https://x.com/nhk_news/status/2079866812117008714",
+          "date": "2026-07-26"
+        },
+        {
+          "label": "うなぎ百名店2026 愛知12店（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001043.000001455.html",
+          "date": "2026-07-22"
+        },
+        {
+          "label": "土用の丑の日2026（tabemaro）",
+          "url": "https://www.tabemaro.jp/column/doyouno-ushinohi/",
+          "date": "2026-07-10"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "名古屋が鰻の街である理由を、旬の数字で読む",
+      "lead_draft": "全国の名店密度で名古屋を含む愛知は上位に入る。ひつまぶし発祥の地が、丑の日の需要期にどう動くか。価格帯の相場、予約と繁忙の回転、夏のシーン設計を業界人目線で整理する。",
+      "angle": "名古屋が鰻の街である背景を旬の需要期に読む。価格帯の相場、予約と繁忙の回転、夏のシーン設計を業界人の裏側目線で",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": "うなぎ・ひつまぶし"
+      },
+      "sources": [
+        {
+          "label": "うなぎ百名店2026（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001043.000001455.html",
+          "date": "2026-07-22"
+        },
+        {
+          "label": "NHK 土用の丑の日 うなぎ価格（X）",
+          "url": "https://x.com/nhk_news/status/2079866812117008714",
+          "date": "2026-07-26"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "丑の日翌週、名古屋の鰻を予約するベストな時期",
+      "lead_draft": "丑の日が終わった翌週は、旬の需要が一段落し予約が取りやすくなる時期。名古屋のひつまぶしを、価格帯の相場と繁忙を避ける回転、夏のシーンから業界人目線で読む短信。",
+      "angle": "丑の日翌週は需要が一段落する予約好機の時期。価格帯の相場と繁忙・回転、夏のシーン設計を業界人目線で",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": "うなぎ・ひつまぶし"
+      },
+      "sources": [
+        {
+          "label": "NHK 土用の丑の日 うなぎ価格（X）",
+          "url": "https://x.com/nhk_news/status/2079866812117008714",
+          "date": "2026-07-26"
+        },
+        {
+          "label": "名古屋ひつまぶし12選（じゃらん）",
+          "url": "https://www.jalan.net/news/article/203704/",
+          "date": "2026-07-01"
+        }
+      ]
+    }
+  ]
+}
