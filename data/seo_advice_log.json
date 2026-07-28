@@ -1120,6 +1120,36 @@
       "brand_reason": "既存の未実装チケット SEO-013（人気特集の冒頭に予約ボタン・店舗詳細リンクを複数設置・ready）および SEO-037（店舗カードに予約/Googleマップボタンを常時表示・ready）と同一施策。再起票せず。",
       "category": null,
       "fingerprint": "1ad76463adeaff4c"
+    },
+    {
+      "id": null,
+      "date": "2026-07-29",
+      "source": "line-daily",
+      "advice": "🔴 直帰率が96%と非常に高く、訪問者のほとんどが店舗情報に到達できていません。👉 index.htmlのファーストビューに「シーン別特集」への導線を目立つように追加し、ユーザーの興味を引くコンテンツへの回遊を促しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "既存 SEO-009（トップFVに人気特集への大きな誘導導線・ready/Builder）および SEO-014（FVで業界人の目利き×シーン別専門性を訴求・P1 ready）と同一施策。fingerprint は文言差で不一致だったが編集判断で重複と確定。再起票せず既存の実装待ちに集約する。",
+      "category": null,
+      "fingerprint": "d5ef8d341c8aaba9"
+    },
+    {
+      "id": null,
+      "date": "2026-07-29",
+      "source": "line-daily",
+      "advice": "🟡 予約ボタンクリック、マップクリック、店舗詳細の閲覧がすべて0回で、サイトの目的が達成されていません。👉 index.htmlの各店舗カードに「詳細を見る」ボタンを設置し、モーダルを開くアクションを促す文言を具体的に記載しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "既存 SEO-010（各店舗カードに「詳細を見る」明示ボタン・ready/Builder）と文字通り同一。加えて予約/マップ導線は SEO-037・SEO-013 で 2026-07-28 に実装済み（本レポートは 07-27 のデータで実装前）。効果判定は翌週の数値で行う。",
+      "category": null,
+      "fingerprint": "11c202787a9dc20f"
+    },
+    {
+      "id": null,
+      "date": "2026-07-29",
+      "source": "line-daily",
+      "advice": "💡 訪問回数(セッション)24に対しページ閲覧が26と、サイト内の回遊がほとんど発生していません。👉 journal/2026-07-27-owarisanso-kurogiの冒頭に、関連するfeatures/nagoya-hitsumabushiなど人気特集への内部リンクを設置し、次の行動を促しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "既存 SEO-008（ジャーナル記事冒頭にサイト紹介＋内部リンク・ready/Editor）および SEO-038（高流入ジャーナル→関連特集への内部リンクで回遊に変換・ready/Editor）と同一施策。再起票せず既存に集約。",
+      "category": null,
+      "fingerprint": "9e2895990684dc50"
     }
   ]
 }
