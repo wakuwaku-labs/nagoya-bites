@@ -151,15 +151,24 @@
 - **検証**: `groupPageQueries` を純関数化して認証なしでテスト（focus外ページの除外 / 1ページ15件上限 / 丸め / keys欠落行でクラッシュしない を確認）/ 分類器を実データ25クエリで検証し店名の帰属も正しいことを確認 / `gsc_opportunities.js` が拡張後の JSON でも従来どおり動作
 - **関連**: [[SEO-011]]（この測定器が測る対象）/ [[SEO-039]]（Bing・生成AI 側の観測。こちらは Google 側の解像度）
 
-### [SEO-042] 特集冒頭のCTAを1つの設計に統合する（店舗詳細導線＋予約導線・SEO-036 + SEO-013 統合）
-- **priority**: P2 → **status**: ready
+### [SEO-042] 特集冒頭のCTAを1つの設計に統合する（店舗詳細導線＋予約導線・SEO-036 + SEO-013 統合）🔸
+- **priority**: P2 → **status**: in_progress（特集側 done 2026-07-27 / モーダル側は未着手）
 - **detected**: 2026-07-27（SEO改善の全体仕分けによる統合起票）
 - **category**: SEO
 - **owner**: Builder + Editor
 - **統合元**: [[SEO-036]]（特集冒頭に「店舗詳細を見る」3件以上）+ [[SEO-013]]（モーダルの予約ボタン視認性＋人気特集本文冒頭にCTA）
 - **統合理由**: 両者とも設置面が「人気特集の冒頭」で、対象店も同じ（nagoya-hitsumabushi / nagoya-solo-dining / nagoya-sweets）。別々に実装すると同じ位置に2種類のボタン群が二重に生えるか、後から実装した側が先の設置を上書きする。「読者が特集冒頭で最初に取れる行動」を1回で設計するほうが正しい
 - **brand-filter**: ✅ 適合（統合元の判定を継承）— 実在店の既存予約導線へのUX改善であり自社マネタイズではない（制約8非該当）。順位操作・広告依存・ストック写真を伴わない
-- **acceptance**: 閲覧上位の特集（hitsumabushi / solo-dining / sweets / gourmet-guide）の冒頭に、実在店3件以上への「店舗詳細」導線と予約導線を**一体のCTAブロックとして**設置／店舗詳細モーダル内の予約ボタンの視認性（色・サイズ・文言「今すぐ予約」）も同時に改善／リンク先は LOCAL_STORES 実在店のみ（`node scripts/audit_feature_stores.js` 検出ゼロ維持）／既存の cta_click・cta_gmap_click 計測を維持／フィルタ・検索・モーダル・IGエンベッド・Google評価を壊さない（制約5）・index.html 単一ファイル維持（制約1）
+- **acceptance**: 閲覧上位の特集（hitsumabushi / solo-dining / sweets / gourmet-guide）の冒頭に、実在店3件以上への「店舗詳細」導線と予約導線を**一体のCTAブロックとして**設置／店舗詳細モーダル内の予約ボタンの視認性（色・サイズ・文言「今すぐ予約」）も同時に改善／リンク先は LOCAL_STORES 実在店のみ（`node scripts/audit_feature_stores.js` 検出ゼロ維持）／既存の cta_click・cta_gmap_click 計測を維持／フィルタ・検索・モーダル・IGエンベッド・Google評価を壊さない（制約5）・index.html 単一ファイル維持
+- **実装（特集側・2026-07-27 完了）**: `scripts/add_feature_top_cta.js` 新設。冪等（`<!-- SEO-042:TOP-CTA:START/END -->` マーカーで再生成）
+  1. **掲載店の出所**: 記事の ItemList JSON-LD（全特集で形式統一）から取得。さらに `stores/JXXXXXXXX.html` の実在と `closed_stores.json` 不掲載を確認した店だけ表示。3件に満たない特集はスキップ（水増ししない）
+  2. **対象特集は実データ由来**: `site_metrics.json`（GA4）と `gsc_metrics.json` の topPages から特集を抽出（決め打ちしない）→ hitsumabushi / solo-dining / tebasaki に適用
+  3. **設置位置**: 本文の最初の `<h2>` 直前＝導入文の後・本編の前。`refresh_feature_rosters.js` が差し替える `.store-list` の**外側**なので月次の掲載店入替で消えない
+- **実装中に見つけて直した2点**:
+  1. **同一ブランドの支店が並ぶ**: ItemList 上位3件がひつまぶし特集＝「備長」3店舗、手羽先特集＝「むつみ」3店舗だった。「EDITORS' PICK 3軒」がチェーン1社の支店一覧では業界人の目利きという Moat に反するため、看板単位で重複を除外し次点を繰り上げる処理を追加（3軒に届かない場合のみ戻す）
+  2. **一部の特集で `--gold` が未定義**: `nagoya-solo-dining` ほか4特集は `--gold` 変数を持たず、`var(--gold)` が空に解決してボタンが透明・文字が黒のまま出ていた。さらにページ側の `.store-link[href*=hotpepper]{color:var(--gold) !important}` が `!important` 付きでスコープ強化だけでは勝てない。`.topcta` 自身に `--gold:#7a5c10;--gold2:#96720f`（サイト共通値）を定義し、ページ側ルールも CTA 内では正しく解決するようにした
+- **検証（ローカル実機・375x812）**: 3特集で CTA の計算済みスタイルが一致（店舗詳細=金塗り rgb(122,92,16)／今すぐ予約=白地に金枠、既存 `.store-link` の意匠と同一）／掲載店リンク9件すべて `stores/*.html` 実在／横スクロール発生なし／console エラーなし／`audit_feature_stores.js` 実在不明0・リンク切れ0／再実行で unchanged（冪等）
+- **残り（未着手）**: 店舗詳細モーダル内の予約ボタン視認性（色・サイズ・文言「今すぐ予約」）＝ index.html 側。SEO-041（店舗カードの直アクション）と同じカードUI/モーダル領域を触るため、着手時に統合可否を判断する（制約1）
 - **効果測定**: `data/metrics_history.json` の `cta.ctaClickRate` と 1訪問あたりページ数の前後比
 
 ### [SEO-041] 店舗カードのアクション導線を1つの設計に統合する（詳細を見る＋予約・マップ・SEO-010 + SEO-037 統合）
