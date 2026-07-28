@@ -1,36 +1,45 @@
 {
-  "generatedAt": "2026-07-27T23:36:03.384Z",
+  "generatedAt": "2026-07-28T00:10:45.293Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
   "byQuery": {
     "ctrFix": [
       {
-        "query": "一魚魚一 はなれ",
-        "impressions": 150,
-        "clicks": 2,
-        "position": 8.3,
-        "ctr": 1.33,
-        "expectedCtr": 3.1,
-        "missedClicks": 2.6
+        "query": "のれんとコルク 名古屋",
+        "impressions": 124,
+        "clicks": 1,
+        "position": 8.4,
+        "ctr": 0.81,
+        "expectedCtr": 3,
+        "missedClicks": 2.8
       },
       {
-        "query": "のれんとコルク 名古屋",
-        "impressions": 134,
+        "query": "一魚魚一 はなれ",
+        "impressions": 145,
         "clicks": 2,
-        "position": 8.3,
-        "ctr": 1.49,
+        "position": 8.2,
+        "ctr": 1.38,
         "expectedCtr": 3.1,
-        "missedClicks": 2.1
+        "missedClicks": 2.5
+      },
+      {
+        "query": "やきまる亭",
+        "impressions": 115,
+        "clicks": 1,
+        "position": 9.2,
+        "ctr": 0.87,
+        "expectedCtr": 2.7,
+        "missedClicks": 2.2
       },
       {
         "query": "フレンチ屋台ビストロ のれんとコルク 名古屋駅店",
-        "impressions": 85,
+        "impressions": 81,
         "clicks": 2,
         "position": 7,
-        "ctr": 2.35,
+        "ctr": 2.47,
         "expectedCtr": 4,
-        "missedClicks": 1.4
+        "missedClicks": 1.2
       },
       {
         "query": "くろぎ 名古屋",
@@ -53,10 +62,10 @@
       },
       {
         "query": "national bakery & canteen",
-        "impressions": 91,
+        "impressions": 88,
         "clicks": 1,
         "position": 10.6,
-        "ctr": 1.1,
+        "ctr": 1.14,
         "upsideClicks": 1.5
       },
       {
@@ -81,57 +90,49 @@
     "ctrFix": [
       {
         "page": "/stores/J004591229.html",
-        "impressions": 907,
+        "impressions": 873,
         "clicks": 4,
         "position": 9.9,
-        "ctr": 0.44,
+        "ctr": 0.46,
         "expectedCtr": 2.5,
-        "missedClicks": 19
+        "missedClicks": 18.1
       },
       {
         "page": "/stores/J004612794.html",
-        "impressions": 859,
+        "impressions": 839,
         "clicks": 11,
         "position": 9.7,
-        "ctr": 1.28,
+        "ctr": 1.31,
         "expectedCtr": 2.6,
-        "missedClicks": 11.3
+        "missedClicks": 10.7
       },
       {
         "page": "/stores/J004559348.html",
-        "impressions": 526,
-        "clicks": 11,
-        "position": 8.2,
-        "ctr": 2.09,
+        "impressions": 505,
+        "clicks": 9,
+        "position": 8.3,
+        "ctr": 1.78,
         "expectedCtr": 3.1,
-        "missedClicks": 5.4
+        "missedClicks": 6.6
       },
       {
         "page": "/stores/J004509691.html",
-        "impressions": 355,
+        "impressions": 346,
         "clicks": 4,
         "position": 10,
-        "ctr": 1.13,
+        "ctr": 1.16,
         "expectedCtr": 2.5,
-        "missedClicks": 4.9
+        "missedClicks": 4.6
       }
     ],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2401,
+        "impressions": 2331,
         "clicks": 6,
-        "position": 23.8,
-        "ctr": 0.25,
-        "upsideClicks": 61.2
-      },
-      {
-        "page": "/journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html",
-        "impressions": 237,
-        "clicks": 4,
-        "position": 10.4,
-        "ctr": 1.69,
-        "upsideClicks": 2.6
+        "position": 24,
+        "ctr": 0.26,
+        "upsideClicks": 59.2
       },
       {
         "page": "/features/nagoya-solo-dining.html",
@@ -145,10 +146,10 @@
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 4,
+    "queryCtrFix": 5,
     "queryRankPush": 4,
     "pageCtrFix": 4,
-    "pageRankPush": 3,
+    "pageRankPush": 2,
     "topPageCtrFix": [
       "/stores/J004591229.html",
       "/stores/J004612794.html",
