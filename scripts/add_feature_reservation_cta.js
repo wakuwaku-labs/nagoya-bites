@@ -16,6 +16,12 @@
  *      （矢印は共通CSS .store-link::after が付与するため文言に含めない）
  *   B: <a href="/stores/JXXXXXXXX.html" class="link"…>…</a>（一人飲み特集の形式）
  *      → 直後に <a href="https://www.hotpepper.jp/strJ…/" class="link">ホットペッパーで予約</a>
+ *   C: <a href="../stores/JXXXXXXXX.html" class="shop-detail-link">詳細ページを見る</a>
+ *      （build_features.js 系が生成する最も新しい形式。2026-07-28 時点で 26特集 266件が
+ *        この形式のみを持ち、A/B のどちらにも一致せず予約導線ゼロだった＝本スクリプトの取りこぼし）
+ *      → 直後に <a href="https://www.hotpepper.jp/strJ…/" class="shop-reserve-link">予約・空席確認</a>
+ *      （.shop-detail-link は solid gold + ::after "→"。予約は outline gold の対比スタイルにし、
+ *        ::after を継承しないよう別クラスにする。CSS が無いファイルには </style> 直前へ注入）
  *
  * 安全条件（架空店ブロック・閉店ゲートと整合）:
  *   - stores/JXXXXXXXX.html がリポジトリに実在する J コードのみ付与
@@ -42,6 +48,16 @@ function isLinkable(jcode) {
 
 const PATTERN_A = /<a class="store-link" href="\.\.\/stores\/(J\d+)\.html">[^<]*<\/a>/g;
 const PATTERN_B = /<a href="\/stores\/(J\d+)\.html" class="link"[^>]*>[^<]*<\/a>/g;
+const PATTERN_C = /<a href="\.\.\/stores\/(J\d+)\.html" class="shop-detail-link">[^<]*<\/a>/g;
+
+// C 形式用のCSS（.shop-detail-link と同寸法・outline 配色。::after を継承しない別クラス）
+const RESERVE_CSS =
+  '.shop-reserve-link{display:inline-flex;align-items:center;gap:.35rem;margin-top:.9rem;margin-left:.5rem;' +
+  'background:transparent;color:var(--gold) !important;padding:.5rem 1rem;border:1px solid var(--gold);' +
+  'border-radius:4px;font-size:.78rem;font-weight:500;text-decoration:none;letter-spacing:.04em;' +
+  'transition:background .15s,transform .1s;}' +
+  '.shop-reserve-link:hover{background:rgba(122,92,16,.08);transform:translateY(-1px);}' +
+  '@media(max-width:480px){.shop-reserve-link{margin-left:0;}}';
 
 let totalAdded = 0;
 const files = fs.readdirSync(FEATURES_DIR).filter(f => f.endsWith('.html'));
@@ -61,10 +77,25 @@ for (const file of files) {
       if (before.includes('hotpepper.jp/str' + jcode) || !isLinkable(jcode)) return m;
       added++;
       return m + ' <a href="https://www.hotpepper.jp/str' + jcode + '/" class="link" target="_blank" rel="noopener">ホットペッパーで予約</a>';
+    })
+    .replace(PATTERN_C, (m, jcode) => {
+      if (before.includes('hotpepper.jp/str' + jcode) || !isLinkable(jcode)) return m;
+      added++;
+      return m + '\n          <a href="https://www.hotpepper.jp/str' + jcode + '/" class="shop-reserve-link" target="_blank" rel="noopener">予約・空席確認</a>';
     });
 
   if (added > 0) {
-    fs.writeFileSync(fp, replaced);
+    let out = replaced;
+    // C 形式を新規付与したファイルに .shop-reserve-link CSS が無ければ注入（冪等）
+    if (out.includes('class="shop-reserve-link"') && !out.includes('.shop-reserve-link{')) {
+      const idx = out.lastIndexOf('</style>');
+      if (idx === -1) {
+        console.error(`  ! </style> が無いためCSS注入をスキップ: features/${file}`);
+      } else {
+        out = out.slice(0, idx) + RESERVE_CSS + out.slice(idx);
+      }
+    }
+    fs.writeFileSync(fp, out);
     console.log(`features/${file}: 予約リンク +${added}`);
     totalAdded += added;
   }

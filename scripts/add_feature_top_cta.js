@@ -193,6 +193,12 @@ function buildCta(stores) {
   // スコープを強めただけでは勝てない。
   // → `.topcta` 自身に変数を定義することで、**ページ側のルールも CTA の中では正しく解決する**。
   //    値はサイト共通の #7a5c10 / #96720f（index.html・他特集と同一）。
+  //
+  // モバイルで負マージンによる全幅化はしない。親の左右 padding はテンプレートごとに違い
+  // （art-body 型は 1.5rem、季節特集の `.content` 型はより小さい）、固定値の
+  // `margin-left:-1.5rem` を当てると padding の小さい型で画面外にはみ出して
+  // 横スクロールが発生する（nagoya-summer-2026 で実測 scrollWidth 383px > 375px）。
+  // 見た目の全幅化より、どのテンプレートでも破綻しないことを優先する。
   return `${START}
 <style>
 .topcta{--gold:#7a5c10;--gold2:#96720f;max-width:880px;margin:0 auto 2rem;padding:1.1rem 1.5rem 1.3rem;border:1px solid rgba(122,92,16,.22);border-radius:6px;background:rgba(122,92,16,.035);}
@@ -206,7 +212,7 @@ function buildCta(stores) {
 .topcta .store-link:hover{background:var(--gold2,#96720f);transform:translateY(-1px);}
 .topcta .store-link[href*="hotpepper"]{background:#fff;color:var(--gold,#7a5c10);border:1px solid var(--gold,#7a5c10);box-shadow:none;}
 .topcta .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
-@media(max-width:640px){.topcta{padding:1rem 1.1rem 1.15rem;border-radius:0;margin-left:-1.5rem;margin-right:-1.5rem;}.topcta-item{flex-direction:column;align-items:flex-start;gap:.45rem;}.topcta-actions{width:100%;}}
+@media(max-width:640px){.topcta{padding:1rem 1.1rem 1.15rem;}.topcta-item{flex-direction:column;align-items:flex-start;gap:.45rem;}.topcta-actions{width:100%;}}
 </style>
 <aside class="topcta" aria-label="この特集の注目店">
   <div class="topcta-head">EDITORS' PICK</div>
