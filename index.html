@@ -733,8 +733,11 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .card-rating{display:inline-flex;align-items:center;gap:.22rem;font-size:.72rem;font-weight:600;color:#d4a017;letter-spacing:.02em;}
 .card-rating svg{width:12px;height:12px;fill:#d4a017;flex-shrink:0;}
 /* ── CARD BOOK CTA ── */
-.card-cta{padding:0;margin-bottom:12px;margin-top:auto;}
-.card-cta a{display:flex;align-items:center;justify-content:center;width:100%;height:44px;background:var(--warm-grad);color:#fff;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;border-radius:3px;text-decoration:none;font-weight:600;transition:transform .2s ease,box-shadow .25s ease,filter .2s;box-shadow:0 1px 3px rgba(140,58,20,.25);}
+.card-cta{padding:0;margin-bottom:12px;margin-top:auto;display:flex;gap:6px;}
+.card-cta a{display:flex;align-items:center;justify-content:center;flex:1 1 auto;min-width:0;height:44px;background:var(--warm-grad);color:#fff;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;border-radius:3px;text-decoration:none;font-weight:600;transition:transform .2s ease,box-shadow .25s ease,filter .2s;box-shadow:0 1px 3px rgba(140,58,20,.25);}
+/* 予約と併置する地図ボタン（モーダルを開かずに場所を確認できるようにする） */
+.card-cta a.card-cta-map{flex:0 0 44px;width:44px;background:#4285F4;box-shadow:0 1px 3px rgba(66,133,244,.3);}
+.card-cta a.card-cta-map svg{width:18px;height:18px;fill:#fff;}
 .card-cta a:hover{transform:translateY(-1px);box-shadow:var(--warm-glow);filter:brightness(1.05);}
 .card-cta a:active{transform:translateY(0);box-shadow:0 1px 3px rgba(140,58,20,.25);}
 /* ── CARD ACTIVE STATE ── */
@@ -13120,7 +13123,7 @@ function buildCardHtml(r) {
       + tagHtml
       + (r['おすすめポイント'] ? '<div class="card-point">' + r['おすすめポイント'] + '</div>' : '')
       + (r.editorReason && !r['おすすめポイント'] ? '<div class="card-editor-lead">' + r.editorReason + '</div>' : '')
-      + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をホットペッパーで予約" rel="noopener noreferrer">ホットペッパーで予約</a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をGoogleマップで確認" style="background:#4285F4" rel="noopener noreferrer">Googleマップで確認</a></div>')
+      + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をホットペッパーで予約" rel="noopener noreferrer">ホットペッパーで予約</a><a class="card-cta-map" href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'の場所をGoogleマップで確認" title="Googleマップで場所を確認" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をGoogleマップで確認" style="background:#4285F4" rel="noopener noreferrer">Googleマップで確認</a></div>')
       + '<div class="mrow">' + mediaLinks + '</div>'
       + '</div>';
 }
