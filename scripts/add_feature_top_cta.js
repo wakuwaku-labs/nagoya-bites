@@ -109,20 +109,37 @@ function storesFromItemList(html) {
  * 正規化した店名の先頭 BRAND_KEY_LEN 文字を看板とみなし、重複を飛ばして次点を繰り上げる。
  * 重複除外の結果 3 軒に届かない場合のみ、除外した店を順位順に戻す（欠番にしない）。
  */
-const BRAND_KEY_LEN = 6;
+/**
+ * 店名から「支店名」を落として看板だけを取り出す。
+ *
+ * 店名は概ね「看板 支店名」の分かち書きで、支店名は末尾が「店」で終わる
+ * （住吉店 / 栄本町通店 / 大名古屋ビルヂング店 …）。末尾から「店」で終わるトークンを
+ * 落として残りを連結したものを看板とみなし、**完全一致**で同一ブランドを判定する。
+ *
+ * 文字数による前方一致では判定できない。長さの閾値を4文字にすると
+ * 「手羽先むつみ 住吉店」と「手羽先むつみ 本店」（看板の実体は3文字の"むつみ"）を
+ * 取りこぼし、3文字にすると「山本屋総本家」と「山本屋本店」を同一視してしまう
+ * （この2つは別会社で、サイトには両者の違いを解説した特集がある）。
+ * 支店名を落とす方式ならどちらも正しく分かれる。
+ */
+function brandOf(name) {
+  const tokens = String(name || '').normalize('NFKC').split(/[\s　]+/).filter(Boolean);
+  const kept = tokens.slice();
+  // 末尾から「〜店」トークンを落とす。ただし全部は落とさない（看板が消えるため）
+  while (kept.length > 1 && /店$/.test(kept[kept.length - 1])) kept.pop();
+  return kept.join('');
+}
 
-function brandKey(name) {
-  return String(name || '').normalize('NFKC').replace(/[\s　]/g, '').slice(0, BRAND_KEY_LEN);
+function sameBrand(a, b) {
+  const ba = brandOf(a), bb = brandOf(b);
+  return !!ba && ba === bb;
 }
 
 function pickDiverse(stores, want) {
   const picked = [];
-  const seen = new Set();
   const skipped = [];
   for (const s of stores) {
-    const k = brandKey(s.name);
-    if (seen.has(k)) { skipped.push(s); continue; }
-    seen.add(k);
+    if (picked.some(p => sameBrand(p.name, s.name))) { skipped.push(s); continue; }
     picked.push(s);
     if (picked.length >= want) return picked;
   }
@@ -135,17 +152,26 @@ function pickDiverse(stores, want) {
 }
 
 /**
- * CTA の挿入位置を決める。特集のテンプレートは2系統ある
- * （`<section class="art-body">` を持つ型と `<main>` 直下に lead-box を置く型）ので、
- * 「本文の最初の <h2> の直前」という共通の位置に寄せる＝導入文の後・本編の前。
+ * CTA の挿入位置を決める。特集のテンプレートは3系統ある:
+ *   1. `<section class="art-body">` を持つ型（nagoya-hitsumabushi 等）
+ *   2. `<main>` 直下に lead-box を置く型（nagoya-solo-dining 等）
+ *   3. `<div class="content">` に直接本文を置く季節特集型（nagoya-summer-2026 等）
+ * いずれも「本文の最初の <h2> の直前」＝導入文の後・本編の前、という共通位置に寄せる。
+ * どの入れ物も見つからない場合は h1 の後ろから最初の <h2> を探す。
  */
 function insertionIndex(html) {
-  const bodyStart = html.indexOf('<section class="art-body">');
-  const mainStart = html.indexOf('<main');
-  const from = bodyStart >= 0 ? bodyStart : (mainStart >= 0 ? mainStart : -1);
+  const candidates = [
+    html.indexOf('<section class="art-body">'),
+    html.indexOf('<main'),
+    html.indexOf('<div class="content">')
+  ].filter(i => i >= 0);
+  let from = candidates.length ? Math.min(...candidates) : -1;
+  if (from < 0) {
+    const h1 = html.indexOf('</h1>');
+    from = h1 >= 0 ? h1 : -1;
+  }
   if (from < 0) return -1;
-  const h2 = html.indexOf('<h2', from);
-  return h2;
+  return html.indexOf('<h2', from);
 }
 
 function buildCta(stores) {
@@ -255,4 +281,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { storesFromItemList, buildCta };
+module.exports = { storesFromItemList, buildCta, sameBrand, pickDiverse };
