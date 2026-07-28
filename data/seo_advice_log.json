@@ -1100,6 +1100,36 @@
       "brand_reason": "Strategic Skip 該当。CLAUDE.md『純ナビゲーショナルな他店名クエリは追わない＝公式サイトに譲る』に明記。トップクエリ25件が全て指名検索という現状で指名CTRを最適化すると、追わないと決めた領域（食べログ/ホットペッパー/店舗公式との指名争い）に労力が集中し、Moat『名古屋×シーン×業界人の目利き』の入口拡大が後回しになる。取りこぼしクリック推定は機械的な優先度であり、ブランド優先度ではない",
       "category": "SEO",
       "fingerprint": "e1f1ca5b29525701"
+    },
+    {
+      "id": null,
+      "date": "2026-07-28",
+      "source": "line-daily",
+      "advice": "🔴 直帰率が85%と非常に高く、訪問者の多くがすぐ離脱しています。👉 トップページ(index.html)に「業界人の目利き」で選ばれた店舗がすぐ分かるよう、魅力的なキャッチコピーと代表的な店舗の写真を大きく配置しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "既存の未実装チケット SEO-009（FVで人気特集へのリンクを大きく配置・ready）および SEO-014（FVに『業界人の目利き』『シーン別専門性』のキャッチコピー・ready）と同一施策。fingerprint は文言揺れで不一致だったが内容は同種のため再起票せず。",
+      "category": null,
+      "fingerprint": "c4961c01df1d92d6"
+    },
+    {
+      "id": null,
+      "date": "2026-07-28",
+      "source": "line-daily",
+      "advice": "🟡 1訪問あたり閲覧が1.3ページと少なく、サイト内を回遊していません。👉 人気の特集記事（nagoya-hitsumabushiなど）の最下部に、関連性の高い他の特集記事やトップページのリンクを「おすすめ記事」として設置しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "既存の未実装チケット SEO-012（人気特集 nagoya-hitsumabushi の下部に関連特集・ジャーナル記事リンクを3件追加・ready）と対象ページまで含めて同一。再起票せず。",
+      "category": null,
+      "fingerprint": "663674df0bbffd7b"
+    },
+    {
+      "id": null,
+      "date": "2026-07-28",
+      "source": "line-daily",
+      "advice": "💡 予約ボタンやマップクリックが0回で、具体的なアクションに繋がっていません。👉 トップページや特集記事の店舗詳細モーダルで、「予約はこちら」と「Googleマップで場所を確認」のボタンを、より大きく目立つ色に変更して配置を最上部に移動しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "既存の未実装チケット SEO-013（人気特集の冒頭に予約ボタン・店舗詳細リンクを複数設置・ready）および SEO-037（店舗カードに予約/Googleマップボタンを常時表示・ready）と同一施策。再起票せず。",
+      "category": null,
+      "fingerprint": "1ad76463adeaff4c"
     }
   ]
 }

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="名古屋の鰻 — 丑の日のあとが狙い目。7月26日の土用の丑の日を過ぎた直後こそ予約が取りやすい狙い目。ひつまぶし四膳の作法。">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#20232b"/>
+      <stop offset="1" stop-color="#161821"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e7b96a"/>
+      <stop offset="1" stop-color="#caa14e"/>
+    </linearGradient>
+    <style>
+      text{font-family:'Hiragino Mincho ProN','Yu Mincho',serif;fill:#f3ead9}
+      .sans{font-family:'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif}
+    </style>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="40" y="40" width="1120" height="550" fill="none" stroke="#3a3d47" stroke-width="1"/>
+
+  <!-- Eyebrow -->
+  <text x="80" y="104" class="sans" font-size="24" letter-spacing="6" fill="#caa14e">NAGOYA BITES ｜ 季節短信</text>
+
+  <!-- Title -->
+  <text x="80" y="176" font-size="62" font-weight="700" letter-spacing="2">名古屋の鰻、</text>
+  <text x="80" y="252" font-size="62" font-weight="700" letter-spacing="2">丑の日の<tspan fill="#e7b96a">あと</tspan>が狙い目。</text>
+
+  <!-- July calendar strip -->
+  <text x="80" y="330" class="sans" font-size="22" fill="#b9bcc6">2026年7月 ｜ 二の丑なしの一発勝負</text>
+  <g transform="translate(80,352)">
+    <rect x="0" y="0" width="700" height="54" rx="6" fill="#2b2e38" stroke="#3a3d47"/>
+    <!-- day ticks -->
+    <g class="sans" font-size="18" fill="#8b8f9a">
+      <text x="40" y="86">20</text>
+      <text x="150" y="86">24</text>
+      <text x="255" y="86">26</text>
+      <text x="360" y="86">28</text>
+      <text x="560" y="86">8月</text>
+    </g>
+    <!-- ushi-no-hi marker -->
+    <g transform="translate(255,27)">
+      <circle r="21" fill="#c0463b"/>
+      <text x="0" y="7" text-anchor="middle" class="sans" font-size="17" font-weight="700" fill="#fff">丑</text>
+    </g>
+    <!-- sweet spot band -->
+    <rect x="300" y="8" width="380" height="38" rx="19" fill="#caa14e" opacity="0.18"/>
+    <text x="360" y="33" class="sans" font-size="19" fill="#e7b96a">← 予約が取りやすい狙い目</text>
+  </g>
+
+  <!-- Four bowls of hitsumabushi -->
+  <text x="80" y="486" class="sans" font-size="22" fill="#b9bcc6">ひつまぶし 四膳の作法</text>
+  <g transform="translate(80,506)" class="sans">
+    <g>
+      <rect x="0" y="0" width="255" height="60" rx="8" fill="#2b2e38" stroke="#3a3d47"/>
+      <text x="18" y="27" font-size="20" fill="#e7b96a">一膳目</text>
+      <text x="18" y="50" font-size="19">そのまま</text>
+    </g>
+    <g transform="translate(275,0)">
+      <rect x="0" y="0" width="255" height="60" rx="8" fill="#2b2e38" stroke="#3a3d47"/>
+      <text x="18" y="27" font-size="20" fill="#e7b96a">二膳目</text>
+      <text x="18" y="50" font-size="19">薬味</text>
+    </g>
+    <g transform="translate(550,0)">
+      <rect x="0" y="0" width="255" height="60" rx="8" fill="#2b2e38" stroke="#3a3d47"/>
+      <text x="18" y="27" font-size="20" fill="#e7b96a">三膳目</text>
+      <text x="18" y="50" font-size="19">出汁茶漬け</text>
+    </g>
+    <g transform="translate(825,0)">
+      <rect x="0" y="0" width="255" height="60" rx="8" fill="#3a2f22" stroke="#caa14e"/>
+      <text x="18" y="27" font-size="20" fill="#e7b96a">四膳目</text>
+      <text x="18" y="50" font-size="19">お好み・おこげ</text>
+    </g>
+  </g>
+
+  <!-- Right accent: unagi mark -->
+  <g transform="translate(980,150)" opacity="0.9">
+    <path d="M20 40 Q80 0 150 40 Q90 70 160 110 Q90 120 40 100 Q10 80 20 40 Z" fill="url(#gold)" opacity="0.85"/>
+    <text x="90" y="170" text-anchor="middle" class="sans" font-size="20" fill="#caa14e">鰻</text>
+  </g>
+</svg>
