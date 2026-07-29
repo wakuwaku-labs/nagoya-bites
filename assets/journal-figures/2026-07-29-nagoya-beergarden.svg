@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" width="600" height="380" role="img" aria-label="名古屋の屋上ビアガーデン3タイプ早見 — 盛り上がり系・夜景系・体験型と120分6500円の元の取り方">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0a860"/>
+      <stop offset="42%" stop-color="#d97a3a"/>
+      <stop offset="100%" stop-color="#8c3a14"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#8c3a14"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#ffe6c0" opacity="0.06"/>
+    </pattern>
+  </defs>
+
+  <!-- background -->
+  <rect width="600" height="380" fill="#f7f5f1"/>
+
+  <!-- header band: dusk sky over a rooftop skyline -->
+  <rect width="600" height="96" fill="url(#sky)"/>
+  <rect width="600" height="96" fill="url(#grain)" opacity=".5"/>
+  <!-- simple skyline silhouette -->
+  <g fill="#5a2510" opacity=".55">
+    <rect x="18" y="60" width="34" height="36"/>
+    <rect x="60" y="46" width="26" height="50"/>
+    <rect x="96" y="66" width="40" height="30"/>
+    <rect x="470" y="40" width="30" height="56"/>
+    <rect x="508" y="58" width="46" height="38"/>
+    <rect x="560" y="50" width="28" height="46"/>
+  </g>
+  <!-- sun -->
+  <circle cx="300" cy="40" r="20" fill="#ffe6c0" opacity=".9"/>
+  <!-- beer mug glyph -->
+  <g transform="translate(268,52)" opacity=".95">
+    <rect x="0" y="0" width="30" height="34" rx="3" fill="#ffe6c0"/>
+    <rect x="0" y="0" width="30" height="11" rx="3" fill="#fff8ec"/>
+    <rect x="30" y="7" width="9" height="20" rx="4" fill="none" stroke="#ffe6c0" stroke-width="4"/>
+  </g>
+
+  <text x="30" y="46" fill="#fff8ec" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="26" font-weight="700" letter-spacing="0.02em">名古屋 屋上ビアガーデン</text>
+  <text x="30" y="76" fill="#fff8ec" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="13" opacity=".92" letter-spacing="0.08em">2026 夏 ・ 3タイプの選び分け早見</text>
+
+  <!-- 3 type columns -->
+  <!-- col template -->
+  <!-- Type A: 盛り上がり系 -->
+  <g>
+    <rect x="24" y="116" width="172" height="180" rx="8" fill="#fff" stroke="rgba(0,0,0,0.10)"/>
+    <rect x="24" y="116" width="172" height="30" rx="8" fill="#b8541f"/>
+    <rect x="24" y="132" width="172" height="14" fill="#b8541f"/>
+    <text x="110" y="137" text-anchor="middle" fill="#fff" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="14" font-weight="700">盛り上がり系</text>
+    <text x="38" y="172" fill="#1c1c1a" font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-size="15" font-weight="700">マイアミ／栄三越屋上</text>
+    <text x="38" y="196" fill="#7a5c10" font-family="'DM Mono',monospace" font-size="11">SCENE</text>
+    <text x="38" y="214" fill="#1c1c1a" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="12.5">大人数宴会・ステージ</text>
+    <text x="38" y="240" fill="#7a5c10" font-family="'DM Mono',monospace" font-size="11">RESERVE</text>
+    <text x="38" y="258" fill="#1c1c1a" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="12.5">当日OK（MY STYLE型）</text>
+    <text x="38" y="284" fill="#8c3a14" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="11.5">創業60年超・食べ飲み放題</text>
+  </g>
+  <!-- Type B: 夜景系 -->
+  <g>
+    <rect x="214" y="116" width="172" height="180" rx="8" fill="#fff" stroke="rgba(0,0,0,0.10)"/>
+    <rect x="214" y="116" width="172" height="30" rx="8" fill="#7a5c10"/>
+    <rect x="214" y="132" width="172" height="14" fill="#7a5c10"/>
+    <text x="300" y="137" text-anchor="middle" fill="#fff" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="14" font-weight="700">夜景系</text>
+    <text x="228" y="172" fill="#1c1c1a" font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-size="15" font-weight="700">CARVINO／名駅</text>
+    <text x="228" y="196" fill="#7a5c10" font-family="'DM Mono',monospace" font-size="11">SCENE</text>
+    <text x="228" y="214" fill="#1c1c1a" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="12.5">デート・接待の〆</text>
+    <text x="228" y="240" fill="#7a5c10" font-family="'DM Mono',monospace" font-size="11">RESERVE</text>
+    <text x="228" y="258" fill="#1c1c1a" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="12.5">要予約（コース制）</text>
+    <text x="228" y="284" fill="#8c3a14" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="11.5">中部一の高さ・6,500円〜</text>
+  </g>
+  <!-- Type C: 体験型 -->
+  <g>
+    <rect x="404" y="116" width="172" height="180" rx="8" fill="#fff" stroke="rgba(0,0,0,0.10)"/>
+    <rect x="404" y="116" width="172" height="30" rx="8" fill="#8c3a14"/>
+    <rect x="404" y="132" width="172" height="14" fill="#8c3a14"/>
+    <text x="490" y="137" text-anchor="middle" fill="#fff" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="14" font-weight="700">体験型</text>
+    <text x="418" y="172" fill="#1c1c1a" font-family="'Hiragino Mincho ProN','Yu Mincho',serif" font-size="15" font-weight="700">ANDBBQ／柳橋 ほか</text>
+    <text x="418" y="196" fill="#7a5c10" font-family="'DM Mono',monospace" font-size="11">SCENE</text>
+    <text x="418" y="214" fill="#1c1c1a" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="12.5">家族・グループで焼く</text>
+    <text x="418" y="240" fill="#7a5c10" font-family="'DM Mono',monospace" font-size="11">RESERVE</text>
+    <text x="418" y="258" fill="#1c1c1a" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="12.5">予約推奨・大人数可</text>
+    <text x="418" y="284" fill="#8c3a14" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="11.5">6/19開業・最大200名</text>
+  </g>
+
+  <!-- footer: the "how to break even" rule -->
+  <rect x="24" y="312" width="552" height="50" rx="8" fill="#1c1c1a"/>
+  <text x="42" y="333" fill="#ffe6c0" font-family="'DM Mono',monospace" font-size="11" letter-spacing="0.06em">元の取り方</text>
+  <text x="42" y="353" fill="#fff8ec" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="13.5">飲み放題120分6,500円前後 = 生ビール7〜8杯で損益分岐。払うのは料理原価でなく“場所代・眺望代・イベント代”。</text>
+
+  <text x="576" y="374" text-anchor="end" fill="rgba(28,28,26,.5)" font-family="'DM Mono',monospace" font-size="9" letter-spacing="0.1em">NAGOYA BITES 編集部・図はイメージ</text>
+</svg>

@@ -1,0 +1,202 @@
+{
+  "date": "2026-07-29",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5
+  },
+  "gate_policy": {
+    "auto_publish_min": 95,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 95,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名古屋の屋上ビアガーデン、120分6,500円の元の取り方",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 87,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 19日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 7件 → 15",
+          "話題の証跡URL 4件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (繁忙,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 186字 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ]
+      },
+      "gate_note": "87点（自動公開ライン 95点）。主な不足: recency -13"
+    },
+    {
+      "id": "c2",
+      "title_draft": "雨天中止と席数変動、名古屋の屋上ビアガーデンを予約で外さない読み方",
+      "verdict": "HOLD",
+      "total": 82,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5
+      },
+      "explain": {
+        "recency": [
+          "最新ソース 19日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (繁忙,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 109字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "87点（自動公開ライン 95点）。主な不足: recency -13",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "名古屋の屋上ビアガーデン、120分6,500円の元の取り方",
+      "lead_draft": "土用の丑が過ぎ、名古屋の夏の外食は屋上ビアガーデンが主役になる。60年続く栄三越屋上のマイアミ、名駅ミッドランドの天空CARVINO、6月に開いたナゴヤドーム前ANDBBQ——2026年も出そろった。だが『飲み放題120分6,500円前後』という共通の値付けは、飲む量とシーンで得にも損にもなる。原価ではなく場所代・眺望代・イベント代を払う設計を、業界人の目線で読み解く。",
+      "angle": "飲み放題120分6,500円前後の価格帯を1杯単価に割り戻す業界人の読み方＋開店直後が空き19-20時が繁忙という回転の裏側＋予約要否と、大人数宴会・夜景デート・接待の〆というシーン適性を示す",
+      "main_store": {
+        "name": "ビアガーデンマイアミ 名古屋栄店",
+        "id": "",
+        "area": "栄",
+        "genre": "ビアガーデン"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES『ビアガーデンマイアミ 名古屋栄店』4月7日OPEN（60年以上続く名古屋の名物ビアガーデン）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000043.000023738.html",
+          "date": "2026-04-07"
+        },
+        {
+          "label": "PR TIMES『ANDBBQ イオンモールナゴヤドーム前店』6月19日オープン（屋上・最大200名・ビアガーデン利用可）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000001.000184393.html",
+          "date": "2026-06-19"
+        },
+        {
+          "label": "名古屋コンシェルジュ（名古屋市公式観光）ビアガーデン特集2026",
+          "url": "https://www.nagoya-info.jp/feature/detail/13/",
+          "date": "2026-07-01"
+        },
+        {
+          "label": "Aichi Now（愛知県公式観光）名古屋のビアガーデン特集2026",
+          "url": "https://aichinow.pref.aichi.jp/features/detail/102/",
+          "date": "2026-07-01"
+        },
+        {
+          "label": "tabemaro 名古屋のビアガーデン10選（当日予約・雨天OK・食べ放題比較 2026最新）",
+          "url": "https://www.tabemaro.jp/column/beergarden/",
+          "date": "2026-07-10"
+        },
+        {
+          "label": "みんなのビアガーデン部2026 名古屋三越栄店（営業時間・料金の一次整理）",
+          "url": "https://beer.30min.jp/place/122426",
+          "date": "2026-07-08"
+        },
+        {
+          "label": "note『2026/7/8 カーフィー/ビアガーデン』（個人の来店記録）",
+          "url": "https://note.com/mendo_931111/n/nffc40bc4b7f7",
+          "date": "2026-07-08"
+        },
+        {
+          "label": "X: ビアガーデンマイアミ 名古屋栄店 公式（@maiami_sakae）",
+          "url": "https://x.com/maiami_sakae"
+        },
+        {
+          "label": "X: AichiNow公式『ミッドランドスクエア 天空のイタリアンBBQ（CARVINO）〜10/31』",
+          "url": "https://x.com/AichiNow_jp/status/2071881428493615390"
+        },
+        {
+          "label": "X: 栄三越屋上マイアミ タコスコーナー新設（サカエ経済新聞シェア）",
+          "url": "https://x.com/owarishogo/status/2040412633418080328"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "雨天中止と席数変動、名古屋の屋上ビアガーデンを予約で外さない読み方",
+      "lead_draft": "屋上ビアガーデンは天気と席に振り回される。コース制の天空CARVINOは要予約、当日OKのマイアミMY STYLE型は飛び込み可。2026年の名古屋の屋上勢を、予約導線と雨天リスク、繁忙時間帯の観点で業界人が整理する。",
+      "angle": "コース制(要予約)vs当日型の予約導線＋雨天中止・席数変動リスク＋開店直後が空き繁忙の回転が鈍る時間帯という価格帯とシーンの裏側",
+      "main_store": {
+        "name": "天空のビアガーデン CARVINO",
+        "id": "",
+        "area": "名駅",
+        "genre": "ビアガーデン"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES『ANDBBQ イオンモールナゴヤドーム前店』6月19日オープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000001.000184393.html",
+          "date": "2026-06-19"
+        },
+        {
+          "label": "名古屋コンシェルジュ（名古屋市公式観光）ビアガーデン特集2026",
+          "url": "https://www.nagoya-info.jp/feature/detail/13/",
+          "date": "2026-07-01"
+        },
+        {
+          "label": "tabemaro 名古屋のビアガーデン10選（2026最新）",
+          "url": "https://www.tabemaro.jp/column/beergarden/",
+          "date": "2026-07-10"
+        },
+        {
+          "label": "X: AichiNow公式 天空のイタリアンBBQ",
+          "url": "https://x.com/AichiNow_jp/status/2071881428493615390"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}
