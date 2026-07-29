@@ -1323,24 +1323,32 @@
     {
       "date": "2026-07-29",
       "totals": {
-        "activeUsers": 471,
-        "pageViews": 698,
-        "sessions": 539,
-        "avgSessionDuration": 106.4,
-        "bounceRate": 0.408,
-        "pagesPerSession": 1.29
+        "activeUsers": 485,
+        "pageViews": 719,
+        "sessions": 555,
+        "avgSessionDuration": 106.7,
+        "bounceRate": 0.391,
+        "pagesPerSession": 1.3
       },
       "channels_pct": {
-        "organic": 57,
-        "direct": 32.1,
-        "social": 9.1,
-        "referral": 1.8,
+        "organic": 57.4,
+        "direct": 31.3,
+        "social": 9.4,
+        "referral": 2,
         "paid": 0,
         "other": 0
       },
+      "search_channels": {
+        "bing": 191,
+        "direct": 152,
+        "ai_assistant": 122,
+        "google": 61,
+        "yahoo": 20,
+        "duckduckgo": 3
+      },
       "cta": {
         "outboundClicks": 18,
-        "ctaClickRate": 3.3
+        "ctaClickRate": 3.2
       }
     }
   ]
