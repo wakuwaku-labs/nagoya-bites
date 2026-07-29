@@ -49,9 +49,23 @@ function readSiteMetrics() {
   try {
     const m = JSON.parse(fs.readFileSync(SITE_METRICS, 'utf8'));
     if (!m.totals) return null;
+    // search_channels（エンジン単位のセッション数）は SEO-039 で追加。
+    // organic/direct/social/referral の4分類だけでは Bing・生成AI が識別できず、
+    // 流入の 58% が履歴に一切残らないまま site_metrics.json の日次上書きで消えていた。
+    let searchChannels = null;
+    try {
+      const { aggregate } = require('./search_channel_metrics');
+      const agg = aggregate(m);
+      if (agg.total > 0) {
+        searchChannels = {};
+        agg.engines.forEach((e) => { searchChannels[e.key] = e.sessions; });
+      }
+    } catch (_) { /* 観測レイヤーが無くても既存のスナップショットは壊さない */ }
+
     return {
       totals: m.totals,
       channels_pct: m.channels && m.channels.pct ? m.channels.pct : null,
+      search_channels: searchChannels,
       cta: m.cta ? { outboundClicks: m.cta.outboundClicks, ctaClickRate: m.cta.ctaClickRate } : null,
     };
   } catch (e) { return null; }

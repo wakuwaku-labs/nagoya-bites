@@ -1,0 +1,15 @@
+{
+  "description": "IndexNow の送信設定（SEO-039）。キーファイルはサイト直下に公開されている必要がある。robots.txt / sitemap.xml / llms.txt と同じくルート直下の配信ファイルで、サイトのHTML構造には触れない。",
+  "host": "nagoya-bites.com",
+  "key": "ec3ee6876b0d465ab4f7093ba5bc42d0",
+  "key_file": "ec3ee6876b0d465ab4f7093ba5bc42d0.txt",
+  "key_location": "https://nagoya-bites.com/ec3ee6876b0d465ab4f7093ba5bc42d0.txt",
+  "endpoint": "https://api.indexnow.org/indexnow",
+  "created": "2026-07-27",
+  "related_issue": "SEO-039",
+  "notes": [
+    "キーを作り直すと Bing 側の認証が切れるため、原則として再生成しない。",
+    "キーファイルは公開されていること自体が認証条件（秘密情報ではない）。",
+    "送信は scripts/indexnow_ping.js --recent N --yes。--yes が無ければ外部通信は発生しない。"
+  ]
+}

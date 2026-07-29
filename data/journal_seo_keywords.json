@@ -1,0 +1,384 @@
+{
+  "description": "日次ジャーナルの入口（検索意図）を担保するシーンKWマスタ。SEO-011（+SEO-007統合）。各KWは features/ の実在記事に紐づき、scripts/journal_seo_kw.js --verify で「特集ファイルが実在し、そのタイトルにその語が実際に使われている」ことを検証できる。.claude/commands/journal-today.md は自己改変ブロックで編集できないため、KW運用のルールはこのデータファイルと scripts/journal_seo_kw.js を単一の情報源とする。",
+  "updated": "2026-07-27",
+  "related_issue": "SEO-011 (SEO-007 統合)",
+  "evidence": {
+    "measured_on": "2026-07-27",
+    "published_titles_analyzed": 73,
+    "with_scene_kw": 9,
+    "with_area_kw": 25,
+    "with_both": 2,
+    "note": "GSC トップクエリ25件は全件が店名の指名検索で、シーンKWの検索面はジャーナルから一切取れていなかった。採点器に「誰かが検索する題材か」を見る次元が無かったことが原因。"
+  },
+  "rules": {
+    "title": "タイトルに「エリア語」と「シーン語（またはジャンル語）」を最低1組ずつ入れる。語の詰め込み・煽りは不可。",
+    "internal_link": "使ったKWに紐づく特集へ本文から内部リンクを1本張る（KW利用がそのまま回遊導線になる）。",
+    "sns": "docs/daily-posts/ の Note/Instagram/X 原稿の冒頭にも同じKW組を使い、入口の検索意図を揃える。",
+    "forbidden": "実在しない店・未検証店をKWに合わせて創作しない（架空店ブロック優先）。KWのためにタイトルの日本語を壊さない。"
+  },
+  "areas": [
+    {
+      "kw": "栄",
+      "aliases": [
+        "栄",
+        "錦"
+      ],
+      "feature": "features/sakae.html",
+      "store_count": 1941
+    },
+    {
+      "kw": "名駅",
+      "aliases": [
+        "名駅",
+        "名古屋駅"
+      ],
+      "feature": "features/meieki.html",
+      "store_count": 1041
+    },
+    {
+      "kw": "覚王山",
+      "aliases": [
+        "覚王山",
+        "本山"
+      ],
+      "feature": "features/nagoya-kakuozan.html",
+      "store_count": 249
+    },
+    {
+      "kw": "大須",
+      "aliases": [
+        "大須"
+      ],
+      "feature": "features/osu-food-walk.html",
+      "store_count": 20
+    }
+  ],
+  "scenes": [
+    {
+      "kw": "接待",
+      "aliases": [
+        "接待",
+        "会食",
+        "ビジネスランチ"
+      ],
+      "feature": "features/nagoya-settai-secret.html"
+    },
+    {
+      "kw": "個室",
+      "aliases": [
+        "個室"
+      ],
+      "feature": "features/private-room.html"
+    },
+    {
+      "kw": "宴会",
+      "aliases": [
+        "宴会",
+        "忘年会",
+        "新年会"
+      ],
+      "feature": "features/banquet.html"
+    },
+    {
+      "kw": "大人数",
+      "aliases": [
+        "大人数",
+        "20人"
+      ],
+      "feature": "features/large-group.html"
+    },
+    {
+      "kw": "デート",
+      "aliases": [
+        "デート"
+      ],
+      "feature": "features/date.html"
+    },
+    {
+      "kw": "女子会",
+      "aliases": [
+        "女子会"
+      ],
+      "feature": "features/girls-party.html"
+    },
+    {
+      "kw": "誕生日",
+      "aliases": [
+        "誕生日",
+        "記念日"
+      ],
+      "feature": "features/birthday.html"
+    },
+    {
+      "kw": "一人飲み",
+      "aliases": [
+        "一人飲み",
+        "カウンター",
+        "立ち飲み"
+      ],
+      "feature": "features/nagoya-solo-dining.html"
+    },
+    {
+      "kw": "顔合わせ",
+      "aliases": [
+        "顔合わせ",
+        "結納"
+      ],
+      "feature": "features/nagoya-kaoawase-washoku.html"
+    },
+    {
+      "kw": "接待ランチ",
+      "aliases": [
+        "接待ランチ",
+        "和食ランチ"
+      ],
+      "feature": "features/nagoya-settai-lunch.html"
+    },
+    {
+      "kw": "予約困難",
+      "aliases": [
+        "予約困難",
+        "予約が取れない"
+      ],
+      "feature": "features/hard-to-book.html"
+    },
+    {
+      "kw": "コスパ",
+      "aliases": [
+        "コスパ"
+      ],
+      "feature": "features/kospa-insider.html"
+    },
+    {
+      "kw": "モーニング",
+      "aliases": [
+        "モーニング",
+        "喫茶"
+      ],
+      "feature": "features/nagoya-morning.html"
+    },
+    {
+      "kw": "食べ歩き",
+      "aliases": [
+        "食べ歩き"
+      ],
+      "feature": "features/osu-food-walk.html"
+    },
+    {
+      "kw": "業界人",
+      "aliases": [
+        "業界人",
+        "飲食人"
+      ],
+      "feature": "features/industry-insiders-pick.html"
+    }
+  ],
+  "genres": [
+    {
+      "kw": "焼肉",
+      "aliases": [
+        "焼肉",
+        "ホルモン",
+        "和牛"
+      ],
+      "feature": "features/nagoya-yakiniku.html"
+    },
+    {
+      "kw": "居酒屋",
+      "aliases": [
+        "居酒屋"
+      ],
+      "feature": "features/nagoya-izakaya.html"
+    },
+    {
+      "kw": "寿司",
+      "aliases": [
+        "寿司",
+        "鮨"
+      ],
+      "feature": "features/nagoya-sushi-guide.html"
+    },
+    {
+      "kw": "ひつまぶし",
+      "aliases": [
+        "ひつまぶし",
+        "うなぎ"
+      ],
+      "feature": "features/nagoya-hitsumabushi.html"
+    },
+    {
+      "kw": "焼き鳥",
+      "aliases": [
+        "焼き鳥",
+        "焼鳥"
+      ],
+      "feature": "features/nagoya-yakitori-guide.html"
+    },
+    {
+      "kw": "ラーメン",
+      "aliases": [
+        "ラーメン"
+      ],
+      "feature": "features/nagoya-ramen.html"
+    },
+    {
+      "kw": "手羽先",
+      "aliases": [
+        "手羽先"
+      ],
+      "feature": "features/nagoya-tebasaki.html"
+    },
+    {
+      "kw": "味噌煮込みうどん",
+      "aliases": [
+        "味噌煮込み"
+      ],
+      "feature": "features/nagoya-miso-nikomi-udon.html"
+    },
+    {
+      "kw": "韓国料理",
+      "aliases": [
+        "韓国料理",
+        "サムギョプサル"
+      ],
+      "feature": "features/nagoya-korean.html"
+    },
+    {
+      "kw": "海鮮",
+      "aliases": [
+        "海鮮",
+        "刺身",
+        "割烹"
+      ],
+      "feature": "features/nagoya-seafood.html"
+    },
+    {
+      "kw": "イタリアン",
+      "aliases": [
+        "イタリアン"
+      ],
+      "feature": "features/nagoya-italian-guide.html"
+    },
+    {
+      "kw": "フレンチ",
+      "aliases": [
+        "フレンチ",
+        "ビストロ"
+      ],
+      "feature": "features/nagoya-french-guide.html"
+    },
+    {
+      "kw": "中華",
+      "aliases": [
+        "中華",
+        "餃子"
+      ],
+      "feature": "features/nagoya-chinese-guide.html"
+    },
+    {
+      "kw": "バー",
+      "aliases": [
+        "バー",
+        "ワインバー",
+        "カクテル"
+      ],
+      "feature": "features/nagoya-bar-guide.html"
+    },
+    {
+      "kw": "カフェ",
+      "aliases": [
+        "カフェ"
+      ],
+      "feature": "features/nagoya-cafe.html"
+    },
+    {
+      "kw": "スイーツ",
+      "aliases": [
+        "スイーツ",
+        "かき氷",
+        "パフェ"
+      ],
+      "feature": "features/nagoya-sweets.html"
+    },
+    {
+      "kw": "とんかつ",
+      "aliases": [
+        "とんかつ",
+        "味噌かつ"
+      ],
+      "feature": "features/nagoya-tonkatsu.html"
+    },
+    {
+      "kw": "すき焼き",
+      "aliases": [
+        "すき焼き",
+        "しゃぶしゃぶ"
+      ],
+      "feature": "features/nagoya-sukiyaki.html"
+    },
+    {
+      "kw": "鉄板焼き",
+      "aliases": [
+        "鉄板焼き"
+      ],
+      "feature": "features/nagoya-teppanyaki.html"
+    },
+    {
+      "kw": "ステーキ",
+      "aliases": [
+        "ステーキ"
+      ],
+      "feature": "features/nagoya-steak.html"
+    }
+  ],
+  "monthly_scenes": {
+    "1": [
+      "新年会",
+      "接待"
+    ],
+    "2": [
+      "デート",
+      "個室"
+    ],
+    "3": [
+      "歓送迎会",
+      "宴会"
+    ],
+    "4": [
+      "歓迎会",
+      "女子会"
+    ],
+    "5": [
+      "デート",
+      "食べ歩き"
+    ],
+    "6": [
+      "接待",
+      "個室"
+    ],
+    "7": [
+      "ひつまぶし",
+      "一人飲み"
+    ],
+    "8": [
+      "食べ歩き",
+      "スイーツ"
+    ],
+    "9": [
+      "接待",
+      "会食"
+    ],
+    "10": [
+      "デート",
+      "記念日"
+    ],
+    "11": [
+      "宴会",
+      "忘年会"
+    ],
+    "12": [
+      "忘年会",
+      "大人数"
+    ]
+  }
+}
