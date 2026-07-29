@@ -220,6 +220,102 @@ function buildNotionContent(task) {
 }
 
 // ──────────────────────────────────────────────────────────
+// リコンサイル: 生きている Notion 実データ と ローカルマスターの突き合わせ
+//   目的: page_id_map に載っていない「孤児ページ」を検出する。
+//         planSync は page_id_map を唯一の真実として信頼するため、
+//         map に無い＝ Notion 側に勝手に存在するページを構造的に検出できない。
+//         （SEO 系が seo-triage 経由で作られ page_id 書き戻し(Step5)を取りこぼした結果、
+//          map に SEO エントリが 0 件 → 孤児が溜まり、ID 再採番で別内容の重複まで発生した。）
+//   設計: このスクリプトは Notion を叩かない。呼び出し側（/sync-backlog）が Notion を
+//         クエリして正規化ダンプを渡す。ダンプの各要素は:
+//           { page_id, backlog_id, title, detected(YYYY-MM-DD|null), status }
+// ──────────────────────────────────────────────────────────
+
+function normTitle(s) {
+  return (s || '').replace(/[✅🔴🟡🟢🔄❌📋\s　]/g, '').trim();
+}
+
+function bigrams(s) {
+  const set = new Set();
+  for (let i = 0; i < s.length - 1; i++) set.add(s.slice(i, i + 2));
+  return set;
+}
+
+// 文字バイグラムの Dice 係数（日本語タイトルの近似一致に使う。0〜1）
+function diceSim(a, b) {
+  a = normTitle(a); b = normTitle(b);
+  if (!a || !b) return 0;
+  if (a === b) return 1;
+  const A = bigrams(a), B = bigrams(b);
+  if (A.size === 0 || B.size === 0) return 0;
+  let inter = 0;
+  for (const g of A) if (B.has(g)) inter++;
+  return (2 * inter) / (A.size + B.size);
+}
+
+/**
+ * ローカルマスター(tasks) と Notion 実データ(notionPages) を突き合わせ、
+ *   keep    : 現行タスクに一致した Notion ページ（page_id_map に登録すべき＝map 修復）
+ *   archive : ローカルに対応する現行タスクが無い＝孤児（明確にアーカイブ対象）
+ *   review  : 同じ課題ID なのに内容が食い違う／同ID重複（＝人間が1件ずつ判断すべき衝突）
+ *   missing : ローカルに在るが Notion に無い（次回 create される・情報のみ）
+ * を返す。archive/review は「1件ずつ」処理できるよう配列で返す（一括 move 拒否対策）。
+ */
+function reconcile(tasks, notionPages, opts = {}) {
+  const simThreshold = opts.simThreshold != null ? opts.simThreshold : 0.6;
+
+  // 現行ローカルの生存タスク（done / wont_fix は Notion 上アーカイブ済みのはずなので除外）
+  const liveById = new Map();
+  for (const t of tasks) {
+    if (t.status === 'done' || t.status === 'wont_fix') continue;
+    if (!liveById.has(t.id)) liveById.set(t.id, []);
+    liveById.get(t.id).push(t);
+  }
+
+  const keep = [];
+  const archive = [];
+  const review = [];
+  const adoptedForId = new Map(); // id -> 現行として既に採用済みの page_id（重複検出用）
+
+  for (const p of notionPages) {
+    const id = p.backlog_id;
+    const locals = liveById.get(id);
+    if (!locals || locals.length === 0) {
+      archive.push({ id, page_id: p.page_id, title: p.title, detected: p.detected || null, reason: 'id_not_in_local' });
+      continue;
+    }
+    const local = locals[0];
+    const dateMatch = !!(p.detected && local.detected && p.detected === local.detected);
+    const sim = diceSim(p.title, local.title);
+    const titleMatch = sim >= simThreshold;
+
+    if (dateMatch || titleMatch) {
+      if (adoptedForId.has(id)) {
+        // 同ID で現行候補が2枚以上 → 後発は重複。機械的に消さず人間判断へ
+        review.push({ id, page_id: p.page_id, notionTitle: p.title, notionDetected: p.detected || null,
+          localTitle: local.title, localDetected: local.detected || null, sim: Number(sim.toFixed(3)), reason: 'duplicate_current_same_id' });
+      } else {
+        adoptedForId.set(id, p.page_id);
+        keep.push({ id, page_id: p.page_id });
+      }
+    } else {
+      // 同ID・別内容（ID 再採番の衝突）→ 人間判断へ
+      review.push({ id, page_id: p.page_id, notionTitle: p.title, notionDetected: p.detected || null,
+        localTitle: local.title, localDetected: local.detected || null, sim: Number(sim.toFixed(3)), reason: 'same_id_different_content' });
+    }
+  }
+
+  const notionIds = new Set(notionPages.map(p => p.backlog_id));
+  const missing = [];
+  for (const id of liveById.keys()) if (!notionIds.has(id)) missing.push(id);
+
+  return {
+    keep, archive, review, missing,
+    summary: { notion_pages: notionPages.length, keep: keep.length, archive: archive.length, review: review.length, missing: missing.length },
+  };
+}
+
+// ──────────────────────────────────────────────────────────
 // State 管理
 // ──────────────────────────────────────────────────────────
 
@@ -292,6 +388,23 @@ function planSync(tasks, state, opts = {}) {
 
 function main() {
   const args = process.argv.slice(2);
+
+  // --reconcile: Notion 実データダンプと突き合わせて孤児/衝突を洗い出す（純関数・Notion は叩かない）
+  //   使い方: node scripts/sync_backlog_to_notion.js --reconcile --notion-dump <path.json>
+  //   ダンプ: [{ page_id, backlog_id, title, detected, status }, ...]
+  if (args.includes('--reconcile')) {
+    const di = args.indexOf('--notion-dump');
+    if (di < 0 || !args[di + 1]) {
+      console.error('usage: --reconcile --notion-dump <path.json>  (dump = [{page_id,backlog_id,title,detected,status}])');
+      process.exit(2);
+    }
+    const dump = JSON.parse(fs.readFileSync(args[di + 1], 'utf8'));
+    const pages = Array.isArray(dump) ? dump : (dump.pages || []);
+    const tasks = parseBacklog(fs.readFileSync(BACKLOG_PATH, 'utf8'));
+    console.log(JSON.stringify(reconcile(tasks, pages), null, 2));
+    return;
+  }
+
   const mode = args.includes('--mark-synced') ? 'mark-synced'
              : args.includes('--if-changed') ? 'if-changed'
              : args.includes('--full') ? 'full'
@@ -346,4 +459,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { parseBacklog, planSync, buildNotionProperties, buildNotionContent, fileHash };
+module.exports = { parseBacklog, planSync, buildNotionProperties, buildNotionContent, fileHash, reconcile, diceSim };
