@@ -26,9 +26,18 @@
   4. `journal/2026-07-29-nagoya-beergarden.html`: 既存公開記事を直接是正。マイアミ(J001042282)/CARVINO(J001246890)/ANDBBQ(J004633290) — いずれも実在の LOCAL_STORES 登録店（架空店ではない）— の店舗ページへのリンク付きカードを `.store-list` に追加
   5. `data/journal_published.json`: 同記事の `store_ids` を空配列から実IDへ補完（30日以内再掲チェックの母数として正しく機能するように）
   6. `agents/editor.md`: 「店舗ページへの内部リンク必須化（全テーマ共通）」を新設。今後の全テーマで `stores[]` に `id` を必ず設定すること、LOCAL_STORES に無い新規店舗は同日中に `pending_stores.json` へ追加することを明文化
-- **QAゲート**: 構文チェック2ファイル ✅（`node -c`）/ 既存公開ジャーナル全件（2026-04〜07月・約60本）に新旧validatorを回して比較 → 新たなFAIL増加ゼロ・既存の暗黙バグ1件を修正（矢場味仙のfalse-negative FAIL解消）✅ / 合成テスト（id指定=内部リンク・id無し=外部リンクのフォールバック）で `buildStores()` の分岐を実機確認 ✅ / retrofit記事は `validate_journal_draft.js` フルPASS（WARNなし）✅ / ブラウザでstore-list描画とリンク先の実店舗ページ（写真・住所・営業時間あり）を目視確認 ✅
-- **files**: `scripts/generate_daily_draft.js`, `scripts/validate_journal_draft.js`, `journal/2026-07-29-nagoya-beergarden.html`, `data/journal_published.json`, `agents/editor.md`, `agent-backlog.md`
-- **関連**: [[ISSUE-077]]（同じ「ヘッドレス日次を止めない」設計思想を踏襲）/ [[ISSUE-041]]（`gen-store-pages.js` による店舗ページ資産そのものの起源）
+- **追補 2026-07-30 — 過去記事84本の一括バックフィル**: オーナーから「過去の毎日の記事も店舗カードが表示されるようにして」と追加指示。実装当日分の1記事修正だけでは過去分が未対応だったため、`journal/*.html` 全84本を監査・是正:
+  1. 既存の `.store-card`（`data-store-id` 付き・外部リンク）11本 → 内部の店舗ページへ張り替え
+  2. 既存の `.store-card`（カードは表示されているが `data-store-id` 無し＝リンク先未解決）44本 → 店舗名を LOCAL_STORES と突合し `data-store-id` 付与＋内部リンク化
+     - 突合は店名の完全一致（NFKC正規化）を優先。43/44 が一発一致。1件（`YORONIKU NAGOYA` の英語表記）は同義の日本語表記店（よろにく 名古屋）へ手動解決
+  3. **重要な落とし穴**: 店舗ページのファイル名（slug）は `gen-store-pages.js` の `toSlug()`（ホットペッパーID優先 → 英語名 → 店名からASCII抽出 → 店名UTF-8の先頭8バイトhex）で決まるが、**重複時の `-2`/`-3` サフィックス採番は生成時の処理順に依存し、事前に再現計算できない**。自前で `toSlug()` を再実装して突合した第1版は、3件で「実在はするが別の店」のページに誤ってリンクする事故を起こしかけた（例: `ポーたま 名古屋HAERA店` → 誤って `stores/haera.html`＝別店舗「炭焼うな富士 栄HAERA店」にリンクしそうになった）。
+     → 対策として `stores/*.html` 全5,421件の JSON-LD `name` から「店名 → 実ファイル名」の正引き索引を実際に生成し、店名の完全一致でのみリンクを確定する方式に変更。再現計算ではなく実ファイルの事実で検証する（CLAUDE.md品質ゲート原則と同じ思想）
+  4. LOCAL_STORES に完全一致する店名が複数ページに存在する重複データ3件（グリルつばき/肉屋 雪月花 NAGOYA/尾張山荘 くろぎ＝manual登録とHotPepper CSV由来の重複行）を発見。どちらのページも同一店舗の実在ページのため実害はないが、データ重複自体は別課題として観測（要 DataKeeper 確認）
+  5. カードが元々無かった39本のうち、本文で実店舗に具体的に言及していたのは1本（`2026-06-12-tsuyu-nagoya-meshi-guide.html` — 「ひつまぶし 登河 那古野本店」「炭焼うな富士 名古屋駅太閤口店」を梅雨ジャンル紹介の一例として言及）のみで、店舗ページリンク付きカードを追加。残り38本は「GW攻略」「業界コラム」等の店舗非依存の一般論記事で、対象店が存在しないことを確認（一般語の部分一致による誤爆を避けるため、トークン重複ヒューリスティックで拾った候補は目視で全棄却）
+  6. 最終検証: `journal/*.html` 全カード（63件）を「店名の完全一致 → 実ファイル存在 → リンク先slugがその店名の正引き索引に含まれる」の3段で再チェックし、**不一致ゼロ**を確認
+- **QAゲート**: 構文チェック2ファイル ✅（`node -c`）/ 既存公開ジャーナル全件（2026-04〜07月・約84本）に新旧validatorを回して比較 → 新たなFAIL増加ゼロ・既存の暗黙バグ1件を修正（矢場味仙のfalse-negative FAIL解消）✅ / 合成テスト（id指定=内部リンク・id無し=外部リンクのフォールバック）で `buildStores()` の分岐を実機確認 ✅ / 全84記事に対しリンク切れ0・JSON-LD破損0を確認 ✅ / 全63店舗カードの店名↔リンク先一致を実ファイルベースで検証しミスマッチ0 ✅ / ブラウザで実記事のカード描画とリンク先の実店舗ページ（写真・住所・営業時間あり）を目視確認 ✅
+- **files**: `scripts/generate_daily_draft.js`, `scripts/validate_journal_draft.js`, `journal/*.html`（44ファイル・過去記事バックフィル分含む）, `data/journal_published.json`, `agents/editor.md`, `agent-backlog.md`
+- **関連**: [[ISSUE-077]]（同じ「ヘッドレス日次を止めない」設計思想を踏襲）/ [[ISSUE-041]]（`gen-store-pages.js` による店舗ページ資産そのものの起源）/ 発見した LOCAL_STORES 重複行3件は今後の課題として観測（未起票・軽微）
 
 ### [ISSUE-076] pending由来店（ジャーナル採用の話題店）が恒久的に写真ゼロだった問題 ✅
 
@@ -1564,7 +1573,8 @@
 | 2026-07-23 | Builder(EXPLICIT) | ISSUE-068① GSC **完全開通**。データ0の原因＝SAが空のURLプレフィックス型のみ閲覧・実データはドメインプロパティ側と特定。pickBestProperty（複数時impressions最大を自動選択・PR #78・3ケーステスト）追加＋オーナーがドメインプロパティにSA追加→CI run 30010262835 で gsc_metrics.json に clicks=288/imp=32,958/CTR0.87%/順位17.3/クエリ25件 が入り確定 | ✅ デプロイ済み (PR #78) |
 | 2026-07-23 | Builder+Marketer(EXPLICIT) | ISSUE-068② link_domain 完了。コード変更ゼロで良いと確認（サイトが link_domain 送信済＋fetch_ga4_views.js が customEvent:link_domain を自動集計）。GA4登録手順をdocs追記（PR #80）＋オーナーがGA4カスタム定義に link_domain（イベント/param=link_domain）登録済（UI確認）。cta.byDomain は非遡及のため登録後クリック蓄積で自動充填。**ISSUE-068 クローズ** | ✅ 完了 (PR #80/#81) |
 | 2026-07-23 | Marketer+Builder(EXPLICIT) | ISSUE-072 GSC実データ駆動の改善ループを既存ループに組み込み。gsc_opportunities.js（ctr_fix/rank_push抽出）＋build.yml日次化＋CLAUDE.mdに「GSC改善ループ」章。第1弾＝店舗タイトルの冗長エリア群を正規化（area_label.js・patch_store_titles.js・生成元gen-store-pages.js）で4,136ページのCTR改善。副次で絵文字再発（gen-store-pages/build_featured生成元）を根絶し全ページ残存0。効果は翌週GSC前後比で測定 | ⏸ PRレビュー待ち |
-| 2026-07-29 | Orchestrator(EXPLICIT) | ISSUE-078 日次ジャーナル記事の店舗を「店舗ページ」（stores/{id}.html）へ内部リンク必須化。buildStores()がid優先で内部リンクするよう修正／validate_journal_draft.jsの店名照合をTOP50限定index.html evalからdata/stores.json全件（load_stores.js）に是正＋WARNING項目16新設／既存公開記事(2026-07-29-nagoya-beergarden.html)にマイアミ・CARVINO・ANDBBQの店舗ページリンクを追記／agents/editor.mdに全テーマ共通ルールを明文化 | ✅ commit待ち（PR作成予定） |
+| 2026-07-29 | Orchestrator(EXPLICIT) | ISSUE-078 日次ジャーナル記事の店舗を「店舗ページ」（stores/{id}.html）へ内部リンク必須化。buildStores()がid優先で内部リンクするよう修正／validate_journal_draft.jsの店名照合をTOP50限定index.html evalからdata/stores.json全件（load_stores.js）に是正＋WARNING項目16新設／既存公開記事(2026-07-29-nagoya-beergarden.html)にマイアミ・CARVINO・ANDBBQの店舗ページリンクを追記／agents/editor.mdに全テーマ共通ルールを明文化 | ✅ commit済み (PR #92) |
+| 2026-07-30 | Orchestrator(EXPLICIT) | ISSUE-078追補: 過去ジャーナル84本を全件監査し店舗カード↔店舗ページのリンクをバックフィル。外部リンクのみ11本を内部化／カードはあるがID未解決の44本にdata-store-id付与＋内部リンク化（stores/*.html全5,421件のJSON-LD名から正引き索引を実生成し、slug再計算に頼らず実ファイル照合で解決）／新規に実店舗言及を検出した1本にカード追加／残り38本は店舗非依存の一般論記事と確認し対象外。全63店舗カードの店名↔リンク先一致をゼロミスマッチで最終検証 | ✅ commit待ち（同PR #92に追加コミット予定） |
 
 ---
 
