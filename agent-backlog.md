@@ -8,6 +8,28 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-078] 日次ジャーナル記事の店舗が「店舗ページ」に内部リンクされていなかった問題 ✅
+
+- **priority**: P1（ユーザー導線・SEO内部リンク・Moatの店舗ページ資産が記事から到達不能） → **status**: done
+- **detected**: 2026-07-29（オーナー指摘。`2026-07-29-nagoya-beergarden.html`（季節短信）がマイアミ/CARVINO/ANDBBQを本文で紹介しているのに、どの店にも店舗ページ（`stores/{id}.html` — カード表記の店舗詳細）へのリンクが無かった）
+- **resolved**: 2026-07-29
+- **resolved_by**: Orchestrator 直轄（EXPLICIT モード）
+- **category**: content / internal-linking / ux
+- **owner**: Editor + Builder
+
+- **真因**: `journal/_template.html` の `.store-list`（`{{STORES}}`）は today_one / weekly_digest テーマだけが `input.stores[]` を使って埋めており、industry_insider / seasonal / flexible テーマは本文で店名を `<strong>` 太字にするだけで `stores[]` を空のまま生成していた。既存の `buildStores()` も `s.link`（外部URL）しか見ておらず、`id` があってもサイト内の店舗ページを優先しない実装だった。
+  - 副次的に発覚: `validate_journal_draft.js` の店名照合チェック（項目1）が `index.html` の `LOCAL_STORES`（TOP50のみインライン化・ISSUE-015-P2以降の仕様）を直接 `eval` しており、実質ほぼ全店（5,400件中50件以外）を検証対象外にしていた。そのため過去に false-negative（未登録の実在店を誤ってFAIL）も発生していた（`journal/2026-04-21-yabamisen-nagoya-insider.html` の「台湾料理 矢場味仙」で確認）。
+- **実装**:
+  1. `scripts/generate_daily_draft.js`: `buildStores()` に `storeDetailLink()` を追加。`s.id` があれば無条件でサイト内店舗ページ（`../stores/{id}.html`）を優先リンクし、外部リンクは `id` が無い場合のみのフォールバックに変更
+  2. `scripts/validate_journal_draft.js`: `extractLocalStores()` を `index.html` 直eval から `scripts/lib/load_stores.js` の `loadStores()`（`data/stores.json` canonical・全件）に切替。項目1の店名照合が全店ベースで正しく機能するように是正
+  3. `scripts/validate_journal_draft.js`: 項目16（**WARNING**・非ブロッキング）を新設。本文 `<strong>` 太字と実店名（LOCAL_STORES全件）を突合し、店舗ページへの内部リンクが一つも無ければ警告。ヘッドレス日次実行を止めないよう意図的に非ブロッキング（ISSUE-077 の教訓 = 質問/停止で1日分の成果が消える、を踏襲）
+  4. `journal/2026-07-29-nagoya-beergarden.html`: 既存公開記事を直接是正。マイアミ(J001042282)/CARVINO(J001246890)/ANDBBQ(J004633290) — いずれも実在の LOCAL_STORES 登録店（架空店ではない）— の店舗ページへのリンク付きカードを `.store-list` に追加
+  5. `data/journal_published.json`: 同記事の `store_ids` を空配列から実IDへ補完（30日以内再掲チェックの母数として正しく機能するように）
+  6. `agents/editor.md`: 「店舗ページへの内部リンク必須化（全テーマ共通）」を新設。今後の全テーマで `stores[]` に `id` を必ず設定すること、LOCAL_STORES に無い新規店舗は同日中に `pending_stores.json` へ追加することを明文化
+- **QAゲート**: 構文チェック2ファイル ✅（`node -c`）/ 既存公開ジャーナル全件（2026-04〜07月・約60本）に新旧validatorを回して比較 → 新たなFAIL増加ゼロ・既存の暗黙バグ1件を修正（矢場味仙のfalse-negative FAIL解消）✅ / 合成テスト（id指定=内部リンク・id無し=外部リンクのフォールバック）で `buildStores()` の分岐を実機確認 ✅ / retrofit記事は `validate_journal_draft.js` フルPASS（WARNなし）✅ / ブラウザでstore-list描画とリンク先の実店舗ページ（写真・住所・営業時間あり）を目視確認 ✅
+- **files**: `scripts/generate_daily_draft.js`, `scripts/validate_journal_draft.js`, `journal/2026-07-29-nagoya-beergarden.html`, `data/journal_published.json`, `agents/editor.md`, `agent-backlog.md`
+- **関連**: [[ISSUE-077]]（同じ「ヘッドレス日次を止めない」設計思想を踏襲）/ [[ISSUE-041]]（`gen-store-pages.js` による店舗ページ資産そのものの起源）
+
 ### [ISSUE-076] pending由来店（ジャーナル採用の話題店）が恒久的に写真ゼロだった問題 ✅
 
 - **priority**: P1 → **status**: done（PR作成・マージ後のCIで実取得）
@@ -1542,6 +1564,7 @@
 | 2026-07-23 | Builder(EXPLICIT) | ISSUE-068① GSC **完全開通**。データ0の原因＝SAが空のURLプレフィックス型のみ閲覧・実データはドメインプロパティ側と特定。pickBestProperty（複数時impressions最大を自動選択・PR #78・3ケーステスト）追加＋オーナーがドメインプロパティにSA追加→CI run 30010262835 で gsc_metrics.json に clicks=288/imp=32,958/CTR0.87%/順位17.3/クエリ25件 が入り確定 | ✅ デプロイ済み (PR #78) |
 | 2026-07-23 | Builder+Marketer(EXPLICIT) | ISSUE-068② link_domain 完了。コード変更ゼロで良いと確認（サイトが link_domain 送信済＋fetch_ga4_views.js が customEvent:link_domain を自動集計）。GA4登録手順をdocs追記（PR #80）＋オーナーがGA4カスタム定義に link_domain（イベント/param=link_domain）登録済（UI確認）。cta.byDomain は非遡及のため登録後クリック蓄積で自動充填。**ISSUE-068 クローズ** | ✅ 完了 (PR #80/#81) |
 | 2026-07-23 | Marketer+Builder(EXPLICIT) | ISSUE-072 GSC実データ駆動の改善ループを既存ループに組み込み。gsc_opportunities.js（ctr_fix/rank_push抽出）＋build.yml日次化＋CLAUDE.mdに「GSC改善ループ」章。第1弾＝店舗タイトルの冗長エリア群を正規化（area_label.js・patch_store_titles.js・生成元gen-store-pages.js）で4,136ページのCTR改善。副次で絵文字再発（gen-store-pages/build_featured生成元）を根絶し全ページ残存0。効果は翌週GSC前後比で測定 | ⏸ PRレビュー待ち |
+| 2026-07-29 | Orchestrator(EXPLICIT) | ISSUE-078 日次ジャーナル記事の店舗を「店舗ページ」（stores/{id}.html）へ内部リンク必須化。buildStores()がid優先で内部リンクするよう修正／validate_journal_draft.jsの店名照合をTOP50限定index.html evalからdata/stores.json全件（load_stores.js）に是正＋WARNING項目16新設／既存公開記事(2026-07-29-nagoya-beergarden.html)にマイアミ・CARVINO・ANDBBQの店舗ページリンクを追記／agents/editor.mdに全テーマ共通ルールを明文化 | ✅ commit待ち（PR作成予定） |
 
 ---
 

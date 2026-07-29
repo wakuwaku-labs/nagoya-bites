@@ -74,9 +74,26 @@ function toDateJa(dateStr) {
   return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日 (${wd})`;
 }
 
+/**
+ * 店舗の「詳細を見る」リンク先を決める。
+ * 優先: サイト内の店舗ページ（stores/{id}.html — gen-store-pages.js が LOCAL_STORES から生成）
+ * 次点: 外部リンク（id が無い＝まだ LOCAL_STORES / pending_stores.json に未登録の店）
+ * id はあるのに外部リンクしか渡されない事故を防ぐため、id があれば無条件で内部リンクを優先する。
+ */
+function storeDetailLink(s) {
+  if (s.id) return { href: `../stores/${s.id}.html`, internal: true };
+  if (s.link) return { href: s.link, internal: false };
+  return null;
+}
+
 function buildStores(stores) {
   if (!stores || stores.length === 0) return '';
-  return stores.map((s, i) => `
+  return stores.map((s, i) => {
+    const dl = storeDetailLink(s);
+    const linkHtml = dl
+      ? `<a class="store-link" href="${esc(dl.href)}"${dl.internal ? '' : ' target="_blank" rel="noopener"'}>${dl.internal ? '店舗ページを見る' : '詳細を見る'} →</a>`
+      : '';
+    return `
       <div class="store-card"${s.id ? ` data-store-id="${esc(s.id)}"` : ''}>
         <div class="store-num">${String(i + 1).padStart(2, '0')}</div>
         <div class="store-info">
@@ -87,9 +104,10 @@ function buildStores(stores) {
             ${s.score ? `<span class="score">${esc(s.score)}</span>` : ''}
           </div>
           <p class="store-desc">${esc(s.desc || '')}</p>
-          ${s.link ? `<a class="store-link" href="${esc(s.link)}" target="_blank" rel="noopener">詳細を見る →</a>` : ''}
+          ${linkHtml}
         </div>
-      </div>`).join('\n');
+      </div>`;
+  }).join('\n');
 }
 
 function buildInsiderPoints(points) {

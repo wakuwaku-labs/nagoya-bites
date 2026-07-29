@@ -356,6 +356,31 @@ retrip / ヒトサラ / PR TIMES / 番組公式 / note 等）から採用OK。**
 4. Instagram公式アカウント・ホットペッパーID・Google Place ID は後追いで
    `resolve_instagram.js` / DataKeeper が解決
 
+### 店舗ページへの内部リンク必須化（全テーマ共通・2026-07-29〜）
+
+> 発端: 季節短信テーマ（`2026-07-29-nagoya-beergarden.html` 等）は本文で店名を `<strong>` 太字にするだけで、
+> `input.stores[]` を空のまま生成しており、記事内のどこにも「店舗ページ」（`stores/{id}.html` — カード表記の
+> 店舗詳細ページ）へのリンクが無い状態で公開されていた。today_one/weekly_digest は `stores[]` を使うため
+> 元々問題なかったが、industry_insider/seasonal/flexible は素通りしていた。
+
+**ルール（全テーマ共通・例外なし）**:
+
+1. 本文で名指しした実在店舗は、LOCAL_STORES にあれば **必ず** `input.stores[]` に列挙し、
+   `id` に店舗ID（ホットペッパーID / 手動店の M番号）を設定する。
+   - `generate_daily_draft.js` の `buildStores()` が `id` を最優先でサイト内の店舗ページ
+     （`../stores/{id}.html`）にリンクする（外部リンクは `id` が無い場合のみのフォールバック）。
+   - today_one/weekly_digest のような箱型カードにしなくても良い（`store-desc` は短くて可）。
+     `journal/_template.html` の `{{STORES}}`（`.store-list`）は全テーマ共通で使える枠。
+2. LOCAL_STORES に無い**新規店舗**を紹介する場合は、上の「新規店舗追加フロー」に従って
+   **必ず同日中に** `data/pending_stores.json` へ追加する。次回 `node build.js` で自動的に
+   LOCAL_STORES にマージされ、CI 日次の `gen-store-pages.js` が店舗ページを自動生成する
+   （手動で `stores/*.html` を作る必要はない）。
+3. `scripts/validate_journal_draft.js` の項目16（**WARNING** — ブロックはしない）が、本文の
+   `<strong>` 太字と LOCAL_STORES の実店名を突合し、内部リンクの有無を検知する。
+   WARN が出たら `stores[]` に `id` を足して解消すること。ヘッドレス実行を止めないよう
+   意図的に非ブロッキングにしてあるので、「WARNが出ても公開はできる」＝「直さなくていい」
+   ではない — 次のターンで拾って直す。
+
 ### 匿名運営の徹底（EDT-001 整合）
 
 - オーナー名 / 大将名 / シェフ名を本文に**書かない**

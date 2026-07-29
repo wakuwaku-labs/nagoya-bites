@@ -15,15 +15,16 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const INDEX = path.join(ROOT, 'index.html');
 const PUBLISHED = path.join(ROOT, 'data', 'journal_published.json');
 const PENDING = path.join(ROOT, 'data', 'pending_stores.json');
+const { loadStores } = require('./lib/load_stores');
 
+// index.html には TOP50 のみが LOCAL_STORES としてインライン化されているため、
+// 全店舗照合には data/stores.json（canonical・約5,400件）を使う共有ヘルパーを使う。
+// 以前は index.html を直接 eval していたため、TOP50 に無い店は常に「未登録」判定を
+// スキップできてしまい、店名照合チェックが実質ほぼ無効化されていた。
 function extractLocalStores() {
-  const src = fs.readFileSync(INDEX, 'utf8');
-  const m = src.match(/var\s+LOCAL_STORES\s*=\s*(\[[\s\S]*?\]);/);
-  if (!m) return [];
-  try { return eval(m[1]); } catch (e) { return []; }
+  try { return loadStores(); } catch (e) { return []; }
 }
 
 function checkJournal(htmlPath, mdPath) {
@@ -197,6 +198,26 @@ function checkJournal(htmlPath, mdPath) {
       isStoreArticle ? '実店舗写真OK（Instagram/Google Maps/HotPepper/許諾済み）'
                      : '写真OK（実写 or 記事固有のイメージ図）');
   }
+
+  // 16. 本文で言及した実在店舗に「店舗ページ」への内部リンクがあるか（WARNING・全テーマ共通）
+  //     today_one/weekly_digest は buildStores() が data-store-id 付きの内部リンクを常に生成するが、
+  //     seasonal/flexible/industry_insider は本文の <strong> で店名を書くだけになりがちで、
+  //     店舗ページ（stores/{id}.html）へのリンクが一切無いまま公開されることがあった。
+  //     店名の存在は実データ（LOCAL_STORES）との突合で検証できるため、自己申告ではなく事実で判定する。
+  const knownFullNames = stores.map(s => (s['店名'] || s.name || '').trim()).filter(Boolean);
+  const strongNames = Array.from(artBody.matchAll(/<strong>([^<]{2,40})<\/strong>/g)).map(m => m[1].trim());
+  const mentionedRealStores = Array.from(new Set(strongNames)).filter(n =>
+    n.length >= 2 && knownFullNames.some(full => full.includes(n)));
+  const hasInternalStoreLink = /href="(?:\.\.\/)?stores\/[^"]+\.html"/.test(html);
+  const storeLinkWarn = mentionedRealStores.length > 0 && !hasInternalStoreLink;
+  results.push({
+    id: '16_store_page_links_warn',
+    ok: true,
+    warn: storeLinkWarn,
+    msg: storeLinkWarn
+      ? `⚠️ WARNING: 本文で実在店舗（${mentionedRealStores.slice(0, 5).join('、')}等）に言及していますが、店舗ページ（stores/*.html）への内部リンクが見つかりません。input.json の stores[] に id（ホットペッパーID等）を設定してください。LOCAL_STORES に無い新規店舗は data/pending_stores.json へ追加してから掲載してください。`
+      : (mentionedRealStores.length > 0 ? `店舗ページへの内部リンクあり OK（言及店: ${mentionedRealStores.slice(0, 5).join('、')}）` : '実在店舗の言及なし（スキップ）')
+  });
 
   return results;
 }
