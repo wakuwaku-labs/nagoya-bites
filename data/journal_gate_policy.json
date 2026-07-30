@@ -1,6 +1,7 @@
 {
   "description": "日次ジャーナルの公開ゲート方針（B: 段階ゲート）。scripts/score_journal_candidates.js と scripts/run_journal_local.sh が参照する。.claude/commands/*.md はエージェント自己改変ブロックで編集できないため、運用ルールはこのデータファイルを単一の情報源とする。",
-  "auto_publish_min": 95,
+  "max_total": 110,
+  "auto_publish_min": 100,
   "review_publish_min": 85,
   "policy": {
     "PASS": "auto_publish_min 以上。無条件で自動公開する。",
@@ -8,10 +9,13 @@
     "HOLD": "review_publish_min 未満。公開しない。ドラフトは残し、.local-logs/HOLD-<date>.md に理由を書き出して当日中に気づけるようにする。"
   },
   "rationale": "2026-07-27 の調査で、旧 95点固定ゲートは『正直に申告すると上限94点で1点届かず、出典のない buzz_score を90以上と書くと通る』構造だったことが判明した（過去にゲートを超えた候補は全て buzz_score>=90 を積んでおり、正直に申告した日だけが未達だった）。ゲートを緩めるのではなく、(A) 採点を検証可能な事実だけで行うよう是正したうえで、(B) 満点でない日に『捏造』か『当日公開ゼロ』かの二択を迫らない第三の帯を設けた。",
+  "rationale_2026_07_27_seo011": "同日、採点器に search_intent（検索意図・10点）を追加し満点が 100 → 110 になった。追加理由は実測: 公開済みジャーナル73本のうちタイトルにシーンKWとエリア語の両方を含むのは2本（3%）しかなく、GSC のトップクエリ25件は全件が店名の指名検索で、Moat と宣言している『名古屋 × シーン × 業界人の目利き』の検索面がジャーナルから一切取れていなかった。採点器に『誰かが検索する題材か』を見る次元が無いため、内輪向けタイトルが構造的に選ばれ続けていた。閾値 95 → 100 は --calibrate の実測分布に基づく（最良×KW完備=105 / 最良×KW無し=96 / 一次発表なし良記事=88 / 薄い記事=37）。KW完備なら 5点の余裕を持って PASS し、KW が無い日は PASS_WITH_NOTE として公開自体は継続する（無人実行で当日の成果物が消えないことを優先）。",
   "notes": [
     "閾値を変えるときは、必ず node scripts/score_journal_candidates.js --calibrate で代表ケースの分布を確認してから変更すること。",
-    "HOLD が続く場合は閾値ではなく取材（一次情報源・話題の証跡URL）の不足を疑うこと。数字を動かして通すのは本末転倒。"
+    "HOLD が続く場合は閾値ではなく取材（一次情報源・話題の証跡URL）の不足を疑うこと。数字を動かして通すのは本末転倒。",
+    "search_intent の KW マスタは data/journal_seo_keywords.json。全KWが features/ の実在記事に裏付けられていることを node scripts/journal_seo_kw.js --verify で検証できる（自己申告値ではない）。",
+    "満点は WEIGHTS から自動算出される。max_total はドキュメント用の控えで、判定には使わない。"
   ],
   "updated": "2026-07-27",
-  "related_issue": "ISSUE-077"
+  "related_issue": "ISSUE-077 / SEO-011 (SEO-007 統合)"
 }

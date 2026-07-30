@@ -166,6 +166,95 @@
 - **files**: `data/manual_stores.json`(149→127店), `data/pending_stores.json`, `data/stores.json`, `scripts/fetch_manual_store_photos.js`(VERIFIED_ALIASES), `index.html`, `sitemap.xml`, `stores/*.html`(23削除), `features/nagoya-kaoawase-washoku.html`, `features/index.html`, `agent-backlog.md`
 - **関連**: ISSUE-067（架空店ブロックの起点事故）/ ISSUE-064（表記差の誤検知＝今回の VERIFIED_ALIASES と同系）/ [[ISSUE-075]]（同ファイルを並行改修・失効写真の自動修復）
 
+### [SEO-043] GSC の取得解像度を上げ、SEO-011 の効果測定器と「トップページが何位で何のKWに出ているか」を可視化する ✅
+- **priority**: P1 → **status**: done（2026-07-27）
+- **detected**: 2026-07-27
+- **category**: SEO
+- **owner**: Marketer
+- **問題**: SEO-011 でシーンKWレイヤーを入れたが、**その効果を測る器が無かった**。`fetch_gsc_metrics.js` は `rowLimit: 25`（ページは15件）で、その上位25件は**全件が店名の指名検索**。シーンKWが表示を得ても指名検索を押しのけて上位25に入るまで数ヶ月かかる可能性が高く、それまで効いているか判別できない。同じ理由で、単体最大の伸びしろ（**トップページ 2,262表示・順位23.4・6クリック＝推定取りこぼし57クリック**）についても「3ページ目で何のクエリに出ているのか」が分からず手が打てなかった
+- **brand-filter**: ✅ 適合 — 計測解像度の向上のみ。順位操作・広告・ストック写真を伴わない
+- **実装**:
+  1. `scripts/gsc_query_intent.js` 新設 — クエリを `discovery`（シーン語 / エリア語×ジャンル語＝**我々が取りに行く面**）/ `navigational`（掲載店の店名＝Strategic Skip の面）/ `brand` / `other` に分類。**辞書は SEO-011 と共通の `data/journal_seo_keywords.json`** を使うため、「KWを入れた面が伸びたか」が記事側と直接対応する
+  2. `scripts/fetch_gsc_metrics.js` — クエリ 25→5,000件 / ページ 15→500件に拡張。`page × query` を新規取得して「どのページがどのクエリで何位か」を紐づけ。意図別集計を `intent` として出力。`topQueries`/`topPages` は従来どおり残して後方互換を維持
+- **効果指標の定義**: `intent.kpi.discovery_impressions` と `discovery_clicks` の推移で SEO-011 を判定する。**総クリックは使わない**（指名検索の増減で簡単に動き、施策の効果と混ざるため）
+- **ベースライン（2026-07-27・上位25クエリ時点）**: navigational 91.1%（19クエリ・1,236表示）/ other 8.9% / **discovery 0%**。ここが伸びるかどうかが SEO-011 の合否
+- **実装中に見つけて直した不具合**: 初版の店名マッチが `query.includes(storeName)` の片方向で、クエリ（「のれんとコルク 名古屋」）より DB の店名（「フレンチ屋台ビストロ のれんとコルク 名古屋駅店」）が長いケースで一致せず、**指名検索が discovery に誤分類されて効果指標が過大に出ていた**（初版で discovery 6.1% と表示。正しくは 0%）。双方向の識別トークン照合に変更し、`navigational` を `discovery` より先に判定する順序に修正。**迷うケースは Strategic Skip 側に倒し、効果指標が過大に出る方向の誤りを構造的に排除**した
+- **検証**: `groupPageQueries` を純関数化して認証なしでテスト（focus外ページの除外 / 1ページ15件上限 / 丸め / keys欠落行でクラッシュしない を確認）/ 分類器を実データ25クエリで検証し店名の帰属も正しいことを確認 / `gsc_opportunities.js` が拡張後の JSON でも従来どおり動作
+- **関連**: [[SEO-011]]（この測定器が測る対象）/ [[SEO-039]]（Bing・生成AI 側の観測。こちらは Google 側の解像度）
+
+### [SEO-042] 特集冒頭のCTAを1つの設計に統合する（店舗詳細導線＋予約導線・SEO-036 + SEO-013 統合）✅
+- **priority**: P2 → **status**: done（2026-07-29）
+- **detected**: 2026-07-27（SEO改善の全体仕分けによる統合起票）
+- **category**: SEO
+- **owner**: Builder + Editor
+- **統合元**: [[SEO-036]]（特集冒頭に「店舗詳細を見る」3件以上）+ [[SEO-013]]（モーダルの予約ボタン視認性＋人気特集本文冒頭にCTA）
+- **統合理由**: 両者とも設置面が「人気特集の冒頭」で、対象店も同じ（nagoya-hitsumabushi / nagoya-solo-dining / nagoya-sweets）。別々に実装すると同じ位置に2種類のボタン群が二重に生えるか、後から実装した側が先の設置を上書きする。「読者が特集冒頭で最初に取れる行動」を1回で設計するほうが正しい
+- **brand-filter**: ✅ 適合（統合元の判定を継承）— 実在店の既存予約導線へのUX改善であり自社マネタイズではない（制約8非該当）。順位操作・広告依存・ストック写真を伴わない
+- **acceptance**: 閲覧上位の特集（hitsumabushi / solo-dining / sweets / gourmet-guide）の冒頭に、実在店3件以上への「店舗詳細」導線と予約導線を**一体のCTAブロックとして**設置／店舗詳細モーダル内の予約ボタンの視認性（色・サイズ・文言「今すぐ予約」）も同時に改善／リンク先は LOCAL_STORES 実在店のみ（`node scripts/audit_feature_stores.js` 検出ゼロ維持）／既存の cta_click・cta_gmap_click 計測を維持／フィルタ・検索・モーダル・IGエンベッド・Google評価を壊さない（制約5）・index.html 単一ファイル維持
+- **実装（特集側・2026-07-27 完了）**: `scripts/add_feature_top_cta.js` 新設。冪等（`<!-- SEO-042:TOP-CTA:START/END -->` マーカーで再生成）
+  1. **掲載店の出所**: 記事の ItemList JSON-LD（全特集で形式統一）から取得。さらに `stores/JXXXXXXXX.html` の実在と `closed_stores.json` 不掲載を確認した店だけ表示。3件に満たない特集はスキップ（水増ししない）
+  2. **対象特集は実データ由来**: `site_metrics.json`（GA4）と `gsc_metrics.json` の topPages から特集を抽出（決め打ちしない）→ hitsumabushi / solo-dining / tebasaki に適用
+  3. **設置位置**: 本文の最初の `<h2>` 直前＝導入文の後・本編の前。`refresh_feature_rosters.js` が差し替える `.store-list` の**外側**なので月次の掲載店入替で消えない
+- **実装中に見つけて直した2点**:
+  1. **同一ブランドの支店が並ぶ**: ItemList 上位3件がひつまぶし特集＝「備長」3店舗、手羽先特集＝「むつみ」3店舗だった。「EDITORS' PICK 3軒」がチェーン1社の支店一覧では業界人の目利きという Moat に反するため、看板単位で重複を除外し次点を繰り上げる処理を追加（3軒に届かない場合のみ戻す）
+  2. **一部の特集で `--gold` が未定義**: `nagoya-solo-dining` ほか4特集は `--gold` 変数を持たず、`var(--gold)` が空に解決してボタンが透明・文字が黒のまま出ていた。さらにページ側の `.store-link[href*=hotpepper]{color:var(--gold) !important}` が `!important` 付きでスコープ強化だけでは勝てない。`.topcta` 自身に `--gold:#7a5c10;--gold2:#96720f`（サイト共通値）を定義し、ページ側ルールも CTA 内では正しく解決するようにした
+- **検証（ローカル実機・375x812）**: 3特集で CTA の計算済みスタイルが一致（店舗詳細=金塗り rgb(122,92,16)／今すぐ予約=白地に金枠、既存 `.store-link` の意匠と同一）／掲載店リンク9件すべて `stores/*.html` 実在／横スクロール発生なし／console エラーなし／`audit_feature_stores.js` 実在不明0・リンク切れ0／再実行で unchanged（冪等）
+- **マージ後の追補（2026-07-27）**: main の最新 GA4/GSC データで対象特集が増えたのを機に、ブランド重複判定と挿入位置の穴を2つ修正
+  1. **看板判定を「支店名を落として完全一致」に変更**: 先頭N文字の一致では「手羽先むつみ 住吉店」と「手羽先むつみ 本店」（看板の実体が3文字のむつみ）を取りこぼし、閾値を下げると「山本屋総本家」と「山本屋本店」（別会社。両者の違いを解説した特集が実在する）を同一視してしまう。末尾の「〜店」トークンを落として残りを完全一致で比較する方式に変更し、9ケースの単体検証で全て期待通りに分岐
+  2. **3系統目のテンプレートに対応**: `<div class=content>` に直接本文を置く季節特集型（nagoya-summer-2026 等）でアンカーが見つからずスキップされていた。h1 後方からの探索もフォールバックに追加し、全67特集で no_anchor がゼロに
+  → 適用は5特集（hitsumabushi / solo-dining / tebasaki / miso-nikomi-udon / summer-2026）。掲載店リンク15件すべて `stores/*.html` 実在
+- **2026-07-29 の決着（main の並行実装を受けて）**: 統合元だった [[SEO-013]] が main で **done**（commit cafcfed99）。内訳は (1) `add_feature_reservation_cta.js` に PATTERN_C を追加して26特集・254店に**店舗別**の予約導線を付与、(2) モーダル内予約ボタンの文言変更（「今すぐ予約」）は**意図的に見送り**。
+  - **本チケットの残タスクは無くなった**。見送りの理由（既に全幅の `.modal-cta-btn` で「この店を予約する」と店名付きで明示されており、文言変更は効果検証もできない＝アドバイスの鵜呑み回避）は妥当なので、こちらから蒸し返さない
+  - **main の実装と本実装は重複しない**: main は「各店舗ブロックの直下」の店舗別リンク、本実装は「記事冒頭」の上位3店まとめ。設置面が別なので二重にならないことを実機で確認済み
+- **status 更新**: in_progress → **done**（特集冒頭CTA の設置をもって完了）（制約1）
+- **効果測定**: `data/metrics_history.json` の `cta.ctaClickRate` と 1訪問あたりページ数の前後比
+
+### [SEO-041] 店舗カードの「詳細を見る」導線を判断する（SEO-010・統合元 SEO-037 は実装済みのため縮小）
+- **priority**: P3 → **status**: ready（要否そのものを再判断）
+- **2026-07-29 の再スコープ**: 統合元だった [[SEO-037]] が main で **done**（commit 82fba08eb・カードに44x44の地図ボタンを併置）。統合の前提だった「カードUIの取り合い」は解消済みで、本チケットに残るのは [[SEO-010]]（カードに「詳細を見る」ボタン）のみ。
+  さらに SEO-037 の実装者が「カード全体が既に `onclick="openM()"` でモーダルを開くため、詳細ボタンを足すと同じ動作の導線が二重になる」と結論しており、これは実コードを見た上での判断で妥当。**着手前にまず「そもそも要るか」を判定する**チケットに縮小し、優先度を P3 に下げた
+- **detected**: 2026-07-27（SEO改善の全体仕分けによる統合起票）
+- **category**: SEO
+- **owner**: Builder
+- **統合元**: [[SEO-010]]（カードに「詳細を見る」ボタン→モーダル起動）+ [[SEO-037]]（カードに「予約」「Googleマップ」を常時表示）
+- **統合理由**: **両者は同じ店舗カードUIを取り合う**（SEO-037 側に既に「要調整」メモがあった）。カード直アクション（予約/マップ）を足すとモーダルオープンを食い潰し、モーダル内にある SEO-004 の関連店舗・特集リンク（回遊レバー）に到達しなくなる。「カードで完結させる行動」と「モーダルへ送る行動」の配分は一度に決めないと片方が必ず無駄になる
+- **brand-filter**: ✅ 適合（統合元の判定を継承）
+- **acceptance**: 店舗カードに「詳細を見る」（モーダル起動）と「予約」「Googleマップ」を**優先順位を決めたうえで**配置／リンク先は各店の実在の予約URL・マップのみ／既存の cta_click・cta_gmap_click 計測を維持し、モーダルオープン数も併せて計測できること（カード直アクションが回遊を食っていないか判定するため）／フィルタ・検索・モーダル・IGエンベッド・Google評価を壊さない（制約5）・index.html 単一ファイル維持（制約1）／予約導線の収益化は制約8によりユーザー承認が別途必須＝本タスクはUX・計測のみ
+- **効果測定**: cta_click / cta_gmap_click / モーダルオープン数の3点セットで前後比。**モーダルオープンが減っていないことを合格条件に含める**
+
+### [SEO-040] トップのファーストビューを1つの設計に統合する（価値提案コピー＋人気特集導線・SEO-014 + SEO-009 統合）
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-07-27（SEO改善の全体仕分けによる統合起票）
+- **category**: SEO
+- **owner**: Builder
+- **統合元**: [[SEO-014]]（FVに「業界人の目利き」「シーン別専門性」の価値提案コピー・P1）+ [[SEO-009]]（FVに人気特集への大きな誘導導線）
+- **統合理由**: 統合元の双方に既に「両者を1つのファーストビュー設計として整合させる」旨のメモがあった。同じ画面の同じ領域を2回別々に改修するとレイアウトが競合する
+- **brand-filter**: ✅ 適合（統合元の判定を継承）— 誇大表現・架空実績は書かず、実在店DB規模と編集独立の事実に基づく
+- **⚠️ 母数の注意（2026-07-27 実測）**: GA4 の topPages で `/` + `/index.html` は 126PV / 645PV = **全体の約20%**、GSC ではトップページは28日で6クリック（順位23.4）。**本課題が効く範囲は流入の2割**であり、入口を増やす施策（[[SEO-011]] / [[SEO-039]]）より優先度は本来低い。P1 なのは直帰の大きさによるもので、着手順は入口系のあとで良い
+- **acceptance**: index.html 単一ファイル維持のまま、FV上部に「業界人の目利き」「シーン別専門性」を核にした簡潔なキャッチコピー（見出し＋サブコピー）と、人気特集への視認性の高い誘導（カード/バナー等）を**1つのFVブロックとして**配置／誇大表現・架空実績を書かない／フィルタ・検索・モーダル・IGエンベッド・Google評価を壊さない（制約5）
+- **注記**: キャッチコピーの文言はブランドの根幹に関わるため、実装前に案をユーザーに提示して確定させる
+- **効果測定**: `data/metrics_history.json` の bounceRate / pagesPerSession の前後比
+
+### [SEO-039] 流入の58%を占める Bing・生成AI を観測レイヤーに載せる（エンジン別内訳の固定化＋IndexNow）
+- **priority**: P1 → **status**: 一部done（観測レイヤーはdone・Bing WMT登録とIndexNow送信の有効化はオーナー操作/承認待ち）
+- **detected**: 2026-07-27
+- **category**: SEO
+- **owner**: Marketer
+- **source**: SEO改善の全体仕分け（2026-07-27）で、ready 12件の分類中に発覚。agent-backlog.md:289 が 2026-05 時点で「Bing(131) が Google(70) を上回るのは P1級の観測盲点」と指摘済みだったが未対応のまま3ヶ月経過していた
+- **問題（GA4 30日・実測）**: 510セッションの内訳は Bing 176 / 直接 141 / 生成AI（OpenAI+ChatGPT）121 / Google 50 / Yahoo 14。**検索・AI経由の363セッションのうち Google は 13.8% にすぎず、Bing 48.5% + 生成AI 33.3% = 82% が既存の改善ループの観測外**だった。GSCループは Google のみ、LINEアドバイスループは主に到着後の行動、`metrics_history.json`（56日分）は organic/direct/social/referral の4分類しか持たず、**エンジン単位のデータは日次上書きの `site_metrics.json` にしか存在せず毎日消えていた**（＝施策の前後比を取る土台が無い）
+- **brand-filter**: ✅ 適合 — 順位操作・広告・クーポン・ストック写真を一切伴わない純粋な観測整備。既に伸びている生成AI流入（3→121セッション）は CLAUDE.md 競合カテゴリF「生成AI引用」そのもので、唯一 Google 以外に打った手（llms.txt・ISSUE-042）が唯一の伸びている流入源になっている事実の追認でもある
+- **実装 2026-07-27（観測レイヤー・done）**:
+  1. `scripts/search_channel_metrics.js` 新設 — `site_metrics.json` の sourceBreakdown を Bing / Google / 生成AI / Yahoo / DuckDuckGo / SNS / 直接 に分類し `data/search_channel_metrics.json` に固定化。「GSCが見ているのは全体の何%か」を `blind_spots` として自動で明示する
+  2. `scripts/track_metrics.js` の `--snapshot` を拡張 — `metrics_history.json` の各エントリに `search_channels`（エンジン別セッション数）を追記。**明日以降エンジン単位の前後比が取れる**（過去分はリポジトリに残っていないため遡及不可）
+  3. `.github/workflows/build.yml` に日次実行と commit 対象を追加
+- **未実施（承認・オーナー操作が必要）**:
+  - `scripts/indexnow_ping.js` は実装済みだが**外部送信は既定 dry-run**で、`--yes` を付けたときだけ送信する。CI には未接続。有効化にはユーザー承認が必要（外部サービスへの送信のため）
+  - キーファイル `ec3ee6876b0d465ab4f7093ba5bc42d0.txt` をリポジトリ直下に生成済み（robots.txt / sitemap.xml / llms.txt と同じルート直下の配信ファイル）。デプロイして 200 を返すことが IndexNow の認証条件
+  - **Bing Webmaster Tools への登録はオーナー本人の操作が必要**（アカウント作成とサイト所有権確認＝クレデンシャルを伴うためエージェントは実行しない）。登録すると Bing 側のクエリ・掲載順位が見えるようになり、48.5% を占めるチャネルで初めて GSC 相当の改善ループが回せる
+- **検証**: `--report` で 504セッションを6エンジンに分類（Bing 34.9% / 直接 28% / 生成AI 24% / Google 9.9% / Yahoo 2.8% / DDG 0.4%）/ `--snapshot` 再実行で冪等（total_days 56 維持）/ `build.yml` YAML 妥当（ruby確認）/ IndexNow dry-run で実在7URLのみ抽出・外部通信ゼロ
+- **効果測定**: `data/search_channel_metrics.json` の `trend`（前回スナップショット比）。IndexNow 有効化後は Bing 経由セッションの推移で判定する
+- **関連**: [[SEO-011]]（入口KW・同じ「入口を増やす」系）/ ISSUE-042（llms.txt・生成AI流入の起点）/ ISSUE-072（GSCループ＝Googleのみを見ていた側）
+
 ### [SEO-038] 高流入ジャーナル記事のロングテール勝ち筋を分析し、同型テーマの横展開と関連特集への内部リンクで回遊に変換する
 - **priority**: P2 → **status**: ready
 - **detected**: 2026-07-27
@@ -196,7 +285,7 @@
 - **関連**: ISSUE-060（Places 三重検証ゲート＝実写ゼロ店の門番）/ ISSUE-067（架空店ブロックと整合）/ ISSUE-036（og:image 系譜）
 
 ### [SEO-036] 閲覧上位の特集記事の冒頭に「店舗詳細を見る」導線を3件以上置き、編集記事→実在店DBへ送客する
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: superseded → **統合先**: [SEO-042]
 - **detected**: 2026-07-25
 - **category**: SEO
 - **owner**: Editor
@@ -348,7 +437,7 @@
 - **acceptance**: journal/_template.html および既存記事テンプレートの `@media(max-width:640px)` に本文可読性の指定を追加（`.art-body p` をモバイルで概ね 1rem 相当まで引き上げ、行間・段落間を維持）。日本語本文の禁則・改行が破綻しないこと。画像/店舗カードのレイアウト崩れがないこと。既存の意匠（Cormorant Garamond 見出し・ゴールド配色）を変えない。サイト用の新ファイルを追加しない（journal/ 配下は憲法の例外）。滞在時間は次回以降のSEOアドバイスで再評価
 
 ### [SEO-014] トップページのファーストビューに「業界人の目利き」「シーン別専門性」を伝える価値提案キャッチコピーを掲げ直帰を防ぐ
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: superseded → **統合先**: [SEO-040]
 - **detected**: 2026-07-16
 - **category**: SEO
 - **owner**: Builder
@@ -372,7 +461,7 @@
 - **acceptance**: index.html 単一ファイル維持のまま、店舗詳細モーダル内の予約ボタンの視認性（色/サイズ/文言「今すぐ予約」）を改善。加えて人気特集（nagoya-hitsumabushi / nagoya-solo-dining / nagoya-sweets）本文冒頭に該当店舗の店舗詳細モーダル・予約への導線を自然に設置。フィルター・検索・モーダル・IGエンベッド・Google評価表示を壊さない。cta_click は次回以降のSEOアドバイスで再評価
 
 ### [SEO-009] トップページのファーストビューに人気特集（nagoya-solo-dining / nagoya-gourmet-guide）への大きな誘導導線を置き直帰を減らす
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: superseded → **統合先**: [SEO-040]
 - **detected**: 2026-07-08
 - **category**: SEO
 - **owner**: Builder
@@ -381,7 +470,7 @@
 - **acceptance**: index.html 単一ファイル維持のまま、ファーストビュー内に人気特集への視認性の高い誘導（カード/バナー等）を配置。フィルター・検索・モーダル・IGエンベッド・Google評価表示を壊さない。直帰率・回遊は次回以降のSEOアドバイスで再評価
 
 ### [SEO-010] 各店舗カードに「詳細を見る」明示ボタンを付け店舗詳細モーダルへの次の一歩を作る（まず10店舗で検証）
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: superseded → **統合先**: [SEO-041]
 - **detected**: 2026-07-08
 - **category**: SEO
 - **owner**: Builder
@@ -389,8 +478,8 @@
 - **brand-filter**: ✅ 適合 — Moat「構造化DB（4,500店超）の活用」を伸ばす回遊強化。既存の店舗詳細モーダルの発見性を上げるだけで、順位操作・広告依存・サクラ要素は無い
 - **acceptance**: 既存の店舗詳細モーダル/フィルター/検索/IGエンベッド/Google評価表示を壊さず、カードに明示的な「詳細を見る」導線を追加。index.html 単一ファイル維持。クリック計測の変化は次回以降のSEOアドバイスで再評価
 
-### [SEO-011] 日次ジャーナルを「名古屋 接待 個室」等のシーン別専門KWでタイトル・内容設計しSNS原稿でも同KWで告知
-- **priority**: P2 → **status**: ready
+### [SEO-011] 日次ジャーナルを「名古屋 接待 個室」等のシーン別専門KWでタイトル・内容設計しSNS原稿でも同KWで告知 ✅
+- **priority**: P2 → **status**: done（2026-07-27・SEO-007 を統合して実装）
 - **detected**: 2026-07-08
 - **category**: SEO
 - **owner**: Editor
@@ -398,6 +487,15 @@
 - **brand-filter**: ✅ 適合 — Moat「名古屋×シーン×業界人の目利き」と独自KW（接待・個室）の中核。編集独立を保ったまま検索面を広げる。実在データ・実写・特集を強化する方向
 - **acceptance**: journal/ の記事タイトル・冒頭・本文にシーン別専門KWを自然挿入（JSON-LD不汚染・架空店ゼロ）。docs/daily-posts/ のSNS原稿も同KWで整合。掲載店は必ずLOCAL_STORES実在データを使用。検索流入は次回以降のSEOアドバイスで再評価
 - **note 2026-07-08（週次レポート 06-29〜07-05 から合流）**: 対象を journal/ だけでなく閲覧上位の features/（nagoya-hitsumabushi 22回・nagoya-solo-dining 18回等）のタイトル・見出しにも拡張。流入はBing検索が35%で最大（Google 13%を大きく上回る）ため、Bingで上位を狙えるシーン別専門KW（例「名古屋 ひつまぶし 個室」）を優先。週次アドバイスW3を本項目に統合
+- **実装 2026-07-27（SEO-007 統合）**:
+  1. **問題の実測**: 公開済みジャーナル73本のタイトルを機械集計 → シーンKWを含む 9本(12%) / エリア語 25本(34%) / **両方 2本(3%)**。GSC トップクエリ25件は全件が店名の指名検索で、Moat のシーン検索面がジャーナルから一切取れていなかった。原因は採点器（`score_journal_candidates.js`）に「誰かが検索する題材か」を見る次元が無く、内輪向けタイトルが構造的に選ばれ続けていたこと。
+  2. `data/journal_seo_keywords.json` 新設 — シーンKWマスタ（エリア4 / シーン15 / ジャンル20）。**全KWが `features/` の実在記事に紐づく**。`node scripts/journal_seo_kw.js --verify` で「特集ファイルが実在し、そのタイトルにその語が実際に使われている」ことを機械検証（39件 problems 0）。エリアの store_count は `data/stores.json` 4,994件から機械算出。
+  3. `scripts/journal_seo_kw.js` 新設 — `--build` / `--verify` / `--check "<title>"` / `--suggest`。KW と一緒に**内部リンク先の実在特集**を返すので、KW を使うことがそのまま回遊導線の設置になる。
+  4. `scripts/score_journal_candidates.js` に **`search_intent`（10点）** を追加（満点 100→110）。タイトルにエリア語+4 / シーン語+4 / ジャンル語+2、リードのみは各+1（正直な中間解の逃げ道）。全て機械判定で自己申告値ゼロ。
+  5. `data/journal_gate_policy.json` の閾値を **95 → 100** に更新。`--calibrate` の実測分布に基づく（最良×KW完備=105 / 最良×KW無し=96 / 一次発表なし良記事=88 / 薄い記事=37）。KW完備なら5点の余裕で PASS、KW が無い日は PASS_WITH_NOTE として**公開自体は継続**（無人実行で当日の成果物が消えないことを優先・CLAUDE.md 品質ゲート原則4/6）。
+  6. `scripts/validate_journal_draft.js` に check16 追加 — タイトルのKWが `docs/daily-posts/` のSNS原稿にも出ているかを照合（**WARN・非ブロッキング**）。SEO-007 の「SNS原稿も同KWで」を担保。
+- **検証**: `--verify` 39件 problems 0 / `--calibrate` で4ケースが設計通りに分岐 / **過去の候補6日分を再採点し、旧PASS 4件（07-18・07-22・07-23・07-26）は全て新ゲートでも PASS＝退行なし**。同日内の順位はKW保持タイトルが上がる（例 07-18 の「名古屋がハイコスパ寿司の街である理由」79→89）。最新公開記事 `2026-07-27-owarisanso-kurogi.html` で validator 全16項目 PASS（check16 は「予約困難」を検出しSNS原稿と整合を確認）
+- **効果測定**: 今後の journal 記事の search_intent 平均（`--history`）と、GSC のシーンKWクエリでの表示回数。指名検索以外のクエリが GSC トップに出てくるかで判定する
 
 ### [SEO-012] 閲覧上位の特集記事下部に「関連記事」導線を3件程度追加し1訪問1.1ページの回遊を伸ばす ✅
 - **priority**: P2 → **status**: done
@@ -411,8 +509,8 @@
 - **brand-filter**: ✅ 適合 — Moat「構造化DB×特集×日次ジャーナルの三層編集」を相互リンクで束ねる回遊強化。順位操作でも広告依存でもなく、自社の実在コンテンツ同士を自然につなぐだけ。週次で閲覧数 -9%・1訪問1.1ページの横ばいトレンドに対する具体レバー
 - **acceptance**: features/ の閲覧上位記事（hitsumabushi / solo-dining 等）末尾に関連特集・関連ジャーナルへの内部リンクを3件前後設置。リンク先は実在の公開済み記事のみ。JSON-LD不汚染・既存レイアウト非破壊。1訪問あたりページ数は次回以降のSEOアドバイスで再評価
 
-### [SEO-007] 日次ジャーナルのタイトル冒頭に「シーン別検索KW」を据え同KWでSNS原稿も作り入口の検索意図を合わせる
-- **priority**: P2 → **status**: ready
+### [SEO-007] 日次ジャーナルのタイトル冒頭に「シーン別検索KW」を据え同KWでSNS原稿も作り入口の検索意図を合わせる ✅
+- **priority**: P2 → **status**: done（2026-07-27・SEO-011 に統合して実装。実装詳細は SEO-011 を参照）
 - **detected**: 2026-06-23
 - **category**: SEO
 - **owner**: Editor

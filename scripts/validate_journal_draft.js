@@ -14,6 +14,9 @@
 const fs = require('fs');
 const path = require('path');
 
+// 検索意図（シーンKW）判定は scripts/journal_seo_kw.js に一元化（SEO-011）
+const { checkText } = require('./journal_seo_kw');
+
 const ROOT = path.join(__dirname, '..');
 const PUBLISHED = path.join(ROOT, 'data', 'journal_published.json');
 const PENDING = path.join(ROOT, 'data', 'pending_stores.json');
@@ -199,7 +202,36 @@ function checkJournal(htmlPath, mdPath) {
                      : '写真OK（実写 or 記事固有のイメージ図）');
   }
 
-  // 16. 本文で言及した実在店舗に「店舗ページ」への内部リンクがあるか（WARNING・全テーマ共通）
+  // 16. 検索意図（シーンKW）とSNS原稿の整合（WARNING — SEO-011）
+  //     記事タイトルに使ったシーンKW/エリア語が docs/daily-posts/ の原稿にも載っているかを見る。
+  //     入口の検索意図を記事とSNSで揃えるための確認で、公開は止めない（無人実行で
+  //     当日の成果物が消えることを避ける。CLAUDE.md 品質ゲート原則6）。
+  const h1 = (html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/) || [, ''])[1].replace(/<[^>]*>/g, '').trim();
+  const artTitle = h1 || (html.match(/<title>([^<]*)<\/title>/) || [, ''])[1];
+  const kwCoverage = checkText(artTitle, '');
+  const usedKw = [kwCoverage.area, kwCoverage.scene, kwCoverage.genre].filter(Boolean);
+  if (usedKw.length === 0) {
+    results.push({
+      id: '16_search_intent_warn', ok: true, warn: true,
+      msg: '⚠️ WARNING: タイトルにシーンKW/エリア語がありません（検索の入口が取れません）。' +
+           'node scripts/journal_seo_kw.js --suggest でKW組を確認してください'
+    });
+  } else if (!md) {
+    results.push({
+      id: '16_search_intent_warn', ok: true, warn: false,
+      msg: `検索意図KW: ${usedKw.map(k => k.matched).join(' / ')}（SNS原稿は未指定のため照合スキップ）`
+    });
+  } else {
+    const missingInSns = usedKw.filter(k => !md.includes(k.matched));
+    results.push({
+      id: '16_search_intent_warn', ok: true, warn: missingInSns.length > 0,
+      msg: missingInSns.length === 0
+        ? `検索意図KW: ${usedKw.map(k => k.matched).join(' / ')} — SNS原稿とも整合 OK`
+        : `⚠️ WARNING: タイトルのKW「${missingInSns.map(k => k.matched).join('・')}」がSNS原稿に出てきません（入口の検索意図を揃えてください）`
+    });
+  }
+
+  // 17. 本文で言及した実在店舗に「店舗ページ」への内部リンクがあるか（WARNING・全テーマ共通）
   //     today_one/weekly_digest は buildStores() が data-store-id 付きの内部リンクを常に生成するが、
   //     seasonal/flexible/industry_insider は本文の <strong> で店名を書くだけになりがちで、
   //     店舗ページ（stores/{id}.html）へのリンクが一切無いまま公開されることがあった。
@@ -211,7 +243,7 @@ function checkJournal(htmlPath, mdPath) {
   const hasInternalStoreLink = /href="(?:\.\.\/)?stores\/[^"]+\.html"/.test(html);
   const storeLinkWarn = mentionedRealStores.length > 0 && !hasInternalStoreLink;
   results.push({
-    id: '16_store_page_links_warn',
+    id: '17_store_page_links_warn',
     ok: true,
     warn: storeLinkWarn,
     msg: storeLinkWarn
