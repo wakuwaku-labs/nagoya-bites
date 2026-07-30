@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-29T19:14:19.138Z",
+  "generatedAt": "2026-07-30T07:46:15.372Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -16,21 +16,21 @@
       },
       {
         "query": "やきまる亭",
-        "impressions": 130,
+        "impressions": 133,
         "clicks": 1,
-        "position": 8.9,
-        "ctr": 0.77,
-        "expectedCtr": 2.8,
-        "missedClicks": 2.7
+        "position": 8.8,
+        "ctr": 0.75,
+        "expectedCtr": 2.9,
+        "missedClicks": 2.8
       },
       {
         "query": "くろぎ 名古屋",
-        "impressions": 104,
+        "impressions": 119,
         "clicks": 1,
         "position": 10,
-        "ctr": 0.96,
+        "ctr": 0.84,
         "expectedCtr": 2.5,
-        "missedClicks": 1.6
+        "missedClicks": 2
       },
       {
         "query": "フレンチ屋台ビストロ のれんとコルク 名古屋駅店",
@@ -40,32 +40,33 @@
         "ctr": 2.27,
         "expectedCtr": 4,
         "missedClicks": 1.5
+      },
+      {
+        "query": "のれんとコルク",
+        "impressions": 60,
+        "clicks": 1,
+        "position": 9.3,
+        "ctr": 1.67,
+        "expectedCtr": 2.7,
+        "missedClicks": 0.6
       }
     ],
     "rankPush": [
       {
         "query": "ナショナルベーカリー",
-        "impressions": 272,
-        "clicks": 2,
-        "position": 12.5,
-        "ctr": 0.74,
-        "upsideClicks": 5.6
+        "impressions": 282,
+        "clicks": 3,
+        "position": 12.3,
+        "ctr": 1.06,
+        "upsideClicks": 4.9
       },
       {
         "query": "尾張山荘くろぎ",
-        "impressions": 175,
-        "clicks": 2,
-        "position": 11,
-        "ctr": 1.14,
-        "upsideClicks": 2.9
-      },
-      {
-        "query": "national bakery & canteen",
-        "impressions": 88,
-        "clicks": 1,
-        "position": 10.5,
-        "ctr": 1.14,
-        "upsideClicks": 1.5
+        "impressions": 215,
+        "clicks": 4,
+        "position": 10.6,
+        "ctr": 1.86,
+        "upsideClicks": 2
       },
       {
         "query": "キミトテ",
@@ -81,30 +82,30 @@
     "ctrFix": [
       {
         "page": "/stores/J004591229.html",
-        "impressions": 943,
+        "impressions": 956,
         "clicks": 4,
         "position": 9.9,
         "ctr": 0.42,
         "expectedCtr": 2.5,
-        "missedClicks": 19.9
+        "missedClicks": 20.2
       },
       {
         "page": "/stores/J004612794.html",
-        "impressions": 888,
+        "impressions": 892,
         "clicks": 12,
         "position": 9.7,
         "ctr": 1.35,
         "expectedCtr": 2.6,
-        "missedClicks": 11
+        "missedClicks": 11.1
       },
       {
         "page": "/stores/J004559348.html",
-        "impressions": 532,
-        "clicks": 8,
+        "impressions": 535,
+        "clicks": 7,
         "position": 8.3,
-        "ctr": 1.5,
+        "ctr": 1.31,
         "expectedCtr": 3.1,
-        "missedClicks": 8.4
+        "missedClicks": 9.5
       },
       {
         "page": "/stores/J004509691.html",
@@ -117,46 +118,46 @@
       },
       {
         "page": "/stores/J004612476.html",
-        "impressions": 329,
+        "impressions": 367,
         "clicks": 5,
-        "position": 8.9,
-        "ctr": 1.52,
+        "position": 9.1,
+        "ctr": 1.36,
         "expectedCtr": 2.8,
-        "missedClicks": 4.3
+        "missedClicks": 5.2
       },
       {
         "page": "/stores/J004025075.html",
-        "impressions": 310,
+        "impressions": 322,
         "clicks": 6,
         "position": 8.5,
-        "ctr": 1.94,
+        "ctr": 1.86,
         "expectedCtr": 3,
-        "missedClicks": 3.3
+        "missedClicks": 3.7
       }
     ],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2422,
-        "clicks": 8,
-        "position": 24,
-        "ctr": 0.33,
-        "upsideClicks": 59.8
+        "impressions": 2433,
+        "clicks": 9,
+        "position": 24.1,
+        "ctr": 0.37,
+        "upsideClicks": 59.1
       },
       {
         "page": "/stores/store-e5b0bee5bcb5e5b1.html",
-        "impressions": 358,
-        "clicks": 4,
-        "position": 10.5,
-        "ctr": 1.12,
-        "upsideClicks": 6
+        "impressions": 363,
+        "clicks": 5,
+        "position": 10.6,
+        "ctr": 1.38,
+        "upsideClicks": 5.2
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 4,
-    "queryRankPush": 4,
+    "queryCtrFix": 5,
+    "queryRankPush": 3,
     "pageCtrFix": 6,
     "pageRankPush": 2,
     "topPageCtrFix": [
