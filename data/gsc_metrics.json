@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-31T05:27:07.236Z",
+  "generatedAt": "2026-07-31T05:49:46.416Z",
   "siteUrl": "sc-domain:nagoya-bites.com",
   "dateRange": {
     "startDate": "2026-07-03",
@@ -7013,39 +7013,39 @@
       "source": "data/journal_seo_keywords.json",
       "updated": "2026-07-27"
     },
-    "store_names_used": 9015,
+    "store_names_used": 9011,
     "total_queries": 2458,
     "summary": [
       {
         "intent": "navigational",
-        "queries": 1709,
-        "impressions": 17602,
+        "queries": 1704,
+        "impressions": 17563,
         "clicks": 58,
         "ctr": 0.33,
         "avg_position": 21.5,
-        "impressions_share": 81.4
+        "impressions_share": 81.2
       },
       {
         "intent": "other",
-        "queries": 728,
-        "impressions": 3879,
+        "queries": 732,
+        "impressions": 3917,
         "clicks": 19,
         "ctr": 0.49,
-        "avg_position": 20.3,
-        "impressions_share": 17.9
+        "avg_position": 20.2,
+        "impressions_share": 18.1
       },
       {
         "intent": "discovery",
-        "queries": 21,
-        "impressions": 155,
+        "queries": 22,
+        "impressions": 156,
         "clicks": 1,
-        "ctr": 0.65,
+        "ctr": 0.64,
         "avg_position": 14.5,
         "impressions_share": 0.7
       }
     ],
     "kpi": {
-      "discovery_impressions": 155,
+      "discovery_impressions": 156,
       "discovery_clicks": 1,
       "discovery_impressions_share": 0.7
     },
@@ -7376,6 +7376,16 @@
           "signals": [
             "scene:一人飲み",
             "area:名駅"
+          ]
+        },
+        {
+          "query": "名駅 すき焼き 粋匠",
+          "impressions": 1,
+          "clicks": 0,
+          "position": 8,
+          "signals": [
+            "area:名駅",
+            "genre:すき焼き"
           ]
         },
         {

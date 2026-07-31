@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-07-31T05:27:07.334Z",
+  "generatedAt": "2026-07-31T05:49:46.496Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 532,
+  "total_sessions": 533,
   "engines": [
     {
       "key": "bing",
@@ -22,8 +22,8 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 134,
-      "pct": 25.2,
+      "sessions": 135,
+      "pct": 25.3,
       "sources": [
         {
           "source": "(direct)",
@@ -33,7 +33,7 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 6
+          "sessions": 7
         }
       ]
     },
@@ -41,7 +41,7 @@
       "key": "ai_assistant",
       "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
       "sessions": 127,
-      "pct": 23.9,
+      "pct": 23.8,
       "sources": [
         {
           "source": "chatgpt.com",
@@ -141,13 +141,13 @@
     ]
   },
   "trend": {
-    "from": "2026-07-29",
-    "to": "2026-07-30",
+    "from": "2026-07-30",
+    "to": "2026-07-31",
     "delta": {
-      "bing": -4,
-      "direct": -14,
-      "ai_assistant": 5,
-      "google": 6,
+      "bing": 2,
+      "direct": 0,
+      "ai_assistant": 4,
+      "google": 2,
       "yahoo": 1,
       "duckduckgo": 0
     }
