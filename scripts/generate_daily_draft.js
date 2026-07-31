@@ -461,16 +461,33 @@ function buildHeroImageSection(input) {
   if (!imgUrl) return '';
   const isStorePhoto  = input.hero_image_is_store_photo;
   const creditSource  = input.hero_image_credit_source; // 'Google Maps' | null
-  const creditUrl     = input.hero_image_credit_url  || 'https://unsplash.com';
-  const creditName    = input.hero_image_credit_name || 'Unsplash';
+  const creditUrl     = input.hero_image_credit_url  || '';
+  const creditName    = input.hero_image_credit_name || '';
+
+  // クレジットは「実際の画像の出所」から決める。
+  // 旧実装は else 節で無条件に「/ Unsplash」を付けており、自作イメージ図や
+  // Google Places 写真にまで Unsplash と表示していた（公開済み15本が誤クレジット）。
+  // 汎用ストック写真は制約9で禁止済みなので、Unsplash を既定値にすること自体が誤り。
+  const isSelfHosted = /^\.?\/?assets\//.test(imgUrl) || /nagoya-bites\.com\/assets\//.test(imgUrl);
+  const isGooglePhoto = /googleusercontent\.com/.test(imgUrl);
+  const isHotPepper = /imgfp\.hotp\.jp|hotpepper\.jp/.test(imgUrl);
+
+  const link = (url, text) => url
+    ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(text)}</a>`
+    : esc(text);
 
   let creditHtml;
-  if (creditSource === 'Google Maps') {
-    creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="https://maps.google.com" target="_blank" rel="noopener">Google Maps</a>`;
-  } else if (isStorePhoto) {
-    creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">店舗公式写真</a> / <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">HotPepper</a>`;
+  if (isSelfHosted) {
+    // リポジトリ内に self-host した「記事固有のイメージ図」（CLAUDE.md 写真ルールの最終手段）
+    creditHtml = '編集部作成のイメージ図';
+  } else if (creditSource === 'Google Maps' || isGooglePhoto) {
+    creditHtml = `${link(creditUrl, creditName || '店舗写真')} / ${link('https://maps.google.com', 'Google Maps')}`;
+  } else if (isStorePhoto || isHotPepper) {
+    creditHtml = `${link(creditUrl, creditName || '店舗公式写真')} / ${link('https://www.hotpepper.jp', 'HotPepper')}`;
+  } else if (creditName) {
+    creditHtml = link(creditUrl, creditName);
   } else {
-    creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>`;
+    creditHtml = '出所不明（要確認）';
   }
 
   return `<figure class="art-hero-img">

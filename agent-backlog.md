@@ -8,6 +8,49 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-079] rebase中断の放置でリポジトリが終日ブロック＋写真クレジット15本の誤表示 ✅
+
+- **priority**: P0（日次公開の全停止 ＋ 公開ページの事実誤り）→ **status**: done
+- **detected**: 2026-07-31（オーナー指摘「きのう、今日の記事がない」）
+- **resolved**: 2026-07-31
+- **resolved_by**: Orchestrator 直轄（INSPECT→BUILD）
+- **category**: ops / content-integrity
+- **owner**: Builder + Editor
+
+- **欠番の原因は日ごとに別だった**:
+  - **7/30**: claude 生成が API 接続エラー（`FailedToOpenSocket`）で3回リトライ全滅。外部要因。
+    [[ISSUE-077]] の仕組みは想定どおり動作し、成果物ゼロを検知して HOLD メモを書き出し、翌朝も警告した
+  - **7/31**: 7/30 の seo-triage が作った**未 push のローカルコミット**が origin/main と
+    `agent-backlog.md` で衝突し `git pull --rebase` が中断。**旧実装は die するだけで
+    rebase 中断状態を放置していた**ため、リポジトリが「rebase in progress」のまま丸一日残り、
+    翌朝の実行はもちろん他ルーチンまで巻き込んで全停止した
+
+- **実装（3点）**:
+  1. **`scripts/run_journal_local.sh`**: pull 失敗時に `git rebase --abort` してから HOLD で終わる。
+     abort すればローカルコミットは失われず作業ツリーは健全に戻るので、被害は「その日の記事が出ない」
+     だけで済み、翌朝は自動で再試行できる（＝今回のような終日ブロックが構造的に起きない）
+  2. **`.gitattributes`**: `agent-backlog.md merge=union` を追加。衝突のほぼ全ては
+     「双方が別々のISSUEを追記しただけ＝両方残すのが正解」というパターン（2026-07 に3回発生）。
+     union で自動解決できる。重複IDの混入は `audit_backlog_ids.js` が別途検出するため安全側に倒せる
+  3. **`scripts/generate_daily_draft.js`**: ヒーロー画像クレジットの既定値バグを修正。
+     旧実装は else 節で**無条件に「/ Unsplash」を付けており**、自作イメージ図や Google Places 写真にまで
+     Unsplash と表示していた。**公開済み15本すべてが誤クレジット**（実体は自作イメージ図12・Google写真2・
+     自サイト1で、Unsplash 画像は1枚も使っていない）。制約9でストック写真は禁止済みなので
+     Unsplash を既定値にすること自体が誤り。実際の画像URLから出所を判定する方式に変更し、
+     既存13本も実体に合わせて一括修正（自作図→「編集部作成のイメージ図」等）
+
+- **欠番2本の復旧**: 7/30（名駅×食べ歩き×スイーツ・89点）/ 7/31（栄×接待×鮨・97点）を
+  遡及生成し PASS_WITH_NOTE 帯で公開。掲載日は WebFetch で実ページから確認した実日付のみを使い、
+  点を上げるための日付・自己申告値の水増しはしていない（[[ISSUE-077]] の方針を踏襲）
+- **QAゲート**: validator 両記事とも全項目 PASS ✅ / 掲載店4件はすべて `data/stores.json` 実在店 ✅ /
+  写真は全て Google Places 実写（規約準拠）✅ / 表示クレジットの unsplash 残存 **0** ✅ /
+  `git check-attr merge` で union 有効を実地確認 ✅ / bash -n・node --check ✅ /
+  本番 HTTP 200 と実表示をブラウザで確認 ✅
+- **files**: `scripts/run_journal_local.sh`, `.gitattributes`, `scripts/generate_daily_draft.js`,
+  `journal/*.html`（新規2・クレジット修正13）, `docs/daily-posts/2026-07-30.md` / `2026-07-31.md`,
+  `data/journal_published.json`, `index.html`, `journal/index.html`, `journal/feed.xml`, `journal/feed.atom`, `sitemap.xml`
+- **関連**: [[ISSUE-077]]（ヘッドレスを止めない設計・HOLD/自動復旧はここで導入）/ [[ISSUE-065]]（作業ツリー汚染による停止＝同一クラス）
+
 ### [SEO-045] 特集冒頭CTAの付与を実データ追従で自動化する（対象24特集中19特集が未付与・現在の最人気 nagoya-korean を含む）
 
 - **priority**: P2 → **status**: ready

@@ -162,7 +162,22 @@ fi
 if ! git pull --rebase --autostash origin main >>"$LOG" 2>&1; then
   log "git pull --rebase が失敗。状態:"
   git status -sb | tee -a "$LOG"
-  die "origin/main の取り込みに失敗。手動で解消してください。"
+  git diff --name-only --diff-filter=U | tee -a "$LOG"
+
+  # 中断した rebase を必ず畳んでから終わる（ISSUE-079）。
+  # 旧実装は die するだけで rebase 中断状態を放置していたため、リポジトリが
+  # 「rebase in progress」のまま丸一日残り、翌朝の実行はもちろん seo-triage 等の
+  # 他ルーチンまで巻き込んで全停止した（2026-07-31 に実発生。7/30 の未 push コミットが
+  # agent-backlog.md で衝突 → 以後すべてブロック）。
+  # abort すればローカルコミットは失われず、作業ツリーは健全な状態に戻るので、
+  # 少なくとも「1日分の記事が出ない」だけで済み、翌朝は自動で再試行できる。
+  if [ -d ".git/rebase-merge" ] || [ -d ".git/rebase-apply" ]; then
+    log "中断した rebase を abort して作業ツリーを健全な状態へ戻します（ローカルコミットは保持）。"
+    git rebase --abort >>"$LOG" 2>&1 \
+      && log "rebase --abort 完了。リポジトリはクリーンです。" \
+      || log "⚠️ rebase --abort に失敗。手動で解消してください。"
+  fi
+  hold "origin/main の取り込みに失敗（衝突）。rebase は abort 済みなのでリポジトリは操作可能な状態です。未 push のローカルコミットが origin と衝突していないか確認してください。"
 fi
 
 # pull 後の UU 再チェック（autostash 再適用で衝突した可能性）。発生したら die して以降の偽成功を防ぐ。
