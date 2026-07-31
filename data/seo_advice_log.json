@@ -1220,6 +1220,36 @@
       "brand_reason": "提案アクション（docs/daily-posts のSNS原稿を各SNSへ毎日投稿）は過去に9回判定済（2026-06-01/06-23/06-27/06-28 rejected、07-11/07-15/07-19/07-23/07-27 duplicate）。docs/daily-posts は /journal-today で日次自動生成済であり、投稿実行は運用オペレーションでコード施策のbacklog対象外。判定は据え置き。前段の「流入元が不明」という問題提起についても、SEO-039 の観測レイヤーが既に解決済み: node scripts/search_channel_metrics.js --report で直近30日523セッションを Bing 34%(178) / 直接・不明 25.6%(134) / 生成AI 23.5%(123) / Google 12.2%(64) / Yahoo 4%(21) / DDG 0.6%(3) と分類でき、GA4 の (not set) は既に「直接/不明」バケットとして観測下にある。新規に採れるサイト/記事アクションが無いため再起票せず",
       "category": null,
       "fingerprint": "c1df8909247c4a0c"
+    },
+    {
+      "id": null,
+      "date": "2026-08-01",
+      "source": "line-daily",
+      "advice": "🔴 直帰率が91%と非常に高く、サイトを訪れたほとんどの人がすぐに離脱しています。👉 index.htmlのファーストビューに「業界人の目利き」を明確に打ち出し、ユーザーがサイトの価値を理解し、次の行動へ進むための店舗フィルタや人気店舗を大きく配置する。",
+      "verdict": "duplicate",
+      "brand_reason": "既起票 SEO-040（P1/ready/Builder・トップのFVを1つの設計に統合＝価値提案コピー＋人気特集導線）が同一施策で未実装のまま。SEO-001/SEO-009/SEO-014 も同系統で判定済み。再起票せず SEO-040 の消化を待つ",
+      "category": null,
+      "fingerprint": "ed6539eef1761080"
+    },
+    {
+      "id": "SEO-046",
+      "date": "2026-08-01",
+      "source": "line-daily",
+      "advice": "🟡 1訪問あたりの閲覧が1.1ページと、ほとんどの人が1店舗も見ずに離脱しています。👉 journal/2026-07-27-owarisanso-kurogi の記事下部に「この店を予約する」ボタンと「この店をGoogleマップで見る」ボタンを目立つように配置し、cta_clickとcta_gmap_clickを促す。",
+      "verdict": "adopted",
+      "brand_reason": "アドバイスの字面（CTAボタン増設）は SEO-037/042/045 で判定済みの重複テーマで、かつ当該店はホットペッパーIDを持たず予約が食べログ経由のため機械的な予約ボタン設置は外部ポータルへの送客導線の新設になり編集独立性（制約7・8）に触れる。代わりに同じ1.1ページ/訪問を実際に説明できる検証済みの原因を採用: refresh_journal_related.js がどの自動化からも呼ばれておらず（.github/workflows・run_journal_local.sh・journal-today.md いずれもヒット0）、直近7本（07-22〜07-31）の関連記事が汎用リンクのみ。当日の閲覧1位がまさにその1本。Moat の三層編集を内部導線で束ねる施策で順位操作・広告依存を伴わない。SEO-045（add_feature_top_cta.js 未組み込み）と同一の故障クラス",
+      "category": "SEO",
+      "fingerprint": "58553aac433574cb"
+    },
+    {
+      "id": null,
+      "date": "2026-08-01",
+      "source": "line-daily",
+      "advice": "🟢 訪問者数が21人と少ないため、人気ページの記事をSNSでさらに拡散し、流入を増やす実験が必要です。👉 docs/daily-posts/ にある 2026-07-27-owarisanso-kurogi のSNS投稿原稿を、X（旧Twitter）とInstagramで本日再投稿する。ハッシュタグに「#名古屋グルメ」「#尾張さんそう」を追加。",
+      "verdict": "duplicate",
+      "brand_reason": "「docs/daily-posts のSNS原稿をX/Instagramでハッシュタグ付きで投稿」は 2026-06-01・06-23・06-24・07-11・07-15・07-18・07-27・07-31 と繰り返し判定済みの同一テーマ（初回 2026-06-01 は汎用論として rejected）。日次SNS原稿の生成自体は既に運用に乗っており、再投稿は課題化ではなく運用手順の範囲。再起票せず",
+      "category": null,
+      "fingerprint": "8207cd3f96b91e0c"
     }
   ]
 }
