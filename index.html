@@ -1363,35 +1363,44 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 <!-- 特集記事バナー（ヒトサラ風：ヒーロー直下の入り口導線） -->
 <!-- ↓ このストリップは data/featured.json + scripts/build_featured.js が自動生成。手で編集しない。 -->
 <section class="feature-strip">
-  <div class="feature-strip-label"><!-- FEATURED_LABEL_START -->7月の特集<span class="feature-strip-label-note">夏グルメ・土用の丑・暑気払い</span><!-- FEATURED_LABEL_END --></div>
+  <div class="feature-strip-label"><!-- FEATURED_LABEL_START -->8月の特集<span class="feature-strip-label-note">真夏のグルメ・お盆の家族会食</span><!-- FEATURED_LABEL_END --></div>
   <div class="feature-strip-cards">
     <!-- FEATURED_START -->
     <a class="feature-card" href="features/nagoya-summer-2026.html">
-      <span class="feature-card-season">夏</span>
+      <span class="feature-card-season">真夏</span>
       <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg 600w, https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 夏グルメ10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 夏グルメ10選</div>
-        <div class="feature-card-sub">ビアガーデン · 海鮮・冷麺</div>
+        <div class="feature-card-sub">真夏 · 冷麺・かき氷</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/large-group.html">
+      <span class="feature-card-season">お盆</span>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/51/55/P048375155/P048375155_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/51/55/P048375155/P048375155_480.jpg 600w, https://imgfp.hotp.jp/IMGH/51/55/P048375155/P048375155_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 大人数宴会・団体10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 大人数宴会・団体10選</div>
+        <div class="feature-card-sub">お盆 · 帰省の集まりに</div>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/nagoya-unaju.html">
-      <span class="feature-card-season">土用の丑</span>
+      <span class="feature-card-season">夏うなぎ</span>
       <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg 600w, https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 うなぎ・ひつまぶし10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 うなぎ・ひつまぶし10選</div>
-        <div class="feature-card-sub">土用の丑の日はうなぎ</div>
+        <div class="feature-card-sub">夏バテにうなぎ</div>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/banquet.html">
-      <span class="feature-card-season">暑気払い</span>
-      <img class="feature-card-thumb" src="assets/features/banquet.jpg" srcset="assets/features/banquet-600.jpg 600w, assets/features/banquet.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 暑気払い・宴会おすすめ15選" width="900" height="599" loading="eager" decoding="async" fetchpriority="high">
+      <img class="feature-card-thumb" src="assets/features/banquet.jpg" srcset="assets/features/banquet-600.jpg 600w, assets/features/banquet.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="ビールジョッキで乾杯する宴会・忘年会の華やかなシーン" width="900" height="599" loading="lazy" decoding="async">
       <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 暑気払い・宴会おすすめ15選</div>
-        <div class="feature-card-sub">暑気払い · ビールで乾杯</div>
+        <div class="feature-card-title">名古屋 宴会・忘年会おすすめ15選</div>
+        <div class="feature-card-sub">名駅・栄・金山 個室完備</div>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
@@ -12217,7 +12226,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '5bf2e90478d4';
+var STORES_JSON_VERSION = '3ee2eb59565d';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
