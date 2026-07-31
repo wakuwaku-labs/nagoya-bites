@@ -1190,6 +1190,36 @@
       "brand_reason": "指示された具体アクション（journalタイトルにシーン別専門KW＋SNS原稿で同KW発信）は SEO-011（done 2026-07-27・SEO-007統合）で実装済みのため、その部分は重複。しかしアドバイスが求めた「検索流入の質を検証する」側はどのチケットも担っておらず、実測が強い裏付けを与えたため採用し診断チケットとして起票した。metrics_history.json の58日台帳（各エントリ30日ローリング＝単日ブレでない）で 2026-06-01→07-29 に sessions 429→536(+25%)・organic 30%→56.6% と流入が伸びる一方、pagesPerSession 2.09→1.31(-37%)・avgSessionDuration 264→104秒(-61%)・ctaClickRate 13.5%→3.4%(-75%、実クリック58→18件)と8週間単調劣化。CVR低下は CLAUDE.md 優先度基準で P1。自社実測データのみを使う診断で順位操作・広告依存・クーポン・ストック写真を伴わず制約10（検証できる事実だけで判定）に沿う。診断のみで打ち手は別チケット",
       "category": "SEO",
       "fingerprint": "05b802263505a730"
+    },
+    {
+      "id": null,
+      "date": "2026-07-31",
+      "source": "line-daily",
+      "advice": "🔴 直帰率100%は全訪問者がすぐに離脱している状態です。👉 トップページ(index.html)のファーストビューで、サイトの強み「業界人の目利き」を明確に打ち出し、信頼感を高めるキャッチコピーを配置しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "編集判断で重複: 既存 ready SEO-040（トップFVを1つの設計に統合＝価値提案コピー＋人気特集導線・P1/Builder。統合元 SEO-009/SEO-014）と同一サーフェス・同一アクション。2026-07-15 以降11回以上同種判定済み。加えて前提が実測と食い違う: 直帰率100%は単日 n=11（訪問11人・PV14）の極小サンプル由来で、data/metrics_history.json の30日ローリングでは bounceRate 0.394（good閾値0.5の内側）かつ 0.45→0.394 と改善傾向。直帰は問題の所在ではなく、劣化の実所在は SEO-044（ready・P1）が分解診断中。再起票せず",
+      "category": null,
+      "fingerprint": "ce15e3a3fdde0e69"
+    },
+    {
+      "id": "SEO-045",
+      "date": "2026-07-31",
+      "source": "line-daily",
+      "advice": "🟡 1訪問あたり閲覧が1.0ページと、店舗詳細や他の特集へ誘導できていません。👉 人気ページ「nagoya-korean」と「2026-05-13-counter-six-seats-formula」の記事内に、関連性の高い店舗の店舗詳細モーダルへのリンクを数カ所設置しましょう。",
+      "verdict": "adopted",
+      "brand_reason": "Moat「構造化DB×特集×日次ジャーナルの三層編集」を編集記事→実在店DBの内部導線で束ねる施策で、順位操作・広告依存・クーポン・ストック写真・架空店を伴わない。SEO-042（done）と重複しないことを実測で確認: 実装 scripts/add_feature_top_cta.js は対象特集をGA4/GSCのtopPagesから動的選択する正しい設計だが、どのワークフローからも呼ばれていない（grep -rn add_feature_top_cta .github/workflows/ → ヒット0）。そのため 2026-07-27 の手動実行時点の5特集で凍結し、--check では流入実績のある24特集中19特集が would_add（未付与）。名指しの nagoya-korean は当日閲覧1位かつ would_add で掲載候補3店まで解決済み＝実行されていないだけ。『一度やった』と『以後も追従する』の差を埋める自動化として採用。なお名指しのもう一方 journal/2026-05-13-counter-six-seats-formula は実測で店舗リンク0だが、ISSUE-078 が「店舗非依存の一般論記事38本」として意図的に除外した業界コラムであり機械的な店舗リンク付与は編集判断として不適切。ジャーナル側の回遊は既存 SEO-038（ready）に寄せ、本件は特集側に限定した",
+      "category": "SEO",
+      "fingerprint": "7d2c3b7ddc4a8995"
+    },
+    {
+      "id": null,
+      "date": "2026-07-31",
+      "source": "line-daily",
+      "advice": "🟢 検索流入比率が38%と重要ですが、流入元に(not set)が25%あり、どこから来たか不明です。👉 docs/daily-posts/にあるSNS投稿原稿を、X（旧Twitter）だけでなくInstagramやNoteなどにも毎日投稿し、流入元を多様化する実験をしましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "提案アクション（docs/daily-posts のSNS原稿を各SNSへ毎日投稿）は過去に9回判定済（2026-06-01/06-23/06-27/06-28 rejected、07-11/07-15/07-19/07-23/07-27 duplicate）。docs/daily-posts は /journal-today で日次自動生成済であり、投稿実行は運用オペレーションでコード施策のbacklog対象外。判定は据え置き。前段の「流入元が不明」という問題提起についても、SEO-039 の観測レイヤーが既に解決済み: node scripts/search_channel_metrics.js --report で直近30日523セッションを Bing 34%(178) / 直接・不明 25.6%(134) / 生成AI 23.5%(123) / Google 12.2%(64) / Yahoo 4%(21) / DDG 0.6%(3) と分類でき、GA4 の (not set) は既に「直接/不明」バケットとして観測下にある。新規に採れるサイト/記事アクションが無いため再起票せず",
+      "category": null,
+      "fingerprint": "c1df8909247c4a0c"
     }
   ]
 }
