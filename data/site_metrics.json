@@ -1,30 +1,30 @@
 {
-  "generatedAt": "2026-08-01T00:16:33.395Z",
+  "generatedAt": "2026-08-01T19:06:24.720Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 482,
-    "pageViews": 721,
-    "sessions": 553,
-    "avgSessionDuration": 123,
+    "activeUsers": 495,
+    "pageViews": 741,
+    "sessions": 568,
+    "avgSessionDuration": 120.1,
     "bounceRate": 0.389,
     "pagesPerSession": 1.3
   },
   "channels": {
     "sessions": {
-      "organic": 318,
-      "direct": 168,
-      "social": 60,
-      "referral": 11,
+      "organic": 328,
+      "direct": 169,
+      "social": 64,
+      "referral": 9,
       "paid": 0,
-      "other": 1
+      "other": 2
     },
     "pct": {
-      "organic": 57,
-      "direct": 30.1,
-      "social": 10.8,
-      "referral": 2,
+      "organic": 57.3,
+      "direct": 29.5,
+      "social": 11.2,
+      "referral": 1.6,
       "paid": 0,
-      "other": 0.2
+      "other": 0.3
     }
   },
   "sourceBreakdown": [
@@ -36,17 +36,17 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 129
+      "sessions": 134
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 67
+      "sessions": 75
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 56
+      "sessions": 60
     },
     {
       "source": "openai",
@@ -54,19 +54,19 @@
       "sessions": 46
     },
     {
+      "source": "yahoo",
+      "medium": "organic",
+      "sessions": 25
+    },
+    {
       "source": "openai",
       "medium": "(not set)",
       "sessions": 24
     },
     {
-      "source": "yahoo",
-      "medium": "organic",
-      "sessions": 23
-    },
-    {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 11
+      "sessions": 9
     },
     {
       "source": "copilot.com",
@@ -82,18 +82,18 @@
   "topPages": [
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 113,
+      "pageViews": 115,
       "sessions": 107
     },
     {
       "path": "/",
-      "pageViews": 94,
-      "sessions": 84
+      "pageViews": 97,
+      "sessions": 86
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 57,
-      "sessions": 49
+      "pageViews": 61,
+      "sessions": 53
     },
     {
       "path": "/index.html",
@@ -108,7 +108,7 @@
   ],
   "cta": {
     "outboundClicks": 18,
-    "ctaClickRate": 3.3,
+    "ctaClickRate": 3.2,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -135,7 +135,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 482,
+    "value": 495,
     "stage": "phase0",
     "thresholds": {
       "phase0": 500,
