@@ -1250,6 +1250,36 @@
       "brand_reason": "「docs/daily-posts のSNS原稿をX/Instagramでハッシュタグ付きで投稿」は 2026-06-01・06-23・06-24・07-11・07-15・07-18・07-27・07-31 と繰り返し判定済みの同一テーマ（初回 2026-06-01 は汎用論として rejected）。日次SNS原稿の生成自体は既に運用に乗っており、再投稿は課題化ではなく運用手順の範囲。再起票せず",
       "category": null,
       "fingerprint": "8207cd3f96b91e0c"
+    },
+    {
+      "id": null,
+      "date": "2026-08-02",
+      "source": "line-daily",
+      "advice": "🔴 直帰率が92%と非常に高く、ユーザーがサイトに留まっていません。👉 トップページのファーストビューに「業界人の目利き」を象徴する具体的な店舗画像を複数配置し、ユーザーの興味を惹きつける",
+      "verdict": "duplicate",
+      "brand_reason": "既起票 SEO-040（P1/ready/Builder・トップFVを1つの設計に統合＝価値提案コピー＋人気特集導線。統合元 SEO-009/SEO-014、系譜に SEO-001 done）が同一サーフェス・同一アクションで未実装のまま。2026-07-15 以降12回以上同種判定済み。さらに前提が実測と食い違う: 直帰率92%は単日 n=22（訪問22人・PV23）の極小サンプルで、data/metrics_history.json の30日ローリングでは bounceRate 0.378〜0.394（good閾値0.5の内側）かつ改善傾向。直帰は問題の所在ではなく、実所在は SEO-044（P1/ready）が分解診断中。加えて当日の閲覧1位は journal 記事（6/23回=26%）でトップページは3位2回＝流入の入口はトップFVではない。再起票せず SEO-040 の消化を待つ",
+      "category": null,
+      "fingerprint": "39faf47794fb83e8"
+    },
+    {
+      "id": null,
+      "date": "2026-08-02",
+      "source": "line-daily",
+      "advice": "🟡 1訪問あたり閲覧が1.0ページ、平均滞在が17秒と、コンテンツが読まれていません。👉 人気ページ1位の「2026-08-01-alma-de-churrasco-meieki」店舗詳細モーダルに、予約ボタンとGoogleマップ導線を大きく表示する",
+      "verdict": "duplicate",
+      "brand_reason": "名指しの journal/2026-08-01-alma-de-churrasco-meieki.html を実測したところ、予約導線は既に存在する（hotpepper.jp/strJ004613182 への予約リンク＋店舗ページ ../stores/J004613182.html＋公式Instagram）。したがって提案アクションは既に満たされており新規性がない。実際に欠けているのは他ジャーナル記事への横断リンクで（同記事の外部/内部リンク実測: 他 journal 記事へのリンク0本）、これは前日起票の SEO-046（P1/ready・refresh_journal_related.js がどの自動化からも呼ばれていない）が扱う症状そのもの。本日再確認: grep -rn refresh_journal_related .github/workflows/ scripts/run_journal_local.sh → ヒット0 で未解消。CTA増設テーマ自体も SEO-037（done）/ SEO-042（done）/ SEO-045（ready）/ SEO-046（ready）で判定済み。再起票せず",
+      "category": null,
+      "fingerprint": "dda2963fc83edc6d"
+    },
+    {
+      "id": null,
+      "date": "2026-08-02",
+      "source": "line-daily",
+      "advice": "🟢 検索流入比率38%は強みですが、まだ伸びしろがあります。流入元も『(not set)』が多いです。👉 docs/daily-posts/にある今日のSNS投稿原稿に、「名古屋 接待 個室」などの強みキーワードを追記し、SNSからの流入を増やす",
+      "verdict": "duplicate",
+      "brand_reason": "提案アクション（docs/daily-posts のSNS原稿に「名古屋 接待 個室」等のシーンKWを入れる）は SEO-044（P1/ready・2026-07-30）が同一KWを名指しで含む同一施策として起票済み、かつ SEO-011（done・2026-06-22 起票の原文が同じ「名古屋 接待 個室」）で機構化済み（data/journal_seo_keywords.json ＋ scripts/journal_seo_kw.js）。SNS原稿への各SNS投稿テーマも 2026-06-01/06-23/06-24/06-27/06-28/07-11/07-15/07-18/07-19/07-23/07-27/07-31 と繰り返し判定済み。(not set) についても SEO-039 の観測レイヤーが解決済みで、本日実測 node scripts/search_channel_metrics.js --report は直近30日541セッションを Bing 32.9%(178) / 直接・不明 25.9%(140) / 生成AI 24%(130) / Google 12.4%(67) / Yahoo 4.3%(23) / DDG 0.6%(3) に分類でき、GA4 の (not set) は既に「直接/不明」バケットとして観測下にある。新規に採れるサイト/記事アクションが無いため再起票せず",
+      "category": null,
+      "fingerprint": "be50a3079f16b8e5"
     }
   ]
 }
