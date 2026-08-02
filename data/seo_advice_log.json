@@ -1280,6 +1280,76 @@
       "brand_reason": "提案アクション（docs/daily-posts のSNS原稿に「名古屋 接待 個室」等のシーンKWを入れる）は SEO-044（P1/ready・2026-07-30）が同一KWを名指しで含む同一施策として起票済み、かつ SEO-011（done・2026-06-22 起票の原文が同じ「名古屋 接待 個室」）で機構化済み（data/journal_seo_keywords.json ＋ scripts/journal_seo_kw.js）。SNS原稿への各SNS投稿テーマも 2026-06-01/06-23/06-24/06-27/06-28/07-11/07-15/07-18/07-19/07-23/07-27/07-31 と繰り返し判定済み。(not set) についても SEO-039 の観測レイヤーが解決済みで、本日実測 node scripts/search_channel_metrics.js --report は直近30日541セッションを Bing 32.9%(178) / 直接・不明 25.9%(140) / 生成AI 24%(130) / Google 12.4%(67) / Yahoo 4.3%(23) / DDG 0.6%(3) に分類でき、GA4 の (not set) は既に「直接/不明」バケットとして観測下にある。新規に採れるサイト/記事アクションが無いため再起票せず",
       "category": null,
       "fingerprint": "be50a3079f16b8e5"
+    },
+    {
+      "id": "SEO-040",
+      "date": "2026-08-03",
+      "source": "line-daily",
+      "advice": "直帰率が96%と非常に高く、訪問者のほとんどがお店を見ずに離脱しています。index.htmlのファーストビューに「業界人の目利き」と「シーン別専門性」が伝わるキャッチコピーと、人気特集への導線を大きく配置し、サイトの価値を一瞬で伝えましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "既起票 [SEO-040]（ready・P1・Builder）と同一。統合元 SEO-014（FVに「業界人の目利き」「シーン別専門性」コピー）+ SEO-009（FVに人気特集導線）が文言レベルで一致。未実装なのは実装ゲート(/solve-next)側の滞留であり、再起票しても解決しない",
+      "category": "SEO",
+      "fingerprint": "f35c43c21ac5e37c"
+    },
+    {
+      "id": "SEO-045",
+      "date": "2026-08-03",
+      "source": "line-daily",
+      "advice": "1訪問あたり閲覧が1.1ページと、ほとんどの人が1店舗しか見ていません。人気の「nagoya-solo-dining」特集ページに、関連する「nagoya-bar-guide」など他の特集記事への内部リンクを増設し、回遊を促しましょう。店舗詳細モーダル内にも関連店舗の表示を検討。",
+      "verdict": "duplicate",
+      "brand_reason": "二重に既済/既起票。①特集→他特集の内部リンクは [SEO-002]/[SEO-012] で done（2026-07-29 実測で features/ 66本すべてが .related 保持を確認済み）②モーダル内の関連店舗・関連特集は [SEO-004] で done（TAG_TO_FEATURES 24エントリ）③残る自動追従分は [SEO-045]（ready）。SEO-012 に「設置有無ではなくスクロール到達率・関連リンクのクリック率を見よ」という再発防止メモが明記されており、本アドバイスはまさにその再発ケース",
+      "category": "SEO",
+      "fingerprint": "df5d5ee87336093d"
+    },
+    {
+      "id": "SEO-042",
+      "date": "2026-08-03",
+      "source": "line-daily",
+      "advice": "予約ボタンもマップもクリックゼロ。index.htmlの店舗詳細モーダルで「予約ボタン」と「Googleマップ導線」の視認性を高めるため、色やサイズを調整し、さらに魅力的な文言（例:「席を予約する」「地図で場所を確認」）に改善しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "[SEO-013]（done・2026-07-29 commit cafcfed99）+ [SEO-042]（done）+ [SEO-037]（done・カードに44x44地図ボタン併置）で判定済み。文言変更は SEO-013 で「既に全幅 .modal-cta-btn で『この店を予約する』と店名付きで明示されており、効果検証もできないため視認性不足の証拠が出るまで触らない」と意図的に見送り済み（アドバイスの鵜呑み回避）。判断を覆す新事実は今回の日次にない",
+      "category": "SEO",
+      "fingerprint": "434a123711a56eb3"
+    },
+    {
+      "id": "SEO-042",
+      "date": "2026-08-03",
+      "source": "line-weekly",
+      "advice": "予約ボタンクリックが0回と、せっかくの訪問者がお店に繋がっていません。トップページの店舗詳細モーダルと特集ページに、予約ボタン（cta_click）をより大きく、目立つ色で設置し「空席確認・予約」と文言を明記する。",
+      "verdict": "duplicate",
+      "brand_reason": "日次同日の同一施策かつ [SEO-013]/[SEO-042]/[SEO-037] で done。特集ページ側の「予約・空席確認」CTA は SEO-013 実装で26特集254店に冪等付与済み（予約導線ゼロの特集 26→0）。設置は完了しておりクリック0の原因は設置有無ではない",
+      "category": "SEO",
+      "fingerprint": "3da7c71ad9d8a95f"
+    },
+    {
+      "id": "SEO-046",
+      "date": "2026-08-03",
+      "source": "line-weekly",
+      "advice": "1訪問あたり閲覧が1.2ページと、サイト内回遊が伸び悩んでいます。人気のjournal記事（2026-07-27-owarisanso-kurogiなど）下部に「この記事を読んだ人へのおすすめ」として関連する特集ページ（features/）へのリンクを3つ設置する。",
+      "verdict": "duplicate",
+      "brand_reason": "既起票 [SEO-046]（ready・P1・Builder）と同一。SEO-046 は refresh_journal_related.js がどの自動化からも呼ばれておらず直近7本が汎用リンクのみ、という検証済み原因まで特定済みで、本アドバイスの上位互換。名指しされた 2026-07-27-owarisanso-kurogi も SEO-046 の対象記事そのもの",
+      "category": "SEO",
+      "fingerprint": "1d4f1aad4b90dc27"
+    },
+    {
+      "id": "SEO-039",
+      "date": "2026-08-03",
+      "source": "line-weekly",
+      "advice": "Bing検索からの流入が45訪問とGoogle検索に次いで多く、侮れません。docs/daily-posts/ にあるSNS投稿原稿をBingのWebマスターツールに登録し、Bing検索での露出を増やすためのSEO設定を確認・改善する。",
+      "verdict": "duplicate",
+      "brand_reason": "[SEO-039]（一部done）で判定済み。観測レイヤー（search_channel_metrics.js）と IndexNow（indexnow_ping.js）は実装済みで、残る Bing WMT 登録はクレデンシャルを伴うためオーナー本人の操作待ち＝エージェント側に実行可能な残作業がない。なお「SNS投稿原稿をBing WMTに登録する」という手順自体は成立しない（WMT はサイト所有権とサイトマップの登録先でSNS原稿の投稿先ではない）ため、その部分は仮に新規でも具体性欠如で却下相当",
+      "category": "SEO",
+      "fingerprint": "ad2aba57e9c9f18a"
+    },
+    {
+      "id": "SEO-044",
+      "date": "2026-08-03",
+      "source": "line-weekly",
+      "advice": "【AI週次分析・前週比】訪問者158人(+15%) だが閲覧数212(-6%)・訪問回数175(+8%)・店舗詳細クリック1回。流入は増えているのにセッションの深さとCTAが伴わない週トレンド。",
+      "verdict": "duplicate",
+      "brand_reason": "週トレンド由来の候補として起票を検討したが、[SEO-044]（ready・P1・Marketer）「流入は+25%なのにセッションの深さとCTAクリックが2ヶ月で構造的に劣化している原因を分解診断する」が同一現象を58日台帳ベースで既に定義済み。今週の +15%/-6% はその同じ構造劣化の継続観測であり、SEO-044 の trend 根拠を強めこそすれ別チケットにはならない",
+      "category": "SEO",
+      "fingerprint": "bd5315222cb33b2f"
     }
   ]
 }
