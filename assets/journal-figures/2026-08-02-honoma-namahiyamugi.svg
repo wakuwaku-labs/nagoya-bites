@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="600" height="360" role="img" aria-label="生ひやむぎ『穂の間』の位置づけと価格帯の読み方（編集部作成のイメージ図）">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b2233"/>
+      <stop offset="100%" stop-color="#154a63"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#0b2233"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#7fd0e6" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="360" fill="url(#bg)"/>
+  <rect width="600" height="360" fill="url(#grain)" opacity=".5"/>
+
+  <!-- ヘッダ -->
+  <rect x="36" y="34" width="3" height="70" fill="#7fd0e6" opacity=".9"/>
+  <text x="46" y="52" fill="#7fd0e6" opacity=".78" font-family="'Helvetica Neue',Arial,sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+  <text x="46" y="82" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="26" font-weight="700" letter-spacing="0.02em">冷たい麺の見取り図</text>
+  <text x="46" y="102" fill="#cfeaf3" opacity=".8" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="11" letter-spacing="0.04em">名駅『穂の間』の生ひやむぎ ── 太さと価格でどこに立つか</text>
+
+  <!-- 太さ軸 -->
+  <text x="46" y="140" fill="#7fd0e6" opacity=".7" font-family="'Helvetica Neue',Arial,sans-serif" font-size="9" letter-spacing="0.18em">THICKNESS 麺の太さ</text>
+  <line x1="46" y1="150" x2="554" y2="150" stroke="#7fd0e6" stroke-width="1.2" opacity=".5"/>
+  <!-- 目盛 -->
+  <g font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="11" fill="#cfeaf3">
+    <circle cx="120" cy="150" r="3" fill="#7fd0e6"/>
+    <text x="120" y="176" text-anchor="middle">そうめん</text>
+    <text x="120" y="190" text-anchor="middle" opacity=".55" font-size="9">〜1.3mm</text>
+
+    <circle cx="300" cy="150" r="5" fill="#ffd873"/>
+    <text x="300" y="176" text-anchor="middle" fill="#ffd873" font-weight="700">ひやむぎ</text>
+    <text x="300" y="190" text-anchor="middle" opacity=".7" font-size="9">1.3〜1.7mm</text>
+
+    <circle cx="480" cy="150" r="3" fill="#7fd0e6"/>
+    <text x="480" y="176" text-anchor="middle">うどん</text>
+    <text x="480" y="190" text-anchor="middle" opacity=".55" font-size="9">1.7mm〜</text>
+  </g>
+  <!-- 穂の間ピン -->
+  <g>
+    <line x1="330" y1="150" x2="330" y2="120" stroke="#ffd873" stroke-width="1.3" opacity=".85"/>
+    <rect x="286" y="104" width="150" height="20" rx="4" fill="#ffd873"/>
+    <text x="361" y="118" text-anchor="middle" fill="#0b2233" font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="11" font-weight="700">穂の間＝生麺・1.7mmギリギリ</text>
+  </g>
+
+  <!-- 価格帯 -->
+  <text x="46" y="228" fill="#7fd0e6" opacity=".7" font-family="'Helvetica Neue',Arial,sans-serif" font-size="9" letter-spacing="0.18em">PRICE 価格帯の読み方（昼のみ）</text>
+  <g font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif">
+    <rect x="46" y="238" width="230" height="46" rx="6" fill="#ffffff" opacity=".07"/>
+    <text x="60" y="258" fill="#fff" font-size="12" font-weight="700">小鉢付き</text>
+    <text x="60" y="276" fill="#cfeaf3" opacity=".8" font-size="11">¥1,210 ── 麺の実力を見る一杯</text>
+
+    <rect x="292" y="238" width="262" height="46" rx="6" fill="#ffffff" opacity=".07"/>
+    <text x="306" y="258" fill="#fff" font-size="12" font-weight="700">天ぷら膳（氷ぶっかけ）</text>
+    <text x="306" y="276" fill="#cfeaf3" opacity=".8" font-size="11">¥1,650 ── 一食として完結させる形</text>
+  </g>
+
+  <!-- オペ/シーン -->
+  <g font-family="'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif" font-size="11" fill="#cfeaf3">
+    <text x="46" y="312" fill="#7fd0e6" opacity=".7" font-family="'Helvetica Neue',Arial,sans-serif" font-size="9" letter-spacing="0.18em">OPS / SCENE</text>
+    <text x="46" y="330" opacity=".9">10:00〜14:30・約30席・QR注文の昼特化 → 回転前提</text>
+    <text x="46" y="348" opacity=".9">向くシーン：猛暑日の一人ランチ・軽めの昼／夜営業なし</text>
+  </g>
+
+  <text x="554" y="348" text-anchor="end" fill="#7fd0e6" opacity=".45" font-family="'Helvetica Neue',Arial,sans-serif" font-size="8.5" letter-spacing="0.06em">編集部作成のイメージ図 / 2026.08.02</text>
+</svg>

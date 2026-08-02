@@ -1,0 +1,444 @@
+{
+  "date": "2026-08-02",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅の生ひやむぎ『穂の間』、猛暑の一杯を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 91,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 6件 (価格帯,席,シーン,オペ,回転,業界) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 3件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 112字 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "91点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4 / recency -3"
+    },
+    {
+      "id": "c5",
+      "title_draft": "矢場町の朝海鮮定食『食堂盛栄』、モーニング営業の相場を読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 87,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "モーニング",
+          "feature": "features/nagoya-morning.html"
+        },
+        {
+          "kw": "海鮮",
+          "feature": "features/nagoya-seafood.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 4件 (価格帯,シーン,相場,業界) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 71字 +2",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「モーニング」+4",
+          "タイトルにジャンル語「海鮮」+2"
+        ]
+      },
+      "gate_note": "87点（自動公開ライン 100点）。主な不足: topicality -17 / brand_fit -4 / writability -2"
+    },
+    {
+      "id": "c4",
+      "title_draft": "大門の朝ラーメン『麺屋 日向ぼっこ』、モーニング需要の回転を読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "モーニング",
+          "feature": "features/nagoya-morning.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 4件 (価格帯,シーン,回転,業界) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 82字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「モーニング」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -17 / brand_fit -4 / search_intent -4"
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄のパスタ専門『PASTA ROOM』、海苔ボナーラの価格帯を読む",
+      "verdict": "HOLD",
+      "total": 84,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 4件 (価格帯,シーン,回転,業界) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 88字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "大須の豪華いなり寿司『やなぎつね』、テイクアウトと席の価格帯設計",
+      "verdict": "HOLD",
+      "total": 83,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 5件 (価格帯,席,シーン,回転,業界) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 114字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語がリードのみ「食べ歩き」+1",
+          "タイトルにジャンル語「寿司」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "91点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4 / recency -3",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "flexible",
+      "title_draft": "名駅の生ひやむぎ『穂の間』、猛暑の一杯を業界人が読む",
+      "lead_draft": "8月2日、名古屋は猛暑のピーク。冷たい麺が恋しいこの時期に名駅で開いたのが、生ひやむぎ専門店『穂の間』だ。乾麺ではなく特注の生麺で作る一杯を、価格帯の読み方・回転とオペの裏側・どのシーンに向くかという業界人の目線で読み解く。",
+      "angle": "乾麺ひやむぎとの違い＝生麺の価格帯の読み方、10:00〜14:30という短時間営業と約30席の回転・QR注文というオペ、一人飲みより日中一人客・軽いランチシーンに向く適性を業界人視点で解説",
+      "main_store": {
+        "name": "穂の間",
+        "id": "",
+        "area": "名駅",
+        "genre": "麺（生ひやむぎ）"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通『生ひやむぎ専門店 穂の間 名古屋駅前にオープン』",
+          "url": "https://jouhou.nagoya/namahiyamugi-honoma/",
+          "date": "2026-07-26"
+        },
+        {
+          "label": "ひや麦あつ麦専門店 一日一麦（各務原・協力店/公式）",
+          "url": "https://kh-service-88.jp/",
+          "date": "2026-07-10"
+        },
+        {
+          "label": "食べログマガジン『手打ちのひやむぎを食べたことある？』",
+          "url": "https://magazine.tabelog.com/articles/412529",
+          "date": "2026-06-20"
+        },
+        {
+          "label": "おいでよ名古屋『名古屋唯一の手打ちひやむぎ にこみ亭』",
+          "url": "https://oinagoya.com/nikomiteihiyamugi/",
+          "date": "2026-05-15"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "flexible",
+      "title_draft": "大須の豪華いなり寿司『やなぎつね』、テイクアウトと席の価格帯設計",
+      "lead_draft": "大須商店街に開いた豪華いなり寿司専門店『やなぎつね』。名駅の1号店に続く2号店はイートイン対応が売りだ。テイクアウトの折詰とイートイン定食で価格帯がどう変わるか、約20席の使い方と食べ歩きシーンへの向き不向きを業界人目線で読む。",
+      "angle": "だし生いなり折詰とイートイン定食の価格帯の読み方、大須2号店で加えた約20席・11時開店の回転、食べ歩きと一人客どちらのシーンに向くかを業界人視点で",
+      "main_store": {
+        "name": "やなぎつね",
+        "id": "",
+        "area": "大須",
+        "genre": "寿司（いなり寿司）"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通『豪華いなり寿司専門店 やなぎつね が大須商店街にオープン』",
+          "url": "https://jouhou.nagoya/yanagitsune-inari/",
+          "date": "2026-07-22"
+        },
+        {
+          "label": "やなぎつね（ホットペッパー）",
+          "url": "https://www.hotpepper.jp/strJ004509692/",
+          "date": "2026-07-25"
+        },
+        {
+          "label": "やなぎつね（食べログ）",
+          "url": "https://tabelog.com/aichi/A2301/A230101/23093411/",
+          "date": "2026-07-24"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "flexible",
+      "title_draft": "栄のパスタ専門『PASTA ROOM』、海苔ボナーラの価格帯を読む",
+      "lead_draft": "栄に開いたパスタ専門店『PASTA ROOM』は、海苔ボナーラなど個性派の一皿で話題。専門店のアラカルト価格帯の読み方と、ランチとディナーで変わるシーン適性を業界人視点で読む。",
+      "angle": "パスタ専門店のアラカルト価格帯の読み方と回転、デートとランチのシーン適性を業界人視点で",
+      "main_store": {
+        "name": "PASTA ROOM",
+        "id": "",
+        "area": "栄",
+        "genre": "イタリアン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-07-30"
+        },
+        {
+          "label": "名古屋市 新規オープン（食べログ）",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "flexible",
+      "title_draft": "大門の朝ラーメン『麺屋 日向ぼっこ』、モーニング需要の回転を読む",
+      "lead_draft": "中村区・大門に朝6時営業のラーメン店『麺屋 日向ぼっこ』が開いた。モーニング需要をラーメンで取りに行く一手を、価格帯・回転・一人客シーンの観点から業界人目線で読む。",
+      "angle": "朝6時開店のモーニング需要をラーメンで取る回転設計と価格帯、一人客シーンの適性を業界人視点で",
+      "main_store": {
+        "name": "麺屋 日向ぼっこ",
+        "id": "",
+        "area": "名駅",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-07-30"
+        },
+        {
+          "label": "名古屋市 新規オープン（食べログ）",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "flexible",
+      "title_draft": "矢場町の朝海鮮定食『食堂盛栄』、モーニング営業の相場を読む",
+      "lead_draft": "矢場町に朝から営業する海鮮定食専門店『食堂盛栄』が開いた。朝定食の価格帯の読み方と、一人客・モーニングシーンへの向き不向きを業界人目線で読む。",
+      "angle": "朝営業の海鮮定食の価格帯と相場の読み方、一人客とモーニングのシーン適性を業界人視点で",
+      "main_store": {
+        "name": "食堂盛栄",
+        "id": "",
+        "area": "栄",
+        "genre": "海鮮"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-07-30"
+        },
+        {
+          "label": "名古屋市 新規オープン（食べログ）",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-07-28"
+        }
+      ]
+    }
+  ]
+}
