@@ -1,37 +1,37 @@
 {
-  "generatedAt": "2026-08-02T00:14:39.860Z",
+  "generatedAt": "2026-08-02T19:08:36.614Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 495,
-    "pageViews": 741,
-    "sessions": 568,
-    "avgSessionDuration": 120.2,
-    "bounceRate": 0.389,
+    "activeUsers": 507,
+    "pageViews": 758,
+    "sessions": 582,
+    "avgSessionDuration": 119.9,
+    "bounceRate": 0.392,
     "pagesPerSession": 1.3
   },
   "channels": {
     "sessions": {
-      "organic": 328,
-      "direct": 170,
-      "social": 64,
-      "referral": 9,
+      "organic": 338,
+      "direct": 171,
+      "social": 68,
+      "referral": 10,
       "paid": 0,
-      "other": 2
+      "other": 0
     },
     "pct": {
-      "organic": 57.2,
-      "direct": 29.7,
-      "social": 11.2,
-      "referral": 1.6,
+      "organic": 57.6,
+      "direct": 29.1,
+      "social": 11.6,
+      "referral": 1.7,
       "paid": 0,
-      "other": 0.3
+      "other": 0
     }
   },
   "sourceBreakdown": [
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 178
+      "sessions": 182
     },
     {
       "source": "(direct)",
@@ -41,32 +41,32 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 75
+      "sessions": 81
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 60
+      "sessions": 64
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 46
+      "sessions": 44
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 25
+      "sessions": 27
     },
     {
       "source": "openai",
       "medium": "(not set)",
-      "sessions": 24
+      "sessions": 26
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 9
+      "sessions": 7
     },
     {
       "source": "copilot.com",
@@ -74,25 +74,25 @@
       "sessions": 4
     },
     {
-      "source": "duckduckgo",
-      "medium": "organic",
+      "source": "cn.bing.com",
+      "medium": "referral",
       "sessions": 3
     }
   ],
   "topPages": [
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 115,
-      "sessions": 107
+      "pageViews": 112,
+      "sessions": 104
     },
     {
       "path": "/",
-      "pageViews": 97,
-      "sessions": 86
+      "pageViews": 98,
+      "sessions": 87
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 61,
+      "pageViews": 62,
       "sessions": 53
     },
     {
@@ -107,9 +107,13 @@
     }
   ],
   "cta": {
-    "outboundClicks": 18,
-    "ctaClickRate": 3.2,
+    "outboundClicks": 25,
+    "ctaClickRate": 4.3,
     "byDomain": [
+      {
+        "domain": "tabelog.com",
+        "clicks": 8
+      },
       {
         "domain": "www.hotpepper.jp",
         "clicks": 4
@@ -123,10 +127,6 @@
         "clicks": 1
       },
       {
-        "domain": "tabelog.com",
-        "clicks": 1
-      },
-      {
         "domain": "www.tablecheck.com",
         "clicks": 1
       }
@@ -135,8 +135,8 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 495,
-    "stage": "phase0",
+    "value": 507,
+    "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
       "takeoff": 3000,
