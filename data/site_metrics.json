@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-08-02T19:08:36.614Z",
+  "generatedAt": "2026-08-02T23:36:32.605Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 507,
-    "pageViews": 758,
-    "sessions": 582,
-    "avgSessionDuration": 119.9,
-    "bounceRate": 0.392,
+    "activeUsers": 512,
+    "pageViews": 763,
+    "sessions": 588,
+    "avgSessionDuration": 118.9,
+    "bounceRate": 0.396,
     "pagesPerSession": 1.3
   },
   "channels": {
     "sessions": {
-      "organic": 338,
-      "direct": 171,
-      "social": 68,
+      "organic": 339,
+      "direct": 173,
+      "social": 71,
       "referral": 10,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 57.6,
-      "direct": 29.1,
-      "social": 11.6,
+      "organic": 57.2,
+      "direct": 29.2,
+      "social": 12,
       "referral": 1.7,
       "paid": 0,
       "other": 0
@@ -36,7 +36,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 134
+      "sessions": 135
     },
     {
       "source": "google",
@@ -46,7 +46,7 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 64
+      "sessions": 67
     },
     {
       "source": "openai",
@@ -56,7 +56,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 27
+      "sessions": 28
     },
     {
       "source": "openai",
@@ -66,7 +66,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 7
+      "sessions": 8
     },
     {
       "source": "copilot.com",
@@ -135,7 +135,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 507,
+    "value": 512,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
