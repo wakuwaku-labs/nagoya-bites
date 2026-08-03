@@ -181,6 +181,75 @@
   3. **CTA計測欠損の切り分け**: `site_metrics.json` の `cta.byDomain` 合計は **8件**だが `outboundClicks` は **18件**で、10件がドメイン未帰属。実減少なのか計測欠損（[[ISSUE-068]] の link_domain ディメンション関連）なのかを判定する。計測欠損なら「CTA -75%」自体が過大評価
   4. 打ち手の起票は診断結果に基づき別チケットで行う（**本チケットは診断まで**。実装は `/solve-next` の YES ゲート経由）
 - **関連**: [[SEO-011]]（KW設計・done／本件は未着手の検証側）/ [[SEO-039]]（エンジン別観測レイヤー＝本診断の入力を作った課題）/ [[SEO-040]]（FV改修・本診断の結果で優先度が変わる）/ [[SEO-038]]（勝ち筋の横展開・本件は劣化側の分解）/ [[ISSUE-068]]（link_domain 計測の穴）/ [[SEO-047]]（同じ「直帰率が毎回異常」症状の発生源＝LINE通知の生成ロジック側を修正したチケット）
+### [ISSUE-080] 消費者フィードバック自動改善ループの新設 ✅
+
+- **priority**: P1（サイトの継続改善サイクルの新設・オーナー直接要望）→ **status**: done
+- **detected**: 2026-07-27（オーナー要望「消費者からのこのサイトの声を届けてもらって、それを元にどんどん改善される様にしたい」）
+- **resolved**: 2026-07-27
+- **resolved_by**: Orchestrator 直轄（PLAN→BUILD、オーナー承認済み計画に基づく実装）
+- **category**: 技術 / 組織
+- **owner**: Builder
+- **背景**: 既存の SEO アドバイス改善ループ（Gmail→定時Claude→Moatフィルター→backlog/Notion→/solve-next）
+  と同じ思想・同じ部品を流用し、入力源を「消費者の声」に変えたループを新設。既存 Formspree エンドポイント
+  （`https://formspree.io/f/xaqaygze`）・業界人レビューフォームの実装・`scripts/lib/backlog_ids.js` を
+  最大限再利用し、新規外部サービス依存を増やしていない。
+- **実装**:
+  1. `index.html`: フローティング「ご意見」ボタン（`#fb-fab`）+ ミニフォーム（`#fb-panel`）を
+     `<!-- STORE-INDEX:END -->` 直後・`<footer>` 直前にマーカー付きで追加。種類選択（使いづらい/不具合/
+     店舗情報誤り/機能要望/その他）+ 対象店舗名（任意・条件付き表示）+ 内容。メール欄は置かず匿名前提。
+     honeypot（`_gotcha`）でスパム対策。`trackEvent('feedback_open'/'feedback_submit')` で計測。
+  2. `scripts/lib/backlog_ids.js`: `normalize`/`fingerprint` に `opts.keepNumbers` を追加（後方互換・
+     デフォルト false で SEO ループ無影響）。消費者フィードバックは電話番号等の数値が指摘の識別子になるため。
+  3. `scripts/feedback_triage.js`（新規）: `seo_triage.js` と同じ「判断しない」決定的ヘルパー。
+     `--next-id` / `--check-dup`（fingerprint + Gmail msg_id の二段階冪等）/ `--log-append`（メール
+     アドレス自動マスク・500字切詰め）/ `--report` / `--policy`。
+  4. `data/feedback_policy.json`（新規）: 3分類（UX改善/店舗事実/スパム）の判定ポリシー単一情報源。
+     `.claude/commands/*.md` の自己改変ブロックを踏まえ、運用ルールは data/ に外出し。
+  5. `data/feedback_log.json`（新規）: ループの記憶（append-only）。
+  6. `scripts/sync_backlog_to_notion.js`: `ID_PREFIX_TO_OWNER` に `'FB': 'Builder'` を追加。
+  7. `docs/feedback-triage-runbook.md`（新規）: triage 手順書（正本）。`/seo-triage` の8ステップ構成を踏襲。
+  8. `CLAUDE.md`: 「消費者フィードバック改善ループ」節を新設、共有ファイル一覧に新ファイルを追記。
+- **3分類の設計**: (a) UX/機能改善→Moatフィルター通過で自動 `ready` 起票（owner=Builder）→翌朝の
+  `/solve-next` が実装。(b) 店舗事実の誤り指摘（閉店・電話番号等）→ `fact_check` として起票するが
+  **その場ではデータを直接修正せず**、acceptance に実在検証ゲート（一次情報確認→検証成立時のみ反映→
+  `audit_store_liveness` 等の監査通過→不能なら `wont_fix`）を必須で書く（`data/dispute_requests.json`
+  の「自動反映しない」先例に準拠。虚偽通報による信頼毀損を防止）。(c) スパム/誹謗/個人情報→ログのみ、
+  法的懸念は `escalated` でオーナー報告。
+- **QAゲート**: `node scripts/qa_gate.js --before/--after` ok:true（マーカー退行なし・構文バランス正常）✅ /
+  `node build.js` は当環境のAPIキー未設定により店舗数減少検知で安全中断（index.html 未書換・想定内。
+  CI 環境では正常ビルドされる）✅ / SEOループ無退行（`data/seo_advice_log.json` 全109件の fingerprint
+  再計算が変更前後で完全一致）✅ / ウィジェットの開閉・必須バリデーション・honeypot無視・カテゴリ連動
+  店舗名欄・PII注意書き・モバイル表示（375px）をブラウザ実機検証 ✅ / `scripts/feedback_triage.js` の
+  採番・重複検知（msg_id完全一致スキップ/fingerprint軽量重複）・PIIマスク（メールアドレス→`[email]`）・
+  レポート出力を実行検証 ✅
+- **未完（ユーザー依頼事項）**:
+  1. Formspree 実送信テストでの実メール件名・本文形式の確認（`data/feedback_policy.json` の
+     `gmail_query` を実形式に合わせて調整する可能性あり）
+  2. 新規 Claude ルーチン（毎日21:31想定・`docs/feedback-triage-runbook.md` を引数なし実行）の
+     schedule skill での作成、および push 権限トグル ON（9時ルーチンの403前例あり）
+  3. 任意: `.claude/commands/feedback-triage.md` のコピペ作成（自己改変ブロックのためエージェント側では
+     作成不可）
+- **files**: `index.html`, `scripts/lib/backlog_ids.js`, `scripts/feedback_triage.js`,
+  `scripts/sync_backlog_to_notion.js`, `data/feedback_policy.json`, `data/feedback_log.json`,
+  `docs/feedback-triage-runbook.md`, `CLAUDE.md`, `agent-backlog.md`
+- **関連**: [[SEO-011]] 等の既存 SEO 改善ループ（同じ設計思想の流用元）/ フェーズ2（記事ページ154件への
+  導線展開）は別チケットとして下記に分離起票
+
+### [ISSUE-081] フィードバック導線の記事ページ（特集・ジャーナル）への展開
+
+- **priority**: P3 → **status**: ready
+- **detected**: 2026-07-27（ISSUE-080 実装時にオーナー方針として「まず index.html のみ」と決定・
+  記事ページへの展開はフェーズ2として分離）
+- **category**: UX
+- **owner**: Editor
+- **source**: 消費者フィードバックループ新設（ISSUE-080）のスコープ決定
+- **brand-filter**: ✅ 適合 — 収集チャネルの拡大は Moat（現役飲食人運営による解釈層）への信頼を
+  さらに広い読者接点で得る方向
+- **acceptance**: features 68 + journal 86 ファイルはフッターがテンプレート複数系統（`journal/_template.html`
+  と features 側2種）で直書きのため、まずは軽量案（フッターに `index.html#feedback` への1行誘導リンクを
+  追加）から着手し、生成スクリプト（`build_features.js` / `gen_industry_features.js` /
+  `journal/_template.html`）と既存ファイルへのバッチ更新の両方を伴うことを踏まえて実装コストを見積もる。
+  フル機能のウィジェット複製は本チケットのスコープ外（別途要検討）。
 
 ### [ISSUE-076] pending由来店（ジャーナル採用の話題店）が恒久的に写真ゼロだった問題 ✅
 

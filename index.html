@@ -425,6 +425,18 @@ body.search-active .results-summary{display:block;}
 .ir-status.ok{display:block;background:rgba(42,106,90,.12);color:#2a6a5a;border:1px solid rgba(42,106,90,.35);}
 .ir-status.ng{display:block;background:rgba(192,57,43,.08);color:#c0392b;border:1px solid rgba(192,57,43,.35);}
 @media (max-width:640px){.ir-form-grid{grid-template-columns:1fr;}}
+/* サイトフィードバック（フローティング「ご意見」ボタン + パネル） */
+#fb-fab{position:fixed;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));left:1.5rem;z-index:290;padding:.55rem .9rem;background:#2a6a5a;color:#fff;font-size:.72rem;font-weight:600;letter-spacing:.04em;border:none;border-radius:999px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.25);transition:background .2s;}
+#fb-fab:hover{background:#1e5145;}
+#fb-panel{display:none;position:fixed;bottom:calc(4.4rem + env(safe-area-inset-bottom,0px));left:1rem;z-index:295;width:min(400px,calc(100vw - 2rem));max-height:min(72vh,560px);overflow-y:auto;background:#fdfcf8;border:1px solid rgba(42,106,90,.35);border-radius:6px;box-shadow:0 8px 32px rgba(0,0,0,.22);padding:1rem 1.1rem 1.1rem;}
+#fb-panel.open{display:block;}
+#fb-panel .ir-form-wrap{margin-top:0;padding:0;background:none;border:none;}
+#fb-panel .ir-form-grid{grid-template-columns:1fr;}
+#fb-store-field[hidden]{display:none;}
+.fb-panel-head{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-bottom:.6rem;}
+.fb-panel-title{font-size:.62rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;font-family:'DM Mono',monospace;}
+.fb-close{background:transparent;border:none;color:var(--dim);font-size:1rem;line-height:1;cursor:pointer;padding:.25rem .4rem;}
+.fb-close:hover{color:var(--text);}
 @media(max-width:768px){.editor-note{font-size:.42rem;}.card-editor-lead{-webkit-line-clamp:2;max-height:52px;}}
 .mmg{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;}
 .mb{display:flex;flex-direction:column;align-items:center;gap:.65rem;padding:1.05rem .4rem 1rem;border:1px solid var(--border);text-decoration:none;color:var(--text);transition:all .2s;border-radius:3px;background:#fff;}
@@ -12145,6 +12157,48 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 </section>
 <!-- STORE-INDEX:END -->
 
+<!-- FEEDBACK-WIDGET:START -->
+<button type="button" id="fb-fab" aria-haspopup="true" aria-expanded="false" aria-controls="fb-panel">ご意見を送る</button>
+<div id="fb-panel" role="dialog" aria-label="サイトへのご意見" aria-hidden="true">
+  <div class="fb-panel-head">
+    <span class="fb-panel-title">FEEDBACK — サイトへのご意見</span>
+    <button type="button" class="fb-close" id="fb-close" aria-label="閉じる">×</button>
+  </div>
+  <p class="ir-form-intro">「ここが使いづらい」「情報が違う」など、お気づきの点を編集部に直接お寄せください。いただいた内容は今後の改善に活用します。</p>
+  <div class="ir-form-wrap">
+    <form id="fb-form" novalidate>
+      <div class="ir-form-grid">
+        <div class="ir-field full">
+          <label for="fb-category">種類<span class="req">必須</span></label>
+          <select id="fb-category" name="category" required>
+            <option value="">選択してください</option>
+            <option value="使いづらい・わかりにくい">使いづらい・わかりにくい</option>
+            <option value="表示がおかしい（不具合）">表示がおかしい（不具合）</option>
+            <option value="店舗情報が間違っている">店舗情報が間違っている</option>
+            <option value="こんな機能がほしい">こんな機能がほしい</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+        <div class="ir-field full" id="fb-store-field" hidden>
+          <label for="fb-store">対象の店舗名<span class="opt">任意</span></label>
+          <input type="text" id="fb-store" name="store" maxlength="60" placeholder="例）〇〇食堂 栄店">
+        </div>
+        <div class="ir-field full">
+          <label for="fb-body">内容<span class="req">必須</span></label>
+          <textarea id="fb-body" name="body" maxlength="800" required placeholder="具体的にお聞かせください"></textarea>
+          <span class="hint">個人情報（お名前・連絡先など）は書かないでください。返信が必要な場合は<a href="contact.html">お問い合わせページ</a>をご利用ください。</span>
+        </div>
+      </div>
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="ir-actions">
+        <button type="submit" class="ir-submit" id="fb-submit" aria-label="ご意見を送信する">送信する</button>
+      </div>
+      <div class="ir-status" id="fb-status" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</div>
+<!-- FEEDBACK-WIDGET:END -->
+
 <footer>
   <div class="fl2">Nagoya Bites</div>
   <div class="fc" id="fc"></div>
@@ -13748,6 +13802,95 @@ function copyShareLink() {
         statusEl.textContent = '送信しました。編集部が確認のうえ、承認後に掲載します。ご協力ありがとうございます。';
         statusEl.className = 'ir-status ok';
         form.reset();
+      } else {
+        return res.json().then(function(d){ throw new Error((d && d.error) || ('HTTP ' + res.status)); });
+      }
+    }).catch(function(err){
+      statusEl.textContent = '送信に失敗しました。時間をおいて再度お試しください。' + (err && err.message ? '（' + err.message + '）' : '');
+      statusEl.className = 'ir-status ng';
+    }).then(function(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    });
+  });
+})();
+
+// ================================================================
+// サイトフィードバック — フローティングボタン + Formspree 送信
+// ================================================================
+(function(){
+  var FORMSPREE_FEEDBACK = 'https://formspree.io/f/xaqaygze';
+  var fab = document.getElementById('fb-fab');
+  var panel = document.getElementById('fb-panel');
+  var closeBtn = document.getElementById('fb-close');
+  var form = document.getElementById('fb-form');
+  var categorySel = document.getElementById('fb-category');
+  var storeField = document.getElementById('fb-store-field');
+  var submitBtn = document.getElementById('fb-submit');
+  var statusEl = document.getElementById('fb-status');
+  if (!fab || !panel || !form) return;
+
+  function openPanel(){
+    panel.classList.add('open');
+    panel.setAttribute('aria-hidden', 'false');
+    fab.setAttribute('aria-expanded', 'true');
+    trackEvent('feedback_open');
+    setTimeout(function(){
+      if (categorySel) categorySel.focus({preventScroll: true});
+    }, 50);
+  }
+  function closePanel(){
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden', 'true');
+    fab.setAttribute('aria-expanded', 'false');
+  }
+
+  fab.addEventListener('click', function(){
+    if (panel.classList.contains('open')) closePanel(); else openPanel();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', closePanel);
+
+  if (categorySel && storeField) {
+    categorySel.addEventListener('change', function(){
+      storeField.hidden = categorySel.value !== '店舗情報が間違っている';
+    });
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var category = (categorySel && categorySel.value || '').trim();
+    var body = (document.getElementById('fb-body').value || '').trim();
+    var gotcha = (form.querySelector('[name=_gotcha]') || {}).value || '';
+    if (gotcha) return; // honeypot: ボット送信は黙って無視
+    if (!category || !body) {
+      statusEl.textContent = '必須項目（種類・内容）をご確認ください。';
+      statusEl.className = 'ir-status ng';
+      return;
+    }
+    var payload = {
+      _subject: '[site-feedback] ' + category,
+      category: category,
+      store: (document.getElementById('fb-store').value || '').trim(),
+      body: body,
+      page: location.hash.slice(0, 200),
+      submittedAt: new Date().toISOString()
+    };
+    submitBtn.disabled = true;
+    var originalLabel = submitBtn.textContent;
+    submitBtn.textContent = '送信中…';
+    statusEl.textContent = '';
+    statusEl.className = 'ir-status';
+    fetch(FORMSPREE_FEEDBACK, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify(payload)
+    }).then(function(res){
+      if (res.ok) {
+        statusEl.textContent = 'ご意見を送信しました。ありがとうございます。';
+        statusEl.className = 'ir-status ok';
+        trackEvent('feedback_submit', {category: category});
+        form.reset();
+        if (storeField) storeField.hidden = true;
       } else {
         return res.json().then(function(d){ throw new Error((d && d.error) || ('HTTP ' + res.status)); });
       }

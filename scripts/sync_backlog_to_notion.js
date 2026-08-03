@@ -160,6 +160,7 @@ const ID_PREFIX_TO_OWNER = {
   'MKT': 'Marketer',
   'SEO': 'Marketer',
   'STR': 'Strategist',
+  'FB': 'Builder',
 };
 
 function inferOwner(task) {

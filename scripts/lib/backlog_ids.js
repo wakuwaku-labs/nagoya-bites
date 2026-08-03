@@ -40,20 +40,26 @@ const BACKLOG_PATH = path.join(ROOT, 'agent-backlog.md');
  * - 絵文字 / 記号 / 数字+単位を畳む（「流入12%」「流入15%」を同種扱いにする）
  * - 空白を畳む、小文字化
  * 数値を落とすのは意図的: 助言は毎日数値だけ変えて同じ施策を繰り返すため。
+ * opts.keepNumbers: true で数値を残す。消費者フィードバック（「電話番号が違う」
+ * 「営業時間が11時になっている」等、数値そのものが指摘の識別子になる入力）向け。
+ * 既定 false = 従来挙動（SEOループの既存 fingerprint は不変）。
  */
-function normalize(text) {
-  return String(text || '')
+function normalize(text, opts = {}) {
+  let s = String(text || '')
     .normalize('NFKC')
-    .replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2B00}-\u{2BFF}]/gu, ' ') // 絵文字・矢印
-    .replace(/[0-9０-９]+(\.[0-9]+)?\s*[%％件人軒日週月]?/g, ' ') // 数値+単位を落とす
+    .replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{2B00}-\u{2BFF}]/gu, ' '); // 絵文字・矢印
+  if (!opts.keepNumbers) {
+    s = s.replace(/[0-9０-９]+(\.[0-9]+)?\s*[%％件人軒日週月]?/g, ' '); // 数値+単位を落とす
+  }
+  return s
     .replace(/[「」『』（）()【】\[\]、。,.・:：\/／…\-—~〜!！?？\n\r\t]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
     .toLowerCase();
 }
 
-function fingerprint(text) {
-  return crypto.createHash('sha1').update(normalize(text)).digest('hex').slice(0, 16);
+function fingerprint(text, opts = {}) {
+  return crypto.createHash('sha1').update(normalize(text, opts)).digest('hex').slice(0, 16);
 }
 
 // ──────────────────────────────────────────────────────────
