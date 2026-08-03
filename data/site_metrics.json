@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-08-03T09:10:50.135Z",
+  "generatedAt": "2026-08-03T10:05:20.704Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 524,
-    "pageViews": 785,
-    "sessions": 605,
-    "avgSessionDuration": 123.3,
-    "bounceRate": 0.39,
-    "pagesPerSession": 1.3
+    "activeUsers": 526,
+    "pageViews": 801,
+    "sessions": 611,
+    "avgSessionDuration": 125.8,
+    "bounceRate": 0.394,
+    "pagesPerSession": 1.31
   },
   "channels": {
     "sessions": {
       "organic": 348,
-      "direct": 178,
+      "direct": 190,
       "social": 74,
       "referral": 10,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 57,
-      "direct": 29.2,
-      "social": 12.1,
+      "organic": 55.9,
+      "direct": 30.5,
+      "social": 11.9,
       "referral": 1.6,
       "paid": 0,
       "other": 0
@@ -36,7 +36,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 138
+      "sessions": 144
     },
     {
       "source": "google",
@@ -66,7 +66,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 11
+      "sessions": 17
     },
     {
       "source": "copilot.com",
@@ -87,8 +87,8 @@
     },
     {
       "path": "/",
-      "pageViews": 101,
-      "sessions": 90
+      "pageViews": 112,
+      "sessions": 95
     },
     {
       "path": "/features/nagoya-solo-dining.html",
@@ -108,7 +108,7 @@
   ],
   "cta": {
     "outboundClicks": 29,
-    "ctaClickRate": 4.8,
+    "ctaClickRate": 4.7,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -151,7 +151,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 524,
+    "value": 526,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
