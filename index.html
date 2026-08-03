@@ -237,6 +237,22 @@ body:not(.search-active) #sticky-search,
 body:not(.search-active) #results-block,
 body:not(.search-active) #grid,
 body:not(.search-active) #pagination{display:none !important;}
+/* SEARCH MODE — 検索/フィルター中は特集・ランキング等の回遊面を畳み、結果を最上部に出す
+   （結果が特集や人気店の下に埋もれて見つけられない問題への対処。リセットで元に戻る） */
+body.search-active .feature-strip,
+body.search-active #trend-ranking-section,
+body.search-active #ranking-section,
+body.search-active #latest-journal-section,
+body.search-active .no-sakura-banner,
+body.search-active #store-index{display:none !important;}
+/* 検索中は「All Listings / 掲載店舗」の大見出しを視覚的に畳む（直下の絞り込み結果サマリーと重複するため）。
+   display:none にせず clip で隠し、見出し構造はスクリーンリーダーに残す */
+body.search-active #results-block > .sec-head{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+/* 結果に戻る導線：検索中だけ出る「特集・ランキングに戻る」 */
+.back-to-magazine{display:none;}
+body.search-active .back-to-magazine{display:flex;align-items:center;gap:.4rem;margin:0 auto;background:transparent;border:none;color:var(--dim);font-family:inherit;font-size:.74rem;letter-spacing:.04em;padding:.9rem 1rem 1.1rem;cursor:pointer;transition:color .2s;}
+.back-to-magazine:hover{color:var(--text);}
+.back-to-magazine .btm-arrow{font-family:'DM Mono',monospace;opacity:.8;}
 .chip{display:inline-flex;align-items:center;gap:.3rem;background:rgba(122,92,16,.12);border:1px solid rgba(122,92,16,.35);color:var(--gold);font-size:.62rem;letter-spacing:.06em;padding:.22rem .6rem;border-radius:2px;cursor:pointer;transition:all .15s;}
 .chip:hover{background:rgba(122,92,16,.22);}
 .chip-x{font-size:.7rem;opacity:.7;line-height:1;}
@@ -1344,7 +1360,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
     絞り込み
     <span class="filter-badge" id="filter-badge" style="display:none">0</span>
   </button>
-  <button class="clear-all-btn" id="clear-all-btn" onclick="clearAllFilters()" style="display:none" aria-label="すべてのフィルターをクリア">すべてリセット</button>
+  <button class="clear-all-btn" id="clear-all-btn" onclick="exitSearchMode()" style="display:none" aria-label="すべてのフィルターをクリア">すべてリセット</button>
 </div>
 
 <!-- 折りたたみ式フィルターパネル -->
@@ -1659,7 +1675,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
     <div class="results-summary-cond" id="results-summary-cond"></div>
     <div class="results-summary-foot">
       <div class="results-summary-count"><em id="results-summary-count">--</em>件 のお店</div>
-      <button class="results-summary-reset" type="button" onclick="clearAllFilters()" aria-label="絞り込みをすべてリセット">すべてリセット</button>
+      <button class="results-summary-reset" type="button" onclick="exitSearchMode()" aria-label="絞り込みをすべてリセット">すべてリセット</button>
     </div>
   </div>
 
@@ -6716,6 +6732,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 </ul></noscript>
 <div class="grid" id="grid"></div>
 <div class="pagination" id="pagination" role="navigation" aria-label="ページネーション"></div>
+<button class="back-to-magazine" type="button" onclick="exitSearchMode()" aria-label="絞り込みを解除して特集・ランキングに戻る"><span class="btm-arrow" aria-hidden="true">←</span>絞り込みを解除して特集・ランキングに戻る</button>
 
 <!-- モーダル -->
 <div class="ov" id="ov" role="dialog" aria-modal="true" aria-label="店舗詳細">
@@ -12916,6 +12933,15 @@ function applyAndShowResults() {
   closeFilterPanel();
   // パネル閉じアニメ後にスクロール（max-heightトランジションは .35s）
   setTimeout(scrollToResults, 60);
+}
+
+// 検索モードを抜けて雑誌面（特集・ランキング）に戻る
+function exitSearchMode() {
+  clearAllFilters();               // ここで body.search-active が外れ、回遊面が戻る
+  var target = document.querySelector('.feature-strip') || document.getElementById('main-content');
+  if (!target) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+  var top = target.getBoundingClientRect().top + window.pageYOffset - 70;
+  window.scrollTo({ top: top < 0 ? 0 : top, behavior: 'smooth' });
 }
 
 function clearAllFilters() {
