@@ -1,0 +1,530 @@
+{
+  "date": "2026-08-03",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "大須で中華とバーガーが同時に動いた——業界人が読む名古屋外食の1週間",
+      "verdict": "PASS",
+      "total": 110,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "中華",
+          "feature": "features/nagoya-chinese-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 7件 → 15",
+          "話題の証跡URL 2件 → 10",
+          "※ trending_signals は採点に使用しない（自己申告値のため・ISSUE-077）"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 8件 (新店,動向,エリア,相場,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 156字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「中華」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "大須のバーガー復活と中華開業——業界人が読む今週の名古屋新店",
+      "verdict": "PASS",
+      "total": 105,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "中華",
+          "feature": "features/nagoya-chinese-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 1件 → 5",
+          "※ trending_signals は採点に使用しない（自己申告値のため・ISSUE-077）"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 8件 (新店,動向,エリア,相場,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 133字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「中華」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "池下の中華と大須の新店——業界人が選ぶ今週の名古屋グルメ動向",
+      "verdict": "PASS",
+      "total": 102,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "中華",
+          "feature": "features/nagoya-chinese-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5",
+          "※ trending_signals は採点に使用しない（自己申告値のため・ISSUE-077）"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 8件 (新店,動向,エリア,相場,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 127字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「中華」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "大須の中華とサウナが一体化——業界人が読む複合業態の新店動向",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "中華",
+          "feature": "features/nagoya-chinese-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0",
+          "※ trending_signals は採点に使用しない（自己申告値のため・ISSUE-077）"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 8件 (新店,動向,エリア,相場,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 116字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「中華」+2"
+        ]
+      },
+      "gate_note": "97点（自動公開ライン 100点）。主な不足: topicality -13"
+    },
+    {
+      "id": "c4",
+      "title_draft": "行列200人の意味——ドムドム復活で読む大須の新店動向",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 88,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0",
+          "※ trending_signals は採点に使用しない（自己申告値のため・ISSUE-077）"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 7件 (新店,動向,エリア,相場,予約,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 121字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "88点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -6 / recency -3"
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "weekly_digest",
+      "title_draft": "大須で中華とバーガーが同時に動いた——業界人が読む名古屋外食の1週間",
+      "lead_draft": "7月末から8月頭にかけ、名古屋の外食で目立った動きは大須に集中した。ドムドムの10年ぶり復活は開店日に約200人の大行列、スガキヤ資本参加という再編の産物だ。築95年の建物を再生した中華ダイニングも同じ週に開いた。話題を追うだけでなく、新店の価格帯・席の回転・予約のしやすさという業界人の目線で今週の3手を読む。",
+      "angle": "大須エリアの新店動向を、価格帯・回転・相場・予約のしやすさとシーン適性という業界人視点で読み解く週次ダイジェスト",
+      "main_store": {
+        "name": "Mă（マー）by KIWAMI",
+        "id": "",
+        "area": "大須",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "時事ドットコム Mă by KIWAMI 8月1日グランドオープン",
+          "url": "https://www.jiji.com/jc/article?k=000000004.000095938&g=prt",
+          "date": "2026-08-01"
+        },
+        {
+          "label": "PR TIMES 築95年再生の中華ダイニング Mă",
+          "url": "https://prtimes.jp/main/html/rd/p/000000003.000095938.html",
+          "date": "2026-08-01"
+        },
+        {
+          "label": "中日BIZナビ ドムドム10年ぶり名古屋出店",
+          "url": "https://biz.chunichi.co.jp/news/article/10/126776/307/",
+          "date": "2026-07-24"
+        },
+        {
+          "label": "トラベルWatch 200人の大行列レポート",
+          "url": "https://travel.watch.impress.co.jp/docs/news/2128675.html",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "都市商業研究所 大須万松寺通店詳報",
+          "url": "https://toshoken.com/news/32991",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "ドムドム公式 大須万松寺通店オープン告知",
+          "url": "https://domdomhamburger.com/topics/7429.html",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "X グルメ名古屋 ドムドム名古屋出店速報",
+          "url": "https://x.com/gourmet_nagoya/status/2062736594424176809",
+          "date": "2026-07-20"
+        },
+        {
+          "label": "X 名古屋情報通 うな拓 池下店",
+          "url": "https://x.com/nagoya_jouhou/status/2080995978992296431",
+          "date": "2026-06-16"
+        }
+      ],
+      "trending_signals": {
+        "x_mentions": 0,
+        "media_count": 8,
+        "buzz_score": 0
+      }
+    },
+    {
+      "id": "c2",
+      "theme": "weekly_digest",
+      "title_draft": "大須のバーガー復活と中華開業——業界人が読む今週の名古屋新店",
+      "lead_draft": "先週の名古屋外食は復活と再生の週だった。ドムドムハンバーガーが大須で10年ぶりに復活し開店日に約200人が並んだ。築95年の建物を再生した中華ダイニングも8月1日に開業。池下の大判鰻はうなぎ高騰下の価格戦略で注目されている。話題の背景を席数・原価・回転から読み解く。",
+      "angle": "大須エリアの新店動向を価格帯・回転・相場・予約とシーン適性で読む業界人視点の週次まとめ",
+      "main_store": {
+        "name": "ドムドムハンバーガー大須万松寺通店",
+        "id": "",
+        "area": "大須",
+        "genre": "ハンバーガー"
+      },
+      "sources": [
+        {
+          "label": "中日BIZナビ ドムドム10年ぶり名古屋出店",
+          "url": "https://biz.chunichi.co.jp/news/article/10/126776/307/",
+          "date": "2026-07-24"
+        },
+        {
+          "label": "トラベルWatch ドムドム200人の大行列",
+          "url": "https://travel.watch.impress.co.jp/docs/news/2128675.html",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "都市商業研究所 ドムドム大須詳報",
+          "url": "https://toshoken.com/news/32991",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "時事ドットコム Mă by KIWAMI グランドオープン",
+          "url": "https://www.jiji.com/jc/article?k=000000004.000095938&g=prt",
+          "date": "2026-08-01"
+        },
+        {
+          "label": "X グルメ名古屋 ドムドム名古屋出店速報",
+          "url": "https://x.com/gourmet_nagoya/status/2062736594424176809",
+          "date": "2026-07-20"
+        }
+      ],
+      "trending_signals": {
+        "x_mentions": 0,
+        "media_count": 5,
+        "buzz_score": 0
+      }
+    },
+    {
+      "id": "c3",
+      "theme": "weekly_digest",
+      "title_draft": "大須の中華とサウナが一体化——業界人が読む複合業態の新店動向",
+      "lead_draft": "この夏の名古屋は複合業態が動いた。KIWAMI SAUNA大須に併設する中華ダイニングが8月1日に開業、ととのいの後に本格中華という滞在設計だ。ドムドムはスガキヤ跡地で復活し行列を作った。滞在時間で単価を作る発想を業界人の目で読む。",
+      "angle": "大須エリアの新店動向を、価格帯・回転・相場・予約とシーン適性から読む業界人視点の週次ダイジェスト",
+      "main_store": {
+        "name": "Mă（マー）by KIWAMI",
+        "id": "",
+        "area": "大須",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 築95年再生の中華ダイニング Mă",
+          "url": "https://prtimes.jp/main/html/rd/p/000000003.000095938.html",
+          "date": "2026-08-01"
+        },
+        {
+          "label": "時事ドットコム Mă by KIWAMI 8月1日グランドオープン",
+          "url": "https://www.jiji.com/jc/article?k=000000004.000095938&g=prt",
+          "date": "2026-08-01"
+        },
+        {
+          "label": "都市商業研究所 ドムドム大須詳報",
+          "url": "https://toshoken.com/news/32991",
+          "date": "2026-07-28"
+        }
+      ],
+      "trending_signals": {
+        "x_mentions": 0,
+        "media_count": 3,
+        "buzz_score": 0
+      }
+    },
+    {
+      "id": "c4",
+      "theme": "weekly_digest",
+      "title_draft": "行列200人の意味——ドムドム復活で読む大須の新店動向",
+      "lead_draft": "ドムドムハンバーガーが10年ぶりに名古屋へ戻り、大須の開店日に約200人が並んだ。話題は行列そのものより、2026年1月のMBOでスガキヤが資本参加した点にある。名古屋のローカルチェーン再編の象徴として、今週の外食の動きを業界目線でまとめる。",
+      "angle": "大須エリアの新店動向を相場・価格帯・回転・予約の観点で読む業界人視点の週次まとめ",
+      "main_store": {
+        "name": "ドムドムハンバーガー大須万松寺通店",
+        "id": "",
+        "area": "大須",
+        "genre": "ハンバーガー"
+      },
+      "sources": [
+        {
+          "label": "中日BIZナビ ドムドム10年ぶり名古屋出店",
+          "url": "https://biz.chunichi.co.jp/news/article/10/126776/307/",
+          "date": "2026-07-24"
+        },
+        {
+          "label": "都市商業研究所 大須万松寺通店詳報",
+          "url": "https://toshoken.com/news/32991",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "ドムドム公式 大須万松寺通店オープン告知",
+          "url": "https://domdomhamburger.com/topics/7429.html",
+          "date": "2026-07-28"
+        }
+      ],
+      "trending_signals": {
+        "x_mentions": 0,
+        "media_count": 3,
+        "buzz_score": 0
+      }
+    },
+    {
+      "id": "c5",
+      "theme": "weekly_digest",
+      "title_draft": "池下の中華と大須の新店——業界人が選ぶ今週の名古屋グルメ動向",
+      "lead_draft": "8月に入った名古屋の外食は大須に注目が集まった。7月28日にドムドムが10年ぶり復活し大行列、8月1日には築95年再生の中華ダイニングが開業。池下では大判鰻が価格戦略で話題だ。それぞれの背景を席数・原価・回転という業界人の視点で読み解く週次ダイジェスト。",
+      "angle": "大須エリアの新店動向を価格帯・回転・相場・予約とシーン適性でまとめる業界人視点の週次ダイジェスト",
+      "main_store": {
+        "name": "大判鰻 うな拓 池下店",
+        "id": "",
+        "area": "池下",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 築95年再生の中華ダイニング Mă",
+          "url": "https://prtimes.jp/main/html/rd/p/000000003.000095938.html",
+          "date": "2026-08-01"
+        },
+        {
+          "label": "トラベルWatch ドムドム200人の大行列",
+          "url": "https://travel.watch.impress.co.jp/docs/news/2128675.html",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "X 名古屋情報通 うな拓 池下店",
+          "url": "https://x.com/nagoya_jouhou/status/2080995978992296431",
+          "date": "2026-06-16"
+        }
+      ],
+      "trending_signals": {
+        "x_mentions": 0,
+        "media_count": 3,
+        "buzz_score": 0
+      }
+    }
+  ]
+}
