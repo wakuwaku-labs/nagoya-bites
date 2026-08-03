@@ -346,12 +346,15 @@ function renderStorePage(s, slug) {
   </div>` : '';
 
   // ── ヒーロー画像の配信最適化（index.html の nbImage() と同思想）──
-  // HotPepper 写真は wsrv.nl 経由で WebP + シャープニング配信（480px 源泉を最良画質で提示）。
-  // wsrv の default= で _238 へ、onerror で 直URL → 汎用SVG へ多段フォールバック。
+  // HotPepper 写真は wsrv.nl 経由で WebP + シャープニング配信。源泉は
+  // promote_store_photos.js が実測で昇格した原寸マスター（720〜1280px）、原寸が無い店は _480。
+  // ※ 原寸マスターは最大 2MB 超の JPEG があるため、必ず CDN でリサイズして配信すること
+  //   （直配信すると店舗ページが極端に重くなる）。
+  // wsrv の default= で1段下のサイズへ、onerror で 直URL → 汎用SVG へ多段フォールバック。
   // Google Places CDN(=s1600-w1200 高解像度) と self-host SVG はプロキシ不可/不要のため直配信。
-  const hpHeroMatch = photo.match(/^https?:\/\/(imgfp\.hotp\.jp\/.+?)_480\.jpg$/);
+  const hpHeroMatch = photo.match(/^https?:\/\/(imgfp\.hotp\.jp\/.+?)(_\d+)?\.jpg$/);
   const heroSrc = hpHeroMatch
-    ? `https://wsrv.nl/?url=${encodeURIComponent(hpHeroMatch[1] + '_480.jpg')}&w=800&output=webp&q=82&we=1&sharp=2&default=${encodeURIComponent(hpHeroMatch[1] + '_238.jpg')}`
+    ? `https://wsrv.nl/?url=${encodeURIComponent(hpHeroMatch[1] + (hpHeroMatch[2] || '') + '.jpg')}&w=800&output=webp&q=82&we=1&sharp=2&default=${encodeURIComponent(hpHeroMatch[1] + (hpHeroMatch[2] === '_480' ? '_238' : '_480') + '.jpg')}`
     : photo;
   const heroOnerror = hpHeroMatch
     ? `if(!this.dataset.f){this.dataset.f=1;this.src='${photo}';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}`
