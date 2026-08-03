@@ -923,6 +923,17 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .si-sub.on{color:var(--gold);border-color:var(--gold);background:rgba(201,169,110,.08);}
 .si-sub .si-sub-cnt{color:var(--dim);font-size:.56rem;margin-left:.25rem;}
 @media(max-width:640px){.si-cards{grid-template-columns:1fr;padding-left:0;}.si-actions,.si-subbar{padding-left:0;}}
+/* ── iOS 入力時の自動ズーム防止（検索バーが拡大されて見えなくなる問題）──
+   iOS Safari は font-size が 16px 未満の入力欄にフォーカスすると必ずページを拡大する。
+   viewport の maximum-scale=1 で殺す手は、ピンチズーム自体を奪うので A11y 上採らない。
+   モバイル時だけ入力欄の実フォントを 16px にして、拡大トリガーそのものを消す。
+   （見た目の高さは padding / min-height / height 側で従来どおり維持される） */
+@media(max-width:768px){
+input[type=text],input[type=search],input[type=email],input[type=tel],input[type=number],input[type=url],input[type=password],select,textarea{font-size:16px;}
+.search-wrap input,.sticky-search input,.mobile-cta-bar .cta-search,.cap-input,
+.ir-field input[type=text],.ir-field input[type=email],.ir-field select,.ir-field textarea{font-size:16px;}
+.cap-input{width:88px;}
+}
 </style>
 
 <!-- ======================================================= -->
