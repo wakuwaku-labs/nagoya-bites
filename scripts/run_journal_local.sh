@@ -333,6 +333,12 @@ if ! grep -q "${TODAY_SLUG}" journal/feed.xml 2>/dev/null; then
   log "✅ feed.xml に ${TODAY_SLUG} を確認（再生成後）"
 fi
 
+# ---- 5f. 関連記事リンクを更新（SEO-046）----
+# 新記事公開後に全記事の <div class="related"> を「直近3本の他記事＋特集リンク」に更新する。
+# 失敗しても記事公開を止めないため非ブロッキング（|| true）。
+log "関連記事リンクを更新（refresh_journal_related.js）"
+node scripts/refresh_journal_related.js >>"$LOG" 2>&1 || log "⚠️ refresh_journal_related.js 失敗（非ブロッキング）"
+
 # ---- 6. ラッパーが commit & push を確実に実行 ----
 # claude (journal-today.md Step 10) は「ユーザー承認後のみ push」と定義されているため
 # ヘッドレスでは承認者が居らず未 push 終了になる。それを補うため、ここで強制 commit/push する。
@@ -367,6 +373,8 @@ git add "${TODAY_FILES[@]}" 2>>"$LOG" || true
 for f in "${TRACKED_UPDATES[@]}"; do
   [ -e "$f" ] && git add "$f" 2>>"$LOG" || true
 done
+# refresh_journal_related.js が更新した他記事の関連リンクも含める（SEO-046）
+git add journal/ 2>>"$LOG" || true
 
 # ステージに差分が無ければ「claude が既に commit 済み」の可能性。
 # その場合は HEAD が origin/main より進んでいるはずなので、未push分を push する。
