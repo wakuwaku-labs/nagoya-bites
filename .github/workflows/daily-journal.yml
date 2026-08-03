@@ -106,6 +106,11 @@ jobs:
         # data/featured.json を見て今日の JST 日付で特集ストリップを再生成する。
         run: node scripts/build_featured.js
 
+      - name: ジャーナル関連記事リンクの自動更新（SEO-046）
+        # 新記事公開後に全記事の <div class="related"> を「直近3本の他記事＋特集リンク」に更新する。
+        # ジャーナル生成の有無に関わらず毎日実行（既公開記事も常に最新の隣接3本を指すようにする）。
+        run: node scripts/refresh_journal_related.js
+
       - name: 生成ファイルをコミット & プッシュ
         if: always()
         run: |

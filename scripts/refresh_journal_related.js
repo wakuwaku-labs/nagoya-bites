@@ -99,12 +99,19 @@ function buildRelatedHtml(currentFile, posts, postsMeta) {
   return lines.join('\n');
 }
 
+// 旧テンプレートは related-wrap クラスを使う（2026-05 初期の5記事）。
+// これらは既に手動キュレーション済みリンクを持つため対象外と判断し、件数と理由をログに残す。
+const RE_OLD_FORMAT = /<div class="related-wrap">/;
+
 function refreshFile(file, posts, postsMeta) {
   const fp = path.join(JOURNAL_DIR, file);
   let html = fs.readFileSync(fp, 'utf8');
   const re = /<div class="related">\s*<p class="related-title">[^<]*<\/p>\s*<div class="related-links">[\s\S]*?<\/div>\s*<\/div>/;
   if (!re.test(html)) {
-    return { file, changed: false, reason: 'related block not found' };
+    const reason = RE_OLD_FORMAT.test(html)
+      ? '旧 related-wrap 形式（既存リンクあり・手動キュレーション保持・対象外）'
+      : 'related block not found';
+    return { file, changed: false, reason };
   }
   const next = buildRelatedHtml(file, posts, postsMeta);
   const updated = html.replace(re, next);
@@ -123,10 +130,18 @@ function main() {
   }
   console.log(`Found ${posts.length} posts`);
   let changed = 0;
+  let skippedOld = 0;
   for (const f of posts) {
     const r = refreshFile(f, posts, postsMeta);
-    if (r.changed) changed++;
-    else console.log(`SKIP ${f}: ${r.reason}`);
+    if (r.changed) {
+      changed++;
+    } else {
+      if (r.reason && r.reason.includes('旧 related-wrap')) skippedOld++;
+      else console.log(`SKIP ${f}: ${r.reason}`);
+    }
+  }
+  if (skippedOld > 0) {
+    console.log(`SKIP（対象外）${skippedOld}件: 旧 related-wrap 形式。既存の手動キュレーション済みリンクを保持します。`);
   }
   console.log(`Updated ${changed}/${posts.length} files`);
 }

@@ -30,7 +30,7 @@
 
 ### [SEO-046] 公開直後のジャーナル記事に関連記事リンクが入らない（`refresh_journal_related.js` がどの自動化からも呼ばれていない・直近7本が汎用リンクのみ）
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: in_progress
 - **detected**: 2026-08-01
 - **category**: SEO
 - **owner**: Builder
