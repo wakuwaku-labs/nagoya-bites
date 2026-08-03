@@ -1,0 +1,401 @@
+{
+  "date": "2026-08-01",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅で開いた和牛シュラスコ食べ放題を接待とデート視点で読む",
+      "verdict": "PASS",
+      "total": 101,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 8件 (価格帯,席,予約,シーン,デート,アラカルト,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 3件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 132字 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「和牛」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "栄のアルマデシュラスコ本店を食べ放題の価格帯で読む",
+      "verdict": "HOLD",
+      "total": 75,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 12日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,シーン,デート) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 72字 +2",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「デート」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄の富や栄店を塩タンと接待シーンで読む一軒",
+      "verdict": "HOLD",
+      "total": 72,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 27日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,コース,席,予約,シーン,接待) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 75字 +2",
+          "title 21字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「接待」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "栄の焼肉SEJONGを黒毛和牛とデート視点で読む一軒",
+      "verdict": "HOLD",
+      "total": 62,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 31日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (価格帯,コース,席,予約,シーン,デート,アラカルト) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 72字 +2",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「デート」+4",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [
+    {
+      "id": "c2",
+      "title_draft": "栄の焼肉ホタルを予約とシーンの視点で読む一軒",
+      "verdict": "DISQUALIFIED",
+      "total": 0,
+      "disqualified_reasons": [
+        "同一店舗の再掲 (J004422261, 2026-05-11)"
+      ],
+      "breakdown": null
+    }
+  ],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "名駅で開いた和牛シュラスコ食べ放題を接待とデート視点で読む",
+      "lead_draft": "2026年7月31日、名古屋駅前の新ビル「ブルームーン名駅」3階に、栄で人気のシュラスコ店が2号店を開いた。和牛を含む13種食べ放題6,600円。この価格帯をどう読むか、約30席に絞った提供オペの意図、そしてデートと少人数の会に効く理由を、業界人の目線で分解する。",
+      "angle": "食べ放題の価格帯の読み方（素6,600円と飲み放題込8,800円のどちらを選ぶか、原価の高い和牛部位をアラカルト換算で読む）と、約30席に絞った提供オペ（パサドールの巡回頻度＝回転より満足度）、デート・少人数シーンへの適性を業界人視点で解説する。予約と繁忙時間帯の裏側も。",
+      "main_store": {
+        "name": "アルマデシュラスコ名駅",
+        "id": "J004613182",
+        "area": "名駅",
+        "genre": "シュラスコ・ブラジル料理"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通: 和牛も味わえるシュラスコ食べ放題『アルマデシュラスコ』名古屋駅前にオープン",
+          "url": "https://jouhou.nagoya/alma-de-churrasco/",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "HotPepper アルマデシュラスコ名駅（公式掲載・席/価格/営業時間）",
+          "url": "https://www.hotpepper.jp/strJ004613182/",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "公式Instagram @alma.dechurrasco",
+          "url": "https://www.instagram.com/alma.dechurrasco/",
+          "date": "2026-07-30"
+        },
+        {
+          "label": "じゃらんnet アルマデシュラスコ 名古屋 栄（ブランド本店）",
+          "url": "https://www.jalan.net/gourmet/grm_foomoojH000693285/",
+          "date": "2026-07-20"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄の焼肉ホタルを予約とシーンの視点で読む一軒",
+      "lead_draft": "栄東の焼肉ホタルは、厳選肉を適正価格で回すホルモン焼肉。宴会と接待の双方に対応する席構成で地元固定客を持つ。価格帯の読み方と予約の取り方を業界人視点で整理する。",
+      "angle": "価格帯の読み方（コースとアラカルトの分岐）、席の予約の取り方、繁忙時間帯と回転、接待とデートのシーン適性を解説。",
+      "main_store": {
+        "name": "焼肉ホタル 栄東店",
+        "id": "J004422261",
+        "area": "栄",
+        "genre": "焼肉・ホルモン"
+      },
+      "sources": [
+        {
+          "label": "HotPepper 焼肉ホタル 栄東店",
+          "url": "https://www.hotpepper.jp/strJ004422261/",
+          "date": "2026-07-10"
+        },
+        {
+          "label": "食べログ 焼肉ホタル",
+          "url": "https://tabelog.com/aichi/A2301/A230103/23093760/",
+          "date": "2026-07-01"
+        },
+        {
+          "label": "OZmall 名古屋 焼肉2026",
+          "url": "https://www.ozmall.co.jp/restaurant/aichi/nagoya-city/yakiniku/",
+          "date": "2026-07-01"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "栄の富や栄店を塩タンと接待シーンで読む一軒",
+      "lead_draft": "栄駅徒歩3分の富や栄店は、国産黒毛和牛にこだわるホルモン焼肉。個室と掘りごたつを備え、記念日や会社宴会に向く。価格帯と席の使い分けを業界人視点で読む。",
+      "angle": "価格帯の読み方（コース選択）、個室と掘りごたつの席の使い分け、予約と接待シーンの適性を解説。",
+      "main_store": {
+        "name": "富や 栄店",
+        "id": "J003298695",
+        "area": "栄",
+        "genre": "焼肉・ホルモン"
+      },
+      "sources": [
+        {
+          "label": "HotPepper 富や 栄店 コース",
+          "url": "https://www.hotpepper.jp/strJ003298695/course/",
+          "date": "2026-07-05"
+        },
+        {
+          "label": "OZmall 富や 栄店",
+          "url": "https://www.ozmall.co.jp/restaurant/9825/",
+          "date": "2026-06-20"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "栄の焼肉SEJONGを黒毛和牛とデート視点で読む一軒",
+      "lead_draft": "栄の焼肉SEJONGは黒毛和牛を上質な空間で味わう一軒。価格帯はやや高めだが、デートや接待に向く席と提供。価格帯の読み方を業界人視点で整理する。",
+      "angle": "価格帯の読み方（コースとアラカルト）、席とデートシーンの適性、予約の取り方を解説。",
+      "main_store": {
+        "name": "焼肉 SEJONG セジョン 栄店",
+        "id": "J003582213",
+        "area": "栄",
+        "genre": "焼肉・ホルモン"
+      },
+      "sources": [
+        {
+          "label": "HotPepper 焼肉SEJONG 栄店",
+          "url": "https://www.hotpepper.jp/strJ003582213/",
+          "date": "2026-06-25"
+        },
+        {
+          "label": "食べログ 名古屋 焼肉",
+          "url": "https://tabelog.com/yakiniku/aichi/A2301/rank/",
+          "date": "2026-07-01"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "栄のアルマデシュラスコ本店を食べ放題の価格帯で読む",
+      "lead_draft": "栄のアルマデシュラスコ本店は、和牛を含むシュラスコ食べ放題の人気店。名駅への2号店出店で改めて注目。食べ放題の価格帯の読み方をデート視点で読む。",
+      "angle": "食べ放題の価格帯の読み方、席とデートシーンの適性、予約の取り方を業界人視点で解説。",
+      "main_store": {
+        "name": "アルマデシュラスコ 名古屋 栄",
+        "id": "J003872023",
+        "area": "栄",
+        "genre": "シュラスコ・ブラジル料理"
+      },
+      "sources": [
+        {
+          "label": "一休.com アルマデシュラスコ 栄",
+          "url": "https://restaurant.ikyu.com/145291",
+          "date": "2026-07-15"
+        },
+        {
+          "label": "公式サイト アルマデシュラスコ",
+          "url": "https://alma-de-churrasco.owst.jp/",
+          "date": "2026-07-20"
+        }
+      ]
+    }
+  ]
+}

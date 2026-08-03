@@ -74,9 +74,26 @@ function toDateJa(dateStr) {
   return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日 (${wd})`;
 }
 
+/**
+ * 店舗の「詳細を見る」リンク先を決める。
+ * 優先: サイト内の店舗ページ（stores/{id}.html — gen-store-pages.js が LOCAL_STORES から生成）
+ * 次点: 外部リンク（id が無い＝まだ LOCAL_STORES / pending_stores.json に未登録の店）
+ * id はあるのに外部リンクしか渡されない事故を防ぐため、id があれば無条件で内部リンクを優先する。
+ */
+function storeDetailLink(s) {
+  if (s.id) return { href: `../stores/${s.id}.html`, internal: true };
+  if (s.link) return { href: s.link, internal: false };
+  return null;
+}
+
 function buildStores(stores) {
   if (!stores || stores.length === 0) return '';
-  return stores.map((s, i) => `
+  return stores.map((s, i) => {
+    const dl = storeDetailLink(s);
+    const linkHtml = dl
+      ? `<a class="store-link" href="${esc(dl.href)}"${dl.internal ? '' : ' target="_blank" rel="noopener"'}>${dl.internal ? '店舗ページを見る' : '詳細を見る'} →</a>`
+      : '';
+    return `
       <div class="store-card"${s.id ? ` data-store-id="${esc(s.id)}"` : ''}>
         <div class="store-num">${String(i + 1).padStart(2, '0')}</div>
         <div class="store-info">
@@ -87,9 +104,10 @@ function buildStores(stores) {
             ${s.score ? `<span class="score">${esc(s.score)}</span>` : ''}
           </div>
           <p class="store-desc">${esc(s.desc || '')}</p>
-          ${s.link ? `<a class="store-link" href="${esc(s.link)}" target="_blank" rel="noopener">詳細を見る →</a>` : ''}
+          ${linkHtml}
         </div>
-      </div>`).join('\n');
+      </div>`;
+  }).join('\n');
 }
 
 function buildInsiderPoints(points) {
@@ -443,16 +461,33 @@ function buildHeroImageSection(input) {
   if (!imgUrl) return '';
   const isStorePhoto  = input.hero_image_is_store_photo;
   const creditSource  = input.hero_image_credit_source; // 'Google Maps' | null
-  const creditUrl     = input.hero_image_credit_url  || 'https://unsplash.com';
-  const creditName    = input.hero_image_credit_name || 'Unsplash';
+  const creditUrl     = input.hero_image_credit_url  || '';
+  const creditName    = input.hero_image_credit_name || '';
+
+  // クレジットは「実際の画像の出所」から決める。
+  // 旧実装は else 節で無条件に「/ Unsplash」を付けており、自作イメージ図や
+  // Google Places 写真にまで Unsplash と表示していた（公開済み15本が誤クレジット）。
+  // 汎用ストック写真は制約9で禁止済みなので、Unsplash を既定値にすること自体が誤り。
+  const isSelfHosted = /^\.?\/?assets\//.test(imgUrl) || /nagoya-bites\.com\/assets\//.test(imgUrl);
+  const isGooglePhoto = /googleusercontent\.com/.test(imgUrl);
+  const isHotPepper = /imgfp\.hotp\.jp|hotpepper\.jp/.test(imgUrl);
+
+  const link = (url, text) => url
+    ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(text)}</a>`
+    : esc(text);
 
   let creditHtml;
-  if (creditSource === 'Google Maps') {
-    creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="https://maps.google.com" target="_blank" rel="noopener">Google Maps</a>`;
-  } else if (isStorePhoto) {
-    creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">店舗公式写真</a> / <a href="https://www.hotpepper.jp" target="_blank" rel="noopener">HotPepper</a>`;
+  if (isSelfHosted) {
+    // リポジトリ内に self-host した「記事固有のイメージ図」（CLAUDE.md 写真ルールの最終手段）
+    creditHtml = '編集部作成のイメージ図';
+  } else if (creditSource === 'Google Maps' || isGooglePhoto) {
+    creditHtml = `${link(creditUrl, creditName || '店舗写真')} / ${link('https://maps.google.com', 'Google Maps')}`;
+  } else if (isStorePhoto || isHotPepper) {
+    creditHtml = `${link(creditUrl, creditName || '店舗公式写真')} / ${link('https://www.hotpepper.jp', 'HotPepper')}`;
+  } else if (creditName) {
+    creditHtml = link(creditUrl, creditName);
   } else {
-    creditHtml = `<a href="${esc(creditUrl)}" target="_blank" rel="noopener">${esc(creditName)}</a> / <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a>`;
+    creditHtml = '出所不明（要確認）';
   }
 
   return `<figure class="art-hero-img">

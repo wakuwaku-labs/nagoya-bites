@@ -8,7 +8,7 @@
 
 ## 進行中・完了タスク
 
-### [SEO-044] LINE日次レポートの直帰率アラートが小サンプルでも毎回「異常」と誤検知していた問題
+### [SEO-047] LINE日次レポートの直帰率アラートが小サンプルでも毎回「異常」と誤検知していた問題
 
 - **priority**: P1 → **status**: in_progress（コード修正済み・GASへの実デプロイはオーナー操作待ち）
 - **detected**: 2026-07-30（オーナー指摘「毎回直帰率が異常に高いと出るが、合っているか？」）
@@ -26,6 +26,161 @@
 - **未完（オーナー操作待ち）**: `.gas-deploy/Code.js` はリポジトリ内のミラーで、実行主体は Google Apps Script 側（`Google分析オートLINE送信.js`）。リポジトリに `.clasp.json`/CIデプロイが存在せずリモートpushの経路が無いため、**この修正を有効化するには GAS エディタへの反映（コピペ or `clasp push`）をオーナー自身が行う必要がある**（Google アカウント操作のため代行不可）
 - **効果測定**: 反映後、母数20未満の日に🔴直帰率アラートが出なくなること／母数20以上の日は従来通り機能することを次回以降のLINEレポートで確認
 - **files**: `.gas-deploy/Code.js`
+- **関連**: [[SEO-044]]（同じ「直帰率が毎回異常」という症状を、`metrics_history.json` の30日ローリング集計側から独立に検証し「bounceRateはむしろ改善(0.45→0.394)・単日n=20の100%は小サンプルのノイズ」と結論した診断チケット。あちらは症状の実態を数値で確認し、本チケットはその誤検知を生んでいたLINE通知の生成ロジック側を修正するもので、互いに補完し合う）
+
+### [SEO-046] 公開直後のジャーナル記事に関連記事リンクが入らない（`refresh_journal_related.js` がどの自動化からも呼ばれていない・直近7本が汎用リンクのみ）
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-08-01
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEOアドバイス(LINE) 2026-07-31 原文「1訪問あたりの閲覧が1.1ページと、ほとんどの人が1店舗も見ずに離脱しています。👉 journal/2026-07-27-owarisanso-kurogi の記事下部に『この店を予約する』ボタンと『この店をGoogleマップで見る』ボタンを目立つように配置し、cta_click と cta_gmap_click を促す」
+- **brand-filter**: ✅ 適合 — Moat「構造化DB × 特集 × 日次ジャーナルの三層編集」を記事間の内部導線で束ねる施策。既存の実在記事へのリンクを正しく出すだけで、順位操作・広告依存・クーポン・ストック写真・架空店を一切伴わない
+- **アドバイスをそのまま採らなかった理由**: 名指しされた「記事下部にCTAボタンを足す」は、[[SEO-037]]（done・トップの店舗カード）/ [[SEO-042]]（done・特集冒頭CTA）/ [[SEO-045]]（ready・その自動化）で繰り返し判定済みの同一テーマ。さらに当該記事の掲載店「尾張山荘 くろぎ」は**予約が食べログ経由でホットペッパーIDを持たない**ため、「予約する」ボタンを機械的に足すと外部ポータルへの送客導線を新設することになり、編集独立性（制約7・8）に触れる。代わりに、同じ「1.1ページ／訪問」を実際に説明できる**検証済みの原因**を打ち手にした
+- **実測（2026-08-01・すべて再現可能なコマンドで確認）**:
+  | 検証項目 | コマンド | 実測値 |
+  |----------|----------|--------|
+  | ジャーナル記事総数 | `ls journal/2026-0*.html` | **85本** |
+  | 関連記事が汎用リンクのみ（他記事への内部リンク0） | `grep -L 'class="related-link" href="20'` | **7本** |
+  | その7本の内訳 | — | 07-22 / 07-26 / **07-27** / 07-28 / 07-29 / 07-30 / 07-31 = **公開が新しい順の連続7本** |
+  | `refresh_journal_related.js` の呼び出し | `grep -rn` on `.github/workflows/` `scripts/run_journal_local.sh` `.claude/commands/journal-today.md` | **ヒット0（どこからも呼ばれていない）** |
+  | スクリプト自体の最終コミット | `git log -1` | 2026-07-18（commit 32269b754） |
+  | 手動実行した場合 | `node scripts/refresh_journal_related.js` | `Updated 80/85`（7本の汎用リンクが実記事3本のリンクに置き換わる） |
+  → **停止した機構が最新記事だけを直撃している**。スクリプトの最終更新（07-18）以降に公開された記事が、ちょうど汎用リンクのまま残っている7本と一致する。当日レポートの閲覧1位はこの7本のひとつ `2026-07-27-owarisanso-kurogi`（7回・全閲覧25回の28%）で、**最も読まれているページに次の記事への導線が無い**状態だった。直帰率91%・1.1ページ/訪問という数値と符合する
+- **[[SEO-045]] と同一の故障クラス**: SEO-045 は `add_feature_top_cta.js` が「正しく作られたのに build.yml に組み込まれておらず、手動実行時点で凍結している」課題。本件は `refresh_journal_related.js` で**全く同じことが起きている**。個別に直すのではなく「一度手で回して done にしたスクリプトが自動化に組み込まれていない」パターンとして棚卸しすべき（他にも同種が眠っている可能性が高い）
+- **副次発見（同時に扱う）**: 上記実行で 5本が `related block not found` で SKIP された（`2026-05-15-friday-night-restaurant-guide` / `05-16-saturday-night-strategy` / `05-17-sunday-lunch-hidden-gems` / `05-20-tuesday-is-the-best-dining-night` / `05-20-wednesday-pro-dining`）。この5本は関連記事ブロック自体を持たず、**今後も永久に内部リンクが付かない**
+- **acceptance**（すべて実データで検証可能・自己申告値を使わない）:
+  1. `scripts/refresh_journal_related.js` を日次ジャーナルの公開経路（`daily-journal.yml` または `scripts/run_journal_local.sh`）に組み込み、記事公開のたびに関連リンクが自動更新される状態にする
+  2. 組み込み後、`grep -L 'class="related-link" href="20' journal/2026-0*.html` の該当が **0本** になること
+  3. SKIP された5本は「関連ブロックを追加して救済」か「対象外と判断」かを明示的に決め、**サイレントに落とさない**（件数と理由がログに出ること）
+  4. 生成されるリンク先が全て実在する `journal/*.html`（リンク切れ0・`node scripts/audit_feature_stores.js` 相当の検出ゼロ維持）
+  5. 制約1・5 を壊さない（journal/ 配下のみ・index.html 単一ファイル維持・フィルタ/検索/モーダル/IGエンベッド/Google評価の不変）
+  6. 効果測定は `data/metrics_history.json` の `pagesPerSession` と直帰率の前後比（体感で判定しない）
+- **関連**: [[SEO-045]]（同一の故障クラス＝スクリプト未組み込み。まとめて棚卸しする価値あり）/ [[SEO-044]]（pagesPerSession 劣化の分解診断。本件はその確定した原因の一つ）/ [[SEO-038]]（高流入ジャーナルの回遊変換）/ [[ISSUE-078]]（ジャーナルの店舗内部リンク）
+
+### [ISSUE-079] rebase中断の放置でリポジトリが終日ブロック＋写真クレジット15本の誤表示 ✅
+
+- **priority**: P0（日次公開の全停止 ＋ 公開ページの事実誤り）→ **status**: done
+- **detected**: 2026-07-31（オーナー指摘「きのう、今日の記事がない」）
+- **resolved**: 2026-07-31
+- **resolved_by**: Orchestrator 直轄（INSPECT→BUILD）
+- **category**: ops / content-integrity
+- **owner**: Builder + Editor
+
+- **欠番の原因は日ごとに別だった**:
+  - **7/30**: claude 生成が API 接続エラー（`FailedToOpenSocket`）で3回リトライ全滅。外部要因。
+    [[ISSUE-077]] の仕組みは想定どおり動作し、成果物ゼロを検知して HOLD メモを書き出し、翌朝も警告した
+  - **7/31**: 7/30 の seo-triage が作った**未 push のローカルコミット**が origin/main と
+    `agent-backlog.md` で衝突し `git pull --rebase` が中断。**旧実装は die するだけで
+    rebase 中断状態を放置していた**ため、リポジトリが「rebase in progress」のまま丸一日残り、
+    翌朝の実行はもちろん他ルーチンまで巻き込んで全停止した
+
+- **実装（3点）**:
+  1. **`scripts/run_journal_local.sh`**: pull 失敗時に `git rebase --abort` してから HOLD で終わる。
+     abort すればローカルコミットは失われず作業ツリーは健全に戻るので、被害は「その日の記事が出ない」
+     だけで済み、翌朝は自動で再試行できる（＝今回のような終日ブロックが構造的に起きない）
+  2. **`.gitattributes`**: `agent-backlog.md merge=union` を追加。衝突のほぼ全ては
+     「双方が別々のISSUEを追記しただけ＝両方残すのが正解」というパターン（2026-07 に3回発生）。
+     union で自動解決できる。重複IDの混入は `audit_backlog_ids.js` が別途検出するため安全側に倒せる
+  3. **`scripts/generate_daily_draft.js`**: ヒーロー画像クレジットの既定値バグを修正。
+     旧実装は else 節で**無条件に「/ Unsplash」を付けており**、自作イメージ図や Google Places 写真にまで
+     Unsplash と表示していた。**公開済み15本すべてが誤クレジット**（実体は自作イメージ図12・Google写真2・
+     自サイト1で、Unsplash 画像は1枚も使っていない）。制約9でストック写真は禁止済みなので
+     Unsplash を既定値にすること自体が誤り。実際の画像URLから出所を判定する方式に変更し、
+     既存13本も実体に合わせて一括修正（自作図→「編集部作成のイメージ図」等）
+
+- **欠番2本の復旧**: 7/30（名駅×食べ歩き×スイーツ・89点）/ 7/31（栄×接待×鮨・97点）を
+  遡及生成し PASS_WITH_NOTE 帯で公開。掲載日は WebFetch で実ページから確認した実日付のみを使い、
+  点を上げるための日付・自己申告値の水増しはしていない（[[ISSUE-077]] の方針を踏襲）
+- **QAゲート**: validator 両記事とも全項目 PASS ✅ / 掲載店4件はすべて `data/stores.json` 実在店 ✅ /
+  写真は全て Google Places 実写（規約準拠）✅ / 表示クレジットの unsplash 残存 **0** ✅ /
+  `git check-attr merge` で union 有効を実地確認 ✅ / bash -n・node --check ✅ /
+  本番 HTTP 200 と実表示をブラウザで確認 ✅
+- **files**: `scripts/run_journal_local.sh`, `.gitattributes`, `scripts/generate_daily_draft.js`,
+  `journal/*.html`（新規2・クレジット修正13）, `docs/daily-posts/2026-07-30.md` / `2026-07-31.md`,
+  `data/journal_published.json`, `index.html`, `journal/index.html`, `journal/feed.xml`, `journal/feed.atom`, `sitemap.xml`
+- **関連**: [[ISSUE-077]]（ヘッドレスを止めない設計・HOLD/自動復旧はここで導入）/ [[ISSUE-065]]（作業ツリー汚染による停止＝同一クラス）
+
+### [SEO-045] 特集冒頭CTAの付与を実データ追従で自動化する（対象24特集中19特集が未付与・現在の最人気 nagoya-korean を含む）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-07-31
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEOアドバイス(LINE) 2026-07-30 原文「1訪問あたり閲覧が1.0ページと、店舗詳細や他の特集へ誘導できていません。👉 人気ページ『nagoya-korean』と『2026-05-13-counter-six-seats-formula』の記事内に、関連性の高い店舗の店舗詳細モーダルへのリンクを数カ所設置しましょう」
+- **brand-filter**: ✅ 適合 — Moat「構造化DB（4,500店超）× 特集 × 日次ジャーナルの三層編集」を編集記事→実在店DBの内部導線で束ねる施策。既存の実在店リンクを増やすだけで、順位操作・広告依存・クーポン・ストック写真・架空店を一切伴わない
+- **なぜ重複ではないか（[[SEO-042]] は done だが機構が止まっている）**: SEO-042 は「閲覧上位の特集の冒頭に店舗詳細＋予約のCTAブロックを置く」課題で 2026-07-29 に done。実装 `scripts/add_feature_top_cta.js` は**対象特集を決め打ちせず GA4 `site_metrics.json` ＋ GSC `gsc_metrics.json` の topPages から動的に選ぶ**正しい設計になっている。**しかしこのスクリプトはどのワークフローからも呼ばれていない**（`grep -rn "add_feature_top_cta" .github/workflows/` → ヒット0。対照的に `build_featured.js` / `refresh_feature_rosters.js` は build.yml に組み込み済み）。結果、2026-07-27 の手動実行時点の5特集で凍結し、その後に人気が移った特集へは永久に付かない。**「一度やった」と「以後も追従する」の差**が本チケット
+- **実測（2026-07-31・`node scripts/add_feature_top_cta.js --check`）**:
+  | 指標 | 実測値 |
+  |------|--------|
+  | 流入実績で対象になる特集 | **24件** |
+  | うち CTA 付与済み（unchanged） | **5件**（hitsumabushi / solo-dining / tebasaki / miso-nikomi-udon / summer-2026） |
+  | うち未付与（would_add） | **19件** |
+  → アドバイスが名指しした `nagoya-korean` は `would_add` で、掲載候補3店（J003829547 韓国サムギョプサル マルエイ 栄 住吉店 / J004049936 骨付きカルビ専門店 ダムラ 栄店 / J003721004 韓国居酒屋 個室完備 MYONDON 金山店）まで既に解決済み。**実行されていないだけ**。同記事は当日レポートの閲覧1位（3回）
+- **アドバイスのうち採らない半分（ジャーナル側）**: 名指しのもう一方 `journal/2026-05-13-counter-six-seats-formula.html` は実測で `stores/*.html` へのリンク0・店舗カード0（`.store-card` のヒットはCSS定義のみ）。ただしこれは [[ISSUE-078]] のバックフィルが「店舗非依存の一般論記事38本」として意図的に除外した記事で、カウンター経済を論じる業界コラム。**機械的に店舗リンクを足すのは編集判断として不適切**（記事が specific な実在店を論じていない）。高流入ジャーナル→関連特集・店舗詳細への導線という論点は既に [[SEO-038]]（ready/Editor）が担当しているので、そちらに寄せて本チケットは特集側に絞る
+- **acceptance**（すべて実データで検証可能・自己申告値を使わない）:
+  1. `scripts/add_feature_top_cta.js` を build.yml の日次ジョブに組み込み、GA4/GSC の topPages が変われば CTA 付与も自動で追従する状態にする（`build_featured.js` / `refresh_feature_rosters.js` と同じ扱い）
+  2. 組み込み後に `--check` で `would_add` が 0 になること（付与できない特集は ItemList 3件未満・アンカー無しの正当理由でスキップされ、その件数と理由がログに出ること＝**サイレントに落とさない**）
+  3. 掲載店リンクは全て `stores/*.html` 実在かつ `closed_stores.json` 不掲載（`node scripts/audit_feature_stores.js` 検出ゼロ維持・架空店ブロック順守）
+  4. 同一ブランドの支店が3枠を占めないこと（SEO-042 で実装済みの看板重複除外が新規19特集でも効くことを実機確認）
+  5. 制約1・5 を壊さない（features/ 配下のみ・index.html 単一ファイル維持・フィルタ/検索/モーダル/IGエンベッド/Google評価の不変）
+  6. 効果測定は `data/metrics_history.json` の `pagesPerSession` と `ctaClickRate` の前後比（体感で判定しない）
+- **関連**: [[SEO-042]]（本機構を作った課題・done。本件はその自動化漏れ）/ [[SEO-038]]（ジャーナル側の回遊・本件は特集側）/ [[SEO-044]]（pagesPerSession 劣化の分解診断。本件はその打ち手候補の一つで、診断結果により優先度が変わる）/ [[ISSUE-078]]（ジャーナルの店舗内部リンク・除外38本の判断根拠）
+
+### [ISSUE-078] 日次ジャーナル記事の店舗が「店舗ページ」に内部リンクされていなかった問題 ✅
+
+- **priority**: P1（ユーザー導線・SEO内部リンク・Moatの店舗ページ資産が記事から到達不能） → **status**: done
+- **detected**: 2026-07-29（オーナー指摘。`2026-07-29-nagoya-beergarden.html`（季節短信）がマイアミ/CARVINO/ANDBBQを本文で紹介しているのに、どの店にも店舗ページ（`stores/{id}.html` — カード表記の店舗詳細）へのリンクが無かった）
+- **resolved**: 2026-07-29
+- **resolved_by**: Orchestrator 直轄（EXPLICIT モード）
+- **category**: content / internal-linking / ux
+- **owner**: Editor + Builder
+
+- **真因**: `journal/_template.html` の `.store-list`（`{{STORES}}`）は today_one / weekly_digest テーマだけが `input.stores[]` を使って埋めており、industry_insider / seasonal / flexible テーマは本文で店名を `<strong>` 太字にするだけで `stores[]` を空のまま生成していた。既存の `buildStores()` も `s.link`（外部URL）しか見ておらず、`id` があってもサイト内の店舗ページを優先しない実装だった。
+  - 副次的に発覚: `validate_journal_draft.js` の店名照合チェック（項目1）が `index.html` の `LOCAL_STORES`（TOP50のみインライン化・ISSUE-015-P2以降の仕様）を直接 `eval` しており、実質ほぼ全店（5,400件中50件以外）を検証対象外にしていた。そのため過去に false-negative（未登録の実在店を誤ってFAIL）も発生していた（`journal/2026-04-21-yabamisen-nagoya-insider.html` の「台湾料理 矢場味仙」で確認）。
+- **実装**:
+  1. `scripts/generate_daily_draft.js`: `buildStores()` に `storeDetailLink()` を追加。`s.id` があれば無条件でサイト内店舗ページ（`../stores/{id}.html`）を優先リンクし、外部リンクは `id` が無い場合のみのフォールバックに変更
+  2. `scripts/validate_journal_draft.js`: `extractLocalStores()` を `index.html` 直eval から `scripts/lib/load_stores.js` の `loadStores()`（`data/stores.json` canonical・全件）に切替。項目1の店名照合が全店ベースで正しく機能するように是正
+  3. `scripts/validate_journal_draft.js`: 項目16（**WARNING**・非ブロッキング）を新設。本文 `<strong>` 太字と実店名（LOCAL_STORES全件）を突合し、店舗ページへの内部リンクが一つも無ければ警告。ヘッドレス日次実行を止めないよう意図的に非ブロッキング（ISSUE-077 の教訓 = 質問/停止で1日分の成果が消える、を踏襲）
+  4. `journal/2026-07-29-nagoya-beergarden.html`: 既存公開記事を直接是正。マイアミ(J001042282)/CARVINO(J001246890)/ANDBBQ(J004633290) — いずれも実在の LOCAL_STORES 登録店（架空店ではない）— の店舗ページへのリンク付きカードを `.store-list` に追加
+  5. `data/journal_published.json`: 同記事の `store_ids` を空配列から実IDへ補完（30日以内再掲チェックの母数として正しく機能するように）
+  6. `agents/editor.md`: 「店舗ページへの内部リンク必須化（全テーマ共通）」を新設。今後の全テーマで `stores[]` に `id` を必ず設定すること、LOCAL_STORES に無い新規店舗は同日中に `pending_stores.json` へ追加することを明文化
+- **追補 2026-07-30 — 過去記事84本の一括バックフィル**: オーナーから「過去の毎日の記事も店舗カードが表示されるようにして」と追加指示。実装当日分の1記事修正だけでは過去分が未対応だったため、`journal/*.html` 全84本を監査・是正:
+  1. 既存の `.store-card`（`data-store-id` 付き・外部リンク）11本 → 内部の店舗ページへ張り替え
+  2. 既存の `.store-card`（カードは表示されているが `data-store-id` 無し＝リンク先未解決）44本 → 店舗名を LOCAL_STORES と突合し `data-store-id` 付与＋内部リンク化
+     - 突合は店名の完全一致（NFKC正規化）を優先。43/44 が一発一致。1件（`YORONIKU NAGOYA` の英語表記）は同義の日本語表記店（よろにく 名古屋）へ手動解決
+  3. **重要な落とし穴**: 店舗ページのファイル名（slug）は `gen-store-pages.js` の `toSlug()`（ホットペッパーID優先 → 英語名 → 店名からASCII抽出 → 店名UTF-8の先頭8バイトhex）で決まるが、**重複時の `-2`/`-3` サフィックス採番は生成時の処理順に依存し、事前に再現計算できない**。自前で `toSlug()` を再実装して突合した第1版は、3件で「実在はするが別の店」のページに誤ってリンクする事故を起こしかけた（例: `ポーたま 名古屋HAERA店` → 誤って `stores/haera.html`＝別店舗「炭焼うな富士 栄HAERA店」にリンクしそうになった）。
+     → 対策として `stores/*.html` 全5,421件の JSON-LD `name` から「店名 → 実ファイル名」の正引き索引を実際に生成し、店名の完全一致でのみリンクを確定する方式に変更。再現計算ではなく実ファイルの事実で検証する（CLAUDE.md品質ゲート原則と同じ思想）
+  4. LOCAL_STORES に完全一致する店名が複数ページに存在する重複データ3件（グリルつばき/肉屋 雪月花 NAGOYA/尾張山荘 くろぎ＝manual登録とHotPepper CSV由来の重複行）を発見。どちらのページも同一店舗の実在ページのため実害はないが、データ重複自体は別課題として観測（要 DataKeeper 確認）
+  5. カードが元々無かった39本のうち、本文で実店舗に具体的に言及していたのは1本（`2026-06-12-tsuyu-nagoya-meshi-guide.html` — 「ひつまぶし 登河 那古野本店」「炭焼うな富士 名古屋駅太閤口店」を梅雨ジャンル紹介の一例として言及）のみで、店舗ページリンク付きカードを追加。残り38本は「GW攻略」「業界コラム」等の店舗非依存の一般論記事で、対象店が存在しないことを確認（一般語の部分一致による誤爆を避けるため、トークン重複ヒューリスティックで拾った候補は目視で全棄却）
+  6. 最終検証: `journal/*.html` 全カード（63件）を「店名の完全一致 → 実ファイル存在 → リンク先slugがその店名の正引き索引に含まれる」の3段で再チェックし、**不一致ゼロ**を確認
+- **QAゲート**: 構文チェック2ファイル ✅（`node -c`）/ 既存公開ジャーナル全件（2026-04〜07月・約84本）に新旧validatorを回して比較 → 新たなFAIL増加ゼロ・既存の暗黙バグ1件を修正（矢場味仙のfalse-negative FAIL解消）✅ / 合成テスト（id指定=内部リンク・id無し=外部リンクのフォールバック）で `buildStores()` の分岐を実機確認 ✅ / 全84記事に対しリンク切れ0・JSON-LD破損0を確認 ✅ / 全63店舗カードの店名↔リンク先一致を実ファイルベースで検証しミスマッチ0 ✅ / ブラウザで実記事のカード描画とリンク先の実店舗ページ（写真・住所・営業時間あり）を目視確認 ✅
+- **files**: `scripts/generate_daily_draft.js`, `scripts/validate_journal_draft.js`, `journal/*.html`（44ファイル・過去記事バックフィル分含む）, `data/journal_published.json`, `agents/editor.md`, `agent-backlog.md`
+- **関連**: [[ISSUE-077]]（同じ「ヘッドレス日次を止めない」設計思想を踏襲）/ [[ISSUE-041]]（`gen-store-pages.js` による店舗ページ資産そのものの起源）/ 発見した LOCAL_STORES 重複行3件は今後の課題として観測（未起票・軽微）
+### [SEO-044] 流入は+25%なのにセッションの深さとCTAクリックが2ヶ月で構造的に劣化している原因を分解診断する
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-07-30
+- **category**: SEO
+- **owner**: Marketer
+- **source**: SEOアドバイス(LINE) 2026-07-29 原文「検索流入比率が40%と高めですが、予約やマップへの遷移がゼロ。検索意図とコンテンツが合致していないかもしれません」→ アドバイスが指示した具体アクション（journalタイトルにシーンKW＋SNS発信）は [[SEO-011]] で実装済み（done）。**未着手なのは「流入の質を検証する」側**であり、そこを本チケットが担う
+- **brand-filter**: ✅ 適合 — 自社の実測データのみを使う診断で、順位操作・広告依存・クーポン・ストック写真を一切伴わない。Moat「名古屋×シーン×業界人の目利き」の入口が実際に噛み合っているかを検証する行為そのもの。CLAUDE.md 制約10「検証できる事実だけで判定する」に沿い、自己申告値を一切使わない
+- **trend（`data/metrics_history.json` 58日台帳・各エントリは30日ローリング＝単日ブレではない）**:
+  | 日付 | sessions | organic% | pagesPerSession | avgSessionDuration | ctaClickRate | outboundClicks |
+  |------|---------|---------|-----------------|--------------------|--------------|----------------|
+  | 2026-06-01 | 429 | 30.0 | 2.09 | 264.4s | 13.5% | 58 |
+  | 2026-06-15 | 531 | 39.7 | 1.89 | 201.8s | 12.4% | 66 |
+  | 2026-07-01 | 431 | 51.0 | 1.31 | 101.7s | 8.1% | 35 |
+  | 2026-07-15 | 419 | 57.8 | 1.17 | 79.8s | 5.3% | 22 |
+  | 2026-07-29 | 536 | 56.6 | 1.31 | 103.6s | **3.4%** | **18** |
+  → セッション **+25%** の一方で pagesPerSession **-37%** / 滞在 **-61%** / CTAクリック率 **-75%**（実クリック 58→18件）。**8週間の単調劣化**
+- **重要な反証（この診断が必要な理由）**: 同じ台帳で **bounceRate は 0.45 → 0.394 に改善している**（ベンチマーク good=0.5 の内側）。日次LINEアドバイスが毎日「直帰率が異常」と警告し、7/15以降10回以上ファーストビュー改修を提案し続けているが、**30日実測では直帰は問題の所在ではない**。単日 n=20 の 100% は小サンプル由来のノイズ。したがって FV改修（[[SEO-040]]）だけを積んでも本劣化は止まらない可能性が高く、先に劣化の所在を数値で特定する必要がある
+- **acceptance**（すべて検証可能な自社データのみで判定・自己申告値を使わない）:
+  1. `data/metrics_history.json` × `data/search_channel_metrics.json` × `site_metrics.json` の `sourceBreakdown` / `topPages` を突き合わせ、pagesPerSession と ctaClickRate の低下を **エンジン別 × ランディングページ別に分解**する
+  2. 劣化の主因がどのエンジン（Bing 182 / 生成AI 118 / Google 58）・どのページ（`/features/nagoya-hitsumabushi.html` 110PV が最大入口）由来かを数値で特定し、根拠数値ごと本チケットに追記する
+  3. **CTA計測欠損の切り分け**: `site_metrics.json` の `cta.byDomain` 合計は **8件**だが `outboundClicks` は **18件**で、10件がドメイン未帰属。実減少なのか計測欠損（[[ISSUE-068]] の link_domain ディメンション関連）なのかを判定する。計測欠損なら「CTA -75%」自体が過大評価
+  4. 打ち手の起票は診断結果に基づき別チケットで行う（**本チケットは診断まで**。実装は `/solve-next` の YES ゲート経由）
+- **関連**: [[SEO-011]]（KW設計・done／本件は未着手の検証側）/ [[SEO-039]]（エンジン別観測レイヤー＝本診断の入力を作った課題）/ [[SEO-040]]（FV改修・本診断の結果で優先度が変わる）/ [[SEO-038]]（勝ち筋の横展開・本件は劣化側の分解）/ [[ISSUE-068]]（link_domain 計測の穴）/ [[SEO-047]]（同じ「直帰率が毎回異常」症状の発生源＝LINE通知の生成ロジック側を修正したチケット）
 
 ### [ISSUE-076] pending由来店（ジャーナル採用の話題店）が恒久的に写真ゼロだった問題 ✅
 
@@ -1659,6 +1814,8 @@
 | 2026-07-23 | Builder(EXPLICIT) | ISSUE-068① GSC **完全開通**。データ0の原因＝SAが空のURLプレフィックス型のみ閲覧・実データはドメインプロパティ側と特定。pickBestProperty（複数時impressions最大を自動選択・PR #78・3ケーステスト）追加＋オーナーがドメインプロパティにSA追加→CI run 30010262835 で gsc_metrics.json に clicks=288/imp=32,958/CTR0.87%/順位17.3/クエリ25件 が入り確定 | ✅ デプロイ済み (PR #78) |
 | 2026-07-23 | Builder+Marketer(EXPLICIT) | ISSUE-068② link_domain 完了。コード変更ゼロで良いと確認（サイトが link_domain 送信済＋fetch_ga4_views.js が customEvent:link_domain を自動集計）。GA4登録手順をdocs追記（PR #80）＋オーナーがGA4カスタム定義に link_domain（イベント/param=link_domain）登録済（UI確認）。cta.byDomain は非遡及のため登録後クリック蓄積で自動充填。**ISSUE-068 クローズ** | ✅ 完了 (PR #80/#81) |
 | 2026-07-23 | Marketer+Builder(EXPLICIT) | ISSUE-072 GSC実データ駆動の改善ループを既存ループに組み込み。gsc_opportunities.js（ctr_fix/rank_push抽出）＋build.yml日次化＋CLAUDE.mdに「GSC改善ループ」章。第1弾＝店舗タイトルの冗長エリア群を正規化（area_label.js・patch_store_titles.js・生成元gen-store-pages.js）で4,136ページのCTR改善。副次で絵文字再発（gen-store-pages/build_featured生成元）を根絶し全ページ残存0。効果は翌週GSC前後比で測定 | ⏸ PRレビュー待ち |
+| 2026-07-29 | Orchestrator(EXPLICIT) | ISSUE-078 日次ジャーナル記事の店舗を「店舗ページ」（stores/{id}.html）へ内部リンク必須化。buildStores()がid優先で内部リンクするよう修正／validate_journal_draft.jsの店名照合をTOP50限定index.html evalからdata/stores.json全件（load_stores.js）に是正＋WARNING項目16新設／既存公開記事(2026-07-29-nagoya-beergarden.html)にマイアミ・CARVINO・ANDBBQの店舗ページリンクを追記／agents/editor.mdに全テーマ共通ルールを明文化 | ✅ commit済み (PR #92) |
+| 2026-07-30 | Orchestrator(EXPLICIT) | ISSUE-078追補: 過去ジャーナル84本を全件監査し店舗カード↔店舗ページのリンクをバックフィル。外部リンクのみ11本を内部化／カードはあるがID未解決の44本にdata-store-id付与＋内部リンク化（stores/*.html全5,421件のJSON-LD名から正引き索引を実生成し、slug再計算に頼らず実ファイル照合で解決）／新規に実店舗言及を検出した1本にカード追加／残り38本は店舗非依存の一般論記事と確認し対象外。全63店舗カードの店名↔リンク先一致をゼロミスマッチで最終検証 | ✅ commit待ち（同PR #92に追加コミット予定） |
 
 ---
 
