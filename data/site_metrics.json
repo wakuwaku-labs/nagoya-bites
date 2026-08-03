@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-08-03T00:15:48.199Z",
+  "generatedAt": "2026-08-03T04:39:27.690Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 512,
-    "pageViews": 764,
-    "sessions": 589,
-    "avgSessionDuration": 118.7,
-    "bounceRate": 0.397,
-    "pagesPerSession": 1.3
+    "activeUsers": 484,
+    "pageViews": 720,
+    "sessions": 558,
+    "avgSessionDuration": 123,
+    "bounceRate": 0.376,
+    "pagesPerSession": 1.29
   },
   "channels": {
     "sessions": {
-      "organic": 340,
-      "direct": 173,
-      "social": 71,
-      "referral": 10,
+      "organic": 323,
+      "direct": 162,
+      "social": 67,
+      "referral": 9,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 57.2,
-      "direct": 29.1,
-      "social": 12,
-      "referral": 1.7,
+      "organic": 57.6,
+      "direct": 28.9,
+      "social": 11.9,
+      "referral": 1.6,
       "paid": 0,
       "other": 0
     }
@@ -31,27 +31,27 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 183
+      "sessions": 170
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 135
+      "sessions": 126
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 81
+      "sessions": 80
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 67
+      "sessions": 62
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 44
+      "sessions": 41
     },
     {
       "source": "yahoo",
@@ -61,7 +61,7 @@
     {
       "source": "openai",
       "medium": "(not set)",
-      "sessions": 26
+      "sessions": 25
     },
     {
       "source": "(not set)",
@@ -82,13 +82,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 112,
-      "sessions": 104
+      "pageViews": 109,
+      "sessions": 102
     },
     {
       "path": "/",
-      "pageViews": 98,
-      "sessions": 87
+      "pageViews": 83,
+      "sessions": 74
     },
     {
       "path": "/features/nagoya-solo-dining.html",
@@ -97,8 +97,8 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 45,
-      "sessions": 26
+      "pageViews": 41,
+      "sessions": 24
     },
     {
       "path": "/journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html",
@@ -108,7 +108,7 @@
   ],
   "cta": {
     "outboundClicks": 25,
-    "ctaClickRate": 4.2,
+    "ctaClickRate": 4.5,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -135,8 +135,8 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 512,
-    "stage": "takeoff",
+    "value": 484,
+    "stage": "phase0",
     "thresholds": {
       "phase0": 500,
       "takeoff": 3000,
