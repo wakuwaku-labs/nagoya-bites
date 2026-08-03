@@ -217,6 +217,11 @@ const BENCHMARKS = {
   ctaRate:         { good: 0.03, warn: 0.01 },  // 予約ボタンクリック率（クリック/訪問者）
 };
 
+// セッション数がこれ未満の日は、直帰率・平均滞在時間を「課題」として通知しない。
+// n=6〜20/日のような小サンプルでは1〜2人の挙動だけで直帰率が50pt動くため、
+// 通知のたびに「異常に高い」と出続けてしまう（ctaRate の t.users>=20 判定と同じ考え方）。
+const MIN_SESSIONS_FOR_RATE_ALERT = 20;
+
 // 値を信号機アイコンに変換
 function healthIcon(value, bench, reverseLowerIsBetter) {
   if (reverseLowerIsBetter) {
@@ -512,6 +517,7 @@ srcLines,
 '    2行目: 「　👉 」で始まる、今日この実装で着手できる超具体的な打ち手（どのページ・どのKW・どの要素を、どう変えるか）',
 '- 毎日同じ提案にならないよう、データで最も差が出ている点に焦点を当てる。汎用論・精神論は禁止。',
 '- データに無い数字を創作しない。訪問者が少ない日は「母数が少ないので◯◯を試す実験」という温度感にする。',
+'- 訪問回数(セッション)が20件未満の日は、直帰率・平均滞在時間を単独の主要課題として取り上げない（1〜2人の挙動だけで数十pt動く統計ノイズのため）。この場合は人気ページ・流入元・回遊など他の実データか「攻めの一手」を優先する。',
 '- 専門用語を避け、素人が読んで即動ける日本語で。各項目は120字以内。',
 '- 出力はJSONのみ。前後に説明文やコードフェンス(```)を付けない。',
 '',
@@ -536,21 +542,23 @@ function generateRuleBasedAdvice(data, a, date) {
   const featurePv = featureRow ? (parseInt(featureRow.metrics[1]) || 0) : 0;
   const hasJournal = (data.pages || []).some(p => /journal\//.test(p.dimensions[0]));
 
-  // 直帰率
-  if (t.bounceRate > BENCHMARKS.bounceRate.warn) {
-    const gap = Math.round((t.bounceRate - BENCHMARKS.bounceRate.good) * 100);
-    const acts = [
-      'ファーストビューに「名古屋の飲食店1100軒を“現役の飲食人”が厳選」と一言入れ、3秒で価値を伝える',
-      '最初の画面に人気特集（' + (featureName || '宴会・接待特集') + '）への大きめボタンを置き、次の一歩を作る',
-      '冒頭の店舗カードを「🔥話題沸騰」の店から並べ、最初の3枚で離脱を止める',
-    ];
-    cand.push({ sev: 95, text: '🔴 すぐ帰る人が' + Math.round(t.bounceRate * 100) + '%（目標50%・あと' + gap + 'pt下げたい）\n　👉 ' + rotate(acts, seed) });
-  } else if (t.bounceRate > BENCHMARKS.bounceRate.good) {
-    cand.push({ sev: 60, text: '🟡 直帰率' + Math.round(t.bounceRate * 100) + '%とやや高め\n　👉 一番見られた「' + topPageName + '」の冒頭に、関連特集リンクを1本足して回遊のきっかけを作る' });
+  // 直帰率（小サンプルでは1〜2人の挙動だけで50pt動くため、意味のある訪問数がある日だけ課題化する）
+  if (t.sessions >= MIN_SESSIONS_FOR_RATE_ALERT) {
+    if (t.bounceRate > BENCHMARKS.bounceRate.warn) {
+      const gap = Math.round((t.bounceRate - BENCHMARKS.bounceRate.good) * 100);
+      const acts = [
+        'ファーストビューに「名古屋の飲食店1100軒を“現役の飲食人”が厳選」と一言入れ、3秒で価値を伝える',
+        '最初の画面に人気特集（' + (featureName || '宴会・接待特集') + '）への大きめボタンを置き、次の一歩を作る',
+        '冒頭の店舗カードを「🔥話題沸騰」の店から並べ、最初の3枚で離脱を止める',
+      ];
+      cand.push({ sev: 95, text: '🔴 すぐ帰る人が' + Math.round(t.bounceRate * 100) + '%（目標50%・あと' + gap + 'pt下げたい／訪問' + t.sessions + '件）\n　👉 ' + rotate(acts, seed) });
+    } else if (t.bounceRate > BENCHMARKS.bounceRate.good) {
+      cand.push({ sev: 60, text: '🟡 直帰率' + Math.round(t.bounceRate * 100) + '%とやや高め\n　👉 一番見られた「' + topPageName + '」の冒頭に、関連特集リンクを1本足して回遊のきっかけを作る' });
+    }
   }
 
-  // 滞在時間
-  if (t.avgDuration < BENCHMARKS.avgDuration.warn) {
+  // 滞在時間（同様に小サンプル日はノイズが大きいため除外）
+  if (t.sessions >= MIN_SESSIONS_FOR_RATE_ALERT && t.avgDuration < BENCHMARKS.avgDuration.warn) {
     const acts = [
       '「' + topPageName + '」の表示速度を確認（画像の遅延読込・Instagramエンベッドの貼りすぎを見直す）',
       '店舗カードに業界人の一言（editorReason）を1行表示し、読みたくなる引きを作る',
@@ -637,10 +645,12 @@ function generateRuleBasedAdvice(data, a, date) {
 function overallVerdict(data, a) {
   const t = data.totals;
   let score = 0;
-  if (t.bounceRate <= BENCHMARKS.bounceRate.good) score++;
-  else if (t.bounceRate > BENCHMARKS.bounceRate.warn) score--;
-  if (t.avgDuration >= BENCHMARKS.avgDuration.good) score++;
-  else if (t.avgDuration < BENCHMARKS.avgDuration.warn) score--;
+  if (t.sessions >= MIN_SESSIONS_FOR_RATE_ALERT) {
+    if (t.bounceRate <= BENCHMARKS.bounceRate.good) score++;
+    else if (t.bounceRate > BENCHMARKS.bounceRate.warn) score--;
+    if (t.avgDuration >= BENCHMARKS.avgDuration.good) score++;
+    else if (t.avgDuration < BENCHMARKS.avgDuration.warn) score--;
+  }
   if (a.pagesPerSession >= BENCHMARKS.pagesPerSession.good) score++;
   else if (a.pagesPerSession < BENCHMARKS.pagesPerSession.warn) score--;
   if (t.users >= 20 && a.ctaRate >= BENCHMARKS.ctaRate.good) score++;
@@ -672,7 +682,8 @@ function formatDailyReport(data, date) {
   msg += '　（30秒未満＝読まれてない危険信号）\n';
   msg += '↩️ すぐ帰った人の割合: ' + Math.round(t.bounceRate * 100) + '% ' +
     healthIcon(t.bounceRate, BENCHMARKS.bounceRate, true) + '\n';
-  msg += '　（70%超＝要注意、50%未満＝良好）\n\n';
+  msg += '　（70%超＝要注意、50%未満＝良好）' +
+    (t.sessions < MIN_SESSIONS_FOR_RATE_ALERT ? '　※訪問' + t.sessions + '件と少なく参考値（課題化はしません）' : '') + '\n\n';
 
   msg += '【人気だったページ TOP5】\n';
   data.pages.slice(0, 5).forEach((p, i) => {
