@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-02T23:36:36.170Z",
+  "generatedAt": "2026-08-03T00:15:50.515Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -16,20 +16,20 @@
       },
       {
         "query": "一魚魚一 はなれ",
-        "impressions": 157,
+        "impressions": 155,
         "clicks": 3,
         "position": 8.1,
-        "ctr": 1.91,
+        "ctr": 1.94,
         "expectedCtr": 3.2,
-        "missedClicks": 2
+        "missedClicks": 1.9
       },
       {
         "query": "フレンチ屋台ビストロ のれんとコルク 名古屋駅店",
-        "impressions": 92,
+        "impressions": 91,
         "clicks": 2,
-        "position": 7.1,
-        "ctr": 2.17,
-        "expectedCtr": 3.9,
+        "position": 7,
+        "ctr": 2.2,
+        "expectedCtr": 4,
         "missedClicks": 1.6
       }
     ],
@@ -44,11 +44,11 @@
       },
       {
         "query": "ナショナルベーカリー",
-        "impressions": 313,
+        "impressions": 312,
         "clicks": 5,
         "position": 12.1,
         "ctr": 1.6,
-        "upsideClicks": 3.8
+        "upsideClicks": 3.7
       },
       {
         "query": "アルマデシュラスコ名駅",
@@ -72,39 +72,39 @@
     "ctrFix": [
       {
         "page": "/stores/J004591229.html",
-        "impressions": 953,
+        "impressions": 944,
         "clicks": 4,
         "position": 9.8,
         "ctr": 0.42,
         "expectedCtr": 2.6,
-        "missedClicks": 20.4
+        "missedClicks": 20.2
       },
       {
         "page": "/stores/J004559348.html",
-        "impressions": 583,
+        "impressions": 573,
         "clicks": 7,
         "position": 8.3,
-        "ctr": 1.2,
+        "ctr": 1.22,
         "expectedCtr": 3.1,
-        "missedClicks": 11
+        "missedClicks": 10.7
       },
       {
         "page": "/stores/J004612476.html",
-        "impressions": 394,
+        "impressions": 386,
         "clicks": 6,
-        "position": 9.2,
-        "ctr": 1.52,
+        "position": 9.3,
+        "ctr": 1.55,
         "expectedCtr": 2.7,
-        "missedClicks": 4.8
+        "missedClicks": 4.5
       },
       {
         "page": "/stores/J004509691.html",
-        "impressions": 340,
+        "impressions": 337,
         "clicks": 5,
         "position": 9.4,
-        "ctr": 1.47,
+        "ctr": 1.48,
         "expectedCtr": 2.7,
-        "missedClicks": 4.1
+        "missedClicks": 4
       },
       {
         "page": "/stores/J004025075.html",
@@ -119,11 +119,11 @@
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2317,
+        "impressions": 2237,
         "clicks": 13,
-        "position": 22.9,
-        "ctr": 0.56,
-        "upsideClicks": 51.9
+        "position": 23.3,
+        "ctr": 0.58,
+        "upsideClicks": 49.7
       },
       {
         "page": "/stores/store-e5b0bee5bcb5e5b1.html",
@@ -135,11 +135,11 @@
       },
       {
         "page": "/stores/J004559164.html",
-        "impressions": 182,
+        "impressions": 170,
         "clicks": 4,
-        "position": 11.1,
-        "ctr": 2.2,
-        "upsideClicks": 1.1
+        "position": 11.4,
+        "ctr": 2.35,
+        "upsideClicks": 0.8
       }
     ]
   },
