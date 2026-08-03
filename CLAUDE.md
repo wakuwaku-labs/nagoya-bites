@@ -207,12 +207,16 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `data/feature_rosters.json` | シーン特集の掲載店を月次で入れ替える選定基準（ハイブリッド＋バランス型スコア＋ハードゲート＋多様性補正）。`seasonalBias`=月×特集の季節キーワード加点で、同じ banquet.html でも7月は「ビアガーデン/ビール/テラス」寄り・12月は「忘年会/鍋」寄りに掲載店を月替わりで組み替える（ゲートは維持・純加点なので枠割れなし）。`node scripts/refresh_feature_rosters.js`（毎月1〜3日 build.yml が実行）で features/*.html の掲載店を再構成。検証は `--check`/内訳は `--dry-run`（☀=季節適合）（Builder/DataKeeper 共管・全掲載店は実在店のみ） |
 | `.claude/commands/seo-triage.md` | `/seo-triage` 日次SEO/LINEアドバイス取り込み（Marketer管轄） |
 | `.claude/commands/seo-triage-weekly.md` | `/seo-triage-weekly` 週次レポート（AI週次分析＋今週のアドバイス）取り込み（Marketer管轄） |
+| `docs/feedback-triage-runbook.md` | 消費者フィードバック triage の手順書（正本）。`.claude/commands/*.md` は自己改変ブロックで作成できないためここに置く（Builder/DataKeeper 共管） |
 | `data/seo_advice_log.json` | SEO改善ループの記憶（採用/却下/重複の全履歴・append-only・`source`で日次/週次を区別） |
 | `data/gsc_metrics.json` | GSC 検索実データ（表示/クリック/CTR/掲載順位・トップクエリ/ページ）。日次 build.yml が更新（Marketer管轄） |
 | `data/gsc_opportunities.json` | GSC 改善機会の抽出結果（ctr_fix=1ページ目低CTR / rank_push=2-3ページ目高需要）。`node scripts/gsc_opportunities.js`（build.yml が日次実行）。GSC改善ループの配信レイヤー（Marketer/Builder 共管） |
 | `scripts/gsc_query_intent.js` | GSC クエリを **discovery（シーン語/エリア語×ジャンル語＝取りに行く面）/ navigational（店名＝Strategic Skip の面）/ brand / other** に分類。辞書は `data/journal_seo_keywords.json` と共通で、**SEO-011 の効果はここの `discovery` の表示・クリックで判定する**（総クリックは指名検索の増減と混ざるため使わない）。確認は `node scripts/gsc_query_intent.js`（Marketer管轄・SEO-043） |
 | `data/search_channel_metrics.json` | **検索・AI流入のエンジン別内訳**（Bing / Google / 生成AI / Yahoo / DDG / SNS / 直接）。`node scripts/search_channel_metrics.js --report`。**GSC は Google しか映さないが、実測では検索経由の 48.5% が Bing・33.3% が生成AI・Google は 13.8%** のため、GSCループだけでは流入の大半が観測外になる。その盲点を `blind_spots` として自動で明示する（Marketer管轄・SEO-039） |
 | `scripts/indexnow_ping.js` | IndexNow（Bing/Yandex 対応のプッシュ型インデックス通知）。**外部送信は既定 dry-run**で `--yes` を付けたときだけ送信する。`--init` でキー生成、`--status` で設定確認。Bing Webmaster Tools への登録はクレデンシャルを伴うため**オーナー本人の操作**が必要 |
+| `data/feedback_policy.json` | 消費者フィードバック改善ループの運用ポリシー（唯一の情報源。3分類ルール・Gmailクエリ・PII規則・起票上限）。手順の正本は `docs/feedback-triage-runbook.md`（Builder/DataKeeper 共管） |
+| `data/feedback_log.json` | 消費者フィードバック改善ループの記憶（採用/fact_check/却下/重複/エスカレーションの全履歴・append-only。書き込みは `scripts/feedback_triage.js --log-append` 経由のみ） |
+| `scripts/feedback_triage.js` | 消費者フィードバック triage の決定的ヘルパー（ID採番/重複検知/PIIマスク付きログ追記/健診レポート）。健診: `node scripts/feedback_triage.js --report --days 30` |
 
 ---
 
@@ -310,6 +314,53 @@ GSC 開通（ISSUE-068①）で初めて回せるようになった。
 
 ```
 node scripts/gsc_opportunities.js   # data/gsc_opportunities.json を再生成（CI が日次実行）
+```
+
+---
+
+## 消費者フィードバック改善ループ（サイト利用者の声を起点にした改善）
+
+上の2つのループが SEO 助言・自社検索実測データを起点にするのに対し、こちらは**サイト利用者本人の
+生の声**（「ここが使いづらい」「情報が違う」等）を起点に、同じ Moat フィルタで施策化するループ。
+
+### 全自動の配信レイヤー
+
+```
+[収集] index.html のフローティング「ご意見」ボタン → ミニフォーム
+        → Formspree（既存 https://formspree.io/f/xaqaygze、_subject: '[site-feedback] <種類>'）
+   ↓ Formspree 通知メールが Gmail（wakato1251999@gmail.com）に届く
+[起動] スケジュール済み Claude ルーチンが docs/feedback-triage-runbook.md の手順を引数なしで実行
+        （Step 0 が Gmail MCP でメールを取得。新着0件の日は正常終了）
+   ↓
+[判定] CLAUDE.md の Moat / Strategic Skip / 制約7・8・10 + data/feedback_policy.json を根拠に3分類
+        ・UX/機能改善 → 採用なら agent-backlog.md に [FB-NNN] ready（owner=Builder）
+        ・店舗情報の誤り指摘 → fact_check として [FB-NNN] ready（owner=DataKeeper）。
+          **この場ではデータを直接修正しない**。acceptance に実在検証ゲート
+          （一次情報での確認 → 検証成立時のみ反映 → audit_store_liveness 等の監査通過）を必須で書く
+        ・スパム/誹謗/個人情報 → data/feedback_log.json に理由付きで記録のみ（起票しない）
+   ↓
+[同期] 採用・fact_check 分を Notion 課題トラッカーへ自動同期
+   ↓
+[実装] /solve-next の YES ゲート経由（マネタイズ・信頼系は制約7・8でさらに承認必須）
+```
+
+### 原則
+
+- **鵜呑みにしない**: SEOアドバイスループと同じく、Moat / Strategic Skip を根拠に採否を判断する。
+  「一利用者の好み」と「構造的な使いづらさ」を区別し、疑わしきは要検討メモ付きで採用に寄せる
+  （消費者の声は外部アドバイスより一次情報に近いため）。
+- **店舗事実は自動反映しない**: 閉店・電話番号等の指摘は`data/dispute_requests.json` の運用
+  （必ず編集部モデレーション経由）と同じ思想で、実在検証ゲートを通ったものだけデータに反映する。
+  虚偽の通報（例: 競合による妨害）で信頼を毀損しないための防波堤。
+- **個人情報を残さない**: ウィジェットにメール欄を置かない（匿名前提）＋ ログ追記時にメールアドレスを
+  機械的にマスクする二重防壁。フィードバック本文はサイト上に一切表示しない。
+- **判定ロジックはウィジェット側に持たせない**（配信だけ）。判定は Claude ルーチンが
+  `docs/feedback-triage-runbook.md` を根拠に行う。
+
+### 健診コマンド
+
+```
+node scripts/feedback_triage.js --report --days 30
 ```
 
 ---

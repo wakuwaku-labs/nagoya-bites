@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "_comment": "消費者フィードバック改善ループの記憶（append-only）。書き込みは scripts/feedback_triage.js --log-append 経由のみ（メールアドレスの機械マスク・500字切詰めを通すため）。schema: {id: 'FB-NNN'|null, date, source: 'site-widget'|'contact-form'|'manual', msg_id: Gmailメッセージid|null, page, store, category, feedback, verdict: 'adopted'|'fact_check'|'rejected'|'duplicate'|'escalated', brand_reason, backlog_category, fingerprint}",
+  "entries": []
+}

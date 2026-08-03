@@ -1,0 +1,44 @@
+{
+  "description": "消費者フィードバック改善ループの運用ポリシー（単一の情報源）。判定の根拠は CLAUDE.md（Moat / Strategic Skip / 制約7・8・10）。.claude/commands/*.md は自己改変ブロックで編集できないため、運用ルールの変更は本ファイルで行う。手順の正本は docs/feedback-triage-runbook.md。決定的処理（採番/重複検知/PIIマスク/ログ追記）は scripts/feedback_triage.js。",
+  "id_prefix": "FB",
+  "subject_tag": "[site-feedback]",
+  "gmail_query": "subject:\"[site-feedback]\" newer_than:2d",
+  "gmail_query_fallback": "from:formspree.io newer_than:2d \"[site-feedback]\"",
+  "classification": {
+    "ux_improvement": {
+      "verdict": "adopted",
+      "owner": "Builder",
+      "category": "UX",
+      "priority_default": "P2",
+      "note": "使いづらい・わかりにくい・機能要望。Moatフィルター通過分のみ採用。体感バグ・信頼毀損に関わるものは P1。「一利用者の好み」ではなく「構造的な使いづらさ」を採用基準にするが、疑わしきは要検討メモ付きで採用に寄せる（消費者の声は SEO 助言より一次情報に近い）。Strategic Skip 抵触（匿名口コミ掲載要望・クーポン/予約特典要望等）は却下。"
+    },
+    "fact_report": {
+      "verdict": "fact_check",
+      "owner": "DataKeeper",
+      "category": "データ",
+      "priority_default": "P1",
+      "note": "閉店した・電話番号が違う・営業時間が違う等の店舗事実の指摘。triage 時点ではデータを一切修正しない。起票の acceptance に実在検証ゲートを必須で書く: 一次情報（公式サイト/公式SNS/Google Places）で検証 → 成立時のみデータ修正 → audit_store_liveness 系の監査通過 → 検証不能なら wont_fix + オーナー報告。dispute_requests.json の『自動反映はしない』先例に準拠（虚偽の閉店報告等による信頼毀損を防ぐ・制約7）。"
+    },
+    "spam_abuse": {
+      "verdict": "rejected | escalated",
+      "note": "スパム・宣伝・誹謗中傷・個人情報混入は起票せず feedback_log.json に理由付きで記録のみ。名誉毀損や法的懸念があるものは verdict=escalated としてトリアージ報告の冒頭でオーナーに明示する。"
+    }
+  },
+  "pii_rules": [
+    "ウィジェットにメール欄を置かない（匿名前提が第一防壁）",
+    "scripts/feedback_triage.js --log-append がメールアドレスを機械的に [email] へマスクし、本文を500字で切り詰める（第二防壁・エージェントの注意力に依存しない）",
+    "電話番号は店舗事実修正の識別情報になり得るためマスクしない（フォームの注意書きで個人情報を書かないよう自衛を促す）",
+    "フィードバック本文はサイト上に一切表示しない"
+  ],
+  "limits": {
+    "max_new_tickets_per_day": 3,
+    "note": "同日の大量投稿はまとめて1件に集約するか翌日回し（スパム爆撃で backlog を汚さない）。duplicate/rejected のログ記録には上限なし。"
+  },
+  "headless_rules": [
+    "新着0件の日は「新着なし」で正常終了（エラー扱いにしない）",
+    "判断に迷っても人間の承認を待って停止しない。「要検討メモ付き採用」か「理由付き却下」のどちらかに倒す（ISSUE-077 教訓）",
+    "Notion 同期に失敗しても backlog 起票済みの旨を残して正常終了する"
+  ],
+  "updated": "2026-07-27",
+  "related_plan": "消費者フィードバック自動改善ループ新設（2026-07-27）"
+}
