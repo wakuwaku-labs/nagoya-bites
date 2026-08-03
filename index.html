@@ -206,7 +206,7 @@ nav.open{right:0;}
 .hero h1 em{font-style:italic;color:var(--gold);}
 .hero h1 .fade{opacity:.65;}
 .hero-sub{margin-top:1.8rem;font-size:.78rem;letter-spacing:.06em;color:var(--muted);line-height:1.95;max-width:380px;opacity:0;animation:up .9s .5s forwards;}
-.search-wrap{margin-top:2.2rem;display:flex;gap:.6rem;max-width:460px;opacity:0;animation:up .9s .65s forwards;}
+.search-wrap{margin-top:2.2rem;display:flex;flex-wrap:wrap;gap:.6rem;max-width:460px;opacity:0;animation:up .9s .65s forwards;}
 .search-wrap input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.8rem 1.1rem;font-size:.8rem;border-radius:2px;outline:none;font-family:inherit;transition:border-color .2s;}
 .search-wrap input::placeholder{color:var(--dim);}
 .search-wrap input:focus{border-color:var(--gold);}
@@ -902,7 +902,11 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);z-index:600;background:var(--text);color:var(--bg);padding:.9rem 1.6rem;border-radius:4px;font-size:.75rem;letter-spacing:.04em;box-shadow:0 4px 24px rgba(0,0,0,.3);opacity:0;transition:all .35s ease;pointer-events:none;white-space:nowrap;}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 /* ── SEARCH SUGGEST ── */
-.search-suggest{display:none;padding:.5rem 0 0;gap:.4rem;flex-wrap:wrap;align-items:center;}
+/* サジェストは .search-wrap（横並び flex）の3つ目の item。width:100% と
+   親の flex-wrap:wrap で必ず次の行に落とす。これが無いと入力欄と同じ行に
+   押し込まれ、縦積みになったチップの高さに align-items:stretch で
+   入力欄・ボタンが引き伸ばされる（フォーカス時に検索バーが巨大化する） */
+.search-suggest{display:none;width:100%;padding:.5rem 0 0;gap:.4rem;flex-wrap:wrap;align-items:center;}
 .search-wrap:focus-within .search-suggest{display:flex;}
 .suggest-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.12em;color:var(--dim);white-space:nowrap;}
 .suggest-pill{font-size:.65rem;color:var(--muted);border:1px solid var(--border);padding:.25rem .65rem;border-radius:2px;cursor:pointer;transition:all .2s;background:transparent;}
