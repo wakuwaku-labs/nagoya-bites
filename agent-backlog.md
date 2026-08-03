@@ -105,8 +105,10 @@
 
 ### [SEO-045] 特集冒頭CTAの付与を実データ追従で自動化する（対象24特集中19特集が未付与・現在の最人気 nagoya-korean を含む）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2→**P1** → **status**: done
 - **detected**: 2026-07-31
+- **resolved**: 2026-08-03
+- **resolved_by**: commit（このセッション）
 - **category**: SEO
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-07-30 原文「1訪問あたり閲覧が1.0ページと、店舗詳細や他の特集へ誘導できていません。👉 人気ページ『nagoya-korean』と『2026-05-13-counter-six-seats-formula』の記事内に、関連性の高い店舗の店舗詳細モーダルへのリンクを数カ所設置しましょう」
@@ -161,8 +163,10 @@
 - **関連**: [[ISSUE-077]]（同じ「ヘッドレス日次を止めない」設計思想を踏襲）/ [[ISSUE-041]]（`gen-store-pages.js` による店舗ページ資産そのものの起源）/ 発見した LOCAL_STORES 重複行3件は今後の課題として観測（未起票・軽微）
 ### [SEO-044] 流入は+25%なのにセッションの深さとCTAクリックが2ヶ月で構造的に劣化している原因を分解診断する
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-07-30
+- **resolved**: 2026-08-03（診断完了）
+- **resolved_by**: Orchestrator 自律実行（`data/metrics_history.json` × `data/search_channel_metrics.json` × `data/site_metrics.json` 突き合わせ）
 - **category**: SEO
 - **owner**: Marketer
 - **source**: SEOアドバイス(LINE) 2026-07-29 原文「検索流入比率が40%と高めですが、予約やマップへの遷移がゼロ。検索意図とコンテンツが合致していないかもしれません」→ アドバイスが指示した具体アクション（journalタイトルにシーンKW＋SNS発信）は [[SEO-011]] で実装済み（done）。**未着手なのは「流入の質を検証する」側**であり、そこを本チケットが担う
@@ -182,6 +186,44 @@
   2. 劣化の主因がどのエンジン（Bing 182 / 生成AI 118 / Google 58）・どのページ（`/features/nagoya-hitsumabushi.html` 110PV が最大入口）由来かを数値で特定し、根拠数値ごと本チケットに追記する
   3. **CTA計測欠損の切り分け**: `site_metrics.json` の `cta.byDomain` 合計は **8件**だが `outboundClicks` は **18件**で、10件がドメイン未帰属。実減少なのか計測欠損（[[ISSUE-068]] の link_domain ディメンション関連）なのかを判定する。計測欠損なら「CTA -75%」自体が過大評価
   4. 打ち手の起票は診断結果に基づき別チケットで行う（**本チケットは診断まで**。実装は `/solve-next` の YES ゲート経由）
+- **診断結果（2026-08-03 確定・自社実データのみ・自己申告値ゼロ）**:
+
+  **① ランディングページ集中（`data/site_metrics.json` 実測）**
+  | ランディングページ | sessions | 全体比 |
+  |---|---|---|
+  | `/features/nagoya-hitsumabushi.html` | 104 | 17.4% |
+  | `/`（ホーム） | 88 | 14.7% |
+  | `/features/nagoya-solo-dining.html` | 54 | 9.0% |
+  | `/index.html` | 27 | 4.5% |
+  | `/journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html` | 20 | 3.3% |
+  → 上位5ページで全セッションの49%。特集ページが1位・3位を占める。
+
+  **② トラフィック流入源（`data/site_metrics.json` sourceBreakdown 実測）**
+  | 流入源 | sessions | 全体比 |
+  |---|---|---|
+  | Bing organic | 186 | 31.1% |
+  | Direct | 136 | 22.7% |
+  | ChatGPT/OpenAI（AI assistant） | 139 | 23.2% |
+  | Google organic | 82 | 13.7% |
+  | Yahoo organic | 28 | 4.7% |
+  → Bing + AI合計で全流入の54.3%。8週で organic% が 30%→57% に倍増した。
+
+  **③ pagesPerSession 劣化の主因: 流入ミックスシフト（UX劣化ではない）**
+  - Bing・AI assistant 経由のユーザーは特定の質問（「名古屋 ひつまぶし おすすめ」等）で流入し、答えを得たら離脱する。これは情報提供の成功であり、UX 劣化ではない
+  - bounceRate が 0.45→0.385 に **改善**していることが確証: ユーザーは記事を読んでいる（即離脱していない）が、回遊はしない
+  - 結論: pagesPerSession の低下は「direct→search への流入ミックスシフトの構造的帰結」。FV改修([[SEO-040]])を積んでも本指標は改善しない
+
+  **④ CTAクリック劣化の主因: 2つの独立要因の合成**
+  - **要因A（実装不足）**: `add_feature_top_cta.js --check` で確認済み（実測 2026-07-31）— 24特集中19特集が上部CTA未付与。トップ流入ページ(hitsumabushi)は既付与だが、2位〜以降の特集は未付与。ユーザーが長記事を最後まで読まずに離脱すると底部CTAは一切見えない。→ **[[SEO-045]] が修正対象**（P2→**P1** に優先度引き上げ）
+  - **要因B（計測欠損）**: `cta.byDomain` 合計 15件 vs `outboundClicks` 25件 → **10件（40%）が未帰属**。headline の「CTAクリック率 -75%」は実態より誇張されている可能性。`[[ISSUE-068]]` の link_domain ディメンション未整備が原因
+  - 実クリック数（25件）は 2026-07-29 時点の 18件から回復傾向にあり、測定欠損補正後の実減少は 75% より小さいと推定される
+
+  **結論と打ち手**:
+  1. **pagesPerSession**: 構造的な流入ミックスシフト起因。追加施策不要（施策を打っても改善しない）
+  2. **CTAクリック**: [[SEO-045]]（特集上部CTA自動付与）が一次対策（P2→P1 に引き上げ）。計測欠損対策は [[ISSUE-068]] 経由
+  3. **bounceRate アラート**: LINEレポートの誤検知。[[SEO-047]] が修正対象
+  4. **FV改修**: bounceRate が実測で改善中のため、[[SEO-040]] の優先度は現状 P2 のままで妥当
+
 - **関連**: [[SEO-011]]（KW設計・done／本件は未着手の検証側）/ [[SEO-039]]（エンジン別観測レイヤー＝本診断の入力を作った課題）/ [[SEO-040]]（FV改修・本診断の結果で優先度が変わる）/ [[SEO-038]]（勝ち筋の横展開・本件は劣化側の分解）/ [[ISSUE-068]]（link_domain 計測の穴）/ [[SEO-047]]（同じ「直帰率が毎回異常」症状の発生源＝LINE通知の生成ロジック側を修正したチケット）
 ### [ISSUE-080] 消費者フィードバック自動改善ループの新設 ✅
 

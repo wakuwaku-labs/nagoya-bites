@@ -138,6 +138,13 @@ jobs:
           fi
         continue-on-error: true
 
+      - name: 特集上部CTAの自動付与（SEO-045・実データ追従型）
+        # data/view_counts.json の流入実績でターゲット特集を決め、各記事の ItemList 先頭から
+        # 3店を抽出して冒頭に CTA ブロックを追加する。build_featured.js / refresh_feature_rosters.js
+        # のあとに実行することで最新の掲載店状態を前提にした CTA が付与される。冪等。
+        run: node scripts/add_feature_top_cta.js
+        continue-on-error: true
+
       - name: 個別店舗ページ再生成（manual_stores 追加分を stores/*.html に反映）
         # build.js が data/stores.json を更新した後、その canonical カタログを source に
         # 個別店舗ページを生成する。これがないと manual_stores.json に追加した店が
