@@ -30,8 +30,10 @@
 
 ### [SEO-046] 公開直後のジャーナル記事に関連記事リンクが入らない（`refresh_journal_related.js` がどの自動化からも呼ばれていない・直近7本が汎用リンクのみ）
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-08-01
+- **resolved**: 2026-08-03
+- **resolved_by**: commit d7398333
 - **category**: SEO
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-07-31 原文「1訪問あたりの閲覧が1.1ページと、ほとんどの人が1店舗も見ずに離脱しています。👉 journal/2026-07-27-owarisanso-kurogi の記事下部に『この店を予約する』ボタンと『この店をGoogleマップで見る』ボタンを目立つように配置し、cta_click と cta_gmap_click を促す」
@@ -1885,6 +1887,7 @@
 | 2026-07-23 | Marketer+Builder(EXPLICIT) | ISSUE-072 GSC実データ駆動の改善ループを既存ループに組み込み。gsc_opportunities.js（ctr_fix/rank_push抽出）＋build.yml日次化＋CLAUDE.mdに「GSC改善ループ」章。第1弾＝店舗タイトルの冗長エリア群を正規化（area_label.js・patch_store_titles.js・生成元gen-store-pages.js）で4,136ページのCTR改善。副次で絵文字再発（gen-store-pages/build_featured生成元）を根絶し全ページ残存0。効果は翌週GSC前後比で測定 | ⏸ PRレビュー待ち |
 | 2026-07-29 | Orchestrator(EXPLICIT) | ISSUE-078 日次ジャーナル記事の店舗を「店舗ページ」（stores/{id}.html）へ内部リンク必須化。buildStores()がid優先で内部リンクするよう修正／validate_journal_draft.jsの店名照合をTOP50限定index.html evalからdata/stores.json全件（load_stores.js）に是正＋WARNING項目16新設／既存公開記事(2026-07-29-nagoya-beergarden.html)にマイアミ・CARVINO・ANDBBQの店舗ページリンクを追記／agents/editor.mdに全テーマ共通ルールを明文化 | ✅ commit済み (PR #92) |
 | 2026-07-30 | Orchestrator(EXPLICIT) | ISSUE-078追補: 過去ジャーナル84本を全件監査し店舗カード↔店舗ページのリンクをバックフィル。外部リンクのみ11本を内部化／カードはあるがID未解決の44本にdata-store-id付与＋内部リンク化（stores/*.html全5,421件のJSON-LD名から正引き索引を実生成し、slug再計算に頼らず実ファイル照合で解決）／新規に実店舗言及を検出した1本にカード追加／残り38本は店舗非依存の一般論記事と確認し対象外。全63店舗カードの店名↔リンク先一致をゼロミスマッチで最終検証 | ✅ commit待ち（同PR #92に追加コミット予定） |
+| 2026-08-03 | Builder(routine) | SEO-046 refresh_journal_related.js 自動化組み込み: daily-journal.yml に「ジャーナル関連記事リンクの自動更新」ステップを追加、run_journal_local.sh の validator PASS 直後（5f節）に非ブロッキング呼び出し追加、旧 related-wrap 形式5本の SKIP ログを明示化。スクリプト未組み込みによる関連リンク欠如（直近7本が汎用リンクのみ）を恒久解消 | ✅ commit d7398333 |
 
 ---
 
