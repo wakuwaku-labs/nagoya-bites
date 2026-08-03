@@ -1,5 +1,20 @@
 {
   "version": 1,
   "_comment": "消費者フィードバック改善ループの記憶（append-only）。書き込みは scripts/feedback_triage.js --log-append 経由のみ（メールアドレスの機械マスク・500字切詰めを通すため）。schema: {id: 'FB-NNN'|null, date, source: 'site-widget'|'contact-form'|'manual', msg_id: Gmailメッセージid|null, page, store, category, feedback, verdict: 'adopted'|'fact_check'|'rejected'|'duplicate'|'escalated', brand_reason, backlog_category, fingerprint}",
-  "entries": []
+  "entries": [
+    {
+      "id": "FB-001",
+      "date": "2026-08-03",
+      "source": "site-widget",
+      "msg_id": "19fc732d2c4af76d",
+      "page": "#q=%E6%A0%84%20%E7%84%BC%E8%82%89",
+      "store": null,
+      "category": "使いづらい・わかりにくい",
+      "feedback": "検索バーに、文字を全てクリアにするためのバツのボタンをつけてほしい",
+      "verdict": "adopted",
+      "brand_reason": "Moat/Strategic Skipに抵触しない一般的なUX改善。検索入力#siにクリアボタンが実際に存在しないことを実装確認済み",
+      "backlog_category": "UX",
+      "fingerprint": "71490579390b5cc1"
+    }
+  ]
 }
