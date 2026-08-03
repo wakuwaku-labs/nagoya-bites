@@ -199,13 +199,26 @@ nav.open{right:0;}
 .nav-overlay.open{display:block;}
 }
 /* ── HERO ── */
-.hero{padding:clamp(7rem,12vw,9rem) 2rem clamp(3rem,5vw,4rem);position:relative;overflow:hidden;min-height:72vh;display:flex;flex-direction:column;justify-content:flex-end;}
+.hero{padding:clamp(6rem,9vw,7rem) 2rem clamp(2.4rem,4vw,3.2rem);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 72% 38%,rgba(201,169,110,.07) 0%,transparent 65%);}
-.hero .eyebrow{font-size:.62rem;letter-spacing:.32em;color:var(--gold);margin-bottom:2rem;opacity:0;animation:up .8s .2s forwards;}
-.hero h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3.2rem,7.5vw,6.5rem);line-height:1.02;letter-spacing:.005em;color:var(--white);opacity:0;animation:up .9s .35s forwards;}
+.hero .eyebrow{font-size:.62rem;letter-spacing:.32em;color:var(--gold);margin-bottom:1.2rem;opacity:0;animation:up .8s .2s forwards;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.9rem,6vw,5rem);line-height:1.04;letter-spacing:.005em;color:var(--white);opacity:0;animation:up .9s .35s forwards;}
 .hero h1 em{font-style:italic;color:var(--gold);}
 .hero h1 .fade{opacity:.65;}
-.hero-sub{margin-top:1.8rem;font-size:.78rem;letter-spacing:.06em;color:var(--muted);line-height:1.95;max-width:380px;opacity:0;animation:up .9s .5s forwards;}
+.hero-sub{margin-top:1.4rem;font-size:.82rem;letter-spacing:.04em;color:var(--muted);line-height:1.9;max-width:520px;opacity:0;animation:up .9s .5s forwards;}
+.hero-sub strong{color:var(--text);font-weight:600;}
+/* ── HERO PROOF ── サイトの強み4点をファーストビューで即座に伝える（直帰率対策） */
+.hero-proof{margin-top:1.6rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;max-width:560px;opacity:0;animation:up .9s .58s forwards;}
+/* クリーム背景に白タイルだと差が出ないため、濃色ベタで抜く */
+.hero-proof-item{display:flex;align-items:center;gap:.6rem;background:var(--text);border-radius:3px;padding:.82rem .95rem;font-size:.8rem;font-weight:600;letter-spacing:.02em;color:#f2efe9;line-height:1.45;box-shadow:0 2px 8px rgba(28,28,26,.16);}
+/* チェックは淡い金の塗り円＋濃色の抜き。線アイコンだと濃色地で視線が止まらない */
+.hero-proof-item svg{flex:0 0 auto;width:18px;height:18px;padding:3.5px;border-radius:50%;background:#d9bd7e;stroke:var(--text);stroke-width:2.8;fill:none;stroke-linecap:round;stroke-linejoin:round;box-sizing:border-box;}
+/* テキストを匿名フレックスアイテムのままにすると最小幅まで潰れて「名古/屋・愛/知」と崩れる */
+.hero-proof-item .hpi-t{flex:1;min-width:0;}
+/* 「4媒/体」のように語中で割れると読めなくなるので強調語は折り返さない */
+.hero-proof-item strong{color:#e2c88d;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:.01em;white-space:nowrap;margin:0 .12em;}
+/* 幅が足りず1文字だけ次行に落ちるのを防ぐため、狭い画面では字送りと余白を詰める */
+@media(max-width:480px){.hero-proof{margin-top:1.25rem;gap:.4rem;}.hero-proof-item{font-size:.72rem;letter-spacing:0;padding:.68rem .7rem;gap:.42rem;}.hero-proof-item svg{width:16px;height:16px;padding:3px;}}
 .search-wrap{margin-top:2.2rem;display:flex;flex-wrap:wrap;gap:.6rem;max-width:460px;opacity:0;animation:up .9s .65s forwards;}
 .search-wrap input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.8rem 1.1rem;font-size:.8rem;border-radius:2px;outline:none;font-family:inherit;transition:border-color .2s;}
 .search-wrap input::placeholder{color:var(--dim);}
@@ -240,6 +253,7 @@ body:not(.search-active) #pagination{display:none !important;}
 /* SEARCH MODE — 検索/フィルター中は特集・ランキング等の回遊面を畳み、結果を最上部に出す
    （結果が特集や人気店の下に埋もれて見つけられない問題への対処。リセットで元に戻る） */
 body.search-active .feature-strip,
+body.search-active .why-band,
 body.search-active #trend-ranking-section,
 body.search-active #ranking-section,
 body.search-active #latest-journal-section,
@@ -620,9 +634,10 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 .tg{font-size:.72rem;padding:.42rem .72rem;min-height:38px;}
 header{height:52px;}
 .logo{font-size:1rem;white-space:nowrap;}
-.hero{padding:80px 1.2rem 32px;min-height:40vh;}
+.hero{padding:68px 1.2rem 28px;min-height:auto;}
 .hero h1{font-size:clamp(2.4rem,9vw,4rem);}
-.hero-sub{font-size:.72rem;max-width:100%;}
+.hero .eyebrow{margin-bottom:.9rem;}
+.hero-sub{font-size:.74rem;max-width:100%;margin-top:1.1rem;line-height:1.85;}
 .search-wrap{max-width:100%;}
 .sticky-search{padding:.5rem 1rem;}
 .active-chips{padding:.4rem 1rem;}
@@ -680,7 +695,8 @@ footer{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));}
 .feature-strip-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:.7rem;}
 .feature-strip-label::before{content:"";display:inline-block;width:24px;height:1px;background:var(--gold);opacity:.55;}
 .feature-strip-label-note{font-size:.58rem;letter-spacing:.12em;color:var(--gold);opacity:.6;text-transform:none;white-space:normal;margin-left:.2rem;}
-.feature-strip-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.4rem;width:100%;}
+/* 掲載枚数を絞ったので auto-fill だと空トラックが残る。auto-fit＋最大幅でカードが間延びしないようにする */
+.feature-strip-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.4rem;width:100%;max-width:720px;}
 .feature-card{display:flex;flex-direction:column;background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;text-decoration:none;transition:transform .35s ease,box-shadow .35s ease,border-color .35s;overflow:hidden;}
 .feature-card:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(184,84,31,.14),0 2px 6px rgba(0,0,0,.06);border-color:var(--ember);}
 .feature-card-icon{display:none;}
@@ -735,6 +751,26 @@ h3.cn{margin:0 0 6px;font-family:'Noto Sans JP',sans-serif;}
 .auth-item .auth-icon{font-size:.9rem;line-height:1;}
 .auth-sep{color:rgba(247,245,241,.25);font-size:.7rem;}
 @media(max-width:640px){.authority-bar{padding:.55rem 1rem;font-size:.55rem;gap:.35rem 1rem;}.auth-sep{display:none;}}
+/* ── WHY BAND ── 選ばれる理由4本柱（トップでの強み訴求・直帰率対策） */
+.why-band{background:var(--bg2);border-bottom:1px solid var(--border);padding:clamp(2rem,4vw,2.9rem) 1.5rem clamp(2.2rem,4.5vw,3rem);}
+.why-band-inner{max-width:1180px;margin:0 auto;}
+.why-band-eyebrow{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;}
+.why-band-title{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-weight:300;font-size:clamp(1.15rem,2.6vw,1.6rem);line-height:1.5;color:var(--text);letter-spacing:.005em;margin-top:.55rem;}
+.why-band-title em{font-style:italic;color:var(--gold);font-weight:500;}
+.why-pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:1.5rem;border-top:1px solid rgba(122,92,16,.2);border-bottom:1px solid rgba(122,92,16,.2);}
+.why-pillar{border-left:1px solid rgba(122,92,16,.16);padding:1.4rem 1.3rem 1.5rem;display:flex;flex-direction:column;}
+.why-pillar:first-child{border-left:none;}
+.why-pillar-no{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.28em;color:var(--gold);margin-bottom:.7rem;}
+.why-pillar-title{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-size:1.02rem;font-weight:600;color:var(--text);line-height:1.5;letter-spacing:.01em;margin-bottom:.55rem;}
+.why-pillar-body{font-size:.74rem;line-height:1.9;color:var(--muted);flex:1;}
+.why-pillar-body strong{color:var(--gold);font-weight:700;font-family:'DM Mono',monospace;}
+.why-pillar-link{display:inline-block;margin-top:.9rem;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.14em;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.35);padding-bottom:.22rem;align-self:flex-start;transition:color .2s,border-color .2s;}
+.why-pillar-link::after{content:' →';}
+.why-pillar-link:hover{color:var(--ember-deep);border-color:var(--ember-deep);}
+.why-media-logos{display:flex;gap:.5rem;align-items:center;margin-top:.9rem;}
+.why-media-logos img{width:20px;height:20px;border-radius:3px;opacity:.9;}
+@media(max-width:900px){.why-pillars{grid-template-columns:repeat(2,1fr);}.why-pillar:nth-child(3){border-left:none;}.why-pillar:nth-child(n+3){border-top:1px solid rgba(122,92,16,.16);}}
+@media(max-width:560px){.why-band{padding:1.6rem 1rem 1.8rem;}.why-pillars{grid-template-columns:1fr;margin-top:1.2rem;}.why-pillar{border-left:none;border-top:1px solid rgba(122,92,16,.16);padding:1.1rem 0 1.2rem;}.why-pillar:first-child{border-top:none;}.why-pillar:nth-child(n+3){border-top:1px solid rgba(122,92,16,.16);}}
 /* ── NO-SAKURA BANNER ── */
 .no-sakura-banner{background:#fdfaf3;color:#1f1b18;padding:clamp(2rem,4vw,3rem) 1.5rem clamp(2.2rem,4.5vw,3.2rem);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
 .no-sakura-inner{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:1.3rem;}
@@ -1334,7 +1370,14 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <section class="hero" id="main-content">
   <div class="eyebrow">名古屋専門 × 飲食のプロの目利き × シーン別</div>
   <h1>飲食の<em>プロ</em>が、<br>名古屋<em>だけ</em>を<br><span class="fade">深く選んだ。</span></h1>
-  <p class="hero-sub">名古屋で8ブランドを運営する現役飲食店経営者が、業界の内側から本当に価値ある店だけを厳選。<br>宴会・接待・デートなど<em>シーンごとの専門性</em>で、最適な一軒が見つかります。</p>
+  <p class="hero-sub">名古屋で<strong>8ブランドを運営する現役の飲食店経営者</strong>が、業界の内側の基準で編集する名古屋・愛知専門のグルメガイド。</p>
+  <!-- 強み4点をファーストビューで明示（直帰率対策）。数値は loadStores() が実データで上書きする -->
+  <div class="hero-proof" aria-label="このサイトの特長">
+    <span class="hero-proof-item"><svg viewBox="0 0 14 14" aria-hidden="true"><polyline points="2 7.5 5.5 11 12 3.5"/></svg><span class="hpi-t">現役の飲食店経営者が編集</span></span>
+    <span class="hero-proof-item"><svg viewBox="0 0 14 14" aria-hidden="true"><polyline points="2 7.5 5.5 11 12 3.5"/></svg><span class="hpi-t">名古屋・愛知<strong id="hero-proof-total">4,500</strong>店</span></span>
+    <span class="hero-proof-item"><svg viewBox="0 0 14 14" aria-hidden="true"><polyline points="2 7.5 5.5 11 12 3.5"/></svg><span class="hpi-t">広告ゼロ・サクラゼロ</span></span>
+    <span class="hero-proof-item"><svg viewBox="0 0 14 14" aria-hidden="true"><polyline points="2 7.5 5.5 11 12 3.5"/></svg><span class="hpi-t"><strong>4媒体</strong>を横断表示</span></span>
+  </div>
   <div class="search-wrap">
     <label for="si" class="visually-hidden">レストランを検索</label>
     <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
@@ -1412,12 +1455,62 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 
 <!-- 権威性バー -->
 <div class="authority-bar">
-  <span class="auth-item"><strong>名古屋グルメ</strong> <span class="num-serif" id="auth-total">4,559</span>店掲載</span>
+  <span class="auth-item">名古屋・愛知 <span class="num-serif" id="auth-total">4,559</span>店掲載</span>
   <span class="auth-sep">·</span>
-  <span class="auth-item"><strong>現役飲食店経営者</strong>が自ら選定</span>
+  <span class="auth-item"><strong>現役飲食店経営者</strong>が編集</span>
   <span class="auth-sep">·</span>
-  <span class="auth-item">広告なし・業界目線</span>
+  <span class="auth-item">掲載料ゼロ・<strong>サクラゼロ</strong></span>
+  <span class="auth-sep">·</span>
+  <span class="auth-item"><strong>4媒体</strong>を1画面で見比べ</span>
 </div>
+
+<!-- 選ばれる理由（4本柱）：サイトの強みをトップで具体的に示す（直帰率対策）。
+     数値は loadStores() が実データから上書きするため、静的値は保守的な下限を書く（制約10）。 -->
+<section class="why-band" aria-labelledby="why-band-title">
+  <div class="why-band-inner">
+    <div class="why-band-head">
+      <p class="why-band-eyebrow">Why NAGOYA BITES</p>
+      <h2 class="why-band-title" id="why-band-title">食べログにも Google にも無い、<em>4つの理由</em>。</h2>
+    </div>
+    <div class="why-pillars">
+
+      <div class="why-pillar">
+        <div class="why-pillar-no">01</div>
+        <h3 class="why-pillar-title">編集しているのが、現役の飲食店経営者</h3>
+        <p class="why-pillar-body">名古屋で8ブランドを営む運営者が、掲載の基準とおすすめ順の考え方を業界の内側の目線で設計しています。ライターでも編集者でもなく、同じ商売をしている人間の目線です。</p>
+        <a class="why-pillar-link" href="about.html">運営者について</a>
+      </div>
+
+      <div class="why-pillar">
+        <div class="why-pillar-no">02</div>
+        <h3 class="why-pillar-title">名古屋・愛知だけを、深く</h3>
+        <p class="why-pillar-body">全国を薄く追わず、名古屋・愛知の<strong id="why-total">4,500</strong>店だけに絞って掲載。宴会・接待・デートなどシーン別の特集と、毎朝更新の日次ジャーナルで深さを積み上げています。</p>
+        <a class="why-pillar-link" href="features/index.html">シーン別の特集を見る</a>
+      </div>
+
+      <div class="why-pillar">
+        <div class="why-pillar-no">03</div>
+        <h3 class="why-pillar-title">サクラゼロ・広告表示ゼロ</h3>
+        <p class="why-pillar-body">掲載料・PR費・店舗からの金銭授受を一切受け取りません。だから「お金を払った店が上に出る」ことが構造上ありえない。招待や無償提供があれば必ずラベルで開示します。</p>
+        <a class="why-pillar-link" href="features/editorial-policy.html#trust-mechanisms">編集規約を読む</a>
+      </div>
+
+      <div class="why-pillar">
+        <div class="why-pillar-no">04</div>
+        <h3 class="why-pillar-title">各媒体を、1画面で見比べられる</h3>
+        <p class="why-pillar-body">1軒ごとに食べログ・Instagram・ホットペッパー・Googleの情報を並べて表示。<strong id="why-media">4,000</strong>店が2媒体以上で裏取り済みなので、タブを行き来せずに判断できます。</p>
+        <div class="why-media-logos" aria-hidden="true">
+          <img src="https://www.google.com/s2/favicons?domain=tabelog.com&amp;sz=64" alt="" width="20" height="20" loading="lazy" decoding="async">
+          <img src="https://www.google.com/s2/favicons?domain=instagram.com&amp;sz=64" alt="" width="20" height="20" loading="lazy" decoding="async">
+          <img src="https://www.google.com/s2/favicons?domain=hotpepper.jp&amp;sz=64" alt="" width="20" height="20" loading="lazy" decoding="async">
+          <img src="https://www.google.com/s2/favicons?domain=maps.google.com&amp;sz=64" alt="" width="20" height="20" loading="lazy" decoding="async">
+        </div>
+        <a class="why-pillar-link" href="features/integrity-method.html">裏取りの方法を見る</a>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- 特集記事バナー（ヒトサラ風：ヒーロー直下の入り口導線） -->
 <!-- ↓ このストリップは data/featured.json + scripts/build_featured.js が自動生成。手で編集しない。 -->
@@ -1445,52 +1538,6 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
-    <a class="feature-card" href="features/nagoya-unaju.html">
-      <span class="feature-card-season">夏うなぎ</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg 600w, https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 うなぎ・ひつまぶし10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 うなぎ・ひつまぶし10選</div>
-        <div class="feature-card-sub">夏バテにうなぎ</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/banquet.html">
-      <img class="feature-card-thumb" src="assets/features/banquet.jpg" srcset="assets/features/banquet-600.jpg 600w, assets/features/banquet.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="ビールジョッキで乾杯する宴会・忘年会の華やかなシーン" width="900" height="599" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 宴会・忘年会おすすめ15選</div>
-        <div class="feature-card-sub">名駅・栄・金山 個室完備</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/private-room.html">
-      <img class="feature-card-thumb" src="assets/features/private-room.jpg" srcset="assets/features/private-room-600.jpg 600w, assets/features/private-room.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="温かい灯りに包まれた上質な個室ダイニング" width="900" height="600" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 個室グルメおすすめ10選</div>
-        <div class="feature-card-sub">接待・女子会・デートに</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/meieki.html">
-      <img class="feature-card-thumb" src="assets/features/meieki.jpg" srcset="assets/features/meieki-600.jpg 600w, assets/features/meieki.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名駅エリアで接待・出張・仕事帰りに集う夜のグループ食事" width="900" height="601" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋・名駅グルメおすすめ15選</div>
-        <div class="feature-card-sub">出張・接待・仕事帰りに</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/sakae.html">
-      <img class="feature-card-thumb" src="assets/features/sakae.jpg" srcset="assets/features/sakae-600.jpg 600w, assets/features/sakae.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="栄・錦の繁華街を彩る夜のネオン街並み" width="900" height="1350" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋・栄・錦グルメおすすめ15選</div>
-        <div class="feature-card-sub">名古屋最大の繁華街</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
 <!-- FEATURED_END -->
   </div>
 </section>
@@ -1509,74 +1556,11 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
-    <a class="feature-card" href="features/nagoya-tebasaki.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/43/78/P047104378/P047104378_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/43/78/P047104378/P047104378_480.jpg 480w, https://imgfp.hotp.jp/IMGH/43/78/P047104378/P047104378_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 手羽先完全ガイド" width="480" height="600" loading="lazy" decoding="async">
+    <a class="feature-card" href="features/nagoya-sukiyaki.html">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/74/85/P050817485/P050817485_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/74/85/P050817485/P050817485_480.jpg 480w, https://imgfp.hotp.jp/IMGH/74/85/P050817485/P050817485_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 すき焼き・しゃぶしゃぶ10選" width="480" height="600" loading="lazy" decoding="async">
       <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 手羽先完全ガイド</div>
-        <div class="feature-card-sub">名古屋めし · 厳選8店</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/nagoya-miso-nikomi-udon.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/64/36/P043876436/P043876436_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/64/36/P043876436/P043876436_480.jpg 480w, https://imgfp.hotp.jp/IMGH/64/36/P043876436/P043876436_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 味噌煮込みうどん" width="480" height="600" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 味噌煮込みうどん</div>
-        <div class="feature-card-sub">名古屋めし · 厳選5店</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/nagoya-chinese-guide.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/35/04/P034423504/P034423504_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/35/04/P034423504/P034423504_480.jpg 480w, https://imgfp.hotp.jp/IMGH/35/04/P034423504/P034423504_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 中華料理10選" width="480" height="600" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 中華料理10選</div>
-        <div class="feature-card-sub">中華 · 接待・宴会</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/nagoya-korean.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/95/78/P047869578/P047869578_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/95/78/P047869578/P047869578_480.jpg 480w, https://imgfp.hotp.jp/IMGH/95/78/P047869578/P047869578_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 韓国料理10選" width="480" height="600" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 韓国料理10選</div>
-        <div class="feature-card-sub">韓国 · サムギョプサル</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/nagoya-bar-guide.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/73/31/P048897331/P048897331_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/73/31/P048897331/P048897331_480.jpg 480w, https://imgfp.hotp.jp/IMGH/73/31/P048897331/P048897331_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 バー・ワインバー10選" width="480" height="600" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 バー・ワインバー10選</div>
-        <div class="feature-card-sub">バー · 〆のカウンター</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/nagoya-steak.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/11/91/P046991191/P046991191_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/11/91/P046991191/P046991191_480.jpg 480w, https://imgfp.hotp.jp/IMGH/11/91/P046991191/P046991191_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 ステーキ10選" width="480" height="600" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 ステーキ10選</div>
-        <div class="feature-card-sub">ステーキ · 熟成・黒毛和牛</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/nagoya-morning.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/11/73/P034111173/P034111173_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/11/73/P034111173/P034111173_480.jpg 480w, https://imgfp.hotp.jp/IMGH/11/73/P034111173/P034111173_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 モーニング・喫茶10選" width="480" height="600" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 モーニング・喫茶10選</div>
-        <div class="feature-card-sub">モーニング · 喫茶文化</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/nagoya-sweets.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/82/67/P040958267/P040958267_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/82/67/P040958267/P040958267_480.jpg 480w, https://imgfp.hotp.jp/IMGH/82/67/P040958267/P040958267_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 スイーツ・デザート10選" width="480" height="600" loading="lazy" decoding="async">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 スイーツ・デザート10選</div>
-        <div class="feature-card-sub">スイーツ · 和洋パティスリー</div>
+        <div class="feature-card-title">名古屋 すき焼き・しゃぶしゃぶ10選</div>
+        <div class="feature-card-sub">鍋 · 黒毛和牛・個室</div>
         <span class="feature-card-cta">特集を読む</span>
       </div>
       <div class="feature-card-arrow">→</div>
@@ -12344,9 +12328,25 @@ function fetchFullCatalog() {
 function loadStores(stores) {
   ALL_STORES = stores.filter(function(s){ return s['公開フラグ'] !== 'FALSE'; });
   FILTERED = ALL_STORES.slice();
-  // 権威性バーの総店舗数を実データから動的に反映
-  var authTotalEl = document.getElementById('auth-total');
-  if (authTotalEl) authTotalEl.textContent = ALL_STORES.length.toLocaleString();
+  // 権威性バー・強み表示の数値を実データから動的に反映（自己申告値を置かない：制約10）
+  var totalTxt = ALL_STORES.length.toLocaleString();
+  ['auth-total', 'hero-proof-total', 'why-total'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = totalTxt;
+  });
+  // 「2媒体以上で裏取り済み」の実店舗数。媒体＝食べログ / Instagram / ホットペッパー / Google
+  var crossMediaEl = document.getElementById('why-media');
+  if (crossMediaEl) {
+    var crossMedia = ALL_STORES.filter(function(s) {
+      var n = 0;
+      if (s['食べログURL']) n++;
+      if (s['Instagram']) n++;
+      if (s['ホットペッパーID']) n++;
+      if (s['Google評価']) n++;
+      return n >= 2;
+    }).length;
+    crossMediaEl.textContent = crossMedia.toLocaleString();
+  }
   buildPrefTabs();
   buildGenreTabs();
   buildAreaFilter();
