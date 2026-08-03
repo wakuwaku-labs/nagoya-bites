@@ -139,6 +139,14 @@ nav{display:none;}
 .art-hero-image img{aspect-ratio:3/2;border-radius:0;}
 .art-hero-image{padding:0;}
 }
+/* ── iOS Safari 自動ズーム対策 ──
+   フォーム入力欄の font-size が 16px 未満だと、iOS Safari はフォーカス時に
+   ページを自動拡大し、フォーム全体が画面外へはみ出す。
+   viewport の maximum-scale=1 でも抑止できるが、それは A11y（ユーザーの
+   ピンチズーム）を奪うため使わない。モバイル幅でだけ実寸 16px にする。 */
+@media(max-width:768px){
+.form-row input,.form-row select,.form-row textarea{font-size:16px;}
+}
 </style>
 </head>
 <body>
