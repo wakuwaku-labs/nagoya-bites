@@ -292,6 +292,22 @@ body.search-active .results-summary{display:block;}
 .results-summary-reset{background:transparent;border:1px solid var(--border);color:var(--dim);font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:.55rem 1rem;border-radius:3px;cursor:pointer;transition:all .2s;min-height:38px;}
 .results-summary-reset:hover{color:var(--text);border-color:var(--border-h);}
 @media(max-width:640px){.results-summary{padding:.9rem 1rem 1rem;}.results-summary-count{font-size:1.35rem;}.results-summary-count em{font-size:1.65rem;}}
+/* ── 検索の解釈表示（何をどう読み取ったかを明示する）── */
+.search-interpret{margin:.1rem 0 .8rem;padding:.6rem .75rem;background:rgba(255,255,255,.6);border:1px dashed var(--border);border-radius:3px;}
+.si-head{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.4rem;}
+.si-pills{display:flex;flex-wrap:wrap;gap:.35rem .4rem;}
+.si-pill{display:inline-flex;align-items:center;gap:.35rem;background:#fff;border:1px solid var(--border);border-radius:999px;padding:.22rem .6rem;font-size:.74rem;font-weight:600;color:var(--text);}
+.si-pill .si-k{font-size:.6rem;font-weight:500;color:var(--dim);letter-spacing:.06em;}
+.si-note{margin-top:.45rem;font-size:.72rem;line-height:1.6;color:var(--dim);}
+.si-note strong{color:var(--ember-deep,var(--gold));font-weight:700;}
+/* 関連度順チップは検索語があるときだけ出す */
+.sort-chip-rel{display:none;}
+body.search-query-active .sort-chip-rel{display:inline-block;}
+/* カードの一致理由（関連度順のときだけ表示）*/
+.card-why{display:none;padding:0 1.1rem .55rem;gap:.3rem;flex-wrap:wrap;align-items:center;}
+body.search-query-active .card-why{display:flex;}
+.card-why .cw-l{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.16em;color:var(--dim);text-transform:uppercase;}
+.card-why .cw-t{background:rgba(184,84,31,.08);border:1px solid rgba(184,84,31,.22);color:var(--ember-deep,var(--gold));border-radius:2px;padding:.12rem .4rem;font-size:.66rem;font-weight:600;}
 /* ── HP CREDIT ── */
 .hpc{padding:.6rem 1.5rem;display:flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border);background:var(--bg2);}
 .hpc span,.hpc a{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:var(--dim);}
@@ -1657,6 +1673,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   <div class="results-summary" id="results-summary" aria-live="polite">
     <div class="results-summary-label">絞り込み結果</div>
     <div class="results-summary-cond" id="results-summary-cond"></div>
+    <div class="search-interpret" id="search-interpret" style="display:none"></div>
     <div class="results-summary-foot">
       <div class="results-summary-count"><em id="results-summary-count">--</em>件 のお店</div>
       <button class="results-summary-reset" type="button" onclick="clearAllFilters()" aria-label="絞り込みをすべてリセット">すべてリセット</button>
@@ -1666,6 +1683,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   <div class="sort-bar sticky-sort" id="sort-bar" role="tablist" aria-label="並び替え">
     <span class="sort-bar-label">並び替え</span>
     <div class="sort-chips" id="sort-chips">
+      <button class="sort-chip sort-chip-rel" type="button" role="tab" aria-selected="false" data-sort="relevance">関連度順</button>
       <button class="sort-chip on" type="button" role="tab" aria-selected="true" data-sort="recommend">おすすめ順</button>
       <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="distance" data-needs-geo="1">近い順</button>
       <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="view-desc">人気順</button>
@@ -1677,6 +1695,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
       <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="cc-desc">整合度順</button>
     </div>
     <select class="sort-select" id="sort-select" hidden onchange="applySort()" aria-hidden="true">
+      <option value="relevance">関連度順</option>
       <option value="recommend">おすすめ順</option>
       <option value="distance">近い順</option>
       <option value="view-desc">人気順</option>
@@ -12639,6 +12658,700 @@ var SCENE_ALIAS = {
   '壮行会':       ['歓送迎会', '忘年会・新年会']
 };
 
+// ==NB_SEARCH_ENGINE_START==
+// ================================================================
+// SEMANTIC SEARCH ENGINE — 検索精度改善（SEARCH-001）
+//
+// 目的:
+//   「誕生日 栄」のように【シーン語 × エリア語】を並べた検索で、
+//   その語が店舗データに丸ごと含まれていなくても、意図に合う店を拾い、
+//   関連度の高い順に並べる。
+//
+// 仕組み:
+//   1. クエリを正規化（NFKC / 小文字化 / カタカナ→ひらがな / 記号・空白除去）
+//   2. 概念辞書（シーン・エリア・ジャンル・設備・予算）に最長一致で分解
+//      → 空白なしの「誕生日栄」でも「誕生日」＋「栄」に分けられる
+//   3. 概念ごとに店舗をスコアリング（タグ / ジャンル / エリア / 本文 / 店名）
+//   4. 全概念にヒットした店を上位（一致）、一部ヒットを下位（関連候補）に置く
+//   5. 「何をどう解釈したか」を画面に明示し、カードに一致理由を出す
+//
+// CLAUDE.md 制約10（検証できる事実だけで判定する）:
+//   スコアは店舗データに実在するフィールドの一致だけで算出する。
+//   エージェントの自己申告値（話題度◯◯ 等）は一切スコアに使わない。
+//   品質加点も「Google評価」「編集部推薦」「editorReason の有無」といった
+//   第三者が確認できる値だけで、かつ関連度を覆さない小さな重みに留める。
+// ================================================================
+
+// ── 正規化 ──────────────────────────────────────────────
+// 比較用の記号・空白は落とす（「焼肉・ホルモン」→「焼肉ほるもん」）
+var NB_PUNCT_RE = /[\s　・･,、，.。／\/\\|｜「」『』｢｣()（）\[\]【】〈〉《》〔〕"'’‘”“`~〜～\-ー－−–—_＋+*!！?？:：;；=＝#＃@＆&%％]/g;
+// 語の切れ目として意味を持つ記号（括弧・読点・スラッシュ・空白など）。
+// これを単純に削ると「栄(名古屋)駅」が「栄名古屋駅」になり、
+// 栄の店が「名古屋駅」の検索に誤ヒットする。区切り文字に置き換えて境界を残す。
+var NB_SEP_RE = /[\s　・･,、，.。／\/\\|｜「」『』｢｣()（）\[\]【】〈〉《》〔〕"'’‘”“]+/g;
+var NB_SEP = '\u0001';
+function nbKanaFold(s) {
+  // カタカナ → ひらがな（「ラーメン」と「らーめん」を同一視）
+  return s.replace(/[ァ-ヶ]/g, function(c){ return String.fromCharCode(c.charCodeAt(0) - 0x60); });
+}
+function nbPre(s) {
+  if (s == null) return '';
+  s = String(s);
+  try { s = s.normalize('NFKC'); } catch(e) {}
+  return nbKanaFold(s.toLowerCase());
+}
+// クエリ語・辞書の見出し語用（区切りなし）
+function nbNorm(s) { return nbPre(s).replace(NB_PUNCT_RE, ''); }
+// 店舗フィールド用（語の境界を NB_SEP として保持する）
+function nbNormSep(s) { return nbPre(s).replace(NB_SEP_RE, NB_SEP).replace(NB_PUNCT_RE, ''); }
+function nbEscHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ── 概念辞書 ────────────────────────────────────────────
+// words   : 検索クエリ側の言い換え（この語が入力に含まれたら概念が立つ）
+// core    : ヒット判定に使うフィールド（1つでも当たれば「その概念に一致」）
+//   tag   : 店舗の「タグ」列
+//   body  : おすすめポイント / editorReason / insiderNote / 備考 / アクセス / 営業時間 など
+//   genre : 「ジャンル」列
+//   areaP : エリア/アクセス/住所（中心エリア）  areaS : 同（隣接エリア・弱め）
+//   fn    : 数値条件（価格帯・収容人数・Google評価など実データでの判定）
+// boost*  : ヒットした店の中での順位付けにだけ効く加点（単独ではヒットにしない）
+// quality : 品質加点の倍率（記念日・接待など「外せない席」ほど大きく）
+function nbC(id, type, label, words, spec) {
+  spec = spec || {};
+  spec.id = id; spec.type = type; spec.label = label; spec.words = words;
+  return spec;
+}
+
+var NB_CONCEPTS = [
+  // ── シーン ──
+  nbC('birthday','scene','誕生日・記念日',
+    ['誕生日','たんじょうび','バースデー','バースデイ','birthday','記念日','アニバーサリー','anniversary','サプライズ','お祝い','お祝','祝い','プロポーズ','結婚記念日','誕生会','還暦','古希'],
+    { tag:['誕生日・記念日','記念日'],
+      body:['誕生日','記念日','サプライズ','アニバーサリー','お祝い','ホールケーキ','メッセージプレート','デザートプレート','特別な日','大切な日','特別な時間'],
+      boostTag:['個室','半個室','カウンター','隠れ家','テラス席','デート'],
+      boostBody:['夜景','個室','コース','おまかせ','記念','雰囲気'],
+      upGenre:['寿司','鮨','和食','日本料理','割烹','イタリアン','フレンチ','創作','イノベーティブ','鉄板','ダイニング','焼肉'],
+      downGenre:['ラーメン','お好み焼き','カラオケ','立ち飲み','定食','食堂'],
+      quality:1.6 }),
+  nbC('date','scene','デート',
+    ['デート','でーと','date','カップル','二人で','ふたりで','彼女','彼氏','初デート','恋人','夜景'],
+    { tag:['デート','誕生日・記念日'],
+      body:['デート','カップル','二人','ふたり','夜景','ムード','雰囲気','大人','落ち着い','ロマンチック','記念日'],
+      boostTag:['個室','半個室','カウンター','隠れ家','テラス席'],
+      boostBody:['夜景','ワイン','コース','静か','照明'],
+      upGenre:['イタリアン','フレンチ','創作','イノベーティブ','ダイニング','バー','鉄板','寿司','鮨'],
+      downGenre:['カラオケ','食堂','立ち飲み','ラーメン'],
+      quality:1.5 }),
+  nbC('settai','scene','接待・会食',
+    ['接待','会食','商談','取引先','上司','ビジネス','おもてなし','顔合わせ','両家','結納','法事','会合','接待用','目上'],
+    { tag:['接待','誕生日・記念日'],
+      body:['接待','会食','商談','おもてなし','顔合わせ','法事','格式','料亭','割烹','静か','落ち着い','個室','大人','ゆったり'],
+      boostTag:['個室','半個室','カウンター','座敷'],
+      boostBody:['個室','完全個室','コース','おまかせ','日本酒','掘りごたつ'],
+      upGenre:['和食','日本料理','割烹','懐石','会席','寿司','鮨','鉄板','フレンチ','料亭'],
+      downGenre:['カラオケ','立ち飲み','ラーメン','食堂','お好み焼き'],
+      quality:1.7 }),
+  nbC('joshikai','scene','女子会',
+    ['女子会','じょしかい','ガールズ','女子','女子旅','ママ会','ママ友','推し活','誕生日会'],
+    { tag:['女子会','ママ会','推し活'],
+      body:['女子会','女子','おしゃれ','映え','インスタ','かわいい','ヘルシー','スイーツ','ワイン','デザート','ソファ'],
+      boostTag:['個室','半個室','テラス席','誕生日・記念日'],
+      boostBody:['個室','コース','飲み放題','おしゃれ'],
+      upGenre:['イタリアン','カフェ','スイーツ','創作','ダイニング','韓国','バル'],
+      quality:1.3 }),
+  nbC('enkai','scene','宴会・大人数',
+    ['宴会','忘年会','新年会','歓送迎会','送別会','歓迎会','打ち上げ','飲み会','大人数','団体','貸切','コンパ','同窓会','壮行会','オフ会','懇親会','納会','パーティ'],
+    { tag:['忘年会・新年会','歓送迎会','貸切可','飲み放題'],
+      body:['宴会','忘年会','新年会','歓送迎会','送別','歓迎','貸切','団体','大人数','幹事','コース','飲み放題','宴会場','パーティ'],
+      fn: function(x){ return x.cap >= 30 ? 22 : (x.cap >= 20 ? 14 : (x.cap >= 10 ? 6 : 0)); },
+      boostTag:['個室','座敷','食べ放題'],
+      boostBody:['飲み放題','コース','掘りごたつ','座敷'],
+      upGenre:['居酒屋','焼肉','中華','和食','カラオケ'],
+      quality:1.0 }),
+  nbC('family','scene','家族・子連れ',
+    ['家族','子連れ','こども','子供','子ども','ファミリー','ベビー','赤ちゃん','親子','三世代','キッズ'],
+    { tag:['家族・子連れ'],
+      body:['子連れ','お子様','ファミリー','家族','キッズ','ベビーカー','座敷','掘りごたつ','個室'],
+      boostTag:['座敷','個室','半個室'],
+      boostBody:['お子様','座敷','掘りごたつ','駐車場'],
+      quality:1.1 }),
+  nbC('hitori','scene','一人・少人数',
+    ['一人','ひとり','1人','おひとり','独り','ソロ','一人飲み','ひとり飲み','1人飲み','サク飲み','立ち寄り'],
+    { tag:['1人OK','カウンター'],
+      body:['1人','おひとり','ひとり','一人でも','カウンター','おひとり様'],
+      boostBody:['カウンター','気軽','立ち飲み'],
+      quality:0.9 }),
+
+  // ── 席・設備 ──
+  nbC('koshitsu','facility','個室',
+    ['個室','こしつ','半個室','完全個室','個室あり','separate room','掘りごたつ個室'],
+    { tag:['個室','半個室'], body:['個室','半個室','完全個室','個室あり'],
+      boostBody:['完全個室','掘りごたつ','襖','扉'], quality:1.1 }),
+  nbC('kashikiri','facility','貸切',
+    ['貸切','かしきり','貸し切り','借り切り','店貸切'],
+    { tag:['貸切可'], body:['貸切','貸し切り','店舗貸切'],
+      fn: function(x){ return x.cap >= 30 ? 14 : 0; }, quality:1.0 }),
+  nbC('counter','facility','カウンター',
+    ['カウンター','かうんたー','counter','おまかせカウンター'],
+    { tag:['カウンター'], body:['カウンター','カウンター席'], quality:1.1 }),
+  nbC('terrace','facility','テラス席',
+    ['テラス','てらす','terrace','屋上','ルーフトップ','オープンエア','ビアガーデン','外席'],
+    { tag:['テラス席'], body:['テラス','屋上','ルーフトップ','ビアガーデン','オープンエア'], quality:1.1 }),
+  nbC('zashiki','facility','座敷・掘りごたつ',
+    ['座敷','ざしき','掘りごたつ','ほりごたつ','お座敷','小上がり','和室'],
+    { tag:['座敷'], body:['座敷','掘りごたつ','小上がり','和室'], quality:1.0 }),
+  nbC('kakurega','facility','隠れ家',
+    ['隠れ家','かくれが','穴場','静か','落ち着く','大人の','秘密','雑居ビル'],
+    { tag:['隠れ家'], body:['隠れ家','穴場','静か','落ち着い','ひっそり','路地'], quality:1.2 }),
+  nbC('nomiho','facility','飲み放題',
+    ['飲み放題','のみほうだい','飲放','飲み放'],
+    { tag:['飲み放題'], body:['飲み放題','飲放題'], quality:0.9 }),
+  nbC('tabeho','facility','食べ放題',
+    ['食べ放題','たべほうだい','食放','ビュッフェ','バイキング','ブッフェ'],
+    { tag:['食べ放題'], body:['食べ放題','ビュッフェ','バイキング'], quality:0.9 }),
+  nbC('ekichika','facility','駅近',
+    ['駅近','駅チカ','駅から近い','駅前','徒歩圏','アクセス良','駅直結'],
+    { tag:['駅直結'],
+      fn: function(x){ return x.walk > 0 && x.walk <= 3 ? 26 : (x.walk > 0 && x.walk <= 5 ? 16 : 0); },
+      body:['駅直結','駅から徒歩1分','駅から徒歩2分','駅から徒歩3分'], quality:0.9 }),
+  nbC('late','facility','深夜営業',
+    ['深夜','朝まで','夜遅く','終電後','24時','2軒目','二軒目','遅くまで'],
+    { body:['翌1','翌2','翌3','翌4','翌5','深夜','24時間','朝まで'], quality:0.9 }),
+
+  // ── 予算 ──
+  nbC('cheap','budget','リーズナブル',
+    ['安い','やすい','格安','激安','リーズナブル','コスパ','お手頃','手頃','低予算','せんべろ','安く','庶民的'],
+    { fn: function(x){ return x.price <= 2000 ? 34 : (x.price <= 3000 ? 24 : (x.price <= 4000 ? 8 : 0)); },
+      body:['リーズナブル','コスパ','お手頃','安く','気軽'], quality:0.8 }),
+  nbC('luxury','budget','高級・特別な一軒',
+    ['高級','贅沢','ぜいたく','ハイエンド','ラグジュアリー','奮発','特別な','いい店','上質','極上'],
+    { fn: function(x){ return x.price >= 10001 ? 34 : (x.price >= 7001 ? 26 : (x.price >= 5001 ? 12 : 0)); },
+      body:['高級','贅沢','極上','上質','厳選','特別な'],
+      upGenre:['寿司','鮨','和食','日本料理','割烹','懐石','会席','フレンチ','鉄板','イノベーティブ'],
+      quality:1.6 }),
+
+  // ── 評価・話題性（実データ由来のみ）──
+  nbC('popular','signal','人気・話題',
+    ['人気','話題','有名','行列','流行','バズ','注目','いま話題','評判','口コミ'],
+    { fn: function(x, s){
+        var v = 0;
+        if (s['話題フラグ'] === true) v += 20;
+        var t = parseInt(s['トレンドスコア'], 10) || 0;
+        if (t >= 90) v += 16; else if (t >= 70) v += 10; else if (t >= 50) v += 4;
+        var rv = parseInt(s['口コミ数'], 10) || 0;
+        if (rv >= 500) v += 10; else if (rv >= 200) v += 6;
+        return v;
+      },
+      body:['行列','人気','話題','予約困難','有名'], quality:1.2 }),
+  nbC('editorial','signal','編集部・業界人の推薦',
+    ['編集部','業界人','プロ','目利き','おすすめの','厳選','推薦','間違いない','外さない','ミシュラン','星付き','百名店','予約困難','予約が取れない'],
+    { fn: function(x, s){
+        var v = 0;
+        if (s['編集部推薦'] === true) v += 24;
+        if (s.editorReason) v += 16;
+        if (s.insiderNote) v += 12;
+        if (Array.isArray(s.mediaFeatures) && s.mediaFeatures.length) v += 8;
+        return v;
+      },
+      body:['ミシュラン','百名店','予約困難','受賞','アワード'], quality:1.4 }),
+
+  // ── ジャンル ──
+  nbC('g_yakiniku','genre','焼肉',
+    ['焼肉','焼き肉','やきにく','ホルモン','カルビ','ハラミ','和牛','ステーキ','肉','a5','タン','ジンギスカン'],
+    { genre:['焼肉','ホルモン','ステーキ','肉'], name:['焼肉','ホルモン','牛','肉'], body:['焼肉','和牛','ホルモン','ステーキ'] }),
+  nbC('g_sushi','genre','寿司',
+    ['寿司','鮨','すし','sushi','江戸前','握り','回転寿司','おまかせ寿司'],
+    { genre:['寿司','鮨'], name:['寿司','鮨','すし'], body:['寿司','鮨','握り','江戸前'] }),
+  nbC('g_ramen','genre','ラーメン',
+    ['ラーメン','らーめん','拉麺','中華そば','つけ麺','まぜそば','台湾ラーメン','家系','二郎','担々麺'],
+    { genre:['ラーメン'], name:['ラーメン','らーめん','麺'], body:['ラーメン','つけ麺','まぜそば'] }),
+  nbC('g_izakaya','genre','居酒屋',
+    ['居酒屋','いざかや','飲み屋','酒場','大衆酒場','立ち飲み','角打ち','呑み屋','晩酌'],
+    { genre:['居酒屋'], name:['居酒屋','酒場','酒処'], body:['居酒屋','酒場','晩酌'] }),
+  nbC('g_italian','genre','イタリアン',
+    ['イタリアン','イタリア料理','パスタ','ピザ','ピッツァ','リストランテ','トラットリア','オステリア'],
+    { genre:['イタリアン','いたりあん'], name:['イタリア','pasta','pizza','osteria','trattoria','ristorante'], body:['イタリアン','パスタ','ピッツァ'] }),
+  nbC('g_french','genre','フレンチ',
+    ['フレンチ','フランス料理','ビストロ','ブラッスリー','ガストロノミー'],
+    { genre:['フレンチ','フランス'], name:['ビストロ','bistro','brasserie'], body:['フレンチ','フランス料理','ビストロ'] }),
+  nbC('g_chinese','genre','中華',
+    ['中華','中国料理','町中華','餃子','麻婆','小籠包','四川','広東','点心','火鍋'],
+    { genre:['中華','中国'], name:['中華','餃子','飯店','酒家','楼'], body:['中華','餃子','麻婆','点心'] }),
+  nbC('g_korean','genre','韓国料理',
+    ['韓国','韓国料理','サムギョプサル','タッカルビ','チヂミ','コリアン','ホンデ','マッコリ','キムチ'],
+    { genre:['韓国'], name:['韓国','そうる','こりあ'], body:['韓国','サムギョプサル','マッコリ','チヂミ'] }),
+  nbC('g_cafe','genre','カフェ・スイーツ',
+    ['カフェ','喫茶','珈琲','コーヒー','モーニング','スイーツ','パンケーキ','パフェ','ケーキ','デザート','かき氷','タピオカ','紅茶','甘味'],
+    { genre:['カフェ','スイーツ','喫茶'], name:['カフェ','珈琲','coffee','cafe'], body:['カフェ','喫茶','モーニング','スイーツ','パフェ'] }),
+  nbC('g_bar','genre','バー・バル',
+    ['バー','bar','ワイン','カクテル','ウイスキー','日本酒','クラフトビール','ビール','ハイボール','バル','ダイニングバー','酒好き','角打'],
+    { genre:['ばー','ばる','だいにんぐ','かくてる'], name:['bar','ばー','わいん','wine','酒'], body:['ワイン','カクテル','ウイスキー','日本酒','クラフトビール'] }),
+  nbC('g_washoku','genre','和食・割烹',
+    ['和食','日本料理','割烹','懐石','会席','小料理','料亭','天ぷら','天麩羅','おばんざい','刺身','和食屋'],
+    { genre:['和食','日本料理','割烹','懐石','会席','料亭'], name:['和食','割烹','懐石','日本料理'], body:['和食','割烹','懐石','会席','日本料理'] }),
+  nbC('g_yakitori','genre','焼鳥・串',
+    ['焼鳥','焼き鳥','やきとり','串焼き','串カツ','手羽先','鶏料理','もつ焼き','串'],
+    { genre:['焼鳥','焼き鳥'], name:['鳥','鶏','串','とり'], body:['焼鳥','焼き鳥','串焼き','手羽先'] }),
+  nbC('g_kaisen','genre','海鮮',
+    ['海鮮','魚料理','刺身','魚介','浜焼き','牡蠣','かき','蟹','かに','うに','鮮魚','漁港'],
+    { genre:['海鮮','魚'], name:['魚','海鮮','漁','浜','貝'], body:['海鮮','鮮魚','刺身','魚介','浜焼き'] }),
+  nbC('g_nabe','genre','鍋',
+    ['鍋','もつ鍋','しゃぶしゃぶ','すき焼き','水炊き','ちゃんこ','おでん','鍋料理'],
+    { genre:['鍋'], name:['鍋'], body:['鍋','しゃぶしゃぶ','すき焼き','もつ鍋','水炊き','おでん'] }),
+  nbC('g_nagoyameshi','genre','名古屋めし',
+    ['名古屋めし','名古屋飯','味噌カツ','ひつまぶし','あんかけスパ','味噌煮込み','どて煮','台湾まぜそば','きしめん','エビフライ','味噌おでん'],
+    { genre:['ひつまぶし','うなぎ','味噌'], name:['味噌','ひつまぶし','きしめん'],
+      body:['名古屋めし','手羽先','味噌カツ','ひつまぶし','あんかけ','味噌煮込み','どて','きしめん','台湾'] }),
+  nbC('g_unagi','genre','うなぎ',
+    ['うなぎ','鰻','うな重','うな丼','蒲焼'],
+    { genre:['うなぎ','鰻'], name:['鰻','うなぎ'], body:['うなぎ','鰻','蒲焼'] }),
+  nbC('g_yoshoku','genre','洋食',
+    ['洋食','ハンバーグ','オムライス','ハンバーガー','グリル','ビーフシチュー','エビフライ定食'],
+    { genre:['洋食'], name:['洋食','ぐりる','grill'], body:['洋食','ハンバーグ','オムライス'] }),
+  nbC('g_teppan','genre','鉄板焼き・お好み焼き',
+    ['お好み焼き','もんじゃ','鉄板焼き','鉄板','広島焼','たこ焼き'],
+    { genre:['お好み焼き','もんじゃ','鉄板'], name:['鉄板','お好み','てっぱん'], body:['鉄板焼','お好み焼き','もんじゃ'] }),
+  nbC('g_ethnic','genre','エスニック・各国料理',
+    ['エスニック','タイ料理','ベトナム','インド','カレー','スパイス','ネパール','メキシカン','アジアン','中東','スペイン'],
+    { genre:['あじあ','えすにっく','各国'], name:['かれー','curry','たい','あじあん'], body:['エスニック','タイ料理','カレー','スパイス','アジアン'] }),
+  nbC('g_men','genre','そば・うどん',
+    ['そば','蕎麦','うどん','きしめん','手打ち'],
+    { genre:['うどん','そば'], name:['そば','うどん','蕎麦','庵'], body:['蕎麦','うどん','きしめん'] }),
+  nbC('g_sosaku','genre','創作・コース',
+    ['創作料理','創作','イノベーティブ','コース料理','おまかせコース','おまかせ','シェフ'],
+    { genre:['創作','いのべーてぃぶ'], name:['創作'], body:['創作','イノベーティブ','おまかせコース','シェフ'] }),
+
+  // ── エリア（名古屋市内）──
+  nbC('a_sakae','area','栄エリア',
+    ['栄','さかえ','栄駅','久屋大通','錦三','錦通','広小路'],
+    { areaP:['栄','錦','東桜','久屋大通'], areaS:['矢場町','大須','上前津','伏見','新栄','丸の内','中区'] }),
+  nbC('a_meieki','area','名駅エリア',
+    ['名駅','名古屋駅','なごやえき','駅前','ささしま','太閤通','中村区','柳橋','那古野','名古屋駅前'],
+    { areaP:['名古屋駅','名駅','中村区'], areaS:['西区','国際センター','ささしま','那古野','柳橋','伏見'] }),
+  nbC('a_osu','area','大須エリア',
+    ['大須','おおす','上前津','万松寺','大須観音'],
+    { areaP:['大須','上前津'], areaS:['矢場町','栄','鶴舞','中区'] }),
+  nbC('a_kanayama','area','金山エリア',
+    ['金山','かなやま'],
+    { areaP:['金山'], areaS:['神宮前','熱田','尾頭橋','鶴舞'] }),
+  nbC('a_fushimi','area','伏見エリア',
+    ['伏見','ふしみ','丸の内','長者町','納屋橋','国際センター'],
+    { areaP:['伏見','丸の内','納屋橋','国際センター'], areaS:['栄','錦','名古屋駅'] }),
+  nbC('a_yaba','area','矢場町エリア',
+    ['矢場町','やばちょう','大須観音前'],
+    { areaP:['矢場町'], areaS:['栄','大須','上前津','中区'] }),
+  nbC('a_shinsakae','area','新栄・高岳エリア',
+    ['新栄','しんさかえ','高岳','車道','葵'],
+    { areaP:['新栄','高岳','車道'], areaS:['栄','東桜','千種','東区'] }),
+  nbC('a_imaike','area','今池・千種エリア',
+    ['今池','いまいけ','千種','池下','覚王山前'],
+    { areaP:['今池','千種','池下'], areaS:['覚王山','車道','鶴舞','吹上','大曽根'] }),
+  nbC('a_kakuozan','area','覚王山・本山エリア',
+    ['覚王山','かくおうざん','本山','東山','星ヶ丘','藤が丘','一社','上社'],
+    { areaP:['覚王山','本山','東山','星ヶ丘','藤が丘','一社','上社'], areaS:['池下','千種','名東区'] }),
+  nbC('a_tsurumai','area','鶴舞・八事エリア',
+    ['鶴舞','つるまい','八事','御器所','いりなか','桜山','川名','吹上','昭和区','瑞穂区','新瑞橋'],
+    { areaP:['鶴舞','八事','御器所','桜山','川名','吹上','昭和区','瑞穂区','新瑞橋'], areaS:['千種','金山','今池'] }),
+  nbC('a_atsuta','area','熱田・神宮前エリア',
+    ['熱田','あつた','神宮前','熱田神宮','伝馬町'],
+    { areaP:['熱田','神宮前'], areaS:['金山','尾頭橋','南区'] }),
+  nbC('a_ozone','area','大曽根・守山エリア',
+    ['大曽根','おおぞね','守山','小幡','平安通','ナゴヤドーム','ドーム前'],
+    { areaP:['大曽根','守山','平安通','小幡','ナゴヤドーム'], areaS:['千種','東区','北区'] }),
+  nbC('a_higashi','area','東区・白壁エリア',
+    ['東区','白壁','徳川','主税町','橦木'],
+    { areaP:['東区','白壁','徳川'], areaS:['高岳','大曽根','栄'] }),
+  nbC('a_nishi','area','西区エリア',
+    ['西区','浄心','浅間町','円頓寺','庄内通'],
+    { areaP:['西区','浄心','円頓寺','浅間町'], areaS:['名古屋駅','丸の内','北区'] }),
+  nbC('a_kita','area','北区エリア',
+    ['北区','志賀','黒川','上飯田'],
+    { areaP:['北区','志賀','黒川','上飯田'], areaS:['大曽根','西区'] }),
+  nbC('a_meito','area','名東区エリア',
+    ['名東区','めいとうく','引山','猪高'],
+    { areaP:['名東区'], areaS:['藤が丘','星ヶ丘','一社'] }),
+  nbC('a_minami','area','緑区・南区・天白区',
+    ['緑区','南区','天白区','鳴海','有松','平針','原駅','野並','大高','笠寺'],
+    { areaP:['緑区','南区','天白区','鳴海','有松','平針','野並','大高','笠寺'], areaS:['瑞穂区','熱田'] }),
+  nbC('a_nakagawa','area','中川区・港区',
+    ['中川区','港区','高畑','尾頭橋','金城ふ頭','荒子','八田'],
+    { areaP:['中川区','港区','高畑','尾頭橋','金城','荒子','八田'], areaS:['名古屋駅','熱田'] })
+];
+
+// ── 辞書の初期化（正規化と最長一致テーブルの構築）──
+var NB_ALIASES = null;
+function nbInitConcepts() {
+  if (NB_ALIASES) return;
+  NB_ALIASES = [];
+  // 店舗フィールドと同じ正規化（区切り保持）を辞書側にも適用する
+  var fields = ['tag','body','genre','name','areaP','areaS','boostTag','boostBody','upGenre','downGenre'];
+  NB_CONCEPTS.forEach(function(c) {
+    fields.forEach(function(f) {
+      if (c[f]) c[f] = c[f].map(nbNormSep).filter(Boolean);
+    });
+    c.words.forEach(function(w) {
+      var n = nbNorm(w);
+      if (n) NB_ALIASES.push({ w: n, c: c });
+    });
+  });
+  // 最長一致優先（「焼き肉」を「肉」より先に消費する）
+  NB_ALIASES.sort(function(a, b){ return b.w.length - a.w.length; });
+}
+
+// ── 店舗側インデックス（初回アクセス時に1度だけ構築）──
+function nbStoreIndex(s) {
+  if (s.__nbx) return s.__nbx;
+  var media = '';
+  if (Array.isArray(s.mediaFeatures)) {
+    media = s.mediaFeatures.map(function(m){ return (m && (m.title || '')) + ' ' + (m && (m.name || '')); }).join(' ');
+  }
+  var body = [
+    s['おすすめポイント'], s.editorReason, s.insiderNote, s['備考'],
+    s['アクセス'], s['営業時間'], s['トレンドラベル'], s['話題ハイライト'],
+    Array.isArray(s['トレンド情報源']) ? s['トレンド情報源'].join(' ') : s['トレンド情報源'],
+    media
+  ].filter(Boolean).join(' ');
+  var walkM = (s['アクセス'] || '').match(/徒歩\D{0,3}(\d+)\s*分/);
+  var x = {
+    name:  nbNormSep(s['店名']),
+    genre: nbNormSep(s['ジャンル']),
+    tags:  nbNormSep(s['タグ']),
+    area:  nbNormSep([s['エリア'], s['アクセス'], s['住所'], s['市区町村'], s['都道府県']].filter(Boolean).join(' ')),
+    body:  nbNormSep(body),
+    price: priceToNum(s['価格帯']),
+    cap:   nbMaxCap(s['タグ']),
+    walk:  walkM ? parseInt(walkM[1], 10) : 0
+  };
+  // 本文検索は店名・タグ・ジャンルも含めて広く当てる（境界は保持したまま連結）
+  x.wide = [x.body, x.tags, x.genre, x.name].join(NB_SEP);
+  try { Object.defineProperty(s, '__nbx', { value: x, enumerable: false, writable: true }); }
+  catch(e) { s.__nbx = x; }
+  return x;
+}
+
+// 「タグ」列から収容可能人数の上限を取り出す（30〜40名 → 40）
+function nbMaxCap(tagStr) {
+  var max = 0;
+  (tagStr || '').split(/[,、，\/]/).forEach(function(t) {
+    t = t.trim();
+    var m1 = t.match(/^(\d+)[〜～~](\d+)名$/);
+    if (m1) { max = Math.max(max, parseInt(m1[2], 10)); return; }
+    var m2 = t.match(/^(\d+)名以上$/);
+    if (m2) { max = Math.max(max, parseInt(m2[1], 10) + 50); }
+  });
+  return max;
+}
+
+// ── クエリ解析 ──────────────────────────────────────────
+// 会話的な入力（「彼女とディナー行きたい」）から意味を持たない語を落とす。
+// 落とさないと「とでぃな」のような断片が検索語として残ってしまう。
+var NB_STOPWORDS = [
+  'ディナー','ランチ','食事','ごはん','ご飯','めし','飲み','呑み','使える','使いたい',
+  '行きたい','行く','いきたい','探して','探す','さがして','したい','おすすめ','オススメ','的な',
+  'ような','くらい','ぐらい','あたり','付近','周辺','近く','向け','用','したいです','予約',
+  'できる','できるお店','お店','店舗','スポット','どこ','ところ','とこ','名古屋','なごや','愛知',
+  'です','ます','なら','こと','もの','とか','など','いい','良い','よい','ほしい','ください'
+];
+var NB_STOP_RE = null;
+
+// 「誕生日 栄」も「誕生日栄」も同じ [誕生日][栄] に分解する
+function nbParseQuery(raw) {
+  nbInitConcepts();
+  var units = [], seen = {};
+  var pre = nbPre(raw);
+  // 空白・読点・スラッシュで大まかに区切る（区切りが無くても後段の最長一致で分解される）
+  var SEG_RE = /[\s　,、，\/／|｜+＋・･×＆&]+/;
+  var segs = pre.split(SEG_RE).filter(Boolean);
+  // カタカナ→ひらがな変換前の区切りも取っておく。
+  // 変換後は「ジョア」も「じょあ」も同じ形になり、助詞の断片と区別できなくなるため。
+  var preRaw = String(raw == null ? '' : raw);
+  try { preRaw = preRaw.normalize('NFKC'); } catch(e) {}
+  var rawSegs = preRaw.toLowerCase().split(SEG_RE).filter(Boolean);
+
+  segs.forEach(function(seg, segIdx) {
+    // 元の表記にカタカナ・漢字・英数字があれば、残りは店名の一部の可能性が高い
+    var strong = /[ァ-ヶ一-龥a-z0-9]/.test(rawSegs[segIdx] || '');
+    var single = nbNorm(seg).length === 1;
+    // 数値条件を先に抜く（20人 / 予算5000円）
+    seg = seg.replace(/(\d+)\s*(人|名)/g, function(m, n) {
+      var v = parseInt(n, 10);
+      if (v >= 8 && !seen['cap']) {
+        seen['cap'] = 1;
+        units.push({ kind:'cap', n:v, label: v + '名以上OK',
+          score: function(x){ return x.cap >= v ? (x.cap >= v + 20 ? 34 : 28) : 0; } });
+      }
+      return '';
+    });
+    seg = seg.replace(/(\d+)\s*円/g, function(m, n) {
+      var v = parseInt(n, 10);
+      if (v >= 500 && !seen['budget']) {
+        seen['budget'] = 1;
+        units.push({ kind:'budget', n:v, label:'予算' + v.toLocaleString('ja-JP') + '円前後',
+          score: function(x){
+            if (!x.price || x.price >= 99999) return 0;
+            var d = Math.abs(x.price - v) / v;
+            return d <= 0.25 ? 32 : (d <= 0.5 ? 20 : (x.price <= v ? 10 : 0));
+          } });
+      }
+      return '';
+    });
+
+    var rest = nbNorm(seg);
+    var guard = 0;
+    // 最長一致で概念を切り出す
+    while (rest.length && guard++ < 12) {
+      var best = null, bestPos = -1;
+      for (var i = 0; i < NB_ALIASES.length; i++) {
+        var p = rest.indexOf(NB_ALIASES[i].w);
+        if (p >= 0) { best = NB_ALIASES[i]; bestPos = p; break; } // 長い順に並んでいるので最初のヒットが最長
+      }
+      if (!best) break;
+      if (!seen['c:' + best.c.id]) {
+        seen['c:' + best.c.id] = 1;
+        units.push({ kind:'concept', c: best.c, word: best.w, label: best.c.label });
+      }
+      rest = rest.slice(0, bestPos) + rest.slice(bestPos + best.w.length);
+    }
+    // 概念を抜いた残りから、意味を持たない語（助詞・一般語）を落とす
+    if (!NB_STOP_RE) {
+      NB_STOP_RE = new RegExp(
+        NB_STOPWORDS.map(nbNorm).filter(Boolean)
+          .sort(function(a,b){ return b.length - a.length; }).join('|'), 'g');
+    }
+    rest = rest.replace(NB_STOP_RE, '');
+    // 残りが助詞まじりの断片（ひらがなだけの短い塊）なら検索語にしない
+    var fragment = !strong && /^[ぁ-んー]{1,3}$/.test(rest);
+    // 辞書に無い残り（店名の一部など）はフリーワードとして扱う
+    if (rest.length && !fragment && (rest.length >= 2 || single)) {
+      if (!seen['t:' + rest]) {
+        seen['t:' + rest] = 1;
+        units.push({ kind:'word', word: rest, label: rest });
+      }
+    }
+  });
+  // 全部が助詞・一般語として落ちた場合でも、入力そのものは検索語として残す
+  // （残さないと「該当なし」ではなく全件表示になり、検索したのに絞られていないように見える）
+  if (!units.length) {
+    var whole = nbNorm(raw);
+    if (whole) units.push({ kind:'word', word: whole, label: whole });
+  }
+  return { raw: raw, units: units };
+}
+
+// ── スコアリング ────────────────────────────────────────
+function nbAnyHit(hay, list, weight) {
+  if (!list) return 0;
+  for (var i = 0; i < list.length; i++) if (hay.indexOf(list[i]) !== -1) return weight;
+  return 0;
+}
+function nbCountHits(hay, list, per, cap) {
+  if (!list) return 0;
+  var n = 0;
+  for (var i = 0; i < list.length; i++) if (hay.indexOf(list[i]) !== -1) n++;
+  return Math.min(n * per, cap);
+}
+
+function nbConceptScore(c, word, x, s, out) {
+  // core: 1つでも当たれば「この概念に一致」
+  var core = 0;
+  core += nbAnyHit(x.tags, c.tag, 40);
+  core += nbAnyHit(x.genre, c.genre, 34);
+  core += nbAnyHit(x.name, c.name, 20);
+  core += nbCountHits(x.wide, c.body, 9, 27);
+  if (word && x.name.indexOf(word) !== -1) core += 14;
+  if (c.fn) core += c.fn(x, s) || 0;
+  var nonArea = core;
+  // エリアは「指定エリア（areaP）」を明確に優先し、隣接エリア（areaS）は控えめに拾う
+  var areaP = nbAnyHit(x.area, c.areaP, 52);
+  var areaS = areaP ? 0 : nbAnyHit(x.area, c.areaS, 12);
+  core += areaP + areaS;
+  // 隣接エリアだけで拾った店は「近いが指定エリアではない」＝関連候補に落とす
+  if (out) out.primary = !(areaS > 0 && nonArea <= 0);
+  if (core <= 0) return 0;
+  // boost: 同じ「一致」の中での並び順にだけ効く
+  var boost = 0;
+  boost += nbCountHits(x.tags, c.boostTag, 6, 12);
+  boost += nbCountHits(x.wide, c.boostBody, 4, 12);
+  boost += nbAnyHit(x.genre, c.upGenre, 8);
+  boost -= nbAnyHit(x.genre, c.downGenre, 12);
+  return Math.max(core * 0.5, core + boost);
+}
+
+function nbUnitScore(u, x, s, out) {
+  if (out) out.primary = true;
+  if (u.kind === 'concept') return nbConceptScore(u.c, u.word, x, s, out);
+  if (u.score) return u.score(x, s) || 0;
+  // フリーワード: 店名 > エリア > ジャンル > タグ > 本文
+  var t = u.word, sc = 0;
+  if (x.name === t) sc += 130;
+  else if (x.name.indexOf(t) !== -1) sc += 62;
+  if (x.area.indexOf(t) !== -1)  sc += 30;
+  if (x.genre.indexOf(t) !== -1) sc += 28;
+  if (x.tags.indexOf(t) !== -1)  sc += 24;
+  if (!sc && x.body.indexOf(t) !== -1) sc += 12;
+  return sc;
+}
+
+// 品質加点（検証できる実データのみ・関連度を覆さない小さな重み）
+function nbQualityBonus(s, mult) {
+  var v = 0;
+  if (s['編集部推薦'] === true) v += 9;
+  if (s.editorReason) v += 6;
+  if (s.insiderNote) v += 4;
+  if (s['話題フラグ'] === true) v += 4;
+  if (s['おすすめポイント']) v += 2;
+  var g = parseFloat(s['Google評価']) || 0;
+  if (g > 0) v += Math.max(0, Math.min(g - 3.6, 1.4)) * 7;
+  var rv = parseInt(s['口コミ数'], 10) || 0;
+  if (rv >= 300) v += 3; else if (rv >= 100) v += 2;
+  return v * (mult || 1);
+}
+
+var NB_SEARCH_MIN_EXACT = 8;    // これ未満なら関連候補で補完する
+var NB_SEARCH_MAX_RELATED = 60; // 補完後の上限（全件並べると絞り込みの意味が消える）
+
+function nbPopCount(v) {
+  var n = 0;
+  while (v) { v &= v - 1; n++; }
+  return n;
+}
+
+function nbSearchRank(list, sq) {
+  var units = sq.units, n = units.length;
+  if (!n) return { list: list, meta: null };
+  var unitHits = [], unitPrim = [], i;
+  for (i = 0; i < n; i++) { unitHits.push(0); unitPrim.push(0); }
+  var qmult = 1;
+  units.forEach(function(u){ if (u.kind === 'concept' && u.c.quality) qmult = Math.max(qmult, u.c.quality); });
+
+  var scored = [], flag = {};
+  list.forEach(function(s) {
+    var x = nbStoreIndex(s), mask = 0, pmask = 0, total = 0, why = [];
+    for (var i = 0; i < n; i++) {
+      var v = nbUnitScore(units[i], x, s, flag);
+      if (v > 0) {
+        mask |= (1 << i); unitHits[i]++; total += v;
+        if (flag.primary !== false) { pmask |= (1 << i); unitPrim[i]++; }
+        if (why.length < 3) why.push(units[i].label);
+      }
+    }
+    if (total <= 0) return;
+    s.__score = total + nbQualityBonus(s, qmult);
+    s.__why = why;
+    scored.push({ s: s, mask: mask, pmask: pmask });
+  });
+
+  // 全店舗で1件も当たらなかった語は「必須」から外す（0件を避ける）
+  var requiredMask = 0, primaryMask = 0, unmatched = [];
+  for (i = 0; i < n; i++) {
+    if (unitHits[i] > 0) requiredMask |= (1 << i);
+    else unmatched.push(units[i].label);
+    // 指定エリアそのものに十分な件数があるなら、隣接エリアは関連候補に回す
+    if (unitPrim[i] >= 3) primaryMask |= (1 << i);
+  }
+
+  var exact = [], related = [];
+  scored.forEach(function(o) {
+    var ok = (o.mask & requiredMask) === requiredMask
+          && (o.pmask & primaryMask) === (requiredMask & primaryMask);
+    o.s.__hitCount = nbPopCount(o.mask & requiredMask);
+    // 並び替え（sortStores）は __score しか見ないので、
+    // 「条件を全部満たす > 2つ満たす > 1つ満たす」の階層をスコアに織り込む。
+    // ここで織り込まないと、ソートを通った時点で階層が消える。
+    o.s.__score += ok ? 1000000 : o.s.__hitCount * 10000;
+    if (ok) exact.push(o.s); else related.push(o.s);
+  });
+  var byScore = function(a, b){ return (b.__score || 0) - (a.__score || 0); };
+  exact.sort(byScore); related.sort(byScore);
+
+  var out = exact, relaxed = false;
+  if (exact.length < NB_SEARCH_MIN_EXACT && related.length) {
+    // 条件を満たす店が無いときの「近い候補」は上位だけ。全件並べると絞れていないのと同じになる。
+    out = exact.concat(related.slice(0, Math.max(0, NB_SEARCH_MAX_RELATED - exact.length)));
+    relaxed = true;
+  }
+  return {
+    list: out,
+    meta: {
+      exact: exact.length,
+      total: out.length,
+      relaxed: relaxed,
+      unmatched: unmatched,
+      labels: units.map(function(u){ return u.label; }),
+      types:  units.map(function(u){ return u.kind === 'concept' ? u.c.type : u.kind; })
+    }
+  };
+}
+
+// 検索の入口（applyFilters から呼ばれる）
+var NB_SEARCH_META = null;
+function nbRunSearch(list, rawQuery) {
+  if (!rawQuery) { NB_SEARCH_META = null; return list; }
+  var sq = nbParseQuery(rawQuery);
+  if (!sq.units.length) { NB_SEARCH_META = null; return list; }
+  var r = nbSearchRank(list, sq);
+  NB_SEARCH_META = r.meta;
+  return r.list;
+}
+// ==NB_SEARCH_ENGINE_END==
+
+// ── 検索UI連携（並び替えの自動切替 / 解釈の可視化）──
+var SORT_USER_PINNED = false; // ユーザーが並び替えを明示的に選んだか
+
+function nbSetSortMode(mode) {
+  SORT_MODE = mode;
+  var sel = document.getElementById('sort-select');
+  if (sel) {
+    var has = false;
+    for (var i = 0; i < sel.options.length; i++) if (sel.options[i].value === mode) has = true;
+    if (has) sel.value = mode;
+  }
+  var chips = document.querySelectorAll('.sort-chip');
+  for (var j = 0; j < chips.length; j++) {
+    var on = chips[j].dataset.sort === mode;
+    chips[j].classList.toggle('on', on);
+    chips[j].setAttribute('aria-selected', on ? 'true' : 'false');
+  }
+}
+
+function nbSyncRelevanceSort(hasQuery) {
+  if (document.body) document.body.classList.toggle('search-query-active', !!hasQuery);
+  if (hasQuery) {
+    if (!SORT_USER_PINNED && SORT_MODE !== 'relevance') nbSetSortMode('relevance');
+  } else if (SORT_MODE === 'relevance') {
+    nbSetSortMode('recommend');
+  }
+}
+
+// 「入力した言葉をどう解釈したか」を画面に出す（AI任せに見えないための説明責任）
+function nbRenderSearchMeta() {
+  var el = document.getElementById('search-interpret');
+  if (!el) return;
+  var m = NB_SEARCH_META;
+  if (!m || !m.labels || !m.labels.length) { el.innerHTML = ''; el.style.display = 'none'; return; }
+  var typeName = { scene:'シーン', area:'エリア', genre:'ジャンル', facility:'席・設備',
+                   budget:'予算', signal:'評判', word:'キーワード', cap:'人数', budgetnum:'予算' };
+  var pills = m.labels.map(function(l, i) {
+    var t = m.types[i] === 'cap' ? '人数' : (typeName[m.types[i]] || 'キーワード');
+    return '<span class="si-pill"><span class="si-k">' + nbEscHtml(t) + '</span>' + nbEscHtml(l) + '</span>';
+  }).join('');
+  var note = '';
+  if (m.unmatched && m.unmatched.length) {
+    note += '<div class="si-note">「' + m.unmatched.map(nbEscHtml).join('」「')
+         + '」に該当する情報は掲載データにありませんでした。他の条件で絞り込んでいます。</div>';
+  }
+  if (m.relaxed) {
+    note += '<div class="si-note">条件をすべて満たす店は' + m.exact
+         + '件です。' + (m.total - m.exact) + '件の<strong>関連する候補</strong>を続けて表示しています。</div>';
+  }
+  el.innerHTML = '<div class="si-head">この検索の解釈</div><div class="si-pills">' + pills + '</div>' + note;
+  el.style.display = '';
+}
+
 function applyFilters() {
   if (!ALL_STORES || ALL_STORES.length === 0) return;
   var prefEl = document.querySelector('.pt.on');
@@ -12648,7 +13361,7 @@ function applyFilters() {
   var genre = genreEl ? genreEl.dataset.f : 'All';
   var capNum = capInputEl ? parseInt(capInputEl.value, 10) : NaN;
   var siEl = document.getElementById('si');
-  var q = siEl ? siEl.value.trim().toLowerCase() : '';
+  var q = siEl ? siEl.value.trim() : '';
   FILTERED = ALL_STORES.filter(function(s){
     var okPref = (pref === '全国' || pref === 'all') || (s['都道府県'] || '') === pref;
     var okWard = ACTIVE_WARD === 'all' || (AREA_TO_WARD[s['エリア']] === ACTIVE_WARD);
@@ -12659,11 +13372,8 @@ function applyFilters() {
       var m2 = t.match(/^(\d+)名以上$/); if (m2) return true;
       return false;
     });
-    var okQ = !q || (s['店名']||'').toLowerCase().indexOf(q) !== -1
-      || (s['ジャンル']||'').toLowerCase().indexOf(q) !== -1
-      || (s['エリア']||'').toLowerCase().indexOf(q) !== -1
-      || (s['アクセス']||'').toLowerCase().indexOf(q) !== -1
-      || (s['タグ']||'').toLowerCase().indexOf(q) !== -1;
+    // 検索語（q）はここでは絞らない。フィルター通過後にセマンティック検索で
+    // スコアリング＆並べ替えする（nbRunSearch）。
     var storeTags = (s['タグ']||'').split(',').map(function(t){ return t.trim(); });
     var access = s['アクセス'] || '';
     var notes  = s['備考'] || '';
@@ -12697,11 +13407,16 @@ function applyFilters() {
       // その他のタグはアクセス・備考列も確認
       return access.includes(tag) || notes.includes(tag);
     });
-    return okPref && okWard && okGenre && okCap && okQ && okTags;
+    return okPref && okWard && okGenre && okCap && okTags;
   });
+  // セマンティック検索: 語がそのまま含まれていなくても意図に合う店を拾い、関連度順に並べる
+  FILTERED = nbRunSearch(FILTERED, q);
+  // 検索語がある間は「関連度順」を既定にする（ユーザーが明示的に別の順を選んだ場合は尊重）
+  nbSyncRelevanceSort(!!q);
   renderGrid(FILTERED);
   pushHash();
   updateFilterUI();
+  nbRenderSearchMeta();
   // MAGAZINE MODE — 検索/フィルターのいずれかが有効ならグリッド系を表示
   var hasActiveFilter = (q !== '')
     || (pref !== '全国' && pref !== 'all')
@@ -12871,10 +13586,13 @@ document.getElementById('si').addEventListener('input', function(){
   var si2 = document.getElementById('si2');
   if (si2 && document.activeElement !== si2) si2.value = this.value;
 });
+// セマンティック検索は全件スコアリングするため、打鍵ごとの再計算はデバウンスする
+var NB_SEARCH_DEBOUNCE = null;
 document.getElementById('si2').addEventListener('input', function(){
   var si = document.getElementById('si');
   if (si) si.value = this.value;
-  applyFilters();
+  if (NB_SEARCH_DEBOUNCE) clearTimeout(NB_SEARCH_DEBOUNCE);
+  NB_SEARCH_DEBOUNCE = setTimeout(applyFilters, 140);
 });
 document.getElementById('si2').addEventListener('keydown', function(e){ if(e.key==='Enter') applyFilters(); });
 
@@ -13211,6 +13929,13 @@ function buildCardHtml(r) {
     else if (ccScore >= 70) ccMetaHtml = '<span data-l="信頼度" class="cc-cell cc-mid" title="スコア信頼度">' + ccScore + '%</span>';
     else if (ccScore >= 50) ccMetaHtml = '<span data-l="信頼度" class="cc-cell cc-low" title="スコア信頼度">' + ccScore + '%</span>';
     else if (typeof r.crossCheckScore === 'number') ccMetaHtml = '<span data-l="信頼度" class="cc-cell cc-pending" title="スコア信頼度（参考値・データ蓄積中）">' + ccScore + '%</span>';
+    // 検索中は「なぜこの店が出たか」をカード上で明示する（語が丸ごと含まれない一致もあるため）
+    var whyHtml = '';
+    if (typeof SORT_MODE !== 'undefined' && SORT_MODE === 'relevance' && r.__why && r.__why.length) {
+      whyHtml = '<div class="card-why"><span class="cw-l">一致</span>'
+        + r.__why.map(function(w){ return '<span class="cw-t">' + nbEscHtml(w) + '</span>'; }).join('')
+        + '</div>';
+    }
     var distBadge = '';
     if (typeof SORT_MODE !== 'undefined' && SORT_MODE === 'distance' && typeof r.__dist === 'number' && isFinite(r.__dist)) {
       var distText = r.__dist < 1
@@ -13234,6 +13959,7 @@ function buildCardHtml(r) {
       + '<div class="cmeta"><span data-l="Area">' + area + '</span>' + (r['価格帯'] ? '<span data-l="Price">' + r['価格帯'] + '</span>' : '') + ccMetaHtml + '</div>'
       + '</div>'
       + tagHtml
+      + whyHtml
       + (r['おすすめポイント'] ? '<div class="card-point">' + r['おすすめポイント'] + '</div>' : '')
       + (r.editorReason && !r['おすすめポイント'] ? '<div class="card-editor-lead">' + r.editorReason + '</div>' : '')
       + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をホットペッパーで予約" rel="noopener noreferrer">ホットペッパーで予約</a><a class="card-cta-map" href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'の場所をGoogleマップで確認" title="Googleマップで場所を確認" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をGoogleマップで確認" style="background:#4285F4" rel="noopener noreferrer">Googleマップで確認</a></div>')
@@ -13253,10 +13979,16 @@ function renderGrid(data) {
   var gridEl = document.getElementById('grid');
   var pagEl = document.getElementById('pagination');
   if (!data.length) {
+    // 検索語のうち掲載データに存在しなかった語が分かっていれば具体的に伝える
+    var missHint = '';
+    if (typeof NB_SEARCH_META !== 'undefined' && NB_SEARCH_META && NB_SEARCH_META.unmatched && NB_SEARCH_META.unmatched.length) {
+      missHint = '<p>「' + NB_SEARCH_META.unmatched.map(nbEscHtml).join('」「')
+        + '」に一致する情報が掲載データにありませんでした。<br>店名の一部だけ、またはシーン（誕生日・接待・女子会）やエリア（栄・名駅・大須）でお試しください。</p>';
+    }
     gridEl.innerHTML = '<div class="empty-state">'
       + '<div class="empty-state-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="24"/><circle cx="32" cy="32" r="14"/></svg></div>'
       + '<h3>該当するお店が見つかりませんでした</h3>'
-      + '<p>検索条件を変えるか、フィルターをリセットしてお試しください。</p>'
+      + (missHint || '<p>検索条件を変えるか、フィルターをリセットしてお試しください。</p>')
       + '<button class="empty-state-reset" onclick="clearAllFilters()" aria-label="すべてのフィルターをリセットして全店舗を表示する">フィルターをリセット</button>'
       + '</div>';
     if (pagEl) pagEl.innerHTML = '';
@@ -14265,6 +14997,7 @@ function scrollToResultsIfAbove() {
 function applySort() {
   var sel = document.getElementById('sort-select');
   SORT_MODE = sel ? sel.value : 'recommend';
+  SORT_USER_PINNED = SORT_MODE !== 'relevance';
   if (SORT_MODE === 'distance' && !USER_GEO) { ensureGeoAndSort(); return; }
   sortAndRender();
   scrollToResultsIfAbove();
@@ -14272,6 +15005,17 @@ function applySort() {
 
 function sortStores(arr) {
   switch (SORT_MODE) {
+    case 'relevance':
+      // 検索語との関連度順（nbSearchRank が付けた __score）。同点は実データの質で割る。
+      arr.sort(function(a,b){
+        var d = (b.__score || 0) - (a.__score || 0);
+        if (d) return d;
+        var af = (a['話題フラグ'] === true || a['編集部推薦'] === true) ? 1 : 0;
+        var bf = (b['話題フラグ'] === true || b['編集部推薦'] === true) ? 1 : 0;
+        if (bf !== af) return bf - af;
+        return (parseFloat(b['Google評価'])||0) - (parseFloat(a['Google評価'])||0);
+      });
+      break;
     case 'cc-desc':
       arr.sort(function(a,b){ return (b.crossCheckScore||0) - (a.crossCheckScore||0); });
       break;
@@ -14389,6 +15133,7 @@ renderGrid = function(data) {
         var sel = document.getElementById('sort-select');
         if (sel) sel.value = mode;
         SORT_MODE = mode;
+        SORT_USER_PINNED = mode !== 'relevance';
         if (mode === 'distance') { ensureGeoAndSort(); }
         else { sortAndRender(); scrollToResultsIfAbove(); }
         if (window.trackEvent) trackEvent('sort_change', { mode: mode });
