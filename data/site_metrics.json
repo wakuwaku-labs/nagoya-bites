@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-08-03T10:05:20.704Z",
+  "generatedAt": "2026-08-03T10:45:30.524Z",
   "lookbackDays": 30,
   "totals": {
     "activeUsers": 526,
-    "pageViews": 801,
-    "sessions": 611,
-    "avgSessionDuration": 125.8,
-    "bounceRate": 0.394,
-    "pagesPerSession": 1.31
+    "pageViews": 805,
+    "sessions": 612,
+    "avgSessionDuration": 128.9,
+    "bounceRate": 0.395,
+    "pagesPerSession": 1.32
   },
   "channels": {
     "sessions": {
       "organic": 348,
-      "direct": 190,
+      "direct": 191,
       "social": 74,
       "referral": 10,
       "paid": 0,
@@ -20,7 +20,7 @@
     },
     "pct": {
       "organic": 55.9,
-      "direct": 30.5,
+      "direct": 30.7,
       "social": 11.9,
       "referral": 1.6,
       "paid": 0,
@@ -66,7 +66,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 17
+      "sessions": 18
     },
     {
       "source": "copilot.com",
@@ -81,14 +81,14 @@
   ],
   "topPages": [
     {
+      "path": "/",
+      "pageViews": 114,
+      "sessions": 96
+    },
+    {
       "path": "/features/nagoya-hitsumabushi.html",
       "pageViews": 113,
       "sessions": 105
-    },
-    {
-      "path": "/",
-      "pageViews": 112,
-      "sessions": 95
     },
     {
       "path": "/features/nagoya-solo-dining.html",
@@ -97,8 +97,8 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 46,
-      "sessions": 27
+      "pageViews": 48,
+      "sessions": 28
     },
     {
       "path": "/journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html",
@@ -107,16 +107,20 @@
     }
   ],
   "cta": {
-    "outboundClicks": 29,
-    "ctaClickRate": 4.7,
+    "outboundClicks": 31,
+    "ctaClickRate": 5.1,
     "byDomain": [
       {
         "domain": "tabelog.com",
-        "clicks": 8
+        "clicks": 9
       },
       {
         "domain": "www.hotpepper.jp",
         "clicks": 4
+      },
+      {
+        "domain": "maps.google.com",
+        "clicks": 2
       },
       {
         "domain": "biz.chunichi.co.jp",
@@ -128,10 +132,6 @@
       },
       {
         "domain": "jouhou.nagoya",
-        "clicks": 1
-      },
-      {
-        "domain": "maps.google.com",
         "clicks": 1
       },
       {
