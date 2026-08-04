@@ -913,7 +913,8 @@
 - **status**: ready
 - **category**: ops / reliability
 - **detected**: 2026-06-22
-- **owner**: Builder
+- **owner**: 片桐 ← Builder
+- **escalated**: 2026-08-04（scheduled-task 停止はエージェント自己改変ブロック対象のためオーナー操作必須。手順書: `docs/journal-consolidation-runbook.md`）
 - **description**: ジャーナル生成経路が2系統並走している：① launchd `com.nagoyabites.journal`（毎朝9:00 → `scripts/run_journal_local.sh`・作業ディレクトリ=メインrepo）② scheduled-task `nagoya-bites-journal-daily`（journal-today SKILL.md・worktree 経由で cp）。両者が同じ `journal/` を書くため、worktree→メインrepo の cp 残骸がメインrepo の `git pull` を殺す相互汚染が ISSUE-065 の真因だった（自己修復処理で再発不能化済だが、二重稼働そのものは温床として残存）。
 - **impact**: 片方が成果を出しても他方が空振り/汚染を生む。観測性も二重化して切り分けが難しい。ISSUE-065 級デッドロックの再発リスク源。
 - **acceptance**: どちらか一方の経路に一本化（推奨は launchd 側＝API課金ゼロのサブスク認証経路を正とし、scheduled-task を停止 or 逆）。残す側の単独運用で日次1本公開が継続することを数日観測。`.claude/settings.json`・scheduled-task はエージェント自己改変ブロックのためオーナー手動操作が必要な可能性あり（その場合は手順を docs にまとめてオーナーへ依頼）。
