@@ -10,7 +10,9 @@
 
 ### [FB-001] 検索バーに入力クリア（×）ボタンがない
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-04
+- **resolved_by**: commit a76fea52 / PR #107
 - **detected**: 2026-08-03（消費者フィードバックループ経由。サイト右下フローティング「ご意見」ボタンから
   モバイル送信。種類=使いづらい・わかりにくい / page=`#q=%E6%A0%84%20%E7%84%BC%E8%82%89`（「栢 焼肉」検索中））
 - **category**: UX
@@ -1982,6 +1984,7 @@
 | 2026-07-29 | Orchestrator(EXPLICIT) | ISSUE-078 日次ジャーナル記事の店舗を「店舗ページ」（stores/{id}.html）へ内部リンク必須化。buildStores()がid優先で内部リンクするよう修正／validate_journal_draft.jsの店名照合をTOP50限定index.html evalからdata/stores.json全件（load_stores.js）に是正＋WARNING項目16新設／既存公開記事(2026-07-29-nagoya-beergarden.html)にマイアミ・CARVINO・ANDBBQの店舗ページリンクを追記／agents/editor.mdに全テーマ共通ルールを明文化 | ✅ commit済み (PR #92) |
 | 2026-07-30 | Orchestrator(EXPLICIT) | ISSUE-078追補: 過去ジャーナル84本を全件監査し店舗カード↔店舗ページのリンクをバックフィル。外部リンクのみ11本を内部化／カードはあるがID未解決の44本にdata-store-id付与＋内部リンク化（stores/*.html全5,421件のJSON-LD名から正引き索引を実生成し、slug再計算に頼らず実ファイル照合で解決）／新規に実店舗言及を検出した1本にカード追加／残り38本は店舗非依存の一般論記事と確認し対象外。全63店舗カードの店名↔リンク先一致をゼロミスマッチで最終検証 | ✅ commit待ち（同PR #92に追加コミット予定） |
 | 2026-08-03 | Builder(routine) | SEO-046 refresh_journal_related.js 自動化組み込み: daily-journal.yml に「ジャーナル関連記事リンクの自動更新」ステップを追加、run_journal_local.sh の validator PASS 直後（5f節）に非ブロッキング呼び出し追加、旧 related-wrap 形式5本の SKIP ログを明示化。スクリプト未組み込みによる関連リンク欠如（直近7本が汎用リンクのみ）を恒久解消 | ✅ commit d7398333 |
+| 2026-08-04 | Builder(routine) | FB-001 検索バーに入力クリア（×）ボタン追加: #si/#si2 を .si-wrap で囲み絶対配置の .si-clear ボタンを追加。全値セット経路（clearAllFilters/suggestSearch/geoSearch/readHash/si-viewall）に updateClearBtns() を追加し表示状態を同期。QA-2〜4 全通過 | ✅ commit a76fea52 / PR #107 |
 
 ---
 
