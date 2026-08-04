@@ -223,8 +223,13 @@ nav.open{right:0;}
 .search-wrap input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.8rem 1.1rem;font-size:.8rem;border-radius:2px;outline:none;font-family:inherit;transition:border-color .2s;}
 .search-wrap input::placeholder{color:var(--dim);}
 .search-wrap input:focus{border-color:var(--gold);}
-.search-wrap button{background:var(--gold);border:none;color:var(--bg);padding:.8rem 1.4rem;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;cursor:pointer;font-weight:500;transition:background .2s;}
-.search-wrap button:hover{background:var(--gold2);}
+.search-wrap > button{background:var(--gold);border:none;color:var(--bg);padding:.8rem 1.4rem;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;cursor:pointer;font-weight:500;transition:background .2s;}
+.search-wrap > button:hover{background:var(--gold2);}
+.si-wrap{position:relative;flex:1;display:flex;align-items:center;}
+.si-wrap input{flex:1;padding-right:2.2rem;}
+.si-clear{position:absolute;right:.35rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--dim);cursor:pointer;font-size:.95rem;line-height:1;padding:.25rem;min-width:32px;min-height:32px;align-items:center;justify-content:center;display:none;border-radius:2px;transition:color .15s;letter-spacing:normal;text-transform:none;}
+.si-clear.visible{display:flex;}
+.si-clear:hover{color:var(--text);}
 /* ── 常時表示のシーン/エリア導線（直帰率対策・MEO-001） ── */
 .scene-nav{margin-top:1.6rem;max-width:580px;opacity:0;animation:up .9s .8s forwards;}
 .scene-nav-row{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin-top:.7rem;}
@@ -1380,7 +1385,10 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   </div>
   <div class="search-wrap">
     <label for="si" class="visually-hidden">レストランを検索</label>
-    <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+    <div class="si-wrap">
+      <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+      <button class="si-clear" id="si-clear" type="button" onclick="clearSearchInput('si')" aria-label="検索をクリア">✕</button>
+    </div>
     <button onclick="doSearch()" aria-label="検索">Search</button>
     <div class="search-suggest" id="hero-suggest">
       <span class="suggest-label">人気:</span>
@@ -1659,7 +1667,10 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <!-- スティッキー検索バー + アクティブフィルターチップ -->
 <div class="sticky-search" id="sticky-search">
   <label for="si2" class="visually-hidden">レストランを検索（追従バー）</label>
-  <input id="si2" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+  <div class="si-wrap">
+    <input id="si2" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+    <button class="si-clear" id="si2-clear" type="button" onclick="clearSearchInput('si2')" aria-label="検索をクリア">✕</button>
+  </div>
   <button class="geo-btn" id="geo-btn" onclick="geoSearch()" aria-label="現在地から探す"><span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="2.8"/></svg></span>現在地</button>
   <button class="sticky-search-btn" onclick="doSearch()" aria-label="検索">検索</button>
 </div>
@@ -12428,6 +12439,7 @@ function enhanceStoreIndex() {
         var si = document.getElementById('si'), si2 = document.getElementById('si2');
         if (si) si.value = q;
         if (si2) si2.value = q;
+        if (typeof updateClearBtns === 'function') updateClearBtns();
         applyFilters();
         var grid = document.getElementById('grid');
         if (grid) window.scrollTo({ top: grid.getBoundingClientRect().top + window.pageYOffset - 110, behavior:'smooth' });
@@ -13543,6 +13555,9 @@ function readHash() {
   if (params.q) {
     var siEl = document.getElementById('si');
     if (siEl) siEl.value = params.q;
+    var si2El = document.getElementById('si2');
+    if (si2El) si2El.value = params.q;
+    if (typeof updateClearBtns === 'function') updateClearBtns();
   }
   // 店舗ページ → モーダルカード表示（#store=HOTPEPPER_ID）
   if (params.store) {
@@ -13602,16 +13617,35 @@ function selectTag(tag) {
   el && el.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 function doSearch(){ var q=document.getElementById('si2').value||document.getElementById('si').value||''; if(q)trackEvent('search',{search_term:q}); applyFilters(); }
+function updateClearBtns() {
+  var si = document.getElementById('si'), si2 = document.getElementById('si2');
+  var b1 = document.getElementById('si-clear'), b2 = document.getElementById('si2-clear');
+  var hasVal = (si && si.value.length > 0) || (si2 && si2.value.length > 0);
+  if (b1) b1.classList.toggle('visible', !!hasVal);
+  if (b2) b2.classList.toggle('visible', !!hasVal);
+}
+function clearSearchInput(id) {
+  var si = document.getElementById('si'), si2 = document.getElementById('si2');
+  if (si) si.value = '';
+  if (si2) si2.value = '';
+  updateClearBtns();
+  if (typeof NB_SEARCH_DEBOUNCE !== 'undefined' && NB_SEARCH_DEBOUNCE) clearTimeout(NB_SEARCH_DEBOUNCE);
+  applyFilters();
+  var focus = document.getElementById(id);
+  if (focus) focus.focus();
+}
 document.getElementById('si').addEventListener('keydown', function(e){ if(e.key==='Enter') applyFilters(); });
 document.getElementById('si').addEventListener('input', function(){
   var si2 = document.getElementById('si2');
   if (si2 && document.activeElement !== si2) si2.value = this.value;
+  updateClearBtns();
 });
 // セマンティック検索は全件スコアリングするため、打鍵ごとの再計算はデバウンスする
 var NB_SEARCH_DEBOUNCE = null;
 document.getElementById('si2').addEventListener('input', function(){
   var si = document.getElementById('si');
   if (si) si.value = this.value;
+  updateClearBtns();
   if (NB_SEARCH_DEBOUNCE) clearTimeout(NB_SEARCH_DEBOUNCE);
   NB_SEARCH_DEBOUNCE = setTimeout(applyFilters, 140);
 });
@@ -13689,6 +13723,7 @@ function clearAllFilters() {
   // Clear search
   var si = document.getElementById('si'); if (si) si.value = '';
   var si2 = document.getElementById('si2'); if (si2) si2.value = '';
+  if (typeof updateClearBtns === 'function') updateClearBtns();
   applyFilters();
 }
 
@@ -15299,6 +15334,7 @@ function geoSearch() {
       if (si) si.value = nearest;
       var si2 = document.getElementById('si2');
       if (si2) si2.value = nearest;
+      if (typeof updateClearBtns === 'function') updateClearBtns();
       applyFilters();
       showToast(nearest + 'エリアの店舗を表示中');
     }
@@ -15487,6 +15523,7 @@ function suggestSearch(keyword) {
   var si2 = document.getElementById('si2');
   if (si) si.value = keyword;
   if (si2) si2.value = keyword;
+  if (typeof updateClearBtns === 'function') updateClearBtns();
   doSearch();
 }
 
