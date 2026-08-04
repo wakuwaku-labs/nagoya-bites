@@ -6736,6 +6736,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <li><a href="index.html#q=%E3%83%89%E3%83%A0%E3%83%89%E3%83%A0%E3%83%8F%E3%83%B3%E3%83%90%E3%83%BC%E3%82%AC%E3%83%BC%E5%A4%A7%E9%A0%88%E4%B8%87%E6%9D%BE%E5%AF%BA%E9%80%9A%E5%BA%97">ドムドムハンバーガー大須万松寺通店（大須 ハンバーガー）</a></li>
 <li><a href="index.html#q=M%C4%83%EF%BC%88%E3%83%9E%E3%83%BC%EF%BC%89by%20KIWAMI">Mă（マー）by KIWAMI（大須 中華）</a></li>
 <li><a href="index.html#q=%E5%A4%A7%E5%88%A4%E9%B0%BB%20%E3%81%86%E3%81%AA%E6%8B%93%20%E6%B1%A0%E4%B8%8B%E5%BA%97">大判鰻 うな拓 池下店（池下 うなぎ）</a></li>
+<li><a href="index.html#q=%E3%83%AA%E3%82%B5%E3%83%BC%E3%83%AB%E3%82%B3%E3%83%BC%E3%83%92%E3%83%BC%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%BA%97">リサールコーヒー 名古屋店（栄 カフェ）</a></li>
 </ul></noscript>
 <div class="grid" id="grid"></div>
 <div class="pagination" id="pagination" role="navigation" aria-label="ページネーション"></div>
@@ -6900,9 +6901,9 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <!-- トースト通知 -->
 <div class="toast" id="toast"></div>
 
-<!-- STORE-INDEX:START 2026-08-03 -->
+<!-- STORE-INDEX:START 2026-08-04 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（5011店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（5012店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（829店）</summary>
@@ -9816,7 +9817,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 </ul>
 </details>
 <details class="store-index-area" data-area="栄">
-<summary>栄（449店）</summary>
+<summary>栄（450店）</summary>
 <ul class="store-index-list">
 <li><a href="stores/J003474639.html">【栄限定】食べ飲み放題2500円 ひねり蛇口ハイ×食べ飲み放題 大衆酒泉テルマエ（栄・居酒屋）</a></li>
 <li><a href="stores/J003625289.html">【個室完備】炉端焼き 海鮮居酒屋 魚々路 - ととろ - 釧路店（栄・居酒屋）</a></li>
@@ -9936,6 +9937,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <li><a href="stores/J000796240.html">ヤン衆漁場 二代目 昌栄丸（栄・居酒屋）</a></li>
 <li><a href="stores/J001038389.html">ゆるりと菜 村さ来 茅ヶ崎店（栄・居酒屋）</a></li>
 <li><a href="stores/J004537287.html">よだれ屋 錦栄店（栄・居酒屋）</a></li>
+<li><a href="index.html#q=%E3%83%AA%E3%82%B5%E3%83%BC%E3%83%AB%E3%82%B3%E3%83%BC%E3%83%92%E3%83%BC%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%BA%97">リサールコーヒー 名古屋店（栄・カフェ）</a></li>
 <li><a href="stores/J000748737.html">リビング&amp;ダイニング hinode（栄・ダイニングバー・バル）</a></li>
 <li><a href="stores/J000590557.html">ろばた焼 明石（栄・居酒屋）</a></li>
 <li><a href="stores/J001261058.html">ロンフーダイニング名古屋パルコ店 栄（栄・中華）</a></li>
@@ -12312,7 +12314,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '36553c4729e5';
+var STORES_JSON_VERSION = '4e22cbfffb2d';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
