@@ -1,113 +1,113 @@
 {
-  "generatedAt": "2026-08-04T00:12:05.777Z",
+  "generatedAt": "2026-08-04T19:36:08.976Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 520,
-    "pageViews": 823,
-    "sessions": 608,
-    "avgSessionDuration": 162.5,
-    "bounceRate": 0.398,
-    "pagesPerSession": 1.35
+    "activeUsers": 556,
+    "pageViews": 874,
+    "sessions": 652,
+    "avgSessionDuration": 137.5,
+    "bounceRate": 0.414,
+    "pagesPerSession": 1.34
   },
   "channels": {
     "sessions": {
-      "organic": 343,
-      "direct": 196,
+      "organic": 366,
+      "direct": 212,
       "social": 75,
-      "referral": 10,
+      "referral": 12,
       "paid": 0,
-      "other": 1
+      "other": 4
     },
     "pct": {
-      "organic": 54.9,
-      "direct": 31.4,
-      "social": 12,
-      "referral": 1.6,
+      "organic": 54.7,
+      "direct": 31.7,
+      "social": 11.2,
+      "referral": 1.8,
       "paid": 0,
-      "other": 0.2
+      "other": 0.6
     }
   },
   "sourceBreakdown": [
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 185
+      "sessions": 193
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 145
+      "sessions": 156
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 83
+      "sessions": 96
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 69
+      "sessions": 71
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 43
+      "sessions": 39
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 28
-    },
-    {
-      "source": "openai",
-      "medium": "(not set)",
-      "sessions": 26
+      "sessions": 34
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 21
+      "sessions": 26
+    },
+    {
+      "source": "openai",
+      "medium": "(not set)",
+      "sessions": 25
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 4
     },
     {
       "source": "copilot.com",
       "medium": "ai-assistant",
       "sessions": 4
-    },
-    {
-      "source": "cn.bing.com",
-      "medium": "referral",
-      "sessions": 3
     }
   ],
   "topPages": [
     {
       "path": "/",
-      "pageViews": 138,
-      "sessions": 97
+      "pageViews": 145,
+      "sessions": 101
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 107,
-      "sessions": 99
+      "pageViews": 104,
+      "sessions": 96
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 61,
-      "sessions": 52
+      "pageViews": 64,
+      "sessions": 57
     },
     {
       "path": "/index.html",
-      "pageViews": 50,
-      "sessions": 28
+      "pageViews": 53,
+      "sessions": 31
     },
     {
-      "path": "/journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html",
+      "path": "/features/nagoya-summer-2026.html",
       "pageViews": 30,
-      "sessions": 20
+      "sessions": 28
     }
   ],
   "cta": {
-    "outboundClicks": 40,
+    "outboundClicks": 43,
     "ctaClickRate": 6.6,
     "byDomain": [
       {
@@ -116,7 +116,7 @@
       },
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 5
+        "clicks": 6
       },
       {
         "domain": "maps.google.com",
@@ -124,6 +124,10 @@
       },
       {
         "domain": "www.instagram.com",
+        "clicks": 3
+      },
+      {
+        "domain": "jouhou.nagoya",
         "clicks": 2
       },
       {
@@ -132,10 +136,6 @@
       },
       {
         "domain": "haera.parco.jp",
-        "clicks": 1
-      },
-      {
-        "domain": "jouhou.nagoya",
         "clicks": 1
       },
       {
@@ -159,7 +159,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 520,
+    "value": 556,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
