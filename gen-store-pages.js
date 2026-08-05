@@ -203,38 +203,84 @@ function buildRelatedFeatures(store) {
 // ================================================================
 // メタ説明文生成
 // ================================================================
+// アクセス文を「〇〇駅から徒歩N分」の一行に正規化する。
+// 元データは「名古屋市営地下鉄東山線，名古屋市営地下鉄名城線，空港バス栄(名古屋)駅１３出口より徒歩約5分」の
+// ように路線名が前置きされるため、そのまま出すと説明文の先頭が路線名で埋まる。
+// 駅名の直前に付く路線・バス表記（〜線 / 〜バス / 地下鉄 / JR 等）は落として駅名だけを残す。
+function accessSummary(access) {
+  const raw = String(access || '').trim();
+  if (!raw) return '';
+  // 括弧内は駅名判定のノイズになるので除去（「栄(名古屋)駅」→「栄駅」）
+  const flat = raw.replace(/[（(][^）)]*[）)]/g, '');
+  const m = flat.match(/([^\s，,／/｜|]{1,8})駅[^。]{0,20}?徒歩(?:約)?\s*(\d+)\s*分/);
+  if (m) {
+    // 徒歩15分超は「最寄り駅」として役に立たない情報なので、説明文ではエリア名に譲る
+    // （店舗ページ本文には元のアクセス文をそのまま掲載しているので情報は失われない）
+    if (parseInt(m[2], 10) > 15) return '';
+    // 「名鉄名古屋本線左京山」→「左京山」、「空港バス栄」→「栄」
+    const station = m[1].replace(/^.*(?:本線|線|バス|地下鉄|鉄道|ＪＲ|JR|名鉄|近鉄)/, '') || m[1];
+    return `${station}駅から徒歩${m[2]}分`;
+  }
+  // 徒歩表記が無い店は先頭セグメントだけを短く使う
+  const head = flat.split(/[｜|／/]/)[0].trim();
+  return head.length > 24 ? '' : head;
+}
+
 function buildDescription(s) {
-  const name  = s['店名'] || '';
-  const point = (s['おすすめポイント'] || '').trim();
+  const point = (s['おすすめポイント'] || '').trim().replace(/[。．]+$/, '');
   const genre = s['ジャンル'] || '';
   const area  = s['エリア'] || '';
   const price = s['価格帯'] || '';
   const score = s['Google評価'] || '';
+  const reviews = parseInt(s['口コミ数'] || '', 10);
   const tags  = (s['タグ'] || '').split(',').map(t => t.trim()).filter(Boolean);
   const parts = [];
 
-  // Part1: おすすめポイント（長すぎる場合は80字で切る）
-  if (point) parts.push(point.length > 80 ? point.slice(0, 79) + '…' : point);
+  // ── 並び順の根拠（SEO-048 / GSC 2026-08-05）──────────────────────
+  // 店舗ページは店名の指名検索で 8〜10 位に出るが CTR 0〜1.5%。
+  // 旧説明文は「個室経営効率を重視した店舗設計」のような “経営者向けの分析” が
+  // 先頭に来ており、店名で検索した消費者が知りたい「場所・予算・評価」が
+  // SERP の可視領域（モバイル約120字）から押し出されていた。
+  // よって「どこ・いくら・評価」を先に置き、業界視点のコメントは後ろに回す。
 
-  // Part2: エリア + ジャンル + 価格帯
-  const ctx = area && genre ? `${area}の${genre}` : (area + genre);
-  if (ctx) parts.push(ctx + (price ? `（${price}）` : ''));
+  // Part1: 最寄り駅 + ジャンル（無ければエリア + ジャンル）
+  const access = accessSummary(s['アクセス']);
+  const place  = access || titleAreaLabel(area) || area;
+  if (place && genre) parts.push(`${place}の${genre}`);
+  else if (place || genre) parts.push(place || genre);
+
+  // Part2: 予算
+  if (price) parts.push(`予算${price}`);
 
   // Part3: Google評価
-  if (score) parts.push(`Googleで${score}評価`);
+  // 口コミ5件未満の平均点は統計的に無意味（★1＝口コミ1件 のような値が混ざる）ため出さない。
+  // 隠蔽ではなく、母数が保証できない数字を代表値として掲げないという判断。
+  // ページ本文側では実データをそのまま表示している。
+  if (score && Number.isFinite(reviews) && reviews >= 5) {
+    parts.push(`Google★${score}（口コミ${reviews}件）`);
+  }
 
-  // Part4: 有用タグ先頭1件
+  // Part4: 有用タグ（最大2件）
   const usefulTags = ['個室', '貸切', '飲み放題', '食べ放題', '女子会', '接待', 'テラス'].filter(t => tags.includes(t));
-  if (usefulTags.length) parts.push(usefulTags[0] + '対応');
+  if (usefulTags.length) parts.push(usefulTags.slice(0, 2).join('・') + '対応');
 
-  let desc = parts.join('。') + (parts.length ? '。' : '');
+  // Part5: 業界視点のひとこと（他媒体に無い差別化要因。長い場合は文単位で切る）
+  if (point) parts.push(point.length > 60 ? point.split(/[。、]/)[0] : point);
 
-  // 短い場合はアクション文を補完
-  const cta = 'ホットペッパー・食べログ・Googleマップをまとめてチェック。NAGOYA BITES掲載。';
-  if (desc.length < 100) desc += cta;
+  // Part6: 複数媒体を1ページで見比べられる価値（尺が余ったときだけ）
+  const tail = '予約・地図・口コミを1ページで確認できます';
 
-  // 155字超は切り詰め
-  if (desc.length > 155) desc = desc.slice(0, 154) + '…';
+  // 説明文はモバイル SERP で約120字に切られる。中途半端な「…」を出さないよう
+  // 文の区切りで積み上げ、上限（130字）を超える手前で止める。
+  const LIMIT = 130;
+  let desc = '';
+  for (const p of parts.concat(tail)) {
+    const next = desc ? `${desc}${p}。` : `${p}。`;
+    if (next.length > LIMIT) break;
+    desc = next;
+  }
+  // 全滅した場合の最終フォールバック（parts が空 = データ欠損店）
+  if (!desc) desc = `${titleAreaLabel(area) || '名古屋'}の${genre || '飲食店'}。${tail}。`;
 
   return desc;
 }
