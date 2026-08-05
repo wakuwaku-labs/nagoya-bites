@@ -1,126 +1,126 @@
 {
-  "generatedAt": "2026-08-05T07:30:24.569Z",
+  "generatedAt": "2026-08-05T19:28:05.261Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 574,
-    "pageViews": 900,
-    "sessions": 673,
-    "avgSessionDuration": 136.9,
-    "bounceRate": 0.379,
-    "pagesPerSession": 1.34
+    "activeUsers": 581,
+    "pageViews": 927,
+    "sessions": 687,
+    "avgSessionDuration": 145,
+    "bounceRate": 0.402,
+    "pagesPerSession": 1.35
   },
   "channels": {
     "sessions": {
-      "organic": 386,
-      "direct": 204,
-      "social": 76,
+      "organic": 389,
+      "direct": 221,
+      "social": 78,
       "referral": 13,
       "paid": 0,
-      "other": 2
+      "other": 7
     },
     "pct": {
-      "organic": 56.7,
-      "direct": 30,
-      "social": 11.2,
-      "referral": 1.9,
+      "organic": 54.9,
+      "direct": 31.2,
+      "social": 11,
+      "referral": 1.8,
       "paid": 0,
-      "other": 0.3
+      "other": 1
     }
   },
   "sourceBreakdown": [
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 199
+      "sessions": 197
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 160
+      "sessions": 162
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 105
+      "sessions": 109
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 72
-    },
-    {
-      "source": "openai",
-      "medium": "organic",
-      "sessions": 40
+      "sessions": 74
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 38
+      "sessions": 43
     },
     {
       "source": "openai",
-      "medium": "(not set)",
-      "sessions": 25
+      "medium": "organic",
+      "sessions": 36
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 15
+      "sessions": 31
+    },
+    {
+      "source": "openai",
+      "medium": "(not set)",
+      "sessions": 24
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 7
     },
     {
       "source": "copilot.com",
       "medium": "ai-assistant",
       "sessions": 4
-    },
-    {
-      "source": "cn.bing.com",
-      "medium": "referral",
-      "sessions": 3
     }
   ],
   "topPages": [
     {
       "path": "/",
-      "pageViews": 146,
-      "sessions": 102
+      "pageViews": 154,
+      "sessions": 107
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 107,
-      "sessions": 98
+      "pageViews": 104,
+      "sessions": 96
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 68,
-      "sessions": 59
+      "pageViews": 71,
+      "sessions": 62
     },
     {
       "path": "/index.html",
-      "pageViews": 53,
-      "sessions": 31
+      "pageViews": 54,
+      "sessions": 32
     },
     {
       "path": "/features/nagoya-summer-2026.html",
-      "pageViews": 31,
-      "sessions": 30
+      "pageViews": 35,
+      "sessions": 33
     }
   ],
   "cta": {
-    "outboundClicks": 48,
-    "ctaClickRate": 7.1,
+    "outboundClicks": 58,
+    "ctaClickRate": 8.4,
     "byDomain": [
       {
         "domain": "tabelog.com",
-        "clicks": 18
+        "clicks": 22
       },
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 6
+        "clicks": 8
       },
       {
         "domain": "maps.google.com",
-        "clicks": 3
+        "clicks": 5
       },
       {
         "domain": "www.instagram.com",
@@ -128,6 +128,14 @@
       },
       {
         "domain": "jouhou.nagoya",
+        "clicks": 2
+      },
+      {
+        "domain": "www.google.com",
+        "clicks": 2
+      },
+      {
+        "domain": "www.tiktok.com",
         "clicks": 2
       },
       {
@@ -147,11 +155,11 @@
         "clicks": 1
       },
       {
-        "domain": "www.tiktok.com",
+        "domain": "www.walkerplus.com",
         "clicks": 1
       },
       {
-        "domain": "www.walkerplus.com",
+        "domain": "x.com",
         "clicks": 1
       }
     ],
@@ -159,7 +167,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 574,
+    "value": 581,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
