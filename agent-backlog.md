@@ -733,7 +733,9 @@
 - **関連**: ISSUE-067（効果計測の解像度向上）/ ISSUE-054（GSC 効果測定）
 
 ### [SEO-015] 日次ジャーナル記事のスマホ可読性を上げる（本文フォントサイズ・行間・画像配置のモバイル最適化）
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-05
+- **resolved_by**: (SEO-015 commit)
 - **detected**: 2026-07-21
 - **category**: SEO
 - **owner**: Editor
@@ -831,7 +833,7 @@
 ### [SEO-008] 検索流入が集中するジャーナル記事の冒頭にサイト紹介文＋index.htmlリンクを設置し専門性を伝え回遊させる
 - **priority**: P2 → **status**: done
 - **resolved**: 2026-08-05
-- **resolved_by**: (SEO-008 commit)
+- **resolved_by**: commit d61e66f7
 - **detected**: 2026-06-23
 - **category**: SEO
 - **owner**: Editor
