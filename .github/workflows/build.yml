@@ -145,6 +145,16 @@ jobs:
         run: node scripts/add_feature_top_cta.js
         continue-on-error: true
 
+      - name: 店舗写真を原寸マスターへ昇格（画質改善・実測ベース・冪等）
+        # Hot Pepper の _480.jpg は 480px しかなく、モーダル(約2000px相当)で 4倍に
+        # 引き伸ばされてボケていた。サフィックスなしURLが投稿時の原寸(720〜1280px)を返すため、
+        # 1件ずつ HTTP で実測し「実測幅が現在より大きい店だけ」を昇格する。
+        # 推測では昇格しない（CLAUDE.md 制約10: 検証できる事実だけで判定）。
+        # 新規追加店（weekly の fetch_hotpepper_popular.js 等）も実行時に自動で実測・追従する。
+        # build.js の後・gen-store-pages.js の前に置くことで stores/*.html にも反映される。
+        run: node scripts/promote_store_photos.js
+        continue-on-error: true
+
       - name: 個別店舗ページ再生成（manual_stores 追加分を stores/*.html に反映）
         # build.js が data/stores.json を更新した後、その canonical カタログを source に
         # 個別店舗ページを生成する。これがないと manual_stores.json に追加した店が
@@ -152,8 +162,9 @@ jobs:
         run: node gen-store-pages.js
 
       - name: 店舗写真カバレッジ監査（画質退行の検知・実写ゼロ店の可視化）
-        # build.js normalizePhotoUrl() が HotPepper 縮小サムネ(_238等)を最大サイズ _480 へ
-        # 昇格するため、縮小サムネ残留は通常ゼロ。--strict で残留＝退行を検知する。
+        # build.js normalizePhotoUrl() が HotPepper 縮小サムネ(_238等)を _480 へ昇格し、
+        # さらに promote_store_photos.js が実測で原寸へ昇格するため、縮小サムネ残留は
+        # 通常ゼロ。--strict で残留＝退行を検知する。
         # 実写ゼロ店（Places三重検証ゲート未通過）のリストもログに出して編集部が追える状態を保つ。
         # 初回は continue-on-error で安全に開始（既存監査と同じ運用）。
         run: node scripts/audit_photo_coverage.js --strict

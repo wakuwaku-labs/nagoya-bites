@@ -56,26 +56,32 @@ async function mapWithConcurrency(items, limit, fn) {
 
 const stores = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'stores.json'), 'utf8'));
 
-const buckets = { google: [], hp480: [], hpSmall: [], svg: [], other: [], none: [] };
+// Hot Pepper の画質階層（scripts/probe_hotpepper_master.js の実測にもとづく）:
+//   サフィックスなし(原寸マスター) > _480 > _238 等の縮小サムネ
+// 以前は「_480 が最大」と誤認していたが、実測で 70% の店に 720〜1280px の原寸が
+// 存在することが判明したため、原寸を最上位の正常値として扱う（ISSUE: カード画像の解像度）。
+const buckets = { google: [], hpMaster: [], hp480: [], hpSmall: [], svg: [], other: [], none: [] };
 for (const s of stores) {
   const u = String(s['写真URL'] || '').trim();
   if (!u) buckets.none.push(s);
   else if (u.includes('googleusercontent.com')) buckets.google.push(s);
   else if (/imgfp\.hotp\.jp\/.+_480\.jpg/.test(u)) buckets.hp480.push(s);
-  else if (/imgfp\.hotp\.jp/.test(u)) buckets.hpSmall.push(s);
+  else if (/imgfp\.hotp\.jp\/.+_\d+\.jpg/.test(u)) buckets.hpSmall.push(s);
+  else if (/imgfp\.hotp\.jp\/.+\.jpg/.test(u)) buckets.hpMaster.push(s);
   else if (u.includes('/assets/store-figures/')) buckets.svg.push(s);
   else buckets.other.push(s);
 }
 
 const total = stores.length;
-const hasUrl = buckets.google.length + buckets.hp480.length;
+const hasUrl = buckets.google.length + buckets.hpMaster.length + buckets.hp480.length;
 const igEmbed = stores.filter(s => /instagram\.com\/[^/]+\/(p|reel)\//.test(s['Instagram投稿URL'] || '')).length;
 
 console.log('── 店舗写真カバレッジ ─────────────────────────');
 console.log(`総店舗数            : ${total}`);
 console.log(`写真URLあり         : ${hasUrl} (${(hasUrl / total * 100).toFixed(1)}%)`);
 console.log(`  Google Places     : ${buckets.google.length}  ※期限付きURL・失効しうる`);
-console.log(`  HotPepper _480    : ${buckets.hp480.length}  ※恒久URL`);
+console.log(`  HotPepper 原寸    : ${buckets.hpMaster.length}  ※恒久URL・720〜1280px（最高画質）`);
+console.log(`  HotPepper _480    : ${buckets.hp480.length}  ※恒久URL・原寸が無い/小さい店`);
 console.log(`縮小サムネ残留(退行): ${buckets.hpSmall.length}`);
 console.log(`SVGプレースホルダー : ${buckets.svg.length}`);
 console.log(`その他URL           : ${buckets.other.length}`);

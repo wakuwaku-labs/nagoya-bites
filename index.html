@@ -84,6 +84,11 @@ function nbImage(url,width){
   if(hpMatch&&hpMatch[2]!=="480"){
     primary=hpMatch[1]+"_480.jpg";
     fallback=cleanUrl;
+  }else if(!hpMatch){
+    // 原寸マスター（サフィックスなし = promote_store_photos.js が実測で昇格したURL）は、
+    // 将来失効しても _480 に退避できるようフォールバックを張る
+    var hpMaster=cleanUrl.match(/^(imgfp\.hotp\.jp\/.+?)\.jpg(\?.*)?$/);
+    if(hpMaster)fallback=hpMaster[1]+"_480.jpg";
   }
   var qs="?url="+encodeURIComponent(primary)+"&w="+w+"&output=webp&q=82&we=1&sharp=2";
   if(fallback)qs+="&default="+encodeURIComponent(fallback);
@@ -1520,7 +1525,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
     <!-- FEATURED_START -->
     <a class="feature-card" href="features/nagoya-summer-2026.html">
       <span class="feature-card-season">真夏</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg 600w, https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 夏グルメ10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614.jpg" srcset="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614.jpg 600w, https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 夏グルメ10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 夏グルメ10選</div>
         <div class="feature-card-sub">真夏 · 冷麺・かき氷</div>
@@ -1530,7 +1535,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
     </a>
     <a class="feature-card" href="features/large-group.html">
       <span class="feature-card-season">お盆</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864_480.jpg 600w, https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 大人数宴会・団体10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864.jpg" srcset="https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864.jpg 600w, https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 大人数宴会・団体10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 大人数宴会・団体10選</div>
         <div class="feature-card-sub">お盆 · 帰省の集まりに</div>
@@ -1548,7 +1553,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   <div class="feature-strip-cards">
     <!-- SHOWCASE_START -->
     <a class="feature-card" href="features/nagoya-hitsumabushi.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg 480w, https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 ひつまぶし完全ガイド" width="480" height="600" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422.jpg" srcset="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422.jpg 480w, https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 ひつまぶし完全ガイド" width="480" height="600" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 ひつまぶし完全ガイド</div>
         <div class="feature-card-sub">名古屋めし · 厳選9店</div>
