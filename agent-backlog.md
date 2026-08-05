@@ -10,7 +10,7 @@
 
 ### [FB-001] 検索バーに入力クリア（×）ボタンがない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-08-03（消費者フィードバックループ経由。サイト右下フローティング「ご意見」ボタンから
   モバイル送信。種類=使いづらい・わかりにくい / page=`#q=%E6%A0%84%20%E7%84%BC%E8%82%89`（「栢 焼肉」検索中））
 - **category**: UX
@@ -735,7 +735,7 @@
 ### [SEO-015] 日次ジャーナル記事のスマホ可読性を上げる（本文フォントサイズ・行間・画像配置のモバイル最適化）
 - **priority**: P2 → **status**: done
 - **resolved**: 2026-08-05
-- **resolved_by**: (SEO-015 commit)
+- **resolved_by**: commit 0447d454
 - **detected**: 2026-07-21
 - **category**: SEO
 - **owner**: Editor

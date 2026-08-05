@@ -223,6 +223,12 @@ nav.open{right:0;}
 .search-wrap input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.8rem 1.1rem;font-size:.8rem;border-radius:2px;outline:none;font-family:inherit;transition:border-color .2s;}
 .search-wrap input::placeholder{color:var(--dim);}
 .search-wrap input:focus{border-color:var(--gold);}
+.si-wrap{position:relative;flex:1;display:flex;}
+.si-wrap input{flex:1;min-width:0;}
+.si-wrap.has-value input{padding-right:2.6rem;}
+.search-clear-btn{position:absolute;right:.3rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--dim);cursor:pointer;font-size:1rem;padding:0;width:44px;height:44px;display:none;align-items:center;justify-content:center;line-height:1;border-radius:2px;}
+.search-clear-btn:hover{color:var(--text);}
+.si-wrap.has-value .search-clear-btn{display:flex;}
 .search-wrap button{background:var(--gold);border:none;color:var(--bg);padding:.8rem 1.4rem;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;cursor:pointer;font-weight:500;transition:background .2s;}
 .search-wrap button:hover{background:var(--gold2);}
 /* ── 常時表示のシーン/エリア導線（直帰率対策・MEO-001） ── */
@@ -1380,7 +1386,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   </div>
   <div class="search-wrap">
     <label for="si" class="visually-hidden">レストランを検索</label>
-    <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+    <div class="si-wrap"><input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索"><button type="button" id="si-clear" class="search-clear-btn" aria-label="検索をクリア">×</button></div>
     <button onclick="doSearch()" aria-label="検索">Search</button>
     <div class="search-suggest" id="hero-suggest">
       <span class="suggest-label">人気:</span>
@@ -1659,7 +1665,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <!-- スティッキー検索バー + アクティブフィルターチップ -->
 <div class="sticky-search" id="sticky-search">
   <label for="si2" class="visually-hidden">レストランを検索（追従バー）</label>
-  <input id="si2" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+  <div class="si-wrap"><input id="si2" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索"><button type="button" id="si2-clear" class="search-clear-btn" aria-label="検索をクリア">×</button></div>
   <button class="geo-btn" id="geo-btn" onclick="geoSearch()" aria-label="現在地から探す"><span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="2.8"/></svg></span>現在地</button>
   <button class="sticky-search-btn" onclick="doSearch()" aria-label="検索">検索</button>
 </div>
@@ -15520,6 +15526,30 @@ function suggestSearch(keyword) {
     si2.addEventListener('input', function() { si.value = si2.value; });
     si2.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(); });
   }
+})();
+
+// ================================================================
+// FB-001: 検索クリアボタン (si / si2)
+// ================================================================
+(function(){
+  function setupClearBtn(inputId,clearId){
+    var inp=document.getElementById(inputId);
+    var btn=document.getElementById(clearId);
+    if(!inp||!btn)return;
+    var wrap=inp.closest('.si-wrap');
+    if(!wrap)return;
+    function updateState(){wrap.classList.toggle('has-value',inp.value.length>0);}
+    inp.addEventListener('input',updateState);
+    updateState();
+    btn.addEventListener('click',function(){
+      inp.value='';
+      updateState();
+      inp.dispatchEvent(new Event('input',{bubbles:true}));
+      inp.focus();
+    });
+  }
+  setupClearBtn('si','si-clear');
+  setupClearBtn('si2','si2-clear');
 })();
 
 // ================================================================
