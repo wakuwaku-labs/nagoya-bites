@@ -8,6 +8,22 @@
 
 ## 進行中・完了タスク
 
+### [SEO-048] チャネル別CTAクリック率を分解計測する（organic/direct/social で分けて測定構造を整備）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-08-01
+- **category**: SEO
+- **owner**: Marketer
+- **source**: [[SEO-044]] 診断結果（2026-08-01）から派生。CTAクリック率 13.5%→3.3% の低下は、organic 流入比率の増加（30%→57%）による**訪問者構成の変化**が主因と特定された
+- **採番修正 2026-08-05**: 本課題は当初 Notion 側にのみ `SEO-046` として作成され、`agent-backlog.md` に未登録の孤児ページだった。`SEO-046` は台帳側で別課題（公開直後のジャーナル記事に関連記事リンクが入らない）に使われており、**同じ番号が2つの別課題に付いていた**。内容は生きた課題のため削除せず `SEO-048` へ振り直して正式登録した（Notion ページ `3af26260-227a-81ee-9777-d7c088214f1f` はそのまま流用）
+- **brand-filter**: ✅ 適合 — 自社 GA4 の計測構造の改善のみ。外部依存・順位操作・広告・クーポン・ストック写真を一切伴わない。CLAUDE.md 制約10「検証できる事実だけで判定する」の強化そのもの
+- **problem**: `ctaClickRate` が全チャネル合算の単一指標としてしか記録されていないため、チャネル構成が変わるたびに「サイト品質の劣化」と「訪問者構成の変化」を区別できない。測定の盲点が施策判断を歪める（実際 SEO-044 では、合算値だけを見て「CTAが-75%劣化した」と読める状態だった）
+- **acceptance**:
+  1. GA4 の `outbound_click` イベントに `session_source` / `session_medium` を紐づけ、チャネル別クリック率を `data/site_metrics.json` に格納する
+  2. `data/metrics_history.json` のスナップショットに `ctaClickRate_organic` / `ctaClickRate_direct` / `ctaClickRate_social` を追記する
+  3. `cta.byDomain` の未帰属問題（[[SEO-044]] acceptance 3）を合わせて解消する
+- **関連**: [[SEO-044]]（診断元・done）/ [[ISSUE-068]]（link_domain 計測の穴）/ [[SEO-039]]（エンジン別観測レイヤー）/ [[SEO-047]]（同じ「合算値で誤読する」クラスの問題＝直帰率アラートの小サンプル誤検知）
+
 ### [FB-001] 検索バーに入力クリア（×）ボタンがない
 
 - **priority**: P2 → **status**: ready
