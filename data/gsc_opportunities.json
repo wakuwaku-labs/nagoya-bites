@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T09:10:52.870Z",
+  "generatedAt": "2026-08-04T19:36:11.788Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -7,56 +7,74 @@
     "ctrFix": [
       {
         "query": "やきまる亭",
-        "impressions": 177,
+        "impressions": 190,
         "clicks": 2,
-        "position": 8.4,
-        "ctr": 1.13,
-        "expectedCtr": 3,
-        "missedClicks": 3.4
+        "position": 8.3,
+        "ctr": 1.05,
+        "expectedCtr": 3.1,
+        "missedClicks": 3.9
       },
       {
         "query": "一魚魚一 はなれ",
-        "impressions": 161,
+        "impressions": 158,
         "clicks": 3,
-        "position": 8,
-        "ctr": 1.86,
+        "position": 8.1,
+        "ctr": 1.9,
         "expectedCtr": 3.2,
-        "missedClicks": 2.2
+        "missedClicks": 2
+      },
+      {
+        "query": "くろぎ 名古屋",
+        "impressions": 189,
+        "clicks": 3,
+        "position": 9.7,
+        "ctr": 1.59,
+        "expectedCtr": 2.6,
+        "missedClicks": 1.9
       },
       {
         "query": "フレンチ屋台ビストロ のれんとコルク 名古屋駅店",
-        "impressions": 91,
+        "impressions": 89,
         "clicks": 2,
         "position": 7,
-        "ctr": 2.2,
+        "ctr": 2.25,
         "expectedCtr": 4,
         "missedClicks": 1.6
+      },
+      {
+        "query": "トロンドン",
+        "impressions": 47,
+        "clicks": 2,
+        "position": 5.7,
+        "ctr": 4.26,
+        "expectedCtr": 5.3,
+        "missedClicks": 0.5
       }
     ],
     "rankPush": [
       {
         "query": "尾張山荘くろぎ",
-        "impressions": 401,
-        "clicks": 5,
+        "impressions": 428,
+        "clicks": 6,
         "position": 10.3,
-        "ctr": 1.25,
-        "upsideClicks": 6.2
+        "ctr": 1.4,
+        "upsideClicks": 6
       },
       {
         "query": "ナショナルベーカリー",
-        "impressions": 326,
+        "impressions": 352,
         "clicks": 5,
         "position": 12,
-        "ctr": 1.53,
-        "upsideClicks": 4.1
+        "ctr": 1.42,
+        "upsideClicks": 4.9
       },
       {
         "query": "アルマデシュラスコ名駅",
-        "impressions": 148,
+        "impressions": 159,
         "clicks": 2,
         "position": 10.1,
-        "ctr": 1.35,
-        "upsideClicks": 2.1
+        "ctr": 1.26,
+        "upsideClicks": 2.4
       },
       {
         "query": "キミトテ",
@@ -72,79 +90,80 @@
     "ctrFix": [
       {
         "page": "/stores/J004559348.html",
-        "impressions": 583,
+        "impressions": 565,
         "clicks": 7,
         "position": 8.3,
-        "ctr": 1.2,
+        "ctr": 1.24,
         "expectedCtr": 3.1,
-        "missedClicks": 11
+        "missedClicks": 10.4
+      },
+      {
+        "page": "/stores/J004613182.html",
+        "impressions": 590,
+        "clicks": 9,
+        "position": 9.7,
+        "ctr": 1.53,
+        "expectedCtr": 2.6,
+        "missedClicks": 6.3
       },
       {
         "page": "/stores/J004612476.html",
-        "impressions": 424,
+        "impressions": 440,
         "clicks": 6,
-        "position": 9.3,
-        "ctr": 1.42,
+        "position": 9.4,
+        "ctr": 1.36,
         "expectedCtr": 2.7,
-        "missedClicks": 5.5
+        "missedClicks": 5.8
       },
       {
         "page": "/stores/J004025075.html",
-        "impressions": 408,
-        "clicks": 8,
-        "position": 8.1,
-        "ctr": 1.96,
-        "expectedCtr": 3.2,
-        "missedClicks": 4.9
-      },
-      {
-        "page": "/stores/J004509691.html",
-        "impressions": 349,
-        "clicks": 5,
-        "position": 9.4,
-        "ctr": 1.43,
-        "expectedCtr": 2.7,
-        "missedClicks": 4.4
+        "impressions": 439,
+        "clicks": 9,
+        "position": 7.9,
+        "ctr": 2.05,
+        "expectedCtr": 3.3,
+        "missedClicks": 5.4
       },
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 229,
+        "impressions": 254,
         "clicks": 5,
-        "position": 7.3,
-        "ctr": 2.18,
-        "expectedCtr": 3.8,
-        "missedClicks": 3.6
+        "position": 7.1,
+        "ctr": 1.97,
+        "expectedCtr": 3.9,
+        "missedClicks": 5
+      },
+      {
+        "page": "/stores/J004509691.html",
+        "impressions": 339,
+        "clicks": 5,
+        "position": 9.4,
+        "ctr": 1.47,
+        "expectedCtr": 2.7,
+        "missedClicks": 4.1
       }
     ],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2294,
-        "clicks": 13,
-        "position": 23.2,
-        "ctr": 0.57,
-        "upsideClicks": 51.2
-      },
-      {
-        "page": "/stores/store-e5b0bee5bcb5e5b1.html",
-        "impressions": 405,
-        "clicks": 5,
-        "position": 10.8,
-        "ctr": 1.23,
-        "upsideClicks": 6.4
+        "impressions": 2430,
+        "clicks": 14,
+        "position": 24.9,
+        "ctr": 0.58,
+        "upsideClicks": 53.9
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 3,
+    "queryCtrFix": 5,
     "queryRankPush": 4,
-    "pageCtrFix": 5,
-    "pageRankPush": 2,
+    "pageCtrFix": 6,
+    "pageRankPush": 1,
     "topPageCtrFix": [
       "/stores/J004559348.html",
-      "/stores/J004612476.html",
-      "/stores/J004025075.html"
+      "/stores/J004613182.html",
+      "/stores/J004612476.html"
     ]
   }
 }

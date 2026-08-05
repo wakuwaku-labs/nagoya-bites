@@ -1,122 +1,134 @@
 {
-  "generatedAt": "2026-08-03T09:10:50.135Z",
+  "generatedAt": "2026-08-04T19:36:08.976Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 524,
-    "pageViews": 785,
-    "sessions": 605,
-    "avgSessionDuration": 123.3,
-    "bounceRate": 0.39,
-    "pagesPerSession": 1.3
+    "activeUsers": 556,
+    "pageViews": 874,
+    "sessions": 652,
+    "avgSessionDuration": 137.5,
+    "bounceRate": 0.414,
+    "pagesPerSession": 1.34
   },
   "channels": {
     "sessions": {
-      "organic": 348,
-      "direct": 178,
-      "social": 74,
-      "referral": 10,
+      "organic": 366,
+      "direct": 212,
+      "social": 75,
+      "referral": 12,
       "paid": 0,
-      "other": 0
+      "other": 4
     },
     "pct": {
-      "organic": 57,
-      "direct": 29.2,
-      "social": 12.1,
-      "referral": 1.6,
+      "organic": 54.7,
+      "direct": 31.7,
+      "social": 11.2,
+      "referral": 1.8,
       "paid": 0,
-      "other": 0
+      "other": 0.6
     }
   },
   "sourceBreakdown": [
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 188
+      "sessions": 193
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 138
+      "sessions": 156
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 84
+      "sessions": 96
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 69
+      "sessions": 71
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 44
+      "sessions": 39
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 28
-    },
-    {
-      "source": "openai",
-      "medium": "(not set)",
-      "sessions": 26
+      "sessions": 34
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 11
+      "sessions": 26
+    },
+    {
+      "source": "openai",
+      "medium": "(not set)",
+      "sessions": 25
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 4
     },
     {
       "source": "copilot.com",
       "medium": "ai-assistant",
       "sessions": 4
-    },
-    {
-      "source": "cn.bing.com",
-      "medium": "referral",
-      "sessions": 3
     }
   ],
   "topPages": [
     {
-      "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 113,
-      "sessions": 105
+      "path": "/",
+      "pageViews": 145,
+      "sessions": 101
     },
     {
-      "path": "/",
-      "pageViews": 101,
-      "sessions": 90
+      "path": "/features/nagoya-hitsumabushi.html",
+      "pageViews": 104,
+      "sessions": 96
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 63,
-      "sessions": 54
+      "pageViews": 64,
+      "sessions": 57
     },
     {
       "path": "/index.html",
-      "pageViews": 46,
-      "sessions": 27
+      "pageViews": 53,
+      "sessions": 31
     },
     {
-      "path": "/journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html",
+      "path": "/features/nagoya-summer-2026.html",
       "pageViews": 30,
-      "sessions": 20
+      "sessions": 28
     }
   ],
   "cta": {
-    "outboundClicks": 29,
-    "ctaClickRate": 4.8,
+    "outboundClicks": 43,
+    "ctaClickRate": 6.6,
     "byDomain": [
       {
         "domain": "tabelog.com",
-        "clicks": 8
+        "clicks": 13
       },
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 4
+        "clicks": 6
+      },
+      {
+        "domain": "maps.google.com",
+        "clicks": 3
+      },
+      {
+        "domain": "www.instagram.com",
+        "clicks": 3
+      },
+      {
+        "domain": "jouhou.nagoya",
+        "clicks": 2
       },
       {
         "domain": "biz.chunichi.co.jp",
@@ -124,14 +136,6 @@
       },
       {
         "domain": "haera.parco.jp",
-        "clicks": 1
-      },
-      {
-        "domain": "jouhou.nagoya",
-        "clicks": 1
-      },
-      {
-        "domain": "maps.google.com",
         "clicks": 1
       },
       {
@@ -143,6 +147,10 @@
         "clicks": 1
       },
       {
+        "domain": "www.tiktok.com",
+        "clicks": 1
+      },
+      {
         "domain": "www.walkerplus.com",
         "clicks": 1
       }
@@ -151,7 +159,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 524,
+    "value": 556,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

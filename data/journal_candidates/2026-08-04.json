@@ -1,0 +1,453 @@
+{
+  "date": "2026-08-04",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c2",
+      "title_draft": "栄『リサールコーヒー』日本初出店——業界人が読むカフェ400円の設計",
+      "verdict": "PASS",
+      "total": 105,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (価格帯,席,予約,シーン,デート,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 3件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 152字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c1",
+      "title_draft": "朝8時に海鮮定食、夜をやらない店の設計——矢場町『食堂盛栄』を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 87,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 20,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "海鮮",
+          "feature": "features/nagoya-seafood.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 10日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,予約,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 146字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「海鮮」+2"
+        ]
+      },
+      "gate_note": "87点（自動公開ライン 100点）。主な不足: recency -7 / topicality -5 / uniqueness -5"
+    },
+    {
+      "id": "c3",
+      "title_draft": "大須のいなり寿司専門店が2階に席を作った理由——『やなぎつね』大須店の回転設計",
+      "verdict": "HOLD",
+      "total": 70,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 13,
+        "uniqueness": 5,
+        "brand_fit": 8,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (席) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 129字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「寿司」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "中村区に開いたラーメン『麺屋 日向ぼっこ』、名駅圏の外に出す判断",
+      "verdict": "HOLD",
+      "total": 63,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 5,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (回転) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 122字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "緑区大高に『コナズ珈琲』——郊外ロードサイドのカフェが席数で勝つ理由",
+      "verdict": "HOLD",
+      "total": 59,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 5,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (席) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 88字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c2",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "朝8時に海鮮定食、夜をやらない店の設計——矢場町『食堂盛栄』を業界人が読む",
+      "lead_draft": "2026年7月14日、矢場町駅から徒歩6分の千代田に『食堂盛栄』が開いた。羽釜炊きのご飯に日間賀島の魚を合わせる海鮮定食屋だが、業界人の目が止まるのは料理より営業時間だ。朝8時に開けて16時に閉め、木曜を休む。名古屋の飲食で最も原価と人件費が重い「夜」を、この店は最初から取りに行っていない。",
+      "angle": "朝8時〜16時・木曜定休という「夜を捨てた」営業設計を、人件費・回転・予約不要のオペレーションから読み解き、1,500〜2,000円の価格帯が定食屋としてどう成立するか、一人飯と朝の商談前にどう向くかまで落とす",
+      "main_store": {
+        "name": "食堂盛栄",
+        "id": "J004633156",
+        "area": "栄(ミナミ)/矢場町/大須/上前津",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「朝から営業する海鮮定食の専門店『食堂盛栄』矢場町駅近くにオープン」",
+          "url": "https://jouhou.nagoya/shokudo-moriei/",
+          "date": "2026-07-25"
+        },
+        {
+          "label": "ホットペッパーグルメ 食堂盛栄 店舗ページ（営業時間・席数・予算の一次情報）",
+          "url": "https://www.hotpepper.jp/strJ004633156/"
+        },
+        {
+          "label": "食べログ 食堂盛栄（矢場町/食堂）",
+          "url": "https://tabelog.com/aichi/A2301/A230103/23096702/"
+        },
+        {
+          "label": "名古屋グルメ探偵アスカイ（X）— 食堂盛栄オープン投稿",
+          "url": "https://x.com/gourmet_nagoya/status/2081363571653661147"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄『リサールコーヒー』日本初出店——業界人が読むカフェ400円の設計",
+      "lead_draft": "2026年8月3日、栄駅から徒歩3分の大津通沿いに韓国発のエスプレッソ専門店『リサールコーヒー』が日本初出店した。看板のカフェ オネローソは400円、ピチカーティは200円。栄大津通の家賃でこの価格帯をどう成立させるのか。約40名収容のうちスタンディングを厚く取り、朝7時半に開ける設計に答えが出ている。",
+      "angle": "客単価400円という価格帯を、立ち席中心の席構成・朝7時半から夜9時までの繁忙帯の二山・予約を取らない回転前提のオペで成立させる韓国式エスプレッソバーの裏側を業界人が読み、一人時間とデート前の待ち合わせというシーン適性まで落とす",
+      "main_store": {
+        "name": "リサールコーヒー 名古屋店",
+        "id": "",
+        "area": "栄",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「リサールコーヒー」栄・大津通に日本初出店",
+          "url": "https://jouhou.nagoya/leesar-coffee/",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "PR TIMES「韓国発『Leesar』、名古屋に日本初店舗オープンに関するお知らせ」（株式会社Field Alliance）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000004.000178744.html",
+          "date": "2026-07-15"
+        },
+        {
+          "label": "リサールコーヒー 公式Instagram 投稿（オープン告知）",
+          "url": "https://www.instagram.com/p/Dbjc9q7zrd0/",
+          "date": "2026-08-02"
+        },
+        {
+          "label": "食べログ リサールコーヒー 名古屋店（LEESAR NAGOYA）",
+          "url": "https://tabelog.com/aichi/A2301/A230103/23097146/"
+        },
+        {
+          "label": "グルメプレス「韓国発『Leesar』、名古屋に日本初店舗オープン」",
+          "url": "https://gourmetpress.net/1459837/",
+          "date": "2026-07-15"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "大須のいなり寿司専門店が2階に席を作った理由——『やなぎつね』大須店の回転設計",
+      "lead_draft": "2026年7月21日、大須の東仁王門通りに『やなぎつね』の2号店が開いた。柳橋の1号店はテイクアウト専門だったが、大須店は1階で注文して2階で食べる。この「注文と着席を分ける」構造は、商店街の立地で席を持つときの定石だ。イートイン限定定食は1,382円から。",
+      "angle": "テイクアウト専門1号店との対比で、商店街立地に席を持つときの1階オーダー・2階着席という導線設計と、いなり寿司専門店が定食とアルコールを足す意味を読む",
+      "main_store": {
+        "name": "やなぎつね 大須店",
+        "id": "",
+        "area": "大須",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「やなぎつね」大須店オープン記事",
+          "url": "https://jouhou.nagoya/yanagitsune-inari/",
+          "date": "2026-07-22"
+        },
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "やなぎつね 公式Instagram",
+          "url": "https://www.instagram.com/yanagitsune2025/"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "中村区に開いたラーメン『麺屋 日向ぼっこ』、名駅圏の外に出す判断",
+      "lead_draft": "2026年7月20日、中村区に『麺屋 日向ぼっこ』が開いた。名駅から一歩外れた住宅寄りの立地で、家賃と客層のバランスをどう取るか。ラーメン業態は席数と回転がすべてだが、名駅圏の外側は昼のピークが読みにくい。それでもここに出す判断には理由がある。",
+      "angle": "名駅圏の外側にラーメン店を出すときの家賃と回転のトレードオフを読む",
+      "main_store": {
+        "name": "麺屋 日向ぼっこ",
+        "id": "",
+        "area": "中村区",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「麺屋 日向ぼっこ」オープン記事",
+          "url": "https://jouhou.nagoya/menya-hinatabocco/",
+          "date": "2026-07-20"
+        },
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-03"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "緑区大高に『コナズ珈琲』——郊外ロードサイドのカフェが席数で勝つ理由",
+      "lead_draft": "2026年7月24日、緑区大高に『コナズ珈琲』が開いた。ハワイアンカフェの郊外ロードサイド型は、駐車場と席数で滞在時間を売る業態だ。都心のカフェと同じ物差しで見ると読み違える。",
+      "angle": "郊外ロードサイドカフェの駐車場・席数・滞在時間の経済を読む",
+      "main_store": {
+        "name": "コナズ珈琲 名古屋緑店",
+        "id": "",
+        "area": "緑区大高",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「コナズ珈琲」緑区オープン記事",
+          "url": "https://jouhou.nagoya/konas-coffee-midori/",
+          "date": "2026-07-24"
+        },
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-03"
+        }
+      ]
+    }
+  ]
+}
