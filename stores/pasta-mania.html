@@ -10,11 +10,11 @@ function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,p
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PASTA MANIA 鶴舞店（鶴舞・パスタ・イタリアン）| NAGOYA BITES</title>
-<meta name="description" content="行列のできるパスタ専門店の3号店が2026年7月3日オープン。全38席、ランチは通常営業だが夜は完全予約制で1日8名限定の会員制コース『PASTA懐石』。八丁…。鶴舞のパスタ・イタリアン（2001～3000円）。">
+<title>PASTA MANIA 鶴舞店（名古屋市中区・パスタ専門店）| NAGOYA BITES</title>
+<meta name="description" content="2026年7月3日オープンの新店ながら、早くも行列のできるパスタ専門店。こだわりの生パスタとソースは、ランチのカジュアル利用から、ディナーの完全予約制VIPル…。名古屋市中区のパスタ専門店。Googleで4評価。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/pasta-mania.html">
-<meta property="og:title" content="PASTA MANIA 鶴舞店（鶴舞・パスタ・イタリアン）| NAGOYA BITES">
-<meta property="og:description" content="行列のできるパスタ専門店の3号店が2026年7月3日オープン。全38席、ランチは通常営業だが夜は完全予約制で1日8名限定の会員制コース『PASTA懐石』。八丁…。鶴舞のパスタ・イタリアン（2001～3000円）。">
+<meta property="og:title" content="PASTA MANIA 鶴舞店（名古屋市中区・パスタ専門店）| NAGOYA BITES">
+<meta property="og:description" content="2026年7月3日オープンの新店ながら、早くも行列のできるパスタ専門店。こだわりの生パスタとソースは、ランチのカジュアル利用から、ディナーの完全予約制VIPル…。名古屋市中区のパスタ専門店。Googleで4評価。">
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="https://nagoya-bites.com/stores/pasta-mania.html">
 <meta property="og:image" content="/assets/store-figures/_fallback.svg">
@@ -23,8 +23,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:site_name" content="NAGOYA BITES">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PASTA MANIA 鶴舞店（鶴舞・パスタ・イタリアン）| NAGOYA BITES">
-<meta name="twitter:description" content="行列のできるパスタ専門店の3号店が2026年7月3日オープン。全38席、ランチは通常営業だが夜は完全予約制で1日8名限定の会員制コース『PASTA懐石』。八丁…。鶴舞のパスタ・イタリアン（2001～3000円）。">
+<meta name="twitter:title" content="PASTA MANIA 鶴舞店（名古屋市中区・パスタ専門店）| NAGOYA BITES">
+<meta name="twitter:description" content="2026年7月3日オープンの新店ながら、早くも行列のできるパスタ専門店。こだわりの生パスタとソースは、ランチのカジュアル利用から、ディナーの完全予約制VIPル…。名古屋市中区のパスタ専門店。Googleで4評価。">
 <meta name="twitter:image" content="/assets/store-figures/_fallback.svg">
 <link rel="manifest" href="../manifest.json">
 <meta name="theme-color" content="#7a5c10">
@@ -36,21 +36,23 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "@context": "https://schema.org",
     "@type": "Restaurant",
     "name": "PASTA MANIA 鶴舞店",
-    "servesCuisine": "パスタ・イタリアン",
+    "servesCuisine": "パスタ専門店",
     "address": {
       "@type": "PostalAddress",
       "addressRegion": "愛知県",
       "addressCountry": "JP",
-      "addressLocality": "鶴舞"
+      "addressLocality": "名古屋市中区"
     },
     "image": "/assets/store-figures/_fallback.svg",
     "url": "https://nagoya-bites.com/stores/pasta-mania.html",
-    "description": "行列のできるパスタ専門店の3号店が2026年7月3日オープン。全38席、ランチは通常営業だが夜は完全予約制で1日8名限定の会員制コース『PASTA懐石』。八丁味噌が隠し味の和牛ボロネーゼが名物。鶴舞駅徒歩3分。",
-    "priceRange": "¥",
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "35.1573",
-      "longitude": "136.9252"
+    "description": "2026年7月3日オープンの新店ながら、早くも行列のできるパスタ専門店。こだわりの生パスタとソースは、ランチのカジュアル利用から、ディナーの完全予約制VIPルームでの特別な食事まで、幅広いシーンで名古屋の食通を唸らせます。",
+    "sameAs": [
+      "https://tabelog.com/aichi/A2301/A230105/23094093/"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4",
+      "bestRating": "5"
     }
   },
   {
@@ -66,14 +68,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "パスタ・イタリアン",
-        "item": "https://nagoya-bites.com/#genre=%E3%83%91%E3%82%B9%E3%82%BF%E3%83%BB%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3"
+        "name": "パスタ専門店",
+        "item": "https://nagoya-bites.com/#genre=%E3%83%91%E3%82%B9%E3%82%BF%E5%B0%82%E9%96%80%E5%BA%97"
       },
       {
         "@type": "ListItem",
         "position": 3,
-        "name": "鶴舞エリア",
-        "item": "https://nagoya-bites.com/#area=%E9%B6%B4%E8%88%9E"
+        "name": "名古屋市中区エリア",
+        "item": "https://nagoya-bites.com/#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA"
       },
       {
         "@type": "ListItem",
@@ -146,35 +148,36 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <a href="../">NAGOYA BITES</a>
-    <span>›</span><a href="../#genre=%E3%83%91%E3%82%B9%E3%82%BF%E3%83%BB%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3">パスタ・イタリアン</a>
-    <span>›</span><a href="../#area=%E9%B6%B4%E8%88%9E">鶴舞</a>
+    <span>›</span><a href="../#genre=%E3%83%91%E3%82%B9%E3%82%BF%E5%B0%82%E9%96%80%E5%BA%97">パスタ専門店</a>
+    <span>›</span><a href="../#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA">名古屋市中区</a>
     <span>›</span>
     <span>PASTA MANIA 鶴舞店</span>
   </nav>
 
-  <div class="genre-badge">パスタ・イタリアン</div>
+  <div class="genre-badge">パスタ専門店</div>
   <h1>PASTA MANIA 鶴舞店</h1>
   <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
-    
-    <span class="ccs-badge ccs-badge-pending" title="スコア信頼度: 複数媒体シグナルによる客観評価（データ蓄積中の参考値・低評価を示すものではありません）">信頼度 33 ／ 参考値</span>
+    <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>4</div>
+    <span class="ccs-badge ccs-badge-pending" title="スコア信頼度: 複数媒体シグナルによる客観評価（データ蓄積中の参考値・低評価を示すものではありません）">信頼度 41 ／ 参考値</span>
   </div>
 
-  <div class="point-box"><p>行列のできるパスタ専門店の3号店が2026年7月3日オープン。全38席、ランチは通常営業だが夜は完全予約制で1日8名限定の会員制コース『PASTA懐石』。八丁味噌が隠し味の和牛ボロネーゼが名物。鶴舞駅徒歩3分。</p></div>
+  <div class="point-box"><p>2026年7月3日オープンの新店ながら、早くも行列のできるパスタ専門店。こだわりの生パスタとソースは、ランチのカジュアル利用から、ディナーの完全予約制VIPルームでの特別な食事まで、幅広いシーンで名古屋の食通を唸らせます。</p></div>
 
   <div class="info-grid">
-    <div class="info-cell"><label>エリア</label><span>愛知県 鶴舞</span></div>
-    
-    <div class="info-cell"><label>価格帯</label><span>2001～3000円</span></div>
+    <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市中区</span></div>
     
     
-    <div class="info-cell"><label>アクセス・特徴</label><span>地下鉄鶴舞線 鶴舞駅1出口 徒歩3分（名古屋市中区千代田2-16-12 さくらビル1F）</span></div>
+    
+    
+    <div class="info-cell"><label>アクセス・特徴</label><span>名古屋市中区千代田 鶴舞駅より徒歩約5分</span></div>
   </div>
 
-  <div class="tags"><span class="tag">イタリアン</span><span class="tag">2000〜3000円</span></div>
+  
 
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/PASTA%20MANIA%20%E9%B6%B4%E8%88%9E%E5%BA%97%20%E9%B6%B4%E8%88%9E" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/PASTA%20MANIA%20%E9%B6%B4%E8%88%9E%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230105/23094093/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>
 
   
@@ -182,13 +185,12 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <h2>この店舗が登場する特集</h2>
     <ul>
       <li><a href="../features/nagoya-italian-guide.html">名古屋のイタリアン10選【2026年版】</a></li>
-      <li><a href="../features/date.html">名古屋・デートディナー10選</a></li>
-      <li><a href="../features/osu-food-walk.html">大須 食べ歩きおすすめ10選</a></li>
+      <li><a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a></li>
     </ul>
   </div>
 
   <div class="back-section">
-    <a href="../?area=%E9%B6%B4%E8%88%9E&genre=%E3%83%91%E3%82%B9%E3%82%BF%E3%83%BB%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3">← 鶴舞のパスタ・イタリアンをもっと見る</a>
+    <a href="../?area=%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA&genre=%E3%83%91%E3%82%B9%E3%82%BF%E5%B0%82%E9%96%80%E5%BA%97">← 名古屋市中区のパスタ専門店をもっと見る</a>
   </div>
 </div>
 
