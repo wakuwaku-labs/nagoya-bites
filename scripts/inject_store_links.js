@@ -4,7 +4,7 @@
  *
  * index.html 内 var LOCAL_STORES を真正データとして、
  * エリア別の全店舗内部リンク集（section#store-index）と
- * SEO クロール用 noscript リスト（noscript#seo-store-list）を生成・差し込む。
+ * シーン/エリア/ジャンル特集への発見導線（section#scene-index）を生成・差し込む。
  *
  * リンク先の決定：
  *   - stores/{ホットペッパーID}.html が存在 → そのページへ
@@ -12,6 +12,18 @@
  *     （index.html 側の readHash() が #q=... を拾って検索を実行する）
  *
  * 冪等: マーカー <!-- STORE-INDEX:START --> / <!-- STORE-INDEX:END --> で囲まれたブロックを置換。
+ *       <!-- SCENE-INDEX:START --> / <!-- SCENE-INDEX:END --> も同様。
+ *
+ * ── noscript#seo-store-list を廃止した理由（SEO-050 / 2026-08-05 GSC 実測）──
+ *   かつて同じ 5,017 店を noscript リストにも重複出力していたが、
+ *     ・href は section#store-index と完全に同一 → クロール上の増分ゼロ
+ *     ・トップページ本文に店名 5,017 件が載る → `/` が全店の指名検索に出てしまう
+ *   実測（2026-07-08〜08-04 GSC）: `/` は 表示2,326 / 掲載順位25.2 / CTR 0.6%。
+ *   出ているクエリは「bar & kitchen life size」等ほぼ全部が店名の指名検索で、
+ *   同じクエリで stores/*.html は 8〜10位・CTR 1.5〜2.5%。つまりトップページが
+ *   自社の店舗ページを共食い（cannibalize）しながら、自身は 26位で取りこぼしていた。
+ *   さらに 415KB（index.html の 36%）を占め、クリックの74%を占めるモバイルの
+ *   初期表示を重くしていた。よって生成を止め、既存ブロックは除去する。
  */
 
 const fs   = require('fs');
@@ -100,20 +112,46 @@ ${sections}
 <!-- STORE-INDEX:END -->`;
 }
 
-function renderNoscriptBlock(stores, detailSet) {
-  const items = stores
-    .filter(s => s['公開フラグ'] !== 'FALSE')
-    .map(s => {
-      const href  = buildHrefFor(s, detailSet);
-      const area  = s['エリア']  || '';
-      const genre = s['ジャンル'] || '';
-      const tail  = [area, genre].filter(Boolean).join(' ');
-      const label = tail
-        ? `${escapeHtml(s['店名'] || '')}（${escapeHtml(tail)}）`
-        : escapeHtml(s['店名'] || '');
-      return `<li><a href="${href}">${label}</a></li>`;
-    }).join('\n');
-  return `<noscript><ul id="seo-store-list">\n${items}\n</ul></noscript>`;
+// ── 発見導線（シーン / エリア / ジャンル特集）──────────────────────────
+// data/journal_seo_keywords.json を唯一の情報源にする。同ファイルの KW は
+// scripts/journal_seo_kw.js --verify で「特集ファイルが実在し、そのタイトルに
+// その語が実際に使われている」ことを機械検証済み（自己申告値を使わない担保）。
+// ここで生成するのは、トップページから discovery 意図（シーン語×エリア語）の
+// 特集へ渡す静的な内部リンク。指名検索ではなく取りに行く面を厚くするのが目的。
+function renderSceneIndexBlock() {
+  const kwPath = path.join(ROOT, 'data', 'journal_seo_keywords.json');
+  if (!fs.existsSync(kwPath)) return null;
+  const kw = JSON.parse(fs.readFileSync(kwPath, 'utf8'));
+
+  const groups = [
+    ['シーンで探す',   kw.scenes || []],
+    ['エリアで探す',   kw.areas  || []],
+    ['ジャンルで探す', kw.genres || []],
+  ];
+
+  const rendered = groups.map(([label, list]) => {
+    const items = list
+      // 実在する特集ファイルにしかリンクしない（リンク切れをビルド時に防ぐ）
+      .filter(x => x.feature && fs.existsSync(path.join(ROOT, x.feature)))
+      .map(x => `<li><a href="${escapeHtml(x.feature)}">名古屋の${escapeHtml(x.kw)}</a></li>`);
+    if (!items.length) return '';
+    return `<div class="scene-index-group">
+<h3 class="scene-index-group-title">${escapeHtml(label)}</h3>
+<ul class="scene-index-list">
+${items.join('\n')}
+</ul>
+</div>`;
+  }).filter(Boolean).join('\n');
+
+  if (!rendered) return null;
+
+  return `<!-- SCENE-INDEX:START -->
+<section id="scene-index" class="scene-index" aria-label="目的から探す">
+<h2 class="scene-index-title">目的から探す</h2>
+<p class="scene-index-lead">シーン・エリア・ジャンルごとに、現役の飲食店経営者が選び直した特集をまとめています。</p>
+${rendered}
+</section>
+<!-- SCENE-INDEX:END -->`;
 }
 
 function main() {
@@ -128,21 +166,13 @@ function main() {
 
   const grouped    = groupByArea(visibleStores);
   const storeIndex = renderIndexBlock(grouped, visibleStores.length);
-  const noscript   = renderNoscriptBlock(visibleStores, detailSet);
 
-  // 1. noscript の seo-store-list を置換
-  const noscriptRe = /<noscript><ul id="seo-store-list">[\s\S]*?<\/ul><\/noscript>/;
-  if (noscriptRe.test(html)) {
-    html = html.replace(noscriptRe, noscript);
-    console.log('noscript#seo-store-list を置換しました');
-  } else {
-    const gridRe = /<div\b[^>]*id=["']grid["'][^>]*>/;
-    if (gridRe.test(html)) {
-      html = html.replace(gridRe, function(m){ return noscript + '\n' + m; });
-      console.log('noscript#seo-store-list を新規挿入しました');
-    } else {
-      console.warn('grid 要素が見つからず、noscript の新規挿入をスキップ');
-    }
+  // 1. 旧 noscript#seo-store-list を除去（冪等・ファイル冒頭の廃止理由コメント参照）
+  const noscriptRe = /\s*<noscript><ul id="seo-store-list">[\s\S]*?<\/ul><\/noscript>/;
+  const legacy = html.match(noscriptRe);
+  if (legacy) {
+    html = html.replace(noscriptRe, '');
+    console.log(`旧 noscript#seo-store-list を除去しました（${Math.round(legacy[0].length / 1024)}KB 削減）`);
   }
 
   // 2. store-index ブロックを <footer> 直前に挿入／置換
@@ -156,6 +186,21 @@ function main() {
   } else {
     html = html.replace('</body>', storeIndex + '\n</body>');
     console.log('section#store-index を </body> 直前に挿入しました');
+  }
+
+  // 3. 発見導線（section#scene-index）を store-index の直前に挿入／置換
+  const sceneIndex = renderSceneIndexBlock();
+  if (sceneIndex) {
+    const sceneRe = /<!-- SCENE-INDEX:START -->[\s\S]*?<!-- SCENE-INDEX:END -->/;
+    if (sceneRe.test(html)) {
+      html = html.replace(sceneRe, sceneIndex);
+      console.log('section#scene-index を置換しました');
+    } else {
+      html = html.replace('<!-- STORE-INDEX:START', sceneIndex + '\n\n<!-- STORE-INDEX:START');
+      console.log('section#scene-index を store-index の直前に挿入しました');
+    }
+  } else {
+    console.warn('data/journal_seo_keywords.json が読めず、scene-index をスキップ');
   }
 
   fs.writeFileSync(HTML_PATH, html, 'utf8');
