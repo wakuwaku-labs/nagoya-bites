@@ -564,7 +564,9 @@
 - **関連**: [[SEO-011]]（入口KW・同じ「入口を増やす」系）/ ISSUE-042（llms.txt・生成AI流入の起点）/ ISSUE-072（GSCループ＝Googleのみを見ていた側）
 
 ### [SEO-038] 高流入ジャーナル記事のロングテール勝ち筋を分析し、同型テーマの横展開と関連特集への内部リンクで回遊に変換する
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-06
+- **resolved_by**: [next commit]
 - **detected**: 2026-07-27
 - **category**: SEO
 - **owner**: Editor
@@ -572,6 +574,18 @@
 - **brand-filter**: ✅ 適合 — Moat「構造化DB 4,500店超 × 特集 × 日次ジャーナルの三層編集」の勝ち筋を実測データから特定して伸ばす施策。順位操作・広告依存・クーポン・ストック写真を一切伴わず、既存の実在記事と実在店DBの内部リンクを強めるだけ。SEO-008（全journal記事冒頭に定型リード＋index.htmlリンクを一律設置）とは異なり、**実データで勝っている個別記事の型を特定して次の編集に再現する**分析・横展開が主眼
 - **trend**: 訪問者 前週比 +41%（97→137人）／閲覧数 +92%（118→226）／訪問回数 +60%（101→162）／直帰率 43%（日次単体の100%と乖離＝週で見れば良好）。**公開から2ヶ月経過した journal 記事が週28回で全ページ中2位**（トップページ31回に次ぐ）＝ジャーナルのロングテール流入が主力化した週トレンド。流入元は Bing 36% / 直接 29% / X 13%
 - **acceptance**: ①週次TOP5に入った過去ジャーナル記事（`journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html` 等）の共通項（テーマ／タイトル型／シーン／店舗ジャンル／KW）を洗い出し、所見を短くドキュメント化する ②抽出した型を以後の `/journal-today` 生成の題材選定に反映する（95点ゲート・90日同一店再掲禁止の既存ルールは維持） ③当該高流入記事から関連特集・店舗詳細への内部リンクを設置し、ロングテール流入を回遊に変換する。リンク先は必ず LOCAL_STORES の実在店・実在特集のみ（架空店ブロック厳守／`node scripts/audit_feature_stores.js` 検出ゼロ維持） ④index.html は単一ファイル維持・フィルタ/検索/モーダル/IGエンベッド/Google評価を壊さない（制約1・5） ⑤効果は翌週以降の週次レポートで当該記事群の閲覧数と1訪問あたりページ数の前後比で判定する
+- **実装（2026-08-06）**:
+  - **① 勝ち筋分析 — 高流入2記事の共通項**:
+    - `yakisoba-stand-rafu-tsuruzato`（週次TOP5 ②位 28回）: テーマ=「新店＋8席カウンター＋一人ランチ＋コスパ設計」／タイトル型=「店名を業界人視点で読む」／検索意図=新店発見・コスパ確認／流入元=Bing36%+直接29%
+    - `owarisanso-kurogi`（GSC最高 14クリック・620インプ）: テーマ=「予約困難名店の名古屋初出店＋接待での使い方」／タイトル型=「使い方ガイド」／検索意図=店の実態確認・接待活用法
+    - **共通パターン**: 「業界人が（本来は見えない）裏側を解説する」形式＋単一店フォーカス＋明確なシーン（一人ランチ / 接待）＋業界人ならではの数値根拠（席数・価格帯・回転設計）
+  - **② /journal-today への反映**: 上記パターンをエディタ指示として backlog に残す。「①シーン明示（誰のための店か）②業界人視点の数値根拠（席数・原価・回転）③タイトルに店名＋シーン語を入れる」の3点が勝ちパターン
+  - **③ 内部リンク設置**:
+    - `yakisoba`記事 → `nagoya-solo-dining.html`（一人飲み完全ガイド）＋`kospa-insider.html`（コスパ最強グルメ）を art-body 末尾に feature box として設置
+    - `owarisanso-kurogi`記事 → `hard-to-book.html`（予約困難攻略ガイド）＋`nagoya-settai-secret.html`（接待10選）を art-body 末尾に feature box として設置
+    - `scripts/refresh_journal_related.js` の TOPIC_FEATURES に3エントリ追加（`一人ランチ`・`コスパ`・`予約困難`）→ 同型の将来記事にも自動で feature リンクが付く
+  - **QAゲート**: qa_gate --after ok:true（店舗数5017→5017・LOCAL_STORES不変・マーカー退行なし）✅ / audit_feature_stores 実在不明0/リンク切れ0 ✅
+  - **files**: `journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html`, `journal/2026-07-27-owarisanso-kurogi.html`, `scripts/refresh_journal_related.js`, `agent-backlog.md`
 
 ### [ISSUE-073] 店舗写真の表示強化 — HP写真480px恒久昇格＋wsrv高画質ヒーロー＋IG実写embed＋写真カバレッジ監査 ✅
 
@@ -733,7 +747,9 @@
 - **関連**: ISSUE-067（効果計測の解像度向上）/ ISSUE-054（GSC 効果測定）
 
 ### [SEO-015] 日次ジャーナル記事のスマホ可読性を上げる（本文フォントサイズ・行間・画像配置のモバイル最適化）
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-06
+- **resolved_by**: b43d4ba6
 - **detected**: 2026-07-21
 - **category**: SEO
 - **owner**: Editor
