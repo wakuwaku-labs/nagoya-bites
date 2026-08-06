@@ -831,7 +831,7 @@
 ### [SEO-008] 検索流入が集中するジャーナル記事の冒頭にサイト紹介文＋index.htmlリンクを設置し専門性を伝え回遊させる
 - **priority**: P2 → **status**: done
 - **resolved**: 2026-08-06
-- **resolved_by**: TBD_COMMIT_HASH
+- **resolved_by**: a4ab72dd
 - **detected**: 2026-06-23
 - **category**: SEO
 - **owner**: Editor
