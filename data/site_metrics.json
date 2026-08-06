@@ -1,47 +1,47 @@
 {
-  "generatedAt": "2026-08-05T19:28:05.261Z",
+  "generatedAt": "2026-08-06T00:43:36.988Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 581,
-    "pageViews": 927,
-    "sessions": 687,
-    "avgSessionDuration": 145,
-    "bounceRate": 0.402,
+    "activeUsers": 584,
+    "pageViews": 939,
+    "sessions": 693,
+    "avgSessionDuration": 145.4,
+    "bounceRate": 0.405,
     "pagesPerSession": 1.35
   },
   "channels": {
     "sessions": {
-      "organic": 389,
-      "direct": 221,
+      "organic": 393,
+      "direct": 225,
       "social": 78,
       "referral": 13,
       "paid": 0,
-      "other": 7
+      "other": 8
     },
     "pct": {
-      "organic": 54.9,
-      "direct": 31.2,
-      "social": 11,
+      "organic": 54.8,
+      "direct": 31.4,
+      "social": 10.9,
       "referral": 1.8,
       "paid": 0,
-      "other": 1
+      "other": 1.1
     }
   },
   "sourceBreakdown": [
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 197
+      "sessions": 199
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 162
+      "sessions": 163
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 109
+      "sessions": 111
     },
     {
       "source": "chatgpt.com",
@@ -61,7 +61,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 31
+      "sessions": 34
     },
     {
       "source": "openai",
@@ -71,7 +71,7 @@
     {
       "source": "(data not available)",
       "medium": "(data not available)",
-      "sessions": 7
+      "sessions": 8
     },
     {
       "source": "copilot.com",
@@ -97,13 +97,13 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 54,
-      "sessions": 32
+      "pageViews": 55,
+      "sessions": 34
     },
     {
       "path": "/features/nagoya-summer-2026.html",
-      "pageViews": 35,
-      "sessions": 33
+      "pageViews": 36,
+      "sessions": 34
     }
   ],
   "cta": {
@@ -167,7 +167,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 581,
+    "value": 584,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
