@@ -566,7 +566,7 @@
 ### [SEO-038] 高流入ジャーナル記事のロングテール勝ち筋を分析し、同型テーマの横展開と関連特集への内部リンクで回遊に変換する
 - **priority**: P2 → **status**: done
 - **resolved**: 2026-08-06
-- **resolved_by**: [next commit]
+- **resolved_by**: a63bd360
 - **detected**: 2026-07-27
 - **category**: SEO
 - **owner**: Editor
@@ -2000,6 +2000,7 @@
 | 2026-07-29 | Orchestrator(EXPLICIT) | ISSUE-078 日次ジャーナル記事の店舗を「店舗ページ」（stores/{id}.html）へ内部リンク必須化。buildStores()がid優先で内部リンクするよう修正／validate_journal_draft.jsの店名照合をTOP50限定index.html evalからdata/stores.json全件（load_stores.js）に是正＋WARNING項目16新設／既存公開記事(2026-07-29-nagoya-beergarden.html)にマイアミ・CARVINO・ANDBBQの店舗ページリンクを追記／agents/editor.mdに全テーマ共通ルールを明文化 | ✅ commit済み (PR #92) |
 | 2026-07-30 | Orchestrator(EXPLICIT) | ISSUE-078追補: 過去ジャーナル84本を全件監査し店舗カード↔店舗ページのリンクをバックフィル。外部リンクのみ11本を内部化／カードはあるがID未解決の44本にdata-store-id付与＋内部リンク化（stores/*.html全5,421件のJSON-LD名から正引き索引を実生成し、slug再計算に頼らず実ファイル照合で解決）／新規に実店舗言及を検出した1本にカード追加／残り38本は店舗非依存の一般論記事と確認し対象外。全63店舗カードの店名↔リンク先一致をゼロミスマッチで最終検証 | ✅ commit待ち（同PR #92に追加コミット予定） |
 | 2026-08-03 | Builder(routine) | SEO-046 refresh_journal_related.js 自動化組み込み: daily-journal.yml に「ジャーナル関連記事リンクの自動更新」ステップを追加、run_journal_local.sh の validator PASS 直後（5f節）に非ブロッキング呼び出し追加、旧 related-wrap 形式5本の SKIP ログを明示化。スクリプト未組み込みによる関連リンク欠如（直近7本が汎用リンクのみ）を恒久解消 | ✅ commit d7398333 |
+| 2026-08-06 | Orchestrator(routine) | **3タスク消化（SEO-040エスカレーション / SEO-008 / SEO-015 / SEO-038）**。①SEO-040: キャッチコピー文言はブランドの根幹のため owner を片桐←Builder にエスカレーション ②SEO-008(done/a4ab72dd): journal/_template.html + 高流入4記事に site-intro リード文（NAGOYA BITESへの帰還導線）を設置 ③SEO-015(done/b43d4ba6): 日次ジャーナル90本に .art-body p モバイルfont-size:1rem/line-height:2 を一括バックポート ④SEO-038(done/a63bd360): 高流入2記事（yakisoba・kurogi）に関連特集featureBoxを設置 + refresh_journal_related.js TOPIC_FEATURESに一人ランチ/コスパ/予約困難を追加（将来記事も自動リンク付与） | ✅ commit a4ab72dd + b43d4ba6 + a63bd360 |
 
 ---
 
