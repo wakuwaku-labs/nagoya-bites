@@ -1,0 +1,471 @@
+{
+  "date": "2026-08-06",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅・焼鳥90円の「鳥ぶら」名駅東口店、一人飲みでいくらになるか",
+      "verdict": "PASS",
+      "total": 110,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "焼き鳥",
+          "feature": "features/nagoya-yakitori-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,予約,シーン,接待,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 153字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「焼鳥」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅の焼鳥、90円の一本で客単価はどう積み上がるか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 96,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "焼き鳥",
+          "feature": "features/nagoya-yakitori-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,予約,シーン,一人飲み,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 142字 +4",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「焼鳥」+2"
+        ]
+      },
+      "gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -8 / recency -3 / search_intent -3"
+    },
+    {
+      "id": "c3",
+      "title_draft": "今池に「御うどん光史」2号店、平日昼の回転を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 92,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (価格帯,席,シーン,接待,一人飲み,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 139字 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "92点（自動公開ライン 100点）。主な不足: topicality -8 / search_intent -6 / brand_fit -4"
+    },
+    {
+      "id": "c4",
+      "title_draft": "名駅・栄の新店ラッシュ、8月第1週に開いた店の価格帯を並べて読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 87,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 3,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 8件 (新店,動向,傾向,比較,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "主役店が必要なテーマなのに main_store 未指定 → +0",
+          "lead 128字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "87点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -5 / writability -3"
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄・錦にウルフギャング上陸、接待で個室を押さえる予約のタイミング",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 29日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (価格帯,コース,席,予約,シーン,接待,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 143字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「接待」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: recency -13 / topicality -10 / search_intent -2"
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "名駅・焼鳥90円の「鳥ぶら」名駅東口店、一人飲みでいくらになるか",
+      "lead_draft": "焼鳥1本90円、生中190円。8月10日にグランドオープンする鳥ぶら名駅東口店の数字だけを見ると、いわゆるセンベロに見える。ところがホットペッパーに載る同店の価格帯は2,001〜3,000円だ。この差はごまかしではなく、この業態の設計そのものを表している。業界人の目で、実際に払う額とシーン適性を読み解く。",
+      "angle": "メニュー単価90円とホットペッパー掲載の価格帯2,001〜3,000円の差から、ドリンク本数で客単価を作る業態設計を読む。生串打ち＝冷凍しない仕込みの人件費を回転とドリンクで回収する構造、名駅3店舗目のドミナント出店、錦本店が朝5時まで・東口店が0時までという立地別の設計差を業界人視点で解説し、一人飲み・サク飲みには向き接待には向かないというシーン適性と予約の考え方まで示す。",
+      "main_store": {
+        "name": "鳥ぶら 名駅東口店",
+        "id": "J004537163",
+        "area": "名駅",
+        "genre": "焼鳥"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 焼鳥酒場『鳥ぶら 名駅東口店』2026年8月10日グランドオープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000272.000070373.html",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "グルメプレス: 鳥ぶら 名駅東口店（住所・営業時間）",
+          "url": "https://gourmetpress.net/1465455/",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "フーズチャネル: 鳥ぶら 名駅東口店 グランドオープン",
+          "url": "https://foods-ch.infomart.co.jp/news/315029",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "鳥ぶら公式Instagram（@toribura_phads・14.5Kフォロワー）",
+          "url": "https://www.instagram.com/toribura_phads/",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "鳥ぶら公式Instagram 投稿（生串打ち・さの塩）",
+          "url": "https://www.instagram.com/toribura_phads/reel/DT1kSH3EWp6/",
+          "date": "2026-07-25"
+        },
+        {
+          "label": "名古屋情報通: ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-03"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄・錦にウルフギャング上陸、接待で個室を押さえる予約のタイミング",
+      "lead_draft": "ウルフギャング・ステーキハウスが東海エリア初出店として、9月4日に名古屋観光ホテル1階へ入る。個室は4室で各8名、連結すれば最大24名。予約受付は7月7日にもう始まっている。接待でこの手の店を使うなら、開業前のいま動くかどうかで結果が変わる。業界人の視点で席と価格帯の読み方を整理する。",
+      "angle": "個室4室×8名・連結24名という席構成から接待・会食用途の設計意図を読み、ステーキハウスの価格帯はコースよりポーターハウスのシェア前提で読むべき理由、開業2ヶ月前から予約が動く繁忙構造、接待に向くシーンと向かないシーンを業界人視点で示す。",
+      "main_store": {
+        "name": "ウルフギャング・ステーキハウス 名古屋店",
+        "id": "",
+        "area": "錦",
+        "genre": "ステーキ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 東海エリア初出店「ウルフギャング・ステーキハウス」名古屋観光ホテル内にグランドオープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000132.000097639.html",
+          "date": "2026-07-07"
+        },
+        {
+          "label": "WDI GROUP: 名古屋店 9月4日グランドオープン、予約受付をスタート",
+          "url": "https://www.wdi.co.jp/news/64047",
+          "date": "2026-07-07"
+        },
+        {
+          "label": "ウルフギャング・ステーキハウス公式: 名古屋店ご予約受付をスタート",
+          "url": "https://wolfgangssteakhouse.jp/news/ja/3606",
+          "date": "2026-07-07"
+        },
+        {
+          "label": "あいちスポット: ウルフギャング名古屋店 2026年9月4日オープン",
+          "url": "https://www.aichispot.com/wolfgang-nagoya-open/",
+          "date": "2026-07-08"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "今池に「御うどん光史」2号店、平日昼の回転を業界人が読む",
+      "lead_draft": "長久手で6年続いた創作うどんの店が、8月上旬に今池へ2号店を出した。イタリアンとフレンチで修業した技術を出汁に持ち込んだ店で、郊外の1号店と地下鉄駅前の2号店では求められるオペレーションがまるで違う。同じ看板でも立地が変われば席と回転の設計が変わる。その差を業界人の視点で読む。",
+      "angle": "郊外ロードサイドの1号店と地下鉄駅前2号店で、席数・回転・ランチ価格帯の設計がどう変わるかを業界人視点で読み、うどん専門店の昼繁忙とシーン適性（一人飲みならぬ一人ランチ・接待には不向き）を示す。",
+      "main_store": {
+        "name": "御うどん光史 今池店",
+        "id": "",
+        "area": "今池",
+        "genre": "うどん"
+      },
+      "sources": [
+        {
+          "label": "ちくさん: 「御うどん 光史(みつし) 今池店」が今池にオープン",
+          "url": "https://chiku-san.com/20260801-mitsushi-imaike-open/",
+          "date": "2026-08-01"
+        },
+        {
+          "label": "名古屋情報通: ニューオープン一覧（8/4 御うどん光史 今池）",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "御うどん光史 公式Instagram",
+          "url": "https://www.instagram.com/oudon.mitsushi/",
+          "date": "2026-08-01"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "weekly_digest",
+      "title_draft": "名駅・栄の新店ラッシュ、8月第1週に開いた店の価格帯を並べて読む",
+      "lead_draft": "7月末から8月頭にかけて、名駅と栄で新店が続けて開いた。コンラッド名古屋の開業、名駅のシュラスコ食べ放題、大須の中華、今池のうどん2号店。バラバラに見える動きだが、価格帯とシーンで並べ直すと今年の名古屋の傾向がはっきり出る。業界人の視点で新店の相場を読む。",
+      "angle": "8月第1週の新店を価格帯とシーン別に並べ、名駅は高単価と低単価の二極化、栄はホテル開業で会食需要の受け皿が増えたという動向を業界人視点で比較し、予約の取りやすさと回転の傾向まで示す。",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名駅",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 「コンラッド名古屋」本日2026年7月31日開業",
+          "url": "https://prtimes.jp/main/html/rd/p/000000190.000033161.html",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "TRAICY: 「コンラッド名古屋」、栄中心部にオープン",
+          "url": "https://www.traicy.com/posts/20260801377661/",
+          "date": "2026-08-01"
+        },
+        {
+          "label": "名古屋情報通: ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-03"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "名駅の焼鳥、90円の一本で客単価はどう積み上がるか",
+      "lead_draft": "名駅に焼鳥1本90円の店が8月10日に増える。安さが先に立つ業態だが、実際の会計は串の本数ではなくドリンクの杯数で決まる。オープンから4日間はドリンクが94円になる告知も出ており、初週の混み方は読める。業界人の視点で、この手の店を気持ちよく使うための価格帯とシーンの読み方を整理する。",
+      "angle": "低単価焼鳥業態の価格帯を、串の本数ではなくドリンク杯数で読む方法を業界人視点で示し、オープン記念キャンペーン期間の繁忙と回転、一人飲みとサク飲みのシーン適性、予約の要否まで具体的に解説する。",
+      "main_store": {
+        "name": "鳥ぶら 名駅東口店",
+        "id": "J004537163",
+        "area": "名駅",
+        "genre": "焼鳥"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 焼鳥酒場『鳥ぶら 名駅東口店』2026年8月10日グランドオープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000272.000070373.html",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "グルメプレス: 鳥ぶら 名駅東口店",
+          "url": "https://gourmetpress.net/1465455/",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "鳥ぶら公式Instagram",
+          "url": "https://www.instagram.com/toribura_phads/",
+          "date": "2026-07-31"
+        }
+      ]
+    }
+  ]
+}
