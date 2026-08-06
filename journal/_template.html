@@ -112,10 +112,14 @@ nav a:hover,nav a.active{color:var(--text);}
 .related-link:hover{background:rgba(122,92,16,.08);}
 footer{background:var(--white);color:rgba(247,245,241,.5);padding:1.8rem 1.5rem;text-align:center;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.14em;}
 footer a{color:rgba(201,169,110,.7);text-decoration:none;}
+.site-intro{font-size:.76rem;line-height:1.8;color:var(--dim);margin-bottom:1.5rem;padding:.5rem 0 .8rem;border-bottom:1px solid var(--border);}
+.site-intro a{color:var(--gold);text-decoration:none;}
+.site-intro a:hover{text-decoration:underline;}
 @media(max-width:640px){
 .store-card{flex-direction:column;gap:.7rem;}
 .store-num{font-size:1.4rem;}
 nav{display:none;}
+.art-body p{font-size:1rem;line-height:2;}
 }
 </style>
 {{PHOTO_SUGGESTIONS_HTML}}
@@ -156,6 +160,7 @@ nav{display:none;}
   {{HERO_IMAGE_SECTION}}
 
   <div class="art-body">
+    <p class="site-intro">この記事は <a href="../index.html">NAGOYA BITES</a>（名古屋の飲食店1,100件超を業界視点で紹介する発見メディア）から。気になる店はシーン・エリア・ジャンルで絞り込めます。</p>
     {{BODY}}
 
     <div class="insider-box">
