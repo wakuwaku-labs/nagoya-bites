@@ -14,7 +14,7 @@
  * 冪等: マーカー <!-- STORE-INDEX:START --> / <!-- STORE-INDEX:END --> で囲まれたブロックを置換。
  *       <!-- SCENE-INDEX:START --> / <!-- SCENE-INDEX:END --> も同様。
  *
- * ── noscript#seo-store-list を廃止した理由（SEO-048 / 2026-08-05 GSC 実測）──
+ * ── noscript#seo-store-list を廃止した理由（SEO-050 / 2026-08-05 GSC 実測）──
  *   かつて同じ 5,017 店を noscript リストにも重複出力していたが、
  *     ・href は section#store-index と完全に同一 → クロール上の増分ゼロ
  *     ・トップページ本文に店名 5,017 件が載る → `/` が全店の指名検索に出てしまう

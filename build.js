@@ -1921,7 +1921,7 @@ async function main() {
   console.log('index.html 更新完了');
 
   // 2b. 内部リンク集（section#store-index）と発見導線（section#scene-index）を再生成
-  //     ※ 旧 noscript#seo-store-list は SEO-048 で廃止（トップが自社店舗ページを共食いしていたため）
+  //     ※ 旧 noscript#seo-store-list は SEO-050 で廃止（トップが自社店舗ページを共食いしていたため）
   try {
     const { execSync } = require('child_process');
     execSync('node ' + JSON.stringify(path.join(__dirname, 'scripts', 'inject_store_links.js')), { stdio: 'inherit' });

@@ -8,6 +8,43 @@
 
 ## 進行中・完了タスク
 
+### [SEO-049] 店舗詳細モーダルに地図CTAが出るのは全体の2.8%だけ（97.2%の店で排他的に非表示）＋メディアボタンのGoogle Mapsが未計測
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-08-06
+- **category**: SEO / UX / 計測
+- **owner**: Builder
+- **source**: SEOアドバイス(LINE) 2026-08-05 原文「予約ボタンクリック率12.8%は好調ですが、マップクリックが0回です。スマホからのアクセスが59%と多いです。👉 各店舗詳細モーダル内のGoogleマップ導線(cta_gmap_click)がスマホで押しにくい可能性があります。タップ領域を広げるなど改善を試みましょう」
+- **brand-filter**: ✅ 適合 — Moat「実在保証」の要である「その店が実際にどこにあるかを確認できる」導線の回復と、その計測の正常化。順位操作・広告依存・クーポン・ストック写真・架空店を一切伴わず、既存の実在店データへの導線を正しく出すだけ
+- **アドバイスをそのまま採らなかった理由**: 名指しされた「タップ領域が狭くて押しにくい」は**実コードで否定された**。カード側の地図ボタン（`.card-cta-map`）は [[SEO-037]]（done・commit 82fba08eb）で 44x44 を確保済み。実測で判明した原因は下記2点で、いずれもタップ領域とは無関係。CLAUDE.md 制約10（検証できる事実だけで判定する）に従い、検算可能な原因に置き換えて起票した
+- **実測（2026-08-06・すべて再現可能）**:
+  | 検証項目 | 根拠 | 実測値 |
+  |----------|------|--------|
+  | モーダルのCTA行が排他的 if/else | `index.html:14348-14355` — `if (hpId2) { 予約ボタン } else { 地図ボタン }` | ホットペッパーIDがある店では**地図CTAが1つも描画されない** |
+  | 影響を受ける店舗数 | `data/stores.json` を集計 | 全5,017店中 **4,875店（97.2%）**がHotPepperID保有＝モーダルに地図CTAなし。地図CTAが出るのは142店（2.8%）のみ |
+  | メディアボタンのGoogle Mapsが未計測 | `index.html:14360-14366` — `items.map()` が生成する `<a class="mb mb-gm">` に `onclick` / `trackEvent` が**無い** | モーダル下部のGoogle Mapsボタンは何回押されても `cta_gmap_click` が発火しない |
+  | カード側は正常 | `index.html:14017` | カードには予約と地図の両方＋`trackEvent('cta_gmap_click')` あり（SEO-037 実装済み） |
+- **つまり**: 「マップクリック0回」は利用者が押しにくいからではなく、**97.2%の店で押す対象がモーダルに存在せず、存在する経路（メディアボタン）は計測されていない**という構造問題。タップ領域を広げても数字は動かない
+- **acceptance**: ①モーダルのCTA行を排他 if/else から**予約と地図の併置**に変更し、HotPepperID の有無にかかわらず地図CTAが常に出ること（HPなし店の現行挙動は維持） ②モーダル下部メディアボタンの Google Maps に `trackEvent('cta_gmap_click')` を付与し、経路を区別できるようにする（[[SEO-048]] のチャネル別分解と整合させる） ③リンク先は既存 `gmap()` が生成する実在店の地図のみ（架空店ブロック厳守・新規外部送客導線は作らない） ④`index.html` 単一ファイル維持（制約1）／フィルタ・検索・モーダル・IGエンベッド・Google評価を壊さない（制約5） ⑤既存 `cta_click` の計測を壊さない
+- **効果測定**: 実装翌週の `data/metrics_history.json` および LINE 日次レポートで `cta_gmap_click` が 0 から動くかを前後比で判定する。**0のままなら「導線がない」以外の原因が残っている**という切り分けが成立する（現状は原因を分離できない）
+- **ブランドガードレール**: 予約導線の収益化（アフィリエイト・送客手数料）は制約8によりユーザー承認が別途必須。本タスクは**UX・計測のみ**
+
+### [SEO-048] チャネル別CTAクリック率を分解計測する（organic/direct/social で分けて測定構造を整備）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-08-01
+- **category**: SEO
+- **owner**: Marketer
+- **source**: [[SEO-044]] 診断結果（2026-08-01）から派生。CTAクリック率 13.5%→3.3% の低下は、organic 流入比率の増加（30%→57%）による**訪問者構成の変化**が主因と特定された
+- **採番修正 2026-08-05**: 本課題は当初 Notion 側にのみ `SEO-046` として作成され、`agent-backlog.md` に未登録の孤児ページだった。`SEO-046` は台帳側で別課題（公開直後のジャーナル記事に関連記事リンクが入らない）に使われており、**同じ番号が2つの別課題に付いていた**。内容は生きた課題のため削除せず `SEO-048` へ振り直して正式登録した（Notion ページ `3af26260-227a-81ee-9777-d7c088214f1f` はそのまま流用）
+- **brand-filter**: ✅ 適合 — 自社 GA4 の計測構造の改善のみ。外部依存・順位操作・広告・クーポン・ストック写真を一切伴わない。CLAUDE.md 制約10「検証できる事実だけで判定する」の強化そのもの
+- **problem**: `ctaClickRate` が全チャネル合算の単一指標としてしか記録されていないため、チャネル構成が変わるたびに「サイト品質の劣化」と「訪問者構成の変化」を区別できない。測定の盲点が施策判断を歪める（実際 SEO-044 では、合算値だけを見て「CTAが-75%劣化した」と読める状態だった）
+- **acceptance**:
+  1. GA4 の `outbound_click` イベントに `session_source` / `session_medium` を紐づけ、チャネル別クリック率を `data/site_metrics.json` に格納する
+  2. `data/metrics_history.json` のスナップショットに `ctaClickRate_organic` / `ctaClickRate_direct` / `ctaClickRate_social` を追記する
+  3. `cta.byDomain` の未帰属問題（[[SEO-044]] acceptance 3）を合わせて解消する
+- **関連**: [[SEO-044]]（診断元・done）/ [[ISSUE-068]]（link_domain 計測の穴）/ [[SEO-039]]（エンジン別観測レイヤー）/ [[SEO-047]]（同じ「合算値で誤読する」クラスの問題＝直帰率アラートの小サンプル誤検知）
+
 ### [FB-001] 検索バーに入力クリア（×）ボタンがない
 
 - **priority**: P2 → **status**: ready
@@ -60,7 +97,7 @@
 - **files**: `index.html`, `tests/search_relevance.test.js`
 - **今後**: 辞書は `NB_CONCEPTS` に1エントリ追加するだけで拡張できる。GSC の `discovery` クエリ（[[SEO-043]]）で「検索されたのに0件だった語」を拾えば、辞書拡張の優先順位を実データで決められる
 
-### [SEO-048] トップページが自社の店舗ページを共食いしていた（noscript 店名5,017件の除去）＋ 説明文を「経営者向け」から「検索者向け」へ ✅
+### [SEO-050] トップページが自社の店舗ページを共食いしていた（noscript 店名5,017件の除去）＋ 説明文を「経営者向け」から「検索者向け」へ ✅
 
 - **priority**: P1 → **status**: done（2026-08-05）
 - **detected**: 2026-08-05（GSC 週次エクスポート 2026/07/27-08/02 + `data/gsc_metrics.json` 28日分）
@@ -92,7 +129,7 @@
   - **制約10（検証できる事実だけで判定）への適合**: Google評価は**口コミ5件以上の店だけ**表示する。旧実装は「★1（口コミ1件）」のような統計的に無意味な平均点をそのまま代表値として掲げていた。隠蔽ではなく、母数が保証できない数字を代表値にしないという判断（ページ本文には実データをそのまま表示）
   - 長さは「…」で中途切断せず**文の区切りで積み上げて130字上限**。中央値102字（旧実装は155字で機械切断）
 
-- **検証**: `npm test` 47 pass（既存2 fail は `tests/featured_freshness.test.js` が `data/featured.json` の旧キー `monthlyFeature` を前提にしたまま＝**本変更と無関係の既存不具合**。別途 [[SEO-049]] 参照）/ `node scripts/audit_feature_stores.js` 実在不明0・リンク切れ0 / ローカル実機でトップ（カード30件描画・検索フィルタ健在・scene-index 39リンク・store-index 5,017リンク・`#seo-store-list` 消滅・コンソールエラー0）と店舗ページ（新description・JSON-LD健在）を確認
+- **検証**: `npm test` 47 pass（既存2 fail は `tests/featured_freshness.test.js` が `data/featured.json` の旧キー `monthlyFeature` を前提にしたまま＝**本変更と無関係の既存不具合**。別途 [[SEO-051]] 参照）/ `node scripts/audit_feature_stores.js` 実在不明0・リンク切れ0 / ローカル実機でトップ（カード30件描画・検索フィルタ健在・scene-index 39リンク・store-index 5,017リンク・`#seo-store-list` 消滅・コンソールエラー0）と店舗ページ（新description・JSON-LD健在）を確認
 - **files**: `index.html`, `scripts/inject_store_links.js`, `gen-store-pages.js`, `features/nagoya-tebasaki.html`, `stores/*.html`（5,017件）, `sitemap.xml`
 
 - **効果の測り方（重要）**: **総表示回数は下がる**見込み（`/` が指名検索5,000件から降りるため）。これは失敗ではなく本件の目的そのもの。判定は次の3つで行う:
@@ -101,10 +138,10 @@
   3. `/features/nagoya-tebasaki.html` の CTR（0.58% がベースライン）
 - **関連**: [[SEO-043]]（この伸びしろを特定した測定器。本件はその follow-through）/ [[SEO-011]]（scene-index が使うKWマスタ）/ [[SEO-039]]（Bing・生成AIの観測。GSCだけでは流入の大半が見えない点に注意）
 
-### [SEO-049] `tests/featured_freshness.test.js` が `data/featured.json` の旧スキーマ（`monthlyFeature`）を前提のままで2件失敗している
+### [SEO-051] `tests/featured_freshness.test.js` が `data/featured.json` の旧スキーマ（`monthlyFeature`）を前提のままで2件失敗している
 
 - **priority**: P2 → **status**: ready
-- **detected**: 2026-08-05（[[SEO-048]] の QA で検出。本変更とは無関係の既存不具合）
+- **detected**: 2026-08-05（[[SEO-050]] の QA で検出。本変更とは無関係の既存不具合）
 - **category**: QA
 - **owner**: Builder
 - **問題**: `data/featured.json` は現在 `monthlyScenes` / `sceneLeads` を持つが、テストは `cfg.monthlyFeature[String(m)]` を読んでおり `undefined` で `TypeError`。**「12ヶ月すべてが実在ページで埋まっている（鮮度の穴ゼロ）」という鮮度ガードが、実質的に無効化されたまま常時 red** になっている
