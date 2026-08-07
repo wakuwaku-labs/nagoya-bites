@@ -30,12 +30,15 @@ test('鮮度ガード: validateConfig が穴・壊れ参照を検出しない', 
   assert.deepEqual(errs, [], errs.join('\n'));
 });
 
-test('monthlyFeature: 12ヶ月すべてが実在ページで埋まっている（鮮度の穴ゼロ）', () => {
+test('monthlyScenes: 12ヶ月すべてが実在ページで埋まっている（鮮度の穴ゼロ）', () => {
   for (let m = 1; m <= 12; m++) {
-    const mf = cfg.monthlyFeature[String(m)];
-    assert.ok(mf, `${m}月が未定義`);
-    assert.ok(featureSlugs.has(mf.slug), `${m}月の ${mf.slug}.html が存在しない`);
-    assert.ok(mf.title && mf.badge, `${m}月の title/badge が欠落`);
+    const ms = cfg.monthlyScenes && cfg.monthlyScenes[String(m)];
+    assert.ok(ms, `${m}月が未定義`);
+    assert.ok(Array.isArray(ms.scenes) && ms.scenes.length > 0, `${m}月の scenes が空`);
+    for (const sc of ms.scenes) {
+      assert.ok(featureSlugs.has(sc.slug), `${m}月の ${sc.slug}.html が存在しない`);
+      assert.ok(sc.title && sc.badge, `${m}月の title/badge が欠落 (slug: ${sc.slug})`);
+    }
   }
 });
 
@@ -43,8 +46,11 @@ test('どの日付でも「今月の旬」リードが必ず1本立つ（年に�
   for (const y of ['2026', '2027', '2030']) {
     for (let m = 1; m <= 12; m++) {
       const mm = String(m).padStart(2, '0');
-      const mf = cfg.monthlyFeature[String(monthOf(`${y}-${mm}-15`))];
-      assert.ok(mf && featureSlugs.has(mf.slug), `${y}-${mm} の旬リードが解決できない`);
+      const ms = cfg.monthlyScenes && cfg.monthlyScenes[String(monthOf(`${y}-${mm}-15`))];
+      assert.ok(ms && Array.isArray(ms.scenes) && ms.scenes.length > 0,
+        `${y}-${mm} の旬リードが解決できない`);
+      assert.ok(ms.scenes.every(sc => featureSlugs.has(sc.slug)),
+        `${y}-${mm} のシーン中に存在しないページがある`);
     }
   }
 });

@@ -10,8 +10,9 @@
 
 ### [SEO-049] 店舗詳細モーダルに地図CTAが出るのは全体の2.8%だけ（97.2%の店で排他的に非表示）＋メディアボタンのGoogle Mapsが未計測
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-06
+- **resolved**: 2026-08-07
 - **category**: SEO / UX / 計測
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-08-05 原文「予約ボタンクリック率12.8%は好調ですが、マップクリックが0回です。スマホからのアクセスが59%と多いです。👉 各店舗詳細モーダル内のGoogleマップ導線(cta_gmap_click)がスマホで押しにくい可能性があります。タップ領域を広げるなど改善を試みましょう」
@@ -47,7 +48,7 @@
 
 ### [FB-001] 検索バーに入力クリア（×）ボタンがない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-03（消費者フィードバックループ経由。サイト右下フローティング「ご意見」ボタンから
   モバイル送信。種類=使いづらい・わかりにくい / page=`#q=%E6%A0%84%20%E7%84%BC%E8%82%89`（「栢 焼肉」検索中））
 - **category**: UX
@@ -140,7 +141,7 @@
 
 ### [SEO-051] `tests/featured_freshness.test.js` が `data/featured.json` の旧スキーマ（`monthlyFeature`）を前提のままで2件失敗している
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-05（[[SEO-050]] の QA で検出。本変更とは無関係の既存不具合）
 - **category**: QA
 - **owner**: Builder
@@ -622,7 +623,7 @@
 - **priority**: P1 → **status**: ready
 - **detected**: 2026-07-27（SEO改善の全体仕分けによる統合起票）
 - **category**: SEO
-- **owner**: Builder
+- **owner**: 片桐 ← Builder
 - **統合元**: [[SEO-014]]（FVに「業界人の目利き」「シーン別専門性」の価値提案コピー・P1）+ [[SEO-009]]（FVに人気特集への大きな誘導導線）
 - **統合理由**: 統合元の双方に既に「両者を1つのファーストビュー設計として整合させる」旨のメモがあった。同じ画面の同じ領域を2回別々に改修するとレイアウトが競合する
 - **brand-filter**: ✅ 適合（統合元の判定を継承）— 誇大表現・架空実績は書かず、実在店DB規模と編集独立の事実に基づく
@@ -2070,6 +2071,7 @@
 | 2026-07-29 | Orchestrator(EXPLICIT) | ISSUE-078 日次ジャーナル記事の店舗を「店舗ページ」（stores/{id}.html）へ内部リンク必須化。buildStores()がid優先で内部リンクするよう修正／validate_journal_draft.jsの店名照合をTOP50限定index.html evalからdata/stores.json全件（load_stores.js）に是正＋WARNING項目16新設／既存公開記事(2026-07-29-nagoya-beergarden.html)にマイアミ・CARVINO・ANDBBQの店舗ページリンクを追記／agents/editor.mdに全テーマ共通ルールを明文化 | ✅ commit済み (PR #92) |
 | 2026-07-30 | Orchestrator(EXPLICIT) | ISSUE-078追補: 過去ジャーナル84本を全件監査し店舗カード↔店舗ページのリンクをバックフィル。外部リンクのみ11本を内部化／カードはあるがID未解決の44本にdata-store-id付与＋内部リンク化（stores/*.html全5,421件のJSON-LD名から正引き索引を実生成し、slug再計算に頼らず実ファイル照合で解決）／新規に実店舗言及を検出した1本にカード追加／残り38本は店舗非依存の一般論記事と確認し対象外。全63店舗カードの店名↔リンク先一致をゼロミスマッチで最終検証 | ✅ commit待ち（同PR #92に追加コミット予定） |
 | 2026-08-03 | Builder(routine) | SEO-046 refresh_journal_related.js 自動化組み込み: daily-journal.yml に「ジャーナル関連記事リンクの自動更新」ステップを追加、run_journal_local.sh の validator PASS 直後（5f節）に非ブロッキング呼び出し追加、旧 related-wrap 形式5本の SKIP ログを明示化。スクリプト未組み込みによる関連リンク欠如（直近7本が汎用リンクのみ）を恒久解消 | ✅ commit d7398333 |
+| 2026-08-07 | Builder(routine) | SEO-051 tests/featured_freshness.test.js を monthlyScenes スキーマに追従させ 47pass2fail → 49pass0fail に是正。FB-001 検索バー（#si）に入力クリア（×）ボタンを追加（clearSearchInput / si-clear / CSS追加 / sync listener 拡張）。SEO-049 モーダル地図CTAをHotPepperIDあり店でも常時表示（排他if/else→予約+地図併置）＋メディアボタンのGoogle Mapsに cta_gmap_click計測(channel:'media_btn')を付与 | ✅ commit <hash後で更新> |
 
 ---
 

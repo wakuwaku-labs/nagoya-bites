@@ -233,6 +233,11 @@ nav.open{right:0;}
 .search-wrap input:focus{border-color:var(--gold);}
 .search-wrap button{background:var(--gold);border:none;color:var(--bg);padding:.8rem 1.4rem;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;cursor:pointer;font-weight:500;transition:background .2s;}
 .search-wrap button:hover{background:var(--gold2);}
+.si-wrap{position:relative;flex:1;min-width:0;}
+.search-wrap .si-wrap input{width:100%;padding-right:2.2rem;}
+#si-clear{position:absolute;right:.4rem;top:50%;transform:translateY(-50%);display:none;background:none;border:none;color:var(--dim);cursor:pointer;padding:0;font-size:1.1rem;line-height:1;width:28px;height:28px;align-items:center;justify-content:center;border-radius:50%;transition:color .2s;}
+#si-clear.visible{display:flex;}
+#si-clear:hover{color:var(--text);}
 /* ── 常時表示のシーン/エリア導線（直帰率対策・MEO-001） ── */
 .scene-nav{margin-top:1.6rem;max-width:580px;opacity:0;animation:up .9s .8s forwards;}
 .scene-nav-row{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin-top:.7rem;}
@@ -517,12 +522,14 @@ body.search-query-active .card-why{display:flex;}
 .modal-rsc{font-size:.76rem;padding:.32rem .7rem;background:var(--surface);border:1px solid var(--border-h);border-radius:3px;cursor:pointer;color:var(--text);font-family:'Noto Sans JP',sans-serif;white-space:nowrap;transition:all .15s;}
 .modal-rsc:hover{border-color:var(--gold);color:var(--gold);}
 /* ── SEO-003 モーダル内 CTA ── */
-.modal-cta-row{padding:.8rem 1.5rem 1rem;}
-.modal-cta-btn{display:block;width:100%;padding:.9rem 1rem;text-align:center;text-decoration:none;font-size:.88rem;font-weight:500;letter-spacing:.05em;border-radius:4px;transition:background .2s;cursor:pointer;border:none;}
+.modal-cta-row{padding:.8rem 1.5rem 1rem;display:flex;flex-direction:column;gap:.45rem;}
+.modal-cta-btn{display:block;width:100%;padding:.9rem 1rem;text-align:center;text-decoration:none;font-size:.88rem;font-weight:500;letter-spacing:.05em;border-radius:4px;transition:background .2s,color .2s;cursor:pointer;border:none;}
 .modal-cta-hp{background:#e6002d;color:#fff!important;}
 .modal-cta-hp:hover{background:#c9001e;}
 .modal-cta-gm{background:#4285F4;color:#fff!important;}
 .modal-cta-gm:hover{background:#2b6cd4;}
+.modal-cta-gm-sub{background:transparent;border:1.5px solid #4285F4;color:#4285F4!important;padding:.7rem 1rem;}
+.modal-cta-gm-sub:hover{background:rgba(66,133,244,.08);}
 /* カード内 .ml の小サイズ favicon */
 .ml img.brand-fav{width:14px;height:14px;object-fit:contain;display:inline-block;vertical-align:-.18em;margin-right:.32rem;border-radius:2px;flex-shrink:0;}
 /* ── MODAL INFO TABLE ── */
@@ -1399,7 +1406,10 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   </div>
   <div class="search-wrap">
     <label for="si" class="visually-hidden">レストランを検索</label>
-    <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+    <div class="si-wrap">
+      <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+      <button id="si-clear" class="si-clear" type="button" aria-label="検索テキストをクリア" onclick="clearSearchInput()">×</button>
+    </div>
     <button onclick="doSearch()" aria-label="検索">Search</button>
     <div class="search-suggest" id="hero-suggest">
       <span class="suggest-label">人気:</span>
@@ -8764,6 +8774,7 @@ function clearAllFilters() {
   // Clear search
   var si = document.getElementById('si'); if (si) si.value = '';
   var si2 = document.getElementById('si2'); if (si2) si2.value = '';
+  var siclear = document.getElementById('si-clear'); if (siclear) siclear.classList.remove('visible');
   applyFilters();
 }
 
@@ -9399,10 +9410,14 @@ function openM(i) {
   if (ctaRow) {
     var hpId2 = r['ホットペッパーID'] || '';
     var ctaEsc = function(s){ return String(s||'').replace(/'/g,'').replace(/</g,'').replace(/>/g,''); };
+    var gmapHref = gmap(r['店名'],r['エリア'],r);
+    var gmapAriaLabel = ctaEsc(r['店名']) + 'の場所をGoogleマップで確認';
+    var gmapClick = "trackEvent('cta_gmap_click',{store_name:'" + ctaEsc(r['店名']) + "',channel:'modal'})";
     if (hpId2) {
-      ctaRow.innerHTML = '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="trackEvent(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>';
+      ctaRow.innerHTML = '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="trackEvent(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>'
+        + '<a href="' + gmapHref + '" target="_blank" class="modal-cta-btn modal-cta-gm-sub" onclick="' + gmapClick + '" rel="noopener noreferrer" aria-label="' + gmapAriaLabel + '"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="margin-right:.3em;vertical-align:-.1em;fill:currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>地図で場所を確認する</a>';
     } else {
-      ctaRow.innerHTML = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認">地図で場所を確認する</a>';
+      ctaRow.innerHTML = '<a href="' + gmapHref + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="' + gmapClick + '" rel="noopener noreferrer" aria-label="' + gmapAriaLabel + '">地図で場所を確認する</a>';
     }
     ctaRow.style.display = '';
   }
@@ -9414,8 +9429,10 @@ function openM(i) {
     {url:xSearchUrl(r), brand:'x', cls:'mb-xx', label:'X'},
     {url:gmap(r['店名'],r['エリア'],r), brand:'gmap', cls:'mb-gm', label:'Google Maps'}
   ];
+  var gmapTrackAttr = " onclick=\"trackEvent('cta_gmap_click',{store_name:'" + ctaEsc(r['店名']) + "',channel:'media_btn'})\"";
   document.getElementById('mmg').innerHTML = items.map(function(m){
-    return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '" rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,28) + '</span><span class="mbl">' + m.label + '</span></a>';
+    var extraAttr = (m.cls === 'mb-gm') ? gmapTrackAttr : '';
+    return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '"' + extraAttr + ' rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,28) + '</span><span class="mbl">' + m.label + '</span></a>';
   }).join('');
   setShareStore(r['店名'] || '');
   var mfavBtn = document.getElementById('modal-fav-btn');
@@ -10557,11 +10574,22 @@ function showNotifyToast() {
 // ================================================================
 // [8] スマートフィルターサジェスト
 // ================================================================
+function clearSearchInput() {
+  var si = document.getElementById('si'), si2 = document.getElementById('si2');
+  if (si) si.value = '';
+  if (si2) si2.value = '';
+  var btn = document.getElementById('si-clear');
+  if (btn) btn.classList.remove('visible');
+  applyFilters();
+  if (si) si.focus();
+}
 function suggestSearch(keyword) {
   var si = document.getElementById('si');
   var si2 = document.getElementById('si2');
   if (si) si.value = keyword;
   if (si2) si2.value = keyword;
+  var btn = document.getElementById('si-clear');
+  if (btn) btn.classList.toggle('visible', !!keyword);
   doSearch();
 }
 
@@ -10572,8 +10600,16 @@ function suggestSearch(keyword) {
   var si = document.getElementById('si');
   var si2 = document.getElementById('si2');
   if (si && si2) {
-    si.addEventListener('input', function() { si2.value = si.value; });
-    si2.addEventListener('input', function() { si.value = si2.value; });
+    si.addEventListener('input', function() {
+      si2.value = si.value;
+      var btn = document.getElementById('si-clear');
+      if (btn) btn.classList.toggle('visible', !!si.value);
+    });
+    si2.addEventListener('input', function() {
+      si.value = si2.value;
+      var btn = document.getElementById('si-clear');
+      if (btn) btn.classList.toggle('visible', !!si.value);
+    });
     si2.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(); });
   }
 })();
