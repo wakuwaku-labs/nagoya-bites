@@ -233,6 +233,11 @@ nav.open{right:0;}
 .search-wrap input:focus{border-color:var(--gold);}
 .search-wrap button{background:var(--gold);border:none;color:var(--bg);padding:.8rem 1.4rem;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;cursor:pointer;font-weight:500;transition:background .2s;}
 .search-wrap button:hover{background:var(--gold2);}
+/* FB-001: 検索クリアボタン */
+.search-input-wrap{flex:1;position:relative;}
+.search-input-wrap>input{width:100%;padding-right:2.2rem!important;}
+.search-clear-btn{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--dim);font-size:1.1rem;line-height:1;cursor:pointer;padding:4px 6px;border-radius:2px;transition:color .15s;min-width:30px;min-height:30px;display:flex;align-items:center;justify-content:center;}
+.search-clear-btn:hover{color:var(--text);}
 /* ── 常時表示のシーン/エリア導線（直帰率対策・MEO-001） ── */
 .scene-nav{margin-top:1.6rem;max-width:580px;opacity:0;animation:up .9s .8s forwards;}
 .scene-nav-row{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin-top:.7rem;}
@@ -1399,7 +1404,10 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   </div>
   <div class="search-wrap">
     <label for="si" class="visually-hidden">レストランを検索</label>
-    <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+    <div class="search-input-wrap">
+      <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+      <button class="search-clear-btn" id="si-clear" type="button" aria-label="検索をクリア" style="display:none">×</button>
+    </div>
     <button onclick="doSearch()" aria-label="検索">Search</button>
     <div class="search-suggest" id="hero-suggest">
       <span class="suggest-label">人気:</span>
@@ -8683,6 +8691,8 @@ document.getElementById('si').addEventListener('keydown', function(e){ if(e.key=
 document.getElementById('si').addEventListener('input', function(){
   var si2 = document.getElementById('si2');
   if (si2 && document.activeElement !== si2) si2.value = this.value;
+  var clr = document.getElementById('si-clear');
+  if (clr) clr.style.display = this.value ? '' : 'none';
 });
 // セマンティック検索は全件スコアリングするため、打鍵ごとの再計算はデバウンスする
 var NB_SEARCH_DEBOUNCE = null;
@@ -8693,6 +8703,19 @@ document.getElementById('si2').addEventListener('input', function(){
   NB_SEARCH_DEBOUNCE = setTimeout(applyFilters, 140);
 });
 document.getElementById('si2').addEventListener('keydown', function(e){ if(e.key==='Enter') applyFilters(); });
+(function(){
+  var clr = document.getElementById('si-clear');
+  if (!clr) return;
+  clr.addEventListener('click', function(){
+    var si = document.getElementById('si');
+    var si2 = document.getElementById('si2');
+    if (si) si.value = '';
+    if (si2) si2.value = '';
+    clr.style.display = 'none';
+    if (si) si.focus();
+    applyFilters();
+  });
+}());
 
 function toggleFilterPanel() {
   FILTER_PANEL_OPEN = !FILTER_PANEL_OPEN;
@@ -8766,6 +8789,7 @@ function clearAllFilters() {
   // Clear search
   var si = document.getElementById('si'); if (si) si.value = '';
   var si2 = document.getElementById('si2'); if (si2) si2.value = '';
+  var siClear = document.getElementById('si-clear'); if (siClear) siClear.style.display = 'none';
   applyFilters();
 }
 
