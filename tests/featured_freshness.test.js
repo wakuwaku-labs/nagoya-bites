@@ -4,7 +4,7 @@
  * 特集の鮮度保証カレンダーのガードテスト（scripts/build_featured.js）。
  *
  * 「季節特集が全部期限切れ → ストリップが evergreen だけで陳腐化」事故の再発防止。
- *   - monthlyFeature が 12ヶ月すべてを実在ページで埋めている（鮮度の穴ゼロ）
+ *   - monthlyScenes が 12ヶ月すべてを実在ページで埋めている（鮮度の穴ゼロ）
  *   - showcase / showcasePinned の slug が実在し画像も取得できる
  *   - season.recurring が年に依存せず MM-DD で判定される（翌年も自動復活）
  *   - validateConfig が穴・壊れ参照を検出する
@@ -30,12 +30,14 @@ test('鮮度ガード: validateConfig が穴・壊れ参照を検出しない', 
   assert.deepEqual(errs, [], errs.join('\n'));
 });
 
-test('monthlyFeature: 12ヶ月すべてが実在ページで埋まっている（鮮度の穴ゼロ）', () => {
+test('monthlyScenes: 12ヶ月すべてが実在ページで埋まっている（鮮度の穴ゼロ）', () => {
   for (let m = 1; m <= 12; m++) {
-    const mf = cfg.monthlyFeature[String(m)];
-    assert.ok(mf, `${m}月が未定義`);
-    assert.ok(featureSlugs.has(mf.slug), `${m}月の ${mf.slug}.html が存在しない`);
-    assert.ok(mf.title && mf.badge, `${m}月の title/badge が欠落`);
+    const ms = cfg.monthlyScenes[String(m)];
+    assert.ok(ms && Array.isArray(ms.scenes) && ms.scenes.length > 0, `${m}月が未定義`);
+    for (const sc of ms.scenes) {
+      assert.ok(featureSlugs.has(sc.slug), `${m}月の ${sc.slug}.html が存在しない`);
+      assert.ok(sc.title && sc.badge, `${m}月の title/badge が欠落`);
+    }
   }
 });
 
@@ -43,8 +45,9 @@ test('どの日付でも「今月の旬」リードが必ず1本立つ（年に�
   for (const y of ['2026', '2027', '2030']) {
     for (let m = 1; m <= 12; m++) {
       const mm = String(m).padStart(2, '0');
-      const mf = cfg.monthlyFeature[String(monthOf(`${y}-${mm}-15`))];
-      assert.ok(mf && featureSlugs.has(mf.slug), `${y}-${mm} の旬リードが解決できない`);
+      const ms = cfg.monthlyScenes[String(monthOf(`${y}-${mm}-15`))];
+      assert.ok(ms && Array.isArray(ms.scenes) && ms.scenes.length > 0, `${y}-${mm} の旬リードが解決できない`);
+      assert.ok(featureSlugs.has(ms.scenes[0].slug), `${y}-${mm} の旬リード slug が存在しない`);
     }
   }
 });

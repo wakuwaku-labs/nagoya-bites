@@ -47,7 +47,8 @@
 
 ### [FB-001] 検索バーに入力クリア（×）ボタンがない
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-08
 - **detected**: 2026-08-03（消費者フィードバックループ経由。サイト右下フローティング「ご意見」ボタンから
   モバイル送信。種類=使いづらい・わかりにくい / page=`#q=%E6%A0%84%20%E7%84%BC%E8%82%89`（「栢 焼肉」検索中））
 - **category**: UX
@@ -140,7 +141,8 @@
 
 ### [SEO-051] `tests/featured_freshness.test.js` が `data/featured.json` の旧スキーマ（`monthlyFeature`）を前提のままで2件失敗している
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-08
 - **detected**: 2026-08-05（[[SEO-050]] の QA で検出。本変更とは無関係の既存不具合）
 - **category**: QA
 - **owner**: Builder
