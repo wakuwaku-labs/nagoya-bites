@@ -10,7 +10,8 @@
 
 ### [SEO-049] 店舗詳細モーダルに地図CTAが出るのは全体の2.8%だけ（97.2%の店で排他的に非表示）＋メディアボタンのGoogle Mapsが未計測
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-08
 - **detected**: 2026-08-06
 - **category**: SEO / UX / 計測
 - **owner**: Builder
