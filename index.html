@@ -233,6 +233,11 @@ nav.open{right:0;}
 .search-wrap input:focus{border-color:var(--gold);}
 .search-wrap button{background:var(--gold);border:none;color:var(--bg);padding:.8rem 1.4rem;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;cursor:pointer;font-weight:500;transition:background .2s;}
 .search-wrap button:hover{background:var(--gold2);}
+.search-input-wrap{position:relative;flex:1;display:flex;align-items:stretch;}
+.search-input-wrap input{flex:1;padding-right:2.5rem;}
+.search-clear-btn{position:absolute;right:0;top:0;bottom:0;width:2.5rem;border:none;background:transparent;color:var(--dim);cursor:pointer;display:none;align-items:center;justify-content:center;font-size:1rem;padding:0;touch-action:manipulation;border-radius:0 2px 2px 0;}
+.search-clear-btn:hover{color:var(--text);}
+.search-input-wrap input:not(:placeholder-shown)~.search-clear-btn{display:flex;}
 /* ── 常時表示のシーン/エリア導線（直帰率対策・MEO-001） ── */
 .scene-nav{margin-top:1.6rem;max-width:580px;opacity:0;animation:up .9s .8s forwards;}
 .scene-nav-row{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin-top:.7rem;}
@@ -1399,7 +1404,10 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   </div>
   <div class="search-wrap">
     <label for="si" class="visually-hidden">レストランを検索</label>
-    <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+    <div class="search-input-wrap" id="si-wrap">
+      <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+      <button class="search-clear-btn" type="button" aria-label="検索をクリア">&#x2715;</button>
+    </div>
     <button onclick="doSearch()" aria-label="検索">Search</button>
     <div class="search-suggest" id="hero-suggest">
       <span class="suggest-label">人気:</span>
@@ -1678,7 +1686,10 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <!-- スティッキー検索バー + アクティブフィルターチップ -->
 <div class="sticky-search" id="sticky-search">
   <label for="si2" class="visually-hidden">レストランを検索（追従バー）</label>
-  <input id="si2" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+  <div class="search-input-wrap" id="si2-wrap">
+    <input id="si2" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+    <button class="search-clear-btn" type="button" aria-label="検索をクリア">&#x2715;</button>
+  </div>
   <button class="geo-btn" id="geo-btn" onclick="geoSearch()" aria-label="現在地から探す"><span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="2.8"/></svg></span>現在地</button>
   <button class="sticky-search-btn" onclick="doSearch()" aria-label="検索">検索</button>
 </div>
@@ -8694,6 +8705,18 @@ document.getElementById('si2').addEventListener('input', function(){
 });
 document.getElementById('si2').addEventListener('keydown', function(e){ if(e.key==='Enter') applyFilters(); });
 
+// 検索クリアボタン（×）: 入力があるときのみ CSS で表示、クリックで両 input を空にして再検索
+document.querySelectorAll('.search-clear-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var si=document.getElementById('si'), si2=document.getElementById('si2');
+    if(si) si.value='';
+    if(si2) si2.value='';
+    applyFilters();
+    var inp=btn.closest('.search-input-wrap') && btn.closest('.search-input-wrap').querySelector('input');
+    if(inp) inp.focus();
+  });
+});
+
 function toggleFilterPanel() {
   FILTER_PANEL_OPEN = !FILTER_PANEL_OPEN;
   var panel = document.getElementById('filter-panel');
@@ -9401,10 +9424,11 @@ function openM(i) {
   if (ctaRow) {
     var hpId2 = r['ホットペッパーID'] || '';
     var ctaEsc = function(s){ return String(s||'').replace(/'/g,'').replace(/</g,'').replace(/>/g,''); };
+    var gmapBtn = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認">地図で場所を確認する</a>';
     if (hpId2) {
-      ctaRow.innerHTML = '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="trackEvent(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>';
+      ctaRow.innerHTML = '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="trackEvent(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>' + gmapBtn;
     } else {
-      ctaRow.innerHTML = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認">地図で場所を確認する</a>';
+      ctaRow.innerHTML = gmapBtn;
     }
     ctaRow.style.display = '';
   }
@@ -9414,10 +9438,10 @@ function openM(i) {
     {url:instagramSearchUrl(r), brand:'instagram', cls:'mb-ig', label:'Instagram'},
     {url:tiktokSearchUrl(r), brand:'tiktok', cls:'mb-tk', label:'TikTok'},
     {url:xSearchUrl(r), brand:'x', cls:'mb-xx', label:'X'},
-    {url:gmap(r['店名'],r['エリア'],r), brand:'gmap', cls:'mb-gm', label:'Google Maps'}
+    {url:gmap(r['店名'],r['エリア'],r), brand:'gmap', cls:'mb-gm', label:'Google Maps', onclick:'trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',channel:\'media_btn\'})'}
   ];
   document.getElementById('mmg').innerHTML = items.map(function(m){
-    return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '" rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,28) + '</span><span class="mbl">' + m.label + '</span></a>';
+    return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '"' + (m.onclick ? ' onclick="' + m.onclick + '"' : '') + ' rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,28) + '</span><span class="mbl">' + m.label + '</span></a>';
   }).join('');
   setShareStore(r['店名'] || '');
   var mfavBtn = document.getElementById('modal-fav-btn');
