@@ -205,6 +205,13 @@ fi
 # 認証切れ（401 Invalid authentication credentials）とは別物。前者はリトライで復旧するが、
 # 後者はリトライしても無駄なので即座に諦める（2026-07-14/07-15 のネットワーク瞬断による
 # 欠番を教訓に導入。認証エラーまでリトライすると失敗ログが埋もれて気づくのが遅れる）。
+#
+# 2026-08-10 追記（08-05 / 08-07 / 08-08 / 08-09 の4日欠番の真因）:
+#   claude CLI が実際に吐いたのは "API Error: Connection closed mid-response." で、
+#   下の一時エラー判定パターンのどれにも当たらなかった。結果 MAX_CLAUDE_ATTEMPTS=3 の
+#   リトライが一度も発火せず、瞬断1回で即 HOLD → その日の記事がゼロになっていた。
+#   「リトライ機構はあるのに、エラー文言の形が変わると丸ごと空振りする」という壊れ方なので、
+#   文言を足すときは実ログ（.local-logs/journal-YYYY-MM-DD.log）の原文に合わせること。
 PROMPT=$(tail -n +5 .claude/commands/journal-today.md)
 MAX_CLAUDE_ATTEMPTS=3
 CLAUDE_ATTEMPT=1
@@ -224,7 +231,7 @@ while :; do
     log "最大試行回数（${MAX_CLAUDE_ATTEMPTS}）に到達。諦めます。"
     break
   fi
-  if ! grep -qE "socket connection was closed|FailedToOpenSocket|ECONNRESET|ETIMEDOUT|network|Unable to connect to API" "$LOG"; then
+  if ! grep -qE "socket connection was closed|Connection closed mid-response|Connection error|stream (was )?(closed|interrupted)|FailedToOpenSocket|ECONNRESET|ECONNREFUSED|EPIPE|ETIMEDOUT|network|Unable to connect to API|API Error: 5[0-9][0-9]|Overloaded" "$LOG"; then
     log "既知のネットワーク一時エラーではないためリトライしません。"
     break
   fi
