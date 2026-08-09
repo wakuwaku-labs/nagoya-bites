@@ -1,0 +1,461 @@
+{
+  "date": "2026-08-08",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "大須の食べ歩きに1,500円のかき氷が加わる",
+      "verdict": "PASS",
+      "total": 107,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "食べ歩き",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "スイーツ",
+          "feature": "features/nagoya-sweets.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 167字 +4",
+          "title 22字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「食べ歩き」+4",
+          "タイトルにジャンル語「かき氷」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "大須で一人、19時までに寄れる新しいカフェ",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (席,シーン,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 99字 +4",
+          "title 21字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: topicality -8 / search_intent -4 / brand_fit -3"
+    },
+    {
+      "id": "c2",
+      "title_draft": "大須にブルーベリー専門カフェ、原料を持つ会社の店",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 93,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 15,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,席,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 100字 +4",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      },
+      "gate_note": "93点（自動公開ライン 100点）。主な不足: topicality -5 / uniqueness -5 / search_intent -4"
+    },
+    {
+      "id": "c4",
+      "title_draft": "1,500円のかき氷は高いのか、大須の相場で考える",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 86,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 10,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "スイーツ",
+          "feature": "features/nagoya-sweets.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (価格帯,シーン) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 81字 +4",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語がリードのみ「食べ歩き」+1",
+          "タイトルにジャンル語「かき氷」+2"
+        ]
+      },
+      "gate_note": "86点（自動公開ライン 100点）。主な不足: uniqueness -10 / topicality -8 / brand_fit -3"
+    },
+    {
+      "id": "c5",
+      "title_draft": "大須の新店、隣が謎解き書店という立地の意味",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (シーン,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 97字 +4",
+          "title 21字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "大須の食べ歩きに1,500円のかき氷が加わる",
+      "lead_draft": "2026年8月8日、大須商店街にブルーベリー専門のカフェが開いた。サプリメントで知られる会社が京都に続いて出した2店舗目で、フレンチトーストもかき氷も1,500円。100円台から食べ歩ける大須の相場からすると、明らかに一段高い。ではなぜその値段で成立するのか。約20席という席数と、原料を自前で持つ会社が直営でやるという構造から読む。",
+      "angle": "大須の食べ歩き動線で単価1,500円が成立する条件を、価格帯・約20席という席数・回転・一人で寄る場合のシーン適性から読む",
+      "main_store": {
+        "name": "WAKASA Cafe 名古屋大須店",
+        "id": "",
+        "area": "大須",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES／株式会社わかさ生活「『WAKASA Cafe 名古屋大須店』8月8日(土)OPEN！」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000763.000003821.html",
+          "date": "2026-08-07"
+        },
+        {
+          "label": "名古屋情報通「ブルーベリーのスイーツ専門店『WAKASA Cafe』名古屋初店舗が大須商店街にオープン」",
+          "url": "https://jouhou.nagoya/wakasa-cafe/",
+          "date": "2026-08-08"
+        },
+        {
+          "label": "WAKASA&CO. 公式Instagram（@wakasa_co_）",
+          "url": "https://www.instagram.com/wakasa_co_/",
+          "date": "2026-08-08"
+        },
+        {
+          "label": "わかさ生活【公式】X（@WAKASASEIKATSU）",
+          "url": "https://x.com/wakasaseikatsu",
+          "date": "2026-08-07"
+        },
+        {
+          "label": "食べログ「WAKASA&CO. BLUEBERRY CAFE」（京都・烏丸の既存店）",
+          "url": "https://tabelog.com/en/kyoto/A2601/A260201/26042719/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "大須にブルーベリー専門カフェ、原料を持つ会社の店",
+      "lead_draft": "2026年8月8日、大須商店街にブルーベリー専門のカフェが開いた。運営はサプリメントの会社で、京都に続く2店舗目。素材の会社が直営で店をやるとメニューの作り方がどう変わるのかを、価格帯と席数から読む。",
+      "angle": "原料会社の直営という業態が価格帯とメニュー構成に与える影響を、回転と席の設計から読む",
+      "main_store": {
+        "name": "WAKASA Cafe 名古屋大須店",
+        "id": "",
+        "area": "大須",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES／わかさ生活「WAKASA Cafe 名古屋大須店 8月8日OPEN」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000763.000003821.html",
+          "date": "2026-08-07"
+        },
+        {
+          "label": "名古屋情報通「WAKASA Cafe 名古屋初店舗が大須商店街にオープン」",
+          "url": "https://jouhou.nagoya/wakasa-cafe/",
+          "date": "2026-08-08"
+        },
+        {
+          "label": "WAKASA&CO. 公式Instagram（@wakasa_co_）",
+          "url": "https://www.instagram.com/wakasa_co_/",
+          "date": "2026-08-08"
+        },
+        {
+          "label": "食べログ「WAKASA&CO. BLUEBERRY CAFE」（京都・烏丸）",
+          "url": "https://tabelog.com/en/kyoto/A2601/A260201/26042719/"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "大須で一人、19時までに寄れる新しいカフェ",
+      "lead_draft": "8月8日に大須商店街に開いたブルーベリー専門カフェは、10時から19時まで、定休日なし。夜の街になる前の時間だけを取りにいく設計で、約20席。一人で寄る場合に何時が快適かを、営業時間と席数から読む。",
+      "angle": "10時から19時という営業時間と約20席の設計から、一人飲み前の時間帯やシーン適性と回転を読む",
+      "main_store": {
+        "name": "WAKASA Cafe 名古屋大須店",
+        "id": "",
+        "area": "大須",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES／わかさ生活「WAKASA Cafe 名古屋大須店 8月8日OPEN」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000763.000003821.html",
+          "date": "2026-08-07"
+        },
+        {
+          "label": "名古屋情報通「WAKASA Cafe 名古屋初店舗が大須商店街にオープン」",
+          "url": "https://jouhou.nagoya/wakasa-cafe/",
+          "date": "2026-08-08"
+        },
+        {
+          "label": "わかさ生活【公式】X（@WAKASASEIKATSU）",
+          "url": "https://x.com/wakasaseikatsu",
+          "date": "2026-08-07"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "1,500円のかき氷は高いのか、大須の相場で考える",
+      "lead_draft": "8月限定のブルーベリーみるくかき氷は1,500円。大須の食べ歩きの相場からすると高いが、専門店の単品としては別の物差しがある。価格帯の読み方を業界側から整理する。",
+      "angle": "専門店の単品価格を大須の食べ歩き相場と比較し、価格帯の読み方とシーンの向き不向きを整理する",
+      "main_store": {
+        "name": "WAKASA Cafe 名古屋大須店",
+        "id": "",
+        "area": "大須",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES／わかさ生活「WAKASA Cafe 名古屋大須店 8月8日OPEN」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000763.000003821.html",
+          "date": "2026-08-07"
+        },
+        {
+          "label": "名古屋情報通「WAKASA Cafe 名古屋初店舗が大須商店街にオープン」",
+          "url": "https://jouhou.nagoya/wakasa-cafe/",
+          "date": "2026-08-08"
+        },
+        {
+          "label": "WAKASA&CO. 公式Instagram（@wakasa_co_）",
+          "url": "https://www.instagram.com/wakasa_co_/",
+          "date": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "大須の新店、隣が謎解き書店という立地の意味",
+      "lead_draft": "8月8日に開いたブルーベリー専門カフェは、同じ会社が営む謎解き専門書店の隣にある。物販と飲食を並べる作り方は、商店街の滞在時間を伸ばすための古典的な手だ。大須での回遊をどう作るかを店側から読む。",
+      "angle": "物販併設で滞在時間を伸ばす作りを、回転と客単価の設計から読み、食べ歩きのシーンに置き直す",
+      "main_store": {
+        "name": "WAKASA Cafe 名古屋大須店",
+        "id": "",
+        "area": "大須",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「WAKASA Cafe 名古屋初店舗が大須商店街にオープン」",
+          "url": "https://jouhou.nagoya/wakasa-cafe/",
+          "date": "2026-08-08"
+        },
+        {
+          "label": "PR TIMES／わかさ生活「WAKASA Cafe 名古屋大須店 8月8日OPEN」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000763.000003821.html",
+          "date": "2026-08-07"
+        },
+        {
+          "label": "WAKASA&CO. 公式サイト",
+          "url": "https://sites.google.com/view/wakasaandco/"
+        }
+      ]
+    }
+  ]
+}

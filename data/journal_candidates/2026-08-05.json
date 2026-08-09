@@ -1,0 +1,471 @@
+{
+  "date": "2026-08-05",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "「お通し450円」に込められた名古屋の居酒屋の意思",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 99,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 8件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 8件 (原価,オペ,回転,仕込み,業界,構造,慣習,相場) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 184字 +4",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-PRICE-004) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "99点（自動公開ライン 100点）。主な不足: search_intent -8 / recency -3"
+    },
+    {
+      "id": "c4",
+      "title_draft": "値上げ2311品目、居酒屋の価格はどこから動くか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 86,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 4件 (原価,仕入れ,歩留まり,構造) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 125字 +4",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-PRICE-004) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "86点（自動公開ライン 100点）。主な不足: topicality -10 / search_intent -8 / recency -3"
+    },
+    {
+      "id": "c2",
+      "title_draft": "お通しを廃止した店と残した店、名古屋で分かれた判断",
+      "verdict": "HOLD",
+      "total": 79,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 15日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 4件 (原価,回転,業界,構造) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 114字 +4",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-PRICE-004) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "「お通しカットできますか」と聞ける店、聞けない店",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 15日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 4件 (オペ,仕込み,業界,慣習) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 94字 +4",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-PRICE-004) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "訪日客が「Hidden Fee」と呼ぶもの — 名古屋の居酒屋の説明責任",
+      "verdict": "HOLD",
+      "total": 77,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 15日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 4件 (オペ,仕込み,業界,構造) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 125字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初出コラム (COL-PRICE-004) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "99点（自動公開ライン 100点）。主な不足: search_intent -8 / recency -3",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "industry_insider",
+      "column_id": "COL-PRICE-004",
+      "title_draft": "「お通し450円」に込められた名古屋の居酒屋の意思",
+      "lead_draft": "お通しをやめる店が増えている。2026年7月には600円のお通しをめぐる揉め事が業界メディアで取り上げられ、訪日客からは「Hidden Fee」と呼ばれた。それでも名古屋の居酒屋の多くは450円前後のお通しを残している。廃止が正しいという話ではない。あれは席料であり、原価の回収であり、そして店がどんな客層と付き合うかの意思表示でもある。業界側から、その読み方を書く。",
+      "angle": "お通しの是非ではなく、原価・仕込み・オペ・回転という店側の構造から450円という相場の意味を読む。業界の慣習として残った理由と、客側が店を見分けるための読み方まで落とす",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "中日新聞Web「８月の値上げ、２千品目超 飲食料品、前年比８割増」",
+          "url": "https://www.chunichi.co.jp/article/1289717",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "帝国データバンク「食品主要195社」価格改定動向調査 — 2026年8月",
+          "url": "https://www.tdb.co.jp/report/economic/20260731-neage26y08/",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "帝国データバンク公式X（@TDB_PR）8月値上げ2311品目の投稿",
+          "url": "https://x.com/TDB_PR/status/2082983836745679272",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "レフズ合同会社「お通し600円で大揉め（お通し値上げ）から学ぶ、具体的改善策とクチコミ集客」",
+          "url": "https://www.refs.jp/2026/07/21/conviction-based-marketing",
+          "date": "2026-07-21"
+        },
+        {
+          "label": "PR TIMES／シンクロ・フード「飲食店の2割が1年以内に『お通し』を値上げ。7割が何らかのチャージを請求」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000563.000001049.html",
+          "date": "2023-08-30"
+        },
+        {
+          "label": "note「激安居酒屋チェーン店は お通し代に注意」（チェーン別のお通し代実記録）",
+          "url": "https://note.com/sapporosenbero/n/n73799cb90100",
+          "date": "2026-02-15"
+        },
+        {
+          "label": "飲食店ドットコム ジャーナル「居酒屋の『お通し』問題、店主のホンネは？」",
+          "url": "https://www.inshokuten.com/foodist/article/4796/",
+          "date": "2021-08-23"
+        },
+        {
+          "label": "弁護士ドットコムニュース「座るだけで『1960円』居酒屋のえげつない料金システム」",
+          "url": "https://www.bengo4.com/c_8/n_12180/",
+          "date": "2020-12-18"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "column_id": "COL-PRICE-004",
+      "title_draft": "お通しを廃止した店と残した店、名古屋で分かれた判断",
+      "lead_draft": "お通しの廃止は増えているが、名古屋では残す店がまだ多い。2026年7月の業界記事では相場300〜500円に対し600円が炎上した事例が紹介された。廃止と存続、それぞれの店が何を守ろうとしたのかを、原価と席あたり売上の側から読む。",
+      "angle": "廃止側・存続側の経営判断を原価と回転の観点で比較し、業界の構造として説明する",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "レフズ合同会社「お通し600円で大揉め」",
+          "url": "https://www.refs.jp/2026/07/21/conviction-based-marketing",
+          "date": "2026-07-21"
+        },
+        {
+          "label": "PR TIMES／シンクロ・フード お通し・サービス料調査",
+          "url": "https://prtimes.jp/main/html/rd/p/000000563.000001049.html",
+          "date": "2023-08-30"
+        },
+        {
+          "label": "飲食店ドットコム ジャーナル「居酒屋の『お通し』問題」",
+          "url": "https://www.inshokuten.com/foodist/article/4796/",
+          "date": "2021-08-23"
+        },
+        {
+          "label": "note「激安居酒屋チェーン店は お通し代に注意」",
+          "url": "https://note.com/sapporosenbero/n/n73799cb90100",
+          "date": "2026-02-15"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "industry_insider",
+      "column_id": "COL-PRICE-004",
+      "title_draft": "訪日客が「Hidden Fee」と呼ぶもの — 名古屋の居酒屋の説明責任",
+      "lead_draft": "訪日客の増加で、お通しは「頼んでいないのに課金される仕組み」として説明を求められるようになった。2026年7月の業界記事では多言語での席料明記やオプトアウト方式が改善策として挙がっている。名古屋の現場が取れる現実的な対応を、オペと仕込みの側から書く。",
+      "angle": "インバウンド対応の説明責任を、オペと仕込みの負荷という業界の構造から現実解に落とす",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "レフズ合同会社「お通し600円で大揉め」",
+          "url": "https://www.refs.jp/2026/07/21/conviction-based-marketing",
+          "date": "2026-07-21"
+        },
+        {
+          "label": "訪日ラボ「2026年最新 名古屋で外国人に人気の飲食店TOP10」",
+          "url": "https://honichi.com/news/2026/06/29/202606_inboundranking_gourmet_nagoya/",
+          "date": "2026-06-29"
+        },
+        {
+          "label": "PR TIMES／シンクロ・フード お通し・サービス料調査",
+          "url": "https://prtimes.jp/main/html/rd/p/000000563.000001049.html",
+          "date": "2023-08-30"
+        },
+        {
+          "label": "飲食店ドットコム ジャーナル「居酒屋の『お通し』問題」",
+          "url": "https://www.inshokuten.com/foodist/article/4796/",
+          "date": "2021-08-23"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "industry_insider",
+      "column_id": "COL-PRICE-004",
+      "title_draft": "値上げ2311品目、居酒屋の価格はどこから動くか",
+      "lead_draft": "帝国データバンクの調査では2026年8月の飲食料品値上げは2311品目、前年同月から8割増となった。原価が上がったとき、居酒屋の価格はメニュー本体ではなく端の方から動く。お通し・ドリンク・お通しカットの可否に何が起きるかを、仕入れと原価の側から読む。",
+      "angle": "値上げ局面で店が最初に触る価格を、仕入れ・原価・歩留まりの構造から説明する",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "中日新聞Web「８月の値上げ、２千品目超」",
+          "url": "https://www.chunichi.co.jp/article/1289717",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "帝国データバンク 価格改定動向調査 2026年8月",
+          "url": "https://www.tdb.co.jp/report/economic/20260731-neage26y08/",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "レフズ合同会社「お通し600円で大揉め」",
+          "url": "https://www.refs.jp/2026/07/21/conviction-based-marketing",
+          "date": "2026-07-21"
+        },
+        {
+          "label": "飲食店ドットコム ジャーナル「居酒屋の『お通し』問題」",
+          "url": "https://www.inshokuten.com/foodist/article/4796/",
+          "date": "2021-08-23"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "industry_insider",
+      "column_id": "COL-PRICE-004",
+      "title_draft": "「お通しカットできますか」と聞ける店、聞けない店",
+      "lead_draft": "お通しカットに応じる店は3割ほどという調査がある。断れる店と断れない店の差は、接客の親切さではなく仕込みと提供オペの設計にある。名古屋で店を使い分けるための読み方を、業界側の事情から書く。",
+      "angle": "お通しカットの可否を仕込みとオペの設計から説明し、業界の慣習として整理する",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "飲食店ドットコム ジャーナル「居酒屋の『お通し』問題」",
+          "url": "https://www.inshokuten.com/foodist/article/4796/",
+          "date": "2021-08-23"
+        },
+        {
+          "label": "レフズ合同会社「お通し600円で大揉め」",
+          "url": "https://www.refs.jp/2026/07/21/conviction-based-marketing",
+          "date": "2026-07-21"
+        },
+        {
+          "label": "弁護士ドットコムニュース「座るだけで『1960円』」",
+          "url": "https://www.bengo4.com/c_8/n_12180/",
+          "date": "2020-12-18"
+        },
+        {
+          "label": "note「激安居酒屋チェーン店は お通し代に注意」",
+          "url": "https://note.com/sapporosenbero/n/n73799cb90100",
+          "date": "2026-02-15"
+        }
+      ]
+    }
+  ]
+}

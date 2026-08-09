@@ -1,0 +1,443 @@
+{
+  "date": "2026-08-07",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "立秋の名古屋、お盆の会食が動き出す一週間",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 99,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 7件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (時期,需要,繁忙,予約,仕入れ) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 159字 +4",
+          "title 20字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「会食」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "99点（自動公開ライン 100点）。主な不足: search_intent -6 / brand_fit -3 / novelty -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "お盆前の名古屋、予約が急に取りづらくなる週",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 88,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (時期,需要,繁忙,予約,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 130字 +4",
+          "title 21字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「接待」+1",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "88点（自動公開ライン 100点）。主な不足: search_intent -9 / topicality -5 / recency -3"
+    },
+    {
+      "id": "c3",
+      "title_draft": "39度台の週に、店の仕入れが変わること",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 4件 (旬,時期,相場,仕入れ) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 128字 +4",
+          "title 19字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -10 / search_intent -10 / brand_fit -3"
+    },
+    {
+      "id": "c5",
+      "title_draft": "残暑見舞いの時期に、手土産で外さない選び方",
+      "verdict": "HOLD",
+      "total": 79,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 17,
+        "uniqueness": 15,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (時期,需要,仕入れ) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 96字 +4",
+          "title 21字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "名古屋城夏まつりの週、栄と丸の内で起きること",
+      "verdict": "HOLD",
+      "total": 73,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 2件 (需要,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 108字 +4",
+          "title 22字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "99点（自動公開ライン 100点）。主な不足: search_intent -6 / brand_fit -3 / novelty -2",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "立秋の名古屋、お盆の会食が動き出す一週間",
+      "lead_draft": "8月7日は立秋。暦の上では秋が始まる日だが、名古屋は8月2日に周辺で39度台が出たばかりで、体感は真夏のままだ。それでも飲食店の一週間は今日から変わる。8月13日からのお盆と、8日に始まる名古屋城夏まつりが同時に来るからで、予約の受け方も仕入れの量も、この一週間で組み替わる。季節の切り替わりを、店側の時間割から書く。",
+      "angle": "立秋からお盆までの一週間に、予約・仕入れ・繁忙のピークがどう動くかを店側の時間割として示し、この時期の需要と席の取り方まで落とす",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "日本気象協会 tenki.jp「5日以降は名古屋や岐阜で猛烈な暑さ 台風13号の東海への影響は?」",
+          "url": "https://tenki.jp/forecaster/n_takeshita/2026/08/04/40005.html",
+          "date": "2026-08-04"
+        },
+        {
+          "label": "中日新聞Web「高知県四万十市で40.8度、3地点で酷暑日 三重県桑名市と岐阜県多治見市で39.9度」",
+          "url": "https://www.chunichi.co.jp/article/1290927",
+          "date": "2026-08-02"
+        },
+        {
+          "label": "メ〜テレ（名古屋テレビ）「午前中からすでに猛暑日 愛知と三重に熱中症警戒アラート」",
+          "url": "https://www.nagoyatv.com/news/?id=036557",
+          "date": "2026-07-30"
+        },
+        {
+          "label": "名古屋城公式ウェブサイト「名古屋城夏まつり（2026年）」",
+          "url": "https://www.nagoyajo.city.nagoya.jp/event/2026/07/20260708_4897.html",
+          "date": "2026-07-08"
+        },
+        {
+          "label": "note「【2026年版】お盆休みはいつ？最大9連休の取り方と帰省前に準備しておきたい持ち物まとめ」",
+          "url": "https://note.com/ebe0911/n/n388cb29474d4"
+        },
+        {
+          "label": "note「お盆はいつ？2026年の日程をわかりやすく解説」",
+          "url": "https://note.com/koichi1978/n/nb0c488c6256c"
+        },
+        {
+          "label": "JREメディア「【2026年版】立秋はいつ？、立秋の意味や立秋の候、食べ物などを詳しく解説！」",
+          "url": "https://media.jreast.co.jp/articles/3285"
+        },
+        {
+          "label": "ナゴヤドット「名古屋エリアの盆踊り大会 厳選7＋2選（2026年7月〜8月）」",
+          "url": "https://nagoyato.com/posts/16888"
+        },
+        {
+          "label": "名古屋城公式ウェブサイト「料金（観覧料）」",
+          "url": "https://www.nagoyajo.city.nagoya.jp/info/fee/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "お盆前の名古屋、予約が急に取りづらくなる週",
+      "lead_draft": "2026年のお盆は8月13日から16日。8日から名古屋城夏まつりも始まり、街の人出は先に動き出す。この一週間、店側は席の押さえ方を変える。帰省の会食と観光の飛び込みが同じ時間帯に重なるためで、予約の入れ方にも作法がいる。繁忙期の席の取り方を店側の事情から書く。",
+      "angle": "帰省需要と観光需要が重なる時期の予約と回転の設計を、店側の繁忙の作り方から説明する",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "名古屋城公式ウェブサイト「名古屋城夏まつり（2026年）」",
+          "url": "https://www.nagoyajo.city.nagoya.jp/event/2026/07/20260708_4897.html",
+          "date": "2026-07-08"
+        },
+        {
+          "label": "note「【2026年版】お盆休みはいつ？最大9連休の取り方」",
+          "url": "https://note.com/ebe0911/n/n388cb29474d4"
+        },
+        {
+          "label": "中日新聞Web「3地点で酷暑日」",
+          "url": "https://www.chunichi.co.jp/article/1290927",
+          "date": "2026-08-02"
+        },
+        {
+          "label": "ナゴヤドット「名古屋エリアの盆踊り大会 厳選7＋2選」",
+          "url": "https://nagoyato.com/posts/16888"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "39度台の週に、店の仕入れが変わること",
+      "lead_draft": "8月2日、東海では桑名と多治見で39.9度、豊田で39.4度が観測された。tenki.jpは5日以降も名古屋で猛烈な暑さが続くと伝えている。この気温が続くと、店の仕入れは目に見えて変わる。魚の入りも野菜の相場も動くからで、その時期に何を頼むかにも影響する。",
+      "angle": "猛暑が続く時期の仕入れと相場の動きを、旬の入れ替わりと結びつけて説明する",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "中日新聞Web「3地点で酷暑日」",
+          "url": "https://www.chunichi.co.jp/article/1290927",
+          "date": "2026-08-02"
+        },
+        {
+          "label": "日本気象協会 tenki.jp（2026年08月04日）",
+          "url": "https://tenki.jp/forecaster/n_takeshita/2026/08/04/40005.html",
+          "date": "2026-08-04"
+        },
+        {
+          "label": "メ〜テレ「熱中症警戒アラート」",
+          "url": "https://www.nagoyatv.com/news/?id=036557",
+          "date": "2026-07-30"
+        },
+        {
+          "label": "JREメディア「立秋はいつ？」",
+          "url": "https://media.jreast.co.jp/articles/3285"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "名古屋城夏まつりの週、栄と丸の内で起きること",
+      "lead_draft": "名古屋城夏まつりは8月8日から16日まで、大盆踊り大会は18時から20時。終わってから動く客が、栄と丸の内の店に一斉に流れる時間帯がある。この時期だけ、二軒目の時計が後ろにずれる。祭りの週の街の動き方を店側から書く。",
+      "angle": "イベント期の人の流れと二軒目需要の時間帯を、店側の回転設計から読む",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "名古屋城公式ウェブサイト「名古屋城夏まつり（2026年）」",
+          "url": "https://www.nagoyajo.city.nagoya.jp/event/2026/07/20260708_4897.html",
+          "date": "2026-07-08"
+        },
+        {
+          "label": "ナゴヤドット「名古屋エリアの盆踊り大会 厳選7＋2選」",
+          "url": "https://nagoyato.com/posts/16888"
+        },
+        {
+          "label": "中日新聞Web「3地点で酷暑日」",
+          "url": "https://www.chunichi.co.jp/article/1290927",
+          "date": "2026-08-02"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "残暑見舞いの時期に、手土産で外さない選び方",
+      "lead_draft": "立秋を過ぎると、暑中見舞いは残暑見舞いに変わる。帰省とお盆の訪問が重なる時期でもあり、名古屋では手土産の需要がこの週から立ち上がる。日持ちと温度帯という現実的な条件から、外さない選び方を書く。",
+      "angle": "手土産の需要が立つ時期の選び方を、日持ちと温度帯という仕入れ側の条件から整理する",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "JREメディア「立秋はいつ？」",
+          "url": "https://media.jreast.co.jp/articles/3285"
+        },
+        {
+          "label": "note「お盆はいつ？2026年の日程をわかりやすく解説」",
+          "url": "https://note.com/koichi1978/n/nb0c488c6256c"
+        },
+        {
+          "label": "中日新聞Web「3地点で酷暑日」",
+          "url": "https://www.chunichi.co.jp/article/1290927",
+          "date": "2026-08-02"
+        }
+      ]
+    }
+  ]
+}

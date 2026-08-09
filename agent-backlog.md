@@ -8,6 +8,20 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-083] 日次ジャーナルが4日欠番（08-05/07/08/09）— リトライ機構がエラー文言の変化で丸ごと空振りしていた ✅
+
+- **priority**: P0 → **status**: done
+- **detected**: 2026-08-10
+- **category**: 自動化 / 可用性
+- **owner**: Orchestrator / Editor
+- **症状**: 2026-08-05・08-07・08-08・08-09 の日次ジャーナルが未公開。`.local-logs/HOLD-*.md` が4枚たまっていたが誰にも届かず、4日間気づけなかった
+- **真因（検証可能）**: `scripts/run_journal_local.sh:227` の一時エラー判定パターンが `socket connection was closed|FailedToOpenSocket|ECONNRESET|ETIMEDOUT|network|Unable to connect to API` で、claude CLI が実際に吐いた **`API Error: Connection closed mid-response.`** がどれにも一致しなかった。結果 `MAX_CLAUDE_ATTEMPTS=3` のリトライが**一度も発火せず**、瞬断1回で即 HOLD → 記事ゼロ。4日とも死因は同一（各日の `.local-logs/journal-YYYY-MM-DD.log` に原文あり）。08-06 だけ通ったのは、たまたま接続が切れなかっただけ
+- **教訓**: 「リトライ機構はあるが、エラー文言の形が変わると機構ごと空振りする」という壊れ方。7/14-15 の欠番を教訓に入れた仕組みが、文言変化で無効化されていた
+- **対応①（実施済み・commit 120c9012b）**: 判定パターンに `Connection closed mid-response` / `Connection error` / `stream closed` / `ECONNREFUSED` / `EPIPE` / `API Error: 5xx` / `Overloaded` を追加。認証エラーの即時諦めと判定順序は不変。実失敗ログの原文でリトライ判定が通ることを確認済み
+- **対応②（実施済み）**: 欠番4日を正規パイプライン（pick_daily_topic → リサーチ → 候補5本 → 採点ゲート → validator → register → index）でバックフィル。採点は記事の日付を基準日として実施（CLI が実行日固定のため `scoreAll({today})` を呼ぶラッパーを別途使用）。全4本 validator PASS、採点は 99 / 99 / 107 / 103
+- **残課題（未対応・別途起票が必要）**: ① HOLD が発生しても通知経路がなくログの中で完結している（無人運用では気づけない） ② `score_journal_candidates.js` の CLI が基準日を **UTC の実行日**で固定しており（`todayISO()`）、JST 早朝は前日扱いになる＋過去日の採点ができない ③ `build.js` は HotPepper API キーなしでは実行できない（今回は安全ガードが働き `index.html` は書き換えず、`data/stores.json` はバックアップから復元された）
+- **acceptance**: ①欠番4日が journal/ と `data/journal_published.json` と journal/index.html に存在すること ②`run_journal_local.sh` が実ログの文言でリトライすること ③`data/stores.json` が 5,017 件のまま壊れていないこと — いずれも確認済み
+
 ### [SEO-049] 店舗詳細モーダルに地図CTAが出るのは全体の2.8%だけ（97.2%の店で排他的に非表示）＋メディアボタンのGoogle Mapsが未計測
 
 - **priority**: P2 → **status**: ready

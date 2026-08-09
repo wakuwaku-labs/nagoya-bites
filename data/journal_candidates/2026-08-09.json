@@ -1,0 +1,441 @@
+{
+  "date": "2026-08-09",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "ナゴヤドーム前の中華、980円の北京飯はコスパか",
+      "verdict": "PASS",
+      "total": 103,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        },
+        {
+          "kw": "中華",
+          "feature": "features/nagoya-chinese-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 7件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 5件 (価格帯,席,シーン,仕入れ,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 142字 +4",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「コスパ」+4",
+          "タイトルにジャンル語「中華」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "60年の行列店がフードコートに出るということ",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 91,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 3件 (仕入れ,オペ,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 118字 +4",
+          "title 22字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "91点（自動公開ライン 100点）。主な不足: search_intent -10 / uniqueness -5 / brand_fit -4"
+    },
+    {
+      "id": "c3",
+      "title_draft": "980円と1,550円、北京飯の価格帯をどう読むか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 87,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 15,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 3件 (価格帯,シーン,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 116字 +4",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "87点（自動公開ライン 100点）。主な不足: search_intent -10 / topicality -5 / uniqueness -5"
+    },
+    {
+      "id": "c4",
+      "title_draft": "日曜のイオンモールで、家族の中華をどう選ぶか",
+      "verdict": "HOLD",
+      "total": 82,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 15,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "中華",
+          "feature": "features/nagoya-chinese-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 3件 (席,シーン,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 108字 +4",
+          "title 22字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「中華」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "安城のソウルフードが名古屋に来た日",
+      "verdict": "HOLD",
+      "total": 80,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 15,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 3件 (相場,仕入れ,業界) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 105字 +4",
+          "title 17字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "flexible",
+      "title_draft": "ナゴヤドーム前の中華、980円の北京飯はコスパか",
+      "lead_draft": "安城で60年以上続く行列店が、2026年8月7日にイオンモールナゴヤドーム前へ出た。名物の北京飯は980円、専用席は26席でフードコートの共用席も使える。専門店がフードコートに入ると何が変わるのか。値上げが続く2026年夏に980円を出すという判断を、原価と回転と席の持ち方から読む。",
+      "angle": "専門店のフードコート出店を、価格帯・回転・席の持ち方・仕入れの側から読み、日曜に家族で使うシーンまで落とす",
+      "main_store": {
+        "name": "北京本店 イオンモールナゴヤドーム前店",
+        "id": "",
+        "area": "ナゴヤドーム前",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「安城の人気中華『北京本店』がイオンモールナゴヤドーム前に名古屋初出店」",
+          "url": "https://jouhou.nagoya/pekin-honten-nagoyadomemae-repo/",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "イオンモールナゴヤドーム前 公式店舗ページ「北京本店」",
+          "url": "https://www.aeon.jp/sc/nagoyadomemae/shop/store/food-370.html"
+        },
+        {
+          "label": "北京本店 公式サイト（安城名物「北京飯」の店）",
+          "url": "https://pekinhonten.gorp.jp/"
+        },
+        {
+          "label": "北京本店 公式Instagram（@pekinhonten）— 北京飯の投稿",
+          "url": "https://www.instagram.com/p/Da82sAYTF1_/",
+          "date": "2026-07-18"
+        },
+        {
+          "label": "note「並んでも食べたい！？安城名物『北京飯』の魅力—意外な新食感に驚き！」",
+          "url": "https://note.com/cozy_ram9690/n/n9893c665bdbd"
+        },
+        {
+          "label": "中日新聞Web「８月の値上げ、２千品目超 飲食料品、前年比８割増」",
+          "url": "https://www.chunichi.co.jp/article/1289717",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "岡崎にゅーす「北京本店がもうすぐオープン！今回は専門店形式のお店？！」",
+          "url": "https://okanyu.jp/news/59226"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "flexible",
+      "title_draft": "60年の行列店がフードコートに出るということ",
+      "lead_draft": "安城で60年以上愛される中華の行列店が、2026年8月7日にイオンモールナゴヤドーム前に名古屋初出店した。専用26席、共用席あり、営業は施設に準ずる。行列を作ってきた店が待たせない場所に出るとき、何を捨てて何を残すのかを業界側から読む。",
+      "angle": "行列店がフードコート業態に出る際の、回転と仕入れとオペの組み替えを構造として読む",
+      "main_store": {
+        "name": "北京本店 イオンモールナゴヤドーム前店",
+        "id": "",
+        "area": "ナゴヤドーム前",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「北京本店がイオンモールナゴヤドーム前に名古屋初出店」",
+          "url": "https://jouhou.nagoya/pekin-honten-nagoyadomemae-repo/",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "イオンモールナゴヤドーム前 公式店舗ページ",
+          "url": "https://www.aeon.jp/sc/nagoyadomemae/shop/store/food-370.html"
+        },
+        {
+          "label": "北京本店 公式Instagram（@pekinhonten）",
+          "url": "https://www.instagram.com/p/Da82sAYTF1_/",
+          "date": "2026-07-18"
+        },
+        {
+          "label": "note「安城名物『北京飯』の魅力」",
+          "url": "https://note.com/cozy_ram9690/n/n9893c665bdbd"
+        },
+        {
+          "label": "岡崎にゅーす「北京本店がもうすぐオープン」",
+          "url": "https://okanyu.jp/news/59226"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "flexible",
+      "title_draft": "980円と1,550円、北京飯の価格帯をどう読むか",
+      "lead_draft": "究極の北京飯980円、禁断の北京飯1,550円。同じ看板料理に570円の差がある。2026年8月にイオンモールナゴヤドーム前へ出た安城の人気中華のメニューは、価格帯の作り方として教科書的だ。どちらを頼むべきかを業界側の物差しで読む。",
+      "angle": "同一看板メニューの価格帯の刻み方を、原価と客単価と回転の設計から読み、頼み方のシーンに落とす",
+      "main_store": {
+        "name": "北京本店 イオンモールナゴヤドーム前店",
+        "id": "",
+        "area": "ナゴヤドーム前",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「北京本店がイオンモールナゴヤドーム前に名古屋初出店」",
+          "url": "https://jouhou.nagoya/pekin-honten-nagoyadomemae-repo/",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "中日新聞Web「８月の値上げ、２千品目超」",
+          "url": "https://www.chunichi.co.jp/article/1289717",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "北京本店 公式Instagram（@pekinhonten）",
+          "url": "https://www.instagram.com/p/Da82sAYTF1_/",
+          "date": "2026-07-18"
+        },
+        {
+          "label": "北京本店 公式サイト",
+          "url": "https://pekinhonten.gorp.jp/"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "flexible",
+      "title_draft": "日曜のイオンモールで、家族の中華をどう選ぶか",
+      "lead_draft": "日曜のイオンモールは、家族連れの回転がいちばん速い時間帯を持つ。2026年8月7日に開いた安城の人気中華は専用26席で、共用テーブルも使える。子ども連れで待たずに座るための考え方を、フードコートの席の仕組みから書く。",
+      "angle": "フードコートの席と回転の仕組みを説明し、日曜のシーンで待たずに座るための実践に落とす",
+      "main_store": {
+        "name": "北京本店 イオンモールナゴヤドーム前店",
+        "id": "",
+        "area": "ナゴヤドーム前",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "イオンモールナゴヤドーム前 公式店舗ページ",
+          "url": "https://www.aeon.jp/sc/nagoyadomemae/shop/store/food-370.html"
+        },
+        {
+          "label": "名古屋情報通「北京本店がイオンモールナゴヤドーム前に名古屋初出店」",
+          "url": "https://jouhou.nagoya/pekin-honten-nagoyadomemae-repo/",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "note「安城名物『北京飯』の魅力」",
+          "url": "https://note.com/cozy_ram9690/n/n9893c665bdbd"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "flexible",
+      "title_draft": "安城のソウルフードが名古屋に来た日",
+      "lead_draft": "北京飯は安城のソウルフードで、甘辛いタレの豚肉と半熟卵をご飯にのせた一皿だ。2026年8月7日、その本家がイオンモールナゴヤドーム前に名古屋初出店した。地元名物が都市部に出るときに起きることを、業界側から書く。",
+      "angle": "地方名物の都市部進出で起きる仕入れと相場の変化を、業界の構造として読む",
+      "main_store": {
+        "name": "北京本店 イオンモールナゴヤドーム前店",
+        "id": "",
+        "area": "ナゴヤドーム前",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「北京本店がイオンモールナゴヤドーム前に名古屋初出店」",
+          "url": "https://jouhou.nagoya/pekin-honten-nagoyadomemae-repo/",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "note「安城名物『北京飯』の魅力」",
+          "url": "https://note.com/cozy_ram9690/n/n9893c665bdbd"
+        },
+        {
+          "label": "北京本店 公式サイト",
+          "url": "https://pekinhonten.gorp.jp/"
+        }
+      ]
+    }
+  ]
+}
