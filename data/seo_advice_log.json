@@ -1500,6 +1500,66 @@
       "brand_reason": "週次メール（2026-07-27〜08-02）は 2026-08-03 に処理済み。fingerprint 一致で再判定不要",
       "category": "SEO",
       "fingerprint": "ad2aba57e9c9f18a"
+    },
+    {
+      "id": "SEO-040",
+      "date": "2026-08-10",
+      "source": "line-daily",
+      "advice": "直帰率が95%と非常に高く、ユーザーがすぐ離脱しています。トップページ（index.html）のファーストビューで「業界人の目利き」を明確に打ち出し、魅力的なキャッチコピーを大きく表示して離脱を防ぎましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "既起票 [[SEO-040]]（ready・P1・Builder）と同一。SEO-040 は SEO-014「FVに業界人の目利き・シーン別専門性の価値提案コピー」＋ SEO-009「FVに人気特集への大きな誘導導線」を1つのFV設計に統合済みで、本アドバイスの指示そのもの。加えて症状側の95%は 訪問19人・16PV の単日値で、同じ週の週次レポート実測は直帰40%・滞在2分15秒と真逆。この小サンプル誤検知自体が [[SEO-047]] の対象で母数20未満ガードは .gas-deploy/Code.js に実装済み・GAS側反映がオーナー操作待ちのため今日も発火した。新規性なし",
+      "category": "SEO",
+      "fingerprint": "c8bbffa0b0a40ec3"
+    },
+    {
+      "id": "SEO-012",
+      "date": "2026-08-10",
+      "source": "line-daily",
+      "advice": "1訪問あたり閲覧が0.8ページと、サイト内を回遊していません。人気の「nagoya-solo-dining」特集記事内に、関連する他の特集や店舗詳細へのリンクを増設し、ユーザーが次に読むべきコンテンツを明確に示しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "指名された features/nagoya-solo-dining.html で実コードを確認したところ、要求された導線は3種すべて既設。①冒頭CTA: SEO-042:TOP-CTA マーカーが存在し上位3店の店舗詳細＋予約導線を保持 ②店舗詳細リンク: stores/J* への実在店リンク29本 ③関連特集リンク: hard-to-book / industry-insiders-pick / kospa-insider / meieki / nagoya-gourmet-guide / nagoya-yakiniku 等8本＋class=related ブロック。[[SEO-012]]（done・2026-07-29）が『毎日同じ回遊アドバイスが届く→既に実装済みなのに未実装だと思って起票し続ける』状態を再発防止メモとして明記済みで、本件はまさにその再来。同メモの指示どおり、次に回遊を触るときは設置有無ではなくスクロール到達率・関連リンクのクリック率を見るべきで、設置指示の再起票はしない",
+      "category": "SEO",
+      "fingerprint": "7ba3abc7dc74d2b0"
+    },
+    {
+      "id": "SEO-049",
+      "date": "2026-08-10",
+      "source": "line-daily",
+      "advice": "予約ボタンクリック、マップクリックが共に0回と、具体的な行動に繋がっていません。店舗詳細モーダルを開いたユーザーが1人いたので、モーダル内の予約ボタン（cta_click）をより大きく、目立つ色に変更し、予約への導線を強化しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "予約ボタンの視認性は [[SEO-013]] で done（全幅 .modal-cta-btn で店名付き『この店を予約する』を明示済み・文言/色の変更は効果検証できないため意図的に見送り＝アドバイス鵜呑み回避）。マップクリック0回の真因は [[SEO-049]]（ready）が特定済みで、index.html:9400-9407 の排他 if/else により cta_gmap_click はホットペッパーID非保持店（全体の2.8%）でしか描画されない。症状側も『モーダルを開いたのが1人』と自ら書いているとおり母数1で、CTR を論じられる標本ではない。新規性なし",
+      "category": "SEO",
+      "fingerprint": "d4f6d4be10c761fe"
+    },
+    {
+      "id": "SEO-049",
+      "date": "2026-08-10",
+      "source": "line-weekly",
+      "advice": "予約ボタンクリック率が9.0%と良好ですが、マップクリックが0回です。トップページと店舗詳細モーダルで、Googleマップ導線(cta_gmap_click)のボタン色を緑から赤に変え、目立たせてみましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "[[SEO-049]]（ready）と同一事象で、かつ打ち手が実コード上むしろ無効。index.html:9400-9407 でモーダルCTAは if(ホットペッパーID){予約} else {地図} の排他分岐であり、cta_gmap_click ボタンは全体の97.2%の店で そもそもDOMに存在しない。存在しないボタンの色を変えても0回は0回のまま。『緑から赤に』という色指定にも出典・検証手段がなく CLAUDE.md 制約10（検証できる事実だけで判定）に照らして採用できない。正しい打ち手は SEO-049 の排他解消（予約と地図の併置）＋メディアボタンのGoogle Maps未計測の是正で、既に ready で待機中。なお本アドバイスが前提とする『予約ボタンCTR 9.0%は良好』は SEO-042/SEO-013 の特集冒頭CTAが効いている証跡（予約18回>店舗詳細16回＝モーダルを開かずに予約に到達している）",
+      "category": "SEO",
+      "fingerprint": "67aff0d5f7803ba6"
+    },
+    {
+      "id": "SEO-046",
+      "date": "2026-08-10",
+      "source": "line-weekly",
+      "advice": "1訪問あたり閲覧が1.2ページと低く、もっとサイト内を回遊させたいです。人気記事「2026-08-04-sakae-leesar-coffee」の下に、関連する「nagoya-solo-dining」特集へのリンクを大きく表示しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "名指しされた journal/2026-08-04-sakae-leesar-coffee.html を実検証したところ、関連記事ブロック（class=related）が既設で、ジャーナル3本＋特集『カフェ10選』（features/nagoya-cafe.html）＋特集一覧＋全店舗検索の導線を保持。これは [[SEO-046]]（done・P1）で refresh_journal_related.js を自動化に接続した成果がこの記事にも効いている状態。さらに提案の『solo-dining へリンク』はコーヒー専門店の記事に対して既設の nagoya-cafe より整合が悪く、テーマ適合を落とす変更になる。回遊の伸び代は記事単位のリンク増設ではなく [[SEO-038]]（ready・Editor）の『高流入ジャーナルのロングテール勝ち筋を同型テーマへ横展開』側にあり、本記事が58回でトップページ39回を上回ったこと自体が SEO-038 の対象証跡として既にカバー済み",
+      "category": "SEO",
+      "fingerprint": "318cfc43dda5a411"
+    },
+    {
+      "id": "SEO-011",
+      "date": "2026-08-10",
+      "source": "line-weekly",
+      "advice": "検索流入のBingがGoogleに次ぐ2位です（53訪問）。docs/daily-posts/にある今日のSNS投稿原稿に、Bing検索ユーザーを意識した「名古屋 接待 個室」などのキーワードを追記しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "『SNS原稿にシーン別専門KW（名古屋 接待 個室 等）を整合させる』は [[SEO-011]] で done。data/journal_seo_keywords.json をKWマスタとして score_journal_candidates.js の search_intent（10点）が採点し、validate_journal_draft.js の check16 が『記事タイトルのKWが docs/daily-posts/ のSNS原稿にも出ているか』を毎日機械照合している（自己申告値ゼロ）。加えて打ち手の因果が誤っている — SNS投稿原稿の文面は Bing の検索結果に影響しない。Bingチャネルの改善は [[SEO-039]] の管轄で、観測レイヤー（search_channel_metrics.json）は done、残る Bing Webmaster Tools 登録はクレデンシャルを伴うためオーナー本人の操作待ち・IndexNow 送信有効化はユーザー承認待ち。エージェント側に実装余地がなく再起票しても ready のまま滞留する",
+      "category": "SEO",
+      "fingerprint": "8674d6ec294afed0"
     }
   ]
 }
