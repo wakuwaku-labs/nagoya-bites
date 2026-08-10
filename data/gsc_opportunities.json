@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T19:50:36.684Z",
+  "generatedAt": "2026-08-10T18:55:54.362Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -16,21 +16,21 @@
       },
       {
         "query": "やきまる亭",
-        "impressions": 208,
+        "impressions": 215,
         "clicks": 3,
-        "position": 8,
-        "ctr": 1.44,
-        "expectedCtr": 3.2,
-        "missedClicks": 3.7
+        "position": 7.9,
+        "ctr": 1.4,
+        "expectedCtr": 3.3,
+        "missedClicks": 4
       },
       {
         "query": "くろぎ 名古屋",
-        "impressions": 217,
+        "impressions": 224,
         "clicks": 3,
-        "position": 9.7,
-        "ctr": 1.38,
+        "position": 9.8,
+        "ctr": 1.34,
         "expectedCtr": 2.6,
-        "missedClicks": 2.6
+        "missedClicks": 2.7
       },
       {
         "query": "喫茶時々",
@@ -52,65 +52,65 @@
       },
       {
         "query": "フレンチ屋台ビストロ のれんとコルク 名古屋駅店",
-        "impressions": 92,
+        "impressions": 94,
         "clicks": 2,
-        "position": 6.9,
-        "ctr": 2.17,
-        "expectedCtr": 4.1,
+        "position": 7,
+        "ctr": 2.13,
+        "expectedCtr": 4,
         "missedClicks": 1.8
       },
       {
         "query": "のれんとコルク 名古屋",
-        "impressions": 118,
+        "impressions": 119,
         "clicks": 2,
         "position": 8.5,
-        "ctr": 1.69,
+        "ctr": 1.68,
         "expectedCtr": 3,
-        "missedClicks": 1.5
+        "missedClicks": 1.6
       },
       {
         "query": "トロンドン",
-        "impressions": 66,
+        "impressions": 63,
         "clicks": 2,
-        "position": 5.7,
-        "ctr": 3.03,
-        "expectedCtr": 5.3,
-        "missedClicks": 1.5
+        "position": 5.6,
+        "ctr": 3.17,
+        "expectedCtr": 5.4,
+        "missedClicks": 1.4
       },
       {
         "query": "イルタッソ",
-        "impressions": 69,
+        "impressions": 68,
         "clicks": 2,
-        "position": 6.4,
-        "ctr": 2.9,
-        "expectedCtr": 4.6,
+        "position": 6.3,
+        "ctr": 2.94,
+        "expectedCtr": 4.7,
         "missedClicks": 1.2
       }
     ],
     "rankPush": [
       {
         "query": "尾張山荘くろぎ",
-        "impressions": 544,
+        "impressions": 546,
         "clicks": 6,
         "position": 10.3,
         "ctr": 1.1,
-        "upsideClicks": 9.2
+        "upsideClicks": 9.3
       },
       {
         "query": "ナショナルベーカリー",
-        "impressions": 425,
+        "impressions": 449,
         "clicks": 8,
         "position": 11.7,
-        "ctr": 1.88,
-        "upsideClicks": 3.9
+        "ctr": 1.78,
+        "upsideClicks": 4.6
       },
       {
         "query": "アルマデシュラスコ名駅",
-        "impressions": 203,
+        "impressions": 222,
         "clicks": 2,
-        "position": 10.1,
-        "ctr": 0.99,
-        "upsideClicks": 3.7
+        "position": 10.2,
+        "ctr": 0.9,
+        "upsideClicks": 4.2
       },
       {
         "query": "キミトテ",
@@ -126,40 +126,49 @@
     "ctrFix": [
       {
         "page": "/stores/J004613182.html",
-        "impressions": 727,
+        "impressions": 760,
         "clicks": 9,
         "position": 9.7,
-        "ctr": 1.24,
+        "ctr": 1.18,
         "expectedCtr": 2.6,
-        "missedClicks": 9.8
+        "missedClicks": 10.7
       },
       {
         "page": "/stores/J004559348.html",
-        "impressions": 551,
-        "clicks": 9,
+        "impressions": 564,
+        "clicks": 8,
         "position": 8.3,
-        "ctr": 1.63,
+        "ctr": 1.42,
         "expectedCtr": 3.1,
-        "missedClicks": 8
+        "missedClicks": 9.4
+      },
+      {
+        "page": "/journal/2026-07-27-owarisanso-kurogi.html",
+        "impressions": 826,
+        "clicks": 14,
+        "position": 9.3,
+        "ctr": 1.69,
+        "expectedCtr": 2.7,
+        "missedClicks": 8.4
       },
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 351,
+        "impressions": 363,
         "clicks": 6,
         "position": 7.4,
-        "ctr": 1.71,
+        "ctr": 1.65,
         "expectedCtr": 3.7,
-        "missedClicks": 6.9
+        "missedClicks": 7.4
       }
     ],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2326,
-        "clicks": 11,
-        "position": 25.2,
-        "ctr": 0.47,
-        "upsideClicks": 54.2
+        "impressions": 2399,
+        "clicks": 12,
+        "position": 25.1,
+        "ctr": 0.5,
+        "upsideClicks": 55.2
       },
       {
         "page": "/stores/store-e5b0bee5bcb5e5b1.html",
@@ -175,12 +184,12 @@
   "summary": {
     "queryCtrFix": 9,
     "queryRankPush": 4,
-    "pageCtrFix": 3,
+    "pageCtrFix": 4,
     "pageRankPush": 2,
     "topPageCtrFix": [
       "/stores/J004613182.html",
       "/stores/J004559348.html",
-      "/features/nagoya-tebasaki.html"
+      "/journal/2026-07-27-owarisanso-kurogi.html"
     ]
   }
 }
