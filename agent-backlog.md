@@ -24,8 +24,9 @@
 
 ### [SEO-049] 店舗詳細モーダルに地図CTAが出るのは全体の2.8%だけ（97.2%の店で排他的に非表示）＋メディアボタンのGoogle Mapsが未計測
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-06
+- **resolved**: 2026-08-10
 - **category**: SEO / UX / 計測
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-08-05 原文「予約ボタンクリック率12.8%は好調ですが、マップクリックが0回です。スマホからのアクセスが59%と多いです。👉 各店舗詳細モーダル内のGoogleマップ導線(cta_gmap_click)がスマホで押しにくい可能性があります。タップ領域を広げるなど改善を試みましょう」
@@ -61,8 +62,9 @@
 
 ### [FB-001] 検索バーに入力クリア（×）ボタンがない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-03（消費者フィードバックループ経由。サイト右下フローティング「ご意見」ボタンから
+- **resolved**: 2026-08-10
   モバイル送信。種類=使いづらい・わかりにくい / page=`#q=%E6%A0%84%20%E7%84%BC%E8%82%89`（「栢 焼肉」検索中））
 - **category**: UX
 - **owner**: Builder
@@ -154,8 +156,9 @@
 
 ### [SEO-051] `tests/featured_freshness.test.js` が `data/featured.json` の旧スキーマ（`monthlyFeature`）を前提のままで2件失敗している
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-05（[[SEO-050]] の QA で検出。本変更とは無関係の既存不具合）
+- **resolved**: 2026-08-10
 - **category**: QA
 - **owner**: Builder
 - **問題**: `data/featured.json` は現在 `monthlyScenes` / `sceneLeads` を持つが、テストは `cfg.monthlyFeature[String(m)]` を読んでおり `undefined` で `TypeError`。**「12ヶ月すべてが実在ページで埋まっている（鮮度の穴ゼロ）」という鮮度ガードが、実質的に無効化されたまま常時 red** になっている
@@ -636,7 +639,7 @@
 - **priority**: P1 → **status**: ready
 - **detected**: 2026-07-27（SEO改善の全体仕分けによる統合起票）
 - **category**: SEO
-- **owner**: Builder
+- **owner**: 片桐 ← Builder
 - **統合元**: [[SEO-014]]（FVに「業界人の目利き」「シーン別専門性」の価値提案コピー・P1）+ [[SEO-009]]（FVに人気特集への大きな誘導導線）
 - **統合理由**: 統合元の双方に既に「両者を1つのファーストビュー設計として整合させる」旨のメモがあった。同じ画面の同じ領域を2回別々に改修するとレイアウトが競合する
 - **brand-filter**: ✅ 適合（統合元の判定を継承）— 誇大表現・架空実績は書かず、実在店DB規模と編集独立の事実に基づく
@@ -3195,3 +3198,32 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
 - 1件ずつ解く: `/solve-next` スラッシュコマンド
 - agent-backlog.md が**マスター**、Notion は確認用ダッシュボード
 - `status: done` になった課題は Notion からアーカイブされて表示から消える
+
+---
+
+## 2026-08-10 毎朝9時 自動課題消化ルーティン 実行ログ
+
+### 実行サマリー
+- **実行日時**: 2026-08-10 09:xx JST
+- **処理タスク数**: 3件実装 + 1件エスカレーション
+- **QAゲート**: 49 pass / 0 fail（`npm test`）/ JS syntax OK / `index.html` 構造維持確認
+
+### [SEO-051] テスト修正: `featured_freshness.test.js` を `monthlyScenes` スキーマへ追従
+- **action**: implement
+- **変更ファイル**: `tests/featured_freshness.test.js`
+- **内容**: `monthScenesOf` を import に追加、2件失敗していた「12ヶ月穴ゼロ」「年非依存」テストを `monthScenesOf(cfg, m)` + `ms.scenes` 配列チェックに書き換え。`npm test` 49 pass 0 fail 達成
+
+### [FB-001] 検索バー入力クリア（×）ボタンの実装
+- **action**: implement
+- **変更ファイル**: `index.html`
+- **内容**: `.si-wrap` flex ラッパー＋`.si-clear` absolute ボタン（CSS）／`:not(:placeholder-shown) ~ .si-clear{display:flex}` で入力時のみ表示／`clearSearch(id)` 関数で `#si` と `#si2` を双方向同期してフィルタ再トリガー。ヒーロー検索バーと追従バーの両方に適用
+
+### [SEO-049] モーダル地図CTA 100%表示化 + Google Maps計測修正
+- **action**: implement
+- **変更ファイル**: `index.html`
+- **内容**: モーダル CTA の排他 `if/else` を「予約ボタン（HotPepperID有の場合）+ 地図ボタン（常時）」の並置に変更。全5,017店で地図CTAが表示されるようになった。メディアボタン列の Google Maps リンクに `trackEvent('cta_gmap_click', {channel:'media_btn'})` を追加して計測の空白を解消
+
+### [SEO-040] エスカレーション: キャッチコピー最適化（owner変更のみ）
+- **action**: escalate（制約8＋acceptance「実装前にユーザーへ案を提示して確定」）
+- **変更ファイル**: `agent-backlog.md`（owner: Builder → 片桐 ← Builder）
+- **内容**: acceptance に「キャッチコピーの文言はブランドの根幹に関わるため、実装前に案をユーザーに提示して確定させる」と明記されており、ユーザー承認が必要。自律実装の範囲外のため status は変更せずオーナーへエスカレーション

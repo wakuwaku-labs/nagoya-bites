@@ -19,7 +19,7 @@ const ROOT = path.join(__dirname, '..');
 const cfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'featured.json'), 'utf8'));
 const {
   isActive, isoWeek, monthOf, selectShowcase, validateConfig,
-  parseFeatureCards, listFeatureSlugs,
+  parseFeatureCards, listFeatureSlugs, monthScenesOf,
 } = require('../scripts/build_featured.js');
 
 const featMap = parseFeatureCards(fs.readFileSync(path.join(ROOT, 'features', 'index.html'), 'utf8'));
@@ -30,12 +30,14 @@ test('鮮度ガード: validateConfig が穴・壊れ参照を検出しない', 
   assert.deepEqual(errs, [], errs.join('\n'));
 });
 
-test('monthlyFeature: 12ヶ月すべてが実在ページで埋まっている（鮮度の穴ゼロ）', () => {
+test('monthlyScenes: 12ヶ月すべてが実在ページで埋まっている（鮮度の穴ゼロ）', () => {
   for (let m = 1; m <= 12; m++) {
-    const mf = cfg.monthlyFeature[String(m)];
-    assert.ok(mf, `${m}月が未定義`);
-    assert.ok(featureSlugs.has(mf.slug), `${m}月の ${mf.slug}.html が存在しない`);
-    assert.ok(mf.title && mf.badge, `${m}月の title/badge が欠落`);
+    const ms = monthScenesOf(cfg, m);
+    assert.ok(ms && ms.scenes && ms.scenes.length > 0, `${m}月が未定義または scenes が空`);
+    for (const scene of ms.scenes) {
+      assert.ok(featureSlugs.has(scene.slug), `${m}月の ${scene.slug}.html が存在しない`);
+      assert.ok(scene.title && scene.badge, `${m}月 ${scene.slug} の title/badge が欠落`);
+    }
   }
 });
 
@@ -43,8 +45,9 @@ test('どの日付でも「今月の旬」リードが必ず1本立つ（年に�
   for (const y of ['2026', '2027', '2030']) {
     for (let m = 1; m <= 12; m++) {
       const mm = String(m).padStart(2, '0');
-      const mf = cfg.monthlyFeature[String(monthOf(`${y}-${mm}-15`))];
-      assert.ok(mf && featureSlugs.has(mf.slug), `${y}-${mm} の旬リードが解決できない`);
+      const ms = monthScenesOf(cfg, monthOf(`${y}-${mm}-15`));
+      assert.ok(ms && ms.scenes && ms.scenes.length > 0, `${y}-${mm} の旬リードが解決できない`);
+      assert.ok(featureSlugs.has(ms.scenes[0].slug), `${y}-${mm} の1本目 ${ms.scenes[0].slug}.html が存在しない`);
     }
   }
 });
