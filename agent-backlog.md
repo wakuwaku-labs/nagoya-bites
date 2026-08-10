@@ -27,6 +27,7 @@
 - **priority**: P2 → **status**: done
 - **detected**: 2026-08-06
 - **resolved**: 2026-08-10
+- **resolved_by**: commit 1cc24952
 - **category**: SEO / UX / 計測
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-08-05 原文「予約ボタンクリック率12.8%は好調ですが、マップクリックが0回です。スマホからのアクセスが59%と多いです。👉 各店舗詳細モーダル内のGoogleマップ導線(cta_gmap_click)がスマホで押しにくい可能性があります。タップ領域を広げるなど改善を試みましょう」
@@ -65,6 +66,7 @@
 - **priority**: P2 → **status**: done
 - **detected**: 2026-08-03（消費者フィードバックループ経由。サイト右下フローティング「ご意見」ボタンから
 - **resolved**: 2026-08-10
+- **resolved_by**: commit 1cc24952
   モバイル送信。種類=使いづらい・わかりにくい / page=`#q=%E6%A0%84%20%E7%84%BC%E8%82%89`（「栢 焼肉」検索中））
 - **category**: UX
 - **owner**: Builder
@@ -159,6 +161,7 @@
 - **priority**: P2 → **status**: done
 - **detected**: 2026-08-05（[[SEO-050]] の QA で検出。本変更とは無関係の既存不具合）
 - **resolved**: 2026-08-10
+- **resolved_by**: commit 1cc24952
 - **category**: QA
 - **owner**: Builder
 - **問題**: `data/featured.json` は現在 `monthlyScenes` / `sceneLeads` を持つが、テストは `cfg.monthlyFeature[String(m)]` を読んでおり `undefined` で `TypeError`。**「12ヶ月すべてが実在ページで埋まっている（鮮度の穴ゼロ）」という鮮度ガードが、実質的に無効化されたまま常時 red** になっている
