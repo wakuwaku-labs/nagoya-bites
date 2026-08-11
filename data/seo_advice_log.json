@@ -1560,6 +1560,36 @@
       "brand_reason": "『SNS原稿にシーン別専門KW（名古屋 接待 個室 等）を整合させる』は [[SEO-011]] で done。data/journal_seo_keywords.json をKWマスタとして score_journal_candidates.js の search_intent（10点）が採点し、validate_journal_draft.js の check16 が『記事タイトルのKWが docs/daily-posts/ のSNS原稿にも出ているか』を毎日機械照合している（自己申告値ゼロ）。加えて打ち手の因果が誤っている — SNS投稿原稿の文面は Bing の検索結果に影響しない。Bingチャネルの改善は [[SEO-039]] の管轄で、観測レイヤー（search_channel_metrics.json）は done、残る Bing Webmaster Tools 登録はクレデンシャルを伴うためオーナー本人の操作待ち・IndexNow 送信有効化はユーザー承認待ち。エージェント側に実装余地がなく再起票しても ready のまま滞留する",
       "category": "SEO",
       "fingerprint": "8674d6ec294afed0"
+    },
+    {
+      "id": "SEO-040",
+      "date": "2026-08-10",
+      "source": "line-daily",
+      "advice": "🔴 直帰率が96%と極めて高く、訪問者のほとんどがトップページから離脱しています。👉 トップページに掲載されている全店舗の情報を、ユーザーがスクロールせずに魅力的に感じるよう、ファーストビューで「業界人の目利き」と「シーン別専門性」が伝わるキャッチコピーと代表店舗写真を大きく配置してください。",
+      "verdict": "duplicate",
+      "brand_reason": "[[SEO-040]]（P1・ready・SEO-014 + SEO-009 の統合）と同一施策。FVに『業界人の目利き』『シーン別専門性』の価値提案コピーを掲げる件は既に ready で待機中で、未実装のまま同じ助言が繰り返し届いている状態（08-07・08-10 にも同型を duplicate 判定済み）。新規要素は『代表店舗写真を大きく配置』のみだが、これは SEO-040 の acceptance 内で扱うべきFV設計の一部であり、かつ写真は実写優先（公式IG embed → HotPepper → Places）の制約下で選定する必要があるため単独起票しない。なお SEO-040 自身に『本課題が効く範囲はトップ流入の約20%』という実測注記があり、入口系（SEO-011 / SEO-039）より着手順は後で良いという判定も継承する",
+      "category": "SEO",
+      "fingerprint": "8fcfad70cc8ad974"
+    },
+    {
+      "id": "SEO-052",
+      "date": "2026-08-10",
+      "source": "line-daily",
+      "advice": "🟡 1訪問あたりの閲覧ページ数が1.0と、ほとんどのユーザーが1ページしか見ていません。👉 日次ジャーナル記事（2026-08-09-nagoyadome-pekin-honten）を読んだユーザーが、関連する「特集: nagoya-solo-dining」や「誕生日特集」などへの導線を記事下に関連記事として画像付きで設置してください。",
+      "verdict": "adopted",
+      "brand_reason": "文字どおりの打ち手は不採（実測で棄却）: 名指しの journal/2026-08-09-nagoyadome-pekin-honten.html には既に関連リンクが7本（実記事3本＋Journal一覧＋特集 中華料理10選＋特集一覧＋全店舗検索）入っており [[SEO-046]] done の成果が効いている。提案の solo-dining / 誕生日特集は北京料理店の記事に対しテーマ適合が既設の nagoya-chinese-guide より劣る。代わりに採用したのは『同じ回遊アドバイスが毎日再来して採否の根拠を作れない』という構造の是正 — [[SEO-012]] の再発防止メモが指定した2指標（スクロール到達率・関連リンクのクリック率）が未計測であることを実測で確認（記事内の trackEvent は outbound_click のみ・スクロール計測なし）。計測整備は順位操作も広告依存もストック写真も伴わず、制約10『検証できる事実だけで判定する』を回遊改善に適用する純粋な観測レイヤーの拡張。[[SEO-052]] として起票",
+      "category": "SEO",
+      "fingerprint": "bd0bb94110657aa7"
+    },
+    {
+      "id": null,
+      "date": "2026-08-10",
+      "source": "line-daily",
+      "advice": "🟢 SNSからの流入が0%です。当サイトの強みを活かした情報発信ができていません。👉 docs/daily-posts/ のSNS投稿原稿を参考に、Instagramで「名古屋 接待 個室」といった専門性の高いキーワードと店舗の魅力を伝える投稿を今日から開始し、キャプションにサイトURLを必ず記載してください。",
+      "verdict": "duplicate",
+      "brand_reason": "2026-08-07 に同一主旨を duplicate 判定済み。原稿側は [[SEO-011]]（done）で担保されており、シーン別専門KW（名古屋 接待 個室 等）は data/journal_seo_keywords.json をマスタに validate_journal_draft.js の check16 が『記事タイトルのKWが docs/daily-posts/ のSNS原稿にも出ているか』を毎日機械照合している。docs/daily-posts/ には 2026-08-09 分まで原稿が生成済みで、不足しているのは原稿ではなく『実際にアカウントから投稿する運用』。これはアカウント認証を伴うオーナー本人の操作で、エージェント側に実装余地が無く起票しても ready のまま滞留する（[[SEO-039]] の Bing WMT 登録・IndexNow 有効化と同じクラス）。なお日次ジャーナル4日欠番（[[ISSUE-083]]・08-05/07/08/09）が直前まで続いていたため、この期間はそもそも配信する原稿自体が生成されていなかった点も SNS 流入0%の一因",
+      "category": null,
+      "fingerprint": "cadaf885012cec9e"
     }
   ]
 }
