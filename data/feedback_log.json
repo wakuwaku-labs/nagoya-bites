@@ -15,6 +15,20 @@
       "brand_reason": "Moat/Strategic Skipに抵触しない一般的なUX改善。検索入力#siにクリアボタンが実際に存在しないことを実装確認済み",
       "backlog_category": "UX",
       "fingerprint": "71490579390b5cc1"
+    },
+    {
+      "id": "FB-002",
+      "date": "2026-08-11",
+      "source": "site-widget",
+      "msg_id": "19ff06134a3dacfc",
+      "page": null,
+      "store": null,
+      "category": "店舗情報が間違っている",
+      "feedback": "店舗: 手羽八 てばはち 金山駅店 / 本文: 焼き鳥と海鮮の個室居酒屋 手羽八 金山店 こちらの店名に変更をお願いいたします。",
+      "verdict": "fact_check",
+      "brand_reason": "店名の正確性は実在保証Moatの根幹だが、依頼文のみを根拠に書き換えない。一次情報2件以上での検証ゲート付きでDataKeeperへP1起票（制約7・dispute_requests準拠）。ソース間で既に表記割れ（stores.json=金山駅店 / places=金山駅前店）",
+      "backlog_category": "データ",
+      "fingerprint": "30521ed1563be403"
     }
   ]
 }
