@@ -6,6 +6,17 @@
 
 ---
 
+## 実行ログ
+
+### 2026-08-11 自律実行（9:00 スケジュール起動）
+
+- **SEO-040** → 片桐エスカレーション。acceptance に「キャッチコピーの文言はブランドの根幹に関わるため、実装前に案をユーザーに提示して確定させる」とあり、オーナー判断が必要な仕様曖昧タスク。owner を `片桐 ← Builder` に変更
+- **SEO-051** → `tests/featured_freshness.test.js` の2テストを `monthlyScenes` スキーマ対応に修正。npm test 49 pass 0 fail 確認
+- **FB-001** → `#si` 検索入力に×クリアボタン追加。`.si-wrap` で位置取り・`clearSearchInput()` でフィルタリセット。QA通過
+- **SEO-049** → モーダル内CTAをHP予約ボタン＋地図ボタンの常時併置に変更（旧: 排他的if/else）。`mb-gm` メディアボタンに `trackEvent('cta_gmap_click', {source:'modal-media'})` 追加。QA通過
+
+---
+
 ## 進行中・完了タスク
 
 ### [ISSUE-083] 日次ジャーナルが4日欠番（08-05/07/08/09）— リトライ機構がエラー文言の変化で丸ごと空振りしていた ✅
@@ -24,7 +35,7 @@
 
 ### [SEO-049] 店舗詳細モーダルに地図CTAが出るのは全体の2.8%だけ（97.2%の店で排他的に非表示）＋メディアボタンのGoogle Mapsが未計測
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-06
 - **category**: SEO / UX / 計測
 - **owner**: Builder
@@ -61,7 +72,7 @@
 
 ### [FB-001] 検索バーに入力クリア（×）ボタンがない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-03（消費者フィードバックループ経由。サイト右下フローティング「ご意見」ボタンから
   モバイル送信。種類=使いづらい・わかりにくい / page=`#q=%E6%A0%84%20%E7%84%BC%E8%82%89`（「栢 焼肉」検索中））
 - **category**: UX
@@ -154,7 +165,7 @@
 
 ### [SEO-051] `tests/featured_freshness.test.js` が `data/featured.json` の旧スキーマ（`monthlyFeature`）を前提のままで2件失敗している
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-05（[[SEO-050]] の QA で検出。本変更とは無関係の既存不具合）
 - **category**: QA
 - **owner**: Builder
@@ -636,7 +647,7 @@
 - **priority**: P1 → **status**: ready
 - **detected**: 2026-07-27（SEO改善の全体仕分けによる統合起票）
 - **category**: SEO
-- **owner**: Builder
+- **owner**: 片桐 ← Builder
 - **統合元**: [[SEO-014]]（FVに「業界人の目利き」「シーン別専門性」の価値提案コピー・P1）+ [[SEO-009]]（FVに人気特集への大きな誘導導線）
 - **統合理由**: 統合元の双方に既に「両者を1つのファーストビュー設計として整合させる」旨のメモがあった。同じ画面の同じ領域を2回別々に改修するとレイアウトが競合する
 - **brand-filter**: ✅ 適合（統合元の判定を継承）— 誇大表現・架空実績は書かず、実在店DB規模と編集独立の事実に基づく

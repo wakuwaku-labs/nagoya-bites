@@ -233,6 +233,10 @@ nav.open{right:0;}
 .search-wrap input:focus{border-color:var(--gold);}
 .search-wrap button{background:var(--gold);border:none;color:var(--bg);padding:.8rem 1.4rem;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;cursor:pointer;font-weight:500;transition:background .2s;}
 .search-wrap button:hover{background:var(--gold2);}
+.si-wrap{position:relative;flex:1;display:flex;align-items:stretch;}
+.si-wrap #si{flex:1;padding-right:2.6rem;}
+.si-clear{position:absolute;right:.3rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--dim);cursor:pointer;font-size:1.1rem;line-height:1;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;border-radius:2px;}
+.si-clear:hover{color:var(--text);}
 /* ── 常時表示のシーン/エリア導線（直帰率対策・MEO-001） ── */
 .scene-nav{margin-top:1.6rem;max-width:580px;opacity:0;animation:up .9s .8s forwards;}
 .scene-nav-row{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin-top:.7rem;}
@@ -523,6 +527,7 @@ body.search-query-active .card-why{display:flex;}
 .modal-cta-hp:hover{background:#c9001e;}
 .modal-cta-gm{background:#4285F4;color:#fff!important;}
 .modal-cta-gm:hover{background:#2b6cd4;}
+.modal-cta-hp + .modal-cta-gm{margin-top:.5rem;}
 /* カード内 .ml の小サイズ favicon */
 .ml img.brand-fav{width:14px;height:14px;object-fit:contain;display:inline-block;vertical-align:-.18em;margin-right:.32rem;border-radius:2px;flex-shrink:0;}
 /* ── MODAL INFO TABLE ── */
@@ -1399,7 +1404,10 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   </div>
   <div class="search-wrap">
     <label for="si" class="visually-hidden">レストランを検索</label>
-    <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+    <div class="si-wrap">
+      <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+      <button class="si-clear" id="si-clear" aria-label="検索をクリア" style="display:none" onclick="clearSearchInput()">×</button>
+    </div>
     <button onclick="doSearch()" aria-label="検索">Search</button>
     <div class="search-suggest" id="hero-suggest">
       <span class="suggest-label">人気:</span>
@@ -8689,7 +8697,17 @@ document.getElementById('si').addEventListener('keydown', function(e){ if(e.key=
 document.getElementById('si').addEventListener('input', function(){
   var si2 = document.getElementById('si2');
   if (si2 && document.activeElement !== si2) si2.value = this.value;
+  var clr = document.getElementById('si-clear');
+  if (clr) clr.style.display = this.value ? '' : 'none';
 });
+function clearSearchInput(){
+  var si = document.getElementById('si'), si2 = document.getElementById('si2'), clr = document.getElementById('si-clear');
+  if (si) si.value = '';
+  if (si2) si2.value = '';
+  if (clr) clr.style.display = 'none';
+  applyFilters();
+  if (si) si.focus();
+}
 // セマンティック検索は全件スコアリングするため、打鍵ごとの再計算はデバウンスする
 var NB_SEARCH_DEBOUNCE = null;
 document.getElementById('si2').addEventListener('input', function(){
@@ -9403,15 +9421,16 @@ function openM(i) {
     if (igWrap._pendingSrc !== undefined) igWrap._pendingSrc = null;
   }
   // ── SEO-003 モーダル内 メインCTA ──
+  var ctaEsc = function(s){ return String(s||'').replace(/'/g,'').replace(/</g,'').replace(/>/g,''); };
   var ctaRow = document.getElementById('modal-cta-row');
   if (ctaRow) {
     var hpId2 = r['ホットペッパーID'] || '';
-    var ctaEsc = function(s){ return String(s||'').replace(/'/g,'').replace(/</g,'').replace(/>/g,''); };
+    var ctaHtml = '';
     if (hpId2) {
-      ctaRow.innerHTML = '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="trackEvent(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>';
-    } else {
-      ctaRow.innerHTML = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認">地図で場所を確認する</a>';
+      ctaHtml += '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="trackEvent(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>';
     }
+    ctaHtml += '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',source:\'modal-cta\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認">地図で場所を確認する</a>';
+    ctaRow.innerHTML = ctaHtml;
     ctaRow.style.display = '';
   }
   var items = [
@@ -9423,7 +9442,8 @@ function openM(i) {
     {url:gmap(r['店名'],r['エリア'],r), brand:'gmap', cls:'mb-gm', label:'Google Maps'}
   ];
   document.getElementById('mmg').innerHTML = items.map(function(m){
-    return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '" rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,28) + '</span><span class="mbl">' + m.label + '</span></a>';
+    var onClick = m.cls === 'mb-gm' ? ' onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',source:\'modal-media\'})"' : '';
+    return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '" rel="noopener noreferrer"' + onClick + '><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,28) + '</span><span class="mbl">' + m.label + '</span></a>';
   }).join('');
   setShareStore(r['店名'] || '');
   var mfavBtn = document.getElementById('modal-fav-btn');
