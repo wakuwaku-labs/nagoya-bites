@@ -1,6 +1,6 @@
 name: NAGOYA BITES — 日次ジャーナル 欠番監視
 
-# なぜこのワークフローが必要か（2026-08-12 / ISSUE-080）:
+# なぜこのワークフローが必要か（2026-08-12 / ISSUE-084）:
 #   日次ジャーナルの生成はローカル launchd（scripts/run_journal_local.sh）が主経路で、
 #   失敗時は HOLD メモと実行ログを .local-logs/ に書き出していた。
 #   しかし .local-logs/ は .gitignore 対象で、Mac の中から一歩も出ない。
