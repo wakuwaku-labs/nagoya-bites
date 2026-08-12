@@ -38,7 +38,54 @@ unset ANTHROPIC_API_KEY
 export DISABLE_AUTOUPDATER=1
 
 log() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" | tee -a "$LOG"; }
-die() { log "❌ $*"; exit 1; }
+die() { log "❌ $*"; record_health "die" "$*"; notify "日次ジャーナル停止" "$*"; exit 1; }
+
+# ---- 実行状態を「Mac の外から見える場所」に記録する（ISSUE-080）----
+# 2026-08-12 の教訓: 失敗の証跡（HOLD メモ・実行ログ）は .local-logs/ にしか無く、
+# そこは .gitignore 対象＝この Mac から一歩も出なかった。警報は鳴っていたが誰にも聞こえず、
+# 08-05〜09 の5日欠番も 08-10〜12 の3日欠番も、オーナーがサイトを見て気づくまで放置された。
+# そこで実行結果を tracked ファイルに書いて push し、サーバ側の監視
+# （.github/workflows/journal-watchdog.yml）が「原因つきで」Issue を起票できるようにする。
+HEALTH_FILE="${REPO}/data/journal_health.json"
+# hold() は最後に die() を呼ぶ。素直に書くと die 側の汎用メッセージが
+# 「認証切れ」等の具体的な理由を上書きしてしまうため、最初の記録を勝たせる。
+HEALTH_RECORDED=0
+record_health() {
+  [ "$HEALTH_RECORDED" = "1" ] && return 0
+  HEALTH_RECORDED=1
+  local status="$1" reason="$2"
+  node -e '
+    const fs = require("fs");
+    const [file, date, status, reason] = process.argv.slice(1);
+    fs.writeFileSync(file, JSON.stringify({
+      description: "日次ジャーナル ローカル実行(launchd)の最終状態。journal-watchdog.yml が原因表示に使う。",
+      date, status, reason,
+      recorded_at: new Date(Date.now() + 9 * 3600 * 1000).toISOString().replace("Z", "+09:00"),
+    }, null, 2) + "\n");
+  ' "$HEALTH_FILE" "${TODAY_JST:-unknown}" "$status" "$reason" 2>>"$LOG" || return 0
+}
+
+# 状態ファイルだけを surgical に push する。記事本体の commit/push とは独立させ、
+# 失敗しても本処理を止めない（監視は published.json 側でも成立するため）。
+push_health() {
+  git add data/journal_health.json >>"$LOG" 2>&1 || return 0
+  git diff --staged --quiet -- data/journal_health.json && return 0
+  git -c user.name="NAGOYA BITES Daily" -c user.email="daily@nagoya-bites" \
+      commit -m "chore(journal): ローカル実行状態を記録 ${TODAY_JST:-unknown} [skip actions]" \
+      -- data/journal_health.json >>"$LOG" 2>&1 || return 0
+  if ! git push origin main >>"$LOG" 2>&1; then
+    git pull --rebase --autostash origin main >>"$LOG" 2>&1 \
+      && git push origin main >>"$LOG" 2>&1 \
+      || log "⚠️ journal_health.json の push に失敗（監視は published.json 側で継続します）"
+  fi
+}
+
+# 目の前に居る場合の即時シグナル。届かない環境（離席・スリープ）もあるため、
+# これは補助であって主経路ではない。主経路はあくまで watchdog の Issue → メール。
+notify() {
+  local title="$1" msg="$2"
+  osascript -e "display notification \"${msg//\"/}\" with title \"NAGOYA BITES — ${title//\"/}\"" >/dev/null 2>&1 || true
+}
 
 # HOLD: 「公開はしないが、当日中に人が気づける形で残す」終了経路（ISSUE-077 / C）。
 # 旧実装は die するだけだったため、記事が出ていない事実に数日後まで誰も気づかなかった
@@ -70,6 +117,11 @@ hold() {
   } > "$holdfile"
   log "🛑 HOLD: ${reason}"
   log "   HOLDメモを書き出しました: ${holdfile}"
+  # HOLD メモはこの Mac の外に出ない（.local-logs/ は .gitignore 対象）。
+  # 状態ファイルを push して、サーバ側の watchdog が原因つきで通知できるようにする。
+  record_health "hold" "$reason"
+  push_health
+  notify "本日の記事は未公開（HOLD）" "$reason"
   die "本日は公開を見送りました（HOLD）。${holdfile} を確認してください。"
 }
 
@@ -212,6 +264,32 @@ fi
 #   リトライが一度も発火せず、瞬断1回で即 HOLD → その日の記事がゼロになっていた。
 #   「リトライ機構はあるのに、エラー文言の形が変わると丸ごと空振りする」という壊れ方なので、
 #   文言を足すときは実ログ（.local-logs/journal-YYYY-MM-DD.log）の原文に合わせること。
+#
+# 2026-08-12 追記（08-10 / 08-11 / 08-12 の3日欠番の真因）:
+#   claude CLI が "Failed to authenticate: OAuth session expired and could not be refreshed"
+#   を返し、認証切れとして即 HOLD になっていた。これはコードでは復旧できず、
+#   Mac で対話ログインし直す以外に手が無い（＝人が気づくことが唯一の復旧経路）。
+#   にもかかわらず通知経路が .local-logs/ しか無かったため3日間気づかれなかった。
+#   下のプリフライトで「生成に40分費やす前に」認証を確かめ、
+#   watchdog（サーバ側）が同じ朝のうちに Issue でオーナーに知らせる構成にした。
+
+# ---- 3.5 認証プリフライト ----
+# 認証切れは本番生成を回す前に判る。先に確かめれば、原因が「認証」だと確定した
+# 状態で即座に HOLD でき、長い生成ログの中に埋もれない。
+log "claude 認証プリフライトを実行（サブスク認証の有効性を確認）"
+PREFLIGHT_OUT=$("$CLAUDE_BIN" --print "ok" --dangerously-skip-permissions 2>&1)
+PREFLIGHT_RC=$?
+if [ "$PREFLIGHT_RC" != "0" ]; then
+  echo "$PREFLIGHT_OUT" >>"$LOG"
+  # 認証切れだけを特別扱いする。ネットワーク瞬断ならリトライ機構のある本番ループに委ねる。
+  if echo "$PREFLIGHT_OUT" | grep -qE "Invalid authentication credentials|Failed to authenticate|OAuth session expired"; then
+    hold "claude の認証が切れています（OAuth session expired）。コードでは復旧できません。Mac で 'claude' を対話起動してログインし直してください。確認: claude --print \"ok\" が応答すればOK。"
+  fi
+  log "⚠️ プリフライトは失敗しましたが認証エラーではないため本番生成に進みます（リトライ機構に委ねる）: RC=${PREFLIGHT_RC}"
+else
+  log "✅ 認証プリフライト OK"
+fi
+
 PROMPT=$(tail -n +5 .claude/commands/journal-today.md)
 MAX_CLAUDE_ATTEMPTS=3
 CLAUDE_ATTEMPT=1
@@ -352,6 +430,10 @@ node scripts/refresh_journal_related.js >>"$LOG" 2>&1 || log "⚠️ refresh_jou
 # 未追跡 junk（root の *.html や " 2.json" 等）の混入を防ぐため surgical に指定。
 log "ラッパー側で commit & push を実行（claude の承認待ちフローを迂回）"
 
+# 正常公開を記録する。ファイルは下の TRACKED_UPDATES に含めて通常のコミットに同乗させる
+# （単独 push はしない＝作業ツリーを汚したまま翌朝を迎えることが無いようにする）。
+record_health "ok" "正常に公開"
+
 # 今日付の新規記事HTML、SNS原稿、本日付の SVG / candidates を列挙
 TODAY_FILES=()
 for p in \
@@ -368,6 +450,7 @@ done
 # 既存 tracked file の更新（surgical）
 TRACKED_UPDATES=(
   data/journal_published.json
+  data/journal_health.json
   data/pending_stores.json
   data/editorial_column_backlog.json
   index.html
