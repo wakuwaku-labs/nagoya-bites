@@ -160,7 +160,13 @@ function loadJSON(file, fallback) {
   catch (_) { return fallback; }
 }
 
-function todayISO() { return new Date().toISOString().slice(0, 10); }
+// 基準日は JST で取る（ISSUE-083 残課題②）。
+// 旧実装は UTC 基準だったが、日次ジャーナルの起動は 09:00 JST ＝ 00:00 UTC ちょうどで、
+// 数分でも早いと UTC 日付が前日になり、recency と dedup が1日ずれて採点される
+// 境界バグを抱えていた。サイトの時間軸は一貫して JST なので JST に統一する。
+function todayISO() {
+  return new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+}
 
 function daysBetween(a, b) {
   const ms = new Date(a + 'T00:00:00+09:00') - new Date(b + 'T00:00:00+09:00');
@@ -755,8 +761,23 @@ if (require.main === module) {
   }
   const inputFile = args[0];
   const explain = args.includes('--explain');
+
+  // --date で基準日を明示する（欠番のバックフィル用・ISSUE-083 残課題②）。
+  // 省略時は JST の当日。過去日を埋めるとき実行日で採点すると、その日には新しかった
+  // ニュースが「N日前の古い話」と判定されて recency と dedup が不当に下がる。
+  // 過去のバックフィルはこれが無いため、その都度アドホックなラッパーを書いていた。
+  const dateIdx = args.indexOf('--date');
+  let baseDate = null;
+  if (dateIdx >= 0) {
+    baseDate = args[dateIdx + 1];
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(baseDate || '')) {
+      console.error('--date は YYYY-MM-DD 形式で指定してください（例: --date 2026-08-10）');
+      process.exit(1);
+    }
+  }
+
   if (!inputFile) {
-    console.error('Usage: node scripts/score_journal_candidates.js <input.json> [--explain]');
+    console.error('Usage: node scripts/score_journal_candidates.js <input.json> [--explain] [--date YYYY-MM-DD]');
     console.error('       node scripts/score_journal_candidates.js --history <days>');
     console.error('       node scripts/score_journal_candidates.js --policy');
     console.error('       node scripts/score_journal_candidates.js --calibrate');
@@ -771,7 +792,8 @@ if (require.main === module) {
     console.error('入力は候補配列である必要があります');
     process.exit(1);
   }
-  const result = scoreAll(candidates);
+  if (baseDate) console.log(`基準日: ${baseDate}（--date 指定・バックフィル用）\n`);
+  const result = scoreAll(candidates, baseDate ? { today: baseDate } : {});
   const out = saveResult(result);
   printRanking(result, explain);
   console.log(`\n採点結果を保存: ${out}`);
