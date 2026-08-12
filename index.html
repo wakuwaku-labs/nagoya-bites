@@ -1968,7 +1968,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 
 <!-- STORE-INDEX:START 2026-08-12 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（5017店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（5018店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（832店）</summary>
@@ -7267,6 +7267,12 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <li><a href="index.html#q=%E5%8C%97%E4%BA%AC%E6%9C%AC%E5%BA%97%20%E3%82%A4%E3%82%AA%E3%83%B3%E3%83%A2%E3%83%BC%E3%83%AB%E3%83%8A%E3%82%B4%E3%83%A4%E3%83%89%E3%83%BC%E3%83%A0%E5%89%8D%E5%BA%97">北京本店 イオンモールナゴヤドーム前店（ナゴヤドーム前・中華）</a></li>
 </ul>
 </details>
+<details class="store-index-area" data-area="今池">
+<summary>今池（1店）</summary>
+<ul class="store-index-list">
+<li><a href="index.html#q=%E5%BE%A1%E3%81%86%E3%81%A9%E3%82%93%E5%85%89%E5%8F%B2%20%E4%BB%8A%E6%B1%A0%E5%BA%97">御うどん光史 今池店（今池・うどん）</a></li>
+</ul>
+</details>
 </section>
 <!-- STORE-INDEX:END -->
 
@@ -7394,7 +7400,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '63e7bf7f4bbe';
+var STORES_JSON_VERSION = '62a473f09f58';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
