@@ -58,7 +58,23 @@ if [ "$ALREADY" = "1" ]; then
   exit 0
 fi
 
-# ---- 2. 生成 ----
+# ---- 2. 生成（成果物が既にあるなら作り直さない）----
+# validator FAIL で止まった後、原因（例: 掲載店が pending_stores.json に未登録）を人が直して
+# 再実行する、という流れが実際に起きる（2026-08-11 の復旧で発生）。そこで毎回ゼロから
+# 生成し直すと、直した対象とは別の記事が出来上がって作業が無駄になる。
+# 記事HTMLとSNS原稿が揃っているなら生成を飛ばして検証から再開する。
+EXISTING=""
+for f in journal/"${TARGET}"-*.html; do
+  [ -e "$f" ] && EXISTING="$f" && break
+done
+if [ -n "$EXISTING" ] && [ -f "docs/daily-posts/${TARGET}.md" ]; then
+  log "既存の成果物を検出したため生成をスキップし、検証から再開します: ${EXISTING}"
+  SKIP_GENERATION=1
+else
+  SKIP_GENERATION=0
+fi
+
+if [ "$SKIP_GENERATION" = "0" ]; then
 # journal-today の本文をそのまま使い、前置きで「基準日」だけ差し替える。
 # プロンプトを複製せず正本を参照することで、通常運用と編集方針がズレないようにする。
 BASE_PROMPT=$(tail -n +5 .claude/commands/journal-today.md)
@@ -102,6 +118,7 @@ while :; do
   sleep 30
   ATTEMPT=$((ATTEMPT+1))
 done
+fi   # SKIP_GENERATION
 
 # ---- 3. 成果物の実在確認 ----
 ART=""
@@ -115,6 +132,9 @@ log "成果物: ${ART} / ${MD}"
 
 # ---- 4. 品質ゲート（通常運用と同一・迂回しない）----
 if ! node scripts/validate_journal_draft.js "$ART" "$MD" >>"$LOG" 2>&1; then
+  log "   よくある原因: 記事の掲載店が data/pending_stores.json に未登録"
+  log "   （その場合は実在を一次情報で確認してから追記し、このスクリプトを再実行してください。"
+  log "    成果物は残っているので生成はスキップされ、検証から再開します）"
   die "validator が FAIL。品質ゲートを通らないため公開しません。${LOG} の末尾を確認してください。"
 fi
 log "✅ validator PASS"
