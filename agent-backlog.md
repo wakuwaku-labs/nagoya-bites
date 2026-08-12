@@ -10,11 +10,20 @@
 
 ### [FB-002] 「手羽八 てばはち 金山駅店」の店名変更依頼を一次情報で検証し、成立時のみ反映する
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: wont_fix
 - **detected**: 2026-08-11
+- **resolved**: 2026-08-12
 - **category**: データ
 - **owner**: DataKeeper
 - **source**: サイトフィードバック 2026-08-11（種類: 店舗情報が間違っている）「焼き鳥と海鮮の個室居酒屋 手羽八 金山店 / こちらの店名に変更をお願いいたします。」対象店舗: 手羽八 てばはち 金山駅店
+- **検証結果（2026-08-12）**: 一次情報3ソースを照合し、「焼き鳥と海鮮の個室居酒屋 手羽八 金山店」という店名は**いずれのソースにも確認できなかった**。依頼された新店名を裏付ける独立した一次情報が2件以上存在しないため、acceptance 条件（検証成立基準）を満たさず。データ変更なし。
+  | ソース | 確認された店名 |
+  |--------|---------------|
+  | HotPepper（J004403667）Web検索結果 | 完全個室 名古屋 手羽先 焼鳥 飲み放題 **手羽八 ―てばはちー 金山駅店** |
+  | ぐるなび（r.gnavi.co.jp/gsgauhjp0000/） | 全席完全個室 名古屋 手羽先 焼鳥 **手羽八 金山駅前店** |
+  | data/places_resolved.json（Google Places ChIJ232bLHt3A2ARd3e4kDRckqc） | **手羽八 金山駅前店** |
+  | 依頼された名称 | 焼き鳥と海鮮の個室居酒屋 手羽八 金山店（**いずれのソースにも不一致**） |
+  現行の「手羽八 てばはち 金山駅店」はHotPepper公式の短縮店名と一致しており、正確性に問題なし。
 - **brand-filter**: ✅ 適合 — 実在保証・情報正確性は Moat の根幹。ただし依頼者が店舗関係者か第三者かは不明で、**依頼文だけを根拠に店名を書き換えない**（制約7・`data/dispute_requests.json` の「自動反映はしない」先例に準拠）
 - **現状（実測・2026-08-11）**:
   | 参照先 | 保持している店名 |
@@ -200,13 +209,15 @@
 
 ### [SEO-051] `tests/featured_freshness.test.js` が `data/featured.json` の旧スキーマ（`monthlyFeature`）を前提のままで2件失敗している
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-05（[[SEO-050]] の QA で検出。本変更とは無関係の既存不具合）
+- **resolved**: 2026-08-12
 - **category**: QA
 - **owner**: Builder
 - **問題**: `data/featured.json` は現在 `monthlyScenes` / `sceneLeads` を持つが、テストは `cfg.monthlyFeature[String(m)]` を読んでおり `undefined` で `TypeError`。**「12ヶ月すべてが実在ページで埋まっている（鮮度の穴ゼロ）」という鮮度ガードが、実質的に無効化されたまま常時 red** になっている
 - **なぜ P2 か**: 本番の鮮度そのものは `build_featured.js --check` と `validateConfig`（同ファイル内の1本目のテストは pass）で担保されている。ただし**常時 red のテストは他の退行を隠す**ため放置しない
 - **acceptance**: `monthlyScenes` スキーマに追従させ、12ヶ月分の穴ゼロを再び機械検証できること／`npm test` が 49 pass 0 fail になること
+- **実装（2026-08-12）**: `tests/featured_freshness.test.js` の2テストを `monthlyScenes` スキーマに追従。`monthlyFeature[m].slug` 単体 → `monthlyScenes[m].scenes[].{slug,title,badge}` 全件チェックへ。`npm test` 49 pass 0 fail（2件→0件 fail）
 
 ### [SEO-047] LINE日次レポートの直帰率アラートが小サンプルでも毎回「異常」と誤検知していた問題
 
@@ -682,7 +693,7 @@
 - **priority**: P1 → **status**: ready
 - **detected**: 2026-07-27（SEO改善の全体仕分けによる統合起票）
 - **category**: SEO
-- **owner**: Builder
+- **owner**: 片桐 ← Builder
 - **統合元**: [[SEO-014]]（FVに「業界人の目利き」「シーン別専門性」の価値提案コピー・P1）+ [[SEO-009]]（FVに人気特集への大きな誘導導線）
 - **統合理由**: 統合元の双方に既に「両者を1つのファーストビュー設計として整合させる」旨のメモがあった。同じ画面の同じ領域を2回別々に改修するとレイアウトが競合する
 - **brand-filter**: ✅ 適合（統合元の判定を継承）— 誇大表現・架空実績は書かず、実在店DB規模と編集独立の事実に基づく
@@ -2130,6 +2141,9 @@
 | 2026-07-29 | Orchestrator(EXPLICIT) | ISSUE-078 日次ジャーナル記事の店舗を「店舗ページ」（stores/{id}.html）へ内部リンク必須化。buildStores()がid優先で内部リンクするよう修正／validate_journal_draft.jsの店名照合をTOP50限定index.html evalからdata/stores.json全件（load_stores.js）に是正＋WARNING項目16新設／既存公開記事(2026-07-29-nagoya-beergarden.html)にマイアミ・CARVINO・ANDBBQの店舗ページリンクを追記／agents/editor.mdに全テーマ共通ルールを明文化 | ✅ commit済み (PR #92) |
 | 2026-07-30 | Orchestrator(EXPLICIT) | ISSUE-078追補: 過去ジャーナル84本を全件監査し店舗カード↔店舗ページのリンクをバックフィル。外部リンクのみ11本を内部化／カードはあるがID未解決の44本にdata-store-id付与＋内部リンク化（stores/*.html全5,421件のJSON-LD名から正引き索引を実生成し、slug再計算に頼らず実ファイル照合で解決）／新規に実店舗言及を検出した1本にカード追加／残り38本は店舗非依存の一般論記事と確認し対象外。全63店舗カードの店名↔リンク先一致をゼロミスマッチで最終検証 | ✅ commit待ち（同PR #92に追加コミット予定） |
 | 2026-08-03 | Builder(routine) | SEO-046 refresh_journal_related.js 自動化組み込み: daily-journal.yml に「ジャーナル関連記事リンクの自動更新」ステップを追加、run_journal_local.sh の validator PASS 直後（5f節）に非ブロッキング呼び出し追加、旧 related-wrap 形式5本の SKIP ログを明示化。スクリプト未組み込みによる関連リンク欠如（直近7本が汎用リンクのみ）を恒久解消 | ✅ commit d7398333 |
+| 2026-08-12 | DataKeeper(routine) | FB-002 手羽八 金山店の店名変更依頼を一次情報3ソース（HotPepper J004403667・ぐるなび・Google Places ChIJ232bLHt3A2ARd3e4kDRckqc）で検証。「焼き鳥と海鮮の個室居酒屋 手羽八 金山店」はいずれのソースにも確認できず検証不成立 → wont_fix・データ変更なし | ⚠️ wont_fix（一次情報不一致） |
+| 2026-08-12 | Orchestrator(routine) | SEO-040 FVキャッチコピー統合はブランド核心コピーのユーザー承認が必要（acceptance に「実装前に案をユーザーに提示して確定させる」と明記）→ owner を片桐に変更してエスカレーション | ⚠️ 要オーナー判断（担当部署を片桐に変更済み） |
+| 2026-08-12 | Builder(routine) | SEO-051 tests/featured_freshness.test.js が data/featured.json の旧スキーマ（monthlyFeature）を前提のまま2件失敗していた問題を修正。monthlyScenes スキーマ（scenes[]配列）に追従し全12ヶ月のslugs/title/badge を検証。npm test 49 pass 0 fail（2件→0件 fail） | ✅ commit 本コミット |
 
 ---
 
