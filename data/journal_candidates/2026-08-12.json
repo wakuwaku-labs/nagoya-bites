@@ -1,0 +1,428 @@
+{
+  "date": "2026-08-12",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄の居酒屋のQR注文、業界人が読む客単価の分かれ目",
+      "verdict": "PASS",
+      "total": 104,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 22,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 6件 (人件費,回転,業界,構造,相場,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 3件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 140字 +4",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-PRICE-006) → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "名駅の居酒屋、QR注文で消えた「もう一杯いかがですか」",
+      "verdict": "HOLD",
+      "total": 74,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 175日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 4件 (人件費,業界,構造,相場) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 102字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-PRICE-006) → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "2026年の居酒屋DXは「導入」ではなく「使いこなし」",
+      "verdict": "HOLD",
+      "total": 64,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 8,
+        "uniqueness": 5,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 1件 (構造) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 93字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-PRICE-006) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "大須の居酒屋でQR注文が向く業態、向かない業態",
+      "verdict": "HOLD",
+      "total": 61,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 13,
+        "uniqueness": 15,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 602日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 3件 (回転,仕込み,構造) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 97字 +4",
+          "title 23字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-PRICE-006) → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "QR注文が苦手な客を、栄の居酒屋はどう扱うべきか",
+      "verdict": "HOLD",
+      "total": 56,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 13,
+        "uniqueness": 10,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1100日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 2件 (業界,慣習) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 98字 +4",
+          "title 24字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-PRICE-006) → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "industry_insider",
+      "column_id": "COL-PRICE-006",
+      "title_draft": "栄の居酒屋のQR注文、業界人が読む客単価の分かれ目",
+      "lead_draft": "卓にQRコードが置かれる居酒屋は、栄で飲んでいればもう珍しくない。導入すれば客単価が上がる、と語られがちだが、事業者データを並べると話は単純ではない。ある調査は「業態によっては客単価が下がる可能性もある」と明記している。何が上がる店と下がる店を分けているのかを、業界人の目で読む。",
+      "angle": "QR注文は人件費を削るが、卓上の追加提案という売上装置も同時に削る。上がる店と下がる店を分ける構造を、繁忙時間の回転と業態別の相場から業界人が読む",
+      "main_store": null,
+      "sources": [
+        {
+          "label": "スカイファーム: 横浜赤レンガ倉庫でモバイルオーダー「NEW PORT」採用（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000241.000017102.html",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "飲食店ドットコム: 竹田クニ氏が語る「2026年の外食トレンド」",
+          "url": "https://www.inshokuten.com/foodist/article/8217/",
+          "date": "2026-02-18"
+        },
+        {
+          "label": "favy: モバイルオーダーの「ついで買い」利用調査（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000297.000016506.html",
+          "date": "2024-12-18"
+        },
+        {
+          "label": "ユビレジ: QRオーダー＆決済が売上アップに繋がる話（導入店/非導入店の実データ）",
+          "url": "https://note.com/ubiregi/n/n260a161505d7",
+          "date": "2023-04-06"
+        },
+        {
+          "label": "じゅくしん: 居酒屋でのスマホ「QRコード注文」が苦手な理由",
+          "url": "https://note.com/akiraiwanau/n/ndf6b5e38d1af",
+          "date": "2023-08-08"
+        },
+        {
+          "label": "リクルート ホットペッパーグルメ外食総研: テーブルトップ/セルフオーダー利用実態・意向調査（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001372.000011414.html",
+          "date": "2022-01-26"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "column_id": "COL-PRICE-006",
+      "title_draft": "名駅の居酒屋、QR注文で消えた「もう一杯いかがですか」",
+      "lead_draft": "QR注文の導入で店が失うものは、注文伝票を書く手間だけではない。飲みかけのグラスを見て一杯を勧める、あの一言も同時に消える。人件費として削られた動作が、実は売上装置でもあったという話を業界人の視点で書く。",
+      "angle": "卓上の追加提案は人件費であると同時に売上装置。削減した人件費と失った売上の相場を業界の構造から読む",
+      "main_store": null,
+      "sources": [
+        {
+          "label": "favy: モバイルオーダーの「ついで買い」利用調査（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000297.000016506.html",
+          "date": "2024-12-18"
+        },
+        {
+          "label": "ユビレジ: QRオーダー＆決済が売上アップに繋がる話",
+          "url": "https://note.com/ubiregi/n/n260a161505d7",
+          "date": "2023-04-06"
+        },
+        {
+          "label": "飲食店ドットコム: 竹田クニ氏が語る「2026年の外食トレンド」",
+          "url": "https://www.inshokuten.com/foodist/article/8217/",
+          "date": "2026-02-18"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "industry_insider",
+      "column_id": "COL-PRICE-006",
+      "title_draft": "大須の居酒屋でQR注文が向く業態、向かない業態",
+      "lead_draft": "同じQR注文でも、焼肉としゃぶしゃぶでは効き方がまるで違う。追加注文が構造的に多い業態ほど数字が動き、コース中心の店では動かない。業態別の向き不向きを、注文品数と会計単価の実データから整理する。",
+      "angle": "追加注文の回数が多い業態ほどQRが効く。業態別の仕込みと回転の構造から向き不向きを読む",
+      "main_store": null,
+      "sources": [
+        {
+          "label": "ユビレジ: QRオーダー＆決済が売上アップに繋がる話",
+          "url": "https://note.com/ubiregi/n/n260a161505d7",
+          "date": "2023-04-06"
+        },
+        {
+          "label": "favy: モバイルオーダーの「ついで買い」利用調査（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000297.000016506.html",
+          "date": "2024-12-18"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "industry_insider",
+      "column_id": "COL-PRICE-006",
+      "title_draft": "QR注文が苦手な客を、栄の居酒屋はどう扱うべきか",
+      "lead_draft": "自分のスマホのバッテリーが減る、個人の端末を人に渡したくない、小さい画面で探しにくい。QR注文への抵抗は感情論ではなく具体的な理由がある。客側の不満と店側の省人化を、どこで折り合わせるかを考える。",
+      "angle": "客の抵抗理由は具体的。紙メニュー併用の慣習を残す店と全面移行する店の分岐を業界の目で見る",
+      "main_store": null,
+      "sources": [
+        {
+          "label": "じゅくしん: 居酒屋でのスマホ「QRコード注文」が苦手な理由",
+          "url": "https://note.com/akiraiwanau/n/ndf6b5e38d1af",
+          "date": "2023-08-08"
+        },
+        {
+          "label": "リクルート 外食総研: テーブルトップ/セルフオーダー利用実態・意向調査（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001372.000011414.html",
+          "date": "2022-01-26"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "industry_insider",
+      "column_id": "COL-PRICE-006",
+      "title_draft": "2026年の居酒屋DXは「導入」ではなく「使いこなし」",
+      "lead_draft": "モバイルオーダーは導入期を終え普及期に入った、と業界の分析は言う。つまり入れただけでは差がつかない段階に来た。名古屋の居酒屋がこの先どこで差をつけるのかを、レコメンド設計の観点から読む。",
+      "angle": "普及期に入ったツールは使いこなしで差がつく。レコメンド設計の有無が客単価の構造を分ける",
+      "main_store": null,
+      "sources": [
+        {
+          "label": "飲食店ドットコム: 竹田クニ氏が語る「2026年の外食トレンド」",
+          "url": "https://www.inshokuten.com/foodist/article/8217/",
+          "date": "2026-02-18"
+        },
+        {
+          "label": "スカイファーム: モバイルオーダー「NEW PORT」採用（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000241.000017102.html",
+          "date": "2026-08-06"
+        }
+      ]
+    }
+  ]
+}

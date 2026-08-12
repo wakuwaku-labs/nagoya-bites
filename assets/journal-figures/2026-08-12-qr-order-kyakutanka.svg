@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="600" height="360" role="img" aria-label="QR注文の導入で客単価がどう動くかの構造図。導入店と非導入店の差は1テーブルあたり約1200円、客単価は200円強、注文品数は平均プラス3品。焼肉・しゃぶしゃぶ・鉄板焼では会計差が約3200円。分岐はレコメンド設計の有無で、画面に関連商品を出した場合は複数商品決済率が約1.4倍、クロスセル発生率が2倍以上。出さない場合は業態によって客単価が下がる可能性がある。">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a1a2a"/>
+      <stop offset="100%" stop-color="#22384f"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#0a1a2a"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#e8c890" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="360" fill="url(#bg)"/>
+  <rect width="600" height="360" fill="url(#grain)" opacity=".5"/>
+
+  <text x="36" y="34" fill="#e8c890" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+  <rect x="36" y="46" width="3" height="26" fill="#e8c890" opacity=".9"/>
+  <text x="48" y="68" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="22" font-weight="700">QR注文は、客単価のどこに効くのか</text>
+
+  <!-- 左パネル: 導入店と非導入店の差 -->
+  <text x="36" y="106" fill="#e8c890" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="13" font-weight="700">導入店 − 非導入店（実データ）</text>
+  <g font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="12" fill="#dce6f0">
+    <text x="36" y="134">1テーブル会計</text>
+    <rect x="140" y="123" width="86" height="14" fill="#e8c890" opacity=".85"/>
+    <text x="234" y="134" fill="#e8c890" font-weight="700">+約1,200円</text>
+
+    <text x="36" y="160">客単価</text>
+    <rect x="140" y="149" width="15" height="14" fill="#e8c890" opacity=".55"/>
+    <text x="234" y="160" fill="#e8c890" font-weight="700">+200円強</text>
+
+    <text x="36" y="186">注文品数</text>
+    <rect x="140" y="175" width="34" height="14" fill="#e8c890" opacity=".55"/>
+    <text x="234" y="186" fill="#e8c890" font-weight="700">+3品</text>
+  </g>
+  <line x1="36" y1="200" x2="290" y2="200" stroke="#7f95ab" stroke-width="1" opacity=".4"/>
+  <text x="36" y="220" fill="#fff" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="11" opacity=".85">焼肉・しゃぶしゃぶ・鉄板焼では</text>
+  <text x="36" y="238" fill="#fff" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="11" opacity=".85">品数ほぼ2倍・会計差 約3,200円</text>
+
+  <!-- 右パネル: 分岐 -->
+  <text x="330" y="106" fill="#e8c890" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="13" font-weight="700">分岐＝画面が推すかどうか</text>
+
+  <rect x="330" y="118" width="234" height="58" fill="#8fb6d9" opacity=".13" rx="3"/>
+  <rect x="330" y="118" width="3" height="58" fill="#8fb6d9" opacity=".9"/>
+  <text x="342" y="137" fill="#8fb6d9" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="12" font-weight="700">関連商品を出す</text>
+  <g font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="11.5" fill="#dce6f0">
+    <text x="342" y="155">複数商品決済率 約1.4倍</text>
+    <text x="342" y="171">クロスセル発生率 2倍以上</text>
+  </g>
+
+  <rect x="330" y="188" width="234" height="50" fill="#c98b8b" opacity=".13" rx="3"/>
+  <rect x="330" y="188" width="3" height="50" fill="#c98b8b" opacity=".9"/>
+  <text x="342" y="207" fill="#c98b8b" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="12" font-weight="700">出さない</text>
+  <text x="342" y="227" fill="#dce6f0" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="11.5">業態によっては客単価が下がる</text>
+
+  <!-- 下段 -->
+  <line x1="36" y1="262" x2="564" y2="262" stroke="#e8c890" stroke-width="1" opacity=".3"/>
+  <text x="36" y="288" fill="#e8c890" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="13" font-weight="700">2026年の位置</text>
+  <g font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="12" fill="#dce6f0">
+    <text x="36" y="312">モバイルオーダーは導入期を終え、普及期に入った</text>
+    <text x="36" y="330">＝「導入したか」ではなく「使いこなせているか」で差がつく段階</text>
+  </g>
+
+  <text x="36" y="350" fill="#7f95ab" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="9">出典: ユビレジ（2023-04-06 / 2022年4月〜2023年1月抽出）、favy 調査（2024-12-18）、飲食店ドットコム（2026-02-18）</text>
+</svg>
