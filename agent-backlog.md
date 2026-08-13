@@ -10,8 +10,9 @@
 
 ### [SEO-053] 店舗カードで editorReason / insiderNote（Moat の編集層）が構造的に表示されない条件分岐を是正する
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-12
+- **resolved**: 2026-08-13
 - **category**: SEO / UX
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-08-11 原文「予約ボタン・マップ・店舗詳細のクリックが全て0回で、サイト内での行動が全く起きていません。👉 index.htmlの各店舗カードに、『業界人の目利き』で選んだ店のおすすめポイント（例: 接待向き、デート向きなど）を短いキャッチコピーで追加し、詳細を見たくなる仕掛けを作りましょう」
@@ -34,8 +35,9 @@
 
 ### [FB-002] 「手羽八 てばはち 金山駅店」の店名変更依頼を一次情報で検証し、成立時のみ反映する
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: wont_fix
 - **detected**: 2026-08-11
+- **resolved**: 2026-08-13
 - **category**: データ
 - **owner**: DataKeeper
 - **source**: サイトフィードバック 2026-08-11（種類: 店舗情報が間違っている）「焼き鳥と海鮮の個室居酒屋 手羽八 金山店 / こちらの店名に変更をお願いいたします。」対象店舗: 手羽八 てばはち 金山駅店
@@ -52,6 +54,7 @@
   2. 検証成立時のみ反映する。店名は Hot Pepper 由来データ（Google Sheets → `build.js`）のため直接書き換えると次回同期で戻る。**`data/manual_stores.json` にホットペッパーID `J004403667` で上書きエントリを追加**して `node build.js` で反映し、恒久化する
   3. 反映後に `node scripts/audit_feature_stores.js` と店舗実在系の監査を通し、検出ゼロを維持する（特集・ジャーナル側に旧名で掲載されている箇所があれば併せて追随させる）
   4. 一次情報で確認できない、または情報が食い違う場合は **status を wont_fix にしてデータを変更せず**、その旨をオーナーに報告する（虚偽・第三者による妨害目的の変更依頼で信頼を毀損しないための防波堤）
+- **結果（2026-08-13 検証）**: **wont_fix** — 依頼された「焼き鳥と海鮮の個室居酒屋 手羽八 金山店」は、HotPepper（J004403667）・ぐるなび・owst.jp（公式サイト）の3独立ソースいずれにも確認できなかった。いずれも「手羽八 てばはち 金山駅店」または「完全個室 名古屋 手羽先 焼鳥 飲み放題 手羽八 ―てばはちー 金山駅店」を維持している。acceptance条件4に従いデータを変更せず終了。依頼者が店舗関係者で店名変更済みの場合は、ホットペッパー掲載情報を正式に更新してから再依頼を受け付ける
 
 ### [SEO-052] ジャーナル記事の「関連リンクのクリック」と「スクロール到達」を計測し、毎日届く回遊アドバイスを検証可能にする
 
@@ -291,13 +294,15 @@
 
 ### [SEO-051] `tests/featured_freshness.test.js` が `data/featured.json` の旧スキーマ（`monthlyFeature`）を前提のままで2件失敗している
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-05（[[SEO-050]] の QA で検出。本変更とは無関係の既存不具合）
+- **resolved**: 2026-08-13
 - **category**: QA
 - **owner**: Builder
 - **問題**: `data/featured.json` は現在 `monthlyScenes` / `sceneLeads` を持つが、テストは `cfg.monthlyFeature[String(m)]` を読んでおり `undefined` で `TypeError`。**「12ヶ月すべてが実在ページで埋まっている（鮮度の穴ゼロ）」という鮮度ガードが、実質的に無効化されたまま常時 red** になっている
 - **なぜ P2 か**: 本番の鮮度そのものは `build_featured.js --check` と `validateConfig`（同ファイル内の1本目のテストは pass）で担保されている。ただし**常時 red のテストは他の退行を隠す**ため放置しない
 - **acceptance**: `monthlyScenes` スキーマに追従させ、12ヶ月分の穴ゼロを再び機械検証できること／`npm test` が 49 pass 0 fail になること
+- **対処（2026-08-13）**: `tests/featured_freshness.test.js` の2テストを `monthlyScenes` スキーマに追従させた。`npm test` が 49 pass 0 fail になったことを確認
 
 ### [SEO-047] LINE日次レポートの直帰率アラートが小サンプルでも毎回「異常」と誤検知していた問題
 
@@ -2221,6 +2226,7 @@
 | 2026-07-29 | Orchestrator(EXPLICIT) | ISSUE-078 日次ジャーナル記事の店舗を「店舗ページ」（stores/{id}.html）へ内部リンク必須化。buildStores()がid優先で内部リンクするよう修正／validate_journal_draft.jsの店名照合をTOP50限定index.html evalからdata/stores.json全件（load_stores.js）に是正＋WARNING項目16新設／既存公開記事(2026-07-29-nagoya-beergarden.html)にマイアミ・CARVINO・ANDBBQの店舗ページリンクを追記／agents/editor.mdに全テーマ共通ルールを明文化 | ✅ commit済み (PR #92) |
 | 2026-07-30 | Orchestrator(EXPLICIT) | ISSUE-078追補: 過去ジャーナル84本を全件監査し店舗カード↔店舗ページのリンクをバックフィル。外部リンクのみ11本を内部化／カードはあるがID未解決の44本にdata-store-id付与＋内部リンク化（stores/*.html全5,421件のJSON-LD名から正引き索引を実生成し、slug再計算に頼らず実ファイル照合で解決）／新規に実店舗言及を検出した1本にカード追加／残り38本は店舗非依存の一般論記事と確認し対象外。全63店舗カードの店名↔リンク先一致をゼロミスマッチで最終検証 | ✅ commit待ち（同PR #92に追加コミット予定） |
 | 2026-08-03 | Builder(routine) | SEO-046 refresh_journal_related.js 自動化組み込み: daily-journal.yml に「ジャーナル関連記事リンクの自動更新」ステップを追加、run_journal_local.sh の validator PASS 直後（5f節）に非ブロッキング呼び出し追加、旧 related-wrap 形式5本の SKIP ログを明示化。スクリプト未組み込みによる関連リンク欠如（直近7本が汎用リンクのみ）を恒久解消 | ✅ commit d7398333 |
+| 2026-08-13 | DataKeeper/Builder(routine) | FB-002 手羽八金山駅店の店名変更依頼を HotPepper・ぐるなび・owst.jp で3独立ソース検証 → 要求された「焼き鳥と海鮮の個室居酒屋 手羽八 金山店」は確認できず wont_fix。SEO-051 tests/featured_freshness.test.js を monthlyScenes スキーマに追従させ npm test 49 pass 0 fail を回復。SEO-053 カードの editorReason/insiderNote が おすすめポイント存在時に完全に隠れる排他条件を是正：editorReason 優先 > insiderNote > おすすめポイント の優先表示に変更、card-editor-lead::before / card-insider-lead 新設 | ✅ commit TBD |
 
 ---
 
