@@ -1,0 +1,475 @@
+{
+  "date": "2026-08-13",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅西の煮干しラーメン18席、カウンター980円の使いどころ",
+      "verdict": "PASS",
+      "total": 105,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,シーン,一人飲み,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 137字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「カウンター」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅にラーメンと焼鳥が続いた週、コスパの基準線が動いた",
+      "verdict": "PASS",
+      "total": 102,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        },
+        {
+          "kw": "焼き鳥",
+          "feature": "features/nagoya-yakitori-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 5件 (傾向,相場,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 118字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "タイトルにジャンル語「焼鳥」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "山王に開く寿司としゃぶしゃぶの食べ放題、宴会で使えるか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 93,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (コース,席,予約,シーン) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 118字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「寿司」+2"
+        ]
+      },
+      "gate_note": "93点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -4"
+    },
+    {
+      "id": "c2",
+      "title_draft": "名駅のイタリアンが監修、フードコートのパスタをコスパで読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 92,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        },
+        {
+          "kw": "イタリアン",
+          "feature": "features/nagoya-italian-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,シーン,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 139字 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "タイトルにジャンル語「イタリアン」+2"
+        ]
+      },
+      "gate_note": "92点（自動公開ライン 100点）。主な不足: topicality -13 / uniqueness -5"
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄の商業施設に3年ぶり新店、カレーうどんの相場を業界人が読む",
+      "verdict": "HOLD",
+      "total": 83,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,シーン,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 122字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "名駅西の煮干しラーメン18席、カウンター980円の使いどころ",
+      "lead_draft": "名古屋駅西口から徒歩3〜4分、椿神社前の交差点脇に2026年8月13日、煮干しらーめん 凛が開いた。1階と2階で計18席、ほぼ全てカウンター。券売機で先に払い、卓上の生卵と海苔は使い放題。同じ番地には同社プロデュースの中華そば店が並ぶ。価格帯とオペの設計を業界人の目で読む。",
+      "angle": "同一番地・同一営業時間で出汁違いの2ブランドを並べるドミナント設計を、券売機とカウンター18席の回転、980円と特製1430円の価格帯、生卵と海苔の使い放題が成立する原価構造、そして一人飲みの〆に使う繁忙時間帯というシーン適性から読む",
+      "main_store": {
+        "name": "煮干しらーめん 凛",
+        "id": "",
+        "area": "名駅",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通『煮干しらーめん 凛』名古屋駅西にオープン",
+          "url": "https://jouhou.nagoya/niboshiramen-rin/",
+          "date": "2026-08-12"
+        },
+        {
+          "label": "煮干しらーめん 凛 公式Instagram（8/13開店・雷杏の姉妹店と明記）",
+          "url": "https://www.instagram.com/niboshiramen.rin/",
+          "date": "2026-08-13"
+        },
+        {
+          "label": "PR TIMES 株式会社エフリード『中華そば 雷杏 -RYAN-』プロデュース店（同番地・使い放題の原型）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000006.000100887.html",
+          "date": "2023-06-12"
+        },
+        {
+          "label": "株式会社エフリード 公式サイト（ラーメン店プロデュース事業）",
+          "url": "https://f-lead.jp/",
+          "date": "2026-08-13"
+        },
+        {
+          "label": "フカボリトウカイ（中日新聞）中華そば 雷杏 -RYAN- 紹介",
+          "url": "https://dg.chunichi.co.jp/fukaboritokai/culture/5483/",
+          "date": "2023-06-16"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "名駅のイタリアンが監修、フードコートのパスタをコスパで読む",
+      "lead_draft": "イオンモールNagoya Noritake Gardenのフードコートに2026年8月6日、今日もパスタ日より ボロネーゼ時々カルボが開いた。名駅の人気イタリアンNo.9が監修に入る。専門店の名前がフードコートに降りてくる構造は、業界では珍しくない。その裏側と使いどころを読む。",
+      "angle": "人気イタリアンが監修として量販業態に名前を貸す構造を、フードコートの回転と客単価、セットメニューの価格帯設計、ファミリー需要というシーン適性から読む",
+      "main_store": {
+        "name": "今日もパスタ日より ボロネーゼ時々カルボ",
+        "id": "",
+        "area": "名駅",
+        "genre": "イタリアン"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 株式会社SORAGROUP『今日もパスタ日より ボロネーゼ時々カルボ』オープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000025.000062841.html",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "名古屋情報通 ニューオープン一覧（2026年8月）",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-12"
+        },
+        {
+          "label": "食べログ 名古屋市 新規オープン順",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "栄の商業施設に3年ぶり新店、カレーうどんの相場を業界人が読む",
+      "lead_draft": "名古屋のカレーうどん若鯱家が2026年8月6日、栄のBINO栄に3年ぶりの新店を開いた。中部経済新聞は出店理由を栄の人流拡大と報じている。999円までという価格帯に、名古屋めしの量販業態がいま置かれている位置が出ている。相場とシーン適性を読む。",
+      "angle": "3年ぶり出店という判断の裏にある栄の人流回復と賃料相場、999円以下に抑えた価格帯の意味、商業施設内テナントの回転とランチ需要というシーン適性から読む",
+      "main_store": {
+        "name": "若鯱家 BINO栄店",
+        "id": "",
+        "area": "栄",
+        "genre": "カレーうどん"
+      },
+      "sources": [
+        {
+          "label": "中部経済新聞『若鯱家 来月、3年ぶり新店 人流拡大の「栄」に』",
+          "url": "https://www.chukei-news.co.jp/news/2026/07/31/OK0002607310201_01/",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "Yahoo!ニュース（中部経済新聞配信）同記事",
+          "url": "https://news.yahoo.co.jp/articles/f4c40e8194d3b1d4c2e5d11394c9269001d5883c",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "若鯱家 公式サイト 店舗情報",
+          "url": "https://www.wakashachiya.co.jp/shopinfo/",
+          "date": "2026-08-06"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "山王に開く寿司としゃぶしゃぶの食べ放題、宴会で使えるか",
+      "lead_draft": "寿司・しゃぶしゃぶ ゆず庵 名古屋山王店が2026年8月18日に開く。物語コーポレーションの全国118店目にあたる。食べ放題業態は宴会の幹事にとって読みやすい一方、使いどころを外すと満足度が落ちる。業界人の視点で価格帯と席の設計を読む。",
+      "angle": "食べ放題業態のコース単価と時間制限の設計、席配置と大人数予約の取り方、宴会というシーン適性で外さない条件を業界人視点で読む",
+      "main_store": {
+        "name": "寿司・しゃぶしゃぶ ゆず庵 名古屋山王店",
+        "id": "",
+        "area": "山王",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 株式会社物語コーポレーション『ゆず庵 名古屋山王店』グランドオープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000001495.000044964.html",
+          "date": "2026-08-13"
+        },
+        {
+          "label": "名古屋情報通 ニューオープン一覧（2026年8月）",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-12"
+        },
+        {
+          "label": "食べログ 名古屋市 新規オープン順",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "weekly_digest",
+      "title_draft": "名駅にラーメンと焼鳥が続いた週、コスパの基準線が動いた",
+      "lead_draft": "2026年8月の第2週、名駅周辺で低単価の新店が続いた。焼鳥90円の店が10日に、煮干しらーめん980円の店が13日に開く。どちらも一次情報で価格が出ている。名駅の一人客の単価がどこに置かれつつあるのか、業界人の目で週の動きをまとめる。",
+      "angle": "同じ週に名駅で開いた低単価業態を並べ、串単価とラーメン単価の相場、券売機と先払いによる回転の設計、一人飲みの価格帯というシーン適性から週の傾向を読む",
+      "main_store": {
+        "name": "煮干しらーめん 凛",
+        "id": "",
+        "area": "名駅",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通『煮干しらーめん 凛』名古屋駅西にオープン",
+          "url": "https://jouhou.nagoya/niboshiramen-rin/",
+          "date": "2026-08-12"
+        },
+        {
+          "label": "PR TIMES 株式会社ファッズ『鳥ぶら 名駅東口店』グランドオープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000272.000070373.html",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "煮干しらーめん 凛 公式Instagram",
+          "url": "https://www.instagram.com/niboshiramen.rin/",
+          "date": "2026-08-13"
+        }
+      ]
+    }
+  ]
+}
