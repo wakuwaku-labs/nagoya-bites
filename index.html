@@ -1966,9 +1966,9 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 </section>
 <!-- SCENE-INDEX:END -->
 
-<!-- STORE-INDEX:START 2026-08-12 -->
+<!-- STORE-INDEX:START 2026-08-13 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（5018店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（5020店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（832店）</summary>
@@ -6952,10 +6952,11 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 </ul>
 </details>
 <details class="store-index-area" data-area="名古屋市中村区">
-<summary>名古屋市中村区（17店）</summary>
+<summary>名古屋市中村区（18店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=CANALIA%20trattoria%EF%BC%86cafe">CANALIA trattoria＆cafe（名古屋市中村区・炭火焼きイタリアン、カフェ）</a></li>
 <li><a href="index.html#q=SALLE%20A%20MANGER%20DE%20KAJINO%EF%BC%88%E3%82%B5%E3%83%A9%E3%83%9E%E3%83%B3%E3%82%B8%E3%82%A7%20%E3%83%89%E3%82%A5%20%E3%82%AB%E3%82%B8%E3%83%8E%EF%BC%89">SALLE A MANGER DE KAJINO（サラマンジェ ドゥ カジノ）（名古屋市中村区・フレンチ、ビストロ）</a></li>
+<li><a href="index.html#q=%E3%81%86%E3%81%AA%E3%81%8E%E3%81%AE%E3%81%97%E3%82%8D%E3%82%80%E3%82%89%20%E6%9F%B3%E6%A9%8B%E6%9C%AC%E5%BA%97">うなぎのしろむら 柳橋本店（名古屋市中村区・うなぎ）</a></li>
 <li><a href="index.html#q=%E3%82%AA%E3%83%BC%E3%83%99%E3%83%AB%E3%82%B8%E3%83%A5%E3%83%BB%E3%83%89%E3%83%BB%E3%83%AA%E3%83%AB%20%E3%83%8A%E3%82%B4%E3%83%A4">オーベルジュ・ド・リル ナゴヤ（名古屋市中村区・フレンチ）</a></li>
 <li><a href="index.html#q=%E3%82%B0%E3%83%AA%E3%83%AB%E3%81%A4%E3%81%B0%E3%81%8D">グリルつばき（名古屋市中村区・和牛洋食、ステーキ、ハンバーグ）</a></li>
 <li><a href="index.html#q=%E3%81%A8%E3%82%93%E3%81%8B%E3%81%A4%E6%9C%B1%E5%AF%BF">とんかつ朱寿（名古屋市中村区・とんかつ）</a></li>
@@ -7175,6 +7176,12 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <summary>名古屋市北区（1店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=%E5%BE%A1%E6%87%90%E7%9F%B3%20%E5%BF%97%E3%82%89%E7%8E%89">御懐石 志ら玉（名古屋市北区・懐石料理、料亭、茶懐石）</a></li>
+</ul>
+</details>
+<details class="store-index-area" data-area="名古屋市天白区">
+<summary>名古屋市天白区（1店）</summary>
+<ul class="store-index-list">
+<li><a href="index.html#q=%E6%B4%8B%E9%A3%9F%E4%BA%AD%20%E5%A1%A9%E9%87%9C%E5%8F%A3%E5%BA%97">洋食亭 塩釜口店（名古屋市天白区・洋食）</a></li>
 </ul>
 </details>
 <details class="store-index-area" data-area="高畑">
@@ -7400,7 +7407,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '914a9f86c18d';
+var STORES_JSON_VERSION = '5275526753d1';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
