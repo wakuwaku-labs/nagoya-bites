@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T05:02:58.646Z",
+  "generatedAt": "2026-08-13T05:28:59.265Z",
   "siteUrl": "sc-domain:nagoya-bites.com",
   "dateRange": {
     "startDate": "2026-07-16",
@@ -6980,41 +6980,41 @@
       "source": "data/journal_seo_keywords.json",
       "updated": "2026-07-27"
     },
-    "store_names_used": 9006,
+    "store_names_used": 9020,
     "total_queries": 2688,
     "summary": [
       {
         "intent": "navigational",
-        "queries": 1807,
-        "impressions": 15828,
+        "queries": 1812,
+        "impressions": 15868,
         "clicks": 95,
         "ctr": 0.6,
         "avg_position": 18.7,
-        "impressions_share": 76.5
+        "impressions_share": 76.7
       },
       {
         "intent": "other",
-        "queries": 846,
-        "impressions": 4548,
+        "queries": 842,
+        "impressions": 4515,
         "clicks": 33,
         "ctr": 0.73,
         "avg_position": 18.8,
-        "impressions_share": 22
+        "impressions_share": 21.8
       },
       {
         "intent": "discovery",
-        "queries": 35,
-        "impressions": 324,
+        "queries": 34,
+        "impressions": 317,
         "clicks": 10,
-        "ctr": 3.09,
-        "avg_position": 12.3,
-        "impressions_share": 1.6
+        "ctr": 3.15,
+        "avg_position": 11.9,
+        "impressions_share": 1.5
       }
     ],
     "kpi": {
-      "discovery_impressions": 324,
+      "discovery_impressions": 317,
       "discovery_clicks": 10,
-      "discovery_impressions_share": 1.6
+      "discovery_impressions_share": 1.5
     },
     "examples": {
       "navigational": [
@@ -7192,16 +7192,6 @@
           "position": 26.4,
           "signals": [
             "scene:宴会"
-          ]
-        },
-        {
-          "query": "ご当地焼肉と鰻の自分焼き 名駅ソトノミ",
-          "impressions": 7,
-          "clicks": 0,
-          "position": 30.4,
-          "signals": [
-            "area:名駅",
-            "genre:焼肉"
           ]
         },
         {
@@ -7390,6 +7380,16 @@
           "signals": [
             "area:名駅",
             "genre:居酒屋"
+          ]
+        },
+        {
+          "query": "名駅一人飲み",
+          "impressions": 1,
+          "clicks": 0,
+          "position": 20,
+          "signals": [
+            "scene:一人飲み",
+            "area:名駅"
           ]
         }
       ],
