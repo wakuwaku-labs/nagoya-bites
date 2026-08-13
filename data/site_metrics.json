@@ -1,37 +1,37 @@
 {
-  "generatedAt": "2026-08-13T05:47:27.221Z",
+  "generatedAt": "2026-08-13T19:01:59.330Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 677,
-    "pageViews": 1042,
-    "sessions": 780,
-    "avgSessionDuration": 143.9,
-    "bounceRate": 0.342,
-    "pagesPerSession": 1.34
+    "activeUsers": 679,
+    "pageViews": 1045,
+    "sessions": 786,
+    "avgSessionDuration": 142.1,
+    "bounceRate": 0.358,
+    "pagesPerSession": 1.33
   },
   "channels": {
     "sessions": {
-      "organic": 496,
-      "direct": 189,
+      "organic": 491,
+      "direct": 199,
       "social": 79,
-      "referral": 17,
+      "referral": 16,
       "paid": 0,
-      "other": 1
+      "other": 9
     },
     "pct": {
-      "organic": 63.4,
-      "direct": 24.2,
-      "social": 10.1,
-      "referral": 2.2,
+      "organic": 61.8,
+      "direct": 25.1,
+      "social": 9.9,
+      "referral": 2,
       "paid": 0,
-      "other": 0.1
+      "other": 1.1
     }
   },
   "sourceBreakdown": [
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 229
+      "sessions": 221
     },
     {
       "source": "(direct)",
@@ -41,12 +41,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 158
+      "sessions": 160
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 82
+      "sessions": 84
     },
     {
       "source": "chatgpt.com",
@@ -56,7 +56,7 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 24
+      "sessions": 23
     },
     {
       "source": "openai",
@@ -66,34 +66,34 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 6
+      "sessions": 16
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 9
     },
     {
       "source": "copilot.com",
       "medium": "(not set)",
-      "sessions": 4
-    },
-    {
-      "source": "copilot.com",
-      "medium": "ai-assistant",
       "sessions": 4
     }
   ],
   "topPages": [
     {
       "path": "/",
-      "pageViews": 162,
-      "sessions": 113
+      "pageViews": 159,
+      "sessions": 111
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 109,
-      "sessions": 103
+      "pageViews": 108,
+      "sessions": 101
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 96,
-      "sessions": 86
+      "pageViews": 94,
+      "sessions": 85
     },
     {
       "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
@@ -108,7 +108,7 @@
   ],
   "cta": {
     "outboundClicks": 63,
-    "ctaClickRate": 8.1,
+    "ctaClickRate": 8,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -167,7 +167,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 677,
+    "value": 679,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

@@ -1781,31 +1781,32 @@
     {
       "date": "2026-08-13",
       "totals": {
-        "activeUsers": 677,
-        "pageViews": 1042,
-        "sessions": 780,
-        "avgSessionDuration": 143.9,
-        "bounceRate": 0.342,
-        "pagesPerSession": 1.34
+        "activeUsers": 679,
+        "pageViews": 1045,
+        "sessions": 786,
+        "avgSessionDuration": 142.1,
+        "bounceRate": 0.358,
+        "pagesPerSession": 1.33
       },
       "channels_pct": {
-        "organic": 63.4,
-        "direct": 24.2,
-        "social": 10.1,
-        "referral": 2.2,
+        "organic": 61.8,
+        "direct": 25.1,
+        "social": 9.9,
+        "referral": 2,
         "paid": 0,
-        "other": 0.1
+        "other": 1.1
       },
       "search_channels": {
-        "bing": 229,
-        "direct": 167,
-        "google": 158,
-        "ai_assistant": 123,
-        "yahoo": 82
+        "bing": 221,
+        "direct": 177,
+        "google": 160,
+        "ai_assistant": 118,
+        "yahoo": 84,
+        "other": 9
       },
       "cta": {
         "outboundClicks": 63,
-        "ctaClickRate": 8.1
+        "ctaClickRate": 8
       }
     }
   ]
