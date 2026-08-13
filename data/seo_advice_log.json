@@ -1620,6 +1620,36 @@
       "brand_reason": "2026-08-07・08-10 に同一主旨を duplicate 判定済み。原稿の生成側は [[SEO-011]]（done）で担保され、シーン別専門KWは data/journal_seo_keywords.json をマスタに validate_journal_draft.js の check16 が毎日機械照合している。不足しているのは原稿ではなく『実際にアカウントから投稿する運用』で、これはアカウント認証を伴うオーナー本人の操作。エージェント側に実装余地が無く起票しても ready のまま滞留する（[[SEO-039]] の Bing WMT 登録・IndexNow 有効化と同じクラス）。実確認: docs/daily-posts/ は 2026-08-09 分まで生成済みで 08-10 以降が無く、journal も 2026-08-09 で止まっている（[[ISSUE-083]] のジャーナル欠番と同根）ため、直近はそもそも配信する当日原稿が生成されていない。SNS流入0%の是正は投稿運用の開始が前提で、SEO施策として再起票する対象ではない",
       "category": null,
       "fingerprint": "66fabf13c7a42edb"
+    },
+    {
+      "id": null,
+      "date": "2026-08-13",
+      "source": "line-daily",
+      "advice": "🔴 直帰率が91%と非常に高く、訪問者のほとんどが1ページで離脱しています。👉 トップページ (index.html) のファーストビューに、最も人気の特集記事「nagoya-solo-dining」への導線を目立つように追加し、ユーザーの次のアクションを促してください。",
+      "verdict": "duplicate",
+      "brand_reason": "[[SEO-040]]（ready・P2）と同一施策。SEO-040 は [[SEO-014]]（価値提案コピー）+ [[SEO-009]]（人気特集 nagoya-solo-dining への大きな誘導導線）を統合した課題で、本アドバイスが求める打ち手そのものが既に ready で待機している。実装ゲートは /solve-next 側にあり再起票しても滞留するだけ。加えて母数が訪問23人で、この小サンプルの直帰率を毎回『異常』と鳴らす問題は [[SEO-047]] で既知（91%の1日値だけでFV設計を動かす根拠にはしない・制約10）",
+      "category": null,
+      "fingerprint": "e998c3cd00dc53ce"
+    },
+    {
+      "id": null,
+      "date": "2026-08-13",
+      "source": "line-daily",
+      "advice": "🟡 SNS流入が0%と、大きな集客チャネルを活用できていません。👉 docs/daily-posts/ にある本日のSNS投稿原稿を、Note、Instagram、Xの3媒体全てに投稿してください。特にInstagramでは店舗写真の魅力を最大限に引き出すキャプションを心がけましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "2026-08-10 / 2026-08-11 にも同主旨で duplicate 判定済み（3日連続の定型アドバイス）。エージェント側の成果物は既に毎日そろっている — docs/daily-posts/ に Note/Instagram/X の3媒体原稿が生成済みで、KW整合は [[SEO-011]] の check16 が毎日機械照合している。残るのは各SNSアカウントへの投稿という**オーナー本人の操作**（認証情報を伴うためエージェント権限外）で、起票しても ready のまま動かない。実行主体が人である以上これは課題ではなく運用リマインド",
+      "category": null,
+      "fingerprint": "a1677aa8c97ba810"
+    },
+    {
+      "id": "SEO-054",
+      "date": "2026-08-13",
+      "source": "line-daily",
+      "advice": "🟢 予約ボタンクリック率が8.7%と良好ですが、店舗詳細の閲覧が1回と少ないです。👉 人気ページ「2026-08-09-nagoyadome-pekin-honten」の記事内に、予約ボタンとGoogleマップ導線 (cta_gmap_click) を記事の冒頭と末尾に設置し、コンバージョン機会を増やしましょう。",
+      "verdict": "adopted",
+      "brand_reason": "実検証で構造欠落が確認できたため採用（1記事の対症療法ではなく生成テンプレの是正として起票）。2026-08-13 実測: journal/2026-08-*.html 12本の store-card 14枚のうち予約導線0枚・地図導線0枚、記事本文まで含めても12本中8本が予約・地図リンク皆無。名指しの 2026-08-09-nagoyadome-pekin-honten は当日TOP1閲覧（7回）ながら store-link すら無く store-desc で終端している。原因は scripts/generate_daily_draft.js:89-110 buildStores() が storeDetailLink() 解決時のみリンクを出し、予約・地図の分岐を持たないこと。特集側は [[SEO-042]]/[[SEO-045]] で冒頭CTAが整備済みで日次ジャーナルだけが取り残されていた。Moat「構造化DB×日次ジャーナル」を編集記事→実在店DBの送客に閉じる方向で、順位操作・広告依存を伴わない。URLは実在データ由来に限定し無い店では出さない（制約10・架空店ブロック順守）",
+      "category": "SEO",
+      "fingerprint": "a00e3a9e97c5fdf3"
     }
   ]
 }
