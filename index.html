@@ -227,6 +227,12 @@ nav.open{right:0;}
 .hero-proof-item strong{color:#e2c88d;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:.01em;white-space:nowrap;margin:0 .12em;}
 /* 幅が足りず1文字だけ次行に落ちるのを防ぐため、狭い画面では字送りと余白を詰める */
 @media(max-width:480px){.hero-proof{margin-top:1.25rem;gap:.4rem;}.hero-proof-item{font-size:.72rem;letter-spacing:0;padding:.68rem .7rem;gap:.42rem;}.hero-proof-item svg{width:16px;height:16px;padding:3px;}}
+/* ── HERO FEATURE LINK ── SEO-040: 特集ストリップ本体は下にあるが、モバイルではFV外に落ちるため1行だけ前倒し表示 */
+.hero-feature-link{display:inline-flex;align-items:center;gap:.4em;margin-top:1rem;font-size:.78rem;letter-spacing:.02em;color:var(--muted);text-decoration:none;opacity:0;animation:up .9s .64s forwards;}
+.hero-feature-link strong{color:var(--gold);font-weight:600;}
+.hero-feature-link:hover{color:var(--text);}
+.hero-feature-link:hover strong{text-decoration:underline;}
+@media(max-width:480px){.hero-feature-link{font-size:.72rem;margin-top:.85rem;}}
 .search-wrap{margin-top:2.2rem;display:flex;flex-wrap:wrap;gap:.6rem;max-width:460px;opacity:0;animation:up .9s .65s forwards;}
 .search-wrap input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.8rem 1.1rem;font-size:.8rem;border-radius:2px;outline:none;font-family:inherit;transition:border-color .2s;}
 .search-wrap input::placeholder{color:var(--dim);}
@@ -1400,6 +1406,11 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
     <span class="hero-proof-item"><svg viewBox="0 0 14 14" aria-hidden="true"><polyline points="2 7.5 5.5 11 12 3.5"/></svg><span class="hpi-t">広告ゼロ・サクラゼロ</span></span>
     <span class="hero-proof-item"><svg viewBox="0 0 14 14" aria-hidden="true"><polyline points="2 7.5 5.5 11 12 3.5"/></svg><span class="hpi-t"><strong>4媒体</strong>を横断表示</span></span>
   </div>
+  <!-- 今月の特集導線（FVブロック内・SEO-040: モバイルではこの下の feature-strip が折返し外になるため、ここに前倒し表示） -->
+  <!-- data/featured.json + scripts/build_featured.js が自動生成。手で編集しない -->
+  <!-- HERO_FEATURE_START -->
+  <a class="hero-feature-link" href="features/nagoya-summer-2026.html">今月の特集: <strong>名古屋 夏グルメ10選</strong>を見る →</a>
+<!-- HERO_FEATURE_END -->
   <div class="search-wrap">
     <label for="si" class="visually-hidden">レストランを検索</label>
     <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
@@ -1542,7 +1553,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
     <!-- FEATURED_START -->
     <a class="feature-card" href="features/nagoya-summer-2026.html">
       <span class="feature-card-season">真夏</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614.jpg" srcset="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614.jpg 600w, https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 夏グルメ10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg 600w, https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 夏グルメ10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 夏グルメ10選</div>
         <div class="feature-card-sub">真夏 · 冷麺・かき氷</div>
@@ -1552,7 +1563,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
     </a>
     <a class="feature-card" href="features/large-group.html">
       <span class="feature-card-season">お盆</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864.jpg" srcset="https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864.jpg 600w, https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 大人数宴会・団体10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864_480.jpg 600w, https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 大人数宴会・団体10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 大人数宴会・団体10選</div>
         <div class="feature-card-sub">お盆 · 帰省の集まりに</div>
@@ -1570,7 +1581,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   <div class="feature-strip-cards">
     <!-- SHOWCASE_START -->
     <a class="feature-card" href="features/nagoya-hitsumabushi.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422.jpg" srcset="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422.jpg 480w, https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 ひつまぶし完全ガイド" width="480" height="600" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg 480w, https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 ひつまぶし完全ガイド" width="480" height="600" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 ひつまぶし完全ガイド</div>
         <div class="feature-card-sub">名古屋めし · 厳選9店</div>
@@ -1579,7 +1590,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/nagoya-gyoza.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/01/43/P039270143/P039270143.jpg" srcset="https://imgfp.hotp.jp/IMGH/01/43/P039270143/P039270143.jpg 480w, https://imgfp.hotp.jp/IMGH/01/43/P039270143/P039270143.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 餃子おすすめ10選" width="480" height="600" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/01/43/P039270143/P039270143_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/01/43/P039270143/P039270143_480.jpg 480w, https://imgfp.hotp.jp/IMGH/01/43/P039270143/P039270143_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 餃子おすすめ10選" width="480" height="600" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 餃子おすすめ10選</div>
         <div class="feature-card-sub">餃子 · 一口・手羽餃子</div>

@@ -389,6 +389,14 @@ function main() {
     console.log(`[build_featured] 見出し更新 ✓ ${month}月の特集${ms && ms.note ? ' — ' + ms.note : ''}`);
   }
 
+  // 1a2) FV内の「今月の特集」誘導リンク（SEO-040: feature-strip 本体はモバイルでFV外に落ちるため1行だけ前倒し。stripList[0]と同一データで二重管理を避ける）
+  if (/<!-- HERO_FEATURE_START -->/.test(indexSrc) && stripList[0]) {
+    const lead = stripList[0];
+    const heroFeatureHtml = `  <a class="hero-feature-link" href="${lead.href}">今月の特集: <strong>${lead.title}</strong>を見る →</a>`;
+    indexSrc = replaceBetween(indexSrc, '<!-- HERO_FEATURE_START -->', '<!-- HERO_FEATURE_END -->', heroFeatureHtml);
+    console.log(`[build_featured] FVの特集導線 ✓ ${lead.id} 「${lead.title}」`);
+  }
+
   // 1b) ジャンル特集ショーケース（週替わりローテーション）
   if ((cfg.showcase || cfg.showcasePinned) && /<!-- SHOWCASE_START -->/.test(indexSrc)) {
     const picks = selectShowcase(cfg, today);
