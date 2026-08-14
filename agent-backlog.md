@@ -37,6 +37,7 @@
 
 - **priority**: P2 → **status**: done
 - **resolved**: 2026-08-14
+- **resolved_by**: commit 75afbe2
 - **detected**: 2026-08-13
 - **category**: SEO / UX
 - **owner**: Editor
@@ -2298,7 +2299,7 @@
 | 2026-08-13 | Builder(/solve-next) | SEO-040 実装。375px幅の実機検証で「価値提案コピー([[SEO-014]])は実装済み・特集導線([[SEO-009]])のみFV外」と判明しスコープ再定義。バナー文言はAskUserQuestionでユーザー確認（テキストのみ落ち着いたトーンを選択）→ hero-proof直下に`.hero-feature-link`追加、`data/featured.json`+`build_featured.js`の既存月次自動更新を再利用。並走セッションが起票したコピー確定エスカレーションを同日中に解消 | ✅ commit fdd8d60ce |
 | 2026-08-14 | Orchestrator(routine) | FB-001 ヒーロー検索・スティッキー検索に×クリアボタン追加（.si-wrap flexbox ラッパー + #si-clear / #si2-clear / updateSearchClear() / clearSearchInput()）。clearAllFilters・suggestSearch も同期。モバイル44px タップ領域対応。QA通過 | ✅ commit 8768903 |
 | 2026-08-14 | Orchestrator(routine) | SEO-049 モーダルCTAで予約とGoogleマップが排他分岐になっていた欠陥を修正。HP IDあり店舗（4,875/5,017 = 97.2%）でも地図ボタンが常時表示されるよう ctaHtml を if/else → 両方追加に変更。mmg の地図ボタンにも trackEvent('cta_gmap_click', {via:'modal_media'}) を追加。QA通過 | ✅ commit de639a0 |
-| 2026-08-14 | Orchestrator(routine) | SEO-054 日次ジャーナル店舗カードへの行動導線追加。journal/_template.html に store-cta CSS追加、generate_daily_draft.js に buildStoreCta() 追加（HotPepper予約+GoogleMaps地図・HP IDはJ\d+形式のみ）、backfill_journal_store_cta.js 新設（冪等・--dry-run対応）で既存93本の記事にバックフィル実施（6本スキップ＝既適用済み）。QA通過 | ✅ commit 待ち |
+| 2026-08-14 | Orchestrator(routine) | SEO-054 日次ジャーナル店舗カードへの行動導線追加。journal/_template.html に store-cta CSS追加、generate_daily_draft.js に buildStoreCta() 追加（HotPepper予約+GoogleMaps地図・HP IDはJ\d+形式のみ）、backfill_journal_store_cta.js 新設（冪等・--dry-run対応）で既存93本の記事にバックフィル実施（6本スキップ＝既適用済み）。QA通過 | ✅ commit 75afbe2 |
 
 ---
 
