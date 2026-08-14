@@ -1,0 +1,72 @@
+name: Weekly media appearances fetch
+
+# サクラチェック精度向上（TRUST SCORE v3.0 系列）:
+# S4「他媒体掲載クロスチェック」のデータ供給を週次で回す。
+# fetch_media_appearances.js は Google News RSS / はてブ RSS / note RSS を叩くだけで
+# API キー不要。従来は weekly-pipeline.yml（ANTHROPIC_API_KEY 未設定で schedule 停止中）
+# にしか載っておらず、mediaFeatures 保有店が 5,024 店中 43 店(0.9%)で S4 が実質死んでいた。
+# RSS は数日で流れるため月次では取りこぼす → 週次の専用 workflow として独立させる。
+#
+# 反映経路: data/media_appearances.json を commit → 翌日の build.yml（daily）が
+# build.js でマージし、S4 シグナルと mediaFeatures 表示に自動反映される。
+
+on:
+  schedule:
+    # 毎週月曜 06:00 JST（日曜 21:00 UTC）
+    - cron: '0 21 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly-media
+  cancel-in-progress: false
+
+jobs:
+  fetch_media:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch media appearances via RSS → data/media_appearances.json
+        run: node scripts/fetch_media_appearances.js
+
+      - name: カバレッジ確認（mediaFeatures 保有店数の推移を可視化）
+        if: always()
+        run: |
+          if [ ! -f data/media_appearances.json ]; then
+            echo "::warning::data/media_appearances.json が生成されていない"
+            exit 0
+          fi
+          node -e '
+            const cache = require("./data/media_appearances.json");
+            const keys = Object.keys(cache).filter(k => k !== "_meta");
+            const withHits = keys.filter(k => Array.isArray(cache[k]) ? cache[k].length > 0 : (cache[k] && cache[k].appearances && cache[k].appearances.length > 0)).length;
+            console.log(`キャッシュ店舗数: ${keys.length} / 掲載ヒットあり: ${withHits}`);
+            if (cache._meta) console.log(`_meta: ${JSON.stringify(cache._meta)}`);
+          '
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -f data/media_appearances.json ]; then
+            git add data/media_appearances.json
+            if git diff --cached --quiet; then
+              echo "変更なし - コミットスキップ"
+            else
+              git commit -m "chore: auto-update media appearances (weekly RSS) [skip actions]"
+              git pull --rebase origin main || true
+              git push || (sleep 5 && git pull --rebase origin main && git push)
+            fi
+          else
+            echo "data/media_appearances.json が存在しない"
+          fi

@@ -169,6 +169,98 @@
   ②再開経路でも validator を必ず通ること ③再開したか新規生成したかがログで判別できること（サイレントに再利用しない）
 - **関連**: [[ISSUE-084]]（この問題を発見した対応）/ [[ISSUE-083]]（リトライ判定の文言網羅）/ [[ISSUE-077]]（never-stop 保証）
 
+### [ISSUE-086] スコア信頼度（サクラチェック）精度向上 — S7時系列蓄積の修理・S4のRSS復活・新シグナル3種を実装、v3.0は活性化保留
+
+- **priority**: P1 → **status**: in_progress（Phase 0〜2完了・Phase 3コード完成/未活性化・Phase 4残）
+- **detected**: 2026-08-14（ユーザー要望「サクラチェックの精度を上げたい」を受けて再調査）
+- **category**: trust / proof / differentiation
+- **owner**: DataKeeper + Builder
+
+- **背景（実測で判明した精度問題）**:
+  1. **S7（時系列健全性・20点）が構造的に死んでいた**: `scripts/fetch_places.js` が
+     「キャッシュ済み店をスキップ」する仕様のため、月次 workflow（--forceなし）では
+     `places_history.json` の snapshots が全5,119店で1個のまま増えず、
+     `openingBurstPattern`（オープン直後レビュー急増→失速）の検出件数が0件だった。
+     T90+（crossCheckScore 90点以上）の店が0件である直接原因。
+  2. **S4（他媒体クロスチェック・10点）がほぼ死んでいた**: mediaFeatures 保有43/5,024店(0.9%)。
+     `scripts/fetch_media_appearances.js`（RSS・APIキー不要）は停止中の weekly-pipeline.yml
+     （ANTHROPIC_API_KEY未設定でschedule停止）にしか載っていなかった。
+  3. **mediaDiscrepancy フラグが機能不全**: 食べログ点数を取得していないため「他媒体との評価乖離」
+     という定義が成立していなかった（食べログURLの有無としか比較できていなかった）。
+  4. **data/crosscheck.json（モーダル内訳の外部化データ）が739件で古いまま**: `build.yml` の
+     `git add` 対象に入っておらず、CI で毎ビルド生成されても捨てられていた。
+  5. latestReviews の `time`（unix epoch）が未活用。本文由来シグナル（本文なし★5・
+     インセンティブ誘導語）も未取得だった。
+
+- **ユーザー確定事項**:
+  - Places API 月次再取得コスト: **階層化**（`PLACES_DETAILS_BUDGET=1700`・約$37/月）。
+    優先店（フラグ付き・露出中）は毎月、残りは古い順ローテで約3ヶ月周期に収束
+  - 食べログ点数取得: **しない**（[[ISSUE-048]] の Strategic Skip を維持）。
+    代替として機械検証可能な `highRatingNoFootprint` フラグを新設
+
+- **実装内容（Phase 0〜2・完了）**:
+  | Phase | 内容 | ファイル |
+  |---|---|---|
+  | 0 | crosscheck.json を daily commit 対象に追加／weekly-media.yml 新設（RSS週次実行） | `.github/workflows/build.yml`, `.github/workflows/weekly-media.yml`（新規） |
+  | 1 | `fetch_places.js --refresh`: staleness(25日)ベース・優先度階層（フラグ店→露出店→古い順）・予算制御(既定1700件)・snapshot追記ガード(20日)・latestReviews に textLen/lang/incentiveHit を追加保存（本文自体は非保存） | `scripts/fetch_places.js`, `.github/workflows/monthly-places.yml` |
+  | 2 | `computeCrossCheckScore` を `scripts/lib/cross_check.js` へ抽出（挙動不変・diff実測で末尾空行1行のみ差分を確認）。テスト10件・シャドー比較器 `scripts/audit_crosscheck_v3.js` 新設 | `scripts/lib/cross_check.js`（新規）, `build.js`, `tests/cross_check.test.js`（新規）, `scripts/audit_crosscheck_v3.js`（新規） |
+
+- **v3.0 設計（Phase 3・コード完成・テスト12件パス・未活性化）**:
+  `scripts/lib/cross_check_v3.js` に実装済み。配点変更（合計100維持・8キー名不変）:
+  | ID | v2.0 | v3.0 | 変更 |
+  |---|---:|---:|---|
+  | S1 ★vs件数比 | 15 | 12 | 縮小 |
+  | S2 件数絶対値 | 10 | 8 | 縮小 |
+  | S3 データ充実度 | 15 | 10 | 縮小 |
+  | S4 他媒体クロスチェック | 10 | 10 | 据置（週次RSSで実働化） |
+  | S5 営業実態 | 5 | 5 | 据置 |
+  | S6 Instagram実在 | 10 | 10 | 据置 |
+  | S7 時系列健全性 | 20 | **25** | S7a を30日換算レートに正規化（refreshの間隔が不揃いなため）＋**S7d 同日クラスタ検出(6・新設)** |
+  | S8 評価分布自然性 | 15 | **20** | **S8-2 本文実在性(6・新設)** ＋ **S8-3 インセンティブ誘導検出(4・新設・2023年景表法ステマ規制観点)** |
+
+  新設フラグ: `reviewBurstCluster` / `emptyFiveStarPattern` / `incentiveReviewSuspicion`。
+  `mediaDiscrepancy` は廃止し `highRatingNoFootprint`（Google★≥4.5 かつ 件数<50 かつ
+  媒体掲載0 かつ IG解決なし）に置換。全シグナルが未取得データに対し中立点へフォールバックし
+  例外を投げないことをテストで確認済み（後方互換）。
+
+- **v3.0 を今回 build.js に接続しなかった理由（意図的な保留・重要）**:
+  `scripts/audit_crosscheck_v3.js` で全5,024店に対し v2/v3 シャドー比較を実行した結果:
+  ```
+  分布 v2.0: 90+:0(0.0%) / 70-89:1636(32.6%) / 50-69:2654(52.8%) / <50:734(14.6%)
+  分布 v3.0: 90+:0(0.0%) / 70-89:1221(24.3%) / 50-69:3139(62.5%) / <50:664(13.2%)
+  1階級以上の移動: 4340件（目安上限502件を大幅超過）
+  ```
+  現時点では `--refresh` が本番で一度も実行されておらず、textLen/incentiveHit/複数snapshotが
+  ほぼ存在しない。この状態で v3.0 に切り替えると、**新シグナルによる実質的なサクラ検出改善はほぼ
+  効かないまま**、配点の付け替えだけで全店のスコアが一斉に動く（Inspector の月次±10%ガイドライン
+  の前提が壊れる）。実装計画の前提ゲート（`--refresh` が本番で1回以上完走してから切替）を守り、
+  意図的に活性化を保留した。
+  副次的な発見: `reviewBurstCluster`（新設シグナル）は既存の latestReviews.time だけで168件に
+  発火しており、refresh を待たずとも機能する見込み。ただし誤検知率は Inspector 未レビューのため、
+  この時点では参考情報に留める。
+
+- **activate 手順（前提ゲートを満たしたら実施）**:
+  1. `monthly-places.yml` の `--refresh` ステップが本番で1回以上完走し、
+     `snapshots≥2 の店舗数` と `textLen付きレビュー保有店` がログ上で増加していることを確認
+  2. `node scripts/audit_crosscheck_v3.js` を再実行し、その時点の実データでの分布影響を確認
+  3. `build.js` の `require('./scripts/lib/cross_check')` を
+     `require('./scripts/lib/cross_check_v3')` に変更
+  4. `agent-backlog.md` に scoreVersion 3.0 切替の実施記録を追記
+  5. `features/integrity-method.html` を v3.0 表記に更新
+  6. デプロイ後 `node scripts/qa_gate.js` で退行なしを確認
+
+- **残タスク（Phase 4）**: `features/integrity-method.html` の v3.0 先行公開（配点表・
+  `INCENTIVE_WORDS_V1` 語彙・プライバシー設計の明記）、`agents/inspector.md` への新フラグ
+  レビュー項目追加（誤検知の典型を明記）と収集健全性チェック追加
+
+- **files**:
+  - `.github/workflows/build.yml` / `.github/workflows/weekly-media.yml`（新規）
+  - `scripts/fetch_places.js` / `.github/workflows/monthly-places.yml`
+  - `scripts/lib/cross_check.js`（新規） / `scripts/lib/cross_check_v3.js`（新規・未接続） / `build.js`
+  - `tests/cross_check.test.js`（新規） / `tests/cross_check_v3.test.js`（新規） / `scripts/audit_crosscheck_v3.js`（新規）
+  - `features/integrity-method.html`（Phase 4） / `agents/inspector.md`（Phase 4）
+- **関連**: [[ISSUE-048]]（サクラチェッカー方式の元祖・食べログスクレイピングのStrategic Skip判断）/ [[ISSUE-049]]（V3化・S7/S8新設の前身）/ [[ISSUE-084]]（監視原則「検知して終わりにしない」を踏襲）
+
 ### [ISSUE-084] 日次ジャーナルが3日欠番（08-10/11/12）— 失敗の警報が「防音室の中」で鳴っていた ✅
 
 - **priority**: P0（日次公開の停止が3日間検知されなかった）→ **status**: done
