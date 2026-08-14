@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-14T09:28:31.212Z",
+  "generatedAt": "2026-08-14T15:27:47.929Z",
   "siteUrl": "sc-domain:nagoya-bites.com",
   "dateRange": {
     "startDate": "2026-07-17",
@@ -6910,41 +6910,41 @@
       "source": "data/journal_seo_keywords.json",
       "updated": "2026-07-27"
     },
-    "store_names_used": 9020,
+    "store_names_used": 9021,
     "total_queries": 2835,
     "summary": [
       {
         "intent": "navigational",
-        "queries": 1912,
-        "impressions": 16241,
+        "queries": 1910,
+        "impressions": 16212,
         "clicks": 97,
         "ctr": 0.6,
         "avg_position": 18.7,
-        "impressions_share": 75.9
+        "impressions_share": 75.8
       },
       {
         "intent": "other",
-        "queries": 879,
-        "impressions": 4782,
+        "queries": 880,
+        "impressions": 4804,
         "clicks": 40,
-        "ctr": 0.84,
-        "avg_position": 18.7,
-        "impressions_share": 22.3
+        "ctr": 0.83,
+        "avg_position": 18.6,
+        "impressions_share": 22.5
       },
       {
         "intent": "discovery",
-        "queries": 44,
-        "impressions": 373,
+        "queries": 45,
+        "impressions": 380,
         "clicks": 10,
-        "ctr": 2.68,
-        "avg_position": 11.8,
-        "impressions_share": 1.7
+        "ctr": 2.63,
+        "avg_position": 12.1,
+        "impressions_share": 1.8
       }
     ],
     "kpi": {
-      "discovery_impressions": 373,
+      "discovery_impressions": 380,
       "discovery_clicks": 10,
-      "discovery_impressions_share": 1.7
+      "discovery_impressions_share": 1.8
     },
     "examples": {
       "navigational": [
@@ -7207,6 +7207,16 @@
           ]
         },
         {
+          "query": "ご当地焼肉と鰻の自分焼き 名駅ソトノミ",
+          "impressions": 7,
+          "clicks": 0,
+          "position": 30.4,
+          "signals": [
+            "area:名駅",
+            "genre:焼肉"
+          ]
+        },
+        {
           "query": "栄 焼き鳥 ミシュラン",
           "impressions": 6,
           "clicks": 0,
@@ -7392,15 +7402,6 @@
           "position": 1,
           "signals": [
             "scene:モーニング"
-          ]
-        },
-        {
-          "query": "名古屋 コスパ",
-          "impressions": 1,
-          "clicks": 0,
-          "position": 7,
-          "signals": [
-            "scene:コスパ"
           ]
         }
       ]
