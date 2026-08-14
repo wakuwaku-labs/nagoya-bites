@@ -176,6 +176,28 @@ P3 (LOW): 時間があれば
    - サクラの ★5 とアンチの ★1 が混在している疑いの店は **要観察** として Strategist へ共有
 6. レビュー結果を `agent-backlog.md` に月次ログとして残す
 
+### Step B-2: v3.0 新フラグのレビュー（[[ISSUE-086]] 活性化後に有効・現時点はスキップ）
+
+`scripts/lib/cross_check_v3.js` は実装・テスト済みだが、まだ `build.js` に接続していない
+（v2.0 = `scripts/lib/cross_check.js` が本番稼働中）。`data/cross_check_flags.json` に
+下記4フラグが出現するのは活性化後のみ。**活性化前の月は本ステップをスキップしてよい**。
+活性化後は Step B の直後にこの4フラグを同様にサンプリングする:
+
+1. `reviewBurstCluster: true`（最新レビュー中3件以上が7日以内に集中・低ペース店のみ判定）
+   - **メディア掲載・TV露出直後**の自然な反響集中は誤検知として記録（`mediaFeatures` の `year` と時期が一致するか確認）
+   - 露出の心当たりがないのに集中している店は **要観察** として Strategist へ共有
+2. `emptyFiveStarPattern: true`（★4.5+ かつ本文なしレビューが3件以上）
+   - **常連が多い大衆店**（サッと星だけ付ける文化）は誤検知として記録
+   - 開店直後で常連形成の余地が薄いのに大量発生している店は **要観察**
+3. `incentiveReviewSuspicion: true`（クーポン/割引/プレゼント等の誘導語を含むレビューを検出）
+   - **クーポンが使えなかった等の苦情文**での誤ヒットが典型 — レビュー内容そのものは見ない設計のため、
+     文脈を Google Maps 上で直接確認してから判断する
+   - 実際に「投稿でクーポン進呈」等の誘導が疑われる場合は 2023年景品表示法ステマ規制の観点から
+     Strategist にエスカレート
+4. `highRatingNoFootprint: true`（★4.5+ かつ件数<50 かつ 媒体掲載0 かつ IG未解決・`mediaDiscrepancy` の後継）
+   - **開店直後・メディア露出を好まない名店**は誤検知として記録
+   - 該当なく高評価だけが立っている店は再評価対象として `agent-backlog.md` に起票
+
 ### Step C: スコア分布の健全性チェック
 
 1. `data/cross_check_flags.json` の `generatedAt` が当月内であることを確認
@@ -183,7 +205,24 @@ P3 (LOW): 時間があれば
    - 前月比で T90+ / T70-89 / T50-69 / <50 の各カテゴリが ±10% を超えて変動していたら原因調査
    - シグナル取得状況の変化（Places API 取得率の低下など）が原因の場合は DataKeeper にエスカレート
    - アルゴリズム変更が原因の場合は `agent-backlog.md` の ISSUE-048 ログに記録
+   - **scoreVersion 変更月**（v2.0→v3.0 切替月など）は ±10% 基準を機械的に適用せず、
+     `scripts/audit_crosscheck_v3.js` の事前シャドー比較で予測した分布と実ビルドの分布が
+     一致しているかで判定する（意図した配点変更による移動と、想定外の劣化を区別するため）
 3. 必要に応じて Strategist と相談し、`scoreVersion` 引き上げを検討（変更時は必ず ISSUE 化して履歴を残す）
+
+### Step C-2: 収集系の健全性チェック（[[ISSUE-086]]・毎月必須）
+
+サクラチェックの精度は「シグナルが正しく計算されているか」だけでなく「データが実際に
+届いているか」に依存する。ISSUE-084 の教訓（「気づけるはず」を検知と数えない）を踏襲し、
+収集パイプラインが静かに止まっていないかを毎月機械的に確認する:
+
+1. `data/places_history.json` の snapshots≥2 保有店の割合を確認（`monthly-places.yml` の
+   「時系列蓄積の健全性確認」ステップのログ、または `node -e` で直接集計）
+   - 前月から増えていなければ `--refresh` が動いていない可能性 → DataKeeper にエスカレート
+2. `data/media_appearances.json` の `_meta.lastFetchedAt` が 14 日以内であることを確認
+   （`weekly-media.yml` が週次で更新するはず。止まっていれば S4 シグナルが再び死蔵する）
+3. どちらかが停滞していたら、原因（GitHub Actions の失敗・Secrets 失効・API クォータ超過）を
+   特定した上で `agent-backlog.md` の [[ISSUE-086]] に追記し、DataKeeper にエスカレートする
 
 ### 月次レビューの出力
 
@@ -194,9 +233,11 @@ P3 (LOW): 時間があれば
 - **resolved**: YYYY-MM-DD
 - **異議申立て件数**: N 件（対応済 N 件 / 一次回答平均日数 N 日）
 - **gachaReviewSuspicion**: 全 N 件中 N 件を抽出確認（誤検知 N 件 / 要観察 N 件）
-- **mediaDiscrepancy**: 全 N 件中 N 件を抽出確認（誤検知 N 件 / 要再評価 N 件）
+- **mediaDiscrepancy**: 全 N 件中 N 件を抽出確認（誤検知 N 件 / 要再評価 N 件）※ v3.0 活性化後は highRatingNoFootprint に置換
 - **openingBurstPattern**: 全 N 件中 N 件を抽出確認（誤検知 N 件 / 要観察 N 件）
 - **uShapedDistribution**: 全 N 件中 N 件を抽出確認（誤検知 N 件 / 要観察 N 件）
+- **（v3.0活性化後）reviewBurstCluster / emptyFiveStarPattern / incentiveReviewSuspicion**: 各 N 件中 N 件を抽出確認（誤検知 N 件 / 要観察 N 件）
+- **収集健全性**: snapshots≥2 保有率 N%（前月 N%）/ media_appearances lastFetchedAt N日前
 - **分布変化**: 前月比 T90+ ±N% / T70-89 ±N% / T50-69 ±N% / <50 ±N%
 - **エスカレート**: Strategist / DataKeeper / Editor のうち〜
 ```

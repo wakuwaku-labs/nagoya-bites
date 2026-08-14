@@ -241,7 +241,10 @@ footer a{color:var(--muted);text-decoration:none;}
     </ul>
   </div>
   <p class="body-para">
-    <strong>S7 は稼働開始から 2〜3 ヶ月後に本格機能します</strong>。初月は月次差分が取れないため、中立スコア（10/20）を返します。これは「履歴が無いだけで店舗を不利に扱わない」公平性のための設計です。
+    <strong>2026-08 時点の実測: 履歴の月次蓄積が想定どおり進んでいなかったため、S7 は稼働開始から数ヶ月経っても中立スコア寄りのままでした。</strong>
+    原因は取得スクリプト側の仕様（取得済み店舗を毎回スキップする設計）にあり、2026-08-14 に修正しています。
+    修正後は毎月の取得時に既存店舗も優先度付き・予算制御つきで再取得する運用に切り替えました。履歴が 3 回分蓄積されるまでは、
+    引き続き「履歴が無いだけで店舗を不利に扱わない」公平性のための中立スコアを返します。
   </p>
 
   <p class="section-label">02-B — S8 の詳細: U 字型分布の近似判定</p>
@@ -272,7 +275,7 @@ footer a{color:var(--muted);text-decoration:none;}
 
   <p class="section-label">03 — Scoring Formula</p>
   <p class="body-para">
-    整合度の算出式は、ソースコードベースで完全に公開されています。実装は <code>build.js</code> 内の
+    整合度の算出式は、ソースコードベースで完全に公開されています。実装は <code>scripts/lib/cross_check.js</code> 内の
     <code>computeCrossCheckScore()</code> 関数で、リポジトリは公開リポジトリ
     <a href="https://github.com/wakuwaku-labs/nagoya-bites" target="_blank" rel="noopener noreferrer" style="color:var(--green);text-decoration:underline;">wakuwaku-labs/nagoya-bites</a>
     から第三者が再現可能です。
