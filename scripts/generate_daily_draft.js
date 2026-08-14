@@ -86,6 +86,22 @@ function storeDetailLink(s) {
   return null;
 }
 
+function buildStoreCta(s) {
+  // 行動導線（SEO-054）: 実在データ由来のみ出力する
+  // 予約: ホットペッパーID（Jから始まる数字列）がある店のみ
+  // 地図: 常に出力（店名+エリアのGoogle Maps検索URL）
+  const isHpId = /^J\d+$/.test(s.id || '');
+  const reserveUrl = isHpId ? `https://www.hotpepper.jp/str${s.id}/` : null;
+  const mapQuery = encodeURIComponent(`${s.name || ''}${s.area ? ' ' + s.area : ''}`);
+  const mapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+  const storeSafe = String(s.name || '').replace(/'/g, '').replace(/</g, '').replace(/>/g, '');
+  const reserve = reserveUrl
+    ? `<a class="store-cta-btn store-cta-reserve" href="${esc(reserveUrl)}" target="_blank" rel="noopener noreferrer" onclick="trackEvent&&trackEvent('cta_reserve',{store_name:'${storeSafe}',via:'journal_card'})" aria-label="${esc(s.name)}をホットペッパーで予約する">この店を予約する</a>`
+    : '';
+  const map = `<a class="store-cta-btn store-cta-map" href="${esc(mapUrl)}" target="_blank" rel="noopener noreferrer" onclick="trackEvent&&trackEvent('cta_gmap_click',{store_name:'${storeSafe}',via:'journal_card'})" aria-label="${esc(s.name)}の場所をGoogleマップで確認">地図で確認</a>`;
+  return `<div class="store-cta">${reserve}${map}</div>`;
+}
+
 function buildStores(stores) {
   if (!stores || stores.length === 0) return '';
   return stores.map((s, i) => {
@@ -105,6 +121,7 @@ function buildStores(stores) {
           </div>
           <p class="store-desc">${esc(s.desc || '')}</p>
           ${linkHtml}
+          ${buildStoreCta(s)}
         </div>
       </div>`;
   }).join('\n');

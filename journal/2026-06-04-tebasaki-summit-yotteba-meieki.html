@@ -89,6 +89,12 @@ nav a:hover,nav a.active{color:var(--text);}
 .store-desc{font-size:.78rem;line-height:1.8;color:var(--muted);margin-bottom:.6rem;}
 .store-link{display:inline-flex;align-items:center;gap:.3rem;font-size:.7rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.3rem .7rem;border-radius:2px;}
 .store-link:hover{background:rgba(122,92,16,.08);}
+.store-cta{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem;}
+.store-cta-btn{display:inline-flex;align-items:center;font-size:.72rem;font-weight:500;padding:.45rem .9rem;border-radius:3px;text-decoration:none;cursor:pointer;min-height:38px;transition:background .2s;}
+.store-cta-reserve{background:#e6002d;color:#fff;}
+.store-cta-reserve:hover{background:#c9001e;}
+.store-cta-map{background:#4285F4;color:#fff;}
+.store-cta-map:hover{background:#2b6cd4;}
 .source-note{background:var(--bg2);border:1px solid var(--border);padding:.8rem 1rem;border-radius:4px;margin:1.5rem 0;font-size:.7rem;line-height:1.7;color:var(--dim);}
 .source-note a{color:var(--gold);text-decoration:none;}
 .art-hero-ig{max-width:760px;margin:0 auto;padding:0 1.5rem 1rem;display:flex;justify-content:center;}
@@ -190,10 +196,8 @@ nav{display:none;}
             <span>手羽先・居酒屋</span>
             <span>名駅</span>
             <span class="score">★4.7</span>
-          </div>
-          <p class="store-desc">名駅3番出口から徒歩3分、深夜5時半まで揚げたて手羽を出す専門店。客単価2,500円前後、カウンター主体で一人でも入りやすい。サク飲み・二次会・締めに強い一軒。</p>
-          <a class="store-link" href="../stores/J003737309.html">店舗ページを見る →</a>
-        </div>
+                    <div class="store-cta"><a class="store-cta-btn store-cta-reserve" href="https://www.hotpepper.jp/strJ003737309/" target="_blank" rel="noopener noreferrer" onclick="trackEvent&&trackEvent('cta_reserve',{store_name:'酔っ手羽 名駅3丁目店',via:'journal_card'})" aria-label="酔っ手羽 名駅3丁目店をホットペッパーで予約する">この店を予約する</a><a class="store-cta-btn store-cta-map" href="https://www.google.com/maps/search/?api=1&query=%E9%85%94%E3%81%A3%E6%89%8B%E7%BE%BD%20%E5%90%8D%E9%A7%853%E4%B8%81%E7%9B%AE%E5%BA%97%20%E5%90%8D%E9%A7%85" target="_blank" rel="noopener noreferrer" onclick="trackEvent&&trackEvent('cta_gmap_click',{store_name:'酔っ手羽 名駅3丁目店',via:'journal_card'})" aria-label="酔っ手羽 名駅3丁目店の場所をGoogleマップで確認">地図で確認</a></div>
+        </div></div>
       </div>
     </div>
 

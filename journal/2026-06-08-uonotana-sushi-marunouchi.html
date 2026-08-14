@@ -89,6 +89,12 @@ nav a:hover,nav a.active{color:var(--text);}
 .store-desc{font-size:.78rem;line-height:1.8;color:var(--muted);margin-bottom:.6rem;}
 .store-link{display:inline-flex;align-items:center;gap:.3rem;font-size:.7rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.3rem .7rem;border-radius:2px;}
 .store-link:hover{background:rgba(122,92,16,.08);}
+.store-cta{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem;}
+.store-cta-btn{display:inline-flex;align-items:center;font-size:.72rem;font-weight:500;padding:.45rem .9rem;border-radius:3px;text-decoration:none;cursor:pointer;min-height:38px;transition:background .2s;}
+.store-cta-reserve{background:#e6002d;color:#fff;}
+.store-cta-reserve:hover{background:#c9001e;}
+.store-cta-map{background:#4285F4;color:#fff;}
+.store-cta-map:hover{background:#2b6cd4;}
 .source-note{background:var(--bg2);border:1px solid var(--border);padding:.8rem 1rem;border-radius:4px;margin:1.5rem 0;font-size:.7rem;line-height:1.7;color:var(--dim);}
 .source-note a{color:var(--gold);text-decoration:none;}
 .art-hero-ig{max-width:760px;margin:0 auto;padding:0 1.5rem 1rem;display:flex;justify-content:center;}
@@ -185,10 +191,8 @@ nav{display:none;}
             <span>江戸前おまかせ鮨</span>
             <span>丸の内</span>
             
-          </div>
-          <p class="store-desc">創業400年の料亭・河文の敷地内、勝手口の奥に2025年9月開業したカウンター11席の江戸前おまかせ。ランチ3,800円・ディナー7,800円（税込）。完全予約制・2部入替制。</p>
-          <a class="store-link" href="../stores/store-e9aea8e38186e381.html">店舗ページを見る →</a>
-        </div>
+                    <div class="store-cta"><a class="store-cta-btn store-cta-map" href="https://www.google.com/maps/search/?api=1&query=%E9%AE%A8%E3%81%86%E3%81%8A%E3%81%AE%E3%81%9F%E3%81%AA" target="_blank" rel="noopener noreferrer" onclick="trackEvent&&trackEvent('cta_gmap_click',{store_name:'鮨うおのたな',via:'journal_card'})" aria-label="鮨うおのたなの場所をGoogleマップで確認">地図で確認</a></div>
+        </div></div>
       </div>
     </div>
 
