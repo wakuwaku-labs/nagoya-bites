@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-08-14T15:27:45.239Z",
+  "generatedAt": "2026-08-14T18:52:30.710Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 685,
-    "pageViews": 1054,
-    "sessions": 795,
-    "avgSessionDuration": 141.9,
-    "bounceRate": 0.358,
-    "pagesPerSession": 1.33
+    "activeUsers": 688,
+    "pageViews": 1057,
+    "sessions": 798,
+    "avgSessionDuration": 141.4,
+    "bounceRate": 0.361,
+    "pagesPerSession": 1.32
   },
   "channels": {
     "sessions": {
-      "organic": 512,
-      "direct": 196,
-      "social": 79,
+      "organic": 514,
+      "direct": 198,
+      "social": 80,
       "referral": 15,
       "paid": 0,
       "other": 2
     },
     "pct": {
-      "organic": 63.7,
-      "direct": 24.4,
-      "social": 9.8,
+      "organic": 63.5,
+      "direct": 24.5,
+      "social": 9.9,
       "referral": 1.9,
       "paid": 0,
       "other": 0.2
@@ -36,7 +36,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 173
+      "sessions": 174
     },
     {
       "source": "(direct)",
@@ -51,7 +51,7 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 74
+      "sessions": 75
     },
     {
       "source": "openai",
@@ -59,23 +59,23 @@
       "sessions": 23
     },
     {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 15
+    },
+    {
       "source": "openai",
       "medium": "(not set)",
       "sessions": 15
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 13
-    },
-    {
-      "source": "copilot.com",
-      "medium": "(not set)",
+      "source": "duckduckgo",
+      "medium": "organic",
       "sessions": 4
     },
     {
       "source": "copilot.com",
-      "medium": "ai-assistant",
+      "medium": "(not set)",
       "sessions": 4
     }
   ],
@@ -167,7 +167,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 685,
+    "value": 688,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
