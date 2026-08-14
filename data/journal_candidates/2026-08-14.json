@@ -1,0 +1,458 @@
+{
+  "date": "2026-08-14",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "お盆後半の栄・丸の内、予約が取れない居酒屋が空く数日間",
+      "verdict": "PASS",
+      "total": 110,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "予約困難",
+          "feature": "features/hard-to-book.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 6件 (繁忙,予約,相場,仕入れ,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 200字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「予約が取れない」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "盆踊りが天候で消える夜、名駅と栄の居酒屋は何を仕込むか",
+      "verdict": "HOLD",
+      "total": 79,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 18,
+        "uniqueness": 10,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 2件 (需要,予約) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 143字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "帰省とセントレア、お盆の名古屋で空港の一軒が持つ意味",
+      "verdict": "HOLD",
+      "total": 75,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 2件 (需要,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 156字 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「モーニング」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "大須の食べ歩き、お盆に1軒増えた練り物専門店をどう組み込むか",
+      "verdict": "HOLD",
+      "total": 72,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "食べ歩き",
+          "feature": "features/osu-food-walk.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (回転) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 166字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「食べ歩き」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "どまつり前夜、栄の宴会予約が8月末に二山目を作る理由",
+      "verdict": "HOLD",
+      "total": 43,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 33日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 151字 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "お盆後半の栄・丸の内、予約が取れない居酒屋が空く数日間",
+      "lead_draft": "2026年のお盆は8月13日から16日まで。名古屋城夏まつりは8月16日までで、開園は20時30分・閉門21時と公式に決まっている。つまりお盆後半の名古屋は、21時前後に人がまとまって街へ落ちる一方、夜の予約は帰省と行楽と天候で読めない。飲食側から見ると、この数日は普段カウンターが埋まる城まわりの店が当日でも空く、年に何度もない窓になる。8月28日からのどまつりで栄が再び満席化する前の、短い谷だ。",
+      "angle": "業界人の目で見ると、お盆後半は名古屋城夏まつりの閉門21時で人流が切れ、夜の予約は天候中止と帰省で読めない繁忙の谷になる。城まわり（丸の内・久屋大通）は栄中心部より夜の供給が薄く、仕入れを絞る店ほど当日席が空く。価格帯はコース主体かアラカルト主体かで盆の客単価の相場が変わり、カウンター比率と回転の設計で21時台の受け皿が決まる。8月28〜30日のどまつり（市内16会場）で栄が再ピークになるため、8月後半の予約カレンダーは二山になる。",
+      "main_store": {
+        "name": "めしや ばさらび",
+        "id": "J004537209",
+        "area": "丸の内",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "名古屋城 公式「名古屋城夏まつり（2026年）」",
+          "url": "https://www.nagoyajo.city.nagoya.jp/event/2026/07/20260708_4897.html",
+          "date": "2026-07-08"
+        },
+        {
+          "label": "久屋大通パーク 公式「第28回にっぽんど真ん中祭り」",
+          "url": "https://www.hisayaodoripark.com/2026/nippon-domannaka-festival-2026/",
+          "date": "2026-07-12"
+        },
+        {
+          "label": "名古屋城 公式X 大盆踊り大会・屋台の告知",
+          "url": "https://x.com/CityNagoyajo/status/1942776333899387227",
+          "date": "2026-07-08"
+        },
+        {
+          "label": "名古屋城 公式X【中止案内】大盆踊り大会 天候中止",
+          "url": "https://x.com/CityNagoyajo/status/1954383348790681727",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "名古屋情報通「ねり伝はなれ 大須商店街にオープン」",
+          "url": "https://jouhou.nagoya/neriden-kanesada/",
+          "date": "2026-08-13"
+        },
+        {
+          "label": "PR TIMES ステーキのあさくま 中部国際空港店 8/13グランドオープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000255.000030130.html",
+          "date": "2026-07-27"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "大須の食べ歩き、お盆に1軒増えた練り物専門店をどう組み込むか",
+      "lead_draft": "2026年8月13日、大須商店街に老舗練り物店のはなれが開いた。お盆の大須は食べ歩き客で歩道の速度が落ちる時期で、1軒の増減が回遊の順路を変える。業界人の目で見ると、揚げ物系の単品は行列の伸び方と客単価の作り方が甘味系と違う。すでに8月8日にはブルーベリー専門カフェも開いており、盆の大須は甘味と塩気のバランスが例年と変わっている。",
+      "angle": "大須の食べ歩きは客単価を1軒あたり300〜600円で刻む設計で、揚げ物系は回転が速い代わりに滞留が短い。甘味系との配置バランスが商店街全体の回遊時間を決める。お盆の人出で行列が伸びる時間帯と、隣接店の売上の相関を業界人視点で読む。",
+      "main_store": {
+        "name": "ねり伝はなれ",
+        "id": "",
+        "area": "大須",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「ねり伝はなれ 大須商店街にオープン」",
+          "url": "https://jouhou.nagoya/neriden-kanesada/",
+          "date": "2026-08-13"
+        },
+        {
+          "label": "名古屋情報通「WAKASA Cafe 名古屋初店舗が大須商店街にオープン」",
+          "url": "https://jouhou.nagoya/wakasa-cafe/",
+          "date": "2026-08-08"
+        },
+        {
+          "label": "名古屋城 公式「名古屋城夏まつり（2026年）」",
+          "url": "https://www.nagoyajo.city.nagoya.jp/event/2026/07/20260708_4897.html",
+          "date": "2026-07-08"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "どまつり前夜、栄の宴会予約が8月末に二山目を作る理由",
+      "lead_draft": "第28回にっぽんど真ん中祭りは2026年8月28日から30日、久屋大通公園をメインに市内16会場で開かれる。お盆で一度沈んだ栄の夜が、月末にもう一度立ち上がる構図だ。飲食側は8月を前半のお盆と後半のどまつりの二山で読む。踊り手と観客では滞在時間も客単価も違い、どちらを取りにいくかで席の作り方が変わる。",
+      "angle": "どまつりの16会場分散は、栄一極ではなく複数エリアに客を配る。踊り手チームは大人数で早い時間帯、観客は少人数で遅い時間帯という二層構造になり、宴会枠とカウンター枠の切り分けが売上を分ける。",
+      "main_store": {
+        "name": "鶏と肴 だいえん",
+        "id": "J004558612",
+        "area": "久屋大通",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "久屋大通パーク 公式「第28回にっぽんど真ん中祭り」",
+          "url": "https://www.hisayaodoripark.com/2026/nippon-domannaka-festival-2026/",
+          "date": "2026-07-12"
+        },
+        {
+          "label": "にっぽんど真ん中祭り文化財団 公式サイト",
+          "url": "https://www.domatsuri.com/",
+          "date": "2026-07-12"
+        },
+        {
+          "label": "名古屋城 公式「名古屋城夏まつり（2026年）」",
+          "url": "https://www.nagoyajo.city.nagoya.jp/event/2026/07/20260708_4897.html",
+          "date": "2026-07-08"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "帰省とセントレア、お盆の名古屋で空港の一軒が持つ意味",
+      "lead_draft": "2026年8月13日、中部国際空港の第1ターミナル4階にステーキのあさくま中部国際空港店が開いた。お盆の帰省ピークに合わせた開業で、モーニングビュッフェは税込1958円、モーニング営業は8月18日からという設計になっている。空港内の飲食は滞在時間が読めない客をどう捌くかの勝負で、街場の店とは別の設計思想が要る。",
+      "angle": "空港店は搭乗時刻という強制退店時間があるため、回転率が席数ではなく提供時間で決まる。ビュッフェ形式は提供時間の分散に効く一方、原価率が上がる。お盆の帰省需要と通常期の落差をどう埋めるかが空港内出店の勘所。",
+      "main_store": {
+        "name": "ステーキのあさくま 中部国際空港店",
+        "id": "",
+        "area": "常滑",
+        "genre": "ステーキ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES ステーキのあさくま 中部国際空港店 8/13グランドオープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000255.000030130.html",
+          "date": "2026-07-27"
+        },
+        {
+          "label": "名古屋城 公式「名古屋城夏まつり（2026年）」",
+          "url": "https://www.nagoyajo.city.nagoya.jp/event/2026/07/20260708_4897.html",
+          "date": "2026-07-08"
+        },
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-13"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "盆踊りが天候で消える夜、名駅と栄の居酒屋は何を仕込むか",
+      "lead_draft": "名古屋城の大盆踊り大会は、2026年8月10日に天候の都合で当日中止になった。公式Xで夕方に告知が出る運用で、周辺の飲食店は数時間前に人流の前提が変わる。お盆の外食は、こうした当日変数を織り込んで仕込み量を決める必要がある。ロスを出さずに、来た客を落とさない量の見極めが問われる時期だ。",
+      "angle": "祭事の当日中止は、仕込みロスと機会損失を同時に生む。天候連動の需要では、仕込みを固定費的な仕込みと当日追い仕込みに分け、ドリンク在庫は日持ちする側へ寄せるのが業界の定石。予約なし客の比率が高い店ほど影響が大きい。",
+      "main_store": {
+        "name": "炭火割烹 魚炭 うおずみ",
+        "id": "J001201978",
+        "area": "丸の内",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "名古屋城 公式X【中止案内】大盆踊り大会 天候中止",
+          "url": "https://x.com/CityNagoyajo/status/1954383348790681727",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "名古屋城 公式「名古屋城夏まつり（2026年）」",
+          "url": "https://www.nagoyajo.city.nagoya.jp/event/2026/07/20260708_4897.html",
+          "date": "2026-07-08"
+        },
+        {
+          "label": "名古屋市広報課 公式X 名古屋城夏まつり告知",
+          "url": "https://x.com/nagoya_koho/status/1953686359115198775",
+          "date": "2026-08-07"
+        }
+      ]
+    }
+  ]
+}
