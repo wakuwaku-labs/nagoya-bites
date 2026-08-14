@@ -515,9 +515,11 @@ const STORE_OUTPUT_OMIT_KEYS = new Set([
 // 「死蔵」になっていた。実測で +1.38MB raw（gzip 配信時 +約200KB）と
 // 受容範囲のため、S3/S6/S7/S8 も焼き付けてモーダルで根拠を見せる。
 //
-// 注: S7 の a（投稿ペース安定性）は places_history.json の月次 snapshot ≥ 3 が条件。
-// 月次 cron（.github/workflows/monthly-places.yml）で 2026-07 初旬に蓄積完了予定で、
-// それまでは全店が「履歴未蓄積（初月）」表示となる（仕様通り）。
+// 注: S7 の a（投稿ペース安定性）は places_history.json の snapshot ≥ 3 が条件。
+// 2026-08-15（ISSUE-086）: 取得スクリプトの仕様バグ（取得済み店を毎回スキップ）で
+// snapshot が全店 1 個のまま増えず機能していなかったことが判明し修正。
+// 週次 cron（.github/workflows/weekly-places.yml）の --refresh で staleness ベースに
+// 蓄積する。蓄積が進むまでは該当店が「履歴未蓄積」「履歴蓄積中」表示となる（仕様通り）。
 const CC_BREAKDOWN_OUTPUT_KEYS = new Set([
   's1_googleRatingVsCount', 's2_reviewCountAbs',
   's3_dataCompleteness',    's4_mediaCrossCheck',
@@ -1303,7 +1305,7 @@ async function main() {
   console.log(`トレンドスコア: 🔥話題沸騰=${trendHot} / 📈注目上昇中=${trendRising} / ✨じわじわ人気=${trendWarm}`);
 
   // ─── places_history.json を読み込み（ISSUE-049 S7・S8 シグナル用） ─────
-  // scripts/fetch_places.js が月次で蓄積する Google Places API 履歴。
+  // scripts/fetch_places.js --refresh が週次で蓄積する Google Places API 履歴。
   // S7: レビュー時系列健全性、S8: 評価分布の自然性 の算出に使用。
   // ファイルがない場合は中立スコアで計算（初月対応）。
   let placesHistory = {};

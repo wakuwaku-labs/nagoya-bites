@@ -216,9 +216,10 @@ P3 (LOW): 時間があれば
 届いているか」に依存する。ISSUE-084 の教訓（「気づけるはず」を検知と数えない）を踏襲し、
 収集パイプラインが静かに止まっていないかを毎月機械的に確認する:
 
-1. `data/places_history.json` の snapshots≥2 保有店の割合を確認（`monthly-places.yml` の
-   「時系列蓄積の健全性確認」ステップのログ、または `node -e` で直接集計）
-   - 前月から増えていなければ `--refresh` が動いていない可能性 → DataKeeper にエスカレート
+1. `data/places_history.json` の snapshots≥2 保有店の割合を確認（`weekly-places.yml` の
+   「時系列蓄積の健全性確認」ステップのログ、または `node -e` で直接集計）。2026-08-15
+   （ISSUE-086）に月次→週次実行へ変更済み — 前月から増えていなければ `--refresh` が
+   動いていない可能性 → DataKeeper にエスカレート
 2. `data/media_appearances.json` の `_meta.lastFetchedAt` が 14 日以内であることを確認
    （`weekly-media.yml` が週次で更新するはず。止まっていれば S4 シグナルが再び死蔵する）
 3. どちらかが停滞していたら、原因（GitHub Actions の失敗・Secrets 失効・API クォータ超過）を

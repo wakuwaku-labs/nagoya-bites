@@ -6,8 +6,9 @@
 // 【本番未投入】build.js は引き続き scripts/lib/cross_check.js（v2.0）を require している。
 //
 // 活性化の前提ゲート（実装計画 Phase 3 より）:
-//   (a) Phase 1 の --refresh が本番 monthly-places.yml で 1 回以上完走し、
-//       textLen/incentiveHit 付き latestReviews と snapshots≥2 が蓄積開始していること
+//   (a) Phase 1 の --refresh が本番 weekly-places.yml（2026-08-15・月次から変更）で
+//       1 回以上完走し、textLen/incentiveHit 付き latestReviews と snapshots≥2 が
+//       蓄積開始していること
 //   (b) scripts/audit_crosscheck_v3.js のシャドー比較結果を agent-backlog.md に記録済みであること
 // 現時点（実装直後）でこの2つを満たせないのは、新シグナルの多くが「データが無ければ中立点」に
 // フォールバックする設計のため、今 build.js に繋いでも実質 v2 のスコアを別配点に付け替えるだけで

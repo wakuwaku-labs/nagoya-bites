@@ -1,19 +1,26 @@
-name: Monthly Google Places fetch
+name: Weekly Google Places fetch
 
 # ISSUE-048 Step 2: Google Places API でレビュー件数・営業ステータスを取得し
 # data/places_resolved.json にキャッシュ。TRUST SCORE（crossCheckScore）の
 # S1（★ vs 件数比率）/ S2（件数絶対値）シグナルを正規化するために使用する。
 #
-# TRUST SCORE 精度向上（サクラチェック強化）: 従来はキャッシュ済み店を毎月スキップして
-# いたため places_history.json の snapshots が全店 1 個のまま増えず、S7（時系列健全性・
-# openingBurstPattern 検出）が実質死んでいた。第2ステップとして --refresh を追加実行し、
-# 既存店の snapshot を staleness ベース・予算制御付きで定期的に積み増す。
+# TRUST SCORE 精度向上（サクラチェック強化・ISSUE-086）: 従来はキャッシュ済み店を毎月
+# スキップしていたため places_history.json の snapshots が全店 1 個のまま増えず、S7
+# （時系列健全性・openingBurstPattern 検出）が実質死んでいた。第2ステップとして --refresh
+# を追加実行し、既存店の snapshot を staleness ベース・予算制御付きで定期的に積み増す。
 #
-# コスト（2026-08 実測 5,119 店ベース・階層化運用）:
+# 2026-08-15: 月次(monthly-places.yml)→週次(本ファイル)に変更（データ蓄積サイクルの
+# 短縮が目的・オーナー承認済み）。「最終取得から STALE_DAYS(25日) 経過 → 次の定期実行まで
+# 待つ」遅延が最大30日→最大7日に短縮される。総コストを変えないため、1回あたりの予算は
+# 月次時の 1/4（1700→425）に分割した。P1（フラグ付き監視対象・527店）は週次予算 425 より
+# 多いため毎週全件はカバーできないが、月次実行1回よりは遥かに高い頻度で回る。
+#
+# コスト（2026-08 実測 5,119 店ベース・階層化運用・総額は月次時から変更なし）:
 #   Step1 新規店解決: Find Place ($17/1000) — 新規追加分のみで少額
 #   Step2 --refresh:  Place Details のみ ($22/1000 = Basic+Atmosphere)
-#                      既定予算 PLACES_DETAILS_BUDGET=1700件/月 ≈ $37/月
-#                      優先店（フラグ付き・露出中）は毎月、残りは古い順で約3ヶ月周期
+#                      既定予算 PLACES_DETAILS_BUDGET=425件/週（月換算 約1840件 ≈ $40/月）
+#                      優先店（フラグ付き・露出中）は毎週上限まで優先消化、残りは古い順で
+#                      月次時と同程度の約3ヶ月周期（総予算を変えていないため）
 #   合算で無料クレジット $200/月 内（写真取得等の他ジョブと合わせて余裕を確認すること）
 #
 # 事前準備（リポジトリオーナー側で必要）:
@@ -28,15 +35,15 @@ name: Monthly Google Places fetch
 
 on:
   schedule:
-    # 毎月 1 日 18:00 UTC（JST 翌 2 日 3:00）に実行
-    - cron: '0 18 1 * *'
+    # 毎週月曜 18:00 UTC（JST 火曜 3:00）に実行
+    - cron: '0 18 * * 1'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: monthly-places
+  group: weekly-places
   cancel-in-progress: false
 
 jobs:

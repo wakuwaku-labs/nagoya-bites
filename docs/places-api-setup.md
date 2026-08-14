@@ -5,7 +5,8 @@
 > **唯一の未完了ステップ = `GOOGLE_PLACES_API_KEY` を GitHub Secrets に設定する**作業手順。
 >
 > コード側のパイプラインは **すべて実装・検証済み**。鍵を 1 つ設定するだけで、
-> 月次 CI が自動で評価を取得し、`build.js` が空の `Google評価` を公式値で補完する。
+> 週次 CI が自動で評価を取得し、`build.js` が空の `Google評価` を公式値で補完する。
+> （2026-08-15・ISSUE-086: データ蓄積サイクル短縮のため月次→週次実行に変更）
 
 ---
 
@@ -18,7 +19,7 @@ scripts/fetch_places.js        ← 全 4,593 店を対象に rating / 口コミ�
         ↓ data/places_resolved.json（キャッシュ）
 build.js（line 1417 付近）       ← rating を空の「Google評価」フィールドに公式値で補完
         ↓
-.github/workflows/monthly-places.yml  ← 毎月 1 日に CI で自動実行・コミット
+.github/workflows/weekly-places.yml    ← 毎週月曜に CI で自動実行・コミット
 ```
 
 しかし `data/places_resolved.json` は **一度も生成されたことがない**
@@ -60,9 +61,9 @@ build.js（line 1417 付近）       ← rating を空の「Google評価」フ�
 
 ### Step 4: 初回実行（手動トリガー）
 
-月次スケジュール（毎月 1 日）を待たずに、すぐ動かして確認できる：
+週次スケジュール（毎週月曜）を待たずに、すぐ動かして確認できる：
 
-1. GitHub →「Actions」→「Monthly Google Places fetch」
+1. GitHub →「Actions」→「Weekly Google Places fetch」
 2. 「Run workflow」（`workflow_dispatch`）を押す
 3. 完了後、ログ末尾の **「Google評価 カバレッジ見込み」** で取得結果を確認
 4. `data/places_resolved.json` がコミットされ、次回 `build.js` 実行（週次パイプライン）で
