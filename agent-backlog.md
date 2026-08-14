@@ -216,7 +216,9 @@
 
 ### [SEO-049] 店舗詳細モーダルに地図CTAが出るのは全体の2.8%だけ（97.2%の店で排他的に非表示）＋メディアボタンのGoogle Mapsが未計測
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-14
+- **resolved_by**: commit pending
 - **detected**: 2026-08-06
 - **category**: SEO / UX / 計測
 - **owner**: Builder
@@ -253,7 +255,7 @@
 
 ### [FB-001] 検索バーに入力クリア（×）ボタンがない
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-03（消費者フィードバックループ経由。サイト右下フローティング「ご意見」ボタンから
   モバイル送信。種類=使いづらい・わかりにくい / page=`#q=%E6%A0%84%20%E7%84%BC%E8%82%89`（「栢 焼肉」検索中））
 - **category**: UX
@@ -273,6 +275,8 @@
   5. QAゲート（`node scripts/qa_gate.js --before/--after`）通過
 - **files**: `index.html`
 - **関連**: [[ISSUE-080]]（本フィードバックループを新設した課題。本件はその最初の実起票）
+- **resolved**: 2026-08-14
+- **resolved_by**: commit 8768903
 
 ### [ISSUE-082] サイト内検索が「誕生日 栄」のような複数語・意図語で機能していなかった ✅
 
