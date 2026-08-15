@@ -11,24 +11,30 @@ name: Weekly Google Places fetch
 #
 # 2026-08-15: 月次(monthly-places.yml)→週次(本ファイル)に変更（データ蓄積サイクルの
 # 短縮が目的・オーナー承認済み）。「最終取得から STALE_DAYS(25日) 経過 → 次の定期実行まで
-# 待つ」遅延が最大30日→最大7日に短縮される。総コストを変えないため、1回あたりの予算は
-# 月次時の 1/4（1700→425）に分割した。P1（フラグ付き監視対象・527店）は週次予算 425 より
-# 多いため毎週全件はカバーできないが、月次実行1回よりは遥かに高い頻度で回る。
+# 待つ」遅延が最大30日→最大7日に短縮される。
 #
-# コスト（2026-08 実測 5,119 店ベース・階層化運用・総額は月次時から変更なし）:
-#   Step1 新規店解決: Find Place ($17/1000) — 新規追加分のみで少額
-#   Step2 --refresh:  Place Details のみ ($22/1000 = Basic+Atmosphere)
-#                      既定予算 PLACES_DETAILS_BUDGET=425件/週（月換算 約1840件 ≈ $40/月）
-#                      優先店（フラグ付き・露出中）は毎週上限まで優先消化、残りは古い順で
-#                      月次時と同程度の約3ヶ月周期（総予算を変えていないため）
-#   合算で無料クレジット $200/月 内（写真取得等の他ジョブと合わせて余裕を確認すること）
+# ⚠ Step2（--refresh）は 2026-08-15 時点で既定予算 0＝実質一時停止中。
+# rating/user_ratings_total/reviews はいずれも Places API の Atmosphere Data カテゴリで
+# 個別 SKU 課金対象（Google が 2025-03 に廃止した旧・一律 $200/月クレジットの対象ではない）。
+# オーナーが Google Cloud 請求画面で実際の無料枠・クレジット残高を確認するまで課金を
+# 発生させない設計にしている。確認後、repo variable PLACES_DETAILS_BUDGET を正の値に
+# 設定すれば再開する（docs/places-api-setup.md の「無料枠の確認」手順を参照）。
+#
+# コスト（2026-08 実測 5,119 店ベース・Step2 は一時停止中のため現状 $0）:
+#   Step1 新規店解決: Find Place ($17/1000) + Details ($22/1000) — 新規追加分のみで少額
+#     （--refresh とは独立の既存挙動。新規店の初回解決のみで動くため止めていない）
+#   Step2 --refresh:  Place Details のみ ($22/1000 = Basic+Atmosphere)。
+#     参考: PLACES_DETAILS_BUDGET=425件/週（月換算 約1840件）に設定した場合 ≈ $40/月
+#     （無料枠を使い切った場合の上乗せ額。実際の無料枠残高は要確認）
 #
 # 事前準備（リポジトリオーナー側で必要）:
 #   1. Google Cloud Platform でプロジェクト作成 → Places API 有効化
 #   2. API キー発行（HTTP リファラ制限なしで作成）
 #   3. GitHub Secrets に GOOGLE_PLACES_API_KEY を設定
-#   4. Google Cloud Console で予算アラート $50 設定推奨
-#   5. （任意）repo variables に PLACES_DETAILS_BUDGET を設定して --refresh の予算を調整
+#   4. Google Cloud Console の「お支払い」で現在の無料枠・クレジット残高を確認
+#      （2025-03 の一律 $200/月クレジット廃止後の実際の枠。SKU 別無料枠に変わっている）
+#   5. 確認後、repo variables に PLACES_DETAILS_BUDGET を設定して --refresh を再開
+#      （未設定のままだと既定 0 で Step2 は何もせず正常終了する）
 #
 # 注: GOOGLE_PLACES_API_KEY が未設定の場合、fetch_places.js は exit 0 で
 #     スキップするため、ワークフローは失敗扱いにならない。
