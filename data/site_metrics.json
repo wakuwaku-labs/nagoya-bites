@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-08-15T00:13:17.002Z",
+  "generatedAt": "2026-08-15T05:57:45.830Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 688,
-    "pageViews": 1057,
-    "sessions": 798,
-    "avgSessionDuration": 142.9,
-    "bounceRate": 0.361,
+    "activeUsers": 693,
+    "pageViews": 1063,
+    "sessions": 803,
+    "avgSessionDuration": 142,
+    "bounceRate": 0.365,
     "pagesPerSession": 1.32
   },
   "channels": {
     "sessions": {
-      "organic": 514,
-      "direct": 198,
+      "organic": 518,
+      "direct": 201,
       "social": 80,
       "referral": 15,
       "paid": 0,
@@ -20,9 +20,9 @@
     },
     "pct": {
       "organic": 63.5,
-      "direct": 24.5,
-      "social": 9.9,
-      "referral": 1.9,
+      "direct": 24.6,
+      "social": 9.8,
+      "referral": 1.8,
       "paid": 0,
       "other": 0.2
     }
@@ -36,17 +36,17 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 174
+      "sessions": 176
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 163
+      "sessions": 164
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 89
+      "sessions": 90
     },
     {
       "source": "chatgpt.com",
@@ -61,7 +61,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 15
+      "sessions": 17
     },
     {
       "source": "openai",
@@ -71,7 +71,7 @@
     {
       "source": "duckduckgo",
       "medium": "organic",
-      "sessions": 4
+      "sessions": 5
     },
     {
       "source": "copilot.com",
@@ -87,13 +87,13 @@
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 106,
-      "sessions": 101
+      "pageViews": 107,
+      "sessions": 102
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 99,
-      "sessions": 89
+      "pageViews": 101,
+      "sessions": 90
     },
     {
       "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
@@ -108,7 +108,7 @@
   ],
   "cta": {
     "outboundClicks": 71,
-    "ctaClickRate": 8.9,
+    "ctaClickRate": 8.8,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -167,7 +167,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 688,
+    "value": 693,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
