@@ -239,6 +239,10 @@ nav.open{right:0;}
 .search-wrap input:focus{border-color:var(--gold);}
 .search-wrap button{background:var(--gold);border:none;color:var(--bg);padding:.8rem 1.4rem;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;cursor:pointer;font-weight:500;transition:background .2s;}
 .search-wrap button:hover{background:var(--gold2);}
+.search-input-wrap{position:relative;flex:1;display:flex;}
+.search-input-wrap input{flex:1;padding-right:2.4rem;}
+.si-clear-btn{position:absolute;right:.5rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--dim);font-size:1.1rem;line-height:1;cursor:pointer;padding:.2rem .4rem;display:none;transition:color .15s;}
+.si-clear-btn:hover{color:var(--text);}
 /* ── 常時表示のシーン/エリア導線（直帰率対策・MEO-001） ── */
 .scene-nav{margin-top:1.6rem;max-width:580px;opacity:0;animation:up .9s .8s forwards;}
 .scene-nav-row{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin-top:.7rem;}
@@ -1413,7 +1417,10 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <!-- HERO_FEATURE_END -->
   <div class="search-wrap">
     <label for="si" class="visually-hidden">レストランを検索</label>
-    <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+    <div class="search-input-wrap">
+      <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+      <button id="si-clear" class="si-clear-btn" type="button" aria-label="検索をクリア">×</button>
+    </div>
     <button onclick="doSearch()" aria-label="検索">Search</button>
     <div class="search-suggest" id="hero-suggest">
       <span class="suggest-label">人気:</span>
@@ -8812,6 +8819,7 @@ function clearAllFilters() {
   // Clear search
   var si = document.getElementById('si'); if (si) si.value = '';
   var si2 = document.getElementById('si2'); if (si2) si2.value = '';
+  var siClearBtn = document.getElementById('si-clear'); if (siClearBtn) siClearBtn.style.display = 'none';
   applyFilters();
 }
 
@@ -10618,10 +10626,20 @@ function suggestSearch(keyword) {
 (function() {
   var si = document.getElementById('si');
   var si2 = document.getElementById('si2');
+  var siClear = document.getElementById('si-clear');
+  function syncClearBtn() { if (siClear) siClear.style.display = si.value ? '' : 'none'; }
   if (si && si2) {
-    si.addEventListener('input', function() { si2.value = si.value; });
-    si2.addEventListener('input', function() { si.value = si2.value; });
+    si.addEventListener('input', function() { si2.value = si.value; syncClearBtn(); });
+    si2.addEventListener('input', function() { si.value = si2.value; syncClearBtn(); });
     si2.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(); });
+  }
+  if (siClear) {
+    siClear.addEventListener('click', function() {
+      if (si) si.value = '';
+      if (si2) si2.value = '';
+      siClear.style.display = 'none';
+      applyFilters();
+    });
   }
 })();
 

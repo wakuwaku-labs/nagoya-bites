@@ -381,9 +381,10 @@
 
 ### [FB-001] 検索バーに入力クリア（×）ボタンがない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-03（消費者フィードバックループ経由。サイト右下フローティング「ご意見」ボタンから
   モバイル送信。種類=使いづらい・わかりにくい / page=`#q=%E6%A0%84%20%E7%84%BC%E8%82%89`（「栢 焼肉」検索中））
+- **resolved**: 2026-08-15
 - **category**: UX
 - **owner**: Builder
 - **source**: 消費者フィードバック（site-widget、Gmail msg_id 19fc732d2c4af76d）
