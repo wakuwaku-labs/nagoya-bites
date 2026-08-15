@@ -536,6 +536,8 @@ body.search-query-active .card-why{display:flex;}
 .modal-cta-hp:hover{background:#c9001e;}
 .modal-cta-gm{background:#4285F4;color:#fff!important;}
 .modal-cta-gm:hover{background:#2b6cd4;}
+.modal-cta-gm-sub{background:transparent;color:var(--muted)!important;border:1px solid var(--border);margin-top:.45rem;font-size:.8rem;padding:.7rem 1rem;}
+.modal-cta-gm-sub:hover{border-color:rgba(66,133,244,.5);color:#4285F4!important;}
 /* カード内 .ml の小サイズ favicon */
 .ml img.brand-fav{width:14px;height:14px;object-fit:contain;display:inline-block;vertical-align:-.18em;margin-right:.32rem;border-radius:2px;flex-shrink:0;}
 /* ── MODAL INFO TABLE ── */
@@ -9454,10 +9456,13 @@ function openM(i) {
   if (ctaRow) {
     var hpId2 = r['ホットペッパーID'] || '';
     var ctaEsc = function(s){ return String(s||'').replace(/'/g,'').replace(/</g,'').replace(/>/g,''); };
+    var gmapHref = gmap(r['店名'],r['エリア'],r);
+    var gmapTrack = 'trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})';
     if (hpId2) {
-      ctaRow.innerHTML = '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="trackEvent(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>';
+      ctaRow.innerHTML = '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="trackEvent(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>'
+        + '<a href="' + gmapHref + '" target="_blank" class="modal-cta-btn modal-cta-gm-sub" onclick="' + gmapTrack + '" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認">地図で場所を確認</a>';
     } else {
-      ctaRow.innerHTML = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認">地図で場所を確認する</a>';
+      ctaRow.innerHTML = '<a href="' + gmapHref + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="' + gmapTrack + '" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認">地図で場所を確認する</a>';
     }
     ctaRow.style.display = '';
   }
@@ -9467,10 +9472,11 @@ function openM(i) {
     {url:instagramSearchUrl(r), brand:'instagram', cls:'mb-ig', label:'Instagram'},
     {url:tiktokSearchUrl(r), brand:'tiktok', cls:'mb-tk', label:'TikTok'},
     {url:xSearchUrl(r), brand:'x', cls:'mb-xx', label:'X'},
-    {url:gmap(r['店名'],r['エリア'],r), brand:'gmap', cls:'mb-gm', label:'Google Maps'}
+    {url:gmap(r['店名'],r['エリア'],r), brand:'gmap', cls:'mb-gm', label:'Google Maps', track:'cta_gmap_click'}
   ];
   document.getElementById('mmg').innerHTML = items.map(function(m){
-    return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '" rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,28) + '</span><span class="mbl">' + m.label + '</span></a>';
+    var trackAttr = m.track ? ' onclick="trackEvent(\'' + m.track + '\',{store_name:\'' + ctaEsc(r['店名']) + '\'})"' : '';
+    return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '"' + trackAttr + ' rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,28) + '</span><span class="mbl">' + m.label + '</span></a>';
   }).join('');
   setShareStore(r['店名'] || '');
   var mfavBtn = document.getElementById('modal-fav-btn');
