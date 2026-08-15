@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-14T18:52:33.522Z",
+  "generatedAt": "2026-08-15T00:13:19.371Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -7,12 +7,12 @@
     "ctrFix": [
       {
         "query": "やきまる亭",
-        "impressions": 243,
+        "impressions": 240,
         "clicks": 2,
         "position": 7.7,
-        "ctr": 0.82,
+        "ctr": 0.83,
         "expectedCtr": 3.4,
-        "missedClicks": 6.4
+        "missedClicks": 6.3
       },
       {
         "query": "一人飲み",
@@ -25,12 +25,12 @@
       },
       {
         "query": "一魚魚一 はなれ",
-        "impressions": 178,
+        "impressions": 172,
         "clicks": 2,
         "position": 8,
-        "ctr": 1.12,
+        "ctr": 1.16,
         "expectedCtr": 3.2,
-        "missedClicks": 3.7
+        "missedClicks": 3.5
       },
       {
         "query": "くろぎ 名古屋",
@@ -43,21 +43,12 @@
       },
       {
         "query": "イルタッソ",
-        "impressions": 72,
+        "impressions": 71,
         "clicks": 2,
         "position": 6.1,
-        "ctr": 2.78,
+        "ctr": 2.82,
         "expectedCtr": 4.9,
         "missedClicks": 1.5
-      },
-      {
-        "query": "フレンチ屋台ビストロ のれんとコルク 名古屋駅店",
-        "impressions": 82,
-        "clicks": 2,
-        "position": 7.1,
-        "ctr": 2.44,
-        "expectedCtr": 3.9,
-        "missedClicks": 1.2
       },
       {
         "query": "トロンドン",
@@ -88,33 +79,50 @@
       },
       {
         "query": "ナショナルベーカリー",
-        "impressions": 394,
-        "clicks": 9,
+        "impressions": 381,
+        "clicks": 8,
         "position": 11.6,
-        "ctr": 2.28,
-        "upsideClicks": 2
+        "ctr": 2.1,
+        "upsideClicks": 2.7
+      },
+      {
+        "query": "アルマデシュラスコ 名駅",
+        "impressions": 115,
+        "clicks": 3,
+        "position": 10.1,
+        "ctr": 2.61,
+        "upsideClicks": 0.2
       }
     ]
   },
   "byPage": {
     "ctrFix": [
       {
-        "page": "/stores/J004025075.html",
-        "impressions": 551,
-        "clicks": 11,
-        "position": 7,
-        "ctr": 2,
-        "expectedCtr": 4,
-        "missedClicks": 11
+        "page": "/stores/J004613182.html",
+        "impressions": 720,
+        "clicks": 6,
+        "position": 9.8,
+        "ctr": 0.83,
+        "expectedCtr": 2.6,
+        "missedClicks": 12.5
       },
       {
-        "page": "/stores/J004613182.html",
-        "impressions": 740,
-        "clicks": 8,
-        "position": 9.8,
-        "ctr": 1.08,
-        "expectedCtr": 2.6,
-        "missedClicks": 11
+        "page": "/stores/J004025075.html",
+        "impressions": 544,
+        "clicks": 11,
+        "position": 7,
+        "ctr": 2.02,
+        "expectedCtr": 4,
+        "missedClicks": 10.8
+      },
+      {
+        "page": "/stores/J004559348.html",
+        "impressions": 541,
+        "clicks": 7,
+        "position": 8.4,
+        "ctr": 1.29,
+        "expectedCtr": 3,
+        "missedClicks": 9.5
       },
       {
         "page": "/journal/2026-07-27-owarisanso-kurogi.html",
@@ -124,25 +132,16 @@
         "ctr": 1.63,
         "expectedCtr": 2.7,
         "missedClicks": 9
-      },
-      {
-        "page": "/stores/J004559348.html",
-        "impressions": 569,
-        "clicks": 9,
-        "position": 8.3,
-        "ctr": 1.58,
-        "expectedCtr": 3.1,
-        "missedClicks": 8.5
       }
     ],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2430,
+        "impressions": 2359,
         "clicks": 10,
         "position": 25,
-        "ctr": 0.41,
-        "upsideClicks": 58.1
+        "ctr": 0.42,
+        "upsideClicks": 56.1
       },
       {
         "page": "/stores/store-e5b0bee5bcb5e5b1.html",
@@ -156,14 +155,14 @@
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 7,
-    "queryRankPush": 3,
+    "queryCtrFix": 6,
+    "queryRankPush": 4,
     "pageCtrFix": 4,
     "pageRankPush": 2,
     "topPageCtrFix": [
-      "/stores/J004025075.html",
       "/stores/J004613182.html",
-      "/journal/2026-07-27-owarisanso-kurogi.html"
+      "/stores/J004025075.html",
+      "/stores/J004559348.html"
     ]
   }
 }

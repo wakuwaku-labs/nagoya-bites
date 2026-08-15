@@ -1980,9 +1980,9 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 </section>
 <!-- SCENE-INDEX:END -->
 
-<!-- STORE-INDEX:START 2026-08-14 -->
+<!-- STORE-INDEX:START 2026-08-15 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（5024店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（5025店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（831店）</summary>
@@ -6910,7 +6910,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 </ul>
 </details>
 <details class="store-index-area" data-area="大須">
-<summary>大須（23店）</summary>
+<summary>大須（24店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=cafe%20Villa">cafe Villa（大須・韓国風カフェ）</a></li>
 <li><a href="index.html#q=M%C4%83%EF%BC%88%E3%83%9E%E3%83%BC%EF%BC%89by%20KIWAMI">Mă（マー）by KIWAMI（大須・中華）</a></li>
@@ -6923,6 +6923,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <li><a href="stores/J003340548.html">そば居酒屋 山葵（大須・居酒屋）</a></li>
 <li><a href="stores/J001231972.html">ダイニングキッチンオハナ（大須・ダイニングバー・バル）</a></li>
 <li><a href="index.html#q=%E3%83%89%E3%83%A0%E3%83%89%E3%83%A0%E3%83%8F%E3%83%B3%E3%83%90%E3%83%BC%E3%82%AC%E3%83%BC%E5%A4%A7%E9%A0%88%E4%B8%87%E6%9D%BE%E5%AF%BA%E9%80%9A%E5%BA%97">ドムドムハンバーガー大須万松寺通店（大須・ハンバーガー）</a></li>
+<li><a href="index.html#q=%E3%81%AD%E3%82%8A%E4%BC%9D%E3%81%AF%E3%81%AA%E3%82%8C%20%E5%A4%A7%E9%A0%88%E6%A8%AA%E4%B8%81%E5%BA%97">ねり伝はなれ 大須横丁店（大須・惣菜・食べ歩き）</a></li>
 <li><a href="stores/J003474300.html">みちのく屋　寿司店　大須観音（大須・居酒屋）</a></li>
 <li><a href="stores/J003582062.html">四川風中華 華澄味（大須・中華）</a></li>
 <li><a href="stores/J004005001.html">寿司居酒屋 や台ずし 大須通町（大須・和食）</a></li>
@@ -7435,7 +7436,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = 'cc020ccc33a7';
+var STORES_JSON_VERSION = '903e294547f6';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
