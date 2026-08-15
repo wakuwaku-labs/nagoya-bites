@@ -1,0 +1,444 @@
+{
+  "date": "2026-08-15",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "大須の食べ歩きに戻ってきた300円の練り物——老舗メーカー95年ぶりの直営店",
+      "verdict": "PASS",
+      "total": 101,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "食べ歩き",
+          "feature": "features/osu-food-walk.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (席,シーン,アラカルト,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 152字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「食べ歩き」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "揚げたて300円は大須の食べ歩き相場に合うのか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "食べ歩き",
+          "feature": "features/osu-food-walk.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,シーン,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 135字 +4",
+          "title 23字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「食べ歩き」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "大須で練り物とホットドッグが3日違いで開いた——1社2業態の価格帯の置き方",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 87,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,シーン,デート,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 143字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語がリードのみ「食べ歩き」+1",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "87点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -5 / brand_fit -3"
+    },
+    {
+      "id": "c5",
+      "title_draft": "中川区に150席の食べ放題が来る——ゆず庵 名古屋山王店の席設計",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 11日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (席,予約,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 116字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「宴会」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "百貨店の惣菜が屋台になるとき——大須に来た練り物専門店の設計",
+      "verdict": "HOLD",
+      "total": 75,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 8,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (席,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 124字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "大須の食べ歩きに戻ってきた300円の練り物——老舗メーカー95年ぶりの直営店",
+      "lead_draft": "大須商店街に2026年8月8日、練り物専門店「ねり伝はなれ 大須横丁店」が開いた。運営は1925年創業の魚肉ねり製品メーカー・かね貞。首都圏の百貨店で磨いた売り方を、創業の地に約95年ぶりに持ち帰った格好だ。串1本300〜450円という価格帯は、大須の食べ歩き相場のどこに刺さるのか。業界人の目線で読む。",
+      "angle": "百貨店の惣菜売場で回してきたメーカーが、食べ歩き単価300〜450円のアラカルト設計に組み替えた意味を、仕入れ・回転・立ち席オペの観点で読み、一人飲み前・食べ歩きのどのシーンに向くかまで落とす",
+      "main_store": {
+        "name": "ねり伝はなれ 大須横丁店",
+        "id": "",
+        "area": "大須",
+        "genre": "練り物・食べ歩き"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES・株式会社かね貞 公式リリース（大須2店舗同時出店）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000068.000027181.html",
+          "date": "2026-08-04"
+        },
+        {
+          "label": "食品産業新聞社ニュースWEB（業界紙）",
+          "url": "https://www.ssnp.co.jp/foodservice/697151/",
+          "date": "2026-08-08"
+        },
+        {
+          "label": "名古屋情報通「老舗による練り物・さつま揚げ専門店『ねり伝はなれ』大須商店街にオープン」",
+          "url": "https://jouhou.nagoya/neriden-kanesada/",
+          "date": "2026-08-13"
+        },
+        {
+          "label": "X・おいでよ名古屋（大須商店街の練り物出店に言及）",
+          "url": "https://x.com/oinagoya/status/2081714439880085660",
+          "date": "2026-08-09"
+        },
+        {
+          "label": "PR TIMES・株式会社かね貞（新業態「ねり伝はなれ」1号店リリース）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000054.000027181.html",
+          "date": "2025-05-29"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "大須で練り物とホットドッグが3日違いで開いた——1社2業態の価格帯の置き方",
+      "lead_draft": "2026年8月8日に練り物の「ねり伝はなれ 大須横丁店」、11日にホットドッグの「GABU DOGS」。大須商店街で3日違いに開いたこの2店は、同じ会社が同じブロックに出した。300〜450円と500〜700円。並べた価格帯には、食べ歩き客の財布を二段階で取りにいく設計が透けて見える。",
+      "angle": "同一運営が隣接ブロックに300〜450円と500〜700円の2業態を同時に置いた価格帯の階段構造を、食べ歩きの回転と客単価の観点で読み、一人歩き・デート前のどのシーンで使い分けるかを示す",
+      "main_store": {
+        "name": "ねり伝はなれ 大須横丁店",
+        "id": "",
+        "area": "大須",
+        "genre": "練り物・食べ歩き"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES・株式会社かね貞 公式リリース（大須2店舗同時出店）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000068.000027181.html",
+          "date": "2026-08-04"
+        },
+        {
+          "label": "食品産業新聞社ニュースWEB（業界紙）",
+          "url": "https://www.ssnp.co.jp/foodservice/697151/",
+          "date": "2026-08-08"
+        },
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/neriden-kanesada/",
+          "date": "2026-08-13"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "揚げたて300円は大須の食べ歩き相場に合うのか",
+      "lead_draft": "大須の食べ歩きは、から揚げ・台湾唐揚げ・タピオカと、ワンハンド300〜500円の激戦区だ。そこへ2026年8月8日、老舗練り物メーカーの直営「ねり伝はなれ 大須横丁店」が入った。チーズ入りちくわの磯辺揚320円、たこ生姜450円。相場のど真ん中に置いた価格の意図を読む。",
+      "angle": "大須の食べ歩き相場と照らして揚げたて練り物の価格帯を検証し、揚げ物のフライヤー回転と待ち時間のオペ、食べ歩きと一人飲み前の使い分けシーンを業界人視点で示す",
+      "main_store": {
+        "name": "ねり伝はなれ 大須横丁店",
+        "id": "",
+        "area": "大須",
+        "genre": "練り物・食べ歩き"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/neriden-kanesada/",
+          "date": "2026-08-13"
+        },
+        {
+          "label": "PR TIMES・株式会社かね貞",
+          "url": "https://prtimes.jp/main/html/rd/p/000000068.000027181.html",
+          "date": "2026-08-04"
+        },
+        {
+          "label": "食品産業新聞社ニュースWEB",
+          "url": "https://www.ssnp.co.jp/foodservice/697151/",
+          "date": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "百貨店の惣菜が屋台になるとき——大須に来た練り物専門店の設計",
+      "lead_draft": "首都圏の百貨店地下で惣菜を売ってきたブランドが、大須商店街の路面に立った。2026年8月8日開店の「ねり伝はなれ 大須横丁店」。グラム売りの惣菜を串の一本売りに組み替えると、何が変わるのか。包装、提供速度、客単価。業態転換の裏側を業界人の目で読む。",
+      "angle": "百貨店惣菜のグラム売りから串の本売りへ組み替えた際の歩留まりと仕込み、立ち食いスペースの席設計、観光客の回転を業界人視点で読み解く",
+      "main_store": {
+        "name": "ねり伝はなれ 大須横丁店",
+        "id": "",
+        "area": "大須",
+        "genre": "練り物・食べ歩き"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES・株式会社かね貞（大須出店）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000068.000027181.html",
+          "date": "2026-08-04"
+        },
+        {
+          "label": "PR TIMES・株式会社かね貞（新業態1号店）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000054.000027181.html",
+          "date": "2025-05-29"
+        },
+        {
+          "label": "食品産業新聞社ニュースWEB",
+          "url": "https://www.ssnp.co.jp/foodservice/697151/",
+          "date": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "中川区に150席の食べ放題が来る——ゆず庵 名古屋山王店の席設計",
+      "lead_draft": "物語コーポレーションの118店舗目、「寿司・しゃぶしゃぶ ゆず庵 名古屋山王店」が2026年8月18日に開く。中川区山王1丁目、25卓150席、駐車場47台。郊外型の食べ放題がこの規模で入る意味を、宴会・家族利用の予約動線から読む。",
+      "angle": "25卓150席・駐車場47台という郊外型の席と予約の設計を、宴会シーンの回転と客単価の観点で読む",
+      "main_store": {
+        "name": "寿司・しゃぶしゃぶ ゆず庵 名古屋山王店",
+        "id": "",
+        "area": "中川区",
+        "genre": "しゃぶしゃぶ・寿司"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES・株式会社物語コーポレーション",
+          "url": "https://prtimes.jp/main/html/rd/p/000001495.000044964.html",
+          "date": "2026-08-04"
+        },
+        {
+          "label": "ゆず庵 公式サイト お知らせ",
+          "url": "https://www.shabu-yuzuan.jp/news/7225/",
+          "date": "2026-08-04"
+        },
+        {
+          "label": "グルメプレス",
+          "url": "https://gourmetpress.net/1466616/",
+          "date": "2026-08-04"
+        }
+      ]
+    }
+  ]
+}
