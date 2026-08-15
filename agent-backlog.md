@@ -171,7 +171,7 @@
 
 ### [ISSUE-086] スコア信頼度（サクラチェック）精度向上 — S7時系列蓄積の修理・S4のRSS復活・新シグナル3種を実装、v3.0は活性化保留
 
-- **priority**: P1 → **status**: in_progress（Phase 0〜2完了・Phase 3コード完成/未活性化・Phase 4残）
+- **priority**: P1 → **status**: in_progress（Phase 0〜5完了・Step2は無料枠未確認のため一時停止中・v3.0コード完成/未活性化）
 - **detected**: 2026-08-14（ユーザー要望「サクラチェックの精度を上げたい」を受けて再調査）
 - **category**: trust / proof / differentiation
 - **owner**: DataKeeper + Builder
@@ -192,18 +192,39 @@
   5. latestReviews の `time`（unix epoch）が未活用。本文由来シグナル（本文なし★5・
      インセンティブ誘導語）も未取得だった。
 
-- **ユーザー確定事項**:
-  - Places API 月次再取得コスト: **階層化**（`PLACES_DETAILS_BUDGET=1700`・約$37/月）。
-    優先店（フラグ付き・露出中）は毎月、残りは古い順ローテで約3ヶ月周期に収束
+- **ユーザー確定事項（初回）**:
+  - Places API 再取得コスト: **階層化**（総額据置・約$37〜40/月）。
+    優先店（フラグ付き・露出中）は実行のたびに優先消化、残りは古い順ローテで約3ヶ月周期に収束
   - 食べログ点数取得: **しない**（[[ISSUE-048]] の Strategic Skip を維持）。
     代替として機械検証可能な `highRatingNoFootprint` フラグを新設
 
-- **実装内容（Phase 0〜2・完了）**:
+- **ユーザー確定事項（2026-08-15・追加要望「このサイクルを早くして欲しい」）**:
+  - データ収集の実行頻度を **月次→週次に変更**。「staleness経過→次の定期実行を
+    待つ」遅延が最大30日→最大7日に短縮。予算は月次時の1/4（1700→425/週）に分割
+  - 初回実行を **手動トリガーで前倒し**したい → PR #127 を main にマージしないと
+    `weekly-places.yml`（新規ファイル名）は GitHub 側で dispatch 対象として認識されない
+    （404）と判明。PR マージは auto-mode 分類器にブロックされたためオーナー本人による
+    GitHub UI でのマージ待ち。マージ後に `gh workflow run weekly-places.yml` で再試行する
+
+- **ユーザー確定事項（2026-08-15・追加要望「コストを無料にできませんか」）**:
+  - 調査の結果 `rating`/`user_ratings_total`/`reviews` はいずれも Places API の
+    Atmosphere Data カテゴリで個別 SKU 課金対象と判明。旧コード/ドキュメントが前提に
+    していた「無料クレジット$200/月」は Google が 2025-03 に廃止済みで、記述自体が誤りだった
+  - オーナーの回答: **「課金アカウントの実際の無料枠を確認してから決める」**。
+    確認が済むまで課金ゼロを保証するため、`--refresh`（Step2）の既定予算を
+    `PLACES_DETAILS_BUDGET=425` → **`0`（実質一時停止）に変更**。
+    再開は repo variable `PLACES_DETAILS_BUDGET` にオーナーが正の値を設定した時点
+  - Step1（新規店の初回解決）は既存の低ボリューム挙動のため対象外・そのまま稼働
+
+- **実装内容（Phase 0〜5・完了）**:
   | Phase | 内容 | ファイル |
   |---|---|---|
   | 0 | crosscheck.json を daily commit 対象に追加／weekly-media.yml 新設（RSS週次実行） | `.github/workflows/build.yml`, `.github/workflows/weekly-media.yml`（新規） |
-  | 1 | `fetch_places.js --refresh`: staleness(25日)ベース・優先度階層（フラグ店→露出店→古い順）・予算制御(既定1700件)・snapshot追記ガード(20日)・latestReviews に textLen/lang/incentiveHit を追加保存（本文自体は非保存） | `scripts/fetch_places.js`, `.github/workflows/monthly-places.yml` |
+  | 1 | `fetch_places.js --refresh`: staleness(25日)ベース・優先度階層（フラグ店→露出店→古い順）・予算制御・snapshot追記ガード(20日)・latestReviews に textLen/lang/incentiveHit を追加保存（本文自体は非保存） | `scripts/fetch_places.js`, `.github/workflows/weekly-places.yml`（旧 monthly-places.yml） |
   | 2 | `computeCrossCheckScore` を `scripts/lib/cross_check.js` へ抽出（挙動不変・diff実測で末尾空行1行のみ差分を確認）。テスト10件・シャドー比較器 `scripts/audit_crosscheck_v3.js` 新設 | `scripts/lib/cross_check.js`（新規）, `build.js`, `tests/cross_check.test.js`（新規）, `scripts/audit_crosscheck_v3.js`（新規） |
+  | 3 | v3.0 スコアリング設計・テスト・シャドー検証（下記詳細）。build.js には未接続 | `scripts/lib/cross_check_v3.js`（新規）, `tests/cross_check_v3.test.js`（新規） |
+  | 4 | 公開ページ・運用ドキュメントの実態整合 | `features/integrity-method.html`, `agents/inspector.md` |
+  | 5 | **月次→週次への実行頻度変更**（2026-08-15）: `monthly-places.yml`→`weekly-places.yml` にrename、cron を毎月1日→毎週月曜に変更。**同日中に既定予算を 425→0（一時停止）へ再修正**（無料枠未確認のため。上記「コストを無料に」参照）。関連ドキュメント（`docs/places-api-setup.md` の無料枠確認手順含む）のワークフロー名・頻度・コスト表記を追従 | `.github/workflows/weekly-places.yml`, `scripts/fetch_places.js`, `docs/places-api-setup.md`, `build.js`, `agents/inspector.md`, `features/integrity-method.html`, `scripts/lib/cross_check_v3.js` |
 
 - **v3.0 設計（Phase 3・コード完成・テスト12件パス・未活性化）**:
   `scripts/lib/cross_check_v3.js` に実装済み。配点変更（合計100維持・8キー名不変）:
@@ -240,7 +261,10 @@
   この時点では参考情報に留める。
 
 - **activate 手順（前提ゲートを満たしたら実施）**:
-  1. `monthly-places.yml` の `--refresh` ステップが本番で1回以上完走し、
+  0. **【新規ゲート・2026-08-15追加】** オーナーが Google Cloud 請求画面で無料枠を確認し、
+     repo variable `PLACES_DETAILS_BUDGET` に正の値を設定して Step2 を再開していること
+     （未設定＝既定0のままだと `--refresh` は何も取得せず、以降のゲートに永久到達しない）
+  1. `weekly-places.yml` の `--refresh` ステップが本番で1回以上完走し、
      `snapshots≥2 の店舗数` と `textLen付きレビュー保有店` がログ上で増加していることを確認
   2. `node scripts/audit_crosscheck_v3.js` を再実行し、その時点の実データでの分布影響を確認
   3. `build.js` の `require('./scripts/lib/cross_check')` を
@@ -249,16 +273,16 @@
   5. `features/integrity-method.html` を v3.0 表記に更新
   6. デプロイ後 `node scripts/qa_gate.js` で退行なしを確認
 
-- **残タスク（Phase 4）**: `features/integrity-method.html` の v3.0 先行公開（配点表・
-  `INCENTIVE_WORDS_V1` 語彙・プライバシー設計の明記）、`agents/inspector.md` への新フラグ
-  レビュー項目追加（誤検知の典型を明記）と収集健全性チェック追加
+- **残タスク**: オーナーによる無料枠確認 → `PLACES_DETAILS_BUDGET` 設定（ゲート0）→
+  上記 activate 手順の実施。Inspector Step C-2（`agents/inspector.md`）で Step2 が
+  0予算のまま停滞していないかも月次確認対象に含める
 
 - **files**:
   - `.github/workflows/build.yml` / `.github/workflows/weekly-media.yml`（新規）
-  - `scripts/fetch_places.js` / `.github/workflows/monthly-places.yml`
+  - `scripts/fetch_places.js` / `.github/workflows/weekly-places.yml`（新規・旧 monthly-places.yml から rename）
   - `scripts/lib/cross_check.js`（新規） / `scripts/lib/cross_check_v3.js`（新規・未接続） / `build.js`
   - `tests/cross_check.test.js`（新規） / `tests/cross_check_v3.test.js`（新規） / `scripts/audit_crosscheck_v3.js`（新規）
-  - `features/integrity-method.html`（Phase 4） / `agents/inspector.md`（Phase 4）
+  - `features/integrity-method.html` / `agents/inspector.md` / `docs/places-api-setup.md`
 - **関連**: [[ISSUE-048]]（サクラチェッカー方式の元祖・食べログスクレイピングのStrategic Skip判断）/ [[ISSUE-049]]（V3化・S7/S8新設の前身）/ [[ISSUE-084]]（監視原則「検知して終わりにしない」を踏襲）
 
 ### [ISSUE-084] 日次ジャーナルが3日欠番（08-10/11/12）— 失敗の警報が「防音室の中」で鳴っていた ✅

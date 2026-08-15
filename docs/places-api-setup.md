@@ -5,7 +5,8 @@
 > **唯一の未完了ステップ = `GOOGLE_PLACES_API_KEY` を GitHub Secrets に設定する**作業手順。
 >
 > コード側のパイプラインは **すべて実装・検証済み**。鍵を 1 つ設定するだけで、
-> 月次 CI が自動で評価を取得し、`build.js` が空の `Google評価` を公式値で補完する。
+> 週次 CI が自動で評価を取得し、`build.js` が空の `Google評価` を公式値で補完する。
+> （2026-08-15・ISSUE-086: データ蓄積サイクル短縮のため月次→週次実行に変更）
 
 ---
 
@@ -18,7 +19,7 @@ scripts/fetch_places.js        ← 全 4,593 店を対象に rating / 口コミ�
         ↓ data/places_resolved.json（キャッシュ）
 build.js（line 1417 付近）       ← rating を空の「Google評価」フィールドに公式値で補完
         ↓
-.github/workflows/monthly-places.yml  ← 毎月 1 日に CI で自動実行・コミット
+.github/workflows/weekly-places.yml    ← 毎週月曜に CI で自動実行・コミット
 ```
 
 しかし `data/places_resolved.json` は **一度も生成されたことがない**
@@ -41,14 +42,26 @@ build.js（line 1417 付近）       ← rating を空の「Google評価」フ�
    - 用途を Places API に限定する「API の制限」は付けてよい（推奨）
 4. 発行されたキー文字列をコピー
 
-### Step 2: 予算アラートを設定（推奨・事故防止）
+### Step 2: 無料枠を確認し、予算アラートを設定（必須・2026-08-15 更新）
 
-- Google Cloud Console →「お支払い」→「予算とアラート」→ **$50** で警告を設定
-- 想定コスト: Find Place + Place Details の 2 SKU。初回フル取得は約 4,593 店 ×
-  2 リクエスト ≈ **$150 前後**（$200/月 無料クレジット内）。
-  2 回目以降は増分取得（キャッシュ済みはスキップ）なので大幅に減る。
+> ⚠ **重要**: 2025-03 に Google は Maps Platform の一律 $200/月無料クレジットを廃止し、
+> SKU（機能カテゴリ）ごとの個別無料枠に切り替えた。このドキュメントの旧版は廃止前の
+> 前提で書かれていたため、**必ず自分のアカウントの実際の無料枠を確認してから予算を決めること**。
+> `weekly-places.yml` の Step2（`--refresh`）は、これが未確認の間は既定 `PLACES_DETAILS_BUDGET=0`
+> （課金ゼロ・実質一時停止）になっている。
 
-> 💡 初回コストを抑えたい場合は、まず `--limit` で段階取得する（Step 4 参照）。
+1. Google Cloud Console →「お支払い」→「レポート」または「予算とアラート」で、
+   現在のアカウントに適用されている無料枠・プロモクレジットの残高を確認する
+   （新規アカウント特典の有無、SKU 別無料枠の状況はアカウントごとに異なる）
+2. 「予算とアラート」で確認した無料枠に見合った金額（例: $20〜$50）で警告を設定
+3. 想定コスト（本ワークフローの Step2 のみ）: Place Details（Basic+Atmosphere）
+   ≈ $22/1000 リクエスト。`PLACES_DETAILS_BUDGET` を設定した件数 × 4.33週/月 × $22/1000
+   が月間の見込み額（例: 425件/週 ≈ 月$40）
+4. 確認・納得したら GitHub リポジトリ →「Settings」→「Secrets and variables」→
+   「Actions」→「Variables」タブで `PLACES_DETAILS_BUDGET` を作成し、希望する
+   週あたりの件数（例: `425`）を設定する。設定しなければ Step2 は課金ゼロのまま動き続ける
+
+> 💡 初回コストを抑えたい場合は、まず `--limit` や `--max-details` で段階取得する（Step 4 参照）。
 
 ### Step 3: GitHub Secrets に登録
 
@@ -60,9 +73,9 @@ build.js（line 1417 付近）       ← rating を空の「Google評価」フ�
 
 ### Step 4: 初回実行（手動トリガー）
 
-月次スケジュール（毎月 1 日）を待たずに、すぐ動かして確認できる：
+週次スケジュール（毎週月曜）を待たずに、すぐ動かして確認できる：
 
-1. GitHub →「Actions」→「Monthly Google Places fetch」
+1. GitHub →「Actions」→「Weekly Google Places fetch」
 2. 「Run workflow」（`workflow_dispatch`）を押す
 3. 完了後、ログ末尾の **「Google評価 カバレッジ見込み」** で取得結果を確認
 4. `data/places_resolved.json` がコミットされ、次回 `build.js` 実行（週次パイプライン）で

@@ -27,18 +27,31 @@
  *   全店 1 個のまま増えず、S7（時系列健全性）と openingBurstPattern 検出が死んでいた。
  *   --refresh は placeId 既知の店を Find Place なしで Place Details 直叩きし、
  *   snapshot を追記する。優先度付き・予算制御:
- *     P1: cross_check_flags.json 掲載店（監視対象は必ず月次で更新）
+ *     P1: cross_check_flags.json 掲載店（監視対象・毎回の実行で優先消化）
  *     P2: features/*.html 掲載店 + view_counts 閲覧上位（露出中の店）
  *     P3: 残り全店を「最終取得が古い順」（予算内ローテで全店が約3ヶ月周期に収束）
- *   予算: --max-details N > env PLACES_DETAILS_BUDGET > 既定 1700
+ *   予算: --max-details N > env PLACES_DETAILS_BUDGET > 既定 0（一時停止・下記参照）
  *   対象: 最終 snapshot が STALE_DAYS(25日) より古い店のみ
- *   ガード: 最終 snapshot から 20 日以内は追記せず上書き（月内再実行で履歴が汚れない）
+ *   ガード: 最終 snapshot から 20 日以内は追記せず上書き（週内再実行で履歴が汚れない）
  *
- * コスト見積（2026-08 更新・実測 5,119 店ベース）:
+ *   2026-08-15（ISSUE-086）: 実行 workflow を月次(monthly-places.yml)→週次
+ *   (weekly-places.yml) に変更。「staleness 経過 → 次の定期実行まで待つ」遅延が
+ *   最大30日→最大7日に短縮。
+ *
+ *   ⚠ 2026-08-15 追記（同日・ユーザー確認事項）: rating/user_ratings_total/reviews は
+ *   いずれも Places API の Atmosphere Data カテゴリで、Google が 2025-03 に廃止した
+ *   旧・一律 $200/月クレジットの対象ではなく個別 SKU 課金。旧コードコメントの
+ *   「無料クレジット$200/月内」は誤り（オーナー未確認のまま走らせていた）。
+ *   オーナーが Google Cloud 請求画面で実際の無料枠・クレジット残高を確認するまで、
+ *   既定予算を 0（実質一時停止・課金ゼロ）にしている。確認後、実行したい予算件数を
+ *   repo variable PLACES_DETAILS_BUDGET に設定して再開すること（docs/places-api-setup.md 参照）。
+ *
+ * コスト見積（2026-08 更新・実測 5,119 店ベース・週次運用・現在は一時停止中）:
  *   - 新規店パス: Find Place ($17/1000) + Details ($22/1000) — 新規追加分のみで少額
- *   - --refresh: Place Details のみ ($17 Basic + $5 Atmosphere = $22/1000)
- *     予算 1700 件/月（既定・階層化運用）≈ $37/月 — 無料クレジット $200/月 内
- *     全店月次にする場合は PLACES_DETAILS_BUDGET=6000 ≈ $113/月（写真取得等と合算注意）
+ *     （--refresh とは独立。新規店の初回解決のみで動くため既定では止めていない）
+ *   - --refresh: Place Details のみ ($17 Basic + $5 Atmosphere = $22/1000)。
+ *     参考: 425 件/週なら月換算1840件 ≈ $40/月（無料枠を消費した場合の上乗せ額。
+ *     実際の無料枠残高は要確認）
  *
  * 安全策:
  *   - 住所に「名古屋市」が含まれない候補は採用しない（誤検出排除）
@@ -69,10 +82,15 @@ const FEATURES_DIR = path.join(ROOT, 'features');
 const HISTORY_MAX_SNAPSHOTS = 12;
 // --refresh の再取得判定: 最終 snapshot がこれより古い店だけをキューに載せる
 const STALE_DAYS = 25;
-// snapshot 追記ガード: 最終 snapshot からこの日数以内は追記せず上書き（月内再実行対策）
+// snapshot 追記ガード: 最終 snapshot からこの日数以内は追記せず上書き（週内再実行対策）
 const SNAPSHOT_GUARD_DAYS = 20;
-// --refresh の既定予算（Place Details 呼び出し件数/回）。階層化運用 ≈ $37/月。
-const DEFAULT_DETAILS_BUDGET = 1700;
+// --refresh の既定予算（Place Details 呼び出し件数/回・週次実行前提）。
+// 2026-08-15: 0（一時停止）。rating/reviews は Atmosphere Data で個別課金対象と判明し、
+// 旧コメントが前提にしていた「$200/月無料クレジット」は2025-03に廃止済みだった。
+// オーナーが実際の無料枠・クレジット残高を Google Cloud 請求画面で確認するまで
+// 意図的に課金を発生させない。再開時は repo variable PLACES_DETAILS_BUDGET に
+// 正の値（例: 425＝週次$40相当）を設定する（docs/places-api-setup.md 参照）。
+const DEFAULT_DETAILS_BUDGET = 0;
 
 // レビュー本文の派生特徴量（本文そのものは保存しない — ヘッダのプライバシー設計参照）
 // 語彙改定時は V2 を作り TEXT_SIGNALS_VERSION を上げる（integrity-method.html も更新）
@@ -184,7 +202,7 @@ async function fetchDetailsForRefresh(placeId) {
 }
 
 // snapshot 追記（ガード付き）: 最終 snapshot から SNAPSHOT_GUARD_DAYS 以内なら
-// 追記せず最新を上書きする。workflow_dispatch を月内に複数回叩いても履歴が汚れない。
+// 追記せず最新を上書きする。workflow_dispatch を短期間に複数回叩いても履歴が汚れない。
 function appendSnapshot(history, id, snap) {
   if (!history[id]) history[id] = { snapshots: [] };
   const snaps = history[id].snapshots;
@@ -225,7 +243,7 @@ function buildRefreshQueue(stores, cache, history) {
   const now = Date.now();
   const staleMs = STALE_DAYS * 24 * 60 * 60 * 1000;
 
-  // P1: 前回フラグ付き店（監視対象は必ず月次更新）
+  // P1: 前回フラグ付き店（監視対象・毎回の実行で優先消化）
   const flagged = new Set();
   const flagsData = readJsonSafe(FLAGS_PATH, null);
   if (flagsData && Array.isArray(flagsData.flags)) {
