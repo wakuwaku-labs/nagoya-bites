@@ -252,6 +252,49 @@ if [ "$ALREADY" = "1" ]; then
   exit 0
 fi
 
+# ---- 3.7 中間成果物からの再開（ISSUE-085）----
+# 接続断で中断した場合、前回到達した工程から再開することで「1時間半費やして成果物ゼロ」を防ぐ。
+#
+# Layer 2: journal/drafts/ にドラフト＋SNS原稿が残っていれば
+#           validator → 本番昇格 → commit フローへ（Claude 呼び出しをスキップ）
+# Layer 3: data/journal_candidates/<date>.json が残っていれば
+#           候補採点済みとして写真調査（Step 3.6）から再開するよう Claude に指示
+#
+# 制約: 再開経路でも validator は必ず通す（品質ゲートを迂回しない）
+# ログ: 再開したか新規生成かを必ず明記する（ISSUE-085 acceptance 3）
+RESUME_COMPLETE=0
+RESUME_NOTE=""
+
+# --- Layer 2: journal/drafts/ に当日ドラフトが残っていれば ---
+DRAFT_HTML_L2=$(ls "journal/drafts/${TODAY_JST}"-*.html 2>/dev/null | head -1 || true)
+DAILY_MD_L2="docs/daily-posts/${TODAY_JST}.md"
+if [ -n "$DRAFT_HTML_L2" ] && [ -f "$DAILY_MD_L2" ]; then
+  log "📂 [Layer 2 再開] ドラフト検出: ${DRAFT_HTML_L2} / SNS原稿: ${DAILY_MD_L2}。独立 validator で検証します。"
+  if node scripts/validate_journal_draft.js "$DRAFT_HTML_L2" "$DAILY_MD_L2" >>"$LOG" 2>&1; then
+    DRAFT_SLUG_L2=$(basename "$DRAFT_HTML_L2" .html)
+    TARGET_HTML_L2="journal/${DRAFT_SLUG_L2}.html"
+    log "✅ [Layer 2] validator PASS。ドラフトを本番へ昇格: ${DRAFT_HTML_L2} → ${TARGET_HTML_L2}"
+    mv "$DRAFT_HTML_L2" "$TARGET_HTML_L2" || hold "[Layer 2] ドラフト昇格に失敗: $DRAFT_HTML_L2 → $TARGET_HTML_L2"
+    node scripts/register_journal_entry.js "$TARGET_HTML_L2" --by-wrapper >>"$LOG" 2>&1 \
+      || hold "[Layer 2] published.json への登録に失敗（register_journal_entry.js）"
+    node scripts/build_journal_index.js >>"$LOG" 2>&1 \
+      || hold "[Layer 2] 索引・フィードの再生成に失敗（build_journal_index.js）"
+    log "🔁 [Layer 2] 再開完了（新規生成ではなくドラフト再利用）。Claude 呼び出しをスキップし commit & push フローへ進みます。"
+    RESUME_COMPLETE=1
+  else
+    log "⚠️ [Layer 2] ドラフト validator FAIL。Layer 3 または全工程からやり直します。"
+  fi
+elif [ -n "$DRAFT_HTML_L2" ]; then
+  log "⚠️ [Layer 2] ドラフト (${DRAFT_HTML_L2}) はあるが SNS原稿 (${DAILY_MD_L2}) がありません。Layer 3 または全工程からやり直します。"
+fi
+
+# --- Layer 3: data/journal_candidates/<date>.json が残っていれば ---
+CANDIDATES_JSON_L3="data/journal_candidates/${TODAY_JST}.json"
+if [ "$RESUME_COMPLETE" = "0" ] && [ -f "$CANDIDATES_JSON_L3" ]; then
+  log "📂 [Layer 3 再開] 候補採点済みファイル検出: ${CANDIDATES_JSON_L3}。写真調査（Step 3.6）から再開するよう Claude に指示します（新規生成ではなく候補ファイル再利用）。"
+  RESUME_NOTE="⚠️ 再開モード（接続断からの復旧）: ${CANDIDATES_JSON_L3} が既に存在します。前回の生成で候補採点（Step 3b/score_journal_candidates.js）まで完了しています。Step 1〜3 はスキップし、${CANDIDATES_JSON_L3} を読み込んで最高スコアの候補を確認した後、Step 3.6（写真調査）から再開してください。"
+fi
+
 # ---- 4. claude で生成 ----
 # ネットワーク瞬断（socket closed / FailedToOpenSocket 等）は claude 側の一時的な通信エラーで、
 # 認証切れ（401 Invalid authentication credentials）とは別物。前者はリトライで復旧するが、
@@ -273,50 +316,57 @@ fi
 #   下のプリフライトで「生成に40分費やす前に」認証を確かめ、
 #   watchdog（サーバ側）が同じ朝のうちに Issue でオーナーに知らせる構成にした。
 
-# ---- 3.5 認証プリフライト ----
-# 認証切れは本番生成を回す前に判る。先に確かめれば、原因が「認証」だと確定した
-# 状態で即座に HOLD でき、長い生成ログの中に埋もれない。
-log "claude 認証プリフライトを実行（サブスク認証の有効性を確認）"
-PREFLIGHT_OUT=$("$CLAUDE_BIN" --print "ok" --dangerously-skip-permissions 2>&1)
-PREFLIGHT_RC=$?
-if [ "$PREFLIGHT_RC" != "0" ]; then
-  echo "$PREFLIGHT_OUT" >>"$LOG"
-  # 認証切れだけを特別扱いする。ネットワーク瞬断ならリトライ機構のある本番ループに委ねる。
-  if echo "$PREFLIGHT_OUT" | grep -qE "Invalid authentication credentials|Failed to authenticate|OAuth session expired"; then
-    hold "claude の認証が切れています（OAuth session expired）。コードでは復旧できません。Mac で 'claude' を対話起動してログインし直してください。確認: claude --print \"ok\" が応答すればOK。"
+if [ "$RESUME_COMPLETE" = "0" ]; then
+  # ---- 3.5 認証プリフライト ----
+  # 認証切れは本番生成を回す前に判る。先に確かめれば、原因が「認証」だと確定した
+  # 状態で即座に HOLD でき、長い生成ログの中に埋もれない。
+  log "claude 認証プリフライトを実行（サブスク認証の有効性を確認）"
+  PREFLIGHT_OUT=$("$CLAUDE_BIN" --print "ok" --dangerously-skip-permissions 2>&1)
+  PREFLIGHT_RC=$?
+  if [ "$PREFLIGHT_RC" != "0" ]; then
+    echo "$PREFLIGHT_OUT" >>"$LOG"
+    # 認証切れだけを特別扱いする。ネットワーク瞬断ならリトライ機構のある本番ループに委ねる。
+    if echo "$PREFLIGHT_OUT" | grep -qE "Invalid authentication credentials|Failed to authenticate|OAuth session expired"; then
+      hold "claude の認証が切れています（OAuth session expired）。コードでは復旧できません。Mac で 'claude' を対話起動してログインし直してください。確認: claude --print \"ok\" が応答すればOK。"
+    fi
+    log "⚠️ プリフライトは失敗しましたが認証エラーではないため本番生成に進みます（リトライ機構に委ねる）: RC=${PREFLIGHT_RC}"
+  else
+    log "✅ 認証プリフライト OK"
   fi
-  log "⚠️ プリフライトは失敗しましたが認証エラーではないため本番生成に進みます（リトライ機構に委ねる）: RC=${PREFLIGHT_RC}"
-else
-  log "✅ 認証プリフライト OK"
-fi
 
-PROMPT=$(tail -n +5 .claude/commands/journal-today.md)
-MAX_CLAUDE_ATTEMPTS=3
-CLAUDE_ATTEMPT=1
-while :; do
-  log "claude 生成を開始（サブスク認証・--dangerously-skip-permissions・試行 ${CLAUDE_ATTEMPT}/${MAX_CLAUDE_ATTEMPTS}）"
-  "$CLAUDE_BIN" --print "$PROMPT" --dangerously-skip-permissions >>"$LOG" 2>&1
-  CLAUDE_RC=$?
-  log "claude 終了コード: ${CLAUDE_RC}"
-  if [ "$CLAUDE_RC" = "0" ]; then
-    break
+  PROMPT=$(tail -n +5 .claude/commands/journal-today.md)
+  if [ -n "$RESUME_NOTE" ]; then
+    PROMPT="${RESUME_NOTE}
+
+${PROMPT}"
   fi
-  if grep -qE "Invalid authentication credentials|Failed to authenticate" "$LOG"; then
-    log "認証エラーを検出。リトライしても復旧しないため即座に諦めます。"
-    break
-  fi
-  if [ "$CLAUDE_ATTEMPT" -ge "$MAX_CLAUDE_ATTEMPTS" ]; then
-    log "最大試行回数（${MAX_CLAUDE_ATTEMPTS}）に到達。諦めます。"
-    break
-  fi
-  if ! grep -qE "socket connection was closed|Connection closed mid-response|Connection error|stream (was )?(closed|interrupted)|FailedToOpenSocket|ECONNRESET|ECONNREFUSED|EPIPE|ETIMEDOUT|network|Unable to connect to API|API Error: 5[0-9][0-9]|Overloaded" "$LOG"; then
-    log "既知のネットワーク一時エラーではないためリトライしません。"
-    break
-  fi
-  log "ネットワーク一時エラーを検出。30秒待機してリトライします。"
-  sleep 30
-  CLAUDE_ATTEMPT=$((CLAUDE_ATTEMPT+1))
-done
+  MAX_CLAUDE_ATTEMPTS=3
+  CLAUDE_ATTEMPT=1
+  while :; do
+    log "claude 生成を開始（サブスク認証・--dangerously-skip-permissions・試行 ${CLAUDE_ATTEMPT}/${MAX_CLAUDE_ATTEMPTS}）"
+    "$CLAUDE_BIN" --print "$PROMPT" --dangerously-skip-permissions >>"$LOG" 2>&1
+    CLAUDE_RC=$?
+    log "claude 終了コード: ${CLAUDE_RC}"
+    if [ "$CLAUDE_RC" = "0" ]; then
+      break
+    fi
+    if grep -qE "Invalid authentication credentials|Failed to authenticate" "$LOG"; then
+      log "認証エラーを検出。リトライしても復旧しないため即座に諦めます。"
+      break
+    fi
+    if [ "$CLAUDE_ATTEMPT" -ge "$MAX_CLAUDE_ATTEMPTS" ]; then
+      log "最大試行回数（${MAX_CLAUDE_ATTEMPTS}）に到達。諦めます。"
+      break
+    fi
+    if ! grep -qE "socket connection was closed|Connection closed mid-response|Connection error|stream (was )?(closed|interrupted)|FailedToOpenSocket|ECONNRESET|ECONNREFUSED|EPIPE|ETIMEDOUT|network|Unable to connect to API|API Error: 5[0-9][0-9]|Overloaded" "$LOG"; then
+      log "既知のネットワーク一時エラーではないためリトライしません。"
+      break
+    fi
+    log "ネットワーク一時エラーを検出。30秒待機してリトライします。"
+    sleep 30
+    CLAUDE_ATTEMPT=$((CLAUDE_ATTEMPT+1))
+  done
+fi
 
 # ---- 5. 検証 ----
 # (a) published.json に本日エントリが入ったか
