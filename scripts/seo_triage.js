@@ -81,6 +81,19 @@ function checkDup(advice) {
 // ──────────────────────────────────────────────────────────
 
 /** agent-backlog.md から各 SEO-ID の status を読む（done 判定用） */
+/**
+ * クローズ扱いの status 一覧。/solve-next の消化ポリシーと同じ定義を使う
+ * （二重定義すると「片方だけ superseded を数える」ような食い違いが再発する）。
+ */
+function closedStatuses() {
+  const p = path.join(ROOT, 'data/solve_next_policy.json');
+  try {
+    const policy = JSON.parse(fs.readFileSync(p, 'utf8'));
+    if (Array.isArray(policy.statuses && policy.statuses.closed)) return policy.statuses.closed;
+  } catch (e) { /* ポリシー未配置でも従来動作にフォールバックする */ }
+  return ['done', 'wont_fix', 'superseded', 'duplicate'];
+}
+
 function backlogStatusById() {
   const map = {};
   if (!fs.existsSync(BACKLOG_PATH)) return map;
@@ -121,9 +134,13 @@ function report(days, sourceFilter) {
   }
 
   // 採用したのに未 done の課題（ループが詰まっている兆候）
+  // 「未 done」を !== 'done' で判定すると superseded / wont_fix（＝既に列から外れた課題）まで
+  // 滞留として数えてしまう。2026-08-16 まで実際の滞留 8件が 12件に見えていた原因がこれ。
+  // クローズ扱いの status は data/solve_next_policy.json（消化ポリシーの唯一の情報源）と共有する。
   const status = backlogStatusById();
+  const closed = new Set(closedStatuses());
   const adoptedOpen = adopted
-    .filter((e) => e.id && status[e.id] !== 'done')
+    .filter((e) => e.id && !closed.has(status[e.id]))
     .map((e) => ({ id: e.id, date: e.date, status: status[e.id] || 'not_in_backlog', advice: e.advice }));
 
   // ソース別内訳（日次=line-daily / 週次=line-weekly を分けてループ健診できるように）

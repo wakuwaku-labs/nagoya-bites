@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "_purpose": "/solve-next の消化ポリシーの唯一の情報源。.claude/commands/*.md は自己改変ブロックで編集できないため、消化レート・選定順・除外条件の変更はこのファイルで行う（data/journal_gate_policy.json と同じ設計）。判定器は scripts/next_task.js。",
+  "_updated": "2026-08-16",
+
+  "dailyQuota": 2,
+  "_dailyQuota_note": "1回の自動ルーチンで消化する上限件数。1件目→QAゲート→デプロイまで完了してから2件目に進む（並行実装しない）。QAが1件でも落ちたらその時点で打ち切り、残りは翌日に回す。CLAUDE.md 制約6（QAゲート通過までデプロイしない）は不変。",
+
+  "statuses": {
+    "open": ["ready", "in_progress", "partial"],
+    "closed": ["done", "wont_fix", "superseded", "duplicate"],
+    "skip": ["blocked"]
+  },
+  "_statuses_note": "superseded / wont_fix を closed に含めるのが要点。2026-08-16 まで seo_triage.js --report がこれらを open と数えており、実際の滞留 8件が『12件』に見えていた（制約10: 検証できる事実だけで判定する）。",
+
+  "statusRank": { "ready": 0, "partial": 1, "in_progress": 2 },
+
+  "aging": {
+    "enabled": true,
+    "escalateAfterDays": { "P3": 60, "P2": 30, "P1": 14 },
+    "maxEscalatedPriority": "P1"
+  },
+  "_aging_note": "滞留日数で実効優先度を1段だけ繰り上げる。同点P2が並ぶと古い課題が永久に順番待ちになる（SEO-008 が 54日滞留した実例）ため。P0 へは決して自動昇格させない — P0 は『バグ・クラッシュ・データ消失・ブランド毀損』の意味であり、時計が作ってよい状態ではない。",
+
+  "awaitingHuman": {
+    "owners": ["片桐", "オーナー", "ユーザー"],
+    "notePatterns": ["待ち", "一時停止", "保留", "承認", "オーナー操作", "本人"],
+    "note": "オーナー本人にしか進められない課題（認証情報の投入・外部サービスへの登録・発信可否の判断・業界人としての一次経験の記入）を、自動ルーチンの選定対象から外す。これを混ぜると、ルーチンは毎朝それを選んでは何もできずに終わる — ISSUE-084 と同型の『空振りが誰にも届かない』失敗になる。外すだけでなく awaiting_human として必ず別枠で表示し、オーナーが自分の番だと分かる状態にする（CLAUDE.md 制約11）。"
+  },
+
+  "neverAutoImplement": {
+    "categories": ["マネタイズ", "収益化", "課金"],
+    "note": "CLAUDE.md 制約7・8 に該当する施策（マネタイズ / ユーザーの信頼を毀損しうるもの）は、自動ルーチンでは実装せず ready のまま残す。着手にはオーナーの明示承認が必要。判定は機械のキーワード一致ではなくエージェントの総合判断で行い、このリストは『迷ったら止める』ための手がかりとして使う。"
+  },
+
+  "requireDetectedDate": true,
+  "_requireDetectedDate_note": "detected が無い課題は滞留日数を測れない＝順番待ちの公平性が壊れるため、queue には出すが warnings に必ず載せる。"
+}

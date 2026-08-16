@@ -682,7 +682,16 @@ agent-backlog.md（マスター）を Notion DB「課題トラッカー」に常
 1. **agent-backlog.md がマスター** — Notion を直接編集してもリポジトリには反映されない
 2. **done タスクは Notion から消える** — アーカイブされて「やるべきこと」だけが画面に映る
 3. **agent-backlog.md の編集後は必ず /sync-backlog** — Stop hook が忘れない仕組みを担保
-4. **`/solve-next` で1件ずつ消化** — 1ターン1件の原則。暴走防止
+4. **`/solve-next` の選定は `scripts/next_task.js` の出力を正とする**（2026-08-16 / ISSUE-088）
+   ```bash
+   node scripts/next_task.js          # 本日の担当分（data/solve_next_policy.json の dailyQuota 件）
+   node scripts/next_task.js --all    # 列全体（滞留日数つき）
+   ```
+   - 消化件数は `data/solve_next_policy.json` の `dailyQuota`（現在 **2件**）。**1件目を QAゲート通過・デプロイまで完了してから2件目に進む**（並行実装しない）。QAが落ちたらその時点で打ち切り、残りは翌日へ。CLAUDE.md 制約6は不変
+   - **滞留日数で実効優先度が1段だけ繰り上がる**（P3→P2→P1・P0へは決して昇格しない）。同点P2の列で古い課題が永久に順番待ちになる構造への対処（SEO-008 が54日滞留した実例）
+   - **オーナー本人にしか進められない課題は選ばない**（owner が片桐／status 注記に「〜待ち」等）。混ぜると毎朝それを選んでは何もできずに終わる。除外した分は必ず `👤 オーナー待ち` として別枠表示し、オーナーが自分の番だと分かる状態にする（制約11）
+   - 手で優先度を上書きしたい場合は `agent-backlog.md` の `priority` を根拠つきで書き換える。**スクリプトの出力を無視して選ばない**（選定理由が検証できなくなる）
+   - **`.claude/commands/solve-next.md` の「1ターン1件の原則」は本ルールで上書きされる**（当該ファイルは自己改変ブロックで編集できないため、憲法側で明示する）。暴走防止の意図は `dailyQuota` の上限と「1件ずつ QA を通してから次へ」で担保する
 5. **新規課題発見時は agent-backlog.md に追記** — Notion 直入力ではない（マスター違反）
 
 ### ID 接頭辞と起票責任
