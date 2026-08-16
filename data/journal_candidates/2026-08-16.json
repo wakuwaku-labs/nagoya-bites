@@ -1,0 +1,484 @@
+{
+  "date": "2026-08-16",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄のかき氷は昼だけ立つ——食べ歩きで挟む間借り営業のオペと価格",
+      "verdict": "PASS",
+      "total": 110,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "食べ歩き",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "スイーツ",
+          "feature": "features/nagoya-sweets.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 7件 (価格帯,席,相場,仕入れ,オペ,回転,業界) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 194字 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「食べ歩き」+4",
+          "タイトルにジャンル語「かき氷」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄のスイーツ、昼だけ営業が増えた理由——一人飲みの前に挟む一杯",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "スイーツ",
+          "feature": "features/nagoya-sweets.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 6件 (価格帯,席,相場,仕入れ,オペ,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 149字 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「スイーツ」+2"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -8 / brand_fit -4"
+    },
+    {
+      "id": "c3",
+      "title_draft": "名駅のかき氷、商業施設の限定区画という選択——スイーツ出店の相場",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "スイーツ",
+          "feature": "features/nagoya-sweets.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 6件 (席,相場,仕入れ,オペ,回転,業界) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 148字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「スイーツ」+2"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -8 / search_intent -4"
+    },
+    {
+      "id": "c4",
+      "title_draft": "お盆明けの栄、かき氷が閉まる前に——食べ歩きの残り時間",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "食べ歩き",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "スイーツ",
+          "feature": "features/nagoya-sweets.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (時期,相場,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 153字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「食べ歩き」+4",
+          "タイトルにジャンル語「かき氷」+2"
+        ]
+      },
+      "gate_note": "97点（自動公開ライン 100点）。主な不足: topicality -8 / uniqueness -5"
+    },
+    {
+      "id": "c5",
+      "title_draft": "遊休時間を売る側の損得——栄の間借りは貸し手に何をもたらすか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 92,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 10件 (原価,オペ,人件費,回転,歩留まり,仕込み,業界,構造,慣習,相場) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 155字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-MAGARI-001) → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "92点（自動公開ライン 100点）。主な不足: topicality -8 / search_intent -6 / brand_fit -4"
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "flexible",
+      "title_draft": "栄のかき氷は昼だけ立つ——食べ歩きで挟む間借り営業のオペと価格",
+      "lead_draft": "夜は肉バル、昼はかき氷専門店。栄・白川公園そばの「awayuki」は2026年6月22日から9月末までの期間限定で、夜営業の店の昼間を借りて立っている。同じ栄では中日ビル24階のホテルのティーラウンジも夏季限定でかき氷を出しており、価格はどちらも2,200円に着地した。原価構造がまるで違う二つの店が同額になる理由を、氷の仕入れと削りのオペ、席の回転、遊休時間の相場から業界人の目で読む。",
+      "angle": "夜営業の店の昼を借りる『間借りかき氷』が栄で同時多発。ホテルと間借り店で価格帯が同じ2,200円に着地する理由を、氷の仕入れ・削りのオペ・席の回転・遊休時間の相場から業界人が読み、食べ歩きに挟む使い方まで落とす",
+      "main_store": {
+        "name": "かき氷専門店 awayuki",
+        "id": "",
+        "area": "栄",
+        "genre": "かき氷"
+      },
+      "sources": [
+        {
+          "label": "かき氷専門店 awayuki 公式Instagram リール（氷の製法）",
+          "url": "https://www.instagram.com/reel/DcA8U49zhO6/",
+          "date": "2026-08-14"
+        },
+        {
+          "label": "かき氷専門店 awayuki 公式Instagram メニュー投稿",
+          "url": "https://www.instagram.com/p/DZzd_-5ERSb/",
+          "date": "2026-06-20"
+        },
+        {
+          "label": "名古屋情報通『古今茶家』名駅タカシマヤ ゲートタワーモールに限定オープン",
+          "url": "https://jouhou.nagoya/kokonchaya-monin2026/",
+          "date": "2026-08-04"
+        },
+        {
+          "label": "名古屋情報通『風鈴堂』栄に8月末まで限定オープン（もつ鍋店を間借り）",
+          "url": "https://jouhou.nagoya/furindo-kakigoori/",
+          "date": "2026-07-19"
+        },
+        {
+          "label": "tabemaro 名古屋のおすすめかき氷ランキングTOP14（awayuki 掲載）",
+          "url": "https://www.tabemaro.jp/column/kakigori/",
+          "date": "2026-06-30"
+        },
+        {
+          "label": "かき氷専門店 awayuki 店舗情報（営業時間・席数・支払い）",
+          "url": "https://tabelog.com/aichi/A2301/A230103/23096824/",
+          "date": "2026-06-22"
+        },
+        {
+          "label": "PR TIMES ザ ロイヤルパークホテル アイコニック 名古屋 夏季限定かき氷（2,200円）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001305.000039557.html",
+          "date": "2026-05-13"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "flexible",
+      "title_draft": "栄のスイーツ、昼だけ営業が増えた理由——一人飲みの前に挟む一杯",
+      "lead_draft": "2026年の名古屋・栄では、かき氷が「夜営業の店の昼間」に次々と立ち上がっている。awayukiは肉バルの昼を、風鈴堂はもつ鍋店の昼を借りた。どちらも営業は昼の数時間で閉まる。短時間営業は客都合ではなく、仕込み動線と削りのオペの都合だ。夜の一杯に向かう前にどう挟むか、業界人の視点で組み立てを示す。",
+      "angle": "間借り営業のスイーツが栄で増えた背景を、遊休時間の相場・仕入れ・オペ・席の回転から解き、一人飲みの前に挟む使い方と価格帯の読み方に落とす",
+      "main_store": {
+        "name": "かき氷専門店 awayuki",
+        "id": "",
+        "area": "栄",
+        "genre": "かき氷"
+      },
+      "sources": [
+        {
+          "label": "かき氷専門店 awayuki 公式Instagram リール",
+          "url": "https://www.instagram.com/reel/DcA8U49zhO6/",
+          "date": "2026-08-14"
+        },
+        {
+          "label": "名古屋情報通『風鈴堂』栄に8月末まで限定オープン",
+          "url": "https://jouhou.nagoya/furindo-kakigoori/",
+          "date": "2026-07-19"
+        },
+        {
+          "label": "tabemaro 名古屋のおすすめかき氷ランキングTOP14",
+          "url": "https://www.tabemaro.jp/column/kakigori/",
+          "date": "2026-06-30"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "flexible",
+      "title_draft": "名駅のかき氷、商業施設の限定区画という選択——スイーツ出店の相場",
+      "lead_draft": "2026年8月、名古屋駅前のタカシマヤ ゲートタワーモールにかき氷専門店の限定出店が入った。栄では夜営業店の間借りが増えている一方、名駅は商業施設の期間限定区画が受け皿になる。同じ「箱を持たない出店」でも、名駅と栄で選ばれる形が違うのはなぜか。仕入れと席の回転、そして家賃の払い方の違いから読む。",
+      "angle": "名駅は商業施設の限定区画、栄は夜営業店の間借り。同じ期間限定出店でエリアごとに形が分かれる理由を、相場・仕入れ・オペ・席の回転から業界人が比べる",
+      "main_store": {
+        "name": "古今茶家",
+        "id": "",
+        "area": "名駅",
+        "genre": "かき氷"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通『古今茶家』名駅タカシマヤ ゲートタワーモールに限定オープン",
+          "url": "https://jouhou.nagoya/kokonchaya-monin2026/",
+          "date": "2026-08-04"
+        },
+        {
+          "label": "かき氷専門店 awayuki 公式Instagram リール",
+          "url": "https://www.instagram.com/reel/DcA8U49zhO6/",
+          "date": "2026-08-14"
+        },
+        {
+          "label": "PR TIMES ザ ロイヤルパークホテル アイコニック 名古屋 夏季限定かき氷",
+          "url": "https://prtimes.jp/main/html/rd/p/000001305.000039557.html",
+          "date": "2026-05-13"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "お盆明けの栄、かき氷が閉まる前に——食べ歩きの残り時間",
+      "lead_draft": "2026年のかき氷は、栄でも名駅でも「いつまで」が決まっている。風鈴堂は8月31日まで、awayukiは9月末まで。夏季限定のホテルのかき氷も9月30日で終わる。お盆が明けた今週から9月末までが、今年の栄で削りたてを食べられる残り時間だ。閉店時期が横並びになるのは偶然ではなく、夜営業に箱を返す都合である。",
+      "angle": "期間限定かき氷の終了時期が横並びになる理由を、間借り契約の相場・夜営業への箱の返し方・オペと席の回転から読み、残暑の食べ歩きの組み方に落とす",
+      "main_store": {
+        "name": "かき氷専門店 awayuki",
+        "id": "",
+        "area": "栄",
+        "genre": "かき氷"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通『風鈴堂』栄に8月末まで限定オープン",
+          "url": "https://jouhou.nagoya/furindo-kakigoori/",
+          "date": "2026-07-19"
+        },
+        {
+          "label": "PR TIMES ザ ロイヤルパークホテル アイコニック 名古屋 夏季限定かき氷",
+          "url": "https://prtimes.jp/main/html/rd/p/000001305.000039557.html",
+          "date": "2026-05-13"
+        },
+        {
+          "label": "かき氷専門店 awayuki 公式Instagram リール",
+          "url": "https://www.instagram.com/reel/DcA8U49zhO6/",
+          "date": "2026-08-14"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "industry_insider",
+      "title_draft": "遊休時間を売る側の損得——栄の間借りは貸し手に何をもたらすか",
+      "lead_draft": "2026年の栄では、夜営業の店が昼をかき氷専門店に貸す形が増えた。借り手の話は語られるが、貸し手の損得はあまり表に出ない。昼を貸せば固定費は薄まるが、仕込み動線とゴミ、清掃の負荷は増える。冷凍庫と製氷の容量が競合すると現場は一気にきしむ。貸す側の判断基準を、原価と人件費、仕込みの段取りから業界の中の目で書く。",
+      "angle": "間借りを貸す側の損得を、原価・人件費・仕込みの段取り・オペの回転・歩留まりから構造として解き、業界の慣習と相場に触れる",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "栄",
+        "genre": ""
+      },
+      "column_id": "COL-MAGARI-001",
+      "sources": [
+        {
+          "label": "名古屋情報通『風鈴堂』栄に8月末まで限定オープン（もつ鍋店を間借り）",
+          "url": "https://jouhou.nagoya/furindo-kakigoori/",
+          "date": "2026-07-19"
+        },
+        {
+          "label": "かき氷専門店 awayuki 公式Instagram リール",
+          "url": "https://www.instagram.com/reel/DcA8U49zhO6/",
+          "date": "2026-08-14"
+        },
+        {
+          "label": "tabemaro 名古屋のおすすめかき氷ランキングTOP14",
+          "url": "https://www.tabemaro.jp/column/kakigori/",
+          "date": "2026-06-30"
+        }
+      ]
+    }
+  ]
+}
