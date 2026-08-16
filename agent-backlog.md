@@ -133,10 +133,12 @@
   6. 計測開始から2週間後、related クリック率とスクロール到達率を `data/` に固定化し、以降の回遊系アドバイスの採否を**その実数で**判定する（体感で判定しない）
 - **関連**: [[SEO-012]]（再発防止メモの実行そのもの）/ [[SEO-046]]（related ブロック自動化・done）/ [[SEO-038]]（高流入ジャーナルの回遊変換）/ [[SEO-044]]（pagesPerSession 劣化の分解診断）/ [[SEO-048]]（チャネル別CTA計測）
 
-### [ISSUE-085] 接続断のたびに生成が全工程やり直しになり、1時間半かけて成果物ゼロになる
+### [ISSUE-085] 接続断のたびに生成が全工程やり直しになり、1時間半かけて成果物ゼロになる ✅
 
-- **priority**: P1（日次公開の可用性。落ちても翌朝リトライできるが、その日の記事は失われる）→ **status**: ready
+- **priority**: P1（日次公開の可用性。落ちても翌朝リトライできるが、その日の記事は失われる）→ **status**: done
 - **detected**: 2026-08-13（[[ISSUE-084]] の対応中に実発生）
+- **resolved**: 2026-08-16
+- **resolved_by**: TBD（commit hash後記）
 - **category**: 自動化 / 可用性
 - **owner**: Builder
 
@@ -2475,6 +2477,7 @@
 | 2026-08-03 | Builder(routine) | SEO-046 refresh_journal_related.js 自動化組み込み: daily-journal.yml に「ジャーナル関連記事リンクの自動更新」ステップを追加、run_journal_local.sh の validator PASS 直後（5f節）に非ブロッキング呼び出し追加、旧 related-wrap 形式5本の SKIP ログを明示化。スクリプト未組み込みによる関連リンク欠如（直近7本が汎用リンクのみ）を恒久解消 | ✅ commit d7398333 |
 | 2026-08-13 | DataKeeper/Builder(routine) | FB-002 手羽八金山駅店の店名変更依頼を HotPepper・ぐるなび・owst.jp で3独立ソース検証 → 要求された「焼き鳥と海鮮の個室居酒屋 手羽八 金山店」は確認できず wont_fix。SEO-051 tests/featured_freshness.test.js を monthlyScenes スキーマに追従させ npm test 49 pass 0 fail を回復。SEO-053 カードの editorReason/insiderNote が おすすめポイント存在時に完全に隠れる排他条件を是正：editorReason 優先 > insiderNote > おすすめポイント の優先表示に変更、card-editor-lead::before / card-insider-lead 新設 | ✅ commit 605832d9 / 4566c11c |
 | 2026-08-13 | Builder(/solve-next) | SEO-040 実装。375px幅の実機検証で「価値提案コピー([[SEO-014]])は実装済み・特集導線([[SEO-009]])のみFV外」と判明しスコープ再定義。バナー文言はAskUserQuestionでユーザー確認（テキストのみ落ち着いたトーンを選択）→ hero-proof直下に`.hero-feature-link`追加、`data/featured.json`+`build_featured.js`の既存月次自動更新を再利用。並走セッションが起票したコピー確定エスカレーションを同日中に解消 | ✅ commit fdd8d60ce |
+| 2026-08-16 | Builder(routine) | ISSUE-085 実装。run_journal_local.sh にセクション3.6「中間成果物チェック」を追加：①下書きHTML存在時はclaude全工程スキップ→Step5自動復旧、②採点済みPASS候補存在時はStep3.5以降から再開する短縮プロンプトを使用、③どちらも無い場合は通常フロー。ログに[RESUME]/[NEW]を出力し再開か新規かを識別可能にした。acceptance①〜③全て充足 | ✅ commit TBD |
 
 ---
 

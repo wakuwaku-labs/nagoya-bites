@@ -290,33 +290,98 @@ else
   log "✅ 認証プリフライト OK"
 fi
 
-PROMPT=$(tail -n +5 .claude/commands/journal-today.md)
-MAX_CLAUDE_ATTEMPTS=3
-CLAUDE_ATTEMPT=1
-while :; do
-  log "claude 生成を開始（サブスク認証・--dangerously-skip-permissions・試行 ${CLAUDE_ATTEMPT}/${MAX_CLAUDE_ATTEMPTS}）"
-  "$CLAUDE_BIN" --print "$PROMPT" --dangerously-skip-permissions >>"$LOG" 2>&1
-  CLAUDE_RC=$?
-  log "claude 終了コード: ${CLAUDE_RC}"
-  if [ "$CLAUDE_RC" = "0" ]; then
-    break
-  fi
-  if grep -qE "Invalid authentication credentials|Failed to authenticate" "$LOG"; then
-    log "認証エラーを検出。リトライしても復旧しないため即座に諦めます。"
-    break
-  fi
-  if [ "$CLAUDE_ATTEMPT" -ge "$MAX_CLAUDE_ATTEMPTS" ]; then
-    log "最大試行回数（${MAX_CLAUDE_ATTEMPTS}）に到達。諦めます。"
-    break
-  fi
-  if ! grep -qE "socket connection was closed|Connection closed mid-response|Connection error|stream (was )?(closed|interrupted)|FailedToOpenSocket|ECONNRESET|ECONNREFUSED|EPIPE|ETIMEDOUT|network|Unable to connect to API|API Error: 5[0-9][0-9]|Overloaded" "$LOG"; then
-    log "既知のネットワーク一時エラーではないためリトライしません。"
-    break
-  fi
-  log "ネットワーク一時エラーを検出。30秒待機してリトライします。"
-  sleep 30
-  CLAUDE_ATTEMPT=$((CLAUDE_ATTEMPT+1))
+# ---- 3.6 中間成果物チェック（ISSUE-085: 接続断後の再開最適化）----
+# 接続断のリトライ時に全工程をやり直す無駄を防ぐ。
+# 前回実行が残した中間成果物を確認し、前回の到達点以降から再開する。
+# ① 下書きHTML が存在 → claude 全工程をスキップし Step 5 の自動復旧に委ねる（最速）
+# ② 採点済み候補(PASS)が存在 → リサーチ+候補生成をスキップする短縮プロンプトで再開
+# ③ どちらも無し → 通常フロー（変更なし）
+# ログに [RESUME] / [NEW] を出力するので、再開か新規かを後から識別できる（acceptance ③）
+SKIP_CLAUDE=0
+RESUME_FROM_CANDIDATES=0
+
+# チェック A: 下書き HTML が存在すれば claude をスキップし Step 5 の自動復旧に委ねる
+DRAFT_HTML=""
+for f in "journal/drafts/${TODAY_JST}"-*.html; do
+  [ -e "$f" ] && DRAFT_HTML="$f" && break
 done
+if [ -n "$DRAFT_HTML" ]; then
+  DRAFT_SLUG=$(basename "$DRAFT_HTML" .html)
+  DRAFT_DEST="journal/${DRAFT_SLUG}.html"
+  log "🔄 [RESUME] 中間成果物を検出: 下書きHTML = ${DRAFT_HTML}"
+  log "   claude 全工程をスキップ。ラッパーの検証フロー（Step 5）へ直接移行します。"
+  if [ ! -f "$DRAFT_DEST" ]; then
+    mv "$DRAFT_HTML" "$DRAFT_DEST" \
+      && log "   下書きを journal/ へ昇格しました: ${DRAFT_DEST}" \
+      || log "⚠️ 昇格失敗。Step 5 の自動復旧フローで再試行します。"
+  fi
+  SKIP_CLAUDE=1
+fi
+
+# チェック B: 採点済み候補が存在し PASS 候補があれば、リサーチ+候補生成をスキップして執筆から再開
+CANDIDATES_JSON="data/journal_candidates/${TODAY_JST}.json"
+if [ "$SKIP_CLAUDE" = "0" ] && [ -f "$CANDIDATES_JSON" ]; then
+  BEST_SCORE=$(node -e "
+    try {
+      const d = require('./${CANDIDATES_JSON}');
+      const ranked = d.ranked || [];
+      const passing = ranked.find(c => c.verdict === 'PASS');
+      process.stdout.write(passing ? String(passing.total) : '0');
+    } catch(e) { process.stdout.write('0'); }
+  " 2>/dev/null || echo "0")
+  if [ "${BEST_SCORE}" -ge 95 ] 2>/dev/null; then
+    log "🔄 [RESUME] 中間成果物を検出: 採点済み候補 = ${CANDIDATES_JSON}（最高スコア: ${BEST_SCORE}）"
+    log "   Step 2〜3（リサーチ・候補生成）をスキップし、Step 3.5（写真調査）以降から再開します。"
+    RESUME_FROM_CANDIDATES=1
+  else
+    log "[NEW] 候補JSON(${CANDIDATES_JSON})を検出しましたが PASS 候補なし（最高スコア: ${BEST_SCORE}）。通常フローで再生成します。"
+  fi
+fi
+[ "$SKIP_CLAUDE" = "0" ] && [ "$RESUME_FROM_CANDIDATES" = "0" ] && log "[NEW] 中間成果物なし。通常フローで生成します。"
+
+PROMPT=$(tail -n +5 .claude/commands/journal-today.md)
+if [ "$RESUME_FROM_CANDIDATES" = "1" ]; then
+  RESUME_HEADER="【前回実行の中間成果物から再開 — [RESUME from candidates: ${TODAY_JST}]】
+data/journal_candidates/${TODAY_JST}.json に採点済みの候補アングルが保存されています。
+Step 2（テーマ取得）と Step 3（候補生成・採点）は完了済みです。
+このファイルを読んで最高スコアの PASS 候補を確認し、journal-today.md の Step 3.5（写真調査）以降から作業を再開してください。
+再開である旨を実行ログの冒頭に「[RESUME from candidates: ${TODAY_JST}]」と記録してください。"
+  PROMPT="${RESUME_HEADER}
+
+${PROMPT}"
+  log "再開プロンプトを使用します（Step 3.5 以降から再開）"
+fi
+
+if [ "$SKIP_CLAUDE" = "0" ]; then
+  MAX_CLAUDE_ATTEMPTS=3
+  CLAUDE_ATTEMPT=1
+  while :; do
+    log "claude 生成を開始（サブスク認証・--dangerously-skip-permissions・試行 ${CLAUDE_ATTEMPT}/${MAX_CLAUDE_ATTEMPTS}）"
+    "$CLAUDE_BIN" --print "$PROMPT" --dangerously-skip-permissions >>"$LOG" 2>&1
+    CLAUDE_RC=$?
+    log "claude 終了コード: ${CLAUDE_RC}"
+    if [ "$CLAUDE_RC" = "0" ]; then
+      break
+    fi
+    if grep -qE "Invalid authentication credentials|Failed to authenticate" "$LOG"; then
+      log "認証エラーを検出。リトライしても復旧しないため即座に諦めます。"
+      break
+    fi
+    if [ "$CLAUDE_ATTEMPT" -ge "$MAX_CLAUDE_ATTEMPTS" ]; then
+      log "最大試行回数（${MAX_CLAUDE_ATTEMPTS}）に到達。諦めます。"
+      break
+    fi
+    if ! grep -qE "socket connection was closed|Connection closed mid-response|Connection error|stream (was )?(closed|interrupted)|FailedToOpenSocket|ECONNRESET|ECONNREFUSED|EPIPE|ETIMEDOUT|network|Unable to connect to API|API Error: 5[0-9][0-9]|Overloaded" "$LOG"; then
+      log "既知のネットワーク一時エラーではないためリトライしません。"
+      break
+    fi
+    log "ネットワーク一時エラーを検出。30秒待機してリトライします。"
+    sleep 30
+    CLAUDE_ATTEMPT=$((CLAUDE_ATTEMPT+1))
+  done
+else
+  log "🔄 [RESUME] claude 全工程をスキップしました（下書きHTMLから直接 Step 5 へ）"
+fi
 
 # ---- 5. 検証 ----
 # (a) published.json に本日エントリが入ったか
