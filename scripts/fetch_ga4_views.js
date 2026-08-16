@@ -219,8 +219,47 @@ async function fetchSiteMetrics(analyticsdata) {
       ? Math.round((outboundClicks / totals.sessions) * 1000) / 10  // 対セッション％
       : 0;
 
+    // チャネル別 CTA クリック率（SEO-048）
+    // organic/direct/social 別にクリック数を集計し、チャネル別セッション数で割って比率を出す。
+    // 合算値だけでは「チャネル構成の変化」と「サイト品質の変化」を区別できないため。
+    try {
+      const ctaChannelRes = await analyticsdata.properties.runReport({
+        property: `properties/${PROPERTY}`,
+        requestBody: {
+          dateRanges,
+          metrics: [{ name: 'eventCount' }],
+          dimensions: [{ name: 'sessionSource' }, { name: 'sessionMedium' }],
+          dimensionFilter: {
+            filter: {
+              fieldName: 'eventName',
+              stringFilter: { matchType: 'EXACT', value: 'outbound_click' },
+            },
+          },
+          orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+          limit: '50',
+        },
+      });
+      const ctaByChannel = { organic: 0, direct: 0, social: 0, referral: 0, paid: 0, other: 0 };
+      for (const row of ctaChannelRes.data.rows || []) {
+        const src = row.dimensionValues[0].value;
+        const med = row.dimensionValues[1].value;
+        const cnt = parseInt(row.metricValues[0].value, 10) || 0;
+        ctaByChannel[classifyChannel(src, med)] += cnt;
+      }
+      cta.byChannel = ctaByChannel;
+      cta.ctaClickRate_organic = channels.organic > 0
+        ? Math.round((ctaByChannel.organic / channels.organic) * 1000) / 10 : 0;
+      cta.ctaClickRate_direct = channels.direct > 0
+        ? Math.round((ctaByChannel.direct / channels.direct) * 1000) / 10 : 0;
+      cta.ctaClickRate_social = channels.social > 0
+        ? Math.round((ctaByChannel.social / channels.social) * 1000) / 10 : 0;
+    } catch (chErr) {
+      cta.note = (cta.note ? cta.note + ' / ' : '') + `チャネル別CTA集計エラー: ${chErr.message}`;
+    }
+
     // 任意: link_domain カスタムディメンションが登録されていればドメイン別内訳も取る。
     // 未登録なら API がエラーを返すので握りつぶしてスキップ。
+    // 帰属不明分（byDomain 合計 < outboundClicks）は末尾に明示する（SEO-048 acceptance 3）。
     try {
       const domRes = await analyticsdata.properties.runReport({
         property: `properties/${PROPERTY}`,
@@ -238,14 +277,20 @@ async function fetchSiteMetrics(analyticsdata) {
           limit: '15',
         },
       });
-      cta.byDomain = (domRes.data.rows || [])
+      const attributed = (domRes.data.rows || [])
         .map(row => ({
           domain: row.dimensionValues[0].value,
           clicks: parseInt(row.metricValues[0].value, 10) || 0,
         }))
         .filter(d => d.domain && d.domain !== '(not set)');
+      const attributedSum = attributed.reduce((s, d) => s + d.clicks, 0);
+      const unattributed = outboundClicks - attributedSum;
+      cta.byDomain = attributed;
+      if (unattributed > 0) {
+        cta.byDomain.push({ domain: '(unattributed)', clicks: unattributed });
+      }
     } catch (domErr) {
-      cta.note = 'link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ';
+      cta.note = (cta.note ? cta.note + ' / ' : '') + 'link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ';
     }
   } catch (ctaErr) {
     cta.note = `outbound_click 集計エラー: ${ctaErr.message}`;

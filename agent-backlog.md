@@ -423,7 +423,7 @@
 
 ### [SEO-048] チャネル別CTAクリック率を分解計測する（organic/direct/social で分けて測定構造を整備）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-08-01
 - **category**: SEO
 - **owner**: Marketer
