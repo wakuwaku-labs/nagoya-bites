@@ -8,6 +8,33 @@
 
 ## 進行中・完了タスク
 
+### [SEO-057] 日次/週次レポートが「生成AI流入」を名前で呼べず、最大流入元が `(not set) / (not set)` として届いている（改善ループの入力そのものが歪む）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-08-17
+- **category**: SEO / data-quality
+- **owner**: Marketer
+- **source**: 週次レポート(LINE) 2026-08-10〜2026-08-16 原文「流入元 TOP3: Google検索(30%) / Bing検索(24%) / Yahoo検索(20%)」「検索流入比率が76%と高い一方で、SNS流入比率は5%と低い状況です」＋ 日次レポート(LINE) 2026-08-16 原文「【どこから来た？ TOP3】① (not set) / (not set)（11訪問 / 29%）」
+- **brand-filter**: ✅ 適合 — CLAUDE.md の競合カテゴリ **F. 生成AI引用**（Google AI Overviews / Perplexity / ChatGPT / Gemini / Claude）は我々が観測すべき発見導線として明記されている。順位操作でも装飾でもなく、**計測の正確化**のみ。ISSUE-084 の「警報は鳴っていたが防音室の中で鳴っていた」と同型で、実データは既に取れているのにオーナーが毎朝読む面へ名前付きで届いていない
+- **trend**: 週次で 訪問者 198人(-1%)・閲覧数 246(-16%)・訪問回数 211(-9%) と横ばい〜微減だが、**流入の構成比を正しく読めていない**ため打ち手が毎週同じ3件（回遊・マップ導線・SNS）に収束している。`data/search_channel_metrics.json`（直近30日 806セッション）では 生成AI が **122セッション / 15.1%** で Bing・Google に次ぐ第3位の発見チャネルなのに、週次レポートの「流入元 TOP3」には一度も現れない
+- **問題（検証済みの事実のみ）**:
+  1. `.gas-deploy/Code.js` および `Google分析オートLINE送信.js` の `sourceToName(src, medium)` に **AI アシスタント系の分岐が1つも無い**（両ファイルとも `chatgpt|perplexity|ai-assistant|生成AI` の出現数 **0**）
+  2. そのため実際の GA4 の source/medium は次のように壊れて表示される:
+     - `chatgpt.com / ai-assistant`（80セッション）→ 最終行 `return s + ' / ' + m` に落ちて生の文字列のまま
+     - `openai / organic`（23セッション）→ `if (m === 'organic') return s + '検索'` に食われて **「openai検索」** と誤ラベル
+     - `openai / (not set)`（15）・`copilot.com / (not set)`（4）→ 生の `(not set)` 表記
+     - ＝ 2026-08-16 の日次レポートで **TOP1 が「(not set) / (not set) 11訪問 / 29%」** になっていたのはこの経路
+  3. 結果、レポート自身が出すアドバイスの前提が歪む。今週の「SNS流入比率は5%と低い」という指摘は、**SNS でも直接でもない生成AI経由の15%を勘定に入れないまま**出されている
+- **なぜ今か**: `scripts/search_channel_metrics.js`（SEO-039）で CLI 側には既に正しい内訳が出ている。足りないのは**オーナーが毎朝実際に読む面へ運ぶこと**だけで、実装は分類関数への分岐追加に閉じる
+- **acceptance**:
+  - `.gas-deploy/Code.js` の `sourceToName()` に生成AI分岐を追加（`chatgpt.com` / `openai` / `perplexity` / `gemini`・`bard` / `copilot` / medium `ai-assistant` を「🤖 生成AI（ChatGPT等）」へ集約）。**`m === 'organic'` の総称分岐より前に置く**こと（そうしないと `openai / organic` が「openai検索」に食われて再発する）
+  - 分類の語彙は `scripts/search_channel_metrics.js` の判定と**同じ集合**にする（2箇所で別々に育てない。差分が出たら CLI 側を正とする）
+  - 週次の「流入元 TOP3」と日次の「どこから来た？」に生成AIが名前で出ること、`(not set) / (not set)` が TOP に現れないことを、反映後の最初のレポートで確認
+  - 数値そのものは一切書き換えない（表示ラベルの分類のみ。制約10）
+- **オーナー操作待ちの依存**: `.gas-deploy/Code.js` はリポジトリ内ミラーで、実行主体は GAS 側。反映にはオーナーによる GAS エディタへの反映（コピペ or `clasp push`）が必要。**[[SEO-047]] が同じ理由で「コード修正済み・デプロイ待ち」で滞留中（18日）のため、この修正は SEO-047 と同じファイルに載せ、オーナーのデプロイ操作を1回で済ませる**こと
+- **files**: `.gas-deploy/Code.js`
+- **関連**: [[SEO-047]]（同ファイル・同じくデプロイ待ち。同時反映）/ [[SEO-039]]（CLI側で既に正しい内訳を出している実装。語彙の正）/ [[SEO-043]]（GSC は Google しか映さない＝生成AI・Bing は GSC ループの外側という同じ盲点の別側面）
+
 ### [ISSUE-088] 課題の列が詰まる構造を是正する — 消化レート・滞留繰り上げ・オーナー待ちの分離 ✅
 
 - **priority**: P1 → **status**: done
