@@ -66,7 +66,13 @@ function readSiteMetrics() {
       totals: m.totals,
       channels_pct: m.channels && m.channels.pct ? m.channels.pct : null,
       search_channels: searchChannels,
-      cta: m.cta ? { outboundClicks: m.cta.outboundClicks, ctaClickRate: m.cta.ctaClickRate } : null,
+      cta: m.cta ? {
+        outboundClicks: m.cta.outboundClicks,
+        ctaClickRate: m.cta.ctaClickRate,
+        ctaClickRate_organic: m.cta.ctaClickRate_organic ?? null,
+        ctaClickRate_direct:  m.cta.ctaClickRate_direct  ?? null,
+        ctaClickRate_social:  m.cta.ctaClickRate_social  ?? null,
+      } : null,
     };
   } catch (e) { return null; }
 }
