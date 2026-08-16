@@ -489,6 +489,13 @@ fi
 log "関連記事リンクを更新（refresh_journal_related.js）"
 node scripts/refresh_journal_related.js >>"$LOG" 2>&1 || log "⚠️ refresh_journal_related.js 失敗（非ブロッキング）"
 
+# ---- 5g. サイト紹介文を記事冒頭に注入（SEO-008）----
+# 「NAGOYA BITES — 名古屋の厳選1,100店超…」1行 + index.html リンクを art-body 先頭に設置。
+# 検索流入で入ったユーザーがサイト全体を知らないまま離脱するのを防ぐ。
+# 失敗しても記事公開を止めないため非ブロッキング（|| true）。
+log "サイト紹介文を記事冒頭に注入（add_journal_site_intro.js）"
+node scripts/add_journal_site_intro.js "$ARTICLE_HTML" >>"$LOG" 2>&1 || log "⚠️ add_journal_site_intro.js 失敗（非ブロッキング）"
+
 # ---- 6. ラッパーが commit & push を確実に実行 ----
 # claude (journal-today.md Step 10) は「ユーザー承認後のみ push」と定義されているため
 # ヘッドレスでは承認者が居らず未 push 終了になる。それを補うため、ここで強制 commit/push する。

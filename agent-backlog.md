@@ -421,9 +421,11 @@
 - **効果測定**: 実装翌週の `data/metrics_history.json` および LINE 日次レポートで `cta_gmap_click` が 0 から動くかを前後比で判定する。**0のままなら「導線がない」以外の原因が残っている**という切り分けが成立する（現状は原因を分離できない）
 - **ブランドガードレール**: 予約導線の収益化（アフィリエイト・送客手数料）は制約8によりユーザー承認が別途必須。本タスクは**UX・計測のみ**
 
-### [SEO-048] チャネル別CTAクリック率を分解計測する（organic/direct/social で分けて測定構造を整備）
+### [SEO-048] チャネル別CTAクリック率を分解計測する（organic/direct/social で分けて測定構造を整備） ✅
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-16
+- **resolved_by**: 5c74d77
 - **detected**: 2026-08-01
 - **category**: SEO
 - **owner**: Marketer
@@ -1322,7 +1324,7 @@
 - **注記**: 出典の直帰率100%は訪問10人/1日の小サンプルでノイズ。ただし「入口=ジャーナル記事の検索意図一致」という打ち手自体は週次トレンド（流入がジャーナルに集中）とも整合する恒常施策のため採用。
 
 ### [SEO-008] 検索流入が集中するジャーナル記事の冒頭にサイト紹介文＋index.htmlリンクを設置し専門性を伝え回遊させる
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-06-23
 - **category**: SEO
 - **owner**: Editor
@@ -2478,6 +2480,7 @@
 | 2026-08-13 | DataKeeper/Builder(routine) | FB-002 手羽八金山駅店の店名変更依頼を HotPepper・ぐるなび・owst.jp で3独立ソース検証 → 要求された「焼き鳥と海鮮の個室居酒屋 手羽八 金山店」は確認できず wont_fix。SEO-051 tests/featured_freshness.test.js を monthlyScenes スキーマに追従させ npm test 49 pass 0 fail を回復。SEO-053 カードの editorReason/insiderNote が おすすめポイント存在時に完全に隠れる排他条件を是正：editorReason 優先 > insiderNote > おすすめポイント の優先表示に変更、card-editor-lead::before / card-insider-lead 新設 | ✅ commit 605832d9 / 4566c11c |
 | 2026-08-13 | Builder(/solve-next) | SEO-040 実装。375px幅の実機検証で「価値提案コピー([[SEO-014]])は実装済み・特集導線([[SEO-009]])のみFV外」と判明しスコープ再定義。バナー文言はAskUserQuestionでユーザー確認（テキストのみ落ち着いたトーンを選択）→ hero-proof直下に`.hero-feature-link`追加、`data/featured.json`+`build_featured.js`の既存月次自動更新を再利用。並走セッションが起票したコピー確定エスカレーションを同日中に解消 | ✅ commit fdd8d60ce |
 | 2026-08-16 | Builder(routine) | ISSUE-085 実装。run_journal_local.sh にセクション3.6「中間成果物チェック」を追加：①下書きHTML存在時はclaude全工程スキップ→Step5自動復旧、②採点済みPASS候補存在時はStep3.5以降から再開する短縮プロンプトを使用、③どちらも無い場合は通常フロー。ログに[RESUME]/[NEW]を出力し再開か新規かを識別可能にした。acceptance①〜③全て充足 | ✅ commit e7febc1 |
+| 2026-08-16 | Marketer(routine) | SEO-048 実装。fetch_ga4_views.js に outbound_click をチャネル別（organic/direct/social）に集計する GA4 クエリを追加し ctaClickRate_organic/ctaClickRate_direct/ctaClickRate_social を site_metrics.json の cta オブジェクトに追記。byDomain 未帰属分を (unattributed) エントリで可視化。track_metrics.js のスナップショットにも3指標を追記。acceptance①②③全て充足 | ✅ commit 5c74d77 |
 
 ---
 
