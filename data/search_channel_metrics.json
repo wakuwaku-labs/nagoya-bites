@@ -1,16 +1,16 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-08-16T04:30:23.305Z",
+  "generatedAt": "2026-08-16T04:53:23.612Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 803,
+  "total_sessions": 805,
   "engines": [
     {
       "key": "bing",
       "label": "Bing",
       "sessions": 223,
-      "pct": 27.8,
+      "pct": 27.7,
       "sources": [
         {
           "source": "bing",
@@ -23,7 +23,7 @@
       "key": "google",
       "label": "Google",
       "sessions": 186,
-      "pct": 23.2,
+      "pct": 23.1,
       "sources": [
         {
           "source": "google",
@@ -35,8 +35,8 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 176,
-      "pct": 21.9,
+      "sessions": 177,
+      "pct": 22,
       "sources": [
         {
           "source": "(direct)",
@@ -46,7 +46,7 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 15
+          "sessions": 16
         }
       ]
     },
@@ -81,13 +81,13 @@
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 91,
-      "pct": 11.3,
+      "sessions": 92,
+      "pct": 11.4,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 91
+          "sessions": 92
         }
       ]
     },
@@ -106,31 +106,31 @@
     }
   ],
   "search_only": {
-    "total": 627,
+    "total": 628,
     "share": [
       {
         "key": "bing",
         "label": "Bing",
         "sessions": 223,
-        "pct_of_search": 35.6
+        "pct_of_search": 35.5
       },
       {
         "key": "google",
         "label": "Google",
         "sessions": 186,
-        "pct_of_search": 29.7
+        "pct_of_search": 29.6
       },
       {
         "key": "ai_assistant",
         "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
         "sessions": 122,
-        "pct_of_search": 19.5
+        "pct_of_search": 19.4
       },
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 91,
-        "pct_of_search": 14.5
+        "sessions": 92,
+        "pct_of_search": 14.6
       },
       {
         "key": "duckduckgo",
@@ -141,15 +141,15 @@
     ]
   },
   "trend": {
-    "from": "2026-08-14",
-    "to": "2026-08-15",
+    "from": "2026-08-15",
+    "to": "2026-08-16",
     "delta": {
-      "bing": -1,
-      "google": 10,
-      "direct": -4,
-      "ai_assistant": 4,
+      "bing": 0,
+      "google": 2,
+      "direct": 2,
+      "ai_assistant": 1,
       "yahoo": 1,
-      "duckduckgo": 1
+      "duckduckgo": 0
     }
   },
   "blind_spots": [
