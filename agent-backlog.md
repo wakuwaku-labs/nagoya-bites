@@ -1323,8 +1323,10 @@
 - **ブランドガードレール**: 編集独立を維持（広告・PR・送客手数料導線なし・制約7/8）。タイトルは内容に忠実に。
 - **注記**: 出典の直帰率100%は訪問10人/1日の小サンプルでノイズ。ただし「入口=ジャーナル記事の検索意図一致」という打ち手自体は週次トレンド（流入がジャーナルに集中）とも整合する恒常施策のため採用。
 
-### [SEO-008] 検索流入が集中するジャーナル記事の冒頭にサイト紹介文＋index.htmlリンクを設置し専門性を伝え回遊させる
-- **priority**: P2 → **status**: in_progress
+### [SEO-008] 検索流入が集中するジャーナル記事の冒頭にサイト紹介文＋index.htmlリンクを設置し専門性を伝え回遊させる ✅
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-16
+- **resolved_by**: 3ddad7a
 - **detected**: 2026-06-23
 - **category**: SEO
 - **owner**: Editor
@@ -2481,6 +2483,7 @@
 | 2026-08-13 | Builder(/solve-next) | SEO-040 実装。375px幅の実機検証で「価値提案コピー([[SEO-014]])は実装済み・特集導線([[SEO-009]])のみFV外」と判明しスコープ再定義。バナー文言はAskUserQuestionでユーザー確認（テキストのみ落ち着いたトーンを選択）→ hero-proof直下に`.hero-feature-link`追加、`data/featured.json`+`build_featured.js`の既存月次自動更新を再利用。並走セッションが起票したコピー確定エスカレーションを同日中に解消 | ✅ commit fdd8d60ce |
 | 2026-08-16 | Builder(routine) | ISSUE-085 実装。run_journal_local.sh にセクション3.6「中間成果物チェック」を追加：①下書きHTML存在時はclaude全工程スキップ→Step5自動復旧、②採点済みPASS候補存在時はStep3.5以降から再開する短縮プロンプトを使用、③どちらも無い場合は通常フロー。ログに[RESUME]/[NEW]を出力し再開か新規かを識別可能にした。acceptance①〜③全て充足 | ✅ commit e7febc1 |
 | 2026-08-16 | Marketer(routine) | SEO-048 実装。fetch_ga4_views.js に outbound_click をチャネル別（organic/direct/social）に集計する GA4 クエリを追加し ctaClickRate_organic/ctaClickRate_direct/ctaClickRate_social を site_metrics.json の cta オブジェクトに追記。byDomain 未帰属分を (unattributed) エントリで可視化。track_metrics.js のスナップショットにも3指標を追記。acceptance①②③全て充足 | ✅ commit 5c74d77 |
+| 2026-08-16 | Editor(routine) | SEO-008 実装。scripts/add_journal_site_intro.js を新設（冪等・art-body 先頭に NAGOYA BITES 紹介文+index.html リンクを注入）。既存 journal/2026-*.html 全100本に一括適用。run_journal_local.sh Step 5g を追加して今後の記事にも自動適用。acceptance（今後分+流入上位の既存記事に設置・JSON-LD・本文構造維持）充足 | ✅ commit 3ddad7a |
 
 ---
 
