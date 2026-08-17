@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-08-17T07:37:19.445Z",
+  "generatedAt": "2026-08-17T09:29:33.860Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 711,
-    "pageViews": 1093,
-    "sessions": 826,
-    "avgSessionDuration": 143.7,
-    "bounceRate": 0.344,
-    "pagesPerSession": 1.32
+    "activeUsers": 713,
+    "pageViews": 1109,
+    "sessions": 830,
+    "avgSessionDuration": 152.3,
+    "bounceRate": 0.345,
+    "pagesPerSession": 1.34
   },
   "channels": {
     "sessions": {
-      "organic": 534,
-      "direct": 191,
+      "organic": 537,
+      "direct": 193,
       "social": 87,
       "referral": 16,
       "paid": 0,
@@ -20,8 +20,8 @@
     },
     "pct": {
       "organic": 64.5,
-      "direct": 23.1,
-      "social": 10.5,
+      "direct": 23.2,
+      "social": 10.4,
       "referral": 1.9,
       "paid": 0,
       "other": 0
@@ -31,12 +31,12 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 216
+      "sessions": 217
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 193
+      "sessions": 195
     },
     {
       "source": "(direct)",
@@ -64,13 +64,13 @@
       "sessions": 15
     },
     {
-      "source": "duckduckgo",
-      "medium": "organic",
-      "sessions": 7
-    },
-    {
       "source": "(not set)",
       "medium": "(not set)",
+      "sessions": 9
+    },
+    {
+      "source": "duckduckgo",
+      "medium": "organic",
       "sessions": 7
     },
     {
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 167,
-      "sessions": 114
+      "pageViews": 178,
+      "sessions": 116
     },
     {
       "path": "/features/nagoya-solo-dining.html",
@@ -102,13 +102,13 @@
     },
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
-      "pageViews": 54,
-      "sessions": 51
+      "pageViews": 55,
+      "sessions": 52
     }
   ],
   "cta": {
     "outboundClicks": 79,
-    "ctaClickRate": 9.6,
+    "ctaClickRate": 9.5,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -177,12 +177,279 @@
       "other": 0
     },
     "ctaClickRate_organic": 4.3,
-    "ctaClickRate_direct": 17.3,
-    "ctaClickRate_social": 26.4
+    "ctaClickRate_direct": 17.1,
+    "ctaClickRate_social": 26.4,
+    "byPage": [
+      {
+        "path": "/features/nagoya-kaoawase-washoku.html",
+        "clicks": 32
+      },
+      {
+        "path": "/",
+        "clicks": 20
+      },
+      {
+        "path": "/features/nagoya-hitsumabushi.html",
+        "clicks": 3
+      },
+      {
+        "path": "/features/nagoya-solo-dining.html",
+        "clicks": 3
+      },
+      {
+        "path": "/journal/2026-08-03-osu-shindo-weekly.html",
+        "clicks": 3
+      },
+      {
+        "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
+        "clicks": 3
+      },
+      {
+        "path": "/journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html",
+        "clicks": 2
+      },
+      {
+        "path": "/features/birthday-surprise.html",
+        "clicks": 1
+      },
+      {
+        "path": "/features/osu-food-walk.html",
+        "clicks": 1
+      },
+      {
+        "path": "/index.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-05-20-bib-gourmand-economics.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-05-31-grill-tsubaki-meiekimae.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-06-14-yoroniku-nagoya-haera.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-07-13-weekly-shinten-tsurumai-sakae.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-07-27-owarisanso-kurogi.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-10-nagoya-shinten-cospa-week.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-11-imaike-mitsushi-sosaku-udon.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-14-obon-latter-half-marunouchi.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-16-sakae-magari-kakigori.html",
+        "clicks": 1
+      }
+    ],
+    "byPageDomain": [
+      {
+        "path": "/features/nagoya-kaoawase-washoku.html",
+        "domain": "tabelog.com",
+        "clicks": 29
+      },
+      {
+        "path": "/",
+        "domain": "tabelog.com",
+        "clicks": 5
+      },
+      {
+        "path": "/",
+        "domain": "maps.google.com",
+        "clicks": 4
+      },
+      {
+        "path": "/",
+        "domain": "www.hotpepper.jp",
+        "clicks": 3
+      },
+      {
+        "path": "/",
+        "domain": "www.instagram.com",
+        "clicks": 3
+      },
+      {
+        "path": "/features/nagoya-hitsumabushi.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 3
+      },
+      {
+        "path": "/features/nagoya-solo-dining.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 3
+      },
+      {
+        "path": "/",
+        "domain": "www.google.com",
+        "clicks": 2
+      },
+      {
+        "path": "/",
+        "domain": "www.tiktok.com",
+        "clicks": 2
+      },
+      {
+        "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
+        "domain": "jouhou.nagoya",
+        "clicks": 2
+      },
+      {
+        "path": "/",
+        "domain": "x.com",
+        "clicks": 1
+      },
+      {
+        "path": "/features/birthday-surprise.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/features/osu-food-walk.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/index.html",
+        "domain": "maps.google.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-05-20-bib-gourmand-economics.html",
+        "domain": "www.walkerplus.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-05-31-grill-tsubaki-meiekimae.html",
+        "domain": "www.tablecheck.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-06-14-yoroniku-nagoya-haera.html",
+        "domain": "haera.parco.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-07-13-weekly-shinten-tsurumai-sakae.html",
+        "domain": "www.instagram.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-07-27-owarisanso-kurogi.html",
+        "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-03-osu-shindo-weekly.html",
+        "domain": "biz.chunichi.co.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-03-osu-shindo-weekly.html",
+        "domain": "jouhou.nagoya",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-03-osu-shindo-weekly.html",
+        "domain": "prtimes.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
+        "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-10-nagoya-shinten-cospa-week.html",
+        "domain": "jouhou.nagoya",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-11-imaike-mitsushi-sosaku-udon.html",
+        "domain": "jouhou.nagoya",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
+        "domain": "jouhou.nagoya",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-14-obon-latter-half-marunouchi.html",
+        "domain": "www.instagram.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-16-sakae-magari-kakigori.html",
+        "domain": "tabelog.com",
+        "clicks": 1
+      }
+    ],
+    "reservationClicksByPage": [
+      {
+        "path": "/features/nagoya-kaoawase-washoku.html",
+        "clicks": 29
+      },
+      {
+        "path": "/",
+        "clicks": 8
+      },
+      {
+        "path": "/features/nagoya-hitsumabushi.html",
+        "clicks": 3
+      },
+      {
+        "path": "/features/nagoya-solo-dining.html",
+        "clicks": 3
+      },
+      {
+        "path": "/features/birthday-surprise.html",
+        "clicks": 1
+      },
+      {
+        "path": "/features/osu-food-walk.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-05-31-grill-tsubaki-meiekimae.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-07-27-owarisanso-kurogi.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-16-sakae-magari-kakigori.html",
+        "clicks": 1
+      }
+    ],
+    "reservationClicks": 49
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 711,
+    "value": 713,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
