@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-08-17T06:43:15.047Z",
+  "generatedAt": "2026-08-17T07:24:37.737Z",
   "lookbackDays": 30,
   "totals": {
     "activeUsers": 710,
-    "pageViews": 1086,
-    "sessions": 823,
-    "avgSessionDuration": 144.7,
-    "bounceRate": 0.362,
-    "pagesPerSession": 1.32
+    "pageViews": 1092,
+    "sessions": 824,
+    "avgSessionDuration": 144,
+    "bounceRate": 0.342,
+    "pagesPerSession": 1.33
   },
   "channels": {
     "sessions": {
       "organic": 533,
-      "direct": 201,
-      "social": 86,
+      "direct": 190,
+      "social": 87,
       "referral": 16,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 63.8,
-      "direct": 24,
-      "social": 10.3,
+      "organic": 64.5,
+      "direct": 23,
+      "social": 10.5,
       "referral": 1.9,
       "paid": 0,
       "other": 0
@@ -41,7 +41,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 162
+      "sessions": 164
     },
     {
       "source": "yahoo",
@@ -51,17 +51,12 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 81
+      "sessions": 82
     },
     {
       "source": "openai",
       "medium": "organic",
       "sessions": 22
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 17
     },
     {
       "source": "openai",
@@ -74,6 +69,11 @@
       "sessions": 7
     },
     {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 6
+    },
+    {
       "source": "copilot.com",
       "medium": "(not set)",
       "sessions": 4
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 162,
-      "sessions": 112
+      "pageViews": 163,
+      "sessions": 113
     },
     {
       "path": "/features/nagoya-solo-dining.html",
@@ -170,15 +170,15 @@
     "note": null,
     "byChannel": {
       "organic": 23,
-      "direct": 35,
-      "social": 21,
+      "direct": 33,
+      "social": 23,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
     "ctaClickRate_organic": 4.3,
     "ctaClickRate_direct": 17.4,
-    "ctaClickRate_social": 24.4
+    "ctaClickRate_social": 26.4
   },
   "stageAssessment": {
     "metric": "activeUsers",
