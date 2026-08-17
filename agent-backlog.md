@@ -8,6 +8,138 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-089] 消費者フィードバックループが Gmail 検索の偽陰性で利用者の声を静かに落とす ✅
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-08-17
+- **category**: 自動化・監視
+- **owner**: Orchestrator（実装）/ Builder・DataKeeper（運用）
+- **source**: 2026-08-17 の `nagoya-bites-feedback-triage-daily` 実行中にオーナーが観測
+
+**観測事実（検証できる事実のみ・制約10）**:
+同一セッション内で、ポリシー既定のクエリ `subject:"[site-feedback]" newer_than:2d` を Gmail MCP で2回実行した。
+- 1回目: **0件**。フォールバック `from:formspree.io newer_than:2d "[site-feedback]"` も0件。
+  窓を広げた `from:formspree.io newer_than:7d` では **08-11 の古い1件のみ**ヒットし、08-16 の投稿は現れなかった
+- 2回目（数分後・クエリ文字列は完全に同一）: 08-16 17:01Z の新着（msg id `1a00b850acf3e0d4`）が正常にヒット
+- この日は人が「もう一度試す」と指示したため拾えた。**無人実行なら「新着なし」で静かに正常終了し、
+  FB-003 は永久に失われていた**
+
+**原因の切り分け**:
+1. **`newer_than` の境界解釈ではない**（棄却）。当該メールは 08-16 17:01Z＝**08-17 02:01 JST**。
+   実行時点で経過 約14時間 ≪ 48時間。Gmail の日境界丸めを考慮しても窓の内側。
+   さらに 7日窓でも出なかったので、窓の広さでは説明できない
+2. **クエリ構文の問題でもない**（棄却）。同一文字列の2回目がヒットしている
+3. **完全な障害でもない**（棄却）。失敗した試行でも 08-11 の古いメールは返っている
+   → **バックエンドは応答していたが、新着をまだ含まない状態を返した**
+4. 残るのは**検索インデックスの鮮度／レプリカ遅延に類する一過性の偽陰性**。
+   post-hoc に確定はできず、**確定しなくても設計は決まる**（後述）
+
+**設計上の含意**: 原因が何であれ、このループの検知器は Gmail 検索1本しかなく、その偽陰性は
+現状の設計で「投稿が無かった」と**完全に同一の出力**になる。CLAUDE.md「無人自動化の監視を
+設計するときの原則」（ISSUE-084）の原則3「気づけるはずを検知と数えない」に真正面から該当する。
+
+**実装した対策（3層）**:
+1. **窓を広げて毎日引き直す＋台帳突合で冪等化**（`data/feedback_policy.json` の `gmail_retrieval`）
+   - `primary_query` を `newer_than:2d` → **`newer_than:7d`**。窓は「処理する量」ではなく
+     「取りこぼしを回収できる期間」。`msg_id` 台帳（`feedback_log.json`）との突合で再処理は
+     完全に防げるため、窓を狭くする利点はゼロだった
+   - 差分器を追加: `node scripts/feedback_triage.js --unseen-msg-ids '[...]'`
+   - **これにより、ある日の偽陰性が翌日以降に自動で回収される**（1日の失敗が恒久的な損失にならない）
+2. **0件を1回で確定させない**（同 `sweep_query` / `retry_on_empty`）
+   - 0件時は `from:formspree.io newer_than:14d in:anywhere` で再確認。Gmail 検索は既定で
+     **迷惑メール/ゴミ箱を除外する**が、Formspree の自動通知はその判定を受けうる
+   - なお1回目は7日窓でも失敗しているため、**同一実行内で窓を広げるだけでは救えなかった**。
+     観測上は「数分の時間差」が効いたので、Step 1 の読み込みと健診を挟んでから投げ直す規則にした
+   - リトライが救うのは数分程度の鮮度遅れのみ。それより長いものは 1 の広い窓が回収する（二段構え）
+3. **生存確認を out-of-band に出す**（ISSUE-084 原則1・2の適用）
+   - `data/feedback_health.json`（心拍）を **新着0件の日も**書いてコミット。
+     0件の日はコミットする成果物が無いため、書かないと「動いて0件」と「動かなかった／
+     Gmail を引けなかった」が外から区別できない
+   - `.github/workflows/feedback-watchdog.yml`（毎日13:00 JST・サーバ側）が鮮度を監視し、
+     `max_silence_days`（既定3日）超過で Issue 起票＝**オーナーにメール**、復旧で自動クローズ
+   - **「フィードバックが N 日0件」では鳴らさない**。実績で月3件程度・8日以上の空白は平常であり、
+     これを鳴らすとオオカミ少年になる（原則6）。鳴らすのは「**ルーチンが報告してこないこと**」だけ
+   - 判定は検証できる事実で行う（制約10）: 心拍ファイルの実在と `last_run.date` の鮮度。
+     **鮮度は自己申告できない**——動いていないエージェントはファイルを更新できない
+   - Gmail を引けなかった場合は 0件と報告せず `status: "gmail_error"` を残す規則を追加
+     （「引けなかった」を「無かった」に混ぜない）
+
+**検証済み**:
+- `check_feedback_health.js` の4系統を実行確認: 健全=exit 0 / 心拍なし=`no_heartbeat` exit 1 /
+  5日前=`stale_heartbeat` exit 1 / `gmail_error`=exit 1。`late_recovered>0` は警告として表示
+- `--unseen-msg-ids` が既知2件を `seen`・未知2件を `unseen` に正しく分離
+- 既存サブコマンド（`--next-id` / `--check-dup` / `--report` / `--policy`）の非退行を確認
+
+**変更ファイル**: `data/feedback_policy.json`（`gmail_retrieval` / `health` / `known_residual_risk` 追加。
+`gmail_query`・`gmail_query_fallback` は二重の情報源になるため `gmail_retrieval` へ統合）/
+`docs/feedback-triage-runbook.md`（Step 0 全面改訂・Step 9 心拍追加）/ `scripts/feedback_triage.js`
+（`--unseen-msg-ids` / `--health-write`）/ `scripts/check_feedback_health.js`（新規）/
+`.github/workflows/feedback-watchdog.yml`（新規）/ `data/feedback_health.json`（新規）/ `CLAUDE.md`（索引）
+
+**デプロイ条件**: watchdog は **main に入って初めて動く**。マージ後、Actions タブで
+`workflow_dispatch` を1回手動実行して起票/クローズ経路が通ることを確認すること。
+
+---
+
+### [ISSUE-090] Formspree 側の投稿数と Gmail 台帳を突合し「メールが一度も届かなかった」を検出する
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-08-17
+- **category**: 自動化・監視
+- **owner**: 片桐（オーナー本人の操作が必須・エージェント着手不可）
+- **source**: ISSUE-089 の残存リスクとして特定
+
+**課題**: ISSUE-089 の対策はすべて **Gmail の中**で完結している。したがって
+「Formspree には届いたが Gmail に一度も配送されなかった／フィルタで削除された」投稿は、
+Gmail をどれだけ広く引いても**原理的に検出できない**（検知器と収集経路が同一系統）。
+独立した情報源との突合だけがこれを埋められる。
+
+**なぜエージェントが実施しないか**: Formspree submissions API の利用には API キーの発行と
+GitHub Secret への登録が必要で、これはクレデンシャル操作にあたるためオーナー本人が行う。
+
+**acceptance**:
+1. オーナーが Formspree で API キーを発行し、`FORMSPREE_API_KEY` として GitHub Secret に登録する
+   （無料プランで submissions API が使えない場合は、その事実を確認した時点で `wont_fix` とし、
+   代替として「Formspree ダッシュボードの件数を月1回目視で `feedback_log.json` と突合」を運用に加える）
+2. フォーム `xaqaygze` の submission 件数/IDを取得し、`feedback_log.json` の `msg_id` 台帳と
+   突合するスクリプトを追加する。**本文は取得しない**（PII を Gmail 以外に増やさない）
+3. 不一致があれば `feedback-watchdog.yml` の判定に合流させ、Issue に「Formspree にあるのに
+   未処理の投稿 N 件」として原因つきで出す（ISSUE-084 原則5）
+4. 突合は件数の一致という**検証できる事実**だけで判定する（制約10）
+
+---
+
+### [ISSUE-091] SEOアドバイスループにも同じ Gmail 偽陰性の穴があるが、修正先が `.claude/commands/` で塞げない
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-08-17
+- **category**: 自動化・監視
+- **owner**: Orchestrator
+- **source**: ISSUE-089 の調査中に構造的な同型として特定
+
+**課題**: `/seo-triage` の Step 0 も Gmail 検索1本（`subject:"📊 NAGOYA BITES 日次レポート" newer_than:2d`）
+で入力を取得しており、ISSUE-089 と**同じ偽陰性の穴**を持つ。
+
+**ただし重大度は低い**（P1 ではなく P2 とする根拠）:
+- 日次レポートは**毎日届く再発性の入力**。1日取りこぼしても翌日のレポートが上位互換の内容を運ぶため、
+  損失は回復する。対して消費者フィードバックは**1通1通が一意で、落ちたら永久に戻らない**
+- したがって ISSUE-089 と同じ3層対策は過剰。窓を広げるだけでほぼ塞がる
+
+**制約**: 修正先の `.claude/commands/seo-triage.md` は**エージェント自己改変ブロックで編集できない**
+（`.claude/settings.json` と同様。既知の制約）。よって以下のいずれかを取る必要がある。
+
+**acceptance**（いずれか1つ）:
+- (a) `data/seo_advice_policy.json`（新規）に Gmail 取得規則を置き、`scripts/seo_triage.js --policy` で
+  読ませる。`feedback_policy.json` と同じ「挙動の変更はポリシーファイルで行う」規約に揃える。
+  ただし `.claude/commands/seo-triage.md` 側に「ポリシーを読め」の一文を足せないため、
+  **オーナーによる1行の手動追記が必要**（それが済むまでは (b) の暫定運用）
+- (b) `agents/marketer.md` に「日次レポートが0件のときは窓を広げて引き直す」を明記し、
+  Marketer の常設ルールとして担保する（コマンドファイルを触らずに効かせられる）
+- どちらを取るにせよ、**心拍/watchdog は付けない**。SEO ループは日次レポートの再発性で
+  自己回復するため、監視を足すとオオカミ少年化のコストの方が上回る（ISSUE-084 原則6）
+
+---
+
 ### [FB-003] 店舗カードの信頼度セルが WCAG AA 不合格で読めない（4状態中3つが基準割れ・Moat の可視化が届いていない）
 
 - **priority**: P2 → **status**: ready

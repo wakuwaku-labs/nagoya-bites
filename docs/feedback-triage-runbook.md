@@ -24,8 +24,12 @@ NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）に�
 
 - 採用課題マスター: `agent-backlog.md`（ID 接頭辞 `FB-` / owner=Builder or DataKeeper / category=UX or データ）
 - ループの記憶（採用・fact_check・却下・重複・エスカレーションの全履歴）: `data/feedback_log.json`（append-only）
-- 判定ポリシー: `data/feedback_policy.json`（3分類ルール・Gmailクエリ・PII規則・起票上限。毎回読む）
-- 決定的ヘルパー: `node scripts/feedback_triage.js`（ID採番 / 重複検知 / PIIマスク付きログ追記 / 健診レポート）
+- 判定ポリシー: `data/feedback_policy.json`（3分類ルール・Gmail取得規則・PII規則・起票上限。毎回読む）
+- 決定的ヘルパー: `node scripts/feedback_triage.js`（ID採番 / 重複検知 / 台帳突合 / PIIマスク付きログ追記 /
+  心拍書き込み / 健診レポート）
+- 生存確認（このループが動いているかの記録）: `data/feedback_health.json`（心拍・毎日更新してコミット）
+- サーバ側監視: `.github/workflows/feedback-watchdog.yml`（毎日 13:00 JST。心拍が滞ると Issue 起票＝
+  オーナーにメール。復旧で自動クローズ）。判定器は `node scripts/check_feedback_health.js`
 - Notion 同期: 既存の `/sync-backlog`（スキーマ変更不要・そのまま流用。`ID_PREFIX_TO_OWNER` に `FB` 登録済み）
 - 収集元: index.html のフローティング「ご意見」ボタン → Formspree（`https://formspree.io/f/xaqaygze`、
   `_subject: '[site-feedback] <種類>'`）→ 通知メールが Gmail（wakato1251999@gmail.com）に届く
@@ -37,14 +41,44 @@ NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）に�
 ### Step 0: 入力の取得（引数が空＝自動運用のときのみ）
 
 引数にフィードバック本文があればそれを使い、この Step をスキップして Step 1 へ。
+
+> ⚠️ **1回の Gmail 検索を信じてはいけない**（2026-08-17 実測・ISSUE-089）
+>
+> 同一セッション内で同じクエリを2回投げ、**1回目は0件・2回目は実在する新着メールがヒット**した。
+> 1回目は窓を `newer_than:7d` に広げても新着だけが出ず、より古い 08-11 のメールは出ていた。
+> ＝ クエリ構文の問題でも窓の境界の問題でもなく、**検索インデックスの鮮度側の偽陰性**。
+> 無人実行では 0件＝「新着なし」で静かに正常終了するため、この取りこぼしは誰にも届かない。
+> 以下の手順は「取りこぼしても翌日以降に自動で回収される」ことを目的に組んである。
+
 **引数が空のとき**は Gmail MCP で Formspree 通知メールを取得する:
-1. `node scripts/feedback_triage.js --policy` で `gmail_query` を取得し、そのクエリで Gmail を検索。
-   既定は `subject:"[site-feedback]" newer_than:2d`。件名が `_subject` と一致しない場合は
-   `gmail_query_fallback`（`from:formspree.io` + 本文検索）を試す。
-2. 各メールの本文から category / store（あれば）/ body / page（あれば）と **Gmail メッセージID** を抽出する。
-3. 該当メールが**0件のときは「新着フィードバックなし」として Step 8 に進まず正常終了**（エラー扱いにしない。
-   毎日0件が普通の状態）。
-4. 取得できたら1メール=1フィードバックとして通常フローへ。
+
+1. `node scripts/feedback_triage.js --policy` を読み、`gmail_retrieval` の各値を取得する
+   （クエリ・窓・リトライ規則の**単一の情報源**。ここに書かれた値をそのまま使い、暗記した値を使わない）。
+2. `primary_query`（既定 `subject:"[site-feedback]" newer_than:7d`）で Gmail を検索する。
+   **窓が7日なのは「7日分を処理するため」ではなく「1日取りこぼしても翌日以降に拾い直すため」**。
+   再処理は 4 の台帳突合で完全に防げるので、窓を狭める利点は無い。
+3. **0件だったら、そこで終わらせない**:
+   - a. `sweep_query`（既定 `from:formspree.io newer_than:14d in:anywhere`）で引き直す。
+     Gmail の検索は既定で**迷惑メール／ゴミ箱を除外する**ため、`in:anywhere` でそこも見る。
+     件名タグの表記ゆれも `from:` なら拾える。
+   - b. それでも0件なら、**時間差を空けて `primary_query` をもう一度**投げる（`retry_on_empty`）。
+     `sleep` で待たず、**Step 1（CLAUDE.md の読み込み）と `--report` の健診を先に済ませてから**
+     投げ直すこと。実測ではこの程度の時間差で復旧した。
+   - c. a・b すべて0件で初めて「新着なし」と確定する。
+4. 拾えたメールの **Gmail メッセージID** を集め、台帳と突合して未処理分だけを処理対象にする:
+   ```bash
+   node scripts/feedback_triage.js --unseen-msg-ids '["<msg-id-1>","<msg-id-2>"]'
+   ```
+   - `unseen` → 通常フローへ（1メール=1フィードバック）
+   - `seen` → 処理済み。**本文を読む必要すらない**（広い窓で毎日引き直しても無害＝冪等）
+   - `unseen` に**数日前の日付のメール**が混ざっていたら、それは過去に取りこぼしていた証拠。
+     通常どおり処理したうえで、Step 9 の心拍に `late_recovered` として件数を計上する
+5. 各メールの本文から category / store（あれば）/ body / page（あれば）と **Gmail メッセージID** を抽出する。
+6. 3-c で0件が確定した場合は「新着フィードバックなし」として Step 1〜7 をスキップし、
+   **Step 9（心拍の記録）だけは必ず実行して**正常終了する（エラー扱いにしない。毎日0件が普通の状態）。
+7. **Gmail 自体を引けなかった場合**（認証切れ・MCP エラー・タイムアウト）は、
+   **0件と報告してはいけない**。Step 9 で `status: "gmail_error"` と理由を記録して終了する
+   （watchdog が拾ってオーナーにメールで届く）。「引けなかった」を「無かった」に混ぜないこと。
 
 ### Step 1: ブランドフィルターの根拠をロード
 
@@ -183,6 +217,31 @@ node scripts/sync_backlog_to_notion.js --if-changed
 - ループの健診は `node scripts/feedback_triage.js --report --days 30`
 ```
 
+### Step 9: 心拍を記録する（**新着0件の日も必ず・スキップ禁止**）
+
+```bash
+node scripts/feedback_triage.js --health-write '{
+  "status": "ok",
+  "queries": [{"q":"<実際に投げたクエリ>","matched":<件数>}],
+  "retried_on_empty": <true/false>,
+  "new_processed": <今回処理した新着メール数>,
+  "already_seen": <台帳突合でスキップした数>,
+  "late_recovered": <数日前の日付なのに未処理だったメールの数>
+}'
+```
+Gmail を引けなかった場合はこちら（**0件と報告しない**）:
+```bash
+node scripts/feedback_triage.js --health-write '{"status":"gmail_error","reason":"<エラー内容>"}'
+```
+
+そのうえで `data/feedback_health.json` を**コミットする**。
+
+**なぜ0件の日こそ書くのか**: フィードバックが無い日はコミットする成果物が何も無い。心拍を書かないと
+「ルーチンが動いて0件だった」と「ルーチンが動かなかった／Gmail を引けなかった」が**外から区別できない**。
+このファイルがリポジトリに push されて初めて、`.github/workflows/feedback-watchdog.yml` が
+サーバ側（＝このループの全故障モードから独立した場所）で鮮度を見て、滞ったら Issue を起票できる
+（＝オーナーにメールが届く）。CLAUDE.md「無人自動化の監視を設計するときの原則」原則1・2・4 の適用。
+
 ---
 
 ## 重要な原則
@@ -194,13 +253,29 @@ node scripts/sync_backlog_to_notion.js --if-changed
 - **1ファイル制約は不変**: サイト本体は `index.html` 単一ファイル維持
 - **ヘッドレスで止まらない**: 応答できる人がいない前提で動く。0件日は正常終了。判断に迷っても
   承認待ちで停止せず、「要検討メモ付き採用」か「理由付き却下」のどちらかに倒す（ISSUE-077 教訓）
+- **0件を確定させるまでの手順を省略しない**: 検知器が1本しかないループでは、検知器の偽陰性が
+  そのまま「無かったこと」になる。Step 0 の sweep とリトライは省略可能な保険ではなく**手順の一部**
+- **「引けなかった」を「無かった」に混ぜない**: Gmail エラーは 0件ではない。`status: "gmail_error"` で残す
+- **心拍を書かずに終了しない**: 0件の日も Step 9 は実行する。書かない終了は「静かな失敗」と区別がつかない
+
+---
+
+## この設計が守れていない失敗（残存リスク）
+
+- **Formspree には届いたが Gmail に一度も配送されなかった投稿**は、Gmail 側をどれだけ広く引いても
+  検出できない（検知器と収集経路が同じ系統のため）。独立した突合には Formspree の submissions API が要り、
+  それにはオーナー本人による API キー発行と Secret 登録が必要 → **ISSUE-090**（owner=片桐）。
+  現状はこのリスクが残っていることを承知のうえで運用する。
 
 ---
 
 ## エラー時
 
-- 引数が空、かつ Step 0 の Gmail 取得でも該当メールが0件 → 「新着フィードバックなし」として正常終了
-  （エラーではない。承認待ちで停止しない）
+- 引数が空、かつ Step 0 の Gmail 取得（primary → sweep → 時間差リトライ）を**すべて消化して**0件
+  → 「新着フィードバックなし」として正常終了（エラーではない。承認待ちで停止しない）。
+  **ただし Step 9 の心拍記録とコミットは必ず行う**
+- Gmail MCP がエラーを返す／認証切れ → 0件と報告せず `status: "gmail_error"` で心拍を書いて終了。
+  復旧は対話ログインが必要でコードでは直せないため、watchdog の Issue が唯一の復旧経路になる
 - `--check-dup` / `--log-append` がエラー JSON を返す → 内容を記録し、その回のフィードバックは
   スキップして次に進む（ループ全体を止めない）
 - Step 7 の Notion 同期失敗 → backlog 起票は完了しているので、その旨を残して正常終了
