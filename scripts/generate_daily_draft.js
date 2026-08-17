@@ -61,7 +61,7 @@ const path = require('path');
 const https = require('https');
 // ヒーロー写真の帰属判定は scripts/lib/hero_photo_gate.js に一元化（2026-08-17 の事故）
 const { judgeHero } = require('./lib/hero_photo_gate');
-// 図解SVG→OGP用PNG変換は scripts/lib/og_figure_png.js に一元化（ISSUE-093）
+// 図解SVG→OGP用PNG変換は scripts/lib/og_figure_png.js に一元化（ISSUE-095）
 const OG = require('./lib/og_figure_png.js');
 
 const ROOT = path.join(__dirname, '..');
@@ -795,7 +795,7 @@ async function main() {
   // 判定器は scripts/lib/hero_photo_gate.js の1本（生成時・公開前QA・日次CI監査が共有）。
   assertHeroBelongsToArticle(input);
 
-  // og:image を SNS が描画できる形（絶対URL・ラスタ画像）に確定させる（ISSUE-093）
+  // og:image を SNS が描画できる形（絶対URL・ラスタ画像）に確定させる（ISSUE-095）
   // 帰属チェックの「後」に置くこと。先に置くと、記事に載せてはいけない画像の
   // PNG を生成してしまう（不採用になる画像をリポジトリに残さない）。
   resolveOgImage(input);
