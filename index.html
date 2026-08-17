@@ -8854,26 +8854,45 @@ document.getElementById('si2').addEventListener('keydown', function(e){ if(e.key
 
 // ── 特集カルーセル（トップ最上部）──
 // タッチ端末は指で払えるが、マウスだと横スクロールできることに気づけないので左右送りを出す。
-// 端に着いたら該当ボタンを隠し、「まだ先がある／もう無い」を見た目で分かるようにする。
+// カード列の前後に同じ並びのコピーを1組ずつ置き、端まで来たら「見た目が同じ位置」へ静かに移す。
+// これで最後の特集の次に最初の特集が続き、スワイプでもボタンでも一周して戻ってこられる。
+var NB_FT_LOOP = 0;            // 1周分の幅（0 なら周回しない＝カードが少なく一画面に収まる場合）
+var NB_FT_ORIGIN = null;       // 実体（コピーでない）先頭カード
+var NB_FEATURE_SMOOTH_OK = null;
+
+function nbFeatureRail() { return document.querySelector(".feature-top .feature-strip-cards"); }
+
 function syncFeatureTopNav() {
-  var rail = document.querySelector(".feature-top .feature-strip-cards");
+  var rail = nbFeatureRail();
   var prev = document.getElementById("feature-top-prev");
   var next = document.getElementById("feature-top-next");
   if (!rail || !prev || !next) return;
+  // 周回するときは端が無いので両方出したままにする（隠すと「もう無い」と誤解される）
+  if (NB_FT_LOOP) { prev.hidden = false; next.hidden = false; return; }
   var max = rail.scrollWidth - rail.clientWidth;
   prev.hidden = rail.scrollLeft <= 4;
   next.hidden = rail.scrollLeft >= max - 4;
 }
+
+// 実体の並びは中央のコピー区間にある。動きが止まってから中央へ引き戻すことで、
+// スクロール中のアニメーションや慣性を邪魔せずに周回させる（見た目は同じなので継ぎ目が見えない）
+function nbFeatureNormalize() {
+  var rail = nbFeatureRail();
+  if (!rail || !NB_FT_LOOP) return;
+  var s = rail.scrollLeft;
+  if (s < NB_FT_LOOP || s >= NB_FT_LOOP * 2) rail.scrollLeft = (s % NB_FT_LOOP) + NB_FT_LOOP;
+}
+
 // scroll-snap + smooth はアニメーションごと無視される環境がある。1回目の送りで実際に動いたかを見て
 // 判定し、動かない環境では以後を即時スクロールに切り替える（「押しても何も起きない」を作らない）
-var NB_FEATURE_SMOOTH_OK = null;
 function scrollFeatureTop(dir) {
-  var rail = document.querySelector(".feature-top .feature-strip-cards");
+  var rail = nbFeatureRail();
   if (!rail) return;
   var card = rail.querySelector(".feature-card");
   var step = card ? card.offsetWidth + 12 : rail.clientWidth * 0.8;
   if (NB_FEATURE_SMOOTH_OK === false) {
     rail.scrollBy({ left: dir * step, behavior: "auto" });
+    nbFeatureNormalize();
     syncFeatureTopNav();
     return;
   }
@@ -8881,16 +8900,49 @@ function scrollFeatureTop(dir) {
   rail.scrollBy({ left: dir * step, behavior: "smooth" });
   setTimeout(function () {
     NB_FEATURE_SMOOTH_OK = rail.scrollLeft !== from;
-    if (!NB_FEATURE_SMOOTH_OK) rail.scrollBy({ left: dir * step, behavior: "auto" });
+    if (!NB_FEATURE_SMOOTH_OK) { rail.scrollBy({ left: dir * step, behavior: "auto" }); nbFeatureNormalize(); }
     syncFeatureTopNav();
   }, 60);
-  setTimeout(syncFeatureTopNav, 420);
 }
-(function initFeatureTopNav() {
-  var rail = document.querySelector(".feature-top .feature-strip-cards");
+
+(function initFeatureTop() {
+  var rail = nbFeatureRail();
   if (!rail) return;
-  rail.addEventListener("scroll", syncFeatureTopNav, { passive: true });
-  window.addEventListener("resize", syncFeatureTopNav);
+  var originals = [].slice.call(rail.querySelectorAll(".feature-card"));
+  if (originals.length >= 2) {
+    NB_FT_ORIGIN = originals[0];
+    var head = document.createDocumentFragment();
+    var tail = document.createDocumentFragment();
+    originals.forEach(function (node) {
+      [head, tail].forEach(function (frag) {
+        var c = node.cloneNode(true);
+        c.classList.add("feature-card-clone");
+        c.setAttribute("aria-hidden", "true");   // 同じ特集が3回読み上げられないようにする
+        c.setAttribute("tabindex", "-1");        // Tab 移動でコピーを踏ませない
+        var img = c.querySelector("img");
+        if (img) { img.setAttribute("loading", "lazy"); img.removeAttribute("fetchpriority"); }
+        frag.appendChild(c);
+      });
+    });
+    rail.appendChild(tail);
+    rail.insertBefore(head, rail.firstChild);
+  }
+  function measure() {
+    if (!NB_FT_ORIGIN) return;
+    var first = rail.querySelector(".feature-card");
+    var span = NB_FT_ORIGIN.offsetLeft - first.offsetLeft;
+    // 1周分が画面幅より狭いと、周回の余白が足りず端で引っかかる。その場合は周回しない
+    NB_FT_LOOP = span > rail.clientWidth ? span : 0;
+    if (NB_FT_LOOP) rail.scrollLeft = NB_FT_LOOP;
+  }
+  measure();
+  var settle = null;
+  rail.addEventListener("scroll", function () {
+    syncFeatureTopNav();
+    clearTimeout(settle);
+    settle = setTimeout(function () { nbFeatureNormalize(); syncFeatureTopNav(); }, 140);
+  }, { passive: true });
+  window.addEventListener("resize", function () { measure(); syncFeatureTopNav(); });
   syncFeatureTopNav();
 })();
 
