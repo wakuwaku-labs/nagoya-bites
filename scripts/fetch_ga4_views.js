@@ -26,6 +26,21 @@ const LOOKBACK   = parseInt(process.env.GA4_LOOKBACK_DAYS || '30', 10);
 const OUT_PATH   = path.join(__dirname, '..', 'data', 'view_counts.json');
 const METRICS_OUT_PATH = path.join(__dirname, '..', 'data', 'site_metrics.json');
 
+// 「予約につながった」と数えるリンク先ドメイン。
+// 掲載店は Hot Pepper 未掲載の店も多く（手動キュレーション店は予約が食べログ/公式のみ）、
+// hotpepper.jp だけを数えると予約導線の実力を過小評価する。
+const RESERVATION_DOMAINS = [
+  'hotpepper.jp',
+  'tabelog.com',
+  'tablecheck.com',
+  'ebica.jp',
+  'toreta.in',
+  'opentable',
+  'ikyu.com',
+  'gurunavi.com',
+  'retty.me',
+];
+
 // 良し悪しの目安（地域グルメメディアの素人判断用ベンチマーク）
 const BENCHMARKS = {
   bounceRate:      { good: 0.50, warn: 0.70 },  // 直帰率（低いほど良い）
@@ -291,6 +306,76 @@ async function fetchSiteMetrics(analyticsdata) {
       }
     } catch (domErr) {
       cta.note = (cta.note ? cta.note + ' / ' : '') + 'link_domain カスタムディメンション未登録のためドメイン別内訳はスキップ';
+    }
+
+    // ページ別 outbound_click（どの記事が外部導線を押させているか）。
+    // ドメイン別・チャネル別だけでは「記事単位でどこが効いているか」が分からず、
+    // 予約導線をどの面に置くかを検証できる事実で決められない（制約10）。
+    try {
+      const pageRes2 = await analyticsdata.properties.runReport({
+        property: `properties/${PROPERTY}`,
+        requestBody: {
+          dateRanges,
+          metrics: [{ name: 'eventCount' }],
+          dimensions: [{ name: 'pagePath' }],
+          dimensionFilter: {
+            filter: {
+              fieldName: 'eventName',
+              stringFilter: { matchType: 'EXACT', value: 'outbound_click' },
+            },
+          },
+          orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+          limit: '30',
+        },
+      });
+      cta.byPage = (pageRes2.data.rows || []).map(row => ({
+        path: row.dimensionValues[0].value,
+        clicks: parseInt(row.metricValues[0].value, 10) || 0,
+      }));
+    } catch (pgErr) {
+      cta.note = (cta.note ? cta.note + ' / ' : '') + `ページ別CTA集計エラー: ${pgErr.message}`;
+    }
+
+    // ページ × リンク先ドメイン。「どの記事から、どの予約サイトへ」を1枚で見るための内訳。
+    // link_domain は custom dimension のため未登録環境ではスキップする（byDomain と同じ扱い）。
+    try {
+      const pdRes = await analyticsdata.properties.runReport({
+        property: `properties/${PROPERTY}`,
+        requestBody: {
+          dateRanges,
+          metrics: [{ name: 'eventCount' }],
+          dimensions: [{ name: 'pagePath' }, { name: 'customEvent:link_domain' }],
+          dimensionFilter: {
+            filter: {
+              fieldName: 'eventName',
+              stringFilter: { matchType: 'EXACT', value: 'outbound_click' },
+            },
+          },
+          orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+          limit: '100',
+        },
+      });
+      const rows = (pdRes.data.rows || [])
+        .map(row => ({
+          path: row.dimensionValues[0].value,
+          domain: row.dimensionValues[1].value,
+          clicks: parseInt(row.metricValues[0].value, 10) || 0,
+        }))
+        .filter(r => r.domain && r.domain !== '(not set)');
+      cta.byPageDomain = rows;
+
+      // 予約系ドメインだけを記事単位で合算（＝「予約につながった数」の本体）
+      const byPathRes = {};
+      for (const r of rows) {
+        if (!RESERVATION_DOMAINS.some(d => r.domain.includes(d))) continue;
+        byPathRes[r.path] = (byPathRes[r.path] || 0) + r.clicks;
+      }
+      cta.reservationClicksByPage = Object.entries(byPathRes)
+        .map(([path, clicks]) => ({ path, clicks }))
+        .sort((a, b) => b.clicks - a.clicks);
+      cta.reservationClicks = cta.reservationClicksByPage.reduce((s, r) => s + r.clicks, 0);
+    } catch (pdErr) {
+      cta.note = (cta.note ? cta.note + ' / ' : '') + 'link_domain 未登録のためページ×ドメイン内訳はスキップ';
     }
   } catch (ctaErr) {
     cta.note = `outbound_click 集計エラー: ${ctaErr.message}`;
