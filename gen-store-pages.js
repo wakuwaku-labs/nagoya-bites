@@ -426,6 +426,13 @@ function renderStorePage(s, slug) {
   // ── 公式Instagram投稿の埋め込み（写真ソース優先1・embed.js 経由で規約上明示的に許可）──
   // 実写を店舗ページで「しっかり見せる」ための本命セクション。埋め込みスクリプトは
   // セクションが視界に近づいてから遅延ロードし、初期表示性能を守る。
+  //
+  // 【配置】おすすめポイントの直後（info-grid の前）＝ページの主役の位置に置く。
+  //   CLAUDE.md の写真ソース優先順で Instagram 埋め込みは優先1、HotPepper 写真は優先2。
+  //   ヒーローに使える HotPepper 写真は 1,442店で原寸 480px しか無く（規約上 AI超解像も
+  //   自ホストも不可）、全幅に引き伸ばすと粗い。一方この埋め込みは店が自分で上げた原寸が
+  //   出るため、優先順どおり「店の公式写真を主役、HotPepper 写真を添え」に並べ替える。
+  //   ローダーは async でDOM構築を止めないため、上に来ても初期描画は阻害しない。
   const igPostUrl = (s['Instagram投稿URL'] || '').trim();
   const hasIgEmbed = /^https:\/\/www\.instagram\.com\/[A-Za-z0-9_.]+\/(p|reel)\/[A-Za-z0-9_-]+\/?$/.test(igPostUrl);
   const igEmbedHtml = hasIgEmbed ? `
@@ -582,7 +589,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
 
   ${point ? `<div class="point-box"><p>${point}</p></div>` : ''}
-
+${igEmbedHtml}
   <div class="info-grid">
     ${area ? `<div class="info-cell"><label>エリア</label><span>${pref}${locality ? ' ' + locality : ''} ${area}</span></div>` : ''}
     ${street ? `<div class="info-cell"><label>住所</label><span>${street}</span></div>` : ''}
@@ -598,7 +605,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <h2>予約・情報を確認</h2>
     ${linksHtml}
   </div>
-${igEmbedHtml}
+
   ${relatedHtml}
 
   <div class="back-section">
