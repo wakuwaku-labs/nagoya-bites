@@ -617,7 +617,7 @@ ${igEmbedHtml}
 </div>
 
 <footer>
-  <p class="fc">© <span id="yr"></span> NAGOYA BITES — 現役飲食店経営者監修 名古屋グルメガイド</p>
+  <p class="fc">© <span id="yr"></span> NAGOYA BITES — 現役飲食店マネージャー監修 名古屋グルメガイド</p>
 </footer>
 <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 ${hasIgEmbed ? `<script>

@@ -10,11 +10,11 @@ function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,p
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NAGOYA BITESについて｜現役飲食店経営者が監修する名古屋グルメガイド</title>
-<meta name="description" content="NAGOYA BITESは、食べログスコア3.2→3.5以上の改善実績を持つ現役飲食店経営者が監修する名古屋グルメメディア。広告掲載型ではなく、プロの視点で選んだ本当に価値ある店だけを掲載しています。">
-<meta name="keywords" content="NAGOYA BITES,名古屋グルメ,飲食店経営者,食べログ,グルメメディア,名古屋 居酒屋,名古屋 宴会">
-<meta property="og:title" content="NAGOYA BITESについて｜現役飲食店経営者が監修する名古屋グルメガイド">
-<meta property="og:description" content="食べログスコア3.2→3.5以上の改善実績を持つ現役飲食店経営者が監修。広告掲載型ではなく、プロが認めた店だけを掲載する名古屋グルメメディア。">
+<title>NAGOYA BITESについて｜現役飲食店マネージャーが監修する名古屋グルメガイド</title>
+<meta name="description" content="NAGOYA BITESは、食べログスコア3.2→3.5以上の改善実績を持つ現役飲食店マネージャーが監修する名古屋グルメメディア。広告掲載型ではなく、プロの視点で選んだ本当に価値ある店だけを掲載しています。">
+<meta name="keywords" content="NAGOYA BITES,名古屋グルメ,飲食店マネージャー,食べログ,グルメメディア,名古屋 居酒屋,名古屋 宴会">
+<meta property="og:title" content="NAGOYA BITESについて｜現役飲食店マネージャーが監修する名古屋グルメガイド">
+<meta property="og:description" content="食べログスコア3.2→3.5以上の改善実績を持つ現役飲食店マネージャーが監修。広告掲載型ではなく、プロが認めた店だけを掲載する名古屋グルメメディア。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nagoya-bites.com/about.html">
 <meta property="og:site_name" content="NAGOYA BITES">
@@ -36,7 +36,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   "@type": "AboutPage",
   "name": "NAGOYA BITESについて",
   "url": "https://nagoya-bites.com/about.html",
-  "description": "食べログスコア改善実績を持つ現役飲食店経営者が監修する名古屋グルメメディア。広告掲載型ではなく、プロの視点で選んだ本当に価値ある店だけを掲載。",
+  "description": "食べログスコア改善実績を持つ現役飲食店マネージャーが監修する名古屋グルメメディア。広告掲載型ではなく、プロの視点で選んだ本当に価値ある店だけを掲載。",
   "isPartOf": {
     "@type": "WebSite",
     "name": "NAGOYA BITES",
@@ -152,7 +152,7 @@ footer{padding:1.8rem 1.5rem;flex-direction:column;gap:.6rem;}
 <section class="hero">
   <div class="eyebrow">About — NAGOYA BITES</div>
   <h1>飲食店を<em>"つくる側"</em>が<br>選んだ、本当のナゴヤ。</h1>
-  <p class="hero-sub">このサイトが扱うのは名古屋のお店だけです。<br>そして選んでいるのは、名古屋で8ブランドを自ら運営する現役の飲食店経営者。<br>この2つが、NAGOYA BITESの全てです。</p>
+  <p class="hero-sub">このサイトが扱うのは名古屋のお店だけです。<br>そして選んでいるのは、名古屋の飲食店で店長として現場に立つ現役の飲食店マネージャー。<br>この2つが、NAGOYA BITESの全てです。</p>
 </section>
 <section class="section">
   <div class="sec-label">01 — Mission</div>
@@ -165,29 +165,19 @@ footer{padding:1.8rem 1.5rem;flex-direction:column;gap:.6rem;}
 </section>
 <div class="quote-block">
   <div class="quote-text">「名古屋のお店しか載せない。<br>なぜなら、<em>名古屋のことしか</em>わからないから。<br>それで十分だと思っています。」</div>
-  <div class="quote-attr">— NAGOYA BITES 監修者・飲食店経営者</div>
+  <div class="quote-attr">— NAGOYA BITES 監修者・飲食店マネージャー</div>
 </div>
 <section class="achievement">
   <div class="sec-label">02 — Track Record</div>
   <h2 class="sec-title">選んでいるのは、<em>結果を出してきた</em>人間。</h2>
   <div class="sec-body">
-    <p>名古屋で複数ブランドの飲食店を運営する現役の経営者が、このサイトを監修しています。</p>
+    <p>名古屋の飲食店で店長・マネージャーとして現場に立つ現役の飲食人が、このサイトを監修しています。</p>
   </div>
   <div class="ach-grid">
     <div class="ach-item">
       <div class="ach-num">3.2<span class="unit">→</span>3.5<span class="unit">+</span></div>
       <div class="ach-label">食べログスコア改善</div>
       <div class="ach-detail">担当2店舗のスコアを<br>3.2台から3.5以上へ</div>
-    </div>
-    <div class="ach-item">
-      <div class="ach-num">8<span class="unit">+</span></div>
-      <div class="ach-label">運営ブランド数</div>
-      <div class="ach-detail">名古屋エリアで<br>複数業態を展開</div>
-    </div>
-    <div class="ach-item">
-      <div class="ach-num">360<span class="unit">°</span></div>
-      <div class="ach-label">飲食店づくりの知見</div>
-      <div class="ach-detail">料理・接客・空間設計<br>集客のすべてを熟知</div>
     </div>
   </div>
 </section>
