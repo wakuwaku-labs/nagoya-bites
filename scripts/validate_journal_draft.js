@@ -16,6 +16,8 @@ const path = require('path');
 
 // 検索意図（シーンKW）判定は scripts/journal_seo_kw.js に一元化（SEO-011）
 const { checkText } = require('./journal_seo_kw');
+// ヒーロー写真の帰属判定は scripts/lib/hero_photo_gate.js に一元化（2026-08-17 の事故）
+const { judgeHero, findReuse, extractHeroFromHtml } = require('./lib/hero_photo_gate');
 
 const ROOT = path.join(__dirname, '..');
 const PUBLISHED = path.join(ROOT, 'data', 'journal_published.json');
@@ -200,6 +202,50 @@ function checkJournal(htmlPath, mdPath) {
     pass('15_real_store_photo', true,
       isStoreArticle ? '実店舗写真OK（Instagram/Google Maps/HotPepper/許諾済み）'
                      : '写真OK（実写 or 記事固有のイメージ図）');
+  }
+
+  // 15b. ヒーロー写真が「この記事の店」の写真か（HARD FAIL・2026-08-17 の事故）
+  //      項目15 は「汎用ストック写真でないこと」しか見ていなかったため、
+  //      記事に一行触れただけの別店の販促バナーを hero_image_url に手書きすると素通りした。
+  //      「実写であること」と「その記事の写真であること」は別の検証。判定器は
+  //      scripts/lib/hero_photo_gate.js の1本（生成時・ここ・日次CI監査が同じ判定を共有）。
+  const heroSlug = path.basename(htmlPath).replace(/\.html$/, '');
+  const heroDate = (heroSlug.match(/^\d{4}-\d{2}-\d{2}/) || [])[0] || '';
+  const heroArticle = extractHeroFromHtml(html, heroSlug, heroDate);
+  const heroVerdict = judgeHero(heroArticle);
+
+  // 過去記事との使い回し（同じ画像が別記事の顔になっていないか）
+  const journalDir = path.join(ROOT, 'journal');
+  let heroReuse = [];
+  if (heroArticle.heroUrl && fs.existsSync(journalDir)) {
+    const others = fs.readdirSync(journalDir)
+      .filter(f => /^\d{4}-\d{2}-\d{2}-.+\.html$/.test(f) && f.replace(/\.html$/, '') !== heroSlug)
+      .map(f => {
+        const s = f.replace(/\.html$/, '');
+        const h = extractHeroFromHtml(fs.readFileSync(path.join(journalDir, f), 'utf8'), s, s.slice(0, 10));
+        return { slug: s, date: s.slice(0, 10), heroUrl: h.heroUrl };
+      });
+    heroReuse = findReuse([...others, { slug: heroSlug, date: heroDate, heroUrl: heroArticle.heroUrl }])
+      .filter(r => r.articles.includes(heroSlug));
+  }
+
+  if (!heroVerdict.ok || heroReuse.length) {
+    const msgs = heroVerdict.findings.filter(f => f.level === 'fail').map(f => `[${f.code}] ${f.msg}`);
+    if (heroReuse.length) {
+      msgs.push(`[hero_reused] この画像は既に別記事の顔として使われています: ${heroReuse[0].articles.filter(s => s !== heroSlug).join(', ')}`);
+    }
+    pass('15b_hero_belongs_to_article', false,
+      `❌ ヒーロー写真が不適切です。\n     ` + msgs.join('\n     ') +
+      `\n     → 主役店の実写が手配できないなら、他店の写真を借りずに\n` +
+      `       その記事専用のイメージ図（/assets/journal-figures/${heroSlug}.svg）に倒してください。`);
+  } else {
+    const warns = heroVerdict.findings.filter(f => f.level === 'warn');
+    results.push({
+      id: '15b_hero_belongs_to_article', ok: true, warn: warns.length > 0,
+      msg: warns.length
+        ? `⚠️ WARNING: ${warns.map(w => `[${w.code}] ${w.msg}`).join(' / ')}`
+        : `ヒーロー写真の帰属OK（${heroArticle.heroSource || 'figure'}）`
+    });
   }
 
   // 16. 検索意図（シーンKW）とSNS原稿の整合（WARNING — SEO-011）

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="600" height="360" role="img" aria-label="名駅と山王に同じ週に開いた新店3軒を、席数と営業時間だけで比較した図。横軸は11時から24時。一風堂名駅3丁目店は29席で11時から23時までの通し営業、ラストオーダーは22時45分。寿司しゃぶしゃぶゆず庵名古屋山王店は25卓150席で11時から24時までだが最終入店は22時。鳥ぶら名駅東口店は17時から24時の夜特化。帯の高さが席数に比例しており、小箱で営業時間を伸ばして回転を稼ぐ設計と、大箱で人数を一度に受けて入店の締めを早める設計の違いを示している。">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a1a2a"/>
+      <stop offset="100%" stop-color="#22384f"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#0a1a2a"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#e8c890" opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="360" fill="url(#bg)"/>
+  <rect width="600" height="360" fill="url(#grain)" opacity=".5"/>
+
+  <text x="36" y="34" fill="#e8c890" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+  <rect x="36" y="46" width="3" height="26" fill="#e8c890" opacity=".9"/>
+  <text x="48" y="68" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="22" font-weight="700">席数と営業時間だけで、設計は読める</text>
+  <text x="48" y="88" fill="#dce6f0" opacity=".7" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="11">帯の長さ＝営業時間 ／ 帯の高さ＝席数（2026年8月・名駅と山王の新店）</text>
+
+  <!-- 時間軸 -->
+  <g font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="9" fill="#7f95ab">
+    <line x1="70" y1="116" x2="560" y2="116" stroke="#7f95ab" stroke-width="1" opacity=".35"/>
+    <g opacity=".8">
+      <text x="70" y="110" text-anchor="middle">11時</text>
+      <text x="221" y="110" text-anchor="middle">15時</text>
+      <text x="372" y="110" text-anchor="middle">19時</text>
+      <text x="484" y="110" text-anchor="middle">22時</text>
+      <text x="560" y="110" text-anchor="middle">24時</text>
+    </g>
+    <g stroke="#7f95ab" stroke-width="1" opacity=".2">
+      <line x1="70"  y1="116" x2="70"  y2="322"/>
+      <line x1="221" y1="116" x2="221" y2="322"/>
+      <line x1="372" y1="116" x2="372" y2="322"/>
+      <line x1="560" y1="116" x2="560" y2="322"/>
+    </g>
+    <line x1="484" y1="116" x2="484" y2="322" stroke="#e8c890" stroke-width="1" opacity=".35" stroke-dasharray="3 3"/>
+  </g>
+
+  <!-- 1軒目: 一風堂 名駅3丁目店 — 29席 × 通し12時間 -->
+  <g font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif">
+    <text x="36" y="140" fill="#e8c890" font-size="12" font-weight="700">名駅3丁目・29席</text>
+    <rect x="70" y="146" width="452" height="15" fill="#e8c890" opacity=".85"/>
+    <text x="530" y="158" fill="#e8c890" font-size="11" font-weight="700">12時間</text>
+    <text x="76" y="178" fill="#dce6f0" font-size="10.5" opacity=".85">11:00〜23:00 通し営業（L.O.22:45）／ 桜通口 徒歩4分</text>
+    <text x="76" y="192" fill="#fff" font-size="10.5" opacity=".6">小箱で家賃を割る → 昼夜二毛作で総回転数を稼ぐ</text>
+  </g>
+
+  <!-- 2軒目: ゆず庵 名古屋山王店 — 150席 × 最終入店22時 -->
+  <g font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif">
+    <text x="36" y="212" fill="#e8c890" font-size="12" font-weight="700">山王・150席</text>
+    <rect x="70" y="218" width="414" height="34" fill="#e8c890" opacity=".85"/>
+    <rect x="484" y="218" width="76" height="34" fill="#e8c890" opacity=".22"/>
+    <text x="489" y="240" fill="#e8c890" font-size="9" opacity=".8">入店締切後</text>
+    <text x="76" y="268" fill="#dce6f0" font-size="10.5" opacity=".85">11:00〜24:00・最終入店22:00 ／ 25卓・車商圏</text>
+    <text x="76" y="282" fill="#fff" font-size="10.5" opacity=".6">大箱で原価率のぶれを吸収 → 締めを早めて仕込みを守る</text>
+  </g>
+
+  <!-- 3軒目: 鳥ぶら 名駅東口店 — 夜特化 -->
+  <g font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif">
+    <text x="36" y="308" fill="#dce6f0" font-size="11" opacity=".7">名駅東口・夜特化</text>
+    <rect x="296" y="299" width="264" height="11" fill="#dce6f0" opacity=".38"/>
+    <text x="76" y="328" fill="#fff" font-size="10.5" opacity=".55">17:00〜24:00 ／ 低単価で客数を取る層（8/10開店）</text>
+  </g>
+
+  <text x="564" y="348" fill="#e8c890" opacity=".45" text-anchor="end" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-size="9">図: NAGOYA BITES 編集部 — 公開情報（席数・営業時間）のみで作図</text>
+</svg>

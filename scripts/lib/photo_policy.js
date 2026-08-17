@@ -171,4 +171,6 @@ function attributionName(photo) {
 /** 写真URLが Places 由来（＝帰属ゲートの対象）か */
 const isPlacesPhotoUrl = (u) => /googleusercontent\.com/.test(String(u || ''));
 
-module.exports = { loadPolicy, isOwnerAttribution, judgePlacesPhoto, attributionName, isPlacesPhotoUrl, norm, dice, VERIFIED_ALIASES };
+// core() は scripts/lib/hero_photo_gate.js（ジャーナルのヒーロー写真の帰属判定）でも使う。
+// 同じ屋号を経路ごとに別基準で照合すると判定がズレるため、正規化はここ1本に集約する。
+module.exports = { loadPolicy, isOwnerAttribution, judgePlacesPhoto, attributionName, isPlacesPhotoUrl, norm, core, dice, VERIFIED_ALIASES };

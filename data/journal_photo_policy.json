@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "updated": "2026-08-17",
+  "description": "日次ジャーナルのヒーロー写真の採用基準（唯一の情報源）。店舗写真そのものの基準は data/photo_policy.json、こちらは『その写真をその記事の顔に使ってよいか』を判定する。閾値の変更はこのファイルで行い、判定器 scripts/lib/hero_photo_gate.js は触らない。",
+
+  "incident": {
+    "date": "2026-08-17",
+    "what": "記事の主役は『一風堂 名駅3丁目店』『ゆず庵 名古屋山王店』の2軒だったが、ヒーロー写真は記事に3番目として一行触れただけの『鳥ぶら 名駅東口店』の HotPepper 画像（ドリンク全品94円の販促バナー）だった。",
+    "why": "主役2店は新店で stores.json に写真URLが無い。validator は『汎用ストック写真でないこと』しか見ておらず、『その記事の店の写真であること』を誰も検証していなかった。そのため Editor が別店の実写URLを hero_image_url に手書きすると素通りした。",
+    "lesson": "『実写であること』と『その記事の写真であること』は別の検証。前者だけを守るゲートは、後者を破る動機（ストック禁止を回避したい）を生む。CLAUDE.md 品質ゲート原則1・2 の再適用。"
+  },
+
+  "attribution": {
+    "_note": "ヒーロー写真は必ず『その記事が主役として扱う店』に帰属しなければならない。判定は第三者が後から検算できる事実だけで行う（CLAUDE.md 制約10）。",
+    "required": true,
+    "matchThreshold": 0.85,
+    "_note_matchThreshold": "店名の照合は scripts/lib/photo_policy.js の core()+dice() を共有する。閾値を下げて通すのはゲートを壊すのと同じ（品質ゲート原則5）。",
+    "allowedSources": ["hotpepper", "press", "places", "instagram", "figure", "self-hosted"],
+    "verifiableBy": {
+      "hotpepper": "画像URL → data/stores.json / data/manual_stores.json の 写真URL 逆引きで所有店名が一意に決まる。誰でも同じ照合を再現できる。",
+      "press": "プレスリリースの報道用画像。規約上の許諾が『報道目的』に紐づくため、(1) 記事HTMLの data-hero-store が記事の店と一致すること、(2) 画像URLに含まれる company_id/release_id に対応するリリースURLが記事本文から引用されていること、の両方を機械照合する。引用の無いリリース画像は報道ではなく単なる無断利用になるため FAIL。",
+      "places": "Places CDN の URL からは店名を逆引きできないため、取得時の店名を記事HTMLの data-hero-store 属性に刻む。証跡を成果物自身に持たせる（主張ではなく証跡・品質ゲート原則2）。",
+      "instagram": "embed の投稿URLのアカウント名が、その店の 公式Instagram と一致すること。",
+      "figure": "記事固有のイメージ図は、ファイル名に記事slugを含むこと。使い回しの図はこの条件で自動的に落ちる。",
+      "self-hosted": "assets/journal-photos/ 配下の編集部取材写真。ファイル名に記事slugを含むこと。"
+    }
+  },
+
+  "reuse": {
+    "_note": "同じ画像を別の記事の顔に使い回すと、読者から見て記事と写真の対応が壊れる。過去の hero と同一URLは不可。",
+    "windowDays": 180,
+    "blockExactUrl": true
+  },
+
+  "caption": {
+    "_note": "出所を書けない写真は載せない。『出所不明（要確認）』のようなキャプションは、確認されないまま公開が続く証拠なので FAIL にする。",
+    "forbiddenPatterns": ["出所不明", "要確認", "TODO", "unknown", "仮画像", "差し替え"]
+  },
+
+  "stockHosts": ["images.unsplash.com", "images.pexels.com", "loremflickr.com", "pixabay.com"],
+
+  "heroCandidates": {
+    "_note": "『目を引く写真』を確実にするための実務的な打ち手は、判定器を賢くすることではなく候補を増やすこと。HotPepper は1店1枚しか持たず、それが販促バナーだと詰む。Places はオーナー投稿を複数枚返すので候補に加える。",
+    "collectPlacesCandidates": 8,
+    "preferOrder": ["instagram", "hotpepper", "press", "places", "figure"],
+    "_note_preferOrder": "CLAUDE.md『写真ソースの優先順』と同一。順位は変えず、同順位内での選択に下の advisory を使う。",
+    "_note_press": "2026-08-17 に追加。開店直後の新店は HotPepper にも Places にも実写が無く、従来はイメージ図に倒すしかなかった。プレスリリースはその穴を埋める（規約で報道目的の無償利用が明示許諾）。ただしリリース画像は販促バナー率が高く、実測では ゆず庵のリリース4枚中3枚がバナーだった。機械では中身を判定しないので、Editor が目で1枚選ぶ運用が前提。"
+  },
+
+  "textOverlayAdvisory": {
+    "_note_STATUS": "⚠️ これは合否に使わない。候補が複数あるときの並べ替えにだけ使う advisory 指標。",
+    "_note_WHY_NOT_A_GATE": "2026-08-17 に実店舗写真46枚で分布を実測した結果、販促バナー2枚と料理・店内写真44枚を画素特徴（純色被覆・連結塊サイズ・エッジ密度・高彩度比）で分離できなかった。良い写真の方がバナーより高い値を出す例が複数あった（例: ミリネ pureRatio 0.462 > バナー 0.322）。分離できない指標を合否に使うのは、検算できない自己申告値でゲートを作るのと同じ失敗（CLAUDE.md 制約10 / 品質ゲート原則5）。閾値をいじって『効くように見せる』ことは禁止。",
+    "_note_SAFE_USE": "誤検知しても実害が出ない使い方に限定する = 有効な候補が複数あるときに順番を下げるだけ。全候補が疑わしくても公開はブロックしない（取り繕わず、落とすなら『写真なし→記事固有の図』へ倒す）。",
+    "enabled": true,
+    "usedForRankingOnly": true,
+    "probeWidthPx": 160,
+    "measured_2026_08_17": {
+      "banners": [
+        { "url": "P050945038", "pureRatio": 0.322, "bigInk": 0.226, "edge": 0.152, "satHot": 0.324 },
+        { "url": "P047883187", "pureRatio": 0.429, "bigInk": 0.369, "edge": 0.114, "satHot": 0.227 }
+      ],
+      "goodPhotosSample": 44,
+      "conclusion": "重なりが大きく、単一閾値での分離は不可能。"
+    }
+  },
+
+  "enforceFrom": "2026-08-17",
+  "_note_enforceFrom": "この日以降に公開する記事は data-hero-store / data-hero-source の証跡を必須にする。過去記事は証跡が無いため『検証不能』として警告に留め、明確な誤り（HotPepper画像の所有店が記事に登場しない）は日付に関係なく FAIL にする。"
+}
