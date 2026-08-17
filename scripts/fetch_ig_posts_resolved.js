@@ -3,16 +3,23 @@
 /**
  * scripts/fetch_ig_posts_resolved.js
  * data/instagram_resolved.json（HP ID → アカウントURL）を読み込み、
- * 各アカウントから「料理/内観」スコアが高い投稿を取得して
+ * 各アカウントから「店の料理・内装・外観がわかる投稿」を1件選んで
  * data/instagram_posts.json に書き込む。
  *
  * build.js がこのキャッシュを読み込み LOCAL_STORES に反映する。
  *
+ * ── 採否の決め方（ISSUE-092 で変更）──────────────────────────
+ * 候補を alt スコア順に並べ、上位N件の本文を実際に読んで
+ * scripts/lib/ig_post_policy.js（基準は data/ig_post_policy.json）にかけ、
+ * 最初に基準を通った1件を採る。全部落ちたら「投稿なし」にする。
+ * 旧版はキャプション全体のキーワード合計点で採っていたため、末尾の
+ * ハッシュタグ（#焼肉 #名古屋グルメ）だけで求人・休業案内・御礼投稿が
+ * 料理投稿として通っていた。
+ *
  * 環境変数:
  *   BATCH_SIZE    1起動で処理する件数（デフォルト30）
- *   MIN_SCORE     採用最低スコア（デフォルト2）
  *   MAX_CANDIDATES  候補最大数（デフォルト12）
- *   CAPTION_FETCH   キャプション取得上位N件（デフォルト3）
+ *   CAPTION_FETCH   本文を読んで判定する上位N件（デフォルト6）
  */
 
 const puppeteer = require('puppeteer-extra');
@@ -20,6 +27,9 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 puppeteer.use(StealthPlugin());
 const fs   = require('fs');
 const path = require('path');
+// 掲載可否の判定は共通の1本を使う（基準は data/ig_post_policy.json）
+const { judgeUrl } = require('./lib/ig_post_policy.js');
+const { shortcodeOf } = require('./fetch_ig_post_evidence.js');
 
 const ROOT          = path.join(__dirname, '..');
 const COOKIE_FILE   = path.join(ROOT, '.ig_cookies.json');
@@ -28,9 +38,8 @@ const POSTS_FILE    = path.join(ROOT, 'data', 'instagram_posts.json');
 const PROGRESS_FILE = path.join(ROOT, '.ig_posts_resolved_progress.json');
 
 const BATCH_SIZE     = parseInt(process.env.BATCH_SIZE    || '30', 10);
-const MIN_SCORE      = parseInt(process.env.MIN_SCORE      || '2',  10);
 const MAX_CANDIDATES = parseInt(process.env.MAX_CANDIDATES || '12', 10);
-const CAPTION_FETCH  = parseInt(process.env.CAPTION_FETCH  || '3',  10);
+const CAPTION_FETCH  = parseInt(process.env.CAPTION_FETCH  || '6',  10);
 
 // ── スコアリング（fetch_ig_posts.js と同一ロジック）──
 const ALT_POSITIVE_EN = /\b(food|dish|cuisine|ramen|sushi|noodle|noodles|drink|beverage|cocktail|wine|beer|coffee|restaurant|indoor|table|counter|plate|bowl|glass|kitchen|chef|meal|dessert|cake|bread|meat|fish|seafood|vegetable|fruit|sake|menu)\b/i;
@@ -97,7 +106,7 @@ async function fetchPostMeta(page, postUrl) {
   });
 }
 
-async function getBestPost(page, profileUrl) {
+async function getBestPost(page, profileUrl, storeName) {
   try {
     const reelsUrl = profileUrl.replace(/\/?$/, '/reels/');
     await page.goto(reelsUrl, { waitUntil: 'networkidle2', timeout: 15000 });
@@ -111,24 +120,34 @@ async function getBestPost(page, profileUrl) {
       candidates = await collectCandidates(page, '/p/', 'post', MAX_CANDIDATES);
     }
     if (candidates.length === 0) return null;
+
+    // alt によるスコアは「どれから本文を読むか」の順番付けにだけ使う。
+    // 採否を決めるのは本文を読んだ上での関連性判定（下）で、alt スコアではない。
     candidates = candidates.map(c => ({ ...c, score: scoreContent(c) }));
     candidates.sort((a, b) => b.score - a.score);
-    if (CAPTION_FETCH > 0) {
-      for (const c of candidates.slice(0, CAPTION_FETCH)) {
-        try {
-          const meta = await fetchPostMeta(page, c.url);
-          c.caption = meta.caption; c.location = meta.location;
-          c.score = scoreContent(c);
-        } catch (_) {}
+
+    // 上位N件の本文を読み、最初に基準を通った1件を採る。全部落ちたら「投稿なし」に落とす。
+    // （data/photo_policy.json の写真選定と同じ考え方＝取り繕わない・ISSUE-092）
+    for (const c of candidates.slice(0, CAPTION_FETCH)) {
+      try {
+        const meta = await fetchPostMeta(page, c.url);
+        c.caption = meta.caption; c.location = meta.location;
+      } catch (_) { continue; }
+      const verdict = judgeUrl(c.url, {
+        storeName,
+        evidence: { [shortcodeOf(c.url)]: { caption: c.caption } }
+      });
+      if (verdict.ok) {
+        return {
+          url: c.url, score: scoreContent(c), type: c.type,
+          caption: c.caption || '', alt: c.alt || '', location: c.location || '',
+          relevance: verdict.verdict
+        };
       }
-      candidates.sort((a, b) => b.score - a.score);
+      c.rejected = verdict.verdict;
     }
-    const best = candidates[0];
-    // caption / alt / location は所有者検証の証跡として保存する（捨てない）
-    return {
-      url: best.url, score: best.score, type: best.type,
-      caption: best.caption || '', alt: best.alt || '', location: best.location || ''
-    };
+    // 基準を通る投稿が無かった＝この店には埋め込みを付けない
+    return { url: null, rejectedAll: candidates.slice(0, CAPTION_FETCH).map(c => c.rejected).filter(Boolean) };
   } catch (e) { return null; }
 }
 
@@ -157,7 +176,7 @@ async function main() {
 
   const startIdx = progress.lastIdx || 0;
   console.log(`対象: ${targets.length}件 / 開始インデックス: ${startIdx}`);
-  console.log(`MIN_SCORE=${MIN_SCORE} / MAX_CANDIDATES=${MAX_CANDIDATES} / CAPTION_FETCH=${CAPTION_FETCH}`);
+  console.log(`MAX_CANDIDATES=${MAX_CANDIDATES} / CAPTION_FETCH=${CAPTION_FETCH}（判定基準: data/ig_post_policy.json）`);
 
   if (targets.length === 0) { console.log('全件取得済み'); return; }
 
@@ -183,19 +202,27 @@ async function main() {
     const { id, store, igUrl } = targets[i];
     process.stdout.write(`[${i + 1}/${targets.length}] ${store.slice(0, 20)} ... `);
 
-    const result = await getBestPost(page, igUrl);
-    if (result && result.score >= MIN_SCORE) {
+    const result = await getBestPost(page, igUrl, store);
+    if (result && result.url) {
       posts[id] = {
         postUrl: result.url, score: result.score, type: result.type,
         // 所有者検証の証跡（第三者アカの投稿を出してよいかの判定材料）
         caption: result.caption, alt: result.alt, location: result.location,
+        // 内容の関連性判定の結果（data/ig_post_policy.json 基準）
+        relevance: result.relevance,
         fetchedAt: new Date().toISOString()
       };
-      console.log(`${result.url} (score=${result.score}, ${result.type})`);
+      console.log(`${result.url} (${result.type}, ${result.relevance})`);
       found++;
     } else if (result) {
-      posts[id] = { postUrl: null, score: result.score, fetchedAt: new Date().toISOString() };
-      console.log(`スコア不足 (best=${result.score})`);
+      // 候補は取れたが、どれも「料理・内装・外観がわかる投稿」ではなかった。
+      // 無理に埋めず投稿なしにする（取り繕わない）
+      posts[id] = {
+        postUrl: null,
+        rejected: result.rejectedAll || [],
+        fetchedAt: new Date().toISOString()
+      };
+      console.log(`基準を通る投稿なし (${(result.rejectedAll || []).join(',') || '候補なし'})`);
     } else {
       posts[id] = { postUrl: null, fetchedAt: new Date().toISOString() };
       console.log('見つからず');
