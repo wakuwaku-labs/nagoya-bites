@@ -92,6 +92,14 @@ test('index.html: ランタイム側のゲートが外れていない', () => {
   assert.ok(html.includes("r['動画証跡']"), 'ランタイム側の証跡経路が外れている');
 });
 
+test('店舗ページ生成もリールと同じ所有者検証を通している', () => {
+  const gen = fs.readFileSync(path.join(__dirname, '..', 'gen-store-pages.js'), 'utf8');
+  assert.ok(gen.includes("require('./scripts/audit_reel_ownership.js')"),
+    'gen-store-pages.js が所有者検証を読み込んでいない');
+  assert.ok(gen.includes('s.__igVerified === true'),
+    'gen-store-pages.js の Instagram 埋め込みが検証を通っていない（形式チェックだけになっている）');
+});
+
 test('sameBrand: 同一ブランドは通し、別ブランドは弾く', () => {
   assert.ok(sameBrand(['鳥貴族 錦三袋町通店', '鳥貴族 広小路伏見店', '鳥貴族 いりなか店']));
   assert.ok(sameBrand(['餃子のかっちゃん 栄錦店', '餃子のかっちゃん 栄住吉店']));
