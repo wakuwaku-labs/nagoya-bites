@@ -259,9 +259,11 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `scripts/gsc_query_intent.js` | GSC クエリを **discovery（シーン語/エリア語×ジャンル語＝取りに行く面）/ navigational（店名＝Strategic Skip の面）/ brand / other** に分類。辞書は `data/journal_seo_keywords.json` と共通で、**SEO-011 の効果はここの `discovery` の表示・クリックで判定する**（総クリックは指名検索の増減と混ざるため使わない）。確認は `node scripts/gsc_query_intent.js`（Marketer管轄・SEO-043） |
 | `data/search_channel_metrics.json` | **検索・AI流入のエンジン別内訳**（Bing / Google / 生成AI / Yahoo / DDG / SNS / 直接）。`node scripts/search_channel_metrics.js --report`。**GSC は Google しか映さないが、実測では検索経由の 48.5% が Bing・33.3% が生成AI・Google は 13.8%** のため、GSCループだけでは流入の大半が観測外になる。その盲点を `blind_spots` として自動で明示する（Marketer管轄・SEO-039） |
 | `scripts/indexnow_ping.js` | IndexNow（Bing/Yandex 対応のプッシュ型インデックス通知）。**外部送信は既定 dry-run**で `--yes` を付けたときだけ送信する。`--init` でキー生成、`--status` で設定確認。Bing Webmaster Tools への登録はクレデンシャルを伴うため**オーナー本人の操作**が必要 |
-| `data/feedback_policy.json` | 消費者フィードバック改善ループの運用ポリシー（唯一の情報源。3分類ルール・Gmailクエリ・PII規則・起票上限）。手順の正本は `docs/feedback-triage-runbook.md`（Builder/DataKeeper 共管） |
-| `data/feedback_log.json` | 消費者フィードバック改善ループの記憶（採用/fact_check/却下/重複/エスカレーションの全履歴・append-only。書き込みは `scripts/feedback_triage.js --log-append` 経由のみ） |
-| `scripts/feedback_triage.js` | 消費者フィードバック triage の決定的ヘルパー（ID採番/重複検知/PIIマスク付きログ追記/健診レポート）。健診: `node scripts/feedback_triage.js --report --days 30` |
+| `data/feedback_policy.json` | 消費者フィードバック改善ループの運用ポリシー（唯一の情報源。3分類ルール・**Gmail取得規則**（`gmail_retrieval`＝クエリ/窓/0件時のsweep/時間差リトライ/台帳突合）・**生存確認規則**（`health`）・PII規則・起票上限）。手順の正本は `docs/feedback-triage-runbook.md`（Builder/DataKeeper 共管） |
+| `data/feedback_log.json` | 消費者フィードバック改善ループの記憶（採用/fact_check/却下/重複/エスカレーションの全履歴・append-only。書き込みは `scripts/feedback_triage.js --log-append` 経由のみ）。`msg_id` の集合が**処理済み台帳**を兼ね、広い検索窓での再取得を無害化する |
+| `scripts/feedback_triage.js` | 消費者フィードバック triage の決定的ヘルパー（ID採番/重複検知/**台帳突合 `--unseen-msg-ids`**/PIIマスク付きログ追記/**心拍書き込み `--health-write`**/健診レポート）。健診: `node scripts/feedback_triage.js --report --days 30` |
+| `data/feedback_health.json` | 消費者フィードバックループの**心拍**。triage ルーチンが毎日（**新着0件の日も**）書いてコミットする。0件の日は成果物が無いため、これが無いと「動いて0件」と「動かなかった／Gmailを引けなかった」が外から区別できない（ISSUE-089・ISSUE-084 の再適用） |
+| `.github/workflows/feedback-watchdog.yml` | 消費者フィードバックループの**サーバ側生存監視**。毎日13:00 JST に心拍の鮮度を見て、`max_silence_days`（既定3日）を超えたら GitHub Issue を起票（＝オーナーにメール）、復旧で自動クローズ。**「フィードバックが0件」では鳴らさない**（実績で月3件程度・空白は平常。鳴らすとオオカミ少年化する）。鳴らすのは「ルーチンが報告してこないこと」だけ。判定器は `scripts/check_feedback_health.js`（鮮度は自己申告できない＝動いていないエージェントはファイルを更新できないため、制約10 を満たす） |
 
 ---
 
@@ -376,6 +378,12 @@ node scripts/gsc_opportunities.js   # data/gsc_opportunities.json を再生成�
    ↓ Formspree 通知メールが Gmail（wakato1251999@gmail.com）に届く
 [起動] スケジュール済み Claude ルーチンが docs/feedback-triage-runbook.md の手順を引数なしで実行
         （Step 0 が Gmail MCP でメールを取得。新着0件の日は正常終了）
+        ※ Gmail 検索は実在するメールに 0件を返すことがある（2026-08-17 実測・ISSUE-089）。
+          0件は「primary → sweep(in:anywhere) → 時間差リトライ」を消化して初めて確定させる。
+          窓は広く取り、再取得は msg_id 台帳との突合で無害化する（＝取りこぼしを翌日以降に自動回収）
+   ↓
+[生存] 実行のたびに（新着0件の日も）data/feedback_health.json に心拍を書いてコミット
+        → feedback-watchdog.yml がサーバ側で鮮度を監視し、滞れば Issue 起票＝オーナーにメール
    ↓
 [判定] CLAUDE.md の Moat / Strategic Skip / 制約7・8・10 + data/feedback_policy.json を根拠に3分類
         ・UX/機能改善 → 採用なら agent-backlog.md に [FB-NNN] ready（owner=Builder）
@@ -405,7 +413,8 @@ node scripts/gsc_opportunities.js   # data/gsc_opportunities.json を再生成�
 ### 健診コマンド
 
 ```
-node scripts/feedback_triage.js --report --days 30
+node scripts/feedback_triage.js --report --days 30   # ループの中身（採用/却下/滞留）
+node scripts/check_feedback_health.js                # ループが動いているか（生存確認・CI と共有）
 ```
 
 ---
