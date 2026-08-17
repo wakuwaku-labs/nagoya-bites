@@ -1312,7 +1312,9 @@
 - **関連**: ISSUE-067（効果計測の解像度向上）/ ISSUE-054（GSC 効果測定）
 
 ### [SEO-015] 日次ジャーナル記事のスマホ可読性を上げる（本文フォントサイズ・行間・画像配置のモバイル最適化）
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-08-17
+- **resolved_by**: 520676b
 - **detected**: 2026-07-21
 - **2026-08-16 棚卸しで P2 → P1 に昇格**: 起票から26日経ち、構造の広がりと影響範囲が当時より確定した。**102/103本**のジャーナル記事が `p{font-size:.86rem;line-height:2}`（≒13.8px）を共有し、唯一の `@media(max-width:640px)` は `.store-card` / `.store-num` / `nav` だけで**本文サイズを引き上げていない**（起票時は79本）。同日の日次レポートでスマホ比率は **79%**（起票時43%から上昇）。読み手の8割が13.8pxの本文を読まされている状態は CLAUDE.md の優先度基準における「UX劣化」に当たるため P1 とする。滞留による自動繰り上げではなく、**実測に基づく明示的な昇格**
 - **category**: SEO
@@ -2571,6 +2573,7 @@
 | 2026-08-16 | Builder(routine) | ISSUE-085 実装。run_journal_local.sh にセクション3.6「中間成果物チェック」を追加：①下書きHTML存在時はclaude全工程スキップ→Step5自動復旧、②採点済みPASS候補存在時はStep3.5以降から再開する短縮プロンプトを使用、③どちらも無い場合は通常フロー。ログに[RESUME]/[NEW]を出力し再開か新規かを識別可能にした。acceptance①〜③全て充足 | ✅ commit e7febc1 |
 | 2026-08-16 | Marketer(routine) | SEO-048 実装。fetch_ga4_views.js に outbound_click をチャネル別（organic/direct/social）に集計する GA4 クエリを追加し ctaClickRate_organic/ctaClickRate_direct/ctaClickRate_social を site_metrics.json の cta オブジェクトに追記。byDomain 未帰属分を (unattributed) エントリで可視化。track_metrics.js のスナップショットにも3指標を追記。acceptance①②③全て充足 | ✅ commit 5c74d77 |
 | 2026-08-16 | Editor(routine) | SEO-008 実装。scripts/add_journal_site_intro.js を新設（冪等・art-body 先頭に NAGOYA BITES 紹介文+index.html リンクを注入）。既存 journal/2026-*.html 全100本に一括適用。run_journal_local.sh Step 5g を追加して今後の記事にも自動適用。acceptance（今後分+流入上位の既存記事に設置・JSON-LD・本文構造維持）充足 | ✅ commit 3ddad7a |
+| 2026-08-17 | Editor(routine) | SEO-015 実装・デプロイ — journal/_template.html および既存ジャーナル全102本の `@media(max-width:640px)` ブロックに `.art-body p{font-size:1rem;}` と `.art-lead{font-size:.95rem;}` を追加。モバイル13.8px（.86rem）→16px（1rem）相当に引き上げ。3パターン（multi-line/single-line-nav/custom）に対応。QA-1〜5全通過（build.jsのABORTはAPIキー不在の既存制約でCSS変更と無関係） | ✅ commit 520676b |
 
 ---
 
