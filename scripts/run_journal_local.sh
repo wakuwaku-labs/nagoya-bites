@@ -37,7 +37,37 @@ export PATH="/Users/katagirijakutou/.local/bin:/opt/homebrew/bin:/usr/local/bin:
 unset ANTHROPIC_API_KEY
 export DISABLE_AUTOUPDATER=1
 
+# ---- ハング対策の時間設定（2026-08-17 の事故）----
+# 08-17 09:00 の実行が claude 呼び出しの直後で固まり、6時間47分ものあいだ CPU をほとんど
+# 使わないまま応答を返さなかった。当時の実装には制限時間が無く、3回リトライも
+# ネットワーク一時エラー判定も「呼び出しが戻ってくること」が前提だったため一度も発火しない。
+# さらに PID ロックを握ったままだったので、翌朝以降の実行もすべて exit 0 で黙ってスキップされる
+# 状態だった（1日の欠番ではなく、人が殺すまで無期限に止まる故障）。
+CLAUDE_TIMEOUT_SEC="${CLAUDE_TIMEOUT_SEC:-1800}"   # 生成1回あたりの上限（30分）
+STALE_LOCK_SEC="${STALE_LOCK_SEC:-5400}"           # これを超えたロックはハングとみなす（90分）
+
 log() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" | tee -a "$LOG"; }
+
+# macOS には coreutils の timeout が無いため、バックグラウンド実行＋見張りで代替する。
+# 制限時間を超えたら TERM → 5秒後に KILL し、専用の終了コード 124 を返す。
+run_with_timeout() {
+  local limit="$1"; shift
+  "$@" >>"$LOG" 2>&1 &
+  local cpid=$! waited=0
+  while kill -0 "$cpid" 2>/dev/null; do
+    if [ "$waited" -ge "$limit" ]; then
+      log "⏱ ${limit}秒を超えても応答がないため打ち切ります（PID ${cpid}）"
+      kill "$cpid" 2>/dev/null
+      sleep 5
+      kill -9 "$cpid" 2>/dev/null
+      wait "$cpid" 2>/dev/null
+      return 124
+    fi
+    sleep 10
+    waited=$((waited + 10))
+  done
+  wait "$cpid"
+}
 die() { log "❌ $*"; record_health "die" "$*"; notify "日次ジャーナル停止" "$*"; exit 1; }
 
 # ---- 実行状態を「Mac の外から見える場所」に記録する（ISSUE-084）----
@@ -133,8 +163,21 @@ LOCKFILE="${LOG_DIR}/run.lock"
 if [ -f "$LOCKFILE" ]; then
   OLDPID=$(cat "$LOCKFILE" 2>/dev/null || echo "")
   if [ -n "$OLDPID" ] && kill -0 "$OLDPID" 2>/dev/null; then
-    log "別の実行 (PID ${OLDPID}) が進行中です。終了します。"
-    exit 0
+    # 「PID が生きている＝正常に作業中」とは限らない（2026-08-17 の事故）。
+    # ハングしたプロセスがロックを握り続けると、以降の実行が毎日 exit 0 で黙って
+    # スキップされ、失敗としても記録されない。経過時間でハングを見分けて奪い返す。
+    LOCK_MTIME=$(stat -f %m "$LOCKFILE" 2>/dev/null || echo 0)
+    LOCK_AGE=$(( $(date +%s) - LOCK_MTIME ))
+    if [ "$LOCK_MTIME" -gt 0 ] && [ "$LOCK_AGE" -ge "$STALE_LOCK_SEC" ]; then
+      log "⚠️ PID ${OLDPID} は生存中だがロック取得から ${LOCK_AGE}秒 経過。ハングとみなし強制終了して引き継ぎます。"
+      kill "$OLDPID" 2>/dev/null
+      sleep 5
+      kill -9 "$OLDPID" 2>/dev/null
+      rm -f "$LOCKFILE"
+    else
+      log "別の実行 (PID ${OLDPID}) が進行中です。終了します。"
+      exit 0
+    fi
   else
     log "古いロックファイル (PID ${OLDPID}) を除去します"
     rm -f "$LOCKFILE"
@@ -357,11 +400,26 @@ if [ "$SKIP_CLAUDE" = "0" ]; then
   CLAUDE_ATTEMPT=1
   while :; do
     log "claude 生成を開始（サブスク認証・--dangerously-skip-permissions・試行 ${CLAUDE_ATTEMPT}/${MAX_CLAUDE_ATTEMPTS}）"
-    "$CLAUDE_BIN" --print "$PROMPT" --dangerously-skip-permissions >>"$LOG" 2>&1
+    run_with_timeout "$CLAUDE_TIMEOUT_SEC" \
+      "$CLAUDE_BIN" --print "$PROMPT" --dangerously-skip-permissions
     CLAUDE_RC=$?
     log "claude 終了コード: ${CLAUDE_RC}"
     if [ "$CLAUDE_RC" = "0" ]; then
       break
+    fi
+    # 124 = run_with_timeout による打ち切り。ログには何も出ないまま止まるため、
+    # 下のネットワークエラー判定（ログの文字列を見る）ではリトライ対象にならない。
+    # ハングは再試行で直ることが多いので、ここで明示的に再試行へ回す。
+    if [ "$CLAUDE_RC" = "124" ]; then
+      if [ "$CLAUDE_ATTEMPT" -ge "$MAX_CLAUDE_ATTEMPTS" ]; then
+        log "応答なしが ${MAX_CLAUDE_ATTEMPTS} 回続いたため諦めます。"
+        record_health "hang" "claude が ${CLAUDE_TIMEOUT_SEC}秒 応答せず（${MAX_CLAUDE_ATTEMPTS}回連続）"
+        break
+      fi
+      log "応答なしのため 30秒待機してリトライします。"
+      sleep 30
+      CLAUDE_ATTEMPT=$((CLAUDE_ATTEMPT + 1))
+      continue
     fi
     if grep -qE "Invalid authentication credentials|Failed to authenticate" "$LOG"; then
       log "認証エラーを検出。リトライしても復旧しないため即座に諦めます。"
