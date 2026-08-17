@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-08-17T11:37:14.887Z",
+  "generatedAt": "2026-08-17T14:29:31.931Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 717,
-    "pageViews": 1133,
-    "sessions": 836,
-    "avgSessionDuration": 158.4,
+    "activeUsers": 720,
+    "pageViews": 1157,
+    "sessions": 841,
+    "avgSessionDuration": 161.2,
     "bounceRate": 0.348,
-    "pagesPerSession": 1.36
+    "pagesPerSession": 1.38
   },
   "channels": {
     "sessions": {
-      "organic": 538,
-      "direct": 200,
-      "social": 87,
+      "organic": 540,
+      "direct": 209,
+      "social": 88,
       "referral": 16,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 64,
-      "direct": 23.8,
+      "organic": 63.3,
+      "direct": 24.5,
       "social": 10.3,
       "referral": 1.9,
       "paid": 0,
@@ -36,12 +36,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 195
+      "sessions": 197
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 167
+      "sessions": 170
     },
     {
       "source": "yahoo",
@@ -51,7 +51,7 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 82
+      "sessions": 83
     },
     {
       "source": "openai",
@@ -59,14 +59,14 @@
       "sessions": 22
     },
     {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 19
+    },
+    {
       "source": "openai",
       "medium": "(not set)",
       "sessions": 15
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 13
     },
     {
       "source": "duckduckgo",
@@ -82,13 +82,13 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 190,
-      "sessions": 120
+      "pageViews": 204,
+      "sessions": 123
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 108,
-      "sessions": 96
+      "pageViews": 109,
+      "sessions": 97
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -177,8 +177,8 @@
       "other": 0
     },
     "ctaClickRate_organic": 4.3,
-    "ctaClickRate_direct": 16.5,
-    "ctaClickRate_social": 26.4,
+    "ctaClickRate_direct": 15.8,
+    "ctaClickRate_social": 26.1,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -449,7 +449,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 717,
+    "value": 720,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
