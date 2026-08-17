@@ -258,3 +258,21 @@ jobs:
           git diff --cached --quiet || git commit -m "chore: auto-update store data [skip actions]"
           git pull --rebase origin main || true
           git push || (sleep 5 && git pull --rebase origin main && git push)
+
+      - name: OGP画像の配信可否を監査（SNSサムネイルが出ない状態の検知）
+        # X / Facebook / LINE の OGP クローラは SVG をレンダリングせず、相対パスも解決しない。
+        # どちらか一方でも崩れると「SNSに貼ってもサムネイルが出ない」状態になり、
+        # 日次ジャーナルの主要導線（SNS手動投稿）の CTR を丸ごと落とす。
+        # サイトの見た目には異常が出ず、オーナーが実際に共有するまで誰も気づかないため
+        # サーバ側で毎日検査する（CLAUDE.md 無人自動化の監視原則3: 気づけるはず＝検知ではない）。
+        # 判定は検証できる事実のみ（PNGのIHDR実寸・URLが絶対か・PNGの実在）＝制約10。
+        #
+        # 位置に意味がある: commit & push の「後」に置くこと。
+        # 前に置くと OGP の不備で店舗データの日次更新まで止まり、被害が逆転する。
+        # ここで落ちれば Actions の失敗通知がオーナーのメールに届く（out-of-band 通知）。
+        #
+        # 修復: node scripts/render_og_figures.js && node scripts/normalize_og_images.js
+        # （PNG生成には Chrome/Chromium が要るためローカルで実行して push する）
+        run: |
+          node scripts/render_og_figures.js --check
+          node scripts/normalize_og_images.js --check
