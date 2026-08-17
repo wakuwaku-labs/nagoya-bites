@@ -80,14 +80,20 @@ async function collectCandidates(page, hrefMatch, type, max) {
   }, hrefMatch, type, max);
 }
 
-async function fetchCaption(page, postUrl) {
+// キャプション本文に加えて「その投稿がどの店を写しているか」の証跡になる
+// ロケーションタグを取得する。@メンションはキャプションから機械抽出できるので
+// ここでは取らない。取得した証跡は instagram_posts.json に保存され、
+// scripts/audit_reel_ownership.js が「第三者アカの投稿を出してよいか」の判定に使う。
+async function fetchPostMeta(page, postUrl) {
   await page.goto(postUrl, { waitUntil: 'networkidle2', timeout: 12000 });
   await sleep(1500);
   return await page.evaluate(() => {
     const og = document.querySelector('meta[property="og:description"]');
-    if (og && og.content) return og.content.slice(0, 500);
     const h1 = document.querySelector('article h1');
-    return h1 ? h1.textContent.slice(0, 500) : '';
+    const caption = (og && og.content) ? og.content.slice(0, 500)
+      : (h1 ? h1.textContent.slice(0, 500) : '');
+    const locEl = document.querySelector('a[href*="/explore/locations/"]');
+    return { caption, location: locEl ? (locEl.textContent || '').trim().slice(0, 120) : '' };
   });
 }
 
@@ -109,12 +115,20 @@ async function getBestPost(page, profileUrl) {
     candidates.sort((a, b) => b.score - a.score);
     if (CAPTION_FETCH > 0) {
       for (const c of candidates.slice(0, CAPTION_FETCH)) {
-        try { c.caption = await fetchCaption(page, c.url); c.score = scoreContent(c); } catch (_) {}
+        try {
+          const meta = await fetchPostMeta(page, c.url);
+          c.caption = meta.caption; c.location = meta.location;
+          c.score = scoreContent(c);
+        } catch (_) {}
       }
       candidates.sort((a, b) => b.score - a.score);
     }
     const best = candidates[0];
-    return { url: best.url, score: best.score, type: best.type };
+    // caption / alt / location は所有者検証の証跡として保存する（捨てない）
+    return {
+      url: best.url, score: best.score, type: best.type,
+      caption: best.caption || '', alt: best.alt || '', location: best.location || ''
+    };
   } catch (e) { return null; }
 }
 
@@ -171,7 +185,12 @@ async function main() {
 
     const result = await getBestPost(page, igUrl);
     if (result && result.score >= MIN_SCORE) {
-      posts[id] = { postUrl: result.url, score: result.score, type: result.type, fetchedAt: new Date().toISOString() };
+      posts[id] = {
+        postUrl: result.url, score: result.score, type: result.type,
+        // 所有者検証の証跡（第三者アカの投稿を出してよいかの判定材料）
+        caption: result.caption, alt: result.alt, location: result.location,
+        fetchedAt: new Date().toISOString()
+      };
       console.log(`${result.url} (score=${result.score}, ${result.type})`);
       found++;
     } else if (result) {

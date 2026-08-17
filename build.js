@@ -1544,6 +1544,21 @@ async function main() {
         }
       }
       console.log(`Instagram投稿URLマージ: ${igPostsMerged}件`);
+
+      // ── 所有者検証の証跡を焼き込む（ISSUE-089）──────────────────────
+      // 「その投稿がその店を写している」ことを示す材料（キャプションの@メンション /
+      // ロケーションタグ / 本文の店名）が取れている投稿にだけ `動画証跡` を付ける。
+      // これが付いた投稿は、投稿者が第三者（グルメインフルエンサー等）でも掲載できる。
+      // 判定関数は scripts/audit_reel_ownership.js が正本で、CI も同じものを使う。
+      const { evidenceFor } = require('./scripts/audit_reel_ownership.js');
+      let evidenceTagged = 0;
+      for (const s of slimStores) {
+        const id = s['ホットペッパーID'];
+        if (!id || !s['Instagram投稿URL']) continue;
+        const ev = evidenceFor(s, igPostsCache[id]);
+        if (ev) { s['動画証跡'] = ev; evidenceTagged++; }
+      }
+      console.log(`Instagram投稿の証跡付与: ${evidenceTagged}件`);
     } catch (e) {
       console.warn(`instagram_posts.json マージ失敗: ${e.message}`);
     }
