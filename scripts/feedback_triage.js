@@ -14,8 +14,13 @@
  *   --check-dup "<text>" [--msg-id <gmail-message-id>]
  *                                正規化テキスト（数値保持版）と msg_id を既存ログと照合。
  *                                msg_id 一致 = 同一メールの再処理（ログ追記も不要な完全スキップ対象）
+ *   --unseen-msg-ids '<json配列>'  Gmail から拾った msg_id の集合を台帳と突合し、未処理分だけ返す。
+ *                                広い窓（newer_than:7d 等）で毎日引いても再処理が起きないための
+ *                                差分器（ISSUE-089: Gmail検索の偽陰性を翌日以降に自動回収する）
  *   --log-append '<json>'        entry(または配列)を feedback_log.json に追記。
  *                                追記前にメールアドレスを [email] にマスクし本文を500字で切詰め
+ *   --health-write '<json>'      data/feedback_health.json（心拍）を書く。**0件の日も必ず書く**。
+ *                                「Gmailを引けた」ことをリポジトリ側＝Macの外に残すためのもの
  *   --report [--days N] [--source site-widget]
  *                                verdict 別サマリ＋「採用済み未done」一覧
  *   --policy                     data/feedback_policy.json をそのまま出力（runbook が毎回読む）
@@ -38,6 +43,7 @@ const ROOT = path.resolve(__dirname, '..');
 const BACKLOG_PATH = path.join(ROOT, 'agent-backlog.md');
 const LOG_PATH = path.join(ROOT, 'data/feedback_log.json');
 const POLICY_PATH = path.join(ROOT, 'data/feedback_policy.json');
+const HEALTH_PATH = path.join(ROOT, 'data/feedback_health.json');
 
 const FP_OPTS = { keepNumbers: true };
 const FEEDBACK_MAX_LEN = 500;
@@ -100,6 +106,74 @@ function checkDup(text, msgId) {
     duplicate: !!fpHit,
     existing: msgHit || fpHit || null,
   };
+}
+
+// ──────────────────────────────────────────────────────────
+// 台帳突合（広い窓で毎日引いても再処理しないための差分器・ISSUE-089）
+// ──────────────────────────────────────────────────────────
+
+/**
+ * Gmail から拾った msg_id 群を feedback_log.json の台帳と突合し、未処理分だけ返す。
+ *
+ * なぜ必要か: Gmail 検索は「実在するのに0件を返す」偽陰性を起こしうる（2026-08-17 に観測）。
+ * 検索窓を広げて毎日引き直せば、ある日取りこぼしても翌日以降に自動で回収できる。
+ * ただし広い窓は同じメールを何度も拾うため、「もう処理したか」を台帳で判定する必要がある。
+ * ここは判断をせず、msg_id の集合差だけを機械的に返す（検証できる事実のみ・制約10）。
+ */
+function unseenMsgIds(ids) {
+  const log = loadLog();
+  const known = new Set(log.entries.filter((e) => e.msg_id).map((e) => e.msg_id));
+  const uniq = [...new Set((ids || []).map(String).filter(Boolean))];
+  return {
+    total: uniq.length,
+    seen: uniq.filter((id) => known.has(id)),
+    unseen: uniq.filter((id) => !known.has(id)),
+    ledger_size: known.size,
+  };
+}
+
+// ──────────────────────────────────────────────────────────
+// 心拍（data/feedback_health.json）
+// ──────────────────────────────────────────────────────────
+
+/**
+ * 「今日このループが動き、Gmail を実際に引けた」ことを **リポジトリ側に** 残す。
+ *
+ * ISSUE-084 の教訓（警報を防音室で鳴らさない）の適用。フィードバックが0件の日は
+ * コミットする成果物が何も無いため、心拍を書かないと「動いていない」と「新着が無い」が
+ * 外から区別できない。0件の日こそ書く。判定側は scripts/check_feedback_health.js。
+ */
+function healthWrite(item) {
+  const log = loadLog();
+  const now = new Date();
+  const jstDate = new Date(now.getTime() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+  const q = Array.isArray(item.queries) ? item.queries : [];
+
+  const health = {
+    version: 1,
+    _comment:
+      '消費者フィードバック改善ループの心拍。triage ルーチンが毎日（新着0件の日も）書き、' +
+      'コミットで Mac の外＝GitHub へ出す。.github/workflows/feedback-watchdog.yml が鮮度を見て、' +
+      '滞ったら Issue を起票する（＝オーナーにメール）。鮮度は自己申告できない（動いていない' +
+      'エージェントはファイルを更新できない）ため、これが本体の検知シグナル。status/reason は' +
+      '原因を人に運ぶための補助情報（ISSUE-084 原則5）。',
+    last_run: {
+      date: item.date || jstDate,
+      recorded_at: now.toISOString(),
+      // ok = Gmail を引けた（新着0件でも ok）/ gmail_error = 引けなかった（認証切れ・MCP障害等）
+      status: item.status === 'gmail_error' ? 'gmail_error' : 'ok',
+      reason: item.reason || null,
+      queries: q.map((x) => ({ q: String(x.q || ''), matched: Number(x.matched) || 0 })),
+      retried_on_empty: !!item.retried_on_empty,
+      // 台帳突合の結果。late_recovered > 0 は「過去に取りこぼしたメールを今日回収した」＝偽陰性の実測
+      new_processed: Number(item.new_processed) || 0,
+      already_seen: Number(item.already_seen) || 0,
+      late_recovered: Number(item.late_recovered) || 0,
+      log_entries_total: log.entries.length,
+    },
+  };
+  fs.writeFileSync(HEALTH_PATH, JSON.stringify(health, null, 2) + '\n');
+  return health;
 }
 
 // ──────────────────────────────────────────────────────────
@@ -211,6 +285,29 @@ function main() {
     return;
   }
 
+  if (args.includes('--unseen-msg-ids')) {
+    const i = args.indexOf('--unseen-msg-ids');
+    const raw = args[i + 1];
+    if (raw === undefined) { out({ ok: false, error: '--unseen-msg-ids requires a JSON array' }); process.exit(1); }
+    let ids;
+    try { ids = JSON.parse(raw); }
+    catch (e) { out({ ok: false, error: 'invalid JSON: ' + e.message }); process.exit(1); }
+    if (!Array.isArray(ids)) { out({ ok: false, error: '--unseen-msg-ids expects a JSON array' }); process.exit(1); }
+    out({ ok: true, ...unseenMsgIds(ids) });
+    return;
+  }
+
+  if (args.includes('--health-write')) {
+    const i = args.indexOf('--health-write');
+    const raw = args[i + 1];
+    if (raw === undefined) { out({ ok: false, error: '--health-write requires JSON' }); process.exit(1); }
+    let item;
+    try { item = JSON.parse(raw); }
+    catch (e) { out({ ok: false, error: 'invalid JSON: ' + e.message }); process.exit(1); }
+    out({ ok: true, health: healthWrite(item || {}) });
+    return;
+  }
+
   if (args.includes('--log-append')) {
     const i = args.indexOf('--log-append');
     const raw = args[i + 1];
@@ -262,7 +359,9 @@ function main() {
     usage: [
       '--next-id',
       '--check-dup "<text>" [--msg-id <gmail-message-id>]',
+      '--unseen-msg-ids \'["<gmail-msg-id>", ...]\'',
       "--log-append '<json>'",
+      "--health-write '<json>'",
       '--report [--days N] [--source site-widget]',
       '--policy',
     ],
@@ -272,4 +371,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { nextId, checkDup, report, scrubPII };
+module.exports = { nextId, checkDup, report, scrubPII, unseenMsgIds, healthWrite };

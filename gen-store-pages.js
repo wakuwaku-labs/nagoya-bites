@@ -398,10 +398,27 @@ function renderStorePage(s, slug) {
   //   （直配信すると店舗ページが極端に重くなる）。
   // wsrv の default= で1段下のサイズへ、onerror で 直URL → 汎用SVG へ多段フォールバック。
   // Google Places CDN(=s1600-w1200 高解像度) と self-host SVG はプロキシ不可/不要のため直配信。
+  //
+  // ⚠️ ヒーローは width:100% の全幅表示（1280px 幅 × DPR2 = 実質 2560px の枠）。
+  //    以前はここが固定 w=800 だったため、原寸 1280px の店でも 800px しか配信されず、
+  //    実測できている解像度を 480px 分捨てていた（= 全幅で 3.2倍に引き伸ばされてボケる）。
+  //    srcset で「実測幅（写真幅）を上限」に複数サイズを出し、端末に選ばせる。
+  //    wsrv は we=1（拡大しない）なので原寸超えの要求は無意味 → 上限は必ず実測幅で切る
+  //    （CLAUDE.md 制約10: 推測値ではなく probe_hotpepper_master.js の実測値だけを根拠にする）。
   const hpHeroMatch = photo.match(/^https?:\/\/(imgfp\.hotp\.jp\/.+?)(_\d+)?\.jpg$/);
-  const heroSrc = hpHeroMatch
-    ? `https://wsrv.nl/?url=${encodeURIComponent(hpHeroMatch[1] + (hpHeroMatch[2] || '') + '.jpg')}&w=800&output=webp&q=82&we=1&sharp=2&default=${encodeURIComponent(hpHeroMatch[1] + (hpHeroMatch[2] === '_480' ? '_238' : '_480') + '.jpg')}`
+  // 実測幅。無い場合のみ URL サフィックス（_480 等）から読む。どちらも無ければ 480 とみなす。
+  const heroMasterW = Number(s['写真幅']) > 0
+    ? Number(s['写真幅'])
+    : (hpHeroMatch && hpHeroMatch[2] ? parseInt(hpHeroMatch[2].slice(1), 10) : 480);
+  const heroWidths = [...new Set([...[480, 800, 1200, 1600].filter((w) => w < heroMasterW), heroMasterW])];
+  const hpHeroUrl = (w) => hpHeroMatch
+    ? `https://wsrv.nl/?url=${encodeURIComponent(hpHeroMatch[1] + (hpHeroMatch[2] || '') + '.jpg')}&w=${w}&output=webp&q=82&we=1&sharp=2&default=${encodeURIComponent(hpHeroMatch[1] + (hpHeroMatch[2] === '_480' ? '_238' : '_480') + '.jpg')}`
     : photo;
+  // src は旧来どおり中間サイズ（srcset 非対応環境の保険）。実際の選択は srcset/sizes が行う。
+  const heroSrc = hpHeroMatch ? hpHeroUrl(Math.min(800, heroMasterW)) : photo;
+  const heroSrcset = hpHeroMatch && heroWidths.length > 1
+    ? heroWidths.map((w) => `${hpHeroUrl(w)} ${w}w`).join(', ')
+    : '';
   const heroOnerror = hpHeroMatch
     ? `if(!this.dataset.f){this.dataset.f=1;this.src='${photo}';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}`
     : `this.onerror=null;this.src='/assets/store-figures/_fallback.svg'`;
@@ -409,8 +426,18 @@ function renderStorePage(s, slug) {
   // ── 公式Instagram投稿の埋め込み（写真ソース優先1・embed.js 経由で規約上明示的に許可）──
   // 実写を店舗ページで「しっかり見せる」ための本命セクション。埋め込みスクリプトは
   // セクションが視界に近づいてから遅延ロードし、初期表示性能を守る。
+  //
+  // 【配置】おすすめポイントの直後（info-grid の前）＝ページの主役の位置に置く。
+  //   CLAUDE.md の写真ソース優先順で Instagram 埋め込みは優先1、HotPepper 写真は優先2。
+  //   ヒーローに使える HotPepper 写真は 1,442店で原寸 480px しか無く（規約上 AI超解像も
+  //   自ホストも不可）、全幅に引き伸ばすと粗い。一方この埋め込みは店が自分で上げた原寸が
+  //   出るため、優先順どおり「店の公式写真を主役、HotPepper 写真を添え」に並べ替える。
+  //   ローダーは async でDOM構築を止めないため、上に来ても初期描画は阻害しない。
   const igPostUrl = (s['Instagram投稿URL'] || '').trim();
-  const hasIgEmbed = /^https:\/\/www\.instagram\.com\/[A-Za-z0-9_.]+\/(p|reel)\/[A-Za-z0-9_-]+\/?$/.test(igPostUrl);
+  //   所有者検証（__igVerified）を通った店だけ埋め込む。形式が正しくても「別の店の投稿」
+  //   であることがあり、その場合この見出しは誤情報になる（判定は audit_reel_ownership.js）。
+  const hasIgEmbed = s.__igVerified === true
+    && /^https:\/\/www\.instagram\.com\/[A-Za-z0-9_.]+\/(p|reel)\/[A-Za-z0-9_-]+\/?$/.test(igPostUrl);
   const igEmbedHtml = hasIgEmbed ? `
   <div class="ig-photos">
     <h2>公式Instagramの実際の写真</h2>
@@ -546,7 +573,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="${heroSrc}" alt="${name}" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="${heroOnerror}">
+<img class="hero-img" src="${heroSrc}"${heroSrcset ? ` srcset="${heroSrcset}" sizes="100vw"` : ''} alt="${name}" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="${heroOnerror}">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
@@ -565,7 +592,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
 
   ${point ? `<div class="point-box"><p>${point}</p></div>` : ''}
-
+${igEmbedHtml}
   <div class="info-grid">
     ${area ? `<div class="info-cell"><label>エリア</label><span>${pref}${locality ? ' ' + locality : ''} ${area}</span></div>` : ''}
     ${street ? `<div class="info-cell"><label>住所</label><span>${street}</span></div>` : ''}
@@ -581,7 +608,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <h2>予約・情報を確認</h2>
     ${linksHtml}
   </div>
-${igEmbedHtml}
+
   ${relatedHtml}
 
   <div class="back-section">
@@ -719,6 +746,24 @@ async function main() {
   const { loadStores } = require('./scripts/lib/load_stores');
   const localStores = loadStores();
   console.log(`LOCAL_STORES: ${localStores.length}件`);
+
+  // ── Instagram 埋め込みの所有者検証（ISSUE-089）────────────────────────
+  // 埋め込みは「公式Instagramの実際の写真」という見出しでページの主役位置に出るため、
+  // 別の店の投稿が混ざると誤情報になる。index.html のカード/モーダルと同じ判定器を通し、
+  // 検証を通った店だけ埋め込む（形式チェックだけでは所有者を確かめられない）。
+  {
+    const { audit } = require('./scripts/audit_reel_ownership.js');
+    const { results } = audit(localStores);
+    const verified = new Set(
+      results.filter(r => r.verdict.startsWith('PASS')).map(r => r.hpId || r.store)
+    );
+    let igVerified = 0;
+    for (const ls of localStores) {
+      ls.__igVerified = verified.has(ls['ホットペッパーID'] || ls['店名']);
+      if (ls.__igVerified) igVerified++;
+    }
+    console.log(`Instagram埋め込み 所有者検証通過: ${igVerified}件`);
+  }
 
   // 各 LOCAL_STORE を CSV で補完してマージ
   let visible = [];

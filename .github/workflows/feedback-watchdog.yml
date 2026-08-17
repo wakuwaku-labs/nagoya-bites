@@ -1,0 +1,158 @@
+name: NAGOYA BITES — 消費者フィードバックループ 生存監視
+
+# なぜこのワークフローが必要か（2026-08-17 / ISSUE-089・ISSUE-084 の再適用）:
+#   消費者フィードバック改善ループの検知器は「Gmail 検索」1本しかない。
+#   そして Gmail 検索は、実在してINBOXにUNREADで存在するメールに対して 0件を返すことがある
+#   （2026-08-17 実測。同一クエリを数分後に投げ直したらヒットした）。
+#
+#   無人のスケジュール実行では 0件＝「新着なし」として静かに正常終了する。つまり
+#     ・本当に投稿が無かった日            → 0件
+#     ・検索が偽陰性を返した日            → 0件
+#     ・認証切れ/MCP障害で引けなかった日  → 0件（あるいは実行そのものが無い）
+#   の3つが外から一切区別できず、利用者の声が永久に落ちる。
+#
+#   ISSUE-084 の教訓（警報を防音室で鳴らすな）をそのまま適用する:
+#     1. 監視は監視対象と別の場所で回す  → ローカル/クラウドのルーチンではなく GitHub Actions
+#     2. 通知は out-of-band に出す        → Issue 起票（GitHub が既定でオーナーにメールする）
+#     3. 「気づけるはず」を検知と数えない → 人がログを見に行かなくても届く
+#
+#   検知の中身は「フィードバックが来ていないこと」ではない。それは平常（実績で月3件程度）。
+#   検知するのは **triage ルーチン自体が報告してこないこと** だけ。この線引きが
+#   オオカミ少年化を防ぐ（ISSUE-084 原則6）。
+#
+#   判定は検証できる事実で行う（CLAUDE.md 制約10）:
+#     data/feedback_health.json の実在と last_run.date の鮮度。
+#     鮮度は自己申告できない——動いていないエージェントはファイルを更新できない。
+
+on:
+  schedule:
+    # 04:00 UTC = 13:00 JST。triage ルーチンの実行時刻に依存しないよう、
+    # 許容欠測日数（既定3日）側で余裕を持たせている。
+    - cron: '0 4 * * *'
+  workflow_dispatch: # 手動確認・復旧後の即時クローズ用
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 生存確認
+        id: check
+        run: |
+          # 異常なら exit 1 になるので、結果を握って後段に渡す
+          set +e
+          node scripts/check_feedback_health.js --json > /tmp/feedback-health.json
+          set -e
+          echo "----- 判定結果 -----"
+          node scripts/check_feedback_health.js || true
+
+      - name: 異常なら Issue を起票/更新、復旧していればクローズ
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/feedback-health.json', 'utf8'));
+            const label = 'feedback-watchdog';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'open', labels: label, per_page: 20,
+            });
+            const existing = issues.find(i => i.title.startsWith('🔴 消費者フィードバックループ'));
+
+            // ---- 復旧している場合: 開いている Issue を閉じる（人の手を煩わせない）----
+            if (r.ok) {
+              if (existing) {
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: existing.number,
+                  body: `✅ 復旧を確認しました（JST ${r.today_jst}）。最後の心拍: ${r.last_run.date}（${r.silence_days}日前）。自動クローズします。`,
+                });
+                await github.rest.issues.update({
+                  owner, repo, issue_number: existing.number, state: 'closed',
+                });
+                core.info(`Issue #${existing.number} を復旧クローズしました。`);
+              } else {
+                core.info('健全。Issue の起票は不要です。');
+              }
+              return;
+            }
+
+            // ---- 異常あり: 起票 or 更新 ----
+            const kinds = r.problems.map(p => p.kind).join(', ');
+            const title = `🔴 消費者フィードバックループが報告してきていません（${kinds}）`;
+
+            const lines = [];
+            lines.push('消費者フィードバック改善ループの **生存確認に失敗**しました（JST ' + r.today_jst + ' 時点）。');
+            lines.push('');
+            lines.push('> このループが止まっていると、サイト利用者から届いた声が**気づかれないまま失われます**。');
+            lines.push('> 検知器（Gmail 検索）が 0 件を返しても、それが「投稿が無い」のか「引けていない」のか');
+            lines.push('> ループの外からは区別できないため、この Issue が唯一の気づく手段です（ISSUE-089）。');
+            lines.push('');
+            lines.push('## 検出内容');
+            for (const p of r.problems) lines.push(`- **${p.kind}** — ${p.detail}`);
+            if (r.warnings.length) {
+              lines.push('');
+              lines.push('## 警告（それ自体は異常ではない）');
+              for (const w of r.warnings) lines.push(`- ${w}`);
+            }
+            lines.push('');
+            lines.push('## 最後の心拍');
+            if (r.last_run) {
+              lines.push(`- 対象日: \`${r.last_run.date}\`（${r.silence_days}日前 / 許容 ${r.max_silence_days}日）`);
+              lines.push(`- 状態: \`${r.last_run.status}\``);
+              if (r.last_run.reason) lines.push(`- 理由: ${r.last_run.reason}`);
+              if (r.last_run.recorded_at) lines.push(`- 記録時刻: ${r.last_run.recorded_at}`);
+              if (Array.isArray(r.last_run.queries)) {
+                for (const q of r.last_run.queries) lines.push(`- クエリ: \`${q.q}\` → ${q.matched}件`);
+              }
+            } else {
+              lines.push('- `data/feedback_health.json` が未取得です。');
+              lines.push('- **triage ルーチンが一度も心拍を書けていない可能性があります**（スケジュール未登録 / push 権限 OFF / 起動失敗）。');
+            }
+            lines.push('');
+            lines.push('## 対処');
+            lines.push('1. まず手で1回回して、Gmail を引けるか確認する（`docs/feedback-triage-runbook.md` の Step 0）。');
+            lines.push('2. **`gmail_error` の場合** — Gmail MCP の認証切れが最有力。これはコードでは直せません。');
+            lines.push('   claude を対話起動して接続し直してください。');
+            lines.push('3. **`stale_heartbeat` / `no_heartbeat` の場合** — ルーチン自体が動いていない、または');
+            lines.push('   動いてもコミット/push できていない。claude.ai のルーチン設定（スケジュール・**push 権限トグル**）を確認する。');
+            lines.push('4. 復旧したら手動で1回実行し、`data/feedback_health.json` が更新・コミットされることを確認する:');
+            lines.push('   ```bash');
+            lines.push('   node scripts/check_feedback_health.js');
+            lines.push('   ```');
+            lines.push('5. 停止期間に投稿が来ていた可能性があるため、復旧後の1回は sweep（`from:formspree.io newer_than:14d in:anywhere`）で');
+            lines.push('   遡って回収する。台帳突合（`--unseen-msg-ids`）があるので二重起票にはなりません。');
+            lines.push('');
+            lines.push('---');
+            lines.push('この Issue は生存確認が通ると自動でクローズされます（feedback-watchdog.yml）。');
+            const body = lines.join('\n');
+
+            if (existing) {
+              await github.rest.issues.update({
+                owner, repo, issue_number: existing.number, title, body,
+              });
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: existing.number,
+                body: `再検出（JST ${r.today_jst}）。現在の問題: ${kinds}`,
+              });
+              core.setFailed(`消費者フィードバックループの異常が継続しています: ${kinds}`);
+            } else {
+              const { data: created } = await github.rest.issues.create({
+                owner, repo, title, body, labels: [label],
+              });
+              core.setFailed(`消費者フィードバックループの異常を検出し Issue #${created.number} を起票しました: ${kinds}`);
+            }

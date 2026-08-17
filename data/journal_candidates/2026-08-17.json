@@ -1,0 +1,331 @@
+{
+  "date": "2026-08-17",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1r",
+      "title_draft": "29席のラーメンと150席の食べ放題——業界人が読む名駅と山王の新店",
+      "verdict": "PASS",
+      "total": 100,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 4件 (比較,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 213字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3r",
+      "title_draft": "徒歩4分の名駅と車で行く山王——今週の名古屋、宴会と一人客が正反対の方角へ開いた",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 91,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 3件 (比較,シーン,価格帯) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 182字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「宴会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "91点（自動公開ライン 100点）。主な不足: topicality -10 / uniqueness -5 / writability -2"
+    },
+    {
+      "id": "c2r",
+      "title_draft": "名駅の家賃を29席で割る——一風堂が選んだ通し営業と、一人飲みの時間帯",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 90,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 15,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 3件 (比較,価格帯,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 170字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "90点（自動公開ライン 100点）。主な不足: topicality -10 / uniqueness -5 / brand_fit -3"
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1r",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1r",
+      "theme": "weekly_digest",
+      "title_draft": "29席のラーメンと150席の食べ放題——業界人が読む名駅と山王の新店",
+      "lead_draft": "8月17日に一風堂名駅3丁目店、翌18日にゆず庵名古屋山王店。今週の名古屋は、名古屋駅桜通口から徒歩4分の29席と、中川区山王の25卓150席という、規模も客層も正反対の2軒が続けて開く週になった。片方は11時から23時までの通し営業、もう片方は最終入店22時の大箱。同じ「新店」でも、どこで採算を合わせるかの設計はまるで違う。公開されている席数と営業時間という検証できる数字だけを並べて、業界人の目で回収の仕組みを読み解く。",
+      "angle": "席数・営業時間・最終入店時刻という公表値だけを使って、29席×12時間通し営業＝昼夜二毛作で名駅の家賃を割る設計と、150席×食べ放題＝客単価を固定して回転より席数で吸収する設計を比較し、一人飲みと宴会というシーン適性、および価格帯の読み方の違いまで落とす。あわせて11日前に本サイトで扱った名駅東口の焼鳥90円業態を三点目に置き、名駅で同時に走っている低単価・中単価・大箱の三層を業界視点で整理する",
+      "main_store": {
+        "name": "一風堂 名駅3丁目店",
+        "id": "",
+        "area": "名駅",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通: 【中村区】『一風堂 名駅3丁目店』2026年8月17日オープン（29席・11:00〜23:00 L.O.22:45）",
+          "url": "https://jouhou.nagoya/ippudo-meieki/",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "流通ニュース: 一風堂／名古屋市中村区に「名駅3丁目店」8月17日オープン、名古屋市内7店舗目（桜通口から徒歩4分・平日11〜15時限定セット）",
+          "url": "https://www.ryutsuu.biz/store/s080646.html",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "一風堂 公式店舗ページ: 名駅3丁目店（名古屋市中村区名駅3-13-31 名駅モリシタビル1階）",
+          "url": "https://stores.ippudo.com/1832",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "PR TIMES: 『寿司・しゃぶしゃぶ ゆず庵 名古屋山王店』2026年8月18日(火)グランドオープン（25卓150席・11:00〜24:00 最終入店22:00・物語コーポレーション）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001495.000044964.html",
+          "date": "2026-08-18"
+        },
+        {
+          "label": "PR TIMES: 焼鳥酒場『鳥ぶら 名駅東口店』2026年8月10日(月)グランドオープン（焼鳥1本90円〜・生中190円・17:00〜24:00）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000272.000070373.html",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "株式会社ファッズ 公式: 【開店】『鳥ぶら 名駅東口店』8月10日 NEW OPEN",
+          "url": "https://www.phads.jp/company/post-shinjidai-hamamatuekimae-2-2-2-2-2-2-2-2-2-2-2-4-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2-2/",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "グルメプレス: 焼鳥酒場『鳥ぶら 名駅東口店』2026年8月10日(月)グランドオープン",
+          "url": "https://gourmetpress.net/1465455/",
+          "date": "2026-08-10"
+        }
+      ]
+    },
+    {
+      "id": "c2r",
+      "theme": "weekly_digest",
+      "title_draft": "名駅の家賃を29席で割る——一風堂が選んだ通し営業と、一人飲みの時間帯",
+      "lead_draft": "8月17日、名古屋駅桜通口から徒歩4分に一風堂名駅3丁目店が開いた。29席、11時から23時までの通し営業、平日昼はセット。名古屋市内7店舗目になる。29席という規模で名駅の家賃を負担する条件を逆算すると、この営業時間は選択ではなく前提に近い。翌18日には中川区山王で150席の大箱も開いており、並べると各社が狙う時間帯の違いが見えてくる。",
+      "angle": "29席・12時間通し営業・平日昼セットという公表値から、昼のビジネス回転と夜の一人飲み・〆需要という二毛作で固定費を割る設計を説明し、価格帯の読み方とカウンター中心店の一人客動線を比較して示す",
+      "main_store": {
+        "name": "一風堂 名駅3丁目店",
+        "id": "",
+        "area": "名駅",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通: 『一風堂 名駅3丁目店』2026年8月17日オープン（29席・11:00〜23:00）",
+          "url": "https://jouhou.nagoya/ippudo-meieki/",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "流通ニュース: 一風堂／名古屋市中村区に「名駅3丁目店」8月17日オープン、名古屋市内7店舗目",
+          "url": "https://www.ryutsuu.biz/store/s080646.html",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "一風堂 公式店舗ページ: 名駅3丁目店",
+          "url": "https://stores.ippudo.com/1832",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "PR TIMES: 『ゆず庵 名古屋山王店』2026年8月18日(火)グランドオープン（25卓150席）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001495.000044964.html",
+          "date": "2026-08-18"
+        },
+        {
+          "label": "PR TIMES: 『鳥ぶら 名駅東口店』2026年8月10日(月)グランドオープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000272.000070373.html",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "グルメプレス: 『鳥ぶら 名駅東口店』2026年8月10日(月)グランドオープン",
+          "url": "https://gourmetpress.net/1465455/",
+          "date": "2026-08-10"
+        }
+      ]
+    },
+    {
+      "id": "c3r",
+      "theme": "weekly_digest",
+      "title_draft": "徒歩4分の名駅と車で行く山王——今週の名古屋、宴会と一人客が正反対の方角へ開いた",
+      "lead_draft": "今週の名古屋は、8月17日に名古屋駅桜通口から徒歩4分の一風堂名駅3丁目店、18日に中川区山王のゆず庵名古屋山王店が開いた。29席と150席、通し営業と最終入店22時、徒歩商圏と車商圏。数字を並べると、この2軒が取りにいっている客はまったく重ならない。外食大手が同じ週に名古屋の両極へ資本を置いた事実から、いまこの街のどこに需要が割れているのかを業界人の目で読む。",
+      "angle": "立地を徒歩商圏か車商圏かで分け、席数・最終入店時刻・営業時間という検証できる数字から、名駅＝少人数短時間の一人飲み、山王＝家族と宴会の長時間滞在という需要の分岐を比較し、それぞれの価格帯の読み方とシーン適性に落とす",
+      "main_store": {
+        "name": "寿司・しゃぶしゃぶ ゆず庵 名古屋山王店",
+        "id": "",
+        "area": "中川区山王",
+        "genre": "寿司・しゃぶしゃぶ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 『ゆず庵 名古屋山王店』2026年8月18日(火)グランドオープン（25卓150席・11:00〜24:00 最終入店22:00）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001495.000044964.html",
+          "date": "2026-08-18"
+        },
+        {
+          "label": "名古屋情報通: 『一風堂 名駅3丁目店』2026年8月17日オープン",
+          "url": "https://jouhou.nagoya/ippudo-meieki/",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "流通ニュース: 一風堂／名古屋市中村区に「名駅3丁目店」8月17日オープン",
+          "url": "https://www.ryutsuu.biz/store/s080646.html",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "一風堂 公式店舗ページ: 名駅3丁目店",
+          "url": "https://stores.ippudo.com/1832",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "PR TIMES: 『鳥ぶら 名駅東口店』2026年8月10日(月)グランドオープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000272.000070373.html",
+          "date": "2026-08-10"
+        }
+      ]
+    }
+  ]
+}

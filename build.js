@@ -661,6 +661,11 @@ function manualStoreToRecord(m) {
     'アクセス': m['アクセス'] || '',
     'ホットペッパーID': m['ホットペッパーID'] || '',
     '写真URL': m['写真URL'] || '',
+    // 写真クレジット＝Places の authorAttributions（＝オーナー投稿か客の投稿かの判定根拠）。
+    // canonical に持ち越さないと scripts/audit_photo_policy.js が後から検算できないため出力する
+    // （data/photo_policy.json の判定は「第三者が確認できる事実」で行う・CLAUDE.md 制約10）。
+    '写真クレジット': m['写真クレジット'] || '',
+    '写真幅': m['写真幅'] || '',
     'Instagram': m['Instagram'] || '',
     '食べログURL': m['食べログURL'] || '',
     'TikTok検索': `https://www.tiktok.com/search?q=${searchQ}`,
@@ -1544,6 +1549,21 @@ async function main() {
         }
       }
       console.log(`Instagram投稿URLマージ: ${igPostsMerged}件`);
+
+      // ── 所有者検証の証跡を焼き込む（ISSUE-089）──────────────────────
+      // 「その投稿がその店を写している」ことを示す材料（キャプションの@メンション /
+      // ロケーションタグ / 本文の店名）が取れている投稿にだけ `動画証跡` を付ける。
+      // これが付いた投稿は、投稿者が第三者（グルメインフルエンサー等）でも掲載できる。
+      // 判定関数は scripts/audit_reel_ownership.js が正本で、CI も同じものを使う。
+      const { evidenceFor } = require('./scripts/audit_reel_ownership.js');
+      let evidenceTagged = 0;
+      for (const s of slimStores) {
+        const id = s['ホットペッパーID'];
+        if (!id || !s['Instagram投稿URL']) continue;
+        const ev = evidenceFor(s, igPostsCache[id]);
+        if (ev) { s['動画証跡'] = ev; evidenceTagged++; }
+      }
+      console.log(`Instagram投稿の証跡付与: ${evidenceTagged}件`);
     } catch (e) {
       console.warn(`instagram_posts.json マージ失敗: ${e.message}`);
     }

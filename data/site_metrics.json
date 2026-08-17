@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-08-17T06:43:15.047Z",
+  "generatedAt": "2026-08-17T07:37:19.445Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 710,
-    "pageViews": 1086,
-    "sessions": 823,
-    "avgSessionDuration": 144.7,
-    "bounceRate": 0.362,
+    "activeUsers": 711,
+    "pageViews": 1093,
+    "sessions": 826,
+    "avgSessionDuration": 143.7,
+    "bounceRate": 0.344,
     "pagesPerSession": 1.32
   },
   "channels": {
     "sessions": {
-      "organic": 533,
-      "direct": 201,
-      "social": 86,
+      "organic": 534,
+      "direct": 191,
+      "social": 87,
       "referral": 16,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 63.8,
-      "direct": 24,
-      "social": 10.3,
+      "organic": 64.5,
+      "direct": 23.1,
+      "social": 10.5,
       "referral": 1.9,
       "paid": 0,
       "other": 0
@@ -36,12 +36,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 192
+      "sessions": 193
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 162
+      "sessions": 164
     },
     {
       "source": "yahoo",
@@ -51,17 +51,12 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 81
+      "sessions": 82
     },
     {
       "source": "openai",
       "medium": "organic",
       "sessions": 22
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 17
     },
     {
       "source": "openai",
@@ -74,6 +69,11 @@
       "sessions": 7
     },
     {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 7
+    },
+    {
       "source": "copilot.com",
       "medium": "(not set)",
       "sessions": 4
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 162,
-      "sessions": 112
+      "pageViews": 167,
+      "sessions": 114
     },
     {
       "path": "/features/nagoya-solo-dining.html",
@@ -170,19 +170,19 @@
     "note": null,
     "byChannel": {
       "organic": 23,
-      "direct": 35,
-      "social": 21,
+      "direct": 33,
+      "social": 23,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
     "ctaClickRate_organic": 4.3,
-    "ctaClickRate_direct": 17.4,
-    "ctaClickRate_social": 24.4
+    "ctaClickRate_direct": 17.3,
+    "ctaClickRate_social": 26.4
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 710,
+    "value": 711,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
