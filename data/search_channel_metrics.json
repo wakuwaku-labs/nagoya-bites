@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-08-17T09:08:55.274Z",
+  "generatedAt": "2026-08-17T09:29:36.390Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 810,
+  "total_sessions": 811,
   "engines": [
     {
       "key": "bing",
@@ -23,7 +23,7 @@
       "key": "google",
       "label": "Google",
       "sessions": 195,
-      "pct": 24.1,
+      "pct": 24,
       "sources": [
         {
           "source": "google",
@@ -35,8 +35,8 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 172,
-      "pct": 21.2,
+      "sessions": 173,
+      "pct": 21.3,
       "sources": [
         {
           "source": "(direct)",
@@ -46,7 +46,7 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 8
+          "sessions": 9
         }
       ]
     },
@@ -82,7 +82,7 @@
       "key": "yahoo",
       "label": "Yahoo!",
       "sessions": 96,
-      "pct": 11.9,
+      "pct": 11.8,
       "sources": [
         {
           "source": "yahoo",
@@ -145,8 +145,8 @@
     "to": "2026-08-17",
     "delta": {
       "bing": 3,
-      "google": 3,
-      "direct": -4,
+      "google": 5,
+      "direct": -3,
       "ai_assistant": 1,
       "yahoo": 1,
       "duckduckgo": 0
