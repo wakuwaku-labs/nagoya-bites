@@ -2002,10 +2002,10 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 
 <!-- STORE-INDEX:START 2026-08-17 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（5026店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（5028店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
-<summary>名古屋（名古屋駅/西区/中村区）（829店）</summary>
+<summary>名古屋（名古屋駅/西区/中村区）（830店）</summary>
 <ul class="store-index-list">
 <li><a href="stores/J003785087.html">［個室空間］肉と魚と名古屋めし 和古屋 名古屋駅前店（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
 <li><a href="stores/J001192959.html">6年4組 名古屋名駅分校（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
@@ -2392,6 +2392,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <li><a href="stores/J004612045.html">一升びん JR名古屋駅うまいもん通り店（名古屋（名古屋駅/西区/中村区）・焼肉・ホルモン）</a></li>
 <li><a href="stores/J001200664.html">一鶴乃鳥（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
 <li><a href="stores/J001146652.html">一番酒場 あぶりどりバリ鳥（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
+<li><a href="index.html#q=%E4%B8%80%E9%A2%A8%E5%A0%82%20%E5%90%8D%E9%A7%853%E4%B8%81%E7%9B%AE%E5%BA%97">一風堂 名駅3丁目店（名古屋（名古屋駅/西区/中村区）・ラーメン）</a></li>
 <li><a href="stores/J001296242.html">飲み放題 中華料理　餃子のハハ 名古屋店（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
 <li><a href="stores/J003298199.html">飲み放題×コース タイ料理専門店 サワデーすみ芳 国際センター南店（名古屋（名古屋駅/西区/中村区）・アジア・エスニック料理）</a></li>
 <li><a href="stores/J003818004.html">飲み放題980円～　国産牛小腸使用　もつ鍋・博多料理｜蟻月　名駅三丁目店（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
@@ -7330,6 +7331,12 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <li><a href="index.html#q=%E5%BE%A1%E3%81%86%E3%81%A9%E3%82%93%E5%85%89%E5%8F%B2%20%E4%BB%8A%E6%B1%A0%E5%BA%97">御うどん光史 今池店（今池・うどん）</a></li>
 </ul>
 </details>
+<details class="store-index-area" data-area="名古屋（中川区）">
+<summary>名古屋（中川区）（1店）</summary>
+<ul class="store-index-list">
+<li><a href="index.html#q=%E5%AF%BF%E5%8F%B8%E3%83%BB%E3%81%97%E3%82%83%E3%81%B6%E3%81%97%E3%82%83%E3%81%B6%20%E3%82%86%E3%81%9A%E5%BA%B5%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B1%B1%E7%8E%8B%E5%BA%97">寿司・しゃぶしゃぶ ゆず庵 名古屋山王店（名古屋（中川区）・しゃぶしゃぶ・寿司）</a></li>
+</ul>
+</details>
 </section>
 <!-- STORE-INDEX:END -->
 
@@ -7457,7 +7464,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '7774f6ff81e4';
+var STORES_JSON_VERSION = '214db67833ba';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })

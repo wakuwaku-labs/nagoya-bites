@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-08-17T07:24:37.737Z",
+  "generatedAt": "2026-08-17T07:37:19.445Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 710,
-    "pageViews": 1092,
-    "sessions": 824,
-    "avgSessionDuration": 144,
-    "bounceRate": 0.342,
-    "pagesPerSession": 1.33
+    "activeUsers": 711,
+    "pageViews": 1093,
+    "sessions": 826,
+    "avgSessionDuration": 143.7,
+    "bounceRate": 0.344,
+    "pagesPerSession": 1.32
   },
   "channels": {
     "sessions": {
-      "organic": 533,
-      "direct": 190,
+      "organic": 534,
+      "direct": 191,
       "social": 87,
       "referral": 16,
       "paid": 0,
@@ -20,7 +20,7 @@
     },
     "pct": {
       "organic": 64.5,
-      "direct": 23,
+      "direct": 23.1,
       "social": 10.5,
       "referral": 1.9,
       "paid": 0,
@@ -36,7 +36,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 192
+      "sessions": 193
     },
     {
       "source": "(direct)",
@@ -71,7 +71,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 6
+      "sessions": 7
     },
     {
       "source": "copilot.com",
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 163,
-      "sessions": 113
+      "pageViews": 167,
+      "sessions": 114
     },
     {
       "path": "/features/nagoya-solo-dining.html",
@@ -177,12 +177,12 @@
       "other": 0
     },
     "ctaClickRate_organic": 4.3,
-    "ctaClickRate_direct": 17.4,
+    "ctaClickRate_direct": 17.3,
     "ctaClickRate_social": 26.4
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 710,
+    "value": 711,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
