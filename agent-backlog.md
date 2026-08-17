@@ -311,12 +311,13 @@
 
 ---
 
-### [ISSUE-092] Formspree 側の投稿数と Gmail 台帳を突合し「メールが一度も届かなかった」を検出する
+### [ISSUE-094] Formspree 側の投稿数と Gmail 台帳を突合し「メールが一度も届かなかった」を検出する
 
-> **採番修正（2026-08-17）**: 本課題は当初 `ISSUE-090` として起票されたが、同日に別セッションが
-> 起票した「カードの Instagram ボタンが別の店に飛ぶ」と **ID が衝突**していた。両方とも Notion 未同期
-> だったため、後者を `ISSUE-092` に採番し直した（Notion 側のリンクは壊れない）。
-> 同種の重複が ISSUE-007 / ISSUE-018 / ISSUE-048 / ISSUE-089 / STR-001 にも残存しており、要棚卸し。
+> **採番修正（2026-08-17・2回）**: 本課題は当初 `ISSUE-090` として起票されたが同日の別セッション起票と
+> 衝突したため `ISSUE-092` に変更。その後 origin/main が独自に `ISSUE-092`（Instagram埋め込みの無関係投稿）を
+> 確定させていたため、**main の採番を優先して `ISSUE-094` に再変更**した。Notion 側のプロパティも追従済み。
+> 同様に本ブランチの `ISSUE-091`（SEOアドバイスループ）も main の `ISSUE-091` と衝突したため `ISSUE-093` へ。
+> 判定器は `node scripts/audit_backlog_ids.js`（CI で毎日実行）。
 
 - **priority**: P2 → **status**: ready
 - **detected**: 2026-08-17
@@ -344,7 +345,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 ---
 
-### [ISSUE-091] SEOアドバイスループにも同じ Gmail 偽陰性の穴があるが、修正先が `.claude/commands/` で塞げない
+### [ISSUE-093] SEOアドバイスループにも同じ Gmail 偽陰性の穴があるが、修正先が `.claude/commands/` で塞げない
 
 - **priority**: P2 → **status**: ready
 - **detected**: 2026-08-17
