@@ -2,8 +2,36 @@
   "description": "消費者フィードバック改善ループの運用ポリシー（単一の情報源）。判定の根拠は CLAUDE.md（Moat / Strategic Skip / 制約7・8・10）。.claude/commands/*.md は自己改変ブロックで編集できないため、運用ルールの変更は本ファイルで行う。手順の正本は docs/feedback-triage-runbook.md。決定的処理（採番/重複検知/PIIマスク/ログ追記）は scripts/feedback_triage.js。",
   "id_prefix": "FB",
   "subject_tag": "[site-feedback]",
-  "gmail_query": "subject:\"[site-feedback]\" newer_than:2d",
-  "gmail_query_fallback": "from:formspree.io newer_than:2d \"[site-feedback]\"",
+  "gmail_retrieval": {
+    "_why": "2026-08-17 に Gmail 検索の偽陰性を実測した（ISSUE-089）。同一セッション内で同じクエリを2回投げ、1回目は0件・2回目は実在する新着メールがヒットした。1回目は newer_than:7d に広げても新着だけが出ず、より古い 08-11 のメールは出ていた＝クエリ構文でも窓でもなく、検索インデックスの鮮度側の問題。無人実行では 0件＝『新着なし』で静かに正常終了するため、この取りこぼしは誰にも届かない。対策は『1回の検索を信じない』設計にすること。",
+    "primary_query": "subject:\"[site-feedback]\" newer_than:7d",
+    "sweep_query": "from:formspree.io newer_than:14d in:anywhere",
+    "sweep_when": "primary_query が0件のとき（＋ primary が1件以上でも、月初1日は棚卸しとして任意で実行してよい）",
+    "window_rationale": "窓は『処理する量』ではなく『取りこぼしを回収できる期間』。msg_id 台帳（feedback_log.json）との突合で再処理は完全に防げる（same_message=完全スキップ）ため、窓を狭くする利点は無く、広くするほど偽陰性が翌日以降に自動回収される。2d→7d はこの一点のための変更。",
+    "sweep_rationale": "Gmail の検索は既定で迷惑メール/ゴミ箱を除外する。Formspree の自動通知は迷惑メール判定を受けうるため、0件時のみ in:anywhere で確認する。件名タグの表記ゆれ（_subject 変更・転送での改変）も from: で拾える。",
+    "retry_on_empty": {
+      "enabled": true,
+      "max_attempts": 2,
+      "min_gap_seconds": 60,
+      "how": "sleep で待たず、Step 1（CLAUDE.md のブランドフィルター読み込み）と健診レポートを先に済ませてから primary_query を投げ直す。実測ではこの程度の時間差で復旧した。",
+      "note": "リトライは『直近数分の鮮度遅れ』しか救わない。それより長い遅れは翌日以降の広い窓＋台帳突合が回収する。二段構え。"
+    },
+    "reconcile_with_ledger": {
+      "enabled": true,
+      "how": "拾った msg_id の配列を node scripts/feedback_triage.js --unseen-msg-ids '[...]' に渡し、unseen だけを処理する。",
+      "note": "これにより広い窓での再取得が無害になる（冪等）。unseen に日付の古いメールが出たら、それは過去に取りこぼしていた証拠なので health の late_recovered に計上する。"
+    }
+  },
+  "health": {
+    "_why": "検知器（Gmail検索）が偽陰性でも、恒久的に壊れても（認証切れ・MCP障害）、現在の出力は同じ『0件』。区別できる唯一の方法は、ループ自身に『動いた』と外へ報告させること（CLAUDE.md ISSUE-084 原則2・3）。",
+    "heartbeat_file": "data/feedback_health.json",
+    "write_even_when_zero": true,
+    "write_note": "新着0件の日はコミットする成果物が無いため、心拍を書かないと『動いていない』と『新着が無い』が外から区別できない。0件の日こそ書いてコミットする。",
+    "max_silence_days": 3,
+    "checker": "node scripts/check_feedback_health.js --json",
+    "watchdog": ".github/workflows/feedback-watchdog.yml（毎日 13:00 JST・欠測で Issue 起票＝オーナーにメール・復旧で自動クローズ）",
+    "do_not_alert_on": "『N日フィードバックが0件』では通知しない。実績で月3件程度・8日以上の空白は平常であり、これを鳴らすとオオカミ少年になる（ISSUE-084 原則6）。通知するのは『ルーチンが報告してこないこと』だけ。"
+  },
   "classification": {
     "ux_improvement": {
       "verdict": "adopted",
@@ -35,10 +63,17 @@
     "note": "同日の大量投稿はまとめて1件に集約するか翌日回し（スパム爆撃で backlog を汚さない）。duplicate/rejected のログ記録には上限なし。"
   },
   "headless_rules": [
-    "新着0件の日は「新着なし」で正常終了（エラー扱いにしない）",
+    "新着0件の日は「新着なし」で正常終了（エラー扱いにしない）。ただし 0件を確定させる前に gmail_retrieval.retry_on_empty と sweep_query を必ず消化する",
+    "0件でも心拍（data/feedback_health.json）を書いてコミットする。書かない終了は「静かな失敗」と区別できない",
+    "Gmail を引けなかった場合は 0件と報告しない。心拍に status=gmail_error と理由を書いて終了する（watchdog が拾う）",
     "判断に迷っても人間の承認を待って停止しない。「要検討メモ付き採用」か「理由付き却下」のどちらかに倒す（ISSUE-077 教訓）",
     "Notion 同期に失敗しても backlog 起票済みの旨を残して正常終了する"
   ],
-  "updated": "2026-07-27",
-  "related_plan": "消費者フィードバック自動改善ループ新設（2026-07-27）"
+  "known_residual_risk": {
+    "description": "Formspree に届いたのに Gmail に一度も配送されなかった投稿は、Gmail 側をいくら広く引いても検出できない（検知器と収集経路が同一系統のため）。独立した突合には Formspree の submissions API が要る。",
+    "ticket": "ISSUE-090",
+    "blocked_on": "オーナー本人による Formspree API キー発行と Secret 登録（クレデンシャル操作のためエージェントは実施しない）"
+  },
+  "updated": "2026-08-17",
+  "related_plan": "消費者フィードバック自動改善ループ新設（2026-07-27）/ Gmail検索の偽陰性対策 ISSUE-089（2026-08-17）"
 }
