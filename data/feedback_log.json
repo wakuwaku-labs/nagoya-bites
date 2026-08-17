@@ -29,6 +29,34 @@
       "brand_reason": "店名の正確性は実在保証Moatの根幹だが、依頼文のみを根拠に書き換えない。一次情報2件以上での検証ゲート付きでDataKeeperへP1起票（制約7・dispute_requests準拠）。ソース間で既に表記割れ（stores.json=金山駅店 / places=金山駅前店）",
       "backlog_category": "データ",
       "fingerprint": "30521ed1563be403"
+    },
+    {
+      "id": "FB-003",
+      "date": "2026-08-17",
+      "source": "site-widget",
+      "msg_id": "1a00b850acf3e0d4",
+      "page": null,
+      "store": null,
+      "category": "使いづらい・わかりにくい",
+      "feedback": "信頼度の文字が見えにくい（指摘のうち可読性の論点）。原文: 信頼度の文字が見えにくいのと、Googleマップの点数は表示しなくても良い。信頼度の文字を黄色の文字にしてGoogleマップの点数の位置と入れ替わりにして",
+      "verdict": "adopted",
+      "brand_reason": "実測でカード背景#fffに対し cc-mid 4.10:1 / cc-low 3.54:1 / cc-pending 2.81:1 と4状態中3つがWCAG AA(4.5:1)不合格。好みではなく可読性の構造欠陥。信頼度はMoat（構造化データ層・実在保証）の唯一のカード面表示のため P2 でBuilderへ起票",
+      "backlog_category": "UX",
+      "fingerprint": "839916a226fa119d"
+    },
+    {
+      "id": null,
+      "date": "2026-08-17",
+      "source": "site-widget",
+      "msg_id": "1a00b850acf3e0d4",
+      "page": null,
+      "store": null,
+      "category": "使いづらい・わかりにくい",
+      "feedback": "Googleマップの点数は表示しなくても良い / 信頼度の文字を黄色にしてGoogleマップの点数と位置を入れ替えて（同一投稿のうち装飾・削除の論点）",
+      "verdict": "rejected",
+      "brand_reason": "(1)Google評価の非表示はCLAUDE.md制約5「Google評価表示を壊さない」に抵触。Google Mapsは競合カテゴリBの最大の前提であり、Google評価との照合はcrossCheckScoreの裏付けシグナルそのもの。出典を消すのは透明性Moatの毀損。(2)黄色指定は実測で#ffd700=1.40:1 / #eab308=1.92:1 と白背景では現状より悪化し要望の主旨と逆行するため文字どおりには採らない。(3)並び順の入れ替えは純粋な好み。ただし要望の主旨「信頼度を見えやすく」はFB-003のコントラスト是正に吸収済み",
+      "backlog_category": null,
+      "fingerprint": "2cc41f30ce1e6292"
     }
   ]
 }

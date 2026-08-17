@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "updated": "2026-08-16",
+  "description": "店舗写真の採用基準（唯一の情報源）。新規店・既存店を問わず、写真がサイトに載る全経路がこの基準を通る。判定は『第三者が検算できる事実』だけで行う（CLAUDE.md 制約10）。閾値の変更はこのファイルで行い、スクリプトは触らない。",
+  "rationale": {
+    "why": "Google Places の写真には『店舗オーナーが上げた宣材』と『客が上げたスマホ写真』が混在する。2026-08-16 の実測で既存132件のうち66件（50%）が個人名クレジット＝客の投稿だった。素人写真を実写として載せるとサイトの品質シグナルが崩れるため、入口で落とす。",
+    "verifiable": "Places API は『オーナー投稿か否か』のフラグを提供しないが、authorAttributions（クレジット名）は返す。クレジット名が店名と一致すれば Google ビジネスプロフィール経由＝オーナー投稿。個人名なら客の投稿。この判定根拠は写真URLとクレジット名として保存され、第三者が後から検算できる。",
+    "limits": "オーナー投稿＝プロ撮影ではない（オーナーもスマホで撮る）。この基準が保証するのは『客の投稿ではない』ことまで。疑わしい場合は載せない側に倒す。"
+  },
+  "places": {
+    "requireOwnerAttribution": true,
+    "attributionMatchThreshold": 0.85,
+    "minWidthPx": 800,
+    "rejectPortrait": false,
+    "portraitRatioThreshold": 1.05,
+    "scanPhotos": 8,
+    "_note_scanPhotos": "photos[0] だけを見ると客の写真で終わってしまう店が半分ある。Google が返す上位N枚を順に見て、最初にゲートを通った1枚を採る。全部落ちたら『写真なし』扱い（＝店舗固有SVGを維持）。取り繕わない。"
+  },
+  "hotpepper": {
+    "_note": "HotPepper 写真は店側が媒体に提出した素材なので、出所の観点では常にオーナー由来。よって帰属ゲートは適用せず、解像度の基準だけを見る。",
+    "minMasterWidthPx": 480
+  },
+  "delivery": {
+    "srcsetCandidates": [480, 800, 1200, 1600],
+    "_note": "ヒーローは全幅表示。実測幅（写真幅）を上限に srcset を出す。wsrv は we=1（拡大しない）なので、実測幅を超える候補を書くと嘘の候補になる。上限は必ず実測幅で切ること。"
+  },
+  "prohibited": {
+    "_note": "CLAUDE.md『写真ソースの優先順』と重複するが、機械判定できるものをここに置く。",
+    "aiUpscale": true,
+    "_note_aiUpscale": "AI超解像による解像度の水増しは禁止。(1) リクルートWEBサービス利用規約が『編集、加工、翻案その他の変更』『複製保存』『再配信』を禁じている (2) AI超解像は実在しないディテールを生成するため、実在保証を Moat とするサイトの信頼と矛盾する（2026-05 の架空店事故と同じ失敗クラス）。2026-08-16 決定。",
+    "stockPhotoHosts": ["unsplash.com", "pexels.com", "loremflickr.com", "pixabay.com"],
+    "instagramImageDownload": true,
+    "_note_instagramImageDownload": "Instagram の画像はダウンロード転載不可。embed.js 経由の埋め込みのみ（CLAUDE.md 写真ソース優先順・優先1）。"
+  }
+}
