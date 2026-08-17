@@ -141,8 +141,27 @@
 ```
 優先1: 店舗公式 Instagram の embed（embed.js 経由・規約上明示的に許可）
 優先2: HotPepper 公式写真（LOCAL_STORES の 写真URL）
-優先3: Google Maps Places API 写真（GOOGLE_MAPS_API_KEY 設定時）
-優先4: 店舗オーナーから許諾を得た独自URL / 編集部の取材写真
+優先3: プレスリリースの報道用写真（PR TIMES 等・報道目的の無償利用が規約で明示許諾）
+       根拠: PR TIMES 企業規約 第6条3項「ご利用企業は、パートナーメディアと報道関係者に対し、
+       報道目的で利用する限り、企業コンテンツを無償で非独占的に利用することを許諾する
+       （パートナーメディア以外において有償目的で利用する行為を除く）」。
+       当サイトは広告ゼロ・PR記事ゼロのため「有償目的」に当たらない。
+       新店・新メニューはほぼ必ずリリースが出るため、**開店直後で実写が存在しない店**
+       （HotPepper に写真が無く Places にも口コミ写真しか無い）を救える唯一の合法経路。
+       条件（1つでも欠けたら使わない）:
+         a. その記事が扱う店・企業のリリースであること
+         b. 記事の sources[] にそのリリースURLを入れる（＝報道目的である証跡。ゲートが照合）
+         c. クレジットに発行企業名とリリースURLを明記する
+         d. 加工しない・self-host しない（参照に留める＝複製保存を避ける）
+         e. CGパースは実写として扱わない（使うならキャプションに「イメージパース」と明記）
+       取得: `node scripts/fetch_press_release_photo.js <リリースURL>`
+       ⚠️ 規約を確認していない配信元（digitalpr.jp 等）の画像を「報道だから使える」と
+          推定して使わないこと。対応配信元は fetch_press_release_photo.js の SUPPORTED が正本。
+優先4: Google Maps Places API 写真（GOOGLE_MAPS_API_KEY 設定時）
+       ⚠️ 日次ジャーナルは launchd のローカル実行で生成されるため、GitHub Secrets の
+          キーは届かない。`~/.config/nagoya-bites/journal.env` に置く（docs/journal-photo-sources-setup.md）。
+          2026-08-17 まで未配線で、この優先順は**一度も発火したことがなかった**（ISSUE-091）。
+優先5: 店舗オーナーから許諾を得た独自URL / 編集部の取材写真
 ─────────────────────────────────────────
 最終手段: 「記事固有のイメージ図」
   実写がどうしても手配できない場合のみ、その記事専用に作成した
@@ -152,6 +171,38 @@
     - 汎用ストックの寄せ集めではなく、その記事のテーマを「説明する図」であること
     - 第三者の権利を侵害しない（Unsplash等の写真をベースに加工したものは不可）
 
+記事の「顔」になる写真の絶対条件（ISSUE-090 の教訓・2026-08-17）:
+
+> 記事の主役2店がどちらも新店で写真を持たなかった日に、記事へ一行触れただけの別店の
+> 販促バナー（「ドリンク全品94円」の文字が全面）が記事のヒーロー写真になって公開された。
+> validator は「汎用ストック写真でないこと」は検証していたが、**「その記事の店の写真で
+> あること」は誰も検証していなかった**。ストック禁止だけを課したことが、
+> 「実写でありさえすれば何でもいい」＝他店の写真を借りる動機を生んでいた。
+
+```
+1. ヒーロー写真は、その記事が主役として扱う店に帰属していなければならない
+   記事に一行触れただけの店の写真を「顔」にしない。読者から見て記事と写真の対応が壊れる
+2. 主役店の実写が手配できないときの正解は「他店の写真を借りる」ではない
+   → 優先1〜4 を尽くしてなお無理なら、その記事専用のイメージ図に倒す（最終手段・下記）
+   → 取り繕わない。無関係な実写より、記事を説明する図の方が読者に対して誠実
+3. 文字が主役の販促バナー（「◯◯円」「グランドオープン」等の大きな文字入り画像）は顔にしない
+   実写ではあるが、料理でも店でもなく広告。消費者の目を引くのは料理と空間であって値札ではない
+   ※ 画素解析でバナーを自動判別することは試みて断念した（2026-08-17 に46枚で実測。
+     料理写真の方がバナーより高い値を出す例が複数あり分離不能）。分離できない指標を
+     合否ゲートにするのは制約10 違反なので、機械判定ではなく人の目と候補の多重化で担保する
+4. 同じ画像を複数の記事の顔に使い回さない（過去180日・data/journal_photo_policy.json）
+5. 出所を書けない写真は載せない
+   「出所不明（要確認）」と書いて公開するのは禁止。出典を確定させるか、図に倒す
+6. 帰属の証跡は成果物自身に刻む
+   figure タグに data-hero-source / data-hero-store を付ける。Places CDN の URL からは
+   店名を逆引きできないため、証跡が無いと第三者が後から検算できない（品質ゲート原則2）
+
+判定器は scripts/lib/hero_photo_gate.js の1本。生成時（generate_daily_draft.js）・
+公開前QA（validate_journal_draft.js 項目15b）・日次CI監査（audit_journal_photos.js）が
+同じ判定を共有する。基準の変更は data/journal_photo_policy.json で行いスクリプトは触らない。
+確認は `node scripts/audit_journal_photos.js`（Editor/Builder 共管）
+```
+
 品質ゲート（新規店・既存店を問わず、写真がサイトに入る全経路に適用）:
   基準の正本は `data/photo_policy.json`、判定器は `scripts/lib/photo_policy.js` の1本。
   - 優先3（Places）の写真は「クレジット名＝店名」＝オーナーがビジネスプロフィールから
@@ -159,6 +210,11 @@
     photos[0] だけを見ると客の写真になる店が半分あるため、上位N枚を走査して
     最初に基準を通った1枚を採り、全部落ちたら「写真なし」に落とす（取り繕わない）。
   - 検知は CI（build.yml）の `node scripts/audit_photo_policy.js --check` で毎日回る。
+
+プレスリリース写真も「販促バナー率」が高いので必ず中身を見る（2026-08-17 実測）:
+  ゆず庵 名古屋山王店のリリースは画像4枚中**3枚が販促バナー**（10%割引クーポン / アプリ広告 /
+  文字入り外観）で、使えるのは料理写真1枚だけだった。解像度順に機械で選ぶと当たることもあるが、
+  保証はない（より大きいバナーが入っていれば1位になる）。**必ず Editor が目で1枚選ぶこと。**
 
 禁止事項:
   - AI超解像・生成AIによる解像度の水増し（2026-08-16 決定）
@@ -244,10 +300,17 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `data/journal_health.json` | ローカル実行（launchd）の最終状態（ok / hold ＋ 理由）。**Mac の外へ push される**ため、watchdog の Issue が「認証切れ／品質HOLD／接続断」のどれかを原因つきで表示できる。`.local-logs/` は gitignore 対象で外に出ないことへの対策（ISSUE-084） |
 | `build.js` | データ埋め込みスクリプト（DataKeeper管轄） |
 | `data/photo_policy.json` | **店舗写真の採用基準の唯一の情報源**。Google Places の写真には「オーナーが上げた宣材」と「客が上げたスマホ写真」が混在し、実測で半々（2026-08-16・132件中66件が客投稿）。判定根拠は `authorAttributions`（写真クレジット）＝後から第三者が検算できる事実だけを使う（制約10）。判定器は `scripts/lib/photo_policy.js` の1本に集約し、取得（`fetch_manual_store_photos.js`）と監査（`audit_photo_policy.js`）が同じ判定を共有する。閾値変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_photo_policy.js`（Builder/DataKeeper 共管） |
-| `scripts/lib/og_figure_png.js` | **図解SVG→OGP用PNG変換の唯一の情報源**。X / Facebook / LINE の OGP クローラは **SVG をレンダリングしない**ため、図解を `og:image` にした記事はSNS共有でサムネイルが出ず、日次ジャーナルの主要導線（SNS手動投稿）の CTR を丸ごと落とす。npm依存を足さず（制約4）、マシンに既にある Chrome/Chromium ヘッドレス（無ければ rsvg-convert）を呼ぶ。元図を等比縮小して 1200x630 のラッパーSVGに入れ子にし、背景は元図の全面rectの fill を流用する＝**画素を発明しない**（制約9のAI超解像禁止と同じ思想）。成功判定は出力PNGの IHDR 実寸のみ（制約10）。対象は `assets/journal-figures/` と `assets/feature-figures/`（Builder管轄・ISSUE-092） |
+| `data/journal_photo_policy.json` | **ジャーナルのヒーロー写真の採用基準の唯一の情報源**。`data/photo_policy.json` が「その写真を店舗データに載せてよいか」を見るのに対し、こちらは「その写真をその記事の顔に使ってよいか」を見る。2026-08-17、記事の主役2店に写真が無かったため記事に一行触れただけの別店の販促バナーが顔になった事故を受けて新設。判定は検証できる事実だけ（HotPepper画像URL→所有店の逆引き／記事HTMLに刻んだ `data-hero-store`／記事slugと図のファイル名の対応）で行う（制約10）。判定器は `scripts/lib/hero_photo_gate.js` の1本に集約し、生成・公開前QA・日次CI監査が同じ判定を共有する。閾値変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_journal_photos.js`（Editor/Builder 共管） |
+| `scripts/audit_journal_photos.js` | 公開済み全記事のヒーロー写真を検査し、「記事と無関係な写真」「別記事との使い回し」「出所不明のまま公開」を検出。`--check` で違反あれば exit 1（build.yml が日次実行＝人がサイトを見に行かなくても検知が届く） |
+| `scripts/fetch_press_release_photo.js` | プレスリリースの報道用写真を取得（写真ソース優先3）。開店直後で実写が存在しない新店を救う経路。対応配信元（規約で報道目的の無償利用が明示許諾されているもの）の正本は同ファイルの `SUPPORTED`。`node scripts/fetch_press_release_photo.js <リリースURL>`（Editor管轄） |
+| `docs/journal-photo-sources-setup.md` | 写真ソースの**配線手順の正本**。日次ジャーナルは launchd のローカル実行のため GitHub Secrets が届かず、Places のキーは `~/.config/nagoya-bites/journal.env` に置く必要がある。PR TIMES メディアユーザー登録の手順も含む（どちらもオーナー本人の操作） |
+| `scripts/lib/og_figure_png.js` | **図解SVG→OGP用PNG変換の唯一の情報源**。X / Facebook / LINE の OGP クローラは **SVG をレンダリングしない**ため、図解を `og:image` にした記事はSNS共有でサムネイルが出ず、日次ジャーナルの主要導線（SNS手動投稿）の CTR を丸ごと落とす。npm依存を足さず（制約4）、マシンに既にある Chrome/Chromium ヘッドレス（無ければ rsvg-convert）を呼ぶ。元図を等比縮小して 1200x630 のラッパーSVGに入れ子にし、背景は元図の全面rectの fill を流用する＝**画素を発明しない**（制約9のAI超解像禁止と同じ思想）。成功判定は出力PNGの IHDR 実寸のみ（制約10）。対象は `assets/journal-figures/` と `assets/feature-figures/`（Builder管轄・ISSUE-093） |
 | `scripts/render_og_figures.js` | 上記のバッチ実行。`node scripts/render_og_figures.js`（og:image が参照する図のうち未生成/古いものだけ）/ `--all` / `--force` / `--only <語>` / `--check`（生成せず不足を報告・CI向け）。**PNG生成には Chrome/Chromium が要る**ためローカルで実行して push する（Builder管轄） |
-| `scripts/normalize_og_images.js` | **OGPメタタグの正本**。① HotPepper `_238`→`_480` 格上げ ② 図解SVGの `og:image`/`twitter:image` を併置PNGの絶対URLに差し替え ③ 相対パス→絶対URL（クローラは記事URL基準で相対パスを解決しない）④ `og:image:width/height` 付与。`--check` で CI 検査、`--only <語>` で対象を絞る。**日次ジャーナルのラッパーからは必ず `--only` を使う**（過去記事まで書き換えると surgical な git add から漏れ、作業ツリーが汚れたまま翌日の git pull が死ぬ）（Builder/Marketer 共管・ISSUE-092） |
+| `scripts/normalize_og_images.js` | **OGPメタタグの正本**。① HotPepper `_238`→`_480` 格上げ ② 図解SVGの `og:image`/`twitter:image` を併置PNGの絶対URLに差し替え ③ 相対パス→絶対URL（クローラは記事URL基準で相対パスを解決しない）④ `og:image:width/height` 付与。`--check` で CI 検査、`--only <語>` で対象を絞る。**日次ジャーナルのラッパーからは必ず `--only` を使う**（過去記事まで書き換えると surgical な git add から漏れ、作業ツリーが汚れたまま翌日の git pull が死ぬ）（Builder/Marketer 共管・ISSUE-093） |
 | `data/manual_stores.json` | 手動キュレーション店舗マスター（Editor/DataKeeper 共管） |
+| `data/ig_post_policy.json` | **店舗カードに埋め込む Instagram 投稿の採用基準の唯一の情報源**。埋め込むのは「その店の料理・内装・外観がわかる投稿」だけで、求人・休業案内・挨拶・御礼・店外イベント・他店まとめ・客室紹介は落とす。判定根拠は**公開 embed のキャプション本文だけ**＝誰でも同じURLを開いて検算できる事実（制約10）。**中核はハッシュタグを採点対象から外すこと**——飲食店の投稿はほぼ全てが `#焼肉 #名古屋グルメ` で終わるため、これを料理語として数えると「何の投稿でも通る」ゲートになる（ISSUE-092。実例: 焼肉店のカードに頂き物の苺のパック写真が出ていた）。判定器は `scripts/lib/ig_post_policy.js` の1本で、選定（`fetch_ig_posts_resolved.js`）・掲載（`build.js`）・監査（`audit_ig_post_relevance.js`）が同じ判定を共有する。語彙・閾値の変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_ig_post_relevance.js`（Builder/DataKeeper 共管） |
+| `scripts/select_ig_posts.js` | **埋め込み投稿の選び直し器**。基準（`data/ig_post_policy.json`）を通らない投稿しか無い店について、そのアカウントの最近の投稿を新しい順に判定し**最初に通った1件へ差し替える**。全部通らなければ埋め込みなしにする（取り繕わない＝写真選定と同じ思想）。**ログイン不要の公開エンドポイントだけを使う**ため Instagram の認証が切れていても回る（`fetch_ig_posts_resolved.js` は `.ig_cookies.json` 必須で、認証切れの間は選び直しが止まる）。投稿一覧が取れるアカウントは実測で約1/4のため、取れない分は既存投稿の判定に留まる。確認は `node scripts/select_ig_posts.js --dry-run`（Builder/DataKeeper 共管） |
+| `data/ig_post_evidence.json` | 埋め込み投稿の**証跡**（キャプション本文・投稿者・削除の有無）を shortcode をキーに保存する。これが無いと「なぜその投稿を選んだか」を後から検算できず、関連性の判定にかけることすらできない（旧データは postUrl/score/type しか持っていなかった）。回収は `node scripts/fetch_ig_post_evidence.js`（公開 embed からテキストのみ取得。ログイン不要・画像は一切ダウンロードしないため写真ポリシーに抵触しない）。**削除済み投稿の検出も兼ねる**（削除された投稿の埋め込みはサイト上で「リンクが壊れています」と表示されるため掲載から外す） |
 | `data/trending_stores.json` | 既存店舗への話題フラグ後付けマスター（DataKeeper管轄） |
 | `data/featured.json` | 特集鮮度設定。`monthlyScenes`=12ヶ月×需要シーンのカレンダー（月替わりでトップ特集面と見出しが自動更新）。`sceneLeads`=月×特集の季節リード（`build_featured.js` が当月シーンの記事本文冒頭に季節バナーを注入し、使い回し記事＝banquet等が「今月はこの用途」と本文で伴うようにする。当月外は自動削除・冪等）。検証は `node scripts/build_featured.js --check`（Editor/Builder 共管） |
 | `data/feature_rosters.json` | シーン特集の掲載店を月次で入れ替える選定基準（ハイブリッド＋バランス型スコア＋ハードゲート＋多様性補正）。`seasonalBias`=月×特集の季節キーワード加点で、同じ banquet.html でも7月は「ビアガーデン/ビール/テラス」寄り・12月は「忘年会/鍋」寄りに掲載店を月替わりで組み替える（ゲートは維持・純加点なので枠割れなし）。`node scripts/refresh_feature_rosters.js`（毎月1〜3日 build.yml が実行）で features/*.html の掲載店を再構成。検証は `--check`/内訳は `--dry-run`（☀=季節適合）（Builder/DataKeeper 共管・全掲載店は実在店のみ） |
