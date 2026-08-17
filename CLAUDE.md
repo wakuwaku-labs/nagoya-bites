@@ -248,6 +248,8 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `data/trending_stores.json` | 既存店舗への話題フラグ後付けマスター（DataKeeper管轄） |
 | `data/featured.json` | 特集鮮度設定。`monthlyScenes`=12ヶ月×需要シーンのカレンダー（月替わりでトップ特集面と見出しが自動更新）。`sceneLeads`=月×特集の季節リード（`build_featured.js` が当月シーンの記事本文冒頭に季節バナーを注入し、使い回し記事＝banquet等が「今月はこの用途」と本文で伴うようにする。当月外は自動削除・冪等）。検証は `node scripts/build_featured.js --check`（Editor/Builder 共管） |
 | `data/feature_rosters.json` | シーン特集の掲載店を月次で入れ替える選定基準（ハイブリッド＋バランス型スコア＋ハードゲート＋多様性補正）。`seasonalBias`=月×特集の季節キーワード加点で、同じ banquet.html でも7月は「ビアガーデン/ビール/テラス」寄り・12月は「忘年会/鍋」寄りに掲載店を月替わりで組み替える（ゲートは維持・純加点なので枠割れなし）。`node scripts/refresh_feature_rosters.js`（毎月1〜3日 build.yml が実行）で features/*.html の掲載店を再構成。検証は `--check`/内訳は `--dry-run`（☀=季節適合）（Builder/DataKeeper 共管・全掲載店は実在店のみ） |
+| `data/solve_next_policy.json` | `/solve-next` の**消化ポリシーの唯一の情報源**（1日の消化件数 `dailyQuota` / 滞留による優先度繰り上げ / クローズ扱いの status / オーナー本人待ちの除外）。`.claude/commands/*.md` は自己改変ブロックで編集できないため、挙動の変更はこのファイルで行う（`journal_gate_policy.json` と同じ設計）。判定器は `scripts/next_task.js`（Orchestrator管轄） |
+| `scripts/next_task.js` | **次に解く課題の決定的な選定器**。`agent-backlog.md` の priority / status / detected という**検証できる事実だけ**で順番を決める（制約10）。`node scripts/next_task.js` で本日の担当分、`--all` で列全体、`--check` で列の健全性（CI向け・警告あれば exit 1）。滞留日数で実効優先度を1段だけ繰り上げ（P0へは決して昇格させない）、**オーナー本人にしか進められない課題は選ばず別枠表示**する（Orchestrator管轄・2026-08-16） |
 | `.claude/commands/seo-triage.md` | `/seo-triage` 日次SEO/LINEアドバイス取り込み（Marketer管轄） |
 | `.claude/commands/seo-triage-weekly.md` | `/seo-triage-weekly` 週次レポート（AI週次分析＋今週のアドバイス）取り込み（Marketer管轄） |
 | `docs/feedback-triage-runbook.md` | 消費者フィードバック triage の手順書（正本）。`.claude/commands/*.md` は自己改変ブロックで作成できないためここに置く（Builder/DataKeeper 共管） |

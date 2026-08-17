@@ -1740,6 +1740,76 @@
       "brand_reason": "実装済み。index.html:9119 の店舗カードは高さ44pxのグラデーション予約ボタン＋地図ボタンを常時表示（SEO-037/SEO-013 done）、カード写真は ISSUE-073(done) で強化済み。同種提案は 2026-08-14 にも判定済み（母数24人・クリック1回で有意差なし）",
       "category": null,
       "fingerprint": "af70c20cf3ea9e5e"
+    },
+    {
+      "id": null,
+      "date": "2026-08-17",
+      "source": "line-daily",
+      "advice": "🔴 直帰率が89%と非常に高く、訪問者のほとんどがトップページから離脱しています。👉 トップページのファーストビューに「シーン別特集」へのリンクを増やし、ユーザーの次のアクションを促しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "[SEO-040]（トップFVの価値提案コピー＋人気特集導線・status done）と同一主旨。5/30以降ほぼ毎日届いている再掲で、実装済み施策の再提案。再起票せず",
+      "category": null,
+      "fingerprint": "809f0a4e12e70bc1"
+    },
+    {
+      "id": null,
+      "date": "2026-08-17",
+      "source": "line-daily",
+      "advice": "🟡 予約ボタンクリックが1回、マップクリックが0回と、具体的な行動が少ないです。👉 人気ページTOP5の各記事に、関連する店舗の予約ボタンとGoogleマップ導線を明確に配置し、クリック率向上を狙いましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "[SEO-054]（日次ジャーナルの store-card 14枚すべてで予約・地図がゼロ・status ready）が同じ対象（人気ページ＝journal記事）の同じ導線欠落を既に扱っている。再起票せず",
+      "category": null,
+      "fingerprint": "845a765eef0c7cb8"
+    },
+    {
+      "id": null,
+      "date": "2026-08-17",
+      "source": "line-daily",
+      "advice": "🟢 検索流入比率が42%ですが、指名検索以外を伸ばす余地があります。👉 「名古屋 接待 個室」のような専門性のあるキーワードで、具体的な店舗を紹介するjournal記事を毎日1本作成・公開しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "提案されたアクションが既存の恒常運用そのもので増分が無い。日次ジャーナルは毎日1本公開が稼働中（check_journal_health.js で直近7日 8/11〜8/16 すべて公開済みを確認）、シーンKWとの紐付けも data/journal_seo_keywords.json ＋ 採点器の search_intent で既に担保済み。discovery/navigational の分解測定も [SEO-043] の gsc_query_intent.js で実装済み。方向性は Moat と一致するが新規の打ち手が無く、起票すると列を詰まらせるだけ（ISSUE-088）",
+      "category": null,
+      "fingerprint": "a2e13a4433e1039e"
+    },
+    {
+      "id": null,
+      "date": "2026-08-17",
+      "source": "line-weekly",
+      "advice": "🔴 1訪問あたり閲覧が1.2ページと低く、サイト内回遊が不足しています。👉 トップページ(index.html)の店舗一覧に「名古屋 接待 個室」など人気特集ページへのバナーを設置し、関連性の高い特集へ誘導しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "[SEO-040]（トップFVの人気特集導線・done）＋ 回遊面は [SEO-056]（特集→ジャーナルの内部リンクが全24特集で0本・ready）と [SEO-052]（関連リンククリックとスクロール到達の計測・ready）で既に列に載っている。同種3件目のため再起票せず",
+      "category": null,
+      "fingerprint": "bab2bd450525ff2d"
+    },
+    {
+      "id": null,
+      "date": "2026-08-17",
+      "source": "line-weekly",
+      "advice": "🟡 予約ボタンクリックは13回あったものの、Googleマップのクリックが0回です。👉 店舗詳細モーダルを開いた6回を活かし、予約ボタンのすぐ隣に「Googleマップで場所を見る」ボタンを大きく目立つように配置しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "[SEO-049]（店舗詳細モーダルの地図CTAが全体の2.8%でしか出ない排他的条件分岐＋Google Maps未計測・status ready・滞留11日）が同一箇所・同一原因を既に特定済み。むしろ実装待ちであって再起票ではない",
+      "category": null,
+      "fingerprint": "ab8df88dd9b6f872"
+    },
+    {
+      "id": null,
+      "date": "2026-08-17",
+      "source": "line-weekly",
+      "advice": "🟢 検索流入比率が76%と高い一方で、SNS流入比率は5%と低い状況です。👉 docs/daily-posts/にあるSNS投稿原稿を参考に、X（旧Twitter）で「名古屋 接待 個室」など強みとなるKWを含んだ投稿を毎日2回以上行いましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "[SEO-055]（SNS発信が直近30日で流入ゼロ・原稿は毎日できているのに配信されなかったことを誰にも通知していない・status ready）が同じギャップを既に構造問題として起票済み。原稿作成ではなく配信の欠落が真因という診断も済んでいる",
+      "category": null,
+      "fingerprint": "419564084bc5689c"
+    },
+    {
+      "id": "SEO-057",
+      "date": "2026-08-17",
+      "source": "line-weekly",
+      "advice": "【週次トレンドから自前で立てたアクション仮説】週次の流入元 TOP3 が Google/Bing/Yahoo のみで生成AIが一度も現れず、日次では TOP1 が「(not set) / (not set) 11訪問 / 29%」。閲覧数 -16%・訪問回数 -9% と横ばい〜微減が続く中、流入構成を正しく読めていないため打ち手が毎週同じ3件に収束している。",
+      "verdict": "adopted",
+      "brand_reason": "CLAUDE.md 競合カテゴリF「生成AI引用」は観測すべき発見導線として明記。GAS の sourceToName() に AI アシスタント分岐が皆無（両ファイルで該当語の出現数0）で、chatgpt.com/ai-assistant は生文字列・openai/organic は「openai検索」と誤ラベル・残りは (not set) 表記に落ちることを実ファイルで確認。data/search_channel_metrics.json では生成AIが122セッション/15.1%で第3位。順位操作ではなく計測の正確化のみで、改善ループの入力そのものの歪みを直す（ISSUE-084 と同型：データは取れているのに人が読む面へ届いていない）",
+      "category": "SEO",
+      "fingerprint": "924f7cbf27c21992"
     }
   ]
 }

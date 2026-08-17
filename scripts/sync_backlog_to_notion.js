@@ -31,6 +31,16 @@ const crypto = require('crypto');
 const ROOT = path.resolve(__dirname, '..');
 const BACKLOG_PATH = path.join(ROOT, 'agent-backlog.md');
 const STATE_PATH = path.join(ROOT, 'data/.notion_sync_state.json');
+const POLICY_PATH = path.join(ROOT, 'data/solve_next_policy.json');
+
+// クローズ扱いの status は消化ポリシー（/solve-next と共有）を唯一の情報源にする。
+const CLOSED_STATUSES = new Set((() => {
+  try {
+    const p = JSON.parse(fs.readFileSync(POLICY_PATH, 'utf8'));
+    if (Array.isArray(p.statuses && p.statuses.closed)) return p.statuses.closed;
+  } catch (e) { /* ポリシー未配置でも従来動作にフォールバックする */ }
+  return ['done', 'wont_fix', 'superseded', 'duplicate'];
+})());
 
 // ──────────────────────────────────────────────────────────
 // パース: agent-backlog.md → タスクオブジェクト配列
@@ -354,12 +364,18 @@ function planSync(tasks, state, opts = {}) {
     seenIds.add(task.id);
     const existingPageId = state.page_id_map[task.id];
 
-    if (task.status === 'done' || task.status === 'wont_fix' && opts.archiveWontFix) {
-      // done → アーカイブ
+    // クローズ済み（done / wont_fix / superseded / duplicate）→ アーカイブ
+    // 定義は data/solve_next_policy.json と共有する。ここを独自に持つと
+    // 「片方だけ superseded を数える」食い違いが起きる（2026-08-16 に実際に起きた:
+    //  superseded 4件 + wont_fix が Notion ダッシュボードに生きたまま残り、
+    //  残課題が実際より多く見えていた）。
+    // 旧実装は `done || wont_fix && opts.archiveWontFix` と書かれており、
+    // && の優先順位により実質「done のみ」でしか発火していなかった。
+    if (CLOSED_STATUSES.has(task.status)) {
       if (existingPageId) {
         archives.push({ id: task.id, page_id: existingPageId, reason: task.status });
       }
-      // 新規 done は何もしない
+      // 最初からクローズ済みの課題は Notion に作らない
       continue;
     }
 
