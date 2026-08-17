@@ -87,10 +87,27 @@ jobs:
         env:
           HOTPEPPER_API_KEY: ${{ secrets.HOTPEPPER_API_KEY }}
 
+      - name: 単体・回帰テスト（npm test / ISSUE-090 acceptance 5）
+        # これまで npm test はどの workflow からも実行されておらず、テストは書かれているのに
+        # 一度も自動実行されていなかった（ISSUE-089 の回帰6件を含む）。Actions は success のまま
+        # ローカルでだけ赤い、という乖離が起きていたため CI に載せる。ISSUE-084 の教訓と同型。
+        #
+        # **意図的にブロッキング**（continue-on-error を付けない）。
+        # 付けた瞬間に「鳴らない報知器」に戻り、載せた意味が消えるため。
+        # ビルド生成物を検証したいので build.js の後に置く。
+        run: npm test
+
       - name: 架空店監査（特集の掲載店 vs LOCAL_STORES 照合・退行検知）
         # 実在データに無い掲載店を検出して警告（非ブロッキング）。CLAUDE.md「架空店ブロック」整合。
         run: node scripts/audit_feature_stores.js
         continue-on-error: true
+
+      - name: 特集の見出し階層監査（SEO-060 退行検知）
+        # 店名=h3・セクション見出し=h2 が維持されているかを検査。
+        # 実測で「検索1ページ目に届いた特集だけが見出し階層を持つ」ことが確認されており
+        # （h3 を持つのは15本中1本のみ・本文量や被リンク数では順位差を説明できない）、
+        # 生成器が <div>/<p> に戻ると全特集の主題構造が機械可読でなくなるため CI で固定する。
+        run: node scripts/migrate_feature_headings.js --check
 
       - name: features/*.html スキーマ整合性監査（ISSUE-059 再発防止）
         # title/h1 と Article/ItemList/BreadcrumbList/FAQPage の語彙整合性を検査。
@@ -241,3 +258,21 @@ jobs:
           git diff --cached --quiet || git commit -m "chore: auto-update store data [skip actions]"
           git pull --rebase origin main || true
           git push || (sleep 5 && git pull --rebase origin main && git push)
+
+      - name: OGP画像の配信可否を監査（SNSサムネイルが出ない状態の検知）
+        # X / Facebook / LINE の OGP クローラは SVG をレンダリングせず、相対パスも解決しない。
+        # どちらか一方でも崩れると「SNSに貼ってもサムネイルが出ない」状態になり、
+        # 日次ジャーナルの主要導線（SNS手動投稿）の CTR を丸ごと落とす。
+        # サイトの見た目には異常が出ず、オーナーが実際に共有するまで誰も気づかないため
+        # サーバ側で毎日検査する（CLAUDE.md 無人自動化の監視原則3: 気づけるはず＝検知ではない）。
+        # 判定は検証できる事実のみ（PNGのIHDR実寸・URLが絶対か・PNGの実在）＝制約10。
+        #
+        # 位置に意味がある: commit & push の「後」に置くこと。
+        # 前に置くと OGP の不備で店舗データの日次更新まで止まり、被害が逆転する。
+        # ここで落ちれば Actions の失敗通知がオーナーのメールに届く（out-of-band 通知）。
+        #
+        # 修復: node scripts/render_og_figures.js && node scripts/normalize_og_images.js
+        # （PNG生成には Chrome/Chromium が要るためローカルで実行して push する）
+        run: |
+          node scripts/render_og_figures.js --check
+          node scripts/normalize_og_images.js --check
