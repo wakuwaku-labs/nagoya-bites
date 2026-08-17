@@ -300,7 +300,7 @@ function renderStoreCard(entry, num) {
         <div class="store-num">${nn}</div>
         <div class="store-photo"><img src="${photo}" alt="${name}" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <div class="store-name"><a href="https://nagoya-bites.com/stores/${id}.html">${name}</a>${isNew}</div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/${id}.html">${name}</a>${isNew}</h3>
           <div class="store-meta">${meta}</div>
           <p class="store-desc">${descOf(s, 110)}</p>
           <div class="store-tags">${tags}</div>

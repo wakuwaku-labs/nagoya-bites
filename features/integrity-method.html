@@ -70,7 +70,7 @@ nav a:hover{color:var(--text);}
 .art-lead p{margin-bottom:.8rem;}
 .art-lead p:last-child{margin-bottom:0;}
 .art-body{max-width:800px;margin:0 auto;padding:0 1.5rem 4rem;}
-.section-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2.8rem 0 .8rem;}
+.section-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2.8rem 0 .8rem;font-weight:400;}
 .art-intro{font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:1.4rem;}
 .art-intro strong{color:var(--text);font-weight:500;}
 .body-para{font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:1.2rem;}
@@ -135,7 +135,7 @@ footer a{color:var(--muted);text-decoration:none;}
 
 <div class="art-body">
 
-  <p class="section-label">01 — Why We Don't Call It "Sakura Score"</p>
+  <h2 class="section-label">01 — Why We Don't Call It "Sakura Score"</h2>
   <p class="body-para">
     一般的な「サクラチェッカー」型のサービスは、各レビューや店舗ごとに <strong>「サクラ確率 87%」</strong> のような数値を出します。
     NAGOYA BITES では、機械統計の発想を借りつつも、<strong>同じ数値を「サクラ確率」とは呼びません</strong>。代わりに「スコア信頼度」と中立的な名前を採用しています。
@@ -152,7 +152,7 @@ footer a{color:var(--muted);text-decoration:none;}
     </ul>
   </div>
 
-  <p class="section-label">02 — 8 Signals: 8 つのシグナル（scoreVersion 2.0）</p>
+  <h2 class="section-label">02 — 8 Signals: 8 つのシグナル（scoreVersion 2.0）</h2>
   <p class="art-intro">
     整合度は次の 8 シグナルの合計（0〜100 点）で表現します。各シグナルは独立に評価され、合計値が高いほど「複数の根拠が同じ方向を指している」状態を意味します。
     <strong>S7・S8 は「点数の変動・時系列パターン（★5/★1 の異常多発、オープン時の急増失速、化粧剥がれ）」を真のサクラ判定要素として組み込んだ新規シグナル</strong>です。
@@ -228,7 +228,7 @@ footer a{color:var(--muted);text-decoration:none;}
     </tbody>
   </table>
 
-  <p class="section-label">02-A — S7 の詳細: 時系列シグナル</p>
+  <h2 class="section-label">02-A — S7 の詳細: 時系列シグナル</h2>
   <p class="body-para">
     S7 は<strong>週次で Google Places API から取得した結果を <code>data/places_history.json</code> に蓄積し、スナップショット間の差分から算出</strong>します。最大 12 回分のリングバッファで履歴を保持し、次の 3 サブシグナルを合算します。
   </p>
@@ -247,7 +247,7 @@ footer a{color:var(--muted);text-decoration:none;}
     履歴が 3 回分蓄積されるまでは、引き続き「履歴が無いだけで店舗を不利に扱わない」公平性のための中立スコアを返します。
   </p>
 
-  <p class="section-label">02-B — S8 の詳細: U 字型分布の近似判定</p>
+  <h2 class="section-label">02-B — S8 の詳細: U 字型分布の近似判定</h2>
   <p class="body-para">
     Google Places API は<strong>★1〜5 の完全な件数分布を返しません</strong>。そのため、最新 5 件のレビュー（取得可能な最大件数）から U 字型分布を近似判定します。
   </p>
@@ -273,7 +273,7 @@ footer a{color:var(--muted);text-decoration:none;}
     </ul>
   </div>
 
-  <p class="section-label">03 — Scoring Formula</p>
+  <h2 class="section-label">03 — Scoring Formula</h2>
   <p class="body-para">
     整合度の算出式は、ソースコードベースで完全に公開されています。実装は <code>scripts/lib/cross_check.js</code> 内の
     <code>computeCrossCheckScore()</code> 関数で、リポジトリは公開リポジトリ
@@ -285,7 +285,7 @@ footer a{color:var(--muted);text-decoration:none;}
     シグナルが取得できない場合は<strong>「不利な情報がない」と解釈し中立寄りで評価</strong>します — 件数情報が取得できないだけで店舗を不利に扱うのは公平でないためです。
   </p>
 
-  <p class="section-label">04 — Tier Definition: 表示の段階</p>
+  <h2 class="section-label">04 — Tier Definition: 表示の段階</h2>
   <p class="art-intro">
     算出された整合度（0〜100）は、サイト上では次の 4 段階で表現されます。
   </p>
@@ -315,7 +315,7 @@ footer a{color:var(--muted);text-decoration:none;}
     <strong>50 未満の店にはバッジを表示しません</strong>。これは「検証が浅い」「シグナルがまだ揃っていない」だけのケースが多く、機械判定でネガティブな表示を出すことで誠実な店を誤って傷つけるリスクを避けるためです。
   </p>
 
-  <p class="section-label">05 — What We Don't Do（戦わない領域）</p>
+  <h2 class="section-label">05 — What We Don't Do（戦わない領域）</h2>
   <div class="tips-box">
     <p class="tips-title">この仕組みで意図的にやらないと決めたこと</p>
     <ul>
@@ -328,7 +328,7 @@ footer a{color:var(--muted);text-decoration:none;}
     </ul>
   </div>
 
-  <p class="section-label">06 — Dispute & Correction（異議申立てと修正）</p>
+  <h2 class="section-label">06 — Dispute & Correction（異議申立てと修正）</h2>
   <p class="body-para">
     機械統計には必ず誤判定が含まれます。NAGOYA BITES では誤判定をすみやかに発見・修正するため、次のセーフガードを用意しています。
   </p>
@@ -347,7 +347,7 @@ footer a{color:var(--muted);text-decoration:none;}
     アルゴリズム変更によって特定店舗のスコアが急変するリスクを最小化するためです。
   </p>
 
-  <p class="section-label">07 — 設計の根本にある立場</p>
+  <h2 class="section-label">07 — 設計の根本にある立場</h2>
   <p class="body-para">
     NAGOYA BITES は飲食業界の中で働いてきた人間が運営している媒体です。
     広告と口コミの境界が曖昧になってきた業界の現状に対して、業界側がやらなければいけない仕事として、この仕組みを設計しました。

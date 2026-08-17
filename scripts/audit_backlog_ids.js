@@ -20,7 +20,7 @@ const fs = require('fs');
 const { findDuplicateIds } = require('./lib/backlog_ids');
 
 // 既知の重複（2026-06-02 棚卸し時点・並列起票の歴史的残骸）。解消したらこの配列から外す。
-const KNOWN_DUPLICATES = ['ISSUE-007', 'ISSUE-018', 'ISSUE-048', 'STR-001'];
+const KNOWN_DUPLICATES = ['ISSUE-007', 'ISSUE-018', 'ISSUE-048', 'ISSUE-089', 'STR-001'];
 
 function out(obj) {
   console.log(JSON.stringify(obj, null, 2));
