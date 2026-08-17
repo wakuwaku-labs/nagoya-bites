@@ -21,6 +21,9 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+// 写真の採用基準（オーナー投稿か／解像度）は data/photo_policy.json が唯一の情報源。
+// 判定器を共有することで、この取得経路と audit_photo_policy.js の判定が食い違わないようにする。
+const { loadPolicy, judgePlacesPhoto, attributionName, VERIFIED_ALIASES } = require('./lib/photo_policy');
 
 const ROOT = path.resolve(__dirname, '..');
 const MANUAL_JSON = path.join(ROOT, 'data', 'manual_stores.json');
@@ -138,29 +141,8 @@ function dice(a, b) {
   for (const [, c] of B) total += c;
   return (2 * inter) / total;
 }
-// 既知の表記ゆれ許可リスト（手動で実在・同一店を確認済み。ローマ字↔カタカナ等）
-// key: 店名, value: マッチ店名に含まれていれば同一店とみなすトークン配列
-const VERIFIED_ALIASES = {
-  '麺や 六三六': ['六三六'],
-  'COFFEE KAJITA': ['カジタ', 'kajita'],
-  'TRUNK COFFEE': ['トランクコーヒー', 'trunk coffee'],
-  '矢場とん 本店': ['矢場とん'],
-  'まるや本店 名古屋駅店': ['まるや本店'],
-  'やきとり大吉 今池店': ['やきとり大吉'],
-  'レストランくるみ': ['くるみ'],
-  '木曽路 名駅IMAI店': ['木曽路'],
-  // 2026-07-25 実在検証済み（WebSearch/食べログ/公式サイトで同一店確認）
-  'コーヒーハウス KAKO 花車本店': ['かこ 花車', 'コーヒーハウスかこ', 'coffee house kako'],
-  '中華そば 雷杏 -RYAN- 名駅店': ['雷杏', 'ライアン'],
-  "BOUL'ANGE 名古屋タカシマヤゲートタワーモール店": ['ブールアンジュ', 'ブール アンジュ', "boul'ange"],
-  '韓国料理 ベジテジや 栄店': ['ベジテジや'],
-  'kitchen HAKUGA': ['ハクガ', 'hakuga'],
-  'KimiTote (キミトテ)': ['キミトテ', 'kimitote'],
-  '淡 如雲 (アワイ ジョウン)': ['如雲', 'ジョウン'],
-  'レミニセンス (Reminiscence)': ['レミニセンス', 'reminiscence'],
-  'カーサ・オリーバ (CASA OLIVA)': ['カーサオリーバ', 'casa oliva'],
-  '鮨屋 とんぼ 住吉店': ['鮨屋とんぼ'],
-};
+// 既知の表記ゆれ許可リストは scripts/lib/photo_policy.js が唯一の置き場所。
+// 店名マッチ（ここ）と写真クレジットのオーナー判定が同じ表を見るようにするため。
 
 // 店名 vs マッチ店名 の一致判定
 function namesMatch(storeName, matchedName) {
@@ -191,17 +173,22 @@ function isInNagoyaArea(addr) {
 }
 
 // place_id から詳細（写真・店名・住所・業態）を引く
+// ※ photos は先頭1枚ではなく配列ごと持ち帰る。Places は「客が上げたスマホ写真」を
+//   先頭に返すことが半分あり（2026-08-16 実測 132件中66件）、photos[0] だけを見ると
+//   素人写真しか採れない店が出るため、採用基準（data/photo_policy.json）で上位N枚を走査する。
 async function detailsByPlaceId(placeId) {
   const detailRes = await getJson(
     `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=photos,name,formatted_address,types&language=ja&key=${KEY}`
   );
   if (!detailRes?.result) return null;
+  const photos = detailRes.result.photos || [];
   return {
     placeId,
     matchedName: detailRes.result.name || '',
     address: detailRes.result.formatted_address || '',
     types: detailRes.result.types || [],
-    photo: detailRes.result.photos?.[0] || null,
+    photos,
+    photo: photos[0] || null, // 後方互換（存在判定にのみ使う）
   };
 }
 
@@ -226,8 +213,8 @@ function passesGates(name, r) {
   return { ok: true, sim: m.sim };
 }
 
-async function fetchPhoto(name, area, cachedPlaceId) {
-  let best = null; // {matchedName, address, photo, sim, placeId}
+async function fetchPhoto(name, area, cachedPlaceId, store = {}) {
+  let best = null; // {matchedName, address, photos, photo, sim, placeId}
   let lastMatchedName = '', lastReason = 'name-mismatch';
 
   // ── 既知の place_id があればまずそこから引く（ISSUE-074）──
@@ -263,14 +250,43 @@ async function fetchPhoto(name, area, cachedPlaceId) {
   }
   if (!best) return { reason: lastReason, matchedName: lastMatchedName, sim: 0 };
 
-  const attribution = best.photo.html_attributions?.[0]
-    ? best.photo.html_attributions[0].replace(/<[^>]+>/g, '')
-    : 'Google Maps';
+  // ── 採用基準ゲート（data/photo_policy.json）──────────────────────────
+  // Places の写真には「オーナーが上げた宣材」と「客が上げたスマホ写真」が混在し、
+  // 先頭が客の写真であることが半分ある。上位N枚を順に見て、最初に基準を通った1枚を採る。
+  // 全部落ちたら写真なし扱い（SVG維持）。取り繕って素人写真を載せない。
+  const pol = loadPolicy().places;
+  const candidates = (best.photos || [best.photo]).filter(Boolean).slice(0, pol.scanPhotos);
+  let picked = null;
+  const rejects = [];
+  for (const ph of candidates) {
+    const attr = attributionName(ph) || 'Google Maps';
+    const j = judgePlacesPhoto(ph, attr, store);
+    if (j.ok) { picked = { photo: ph, attribution: attr, judge: j }; break; }
+    rejects.push(`${j.reason}${j.detail ? ` ${j.detail}` : ''}`);
+  }
+  if (!picked) {
+    return {
+      reason: 'photo-policy',
+      matchedName: best.matchedName,
+      sim: best.sim,
+      policyRejects: rejects,
+    };
+  }
+
   const cdnUrl = await resolveCdnUrl(
-    `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=${best.photo.photo_reference}&key=${KEY}`
+    `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=${picked.photo.photo_reference}&key=${KEY}`
   );
   if (!cdnUrl) return { reason: 'no-cdn', matchedName: best.matchedName };
-  return { url: cdnUrl, attribution, matchedName: best.matchedName, sim: best.sim };
+  return {
+    url: cdnUrl,
+    attribution: picked.attribution,
+    matchedName: best.matchedName,
+    sim: best.sim,
+    placeId: best.placeId,
+    photoWidth: Number(picked.photo.width || picked.photo.widthPx || 0),
+    scanned: candidates.length,
+    skipped: rejects.length,
+  };
 }
 
 const isSvgOrEmpty = (u) => !u || u.includes('/assets/store-figures/');
@@ -335,26 +351,31 @@ async function main() {
   const targets = allStores.filter(s => force || s.__needsRefetch || !hasRealPhoto(s));
 
   // ── Phase 2: 対象店だけ Places から取得（place_id キャッシュで API 呼び出しを節約）──
-  let done = 0, ok = 0, miss = 0, 復活 = 0;
+  let done = 0, ok = 0, miss = 0, 復活 = 0, policyRejected = 0;
   for (const s of targets) {
     if (done >= limit) break;
     done++;
     const name = s['店名'] || '';
     const area = s['エリア'] || '';
     const wasDead = !!s.__needsRefetch;
-    const r = await fetchPhoto(name, area, s['GooglePlaceID'] || '');
+    const r = await fetchPhoto(name, area, s['GooglePlaceID'] || '', s);
     if (r && r.url) {
       s['写真URL'] = r.url;
       s['写真クレジット'] = r.attribution;
       if (r.placeId) s['GooglePlaceID'] = r.placeId;   // 次回の再取得を安く・確実にする
       s['写真取得日'] = new Date().toISOString().slice(0, 10);
+      if (r.photoWidth) s['写真幅'] = r.photoWidth;     // 実測幅。srcset の上限決定に使う
       ok++;
       if (wasDead) 復活++;
-      console.log(`✅ ${name} (一致度${r.sim}) → ${wasDead ? '失効URLを差し替え' : '実写採用'} [${r.matchedName}]`);
+      const skip = r.skipped ? `・客投稿等${r.skipped}枚を除外` : '';
+      console.log(`✅ ${name} (一致度${r.sim}${skip}) → ${wasDead ? '失効URLを差し替え' : '実写採用'} [${r.matchedName}]`);
     } else {
       miss++;
+      if (r?.reason === 'photo-policy') policyRejected++;
       const why = r?.reason === 'name-mismatch'
         ? `別店マッチのため不採用（候補:「${r.matchedName}」一致度${r.sim}）→ SVG維持`
+        : r?.reason === 'photo-policy'
+        ? `採用基準を満たす写真なし（${(r.policyRejects || []).join(' / ')}）→ SVG維持`
         : `Google で実写取得できず（${r?.reason || 'unknown'}）→ SVG維持`;
       console.log(`— ${name}: ${why}`);
       // 失効URLは表示できない上に JSON-LD image / og:image が 403 を指し続けるので、
@@ -381,6 +402,7 @@ async function main() {
     fs.writeFileSync(d.file, JSON.stringify(d.root, null, 2) + '\n', 'utf8');
   }
   console.log(`\n生存 ${生存}件 / 失効検知 ${失効}件 → 処理 ${done}件 / 実写採用 ${ok}件（うち失効差し替え ${復活}件）/ 不採用(SVG維持) ${miss}件`);
+  if (policyRejected) console.log(`  ↳ うち ${policyRejected}件は採用基準（客投稿の除外・解像度）で不採用。data/photo_policy.json 参照`);
   console.log('次に: node build.js && node gen-store-pages.js');
 }
 
