@@ -87,6 +87,16 @@ jobs:
         env:
           HOTPEPPER_API_KEY: ${{ secrets.HOTPEPPER_API_KEY }}
 
+      - name: 単体・回帰テスト（npm test / ISSUE-090 acceptance 5）
+        # これまで npm test はどの workflow からも実行されておらず、テストは書かれているのに
+        # 一度も自動実行されていなかった（ISSUE-089 の回帰6件を含む）。Actions は success のまま
+        # ローカルでだけ赤い、という乖離が起きていたため CI に載せる。ISSUE-084 の教訓と同型。
+        #
+        # **意図的にブロッキング**（continue-on-error を付けない）。
+        # 付けた瞬間に「鳴らない報知器」に戻り、載せた意味が消えるため。
+        # ビルド生成物を検証したいので build.js の後に置く。
+        run: npm test
+
       - name: 架空店監査（特集の掲載店 vs LOCAL_STORES 照合・退行検知）
         # 実在データに無い掲載店を検出して警告（非ブロッキング）。CLAUDE.md「架空店ブロック」整合。
         run: node scripts/audit_feature_stores.js
