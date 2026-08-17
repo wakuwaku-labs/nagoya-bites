@@ -1142,7 +1142,9 @@
 - **関連**: [[SEO-011]]（入口KW・同じ「入口を増やす」系）/ ISSUE-042（llms.txt・生成AI流入の起点）/ ISSUE-072（GSCループ＝Googleのみを見ていた側）
 
 ### [SEO-038] 高流入ジャーナル記事のロングテール勝ち筋を分析し、同型テーマの横展開と関連特集への内部リンクで回遊に変換する
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-17
+- **resolved_by**: (next commit)
 - **detected**: 2026-07-27
 - **category**: SEO
 - **owner**: Editor
@@ -2358,6 +2360,7 @@
 
 ### [ISSUE-012] Instagram 話題度連携 🔄
 - **priority**: P2 → **status**: in_progress
+- **owner**: 片桐 ← Builder（Phase B は Facebook App 作成・Business Review 申請が next_action。外部アカウント操作のためオーナー本人操作が必要。自動エージェントは着手不可）
 - **detected**: 2026-04-17 / **phase_a_done**: 2026-04-18
 - **description**:
   Phase A（実装済み）: 各店モーダルに Instagram ハッシュタグ検索リンクを表示。
