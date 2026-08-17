@@ -554,6 +554,18 @@ node scripts/refresh_journal_related.js >>"$LOG" 2>&1 || log "⚠️ refresh_jou
 log "サイト紹介文を記事冒頭に注入（add_journal_site_intro.js）"
 node scripts/add_journal_site_intro.js "$ARTICLE_HTML" >>"$LOG" 2>&1 || log "⚠️ add_journal_site_intro.js 失敗（非ブロッキング）"
 
+# ---- 5h. OGP画像を SNS が描画できる形に確定させる ----
+# X / Facebook / LINE は og:image の SVG を描画しない。図解を hero にした日は
+# そのままだとSNS共有でサムネイルが出ず、日次ジャーナルの主要導線の CTR を落とす。
+# 記事HTMLは claude が直接書く経路もある（generate_daily_draft.js を通らない）ため、
+# ラッパー側でも独立に正規化する（validator と同じ「ラッパーが独立に担保する」方針）。
+# 記事公開そのものは止めないため非ブロッキング。取りこぼしは CI の --check が拾う。
+# --only で当日分だけに絞るのは必須。過去記事まで書き換えると surgical な git add から漏れ、
+# 作業ツリーが汚れたまま翌日を迎えて git pull が死ぬ（過去に複数回起きた故障モード）。
+log "OGP画像を正規化（render_og_figures.js → normalize_og_images.js）"
+node scripts/render_og_figures.js --only "$TODAY_JST" >>"$LOG" 2>&1 || log "⚠️ render_og_figures.js 失敗（非ブロッキング）"
+node scripts/normalize_og_images.js --only "$TODAY_JST" >>"$LOG" 2>&1 || log "⚠️ normalize_og_images.js 失敗（非ブロッキング）"
+
 # ---- 6. ラッパーが commit & push を確実に実行 ----
 # claude (journal-today.md Step 10) は「ユーザー承認後のみ push」と定義されているため
 # ヘッドレスでは承認者が居らず未 push 終了になる。それを補うため、ここで強制 commit/push する。

@@ -59,6 +59,7 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const OG = require('./lib/og_figure_png.js');
 
 const ROOT = path.join(__dirname, '..');
 const HTML_TEMPLATE = path.join(ROOT, 'journal', '_template.html');
@@ -575,6 +576,54 @@ function buildNotebookLmSlidesMd(slides) {
   return NOTEBOOKLM_SLIDES_HEADER + '\n\n' + blocks.join('\n\n---\n\n');
 }
 
+// --------------- OGP画像の解決（SNS配信用）---------------
+
+/**
+ * og:image を「SNSクローラが実際に描画できる絶対URLのラスタ画像」に確定させる。
+ *
+ * X / Facebook / LINE は og:image の SVG をレンダリングしない。
+ * 図解（assets/*-figures/*.svg）を hero にした日は、そのままだと
+ * SNS共有時にサムネイルが出ず、日次ジャーナルの主要導線（SNS手動投稿）の CTR を落とす。
+ * そこで hero が図解SVGのときは 1200x630 PNG を併せて出力し、og:image はそちらを指す。
+ * 記事本文の <img> は SVG のまま（ベクタで綺麗・軽い）。
+ *
+ * 併せて、相対パスの og:image を絶対URLにする（クローラは記事URL基準で解決しない）。
+ *
+ * 失敗しても記事生成は止めない（ヘッドレス実行で成果物を失わないため）。
+ * 未変換は scripts/normalize_og_images.js --check / render_og_figures.js --check が拾う。
+ */
+function resolveOgImage(input) {
+  let og = input.og_image || '';
+  if (!og) return;
+
+  const hit = OG.matchFigureUrl(og);
+  if (hit) {
+    const svgPath = path.join(ROOT, hit.rel);
+    const pngRel = hit.rel.replace(/\.svg$/i, '.png');
+    const pngPath = path.join(ROOT, pngRel);
+    if (fs.existsSync(svgPath)) {
+      try {
+        if (!OG.isPngFresh(svgPath, pngPath)) {
+          const r = OG.renderSvgToPng(svgPath, pngPath);
+          console.log(`  🖼  OGP用PNGを生成: ${pngRel} (${Math.round(r.bytes / 1024)}KB / ${r.renderer})`);
+        }
+        input.og_image = OG.absoluteFigureUrl(pngRel);
+        return;
+      } catch (e) {
+        console.warn(`  ⚠️  OGP用PNGの生成に失敗（og:image はSVGのまま）: ${e.message}`);
+        console.warn('     → 後で node scripts/render_og_figures.js && node scripts/normalize_og_images.js');
+      }
+    }
+  }
+
+  // 相対パス → 絶対URL（journal/<slug>.html を基準に解決する）
+  if (!/^https?:\/\//i.test(og) && !og.startsWith('data:')) {
+    const abs = path.resolve(path.join(ROOT, 'journal'), og);
+    const rel = path.relative(ROOT, abs).split(path.sep).join('/');
+    if (!rel.startsWith('..')) input.og_image = `${OG.SITE_ORIGIN}/${rel}`;
+  }
+}
+
 function renderHtml(input) {
   let html = fs.readFileSync(HTML_TEMPLATE, 'utf8');
   const themeLabel = ({
@@ -674,6 +723,9 @@ async function main() {
   } else {
     input.og_image = input.og_image || input.hero_image_url;
   }
+
+  // og:image を SNS が描画できる形（絶対URL・ラスタ画像）に確定させる
+  resolveOgImage(input);
 
   const htmlPath = path.join(DRAFTS_DIR, input.slug + '.html');
   const mdPath = path.join(POSTS_DIR, input.date + '.md');
