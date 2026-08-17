@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-08-17T09:54:06.691Z",
+  "generatedAt": "2026-08-17T10:46:22.120Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 714,
-    "pageViews": 1122,
-    "sessions": 831,
+    "activeUsers": 717,
+    "pageViews": 1127,
+    "sessions": 834,
     "avgSessionDuration": 158.7,
-    "bounceRate": 0.344,
+    "bounceRate": 0.347,
     "pagesPerSession": 1.35
   },
   "channels": {
     "sessions": {
       "organic": 538,
-      "direct": 194,
+      "direct": 198,
       "social": 87,
       "referral": 16,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 64.4,
-      "direct": 23.2,
+      "organic": 64.1,
+      "direct": 23.6,
       "social": 10.4,
       "referral": 1.9,
       "paid": 0,
@@ -41,7 +41,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 165
+      "sessions": 167
     },
     {
       "source": "yahoo",
@@ -66,7 +66,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 9
+      "sessions": 11
     },
     {
       "source": "duckduckgo",
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 185,
-      "sessions": 116
+      "pageViews": 190,
+      "sessions": 119
     },
     {
       "path": "/features/nagoya-solo-dining.html",
@@ -93,7 +93,7 @@
     {
       "path": "/features/nagoya-hitsumabushi.html",
       "pageViews": 103,
-      "sessions": 99
+      "sessions": 100
     },
     {
       "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
@@ -177,7 +177,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 4.3,
-    "ctaClickRate_direct": 17,
+    "ctaClickRate_direct": 16.7,
     "ctaClickRate_social": 26.4,
     "byPage": [
       {
@@ -449,7 +449,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 714,
+    "value": 717,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
