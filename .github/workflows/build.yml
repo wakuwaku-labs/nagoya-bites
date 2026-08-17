@@ -68,6 +68,20 @@ jobs:
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
         continue-on-error: true
 
+      - name: Instagram 埋め込みの証跡を補充（削除済み投稿の検知も兼ねる）
+        # 新しく増えた埋め込みの本文を回収し、削除された投稿（埋め込みが「リンクが壊れています」
+        # と表示される状態）を検出する。1回あたり上限を設けて実行時間を抑える。
+        run: node scripts/fetch_ig_post_evidence.js --limit 120 --delay 700
+        continue-on-error: true
+
+      - name: Instagram 埋め込みを「店の雰囲気がわかる投稿」に選び直す（ISSUE-092）
+        # 基準を通らない投稿しか無い店について、そのアカウントの最近の投稿を新しい順に見て
+        # 最初に基準を通った1件へ差し替える。全部通らなければ埋め込みなしのままにする。
+        # ログイン不要の公開エンドポイントだけを使うため、Instagram の認証が切れていても回る
+        # （認証切れで選定が止まり続けるのを防ぐ）。1回あたり上限を設けて実行時間を抑える。
+        run: node scripts/select_ig_posts.js --limit 80 --delay 1200
+        continue-on-error: true
+
       - name: Build (embed store data & update sitemap)
         run: node build.js
         env:
@@ -188,6 +202,28 @@ jobs:
         run: node scripts/audit_photo_policy.js --check
         continue-on-error: true
 
+      - name: Instagram 埋め込みの内容関連性を監査（ISSUE-092）
+        # 店舗カードに出す IG 埋め込みが「その店の料理・内装・外観がわかる投稿」かを検査する。
+        # 所有者検証（audit_reel_ownership.js）が見るのは「その店の投稿か」で、
+        # 「中身が店の紹介になっているか」は見ていなかったため、公式アカ本人が上げた
+        # 求人・休業案内・御礼投稿（例: 頂き物の苺のパック写真）が焼肉店のカードに出ていた。
+        # 判定根拠は公開 embed のキャプション本文＝誰でも同じURLを開いて検算できる事実のみ
+        # （CLAUDE.md 制約10）。基準は data/ig_post_policy.json が唯一の情報源。
+        run: node scripts/audit_ig_post_relevance.js --check
+        continue-on-error: true
+
+      - name: ジャーナルのヒーロー写真が記事と対応しているかを監査（2026-08-17 の事故）
+        # 2026-08-17、記事の主役2店が新店で写真を持たなかったため、記事に一行触れただけの
+        # 別店の販促バナー（ドリンク94円）が記事の顔になって公開された。当時の validator は
+        # 「汎用ストック写真でないこと」しか見ておらず、「その記事の店の写真であること」は
+        # 誰も検証していなかった。発覚はオーナーがサイトを見るまで遅れた。
+        #
+        # → 検知は人が見に行かなくても届く場所で回す（CLAUDE.md 無人自動化の監視の原則1・3）。
+        #   判定は検証できる事実だけ（HotPepper画像URL→所有店の逆引き / 記事に刻んだ
+        #   data-hero-store / 記事slugと図のファイル名の対応）で行い、自己申告値を見ない（制約10）。
+        # 基準は data/journal_photo_policy.json が唯一の情報源。
+        run: node scripts/audit_journal_photos.js --check
+
       - name: KPI 日次スナップショットを時系列に追記（ORG-005・効果測定の Check）
         # data/site_metrics.json（上の GA4 fetch で更新済み）を metrics_history.json に1日1行 append。
         # 毎日上書きでなく追記することで、施策デプロイ前後の KPI 比較を可能にする（PDCA の Check）。
@@ -205,7 +241,7 @@ jobs:
           # Places で取得した pending 店の写真が毎回捨てられ、無駄な API 再取得が続く。
           # data/crosscheck.json: モーダル「内訳を見る」の遅延ロード元。ここが漏れていると
           # CI で毎ビルド生成されても捨てられ、フロントが古い内訳（一部店舗のみ）を出し続ける。
-          git add index.html features/index.html sitemap.xml data/stores.json data/manual_stores.json data/pending_stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json
+          git add index.html features/index.html sitemap.xml data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json
           # 特集本体(features/*.html)も commit 対象。月次ロスター更新の掲載店入替を反映する。
           git add features/ || true
           git add stores/ || true
