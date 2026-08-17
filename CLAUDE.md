@@ -141,8 +141,27 @@
 ```
 優先1: 店舗公式 Instagram の embed（embed.js 経由・規約上明示的に許可）
 優先2: HotPepper 公式写真（LOCAL_STORES の 写真URL）
-優先3: Google Maps Places API 写真（GOOGLE_MAPS_API_KEY 設定時）
-優先4: 店舗オーナーから許諾を得た独自URL / 編集部の取材写真
+優先3: プレスリリースの報道用写真（PR TIMES 等・報道目的の無償利用が規約で明示許諾）
+       根拠: PR TIMES 企業規約 第6条3項「ご利用企業は、パートナーメディアと報道関係者に対し、
+       報道目的で利用する限り、企業コンテンツを無償で非独占的に利用することを許諾する
+       （パートナーメディア以外において有償目的で利用する行為を除く）」。
+       当サイトは広告ゼロ・PR記事ゼロのため「有償目的」に当たらない。
+       新店・新メニューはほぼ必ずリリースが出るため、**開店直後で実写が存在しない店**
+       （HotPepper に写真が無く Places にも口コミ写真しか無い）を救える唯一の合法経路。
+       条件（1つでも欠けたら使わない）:
+         a. その記事が扱う店・企業のリリースであること
+         b. 記事の sources[] にそのリリースURLを入れる（＝報道目的である証跡。ゲートが照合）
+         c. クレジットに発行企業名とリリースURLを明記する
+         d. 加工しない・self-host しない（参照に留める＝複製保存を避ける）
+         e. CGパースは実写として扱わない（使うならキャプションに「イメージパース」と明記）
+       取得: `node scripts/fetch_press_release_photo.js <リリースURL>`
+       ⚠️ 規約を確認していない配信元（digitalpr.jp 等）の画像を「報道だから使える」と
+          推定して使わないこと。対応配信元は fetch_press_release_photo.js の SUPPORTED が正本。
+優先4: Google Maps Places API 写真（GOOGLE_MAPS_API_KEY 設定時）
+       ⚠️ 日次ジャーナルは launchd のローカル実行で生成されるため、GitHub Secrets の
+          キーは届かない。`~/.config/nagoya-bites/journal.env` に置く（docs/journal-photo-sources-setup.md）。
+          2026-08-17 まで未配線で、この優先順は**一度も発火したことがなかった**（ISSUE-091）。
+優先5: 店舗オーナーから許諾を得た独自URL / 編集部の取材写真
 ─────────────────────────────────────────
 最終手段: 「記事固有のイメージ図」
   実写がどうしても手配できない場合のみ、その記事専用に作成した
@@ -152,6 +171,38 @@
     - 汎用ストックの寄せ集めではなく、その記事のテーマを「説明する図」であること
     - 第三者の権利を侵害しない（Unsplash等の写真をベースに加工したものは不可）
 
+記事の「顔」になる写真の絶対条件（ISSUE-090 の教訓・2026-08-17）:
+
+> 記事の主役2店がどちらも新店で写真を持たなかった日に、記事へ一行触れただけの別店の
+> 販促バナー（「ドリンク全品94円」の文字が全面）が記事のヒーロー写真になって公開された。
+> validator は「汎用ストック写真でないこと」は検証していたが、**「その記事の店の写真で
+> あること」は誰も検証していなかった**。ストック禁止だけを課したことが、
+> 「実写でありさえすれば何でもいい」＝他店の写真を借りる動機を生んでいた。
+
+```
+1. ヒーロー写真は、その記事が主役として扱う店に帰属していなければならない
+   記事に一行触れただけの店の写真を「顔」にしない。読者から見て記事と写真の対応が壊れる
+2. 主役店の実写が手配できないときの正解は「他店の写真を借りる」ではない
+   → 優先1〜4 を尽くしてなお無理なら、その記事専用のイメージ図に倒す（最終手段・下記）
+   → 取り繕わない。無関係な実写より、記事を説明する図の方が読者に対して誠実
+3. 文字が主役の販促バナー（「◯◯円」「グランドオープン」等の大きな文字入り画像）は顔にしない
+   実写ではあるが、料理でも店でもなく広告。消費者の目を引くのは料理と空間であって値札ではない
+   ※ 画素解析でバナーを自動判別することは試みて断念した（2026-08-17 に46枚で実測。
+     料理写真の方がバナーより高い値を出す例が複数あり分離不能）。分離できない指標を
+     合否ゲートにするのは制約10 違反なので、機械判定ではなく人の目と候補の多重化で担保する
+4. 同じ画像を複数の記事の顔に使い回さない（過去180日・data/journal_photo_policy.json）
+5. 出所を書けない写真は載せない
+   「出所不明（要確認）」と書いて公開するのは禁止。出典を確定させるか、図に倒す
+6. 帰属の証跡は成果物自身に刻む
+   figure タグに data-hero-source / data-hero-store を付ける。Places CDN の URL からは
+   店名を逆引きできないため、証跡が無いと第三者が後から検算できない（品質ゲート原則2）
+
+判定器は scripts/lib/hero_photo_gate.js の1本。生成時（generate_daily_draft.js）・
+公開前QA（validate_journal_draft.js 項目15b）・日次CI監査（audit_journal_photos.js）が
+同じ判定を共有する。基準の変更は data/journal_photo_policy.json で行いスクリプトは触らない。
+確認は `node scripts/audit_journal_photos.js`（Editor/Builder 共管）
+```
+
 品質ゲート（新規店・既存店を問わず、写真がサイトに入る全経路に適用）:
   基準の正本は `data/photo_policy.json`、判定器は `scripts/lib/photo_policy.js` の1本。
   - 優先3（Places）の写真は「クレジット名＝店名」＝オーナーがビジネスプロフィールから
@@ -159,6 +210,11 @@
     photos[0] だけを見ると客の写真になる店が半分あるため、上位N枚を走査して
     最初に基準を通った1枚を採り、全部落ちたら「写真なし」に落とす（取り繕わない）。
   - 検知は CI（build.yml）の `node scripts/audit_photo_policy.js --check` で毎日回る。
+
+プレスリリース写真も「販促バナー率」が高いので必ず中身を見る（2026-08-17 実測）:
+  ゆず庵 名古屋山王店のリリースは画像4枚中**3枚が販促バナー**（10%割引クーポン / アプリ広告 /
+  文字入り外観）で、使えるのは料理写真1枚だけだった。解像度順に機械で選ぶと当たることもあるが、
+  保証はない（より大きいバナーが入っていれば1位になる）。**必ず Editor が目で1枚選ぶこと。**
 
 禁止事項:
   - AI超解像・生成AIによる解像度の水増し（2026-08-16 決定）
@@ -244,6 +300,10 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `data/journal_health.json` | ローカル実行（launchd）の最終状態（ok / hold ＋ 理由）。**Mac の外へ push される**ため、watchdog の Issue が「認証切れ／品質HOLD／接続断」のどれかを原因つきで表示できる。`.local-logs/` は gitignore 対象で外に出ないことへの対策（ISSUE-084） |
 | `build.js` | データ埋め込みスクリプト（DataKeeper管轄） |
 | `data/photo_policy.json` | **店舗写真の採用基準の唯一の情報源**。Google Places の写真には「オーナーが上げた宣材」と「客が上げたスマホ写真」が混在し、実測で半々（2026-08-16・132件中66件が客投稿）。判定根拠は `authorAttributions`（写真クレジット）＝後から第三者が検算できる事実だけを使う（制約10）。判定器は `scripts/lib/photo_policy.js` の1本に集約し、取得（`fetch_manual_store_photos.js`）と監査（`audit_photo_policy.js`）が同じ判定を共有する。閾値変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_photo_policy.js`（Builder/DataKeeper 共管） |
+| `data/journal_photo_policy.json` | **ジャーナルのヒーロー写真の採用基準の唯一の情報源**。`data/photo_policy.json` が「その写真を店舗データに載せてよいか」を見るのに対し、こちらは「その写真をその記事の顔に使ってよいか」を見る。2026-08-17、記事の主役2店に写真が無かったため記事に一行触れただけの別店の販促バナーが顔になった事故を受けて新設。判定は検証できる事実だけ（HotPepper画像URL→所有店の逆引き／記事HTMLに刻んだ `data-hero-store`／記事slugと図のファイル名の対応）で行う（制約10）。判定器は `scripts/lib/hero_photo_gate.js` の1本に集約し、生成・公開前QA・日次CI監査が同じ判定を共有する。閾値変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_journal_photos.js`（Editor/Builder 共管） |
+| `scripts/audit_journal_photos.js` | 公開済み全記事のヒーロー写真を検査し、「記事と無関係な写真」「別記事との使い回し」「出所不明のまま公開」を検出。`--check` で違反あれば exit 1（build.yml が日次実行＝人がサイトを見に行かなくても検知が届く） |
+| `scripts/fetch_press_release_photo.js` | プレスリリースの報道用写真を取得（写真ソース優先3）。開店直後で実写が存在しない新店を救う経路。対応配信元（規約で報道目的の無償利用が明示許諾されているもの）の正本は同ファイルの `SUPPORTED`。`node scripts/fetch_press_release_photo.js <リリースURL>`（Editor管轄） |
+| `docs/journal-photo-sources-setup.md` | 写真ソースの**配線手順の正本**。日次ジャーナルは launchd のローカル実行のため GitHub Secrets が届かず、Places のキーは `~/.config/nagoya-bites/journal.env` に置く必要がある。PR TIMES メディアユーザー登録の手順も含む（どちらもオーナー本人の操作） |
 | `data/manual_stores.json` | 手動キュレーション店舗マスター（Editor/DataKeeper 共管） |
 | `data/trending_stores.json` | 既存店舗への話題フラグ後付けマスター（DataKeeper管轄） |
 | `data/featured.json` | 特集鮮度設定。`monthlyScenes`=12ヶ月×需要シーンのカレンダー（月替わりでトップ特集面と見出しが自動更新）。`sceneLeads`=月×特集の季節リード（`build_featured.js` が当月シーンの記事本文冒頭に季節バナーを注入し、使い回し記事＝banquet等が「今月はこの用途」と本文で伴うようにする。当月外は自動削除・冪等）。検証は `node scripts/build_featured.js --check`（Editor/Builder 共管） |

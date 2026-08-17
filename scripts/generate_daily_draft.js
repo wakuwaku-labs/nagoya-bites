@@ -59,6 +59,8 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+// ヒーロー写真の帰属判定は scripts/lib/hero_photo_gate.js に一元化（2026-08-17 の事故）
+const { judgeHero } = require('./lib/hero_photo_gate');
 
 const ROOT = path.join(__dirname, '..');
 const HTML_TEMPLATE = path.join(ROOT, 'journal', '_template.html');
@@ -413,7 +415,7 @@ async function fetchPhotoForArticle(input) {
     const storePhoto = await tryStorePhoto(store.photo_url);
     if (storePhoto) {
       process.stdout.write(` 📷 店舗公式写真 (HotPepper)\n`);
-      return storePhoto;
+      return { ...storePhoto, store_name: store.name || '' };
     }
   }
 
@@ -432,23 +434,16 @@ async function fetchPhotoForArticle(input) {
     const googlePhoto = await tryGoogleMapsPhoto(store.name, store.area || '');
     if (googlePhoto) {
       process.stdout.write(` 📷 Googleマップ写真: ${googlePhoto.credit_name}\n`);
-      return googlePhoto;
+      return { ...googlePhoto, store_name: store.name };
     }
   }
 
-  const genre = store.genre || '';
-
-  // 3. Unsplash API（環境変数あり時のみ）
-  const unsplash = await tryUnsplashApi(genre);
-  if (unsplash) {
-    process.stdout.write(` 📷 Unsplash API: ${unsplash.credit_name}\n`);
-    return unsplash;
-  }
-
-  // 4. ジャンル別厳選写真（API不要・Unsplash直接URL・永続的）
-  const curated = pickCuratedPhoto(input);
-  process.stdout.write(` 📷 Unsplash (curated): ${curated.credit_name}\n`);
-  return curated;
+  // 3〜4. かつてはここで Unsplash API / ジャンル別 curated Unsplash に落ちていたが、
+  //       汎用ストック写真は CLAUDE.md 制約9 で全面禁止（validator 項目15 も FAIL にする）。
+  //       落ちる先を用意しておくと「とりあえず絵が出る」ため、写真が手配できていない事実が
+  //       隠れる。実写が無いなら、取り繕わず記事固有のイメージ図に倒すのが正しい振る舞い。
+  process.stdout.write(` ⚠️  実写を取得できませんでした\n`);
+  return null;
 }
 
 function buildHeroImageSection(input) {
@@ -468,9 +463,17 @@ function buildHeroImageSection(input) {
   // 旧実装は else 節で無条件に「/ Unsplash」を付けており、自作イメージ図や
   // Google Places 写真にまで Unsplash と表示していた（公開済み15本が誤クレジット）。
   // 汎用ストック写真は制約9で禁止済みなので、Unsplash を既定値にすること自体が誤り。
-  const isSelfHosted = /^\.?\/?assets\//.test(imgUrl) || /nagoya-bites\.com\/assets\//.test(imgUrl);
+  // 記事HTMLは journal/ 配下にあるため、自作図の参照は「../assets/…」になる。
+  // 旧実装の /^\.?\/?assets\// は "assets/" "./assets/" "/assets/" しか拾えず、
+  // 実際に使われている "../assets/" を取りこぼして「出所不明（要確認）」と書いていた
+  // （公開済み4本が該当）。自作図なのに出所不明と表示されるのは信頼を直接損なう。
+  const isSelfHosted = /(^|\/)assets\/journal-(figures|photos)\//.test(imgUrl)
+                    || /^(\.{0,2}\/)*assets\//.test(imgUrl)
+                    || /nagoya-bites\.com\/assets\//.test(imgUrl);
   const isGooglePhoto = /googleusercontent\.com/.test(imgUrl);
   const isHotPepper = /imgfp\.hotp\.jp|hotpepper\.jp/.test(imgUrl);
+  // プレスリリースの報道用画像（CLAUDE.md 優先3・PR TIMES 企業規約 第6条3項）
+  const isPressPhoto = /prcdn\.freetls\.fastly\.net|prtimes\.jp\/i\//.test(imgUrl);
 
   const link = (url, text) => url
     ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(text)}</a>`
@@ -480,6 +483,12 @@ function buildHeroImageSection(input) {
   if (isSelfHosted) {
     // リポジトリ内に self-host した「記事固有のイメージ図」（CLAUDE.md 写真ルールの最終手段）
     creditHtml = '編集部作成のイメージ図';
+  } else if (isPressPhoto) {
+    // 報道目的の利用許諾に依拠するため、提供元（発行企業）と出所（リリース）を必ず出す。
+    // 出所を書かない報道用画像の利用は、許諾の前提を外れる。
+    const company = input.hero_image_credit_name || '発行企業';
+    const releaseUrl = input.hero_image_release_url || input.hero_image_credit_url || '';
+    creditHtml = `提供 ${esc(company)}（${link(releaseUrl, 'プレスリリース')}より）`;
   } else if (creditSource === 'Google Maps' || isGooglePhoto) {
     creditHtml = `${link(creditUrl, creditName || '店舗写真')} / ${link('https://maps.google.com', 'Google Maps')}`;
   } else if (isStorePhoto || isHotPepper) {
@@ -487,10 +496,27 @@ function buildHeroImageSection(input) {
   } else if (creditName) {
     creditHtml = link(creditUrl, creditName);
   } else {
-    creditHtml = '出所不明（要確認）';
+    // 旧実装はここで「出所不明（要確認）」と書いて公開まで通していた（公開済み4本が該当）。
+    // 出所を書けない写真は載せない。取り繕わず、生成を止めて出典を替えさせる。
+    throw new Error(
+      `ヒーロー写真の出所を特定できません: ${imgUrl}\n` +
+      `  「出所不明（要確認）」と書いて公開するのは禁止です。\n` +
+      `  CLAUDE.md「写真ソースの優先順」に従い、優先1〜4 のいずれかで出典を確定させるか、\n` +
+      `  その記事専用のイメージ図（/assets/journal-figures/${input.slug}.svg）に倒してください。`
+    );
   }
 
-  return `<figure class="art-hero-img">
+  // 帰属の証跡を成果物自身に刻む（主張ではなく証跡・CLAUDE.md 品質ゲート原則2）。
+  // Places CDN の URL からは店名を逆引きできないため、これが無いと第三者は
+  // 「この写真がこの記事の店のものか」を後から検算できない。
+  const heroSource = isSelfHosted ? (/journal-figures/.test(imgUrl) ? 'figure' : 'self-hosted')
+                   : isPressPhoto ? 'press'
+                   : isGooglePhoto ? 'places'
+                   : isHotPepper ? 'hotpepper' : 'unknown';
+  const heroStore = input.hero_image_store_name || '';
+  const attrs = ` data-hero-source="${esc(heroSource)}"` + (heroStore ? ` data-hero-store="${esc(heroStore)}"` : '');
+
+  return `<figure class="art-hero-img"${attrs}>
   <img src="${esc(imgUrl)}" alt="${esc(input.title)}" loading="lazy" decoding="async">
   <figcaption class="art-img-credit">Photo: ${creditHtml}</figcaption>
 </figure>`;
@@ -631,6 +657,43 @@ function renderMd(input) {
   return md;
 }
 
+/**
+ * ヒーロー写真が「この記事の店」の写真であることを、生成時に確かめる。
+ *
+ * 公開前QA（validator 15b）と日次CI監査（audit_journal_photos.js）でも同じ判定器を通すが、
+ * 生成の段階で止めた方が、間違った写真の付いたドラフトがそもそも作られない。
+ * 落とすのではなく「出典を替えるか、記事固有の図に倒す」よう促す。
+ */
+function assertHeroBelongsToArticle(input) {
+  const url = input.hero_image_url;
+  if (!url) return;
+  if (input.hero_image_is_instagram) return; // IG embed はアカウント照合を validator 側で行う
+
+  const verdict = judgeHero({
+    slug: input.slug,
+    date: input.date,
+    heroUrl: url,
+    heroStore: input.hero_image_store_name || '',
+    caption: '',
+    storeNames: (input.stores || []).map(s => s.name).filter(Boolean),
+  });
+
+  const fails = verdict.findings.filter(f => f.level === 'fail');
+  if (!fails.length) return;
+
+  throw new Error(
+    `ヒーロー写真がこの記事のものではありません。\n` +
+    fails.map(f => `  [${f.code}] ${f.msg}`).join('\n') +
+    `\n\n  対処（CLAUDE.md「写真ソースの優先順」）:\n` +
+    `    1. 主役店の公式Instagram投稿URL → stores[0].instagram_post_url\n` +
+    `    2. 主役店の HotPepper 写真URL     → stores[0].photo_url\n` +
+    `    3. GOOGLE_MAPS_API_KEY を設定して Places のオーナー投稿写真を自動取得\n` +
+    `    4. どれも無理なら、その記事専用のイメージ図を作る\n` +
+    `       → /assets/journal-figures/${input.slug}.svg を作成し hero_image_url に指定\n` +
+    `\n  他店の写真を借りるのは禁止です（読者から見て記事と写真の対応が壊れます）。`
+  );
+}
+
 async function main() {
   const input = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
   if (!fs.existsSync(DRAFTS_DIR)) fs.mkdirSync(DRAFTS_DIR, { recursive: true });
@@ -668,12 +731,19 @@ async function main() {
         input.hero_image_credit_name    = photo.credit_name;
         input.hero_image_is_store_photo = photo.is_store_photo || false;
         input.hero_image_credit_source  = photo.credit_source || null;
+        input.hero_image_store_name     = photo.store_name || '';
         input.og_image = input.og_image || photo.url;
       }
     }
   } else {
     input.og_image = input.og_image || input.hero_image_url;
   }
+
+  // --- ヒーロー写真の帰属チェック（2026-08-17 の事故の再発防止）---
+  // 手書きの hero_image_url は、記事の主役店と無関係な写真でも通ってしまう経路だった。
+  // 実際、主役2店に写真が無かった日に、記事へ一行触れただけの別店の販促バナーが顔になった。
+  // 判定器は scripts/lib/hero_photo_gate.js の1本（生成時・公開前QA・日次CI監査が共有）。
+  assertHeroBelongsToArticle(input);
 
   const htmlPath = path.join(DRAFTS_DIR, input.slug + '.html');
   const mdPath = path.join(POSTS_DIR, input.date + '.md');

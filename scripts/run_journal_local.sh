@@ -37,6 +37,25 @@ export PATH="/Users/katagirijakutou/.local/bin:/opt/homebrew/bin:/usr/local/bin:
 unset ANTHROPIC_API_KEY
 export DISABLE_AUTOUPDATER=1
 
+# ---- 写真取得用のクレデンシャル読み込み（ISSUE-091）----
+# 2026-08-17 に「記事と無関係な別店の販促バナーが記事の顔になる」事故が起きた。
+# 主役2店が新店で HotPepper 写真を持たず、実写を1枚も取れなかったことが引き金だが、
+# 真の理由は CLAUDE.md が「優先3」として許可している Google Places 写真が、
+# **ジャーナルを実際に生成するこの環境に一度も届いていなかった**こと。
+# キーは GitHub Secrets（GOOGLE_PLACES_API_KEY）には入っているが、launchd は
+# 最小環境で起動するためシェルの環境変数を一切引き継がない。結果、優先3 は
+# 「規約上は使ってよい」のに「実装上は絶対に発火しない」死んだ経路になっていた。
+#
+# 置き場所はリポジトリの外（gitignore 頼みにすると、いつか誤ってコミットされる）。
+# 権限は 600 を想定。存在しなくても実行は続行するが、下で必ず警告する。
+JOURNAL_ENV="${JOURNAL_ENV:-$HOME/.config/nagoya-bites/journal.env}"
+if [ -f "$JOURNAL_ENV" ]; then
+  set -a
+  # shellcheck disable=SC1090
+  . "$JOURNAL_ENV"
+  set +a
+fi
+
 # ---- ハング対策の時間設定（2026-08-17 の事故）----
 # 08-17 09:00 の実行が claude 呼び出しの直後で固まり、6時間47分ものあいだ CPU をほとんど
 # 使わないまま応答を返さなかった。当時の実装には制限時間が無く、3回リトライも
@@ -84,15 +103,27 @@ record_health() {
   [ "$HEALTH_RECORDED" = "1" ] && return 0
   HEALTH_RECORDED=1
   local status="$1" reason="$2"
+  # 写真ソースの可用性も一緒に外へ出す（ISSUE-091）。
+  # 「実写が取れなかった」を .local-logs の中だけで嘆いても Mac から一歩も出ない
+  # （ISSUE-084 と同じ失敗）。tracked ファイルに書いて push することで、
+  # 優先3 が死んでいることが人の目に触れる場所に残る。
+  local places_key="absent"
+  [ -n "${GOOGLE_MAPS_API_KEY:-}" ] && places_key="present"
   node -e '
     const fs = require("fs");
-    const [file, date, status, reason] = process.argv.slice(1);
+    const [file, date, status, reason, placesKey] = process.argv.slice(1);
     fs.writeFileSync(file, JSON.stringify({
       description: "日次ジャーナル ローカル実行(launchd)の最終状態。journal-watchdog.yml が原因表示に使う。",
       date, status, reason,
+      photo_sources: {
+        google_places_api_key: placesKey,
+        _note: placesKey === "absent"
+          ? "GOOGLE_MAPS_API_KEY が未設定のため、CLAUDE.md 優先3（Google Places の実写）が発火しません。~/.config/nagoya-bites/journal.env に設定してください（ISSUE-091）"
+          : "優先3（Google Places）が利用可能",
+      },
       recorded_at: new Date(Date.now() + 9 * 3600 * 1000).toISOString().replace("Z", "+09:00"),
     }, null, 2) + "\n");
-  ' "$HEALTH_FILE" "${TODAY_JST:-unknown}" "$status" "$reason" 2>>"$LOG" || return 0
+  ' "$HEALTH_FILE" "${TODAY_JST:-unknown}" "$status" "$reason" "$places_key" 2>>"$LOG" || return 0
 }
 
 # 状態ファイルだけを surgical に push する。記事本体の commit/push とは独立させ、
