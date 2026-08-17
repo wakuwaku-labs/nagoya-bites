@@ -11,6 +11,12 @@
  *   - yuichi5016   → 個人アカウントが無関係な複数店に紐づいていた
  *   - shinjidai_phads → 運営会社アカに「新時代」と「一軒め酒場」が混在していた
  * これらは「どの店の動画か決められない」ため、機械的に遮断する。
+ *
+ * 遮断の境界（2026-08-17 オーナー判断で確定）:
+ *   **別ブランドをまたぐ重複だけ遮断し、同一ブランド内の重複は許容する。**
+ *   同じチェーンの支店同士なら「どの店の動画か決められない」状態には当たらないと見なす。
+ *   したがって「新時代の1本が新時代4支店に出る」のは仕様であって不具合ではない。
+ *   この境界を動かすときは、掲載本数への影響を実測してから決めること（制約10-5）。
  */
 
 const { test } = require('node:test');
@@ -24,6 +30,13 @@ const stores = loadStores();
 const { results, byPost, byUrl } = audit(stores);
 const passed = results.filter(r => r.verdict.startsWith('PASS'));
 
+/**
+ * 過去に実際の事故を起こしたアカウント（normH 済みの表記）。
+ * 「この名前だから通すな」ではなく「この名前は特に規則の適用を毎回確かめる」という監視対象リスト。
+ * 判定そのものは規則（ブランドが割れているか）から導出する。
+ */
+const HISTORICAL_INCIDENT_HANDLES = ['popular', 'yuichi5016', 'shinjidaiphads', 'gassyosennin'];
+
 test('リール: ブランドが割れている共有アカウント由来を1件も通さない', () => {
   const leaked = passed.filter(r => {
     const names = byPost.get(normH(r.postHandle)) || [];
@@ -33,10 +46,28 @@ test('リール: ブランドが割れている共有アカウント由来を1�
     `別ブランドと共有のアカウント由来が通過: ${leaked.slice(0, 5).map(r => `${r.store}←${r.postHandle}`).join(', ')}`);
 });
 
-test('リール: 実際に事故を起こしたアカウントを通さない', () => {
-  for (const handle of ['popular', 'yuichi5016', 'shinjidaiphads', 'gassyosennin']) {
+test('リール: 過去に事故を起こしたアカウントが、いまも規則どおり裁かれている', () => {
+  // 以前はハンドル名のベタ書きで「この4つは永久に通すな」と書いていたが、これは陳腐化した。
+  // shinjidai_phads は埋め込みの選び直し（ISSUE-092）で紐づく店が
+  // 「新時代12店＋一軒め酒場」→「新時代4店のみ」に減り、ブランドが割れなくなった。
+  // 遮断規則（＝ブランドが割れているものを弾く）は正しく動いているのに、
+  // 名前で覚えていたテストだけが古い前提のまま落ちる状態になっていた。
+  //
+  // そこで判定を「名前の一致」ではなく **規則の前提そのもの** から導出する。
+  // 事故アカウントが再びブランドをまたいだら落ち、ブランド内に収まっている限りは通る。
+  for (const handle of HISTORICAL_INCIDENT_HANDLES) {
+    const names = byPost.get(handle) || [];
     const leaked = passed.filter(r => normH(r.postHandle) === handle);
-    assert.equal(leaked.length, 0, `${handle} 由来が ${leaked.length} 件通過している`);
+    if (names.length > 1 && !sameBrand(names)) {
+      assert.equal(leaked.length, 0,
+        `${handle} はブランドが割れている（${names.slice(0, 4).join(' / ')}）のに ${leaked.length} 件通過している`);
+    } else {
+      // 割れていない＝「どの店の動画か決められない」状態ではないため、設計上は通してよい。
+      // ただし通ったものが本当に同一ブランドに収まっていることは毎回確かめる。
+      const holders = [...new Set(leaked.map(r => r.store))];
+      assert.ok(holders.length <= 1 || sameBrand(holders),
+        `${handle} が別ブランドをまたいで通過している: ${holders.slice(0, 4).join(' / ')}`);
+    }
   }
 });
 

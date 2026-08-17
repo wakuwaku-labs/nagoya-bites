@@ -1810,6 +1810,16 @@
       "brand_reason": "CLAUDE.md 競合カテゴリF「生成AI引用」は観測すべき発見導線として明記。GAS の sourceToName() に AI アシスタント分岐が皆無（両ファイルで該当語の出現数0）で、chatgpt.com/ai-assistant は生文字列・openai/organic は「openai検索」と誤ラベル・残りは (not set) 表記に落ちることを実ファイルで確認。data/search_channel_metrics.json では生成AIが122セッション/15.1%で第3位。順位操作ではなく計測の正確化のみで、改善ループの入力そのものの歪みを直す（ISSUE-084 と同型：データは取れているのに人が読む面へ届いていない）",
       "category": "SEO",
       "fingerprint": "924f7cbf27c21992"
+    },
+    {
+      "id": "SEO-059",
+      "date": "2026-08-17",
+      "source": "gsc-opportunities",
+      "advice": "data/gsc_opportunities.json の ctrFix 第1位「一人飲み」（4.8位・表示169・クリック2・CTR 1.18% vs 期待CTR 6.4%・取りこぼし推定8.8クリック）に対し、features/nagoya-solo-dining.html の title / meta description を改善してクリックを回収する",
+      "verdict": "rejected",
+      "brand_reason": "実測で検証したところ取りこぼしは存在しなかった。「一人飲み」系クエリを地名あり/なしで分解した結果（直近28日・GSC実測）、地名あり4クエリ（名古屋 一人飲み 等）は 表示143・クリック9・CTR 6.29%・加重順位9.4 で、その順位帯の期待CTR（約2.6〜3%）の2倍以上と既に大幅な期待超過。一方 CTR を押し下げていたのは地名なしの「一人飲み」単体（表示169・クリック2・CTR 1.2%・4.8位）で、これは全国クエリであり検索者の大半が名古屋在住ではないため低CTRが正常。名古屋特化ページが5位に出ていること自体が意図不一致であり、ここを取りに行くには title から地名の重みを下げるしかないが、それは Strategic Skip（全国区の一般語で大手ポータルと殴り合う）に該当し、かつ既に期待の2倍で機能している地名ありクエリを毀損する。よって追わない。副次的な発見として、scripts/gsc_opportunities.js の期待CTRモデルは地理的検索意図を考慮しないため、地域特化サイトでは地名なしクエリの取りこぼしを構造的に過大評価する（SEO-061 として起票）",
+      "category": "SEO",
+      "fingerprint": "1851d5c21090a424"
     }
   ]
 }

@@ -74,14 +74,14 @@ nav a:hover,nav a.active{color:var(--text);}
 .art-meta{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--dim);margin-bottom:1.5rem;display:flex;gap:1.2rem;flex-wrap:wrap;}
 .art-lead{font-size:.88rem;line-height:2;color:var(--muted);max-width:680px;border-left:2px solid var(--gold);padding-left:1.2rem;}
 .art-body{max-width:800px;margin:0 auto;padding:0 1.5rem 4rem;}
-.section-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2.5rem 0 .8rem;}
+.section-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2.5rem 0 .8rem;font-weight:400;}
 .art-intro{font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:2rem;}
 .store-list{display:flex;flex-direction:column;gap:1.5rem;}
 .store-card{background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;padding:1.4rem;display:flex;gap:1.2rem;align-items:flex-start;transition:box-shadow .2s;}
 .store-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);}
 .store-num{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2.2rem;color:var(--gold);opacity:.6;line-height:1;min-width:2rem;text-align:center;}
 .store-info{flex:1;}
-.store-name{font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:1rem;color:var(--white);margin-bottom:.4rem;}
+.store-name{font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:1rem;color:var(--white);margin:0 0 .4rem;}
 .store-meta{display:flex;gap:.6rem;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:var(--dim);margin-bottom:.6rem;}
 .store-meta .score{color:#f5a623;font-weight:500;}
 .store-desc{font-size:.8rem;line-height:1.8;color:var(--muted);margin-bottom:.8rem;}
@@ -166,13 +166,13 @@ nav a{font-size:.6rem;}
 
     <p class="art-intro">顔合わせの食事会で大切なのは、奇をてらった料理ではなく「両家が落ち着いて話せる時間」です。名古屋は伏見〜栄に懐石・割烹の名店が集まり、名駅・金山には遠方の親御さんが集まりやすい個室和食があります。価格帯も雰囲気も異なりますが、どの店も「個室で、和食で、昼から品よく」というこのシーンの条件を満たす実在店だけを選びました。各店とも顔合わせでの利用は事前予約と「顔合わせで使う」旨の伝達を推奨します。</p>
 
-    <p class="section-label">01 — 厳選7軒</p>
+    <h2 class="section-label">01 — 厳選7軒</h2>
     <div class="store-list">
 
       <div class="store-card">
         <div class="store-num">1</div>
         <div class="store-info">
-          <div class="store-name">旬菜家 楽</div>
+          <h3 class="store-name">旬菜家 楽</h3>
           <div class="store-meta">
             <span class="score">★ 4.4</span>
             <span>東区</span>
@@ -191,7 +191,7 @@ nav a{font-size:.6rem;}
       <div class="store-card">
         <div class="store-num">2</div>
         <div class="store-info">
-          <div class="store-name">日本料理 旬彩</div>
+          <h3 class="store-name">日本料理 旬彩</h3>
           <div class="store-meta">
             <span class="score">★ 4.5</span>
             <span>中区・伏見</span>
@@ -210,7 +210,7 @@ nav a{font-size:.6rem;}
       <div class="store-card">
         <div class="store-num">3</div>
         <div class="store-info">
-          <div class="store-name">うなぎのしろむら 泉店</div>
+          <h3 class="store-name">うなぎのしろむら 泉店</h3>
           <div class="store-meta">
             <span class="score">★ 4.3</span>
             <span>東区・久屋大通</span>
@@ -229,7 +229,7 @@ nav a{font-size:.6rem;}
       <div class="store-card">
         <div class="store-num">4</div>
         <div class="store-info">
-          <div class="store-name">旬彩倶楽部 鱗</div>
+          <h3 class="store-name">旬彩倶楽部 鱗</h3>
           <div class="store-meta">
             <span class="score">★ 4.4</span>
             <span>栄／伏見</span>
@@ -248,7 +248,7 @@ nav a{font-size:.6rem;}
       <div class="store-card">
         <div class="store-num">5</div>
         <div class="store-info">
-          <div class="store-name">鮨赤酢かぶと</div>
+          <h3 class="store-name">鮨赤酢かぶと</h3>
           <div class="store-meta">
             <span class="score">★ 4.2</span>
             <span>名駅</span>
@@ -267,7 +267,7 @@ nav a{font-size:.6rem;}
       <div class="store-card">
         <div class="store-num">6</div>
         <div class="store-info">
-          <div class="store-name">鍋と和食 個室ダイニング ENISHI 金山店</div>
+          <h3 class="store-name">鍋と和食 個室ダイニング ENISHI 金山店</h3>
           <div class="store-meta">
             <span class="score">★ 4.4</span>
             <span>金山</span>
@@ -286,7 +286,7 @@ nav a{font-size:.6rem;}
       <div class="store-card">
         <div class="store-num">7</div>
         <div class="store-info">
-          <div class="store-name">全室水槽個室 柳橋 AONO（アオノ）名古屋駅店</div>
+          <h3 class="store-name">全室水槽個室 柳橋 AONO（アオノ）名古屋駅店</h3>
           <div class="store-meta">
             <span class="score">★ 4.0</span>
             <span>名駅</span>

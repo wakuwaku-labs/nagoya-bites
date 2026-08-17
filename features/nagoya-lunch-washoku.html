@@ -67,14 +67,14 @@ nav a:hover,nav a.active{color:var(--text);}
 .art-meta{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--dim);margin-bottom:1.5rem;display:flex;gap:1.2rem;flex-wrap:wrap;}
 .art-lead{font-size:.88rem;line-height:2;color:var(--muted);max-width:680px;border-left:2px solid var(--gold);padding-left:1.2rem;}
 .art-body{max-width:800px;margin:0 auto;padding:0 1.5rem 4rem;}
-.section-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2.5rem 0 .8rem;}
+.section-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2.5rem 0 .8rem;font-weight:400;}
 .art-intro{font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:2rem;}
 .store-list{display:flex;flex-direction:column;gap:1.5rem;}
 .store-card{background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;padding:1.4rem;display:flex;gap:1.2rem;align-items:flex-start;transition:box-shadow .2s;}
 .store-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);}
 .store-num{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2.2rem;color:var(--gold);opacity:.6;line-height:1;min-width:2rem;text-align:center;}
 .store-info{flex:1;}
-.store-name{font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:1rem;color:var(--white);margin-bottom:.4rem;}
+.store-name{font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:1rem;color:var(--white);margin:0 0 .4rem;}
 .store-meta{display:flex;gap:.6rem;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:var(--dim);margin-bottom:.6rem;}
 .store-meta .score{color:#f5a623;font-weight:500;}
 .store-desc{font-size:.8rem;line-height:1.8;color:var(--muted);margin-bottom:.8rem;}
@@ -160,13 +160,13 @@ nav a{font-size:.6rem;}
 
     <p class="art-intro">名古屋で「ランチに和食を食べたい」と思ったとき、選択肢は思ったより幅広い。接待・個室対応の割烹から、うなぎの名店、大衆酒場のランチ定食まで——価格帯も雰囲気も違うが、どれも「ここならではの1皿」がある店を選びました。</p>
 
-    <p class="section-label">01 — 厳選10軒</p>
+    <h2 class="section-label">01 — 厳選10軒</h2>
     <div class="store-list">
       <div class="store-card">
         <div class="store-num">01</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/43/78/P047104378/P047104378_480.jpg" alt="手羽先むつみ 住吉店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <div class="store-name"><a href="https://nagoya-bites.com/stores/J004068058.html">手羽先むつみ 住吉店</a></div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J004068058.html">手羽先むつみ 住吉店</a></h3>
           <div class="store-meta"><span>栄</span><span>和食</span><span class="score">★ 4.9</span><span>2001～3000円</span></div>
           <p class="store-desc">名古屋名物の手羽先は各店が独自のタレで差別化を図るが、あっさり系タレと掘りごたつの居心地が局地的な固定客を生んでいる。チェーン化せず住吉という単立地に絞った判断を評価して掲載した。</p>
           <div class="store-tags"><span class="store-tag">10〜20名</span><span class="store-tag">5000円以上</span><span class="store-tag">和食</span></div>
@@ -181,7 +181,7 @@ nav a{font-size:.6rem;}
         <div class="store-num">02</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/80/94/P048518094/P048518094_480.jpg" alt="もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <div class="store-name"><a href="https://nagoya-bites.com/stores/J003411794.html">もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店</a></div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003411794.html">もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店</a></h3>
           <div class="store-meta"><span>名古屋駅</span><span>和食</span><span class="score">★ 4.3</span><span>3001～4000円</span></div>
           <p class="store-desc">和食とお酒が楽しめる人気店。落ち着いた雰囲気が魅力</p>
           <div class="store-tags"><span class="store-tag">100名以上</span><span class="store-tag">3000〜5000円</span><span class="store-tag">個室</span></div>
@@ -196,7 +196,7 @@ nav a{font-size:.6rem;}
         <div class="store-num">03</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/51/43/P050345143/P050345143_480.jpg" alt="ふじさん名駅店 昼だけうなぎ屋 名駅店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <div class="store-name"><a href="https://nagoya-bites.com/stores/J004090812.html">ふじさん名駅店 昼だけうなぎ屋 名駅店</a></div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J004090812.html">ふじさん名駅店 昼だけうなぎ屋 名駅店</a></h3>
           <div class="store-meta"><span>名古屋（名古屋駅/西区/中村区）</span><span>和食</span><span class="score">★ 4.5</span><span>5001～7000円</span></div>
           <p class="store-desc">近鉄名古屋駅正面3分、5,500円でランチ営業、近鉄利用者の信頼系店舗</p>
           <div class="store-tags"><span class="store-tag">和食</span><span class="store-tag">5000円以上</span></div>
@@ -211,7 +211,7 @@ nav a{font-size:.6rem;}
         <div class="store-num">04</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/68/75/P048866875/P048866875_480.jpg" alt="九州料理 椿 金山店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <div class="store-name"><a href="https://nagoya-bites.com/stores/J001187588.html">九州料理 椿 金山店</a></div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001187588.html">九州料理 椿 金山店</a></h3>
           <div class="store-meta"><span>金山</span><span>和食</span><span class="score">★ 4.3</span><span>4001～5000円</span></div>
           <p class="store-desc">金山の人気No.1のもつ鍋 個室 半個室もご用意♪</p>
           <div class="store-tags"><span class="store-tag">半個室</span><span class="store-tag">50〜60名</span><span class="store-tag">3000〜5000円</span></div>
@@ -226,7 +226,7 @@ nav a{font-size:.6rem;}
         <div class="store-num">05</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/38/83/P039793883/P039793883_480.jpg" alt="みそかつの三河屋" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <div class="store-name"><a href="https://nagoya-bites.com/stores/J001039636.html">みそかつの三河屋</a></div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001039636.html">みそかつの三河屋</a></h3>
           <div class="store-meta"><span>緑区・南区・天白区・瑞穂区</span><span>和食</span><span class="score">★ 4.2</span><span>1501～2000円</span></div>
           <p class="store-desc">堀田駅15分、1501円帯の和食でランチ客層と夜間層を分離できる価格設定が機能。</p>
           <div class="store-tags"><span class="store-tag">和食</span></div>
@@ -241,7 +241,7 @@ nav a{font-size:.6rem;}
         <div class="store-num">06</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/00/64/P046600064/P046600064_480.jpg" alt="日本料理 満つ谷" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <div class="store-name"><a href="https://nagoya-bites.com/stores/J004026240.html">日本料理 満つ谷</a><span class="store-new">今月の新顔</span></div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J004026240.html">日本料理 満つ谷</a><span class="store-new">今月の新顔</span></h3>
           <div class="store-meta"><span>本山・覚王山・藤が丘</span><span>和食</span><span class="score">★ 4.3</span><span>5001～7000円</span></div>
           <p class="store-desc">上社〜一社間、5500円、和食ランチ。郊外高級路線で昼間営業は付加価値。</p>
           <div class="store-tags"><span class="store-tag">和食</span><span class="store-tag">5000円以上</span></div>
@@ -256,7 +256,7 @@ nav a{font-size:.6rem;}
         <div class="store-num">07</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/31/87/P047883187/P047883187_480.jpg" alt="鳥ぶら 名駅4丁目店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <div class="store-name"><a href="https://nagoya-bites.com/stores/J003411521.html">鳥ぶら 名駅4丁目店</a><span class="store-new">今月の新顔</span></div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003411521.html">鳥ぶら 名駅4丁目店</a><span class="store-new">今月の新顔</span></h3>
           <div class="store-meta"><span>名古屋（名古屋駅/西区/中村区）</span><span>和食</span><span class="score">★ 4.1</span><span>2001～3000円</span></div>
           <p class="store-desc">名駅東口ユニモール直結30秒、行列対策にランチ営業は機能している</p>
           <div class="store-tags"><span class="store-tag">和食</span><span class="store-tag">2000〜3000円</span></div>
@@ -271,7 +271,7 @@ nav a{font-size:.6rem;}
         <div class="store-num">08</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/45/46/P038794546/P038794546_480.jpg" alt="鍋と和食 個室ダイニング ENISHI 金山店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <div class="store-name"><a href="https://nagoya-bites.com/stores/J001259546.html">鍋と和食 個室ダイニング ENISHI 金山店</a><span class="store-new">今月の新顔</span></div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001259546.html">鍋と和食 個室ダイニング ENISHI 金山店</a><span class="store-new">今月の新顔</span></h3>
           <div class="store-meta"><span>金山</span><span>和食</span><span class="score">★ 4.4</span><span>2001～3000円</span></div>
           <p class="store-desc">個室のお席でご案内♪ 厳選された和の食材</p>
           <div class="store-tags"><span class="store-tag">女子会</span><span class="store-tag">90〜100名</span><span class="store-tag">3000〜5000円</span></div>
@@ -286,7 +286,7 @@ nav a{font-size:.6rem;}
         <div class="store-num">09</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/48/91/P044424891/P044424891_480.jpg" alt="手羽先むつみ 本店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <div class="store-name"><a href="https://nagoya-bites.com/stores/J001282169.html">手羽先むつみ 本店</a><span class="store-new">今月の新顔</span></div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001282169.html">手羽先むつみ 本店</a><span class="store-new">今月の新顔</span></h3>
           <div class="store-meta"><span>栄</span><span>和食</span><span class="score">★ 4.7</span><span>2001～3000円</span></div>
           <p class="store-desc">住吉店と共にむつみブランドを支える本店はチェーン化しない姿勢を維持しながら4.7評価を継続している。本店として培った技術とレシピが住吉店に継承されておりブランドの起点として重要な拠点。</p>
           <div class="store-tags"><span class="store-tag">5000円以上</span><span class="store-tag">和食</span></div>
@@ -301,7 +301,7 @@ nav a{font-size:.6rem;}
         <div class="store-num">10</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/55/98/P032035598/P032035598_480.jpg" alt="則武家うどん" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <div class="store-name"><a href="https://nagoya-bites.com/stores/J001216257.html">則武家うどん</a><span class="store-new">今月の新顔</span></div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001216257.html">則武家うどん</a><span class="store-new">今月の新顔</span></h3>
           <div class="store-meta"><span>名古屋（名古屋駅/西区/中村区）</span><span>和食</span><span class="score">★ 4.2</span></div>
           <p class="store-desc">栄生駅徒歩10分、ランチ営業で昼の顧客層を固めた和食店</p>
           <div class="store-tags"><span class="store-tag">和食</span></div>
