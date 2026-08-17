@@ -661,6 +661,11 @@ function manualStoreToRecord(m) {
     'アクセス': m['アクセス'] || '',
     'ホットペッパーID': m['ホットペッパーID'] || '',
     '写真URL': m['写真URL'] || '',
+    // 写真クレジット＝Places の authorAttributions（＝オーナー投稿か客の投稿かの判定根拠）。
+    // canonical に持ち越さないと scripts/audit_photo_policy.js が後から検算できないため出力する
+    // （data/photo_policy.json の判定は「第三者が確認できる事実」で行う・CLAUDE.md 制約10）。
+    '写真クレジット': m['写真クレジット'] || '',
+    '写真幅': m['写真幅'] || '',
     'Instagram': m['Instagram'] || '',
     '食べログURL': m['食べログURL'] || '',
     'TikTok検索': `https://www.tiktok.com/search?q=${searchQ}`,

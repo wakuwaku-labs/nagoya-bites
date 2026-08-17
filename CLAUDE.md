@@ -152,7 +152,22 @@
     - 汎用ストックの寄せ集めではなく、その記事のテーマを「説明する図」であること
     - 第三者の権利を侵害しない（Unsplash等の写真をベースに加工したものは不可）
 
+品質ゲート（新規店・既存店を問わず、写真がサイトに入る全経路に適用）:
+  基準の正本は `data/photo_policy.json`、判定器は `scripts/lib/photo_policy.js` の1本。
+  - 優先3（Places）の写真は「クレジット名＝店名」＝オーナーがビジネスプロフィールから
+    上げた宣材だけを採用する。個人名クレジット（＝客が上げたスマホ写真）は載せない。
+    photos[0] だけを見ると客の写真になる店が半分あるため、上位N枚を走査して
+    最初に基準を通った1枚を採り、全部落ちたら「写真なし」に落とす（取り繕わない）。
+  - 検知は CI（build.yml）の `node scripts/audit_photo_policy.js --check` で毎日回る。
+
 禁止事項:
+  - AI超解像・生成AIによる解像度の水増し（2026-08-16 決定）
+    理由1: リクルートWEBサービス利用規約が「編集、加工、翻案その他の変更」「複製保存」
+           「再配信」を禁じており、HotPepper 写真の加工・自ホストは規約違反にあたる
+    理由2: AI超解像は実在しないディテールを生成する。実在保証を Moat とするサイトで
+           「無いものを作って載せる」のは 2026-05 の架空店事故と同じ失敗クラス
+    → 解像度が足りないときは「画素を発明する」のではなく「出典を替える」（優先1〜4）か、
+      引き伸ばさない見せ方にする。粗いまま伸ばすのも、水増しするのも、どちらも選ばない
   - 他メディア（dressing / macaroni / retrip / 食べログ / ヒトサラ等）の記事内写真の転用
   - 店舗公式サイトの写真の無許諾転載
   - Instagram のスクリーンショット・画像ダウンロード（embed.js 経由のみ可）
@@ -228,6 +243,7 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `.github/workflows/journal-watchdog.yml` | **日次ジャーナル欠番のサーバ側監視**。毎日12:00 JST に検査し、欠番があれば GitHub Issue を起票（＝オーナーにメール）、復旧で自動クローズ。**ローカルの全故障モードから独立**しており、「Mac がスリープで launchd が一度も動かなかった」というローカル警報では原理的に検出できない穴も塞ぐ（ISSUE-084） |
 | `data/journal_health.json` | ローカル実行（launchd）の最終状態（ok / hold ＋ 理由）。**Mac の外へ push される**ため、watchdog の Issue が「認証切れ／品質HOLD／接続断」のどれかを原因つきで表示できる。`.local-logs/` は gitignore 対象で外に出ないことへの対策（ISSUE-084） |
 | `build.js` | データ埋め込みスクリプト（DataKeeper管轄） |
+| `data/photo_policy.json` | **店舗写真の採用基準の唯一の情報源**。Google Places の写真には「オーナーが上げた宣材」と「客が上げたスマホ写真」が混在し、実測で半々（2026-08-16・132件中66件が客投稿）。判定根拠は `authorAttributions`（写真クレジット）＝後から第三者が検算できる事実だけを使う（制約10）。判定器は `scripts/lib/photo_policy.js` の1本に集約し、取得（`fetch_manual_store_photos.js`）と監査（`audit_photo_policy.js`）が同じ判定を共有する。閾値変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_photo_policy.js`（Builder/DataKeeper 共管） |
 | `data/manual_stores.json` | 手動キュレーション店舗マスター（Editor/DataKeeper 共管） |
 | `data/trending_stores.json` | 既存店舗への話題フラグ後付けマスター（DataKeeper管轄） |
 | `data/featured.json` | 特集鮮度設定。`monthlyScenes`=12ヶ月×需要シーンのカレンダー（月替わりでトップ特集面と見出しが自動更新）。`sceneLeads`=月×特集の季節リード（`build_featured.js` が当月シーンの記事本文冒頭に季節バナーを注入し、使い回し記事＝banquet等が「今月はこの用途」と本文で伴うようにする。当月外は自動削除・冪等）。検証は `node scripts/build_featured.js --check`（Editor/Builder 共管） |

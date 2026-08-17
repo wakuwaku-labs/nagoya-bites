@@ -170,6 +170,17 @@ jobs:
         run: node scripts/audit_photo_coverage.js --strict
         continue-on-error: true
 
+      - name: 店舗写真の採用基準を監査（客が投稿したスマホ写真の混入検知）
+        # Google Places の写真には「オーナーが上げた宣材」と「客が上げたスマホ写真」が
+        # 混在し、photos[0] が客の写真であることが実測で半分あった（2026-08-16・132件中66件）。
+        # 取得側（fetch_manual_store_photos.js）にゲートを入れても、別経路や巻き戻しから
+        # 基準外の写真が入り得るため、canonical を毎回検査して退行を止める。
+        # 判定根拠は写真クレジット（authorAttributions）＝後から第三者が検算できる事実のみ
+        # （CLAUDE.md 制約10）。基準は data/photo_policy.json が唯一の情報源。
+        # 既存データの積み残し（クレジット未記録の既存Places写真）を解消するまでは警告のみ。
+        run: node scripts/audit_photo_policy.js --check
+        continue-on-error: true
+
       - name: KPI 日次スナップショットを時系列に追記（ORG-005・効果測定の Check）
         # data/site_metrics.json（上の GA4 fetch で更新済み）を metrics_history.json に1日1行 append。
         # 毎日上書きでなく追記することで、施策デプロイ前後の KPI 比較を可能にする（PDCA の Check）。
