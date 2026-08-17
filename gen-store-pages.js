@@ -398,10 +398,27 @@ function renderStorePage(s, slug) {
   //   （直配信すると店舗ページが極端に重くなる）。
   // wsrv の default= で1段下のサイズへ、onerror で 直URL → 汎用SVG へ多段フォールバック。
   // Google Places CDN(=s1600-w1200 高解像度) と self-host SVG はプロキシ不可/不要のため直配信。
+  //
+  // ⚠️ ヒーローは width:100% の全幅表示（1280px 幅 × DPR2 = 実質 2560px の枠）。
+  //    以前はここが固定 w=800 だったため、原寸 1280px の店でも 800px しか配信されず、
+  //    実測できている解像度を 480px 分捨てていた（= 全幅で 3.2倍に引き伸ばされてボケる）。
+  //    srcset で「実測幅（写真幅）を上限」に複数サイズを出し、端末に選ばせる。
+  //    wsrv は we=1（拡大しない）なので原寸超えの要求は無意味 → 上限は必ず実測幅で切る
+  //    （CLAUDE.md 制約10: 推測値ではなく probe_hotpepper_master.js の実測値だけを根拠にする）。
   const hpHeroMatch = photo.match(/^https?:\/\/(imgfp\.hotp\.jp\/.+?)(_\d+)?\.jpg$/);
-  const heroSrc = hpHeroMatch
-    ? `https://wsrv.nl/?url=${encodeURIComponent(hpHeroMatch[1] + (hpHeroMatch[2] || '') + '.jpg')}&w=800&output=webp&q=82&we=1&sharp=2&default=${encodeURIComponent(hpHeroMatch[1] + (hpHeroMatch[2] === '_480' ? '_238' : '_480') + '.jpg')}`
+  // 実測幅。無い場合のみ URL サフィックス（_480 等）から読む。どちらも無ければ 480 とみなす。
+  const heroMasterW = Number(s['写真幅']) > 0
+    ? Number(s['写真幅'])
+    : (hpHeroMatch && hpHeroMatch[2] ? parseInt(hpHeroMatch[2].slice(1), 10) : 480);
+  const heroWidths = [...new Set([...[480, 800, 1200, 1600].filter((w) => w < heroMasterW), heroMasterW])];
+  const hpHeroUrl = (w) => hpHeroMatch
+    ? `https://wsrv.nl/?url=${encodeURIComponent(hpHeroMatch[1] + (hpHeroMatch[2] || '') + '.jpg')}&w=${w}&output=webp&q=82&we=1&sharp=2&default=${encodeURIComponent(hpHeroMatch[1] + (hpHeroMatch[2] === '_480' ? '_238' : '_480') + '.jpg')}`
     : photo;
+  // src は旧来どおり中間サイズ（srcset 非対応環境の保険）。実際の選択は srcset/sizes が行う。
+  const heroSrc = hpHeroMatch ? hpHeroUrl(Math.min(800, heroMasterW)) : photo;
+  const heroSrcset = hpHeroMatch && heroWidths.length > 1
+    ? heroWidths.map((w) => `${hpHeroUrl(w)} ${w}w`).join(', ')
+    : '';
   const heroOnerror = hpHeroMatch
     ? `if(!this.dataset.f){this.dataset.f=1;this.src='${photo}';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}`
     : `this.onerror=null;this.src='/assets/store-figures/_fallback.svg'`;
@@ -546,7 +563,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="${heroSrc}" alt="${name}" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="${heroOnerror}">
+<img class="hero-img" src="${heroSrc}"${heroSrcset ? ` srcset="${heroSrcset}" sizes="100vw"` : ''} alt="${name}" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="${heroOnerror}">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
