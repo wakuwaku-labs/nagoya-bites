@@ -50,9 +50,30 @@
     - banquet: `H2 よくある質問` / `H2 宴会・忘年会おすすめ居酒屋15選 よくある質問` の**2つだけ**。掲載15店は見出しを一切持たずに並んでおり、記事の主題構造が機械可読になっていない
   - **併せて発見したバグ**: `banquet.html` は「よくある質問」H2 が**重複して2つ**存在する（`data/feature_faqs.json` 由来の生成分と元原稿分が二重化）。同様の重複が他特集にもある可能性があり要確認
   - 注: FAQPage 構造化データ自体は JSON-LD で既に入っている（banquet / date / private-room 等12本）。**不足しているのは本文側の見出し階層**であって schema ではない
+- **実装（2026-08-17・acceptance 3 の第一段を完了）**: 見出し階層を全特集に付与した。**見た目は1pxも変えていない**（意味づけだけを与えた）。
+  - `scripts/refresh_feature_rosters.js:303` を `<div class="store-name">` → `<h3 class="store-name">` に修正。**生成器側を直したので毎月の roster 再生成で元に戻らない**
+  - `scripts/migrate_feature_headings.js` を新規追加（既存HTMLの一度きりの移行＋恒久的な `--check` 検証器）。店名 **289件 → h3**（テンプレート2系統: roster生成の `div` 268件＋手羽先/ひつまぶし系の `span` 21件）、セクション見出し **128件 → h2**、計63ファイル
+  - h2/h3 のUA既定スタイル（margin・font-weight）を打ち消すCSSを同時に補い、**描画結果の同一性を実測で検証**:
+
+    | 幅 | 移行前 body高 | 移行後 body高 | カード高 | 横溢れ | 判定 |
+    |---|---:|---:|---|---|---|
+    | 1280px | 7,274px | 7,274px | 248/248/248/202… 一致 | なし | **完全一致** |
+    | 768px | 7,305px | 7,305px | 一致 | なし | **完全一致** |
+    | 375px | 13,025px | 13,025px | 一致 | なし | **完全一致** |
+
+  - `banquet.html` の見出し構成: `H1 → H2 Top Picks — 宴会・忘年会におすすめの15店 → H3 ×15（店名）`（移行前は h3 ゼロ・h2 は「よくある質問」2つのみ）
+  - シーンKW 15本のうち **13本が h3 を獲得**（残り2本は後述）
+  - CI（`build.yml`）に `node scripts/migrate_feature_headings.js --check` を追加し、生成器の退行をブロックする
+- **QAゲート**: `npm test` 88件全通過／`audit_feature_stores.js` 実在不明0・リンク切れ0／`build_featured.js --check` 鮮度OK／`refresh_feature_rosters.js --check` 枠割れ0 — いずれも通過
 - **acceptance（残り）**:
   1. ~~15本のシーンKWそれぞれについて、現在の順位・表示・クリックを実測値で一覧化する~~ ✅ 完了（上表）
   2. ~~「一人飲み」1本が機能している理由を検証できる差分で特定する~~ ✅ 完了（見出し階層の有無）
+  3. ~~その差分を banquet.html から順に適用する~~ ✅ 完了（全特集に一括適用・生成器も修正済み）
+  4. 効果判定を `gsc_query_intent.js` の discovery クリックで行う（**4週間後＝2026-09-14 に確認**）
+  5. 施策前の数値を `data/effect_ledger.json` に記録して前後比で閉じる
+- **判明した残件（別途対応が必要）**:
+  - `nagoya-settai-lunch.html`（接待ランチ）と `nagoya-morning.html`（モーニング）は**掲載店が0件**のため h3 が付かない。見出し階層以前に中身が無く、シーンKWとして登録されているのに実質空の記事になっている
+  - `banquet.html` に「よくある質問」h2 が**重複して2つ**存在する（`data/feature_faqs.json` 由来の生成分と元原稿分の二重化）。他特集にも同様の重複がある可能性があり要棚卸し
   3. その差分を、季節の締切がある `banquet.html`（忘年会）から順に適用する
   4. 効果判定は `node scripts/gsc_query_intent.js` の **discovery のクリック数**で行う（総クリックは指名検索と混ざるため使わない・SEO-043 の判定器を流用）
   5. 施策前の数値を `data/effect_ledger.json` に記録し、4週間後に前後比で閉じる

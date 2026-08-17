@@ -78,6 +78,13 @@ jobs:
         run: node scripts/audit_feature_stores.js
         continue-on-error: true
 
+      - name: 特集の見出し階層監査（SEO-060 退行検知）
+        # 店名=h3・セクション見出し=h2 が維持されているかを検査。
+        # 実測で「検索1ページ目に届いた特集だけが見出し階層を持つ」ことが確認されており
+        # （h3 を持つのは15本中1本のみ・本文量や被リンク数では順位差を説明できない）、
+        # 生成器が <div>/<p> に戻ると全特集の主題構造が機械可読でなくなるため CI で固定する。
+        run: node scripts/migrate_feature_headings.js --check
+
       - name: features/*.html スキーマ整合性監査（ISSUE-059 再発防止）
         # title/h1 と Article/ItemList/BreadcrumbList/FAQPage の語彙整合性を検査。
         # コピペテンプレ事故（ラーメンFAQが焼き鳥ページに混入する等）を CI で都度検出。
