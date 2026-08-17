@@ -1,7 +1,7 @@
 {
   "description": "日次ジャーナル ローカル実行(launchd)の最終状態。journal-watchdog.yml が原因表示に使う。",
   "date": "2026-08-17",
-  "status": "hold",
-  "reason": "記事HTML（journal/2026-08-17-*.html）が存在しない。生成そのものが失敗しています。",
-  "recorded_at": "2026-08-17T16:19:11.459+09:00"
+  "status": "ok",
+  "reason": "ハング復旧後に手動で公開（09:00の自動実行が応答なしで停止→PID停止・ロック解放・タイムアウト実装 ISSUE-089）",
+  "recorded_at": "2026-08-17T16:36:23.257+09:00"
 }
