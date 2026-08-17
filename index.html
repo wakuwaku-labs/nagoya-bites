@@ -778,6 +778,16 @@ h3.cn{margin:0 0 6px;font-family:'Noto Sans JP',sans-serif;}
 .feature-top .feature-card-title::after{display:none;}
 .feature-top .feature-card-sub{color:rgba(255,255,255,.82);letter-spacing:.12em;text-shadow:0 1px 5px rgba(0,0,0,.4);}
 .feature-top .feature-card-cta{display:none;}
+.feature-top-rail{position:relative;}
+/* 送りボタンはマウス環境の発見性のためだけに出す（指で払える端末では邪魔なので出さない） */
+.feature-top-nav{display:none;}
+@media(hover:hover) and (min-width:900px){
+.feature-top-nav{display:flex;align-items:center;justify-content:center;position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:40px;height:40px;border:none;border-radius:50%;background:rgba(255,255,255,.94);color:var(--text);font-size:1.4rem;line-height:1;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.18);transition:background .2s;}
+.feature-top-nav:hover{background:#fff;}
+.feature-top-nav[hidden]{display:none;}
+.feature-top-prev{left:.75rem;}
+.feature-top-next{right:.75rem;}
+}
 .feature-top-foot{display:flex;justify-content:center;}
 .feature-top-all{font-size:.76rem;letter-spacing:.06em;color:var(--gold);text-decoration:none;padding:.3rem .6rem;}
 .feature-top-all:hover{color:var(--ember-deep);text-decoration:underline;}
@@ -1446,6 +1456,9 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <!-- ↓ このストリップは data/featured.json + scripts/build_featured.js が自動生成。手で編集しない。 -->
 <section class="feature-strip feature-top" aria-label="今月の特集">
   <div class="feature-strip-label"><!-- FEATURED_LABEL_START -->8月の特集<span class="feature-strip-label-note">真夏のグルメ・お盆の家族会食</span><!-- FEATURED_LABEL_END --></div>
+  <div class="feature-top-rail">
+  <button class="feature-top-nav feature-top-prev" id="feature-top-prev" type="button" onclick="scrollFeatureTop(-1)" aria-label="前の特集へ" hidden>‹</button>
+  <button class="feature-top-nav feature-top-next" id="feature-top-next" type="button" onclick="scrollFeatureTop(1)" aria-label="次の特集へ">›</button>
   <div class="feature-strip-cards">
     <!-- FEATURED_START -->
     <a class="feature-card" href="features/nagoya-summer-2026.html">
@@ -1468,8 +1481,55 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
       </div>
       <div class="feature-card-arrow">→</div>
     </a>
+    <a class="feature-card" href="features/nagoya-unaju.html">
+      <span class="feature-card-season">夏うなぎ</span>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg 600w, https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 うなぎ・ひつまぶし10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 うなぎ・ひつまぶし10選</div>
+        <div class="feature-card-sub">夏バテにうなぎ</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/banquet.html">
+      <img class="feature-card-thumb" src="assets/features/banquet.jpg" srcset="assets/features/banquet-600.jpg 600w, assets/features/banquet.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="ビールジョッキで乾杯する宴会・忘年会の華やかなシーン" width="900" height="599" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 宴会・忘年会おすすめ15選</div>
+        <div class="feature-card-sub">名駅・栄・金山 個室完備</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/private-room.html">
+      <img class="feature-card-thumb" src="assets/features/private-room.jpg" srcset="assets/features/private-room-600.jpg 600w, assets/features/private-room.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="温かい灯りに包まれた上質な個室ダイニング" width="900" height="600" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 個室グルメおすすめ10選</div>
+        <div class="feature-card-sub">接待・女子会・デートに</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/meieki.html">
+      <img class="feature-card-thumb" src="assets/features/meieki.jpg" srcset="assets/features/meieki-600.jpg 600w, assets/features/meieki.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名駅エリアで接待・出張・仕事帰りに集う夜のグループ食事" width="900" height="601" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋・名駅グルメおすすめ15選</div>
+        <div class="feature-card-sub">出張・接待・仕事帰りに</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/sakae.html">
+      <img class="feature-card-thumb" src="assets/features/sakae.jpg" srcset="assets/features/sakae-600.jpg 600w, assets/features/sakae.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="栄・錦の繁華街を彩る夜のネオン街並み" width="900" height="1350" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋・栄・錦グルメおすすめ15選</div>
+        <div class="feature-card-sub">名古屋最大の繁華街</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
 <!-- FEATURED_END -->
   </div>
+  </div><!-- /feature-top-rail -->
   <div class="feature-top-foot"><a class="feature-top-all" href="features/index.html">特集をすべて見る ›</a></div>
 </section>
 
@@ -8791,6 +8851,48 @@ document.getElementById('si2').addEventListener('input', function(){
   NB_SEARCH_DEBOUNCE = setTimeout(applyFilters, 140);
 });
 document.getElementById('si2').addEventListener('keydown', function(e){ if(e.key==='Enter') applyFilters(); });
+
+// ── 特集カルーセル（トップ最上部）──
+// タッチ端末は指で払えるが、マウスだと横スクロールできることに気づけないので左右送りを出す。
+// 端に着いたら該当ボタンを隠し、「まだ先がある／もう無い」を見た目で分かるようにする。
+function syncFeatureTopNav() {
+  var rail = document.querySelector(".feature-top .feature-strip-cards");
+  var prev = document.getElementById("feature-top-prev");
+  var next = document.getElementById("feature-top-next");
+  if (!rail || !prev || !next) return;
+  var max = rail.scrollWidth - rail.clientWidth;
+  prev.hidden = rail.scrollLeft <= 4;
+  next.hidden = rail.scrollLeft >= max - 4;
+}
+// scroll-snap + smooth はアニメーションごと無視される環境がある。1回目の送りで実際に動いたかを見て
+// 判定し、動かない環境では以後を即時スクロールに切り替える（「押しても何も起きない」を作らない）
+var NB_FEATURE_SMOOTH_OK = null;
+function scrollFeatureTop(dir) {
+  var rail = document.querySelector(".feature-top .feature-strip-cards");
+  if (!rail) return;
+  var card = rail.querySelector(".feature-card");
+  var step = card ? card.offsetWidth + 12 : rail.clientWidth * 0.8;
+  if (NB_FEATURE_SMOOTH_OK === false) {
+    rail.scrollBy({ left: dir * step, behavior: "auto" });
+    syncFeatureTopNav();
+    return;
+  }
+  var from = rail.scrollLeft;
+  rail.scrollBy({ left: dir * step, behavior: "smooth" });
+  setTimeout(function () {
+    NB_FEATURE_SMOOTH_OK = rail.scrollLeft !== from;
+    if (!NB_FEATURE_SMOOTH_OK) rail.scrollBy({ left: dir * step, behavior: "auto" });
+    syncFeatureTopNav();
+  }, 60);
+  setTimeout(syncFeatureTopNav, 420);
+}
+(function initFeatureTopNav() {
+  var rail = document.querySelector(".feature-top .feature-strip-cards");
+  if (!rail) return;
+  rail.addEventListener("scroll", syncFeatureTopNav, { passive: true });
+  window.addEventListener("resize", syncFeatureTopNav);
+  syncFeatureTopNav();
+})();
 
 function toggleFilterPanel() {
   FILTER_PANEL_OPEN = !FILTER_PANEL_OPEN;
