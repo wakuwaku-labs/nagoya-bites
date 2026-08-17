@@ -1144,7 +1144,7 @@
 ### [SEO-038] 高流入ジャーナル記事のロングテール勝ち筋を分析し、同型テーマの横展開と関連特集への内部リンクで回遊に変換する
 - **priority**: P2 → **status**: done
 - **resolved**: 2026-08-17
-- **resolved_by**: (next commit)
+- **resolved_by**: 24d9e66
 - **detected**: 2026-07-27
 - **category**: SEO
 - **owner**: Editor
@@ -2577,6 +2577,7 @@
 | 2026-08-16 | Marketer(routine) | SEO-048 実装。fetch_ga4_views.js に outbound_click をチャネル別（organic/direct/social）に集計する GA4 クエリを追加し ctaClickRate_organic/ctaClickRate_direct/ctaClickRate_social を site_metrics.json の cta オブジェクトに追記。byDomain 未帰属分を (unattributed) エントリで可視化。track_metrics.js のスナップショットにも3指標を追記。acceptance①②③全て充足 | ✅ commit 5c74d77 |
 | 2026-08-16 | Editor(routine) | SEO-008 実装。scripts/add_journal_site_intro.js を新設（冪等・art-body 先頭に NAGOYA BITES 紹介文+index.html リンクを注入）。既存 journal/2026-*.html 全100本に一括適用。run_journal_local.sh Step 5g を追加して今後の記事にも自動適用。acceptance（今後分+流入上位の既存記事に設置・JSON-LD・本文構造維持）充足 | ✅ commit 3ddad7a |
 | 2026-08-17 | Editor(routine) | SEO-015 実装・デプロイ — journal/_template.html および既存ジャーナル全102本の `@media(max-width:640px)` ブロックに `.art-body p{font-size:1rem;}` と `.art-lead{font-size:.95rem;}` を追加。モバイル13.8px（.86rem）→16px（1rem）相当に引き上げ。3パターン（multi-line/single-line-nav/custom）に対応。QA-1〜5全通過（build.jsのABORTはAPIキー不在の既存制約でCSS変更と無関係） | ✅ commit 520676b |
+| 2026-08-17 | Editor(routine) | SEO-038 done化 — GA4トップページランキング・週次レポートTOP5から高流入ジャーナル記事3本（らふ/リサール/北京）を横断分析。共通パターン（専門業態新店×価格設計分析×ニッチシーン×固有名詞ロングテールKW）を抽出し、agents/editor.md「ロングテール勝ち筋の型」セクションを新設（題材選定への反映・同型テーマ横展開候補も記載）。ISSUE-012（Instagram API連携Phase B）はFacebook App作成が次アクションのためowner=片桐にエスカレーション | ✅ commit 24d9e66 |
 
 ---
 
