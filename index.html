@@ -542,9 +542,17 @@ body.search-query-active .card-why{display:flex;}
 .modal-related-features a:last-child{border-bottom:none;}
 .modal-related-features a:hover{color:var(--gold2);}
 .modal-related-stores-label{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin:.9rem 0 .45rem;}
-.modal-related-stores{display:flex;gap:.5rem;flex-wrap:wrap;}
-.modal-rsc{font-size:.76rem;padding:.32rem .7rem;background:var(--surface);border:1px solid var(--border-h);border-radius:3px;cursor:pointer;color:var(--text);font-family:'Noto Sans JP',sans-serif;white-space:nowrap;transition:all .15s;}
+.modal-related-stores{display:flex;gap:.6rem;overflow-x:auto;padding-bottom:.45rem;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;}
+.modal-related-stores::-webkit-scrollbar{height:3px;}
+.modal-related-stores::-webkit-scrollbar-thumb{background:var(--border-h);border-radius:2px;}
+.modal-rsc{flex:0 0 150px;scroll-snap-align:start;display:flex;flex-direction:column;padding:0;overflow:hidden;background:var(--surface);border:1px solid var(--border-h);border-radius:3px;cursor:pointer;color:var(--text);font-family:'Noto Sans JP',sans-serif;text-align:left;transition:all .15s;}
+.modal-rsc-img{width:100%;aspect-ratio:16/10;height:auto;object-fit:cover;display:block;background:var(--border);}
+.modal-rsc-body{display:block;padding:.42rem .55rem .5rem;}
+.modal-rsc-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:.76rem;line-height:1.35;overflow:hidden;}
+.modal-rsc-meta{display:block;margin-top:.2rem;font-size:.63rem;color:var(--dim);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .modal-rsc:hover{border-color:var(--gold);color:var(--gold);}
+.modal-rsc:hover .modal-rsc-meta{color:var(--gold2);}
+@media(max-width:640px){.modal-related-stores{gap:.5rem;}.modal-rsc{flex:0 0 132px;}}
 /* ── SEO-003 モーダル内 CTA ── */
 .modal-cta-row{padding:.8rem 1.5rem 1rem;}
 .modal-cta-btn{display:block;width:100%;padding:.9rem 1rem;text-align:center;text-decoration:none;font-size:.88rem;font-weight:500;letter-spacing:.05em;border-radius:4px;transition:background .2s;cursor:pointer;border:none;}
@@ -9681,10 +9689,10 @@ function openM(i) {
     var relStores=[];
     if(ALL_STORES&&ALL_STORES.length>1){
       var rg=(r['ジャンル']||'').split(/[・\/]/)[0].trim();
-      for(var si2=0;si2<ALL_STORES.length&&relStores.length<3;si2++){
+      for(var si2=0;si2<ALL_STORES.length&&relStores.length<12;si2++){
         var rs2=ALL_STORES[si2];
         if(!rs2||rs2['店名']===r['店名'])continue;
-        if(rg&&(rs2['ジャンル']||'').includes(rg))relStores.push({i:si2,n:rs2['店名']});
+        if(rg&&(rs2['ジャンル']||'').includes(rg))relStores.push({i:si2,s:rs2});
       }
     }
     var relEl=document.getElementById('modal-related');
@@ -9698,7 +9706,14 @@ function openM(i) {
       if(relStores.length>0){
         rh+='<div class="modal-related-stores-label">似た雰囲気のお店</div>'
           +'<div class="modal-related-stores">'+relStores.map(function(rs3){
-            return '<button class="modal-rsc" onclick="closeM();setTimeout(function(){openM('+rs3.i+');},50)">'+rs3.n+'</button>';
+            var rst=rs3.s, rsn=rst['店名']||'';
+            var rsAlt=rsn.replace(/"/g,'&quot;');
+            var rsPhoto=rst['写真URL']||'/assets/store-figures/_fallback.svg';
+            return '<button class="modal-rsc" onclick="closeM();setTimeout(function(){openM('+rs3.i+');},50)" aria-label="'+rsAlt+'の詳細を見る">'
+              +'<img class="modal-rsc-img" src="'+nbImage(rsPhoto,480)+'" srcset="'+nbSrcset(rsPhoto,[240,480])+'" sizes="150px" alt="'+rsAlt+'" loading="lazy" decoding="async" width="160" height="100" onerror="nbImgFallback(this)">'
+              +'<span class="modal-rsc-body"><span class="modal-rsc-name">'+rsn+'</span>'
+              +'<span class="modal-rsc-meta">'+((rst['ジャンル']||'').split('・')[0])+((rst['エリア'])?' · '+rst['エリア']:'')+'</span></span>'
+              +'</button>';
           }).join('')+'</div>';
       }
       if(rh){relEl.innerHTML='<div class="modal-related-title">この特集もおすすめ</div>'+rh;relEl.style.display='';}
