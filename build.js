@@ -1568,6 +1568,50 @@ async function main() {
       console.warn(`instagram_posts.json マージ失敗: ${e.message}`);
     }
   }
+
+  // ── 内容の関連性ゲート（ISSUE-092）────────────────────────────────────
+  // 上の所有者検証が見るのは「その店の投稿か」。ここで見るのは「店の料理・内装・外観を
+  // 写した投稿か」。求人・休業案内・挨拶・御礼・店外イベントの投稿は、その店の公式アカ
+  // 本人が上げたものでも消費者には何の情報にもならないので落とす。
+  //
+  // 判定は scripts/lib/ig_post_policy.js の1本（基準は data/ig_post_policy.json）。
+  // 根拠はキャプション本文＝誰でも同じURLを開いて検算できる事実だけ（制約10）。
+  // 証跡が無い投稿は「検証できない」ので載せない。取り繕うより出さない方を選ぶ。
+  try {
+    const { judgeUrl, loadEvidence } = require('./scripts/lib/ig_post_policy.js');
+
+    // 証跡ストアが丸ごと無い/空のときは「全投稿が基準を満たさない」ではなく
+    // 「判定できる材料が無い」＝パイプラインの故障。ここでゲートを適用すると
+    // 埋め込みが全店から静かに消えるので、適用せず警告して抜ける
+    // （検知を握りつぶさない・CLAUDE.md 無人自動化の原則）。
+    const evStore = loadEvidence();
+    if (!evStore || Object.keys(evStore).length === 0) {
+      console.warn('⚠ data/ig_post_evidence.json が空です。関連性ゲートは適用しません。');
+      console.warn('  node scripts/fetch_ig_post_evidence.js で証跡を回収してください。');
+      throw new Error('evidence store empty');
+    }
+
+    const relTally = {};
+    let relDropped = 0, relKept = 0;
+    for (const s of slimStores) {
+      const url = (s['Instagram投稿URL'] || '').trim();
+      if (!url) continue;
+      const r = judgeUrl(url, { storeName: s['店名'] || '' });
+      relTally[r.verdict] = (relTally[r.verdict] || 0) + 1;
+      if (r.ok) { relKept++; continue; }
+      s['Instagram投稿URL'] = '';
+      delete s['動画証跡'];
+      relDropped++;
+    }
+    const breakdown = Object.entries(relTally)
+      .filter(([v]) => v !== 'PASS')
+      .sort((a, b) => b[1] - a[1])
+      .map(([v, n]) => `${v}=${n}`)
+      .join(' ');
+    console.log(`Instagram投稿の関連性ゲート: 掲載 ${relKept}件 / 除外 ${relDropped}件${breakdown ? ` (${breakdown})` : ''}`);
+  } catch (e) {
+    console.warn(`Instagram投稿の関連性ゲート失敗: ${e.message}`);
+  }
   // ─────────────────────────────────────────────────────────────────────────
 
   // ─── ISSUE-015-P2 第二段: 優先度順ソート（TOP50 インライン用） ──────────
