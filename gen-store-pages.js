@@ -434,7 +434,10 @@ function renderStorePage(s, slug) {
   //   出るため、優先順どおり「店の公式写真を主役、HotPepper 写真を添え」に並べ替える。
   //   ローダーは async でDOM構築を止めないため、上に来ても初期描画は阻害しない。
   const igPostUrl = (s['Instagram投稿URL'] || '').trim();
-  const hasIgEmbed = /^https:\/\/www\.instagram\.com\/[A-Za-z0-9_.]+\/(p|reel)\/[A-Za-z0-9_-]+\/?$/.test(igPostUrl);
+  //   所有者検証（__igVerified）を通った店だけ埋め込む。形式が正しくても「別の店の投稿」
+  //   であることがあり、その場合この見出しは誤情報になる（判定は audit_reel_ownership.js）。
+  const hasIgEmbed = s.__igVerified === true
+    && /^https:\/\/www\.instagram\.com\/[A-Za-z0-9_.]+\/(p|reel)\/[A-Za-z0-9_-]+\/?$/.test(igPostUrl);
   const igEmbedHtml = hasIgEmbed ? `
   <div class="ig-photos">
     <h2>公式Instagramの実際の写真</h2>
@@ -743,6 +746,24 @@ async function main() {
   const { loadStores } = require('./scripts/lib/load_stores');
   const localStores = loadStores();
   console.log(`LOCAL_STORES: ${localStores.length}件`);
+
+  // ── Instagram 埋め込みの所有者検証（ISSUE-089）────────────────────────
+  // 埋め込みは「公式Instagramの実際の写真」という見出しでページの主役位置に出るため、
+  // 別の店の投稿が混ざると誤情報になる。index.html のカード/モーダルと同じ判定器を通し、
+  // 検証を通った店だけ埋め込む（形式チェックだけでは所有者を確かめられない）。
+  {
+    const { audit } = require('./scripts/audit_reel_ownership.js');
+    const { results } = audit(localStores);
+    const verified = new Set(
+      results.filter(r => r.verdict.startsWith('PASS')).map(r => r.hpId || r.store)
+    );
+    let igVerified = 0;
+    for (const ls of localStores) {
+      ls.__igVerified = verified.has(ls['ホットペッパーID'] || ls['店名']);
+      if (ls.__igVerified) igVerified++;
+    }
+    console.log(`Instagram埋め込み 所有者検証通過: ${igVerified}件`);
+  }
 
   // 各 LOCAL_STORE を CSV で補完してマージ
   let visible = [];

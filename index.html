@@ -373,6 +373,26 @@ body.search-query-active .card-why{display:flex;}
 .ci img{width:100%;height:100%;object-fit:cover;filter:saturate(1.06) contrast(1.03);transition:filter .5s,transform .7s cubic-bezier(.2,.7,.2,1);display:block;}
 .card:hover .ci img{filter:saturate(1.12) contrast(1.05);transform:scale(1.06);}
 .ci::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(28,28,26,.55) 0%,transparent 48%);pointer-events:none;}
+/* ── カード内リール（所有者検証を通った動画のみ・タップで再生）── */
+/* 当たり判定は再生アイコンだけに絞る（写真の他の部分をタップしたら従来どおり店舗詳細が開く）*/
+.reel-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:66px;height:66px;display:flex;align-items:center;justify-content:center;background:transparent;border:0;padding:0;cursor:pointer;z-index:4;}
+.reel-play i{width:54px;height:54px;border-radius:50%;background:rgba(10,10,8,.62);backdrop-filter:blur(6px);border:1.5px solid rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;transition:transform .25s,background .25s;}
+.reel-play i::before{content:'';border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #fff;margin-left:4px;}
+.card:hover .reel-play i{transform:scale(1.1);background:rgba(10,10,8,.78);}
+.reel-play:focus-visible i{outline:2px solid var(--gold);outline-offset:3px;}
+.reel-tag{position:absolute;left:.9rem;bottom:.7rem;z-index:4;font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.12em;color:#fff;background:rgba(10,10,8,.66);border:1px solid rgba(255,255,255,.35);padding:.16rem .45rem;pointer-events:none;text-transform:uppercase;}
+/* リール展開中は行の引き伸ばしを止める（同じ行の他カードが空白だらけになるのを防ぐ）*/
+.grid.reel-active{align-items:start;}
+.card.reel-open .ci{height:auto;aspect-ratio:auto;overflow:hidden;}
+.card.reel-open .ci::after{display:none;}
+/* 再生中はカード上のバッジ類を退避（Instagram側のヘッダーと重なるため）*/
+.card.reel-open .badge,.card.reel-open .trend-badge,.card.reel-open .pref-badge,
+.card.reel-open .pro-pick,.card.reel-open .editor-note,.card.reel-open .editor-pick,
+.card.reel-open .insider-badge,.card.reel-open .dist-badge{display:none;}
+.card.reel-open .ci iframe{width:100%;display:block;border:0;background:#000;}
+.reel-close{position:absolute;top:.5rem;right:.5rem;z-index:6;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(10,10,8,.72);color:#fff;font-size:1rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.grid.list-mode .reel-play,.grid.list-mode .reel-tag{display:none;}
+@media (prefers-reduced-motion:reduce){.card:hover .reel-play i{transform:none;}}
 .badge{position:absolute;top:.9rem;left:.9rem;font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.14em;color:var(--gold);border:1px solid rgba(201,169,110,.4);padding:.2rem .55rem;text-transform:uppercase;background:rgba(10,10,8,.7);backdrop-filter:blur(6px);z-index:2;}
 .pref-badge{position:absolute;top:.9rem;right:.9rem;font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;color:var(--dim);background:rgba(10,10,8,.7);border:1px solid var(--border);padding:.2rem .5rem;z-index:2;}
 .cb{padding:0;}
@@ -9050,8 +9070,112 @@ function gmap(name, area, accessOrFullRecord) {
   return 'https://maps.google.com/search?q=' + encodeURIComponent(base + ' ' + (cleanArea(area) || '名古屋'));
 }
 
+// ================================================================
+// リール所有者検証 —「その店の動画か」を検証できる事実だけで判定する
+// ----------------------------------------------------------------
+// CLAUDE.md 制約10 に従い、判定に使うのは次の3つの事実のみ。
+//   (1) 投稿URLのアカウント名  (2) 店の登録Instagramアカウント名
+//   (3) 同じ投稿アカウントが紐づく全店舗の店名
+// エージェントや外部が自由に書ける自己申告値（スコア等）は一切使わない。
+//
+// 落とすもの:
+//   - 1つのアカウントが「ブランドの異なる複数店」に紐づくケース
+//     （例: popular=25店 / yuichi5016=3店 → どの店の動画か決められない）
+//   - 店と無関係な第三者アカウントの投稿（インフルエンサー投稿は、
+//     キャプション等の証跡を保存したうえで別途解禁する。それまでは保留）
+// 通すもの:
+//   - 店の登録アカウント本人の投稿
+//   - 同一ブランドの支店アカ・チェーン公式アカ（例: 鳥貴族公式→鳥貴族各店）
+//
+// 判定の正本は scripts/audit_reel_ownership.js（CI が同じ判定を実行する）。
+// 表示の直前に毎回検証するため、データが将来汚れても画面には出ない。
+// ================================================================
+// リールと写真投稿の両方を検証対象にする（同じ所有者問題があるため）
+var NB_POST_RE = /^https:\/\/www\.instagram\.com\/([A-Za-z0-9._]+)\/(reel|p)\/([A-Za-z0-9_-]+)/;
+// 店名からエリア語・支店語を除いた「ブランド部分」を取り出すための語
+var NB_AREA_RE = /(名古屋駅|名駅|名古屋|栄東|栄|錦|金山|伏見|大須|今池|千種|藤が丘|本山|住吉|新栄|覚王山|八事|鶴舞|黒川|池下|矢場町|東別院|柳橋|広小路|笹島|岩塚|徳重|栄生|九条|西口|東口|南口|北口|駅前|本店|支店|店|丁目|[0-9０-９]|\s|　)/g;
+
+function nbNormH(h) { return String(h || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
+
+// r['Instagram'] は完全URL・ハンドルのみ の両形式が混在する
+function nbAcctHandle(v) {
+  var s = String(v || '').trim();
+  if (!s) return '';
+  var m = s.match(/^https?:\/\/(?:www\.)?instagram\.com\/([^\/?#]+)/i);
+  if (m) return nbNormH(m[1]);
+  return nbNormH(s.replace(/^@/, '').replace(/^instagram\.com\//i, ''));
+}
+
+function nbReelParts(r) {
+  var url = String(r['Instagram投稿URL'] || '').trim();
+  var m = url.match(NB_POST_RE);
+  return m ? {handle: m[1], kind: m[2], code: m[3], url: url} : null;
+}
+
+function nbBrandCore(name) { return String(name || '').replace(NB_AREA_RE, ''); }
+
+// 全店名に共通して含まれる2文字以上の部分文字列があれば同一ブランドとみなす
+function nbSameBrand(names) {
+  var cores = names.map(nbBrandCore).filter(function(c) { return c.length >= 2; });
+  if (cores.length !== names.length) return false;
+  var base = cores[0];
+  for (var len = base.length; len >= 2; len--) {
+    for (var i = 0; i + len <= base.length; i++) {
+      var sub = base.substr(i, len);
+      var all = cores.every(function(c) { return c.indexOf(sub) !== -1; });
+      if (all) return true;
+    }
+  }
+  return false;
+}
+
+// 投稿アカウント／投稿URL ごとの紐づき店舗名（1度だけ構築）
+var NB_REEL_IDX = null, NB_REEL_IDX_N = -1;
+function nbReelIndex() {
+  if (NB_REEL_IDX && NB_REEL_IDX_N === ALL_STORES.length) return NB_REEL_IDX;
+  var byHandle = {}, byUrl = {};
+  for (var i = 0; i < ALL_STORES.length; i++) {
+    var p = nbReelParts(ALL_STORES[i]);
+    if (!p) continue;
+    var nm = ALL_STORES[i]['店名'] || '';
+    var k = nbNormH(p.handle);
+    (byHandle[k] = byHandle[k] || []).push(nm);
+    (byUrl[p.url] = byUrl[p.url] || []).push(nm);
+  }
+  NB_REEL_IDX = {byHandle: byHandle, byUrl: byUrl}; NB_REEL_IDX_N = ALL_STORES.length;
+  return NB_REEL_IDX;
+}
+
+function nbVerifiedReel(r) {
+  var p = nbReelParts(r);
+  if (!p) return null;
+  var post = nbNormH(p.handle);
+  var acct = nbAcctHandle(r['Instagram']);
+  var idx = nbReelIndex();
+
+  // 段1（最優先）: 同じ1本が別ブランドの複数店に割り当てられている
+  //   → 1本の動画が2つの店を写していることはない。どちらが正かも決められないので出さない
+  var holders = idx.byUrl[p.url] || [];
+  if (holders.length > 1 && !nbSameBrand(holders)) return null;
+
+  // 段2: 証跡があれば投稿者が誰でも出す（グルメインフルエンサーの投稿の掲載経路）。
+  //   r['動画証跡'] は build.js が scripts/audit_reel_ownership.js の evidenceFor() で
+  //   付与する（キャプションの@メンション / ロケーションタグ / 本文の店名）。
+  if (r['動画証跡']) return p;
+
+  if (!acct) return null;                       // 照合先が無い＝検証不能
+  // 段3: 証跡が無い場合はアカウントの紐付けだけが頼り。共有アカは出さない
+  var sharers = idx.byHandle[post] || [];
+  if (sharers.length > 1 && !nbSameBrand(sharers)) return null;
+  if (post === acct) return p;
+  if (post.indexOf(acct) === 0 || acct.indexOf(post) === 0) return p;
+  return null;                                  // 第三者アカ＝証跡が付くまで保留
+}
+
 function buildCardHtml(r) {
     var idx = ALL_STORES.indexOf(r);
+    var verified = nbVerifiedReel(r);
+    var reel = (verified && verified.kind === 'reel') ? verified : null;  // カードに出すのは動画のみ
     var photo = r['写真URL'] || '/assets/store-figures/_fallback.svg';
     var hpUrl = hotpepperUrl(r);
     var genre = (r['ジャンル']||'').split('・')[0];
@@ -9100,7 +9224,9 @@ function buildCardHtml(r) {
       distBadge = '<span class="dist-badge' + (approx ? ' approx' : '') + '" title="' + (approx ? '現在地からの概算距離（エリア中心点）' : '現在地からの直線距離') + '">' + (approx ? '~' : '') + distText + '</span>';
     }
     return '<div class="card" onclick="openM(' + idx + ')" role="button" tabindex="0" aria-label="' + r['店名'] + 'の詳細を見る">'
-      + '<div class="ci">' + distBadge + '<img src="' + nbImage(photo, 600) + '" srcset="' + nbSrcset(photo, [400, 600, 800]) + '" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)"></div>'
+      + '<div class="ci">' + distBadge + '<img src="' + nbImage(photo, 600) + '" srcset="' + nbSrcset(photo, [400, 600, 800]) + '" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)">'
+      + (reel ? '<button class="reel-play" onclick="nbPlayReel(event,this,\'' + reel.code + '\')" aria-label="' + nbEscHtml(r['店名']) + 'のリール動画を再生"><i aria-hidden="true"></i></button><span class="reel-tag">Reel</span>' : '')
+      + '</div>'
       + '<span class="badge">' + genre + '</span>'
       + trendBadgeHtml
       + (pref ? '<span class="pref-badge">' + pref + '</span>' : '')
@@ -9121,6 +9247,41 @@ function buildCardHtml(r) {
       + '</div>';
 }
 
+// カード内リールの再生／停止。iframe はタップされた瞬間に初めて生成するため、
+// 初期表示のコストはゼロ（サードパーティ iframe を先読みしない）。
+// 同時に開くのは常に1枚だけにして、通信量とスクロール負荷を抑える。
+var NB_OPEN_REEL = null;
+function nbCloseReel() {
+  if (!NB_OPEN_REEL) return;
+  var card = NB_OPEN_REEL, ci = card.querySelector('.ci');
+  if (ci && ci._reelHtml != null) { ci.innerHTML = ci._reelHtml; ci._reelHtml = null; }
+  card.classList.remove('reel-open');
+  var g = document.getElementById('grid');
+  if (g) g.classList.remove('reel-active');
+  NB_OPEN_REEL = null;
+}
+function nbPlayReel(ev, btn, code) {
+  ev.stopPropagation();                       // カードのモーダル起動を抑止
+  var card = btn.closest('.card'), ci = btn.closest('.ci');
+  if (!card || !ci) return;
+  if (NB_OPEN_REEL === card) { nbCloseReel(); return; }
+  nbCloseReel();
+  var w = ci.getBoundingClientRect().width || 320;
+  // IG埋め込みは 動画(実測 幅×1.68) + 出典リンク行 で構成される。
+  // その下のコメント欄は空白になるだけなので高さに含めず、.ci 側で切り落とす。
+  var h = Math.min(760, Math.round(w * 1.68) + 70);
+  ci._reelHtml = ci.innerHTML;
+  ci.innerHTML = '<button class="reel-close" onclick="event.stopPropagation();nbCloseReel()" aria-label="リール動画を閉じる">×</button>'
+    + '<iframe src="https://www.instagram.com/reel/' + code + '/embed/" height="' + h + '" '
+    + 'loading="lazy" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true" '
+    + 'title="Instagram リール動画"></iframe>';
+  card.classList.add('reel-open');
+  if (card.parentElement && card.parentElement.id === 'grid') card.parentElement.classList.add('reel-active');
+  NB_OPEN_REEL = card;
+  var nm = card.getAttribute('aria-label') || '';
+  trackEvent('reel_play', {store_name: nm.replace(/の詳細を見る$/, '')});
+}
+
 function renderGrid(data) {
   var cntEl = document.getElementById('cnt');
   if (cntEl) {
@@ -9132,6 +9293,7 @@ function renderGrid(data) {
   }
   var gridEl = document.getElementById('grid');
   var pagEl = document.getElementById('pagination');
+  NB_OPEN_REEL = null;   // 再描画で開いていたカードのDOMは失われる
   if (!data.length) {
     // 検索語のうち掲載データに存在しなかった語が分かっていれば具体的に伝える
     var missHint = '';
@@ -9422,6 +9584,8 @@ function openM(i) {
     mvisitRow.style.display = 'none';
   }
   var igPost = (r['Instagram投稿URL'] || '').trim();
+  // リール・写真とも同じ所有者検証を通す（検証を通らない投稿はモーダルにも出さない）
+  if (igPost && !nbVerifiedReel(r)) igPost = '';
   var igWrap = document.getElementById('mig-wrap');
   var igContainer = document.getElementById('mig-container');
   if (igPost && (igPost.includes('/p/') || igPost.includes('/reel/'))) {
