@@ -222,6 +222,15 @@ jobs:
         run: node scripts/audit_ig_post_relevance.js --check
         continue-on-error: true
 
+      - name: Instagram アカウントの共有監査（ISSUE-090・別ブランドに同じアカウントが紐づく誤リンク検知）
+        # 1つの Instagram アカウントがブランドの異なる複数店に登録されていると、ボタンを押すと
+        # 別店舗のページへ飛ぶ（例: popular=25店・shinjidai_phads=17店 等）。
+        # 判定根拠: LOCAL_STORES の Instagram フィールド + sameBrand()（検証できる事実のみ・制約10）。
+        # 「Moat=実在保証・編集独立性」を直接毀損するため CI でブロックする（ISSUE-090）。
+        # 修正: node scripts/audit_instagram_accounts.js --fix && node build.js
+        run: node scripts/audit_instagram_accounts.js --check
+        continue-on-error: true
+
       - name: ジャーナルのヒーロー写真が記事と対応しているかを監査（2026-08-17 の事故）
         # 2026-08-17、記事の主役2店が新店で写真を持たなかったため、記事に一行触れただけの
         # 別店の販促バナー（ドリンク94円）が記事の顔になって公開された。当時の validator は

@@ -298,8 +298,9 @@ URLが絶対か / PNGが実在するか。エージェントの自己申告値�
 
 ### [ISSUE-090] カードの「Instagram」ボタンが別の店のアカウントに飛ぶ（154店）
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-08-17（ISSUE-089 のリール調査の副産物。オーナー判断で別課題として起票）
+- **resolved**: 2026-08-18
 - **category**: データ健全性 / 信頼
 - **owner**: DataKeeper
 - **problem**: カードとモーダルの「Instagram」ボタンは `r['Instagram']` を**そのままリンク先に使う**（`instagramSearchUrl()`）。ところが登録アカウントの一部は誤解決しており、**ブランドの異なる複数店に同じアカウントが登録されている**。該当は **48アカウント・154店**（`popular`=25店／`shinjidai_phads`=17店／`minoji.official`=9店 等）。押すと別の店の Instagram に飛ぶ。
@@ -379,6 +380,24 @@ URLが絶対か / PNGが実在するか。エージェントの自己申告値�
   APIキー無しで ABORT（exit 1）し、**`data/crosscheck.json` が 4,868件 → 741件に上書きされたまま巻き戻されなかった**。
   ISSUE-087 の記述どおりの挙動を実地で再現。`git checkout --` で復元済みだが、
   **ABORT を見て「守られた」と読むと欠損をそのままコミットしうる**という危険性が改めて裏付けられた
+
+- **対応内容（2026-08-18・acceptance 1〜4を完了）**:
+  1. ~~複数ブランドで共有されている登録アカウントを検出する監査を用意~~ ✅ **完了**
+     `scripts/audit_instagram_accounts.js` を新規作成。判定根拠は `Instagram` フィールドのハンドル名と
+     `sameBrand()` のみ（自己申告値なし・制約10）。`audit_reel_ownership.js` と同じ正規化ロジックを使用。
+     - `--fix`: `instagram_resolved.json` の問題エントリを `instagram=''` にクリア（`cleared_by_audit=true`）
+     - `--check`: CI用、共有アカウントが残っていれば exit 1
+     - `--list`: 共有アカウントの全店名付き一覧
+  2. ~~誤りと判定されたものは `Instagram` を空にする~~ ✅ **完了**
+     `--fix` 実行で 47アカウント・152店に紐づく 158件を `instagram_resolved.json` からクリア。
+     次回 `node build.js` で空のエントリは自動スキップされ、ボタンは店名検索URLにフォールバック
+  3. `MIN_SCORE` の妥当性を代表ケースで実測 — スコア分布は実測済み（score=0: 2537件 / score=4: 461件 / score>4: 724件）。
+     score=0エントリは `resolvedBy: "google"` 方式（スコアフィールドなし）に由来。
+     実際の誤リンク（popular等）はスコアに関係なく共有アカウント検知で捕捉されるため、
+     MIN_SCOREの閾値変更は web 検索で個別検証が必要な別タスク（クラウド環境では実施不可）
+  4. ~~CI に監査を追加~~ ✅ **完了**
+     `.github/workflows/build.yml` に `audit_instagram_accounts.js --check` を追加（`continue-on-error: true`）
+  - `npm test` 94件全通過
 
 ### [ISSUE-089] 店舗カードにリール動画を埋め込む — 併せて「別の店の動画が貼られている」既存事故を遮断 ✅
 
@@ -3158,6 +3177,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-16 | Editor(routine) | SEO-008 実装。scripts/add_journal_site_intro.js を新設（冪等・art-body 先頭に NAGOYA BITES 紹介文+index.html リンクを注入）。既存 journal/2026-*.html 全100本に一括適用。run_journal_local.sh Step 5g を追加して今後の記事にも自動適用。acceptance（今後分+流入上位の既存記事に設置・JSON-LD・本文構造維持）充足 | ✅ commit 3ddad7a |
 | 2026-08-17 | Editor(routine) | SEO-015 実装・デプロイ — journal/_template.html および既存ジャーナル全102本の `@media(max-width:640px)` ブロックに `.art-body p{font-size:1rem;}` と `.art-lead{font-size:.95rem;}` を追加。モバイル13.8px（.86rem）→16px（1rem）相当に引き上げ。3パターン（multi-line/single-line-nav/custom）に対応。QA-1〜5全通過（build.jsのABORTはAPIキー不在の既存制約でCSS変更と無関係） | ✅ commit 520676b |
 | 2026-08-17 | Editor(routine) | SEO-038 done化 — GA4トップページランキング・週次レポートTOP5から高流入ジャーナル記事3本（らふ/リサール/北京）を横断分析。共通パターン（専門業態新店×価格設計分析×ニッチシーン×固有名詞ロングテールKW）を抽出し、agents/editor.md「ロングテール勝ち筋の型」セクションを新設（題材選定への反映・同型テーマ横展開候補も記載）。ISSUE-012（Instagram API連携Phase B）はFacebook App作成が次アクションのためowner=片桐にエスカレーション | ✅ commit 24d9e66 |
+| 2026-08-18 | DataKeeper(routine) | ISSUE-090 実装・デプロイ — scripts/audit_instagram_accounts.js 新設（sameBrand()再利用・制約10準拠）。47アカウント・152店の共有リンク問題を --fix で instagram_resolved.json から158件クリア（instagram=''・cleared_by_audit=true）。build.yml に --check ステップ追加で再発防止。npm test 94件全通過 | ✅ commit TBD |
 
 ---
 
