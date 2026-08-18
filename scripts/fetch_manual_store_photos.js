@@ -9,7 +9,9 @@
 //        対象外だったため「HotPepper ID を持たない店」が恒久的に写真ゼロのまま
 //        トップの人気カード等に出ていた。両方を同じ三重ゲートで処理する。
 //
-// Google Places API（findplacefromtext → place/details → place/photo CDN URL）を使用。
+// Google Places API（textsearch → place/details → place/photo CDN URL）を使用。
+// textsearch は複数候補を返すため、店名ゲート（namesMatch）を通る候補が出るまで順に試す
+// （2026-08-18: findplacefromtext の単一候補仕様が同一チェーンの別店舗に化ける事故があったため変更）。
 // 要 GOOGLE_MAPS_API_KEY（または GOOGLE_PLACES_API_KEY）環境変数。
 // place/photo が返す lh3.googleusercontent.com の CDN URL を保存（APIキーはHTMLに埋め込まない）。
 //
@@ -192,14 +194,29 @@ async function detailsByPlaceId(placeId) {
   };
 }
 
+// 読み仮名の括弧書き（例:「那古野 しば福や 名駅店 (なごの しばふくや めいえきてん)」）を
+// 検索クエリから除く。Google 側の検索文字列としては表記ゆれのノイズにしかならない。
+// 店名一致判定（namesMatch）側は括弧内も許容するのでこちらは変更しない。
+function stripReading(name) {
+  return String(name || '').replace(/[（(][^）)]*[）)]/g, '').trim();
+}
+
+// findplacefromtext は「候補を1件だけ」返す仕様のため、Google 側のあいまい一致が
+// 微妙に外れると（同一チェーンの別店舗等）ここでリカバリ手段が無かった
+// （2026-08-18 実測: THE CUPS SAKAE が別店舗「THE CUPS Q」に化けて不採用になっていた）。
+// textsearch は候補を複数返すため、店名ゲートを通る候補が見つかるまで順に試せる。
 async function tryOneQuery(queryStr) {
   const query = encodeURIComponent(queryStr);
-  const findRes = await getJson(
-    `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${query}&inputtype=textquery&fields=place_id&language=ja&key=${KEY}`
+  const res = await getJson(
+    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${query}&language=ja&key=${KEY}`
   );
-  const placeId = findRes?.candidates?.[0]?.place_id;
-  if (!placeId) return null;
-  return detailsByPlaceId(placeId);
+  const results = Array.isArray(res?.results) ? res.results : [];
+  return results.slice(0, 5).map(r => ({
+    placeId: r.place_id,
+    matchedName: r.name || '',
+    address: r.formatted_address || '',
+    types: r.types || [],
+  }));
 }
 
 // 三重検証ゲート（店名一致 / 名古屋・愛知の住所 / 飲食店業態）— 架空店ブロックの門番。
@@ -215,10 +232,10 @@ function passesGates(name, r) {
 
 async function fetchPhoto(name, area, cachedPlaceId, store = {}) {
   let best = null; // {matchedName, address, photos, photo, sim, placeId}
-  let lastMatchedName = '', lastReason = 'name-mismatch';
+  let lastMatchedName = '', lastReason = 'name-mismatch', lastSim = 0;
 
   // ── 既知の place_id があればまずそこから引く（ISSUE-074）──
-  // findplacefromtext を省けるので API 呼び出しが半分になり、かつ「一度検証を通った同じ店」を
+  // textsearch を省けるので API 呼び出しが減り、かつ「一度検証を通った同じ店」を
   // 引き直すので再マッチのブレ（別店に化ける事故）も起きない。ゲートは省略せず再検証する。
   if (cachedPlaceId) {
     const r = await detailsByPlaceId(cachedPlaceId);
@@ -228,27 +245,40 @@ async function fetchPhoto(name, area, cachedPlaceId, store = {}) {
       best = { ...r, sim: g.sim };
     } else if (r && !g.ok) {
       // 保存済み place_id がゲートを落ちた（店舗入れ替わり等）→ 名前検索にフォールバック
-      lastReason = g.reason; lastMatchedName = g.label;
+      lastReason = g.reason; lastMatchedName = g.label; lastSim = g.sim || 0;
       console.log(`  ⚠ 保存済み place_id がゲート不通過(${g.reason}) → 名前検索にフォールバック`);
       cachedPlaceId = null;
     }
   }
 
   // 「名古屋」を含むクエリのみ（別都市の同名店を避ける）。店名一致＋名古屋/愛知の住所を満たす候補を採用
+  const cleanName = stripReading(name);
   const queries = [
-    `${name} ${area} 名古屋`,
-    `${name} 名古屋`,
+    `${cleanName} ${area} 名古屋`,
+    `${cleanName} 名古屋`,
   ];
   for (const q of best ? [] : queries) {
-    const r = await tryOneQuery(q);
+    const candidates = await tryOneQuery(q);
     await new Promise(res => setTimeout(res, 150));
-    if (!r || !r.matchedName) continue;
-    lastMatchedName = r.matchedName;
-    const g = passesGates(name, r);
-    if (!g.ok) { if (g.reason !== 'name-mismatch') { lastReason = g.reason; lastMatchedName = g.label; } continue; }
-    if (r.photo?.photo_reference) { best = { ...r, sim: g.sim }; break; }
+    for (const c of candidates) {
+      if (!c || !c.matchedName) continue;
+      lastMatchedName = c.matchedName;
+      // textsearch は候補一覧の名前/住所/業態だけを軽量に返す。名前ゲートを通った候補だけ
+      // 詳細取得（写真ギャラリー付き）に進む＝無関係な候補ぶんの API 消費を避ける。
+      const quickGate = passesGates(name, { matchedName: c.matchedName, address: c.address, types: c.types });
+      lastSim = quickGate.sim || 0;
+      if (!quickGate.ok) { if (quickGate.reason !== 'name-mismatch') { lastReason = quickGate.reason; lastMatchedName = quickGate.label; } continue; }
+      const r = await detailsByPlaceId(c.placeId);
+      await new Promise(res => setTimeout(res, 150));
+      if (!r) continue;
+      const g = passesGates(name, r); // 詳細取得後の name/address/types で再検証（保険）
+      lastSim = g.sim || 0;
+      if (!g.ok) { if (g.reason !== 'name-mismatch') { lastReason = g.reason; lastMatchedName = g.label; } continue; }
+      if (r.photo?.photo_reference) { best = { ...r, sim: g.sim }; break; }
+    }
+    if (best) break;
   }
-  if (!best) return { reason: lastReason, matchedName: lastMatchedName, sim: 0 };
+  if (!best) return { reason: lastReason, matchedName: lastMatchedName, sim: lastSim };
 
   // ── 採用基準ゲート（data/photo_policy.json）──────────────────────────
   // Places の写真には「オーナーが上げた宣材」と「客が上げたスマホ写真」が混在し、
