@@ -10,11 +10,11 @@ function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,p
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>とり家ゑび寿 錦店（栄・和食）| NAGOYA BITES</title>
-<meta name="description" content="栄駅から徒歩4分の和食。Google★4.4（口コミ16件）。お得なご宴会コース★ まずはビールで乾杯。予約・地図・口コミを1ページで確認できます。">
+<title>とり家ゑび寿 錦店（栄・伏見・居酒屋）| NAGOYA BITES</title>
+<meta name="description" content="栄駅から徒歩4分の居酒屋。予算2001～3000円。Google★4.4（口コミ16件）。栄駅徒歩4分、90～100名対応で4.4評価。大規模和食の選択肢は限られる、確保価値あり。予約・地図・口コミを1ページで確認できます。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/J004422366.html">
-<meta property="og:title" content="とり家ゑび寿 錦店（栄・和食）| NAGOYA BITES">
-<meta property="og:description" content="栄駅から徒歩4分の和食。Google★4.4（口コミ16件）。お得なご宴会コース★ まずはビールで乾杯。予約・地図・口コミを1ページで確認できます。">
+<meta property="og:title" content="とり家ゑび寿 錦店（栄・伏見・居酒屋）| NAGOYA BITES">
+<meta property="og:description" content="栄駅から徒歩4分の居酒屋。予算2001～3000円。Google★4.4（口コミ16件）。栄駅徒歩4分、90～100名対応で4.4評価。大規模和食の選択肢は限られる、確保価値あり。予約・地図・口コミを1ページで確認できます。">
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="https://nagoya-bites.com/stores/J004422366.html">
 <meta property="og:image" content="https://wsrv.nl/?url=https%3A%2F%2Fnagoya-bites.com%2Fassets%2Fog%2FJ004422366.svg&output=png&w=1200&h=630">
@@ -25,8 +25,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:site_name" content="NAGOYA BITES">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="とり家ゑび寿 錦店（栄・和食）| NAGOYA BITES">
-<meta name="twitter:description" content="栄駅から徒歩4分の和食。Google★4.4（口コミ16件）。お得なご宴会コース★ まずはビールで乾杯。予約・地図・口コミを1ページで確認できます。">
+<meta name="twitter:title" content="とり家ゑび寿 錦店（栄・伏見・居酒屋）| NAGOYA BITES">
+<meta name="twitter:description" content="栄駅から徒歩4分の居酒屋。予算2001～3000円。Google★4.4（口コミ16件）。栄駅徒歩4分、90～100名対応で4.4評価。大規模和食の選択肢は限られる、確保価値あり。予約・地図・口コミを1ページで確認できます。">
 <meta name="twitter:image" content="https://wsrv.nl/?url=https%3A%2F%2Fnagoya-bites.com%2Fassets%2Fog%2FJ004422366.svg&output=png&w=1200&h=630">
 <link rel="manifest" href="../manifest.json">
 <meta name="theme-color" content="#7a5c10">
@@ -38,21 +38,24 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "@context": "https://schema.org",
     "@type": "Restaurant",
     "name": "とり家ゑび寿 錦店",
-    "servesCuisine": "和食",
+    "servesCuisine": "居酒屋",
     "address": {
       "@type": "PostalAddress",
       "addressRegion": "愛知県",
       "addressCountry": "JP",
-      "addressLocality": "栄"
+      "addressLocality": "名古屋市",
+      "streetAddress": "愛知県名古屋市中区錦３丁目１３-２５　佐藤ビル地下１階",
+      "addressArea": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄"
     },
     "image": "https://imgfp.hotp.jp/IMGH/84/66/P034758466/P034758466.jpg",
     "url": "https://nagoya-bites.com/stores/J004422366.html",
-    "description": "お得なご宴会コース★ まずはビールで乾杯",
-    "openingHours": "月～土、祝前日: 18:00～翌4:00",
+    "description": "栄駅徒歩4分、90～100名対応で4.4評価。大規模和食の選択肢は限られる、確保価値あり。",
+    "priceRange": "¥",
+    "openingHours": "月～木、祝前日: 18:00～翌4:00金、土: 17:00～翌4:00",
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": "35.1681",
-      "longitude": "136.9083"
+      "latitude": "35.1721",
+      "longitude": "136.905"
     },
     "acceptsReservations": true,
     "sameAs": [
@@ -80,14 +83,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "和食",
-        "item": "https://nagoya-bites.com/#genre=%E5%92%8C%E9%A3%9F"
+        "name": "居酒屋",
+        "item": "https://nagoya-bites.com/#genre=%E5%B1%85%E9%85%92%E5%B1%8B"
       },
       {
         "@type": "ListItem",
         "position": 3,
-        "name": "栄エリア",
-        "item": "https://nagoya-bites.com/#area=%E6%A0%84"
+        "name": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄エリア",
+        "item": "https://nagoya-bites.com/#area=%E6%A0%84%EF%BD%B7%EF%BE%80%E9%8C%A6%2F%E4%BC%8F%E8%A6%8B%E4%B8%B8%E3%81%AE%E5%86%85%2F%E6%B3%89%2F%E6%9D%B1%E6%A1%9C%2F%E6%96%B0%E6%A0%84"
       },
       {
         "@type": "ListItem",
@@ -160,20 +163,20 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <a href="../">NAGOYA BITES</a>
-    <span>›</span><a href="../#genre=%E5%92%8C%E9%A3%9F">和食</a>
-    <span>›</span><a href="../#area=%E6%A0%84">栄</a>
+    <span>›</span><a href="../#genre=%E5%B1%85%E9%85%92%E5%B1%8B">居酒屋</a>
+    <span>›</span><a href="../#area=%E6%A0%84%EF%BD%B7%EF%BE%80%E9%8C%A6%2F%E4%BC%8F%E8%A6%8B%E4%B8%B8%E3%81%AE%E5%86%85%2F%E6%B3%89%2F%E6%9D%B1%E6%A1%9C%2F%E6%96%B0%E6%A0%84">栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄</a>
     <span>›</span>
     <span>とり家ゑび寿 錦店</span>
   </nav>
 
-  <div class="genre-badge">和食</div>
+  <div class="genre-badge">居酒屋</div>
   <h1>とり家ゑび寿 錦店</h1>
   <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
     <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>4.4</div>
     <span class="ccs-badge ccs-badge-pending" title="スコア信頼度: 複数媒体シグナルによる客観評価（データ蓄積中の参考値・低評価を示すものではありません）">信頼度 48 ／ 参考値</span>
   </div>
 
-  <div class="point-box"><p>お得なご宴会コース★ まずはビールで乾杯</p></div>
+  <div class="point-box"><p>栄駅徒歩4分、90～100名対応で4.4評価。大規模和食の選択肢は限られる、確保価値あり。</p></div>
 
   <div class="ig-photos">
     <h2>公式Instagramの実際の写真</h2>
@@ -182,20 +185,20 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     </blockquote>
   </div>
   <div class="info-grid">
-    <div class="info-cell"><label>エリア</label><span>愛知県 栄</span></div>
+    <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄</span></div>
+    <div class="info-cell"><label>住所</label><span>愛知県名古屋市中区錦３丁目１３-２５　佐藤ビル地下１階</span></div>
+    <div class="info-cell"><label>価格帯</label><span>2001～3000円</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月～木、祝前日: 18:00～翌4:00金、土: 17:00～翌4:00</span></div>
     
-    
-    <div class="info-cell"><label>営業時間</label><span>月～土、祝前日: 18:00～翌4:00</span></div>
-    
-    <div class="info-cell"><label>アクセス・特徴</label><span>栄(名古屋)駅1出口より徒歩約4分</span></div>
+    <div class="info-cell"><label>アクセス・特徴</label><span>名古屋市営地下鉄東山線，名古屋市営地下鉄名城線，空港バス栄(名古屋)駅１出口より徒歩約4分</span></div>
   </div>
 
-  <div class="tags"><span class="tag">90〜100名</span><span class="tag">和食</span></div>
+  <div class="tags"><span class="tag">居酒屋</span><span class="tag">2000〜3000円</span><span class="tag">100名以上</span></div>
 
   <div class="links-section">
     <h2>予約・情報を確認</h2>
     <a class="link-btn hp" href="https://www.hotpepper.jp/strJ004422366/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E3%81%A8%E3%82%8A%E5%AE%B6%E3%82%91%E3%81%B3%E5%AF%BF%20%E9%8C%A6%E5%BA%97%20%E6%A0%84" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E3%81%A8%E3%82%8A%E5%AE%B6%E3%82%91%E3%81%B3%E5%AF%BF%20%E9%8C%A6%E5%BA%97%20%E6%A0%84%EF%BD%B7%EF%BE%80%E9%8C%A6%2F%E4%BC%8F%E8%A6%8B%E4%B8%B8%E3%81%AE%E5%86%85%2F%E6%B3%89%2F%E6%9D%B1%E6%A1%9C%2F%E6%96%B0%E6%A0%84" target="_blank" rel="noopener noreferrer">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/138toriyaebisu/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2302/A230201/23059640/" target="_blank" rel="noopener noreferrer">食べログ</a>
     <a class="link-btn tk" href="https://www.tiktok.com/search?q=%E3%81%A8%E3%82%8A%E5%AE%B6%E3%82%91%E3%81%B3%E5%AF%BF%20%E9%8C%A6%E5%BA%97%20%E6%A0%84" target="_blank" rel="noopener noreferrer">TikTok</a>
@@ -208,12 +211,12 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <ul>
       <li><a href="../features/banquet.html">名古屋の宴会・忘年会15選</a></li>
       <li><a href="../features/large-group.html">名古屋・大人数宴会20人以上10選</a></li>
-      <li><a href="../features/nagoya-lunch-washoku.html">名古屋ランチ 和食おすすめ10選</a></li>
+      <li><a href="../features/nagoya-solo-dining.html">名古屋 一人飲み完全ガイド 2026</a></li>
     </ul>
   </div>
 
   <div class="back-section">
-    <a href="../?area=%E6%A0%84&genre=%E5%92%8C%E9%A3%9F">← 栄の和食をもっと見る</a>
+    <a href="../?area=%E6%A0%84%EF%BD%B7%EF%BE%80%E9%8C%A6%2F%E4%BC%8F%E8%A6%8B%E4%B8%B8%E3%81%AE%E5%86%85%2F%E6%B3%89%2F%E6%9D%B1%E6%A1%9C%2F%E6%96%B0%E6%A0%84&genre=%E5%B1%85%E9%85%92%E5%B1%8B">← 栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄の居酒屋をもっと見る</a>
   </div>
 </div>
 

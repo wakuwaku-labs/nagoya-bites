@@ -10,24 +10,22 @@ function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,p
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>鍋屋ほたる 大須本店（大須・居酒屋）| NAGOYA BITES</title>
+<title>鍋屋ほたる 大須食邸（栄・矢場町・居酒屋）| NAGOYA BITES</title>
 <meta name="description" content="上前津駅から徒歩2分の居酒屋。予算3001～4000円。Google★4.1（口コミ150件）。麺屋はなび監修 コース料理が充実。予約・地図・口コミを1ページで確認できます。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/J001052510.html">
-<meta property="og:title" content="鍋屋ほたる 大須本店（大須・居酒屋）| NAGOYA BITES">
+<meta property="og:title" content="鍋屋ほたる 大須食邸（栄・矢場町・居酒屋）| NAGOYA BITES">
 <meta property="og:description" content="上前津駅から徒歩2分の居酒屋。予算3001～4000円。Google★4.1（口コミ150件）。麺屋はなび監修 コース料理が充実。予約・地図・口コミを1ページで確認できます。">
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="https://nagoya-bites.com/stores/J001052510.html">
-<meta property="og:image" content="https://imgfp.hotp.jp/IMGH/07/63/P048310763/P048310763_480.jpg">
-<meta property="og:image:alt" content="鍋屋ほたる 大須本店 の店舗写真">
-<meta name="twitter:image:alt" content="鍋屋ほたる 大須本店 の店舗写真">
-<meta property="og:image:width" content="480">
-<meta property="og:image:height" content="320">
+<meta property="og:image" content="https://imgfp.hotp.jp/IMGH/11/63/P050101163/P050101163.jpg">
+<meta property="og:image:alt" content="鍋屋ほたる 大須食邸 の店舗写真">
+<meta name="twitter:image:alt" content="鍋屋ほたる 大須食邸 の店舗写真">
 <meta property="og:site_name" content="NAGOYA BITES">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="鍋屋ほたる 大須本店（大須・居酒屋）| NAGOYA BITES">
+<meta name="twitter:title" content="鍋屋ほたる 大須食邸（栄・矢場町・居酒屋）| NAGOYA BITES">
 <meta name="twitter:description" content="上前津駅から徒歩2分の居酒屋。予算3001～4000円。Google★4.1（口コミ150件）。麺屋はなび監修 コース料理が充実。予約・地図・口コミを1ページで確認できます。">
-<meta name="twitter:image" content="https://imgfp.hotp.jp/IMGH/07/63/P048310763/P048310763_480.jpg">
+<meta name="twitter:image" content="https://imgfp.hotp.jp/IMGH/11/63/P050101163/P050101163.jpg">
 <link rel="manifest" href="../manifest.json">
 <meta name="theme-color" content="#7a5c10">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,23 +35,25 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   {
     "@context": "https://schema.org",
     "@type": "Restaurant",
-    "name": "鍋屋ほたる 大須本店",
+    "name": "鍋屋ほたる 大須食邸",
     "servesCuisine": "居酒屋",
     "address": {
       "@type": "PostalAddress",
       "addressRegion": "愛知県",
       "addressCountry": "JP",
-      "addressLocality": "大須"
+      "addressLocality": "名古屋市",
+      "streetAddress": "愛知県名古屋市中区大須４丁目15-59 前津ビル1Ｆ",
+      "addressArea": "栄(ミナミ)/矢場町/大須/上前津"
     },
-    "image": "https://imgfp.hotp.jp/IMGH/07/63/P048310763/P048310763_480.jpg",
+    "image": "https://imgfp.hotp.jp/IMGH/11/63/P050101163/P050101163.jpg",
     "url": "https://nagoya-bites.com/stores/J001052510.html",
     "description": "麺屋はなび監修 コース料理が充実",
     "priceRange": "¥¥",
     "openingHours": "火～日、祝日、祝前日: 17:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）",
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": "35.1597",
-      "longitude": "136.9032"
+      "latitude": "35.161",
+      "longitude": "136.906"
     },
     "acceptsReservations": true,
     "sameAs": [
@@ -86,13 +86,13 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       {
         "@type": "ListItem",
         "position": 3,
-        "name": "大須エリア",
-        "item": "https://nagoya-bites.com/#area=%E5%A4%A7%E9%A0%88"
+        "name": "栄(ミナミ)/矢場町/大須/上前津エリア",
+        "item": "https://nagoya-bites.com/#area=%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5"
       },
       {
         "@type": "ListItem",
         "position": 4,
-        "name": "鍋屋ほたる 大須本店",
+        "name": "鍋屋ほたる 大須食邸",
         "item": "https://nagoya-bites.com/stores/J001052510.html"
       }
     ]
@@ -155,19 +155,19 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F07%2F63%2FP048310763%2FP048310763_480.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F07%2F63%2FP048310763%2FP048310763_238.jpg" alt="鍋屋ほたる 大須本店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/07/63/P048310763/P048310763_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
+<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F11%2F63%2FP050101163%2FP050101163.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F11%2F63%2FP050101163%2FP050101163_480.jpg" srcset="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F11%2F63%2FP050101163%2FP050101163.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F11%2F63%2FP050101163%2FP050101163_480.jpg 480w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F11%2F63%2FP050101163%2FP050101163.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F11%2F63%2FP050101163%2FP050101163_480.jpg 800w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F11%2F63%2FP050101163%2FP050101163.jpg&w=1200&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F11%2F63%2FP050101163%2FP050101163_480.jpg 1200w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F11%2F63%2FP050101163%2FP050101163.jpg&w=1280&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F11%2F63%2FP050101163%2FP050101163_480.jpg 1280w" sizes="100vw" alt="鍋屋ほたる 大須食邸" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/11/63/P050101163/P050101163.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <a href="../">NAGOYA BITES</a>
     <span>›</span><a href="../#genre=%E5%B1%85%E9%85%92%E5%B1%8B">居酒屋</a>
-    <span>›</span><a href="../#area=%E5%A4%A7%E9%A0%88">大須</a>
+    <span>›</span><a href="../#area=%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5">栄(ミナミ)/矢場町/大須/上前津</a>
     <span>›</span>
-    <span>鍋屋ほたる 大須本店</span>
+    <span>鍋屋ほたる 大須食邸</span>
   </nav>
 
   <div class="genre-badge">居酒屋</div>
-  <h1>鍋屋ほたる 大須本店</h1>
+  <h1>鍋屋ほたる 大須食邸</h1>
   <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
     <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>4.1</div>
     <span class="ccs-badge" title="スコア信頼度: 複数媒体シグナルによる客観評価">✓ 信頼度 検証中</span>
@@ -176,20 +176,20 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <div class="point-box"><p>麺屋はなび監修 コース料理が充実</p></div>
 
   <div class="info-grid">
-    <div class="info-cell"><label>エリア</label><span>愛知県 大須</span></div>
-    
+    <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 栄(ミナミ)/矢場町/大須/上前津</span></div>
+    <div class="info-cell"><label>住所</label><span>愛知県名古屋市中区大須４丁目15-59 前津ビル1Ｆ</span></div>
     <div class="info-cell"><label>価格帯</label><span>3001～4000円</span></div>
     <div class="info-cell"><label>営業時間</label><span>火～日、祝日、祝前日: 17:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）</span></div>
     
-    <div class="info-cell"><label>アクセス・特徴</label><span>地下鉄上前津駅2番出口徒歩2分/万松寺交差点徒歩4分</span></div>
+    <div class="info-cell"><label>アクセス・特徴</label><span>地下鉄上前津駅2番出口より徒歩2分！大須万松寺交差点から徒歩4分で、大須商店街からもすぐです◎</span></div>
   </div>
 
-  <div class="tags"><span class="tag">20〜30名</span><span class="tag">3000〜5000円</span><span class="tag">居酒屋</span></div>
+  <div class="tags"><span class="tag">居酒屋</span><span class="tag">3000〜5000円</span></div>
 
   <div class="links-section">
     <h2>予約・情報を確認</h2>
     <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001052510/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E9%8D%8B%E5%B1%8B%E3%81%BB%E3%81%9F%E3%82%8B%20%E5%A4%A7%E9%A0%88%E6%9C%AC%E5%BA%97%20%E5%A4%A7%E9%A0%88" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E9%8D%8B%E5%B1%8B%E3%81%BB%E3%81%9F%E3%82%8B%20%E5%A4%A7%E9%A0%88%E9%A3%9F%E9%82%B8%20%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5" target="_blank" rel="noopener noreferrer">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/hotaru_osu/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tk" href="https://www.tiktok.com/search?q=%E9%8D%8B%E5%B1%8B%E3%81%BB%E3%81%9F%E3%82%8B%20%E5%A4%A7%E9%A0%88%E6%9C%AC%E5%BA%97%20%E5%A4%A7%E9%A0%88" target="_blank" rel="noopener noreferrer">TikTok</a>
     <a class="link-btn xx" href="https://x.com/search?q=%E9%8D%8B%E5%B1%8B%E3%81%BB%E3%81%9F%E3%82%8B%20%E5%A4%A7%E9%A0%88%E6%9C%AC%E5%BA%97%20%E5%A4%A7%E9%A0%88" target="_blank" rel="noopener noreferrer">X</a>
@@ -201,12 +201,12 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <ul>
       <li><a href="../features/banquet.html">名古屋の宴会・忘年会15選</a></li>
       <li><a href="../features/nagoya-solo-dining.html">名古屋 一人飲み完全ガイド 2026</a></li>
-      <li><a href="../features/osu-food-walk.html">大須 食べ歩きおすすめ10選</a></li>
+      <li><a href="../features/sakae.html">栄グルメ15選</a></li>
     </ul>
   </div>
 
   <div class="back-section">
-    <a href="../?area=%E5%A4%A7%E9%A0%88&genre=%E5%B1%85%E9%85%92%E5%B1%8B">← 大須の居酒屋をもっと見る</a>
+    <a href="../?area=%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5&genre=%E5%B1%85%E9%85%92%E5%B1%8B">← 栄(ミナミ)/矢場町/大須/上前津の居酒屋をもっと見る</a>
   </div>
 </div>
 

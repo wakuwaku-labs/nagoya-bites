@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-08-18T08:57:22.073Z",
+  "generatedAt": "2026-08-18T09:35:41.710Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 730,
-    "pageViews": 1205,
-    "sessions": 853,
-    "avgSessionDuration": 159.1,
-    "bounceRate": 0.347,
+    "activeUsers": 734,
+    "pageViews": 1212,
+    "sessions": 859,
+    "avgSessionDuration": 158.6,
+    "bounceRate": 0.35,
     "pagesPerSession": 1.41
   },
   "channels": {
     "sessions": {
-      "organic": 550,
-      "direct": 204,
+      "organic": 553,
+      "direct": 210,
       "social": 90,
       "referral": 16,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 64,
-      "direct": 23.7,
-      "social": 10.5,
-      "referral": 1.9,
+      "organic": 63.6,
+      "direct": 24.2,
+      "social": 10.4,
+      "referral": 1.8,
       "paid": 0,
       "other": 0
     }
@@ -31,17 +31,17 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 224
+      "sessions": 226
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 202
+      "sessions": 203
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 172
+      "sessions": 174
     },
     {
       "source": "yahoo",
@@ -59,14 +59,14 @@
       "sessions": 22
     },
     {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 16
+    },
+    {
       "source": "openai",
       "medium": "(not set)",
       "sessions": 15
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 12
     },
     {
       "source": "duckduckgo",
@@ -83,12 +83,12 @@
     {
       "path": "/",
       "pageViews": 216,
-      "sessions": 127
+      "sessions": 129
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 111,
-      "sessions": 100
+      "pageViews": 113,
+      "sessions": 102
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -108,7 +108,7 @@
   ],
   "cta": {
     "outboundClicks": 79,
-    "ctaClickRate": 9.3,
+    "ctaClickRate": 9.2,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -177,7 +177,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 4.2,
-    "ctaClickRate_direct": 16.2,
+    "ctaClickRate_direct": 15.7,
     "ctaClickRate_social": 25.6,
     "byPage": [
       {
@@ -449,7 +449,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 730,
+    "value": 734,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
