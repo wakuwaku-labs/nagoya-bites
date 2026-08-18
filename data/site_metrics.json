@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-08-18T12:45:23.739Z",
+  "generatedAt": "2026-08-18T14:54:17.926Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 739,
-    "pageViews": 1227,
-    "sessions": 867,
-    "avgSessionDuration": 157.8,
-    "bounceRate": 0.355,
-    "pagesPerSession": 1.42
+    "activeUsers": 743,
+    "pageViews": 1231,
+    "sessions": 872,
+    "avgSessionDuration": 157,
+    "bounceRate": 0.359,
+    "pagesPerSession": 1.41
   },
   "channels": {
     "sessions": {
-      "organic": 558,
-      "direct": 218,
+      "organic": 560,
+      "direct": 223,
       "social": 90,
       "referral": 17,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 63.2,
-      "direct": 24.7,
-      "social": 10.2,
+      "organic": 62.9,
+      "direct": 25.1,
+      "social": 10.1,
       "referral": 1.9,
       "paid": 0,
       "other": 0
@@ -31,7 +31,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 226
+      "sessions": 227
     },
     {
       "source": "google",
@@ -41,12 +41,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 176
+      "sessions": 177
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 97
+      "sessions": 98
     },
     {
       "source": "chatgpt.com",
@@ -54,13 +54,13 @@
       "sessions": 85
     },
     {
-      "source": "openai",
-      "medium": "organic",
-      "sessions": 22
-    },
-    {
       "source": "(not set)",
       "medium": "(not set)",
+      "sessions": 26
+    },
+    {
+      "source": "openai",
+      "medium": "organic",
       "sessions": 22
     },
     {
@@ -82,18 +82,18 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 220,
-      "sessions": 131
+      "pageViews": 221,
+      "sessions": 132
     },
     {
       "path": "/features/nagoya-solo-dining.html",
       "pageViews": 114,
-      "sessions": 103
+      "sessions": 104
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 104,
-      "sessions": 99
+      "pageViews": 105,
+      "sessions": 100
     },
     {
       "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
@@ -177,7 +177,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 4.1,
-    "ctaClickRate_direct": 15.1,
+    "ctaClickRate_direct": 14.8,
     "ctaClickRate_social": 25.6,
     "byPage": [
       {
@@ -449,7 +449,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 739,
+    "value": 743,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
