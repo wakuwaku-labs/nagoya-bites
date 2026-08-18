@@ -104,7 +104,14 @@ function computeCrossCheckScore(store, placesHistoryEntry) {
   if (mfCount >= 4)      { breakdown.s4_mediaCrossCheck.score = 10; breakdown.s4_mediaCrossCheck.reason = `${mfCount}媒体に掲載（強い第三者検証）`; }
   else if (mfCount >= 2) { breakdown.s4_mediaCrossCheck.score = 8;  breakdown.s4_mediaCrossCheck.reason = `${mfCount}媒体に掲載`; }
   else if (mfCount === 1){ breakdown.s4_mediaCrossCheck.score = 5;  breakdown.s4_mediaCrossCheck.reason = '1媒体に掲載'; }
-  else                   { breakdown.s4_mediaCrossCheck.score = 0;  breakdown.s4_mediaCrossCheck.reason = 'メディア掲載情報なし'; }
+  else {
+    // 2026-08-18: 掲載0件を0点(=減点)ではなく中立3点にする。
+    // 理由: RSS由来の無料メディア発見は元々カバレッジが薄く(実測98.7%が0件)、
+    // プレス実績がない普通の正当な小規模店を構造的に不利にしていた（オーナー承認済み）。
+    // s7 の「データ不足時は中立の半分点」と同じ思想（無いこと自体は不信の証拠ではない）。
+    breakdown.s4_mediaCrossCheck.score = 3;
+    breakdown.s4_mediaCrossCheck.reason = 'メディア掲載情報なし（中立点・多くの正当な店舗も同様）';
+  }
 
   // ─── S5: 営業実態継続（max 5） ───
   if (hpId) { breakdown.s5_operationContinuity.score = 5; breakdown.s5_operationContinuity.reason = 'Hot Pepper 営業継続中'; }
