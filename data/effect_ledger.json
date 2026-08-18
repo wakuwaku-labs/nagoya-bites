@@ -31,6 +31,24 @@
       "target_value": 3,
       "followup": null
     },
+    "SEO-060": {
+      "baseline": {
+        "date": "2026-08-18",
+        "note": "h3 headings added to 63 feature HTML files on 2026-08-17 (acceptance 1-3 done). Baseline recorded day after implementation.",
+        "measurement_window": { "start": "2026-07-20", "end": "2026-08-16", "days": 28 },
+        "metrics": {
+          "discovery_clicks": 13,
+          "discovery_impressions": 322,
+          "discovery_ctr": 0.0404,
+          "discovery_avg_position": 6.9,
+          "discovery_share_pct": 5.4
+        }
+      },
+      "target_metric": "discovery_clicks",
+      "target_direction": "increase",
+      "followup": "2026-09-14",
+      "followup_note": "4週間後に gsc_query_intent.js の discovery クリックで前後比を確認する"
+    },
     "ISSUE-067": {
       "baseline": {
         "date": "2026-07-16",
