@@ -207,7 +207,7 @@ nav.open{right:0;}
 .nav-overlay.open{display:block;}
 }
 /* ── HERO ── */
-.hero{padding:clamp(6rem,9vw,7rem) 2rem clamp(2.4rem,4vw,3.2rem);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;}
+.hero{padding:clamp(1.8rem,3.5vw,2.8rem) 2rem clamp(2.4rem,4vw,3.2rem);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 72% 38%,rgba(201,169,110,.07) 0%,transparent 65%);}
 .hero .eyebrow{font-size:.62rem;letter-spacing:.32em;color:var(--gold);margin-bottom:1.2rem;opacity:0;animation:up .8s .2s forwards;}
 .hero h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.9rem,6vw,5rem);line-height:1.04;letter-spacing:.005em;color:var(--white);opacity:0;animation:up .9s .35s forwards;}
@@ -227,12 +227,6 @@ nav.open{right:0;}
 .hero-proof-item strong{color:#e2c88d;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:.01em;white-space:nowrap;margin:0 .12em;}
 /* 幅が足りず1文字だけ次行に落ちるのを防ぐため、狭い画面では字送りと余白を詰める */
 @media(max-width:480px){.hero-proof{margin-top:1.25rem;gap:.4rem;}.hero-proof-item{font-size:.72rem;letter-spacing:0;padding:.68rem .7rem;gap:.42rem;}.hero-proof-item svg{width:16px;height:16px;padding:3px;}}
-/* ── HERO FEATURE LINK ── SEO-040: 特集ストリップ本体は下にあるが、モバイルではFV外に落ちるため1行だけ前倒し表示 */
-.hero-feature-link{display:inline-flex;align-items:center;gap:.4em;margin-top:1rem;font-size:.78rem;letter-spacing:.02em;color:var(--muted);text-decoration:none;opacity:0;animation:up .9s .64s forwards;}
-.hero-feature-link strong{color:var(--gold);font-weight:600;}
-.hero-feature-link:hover{color:var(--text);}
-.hero-feature-link:hover strong{text-decoration:underline;}
-@media(max-width:480px){.hero-feature-link{font-size:.72rem;margin-top:.85rem;}}
 .search-wrap{margin-top:2.2rem;display:flex;flex-wrap:wrap;gap:.6rem;max-width:460px;opacity:0;animation:up .9s .65s forwards;}
 .search-wrap input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.8rem 1.1rem;font-size:.8rem;border-radius:2px;outline:none;font-family:inherit;transition:border-color .2s;}
 .search-wrap input::placeholder{color:var(--dim);}
@@ -679,7 +673,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justi
 .tg{font-size:.72rem;padding:.42rem .72rem;min-height:38px;}
 header{height:52px;}
 .logo{font-size:1rem;white-space:nowrap;}
-.hero{padding:68px 1.2rem 28px;min-height:auto;}
+.hero{padding:20px 1.2rem 28px;min-height:auto;}
 .hero h1{font-size:clamp(2.4rem,9vw,4rem);}
 .hero .eyebrow{margin-bottom:.9rem;}
 .hero-sub{font-size:.74rem;max-width:100%;margin-top:1.1rem;line-height:1.85;}
@@ -770,6 +764,41 @@ h3.cn{margin:0 0 6px;font-family:'Noto Sans JP',sans-serif;}
 .feature-showcase-all:hover{background:rgba(122,92,16,.08);color:var(--ember-deep);border-color:var(--gold);}
 @media(max-width:900px){.feature-strip-cards{grid-template-columns:repeat(2,1fr);gap:1rem;}}
 @media(max-width:640px){.feature-strip{padding:.9rem 1rem;gap:.7rem;}.feature-strip-cards{grid-template-columns:repeat(2,1fr);gap:.7rem;}.feature-card-body{padding:.75rem .85rem .9rem;}.feature-card-title{font-size:.88rem;}.feature-card-sub{font-size:.58rem;}}
+/* ── FEATURE TOP CAROUSEL ── 今月の特集をヘッダー直下・ファーストビュー最上部に横スクロールで出す。
+   隣のカードを覗かせて「横に続く」ことを見せる（矢印やドットに頼らず指で払える形を優先） */
+.feature-top{padding:calc(56px + 1rem) 0 1.1rem;gap:.85rem;background:var(--bg);}
+.feature-top .feature-strip-label{padding:0 1.5rem;}
+.feature-top .feature-strip-cards{display:flex;grid-template-columns:none;max-width:none;gap:.7rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:1.5rem;padding:.2rem 1.5rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.feature-top .feature-strip-cards::-webkit-scrollbar{display:none;}
+.feature-top .feature-card{position:relative;flex:0 0 min(560px,72vw);scroll-snap-align:start;border-radius:8px;border:none;background:#221f1c;}
+.feature-top .feature-card-thumb{aspect-ratio:16/9;}
+/* 画像の上に文字を重ねるため、下からのグラデーションで可読性を確保する */
+.feature-top .feature-card-body{position:absolute;left:0;right:0;bottom:0;padding:2.4rem 1.1rem .95rem;gap:.25rem;flex:none;background:linear-gradient(to top,rgba(16,14,12,.86) 0%,rgba(16,14,12,.5) 48%,rgba(16,14,12,0) 100%);}
+.feature-top .feature-card-title{font-size:1.15rem;font-weight:600;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.4);}
+.feature-top .feature-card-title::after{display:none;}
+.feature-top .feature-card-sub{color:rgba(255,255,255,.82);letter-spacing:.12em;text-shadow:0 1px 5px rgba(0,0,0,.4);}
+.feature-top .feature-card-cta{display:none;}
+.feature-top-rail{position:relative;}
+/* 送りボタンはマウス環境の発見性のためだけに出す（指で払える端末では邪魔なので出さない） */
+.feature-top-nav{display:none;}
+@media(hover:hover) and (min-width:900px){
+.feature-top-nav{display:flex;align-items:center;justify-content:center;position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:40px;height:40px;border:none;border-radius:50%;background:rgba(255,255,255,.94);color:var(--text);font-size:1.4rem;line-height:1;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.18);transition:background .2s;}
+.feature-top-nav:hover{background:#fff;}
+.feature-top-nav[hidden]{display:none;}
+.feature-top-prev{left:.75rem;}
+.feature-top-next{right:.75rem;}
+}
+.feature-top-foot{display:flex;justify-content:center;}
+.feature-top-all{font-size:.76rem;letter-spacing:.06em;color:var(--gold);text-decoration:none;padding:.3rem .6rem;}
+.feature-top-all:hover{color:var(--ember-deep);text-decoration:underline;}
+@media(max-width:640px){
+.feature-top{padding:calc(52px + .8rem) 0 .85rem;gap:.6rem;}
+.feature-top .feature-strip-label{padding:0 1rem;}
+.feature-top .feature-strip-cards{gap:.55rem;padding:.2rem 1rem;scroll-padding-left:1rem;}
+.feature-top .feature-card{flex:0 0 86vw;}
+.feature-top .feature-card-title{font-size:1rem;}
+.feature-top .feature-card-body{padding:2rem .9rem .8rem;}
+}
 /* ── LATEST JOURNAL (最新の日次ジャーナル3件) ── */
 .latest-journal-section{padding:clamp(1.8rem,3.5vw,2.8rem) 1.5rem;background:var(--bg);border-bottom:1px solid var(--border);}
 .latest-journal-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.2rem;max-width:1100px;margin-left:auto;margin-right:auto;padding-bottom:.9rem;border-bottom:1px solid var(--border);}
@@ -1423,6 +1452,87 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   </nav>
 </header>
 
+<!-- 今月の特集（トップ最上部・横スクロールカルーセル：ファーストビューで特集に触れられる入り口） -->
+<!-- ↓ このストリップは data/featured.json + scripts/build_featured.js が自動生成。手で編集しない。 -->
+<section class="feature-strip feature-top" aria-label="今月の特集">
+  <div class="feature-strip-label"><!-- FEATURED_LABEL_START -->8月の特集<span class="feature-strip-label-note">真夏のグルメ・お盆の家族会食</span><!-- FEATURED_LABEL_END --></div>
+  <div class="feature-top-rail">
+  <button class="feature-top-nav feature-top-prev" id="feature-top-prev" type="button" onclick="scrollFeatureTop(-1)" aria-label="前の特集へ" hidden>‹</button>
+  <button class="feature-top-nav feature-top-next" id="feature-top-next" type="button" onclick="scrollFeatureTop(1)" aria-label="次の特集へ">›</button>
+  <div class="feature-strip-cards">
+    <!-- FEATURED_START -->
+    <a class="feature-card" href="features/nagoya-summer-2026.html">
+      <span class="feature-card-season">真夏</span>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg 600w, https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 夏グルメ10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 夏グルメ10選</div>
+        <div class="feature-card-sub">真夏 · 冷麺・かき氷</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/large-group.html">
+      <span class="feature-card-season">お盆</span>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864_480.jpg 600w, https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 大人数宴会・団体10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 大人数宴会・団体10選</div>
+        <div class="feature-card-sub">お盆 · 帰省の集まりに</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/nagoya-unaju.html">
+      <span class="feature-card-season">夏うなぎ</span>
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg 600w, https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 うなぎ・ひつまぶし10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 うなぎ・ひつまぶし10選</div>
+        <div class="feature-card-sub">夏バテにうなぎ</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/banquet.html">
+      <img class="feature-card-thumb" src="assets/features/banquet.jpg" srcset="assets/features/banquet-600.jpg 600w, assets/features/banquet.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="ビールジョッキで乾杯する宴会・忘年会の華やかなシーン" width="900" height="599" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 宴会・忘年会おすすめ15選</div>
+        <div class="feature-card-sub">名駅・栄・金山 個室完備</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/private-room.html">
+      <img class="feature-card-thumb" src="assets/features/private-room.jpg" srcset="assets/features/private-room-600.jpg 600w, assets/features/private-room.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="温かい灯りに包まれた上質な個室ダイニング" width="900" height="600" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋 個室グルメおすすめ10選</div>
+        <div class="feature-card-sub">接待・女子会・デートに</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/meieki.html">
+      <img class="feature-card-thumb" src="assets/features/meieki.jpg" srcset="assets/features/meieki-600.jpg 600w, assets/features/meieki.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名駅エリアで接待・出張・仕事帰りに集う夜のグループ食事" width="900" height="601" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋・名駅グルメおすすめ15選</div>
+        <div class="feature-card-sub">出張・接待・仕事帰りに</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+    <a class="feature-card" href="features/sakae.html">
+      <img class="feature-card-thumb" src="assets/features/sakae.jpg" srcset="assets/features/sakae-600.jpg 600w, assets/features/sakae.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="栄・錦の繁華街を彩る夜のネオン街並み" width="900" height="1350" loading="lazy" decoding="async">
+      <div class="feature-card-body">
+        <div class="feature-card-title">名古屋・栄・錦グルメおすすめ15選</div>
+        <div class="feature-card-sub">名古屋最大の繁華街</div>
+        <span class="feature-card-cta">特集を読む</span>
+      </div>
+      <div class="feature-card-arrow">→</div>
+    </a>
+<!-- FEATURED_END -->
+  </div>
+  </div><!-- /feature-top-rail -->
+  <div class="feature-top-foot"><a class="feature-top-all" href="features/index.html">特集をすべて見る ›</a></div>
+</section>
+
 <section class="hero" id="main-content">
   <div class="eyebrow">名古屋専門 × 飲食のプロの目利き × シーン別</div>
   <h1>飲食の<em>プロ</em>が、<br>名古屋<em>だけ</em>を<br><span class="fade">深く選んだ。</span></h1>
@@ -1434,11 +1544,6 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
     <span class="hero-proof-item"><svg viewBox="0 0 14 14" aria-hidden="true"><polyline points="2 7.5 5.5 11 12 3.5"/></svg><span class="hpi-t">広告ゼロ・サクラゼロ</span></span>
     <span class="hero-proof-item"><svg viewBox="0 0 14 14" aria-hidden="true"><polyline points="2 7.5 5.5 11 12 3.5"/></svg><span class="hpi-t"><strong>4媒体</strong>を横断表示</span></span>
   </div>
-  <!-- 今月の特集導線（FVブロック内・SEO-040: モバイルではこの下の feature-strip が折返し外になるため、ここに前倒し表示） -->
-  <!-- data/featured.json + scripts/build_featured.js が自動生成。手で編集しない -->
-  <!-- HERO_FEATURE_START -->
-  <a class="hero-feature-link" href="features/nagoya-summer-2026.html">今月の特集: <strong>名古屋 夏グルメ10選</strong>を見る →</a>
-<!-- HERO_FEATURE_END -->
   <div class="search-wrap">
     <label for="si" class="visually-hidden">レストランを検索</label>
     <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
@@ -1573,43 +1678,13 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   </div>
 </section>
 
-<!-- 特集記事バナー（ヒトサラ風：ヒーロー直下の入り口導線） -->
-<!-- ↓ このストリップは data/featured.json + scripts/build_featured.js が自動生成。手で編集しない。 -->
-<section class="feature-strip">
-  <div class="feature-strip-label"><!-- FEATURED_LABEL_START -->8月の特集<span class="feature-strip-label-note">真夏のグルメ・お盆の家族会食</span><!-- FEATURED_LABEL_END --></div>
-  <div class="feature-strip-cards">
-    <!-- FEATURED_START -->
-    <a class="feature-card" href="features/nagoya-summer-2026.html">
-      <span class="feature-card-season">真夏</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614.jpg" srcset="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614.jpg 600w, https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 夏グルメ10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 夏グルメ10選</div>
-        <div class="feature-card-sub">真夏 · 冷麺・かき氷</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-    <a class="feature-card" href="features/large-group.html">
-      <span class="feature-card-season">お盆</span>
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864.jpg" srcset="https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864.jpg 600w, https://imgfp.hotp.jp/IMGH/48/64/P050834864/P050834864.jpg 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="名古屋 大人数宴会・団体10選" width="480" height="600" loading="eager" decoding="async" fetchpriority="high">
-      <div class="feature-card-body">
-        <div class="feature-card-title">名古屋 大人数宴会・団体10選</div>
-        <div class="feature-card-sub">お盆 · 帰省の集まりに</div>
-        <span class="feature-card-cta">特集を読む</span>
-      </div>
-      <div class="feature-card-arrow">→</div>
-    </a>
-<!-- FEATURED_END -->
-  </div>
-</section>
-
 <!-- ジャンル特集ショーケース（写真付き）: data/featured.json の showcase + scripts/build_featured.js が自動生成。手で編集しない。 -->
 <section class="feature-strip feature-showcase">
   <div class="feature-strip-label">ジャンルで特集を探す</div>
   <div class="feature-strip-cards">
     <!-- SHOWCASE_START -->
     <a class="feature-card" href="features/nagoya-hitsumabushi.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422.jpg" srcset="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422.jpg 480w, https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 ひつまぶし完全ガイド" width="480" height="600" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg 480w, https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 ひつまぶし完全ガイド" width="480" height="600" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 ひつまぶし完全ガイド</div>
         <div class="feature-card-sub">名古屋めし · 厳選9店</div>
@@ -1618,7 +1693,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
       <div class="feature-card-arrow">→</div>
     </a>
     <a class="feature-card" href="features/nagoya-italian-guide.html">
-      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/79/11/P047477911/P047477911.jpg" srcset="https://imgfp.hotp.jp/IMGH/79/11/P047477911/P047477911.jpg 480w, https://imgfp.hotp.jp/IMGH/79/11/P047477911/P047477911.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 イタリアン10選" width="480" height="600" loading="lazy" decoding="async">
+      <img class="feature-card-thumb" src="https://imgfp.hotp.jp/IMGH/79/11/P047477911/P047477911_480.jpg" srcset="https://imgfp.hotp.jp/IMGH/79/11/P047477911/P047477911_480.jpg 480w, https://imgfp.hotp.jp/IMGH/79/11/P047477911/P047477911_480.jpg 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="名古屋 イタリアン10選" width="480" height="600" loading="lazy" decoding="async">
       <div class="feature-card-body">
         <div class="feature-card-title">名古屋 イタリアン10選</div>
         <div class="feature-card-sub">イタリアン · デート・接待</div>
@@ -8775,6 +8850,100 @@ document.getElementById('si2').addEventListener('input', function(){
   NB_SEARCH_DEBOUNCE = setTimeout(applyFilters, 140);
 });
 document.getElementById('si2').addEventListener('keydown', function(e){ if(e.key==='Enter') applyFilters(); });
+
+// ── 特集カルーセル（トップ最上部）──
+// タッチ端末は指で払えるが、マウスだと横スクロールできることに気づけないので左右送りを出す。
+// カード列の前後に同じ並びのコピーを1組ずつ置き、端まで来たら「見た目が同じ位置」へ静かに移す。
+// これで最後の特集の次に最初の特集が続き、スワイプでもボタンでも一周して戻ってこられる。
+var NB_FT_LOOP = 0;            // 1周分の幅（0 なら周回しない＝カードが少なく一画面に収まる場合）
+var NB_FT_ORIGIN = null;       // 実体（コピーでない）先頭カード
+var NB_FEATURE_SMOOTH_OK = null;
+
+function nbFeatureRail() { return document.querySelector(".feature-top .feature-strip-cards"); }
+
+function syncFeatureTopNav() {
+  var rail = nbFeatureRail();
+  var prev = document.getElementById("feature-top-prev");
+  var next = document.getElementById("feature-top-next");
+  if (!rail || !prev || !next) return;
+  // 周回するときは端が無いので両方出したままにする（隠すと「もう無い」と誤解される）
+  if (NB_FT_LOOP) { prev.hidden = false; next.hidden = false; return; }
+  var max = rail.scrollWidth - rail.clientWidth;
+  prev.hidden = rail.scrollLeft <= 4;
+  next.hidden = rail.scrollLeft >= max - 4;
+}
+
+// 実体の並びは中央のコピー区間にある。動きが止まってから中央へ引き戻すことで、
+// スクロール中のアニメーションや慣性を邪魔せずに周回させる（見た目は同じなので継ぎ目が見えない）
+function nbFeatureNormalize() {
+  var rail = nbFeatureRail();
+  if (!rail || !NB_FT_LOOP) return;
+  var s = rail.scrollLeft;
+  if (s < NB_FT_LOOP || s >= NB_FT_LOOP * 2) rail.scrollLeft = (s % NB_FT_LOOP) + NB_FT_LOOP;
+}
+
+// scroll-snap + smooth はアニメーションごと無視される環境がある。1回目の送りで実際に動いたかを見て
+// 判定し、動かない環境では以後を即時スクロールに切り替える（「押しても何も起きない」を作らない）
+function scrollFeatureTop(dir) {
+  var rail = nbFeatureRail();
+  if (!rail) return;
+  var card = rail.querySelector(".feature-card");
+  var step = card ? card.offsetWidth + 12 : rail.clientWidth * 0.8;
+  if (NB_FEATURE_SMOOTH_OK === false) {
+    rail.scrollBy({ left: dir * step, behavior: "auto" });
+    nbFeatureNormalize();
+    syncFeatureTopNav();
+    return;
+  }
+  var from = rail.scrollLeft;
+  rail.scrollBy({ left: dir * step, behavior: "smooth" });
+  setTimeout(function () {
+    NB_FEATURE_SMOOTH_OK = rail.scrollLeft !== from;
+    if (!NB_FEATURE_SMOOTH_OK) { rail.scrollBy({ left: dir * step, behavior: "auto" }); nbFeatureNormalize(); }
+    syncFeatureTopNav();
+  }, 60);
+}
+
+(function initFeatureTop() {
+  var rail = nbFeatureRail();
+  if (!rail) return;
+  var originals = [].slice.call(rail.querySelectorAll(".feature-card"));
+  if (originals.length >= 2) {
+    NB_FT_ORIGIN = originals[0];
+    var head = document.createDocumentFragment();
+    var tail = document.createDocumentFragment();
+    originals.forEach(function (node) {
+      [head, tail].forEach(function (frag) {
+        var c = node.cloneNode(true);
+        c.classList.add("feature-card-clone");
+        c.setAttribute("aria-hidden", "true");   // 同じ特集が3回読み上げられないようにする
+        c.setAttribute("tabindex", "-1");        // Tab 移動でコピーを踏ませない
+        var img = c.querySelector("img");
+        if (img) { img.setAttribute("loading", "lazy"); img.removeAttribute("fetchpriority"); }
+        frag.appendChild(c);
+      });
+    });
+    rail.appendChild(tail);
+    rail.insertBefore(head, rail.firstChild);
+  }
+  function measure() {
+    if (!NB_FT_ORIGIN) return;
+    var first = rail.querySelector(".feature-card");
+    var span = NB_FT_ORIGIN.offsetLeft - first.offsetLeft;
+    // 1周分が画面幅より狭いと、周回の余白が足りず端で引っかかる。その場合は周回しない
+    NB_FT_LOOP = span > rail.clientWidth ? span : 0;
+    if (NB_FT_LOOP) rail.scrollLeft = NB_FT_LOOP;
+  }
+  measure();
+  var settle = null;
+  rail.addEventListener("scroll", function () {
+    syncFeatureTopNav();
+    clearTimeout(settle);
+    settle = setTimeout(function () { nbFeatureNormalize(); syncFeatureTopNav(); }, 140);
+  }, { passive: true });
+  window.addEventListener("resize", function () { measure(); syncFeatureTopNav(); });
+  syncFeatureTopNav();
+})();
 
 function toggleFilterPanel() {
   FILTER_PANEL_OPEN = !FILTER_PANEL_OPEN;

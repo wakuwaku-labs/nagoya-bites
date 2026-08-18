@@ -1,6 +1,6 @@
 {
   "_README": "特集の鮮度を『常に』保つための設定。build.js / daily-journal の毎日ビルドが node scripts/build_featured.js を実行し、当日(JST)に応じて index.html の特集ストリップ(FEATURED)・見出し(FEATURED_LABEL)とジャンル特集(SHOWCASE)、features/index.html の季節ブロック(FEATURED_SEASONAL)を再生成する。鮮度の3本柱: (1) monthlyScenes=毎月『その月の飲食店探し需要シーン』(新年会/送別会/土用の丑/忘年会予約など)を複数本ストリップ先頭に立て、見出しも『M月の特集 — シーン一覧』に自動更新(年に依存しないので永久に空にならない)。(2) items の season.recurring=true は MM-DD で毎年判定し期限切れで自動消滅/翌年自動復活。(3) showcase は showcasePinned(名古屋めし定番・常時表示)＋showcase(プール)を ISO週で回転させ、毎週少しずつ入れ替わる。slug は features/ に実在するページのみ。画像/タイトルは items の thumb か features/index.html の該当カードから自動取得し二重管理しない(scene 単位の thumb 上書きも可)。検証: node scripts/build_featured.js --check（穴・壊れ参照を検出）。",
-  "maxSlots": 2,
+  "maxSlots": 8,
   "showcaseCount": 2,
 
   "monthlyScenes": {
