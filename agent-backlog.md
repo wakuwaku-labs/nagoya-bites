@@ -30,6 +30,29 @@
 
 ---
 
+### [ISSUE-097] 「今日の話題店」で実在マッチ済みの店が実写プレースホルダーのまま（fetch_manual_store_photos.js の findplacefromtext が単一候補・別店に化ける）
+
+- **priority**: P2 → **status**: in_progress（コード修正済み・実効果はCI待ち）
+- **detected**: 2026-08-18（オーナー指摘「今日の話題店の3位・4位が実写になっていない。実写優先ルールでは？」）
+- **category**: data-quality
+- **owner**: DataKeeper（Builder が実装）
+- **problem**: トップの「今日の話題店」TOP5のうち2枠（`那古野 しば福や 名駅店`／`THE CUPS SAKAE`）が `/assets/store-figures/_fallback.svg` のプレースホルダーのまま表示されていた。制約9「実写優先」への違反ではなく、`data/photo_policy.json` の店名一致ゲート（別店の写真を掲載しない安全弁）が意図通り不採用にした結果だったが、**その不一致自体が Google Places API の仕様限界による誤検知**だった。
+- **真因**（本日 CI ログで実測・[ISSUE-076] と同系統だが別原因）:
+  1. `findplacefromtext` は候補を1件しか返さない仕様。Google側のあいまい一致が外れると（同一チェーンの別店舗等）リカバリ手段が無かった。実測: `THE CUPS SAKAE` の検索が別店舗「CAFE&PASTA THE CUPS Q」を返し、店名ゲートで正しく不採用（一致度0.43）→ しかし他に候補を試す手段が無くそのまま「実写取得できず」に確定していた
+  2. 検索クエリに読み仮名の括弧書き（例:「那古野 しば福や 名駅店 (なごの しばふくや めいえきてん)」）をそのまま含めており、Google 側の検索精度を落とす要因になっていた
+  3. 副次的に、不一致時のログが常に `一致度0` と固定表示される表示バグがあり（実際の Dice 類似度を破棄していた）、原因切り分けを困難にしていた
+- **やったこと**（`scripts/fetch_manual_store_photos.js`）:
+  1. `findplacefromtext`（候補1件）→ `textsearch`（候補最大5件）に変更。店名ゲート（`namesMatch`）を通る候補が見つかるまで順に試すよう `fetchPhoto` を修正
+  2. 検索クエリ構築時のみ読み仮名の括弧書きを除去する `stripReading()` を追加（店名一致判定側は従来通り括弧内も許容し変更なし）
+  3. 不採用時のログが実際の類似度（`lastSim`）を報告するよう修正（従来は `sim: 0` 固定）
+- **懸念点（オーナーに開示）**: `textsearch` は `findplacefromtext` と異なる Google Places API の課金SKUで、候補を複数試す分リクエスト数も増える。対象は「写真が未取得/失効した店」のみ（全4500店ではない）なので影響は限定的だが、無関係ではない
+- **QAゲート**: `node -c` 構文チェック ✅ / `npm test`（94件）退行なし ✅ / 店名一致ロジック（`namesMatch`）を実際のCIログの誤マッチ例で単体検証 ✅ — ただし `GOOGLE_MAPS_API_KEY` はCI専用（ローカル未配線）のため、実際にこの2店の写真が取得できるかは次回 `build.yml` 実行結果で確認する必要がある
+- **未完（CI待ち）**: 次回 `build.yml` 実行（`fetch_manual_store_photos.js` ステップ）のログで、`那古野 しば福や 名駅店` と `THE CUPS SAKAE` が実写を採用できたか確認し、この issue を close する
+- **files**: `scripts/fetch_manual_store_photos.js`
+- **関連**: [[ISSUE-076]]（写真ゼロの別系統の真因・同じ三重ゲートの設計思想）
+
+---
+
 ### [EDT-003] 日次ジャーナルのヒーロー画像が「図解」既定になっており、AI生成物に見えて閲覧意欲を削いでいる
 
 - **priority**: P2 → **status**: ready
