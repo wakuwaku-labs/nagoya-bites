@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-08-18T18:36:38.356Z",
+  "generatedAt": "2026-08-18T23:39:41.273Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 736,
-    "pageViews": 1224,
-    "sessions": 866,
-    "avgSessionDuration": 154.7,
-    "bounceRate": 0.364,
+    "activeUsers": 738,
+    "pageViews": 1227,
+    "sessions": 869,
+    "avgSessionDuration": 154.2,
+    "bounceRate": 0.366,
     "pagesPerSession": 1.41
   },
   "channels": {
     "sessions": {
       "organic": 557,
-      "direct": 222,
+      "direct": 225,
       "social": 90,
       "referral": 17,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 62.9,
-      "direct": 25.1,
-      "social": 10.2,
+      "organic": 62.7,
+      "direct": 25.3,
+      "social": 10.1,
       "referral": 1.9,
       "paid": 0,
       "other": 0
@@ -41,7 +41,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 174
+      "sessions": 176
     },
     {
       "source": "yahoo",
@@ -56,7 +56,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 28
+      "sessions": 29
     },
     {
       "source": "openai",
@@ -82,18 +82,18 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 218,
-      "sessions": 130
+      "pageViews": 220,
+      "sessions": 132
     },
     {
       "path": "/features/nagoya-solo-dining.html",
       "pageViews": 114,
-      "sessions": 104
+      "sessions": 105
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 103,
-      "sessions": 98
+      "pageViews": 104,
+      "sessions": 99
     },
     {
       "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
@@ -177,7 +177,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 4.1,
-    "ctaClickRate_direct": 14.9,
+    "ctaClickRate_direct": 14.7,
     "ctaClickRate_social": 25.6,
     "byPage": [
       {
@@ -449,7 +449,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 736,
+    "value": 738,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
