@@ -1,0 +1,441 @@
+{
+  "date": "2026-08-18",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅から徒歩12分のフードコート、980円のパスタ専門店は何を捨てたか",
+      "verdict": "PASS",
+      "total": 105,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 7件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 180字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "パイ生地のピッツァはフードコートの何を解決するか——西区の新店を読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 96,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,シーン,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 3件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 155字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "96点（自動公開ライン 100点）。主な不足: search_intent -9 / topicality -5"
+    },
+    {
+      "id": "c3",
+      "title_draft": "名駅のイタリアンがフードコートを監修する時代——西区の新店が示す型",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 96,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "イタリアン",
+          "feature": "features/nagoya-italian-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 145字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「イタリアン」+2"
+        ]
+      },
+      "gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -10 / search_intent -4"
+    },
+    {
+      "id": "c4",
+      "title_draft": "日進の果物洋菓子店、8月11日開店の一皿単価を読む",
+      "verdict": "HOLD",
+      "total": 72,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 20,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 121字 +4",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "金山のマーラータン専門店、トッピング量り売りの単価はどこで決まるか",
+      "verdict": "HOLD",
+      "total": 55,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 215日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,シーン,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 117字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "名駅から徒歩12分のフードコート、980円のパスタ専門店は何を捨てたか",
+      "lead_draft": "イオンモール Nagoya Noritake Garden の3階フードコートに、名駅の人気イタリアン監修のパスタ専門店が8月6日に入った。S 130g が980円、M 190g と L 260g がどちらも1,180円。麺量が70g増えても価格が動かないこの表を見て、業界人が最初に考えるのは原価ではなく、650席を共有する店が何で選ばれ続けるかという話だ。",
+      "angle": "自店の席を持たない650席フードコート業態の価格帯の読み方——M と L を同価格に揃えた意図、S との200円差にスープを含めた設計、通し営業10時間の回転とピーク耐性、そして一人客が浮かないフードコートのシーン適性を業界人視点で分解する",
+      "main_store": {
+        "name": "今日もパスタ日より ボロネ時々カルボ",
+        "id": "",
+        "area": "名古屋市西区（亀島／名駅西）",
+        "genre": "パスタ専門店"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社SORAGROUP 公式リリース・一次情報）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000025.000062841.html",
+          "date": "2026-08-05"
+        },
+        {
+          "label": "イオンモール Nagoya Noritake Garden 公式ニュース（一次情報）",
+          "url": "https://nagoya-noritake-garden.aeonmall.jp/news/ee800da7-cd38-433a-87d0-8b0a45b7c30c",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "名古屋情報通（メニュー・麺量・価格）",
+          "url": "https://jouhou.nagoya/kyoumo-pasta-biyori/",
+          "date": "2026-08-16"
+        },
+        {
+          "label": "STRAIGHT PRESS",
+          "url": "https://straightpress.jp/20260807/1680720",
+          "date": "2026-08-07"
+        },
+        {
+          "label": "食べログ 店舗ページ（営業時間・予算・アクセス）",
+          "url": "https://tabelog.com/aichi/A2301/A230113/23097436/",
+          "date": "2026-08-16"
+        },
+        {
+          "label": "X（@oinagoya の開店言及・話題の証跡）",
+          "url": "https://x.com/oinagoya/status/2085701279884709911",
+          "date": "2026-08-08"
+        },
+        {
+          "label": "店舗公式Instagram（看板カルボロネーゼ）",
+          "url": "https://www.instagram.com/p/DbinJOaI-dZ/",
+          "date": "2026-08-02"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "パイ生地のピッツァはフードコートの何を解決するか——西区の新店を読む",
+      "lead_draft": "8月6日に西区のイオンモール Nagoya Noritake Garden へ入ったパスタ専門店は、パイ生地で焼くオリジナルピッツァを併売している。発酵生地を持たずに済むこの選択は、フードコートという席を持たない業態にとって仕込みと提供時間の両方に効く。業界人の目には、味の話の前にオペレーションの話に見える。",
+      "angle": "パイ生地ピッツァという選択をオペの裏側から読む——発酵管理を外すことで仕込みと提供速度がどう変わるか、フードコートの繁忙時間帯における回転の設計、シェア前提のシーン適性と価格帯の置き方",
+      "main_store": {
+        "name": "今日もパスタ日より ボロネ時々カルボ",
+        "id": "",
+        "area": "名古屋市西区（亀島／名駅西）",
+        "genre": "パスタ専門店"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社SORAGROUP 公式リリース・一次情報）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000025.000062841.html",
+          "date": "2026-08-05"
+        },
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/kyoumo-pasta-biyori/",
+          "date": "2026-08-16"
+        },
+        {
+          "label": "店舗公式Instagram（パイピッツァ）",
+          "url": "https://www.instagram.com/p/Db5BDhCo-hN/",
+          "date": "2026-08-15"
+        },
+        {
+          "label": "STRAIGHT PRESS",
+          "url": "https://straightpress.jp/20260807/1680720",
+          "date": "2026-08-07"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "名駅のイタリアンがフードコートを監修する時代——西区の新店が示す型",
+      "lead_draft": "名駅の人気イタリアンが監修し、東海40店舗のチェーンが運営する。8月6日に西区のイオンモールへ入ったパスタ専門店は、味の設計を個店に、運営を多店舗の型に振り分けた組み合わせだ。個店の名前を借りる商業施設テナントは増えているが、その分業が価格帯と席の設計にどう出るかは、あまり語られていない。",
+      "angle": "監修ブランド × チェーンオペという分業の読み方——監修が価格帯の上限をどこまで引き上げるか、席を持たない業態で回転をどう設計するか、予約不可の業態におけるシーン適性",
+      "main_store": {
+        "name": "今日もパスタ日より ボロネ時々カルボ",
+        "id": "",
+        "area": "名古屋市西区（亀島／名駅西）",
+        "genre": "パスタ専門店"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社SORAGROUP 公式リリース・一次情報）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000025.000062841.html",
+          "date": "2026-08-05"
+        },
+        {
+          "label": "イオンモール Nagoya Noritake Garden 公式ニュース（一次情報）",
+          "url": "https://nagoya-noritake-garden.aeonmall.jp/news/ee800da7-cd38-433a-87d0-8b0a45b7c30c",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/kyoumo-pasta-biyori/",
+          "date": "2026-08-16"
+        },
+        {
+          "label": "食べログ 店舗ページ",
+          "url": "https://tabelog.com/aichi/A2301/A230113/23097436/",
+          "date": "2026-08-16"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "日進の果物洋菓子店、8月11日開店の一皿単価を読む",
+      "lead_draft": "8月11日に日進市へ果物を主役にした洋菓子店が開いた。名古屋市内ではないが、名東・天白から車で通える距離にあり、季節果実を軸にした業態は原価率の読み方が独特だ。仕入れの波をどう価格に載せるかという意味で、市内のカフェにとっても他人事ではない。",
+      "angle": "季節果実業態の価格帯の読み方——仕入れ変動を単価にどう反映するか、テイクアウト中心業態の席と回転、手土産シーンの適性",
+      "main_store": {
+        "name": "くだもの洋菓子店 さんろ",
+        "id": "",
+        "area": "日進市",
+        "genre": "洋菓子・スイーツ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/sanro-fruit/",
+          "date": "2026-08-11"
+        },
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-16"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "金山のマーラータン専門店、トッピング量り売りの単価はどこで決まるか",
+      "lead_draft": "金山駅周辺はここ数年でマーラータン専門店が並ぶ激戦区になった。量り売りという価格の作り方は、客が自分で単価を決められる一方、店側は原価率が読みにくい。名古屋のマーラータン業態が定着した今、業界人の目で価格の作り方を振り返っておきたい。",
+      "angle": "量り売り業態の価格帯の読み方——グラム単価とスープ別料金の判断軸、カウンター中心の席と回転、一人飲み・一人ランチのシーン適性",
+      "main_store": {
+        "name": "麻辣神 金山店",
+        "id": "",
+        "area": "名古屋市熱田区（金山）",
+        "genre": "マーラータン専門店"
+      },
+      "sources": [
+        {
+          "label": "名古屋メシ",
+          "url": "https://nagoya-meshi.com/area2/atsuta/marashin",
+          "date": "2025-09-01"
+        },
+        {
+          "label": "マーラータン情報メディア（名古屋まとめ）",
+          "url": "https://www.mala-tabetai.com/blog/nagoya-malatang-matome",
+          "date": "2026-01-15"
+        }
+      ]
+    }
+  ]
+}
