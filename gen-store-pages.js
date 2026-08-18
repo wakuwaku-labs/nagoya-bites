@@ -14,6 +14,53 @@ const fs    = require('fs');
 const path  = require('path');
 const { titleAreaLabel } = require('./scripts/lib/area_label');
 
+// 信頼度スコアの内訳（integrity-method.html の「02 — 8 Signals」表と同一のラベルを使用。
+// crosscheck.json はホットペッパーID をキーに軸ごとの score/max/reason を持つ）
+const CROSSCHECK = (() => {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'crosscheck.json'), 'utf8'));
+  } catch (e) {
+    return {};
+  }
+})();
+const AXIS_LABELS = {
+  s1_googleRatingVsCount: 'Google★ vs 件数比率',
+  s2_reviewCountAbs:      'レビュー件数絶対値',
+  s3_dataCompleteness:    'データ充実度',
+  s4_mediaCrossCheck:     '他媒体掲載クロスチェック',
+  s5_operationContinuity: '営業実態継続',
+  s6_instagramPresence:   'Instagram 実在シグナル',
+  s7_reviewTimeseries:    'レビュー時系列健全性',
+  s8_reviewDistribution:  '評価分布の自然性'
+};
+const AXIS_ORDER = Object.keys(AXIS_LABELS);
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+// 店舗ページに「なぜこのスコアなのか」を軸ごとの根拠付きで表示する。
+// 自己申告値ではなく crosscheck.json（scripts/lib/cross_check.js が算出した検証可能な事実）
+// をそのまま出す（CLAUDE.md 制約10）。
+function buildTrustBreakdown(cc, ccs) {
+  if (!cc) return '';
+  const rows = AXIS_ORDER.filter(k => cc[k]).map(k => {
+    const axis = cc[k];
+    return `      <div class="trust-axis-row">
+        <span class="trust-axis-name">${escapeHtml(AXIS_LABELS[k])}</span>
+        <span class="trust-axis-score">${axis.score}/${axis.max}点</span>
+        <span class="trust-axis-reason">${escapeHtml(axis.reason || '')}</span>
+      </div>`;
+  }).join('\n');
+  if (!rows) return '';
+  return `
+  <div class="trust-breakdown">
+    <h2>信頼度スコアの内訳（${ccs}/100点）</h2>
+    <p class="trust-breakdown-intro">広告料による順位操作はありません。Google評価・レビュー時系列・他媒体掲載・Instagram実在性など8つの検証可能な軸から算定しています。<a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
+${rows}
+  </div>`;
+}
+
 const CSV_URL     = 'https://docs.google.com/spreadsheets/d/1VUk4bRTPoIc7pHywzIJTwZr9WyUX7ioxlZzbxQHsjCQ/export?format=csv&gid=415662614';
 const BASE_URL    = 'https://nagoya-bites.com';
 const OUT_DIR     = path.join(__dirname, 'stores');
@@ -314,6 +361,8 @@ function renderStorePage(s, slug) {
   const photo    = (s['写真URL'] || '/assets/store-figures/_fallback.svg')
     .replace(/(imgfp\.hotp\.jp\/.+?)_(?:58|100|168|238|320)\.jpg/, '$1_480.jpg');
   const hpId     = s['ホットペッパーID'] || '';
+  const cc       = hpId && CROSSCHECK[hpId] ? CROSSCHECK[hpId] : null;
+  const trustBreakdownHtml = cc ? buildTrustBreakdown(cc, ccs) : '';
   const hpUrl    = hpId ? `https://www.hotpepper.jp/str${hpId}/` : '';
   const igUrl    = s['Instagram'] || '';
   const tbUrl    = s['食べログURL'] || '';
@@ -367,6 +416,15 @@ function renderStorePage(s, slug) {
       'bestRating': '5',
       ...(reviewCount > 0 ? { 'ratingCount': String(reviewCount) } : {})
     };
+  }
+  if (cc) {
+    jsonLd.additionalProperty = [{
+      '@type': 'PropertyValue',
+      'name': '信頼性スコア（第三者要因による独自算定・広告非関与）',
+      'value': ccs,
+      'maxValue': 100,
+      'description': 'Google評価×件数・レビュー時系列健全性・他媒体掲載・Instagram実在性など8軸の検証可能な事実から算定。算定方法: https://nagoya-bites.com/features/integrity-method.html'
+    }];
   }
 
   // BreadcrumbList JSON-LD
@@ -554,6 +612,15 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:#e6002d;color:#fff;border-color:#e6002d;}
 .link-btn.hp:hover{background:#c0001f;border-color:#c0001f;}
+.trust-breakdown{margin:1.6rem 0;padding:1.2rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
+.trust-breakdown h2{font-size:.92rem;margin:0 0 .5rem;}
+.trust-breakdown-intro{font-size:.76rem;line-height:1.7;color:var(--muted);margin-bottom:.9rem;}
+.trust-breakdown-intro a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.3);}
+.trust-axis-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem;padding:.4rem 0;border-top:1px solid var(--border);font-size:.78rem;}
+.trust-axis-row:first-of-type{border-top:none;}
+.trust-axis-name{font-weight:600;min-width:9.5rem;}
+.trust-axis-score{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--gold);white-space:nowrap;}
+.trust-axis-reason{color:var(--muted);flex:1 1 14rem;}
 .related-features{margin:2rem 0 1.8rem;padding:1.3rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
 .related-features h2{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
 .related-features ul{list-style:none;padding:0;margin:0;}
@@ -603,7 +670,7 @@ ${igEmbedHtml}
   </div>
 
   ${tagPills ? `<div class="tags">${tagPills}</div>` : ''}
-
+${trustBreakdownHtml}
   <div class="links-section">
     <h2>予約・情報を確認</h2>
     ${linksHtml}
