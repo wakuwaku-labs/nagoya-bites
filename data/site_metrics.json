@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-08-18T10:09:25.521Z",
+  "generatedAt": "2026-08-18T12:27:20.449Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 735,
-    "pageViews": 1217,
-    "sessions": 862,
-    "avgSessionDuration": 158.3,
-    "bounceRate": 0.353,
-    "pagesPerSession": 1.41
+    "activeUsers": 739,
+    "pageViews": 1227,
+    "sessions": 867,
+    "avgSessionDuration": 157.8,
+    "bounceRate": 0.355,
+    "pagesPerSession": 1.42
   },
   "channels": {
     "sessions": {
-      "organic": 555,
-      "direct": 213,
+      "organic": 558,
+      "direct": 218,
       "social": 90,
-      "referral": 16,
+      "referral": 17,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 63.5,
-      "direct": 24.4,
-      "social": 10.3,
-      "referral": 1.8,
+      "organic": 63.2,
+      "direct": 24.7,
+      "social": 10.2,
+      "referral": 1.9,
       "paid": 0,
       "other": 0
     }
@@ -36,17 +36,17 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 204
+      "sessions": 205
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 174
+      "sessions": 176
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 96
+      "sessions": 97
     },
     {
       "source": "chatgpt.com",
@@ -61,7 +61,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 19
+      "sessions": 22
     },
     {
       "source": "openai",
@@ -71,7 +71,7 @@
     {
       "source": "duckduckgo",
       "medium": "organic",
-      "sessions": 7
+      "sessions": 8
     },
     {
       "source": "copilot.com",
@@ -82,13 +82,13 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 218,
-      "sessions": 130
+      "pageViews": 220,
+      "sessions": 131
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 113,
-      "sessions": 102
+      "pageViews": 114,
+      "sessions": 103
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -108,7 +108,7 @@
   ],
   "cta": {
     "outboundClicks": 79,
-    "ctaClickRate": 9.2,
+    "ctaClickRate": 9.1,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -177,7 +177,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 4.1,
-    "ctaClickRate_direct": 15.5,
+    "ctaClickRate_direct": 15.1,
     "ctaClickRate_social": 25.6,
     "byPage": [
       {
@@ -449,7 +449,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 735,
+    "value": 739,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
