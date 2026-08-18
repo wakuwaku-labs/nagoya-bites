@@ -3178,7 +3178,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-17 | Editor(routine) | SEO-015 実装・デプロイ — journal/_template.html および既存ジャーナル全102本の `@media(max-width:640px)` ブロックに `.art-body p{font-size:1rem;}` と `.art-lead{font-size:.95rem;}` を追加。モバイル13.8px（.86rem）→16px（1rem）相当に引き上げ。3パターン（multi-line/single-line-nav/custom）に対応。QA-1〜5全通過（build.jsのABORTはAPIキー不在の既存制約でCSS変更と無関係） | ✅ commit 520676b |
 | 2026-08-17 | Editor(routine) | SEO-038 done化 — GA4トップページランキング・週次レポートTOP5から高流入ジャーナル記事3本（らふ/リサール/北京）を横断分析。共通パターン（専門業態新店×価格設計分析×ニッチシーン×固有名詞ロングテールKW）を抽出し、agents/editor.md「ロングテール勝ち筋の型」セクションを新設（題材選定への反映・同型テーマ横展開候補も記載）。ISSUE-012（Instagram API連携Phase B）はFacebook App作成が次アクションのためowner=片桐にエスカレーション | ✅ commit 24d9e66 |
 | 2026-08-18 | DataKeeper(routine) | ISSUE-090 実装・デプロイ — scripts/audit_instagram_accounts.js 新設（sameBrand()再利用・制約10準拠）。47アカウント・152店の共有リンク問題を --fix で instagram_resolved.json から158件クリア（instagram=''・cleared_by_audit=true）。build.yml に --check ステップ追加で再発防止。npm test 94件全通過 | ✅ commit 9f7bcd92 |
-| 2026-08-18 | Marketer(routine) | SEO-060 クローズ — acceptance 5（施策前ベースライン記録）: data/effect_ledger.json に discovery clicks=13/impressions=322/CTR=4.04%/avg position=6.9 を記録（計測窓2026-07-20〜08-16）。効果判定は2026-09-14（4週間後）。バグ修正: banquet.html の「よくある質問」H2 重複を解消（FAQ-HTML生成分と元原稿分の二重化）。status: ready → done | ✅ commit pending |
+| 2026-08-18 | Marketer(routine) | SEO-060 クローズ — acceptance 5（施策前ベースライン記録）: data/effect_ledger.json に discovery clicks=13/impressions=322/CTR=4.04%/avg position=6.9 を記録（計測窓2026-07-20〜08-16）。効果判定は2026-09-14（4週間後）。バグ修正: banquet.html の「よくある質問」H2 重複を解消（FAQ-HTML生成分と元原稿分の二重化）。status: ready → done | ✅ commit 07fb1782 |
 
 ---
 
