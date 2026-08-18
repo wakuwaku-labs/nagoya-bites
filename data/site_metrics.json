@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-08-18T07:07:38.644Z",
+  "generatedAt": "2026-08-18T07:39:36.872Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 726,
-    "pageViews": 1172,
-    "sessions": 847,
-    "avgSessionDuration": 164.7,
-    "bounceRate": 0.36,
-    "pagesPerSession": 1.38
+    "activeUsers": 727,
+    "pageViews": 1190,
+    "sessions": 848,
+    "avgSessionDuration": 159,
+    "bounceRate": 0.343,
+    "pagesPerSession": 1.4
   },
   "channels": {
     "sessions": {
-      "organic": 548,
+      "organic": 549,
       "direct": 198,
       "social": 89,
       "referral": 16,
@@ -20,8 +20,8 @@
     },
     "pct": {
       "organic": 64.4,
-      "direct": 23.3,
-      "social": 10.5,
+      "direct": 23.2,
+      "social": 10.4,
       "referral": 1.9,
       "paid": 0,
       "other": 0
@@ -31,7 +31,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 223
+      "sessions": 224
     },
     {
       "source": "google",
@@ -102,7 +102,7 @@
     },
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
-      "pageViews": 55,
+      "pageViews": 56,
       "sessions": 53
     }
   ],
@@ -449,7 +449,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 726,
+    "value": 727,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
