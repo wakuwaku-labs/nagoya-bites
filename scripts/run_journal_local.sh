@@ -67,6 +67,22 @@ STALE_LOCK_SEC="${STALE_LOCK_SEC:-5400}"           # これを超えたロック
 
 log() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" | tee -a "$LOG"; }
 
+# ---- 電源状態の把握（2026-08-18 の教訓）----
+# 08-05/07/08/09/13/16/18 と "Connection closed mid-response" による欠番が繰り返し発生していた。
+# 真因は claude 生成の直後に "Clamshell Sleep"（蓋閉じスリープ）に入り、
+# 数十分ストリーミング中の接続が切断されていたこと（pmset -g log で確認）。
+# caffeinate -s は「システムスリープを防ぐ」が、man 記載の通り AC 電源時のみ有効。
+# バッテリー駆動中の蓋閉じスリープは、ユーザー空間のどんな assertion でも防げない
+# （Apple のバッテリー保護仕様）。つまりこのスクリプトだけでは全ケースを解決できず、
+# 「AC電源に接続されていること」が実質的な前提条件になる。それを不可視のまま
+# にしておくと、また同じ謎の "Connection closed mid-response" で行き詰まるので、
+# 実行のたびに電源状態を記録し、失敗時の HOLD 理由に反映させる（原因つき通知の原則）。
+POWER_SOURCE="AC"
+if command -v pmset >/dev/null 2>&1 && pmset -g batt 2>/dev/null | head -1 | grep -qi "Battery Power"; then
+  POWER_SOURCE="Battery"
+fi
+log "電源状態: ${POWER_SOURCE}$( [ "$POWER_SOURCE" = "Battery" ] && echo '（⚠️ バッテリー駆動中は蓋閉じスリープを防げず、生成中に接続が切れる可能性があります。ACアダプタの接続を推奨）' )"
+
 # macOS には coreutils の timeout が無いため、バックグラウンド実行＋見張りで代替する。
 # 制限時間を超えたら TERM → 5秒後に KILL し、専用の終了コード 124 を返す。
 run_with_timeout() {
@@ -351,7 +367,7 @@ fi
 # 認証切れは本番生成を回す前に判る。先に確かめれば、原因が「認証」だと確定した
 # 状態で即座に HOLD でき、長い生成ログの中に埋もれない。
 log "claude 認証プリフライトを実行（サブスク認証の有効性を確認）"
-PREFLIGHT_OUT=$("$CLAUDE_BIN" --print "ok" --dangerously-skip-permissions 2>&1)
+PREFLIGHT_OUT=$(caffeinate -s -i -d -u "$CLAUDE_BIN" --print "ok" --dangerously-skip-permissions 2>&1)
 PREFLIGHT_RC=$?
 if [ "$PREFLIGHT_RC" != "0" ]; then
   echo "$PREFLIGHT_OUT" >>"$LOG"
@@ -431,8 +447,11 @@ if [ "$SKIP_CLAUDE" = "0" ]; then
   CLAUDE_ATTEMPT=1
   while :; do
     log "claude 生成を開始（サブスク認証・--dangerously-skip-permissions・試行 ${CLAUDE_ATTEMPT}/${MAX_CLAUDE_ATTEMPTS}）"
+    # caffeinate -s -i -d -u で生成中のスリープ（アイドル・蓋閉じ[AC時]・ディスプレイ）を防ぐ。
+    # AC電源でなければ -s は無効化される（man caffeinate）ため、上で記録した電源状態の
+    # 警告と併せて運用すること。
     run_with_timeout "$CLAUDE_TIMEOUT_SEC" \
-      "$CLAUDE_BIN" --print "$PROMPT" --dangerously-skip-permissions
+      caffeinate -s -i -d -u "$CLAUDE_BIN" --print "$PROMPT" --dangerously-skip-permissions
     CLAUDE_RC=$?
     log "claude 終了コード: ${CLAUDE_RC}"
     if [ "$CLAUDE_RC" = "0" ]; then
@@ -496,7 +515,11 @@ if [ "$OK" != "1" ]; then
   RESCUE_MD="docs/daily-posts/${TODAY_JST}.md"
 
   if [ -z "$RESCUE_HTML" ]; then
-    hold "記事HTML（journal/${TODAY_JST}-*.html）が存在しない。生成そのものが失敗しています。"
+    MISSING_REASON="記事HTML（journal/${TODAY_JST}-*.html）が存在しない。生成そのものが失敗しています。"
+    if [ "$POWER_SOURCE" = "Battery" ] && grep -qE "Connection closed mid-response|socket connection was closed|ECONNRESET|stream (was )?(closed|interrupted)" "$LOG"; then
+      MISSING_REASON="${MISSING_REASON} 実行時 Mac はバッテリー駆動でした。バッテリー駆動中は蓋閉じ(clamshell)スリープを caffeinate でも防げないため、生成中に接続が切断された可能性が高いです（2026-08-18 判明）。ACアダプタを接続した状態で再実行してください。"
+    fi
+    hold "$MISSING_REASON"
   fi
   if [ ! -f "$RESCUE_MD" ]; then
     hold "SNS原稿（${RESCUE_MD}）が存在しない。生成が途中で止まっています。記事HTML=${RESCUE_HTML}"
