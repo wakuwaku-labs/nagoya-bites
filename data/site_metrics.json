@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-08-17T18:37:27.094Z",
+  "generatedAt": "2026-08-18T07:07:38.644Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 716,
-    "pageViews": 1146,
-    "sessions": 836,
-    "avgSessionDuration": 162.7,
-    "bounceRate": 0.352,
-    "pagesPerSession": 1.37
+    "activeUsers": 726,
+    "pageViews": 1172,
+    "sessions": 847,
+    "avgSessionDuration": 164.7,
+    "bounceRate": 0.36,
+    "pagesPerSession": 1.38
   },
   "channels": {
     "sessions": {
-      "organic": 536,
-      "direct": 208,
-      "social": 88,
+      "organic": 548,
+      "direct": 198,
+      "social": 89,
       "referral": 16,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 63.2,
-      "direct": 24.5,
-      "social": 10.4,
+      "organic": 64.4,
+      "direct": 23.3,
+      "social": 10.5,
       "referral": 1.9,
       "paid": 0,
       "other": 0
@@ -31,27 +31,27 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 215
+      "sessions": 223
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 198
+      "sessions": 201
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 168
+      "sessions": 169
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 94
+      "sessions": 95
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 83
+      "sessions": 84
     },
     {
       "source": "openai",
@@ -59,14 +59,14 @@
       "sessions": 22
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 20
-    },
-    {
       "source": "openai",
       "medium": "(not set)",
       "sessions": 15
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 9
     },
     {
       "source": "duckduckgo",
@@ -82,18 +82,18 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 203,
-      "sessions": 123
+      "pageViews": 209,
+      "sessions": 124
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 108,
-      "sessions": 96
+      "pageViews": 111,
+      "sessions": 100
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 101,
-      "sessions": 98
+      "pageViews": 104,
+      "sessions": 99
     },
     {
       "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
@@ -103,11 +103,11 @@
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
       "pageViews": 55,
-      "sessions": 52
+      "sessions": 53
     }
   ],
   "cta": {
-    "outboundClicks": 78,
+    "outboundClicks": 79,
     "ctaClickRate": 9.3,
     "byDomain": [
       {
@@ -124,7 +124,7 @@
       },
       {
         "domain": "maps.google.com",
-        "clicks": 5
+        "clicks": 6
       },
       {
         "domain": "www.instagram.com",
@@ -170,15 +170,15 @@
     "note": null,
     "byChannel": {
       "organic": 23,
-      "direct": 32,
+      "direct": 33,
       "social": 23,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 4.3,
-    "ctaClickRate_direct": 15.4,
-    "ctaClickRate_social": 26.1,
+    "ctaClickRate_organic": 4.2,
+    "ctaClickRate_direct": 16.7,
+    "ctaClickRate_social": 25.8,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -186,7 +186,7 @@
       },
       {
         "path": "/",
-        "clicks": 20
+        "clicks": 21
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -269,13 +269,13 @@
       },
       {
         "path": "/",
-        "domain": "tabelog.com",
+        "domain": "maps.google.com",
         "clicks": 5
       },
       {
         "path": "/",
-        "domain": "maps.google.com",
-        "clicks": 4
+        "domain": "tabelog.com",
+        "clicks": 5
       },
       {
         "path": "/",
@@ -449,7 +449,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 716,
+    "value": 726,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

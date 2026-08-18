@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T18:37:30.979Z",
+  "generatedAt": "2026-08-18T07:07:41.455Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -7,21 +7,21 @@
     "ctrFix": [
       {
         "query": "一人飲み",
-        "impressions": 169,
+        "impressions": 158,
         "clicks": 2,
-        "position": 4.8,
-        "ctr": 1.18,
-        "expectedCtr": 6.4,
-        "missedClicks": 8.8
+        "position": 4.7,
+        "ctr": 1.27,
+        "expectedCtr": 6.6,
+        "missedClicks": 8.4
       },
       {
         "query": "やきまる亭",
-        "impressions": 238,
+        "impressions": 236,
         "clicks": 2,
         "position": 7.6,
-        "ctr": 0.84,
+        "ctr": 0.85,
         "expectedCtr": 3.5,
-        "missedClicks": 6.4
+        "missedClicks": 6.3
       },
       {
         "query": "喫茶時々",
@@ -43,21 +43,12 @@
       },
       {
         "query": "イルタッソ",
-        "impressions": 61,
+        "impressions": 57,
         "clicks": 2,
         "position": 6,
-        "ctr": 3.28,
+        "ctr": 3.51,
         "expectedCtr": 5,
-        "missedClicks": 1
-      },
-      {
-        "query": "トロンドン",
-        "impressions": 47,
-        "clicks": 2,
-        "position": 5.4,
-        "ctr": 4.26,
-        "expectedCtr": 5.6,
-        "missedClicks": 0.6
+        "missedClicks": 0.8
       }
     ],
     "rankPush": [
@@ -70,50 +61,33 @@
         "upsideClicks": 9.4
       },
       {
-        "query": "アルマデシュラスコ名駅",
-        "impressions": 230,
-        "clicks": 2,
-        "position": 10.3,
-        "ctr": 0.87,
-        "upsideClicks": 4.4
-      },
-      {
         "query": "アルマデシュラスコ 名駅",
-        "impressions": 114,
+        "impressions": 111,
         "clicks": 2,
         "position": 10.2,
-        "ctr": 1.75,
-        "upsideClicks": 1.2
+        "ctr": 1.8,
+        "upsideClicks": 1.1
       },
       {
         "query": "ナショナルベーカリー",
-        "impressions": 392,
+        "impressions": 377,
         "clicks": 10,
-        "position": 11.4,
-        "ctr": 2.55,
-        "upsideClicks": 1
+        "position": 11.3,
+        "ctr": 2.65,
+        "upsideClicks": 0.6
       }
     ]
   },
   "byPage": {
     "ctrFix": [
       {
-        "page": "/stores/J004613182.html",
-        "impressions": 718,
-        "clicks": 5,
-        "position": 9.8,
-        "ctr": 0.7,
-        "expectedCtr": 2.6,
-        "missedClicks": 13.4
-      },
-      {
         "page": "/stores/J004025075.html",
-        "impressions": 560,
+        "impressions": 550,
         "clicks": 11,
-        "position": 6.8,
-        "ctr": 1.96,
-        "expectedCtr": 4.2,
-        "missedClicks": 12.5
+        "position": 6.7,
+        "ctr": 2,
+        "expectedCtr": 4.3,
+        "missedClicks": 12.6
       },
       {
         "page": "/journal/2026-07-27-owarisanso-kurogi.html",
@@ -125,6 +99,15 @@
         "missedClicks": 9
       },
       {
+        "page": "/stores/J004559348.html",
+        "impressions": 552,
+        "clicks": 9,
+        "position": 8.4,
+        "ctr": 1.63,
+        "expectedCtr": 3,
+        "missedClicks": 7.8
+      },
+      {
         "page": "/stores/J004661023.html",
         "impressions": 439,
         "clicks": 6,
@@ -132,15 +115,6 @@
         "ctr": 1.37,
         "expectedCtr": 3.1,
         "missedClicks": 7.5
-      },
-      {
-        "page": "/stores/J004559348.html",
-        "impressions": 569,
-        "clicks": 10,
-        "position": 8.4,
-        "ctr": 1.76,
-        "expectedCtr": 3,
-        "missedClicks": 7.3
       },
       {
         "page": "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
@@ -155,24 +129,32 @@
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2452,
+        "impressions": 2398,
         "clicks": 10,
-        "position": 24.8,
-        "ctr": 0.41,
-        "upsideClicks": 58.6
+        "position": 24.9,
+        "ctr": 0.42,
+        "upsideClicks": 57.1
+      },
+      {
+        "page": "/stores/store-e5b0bee5bcb5e5b1.html",
+        "impressions": 455,
+        "clicks": 5,
+        "position": 10.8,
+        "ctr": 1.1,
+        "upsideClicks": 7.7
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 6,
-    "queryRankPush": 4,
-    "pageCtrFix": 6,
-    "pageRankPush": 1,
+    "queryCtrFix": 5,
+    "queryRankPush": 3,
+    "pageCtrFix": 5,
+    "pageRankPush": 2,
     "topPageCtrFix": [
-      "/stores/J004613182.html",
       "/stores/J004025075.html",
-      "/journal/2026-07-27-owarisanso-kurogi.html"
+      "/journal/2026-07-27-owarisanso-kurogi.html",
+      "/stores/J004559348.html"
     ]
   }
 }
