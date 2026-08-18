@@ -301,6 +301,7 @@ URLが絶対か / PNGが実在するか。エージェントの自己申告値�
 - **priority**: P1 → **status**: done
 - **detected**: 2026-08-17（ISSUE-089 のリール調査の副産物。オーナー判断で別課題として起票）
 - **resolved**: 2026-08-18
+- **resolved_by**: 9f7bcd92
 - **category**: データ健全性 / 信頼
 - **owner**: DataKeeper
 - **problem**: カードとモーダルの「Instagram」ボタンは `r['Instagram']` を**そのままリンク先に使う**（`instagramSearchUrl()`）。ところが登録アカウントの一部は誤解決しており、**ブランドの異なる複数店に同じアカウントが登録されている**。該当は **48アカウント・154店**（`popular`=25店／`shinjidai_phads`=17店／`minoji.official`=9店 等）。押すと別の店の Instagram に飛ぶ。
@@ -3177,7 +3178,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-16 | Editor(routine) | SEO-008 実装。scripts/add_journal_site_intro.js を新設（冪等・art-body 先頭に NAGOYA BITES 紹介文+index.html リンクを注入）。既存 journal/2026-*.html 全100本に一括適用。run_journal_local.sh Step 5g を追加して今後の記事にも自動適用。acceptance（今後分+流入上位の既存記事に設置・JSON-LD・本文構造維持）充足 | ✅ commit 3ddad7a |
 | 2026-08-17 | Editor(routine) | SEO-015 実装・デプロイ — journal/_template.html および既存ジャーナル全102本の `@media(max-width:640px)` ブロックに `.art-body p{font-size:1rem;}` と `.art-lead{font-size:.95rem;}` を追加。モバイル13.8px（.86rem）→16px（1rem）相当に引き上げ。3パターン（multi-line/single-line-nav/custom）に対応。QA-1〜5全通過（build.jsのABORTはAPIキー不在の既存制約でCSS変更と無関係） | ✅ commit 520676b |
 | 2026-08-17 | Editor(routine) | SEO-038 done化 — GA4トップページランキング・週次レポートTOP5から高流入ジャーナル記事3本（らふ/リサール/北京）を横断分析。共通パターン（専門業態新店×価格設計分析×ニッチシーン×固有名詞ロングテールKW）を抽出し、agents/editor.md「ロングテール勝ち筋の型」セクションを新設（題材選定への反映・同型テーマ横展開候補も記載）。ISSUE-012（Instagram API連携Phase B）はFacebook App作成が次アクションのためowner=片桐にエスカレーション | ✅ commit 24d9e66 |
-| 2026-08-18 | DataKeeper(routine) | ISSUE-090 実装・デプロイ — scripts/audit_instagram_accounts.js 新設（sameBrand()再利用・制約10準拠）。47アカウント・152店の共有リンク問題を --fix で instagram_resolved.json から158件クリア（instagram=''・cleared_by_audit=true）。build.yml に --check ステップ追加で再発防止。npm test 94件全通過 | ✅ commit TBD |
+| 2026-08-18 | DataKeeper(routine) | ISSUE-090 実装・デプロイ — scripts/audit_instagram_accounts.js 新設（sameBrand()再利用・制約10準拠）。47アカウント・152店の共有リンク問題を --fix で instagram_resolved.json から158件クリア（instagram=''・cleared_by_audit=true）。build.yml に --check ステップ追加で再発防止。npm test 94件全通過 | ✅ commit 9f7bcd92 |
 
 ---
 
