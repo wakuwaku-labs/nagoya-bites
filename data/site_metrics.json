@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-08-18T09:35:41.710Z",
+  "generatedAt": "2026-08-18T10:09:25.521Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 734,
-    "pageViews": 1212,
-    "sessions": 859,
-    "avgSessionDuration": 158.6,
-    "bounceRate": 0.35,
+    "activeUsers": 735,
+    "pageViews": 1217,
+    "sessions": 862,
+    "avgSessionDuration": 158.3,
+    "bounceRate": 0.353,
     "pagesPerSession": 1.41
   },
   "channels": {
     "sessions": {
-      "organic": 553,
-      "direct": 210,
+      "organic": 555,
+      "direct": 213,
       "social": 90,
       "referral": 16,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 63.6,
-      "direct": 24.2,
-      "social": 10.4,
+      "organic": 63.5,
+      "direct": 24.4,
+      "social": 10.3,
       "referral": 1.8,
       "paid": 0,
       "other": 0
@@ -36,7 +36,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 203
+      "sessions": 204
     },
     {
       "source": "(direct)",
@@ -46,7 +46,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 95
+      "sessions": 96
     },
     {
       "source": "chatgpt.com",
@@ -61,7 +61,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 16
+      "sessions": 19
     },
     {
       "source": "openai",
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 216,
-      "sessions": 129
+      "pageViews": 218,
+      "sessions": 130
     },
     {
       "path": "/features/nagoya-solo-dining.html",
@@ -176,8 +176,8 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 4.2,
-    "ctaClickRate_direct": 15.7,
+    "ctaClickRate_organic": 4.1,
+    "ctaClickRate_direct": 15.5,
     "ctaClickRate_social": 25.6,
     "byPage": [
       {
@@ -449,7 +449,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 734,
+    "value": 735,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

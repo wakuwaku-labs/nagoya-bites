@@ -10,23 +10,23 @@ function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,p
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NAKASHO ナカショウ 名古屋駅直結（名駅・居酒屋）| NAGOYA BITES</title>
-<meta name="description" content="チラウンジ名古屋駅から徒歩3分の居酒屋。予算3001～4000円。Google★3.3（口コミ144件）。名駅直結クロスコートB1F、2,000円台の手軽さで30～40名、ランチ営業の集約効率。予約・地図・口コミを1ページで確認できます。">
+<title>大衆天ぷらと日本酒 天ぷら酒場 NAKASHO（名古屋駅・居酒屋）| NAGOYA BITES</title>
+<meta name="description" content="名古屋駅直結の地下の居酒屋。予算2001～3000円。Google★3.3（口コミ144件）。飲み放題付コース4000円～ 素材の目利きに自信有り。予約・地図・口コミを1ページで確認できます。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/J001189988.html">
-<meta property="og:title" content="NAKASHO ナカショウ 名古屋駅直結（名駅・居酒屋）| NAGOYA BITES">
-<meta property="og:description" content="チラウンジ名古屋駅から徒歩3分の居酒屋。予算3001～4000円。Google★3.3（口コミ144件）。名駅直結クロスコートB1F、2,000円台の手軽さで30～40名、ランチ営業の集約効率。予約・地図・口コミを1ページで確認できます。">
+<meta property="og:title" content="大衆天ぷらと日本酒 天ぷら酒場 NAKASHO（名古屋駅・居酒屋）| NAGOYA BITES">
+<meta property="og:description" content="名古屋駅直結の地下の居酒屋。予算2001～3000円。Google★3.3（口コミ144件）。飲み放題付コース4000円～ 素材の目利きに自信有り。予約・地図・口コミを1ページで確認できます。">
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="https://nagoya-bites.com/stores/J001189988.html">
 <meta property="og:image" content="https://wsrv.nl/?url=https%3A%2F%2Fnagoya-bites.com%2Fassets%2Fog%2FJ001189988.svg&output=png&w=1200&h=630">
-<meta property="og:image:alt" content="NAKASHO ナカショウ 名古屋駅直結 | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
-<meta name="twitter:image:alt" content="NAKASHO ナカショウ 名古屋駅直結 | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
+<meta property="og:image:alt" content="大衆天ぷらと日本酒 天ぷら酒場 NAKASHO | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
+<meta name="twitter:image:alt" content="大衆天ぷらと日本酒 天ぷら酒場 NAKASHO | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="NAGOYA BITES">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="NAKASHO ナカショウ 名古屋駅直結（名駅・居酒屋）| NAGOYA BITES">
-<meta name="twitter:description" content="チラウンジ名古屋駅から徒歩3分の居酒屋。予算3001～4000円。Google★3.3（口コミ144件）。名駅直結クロスコートB1F、2,000円台の手軽さで30～40名、ランチ営業の集約効率。予約・地図・口コミを1ページで確認できます。">
+<meta name="twitter:title" content="大衆天ぷらと日本酒 天ぷら酒場 NAKASHO（名古屋駅・居酒屋）| NAGOYA BITES">
+<meta name="twitter:description" content="名古屋駅直結の地下の居酒屋。予算2001～3000円。Google★3.3（口コミ144件）。飲み放題付コース4000円～ 素材の目利きに自信有り。予約・地図・口コミを1ページで確認できます。">
 <meta name="twitter:image" content="https://wsrv.nl/?url=https%3A%2F%2Fnagoya-bites.com%2Fassets%2Fog%2FJ001189988.svg&output=png&w=1200&h=630">
 <link rel="manifest" href="../manifest.json">
 <meta name="theme-color" content="#7a5c10">
@@ -37,21 +37,19 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   {
     "@context": "https://schema.org",
     "@type": "Restaurant",
-    "name": "NAKASHO ナカショウ 名古屋駅直結",
+    "name": "大衆天ぷらと日本酒 天ぷら酒場 NAKASHO",
     "servesCuisine": "居酒屋",
     "address": {
       "@type": "PostalAddress",
       "addressRegion": "愛知県",
       "addressCountry": "JP",
-      "addressLocality": "名古屋市",
-      "streetAddress": "愛知県名古屋市中村区名駅４-4-10",
-      "addressArea": "名古屋（名古屋駅/西区/中村区）"
+      "addressLocality": "名古屋駅"
     },
     "image": "https://imgfp.hotp.jp/IMGH/39/42/P032903942/P032903942_480.jpg",
     "url": "https://nagoya-bites.com/stores/J001189988.html",
-    "description": "名駅直結クロスコートB1F、2,000円台の手軽さで30～40名、ランチ営業の集約効率。",
-    "priceRange": "¥¥",
-    "openingHours": "月～日、祝日、祝前日: 11:00～15:00 （料理L.O. 14:00 ドリンクL.O. 14:00）17:00～23:00 （料理L.O. 22:00 ドリンクL.O. 22:00）",
+    "description": "飲み放題付コース4000円～ 素材の目利きに自信有り",
+    "priceRange": "¥",
+    "openingHours": "月～金、日、祝日、祝前日: 11:00～15:00 （料理L.O. 14:00",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.1709",
@@ -67,7 +65,16 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       "ratingValue": "3.3",
       "bestRating": "5",
       "ratingCount": "144"
-    }
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "信頼性スコア（第三者要因による独自算定・広告非関与）",
+        "value": 56,
+        "maxValue": 100,
+        "description": "Google評価×件数・レビュー時系列健全性・他媒体掲載・Instagram実在性など8軸の検証可能な事実から算定。算定方法: https://nagoya-bites.com/features/integrity-method.html"
+      }
+    ]
   },
   {
     "@context": "https://schema.org",
@@ -88,13 +95,13 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       {
         "@type": "ListItem",
         "position": 3,
-        "name": "名古屋（名古屋駅/西区/中村区）エリア",
-        "item": "https://nagoya-bites.com/#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89"
+        "name": "名古屋駅エリア",
+        "item": "https://nagoya-bites.com/#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85"
       },
       {
         "@type": "ListItem",
         "position": 4,
-        "name": "NAKASHO ナカショウ 名古屋駅直結",
+        "name": "大衆天ぷらと日本酒 天ぷら酒場 NAKASHO",
         "item": "https://nagoya-bites.com/stores/J001189988.html"
       }
     ]
@@ -138,6 +145,15 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:#e6002d;color:#fff;border-color:#e6002d;}
 .link-btn.hp:hover{background:#c0001f;border-color:#c0001f;}
+.trust-breakdown{margin:1.6rem 0;padding:1.2rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
+.trust-breakdown h2{font-size:.92rem;margin:0 0 .5rem;}
+.trust-breakdown-intro{font-size:.76rem;line-height:1.7;color:var(--muted);margin-bottom:.9rem;}
+.trust-breakdown-intro a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.3);}
+.trust-axis-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem;padding:.4rem 0;border-top:1px solid var(--border);font-size:.78rem;}
+.trust-axis-row:first-of-type{border-top:none;}
+.trust-axis-name{font-weight:600;min-width:9.5rem;}
+.trust-axis-score{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--gold);white-space:nowrap;}
+.trust-axis-reason{color:var(--muted);flex:1 1 14rem;}
 .related-features{margin:2rem 0 1.8rem;padding:1.3rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
 .related-features h2{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
 .related-features ul{list-style:none;padding:0;margin:0;}
@@ -157,41 +173,85 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F39%2F42%2FP032903942%2FP032903942_480.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F39%2F42%2FP032903942%2FP032903942_238.jpg" alt="NAKASHO ナカショウ 名古屋駅直結" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/39/42/P032903942/P032903942_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
+<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F39%2F42%2FP032903942%2FP032903942_480.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F39%2F42%2FP032903942%2FP032903942_238.jpg" alt="大衆天ぷらと日本酒 天ぷら酒場 NAKASHO" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/39/42/P032903942/P032903942_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <a href="../">NAGOYA BITES</a>
     <span>›</span><a href="../#genre=%E5%B1%85%E9%85%92%E5%B1%8B">居酒屋</a>
-    <span>›</span><a href="../#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89">名古屋（名古屋駅/西区/中村区）</a>
+    <span>›</span><a href="../#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85">名古屋駅</a>
     <span>›</span>
-    <span>NAKASHO ナカショウ 名古屋駅直結</span>
+    <span>大衆天ぷらと日本酒 天ぷら酒場 NAKASHO</span>
   </nav>
 
   <div class="genre-badge">居酒屋</div>
-  <h1>NAKASHO ナカショウ 名古屋駅直結</h1>
+  <h1>大衆天ぷらと日本酒 天ぷら酒場 NAKASHO</h1>
   <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
     <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>3.3</div>
     <span class="ccs-badge" title="スコア信頼度: 複数媒体シグナルによる客観評価">✓ 信頼度 検証中</span>
   </div>
 
-  <div class="point-box"><p>名駅直結クロスコートB1F、2,000円台の手軽さで30～40名、ランチ営業の集約効率。</p></div>
+  <div class="point-box"><p>飲み放題付コース4000円～ 素材の目利きに自信有り</p></div>
 
   <div class="info-grid">
-    <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 名古屋（名古屋駅/西区/中村区）</span></div>
-    <div class="info-cell"><label>住所</label><span>愛知県名古屋市中村区名駅４-4-10</span></div>
-    <div class="info-cell"><label>価格帯</label><span>3001～4000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月～日、祝日、祝前日: 11:00～15:00 （料理L.O. 14:00 ドリンクL.O. 14:00）17:00～23:00 （料理L.O. 22:00 ドリンクL.O. 22:00）</span></div>
+    <div class="info-cell"><label>エリア</label><span>愛知県 名古屋駅</span></div>
     
-    <div class="info-cell"><label>アクセス・特徴</label><span>名古屋駅直結の地下街チカマチラウンジ（名古屋クロスコートタワー B1F）名古屋駅6番出口より徒歩3分</span></div>
+    <div class="info-cell"><label>価格帯</label><span>2001～3000円</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月～金、日、祝日、祝前日: 11:00～15:00 （料理L.O. 14:00</span></div>
+    
+    <div class="info-cell"><label>アクセス・特徴</label><span>名古屋駅直結の地下(名古屋ｸﾛｽｺｰﾄﾀﾜｰ B1F)</span></div>
   </div>
 
-  <div class="tags"><span class="tag">居酒屋</span><span class="tag">3000〜5000円</span><span class="tag">30〜40名</span></div>
+  <div class="tags"><span class="tag">半個室</span><span class="tag">30〜40名</span><span class="tag">3000〜5000円</span><span class="tag">居酒屋</span></div>
 
+  <div class="trust-breakdown">
+    <h2>信頼度スコアの内訳（56/100点）</h2>
+    <p class="trust-breakdown-intro">広告料による順位操作はありません。Google評価・レビュー時系列・他媒体掲載・Instagram実在性など8つの検証可能な軸から算定しています。<a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
+      <div class="trust-axis-row">
+        <span class="trust-axis-name">Google★ vs 件数比率</span>
+        <span class="trust-axis-score">5/15点</span>
+        <span class="trust-axis-reason">★3.3・件数144件（評価は標準）</span>
+      </div>
+      <div class="trust-axis-row">
+        <span class="trust-axis-name">レビュー件数絶対値</span>
+        <span class="trust-axis-score">8/10点</span>
+        <span class="trust-axis-reason">144件（十分なサンプル）</span>
+      </div>
+      <div class="trust-axis-row">
+        <span class="trust-axis-name">データ充実度</span>
+        <span class="trust-axis-score">12/15点</span>
+        <span class="trust-axis-reason">タグ4個・IG解決・推薦文・写真 あり</span>
+      </div>
+      <div class="trust-axis-row">
+        <span class="trust-axis-name">他媒体掲載クロスチェック</span>
+        <span class="trust-axis-score">0/10点</span>
+        <span class="trust-axis-reason">メディア掲載情報なし</span>
+      </div>
+      <div class="trust-axis-row">
+        <span class="trust-axis-name">営業実態継続</span>
+        <span class="trust-axis-score">5/5点</span>
+        <span class="trust-axis-reason">Hot Pepper 営業継続中</span>
+      </div>
+      <div class="trust-axis-row">
+        <span class="trust-axis-name">Instagram 実在シグナル</span>
+        <span class="trust-axis-score">7/10点</span>
+        <span class="trust-axis-reason">公式アカウント あり</span>
+      </div>
+      <div class="trust-axis-row">
+        <span class="trust-axis-name">レビュー時系列健全性</span>
+        <span class="trust-axis-score">11/20点</span>
+        <span class="trust-axis-reason">月次履歴未蓄積（初月） / 最新★が全体より+0.9（サクラ継続投入疑い） / 標準偏差0.98（自然な分布）</span>
+      </div>
+      <div class="trust-axis-row">
+        <span class="trust-axis-name">評価分布の自然性</span>
+        <span class="trust-axis-score">8/15点</span>
+        <span class="trust-axis-reason">★5系3件・★1系0件・中間2件</span>
+      </div>
+  </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
     <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001189988/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/NAKASHO%20%E3%83%8A%E3%82%AB%E3%82%B7%E3%83%A7%E3%82%A6%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E7%9B%B4%E7%B5%90%20%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E5%A4%A7%E8%A1%86%E5%A4%A9%E3%81%B7%E3%82%89%E3%81%A8%E6%97%A5%E6%9C%AC%E9%85%92%20%E5%A4%A9%E3%81%B7%E3%82%89%E9%85%92%E5%A0%B4%20NAKASHO%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85" target="_blank" rel="noopener noreferrer">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/nakasho.sakaba.tenpura/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tk" href="https://www.tiktok.com/search?q=%E5%A4%A7%E8%A1%86%E5%A4%A9%E3%81%B7%E3%82%89%E3%81%A8%E6%97%A5%E6%9C%AC%E9%85%92%20%E5%A4%A9%E3%81%B7%E3%82%89%E9%85%92%E5%A0%B4%20NAKASHO%20%E5%90%8D%E5%8F%A4%E5%B1%8B" target="_blank" rel="noopener noreferrer">TikTok</a>
     <a class="link-btn xx" href="https://x.com/search?q=%E5%A4%A7%E8%A1%86%E5%A4%A9%E3%81%B7%E3%82%89%E3%81%A8%E6%97%A5%E6%9C%AC%E9%85%92%20%E5%A4%A9%E3%81%B7%E3%82%89%E9%85%92%E5%A0%B4%20NAKASHO%20%E5%90%8D%E5%8F%A4%E5%B1%8B" target="_blank" rel="noopener noreferrer">X</a>
@@ -201,14 +261,14 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <div class="related-features">
     <h2>この店舗が登場する特集</h2>
     <ul>
+      <li><a href="../features/private-room.html">個室のある名古屋グルメ10選</a></li>
       <li><a href="../features/banquet.html">名古屋の宴会・忘年会15選</a></li>
       <li><a href="../features/nagoya-solo-dining.html">名古屋 一人飲み完全ガイド 2026</a></li>
-      <li><a href="../features/meieki.html">名駅グルメ15選</a></li>
     </ul>
   </div>
 
   <div class="back-section">
-    <a href="../?area=%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89&genre=%E5%B1%85%E9%85%92%E5%B1%8B">← 名古屋（名古屋駅/西区/中村区）の居酒屋をもっと見る</a>
+    <a href="../?area=%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85&genre=%E5%B1%85%E9%85%92%E5%B1%8B">← 名古屋駅の居酒屋をもっと見る</a>
   </div>
 </div>
 
