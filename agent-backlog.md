@@ -34,6 +34,26 @@
 - **files**: `.gas-deploy/Code.js`
 - **関連**: [[SEO-047]]（同じ症状に**母数ゲート**で対処。ただし本件は n=30〜35 でゲート（20件）を通過してしまい、かつ系統誤差なので母数を増やしても解消しない＝**別原因**。両方必要） / [[SEO-044]]（30日ローリング側から「bounceRate はむしろ改善・単日100%は小サンプル」と診断したが、**なぜLINE側だけが乖離するのか**の生成経路までは特定していなかった。本チケットがその欠けていた半分を埋める） / [[SEO-057]]（レポート生成側が入力を歪める同型クラス）
 
+---
+
+### [ISSUE-098] Build & Deploy CIが中断/擬似失敗を繰り返し、データ更新が失われる（concurrency設定＋OGPチェックのmtime非決定性）
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-08-18（オーナー指摘「他の店舗も表示されてないものはしてほしい」対応中、直近のCI実行が軒並み `cancelled`/`failure` になっていることに気づき深掘り依頼）
+- **category**: インフラ・自動化
+- **owner**: Builder
+- **problem**: 直近の `Build & Deploy` 実行を確認すると、短時間（09:57〜10:08の約10分間）に3回連続で中断/失敗していた。原因は2系統あり、性質が異なるので分けて対処した。
+- **真因1（実害あり）**: `.github/workflows/build.yml` の `concurrency: cancel-in-progress: true`。このジョブは単なるデプロイではなく、GA4/GSC/Places写真等を取得して main へ直接 commit する**データパイプラインを兼ねる**。短時間に複数PRがマージされると実行中のジョブが強制中断され、**その回に取得した結果（例: 写真マッチング検証）が一切保存されずに失われる**（実測: [ISSUE-097] の textsearch 修正の初回検証がこれで2回連続失われた）。
+  - **是正**: `cancel-in-progress: false` に変更。各実行は開始時に main の最新HEADを checkout するため、キューイングしても古い内容をデプロイする心配は無い。GitHub Actions の標準動作により、待機中に複数pushが来ても最新1件だけがキューされる（実行中ジョブは中断されず、無限にジョブが積み上がることもない）
+- **真因2（実害は無いが恒常的な誤警報）**: `scripts/lib/og_figure_png.js` の `isPngFresh()` が PNG/SVG の **mtime比較**を合否判定に含んでいた。`actions/checkout` はコミット時刻を保持せず checkout 時刻をファイルmtimeにするため、SVGとPNGの新旧関係は**チェックアウト時の書き込み順でほぼランダムに決まる**。結果、CIの `render_og_figures.js --check` が実行のたびに無関係な別ファイルを「未生成/古い」と誤検知していた（実測ログ: ある回は2026-04-30/2026-08-07/nagoya-steakの3件、別の回は2026-08-12の1件のみ、と**日替わりで違うファイルが引っかかる**＝内容ではなく checkout の巡り合わせで判定が変わっている動かぬ証拠）。CLAUDE.md の当該箇所自体が「成功判定はPNGのIHDR実寸のみ」と明記しており、mtime比較はその設計意図とも矛盾していた
+  - **是正**: CI専用の判定関数 `isPngDimensionsOk()`（IHDR実寸のみ・mtime不問）を新設し、`render_og_figures.js --check` はこちらを使うよう変更。ローカルでの生成スキップ判定（`isPngFresh`、mtimeを使うのが妥当な文脈）は変更していない
+  - **再現検証**: SVGのmtimeだけ touch して人為的に checkout jitter を再現 → 旧ロジック(`isPngFresh`)は false（誤検知）、新ロジック(`isPngDimensionsOk`)は true（正しく合格）を確認
+- **QAゲート**: `node -c` 構文チェック3ファイル ✅ / `npm test`（94件）退行なし ✅ / YAML構文検証（pyyaml） ✅ / `render_og_figures.js --check` 実行 ✅ / mtime非決定性の再現・修正確認 ✅
+- **files**: `.github/workflows/build.yml`, `scripts/lib/og_figure_png.js`, `scripts/render_og_figures.js`
+- **関連**: [[ISSUE-097]]（このCI不安定性の影響で検証が2回流れた）
+
+---
+
 ### [ISSUE-096] 日次ジャーナルが "Connection closed mid-response" で繰り返し欠番（clamshell sleep が真因）
 
 - **priority**: P0 → **status**: in_progress（コード対策は完了。恒久解消には運用側の対応が要る）

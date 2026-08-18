@@ -13,7 +13,16 @@ permissions:
 
 concurrency:
   group: build-deploy
-  cancel-in-progress: true
+  # このジョブは実行中に GA4/GSC/Places写真等を取得して main へ直接 commit & push する
+  # （デプロイ専用ではなくデータパイプラインを兼ねる）。cancel-in-progress:true だと、
+  # 短時間に複数PRがマージされた際に実行中のジョブが中断され、その回の取得結果が
+  # 一切保存されないまま捨てられる（2026-08-18実測: 09:57-10:08の間に3連続でこれが発生し、
+  # 写真取得の検証結果が2回とも失われた）。各実行は開始時に main の最新HEADを
+  # checkout するため、キューイングしても古い内容をデプロイしてしまう心配は無い。
+  # false にすると: 実行中のジョブは中断されず完走し、待機中に来た複数pushは
+  # 最新1件だけがキューされる（GitHub Actions の標準動作）＝ロスト無く、かつ
+  # 無限にジョブが積み上がることもない。
+  cancel-in-progress: false
 
 jobs:
   build:
