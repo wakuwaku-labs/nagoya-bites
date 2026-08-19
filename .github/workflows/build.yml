@@ -222,6 +222,13 @@ jobs:
         run: node scripts/audit_ig_post_relevance.js --check
         continue-on-error: true
 
+      - name: Instagram ボタンのリンク先が異ブランド共有でないかを監査（ISSUE-090）
+        # 1つのアカウントが複数ブランドにまたがって登録されていると、「Instagram」ボタンを
+        # 押すと別の店の IG に飛ぶ誤リンクになる。判定根拠は instagram_resolved.json の
+        # アカウント名と店名から求めるブランド判定のみ＝第三者が検算できる事実だけ（制約10）。
+        # 違反店は instagram を空にして instagramSearchUrl() の店名検索フォールバックへ誘導する。
+        run: node scripts/audit_instagram_links.js --check
+
       - name: ジャーナルのヒーロー写真が記事と対応しているかを監査（2026-08-17 の事故）
         # 2026-08-17、記事の主役2店が新店で写真を持たなかったため、記事に一行触れただけの
         # 別店の販促バナー（ドリンク94円）が記事の顔になって公開された。当時の validator は

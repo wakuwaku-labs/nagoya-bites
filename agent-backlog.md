@@ -369,7 +369,7 @@ URLが絶対か / PNGが実在するか。エージェントの自己申告値�
 
 ### [ISSUE-090] カードの「Instagram」ボタンが別の店のアカウントに飛ぶ（154店）
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done → **resolved**: 2026-08-19
 - **detected**: 2026-08-17（ISSUE-089 のリール調査の副産物。オーナー判断で別課題として起票）
 - **category**: データ健全性 / 信頼
 - **owner**: DataKeeper
