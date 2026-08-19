@@ -389,9 +389,16 @@ URLが絶対か / PNGが実在するか。エージェントの自己申告値�
   2. 抽出結果を `gsc_query_intent.js` で分類し、**navigational（他店名など）が大半なら Strategic Skip と判定**して「追わない」を明示的にログへ残し、本課題はクローズする（表示回数が減ること自体は害ではない）
   3. discovery 系で 11〜30位に滞留しているクエリが見つかった場合のみ、rank_push 施策（内部リンク・本文拡充）の対象として SEO-060 に統合する
 - **備考**: 「最大の表示消費源だから直す」という順序で入らないこと。**表示回数は成果指標ではない**（消えた表示回数の実効CTRは 0.57% ＝ ほぼ店名検索だった）。診断で Strategic Skip と出たら、直さないのが正解
-### [ISSUE-092] 店舗カードの Instagram 埋め込みに、店と無関係な投稿が出ている
+### [ISSUE-092] 店舗カードの Instagram 埋め込みに、店と無関係な投稿が出ている ✅
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-08-19
+- **resolved_by**: commit d66ccad84（実装・デプロイ済み。本日 acceptance を再検証し done へ更新）
+- **acceptance 検証結果（2026-08-19・/solve-next）**:
+  - `node scripts/audit_ig_post_relevance.js --check` → exit 0（出荷済み1,493件・基準違反0件）
+  - `npm test` → 94/94 通過
+  - 報告事例「焼肉やっちゃん 名駅西口店」の苺投稿 → `data/stores.json` で `Instagram投稿URL` が空欄になっていることを確認（該当店の Instagram 埋め込みが除去済み）
+  - 削除済み投稿の掲載除外 → 監査の `REJECT_REMOVED` カテゴリ（251件）で機械的に検出・除外されていることを確認
 - **detected**: 2026-08-17（オーナー報告「消費者から見て全く関係のない投稿が埋め込まれている。内装・料理・外観など店の雰囲気がわかる投稿だけを選定して」）
 - **category**: UX / データ健全性
 - **owner**: Builder
@@ -3346,6 +3353,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-17 | Editor(routine) | SEO-015 実装・デプロイ — journal/_template.html および既存ジャーナル全102本の `@media(max-width:640px)` ブロックに `.art-body p{font-size:1rem;}` と `.art-lead{font-size:.95rem;}` を追加。モバイル13.8px（.86rem）→16px（1rem）相当に引き上げ。3パターン（multi-line/single-line-nav/custom）に対応。QA-1〜5全通過（build.jsのABORTはAPIキー不在の既存制約でCSS変更と無関係） | ✅ commit 520676b |
 | 2026-08-17 | Editor(routine) | SEO-038 done化 — GA4トップページランキング・週次レポートTOP5から高流入ジャーナル記事3本（らふ/リサール/北京）を横断分析。共通パターン（専門業態新店×価格設計分析×ニッチシーン×固有名詞ロングテールKW）を抽出し、agents/editor.md「ロングテール勝ち筋の型」セクションを新設（題材選定への反映・同型テーマ横展開候補も記載）。ISSUE-012（Instagram API連携Phase B）はFacebook App作成が次アクションのためowner=片桐にエスカレーション | ✅ commit 24d9e66 |
 | 2026-08-19 | Marketer(/solve-next) | SEO-062 実装・デプロイ — `.gas-deploy/Code.js` の直帰率/平均滞在がpagePath次元つきクエリのTOTAL行から算出され97%等の誤値を出していたバグを修正。ディメンションなしの`totalsRequest`を新設し`fetch_ga4_views.js`と同形のクエリに分離、`parseTotals()`の読み取り元を`response.rows[0]`に変更。実デプロイ（GASエディタへの反映）はオーナー操作待ち | ✅ commit eb62b63f6 |
+| 2026-08-19 | Builder(/solve-next) | ISSUE-092 done化 — 実装済み(commit d66ccad84)のacceptanceを再検証: `audit_ig_post_relevance.js --check` exit0（違反0件）／`npm test` 94/94／報告事例（焼肉やっちゃんの苺投稿）が実際に除去済み／削除済み投稿はREJECT_REMOVEDで機械除外されていることを確認 | ✅ 検証のみ・新規commitなし |
 
 ---
 
