@@ -3366,6 +3366,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-17 | Editor(routine) | SEO-038 done化 — GA4トップページランキング・週次レポートTOP5から高流入ジャーナル記事3本（らふ/リサール/北京）を横断分析。共通パターン（専門業態新店×価格設計分析×ニッチシーン×固有名詞ロングテールKW）を抽出し、agents/editor.md「ロングテール勝ち筋の型」セクションを新設（題材選定への反映・同型テーマ横展開候補も記載）。ISSUE-012（Instagram API連携Phase B）はFacebook App作成が次アクションのためowner=片桐にエスカレーション | ✅ commit 24d9e66 |
 | 2026-08-19 | Marketer(/solve-next) | SEO-062 実装・デプロイ — `.gas-deploy/Code.js` の直帰率/平均滞在がpagePath次元つきクエリのTOTAL行から算出され97%等の誤値を出していたバグを修正。ディメンションなしの`totalsRequest`を新設し`fetch_ga4_views.js`と同形のクエリに分離、`parseTotals()`の読み取り元を`response.rows[0]`に変更。実デプロイ（GASエディタへの反映）はオーナー操作待ち | ✅ commit eb62b63f6 |
 | 2026-08-19 | Builder(/solve-next) | ISSUE-092 done化 — 実装済み(commit d66ccad84)のacceptanceを再検証: `audit_ig_post_relevance.js --check` exit0（違反0件）／`npm test` 94/94／報告事例（焼肉やっちゃんの苺投稿）が実際に除去済み／削除済み投稿はREJECT_REMOVEDで機械除外されていることを確認 | ✅ 検証のみ・新規commitなし |
+| 2026-08-19 | Builder(/solve-next) | FB-001 実装・デプロイ — 検索バー(#si/#si2)にクリア（×）ボタンを追加。`.search-field`ラッパー+`clearSearchQuery()`で両入力を同時クリアしフィルタ再実行。打鍵時・URLハッシュ復元時とも表示同期を確認。ブラウザ実機検証（デスクトップ/モバイル375px）・qa_gate QA-2/3/4 pass・npm test 94/94 | ✅ commit 306e31456 |
 
 ---
 
