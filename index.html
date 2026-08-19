@@ -231,6 +231,14 @@ nav.open{right:0;}
 .search-wrap input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.8rem 1.1rem;font-size:.8rem;border-radius:2px;outline:none;font-family:inherit;transition:border-color .2s;}
 .search-wrap input::placeholder{color:var(--dim);}
 .search-wrap input:focus{border-color:var(--gold);}
+/* 検索入力のクリア（×）ボタン（FB-001）。#si / #si2 を .search-field で包み、
+   ボタンを入力欄の右端に重ねて配置する。入力に値がある時だけ表示（has-value）。 */
+.search-field{position:relative;flex:1;display:flex;align-items:center;min-width:0;}
+.search-field input{width:100%;}
+.search-wrap .search-field input{padding-right:2.3rem;}
+.search-clear-btn{position:absolute;right:.35rem;top:50%;transform:translateY(-50%);width:1.7rem;height:1.7rem;display:none;align-items:center;justify-content:center;background:none;border:none;color:var(--dim);font-size:1.15rem;line-height:1;cursor:pointer;border-radius:50%;padding:0;}
+.search-clear-btn:hover{color:var(--text);background:var(--border);}
+.search-field.has-value .search-clear-btn{display:flex;}
 .search-wrap button{background:var(--gold);border:none;color:var(--bg);padding:.8rem 1.4rem;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;cursor:pointer;font-weight:500;transition:background .2s;}
 .search-wrap button:hover{background:var(--gold2);}
 /* ── 常時表示のシーン/エリア導線（直帰率対策・MEO-001） ── */
@@ -248,6 +256,7 @@ nav.open{right:0;}
 .sticky-search input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.6rem .9rem;font-size:.82rem;border-radius:2px;outline:none;font-family:inherit;transition:border-color .2s;min-height:40px;}
 .sticky-search input:focus{border-color:var(--gold);}
 .sticky-search input::placeholder{color:var(--dim);}
+.sticky-search .search-field input{padding-right:2.2rem;}
 .sticky-search-btn{background:var(--gold);border:none;color:var(--bg);padding:.6rem 1rem;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;border-radius:2px;cursor:pointer;font-weight:500;transition:background .2s;white-space:nowrap;min-height:40px;}
 .sticky-search-btn:hover{background:var(--gold2);}
 /* ── ACTIVE FILTER CHIPS ── */
@@ -1546,7 +1555,10 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   </div>
   <div class="search-wrap">
     <label for="si" class="visually-hidden">レストランを検索</label>
-    <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+    <span class="search-field">
+      <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+      <button type="button" class="search-clear-btn" aria-label="検索語をクリア" onclick="clearSearchQuery()">×</button>
+    </span>
     <button onclick="doSearch()" aria-label="検索">Search</button>
     <div class="search-suggest" id="hero-suggest">
       <span class="suggest-label">人気:</span>
@@ -1795,7 +1807,10 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <!-- スティッキー検索バー + アクティブフィルターチップ -->
 <div class="sticky-search" id="sticky-search">
   <label for="si2" class="visually-hidden">レストランを検索（追従バー）</label>
-  <input id="si2" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+  <span class="search-field">
+    <input id="si2" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+    <button type="button" class="search-clear-btn" aria-label="検索語をクリア" onclick="clearSearchQuery()">×</button>
+  </span>
   <button class="geo-btn" id="geo-btn" onclick="geoSearch()" aria-label="現在地から探す"><span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="2.8"/></svg></span>現在地</button>
   <button class="sticky-search-btn" onclick="doSearch()" aria-label="検索">検索</button>
 </div>
@@ -8864,16 +8879,29 @@ function selectTag(tag) {
   el && el.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 function doSearch(){ var q=document.getElementById('si2').value||document.getElementById('si').value||''; if(q)trackEvent('search',{search_term:q}); applyFilters(); }
+// 検索入力のクリア（×）ボタン（FB-001）。入力の有無で .search-field に has-value を付け外しする。
+function nbUpdateSearchClearVisibility(el) {
+  var field = el && el.closest ? el.closest('.search-field') : null;
+  if (field) field.classList.toggle('has-value', !!(el && el.value.trim()));
+}
+function clearSearchQuery() {
+  var si = document.getElementById('si'); if (si) si.value = '';
+  var si2 = document.getElementById('si2'); if (si2) si2.value = '';
+  applyFilters();
+  if (si) si.focus();
+}
 document.getElementById('si').addEventListener('keydown', function(e){ if(e.key==='Enter') applyFilters(); });
 document.getElementById('si').addEventListener('input', function(){
   var si2 = document.getElementById('si2');
   if (si2 && document.activeElement !== si2) si2.value = this.value;
+  nbUpdateSearchClearVisibility(this);
 });
 // セマンティック検索は全件スコアリングするため、打鍵ごとの再計算はデバウンスする
 var NB_SEARCH_DEBOUNCE = null;
 document.getElementById('si2').addEventListener('input', function(){
   var si = document.getElementById('si');
   if (si) si.value = this.value;
+  nbUpdateSearchClearVisibility(this);
   if (NB_SEARCH_DEBOUNCE) clearTimeout(NB_SEARCH_DEBOUNCE);
   NB_SEARCH_DEBOUNCE = setTimeout(applyFilters, 140);
 });
@@ -9059,6 +9087,10 @@ function updateFilterUI() {
   var genre = genreEl ? (genreEl.dataset.f || 'All') : 'All';
   var cap = capEl ? capEl.value.trim() : '';
   var q = siEl ? siEl.value.trim() : '';
+  // 検索クリアボタンの表示状態をここでも同期する（URLハッシュ復元・suggestSearch等の
+  // プログラム的な値変更は input イベントを発火しないため、input側のリスナーだけでは追えない）
+  nbUpdateSearchClearVisibility(siEl);
+  nbUpdateSearchClearVisibility(document.getElementById('si2'));
   if (pref !== '全国' && pref !== 'all') count++;
   if (typeof ACTIVE_WARD !== 'undefined' && ACTIVE_WARD && ACTIVE_WARD !== 'all') count++;
   if (genre !== 'All' && genre !== 'all') count++;
