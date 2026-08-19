@@ -936,9 +936,29 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   4. 一次情報で確認できない、または情報が食い違う場合は **status を wont_fix にしてデータを変更せず**、その旨をオーナーに報告する（虚偽・第三者による妨害目的の変更依頼で信頼を毀損しないための防波堤）
 - **結果（2026-08-13 検証）**: **wont_fix** — 依頼された「焼き鳥と海鮮の個室居酒屋 手羽八 金山店」は、HotPepper（J004403667）・ぐるなび・owst.jp（公式サイト）の3独立ソースいずれにも確認できなかった。いずれも「手羽八 てばはち 金山駅店」または「完全個室 名古屋 手羽先 焼鳥 飲み放題 手羽八 ―てばはちー 金山駅店」を維持している。acceptance条件4に従いデータを変更せず終了。依頼者が店舗関係者で店名変更済みの場合は、ホットペッパー掲載情報を正式に更新してから再依頼を受け付ける
 
-### [SEO-052] ジャーナル記事の「関連リンクのクリック」と「スクロール到達」を計測し、毎日届く回遊アドバイスを検証可能にする
+### [SEO-052] ジャーナル記事の「関連リンクのクリック」と「スクロール到達」を計測し、毎日届く回遊アドバイスを検証可能にする ✅
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（計測開始のみ。acceptance 6 の「2週間後に実数で採否判定」は今回のスコープ外・次回参照用に残す）
+- **resolved**: 2026-08-19
+- **resolved_by**: /solve-next（Builder）
+- **実施内容**:
+  1. `journal/_template.html` の `</body>` 直前に計測用 `<script class="nb-engagement-tracking">` を追加。
+     `.related-link` クリックで `internal_link_click`（`link_url`/`link_text`/`block:'related'`）、
+     スクロール到達で `scroll_depth`（`percent`: 25/50/75/100、各1回のみ・デバウンス200ms）を送信。
+     `generate_daily_draft.js` はこのテンプレートから新規記事を生成するため、新規公開記事には自動で入る
+  2. `scripts/add_journal_engagement_tracking.js` を新設（`add_journal_site_intro.js` と同じ冪等パターン:
+     `class="nb-engagement-tracking"` の有無でスキップ判定・modified/skipped/errored をログ出力）。
+     既存ジャーナル105ファイル（`journal/index.html` 含む）に一括適用: **modified=105 skipped=0 errored=0**
+  3. 冪等性を確認（同ファイルへの再実行で `SKIP (already present)`）
+- **検証**: 全106ファイルの追加スクリプトを `new Function()` で構文チェック（0件エラー）。ブラウザ実機で
+  `.related-link` クリック時に `gtag('event','internal_link_click',{...})` が実際に発火することを確認
+  （`window.gtag` を差し替えて捕捉）。スクロール閾値判定ロジック（25/50/75/100%・重複発火防止）は
+  Node上で境界値（24%/25%/60%/76%/100%/再到達）を与えて単体検証し意図通りであることを確認
+  （ブラウザのプログラム的スクロールがサンドボックス環境の制約で window.scrollY に反映されなかったため、
+  実スクロールでの目視確認は次回実データ確認時に譲る）
+- **次の手**: 2週間分のデータが貯まったら `internal_link_click` / `scroll_depth` の実数を確認し、
+  acceptance 6 の「回遊系アドバイスの採否をその実数で判定する」運用に接続する
+- **files**: `journal/_template.html`, `journal/*.html`（105ファイル）, `scripts/add_journal_engagement_tracking.js`（新規）
 - **detected**: 2026-08-11
 - **category**: SEO / 計測
 - **owner**: Builder
