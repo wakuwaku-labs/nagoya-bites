@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T05:11:42.919Z",
+  "generatedAt": "2026-08-19T06:30:29.955Z",
   "siteUrl": "sc-domain:nagoya-bites.com",
   "dateRange": {
     "startDate": "2026-07-22",
@@ -6828,13 +6828,13 @@
       "source": "data/journal_seo_keywords.json",
       "updated": "2026-07-27"
     },
-    "store_names_used": 9022,
+    "store_names_used": 9033,
     "total_queries": 3405,
     "summary": [
       {
         "intent": "navigational",
-        "queries": 2382,
-        "impressions": 17381,
+        "queries": 2380,
+        "impressions": 17378,
         "clicks": 91,
         "ctr": 0.52,
         "avg_position": 19.7,
@@ -6842,8 +6842,8 @@
       },
       {
         "intent": "other",
-        "queries": 958,
-        "impressions": 5263,
+        "queries": 959,
+        "impressions": 5260,
         "clicks": 54,
         "ctr": 1.03,
         "avg_position": 18.9,
@@ -6851,18 +6851,18 @@
       },
       {
         "intent": "discovery",
-        "queries": 65,
-        "impressions": 519,
+        "queries": 66,
+        "impressions": 525,
         "clicks": 14,
-        "ctr": 2.7,
-        "avg_position": 12.8,
-        "impressions_share": 2.2
+        "ctr": 2.67,
+        "avg_position": 13,
+        "impressions_share": 2.3
       }
     ],
     "kpi": {
-      "discovery_impressions": 519,
+      "discovery_impressions": 525,
       "discovery_clicks": 14,
-      "discovery_impressions_share": 2.2
+      "discovery_impressions_share": 2.3
     },
     "examples": {
       "navigational": [
@@ -7061,6 +7061,16 @@
           ]
         },
         {
+          "query": "ご当地焼肉と鰻の自分焼き 名駅ソトノミ",
+          "impressions": 6,
+          "clicks": 0,
+          "position": 30.2,
+          "signals": [
+            "area:名駅",
+            "genre:焼肉"
+          ]
+        },
+        {
           "query": "栄 焼き鳥 ミシュラン",
           "impressions": 6,
           "clicks": 0,
@@ -7225,15 +7235,6 @@
           "position": 2.5,
           "signals": [
             "scene:一人飲み"
-          ]
-        },
-        {
-          "query": "予約困難店 ランキング 名古屋",
-          "impressions": 2,
-          "clicks": 0,
-          "position": 27,
-          "signals": [
-            "scene:予約困難"
           ]
         }
       ],
