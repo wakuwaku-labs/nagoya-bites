@@ -3539,7 +3539,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Builder(/solve-next) | SEO-056 実装・デプロイ — resolve_journal_pending_stores.js（新設）でpending_store_keysを6件解決（core()除去版Diceで支店誤爆3件を検出・是正した安全な実装に切替）。add_feature_journal_links.js（新設・冪等）で特集→ジャーナルの内部リンクを24特集・38本追加（0→24）。audit_feature_stores.js検出数が変更前後で完全一致・ブラウザ実機でリンク先実在とtrackEvent発火を確認・npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | Orchestrator(/solve-next) | ISSUE-093 実装・デプロイ — agents/marketer.mdに「/seo-triage Gmail取得規則」章を新設。.claude/commands/seo-triage.mdが自己改変ブロックで編集不可なため、Marketerの常設ルールとして0件時の窓拡大手順を明記（acceptance選択肢b採用）。心拍/watchdogは意図的に追加せず（ISSUE-084原則6） | ✅ 本コミット |
 | 2026-08-19 | Marketer(/solve-next) | SEO-057 実装・デプロイ — .gas-deploy/Code.jsのsourceToName()に生成AI分岐を追加（m==='organic'総称分岐より前に配置し「openai/organic」誤ラベルを防止）。語彙はsearch_channel_metrics.jsのai_assistant判定と統一。全報告パターンをNode単体実行で検証・npm test 94/94。実デプロイはオーナーのGASエディタ操作待ち（SEO-047/062と同ファイル） | ✅ 本コミット |
-| 2026-08-19 | Marketer/Builder(/solve-next) | SEO-058 partial実装 — fetch_gsc_metrics.jsのgroupPageQueries()でトップページを表示順位に関わらずfocus集合へ強制追加（acceptance①）。単体テストで意図的低impressionでも捕捉されることを確認・npm test 94/94。acceptance②③（GSC実データでのnavigational/discovery分類・Strategic Skip判定）は本環境にGSC API認証情報が無く実施不可のためpartialのまま。次回CI（build.yml日次fetch）で修正が効き次第②③に進む | ⏸ commit待ち・partial |
+| 2026-08-19 | Marketer/Builder(/solve-next) | SEO-058 partial実装 — fetch_gsc_metrics.jsのgroupPageQueries()でトップページを表示順位に関わらずfocus集合へ強制追加（acceptance①）。単体テストで意図的低impressionでも捕捉されることを確認・npm test 94/94。acceptance②③（GSC実データでのnavigational/discovery分類・Strategic Skip判定）は本環境にGSC API認証情報が無く実施不可のためpartialのまま。次回CI（build.yml日次fetch）で修正が効き次第②③に進む | ⏸ commit 9e3da3164・partial |
 
 ---
 
