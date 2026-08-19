@@ -105,15 +105,13 @@ console.log(`=== editorReason 自動 draft 生成: ${candidates.length} 件 ===`
 
     if (DRY) { console.log('(dry-run: skip)'); continue; }
 
-    // Draft 生成（キャッシュ優先。ただし過去のCSEエラー混入キャッシュを誤って
-    // 再利用しないよう、status=INSUFFICIENT_EVIDENCE かつ warnings が
-    // API エラー由来の古いキャッシュは無視して再生成する）
+    // Draft 生成（キャッシュ優先。ただし旧実装（Google CSE版等）の抽出器バージョンが
+    // 付いていない・一致しないキャッシュは無効として再生成する・ISSUE-098）
     let draft;
     if (fs.existsSync(draftPath)) {
       try {
         const cached = JSON.parse(fs.readFileSync(draftPath, 'utf8'));
-        const hasApiErrorWarning = (cached.warnings || []).some(w => /API error|API_KEY|アクセスできません/i.test(w));
-        if (!hasApiErrorWarning) draft = cached;
+        if (cached.extractor === llm.EXTRACTOR_VERSION) draft = cached;
       } catch (_) { draft = null; }
     }
     if (!draft) {

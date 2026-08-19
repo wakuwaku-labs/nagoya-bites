@@ -40,6 +40,11 @@
 
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
+// build_editorreason_drafts.js のキャッシュ判定に使う版識別子。
+// 抽出ロジック（プロンプト・検証方式）を変えたら値を上げること
+// （CSE版など旧実装のキャッシュを誤って再利用しないための目印・ISSUE-098）
+const EXTRACTOR_VERSION = 'gemini_search_grounding_v1';
+
 const API_KEY = process.env.GEMINI_API_KEY || '';
 const MODEL_CANDIDATES = [
   process.env.GEMINI_MODEL,
@@ -183,6 +188,7 @@ async function extractEditorReason(store, opts = {}) {
       confidence: 0,
       sources_used: [],
       warnings: ['検索グラウンディングで関連URLが見つからなかった'],
+      extractor: EXTRACTOR_VERSION,
       _debug: { researchText, groundingUrls },
     };
   }
@@ -216,6 +222,7 @@ async function extractEditorReason(store, opts = {}) {
     obj.warnings.push('sources_used が 2 件未満（人手レビュー必須）');
   }
 
+  obj.extractor = EXTRACTOR_VERSION;
   obj._debug = { researchText, groundingUrls };
   return obj;
 }
@@ -224,4 +231,4 @@ function isConfigured() {
   return !!API_KEY;
 }
 
-module.exports = { extractEditorReason, isConfigured };
+module.exports = { extractEditorReason, isConfigured, EXTRACTOR_VERSION };
