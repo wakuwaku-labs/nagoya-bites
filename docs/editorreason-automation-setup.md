@@ -62,19 +62,29 @@
 
 ### Step 1: Google Custom Search Engine（CSE）を作成
 
+> **2026-08-19 訂正（重要）**: Google は2026-01-20から、**新規作成の CSE では「ウェブ全体を検索」を
+> 選べなくなった**（既存エンジンのみ2027-01-01まで猶予・[Google公式ヘルプ](https://support.google.com/programmable-search/answer/12397162)）。
+> 新規エンジンは「検索するサイト」を **必ず指定**（最大50ドメイン）する方式に一本化されている。
+> 下記の「検索するサイト」はもう任意ではなく必須。
+>
+> あわせて、旧版の本ドキュメントに書かれていた優先サイトのドメインを実在確認したところ
+> **4件中2件が誤り**だったため訂正済み（`nagoyareco.com`→`nagoreco.com`「や」が余分・
+> `nagoya-info.com`→`jouhou.nagoya`・`webotonano.jp`→`otona-no-nagoya.com`）。
+
 1. [programmablesearchengine.google.com](https://programmablesearchengine.google.com/) にアクセス
 2. 「新しい検索エンジン」を作成
    - 名前: `nagoya-bites-industry-search`
-   - 「ウェブ全体を検索」を **ON**
+   - **検索するサイト**（必須・下記を1件ずつ追加）:
+     - `nagoreco.com`（ナゴレコ）
+     - `nagoya-meshi.com`（ナゴレコと同運営の別ドメイン）
+     - `jouhou.nagoya`（名古屋情報通）
+     - `kelly-net.jp`（日刊KELLY）
+     - `otona-no-nagoya.com`（WEB大人の名古屋）
+     - `prtimes.jp`（プレスリリース）
+     - `note.com` / `hatenablog.com`（個人ブログ・食レポ系が多い）
    - 言語: 日本語
-3. 作成後、「概要」→ **検索エンジン ID（cx）** をコピー
-4. 任意で「サイトの優先順位」に名古屋系メディアを追加（精度向上）:
-   - `nagoyareco.com`（ナゴレコ）
-   - `nagoya-info.com`（名古屋情報通）
-   - `kelly-net.jp`（日刊KELLY）
-   - `webotonano.jp`（WEB大人の名古屋）
-   - `prtimes.jp`（プレスリリース）
-   - `note.com` / `hatenablog.com`（個人ブログ）
+3. 作成後、「概要」→ **検索エンジン ID（cx）** をコピー（`<script async src="https://cse.google.com/cse.js?cx=...">` の `cx=` の後ろ）
+4. サイトは上限50ドメインまで追加できる。名古屋の飲食メディア・ブログを見つけ次第、後からいつでも追加してよい（追加するたびに実在するドメインか確認すること。過去に未検証のまま2件が誤ったドメインとして記載されていた前例あり）
 
 ### Step 2: Google Cloud で Custom Search JSON API を有効化
 
