@@ -4,32 +4,37 @@
  *
  * ISSUE-045 自動化メインエントリ:
  *   1. 優先順候補（list_editorreason_candidates のロジック）を上位 N 件抽出
- *   2. 各店に対し Google CSE で業界系エビデンスを検索
- *   3. Gemini API（無料枠）で「引用ベースの editorReason draft」を生成
- *   4. confidence >= AUTO_THRESHOLD は data/editorreason_drafts/ にキャッシュ
- *   5. すべての draft を docs/editorreason-drafts.md に追記（人手レビュー用）
+ *   2. Gemini API（無料枠）の Google検索グラウンディングで業界系エビデンスを調査し、
+ *      「引用ベースの editorReason draft」を生成
+ *   3. confidence >= AUTO_THRESHOLD は data/editorreason_drafts/ にキャッシュ
+ *   4. すべての draft を docs/editorreason-drafts.md に追記（人手レビュー用）
  *
- * 必要シークレット: GOOGLE_CSE_KEY / GOOGLE_CSE_CX / GEMINI_API_KEY
+ * 必要シークレット: GEMINI_API_KEY
  *   未設定の場合は exit 0（CI 失敗扱いにしない・ISSUE-041 と同じパターン）
- *   ISSUE-098: 元は ANTHROPIC_API_KEY 前提だったが、新規アカウント作成を避けるため
- *   scripts/daily_store_discovery.js と共用の GEMINI_API_KEY（無料枠）に切替。
- *   Anthropic 版は scripts/lib/anthropic_extractor.js にそのまま残置（将来切替可）
+ *
+ * ISSUE-098（2026-08-19）変遷:
+ *   元は ANTHROPIC_API_KEY 前提 → 新規アカウント作成を避けるため GEMINI_API_KEY に切替
+ *   → 実際に稼働させたところ Google CSE（Custom Search JSON API）が
+ *     「新規プロジェクトには提供終了済み」（developers.google.com/custom-search/v1/overview
+ *     に "closed to new customers" と明記）と判明し、CSE 自体を廃止。
+ *     代わりに scripts/daily_store_discovery.js と同じ Gemini の Google検索
+ *     グラウンディング機能（無料枠・新規サインアップ不要）に置き換えた。
+ *   Google CSE 版は scripts/lib/google_cse.js にそのまま残置（将来 Vertex AI Search 等へ
+ *     移行する場合の参考用）。Anthropic 版も scripts/lib/anthropic_extractor.js に残置
  *
  * 使い方:
  *   node scripts/build_editorreason_drafts.js              # 上位 30 件
  *   node scripts/build_editorreason_drafts.js --top 100    # 上位 100 件
- *   node scripts/build_editorreason_drafts.js --dry-run    # 検索のみ・LLM 呼ばない
+ *   node scripts/build_editorreason_drafts.js --dry-run    # 検索のみ・書き込みなし
  */
 
 'use strict';
 const fs = require('fs');
 const path = require('path');
 const { loadStores } = require('./lib/load_stores');
-const cse = require('./lib/google_cse');
-const llm = require('./lib/gemini_extractor');
+const llm = require('./lib/gemini_grounded_extractor');
 
 const ROOT = path.resolve(__dirname, '..');
-const SOURCES_DIR = path.join(ROOT, 'data', 'industry_sources');
 const DRAFTS_DIR = path.join(ROOT, 'data', 'editorreason_drafts');
 const DRAFTS_MD = path.join(ROOT, 'docs', 'editorreason-drafts.md');
 
@@ -44,18 +49,12 @@ for (let i = 0; i < args.length; i++) {
 const AUTO_CONFIDENCE_THRESHOLD = 0.85;
 
 // 環境チェック
-if (!cse.isConfigured()) {
-  console.error('GOOGLE_CSE_KEY / GOOGLE_CSE_CX 未設定 — exit 0 でスキップ');
-  console.error('セットアップ: docs/editorreason-automation-setup.md');
-  process.exit(0);
-}
 if (!DRY && !llm.isConfigured()) {
   console.error('GEMINI_API_KEY 未設定 — exit 0 でスキップ');
   console.error('セットアップ: docs/editorreason-automation-setup.md');
   process.exit(0);
 }
 
-fs.mkdirSync(SOURCES_DIR, { recursive: true });
 fs.mkdirSync(DRAFTS_DIR, { recursive: true });
 
 // ── 優先順候補抽出（list_editorreason_candidates.js と同じロジック） ──
@@ -100,42 +99,26 @@ console.log(`=== editorReason 自動 draft 生成: ${candidates.length} 件 ===`
   for (let i = 0; i < candidates.length; i++) {
     const s = candidates[i];
     const id = s['ホットペッパーID'] || `manual_${norm(s['店名'])}`;
-    const sourcePath = path.join(SOURCES_DIR, `${id}.json`);
     const draftPath = path.join(DRAFTS_DIR, `${id}.json`);
 
     process.stdout.write(`[${i + 1}/${candidates.length}] ${s['店名']} ... `);
 
-    // 1) Source discovery（キャッシュ優先）
-    let evidence;
-    if (fs.existsSync(sourcePath)) {
-      try { evidence = JSON.parse(fs.readFileSync(sourcePath, 'utf8')); }
-      catch (_) { evidence = null; }
-    }
-    if (!evidence) {
-      try {
-        evidence = await cse.discoverIndustryEvidence(
-          { name: s['店名'], area: s['エリア'], genre: s['ジャンル'] },
-          { perQuery: 3 }
-        );
-        fs.writeFileSync(sourcePath, JSON.stringify(evidence, null, 2), 'utf8');
-      } catch (e) {
-        console.log(`source discovery ERR: ${e.message}`);
-        errCount++;
-        continue;
-      }
-    }
+    if (DRY) { console.log('(dry-run: skip)'); continue; }
 
-    if (DRY) { console.log(`(dry-run: evidence ${evidence.length} queries cached)`); continue; }
-
-    // 2) Draft 生成（キャッシュ優先）
+    // Draft 生成（キャッシュ優先。ただし過去のCSEエラー混入キャッシュを誤って
+    // 再利用しないよう、status=INSUFFICIENT_EVIDENCE かつ warnings が
+    // API エラー由来の古いキャッシュは無視して再生成する）
     let draft;
     if (fs.existsSync(draftPath)) {
-      try { draft = JSON.parse(fs.readFileSync(draftPath, 'utf8')); }
-      catch (_) { draft = null; }
+      try {
+        const cached = JSON.parse(fs.readFileSync(draftPath, 'utf8'));
+        const hasApiErrorWarning = (cached.warnings || []).some(w => /API error|API_KEY|アクセスできません/i.test(w));
+        if (!hasApiErrorWarning) draft = cached;
+      } catch (_) { draft = null; }
     }
     if (!draft) {
       try {
-        draft = await llm.extractEditorReason(s, evidence);
+        draft = await llm.extractEditorReason(s);
         draft.store_id = id;
         draft.store_name = s['店名'];
         draft.area = s['エリア'] || '';
@@ -164,7 +147,9 @@ console.log(`=== editorReason 自動 draft 生成: ${candidates.length} 件 ===`
     await new Promise(r => setTimeout(r, 500));
   }
 
-  // ── 3) docs/editorreason-drafts.md を生成（人手レビュー用） ──
+  if (DRY) { console.log('\n(dry-run 完了・書き込みなし)'); return; }
+
+  // ── docs/editorreason-drafts.md を生成（人手レビュー用） ──
   const lines = [];
   lines.push('# editorReason 自動生成 draft レビュー（ISSUE-045）');
   lines.push('');
@@ -215,7 +200,6 @@ console.log(`=== editorReason 自動 draft 生成: ${candidates.length} 件 ===`
   console.log(`\n=== 完了 ===`);
   console.log(`OK ${okCount} / INSUFFICIENT ${insufficientCount} / WARN ${warnCount} / ERR ${errCount}`);
   console.log(`→ ${DRAFTS_MD}`);
-  console.log(`→ data/industry_sources/ にエビデンスキャッシュ`);
   console.log(`→ data/editorreason_drafts/ に draft キャッシュ`);
   console.log(`\n次は: docs/editorreason-drafts.md で [approved] を付け、\`node scripts/approve_editorreason_drafts.js\` で反映`);
 })().catch(e => { console.error(e); process.exit(1); });

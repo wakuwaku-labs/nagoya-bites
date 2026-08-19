@@ -131,7 +131,7 @@ for (const id of approvedIds) {
       fetched_at: d.generated_at || today
     })),
     'automation': {
-      method: 'google_cse+claude',
+      method: 'gemini_search_grounding',
       confidence: d.confidence ?? 0,
       generated_at: d.generated_at || new Date().toISOString(),
       reviewed_by: REVIEWER,
