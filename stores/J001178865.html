@@ -71,7 +71,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       {
         "@type": "PropertyValue",
         "name": "信頼性スコア（第三者要因による独自算定・広告非関与）",
-        "value": 70,
+        "value": 60,
         "maxValue": 100,
         "description": "Google評価×件数・レビュー時系列健全性・他媒体掲載・Instagram実在性など8軸の検証可能な事実から算定。算定方法: https://nagoya-bites.com/features/integrity-method.html"
       }
@@ -189,17 +189,11 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <h1>和牛 旬菜 一颯 いぶき</h1>
   <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
     <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>4.5</div>
-    <span class="ccs-badge" title="スコア信頼度: 複数媒体シグナルによる客観評価">✓✓ 信頼度 中</span>
+    <span class="ccs-badge" title="スコア信頼度: 複数媒体シグナルによる客観評価">✓ 信頼度 検証中</span>
   </div>
 
   <div class="point-box"><p>お酒との相性抜群★ 栄で雰囲気がいいお店</p></div>
 
-  <div class="ig-photos">
-    <h2>公式Instagramの実際の写真</h2>
-    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/ibuki9620/p/CEBeRnogpeu/" data-instgrm-version="14" style="margin:0 auto;max-width:540px;min-width:280px;width:100%;background:#fff;border:1px solid var(--border);border-radius:3px;">
-      <a href="https://www.instagram.com/ibuki9620/p/CEBeRnogpeu/" target="_blank" rel="noopener noreferrer">和牛 旬菜 一颯 いぶき の公式Instagram投稿を見る</a>
-    </blockquote>
-  </div>
   <div class="info-grid">
     <div class="info-cell"><label>エリア</label><span>愛知県 栄</span></div>
     
@@ -212,7 +206,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <div class="tags"><span class="tag">20〜30名</span><span class="tag">5000円以上</span><span class="tag">居酒屋</span></div>
 
   <div class="trust-breakdown">
-    <h2>信頼度スコアの内訳（70/100点）</h2>
+    <h2>信頼度スコアの内訳（60/100点）</h2>
     <p class="trust-breakdown-intro">広告料による順位操作はありません。Google評価・レビュー時系列・他媒体掲載・Instagram実在性など8つの検証可能な軸から算定しています。<a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
       <div class="trust-axis-row">
         <span class="trust-axis-name">Google★ vs 件数比率</span>
@@ -226,8 +220,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
       </div>
       <div class="trust-axis-row">
         <span class="trust-axis-name">データ充実度</span>
-        <span class="trust-axis-score">12/15点</span>
-        <span class="trust-axis-reason">タグ3個・IG解決・推薦文・写真 あり</span>
+        <span class="trust-axis-score">9/15点</span>
+        <span class="trust-axis-reason">タグ3個・推薦文・写真 あり</span>
       </div>
       <div class="trust-axis-row">
         <span class="trust-axis-name">他媒体掲載クロスチェック</span>
@@ -241,8 +235,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
       </div>
       <div class="trust-axis-row">
         <span class="trust-axis-name">Instagram 実在シグナル</span>
-        <span class="trust-axis-score">10/10点</span>
-        <span class="trust-axis-reason">公式アカウント・最新投稿 あり</span>
+        <span class="trust-axis-score">3/10点</span>
+        <span class="trust-axis-reason">最新投稿 あり</span>
       </div>
       <div class="trust-axis-row">
         <span class="trust-axis-name">レビュー時系列健全性</span>
@@ -284,17 +278,5 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <p class="fc">© <span id="yr"></span> NAGOYA BITES — 現役飲食店マネージャー監修 名古屋グルメガイド</p>
 </footer>
 <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
-<script>
-(function(){
-  var el=document.querySelector('.instagram-media');
-  if(!el)return;
-  var loaded=false;
-  function load(){if(loaded)return;loaded=true;var sc=document.createElement('script');sc.async=true;sc.src='https://www.instagram.com/embed.js';document.body.appendChild(sc);}
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){load();io.disconnect();}});},{rootMargin:'600px'});
-    io.observe(el);
-  }else{load();}
-})();
-</script>
 </body>
 </html>
