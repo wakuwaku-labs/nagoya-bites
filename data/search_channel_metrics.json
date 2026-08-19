@@ -1,16 +1,16 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-08-18T23:39:44.186Z",
+  "generatedAt": "2026-08-19T00:16:53.343Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 866,
+  "total_sessions": 868,
   "engines": [
     {
       "key": "bing",
       "label": "Bing",
       "sessions": 225,
-      "pct": 26,
+      "pct": 25.9,
       "sources": [
         {
           "source": "bing",
@@ -22,7 +22,7 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 205,
+      "sessions": 206,
       "pct": 23.7,
       "sources": [
         {
@@ -33,20 +33,20 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 29
+          "sessions": 30
         }
       ]
     },
     {
       "key": "google",
       "label": "Google",
-      "sessions": 204,
+      "sessions": 205,
       "pct": 23.6,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 204
+          "sessions": 205
         }
       ]
     },
@@ -106,7 +106,7 @@
     }
   ],
   "search_only": {
-    "total": 661,
+    "total": 662,
     "share": [
       {
         "key": "bing",
@@ -117,8 +117,8 @@
       {
         "key": "google",
         "label": "Google",
-        "sessions": 204,
-        "pct_of_search": 30.9
+        "sessions": 205,
+        "pct_of_search": 31
       },
       {
         "key": "ai_assistant",
@@ -145,7 +145,7 @@
     "to": "2026-08-18",
     "delta": {
       "bing": 10,
-      "direct": 14,
+      "direct": 17,
       "google": 6,
       "ai_assistant": 1,
       "yahoo": 5,
@@ -155,7 +155,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 204 セッションのみ。Bing(225) + 生成AI(125) の 350 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 205 セッションのみ。Bing(225) + 生成AI(125) の 350 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
