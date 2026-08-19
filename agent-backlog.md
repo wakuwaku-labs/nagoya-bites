@@ -8,23 +8,28 @@
 
 ## 進行中・完了タスク
 
-### [ISSUE-098] editorReason 自動収集パイプライン（ISSUE-045）が3ヶ月間サイレント無稼働だった — 必要シークレット3件が未設定
+### [ISSUE-099] editorReason 自動収集パイプライン（ISSUE-045）が3ヶ月間サイレント無稼働だった — 必要シークレット3件が未設定
 
-- **priority**: P1 → **status**: ready（オーナーの残タスクは Google CSE 設定のみに縮小。判定ロジック側は対応済み）
+- **priority**: P1 → **status**: ready（パイプラインは稼働確認済み。残るのは人手レビュー＆承認のみ）
 - **detected**: 2026-08-19（事業化ロードマップ Phase 2 の進捗確認中に発覚）
 - **category**: automation / moat / trust-score-business
-- **owner**: 片桐（Google CSE 作成 + GitHub Secrets 設定）→ 設定後は DataKeeper が動作確認
+- **owner**: DataKeeper（稼働確認済み）→ Editor（`docs/editorreason-drafts.md` のレビュー・承認）
 - **背景**: [[ISSUE-045]] で構築した4-stage自動収集パイプライン（Google CSE + Claude API + 引用必須プロンプト + 人手レビューゲート）は `.github/workflows/editorreason-batch.yml` として毎週月曜 JST 3:00 に実行されている。`gh run list` で確認すると2026-06-15〜2026-08-17まで**13週連続 success**だが、`gh run view --log` で中身を見ると**毎回同じ2026-05-24の実演デモ（3件処理・OK1/INSUFFICIENT2）を再出力しているだけ**で新規候補を1件も処理していない
-- **直接原因**: `gh secret list` で確認した結果、稼働に必要な `GOOGLE_CSE_KEY` / `GOOGLE_CSE_CX` / `ANTHROPIC_API_KEY` の3件がいずれも未設定。ワークフローはキー無しでもエラーにならず「変更なし」で正常終了する設計のため、CI上は3ヶ月間ずっと緑（success）のまま実質ゼロ稼働だった。CLAUDE.md「無人自動化の監視原則」が警告する**「検知はしているが誰にも届かない」型ではなく、そもそも動いていないことを success が覆い隠す型**の穴
+- **直接原因1（未設定）**: `gh secret list` で確認した結果、稼働に必要な `GOOGLE_CSE_KEY` / `GOOGLE_CSE_CX` / `ANTHROPIC_API_KEY` の3件がいずれも未設定。ワークフローはキー無しでもエラーにならず「変更なし」で正常終了する設計のため、CI上は3ヶ月間ずっと緑（success）のまま実質ゼロ稼働だった。CLAUDE.md「無人自動化の監視原則」が警告する**「検知はしているが誰にも届かない」型ではなく、そもそも動いていないことを success が覆い隠す型**の穴
+- **直接原因2（Google CSE自体が新規には使えなくなっていた）**: オーナーがGoogle CSE + Cloud API を新規作成・シークレット設定した後も、実行結果は全滅（`This project does not have the access to Custom Search JSON API`）。Google公式ドキュメント（[developers.google.com/custom-search/v1/overview](https://developers.google.com/custom-search/v1/overview)）に "The Custom Search JSON API is closed to new customers." と明記されており、**2025年に新規プロジェクトへの提供自体が停止されていた**と判明（コンソール上は有効化操作ができ「APIが有効です」と表示されるが実際の呼び出しは拒否される・設定ミスではない）
 - **影響**: 事業化ロードマップ Phase 2 の核心KPI「editorReason充填率 2.2%→20%」が、パイプライン整備済み（2026-05-24）と報告されて以降ずっと**足踏み**（2026-08-19実測: 108/5,027 = 2.15%、母数増でむしろ5月時点の2.46%より後退）。歩留まり試算（週50件処理→年750〜1,300件）がまるまる3ヶ月ぶん未実現
-- **progress 2026-08-19 — LLM を Anthropic → Gemini（既存キー流用）に切替、オーナー作業を3件→2件に縮小**: オーナーから「無料で、かつクオリティを損なわない方」の指示を受け、新規 Anthropic アカウント作成を避ける方針に変更。`scripts/lib/gemini_extractor.js` を新設（`anthropic_extractor.js` と同一プロンプト・同一安全策をそのまま踏襲・引用元URL必須/2ソース原則/INSUFFICIENT_EVIDENCE強制/confidence<0.85は人手レビューは変更なし）。`scripts/build_editorreason_drafts.js` と `editorreason-batch.yml` の参照先を切替。**リポジトリには daily-store-add.yml と共用の `GEMINI_API_KEY` が既に登録済み**なため、残るオーナー作業は Google CSE（Step1・2）のみに縮小。`anthropic_extractor.js` は削除せず残置（切り戻し可能）。既存テスト94件は全てPASS（本変更が対象コードに触れていないことを確認）。**Gemini版の抽出品質（confidence分布・INSUFFICIENT率）はまだ実測できていない**（CSEキーが無く実行不可のため）。実行できるようになり次第、Anthropicデモ結果（OK1/INSUFFICIENT2・3件）と比較する`node scripts/audit`系の検証はまだ無く、`docs/editorreason-drafts.md` を人間が目視確認するのが現状の担保
-- **必要な対応（いずれもオーナー本人のクレデンシャル操作。エージェントでは代行不可）**:
-  1. Google Cloud で Programmable Search Engine（CSE）を作成し `GOOGLE_CSE_KEY` / `GOOGLE_CSE_CX` を取得（`docs/editorreason-automation-setup.md` に手順あり）
-  2. `gh secret set GOOGLE_CSE_KEY` / `gh secret set GOOGLE_CSE_CX` の2件、またはリポジトリ Settings → Secrets and variables → Actions から設定（`GEMINI_API_KEY` は設定済みのため不要）
-  3. 設定後、`gh workflow run editorreason-batch.yml` で手動実行し、`docs/editorreason-drafts.md` に新規候補が出ることを確認（DataKeeper が対応可能）
-- **acceptance**: 2シークレット設定後の初回実行で新規 draft が1件以上生成されること（v2.0の「OK1/INSUFFICIENT2」固定出力から変化があること）。あわせて Gemini 版の confidence 分布・INSUFFICIENT率を最初の数回分観察し、Anthropic 版と著しく劣化していないか確認する（体感ではなく docs/editorreason-drafts.md の実出力で判断）
+- **最終対応 2026-08-19 — Google CSE を廃止し、Gemini の Google検索グラウンディングに置換**: `scripts/lib/gemini_grounded_extractor.js` を新設。`scripts/daily_store_discovery.js` と同じ仕組み（無料枠・新規サインアップ不要）で、evidence収集とJSON抽出の2段階を1本化。**安全策をCSE版より1段強化**: `sources_used` のURLが実際の `groundingChunks`（グラウンディングで本当に参照されたURL一覧）に含まれるかコード側で検証し、含まれないURLは除外・confidenceを下げる（LLMの自己申告URLを鵜呑みにしない）。実機テストで発見・修正した2つの実装バグ:
+  1. draft キャッシュに版識別子（`EXTRACTOR_VERSION`）が無く、旧CSE実装時の空エビデンスキャッシュ（`data/editorreason_drafts/*.json`、warnings=[]で判別不能）を誤って再利用し続けていた → `extractor` フィールドでバージョン一致チェックする方式に変更
+  2. `maxOutputTokens: 1024〜2048` では Gemini 2.5系の既定「thinking」機能が可視出力トークンを圧迫し、JSON が途中で切れて `Unterminated string` パースエラーが頻発（Google公式フォーラムで既知の挙動と確認） → `daily_store_discovery.js` の前例に合わせ 8192 に統一
+- **稼働確認（2026-08-19・`main` 上で `gh workflow run editorreason-batch.yml -f top=8` を実行）**: **OK 7 / INSUFFICIENT 0 / WARN 0 / ERR 1**（自動マージ候補4件・要人手レビュー3件）。生成された editorReason は実在の一次情報に基づく具体的な内容（店主の経歴・修行先、ミシュラン/ゴエミヨ掲載歴、看板メニューの詳細等）で、安全策（URL不一致除外）も3件で実際に発動し機能を確認した。ERR 1件は同じ MAX_TOKENS 切断（8192でも稀に発生・次回実行時に自動再試行される。頻度が高ければ上限をさらに引き上げる）。結果は `docs/editorreason-drafts.md` にコミット済みで、**まだ `[approved]` は付けていない**（Editorによる内容レビュー待ち）
+- **既知の留意点**: `sources_used[].url` は Gemini グラウンディングの仕様上 `vertexaisearch.cloud.google.com/grounding-api-redirect/...` という Google 経由のリダイレクトURLになる（元記事の直接URLではない）。クリックすれば実際の一次情報に遷移するため検証可能ではあるが、`editor_picks.json` の監査証跡としては見た目でドメインが分からない点に留意（将来的にリダイレクト解決して実URLを保存する改善の余地はあるが、本チケットでは対応せず）
+- **必要な対応（Editor・人手判断）**:
+  1. `docs/editorreason-drafts.md` の7件を確認し、`[approved]` または `[reject]` を記入
+  2. `node scripts/approve_editorreason_drafts.js` を実行 → `data/editor_picks.json` に反映
+  3. `node build.js` → `git push origin main` で公開
+- **acceptance**: 週次実行で継続的にOK判定が出ること（今回13週ぶりに初めて達成）。Editorが最初のバッチをレビュー・承認し、editor_picks.json に industry_automation 由来のエントリが実際に追加されること
 - **note**: 稼働確認後は「success = 何かが起きた」ではなく「success = 新規処理件数」をログに明記する形へ `editorreason-batch.yml` を改善する余地あり（無稼働がsuccessに埋もれない設計。優先度は低いため本チケットでは対応せず）
-- **files**: `.github/workflows/editorreason-batch.yml`, `docs/editorreason-automation-setup.md`, `scripts/lib/gemini_extractor.js`（新規）, `scripts/build_editorreason_drafts.js`
+- **files**: `.github/workflows/editorreason-batch.yml`, `docs/editorreason-automation-setup.md`, `scripts/lib/gemini_grounded_extractor.js`（新規）, `scripts/build_editorreason_drafts.js`, `scripts/approve_editorreason_drafts.js`
 - **関連**: [[ISSUE-045]]（親チケット・本件はその稼働確認）
 
 ### [STR-MONTHLY-2026-08] KPI月次スナップショット復旧（05月ベースライン以降、途絶していた記録を実データで再開）
@@ -47,7 +52,7 @@
 
 #### ストック指標
 - 掲載店舗数: **5,027店**（5月 4,584店から+443）/ crossCheckScore充填率: **100%**（5,028/5,028）
-- editorReason充填率: **2.15%**（108/5,027）— [[ISSUE-098]] で判明した通り足踏み中（5月時点2.46%より母数増で後退）
+- editorReason充填率: **2.15%**（108/5,027）— [[ISSUE-099]] で判明した通り足踏み中（5月時点2.46%より母数増で後退）
 - insider_reviews: **0件**（未着手・Phase 2 はオーナー本人の人脈が起点）/ visitStatus=visited: **4件**（5月から横ばい）
 
 #### Phase 3 準備（本チケットで実施）
@@ -4063,7 +4068,7 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 
 - **priority**: P1
 - **status**: in_progress（収集パイプライン整備済み・段階的な人間 Editor 投入で前進）
-- **progress 2026-08-19 — 自動収集パイプラインが3ヶ月間サイレント無稼働と判明**: [[ISSUE-098]] を参照。`editorreason-batch.yml` は毎週成功しているが `GOOGLE_CSE_KEY`/`GOOGLE_CSE_CX`/`ANTHROPIC_API_KEY` 未設定のため2026-05-24のデモ出力を再生し続けているだけだった。editorReason充填率は2.15%（108/5,027）で母数増によりむしろ後退。同日、LLMをAnthropic→既存GEMINI_API_KEY流用のGeminiへ切替（[[ISSUE-098]]参照）し、オーナーの残タスクを「Google CSE設定のみ」に縮小。オーナーのCSEシークレット設定待ち
+- **progress 2026-08-19 — 自動収集パイプラインが3ヶ月間サイレント無稼働と判明、その後 Gemini 検索グラウンディングで実稼働に到達**: 詳細は [[ISSUE-099]]。`editorreason-batch.yml` が13週連続successでも新規候補ゼロだったこと（`GOOGLE_CSE_KEY`/`GOOGLE_CSE_CX`/`ANTHROPIC_API_KEY` 未設定）、その後 Google CSE 自体が新規プロジェクトに提供終了済みと判明したこと（設定ミスではない）、最終的に Google CSE を廃止して Gemini の検索グラウンディング（無料枠）に置換したことで**2026-08-19に初めて実際の新規 draft 7件（OK 7/8）を生成**。`docs/editorreason-drafts.md` に反映済みで Editor のレビュー・承認待ち
 - **progress 2026-05-24 — 収集パイプライン整備 + 第1バッチ 12 件昇格**:
   - **収集パイプライン整備（3 スクリプト + 作業表テンプレ）**:
     - `scripts/list_editorreason_candidates.js` 新設 — GA4 閲覧上位 + 編集部推薦 + picks 既登録 + 高評価 で優先順 TOP N を抽出し、`docs/editorreason-todo.md` に作業表を生成
