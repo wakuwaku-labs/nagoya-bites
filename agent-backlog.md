@@ -810,9 +810,33 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **acceptance**: `node scripts/next_task.js --check` が警告ゼロ（exit 0）で通ること／滞留の数え方が2箇所で一致すること／オーナー待ちが列から分離されていること — **いずれも達成**
 - **副次的に直したもの**: [[ISSUE-054]] の `detected` 欠落（起票コミット 307f643e1 から 2026-05-20 を復元）／[[SEO-039]] の status が `一部done` という非正規値でパーサが読めなかった問題を `in_progress` に正規化
 
-### [SEO-056] 内部リンクが一方通行——ジャーナル→特集は張られているが、特集→ジャーナルは全24特集で0本（最大の入口である特集が三層編集の最新層へ出口を持たない）
+### [SEO-056] 内部リンクが一方通行——ジャーナル→特集は張られているが、特集→ジャーナルは全24特集で0本（最大の入口である特集が三層編集の最新層へ出口を持たない） ✅
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-19
+- **resolved_by**: /solve-next（Builder）
+- **実施内容**:
+  1. `scripts/resolve_journal_pending_stores.js` を新設（acceptance③）。`pending_store_keys`
+     をLOCAL_STORESと再突合し、**6件**を新規に`store_ids`へ解決（44件は一致店なしとして
+     ログに残し検算可能な状態を維持）。**当初 core()（一般語除去）付きDiceで実装したが、
+     実データ検証で「酔っ手羽 名駅3丁目店」→「酔っ手羽 名駅椿町店」等3件の別支店誤爆を発見**
+     （`[^\s]{1,6}店`除去が支店名まで削ってしまうため）。実在保証Moatを直接損なう誤りのため、
+     一般語除去なしの素の正規化名でDice0.85判定に是正した上で採用
+  2. `scripts/add_feature_journal_links.js` を新設（acceptance①②）。特集内の`stores/JXXXX.html`
+     参照と`store_ids`を突合し、一致するジャーナル記事（最大3本・新しい順）への内部リンクを
+     `.related`ブロック内に追加。一致0件の特集には何も追加しない（空セクションを作らない）。
+     `internal_link_click`イベント（`block:'feature_journal'`）でSEO-052と同じ計測に統一。
+     冪等（`related-journal-articles`マーカーで判定）。全66特集中**24特集・38リンク**を追加
+     （0→24。残り42特集は現時点で一致する解決済みジャーナル記事が無いため対象外）
+- **検証**: `audit_feature_stores.js` の実在不明検出数が変更前後で完全一致（5件・pre-existing、
+  新規0件）。ブラウザ実機で追加ブロックのDOM構造・リンク先の実在（journal記事が実際にロード
+  できること）・`trackEvent('internal_link_click',...)`の発火を確認。全24変更ファイルの
+  `<script>`ブロックを`new Function()`で構文検証（0件エラー）。`npm test` 94/94 pass
+- **未対応（スコープ外・次の手）**: acceptance⑥の効果測定（1訪問あたり閲覧ページ数・
+  当該リンクのクリック数の前後比）は翌週以降のデータ蓄積を待って判定する
+- **files**: `scripts/resolve_journal_pending_stores.js`（新規）,
+  `scripts/add_feature_journal_links.js`（新規）, `data/journal_published.json`,
+  `features/*.html`（24ファイル）
 - **detected**: 2026-08-16
 - **category**: SEO
 - **owner**: Builder
@@ -3470,6 +3494,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Editor/Builder(/solve-next) | SEO-054 実装・デプロイ — generate_daily_draft.jsのbuildStores()に予約(HotPepperID実在照合のみ)・地図(常時)の行動導線を追加。add_journal_store_cta.js（新設・冪等）で既存105記事に適用し63記事94カードに導線を追加。モック入力3パターンでURL出し分けを検証・全変更ファイルの構文検証・div開閉バランス確認・npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | Marketer/Builder(/solve-next) | SEO-055 実装・デプロイ — search_channel_metrics.jsのaggregate()でsocialを常時明示（0でも消えない）。check_social_health.js（新設）で「原稿ありsocial=0が7日連続」をmetrics_history.jsonの実測から検知、social-watchdog.yml（新設）で毎日14:00 JSTにサーバ側監視・Issue起票/自動クローズ。audit_journal_sns_pairing.js（新設・build.yml非ブロッキング追加）で2026-08-10/11型の生成漏れを可視化。合成データで閾値ロジック検証・実データで既知欠落2件を正しく検出・track_metrics.js再実行でsocial:0が実際に記録されることをE2E確認・npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | DataKeeper(/solve-next) | ISSUE-087 実装・デプロイ — build.jsのcross_check_flags.json/crosscheck.json書き込み前に既存内容を退避し、店舗数ABORT発火時はstores.jsonと合わせ3ファイルとも直前バックアップへ復元するよう修正。APIキー無し環境で実際にABORTを発火させgit status/diffが完全にクリーンになることを確認（修正前は本セッションで同じバグを実際に踏み手動checkoutが必要だった）。ALLOW_STORE_SHRINK=1の続行パスは無改変であることも実行確認。npm test 94/94 | ✅ 本コミット |
+| 2026-08-19 | Builder(/solve-next) | SEO-056 実装・デプロイ — resolve_journal_pending_stores.js（新設）でpending_store_keysを6件解決（core()除去版Diceで支店誤爆3件を検出・是正した安全な実装に切替）。add_feature_journal_links.js（新設・冪等）で特集→ジャーナルの内部リンクを24特集・38本追加（0→24）。audit_feature_stores.js検出数が変更前後で完全一致・ブラウザ実機でリンク先実在とtrackEvent発火を確認・npm test 94/94 | ✅ 本コミット |
 
 ---
 
