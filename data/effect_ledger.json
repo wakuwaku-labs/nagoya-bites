@@ -60,6 +60,53 @@
       "target_metric": "ctaClickRate",
       "target_value": 8,
       "followup": null
+    },
+    "SEO-060": {
+      "baseline": {
+        "date": "2026-08-17",
+        "note": "見出し階層付与（全特集h3=0→h3付き）施策前のGSC 28日値（2026-07-21〜2026-08-17）",
+        "metrics": {
+          "features_discovery": {
+            "solo_dining_clicks": 53,
+            "solo_dining_impressions": 1018,
+            "solo_dining_ctr": 0.0521,
+            "solo_dining_position": 8.3,
+            "banquet_clicks": 0,
+            "banquet_impressions": 49,
+            "banquet_ctr": 0,
+            "banquet_position": 22.2,
+            "date_clicks": 0,
+            "date_impressions": 25,
+            "date_ctr": 0,
+            "date_position": 18.8,
+            "private_room_clicks": 0,
+            "private_room_impressions": 4,
+            "private_room_ctr": 0,
+            "private_room_position": 17.5,
+            "kaoawase_clicks": 3,
+            "kaoawase_impressions": 17,
+            "kaoawase_ctr": 0.1765,
+            "kaoawase_position": 32.1,
+            "hard_to_book_clicks": 1,
+            "hard_to_book_impressions": 35,
+            "hard_to_book_ctr": 0.0286,
+            "hard_to_book_position": 9.8
+          },
+          "features_total": {
+            "clicks": 79,
+            "impressions": 3393,
+            "discovery_share_of_impressions": 0.022
+          }
+        }
+      },
+      "intervention": {
+        "date": "2026-08-17",
+        "description": "全特集（15本）の店名をdiv/span→h3、セクション見出しをdiv→h2に移行。migrate_feature_headings.jsで63ファイル一括適用。refresh_feature_rosters.jsの生成器も同時修正し退行を防止"
+      },
+      "target_metric": "discovery_clicks_features",
+      "target_value": 150,
+      "followup_date": "2026-09-14",
+      "followup": null
     }
   }
 }
