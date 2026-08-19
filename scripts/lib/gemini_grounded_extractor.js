@@ -194,14 +194,20 @@ async function extractEditorReason(store, opts = {}) {
   }
 
   // 2) JSON 抽出（tool 無し）
+  // maxOutputTokens は 1024 だと日本語の editorReason/sources_used を含む JSON が
+  // 途中で切れて JSON.parse に失敗する実例があったため 2048 に引き上げ（ISSUE-098 実測）
   const extractResp = await callGemini(
-    genAI, modelName, buildExtractPrompt(store, researchText, groundingUrls), false, 1024
+    genAI, modelName, buildExtractPrompt(store, researchText, groundingUrls), false, 2048
   );
   let raw = (extractResp.text() || '').trim();
   raw = raw.replace(/^```(?:json)?\s*\n/, '').replace(/\n```\s*$/, '');
   let obj;
   try { obj = JSON.parse(raw); }
-  catch (e) { throw new Error(`Gemini 応答が JSON ではない: ${e.message}\nraw: ${raw.slice(0, 300)}`); }
+  catch (e) {
+    const finishReason = extractResp.candidates?.[0]?.finishReason || '?';
+    const hint = finishReason === 'MAX_TOKENS' ? '（maxOutputTokens上限に達して途中で切れた可能性）' : '';
+    throw new Error(`Gemini 応答が JSON ではない: ${e.message}${hint} finishReason=${finishReason}\nraw: ${raw.slice(0, 300)}`);
+  }
 
   // sources_used の URL がグラウンディングで実際に得られた URL かをコード側で検証
   // （LLM の自己申告を鵜呑みにしない・CSE 版より安全策を1段強化）
