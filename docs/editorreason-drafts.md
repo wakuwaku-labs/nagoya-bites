@@ -1,8 +1,8 @@
 # editorReason 自動生成 draft レビュー（ISSUE-045）
 
-> **生成**: 2026-08-19T06:41:03.137Z
-> **対象**: 上位 5 候補 / 生成 5 件
-> **結果**: OK 0 / INSUFFICIENT 5 / WARN 0 / ERR 0
+> **生成**: 2026-08-19T06:57:40.982Z
+> **対象**: 上位 3 候補 / 生成 3 件
+> **結果**: OK 0 / INSUFFICIENT 3 / WARN 0 / ERR 0
 > **自動マージ候補** (confidence ≥ 0.85): 0 件
 > **人手レビュー要**: 0 件
 
@@ -42,25 +42,5 @@
 - **editorReason**: (なし)
 
 <!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_大衆酒場フレンチマン -->
-
----
-
-### 千亀（栄 / 焼鳥・★）
-
-- **status**: INSUFFICIENT_EVIDENCE ⚪ INSUFFICIENT
-- **confidence**: 0
-- **editorReason**: (なし)
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_千亀 -->
-
----
-
-### ぎょうざや たつみ（新栄 / 餃子専門店・★）
-
-- **status**: INSUFFICIENT_EVIDENCE ⚪ INSUFFICIENT
-- **confidence**: 0
-- **editorReason**: (なし)
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_ぎょうざやたつみ -->
 
 ---
