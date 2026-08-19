@@ -5,12 +5,15 @@
  * ISSUE-045 自動化メインエントリ:
  *   1. 優先順候補（list_editorreason_candidates のロジック）を上位 N 件抽出
  *   2. 各店に対し Google CSE で業界系エビデンスを検索
- *   3. Claude API で「引用ベースの editorReason draft」を生成
+ *   3. Gemini API（無料枠）で「引用ベースの editorReason draft」を生成
  *   4. confidence >= AUTO_THRESHOLD は data/editorreason_drafts/ にキャッシュ
  *   5. すべての draft を docs/editorreason-drafts.md に追記（人手レビュー用）
  *
- * 必要シークレット: GOOGLE_CSE_KEY / GOOGLE_CSE_CX / ANTHROPIC_API_KEY
+ * 必要シークレット: GOOGLE_CSE_KEY / GOOGLE_CSE_CX / GEMINI_API_KEY
  *   未設定の場合は exit 0（CI 失敗扱いにしない・ISSUE-041 と同じパターン）
+ *   ISSUE-098: 元は ANTHROPIC_API_KEY 前提だったが、新規アカウント作成を避けるため
+ *   scripts/daily_store_discovery.js と共用の GEMINI_API_KEY（無料枠）に切替。
+ *   Anthropic 版は scripts/lib/anthropic_extractor.js にそのまま残置（将来切替可）
  *
  * 使い方:
  *   node scripts/build_editorreason_drafts.js              # 上位 30 件
@@ -23,7 +26,7 @@ const fs = require('fs');
 const path = require('path');
 const { loadStores } = require('./lib/load_stores');
 const cse = require('./lib/google_cse');
-const llm = require('./lib/anthropic_extractor');
+const llm = require('./lib/gemini_extractor');
 
 const ROOT = path.resolve(__dirname, '..');
 const SOURCES_DIR = path.join(ROOT, 'data', 'industry_sources');
@@ -47,7 +50,7 @@ if (!cse.isConfigured()) {
   process.exit(0);
 }
 if (!DRY && !llm.isConfigured()) {
-  console.error('ANTHROPIC_API_KEY 未設定 — exit 0 でスキップ');
+  console.error('GEMINI_API_KEY 未設定 — exit 0 でスキップ');
   console.error('セットアップ: docs/editorreason-automation-setup.md');
   process.exit(0);
 }

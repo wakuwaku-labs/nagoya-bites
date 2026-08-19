@@ -1,16 +1,20 @@
 name: editorReason batch
 
 # ISSUE-045 自動化: 上位候補 50 店の業界系エビデンスを Google CSE で取得 →
-# Claude API で「引用ベースの editorReason draft」を生成 →
+# Gemini API（無料枠）で「引用ベースの editorReason draft」を生成 →
 # docs/editorreason-drafts.md を更新してコミット。
 #
 # 人手レビュー後、scripts/approve_editorreason_drafts.js で editor_picks.json に反映。
 #
 # 必要 Secrets:
-#   GOOGLE_CSE_KEY   — Custom Search JSON API キー
-#   GOOGLE_CSE_CX    — 検索エンジン ID
-#   ANTHROPIC_API_KEY — Claude API キー
+#   GOOGLE_CSE_KEY  — Custom Search JSON API キー
+#   GOOGLE_CSE_CX   — 検索エンジン ID
+#   GEMINI_API_KEY  — Gemini API キー（scripts/daily_store_discovery.js と共用可・無料枠）
 # 未設定の場合は build_editorreason_drafts.js が exit 0 でスキップ（CI 失敗扱いにしない）。
+#
+# ISSUE-098: 元は ANTHROPIC_API_KEY 前提だったが、13週連続で未設定のままサイレント
+# 無稼働（success扱い）だったと判明。新規Anthropicアカウント作成を避けるため、既存の
+# GEMINI_API_KEY（daily-store-add.yml と共用）に切替（scripts/lib/gemini_extractor.js）。
 #
 # セットアップ手順: docs/editorreason-automation-setup.md
 
@@ -45,14 +49,14 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install deps (Anthropic SDK)
-        run: npm install --no-save @anthropic-ai/sdk
+      - name: Install deps (Gemini SDK)
+        run: npm install --no-save @google/generative-ai
 
       - name: Build editorReason drafts
         env:
           GOOGLE_CSE_KEY: ${{ secrets.GOOGLE_CSE_KEY }}
           GOOGLE_CSE_CX: ${{ secrets.GOOGLE_CSE_CX }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           TOP="${{ github.event.inputs.top || '50' }}"
           node scripts/build_editorreason_drafts.js --top "$TOP"

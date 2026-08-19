@@ -2,9 +2,16 @@
 
 > **このドキュメントの目的**
 > 「ネット上の業界人知識を大量に集めて editorReason に自動反映する」パイプラインの
-> 起動手順。コード側は **すべて実装・検証済み**。2 つの API キーを設定するだけで起動する。
+> 起動手順。コード側は **すべて実装・検証済み**。Google Custom Search の2つの値を
+> 設定するだけで起動する（LLM は既存の `GEMINI_API_KEY`＝無料枠を流用するため新規取得不要）。
 >
 > ISSUE-041 / 056（Google Places 自動取得）と同じ運用パターン。
+>
+> **ISSUE-098（2026-08-19）**: 元は Claude API（`ANTHROPIC_API_KEY`）前提だったが、
+> 13週連続でキー未設定のままサイレント無稼働（CI上は毎回success）だったと判明。
+> 新規 Anthropic アカウント作成を不要にするため、`scripts/daily_store_discovery.js`
+> と共用の `GEMINI_API_KEY`（Gemini API 無料枠）へ切替済み（`scripts/lib/gemini_extractor.js`）。
+> **これにより、あなたが新規に行う作業は Step 1・2（Google CSE）のみ**。
 
 ---
 
@@ -14,7 +21,7 @@
 ┌─────────────────────────────────────────────────────────────────────┐
 │ 1. scripts/build_editorreason_drafts.js（週次 CI で実行）              │
 │    入力: data/stores.json + 優先順スコアリング                          │
-│    処理: Google CSE で業界系クエリ実行 → Claude API で「引用ベース       │
+│    処理: Google CSE で業界系クエリ実行 → Gemini API で「引用ベース       │
 │         draft」生成                                                    │
 │    出力: data/industry_sources/{HPID}.json  ← 検索エビデンス           │
 │          data/editorreason_drafts/{HPID}.json ← LLM draft + sources   │
@@ -51,7 +58,7 @@
 
 ---
 
-## セットアップ手順（リポジトリオーナーのみ・所要 20 分）
+## セットアップ手順（リポジトリオーナーのみ・所要 10 分。LLMキーは既存流用のため新規取得不要）
 
 ### Step 1: Google Custom Search Engine（CSE）を作成
 
@@ -80,26 +87,33 @@
 - 有料 $5 / 1000 クエリ
 - 1 店あたり 5 クエリ → 週 50 店処理で **250 クエリ/週 ≈ $1.25/月**
 
-### Step 3: Anthropic API キーを取得
+### Step 3: LLM キー（新規取得不要）
 
-1. [console.anthropic.com](https://console.anthropic.com/) でアカウント作成
-2. 「API Keys」→「Create Key」
-3. 月次予算上限を設定（推奨: $30/月）
+抽出には `GEMINI_API_KEY` を使う（`scripts/daily_store_discovery.js` / `daily-store-add.yml`
+と共用の既存 GitHub Secret。Gemini 2.0/2.5 Flash 無料枠＝15回/分・1,500回/日で、
+週50店処理（1店あたり数回呼び出し）は無料枠の範囲内に収まる想定）。
+未取得の場合のみ [aistudio.google.com/apikey](https://aistudio.google.com/apikey) で発行し、
+`gh secret set GEMINI_API_KEY` で登録する。
 
-**コスト見積**:
-- 1 店あたり ~1,500 input tokens + ~500 output tokens
-- Sonnet 4.5 = $3/M input, $15/M output → 1 店 ~$0.012
-- 週 50 店 → **~$2.4/月**
+> 過去に Claude（Anthropic API）版で実装・実績があり、切り戻したい場合は
+> `scripts/build_editorreason_drafts.js` の `require('./lib/gemini_extractor')` を
+> `require('./lib/anthropic_extractor')` に戻せば良い（コードは削除せず残置）。
 
 ### Step 4: GitHub Secrets に登録
 
-GitHub リポジトリ →「Settings」→「Secrets and variables」→「Actions」で以下 3 つを登録:
+GitHub リポジトリ →「Settings」→「Secrets and variables」→「Actions」で以下 2 つを登録
+（`GEMINI_API_KEY` は既に登録済みなら不要）:
 
 | Secret name | 値 |
 |---|---|
 | `GOOGLE_CSE_KEY` | Step 2 の API キー |
 | `GOOGLE_CSE_CX` | Step 1 の検索エンジン ID（cx） |
-| `ANTHROPIC_API_KEY` | Step 3 の API キー |
+
+ターミナルから（値の入力を求められます・値を直接コマンドライン引数に書かないこと）:
+```bash
+gh secret set GOOGLE_CSE_KEY
+gh secret set GOOGLE_CSE_CX
+```
 
 ### Step 5: 初回手動実行
 
@@ -109,7 +123,7 @@ GitHub →「Actions」→「editorReason batch」→「Run workflow」（`workf
 ```bash
 export GOOGLE_CSE_KEY=＜key＞
 export GOOGLE_CSE_CX=＜cx＞
-export ANTHROPIC_API_KEY=＜key＞
+export GEMINI_API_KEY=＜key＞   # 既存キーを使う場合は自分の .env 等から
 node scripts/build_editorreason_drafts.js --top 30
 ```
 
@@ -161,11 +175,11 @@ git push origin main
 
 | 症状 | 原因 | 対処 |
 |---|---|---|
-| ログに「GOOGLE_CSE_KEY 未設定」「ANTHROPIC_API_KEY 未設定」 | Secret 未登録 | Step 4 を実施 |
+| ログに「GOOGLE_CSE_KEY 未設定」「GEMINI_API_KEY 未設定」 | Secret 未登録 | Step 4 を実施 |
 | 全 draft が INSUFFICIENT_EVIDENCE | CSE 検索結果が空 or 関連度低 | Step 1 で名古屋系メディアをサイト優先順位に追加 |
 | confidence が常に低い | snippet 短すぎる / 業界視点情報なし | 検索クエリを `lib/google_cse.js:discoverIndustryEvidence` で調整 |
 | API クォータ超過 | CSE 100 クエリ/日 上限 | 有料化 or `--top` を下げる |
-| LLM コストが想定超 | Anthropic API のトークン使用量 | Anthropic console で予算アラート設定 |
+| Gemini が 429（レート超過） | 無料枠 15回/分・1,500回/日 の上限 | `--top` を下げる、または実行間隔を空ける（コストは発生しない・待てば解消） |
 
 ---
 
