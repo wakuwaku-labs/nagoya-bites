@@ -67,7 +67,7 @@
 
 - **priority**: P1 → **status**: done（コード修正完了。実デプロイはオーナーのGASエディタ操作待ち）
 - **resolved**: 2026-08-19
-- **resolved_by**: commit 6aa1b0dda
+- **resolved_by**: commit eb62b63f6
 - **detected**: 2026-08-19
 - **category**: SEO / data-quality
 - **owner**: Marketer
@@ -3345,7 +3345,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-16 | Editor(routine) | SEO-008 実装。scripts/add_journal_site_intro.js を新設（冪等・art-body 先頭に NAGOYA BITES 紹介文+index.html リンクを注入）。既存 journal/2026-*.html 全100本に一括適用。run_journal_local.sh Step 5g を追加して今後の記事にも自動適用。acceptance（今後分+流入上位の既存記事に設置・JSON-LD・本文構造維持）充足 | ✅ commit 3ddad7a |
 | 2026-08-17 | Editor(routine) | SEO-015 実装・デプロイ — journal/_template.html および既存ジャーナル全102本の `@media(max-width:640px)` ブロックに `.art-body p{font-size:1rem;}` と `.art-lead{font-size:.95rem;}` を追加。モバイル13.8px（.86rem）→16px（1rem）相当に引き上げ。3パターン（multi-line/single-line-nav/custom）に対応。QA-1〜5全通過（build.jsのABORTはAPIキー不在の既存制約でCSS変更と無関係） | ✅ commit 520676b |
 | 2026-08-17 | Editor(routine) | SEO-038 done化 — GA4トップページランキング・週次レポートTOP5から高流入ジャーナル記事3本（らふ/リサール/北京）を横断分析。共通パターン（専門業態新店×価格設計分析×ニッチシーン×固有名詞ロングテールKW）を抽出し、agents/editor.md「ロングテール勝ち筋の型」セクションを新設（題材選定への反映・同型テーマ横展開候補も記載）。ISSUE-012（Instagram API連携Phase B）はFacebook App作成が次アクションのためowner=片桐にエスカレーション | ✅ commit 24d9e66 |
-| 2026-08-19 | Marketer(/solve-next) | SEO-062 実装・デプロイ — `.gas-deploy/Code.js` の直帰率/平均滞在がpagePath次元つきクエリのTOTAL行から算出され97%等の誤値を出していたバグを修正。ディメンションなしの`totalsRequest`を新設し`fetch_ga4_views.js`と同形のクエリに分離、`parseTotals()`の読み取り元を`response.rows[0]`に変更。実デプロイ（GASエディタへの反映）はオーナー操作待ち | ✅ commit 6aa1b0dda |
+| 2026-08-19 | Marketer(/solve-next) | SEO-062 実装・デプロイ — `.gas-deploy/Code.js` の直帰率/平均滞在がpagePath次元つきクエリのTOTAL行から算出され97%等の誤値を出していたバグを修正。ディメンションなしの`totalsRequest`を新設し`fetch_ga4_views.js`と同形のクエリに分離、`parseTotals()`の読み取り元を`response.rows[0]`に変更。実デプロイ（GASエディタへの反映）はオーナー操作待ち | ✅ commit eb62b63f6 |
 
 ---
 
