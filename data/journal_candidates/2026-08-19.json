@@ -1,0 +1,492 @@
+{
+  "date": "2026-08-19",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄の居酒屋で一人飲み、ラストオーダー30分前に入れる店の見分け方",
+      "verdict": "PASS",
+      "total": 107,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 7件 (オペ,人件費,回転,仕込み,業界,構造,慣習) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 3件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 150字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "過去に掲載歴のある店（90日超） → 2"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "栄で終電後に一人飲みするなら、閉店時刻ではなくL.O.を見る",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 91,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 6件 (オペ,人件費,仕込み,構造,慣習,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 128字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "91点（自動公開ライン 100点）。主な不足: topicality -13 / brand_fit -4 / search_intent -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄の居酒屋、一人飲みの可否は閉店1時間前の厨房が決めている",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 90,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 2,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 6件 (オペ,人件費,回転,仕込み,構造,慣習) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 132字 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "過去に掲載歴のある店（90日超） → 2"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "90点（自動公開ライン 100点）。主な不足: topicality -13 / brand_fit -4 / novelty -3"
+    },
+    {
+      "id": "c3",
+      "title_draft": "名駅のラーメンと栄の居酒屋、一人飲みでL.O.の意味が3倍違う",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 90,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 6件 (回転,歩留まり,仕込み,業界,構造,相場) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 128字 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "90点（自動公開ライン 100点）。主な不足: topicality -13 / brand_fit -7"
+    },
+    {
+      "id": "c4",
+      "title_draft": "栄の居酒屋、ドリンクL.O.が30分遅い店が一人客に強い理由",
+      "verdict": "HOLD",
+      "total": 74,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 2,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 22日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 5件 (原価,人件費,仕込み,構造,相場) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 129字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "過去に掲載歴のある店（90日超） → 2"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "industry_insider",
+      "title_draft": "栄の居酒屋で一人飲み、ラストオーダー30分前に入れる店の見分け方",
+      "lead_draft": "「L.O.の30分前に一人で入るのは迷惑か」は数年おきに燃える話題だが、店側の答えはたいてい営業時間の表記にもう書かれている。編集部が名古屋の3,697軒を実測したところ、料理L.O.から閉店までの猶予はジャンルで3倍以上開いていた。この数字は、店が自分で宣言した「注文したあと居ていい時間」である。",
+      "angle": "料理L.O.→閉店の猶予は店が公開したオペの設計値。名古屋3,697軒の実測から、仕込みと締め作業の構造、閉店帯の人件費配置、業態ごとの回転の慣習を読み、一人客が遅い時間に歓迎される店のサインを業界人の目で示す",
+      "main_store": {
+        "name": "手羽先むつみ 住吉店",
+        "id": "J004068058",
+        "area": "栄",
+        "genre": "和食"
+      },
+      "column_id": "COL-OPS-004",
+      "sources": [
+        {
+          "label": "名古屋情報通『一風堂 名駅3丁目店』",
+          "url": "https://jouhou.nagoya/ippudo-meieki/",
+          "date": "2026-08-16"
+        },
+        {
+          "label": "流通ニュース『日本フードサービス協会／6月の外食売上3.3％増、台風・曜日回りで客数失速』",
+          "url": "https://www.ryutsuu.biz/sales/s072812.html",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "日本経済新聞『6月の外食売上高3.3%増に鈍化 台風で客数減、居酒屋は減収に』",
+          "url": "https://www.nikkei.com/article/DGXZQOUC276YX0X20C26A7000000/",
+          "date": "2026-07-27"
+        },
+        {
+          "label": "Yahoo!ニュース エキスパート『2026年は飲食業界の「人材難」が加速する』",
+          "url": "https://news.yahoo.co.jp/expert/articles/37511e3df1ae1657933bfbfd0a63dd6cf99d4587",
+          "date": "2026-01-10"
+        },
+        {
+          "label": "Yahoo!ニュース エキスパート『飲食店にラストオーダー時間の「ぎりぎり入店」は迷惑？』",
+          "url": "https://news.yahoo.co.jp/expert/articles/2483e83f69947bf74259894f2836d42d5d6909b7",
+          "date": "2023-12-03"
+        },
+        {
+          "label": "マネーポストWEB『飲食店「ラストオーダー10分前の入店」はアリかナシか』",
+          "url": "https://www.moneypost.jp/905719",
+          "date": "2022-05-08"
+        },
+        {
+          "label": "手羽先むつみ 住吉店 公式Instagram",
+          "url": "https://www.instagram.com/tebasakimutsumi.sumiyoshi/reel/DSHYWqWESp5/"
+        },
+        {
+          "label": "お晩菜と炭火焼き みかん 栄 錦 伏見店 公式Instagram",
+          "url": "https://www.instagram.com/obanzai_mikan0515/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "title_draft": "栄の居酒屋、一人飲みの可否は閉店1時間前の厨房が決めている",
+      "lead_draft": "閉店1時間前の厨房は、料理を出しながら翌日の仕込みと片付けを同時に回している。名古屋の居酒屋1,580軒の営業時間表記を読むと、その1時間をどう設計しているかが店ごとにはっきり分かれる。遅い時間の一人客が歓迎される店とそうでない店の差は、精神論ではなくここにある。",
+      "angle": "閉店帯の厨房は提供と仕込みと締め作業を並走させる。人件費のシフト構造と回転の慣習から、居酒屋1,580軒の営業時間表記が示すオペ設計の差を読む",
+      "main_store": {
+        "name": "お晩菜と炭火焼き みかん 栄 錦 伏見店",
+        "id": "J004050204",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "column_id": "COL-OPS-004",
+      "sources": [
+        {
+          "label": "名古屋情報通『一風堂 名駅3丁目店』",
+          "url": "https://jouhou.nagoya/ippudo-meieki/",
+          "date": "2026-08-16"
+        },
+        {
+          "label": "流通ニュース『6月の外食売上3.3％増、客数失速』",
+          "url": "https://www.ryutsuu.biz/sales/s072812.html",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "Yahoo!ニュース エキスパート『ぎりぎり入店は迷惑？』",
+          "url": "https://news.yahoo.co.jp/expert/articles/2483e83f69947bf74259894f2836d42d5d6909b7",
+          "date": "2023-12-03"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "industry_insider",
+      "title_draft": "名駅のラーメンと栄の居酒屋、一人飲みでL.O.の意味が3倍違う",
+      "lead_draft": "同じ「ラストオーダー」でも、ラーメン店と居酒屋では意味が違う。名古屋のラーメン45軒は料理L.O.から閉店まで平均18.8分、居酒屋1,580軒は48.5分。この差は接客の良し悪しではなく、一人あたりの滞在時間と回転を前提にした業態設計の違いから来ている。",
+      "angle": "L.O.猶予の平均はラーメン18.8分・居酒屋48.5分。歩留まりと回転を前提にした業態別の仕込み構造の違いから、同じ表記が別の意味を持つ理由を業界の相場観で読む",
+      "main_store": {
+        "name": "らぁめん翠蓮",
+        "id": "J001264628",
+        "area": "いりなか",
+        "genre": "ラーメン"
+      },
+      "column_id": "COL-OPS-004",
+      "sources": [
+        {
+          "label": "名古屋情報通『一風堂 名駅3丁目店』",
+          "url": "https://jouhou.nagoya/ippudo-meieki/",
+          "date": "2026-08-16"
+        },
+        {
+          "label": "流通ニュース『6月の外食売上3.3％増、客数失速』",
+          "url": "https://www.ryutsuu.biz/sales/s072812.html",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "Yahoo!ニュース エキスパート『2026年は飲食業界の「人材難」が加速する』",
+          "url": "https://news.yahoo.co.jp/expert/articles/37511e3df1ae1657933bfbfd0a63dd6cf99d4587",
+          "date": "2026-01-10"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "industry_insider",
+      "title_draft": "栄の居酒屋、ドリンクL.O.が30分遅い店が一人客に強い理由",
+      "lead_draft": "料理とドリンクのラストオーダーを別々に出している店がある。名古屋の3,671軒を見ると、ドリンクの方が遅いのは31%、平均32分後ろだった。この30分は「食べ終わってからもう一杯」を売る時間であり、遅い時間に一人で来る客を歓迎するかどうかの意思表示でもある。",
+      "angle": "ドリンクL.O.を料理より後ろに置く31%の店は、原価率の低い一杯で閉店帯の人件費を回収する構造を選んでいる。相場と仕込みの観点から遅い一人客の可否を読む",
+      "main_store": {
+        "name": "手羽先むつみ 住吉店",
+        "id": "J004068058",
+        "area": "栄",
+        "genre": "和食"
+      },
+      "column_id": "COL-OPS-004",
+      "sources": [
+        {
+          "label": "流通ニュース『6月の外食売上3.3％増、客数失速』",
+          "url": "https://www.ryutsuu.biz/sales/s072812.html",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "日本経済新聞『6月の外食売上高3.3%増に鈍化』",
+          "url": "https://www.nikkei.com/article/DGXZQOUC276YX0X20C26A7000000/",
+          "date": "2026-07-27"
+        },
+        {
+          "label": "Yahoo!ニュース エキスパート『ぎりぎり入店は迷惑？』",
+          "url": "https://news.yahoo.co.jp/expert/articles/2483e83f69947bf74259894f2836d42d5d6909b7",
+          "date": "2023-12-03"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "industry_insider",
+      "title_draft": "栄で終電後に一人飲みするなら、閉店時刻ではなくL.O.を見る",
+      "lead_draft": "深夜まで開いている店を探すとき、閉店時刻だけを見て向かうと失敗する。名古屋で翌1時以降まで営業する店の表記を読むと、閉店時刻が同じでも料理のラストオーダーは1時間近く違う。終電後の使い勝手を決めるのは閉店時刻ではなく、L.O.から閉店までの猶予の方である。",
+      "angle": "深夜帯の一人飲みは閉店時刻ではなくL.O.猶予で選ぶ。深夜営業の人件費と仕込みの構造、翌日の繁忙を織り込んだオペの慣習から選び方を示す",
+      "main_store": {
+        "name": "鮮魚とお晩菜 居酒家 くちこう",
+        "id": "J004558903",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "column_id": "COL-OPS-004",
+      "sources": [
+        {
+          "label": "名古屋情報通『一風堂 名駅3丁目店』",
+          "url": "https://jouhou.nagoya/ippudo-meieki/",
+          "date": "2026-08-16"
+        },
+        {
+          "label": "流通ニュース『6月の外食売上3.3％増、客数失速』",
+          "url": "https://www.ryutsuu.biz/sales/s072812.html",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "マネーポストWEB『飲食店「ラストオーダー10分前の入店」はアリかナシか』",
+          "url": "https://www.moneypost.jp/905719",
+          "date": "2022-05-08"
+        }
+      ]
+    }
+  ]
+}
