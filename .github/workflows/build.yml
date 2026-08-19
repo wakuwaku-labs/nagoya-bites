@@ -298,6 +298,16 @@ jobs:
             exit 1
           fi
 
+      - name: 口コミ信頼度の公開文言を監査（旧名称・非難語の混入検知）
+        # 「口コミ信頼度」（旧スコア信頼度・整合度）は名称・語彙が data/trust_display_policy.json の
+        # 1箇所に統一されている前提で運用する。旧名称（整合度順・スコア信頼度等）や、店を名指しで
+        # 疑う語（疑い・サクラ・ガチャ・化粧・評価操作）が公開面に残ると、ブランドの一貫性と
+        # 名誉毀損リスク回避の両方が崩れる。判定は data/crosscheck.json の reason・index.html の
+        # 表示区間・stores/*.html の内訳・features/*.html の名称のみ（制約10）。
+        # 位置に意味がある: commit & push の「後」に置くこと（前に置くと文言ミスで店舗データの
+        # 日次更新まで止まる）。ここで落ちれば Actions の失敗通知がオーナーのメールに届く。
+        run: node scripts/audit_trust_wording.js --check
+
       - name: OGP画像の配信可否を監査（SNSサムネイルが出ない状態の検知）
         # X / Facebook / LINE の OGP クローラは SVG をレンダリングせず、相対パスも解決しない。
         # どちらか一方でも崩れると「SNSに貼ってもサムネイルが出ない」状態になり、

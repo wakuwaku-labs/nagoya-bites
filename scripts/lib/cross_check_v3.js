@@ -31,6 +31,13 @@
 // フラグ再定義: mediaDiscrepancy を廃止し highRatingNoFootprint に置換（食べログ点数を
 // 取得しない Strategic Skip 方針・ISSUE-048 を維持したまま、機械検証可能な事実だけで
 // 「高評価なのに第三者の足跡が無い」を捉える）。
+// 2026-08-20 追記（口コミ信頼度 v2.1 導入時）: v2.0（scripts/lib/cross_check.js）は
+// 各軸に observed:boolean、S7 に parts:[{id,score,max,observed,reason}] を追加し、
+// 消費者向けの「口コミ信頼度」（scripts/lib/trust_display.js）が観測できた項目だけで
+// 採点する仕組みに移行済み。v3.0 を活性化するときは、この v3 実装にも同じ
+// observed/parts 付与と非難語（疑い/サクラ/ガチャ/化粧/評価操作）の排除を行ってから
+// build.js に接続すること（trust_display.js は breakdown の observed 前提で動く）。
+
 function computeCrossCheckScore(store, placesHistoryEntry) {
   const breakdown = {
     s1_googleRatingVsCount:    { score: 0, max: 12, reason: '' },

@@ -14,8 +14,11 @@ const fs    = require('fs');
 const path  = require('path');
 const { titleAreaLabel } = require('./scripts/lib/area_label');
 
-// 信頼度スコアの内訳（integrity-method.html の「02 — 8 Signals」表と同一のラベルを使用。
-// crosscheck.json はホットペッパーID をキーに軸ごとの score/max/reason を持つ）
+// 口コミ信頼度の内訳。語彙・段階は data/trust_display_policy.json（唯一の情報源）、判定は
+// scripts/lib/trust_display.js。crosscheck.json はホットペッパーID をキーに 8 軸の
+// score/max/reason/observed と reviewTrust（段階・見出し・検証カバー率）を持つ。
+const trustDisplay = require('./scripts/lib/trust_display');
+const TRUST_POLICY = trustDisplay.loadPolicy();
 const CROSSCHECK = (() => {
   try {
     return JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'crosscheck.json'), 'utf8'));
@@ -23,41 +26,58 @@ const CROSSCHECK = (() => {
     return {};
   }
 })();
-const AXIS_LABELS = {
-  s1_googleRatingVsCount: 'Google★ vs 件数比率',
-  s2_reviewCountAbs:      'レビュー件数絶対値',
-  s3_dataCompleteness:    'データ充実度',
-  s4_mediaCrossCheck:     '他媒体掲載クロスチェック',
-  s5_operationContinuity: '営業実態継続',
-  s6_instagramPresence:   'Instagram 実在シグナル',
-  s7_reviewTimeseries:    'レビュー時系列健全性',
-  s8_reviewDistribution:  '評価分布の自然性'
-};
-const AXIS_ORDER = Object.keys(AXIS_LABELS);
 
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 }
 
-// 店舗ページに「なぜこのスコアなのか」を軸ごとの根拠付きで表示する。
+// 店舗ページに「なぜこの段階なのか」を検証項目ごとの観測事実付きで表示する。
 // 自己申告値ではなく crosscheck.json（scripts/lib/cross_check.js が算出した検証可能な事実）
-// をそのまま出す（CLAUDE.md 制約10）。
-function buildTrustBreakdown(cc, ccs) {
-  if (!cc) return '';
-  const rows = AXIS_ORDER.filter(k => cc[k]).map(k => {
-    const axis = cc[k];
-    return `      <div class="trust-axis-row">
-        <span class="trust-axis-name">${escapeHtml(AXIS_LABELS[k])}</span>
+// をそのまま出す（CLAUDE.md 制約10）。reviewTrust が無い旧形式でも例外を投げない。
+function buildTrustBreakdown(cc, rt) {
+  if (!cc || !rt || !rt.tier) return '';
+  const P = TRUST_POLICY;
+  const compactK = {};
+  if (cc.reviewTrust && Array.isArray(cc.reviewTrust.k)) for (const k of cc.reviewTrust.k) compactK[k[0]] = k;
+  const rows = P.checks.map(chk => {
+    const axis = cc[chk.axis];
+    if (!axis) return '';
+    let node = axis;
+    if (chk.part) node = Array.isArray(axis.parts) ? axis.parts.find(x => x.id === chk.part) : null;
+    if (!node) return '';
+    const k = compactK[chk.id];
+    // 旧形式（observed 無し・CI ビルド前）は観測状態が分からないので注記なしで点数だけ出す
+    const known = !!k || typeof node.observed === 'boolean';
+    const observed = k ? !!k[1] : (known ? !!node.observed : true);
+    const sc = k ? k[2] : node.score, mx = k ? k[3] : node.max;
+    return `      <div class="trust-axis-row${observed ? '' : ' trust-axis-unobserved'}">
+        <span class="trust-axis-name">${escapeHtml(chk.label)}</span>
+        <span class="trust-axis-score">${observed ? `${sc}/${mx}点` : '—'}</span>
+        <span class="trust-axis-reason">${escapeHtml(node.reason || '')}${observed ? '' : `（${escapeHtml(P.notObservedLabel)}・採点に含めません）`}</span>
+      </div>`;
+  }).filter(Boolean).join('\n');
+  const metaRows = (P.meta || []).map(m => {
+    const axis = cc[m.axis];
+    if (!axis) return '';
+    return `      <div class="trust-axis-row trust-axis-meta">
+        <span class="trust-axis-name">${escapeHtml(m.label)}</span>
         <span class="trust-axis-score">${axis.score}/${axis.max}点</span>
         <span class="trust-axis-reason">${escapeHtml(axis.reason || '')}</span>
       </div>`;
-  }).join('\n');
+  }).filter(Boolean).join('\n');
   if (!rows) return '';
+  const tierDef = rt.tier === P.na.id ? P.na : (P.tiers.find(t => t.id === rt.tier) || P.na);
+  const scoreTxt = typeof rt.score === 'number' ? `${rt.score}` : '—';
+  const metaLine = `${P.coverageLabel.replace('{observed}', rt.coverage.observed).replace('{total}', rt.coverage.total)}${rt.lastChecked ? ' ・ ' + P.lastCheckedLabel.replace('{date}', rt.lastChecked) : ''}`;
   return `
   <div class="trust-breakdown">
-    <h2>信頼度スコアの内訳（${ccs}/100点）</h2>
-    <p class="trust-breakdown-intro">広告料による順位操作はありません。Google評価・レビュー時系列・他媒体掲載・Instagram実在性など8つの検証可能な軸から算定しています。<a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
+    <h2>${escapeHtml(P.name)}の内訳</h2>
+    <p class="trust-headline"><span class="trust-tier ${tierDef.cssClass}">${escapeHtml(rt.tier)}</span><span class="trust-score">${scoreTxt} / 100</span> — ${escapeHtml(rt.headline || '')}</p>
+    <p class="trust-meta-line">${escapeHtml(metaLine)}</p>
+    <p class="trust-breakdown-intro">${escapeHtml(P.name)}は「${escapeHtml(P.question)}」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
 ${rows}
+    <p class="trust-meta-heading">${escapeHtml(P.metaHeading)}</p>
+${metaRows}
   </div>`;
 }
 
@@ -350,9 +370,23 @@ function renderStorePage(s, slug) {
   const access   = s['アクセス'] || '';
   const score    = s['Google評価'] || '';
   const ccs      = Number(s['crossCheckScore'] || 0);
-  const ccsHasScore = typeof s['crossCheckScore'] === 'number';
-  const ccsPending  = ccsHasScore && ccs < 50;
-  const ccsLabel = ccs >= 90 ? '✓✓✓ 信頼度 高' : ccs >= 70 ? '✓✓ 信頼度 中' : ccs >= 50 ? '✓ 信頼度 検証中' : (ccsPending ? `信頼度 ${ccs} ／ 参考値` : '');
+  // 口コミ信頼度（公開値）。stores.json の reviewTrust（slim {s,t,c,d}）から段階・数字・見出しを復元。
+  // 無い場合（CI ビルド前の旧データ）はバッジ・内訳を出さない
+  const rtSlim = (s.reviewTrust && s.reviewTrust.t) ? s.reviewTrust : null;
+  const rtTierDef = rtSlim ? (rtSlim.t === TRUST_POLICY.na.id ? TRUST_POLICY.na : (TRUST_POLICY.tiers.find(t => t.id === rtSlim.t) || TRUST_POLICY.na)) : null;
+  const rtCov = rtSlim ? String(rtSlim.c || '').split('/') : [];
+  const rtRating = parseFloat(s['Google評価']) || 0, rtCount = parseInt(s['口コミ数'] || '', 10) || 0;
+  const rt = rtSlim ? {
+    score: typeof rtSlim.s === 'number' ? rtSlim.s : null,
+    tier: rtSlim.t,
+    headline: (rtRating > 0 && rtCount > 0)
+      ? TRUST_POLICY.headline.replace('{rating}', rtRating).replace('{count}', rtCount).replace('{advice}', rtTierDef.advice)
+      : TRUST_POLICY.headlineNoRating.replace('{advice}', rtTierDef.advice),
+    coverage: { observed: rtCov[0] || '0', total: rtCov[1] || TRUST_POLICY.checks.length },
+    lastChecked: rtSlim.d || ''
+  } : null;
+  const ccsPending  = !!(rt && rt.tier === TRUST_POLICY.na.id);
+  const ccsLabel = rt ? `${TRUST_POLICY.name} ${rt.tier}` : '';
   const reviewCountRaw = parseInt(s['口コミ数'] || '', 10);
   const reviewCount    = Number.isFinite(reviewCountRaw) && reviewCountRaw > 0 ? reviewCountRaw : 0;
   const point    = s['おすすめポイント'] || '';
@@ -362,7 +396,7 @@ function renderStorePage(s, slug) {
     .replace(/(imgfp\.hotp\.jp\/.+?)_(?:58|100|168|238|320)\.jpg/, '$1_480.jpg');
   const hpId     = s['ホットペッパーID'] || '';
   const cc       = hpId && CROSSCHECK[hpId] ? CROSSCHECK[hpId] : null;
-  const trustBreakdownHtml = cc ? buildTrustBreakdown(cc, ccs) : '';
+  const trustBreakdownHtml = cc ? buildTrustBreakdown(cc, rt) : '';
   const hpUrl    = hpId ? `https://www.hotpepper.jp/str${hpId}/` : '';
   const igUrl    = s['Instagram'] || '';
   const tbUrl    = s['食べログURL'] || '';
@@ -417,13 +451,13 @@ function renderStorePage(s, slug) {
       ...(reviewCount > 0 ? { 'ratingCount': String(reviewCount) } : {})
     };
   }
-  if (cc) {
+  if (rt && typeof rt.score === 'number') {
     jsonLd.additionalProperty = [{
       '@type': 'PropertyValue',
-      'name': '信頼性スコア（第三者要因による独自算定・広告非関与）',
-      'value': ccs,
+      'name': `${TRUST_POLICY.name}（独自算定・広告非関与・段階 ${rt.tier}）`,
+      'value': rt.score,
       'maxValue': 100,
-      'description': 'Google評価×件数・レビュー時系列健全性・他媒体掲載・Instagram実在性など8軸の検証可能な事実から算定。算定方法: https://nagoya-bites.com/features/integrity-method.html'
+      'description': `「${TRUST_POLICY.question}」を、Googleの件数・★と件数のバランス・直近の口コミの傾向・評価の分布・第三者メディアの掲載のうち観測できた検証項目（${rt.coverage.observed}/${rt.coverage.total}）だけで採点した参考指標。段階 ${rt.tier}＝${rtTierDef.label}。店の良し悪しの評価ではない。算定方法: https://nagoya-bites.com/features/integrity-method.html`
     }];
   }
 
@@ -596,6 +630,8 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem
 .score svg{width:14px;height:14px;fill:#d4a017;}
 .ccs-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.12em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.18rem .6rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
 .ccs-badge.ccs-badge-pending{color:#767676;border-color:rgba(120,120,120,.35);background:rgba(120,120,120,.06);}
+.ccs-badge .ccs-tier{font-weight:800;font-size:.7rem;margin-left:.25rem;letter-spacing:0;}
+.cc-tier-A{color:#2e7d32;}.cc-tier-B{color:#46752a;}.cc-tier-C{color:#5f6b63;}.cc-tier-D{color:#767676;}.cc-tier-NA{color:#767676;font-style:italic;}
 .point-box{background:rgba(122,92,16,.07);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:.9rem 1.1rem;margin-bottom:1.6rem;}
 .point-box p{font-size:.85rem;line-height:1.9;color:var(--text);}
 .info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.6rem;padding:1.2rem;background:var(--bg2);border:1px solid var(--border);}
@@ -621,6 +657,13 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem
 .trust-axis-name{font-weight:600;min-width:9.5rem;}
 .trust-axis-score{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--gold);white-space:nowrap;}
 .trust-axis-reason{color:var(--muted);flex:1 1 14rem;}
+.trust-axis-unobserved .trust-axis-score,.trust-axis-unobserved .trust-axis-reason{color:var(--dim);}
+.trust-axis-meta .trust-axis-score{color:var(--dim);}
+.trust-headline{font-size:.9rem;line-height:1.7;margin:.2rem 0 .1rem;}
+.trust-headline .trust-tier{font-family:'DM Mono',monospace;font-weight:800;font-size:1.35rem;margin-right:.4rem;vertical-align:-.05em;}
+.trust-headline .trust-score{font-family:'DM Mono',monospace;font-size:.8rem;color:var(--muted);margin-right:.2rem;}
+.trust-meta-line{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:var(--dim);margin:0 0 .6rem;}
+.trust-meta-heading{font-size:.7rem;font-weight:600;color:var(--dim);margin:.9rem 0 .1rem;}
 .related-features{margin:2rem 0 1.8rem;padding:1.3rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
 .related-features h2{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
 .related-features ul{list-style:none;padding:0;margin:0;}
@@ -655,7 +698,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <h1>${name}</h1>
   <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
     ${score ? `<div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>${score}</div>` : ''}
-    ${ccsLabel ? `<span class="ccs-badge${ccsPending ? ' ccs-badge-pending' : ''}" title="スコア信頼度: 複数媒体シグナルによる客観評価${ccsPending ? '（データ蓄積中の参考値・低評価を示すものではありません）' : ''}">${ccsLabel}</span>` : ''}
+    ${ccsLabel ? `<span class="ccs-badge${ccsPending ? ' ccs-badge-pending' : ''}" title="${escapeHtml(TRUST_POLICY.name)} ${escapeHtml(rt.tier)}：${escapeHtml(rtTierDef.label)}${ccsPending ? '（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）' : ''}">${escapeHtml(TRUST_POLICY.name)}<span class="ccs-tier ${rtTierDef.cssClass}">${escapeHtml(rt.tier)}</span></span>` : ''}
   </div>
 
   ${point ? `<div class="point-box"><p>${point}</p></div>` : ''}

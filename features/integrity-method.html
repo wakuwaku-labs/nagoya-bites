@@ -9,12 +9,12 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>スコア信頼度の作り方｜NAGOYA BITES — サクラ口コミ問題に第三者として向き合う</title>
-<meta name="description" content="食べログ・Googleマップなどの口コミからサクラを排除して、複数媒体・複数シグナルで裏付けたスコア信頼度を機械的に算出する仕組みを完全公開。なぜ「サクラ確率」と呼ばないのか、何をしないと決めたのかを含めて、第三者検証可能な形で開示します。">
-<meta name="keywords" content="NAGOYA BITES,スコア信頼度,サクラチェッカー,飲食店,口コミ,信頼度,名古屋グルメ,編集独立性">
+<title>口コミ信頼度の作り方｜NAGOYA BITES — 「その店の★は信じてよいか」を第三者として判定する方法論</title>
+<meta name="description" content="NAGOYA BITES の「口コミ信頼度」（A〜D・0-100）の作り方を完全公開。「この店のGoogle★と件数は、そのまま信じてよいか」を、観測できた検証項目だけで機械的に採点する方法論・段階の定義・やらないと決めたこと・異議申立ての手順。">
+<meta name="keywords" content="NAGOYA BITES,口コミ信頼度,口コミ 信頼性,飲食店,口コミ,信頼度,名古屋グルメ,編集独立性">
 <link rel="canonical" href="https://nagoya-bites.com/features/integrity-method.html">
-<meta property="og:title" content="スコア信頼度の作り方｜NAGOYA BITES">
-<meta property="og:description" content="複数媒体・複数シグナルで裏付けたスコア信頼度を機械的に算出する仕組みを完全公開。サクラを「確率」で名指しせず、中立な参考指標として開示する設計判断。">
+<meta property="og:title" content="口コミ信頼度の作り方｜NAGOYA BITES">
+<meta property="og:description" content="「この店のGoogle★と件数は、そのまま信じてよいか」を観測できた検証項目だけで採点する口コミ信頼度（A〜D）の方法論を完全公開。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://nagoya-bites.com/features/integrity-method.html">
 <meta property="og:site_name" content="NAGOYA BITES">
@@ -29,13 +29,13 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "スコア信頼度の作り方｜NAGOYA BITES",
-  "description": "複数媒体・複数シグナルで裏付けたスコア信頼度を機械的に算出する仕組み。サクラを「確率」で名指しせず、中立な参考指標として開示する設計判断を完全公開。",
+  "headline": "口コミ信頼度の作り方｜NAGOYA BITES",
+  "description": "「この店のGoogle★と件数は、そのまま信じてよいか」を観測できた検証項目だけで採点する口コミ信頼度（A〜D・0-100）の方法論。名指しではなく読者への助言として示す設計判断を完全公開。",
   "author": {"@type": "Organization", "name": "NAGOYA BITES"},
   "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
   "url": "https://nagoya-bites.com/features/integrity-method.html",
   "datePublished": "2026-05-11",
-  "dateModified": "2026-05-11",
+  "dateModified": "2026-08-20",
   "mainEntityOfPage": "https://nagoya-bites.com/features/integrity-method.html"
 }
 </script>
@@ -46,7 +46,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   "itemListElement": [
     {"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},
     {"@type":"ListItem","position":2,"name":"特集記事","item":"https://nagoya-bites.com/features/"},
-    {"@type":"ListItem","position":3,"name":"スコア信頼度の作り方"}
+    {"@type":"ListItem","position":3,"name":"口コミ信頼度の作り方"}
   ]
 }
 </script>
@@ -123,13 +123,13 @@ footer a{color:var(--muted);text-decoration:none;}
   <img src="../assets/feature-figures/integrity-method.svg" alt="編集の透明性" loading="eager" fetchpriority="high">
 </div>
 <article class="art-hero">
-  <p class="art-eyebrow">SAKURA-FREE / TRUST METHODOLOGY</p>
-  <h1 class="art-title">スコア<em>信頼度</em>の作り方</h1>
-  <p class="art-meta"><span>更新 2026-05-11</span><span>NAGOYA BITES 編集部</span><span>方法論全公開</span></p>
+  <p class="art-eyebrow">REVIEW TRUST / METHODOLOGY</p>
+  <h1 class="art-title">口コミ<em>信頼度</em>の作り方</h1>
+  <p class="art-meta"><span>更新 2026-08-20</span><span>NAGOYA BITES 編集部</span><span>方法論全公開・scoreVersion 2.1</span></p>
   <div class="art-lead">
     <p>食べログ・Googleマップ・Hot Pepper・SNS — 飲食店の評価情報は複数の媒体に分散しており、各媒体には<strong>金銭授受や無償提供を背景にした口コミ（いわゆる「桜」）</strong>が混じっている、というのが業界の率直な現実です。</p>
-    <p>NAGOYA BITES では、各媒体の口コミ本文を取得することはせず（運営側の利用規約と表現の自由を尊重するため）、<strong>取得可能な公式 API と既に編集部が確認しているデータだけを使い、複数シグナルでの整合度を機械的に算出</strong>する仕組みを導入しました。</p>
-    <p>このページでは、その仕組みのすべて — シグナル定義、計算式、何をやらないと決めたか、誤判定が起きたときの異議申立て手順 — を第三者が検証できる形で開示します。</p>
+    <p>NAGOYA BITES の「口コミ信頼度」は、<strong>「この店の Google の★と件数は、そのまま信じてよいか」</strong>という 1 つの問いに答える指標です。各媒体の口コミ本文は取得せず（運営側の利用規約と表現の自由を尊重するため）、公式 API で取れる事実だけを使い、<strong>観測できた検証項目だけで機械的に採点</strong>します。店の良し悪しを評価するものではありません。</p>
+    <p>このページでは、その仕組みのすべて — 検証項目、計算式、段階の定義、何をやらないと決めたか、誤判定が起きたときの異議申立て手順 — を第三者が検証できる形で開示します。1 分で読める要約は <a href="review-trust.html" style="color:var(--green);text-decoration:underline;">口コミ信頼度の読み方</a> にあります。</p>
   </div>
 </article>
 
@@ -138,7 +138,7 @@ footer a{color:var(--muted);text-decoration:none;}
   <h2 class="section-label">01 — Why We Don't Call It "Sakura Score"</h2>
   <p class="body-para">
     一般的な「サクラチェッカー」型のサービスは、各レビューや店舗ごとに <strong>「サクラ確率 87%」</strong> のような数値を出します。
-    NAGOYA BITES では、機械統計の発想を借りつつも、<strong>同じ数値を「サクラ確率」とは呼びません</strong>。代わりに「スコア信頼度」と中立的な名前を採用しています。
+    NAGOYA BITES では、機械統計の発想を借りつつも、<strong>同じ数値を「サクラ確率」とは呼びません</strong>。代わりに「口コミ信頼度」— その店の★と件数をどれだけ信じてよいか — という読者向けの名前を採用し、段階の語も店への評価ではなく<strong>読者への助言</strong>（「そのまま参考にできます」「他の情報と合わせて判断を」）として書いています。
   </p>
   <p class="body-para">
     理由は 3 つあります。
@@ -148,14 +148,31 @@ footer a{color:var(--muted);text-decoration:none;}
     <ul>
       <li><strong>誤判定リスク。</strong> 機械統計は必ず偽陽性・偽陰性を含みます。誠実に営業している優良店に「サクラ確率 80%」と表示してしまった場合、店舗側にとっての名誉毀損リスク・経営リスクは甚大です。</li>
       <li><strong>媒体名指しのリスク。</strong> 「この店のサクラは食べログに多い」のような名指しは、当該媒体との関係性も含めて訴訟リスクを高めます。NAGOYA BITES は<strong>個別媒体名で「サクラあり」と断定する表現を一切採用しません</strong>。</li>
-      <li><strong>本質は確率ではなく整合度。</strong> 我々が機械で測れるのは「複数媒体・複数シグナルでの一致度」であって、個別レビューの真贋ではありません。表現を実態と一致させることが、長く運営するうえでの誠実さです。</li>
+      <li><strong>本質は確率ではなく整合性。</strong> 我々が機械で測れるのは「件数・★・直近の傾向・分布・第三者の足跡が同じ方向を指しているか」であって、個別レビューの真贋ではありません。表現を実態と一致させることが、長く運営するうえでの誠実さです。</li>
+      <li><strong>公開文言は観測事実だけを書く。</strong> 店舗ページやモーダルの内訳には「直近5件の平均★が全体より+0.9高い」のように<strong>観測された事実だけ</strong>を書き、「疑い」のような結論語は書きません（2026-08-20 に全面改訂。旧版では直近5件が全て★5という良店ほど当たる条件に結論語を付けており、半数近い店に出ていました）。結論は段階 A〜D と助言語が担います。</li>
     </ul>
   </div>
 
-  <h2 class="section-label">02 — 8 Signals: 8 つのシグナル（scoreVersion 2.0）</h2>
+  <h2 class="section-label">02 — What The Number Answers: この数字が答える問い</h2>
   <p class="art-intro">
-    整合度は次の 8 シグナルの合計（0〜100 点）で表現します。各シグナルは独立に評価され、合計値が高いほど「複数の根拠が同じ方向を指している」状態を意味します。
-    <strong>S7・S8 は「点数の変動・時系列パターン（★5/★1 の異常多発、オープン時の急増失速、化粧剥がれ）」を真のサクラ判定要素として組み込んだ新規シグナル</strong>です。
+    口コミ信頼度が答えるのは <strong>「この店の Google の★と件数は、そのまま信じてよいか」</strong> の 1 つだけです。
+    店の良し悪し・料理の評価・当サイトの推薦度ではありません。段階は次の 5 つで、語はすべて読者への助言として書いています。
+  </p>
+  <div class="tier-grid">
+    <div class="tier-card"><div class="tier-num">A ／ 90 — 100</div><div class="tier-label">Advice</div><div class="tier-body"><strong>そのまま参考にできます。</strong>観測できた検証項目のほぼ全てで、★と件数に不自然な点が見つかりませんでした。</div></div>
+    <div class="tier-card tier-mid"><div class="tier-num">B ／ 75 — 89</div><div class="tier-label">Advice</div><div class="tier-body"><strong>おおむね参考にできます。</strong>一部の項目で軽微な乖離や件数の薄さがあります。</div></div>
+    <div class="tier-card tier-low"><div class="tier-num">C ／ 60 — 74</div><div class="tier-label">Advice</div><div class="tier-body"><strong>参考程度に。</strong>件数が少ない、直近の評価が全体と離れている等、★を額面どおりに受け取りにくい材料があります。</div></div>
+    <div class="tier-card tier-low"><div class="tier-num">D ／ 0 — 59</div><div class="tier-label">Advice</div><div class="tier-body"><strong>他の情報と合わせて判断を。</strong>件数不足や分布の偏りなど、★だけで判断しない方がよい材料が重なっています。店を非難する語は使いません。</div></div>
+    <div class="tier-card tier-hidden"><div class="tier-num">— ／ 判定材料不足</div><div class="tier-label">Pending</div><div class="tier-body"><strong>判定材料が足りません。</strong>観測できた検証項目が 3 未満（Google の口コミデータが未取得など）。評価が低いことを示すものではありません。</div></div>
+  </div>
+  <p class="body-para">
+    2026-08-20 の実測分布（5,030 店）: A 14% ／ B 36% ／ C 22% ／ D 19% ／ — 9%。D の大半は「件数が 30 件未満」または「★4.6 以上なのに 50 件未満」で、助言「件数が少ないため★は参考程度に」が事実として正しい帯です。
+  </p>
+
+  <h2 class="section-label">03 — 8 Signals: 採点器の 8 軸（scoreVersion 2.1）</h2>
+  <p class="art-intro">
+    採点器は次の 8 軸を計算します。このうち<strong>口コミの信用度に関わる 7 項目（S1・S2・S4・S7a・S7b・S7c・S8）だけが口コミ信頼度に入り</strong>、サイト側のデータ整備状況を表す S3・S5・S6 は「掲載データの充実度」として別枠で見せます（信頼度には含めません）。
+    8 軸の単純和（0〜100）は<strong>内部合成点 <code>crossCheckScore</code></strong> として特集の掲載店選定などに使いますが、公開面の数字ではありません。
   </p>
 
   <table class="signal-table">
@@ -165,6 +182,7 @@ footer a{color:var(--muted);text-decoration:none;}
         <th>シグナル名</th>
         <th>取得元</th>
         <th class="max">満点</th>
+        <th>口コミ信頼度</th>
         <th>判定の趣旨</th>
       </tr>
     </thead>
@@ -174,13 +192,15 @@ footer a{color:var(--muted);text-decoration:none;}
         <td>Google★ vs 件数比率</td>
         <td>Google Places API（rating × user_ratings_total）</td>
         <td class="max">15</td>
-        <td>★ が極端に高いのに件数が少ない（&lt;50 件）はガチャレビュー疑い。件数 100+ で ★4.0+ は強い整合シグナル。</td>
+        <td>入れる（★と件数が取れた店で観測）</td>
+        <td>★4.6 以上なのに件数が 50 件未満は「高評価の裏付けが弱い」として低点。件数 100+ で ★4.0+ は強い整合シグナル。</td>
       </tr>
       <tr>
         <td>S2</td>
         <td>レビュー件数絶対値</td>
         <td>Google Places API（user_ratings_total）</td>
         <td class="max">10</td>
+        <td>入れる（件数が取れた店で観測）</td>
         <td>30 件未満はサンプル不足、200+ は豊富なサンプル。</td>
       </tr>
       <tr>
@@ -188,13 +208,15 @@ footer a{color:var(--muted);text-decoration:none;}
         <td>データ充実度</td>
         <td>LOCAL_STORES のフィールド埋まり率</td>
         <td class="max">15</td>
-        <td>タグ ≥3 個・Instagram URL・食べログ URL・おすすめポイント・写真 URL の 5 要素 × 3 点。データキーパーの拡充状態を客観的に測る。</td>
+        <td><strong>入れない</strong>（掲載データの充実度）</td>
+        <td>タグ ≥3 個・Instagram URL・食べログ URL・おすすめポイント・写真 URL の 5 要素 × 3 点。当サイトのデータ整備状況であって口コミの信用度ではない。</td>
       </tr>
       <tr>
         <td>S4</td>
         <td>他媒体掲載クロスチェック</td>
         <td>editor_picks.json（手動）+ 無料RSS自動検出（Google News/note/はてな）の mediaFeatures</td>
         <td class="max">10</td>
+        <td>入れる（掲載が 1 件以上見つかった店で観測）</td>
         <td>第三者媒体への掲載が複数あるほど独立検証が効いていると加点（1媒体5点・2媒体以上8点・4媒体以上10点）。掲載情報が見つからない場合は3点（中立）— プレス実績の有無は無料RSS発見の性質上ほとんどの正当な小規模店で該当するため、0点（減点）にはしない。</td>
       </tr>
       <tr>
@@ -202,6 +224,7 @@ footer a{color:var(--muted);text-decoration:none;}
         <td>営業実態継続</td>
         <td>Hot Pepper API 取得継続 + Places business_status</td>
         <td class="max">5</td>
+        <td><strong>入れない</strong>（掲載データの充実度）</td>
         <td>Hot Pepper 取得継続＝営業実態あり。CLOSED_PERMANENTLY は除外。</td>
       </tr>
       <tr>
@@ -209,26 +232,29 @@ footer a{color:var(--muted);text-decoration:none;}
         <td>Instagram 実在シグナル</td>
         <td>instagram_resolved.json + Instagram投稿URL</td>
         <td class="max">10</td>
-        <td>公式 IG アカウント解決済み（+7）+ 最新投稿 URL あり（+3）。実在性 + 集客活動の客観シグナル。</td>
+        <td><strong>入れない</strong>（掲載データの充実度）</td>
+        <td>公式 IG アカウント解決済み（+7）+ 最新投稿 URL あり（+3）。実在性の参考情報だが口コミの信用度ではない。</td>
       </tr>
       <tr style="background:rgba(46,125,50,.06);">
         <td><strong>S7</strong></td>
         <td><strong>レビュー時系列健全性</strong></td>
         <td>places_history.json（月次差分）+ 最新 5 件レビュー</td>
         <td class="max">20</td>
-        <td><strong>(a) 投稿ペース安定性 ／ (b) 最新★ vs 全体★ の乖離 ／ (c) 最新★の標準偏差。</strong>オープン時の急増→失速、サクラ継続投入、化粧剥がれパターンを検知。</td>
+        <td>入れる（a/b/c を個別に観測判定）</td>
+        <td><strong>(a) 口コミの増え方 ／ (b) 直近の評価は全体と一致するか ／ (c) 直近の評価のばらつき。</strong>オープン直後の急増→失速、直近だけ高い／低い、といった時系列の偏りを検知。</td>
       </tr>
       <tr style="background:rgba(46,125,50,.06);">
         <td><strong>S8</strong></td>
         <td><strong>評価分布の自然性</strong></td>
         <td>Google Places API reviews（最新 5 件）</td>
         <td class="max">15</td>
-        <td><strong>★5 と ★1 が混在し中間が薄い U 字型分布</strong>は評価操作の典型パターン。最新 5 件からの近似判定で減点。</td>
+        <td>入れる（最新 5 件が取れた店で観測）</td>
+        <td><strong>★5 と ★1 が混在し中間が薄い、両極に割れた分布</strong>は不自然な分布として低点。最新 5 件からの近似判定。</td>
       </tr>
     </tbody>
   </table>
 
-  <h2 class="section-label">02-A — S7 の詳細: 時系列シグナル</h2>
+  <h2 class="section-label">03-A — S7 の詳細: 時系列シグナル</h2>
   <p class="body-para">
     S7 は<strong>週次で Google Places API から取得した結果を <code>data/places_history.json</code> に蓄積し、スナップショット間の差分から算出</strong>します。最大 12 回分のリングバッファで履歴を保持し、次の 3 サブシグナルを合算します。
   </p>
@@ -236,28 +262,28 @@ footer a{color:var(--muted);text-decoration:none;}
     <p class="tips-title">S7 サブシグナル（max 20）</p>
     <ul>
       <li><strong>S7-a 投稿ペース安定性（max 8）：</strong><code>user_ratings_total</code> の増加ペースを分析。<strong>初回だけ急増、直近は伸びが止まる</strong>ような急増→失速パターンを検知 → 1 点まで減点。変動係数 ≤ 0.5 で安定なら 8 点。</li>
-      <li><strong>S7-b 最新★ vs 全体★ の乖離（max 6）：</strong>最新 5 件の平均★ と全体★ の差を判定。<strong>+0.8 以上高い場合はサクラ継続投入疑い</strong>、-0.8 以下なら「化粧剥がれ」（初期サクラの効果が薄れて本来の評価が出てきた）パターン → どちらも 1 点まで減点。</li>
-      <li><strong>S7-c 最新★の標準偏差（max 6）：</strong>標準偏差 0.5〜1.5 が自然な分布。<strong>0.5 未満（全部 ★5 など一様）または 2.0+（★1 と ★5 だけ）</strong>は評価操作疑い → 2 点まで減点。</li>
+      <li><strong>S7-b 直近の評価は全体と一致するか（max 6）：</strong>最新 5 件の平均★ と全体★ の差を判定。<strong>+0.8 以上高い、または -0.8 以下低い</strong>場合は直近と全体が食い違っているとして 1 点まで減点。公開文言は「直近5件の平均★4.9が全体★4.0より+0.9高い」のように差だけを書く。</li>
+      <li><strong>S7-c 直近の評価のばらつき（max 6）：</strong>標準偏差 0.5〜1.5 が自然な分布。<strong>1.5 超（★1 と ★5 だけ）</strong>は評価が大きく割れているとして 2 点。<strong>0.5 未満（最新 5 件が全て★5 など）は 2026-08-20 から「判定保留」＝中立 3 点・観測外</strong>とし、口コミ信頼度の分母に入れません。件数 5 で一様性は判定できず、旧ロジックでは良店ほど減点＋結論語が付く偽陽性が 44% の店で起きていたためです。</li>
     </ul>
   </div>
   <p class="body-para">
     <strong>2026-08 時点の実測: 履歴の蓄積が想定どおり進んでいなかったため、S7 は稼働開始から数ヶ月経っても中立スコア寄りのままでした。</strong>
     原因は取得スクリプト側の仕様（取得済み店舗を毎回スキップする設計）にあり、2026-08-14 に修正しています。
     修正後は既存店舗も優先度付き・予算制御つきで週次に再取得する運用に切り替えました（2026-08-15、蓄積サイクル短縮のため月次から変更）。
-    履歴が 3 回分蓄積されるまでは、引き続き「履歴が無いだけで店舗を不利に扱わない」公平性のための中立スコアを返します。
+    履歴が 3 回分蓄積されるまでは、引き続き「履歴が無いだけで店舗を不利に扱わない」公平性のための中立スコアを返し、<strong>口コミ信頼度の分母には入れません</strong>（観測外）。
   </p>
 
-  <h2 class="section-label">02-B — S8 の詳細: U 字型分布の近似判定</h2>
+  <h2 class="section-label">03-B — S8 の詳細: 両極に割れた分布の近似判定</h2>
   <p class="body-para">
     Google Places API は<strong>★1〜5 の完全な件数分布を返しません</strong>。そのため、最新 5 件のレビュー（取得可能な最大件数）から U 字型分布を近似判定します。
   </p>
   <div class="tips-box">
     <p class="tips-title">S8 判定ロジック（max 15）</p>
     <ul>
-      <li><strong>U 字型疑い（2 点）：</strong>最新 5 件に ★5 系（≥4.5）が 2 件以上 + ★1 系（≤1.5）が 2 件以上 + 中間（★2-4）が 0〜1 件 → 評価操作の典型パターン</li>
+      <li><strong>両極に割れた分布（2 点）：</strong>最新 5 件に ★5 系（≥4.5）が 2 件以上 + ★1 系（≤1.5）が 2 件以上 + 中間（★2-4）が 0〜1 件 → 不自然な分布。公開文言は「★5系2件・★1系2件・中間1件（評価が両極に分かれています）」</li>
       <li><strong>自然な分布（15 点）：</strong>中間（★2-4）が 3 件以上 → 健全な評価分布</li>
       <li><strong>高評価集中（11 点）：</strong>★5 系 4 件以上 + ★1 系 0 件 → 良店だが U 字型ではない</li>
-      <li><strong>判定不可（7 点）：</strong>最新レビューが 5 件未満、または取得失敗 → 中立扱い</li>
+      <li><strong>判定不可（7 点）：</strong>最新レビューが 5 件未満、または取得失敗 → 中立扱い・観測外（口コミ信頼度の分母に入れない）</li>
     </ul>
   </div>
 
@@ -266,80 +292,75 @@ footer a{color:var(--muted);text-decoration:none;}
     上記 8 シグナルとは別に、次の 4 つの内部フラグを <code>data/cross_check_flags.json</code> に分離保存しています。
     これらは Inspector の月次レビュー素材として使われるだけで、サイト上には表示しません — 機械判定で個別店を「サクラ疑い」と名指しすることのリスクが大きすぎるためです。
     <ul style="margin-top:.6rem;padding-left:1.4rem;">
-      <li><code>gachaReviewSuspicion</code>: ★≥4.6 かつ件数 &lt;50 = ガチャレビュー疑い</li>
+      <li><code>gachaReviewSuspicion</code>: ★≥4.6 かつ件数 &lt;50 = 高評価の裏付けが弱い（内部名は旧来のまま）</li>
       <li><code>mediaDiscrepancy</code>: 食べログ URL あり かつ Google★ ≤3.2 = 媒体間評価乖離</li>
       <li><code>openingBurstPattern</code>: 投稿急増 → 失速パターン（S7-a 検知）</li>
       <li><code>uShapedDistribution</code>: ★5/★1 偏在で中間が薄い（S8 検知）</li>
     </ul>
   </div>
 
-  <h2 class="section-label">03 — Scoring Formula</h2>
+  <h2 class="section-label">04 — Scoring Formula: 口コミ信頼度の計算式</h2>
+  <div class="tips-box">
+    <p class="tips-title">口コミ信頼度（0〜100）＝ 観測できた検証項目の得点 ÷ その満点 × 100</p>
+    <ul>
+      <li><strong>分母に入るのは観測できた項目だけ。</strong>データが無くて中立点を返した項目（メディア掲載 0 件、履歴未蓄積、最新レビュー未取得など）は得点にも分母にも入れません。「信じてよいか」と「どれだけ確かめたか」を混ぜないためで、後者は「検証 n/7 項目」として別に表示します。</li>
+      <li><strong>観測できた項目が 3 未満なら段階「—」（判定材料不足）</strong>とし、数字を出しません。</li>
+      <li><strong>段階は A 90+ ／ B 75+ ／ C 60+ ／ D それ未満。</strong>閾値・助言語・色・検証項目の一覧は <code>data/trust_display_policy.json</code> が唯一の情報源で、判定器 <code>scripts/lib/trust_display.js</code> だけが解釈します。</li>
+      <li><strong>検証項目は、検証できる項目が増えれば増えます</strong>（週次の Places 再取得で履歴が 3 回揃うと S7-a が、メディア掲載が見つかると S4 が分母に加わる）。項目が増えると数字が動くことがありますが、それは「確かめた範囲が広がった」結果で、表示の「検証 n/7 項目」で追えます。</li>
+      <li><strong>「Google口コミ取得日」</strong>を併記します。Places API の再取得は週 100 件のローテーションのため、多くの店で数ヶ月前の日付になります。古いことを隠さず出す方が誠実だと判断しています。</li>
+    </ul>
+  </div>
   <p class="body-para">
-    整合度の算出式は、ソースコードベースで完全に公開されています。実装は <code>scripts/lib/cross_check.js</code> 内の
-    <code>computeCrossCheckScore()</code> 関数で、リポジトリは公開リポジトリ
+    採点器と判定器はソースコードベースで完全に公開されています。8 軸の採点は <code>scripts/lib/cross_check.js</code> 内の
+    <code>computeCrossCheckScore()</code> 関数、段階への変換は <code>scripts/lib/trust_display.js</code> の <code>evaluate()</code> で、リポジトリは公開リポジトリ
     <a href="https://github.com/wakuwaku-labs/nagoya-bites" target="_blank" rel="noopener noreferrer" style="color:var(--green);text-decoration:underline;">wakuwaku-labs/nagoya-bites</a>
     から第三者が再現可能です。
   </p>
   <p class="body-para">
-    各シグナルは段階関数で 0〜満点の範囲にマップされ、最後に単純和を取ります（重み付け平均ではなく、合計）。
-    シグナルが取得できない場合は<strong>「不利な情報がない」と解釈し中立寄りで評価</strong>します — 件数情報が取得できないだけで店舗を不利に扱うのは公平でないためです。
+    各軸は段階関数で 0〜満点の範囲にマップされます。8 軸の単純和（0〜100）は<strong>内部合成点 <code>crossCheckScore</code></strong> で、特集の掲載店を月次で選び直す際のバランス型スコアの一要素や、編集部の優先度付けに使います。公開面（店舗カード・詳細・店舗ページ・構造化データ）に出すのは口コミ信頼度の方です。
+    軸のデータが取得できない場合、内部合成点では<strong>「不利な情報がない」と解釈し中立寄りで評価</strong>し（件数情報が取得できないだけで店舗を不利に扱うのは公平でないため）、口コミ信頼度ではその項目を観測外として分母から外します。
   </p>
 
-  <h2 class="section-label">04 — Tier Definition: 表示の段階</h2>
+  <h2 class="section-label">05 — Display: サイト上の見せ方（4 層）</h2>
   <p class="art-intro">
-    算出された整合度（0〜100）は、サイト上では次の 4 段階で表現されます。
+    段階の定義は 02 のとおりです。サイト上では同じ語彙を 4 層で繰り返します。
   </p>
-  <div class="tier-grid">
-    <div class="tier-card">
-      <div class="tier-num">90 — 100</div>
-      <div class="tier-label">High</div>
-      <div class="tier-body">複数媒体・編集部来店・業界人レビューが揃って高評価。最も整合度が高い店。</div>
-    </div>
-    <div class="tier-card tier-mid">
-      <div class="tier-num">70 — 89</div>
-      <div class="tier-label">Mid</div>
-      <div class="tier-body">複数のシグナルで高評価。一部のシグナルがまだ未確認の状態。</div>
-    </div>
-    <div class="tier-card tier-low">
-      <div class="tier-num">50 — 69</div>
-      <div class="tier-label">Verifying</div>
-      <div class="tier-body">基準クリア。シグナルがまだ十分集まっておらず追加検証待ち。</div>
-    </div>
-    <div class="tier-card tier-hidden">
-      <div class="tier-num">— 49</div>
-      <div class="tier-label">Provisional</div>
-      <div class="tier-body">グレーの「参考値」表示。検証が浅いだけで、店の品質が低いという意味ではない。</div>
-    </div>
+  <div class="tips-box">
+    <p class="tips-title">どこに何が出るか</p>
+    <ul>
+      <li><strong>店舗カード（1 秒）：</strong>「口コミ信頼度 A」のように段階だけ。数字や%は出しません（%は「確率」に見えるため 2026-08-20 に廃止）。</li>
+      <li><strong>店舗詳細・店舗ページ（10 秒）：</strong>「A 92 / 100 — Google★4.3（182件）は、そのまま参考にできます。」＋「検証 5/7項目 ・ Google口コミ取得日」。</li>
+      <li><strong>内訳（1 分）：</strong>7 つの検証項目ごとに観測事実だけを表示。観測外の項目は「—（判定保留・採点に含めません）」。別枠で「掲載データの充実度（口コミ信頼度には含めません）」。</li>
+      <li><strong>読み方（5 分）：</strong><a href="review-trust.html" style="color:var(--green);text-decoration:underline;">口コミ信頼度の読み方</a>。このページ（方法論）はその下の層です。</li>
+    </ul>
   </div>
   <p class="body-para">
-    <strong>50 未満の店には、グレーの中立トーンで「参考値」バッジを表示します</strong>（2026-05-20 是正）。
-    以前は非表示にしていましたが、「検証が浅い」「シグナルがまだ揃っていない」だけの店が一覧から不自然に
-    欠落するよりも、ネガティブな色・強調を使わず「データ蓄積中の参考値であり低評価ではない」と明記した
-    バッジを全店に表示するほうが、読者にとって誠実だと判断したためです。
+    <strong>段階の低い店にも、段階と助言語をそのまま表示します</strong>（非表示にはしません）。2026-05-20 までは 50 点未満を非表示、その後は「参考値」と表示していましたが、2026-08-20 からは段階 D「他の情報と合わせて判断を」・「—」「判定材料が足りません」と、読者が★をどう読むべきかの助言として出しています。店を非難する語は段階にも内訳にも使いません。
   </p>
 
-  <h2 class="section-label">05 — What We Don't Do（戦わない領域）</h2>
+  <h2 class="section-label">06 — What We Don't Do（戦わない領域）</h2>
   <div class="tips-box">
     <p class="tips-title">この仕組みで意図的にやらないと決めたこと</p>
     <ul>
       <li><strong>食べログ・Retty・OZmall・ぐるなびの口コミ本文を取得しない。</strong>各媒体の利用規約に対する敬意と、本文取得が引き起こす法的リスクを回避するため。</li>
       <li><strong>「サクラ確率 N%」という数値を一切公開しない。</strong>誤判定の名誉毀損リスクが甚大なため。</li>
       <li><strong>個別媒体名で「この媒体にはサクラが多い」と断定しない。</strong>構造的な指摘にとどめる。</li>
-      <li><strong>整合度 50 未満の店にネガティブバッジを表示しない。</strong>攻撃的な指標は採用しない。</li>
-      <li><strong>整合度ランキングを別建てで作らない。</strong>既存のソート選択肢に「整合度順」を 1 つ追加するだけ。</li>
+      <li><strong>店を非難する語を表示しない。</strong>段階の語は読者への助言（「他の情報と合わせて判断を」）で、内訳は観測事実だけ。「疑い」のような結論語は公開面から排除し、CI の監査（<code>scripts/audit_trust_wording.js</code>）で毎日検査する。</li>
+      <li><strong>口コミ信頼度のランキングを別建てで作らない。</strong>既存のソート選択肢に「口コミ信頼度順」を 1 つ追加するだけ。</li>
+      <li><strong>掲載データの充実度（当サイトの都合）を口コミ信頼度に混ぜない。</strong>別枠で見せる。</li>
       <li><strong>店舗一覧から低スコア店を除外しない。</strong>ユーザーの判断を奪わない。</li>
     </ul>
   </div>
 
-  <h2 class="section-label">06 — Dispute & Correction（異議申立てと修正）</h2>
+  <h2 class="section-label">07 — Dispute & Correction（異議申立てと修正）</h2>
   <p class="body-para">
     機械統計には必ず誤判定が含まれます。NAGOYA BITES では誤判定をすみやかに発見・修正するため、次のセーフガードを用意しています。
   </p>
   <div class="tips-box">
     <p class="tips-title">スコアに違和感があった場合の窓口</p>
     <ul>
-      <li><strong>店舗側からの修正依頼：</strong><a href="mailto:editor@nagoya-bites.com?subject=%E3%82%AF%E3%83%AD%E3%82%B9%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E6%95%B4%E5%90%88%E5%BA%A6%E3%81%AE%E4%BF%AE%E6%AD%A3%E4%BE%9D%E9%A0%BC" style="color:var(--green);">editor@nagoya-bites.com</a> 宛にメール。事実誤認・誤判定があれば即時補正します。</li>
-      <li><strong>読者からの通報：</strong>同じく <a href="mailto:editor@nagoya-bites.com?subject=%E6%95%B4%E5%90%88%E5%BA%A6%E3%82%B9%E3%82%B3%E3%82%A2%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E3%81%AE%E9%80%9A%E5%A0%B1" style="color:var(--green);">editor@nagoya-bites.com</a>。匿名通報を歓迎します。</li>
+      <li><strong>店舗側からの修正依頼：</strong><a href="mailto:editor@nagoya-bites.com?subject=%E5%8F%A3%E3%82%B3%E3%83%9F%E4%BF%A1%E9%A0%BC%E5%BA%A6%E3%81%AE%E4%BF%AE%E6%AD%A3%E4%BE%9D%E9%A0%BC" style="color:var(--green);">editor@nagoya-bites.com</a> 宛にメール。事実誤認・誤判定があれば即時補正します。</li>
+      <li><strong>読者からの通報：</strong>同じく <a href="mailto:editor@nagoya-bites.com?subject=%E5%8F%A3%E3%82%B3%E3%83%9F%E4%BF%A1%E9%A0%BC%E5%BA%A6%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6%E3%81%AE%E9%80%9A%E5%A0%B1" style="color:var(--green);">editor@nagoya-bites.com</a>。匿名通報を歓迎します。</li>
       <li><strong>受付した申立て・通報はすべて記録し、10 営業日以内に一次回答します。</strong></li>
       <li><strong>Inspector の月次レビュー。</strong>編集部 Inspector が毎月 <code>data/cross_check_flags.json</code> の内部フラグを目視確認し、誤検知が疑われる店は <code>editor_picks.json</code> の手動補正で対応します。</li>
     </ul>
@@ -350,7 +371,7 @@ footer a{color:var(--muted);text-decoration:none;}
     アルゴリズム変更によって特定店舗のスコアが急変するリスクを最小化するためです。
   </p>
 
-  <h2 class="section-label">07 — 設計の根本にある立場</h2>
+  <h2 class="section-label">08 — 設計の根本にある立場</h2>
   <p class="body-para">
     NAGOYA BITES は飲食業界の中で働いてきた人間が運営している媒体です。
     広告と口コミの境界が曖昧になってきた業界の現状に対して、業界側がやらなければいけない仕事として、この仕組みを設計しました。
@@ -358,7 +379,7 @@ footer a{color:var(--muted);text-decoration:none;}
   <p class="body-para">
     重要なのは、<strong>機械が個別の口コミの真贋を判定できるとは思っていない</strong>ということです。
     我々ができるのは、複数の根拠が同じ方向を指している「整合性」を測ることだけです。
-    最終的に「この店に行くかどうか」を決めるのは読者の皆さんであり、整合度は判断材料の 1 つにすぎません。
+    最終的に「この店に行くかどうか」を決めるのは読者の皆さんであり、口コミ信頼度は判断材料の 1 つにすぎません。
   </p>
   <p class="body-para">
     だからこそ、この仕組みのすべてをこのページで公開しています。
@@ -370,7 +391,8 @@ footer a{color:var(--muted);text-decoration:none;}
 <div class="related">
   <p class="related-title">関連ページ</p>
   <div class="related-links">
-    <a class="related-link" href="no-fake-reviews.html" style="background:rgba(46,125,50,.08);border-color:var(--green);font-weight:500;">桜ゼロ宣言（3 層防衛）</a>
+    <a class="related-link" href="review-trust.html" style="background:rgba(46,125,50,.08);border-color:var(--green);font-weight:500;">口コミ信頼度の読み方（1 分）</a>
+    <a class="related-link" href="no-fake-reviews.html">桜ゼロ宣言（3 層防衛）</a>
     <a class="related-link" href="editorial-policy.html">編集規約（信頼の仕組み）</a>
     <a class="related-link" href="become-reviewer.html">業界人レビュワー募集</a>
     <a class="related-link" href="../journal/index.html">Journal（毎日1本）</a>
