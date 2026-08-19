@@ -1,20 +1,23 @@
 name: editorReason batch
 
-# ISSUE-045 自動化: 上位候補 50 店の業界系エビデンスを Google CSE で取得 →
-# Gemini API（無料枠）で「引用ベースの editorReason draft」を生成 →
-# docs/editorreason-drafts.md を更新してコミット。
+# ISSUE-045 自動化: 上位候補 50 店を Gemini API（無料枠）の Google検索グラウンディングで
+# 調査 → 「引用ベースの editorReason draft」を生成 → docs/editorreason-drafts.md を
+# 更新してコミット。
 #
 # 人手レビュー後、scripts/approve_editorreason_drafts.js で editor_picks.json に反映。
 #
 # 必要 Secrets:
-#   GOOGLE_CSE_KEY  — Custom Search JSON API キー
-#   GOOGLE_CSE_CX   — 検索エンジン ID
-#   GEMINI_API_KEY  — Gemini API キー（scripts/daily_store_discovery.js と共用可・無料枠）
+#   GEMINI_API_KEY — Gemini API キー（scripts/daily_store_discovery.js と共用可・無料枠）
 # 未設定の場合は build_editorreason_drafts.js が exit 0 でスキップ（CI 失敗扱いにしない）。
 #
-# ISSUE-098: 元は ANTHROPIC_API_KEY 前提だったが、13週連続で未設定のままサイレント
-# 無稼働（success扱い）だったと判明。新規Anthropicアカウント作成を避けるため、既存の
-# GEMINI_API_KEY（daily-store-add.yml と共用）に切替（scripts/lib/gemini_extractor.js）。
+# ISSUE-098 の変遷（2026-08-19）:
+#   1. 元は ANTHROPIC_API_KEY 前提 → 13週連続で未設定のままサイレント無稼働だったと判明
+#   2. 新規Anthropicアカウント作成を避けるため GEMINI_API_KEY + Google CSE に切替
+#   3. 実際に稼働させたところ Google Custom Search JSON API が「新規プロジェクトには
+#      提供終了済み」（developers.google.com/custom-search/v1/overview に
+#      "closed to new customers" と明記）と判明。CSE を廃止し、Gemini の Google検索
+#      グラウンディング機能（daily-store-add.yml と同じ仕組み・新規サインアップ不要）に
+#      置き換えた（scripts/lib/gemini_grounded_extractor.js）。GOOGLE_CSE_KEY/CX は不要
 #
 # セットアップ手順: docs/editorreason-automation-setup.md
 
@@ -54,8 +57,6 @@ jobs:
 
       - name: Build editorReason drafts
         env:
-          GOOGLE_CSE_KEY: ${{ secrets.GOOGLE_CSE_KEY }}
-          GOOGLE_CSE_CX: ${{ secrets.GOOGLE_CSE_CX }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           TOP="${{ github.event.inputs.top || '50' }}"
@@ -71,11 +72,11 @@ jobs:
             echo "::warning::docs/editorreason-drafts.md が無い — シークレット未設定の可能性。docs/editorreason-automation-setup.md 参照"
           fi
 
-      - name: Commit drafts & sources cache
+      - name: Commit drafts cache
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/editorreason-drafts.md data/industry_sources/ data/editorreason_drafts/ || true
+          git add docs/editorreason-drafts.md data/editorreason_drafts/ || true
           if git diff --cached --quiet; then
             echo "変更なし - コミットスキップ"
           else

@@ -2,16 +2,31 @@
 
 > **このドキュメントの目的**
 > 「ネット上の業界人知識を大量に集めて editorReason に自動反映する」パイプラインの
-> 起動手順。コード側は **すべて実装・検証済み**。Google Custom Search の2つの値を
-> 設定するだけで起動する（LLM は既存の `GEMINI_API_KEY`＝無料枠を流用するため新規取得不要）。
+> 起動手順。コード側は **すべて実装・検証済み**。**新規の作業は不要**（既存の
+> `GEMINI_API_KEY` だけで動く）。
 >
 > ISSUE-041 / 056（Google Places 自動取得）と同じ運用パターン。
->
-> **ISSUE-098（2026-08-19）**: 元は Claude API（`ANTHROPIC_API_KEY`）前提だったが、
-> 13週連続でキー未設定のままサイレント無稼働（CI上は毎回success）だったと判明。
-> 新規 Anthropic アカウント作成を不要にするため、`scripts/daily_store_discovery.js`
-> と共用の `GEMINI_API_KEY`（Gemini API 無料枠）へ切替済み（`scripts/lib/gemini_extractor.js`）。
-> **これにより、あなたが新規に行う作業は Step 1・2（Google CSE）のみ**。
+
+## ISSUE-098 の経緯（2026-08-19・重要）
+
+このパイプラインは3段階を経ています。最終的にたどり着いた現行版（3）だけ知っていれば
+使えますが、同じ落とし穴を踏まないよう記録しておきます。
+
+1. **初期実装**: Google CSE（Custom Search）+ Claude API（`ANTHROPIC_API_KEY`）前提で構築。
+   → `ANTHROPIC_API_KEY` が13週連続で未設定のまま、CI上は毎回 success 判定という
+   サイレント無稼働に気づかず放置されていた（新規Anthropicアカウント作成の手間が壁になっていた）
+2. **1回目の修正**: 新規アカウント作成を避けるため、LLMを既存の `GEMINI_API_KEY`（無料枠）に
+   切替。ただし検索部分はまだ Google CSE のまま
+3. **2回目の修正（現行版）**: 実際に稼働させたところ、Google CSE が
+   **"This project does not have the access to Custom Search JSON API"** で全滅。
+   調査の結果、Google公式ドキュメント（[developers.google.com/custom-search/v1/overview](https://developers.google.com/custom-search/v1/overview)）に
+   > "The Custom Search JSON API is closed to new customers."
+   > "Existing Custom Search JSON API customers have until January 1, 2027 to transition to an alternative solution."
+   と明記されており、**2025年に新規プロジェクトへの提供自体が停止されていた**と判明
+   （コンソール上は有効化操作ができ「APIが有効です」と表示されるが、実際の呼び出しは拒否される）。
+   → Google CSE を廃止し、`scripts/daily_store_discovery.js`（新店発掘パイプライン）と同じ
+   **Gemini の Google検索グラウンディング機能**（無料枠・新規サインアップ不要）に置き換えた。
+   `GOOGLE_CSE_KEY` / `GOOGLE_CSE_CX` はもう不要（Step1・2として作成した分は未使用のまま残っているが、削除しなくてよい）
 
 ---
 
@@ -21,10 +36,13 @@
 ┌─────────────────────────────────────────────────────────────────────┐
 │ 1. scripts/build_editorreason_drafts.js（週次 CI で実行）              │
 │    入力: data/stores.json + 優先順スコアリング                          │
-│    処理: Google CSE で業界系クエリ実行 → Gemini API で「引用ベース       │
-│         draft」生成                                                    │
-│    出力: data/industry_sources/{HPID}.json  ← 検索エビデンス           │
-│          data/editorreason_drafts/{HPID}.json ← LLM draft + sources   │
+│    処理: scripts/lib/gemini_grounded_extractor.js が2段階で処理:       │
+│      (a) Gemini + googleSearch tool で「店の業界視点情報」を自然文調査   │
+│          → groundingChunks から実際に参照した URL 一覧を取得           │
+│      (b) 同じ Gemini（tool無し）で 調査結果 + 実URL一覧 を渡し JSON抽出  │
+│          → sources_used の URL がグラウンディングの実URLと一致するか   │
+│            コード側で検証（LLMの自己申告を鵜呑みにしない）              │
+│    出力: data/editorreason_drafts/{HPID}.json ← LLM draft + sources   │
 │          docs/editorreason-drafts.md ← 人手レビュー用                  │
 └─────────────────────────────────────────────────────────────────────┘
                           ↓ レビュー（あなた）
@@ -47,9 +65,10 @@
 
 | 安全策 | 実装箇所 | 効果 |
 |---|---|---|
-| **引用元 URL 必須** | `anthropic_extractor.js` のプロンプト | 各 claim に対応 URL を必須化 |
-| **2 ソース以上が原則** | LLM プロンプト + post-validation | 単一ソースのみは confidence を下げる |
-| **不十分なら拒否** | LLM プロンプトで `INSUFFICIENT_EVIDENCE` 返答強制 | 捏造より「書かない」を選ぶ |
+| **引用元にない事実は書かない** | `gemini_grounded_extractor.js` のプロンプト | 各 claim に対応 URL を必須化 |
+| **sources_used の URL は実際の検索結果と一致するかコード側検証** | 同上（新設・CSE版より強化） | LLMが存在しないURLを自己申告しても除外される |
+| **2 ソース以上が原則** | プロンプト + post-validation | 単一ソースのみは confidence を下げる |
+| **不十分なら拒否** | プロンプトで `INSUFFICIENT_EVIDENCE` 返答強制 | 捏造より「書かない」を選ぶ |
 | **mediaFeatures 自動化禁止** | プロンプトで明示禁止 | 受賞歴等の検証必須情報は自動生成しない |
 | **confidence < 0.85 は人手レビュー必須** | `approve_editorreason_drafts.js` | 高信頼以外は人手の目を通す |
 | **`source: 'industry_automation'` で識別** | schema | 後から一括取消・監査可能 |
@@ -58,72 +77,25 @@
 
 ---
 
-## セットアップ手順（リポジトリオーナーのみ・所要 10 分。LLMキーは既存流用のため新規取得不要）
+## セットアップ（不要）
 
-### Step 1: Google Custom Search Engine（CSE）を作成
+**新規に行う作業はありません。** `GEMINI_API_KEY` は既に GitHub Secrets に登録済み
+（`scripts/daily_store_discovery.js` と共用）で、`scripts/build_editorreason_drafts.js` は
+これだけで動きます。
 
-1. [programmablesearchengine.google.com](https://programmablesearchengine.google.com/) にアクセス
-2. 「新しい検索エンジン」を作成
-   - 名前: `nagoya-bites-industry-search`
-   - 「ウェブ全体を検索」を **ON**
-   - 言語: 日本語
-3. 作成後、「概要」→ **検索エンジン ID（cx）** をコピー
-4. 任意で「サイトの優先順位」に名古屋系メディアを追加（精度向上）:
-   - `nagoyareco.com`（ナゴレコ）
-   - `nagoya-info.com`（名古屋情報通）
-   - `kelly-net.jp`（日刊KELLY）
-   - `webotonano.jp`（WEB大人の名古屋）
-   - `prtimes.jp`（プレスリリース）
-   - `note.com` / `hatenablog.com`（個人ブログ）
-
-### Step 2: Google Cloud で Custom Search JSON API を有効化
-
-1. [Google Cloud Console](https://console.cloud.google.com/) →（ISSUE-056 と同じ `optimal-transit-447015-e9` プロジェクト流用可）
-2. 「API とサービス」→「ライブラリ」→ **Custom Search API** を有効化
-3. 「認証情報」→「API キーを作成」（HTTP リファラ制限なし）
-
-**コスト**:
-- 無料枠 100 クエリ/日
-- 有料 $5 / 1000 クエリ
-- 1 店あたり 5 クエリ → 週 50 店処理で **250 クエリ/週 ≈ $1.25/月**
-
-### Step 3: LLM キー（新規取得不要）
-
-抽出には `GEMINI_API_KEY` を使う（`scripts/daily_store_discovery.js` / `daily-store-add.yml`
-と共用の既存 GitHub Secret。Gemini 2.0/2.5 Flash 無料枠＝15回/分・1,500回/日で、
-週50店処理（1店あたり数回呼び出し）は無料枠の範囲内に収まる想定）。
-未取得の場合のみ [aistudio.google.com/apikey](https://aistudio.google.com/apikey) で発行し、
-`gh secret set GEMINI_API_KEY` で登録する。
-
-> 過去に Claude（Anthropic API）版で実装・実績があり、切り戻したい場合は
-> `scripts/build_editorreason_drafts.js` の `require('./lib/gemini_extractor')` を
-> `require('./lib/anthropic_extractor')` に戻せば良い（コードは削除せず残置）。
-
-### Step 4: GitHub Secrets に登録
-
-GitHub リポジトリ →「Settings」→「Secrets and variables」→「Actions」で以下 2 つを登録
-（`GEMINI_API_KEY` は既に登録済みなら不要）:
-
-| Secret name | 値 |
-|---|---|
-| `GOOGLE_CSE_KEY` | Step 2 の API キー |
-| `GOOGLE_CSE_CX` | Step 1 の検索エンジン ID（cx） |
-
-ターミナルから（値の入力を求められます・値を直接コマンドライン引数に書かないこと）:
+万一 `GEMINI_API_KEY` が未設定の場合のみ、[aistudio.google.com/apikey](https://aistudio.google.com/apikey) で発行し
 ```bash
-gh secret set GOOGLE_CSE_KEY
-gh secret set GOOGLE_CSE_CX
+gh secret set GEMINI_API_KEY
 ```
+で登録してください（値は貼らずにプロンプトで入力）。
 
-### Step 5: 初回手動実行
+### 手動実行
 
 GitHub →「Actions」→「editorReason batch」→「Run workflow」（`workflow_dispatch`）
 
-または、ローカルで:
+または、ローカルで（`GEMINI_API_KEY` を自分の環境から）:
 ```bash
-export GOOGLE_CSE_KEY=＜key＞
-export GOOGLE_CSE_CX=＜cx＞
-export GEMINI_API_KEY=＜key＞   # 既存キーを使う場合は自分の .env 等から
+export GEMINI_API_KEY=＜key＞
 node scripts/build_editorreason_drafts.js --top 30
 ```
 
@@ -133,7 +105,7 @@ node scripts/build_editorreason_drafts.js --top 30
 - ⚪ `INSUFFICIENT` — 採用不可
 - 🔴 `WARN_RISK` — 閉店/スキャンダル等の警告
 
-### Step 6: レビュー & 承認
+### レビュー & 承認
 
 docs/editorreason-drafts.md 内のコメント行：
 ```
@@ -160,14 +132,14 @@ git push origin main
 
 `.github/workflows/editorreason-batch.yml` が **毎週月曜 18:00 UTC（JST 火 3:00）** に自動実行：
 
-1. 上位 50 候補に対し discover + draft 生成
-2. `docs/editorreason-drafts.md` を更新して PR 作成（または直接コミット）
-3. あなたが PR を確認 → `[approved]` 記入 → マージ
-4. マージ後の post-job が approve_editorreason_drafts.js を実行（オプション）
+1. 上位 50 候補に対し Gemini 検索グラウンディング調査 + draft 生成
+2. `docs/editorreason-drafts.md` を更新してコミット
+3. あなたが確認 → `[approved]` 記入 → `approve_editorreason_drafts.js` 実行
 
-**累積効果**:
-- 週 50 件 × confidence 0.85 突破率 50% → 週 25 件追加
-- **約 1 年で 1,300 件追加 → editorReason カバー率 30% 到達**
+**累積効果（想定）**:
+- 週 50 件 × confidence 0.85 突破率次第。初回実測はまだ無いため、稼働後に
+  `docs/editorreason-drafts.md` の OK/INSUFFICIENT 比率を見て歩留まりを確認すること
+  （自己申告の見積もりで判断しない・CLAUDE.md 制約10）
 
 ---
 
@@ -175,17 +147,18 @@ git push origin main
 
 | 症状 | 原因 | 対処 |
 |---|---|---|
-| ログに「GOOGLE_CSE_KEY 未設定」「GEMINI_API_KEY 未設定」 | Secret 未登録 | Step 4 を実施 |
-| 全 draft が INSUFFICIENT_EVIDENCE | CSE 検索結果が空 or 関連度低 | Step 1 で名古屋系メディアをサイト優先順位に追加 |
-| confidence が常に低い | snippet 短すぎる / 業界視点情報なし | 検索クエリを `lib/google_cse.js:discoverIndustryEvidence` で調整 |
-| API クォータ超過 | CSE 100 クエリ/日 上限 | 有料化 or `--top` を下げる |
+| ログに「GEMINI_API_KEY 未設定」 | Secret 未登録 | `gh secret set GEMINI_API_KEY` |
+| 全 draft が INSUFFICIENT_EVIDENCE | 検索グラウンディングで関連情報が見つからなかった、または `_debug.groundingUrls` が空 | `data/editorreason_drafts/{id}.json` の `_debug.researchText` を確認。店名の表記ゆれ（正式名 vs 通称）が原因のことがある |
 | Gemini が 429（レート超過） | 無料枠 15回/分・1,500回/日 の上限 | `--top` を下げる、または実行間隔を空ける（コストは発生しない・待てば解消） |
+| `sources_used` が期待より少ない | `N件のURLが実際の検索結果に無いため除外` 警告 | 正常動作（安全策）。LLMが検索結果にないURLを自己申告した場合に発動する |
+| 過去のキャッシュがCSEエラーのまま再利用される | `data/editorreason_drafts/{id}.json` に古いエラー入りキャッシュが残っている | `build_editorreason_drafts.js` は warnings に API error 文言があるキャッシュを自動的に無視し再生成する（対応済み）。それでも怪しい場合は該当ファイルを削除して再実行 |
 
 ---
 
 ## 関連
 
-- ISSUE-045（本パイプラインの起票元・editorReason カバー率引き上げ）
+- [[ISSUE-045]]（本パイプラインの起票元・editorReason カバー率引き上げ）
+- [[ISSUE-098]]（Google CSE 提供終了の発見・Gemini 検索グラウンディングへの移行）
 - ISSUE-040（mediaFeatures 捏造除去・本パイプラインの教訓元）
 - `data/editor_picks.json` `_schema`（`sources` / `automation` フィールド定義）
 - `agents/editor.md`（編集哲学・業界視点）
