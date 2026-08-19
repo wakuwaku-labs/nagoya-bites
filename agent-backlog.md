@@ -1254,9 +1254,25 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **残課題（未対応・別途起票が必要）**: ① HOLD が発生しても通知経路がなくログの中で完結している（無人運用では気づけない） ② `score_journal_candidates.js` の CLI が基準日を **UTC の実行日**で固定しており（`todayISO()`）、JST 早朝は前日扱いになる＋過去日の採点ができない ③ `build.js` は HotPepper API キーなしでは実行できない（今回は安全ガードが働き `index.html` は書き換えず、`data/stores.json` はバックアップから復元された）
 - **acceptance**: ①欠番4日が journal/ と `data/journal_published.json` と journal/index.html に存在すること ②`run_journal_local.sh` が実ログの文言でリトライすること ③`data/stores.json` が 5,017 件のまま壊れていないこと — いずれも確認済み
 
-### [SEO-049] 店舗詳細モーダルに地図CTAが出るのは全体の2.8%だけ（97.2%の店で排他的に非表示）＋メディアボタンのGoogle Mapsが未計測
+### [SEO-049] 店舗詳細モーダルに地図CTAが出るのは全体の2.8%だけ（97.2%の店で排他的に非表示）＋メディアボタンのGoogle Mapsが未計測 ✅
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-19
+- **resolved_by**: /solve-next（Builder）
+- **実施内容**:
+  1. `renderModal()` 内の `modal-cta-row` を排他 if/else から併置に変更。ホットペッパーIDがある店では
+     「この店を予約する」（赤）＋「地図で場所を確認する」（青）を横並びで両方表示。無い店は従来どおり地図のみ
+  2. `.modal-cta-row` を flex 化し `.modal-cta-btn{flex:1}` で1ボタン/2ボタンどちらも同じ見た目になるようにした。
+     420px未満では2段積みに切替（`flex-wrap`）
+  3. モーダル下部メディアボタンの Google Maps（`.mb-gm`）に欠けていた `trackEvent('cta_gmap_click')` を追加
+  4. 3箇所（カード / モーダルCTA行 / モーダルメディア行）の `cta_gmap_click` に `location` パラメータ
+     （`card` / `modal_cta` / `modal_media_row`）を付与し、GA4上で経路別に分解できるようにした
+     （[[SEO-048]] のチャネル別分解と同じ思想）
+- **検証**: ブラウザ実機で HotPepperIDあり店・なし店の両方を開き、CTA行のHTML・トラッキングパラメータを
+  確認（あり店=2ボタン併置＋location別々、なし店=1ボタンのみで従来どおり）。モバイル375pxで2段積み・
+  各ボタンが十分なタップ領域（283×49px）を確保していることを確認。`qa_gate.js` QA-2/3/4 pass・
+  `npm test` 94/94 pass
+- **files**: `index.html`
 - **detected**: 2026-08-06
 - **category**: SEO / UX / 計測
 - **owner**: Builder
