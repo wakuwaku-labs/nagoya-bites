@@ -8,6 +8,22 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-100] Search Console「サイトマップ内のページがインデックスに登録されない」通知への対応 — sitemap生存監査を新設
+
+- **priority**: P2 → **status**: done
+- **detected**: 2026-08-20（オーナーへ GSC 通知メール2種が到達: 2026-08-19「ページにリダイレクトがあります」/ 2026-08-07,08-08「見つかりませんでした（404）」）
+- **category**: SEO / monitoring / ci
+- **owner**: Orchestrator（調査）+ Builder（実装）
+- **調査結果**: GSC の自動通知メールには対象URLが一切含まれておらず（Search Console 画面へのリンクのみ）、Gmail からは原因ページを特定できなかった。そこでリポジトリ側から直接検証:
+  1. `sitemap.xml`（5,205 URL: stores 5,031 / journal 105 / features 67 / 静的4）の全URLが実ファイル・実HTTP応答と一致するかを機械照合 → sitemap記載と実ファイルの不一致ゼロ（stores/features/journalの全ディレクトリで sitemap ⇔ 実ファイルが完全一致）
+  2. 本番 `https://nagoya-bites.com/` に対し、sitemap.xml 全5,205 URLへ実際に HEAD リクエストを送信 → **全件 200 OK、404もリダイレクトも0件**（唯一の非200は再試行で解消した一過性503）
+  3. サイト内の内部リンクに `/features`・`/stores`・`/journal`（末尾スラッシュ無し＝301対象）を指すものが無いかを監査 → 0件
+  → **現時点のサイトは技術的に健全**。GSC通知は、直近の架空店除去・orphanページ削除等（[[ISSUE-050]] 等）で既に解消済みの過去のクロール履歴を反映した遅延通知と判断（Search Console のインデックス登録レポートは反映まで数日〜数週間のラグがあるため）
+- **恒久対応（再発時に人がメールを待たず検知できるように）**: `scripts/audit_sitemap_health.js` を新設。sitemap.xml の全URLへ実HTTPステータス（検証可能な事実・制約10）でリダイレクト/404を検査する。デプロイ直後の伝播遅延・CDN一過性5xxで誤検知しないよう最大2回リトライしてから確定。`.github/workflows/build.yml` の commit&push 後（本番反映後）に `--check` 付きで実行するステップを追加（非ブロッキング＝`continue-on-error: true`。本番へのHTTP到達性はCI環境要因でも変動するため）
+- **acceptance**: `node scripts/audit_sitemap_health.js --check` がローカルから本番URLへ実行でき、5,205 URL全件 200 を確認済み。CI（build.yml）に統合済み
+- **files**: `scripts/audit_sitemap_health.js`（新規）, `.github/workflows/build.yml`
+- **次のアクション（オーナー本人のみ可能）**: GSC「インデックス登録レポート」で「検証を試す」を押すと、Google側に再クロールを促せる（本チケットの技術対応が事実として反映されているため通るはず）。ログインが要るため自動化不可
+
 ### [ISSUE-099] editorReason 自動収集パイプライン（ISSUE-045）が3ヶ月間サイレント無稼働だった — 必要シークレット3件が未設定
 
 - **priority**: P1 → **status**: ready（パイプラインは稼働確認済み。残るのは人手レビュー＆承認のみ）
@@ -3604,6 +3620,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Marketer/Builder(/solve-next) | SEO-061 実装・デプロイ — gsc_opportunities.jsのclassify()にクエリ単位の地理的意図判定を追加（areas辞書+名古屋/愛知の語の有無）。地名なしクエリをctrFixGeoless別枠へ隔離。実データ（既存gsc_metrics.json）で変更前後を比較: 誤検知の「一人飲み」がctrFix1位から除外され「くろぎ 名古屋」のみ残存、地名なし5件中大半が店名の指名検索と判明（SEO-059診断の裏付け）。前後をseo_advice_log.jsonに記録・npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | Editor/Builder(/solve-next) | ISSUE-081 実装・デプロイ — index.htmlのフィードバックパネルに#feedbackハッシュでの自動オープンを追加。add_feedback_nudge.js（新設・冪等）で3系統以上のフッター混在に対応する共通挿入点（最後の</footer>直前）を設計し、既存170ファイル（features66+journal104）に一括適用。journal/_template.html・gen_industry_features.jsにも焼き込み新規記事は自動対応。ブラウザ実機で#feedbackアクセス時の自動オープンを確認・全172ファイル構文検証0エラー・npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | Editor(/solve-next) | EDT-003 分類調査partial — 直近30本のヒーロー画像を実測、実写比率が検出時42%→現在67%まで既に改善していたことを発見。図解になった30本のtheme×本文実査で(a)題材選定21件(70%)/(b)写真調達失敗9件(30%)に分類。(b)はISSUE-097と同一根本原因（新店のLOCAL_STORES未解決）と判明し既存チケットの進捗で自動改善見込み。(a)対応（題材選定アルゴリズム変更）は編集戦略変更のためオーナー判断待ちとして意図的に保留 | ⏸ 調査のみ・commitなし |
+| 2026-08-20 | Orchestrator(EXPLICIT) | ISSUE-100 実装・デプロイ — GSC「サイトマップ内のページがインデックスに登録されない（リダイレクト/404）」通知メール2件を調査。sitemap.xml全5,205URLをファイル照合＋本番への実HTTP HEADで検証し現状は全件200・異常0件と確認（既存クリーンアップで解消済みの過去クロール履歴と判断）。再発時に自動検知できるよう scripts/audit_sitemap_health.js（新設・リトライ付き）を build.yml の push後ステップに追加（非ブロッキング）。npm test 94/94 | ✅ 本コミット |
 
 ---
 
