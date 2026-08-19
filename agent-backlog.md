@@ -670,9 +670,18 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 ---
 
-### [ISSUE-093] SEOアドバイスループにも同じ Gmail 偽陰性の穴があるが、修正先が `.claude/commands/` で塞げない
+### [ISSUE-093] SEOアドバイスループにも同じ Gmail 偽陰性の穴があるが、修正先が `.claude/commands/` で塞げない ✅
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-19
+- **resolved_by**: /solve-next（Orchestrator）
+- **実施内容**: acceptance の選択肢(b)を採用（`.claude/commands/seo-triage.md` はエージェント
+  自己改変ブロックで編集できないため、(a)はオーナーの手動追記が済むまで不可）。
+  `agents/marketer.md` に「`/seo-triage` Gmail取得規則（ISSUE-093）」章を新設し、
+  Step 0 のGmail検索が0件のときに窓を広げて引き直す手順（newer_than拡大→部分一致/sweep→
+  それでも0件なら正常終了）をMarketerの常設ルールとして明記。心拍/watchdogは意図的に追加しない
+  （ISSUE-084原則6：日次レポートは再発性の入力で自己回復するため、監視コストが効用を上回る）
+- **files**: `agents/marketer.md`
 - **detected**: 2026-08-17
 - **category**: 自動化・監視
 - **owner**: Orchestrator
@@ -3495,6 +3504,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Marketer/Builder(/solve-next) | SEO-055 実装・デプロイ — search_channel_metrics.jsのaggregate()でsocialを常時明示（0でも消えない）。check_social_health.js（新設）で「原稿ありsocial=0が7日連続」をmetrics_history.jsonの実測から検知、social-watchdog.yml（新設）で毎日14:00 JSTにサーバ側監視・Issue起票/自動クローズ。audit_journal_sns_pairing.js（新設・build.yml非ブロッキング追加）で2026-08-10/11型の生成漏れを可視化。合成データで閾値ロジック検証・実データで既知欠落2件を正しく検出・track_metrics.js再実行でsocial:0が実際に記録されることをE2E確認・npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | DataKeeper(/solve-next) | ISSUE-087 実装・デプロイ — build.jsのcross_check_flags.json/crosscheck.json書き込み前に既存内容を退避し、店舗数ABORT発火時はstores.jsonと合わせ3ファイルとも直前バックアップへ復元するよう修正。APIキー無し環境で実際にABORTを発火させgit status/diffが完全にクリーンになることを確認（修正前は本セッションで同じバグを実際に踏み手動checkoutが必要だった）。ALLOW_STORE_SHRINK=1の続行パスは無改変であることも実行確認。npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | Builder(/solve-next) | SEO-056 実装・デプロイ — resolve_journal_pending_stores.js（新設）でpending_store_keysを6件解決（core()除去版Diceで支店誤爆3件を検出・是正した安全な実装に切替）。add_feature_journal_links.js（新設・冪等）で特集→ジャーナルの内部リンクを24特集・38本追加（0→24）。audit_feature_stores.js検出数が変更前後で完全一致・ブラウザ実機でリンク先実在とtrackEvent発火を確認・npm test 94/94 | ✅ 本コミット |
+| 2026-08-19 | Orchestrator(/solve-next) | ISSUE-093 実装・デプロイ — agents/marketer.mdに「/seo-triage Gmail取得規則」章を新設。.claude/commands/seo-triage.mdが自己改変ブロックで編集不可なため、Marketerの常設ルールとして0件時の窓拡大手順を明記（acceptance選択肢b採用）。心拍/watchdogは意図的に追加せず（ISSUE-084原則6） | ✅ 本コミット |
 
 ---
 
