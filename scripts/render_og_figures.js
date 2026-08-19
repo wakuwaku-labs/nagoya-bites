@@ -76,9 +76,12 @@ function main() {
 
   const absSvg = rel => path.join(F.ROOT, rel);
 
-  // --check: 生成せず不足だけ報告する
+  // --check: 生成せず不足だけ報告する。IHDR実寸のみで判定（mtime不問・CLAUDE.md 制約10）。
+  // actions/checkout はコミット時刻を保持せず checkout 時刻をmtimeにするため、
+  // isPngFresh のmtime比較をCIの合否に使うと無関係なファイルが日替わりで
+  // false-positive になる（2026-08-18実測）。
   if (check) {
-    const missing = targets.filter(n => !F.isPngFresh(absSvg(n), F.pngPathForSvg(absSvg(n))));
+    const missing = targets.filter(n => !F.isPngDimensionsOk(F.pngPathForSvg(absSvg(n))));
     if (missing.length === 0) {
       console.log(`✅ OGP用PNG: 対象 ${targets.length}件すべて ${F.OG_WIDTH}x${F.OG_HEIGHT} で最新です。`);
       return;

@@ -371,12 +371,28 @@ function listFigureSvgs() {
   return out;
 }
 
-/** PNG が既に最新か（存在し、SVGより新しい） */
+/** PNG が既に最新か（存在し、SVGより新しい）。ローカルでの再生成スキップ判定専用。
+ *  mtime 比較を含むため、git checkout でファイルmtimeが再現されない CI 環境の
+ *  合否判定には使わないこと（→ isPngDimensionsOk を使う）。 */
 function isPngFresh(svgPath, pngPath) {
   if (!fs.existsSync(pngPath)) return false;
   const size = readPngSize(pngPath);
   if (!size || size.width !== OG_WIDTH || size.height !== OG_HEIGHT) return false;
   return fs.statSync(pngPath).mtimeMs >= fs.statSync(svgPath).mtimeMs;
+}
+
+/** PNG の実寸が配信可能な状態か（IHDR実寸のみで判定・mtime不問）。
+ *  CI の --check ゲート用。actions/checkout はコミット時刻ではなく checkout 時刻を
+ *  mtime に使うため、SVG/PNG の mtime 前後関係はチェックアウトの書き込み順で
+ *  ほぼランダムに決まり、isPngFresh の mtime 比較を CI の合否に使うと「今回はこの
+ *  ファイル、次回は別のファイル」という形で無関係なファイルが日替わりで
+ *  false-positive の不足報告に上がる（2026-08-18実測）。CLAUDE.md 制約10
+ *  「後から第三者が確認できる事実だけで判定する」に沿い、CIでは検証可能な
+ *  PNGの実寸だけを見る。 */
+function isPngDimensionsOk(pngPath) {
+  if (!fs.existsSync(pngPath)) return false;
+  const size = readPngSize(pngPath);
+  return !!size && size.width === OG_WIDTH && size.height === OG_HEIGHT;
 }
 
 module.exports = {
@@ -399,4 +415,5 @@ module.exports = {
   matchFigureSvgUrl,
   matchFigureUrl,
   isPngFresh,
+  isPngDimensionsOk,
 };
