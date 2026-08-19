@@ -71,6 +71,36 @@ const DRAFTS_DIR = path.join(ROOT, 'journal', 'drafts');
 const POSTS_DIR = path.join(ROOT, 'docs', 'daily-posts');
 
 function esc(s) { return String(s || '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+// onclick="trackEvent(...)" 内の JS 文字列リテラル用エスケープ（index.html の ctaEsc と同じ簡易方式）
+function jsEsc(s) { return String(s || '').replace(/'/g, '').replace(/</g, '').replace(/>/g, ''); }
+
+// SEO-054: 店舗カードの予約導線は実在データ（data/stores.json のホットペッパーID）由来に限る。
+// s.id は入力JSONの著者（Editor）が任意入力する値で、多くは stores/{id}.html のスラグと
+// 同じホットペッパーIDだが、ペンディング店などの名前スラグの場合もある（架空URL生成の防止・制約10）。
+let _hpMapCache = null;
+function loadHpMap() {
+  if (_hpMapCache) return _hpMapCache;
+  _hpMapCache = new Map();
+  try {
+    const stores = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'stores.json'), 'utf8'));
+    const list = Array.isArray(stores) ? stores : (stores.stores || []);
+    for (const r of list) {
+      const hpId = r['ホットペッパーID'];
+      if (hpId) _hpMapCache.set(hpId, r);
+    }
+  } catch (e) {
+    console.error('loadHpMap: data/stores.json 読み込み失敗（予約導線は付与されません）:', e.message);
+  }
+  return _hpMapCache;
+}
+
+// index.html の gmap() の簡易移植（アクセス文字列から住所を抽出→無ければ店名+エリアで検索）
+function gmapSearchUrl(name, area, access) {
+  const base = String(name || '').trim();
+  const addrMatch = String(access || '').match(/(?:愛知県)?(名古屋市[^\s（）()【】「」]+)/);
+  const q = addrMatch ? `${base} ${addrMatch[1]}` : `${base} ${String(area || '').split('/')[0] || '名古屋'}`;
+  return 'https://maps.google.com/search?q=' + encodeURIComponent(q);
+}
 
 function toDateJa(dateStr) {
   const d = new Date(dateStr + 'T00:00:00+09:00');
@@ -92,10 +122,24 @@ function storeDetailLink(s) {
 
 function buildStores(stores) {
   if (!stores || stores.length === 0) return '';
+  const hpMap = loadHpMap();
   return stores.map((s, i) => {
     const dl = storeDetailLink(s);
     const linkHtml = dl
       ? `<a class="store-link" href="${esc(dl.href)}"${dl.internal ? '' : ' target="_blank" rel="noopener"'}>${dl.internal ? '店舗ページを見る' : '詳細を見る'} →</a>`
+      : '';
+    // SEO-054: 予約・地図の行動導線。既存の store-link（詳細ページ）とは排他にせず併置する
+    // （SEO-049 で判明したモーダルの排他分岐と同じ失敗を繰り返さない）
+    const rec = s.id ? hpMap.get(s.id) : null;
+    const reserveHtml = rec
+      ? `<a class="store-link store-link-reserve" href="https://www.hotpepper.jp/str${esc(rec['ホットペッパーID'])}/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_reserve',{store_name:'${jsEsc(s.name)}'})">この店を予約する</a>`
+      : '';
+    const mapUrl = gmapSearchUrl(s.name, rec ? (rec['エリア'] || s.area) : s.area, rec ? rec['アクセス'] : '');
+    const mapHtml = s.name
+      ? `<a class="store-link store-link-map" href="${esc(mapUrl)}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{store_name:'${jsEsc(s.name)}',location:'journal_store_card'})">地図で確認する</a>`
+      : '';
+    const ctaRowHtml = (linkHtml || reserveHtml || mapHtml)
+      ? `<div class="store-cta-row">${reserveHtml}${mapHtml}${linkHtml}</div>`
       : '';
     return `
       <div class="store-card"${s.id ? ` data-store-id="${esc(s.id)}"` : ''}>
@@ -108,7 +152,7 @@ function buildStores(stores) {
             ${s.score ? `<span class="score">${esc(s.score)}</span>` : ''}
           </div>
           <p class="store-desc">${esc(s.desc || '')}</p>
-          ${linkHtml}
+          ${ctaRowHtml}
         </div>
       </div>`;
   }).join('\n');

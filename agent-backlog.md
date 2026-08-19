@@ -861,9 +861,30 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   4. **実際の投稿はオーナー操作**（外部発信のため自動投稿はしない）。本課題のスコープは通知経路の敷設まで
   5. 効果判定は翌週以降の `data/site_metrics.json` の social セッション数で行う（体感で判定しない＝制約10）
 
-### [SEO-054] 日次ジャーナルの店舗カードが行動導線を1つも持たない（8月の store-card 14枚すべてで予約・地図がゼロ）
+### [SEO-054] 日次ジャーナルの店舗カードが行動導線を1つも持たない（8月の store-card 14枚すべてで予約・地図がゼロ）✅
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-19
+- **resolved_by**: /solve-next（Editor/Builder）
+- **実施内容**:
+  1. `scripts/generate_daily_draft.js` の `buildStores()` に予約（HotPepper）・地図（Google Maps検索）の
+     行動導線を追加。**予約は `data/stores.json` のホットペッパーIDが実在照合できた店にのみ**発行
+     （`loadHpMap()` で `s.id` を実データと突合。該当なしなら予約ボタンを出さない＝制約10）。
+     **地図は店名+エリアの検索URLで常時発行**（`gmapSearchUrl()`。index.htmlの`gmap()`と同じフォールバック設計）。
+     既存の店舗ページ/外部リンク（`store-link`）とは排他にせず併置（`.store-cta-row`。SEO-049の教訓を踏襲）
+  2. クリック計測は `cta_reserve` / `cta_gmap_click`（`location:'journal_store_card'`）でSEO-052/SEO-049と
+     同じイベント名に統一
+  3. `journal/_template.html` にCTAボタンのスタイル（`.store-link-reserve`＝赤/`.store-link-map`＝青、
+     index.htmlのモーダルCTAと同配色）を追加
+  4. `scripts/add_journal_store_cta.js` を新設（冪等バックフィルスクリプト）。全105記事に適用し
+     **63記事・94カードに導線を追加**（42記事は店舗カード自体を持たない記事のためSKIP）
+- **検証**: `renderHtml()` にモック入力（実在HPID店/未登録店/不明スラグ店の3パターン）を通し、
+  予約ボタンの出し分けが意図通りであることを確認。全66変更ファイルの`<script>`ブロックを
+  `new Function()`で構文検証（0件エラー）。div開閉タグのバランスをサンプル3記事で確認（全て一致）。
+  ブラウザ実機でDOM上に3ボタン（予約/地図/詳細）が正しいURLで生成されていることを確認
+  （`elementFromPoint`でレンダリング内容を直接検証）。`npm test` 94/94 pass
+- **files**: `scripts/generate_daily_draft.js`, `journal/_template.html`, `journal/*.html`（63ファイル）,
+  `scripts/add_journal_store_cta.js`（新規）
 - **detected**: 2026-08-13
 - **category**: SEO / UX
 - **owner**: Editor
@@ -3405,6 +3426,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Builder(/solve-next) | FB-001 実装・デプロイ — 検索バー(#si/#si2)にクリア（×）ボタンを追加。`.search-field`ラッパー+`clearSearchQuery()`で両入力を同時クリアしフィルタ再実行。打鍵時・URLハッシュ復元時とも表示同期を確認。ブラウザ実機検証（デスクトップ/モバイル375px）・qa_gate QA-2/3/4 pass・npm test 94/94 | ✅ commit 306e31456 |
 | 2026-08-19 | Builder(/solve-next) | SEO-049 実装・デプロイ — モーダルの予約/地図CTA排他if/elseを併置に変更（HotPepperID保有店97.2%で地図CTAが皆無だった問題を解消）。メディア行Google Mapsに欠けていたtrackEventを追加。card/modal_cta/modal_media_rowをlocationパラメータで区別。ブラウザ実機検証（HP有無2パターン×デスクトップ/モバイル）・qa_gate QA-2/3/4 pass・npm test 94/94 | ✅ commit 9135e4c11 |
 | 2026-08-19 | Builder(/solve-next) | SEO-052 実装・デプロイ — journal/_template.htmlにinternal_link_click（.related-link）・scroll_depth（25/50/75/100%）計測を焼き込み。add_journal_engagement_tracking.js（新設・冪等）で既存105記事に一括適用。106ファイルの追加スクリプトをnew Function()で構文検証・ブラウザ実機でクリックイベント発火確認・閾値ロジックをNode単体テストで検証 | ✅ commit 5411042e2 |
+| 2026-08-19 | Editor/Builder(/solve-next) | SEO-054 実装・デプロイ — generate_daily_draft.jsのbuildStores()に予約(HotPepperID実在照合のみ)・地図(常時)の行動導線を追加。add_journal_store_cta.js（新設・冪等）で既存105記事に適用し63記事94カードに導線を追加。モック入力3パターンでURL出し分けを検証・全変更ファイルの構文検証・div開閉バランス確認・npm test 94/94 | ✅ 本コミット |
 
 ---
 
