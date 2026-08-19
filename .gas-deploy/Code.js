@@ -148,9 +148,26 @@ function fetchGA4Report(startDate, endDate) {
     ],
     dimensions: [{ name: 'pagePath' }],
     dimensionFilter: HOST_FILTER,
-    metricAggregations: ['TOTAL'],  // totals を返すために必須
+    metricAggregations: ['TOTAL'],  // ページ別ランキング用（totals はページ次元つきのため直帰率/平均滞在の算出には使わない。下の totalsRequest 参照）
     orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
     limit: 20,
+  }, 'properties/' + GA4_PROPERTY_ID);
+
+  // サイト全体トータル（ディメンションなし → 1行のトータル）。
+  // bounceRate / averageSessionDuration はセッションスコープの指標であり、
+  // pagePath 次元つきクエリの TOTAL 行から取ると値が歪む（SEO-062）。
+  // scripts/fetch_ga4_views.js と同じディメンションなしクエリで別途取得する。
+  const totalsRequest = AnalyticsData.Properties.runReport({
+    dateRanges: [{ startDate: startDate, endDate: endDate }],
+    metrics: [
+      { name: 'activeUsers' },
+      { name: 'screenPageViews' },
+      { name: 'sessions' },
+      { name: 'averageSessionDuration' },
+      { name: 'bounceRate' },
+      { name: 'eventCount' },
+    ],
+    dimensionFilter: HOST_FILTER,
   }, 'properties/' + GA4_PROPERTY_ID);
 
   const eventRequest = AnalyticsData.Properties.runReport({
@@ -183,7 +200,7 @@ function fetchGA4Report(startDate, endDate) {
     events: parseReport(eventRequest),
     sources: parseReport(sourceRequest),
     devices: parseReport(deviceRequest),
-    totals: parseTotals(request),
+    totals: parseTotals(totalsRequest),
   };
 }
 
@@ -195,10 +212,13 @@ function parseReport(response) {
   }));
 }
 
+// totalsRequest はディメンションなしクエリのため、値は response.totals ではなく
+// response.rows[0]（唯一の行）に入る（GA4 Data API の仕様。metricAggregations 未指定時は
+// totals フィールド自体が生成されない）。
 function parseTotals(response) {
   const zero = { users: 0, pageviews: 0, sessions: 0, avgDuration: 0, bounceRate: 0, events: 0 };
-  if (!response.totals || !response.totals[0] || !response.totals[0].metricValues) return zero;
-  const vals = response.totals[0].metricValues.map(m => m.value);
+  if (!response.rows || !response.rows[0] || !response.rows[0].metricValues) return zero;
+  const vals = response.rows[0].metricValues.map(m => m.value);
   return {
     users: parseInt(vals[0]) || 0,
     pageviews: parseInt(vals[1]) || 0,

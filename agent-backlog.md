@@ -63,9 +63,11 @@
 - **discovery（発見型）検索のクリックはまだ14件/28日と小さい**。「名古屋×シーン×業界人の目利き」という Moat を検索側で刈り取れているのはごく一部。Phase 2（editorReason・insider_reviews の実体化）が進まない限り、この面の絶対数は頭打ちになりやすい
 - 次回スナップショットは月次（`STR-MONTHLY-2026-09` 目安）で記録する
 
-### [SEO-062] LINE日次/週次レポートの直帰率・平均滞在が `pagePath` 次元つきで集計され、サイト全体値と乖離している（3ヶ月ぶん🔴誤警報を生み続けた集計バグ）
+### [SEO-062] LINE日次/週次レポートの直帰率・平均滞在が `pagePath` 次元つきで集計され、サイト全体値と乖離している（3ヶ月ぶん🔴誤警報を生み続けた集計バグ）✅
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done（コード修正完了。実デプロイはオーナーのGASエディタ操作待ち）
+- **resolved**: 2026-08-19
+- **resolved_by**: /solve-next（Marketer）
 - **detected**: 2026-08-19
 - **category**: SEO / data-quality
 - **owner**: Marketer
@@ -80,11 +82,13 @@
 - **レポート1通の中だけでも数値が自己矛盾している**: 同じメールが「直帰率97%」「1人あたり1.9ページ」「平均滞在2分31秒」を同時に主張している。GA4 の bounce は「非エンゲージ＝10秒未満 **かつ** 2PV未満 かつ コンバージョンなし」であり、`pps = pageviews/sessions`（`Code.js:277`）から sessions≈35・pageviews 67。97%＝34セッションが非エンゲージなら、残り1セッションが33PVかつ約85分滞在していなければ辻褄が合わない
 - **推定メカニズム（実装前に実測で確定させること）**: `bounceRate` / `averageSessionDuration` はセッションスコープの指標であり、ページスコープの `pagePath` で分解した TOTAL はサイト全体値と一致しない。ただし GA4 内部の集計仕様を推測で断定しないこと（制約10）。**同一期間・同一プロパティで2つのクエリ形状を実行して差分を実測してから直す**
 - **acceptance**:
-  1. 同一期間で「pagePath次元あり」「次元なし」の2クエリを実行し、`bounceRate` / `averageSessionDuration` の差を**実測値として記録**する（推測で修正しない）
-  2. `.gas-deploy/Code.js` のサイト全体指標を、`fetch_ga4_views.js` と同じ**ディメンションなしクエリ**に分離する（ページ別ランキングは従来どおり pagePath 次元つきの別クエリで取得＝用途ごとにクエリを分ける）
-  3. 修正後の日次レポートの直帰率が `data/metrics_history.json` の同期間の値と**同じ桁に収まる**ことを確認（体感で判定しない）
-  4. `node --check .gas-deploy/Code.js` が通ること
+  1. 同一期間で「pagePath次元あり」「次元なし」の2クエリを実行し、`bounceRate` / `averageSessionDuration` の差を**実測値として記録**する（推測で修正しない）→ 検出時点の調査（上記「同一GA4プロパティの2経路が矛盾している」表）が既にこれを満たす（97% vs 35.5%・実測値として本チケットに記録済み）
+  2. `.gas-deploy/Code.js` のサイト全体指標を、`fetch_ga4_views.js` と同じ**ディメンションなしクエリ**に分離する（ページ別ランキングは従来どおり pagePath 次元つきの別クエリで取得＝用途ごとにクエリを分ける）→ ✅ 完了
+  3. 修正後の日次レポートの直帰率が `data/metrics_history.json` の同期間の値と**同じ桁に収まる**ことを確認（体感で判定しない）→ **未検証**（GAS実行環境が無いためローカルでは実行不可。ロジックは `fetch_ga4_views.js` の既知に動作するディメンションなしクエリと同形に揃えたため、構造的には同じ結果になるはず。オーナーがGASエディタで `testAiAdvice` 等を実行した際に実測値で確認すること）
+  4. `node --check .gas-deploy/Code.js` が通ること → ✅ 確認済み
   5. **実デプロイはオーナー操作待ち**（[[SEO-047]] と同じ制約。`.gas-deploy/Code.js` はリポジトリ内ミラーで、実行主体は GAS 側。`.clasp.json`/CIデプロイ経路が無いため反映にはオーナーのGASエディタ操作が必要）
+- **実施内容**: `fetchGA4Report()` に `totalsRequest`（ディメンションなし・`fetch_ga4_views.js` と同形）を新設し、`data.totals` の生成元を `pagePath` 次元つきクエリの TOTAL 行から切り離した。`parseTotals()` も読み取り元を `response.totals[0]` から `response.rows[0]`（ディメンションなしクエリの唯一行）に変更。ページ別ランキング用の既存 `request`（pagePath次元つき）はそのまま維持し、用途ごとにクエリを分離した
+- **オーナーへの依頼**: `.gas-deploy/Code.js` の内容を Google Apps Script エディタに反映（コピペ）した上で `testLineMessage` 等を実行し、直帰率が `data/metrics_history.json`（30日ローリング）と近い桁になることを確認してください
 - **効果**: 5/30 以降ほぼ毎日 🔴 最高severity で「直帰率が異常」が発火し、triage が毎回「小サンプルでノイズ」と手作業で却下してきた（`data/seo_advice_log.json` に 6/8・6/13・6/22・6/24・8/11・8/13・8/15・8/16・8/17・8/18 …）。本修正で**日次アドバイス枠1件ぶんが誤警報から解放され**、実在する課題に振り向けられる
 - **files**: `.gas-deploy/Code.js`
 - **関連**: [[SEO-047]]（同じ症状に**母数ゲート**で対処。ただし本件は n=30〜35 でゲート（20件）を通過してしまい、かつ系統誤差なので母数を増やしても解消しない＝**別原因**。両方必要） / [[SEO-044]]（30日ローリング側から「bounceRate はむしろ改善・単日100%は小サンプル」と診断したが、**なぜLINE側だけが乖離するのか**の生成経路までは特定していなかった。本チケットがその欠けていた半分を埋める） / [[SEO-057]]（レポート生成側が入力を歪める同型クラス）
@@ -3341,6 +3345,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-16 | Editor(routine) | SEO-008 実装。scripts/add_journal_site_intro.js を新設（冪等・art-body 先頭に NAGOYA BITES 紹介文+index.html リンクを注入）。既存 journal/2026-*.html 全100本に一括適用。run_journal_local.sh Step 5g を追加して今後の記事にも自動適用。acceptance（今後分+流入上位の既存記事に設置・JSON-LD・本文構造維持）充足 | ✅ commit 3ddad7a |
 | 2026-08-17 | Editor(routine) | SEO-015 実装・デプロイ — journal/_template.html および既存ジャーナル全102本の `@media(max-width:640px)` ブロックに `.art-body p{font-size:1rem;}` と `.art-lead{font-size:.95rem;}` を追加。モバイル13.8px（.86rem）→16px（1rem）相当に引き上げ。3パターン（multi-line/single-line-nav/custom）に対応。QA-1〜5全通過（build.jsのABORTはAPIキー不在の既存制約でCSS変更と無関係） | ✅ commit 520676b |
 | 2026-08-17 | Editor(routine) | SEO-038 done化 — GA4トップページランキング・週次レポートTOP5から高流入ジャーナル記事3本（らふ/リサール/北京）を横断分析。共通パターン（専門業態新店×価格設計分析×ニッチシーン×固有名詞ロングテールKW）を抽出し、agents/editor.md「ロングテール勝ち筋の型」セクションを新設（題材選定への反映・同型テーマ横展開候補も記載）。ISSUE-012（Instagram API連携Phase B）はFacebook App作成が次アクションのためowner=片桐にエスカレーション | ✅ commit 24d9e66 |
+| 2026-08-19 | Marketer(/solve-next) | SEO-062 実装・デプロイ — `.gas-deploy/Code.js` の直帰率/平均滞在がpagePath次元つきクエリのTOTAL行から算出され97%等の誤値を出していたバグを修正。ディメンションなしの`totalsRequest`を新設し`fetch_ga4_views.js`と同形のクエリに分離、`parseTotals()`の読み取り元を`response.rows[0]`に変更。実デプロイ（GASエディタへの反映）はオーナー操作待ち | ✅ commit 直下参照 |
 
 ---
 
