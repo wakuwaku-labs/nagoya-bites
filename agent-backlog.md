@@ -326,9 +326,25 @@ URLが絶対か / PNGが実在するか。エージェントの自己申告値�
   - ~~`banquet.html` に「よくある質問」h2 が**重複して2つ**存在する（`data/feature_faqs.json` 由来の生成分と元原稿分の二重化）。他特集にも同様の重複がある可能性があり要棚卸し~~ ✅ **2026-08-19 完了**: banquet / birthday / gw-2026 / mothers-day / private-room の5ファイルで古い静的FAQセクション（`<section id="faq">`）を削除。各ファイル1つのみに統一
 - **備考**: 表示回数（インプレッション）を成果指標にしない。5/8 の店舗ページ大量公開（1,095→4,585本）が生んだ表示バブルの正常化と混ざり、施策の効果が読めなくなるため
 
-### [SEO-061] `gsc_opportunities.js` の期待CTRモデルが地理的検索意図を見ないため、地域特化サイトで取りこぼしを構造的に過大評価する
+### [SEO-061] `gsc_opportunities.js` の期待CTRモデルが地理的検索意図を見ないため、地域特化サイトで取りこぼしを構造的に過大評価する ✅
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-19
+- **resolved_by**: /solve-next（Marketer/Builder）
+- **実施内容**: `scripts/gsc_opportunities.js` の `classify()` にクエリ単位の地理的意図判定を追加。
+  `data/journal_seo_keywords.json` の `areas` 辞書の全 alias ＋「名古屋」「愛知」の語の有無
+  （検証できる事実のみ・自己申告値は使わない）で、地名なしクエリを `ctrFix` から
+  `ctrFixGeoless`（新設の別枠）へ隔離。ページ単位（`byPage`）は対象外（URLに検索意図の
+  地理性は無いため）
+- **検証（acceptance③④・実データで実施）**: 既存の`data/gsc_metrics.json`（直近の実測）に対し
+  変更前後で実行し比較。**変更前トップ5**: 一人飲み(missed=9.4)/やきまる亭(6.4)/喫茶時々(3.1)/
+  くろぎ 名古屋(2.6)/煮干しラーメン 凛(2.0)。**変更後 ctrFix（地名あり）**: くろぎ 名古屋(2.6)
+  のみ1件に減少。**ctrFixGeoless（地名なし別枠）**: 一人飲み/やきまる亭/喫茶時々/
+  煮干しラーメン 凛/イルタッソの5件へ分離。地名なしクエリの大半が店名の指名検索
+  （やきまる亭・喫茶時々等）だったことも判明し、SEO-059の実測診断（地名なし「一人飲み」は
+  全国区の一般語で低CTRが正常）を構造面で裏付けた。前後の順位は `data/seo_advice_log.json`
+  （category: gsc-improvement-loop）に記録済み。`node --check` 構文検証・`npm test` 94/94 pass
+- **files**: `scripts/gsc_opportunities.js`, `data/gsc_opportunities.json`, `data/seo_advice_log.json`
 - **detected**: 2026-08-17（SEO-059 の検証中に判明した副産物）
 - **category**: SEO / 計測
 - **owner**: Marketer / Builder
@@ -3540,6 +3556,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Orchestrator(/solve-next) | ISSUE-093 実装・デプロイ — agents/marketer.mdに「/seo-triage Gmail取得規則」章を新設。.claude/commands/seo-triage.mdが自己改変ブロックで編集不可なため、Marketerの常設ルールとして0件時の窓拡大手順を明記（acceptance選択肢b採用）。心拍/watchdogは意図的に追加せず（ISSUE-084原則6） | ✅ 本コミット |
 | 2026-08-19 | Marketer(/solve-next) | SEO-057 実装・デプロイ — .gas-deploy/Code.jsのsourceToName()に生成AI分岐を追加（m==='organic'総称分岐より前に配置し「openai/organic」誤ラベルを防止）。語彙はsearch_channel_metrics.jsのai_assistant判定と統一。全報告パターンをNode単体実行で検証・npm test 94/94。実デプロイはオーナーのGASエディタ操作待ち（SEO-047/062と同ファイル） | ✅ 本コミット |
 | 2026-08-19 | Marketer/Builder(/solve-next) | SEO-058 partial実装 — fetch_gsc_metrics.jsのgroupPageQueries()でトップページを表示順位に関わらずfocus集合へ強制追加（acceptance①）。単体テストで意図的低impressionでも捕捉されることを確認・npm test 94/94。acceptance②③（GSC実データでのnavigational/discovery分類・Strategic Skip判定）は本環境にGSC API認証情報が無く実施不可のためpartialのまま。次回CI（build.yml日次fetch）で修正が効き次第②③に進む | ⏸ commit 9e3da3164・partial |
+| 2026-08-19 | Marketer/Builder(/solve-next) | SEO-061 実装・デプロイ — gsc_opportunities.jsのclassify()にクエリ単位の地理的意図判定を追加（areas辞書+名古屋/愛知の語の有無）。地名なしクエリをctrFixGeoless別枠へ隔離。実データ（既存gsc_metrics.json）で変更前後を比較: 誤検知の「一人飲み」がctrFix1位から除外され「くろぎ 名古屋」のみ残存、地名なし5件中大半が店名の指名検索と判明（SEO-059診断の裏付け）。前後をseo_advice_log.jsonに記録・npm test 94/94 | ✅ 本コミット |
 
 ---
 

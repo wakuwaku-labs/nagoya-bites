@@ -1,10 +1,21 @@
 {
-  "generatedAt": "2026-08-19T12:30:17.881Z",
+  "generatedAt": "2026-08-19T13:02:04.404Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
   "byQuery": {
     "ctrFix": [
+      {
+        "query": "くろぎ 名古屋",
+        "impressions": 220,
+        "clicks": 3,
+        "position": 9.8,
+        "ctr": 1.36,
+        "expectedCtr": 2.6,
+        "missedClicks": 2.6
+      }
+    ],
+    "ctrFixGeoless": [
       {
         "query": "一人飲み",
         "impressions": 167,
@@ -31,15 +42,6 @@
         "ctr": 1.61,
         "expectedCtr": 3.3,
         "missedClicks": 3.1
-      },
-      {
-        "query": "くろぎ 名古屋",
-        "impressions": 220,
-        "clicks": 3,
-        "position": 9.8,
-        "ctr": 1.36,
-        "expectedCtr": 2.6,
-        "missedClicks": 2.6
       },
       {
         "query": "煮干しラーメン 凛",
@@ -135,6 +137,7 @@
         "missedClicks": 7.6
       }
     ],
+    "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
@@ -146,9 +149,10 @@
       }
     ]
   },
-  "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
+  "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 6,
+    "queryCtrFix": 1,
+    "queryCtrFixGeoless": 5,
     "queryRankPush": 3,
     "pageCtrFix": 5,
     "pageRankPush": 1,
