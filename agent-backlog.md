@@ -3404,6 +3404,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Builder(/solve-next) | ISSUE-092 done化 — 実装済み(commit d66ccad84)のacceptanceを再検証: `audit_ig_post_relevance.js --check` exit0（違反0件）／`npm test` 94/94／報告事例（焼肉やっちゃんの苺投稿）が実際に除去済み／削除済み投稿はREJECT_REMOVEDで機械除外されていることを確認 | ✅ 検証のみ・新規commitなし |
 | 2026-08-19 | Builder(/solve-next) | FB-001 実装・デプロイ — 検索バー(#si/#si2)にクリア（×）ボタンを追加。`.search-field`ラッパー+`clearSearchQuery()`で両入力を同時クリアしフィルタ再実行。打鍵時・URLハッシュ復元時とも表示同期を確認。ブラウザ実機検証（デスクトップ/モバイル375px）・qa_gate QA-2/3/4 pass・npm test 94/94 | ✅ commit 306e31456 |
 | 2026-08-19 | Builder(/solve-next) | SEO-049 実装・デプロイ — モーダルの予約/地図CTA排他if/elseを併置に変更（HotPepperID保有店97.2%で地図CTAが皆無だった問題を解消）。メディア行Google Mapsに欠けていたtrackEventを追加。card/modal_cta/modal_media_rowをlocationパラメータで区別。ブラウザ実機検証（HP有無2パターン×デスクトップ/モバイル）・qa_gate QA-2/3/4 pass・npm test 94/94 | ✅ commit 9135e4c11 |
+| 2026-08-19 | Builder(/solve-next) | SEO-052 実装・デプロイ — journal/_template.htmlにinternal_link_click（.related-link）・scroll_depth（25/50/75/100%）計測を焼き込み。add_journal_engagement_tracking.js（新設・冪等）で既存105記事に一括適用。106ファイルの追加スクリプトをnew Function()で構文検証・ブラウザ実機でクリックイベント発火確認・閾値ロジックをNode単体テストで検証 | ✅ commit 5411042e2 |
 
 ---
 
