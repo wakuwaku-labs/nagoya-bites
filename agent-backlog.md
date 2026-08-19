@@ -1861,9 +1861,29 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **関連**: [[SEO-011]] 等の既存 SEO 改善ループ（同じ設計思想の流用元）/ フェーズ2（記事ページ154件への
   導線展開）は別チケットとして下記に分離起票
 
-### [ISSUE-081] フィードバック導線の記事ページ（特集・ジャーナル）への展開
+### [ISSUE-081] フィードバック導線の記事ページ（特集・ジャーナル）への展開 ✅
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
+- **resolved**: 2026-08-19
+- **resolved_by**: /solve-next（Editor/Builder）
+- **実施内容**: acceptanceの軽量案を実装。
+  1. `index.html` の既存フィードバックパネル（`#fb-fab`/`#fb-panel`）に、`location.hash==='#feedback'`
+     で自動的にパネルを開く処理を追加（`../index.html#feedback` へのリンクを単なる着地でなく
+     機能する誘導にするため）
+  2. `scripts/add_feedback_nudge.js` を新設（冪等）。フッターが3系統以上混在する
+     （単一行/`class="site-footer"`複数`<p>`/最小構成）ため、共通して安全な挿入点として
+     各ファイルの**最後の`</footer>`直前**にリンク段落を挿入する設計にし、内部構造への
+     依存を避けた。既存 features 66 + journal 104 = **170ファイルに一括適用**
+  3. 新規記事が自動で持つよう、生成テンプレート側にも直接焼き込み: `journal/_template.html`と
+     `scripts/gen_industry_features.js`（新規特集生成器）のフッターに同じリンクを追加
+- **検証**: ブラウザ実機で `index.html#feedback` に直接アクセスしパネルが実際に自動で開く
+  ことを確認（スクリーンショットで確認）。3フッター変種＋journalの計4パターンで挿入後の
+  `<footer>`開閉タグ数が1/1で維持されていることを確認。`audit_feature_stores.js`の検出数が
+  変更前後で完全一致（5件・pre-existing）。全172変更HTMLファイルの`<script>`ブロックを
+  `new Function()`で構文検証（0件エラー）。冪等性（再実行でmodified=0）を確認。`npm test` 94/94 pass
+- **スコープ外**: フル機能のウィジェット複製は acceptance の記述どおり対象外のまま
+- **files**: `index.html`, `journal/_template.html`, `scripts/gen_industry_features.js`,
+  `scripts/add_feedback_nudge.js`（新規）, `features/*.html`（66ファイル）, `journal/*.html`（104ファイル）
 - **detected**: 2026-07-27（ISSUE-080 実装時にオーナー方針として「まず index.html のみ」と決定・
   記事ページへの展開はフェーズ2として分離）
 - **category**: UX
@@ -3557,6 +3577,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Marketer(/solve-next) | SEO-057 実装・デプロイ — .gas-deploy/Code.jsのsourceToName()に生成AI分岐を追加（m==='organic'総称分岐より前に配置し「openai/organic」誤ラベルを防止）。語彙はsearch_channel_metrics.jsのai_assistant判定と統一。全報告パターンをNode単体実行で検証・npm test 94/94。実デプロイはオーナーのGASエディタ操作待ち（SEO-047/062と同ファイル） | ✅ 本コミット |
 | 2026-08-19 | Marketer/Builder(/solve-next) | SEO-058 partial実装 — fetch_gsc_metrics.jsのgroupPageQueries()でトップページを表示順位に関わらずfocus集合へ強制追加（acceptance①）。単体テストで意図的低impressionでも捕捉されることを確認・npm test 94/94。acceptance②③（GSC実データでのnavigational/discovery分類・Strategic Skip判定）は本環境にGSC API認証情報が無く実施不可のためpartialのまま。次回CI（build.yml日次fetch）で修正が効き次第②③に進む | ⏸ commit 9e3da3164・partial |
 | 2026-08-19 | Marketer/Builder(/solve-next) | SEO-061 実装・デプロイ — gsc_opportunities.jsのclassify()にクエリ単位の地理的意図判定を追加（areas辞書+名古屋/愛知の語の有無）。地名なしクエリをctrFixGeoless別枠へ隔離。実データ（既存gsc_metrics.json）で変更前後を比較: 誤検知の「一人飲み」がctrFix1位から除外され「くろぎ 名古屋」のみ残存、地名なし5件中大半が店名の指名検索と判明（SEO-059診断の裏付け）。前後をseo_advice_log.jsonに記録・npm test 94/94 | ✅ 本コミット |
+| 2026-08-19 | Editor/Builder(/solve-next) | ISSUE-081 実装・デプロイ — index.htmlのフィードバックパネルに#feedbackハッシュでの自動オープンを追加。add_feedback_nudge.js（新設・冪等）で3系統以上のフッター混在に対応する共通挿入点（最後の</footer>直前）を設計し、既存170ファイル（features66+journal104）に一括適用。journal/_template.html・gen_industry_features.jsにも焼き込み新規記事は自動対応。ブラウザ実機で#feedbackアクセス時の自動オープンを確認・全172ファイル構文検証0エラー・npm test 94/94 | ✅ 本コミット |
 
 ---
 

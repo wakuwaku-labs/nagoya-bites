@@ -10168,6 +10168,10 @@ function copyShareLink() {
   });
   if (closeBtn) closeBtn.addEventListener('click', closePanel);
 
+  // ISSUE-081: 記事ページ（特集・ジャーナル）のフッターから「../index.html#feedback」で
+  // 誘導した際、ホームに着地するだけでなくこのパネルを自動で開く
+  if (location.hash === '#feedback') openPanel();
+
   if (categorySel && storeField) {
     categorySel.addEventListener('change', function(){
       storeField.hidden = categorySel.value !== '店舗情報が間違っている';
