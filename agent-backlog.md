@@ -1066,10 +1066,25 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   ②再開経路でも validator を必ず通ること ③再開したか新規生成したかがログで判別できること（サイレントに再利用しない）
 - **関連**: [[ISSUE-084]]（この問題を発見した対応）/ [[ISSUE-083]]（リトライ判定の文言網羅）/ [[ISSUE-077]]（never-stop 保証）
 
-### [ISSUE-087] build.js の店舗数ABORTガードが crosscheck 系ファイルの巻き戻しを取りこぼす
+### [ISSUE-087] build.js の店舗数ABORTガードが crosscheck 系ファイルの巻き戻しを取りこぼす ✅
 
-- **priority**: P2（データ破損の芽。ABORT自体は正しく効いており本番は無傷）→ **status**: ready
-- **detected**: 2026-08-15（`/journal-today` 実行中に実発生）
+- **priority**: P2（データ破損の芽。ABORT自体は正しく効いており本番は無傷）→ **status**: done
+- **resolved**: 2026-08-19
+- **resolved_by**: /solve-next（DataKeeper）
+- **実施内容**: 検討方向②（`data/stores.json` と同じバックアップ／復元を crosscheck 系2ファイルにも拡張）を採用。
+  `data/cross_check_flags.json`・`data/crosscheck.json` それぞれの書き込み直前に既存内容を退避し、
+  ABORT時（`ALLOW_STORE_SHRINK`未指定）は3ファイルすべてを直前バックアップから復元してから
+  `throw`するように変更。検討方向①（件数チェックの書き込み前への前倒し）も調査したが、
+  `stores.length` はflags書き込み時点で既に確定しているため理論上は可能なものの、
+  `html`変数の読み込み位置移動を含む広範な再配置が必要でリスクが高いため見送った
+- **検証**: APIキー無しの本環境で実際に `node build.js` を実行し、ABORT発火後
+  `git status`/`git diff` で3ファイルとも変更が一切残らないことを確認（修正前は本セッションで
+  実際にこのバグを踏み、手動 `git checkout --` が必要だった）。`ALLOW_STORE_SHRINK=1` では
+  従来通り3ファイルとも書き込まれ復元処理が呼ばれないことを確認（続行パスは変更していないため
+  設計上自明だが実行でも確認・検証用の書き込み結果は破棄）。`npm test` 94/94 pass
+- **未検証（本環境では不可）**: ③CI（キーあり・正常系）の出力一致は、変更が読み取り専用の
+  バックアップ取得（既存の write 呼び出し自体は無改変）のみのため実行せずとも安全と判断
+- **files**: `build.js`
 - **category**: データパイプライン / 安全装置
 - **owner**: DataKeeper
 
@@ -3454,6 +3469,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Builder(/solve-next) | SEO-052 実装・デプロイ — journal/_template.htmlにinternal_link_click（.related-link）・scroll_depth（25/50/75/100%）計測を焼き込み。add_journal_engagement_tracking.js（新設・冪等）で既存105記事に一括適用。106ファイルの追加スクリプトをnew Function()で構文検証・ブラウザ実機でクリックイベント発火確認・閾値ロジックをNode単体テストで検証 | ✅ commit 5411042e2 |
 | 2026-08-19 | Editor/Builder(/solve-next) | SEO-054 実装・デプロイ — generate_daily_draft.jsのbuildStores()に予約(HotPepperID実在照合のみ)・地図(常時)の行動導線を追加。add_journal_store_cta.js（新設・冪等）で既存105記事に適用し63記事94カードに導線を追加。モック入力3パターンでURL出し分けを検証・全変更ファイルの構文検証・div開閉バランス確認・npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | Marketer/Builder(/solve-next) | SEO-055 実装・デプロイ — search_channel_metrics.jsのaggregate()でsocialを常時明示（0でも消えない）。check_social_health.js（新設）で「原稿ありsocial=0が7日連続」をmetrics_history.jsonの実測から検知、social-watchdog.yml（新設）で毎日14:00 JSTにサーバ側監視・Issue起票/自動クローズ。audit_journal_sns_pairing.js（新設・build.yml非ブロッキング追加）で2026-08-10/11型の生成漏れを可視化。合成データで閾値ロジック検証・実データで既知欠落2件を正しく検出・track_metrics.js再実行でsocial:0が実際に記録されることをE2E確認・npm test 94/94 | ✅ 本コミット |
+| 2026-08-19 | DataKeeper(/solve-next) | ISSUE-087 実装・デプロイ — build.jsのcross_check_flags.json/crosscheck.json書き込み前に既存内容を退避し、店舗数ABORT発火時はstores.jsonと合わせ3ファイルとも直前バックアップへ復元するよう修正。APIキー無し環境で実際にABORTを発火させgit status/diffが完全にクリーンになることを確認（修正前は本セッションで同じバグを実際に踏み手動checkoutが必要だった）。ALLOW_STORE_SHRINK=1の続行パスは無改変であることも実行確認。npm test 94/94 | ✅ 本コミット |
 
 ---
 

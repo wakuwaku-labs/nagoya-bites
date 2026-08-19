@@ -1362,8 +1362,14 @@ async function main() {
   console.log(`スコア信頼度: 平均=${ccAvg} / T90+=${ccDist.t90} / T70-89=${ccDist.t70} / T50-69=${ccDist.t50} / <50=${ccDist.lt50}`);
   console.log(`内部フラグ（Inspector 月次レビュー用）: ${crossCheckFlagList.length}件`);
   // 内部フラグを data/cross_check_flags.json に書き出す（公開しない・Inspector のみ参照）
+  // ISSUE-087: 店舗数ABORTガードより前に書き終わるため、ABORT時に巻き戻せるよう
+  // 書き込み前の内容を退避しておく（data/stores.json と同じパターン）
+  const flagsPath = path.join(__dirname, 'data', 'cross_check_flags.json');
+  let _prevFlagsContent = null;
+  if (fs.existsSync(flagsPath)) {
+    try { _prevFlagsContent = fs.readFileSync(flagsPath, 'utf8'); } catch (_) { /* ignore */ }
+  }
   try {
-    const flagsPath = path.join(__dirname, 'data', 'cross_check_flags.json');
     fs.writeFileSync(flagsPath, JSON.stringify({
       generatedAt: new Date().toISOString(),
       version: '1.0',
@@ -1486,6 +1492,11 @@ async function main() {
     if (slim && Object.keys(slim).length > 0) { crossCheckMap[id] = slim; ccExported++; }
   }
   const crossCheckPath = path.join(__dirname, 'data', 'crosscheck.json');
+  // ISSUE-087: こちらも店舗数ABORTガードより前に書き終わるため、書き込み前の内容を退避
+  let _prevCrossCheckContent = null;
+  if (fs.existsSync(crossCheckPath)) {
+    try { _prevCrossCheckContent = fs.readFileSync(crossCheckPath, 'utf8'); } catch (_) { /* ignore */ }
+  }
   fs.writeFileSync(crossCheckPath, JSON.stringify(crossCheckMap), 'utf8');
   console.log(`crosscheck 外部化: ${ccExported}件 → data/crosscheck.json (${(fs.statSync(crossCheckPath).size/1024/1024).toFixed(2)}MB)`);
   // ───────────────────────────────────────────────────────────────────────────
@@ -1682,11 +1693,24 @@ async function main() {
     if (process.env.ALLOW_STORE_SHRINK === '1') {
       console.warn(msg + ' → ALLOW_STORE_SHRINK=1 のため続行します。');
     } else {
-      // data/stores.json は既に書き込んでしまっているため、バックアップから復元
+      // ISSUE-087: stores.json だけでなく crosscheck 系2ファイルもこの時点で
+      // 既に部分データで書き込み済み。ABORTが「守った」と誤認させないよう全て巻き戻す
       if (_prevStoresContent !== null) {
         try {
           fs.writeFileSync(storesJsonPath, _prevStoresContent, 'utf8');
           console.warn('data/stores.json を直前バックアップから復元しました。');
+        } catch (_) {}
+      }
+      if (_prevFlagsContent !== null) {
+        try {
+          fs.writeFileSync(flagsPath, _prevFlagsContent, 'utf8');
+          console.warn('data/cross_check_flags.json を直前バックアップから復元しました。');
+        } catch (_) {}
+      }
+      if (_prevCrossCheckContent !== null) {
+        try {
+          fs.writeFileSync(crossCheckPath, _prevCrossCheckContent, 'utf8');
+          console.warn('data/crosscheck.json を直前バックアップから復元しました。');
         } catch (_) {}
       }
       throw new Error(msg);
