@@ -175,7 +175,10 @@ async function extractEditorReason(store, opts = {}) {
   const modelName = await findWorkingModel(genAI);
 
   // 1) 検索グラウンディングで調査
-  const researchResp = await callGemini(genAI, modelName, buildResearchPrompt(store), true, 2048);
+  // maxOutputTokens は 8192（scripts/daily_store_discovery.js と同じ値）。
+  // gemini-2.5系は既定で「thinking」トークンが maxOutputTokens を消費するため、
+  // 2048では visible な出力が思考トークンに食われて MAX_TOKENS 切断が実際に多発した（ISSUE-098実測）
+  const researchResp = await callGemini(genAI, modelName, buildResearchPrompt(store), true, 8192);
   const researchText = (researchResp.text() || '').trim();
   const groundingUrls = extractGroundingUrls(researchResp);
 
@@ -194,10 +197,8 @@ async function extractEditorReason(store, opts = {}) {
   }
 
   // 2) JSON 抽出（tool 無し）
-  // maxOutputTokens は 1024 だと日本語の editorReason/sources_used を含む JSON が
-  // 途中で切れて JSON.parse に失敗する実例があったため 2048 に引き上げ（ISSUE-098 実測）
   const extractResp = await callGemini(
-    genAI, modelName, buildExtractPrompt(store, researchText, groundingUrls), false, 2048
+    genAI, modelName, buildExtractPrompt(store, researchText, groundingUrls), false, 8192
   );
   let raw = (extractResp.text() || '').trim();
   raw = raw.replace(/^```(?:json)?\s*\n/, '').replace(/\n```\s*$/, '');
