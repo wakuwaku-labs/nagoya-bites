@@ -160,7 +160,32 @@
 
 ### [EDT-003] 日次ジャーナルのヒーロー画像が「図解」既定になっており、AI生成物に見えて閲覧意欲を削いでいる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: partial（acceptanceの分類調査は完了・実装は判断待ちで意図的に保留）
+- **progress 2026-08-19（分類調査・acceptanceの最初のタスク）**:
+  - **現状の実写比率が既に改善していた**: 直近30本を実測したところ**実写20/30＝67%**
+    （検出時点2026-08-17の基準値42%から大幅改善・目標70%にほぼ到達）。ISSUE-091（ヒーロー写真
+    帰属ゲート新設）・ISSUE-095（PR TIMES報道写真ソース追加）・Places APIキー配線等、
+    直近の一連の是正が効いていると見られる
+  - **図解になった直近30本の(a)/(b)分類**（`theme`フィールド×記事本文の実データで判定・
+    憶測ではない）:
+    | 分類 | theme | 本数 | 判定根拠 |
+    |---|---|---:|---|
+    | (a) 題材選定 | industry_insider（業界の裏側系） | 14 | 特定店を主役にしない一般論記事 |
+    | (a) 題材選定 | seasonal/weekly_digest（季節・週次まとめ） | 7 | タイトル実査で複数店の roundup と確認（例:「名古屋の屋上ビアガーデン」「梅雨の名古屋メシ」）。単一の撮影対象が無い |
+    | (b) 写真調達失敗 | today_one（単一店スポットライト） | 8 | 店は決まっているが写真取得失敗。サンプル4件全てで`pending_store_keys`に該当店名が残存＝新店でLOCAL_STORES未解決 |
+    | (b) 写真調達失敗 | flexible（1店名指名記事） | 1 | 同上 |
+  - **結論**: **(a)題材選定が主因（21/30＝70%）**。(b)写真調達失敗（9/30＝30%）は**ISSUE-097
+    「実写ゼロの手動キュレーション店24件」と同一の根本原因**（新店がLOCAL_STORES未解決のため
+    Instagram/HotPepper/Placesのいずれからも写真を引けない）で、既に別チケットで対応中
+  - **未実施（意図的に保留）**: acceptanceの(a)対応「journal-todayの題材選定側を見直し、実写が
+    用意できるかを候補スコアの入力に含める」は、**どのテーマをどの頻度で選ぶかという編集戦略の
+    変更**であり、チケット自身が「すぐには着手しない（オーナー判断）」と明記している範囲。
+    かつ実写比率が既に目標にほぼ到達している現状では、緊急に構造を変える必要性は薄いと判断し、
+    分類調査の結果報告までに留めた
+  - **次の手（オーナー判断待ち）**: 67%→70%超を追うなら、(a)側は
+    「industry_insider/roundup系の出稿頻度を若干抑え、today_one系（単一店で実写確保しやすい）を
+    優先する」候補スコア調整が有力打ち手。(b)側はISSUE-097の進捗で自動的に改善する見込み
+- **files**: なし（調査のみ・コード変更なし）
 - **detected**: 2026-08-17
 - **category**: 編集
 - **owner**: Editor（写真ソース確保は DataKeeper と共管）
@@ -3578,6 +3603,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Marketer/Builder(/solve-next) | SEO-058 partial実装 — fetch_gsc_metrics.jsのgroupPageQueries()でトップページを表示順位に関わらずfocus集合へ強制追加（acceptance①）。単体テストで意図的低impressionでも捕捉されることを確認・npm test 94/94。acceptance②③（GSC実データでのnavigational/discovery分類・Strategic Skip判定）は本環境にGSC API認証情報が無く実施不可のためpartialのまま。次回CI（build.yml日次fetch）で修正が効き次第②③に進む | ⏸ commit 9e3da3164・partial |
 | 2026-08-19 | Marketer/Builder(/solve-next) | SEO-061 実装・デプロイ — gsc_opportunities.jsのclassify()にクエリ単位の地理的意図判定を追加（areas辞書+名古屋/愛知の語の有無）。地名なしクエリをctrFixGeoless別枠へ隔離。実データ（既存gsc_metrics.json）で変更前後を比較: 誤検知の「一人飲み」がctrFix1位から除外され「くろぎ 名古屋」のみ残存、地名なし5件中大半が店名の指名検索と判明（SEO-059診断の裏付け）。前後をseo_advice_log.jsonに記録・npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | Editor/Builder(/solve-next) | ISSUE-081 実装・デプロイ — index.htmlのフィードバックパネルに#feedbackハッシュでの自動オープンを追加。add_feedback_nudge.js（新設・冪等）で3系統以上のフッター混在に対応する共通挿入点（最後の</footer>直前）を設計し、既存170ファイル（features66+journal104）に一括適用。journal/_template.html・gen_industry_features.jsにも焼き込み新規記事は自動対応。ブラウザ実機で#feedbackアクセス時の自動オープンを確認・全172ファイル構文検証0エラー・npm test 94/94 | ✅ 本コミット |
+| 2026-08-19 | Editor(/solve-next) | EDT-003 分類調査partial — 直近30本のヒーロー画像を実測、実写比率が検出時42%→現在67%まで既に改善していたことを発見。図解になった30本のtheme×本文実査で(a)題材選定21件(70%)/(b)写真調達失敗9件(30%)に分類。(b)はISSUE-097と同一根本原因（新店のLOCAL_STORES未解決）と判明し既存チケットの進捗で自動改善見込み。(a)対応（題材選定アルゴリズム変更）は編集戦略変更のためオーナー判断待ちとして意図的に保留 | ⏸ 調査のみ・commitなし |
 
 ---
 
