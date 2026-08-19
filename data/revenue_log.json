@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "_comment": "法人向け収益ループ（事業化ロードマップ Phase 3）の記憶（append-only）。問い合わせ・見積・成約のみを記録し、自己申告の売上目標や見込みは書かない（CLAUDE.md 制約10＝検証できる事実のみ）。schema: {id: 'REV-NNN', date: 'YYYY-MM-DD', source: '接待・宴会コンシェルジュ'|'B2Bデータ提供'|その他成約経路名, contact_channel: 'formspree'|'email'|'other', stage: 'inquiry'|'quoted'|'won'|'lost', amount_yen: 見積/成約金額(円)|null, note: 経緯の短い記述, related_feature: 'nagoya-settai-concierge.html'等}",
+  "entries": []
+}
