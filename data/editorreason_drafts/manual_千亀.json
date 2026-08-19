@@ -1,15 +1,78 @@
 {
-  "status": "INSUFFICIENT_EVIDENCE",
-  "editorReason": "",
-  "insiderNote": "",
+  "status": "OK",
+  "editorReason": "名古屋コーチンなど厳選素材を紀州備長炭で焼き上げる職人技が光る人気店。県外からも客が訪れるほどの実力派で、焼き鳥好きには外せない一軒です。",
+  "insiderNote": "有名店での修業経験を持つ店主が、真心込めて焼き上げる希少部位も楽しめる人気店。予約が必須、または強く推奨されるため、早めの手配が肝要です。",
   "visitStatus": "desk_automated",
-  "confidence": 0,
-  "sources_used": [],
-  "warnings": [],
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG9PCiFaYX9dZD2q29rKXkfXsksCpOsEOWbFNP5_mn4dQxHTOChyTkAAxqjU-9j8ukkO8cUDQmCvElJ8SQ839mDrKT_6mko9J5XZLdgWANsZxpVzRQVcBvvGpK4VBRpdcVpCmJBef2Gy_zl-Lh1",
+      "snippet_quote": "「フードメ」ではミシュランガイドにも掲載される人気店として紹介され、名古屋コーチンのもも塩焼きが絶品とされています。",
+      "supports": "名古屋コーチンの使用、紀州備長炭での調理、人気店であること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQERBjESOFumCe5ufbidkxhA59A_WBcWZ6G7RrG-JuP8Ak1fNvIDnfWHfQ0eGLFWwFLJ3yUV9taw4dp8Tu4iPaUstzWPRtwxXff2UJ0MK_YMpBvTRplDnYlZ3-FsfoMR2C58xCjAZuu7oDrGYHGKNATT7rE=",
+      "snippet_quote": "「Retty」では焼き鳥好きの人気店として掲載されており、食に詳しい人のオススメが集まるお店と評価されています。",
+      "supports": "人気店であること"
+    }
+  ],
+  "warnings": [
+    "1件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「千亀」（栄・焼鳥）について、Google検索で見つかった業界視点の情報は以下の通りです。\n\n**店主のこだわり・料理人としての評価**\n「千亀」の店主は、知る人ぞ知る有名店で修業した経験があり、その真心と情熱がこもった焼き鳥は一食の価値があると評価されています。 新鮮な地鶏である名古屋コーチンを使用し、紀州備長炭による絶妙な火入れで提供される焼き鳥は、職人技が光ると評されています。 特に、皮はパリパリ、もも肉はしっとりジューシーで、火入れが完璧と評される串もあります。\n\n**提供スタイルの特徴**\n*   **素材のこだわり:** 新鮮な名古屋コーチンや三河赤鶏などのブランド鶏を使用しています。\n*   **調理法:** 紀州備長炭で焼き上げています。 カウンター席では、目の前で焼き上げる様子を見ることができます。\n*   **注文形式:** 焼き鳥は1本から注文可能で、様々な部位を楽しむことができます。\n*   **メニューの多様性:** 定番のねぎまや軟骨に加え、コーチンもも塩焼き、ちょうちん、白肝串焼などの希少部位も提供しています。 黒板メニューには焼きチーズやトマト、牡蠣串焼きなどもあります。\n*   **一品料理と締め:** 一品料理として肉味噌とうふやきゅうりのぬか漬け、締めに塩きしめん（亀心麺）なども好評です。\n*   **ドリンク:** 生ビールや焼酎の他に、ワインの種類も豊富で、焼き鳥とワインのマリアージュも楽しめます。 日本酒はワンカップで提供されるものもあります。\n*   **予約の必要性:** 人気店のため、予約が必須、または強く推奨されています。 特に、希望月の前月1日から予約が可能です。\n\n**地元グルメメディアでの紹介**\n「千亀」は、名古屋最大級のWebメディア「ナゴレコ」で紹介されており、県外からも客が来るほどの人気店とされています。 また、「フードメ」ではミシュランガイドにも掲載される人気店として紹介され、名古屋コーチンのもも塩焼きが絶品とされています。 「おいでよ名古屋の食べ歩きログ」や「ぼくプーさんの名古屋グルメぐり」といったブログでも紹介されています。 「Retty」では焼き鳥好きの人気店として掲載されており、食に詳しい人のオススメが集まるお店と評価されています。 「食べログ」では百名店2018に選出され、愛知県ランキングでも上位に位置していました。 「南山常盤会WEB」の「タウンぶらぶら歩き」でも紹介されています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHBXB-2uvjq2Z-eqs9ngkC6lo0fJ9oLsoOKNtBcrkJEt2gFgZBYFX59EkZWjjcjrNsZIMIyCy_69Ca_1O3ghcw5yBqVW8VQBFaV295dAKCN7Xoaj0d3pj2pX39q_XD1oHZsbwaXm_KSMnj77SaufGneWf_E7HzUANg=",
+        "title": "nanzan-tokiwakai.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG9PCiFaYX9dZD2q29rKXkfXsksCpOsEOWbFNP5_mn4dQxHTOChyTkAAxqjU-9j8ukkO8cUDQmCvElJ8SQ839mDrKT_6mko9J5XZLdgWANsZxpVzRQVcBvvGpK4VBRpdcVpCmJBef2Gy_zl-Lh1",
+        "title": "foodmation2018.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE7pZUw91DOGXXfQs8UIJl79k5GtO4YgCbk-SI5I7aZs9yvvq9-7Dz6u0jxEJNfJBY63TU9nwJ3awGqFfHNKv3QnPsO7JYPHHG5MCVojXMqf6eT9QUHARrtE3bn",
+        "title": "oinagoya.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE8VNVg-SKLS20sqZOitHsffZ4zyTm6gybWrNG70JT9DBYFEpDxqWlGAMncnTePE3iaV6Qo96g3unquZk0LbgmYdGqj4DddiP30ofeDLtBLN2ZASryPlDqDaitSaePSCfD9JW0=",
+        "title": "jeez.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH24z-ZysouQuVdGr2x8Zy9uIxRm3QBd0ScmpEMKTKe95gSm5dKs9mowav_pFxA8DdNwwdt_Y2KaqMVQKObOAWYra_7kY3KSmFEmnPlILWn2klUptj69g_y_B5o2m_lSqMMQMKQY3SvCJBUt02I",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFagvhDGK0z6ZOAlMKWibaAwnDqBme5GQIPKJ7Znrbh9XZWY5y4EDBv0kkQON-Cw9fTTWKVGYjf5Qu1qbb9wHdmTODgSC63jwJ3dWYshU2OveKEmkp51jXZsnOAoMhH4BtBPL3bVYQ=",
+        "title": "nagoya-meshi.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGjcDNbJL1qL-le6-EPYm09YMnLxQsO_1WJCiFQ0Si3CjU8eyF7NCUZVLye-60cxrlrb1dA1HNZy-GwbWEzNSaQtq3iQsh50_ATP7_r1swMW-QuCuT4W-_M2mNdmySuLit6gl8yPf1bkAHEyBQ=",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQERBjESOFumCe5ufbidkxhA59A_WBcWZ6G7RrG-JuP8Ak1fNvIDnfWHfQ0eGLFWwFLJ3yUV9taw4dp8Tu4iPaUstzWPRtwxXff2UJ0MK_YMpBvTRplDnYlZ3-FsfoMR2C58xCjAZuu7oDrGYHGKNATT7rE=",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF8j_VgHNlHNfuUQGcJIMr6513eWZQLlJTPetSJReLQM4VVDNts-4PT_5EQmN1w2XlDZVTLRVL8zlJIS9EhV0Wo35zUHBiA8Z939UZ4drOfU9nVIObDlKBaCtjh364wDBtvneU_LcjmopgNtRo=",
+        "title": "takemachelin.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFM9ptCSUj_dhpyGERwe0G3bIDjP_CvZw_3kFPuExV0CwvUugFkhZR2Il_KARQrcj5ojSW1m3_w-58QdLUfBHb6bvbxI7VU_gKRHKrQntd4i0cb89154HXaRCxw_sPtA6465w==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHSRe86QQSScqb9jBjO7LYToXBR-UtnSuPUiETuxwGJbTTcY0tly4I70VJD3rTCvMRNwXI5ypFiyLy4DupVcxUWdWTTnFhA01-9A2VuE7E2q4I1EteHD6r8tMkdO8LsJx8=",
+        "title": "758nomi.com"
+      }
+    ]
+  },
   "store_id": "manual_千亀",
   "store_name": "千亀",
   "area": "栄",
   "genre": "焼鳥",
   "rating": "",
-  "generated_at": "2026-08-19T06:40:57.729Z"
+  "generated_at": "2026-08-19T08:36:06.603Z"
 }

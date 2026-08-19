@@ -1,15 +1,58 @@
 {
-  "status": "INSUFFICIENT_EVIDENCE",
-  "editorReason": "",
-  "insiderNote": "",
+  "status": "OK",
+  "editorReason": "新栄の名店「シェ・トト」出身シェフが、音響にもこだわり抜いた空間で提供するフレンチ。季節感あふれるシンプルな料理は、一皿ごとに技術と情熱が光り、大人向けの落ち着いた雰囲気で特別な時間を演出します。",
+  "insiderNote": "新栄の名店「シェ・トト」で腕を振るったシェフが、音響プロデュースまで手掛けるこだわり。料理だけでなく、空間全体の質を追求する姿勢が伺えます。",
   "visitStatus": "desk_automated",
-  "confidence": 0,
-  "sources_used": [],
-  "warnings": [],
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFF-cOxtCyFAPb0-ICxfATCyPMld1pDk-ywAOuwsscdTrrYWP_nMpusCf5zpGZwUvb_R0zJL4TCpQNHfTElM66nL9sHeNOXIDz_EMmETeqoiPuAM2QvfICs81UlXOPwc-mOcbO9ETjkmZa0",
+      "snippet_quote": "シェフは新栄の有名店「シェ・トト」で腕を振るっていた方で、音響にもこだわりがあるそうで、心地よいジャズが流れる空間で、季節に寄り添ったシンプルなフランス料理をゆっくりと楽しめます。",
+      "supports": "シェフが新栄の名店「シェ・トト」出身であること、音響にこだわりがあること、季節に寄り添ったシンプルなフランス料理を提供していること"
+    }
+  ],
+  "warnings": [
+    "2件のURLが実際の検索結果に無いため除外（要確認）",
+    "sources_used が 2 件未満（人手レビュー必須）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋市昭和区のフレンチレストラン「KimiTote (キミトテ)」について、Google検索で得られた業界視点の情報は以下の通りです。\n\n**店主のこだわり**\nKimiToteのシェフは、料理だけでなく、お客様が過ごす時間全体の質を重視しており、音響にも強いこだわりを持っています。新店舗オープンに際し、自ら音響プロデュースを担当したオタイオーディオ本店に足を運び、音響設備の相談をしています。心地よいジャズが流れる空間作りにもその想いが表れています。 また、シェフは新栄の名店「シェ・トト」で腕を振るっていた経験があります。\n\n**提供スタイルの特徴**\nKimiToteは、鶴舞公園内の古民家をリノベーションしたカジュアルフレンチレストランです。 店内は温かみのある素敵な空間で、フランス料理とワインをゆっくりと楽しめるよう配慮されています。 小学校高学年未満（10歳未満）のお子様の入店は基本的に遠慮いただいており、お子様向けのメニューや設備はなく、大人と同じ料理を楽しめるお客様に限定することで、特別な時間を共有できる空間づくりを目指しています。 料理は「季節に寄り添ったシンプルなフランス料理」と評されており、一皿一皿にシェフの技術と想いが感じられるとされています。 料理のポーションはボリューム満点であるという声もあります。 ランチでは、メイン料理を魚または肉から選ぶスタイルで、季節のオードブルとパンがセットになっています。 スープやデザートは追加料金で付けることができます。\n\n**地元グルメメディアでの紹介**\nKimiToteは、2026年6月15日のオープン時に、地元情報サイト「しょうわん」で開店情報として紹介されています。 また、ウェブメディア「Web eclat（ウェブエクラ）」のブログや、個人のグルメブログ「とっておきのご馳走❤️名古屋グルメ」、「チャラblog」などでランチやディナーの体験が紹介されています。 「クリエイター成長ラボ」のブログでもメニュー内容が具体的にまとめられています。\n\n**料理人としての評価**\nシェフは新栄の有名店「シェ・トト」での経験があり、その技術と情熱が料理に込められていると評価されています。 提供される料理については、パテ・ド・カンパーニュが肉厚で肉肉しく美味しい、天然真鯛のポワレは皮がパリパリで身はふっくら柔らかく、ソースも美味しい、季節の野菜のポタージュは雑味がなく野菜本来の美味しさが伝わる、オニオングラタンスープはチーズとパンが香ばしく玉ねぎの甘みがしっかりしている など、具体的な料理への高い評価が見られます。全体的に、提供される料理は美味しく、満足度が高いと評されています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEkkrSYnCCZH7lIjRaDBxKqg4dR5-xpI9lOaFLUJ0MfZLOXQTLBE-sCHIK1DchM1-HO0Fl023cxpRkbwqzTSgJ93kDJE4Hs9Drwty_YfzRyx1PmyGJjavjcEDot06IT9_DczgG21sIXhSHbhQ==",
+        "title": "otaiweb.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEjyqmx5vXU9xx9POiDNKMsQPBLIzy0LwL-9fhNledmAF4Iegi_M68Jlrlz39bosRJymWfpSo-zXkGQoeyfneuM820XmBqpopp8vbt5nNi_uSrf96MiaO0ZBOy9xoXRdyjvWbGuefF5vdTybfeX",
+        "title": "sho-wan.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFF-cOxtCyFAPb0-ICxfATCyPMld1pDk-ywAOuwsscdTrrYWP_nMpusCf5zpGZwUvb_R0zJL4TCpQNHfTElM66nL9sHeNOXIDz_EMmETeqoiPuAM2QvfICs81UlXOPwc-mOcbO9ETjkmZa0",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJaymGBm6xcg-9UhgpcS_dpjDlmQbRdDumJjM92Zy8NXfqZfzQyUG3_EAQErWRryJ35cntG66anj915uc-XdkCsR2gpiD3Zb1eb3qq3g4T9O68rFN-ZxdDwdo_g9vGtWyoA6YWqZZs7W8gMu6UHG8=",
+        "title": "owl-solution.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFEQa2vZq5yHaWLD1tAqwa0ZSRcPpcw-F_27-iAHj5_kD8yxA8nph5CgxNLuRgqFvcKsOCFQlgqwjwuojBJBg9qITolMewa9aAp8hQrz40xOOpeUqR41WOJxemVbRpK3b80ZzU15VCnOj1iPjz1GA==",
+        "title": "fc2.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH_HuIwi6-a4Y-M1edMV9_UyK_fUHjpS_thvat9_C3hIyeYatHw8XTxU878W64IT1Es5-e22Sf3hPCMJmVUr8t60xD4Eindi6jZ_e25Wvn9YlK2afPNPz5PjTiPp_KZCaEzhh-tfN1dtdS3z1E_BWfPn1y4k2uoIHTje5E=",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQElNBsWhYN-jQS5t5Vkamx2yTcF5OXeJCAaYPy10PbYTtE5OyiSxpXk-ydYAf6NSjJpqfHynyBthuejnutocVfl2_IDMbe_AFFBYZPS2fvxNyGoQYL1OrGn60bL8jd_6jL2RD1YK2UHchHwpWVdgw==",
+        "title": "hpplus.jp"
+      }
+    ]
+  },
   "store_id": "manual_kimitote(キミトテ)",
   "store_name": "KimiTote (キミトテ)",
   "area": "名古屋市昭和区",
   "genre": "フレンチ",
   "rating": "4.5",
-  "generated_at": "2026-08-19T06:59:36.796Z"
+  "generated_at": "2026-08-19T08:36:58.167Z"
 }

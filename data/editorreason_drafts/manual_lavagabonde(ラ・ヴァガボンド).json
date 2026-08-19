@@ -1,15 +1,122 @@
 {
-  "status": "INSUFFICIENT_EVIDENCE",
-  "editorReason": "",
+  "status": "OK",
+  "editorReason": "ミシュラン二つ星、ゴ・エ・ミヨ掲載の予約困難な名店。岩本シェフの独創的で芸術的なフレンチは、厳選食材と巧みな風味の昇華で美食家を魅了します。",
   "insiderNote": "",
   "visitStatus": "desk_automated",
-  "confidence": 0,
-  "sources_used": [],
-  "warnings": [],
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiPqXm_6uHYBU-BtaN164BpyOJnvw0fsm9Xs8drWSqDtRrF7s_Jb2o5G_ubrj9LoYoWBCB39BRGBf931HR30-UUgVKe7Sjtz9xexNs01nhWegbQx6EZBoX0r8PtKFjiwE=",
+      "snippet_quote": "ミシュランガイド愛知で二つ星を獲得しています。フランス発の本格レストランガイド「ゴ・エ・ミヨ」にも掲載されており、2022年から2026年まで掲載歴があり、掲載点数は16/20です。オープンして間もなく、名古屋のグルメな美食家たちの間で評判となり、予約の取れないフレンチの名店として知られるようになりました。オーナーシェフである岩本シェフの独創的で美しいフレンチにそのコンセプトが反映されています。日本全国、また世界各国から厳選した食材を使用し、料理は一皿一皿の端整な美しさに迷いがなく、食材の個性と旨みの頂点を見極めたテクニックは芸術性が高く、美味しさをストレートかつダイレクトに表現しています。ハーブやスパイスで香りを際立たせながらも調和を狙った「風味の昇華」が見事とされています。",
+      "supports": "ミシュラン二つ星、ゴ・エ・ミヨ掲載、予約困難な名店であること、岩本シェフの独創的で芸術的なフレンチ、厳選食材の使用、風味の昇華"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG9EuygfWsgZmTjodfzbjfBwfvZQkxKMmYGhC-VKgCZNagVDsCAgXRVIj-LFfeTz-8ZymjvjSq-vXlWIXsj_vInevX1PArlUDC6-4-wlA5_O0cMOOoDJtb9wxefX8AzKlkPM0Gqb8p2M2h2a5cL",
+      "snippet_quote": "ミシュランガイド愛知で二つ星を獲得しています。オーナーシェフである岩本シェフは、独創的で美しいフレンチを生み出す料理人として評価されています。日本全国や世界各国から厳選した食材を使い、一皿一皿の料理には迷いがなく、端整な美しさを誇ります。食材の個性と旨みを最大限に引き出すテクニックは芸術的でありながら、美味しさをダイレクトに表現しています。食感の対比やハーブ、スパイスを巧みに用いた「風味の昇華」が見事とされています。",
+      "supports": "ミシュラン二つ星、岩本シェフの独創的で芸術的なフレンチ、厳選食材の使用、風味の昇華"
+    }
+  ],
+  "warnings": [
+    "2件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋のフレンチレストラン「LA VAGABONDE (ラ・ヴァガボンド)」について、Google検索で得られた業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n店名の「VAGABONDE」はフランス語で「放浪者」「旅人」を意味し、オーナーシェフである岩本シェフの独創的で美しいフレンチにそのコンセプトが反映されています。\n岩本シェフは独学で高い技術を習得し、日本の食のシーンにおいて異端児的な存在として知られています。\n日本全国、また世界各国から厳選した食材を使用し、たっぷりのソースで仕上げる一皿一皿に想いを込めて、フランス料理ならではの手間暇かけた渾身の料理を肩肘張らずに楽しんでほしいという願いが込められています。\n料理は一皿一皿の端整な美しさに迷いがなく、食材の個性と旨みの頂点を見極めたテクニックは芸術性が高く、美味しさをストレートかつダイレクトに表現しています。\n食感の対比も随所に見られ、計算し尽くされた料理はまるで魔法のようと評され、ハーブやスパイスで香りを際立たせながらも調和を狙った「風味の昇華」が見事とされています。\n小さな料理の中に多くの食材が使われ、奥深く新たな発見で楽しませる工夫が凝らされています。\n\n**提供スタイルの特徴**\nコース料理は3時間から3時間半ほどかけて提供されます。\nディナーはワンコースメニューで、料理に合わせたワインのペアリングが可能です。ワインペアリングは、飲める量に合わせてスタンダード、ハーフ、テイスティングの3タイプから選べ、ノンアルコールのペアリングやデザートワインのペアリングも用意されています。\n料理全般に様々なエディブルフラワー（食用花）が使われ、華やかな見た目も特徴です。\n一品ずつが凝っていて繊細で、見ているだけでも楽しく、お皿から料理までこだわりが感じられます。\n予約は非常に困難で、以前は1日3組のみに限定されていた時期もありました。現在は、訪問時に直接次回の予約を取るか、TableCheckでのネット予約のみとなっています。\n入店人数を常に制限することで、サービスと料理のクオリティを保つ努力がされています。\nお子様の入店は中学生以上とされています。\n各料理の説明は細部にわたるまで丁寧に行われ、顧客の要望にも細やかに対応する心地よい距離感のサービスが提供されています。\n調理と接客の垣根なく全員がすべての業務を経験し、「実際に感じたことを、自分の言葉でお客様に届ける」ことを大切にしています。\nアミューズに続き、前菜や魚料理では多くの食材が使われ、縦方向に盛り付けられるのが特徴的です。\n\n**地元グルメメディアでの紹介**\nオープンして間もなく、名古屋のグルメな美食家たちの間で評判となり、予約の取れないフレンチの名店として知られるようになりました。\nミシュランガイド愛知で二つ星を獲得しています。\nフランス発の本格レストランガイド「ゴ・エ・ミヨ」にも掲載されており、2022年から2026年まで掲載歴があり、掲載点数は16/20です。\n食べログでは4.23と高い評価を得ています。\nRettyでは実名ユーザーによる23件のリアルな口コミが寄せられています。\nヒトサラにも店舗情報や美しい料理写真、店内写真が掲載されています。\n複数のグルメブログで詳細な食レポが紹介されています。\n\n**料理人としての評価**\nオーナーシェフである岩本シェフは、独創的で美しいフレンチを生み出す料理人として評価されています。\n一皿一皿の料理には迷いがなく、端整な美しさを誇ります。\n日本全国や世界各国から厳選した食材を使い、手間暇をかけた渾身の料理を提供しています。\n「天才シェフが放つ唯一無二のディナー」と評されることもあり、食材の個性と旨みを最大限に引き出すテクニックは芸術的でありながら、美味しさをダイレクトに表現しています。\n食感の対比やハーブ、スパイスを巧みに用いた「風味の昇華」が見事とされています。\n特にジビエ料理の評価が高いです。\n15年の歴史の中で7店舗が独立し、予約困難な店も多数輩出していることから、料理人としての指導力や影響力も高く評価されています。\nソムリエ資格を持つスタッフが複数在籍していることも、シェフの育成方針や料理とワインへの深い理解を示唆しています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiPqXm_6uHYBU-BtaN164BpyOJnvw0fsm9Xs8drWSqDtRrF7s_Jb2o5G_ubrj9LoYoWBCB39BRGBf931HR30-UUgVKe7Sjtz9xexNs01nhWegbQx6EZBoX0r8PtKFjiwE=",
+        "title": "mileage-fun.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFiTbT46zvM8O-ki6zSEzHWzZv-bChZXNFcSrMnVabXSFcYpcMBWPqRAXr3a8fsnCgwIY6zy_x2vAWQBlTN4P18MdhkYL4BTvAUqXOn6RHsnvv-reXJfYLwLh6Enu-cMeIiL4opMDg=",
+        "title": "lade.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFu7TqOlZZeY4Wmu3O8GhnMw8WHnsxAVHVq4Uqavue-vpJ79FVz-EQZFyKlOT4Q3Ns0je8p4LmC1tkZdNCVRvC7z-2FK7YxLrFnMNJF6SgfwxKBK8Ow-d3hwSqvFYopWJm_yDk4pTc=",
+        "title": "lade.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF3ZE46_0xYX7sFiLujVqjJCpGNs_mP3yqMweJPoFKNfFo9DetQwwketxh8cBHn1IgnrPvCb_S9V4thQlot5TxXu9yQ0OjtTZt0ksra8FinYLFCkdhwIgVbQm8SNBcGGgY6r1POf1A=",
+        "title": "lade.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH1X0_vywxgAHDMzHw4n-W7jJlN6_PlebqqDF1-goQPXpdSquoxZaHUjbSzQpEUrGlYcgUyVYNeMy3XsjB3miY473sCoKjx-T5b9rtBTvROWv95Ya7CSgcXiZwuakfKB8X_tN4XS6hRvVpW5qi3hb9r",
+        "title": "byfood.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE4M6_Ij8HRut_0jDhV1JHVTPYPMTIPOlwiNYC_SHLgR6iNw95PyCpOFvxFTtVmH_-kNzaQIMp8oUbFAzQSmKfUjm67PQpeLMQ8DIDBmCt5mw8Vl8DI-_aUCKwJNA9P4pWr6BkapsjvaeCkuZGBMJYqFB8=",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGSyPT8l3W9hF6z1vUCurF06ohth6Zsth24soIJEqCBaP1o6urAOjOQrdvfty2KNY1wUnNdpkK2Md-j6aMkrmp71F8M_eRCFzYdEq0WOj0DyqRR--4d-Yzch8LqMqlfkrVj01epMqc=",
+        "title": "youtube.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGy69OzKwSBpVHKRDTzlzGSYnYteIrq1w-HyZ2SfhFn8Fv-PkQmaq1hIMlwsqwyeK7bM8NvTSVGSWopZSF4mUBZKmtjxZJVCAcHB0bFuQ8f9M-kOu4lN2yDJaQuYP1mLG7Oj5KbZOVCgyYR-NKCy-O52K1F",
+        "title": "tablecheck.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGYU3hp0QGTO3O8mX3fKTeSII5e9BFjgJLF0gNyRoffQru-kJnu04WEYb4YFBykJHj3Vpybosrdvz3q8lLVjtXJO6I9wVR_Ggg-Eh4nxmRrn-Q2XtScinOoiP4ovNSLlhM78DGIL3Zq2ZxF1jodcap4D9EzoNnkodau7A==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF_mmttGDpJAG9jdbFmvYBaqsF864IR0mwFhnpnDJhUU5wsEgVJZtvzctdtM473tb2FHBYsmHcoMy-oLpphLobEPBGT59QcxjWzMwoYsMe4v7HUjSzhQkRuZMn5mfV8YWoHbb2HBXfFO4nwONXqyEOQjBu3qlSs3lM2Jw==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH_v7U_6WWTv7BpObpowtpGbbryKvAjBEkwi2IX3XaiYToOGnP-VM88KDTZaY8ExljxeJ_zvFHC5Sa9HOCvpcTRZMJWWNPLKxjD0khztHk0p-q5DvR-xq_MIkqTTES83PsuyXtFbohE6Q7m4biK",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGBLq_G4yNZO1tS4JdDnXLbcKdWuLNBN_nceomfh1AjaYiKuinotLOWhBmiDEEM121HoK6Lp4dgt02fp_jpJTtcbn_thFpmMVsg460yMYWLTLpOjo7YZxjXW8gYtreqryBeZtV11IV1GzR0dSdrw5Z9",
+        "title": "navitime.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEksN3PV0TWftmTpCBZavA0PZT5y-w1vwvC2N9ltmkaHzrQ4ndXwD2MJkzsCYLslHl589-RMYEHat-HZiW-UjEfVK7mmJ40_9nSb-Oelk7eRIJ8DGx4qB16wIXlaaVlOj_GtQ-hOhB_y2cu6Uw8nfnY7kw=",
+        "title": "livedoor.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG9EuygfWsgZmTjodfzbjfBwfvZQkxKMmYGhC-VKgCZNagVDsCAgXRVIj-LFfeTz-8ZymjvjSq-vXlWIXsj_vInevX1PArlUDC6-4-wlA5_O0cMOOoDJtb9wxefX8AzKlkPM0Gqb8p2M2h2a5cL",
+        "title": "inshokuten.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH2dG7LIUvUPa_xV02ckTzSyVNpHjXz7pBuhEq5DQ6LGDuDAoIPRn4El0TjzbjeoXO275a3FpfpWls3jNOCLSYfaCLKUM150aZ-YwbLa_Sz08el4bnBkb_E7JmUI9Ci0fg6boLUXDf2S6IllVHPsQ==",
+        "title": "fc2.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGuxmPL8FCREnfox_kb82_opNf6ILglQXGceIa6kBx4APsr1XNESKxwT_tFv8mKKdMZbHQCq5ccQXG2q38NfT-ajyzEFR-nBrpxmfMLVuTFsHrB6DUZhtsjjkXH3onBSyBWt0aObPMdhgS3VQ8VFxPE",
+        "title": "gaultmillau-japan.info"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGYKHEruegWwB1sLh0tt1PBvCGgjHhKsC6SFfwqB-JSw0t3UNlG7xKN6xRVg-2c_9z91rzYDmbwmSzgGYdkXBiZsI7v0rM9j7BNapCbK7mYk3Aip9D-7WgB8Al9qkNy-d4HKJWw0PWiWn90YlQuDnNB58E=",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEjiYPykd3v1KxMe5NOiB1xKC7oR3LbbtC5_xpKRWK2Kfll9mCfAn5EReiSwKRuhNuLejn7kIqTJM_eRVbfhARFDYZjWim9WDL0-R9dltAfujCU8PkIhI5pMyijkOAO-gItFLg=",
+        "title": "hitosara.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHH8b6DJUQDjlGL8csuGzgaPQUVQM9DSGkviKIMs2182nLrdUjzWRVl7uHTHhcbFhUOQuX4RMiywPL0GBdOBRaMpQFhE_5WMLDfFPcwb9mu8PckMLAdrKKoZ4GN",
+        "title": "hitosara.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFyDibcdycbs-tCrY-yKq1V0kbwlCWuSrApMGYF4xr-GZZcZnJFVCa7QgITnby8QM3sGNeWP9e3SX90yh278nlL-4a1ZkZSDbRgzOjOc5mfZlZMPBFqkgO8NSlpbyTGNxQd",
+        "title": "hitosara.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPF85zkE4ou79rzDlMOB7JoYwH_6cIdKv0VbzdAeB4vhbi1c5_lILA6qYb5YfA-MP0YNJ_LXur49qtd9pWauTKB9NaP6RcouqWcAl8eDKQnq0272hx0Sl2YEmtMe3qHDoqJT6YXJ6z0oDgsyCB",
+        "title": "minna-tabisuru.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGnDgQOTFmXrH_bNIvRxjb-K8VAqKO38748t-umSzHcCeGkCWzqDq07wMGApqy-51d0P4ygmR_MW6HKRp1ukSHSpdB-3uqjPcZVfZe26Fu9Lzt0OovUZVTPEjfrH9lxtNX3PeM9WQ==",
+        "title": "meals4israel.org"
+      }
+    ]
+  },
   "store_id": "manual_lavagabonde(ラ・ヴァガボンド)",
   "store_name": "LA VAGABONDE (ラ・ヴァガボンド)",
   "area": "名古屋市中区",
   "genre": "フレンチ",
   "rating": "4.4",
-  "generated_at": "2026-08-19T06:59:41.925Z"
+  "generated_at": "2026-08-19T08:37:38.503Z"
 }

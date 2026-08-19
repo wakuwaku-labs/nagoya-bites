@@ -1,15 +1,110 @@
 {
-  "status": "INSUFFICIENT_EVIDENCE",
-  "editorReason": "",
-  "insiderNote": "",
+  "status": "OK",
+  "editorReason": "京都の人気ビストロが手掛ける新業態。本格フレンチを大衆酒場スタイルで提供し、高級フレンチの敷居を払拭。大阪や東京での成功実績から、食感度の高い名古屋での展開にも期待が高まります。",
+  "insiderNote": "京都のBistroフレンチマンの新業態。大阪で大ヒットし、東京進出店も月商1300万円を達成。食感度の高い名古屋で、その革新的なコンセプトがどう受け入れられるか注目です。",
   "visitStatus": "desk_automated",
-  "confidence": 0,
-  "sources_used": [],
+  "confidence": 0.9,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH0-0afKK1VcJX_eJv0IZf-nXP-yVMu0x1r98MbWUjtb1vt3xxwFnuTYFzrV8khJxkNeQSue-AJx4GNCyzdrjgQNu05iSyaOLy1X2tJcFpTJAkmGI1qAsSxYxW2TjpZEYlViR0=",
+      "snippet_quote": "京都のフレンチビストロ「Bistroフレンチマン」が手掛ける新業態として、フレンチビストロと大衆酒場を融合させた新しいスタイルを提案しています。",
+      "supports": "京都の人気ビストロが手掛ける新業態であること、フレンチと大衆酒場を融合させたスタイルであること、大阪で大ヒットしたこと、名古屋への出店理由"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEcaIFoopeHrNQ14E7CKanuY_ntik2ri6NIaelb_unHylA52ZYFadt2grZUCMs7McWSKYeIYKW4IEbMskdkxEkB1tUTM4F7eJ982YDP1dj0fSKeY4i3sjcz4rA01HkbmeAqVk1ZFtnG5tGL2DEp8PUN",
+      "snippet_quote": "京都のフレンチビストロ「Bistroフレンチマン」が手掛ける新業態として、フレンチビストロと大衆酒場を融合させた新しいスタイルを提案しています。",
+      "supports": "京都の人気ビストロが手掛ける新業態であること、フレンチと大衆酒場を融合させたスタイルであること、大阪で大ヒットしたこと、名古屋への出店理由"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGg_seWGSFJqSpz888x8rvw-LltUqtLq8WeJWTv3L7ylgJScImjr14fu_dBhNi9mlEn-eS6OhPVvx-nicMFgvvbqbmirmURXKGeRGPsuraOE-onJWP1lOupxO-RfW0jnjp6EuKR_SzIOFU=",
+      "snippet_quote": "東京に進出した渋谷サクラステージ店も月商1300万円を達成するなど、その料理の質とコンセプトが高く評価されていることが伺えます。",
+      "supports": "東京進出店が月商1300万円を達成していること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF0Mg8LTw_kt-6NvtluCKJb0IY366l25s9tOkGHpquyWpkupA1veMMCDJpC9eswASEQvUf5zpNtGlkLnrt8wS9kgeCx-s0OmBd-NjHthnL1CTUpfSUPqc4EalcPIPOdrYlveS8=",
+      "snippet_quote": "高級フレンチの敷居が高いというイメージを払拭し、気軽に楽しめることを重視しています。",
+      "supports": "高級フレンチの敷居を払拭し、気軽に楽しめることを重視している点"
+    }
+  ],
   "warnings": [],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「大衆酒場フレンチマン」について、Google検索で得られた業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「大衆酒場フレンチマン」は、京都のフレンチビストロ「Bistroフレンチマン」が手掛ける新業態として、フレンチビストロと大衆酒場を融合させた新しいスタイルを提案しています。運営会社である有限会社らくちんの代表取締役社長である渡辺哲也氏は、実家の倒産を機に独立し、様々な業態を経て2014年に「ビストロ・フレンチマン」をオープンしました。その後、2020年に大阪で「大衆酒場フレンチマン」が大ヒットし、名古屋への出店は、みそ文化など独自の食文化を持つ、食に対する感度が高い名古屋で、同店の料理やコンセプトがマッチすると考えたためと語っています。フレンチシェフが考案した本格的なフレンチ料理を、1品198円からというリーズナブルな価格で提供し、高級フレンチの敷居が高いというイメージを払拭し、気軽に楽しめることを重視しています。\n\n**提供スタイルの特徴**\n提供スタイルは、カジュアルな雰囲気の中で本格的なフレンチ料理を楽しめる「ビストロ×大衆酒場」という点が特徴です。フレンチの技法を用いた料理の数々は、フォアグラや冷製パスタ、赤ワイン煮込みなど、大衆酒場には珍しい本格的なメニューが並びます。\n特に、「うにとイクラの冷製パスタ」（2,728円）と「フォアグラとステーキ」（2,420円）が2大看板メニューとして挙げられています。\n小皿料理はショーケースに常時8～10種類（198円～）並べられ、料理内容が一目で分かり、フレンチに馴染みのない人でも選びやすい工夫がされています。\nフレンチの技法を取り入れた串焼きメニューも展開しており、「牛タンとだいこん（わさびクリームソース）」や「つくね（ブルーチーズソース）」など、ワインとのマリアージュを提案しています。串焼きは1本から注文可能です。\nドリンクは常時15～20種類程度のグラスワインが用意されており、料理に合わせて様々なワインを試せるようになっています。\n平日11時から17時まではハッピーアワーを実施し、ボトルワインが20％オフになるほか、ビールやハイボールなどのドリンクも割安で提供され、「昼飲みの聖地」として支持を集めています。\n店内は女性客が一人でも利用しやすいデザインで、カウンター席とテーブル席があり、幅広いシーンで利用できる空間となっています。\n\n**地元グルメメディアでの紹介**\n「大衆酒場フレンチマン 名古屋店」は、2026年4月1日に大名古屋ビルヂング3Fにオープンした際、複数の地元グルメメディアやプレスリリースで紹介されています。具体的には、「大名古屋ビルヂング」の公式サイトや「名駅経済新聞」、「STRAIGHT PRESS[ストレートプレス]」、「ガジェット通信 GetNews」、「PR TIMES」、「CLASSY.」、「PR会社ラプレ・PRプランナー日記」などで、名古屋初出店であることや、本格フレンチをリーズナブルに楽しめる点が注目されています。\n\n**料理人としての評価**\n「大衆酒場フレンチマン」の料理は、フレンチシェフが考案し、フレンチの技法を使った本格的な料理であると評価されています。 統括シェフはフレンチレストランでの経験を持つ吉丸清孝さんが務めています。 大阪や神戸では若い世代を中心に常に行列ができるほどの人気を集めており、東京に進出した渋谷サクラステージ店も月商1300万円を達成するなど、その料理の質とコンセプトが高く評価されていることが伺えます。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGg_seWGSFJqSpz888x8rvw-LltUqtLq8WeJWTv3L7ylgJScImjr14fu_dBhNi9mlEn-eS6OhPVvx-nicMFgvvbqbmirmURXKGeRGPsuraOE-onJWP1lOupxO-RfW0jnjp6EuKR_SzIOFU=",
+        "title": "tablecheck.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFUsi5uXSTTib57_eqaAJzdP7bOYyDBskJwE6Iv0baZ0f3_0BV4zDdpHz0qjZ2TiSSw7ilE-4zqPPUHwWkc-wsv6CpOjRRMFYmdksZ_Ja1s7-WIEL-EooK7_bDGHyDwyplmvTgpe1aAD2oIz12ebvY7",
+        "title": "dainagoyabuilding.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH0-0afKK1VcJX_eJv0IZf-nXP-yVMu0x1r98MbWUjtb1vt3xxwFnuTYFzrV8khJxkNeQSue-AJx4GNCyzdrjgQNu05iSyaOLy1X2tJcFpTJAkmGI1qAsSxYxW2TjpZEYlViR0=",
+        "title": "shizuoka-life.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGOtM1Ro3KXEwH2Ew94jgBxIiL7SJlYDHAy95lWJ0yEpgF4u0PREJkt7-e2b6vn9woSaiMaTQg0VMxbY3M3WOKkBLU3gNXVvsXTzQ6X2LTBuvgYpEOYv1sz2izpQ7wGIzPPP2m5",
+        "title": "straightpress.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF0Mg8LTw_kt-6NvtluCKJb0IY366l25s9tOkGHpquyWpkupA1veMMCDJpC9eswASEQvUf5zpNtGlkLnrt8wS9kgeCx-s0OmBd-NjHthnL1CTUpfSUPqc4EalcPIPOdrYlveS8=",
+        "title": "keizai.biz"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH1Miqhlkl3mUVLOIpik_4OMJXdf7sDRU9rksuVLiyJ2oQ20O8i4VOOLIYZO8OBmw7ZI9NldhRT2oliILWasUI9UW126DYmGpVqSqv-9jYzjRRWaEY7bcVHivT7r9pB",
+        "title": "getnews.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGe5F9rlHURniWCG0Crt9PQIr2yd0cDmxYhoSoOzpQTS9hFaMOF1aFfFVyuTkftyVnFmi6yRY0ZJcX8sAPT4R1U-05FufaHmzP7KQRP84K9UrJeC5fAAcaAPtHvvQ==",
+        "title": "gourmetpress.net"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVPwRWY-KHvUk12OoKE26fGh2nnggatEZhPdEbDdxXl666ugm_rJ3K1CCtrLkMJUmKRq5XEYjAUd-udoOODJoP2zz4eJq5YPylj060NOEVo4iZUzMX54uXln-litltLYalsEEQxfdMaJqBhRJuGgGFLG_RcDQ=",
+        "title": "prtimes.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFZVyPxYPQlM4EDM6V2zdUkt8E_W9CgBQf4pvvcTw67toYGlEGj6xgHY4RIGm83W67-s6DaE8IOTe_x3e1fBha8szpPOUII7OUcYEh1HIW1IX94ztO2ayJBiGZ4tPRClD04T4I=",
+        "title": "prdesse.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFP6do3SHb1U_T5eWXR6ZHvnKUfrRpzoNoaUVCGst0AN59GeS52ien0e53cbY2JC3vhL8kgtdd57pGwD8oymJKdd8fyLy0IO14L3k1RqtJtTyxMWnHvL3jB2Hren_RUVbSajrGYxTwf",
+        "title": "osaka.style"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE9BemLlu1cINhQMWG8_JRBypnzpVHEH8U4CHfADLcphZDmO4hCh5-1Xji6LEAmBfnclvyjUjbs52TO3v-YGDoTriCe7PWX0nvXiczUcO1Z503Zzu6RJgl-BEJAabDrEuDjl43NB2rtM4Pu_g==",
+        "title": "note.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEQt58oZiog8MifKBJFfgInUhB-QiIPGObaB_di2PUIkxX1tp0fdJ1H2HZblJ1LQQsia8TKnJyK-rMfEEbg9YoN1zHdQ3CdATkmGnvmq4ZA8H-MEtzGn0E4fDbSXmXaI-Zie1bGSpw4",
+        "title": "classy-online.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH1ZllhquTcFdVtD3jCuODQqJOmVBZE-9rg-i2UNv9RD2UCtmiridWhcGvNJmoncNfNjuFsAiRPif29-DMrpICPtCleyDaWHq_J4ozTDpf5RXcNiQSCjP2i5OOtIahtXFniNDZf6pm6UARLzNOieA==",
+        "title": "dainagoyabuilding.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEpvFv4Epn_NIZ7cqj9SSef52k5bZzm8RhKkGntSykn1RtudMspax6gjpal8RYD9JaRoolEVvqGhHDGmFy5Ysa4oPk7zT9g84mDyf6QnQc0P71ic9M6PzCUtTsYsQYa6AztvBKK2g==",
+        "title": "keizai.biz"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFwOjEceMpPSCzaHztSxdHyD5VmjiXHH-9j8bSIMeNFUsNnN6k3DHXTn_yExVtyIo-soh9FP5K7RFRTxO9nnzDMJDpVBhB-7cEroSPnOBZTWJgzWX8btG9SIbG_hoY2BchmR02LxQ==",
+        "title": "keizai.biz"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHLnhZBiu7ENQ413cDiDsw6-KoEA4m_40p3izGXD5BKVVuLJpMb15REzpjVUwP-9KXBNAPSUFgnK0xKkKMZvhH5xr1DV1XVPZ6DMbCdaY9hPk-fixXafwiH6BONdA==",
+        "title": "raple.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEcaIFoopeHrNQ14E7CKanuY_ntik2ri6NIaelb_unHylA52ZYFadt2grZUCMs7McWSKYeIYKW4IEbMskdkxEkB1tUTM4F7eJ982YDP1dj0fSKeY4i3sjcz4rA01HkbmeAqVk1ZFtnG5tGL2DEp8PUN",
+        "title": "inshokuten.com"
+      }
+    ]
+  },
   "store_id": "manual_大衆酒場フレンチマン",
   "store_name": "大衆酒場フレンチマン",
   "area": "名古屋市中村区",
   "genre": "フレンチビストロ、大衆酒場",
   "rating": "3.9",
-  "generated_at": "2026-08-19T06:40:52.425Z"
+  "generated_at": "2026-08-19T08:35:30.722Z"
 }

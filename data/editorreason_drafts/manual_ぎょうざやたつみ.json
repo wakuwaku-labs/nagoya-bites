@@ -1,15 +1,84 @@
 {
-  "status": "INSUFFICIENT_EVIDENCE",
-  "editorReason": "",
-  "insiderNote": "",
+  "status": "OK",
+  "editorReason": "ミシュランガイドのビブグルマンや食べログ百名店に選出され、若手料理人からも絶賛される実力派。手作りの皮とニンニク不使用ながら溢れる肉汁の餃子は、行列必至の提供スタイルも納得の逸品です。",
+  "insiderNote": "若手料理人からも「只者じゃない」と評される実力は、店主一人で切り盛りし、多くの客に味わってもらうため餃子を制限するこだわりから生まれる。",
   "visitStatus": "desk_automated",
-  "confidence": 0,
-  "sources_used": [],
+  "confidence": 0.9,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFltytzz5MtTCKs0JGT2Tsr7oGco2DWV-RPXdknfYBLj0jPEqsOzKtsdDmIpnBnCgoYMsF4-mknGa7779D5l9gZZ-HbnhT_WANthYngeZl7aaaAP-F5cN3n0ba70m3fh4D7dMXzv0GuvPs=",
+      "snippet_quote": "「食べログ」の餃子部門で百名店に選出されています。「ミシュランガイド」のビブグルマンにも選ばれるほどの人気店です。周辺の和食の名店をはじめとする若手料理人からも「あそこの中華は只者じゃない」という情報で知られているとされています。餃子の皮は手作りで、もちもちとした食感が特徴です。餃子にはニンニクを使用しておらず、野菜と肉の優しい味わいが特徴です。「小籠包のように肉汁があふれる」と評されるほど、ジューシーな餃子が特徴です。予約不可・記帳制/行列必至",
+      "supports": "ミシュランガイドのビブグルマン、食べログ百名店選出、若手料理人からの評価、手作り皮、ニンニク不使用、肉汁溢れる餃子、行列必至の提供スタイル"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGA8YgbXDYhdzqu4Ai0GMX-NOpl-p9p-8-AGKpxQJMUBEVJhIoCIuy89_6Ynw9FKOf9tRm4skjZ4UanpjmvegcqTV5sYWbau_I8Su_7gUg8FSDZXctV54gK6JX5lX9Wsg7xhyrNd2E=",
+      "snippet_quote": "「食べログ」の餃子部門で百名店に選出されています。「ミシュランガイド」のビブグルマンにも選ばれるほどの人気店です。餃子の皮は手作りで、もちもちとした食感が特徴です。餃子にはニンニクを使用しておらず、野菜と肉の優しい味わいが特徴です。「小籠包のように肉汁があふれる」と評されるほど、ジューシーな餃子が特徴です。予約不可・記帳制/行列必至",
+      "supports": "ミシュランガイドのビブグルマン、食べログ百名店選出、手作り皮、ニンニク不使用、肉汁溢れる餃子、行列必至の提供スタイル"
+    }
+  ],
   "warnings": [],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「ぎょうざや たつみ」（新栄・餃子専門店）に関する業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「ぎょうざや たつみ」の店主は、「たくさんの人に餃子を味わってもらいたい」という思いから、餃子の注文を一人二人前までに制限しています。 また、餃子の皮は手作りで、もちもちとした食感が特徴です。餡には野菜の甘みと鶏スープの旨味が合わさり、一口噛むとスープがあふれ出すようなジューシーな餃子を提供しています。 餃子にはニンニクを使用しておらず、野菜と肉の優しい味わいが特徴です。\n\n**提供スタイルの特徴**\n*   **予約不可・記帳制/行列必至**: 席の予約は受け付けておらず、開店前から並ぶか、17時頃に出されるウェイティングリストに記名して待つ必要があります。 開店直後にはすぐに満席になり、ピークを過ぎると比較的入りやすくなることがあります。\n*   **餃子の注文制限**: 多くの客に餃子を味わってもらうため、餃子類は一人につき2人前までと制限されています。\n*   **売り切れ次第閉店**: 餃子が売り切れ次第、閉店となります。\n*   **店内**: 店内はテーブル席のみで、一般的な居酒屋のようなアットホームな雰囲気です。 小さな店舗で、料理は店主が一人で、ホールは1～2人のスタッフで切り盛りされています。\n*   **テイクアウト**: 以前は予約もテイクアウトもできませんでしたが、一時的に冷凍餃子のテイクアウトを実施していた時期がありました。\n\n**地元グルメメディアでの紹介**\n「ぎょうざや たつみ」は、名古屋のグルメ情報サイトやブログで多数紹介されています。\n*   「食べログ」の餃子部門で百名店に選出されています。\n*   「ミシュランガイド」のビブグルマンにも選ばれるほどの人気店です。\n*   「でらぶの名古屋グルメ情報」や「おいでよ名古屋の食べ歩きログ」、「ナゴレコ」、「名古屋チャンネル」などの地元グルメメディアで、その人気や餃子の特徴が紹介されています。\n\n**料理人としての評価**\n「ぎょうざや たつみ」の餃子は、その品質と美味しさから高い評価を得ています。\n*   「小籠包のように肉汁があふれる」と評されるほど、ジューシーな餃子が特徴です。\n*   皮はもちもちとしており、焼き目はカリッとしていると評価されています。\n*   ニンニク不使用でありながら、野菜と肉の旨味がしっかりと感じられる点が評価されています。\n*   「餃子好きマニアの方も推すくらい美味しい餃子」と評されており、その味は「最高」という声も聞かれます。\n*   周辺の和食の名店をはじめとする若手料理人からも「あそこの中華は只者じゃない」という情報で知られているとされています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQExzLyu04gF6h4VOLLOVTasFVIyhTIPb0Zx1eBGchyP-M0gEhhTYyTZRFif5HAtzCFPb6bNnEpE7GKJZMG9I-Ne_q1m7yquJzI8xUY9ezUJW0J3jGe7JdaQVPsBr7KRijDhCwphmbtZBg2CFqqgwKXfhj0=",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGyZv8tfOxLLHmelIsDVGguh08ajNYRlZVQOcnIXv9bYZcaTYoUOHCI0NuHPEu1VIlivFdbrr6b7lMOdlwXSkofz82s2KkVEUJz8QQPjd_fbQDUhgp-i66o18Ae12RL_buxgTg5nVF5I_H9h3xf",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFltytzz5MtTCKs0JGT2Tsr7oGco2DWV-RPXdknfYBLj0jPEqsOzKtsdDmIpnBnCgoYMsF4-mknGa7779D5l9gZZ-HbnhT_WANthYngeZl7aaaAP-F5cN3n0ba70m3fh4D7dMXzv0GuvPs=",
+        "title": "note.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGA8YgbXDYhdzqu4Ai0GMX-NOpl-p9p-8-AGKpxQJMUBEVJhIoCIuy89_6Ynw9FKOf9tRm4skjZ4UanpjmvegcqTV5sYWbau_I8Su_7gUg8FSDZXctV54gK6JX5lX9Wsg7xhyrNd2E=",
+        "title": "nagoyachannel.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzBX1qMfTL-vnDBz8Q4iw07wrgM32VZ_9k0sISPS6wubjf9nemAax1kRmWzIA-m0O0RI5OF-knTPmUMBXXxrws7VEKcjwEEk56FmaPhEX1yPRPij_4-oqorQer9LbTqomYUnSDjLg2JJ89AhWxi70PXyaI0l8=",
+        "title": "livedoor.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH8ocMOyfxTM1bNT9qn6iMFaqtD92avpaMBeKy1m3aRINc5uIZZb0Zes7LvR7KN6s7tkFZqsU94W1DEQgDoSCHjDp5Jf2x7IRKs5hh9Ux7Hfi_I0lu0ZIDaqjr-BfQ=",
+        "title": "delovedesu2020.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH_wsN-sHiQ49oZnQdvha5qEKeRpndWCggDpTG_HzlxWVKOWUCHIs0AaMX1YLLZwTlgmTabeurZZXEMjEcauK0Zt0r302baEB4K75PwdraEadTqxdS50d9KMB-LrFyGx-Xl6zh9y5viWdNnKAuYBfUaigv9R6VTPf6-SQ==",
+        "title": "cookdoor.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFDT_eSSdcpt3usuBOW_Wp8oVjkIEeUdyv_oh3j6Rc9fWHwVXkuBblv1k7qe1yjLK7w-uRYkmnFNhdlsJh6vk_j-Pbref2rZL7yG6yrs8ZbjTY8d4EFR042f65kHun3dyxY1jjGXarn9o5eUNRgz8gxJ67VRNBgrQzR0Vyy-Yq2GrJpJduz97SKPw==",
+        "title": "cookdoor.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEWACUiDsN8yf7FkHmTaRfWI2KRX8jjwZMbgS7HwmQrMjv1dsckDsVywfpgDXJCH0_DNwgDNLtqVdA4kWYYJz_6AuO5IrqPzFhrRsThHfHQeHrlh0LRJTDC8OtInnDAx7ckbt6MW6XEORcM-YU=",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPDsBkSKH89Z5avK2ZnjRbDMobmlASLbckbU_FpN4svanDiHcb1xgU2fpRrR3IjZqM5NmEnbjWvatpALJbdqh1D2NxNCTJm_Ws02lMwU_vgdVu5DnrEYQ2Om3KFSapH9VAKVYmr8hAiia6",
+        "title": "nagoya-meshi.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGMwsfinJsYq-0-8LpWV9lVthS89VWS2XxmllethSvQ1wkgy7NDdyHTf_WWoHLsNTj5NWbzWjfigtfbtLNxrHxYopqln10CpIBWyvFAo1kLi4434_mBoCkFVb-2J-0=",
+        "title": "oinagoya.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHU-ytpMipv1MJttfwCXSDe1EFwNI-FcYzdpuhQd2TG5BbkYRPA6H3xktnuzpgc5ygT2uLypp874UUc122yHFKEKjeojdjCqHCm4pBUJlYdBOsPPDlC3QJHSPbuEj_BjUznZNqkjTrJ-wptrw==",
+        "title": "nagoya-meshi.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGnHQo9qFpz6Ol2Z0LPzaoB0e2OBrin2VLH8wgG3f9G4jI3etXJQ1nVJna4XvGrtbjhA5FbE-w5Z97dmYhYHB9AlmoVt1zXhiTOeCYgnBkTbK13FEaP9VeMbN--WzBCjnvhzEJ2GcLjuMf2jNqRPWzqS2xkwOJSSg3mrAI=",
+        "title": "retty.me"
+      }
+    ]
+  },
   "store_id": "manual_ぎょうざやたつみ",
   "store_name": "ぎょうざや たつみ",
   "area": "新栄",
   "genre": "餃子専門店",
   "rating": "",
-  "generated_at": "2026-08-19T06:41:02.637Z"
+  "generated_at": "2026-08-19T08:36:33.236Z"
 }
