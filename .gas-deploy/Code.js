@@ -274,6 +274,13 @@ function sourceToName(src, medium) {
   if (s === 'google' && m === 'organic') return 'Google検索';
   if (s === 'yahoo' && m === 'organic') return 'Yahoo検索';
   if (s === 'bing' && m === 'organic')  return 'Bing検索';
+  // SEO-057: 生成AI経由の流入をここで先に分類する。m==='organic'の総称分岐より前に
+  // 置かないと「openai / organic」が「openai検索」に誤ラベルされて再発する。
+  // 語彙は scripts/search_channel_metrics.js の ai_assistant 判定と同じ集合に揃える
+  // （2箇所で別々に育てない。差分が出たらCLI側=search_channel_metrics.jsを正とする）。
+  if (m === 'ai-assistant' || /openai|chatgpt|perplexity|claude\.ai|anthropic|gemini|bard\.google|copilot/.test(s)) {
+    return '🤖 生成AI（ChatGPT等）';
+  }
   if (m === 'organic') return s + '検索';
   if (s === '(direct)' || m === '(none)') return '直接アクセス（お気に入り等）';
   if (s.includes('t.co') || s.includes('twitter') || s.includes('x.com')) return 'X（旧Twitter）';

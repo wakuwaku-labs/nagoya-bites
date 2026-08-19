@@ -765,9 +765,26 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   - `features/integrity-method.html` の `--bg2 #eeebe5` 上のtier説明図（`tier-mid`/`tier-low`）も同時に是正: `#46752a`=**4.60:1** ✅ / `#666666`=**4.83:1** ✅（白基準の値とは背景が異なるため別計算）
 - **検証**: `node --test tests/*.test.js` 94件全パス（回帰なし）。ブラウザで実レンダリングし `getComputedStyle` で実適用値が上記16進値と一致することを確認（`rgb(70,117,42)` / `rgb(112,112,112)` / `rgb(118,118,118)`）。既存の検索・フィルター・IGエンベッド・Google評価表示に影響なし
 
-### [SEO-057] 日次/週次レポートが「生成AI流入」を名前で呼べず、最大流入元が `(not set) / (not set)` として届いている（改善ループの入力そのものが歪む）
+### [SEO-057] 日次/週次レポートが「生成AI流入」を名前で呼べず、最大流入元が `(not set) / (not set)` として届いている（改善ループの入力そのものが歪む） ✅
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（コード修正完了。実デプロイはオーナーのGASエディタ操作待ち。SEO-047/SEO-062と同じ`.gas-deploy/Code.js`に同居のため1回で反映可能）
+- **resolved**: 2026-08-19
+- **resolved_by**: /solve-next（Marketer）
+- **実施内容**: `.gas-deploy/Code.js` の `sourceToName()` に生成AI分岐を追加。`m==='ai-assistant'`
+  または `s` が `openai|chatgpt|perplexity|claude\.ai|anthropic|gemini|bard\.google|copilot` に
+  一致する場合を「🤖 生成AI（ChatGPT等）」へ分類。**`m==='organic'` の総称分岐より前**に配置し
+  「openai / organic」が「openai検索」に誤ラベルされる再発を防止。語彙は
+  `scripts/search_channel_metrics.js` の `ai_assistant` 判定と同じ集合に揃えた
+- **検証**: 関数を実際に抽出しNode上で単体実行し、報告された全パターン（chatgpt.com/ai-assistant・
+  openai/organic・openai/(not set)・copilot.com/(not set)・perplexity.ai/referral・
+  gemini.google.com/referral）が正しく「🤖 生成AI（ChatGPT等）」に分類され、既存の
+  google/bing/direct/instagram等の分類が影響を受けないことを確認。`node --check` 構文検証・
+  `npm test` 94/94 pass
+- **対象外とした判断**: リポジトリ直下 `Google分析オートLINE送信.js` にも同名の同型バグが
+  存在するが、最終更新が2026-06-02で`.gas-deploy/Code.js`（本日更新・SEO-047/062等の実働先）
+  と2.5ヶ月乖離しており非稼働の旧ファイルと判断。acceptanceも`.gas-deploy/Code.js`のみを
+  明示的に対象としているためスコープ外とした
+- **files**: `.gas-deploy/Code.js`
 - **detected**: 2026-08-17
 - **category**: SEO / data-quality
 - **owner**: Marketer
@@ -3505,6 +3522,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | DataKeeper(/solve-next) | ISSUE-087 実装・デプロイ — build.jsのcross_check_flags.json/crosscheck.json書き込み前に既存内容を退避し、店舗数ABORT発火時はstores.jsonと合わせ3ファイルとも直前バックアップへ復元するよう修正。APIキー無し環境で実際にABORTを発火させgit status/diffが完全にクリーンになることを確認（修正前は本セッションで同じバグを実際に踏み手動checkoutが必要だった）。ALLOW_STORE_SHRINK=1の続行パスは無改変であることも実行確認。npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | Builder(/solve-next) | SEO-056 実装・デプロイ — resolve_journal_pending_stores.js（新設）でpending_store_keysを6件解決（core()除去版Diceで支店誤爆3件を検出・是正した安全な実装に切替）。add_feature_journal_links.js（新設・冪等）で特集→ジャーナルの内部リンクを24特集・38本追加（0→24）。audit_feature_stores.js検出数が変更前後で完全一致・ブラウザ実機でリンク先実在とtrackEvent発火を確認・npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | Orchestrator(/solve-next) | ISSUE-093 実装・デプロイ — agents/marketer.mdに「/seo-triage Gmail取得規則」章を新設。.claude/commands/seo-triage.mdが自己改変ブロックで編集不可なため、Marketerの常設ルールとして0件時の窓拡大手順を明記（acceptance選択肢b採用）。心拍/watchdogは意図的に追加せず（ISSUE-084原則6） | ✅ 本コミット |
+| 2026-08-19 | Marketer(/solve-next) | SEO-057 実装・デプロイ — .gas-deploy/Code.jsのsourceToName()に生成AI分岐を追加（m==='organic'総称分岐より前に配置し「openai/organic」誤ラベルを防止）。語彙はsearch_channel_metrics.jsのai_assistant判定と統一。全報告パターンをNode単体実行で検証・npm test 94/94。実デプロイはオーナーのGASエディタ操作待ち（SEO-047/062と同ファイル） | ✅ 本コミット |
 
 ---
 
