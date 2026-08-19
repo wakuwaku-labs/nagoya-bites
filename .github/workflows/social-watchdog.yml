@@ -1,0 +1,128 @@
+name: NAGOYA BITES — SNS配信断絶 監視
+
+# なぜこのワークフローが必要か（2026-08-19 / SEO-055・ISSUE-084 の再適用）:
+#   日次ジャーナルの SNS 投稿原稿（docs/daily-posts/<date>.md）は自動生成されているが、
+#   実際の SNS 投稿はオーナー本人の手作業であり、投稿されなかったことが誰にも届かない。
+#   実測（2026-08-14）: 直近30日の SNS 由来セッションは 0/759。原稿は毎日できているのに
+#   「配信されなかったこと」自体が検知されず、同種の SEO アドバイスが duplicate として
+#   捨てられ続けていた（制約11「検知して終わりにしない／警報は当人の外へ」に該当する穴）。
+#
+#   このワークフローはサーバ側（GitHub）で回るため、ローカルの全故障モードから独立している。
+#   判定は検証できる事実だけで行う（CLAUDE.md 制約10）:
+#     data/metrics_history.json の search_channels.social（GA4実測・自己申告不可）と
+#     docs/daily-posts/<date>.md の実在。「原稿は無いが social も無い日」は異常としない
+#     （そもそも配信対象が無いだけ）。判定器は scripts/check_social_health.js の1本。
+
+on:
+  schedule:
+    # 05:00 UTC = 14:00 JST。KPI日次スナップショット（build.yml）が
+    # 当日分の search_channels を metrics_history.json に積んだ後に判定する。
+    - cron: '0 5 * * *'
+  workflow_dispatch: # 手動確認・復旧後の即時クローズ用
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 生存確認
+        id: check
+        run: |
+          set +e
+          node scripts/check_social_health.js --json > /tmp/social-health.json
+          set -e
+          echo "----- 判定結果 -----"
+          node scripts/check_social_health.js || true
+
+      - name: 異常なら Issue を起票/更新、復旧していればクローズ
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/social-health.json', 'utf8'));
+            const label = 'social-watchdog';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'open', labels: label, per_page: 20,
+            });
+            const existing = issues.find(i => i.title.startsWith('🔴 SNS配信'));
+
+            // ---- 未計測（観測前）: 何もしない ----
+            if (!r.ready) {
+              core.info(`未計測: ${r.note}`);
+              return;
+            }
+
+            // ---- 復旧している場合: 開いている Issue を閉じる ----
+            if (r.ok) {
+              if (existing) {
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: existing.number,
+                  body: `✅ 復旧を確認しました（JST ${r.today_jst}）。原稿ありでsocial=0の連続日数: ${r.consecutive_zero_days}日（閾値 ${r.threshold}日未満）。自動クローズします。`,
+                });
+                await github.rest.issues.update({
+                  owner, repo, issue_number: existing.number, state: 'closed',
+                });
+                core.info(`Issue #${existing.number} を復旧クローズしました。`);
+              } else {
+                core.info('健全。Issue の起票は不要です。');
+              }
+              return;
+            }
+
+            // ---- 異常あり: 起票 or 更新 ----
+            const title = `🔴 SNS配信が${r.consecutive_zero_days}日連続で流入ゼロです（原稿はあります）`;
+
+            const lines = [];
+            lines.push('SNS投稿原稿（docs/daily-posts/）は生成され続けているのに、SNS由来セッションが');
+            lines.push(`**${r.consecutive_zero_days}日連続で0**でした（閾値 ${r.threshold}日・JST ${r.today_jst} 時点）。`);
+            lines.push('');
+            lines.push('> 原稿はできているのに投稿自体がされていない可能性が高いです。');
+            lines.push('> 実投稿はオーナー本人の手作業のため、自動化では直せません（このIssueが唯一の気づく手段）。');
+            lines.push('');
+            lines.push('## 直近の観測（原稿ありの日のみ）');
+            for (const d of r.recent) lines.push(`- ${d.date}: social=${d.social}`);
+            lines.push('');
+            lines.push('## 対処');
+            lines.push('1. `docs/daily-posts/<今日の日付>.md` を開き、Note/Instagram/X の原稿を確認する');
+            lines.push('2. 各SNSに実際に投稿する（自動投稿はスコープ外・手動運用）');
+            lines.push('3. 投稿を継続すると、翌日以降のGA4実測で social セッションが増え、次回チェックで自動復旧・自動クローズされます');
+            lines.push('4. 手元で健全性を再確認する場合:');
+            lines.push('   ```bash');
+            lines.push('   node scripts/check_social_health.js');
+            lines.push('   ```');
+            lines.push('');
+            lines.push('---');
+            lines.push('この Issue は生存確認が通ると自動でクローズされます（social-watchdog.yml）。');
+            const body = lines.join('\n');
+
+            if (existing) {
+              await github.rest.issues.update({
+                owner, repo, issue_number: existing.number, title, body,
+              });
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: existing.number,
+                body: `再検出（JST ${r.today_jst}）。連続日数: ${r.consecutive_zero_days}日`,
+              });
+              core.setFailed(`SNS配信断絶が継続しています: ${r.consecutive_zero_days}日連続`);
+            } else {
+              const { data: created } = await github.rest.issues.create({
+                owner, repo, title, body, labels: [label],
+              });
+              core.setFailed(`SNS配信断絶を検出し Issue #${created.number} を起票しました: ${r.consecutive_zero_days}日連続`);
+            }

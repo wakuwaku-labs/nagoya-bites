@@ -145,6 +145,13 @@ jobs:
         run: node scripts/audit_manual_stores_links.js
         continue-on-error: true
 
+      - name: ジャーナル記事とSNS原稿の対応漏れを監査（SEO-055・2026-08-10/11の欠落再発防止）
+        # バックフィル公開（手動でjournal/*.htmlを直接作成するケース）はSNS原稿生成の
+        # ブロッキング検証（run_journal_local.sh）を通らないため、生成漏れが実際に発生した。
+        # 既知2件のため非ブロッキング（可視化のみ・新規欠落の早期発見が目的）。
+        run: node scripts/audit_journal_sns_pairing.js
+        continue-on-error: true
+
       - name: agent-backlog.md 重複ID監査（並列起票の採番衝突を検知・ORG-004）
         # 並列エージェント/複数 workflow が同じ番号で起票する事故を検知（ISSUE-048/059 で実発生）。
         # 既知4件(ISSUE-007/018/048/STR-001)は KNOWN_DUPLICATES でWL。新規重複だけ exit 1。

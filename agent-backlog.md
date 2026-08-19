@@ -836,9 +836,35 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   5. `node scripts/audit_feature_stores.js` の検出ゼロを維持・`index.html` は単一ファイル維持（制約1・5）
   6. 効果は翌週以降の1訪問あたり閲覧ページ数と、当該リンクのクリック数の前後比で判定する
 
-### [SEO-055] SNS発信が直近30日で流入ゼロ — 原稿は毎日できているのに「配信されなかったこと」を誰にも通知していない
+### [SEO-055] SNS発信が直近30日で流入ゼロ — 原稿は毎日できているのに「配信されなかったこと」を誰にも通知していない ✅
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-19
+- **resolved_by**: /solve-next（Marketer/Builder）
+- **実施内容**:
+  1. `scripts/search_channel_metrics.js` の `aggregate()` を修正し、`social` を常に明示（0でも
+     配列から消えない）。実データで確認: 修正前は `SNS: 0` の行自体が出力されず「未計測」と
+     区別不能だったが、修正後は `0%   0    SNS` と明示される
+  2. `scripts/audit_journal_sns_pairing.js` を新設（`data/journal_published.json` の各記事に
+     対応する `docs/daily-posts/<date>.md` の実在を監査）。build.yml に非ブロッキングで追加し、
+     2026-08-10/08-11 と同型の生成漏れが今後起きても可視化される
+  3. `scripts/check_social_health.js` を新設。「原稿はあるのに`search_channels.social`が
+     N日連続0（閾値7日）」を `data/metrics_history.json` の実測から検知する判定器
+  4. `.github/workflows/social-watchdog.yml` を新設（`journal-watchdog.yml`/`feedback-watchdog.yml`
+     と同じ設計）。毎日14:00 JSTにサーバ側（GitHub Actions）で判定し、異常なら Issue 起票、
+     復旧で自動クローズ。ローカル完結にしない（制約11・ISSUE-084の再適用）
+- **検証**: 一時的な合成データ（9日分のフィクスチャ）で `check_social_health.js` の閾値判定
+  ロジックを検証（健全ケース／8日連続でsocial=0の異常ケースの両方で意図通りの結果・exit code
+  を確認）。実データで `audit_journal_sns_pairing.js` を実行し既知の欠落2件（08-10/08-11）を
+  正しく検出することを確認。`track_metrics.js --snapshot` を再実行し、当日分の
+  `metrics_history.json` に `search_channels.social` が実際に記録されることをエンドツーエンドで確認。
+  `.github/workflows/*.yml`（新規含む）を pyyaml で構文検証。`npm test` 94/94 pass
+- **未対応（意図的にスコープ外）**: 2026-08-10/08-11 の docs/daily-posts/*.md 自体の遡及生成は
+  新規のSNS原稿コンテンツ作成（Editorの編集判断）が必要なため本チケットでは行わない。
+  acceptance②が求めるのは「再発しない」ことであり、audit_journal_sns_pairing.js がその担保
+- **files**: `scripts/search_channel_metrics.js`, `scripts/audit_journal_sns_pairing.js`（新規）,
+  `scripts/check_social_health.js`（新規）, `.github/workflows/social-watchdog.yml`（新規）,
+  `.github/workflows/build.yml`
 - **detected**: 2026-08-14
 - **category**: SEO
 - **owner**: Marketer
@@ -3427,6 +3453,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Builder(/solve-next) | SEO-049 実装・デプロイ — モーダルの予約/地図CTA排他if/elseを併置に変更（HotPepperID保有店97.2%で地図CTAが皆無だった問題を解消）。メディア行Google Mapsに欠けていたtrackEventを追加。card/modal_cta/modal_media_rowをlocationパラメータで区別。ブラウザ実機検証（HP有無2パターン×デスクトップ/モバイル）・qa_gate QA-2/3/4 pass・npm test 94/94 | ✅ commit 9135e4c11 |
 | 2026-08-19 | Builder(/solve-next) | SEO-052 実装・デプロイ — journal/_template.htmlにinternal_link_click（.related-link）・scroll_depth（25/50/75/100%）計測を焼き込み。add_journal_engagement_tracking.js（新設・冪等）で既存105記事に一括適用。106ファイルの追加スクリプトをnew Function()で構文検証・ブラウザ実機でクリックイベント発火確認・閾値ロジックをNode単体テストで検証 | ✅ commit 5411042e2 |
 | 2026-08-19 | Editor/Builder(/solve-next) | SEO-054 実装・デプロイ — generate_daily_draft.jsのbuildStores()に予約(HotPepperID実在照合のみ)・地図(常時)の行動導線を追加。add_journal_store_cta.js（新設・冪等）で既存105記事に適用し63記事94カードに導線を追加。モック入力3パターンでURL出し分けを検証・全変更ファイルの構文検証・div開閉バランス確認・npm test 94/94 | ✅ 本コミット |
+| 2026-08-19 | Marketer/Builder(/solve-next) | SEO-055 実装・デプロイ — search_channel_metrics.jsのaggregate()でsocialを常時明示（0でも消えない）。check_social_health.js（新設）で「原稿ありsocial=0が7日連続」をmetrics_history.jsonの実測から検知、social-watchdog.yml（新設）で毎日14:00 JSTにサーバ側監視・Issue起票/自動クローズ。audit_journal_sns_pairing.js（新設・build.yml非ブロッキング追加）で2026-08-10/11型の生成漏れを可視化。合成データで閾値ロジック検証・実データで既知欠落2件を正しく検出・track_metrics.js再実行でsocial:0が実際に記録されることをE2E確認・npm test 94/94 | ✅ 本コミット |
 
 ---
 

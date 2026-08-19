@@ -88,6 +88,11 @@ function aggregate(metrics) {
     (detail[key] = detail[key] || []).push({ source: r.source, medium: r.medium, sessions: n });
   });
 
+  // SEO-055: sourceBreakdown に social が1件も無いと byEngine['social'] 自体が
+  // 存在せず、後段の engines 配列から丸ごと消える。「0セッション」と「未計測」が
+  // 区別できなくなるため、social は必ず明示的に0を持たせる（制約10）
+  if (!('social' in byEngine)) byEngine.social = 0;
+
   const total = Object.values(byEngine).reduce((a, b) => a + b, 0);
   const engines = Object.entries(byEngine)
     .map(([key, sessions]) => ({

@@ -1,7 +1,7 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-08-19T11:52:35.387Z",
+  "generatedAt": "2026-08-19T12:25:51.521Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
   "total_sessions": 877,
@@ -111,6 +111,13 @@
           "sessions": 8
         }
       ]
+    },
+    {
+      "key": "social",
+      "label": "SNS",
+      "sessions": 0,
+      "pct": 0,
+      "sources": []
     }
   ],
   "search_only": {
@@ -152,13 +159,14 @@
     "from": "2026-08-18",
     "to": "2026-08-19",
     "delta": {
-      "bing": 4,
-      "google": 1,
-      "direct": 9,
-      "ai_assistant": -4,
+      "bing": 6,
+      "google": 4,
+      "direct": -8,
+      "ai_assistant": -3,
       "yahoo": 0,
-      "other": 7,
-      "duckduckgo": 0
+      "other": 12,
+      "duckduckgo": 0,
+      "social": 0
     }
   },
   "blind_spots": [
