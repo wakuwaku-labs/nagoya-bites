@@ -8,6 +8,56 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-098] editorReason 自動収集パイプライン（ISSUE-045）が3ヶ月間サイレント無稼働だった — 必要シークレット3件が未設定
+
+- **priority**: P1 → **status**: ready（オーナーのシークレット設定待ち。判定ロジック側はエージェント作業なし）
+- **detected**: 2026-08-19（事業化ロードマップ Phase 2 の進捗確認中に発覚）
+- **category**: automation / moat / trust-score-business
+- **owner**: 片桐（GitHub Secrets 設定）→ 設定後は DataKeeper が動作確認
+- **背景**: [[ISSUE-045]] で構築した4-stage自動収集パイプライン（Google CSE + Claude API + 引用必須プロンプト + 人手レビューゲート）は `.github/workflows/editorreason-batch.yml` として毎週月曜 JST 3:00 に実行されている。`gh run list` で確認すると2026-06-15〜2026-08-17まで**13週連続 success**だが、`gh run view --log` で中身を見ると**毎回同じ2026-05-24の実演デモ（3件処理・OK1/INSUFFICIENT2）を再出力しているだけ**で新規候補を1件も処理していない
+- **直接原因**: `gh secret list` で確認した結果、稼働に必要な `GOOGLE_CSE_KEY` / `GOOGLE_CSE_CX` / `ANTHROPIC_API_KEY` の3件がいずれも未設定。ワークフローはキー無しでもエラーにならず「変更なし」で正常終了する設計のため、CI上は3ヶ月間ずっと緑（success）のまま実質ゼロ稼働だった。CLAUDE.md「無人自動化の監視原則」が警告する**「検知はしているが誰にも届かない」型ではなく、そもそも動いていないことを success が覆い隠す型**の穴
+- **影響**: 事業化ロードマップ Phase 2 の核心KPI「editorReason充填率 2.2%→20%」が、パイプライン整備済み（2026-05-24）と報告されて以降ずっと**足踏み**（2026-08-19実測: 108/5,027 = 2.15%、母数増でむしろ5月時点の2.46%より後退）。歩留まり試算（週50件処理→年750〜1,300件）がまるまる3ヶ月ぶん未実現
+- **必要な対応（いずれもオーナー本人のクレデンシャル操作。エージェントでは代行不可）**:
+  1. Google Cloud で Programmable Search Engine（CSE）を作成し `GOOGLE_CSE_KEY` / `GOOGLE_CSE_CX` を取得（`docs/editorreason-automation-setup.md` に手順あり）
+  2. Anthropic API キーを取得（他パイプラインと共用可）
+  3. `gh secret set GOOGLE_CSE_KEY` / `gh secret set GOOGLE_CSE_CX` / `gh secret set ANTHROPIC_API_KEY` の3件、またはリポジトリ Settings → Secrets and variables → Actions から設定
+  4. 設定後、`gh workflow run editorreason-batch.yml` で手動実行し、`docs/editorreason-drafts.md` に新規候補が出ることを確認（DataKeeper が対応可能）
+- **acceptance**: 3シークレット設定後の初回実行で新規 draft が1件以上生成されること（v2.0の「OK1/INSUFFICIENT2」固定出力から変化があること）
+- **note**: 稼働確認後は「success = 何かが起きた」ではなく「success = 新規処理件数」をログに明記する形へ `editorreason-batch.yml` を改善する余地あり（無稼働がsuccessに埋もれない設計。優先度は低いため本チケットでは対応せず）
+- **files**: `.github/workflows/editorreason-batch.yml`, `docs/editorreason-automation-setup.md`
+- **関連**: [[ISSUE-045]]（親チケット・本件はその稼働確認）
+
+### [STR-MONTHLY-2026-08] KPI月次スナップショット復旧（05月ベースライン以降、途絶していた記録を実データで再開）
+
+- **priority**: P2 → **status**: done（記録のみ）
+- **recorded**: 2026-08-19
+- **owner**: Strategist
+- **category**: KPI / monitoring / trust-score-business
+- **背景**: 事業化ロードマップ（`nagoya-bites-trust-score-business-plan` メモ / `/Users/katagirijakutou/.claude/plans/memoized-launching-corbato.md`）で「STR-MONTHLY が2026-05以降途絶＝事業判断の計器が止まっている」と指摘されていた穴。`data/site_metrics.json` / `data/gsc_metrics.json` / `data/search_channel_metrics.json` は日次自動更新が継続していたため、記録が滞っていたのは backlog への転記のみだった
+
+#### フロー指標（直近30日・2026-08-19 生成データより）
+- 月間アクティブユーザー: **739**（[[STR-MONTHLY-2026-05-BASELINE]] 215 → **+244%**。Phase1目標5,000の14.8%）
+- 月間セッション: **870** / 月間PV: **1,228**（1.41ページ/セッション・直帰率36.7%）
+- 流入チャネル（GA4セッション比）: Organic **62.6%** / Direct 25.4% / Social 10.1% / Referral 1.9%
+  （5月は Direct 77.7% / Organic 16.9% だった → **Organic流入が主導権を握る形に転換**）
+- **検索エンジン別内訳**（`search_channel_metrics.json`・GSCの外側まで含む実測）: Bing 25.9% > 直接/不明 23.7% > Google 23.6% > 生成AI 14.4%（ChatGPT/OpenAI系）> Yahoo! 11.4% > DuckDuckGo 0.9%。
+  **GSCが見えるのはGoogleの23.6%のみ**で、Bing+生成AIの計40.3%は既存の改善ループの外側（`search_channel_metrics.json` の `blind_spots` が自動指摘）
+- GSC実測（過去28日・Google限定）: クリック**457** / 表示**39,070** / CTR1.17% / 平均順位15.5位
+- 検索意図内訳（GSCクエリ・discovery=シーン/エリア型・navigational=店名型）: navigational **75%**（指名検索・Strategic Skip対象）/ discovery **2.2%**（発見型・伸ばす本筋）/ other 22.7%。5月時点の「発見型KWはほぼ皆無」からは前進しているが、依然 discovery のクリック絶対数は14件と小さい
+
+#### ストック指標
+- 掲載店舗数: **5,027店**（5月 4,584店から+443）/ crossCheckScore充填率: **100%**（5,028/5,028）
+- editorReason充填率: **2.15%**（108/5,027）— [[ISSUE-098]] で判明した通り足踏み中（5月時点2.46%より母数増で後退）
+- insider_reviews: **0件**（未着手・Phase 2 はオーナー本人の人脈が起点）/ visitStatus=visited: **4件**（5月から横ばい）
+
+#### Phase 3 準備（本チケットで実施）
+- 事業化ロードマップ Phase 3 が要求していた `data/revenue_log.json`（法人問い合わせ・見積・成約の append-only 記録）が存在しなかったため新設。空の状態からスタートし、`features/nagoya-settai-concierge.html` の Formspree 経由問い合わせが発生し次第、手動または triage ルーチンで追記する運用に乗せる
+
+#### 解釈メモ
+- **UUは4ヶ月弱で3.4倍に伸長**しているが、伸びの主因は Organic（Bing含む）であり、事業計画が「AI引用インフラ」として重視する生成AI流入（14.4%）はすでに Google 単体（23.6%）に迫る規模。判定エンジンの機械可読化（構造化データへのスコア追加＝Phase1完了済み）の投資対効果は上振れ方向
+- **discovery（発見型）検索のクリックはまだ14件/28日と小さい**。「名古屋×シーン×業界人の目利き」という Moat を検索側で刈り取れているのはごく一部。Phase 2（editorReason・insider_reviews の実体化）が進まない限り、この面の絶対数は頭打ちになりやすい
+- 次回スナップショットは月次（`STR-MONTHLY-2026-09` 目安）で記録する
+
 ### [SEO-062] LINE日次/週次レポートの直帰率・平均滞在が `pagePath` 次元つきで集計され、サイト全体値と乖離している（3ヶ月ぶん🔴誤警報を生み続けた集計バグ）
 
 - **priority**: P1 → **status**: ready
@@ -3993,6 +4043,7 @@ Editor が記事＋SNS原稿を生成 → ユーザー承認 → git push → No
 
 - **priority**: P1
 - **status**: in_progress（収集パイプライン整備済み・段階的な人間 Editor 投入で前進）
+- **progress 2026-08-19 — 自動収集パイプラインが3ヶ月間サイレント無稼働と判明**: [[ISSUE-098]] を参照。`editorreason-batch.yml` は毎週成功しているが `GOOGLE_CSE_KEY`/`GOOGLE_CSE_CX`/`ANTHROPIC_API_KEY` 未設定のため2026-05-24のデモ出力を再生し続けているだけだった。editorReason充填率は2.15%（108/5,027）で母数増によりむしろ後退。オーナーのシークレット設定待ち
 - **progress 2026-05-24 — 収集パイプライン整備 + 第1バッチ 12 件昇格**:
   - **収集パイプライン整備（3 スクリプト + 作業表テンプレ）**:
     - `scripts/list_editorreason_candidates.js` 新設 — GA4 閲覧上位 + 編集部推薦 + picks 既登録 + 高評価 で優先順 TOP N を抽出し、`docs/editorreason-todo.md` に作業表を生成
