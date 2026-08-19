@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-08-19T18:33:42.033Z",
+  "generatedAt": "2026-08-19T23:40:16.734Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 751,
-    "pageViews": 1267,
-    "sessions": 889,
-    "avgSessionDuration": 155.8,
-    "bounceRate": 0.354,
+    "activeUsers": 752,
+    "pageViews": 1273,
+    "sessions": 891,
+    "avgSessionDuration": 156,
+    "bounceRate": 0.356,
     "pagesPerSession": 1.43
   },
   "channels": {
     "sessions": {
-      "organic": 559,
-      "direct": 221,
+      "organic": 560,
+      "direct": 222,
       "social": 89,
       "referral": 17,
       "paid": 0,
@@ -31,7 +31,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 225
+      "sessions": 226
     },
     {
       "source": "google",
@@ -41,7 +41,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 182
+      "sessions": 183
     },
     {
       "source": "yahoo",
@@ -97,8 +97,8 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 58,
-      "sessions": 37
+      "pageViews": 63,
+      "sessions": 38
     },
     {
       "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
@@ -449,7 +449,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 751,
+    "value": 752,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
