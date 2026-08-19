@@ -35,7 +35,7 @@
   6. [店舗の建物の特徴（蔵のリノベーション、隠れ家的な雰囲気、歴史的な風合い）](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFUV1JZ3jh4SCN__mKG905W4xWHK0-Iqe7r1FSKVJzzEXrQH1IEK6tDAouk8dGp_CqpIvDnQhimsaK4SfKDEfWMWysyj2O5rnwcUxDmA6ZCtovVFYa6fi0E)
      > 店舗の建物は、100年前に漁師が網の製造・補修に使っていた蔵をリノベーションしたもので、隠れ家のような雰囲気と歴史を重ねた店内の風合いが特徴です。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鮨結 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鮨結 -->
 
 ---
 
@@ -55,7 +55,7 @@
   4. [高級フレンチの敷居を払拭し、気軽に楽しめることを重視している点](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF0Mg8LTw_kt-6NvtluCKJb0IY366l25s9tOkGHpquyWpkupA1veMMCDJpC9eswASEQvUf5zpNtGlkLnrt8wS9kgeCx-s0OmBd-NjHthnL1CTUpfSUPqc4EalcPIPOdrYlveS8=)
      > 高級フレンチの敷居が高いというイメージを払拭し、気軽に楽しめることを重視しています。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_大衆酒場フレンチマン -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_大衆酒場フレンチマン -->
 
 ---
 
@@ -72,7 +72,7 @@
      > 「Retty」では焼き鳥好きの人気店として掲載されており、食に詳しい人のオススメが集まるお店と評価されています。
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_千亀 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_千亀 -->
 
 ---
 
@@ -88,7 +88,7 @@
   2. [ミシュランガイドのビブグルマン、食べログ百名店選出、手作り皮、ニンニク不使用、肉汁溢れる餃子、行列必至の提供スタイル](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGA8YgbXDYhdzqu4Ai0GMX-NOpl-p9p-8-AGKpxQJMUBEVJhIoCIuy89_6Ynw9FKOf9tRm4skjZ4UanpjmvegcqTV5sYWbau_I8Su_7gUg8FSDZXctV54gK6JX5lX9Wsg7xhyrNd2E=)
      > 「食べログ」の餃子部門で百名店に選出されています。「ミシュランガイド」のビブグルマンにも選ばれるほどの人気店です。餃子の皮は手作りで、もちもちとした食感が特徴です。餃子にはニンニクを使用しておらず、野菜と肉の優しい味わいが特徴です。「小籠包のように肉汁があふれる」と評されるほど、ジューシーな餃子が特徴です。予約不可・記帳制/行列必至
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_ぎょうざやたつみ -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_ぎょうざやたつみ -->
 
 ---
 
@@ -103,7 +103,9 @@
      > シェフは新栄の有名店「シェ・トト」で腕を振るっていた方で、音響にもこだわりがあるそうで、心地よいジャズが流れる空間で、季節に寄り添ったシンプルなフランス料理をゆっくりと楽しめます。
 - **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認） / sources_used が 2 件未満（人手レビュー必須）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_kimitote(キミトテ) -->
+> **却下理由**: 検証済み sources_used が1件のみ（2件の候補URLがグラウンディング結果に無く除外された）。パイプライン自身の「2ソース以上」原則を満たさないため今回は見送り。次回実行で追加のソースが見つかれば再検討
+
+<!-- review: reject  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_kimitote(キミトテ) -->
 
 ---
 
@@ -119,7 +121,7 @@
      > ミシュランガイド愛知で二つ星を獲得しています。オーナーシェフである岩本シェフは、独創的で美しいフレンチを生み出す料理人として評価されています。日本全国や世界各国から厳選した食材を使い、一皿一皿の料理には迷いがなく、端整な美しさを誇ります。食材の個性と旨みを最大限に引き出すテクニックは芸術的でありながら、美味しさをダイレクトに表現しています。食感の対比やハーブ、スパイスを巧みに用いた「風味の昇華」が
 - **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_lavagabonde(ラ・ヴァガボンド) -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_lavagabonde(ラ・ヴァガボンド) -->
 
 ---
 
@@ -153,6 +155,6 @@
   11. [TikTokでの成功と多角的な活躍](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQESeJ5P84KABwkKMWiZZ0o6B_cW0wIFAKx-MecGBohJo1TvQc_meohEtG11vCAFOPoj0vSJ6SBu0cPWaSA1tM06bwZ94UuHx3fwXErG61fYvGjzk3BM-8NJIO7lGU-_ehdxTlvRvIbqDWki6S-h)
      > 同店はTikTokにおいて日本一のフォロワー数を誇る居酒屋としてメディア出演依頼やセミナー依頼を受けるなど、居酒屋の枠を超えた活躍をしており
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_完全個室居酒屋哉月 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_完全個室居酒屋哉月 -->
 
 ---
