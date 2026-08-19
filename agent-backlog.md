@@ -377,7 +377,23 @@ URLが絶対か / PNGが実在するか。エージェントの自己申告値�
 
 ### [SEO-058] トップページが表示15,891を消費して38クリックしか生んでいない（順位18.1位・CTR 0.24%）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: partial（acceptance①のコード修正のみ完了。②③の診断は実GSCデータ待ちで未着手）
+- **progress 2026-08-19**: acceptance①（`scripts/fetch_gsc_metrics.js` の取得対象にトップページを
+  明示的に加える）を実装。`groupPageQueries()` の `focus` 集合に `DEFAULT_SITE_URL`
+  （`https://nagoya-bites.com/`）を表示回数の順位に関わらず強制的に含めるよう修正。
+  **理由**: トップページは表示回数の絶対値こそ大きいが、個々の店舗ページの方がさらに大きいことが
+  多く、上位15件ランキングから漏れやすい構造だった（実際、本セッションで取得できた直近30日
+  スナップショットでは`topPages`15件中8位に入っていたが、6ヶ月窓では圏外だったとみられる）
+- **検証**: `groupPageQueries()` を単体で呼び出し、トップページの impressions を意図的に
+  低く設定（他20ページより小さい値）してもなお `focus` に含まれ、page×query行が正しく
+  拾われることを確認（`node --check` 構文検証・`npm test` 94/94 pass）
+- **未着手（本環境では実行不可）**: acceptance②③（抽出結果を `gsc_query_intent.js` で分類し
+  navigational大半ならStrategic Skip・discovery系の11〜30位滞留があればSEO-060統合）は、
+  実際のGSC API認証情報（`GA4_SERVICE_ACCOUNT_KEY`/`GSC_SITE_URL`）がこの実行環境に無いため
+  実施できなかった。**次回CI実行（build.ymlが日次でfetch_gsc_metrics.jsを実行）で今回の
+  コード修正が効き、以降のgsc_metrics.jsonにトップページのpage×queryデータが載る。
+  それを見てから②③の分類・判定に進むこと**
+- **files**: `scripts/fetch_gsc_metrics.js`
 - **detected**: 2026-08-17（同上）
 - **category**: SEO
 - **owner**: Marketer / Builder
@@ -3523,6 +3539,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Builder(/solve-next) | SEO-056 実装・デプロイ — resolve_journal_pending_stores.js（新設）でpending_store_keysを6件解決（core()除去版Diceで支店誤爆3件を検出・是正した安全な実装に切替）。add_feature_journal_links.js（新設・冪等）で特集→ジャーナルの内部リンクを24特集・38本追加（0→24）。audit_feature_stores.js検出数が変更前後で完全一致・ブラウザ実機でリンク先実在とtrackEvent発火を確認・npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | Orchestrator(/solve-next) | ISSUE-093 実装・デプロイ — agents/marketer.mdに「/seo-triage Gmail取得規則」章を新設。.claude/commands/seo-triage.mdが自己改変ブロックで編集不可なため、Marketerの常設ルールとして0件時の窓拡大手順を明記（acceptance選択肢b採用）。心拍/watchdogは意図的に追加せず（ISSUE-084原則6） | ✅ 本コミット |
 | 2026-08-19 | Marketer(/solve-next) | SEO-057 実装・デプロイ — .gas-deploy/Code.jsのsourceToName()に生成AI分岐を追加（m==='organic'総称分岐より前に配置し「openai/organic」誤ラベルを防止）。語彙はsearch_channel_metrics.jsのai_assistant判定と統一。全報告パターンをNode単体実行で検証・npm test 94/94。実デプロイはオーナーのGASエディタ操作待ち（SEO-047/062と同ファイル） | ✅ 本コミット |
+| 2026-08-19 | Marketer/Builder(/solve-next) | SEO-058 partial実装 — fetch_gsc_metrics.jsのgroupPageQueries()でトップページを表示順位に関わらずfocus集合へ強制追加（acceptance①）。単体テストで意図的低impressionでも捕捉されることを確認・npm test 94/94。acceptance②③（GSC実データでのnavigational/discovery分類・Strategic Skip判定）は本環境にGSC API認証情報が無く実施不可のためpartialのまま。次回CI（build.yml日次fetch）で修正が効き次第②③に進む | ⏸ commit待ち・partial |
 
 ---
 

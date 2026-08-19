@@ -69,6 +69,15 @@ function isoDaysAgo(n) {
  */
 function groupPageQueries(pqRows, allPages) {
   const focus = new Set((allPages || []).slice(0, PAGE_QUERY_FOCUS_PAGES).map(p => p.page));
+  // SEO-058: トップページ（ホームURL）は表示回数の絶対値こそ大きいが、店舗ページ等
+  // 個別URLの表示回数の方がさらに大きいことが多く、上位15件のランキングから漏れやすい。
+  // 漏れると「トップページがどのクエリで18位前後に出ているか」が一切観測できず、
+  // Strategic Skip（指名検索が大半）か rank_push 対象（discovery語で圏外滞留）かを
+  // 判定できない（SEO-058）。表示回数の大小に関わらず必ず観測対象に含める。
+  focus.add(DEFAULT_SITE_URL);
+  if (process.env.GSC_SITE_URL && /^https?:\/\//.test(process.env.GSC_SITE_URL)) {
+    focus.add(process.env.GSC_SITE_URL);
+  }
   const byPage = new Map();
   (pqRows || []).forEach(r => {
     const [page, q] = r.keys || [];
