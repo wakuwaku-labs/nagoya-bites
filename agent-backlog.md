@@ -28,7 +28,7 @@
 - **priority**: P1 → **status**: done
 - **detected**: 2026-08-20
 - **resolved**: 2026-08-20
-- **resolved_by**: TBD
+- **resolved_by**: 99d35aa8
 - **category**: SEO / data-quality
 - **owner**: Marketer
 - **source**: 日次レポート(LINE) 2026-08-19 原文「【どこから来た？ TOP3】① (not set) / (not set)（15訪問 / 32%）② (data not available) / (data not available)（14訪問 / 30%）③ 直接アクセス（8訪問 / 17%）」＋「🟢 検索流入比率が21%と低いですが、Bing検索からの流入がGoogle検索より多い状況です」
