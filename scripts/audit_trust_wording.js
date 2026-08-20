@@ -19,6 +19,15 @@
  * A のスコープ: index.html 全体・features/*.html（integrity-method / no-fake-reviews /
  *   editorial-policy を含む）・about.html・faq.html・llms.txt・stores/*.html
  *
+ * stores/*.html のスコープは「data/stores.json に現存する店（＝ gen-store-pages.js が
+ * 実際に再生成する店）」だけに限定する（2026-08-20・ISSUE-101 マージ直後に発覚）。
+ * stores/ ディレクトリには過去に閉店・統合等でカタログから外れた店の孤児ページが
+ * 676件残っており、gen-store-pages.js は既定では孤児を再生成も削除もしない
+ * （破壊的操作のため --delete-orphans が明示指定された時のみ）。この監査が全ファイルを
+ * 対象にすると、この PR と無関係な孤児ページの内容で CI が恒久的に赤くなる。
+ * 孤児ページの是正（削除 or 再生成）は別チケット（ISSUE-050 と同じ「孤児ページ」クラス）で
+ * 扱い、ここでは対象外である旨を info として出すに留める（削除は破壊的操作のため単独では行わない）。
+ *
  * 使い方:
  *   node scripts/audit_trust_wording.js           # レポート
  *   node scripts/audit_trust_wording.js --check   # 違反あれば exit 1（CI 用）
@@ -33,6 +42,7 @@ const CHECK = process.argv.includes('--check');
 const P = loadPolicy();
 const violations = [];
 const warnings = [];
+const info = [];
 
 function read(rel) { try { return fs.readFileSync(path.join(ROOT, rel), 'utf8'); } catch (_) { return null; } }
 function lineOf(text, idx) { return text.slice(0, idx).split('\n').length; }
@@ -63,13 +73,31 @@ function listFiles(dir, re) {
   return fs.readdirSync(abs).filter(f => re.test(f)).map(f => path.join(dir, f));
 }
 
+/** stores/*.html のうち data/stores.json に現存する店だけ（gen-store-pages.js が実際に管理する範囲） */
+function managedStoreFiles() {
+  const all = listFiles('stores', /\.html$/);
+  let ids;
+  try {
+    const { loadStores } = require('./lib/load_stores');
+    ids = new Set(loadStores().map(s => s['ホットペッパーID']).filter(Boolean));
+  } catch (e) {
+    return { managed: all, orphanCount: 0 }; // stores.json 未生成環境ではフィルタしない
+  }
+  const managed = all.filter(f => ids.has(path.basename(f, '.html')));
+  return { managed, orphanCount: all.length - managed.length };
+}
+const { managed: MANAGED_STORE_FILES, orphanCount: ORPHAN_STORE_COUNT } = managedStoreFiles();
+if (ORPHAN_STORE_COUNT > 0) {
+  info.push(`stores/*.html: 孤児ページ ${ORPHAN_STORE_COUNT}件は data/stores.json に現存しないため本監査の対象外（gen-store-pages.js --delete-orphans で是正・別チケット）`);
+}
+
 // ── A. 旧名称 ──────────────────────────────────────────────
 const legacyTargets = ['index.html', 'about.html', 'faq.html', 'llms.txt']
   .concat(listFiles('features', /\.html$/));
 for (const f of legacyTargets) scanWords(read(f), P.legacyNames, `[旧名称] ${f}`);
-// stores/*.html は件数が多いので集計のみ
+// stores/*.html は件数が多いので集計のみ（管理下＝data/stores.json に現存する店のみ）
 {
-  const files = listFiles('stores', /\.html$/);
+  const files = MANAGED_STORE_FILES;
   const counts = {};
   let scanned = 0;
   for (const f of files) {
@@ -153,9 +181,9 @@ for (const f of legacyTargets) scanWords(read(f), P.legacyNames, `[旧名称] ${
   if (!/^var TRUST_POLICY = \{.*\};$/m.test(html)) violations.push('[構造] index.html に var TRUST_POLICY = {...}; が無い');
 }
 
-// ── B-4. stores/*.html の表示面 ─────────────────────────────
+// ── B-4. stores/*.html の表示面（管理下＝data/stores.json に現存する店のみ） ─────────────────────────────
 {
-  const files = listFiles('stores', /\.html$/);
+  const files = MANAGED_STORE_FILES;
   const counts = {}; const samples = {}; let scanned = 0; let newFormat = 0;
   for (const f of files) {
     const t = read(f); if (t == null) continue; scanned++;
@@ -178,6 +206,7 @@ scanWords(read('features/review-trust.html'), P.bannedWords, '[禁止語] featur
 
 // ── 出力 ──────────────────────────────────────────────────
 console.log(`口コミ信頼度 公開文言監査（policy v${P.version} / scoreVersion ${P.scoreVersion}）`);
+for (const i of info) console.log(`  ℹ ${i}`);
 for (const w of warnings) console.log(`  ⚠ ${w}`);
 if (violations.length === 0) {
   console.log('  ✅ 旧名称 0 件・禁止語 0 件');
