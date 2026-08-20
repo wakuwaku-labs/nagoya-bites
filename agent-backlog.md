@@ -8,7 +8,7 @@
 
 ## 進行中・完了タスク
 
-### [ISSUE-100] 「口コミ信頼度」の見せ方・採点を再設計 — 消費者が学習できる指標にする
+### [ISSUE-101] 「口コミ信頼度」の見せ方・採点を再設計 — 消費者が学習できる指標にする
 
 - **priority**: P1 → **status**: done
 - **detected**: 2026-08-20（オーナー要望「サクラの信頼度という数字がしっかり消費者にとって信頼できるものになるように、見せ方・採点方法・説明を設計したい。精度だけでなく消費者の頭の中にブランディングできるように」）
@@ -48,6 +48,45 @@
 - **Phase 2（起票のみ・別ISSUEで着手）**: 月次「口コミ信頼度レポート」の自動公開／特集・ジャーナルへのバッジ定型挿入／前月比表示／`dispute_requests.json`の`scoreOverride`未実装（異議申立ての反映経路が無い）／`refresh_feature_rosters.js`の重みを`reviewTrust.s`へ移行／[[ISSUE-086]] v3.0活性化
 - **2026-08-20 追記（同PR内・オーナー指示「SS〜Dまでの5段階にして欲しい」）**: 公開段階を4段階（A/B/C/D＋—）から**5段階（SS/A/B/C/D＋—）**に変更。SSは「観測できた検証項目のすべてで満点」（scoreVersion 2.1の実測で全店の約4.2%が該当・閾値97点）という機械検証可能な基準を持つ最上位帯。A/B/C/Dの閾値は変更せず、Aの上限のみ90-100→90-96に縮小。`data/trust_display_policy.json`にSSエントリを追加するだけでtierOf()のロジック変更は不要（min降順ソートで自動的に分岐）。CSS色は`#1b5e20`（白地コントラスト7.87:1・AA適合）。features/integrity-method.html・no-fake-reviews.html・editorial-policy.html・review-trust.html・about.html・faq.html・features/index.htmlの段階表・文言を全て更新し、`node scripts/audit_trust_wording.js`のB-2チェック（policyファイル自体の禁止語走査）を行フィルタ方式から**JSON構造を再帰的に走査する方式**に修正（`json.dumps(indent=2)`で複数行に整形されると行ベースのフィルタが壊れるため）。
 - **関連**: [[ISSUE-048]] [[ISSUE-049]] [[ISSUE-086]]（v3活性化時の前提を本ISSUEが追加）
+### [ISSUE-100] Search Console「サイトマップ内のページがインデックスに登録されない」通知への対応 — sitemap生存監査を新設
+
+- **priority**: P2 → **status**: done
+- **detected**: 2026-08-20（オーナーへ GSC 通知メール2種が到達: 2026-08-19「ページにリダイレクトがあります」/ 2026-08-07,08-08「見つかりませんでした（404）」）
+- **category**: SEO / monitoring / ci
+- **owner**: Orchestrator（調査）+ Builder（実装）
+- **調査結果**: GSC の自動通知メールには対象URLが一切含まれておらず（Search Console 画面へのリンクのみ）、Gmail からは原因ページを特定できなかった。そこでリポジトリ側から直接検証:
+  1. `sitemap.xml`（5,205 URL: stores 5,031 / journal 105 / features 67 / 静的4）の全URLが実ファイル・実HTTP応答と一致するかを機械照合 → sitemap記載と実ファイルの不一致ゼロ（stores/features/journalの全ディレクトリで sitemap ⇔ 実ファイルが完全一致）
+  2. 本番 `https://nagoya-bites.com/` に対し、sitemap.xml 全5,205 URLへ実際に HEAD リクエストを送信 → **全件 200 OK、404もリダイレクトも0件**（唯一の非200は再試行で解消した一過性503）
+  3. サイト内の内部リンクに `/features`・`/stores`・`/journal`（末尾スラッシュ無し＝301対象）を指すものが無いかを監査 → 0件
+  → **現時点のサイトは技術的に健全**。GSC通知は、直近の架空店除去・orphanページ削除等（[[ISSUE-050]] 等）で既に解消済みの過去のクロール履歴を反映した遅延通知と判断（Search Console のインデックス登録レポートは反映まで数日〜数週間のラグがあるため）
+- **恒久対応（再発時に人がメールを待たず検知できるように）**: `scripts/audit_sitemap_health.js` を新設。sitemap.xml の全URLへ実HTTPステータス（検証可能な事実・制約10）でリダイレクト/404を検査する。デプロイ直後の伝播遅延・CDN一過性5xxで誤検知しないよう最大2回リトライしてから確定。`.github/workflows/build.yml` の commit&push 後（本番反映後）に `--check` 付きで実行するステップを追加（非ブロッキング＝`continue-on-error: true`。本番へのHTTP到達性はCI環境要因でも変動するため）
+- **acceptance**: `node scripts/audit_sitemap_health.js --check` がローカルから本番URLへ実行でき、5,205 URL全件 200 を確認済み。CI（build.yml）に統合済み
+- **files**: `scripts/audit_sitemap_health.js`（新規）, `.github/workflows/build.yml`
+- **次のアクション（オーナー本人のみ可能）**: GSC「インデックス登録レポート」で「検証を試す」を押すと、Google側に再クロールを促せる（本チケットの技術対応が事実として反映されているため通るはず）。ログインが要るため自動化不可
+### [SEO-063] 日次レポートの「どこから来た？」が GA4 のしきい値適用で 62% 判別不能になり、検索流入比率を 62%→21% に押し下げてアドバイスの前提を壊している
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-08-20
+- **category**: SEO / data-quality
+- **owner**: Marketer
+- **source**: 日次レポート(LINE) 2026-08-19 原文「【どこから来た？ TOP3】① (not set) / (not set)（15訪問 / 32%）② (data not available) / (data not available)（14訪問 / 30%）③ 直接アクセス（8訪問 / 17%）」＋「🟢 検索流入比率が21%と低いですが、Bing検索からの流入がGoogle検索より多い状況です」
+- **brand-filter**: ✅ 適合 — 順位操作でも装飾でもなく**計測の正確化のみ**。CLAUDE.md 制約10（合否を分ける入力は後から第三者が確認できるものに限る）と ISSUE-084 の「データは取れているのに人が読む面へ届いていない」に同型。[[SEO-062]]（直帰率が `pagePath` 次元つき集計で 35.5%→97% に歪む）と**同じ失敗クラス・別フィールド**で、同じ `.gas-deploy/Code.js` に同居する
+- **problem（検証済みの事実のみ）**:
+  1. **62% が名前のない文字列で届いている** — 2026-08-19 の日次で TOP1 が `(not set) / (not set)` 32%、TOP2 が `(data not available) / (data not available)` 30%。合計 62% が「どこから来たか分からない」まま、オーナーが毎朝読む面に出ている
+  2. **30日集計では同じ2つは合計 3.5% しかない** — `data/site_metrics.json`（直近30日・898セッション）の `sourceBreakdown` 実測: `(not set)/(not set)` **18**（2.0%）/ `(data not available)` **13**（1.4%）。単日で 62%、30日で 3.5% ＝ 単日クエリ側の系統的な歪みであって実際の流入構成ではない
+  3. **原因は次元つき単日クエリへの GA4 のしきい値適用** — `.gas-deploy/Code.js:185` は `sessionSource` × `sessionMedium` の2次元で**1日ぶん**を取得している。Google シグナル有効下では小標本の次元つきクエリに GA4 側のデータしきい値が働き、値が `(data not available)` に丸められる。母数28人の日に効くのは構造的で、母数の大きい30日集計では効かない（上記2の数字がその対照実験になっている）
+  4. **`sourceToName()` に両者の分岐が無い** — `.gas-deploy/Code.js:271-292`。`(not set)` / `(data not available)` は最終行 `return s + ' / ' + m` に落ちて生文字列のまま表示される（両語の出現数 **0**）。[[SEO-057]] は `(not set)/(not set)` を「生成AI流入の誤ラベル」と診断して AI 分岐を追加したが、**実データでは `(not set)/(not set)`（18）と `openai/(not set)`（15）は別行**であり、SEO-057 の修正を反映しても `(not set)/(not set)` は TOP から消えない（SEO-057 の acceptance「`(not set)/(not set)` が TOP に現れないこと」は満たされない）
+  5. **その歪みが検索流入比率を通じてアドバイス本文の前提になっている** — `.gas-deploy/Code.js:318-331` は `organicPct = organicSessions / srcTotal` で、しきい値で潰れた行は分子に入らないまま**分母には入る**。結果、2026-08-19 の日次は「検索流入比率が21%と低い」と報告したが、`data/site_metrics.json` の30日実測は **Organic 62.6%**（[[STR-MONTHLY-2026-08]] に記録済み）。SEO-062 の「直帰率97%」と同じく、**誤った前提の上でアドバイスが生成されている**
+- **なぜ今か**: [[SEO-047]] / [[SEO-057]] / [[SEO-062]] が同じ `.gas-deploy/Code.js` で「コード修正済み・オーナーのGASデプロイ操作待ち」のまま滞留している。本件を同じファイルに載せれば、**オーナーのデプロイ操作1回で4件まとめて反映**できる
+- **acceptance**:
+  1. `sourceToName()` に `(not set)` / `(data not available)` / `(other)` の分岐を追加し、「⚠️ 判別不能（GA4しきい値）」として**1行に集約**して表示する（生文字列を出さない）
+  2. 検索流入比率・SNS流入比率の**分母から判別不能ぶんを除外**する（`srcTotal` ではなく判別できたセッション数を分母にし、「判別できた◯件中」と併記する）。数値そのものは書き換えない＝分母の定義を正すだけ（制約10）
+  3. 判別不能が**全セッションの30%を超えた日**は、流入元セクションに「この日は母数が小さくGA4のしきい値が効いています。流入構成は30日集計（`search_channel_metrics.json`）を見てください」と明示し、**その日の流入比率を根拠にしたアドバイスを生成しない**（[[SEO-047]] の小サンプルゲートと同じ思想を流入元にも適用する）
+  4. ルールベース／AI 双方のアドバイス生成に渡す `topSrcName`（`.gas-deploy/Code.js:566`）が判別不能行を掴まないようにする
+  5. 反映後の最初のレポートで、流入元 TOP3 に生文字列が出ないこと・検索流入比率が30日集計と桁で乖離しないことを確認する
+- **files**: `.gas-deploy/Code.js`
+- **オーナー操作待ちの依存**: `.gas-deploy/Code.js` はリポジトリ内ミラーで実行主体は GAS 側。反映にはオーナーによる GAS エディタへの反映（コピペ or `clasp push`）が必要
+- **関連**: [[SEO-062]]（同ファイル・同じ「次元つき集計が単日値を壊す」クラス・デプロイ待ち）/ [[SEO-057]]（同ファイル・本件で acceptance の一部が未達と判明・デプロイ待ち）/ [[SEO-047]]（同ファイル・小サンプルゲート・デプロイ待ち）/ [[SEO-039]]（30日集計の正しい内訳を出している CLI 側の実装）
 
 ### [ISSUE-099] editorReason 自動収集パイプライン（ISSUE-045）が3ヶ月間サイレント無稼働だった — 必要シークレット3件が未設定
 
@@ -1401,11 +1440,11 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   - `scripts/lib/cross_check.js`（新規） / `scripts/lib/cross_check_v3.js`（新規・未接続） / `build.js`
   - `tests/cross_check.test.js`（新規） / `tests/cross_check_v3.test.js`（新規） / `scripts/audit_crosscheck_v3.js`（新規）
   - `features/integrity-method.html` / `agents/inspector.md` / `docs/places-api-setup.md`
-- **2026-08-20 追記（[[ISSUE-100]] 口コミ信頼度の見せ方・採点再設計）**: 消費者に見せる公開値を「スコア信頼度（%・整合度順）」から「口コミ信頼度（段階A〜D＋0-100・7項目のうち観測できたものだけで採点）」へ再設計した。
+- **2026-08-20 追記（[[ISSUE-101]] 口コミ信頼度の見せ方・採点再設計）**: 消費者に見せる公開値を「スコア信頼度（%・整合度順）」から「口コミ信頼度（段階A〜D＋0-100・7項目のうち観測できたものだけで採点）」へ再設計した。
   v2.0 → **v2.1**（`scripts/lib/cross_check.js`）に更新し、各軸へ `observed:boolean` を追加、S7 に `parts:[s7a,s7b,s7c]` を追加。
   内部合成点 `crossCheckScore`（8軸100点・本 ISSUE が扱う分布・フラグ）は本ステップでは**変更していない**（ロスター等の依存を壊さないため）。
-  **v3.0 を活性化するときは、v3 実装（`scripts/lib/cross_check_v3.js`）にも同じ observed/parts 付与が前提**（`scripts/lib/trust_display.js` が observed を読むため）。詳細は [[ISSUE-100]]。
-- **関連**: [[ISSUE-048]]（サクラチェッカー方式の元祖・食べログスクレイピングのStrategic Skip判断）/ [[ISSUE-049]]（V3化・S7/S8新設の前身）/ [[ISSUE-084]]（監視原則「検知して終わりにしない」を踏襲）/ [[ISSUE-100]]（口コミ信頼度の見せ方・採点再設計）
+  **v3.0 を活性化するときは、v3 実装（`scripts/lib/cross_check_v3.js`）にも同じ observed/parts 付与が前提**（`scripts/lib/trust_display.js` が observed を読むため）。詳細は [[ISSUE-101]]。
+- **関連**: [[ISSUE-048]]（サクラチェッカー方式の元祖・食べログスクレイピングのStrategic Skip判断）/ [[ISSUE-049]]（V3化・S7/S8新設の前身）/ [[ISSUE-084]]（監視原則「検知して終わりにしない」を踏襲）/ [[ISSUE-101]]（口コミ信頼度の見せ方・採点再設計）
 
 ### [ISSUE-084] 日次ジャーナルが3日欠番（08-10/11/12）— 失敗の警報が「防音室の中」で鳴っていた ✅
 
@@ -3649,6 +3688,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Marketer/Builder(/solve-next) | SEO-061 実装・デプロイ — gsc_opportunities.jsのclassify()にクエリ単位の地理的意図判定を追加（areas辞書+名古屋/愛知の語の有無）。地名なしクエリをctrFixGeoless別枠へ隔離。実データ（既存gsc_metrics.json）で変更前後を比較: 誤検知の「一人飲み」がctrFix1位から除外され「くろぎ 名古屋」のみ残存、地名なし5件中大半が店名の指名検索と判明（SEO-059診断の裏付け）。前後をseo_advice_log.jsonに記録・npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | Editor/Builder(/solve-next) | ISSUE-081 実装・デプロイ — index.htmlのフィードバックパネルに#feedbackハッシュでの自動オープンを追加。add_feedback_nudge.js（新設・冪等）で3系統以上のフッター混在に対応する共通挿入点（最後の</footer>直前）を設計し、既存170ファイル（features66+journal104）に一括適用。journal/_template.html・gen_industry_features.jsにも焼き込み新規記事は自動対応。ブラウザ実機で#feedbackアクセス時の自動オープンを確認・全172ファイル構文検証0エラー・npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | Editor(/solve-next) | EDT-003 分類調査partial — 直近30本のヒーロー画像を実測、実写比率が検出時42%→現在67%まで既に改善していたことを発見。図解になった30本のtheme×本文実査で(a)題材選定21件(70%)/(b)写真調達失敗9件(30%)に分類。(b)はISSUE-097と同一根本原因（新店のLOCAL_STORES未解決）と判明し既存チケットの進捗で自動改善見込み。(a)対応（題材選定アルゴリズム変更）は編集戦略変更のためオーナー判断待ちとして意図的に保留 | ⏸ 調査のみ・commitなし |
+| 2026-08-20 | Orchestrator(EXPLICIT) | ISSUE-100 実装・デプロイ — GSC「サイトマップ内のページがインデックスに登録されない（リダイレクト/404）」通知メール2件を調査。sitemap.xml全5,205URLをファイル照合＋本番への実HTTP HEADで検証し現状は全件200・異常0件と確認（既存クリーンアップで解消済みの過去クロール履歴と判断）。再発時に自動検知できるよう scripts/audit_sitemap_health.js（新設・リトライ付き）を build.yml の push後ステップに追加（非ブロッキング）。npm test 94/94 | ✅ 本コミット |
 
 ---
 
