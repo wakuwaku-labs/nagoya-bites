@@ -2101,9 +2101,9 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 </section>
 <!-- SCENE-INDEX:END -->
 
-<!-- STORE-INDEX:START 2026-08-19 -->
+<!-- STORE-INDEX:START 2026-08-20 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（5030店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（5031店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（831店）</summary>
@@ -7465,6 +7465,12 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <li><a href="index.html#q=%E4%BB%8A%E6%97%A5%E3%82%82%E3%83%91%E3%82%B9%E3%82%BF%E6%97%A5%E3%82%88%E3%82%8A%20%E3%83%9C%E3%83%AD%E3%83%8D%E6%99%82%E3%80%85%E3%82%AB%E3%83%AB%E3%83%9C">今日もパスタ日より ボロネ時々カルボ（名古屋（西区）・パスタ専門店）</a></li>
 </ul>
 </details>
+<details class="store-index-area" data-area="名古屋（天白区）">
+<summary>名古屋（天白区）（1店）</summary>
+<ul class="store-index-list">
+<li><a href="index.html#q=%E3%81%A9%E3%81%A6%E7%85%AE%E3%81%AE%E5%B9%B3%E9%87%9D">どて煮の平針（名古屋（天白区）・居酒屋）</a></li>
+</ul>
+</details>
 </section>
 <!-- STORE-INDEX:END -->
 
@@ -7592,7 +7598,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '0c465a3f3de0';
+var STORES_JSON_VERSION = '0eb86fccce93';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
