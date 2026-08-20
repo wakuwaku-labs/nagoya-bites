@@ -108,6 +108,8 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem
 .score svg{width:14px;height:14px;fill:#d4a017;}
 .ccs-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.12em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.18rem .6rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
 .ccs-badge.ccs-badge-pending{color:#767676;border-color:rgba(120,120,120,.35);background:rgba(120,120,120,.06);}
+.ccs-badge .ccs-tier{font-weight:800;font-size:.7rem;margin-left:.25rem;letter-spacing:0;}
+.cc-tier-SS{color:#1b5e20;}.cc-tier-A{color:#2e7d32;}.cc-tier-B{color:#46752a;}.cc-tier-C{color:#5f6b63;}.cc-tier-D{color:#767676;}.cc-tier-NA{color:#767676;font-style:italic;}
 .point-box{background:rgba(122,92,16,.07);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:.9rem 1.1rem;margin-bottom:1.6rem;}
 .point-box p{font-size:.85rem;line-height:1.9;color:var(--text);}
 .info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.6rem;padding:1.2rem;background:var(--bg2);border:1px solid var(--border);}
@@ -133,6 +135,13 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem
 .trust-axis-name{font-weight:600;min-width:9.5rem;}
 .trust-axis-score{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--gold);white-space:nowrap;}
 .trust-axis-reason{color:var(--muted);flex:1 1 14rem;}
+.trust-axis-unobserved .trust-axis-score,.trust-axis-unobserved .trust-axis-reason{color:var(--dim);}
+.trust-axis-meta .trust-axis-score{color:var(--dim);}
+.trust-headline{font-size:.9rem;line-height:1.7;margin:.2rem 0 .1rem;}
+.trust-headline .trust-tier{font-family:'DM Mono',monospace;font-weight:800;font-size:1.35rem;margin-right:.4rem;vertical-align:-.05em;}
+.trust-headline .trust-score{font-family:'DM Mono',monospace;font-size:.8rem;color:var(--muted);margin-right:.2rem;}
+.trust-meta-line{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:var(--dim);margin:0 0 .6rem;}
+.trust-meta-heading{font-size:.7rem;font-weight:600;color:var(--dim);margin:.9rem 0 .1rem;}
 .related-features{margin:2rem 0 1.8rem;padding:1.3rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
 .related-features h2{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
 .related-features ul{list-style:none;padding:0;margin:0;}
@@ -167,7 +176,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <h1>キング軒 名古屋大須店</h1>
   <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
     
-    <span class="ccs-badge ccs-badge-pending" title="スコア信頼度: 複数媒体シグナルによる客観評価（データ蓄積中の参考値・低評価を示すものではありません）">信頼度 47 ／ 参考値</span>
+    <span class="ccs-badge ccs-badge-pending" title="口コミ信頼度 —：判定材料不足（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）">口コミ信頼度<span class="ccs-tier cc-tier-NA">—</span></span>
   </div>
 
   <div class="point-box"><p>広島発祥の汁なし担担麺専門店「キング軒」の名古屋2号店として2026年4月3日に大須にオープン。看板は「30回混ぜてから食べる」流儀で、香り高いラー油と山椒の痺れ・濃厚なタレが麺に絡んでいく過程そのものを楽しむ一杯。並800円・大盛950円・セット1100円。食べ歩き文化と若者カルチャーが交差する新天地通商店街のど真ん中という出店判断は、広島本店が大切にしてきた「ローカル文化との接続」と相性が良い。</p></div>
