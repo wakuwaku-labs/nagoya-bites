@@ -35,18 +35,19 @@ function bd(o) {
 }
 const store = { 'Google評価': '4.3', '口コミ数': '182' };
 
-test('trust_display: policy の基本形（段階4つ＋na・検証7項目・meta3項目・禁止語）', () => {
+test('trust_display: policy の基本形（段階5つ＋na・検証7項目・meta3項目・禁止語）', () => {
   assert.equal(P.name, '口コミ信頼度');
-  assert.deepEqual(P.tiers.map(t => t.id), ['A', 'B', 'C', 'D']);
-  assert.deepEqual(P.tiers.map(t => t.min), [90, 75, 60, 0]);
+  assert.deepEqual(P.tiers.map(t => t.id), ['SS', 'A', 'B', 'C', 'D']);
+  assert.deepEqual(P.tiers.map(t => t.min), [97, 90, 75, 60, 0]);
   assert.equal(P.checks.length, 7);
   assert.deepEqual(P.meta.map(m => m.axis), ['s3_dataCompleteness', 's5_operationContinuity', 's6_instagramPresence']);
   assert.ok(P.bannedWords.length >= 5);
   assert.equal(P.minObserved, 3);
 });
 
-test('trust_display: 段階の境界（89→B, 90→A, 74→C, 75→B, 59→D, 60→C, null→—）', () => {
-  assert.equal(td.tierOf(90).id, 'A'); assert.equal(td.tierOf(89).id, 'B');
+test('trust_display: 段階の境界（96→A, 97→SS, 89→B, 90→A, 74→C, 75→B, 59→D, 60→C, null→—）', () => {
+  assert.equal(td.tierOf(100).id, 'SS'); assert.equal(td.tierOf(97).id, 'SS');
+  assert.equal(td.tierOf(96).id, 'A');   assert.equal(td.tierOf(90).id, 'A'); assert.equal(td.tierOf(89).id, 'B');
   assert.equal(td.tierOf(75).id, 'B'); assert.equal(td.tierOf(74).id, 'C');
   assert.equal(td.tierOf(60).id, 'C'); assert.equal(td.tierOf(59).id, 'D');
   assert.equal(td.tierOf(0).id, 'D');  assert.equal(td.tierOf(null).id, '—');
@@ -56,7 +57,7 @@ test('trust_display: 未観測の項目は分母に入らない／S3・S5・S6 �
   // 観測: s1 15/15, s2 10/10, s7b 6/6, s7c 6/6, s8 15/15 = 52/52 → 100（s4, s7a は未観測）
   const r = td.evaluate(store, { crossCheckBreakdown: bd() });
   assert.equal(r.score, 100);
-  assert.equal(r.tier, 'A');
+  assert.equal(r.tier, 'SS');
   assert.deepEqual(r.coverage, { observed: 5, total: 7 });
   // S6 を 10/10 にしても score は変わらない
   const r2 = td.evaluate(store, { crossCheckBreakdown: bd({ s6_instagramPresence: axis(10, 10, true) }) });
@@ -92,20 +93,20 @@ test('trust_display: 観測項目が minObserved 未満なら「—」判定材�
 
 test('trust_display: 見出し文は policy の headline テンプレと助言語で組み立てる（ハードコードなし）', () => {
   const r = td.evaluate(store, { crossCheckBreakdown: bd() });
-  const tierA = P.tiers.find(t => t.id === 'A');
-  assert.equal(r.headline, P.headline.replace('{rating}', '4.3').replace('{count}', '182').replace('{advice}', tierA.advice));
-  assert.equal(r.advice, tierA.advice);
-  assert.equal(r.tierLabel, tierA.label);
+  const tierSS = P.tiers.find(t => t.id === 'SS');
+  assert.equal(r.headline, P.headline.replace('{rating}', '4.3').replace('{count}', '182').replace('{advice}', tierSS.advice));
+  assert.equal(r.advice, tierSS.advice);
+  assert.equal(r.tierLabel, tierSS.label);
 });
 
 test('trust_display: toSlim / toCompact / fromCompact の往復', () => {
   const full = td.evaluate(store, { crossCheckBreakdown: bd() }, { lastChecked: '2026-05-22' });
   const slim = td.toSlim(full);
-  assert.deepEqual(slim, { s: 100, t: 'A', c: '5/7', d: '2026-05-22' });
+  assert.deepEqual(slim, { s: 100, t: 'SS', c: '5/7', d: '2026-05-22' });
   const compact = td.toCompact(full);
   assert.equal(compact.k.length, 7);
   const back = td.fromCompact(compact);
-  assert.equal(back.score, 100); assert.equal(back.tier, 'A'); assert.equal(back.advice, full.advice);
+  assert.equal(back.score, 100); assert.equal(back.tier, 'SS'); assert.equal(back.advice, full.advice);
   assert.deepEqual(back.checks.map(c => c.id), P.checks.map(c => c.id));
 });
 

@@ -9,12 +9,12 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>口コミ信頼度の読み方｜NAGOYA BITES — A〜Dの段階を1分で</title>
-<meta name="description" content="NAGOYA BITES の各店舗に表示される「口コミ信頼度」（A〜D）の読み方を1分で。何を測り、何を測らないか。段階ごとの助言・実例・違和感があったときの窓口。">
+<title>口コミ信頼度の読み方｜NAGOYA BITES — SS〜Dの5段階を1分で</title>
+<meta name="description" content="NAGOYA BITES の各店舗に表示される「口コミ信頼度」（SS〜Dの5段階）の読み方を1分で。何を測り、何を測らないか。段階ごとの助言・実例・違和感があったときの窓口。">
 <meta name="keywords" content="NAGOYA BITES,口コミ信頼度,口コミ 信頼性,飲食店,口コミ,信頼度,名古屋グルメ">
 <link rel="canonical" href="https://nagoya-bites.com/features/review-trust.html">
 <meta property="og:title" content="口コミ信頼度の読み方｜NAGOYA BITES">
-<meta property="og:description" content="各店舗の「口コミ信頼度」（A〜D）が何を測り、何を測らないかを1分で。">
+<meta property="og:description" content="各店舗の「口コミ信頼度」（SS〜D）が何を測り、何を測らないかを1分で。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://nagoya-bites.com/features/review-trust.html">
 <meta property="og:site_name" content="NAGOYA BITES">
@@ -30,7 +30,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "口コミ信頼度の読み方｜NAGOYA BITES",
-  "description": "各店舗の「口コミ信頼度」（A〜D）が何を測り、何を測らないかを1分で。",
+  "description": "各店舗の「口コミ信頼度」（SS〜D）が何を測り、何を測らないかを1分で。",
   "author": {"@type": "Organization", "name": "NAGOYA BITES"},
   "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
   "url": "https://nagoya-bites.com/features/review-trust.html",
@@ -110,6 +110,8 @@ nav a:hover{color:var(--text);}
 .signal-table tbody tr:nth-child(odd){background:rgba(46,125,50,.025);}
 .tier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.9rem;margin:1.4rem 0;}
 .tier-card{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--green);padding:1rem 1.1rem;border-radius:0 4px 4px 0;}
+.tier-card.tier-ss{border-left-color:#1b5e20;background:rgba(27,94,32,.06);}
+.tier-card.tier-ss .tier-num{color:#1b5e20;}
 .tier-card.tier-mid{border-left-color:var(--green-dim);}
 .tier-card.tier-low{border-left-color:#888;}
 .tier-card.tier-hidden{border-left-color:#bbb;}
@@ -149,7 +151,7 @@ footer a{color:var(--muted);text-decoration:none;}
   <h1 class="art-title">口コミ<em>信頼度</em>の読み方</h1>
   <p class="art-meta"><span>公開 2026-08-20</span><span>NAGOYA BITES 編集部</span><span>1分で読めます</span></p>
   <div class="art-lead">
-    <p>店舗カードや詳細に出ている「口コミ信頼度 A〜D」は、<strong>「この店の Google の★と件数は、そのまま信じてよいか」</strong>に答える参考指標です。店の良し悪しの評価ではありません。このページで 1 分で読み方を説明します。仕組みの全部は <a href="integrity-method.html" style="color:var(--green);text-decoration:underline;">口コミ信頼度の作り方</a> で公開しています。</p>
+    <p>店舗カードや詳細に出ている「口コミ信頼度 SS〜D」（5段階）は、<strong>「この店の Google の★と件数は、そのまま信じてよいか」</strong>に答える参考指標です。店の良し悪しの評価ではありません。このページで 1 分で読み方を説明します。仕組みの全部は <a href="integrity-method.html" style="color:var(--green);text-decoration:underline;">口コミ信頼度の作り方</a> で公開しています。</p>
   </div>
 </article>
 
@@ -157,7 +159,8 @@ footer a{color:var(--muted);text-decoration:none;}
 
   <h2 class="section-label">段階の読み方</h2>
   <div class="tier-grid">
-    <div class="tier-card"><div class="tier-num">A ／ 90 — 100</div><div class="tier-label">Advice</div><div class="tier-body"><strong>そのまま参考にできます。</strong>★と件数に不自然な点が見つかりませんでした。</div></div>
+    <div class="tier-card tier-ss"><div class="tier-num">SS ／ 97 — 100</div><div class="tier-label">Advice</div><div class="tier-body"><strong>文句なしに参考にできます。</strong>観測できた検証項目すべてで満点（全体の約4%）。</div></div>
+    <div class="tier-card"><div class="tier-num">A ／ 90 — 96</div><div class="tier-label">Advice</div><div class="tier-body"><strong>そのまま参考にできます。</strong>★と件数に不自然な点が見つかりませんでした。</div></div>
     <div class="tier-card tier-mid"><div class="tier-num">B ／ 75 — 89</div><div class="tier-label">Advice</div><div class="tier-body"><strong>おおむね参考にできます。</strong>一部の項目に軽微な乖離があります。</div></div>
     <div class="tier-card tier-low"><div class="tier-num">C ／ 60 — 74</div><div class="tier-label">Advice</div><div class="tier-body"><strong>参考程度に。</strong>件数が少ない等、★を額面どおり受け取りにくい材料があります。</div></div>
     <div class="tier-card tier-low"><div class="tier-num">D ／ 0 — 59</div><div class="tier-label">Advice</div><div class="tier-body"><strong>他の情報と合わせて判断を。</strong>店を非難する語ではなく、読者への助言です。</div></div>

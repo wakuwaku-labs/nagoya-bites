@@ -578,6 +578,7 @@ body.search-query-active .card-why{display:flex;}
 .trend-badge{position:absolute;top:.9rem;right:.9rem;font-size:.58rem;font-weight:700;padding:.2rem .55rem;border-radius:2px;z-index:3;backdrop-filter:blur(6px);letter-spacing:.06em;animation:trendPulse 2s ease-in-out infinite;}
 /* ── 口コミ信頼度（カードの cmeta セル + モーダル内訳）。段階の色は data/trust_display_policy.json と同値・白地で 4.5:1 以上（FB-003） ── */
 .cmeta .cc-cell{font-weight:800;padding:0 .15rem;font-family:'DM Mono',monospace;}
+.cc-tier-SS{color:#1b5e20;}
 .cc-tier-A{color:#2e7d32;}
 .cc-tier-B{color:#46752a;}
 .cc-tier-C{color:#5f6b63;}
@@ -585,6 +586,8 @@ body.search-query-active .card-why{display:flex;}
 .cc-tier-NA{color:#767676;font-style:italic;font-weight:600;}
 .cross-check-box{background:rgba(46,125,50,.05);border-left:3px solid #2e7d32;border-radius:0 4px 4px 0;padding:.95rem 1.1rem;margin-bottom:1rem;}
 .cross-check-box .mpoint-label{color:#2e7d32;}
+.cross-check-box.cc-box-SS{background:rgba(27,94,32,.07);border-left-color:#1b5e20;}
+.cross-check-box.cc-box-SS .mpoint-label{color:#1b5e20;}
 .cross-check-box.cc-box-C,.cross-check-box.cc-box-D{background:rgba(95,107,99,.06);border-left-color:#5f6b63;}
 .cross-check-box.cc-box-C .mpoint-label,.cross-check-box.cc-box-D .mpoint-label{color:#5f6b63;}
 .cross-check-box.cc-box-pending{background:rgba(120,120,120,.05);border-left-color:#767676;}
@@ -9469,7 +9472,7 @@ function buildCardHtml(r) {
     if (trendLabel === '話題沸騰') trendBadgeHtml = '<span class="trend-badge trend-hot">話題沸騰</span>';
     else if (trendLabel === '注目上昇中') trendBadgeHtml = '<span class="trend-badge trend-rising">注目上昇中</span>';
     else if (trendLabel === 'じわじわ人気') trendBadgeHtml = '<span class="trend-badge trend-warm">じわじわ人気</span>';
-    // ── 口コミ信頼度（cmeta 内のセル）。段階（A〜D／—）だけを出し、数字はモーダルで見せる。
+    // ── 口コミ信頼度（cmeta 内のセル）。段階（SS〜D／—）だけを出し、数字はモーダルで見せる。
     //    語彙・色は TRUST_POLICY（data/trust_display_policy.json を build が注入）。未注入・未付与なら出さない ──
     var ccMetaHtml = '';
     var ccRt = r.reviewTrust || null;
@@ -9753,7 +9756,7 @@ function openM(i) {
   document.getElementById('m-insider-note-body').textContent = insiderNote;
   document.getElementById('m-insider-note').style.display = insiderNote ? '' : 'none';
   // REVIEW_TRUST_RENDER_START
-  // ── 口コミ信頼度（段階 A〜D・0-100・助言文・検証カバー率・Google口コミ取得日） ──
+  // ── 口コミ信頼度（段階 SS〜D・0-100・助言文・検証カバー率・Google口コミ取得日） ──
   // 語彙・段階は TRUST_POLICY（build が data/trust_display_policy.json を注入）。
   // 内訳は data/crosscheck.json（8軸の観測事実＋reviewTrust）を初回モーダル展開時に遅延ロード。
   // reviewTrust 未付与・TRUST_POLICY 未注入（CI ビルド前）でも例外を出さず、箱ごと非表示にする。

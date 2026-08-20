@@ -114,11 +114,30 @@ for (const f of legacyTargets) scanWords(read(f), P.legacyNames, `[旧名称] ${
 }
 
 // ── B-2. policy 自身 ───────────────────────────────────────
+// JSON を構造的に走査し、禁止語の定義そのもの（P.bannedWords 配列）と内部メモ
+// （_README / _why 等・公開面には注入されない）を除いた文字列値だけを対象にする。
+// 生テキストの行フィルタだとインデント幅・改行位置が変わるだけで壊れるため使わない。
 {
-  const raw = read('data/trust_display_policy.json') || '';
-  // 定義行と内部メモ（_README / _why 等・公開面には注入されない）は対象外
-  const stripped = raw.split('\n').filter(l => !/"bannedWords"|"legacyNames"|^\s*"_\w+"\s*:/.test(l)).join('\n');
-  scanWords(stripped, P.bannedWords, '[禁止語] data/trust_display_policy.json');
+  const skipKeys = new Set(['bannedWords', 'legacyNames']);
+  const violations2 = [];
+  function walk(node, path) {
+    if (node == null) return;
+    if (Array.isArray(node)) { node.forEach((v, i) => walk(v, path)); return; }
+    if (typeof node === 'object') {
+      for (const [k, v] of Object.entries(node)) {
+        if (skipKeys.has(k) || k.startsWith('_')) continue;
+        walk(v, path.concat(k));
+      }
+      return;
+    }
+    if (typeof node === 'string') {
+      for (const w of P.bannedWords) if (node.includes(w)) {
+        violations2.push(`[禁止語] data/trust_display_policy.json ${path.join('.')} 「${w}」: ${node}`);
+      }
+    }
+  }
+  walk(P, []);
+  violations.push(...violations2);
 }
 
 // ── B-3. index.html の表示区間 ──────────────────────────────

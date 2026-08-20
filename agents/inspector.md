@@ -147,8 +147,8 @@ P3 (LOW): 時間があれば
 
 ## 月次「口コミ信頼度」レビュー（ISSUE-048 由来・2026-08-20 名称改訂）
 
-> 消費者に見せる名前は「口コミ信頼度」（A〜D・段階の語は読者への助言。基準は `data/trust_display_policy.json`）。
-> 本セクションが扱う T90+/T70-89/T50-69/<50 の分布・内部フラグは、8軸の**内部合成点** `crossCheckScore`（公開しない）に対する監視で、消費者向けの A〜D 段階（`reviewTrust`）とは別物。両者の関係は `features/integrity-method.html` §04 を参照。
+> 消費者に見せる名前は「口コミ信頼度」（SS〜Dの5段階・段階の語は読者への助言。基準は `data/trust_display_policy.json`）。
+> 本セクションが扱う T90+/T70-89/T50-69/<50 の分布・内部フラグは、8軸の**内部合成点** `crossCheckScore`（公開しない）に対する監視で、消費者向けの SS〜D 段階（`reviewTrust`）とは別物。両者の関係は `features/integrity-method.html` §04 を参照。
 
 毎月 1 日に、以下の 3 つの順序で実施する。漏らした月は ORG 違反として `agent-backlog.md` に記録する。
 

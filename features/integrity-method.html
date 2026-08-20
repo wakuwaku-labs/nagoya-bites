@@ -10,11 +10,11 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>口コミ信頼度の作り方｜NAGOYA BITES — 「その店の★は信じてよいか」を第三者として判定する方法論</title>
-<meta name="description" content="NAGOYA BITES の「口コミ信頼度」（A〜D・0-100）の作り方を完全公開。「この店のGoogle★と件数は、そのまま信じてよいか」を、観測できた検証項目だけで機械的に採点する方法論・段階の定義・やらないと決めたこと・異議申立ての手順。">
+<meta name="description" content="NAGOYA BITES の「口コミ信頼度」（SS〜Dの5段階・0-100）の作り方を完全公開。「この店のGoogle★と件数は、そのまま信じてよいか」を、観測できた検証項目だけで機械的に採点する方法論・段階の定義・やらないと決めたこと・異議申立ての手順。">
 <meta name="keywords" content="NAGOYA BITES,口コミ信頼度,口コミ 信頼性,飲食店,口コミ,信頼度,名古屋グルメ,編集独立性">
 <link rel="canonical" href="https://nagoya-bites.com/features/integrity-method.html">
 <meta property="og:title" content="口コミ信頼度の作り方｜NAGOYA BITES">
-<meta property="og:description" content="「この店のGoogle★と件数は、そのまま信じてよいか」を観測できた検証項目だけで採点する口コミ信頼度（A〜D）の方法論を完全公開。">
+<meta property="og:description" content="「この店のGoogle★と件数は、そのまま信じてよいか」を観測できた検証項目だけで採点する口コミ信頼度（SS〜D）の方法論を完全公開。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://nagoya-bites.com/features/integrity-method.html">
 <meta property="og:site_name" content="NAGOYA BITES">
@@ -30,7 +30,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "口コミ信頼度の作り方｜NAGOYA BITES",
-  "description": "「この店のGoogle★と件数は、そのまま信じてよいか」を観測できた検証項目だけで採点する口コミ信頼度（A〜D・0-100）の方法論。名指しではなく読者への助言として示す設計判断を完全公開。",
+  "description": "「この店のGoogle★と件数は、そのまま信じてよいか」を観測できた検証項目だけで採点する口コミ信頼度（SS〜D・0-100）の方法論。名指しではなく読者への助言として示す設計判断を完全公開。",
   "author": {"@type": "Organization", "name": "NAGOYA BITES"},
   "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
   "url": "https://nagoya-bites.com/features/integrity-method.html",
@@ -87,6 +87,8 @@ nav a:hover{color:var(--text);}
 .signal-table tbody tr:nth-child(odd){background:rgba(46,125,50,.025);}
 .tier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.9rem;margin:1.4rem 0;}
 .tier-card{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--green);padding:1rem 1.1rem;border-radius:0 4px 4px 0;}
+.tier-card.tier-ss{border-left-color:#1b5e20;background:rgba(27,94,32,.06);}
+.tier-card.tier-ss .tier-num{color:#1b5e20;}
 .tier-card.tier-mid{border-left-color:var(--green-dim);}
 .tier-card.tier-low{border-left-color:#888;}
 .tier-card.tier-hidden{border-left-color:#bbb;}
@@ -149,24 +151,25 @@ footer a{color:var(--muted);text-decoration:none;}
       <li><strong>誤判定リスク。</strong> 機械統計は必ず偽陽性・偽陰性を含みます。誠実に営業している優良店に「サクラ確率 80%」と表示してしまった場合、店舗側にとっての名誉毀損リスク・経営リスクは甚大です。</li>
       <li><strong>媒体名指しのリスク。</strong> 「この店のサクラは食べログに多い」のような名指しは、当該媒体との関係性も含めて訴訟リスクを高めます。NAGOYA BITES は<strong>個別媒体名で「サクラあり」と断定する表現を一切採用しません</strong>。</li>
       <li><strong>本質は確率ではなく整合性。</strong> 我々が機械で測れるのは「件数・★・直近の傾向・分布・第三者の足跡が同じ方向を指しているか」であって、個別レビューの真贋ではありません。表現を実態と一致させることが、長く運営するうえでの誠実さです。</li>
-      <li><strong>公開文言は観測事実だけを書く。</strong> 店舗ページやモーダルの内訳には「直近5件の平均★が全体より+0.9高い」のように<strong>観測された事実だけ</strong>を書き、「疑い」のような結論語は書きません（2026-08-20 に全面改訂。旧版では直近5件が全て★5という良店ほど当たる条件に結論語を付けており、半数近い店に出ていました）。結論は段階 A〜D と助言語が担います。</li>
+      <li><strong>公開文言は観測事実だけを書く。</strong> 店舗ページやモーダルの内訳には「直近5件の平均★が全体より+0.9高い」のように<strong>観測された事実だけ</strong>を書き、「疑い」のような結論語は書きません（2026-08-20 に全面改訂。旧版では直近5件が全て★5という良店ほど当たる条件に結論語を付けており、半数近い店に出ていました）。結論は段階 SS〜D と助言語が担います。</li>
     </ul>
   </div>
 
   <h2 class="section-label">02 — What The Number Answers: この数字が答える問い</h2>
   <p class="art-intro">
     口コミ信頼度が答えるのは <strong>「この店の Google の★と件数は、そのまま信じてよいか」</strong> の 1 つだけです。
-    店の良し悪し・料理の評価・当サイトの推薦度ではありません。段階は次の 5 つで、語はすべて読者への助言として書いています。
+    店の良し悪し・料理の評価・当サイトの推薦度ではありません。段階は次の 5 つ（SS〜D）＋判定材料不足で、語はすべて読者への助言として書いています。
   </p>
   <div class="tier-grid">
-    <div class="tier-card"><div class="tier-num">A ／ 90 — 100</div><div class="tier-label">Advice</div><div class="tier-body"><strong>そのまま参考にできます。</strong>観測できた検証項目のほぼ全てで、★と件数に不自然な点が見つかりませんでした。</div></div>
+    <div class="tier-card tier-ss"><div class="tier-num">SS ／ 97 — 100</div><div class="tier-label">Advice</div><div class="tier-body"><strong>文句なしに参考にできます。</strong>観測できた検証項目のすべてで満点。全体の約4%だけが到達する最上位帯です。</div></div>
+    <div class="tier-card"><div class="tier-num">A ／ 90 — 96</div><div class="tier-label">Advice</div><div class="tier-body"><strong>そのまま参考にできます。</strong>観測できた検証項目のほぼ全てで、★と件数に不自然な点が見つかりませんでした。</div></div>
     <div class="tier-card tier-mid"><div class="tier-num">B ／ 75 — 89</div><div class="tier-label">Advice</div><div class="tier-body"><strong>おおむね参考にできます。</strong>一部の項目で軽微な乖離や件数の薄さがあります。</div></div>
     <div class="tier-card tier-low"><div class="tier-num">C ／ 60 — 74</div><div class="tier-label">Advice</div><div class="tier-body"><strong>参考程度に。</strong>件数が少ない、直近の評価が全体と離れている等、★を額面どおりに受け取りにくい材料があります。</div></div>
     <div class="tier-card tier-low"><div class="tier-num">D ／ 0 — 59</div><div class="tier-label">Advice</div><div class="tier-body"><strong>他の情報と合わせて判断を。</strong>件数不足や分布の偏りなど、★だけで判断しない方がよい材料が重なっています。店を非難する語は使いません。</div></div>
     <div class="tier-card tier-hidden"><div class="tier-num">— ／ 判定材料不足</div><div class="tier-label">Pending</div><div class="tier-body"><strong>判定材料が足りません。</strong>観測できた検証項目が 3 未満（Google の口コミデータが未取得など）。評価が低いことを示すものではありません。</div></div>
   </div>
   <p class="body-para">
-    2026-08-20 の実測分布（5,030 店）: A 14% ／ B 36% ／ C 22% ／ D 19% ／ — 9%。D の大半は「件数が 30 件未満」または「★4.6 以上なのに 50 件未満」で、助言「件数が少ないため★は参考程度に」が事実として正しい帯です。
+    2026-08-20 の実測分布（5,030 店）: SS 4% ／ A 12% ／ B 36% ／ C 22% ／ D 19% ／ — 9%。D の大半は「件数が 30 件未満」または「★4.6 以上なのに 50 件未満」で、助言「件数が少ないため★は参考程度に」が事実として正しい帯です。SS は観測できた検証項目すべてで満点という明確な基準を持つ最上位帯です。
   </p>
 
   <h2 class="section-label">03 — 8 Signals: 採点器の 8 軸（scoreVersion 2.1）</h2>

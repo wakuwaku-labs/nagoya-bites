@@ -1,53 +1,139 @@
 {
-  "_README": "「口コミ信頼度」の表示基準の唯一の情報源。名称・段階（A〜D／—）・助言語・色・検証項目ラベル・公開禁止語をここで定義し、判定器 scripts/lib/trust_display.js だけが解釈する。build.js（LOCAL_STORES / data/crosscheck.json 生成・index.html への TRUST_POLICY 注入）・gen-store-pages.js（店舗ページ）・index.html（カード／モーダル／ソート）・scripts/audit_trust_wording.js（CI監査）が全て同じ判定・同じ語彙を共有する。閾値や文言の変更はこのJSONで行いスクリプトは触らない。確認は node scripts/audit_trust_wording.js（Builder/DataKeeper/Editor 共管）。",
-  "_why": "2026-08-20 の実測: 旧「スコア信頼度」は100点中30点がサイト側のデータ充実度（S3/S5/S6）で口コミの信用度と別物、%表記が「サクラ確率」に見え、90点以上が0店・61%が「検証中」、内訳文言「評価操作疑い」が44%の店に出ていた（直近5件が全★5の良店ほど当たる偽陽性）。数字が答える問いを「この店のGoogle★と件数は、そのまま信じてよいか」の1つに絞り、観測できた検証項目だけで採点し、段階の語は店の評価ではなく読者への助言として書く。",
-  "version": "1.0",
+  "_README": "「口コミ信頼度」の表示基準の唯一の情報源。名称・段階（SS〜D／—・5段階）・助言語・色・検証項目ラベル・公開禁止語をここで定義し、判定器 scripts/lib/trust_display.js だけが解釈する。build.js（LOCAL_STORES / data/crosscheck.json 生成・index.html への TRUST_POLICY 注入）・gen-store-pages.js（店舗ページ）・index.html（カード／モーダル／ソート）・scripts/audit_trust_wording.js（CI監査）が全て同じ判定・同じ語彙を共有する。閾値や文言の変更はこのJSONで行いスクリプトは触らない。確認は node scripts/audit_trust_wording.js（Builder/DataKeeper/Editor 共管）。",
+  "_why": "2026-08-20 の実測: 旧「スコア信頼度」は100点中30点がサイト側のデータ充実度（S3/S5/S6）で口コミの信用度と別物、%表記が「サクラ確率」に見え、90点以上が0店・61%が「検証中」、内訳文言「評価操作疑い」が44%の店に出ていた（直近5件が全★5の良店ほど当たる偽陽性）。数字が答える問いを「この店のGoogle★と件数は、そのまま信じてよいか」の1つに絞り、観測できた検証項目だけで採点し、段階の語は店の評価ではなく読者への助言として書く。 2026-08-20b: 4段階（A〜D）に最上位「SS」を新設し5段階（SS〜D）に変更。観測できた検証項目すべてで満点（ScoreVersion 2.1実測: 全店の4.2%が該当）という明確な基準を持つ層を切り出し、最上位バッジに希少性を持たせた。",
+  "version": "1.1",
   "updated": "2026-08-20",
   "scoreVersion": "2.1",
-
   "name": "口コミ信頼度",
   "shortName": "信頼度",
   "enLabel": "REVIEW TRUST",
   "question": "この店のGoogle★と件数は、そのまま信じてよいか",
   "sortLabel": "口コミ信頼度順",
-
   "minObserved": 3,
-
   "tiers": [
-    { "id": "A", "min": 90, "label": "そのまま参考にできます",     "advice": "そのまま参考にできます。",        "color": "#2e7d32", "cssClass": "cc-tier-A" },
-    { "id": "B", "min": 75, "label": "おおむね参考にできます",     "advice": "おおむね参考にできます。",        "color": "#46752a", "cssClass": "cc-tier-B" },
-    { "id": "C", "min": 60, "label": "参考程度に",                 "advice": "参考程度にしてください。",        "color": "#5f6b63", "cssClass": "cc-tier-C" },
-    { "id": "D", "min": 0,  "label": "他の情報と合わせて判断を",   "advice": "他の情報と合わせて判断してください。", "color": "#767676", "cssClass": "cc-tier-D" }
+    {
+      "id": "SS",
+      "min": 97,
+      "label": "文句なしに参考にできます",
+      "advice": "文句なしに参考にできます。",
+      "color": "#1b5e20",
+      "cssClass": "cc-tier-SS"
+    },
+    {
+      "id": "A",
+      "min": 90,
+      "label": "そのまま参考にできます",
+      "advice": "そのまま参考にできます。",
+      "color": "#2e7d32",
+      "cssClass": "cc-tier-A"
+    },
+    {
+      "id": "B",
+      "min": 75,
+      "label": "おおむね参考にできます",
+      "advice": "おおむね参考にできます。",
+      "color": "#46752a",
+      "cssClass": "cc-tier-B"
+    },
+    {
+      "id": "C",
+      "min": 60,
+      "label": "参考程度に",
+      "advice": "参考程度にしてください。",
+      "color": "#5f6b63",
+      "cssClass": "cc-tier-C"
+    },
+    {
+      "id": "D",
+      "min": 0,
+      "label": "他の情報と合わせて判断を",
+      "advice": "他の情報と合わせて判断してください。",
+      "color": "#767676",
+      "cssClass": "cc-tier-D"
+    }
   ],
-  "na": { "id": "—", "label": "判定材料不足", "advice": "判定材料が足りません。", "color": "#767676", "cssClass": "cc-tier-NA" },
-
+  "na": {
+    "id": "—",
+    "label": "判定材料不足",
+    "advice": "判定材料が足りません。",
+    "color": "#767676",
+    "cssClass": "cc-tier-NA"
+  },
   "headline": "Google★{rating}（{count}件）は、{advice}",
   "headlineNoRating": "Googleの★と件数が取得できていないため、{advice}",
   "coverageLabel": "検証 {observed}/{total}項目",
   "lastCheckedLabel": "Google口コミ取得日 {date}",
   "pendingLabel": "— 蓄積中",
   "notObservedLabel": "判定保留",
-
   "checks": [
-    { "id": "s2",  "axis": "s2_reviewCountAbs",      "label": "件数は十分か" },
-    { "id": "s1",  "axis": "s1_googleRatingVsCount", "label": "★と件数のバランス" },
-    { "id": "s7b", "axis": "s7_reviewTimeseries", "part": "s7b", "label": "直近の評価は全体と一致するか" },
-    { "id": "s7c", "axis": "s7_reviewTimeseries", "part": "s7c", "label": "直近の評価のばらつき" },
-    { "id": "s8",  "axis": "s8_reviewDistribution",  "label": "評価の分布（両極に割れていないか）" },
-    { "id": "s7a", "axis": "s7_reviewTimeseries", "part": "s7a", "label": "口コミの増え方" },
-    { "id": "s4",  "axis": "s4_mediaCrossCheck",     "label": "第三者メディアの掲載" }
+    {
+      "id": "s2",
+      "axis": "s2_reviewCountAbs",
+      "label": "件数は十分か"
+    },
+    {
+      "id": "s1",
+      "axis": "s1_googleRatingVsCount",
+      "label": "★と件数のバランス"
+    },
+    {
+      "id": "s7b",
+      "axis": "s7_reviewTimeseries",
+      "part": "s7b",
+      "label": "直近の評価は全体と一致するか"
+    },
+    {
+      "id": "s7c",
+      "axis": "s7_reviewTimeseries",
+      "part": "s7c",
+      "label": "直近の評価のばらつき"
+    },
+    {
+      "id": "s8",
+      "axis": "s8_reviewDistribution",
+      "label": "評価の分布（両極に割れていないか）"
+    },
+    {
+      "id": "s7a",
+      "axis": "s7_reviewTimeseries",
+      "part": "s7a",
+      "label": "口コミの増え方"
+    },
+    {
+      "id": "s4",
+      "axis": "s4_mediaCrossCheck",
+      "label": "第三者メディアの掲載"
+    }
   ],
-
   "metaHeading": "掲載データの充実度（口コミ信頼度には含めません）",
   "meta": [
-    { "axis": "s3_dataCompleteness",    "label": "掲載情報の充実" },
-    { "axis": "s5_operationContinuity", "label": "営業確認" },
-    { "axis": "s6_instagramPresence",   "label": "公式Instagram" }
+    {
+      "axis": "s3_dataCompleteness",
+      "label": "掲載情報の充実"
+    },
+    {
+      "axis": "s5_operationContinuity",
+      "label": "営業確認"
+    },
+    {
+      "axis": "s6_instagramPresence",
+      "label": "公式Instagram"
+    }
   ],
-
-  "bannedWords": ["疑い", "サクラ", "ガチャ", "化粧", "評価操作"],
-  "legacyNames": ["整合度順", "TRUST SCORE", "スコア信頼度", "信頼性スコア", "信頼度スコア"],
-
+  "bannedWords": [
+    "疑い",
+    "サクラ",
+    "ガチャ",
+    "化粧",
+    "評価操作"
+  ],
+  "legacyNames": [
+    "整合度順",
+    "TRUST SCORE",
+    "スコア信頼度",
+    "信頼性スコア",
+    "信頼度スコア"
+  ],
   "pages": {
     "guide": "features/review-trust.html",
     "method": "features/integrity-method.html",

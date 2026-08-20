@@ -838,7 +838,7 @@ function getTrendLabel(score) {
 
 // ────────────────────────────────────────────────────
 // 口コミ信頼度: 採点本体（8軸・内部合成点 crossCheckScore）は scripts/lib/cross_check.js、
-// 消費者向けの段階（A〜D）・0-100・助言語への変換は scripts/lib/trust_display.js
+// 消費者向けの段階（SS〜D）・0-100・助言語への変換は scripts/lib/trust_display.js
 // （基準は data/trust_display_policy.json）。ここは require して全店に付与するだけ。
 // ────────────────────────────────────────────────────
 const { computeCrossCheckScore } = require('./scripts/lib/cross_check');
@@ -1332,7 +1332,7 @@ async function main() {
   // ─── 口コミ信頼度の算出（scoreVersion 2.1） ──────
   // 8 軸の内部合成点 crossCheckScore を全店に付与し、内部フラグは
   // data/cross_check_flags.json に分離保存（Inspector 月次レビュー用・公開しない）。
-  // 消費者に見せる reviewTrust（段階 A〜D・0-100・検証カバー率・取得日）は
+  // 消費者に見せる reviewTrust（段階 SS〜D・0-100・検証カバー率・取得日）は
   // trust_display.evaluate() が観測できた検証項目だけで算出する。
   const crossCheckFlagList = [];
   const ccDist = { t90: 0, t70: 0, t50: 0, lt50: 0 };
@@ -1373,7 +1373,7 @@ async function main() {
   }
   const ccAvg = stores.length ? (ccTotal / stores.length).toFixed(1) : '0';
   console.log(`内部合成点 crossCheckScore: 平均=${ccAvg} / T90+=${ccDist.t90} / T70-89=${ccDist.t70} / T50-69=${ccDist.t50} / <50=${ccDist.lt50}`);
-  console.log(`口コミ信頼度（公開・A〜D）: ${['A','B','C','D','—'].map(t => `${t}=${rtDist[t] || 0}`).join(' / ')}`);
+  console.log(`口コミ信頼度（公開・SS〜D）: ${['SS','A','B','C','D','—'].map(t => `${t}=${rtDist[t] || 0}`).join(' / ')}`);
   console.log(`内部フラグ（Inspector 月次レビュー用）: ${crossCheckFlagList.length}件`);
   // 内部フラグを data/cross_check_flags.json に書き出す（公開しない・Inspector のみ参照）
   // ISSUE-087: 店舗数ABORTガードより前に書き終わるため、ABORT時に巻き戻せるよう

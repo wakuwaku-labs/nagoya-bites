@@ -631,7 +631,7 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem
 .ccs-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.12em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.18rem .6rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
 .ccs-badge.ccs-badge-pending{color:#767676;border-color:rgba(120,120,120,.35);background:rgba(120,120,120,.06);}
 .ccs-badge .ccs-tier{font-weight:800;font-size:.7rem;margin-left:.25rem;letter-spacing:0;}
-.cc-tier-A{color:#2e7d32;}.cc-tier-B{color:#46752a;}.cc-tier-C{color:#5f6b63;}.cc-tier-D{color:#767676;}.cc-tier-NA{color:#767676;font-style:italic;}
+.cc-tier-SS{color:#1b5e20;}.cc-tier-A{color:#2e7d32;}.cc-tier-B{color:#46752a;}.cc-tier-C{color:#5f6b63;}.cc-tier-D{color:#767676;}.cc-tier-NA{color:#767676;font-style:italic;}
 .point-box{background:rgba(122,92,16,.07);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:.9rem 1.1rem;margin-bottom:1.6rem;}
 .point-box p{font-size:.85rem;line-height:1.9;color:var(--text);}
 .info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.6rem;padding:1.2rem;background:var(--bg2);border:1px solid var(--border);}

@@ -46,6 +46,7 @@
 
 - **検証**: `npm test`（cross_check.test.js改修＋trust_display.test.js新規・22件パス）／`node scripts/audit_trust_wording.js`（旧名称0件・禁止語0件）／`node scripts/migrate_feature_headings.js --check`・`node scripts/audit_feature_schema_alignment.js`（67件OK）／全店再計算での分布実測（品質ゲート原則5）
 - **Phase 2（起票のみ・別ISSUEで着手）**: 月次「口コミ信頼度レポート」の自動公開／特集・ジャーナルへのバッジ定型挿入／前月比表示／`dispute_requests.json`の`scoreOverride`未実装（異議申立ての反映経路が無い）／`refresh_feature_rosters.js`の重みを`reviewTrust.s`へ移行／[[ISSUE-086]] v3.0活性化
+- **2026-08-20 追記（同PR内・オーナー指示「SS〜Dまでの5段階にして欲しい」）**: 公開段階を4段階（A/B/C/D＋—）から**5段階（SS/A/B/C/D＋—）**に変更。SSは「観測できた検証項目のすべてで満点」（scoreVersion 2.1の実測で全店の約4.2%が該当・閾値97点）という機械検証可能な基準を持つ最上位帯。A/B/C/Dの閾値は変更せず、Aの上限のみ90-100→90-96に縮小。`data/trust_display_policy.json`にSSエントリを追加するだけでtierOf()のロジック変更は不要（min降順ソートで自動的に分岐）。CSS色は`#1b5e20`（白地コントラスト7.87:1・AA適合）。features/integrity-method.html・no-fake-reviews.html・editorial-policy.html・review-trust.html・about.html・faq.html・features/index.htmlの段階表・文言を全て更新し、`node scripts/audit_trust_wording.js`のB-2チェック（policyファイル自体の禁止語走査）を行フィルタ方式から**JSON構造を再帰的に走査する方式**に修正（`json.dumps(indent=2)`で複数行に整形されると行ベースのフィルタが壊れるため）。
 - **関連**: [[ISSUE-048]] [[ISSUE-049]] [[ISSUE-086]]（v3活性化時の前提を本ISSUEが追加）
 
 ### [ISSUE-099] editorReason 自動収集パイプライン（ISSUE-045）が3ヶ月間サイレント無稼働だった — 必要シークレット3件が未設定
