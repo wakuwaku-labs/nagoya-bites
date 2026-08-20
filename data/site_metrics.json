@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-08-20T13:49:52.424Z",
+  "generatedAt": "2026-08-20T15:06:09.618Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 784,
-    "pageViews": 1315,
-    "sessions": 925,
-    "avgSessionDuration": 153.8,
-    "bounceRate": 0.375,
-    "pagesPerSession": 1.42
+    "activeUsers": 762,
+    "pageViews": 1259,
+    "sessions": 892,
+    "avgSessionDuration": 157.2,
+    "bounceRate": 0.382,
+    "pagesPerSession": 1.41
   },
   "channels": {
     "sessions": {
-      "organic": 587,
-      "direct": 248,
-      "social": 92,
-      "referral": 17,
+      "organic": 573,
+      "direct": 234,
+      "social": 90,
+      "referral": 15,
       "paid": 0,
       "other": 14
     },
     "pct": {
-      "organic": 61.3,
-      "direct": 25.9,
-      "social": 9.6,
-      "referral": 1.8,
+      "organic": 61.9,
+      "direct": 25.3,
+      "social": 9.7,
+      "referral": 1.6,
       "paid": 0,
       "other": 1.5
     }
@@ -31,17 +31,17 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 245
+      "sessions": 234
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 216
+      "sessions": 214
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 187
+      "sessions": 173
     },
     {
       "source": "yahoo",
@@ -51,26 +51,26 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 87
+      "sessions": 85
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 41
+      "sessions": 42
     },
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 20
-    },
-    {
-      "source": "openai",
-      "medium": "(not set)",
-      "sessions": 15
+      "sessions": 19
     },
     {
       "source": "(data not available)",
       "medium": "(data not available)",
+      "sessions": 14
+    },
+    {
+      "source": "openai",
+      "medium": "(not set)",
       "sessions": 14
     },
     {
@@ -82,33 +82,33 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 239,
-      "sessions": 142
+      "pageViews": 234,
+      "sessions": 139
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 130,
-      "sessions": 116
+      "pageViews": 129,
+      "sessions": 114
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 112,
-      "sessions": 107
-    },
-    {
-      "path": "/index.html",
-      "pageViews": 65,
-      "sessions": 39
+      "pageViews": 109,
+      "sessions": 103
     },
     {
       "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
       "pageViews": 58,
       "sessions": 55
+    },
+    {
+      "path": "/index.html",
+      "pageViews": 57,
+      "sessions": 36
     }
   ],
   "cta": {
-    "outboundClicks": 82,
-    "ctaClickRate": 8.9,
+    "outboundClicks": 83,
+    "ctaClickRate": 9.3,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -119,11 +119,11 @@
         "clicks": 12
       },
       {
-        "domain": "jouhou.nagoya",
-        "clicks": 6
+        "domain": "maps.google.com",
+        "clicks": 8
       },
       {
-        "domain": "maps.google.com",
+        "domain": "jouhou.nagoya",
         "clicks": 6
       },
       {
@@ -164,21 +164,21 @@
       },
       {
         "domain": "(unattributed)",
-        "clicks": 4
+        "clicks": 3
       }
     ],
     "note": null,
     "byChannel": {
       "organic": 23,
-      "direct": 36,
+      "direct": 37,
       "social": 23,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 3.9,
-    "ctaClickRate_direct": 14.5,
-    "ctaClickRate_social": 25,
+    "ctaClickRate_organic": 4,
+    "ctaClickRate_direct": 15.8,
+    "ctaClickRate_social": 25.6,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -186,7 +186,7 @@
       },
       {
         "path": "/",
-        "clicks": 21
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -218,10 +218,6 @@
       },
       {
         "path": "/journal/2026-05-20-bib-gourmand-economics.html",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html",
         "clicks": 1
       },
       {
@@ -270,7 +266,7 @@
       {
         "path": "/",
         "domain": "maps.google.com",
-        "clicks": 5
+        "clicks": 7
       },
       {
         "path": "/",
@@ -449,7 +445,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 784,
+    "value": 762,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
