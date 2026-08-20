@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T15:06:09.618Z",
+  "generatedAt": "2026-08-20T15:34:15.324Z",
   "lookbackDays": 30,
   "totals": {
     "activeUsers": 762,
@@ -107,12 +107,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 83,
-    "ctaClickRate": 9.3,
+    "outboundClicks": 84,
+    "ctaClickRate": 9.4,
     "byDomain": [
       {
         "domain": "tabelog.com",
-        "clicks": 39
+        "clicks": 40
       },
       {
         "domain": "www.hotpepper.jp",
@@ -170,14 +170,14 @@
     "note": null,
     "byChannel": {
       "organic": 23,
-      "direct": 37,
+      "direct": 38,
       "social": 23,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
     "ctaClickRate_organic": 4,
-    "ctaClickRate_direct": 15.8,
+    "ctaClickRate_direct": 16.2,
     "ctaClickRate_social": 25.6,
     "byPage": [
       {
@@ -254,6 +254,10 @@
       },
       {
         "path": "/journal/2026-08-16-sakae-magari-kakigori.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-18-noritake-garden-pasta.html",
         "clicks": 1
       }
     ],
@@ -397,6 +401,11 @@
         "path": "/journal/2026-08-16-sakae-magari-kakigori.html",
         "domain": "tabelog.com",
         "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-18-noritake-garden-pasta.html",
+        "domain": "tabelog.com",
+        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
@@ -439,9 +448,13 @@
       {
         "path": "/journal/2026-08-16-sakae-magari-kakigori.html",
         "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-18-noritake-garden-pasta.html",
+        "clicks": 1
       }
     ],
-    "reservationClicks": 52
+    "reservationClicks": 53
   },
   "stageAssessment": {
     "metric": "activeUsers",
