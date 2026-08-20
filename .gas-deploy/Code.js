@@ -267,10 +267,18 @@ function weekdayJa(dateStr) {
   return w[new Date(dateStr).getDay()];
 }
 
+// GA4しきい値で値が潰れた行を判定するヘルパー（analyze / topSrcRow でも共用）
+function isGa4Unknown(src, medium) {
+  const UNKNOWN = ['(not set)', '(data not available)', '(other)'];
+  return UNKNOWN.includes((src || '').toLowerCase()) || UNKNOWN.includes((medium || '').toLowerCase());
+}
+
 // 流入元を素人向け表記に
 function sourceToName(src, medium) {
   const s = (src || '').toLowerCase();
   const m = (medium || '').toLowerCase();
+  // SEO-063: GA4しきい値で次元値が潰れた行を1行に集約（母数の小さい日の次元つきクエリで多発）
+  if (isGa4Unknown(s, m)) return '⚠️ 判別不能（GA4しきい値）';
   if (s === 'google' && m === 'organic') return 'Google検索';
   if (s === 'yahoo' && m === 'organic') return 'Yahoo検索';
   if (s === 'bing' && m === 'organic')  return 'Bing検索';
@@ -319,16 +327,22 @@ function analyze(data) {
   let organicSessions = 0;
   let directSessions = 0;
   let socialSessions = 0;
+  let unknownSessions = 0;  // SEO-063: GA4しきい値で判別不能なセッション数
   data.sources.forEach(r => {
     const src = (r.dimensions[0] || '').toLowerCase();
     const med = (r.dimensions[1] || '').toLowerCase();
     const ses = parseInt(r.metrics[1] || 0);
-    if (med === 'organic') organicSessions += ses;
+    if (isGa4Unknown(src, med)) unknownSessions += ses;
+    else if (med === 'organic') organicSessions += ses;
     else if (src === '(direct)' || med === '(none)') directSessions += ses;
     else if (/twitter|t\.co|x\.com|instagram|facebook|line/.test(src)) socialSessions += ses;
   });
-  const organicPct = srcTotal > 0 ? organicSessions / srcTotal : 0;
-  const socialPct = srcTotal > 0 ? socialSessions / srcTotal : 0;
+  // SEO-063: 分母を「判別できたセッション数」に限定し、判別不能ぶんが比率を歪めるのを防ぐ
+  const identifiableSessions = srcTotal - unknownSessions;
+  const unknownPct = srcTotal > 0 ? unknownSessions / srcTotal : 0;
+  const highThreshold = unknownPct > 0.30;
+  const organicPct = identifiableSessions > 0 ? organicSessions / identifiableSessions : 0;
+  const socialPct = identifiableSessions > 0 ? socialSessions / identifiableSessions : 0;
 
   // デバイス
   const devTotal = data.devices.reduce((s, d) => s + parseInt(d.metrics[0]), 0);
@@ -341,6 +355,7 @@ function analyze(data) {
     ctaCount, gmapCount, modalCount, ctaRate,
     organicPct, socialPct, mobilePct,
     srcTotal, devTotal,
+    unknownSessions, unknownPct, identifiableSessions, highThreshold,
   };
 }
 
@@ -528,7 +543,9 @@ function buildAdvicePrompt(data, a, date, isWeekly) {
 '- 直帰率: ' + Math.round(t.bounceRate * 100) + '%（目安50%未満が良好・70%超は要注意）',
 '- 予約ボタンクリック: ' + a.ctaCount + '回 ／ マップ: ' + a.gmapCount + '回 ／ 店舗詳細を開いた: ' + a.modalCount + '回' + (a.outboundCount ? ' ／ 外部リンク: ' + a.outboundCount + '回' : ''),
 '- 予約クリック率（予約÷訪問者）: ' + (a.ctaRate * 100).toFixed(1) + '%（目安3%）',
-'- 検索流入比率: ' + Math.round(a.organicPct * 100) + '% ／ SNS流入比率: ' + Math.round(a.socialPct * 100) + '%',
+'- 検索流入比率: ' + Math.round(a.organicPct * 100) + '%（判別できた' + a.identifiableSessions + '件中）' +
+  ' ／ SNS流入比率: ' + Math.round(a.socialPct * 100) + '%' +
+  (a.highThreshold ? '　※GA4のしきい値適用で' + Math.round(a.unknownPct * 100) + '%が判別不能のため比率の信頼性が低い' : ''),
 '- デバイス: ' + (devLines || '不明'),
 '',
 '## 人気ページ TOP5',
@@ -545,6 +562,7 @@ srcLines,
 '- 毎日同じ提案にならないよう、データで最も差が出ている点に焦点を当てる。汎用論・精神論は禁止。',
 '- データに無い数字を創作しない。訪問者が少ない日は「母数が少ないので◯◯を試す実験」という温度感にする。',
 '- 訪問回数(セッション)が20件未満の日は、直帰率・平均滞在時間を単独の主要課題として取り上げない（1〜2人の挙動だけで数十pt動く統計ノイズのため）。この場合は人気ページ・流入元・回遊など他の実データか「攻めの一手」を優先する。',
+'- 「判別できた〇件中」と記載されている日はGA4のしきい値が効き流入元の多くが判別不能になっている。そのような日は検索流入比率・SNS流入比率を主な根拠にしたアドバイスを避け、人気ページ・直帰率・回遊など他のデータを優先する。',
 '- 専門用語を避け、素人が読んで即動ける日本語で。各項目は120字以内。',
 '- 出力はJSONのみ。前後に説明文やコードフェンス(```)を付けない。',
 '',
@@ -562,7 +580,10 @@ function generateRuleBasedAdvice(data, a, date) {
   const tops = topPagesForPrompt(data.pages, 1);
   const topPageName = tops[0] ? tops[0].name : 'トップページ';
   const topPagePv = tops[0] ? tops[0].pv : 0;
-  const topSrcRow = data.sources && data.sources[0];
+  // SEO-063: 判別不能行（GA4しきい値）を topSrcRow の対象から除く
+  const topSrcRow = data.sources && data.sources.find(r =>
+    !isGa4Unknown(r.dimensions[0] || '', r.dimensions[1] || '')
+  );
   const topSrcName = topSrcRow ? sourceToName(topSrcRow.dimensions[0], topSrcRow.dimensions[1]) : null;
   const featureRow = (data.pages || []).find(p => /features\//.test(p.dimensions[0]));
   const featureName = featureRow ? pagePathToName(featureRow.dimensions[0]) : null;
@@ -613,17 +634,21 @@ function generateRuleBasedAdvice(data, a, date) {
     }
   }
 
-  // 流入元・SEO
+  // 流入元・SEO（SEO-063: highThreshold 日は流入比率ベースのアドバイスを出さない）
   if (a.srcTotal >= 15) {
-    if (a.organicPct < 0.30) {
-      cand.push({ sev: 80, text: '🔴 Google検索からの流入が' + Math.round(a.organicPct * 100) + '%と少なめ\n　👉 既存特集のタイトルとh1に ' + rotate(SEO_KEYWORDS, seed) + ' を入れ、本文の最初の2行にも自然に1回使う' });
-    } else if (a.organicPct >= 0.70) {
-      cand.push({ sev: 30, text: '🟢 検索流入' + Math.round(a.organicPct * 100) + '%と好調\n　👉 勢いに乗せて ' + rotate(SEO_KEYWORDS, seed + 3) + ' を狙う新特集を仕込み、検索の面を広げる' });
-    }
-    if (a.socialPct < 0.05) {
-      cand.push({ sev: 50, text: '🟡 SNSからの流入がほぼゼロ\n　👉 ' + (featureName || '今日のジャーナル') + 'をInstagram/Xに「画像1枚＋一言」で投稿（docs/daily-posts の原稿を流用）' });
-    } else if (a.socialPct >= 0.25) {
-      cand.push({ sev: 35, text: '🟢 SNS流入が' + Math.round(a.socialPct * 100) + '%と強い\n　👉 反応が出たテーマで連投し、プロフィールのサイトURL固定を確認する' });
+    if (a.highThreshold) {
+      cand.push({ sev: 40, text: '⚠️ この日はGA4のしきい値が効き流入元の' + Math.round(a.unknownPct * 100) + '%が判別不能です\n　👉 流入構成は30日集計（search_channel_metrics.json）を参考に。今日は人気ページや回遊を見てください' });
+    } else {
+      if (a.organicPct < 0.30) {
+        cand.push({ sev: 80, text: '🔴 Google検索からの流入が' + Math.round(a.organicPct * 100) + '%と少なめ\n　👉 既存特集のタイトルとh1に ' + rotate(SEO_KEYWORDS, seed) + ' を入れ、本文の最初の2行にも自然に1回使う' });
+      } else if (a.organicPct >= 0.70) {
+        cand.push({ sev: 30, text: '🟢 検索流入' + Math.round(a.organicPct * 100) + '%と好調\n　👉 勢いに乗せて ' + rotate(SEO_KEYWORDS, seed + 3) + ' を狙う新特集を仕込み、検索の面を広げる' });
+      }
+      if (a.socialPct < 0.05) {
+        cand.push({ sev: 50, text: '🟡 SNSからの流入がほぼゼロ\n　👉 ' + (featureName || '今日のジャーナル') + 'をInstagram/Xに「画像1枚＋一言」で投稿（docs/daily-posts の原稿を流用）' });
+      } else if (a.socialPct >= 0.25) {
+        cand.push({ sev: 35, text: '🟢 SNS流入が' + Math.round(a.socialPct * 100) + '%と強い\n　👉 反応が出たテーマで連投し、プロフィールのサイトURL固定を確認する' });
+      }
     }
   }
 
@@ -731,6 +756,9 @@ function formatDailyReport(data, date) {
 
   if (data.sources.length > 0) {
     msg += '\n【どこから来た？ TOP3】\n';
+    if (a.highThreshold) {
+      msg += '⚠️ この日はGA4のしきい値が効き ' + Math.round(a.unknownPct * 100) + '% が判別不能です。流入構成は30日集計（search_channel_metrics.json）をご参照ください。\n';
+    }
     data.sources.slice(0, 3).forEach((s, i) => {
       const medal = ['🥇','🥈','🥉'][i];
       const pct = a.srcTotal > 0 ? Math.round(parseInt(s.metrics[1]) / a.srcTotal * 100) : 0;
@@ -798,6 +826,9 @@ function formatWeeklyReport(data, prevData, startDate, endDate) {
 
   if (data.sources.length > 0) {
     msg += '\n【流入元 TOP3】\n';
+    if (a.highThreshold) {
+      msg += '⚠️ この週はGA4のしきい値が効き ' + Math.round(a.unknownPct * 100) + '% が判別不能です。流入構成は30日集計をご参照ください。\n';
+    }
     data.sources.slice(0, 3).forEach((s, i) => {
       const medal = ['🥇','🥈','🥉'][i];
       const pct = a.srcTotal > 0 ? Math.round(parseInt(s.metrics[1]) / a.srcTotal * 100) : 0;

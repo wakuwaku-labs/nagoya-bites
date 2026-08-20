@@ -25,8 +25,10 @@
 - **次のアクション（オーナー本人のみ可能）**: GSC「インデックス登録レポート」で「検証を試す」を押すと、Google側に再クロールを促せる（本チケットの技術対応が事実として反映されているため通るはず）。ログインが要るため自動化不可
 ### [SEO-063] 日次レポートの「どこから来た？」が GA4 のしきい値適用で 62% 判別不能になり、検索流入比率を 62%→21% に押し下げてアドバイスの前提を壊している
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-08-20
+- **resolved**: 2026-08-20
+- **resolved_by**: TBD
 - **category**: SEO / data-quality
 - **owner**: Marketer
 - **source**: 日次レポート(LINE) 2026-08-19 原文「【どこから来た？ TOP3】① (not set) / (not set)（15訪問 / 32%）② (data not available) / (data not available)（14訪問 / 30%）③ 直接アクセス（8訪問 / 17%）」＋「🟢 検索流入比率が21%と低いですが、Bing検索からの流入がGoogle検索より多い状況です」
@@ -158,7 +160,7 @@
 - **priority**: P0 → **status**: in_progress（コード対策は完了。恒久解消には運用側の対応が要る）
 - **detected**: 2026-08-18（オーナー報告「最近ものすごく多い」。過去ログ確認で 08-05/07/08/09/13/16/18 の7日で発生と判明）
 - **category**: インフラ・自動化
-- **owner**: Builder（`run_journal_local.sh` 管轄）
+- **owner**: 片桐 ← Builder（`run_journal_local.sh` 管轄）（残課題は運用操作のみ・オーナー本人の対応が必要）
 - **problem**: `claude --print` での生成中に `API Error: Connection closed mid-response.` が発生し、3回リトライしても直らず HOLD になる日が繰り返し起きていた（過去の修正メモでは「ネットワーク一時エラー」として片付けられ、真因は未特定だった）。
   - **真因**: `pmset -g log` で 2026-08-18 09:04:55（1回目の生成開始）の20秒後、09:05:15 に **`Entering Sleep state due to 'Clamshell Sleep'`** を確認。Mac がラップトップで、蓋を閉じた状態・**バッテリー駆動**（この日は充電71%）で launchd の 9:00 起動を迎えていた。生成の長時間ストリーミング接続（1回目は51分）の途中で OS が蓋閉じスリープに入り、接続が切断されていた
   - `run_journal_local.sh` には `caffeinate` 等のスリープ防止策が一切無く、macOS の蓋閉じスリープを素通しにしていた
@@ -3645,6 +3647,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Editor/Builder(/solve-next) | ISSUE-081 実装・デプロイ — index.htmlのフィードバックパネルに#feedbackハッシュでの自動オープンを追加。add_feedback_nudge.js（新設・冪等）で3系統以上のフッター混在に対応する共通挿入点（最後の</footer>直前）を設計し、既存170ファイル（features66+journal104）に一括適用。journal/_template.html・gen_industry_features.jsにも焼き込み新規記事は自動対応。ブラウザ実機で#feedbackアクセス時の自動オープンを確認・全172ファイル構文検証0エラー・npm test 94/94 | ✅ 本コミット |
 | 2026-08-19 | Editor(/solve-next) | EDT-003 分類調査partial — 直近30本のヒーロー画像を実測、実写比率が検出時42%→現在67%まで既に改善していたことを発見。図解になった30本のtheme×本文実査で(a)題材選定21件(70%)/(b)写真調達失敗9件(30%)に分類。(b)はISSUE-097と同一根本原因（新店のLOCAL_STORES未解決）と判明し既存チケットの進捗で自動改善見込み。(a)対応（題材選定アルゴリズム変更）は編集戦略変更のためオーナー判断待ちとして意図的に保留 | ⏸ 調査のみ・commitなし |
 | 2026-08-20 | Orchestrator(EXPLICIT) | ISSUE-100 実装・デプロイ — GSC「サイトマップ内のページがインデックスに登録されない（リダイレクト/404）」通知メール2件を調査。sitemap.xml全5,205URLをファイル照合＋本番への実HTTP HEADで検証し現状は全件200・異常0件と確認（既存クリーンアップで解消済みの過去クロール履歴と判断）。再発時に自動検知できるよう scripts/audit_sitemap_health.js（新設・リトライ付き）を build.yml の push後ステップに追加（非ブロッキング）。npm test 94/94 | ✅ 本コミット |
+| 2026-08-20 | Marketer(/solve-next) | SEO-063 実装・デプロイ — `.gas-deploy/Code.js` に GA4しきい値判別不能行（`(not set)` / `(data not available)` / `(other)`）の集約・分母補正・highThreshold警告を追加。`isGa4Unknown()` ヘルパー新設・`analyze()` で `identifiableSessions` を分母に切替・topSrcRow フィルタ追加・AI プロンプト補足・ルールベースアドバイスの highThreshold ガード・日次/週次レポートへの警告行追加。ISSUE-096はコード修正済みを確認しオーナー操作待ちとしてowner=片桐にエスカレーション。`node --check` ✅ / npm test 94/94 ✅ | ✅ 本コミット |
 
 ---
 
