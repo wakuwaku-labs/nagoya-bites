@@ -260,12 +260,30 @@ node scripts/feedback_triage.js --health-write '{"status":"gmail_error","reason"
 
 ---
 
-## この設計が守れていない失敗（残存リスク）
+## この設計が守れていない失敗（残存リスク・ISSUE-094・2026-08-20 wont_fix 確定）
 
 - **Formspree には届いたが Gmail に一度も配送されなかった投稿**は、Gmail 側をどれだけ広く引いても
-  検出できない（検知器と収集経路が同じ系統のため）。独立した突合には Formspree の submissions API が要り、
-  それにはオーナー本人による API キー発行と Secret 登録が必要 → **ISSUE-090**（owner=片桐）。
-  現状はこのリスクが残っていることを承知のうえで運用する。
+  検出できない（検知器と収集経路が同じ系統のため）。独立した突合には Formspree の submissions API が要るが、
+  これは Free/Personal プランに含まれず Professional プラン（$30/月〜）が必要と判明した。月額課金は
+  オーナー本人の契約判断（制約8）であり、エージェントは実施しない。**status: wont_fix** として確定する。
+
+- **無料の代替運用（月1回・オーナー実施・自動リマインド化済み）**: Formspree ダッシュボードは Free
+  プランでも直近30日分の提出履歴を無料で閲覧できる。ローカルスケジュールタスク
+  `nagoya-bites-feedback-formspree-crosscheck-monthly`（毎月1日 09:00・
+  `~/.claude/scheduled-tasks/nagoya-bites-feedback-formspree-crosscheck-monthly/SKILL.md`）が
+  `node scripts/feedback_triage.js --report --days 30` の件数を添えてオーナーへ通知するので、
+  1. 通知に記載された Gmail 経由の処理件数を確認する
+  2. https://formspree.io/forms/xaqaygze/submissions を開き、直近30日の件数と見比べる
+  3. Formspree側の件数が多ければ「Gmailに届かなかった投稿がある」ことが分かる
+     （本文はGmail以外に複製しないため、差分が出たら該当期間のFormspree側詳細を直接確認する）
+  - タスク自体はFormspreeへログインできないため実際の突合はオーナーが行う。それでも「気づけるはず」を
+    人の記憶任せにせず、毎月自動で材料を届ける点で CLAUDE.md ISSUE-084 原則2（out-of-band通知）は満たす。
+    最終比較そのものが人手である点は原則3の限界として承知のうえで、無料で取れる最良の代替として採用する
+
+- **無料の予防策（任意・オーナー1回設定）**: Formspree Free プランは「2つの連携通知メール」を無料で
+  設定できる（フォーム設定 → Notifications）。2つ目の宛先を wakato1251999@gmail.com とは別プロバイダの
+  アドレスにすると、片方のアカウントの迷惑メール判定・フィルタ・障害だけでは投稿が完全には消えなくなる
+  （検知ではなく冗長化。ゼロコストでリスクを直接下げられる）。未設定でも運用は継続できる任意項目。
 
 ---
 

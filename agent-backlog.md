@@ -792,7 +792,7 @@ URLが絶対か / PNGが実在するか。エージェントの自己申告値�
 
 ---
 
-### [ISSUE-094] Formspree 側の投稿数と Gmail 台帳を突合し「メールが一度も届かなかった」を検出する
+### [ISSUE-094] Formspree 側の投稿数と Gmail 台帳を突合し「メールが一度も届かなかった」を検出する ✅
 
 > **採番修正（2026-08-17・2回）**: 本課題は当初 `ISSUE-090` として起票されたが同日の別セッション起票と
 > 衝突したため `ISSUE-092` に変更。その後 origin/main が独自に `ISSUE-092`（Instagram埋め込みの無関係投稿）を
@@ -800,8 +800,28 @@ URLが絶対か / PNGが実在するか。エージェントの自己申告値�
 > 同様に本ブランチの `ISSUE-091`（SEOアドバイスループ）も main の `ISSUE-091` と衝突したため `ISSUE-093` へ。
 > 判定器は `node scripts/audit_backlog_ids.js`（CI で毎日実行）。
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: wont_fix（2026-08-20・acceptance 1 の分岐条件が成立）
 - **detected**: 2026-08-17
+- **resolved**: 2026-08-20
+- **resolved_by**: 対話セッション（オーナー確認依頼 → 外部情報で先行調査）
+- **実施内容**: acceptance 1 で分岐条件としていた「無料プランで submissions API が使えない」ことを確認した
+  （Formspree の submissions API は Free/Personal に含まれず Professional プラン $30/月〜が必要。
+  formspree.io/plans はログイン無しでは参照不可のため外部の料金比較情報で確認。オーナーにも一次確認を
+  依頼済みだが、月額課金の是非は制約8＝ユーザー承認必須の支出判断のため、着手せず `wont_fix` で確定）。
+  代わりに acceptance 1 が当初から用意していた無料フォールバックを実装:
+  1. ローカルスケジュールタスク `nagoya-bites-feedback-formspree-crosscheck-monthly`（毎月1日 09:00・
+     `~/.claude/scheduled-tasks/nagoya-bites-feedback-formspree-crosscheck-monthly/SKILL.md`）を新設。
+     `feedback_triage.js --report --days 30` の件数を添えて「Formspreeダッシュボードの提出履歴(30日分・
+     無料)と見比べてほしい」とオーナーへ毎月自動リマインドする（読み取り専用・データ変更なし・
+     Formspreeへは非ログイン＝実際の突合はオーナー本人）。`docs/feedback-triage-runbook.md` の
+     残存リスク節に手順を明記
+  2. 追加の無料予防策として、Formspree Free プランの「2つ目の連携通知メール」（別プロバイダのアドレスに
+     設定すると、片方のアカウントの迷惑メール判定/フィルタだけでは投稿が消えなくなる）をオーナー任意設定
+     として案内。冗長化であり検知ではないため必須にはしていない
+  3. `data/feedback_policy.json` の `known_residual_risk` を更新（`ticket` を ISSUE-090→ISSUE-094 に修正、
+     `status`/`why_wont_fix`/`mitigation_*` を追加）
+- **files**: `data/feedback_policy.json`, `docs/feedback-triage-runbook.md`,
+  `~/.claude/scheduled-tasks/nagoya-bites-feedback-formspree-crosscheck-monthly/SKILL.md`（リポジトリ外）
 - **category**: 自動化・監視
 - **owner**: 片桐（オーナー本人の操作が必須・エージェント着手不可）
 - **source**: ISSUE-089 の残存リスクとして特定
