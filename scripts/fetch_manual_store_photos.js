@@ -16,7 +16,9 @@
 // place/photo が返す lh3.googleusercontent.com の CDN URL を保存（APIキーはHTMLに埋め込まない）。
 //
 // 使い方:
-//   GOOGLE_MAPS_API_KEY=xxxx node scripts/fetch_manual_store_photos.js [--force] [--limit N]
+//   GOOGLE_MAPS_API_KEY=xxxx node scripts/fetch_manual_store_photos.js [--force] [--limit N] [--only <店名の一部>]
+//   --only は指定店だけを対象に強制再判定する（既存写真の有無を問わない）。
+//   採用基準の後付け改定（data/photo_policy.json）で個別店の客投稿写真を洗い直すときに使う。
 // 取得後:
 //   node build.js && node gen-store-pages.js
 
@@ -328,6 +330,9 @@ async function main() {
   const force = process.argv.includes('--force');
   const limIdx = process.argv.indexOf('--limit');
   const limit = limIdx >= 0 ? parseInt(process.argv[limIdx + 1], 10) : Infinity;
+  const onlyIdx = process.argv.indexOf('--only');
+  const only = onlyIdx >= 0 ? process.argv[onlyIdx + 1] : null;
+  const matchesOnly = (s) => !only || (s['店名'] || '').includes(only);
 
   // ── 対象データセットの読み込み（manual＋pending・ISSUE-076）────────────────
   // pending（ジャーナル採用の話題店）は写真取得の対象外だったため、HotPepper ID を
@@ -362,7 +367,7 @@ async function main() {
     const cur = s['写真URL'] || '';
     return cur.startsWith('http') && !isSvgOrEmpty(cur) && !/unsplash|pexels|loremflickr/i.test(cur);
   };
-  const 生死確認対象 = force ? [] : allStores.filter(hasRealPhoto);
+  const 生死確認対象 = (force || only) ? [] : allStores.filter(hasRealPhoto);
 
   let 失効 = 0, 生存 = 0;
   if (生死確認対象.length) {
@@ -381,7 +386,9 @@ async function main() {
   }
 
   // 再取得対象 = 未取得/SVG/禁止ストック（従来どおり）＋ 生死判定で失効が確認された店（新規）
-  const targets = allStores.filter(s => force || s.__needsRefetch || !hasRealPhoto(s));
+  // --only 指定時はその店だけを対象にし、hasRealPhoto の有無に関わらず強制的に再判定する
+  // （採用基準ゲート＝data/photo_policy.json 施行前に採用済みの客投稿写真を洗い直すため）
+  const targets = allStores.filter(s => matchesOnly(s) && (force || only || s.__needsRefetch || !hasRealPhoto(s)));
 
   // ── Phase 2: 対象店だけ Places から取得（place_id キャッシュで API 呼び出しを節約）──
   let done = 0, ok = 0, miss = 0, 復活 = 0, policyRejected = 0;
@@ -415,10 +422,18 @@ async function main() {
       // 取り繕わずクリアして正規フォールバックへ委ねる。
       // ただし API 自体が落ちている（キー不正・quota・ネットワーク断）ときに消すと
       // 復旧可能なURLを取りこぼすため、API が応答している場合に限る。
-      if (wasDead && apiHealth.responded > 0) {
+      //
+      // photo-policy 不採用（＝店は正しく特定できたが Places 側の写真が全て客投稿等で
+      // 基準を満たさない）で、かつ現在の写真URLが Places CDN 由来のときも同様にクリアする。
+      // 旧実装は wasDead（＝生死判定で失効と判定済み）のときしかクリアしておらず、
+      // --force/--only で「既にある写真を基準に照らして洗い直す」場合に非採用と判定しても
+      // 古い客投稿URLが残り続ける抜け穴があった（採用基準ゲート新設後も既存違反が
+      // 解消されなかった実際の原因）。
+      const staleNonCompliant = r?.reason === 'photo-policy' && /googleusercontent\.com/.test(s['写真URL'] || '');
+      if ((wasDead || staleNonCompliant) && apiHealth.responded > 0) {
         s['写真URL'] = '';
         delete s['写真クレジット'];
-        console.log(`   ↳ 失効URLをクリア（JSON-LD/og:image が 403 を指さないように）`);
+        console.log(`   ↳ ${staleNonCompliant ? '基準を満たさない既存の客投稿写真をクリア' : '失効URLをクリア'}（JSON-LD/og:image が 403 を指さないように）`);
       } else if (wasDead) {
         console.log(`   ↳ API 応答なし → 失効URLは保持（次回再試行）`);
       }

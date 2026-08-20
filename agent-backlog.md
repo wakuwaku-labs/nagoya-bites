@@ -8,6 +8,24 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-105] 店舗写真の採用基準ゲート（8/17新設）が既存の客投稿写真を洗い直せず、147店で誤掲載が残っていた
+
+- **priority**: P0 → **status**: done（PR経由でマージ待ち・マージ後の次回 build.yml でサイトに反映）
+- **detected**: 2026-08-20（オーナーが「鮨 旬美 西川」の店舗ページでケーキ屋のショーケース写真が表示されていることをスクリーンショットで報告。「前の改修で直さなかった?」と指摘）
+- **category**: data-quality / trust / 写真ポリシー
+- **owner**: DataKeeper（実装）
+
+- **直接原因**: `data/manual_stores.json` の「鮨 旬美 西川」の `写真URL` が客投稿写真（クレジット「おっとも」＝ケーキ・スイーツのショーケース）のままだった。
+- **根本原因（[[ISSUE-105-root]] 8/17改修のバグ）**: `973667b22`（写真採用基準ゲート新設）で判定器 `scripts/lib/photo_policy.js` は作られたが、既存写真を洗い直す `scripts/fetch_manual_store_photos.js` 側の再取得トリガーが「URLの生死判定で失効と分かった店（`wasDead`）」の場合にしか古い写真URLをクリアしない実装になっていた。`--force` 実行時もこの生死判定フェーズ自体をスキップするため、`wasDead` は常に false となり、**新設した採用基準を通らない写真が見つかっても、既存の客投稿写真が消えずに残り続ける**抜け穴があった。コミットメッセージが「既存データには基準外が209件残る」と自ら記録していた未解消分の直接原因。
+- **実装内容**:
+  | 区分 | ファイル | 内容 |
+  |---|---|---|
+  | 変更 | `scripts/fetch_manual_store_photos.js` | ①`--only <店名の一部>` オプションを新設し、個別店の強制再判定を可能にした ②再取得が `photo-policy` 理由で不採用になり、かつ現在の写真URLが Places CDN（`googleusercontent.com`）由来のときはクリアするよう修正（旧実装は `wasDead` のときしかクリアしなかった） |
+  | 修正 | `data/manual_stores.json` / `data/pending_stores.json` | 上記スクリプトを `--force` で全193店（manual 155 + pending の非HotPepper 38）に対して再実行。客投稿写真しか無い77店の `写真URL`/`写真クレジット` をクリア（フォールバックSVGに委ねる）。オーナー写真が別途見つかった数店は差し替え |
+  | 手動修正 | 同上 | スクリプトの店名一致ロジックが別要因で保留にした2件（ウルフギャング・ステーキハウス名古屋店／北京本店 イオンモールナゴヤドーム前店）はクレジットが明らかに個人名だったため手動でクリア |
+- **検証**: `data/photo_policy.json` の判定器（`judgePlacesPhoto`）を manual_stores.json + pending_stores.json 全件に対して直接実行し、残存違反 0件を確認 ✅ / JSON構文検証 ✅ / `data/stores.json`・`index.html` はビルド生成物のため本セッションでは未反映（`HOTPEPPER_API_KEY` 未設定でローカル `node build.js` は安全装置により中断・自動復元された）。マージ後の `build.yml`（Secrets保有）で自動反映される
+- **acceptance**: マージ後の次回 build.yml 実行後、`node scripts/audit_photo_policy.js` の `客投稿の混入` 件数が大幅に減少していることを確認（manual/pending 由来分はゼロになる想定。HotPepper側の別経路由来が残る場合は別issueとして分離）
+
 ### [ISSUE-104] ホットペッパーID非保有の手動キュレーション店（編集部推薦・話題フラグ中心）が口コミ信頼度の判定対象から一律除外されていた
 
 - **priority**: P1 → **status**: in_progress（コード修正はマージ済み・実データ反映は次回 `weekly-places.yml` 実行待ち）
