@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * scripts/lib/cross_check.js（TRUST SCORE / いわゆる「サクラチェック」）の単体テスト。
+ * scripts/lib/cross_check.js（口コミ信頼度の採点器・内部合成点 crossCheckScore）の単体テスト。
  * 合成フィクスチャで各シグナルの境界値・後方互換（旧形式データ）を固定する。
  * v3.0 移行時はここに S7d/S8-2/S8-3 のテストを追加してから切り替える（実装計画 Phase 3 前提ゲート）。
  */
@@ -28,7 +28,7 @@ test('cross_check: 8キー全てが breakdown に存在し合計が crossCheckSc
   for (const k of keys) assert.ok(k in r.crossCheckBreakdown, `${k} が breakdown に無い`);
   const sum = keys.reduce((a, k) => a + r.crossCheckBreakdown[k].score, 0);
   assert.equal(sum, r.crossCheckScore);
-  assert.equal(r.crossCheckScoreVersion, '2.0');
+  assert.equal(r.crossCheckScoreVersion, '2.1');
 });
 
 test('cross_check: 履歴データなし（新規店）は破綻せず中立帯のスコアを返す', () => {
@@ -130,4 +130,64 @@ test('cross_check: S4 他媒体クロスチェックは異なる媒体名の数�
   });
   const r = computeCrossCheckScore(store, null);
   assert.equal(r.crossCheckBreakdown.s4_mediaCrossCheck.score, 8); // mfCount=2 -> 8点
+});
+
+// ── 2.1: observed / parts / S7c 判定保留 / 公開文言の禁止語 ──
+const POLICY = JSON.parse(require('fs').readFileSync(require('path').join(__dirname, '..', 'data', 'trust_display_policy.json'), 'utf8'));
+
+test('cross_check 2.1: 8軸すべてに observed(boolean) があり、S7 は parts[s7a,s7b,s7c] を持つ', () => {
+  const r = computeCrossCheckScore(baseStore({ 'Google評価': '4.2', '口コミ数': '80' }), null);
+  for (const k of Object.keys(r.crossCheckBreakdown)) {
+    assert.equal(typeof r.crossCheckBreakdown[k].observed, 'boolean', `${k}.observed が boolean でない`);
+  }
+  const parts = r.crossCheckBreakdown.s7_reviewTimeseries.parts;
+  assert.deepEqual(parts.map(p => p.id), ['s7a', 's7b', 's7c']);
+  assert.equal(parts.reduce((a, p) => a + p.score, 0), r.crossCheckBreakdown.s7_reviewTimeseries.score);
+  assert.deepEqual(parts.map(p => p.max), [8, 6, 6]);
+  // 履歴なし・件数あり → S1/S2 観測、S4/S7/S8 は未観測
+  assert.equal(r.crossCheckBreakdown.s1_googleRatingVsCount.observed, true);
+  assert.equal(r.crossCheckBreakdown.s2_reviewCountAbs.observed, true);
+  assert.equal(r.crossCheckBreakdown.s4_mediaCrossCheck.observed, false);
+  assert.equal(r.crossCheckBreakdown.s7_reviewTimeseries.observed, false);
+  assert.equal(r.crossCheckBreakdown.s8_reviewDistribution.observed, false);
+});
+
+test('cross_check 2.1: 直近5件が全て★5（stddev<0.5）は S7c 判定保留＝3点・observed:false', () => {
+  const store = baseStore({ 'Google評価': '4.8', '口コミ数': '120' });
+  const history = { snapshots: [], latestReviews: [5, 5, 5, 5, 5].map(rating => ({ rating })) };
+  const r = computeCrossCheckScore(store, history);
+  const s7c = r.crossCheckBreakdown.s7_reviewTimeseries.parts.find(p => p.id === 's7c');
+  assert.equal(s7c.score, 3);
+  assert.equal(s7c.observed, false);
+  assert.equal(s7c.reason.includes('評価できません'), true);
+  // 自然な分布（stddev 0.5〜1.5）は観測＝6点
+  const r2 = computeCrossCheckScore(store, { snapshots: [], latestReviews: [5, 4, 5, 3, 4].map(rating => ({ rating })) });
+  const s7c2 = r2.crossCheckBreakdown.s7_reviewTimeseries.parts.find(p => p.id === 's7c');
+  assert.equal(s7c2.score, 6);
+  assert.equal(s7c2.observed, true);
+});
+
+test('cross_check 2.1: 公開される reason に禁止語（policy.bannedWords）を含まない', () => {
+  const fixtures = [
+    [baseStore({ 'Google評価': '4.8', '口コミ数': '20' }), null],                                         // 少件数高評価
+    [baseStore({ 'Google評価': '4.0', '口コミ数': '200' }), { snapshots: [], latestReviews: [5,5,5,5,5].map(rating => ({ rating })) }], // 揃っている
+    [baseStore({ 'Google評価': '3.0', '口コミ数': '200' }), { snapshots: [], latestReviews: [5,5,5,5,5].map(rating => ({ rating })) }], // 最新が全体より高い
+    [baseStore({ 'Google評価': '4.8', '口コミ数': '200' }), { snapshots: [], latestReviews: [1,1,1,1,2].map(rating => ({ rating })) }], // 最新が全体より低い
+    [baseStore({ 'Google評価': '3.5', '口コミ数': '200' }), { snapshots: [], latestReviews: [5,5,1,1,3].map(rating => ({ rating })) }], // 両極
+    [baseStore({ 'Google評価': '4.0', '口コミ数': '100' }), { snapshots: [
+      { ts: '2026-01-01T00:00:00Z', total: 10 }, { ts: '2026-02-01T00:00:00Z', total: 40 }, { ts: '2026-03-01T00:00:00Z', total: 41 }
+    ] }], // 急増→失速
+    [baseStore({}), null]
+  ];
+  for (const [store, history] of fixtures) {
+    const r = computeCrossCheckScore(store, history);
+    for (const [k, axis] of Object.entries(r.crossCheckBreakdown)) {
+      for (const w of POLICY.bannedWords) {
+        assert.equal(axis.reason.includes(w), false, `${k} の reason に禁止語「${w}」: ${axis.reason}`);
+      }
+      for (const p of (axis.parts || [])) {
+        for (const w of POLICY.bannedWords) assert.equal(p.reason.includes(w), false, `${k}.${p.id} に禁止語「${w}」: ${p.reason}`);
+      }
+    }
+  }
 });

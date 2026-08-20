@@ -8,6 +8,46 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-101] 「口コミ信頼度」の見せ方・採点を再設計 — 消費者が学習できる指標にする
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-08-20（オーナー要望「サクラの信頼度という数字がしっかり消費者にとって信頼できるものになるように、見せ方・採点方法・説明を設計したい。精度だけでなく消費者の頭の中にブランディングできるように」）
+- **category**: trust / branding / differentiation
+- **owner**: Orchestrator（実装）
+
+- **実測で判明した問題（着手前・crosscheck.json 4,864件・stores.json 5,030件で実測）**:
+  1. 100点中30点（S3データ充実度・S5営業実態・S6 Instagram）は当サイトのデータ整備状況であって口コミの信用度と別物。S5は全店5/5、S4は98.7%が中立フォールバック、S7aは100%「履歴未蓄積」
+  2. カードが「信頼度 63**%**」表記。自ら否定している「サクラ確率」と同じ受け取られ方をする
+  3. 分布: 90+ **0店(0.0%)** / 70-89 26.7% / 50-69 **61.0%** / <50 12.3%（最高86点）。最上位が存在せず尺度として学習不能
+  4. 内訳文言「一様すぎ・**評価操作疑い**」が**44.4%**の店に出現（直近5件が全★5＝良店ほど当たる偽陽性）。「ガチャレビュー疑い」9.5%／「サクラ継続投入疑い」3.0%／「化粧剥がれ」4.9%。「個別店をサクラと名指ししない」公開方針（integrity-method.html §01）と矛盾
+  5. モーダル・Tier説明に「編集部来店・業界人レビューを照合」とあるが算出に未使用（実装と説明の不一致）
+  6. 名称が7種類（スコア信頼度／信頼度／整合度順／TRUST SCORE／信頼性スコア／信頼度スコア／✓✓✓信頼度 高）に分裂。ジャーナル106本中0件が言及、about/faqに説明なし、フッターから説明ページへ導線なし
+
+- **設計（AskUserQuestion で承認済み）**: 名称=**口コミ信頼度**（整合度順等は全廃）／表示=**段階（A〜D＋読者向け助言語）＋数字**（%廃止）／低スコア帯=**読者向け助言語**（店の非難語は使わない）／採点=**観測できた口コミ検証項目だけで採点**（S3/S5/S6は「掲載データの充実度」として信頼度から分離）。品質ゲート原則5に従い実装前に分布を実測（全店シミュレーション: A 14.9% / B 37.6% / C 22.8% / D 20.9% / — 8.6%、実装後の実測でも概ね同桁: A 14.4% / B 36.3% / C 22.0% / D 18.8% / — 8.6%）。
+
+- **実装内容**:
+  | 区分 | ファイル | 内容 |
+  |---|---|---|
+  | 新規 | `data/trust_display_policy.json` | 名称・段階閾値・助言語・色・7検証項目ラベル・meta3項目・公開禁止語・旧名称一覧の唯一の情報源 |
+  | 新規 | `scripts/lib/trust_display.js` | 判定器1本。`evaluate()`が観測済み項目だけで段階・数字・助言文・検証カバー率・取得日を算出／`toSlim()`/`toCompact()`／`injectTrustPolicy()`（index.htmlへのTRUST_POLICY注入） |
+  | 新規 | `scripts/audit_trust_wording.js --check` | 旧名称・禁止語（疑い/サクラ/ガチャ/化粧/評価操作）を表示面だけに限定して検査。CI（build.yml・push直後）に追加 |
+  | 新規 | `features/review-trust.html` | 消費者向け1分ページ「口コミ信頼度の読み方」＋専用図解 `assets/feature-figures/review-trust.svg` |
+  | 新規 | `tests/trust_display.test.js` | 段階境界・最小観測数(3)・分母から未観測を除外・meta非算入・全店再計算での禁止語ゼロ・index.html注入のラウンドトリップ |
+  | 変更 | `scripts/lib/cross_check.js` | v2.0→**v2.1**。各軸に`observed`、S7に`parts:[s7a,s7b,s7c]`追加。S7c「直近5件stddev<0.5」を判定保留（観測外）に変更（旧ロジックは良店ほど「評価操作疑い」が付く偽陽性）。禁止語を含む reason を観測事実の文言へ全面置換 |
+  | 変更 | `build.js` | 全店に `reviewTrust`（slim `{s,t,c,d}`）を付与しLOCAL_STORES/stores.jsonへ、`crosscheck.json`にcompact形を同梱、index.htmlへTRUST_POLICY注入。内部合成点crossCheckScoreは維持 |
+  | 変更 | `index.html` | カード（`口コミ信頼度 A`・%廃止）／モーダル（段階＋数字＋助言文＋検証カバー率＋取得日＋設問別内訳）／ソート「口コミ信頼度順」／FAQPage 1問追加／フッターと桜ゼロ宣言バナーに読み方ページへの導線 |
+  | 変更 | `gen-store-pages.js` | 店舗ページのバッジ・内訳・JSON-LD `additionalProperty` を口コミ信頼度ベースに |
+  | 変更 | `features/integrity-method.html` | 「口コミ信頼度の作り方」に改題。段階表（A〜D＋—）・7項目と観測ルール・S7c変更履歴・「50未満バッジ非表示」等の旧記述を是正 |
+  | 変更 | `features/no-fake-reviews.html` / `features/editorial-policy.html` | 読み方節・04-Dを新名称・新段階・実装（cross_check.js/trust_display.js）に整合 |
+  | 変更 | `faq.html` / `about.html` / `llms.txt` | 「口コミ信頼度とは？」設問・掲載基準1行・AI向け定義を追加 |
+  | 変更 | features 24本 | フッターの「スコア信頼度」リンクを「口コミ信頼度の読み方／作り方」の2リンクに一括置換 |
+  | 変更 | `.github/workflows/build.yml` | commit&push直後に `audit_trust_wording.js --check` を追加（ブロッキング） |
+  | 変更 | `agents/inspector.md` / `agents/strategist.md` / `scripts/lib/cross_check_v3.js` | 名称統一・月次レビュー手順・法的リスク管理・v3活性化時の前提（observed/parts付与）を追記 |
+
+- **検証**: `npm test`（cross_check.test.js改修＋trust_display.test.js新規・22件パス）／`node scripts/audit_trust_wording.js`（旧名称0件・禁止語0件）／`node scripts/migrate_feature_headings.js --check`・`node scripts/audit_feature_schema_alignment.js`（67件OK）／全店再計算での分布実測（品質ゲート原則5）
+- **Phase 2（起票のみ・別ISSUEで着手）**: 月次「口コミ信頼度レポート」の自動公開／特集・ジャーナルへのバッジ定型挿入／前月比表示／`dispute_requests.json`の`scoreOverride`未実装（異議申立ての反映経路が無い）／`refresh_feature_rosters.js`の重みを`reviewTrust.s`へ移行／[[ISSUE-086]] v3.0活性化
+- **2026-08-20 追記（同PR内・オーナー指示「SS〜Dまでの5段階にして欲しい」）**: 公開段階を4段階（A/B/C/D＋—）から**5段階（SS/A/B/C/D＋—）**に変更。SSは「観測できた検証項目のすべてで満点」（scoreVersion 2.1の実測で全店の約4.2%が該当・閾値97点）という機械検証可能な基準を持つ最上位帯。A/B/C/Dの閾値は変更せず、Aの上限のみ90-100→90-96に縮小。`data/trust_display_policy.json`にSSエントリを追加するだけでtierOf()のロジック変更は不要（min降順ソートで自動的に分岐）。CSS色は`#1b5e20`（白地コントラスト7.87:1・AA適合）。features/integrity-method.html・no-fake-reviews.html・editorial-policy.html・review-trust.html・about.html・faq.html・features/index.htmlの段階表・文言を全て更新し、`node scripts/audit_trust_wording.js`のB-2チェック（policyファイル自体の禁止語走査）を行フィルタ方式から**JSON構造を再帰的に走査する方式**に修正（`json.dumps(indent=2)`で複数行に整形されると行ベースのフィルタが壊れるため）。
+- **関連**: [[ISSUE-048]] [[ISSUE-049]] [[ISSUE-086]]（v3活性化時の前提を本ISSUEが追加）
 ### [ISSUE-100] Search Console「サイトマップ内のページがインデックスに登録されない」通知への対応 — sitemap生存監査を新設
 
 - **priority**: P2 → **status**: done
@@ -1400,7 +1440,11 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   - `scripts/lib/cross_check.js`（新規） / `scripts/lib/cross_check_v3.js`（新規・未接続） / `build.js`
   - `tests/cross_check.test.js`（新規） / `tests/cross_check_v3.test.js`（新規） / `scripts/audit_crosscheck_v3.js`（新規）
   - `features/integrity-method.html` / `agents/inspector.md` / `docs/places-api-setup.md`
-- **関連**: [[ISSUE-048]]（サクラチェッカー方式の元祖・食べログスクレイピングのStrategic Skip判断）/ [[ISSUE-049]]（V3化・S7/S8新設の前身）/ [[ISSUE-084]]（監視原則「検知して終わりにしない」を踏襲）
+- **2026-08-20 追記（[[ISSUE-101]] 口コミ信頼度の見せ方・採点再設計）**: 消費者に見せる公開値を「スコア信頼度（%・整合度順）」から「口コミ信頼度（段階A〜D＋0-100・7項目のうち観測できたものだけで採点）」へ再設計した。
+  v2.0 → **v2.1**（`scripts/lib/cross_check.js`）に更新し、各軸へ `observed:boolean` を追加、S7 に `parts:[s7a,s7b,s7c]` を追加。
+  内部合成点 `crossCheckScore`（8軸100点・本 ISSUE が扱う分布・フラグ）は本ステップでは**変更していない**（ロスター等の依存を壊さないため）。
+  **v3.0 を活性化するときは、v3 実装（`scripts/lib/cross_check_v3.js`）にも同じ observed/parts 付与が前提**（`scripts/lib/trust_display.js` が observed を読むため）。詳細は [[ISSUE-101]]。
+- **関連**: [[ISSUE-048]]（サクラチェッカー方式の元祖・食べログスクレイピングのStrategic Skip判断）/ [[ISSUE-049]]（V3化・S7/S8新設の前身）/ [[ISSUE-084]]（監視原則「検知して終わりにしない」を踏襲）/ [[ISSUE-101]]（口コミ信頼度の見せ方・採点再設計）
 
 ### [ISSUE-084] 日次ジャーナルが3日欠番（08-10/11/12）— 失敗の警報が「防音室の中」で鳴っていた ✅
 

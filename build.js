@@ -837,10 +837,12 @@ function getTrendLabel(score) {
 }
 
 // ────────────────────────────────────────────────────
-// スコア信頼度（TRUST SCORE）計算本体は scripts/lib/cross_check.js に抽出済み
-// （単体テスト・シャドー比較用の独立モジュール化。挙動不変のリファクタ）。
+// 口コミ信頼度: 採点本体（8軸・内部合成点 crossCheckScore）は scripts/lib/cross_check.js、
+// 消費者向けの段階（SS〜D）・0-100・助言語への変換は scripts/lib/trust_display.js
+// （基準は data/trust_display_policy.json）。ここは require して全店に付与するだけ。
 // ────────────────────────────────────────────────────
 const { computeCrossCheckScore } = require('./scripts/lib/cross_check');
+const trustDisplay = require('./scripts/lib/trust_display');
 
 async function fetchHotPepperNagoyaStores() {
   if (!HP_API_KEY) {
@@ -1327,11 +1329,16 @@ async function main() {
     console.log('places_history.json なし（S7/S8 は中立スコアで算出）');
   }
 
-  // ─── スコア信頼度算出（ISSUE-049 V3 / scoreVersion 2.0） ──────
-  // 8 シグナルから 0〜100 のスコア信頼度を全店に付与し、内部フラグは
+  // ─── 口コミ信頼度の算出（scoreVersion 2.1） ──────
+  // 8 軸の内部合成点 crossCheckScore を全店に付与し、内部フラグは
   // data/cross_check_flags.json に分離保存（Inspector 月次レビュー用・公開しない）。
+  // 消費者に見せる reviewTrust（段階 SS〜D・0-100・検証カバー率・取得日）は
+  // trust_display.evaluate() が観測できた検証項目だけで算出する。
   const crossCheckFlagList = [];
   const ccDist = { t90: 0, t70: 0, t50: 0, lt50: 0 };
+  const rtDist = {};
+  const reviewTrustFullById = new Map();
+  const trustBuildDate = new Date().toISOString().slice(0, 10);
   let ccTotal = 0;
   for (const s of stores) {
     const hpId = s['ホットペッパーID'] || '';
@@ -1340,6 +1347,12 @@ async function main() {
     s['crossCheckScore'] = result.crossCheckScore;
     s['crossCheckBreakdown'] = result.crossCheckBreakdown;
     s['crossCheckScoreVersion'] = result.crossCheckScoreVersion;
+    const rtFull = trustDisplay.evaluate(s, result, {
+      lastChecked: trustDisplay.lastCheckedFrom(historyEntry, trustBuildDate)
+    });
+    s['reviewTrust'] = trustDisplay.toSlim(rtFull);
+    if (hpId) reviewTrustFullById.set(hpId, trustDisplay.toCompact(rtFull));
+    rtDist[rtFull.tier] = (rtDist[rtFull.tier] || 0) + 1;
     if (Object.keys(result.crossCheckFlags).length > 0) {
       crossCheckFlagList.push({
         '店名': s['店名'],
@@ -1359,7 +1372,8 @@ async function main() {
     else ccDist.lt50++;
   }
   const ccAvg = stores.length ? (ccTotal / stores.length).toFixed(1) : '0';
-  console.log(`スコア信頼度: 平均=${ccAvg} / T90+=${ccDist.t90} / T70-89=${ccDist.t70} / T50-69=${ccDist.t50} / <50=${ccDist.lt50}`);
+  console.log(`内部合成点 crossCheckScore: 平均=${ccAvg} / T90+=${ccDist.t90} / T70-89=${ccDist.t70} / T50-69=${ccDist.t50} / <50=${ccDist.lt50}`);
+  console.log(`口コミ信頼度（公開・SS〜D）: ${['SS','A','B','C','D','—'].map(t => `${t}=${rtDist[t] || 0}`).join(' / ')}`);
   console.log(`内部フラグ（Inspector 月次レビュー用）: ${crossCheckFlagList.length}件`);
   // 内部フラグを data/cross_check_flags.json に書き出す（公開しない・Inspector のみ参照）
   // ISSUE-087: 店舗数ABORTガードより前に書き終わるため、ABORT時に巻き戻せるよう
@@ -1489,7 +1503,12 @@ async function main() {
     const bd = s['crossCheckBreakdown'];
     if (!id || !bd || typeof bd !== 'object') continue;
     const slim = slimCrossCheckBreakdown(bd);
-    if (slim && Object.keys(slim).length > 0) { crossCheckMap[id] = slim; ccExported++; }
+    if (slim && Object.keys(slim).length > 0) {
+      // 口コミ信頼度（段階・見出し・検証カバー率）を同梱。reason 本文は軸側を参照（サイズ抑制）
+      const rt = reviewTrustFullById.get(id);
+      if (rt) slim.reviewTrust = rt;
+      crossCheckMap[id] = slim; ccExported++;
+    }
   }
   const crossCheckPath = path.join(__dirname, 'data', 'crosscheck.json');
   // ISSUE-087: こちらも店舗数ABORTガードより前に書き終わるため、書き込み前の内容を退避
@@ -1735,6 +1754,11 @@ async function main() {
     `var STORES_JSON_VERSION = '${storesJsonVersion}';`
   );
   console.log(`STORES_JSON_VERSION = ${storesJsonVersion}（data/stores.json の cache buster）`);
+
+  // 口コミ信頼度の表示基準（data/trust_display_policy.json）を index.html に注入。
+  // カード／モーダル／ソートが build と同じ語彙・段階で描画するための唯一の情報源
+  html = trustDisplay.injectTrustPolicy(html);
+  console.log('TRUST_POLICY 注入: data/trust_display_policy.json → index.html');
 
   // 「今日の話題店」更新日付を埋め込む（YYYY/M/D 形式。JS依存なしの静的置換）
   if (dailyTrendingDate) {
