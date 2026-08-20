@@ -8,6 +8,29 @@
 
 ## 進行中・完了タスク
 
+### [SEO-064] 実測で最も読まれている特集2本（おひとり様・ひつまぶし）がトップのファーストビュー導線に1枠も無く、同じ需要の別特集が枠を占めている
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-08-21
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEOアドバイス(LINE) 2026-08-20 原文「「おひとり様」と「ひつまぶし」の特集が人気ですが、トップページからの遷移が少ないです。👉 トップページに人気特集への導線としてバナーを追加しましょう」
+- **brand-filter**: ✅ 適合 — Moat「シーン別専門性」「業界人の目利き」を、実測で読者に支持されている面へ集中させるだけの**自社内の導線配置**。外部順位の操作でも、広告主・クーポン経済への依存でもない（制約7・8に抵触しない）。
+- **検証できる事実（助言の主張ではなく実データで確認した内容）**:
+  | 事実 | 出典 |
+  |---|---|
+  | `nagoya-solo-dining` が日次閲覧 TOP1（11回）・週次 2位（44回）。トップページ自身は日次8回 | 日次レポート 2026-08-20 / 週次レポート 2026-08-10〜08-16 |
+  | `nagoya-hitsumabushi` が日次 3位（7回）・週次 3位（24回） | 同上 |
+  | FVカルーセル（`index.html:1484` `feature-top`）の7枠は summer-2026 / large-group / nagoya-unaju / banquet / private-room / meieki / sakae で、**上記2本はどちらも入っていない** | `data/featured.json` monthlyScenes（8月3枠）＋ items（4枠） |
+  | `nagoya-solo-dining` はトップページ内に**カードが1枚も無く**、シーン索引のテキストリンク（`index.html:2080`）だけ。`nagoya-hitsumabushi` も FV外の `feature-showcase`（`index.html:1716`）とジャンル索引（`:2105`）のみ | index.html |
+  | カルーセルは `nagoya-unaju`「うなぎ・ひつまぶし10選」を出しており、実測で読まれている `nagoya-hitsumabushi` と**同一需要で枠を食い合っている** | `data/featured.json` 8月 scenes |
+- **acceptance**:
+  1. FV導線の増枠・入れ替えは **`data/featured.json` を編集して行う**（`index.html` の `FEATURED_START..END` 区間を直接手書きしない＝基準の正本はJSON側・CLAUDE.md「閾値変更はJSONで行いスクリプトは触らない」と同じ思想）。反映は `node scripts/build_featured.js`。
+  2. `nagoya-solo-dining` と `nagoya-hitsumabushi` がFVカルーセルから到達できること（月替わりの季節枠と競合しない置き方を選ぶ。例: 季節枠とは別に「よく読まれている特集」枠を持たせる／当月 scenes に入れる）。
+  3. `nagoya-unaju` と `nagoya-hitsumabushi` の需要重複を解消する（同月のFVに両方は出さない。どちらを残すかは閲覧実数で決め、判断根拠を本チケットに追記する）。
+  4. `node scripts/build_featured.js --check` が通り、`index.html` は単一ファイルのまま（制約1）・`LOCAL_STORES` パターン不変（制約2）。
+  5. 効果は翌週の日次/週次レポートで「トップページ閲覧数に対する当該2特集の閲覧数」の前後比で再評価する（体感で判定しない）。
+
 ### [ISSUE-105] 店舗写真の採用基準ゲート（8/17新設）が既存の客投稿写真を洗い直せず、147店で誤掲載が残っていた
 
 - **priority**: P0 → **status**: done（PR経由でマージ待ち・マージ後の次回 build.yml でサイトに反映）
