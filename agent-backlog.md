@@ -48,6 +48,23 @@
 - **Phase 2（起票のみ・別ISSUEで着手）**: 月次「口コミ信頼度レポート」の自動公開／特集・ジャーナルへのバッジ定型挿入／前月比表示／`dispute_requests.json`の`scoreOverride`未実装（異議申立ての反映経路が無い）／`refresh_feature_rosters.js`の重みを`reviewTrust.s`へ移行／[[ISSUE-086]] v3.0活性化
 - **2026-08-20 追記（同PR内・オーナー指示「SS〜Dまでの5段階にして欲しい」）**: 公開段階を4段階（A/B/C/D＋—）から**5段階（SS/A/B/C/D＋—）**に変更。SSは「観測できた検証項目のすべてで満点」（scoreVersion 2.1の実測で全店の約4.2%が該当・閾値97点）という機械検証可能な基準を持つ最上位帯。A/B/C/Dの閾値は変更せず、Aの上限のみ90-100→90-96に縮小。`data/trust_display_policy.json`にSSエントリを追加するだけでtierOf()のロジック変更は不要（min降順ソートで自動的に分岐）。CSS色は`#1b5e20`（白地コントラスト7.87:1・AA適合）。features/integrity-method.html・no-fake-reviews.html・editorial-policy.html・review-trust.html・about.html・faq.html・features/index.htmlの段階表・文言を全て更新し、`node scripts/audit_trust_wording.js`のB-2チェック（policyファイル自体の禁止語走査）を行フィルタ方式から**JSON構造を再帰的に走査する方式**に修正（`json.dumps(indent=2)`で複数行に整形されると行ベースのフィルタが壊れるため）。
 - **関連**: [[ISSUE-048]] [[ISSUE-049]] [[ISSUE-086]]（v3活性化時の前提を本ISSUEが追加）
+### [ISSUE-102] stores/*.html に677件の孤児ページが放置されている（CI障害の原因・data/stores.json 未掲載店の旧テンプレページ）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-08-20（[[ISSUE-101]] マージ直後、build.yml の `audit_trust_wording.js --check` が本番で失敗し発覚。実測: `git diff --stat` https://github.com/wakuwaku-labs/nagoya-bites/actions/runs/32354313646）
+- **category**: cleanup / seo / ci
+- **owner**: Builder + DataKeeper
+
+- **背景（検証済みの事実）**: `stores/` ディレクトリに5,540件の `.html` ファイルが存在するが、`data/stores.json`（現行カタログ）にHPIDが存在する店は4,863件のみ。差分の**677件が孤児ページ**（過去に閉店・重複統合等でカタログから外れたが、`gen-store-pages.js` が既定では再生成も削除もしないため残存）。
+  `gen-store-pages.js` はゴーストページ検出ロジックを既に持つ（`--check-orphans` / `--delete-orphans`）が、CI（`build.yml:209`）は素の `node gen-store-pages.js` しか実行しておらず、孤児は毎日放置され続けている。
+- **顕在化した実害**: [[ISSUE-101]] で新設した `scripts/audit_trust_wording.js --check`（口コミ信頼度の旧名称・非難語の混入検知）が、この677件のうち326件で旧テンプレの「スコア信頼度」等の名称、16件で「疑い」「評価操作」等の語を検出し、**本番 build.yml を失敗させた**（[run 32354313646](https://github.com/wakuwaku-labs/nagoya-bites/actions/runs/32354313646)）。応急処置として同スクリプトのスキャン対象を「`data/stores.json` に現存する店のみ」に限定し（孤児は監査対象外・info行で件数のみ通知）、CI を復旧させた。**本チケットはその根本原因（孤児ページ自体）の後始末**。
+- **判断が必要な点（Builder/DataKeeper で検討）**:
+  1. `--delete-orphans` を CI に常設するか（破壊的操作・URL が消えるため sitemap/被リンク/GSCインデックスへの影響を要確認）
+  2. 一括削除ではなく `--check-orphans` を非ブロッキングで CI に常設し、月次で Inspector が目視レビューしてから手動削除する運用（ISSUE-050 の前例に近い）にするか
+  3. 一部は「閉店ではなく重複ID」等、削除ではなく統合が正しいケースが混じっていないか事前サンプリングが必要
+- **acceptance**: 677件の内訳（閉店/重複/その他）をサンプリングで分類 → 方針決定 → 実施後 `node gen-store-pages.js --check-orphans` で0件を確認 → CIの `audit_trust_wording.js` のスコープ限定コメントを撤去可能かどうか判断
+- **関連**: [[ISSUE-050]]（孤児ページ削除の前例）/ [[ISSUE-101]]（本件の発覚元）
+
 ### [ISSUE-100] Search Console「サイトマップ内のページがインデックスに登録されない」通知への対応 — sitemap生存監査を新設
 
 - **priority**: P2 → **status**: done
