@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-08-20T15:34:15.324Z",
+  "generatedAt": "2026-08-20T18:37:12.564Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 762,
-    "pageViews": 1259,
-    "sessions": 892,
-    "avgSessionDuration": 157.2,
-    "bounceRate": 0.382,
+    "activeUsers": 766,
+    "pageViews": 1267,
+    "sessions": 899,
+    "avgSessionDuration": 159.7,
+    "bounceRate": 0.384,
     "pagesPerSession": 1.41
   },
   "channels": {
     "sessions": {
-      "organic": 573,
-      "direct": 234,
-      "social": 90,
+      "organic": 576,
+      "direct": 241,
+      "social": 91,
       "referral": 15,
       "paid": 0,
       "other": 14
     },
     "pct": {
-      "organic": 61.9,
-      "direct": 25.3,
+      "organic": 61.5,
+      "direct": 25.7,
       "social": 9.7,
       "referral": 1.6,
       "paid": 0,
@@ -36,27 +36,27 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 214
+      "sessions": 215
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 173
+      "sessions": 175
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 98
+      "sessions": 100
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 85
+      "sessions": 86
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 42
+      "sessions": 46
     },
     {
       "source": "openai",
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 234,
-      "sessions": 139
+      "pageViews": 237,
+      "sessions": 142
     },
     {
       "path": "/features/nagoya-solo-dining.html",
@@ -96,19 +96,19 @@
       "sessions": 103
     },
     {
+      "path": "/index.html",
+      "pageViews": 59,
+      "sessions": 37
+    },
+    {
       "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
       "pageViews": 58,
       "sessions": 55
-    },
-    {
-      "path": "/index.html",
-      "pageViews": 57,
-      "sessions": 36
     }
   ],
   "cta": {
     "outboundClicks": 84,
-    "ctaClickRate": 9.4,
+    "ctaClickRate": 9.3,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -177,8 +177,8 @@
       "other": 0
     },
     "ctaClickRate_organic": 4,
-    "ctaClickRate_direct": 16.2,
-    "ctaClickRate_social": 25.6,
+    "ctaClickRate_direct": 15.8,
+    "ctaClickRate_social": 25.3,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -458,7 +458,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 762,
+    "value": 766,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
