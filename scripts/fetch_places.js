@@ -70,6 +70,7 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const { placesKey } = require('./lib/places_key');
 
 const ROOT = path.resolve(__dirname, '..');
 const PLACES_CACHE = path.join(ROOT, 'data', 'places_resolved.json');
@@ -220,9 +221,13 @@ function appendSnapshot(history, id, snap) {
 
 // 住所マッチ: 名古屋市が両方に含まれていれば採用
 // （誤検出を排除するための最低限のサニティチェック）
+// 2026-08-20: Google が稀に formatted_address の市区町村部分だけローマ字表記
+// （例: 「愛知県Nagoya-shi名東区」）で返すケースを確認。漢字表記のみを見ていたため
+// 実在する名古屋市内の店が住所却下されていた（ISSUE-103調査で発見）。
 function validateAddress(placesAddr, storeAddr) {
   if (!placesAddr) return false;
   if (placesAddr.includes('名古屋市')) return true;
+  if (/nagoya-shi/i.test(placesAddr)) return true;
   if (storeAddr && placesAddr.includes(storeAddr.slice(0, 10))) return true;
   return false;
 }
@@ -392,11 +397,14 @@ async function main() {
   }
 
   // 取得対象
+  // 2026-08-20（ISSUE-104）: 従来はホットペッパーID必須で、data/manual_stores.json 由来の
+  // 手動キュレーション店（編集部推薦・話題フラグの目玉店に集中）が一律で対象外だった。
+  // ホットペッパーIDが無い店も placesKey()（店名+エリア）で識別して対象に含める。
   let queue = stores.filter(s => {
     if (opts.store && s['ホットペッパーID'] !== opts.store) return false;
     if (!s['店名']) return false;
-    if (!s['ホットペッパーID']) return false;
-    if (cache[s['ホットペッパーID']] && !opts.force) return false;
+    const key = placesKey(s);
+    if (cache[key] && !opts.force) return false;
     return true;
   });
   if (opts.limit) queue = queue.slice(0, opts.limit);
@@ -405,9 +413,9 @@ async function main() {
   let succeeded = 0, rejected = 0, zeroResults = 0, errors = 0;
   for (let i = 0; i < queue.length; i++) {
     const s = queue[i];
-    const id = s['ホットペッパーID'];
+    const id = placesKey(s);
     const name = s['店名'];
-    const addr = s['住所'] || '';
+    const addr = s['住所'] || s['アクセス'] || '';
     try {
       const candidate = await findPlace(name, addr || '名古屋市');
       if (!candidate) {

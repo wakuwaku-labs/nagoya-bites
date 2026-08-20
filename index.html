@@ -7578,6 +7578,13 @@ var ACTIVE_WARD = 'all';
 var CROSSCHECK_MAP = null;
 var _ccLoadPromise = null;
 var CC_OPEN_HPID = null;
+// data/crosscheck.json のキー。scripts/lib/places_key.js と同じ規則
+// （ホットペッパーID優先・無ければ店名+エリア）を JS 側で再現する。
+function ccKeyOf(r) {
+  var hp = r && r['ホットペッパーID'];
+  if (hp) return hp;
+  return 'manual:' + ((r && r['店名']) || '') + '|' + ((r && r['エリア']) || '');
+}
 function loadCrossCheck() {
   if (CROSSCHECK_MAP) return Promise.resolve(CROSSCHECK_MAP);
   if (_ccLoadPromise) return _ccLoadPromise;
@@ -9785,7 +9792,7 @@ function openM(i) {
   // reviewTrust 未付与・TRUST_POLICY 未注入（CI ビルド前）でも例外を出さず、箱ごと非表示にする。
   var TP = (typeof TRUST_POLICY === 'object' && TRUST_POLICY && TRUST_POLICY.tiers && TRUST_POLICY.na) ? TRUST_POLICY : null;
   var mRt = r.reviewTrust || null;
-  var mHpid = r['ホットペッパーID'] || '';
+  var mHpid = ccKeyOf(r);
   CC_OPEN_HPID = mHpid;
   var ccBoxEl = document.getElementById('m-cross-check');
   function _ccTierDef(id){

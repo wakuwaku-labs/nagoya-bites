@@ -18,6 +18,7 @@ const { titleAreaLabel } = require('./scripts/lib/area_label');
 // scripts/lib/trust_display.js。crosscheck.json はホットペッパーID をキーに 8 軸の
 // score/max/reason/observed と reviewTrust（段階・見出し・検証カバー率）を持つ。
 const trustDisplay = require('./scripts/lib/trust_display');
+const { placesKey } = require('./scripts/lib/places_key');
 const TRUST_POLICY = trustDisplay.loadPolicy();
 const CROSSCHECK = (() => {
   try {
@@ -395,7 +396,8 @@ function renderStorePage(s, slug) {
   const photo    = (s['写真URL'] || '/assets/store-figures/_fallback.svg')
     .replace(/(imgfp\.hotp\.jp\/.+?)_(?:58|100|168|238|320)\.jpg/, '$1_480.jpg');
   const hpId     = s['ホットペッパーID'] || '';
-  const cc       = hpId && CROSSCHECK[hpId] ? CROSSCHECK[hpId] : null;
+  const ccKey    = s['店名'] ? placesKey(s) : '';
+  const cc       = ccKey && CROSSCHECK[ccKey] ? CROSSCHECK[ccKey] : null;
   const trustBreakdownHtml = cc ? buildTrustBreakdown(cc, rt) : '';
   const hpUrl    = hpId ? `https://www.hotpepper.jp/str${hpId}/` : '';
   const igUrl    = s['Instagram'] || '';

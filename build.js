@@ -843,6 +843,7 @@ function getTrendLabel(score) {
 // ────────────────────────────────────────────────────
 const { computeCrossCheckScore } = require('./scripts/lib/cross_check');
 const trustDisplay = require('./scripts/lib/trust_display');
+const { placesKey } = require('./scripts/lib/places_key');
 
 async function fetchHotPepperNagoyaStores() {
   if (!HP_API_KEY) {
@@ -1222,6 +1223,8 @@ async function main() {
   // LOCAL_STORES に反映する。rating と user_ratings_total を公式値で上書きし、
   // スコア信頼度の S1・S2 シグナルを正規化する。
   // business_status が CLOSED_PERMANENTLY の店は最終リストから除外。
+  // 2026-08-20（ISSUE-104）: ホットペッパーIDが無い手動キュレーション店も
+  // placesKey()（店名+エリア）でキャッシュを引けるようにした（fetch_places.js と同じキー）。
   const placesPath = path.join(__dirname, 'data', 'places_resolved.json');
   let placesApplied = 0, placesClosed = 0, placesNoMatch = 0, placesRejected = 0;
   if (fs.existsSync(placesPath)) {
@@ -1230,8 +1233,8 @@ async function main() {
       // 後ろから削除するため逆順ループ
       for (let i = stores.length - 1; i >= 0; i--) {
         const s = stores[i];
-        const id = s['ホットペッパーID'];
-        if (!id) continue;
+        if (!s['店名']) continue;
+        const id = placesKey(s);
         const entry = placesCache[id];
         if (!entry) { placesNoMatch++; continue; }
         if (entry.notFound || entry.error) { placesNoMatch++; continue; }
@@ -1341,8 +1344,9 @@ async function main() {
   const trustBuildDate = new Date().toISOString().slice(0, 10);
   let ccTotal = 0;
   for (const s of stores) {
-    const hpId = s['ホットペッパーID'] || '';
-    const historyEntry = hpId && placesHistory[hpId] ? placesHistory[hpId] : null;
+    // 2026-08-20（ISSUE-104）: ホットペッパーID非保有店も placesKey() で履歴を引く
+    const key = s['店名'] ? placesKey(s) : '';
+    const historyEntry = key && placesHistory[key] ? placesHistory[key] : null;
     const result = computeCrossCheckScore(s, historyEntry);
     s['crossCheckScore'] = result.crossCheckScore;
     s['crossCheckBreakdown'] = result.crossCheckBreakdown;
@@ -1351,7 +1355,7 @@ async function main() {
       lastChecked: trustDisplay.lastCheckedFrom(historyEntry, trustBuildDate)
     });
     s['reviewTrust'] = trustDisplay.toSlim(rtFull);
-    if (hpId) reviewTrustFullById.set(hpId, trustDisplay.toCompact(rtFull));
+    if (key) reviewTrustFullById.set(key, trustDisplay.toCompact(rtFull));
     rtDist[rtFull.tier] = (rtDist[rtFull.tier] || 0) + 1;
     if (Object.keys(result.crossCheckFlags).length > 0) {
       crossCheckFlagList.push({
@@ -1493,13 +1497,13 @@ async function main() {
 
   // ─── ISSUE-015-P2: crossCheckBreakdown を外部化（data/crosscheck.json） ─────
   // モーダル展開時のみ必要な breakdown を index.html から切り出し、
-  // ホットペッパーID をキーにした map として書き出す。index.html は初回モーダル
-  // 展開時にこれを fetch して描画する（遅延ロード）。出力するシグナルは
+  // placesKey()（ホットペッパーID優先・無ければ店名+エリア）をキーにした map として書き出す。
+  // index.html は初回モーダル展開時にこれを fetch して描画する（遅延ロード）。出力するシグナルは
   // CC_BREAKDOWN_OUTPUT_KEYS 全 8 種（モーダルの描画対象と一致）。
   const crossCheckMap = {};
   let ccExported = 0;
   for (const s of stores) {
-    const id = s['ホットペッパーID'];
+    const id = s['店名'] ? placesKey(s) : '';
     const bd = s['crossCheckBreakdown'];
     if (!id || !bd || typeof bd !== 'object') continue;
     const slim = slimCrossCheckBreakdown(bd);
