@@ -1,0 +1,526 @@
+{
+  "date": "2026-08-20",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "d1",
+      "title_draft": "「どて煮の平針」29席の居酒屋、カウンター5席は誰のためか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 14日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 3件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,予約,アラカルト,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 167字 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「カウンター」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: recency -7 / brand_fit -4 / search_intent -4"
+    },
+    {
+      "id": "d2",
+      "title_draft": "平針駅30秒のどて煮居酒屋、一人飲みで3,000円台に収まるか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 14日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 3件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,予約,アラカルト,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 138字 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: recency -7 / brand_fit -4 / search_intent -4"
+    },
+    {
+      "id": "d3",
+      "title_draft": "平針の新しい居酒屋、カウンターと昼営業を捨てた理由を読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 14日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,予約,シーン,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 140字 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「カウンター」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: recency -7 / brand_fit -4 / search_intent -4"
+    },
+    {
+      "id": "d4",
+      "title_draft": "どて煮専門の居酒屋が平針駅前へ、カウンター5席の使いどころ",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 14日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 3件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,予約,シーン,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 141字 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「カウンター」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: recency -7 / brand_fit -4 / search_intent -4"
+    },
+    {
+      "id": "d5",
+      "title_draft": "平針の居酒屋「どて煮の平針」、一人飲みと家族連れが同居する席",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 14日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,予約,シーン,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 136字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: recency -7 / brand_fit -4 / search_intent -4"
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "d1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "95点（自動公開ライン 100点）。主な不足: recency -7 / brand_fit -4 / search_intent -4",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "d1",
+      "theme": "today_one",
+      "title_draft": "「どて煮の平針」29席の居酒屋、カウンター5席は誰のためか",
+      "lead_draft": "2026年8月3日、地下鉄鶴舞線の平針駅を出て30秒の場所に「どて煮の平針」が開いた。名古屋の老舗とんちゃん「やぶ屋」を持つやぶやグループの単品特化ブランドで、フランチャイズとしては2号店にあたる。29席の内訳はカウンター5席にテーブル24席。この配分と、16時開店で昼を持たない設計を並べると、この店が誰を待っているかが見えてくる。",
+      "angle": "カウンター5席とテーブル24席という席の配分から、この店が一人飲みではなく二人以上を主役に置いていることを読み、3,000円台の価格帯にアラカルトで着地する品数の組み方、16時開店で昼を捨てた回転設計、予約なしで入れる時間帯まで業界人視点で通して解説する",
+      "main_store": {
+        "name": "どて煮の平針",
+        "id": "",
+        "area": "平針・天白区",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "やぶやグループ公式「どて煮の平針 FC 8/3(月) GRAND OPEN！！」",
+          "url": "https://www.yabuya.com/topics/%E3%81%A9%E3%81%A6%E7%85%AE%E3%81%AE%E5%B9%B3%E9%87%9D-fc%EF%BC%98-%EF%BC%91%E6%9C%88grand-open%EF%BC%81%EF%BC%81.html",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "やぶやグループ公式 店舗ページ（30席・平針駅徒歩30秒・年中無休）",
+          "url": "https://www.yabuya.com/shop/dotenino_hirabari",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "食べログ どて煮の平針（29席＝カウンター5・テーブル24／夜予算3,000〜3,999円／ランチ営業なし）",
+          "url": "https://tabelog.com/aichi/A2301/A230111/23097326/",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "公式Instagram @doteni_hirabari 料理投稿（どて煮・味噌おでん・大海老フライ）",
+          "url": "https://www.instagram.com/p/Dau0ZBPSQa7/",
+          "date": "2026-07-13"
+        },
+        {
+          "label": "公式Instagram @doteni_hirabari グランドオープン告知",
+          "url": "https://www.instagram.com/p/DbjricqPK--/",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "公式Instagram @doteni_hirabari 開店後の追加メニュー告知（BLUE SEALアイス4種・各480円税抜／テイクアウトあり）",
+          "url": "https://www.instagram.com/p/DbraHIwPk9p/",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "Yahoo!マップ どて煮の平針（所在地・業態）",
+          "url": "https://map.yahoo.co.jp/v3/place/nZRqKmUclhA"
+        }
+      ]
+    },
+    {
+      "id": "d2",
+      "theme": "today_one",
+      "title_draft": "平針駅30秒のどて煮居酒屋、一人飲みで3,000円台に収まるか",
+      "lead_draft": "8月3日に平針駅前で開いた「どて煮の平針」は、夜だけの営業で予算は3,000円台とされている。どて煮や味噌おでんを軸にしたアラカルト主体の組み立てで、この金額に着地する道筋は品数の取り方で大きく変わる。カウンター5席しかない店で一人客がどう使えるのかを、業界人の目で分解する。",
+      "angle": "アラカルト主体の大衆酒場で客単価3,000円台に着地する品数と価格帯の関係を、カウンター5席という一人飲みの受け皿の狭さ、テーブル24席が示す組数想定、16時開店の早い時間なら予約なしで座れる回転の事情から読む",
+      "main_store": {
+        "name": "どて煮の平針",
+        "id": "",
+        "area": "平針・天白区",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "食べログ どて煮の平針（29席・予算3,000〜3,999円）",
+          "url": "https://tabelog.com/aichi/A2301/A230111/23097326/",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "やぶやグループ公式 店舗ページ",
+          "url": "https://www.yabuya.com/shop/dotenino_hirabari",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "公式Instagram @doteni_hirabari 料理投稿",
+          "url": "https://www.instagram.com/p/Dau0ZBPSQa7/",
+          "date": "2026-07-13"
+        },
+        {
+          "label": "公式Instagram @doteni_hirabari 追加メニュー告知",
+          "url": "https://www.instagram.com/p/DbraHIwPk9p/",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "公式Instagram @doteni_hirabari グランドオープン告知",
+          "url": "https://www.instagram.com/p/DbjricqPK--/",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "Yahoo!マップ どて煮の平針",
+          "url": "https://map.yahoo.co.jp/v3/place/nZRqKmUclhA"
+        }
+      ]
+    },
+    {
+      "id": "d3",
+      "theme": "today_one",
+      "title_draft": "平針の新しい居酒屋、カウンターと昼営業を捨てた理由を読む",
+      "lead_draft": "やぶやグループの「どて煮の◯◯」が8月3日の平針で7店目になった。直営は今池や大曽根といった繁華街に、フランチャイズは瑞穂と平針という住宅街の駅前に置かれている。同じ看板でも瑞穂は土日祝に昼から開けるのに対し、平針は16時からの夜だけ。この差は立地の読み方の違いとして説明がつく。",
+      "angle": "同じブランドでも住宅街の駅前と繁華街で営業時間が変わる理由を、平針が昼を捨てて16時開店に絞った回転の設計、カウンター5席という一人飲みの受け皿の小ささ、3,000円台の価格帯、予約なしで使えるシーンから業界人視点で読む",
+      "main_store": {
+        "name": "どて煮の平針",
+        "id": "",
+        "area": "平針・天白区",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "やぶやグループ公式サイト 店舗一覧（どて煮の◯◯ 7店舗）",
+          "url": "https://www.yabuya.com/",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "やぶやグループ公式 どて煮の平針 FC",
+          "url": "https://www.yabuya.com/shop/dotenino_hirabari",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "食べログ どて煮の平針",
+          "url": "https://tabelog.com/aichi/A2301/A230111/23097326/",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "公式Instagram @doteni_hirabari 追加メニュー告知",
+          "url": "https://www.instagram.com/p/DbraHIwPk9p/",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "公式Instagram @doteni_hirabari 料理投稿",
+          "url": "https://www.instagram.com/p/Dau0ZBPSQa7/",
+          "date": "2026-07-13"
+        },
+        {
+          "label": "Yahoo!マップ どて煮の平針",
+          "url": "https://map.yahoo.co.jp/v3/place/nZRqKmUclhA"
+        }
+      ]
+    },
+    {
+      "id": "d4",
+      "theme": "today_one",
+      "title_draft": "どて煮専門の居酒屋が平針駅前へ、カウンター5席の使いどころ",
+      "lead_draft": "煮込みを屋号の頭に置く「どて煮の平針」が8月3日に開店した。平針駅の出口から30秒、29席、夜のみの営業。仕込みを牛すじの煮込み一点に集約する単品特化は、少人数のオペレーションと相性がよく、住宅街の駅前で成立させやすい。カウンター5席をどう使うかという視点から、この店の設計を読む。",
+      "angle": "煮込み一点に仕込みを集約する単品特化業態が住宅街の駅前で成立する理由を、カウンター5席とテーブル24席の席構成、3,000円台の価格帯、予約なしで入れる16時台の回転、一人飲みと家族利用が同居するシーンの重なりから業界人視点で読む",
+      "main_store": {
+        "name": "どて煮の平針",
+        "id": "",
+        "area": "平針・天白区",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "やぶやグループ公式 どて煮の平針 FC（30席・平針駅徒歩30秒）",
+          "url": "https://www.yabuya.com/shop/dotenino_hirabari",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "食べログ どて煮の平針（カウンター5・テーブル24）",
+          "url": "https://tabelog.com/aichi/A2301/A230111/23097326/",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "公式Instagram @doteni_hirabari 追加メニュー告知",
+          "url": "https://www.instagram.com/p/DbraHIwPk9p/",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "公式Instagram @doteni_hirabari 料理投稿",
+          "url": "https://www.instagram.com/p/Dau0ZBPSQa7/",
+          "date": "2026-07-13"
+        },
+        {
+          "label": "公式Instagram @doteni_hirabari 開店祝いのリール",
+          "url": "https://www.instagram.com/reel/DbrXoVvv2lg/",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "Yahoo!マップ どて煮の平針",
+          "url": "https://map.yahoo.co.jp/v3/place/nZRqKmUclhA"
+        }
+      ]
+    },
+    {
+      "id": "d5",
+      "theme": "today_one",
+      "title_draft": "平針の居酒屋「どて煮の平針」、一人飲みと家族連れが同居する席",
+      "lead_draft": "8月3日開店の「どて煮の平針」は、公式の案内で仕事帰りの一杯と家族の食事の両方を名指ししている。カウンター5席にテーブル24席という配分は、その二つを同じ時間帯に同居させる前提の設計だ。16時という開店時刻の意味も含めて、席とオペレーションの側からこの店の狙いを読み解く。",
+      "angle": "一人飲みの客とファミリーを同じ箱で受ける席の配分を、カウンター5席とテーブル24席の比率、16時開店が拾う早い時間帯のシーン、22時30分ラストオーダーまでの二山構成の回転、予約の要否と3,000円台の価格帯から業界人視点で読む",
+      "main_store": {
+        "name": "どて煮の平針",
+        "id": "",
+        "area": "平針・天白区",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "公式Instagram @doteni_hirabari 料理投稿（仕事帰りの一杯にも、ご家族とのお食事にも）",
+          "url": "https://www.instagram.com/p/Dau0ZBPSQa7/",
+          "date": "2026-07-13"
+        },
+        {
+          "label": "食べログ どて煮の平針（カウンター5・テーブル24）",
+          "url": "https://tabelog.com/aichi/A2301/A230111/23097326/",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "やぶやグループ公式 どて煮の平針 FC",
+          "url": "https://www.yabuya.com/shop/dotenino_hirabari",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "公式Instagram @doteni_hirabari 追加メニュー告知",
+          "url": "https://www.instagram.com/p/DbraHIwPk9p/",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "Yahoo!マップ どて煮の平針",
+          "url": "https://map.yahoo.co.jp/v3/place/nZRqKmUclhA"
+        }
+      ]
+    }
+  ]
+}
