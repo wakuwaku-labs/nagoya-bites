@@ -58,10 +58,17 @@
  *   - business_status が CLOSED_PERMANENTLY の店はキャッシュに記録（build.js で除外）
  *   - 100 件ごとに中間保存（途中失敗時のリトライ容易化）
  *
- * プライバシー設計（レビュー本文）:
- *   レビューの生本文は保存しない。公開リポジトリに第三者の本文を恒久保存しないため、
- *   保存するのは機械検証可能な派生特徴量のみ:
+ * プライバシー設計（レビュー本文・投稿者名）:
+ *   レビューの生本文・投稿者名は保存しない。公開リポジトリに第三者の本文/氏名を
+ *   恒久保存しないため、保存するのは機械検証可能な派生特徴量のみ:
  *     textLen（本文文字数）/ lang（言語コード）/ incentiveHit（インセンティブ誘導語の有無）
+ *     textHash（正規化本文のSHA-256先頭16桁・20文字未満はnull）
+ *     authorNameHash（投稿者名のSHA-256先頭16桁）
+ *   textHash/authorNameHash は非可逆ハッシュで元の文字列は復元できない。用途は
+ *   scripts/lib/review_fingerprint.js によるクロス店舗の重複検出（同一文面・同一投稿者名が
+ *   無関係な複数店舗に出現していないか）のみで、本文・氏名そのものではなく指紋を保存する。
+ *   Google Maps Platform Service Specific Terms（reviews/author情報の warehousing 禁止）に
+ *   抵触しないよう、生データはこの関数のスコープを出ない。
  *   語彙リストは INCENTIVE_WORDS_V1 として本ファイルに明示し、features/integrity-method.html で全公開する。
  */
 
@@ -71,6 +78,7 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const { placesKey } = require('./lib/places_key');
+const { textFingerprint, authorFingerprint } = require('./lib/review_fingerprint');
 
 const ROOT = path.resolve(__dirname, '..');
 const PLACES_CACHE = path.join(ROOT, 'data', 'places_resolved.json');
@@ -95,7 +103,8 @@ const DEFAULT_DETAILS_BUDGET = 0;
 
 // レビュー本文の派生特徴量（本文そのものは保存しない — ヘッダのプライバシー設計参照）
 // 語彙改定時は V2 を作り TEXT_SIGNALS_VERSION を上げる（integrity-method.html も更新）
-const TEXT_SIGNALS_VERSION = 1;
+// v2: textHash/authorNameHash（クロス店舗指紋照合）を追加
+const TEXT_SIGNALS_VERSION = 2;
 const INCENTIVE_WORDS_V1 = /クーポン|割引|プレゼント|特典|キャンペーン|投稿で|レビューを書(?:い|く)|フォローで|無料/;
 
 // ─── CLI ───
@@ -153,6 +162,7 @@ async function findPlace(name, address) {
 // 旧形式（textLen 等なし）との後方互換は読み手（build.js / cross_check.js）が optional 扱いで担保
 function toReviewRecord(r) {
   const text = typeof r.text === 'string' ? r.text : '';
+  const authorName = typeof r.author_name === 'string' ? r.author_name : '';
   return {
     rating: typeof r.rating === 'number' ? r.rating : null,
     time: typeof r.time === 'number' ? r.time : null,
@@ -160,6 +170,8 @@ function toReviewRecord(r) {
     textLen: text.length,
     lang: r.language || r.original_language || null,
     incentiveHit: INCENTIVE_WORDS_V1.test(text),
+    textHash: textFingerprint(text),
+    authorNameHash: authorFingerprint(authorName),
     textSignalsVersion: TEXT_SIGNALS_VERSION
   };
 }

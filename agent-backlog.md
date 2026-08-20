@@ -8,6 +8,32 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-106] 口コミ信頼度の採点基準にサクラレビュー検出の観点（投稿タイミング集中・クロス店舗の重複）を追加
+
+- **priority**: P1 → **status**: done（PR経由でマージ待ち・マージ後の次回 build.yml でサイトに反映）
+- **detected**: 2026-08-21（オーナーがサクラレビューの一般的な見分け方の資料を提示し「サクラチェックの採点基準に組み込んで」と依頼）
+- **category**: trust / data-pipeline / 口コミ信頼度
+- **owner**: Orchestrator（調査・実装）
+
+- **調査で判明した制約**: オーナー提示の基準は (A)文体・具体性 (B)投稿タイミングの集中 (C)投稿者アカウントの特徴（レビュー数・フルネーム・プロフィール空白等） (D)評価分布の偏り の4軸。このうち (D) は既に v2.1 で実装済み（S1ガチャ疑い・S8お椀型分布）。(A)(C) はレビュー本文・投稿者情報の恒久保存が必要だが、Google Maps Platform Service Specific Terms（developers.google.com/maps/documentation/places/web-service/policies で一次情報確認済み）が「names, ratings, reviews, and phone numbers must be requested live rather than warehoused」と規定しており、生データの保存は規約違反。投稿者の総投稿数・他店での投稿履歴（Cの核心）はAPIに存在せず、取得には個人のGoogleマップ公開プロフィールへの自動スクレイピングが必要（同規約 3.2.3(a) No Scraping 条項に抵触・技術的にもボット検知回避が必要）と判断し、この経路は実装しないと判断した。
+- **実装した代替案**: レビュー本文・投稿者名は取得直後にその場で正規化・非可逆ハッシュ化し、生データは保存しない設計で (B) と (A)(C) の一部を実現:
+  | 区分 | ファイル | 内容 |
+  |---|---|---|
+  | 新規 | `scripts/lib/review_fingerprint.js` | `textHash`/`authorNameHash` を店舗横断でインデックス化し、同一文面・同一投稿者名（★4.5以上・3店舗以上・180日以内）が無関係な複数店舗に出現していないかを検出する（S9） |
+  | 変更 | `scripts/fetch_places.js` | `toReviewRecord()` に `textHash`/`authorNameHash` 計算を追加（TEXT_SIGNALS_VERSION 1→2）。本文・氏名そのものは関数スコープを出ない |
+  | 新規 | `scripts/lib/cross_check_v22.js` | v2.1のS1〜S8ロジック・配点を完全維持したまま、S7d（投稿タイミング短期集中検出・cross_check_v3.js からの移植）とS9（クロス店舗指紋照合）を加算専用の軸として追加（低ブラスト半径設計。v3のような全軸リウェイトは不採用） |
+  | 新規 | `scripts/audit_crosscheck_v22.js` | 消費者向けTier（SS〜D）分布のシャドー比較器。v3と同じ±10%ガイドライン形式 |
+  | 変更 | `data/trust_display_policy.json` | `checks[]`にs7d・s9を追加（version 1.1→1.2, scoreVersion 2.1→2.2） |
+  | 変更 | `build.js` | require先を`cross_check_v22`に切替。`buildFingerprintIndex`を全店ループ前に一度だけ構築し、`evaluateStoreFingerprint`の結果を各店へ渡す |
+  | 新規 | `tests/review_fingerprint.test.js`, `tests/cross_check_v22.test.js` | 19件追加 |
+  | 変更 | `tests/trust_display.test.js` | 検証項目数の変更（7→9）に伴うアサーション更新、全店再計算テストをv2.2経路に切替 |
+- **検証**:
+  - `scripts/audit_crosscheck_v22.js` 実測: 消費者向けTierの段階変動 283件/5,025店（目安上限503件以内・当初max6設定では585件で超過→max3に半減して収束）。`reviewBurstCluster` 181件検出
+  - `npm test`: 全144件パス（既存125件 + 新規19件）。禁止語（疑い/サクラ/ガチャ/化粧/評価操作）混入なしを機械検証
+  - `node build.js` を実データ（904店・HOTPEPPER_API_KEY未設定のため部分データ）でドライラン実行し、crossCheckScore/reviewTrust算出が例外なく完走することを確認。店舗数減少の既存ABORTガードが正常に作動しデータ復元されたことも確認（本変更起因の副作用なし）
+- **未完了**: S9（クロス店舗指紋照合）は `textHash`/`authorNameHash` 付きデータが蓄積されるまで実質 observed:false（`--refresh` は `PLACES_DETAILS_BUDGET=0` で一時停止中・別課題）。再開後に効き始める
+- **acceptance**: マージ後の次回 build.yml 実行後、`node scripts/audit_crosscheck_v22.js` 相当の分布が本番 `data/crosscheck.json` で確認できること。`--refresh` 再開後、`s9_crossStoreFingerprint` の observed 率が上昇していくことを月次で確認
+
 ### [ISSUE-105] 店舗写真の採用基準ゲート（8/17新設）が既存の客投稿写真を洗い直せず、147店で誤掲載が残っていた
 
 - **priority**: P0 → **status**: done（PR経由でマージ待ち・マージ後の次回 build.yml でサイトに反映）

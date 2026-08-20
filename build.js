@@ -841,7 +841,8 @@ function getTrendLabel(score) {
 // 消費者向けの段階（SS〜D）・0-100・助言語への変換は scripts/lib/trust_display.js
 // （基準は data/trust_display_policy.json）。ここは require して全店に付与するだけ。
 // ────────────────────────────────────────────────────
-const { computeCrossCheckScore } = require('./scripts/lib/cross_check');
+const { computeCrossCheckScore } = require('./scripts/lib/cross_check_v22');
+const { buildFingerprintIndex, evaluateStoreFingerprint } = require('./scripts/lib/review_fingerprint');
 const trustDisplay = require('./scripts/lib/trust_display');
 const { placesKey } = require('./scripts/lib/places_key');
 
@@ -1332,11 +1333,16 @@ async function main() {
     console.log('places_history.json なし（S7/S8 は中立スコアで算出）');
   }
 
-  // ─── 口コミ信頼度の算出（scoreVersion 2.1） ──────
-  // 8 軸の内部合成点 crossCheckScore を全店に付与し、内部フラグは
+  // ─── 口コミ信頼度の算出（scoreVersion 2.2） ──────
+  // 10 軸の内部合成点 crossCheckScore を全店に付与し、内部フラグは
   // data/cross_check_flags.json に分離保存（Inspector 月次レビュー用・公開しない）。
   // 消費者に見せる reviewTrust（段階 SS〜D・0-100・検証カバー率・取得日）は
   // trust_display.evaluate() が観測できた検証項目だけで算出する。
+  // 2026-08-21（scoreVersion 2.2）: v2.1 の S1〜S8 は無変更のまま、S7d（投稿タイミング
+  // 短期集中検出）・S9（クロス店舗レビュー指紋照合）を加算専用の軸として追加。
+  // S9 は全店共通の指紋インデックス（places_history.json 全体を一括スキャン）が必要なため、
+  // per-store ループの前に一度だけ構築する（scripts/lib/review_fingerprint.js）。
+  const fingerprintIndex = buildFingerprintIndex(placesHistory);
   const crossCheckFlagList = [];
   const ccDist = { t90: 0, t70: 0, t50: 0, lt50: 0 };
   const rtDist = {};
@@ -1347,7 +1353,8 @@ async function main() {
     // 2026-08-20（ISSUE-104）: ホットペッパーID非保有店も placesKey() で履歴を引く
     const key = s['店名'] ? placesKey(s) : '';
     const historyEntry = key && placesHistory[key] ? placesHistory[key] : null;
-    const result = computeCrossCheckScore(s, historyEntry);
+    const fingerprintResult = key ? evaluateStoreFingerprint(key, historyEntry, fingerprintIndex) : null;
+    const result = computeCrossCheckScore(s, historyEntry, fingerprintResult);
     s['crossCheckScore'] = result.crossCheckScore;
     s['crossCheckBreakdown'] = result.crossCheckBreakdown;
     s['crossCheckScoreVersion'] = result.crossCheckScoreVersion;
