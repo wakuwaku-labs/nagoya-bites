@@ -2987,6 +2987,31 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **acceptance**: features/nagoya-lunch-washoku.html の `<title>`/h1/meta description/本文冒頭2行に独自KW「接待」「個室」を自然挿入（KW詰め込み禁止）／JSON-LD（@type, address 等）は不汚染で維持（既存 ISSUE-060 教訓）／掲載店は LOCAL_STORES の実在店のみ（架空店ブロック厳守）／docs/daily-posts/ 経由でSNS告知（既存運用フローに乗せる）／効果は翌週の週次レポートで再評価（検索流入比率・特集ページ閲覧数）
 - **ブランドガードレール**: KW詰め込み・順位操作禁止。タイトル変更時に既存被リンク（内部）が壊れないか確認。広告・PR・送客手数料導線は含めない（編集独立・制約7/8）
 
+### [SEO-067] Bing Webmaster Tools を接続し最大流入エンジンの検索実データを可視化する
+- **priority**: P2 → **status**: blocked（owner本人操作待ち）
+- **detected**: 2026-08-22
+- **category**: SEO / 計測
+- **owner**: 片桐（オーナー本人）／設定後の活用はMarketer
+- **source**: SEO改善分析セッション（ユーザー依頼によるサイト監査）。`data/search_channel_metrics.json`実測（直近30日）で Bing 26.5%（245セッション）が Google 25.4%（235セッション）を上回り最大の検索流入エンジンと判明。一方 `data/gsc_metrics.json` は Google Search Console 専用データで Bing の掲載順位・CTR・クエリは一切見えていない
+- **brand-filter**: ✅ 適合 — 既存のGSC改善ループ（`scripts/gsc_opportunities.js`）と同じ「自社の実測データを起点にMoat/Strategic Skipで施策化する」ループをBingにも拡張するだけ。広告・順位操作は伴わない
+- **why-not-agent**: Bing Webmaster Toolsへのサイト登録・所有権確認はGoogleアカウント/メールでの認証を伴うクレデンシャル操作のため、エージェントは代行できない（制約: パスワード/認証情報の代行操作は行わない）。`scripts/indexnow_ping.js`（IndexNow鍵生成・送信）は実装済みで登録後すぐ使える
+- **acceptance**: ① https://www.bing.com/webmasters にオーナー本人が `nagoya-bites.com` を登録・所有権確認（sitemap-index.xml も登録）／② 登録後、Marketerが Bing Webmaster Tools API または CSV エクスポートを使い `fetch_gsc_metrics.js` と対になる `fetch_bing_metrics.js` を新設しBing側のクエリ・ページ別実データを取得できるようにする／③ `scripts/indexnow_ping.js --init && --status` で鍵設定を確認し `--yes` で本稼働に切り替える
+- **ブランドガードレール**: Bing側データも他の検索ループと同じくMoat/Strategic Skipでtriageする。データが増えても採否判断の基準は変えない
+
+### [SEO-068] discovery意図クエリ（シーン×エリア=Moat領域）の検索面を計画的に拡張する
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-08-22
+- **category**: SEO / コンテンツ戦略
+- **owner**: Editor / Marketer
+- **source**: SEO改善分析セッション。`scripts/gsc_query_intent.js`の実測（直近28日）で検索意図別の内訳が判明:
+  navigational（店名検索）74.1%・CTR 0.55%・平均順位19.7位／other 23.3%・CTR 1.07%・平均順位18.7位／
+  discovery（シーン語×エリア語＝Moat領域）**2.6%・CTR 2.92%・平均順位12.6位**。
+  discoveryは3意図中もっともCTRも掲載順位も良いにもかかわらず、表示回数シェアは最小。
+  サイトの競争優位（Moat）である「名古屋×シーン×業界人の目利き」に該当する検索面が、
+  実際の検索露出のごく一部しか占めていない
+- **brand-filter**: ✅ 適合 — CLAUDE.mdのMoat（シーン専門性）そのものを伸ばす施策。競合が強い指名検索（Strategic Skip該当のnavigational）を追わず、勝てる領域に配分を寄せる王道
+- **acceptance**: `data/journal_seo_keywords.json` の既存シーンKWのうち、`node scripts/journal_seo_kw.js --suggest` で「特集が薄い/未カバー」と判定されたシーン×エリアの組み合わせを洗い出す／未カバー上位から日次ジャーナル・特集記事のテーマ選定に反映（EDT-003「題材選定の型」に準拠、架空店ブロック厳守）／効果測定は `node scripts/gsc_query_intent.js` の discovery行の impressions_share・impressions 絶対値を追跡（総クリックではなく意図別内訳で判定。総クリックは指名検索の増減と混ざるため使わない）／施策実施後、次回GSC更新でdiscovery impressions_shareが2.6%から改善しているかを再評価
+- **ブランドガードレール**: 「シーンKWを増やす」ことが目的化して架空店・薄い特集を量産しないこと。既存特集とのカニバリ回避（SEO-005/SEO-006と同じ判断基準）。実施はEditor/Marketerの編集判断を要するため、本セッションでは診断のみで実装は次サイクルへ
 
 ### [STR-001] マネタイズ第1弾実装：接待・宴会コンシェルジュLP + CTA計測 + 編集独立の透明化 ✅
 - **priority**: P1（事業健全性・Moat換金の第一歩） → **status**: done
@@ -3852,6 +3877,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Editor(/solve-next) | EDT-003 分類調査partial — 直近30本のヒーロー画像を実測、実写比率が検出時42%→現在67%まで既に改善していたことを発見。図解になった30本のtheme×本文実査で(a)題材選定21件(70%)/(b)写真調達失敗9件(30%)に分類。(b)はISSUE-097と同一根本原因（新店のLOCAL_STORES未解決）と判明し既存チケットの進捗で自動改善見込み。(a)対応（題材選定アルゴリズム変更）は編集戦略変更のためオーナー判断待ちとして意図的に保留 | ⏸ 調査のみ・commitなし |
 | 2026-08-20 | Orchestrator(EXPLICIT) | ISSUE-100 実装・デプロイ — GSC「サイトマップ内のページがインデックスに登録されない（リダイレクト/404）」通知メール2件を調査。sitemap.xml全5,205URLをファイル照合＋本番への実HTTP HEADで検証し現状は全件200・異常0件と確認（既存クリーンアップで解消済みの過去クロール履歴と判断）。再発時に自動検知できるよう scripts/audit_sitemap_health.js（新設・リトライ付き）を build.yml の push後ステップに追加（非ブロッキング）。npm test 94/94 | ✅ 本コミット |
 | 2026-08-20 | Marketer(/solve-next) | SEO-063 実装・デプロイ — `.gas-deploy/Code.js` に GA4しきい値判別不能行（`(not set)` / `(data not available)` / `(other)`）の集約・分母補正・highThreshold警告を追加。`isGa4Unknown()` ヘルパー新設・`analyze()` で `identifiableSessions` を分母に切替・topSrcRow フィルタ追加・AI プロンプト補足・ルールベースアドバイスの highThreshold ガード・日次/週次レポートへの警告行追加。ISSUE-096はコード修正済みを確認しオーナー操作待ちとしてowner=片桐にエスカレーション。`node --check` ✅ / npm test 94/94 ✅ | ✅ 本コミット |
+| 2026-08-22 | Builder(SEO分析セッション) | SEO-065 実装・デプロイ — サイト全体SEO監査で「店舗ページ5,541件がサイトマップとトップ50件カードだけを発見経路にしており店舗間の内部リンクが皆無」と判明。gen-store-pages.jsに`buildRelatedStores()`を新設（同エリア内でジャンル一致を優先しつつ最大4件・エリアが無い店のみジャンル一致にフォールバック）。見出しラベルは選定条件と必ず一致するよう関数側で確定して返す設計に統一（「同ジャンル」と謳って別ジャンルが混ざる等の見出しと中身の不一致を防止）。全店舗のスラグを先に確定してから related-stores を解決する2段構成にmain()を変更（他店リンク先が実在するスラグであることを保証・架空店リスクなし）。5,023店を再生成、うち4,984店（99.2%）にrelated-storesブロックが付与（残りはエリア・ジャンルとも欠損の店のみ）。sitemap.xml 5,201URLで再生成。npm test 125/125 pass・複数店のレンダリング結果を手動照合 | ✅ 本コミット |
+| 2026-08-22 | Marketer(SEO分析セッション) | SEO-066 partial実装 — GSCの`gsc_opportunities.json`が挙げるctrFix対象5ページを個別診断。3店舗ページ（J004025075/J004559348/J004661023）はtitleに既に店名完全一致が入っており（SEO-050で一度最適化済み）、上位表示クエリが全て指名検索＝Google Maps/公式Instagram/食べログという「一次情報源」に順位で勝てない構造的なCTR上限（Strategic Skip該当）と判断、対症的なtitle/meta変更は見送り。一方、ジャーナル記事2本は実際のバグを検出: `journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html`は最多流入クエリ「煮干しラーメン 凛」(223 impression/28日)の店名「凛」がtitle/meta/OGP/JSON-LDのどこにも一度も出現していなかった（本文には9回登場）。`journal/2026-07-27-owarisanso-kurogi.html`は最多流入クエリ「尾張山荘くろぎ」(493 impression)のうちmeta descriptionには「尾張山荘」があったがtitleには無かった。両記事のtitle/og:title/JSON-LD headlineに店舗正式名を追加（niboshi-ramen-rinはmeta descriptionにも追加、owarisanso-kurogiは既にmeta記載済みのため据え置き）・dateModified更新・JSON-LD構文検証OK・npm test 125/125 pass。効果は次回GSC更新（該当2クエリのCTR/掲載順位）で再評価 | ✅ 本コミット・3店舗ページ分は意図的見送り |
 
 ---
 
