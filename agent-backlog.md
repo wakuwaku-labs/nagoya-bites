@@ -2776,7 +2776,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 ### [ISSUE-066] 日次ジャーナル生成の二重稼働（launchd × scheduled-task）を一本化
 
 - **priority**: P3
-- **status**: ready
+- **status**: done（検証の結果、既に一本化済みと確認）
+- **resolved**: 2026-08-22（Orchestrator・オーナー就寝中の自律処理）
 - **category**: ops / reliability
 - **detected**: 2026-06-22
 - **owner**: Builder
@@ -2784,6 +2785,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **impact**: 片方が成果を出しても他方が空振り/汚染を生む。観測性も二重化して切り分けが難しい。ISSUE-065 級デッドロックの再発リスク源。
 - **acceptance**: どちらか一方の経路に一本化（推奨は launchd 側＝API課金ゼロのサブスク認証経路を正とし、scheduled-task を停止 or 逆）。残す側の単独運用で日次1本公開が継続することを数日観測。`.claude/settings.json`・scheduled-task はエージェント自己改変ブロックのためオーナー手動操作が必要な可能性あり（その場合は手順を docs にまとめてオーナーへ依頼）。
 - **files**: `scripts/run_journal_local.sh`, launchd plist, scheduled-task 設定（オーナー領域）, `agent-backlog.md`
+- **2026-08-22 検証（Orchestrator）**: `mcp__scheduled-tasks__list_scheduled_tasks` で現在アクティブなスケジュールタスク一覧を確認したところ `nagoya-bites-journal-daily` は**登録されていなかった**（seo-triage-daily / feedback-triage-daily / feedback-formspree-crosscheck-monthly / solve-next-daily(無効化) の4件のみ有効）。`~/.claude/scheduled-tasks/nagoya-bites-journal-daily/SKILL.md` はディスク上に残存しているが最終更新が2026-06-18（本チケットの detected 2026-06-22 より前）で、対応する有効なスケジュール登録が存在しないため**発火しない孤児ファイル**と判断。launchd `com.nagoyabites.journal`（`launchctl list` で存在確認・`~/Library/LaunchAgents/com.nagoyabites.journal.plist` で毎朝9:00設定確認）が唯一の稼働経路であることを確認した。**二重稼働は既に解消済み**（いつ・誰が scheduled-task 側を無効化したかは不明だが、現状の実害は無い）。孤児ディレクトリ（`~/.claude/scheduled-tasks/nagoya-bites-journal-daily/`）の削除はリポジトリ外のオーナー環境ファイルのため、片付けとして任意でオーナーに委ねる（実害なし）
 - **関連**: ISSUE-065（親）/ [[journal-daily-worktree-dirty-rebase]]
 
 ### [DATA-001] 閉店店の掲載検出（餃子歩兵 名古屋泉店ほか）と営業実体ゲート新設 ✅
@@ -3036,6 +3038,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **brand-filter**: ✅ 適合 — CLAUDE.mdのMoat（シーン専門性）そのものを伸ばす施策。競合が強い指名検索（Strategic Skip該当のnavigational）を追わず、勝てる領域に配分を寄せる王道
 - **acceptance**: `data/journal_seo_keywords.json` の既存シーンKWのうち、`node scripts/journal_seo_kw.js --suggest` で「特集が薄い/未カバー」と判定されたシーン×エリアの組み合わせを洗い出す／未カバー上位から日次ジャーナル・特集記事のテーマ選定に反映（EDT-003「題材選定の型」に準拠、架空店ブロック厳守）／効果測定は `node scripts/gsc_query_intent.js` の discovery行の impressions_share・impressions 絶対値を追跡（総クリックではなく意図別内訳で判定。総クリックは指名検索の増減と混ざるため使わない）／施策実施後、次回GSC更新でdiscovery impressions_shareが2.6%から改善しているかを再評価
 - **ブランドガードレール**: 「シーンKWを増やす」ことが目的化して架空店・薄い特集を量産しないこと。既存特集とのカニバリ回避（SEO-005/SEO-006と同じ判断基準）。実施はEditor/Marketerの編集判断を要するため、本セッションでは診断のみで実装は次サイクルへ
+- **2026-08-22 診断実行（Orchestrator）**: `node scripts/journal_seo_kw.js --suggest` を実行し正常動作を確認。8月の未カバー上位候補として「栄×食べ歩き」（当月シーンに合致・in_season:true）「栄×接待」「栄×個室」「栄×宴会」を機械抽出（各コンボは既存特集への内部リンクも自動解決）。この診断結果は `/journal-today` の題材選定入力として日次サイクルで自動的に消費される設計のため、追加のコード実装は不要。**status は ready のまま据え置く**（施策実施＝日次ジャーナルでの実採用は今後の複数サイクルにわたる継続施策のため、1回のセッションで"done"にする性質のチケットではない）
 
 ### [STR-001] マネタイズ第1弾実装：接待・宴会コンシェルジュLP + CTA計測 + 編集独立の透明化 ✅
 - **priority**: P1（事業健全性・Moat換金の第一歩） → **status**: done
