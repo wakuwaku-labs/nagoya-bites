@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-08-21T07:40:09.500Z",
+  "generatedAt": "2026-08-21T08:24:59.236Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 781,
+    "activeUsers": 782,
     "pageViews": 1299,
-    "sessions": 918,
-    "avgSessionDuration": 154.4,
-    "bounceRate": 0.331,
-    "pagesPerSession": 1.42
+    "sessions": 919,
+    "avgSessionDuration": 154.2,
+    "bounceRate": 0.332,
+    "pagesPerSession": 1.41
   },
   "channels": {
     "sessions": {
       "organic": 602,
-      "direct": 216,
+      "direct": 217,
       "social": 94,
       "referral": 15,
       "paid": 0,
@@ -20,7 +20,7 @@
     },
     "pct": {
       "organic": 64.9,
-      "direct": 23.3,
+      "direct": 23.4,
       "social": 10.1,
       "referral": 1.6,
       "paid": 0,
@@ -61,7 +61,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 17
+      "sessions": 18
     },
     {
       "source": "openai",
@@ -108,7 +108,7 @@
   ],
   "cta": {
     "outboundClicks": 85,
-    "ctaClickRate": 9.3,
+    "ctaClickRate": 9.2,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -177,7 +177,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 4.5,
-    "ctaClickRate_direct": 16.2,
+    "ctaClickRate_direct": 16.1,
     "ctaClickRate_social": 24.5,
     "byPage": [
       {
@@ -471,7 +471,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 781,
+    "value": 782,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
