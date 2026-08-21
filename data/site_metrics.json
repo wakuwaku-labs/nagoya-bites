@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-08-21T18:30:36.999Z",
+  "generatedAt": "2026-08-21T23:35:30.948Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 781,
-    "pageViews": 1310,
-    "sessions": 925,
-    "avgSessionDuration": 154.7,
-    "bounceRate": 0.35,
+    "activeUsers": 783,
+    "pageViews": 1321,
+    "sessions": 931,
+    "avgSessionDuration": 155.2,
+    "bounceRate": 0.351,
     "pagesPerSession": 1.42
   },
   "channels": {
     "sessions": {
-      "organic": 609,
-      "direct": 230,
+      "organic": 610,
+      "direct": 237,
       "social": 92,
       "referral": 15,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 64.4,
-      "direct": 24.3,
-      "social": 9.7,
+      "organic": 63.9,
+      "direct": 24.8,
+      "social": 9.6,
       "referral": 1.6,
       "paid": 0,
       "other": 0
@@ -36,12 +36,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 235
+      "sessions": 236
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 183
+      "sessions": 186
     },
     {
       "source": "yahoo",
@@ -56,7 +56,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 32
+      "sessions": 36
     },
     {
       "source": "openai",
@@ -82,8 +82,8 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 264,
-      "sessions": 152
+      "pageViews": 269,
+      "sessions": 155
     },
     {
       "path": "/features/nagoya-solo-dining.html",
@@ -97,8 +97,8 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 60,
-      "sessions": 37
+      "pageViews": 64,
+      "sessions": 39
     },
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
@@ -108,7 +108,7 @@
   ],
   "cta": {
     "outboundClicks": 83,
-    "ctaClickRate": 9,
+    "ctaClickRate": 8.9,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -173,7 +173,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 3.9,
-    "ctaClickRate_direct": 15.7,
+    "ctaClickRate_direct": 15.2,
     "ctaClickRate_social": 25,
     "byPage": [
       {
@@ -476,7 +476,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 781,
+    "value": 783,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
