@@ -36,6 +36,28 @@ const TRENDING_PATH = path.join(ROOT, 'data', 'trending_stores.json');
 const MANUAL_PATH = path.join(ROOT, 'data', 'manual_stores.json');
 const URL_HISTORY_PATH = path.join(ROOT, 'data', 'trending_url_history.json');
 const OUT_PATH = path.join(ROOT, 'data', 'daily_trending5.json');
+const STORES_PATH = path.join(ROOT, 'data', 'stores.json');
+
+// trending_stores.json は 写真URL を持たないため、build.js と同じ 店名(+エリア) 完全一致で
+// data/stores.json から引く（ISSUE: 話題店TOP5が実写を持たない店ばかりになりトップページの
+// 「顔」が汎用プレースホルダーだらけになった事故の再発防止）。
+function loadStorePhotoIndex() {
+  const byNameArea = new Map();
+  const byName = new Map();
+  try {
+    const stores = JSON.parse(fs.readFileSync(STORES_PATH, 'utf8'));
+    for (const s of stores) {
+      const photo = s['写真URL'];
+      if (!photo) continue;
+      const name = s['店名'] || '';
+      if (!byName.has(name)) byName.set(name, photo);
+      byNameArea.set(name + '|' + (s['エリア'] || ''), photo);
+    }
+  } catch (e) {
+    console.error(`data/stores.json の読み込み失敗（写真ゲートを無効化して続行）: ${e.message}`);
+  }
+  return (name, area) => byNameArea.get(name + '|' + (area || '')) || byName.get(name) || '';
+}
 
 const TOP_N = 5;
 const HISTORY_DAYS = 7;
@@ -225,6 +247,7 @@ function loadAndSyncSources(today) {
 }
 
 function buildCandidatesFromSynced(trending, manual, today) {
+  const resolvePhoto = loadStorePhotoIndex();
   const candidates = [];
   for (const s of (trending.stores || [])) {
     if (s['話題フラグ'] !== true) continue;
@@ -239,6 +262,7 @@ function buildCandidatesFromSynced(trending, manual, today) {
       話題スコア: parseInt(s['話題スコア']) || 0,
       編集部推薦: false,
       コメント: s['コメント'] || '',
+      写真URL: resolvePhoto(s['店名'], s['エリア']),
       _source: 'trending',
     });
   }
@@ -256,6 +280,7 @@ function buildCandidatesFromSynced(trending, manual, today) {
       話題スコア: parseInt(s['話題スコア']) || 0,
       編集部推薦: s['編集部推薦'] === true,
       コメント: s['コメント'] || '',
+      写真URL: s['写真URL'] || resolvePhoto(s['店名'], s['エリア']),
       _source: 'manual',
     });
   }
@@ -380,7 +405,20 @@ function run({ write }) {
     );
   }
 
-  const top = selectDiverse(scored, TOP_N);
+  // 写真ゲート: このTOP5はカードの「顔」写真を大きく見せる導線のため、実写を持つ店だけを
+  // 選出プールにする（無ければ汎用プレースホルダーのままトップページ最上部に並び、
+  // 「サイト全体で写真が壊れた」ように見える事故が起きた・2026-08-21）。
+  // 候補プールが十分にあるとき（実写候補が TOP_N を満たすとき）だけ絞り込み、
+  // 万一実写候補が枯渇した日は絞り込みを諦めて既存挙動にフォールバックする（機能を殺さない）。
+  const withPhoto = scored.filter(x => x.c.写真URL);
+  const pool = withPhoto.length >= TOP_N ? withPhoto : scored;
+  if (pool === scored) {
+    console.log(`\n⚠ 実写を持つ候補が ${withPhoto.length}件 < TOP_N(${TOP_N}) のため写真ゲートを解除`);
+  } else {
+    console.log(`\n写真ゲート: ${scored.length}件中 実写あり${withPhoto.length}件を選出プールに採用`);
+  }
+
+  const top = selectDiverse(pool, TOP_N);
   const outStores = top.map((x, i) => ({
     順位: i + 1,
     店名: x.c.店名,
