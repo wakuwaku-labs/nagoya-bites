@@ -43,7 +43,14 @@ jobs:
         run: |
           git config user.name  "NAGOYA BITES Daily"
           git config user.email "daily@nagoya-bites"
-          git add data/daily_trending5.json index.html sitemap.xml stores/ page-names.json 2>/dev/null || true
+          # build.js が焼き込む data/stores.json 等を漏らすと、build.yml（push トリガーで
+          # 並走しうる）が古い data/daily_trending5.json を読んだ結果で上書きし、TOP5の
+          # 選定だけが index.html と data/stores.json とで食い違う（ISSUE: 2026-08-21
+          # 写真ゲート導入時に発覚。ALL_STORES は data/stores.json 側で上書きされるため
+          # 古い方が実際の表示に勝ってしまう）。build.yml の git add 対象と揃えておく。
+          git add data/daily_trending5.json data/trending_stores.json data/manual_stores.json \
+            data/trending_url_history.json data/stores.json data/cross_check_flags.json \
+            data/crosscheck.json index.html sitemap.xml stores/ page-names.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "コミット対象の変更がありません。"
             exit 0
