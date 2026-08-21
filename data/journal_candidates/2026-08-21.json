@@ -1,0 +1,459 @@
+{
+  "date": "2026-08-21",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "JR名古屋駅1番線に六厘舎が90日だけ — 名駅のつけめん1,080円＋入場券150円を業界人が読む",
+      "verdict": "PASS",
+      "total": 105,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (旬,需要,繁忙,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 130字 +4",
+          "title 50字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "秋の名駅、使われないホームが飲食店になる — 1番線企画の第8弾を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 93,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (需要,繁忙,相場,仕入れ,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 114字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "93点（自動公開ライン 100点）。主な不足: topicality -13 / writability -2 / search_intent -2"
+    },
+    {
+      "id": "c4",
+      "title_draft": "六厘舎が東京を出た秋 — 名駅への90日間と八重洲の新ブランド",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 89,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 13,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 4件 (需要,繁忙,相場,仕入れ) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 108字 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "89点（自動公開ライン 100点）。主な不足: topicality -12 / search_intent -6 / brand_fit -3"
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅で入場券がいる食事 — 秋の改札内グルメの歩き方",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 88,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 6件 (旬,需要,繁忙,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 105字 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "88点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -6 / brand_fit -3"
+    },
+    {
+      "id": "c3",
+      "title_draft": "名駅の駅ナカつけめん、秋の相場を並べる — ゲートタワーと1番線",
+      "verdict": "HOLD",
+      "total": 84,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (繁忙,シーン,相場,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 108字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "JR名古屋駅1番線に六厘舎が90日だけ — 名駅のつけめん1,080円＋入場券150円を業界人が読む",
+      "lead_draft": "2026年9月1日から11月29日までの90日間、JR名古屋駅の1番線に東京のつけめん専門店「六厘舎」が期間限定で入る。リニア工事で止まったホームを客席に変える第8弾で、約60席・10時から22時の通し営業。秋の名駅で、この価格帯と時期をどう読むかを整理する。",
+      "angle": "改札内に90日だけ置かれる約60席の仮設店を、旬の需要・繁忙時間帯・入場券150円と2時間の制限を含めた価格帯・回転の設計として読む",
+      "main_store": {
+        "name": "六厘舎 JR名古屋駅1番線店",
+        "id": "",
+        "area": "名駅",
+        "genre": "つけめん専門店"
+      },
+      "sources": [
+        {
+          "label": "名古屋ステーション開発 プレスリリース（1番線企画2026年秋・六厘舎）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000041.000108483.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "名古屋ステーション開発 公式お知らせ",
+          "url": "https://www.nsk-eki.com/info/detail/?cd=000082",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "六厘舎 ブランド側リリース（名古屋出店・参厘舎開業）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000097.000087198.html",
+          "date": "2026-08-18"
+        },
+        {
+          "label": "名駅経済新聞（みんなの経済新聞ネットワーク）",
+          "url": "https://topics.smt.docomo.ne.jp/amp/article/minkei/region/minkei-meieki3798",
+          "date": "2026-08-20"
+        },
+        {
+          "label": "おいでよ名古屋（X）",
+          "url": "https://x.com/oinagoya/status/2089607636090228794",
+          "date": "2026-08-20"
+        },
+        {
+          "label": "六厘舎 公式Instagram",
+          "url": "https://www.instagram.com/rokurinsha_official/",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "JR東海 入場券のご案内（150円・2時間）",
+          "url": "https://railway.jr-central.co.jp/ticket-rule/rule45.html",
+          "date": "2026-08-21"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "秋の名駅、使われないホームが飲食店になる — 1番線企画の第8弾を業界人が読む",
+      "lead_draft": "世界の山ちゃん、昔の矢場とん、かき氷フェア。JR名古屋駅の止まった1番線に置かれてきた期間限定店は、2026年秋のつけめんで第8弾になる。約500平方メートルの遊休空間を季節ごとに貼り替える商売の構造を、出店側の目線で整理する。",
+      "angle": "遊休ホームを季節ごとに貼り替える期間限定出店を、仕入れの読みと繁忙期の需要、相場と回転の観点から出店側の損益で読む",
+      "main_store": {
+        "name": "JR名古屋駅1番線スペース",
+        "id": "",
+        "area": "名駅",
+        "genre": "期間限定店舗"
+      },
+      "sources": [
+        {
+          "label": "名古屋ステーション開発 プレスリリース",
+          "url": "https://prtimes.jp/main/html/rd/p/000000041.000108483.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "名駅経済新聞",
+          "url": "https://topics.smt.docomo.ne.jp/amp/article/minkei/region/minkei-meieki3798",
+          "date": "2026-08-20"
+        },
+        {
+          "label": "名古屋ステーション開発 公式お知らせ（2026年春・台湾五之神製作所）",
+          "url": "https://www.nsk-eki.com/info/detail/?cd=000072",
+          "date": "2026-03-01"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "名駅の駅ナカつけめん、秋の相場を並べる — ゲートタワーと1番線",
+      "lead_draft": "名古屋駅の改札まわりでつけめんを食べる選択肢が、2026年秋に一つ増える。既にあるJRゲートタワーの専門店と、9月から90日だけ入る期間限定店。価格帯と待ち時間の相場を並べて、乗り換えの時間で何が食べられるかを見る。",
+      "angle": "駅ナカのつけめんを価格帯と繁忙時間帯の相場で並べ、乗り換え時間というシーンに対する回転の合う合わないを読む",
+      "main_store": {
+        "name": "つけめんTETSU JRゲートタワー名古屋店",
+        "id": "J001277618",
+        "area": "名駅",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋ステーション開発 プレスリリース",
+          "url": "https://prtimes.jp/main/html/rd/p/000000041.000108483.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "名駅経済新聞",
+          "url": "https://topics.smt.docomo.ne.jp/amp/article/minkei/region/minkei-meieki3798",
+          "date": "2026-08-20"
+        },
+        {
+          "label": "六厘舎 ブランド側リリース",
+          "url": "https://prtimes.jp/main/html/rd/p/000000097.000087198.html",
+          "date": "2026-08-18"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "六厘舎が東京を出た秋 — 名駅への90日間と八重洲の新ブランド",
+      "lead_draft": "都内6拠点のつけめん専門店が、2026年秋に二つの動きを見せる。9月1日からのJR名古屋駅1番線への期間限定出店と、9月10日の八重洲での新ブランド開業。ブランドが街を選ぶ順番から、名古屋という市場の位置づけを読む。",
+      "angle": "都内6拠点のブランドが期間限定で名古屋を試す動きを、仕入れと人員の相場、繁忙期の需要という出店判断の軸で読む",
+      "main_store": {
+        "name": "六厘舎 JR名古屋駅1番線店",
+        "id": "",
+        "area": "名駅",
+        "genre": "つけめん専門店"
+      },
+      "sources": [
+        {
+          "label": "六厘舎 ブランド側リリース",
+          "url": "https://prtimes.jp/main/html/rd/p/000000097.000087198.html",
+          "date": "2026-08-18"
+        },
+        {
+          "label": "名古屋ステーション開発 プレスリリース",
+          "url": "https://prtimes.jp/main/html/rd/p/000000041.000108483.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "六厘舎 公式Instagram",
+          "url": "https://www.instagram.com/rokurinsha_official/",
+          "date": "2026-08-19"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "名駅で入場券がいる食事 — 秋の改札内グルメの歩き方",
+      "lead_draft": "2026年秋、名古屋駅で食事をするのに切符が要る店ができる。JR1番線の期間限定店は入場券か乗車券がないと入れない。150円と2時間という制限がつく食事は何が違うのか、改札内で食べるという選択の損得を整理する。",
+      "angle": "入場券150円と2時間制限という前提が価格帯と滞在シーンをどう変えるかを、繁忙時間帯の回転と旬の需要から読む",
+      "main_store": {
+        "name": "六厘舎 JR名古屋駅1番線店",
+        "id": "",
+        "area": "名駅",
+        "genre": "つけめん専門店"
+      },
+      "sources": [
+        {
+          "label": "名古屋ステーション開発 プレスリリース",
+          "url": "https://prtimes.jp/main/html/rd/p/000000041.000108483.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "JR東海 入場券のご案内",
+          "url": "https://railway.jr-central.co.jp/ticket-rule/rule45.html",
+          "date": "2026-08-21"
+        },
+        {
+          "label": "名駅経済新聞",
+          "url": "https://topics.smt.docomo.ne.jp/amp/article/minkei/region/minkei-meieki3798",
+          "date": "2026-08-20"
+        }
+      ]
+    }
+  ]
+}
