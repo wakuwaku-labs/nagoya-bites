@@ -59,7 +59,7 @@
 - **priority**: P0 → **status**: ready
 - **detected**: 2026-08-20（オーナー報告「結構な店舗数で口コミ信頼度が表示されておらず判断材料が足りない」の原因調査中に発見）
 - **category**: data-quality / trust / 架空店ブロック関連
-- **owner**: DataKeeper（調査）+ Orchestrator（削除・差し替え判断）
+- **owner**: 片桐 ← DataKeeper（調査）+ Orchestrator（削除・差し替え判断）
 
 - **発端**: 口コミ信頼度が「—（判定材料不足）」になる436店（`data/stores.json` 5,033店中8.7%）の原因を追ったところ、`scripts/fetch_places.js` の住所検証（`validateAddress()`）が94店でGoogle Places候補を却下（`rejected: true`、`data/places_resolved.json`）していた。この却下自体は誤検出防止のガードとして正しく機能していたが、却下理由を分類したところ想定より深刻な内容だった。
 - **実測した内訳（94件・機械分類）**:
@@ -125,7 +125,7 @@
 - **関連**: [[ISSUE-048]] [[ISSUE-049]] [[ISSUE-086]]（v3活性化時の前提を本ISSUEが追加）
 ### [ISSUE-102] stores/*.html に677件の孤児ページが放置されている（CI障害の原因・data/stores.json 未掲載店の旧テンプレページ）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress（--check-orphans CI監視追加済み・孤児削除は未実施）
 - **detected**: 2026-08-20（[[ISSUE-101]] マージ直後、build.yml の `audit_trust_wording.js --check` が本番で失敗し発覚。実測: `git diff --stat` https://github.com/wakuwaku-labs/nagoya-bites/actions/runs/32354313646）
 - **category**: cleanup / seo / ci
 - **owner**: Builder + DataKeeper
@@ -133,10 +133,13 @@
 - **背景（検証済みの事実）**: `stores/` ディレクトリに5,540件の `.html` ファイルが存在するが、`data/stores.json`（現行カタログ）にHPIDが存在する店は4,863件のみ。差分の**677件が孤児ページ**（過去に閉店・重複統合等でカタログから外れたが、`gen-store-pages.js` が既定では再生成も削除もしないため残存）。
   `gen-store-pages.js` はゴーストページ検出ロジックを既に持つ（`--check-orphans` / `--delete-orphans`）が、CI（`build.yml:209`）は素の `node gen-store-pages.js` しか実行しておらず、孤児は毎日放置され続けている。
 - **顕在化した実害**: [[ISSUE-101]] で新設した `scripts/audit_trust_wording.js --check`（口コミ信頼度の旧名称・非難語の混入検知）が、この677件のうち326件で旧テンプレの「スコア信頼度」等の名称、16件で「疑い」「評価操作」等の語を検出し、**本番 build.yml を失敗させた**（[run 32354313646](https://github.com/wakuwaku-labs/nagoya-bites/actions/runs/32354313646)）。応急処置として同スクリプトのスキャン対象を「`data/stores.json` に現存する店のみ」に限定し（孤児は監査対象外・info行で件数のみ通知）、CI を復旧させた。**本チケットはその根本原因（孤児ページ自体）の後始末**。
-- **判断が必要な点（Builder/DataKeeper で検討）**:
-  1. `--delete-orphans` を CI に常設するか（破壊的操作・URL が消えるため sitemap/被リンク/GSCインデックスへの影響を要確認）
-  2. 一括削除ではなく `--check-orphans` を非ブロッキングで CI に常設し、月次で Inspector が目視レビューしてから手動削除する運用（ISSUE-050 の前例に近い）にするか
-  3. 一部は「閉店ではなく重複ID」等、削除ではなく統合が正しいケースが混じっていないか事前サンプリングが必要
+- **2026-08-21 サンプリング調査（Builder/routine）**:
+  - 実測件数: `stores.json` 5,025件に対し `stores/` に5,557件 → **孤児532件**（起票時677件から減少しているのはstore.json追加分か前回部分削除による）。全532件がサイトマップに掲載済み（sitemap.xml で grep確認）
+  - 判断が必要な点3（サンプリング実施）: 孤児5件を目視確認 → J000015119（札幌かに本家 金山店）/ J000015303（COCON ココン）/ J000015496（木曽路 名駅店）/ J000016094（あんかけスパゲティ NANAYA）/ J000024111（カラオケ JOYJOY 栄錦通店）。いずれも ホットペッパーID ベースの店舗ページ。カラオケ等の非飲食業態も混在
+  - **方針決定**: sitemap.xml に孤児が含まれており、一括削除はGSCへの影響が大きい。次回CIで `gen-store-pages.js` が sitemap を再生成（stores.jsonベース）するため sitemap 問題は自動修正されるが、HTMLファイル自体は残存する。`--check-orphans` を CI 監視として追加済み（非ブロッキング）。削除は「Inspector が月次サンプリング → オーナー確認後 `--delete-orphans`」の運用を推奨
+- **判断が必要な点（残）**:
+  1. `--delete-orphans` を運用: Inspector の月次レビュー後にオーナーが `node gen-store-pages.js --delete-orphans` を手動実行（推奨）
+  2. `audit_trust_wording.js` のスコープ限定コメント撤去: 孤児削除完了後
 - **acceptance**: 677件の内訳（閉店/重複/その他）をサンプリングで分類 → 方針決定 → 実施後 `node gen-store-pages.js --check-orphans` で0件を確認 → CIの `audit_trust_wording.js` のスコープ限定コメントを撤去可能かどうか判断
 - **関連**: [[ISSUE-050]]（孤児ページ削除の前例）/ [[ISSUE-101]]（本件の発覚元）
 
@@ -3804,6 +3807,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-19 | Editor(/solve-next) | EDT-003 分類調査partial — 直近30本のヒーロー画像を実測、実写比率が検出時42%→現在67%まで既に改善していたことを発見。図解になった30本のtheme×本文実査で(a)題材選定21件(70%)/(b)写真調達失敗9件(30%)に分類。(b)はISSUE-097と同一根本原因（新店のLOCAL_STORES未解決）と判明し既存チケットの進捗で自動改善見込み。(a)対応（題材選定アルゴリズム変更）は編集戦略変更のためオーナー判断待ちとして意図的に保留 | ⏸ 調査のみ・commitなし |
 | 2026-08-20 | Orchestrator(EXPLICIT) | ISSUE-100 実装・デプロイ — GSC「サイトマップ内のページがインデックスに登録されない（リダイレクト/404）」通知メール2件を調査。sitemap.xml全5,205URLをファイル照合＋本番への実HTTP HEADで検証し現状は全件200・異常0件と確認（既存クリーンアップで解消済みの過去クロール履歴と判断）。再発時に自動検知できるよう scripts/audit_sitemap_health.js（新設・リトライ付き）を build.yml の push後ステップに追加（非ブロッキング）。npm test 94/94 | ✅ 本コミット |
 | 2026-08-20 | Marketer(/solve-next) | SEO-063 実装・デプロイ — `.gas-deploy/Code.js` に GA4しきい値判別不能行（`(not set)` / `(data not available)` / `(other)`）の集約・分母補正・highThreshold警告を追加。`isGa4Unknown()` ヘルパー新設・`analyze()` で `identifiableSessions` を分母に切替・topSrcRow フィルタ追加・AI プロンプト補足・ルールベースアドバイスの highThreshold ガード・日次/週次レポートへの警告行追加。ISSUE-096はコード修正済みを確認しオーナー操作待ちとしてowner=片桐にエスカレーション。`node --check` ✅ / npm test 94/94 ✅ | ✅ 本コミット |
+| 2026-08-21 | Orchestrator(routine) | ISSUE-103 エスカレーション — P0ルールによりオーナー判断へ。owner=片桐に変更。71件の他都市店舗混入疑いは実在検証・削除・差し替えにオーナー判断が必要。ISSUE-102 部分実装 — 孤児ページ532件を実測・5件サンプリング（閉店/非飲食業態混在を確認）。方針: sitemap.xmlは次回CI実行で自動更新される。孤児HTML削除は月次Inspectorレビュー後にオーナーが--delete-orphansで手動実行を推奨。build.ymlのgen-store-pages.jsに--check-orphansフラグを追加（非ブロッキング監視）。QA: build.jsはAPI key未設定のリモート環境のため中断（site変更なし・N/A）/ build.yml構文確認OK | ✅ PR作成 |
 
 ---
 

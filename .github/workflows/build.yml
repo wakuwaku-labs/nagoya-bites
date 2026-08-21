@@ -206,7 +206,10 @@ jobs:
         # build.js が data/stores.json を更新した後、その canonical カタログを source に
         # 個別店舗ページを生成する。これがないと manual_stores.json に追加した店が
         # フロント検索ヒット時の詳細ページから 404 になる（ISSUE-058 の再発防止）。
-        run: node gen-store-pages.js
+        # --check-orphans: data/stores.json に現存しない孤児ページ（閉店等でカタログから除外された店）
+        # の件数をログに記録する（非ブロッキング・削除はしない）。件数が多い場合は
+        # `node gen-store-pages.js --delete-orphans` で手動削除（ISSUE-102）。
+        run: node gen-store-pages.js --check-orphans
 
       - name: 店舗写真カバレッジ監査（画質退行の検知・実写ゼロ店の可視化）
         # build.js normalizePhotoUrl() が HotPepper 縮小サムネ(_238等)を _480 へ昇格し、
