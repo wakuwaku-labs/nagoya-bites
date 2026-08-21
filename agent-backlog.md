@@ -104,10 +104,21 @@
 
 ### [ISSUE-103] カタログに他都市チェーン店舗が誤って「名古屋の店」として混入している疑い（71店・実在保証Moatの根幹に関わる）
 
-- **priority**: P0 → **status**: ready
+- **priority**: P0 → **status**: done（acceptance 1〜4完了・5はオーナー判断待ちで別枠）
 - **detected**: 2026-08-20（オーナー報告「結構な店舗数で口コミ信頼度が表示されておらず判断材料が足りない」の原因調査中に発見）
+- **resolved**: 2026-08-22（Orchestrator・オーナー就寝中の自律処理）
 - **category**: data-quality / trust / 架空店ブロック関連
 - **owner**: DataKeeper（調査）+ Orchestrator（削除・差し替え判断）
+
+- **実施内容（acceptance 1〜4）**:
+  1. **71件の完全リスト化**: `data/places_resolved.json` の `rejected:true`（94件）を候補住所の都道府県で機械分類 → 愛知県外71件・愛知県内郊外22件（既知の1件不明分類ズレを修正）に確定。各店の店名は `stores/<HotPepperID>.html` の `<title>` から復元（ファイル名＝HotPepperID の既存規約を利用）
+  2. **実在検証**: 71件全てについて (a) Google Places candidateAddress（他都市の実住所） (b) 自社データの「アクセス」欄の記述（他都市の実在駅名等） の2独立ソースが一致することを確認。うち3件（旬酔かなで／栄亭綾部本店／エゾバルバンバン）は HotPepper公式ページを実フェッチして追加検証。**70件は他都市の実店舗の誤登録と確定**、**1件（エゾバルバンバン EZOBARU BANG BANG 名古屋栄店・J001161829）は名古屋栄の実店舗と判明**（Google Places側が同名チェーンの札幌店に誤マッチしていただけ）
+  3. **差し替え要否の判断**: 70件のうち複数支店を持つチェーン（くいもの屋わん・七輪焼肉安安等）は、名古屋の正規支店が別エントリとして既にカタログに実在することを確認済みのため「差し替え」は不要（誤登録行の削除のみで名古屋店の掲載は毀損しない）。単独店（会津っこ・この島の大地等）はそもそも名古屋に支店を持たないため削除のみ
+  4. **削除の実施**: `data/closed_stores.json`（既存の実在検証済み永久除外リスト・build.jsが自動除外）へ70件をホットペッパーIDで登録。1件（エゾバルバンバン）は `data/other_prefecture_match_exceptions.json`（新設）に「検証済みの実店舗」として記録し監査対象から除外
+  5. **再発防止（acceptance 4）**: `scripts/audit_other_prefecture_matches.js` を新設。`places_resolved.json` の却下ログのうち愛知県外マッチが `closed_stores.json`/`other_prefecture_match_exceptions.json` のどちらにも未登録なら exit 1。`.github/workflows/build.yml` に非スキップの監査ステップとして追加（build.js 実行後・commit&push 前）
+- **acceptance 5（未着手・別枠）**: 22件の愛知県内・名古屋市外（一宮市・知立市・瀬戸市等）は掲載方針の編集判断が必要なためオーナー確認待ち。一覧は `data/places_resolved.json` の rejected エントリから `pref === '愛知県' && pref !== '不明'`（候補住所が愛知県だが名古屋市外）で再抽出可能
+- **未検証（本チケットの範囲外・環境制約）**: `HOTPEPPER_API_KEY` がこのエージェント実行環境に無いため、`node build.js` のフル実行（5,023件規模）はローカルで確認できず。closed_stores.json の除外ロジック自体は835件の部分データでのドライラン（`他都道府県マッチ` ログで70件除外・想定通り）で確認済み。本番反映は次回 build.yml（CI・HOTPEPPER_API_KEY保持）実行時
+- **検証**: `node scripts/audit_other_prefecture_matches.js --check` → OK（0件未対応）。`npm test` 全125件パス。JSON構文検証済み
 
 - **発端**: 口コミ信頼度が「—（判定材料不足）」になる436店（`data/stores.json` 5,033店中8.7%）の原因を追ったところ、`scripts/fetch_places.js` の住所検証（`validateAddress()`）が94店でGoogle Places候補を却下（`rejected: true`、`data/places_resolved.json`）していた。この却下自体は誤検出防止のガードとして正しく機能していたが、却下理由を分類したところ想定より深刻な内容だった。
 - **実測した内訳（94件・機械分類）**:

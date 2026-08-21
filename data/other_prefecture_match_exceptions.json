@@ -1,0 +1,19 @@
+{
+  "_comment": "scripts/audit_other_prefecture_matches.js（ISSUE-103再発防止監査）の例外リスト。data/places_resolved.json で住所不一致却下（rejected:true）かつ候補住所が愛知県外を指すが、個別に実在検証した結果『名古屋の実店舗である』と確認できたもの。Google Places の text search が同名チェーンの別都市支店に誤マッチしただけで、当該店自体は名古屋に実在する（＝ISSUE-103の混入とは別の、単なる検索マッチング精度の問題）。ここに載せない限り監査は毎回 FAIL する。",
+  "_schema": {
+    "ホットペッパーID": "必須。除外キー",
+    "店名": "証跡兼",
+    "確認日": "YYYY-MM-DD",
+    "出典": "実在検証した一次情報URL（HotPepper公式ページ等）",
+    "理由": "なぜ他都道府県マッチが誤りで、名古屋店が実在すると判断したか"
+  },
+  "exceptions": [
+    {
+      "ホットペッパーID": "J001161829",
+      "店名": "エゾバルバンバン EZOBARU BANG BANG 名古屋栄店",
+      "確認日": "2026-08-22",
+      "出典": "https://www.hotpepper.jp/strJ001161829/",
+      "理由": "HotPepper公式ページを実フェッチし、店名・所在地とも「愛知県名古屋市中区栄5-28-4」の名古屋栄店であることを確認済み（矢場町駅3番出口徒歩1分）。data/stores.json 側の住所・緯度経度・Instagram（ezobarunagoya）・食べログURL（tabelog.com/aichi/...）も独立して一致。Google Places却下は『札幌大通店』への誤マッチが原因で、店自体の混入ではない"
+    }
+  ]
+}
