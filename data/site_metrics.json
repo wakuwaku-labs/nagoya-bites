@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-08-21T00:14:32.664Z",
+  "generatedAt": "2026-08-21T07:40:09.500Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 771,
-    "pageViews": 1286,
-    "sessions": 907,
-    "avgSessionDuration": 157.8,
-    "bounceRate": 0.359,
+    "activeUsers": 781,
+    "pageViews": 1299,
+    "sessions": 918,
+    "avgSessionDuration": 154.4,
+    "bounceRate": 0.331,
     "pagesPerSession": 1.42
   },
   "channels": {
     "sessions": {
-      "organic": 593,
-      "direct": 231,
+      "organic": 602,
+      "direct": 216,
       "social": 94,
       "referral": 15,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 63.6,
-      "direct": 24.8,
+      "organic": 64.9,
+      "direct": 23.3,
       "social": 10.1,
       "referral": 1.6,
       "paid": 0,
@@ -31,22 +31,22 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 242
+      "sessions": 247
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 222
+      "sessions": 225
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 180
+      "sessions": 181
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 102
+      "sessions": 103
     },
     {
       "source": "chatgpt.com",
@@ -54,14 +54,14 @@
       "sessions": 89
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 31
-    },
-    {
       "source": "openai",
       "medium": "organic",
       "sessions": 19
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 17
     },
     {
       "source": "openai",
@@ -82,13 +82,13 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 248,
+      "pageViews": 250,
       "sessions": 145
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 130,
-      "sessions": 114
+      "pageViews": 134,
+      "sessions": 119
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -97,17 +97,17 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 59,
+      "pageViews": 60,
       "sessions": 37
     },
     {
-      "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
-      "pageViews": 58,
-      "sessions": 55
+      "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
+      "pageViews": 59,
+      "sessions": 56
     }
   ],
   "cta": {
-    "outboundClicks": 84,
+    "outboundClicks": 85,
     "ctaClickRate": 9.3,
     "byDomain": [
       {
@@ -116,7 +116,7 @@
       },
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 12
+        "clicks": 13
       },
       {
         "domain": "maps.google.com",
@@ -169,15 +169,15 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 23,
-      "direct": 38,
+      "organic": 27,
+      "direct": 35,
       "social": 23,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 3.9,
-    "ctaClickRate_direct": 16.5,
+    "ctaClickRate_organic": 4.5,
+    "ctaClickRate_direct": 16.2,
     "ctaClickRate_social": 24.5,
     "byPage": [
       {
@@ -206,6 +206,10 @@
       },
       {
         "path": "/features/birthday-surprise.html",
+        "clicks": 1
+      },
+      {
+        "path": "/features/nagoya-yakiniku.html",
         "clicks": 1
       },
       {
@@ -323,6 +327,11 @@
         "clicks": 1
       },
       {
+        "path": "/features/nagoya-yakiniku.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
         "path": "/features/osu-food-walk.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -430,6 +439,10 @@
         "clicks": 1
       },
       {
+        "path": "/features/nagoya-yakiniku.html",
+        "clicks": 1
+      },
+      {
         "path": "/features/osu-food-walk.html",
         "clicks": 1
       },
@@ -454,11 +467,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 53
+    "reservationClicks": 54
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 771,
+    "value": 781,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
