@@ -21,6 +21,17 @@
 //   採用基準の後付け改定（data/photo_policy.json）で個別店の客投稿写真を洗い直すときに使う。
 // 取得後:
 //   node build.js && node gen-store-pages.js
+//
+// 【再試行クールダウン（2026-08-21・Places API課金の実測調査で判明）】
+// このスクリプトは build.yml の全実行（push契機・毎日約18回）で無条件に走り、写真の無い
+// 店は毎回フルの textsearch+details を打ち直していた。Google側のデータは数時間では
+// 変わらないのに、同じ「客投稿しかない/解像度不足」な店（実測75件超）を1日十数回、
+// 何ヶ月も課金し続けていた計算になり、これが ¥1,500/月の Places API 予算アラートが
+// 無料トライアル失効の翌日（2026-08-20）に即座に100%到達した主因と推定される
+// （週次の weekly-places.yml 側は 100件/週の予算制御込みで¥1,429/月と別枠で見積もり済み）。
+// 前回「試行した」事実だけを記録し（成功/失敗を問わない）、COOLDOWN_DAYS 以内に再試行
+// 済みの店はスキップする。Google側の在庫は日次で動くものではないため、取りこぼしより
+// 無駄打ちを減らす方を優先する。--force / --only は従来通りクールダウンを無視する。
 
 const fs = require('fs');
 const path = require('path');
@@ -33,6 +44,9 @@ const ROOT = path.resolve(__dirname, '..');
 const MANUAL_JSON = path.join(ROOT, 'data', 'manual_stores.json');
 const PENDING_JSON = path.join(ROOT, 'data', 'pending_stores.json');
 const KEY = process.env.GOOGLE_MAPS_API_KEY || process.env.GOOGLE_PLACES_API_KEY || '';
+// 失敗した店を毎回（1日十数回）再試行しない。Google側の在庫は日次で動かないため、
+// この間隔で十分に取りこぼしを回収できる（週次の weekly-places.yml と同じオーダー）。
+const COOLDOWN_DAYS = 7;
 
 if (!KEY) {
   console.error('❌ GOOGLE_MAPS_API_KEY（または GOOGLE_PLACES_API_KEY）が未設定です。');
@@ -388,7 +402,22 @@ async function main() {
   // 再取得対象 = 未取得/SVG/禁止ストック（従来どおり）＋ 生死判定で失効が確認された店（新規）
   // --only 指定時はその店だけを対象にし、hasRealPhoto の有無に関わらず強制的に再判定する
   // （採用基準ゲート＝data/photo_policy.json 施行前に採用済みの客投稿写真を洗い直すため）
-  const targets = allStores.filter(s => matchesOnly(s) && (force || only || s.__needsRefetch || !hasRealPhoto(s)));
+  const daysSince = (dateStr) => {
+    const d = Date.parse(dateStr);
+    if (isNaN(d)) return Infinity;
+    return Math.floor((Date.now() - d) / 86400000);
+  };
+  const inCooldown = (s) => !force && !only && !s.__needsRefetch
+    && daysSince(s['写真確認日']) < COOLDOWN_DAYS;
+  let cooldownSkipped = 0;
+  const targets = allStores.filter(s => {
+    if (!matchesOnly(s) || !(force || only || s.__needsRefetch || !hasRealPhoto(s))) return false;
+    if (inCooldown(s)) { cooldownSkipped++; return false; }
+    return true;
+  });
+  if (cooldownSkipped) {
+    console.log(`クールダウン中（前回試行から${COOLDOWN_DAYS}日未満）につきスキップ: ${cooldownSkipped}件\n`);
+  }
 
   // ── Phase 2: 対象店だけ Places から取得（place_id キャッシュで API 呼び出しを節約）──
   let done = 0, ok = 0, miss = 0, 復活 = 0, policyRejected = 0;
@@ -399,6 +428,12 @@ async function main() {
     const area = s['エリア'] || '';
     const wasDead = !!s.__needsRefetch;
     const r = await fetchPhoto(name, area, s['GooglePlaceID'] || '', s);
+    // 成功/失敗を問わず「試行した」ことを記録する（クールダウン判定の基準）。
+    // API 自体が応答していない回（キー不正・quota・ネットワーク断）は記録しない
+    // ＝一時的な障害を「7日間再試行不要」と誤解させないための安全弁。
+    if (apiHealth.responded > 0) {
+      s['写真確認日'] = new Date().toISOString().slice(0, 10);
+    }
     if (r && r.url) {
       s['写真URL'] = r.url;
       s['写真クレジット'] = r.attribution;
@@ -449,7 +484,7 @@ async function main() {
   for (const d of datasets) {
     fs.writeFileSync(d.file, JSON.stringify(d.root, null, 2) + '\n', 'utf8');
   }
-  console.log(`\n生存 ${生存}件 / 失効検知 ${失効}件 → 処理 ${done}件 / 実写採用 ${ok}件（うち失効差し替え ${復活}件）/ 不採用(SVG維持) ${miss}件`);
+  console.log(`\n生存 ${生存}件 / 失効検知 ${失効}件 / クールダウン中${cooldownSkipped}件スキップ → 処理 ${done}件 / 実写採用 ${ok}件（うち失効差し替え ${復活}件）/ 不採用(SVG維持) ${miss}件`);
   if (policyRejected) console.log(`  ↳ うち ${policyRejected}件は採用基準（客投稿の除外・解像度）で不採用。data/photo_policy.json 参照`);
   console.log('次に: node build.js && node gen-store-pages.js');
 }
