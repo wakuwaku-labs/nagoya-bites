@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-08-21T08:24:59.236Z",
+  "generatedAt": "2026-08-21T17:49:17.469Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 782,
-    "pageViews": 1299,
-    "sessions": 919,
-    "avgSessionDuration": 154.2,
-    "bounceRate": 0.332,
-    "pagesPerSession": 1.41
+    "activeUsers": 781,
+    "pageViews": 1309,
+    "sessions": 925,
+    "avgSessionDuration": 154.7,
+    "bounceRate": 0.35,
+    "pagesPerSession": 1.42
   },
   "channels": {
     "sessions": {
-      "organic": 602,
-      "direct": 217,
-      "social": 94,
+      "organic": 609,
+      "direct": 230,
+      "social": 92,
       "referral": 15,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 64.9,
-      "direct": 23.4,
-      "social": 10.1,
+      "organic": 64.4,
+      "direct": 24.3,
+      "social": 9.7,
       "referral": 1.6,
       "paid": 0,
       "other": 0
@@ -31,42 +31,42 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 247
+      "sessions": 245
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 225
+      "sessions": 235
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 181
+      "sessions": 183
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 103
+      "sessions": 104
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 89
-    },
-    {
-      "source": "openai",
-      "medium": "organic",
-      "sessions": 19
+      "sessions": 87
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 18
+      "sessions": 32
+    },
+    {
+      "source": "openai",
+      "medium": "organic",
+      "sessions": 17
     },
     {
       "source": "openai",
       "medium": "(not set)",
-      "sessions": 14
+      "sessions": 11
     },
     {
       "source": "duckduckgo",
@@ -82,18 +82,18 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 250,
-      "sessions": 145
+      "pageViews": 263,
+      "sessions": 152
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 134,
-      "sessions": 119
+      "pageViews": 139,
+      "sessions": 123
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 110,
-      "sessions": 104
+      "pageViews": 112,
+      "sessions": 106
     },
     {
       "path": "/index.html",
@@ -107,8 +107,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 85,
-    "ctaClickRate": 9.2,
+    "outboundClicks": 83,
+    "ctaClickRate": 9,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -120,7 +120,7 @@
       },
       {
         "domain": "maps.google.com",
-        "clicks": 8
+        "clicks": 9
       },
       {
         "domain": "jouhou.nagoya",
@@ -161,28 +161,24 @@
       {
         "domain": "x.com",
         "clicks": 1
-      },
-      {
-        "domain": "(unattributed)",
-        "clicks": 3
       }
     ],
     "note": null,
     "byChannel": {
-      "organic": 27,
-      "direct": 35,
+      "organic": 24,
+      "direct": 36,
       "social": 23,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 4.5,
-    "ctaClickRate_direct": 16.1,
-    "ctaClickRate_social": 24.5,
+    "ctaClickRate_organic": 3.9,
+    "ctaClickRate_direct": 15.7,
+    "ctaClickRate_social": 25,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 34
+        "clicks": 31
       },
       {
         "path": "/",
@@ -262,6 +258,10 @@
       },
       {
         "path": "/journal/2026-08-18-noritake-garden-pasta.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-21-meieki-1bansen-rokurinsha.html",
         "clicks": 1
       }
     ],
@@ -415,6 +415,11 @@
         "path": "/journal/2026-08-18-noritake-garden-pasta.html",
         "domain": "tabelog.com",
         "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-21-meieki-1bansen-rokurinsha.html",
+        "domain": "maps.google.com",
+        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
@@ -471,7 +476,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 782,
+    "value": 781,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
