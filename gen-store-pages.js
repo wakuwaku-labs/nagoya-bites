@@ -269,6 +269,54 @@ function buildRelatedFeatures(store) {
 }
 
 // ================================================================
+// 関連店舗（同エリア優先）— SEO-065
+// ================================================================
+// 店舗ページ間に内部リンクが無く、5,500件超の深いページがサイトマップと
+// トップページ50件のカードだけを発見経路にしていた（内部リンクの権威伝播が薄い）。
+// 実在する店（slugged=生成対象の全店舗）だけを機械的な一致条件で選ぶ。
+// 手動キュレーションや順位操作は行わない（架空店ブロック・制約10と整合）。
+//
+// 見出しは選定条件と必ず一致させる（「同ジャンル」と謳って別ジャンルが混ざる、
+// といった見出しと中身の不一致を避ける）。エリアがあれば同エリア内で
+// ジャンル一致を優先しつつ埋める＝結果は常に「同エリア」を満たす。
+// エリアが無い店だけジャンル一致（エリア問わず）にフォールバックする。
+function buildRelatedStores(store, slugged, ownSlug) {
+  const area  = store['エリア']  || '';
+  const genre = store['ジャンル'] || '';
+  if (!area && !genre) return { label: '', items: [] };
+
+  const score = (cand) => {
+    const rating = parseFloat(cand['Google評価']) || 0;
+    const count  = parseInt(cand['口コミ数'] || '', 10) || 0;
+    return rating * 1000 + count; // 評価優先・同点は口コミ数で決定的に順序付け
+  };
+  const byScore = (a, b) => score(b.store) - score(a.store);
+  const toItem = (cand) => ({ name: cand.store['店名'] || '', slug: cand.slug });
+
+  if (area) {
+    const sameAreaGenre = [];
+    const sameAreaOther = [];
+    for (const cand of slugged) {
+      if (cand.slug === ownSlug) continue;
+      if ((cand.store['エリア'] || '') !== area) continue;
+      if (genre && (cand.store['ジャンル'] || '') === genre) sameAreaGenre.push(cand);
+      else sameAreaOther.push(cand);
+    }
+    sameAreaGenre.sort(byScore);
+    sameAreaOther.sort(byScore);
+    const items = [...sameAreaGenre, ...sameAreaOther].slice(0, 4).map(toItem);
+    return { label: `${area}の他の店`, items };
+  }
+
+  const sameGenre = slugged
+    .filter((cand) => cand.slug !== ownSlug && (cand.store['ジャンル'] || '') === genre)
+    .sort(byScore)
+    .slice(0, 4)
+    .map(toItem);
+  return { label: `${genre}の店`, items: sameGenre };
+}
+
+// ================================================================
 // メタ説明文生成
 // ================================================================
 // アクセス文を「〇〇駅から徒歩N分」の一行に正規化する。
@@ -356,7 +404,7 @@ function buildDescription(s) {
 // ================================================================
 // HTML テンプレート
 // ================================================================
-function renderStorePage(s, slug) {
+function renderStorePage(s, slug, relatedStores) {
   const name     = s['店名'] || '';
   const genre    = s['ジャンル'] || '';
   const area     = s['エリア'] || '';
@@ -482,6 +530,15 @@ function renderStorePage(s, slug) {
     <h2>この店舗が登場する特集</h2>
     <ul>
       ${relatedFeatures.map(f => `<li><a href="../features/${f.file}">${f.label}</a></li>`).join('\n      ')}
+    </ul>
+  </div>` : '';
+
+  // 関連店舗（同エリア優先、最大4件）— SEO-065
+  const relatedStoresHtml = (relatedStores && relatedStores.items && relatedStores.items.length) ? `
+  <div class="related-stores">
+    <h2>${escapeHtml(relatedStores.label)}</h2>
+    <ul>
+      ${relatedStores.items.map(r => `<li><a href="${r.slug}.html">${escapeHtml(r.name)}</a></li>`).join('\n      ')}
     </ul>
   </div>` : '';
 
@@ -666,12 +723,12 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem
 .trust-headline .trust-score{font-family:'DM Mono',monospace;font-size:.8rem;color:var(--muted);margin-right:.2rem;}
 .trust-meta-line{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:var(--dim);margin:0 0 .6rem;}
 .trust-meta-heading{font-size:.7rem;font-weight:600;color:var(--dim);margin:.9rem 0 .1rem;}
-.related-features{margin:2rem 0 1.8rem;padding:1.3rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
-.related-features h2{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
-.related-features ul{list-style:none;padding:0;margin:0;}
-.related-features li{margin:.5rem 0;}
-.related-features a{font-size:.82rem;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.25);padding-bottom:2px;transition:color .2s;}
-.related-features a:hover{color:var(--gold2);border-bottom-color:var(--gold2);}
+.related-features,.related-stores{margin:2rem 0 1.8rem;padding:1.3rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
+.related-features h2,.related-stores h2{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
+.related-features ul,.related-stores ul{list-style:none;padding:0;margin:0;}
+.related-features li,.related-stores li{margin:.5rem 0;}
+.related-features a,.related-stores a{font-size:.82rem;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.25);padding-bottom:2px;transition:color .2s;}
+.related-features a:hover,.related-stores a:hover{color:var(--gold2);border-bottom-color:var(--gold2);}
 .back-section{border-top:1px solid var(--border);padding-top:1.8rem;text-align:center;}
 .back-section a{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
 .back-section a:hover{color:var(--gold);}
@@ -722,6 +779,7 @@ ${trustBreakdownHtml}
   </div>
 
   ${relatedHtml}
+  ${relatedStoresHtml}
 
   <div class="back-section">
     <a href="../?area=${encodeURIComponent(area)}&genre=${encodeURIComponent(genre)}">← ${area}の${genre}をもっと見る</a>
@@ -919,19 +977,24 @@ async function main() {
   let generated = 0;
   let skipped = 0;
 
+  // 第一段: 全店舗のスラグを先に確定する（related-stores のリンク先に要る・重複スラグの解決も先に済ませる）
+  const slugged = [];
   for (const s of visible) {
     if (!s['店名']) { skipped++; continue; }
     const baseSlug = toSlug(s);
-    // 重複スラグ対策
     let slug = baseSlug;
     let counter = 2;
     while (slugsSeen.has(slug)) {
       slug = `${baseSlug}-${counter++}`;
     }
     slugsSeen.add(slug);
-    slugs.push(slug);
+    slugged.push({ store: s, slug });
+  }
 
-    const html = renderStorePage(s, slug);
+  for (const { store: s, slug } of slugged) {
+    slugs.push(slug);
+    const relatedStores = buildRelatedStores(s, slugged, slug);
+    const html = renderStorePage(s, slug, relatedStores);
     if (!DRY_RUN) fs.writeFileSync(path.join(OUT_DIR, `${slug}.html`), html, 'utf8');
     generated++;
     if (generated % 100 === 0) process.stdout.write(`\r  ${generated}件生成済み...`);
@@ -984,4 +1047,4 @@ if (require.main === module) {
   main().catch(err => { console.error('エラー:', err); process.exit(1); });
 }
 
-module.exports = { renderStorePage, toSlug };
+module.exports = { renderStorePage, toSlug, buildRelatedStores };
