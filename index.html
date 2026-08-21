@@ -426,6 +426,19 @@ body.search-query-active .card-why{display:flex;}
 .mhi{height:340px;position:relative;overflow:hidden;}
 .mhi img{width:100%;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.03);}
 .mhi::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(28,28,26,.45) 0%,transparent 42%);pointer-events:none;}
+.mhi-track{display:flex;height:100%;transition:transform .32s cubic-bezier(.22,.61,.36,1);touch-action:pan-y;}
+.mhi-track.dragging{transition:none;}
+.mhi-track img{flex:0 0 100%;}
+.mhi-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(10,10,8,.55);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.92);width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;z-index:3;padding:0;transition:background .2s,opacity .2s;}
+.mhi-nav svg{width:18px;height:18px;display:block;}
+.mhi-nav:hover{background:rgba(10,10,8,.85);}
+.mhi-nav:disabled{opacity:.35;cursor:default;}
+.mhi-nav:disabled:hover{background:rgba(10,10,8,.55);}
+.mhi-prev{left:.7rem;}
+.mhi-next{right:.7rem;}
+.mhi-dots{position:absolute;left:0;right:0;bottom:.65rem;display:flex;justify-content:center;gap:.35rem;z-index:3;}
+.mhi-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45);transition:all .2s;cursor:pointer;padding:0;border:none;}
+.mhi-dot.active{background:#fff;width:16px;border-radius:3px;}
 .modal-title-block{padding-bottom:1.2rem;border-bottom:1px solid var(--border);margin-bottom:1.2rem;}
 .mig{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.22em;color:var(--ember);text-transform:uppercase;margin-bottom:.6rem;font-weight:600;}
 .min2{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--text);line-height:1.12;margin-top:.3rem;letter-spacing:.01em;}
@@ -1901,7 +1914,10 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 <div class="ov" id="ov" role="dialog" aria-modal="true" aria-label="店舗詳細">
   <div class="modal">
     <div class="mhi">
-      <img id="mi" src="" alt="">
+      <div class="mhi-track" id="mhi-track"><img id="mi" src="" alt=""></div>
+      <button type="button" class="mhi-nav mhi-prev" id="mhi-prev" onclick="mhiGo(-1)" aria-label="前の写真" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button type="button" class="mhi-nav mhi-next" id="mhi-next" onclick="mhiGo(1)" aria-label="次の写真" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg></button>
+      <div class="mhi-dots" id="mhi-dots" style="display:none"></div>
       <button id="modal-fav-btn" class="mcl mcl-fav" onclick="toggleModalFav()" aria-label="保存"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7.5-4.5-10-9.5C.5 7 3.5 3 8 3c2.5 0 3.5 1.5 4 2 .5-.5 1.5-2 4-2 4.5 0 7.5 4 6 8.5C19.5 16.5 12 21 12 21z"/></svg></button>
       <button class="mcl mcl-close" onclick="closeM()" aria-label="閉じる"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg></button>
     </div>
@@ -9677,11 +9693,7 @@ function openM(i) {
   trackEvent('modal_open', {store_name: r['店名'], genre: r['ジャンル'], area: r['エリア']});
   var photo = r['写真URL'] || '/assets/store-figures/_fallback.svg';
   var hpUrl = hotpepperUrl(r);
-  var miEl = document.getElementById('mi');
-  miEl.src = nbImage(photo, 1200);
-  miEl.srcset = nbSrcset(photo, [800, 1200, 1600]);
-  miEl.sizes = '(max-width:768px) 100vw, 680px';
-  miEl.alt = (r['店名'] || '店舗') + ' - ' + (r['ジャンル'] || '飲食店') + 'の写真';
+  renderMhi(r, photo);
   document.getElementById('mg').textContent = r['ジャンル'] || '';
   document.getElementById('mn').textContent = r['店名'] || '';
   document.getElementById('ma').textContent = (r['都道府県']||'') + ' ' + (r['エリア']||'');
@@ -10071,6 +10083,114 @@ function openM(i) {
   document.getElementById('mobile-cta-bar').style.display='none';
 }
 
+// ================================================================
+// モーダル ヒーロー写真カルーセル（複数写真をスワイプで閲覧）
+// 現状は 写真URL 1枚のみが典型だが、内観写真URL/料理写真URL1/URL2 が
+// 将来データ投入されれば自動的に複数枚スワイプが有効になる設計。
+// ================================================================
+var MHI_PHOTOS = [];
+var MHI_INDEX = 0;
+function renderMhi(r, primaryPhoto) {
+  var extraFields = [
+    {key:'内観写真URL', label:'内観'},
+    {key:'料理写真URL1', label:'料理①'},
+    {key:'料理写真URL2', label:'料理②'}
+  ];
+  var seen = {};
+  var photos = [];
+  var primary = (primaryPhoto || '').trim();
+  if (primary) { photos.push({url: primary, label: ''}); seen[primary] = true; }
+  extraFields.forEach(function(f) {
+    var url = (r[f.key] || '').trim();
+    if (url && !seen[url]) { photos.push({url: url, label: f.label}); seen[url] = true; }
+  });
+  if (photos.length === 0) photos.push({url: '/assets/store-figures/_fallback.svg', label: ''});
+  MHI_PHOTOS = photos;
+  MHI_INDEX = 0;
+  var storeName = r['店名'] || '店舗';
+  var genre = r['ジャンル'] || '飲食店';
+  document.getElementById('mhi-track').innerHTML = photos.map(function(p, idx) {
+    var altSuffix = p.label ? '（' + p.label + '）' : '';
+    var alt = (storeName + ' - ' + genre + 'の写真' + altSuffix).replace(/"/g, '&quot;');
+    return '<img' + (idx === 0 ? ' id="mi"' : '') +
+      ' src="' + nbImage(p.url, 1200) + '"' +
+      ' srcset="' + nbSrcset(p.url, [800, 1200, 1600]) + '"' +
+      ' sizes="(max-width:768px) 100vw, 680px"' +
+      ' alt="' + alt + '"' +
+      (idx > 0 ? ' loading="lazy"' : '') + '>';
+  }).join('');
+  var multi = photos.length > 1;
+  document.getElementById('mhi-prev').style.display = multi ? '' : 'none';
+  document.getElementById('mhi-next').style.display = multi ? '' : 'none';
+  var dotsEl = document.getElementById('mhi-dots');
+  if (multi) {
+    dotsEl.style.display = '';
+    dotsEl.innerHTML = photos.map(function(p, idx) {
+      return '<button type="button" class="mhi-dot' + (idx === 0 ? ' active' : '') + '" onclick="mhiGoTo(' + idx + ')" aria-label="' + (idx + 1) + '枚目の写真を見る"></button>';
+    }).join('');
+  } else {
+    dotsEl.style.display = 'none';
+    dotsEl.innerHTML = '';
+  }
+  mhiUpdateUi();
+}
+function mhiUpdateUi() {
+  var track = document.getElementById('mhi-track');
+  track.style.transform = 'translateX(-' + (MHI_INDEX * 100) + '%)';
+  var dots = document.querySelectorAll('#mhi-dots .mhi-dot');
+  for (var i = 0; i < dots.length; i++) dots[i].classList.toggle('active', i === MHI_INDEX);
+  var prevBtn = document.getElementById('mhi-prev');
+  var nextBtn = document.getElementById('mhi-next');
+  if (prevBtn) prevBtn.disabled = (MHI_INDEX <= 0);
+  if (nextBtn) nextBtn.disabled = (MHI_INDEX >= MHI_PHOTOS.length - 1);
+}
+function mhiGo(delta) {
+  var next = MHI_INDEX + delta;
+  if (next < 0 || next >= MHI_PHOTOS.length) return;
+  MHI_INDEX = next;
+  mhiUpdateUi();
+}
+function mhiGoTo(idx) {
+  if (idx < 0 || idx >= MHI_PHOTOS.length) return;
+  MHI_INDEX = idx;
+  mhiUpdateUi();
+}
+(function() {
+  var track = document.getElementById('mhi-track');
+  var startX = 0, startY = 0, dragging = false, axisLocked = null;
+  track.addEventListener('touchstart', function(e) {
+    if (MHI_PHOTOS.length <= 1) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    axisLocked = null;
+    dragging = true;
+    track.classList.add('dragging');
+  }, {passive: true});
+  track.addEventListener('touchmove', function(e) {
+    if (!dragging) return;
+    var dx = e.touches[0].clientX - startX;
+    var dy = e.touches[0].clientY - startY;
+    if (axisLocked === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+      axisLocked = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+    }
+    if (axisLocked !== 'x') return;
+    e.preventDefault();
+    track.style.transform = 'translateX(calc(-' + (MHI_INDEX * 100) + '% + ' + dx + 'px))';
+  }, {passive: false});
+  track.addEventListener('touchend', function(e) {
+    track.classList.remove('dragging');
+    if (!dragging) return;
+    dragging = false;
+    if (axisLocked === 'x') {
+      var dx = e.changedTouches[0].clientX - startX;
+      var threshold = track.clientWidth * 0.18;
+      if (dx <= -threshold && MHI_INDEX < MHI_PHOTOS.length - 1) MHI_INDEX++;
+      else if (dx >= threshold && MHI_INDEX > 0) MHI_INDEX--;
+    }
+    mhiUpdateUi();
+  }, {passive: true});
+})();
+
 function checkPhotoGrid() {
   var grid = document.getElementById('photo-grid');
   var wrap = document.getElementById('photo-gallery-row');
@@ -10380,6 +10500,16 @@ document.addEventListener('keydown', function(e) {
     var ov = document.getElementById('ov');
     if (ov && ov.classList.contains('open')) closeM();
   }
+});
+
+// ================================================================
+// Arrow keys navigate the modal hero photo carousel
+// ================================================================
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+  var ov = document.getElementById('ov');
+  if (!ov || !ov.classList.contains('open') || MHI_PHOTOS.length <= 1) return;
+  mhiGo(e.key === 'ArrowLeft' ? -1 : 1);
 });
 
 // ================================================================
