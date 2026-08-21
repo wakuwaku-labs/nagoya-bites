@@ -35,7 +35,8 @@
 - **acceptance**: マージ後の次回 build.yml 実行後、`node scripts/audit_crosscheck_v22.js` 相当の分布が本番 `data/crosscheck.json` で確認できること。`--refresh` 再開後、`s9_crossStoreFingerprint` の observed 率が上昇していくことを月次で確認
 ### [SEO-064] 実測で最も読まれている特集2本（おひとり様・ひつまぶし）がトップのファーストビュー導線に1枠も無く、同じ需要の別特集が枠を占めている
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-22（Orchestrator・オーナー就寝中の自律処理）
 - **detected**: 2026-08-21
 - **category**: SEO
 - **owner**: Builder
@@ -55,6 +56,12 @@
   3. `nagoya-unaju` と `nagoya-hitsumabushi` の需要重複を解消する（同月のFVに両方は出さない。どちらを残すかは閲覧実数で決め、判断根拠を本チケットに追記する）。
   4. `node scripts/build_featured.js --check` が通り、`index.html` は単一ファイルのまま（制約1）・`LOCAL_STORES` パターン不変（制約2）。
   5. 効果は翌週の日次/週次レポートで「トップページ閲覧数に対する当該2特集の閲覧数」の前後比で再評価する（体感で判定しない）。
+
+- **実装内容**: `data/featured.json` を編集し `node scripts/build_featured.js` で反映（`index.html` を直接手書きしていない）。
+  1. `nagoya-unaju` と `nagoya-hitsumabushi` の需要重複: 実測で継続的にトラフィックがあるのは `nagoya-hitsumabushi`（`nagoya-unaju` には該当する実測数値なし）のため、7月・8月の `monthlyScenes` の該当スロットを `nagoya-unaju` → `nagoya-hitsumabushi` に差し替え（バッジ・シーズンバナー文言も追従、`sceneLeads["7"]["nagoya-hitsumabushi"]`/`["8"]` も更新）。`nagoya-unaju` はジャンル横断の `showcase` プール（週替わり）には引き続き残るため掲載機会自体は失われない
+  2. `nagoya-solo-dining`（評価軸が季節に紐付かない evergreen 需要）を `items` に新規追加（`priority: 58`）。これにより8月のFVは `[今月のシーン3枠] + [evergreen 5枠(banquet/nagoya-solo-dining/private-room/meieki/sakae)] = 8枠(maxSlots)` で両特集がFVから到達可能になった
+  3. `node scripts/build_featured.js --check` ✅ / 実行後 `git diff index.html` で意図した3箇所（うなぎ→ひつまぶし差し替え・一人飲み新規カード追加）のみ変更されていることを確認 ✅ / `npm test` 全125件パス ✅
+- **acceptance 5（効果測定）**: 未実施（翌週以降の日次/週次レポートで再評価が必要・次回 `/seo-triage` 実行時に前後比を確認すること）
 
 ### [ISSUE-105] 店舗写真の採用基準ゲート（8/17新設）が既存の客投稿写真を洗い直せず、147店で誤掲載が残っていた
 
