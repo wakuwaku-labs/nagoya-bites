@@ -1,47 +1,37 @@
 {
-  "generatedAt": "2026-08-20T18:37:15.711Z",
+  "generatedAt": "2026-08-21T00:14:36.063Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
   "byQuery": {
-    "ctrFix": [
-      {
-        "query": "くろぎ 名古屋",
-        "impressions": 211,
-        "clicks": 3,
-        "position": 9.9,
-        "ctr": 1.42,
-        "expectedCtr": 2.5,
-        "missedClicks": 2.3
-      }
-    ],
+    "ctrFix": [],
     "ctrFixGeoless": [
       {
         "query": "一人飲み",
-        "impressions": 188,
+        "impressions": 179,
         "clicks": 3,
         "position": 4.5,
-        "ctr": 1.6,
+        "ctr": 1.68,
         "expectedCtr": 7,
-        "missedClicks": 10.2
+        "missedClicks": 9.5
       },
       {
         "query": "やきまる亭",
-        "impressions": 247,
+        "impressions": 240,
         "clicks": 3,
         "position": 7.6,
-        "ctr": 1.21,
+        "ctr": 1.25,
         "expectedCtr": 3.5,
-        "missedClicks": 5.7
+        "missedClicks": 5.4
       },
       {
         "query": "一魚魚一 はなれ",
-        "impressions": 183,
+        "impressions": 181,
         "clicks": 2,
         "position": 8.1,
-        "ctr": 1.09,
+        "ctr": 1.1,
         "expectedCtr": 3.2,
-        "missedClicks": 3.8
+        "missedClicks": 3.7
       },
       {
         "query": "喫茶時々",
@@ -63,38 +53,38 @@
       },
       {
         "query": "イルタッソ",
-        "impressions": 53,
+        "impressions": 51,
         "clicks": 2,
         "position": 5.8,
-        "ctr": 3.77,
+        "ctr": 3.92,
         "expectedCtr": 5.2,
-        "missedClicks": 0.8
+        "missedClicks": 0.7
       }
     ],
     "rankPush": [
       {
         "query": "尾張山荘くろぎ",
-        "impressions": 532,
+        "impressions": 492,
         "clicks": 6,
         "position": 10.4,
-        "ctr": 1.13,
-        "upsideClicks": 8.9
+        "ctr": 1.22,
+        "upsideClicks": 7.8
       },
       {
         "query": "アルマデシュラスコ 名駅",
-        "impressions": 114,
+        "impressions": 107,
         "clicks": 2,
         "position": 10.1,
-        "ctr": 1.75,
-        "upsideClicks": 1.2
+        "ctr": 1.87,
+        "upsideClicks": 1
       },
       {
         "query": "ナショナルベーカリー",
-        "impressions": 382,
+        "impressions": 379,
         "clicks": 10,
         "position": 11.4,
-        "ctr": 2.62,
-        "upsideClicks": 0.7
+        "ctr": 2.64,
+        "upsideClicks": 0.6
       }
     ]
   },
@@ -111,21 +101,12 @@
       },
       {
         "page": "/stores/J004025075.html",
-        "impressions": 579,
+        "impressions": 563,
         "clicks": 14,
-        "position": 6.6,
-        "ctr": 2.42,
-        "expectedCtr": 4.4,
-        "missedClicks": 11.5
-      },
-      {
-        "page": "/stores/J004559348.html",
-        "impressions": 565,
-        "clicks": 8,
-        "position": 8.4,
-        "ctr": 1.42,
-        "expectedCtr": 3,
-        "missedClicks": 9.2
+        "position": 6.5,
+        "ctr": 2.49,
+        "expectedCtr": 4.5,
+        "missedClicks": 11.3
       },
       {
         "page": "/journal/2026-07-27-owarisanso-kurogi.html",
@@ -135,6 +116,15 @@
         "ctr": 1.63,
         "expectedCtr": 2.7,
         "missedClicks": 9
+      },
+      {
+        "page": "/stores/J004559348.html",
+        "impressions": 539,
+        "clicks": 8,
+        "position": 8.4,
+        "ctr": 1.48,
+        "expectedCtr": 3,
+        "missedClicks": 8.4
       },
       {
         "page": "/stores/J004661023.html",
@@ -150,17 +140,17 @@
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2558,
+        "impressions": 2515,
         "clicks": 13,
-        "position": 25.3,
-        "ctr": 0.51,
-        "upsideClicks": 58.6
+        "position": 25.4,
+        "ctr": 0.52,
+        "upsideClicks": 57.3
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 1,
+    "queryCtrFix": 0,
     "queryCtrFixGeoless": 6,
     "queryRankPush": 3,
     "pageCtrFix": 5,
@@ -168,7 +158,7 @@
     "topPageCtrFix": [
       "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
       "/stores/J004025075.html",
-      "/stores/J004559348.html"
+      "/journal/2026-07-27-owarisanso-kurogi.html"
     ]
   }
 }
