@@ -11,7 +11,8 @@ const assert = require('node:assert/strict');
 const fs = require('fs');
 const path = require('path');
 const td = require('../scripts/lib/trust_display.js');
-const { computeCrossCheckScore } = require('../scripts/lib/cross_check.js');
+const { computeCrossCheckScore } = require('../scripts/lib/cross_check_v22.js');
+const { buildFingerprintIndex, evaluateStoreFingerprint } = require('../scripts/lib/review_fingerprint.js');
 
 const ROOT = path.join(__dirname, '..');
 const P = td.loadPolicy();
@@ -30,16 +31,18 @@ function bd(o) {
       { id: 's7b', score: 6, max: 6, observed: true, reason: '≒' },
       { id: 's7c', score: 6, max: 6, observed: true, reason: '自然' }
     ] },
-    s8_reviewDistribution:  axis(15, 15, true, '自然')
+    s8_reviewDistribution:  axis(15, 15, true, '自然'),
+    s7d_reviewBurstCluster:   axis(3, 3, true, '分散'),
+    s9_crossStoreFingerprint: axis(4, 4, true, '一致なし')
   }, o);
 }
 const store = { 'Google評価': '4.3', '口コミ数': '182' };
 
-test('trust_display: policy の基本形（段階5つ＋na・検証7項目・meta3項目・禁止語）', () => {
+test('trust_display: policy の基本形（段階5つ＋na・検証9項目・meta3項目・禁止語）', () => {
   assert.equal(P.name, '口コミ信頼度');
   assert.deepEqual(P.tiers.map(t => t.id), ['SS', 'A', 'B', 'C', 'D']);
   assert.deepEqual(P.tiers.map(t => t.min), [97, 90, 75, 60, 0]);
-  assert.equal(P.checks.length, 7);
+  assert.equal(P.checks.length, 9);
   assert.deepEqual(P.meta.map(m => m.axis), ['s3_dataCompleteness', 's5_operationContinuity', 's6_instagramPresence']);
   assert.ok(P.bannedWords.length >= 5);
   assert.equal(P.minObserved, 3);
@@ -54,25 +57,26 @@ test('trust_display: 段階の境界（96→A, 97→SS, 89→B, 90→A, 74→C, 
 });
 
 test('trust_display: 未観測の項目は分母に入らない／S3・S5・S6 は採点に入らない', () => {
-  // 観測: s1 15/15, s2 10/10, s7b 6/6, s7c 6/6, s8 15/15 = 52/52 → 100（s4, s7a は未観測）
+  // 観測: s1 15/15, s2 10/10, s7b 6/6, s7c 6/6, s8 15/15, s7d 3/3, s9 4/4 = 59/59 → 100（s4, s7a は未観測）
   const r = td.evaluate(store, { crossCheckBreakdown: bd() });
   assert.equal(r.score, 100);
   assert.equal(r.tier, 'SS');
-  assert.deepEqual(r.coverage, { observed: 5, total: 7 });
+  assert.deepEqual(r.coverage, { observed: 7, total: 9 });
   // S6 を 10/10 にしても score は変わらない
   const r2 = td.evaluate(store, { crossCheckBreakdown: bd({ s6_instagramPresence: axis(10, 10, true) }) });
   assert.equal(r2.score, 100);
   assert.equal(r2.meta.find(m => m.axis === 's6_instagramPresence').score, 10);
-  // s4 を観測 5/10 にすると分母が増えて 57/62 → 92
+  // s4 を観測 5/10 にすると分母が増える
   const r3 = td.evaluate(store, { crossCheckBreakdown: bd({ s4_mediaCrossCheck: axis(5, 10, true) }) });
-  assert.equal(r3.score, 92);
-  assert.equal(r3.coverage.observed, 6);
+  assert.equal(r3.score, Math.round(64 / 69 * 100));
+  assert.equal(r3.coverage.observed, 8);
 });
 
 test('trust_display: 観測項目が minObserved 未満なら「—」判定材料不足（score は null）', () => {
   const b = bd({
     s1_googleRatingVsCount: axis(5, 15, false), s2_reviewCountAbs: axis(6, 10, false),
     s8_reviewDistribution: axis(7, 15, false),
+    s7d_reviewBurstCluster: axis(3, 3, false), s9_crossStoreFingerprint: axis(4, 4, false),
     s7_reviewTimeseries: { score: 10, max: 20, observed: false, parts: [
       { id: 's7a', score: 4, max: 8, observed: false }, { id: 's7b', score: 3, max: 6, observed: false }, { id: 's7c', score: 3, max: 6, observed: false }
     ] }
@@ -83,7 +87,10 @@ test('trust_display: 観測項目が minObserved 未満なら「—」判定材�
   assert.equal(r.coverage.observed, 0);
   assert.equal(r.headline.includes(P.na.advice), true);
   // ちょうど minObserved（3）なら数値が出る
-  const b3 = bd({ s4_mediaCrossCheck: axis(3, 10, false), s8_reviewDistribution: axis(7, 15, false) });
+  const b3 = bd({
+    s4_mediaCrossCheck: axis(3, 10, false), s8_reviewDistribution: axis(7, 15, false),
+    s7d_reviewBurstCluster: axis(3, 3, false), s9_crossStoreFingerprint: axis(4, 4, false)
+  });
   b3.s7_reviewTimeseries.parts[1].observed = false; b3.s7_reviewTimeseries.parts[2].observed = false;
   // 観測: s1, s2 のみ → 2 → —
   assert.equal(td.evaluate(store, { crossCheckBreakdown: b3 }).tier, '—');
@@ -102,9 +109,9 @@ test('trust_display: 見出し文は policy の headline テンプレと助言�
 test('trust_display: toSlim / toCompact / fromCompact の往復', () => {
   const full = td.evaluate(store, { crossCheckBreakdown: bd() }, { lastChecked: '2026-05-22' });
   const slim = td.toSlim(full);
-  assert.deepEqual(slim, { s: 100, t: 'SS', c: '5/7', d: '2026-05-22' });
+  assert.deepEqual(slim, { s: 100, t: 'SS', c: '7/9', d: '2026-05-22' });
   const compact = td.toCompact(full);
-  assert.equal(compact.k.length, 7);
+  assert.equal(compact.k.length, 9);
   const back = td.fromCompact(compact);
   assert.equal(back.score, 100); assert.equal(back.tier, 'SS'); assert.equal(back.advice, full.advice);
   assert.deepEqual(back.checks.map(c => c.id), P.checks.map(c => c.id));
@@ -132,13 +139,17 @@ test('trust_display: 全店再計算で公開 reason と見出しに禁止語が
   const histPath = path.join(ROOT, 'data', 'places_history.json');
   if (!fs.existsSync(storesPath) || !fs.existsSync(histPath)) return; // 未ビルド環境ではスキップ
   const { loadStores } = require('../scripts/lib/load_stores.js');
+  const { placesKey } = require('../scripts/lib/places_key.js');
   const stores = loadStores();
   const hist = JSON.parse(fs.readFileSync(histPath, 'utf8'));
+  const fpIndex = buildFingerprintIndex(hist);
   const dist = {};
   for (const s of stores) {
-    const id = s['ホットペッパーID'] || '';
-    const cc = computeCrossCheckScore(s, (id && hist[id]) || null);
-    const r = td.evaluate(s, cc, { lastChecked: td.lastCheckedFrom(hist[id], '2026-08-20') });
+    const key = s['店名'] ? placesKey(s) : '';
+    const historyEntry = key && hist[key] ? hist[key] : null;
+    const fp = key ? evaluateStoreFingerprint(key, historyEntry, fpIndex) : null;
+    const cc = computeCrossCheckScore(s, historyEntry, fp);
+    const r = td.evaluate(s, cc, { lastChecked: td.lastCheckedFrom(historyEntry, '2026-08-20') });
     dist[r.tier] = (dist[r.tier] || 0) + 1;
     for (const w of P.bannedWords) {
       assert.equal(r.headline.includes(w), false, `見出しに禁止語「${w}」: ${r.headline}`);
