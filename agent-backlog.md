@@ -8,7 +8,7 @@
 
 ### [ISSUE-112] build.ymlの「Commit & push if changed」が、近接して起動した2つのCI実行間で本物のコンテンツ競合を起こすと5回リトライしても回復できない
 
-- **priority**: P2 → P1（2回目発生・実害確認により引き上げ） → **status**: ready
+- **priority**: P1（当初P2・2回目発生の実害確認により引き上げ） → **status**: ready
 - **detected**: 2026-08-23（オーナー就寝中の自律処理。本セッション自身が短時間に連続push→CI連続起動を招き実際に発生させて発覚）
 - **category**: CI / インフラ
 - **owner**: Builder
