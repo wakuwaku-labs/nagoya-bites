@@ -122,8 +122,16 @@ function pickDailyTopic(date) {
   };
 }
 
+// JST の YYYY-MM-DD（check_journal_health.js と同じ算出方法）。
+// new Date().toISOString() は UTC のため、0:00〜8:59 JST に引数なしで実行すると
+// 前日の日付・曜日テーマを誤って選んでしまう不具合があった（2026-08-23 発見）。
+function jstToday() {
+  const ms = Date.now() + 9 * 3600 * 1000;
+  return new Date(ms).toISOString().slice(0, 10);
+}
+
 if (require.main === module) {
-  const date = process.argv[2] || new Date().toISOString().slice(0, 10);
+  const date = process.argv[2] || jstToday();
   const result = pickDailyTopic(date);
   console.log(JSON.stringify(result, null, 2));
 }

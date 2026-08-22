@@ -1,0 +1,72 @@
+{
+  "date": "2026-08-23",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [],
+  "disqualified": [
+    {
+      "id": "c2",
+      "title_draft": "栄で一人飲みしていい店を見分ける5つのサイン",
+      "verdict": "DISQUALIFIED",
+      "total": 0,
+      "disqualified_reasons": [
+        "同一コラムの再掲 (COL-OPS-004, 2026-08-19)"
+      ],
+      "breakdown": null
+    }
+  ],
+  "selected_id": null,
+  "selected_verdict": null,
+  "selected_gate_note": "",
+  "fallback_needed": true,
+  "inputs": [
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "title_draft": "栄で一人飲みしていい店を見分ける5つのサイン",
+      "lead_draft": "OZmallの調査では2019年から2025年の6年間で1人予約の利用者数が10.4倍に拡大した。「入りやすい店」は雰囲気ではなく、席割り・価格設計・告知文の3点に共通のサインがある。栄の実店舗5軒を業界人の目で読み解く。",
+      "angle": "一人飲みの入りやすさを『感覚』ではなく店側の設計判断（カウンター比率・単品完結価格・告知文の書き方）として構造化し、栄の実在5店で裏付ける",
+      "main_store": {
+        "name": "日本酒と干物と燻製　居酒屋かけはし",
+        "id": "J004559158",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "column_id": "COL-OPS-004",
+      "sources": [
+        {
+          "label": "テンポスフードメディア「外食における消費行動分析 6年で1人予約が10倍」（OZmall調査）",
+          "url": "https://foodmedia.tenpos.com/newstrend/news/63624",
+          "date": "2026-08-03"
+        },
+        {
+          "label": "LOCAL_STORES掲載店の公開情報（居酒屋かけはし・串の鬼ひげ 伏見店・寿司の銀之丞・辛麺 華火 新栄町本店・Lazward ラズワード）",
+          "url": "https://nagoya-bites.com/features/nagoya-solo-dining.html",
+          "date": "2026-08-23"
+        },
+        {
+          "label": "ホットペッパーグルメ外食総研「女性の一人外食、延べ回数が3年間で14.2%増加」",
+          "url": "https://www.inshokuten.com/foodist/article/5616/",
+          "date": "2026-08-01"
+        }
+      ],
+      "trending_signals": {
+        "x_mentions": 0,
+        "media_count": 3,
+        "buzz_score": 0
+      }
+    }
+  ]
+}

@@ -6,7 +6,18 @@
 
 ---
 
-## 進行中・完了タスク
+### [ISSUE-111] pick_daily_topic.js が0:00〜8:59 JSTの実行でUTC日付を使い前日の曜日テーマを誤選定していた ✅
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-08-23（オーナー就寝中の自律処理・4:35 JSTに `/journal-today` を自律実行しようとして遭遇）
+- **resolved**: 2026-08-23
+- **category**: バグ / 日次ジャーナル
+- **owner**: Orchestrator（発見・実装）
+- **調査で判明した事実**: `scripts/pick_daily_topic.js` の引数省略時デフォルトが `new Date().toISOString().slice(0, 10)`（UTC日付）だった。JST 0:00〜8:59 は UTC ではまだ前日にあたるため、この時間帯に引数なしで実行すると**前日の日付・曜日テーマ・週次ローテーションを誤って選んでしまう**（実測: JST 2026-08-23 04:35 に実行 → `"date": "2026-08-22", "weekday": "土"` を誤返却。本来は日曜/flexible）。`/journal-today` の Step 2 は手順書どおり引数なしでこのスクリプトを呼ぶ設計のため、この時間帯に実行が走ると影響する。同codebase内の `check_journal_health.js` は `Date.now() + 9時間` してからISO変換する正しいJST算出方法を既に採用しており、本スクリプトだけこのパターンから外れていた
+- **実装内容**: `check_journal_health.js` と同じ `jstToday()`（`Date.now() + 9*3600*1000` してからISO日付部分を取る）をデフォルト値算出に採用。明示的に日付を渡す既存の呼び出し（例: launchdラッパー等が引数を渡している場合）には影響しない
+- **検証**: 修正前後で実行し `"date": "2026-08-22"→"2026-08-23"`, `"weekday": "土"→"日"`, `"theme"` も追従することを確認。`node -c` 構文チェックOK。`npm test` 125/125 pass（本スクリプトへの直接テストは無し）
+- **files**: `scripts/pick_daily_topic.js`
+- **副産物（HOLD・未公開）**: この修正の検証を兼ねて本日分ジャーナルの自律生成を試みたが、候補採点で85点（PASS_WITH_NOTEライン）に届かず（最良候補67点→独自性0点、次点は同一コラム90日以内重複で失格）HOLDとした。`data/journal_candidates/2026-08-23.json` に採点記録を保存。無理に閾値を動かさず「取材不足」と判断し公開を見送った（`data/journal_gate_policy.json` の運用原則どおり）。通常のローカル実行（launchd）が本日中に走れば独立に再挑戦される
 
 ### [ISSUE-110] npm依存に残る既知脆弱性8件（puppeteer/googleapisのメジャーアップデートが必要）
 
@@ -3965,6 +3976,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-20 | Orchestrator(EXPLICIT) | ISSUE-100 実装・デプロイ — GSC「サイトマップ内のページがインデックスに登録されない（リダイレクト/404）」通知メール2件を調査。sitemap.xml全5,205URLをファイル照合＋本番への実HTTP HEADで検証し現状は全件200・異常0件と確認（既存クリーンアップで解消済みの過去クロール履歴と判断）。再発時に自動検知できるよう scripts/audit_sitemap_health.js（新設・リトライ付き）を build.yml の push後ステップに追加（非ブロッキング）。npm test 94/94 | ✅ 本コミット |
 | 2026-08-20 | Marketer(/solve-next) | SEO-063 実装・デプロイ — `.gas-deploy/Code.js` に GA4しきい値判別不能行（`(not set)` / `(data not available)` / `(other)`）の集約・分母補正・highThreshold警告を追加。`isGa4Unknown()` ヘルパー新設・`analyze()` で `identifiableSessions` を分母に切替・topSrcRow フィルタ追加・AI プロンプト補足・ルールベースアドバイスの highThreshold ガード・日次/週次レポートへの警告行追加。ISSUE-096はコード修正済みを確認しオーナー操作待ちとしてowner=片桐にエスカレーション。`node --check` ✅ / npm test 94/94 ✅ | ✅ 本コミット |
 | 2026-08-22 | Builder(SEO分析セッション) | SEO-065 実装・デプロイ — サイト全体SEO監査で「店舗ページ5,541件がサイトマップとトップ50件カードだけを発見経路にしており店舗間の内部リンクが皆無」と判明。gen-store-pages.jsに`buildRelatedStores()`を新設（同エリア内でジャンル一致を優先しつつ最大4件・エリアが無い店のみジャンル一致にフォールバック）。見出しラベルは選定条件と必ず一致するよう関数側で確定して返す設計に統一（「同ジャンル」と謳って別ジャンルが混ざる等の見出しと中身の不一致を防止）。全店舗のスラグを先に確定してから related-stores を解決する2段構成にmain()を変更（他店リンク先が実在するスラグであることを保証・架空店リスクなし）。5,023店を再生成、うち4,984店（99.2%）にrelated-storesブロックが付与（残りはエリア・ジャンルとも欠損の店のみ）。sitemap.xml 5,201URLで再生成。npm test 125/125 pass・複数店のレンダリング結果を手動照合 | ✅ 本コミット |
+| 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-111 実装・デプロイ — 4:35 JSTに`/journal-today`を自律実行しようとしたところ`pick_daily_topic.js`がUTC日付をデフォルト採用しており前日(土)の曜日テーマを誤返却すると発見。`check_journal_health.js`と同じJST算出方法に修正。検証を兼ねた本日分ジャーナル生成は候補採点85点未達でHOLD（取材不足と判断し無理に公開せず） | ✅ 本コミット |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-110 起票 — `node scripts/security_audit.js` がnpm依存の既知脆弱性12件を検出。非破壊の`npm audit fix`で4件（brace-expansion/ip-address/js-yaml）を即時解消（別コミット）。残り8件（puppeteer/googleapisのメジャーアップが必要）はAPIキー無しで動作検証できないため見送り、Builder向けにISSUE-110として起票 | ✅ 本コミット（npm audit fix分）・ISSUE-110は次サイクル |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-109 実装・デプロイ — `node scripts/audit_journal_sns_pairing.js` で公開済みジャーナル2本（2026-08-10/08-11）にSNS原稿が欠落していると発見。記事本文・情報源・既存の埋め込みInstagram投稿を基に既存書式でdocs/daily-posts/2026-08-10.md・2026-08-11.mdを作成、欠落2→0件を確認 | ✅ 本コミット |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-107 実装・デプロイ — `node scripts/audit_feature_stores.js` の全特集監査で発見した「実在不明」5件を個別調査。うち1件（nagoya-ramen.htmlの「担担麺専門店 想吃担担面 名駅地下店」）はLOCAL_STORESに実在する店（正式名「想吃担担面 シャンツーダンダンミェン 名駅地下店」・HP ID J001271930）の表記・写真URLドリフトと判明し即修正。残り4件（4特集共通の「鉄板焼肉3G スリージー」）はHotPepper個別ページ404・sandbox内Places APIアクセス不能のため実在確定に至らず、ISSUE-108としてDataKeeperへローカル環境での再検証を依頼 | ✅ 本コミット（ISSUE-107分のみ・ISSUE-108は未実装） |
