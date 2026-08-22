@@ -1,16 +1,16 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-08-22T20:13:43.258Z",
+  "generatedAt": "2026-08-22T20:42:06.108Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 923,
+  "total_sessions": 925,
   "engines": [
     {
       "key": "bing",
       "label": "Bing",
       "sessions": 248,
-      "pct": 26.9,
+      "pct": 26.8,
       "sources": [
         {
           "source": "bing",
@@ -22,21 +22,21 @@
     {
       "key": "google",
       "label": "Google",
-      "sessions": 246,
+      "sessions": 247,
       "pct": 26.7,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 246
+          "sessions": 247
         }
       ]
     },
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 192,
-      "pct": 20.8,
+      "sessions": 193,
+      "pct": 20.9,
       "sources": [
         {
           "source": "(direct)",
@@ -46,7 +46,7 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 19
+          "sessions": 20
         }
       ]
     },
@@ -54,7 +54,7 @@
       "key": "ai_assistant",
       "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
       "sessions": 115,
-      "pct": 12.5,
+      "pct": 12.4,
       "sources": [
         {
           "source": "chatgpt.com",
@@ -82,7 +82,7 @@
       "key": "yahoo",
       "label": "Yahoo!",
       "sessions": 114,
-      "pct": 12.4,
+      "pct": 12.3,
       "sources": [
         {
           "source": "yahoo",
@@ -113,7 +113,7 @@
     }
   ],
   "search_only": {
-    "total": 731,
+    "total": 732,
     "share": [
       {
         "key": "bing",
@@ -124,7 +124,7 @@
       {
         "key": "google",
         "label": "Google",
-        "sessions": 246,
+        "sessions": 247,
         "pct_of_search": 33.7
       },
       {
@@ -163,7 +163,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 246 セッションのみ。Bing(248) + 生成AI(115) の 363 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 247 セッションのみ。Bing(248) + 生成AI(115) の 363 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
