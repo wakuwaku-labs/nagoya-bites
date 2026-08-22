@@ -146,6 +146,15 @@ jobs:
         # data/other_prefecture_match_exceptions.json のどちらにも未登録なら exit 1 でブロックする。
         run: node scripts/audit_other_prefecture_matches.js --check
 
+      - name: 除外済み他都市店の本文残存監査（ISSUE-113 再発防止）
+        # 2026-08-23、ISSUE-103で除外した71件の他都市店舗のうち6件が、データ層
+        # （LOCAL_STORES/closed_stores.json）からは正しく除外されていたにもかかわらず、
+        # その店をすでに掲載していた特集記事（features/*.html）側の店名・写真・リンク・
+        # 本文には一切反映されていなかったことが nightly QA で発覚。data/closed_stores.json の
+        # 「他都市」確認済みエントリが features/journal の本文にまだ残っていないかを毎回突合し、
+        # 1件でも残っていれば exit 1 でブロックする。
+        run: node scripts/audit_closed_store_mentions.js --check
+
       - name: manual_stores.json リンク到達性監査（ISSUE-061 観測）
         # 食べログ直リンク / ホットペッパーID / 住所のいずれも持たない
         # 「ユーザーが詳細を確認できない店」の件数を可視化。

@@ -6,6 +6,42 @@
 
 ---
 
+### [ISSUE-113] ISSUE-103で除外した他都市チェーン店8件が、特集記事の掲載コンテンツ側には残存していた（実店舗を名古屋店として掲載する事故の再発） ✅
+
+- **priority**: P0 → **status**: done
+- **detected**: 2026-08-23（オーナー就寝中の自律処理・`.github/workflows/nightly-qa.yml` の定期実行が架空店監査で ❌ WARN を報告、`docs/qa/nightly-2026-08-23.md` で発見。6件はnightly QAが偶然拾った範囲、残り2件は`data/closed_stores.json`全70件×全features/journal本文の網羅的突合で追加発見）
+- **resolved**: 2026-08-23
+- **category**: data-quality / trust / 架空店ブロック
+- **owner**: Orchestrator（発見・実装）
+- **調査で判明した事実**: [[ISSUE-103]]（2026-08-22 done）は「他都市の実店舗が名古屋店としてLOCAL_STORESに混入していた71件」を`data/closed_stores.json`へ登録しLOCAL_STORESから除外したが、**その混入店をすでに掲載していた特集記事（features/*.html）側の店名・写真・リンク・本文は一切修正されていなかった**。結果、LOCAL_STORESからは正しく消えた一方で、特集ページ上には引き続き「他都市の実店舗」が「名古屋のおすすめ店」として表示され続けていた（audit_feature_stores.js は「実在不明」としか報告しないため、`data/closed_stores.json`に既に確認済みの他都市店だと突き合わせないと見逃す）
+- **対象と実在確認（`data/closed_stores.json`の既存記録＋WebSearchで再確認・計8店）**:
+  | 店名（特集上の表記） | 実際の所在地 | 混入していた特集 |
+  |---|---|---|
+  | 炭火焼 月光浴 | 福岡県大牟田市 | nagoya-industry-pick-izakaya.html |
+  | 居酒屋 マグロ専門店 ぎょぎょ丸 | 沖縄県那覇市 | nagoya-industry-pick-izakaya.html, sakae.html（2箇所） |
+  | ワラッテ 岐阜 Wa Latte | 岐阜県岐阜市 | nagoya-morning.html |
+  | 藁焼き小屋またふく 九条店 | 大阪府大阪市西区 | nagoya-seafood.html |
+  | 大衆酒場春田屋 江古田店 | 東京都練馬区 | nagoya-settai-lunch.html |
+  | 大衆居酒屋 ごっちん | 広島県安芸郡府中町 | osu-food-walk.html |
+  | いち稟 二俣川駅店 | 神奈川県横浜市旭区 | birthday-surprise.html（JSON-LD ItemListのみ・カードは元々未生成） |
+  | 焼鳥が止まらない店 焼き膳 彩鳥 | 東京都足立区 | nagoya-yakitori-guide.html |
+- **さらに判明した二次被害**: 除去した各カードの `media-features`（掲載歴）欄に「名古屋ウォーカー 地鶏料理特集」「東海テレビ アゲアゲめし」等、**東海地方ローカルメディアの掲載歴が記載されていた**。掲載店が実際には福岡・沖縄の店であるため、これらのメディア掲載歴も実在しないか無関係と考えられる（架空の受賞歴・掲載歴を記載しないというCLAUDE.mdの原則にも反する）。置き換え後のカードでは media-features 欄自体を削除し、LOCAL_STORES に実在する検証済みフィールド（おすすめポイント・口コミ数・評価等）のみで記述した
+- **実装内容**: 8店すべてを、同テーマ・同エリアで実在検証済み（LOCAL_STORES現存・写真URL実在）の代替店に差し替え。カード本文・写真・詳細/予約リンク・JSON-LD ItemListの該当position・関連するFAQ本文/ルート案内文/比較表の言及箇所も含めて整合させた（表面的なテキスト置換ではなく、各特集の文脈に合わせて代替店の実データから書き起こし）:
+  | 特集 | 除去店 | 代替店（LOCAL_STORES実在） |
+  |---|---|---|
+  | nagoya-industry-pick-izakaya.html | 月光浴 / ぎょぎょ丸 | 炭火焼鳥 しげ 栄本店 / ふぐ料理 徳福 錦店 |
+  | nagoya-morning.html | ワラッテ | malibu coffee マリブコーヒー |
+  | nagoya-seafood.html | またふく | 柳橋市場の藁焼きの店 魚柳 うおやなぎ 名古屋駅店（名古屋の実在市場・同じ「藁焼き」業態を保持できる代替） |
+  | nagoya-settai-lunch.html | 春田屋 | そばまえ粋玄 |
+  | osu-food-walk.html | ごっちん | 肉汁餃子のダンダダン 大須観音店 |
+  | sakae.html | ぎょぎょ丸 | 名古屋きんしゃち 栄店 |
+  | birthday-surprise.html | いち稟 | 個室焼肉 スギモトHOUSeN 栄・伏見店（LOCAL_STORESのタグに「誕生日・記念日」を実データとして保有） |
+  | nagoya-yakitori-guide.html | 彩鳥 | 焼き鳥 炭焼きブーズ |
+- **再発防止（新規監査スクリプト）**: `scripts/audit_closed_store_mentions.js` を新設。`data/closed_stores.json`の「他都市」確認済みエントリ（70件）が`features/*.html`・`journal/*.html`本文に残っていないかを毎回突合し、1件でも残っていれば exit 1。`.github/workflows/build.yml`に**ブロッキング**で追加（audit_feature_stores.jsと違い偽陽性が原理的に発生しないため——`closed_stores.json`は既にISSUE-103で dual-source 検証済みの確定リストであり、audit_feature_stores.jsのような「HotPepperのライブ結果に一時的に出てこないだけの実在店」との取り違えが起きない）
+- **検証**: `node scripts/audit_closed_store_mentions.js` で70件×features/journal全177ファイルを突合し検出0件を確認。`node scripts/audit_feature_stores.js` で対象8店の「実在不明」検出が0件になったことを確認（残る4件は無関係の別issue・[[ISSUE-108]]）。8ファイル全てのJSON-LD構文検証OK。`node scripts/audit_feature_schema_alignment.js` OK（67件整合）。`node scripts/audit_store_liveness.js --check` OK（掲載不可の閉店店0件）。`npm test` 125/125 pass。`.github/workflows/build.yml` のYAML構文検証OK
+- **files**: `features/nagoya-industry-pick-izakaya.html`, `features/nagoya-morning.html`, `features/nagoya-seafood.html`, `features/nagoya-settai-lunch.html`, `features/osu-food-walk.html`, `features/sakae.html`, `features/birthday-surprise.html`, `features/nagoya-yakitori-guide.html`, `scripts/audit_closed_store_mentions.js`（新規）, `.github/workflows/build.yml`
+- **関連**: [[ISSUE-103]]（データ層の除外は完了していたが特集コンテンツ層への反映が漏れていた）/ [[ISSUE-108]]（同じ監査で見つかった別store・実在確認が本セッションでは完了できずDataKeeperへ引き継ぎ中）
+
 ### [ISSUE-112] build.ymlの「Commit & push if changed」が、近接して起動した2つのCI実行間で本物のコンテンツ競合を起こすと5回リトライしても回復できない
 
 - **priority**: P1（当初P2・2回目発生の実害確認により引き上げ） → **status**: ready
@@ -3995,6 +4031,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-20 | Orchestrator(EXPLICIT) | ISSUE-100 実装・デプロイ — GSC「サイトマップ内のページがインデックスに登録されない（リダイレクト/404）」通知メール2件を調査。sitemap.xml全5,205URLをファイル照合＋本番への実HTTP HEADで検証し現状は全件200・異常0件と確認（既存クリーンアップで解消済みの過去クロール履歴と判断）。再発時に自動検知できるよう scripts/audit_sitemap_health.js（新設・リトライ付き）を build.yml の push後ステップに追加（非ブロッキング）。npm test 94/94 | ✅ 本コミット |
 | 2026-08-20 | Marketer(/solve-next) | SEO-063 実装・デプロイ — `.gas-deploy/Code.js` に GA4しきい値判別不能行（`(not set)` / `(data not available)` / `(other)`）の集約・分母補正・highThreshold警告を追加。`isGa4Unknown()` ヘルパー新設・`analyze()` で `identifiableSessions` を分母に切替・topSrcRow フィルタ追加・AI プロンプト補足・ルールベースアドバイスの highThreshold ガード・日次/週次レポートへの警告行追加。ISSUE-096はコード修正済みを確認しオーナー操作待ちとしてowner=片桐にエスカレーション。`node --check` ✅ / npm test 94/94 ✅ | ✅ 本コミット |
 | 2026-08-22 | Builder(SEO分析セッション) | SEO-065 実装・デプロイ — サイト全体SEO監査で「店舗ページ5,541件がサイトマップとトップ50件カードだけを発見経路にしており店舗間の内部リンクが皆無」と判明。gen-store-pages.jsに`buildRelatedStores()`を新設（同エリア内でジャンル一致を優先しつつ最大4件・エリアが無い店のみジャンル一致にフォールバック）。見出しラベルは選定条件と必ず一致するよう関数側で確定して返す設計に統一（「同ジャンル」と謳って別ジャンルが混ざる等の見出しと中身の不一致を防止）。全店舗のスラグを先に確定してから related-stores を解決する2段構成にmain()を変更（他店リンク先が実在するスラグであることを保証・架空店リスクなし）。5,023店を再生成、うち4,984店（99.2%）にrelated-storesブロックが付与（残りはエリア・ジャンルとも欠損の店のみ）。sitemap.xml 5,201URLで再生成。npm test 125/125 pass・複数店のレンダリング結果を手動照合 | ✅ 本コミット |
+| 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-113 実装・デプロイ — nightly QAが架空店監査WARNを報告、ISSUE-103で除外済みのはずの他都市チェーン店6件が特集記事の掲載コンテンツ側に残存していたと判明（データ層除外が特集コンテンツ層に反映されていなかった構造的欠陥）。`data/closed_stores.json`全70件×全features/journal本文の網羅的突合で追加2件を発見し計8件を実在検証済みのLOCAL_STORES代替店に差し替え。再発防止として`scripts/audit_closed_store_mentions.js`を新設しbuild.ymlにブロッキングで追加 | ✅ 本コミット（8ファイル差し替え＋新規監査スクリプト） |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-112 2回目発生・復旧 — `daily-trending5.yml`（定期実行）が本セッションの直前pushと重なり同型のコンテンツ競合で失敗、当日分「今日の話題店TOP5」コミットが丸ごと失われるところだった。`gh workflow run daily-trending5.yml`でリカバリ用workflow_dispatchを手動実行し5分後に復旧成功を確認。実害が具体化・複数ワークフローに同根本原因があると判明したため priority を P2→P1 に引き上げ | ✅ リカバリ実行成功（`32598697435`）・恒久修正はISSUE-112のまま |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-112 起票 — `gh run list`でCI失敗を発見・調査。本セッション自身の短間隔連続pushが原因で2つのbuild.yml実行が重なり、`Commit & push if changed`が本物のコンテンツ競合（ISSUE-100とは別モード）で5回リトライしても回復不能と判明。実害は無駄な二重API呼び出しのみ（データ損失は無い、次回実行で自己回復）と確認。恒久修正はCI本体の変更で検証に時間を要するため見送り、以降は自身のpush間隔を空ける運用に切替 | 📋 起票のみ・push間隔調整で運用回避 |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-111 実装・デプロイ — 4:35 JSTに`/journal-today`を自律実行しようとしたところ`pick_daily_topic.js`がUTC日付をデフォルト採用しており前日(土)の曜日テーマを誤返却すると発見。`check_journal_health.js`と同じJST算出方法に修正。検証を兼ねた本日分ジャーナル生成は候補採点85点未達でHOLD（取材不足と判断し無理に公開せず） | ✅ 本コミット |
