@@ -6,6 +6,36 @@
 
 ---
 
+### [ISSUE-115] normalize_og_images.js --check にHTTP到達性チェックが無く、404のog:imageをCIが検知できない
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-08-23（[[ISSUE-114]]の調査で判明）
+- **category**: SEO / SNS / 品質ゲート
+- **owner**: Builder
+- **調査で判明した事実**: `scripts/normalize_og_images.js --check`（build.ymlの「OGP画像の配信可否を監査」ステップ）は、og:imageが絶対URLか・SVGでないか・width/heightが付いているか等の**構造**は検査するが、**そのURLが実際にHTTP到達可能か（生死）は検査していない**。HotPepperの画像CDN（imgfp.hotp.jp）は個別の写真URLが将来的に無効化されうるため、構造的には正しいog:imageでも実配信が止まっているケースを見逃す（[[ISSUE-114]]で実際に3件の404を発見）
+- **未実施の理由**: `normalize_og_images.js`は日次ジャーナルのラッパー（`run_journal_local.sh`）から`--only`で呼ばれるdelicateなスクリプトであり、同期処理から非同期HTTP検査への構造変更を無人の深夜セッションで急ぐより、次回テストを伴って実装する方が安全と判断した
+- **acceptance**: `normalize_og_images.js --check`（または新規の軽量スクリプト）にHTTP到達性チェックを追加しCIに組み込む。既存の`audit_sitemap_health.js`が同種のリトライ付きHTTP検査パターンを持つため参考にできる。実装後、意図的に1件のog:imageを404 URLに書き換えてCIが検知することを確認する
+- **関連**: [[ISSUE-114]]（この調査の発端・実際の404 3件は既に修正済み）
+
+### [ISSUE-114] OGPの og:image が実際に配信されているか（HTTP到達性）をCIが検査しておらず、3特集で404画像がSNSサムネイルに使われていた ✅
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-08-23（[[ISSUE-113]]の作業中、osu-food-walk.htmlのog:imageが除去済みの他都市店の写真URLらしき値を指していると気づき実HTTP確認したところ404と判明。全特集を横断調査）
+- **resolved**: 2026-08-23
+- **category**: SEO / SNS / 品質ゲート
+- **owner**: Orchestrator（発見・実装）
+- **調査で判明した事実**: features/*.html全67件の`og:image`をHTTP HEADで実測したところ3件が404だった:
+  | 特集 | 旧og:image（404） |
+  |---|---|
+  | osu-food-walk.html | P000715131（[[ISSUE-113]]で除去した他都市店とは無関係の別画像・偶然IDが似ていただけ） |
+  | birthday-surprise.html | P045559290 |
+  | large-group.html | P048375155 |
+  CLAUDE.mdが明記する通り、この種の不具合は「サイトの見た目には異常が出ず、オーナーが実際に共有するまで誰も気づかない」— 実際、この3件がいつから404だったかは不明（既存のOGP監査がURL構造しか検査していなかったため一度も検知されていなかった。根本原因は[[ISSUE-115]]として別途起票）
+- **実装内容**: 3件とも、各特集の掲載店1位（JSON-LD ItemList position:1）の現在の実写真URL（LOCAL_STORES実在・HTTP 200確認済み）に差し替え。全67特集のog:imageを再度HTTP HEADで実測し、残り64件が全て200であることを確認
+- **検証**: 全67特集のog:image URLをHTTP HEADで再測定し404ゼロを確認。`node scripts/audit_feature_schema_alignment.js` OK。JSON-LD構文検証OK。`npm test` 125/125 pass
+- **files**: `features/osu-food-walk.html`, `features/birthday-surprise.html`, `features/large-group.html`
+- **関連**: [[ISSUE-113]]（この調査の発端）/ [[ISSUE-115]]（根本原因＝CI側の検知漏れ）
+
 ### [ISSUE-113] ISSUE-103で除外した他都市チェーン店8件が、特集記事の掲載コンテンツ側には残存していた（実店舗を名古屋店として掲載する事故の再発） ✅
 
 - **priority**: P0 → **status**: done
@@ -4031,6 +4061,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-20 | Orchestrator(EXPLICIT) | ISSUE-100 実装・デプロイ — GSC「サイトマップ内のページがインデックスに登録されない（リダイレクト/404）」通知メール2件を調査。sitemap.xml全5,205URLをファイル照合＋本番への実HTTP HEADで検証し現状は全件200・異常0件と確認（既存クリーンアップで解消済みの過去クロール履歴と判断）。再発時に自動検知できるよう scripts/audit_sitemap_health.js（新設・リトライ付き）を build.yml の push後ステップに追加（非ブロッキング）。npm test 94/94 | ✅ 本コミット |
 | 2026-08-20 | Marketer(/solve-next) | SEO-063 実装・デプロイ — `.gas-deploy/Code.js` に GA4しきい値判別不能行（`(not set)` / `(data not available)` / `(other)`）の集約・分母補正・highThreshold警告を追加。`isGa4Unknown()` ヘルパー新設・`analyze()` で `identifiableSessions` を分母に切替・topSrcRow フィルタ追加・AI プロンプト補足・ルールベースアドバイスの highThreshold ガード・日次/週次レポートへの警告行追加。ISSUE-096はコード修正済みを確認しオーナー操作待ちとしてowner=片桐にエスカレーション。`node --check` ✅ / npm test 94/94 ✅ | ✅ 本コミット |
 | 2026-08-22 | Builder(SEO分析セッション) | SEO-065 実装・デプロイ — サイト全体SEO監査で「店舗ページ5,541件がサイトマップとトップ50件カードだけを発見経路にしており店舗間の内部リンクが皆無」と判明。gen-store-pages.jsに`buildRelatedStores()`を新設（同エリア内でジャンル一致を優先しつつ最大4件・エリアが無い店のみジャンル一致にフォールバック）。見出しラベルは選定条件と必ず一致するよう関数側で確定して返す設計に統一（「同ジャンル」と謳って別ジャンルが混ざる等の見出しと中身の不一致を防止）。全店舗のスラグを先に確定してから related-stores を解決する2段構成にmain()を変更（他店リンク先が実在するスラグであることを保証・架空店リスクなし）。5,023店を再生成、うち4,984店（99.2%）にrelated-storesブロックが付与（残りはエリア・ジャンルとも欠損の店のみ）。sitemap.xml 5,201URLで再生成。npm test 125/125 pass・複数店のレンダリング結果を手動照合 | ✅ 本コミット |
+| 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-114 実装・デプロイ — ISSUE-113調査中、特集のog:imageが実際にHTTP到達可能かを確認していないことに気づき全67特集を実測。3件（osu-food-walk/birthday-surprise/large-group）が404と判明し、各特集の掲載店1位の現在の実写真URLに差し替え。根本原因（CIのOGP監査がURL構造しか検査していない）はISSUE-115として別途起票 | ✅ 本コミット（3ファイル修正） |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-113 実装・デプロイ — nightly QAが架空店監査WARNを報告、ISSUE-103で除外済みのはずの他都市チェーン店6件が特集記事の掲載コンテンツ側に残存していたと判明（データ層除外が特集コンテンツ層に反映されていなかった構造的欠陥）。`data/closed_stores.json`全70件×全features/journal本文の網羅的突合で追加2件を発見し計8件を実在検証済みのLOCAL_STORES代替店に差し替え。再発防止として`scripts/audit_closed_store_mentions.js`を新設しbuild.ymlにブロッキングで追加 | ✅ 本コミット（8ファイル差し替え＋新規監査スクリプト） |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-112 2回目発生・復旧 — `daily-trending5.yml`（定期実行）が本セッションの直前pushと重なり同型のコンテンツ競合で失敗、当日分「今日の話題店TOP5」コミットが丸ごと失われるところだった。`gh workflow run daily-trending5.yml`でリカバリ用workflow_dispatchを手動実行し5分後に復旧成功を確認。実害が具体化・複数ワークフローに同根本原因があると判明したため priority を P2→P1 に引き上げ | ✅ リカバリ実行成功（`32598697435`）・恒久修正はISSUE-112のまま |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-112 起票 — `gh run list`でCI失敗を発見・調査。本セッション自身の短間隔連続pushが原因で2つのbuild.yml実行が重なり、`Commit & push if changed`が本物のコンテンツ競合（ISSUE-100とは別モード）で5回リトライしても回復不能と判明。実害は無駄な二重API呼び出しのみ（データ損失は無い、次回実行で自己回復）と確認。恒久修正はCI本体の変更で検証に時間を要するため見送り、以降は自身のpush間隔を空ける運用に切替 | 📋 起票のみ・push間隔調整で運用回避 |
