@@ -6,6 +6,23 @@
 
 ---
 
+### [ISSUE-112] build.ymlの「Commit & push if changed」が、近接して起動した2つのCI実行間で本物のコンテンツ競合を起こすと5回リトライしても回復できない
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-08-23（オーナー就寝中の自律処理。本セッション自身が短時間に連続push→CI連続起動を招き実際に発生させて発覚）
+- **category**: CI / インフラ
+- **owner**: Builder
+- **source**: `gh run view 32594601324` — "chore(notion): 同期ハッシュ更新（ISSUE-111追記分）" コミットの Build & Deploy が `Commit & push if changed` ステップで失敗（14分53秒）
+- **調査で判明した事実**:
+  - ISSUE-100 で対策された「unstaged changes で毎回失敗する」バグとは**別の失敗モード**。今回はほぼ同時刻に走った2つのワークフロー実行が、それぞれ独立に `data/gsc_metrics.json` / `data/cross_check_flags.json` / `data/search_channel_metrics.json` 等（ライブAPIから毎回再取得する時系列データ）の**別々の新しいスナップショットを生成し**、双方が `chore: auto-update store data` としてコミットしようとした
+  - 一方が先に push に成功（`897770089`）、もう一方（`32594601324`）は `git pull --rebase --autostash` で取り込もうとしたところ、同じファイルの**本物のコンテンツ競合**（`CONFLICT (content): Merge conflict in data/gsc_metrics.json` 等6ファイル）が発生。これは「未addの副産物が残っている」系のバグではなく、**双方とも正当な新しいデータを持っている**ため機械的な自動解消ができない性質の競合で、既存の5回リトライ（`git pull --rebase --autostash` → `git push` を単純反復）ではリトライするたびに同じ競合を再現するだけで解消しない
+  - **実害は限定的**: 競合したファイル群はいずれも「ライブAPIから毎回再取得するスナップショット」であり、失敗した側の実行が集めたPlaces写真取得・Instagram埋め込み選定等の成果も同じコミットに含まれていたため一緒に破棄されたが、次の正常な実行が同じ処理を再実行するため**恒久的なデータ損失ではない**（無駄な二重API呼び出し・CI時間の浪費が実害）
+  - **本セッションが直接の引き金**: このセッション自身が短時間（数分間隔）で連続 push したことで、実行時間の長い build.yml（12分超）の2実行が重なり、今回の競合を実際に発生させた。今後の自動化運用（`/solve-next` 連続実行等）でも同じ間隔で push が続けば再発しうる
+- **未実施の理由**: 恒久修正（例: リトライ時に単純な `git pull --rebase` ではなく「競合ファイルは常に自分側を正として再生成し直す」戦略や、mainへの書き込みを直列化するロック機構の導入）は build.yml 本体という高頻度実行インフラの変更であり、設計と検証（連続push環境での再現テストを含む）に相応の時間を要するため、無人の深夜セッションでは見送った。当面の緩和策として、本セッション自身は以降 push 間隔を空けるよう運用を調整した
+- **acceptance**: `Commit & push if changed` ステップに、単純リトライではなく次のいずれかの対策を実装する: (a) 競合したデータ生成系ファイル（`data/gsc_metrics.json`等、`--if-changed`で機械生成される時系列スナップショット）は競合時に自分の生成結果を正として `git checkout --ours` で解消してからリトライする、(b) mainへの書き込み自体を GitHub の concurrency グループ等で直列化し後続実行を待たせる。対応後、意図的に短間隔で2回連続pushして競合を再現させ、両方の実行が最終的に成功することを確認する
+- **files**: `.github/workflows/build.yml`
+- **関連**: [[ISSUE-100]]（別の失敗モードだが同じ「Commit & push if changed」ステップの過去の教訓）
+
 ### [ISSUE-111] pick_daily_topic.js が0:00〜8:59 JSTの実行でUTC日付を使い前日の曜日テーマを誤選定していた ✅
 
 - **priority**: P1 → **status**: done
@@ -3976,6 +3993,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-20 | Orchestrator(EXPLICIT) | ISSUE-100 実装・デプロイ — GSC「サイトマップ内のページがインデックスに登録されない（リダイレクト/404）」通知メール2件を調査。sitemap.xml全5,205URLをファイル照合＋本番への実HTTP HEADで検証し現状は全件200・異常0件と確認（既存クリーンアップで解消済みの過去クロール履歴と判断）。再発時に自動検知できるよう scripts/audit_sitemap_health.js（新設・リトライ付き）を build.yml の push後ステップに追加（非ブロッキング）。npm test 94/94 | ✅ 本コミット |
 | 2026-08-20 | Marketer(/solve-next) | SEO-063 実装・デプロイ — `.gas-deploy/Code.js` に GA4しきい値判別不能行（`(not set)` / `(data not available)` / `(other)`）の集約・分母補正・highThreshold警告を追加。`isGa4Unknown()` ヘルパー新設・`analyze()` で `identifiableSessions` を分母に切替・topSrcRow フィルタ追加・AI プロンプト補足・ルールベースアドバイスの highThreshold ガード・日次/週次レポートへの警告行追加。ISSUE-096はコード修正済みを確認しオーナー操作待ちとしてowner=片桐にエスカレーション。`node --check` ✅ / npm test 94/94 ✅ | ✅ 本コミット |
 | 2026-08-22 | Builder(SEO分析セッション) | SEO-065 実装・デプロイ — サイト全体SEO監査で「店舗ページ5,541件がサイトマップとトップ50件カードだけを発見経路にしており店舗間の内部リンクが皆無」と判明。gen-store-pages.jsに`buildRelatedStores()`を新設（同エリア内でジャンル一致を優先しつつ最大4件・エリアが無い店のみジャンル一致にフォールバック）。見出しラベルは選定条件と必ず一致するよう関数側で確定して返す設計に統一（「同ジャンル」と謳って別ジャンルが混ざる等の見出しと中身の不一致を防止）。全店舗のスラグを先に確定してから related-stores を解決する2段構成にmain()を変更（他店リンク先が実在するスラグであることを保証・架空店リスクなし）。5,023店を再生成、うち4,984店（99.2%）にrelated-storesブロックが付与（残りはエリア・ジャンルとも欠損の店のみ）。sitemap.xml 5,201URLで再生成。npm test 125/125 pass・複数店のレンダリング結果を手動照合 | ✅ 本コミット |
+| 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-112 起票 — `gh run list`でCI失敗を発見・調査。本セッション自身の短間隔連続pushが原因で2つのbuild.yml実行が重なり、`Commit & push if changed`が本物のコンテンツ競合（ISSUE-100とは別モード）で5回リトライしても回復不能と判明。実害は無駄な二重API呼び出しのみ（データ損失は無い、次回実行で自己回復）と確認。恒久修正はCI本体の変更で検証に時間を要するため見送り、以降は自身のpush間隔を空ける運用に切替 | 📋 起票のみ・push間隔調整で運用回避 |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-111 実装・デプロイ — 4:35 JSTに`/journal-today`を自律実行しようとしたところ`pick_daily_topic.js`がUTC日付をデフォルト採用しており前日(土)の曜日テーマを誤返却すると発見。`check_journal_health.js`と同じJST算出方法に修正。検証を兼ねた本日分ジャーナル生成は候補採点85点未達でHOLD（取材不足と判断し無理に公開せず） | ✅ 本コミット |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-110 起票 — `node scripts/security_audit.js` がnpm依存の既知脆弱性12件を検出。非破壊の`npm audit fix`で4件（brace-expansion/ip-address/js-yaml）を即時解消（別コミット）。残り8件（puppeteer/googleapisのメジャーアップが必要）はAPIキー無しで動作検証できないため見送り、Builder向けにISSUE-110として起票 | ✅ 本コミット（npm audit fix分）・ISSUE-110は次サイクル |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-109 実装・デプロイ — `node scripts/audit_journal_sns_pairing.js` で公開済みジャーナル2本（2026-08-10/08-11）にSNS原稿が欠落していると発見。記事本文・情報源・既存の埋め込みInstagram投稿を基に既存書式でdocs/daily-posts/2026-08-10.md・2026-08-11.mdを作成、欠落2→0件を確認 | ✅ 本コミット |
