@@ -35,7 +35,8 @@
 - **acceptance**: マージ後の次回 build.yml 実行後、`node scripts/audit_crosscheck_v22.js` 相当の分布が本番 `data/crosscheck.json` で確認できること。`--refresh` 再開後、`s9_crossStoreFingerprint` の observed 率が上昇していくことを月次で確認
 ### [SEO-064] 実測で最も読まれている特集2本（おひとり様・ひつまぶし）がトップのファーストビュー導線に1枠も無く、同じ需要の別特集が枠を占めている
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-08-22（Orchestrator・オーナー就寝中の自律処理）
 - **detected**: 2026-08-21
 - **category**: SEO
 - **owner**: Builder
@@ -55,6 +56,12 @@
   3. `nagoya-unaju` と `nagoya-hitsumabushi` の需要重複を解消する（同月のFVに両方は出さない。どちらを残すかは閲覧実数で決め、判断根拠を本チケットに追記する）。
   4. `node scripts/build_featured.js --check` が通り、`index.html` は単一ファイルのまま（制約1）・`LOCAL_STORES` パターン不変（制約2）。
   5. 効果は翌週の日次/週次レポートで「トップページ閲覧数に対する当該2特集の閲覧数」の前後比で再評価する（体感で判定しない）。
+
+- **実装内容**: `data/featured.json` を編集し `node scripts/build_featured.js` で反映（`index.html` を直接手書きしていない）。
+  1. `nagoya-unaju` と `nagoya-hitsumabushi` の需要重複: 実測で継続的にトラフィックがあるのは `nagoya-hitsumabushi`（`nagoya-unaju` には該当する実測数値なし）のため、7月・8月の `monthlyScenes` の該当スロットを `nagoya-unaju` → `nagoya-hitsumabushi` に差し替え（バッジ・シーズンバナー文言も追従、`sceneLeads["7"]["nagoya-hitsumabushi"]`/`["8"]` も更新）。`nagoya-unaju` はジャンル横断の `showcase` プール（週替わり）には引き続き残るため掲載機会自体は失われない
+  2. `nagoya-solo-dining`（評価軸が季節に紐付かない evergreen 需要）を `items` に新規追加（`priority: 58`）。これにより8月のFVは `[今月のシーン3枠] + [evergreen 5枠(banquet/nagoya-solo-dining/private-room/meieki/sakae)] = 8枠(maxSlots)` で両特集がFVから到達可能になった
+  3. `node scripts/build_featured.js --check` ✅ / 実行後 `git diff index.html` で意図した3箇所（うなぎ→ひつまぶし差し替え・一人飲み新規カード追加）のみ変更されていることを確認 ✅ / `npm test` 全125件パス ✅
+- **acceptance 5（効果測定）**: 未実施（翌週以降の日次/週次レポートで再評価が必要・次回 `/seo-triage` 実行時に前後比を確認すること）
 
 ### [ISSUE-105] 店舗写真の採用基準ゲート（8/17新設）が既存の客投稿写真を洗い直せず、147店で誤掲載が残っていた
 
@@ -104,10 +111,21 @@
 
 ### [ISSUE-103] カタログに他都市チェーン店舗が誤って「名古屋の店」として混入している疑い（71店・実在保証Moatの根幹に関わる）
 
-- **priority**: P0 → **status**: ready
+- **priority**: P0 → **status**: done（acceptance 1〜4完了・5はオーナー判断待ちで別枠）
 - **detected**: 2026-08-20（オーナー報告「結構な店舗数で口コミ信頼度が表示されておらず判断材料が足りない」の原因調査中に発見）
+- **resolved**: 2026-08-22（Orchestrator・オーナー就寝中の自律処理）
 - **category**: data-quality / trust / 架空店ブロック関連
 - **owner**: DataKeeper（調査）+ Orchestrator（削除・差し替え判断）
+
+- **実施内容（acceptance 1〜4）**:
+  1. **71件の完全リスト化**: `data/places_resolved.json` の `rejected:true`（94件）を候補住所の都道府県で機械分類 → 愛知県外71件・愛知県内郊外22件（既知の1件不明分類ズレを修正）に確定。各店の店名は `stores/<HotPepperID>.html` の `<title>` から復元（ファイル名＝HotPepperID の既存規約を利用）
+  2. **実在検証**: 71件全てについて (a) Google Places candidateAddress（他都市の実住所） (b) 自社データの「アクセス」欄の記述（他都市の実在駅名等） の2独立ソースが一致することを確認。うち3件（旬酔かなで／栄亭綾部本店／エゾバルバンバン）は HotPepper公式ページを実フェッチして追加検証。**70件は他都市の実店舗の誤登録と確定**、**1件（エゾバルバンバン EZOBARU BANG BANG 名古屋栄店・J001161829）は名古屋栄の実店舗と判明**（Google Places側が同名チェーンの札幌店に誤マッチしていただけ）
+  3. **差し替え要否の判断**: 70件のうち複数支店を持つチェーン（くいもの屋わん・七輪焼肉安安等）は、名古屋の正規支店が別エントリとして既にカタログに実在することを確認済みのため「差し替え」は不要（誤登録行の削除のみで名古屋店の掲載は毀損しない）。単独店（会津っこ・この島の大地等）はそもそも名古屋に支店を持たないため削除のみ
+  4. **削除の実施**: `data/closed_stores.json`（既存の実在検証済み永久除外リスト・build.jsが自動除外）へ70件をホットペッパーIDで登録。1件（エゾバルバンバン）は `data/other_prefecture_match_exceptions.json`（新設）に「検証済みの実店舗」として記録し監査対象から除外
+  5. **再発防止（acceptance 4）**: `scripts/audit_other_prefecture_matches.js` を新設。`places_resolved.json` の却下ログのうち愛知県外マッチが `closed_stores.json`/`other_prefecture_match_exceptions.json` のどちらにも未登録なら exit 1。`.github/workflows/build.yml` に非スキップの監査ステップとして追加（build.js 実行後・commit&push 前）
+- **acceptance 5（未着手・別枠）**: 22件の愛知県内・名古屋市外（一宮市・知立市・瀬戸市等）は掲載方針の編集判断が必要なためオーナー確認待ち。一覧は `data/places_resolved.json` の rejected エントリから `pref === '愛知県' && pref !== '不明'`（候補住所が愛知県だが名古屋市外）で再抽出可能
+- **未検証（本チケットの範囲外・環境制約）**: `HOTPEPPER_API_KEY` がこのエージェント実行環境に無いため、`node build.js` のフル実行（5,023件規模）はローカルで確認できず。closed_stores.json の除外ロジック自体は835件の部分データでのドライラン（`他都道府県マッチ` ログで70件除外・想定通り）で確認済み。本番反映は次回 build.yml（CI・HOTPEPPER_API_KEY保持）実行時
+- **検証**: `node scripts/audit_other_prefecture_matches.js --check` → OK（0件未対応）。`npm test` 全125件パス。JSON構文検証済み
 
 - **発端**: 口コミ信頼度が「—（判定材料不足）」になる436店（`data/stores.json` 5,033店中8.7%）の原因を追ったところ、`scripts/fetch_places.js` の住所検証（`validateAddress()`）が94店でGoogle Places候補を却下（`rejected: true`、`data/places_resolved.json`）していた。この却下自体は誤検出防止のガードとして正しく機能していたが、却下理由を分類したところ想定より深刻な内容だった。
 - **実測した内訳（94件・機械分類）**:
@@ -173,7 +191,7 @@
 - **関連**: [[ISSUE-048]] [[ISSUE-049]] [[ISSUE-086]]（v3活性化時の前提を本ISSUEが追加）
 ### [ISSUE-102] stores/*.html に677件の孤児ページが放置されている（CI障害の原因・data/stores.json 未掲載店の旧テンプレページ）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress（サンプリング・方針決定・CI可視化まで完了／実削除はオーナー本人の手動実行が必要）
 - **detected**: 2026-08-20（[[ISSUE-101]] マージ直後、build.yml の `audit_trust_wording.js --check` が本番で失敗し発覚。実測: `git diff --stat` https://github.com/wakuwaku-labs/nagoya-bites/actions/runs/32354313646）
 - **category**: cleanup / seo / ci
 - **owner**: Builder + DataKeeper
@@ -186,6 +204,12 @@
   2. 一括削除ではなく `--check-orphans` を非ブロッキングで CI に常設し、月次で Inspector が目視レビューしてから手動削除する運用（ISSUE-050 の前例に近い）にするか
   3. 一部は「閉店ではなく重複ID」等、削除ではなく統合が正しいケースが混じっていないか事前サンプリングが必要
 - **acceptance**: 677件の内訳（閉店/重複/その他）をサンプリングで分類 → 方針決定 → 実施後 `node gen-store-pages.js --check-orphans` で0件を確認 → CIの `audit_trust_wording.js` のスコープ限定コメントを撤去可能かどうか判断
+- **2026-08-22 進捗（Orchestrator・オーナー就寝中の自律処理）**:
+  1. **再計測**: 677件→**517件**に自然減（この4日間の日次ビルドで一部は既にHotPepper側の変動等により整合）。`data/stores.json`（現行5,023件）に対する `gen-store-pages.js` の `toSlug()` ロジックを再現し、`stores/` 5,540ファイルとの差分を機械算出（`--check-orphans` の実測と完全一致・実測は本セッションの `HOTPEPPER_API_KEY` 未設定によりリモートの実データではなくローカル committed 版基準）
+  2. **サンプリング分類（30件・シード固定の再現可能な乱択）**: `data/closed_stores.json` 登録済み = **0/30**。店名・エリア表記はいずれも実在の名古屋の飲食店らしい体裁（栄・名駅・緑区等）で、旧ドラフトPR（#168・2026-08-21）が報告した「コンビニ・ドラッグストア混在」は今回のサンプルには出現せず（サンプル差・時点差の可能性）。**重複ID（店名一致だが別HP IDで現存）と判定できたケースは0/30** — `data/stores.json` の現存店に同名店が見当たらないため、削除ではなく統合が必要なケースは確認されなかった
+  3. **判断**: 617→517件は、HotPepper APIが日次で返す掲載店集合が閉店等で自然に変動した結果と推定（`build.js` はHotPepper APIのライブ結果をそのまま採用するため、API側が既に該当店を返さなくなれば自動的にstores.jsonから外れる＝典型的な「閉店delist」の残骸）。**一括の自動削除（`--delete-orphans` を CI 常設）は見送り**、`--delete-orphans` は破壊的操作としてこのセッションの auto-mode 権限では実行がブロックされた（オーナー確認が必要な操作として分類）ため、ISSUE-050 の前例に倣い「`--check-orphans` を非ブロッキングでCIに常設 → 月次でInspectorが目視レビュー後に手動 `--delete-orphans`」の運用（acceptance判断②）を採用
+  4. **CI実装**: `.github/workflows/build.yml` の「個別店舗ページ再生成」ステップに `--check-orphans` を追加（非ブロッキング・件数のみログ表示）
+- **オーナーへのアクション依頼**: 上記サンプリングで問題ケースが出なかったため、`node gen-store-pages.js --delete-orphans` を手動実行いただければ517件の孤児ページを安全に削除できます（このセッションでは破壊的ファイル削除としてauto-mode権限がブロックされたため未実施）
 - **関連**: [[ISSUE-050]]（孤児ページ削除の前例）/ [[ISSUE-101]]（本件の発覚元）
 
 ### [ISSUE-100] Search Console「サイトマップ内のページがインデックスに登録されない」通知への対応 — sitemap生存監査を新設
@@ -2752,7 +2776,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 ### [ISSUE-066] 日次ジャーナル生成の二重稼働（launchd × scheduled-task）を一本化
 
 - **priority**: P3
-- **status**: ready
+- **status**: done（検証の結果、既に一本化済みと確認）
+- **resolved**: 2026-08-22（Orchestrator・オーナー就寝中の自律処理）
 - **category**: ops / reliability
 - **detected**: 2026-06-22
 - **owner**: Builder
@@ -2760,6 +2785,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **impact**: 片方が成果を出しても他方が空振り/汚染を生む。観測性も二重化して切り分けが難しい。ISSUE-065 級デッドロックの再発リスク源。
 - **acceptance**: どちらか一方の経路に一本化（推奨は launchd 側＝API課金ゼロのサブスク認証経路を正とし、scheduled-task を停止 or 逆）。残す側の単独運用で日次1本公開が継続することを数日観測。`.claude/settings.json`・scheduled-task はエージェント自己改変ブロックのためオーナー手動操作が必要な可能性あり（その場合は手順を docs にまとめてオーナーへ依頼）。
 - **files**: `scripts/run_journal_local.sh`, launchd plist, scheduled-task 設定（オーナー領域）, `agent-backlog.md`
+- **2026-08-22 検証（Orchestrator）**: `mcp__scheduled-tasks__list_scheduled_tasks` で現在アクティブなスケジュールタスク一覧を確認したところ `nagoya-bites-journal-daily` は**登録されていなかった**（seo-triage-daily / feedback-triage-daily / feedback-formspree-crosscheck-monthly / solve-next-daily(無効化) の4件のみ有効）。`~/.claude/scheduled-tasks/nagoya-bites-journal-daily/SKILL.md` はディスク上に残存しているが最終更新が2026-06-18（本チケットの detected 2026-06-22 より前）で、対応する有効なスケジュール登録が存在しないため**発火しない孤児ファイル**と判断。launchd `com.nagoyabites.journal`（`launchctl list` で存在確認・`~/Library/LaunchAgents/com.nagoyabites.journal.plist` で毎朝9:00設定確認）が唯一の稼働経路であることを確認した。**二重稼働は既に解消済み**（いつ・誰が scheduled-task 側を無効化したかは不明だが、現状の実害は無い）。孤児ディレクトリ（`~/.claude/scheduled-tasks/nagoya-bites-journal-daily/`）の削除はリポジトリ外のオーナー環境ファイルのため、片付けとして任意でオーナーに委ねる（実害なし）
 - **関連**: ISSUE-065（親）/ [[journal-daily-worktree-dirty-rebase]]
 
 ### [DATA-001] 閉店店の掲載検出（餃子歩兵 名古屋泉店ほか）と営業実体ゲート新設 ✅
@@ -3012,6 +3038,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **brand-filter**: ✅ 適合 — CLAUDE.mdのMoat（シーン専門性）そのものを伸ばす施策。競合が強い指名検索（Strategic Skip該当のnavigational）を追わず、勝てる領域に配分を寄せる王道
 - **acceptance**: `data/journal_seo_keywords.json` の既存シーンKWのうち、`node scripts/journal_seo_kw.js --suggest` で「特集が薄い/未カバー」と判定されたシーン×エリアの組み合わせを洗い出す／未カバー上位から日次ジャーナル・特集記事のテーマ選定に反映（EDT-003「題材選定の型」に準拠、架空店ブロック厳守）／効果測定は `node scripts/gsc_query_intent.js` の discovery行の impressions_share・impressions 絶対値を追跡（総クリックではなく意図別内訳で判定。総クリックは指名検索の増減と混ざるため使わない）／施策実施後、次回GSC更新でdiscovery impressions_shareが2.6%から改善しているかを再評価
 - **ブランドガードレール**: 「シーンKWを増やす」ことが目的化して架空店・薄い特集を量産しないこと。既存特集とのカニバリ回避（SEO-005/SEO-006と同じ判断基準）。実施はEditor/Marketerの編集判断を要するため、本セッションでは診断のみで実装は次サイクルへ
+- **2026-08-22 診断実行（Orchestrator）**: `node scripts/journal_seo_kw.js --suggest` を実行し正常動作を確認。8月の未カバー上位候補として「栄×食べ歩き」（当月シーンに合致・in_season:true）「栄×接待」「栄×個室」「栄×宴会」を機械抽出（各コンボは既存特集への内部リンクも自動解決）。この診断結果は `/journal-today` の題材選定入力として日次サイクルで自動的に消費される設計のため、追加のコード実装は不要。**status は ready のまま据え置く**（施策実施＝日次ジャーナルでの実採用は今後の複数サイクルにわたる継続施策のため、1回のセッションで"done"にする性質のチケットではない）
 
 ### [STR-001] マネタイズ第1弾実装：接待・宴会コンシェルジュLP + CTA計測 + 編集独立の透明化 ✅
 - **priority**: P1（事業健全性・Moat換金の第一歩） → **status**: done

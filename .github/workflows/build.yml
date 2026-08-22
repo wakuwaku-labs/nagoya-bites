@@ -138,6 +138,14 @@ jobs:
         # CLOSED_PERMANENTLY/閉店確定が混入したら exit 1 でデプロイをブロックする（制約7・信頼担保）。
         run: node scripts/audit_store_liveness.js
 
+      - name: 他都道府県マッチ監査（他都市チェーン店の誤登録を検知・ISSUE-103 再発防止）
+        # 2026-08-20、71件の他都市店舗（大阪・神奈川・北海道等）が「栄」エリア・愛知県の
+        # 名古屋店として誤登録されていたことが発覚（fetch_places.js は正しく却下していたが
+        # 却下ログを誰も見ていなかった）。data/places_resolved.json の rejected エントリのうち
+        # 候補住所が愛知県外を指すものを毎回集計し、data/closed_stores.json /
+        # data/other_prefecture_match_exceptions.json のどちらにも未登録なら exit 1 でブロックする。
+        run: node scripts/audit_other_prefecture_matches.js --check
+
       - name: manual_stores.json リンク到達性監査（ISSUE-061 観測）
         # 食べログ直リンク / ホットペッパーID / 住所のいずれも持たない
         # 「ユーザーが詳細を確認できない店」の件数を可視化。
@@ -206,7 +214,12 @@ jobs:
         # build.js が data/stores.json を更新した後、その canonical カタログを source に
         # 個別店舗ページを生成する。これがないと manual_stores.json に追加した店が
         # フロント検索ヒット時の詳細ページから 404 になる（ISSUE-058 の再発防止）。
-        run: node gen-store-pages.js
+        # --check-orphans: 現在の stores.json に無い旧 stores/*.html（主にHotPepper側で
+        # 閉店delistされた店の残骸）を件数のみログ表示する（非ブロッキング・削除はしない）。
+        # ISSUE-102（2026-08-22・677→517件で発覚・サンプリングでいずれも通常の閉店churnと確認）
+        # の再発監視。一括自動削除は sitemap/被リンク/GSCインデックスへの影響があるため見送り、
+        # ISSUE-050 の前例に倣い Inspector の月次レビュー後に手動 --delete-orphans する運用とする。
+        run: node gen-store-pages.js --check-orphans
 
       - name: 店舗写真カバレッジ監査（画質退行の検知・実写ゼロ店の可視化）
         # build.js normalizePhotoUrl() が HotPepper 縮小サムネ(_238等)を _480 へ昇格し、
