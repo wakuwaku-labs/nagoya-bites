@@ -8,6 +8,39 @@
 
 ## 進行中・完了タスク
 
+### [ISSUE-108] 特集4本に掲載中の「鉄板焼肉3G スリージー」がLOCAL_STORES未収録・HotPepper個別ページも404で実在の最新確認が取れない
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-08-23（オーナー就寝中の自律処理・`node scripts/audit_feature_stores.js` で発見）
+- **category**: data-quality / 架空店ブロック
+- **owner**: DataKeeper
+- **source**: `node scripts/audit_feature_stores.js` が nagoya-settai-lunch.html / nagoya-settai-secret.html / nagoya-steak.html / nagoya-teppanyaki.html の4特集で「鉄板焼肉3G スリージー」を「実在不明（LOCAL_STORES に無い）」として検出
+- **調査で判明した事実**:
+  - この店は `7f101b8fb`「架空店で構成された特集20記事を実在店で全面再生成」で追加された経緯があり、記事本文には「食べログ4.9の評価の整合性を確認したうえで掲載した」と記載がある（追加当時は検証済みだった可能性が高い）
+  - WebSearch では「鉄板焼肉3G スリージー(栄/居酒屋)＜ネット予約可＞｜ホットペッパーグルメ」がヒットし、`https://www.hotpepper.jp/strJ004509241/` というホットペッパーIDが存在。バイトルに現在の求人（名古屋市中区錦）もヒットし、TikTok discoverページも存在 — **営業実態を示す状況証拠はある**
+  - しかし `https://www.hotpepper.jp/strJ004509241/` を WebFetch で開くと **HTTP 404**（トレイリングスラッシュ有無どちらも404）。個別ページが生きているかは未確認のまま
+  - 本セッションの sandbox からは `GOOGLE_MAPS_API_KEY`（`~/.config/nagoya-bites/journal.env`）で Places API を叩くと **REQUEST_DENIED**（キーが自宅Macのネットワーク/リファラ制限付きの可能性が高く、この sandbox からは検証不能。journal-photo-sources-setup.md の想定用途どおりローカルMacでは動く見込み）
+- **未実施の理由**: 実在確認が「WebSearchの状況証拠はあるが公式ページ404・Places APIはこの環境からは呼べない」という中途半端な状態のまま、**掲載継続の可否（現状維持/manual_stores.jsonへの正式追加/特集からの除去）を確定させるだけの検証ができなかった**。架空店ブロックの原則（実在確認できないなら掲載しない）に照らすと、誤って実在店を消す・誤って未検証のまま残す、どちらのリスクも避けるため、DataKeeperがローカルMac環境（`GOOGLE_MAPS_API_KEY`が実際に通る環境）で再検証してから確定させるべきと判断し、今回は特集からの除去も追加登録もしなかった
+- **acceptance**:
+  1. DataKeeper がローカルMacで `GOOGLE_MAPS_API_KEY=... node -e` 等により Places textsearch で「鉄板焼肉3G スリージー 名古屋 栄」を検索し、`business_status` を含む現況を確認する
+  2. 営業中と確認できれば `data/manual_stores.json` に正式追加（ホットペッパーID/エリア/住所等を含む）→ `node scripts/fetch_manual_store_photos.js` で三重ゲート通過を確認 → `node build.js` で LOCAL_STORES に反映
+  3. 閉店/実在確認不能と判明すれば、4特集（nagoya-settai-lunch.html / nagoya-settai-secret.html / nagoya-steak.html / nagoya-teppanyaki.html）から当該店を除去し、必要なら代替店を選定する
+  4. 対応後 `node scripts/audit_feature_stores.js` で当該店の「実在不明」検出がゼロになることを確認
+- **関連**: [[ISSUE-107]]（同じ監査で発見した姉妹issue。こちらは実在確認済みの単純な表記/写真ドリフトで即修正できたため既に解決）
+
+### [ISSUE-107] 特集「名古屋ラーメン」で実在店「想吃担担面 名駅地下店」の店名表記・写真URLが本来のLOCAL_STORESの値からドリフトしていた ✅
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-08-23（オーナー就寝中の自律処理・`node scripts/audit_feature_stores.js` で発見）
+- **resolved**: 2026-08-23
+- **category**: data-quality / 架空店ブロック
+- **owner**: Orchestrator（発見・実装）
+- **調査で判明した事実**: `features/nagoya-ramen.html` の3番目の掲載店が「担担麺専門店 想吃担担面 名駅地下店」という表記で、LOCAL_STORES（`data/stores.json`）に存在する正式店名「想吃担担面 シャンツーダンダンミェン 名駅地下店」（ホットペッパーID `J001271930`）と一致しなかったため `audit_feature_stores.js` が「実在不明」と誤検出していた。詳細ページリンク（`../stores/J001271930.html`）と予約リンク（`hotpepper.jp/strJ001271930/`）は**最初から正しいIDを指していた**ため、架空店ではなく表示名と画像URL（`P038075153` — LOCAL_STORESのどの店の写真とも一致しない古い/無関係なID）だけがドリフトしていた単純な表記不整合と判明。同一チェーンに「名駅南店」「エスカ店」「栄店」「サンロード店」「名駅地下店」の5支店があり、記事執筆時に支店名の接頭辞を取り違えた可能性が高い
+- **実装内容**: `features/nagoya-ramen.html` の3箇所（JSON-LD ItemList position 3 / shop-card の img alt・src / shop-name）を LOCAL_STORES の正式店名「想吃担担面 シャンツーダンダンミェン 名駅地下店」と現行写真URL（`https://imgfp.hotp.jp/IMGH/89/05/P050608905/P050608905_480.jpg`）に修正。詳細/予約リンクは既に正しかったため変更なし
+- **検証**: `node scripts/audit_feature_stores.js` 実行前後で nagoya-ramen.html の「実在不明」検出が1→0に減少したことを確認。`git diff` で意図した3箇所以外の変更がないことを確認。`node build.js` はローカルHotPepper APIキー未設定により店舗数ガードで意図的abort（`index.html`/`data/stores.json`とも不変更・本セッションの変更は`features/nagoya-ramen.html`単体で完結しLOCAL_STORESに依存しないため無関係）
+- **files**: `features/nagoya-ramen.html`
+- **関連**: [[ISSUE-108]]（同じ監査で発見した姉妹issue。こちらは実在確認に本物のPlaces APIアクセスが要るため保留）
+
 ### [ISSUE-106] 口コミ信頼度の採点基準にサクラレビュー検出の観点（投稿タイミング集中・クロス店舗の重複）を追加
 
 - **priority**: P1 → **status**: done（PR経由でマージ待ち・マージ後の次回 build.yml でサイトに反映）
@@ -3905,6 +3938,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-20 | Orchestrator(EXPLICIT) | ISSUE-100 実装・デプロイ — GSC「サイトマップ内のページがインデックスに登録されない（リダイレクト/404）」通知メール2件を調査。sitemap.xml全5,205URLをファイル照合＋本番への実HTTP HEADで検証し現状は全件200・異常0件と確認（既存クリーンアップで解消済みの過去クロール履歴と判断）。再発時に自動検知できるよう scripts/audit_sitemap_health.js（新設・リトライ付き）を build.yml の push後ステップに追加（非ブロッキング）。npm test 94/94 | ✅ 本コミット |
 | 2026-08-20 | Marketer(/solve-next) | SEO-063 実装・デプロイ — `.gas-deploy/Code.js` に GA4しきい値判別不能行（`(not set)` / `(data not available)` / `(other)`）の集約・分母補正・highThreshold警告を追加。`isGa4Unknown()` ヘルパー新設・`analyze()` で `identifiableSessions` を分母に切替・topSrcRow フィルタ追加・AI プロンプト補足・ルールベースアドバイスの highThreshold ガード・日次/週次レポートへの警告行追加。ISSUE-096はコード修正済みを確認しオーナー操作待ちとしてowner=片桐にエスカレーション。`node --check` ✅ / npm test 94/94 ✅ | ✅ 本コミット |
 | 2026-08-22 | Builder(SEO分析セッション) | SEO-065 実装・デプロイ — サイト全体SEO監査で「店舗ページ5,541件がサイトマップとトップ50件カードだけを発見経路にしており店舗間の内部リンクが皆無」と判明。gen-store-pages.jsに`buildRelatedStores()`を新設（同エリア内でジャンル一致を優先しつつ最大4件・エリアが無い店のみジャンル一致にフォールバック）。見出しラベルは選定条件と必ず一致するよう関数側で確定して返す設計に統一（「同ジャンル」と謳って別ジャンルが混ざる等の見出しと中身の不一致を防止）。全店舗のスラグを先に確定してから related-stores を解決する2段構成にmain()を変更（他店リンク先が実在するスラグであることを保証・架空店リスクなし）。5,023店を再生成、うち4,984店（99.2%）にrelated-storesブロックが付与（残りはエリア・ジャンルとも欠損の店のみ）。sitemap.xml 5,201URLで再生成。npm test 125/125 pass・複数店のレンダリング結果を手動照合 | ✅ 本コミット |
+| 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-107 実装・デプロイ — `node scripts/audit_feature_stores.js` の全特集監査で発見した「実在不明」5件を個別調査。うち1件（nagoya-ramen.htmlの「担担麺専門店 想吃担担面 名駅地下店」）はLOCAL_STORESに実在する店（正式名「想吃担担面 シャンツーダンダンミェン 名駅地下店」・HP ID J001271930）の表記・写真URLドリフトと判明し即修正。残り4件（4特集共通の「鉄板焼肉3G スリージー」）はHotPepper個別ページ404・sandbox内Places APIアクセス不能のため実在確定に至らず、ISSUE-108としてDataKeeperへローカル環境での再検証を依頼 | ✅ 本コミット（ISSUE-107分のみ・ISSUE-108は未実装） |
 | 2026-08-22 | Marketer(SEO分析セッション) | SEO-066 partial実装 — GSCの`gsc_opportunities.json`が挙げるctrFix対象5ページを個別診断。3店舗ページ（J004025075/J004559348/J004661023）はtitleに既に店名完全一致が入っており（SEO-050で一度最適化済み）、上位表示クエリが全て指名検索＝Google Maps/公式Instagram/食べログという「一次情報源」に順位で勝てない構造的なCTR上限（Strategic Skip該当）と判断、対症的なtitle/meta変更は見送り。一方、ジャーナル記事2本は実際のバグを検出: `journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html`は最多流入クエリ「煮干しラーメン 凛」(223 impression/28日)の店名「凛」がtitle/meta/OGP/JSON-LDのどこにも一度も出現していなかった（本文には9回登場）。`journal/2026-07-27-owarisanso-kurogi.html`は最多流入クエリ「尾張山荘くろぎ」(493 impression)のうちmeta descriptionには「尾張山荘」があったがtitleには無かった。両記事のtitle/og:title/JSON-LD headlineに店舗正式名を追加（niboshi-ramen-rinはmeta descriptionにも追加、owarisanso-kurogiは既にmeta記載済みのため据え置き）・dateModified更新・JSON-LD構文検証OK・npm test 125/125 pass。効果は次回GSC更新（該当2クエリのCTR/掲載順位）で再評価 | ✅ 本コミット・3店舗ページ分は意図的見送り |
 
 ---
