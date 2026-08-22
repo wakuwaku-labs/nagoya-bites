@@ -821,7 +821,7 @@
 - **priority**: P0 → **status**: done（acceptance 1〜4完了・5はオーナー判断待ちで別枠）
 - **priority**: P0 → **status**: done
 - **resolved**: 2026-08-22
-- **resolved_by**: （commit後に記録）
+- **resolved_by**: commit bd00d50f
 - **detected**: 2026-08-20（オーナー報告「結構な店舗数で口コミ信頼度が表示されておらず判断材料が足りない」の原因調査中に発見）
 - **resolved**: 2026-08-22（Orchestrator・オーナー就寝中の自律処理）
 - **category**: data-quality / trust / 架空店ブロック関連
