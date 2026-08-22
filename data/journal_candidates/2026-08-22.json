@@ -1,0 +1,472 @@
+{
+  "date": "2026-08-22",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "大須に名古屋初の麻辣串、串1本50円の中華を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 96,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "中華",
+          "feature": "features/nagoya-chinese-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (席,接待,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 156字 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「中華」+2"
+        ]
+      },
+      "gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4"
+    },
+    {
+      "id": "c3",
+      "title_draft": "大須の麻辣串15席、昼夜通し営業を食べ歩き需要で読む",
+      "verdict": "HOLD",
+      "total": 81,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "食べ歩き",
+          "feature": "features/osu-food-walk.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (席,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 111字 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「食べ歩き」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "栄三越の秋リニューアル、カフェ新設をデート需要で読む",
+      "verdict": "HOLD",
+      "total": 62,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 0,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 102字 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「デート」+4",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄から歩く伏見のステーキ、9月4日開業ウルフギャングを接待目線で読む",
+      "verdict": "HOLD",
+      "total": 59,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "ステーキ",
+          "feature": "features/nagoya-steak.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 45日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (予約,接待) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 125字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「ステーキ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "生搾りオレンジの自販機が名古屋から消える、コスパ勝負の終わり方",
+      "verdict": "HOLD",
+      "total": 59,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 5,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 1件 (相場) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 125字 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「コスパ」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "大須に名古屋初の麻辣串、串1本50円の中華を業界人が読む",
+      "lead_draft": "大須3丁目に8月1日、麻辣串（マーラーチャン）の専門店が開いた。約50種の具材が全部串に刺さっていて、色ごとに50円から300円。取った本数がそのまま会計になる。2026年8月19日に地域メディアが報じて名古屋初と分かったこの業態を、価格の作り方・少人数で回るオペ・どのシーンで効くかの3点から業界人の目で読む。",
+      "angle": "串の色分け価格＝原価率の違う食材を1オペで捌く仕組み。客に串を選ばせる時点でピッキングを外注しており、厨房は茹でる・和える・盛るだけになる。15席＋カップ提供で回転に依存しない設計で、一人飲み前の一杯や食べ歩きの合間には効くが接待には向かない",
+      "main_store": {
+        "name": "龍さん家の大須麻辣串",
+        "id": "",
+        "area": "大須",
+        "genre": "四川料理"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通『龍さん家の大須麻辣串』オープン",
+          "url": "https://jouhou.nagoya/osu-malachan/",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "食べログ 店舗ページ（四川料理・上前津駅 徒歩5分／2026-08-22 参照）",
+          "url": "https://tabelog.com/aichi/A2301/A230105/23097384/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "食べログ 実食口コミ（韓国で人気の麻辣串が名古屋・大須に）",
+          "url": "https://tabelog.com/aichi/A2301/A230105/23097384/dtlrvwlst/B532828294/",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "tabemaro 大須商店街の食べ歩き最新店舗",
+          "url": "https://www.tabemaro.jp/column/osu-tabearuki-new/",
+          "date": "2026-08-01"
+        },
+        {
+          "label": "名古屋情報通 張亮麻辣湯 名古屋大須店（大須の麻辣湯激戦の裏取り）",
+          "url": "https://jouhou.nagoya/zhangliang-maratan/",
+          "date": "2026-06-10"
+        },
+        {
+          "label": "ワカの食べ歩きブログ 実食レポ（龍さん家の大須麻辣串）",
+          "url": "https://wakagourmet.blog.shinobi.jp/%E3%80%80%E3%82%A2%E3%82%B8%E3%82%A2%E3%83%B3%E3%83%BB%E5%A4%9A%E5%9B%BD%E7%B1%8D_46/%E9%BE%8D%E3%81%95%E3%82%93%E5%AE%B6%E3%81%AE%E5%A4%A7%E9%A0%88%E9%BA%BB%E8%BE%A3%E4%B8%B2",
+          "date": "2026-08-12"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄から歩く伏見のステーキ、9月4日開業ウルフギャングを接待目線で読む",
+      "lead_draft": "名古屋観光ホテル1階に、ウルフギャング・ステーキハウスの東海初店舗が9月4日に開く。予約は7月7日から受付が始まっており、個室は4室・各8名、連結で最大24名。ホテル1階×個室4室という構成が誰のための箱なのかを、接待の段取りという実務の側から読む。",
+      "angle": "ホテル1階＋8名個室4室＝接待とパーティの二毛作を狙った箱。開業前に予約を開ける意味は初月の稼働を読み切るためで、9月の接待需要に合わせた開業日設定になっている",
+      "main_store": {
+        "name": "ウルフギャング・ステーキハウス 名古屋店",
+        "id": "",
+        "area": "伏見",
+        "genre": "ステーキ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 東海エリア初出店舗のオープン日が決定、予約受付をスタート",
+          "url": "https://prtimes.jp/main/html/rd/p/000001298.000018232.html",
+          "date": "2026-07-07"
+        },
+        {
+          "label": "公式ニュース 2026年9月4日グランドオープン 予約受付をスタート",
+          "url": "https://wolfgangssteakhouse.jp/news/ja/3606",
+          "date": "2026-07-07"
+        },
+        {
+          "label": "ファッションプレス 名古屋観光ホテル内に東海初店舗",
+          "url": "https://www.fashion-press.net/news/145358",
+          "date": "2026-07-08"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "大須の麻辣串15席、昼夜通し営業を食べ歩き需要で読む",
+      "lead_draft": "大須の新店は約15席しかないのに、昼前から夜まで通しで開ける。席が少ない店が通し営業を選ぶとき、狙っているのは着席客ではなくカップを持って歩く客だ。2026年8月に開いたこの麻辣串店のオペを、席数と営業時間の関係から読む。",
+      "angle": "席数15に対してテイクアウト比率を上げると、売上の上限が席の回転から外れる。大須の歩行者需要を拾うために中休みを作らない構成",
+      "main_store": {
+        "name": "龍さん家の大須麻辣串",
+        "id": "",
+        "area": "大須",
+        "genre": "四川料理"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通『龍さん家の大須麻辣串』オープン",
+          "url": "https://jouhou.nagoya/osu-malachan/",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "食べログ 店舗ページ（営業時間・立地）",
+          "url": "https://tabelog.com/aichi/A2301/A230105/23097384/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "tabemaro 大須商店街の食べ歩き最新店舗",
+          "url": "https://www.tabemaro.jp/column/osu-tabearuki-new/",
+          "date": "2026-08-01"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "flexible",
+      "title_draft": "栄三越の秋リニューアル、カフェ新設をデート需要で読む",
+      "lead_draft": "名古屋栄三越が秋のリニューアルで、東海エリア唯一となるキハチカフェなどを順次開ける。百貨店が館内にカフェを増やすときに見ているのは飲食の粗利ではなく滞在時間で、その狙いは栄の街全体の回遊とつながっている。",
+      "angle": "百貨店内カフェは飲食単体の採算ではなく滞在時間と買い回りを買う投資。栄の路面店にとっては競合ではなく送客元になる",
+      "main_store": {
+        "name": "名古屋栄三越",
+        "id": "",
+        "area": "栄",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 名古屋栄三越が秋のリニューアル",
+          "url": "https://jouhou.nagoya/sakae-mitsukoshi-new2026/",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-21"
+        },
+        {
+          "label": "名古屋情報通 グルメ一覧",
+          "url": "https://jouhou.nagoya/category/gourmet/",
+          "date": "2026-08-21"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "flexible",
+      "title_draft": "生搾りオレンジの自販機が名古屋から消える、コスパ勝負の終わり方",
+      "lead_draft": "生搾りオレンジジュースの自販機IJOOZが東海エリアから撤退すると2026年8月21日に報じられた。1杯350円で搾りたてという分かりやすいコスパは、名古屋の街でよく見かけるようになっていた。撤退が何を意味するのかを、原材料と設置コストの側から読む。",
+      "angle": "無人販売のコスパ訴求は原材料相場が動くと真っ先に崩れる。飲食店が価格で殴り合わない理由が、この撤退に凝縮している",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 IJOOZ が東海エリアから撤退へ",
+          "url": "https://jouhou.nagoya/ijooz-orange/",
+          "date": "2026-08-21"
+        },
+        {
+          "label": "名古屋情報通 グルメ一覧",
+          "url": "https://jouhou.nagoya/category/gourmet/",
+          "date": "2026-08-21"
+        },
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-21"
+        }
+      ]
+    }
+  ]
+}
