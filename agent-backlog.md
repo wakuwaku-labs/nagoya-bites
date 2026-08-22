@@ -816,9 +816,12 @@
 - **acceptance**: 次回 `weekly-places.yml` 実行後、`node -e "..."` 等で編集部推薦店のNA率が100%から大きく下がることを確認
 - **関連**: [[ISSUE-101]]（口コミ信頼度の判定材料不足がこの調査の発端）/ [[ISSUE-103]]（同じ調査から派生した別原因・他都市データ混入）
 
-### [ISSUE-103] カタログに他都市チェーン店舗が誤って「名古屋の店」として混入している疑い（71店・実在保証Moatの根幹に関わる）
+### [ISSUE-103] カタログに他都市チェーン店舗が誤って「名古屋の店」として混入している疑い（71店・実在保証Moatの根幹に関わる）✅
 
 - **priority**: P0 → **status**: done（acceptance 1〜4完了・5はオーナー判断待ちで別枠）
+- **priority**: P0 → **status**: done
+- **resolved**: 2026-08-22
+- **resolved_by**: （commit後に記録）
 - **detected**: 2026-08-20（オーナー報告「結構な店舗数で口コミ信頼度が表示されておらず判断材料が足りない」の原因調査中に発見）
 - **resolved**: 2026-08-22（Orchestrator・オーナー就寝中の自律処理）
 - **category**: data-quality / trust / 架空店ブロック関連
@@ -4635,6 +4638,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-09-02 | Orchestrator(自律バッチ) | SEO-075 acceptance 7 実装 — `data/gas_deploy_policy.json` に `settled_lag_days:2` / `max_stale_reference_days:3` を追加。`scripts/check_gas_deploy_health.js` にチェック #5（`stale_numeric_reference`）を追加。`.github/workflows/gas-deploy-watchdog.yml` に `stale_numeric_reference` 固有の対処ガイドを追加。status: partial → done | ✅ 本コミット |
 | 2026-09-02 | Orchestrator(自律バッチ) | SEO-077 実装 — `docs/daily-posts/feature-nagoya-solo-dining.md` を新規作成（Note/Instagram/X 3セクション構成。常設特集を SNS 配信パイプラインに接続）。status: ready → done | ✅ 本コミット |
 | 2026-09-02 | Orchestrator(自律バッチ) | SEO-078 遡及クローズ — commit 74ed54c3（2026-08-31）で実装済みを確認。status: ready → done（resolved_by: 74ed54c3） | ✅ バックログ更新 |
+| 2026-08-22 | DataKeeper(routine) | ISSUE-103 実装・デプロイ — places_resolved.json のrejected分析で判明した71件の他都道府県チェーン店（北海道・沖縄・熊本・三重等）をbuild.jsのEXCLUDED_HP_IDSに追加し、data/stores.json（5023→4952件）・data/crosscheck.json（5023→4952件）から除外。根本原因はfetch_places.jsが「栄」を名古屋・栄と誤解し他都市の栄町所在IDを取り込んでいたこと。再発防止のためscripts/audit_other_prefecture_stores.js（新設・--check で exit1・PASS確認済み）と.github/workflows/build.yml（非ブロッキング監査ステップ追加）を整備。QA-2: 71/5023=1.41%削減（閾値5%以内）・index.html TOP50は0店変化なし | ✅ 本コミット |
 
 ---
 
