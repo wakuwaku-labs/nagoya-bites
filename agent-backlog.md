@@ -6,16 +6,43 @@
 
 ---
 
-### [ISSUE-115] normalize_og_images.js --check にHTTP到達性チェックが無く、404のog:imageをCIが検知できない
+### [ISSUE-116] journal記事のog:imageに11件のHTTP到達不能（404/Places署名URL失効）が見つかった。うち10件はAPIキーが無く本セッションでは修復不能
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: ready（オーナー本人 or HOTPEPPER_API_KEY/GOOGLE_MAPS_API_KEYを持つ環境待ち）
+- **detected**: 2026-08-23（[[ISSUE-115]]で新設した`audit_ogp_image_liveness.js`をfeatures/journal全176件に対して実行し発見）
+- **category**: SEO / SNS / data-quality
+- **owner**: DataKeeper（写真再取得） + Builder（実行環境）
+- **調査で判明した事実**: `node scripts/audit_ogp_image_liveness.js` を journal/*.html にも対象を広げて実行した結果、11件のog:imageが404/403だった（4件はHotPepper URL 404・重複1件を除くと3店、7件はGoogle Places署名URL失効）:
+  | journal記事 | 掲載店 | 状態 |
+  |---|---|---|
+  | 2026-05-11-trending-4-stores-sakae-kanayama.html | 焼肉ホタル 栄東店 | HotPepper 404 |
+  | 2026-05-14-yakiniku-fuku-nagoya-insider.html | 焼肉 福 名駅西口店 | HotPepper 404 |
+  | 2026-05-17-yakiniku-fuku-meieki-west.html | 焼肉 福 名駅西口店（同上） | HotPepper 404 |
+  | 2026-05-16-torinchi-shinsakae-jidori.html | 鶏ん家 名古屋新栄店 | HotPepper 404 |
+  | 2026-05-27/06-01/06-07/06-08/06-11/06-16/07-23 の7記事 | 各店 | Google Places署名URL失効（`lh3.googleusercontent.com/place-photos/...` が403） |
+- **[[ISSUE-114]]との違い（なぜ今回は自力修復できなかったか）**: ISSUE-114の3件は「特集本文が古いURLを指し続けていたが、LOCAL_STORESには既に生きた現在URLがある」パターンで、その現在値に差し替えるだけで直せた。今回の3店（焼肉ホタル栄東店・焼肉福名駅西口店・鶏ん家名古屋新栄店）は**`data/stores.json`（LOCAL_STORES）自体の「写真URL」フィールドが既に同じ404URLを指していた**——つまりHotPepper側の配信が止まっており、代わりに使える生きたURLがこのリポジトリのどこにも存在しない。再取得には`HOTPEPPER_API_KEY`が必要だが本セッションには無い。Places署名URLの7件も同様に`GOOGLE_MAPS_API_KEY`での再取得が必要（このセッションのキーは`REQUEST_DENIED`・[[ISSUE-108]]と同じ制約）
+- **もう一段深刻な背景（今回は未対応・別途スコープ）**: `node scripts/audit_photo_coverage.js --check-liveness` を実行したところ、**「写真URLあり」4,869件のうち実際にHTTP到達可能なのは約1,284件（25.9%）と推定**された（HotPepper抽出サンプル40件中6件＝15%が失効、Google Places全83件は失効0件）。ただし index.html・stores/*.html はいずれも`onerror`で汎用フォールバックSVGへ自動的に切り替わる実装（`nbImgFallback()`）になっているため、**サイト上で壊れた画像が表示されるわけではない**（写真が実在するはずの店で無言でプレースホルダーに差し替わるだけ）。一方 og:image は静的metaタグでJSのフォールバックが効かないため、SNS共有時のサムネイル欠落として顕在化する。両者は実害の性質が異なるため本チケットではog:image側（顕在化した実害）のみを対象とし、サイト全体の写真カバレッジ実態（25.9%という数字の是非を含む）は別途規模を見積もってから着手すべき別課題として切り出す
+- **acceptance**:
+  1. `HOTPEPPER_API_KEY`/`GOOGLE_MAPS_API_KEY`が使える環境（オーナーのローカルMacまたはCI）で該当3店＋7記事の写真を再取得し、og:imageとLOCAL_STORESの写真URL双方を更新する
+  2. 対応後 `node scripts/audit_ogp_image_liveness.js --check` の検出が0件になることを確認
+  3. `.github/workflows/build.yml`の「OGP画像のHTTP到達性を監査」ステップから`continue-on-error: true`を外し、ブロッキングに切り替える（現状は既知の未解消分があるため意図的に非ブロッキング）
+  4. 「実配信25.9%」の実態調査は、規模（3,585件相当）を踏まえて別チケットとして起票するか判断する
+- **files**: 該当journal記事7〜8本（上記表）, `.github/workflows/build.yml`（ブロッキング化の際に変更）
+- **関連**: [[ISSUE-114]]（同種だが自力修復できたケース）/ [[ISSUE-115]]（この発見に使った監査スクリプトの新設元）/ [[ISSUE-108]]（同じくAPIキー制約で本セッションでは完了できないケース）
+
+### [ISSUE-115] normalize_og_images.js --check にHTTP到達性チェックが無く、404のog:imageをCIが検知できない ✅
+
+- **priority**: P1 → **status**: done
 - **detected**: 2026-08-23（[[ISSUE-114]]の調査で判明）
+- **resolved**: 2026-08-23
 - **category**: SEO / SNS / 品質ゲート
-- **owner**: Builder
+- **owner**: Orchestrator（実装）
 - **調査で判明した事実**: `scripts/normalize_og_images.js --check`（build.ymlの「OGP画像の配信可否を監査」ステップ）は、og:imageが絶対URLか・SVGでないか・width/heightが付いているか等の**構造**は検査するが、**そのURLが実際にHTTP到達可能か（生死）は検査していない**。HotPepperの画像CDN（imgfp.hotp.jp）は個別の写真URLが将来的に無効化されうるため、構造的には正しいog:imageでも実配信が止まっているケースを見逃す（[[ISSUE-114]]で実際に3件の404を発見）
-- **未実施の理由**: `normalize_og_images.js`は日次ジャーナルのラッパー（`run_journal_local.sh`）から`--only`で呼ばれるdelicateなスクリプトであり、同期処理から非同期HTTP検査への構造変更を無人の深夜セッションで急ぐより、次回テストを伴って実装する方が安全と判断した
-- **acceptance**: `normalize_og_images.js --check`（または新規の軽量スクリプト）にHTTP到達性チェックを追加しCIに組み込む。既存の`audit_sitemap_health.js`が同種のリトライ付きHTTP検査パターンを持つため参考にできる。実装後、意図的に1件のog:imageを404 URLに書き換えてCIが検知することを確認する
-- **関連**: [[ISSUE-114]]（この調査の発端・実際の404 3件は既に修正済み）
+- **実装内容**: `normalize_og_images.js`本体は改変せず（日次ジャーナルのラッパーから`--only`で呼ばれるdelicateなスクリプトのため）、`scripts/audit_ogp_image_liveness.js`を新設。`audit_sitemap_health.js`と同じ「実HTTPレスポンスで判定（3xx5xx/timeoutは最大2回リトライ）」パターンをog:imageに絞って適用し、features/journal全HTMLのog:imageをHTTP HEADで検査する。`.github/workflows/build.yml`にステップを追加（既存の「OGP画像の配信可否を監査」の直後）
+- **実行して判明した実態**: features 67件は[[ISSUE-114]]の3件を除き全て生存を確認済みだったが、対象をjournal 100件超にも広げたところ**新たに11件の404/403を発見**（[[ISSUE-116]]として別途起票。API キー制約で本セッションでは修復不能なため）。このため本ステップは**一旦 `continue-on-error: true` の非ブロッキングで追加**し、ISSUE-116解消後にブロッキングへ切り替える方針とした（「現状の違反を無視してブロッキング化する」と「鳴らない報知器のまま放置する」のどちらも避けるための中間状態）
+- **検証**: `node scripts/audit_ogp_image_liveness.js` を実行し176件中165件生存・11件検出（想定通り）。`node -c`構文チェックOK。`.github/workflows/build.yml`のYAML構文検証OK
+- **files**: `scripts/audit_ogp_image_liveness.js`（新規）, `.github/workflows/build.yml`
+- **関連**: [[ISSUE-114]]（この調査の発端・実際の404 3件は既に修正済み）/ [[ISSUE-116]]（本スクリプトの実行で新たに見つかった未解消分）
 
 ### [ISSUE-114] OGPの og:image が実際に配信されているか（HTTP到達性）をCIが検査しておらず、3特集で404画像がSNSサムネイルに使われていた ✅
 
@@ -4061,6 +4088,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-20 | Orchestrator(EXPLICIT) | ISSUE-100 実装・デプロイ — GSC「サイトマップ内のページがインデックスに登録されない（リダイレクト/404）」通知メール2件を調査。sitemap.xml全5,205URLをファイル照合＋本番への実HTTP HEADで検証し現状は全件200・異常0件と確認（既存クリーンアップで解消済みの過去クロール履歴と判断）。再発時に自動検知できるよう scripts/audit_sitemap_health.js（新設・リトライ付き）を build.yml の push後ステップに追加（非ブロッキング）。npm test 94/94 | ✅ 本コミット |
 | 2026-08-20 | Marketer(/solve-next) | SEO-063 実装・デプロイ — `.gas-deploy/Code.js` に GA4しきい値判別不能行（`(not set)` / `(data not available)` / `(other)`）の集約・分母補正・highThreshold警告を追加。`isGa4Unknown()` ヘルパー新設・`analyze()` で `identifiableSessions` を分母に切替・topSrcRow フィルタ追加・AI プロンプト補足・ルールベースアドバイスの highThreshold ガード・日次/週次レポートへの警告行追加。ISSUE-096はコード修正済みを確認しオーナー操作待ちとしてowner=片桐にエスカレーション。`node --check` ✅ / npm test 94/94 ✅ | ✅ 本コミット |
 | 2026-08-22 | Builder(SEO分析セッション) | SEO-065 実装・デプロイ — サイト全体SEO監査で「店舗ページ5,541件がサイトマップとトップ50件カードだけを発見経路にしており店舗間の内部リンクが皆無」と判明。gen-store-pages.jsに`buildRelatedStores()`を新設（同エリア内でジャンル一致を優先しつつ最大4件・エリアが無い店のみジャンル一致にフォールバック）。見出しラベルは選定条件と必ず一致するよう関数側で確定して返す設計に統一（「同ジャンル」と謳って別ジャンルが混ざる等の見出しと中身の不一致を防止）。全店舗のスラグを先に確定してから related-stores を解決する2段構成にmain()を変更（他店リンク先が実在するスラグであることを保証・架空店リスクなし）。5,023店を再生成、うち4,984店（99.2%）にrelated-storesブロックが付与（残りはエリア・ジャンルとも欠損の店のみ）。sitemap.xml 5,201URLで再生成。npm test 125/125 pass・複数店のレンダリング結果を手動照合 | ✅ 本コミット |
+| 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-115 実装・デプロイ — `scripts/audit_ogp_image_liveness.js`を新設しog:imageのHTTP到達性をCIで検査可能に。全features/journalに実行したところjournal記事で新たに11件の404/403を発見（ISSUE-116として起票・APIキー制約で本セッションでは修復不能）。既知の未解消分があるため`continue-on-error: true`で非ブロッキング追加し、ISSUE-116解消後にブロッキング化する方針とした。副次的に`audit_photo_coverage.js --check-liveness`で「写真URLあり」の実配信率が推定25.9%と判明したが、onerrorフォールバックでサイト表示自体は壊れないため規模を見積もってから別課題として切り出す判断とした | ✅ 本コミット（新規スクリプト＋CI追加） |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-114 実装・デプロイ — ISSUE-113調査中、特集のog:imageが実際にHTTP到達可能かを確認していないことに気づき全67特集を実測。3件（osu-food-walk/birthday-surprise/large-group）が404と判明し、各特集の掲載店1位の現在の実写真URLに差し替え。根本原因（CIのOGP監査がURL構造しか検査していない）はISSUE-115として別途起票 | ✅ 本コミット（3ファイル修正） |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-113 実装・デプロイ — nightly QAが架空店監査WARNを報告、ISSUE-103で除外済みのはずの他都市チェーン店6件が特集記事の掲載コンテンツ側に残存していたと判明（データ層除外が特集コンテンツ層に反映されていなかった構造的欠陥）。`data/closed_stores.json`全70件×全features/journal本文の網羅的突合で追加2件を発見し計8件を実在検証済みのLOCAL_STORES代替店に差し替え。再発防止として`scripts/audit_closed_store_mentions.js`を新設しbuild.ymlにブロッキングで追加 | ✅ 本コミット（8ファイル差し替え＋新規監査スクリプト） |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-112 2回目発生・復旧 — `daily-trending5.yml`（定期実行）が本セッションの直前pushと重なり同型のコンテンツ競合で失敗、当日分「今日の話題店TOP5」コミットが丸ごと失われるところだった。`gh workflow run daily-trending5.yml`でリカバリ用workflow_dispatchを手動実行し5分後に復旧成功を確認。実害が具体化・複数ワークフローに同根本原因があると判明したため priority を P2→P1 に引き上げ | ✅ リカバリ実行成功（`32598697435`）・恒久修正はISSUE-112のまま |

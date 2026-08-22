@@ -359,3 +359,13 @@ jobs:
         run: |
           node scripts/render_og_figures.js --check
           node scripts/normalize_og_images.js --check
+
+      - name: OGP画像のHTTP到達性を監査（ISSUE-115再発防止・404/失効URLの検知）
+        # 上のステップは og:image の「構造」（絶対URLか・SVGでないか等）しか見ておらず、
+        # そのURLが実際にHTTP到達可能か（生死）は検査していなかった（ISSUE-114で3件の404を発見）。
+        # 追加調査でjournal記事にも同種の404・Places署名URL失効が計11件見つかったが、
+        # いずれもHOTPEPPER_API_KEY/GOOGLE_MAPS_API_KEYでの再取得が必要でこのステップの追加と
+        # 同時には直しきれなかった（ISSUE-116）。既知の未解消分があるため一旦非ブロッキングとし、
+        # ISSUE-116の解消後にブロッキングへ切り替える。
+        run: node scripts/audit_ogp_image_liveness.js --check
+        continue-on-error: true
