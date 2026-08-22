@@ -10,24 +10,22 @@ function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,p
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ma by KIWAMI マーバイキワミ（栄・矢場町・中華）| NAGOYA BITES</title>
-<meta name="description" content="上前津駅から徒歩10分の中華。予算3001～4000円。予約・地図・口コミを1ページで確認できます。">
-<link rel="canonical" href="https://nagoya-bites.com/stores/J004444094.html">
-<meta property="og:title" content="Ma by KIWAMI マーバイキワミ（栄・矢場町・中華）| NAGOYA BITES">
-<meta property="og:description" content="上前津駅から徒歩10分の中華。予算3001～4000円。予約・地図・口コミを1ページで確認できます。">
+<title>龍さん家の大須麻辣串（栄・矢場町・四川料理 / 麻辣串）| NAGOYA BITES</title>
+<meta name="description" content="名古屋市中区大須3-36-24 浅田屋ビル1階の四川料理 / 麻辣串。予算1001～1500円。2026年8月1日オープンの名古屋初の麻辣串（マーラーチャン）専門店。予約・地図・口コミを1ページで確認できます。">
+<link rel="canonical" href="https://nagoya-bites.com/stores/store-e9be8de38195e382.html">
+<meta property="og:title" content="龍さん家の大須麻辣串（栄・矢場町・四川料理 / 麻辣串）| NAGOYA BITES">
+<meta property="og:description" content="名古屋市中区大須3-36-24 浅田屋ビル1階の四川料理 / 麻辣串。予算1001～1500円。2026年8月1日オープンの名古屋初の麻辣串（マーラーチャン）専門店。予約・地図・口コミを1ページで確認できます。">
 <meta property="og:type" content="restaurant">
-<meta property="og:url" content="https://nagoya-bites.com/stores/J004444094.html">
-<meta property="og:image" content="https://imgfp.hotp.jp/IMGH/42/65/P047994265/P047994265_480.jpg">
-<meta property="og:image:alt" content="Ma by KIWAMI マーバイキワミ の店舗写真">
-<meta name="twitter:image:alt" content="Ma by KIWAMI マーバイキワミ の店舗写真">
-<meta property="og:image:width" content="480">
-<meta property="og:image:height" content="320">
+<meta property="og:url" content="https://nagoya-bites.com/stores/store-e9be8de38195e382.html">
+<meta property="og:image" content="/assets/store-figures/_fallback.svg">
+<meta property="og:image:alt" content="龍さん家の大須麻辣串 の店舗写真">
+<meta name="twitter:image:alt" content="龍さん家の大須麻辣串 の店舗写真">
 <meta property="og:site_name" content="NAGOYA BITES">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Ma by KIWAMI マーバイキワミ（栄・矢場町・中華）| NAGOYA BITES">
-<meta name="twitter:description" content="上前津駅から徒歩10分の中華。予算3001～4000円。予約・地図・口コミを1ページで確認できます。">
-<meta name="twitter:image" content="https://imgfp.hotp.jp/IMGH/42/65/P047994265/P047994265_480.jpg">
+<meta name="twitter:title" content="龍さん家の大須麻辣串（栄・矢場町・四川料理 / 麻辣串）| NAGOYA BITES">
+<meta name="twitter:description" content="名古屋市中区大須3-36-24 浅田屋ビル1階の四川料理 / 麻辣串。予算1001～1500円。2026年8月1日オープンの名古屋初の麻辣串（マーラーチャン）専門店。予約・地図・口コミを1ページで確認できます。">
+<meta name="twitter:image" content="/assets/store-figures/_fallback.svg">
 <link rel="manifest" href="../manifest.json">
 <meta name="theme-color" content="#7a5c10">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,30 +35,23 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   {
     "@context": "https://schema.org",
     "@type": "Restaurant",
-    "name": "Ma by KIWAMI マーバイキワミ",
-    "servesCuisine": "中華",
+    "name": "龍さん家の大須麻辣串",
+    "servesCuisine": "四川料理 / 麻辣串",
     "address": {
       "@type": "PostalAddress",
       "addressRegion": "愛知県",
       "addressCountry": "JP",
-      "addressLocality": "名古屋市",
-      "streetAddress": "愛知県名古屋市中区橘１-4-12",
-      "addressArea": "栄(ミナミ)/矢場町/大須/上前津"
+      "addressLocality": "栄(ミナミ)/矢場町/大須/上前津"
     },
-    "image": "https://imgfp.hotp.jp/IMGH/42/65/P047994265/P047994265_480.jpg",
-    "url": "https://nagoya-bites.com/stores/J004444094.html",
-    "description": "栄(ミナミ)/矢場町/大須/上前津の中華。名古屋市営地下鉄名城線，名古屋市営地下鉄鶴舞線上前津駅７出口より徒歩約10分",
-    "priceRange": "¥¥",
-    "openingHours": "月～日、祝日、祝前日: 11:30～14:0017:00～23:00",
+    "image": "/assets/store-figures/_fallback.svg",
+    "url": "https://nagoya-bites.com/stores/store-e9be8de38195e382.html",
+    "description": "2026年8月1日オープンの名古屋初の麻辣串（マーラーチャン）専門店。約50種の具材が全て串に刺さり、串の色ごとに1本50〜300円で取った本数がそのまま会計になる。カップ麻辣湯は0辛〜3辛から選べる。約15席で全日11:00〜21:00の通し営業、カップ提供のため大須の食べ歩きにも使える。",
+    "priceRange": "¥",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.161",
       "longitude": "136.906"
-    },
-    "acceptsReservations": true,
-    "sameAs": [
-      "https://www.hotpepper.jp/strJ004444094/"
-    ]
+    }
   },
   {
     "@context": "https://schema.org",
@@ -75,8 +66,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "中華",
-        "item": "https://nagoya-bites.com/#genre=%E4%B8%AD%E8%8F%AF"
+        "name": "四川料理 / 麻辣串",
+        "item": "https://nagoya-bites.com/#genre=%E5%9B%9B%E5%B7%9D%E6%96%99%E7%90%86%20%2F%20%E9%BA%BB%E8%BE%A3%E4%B8%B2"
       },
       {
         "@type": "ListItem",
@@ -87,8 +78,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       {
         "@type": "ListItem",
         "position": 4,
-        "name": "Ma by KIWAMI マーバイキワミ",
-        "item": "https://nagoya-bites.com/stores/J004444094.html"
+        "name": "龍さん家の大須麻辣串",
+        "item": "https://nagoya-bites.com/stores/store-e9be8de38195e382.html"
       }
     ]
   }
@@ -168,36 +159,36 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F42%2F65%2FP047994265%2FP047994265_480.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F42%2F65%2FP047994265%2FP047994265_238.jpg" alt="Ma by KIWAMI マーバイキワミ" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/42/65/P047994265/P047994265_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
+<img class="hero-img" src="/assets/store-figures/_fallback.svg" alt="龍さん家の大須麻辣串" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="this.onerror=null;this.src='/assets/store-figures/_fallback.svg'">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <a href="../">NAGOYA BITES</a>
-    <span>›</span><a href="../#genre=%E4%B8%AD%E8%8F%AF">中華</a>
+    <span>›</span><a href="../#genre=%E5%9B%9B%E5%B7%9D%E6%96%99%E7%90%86%20%2F%20%E9%BA%BB%E8%BE%A3%E4%B8%B2">四川料理 / 麻辣串</a>
     <span>›</span><a href="../#area=%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5">栄(ミナミ)/矢場町/大須/上前津</a>
     <span>›</span>
-    <span>Ma by KIWAMI マーバイキワミ</span>
+    <span>龍さん家の大須麻辣串</span>
   </nav>
 
-  <div class="genre-badge">中華</div>
-  <h1>Ma by KIWAMI マーバイキワミ</h1>
+  <div class="genre-badge">四川料理 / 麻辣串</div>
+  <h1>龍さん家の大須麻辣串</h1>
   <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
     
     <span class="ccs-badge ccs-badge-pending" title="口コミ信頼度 —：判定材料不足（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）">口コミ信頼度<span class="ccs-tier cc-tier-NA">—</span></span>
   </div>
 
-  
+  <div class="point-box"><p>2026年8月1日オープンの名古屋初の麻辣串（マーラーチャン）専門店。約50種の具材が全て串に刺さり、串の色ごとに1本50〜300円で取った本数がそのまま会計になる。カップ麻辣湯は0辛〜3辛から選べる。約15席で全日11:00〜21:00の通し営業、カップ提供のため大須の食べ歩きにも使える。</p></div>
 
   <div class="info-grid">
-    <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 栄(ミナミ)/矢場町/大須/上前津</span></div>
-    <div class="info-cell"><label>住所</label><span>愛知県名古屋市中区橘１-4-12</span></div>
-    <div class="info-cell"><label>価格帯</label><span>3001～4000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月～日、祝日、祝前日: 11:30～14:0017:00～23:00</span></div>
+    <div class="info-cell"><label>エリア</label><span>愛知県 栄(ミナミ)/矢場町/大須/上前津</span></div>
     
-    <div class="info-cell"><label>アクセス・特徴</label><span>名古屋市営地下鉄名城線，名古屋市営地下鉄鶴舞線上前津駅７出口より徒歩約10分</span></div>
+    <div class="info-cell"><label>価格帯</label><span>1001～1500円</span></div>
+    
+    
+    <div class="info-cell"><label>アクセス・特徴</label><span>名古屋市中区大須3-36-24 浅田屋ビル1階（地下鉄上前津駅より徒歩5分）</span></div>
   </div>
 
-  <div class="tags"><span class="tag">中華料理</span><span class="tag">3000〜5000円</span></div>
+  <div class="tags"><span class="tag">50〜60名</span></div>
 
   <div class="trust-breakdown">
     <h2>口コミ信頼度の内訳</h2>
@@ -243,12 +234,12 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
       <div class="trust-axis-row trust-axis-meta">
         <span class="trust-axis-name">掲載情報の充実</span>
         <span class="trust-axis-score">3/15点</span>
-        <span class="trust-axis-reason">写真 あり</span>
+        <span class="trust-axis-reason">推薦文 あり</span>
       </div>
       <div class="trust-axis-row trust-axis-meta">
         <span class="trust-axis-name">営業確認</span>
-        <span class="trust-axis-score">5/5点</span>
-        <span class="trust-axis-reason">Hot Pepper 営業継続中</span>
+        <span class="trust-axis-score">2/5点</span>
+        <span class="trust-axis-reason">営業実態は手動キュレーションで確認</span>
       </div>
       <div class="trust-axis-row trust-axis-meta">
         <span class="trust-axis-name">公式Instagram</span>
@@ -258,32 +249,31 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ004444094/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/Ma%20by%20KIWAMI%20%E3%83%9E%E3%83%BC%E3%83%90%E3%82%A4%E3%82%AD%E3%83%AF%E3%83%9F%20%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E9%BE%8D%E3%81%95%E3%82%93%E5%AE%B6%E3%81%AE%E5%A4%A7%E9%A0%88%E9%BA%BB%E8%BE%A3%E4%B8%B2%20%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5" target="_blank" rel="noopener noreferrer">Googleマップ</a>
   </div>
 
   
   <div class="related-features">
     <h2>この店舗が登場する特集</h2>
     <ul>
+      <li><a href="../features/banquet.html">名古屋の宴会・忘年会15選</a></li>
       <li><a href="../features/nagoya-chinese-guide.html">名古屋 中華料理おすすめ 2026</a></li>
       <li><a href="../features/sakae.html">栄グルメ15選</a></li>
-      <li><a href="../features/osu-food-walk.html">大須 食べ歩きおすすめ10選</a></li>
     </ul>
   </div>
   
   <div class="related-stores">
     <h2>栄(ミナミ)/矢場町/大須/上前津の他の店</h2>
     <ul>
+      <li><a href="J003737480.html">肉ト魚 大衆酒場 ひとめぼれ 栄店</a></li>
+      <li><a href="J000107401.html">矢場とん 矢場町本店</a></li>
+      <li><a href="J000796446.html">あつた蓬莱軒 松坂屋店</a></li>
       <li><a href="J000389487.html">台湾料理 矢場味仙</a></li>
-      <li><a href="J000429952.html">陳麻婆豆腐 ラシック店</a></li>
-      <li><a href="J004660957.html">安光</a></li>
-      <li><a href="J003389327.html">重慶火鍋基地 炉鼎技名古屋大須店</a></li>
     </ul>
   </div>
 
   <div class="back-section">
-    <a href="../?area=%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5&genre=%E4%B8%AD%E8%8F%AF">← 栄(ミナミ)/矢場町/大須/上前津の中華をもっと見る</a>
+    <a href="../?area=%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5&genre=%E5%9B%9B%E5%B7%9D%E6%96%99%E7%90%86%20%2F%20%E9%BA%BB%E8%BE%A3%E4%B8%B2">← 栄(ミナミ)/矢場町/大須/上前津の四川料理 / 麻辣串をもっと見る</a>
   </div>
 </div>
 

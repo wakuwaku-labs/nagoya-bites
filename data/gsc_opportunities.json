@@ -1,37 +1,38 @@
 {
-  "generatedAt": "2026-08-21T23:35:33.770Z",
+  "generatedAt": "2026-08-22T00:14:23.061Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
   "byQuery": {
-    "ctrFix": [],
+    "ctrFix": [
+      {
+        "query": "くろぎ 名古屋",
+        "impressions": 172,
+        "clicks": 2,
+        "position": 9.8,
+        "ctr": 1.16,
+        "expectedCtr": 2.6,
+        "missedClicks": 2.4
+      }
+    ],
     "ctrFixGeoless": [
       {
         "query": "一人飲み",
-        "impressions": 192,
+        "impressions": 183,
         "clicks": 3,
         "position": 4.4,
-        "ctr": 1.56,
+        "ctr": 1.64,
         "expectedCtr": 7.2,
-        "missedClicks": 10.8
+        "missedClicks": 10.2
       },
       {
         "query": "やきまる亭",
-        "impressions": 246,
+        "impressions": 236,
         "clicks": 3,
-        "position": 7.6,
-        "ctr": 1.22,
-        "expectedCtr": 3.5,
-        "missedClicks": 5.7
-      },
-      {
-        "query": "一魚魚一 はなれ",
-        "impressions": 182,
-        "clicks": 2,
-        "position": 8.1,
-        "ctr": 1.1,
-        "expectedCtr": 3.2,
-        "missedClicks": 3.7
+        "position": 7.7,
+        "ctr": 1.27,
+        "expectedCtr": 3.4,
+        "missedClicks": 5.1
       },
       {
         "query": "喫茶時々",
@@ -52,39 +53,48 @@
         "missedClicks": 2.9
       },
       {
-        "query": "イルタッソ",
-        "impressions": 53,
+        "query": "一魚魚一 はなれ",
+        "impressions": 152,
         "clicks": 2,
-        "position": 5.8,
-        "ctr": 3.77,
-        "expectedCtr": 5.2,
-        "missedClicks": 0.8
+        "position": 8.1,
+        "ctr": 1.32,
+        "expectedCtr": 3.2,
+        "missedClicks": 2.8
+      },
+      {
+        "query": "イルタッソ",
+        "impressions": 51,
+        "clicks": 2,
+        "position": 5.7,
+        "ctr": 3.92,
+        "expectedCtr": 5.3,
+        "missedClicks": 0.7
       }
     ],
     "rankPush": [
       {
         "query": "尾張山荘くろぎ",
-        "impressions": 493,
-        "clicks": 6,
-        "position": 10.4,
-        "ctr": 1.22,
-        "upsideClicks": 7.8
+        "impressions": 474,
+        "clicks": 5,
+        "position": 10.3,
+        "ctr": 1.05,
+        "upsideClicks": 8.3
       },
       {
         "query": "アルマデシュラスコ 名駅",
-        "impressions": 108,
+        "impressions": 103,
         "clicks": 2,
-        "position": 10.1,
-        "ctr": 1.85,
-        "upsideClicks": 1
+        "position": 10.2,
+        "ctr": 1.94,
+        "upsideClicks": 0.9
       },
       {
         "query": "ナショナルベーカリー",
-        "impressions": 381,
+        "impressions": 363,
         "clicks": 10,
-        "position": 11.4,
-        "ctr": 2.62,
-        "upsideClicks": 0.7
+        "position": 11.2,
+        "ctr": 2.75,
+        "upsideClicks": 0.2
       }
     ]
   },
@@ -101,12 +111,12 @@
       },
       {
         "page": "/stores/J004025075.html",
-        "impressions": 574,
+        "impressions": 553,
         "clicks": 14,
-        "position": 6.6,
-        "ctr": 2.44,
-        "expectedCtr": 4.4,
-        "missedClicks": 11.3
+        "position": 6.5,
+        "ctr": 2.53,
+        "expectedCtr": 4.5,
+        "missedClicks": 10.9
       },
       {
         "page": "/journal/2026-07-27-owarisanso-kurogi.html",
@@ -119,12 +129,12 @@
       },
       {
         "page": "/stores/J004559348.html",
-        "impressions": 560,
-        "clicks": 8,
+        "impressions": 515,
+        "clicks": 7,
         "position": 8.4,
-        "ctr": 1.43,
+        "ctr": 1.36,
         "expectedCtr": 3,
-        "missedClicks": 9
+        "missedClicks": 8.7
       },
       {
         "page": "/stores/J004661023.html",
@@ -140,17 +150,17 @@
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2586,
+        "impressions": 2384,
         "clicks": 13,
-        "position": 25.1,
-        "ctr": 0.5,
-        "upsideClicks": 59.5
+        "position": 24.4,
+        "ctr": 0.55,
+        "upsideClicks": 53.6
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 0,
+    "queryCtrFix": 1,
     "queryCtrFixGeoless": 6,
     "queryRankPush": 3,
     "pageCtrFix": 5,
