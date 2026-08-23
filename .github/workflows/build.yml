@@ -337,8 +337,22 @@ jobs:
           # `--autostash` を使い、最大5回まで指数バックオフで再試行する
           PUSHED=0
           for i in 1 2 3 4 5; do
-            git pull --rebase --autostash origin main || true
-            if git push; then PUSHED=1; break; fi
+            # ISSUE-112: 前の試行で rebase が中途半端に止まっている場合はリセット
+            git rebase --abort 2>/dev/null || true
+            if git pull --rebase --autostash origin main; then
+              if git push; then PUSHED=1; break; fi
+            else
+              # ISSUE-112: 機械生成スナップショット同士のコンテンツ競合。
+              # rebase の --ours は「適用中の我々のコミット（今回の生成結果）」を指す。
+              # 競合した全ファイルを我々の版で解消して rebase を続行する。
+              CONFLICTED=$(git diff --name-only --diff-filter=U 2>/dev/null)
+              if [ -n "$CONFLICTED" ]; then
+                echo "$CONFLICTED" | xargs git checkout --ours -- 2>/dev/null || true
+                echo "$CONFLICTED" | xargs git add -- 2>/dev/null || true
+                GIT_EDITOR=true git rebase --continue 2>/dev/null || git rebase --abort 2>/dev/null || true
+              fi
+              if git push; then PUSHED=1; break; fi
+            fi
             echo "push 失敗（試行 ${i}/5）。$((i * 5))秒待って再試行します"
             sleep $((i * 5))
           done
