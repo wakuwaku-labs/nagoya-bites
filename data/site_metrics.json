@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-08-23T18:27:25.312Z",
+  "generatedAt": "2026-08-23T23:43:44.017Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 792,
-    "pageViews": 1313,
-    "sessions": 932,
-    "avgSessionDuration": 156.9,
-    "bounceRate": 0.33,
+    "activeUsers": 793,
+    "pageViews": 1314,
+    "sessions": 933,
+    "avgSessionDuration": 156.7,
+    "bounceRate": 0.331,
     "pagesPerSession": 1.41
   },
   "channels": {
     "sessions": {
-      "organic": 638,
+      "organic": 639,
       "direct": 200,
       "social": 90,
       "referral": 13,
@@ -20,7 +20,7 @@
     },
     "pct": {
       "organic": 67.8,
-      "direct": 21.3,
+      "direct": 21.2,
       "social": 9.6,
       "referral": 1.4,
       "paid": 0,
@@ -46,7 +46,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 121
+      "sessions": 122
     },
     {
       "source": "chatgpt.com",
@@ -87,8 +87,8 @@
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 159,
-      "sessions": 142
+      "pageViews": 160,
+      "sessions": 143
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -485,7 +485,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 792,
+    "value": 793,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
