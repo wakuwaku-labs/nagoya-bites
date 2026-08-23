@@ -6,6 +6,57 @@
 
 ---
 
+### [SEO-070] 特集・日次ジャーナルの内部リンクが「本文の後ろ」にしか無く、記事を読み切らない読者に回遊の手がかりが一度も出ない
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-08-24
+- **category**: SEO
+- **owner**: Builder + Editor
+- **source**: SEOアドバイス(LINE) 2026-08-23 原文「1訪問あたり閲覧が1.1ページと低く、サイト内を回遊してもらえていません。👉 人気の特集「nagoya-solo-dining」ページに、関連性の高い特集へのリンクを記事の冒頭・中盤・末尾に設置し、回遊を促しましょう」／ 週次レポート(LINE) 2026-08-17〜08-23 原文「1訪問あたり閲覧が1.4ページと目安2ページを下回っており、サイト内回遊が少ないです。👉 journal/の最新記事の冒頭に、関連するfeatures/の特集記事への内部リンクを追記しましょう」
+- **統合理由**: 日次（features/ 側）と週次（journal/ 側）が同じ週に**同一の打ち手**を別の面に対して指している。設置面は違うが「本文内のどこに内部リンクを置くか」という1つの設計判断であり、別々に実装すると [[SEO-040]]（FV統合）・[[SEO-042]]（特集冒頭CTA統合）と同じく後から実装した側が先の設置と競合する。1チケットで扱う
+- **brand-filter**: ✅ 適合 — 自社内の実在記事どうしを繋ぐ回遊改善であり、外部順位の操作でも被リンク工作でもない。Moat の「構造化DB 4,584店 × 特集20本 × 日次ジャーナルの三層編集」は**三層が相互に到達可能で初めて価値になる**。現状はその導線が本文末尾にしか無い
+- **検証できる事実（助言の主張ではなく実データ・実ファイルで確認した内容）**:
+  | 事実 | 出典 |
+  |---|---|
+  | 1訪問あたり閲覧 日次 1.1ページ / 週次 1.4ページ。週次の目安2ページを下回る状態が日次・週次の**両方**で出ている（単日のブレではない） | 日次レポート 2026-08-23 / 週次レポート 2026-08-17〜08-23 |
+  | `features/nagoya-solo-dining.html` の他特集へのリンクは `.related`（`:427`）の6本のみ。**本文中（`.content` 内）に他特集へのリンクは1本も無い** | features/nagoya-solo-dining.html |
+  | journal 記事も同様。直近8本すべてで features/ への最初のリンクが `</article>`（`:249`）より**後ろ**の `.related` ブロック内にある | journal/2026-08-16〜08-23 の8本 |
+  | `nagoya-solo-dining` は週次閲覧2位（58回）・日次1位（12回）＝**サイトで最も読まれている特集**であり、回遊改善の効きが最も大きい面 | 週次/日次レポート 2026-08-23 |
+  | 既存の `.related` は自動保守されている（`scripts/refresh_journal_related.js`）。**仕組みは既にあり、足りないのは設置位置だけ** | journal記事内のコメント `:251` |
+  | [[SEO-052]] で `internal_link_click` とスクロール到達が既に計測されている＝**効果を数字で閉じられる** | journal記事 `:270-273` |
+- **acceptance**:
+  1. **まず計測データを見てから設計する**（制約10）。[[SEO-052]] が取っている `internal_link_click` とスクロール到達率を確認し、「読者が `.related` ブロックまで到達しているか」を先に確定させる。到達率が十分高いなら本チケットは position ではなく**リンクの中身**の問題に再スコープする（＝到達しているのに押されていない）
+  2. 到達率が低いことが確認できた場合のみ、本文内（導入文の直後 or 最初の `<h2>` 付近）に関連特集への文脈リンクを設置する。設置は**既存スクリプトの拡張で冪等に**行う（`refresh_journal_related.js` / `add_feature_top_cta.js` の方式に倣い、マーカー方式で再生成可能にする。記事HTMLへの手書き禁止＝月次の掲載店入替や再生成で消えないこと）
+  3. リンク先は**実在する特集・記事のみ**（`node scripts/audit_feature_stores.js` 検出ゼロ維持／リンク切れゼロ）。関連性は既存 `.related` の選定ロジックを流用し、無関係な特集を機械的に差し込まない（solo-dining に「手羽先」を繋ぐような需要の合わない対応付けは**しない**——助言はこの組み合わせを名指ししていたが、既存の `.related` が持つ industry-insiders-pick / hard-to-book / kospa-insider の方が Moat 適合度が高い）
+  4. `index.html` は単一ファイル維持（制約1）・`LOCAL_STORES` パターン不変（制約2）・フィルタ/検索/モーダル/IGエンベッド/Google評価を壊さない（制約5）
+- **効果測定**: `data/metrics_history.json` の pagesPerSession 前後比 ＋ [[SEO-052]] の `internal_link_click` 実数。体感ではなく数字で判定する
+- **files**: `scripts/refresh_journal_related.js`, `scripts/add_feature_top_cta.js`, `features/*.html`, `journal/*.html`
+
+### [SEO-071] IndexNow が「送信可能な状態のまま一度も送信されていない」— 最大流入エンジン Bing への更新通知が丸ごと死んでいる
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-08-24
+- **category**: SEO
+- **owner**: Builder + Marketer
+- **source**: 週次レポート(LINE) 2026-08-17〜08-23 原文「Bing検索からの流入が28%とGoogle検索(29%)に迫る勢いです。👉 features/にある全特集ページとjournal/にある全記事の<title>と<meta name="description">を見直し、特にBingでの表示を意識したキーワードを盛り込みましょう」
+- **助言そのものは却下し、同じ症状に対する検証可能な打ち手へ振り替えた**: 「Bingを意識したKWを全記事に盛り込む」は (a) 同種の助言を 2026-08-20 / 08-21 に既に却下済み、(b) [[SEO-067]]（Bing Webmaster Tools 接続）が未完でBing側の検索実データが1件も無いため「Bing向けKW」は当て推量にしかならず、**検証できない自己申告を根拠に全記事を書き換えることになる（制約10違反）**。一方で「Bingが主要流入エンジンなのに手当てが無い」という**症状の側は実データで裏が取れている**ため、検証可能な打ち手として本チケットを起こす
+- **brand-filter**: ✅ 適合 — IndexNow は「更新したURLを検索エンジンに通知する」標準プロトコルであり、順位操作でも被リンク工作でもない。日次ジャーナルという**毎日更新される実在コンテンツ**を持つ本サイトの構造とそのまま噛み合う（更新頻度が武器になる唯一の面）。広告主依存・クーポン経済のいずれにも該当しない（制約7・8非該当）
+- **検証できる事実（実行して確認した内容）**:
+  | 事実 | 出典 |
+  |---|---|
+  | 週次の流入元は Google 29% / **Bing 28%** / 直接 17%。Bing が Google とほぼ並んだ | 週次レポート 2026-08-17〜08-23 |
+  | `data/search_channel_metrics.json` の `blind_spots` が自分で「**IndexNow 送信の有効化**」を対処として挙げている | `node scripts/search_channel_metrics.js` の出力 |
+  | `node scripts/indexnow_ping.js --status` → `initialized: true` / `key_file_in_repo: true` / **`ready_to_submit: true`**。キーファイル `ec3ee6876b0d465ab4f7093ba5bc42d0.txt` はリポジトリ root に実在し配信済み | 実行して確認 |
+  | `grep -rn "indexnow" .github/workflows/` → **ヒット0件**。つまり送信可能な状態で完成しているのに、**呼び出す経路がどこにも無い**（手で `--yes` を打った時だけ動く＝実質一度も動いていない） | 実行して確認 |
+  | [[SEO-067]]（Bing WMT 接続・オーナー操作待ちで blocked）とは**独立**。IndexNow はキーファイルのホストだけで成立し、WMT 登録を必要としない＝**オーナーを待たずに今すぐ閉じられる** | `scripts/indexnow_ping.js` の設計 |
+- **acceptance**:
+  1. 日次ジャーナル公開時（および特集更新時）に、公開した URL を IndexNow へ送信する経路を配線する。既定 dry-run の設計は維持し、CI からの実送信は明示的に `--yes` を渡す形にする（外部送信を暗黙に既定化しない）
+  2. 送信対象は**その日に実際に公開/更新した URL に限る**（サイト全URLの一括再送信はしない。スパム的な再送はエンジン側の信頼を落とす）
+  3. 送信の成否をログに残し、**失敗が gitignore 配下で消えない**こと（CLAUDE.md「無人自動化の監視」原則2: 警報は out-of-band に出す。既存 watchdog と同じ思想で、連続失敗が人に届く経路にする）
+  4. 効果測定は `node scripts/search_channel_metrics.js --report` の Bing セッション数と、次回以降の週次レポートの流入元内訳で判定する（総クリックではなくエンジン別内訳で見る。[[SEO-043]] と同じ理由）
+- **注記**: 実装は `/solve-next` の YES ゲート経由。**外部サービスへの送信を伴う**ため、初回の実送信はオーナー承認を取ってから有効化する
+- **files**: `scripts/indexnow_ping.js`, `.github/workflows/build.yml`（または journal 公開ラッパー）, `data/search_channel_metrics.json`
+
 ### [ISSUE-116] journal記事のog:imageに11件のHTTP到達不能（404/Places署名URL失効）が見つかった。うち10件はAPIキーが無く本セッションでは修復不能
 
 - **priority**: P1 → **status**: ready（オーナー本人 or HOTPEPPER_API_KEY/GOOGLE_MAPS_API_KEYを持つ環境待ち）
