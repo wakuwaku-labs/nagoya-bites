@@ -14,59 +14,476 @@
     "review_publish_min": 85
   },
   "pass_threshold": 100,
-  "ranked": [],
-  "disqualified": [
+  "ranked": [
     {
-      "id": "c2",
-      "title_draft": "栄で一人飲みしていい店を見分ける5つのサイン",
-      "verdict": "DISQUALIFIED",
-      "total": 0,
-      "disqualified_reasons": [
-        "同一コラムの再掲 (COL-OPS-004, 2026-08-19)"
-      ],
-      "breakdown": null
-    }
-  ],
-  "selected_id": null,
-  "selected_verdict": null,
-  "selected_gate_note": "",
-  "fallback_needed": true,
-  "inputs": [
-    {
-      "id": "c2",
-      "theme": "industry_insider",
-      "title_draft": "栄で一人飲みしていい店を見分ける5つのサイン",
-      "lead_draft": "OZmallの調査では2019年から2025年の6年間で1人予約の利用者数が10.4倍に拡大した。「入りやすい店」は雰囲気ではなく、席割り・価格設計・告知文の3点に共通のサインがある。栄の実店舗5軒を業界人の目で読み解く。",
-      "angle": "一人飲みの入りやすさを『感覚』ではなく店側の設計判断（カウンター比率・単品完結価格・告知文の書き方）として構造化し、栄の実在5店で裏付ける",
-      "main_store": {
-        "name": "日本酒と干物と燻製　居酒屋かけはし",
-        "id": "J004559158",
-        "area": "栄",
-        "genre": "居酒屋"
+      "id": "c1",
+      "title_draft": "名駅3丁目に名古屋初上陸の焼肉、30席が飲み放題を半額で出す理由を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 99,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
       },
-      "column_id": "COL-OPS-004",
-      "sources": [
+      "search_intent_links": [
         {
-          "label": "テンポスフードメディア「外食における消費行動分析 6年で1人予約が10倍」（OZmall調査）",
-          "url": "https://foodmedia.tenpos.com/newstrend/news/63624",
-          "date": "2026-08-03"
+          "kw": "名駅",
+          "feature": "features/meieki.html"
         },
         {
-          "label": "LOCAL_STORES掲載店の公開情報（居酒屋かけはし・串の鬼ひげ 伏見店・寿司の銀之丞・辛麺 華火 新栄町本店・Lazward ラズワード）",
-          "url": "https://nagoya-bites.com/features/nagoya-solo-dining.html",
-          "date": "2026-08-23"
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
         },
         {
-          "label": "ホットペッパーグルメ外食総研「女性の一人外食、延べ回数が3年間で14.2%増加」",
-          "url": "https://www.inshokuten.com/foodist/article/5616/",
-          "date": "2026-08-01"
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
         }
       ],
-      "trending_signals": {
-        "x_mentions": 0,
-        "media_count": 3,
-        "buzz_score": 0
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 6件 (コース,席,予約,シーン,接待,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 192字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      },
+      "gate_note": "99点（自動公開ライン 100点）。主な不足: topicality -5 / brand_fit -4 / writability -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "神宮前に本日オープンのパスタ専門店2号店、100円刻みの盛り3段を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 5件 (価格帯,シーン,仕入れ,オペ,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 179字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: search_intent -6 / brand_fit -4 / writability -2"
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅で焼肉の飲み放題が1,100円、業界人が見る半額固定という価格帯の作り方",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 94,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 6件 (価格帯,コース,予約,シーン,回転,業界) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 156字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      },
+      "gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4 / writability -2"
+    },
+    {
+      "id": "c3",
+      "title_draft": "名駅の焼肉で平日ランチだけ開ける店、接待に向かない30席のシーン適性",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 93,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 7件 (価格帯,コース,席,予約,接待,オペ,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 154字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      },
+      "gate_note": "93点（自動公開ライン 100点）。主な不足: topicality -13 / brand_fit -4"
+    },
+    {
+      "id": "c4",
+      "title_draft": "吹上から神宮前へ、名古屋のパスタ専門店が2号店を出すときの相場と席の考え方",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 13,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 3件 (価格帯,仕入れ,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 163字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
       }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "99点（自動公開ライン 100点）。主な不足: topicality -5 / brand_fit -4 / writability -2",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "flexible",
+      "title_draft": "名駅3丁目に名古屋初上陸の焼肉、30席が飲み放題を半額で出す理由を業界人が読む",
+      "lead_draft": "2026年8月11日、東京・錦糸町発の「焼肉ここから」が名駅3丁目に名古屋初上陸した。看板は6,578円の伝説盛りだが、この店の価格帯を読むならそこではない。コース3,500円からと、通常2,200円の飲み放題を常時1,100円で出す設計の組み合わせを見る。30席・個室あり・定休日なし・平日だけランチを開けるオペと合わせて、名駅の焼肉相場のどこに置かれた店なのかを業界人視点で読む。",
+      "angle": "看板の6,578円は客単価ではなく最上位の単品。実際の着地はコース3,500円+飲み放題1,100円の二層で、飲み放題を常時半額に置くのは予約客の単価を読みやすくする回転設計。30席・個室あり・平日のみランチという営業時間の切り方と、接待には向かず2〜4人の一人飲み延長に向くシーン適性まで含めて読む。",
+      "main_store": {
+        "name": "焼肉ここから 名古屋名駅店",
+        "id": "J004661361",
+        "area": "名駅",
+        "genre": "焼肉・ホルモン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 — 『焼肉ここから』名古屋初店舗が名駅3丁目にオープン",
+          "url": "https://jouhou.nagoya/yakiniku-kokokara/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "焼肉ここから 公式サイト — 名古屋名駅店",
+          "url": "http://issei-kokokara.com/shop/nagoya/",
+          "date": "2026-08-11"
+        },
+        {
+          "label": "焼肉ここから 公式サイト — 新店ラッシュ！8月11日名古屋エリアにOPEN",
+          "url": "https://issei-kokokara.com/news/",
+          "date": "2026-08-11"
+        },
+        {
+          "label": "ホットペッパーグルメ — 焼肉ここから 名古屋名駅店",
+          "url": "https://www.hotpepper.jp/strJ004661361/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "食べログ — 焼肉ここから 名古屋名駅店",
+          "url": "https://tabelog.com/aichi/A2301/A230101/23096990/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "焼肉ここから 公式本部Instagram",
+          "url": "https://www.instagram.com/yakinikukokokara_official/",
+          "date": "2026-08-11"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "flexible",
+      "title_draft": "神宮前に本日オープンのパスタ専門店2号店、100円刻みの盛り3段を業界人が読む",
+      "lead_draft": "2026年8月23日、吹上本店で知られる特盛パスタ専門店GURUの2号店が名鉄神宮前駅の東口すぐに本オープンした。ジェノベーゼは小盛1,330円・普通盛1,430円・大盛1,630円。この100円と200円の刻みは値上げではなく、茹で前200gを基準にした原価と客回転の設計そのものだ。11時から20時通しの営業時間と火曜定休の意味も含め、業界人視点で読む。",
+      "angle": "小盛1,330円から大盛1,630円までの100〜200円刻みは、麺の仕入れ原価が薄いパスタ専門店だから成立する価格帯の作り方。11時-20時通し営業で昼夜の谷を埋める回転設計と、ニンニク・オイル・辛味を無料カスタムにしてオペを増やさずに満足度を上げる手口、一人飲みではなく一人昼食に振ったシーン適性を読む。",
+      "main_store": {
+        "name": "GURU 熱田店",
+        "id": "",
+        "area": "神宮前",
+        "genre": "パスタ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 — パスタ専門店『GURU』2号店が熱田区に",
+          "url": "https://jouhou.nagoya/guru-atsuta/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "GURU 公式Instagram — 2号店オープン告知",
+          "url": "https://www.instagram.com/p/Db7uWxIOQem/",
+          "date": "2026-08-12"
+        },
+        {
+          "label": "名古屋情報通 — 吹上にオープンした特盛パスタ専門店『GURU』",
+          "url": "https://jouhou.nagoya/guru-pasta/",
+          "date": "2026-08-16"
+        },
+        {
+          "label": "X — GURU吹上本店の普通サイズは茹で前200g",
+          "url": "https://x.com/nagoya1016/status/1868622718385713154",
+          "date": "2026-08-16"
+        },
+        {
+          "label": "Retty — GURU 吹上本店",
+          "url": "https://retty.me/area/PRE23/ARE66/SUB6601/100001762363/",
+          "date": "2026-08-16"
+        },
+        {
+          "label": "おいでよ名古屋の食べ歩きログ — パスタ専門店『グル』",
+          "url": "https://oinagoya.com/guru/",
+          "date": "2026-08-16"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "flexible",
+      "title_draft": "名駅の焼肉で平日ランチだけ開ける店、接待に向かない30席のシーン適性",
+      "lead_draft": "名駅3丁目に8月11日オープンした焼肉ここから名古屋名駅店は、平日だけ11時半から15時のランチを開け、土日祝は夜のみで回す。定休日はない。この営業時間の切り方は、名駅のオフィス需要と週末の来街需要を別のものとして扱っている証拠だ。30席・個室ありという席構成が誰のための設計なのかを、業界人視点で読み解く。",
+      "angle": "平日のみランチという営業時間の切り方はオフィス需要と週末需要を別勘定にする回転設計。30席で個室ありでも接待には向かず、2〜4人の予約とカウンターの一人飲みに寄る理由を席と煙のオペから説明し、コース3,500円という価格帯の使いどころを示す。",
+      "main_store": {
+        "name": "焼肉ここから 名古屋名駅店",
+        "id": "J004661361",
+        "area": "名駅",
+        "genre": "焼肉・ホルモン"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ — 焼肉ここから 名古屋名駅店",
+          "url": "https://www.hotpepper.jp/strJ004661361/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "焼肉ここから 公式サイト — 名古屋名駅店",
+          "url": "http://issei-kokokara.com/shop/nagoya/",
+          "date": "2026-08-11"
+        },
+        {
+          "label": "名古屋情報通 — 『焼肉ここから』名古屋初店舗",
+          "url": "https://jouhou.nagoya/yakiniku-kokokara/",
+          "date": "2026-08-22"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "flexible",
+      "title_draft": "吹上から神宮前へ、名古屋のパスタ専門店が2号店を出すときの相場と席の考え方",
+      "lead_draft": "2024年11月に吹上で始まったパスタ専門店GURUが、2026年8月23日に名鉄神宮前駅東口へ2号店を開いた。個人店が2号店を出すタイミングは、売上ではなく仕込みと人の再現性で決まる。1号店から徒歩圏ではない場所を選んだこと、11時から20時の通し営業にしたこと、火曜定休を残したことの三点から、業界人視点でこの出店を読む。",
+      "angle": "個人店の2号店は仕入れと仕込みの再現性が取れた時に出る。1号店と商圏を食い合わない距離、通し営業で昼夜の谷を埋める回転設計、火曜定休という人繰りの残し方から、価格帯1,300〜1,760円のパスタ専門店が多店舗化する条件を読む。",
+      "main_store": {
+        "name": "GURU 熱田店",
+        "id": "",
+        "area": "神宮前",
+        "genre": "パスタ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 — パスタ専門店『GURU』2号店が熱田区に",
+          "url": "https://jouhou.nagoya/guru-atsuta/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "GURU 公式Instagram — 2号店オープン告知",
+          "url": "https://www.instagram.com/p/Db7uWxIOQem/",
+          "date": "2026-08-12"
+        },
+        {
+          "label": "名古屋情報通 — 吹上にオープンした特盛パスタ専門店『GURU』",
+          "url": "https://jouhou.nagoya/guru-pasta/",
+          "date": "2026-08-16"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "flexible",
+      "title_draft": "名駅で焼肉の飲み放題が1,100円、業界人が見る半額固定という価格帯の作り方",
+      "lead_draft": "焼肉ここから名古屋名駅店は、2時間の飲み放題を通常2,200円のところ半額の1,100円で出している。期間限定ではなく常時だ。飲食の現場から見ると、これは値引きではなく客単価を読みやすくするための装置に近い。2026年8月11日に名古屋初上陸したこの店の価格帯を、コース3,500円からという設定と合わせて読む。",
+      "angle": "飲み放題の半額固定は値引きではなく客単価を先に確定させる装置。ドリンク原価と肉原価の差、コース3,500円との組み合わせで着地する価格帯、予約の取りやすさと回転の関係を業界人視点で説明し、どのシーンなら得かを示す。",
+      "main_store": {
+        "name": "焼肉ここから 名古屋名駅店",
+        "id": "J004661361",
+        "area": "名駅",
+        "genre": "焼肉・ホルモン"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ — 焼肉ここから 名古屋名駅店",
+          "url": "https://www.hotpepper.jp/strJ004661361/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "食べログ — 焼肉ここから 名古屋名駅店",
+          "url": "https://tabelog.com/aichi/A2301/A230101/23096990/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "焼肉ここから 公式サイト — 名古屋名駅店",
+          "url": "http://issei-kokokara.com/shop/nagoya/",
+          "date": "2026-08-11"
+        },
+        {
+          "label": "名古屋情報通 — 『焼肉ここから』名古屋初店舗",
+          "url": "https://jouhou.nagoya/yakiniku-kokokara/",
+          "date": "2026-08-22"
+        }
+      ]
     }
   ]
 }
