@@ -1,47 +1,47 @@
 {
-  "generatedAt": "2026-08-24T13:42:24.822Z",
+  "generatedAt": "2026-08-24T18:38:09.626Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 823,
-    "pageViews": 1373,
-    "sessions": 969,
-    "avgSessionDuration": 158.2,
-    "bounceRate": 0.328,
-    "pagesPerSession": 1.42
+    "activeUsers": 814,
+    "pageViews": 1347,
+    "sessions": 955,
+    "avgSessionDuration": 156.5,
+    "bounceRate": 0.33,
+    "pagesPerSession": 1.41
   },
   "channels": {
     "sessions": {
-      "organic": 672,
-      "direct": 204,
-      "social": 93,
+      "organic": 665,
+      "direct": 199,
+      "social": 90,
       "referral": 13,
       "paid": 0,
-      "other": 0
+      "other": 2
     },
     "pct": {
-      "organic": 68.4,
-      "direct": 20.8,
-      "social": 9.5,
+      "organic": 68.6,
+      "direct": 20.5,
+      "social": 9.3,
       "referral": 1.3,
       "paid": 0,
-      "other": 0
+      "other": 0.2
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 275
+      "sessions": 274
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 249
+      "sessions": 245
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 169
+      "sessions": 164
     },
     {
       "source": "yahoo",
@@ -51,17 +51,12 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 88
+      "sessions": 85
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 20
-    },
-    {
-      "source": "openai",
-      "medium": "organic",
-      "sessions": 10
+      "sessions": 21
     },
     {
       "source": "openai",
@@ -74,30 +69,35 @@
       "sessions": 8
     },
     {
+      "source": "openai",
+      "medium": "organic",
+      "sessions": 8
+    },
+    {
       "source": "copilot.com",
       "medium": "(not set)",
-      "sessions": 5
+      "sessions": 4
     }
   ],
   "topPages": [
     {
       "path": "/",
-      "pageViews": 256,
-      "sessions": 143
+      "pageViews": 253,
+      "sessions": 141
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 183,
-      "sessions": 153
+      "pageViews": 184,
+      "sessions": 154
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 116,
-      "sessions": 111
+      "pageViews": 112,
+      "sessions": 107
     },
     {
       "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
-      "pageViews": 66,
+      "pageViews": 67,
       "sessions": 64
     },
     {
@@ -107,8 +107,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 96,
-    "ctaClickRate": 9.9,
+    "outboundClicks": 94,
+    "ctaClickRate": 9.8,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -116,7 +116,7 @@
       },
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 22
+        "clicks": 21
       },
       {
         "domain": "maps.google.com",
@@ -143,10 +143,6 @@
         "clicks": 1
       },
       {
-        "domain": "haera.parco.jp",
-        "clicks": 1
-      },
-      {
         "domain": "prtimes.jp",
         "clicks": 1
       },
@@ -165,16 +161,16 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 34,
+      "organic": 32,
       "direct": 37,
       "social": 25,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 5.1,
-    "ctaClickRate_direct": 18.1,
-    "ctaClickRate_social": 26.9,
+    "ctaClickRate_organic": 4.8,
+    "ctaClickRate_direct": 18.6,
+    "ctaClickRate_social": 27.8,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -190,7 +186,7 @@
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 5
+        "clicks": 4
       },
       {
         "path": "/features/birthday-surprise.html",
@@ -222,10 +218,6 @@
       },
       {
         "path": "/journal/2026-05-31-grill-tsubaki-meiekimae.html",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-06-14-yoroniku-nagoya-haera.html",
         "clicks": 1
       },
       {
@@ -289,7 +281,7 @@
       {
         "path": "/features/nagoya-hitsumabushi.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 5
+        "clicks": 4
       },
       {
         "path": "/",
@@ -354,11 +346,6 @@
       {
         "path": "/journal/2026-05-31-grill-tsubaki-meiekimae.html",
         "domain": "www.tablecheck.com",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-06-14-yoroniku-nagoya-haera.html",
-        "domain": "haera.parco.jp",
         "clicks": 1
       },
       {
@@ -442,7 +429,7 @@
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 5
+        "clicks": 4
       },
       {
         "path": "/features/birthday-surprise.html",
@@ -481,11 +468,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 65
+    "reservationClicks": 64
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 823,
+    "value": 814,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

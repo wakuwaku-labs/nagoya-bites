@@ -65,8 +65,17 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       "@type": "AggregateRating",
       "ratingValue": "5",
       "bestRating": "5",
-      "ratingCount": "2"
-    }
+      "ratingCount": "1"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "口コミ信頼度（独自算定・広告非関与・段階 D）",
+        "value": 31,
+        "maxValue": 100,
+        "description": "「この店のGoogle★と件数は、そのまま信じてよいか」を、Googleの件数・★と件数のバランス・直近の口コミの傾向・評価の分布・第三者メディアの掲載のうち観測できた検証項目（3/9）だけで採点した参考指標。段階 D＝他の情報と合わせて判断を。店の良し悪しの評価ではない。算定方法: https://nagoya-bites.com/features/integrity-method.html"
+      }
+    ]
   },
   {
     "@context": "https://schema.org",
@@ -189,7 +198,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <h1>BAR FRIX S バーフリックス</h1>
   <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
     <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>5</div>
-    <span class="ccs-badge ccs-badge-pending" title="口コミ信頼度 —：判定材料不足（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）">口コミ信頼度<span class="ccs-tier cc-tier-NA">—</span></span>
+    <span class="ccs-badge" title="口コミ信頼度 D：他の情報と合わせて判断を">口コミ信頼度<span class="ccs-tier cc-tier-D">D</span></span>
   </div>
 
   <div class="point-box"><p>栄駅16出口4分、2,500円バーはキャッチ視認性の高いアクセスで流動客対応</p></div>
@@ -207,18 +216,18 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
 
   <div class="trust-breakdown">
     <h2>口コミ信頼度の内訳</h2>
-    <p class="trust-headline"><span class="trust-tier cc-tier-NA">—</span><span class="trust-score">— / 100</span> — Google★5（2件）は、判定材料が足りません。</p>
-    <p class="trust-meta-line">検証 2/9項目 ・ Google口コミ取得日 2026-05-22</p>
+    <p class="trust-headline"><span class="trust-tier cc-tier-D">D</span><span class="trust-score">31 / 100</span> — Google★5（1件）は、他の情報と合わせて判断してください。</p>
+    <p class="trust-meta-line">検証 3/9項目 ・ Google口コミ取得日 2026-08-24</p>
     <p class="trust-breakdown-intro">口コミ信頼度は「この店のGoogle★と件数は、そのまま信じてよいか」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
       <div class="trust-axis-row">
         <span class="trust-axis-name">件数は十分か</span>
         <span class="trust-axis-score">2/10点</span>
-        <span class="trust-axis-reason">2件（サンプル不足）</span>
+        <span class="trust-axis-reason">1件（サンプル不足）</span>
       </div>
       <div class="trust-axis-row">
         <span class="trust-axis-name">★と件数のバランス</span>
         <span class="trust-axis-score">3/15点</span>
-        <span class="trust-axis-reason">★5・件数2件（件数が少なく、高評価の裏付けが弱い）</span>
+        <span class="trust-axis-reason">★5・件数1件（件数が少なく、高評価の裏付けが弱い）</span>
       </div>
       <div class="trust-axis-row trust-axis-unobserved">
         <span class="trust-axis-name">直近の評価は全体と一致するか</span>
@@ -233,7 +242,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
       <div class="trust-axis-row trust-axis-unobserved">
         <span class="trust-axis-name">評価の分布（両極に割れていないか）</span>
         <span class="trust-axis-score">—</span>
-        <span class="trust-axis-reason">最新2件のみ（判定保留）（判定保留・採点に含めません）</span>
+        <span class="trust-axis-reason">最新1件のみ（判定保留）（判定保留・採点に含めません）</span>
       </div>
       <div class="trust-axis-row trust-axis-unobserved">
         <span class="trust-axis-name">口コミの増え方</span>
