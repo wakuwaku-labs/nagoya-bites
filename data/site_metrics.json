@@ -1,62 +1,62 @@
 {
-  "generatedAt": "2026-08-24T18:38:09.626Z",
+  "generatedAt": "2026-08-24T23:40:17.239Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 814,
-    "pageViews": 1347,
-    "sessions": 955,
-    "avgSessionDuration": 156.5,
-    "bounceRate": 0.33,
+    "activeUsers": 817,
+    "pageViews": 1350,
+    "sessions": 958,
+    "avgSessionDuration": 156.7,
+    "bounceRate": 0.331,
     "pagesPerSession": 1.41
   },
   "channels": {
     "sessions": {
-      "organic": 665,
-      "direct": 199,
-      "social": 90,
+      "organic": 640,
+      "direct": 197,
+      "social": 87,
       "referral": 13,
       "paid": 0,
-      "other": 2
+      "other": 5
     },
     "pct": {
-      "organic": 68.6,
-      "direct": 20.5,
-      "social": 9.3,
-      "referral": 1.3,
+      "organic": 67.9,
+      "direct": 20.9,
+      "social": 9.2,
+      "referral": 1.4,
       "paid": 0,
-      "other": 0.2
+      "other": 0.5
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 274
+      "sessions": 263
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 245
+      "sessions": 237
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 164
+      "sessions": 160
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 130
+      "sessions": 124
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 85
+      "sessions": 82
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 21
+      "sessions": 23
     },
     {
       "source": "openai",
@@ -74,9 +74,9 @@
       "sessions": 8
     },
     {
-      "source": "copilot.com",
-      "medium": "(not set)",
-      "sessions": 4
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 5
     }
   ],
   "topPages": [
@@ -107,12 +107,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 94,
-    "ctaClickRate": 9.8,
+    "outboundClicks": 85,
+    "ctaClickRate": 8.9,
     "byDomain": [
       {
         "domain": "tabelog.com",
-        "clicks": 42
+        "clicks": 34
       },
       {
         "domain": "www.hotpepper.jp",
@@ -124,7 +124,7 @@
       },
       {
         "domain": "jouhou.nagoya",
-        "clicks": 6
+        "clicks": 5
       },
       {
         "domain": "www.instagram.com",
@@ -161,23 +161,23 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 32,
+      "organic": 31,
       "direct": 37,
-      "social": 25,
+      "social": 17,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
     "ctaClickRate_organic": 4.8,
-    "ctaClickRate_direct": 18.6,
-    "ctaClickRate_social": 27.8,
+    "ctaClickRate_direct": 18.8,
+    "ctaClickRate_social": 19.5,
     "byPage": [
       {
-        "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 32
+        "path": "/",
+        "clicks": 24
       },
       {
-        "path": "/",
+        "path": "/features/nagoya-kaoawase-washoku.html",
         "clicks": 24
       },
       {
@@ -234,10 +234,6 @@
       },
       {
         "path": "/journal/2026-08-11-imaike-mitsushi-sosaku-udon.html",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
         "clicks": 1
       },
       {
@@ -472,7 +468,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 814,
+    "value": 817,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
