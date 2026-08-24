@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-23T23:43:46.920Z",
+  "generatedAt": "2026-08-24T00:12:54.250Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -7,32 +7,32 @@
     "ctrFix": [
       {
         "query": "くろぎ 名古屋",
-        "impressions": 158,
+        "impressions": 139,
         "clicks": 2,
-        "position": 9.8,
-        "ctr": 1.27,
+        "position": 9.7,
+        "ctr": 1.44,
         "expectedCtr": 2.6,
-        "missedClicks": 2
+        "missedClicks": 1.6
       }
     ],
     "ctrFixGeoless": [
       {
         "query": "一人飲み",
-        "impressions": 214,
+        "impressions": 207,
         "clicks": 3,
         "position": 4.2,
-        "ctr": 1.4,
+        "ctr": 1.45,
         "expectedCtr": 7.6,
-        "missedClicks": 13.3
+        "missedClicks": 12.7
       },
       {
         "query": "やきまる亭",
-        "impressions": 231,
+        "impressions": 222,
         "clicks": 3,
         "position": 7.7,
-        "ctr": 1.3,
+        "ctr": 1.35,
         "expectedCtr": 3.4,
-        "missedClicks": 4.9
+        "missedClicks": 4.6
       },
       {
         "query": "煮干しラーメン 凛",
@@ -54,30 +54,30 @@
       },
       {
         "query": "イルタッソ",
-        "impressions": 55,
+        "impressions": 54,
         "clicks": 2,
-        "position": 5.7,
-        "ctr": 3.64,
-        "expectedCtr": 5.3,
+        "position": 5.6,
+        "ctr": 3.7,
+        "expectedCtr": 5.4,
         "missedClicks": 0.9
       }
     ],
     "rankPush": [
       {
         "query": "尾張山荘くろぎ",
-        "impressions": 448,
+        "impressions": 416,
         "clicks": 4,
-        "position": 10.2,
-        "ctr": 0.89,
-        "upsideClicks": 8.6
+        "position": 10.1,
+        "ctr": 0.96,
+        "upsideClicks": 7.7
       },
       {
         "query": "アルマデシュラスコ 名駅",
-        "impressions": 102,
+        "impressions": 101,
         "clicks": 2,
-        "position": 10.2,
-        "ctr": 1.96,
-        "upsideClicks": 0.9
+        "position": 10.1,
+        "ctr": 1.98,
+        "upsideClicks": 0.8
       }
     ]
   },
@@ -94,12 +94,12 @@
       },
       {
         "page": "/stores/J004025075.html",
-        "impressions": 545,
+        "impressions": 523,
         "clicks": 14,
         "position": 6.5,
-        "ctr": 2.57,
+        "ctr": 2.68,
         "expectedCtr": 4.5,
-        "missedClicks": 10.5
+        "missedClicks": 9.5
       },
       {
         "page": "/journal/2026-07-27-owarisanso-kurogi.html",
@@ -111,15 +111,6 @@
         "missedClicks": 9
       },
       {
-        "page": "/stores/J004559348.html",
-        "impressions": 550,
-        "clicks": 8,
-        "position": 8.3,
-        "ctr": 1.45,
-        "expectedCtr": 3.1,
-        "missedClicks": 9
-      },
-      {
         "page": "/stores/J004661023.html",
         "impressions": 518,
         "clicks": 7,
@@ -127,17 +118,26 @@
         "ctr": 1.35,
         "expectedCtr": 3,
         "missedClicks": 8.5
+      },
+      {
+        "page": "/stores/J004559348.html",
+        "impressions": 527,
+        "clicks": 8,
+        "position": 8.3,
+        "ctr": 1.52,
+        "expectedCtr": 3.1,
+        "missedClicks": 8.2
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2486,
-        "clicks": 15,
+        "impressions": 2392,
+        "clicks": 14,
         "position": 24.3,
-        "ctr": 0.6,
-        "upsideClicks": 54.7
+        "ctr": 0.59,
+        "upsideClicks": 52.9
       }
     ]
   },
