@@ -1,0 +1,188 @@
+name: NAGOYA BITES — GAS レポート反映 監視
+
+# なぜこのワークフローが必要か（2026-08-23 検出 / SEO-069・ISSUE-084 の再適用）:
+#   毎朝のレポートを作っている GAS は**このリポジトリの外**で動いている。`.gas-deploy/Code.js` は
+#   ただのミラーで、CI からのデプロイ経路が無い（`.clasp.json` はあるが CI 未配線）。
+#   そのため修正をマージしても GAS 側は旧コードのまま動き続け、
+#   **修正済みのバグが出した数値の上で、毎朝のアドバイスが生成され続ける**。
+#
+#   実際 2026-08-23 時点で SEO-047 / SEO-057 / SEO-062 / SEO-063 の4件が未反映のまま積み上がり、
+#   SEO-047 は **24日間** 誰にも気づかれずに滞留していた。しかも SEO-062 / SEO-063 は
+#   「コード修正完了」で status:done にした結果 Notion からアーカイブされ、
+#   **効果が出ていない修正が追跡対象の外に消えていた**。
+#
+#   反映されたかを知る経路は「オーナーが翌朝のレポートを読んで気づく」しか無かった。
+#   これは CLAUDE.md の言う検知ではなく記録（ISSUE-084 原則3:「気づけるはず」を検知と数えない）。
+#
+#   ISSUE-084 の教訓をそのまま適用する:
+#     1. 監視は監視対象と別の場所で回す  → ローカルの triage ルーチンではなく GitHub Actions
+#     2. 通知は out-of-band に出す        → Issue 起票（GitHub が既定でオーナーにメールする）
+#     5. 通知は原因つきで出す             → どの修正（SEO-0NN）が未反映かを本文に載せる
+#     6. 復旧したら自動で静かにする       → 反映を確認したら自動クローズ
+#
+#   判定は検証できる事実だけで行う（CLAUDE.md 制約10）:
+#     レポート本文に現れる「新コードでは原理的に出力できない文字列」の有無。
+#     具体的には旧 sourceToName() の最終行 `return s + ' / ' + m` が出す生文字列
+#     `(not set) / (not set)`。新コードは手前の isGa4Unknown() で集約するため出せない。
+#     誰でも同じメールを開いて目視で検算できる＝自己申告ではない。
+#
+#   鳴らさないもの（オオカミ少年化させない・原則6）:
+#     その日のデータがたまたま分岐を通らず痕跡が出なかった日（indeterminate）では鳴らさない。
+#     鳴らすのは「旧コード確定が続いたとき」と「ルーチンが報告してこないとき」だけ。
+
+on:
+  schedule:
+    # 05:00 UTC = 14:00 JST。日次 triage（21:01 JST）が痕跡を書いた翌日の昼に見る。
+    # feedback-watchdog（13:00 JST）と1時間ずらして、Issue メールが同時に束にならないようにする。
+    - cron: '0 5 * * *'
+  workflow_dispatch: # 手動確認・デプロイ直後の即時クローズ用
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 反映状況を判定
+        id: check
+        run: |
+          # 異常なら exit 1 になるので、結果を握って後段に渡す
+          set +e
+          node scripts/check_gas_deploy_health.js --json > /tmp/gas-deploy-health.json
+          set -e
+          echo "----- 判定結果 -----"
+          node scripts/check_gas_deploy_health.js || true
+
+      - name: 異常なら Issue を起票/更新、復旧していればクローズ
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/gas-deploy-health.json', 'utf8'));
+            const label = 'gas-deploy-watchdog';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'open', labels: label, per_page: 20,
+            });
+            const existing = issues.find(i => i.title.startsWith('🔴 GASレポート'));
+
+            // ---- 復旧している場合: 開いている Issue を閉じる（人の手を煩わせない）----
+            if (r.ok) {
+              if (existing) {
+                const d = r.latest_decided;
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: existing.number,
+                  body:
+                    `✅ 復旧を確認しました（JST ${r.today_jst}）。` +
+                    (d ? `直近の確定判定: ${d.date}（${d.kind}）→ \`${d.verdict}\`。` : '') +
+                    '自動クローズします。\n\n' +
+                    '> 反映が済んだので、`data/gas_deploy_policy.json` の `pending_fixes` を空にし、' +
+                    'SEO-047 / SEO-057 / SEO-062 / SEO-063 の効果測定を1回で閉じてください（SEO-069 acceptance 6）。',
+                });
+                await github.rest.issues.update({
+                  owner, repo, issue_number: existing.number, state: 'closed',
+                });
+                core.info(`Issue #${existing.number} を復旧クローズしました。`);
+              } else {
+                core.info('健全。Issue の起票は不要です。');
+              }
+              return;
+            }
+
+            // ---- 異常あり: 起票 or 更新 ----
+            const kinds = r.problems.map(p => p.kind).join(', ');
+            const title = `🔴 GASレポートが旧コードのまま動いています（${kinds}）`;
+
+            const L = [];
+            L.push('毎朝の GAS レポートが、このリポジトリの最新コードで動いていません（JST ' + r.today_jst + ' 時点）。');
+            L.push('');
+            L.push('> **なぜこれが重要か**: レポートの数値がそのまま毎朝の「今日のアドバイス」の入力になります。');
+            L.push('> 旧コードのままだと、**すでに直したバグが出した数値の上で助言が生成され続け**、');
+            L.push('> SEOループが毎日ノイズを再生産します（SEO-069）。');
+            L.push('');
+            L.push('## 検出内容');
+            for (const p of r.problems) L.push(`- **${p.kind}** — ${p.detail}`);
+            if (r.warnings.length) {
+              L.push('');
+              L.push('## 警告（それ自体は異常ではない）');
+              for (const w of r.warnings) L.push(`- ${w}`);
+            }
+
+            if (r.latest_decided) {
+              L.push('');
+              L.push('## 判定の根拠（第三者が検算できる事実のみ）');
+              L.push(`- 対象: ${r.latest_decided.date} の ${r.latest_decided.kind} レポート → \`${r.latest_decided.verdict}\``);
+              for (const e of (r.latest_decided.evidence || [])) {
+                L.push(`- \`${e.key}\`（${e.fix_id} 未反映の痕跡）: \`${e.line}\``);
+              }
+              L.push('');
+              L.push('> この生文字列は**新コードでは原理的に出力できません**。新しい `sourceToName()` は');
+              L.push('> 先頭の `isGa4Unknown()` で `⚠️ 判別不能（GA4しきい値）` に集約するため、');
+              L.push('> `(not set) / (not set)` は旧コードの最終行 `return s + \' / \' + m` からしか出ません。');
+              L.push('> 該当日のレポートメールを開けば、同じ行を目視で確認できます。');
+            }
+
+            if ((r.pending_fixes || []).length) {
+              L.push('');
+              L.push('## 反映待ちの修正（デプロイ1回でまとめて入ります）');
+              L.push('');
+              L.push('| 課題 | commit | 検出日 | 内容 |');
+              L.push('| --- | --- | --- | --- |');
+              for (const f of r.pending_fixes) {
+                L.push(`| ${f.id} | \`${f.commit}\` | ${f.detected} | ${f.summary} |`);
+              }
+            }
+
+            L.push('');
+            L.push('## 対処（オーナー本人の操作が必要）');
+            L.push('');
+            L.push('`.gas-deploy/Code.js` はミラーで、実行主体は GAS 側です。CI からは反映できません。');
+            L.push('');
+            L.push('1. `.gas-deploy/Code.js` の中身を GAS エディタ（Google分析オートLINE送信）にコピペして保存する');
+            L.push('   - または `clasp push`（`.gas-deploy/.clasp.json` あり。要 `clasp login`）');
+            L.push('2. **重複ファイルを作らないこと**（`Code 2.js` 等が混ざると top-level 二重宣言で');
+            L.push('   コンパイル全体が落ち、レポートが届かなくなります。CLAUDE.md に明記の禁止事項）');
+            L.push('3. 翌朝のレポートで、流入元 TOP3 に `(not set)` が出ず');
+            L.push('   `⚠️ 判別不能（GA4しきい値）` に変わっていることを確認する');
+            L.push('4. 確認できたら `data/gas_deploy_policy.json` の `pending_fixes` を空にし、');
+            L.push('   SEO-047 / SEO-057 / SEO-062 / SEO-063 の効果測定を1回で閉じる（SEO-069 acceptance 6）');
+            L.push('');
+            L.push('手元での確認:');
+            L.push('```bash');
+            L.push('node scripts/check_gas_deploy_health.js');
+            L.push('```');
+            L.push('');
+            L.push('---');
+            L.push('この Issue は反映が確認できると自動でクローズされます（gas-deploy-watchdog.yml）。');
+            L.push('痕跡が出なかった日（`indeterminate`）では鳴りません。');
+            const body = L.join('\n');
+
+            if (existing) {
+              await github.rest.issues.update({
+                owner, repo, issue_number: existing.number, title, body,
+              });
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: existing.number,
+                body: `再検出（JST ${r.today_jst}）。現在の問題: ${kinds}`,
+              });
+              core.setFailed(`GAS 未反映が継続しています: ${kinds}`);
+            } else {
+              const { data: created } = await github.rest.issues.create({
+                owner, repo, title, body, labels: [label],
+              });
+              core.setFailed(`GAS 未反映を検出し Issue #${created.number} を起票しました: ${kinds}`);
+            }

@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "_comment": "GAS（Google分析オートLINE送信）に、このリポジトリの .gas-deploy/Code.js が反映されているかを判定するための唯一の情報源。SEO-069。判定は『レポート本文に現れる機械判別可能な痕跡』だけで行い、自己申告値・体感は一切使わない（CLAUDE.md 制約10）。閾値・痕跡の変更はこのJSONで行い、scripts/lib/gas_deploy_trace.js は触らない。",
+  "_why": "GAS はリポジトリ外で動く実行主体で、.gas-deploy/Code.js はミラーにすぎない。CIデプロイ経路が無く反映には人手の操作が要るため、『コードは直ったのに効果が出ていない』が無言で積み上がる（SEO-047 は24日滞留した）。反映されたかを知る経路が『オーナーが翌朝のレポートを読んで気づく』しか無い状態は、CLAUDE.md の言う検知ではなく記録（ISSUE-084 原則3）。",
+  "watchdog": {
+    "max_silence_days": 3,
+    "_max_silence_days": "triage ルーチンが痕跡を記録してこなくなってから何日で異常とするか。ルーチンは毎日走る想定なので3日。鮮度は自己申告できない（動いていないルーチンはファイルを更新できない）ため、これが本体の検知シグナル。",
+    "max_not_deployed_days": 2,
+    "_max_not_deployed_days": "『旧コードで動いている』と確定した状態が何日続いたら Issue を起票するか。デプロイはオーナー本人の操作なので、当日中の起票は急かしすぎる。2日連続＝週末を挟んでも気づける位置。",
+    "indeterminate_never_alerts": true,
+    "_indeterminate_never_alerts": "その日のデータがたまたま分岐を通らず痕跡が出なかった日（indeterminate）では絶対に鳴らさない。オオカミ少年化させない（ISSUE-084 原則6）。鳴らすのは『旧コード確定が続いたとき』と『ルーチンが報告してこないとき』だけ。"
+  },
+  "pending_fixes": [
+    {
+      "id": "SEO-047",
+      "commit": "089e3381a",
+      "detected": "2026-07-30",
+      "summary": "直帰率・平均滞在の母数ゲート（訪問20件未満は参考値扱いにして課題化しない）"
+    },
+    {
+      "id": "SEO-062",
+      "commit": "eb62b63f6",
+      "detected": "2026-08-12",
+      "summary": "直帰率が pagePath 次元つき TOTAL 行から算出されていた集計バグの修正"
+    },
+    {
+      "id": "SEO-057",
+      "commit": "52d6f1ba0",
+      "detected": "2026-08-11",
+      "summary": "生成AI流入（ChatGPT等）を『openai検索』ではなく専用ラベルで表示"
+    },
+    {
+      "id": "SEO-063",
+      "commit": "64e0081ac",
+      "detected": "2026-08-19",
+      "summary": "GA4しきい値で潰れた行を1行に集約し、比率の分母を判別できた分に補正"
+    }
+  ],
+  "_pending_fixes": "GAS へ未反映の修正。デプロイ操作1回でまとめて反映される。反映が確認できたらこの配列を空にする（＝そのとき watchdog は恒久的に静かになる）。",
+  "signals": [
+    {
+      "key": "ga4_unknown_raw",
+      "fix_id": "SEO-063",
+      "verdict": "not_deployed",
+      "scope": "source_lines",
+      "pattern": "\\((not set|data not available|other)\\)",
+      "reason": "流入元の行に GA4 の生文字列がそのまま出ている。新コードは sourceToName() の先頭 isGa4Unknown() で『⚠️ 判別不能（GA4しきい値）』に集約するため、この生文字列は新コードでは原理的に出力されない。旧コードの最終行 `return s + ' / ' + m` の出力。"
+    },
+    {
+      "key": "ga4_unknown_aggregated",
+      "fix_id": "SEO-063",
+      "verdict": "deployed",
+      "scope": "body",
+      "pattern": "判別不能（GA4しきい値）",
+      "reason": "SEO-063 で追加された集約ラベル。旧コードには存在しない文字列。"
+    },
+    {
+      "key": "ga4_threshold_notice",
+      "fix_id": "SEO-063",
+      "verdict": "deployed",
+      "scope": "body",
+      "pattern": "この日はGA4のしきい値が効き",
+      "reason": "SEO-063 で追加された highThreshold 注記。旧コードには存在しない文字列。"
+    },
+    {
+      "key": "small_sample_gate",
+      "fix_id": "SEO-047",
+      "verdict": "deployed",
+      "scope": "body",
+      "pattern": "少なく参考値（課題化はしません）",
+      "reason": "SEO-047 で追加された母数ゲートの注記。訪問20件未満の日にのみ出るため、出ないこと自体は未反映の証拠にならない（片側シグナル）。"
+    },
+    {
+      "key": "ai_traffic_label",
+      "fix_id": "SEO-057",
+      "verdict": "deployed",
+      "scope": "body",
+      "pattern": "生成AI（ChatGPT等）",
+      "reason": "SEO-057 で追加された生成AI流入ラベル。旧コードには存在しない文字列。"
+    },
+    {
+      "key": "ai_traffic_mislabel",
+      "fix_id": "SEO-057",
+      "verdict": "not_deployed",
+      "scope": "source_lines",
+      "pattern": "(openai|chatgpt|perplexity|gemini|copilot|anthropic)検索",
+      "reason": "生成AI経由の流入が旧コードの `m === 'organic'` 分岐に落ちて『openai検索』等と誤ラベルされている。新コードはその手前で専用ラベルに分岐するため出力されない。"
+    }
+  ],
+  "_signals": "scope=source_lines は『【どこから来た？】/【流入元】セクションの各行』だけを見る（本文の他の場所に同じ語が出ても誤検出しないため）。scope=body は本文全体。verdict=not_deployed の痕跡が1つでも出れば旧コード確定（新コードでは原理的に出力できない文字列だから）。verdict=deployed の痕跡が出れば新コード確定。どちらも出なければ indeterminate（その日のデータが分岐を通らなかっただけ）で、これは異常ではない。",
+  "source_section_headings": [
+    "【どこから来た？",
+    "【流入元"
+  ],
+  "_source_section_headings": "流入元セクションの開始を示す見出し。日次は『【どこから来た？ TOP3】』、週次は『【流入元 TOP3】』。",
+  "source_row_pattern": "（\\s*[0-9０-９]+\\s*(?:訪問|%|％)",
+  "_source_row_pattern": "流入元セクションの『データ行』の形。日次『（16訪問 / 31%）』・週次『（29%）』の両方に一致し、散文（アドバイス文など）には一致しない。2026-08-24 実測: Gmail のプレーンテキスト変換で順位絵文字が U+FFFD に化けるため、絵文字に依存する判定は取りこぼす（＝検知が静かに死ぬ）。数値+単位の形は transport に影響されないのでこちらを正とする。"
+}

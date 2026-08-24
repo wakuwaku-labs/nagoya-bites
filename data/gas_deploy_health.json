@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
+  "last_run": {
+    "date": "2026-08-23",
+    "recorded_at": "2026-08-24T03:08:02.740Z",
+    "status": "ok",
+    "reason": null,
+    "verdict": "indeterminate",
+    "missing_fixes": []
+  },
+  "observations": [
+    {
+      "date": "2026-08-22",
+      "kind": "daily",
+      "verdict": "not_deployed",
+      "missing_fixes": [
+        "SEO-063"
+      ],
+      "evidence": [
+        {
+          "key": "ga4_unknown_raw",
+          "fix_id": "SEO-063",
+          "verdict": "not_deployed",
+          "line": "������ (not set) / (not set)（16訪問 / 34%）"
+        }
+      ],
+      "recorded_at": "2026-08-24T03:08:02.647Z"
+    },
+    {
+      "date": "2026-08-23",
+      "kind": "daily",
+      "verdict": "not_deployed",
+      "missing_fixes": [
+        "SEO-063"
+      ],
+      "evidence": [
+        {
+          "key": "ga4_unknown_raw",
+          "fix_id": "SEO-063",
+          "verdict": "not_deployed",
+          "line": "🥈 (not set) / (not set)（16訪問 / 31%）"
+        }
+      ],
+      "recorded_at": "2026-08-24T03:08:02.691Z"
+    },
+    {
+      "date": "2026-08-23",
+      "kind": "weekly",
+      "verdict": "indeterminate",
+      "missing_fixes": [],
+      "evidence": [],
+      "recorded_at": "2026-08-24T03:08:02.735Z"
+    }
+  ]
+}

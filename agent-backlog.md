@@ -244,8 +244,9 @@
 
 ### [SEO-069] GAS側レポートが旧コードのまま動き続け、日次アドバイスが4件の修正済みバグの上で生成されている（未反映を誰も検知していない）
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: partial（acceptance 1〜5 完了＝検知と通知は稼働。6 はオーナーのデプロイ後に閉じる）
 - **detected**: 2026-08-23
+- **resolved_scope**: 2026-08-24（Orchestrator）— 本チケットの担当範囲「検知と通知」を実装
 - **category**: SEO / ops / data-quality
 - **owner**: Marketer
 - **source**: 日次レポート(LINE) 2026-08-22 の実データから自前で立てた指摘。原文「【どこから来た？ TOP3】① (not set) / (not set)（16訪問 / 34%）」＋「🔴 直帰率が91%と非常に高く…」
@@ -266,6 +267,20 @@
   6. 反映後の最初のレポートで、流入元 TOP3 に生文字列が出ないこと・直帰率の🔴が母数ゲートに従うことを確認し、[[SEO-047]]/[[SEO-057]]/[[SEO-062]]/[[SEO-063]] の効果測定を1回で閉じる
 - **スコープ外（オーナー本人の操作）**: `.gas-deploy/Code.js` はリポジトリ内ミラーで実行主体は GAS 側。`.clasp.json`/CIデプロイ経路が無く、反映には GAS エディタへのコピペ or `clasp push` が必要で代行できない。**本チケットが担うのは検知と通知まで**（デプロイ操作1回で4件まとめて反映される）
 - **files**: `scripts/`（検知）・`.github/workflows/`（通知）・`data/`（痕跡の記録）
+- **実装（2026-08-24・Orchestrator）**:
+  1. **判定器を1本に集約** — `scripts/lib/gas_deploy_trace.js`。基準の正本は `data/gas_deploy_policy.json`（閾値・痕跡パターンはJSON側で変更し、スクリプトは触らない＝`photo_policy.js` / `trust_display.js` と同じ設計）。記録・検査・CI が同じ判定を共有する
+  2. **判定は3値**（`not_deployed` / `deployed` / `indeterminate`）。2値に丸めない。主判定は流入元セクションの生文字列 `(not set) / (not set)` で、これは**新コードでは原理的に出力できない**（新 `sourceToName()` は先頭の `isGa4Unknown()` で集約するため、旧コードの最終行 `return s + ' / ' + m` からしか出ない）。誰でも該当日のメールを開いて同じ行を目視で検算できる＝自己申告ではない（制約10）
+  3. **記録** — `scripts/check_gas_deploy_health.js --record`。triage ルーチンが毎回（レポートが無い日も `--no-report` で）`data/gas_deploy_health.json` に痕跡と**根拠の行そのもの**を書き、コミットで Mac の外へ出す。同じ日・同じ種別の再記録は上書き（冪等）
+  4. **監視** — `.github/workflows/gas-deploy-watchdog.yml`（毎日 14:00 JST）。ローカルの全故障モードから独立。`not_deployed` が**確定観測2回連続**で GitHub Issue を起票（＝オーナーにメール）、`deployed` を確認したら自動クローズ。`indeterminate` では**絶対に鳴らさない**（ISSUE-084 原則6）
+  5. **原因つきで通知**（原則5）— Issue 本文に「どの SEO-0NN が未反映か」「判定根拠の行そのもの」「反映待ち4件の表」「デプロイ手順（重複ファイル禁止の注意つき）」を載せる。人がログを読みに行かなくて済む
+  6. **acceptance 5 の是正** — [[SEO-057]] / [[SEO-062]] / [[SEO-063]] を `done` → `partial` に戻した。「コードは直ったが効果は出ていない」ものが Notion からアーカイブされて追跡外に消える状態を解消。反映確認時に `done` へ戻す
+  7. **手順の正本** — `docs/gas-deploy-verification-runbook.md`（`.claude/commands/*.md` は自己改変ブロックで編集できないため。`docs/feedback-triage-runbook.md` と同じ設計）
+- **実測で踏んで直した誤検知2件（この2つを踏まなければ watchdog は無害に見えて壊れていた）**:
+  1. **散文を拾う誤検知（偽陽性）** — セクション終端を「次の `【…】` 見出し」だけで判定していたため、`💡 今日のアドバイス`（【】を使わない見出し）が流入元セクションに飲み込まれ、**アドバイス文中の `(not set)` という単語だけで旧コードと誤判定**した。そのまま watchdog に載せればオオカミ少年になっていた。→ 終端条件に空行・区切り線・絵文字見出しを追加し、さらに行の形でも絞った
+  2. **絵文字依存による検知の静かな死（偽陰性）** — 行の形を「順位絵文字 🥇🥈🥉 で始まること」にしていたが、**Gmail のプレーンテキスト変換で順位絵文字は U+FFFD に化ける**（実測）。この条件だと実運用の入力で全行が落ち、**未反映なのに `indeterminate` を返し続けて検知が静かに死ぬ**。→ transport に影響されない「数値+単位」の形（`（16訪問 / 31%）` / `（29%）`）で判定するよう変更
+- **検証（実データ・合成6ケース）**: 2026-08-22 日次（絵文字が化けた実本文）→ `not_deployed`(SEO-063) ／ 2026-08-23 日次 → `not_deployed`(SEO-063) ／ 2026-08-23 週次 → `indeterminate` ／ 新コード想定の合成本文 → `deployed` ／ アドバイス文にのみ `(not set)` を含む本文 → `indeterminate`（偽陽性なし）／ 生成AI誤ラベル `openai検索` → `not_deployed`(SEO-057)。watchdog の Issue 起票経路と復旧クローズ経路は github-script 本体をモックで実行して本文まで確認済み
+- **現在の判定**: `not_deployed`（確定観測2回連続・根拠 `🥈 (not set) / (not set)（16訪問 / 31%）`）。**このワークフローが初回実行される 14:00 JST に Issue が起票される見込み**
+- **残（オーナー本人の操作）**: `.gas-deploy/Code.js` を GAS エディタへコピペ（または `clasp push`）。1回の操作で4件まとめて反映される。反映後は `pending_fixes` を空にし、4チケットを `done` に戻して効果測定を1回で閉じる
 - **関連**: [[SEO-047]]（同ファイル・in_progress・24日滞留）/ [[SEO-057]]（同ファイル・デプロイ待ち）/ [[SEO-062]]（同ファイル・done扱い）/ [[SEO-063]]（同ファイル・done扱い）/ [[ISSUE-084]]（同じ「警報が防音室で鳴っている」失敗クラス）
 
 ### [ISSUE-106] 口コミ信頼度の採点基準にサクラレビュー検出の観点（投稿タイミング集中・クロス店舗の重複）を追加
@@ -489,7 +504,8 @@
 - **次のアクション（オーナー本人のみ可能）**: GSC「インデックス登録レポート」で「検証を試す」を押すと、Google側に再クロールを促せる（本チケットの技術対応が事実として反映されているため通るはず）。ログインが要るため自動化不可
 ### [SEO-063] 日次レポートの「どこから来た？」が GA4 のしきい値適用で 62% 判別不能になり、検索流入比率を 62%→21% に押し下げてアドバイスの前提を壊している
 
-- **priority**: P1 → **status**: done
+- **priority**: P1 → **status**: partial（コード修正完了・**GAS未反映で効果ゼロ**。実デプロイはオーナーのGASエディタ操作待ち）
+- **⚠️ 2026-08-24 追記（[[SEO-069]]）— status を done から partial に戻した**: コード修正は完了しているが **GAS 側は旧コードのまま動いており、この修正の効果は一度も出ていない**。`done` にしたことで Notion からアーカイブされ、効果ゼロのまま追跡対象の外に消えていた（CLAUDE.md の言う「気づけるはず」＝検知ではなく記録）。反映は `node scripts/check_gas_deploy_health.js` で機械判定でき、未反映が続けば `.github/workflows/gas-deploy-watchdog.yml` が Issue を起票する。**反映が確認できた時点で done に戻す**（それが本チケットの本当の完了）
 - **detected**: 2026-08-20
 - **resolved**: 2026-08-20
 - **resolved_by**: 99d35aa8
@@ -569,9 +585,10 @@
 - **discovery（発見型）検索のクリックはまだ14件/28日と小さい**。「名古屋×シーン×業界人の目利き」という Moat を検索側で刈り取れているのはごく一部。Phase 2（editorReason・insider_reviews の実体化）が進まない限り、この面の絶対数は頭打ちになりやすい
 - 次回スナップショットは月次（`STR-MONTHLY-2026-09` 目安）で記録する
 
-### [SEO-062] LINE日次/週次レポートの直帰率・平均滞在が `pagePath` 次元つきで集計され、サイト全体値と乖離している（3ヶ月ぶん🔴誤警報を生み続けた集計バグ）✅
+### [SEO-062] LINE日次/週次レポートの直帰率・平均滞在が `pagePath` 次元つきで集計され、サイト全体値と乖離している（3ヶ月ぶん🔴誤警報を生み続けた集計バグ）
 
-- **priority**: P1 → **status**: done（コード修正完了。実デプロイはオーナーのGASエディタ操作待ち）
+- **priority**: P1 → **status**: partial（コード修正完了・**GAS未反映で効果ゼロ**。実デプロイはオーナーのGASエディタ操作待ち）
+- **⚠️ 2026-08-24 追記（[[SEO-069]]）— status を done から partial に戻した**: コード修正は完了しているが **GAS 側は旧コードのまま動いており、この修正の効果は一度も出ていない**。`done` にしたことで Notion からアーカイブされ、効果ゼロのまま追跡対象の外に消えていた（CLAUDE.md の言う「気づけるはず」＝検知ではなく記録）。反映は `node scripts/check_gas_deploy_health.js` で機械判定でき、未反映が続けば `.github/workflows/gas-deploy-watchdog.yml` が Issue を起票する。**反映が確認できた時点で done に戻す**（それが本チケットの本当の完了）
 - **resolved**: 2026-08-19
 - **resolved_by**: commit eb62b63f6
 - **detected**: 2026-08-19
@@ -1348,9 +1365,10 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   - `features/integrity-method.html` の `--bg2 #eeebe5` 上のtier説明図（`tier-mid`/`tier-low`）も同時に是正: `#46752a`=**4.60:1** ✅ / `#666666`=**4.83:1** ✅（白基準の値とは背景が異なるため別計算）
 - **検証**: `node --test tests/*.test.js` 94件全パス（回帰なし）。ブラウザで実レンダリングし `getComputedStyle` で実適用値が上記16進値と一致することを確認（`rgb(70,117,42)` / `rgb(112,112,112)` / `rgb(118,118,118)`）。既存の検索・フィルター・IGエンベッド・Google評価表示に影響なし
 
-### [SEO-057] 日次/週次レポートが「生成AI流入」を名前で呼べず、最大流入元が `(not set) / (not set)` として届いている（改善ループの入力そのものが歪む） ✅
+### [SEO-057] 日次/週次レポートが「生成AI流入」を名前で呼べず、最大流入元が `(not set) / (not set)` として届いている（改善ループの入力そのものが歪む）
 
-- **priority**: P2 → **status**: done（コード修正完了。実デプロイはオーナーのGASエディタ操作待ち。SEO-047/SEO-062と同じ`.gas-deploy/Code.js`に同居のため1回で反映可能）
+- **priority**: P2 → **status**: partial（コード修正完了・**GAS未反映で効果ゼロ**。実デプロイはオーナーのGASエディタ操作待ち）
+- **⚠️ 2026-08-24 追記（[[SEO-069]]）— status を done から partial に戻した**: コード修正は完了しているが **GAS 側は旧コードのまま動いており、この修正の効果は一度も出ていない**。`done` にしたことで Notion からアーカイブされ、効果ゼロのまま追跡対象の外に消えていた（CLAUDE.md の言う「気づけるはず」＝検知ではなく記録）。反映は `node scripts/check_gas_deploy_health.js` で機械判定でき、未反映が続けば `.github/workflows/gas-deploy-watchdog.yml` が Issue を起票する。**反映が確認できた時点で done に戻す**（それが本チケットの本当の完了）
 - **resolved**: 2026-08-19
 - **resolved_by**: /solve-next（Marketer）
 - **実施内容**: `.gas-deploy/Code.js` の `sourceToName()` に生成AI分岐を追加。`m==='ai-assistant'`
