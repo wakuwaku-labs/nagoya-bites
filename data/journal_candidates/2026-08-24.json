@@ -1,0 +1,541 @@
+{
+  "date": "2026-08-24",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c6",
+      "title_draft": "栄の韓国料理食べ放題2,500円と5,000円、差額を業界人が読む",
+      "verdict": "PASS",
+      "total": 110,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "韓国料理",
+          "feature": "features/nagoya-korean.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 6件 (新店,比較,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 162字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「韓国料理」+2"
+        ]
+      }
+    },
+    {
+      "id": "c7",
+      "title_draft": "栄に韓国料理の食べ放題、40席の新店を業界人が読む",
+      "verdict": "PASS",
+      "total": 110,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "韓国料理",
+          "feature": "features/nagoya-korean.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 6件 (新店,比較,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 159字 +4",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「韓国料理」+2"
+        ]
+      }
+    },
+    {
+      "id": "c8",
+      "title_draft": "栄の韓国料理食べ放題と神宮前のパスタ、新店2軒の価格帯を業界人が比較",
+      "verdict": "PASS",
+      "total": 110,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "韓国料理",
+          "feature": "features/nagoya-korean.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 8件 (新店,比較,エリア,相場,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 152字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「韓国料理」+2"
+        ]
+      }
+    },
+    {
+      "id": "c9",
+      "title_draft": "栄の韓国料理食べ放題、90分と120分の差30分を業界人が読む",
+      "verdict": "PASS",
+      "total": 105,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "韓国料理",
+          "feature": "features/nagoya-korean.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 8件 (新店,比較,エリア,相場,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 152字 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「韓国料理」+2"
+        ]
+      }
+    },
+    {
+      "id": "c10",
+      "title_draft": "栄の韓国料理食べ放題は宴会に向くか、業界人が新店2軒を読む",
+      "verdict": "PASS",
+      "total": 105,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "韓国料理",
+          "feature": "features/nagoya-korean.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 6件 (新店,比較,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 128字 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「韓国料理」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c6",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c6",
+      "theme": "weekly_digest",
+      "title_draft": "栄の韓国料理食べ放題2,500円と5,000円、差額を業界人が読む",
+      "lead_draft": "今週の名古屋は、栄に韓国料理食べ放題「ヤムヤムビュッフェ」が8月24日オープン、神宮前には特盛パスタ「GURU」の2号店が8月23日オープンと、対照的な2軒が並んだ。片方は40席・90分食べ放題、片方は1,300円台で11時から20時まで通す。値付けと席の使い方を並べると、それぞれが何で稼ぐ商売なのかがはっきり見えてくる。",
+      "angle": "新店2軒の価格帯を比較して読む。同じ90分でコースが2,500円（ソフトドリンク）と5,000円（酒込み）に割れる＝食べ放題は料理ではなく酒で回収する商売であること、席時間120分制と90分食べ放題の差30分が回転設計であること、予約の取りやすい枠の逆算、対する通し営業のパスタ2号店はどのシーンに向くか",
+      "main_store": {
+        "name": "ヤムヤムビュッフェ Yum Yum Buffet 栄女子大店",
+        "id": "J004634380",
+        "area": "栄",
+        "genre": "韓国料理・食べ放題"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通: 栄に韓国料理食べ放題『ヤムヤムビュッフェ』オープン",
+          "url": "https://jouhou.nagoya/yamyam-buffet/",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "ホットペッパーグルメ: 韓国料理食べ放題 ヤムヤムビュッフェ 栄女子大店（総席数40席・コース料金）",
+          "url": "https://www.hotpepper.jp/strJ004634380/",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "名古屋情報通: 特盛パスタ専門店『GURU』2号店が神宮前駅前にオープン",
+          "url": "https://jouhou.nagoya/guru-atsuta/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "名古屋情報通: 吹上にオープンした特盛パスタ専門店『GURU』（1号店・2024年11月）",
+          "url": "https://jouhou.nagoya/guru-pasta/",
+          "date": "2024-11-18"
+        },
+        {
+          "label": "PR TIMES 株式会社名古屋三越: 名古屋栄三越 秋のリニューアル（キハチ カフェ 8/28開業）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000006.000185183.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "Instagram: GURU吹上本店の特盛パスタ言及投稿（@nagoya_otaku）",
+          "url": "https://www.instagram.com/reel/DJT6Kn9S2fS/",
+          "date": "2026-05-05"
+        },
+        {
+          "label": "Instagram: GURU吹上本店の来店投稿（@yas_suuu）",
+          "url": "https://www.instagram.com/p/DTuwK5dEncR/",
+          "date": "2026-07-20"
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "theme": "weekly_digest",
+      "title_draft": "栄に韓国料理の食べ放題、40席の新店を業界人が読む",
+      "lead_draft": "8月24日、栄の女子大小路に韓国料理食べ放題「ヤムヤムビュッフェ」が開いた。総席数40席、90分食べ放題に対して席時間は120分制。同じ週、神宮前には特盛パスタ「GURU」の2号店が開いている。数字だけ並べても平凡に見えるが、コースが2,500円と5,000円に割れているところに、この業態の稼ぎ方がそのまま出ている。",
+      "angle": "新店の価格帯と席数を比較し、食べ放題の回転設計（90分と120分の差30分）と予約の取りやすいシーンを業界視点で読む",
+      "main_store": {
+        "name": "ヤムヤムビュッフェ Yum Yum Buffet 栄女子大店",
+        "id": "J004634380",
+        "area": "栄",
+        "genre": "韓国料理・食べ放題"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通: ヤムヤムビュッフェ オープン",
+          "url": "https://jouhou.nagoya/yamyam-buffet/",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "ホットペッパーグルメ: ヤムヤムビュッフェ 栄女子大店",
+          "url": "https://www.hotpepper.jp/strJ004634380/",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "名古屋情報通: GURU 2号店 神宮前駅前",
+          "url": "https://jouhou.nagoya/guru-atsuta/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "PR TIMES 名古屋三越: 秋のリニューアル",
+          "url": "https://prtimes.jp/main/html/rd/p/000000006.000185183.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "Instagram: GURU吹上本店 言及投稿（@nagoya.hunter）",
+          "url": "https://www.instagram.com/reel/DGnUuH4vOR6/",
+          "date": "2026-02-20"
+        },
+        {
+          "label": "Instagram: GURU吹上本店 来店投稿（@yas_suuu）",
+          "url": "https://www.instagram.com/p/DTuwK5dEncR/",
+          "date": "2026-07-20"
+        }
+      ]
+    },
+    {
+      "id": "c8",
+      "theme": "weekly_digest",
+      "title_draft": "栄の韓国料理食べ放題と神宮前のパスタ、新店2軒の価格帯を業界人が比較",
+      "lead_draft": "8月23日に神宮前で特盛パスタ「GURU」2号店、8月24日に栄で韓国料理食べ放題「ヤムヤムビュッフェ」。今週名古屋に開いた2軒は、単価も滞在時間も真逆だ。1,300円台で回すパスタと、2,500円から5,000円まで幅のある食べ放題。どちらが得かではなく、どちらが自分の用途に合うかを数字から逆算する。",
+      "angle": "新店2軒の価格帯とシーン適性を比較。食べ放題は酒で回収し回転で成立する、通し営業のパスタは予約不要の一人客で埋める。エリアごとの相場の違いまで",
+      "main_store": {
+        "name": "ヤムヤムビュッフェ Yum Yum Buffet 栄女子大店",
+        "id": "J004634380",
+        "area": "栄",
+        "genre": "韓国料理・食べ放題"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ: ヤムヤムビュッフェ 栄女子大店",
+          "url": "https://www.hotpepper.jp/strJ004634380/",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "名古屋情報通: ヤムヤムビュッフェ オープン",
+          "url": "https://jouhou.nagoya/yamyam-buffet/",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "名古屋情報通: GURU 2号店 神宮前駅前",
+          "url": "https://jouhou.nagoya/guru-atsuta/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "PR TIMES 名古屋三越: 秋のリニューアル",
+          "url": "https://prtimes.jp/main/html/rd/p/000000006.000185183.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "Instagram: GURU公式アカウント",
+          "url": "https://www.instagram.com/guru_pasta_1118/",
+          "date": "2026-08-23"
+        },
+        {
+          "label": "Instagram: GURU吹上本店 言及投稿（@nagoya_otaku）",
+          "url": "https://www.instagram.com/reel/DJT6Kn9S2fS/",
+          "date": "2026-05-05"
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "theme": "weekly_digest",
+      "title_draft": "栄の韓国料理食べ放題、90分と120分の差30分を業界人が読む",
+      "lead_draft": "8月24日に栄で開いた韓国料理食べ放題「ヤムヤムビュッフェ」は、90分食べ放題に対して席時間を120分制としている。この30分は客へのサービスに見えて、実際には店側の回転計算がそのまま書かれた数字だ。同じ週に神宮前で開いた特盛パスタの2号店と並べると、名古屋の新店がいまどこで利益を作っているかが見える。",
+      "angle": "新店の席時間と価格帯から回転設計を読む。予約が取りやすい枠の逆算、宴会シーンへの向き不向き、エリア相場との比較",
+      "main_store": {
+        "name": "ヤムヤムビュッフェ Yum Yum Buffet 栄女子大店",
+        "id": "J004634380",
+        "area": "栄",
+        "genre": "韓国料理・食べ放題"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ: ヤムヤムビュッフェ 栄女子大店",
+          "url": "https://www.hotpepper.jp/strJ004634380/",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "名古屋情報通: ヤムヤムビュッフェ オープン",
+          "url": "https://jouhou.nagoya/yamyam-buffet/",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "名古屋情報通: GURU 2号店 神宮前駅前",
+          "url": "https://jouhou.nagoya/guru-atsuta/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "PR TIMES 名古屋三越: 秋のリニューアル",
+          "url": "https://prtimes.jp/main/html/rd/p/000000006.000185183.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "Instagram: GURU吹上本店 来店投稿（@yas_suuu）",
+          "url": "https://www.instagram.com/p/DTuwK5dEncR/",
+          "date": "2026-07-20"
+        }
+      ]
+    },
+    {
+      "id": "c10",
+      "theme": "weekly_digest",
+      "title_draft": "栄の韓国料理食べ放題は宴会に向くか、業界人が新店2軒を読む",
+      "lead_draft": "今週の名古屋は栄と神宮前で新店が2軒。栄は最大40人まで入る韓国料理食べ放題、神宮前は1,300円台の特盛パスタ2号店だ。秋の宴会シーズンを前に、40席の食べ放題がどんな集まりに向いて、どんな集まりには向かないのか。価格帯と席の作り方から判断材料を並べる。",
+      "angle": "新店の席数・価格帯・食べ放題の時間制限から宴会シーンへの適性を比較し、予約を入れるべき時間帯を回転の観点で逆算する",
+      "main_store": {
+        "name": "ヤムヤムビュッフェ Yum Yum Buffet 栄女子大店",
+        "id": "J004634380",
+        "area": "栄",
+        "genre": "韓国料理・食べ放題"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ: ヤムヤムビュッフェ 栄女子大店",
+          "url": "https://www.hotpepper.jp/strJ004634380/",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "名古屋情報通: ヤムヤムビュッフェ オープン",
+          "url": "https://jouhou.nagoya/yamyam-buffet/",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "名古屋情報通: GURU 2号店 神宮前駅前",
+          "url": "https://jouhou.nagoya/guru-atsuta/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "PR TIMES 名古屋三越: 秋のリニューアル",
+          "url": "https://prtimes.jp/main/html/rd/p/000000006.000185183.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "Instagram: GURU公式アカウント",
+          "url": "https://www.instagram.com/guru_pasta_1118/",
+          "date": "2026-08-23"
+        }
+      ]
+    }
+  ]
+}
