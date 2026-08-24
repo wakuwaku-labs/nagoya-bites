@@ -513,10 +513,10 @@
 - **次のアクション（オーナー本人のみ可能）**: GSC「インデックス登録レポート」で「検証を試す」を押すと、Google側に再クロールを促せる（本チケットの技術対応が事実として反映されているため通るはず）。ログインが要るため自動化不可
 ### [SEO-063] 日次レポートの「どこから来た？」が GA4 のしきい値適用で 62% 判別不能になり、検索流入比率を 62%→21% に押し下げてアドバイスの前提を壊している
 
-- **priority**: P1 → **status**: partial（コード修正完了・**GAS未反映で効果ゼロ**。実デプロイはオーナーのGASエディタ操作待ち）
-- **⚠️ 2026-08-24 追記（[[SEO-069]]）— status を done から partial に戻した**: コード修正は完了しているが **GAS 側は旧コードのまま動いており、この修正の効果は一度も出ていない**。`done` にしたことで Notion からアーカイブされ、効果ゼロのまま追跡対象の外に消えていた（CLAUDE.md の言う「気づけるはず」＝検知ではなく記録）。反映は `node scripts/check_gas_deploy_health.js` で機械判定でき、未反映が続けば `.github/workflows/gas-deploy-watchdog.yml` が Issue を起票する。**反映が確認できた時点で done に戻す**（それが本チケットの本当の完了）
+- **priority**: P1 → **status**: done（GAS反映確認済み・効果測定OK）
+- **✅ 2026-08-24 追記（[[SEO-069]]）— 反映確認により partial → done**: オーナーがGASエディタで新コードをデプロイ（Apps Scriptプロジェクト最終更新 12:44 JST確認）。2026-08-23分の日次レポートが同日中に旧コード版→新コード版で2通届き、新コード版で「⚠️ 判別不能（GA4しきい値）（16訪問 / 31%）」「⚠️ この日はGA4のしきい値が効き31%が判別不能です。流入構成は30日集計（search_channel_metrics.json）をご参照ください。」という新規実装のみが出す文言を実メールで確認。`node scripts/check_gas_deploy_health.js` も `verdict: deployed` を返す。生文字列 `(not set)/(not set)` はTOPから消え、比率注記が新設された（acceptance 1〜3 達成）
 - **detected**: 2026-08-20
-- **resolved**: 2026-08-20
+- **resolved**: 2026-08-20（コード）/ 2026-08-24（GAS反映確認）
 - **resolved_by**: 99d35aa8
 - **category**: SEO / data-quality
 - **owner**: Marketer
@@ -596,8 +596,8 @@
 
 ### [SEO-062] LINE日次/週次レポートの直帰率・平均滞在が `pagePath` 次元つきで集計され、サイト全体値と乖離している（3ヶ月ぶん🔴誤警報を生み続けた集計バグ）
 
-- **priority**: P1 → **status**: partial（コード修正完了・**GAS未反映で効果ゼロ**。実デプロイはオーナーのGASエディタ操作待ち）
-- **⚠️ 2026-08-24 追記（[[SEO-069]]）— status を done から partial に戻した**: コード修正は完了しているが **GAS 側は旧コードのまま動いており、この修正の効果は一度も出ていない**。`done` にしたことで Notion からアーカイブされ、効果ゼロのまま追跡対象の外に消えていた（CLAUDE.md の言う「気づけるはず」＝検知ではなく記録）。反映は `node scripts/check_gas_deploy_health.js` で機械判定でき、未反映が続けば `.github/workflows/gas-deploy-watchdog.yml` が Issue を起票する。**反映が確認できた時点で done に戻す**（それが本チケットの本当の完了）
+- **priority**: P1 → **status**: done（GAS反映確認済み）
+- **✅ 2026-08-24 追記（[[SEO-069]]）— 反映確認により partial → done**: オーナーがGASエディタで新コードをデプロイ（Apps Scriptプロジェクト最終更新 12:44 JST確認・同日中の日次レポート再送で `check_gas_deploy_health.js` が `deployed` を確認）。本チケット固有のテキスト痕跡（pagePath次元バグは数値の歪みであり固有の文字列を持たない）は無いが、同一 `.gas-deploy/Code.js` の同一デプロイに同居しており、2026-08-23分レポートで自己矛盾チェックを実施：直帰率90%・pagesPerSession 1.15（46PV/40人）は整合（旧バグ時の「97%直帰なのに1.9ページ/2分31秒」という矛盾パターンは消えている）。平均滞在2分13秒も30日ロール値2分37秒と同オーダーで、acceptance③の「同じ桁に収まる」を満たすと判断
 - **resolved**: 2026-08-19
 - **resolved_by**: commit eb62b63f6
 - **detected**: 2026-08-19
@@ -1376,8 +1376,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 ### [SEO-057] 日次/週次レポートが「生成AI流入」を名前で呼べず、最大流入元が `(not set) / (not set)` として届いている（改善ループの入力そのものが歪む）
 
-- **priority**: P2 → **status**: partial（コード修正完了・**GAS未反映で効果ゼロ**。実デプロイはオーナーのGASエディタ操作待ち）
-- **⚠️ 2026-08-24 追記（[[SEO-069]]）— status を done から partial に戻した**: コード修正は完了しているが **GAS 側は旧コードのまま動いており、この修正の効果は一度も出ていない**。`done` にしたことで Notion からアーカイブされ、効果ゼロのまま追跡対象の外に消えていた（CLAUDE.md の言う「気づけるはず」＝検知ではなく記録）。反映は `node scripts/check_gas_deploy_health.js` で機械判定でき、未反映が続けば `.github/workflows/gas-deploy-watchdog.yml` が Issue を起票する。**反映が確認できた時点で done に戻す**（それが本チケットの本当の完了）
+- **priority**: P2 → **status**: done（GAS反映確認済み）
+- **✅ 2026-08-24 追記（[[SEO-069]]）— 反映確認により partial → done**: オーナーがGASエディタで新コードをデプロイ（Apps Scriptプロジェクト最終更新 12:44 JST確認・`check_gas_deploy_health.js` が `deployed` を確認）。同一 `.gas-deploy/Code.js` の同一デプロイに同居。2026-08-23分レポートの流入元TOP3は Google検索/⚠️判別不能(GA4しきい値)/Yahoo検索で、生成AI流入（chatgpt.com等）がこの日はTOP3に入らなかったため本チケット固有のラベル文字列は今回のレポートでは確認できていない（次回、生成AI流入がTOP3に入る日に「🤖 生成AI（ChatGPT等）」表記を最終確認する）。デプロイ自体は確定しているためdoneとする
 - **resolved**: 2026-08-19
 - **resolved_by**: /solve-next（Marketer）
 - **実施内容**: `.gas-deploy/Code.js` の `sourceToName()` に生成AI分岐を追加。`m==='ai-assistant'`
@@ -2174,7 +2174,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 ### [SEO-047] LINE日次レポートの直帰率アラートが小サンプルでも毎回「異常」と誤検知していた問題
 
-- **priority**: P1 → **status**: in_progress（コード修正済み・GASへの実デプロイはオーナー操作待ち）
+- **priority**: P1 → **status**: done（GAS反映確認済み）
+- **✅ 2026-08-24 追記（[[SEO-069]]）— 反映確認により in_progress → done**: オーナーがGASエディタで新コードをデプロイ（Apps Scriptプロジェクト最終更新 12:44 JST確認・`check_gas_deploy_health.js` が `deployed` を確認）。同一 `.gas-deploy/Code.js` の同一デプロイに同居。2026-08-23分レポートは40セッション（≥20のゲート閾値以上）のため母数ゲートの注記自体は今回出ていない（該当日が対象外なだけで片側シグナル）。デプロイ自体は確定しているためdoneとする。次回セッション数<20の日に「少なく参考値（課題化はしません）」の注記が出ることを確認できると尚良い
 - **detected**: 2026-07-30（オーナー指摘「毎回直帰率が異常に高いと出るが、合っているか？」）
 - **category**: SEO / data-quality
 - **owner**: Marketer

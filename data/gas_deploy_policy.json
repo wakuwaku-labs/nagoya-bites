@@ -10,32 +10,7 @@
     "indeterminate_never_alerts": true,
     "_indeterminate_never_alerts": "その日のデータがたまたま分岐を通らず痕跡が出なかった日（indeterminate）では絶対に鳴らさない。オオカミ少年化させない（ISSUE-084 原則6）。鳴らすのは『旧コード確定が続いたとき』と『ルーチンが報告してこないとき』だけ。"
   },
-  "pending_fixes": [
-    {
-      "id": "SEO-047",
-      "commit": "089e3381a",
-      "detected": "2026-07-30",
-      "summary": "直帰率・平均滞在の母数ゲート（訪問20件未満は参考値扱いにして課題化しない）"
-    },
-    {
-      "id": "SEO-062",
-      "commit": "eb62b63f6",
-      "detected": "2026-08-12",
-      "summary": "直帰率が pagePath 次元つき TOTAL 行から算出されていた集計バグの修正"
-    },
-    {
-      "id": "SEO-057",
-      "commit": "52d6f1ba0",
-      "detected": "2026-08-11",
-      "summary": "生成AI流入（ChatGPT等）を『openai検索』ではなく専用ラベルで表示"
-    },
-    {
-      "id": "SEO-063",
-      "commit": "64e0081ac",
-      "detected": "2026-08-19",
-      "summary": "GA4しきい値で潰れた行を1行に集約し、比率の分母を判別できた分に補正"
-    }
-  ],
+  "pending_fixes": [],
   "_pending_fixes": "GAS へ未反映の修正。デプロイ操作1回でまとめて反映される。反映が確認できたらこの配列を空にする（＝そのとき watchdog は恒久的に静かになる）。",
   "signals": [
     {
