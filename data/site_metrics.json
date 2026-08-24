@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-08-24T03:35:34.033Z",
+  "generatedAt": "2026-08-24T05:32:46.749Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 796,
-    "pageViews": 1315,
-    "sessions": 936,
-    "avgSessionDuration": 156.3,
-    "bounceRate": 0.333,
-    "pagesPerSession": 1.4
+    "activeUsers": 798,
+    "pageViews": 1327,
+    "sessions": 938,
+    "avgSessionDuration": 155.9,
+    "bounceRate": 0.309,
+    "pagesPerSession": 1.41
   },
   "channels": {
     "sessions": {
-      "organic": 640,
-      "direct": 202,
-      "social": 90,
+      "organic": 648,
+      "direct": 185,
+      "social": 92,
       "referral": 13,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 67.7,
-      "direct": 21.4,
-      "social": 9.5,
+      "organic": 69.1,
+      "direct": 19.7,
+      "social": 9.8,
       "referral": 1.4,
       "paid": 0,
       "other": 0
@@ -31,12 +31,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 261
+      "sessions": 264
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 239
+      "sessions": 241
     },
     {
       "source": "(direct)",
@@ -46,17 +46,12 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 122
+      "sessions": 125
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 85
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 20
+      "sessions": 87
     },
     {
       "source": "openai",
@@ -77,6 +72,11 @@
       "source": "copilot.com",
       "medium": "(not set)",
       "sessions": 5
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 4
     }
   ],
   "topPages": [
@@ -87,8 +87,8 @@
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 160,
-      "sessions": 143
+      "pageViews": 163,
+      "sessions": 144
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -102,7 +102,7 @@
     },
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
-      "pageViews": 62,
+      "pageViews": 64,
       "sessions": 61
     }
   ],
@@ -165,16 +165,16 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 28,
-      "direct": 38,
+      "organic": 30,
+      "direct": 36,
       "social": 25,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 4.4,
-    "ctaClickRate_direct": 18.8,
-    "ctaClickRate_social": 27.8,
+    "ctaClickRate_organic": 4.6,
+    "ctaClickRate_direct": 19.5,
+    "ctaClickRate_social": 27.2,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -485,7 +485,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 796,
+    "value": 798,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
