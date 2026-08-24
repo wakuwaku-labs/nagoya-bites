@@ -1,30 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" width="600" height="260" role="img" aria-label="一人飲み">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 525" width="1200" height="525" role="img" aria-label="カウンター席で一人静かに飲む夜のイメージイラスト">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1a1a2a"/>
-      <stop offset="100%" stop-color="#4a4a5a"/>
+      <stop offset="0%" stop-color="#0d1a2d"/>
+      <stop offset="55%" stop-color="#1a2d4d"/>
+      <stop offset="100%" stop-color="#243d5c"/>
     </linearGradient>
-    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
-      <rect width="3" height="3" fill="#1a1a2a"/>
-      <circle cx="0.5" cy="0.5" r="0.4" fill="#e8c098" opacity="0.06"/>
-    </pattern>
+    <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f3d9a4" stop-opacity=".85"/>
+      <stop offset="45%" stop-color="#e8c098" stop-opacity=".28"/>
+      <stop offset="100%" stop-color="#e8c098" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f3d9a4" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#e8c098" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="counter" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8a5a34"/>
+      <stop offset="100%" stop-color="#5e3c22"/>
+    </linearGradient>
+    <linearGradient id="counterFace" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a2415"/>
+      <stop offset="100%" stop-color="#241509"/>
+    </linearGradient>
   </defs>
-  <rect width="600" height="260" fill="url(#bg)"/>
-  <rect width="600" height="260" fill="url(#grain)" opacity=".5"/>
-  
-        <g opacity=".5" fill="#e8c098">
-          <rect x="420" y="190" width="160" height="40" rx="6"/>
-          <circle cx="440" cy="180" r="6"/>
-          <circle cx="475" cy="180" r="6"/>
-          <circle cx="510" cy="180" r="6"/>
-          <circle cx="545" cy="180" r="6"/>
-          <circle cx="440" cy="240" r="6"/>
-          <circle cx="475" cy="240" r="6"/>
-          <circle cx="510" cy="240" r="6"/>
-          <circle cx="545" cy="240" r="6"/>
-        </g>
-  <rect x="36" y="36" width="3" height="110" fill="#e8c098" opacity=".9"/>
-  <text x="46" y="130" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="32" font-weight="700" letter-spacing="0.02em">一人飲み</text>
-  <text x="46" y="60" fill="#e8c098" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>
+
+  <rect width="1200" height="525" fill="url(#bg)"/>
+
+  <!-- back shelf: soft rows of bottles, silhouette only -->
+  <g opacity=".38">
+    <rect x="70" y="150" width="1060" height="4" fill="#e8c098"/>
+    <rect x="70" y="205" width="1060" height="4" fill="#e8c098"/>
+    <g fill="#0d1a2d">
+      <rect x="110" y="112" width="16" height="40" rx="2"/>
+      <rect x="140" y="102" width="14" height="50" rx="2"/>
+      <rect x="168" y="118" width="18" height="34" rx="2"/>
+      <rect x="960" y="108" width="15" height="44" rx="2"/>
+      <rect x="990" y="120" width="16" height="32" rx="2"/>
+      <rect x="1022" y="98" width="14" height="54" rx="2"/>
+      <rect x="1050" y="115" width="17" height="37" rx="2"/>
+    </g>
+    <g fill="#0d1a2d">
+      <rect x="120" y="168" width="17" height="38" rx="2"/>
+      <rect x="150" y="175" width="15" height="31" rx="2"/>
+      <rect x="1000" y="172" width="16" height="34" rx="2"/>
+      <rect x="1030" y="165" width="14" height="41" rx="2"/>
+    </g>
+  </g>
+
+  <!-- pendant lamp above the seat -->
+  <line x1="600" y1="0" x2="600" y2="118" stroke="#e8c098" stroke-width="2" opacity=".5"/>
+  <circle cx="600" cy="150" r="150" fill="url(#glow1)"/>
+  <path d="M572 122 L628 122 L618 150 L582 150 Z" fill="#f3d9a4" opacity=".92"/>
+  <ellipse cx="600" cy="151" rx="9" ry="4" fill="#fff7e6" opacity=".9"/>
+
+  <!-- two soft secondary lamps, empty seats either side -->
+  <circle cx="270" cy="128" r="95" fill="url(#glow2)"/>
+  <path d="M255 108 L285 108 L279 128 L261 128 Z" fill="#f3d9a4" opacity=".55"/>
+  <circle cx="930" cy="128" r="95" fill="url(#glow2)"/>
+  <path d="M915 108 L945 108 L939 128 L921 128 Z" fill="#f3d9a4" opacity=".55"/>
+
+  <!-- counter -->
+  <rect x="0" y="360" width="1200" height="26" fill="url(#counter)"/>
+  <rect x="0" y="386" width="1200" height="139" fill="url(#counterFace)"/>
+  <rect x="0" y="360" width="1200" height="4" fill="#f3d9a4" opacity=".35"/>
+
+  <!-- stools: empty left & right, one occupied at center -->
+  <g fill="#16233a">
+    <rect x="240" y="430" width="8" height="70" rx="3"/>
+    <rect x="296" y="430" width="8" height="70" rx="3"/>
+    <ellipse cx="270" cy="428" rx="34" ry="9"/>
+  </g>
+  <g fill="#16233a">
+    <rect x="896" y="430" width="8" height="70" rx="3"/>
+    <rect x="952" y="430" width="8" height="70" rx="3"/>
+    <ellipse cx="924" cy="428" rx="34" ry="9"/>
+  </g>
+
+  <!-- centered figure: back silhouette, one person, alone -->
+  <g>
+    <rect x="566" y="430" width="8" height="70" rx="3" fill="#0a1220"/>
+    <rect x="626" y="430" width="8" height="70" rx="3" fill="#0a1220"/>
+    <ellipse cx="600" cy="428" rx="34" ry="9" fill="#0a1220"/>
+    <path d="M566 428
+             C566 372 574 338 600 336
+             C626 338 634 372 634 428
+             C634 436 626 440 600 440
+             C574 440 566 436 566 428 Z" fill="#0a1220"/>
+    <circle cx="600" cy="300" r="26" fill="#0a1220"/>
+    <path d="M576 318 C576 306 586 298 600 298 C614 298 624 306 624 318 L624 336 C624 346 614 350 600 350 C586 350 576 346 576 336 Z" fill="#0a1220"/>
+  </g>
+
+  <!-- glass and small plate in front of the seated figure -->
+  <g opacity=".92">
+    <path d="M584 372 L592 372 L590 356 L586 356 Z" fill="#e8c098"/>
+    <ellipse cx="588" cy="356" rx="5" ry="2" fill="#f3d9a4"/>
+    <ellipse cx="616" cy="368" rx="16" ry="5" fill="#3a2415" stroke="#e8c098" stroke-width="1" opacity=".7"/>
+  </g>
+
+  <!-- faint steam wisp for warmth -->
+  <path d="M616 360 C612 350 620 344 616 334" stroke="#f3d9a4" stroke-width="2" fill="none" opacity=".35" stroke-linecap="round"/>
+
+  <text x="600" y="60" fill="#e8c098" opacity=".8" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.32em" text-anchor="middle">NAGOYA BITES — SOLO DINING</text>
 </svg>
