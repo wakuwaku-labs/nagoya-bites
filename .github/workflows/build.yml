@@ -387,3 +387,38 @@ jobs:
         # ISSUE-116の解消後にブロッキングへ切り替える。
         run: node scripts/audit_ogp_image_liveness.js --check
         continue-on-error: true
+
+      - name: IndexNow 送信（Bing への更新通知・SEO-071）
+        # なぜここに置くか: push & deploy「後」に置くこと。push 前に送信すると
+        # Bing クローラが来た時点でページが存在しない可能性がある。
+        #
+        # 安全設計（CLAUDE.md 制約 / ISSUE-084 / SEO-071 注記）:
+        #   - 既定は dry-run（外部通信なし）。実送信は INDEXNOW_ENABLED が設定されている時のみ。
+        #   - 送信対象は「直近2日に公開されたジャーナル + トップ/索引」に限定（一括再送信しない）。
+        #   - 結果は data/indexnow_send_log.json に記録し次のステップで commit する（gitignore 外）。
+        #
+        # 実送信を有効化するには:
+        #   GitHub リポジトリの Settings → Secrets → Actions で
+        #   INDEXNOW_ENABLED=true を追加する。これがオーナーの承認操作になる（SEO-071 注記）。
+        env:
+          INDEXNOW_ENABLED: ${{ secrets.INDEXNOW_ENABLED }}
+        run: |
+          if [ "$INDEXNOW_ENABLED" = "true" ]; then
+            echo "IndexNow: 実送信モード（INDEXNOW_ENABLED=true）"
+            node scripts/indexnow_ping.js --recent 2 --yes --log-file data/indexnow_send_log.json || true
+          else
+            echo "IndexNow: dry-run モード（実送信は INDEXNOW_ENABLED=true に設定すると有効になります）"
+            node scripts/indexnow_ping.js --recent 2 --log-file data/indexnow_send_log.json || true
+          fi
+        continue-on-error: true
+
+      - name: IndexNow 送信ログをコミット（data/indexnow_send_log.json）
+        # 送信結果を gitignore 外の data/ に残す。失敗が「防音室で鳴る」状態を防ぐ（ISSUE-084 原則2）。
+        # commit には [skip actions] を付けて自分自身の再起動を防ぐ。
+        run: |
+          git config user.name  "github-actions[bot]" 2>/dev/null || true
+          git config user.email "github-actions[bot]@users.noreply.github.com" 2>/dev/null || true
+          git add data/indexnow_send_log.json 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "chore: IndexNow 送信ログ更新 [skip actions]" || true
+          git push || true
+        continue-on-error: true

@@ -158,7 +158,14 @@ async function main() {
   const bad = urls.filter(u => !u.startsWith(ORIGIN));
   if (bad.length) { out({ ok: false, error: 'foreign_host', bad }); process.exit(1); }
 
-  out(await submit(urls, cfg, args.includes('--yes')));
+  const result = await submit(urls, cfg, args.includes('--yes'));
+  out(result);
+
+  const logFile = flag('--log-file');
+  if (logFile) {
+    const logPath = path.resolve(logFile);
+    fs.writeFileSync(logPath, JSON.stringify({ ...result, logged_at: new Date().toISOString() }, null, 2) + '\n');
+  }
 }
 
 if (require.main === module) main().catch(e => { out({ ok: false, error: e.message }); process.exit(1); });
