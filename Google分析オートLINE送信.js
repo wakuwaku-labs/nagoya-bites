@@ -1,4 +1,19 @@
 /**
+ * ⚠️ このファイルは【旧版・参照専用】です。GASへ反映してはいけません。（2026-08-24 / SEO-069）
+ *
+ * デプロイの正本は `.gas-deploy/Code.js` の1本です。
+ * SEO-047 / SEO-057 / SEO-062 / SEO-063 の修正はすべて .gas-deploy/Code.js 側に入っており、
+ * このファイルは 2026-06-02 を最後に更新が止まっています（約3ヶ月ぶんの修正が入っていない）。
+ *
+ * かつて deploy-gas.sh はこのファイルを .gas-deploy/Code.js へ上書きしてから push していたため、
+ * 実行すると「修正を消したうえで旧コードを本番へ送る」動作になっていました。
+ * 2026-08-24 に deploy-gas.sh を修正し、.gas-deploy/Code.js を直接 push するよう改めています。
+ *
+ * 反映手順: docs/gas-deploy-verification-runbook.md
+ * 反映確認: node scripts/check_gas_deploy_health.js
+ */
+
+/**
  * gas_line_report.js
  *
  * Google Apps Script（GAS）で動かすスクリプト。
