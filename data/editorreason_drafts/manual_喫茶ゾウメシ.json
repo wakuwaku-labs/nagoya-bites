@@ -1,15 +1,118 @@
 {
-  "status": "INSUFFICIENT_EVIDENCE",
-  "editorReason": "",
-  "insiderNote": "",
+  "status": "OK",
+  "editorReason": "老舗味噌蔵が運営し、味噌の魅力を若い世代に伝えるコンセプトが秀逸。レトロとモダンが融合した空間で、SNS映えするクリームソーダや家族連れへの配慮も抜かりない。",
+  "insiderNote": "老舗味噌蔵のオーナーが「若い世代に味噌の美味しさを」と立ち上げ。一つひとつ丁寧なこだわりと、子連れ客への座敷席やタッチパネル予約など、顧客体験への配慮が光る。",
   "visitStatus": "desk_automated",
-  "confidence": 0,
-  "sources_used": [],
-  "warnings": [],
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHWRwalgX19sSpfypsikJ1g7UAw4bFo_FAnq__eLuIxJ6R1cHgbXA7_QVG3YvwiKmLsoX7vlWtK3NVJT_iCq9imJoVUO6t2o3fkw3apyZc1GkrcWiqYN_E9hQE2XnGg9MB8Xy_O6Uw5uDI=",
+      "snippet_quote": "「喫茶ゾウメシ」は、愛知県西尾市にある老舗味噌蔵「今井醸造」が運営する喫茶店です。オーナーである今井醸造三代目の今井氏は、「若い世代にもっと気軽に本物の味噌の美味しさを知ってほしい」という切実な思いから、このカフェを立ち上げました。彼らは「一つひとつを丁寧に、しっかりとこだわって」という気持ちを大切にしています。また、子連れの客層を意識し、「名古屋駅近くだからこそ座敷を増やしたい」というオーナーの思いから、広々とした座敷席や子供用の椅子、おもちゃを用意するなど、家族連れへの配慮も行われています。レトロな純喫茶の雰囲気を大切にしつつ、現代的なおしゃれなデザインを融合させた空間が特徴です。提供されるメニューは、象のクッキーが乗ったカラフルなクリームソーダが特にSNSで人気を集め、フォトジェニックな見た目が特徴です。混雑時には、店頭のタッチパネルで予約を受け付け、順番が近づくと通知が届くシステムを導入しており、待ち時間を快適に過ごせるよう工夫されています。",
+      "supports": "老舗味噌蔵「今井醸造」が運営し、「若い世代に味噌の美味しさを知ってほしい」というコンセプト、一つひとつのこだわり、レトロとモダンが融合した空間、SNSで人気のクリームソーダ、家族連れへの配慮、タッチパネル予約システム導入"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEo8cE-tB5mETkmeJENTHfbD4NqkjjN_lmXRz8yDVKurM2IlpD6KzZAXCbnTsTbWem1JLZLxk1lE_IBn88vb4_I8BfE3Ql1mIdH4dUQwjFwwokGxCDya3kgae4e",
+      "snippet_quote": "愛知県西尾市の老舗味噌蔵「今井醸造」が手がける喫茶店「喫茶ゾウメシ」。「若い世代にもっと気軽に本物の味噌の美味しさを知ってほしい」という思いからオープンした「喫茶ゾウメシ」は、レトロな純喫茶の雰囲気を残しつつ、現代的なおしゃれなデザインを融合させた空間が特徴です。象のクッキーが乗ったカラフルなクリームソーダは、SNSでも人気を集めるフォトジェニックな一品。広々とした座敷席や子供用の椅子、おもちゃを用意するなど、家族連れへの配慮も行き届いています。",
+      "supports": "老舗味噌蔵「今井醸造」が運営し、「若い世代に味噌の美味しさを知ってほしい」というコンセプト、レトロとモダンが融合した空間、SNSで人気のクリームソーダ、家族連れへの配慮"
+    }
+  ],
+  "warnings": [
+    "1件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「喫茶ゾウメシ」（西区）について、Google検索で見つかった業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「喫茶ゾウメシ」は、愛知県西尾市にある老舗味噌蔵「今井醸造」が運営する喫茶店です。オーナーである今井醸造三代目の今井氏は、「若い世代にもっと気軽に本物の味噌の美味しさを知ってほしい」という切実な思いから、このカフェを立ち上げました。店名の「ゾウメシ」は、今井氏の4歳の息子さんの発案によるものです。彼らは「一つひとつを丁寧に、しっかりとこだわって」という気持ちを大切にしています。また、子連れの客層を意識し、「名古屋駅近くだからこそ座敷を増やしたい」というオーナーの思いから、広々とした座敷席や子供用の椅子、おもちゃを用意するなど、家族連れへの配慮も行われています。\n\n**提供スタイルの特徴**\n「喫茶ゾウメシ」は、レトロな純喫茶の雰囲気を大切にしつつ、現代的なおしゃれなデザインを融合させた空間が特徴です。店内は、以前の喫茶店の面影を残しつつ、オリジナルのテーブルやゆったりと座れるソファが配置されています。\n提供されるメニューは、象のクッキーが乗ったカラフルなクリームソーダが特にSNSで人気を集め、フォトジェニックな見た目が特徴です。\nまた、子連れ客への配慮として、座敷席には子供用の椅子やおもちゃが用意されており、幅広い年齢層が利用しやすい環境が整えられています。\n混雑時には、店頭のタッチパネルで予約を受け付け、順番が近づくと通知が届くシステムを導入しており、待ち時間を快適に過ごせるよう工夫されています。\nモーニング営業も行っており、好きなメニューとドリンクを組み合わせて選べるスタイルです。\n\n**地元グルメメディアでの紹介**\n「喫茶ゾウメシ」は、名古屋を中心とした東海エリアのローカルウェブメディア「Life Designs（ライフデザインズ）」、「名古屋情報通」、「ナゴレコ」、「ことりっぷ」などで紹介されています。また、「るるぶ」や「旅サラダPLUS」といった全国的な旅行・グルメメディアでも取り上げられています。\n\n**料理人としての評価**\n「喫茶ゾウメシ」の料理は、運営元である老舗味噌蔵「今井醸造」の誇りが注ぎ込まれた「本物の味わい」と「圧倒的な完成度」が評価されています。\n看板メニューである「肉みそごはんプレート」や「みそ煮込みうどん」などのフードメニューは、今井醸造の無添加・非加熱で熟成された豆味噌を使用しており、その深いコクと旨味が特徴です。\nクリームソーダは、見た目の可愛らしさに加え、さっぱりとした味わい（一部ミルクアイスを使用しシャーベットのような口当たり）や、桜の塩漬けをトッピングして塩味とのバランスを楽しむ工夫がされています。\nその他、あんバタートーストは小豆の風味がしっかりと感じられ、甘じょっぱい味が楽しめる完成度の高い一品と評されています。たまごサンドや固めのプリンにも隠し味として味噌が使われており、味噌屋ならではのこだわりが随所に感じられます。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHWRwalgX19sSpfypsikJ1g7UAw4bFo_FAnq__eLuIxJ6R1cHgbXA7_QVG3YvwiKmLsoX7vlWtK3NVJT_iCq9imJoVUO6t2o3fkw3apyZc1GkrcWiqYN_E9hQE2XnGg9MB8Xy_O6Uw5uDI=",
+        "title": "life-designs.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEo8cE-tB5mETkmeJENTHfbD4NqkjjN_lmXRz8yDVKurM2IlpD6KzZAXCbnTsTbWem1JLZLxk1lE_IBn88vb4_I8BfE3Ql1mIdH4dUQwjFwwokGxCDya3kgae4e",
+        "title": "co-trip.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGX_OcfzC4uQq3T6hq1JKnfR4LZel2weNWkD4xSFqybRJD6JkRcj1sXEe0X3D5CZJqw1-idxVXZhW6Zx6nRRYikyQ0Ne-UWQjCup45qzKI21ov6eCSoSzrWlmDNW_9BBWk9lc5B8bOsnSiO",
+        "title": "nagoya-meshi.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHkMDzCfjsiX80lbGP1wg3B9lj1ratDwE1Kc1anBRUPiOsULFnimROWN2hxMPRsSvT49dbTYORx8hMNcoSiyd3d_ttTkLUKjshnpVMKnZXEIIMJ_EjQYtMQQ9Ewi6QoGw==",
+        "title": "jouhou.nagoya"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHWl8i_TtQIclIbVXn7P7OP4YlcmEOcTPTL-bfmGfUTs1LgcSFXivlK17PX4_V0QHkQFflkwrG23pqYjNurpgh1BbE1JpnW8_YGrMnKzZoM44s4oDaW6xO71s_ZLYnMwjDgOxxcsNgz224PT9sSGSkMse4=",
+        "title": "fc2.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFz8Fv6USsoThNRIprt2GCZNXdmlKQxswDp8xN0Ylmpk1YeEja2mj-3hLXJqaX1bFoZkT5Iq0j0no9uL4C2utuBU8zq3sG3WEV_974AD2Q0V8WMSShNZW__ieW_3DW7nU3l7IWQKaWYbY4N1pnDwme95eRGEIA=",
+        "title": "meijimura.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHU5BDEhps1Wj_bDLh0rl_yETPLK94GgvR10mV-UyEyMFwxaKocLIA9AbNk3cl7Rd5A29e7MnS3Fu5Mia6Q09DM3JSN9xhHgU1mjbXFKlkzKaJUieOPU1F7UkpQsR_qeiLxbQghbdRrfuBL0k8gqRZ3GWQqk4mOp16PP4w=",
+        "title": "aitoc.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF7e3NRx-AuptHESUoN9IYeQpntGRTfGNsdY7sEWRMqjsrrU_HHtdn9NGGwi5HWT1LlRyj7TF0VGvXAk8wp6LUhhTnB_najBzbw6nneVcerEbnEffEt6z4yWbhMXiX6SQMSjo26kL3DXSs8WQY=",
+        "title": "nagoya-meshi.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG07GdFd7LNqKAZ825gbOkxfJ3hpkwQHrTX_g9lTnYAB4972qe-uzpDUn7eyKq6B2cv5MBub9QbkRl6b8X105NoxdNz2Z94gsdQasAVvEQ9wFRGyynFDMZgLT9meuCR4QtXao-d7cRUALJDGnOiW2MHy0HREwftrqTCMvQmJWY=",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGK88k5xakcmUI5Ob18dv6kvLfpfdHlgzkkYMkfUXO3lr4KLsV-Lu-VLJITH8tyc4z905qYx7tXH_4_7Nmzwk_k0zBsmz-wOMusDYeGzhcKS2iFO1iyJdrktn3XYHuygM4qjaK6XaJtF-qRTQ==",
+        "title": "nagoya-meshi.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFl5YESZ8JazrHwhoRGSbaac34IYLjYsgHuFXwNhMS5o80z6CLvsGtHgUqX7hRWGjazstf5J_HCloYNLrXfAFyaKOWqmilnCLSo9wef94UMn0kLh4EmFdzGoj5x_B-_5ozpZNFEhGQ25A==",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFZ-XpThsB0pkipyVtSvcGPZHNEganJ_EDtqUVxDveqWNn4S0NfyGfmSM5AxTFN-Je6XiZzuo1CnrlQcVwQh2IT72PT8bzt8ufvrIg1mQbtg3uBow4wQ9QzqnEKkeBqf5SonroJa3-qVqipGDj3AoC5BaqZfsQe5C-ZUpZFJChy16r4mYtkLlBw63YmKX3igPU8dyebjmyVtdEs9Vc0-OZfQEBzu9GH6PB4",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEKyWVrdtZDHvvSe6lAJ6Rv21uLaI1ACW4tXBGII2N4VRoY_7wxWVCJH5rO_UBlUUgPiwp_T0kn4ivfLHNPB0P53FsGNdFeGQaNX63wtDSnpAoaVE6g-ou8Y_onaSeqI-UdfSaRh_uJOZ_bmifkYWQ478t-eGixPXAoiTFTRTI=",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEPgSO87eR09xODKTKna4e7bht--fq92yjQZWXWIH0RV5zYli-oKkS7z_jBfYqG8O1FipHveV0tGeA-7FlI7Xev5GZ45Ng9ToAAWuZkJzZSHJNXcex5wlhqEARxJY2VilAJz8Q0SQoHcg==",
+        "title": "note.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGOyKd3nMpYmiNCs1hn5vuDtldYYAC-3Mxs9seQAi3fyHppZDN4G-9uNzQIQ3cteeRuYOrhqwy6BeAqxjONY6sS1DRw7jqqe-pRnTg7a-j0TZu6iXzs16tJOuCiZ-1MDOR9Cg==",
+        "title": "design-kom.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFkGZSdm3u7ySFnl5ew-BnHRl_z-UOA6RfSxQwNkpOpdESIDMEunbkUOxCpXBSwnNtCvgEIXw9qOjqGRuIpIfF3-ZQONrUhT0YTku-Za58uGDLyqioswFJNwj52Iorkv5TOAhLHwop69dup3Ug=",
+        "title": "nagoya-meshi.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEBFm_G0gelz8ZNJHBzYHdsht3IINpliMtaRHkZRYWdUQSZrMdxqio_a-FAJT87wMLrWDrDh227mkcPfJHpkT6g_ZbTapRTaGfDiTsRU6nSwOZvdg6o_wvZiadP_SaZKtE=",
+        "title": "rurubu.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE406MHjd1dhCy1ghl3B4HU6lXjzXfg82rTsMTkWVE3N9vR5VcwFETkh9O0XAENyPx3Yff0kyh0XgOx7MtjDmTjHMQytvXN6SGG-kiFtncbG-q9w_4CSijwTvajYA3Aon9fZAZIRuRhHcon5Iw=",
+        "title": "asahi.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgGZdUHOmQTLvXPjl7WucnWbcc82flbBqcEovQctQiaaxRDe-CqhPhtJJe4x32-mkNIS9cT9mdvr5hyALllIja1DVB3Zy2ZBWxJT6kkFslY67Z67PJldO3J1xd45ejTnlpPmxnvAS9BGe06g9vl3DK3H3IPF6EmWKi_if2IkkHWJVf",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEiUmZsTnfhxfm1xFPsS5DxHeaSEh1ZSYUfSwoY0m5xDXsLMkDAQa61I_EY8jlg6v5Yvjp5sDpL9DFaImRAbjlHekDB4ohlludi2-IDcF708WiLNFtthLPb_w0omTCqDANV-daT6mb22o8d",
+        "title": "chikudays.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGKlee77ii7wvvRLGHwHB2wbGzQgC2kjNns5TKFARcHk16LXXv38RJbBq12NvinNoxqxSsDU1bBiIauJ7nFQCK3oTHoLgGnZkotww14YsB9a6zrKfwnNCFrBlU7iVjJG8ELN80=",
+        "title": "ufu-sweets.jp"
+      }
+    ]
+  },
   "store_id": "manual_喫茶ゾウメシ",
   "store_name": "喫茶ゾウメシ",
   "area": "西区",
   "genre": "レトロ喫茶・クリームソーダ",
-  "rating": "",
-  "generated_at": "2026-08-19T06:59:51.635Z"
+  "rating": "4.2",
+  "generated_at": "2026-08-24T18:54:07.798Z"
 }

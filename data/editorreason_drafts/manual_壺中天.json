@@ -1,15 +1,82 @@
 {
-  "status": "INSUFFICIENT_EVIDENCE",
-  "editorReason": "",
-  "insiderNote": "",
+  "status": "OK",
+  "editorReason": "名古屋のフレンチを牽引する名店。ミシュラン一つ星、ゴ・エ・ミヨ3トックを獲得し、オーナーシェフと若手シェフの二名体制で、伝統を継承しつつ「今の時代を彩る料理」を追求し続けている点が業界から高く評価されています。",
+  "insiderNote": "上井・河村両シェフの世代を超えた協業が、伝統と革新を両立する「今の時代を彩る料理」を生み出しています。フランスでの豊富な経験がその情熱を支えています。",
   "visitStatus": "desk_automated",
-  "confidence": 0,
-  "sources_used": [],
+  "confidence": 0.9,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPdWszCR6QTpqHxmKNEb7Uu1za-qa1P4ooiowmeqqPd1XDHJq6uNdBi32OUlI6XDjgR2Fn0AiSsAoTQjekrOVIcJqtIk-1-Bfdku4J3zCRkKP2hftDyqupXHAP4r58GTPjUaetlL1zkD3wXXw=",
+      "snippet_quote": "「壺中天」は、伝統的なフランス料理を追求しつつ、常に進化する一皿を提供しているレストランです。オーナーシェフの上井克輔氏とシェフの河村英幸氏の二名体制で料理が作られています。…世代の異なる両シェフは、フランスでの経験を経て日本でフランス料理を作り上げることへの情熱を共有しており、上井シェフはフランス料理が時代を映す料理であるため、世代の感性も重要だと語り、河村シェフへのリスペクトを示しています。彼らは「今の時代を彩る料理」のアップデートを重ねています。…ミシュランガイド愛知・岐阜・三重2019特別版で1ツ星を獲得しており、ゴ・エ・ミヨ2025では3トック（16/20点）の評価を受けています。 また、「KIWAMINO」や名古屋のWebメディア「ナゴレコ」などのグルメメディアでも紹介されており、「名古屋でワンランク上の美食体験が叶う名店シェフのインタビュー特集」",
+      "supports": "オーナーシェフと若手シェフの二名体制、伝統と進化の追求、「今の時代を彩る料理」のアップデート、ミシュラン1ツ星・ゴ・エ・ミヨ3トック獲得、名古屋の名店であること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGxjXO3JlmgkRlHFuL8J7liVgHMVnpP3aEnxjpqaELCP4Yinbu8wLMvfXvjD2YMK3u2dhMJVOpCCwoN_3ufzTiayvrDaEfYWXqjdwc7AchbApoyDPzQEGL4VhnT4y5HRZ0=",
+      "snippet_quote": "ミシュランガイド愛知・岐阜・三重2019特別版で1ツ星を獲得しており、ゴ・エ・ミヨ2025では3トック（16/20点）の評価を受けています。",
+      "supports": "ミシュラン1ツ星・ゴ・エ・ミヨ3トック獲得"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHFZ5HX986wzeecTRY5wLwjLxBHvCjgQYAGzynQ2jpGD7EWXheq9E32cSR01cMXXTCQawvySyItk9tNQJZ-Zrvv5uBSFb8XMYXZ2ZzKsyLXpvWA",
+      "snippet_quote": "オーナーシェフの上井克輔氏とシェフの河村英幸氏の二名体制で料理が作られています。…世代の異なる両シェフは、フランスでの経験を経て日本でフランス料理を作り上げることへの情熱を共有しており、上井シェフはフランス料理が時代を映す料理であるため、世代の感性も重要だと語り、河村シェフへのリスペクトを示しています。彼らは「今の時代を彩る料理」のアップデートを重ねています。",
+      "supports": "オーナーシェフと若手シェフの二名体制、伝統と進化の追求、「今の時代を彩る料理」のアップデート"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGppwPKnIyIYh-x1FZNOin_jpvZY8j5ImiXxIpXYgN76Z71T9uuBLQvCGPsVMynoKC2QigGumEjL443nqh7LqPUsU-iJ-5G1oeriJ8V1vY1520OpTskb38tnkDiaRRbSkjU6cMYw8qk9zwW9g==",
+      "snippet_quote": "「壺中天」は、名古屋の賓客に愛されてきた名店として知られています。…「ミシュラン一つ星として認められた名古屋の有名フレンチ」として取り上げられています。",
+      "supports": "名古屋の賓客に愛される名店であること、ミシュラン1ツ星獲得"
+    }
+  ],
   "warnings": [],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋市東区にあるフランス料理店「壺中天」に関する業界視点の情報は以下の通りです。\n\n**店主のこだわり・料理人としての評価**\n「壺中天」は、伝統的なフランス料理を追求しつつ、常に進化する一皿を提供しているレストランです。オーナーシェフの上井克輔氏とシェフの河村英幸氏の二名体制で料理が作られています。上井シェフは岐阜のフランス料理店で師事した後、27歳でヨーロッパに渡りイタリア、フランスで修業を積んでいます。帰国後、複数の料理店を経て2001年に「壺中天」を開店し、2010年に現在のマザックアートプラザに移転オープンしました。河村シェフは調理師専門学校卒業後、名古屋のフランス料理店勤務を経て渡仏し、2019年に「壺中天」に入社しました。世代の異なる両シェフは、フランスでの経験を経て日本でフランス料理を作り上げることへの情熱を共有しており、上井シェフはフランス料理が時代を映す料理であるため、世代の感性も重要だと語り、河村シェフへのリスペクトを示しています。彼らは「今の時代を彩る料理」のアップデートを重ねています。\n\n**提供スタイルの特徴**\n「壺中天」は、記念日や誕生日、大切な会食やビジネスシーンなど様々な用途で利用できる空間を提供しています。店内は地下にありながら外光を取り入れ、木のぬくもりを感じる色調で、天井が高く高級感あふれる空間です。ソムリエが厳選したフランス産をはじめとするワインが豊富に用意されており、料理とのマリアージュを楽しむことができます。ディナーコースは3種類、ランチコースは4種類あり、旬の上質な素材を最も美味しい状態で提供することにこだわっています。アレルギーや苦手な食材にも対応しています。料理は一皿ごとに繊細に盛り付けられ、素材の風味が最大限に引き出された逸品揃いです。スペシャリテとして「オマール海老と雲丹のコンソメジュレ」が挙げられています。\n\n**地元グルメメディアでの紹介**\n「壺中天」は、名古屋の賓客に愛されてきた名店として知られています。ミシュランガイド愛知・岐阜・三重2019特別版で1ツ星を獲得しており、ゴ・エ・ミヨ2025では3トック（16/20点）の評価を受けています。 また、「KIWAMINO」や名古屋のWebメディア「ナゴレコ」などのグルメメディアでも紹介されており、「名古屋でワンランク上の美食体験が叶う名店シェフのインタビュー特集」や「ミシュラン一つ星として認められた名古屋の有名フレンチ」として取り上げられています。 「Retty」などの実名型グルメサービスでも高評価の口コミが多数寄せられています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPdWszCR6QTpqHxmKNEb7Uu1za-qa1P4ooiowmeqqPd1XDHJq6uNdBi32OUlI6XDjgR2Fn0AiSsAoTQjekrOVIcJqtIk-1-Bfdku4J3zCRkKP2hftDyqupXHAP4r58GTPjUaetlL1zkD3wXXw=",
+        "title": "kiwamino.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHVY_rJqLzjxFisP4mou-W46VNDRVO1qpztKX4DkNdZoD9SJ3HUGECX51_Nz3UqUN1EWb02kfXTJnlsrXJq2RKcNyxORH6JO9rFpryhn3-sD8Ye",
+        "title": "gorp.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGxjXO3JlmgkRlHFuL8J7liVgHMVnpP3aEnxjpqaELCP4Yinbu8wLMvfXvjD2YMK3u2dhMJVOpCCwoN_3ufzTiayvrDaEfYWXqjdwc7AchbApoyDPzQEGL4VhnT4y5HRZ0=",
+        "title": "tablecheck.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHFZ5HX986wzeecTRY5wLwjLxBHvCjgQYAGzynQ2jpGD7EWXheq9E32cSR01cMXXTCQawvySyItk9tNQJZ-Zrvv5uBSFb8XMYXZ2ZzKsyLXpvWA",
+        "title": "kochuten.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE04hBltyAB1KrJip9m7hbe-qOEzMtVACrFT_lIZaZjRghBrMOsVGsa2k9jxzZ6u9mo7S53D4pBA1bnZ2qo1FPW8zlHYpTV_SjexEdt8PI3fvaAh09nYd_FP5ZjU2_CEpMJnhJZ6omyoXt4GEioiA==",
+        "title": "fc2.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE5cplvSK3UIBiyQ49hyte3_OI-xSeF_S4CNFgHGzs2YKNzlJPnH9BwqNU15KcCa9egshjSbq88nanYE0gy19-BQ3ZuSKi64piBRV_UNTAZWe2qUu8yoMAh-MAV5pe7wgc_XegCMK7F",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG2DXWCpSeSOmXGvkwNNesz5PgWWKRS3WTYDrjWZ4rPqsZalVFXJwmvkjj50ZMEEsalUexUH_ebN2fL4xxViixguP7m2AKV3jIBVu5-ebaO-_nZjhBAZSR3NBvB0kRlwfczYDfzqzjuDg==",
+        "title": "fivestar-club.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGppwPKnIyIYh-x1FZNOin_jpvZY8j5ImiXxIpXYgN76Z71T9uuBLQvCGPsVMynoKC2QigGumEjL443nqh7LqPUsU-iJ-5G1oeriJ8V1vY1520OpTskb38tnkDiaRRbSkjU6cMYw8qk9zwW9g==",
+        "title": "nagoya-meshi.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHjFuNzOyH8W30ivc5D4BrcBU0X5QKJ2AL_pD4C3Ec1itIWA8FcMi9p6POl8JV4mJf7T54U1rbS1bvl5jQ71BwPS8mR_O2eNwq8_hRvgcVVrDccL8xZuA0L3NYEAxiI61knTWKM9fu_vXX4YCus",
+        "title": "fc2.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGDWTOH9_znhlPcY_cG_Ohs4YTR1NdigMmSr7Za6rjPYwAHDQy5Cyx8nCTMqYFKTdydU6tBki4R9s7S03VvqiwlKzBM5CsF_qguD2wTTvMisCkFWLbu8XKVhiobr91tOPOrqNl25ilF_dZV4icddsxbYt7CGWQ2dp11",
+        "title": "retty.me"
+      }
+    ]
+  },
   "store_id": "manual_壺中天",
   "store_name": "壺中天",
   "area": "名古屋市東区",
   "genre": "フランス料理",
-  "rating": "4.4",
-  "generated_at": "2026-08-19T07:00:01.801Z"
+  "rating": "4.6",
+  "generated_at": "2026-08-24T18:45:09.137Z"
 }

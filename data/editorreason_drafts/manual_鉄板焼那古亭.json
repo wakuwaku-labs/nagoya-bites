@@ -1,15 +1,91 @@
 {
-  "status": "INSUFFICIENT_EVIDENCE",
-  "editorReason": "",
-  "insiderNote": "",
+  "status": "OK",
+  "editorReason": "名古屋マリオットアソシアホテル高層階に位置し、A5ランク和牛など厳選高級食材を熟練料理人が目の前で調理。圧倒的なライブ感と高評価の料理、名古屋の眺望が魅力で、主要グルメサイトでも多数の口コミを集める。",
+  "insiderNote": "熟練料理人が目の前で繰り広げる圧倒的なライブパフォーマンスは、単なる食事ではなく、五感で楽しむ体験を創出。食材の焼き加減や出汁、塩への丁寧なこだわりも光る。",
   "visitStatus": "desk_automated",
-  "confidence": 0,
-  "sources_used": [],
-  "warnings": [],
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG8PWhX7xsf-9CFb_n_IGGnpVAkrRzT9GlAZHiDPKogK-HYiSMnyEDyf9jEVXsP3B-r7mz9kd9DRxr__l4myKBC84u8YirpjK5Nc7VN-dQ8s82Qj8SXsnNXpShJL-CEk30MZ74j7A==",
+      "snippet_quote": "一休.comレストランでは「料理・味」が4.22と高得点を得ています。",
+      "supports": "一休.comレストランで「料理・味」が高評価を得ている。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHsp3LSVf0f_Di6v5rtFNhqe4ZevNQI1h7K-vAUShHIYvDOhWCqvZoE5NiQDT1wHRcgjNTkv1r25bXeOkGwqQHw9_Yy1z3y0EVq54F-Dq022pqnrTy_iTtMO1x8FfnzW_1zIgvUYgcJ3BNngQ==",
+      "snippet_quote": "PayPayグルメでは4.37と高得点を得ています。",
+      "supports": "PayPayグルメで高評価を得ている。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFGJPDDECtPXf-lexlfVt5dhWdmVBPfwkjCVKiMkK7AX_UXBG0DEnoVPGLVQNKARnPLrxQ76bKkfmjeeOTQb98moBd3iWeEygl_2umtUoAv4TS0jF27BOhBhQ9DGuLtzdiU4Vhfu1SkEm8PNVEkL_Qhqsg=",
+      "snippet_quote": "Rettyの口コミでは、「焼き加減、出汁や塩などのこだわり」や「シェフの手仕事が引き立つ料理」が評価されており、A5ランクのフィレステーキが「絶品で今まで食べた事のない美味しさ」と称賛されています。",
+      "supports": "Rettyの口コミで、焼き加減や出汁、塩へのこだわり、シェフの手仕事が評価されている。主要グルメサイトで多数の口コミを集めている。"
+    }
+  ],
+  "warnings": [
+    "2件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「鉄板焼 那古亭」に関する業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「鉄板焼 那古亭」は、名古屋マリオットアソシアホテル内に位置し、A5ランクの極上和牛肉やフォアグラ、新鮮な魚介、旬の野菜など、厳選された高級食材を使用することにこだわっています。料理人が目の前で調理する鉄板焼きの過程において、ただ食すだけでなく、その過程にも美意識を求めるという考え方があり、料理人の所作に浸りながら五感を研ぎ澄ます体験を提供することを目指しています。また、食材の焼き加減、出汁、塩に至るまで丁寧なこだわりが感じられると評価されています。\n\n**提供スタイルの特徴**\nお客様の目の前で、熟練した料理人が食材を焼き上げる「圧倒的なライブ感」と「ライブパフォーマンス」が大きな特徴です。南蛮情緒が漂うインテリアの中で、シェフとの会話を楽しみながら食事をすることができます。店内はカウンター席が中心で、名古屋の景色を一望できる高層階からの眺望も魅力の一つです。個室も用意されていますが、窓からの眺望がない場合があるとのことです。\n\n**地元グルメメディアでの紹介**\n「鉄板焼 那古亭」は、一休.comレストラン、PayPayグルメ、Retty、TableCheckといった主要なグルメ予約サイトやレビューサイトで紹介されています。これらのサイトでは、利用者の口コミや評価が多数掲載されており、地元の人々や観光客が飲食店を探す際の重要な情報源となっています。また、「コスパ旅Blog」や「くまの子とらべる」などの個人ブログでも体験談が紹介されています。\n\n**料理人としての評価**\n「鉄板焼 那古亭」の料理人は「熟練した料理人」と評され、その「華麗な手さばき」と「圧倒的なライブパフォーマンス」は鉄板焼きの醍醐味とされています。顧客からの評価も高く、一休.comレストランでは「料理・味」が4.22、PayPayグルメでは4.37と高得点を得ています。Rettyの口コミでは、「焼き加減、出汁や塩などのこだわり」や「シェフの手仕事が引き立つ料理」が評価されており、A5ランクのフィレステーキが「絶品で今まで食べた事のない美味しさ」と称賛されています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGYB57qL37YfmE1qudrFzDs0N6X1nHEb3WA-np-re5u_2qJlFgqLR7H281c0K2x_kz4JpM5PEGVzyLcBkxG2F-EEDpRJa8IsmMr5vi1K3wCptIBwLbmEF886sMXH3h3yexDiZYb_jLdHeFJ",
+        "title": "associa.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF11rvTmP6GrNaOgiBC1kr6_s3TGSxaJOSXCpX79eM-CRmeDDBB2QzNGjJNX451PvwF8qAOAHddLdZDrhhp5t8EM0bhafEEvHD06Z85z5RyCE1ymLTZElEt4kNmNTpK4cjoZMcu4ri8f2iFLXmu",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFdfrptY6C92-87AT-2SuyGUd2pjeRfyVXHnhH1qSq3VqLdW9aWysoh9VE340UHB8aF62JA0wDTwNokzmloJzr7tIg0cPVvWRWkH3bJX96rxgYNCZH35WXtbNXhLxkIjVbf-3m7YTbxLpxA4J3cDrik7VBQ7RQ7WdIwjhZHaXDvSk730bcSbgTx18ZdqePHWUeaMqCNF3yYLZce",
+        "title": "marriott.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFGJPDDECtPXf-lexlfVt5dhWdmVBPfwkjCVKiMkK7AX_UXBG0DEnoVPGLVQNKARnPLrxQ76bKkfmjeeOTQb98moBd3iWeEygl_2umtUoAv4TS0jF27BOhBhQ9DGuLtzdiU4Vhfu1SkEm8PNVEkL_Qhqsg=",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG8PWhX7xsf-9CFb_n_IGGnpVAkrRzT9GlAZHiDPKogK-HYiSMnyEDyf9jEVXsP3B-r7mz9kd9DRxr__l4myKBC84u8YirpjK5Nc7VN-dQ8s82Qj8SXsnNXpShJL-CEk30MZ74j7A==",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHsp3LSVf0f_Di6v5rtFNhqe4ZevNQI1h7K-vAUShHIYvDOhWCqvZoE5NiQDT1wHRcgjNTkv1r25bXeOkGwqQHw9_Yy1z3y0EVq54F-Dq022pqnrTy_iTtMO1x8FfnzW_1zIgvUYgcJ3BNngQ==",
+        "title": "yahoo.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG7-pbx9NlL-EtZ3qSbOaSqlOdj8dUw-dFfqXMyo8BU56UIR9FmKKJ6HDVWNRVXOKnA-1xFWGwm-MlOm3XEN0FbTzlTrDPxtp-fuMKGnJYICi9iocjalY746rwEacM=",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFJzz6Hz0FARuVwC-bwWNkrjhicFxFKMxE0v4CHR1L2nkgD0JrlnVL65-6-auSdYjb8Kw82xjCW-CSv0YwibEjyUqiPUZboEYFqLH8W4p2Os4W77KpB0X5ax3GSHrVWQqB4dIE1NB7BL2az-UD4aiph",
+        "title": "yahoo.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHcN4-89DlMofwMGKP21iGVvVC_tK5ApRWl-JcQ_kWRn0fPJzqt4AFTkth8tAnPxLj9EZ7QxKPn5dSw2TT6Nkd6hUq4b5ePxmnML2P0Ban5jznntcFB7chET1PNRNErY2gW5PH6wqh9JJ8L96Y=",
+        "title": "tablecheck.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFaIfW9cDwQFykoXJxPgqrYyki8elnpknKSYqnJNBMHgTkTRNYZxG39ZV7rAc0rtuXb1-pgLSK9U7JNMOVGdgCNfgVT7pCEtvOGnLjfzO4NRk_3_ze1fTD3gF5edRsof264RUw=",
+        "title": "yahoo.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFCAhLg3IUhn2VwmD5bfHzoMQT_lR6bkxoi_xLDlPbtwk-DHpVmX5WXILro8stOWh6oE1--GjNM3hIdQHvINhPgyc8pSQudeilxbDH4z6NlQbHEWXEjlRIifhE4cZZg8x7ysYBDE2LTEzfrTqC13cUcwoNYyJRgv7-JCQ==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHvmzovKXNizp6CcOw1IOxpknJAnEJ8Uck2n8U97FKpuV3Fo8w4Q4iBVUwnvetXUy9UNJN3x2M-IVBu_xrf5CLDAc_b02o6WJjP05V1W-em12mwztUWEXCVkbPoCzK_mU-OOhULLRGvaZiwA2XsXCPU6lWAKJNB9msnKXhGaTI=",
+        "title": "kosupatabiblog.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHrgnhTH77lyJpRQ8t2OjXFst4crMEEy85r2ynJuh1xacFI_hXRfV5Ed34T02qA6nB7StWOEjHqrw_NFPa7XzYFuwTbie25DCUOesCB9WthCfrIChJPzDLfCTZTNKamjCfqqw==",
+        "title": "kumanokotravel.com"
+      }
+    ]
+  },
   "store_id": "manual_鉄板焼那古亭",
   "store_name": "鉄板焼 那古亭",
   "area": "名駅",
   "genre": "鉄板焼ステーキ",
-  "rating": "",
-  "generated_at": "2026-08-19T07:00:13.084Z"
+  "rating": "4.3",
+  "generated_at": "2026-08-24T18:48:58.693Z"
 }

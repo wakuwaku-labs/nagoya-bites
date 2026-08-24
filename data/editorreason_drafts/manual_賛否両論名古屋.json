@@ -1,15 +1,163 @@
 {
-  "status": "INSUFFICIENT_EVIDENCE",
-  "editorReason": "",
-  "insiderNote": "",
+  "status": "OK",
+  "editorReason": "「和食界のユニクロ」を掲げる笠原将弘氏の哲学が息づく予約困難な日本料理店。伝統を踏まえつつ遊び心溢れる独創的な和食を、敷居を感じさせない雰囲気で提供。名古屋店独自の地元食材使いや、名物のデザート全種オーダー可など、再訪を促す工夫が光ります。",
+  "insiderNote": "笠原氏の「腕・舌・遊び心」をモットーに、伝統と創意工夫が融合した唯一無二の和食を提供。弟子が活躍する場として多店舗展開し、名古屋店料理長も食育活動に注力。お品書きなしやデザート全種オーダー可など、顧客体験を重視する姿勢が伺えます。",
   "visitStatus": "desk_automated",
-  "confidence": 0,
-  "sources_used": [],
-  "warnings": [],
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF2Olrlqv9HFgZGk1ft61PNGn4h1qSs66SJ5kQzA5Fsoz0Xl88e5tb4QvyxyRDeogK6UcucXzQbQUW6SH4Kc5GRtgWTA--8IJHG7EOrKUbQO8-cIyUQfKLXE1RNn3BhCclcGn4UKhyd0cjnfj35",
+      "snippet_quote": "笠原氏は「敷居の高くない日本料理屋」を目指し、「和食界のユニクロ」と表現しています。",
+      "supports": "店主笠原氏が「敷居の高くない日本料理屋」を目指し、「和食界のユニクロ」と表現していること。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFw2Oj-x8jMW-PouDW6pisvQ_XGeO8b0doTChH8j9qpJYbZ08H9S2bf7bogFN0DulGMwhLVKgJc2u6r0siyvYnivpX9swjC26_B5SvXXvy4vWRiTvEG-32mYxuJqSqxAMfShVV21w==",
+      "snippet_quote": "敷居の高さを感じさせないフレンドリーな雰囲気で、和食が初めての人でも気軽に訪れることができるとされています。",
+      "supports": "店舗が敷居の高さを感じさせないフレンドリーな雰囲気であること。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF2Olrlqv9HFgZGk1ft61PNGn4h1qSs66SJ5kQzA5Fsoz0Xl88e5tb4QvyxyRDeogK6UcucXzQbQUW6SH4Kc5GRtgWTA--8IJHG7EOrKUbQO8-cIyUQfKLXE1RNn3BhCclcGn4UKhyd0cjnfj35",
+      "snippet_quote": "笠原氏のモットーは「腕・舌・遊び心」であり、伝統を踏まえつつ創意工夫を凝らした、旬を感じる唯一無二の和食を提供しています。",
+      "supports": "店主笠原氏のモットー「腕・舌・遊び心」に基づき、伝統と創意工夫を凝らした唯一無二の和食が提供されていること。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFw2Oj-x8jMW-PouDW6pisvQ_XGeO8b0doTChH8j9qpJYbZ08H9S2bf7bogFN0DulGMwhLVKgJc2u6r0siyvYnivpX9swjC26_B5SvXXvy4vWRiTvEG-32mYxuJqSqxAMfShVV21w==",
+      "snippet_quote": "和食の枠にとらわれない素材使いや斬新な組み合わせ、遊び心や季節感を重視した発想豊かな料理が提供されます。",
+      "supports": "和食の枠にとらわれない素材使いや斬新な組み合わせ、遊び心や季節感を重視した発想豊かな料理が提供されていること。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFw2Oj-x8jMW-PouDW6pisvQ_XGeO8b0doTChH8j9qpJYbZ08H9S2bf7bogFN0DulGMwhLVKgJc2u6r0siyvYnivpX9swjC26_B5SvXXvy4vWRiTvEG-32mYxuJqSqxAMfShVV21w==",
+      "snippet_quote": "名古屋店では東海4県を中心とした地元食材を使用しており、東京本店とは異なる味わいを楽しめる点も特徴です。",
+      "supports": "名古屋店が東海4県を中心とした地元食材を使用し、東京本店とは異なる味わいを提供していること。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFw2Oj-x8jMW-PouDW6pisvQ_XGeO8b0doTChH8j9qpJYbZ08H9S2bf7bogFN0DulGMwhLVKgJc2u6r0siyvYnivpX9swjC26_B5SvXXvy4vWRiTvEG-32mYxuJqSqxAMfShVV21w==",
+      "snippet_quote": "和食店としては珍しく、「デザート全種オーダー可」というサービスが名物の一つとなっています。",
+      "supports": "和食店としては珍しい「デザート全種オーダー可」が名物サービスであること。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFpClyQFrPhquYqjVJ_MT0KgUzxl7OuOJRz83qDFooLzqaiHwVnhUKv7cgIVX7Z0DAFVo6vjQUMsjnKsDCxZiFbe0lCoQyfWtxKzPdrHXuKOX_SFs3vASU2Zw6GiKX17tB8qIL3WxIlkwSSW2DnvTvFu0w=",
+      "snippet_quote": "和食店としては珍しく、「デザート全種オーダー可」というサービスが名物の一つとなっています。",
+      "supports": "和食店としては珍しい「デザート全種オーダー可」が名物サービスであること。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF2Olrlqv9HFgZGk1ft61PNGn4h1qSs66SJ5kQzA5Fsoz0Xl88e5tb4QvyxyRDeogK6UcucXzQbQUW6SH4Kc5GRtgWTA--8IJHG7EOrKUbQO8-cIyUQfKLXE1RNn3BhCclcGn4UKhyd0cjnfj35",
+      "snippet_quote": "笠原氏は、弟子たちが活躍できる場を提供するために多店舗展開を進めており、名古屋店の成功がその大きな要因であったと語っています。",
+      "supports": "笠原氏が弟子たちの活躍の場として多店舗展開を進めていること。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF2Olrlqv9HFgZGk1ft61PNGn4h1qSs66SJ5kQzA5Fsoz0Xl88e5tb4QvyxyRDeogK6UcucXzQbQUW6SH4Kc5GRtgWTA--8IJHG7EOrKUbQO8-cIyUQfKLXE1RNn3BhCclcGn4UKhyd0cjnfj35",
+      "snippet_quote": "名古屋店の料理長である丹下陽介氏は、名古屋店を統括する傍ら、メディア出演や市町村とのコラボレーション、中部地区の小中学校での家庭科の授業（和食給食応援団として）も積極的に行っています。",
+      "supports": "名古屋店の料理長がメディア出演や食育活動に積極的に取り組んでいること。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF2Olrlqv9HFgZGk1ft61PNGn4h1qSs66SJ5kQzA5Fsoz0Xl88e5tb4QvyxyRDeogK6UcucXzQbQUW6SH4Kc5GRtgWTA--8IJHG7EOrKUbQO8-cIyUQfKLXE1RNn3BhCclcGn4UKhyd0cjnfj35",
+      "snippet_quote": "お品書きは用意せず、提供直前まで料理の内容を秘密にしています。",
+      "supports": "お品書きを用意せず、提供直前まで料理の内容を秘密にしていること。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFw2Oj-x8jMW-PouDW6pisvQ_XGeO8b0doTChH8j9qpJYbZ08H9S2bf7bogFN0DulGMwhLVKgJc2u6r0siyvYnivpX9swjC26_B5SvXXvy4vWRiTvEG-32mYxuJqSqxAMfShVV21w==",
+      "snippet_quote": "お品書きは提供直前まで伏せられており、お客様にワクワク感を提供しています。",
+      "supports": "お品書きを伏せてお客様にワクワク感を提供していること。"
+    }
+  ],
+  "warnings": [
+    "2件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「賛否両論 名古屋」に関して、Google検索で得られた業界視点の情報は以下の通りです。\n\n### 店主のこだわり\n「賛否両論 名古屋」の屋号には、「万人に好かれなくていい。自分の料理とやり方を好きだと言ってくれる人が来てくれれば良い」という店主・笠原将弘氏の想いが込められています。笠原氏は「敷居の高くない日本料理屋」を目指し、「和食界のユニクロ」と表現しています。日本料理に馴染みのない若い世代にも「おまかせ」で料理を楽しんでもらいたいという考えから、あえてコースのみを提供し、10,000円以上のコースは設けていません。\n\n料理においては、「美味しいは当たり前」とし、お客様に「楽しい」と感じてもらうことを重視しています。子供の頃の「今日の晩ごはんは何かな？」というワクワク感を食事で提供するため、お品書きは用意せず、提供直前まで料理の内容を秘密にしています。また、低価格で質の高い料理を提供するため、高価な食材だけでなく、スーパーなどで手に入る身近な食材を料理人が丁寧に手間をかけることで美味しく仕上げることにこだわっています。日本酒の仕入れにもこだわりがあり、日本酒専門の酒屋と協力して厳選しています。\n\n笠原氏のモットーは「腕・舌・遊び心」であり、伝統を踏まえつつ創意工夫を凝らした、旬を感じる唯一無二の和食を提供しています。さらに、和食を未来へ伝える活動として、小学校での食育や和食推進活動にも力を入れ、「和食給食応援団東日本代表」としても活動しています。\n\n### 提供スタイルの特徴\n「賛否両論 名古屋」では、季節の素材を活かした「おまかせコース」のみを提供しています。ランチは4,500円と7,500円、ディナーは7,500円と9,500円のおまかせコースが設定されています（2022年7月時点の情報）。料理と日本酒は月替わりで内容が更新され、季節ごとの変化を楽しめるため、定期的な来店が推奨されています。\n\n特定のプランでは、月替わりで6品の日本料理と厳選された5種類の日本酒のペアリングコースが提供され、料理長からペアリングについての解説を聞き、質問することも可能です。お品書きは提供直前まで伏せられており、お客様にワクワク感を提供しています。器や盛り付けにもこだわり、見た目にも美しい料理が供されます。\n\n和食店としては珍しく、「デザート全種オーダー可」というサービスが名物の一つとなっています。店内にはカウンター席があり、ライブ感のある調理の様子を間近で見ることができます。名古屋店では東海4県を中心とした地元食材を使用しており、東京本店とは異なる味わいを楽しめる点も特徴です。2週間ごとにコース内容が更新され、和食の枠にとらわれない素材使いや斬新な組み合わせ、遊び心や季節感を重視した発想豊かな料理が提供されます。敷居の高さを感じさせないフレンドリーな雰囲気で、和食が初めての人でも気軽に訪れることができるとされています。\n\n### 地元グルメメディアでの紹介\n「賛否両論 名古屋」は、地元メディアである「ナゴヤドット」にて「予約の取れない日本料理店、笠原将弘氏の『賛否両論 名古屋』。若い人にこそ知ってほしい、その魅力！」と題して紹介されています。また、「名古屋情報通」では「予約困難！若き巨匠が贈る和食の名店『賛否両論 名古屋』」として取り上げられました。過去には「Otonami」で日本酒と和食のペアリングコースが紹介されたこともあります。\n\nその他、「ヒトサラ」ではシェフのおすすめ店として掲載されており、「Retty」「一休.comレストラン」「楽天ぐるなび」「フォートラベル」「NAVITIME」といった主要なグルメサイトにも情報が掲載されています。店主の笠原将弘氏は、東海ラジオで「笠原将弘の賛否両論！」という番組も持っています。\n\n### 料理人としての評価\n店主の笠原将弘氏は「日本を代表する料理人」の一人として広く認知されています。その料理は「腕・舌・遊び心」をモットーに、伝統と創意工夫が融合した唯一無二の和食であり、その確かな味と新鮮な驚きが多くの人々を魅了し、「予約の取れない名店」として知られています。笠原氏は「若き和の巨匠」と称され、「情熱大陸」や「徹子の部屋」といった著名なテレビ番組への出演経験もあります。2010年には世界料理学会で日本代表賞を受賞しています。\n\n名古屋店の料理長である丹下陽介氏は、笠原将弘氏の料理本を熟読し、名古屋店の開業時に弟子入りした人物です。丹下料理長は名古屋店を統括する傍ら、メディア出演や市町村とのコラボレーション、中部地区の小中学校での家庭科の授業（和食給食応援団として）も積極的に行っています。笠原氏は、弟子たちが活躍できる場を提供するために多店舗展開を進めており、名古屋店の成功がその大きな要因であったと語っています。名古屋店は、笠原氏の「笠原ワールド」を受け継ぎつつ、独自の独創性も発揮する味わいがファンに支持されています。料理の質については「美味しいのは当たり前」という言葉が示す通り高く評価されており、「お高めですが価値あり」という声や、「丁寧なお仕事がされたお料理で美味しくいただきました。サービスも滞りなく気持ちよく過ごせました」といった肯定的な口コミが見られます。また、「和食の枠にとらわれない素材使い、斬新な組み合わせが特徴で、遊び心や季節感を重視した発想豊かな料理は、再訪時にも新しい発見に満ちている」と評価されています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGykONFfBMy9ogmmXGEh9S7cibeRkjPX1sDiUgYx5gq-d0x62N5Ayo1PLgDzHu_Ze86_R8-1MClzr-kfx5rPx14KSblWVy-ktoePGAYM-VxySEU6VH8S4SLZkJZdgcK",
+        "title": "nagoyadot.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF2Olrlqv9HFgZGk1ft61PNGn4h1qSs66SJ5kQzA5Fsoz0Xl88e5tb4QvyxyRDeogK6UcucXzQbQUW6SH4Kc5GRtgWTA--8IJHG7EOrKUbQO8-cIyUQfKLXE1RNn3BhCclcGn4UKhyd0cjnfj35",
+        "title": "livedoor.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFw2Oj-x8jMW-PouDW6pisvQ_XGeO8b0doTChH8j9qpJYbZ08H9S2bf7bogFN0DulGMwhLVKgJc2u6r0siyvYnivpX9swjC26_B5SvXXvy4vWRiTvEG-32mYxuJqSqxAMfShVV21w==",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHm51RHEqztN9Ht2Oqy2d_q_qVERHnpQc4HAol_zEqn1YTOwqS0zY43nHkOG6RMQgFh6EJ_qy68q-RlaM-KDZZL_PhW0_vGS82IPJYmrqh7WjfJurFz3jPQ31jOl_lXv_Qa-xdpouqATTlyBQ==",
+        "title": "navitime.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEVL_qWwviX3Ksza2QZMLCkRtPCs06rm5kS6qCNcqTrWfPA7iFxCHgVTJwCILH0SmkW7mbSgI2kIY9ZWIuVHVe1Rmew-5tYpKe8oAwg9pmpGLJW_Ulb_CKIqX0ZjMshXAXlFy4WgvIZ1Y5kg705uw==",
+        "title": "otonami.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFgsE0SpRosyeWfo8H0N1h2lSOZK4HjRxtF1B5BQIEPDF29B7usNPr_VRfvDwv0JM__t8vwBxTSOqoREhJjKyiYneuVwWTxl7eDocK_DW5Y8UXvzr53_JnZhTe2xZ0z5X0EfYo=",
+        "title": "ncg.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF-MJtKyZDeiE7AIiCRhzeG0C2RDtwjinkJoaUf1u6f0Pfd2KbIqGIPaGai9PJELYkdtJIDcas3F3BTDeGd3j0gzbXxl9_DN19LuzDWgfwh2t762YFdCAMNGRvN5jGw3w==",
+        "title": "sanpi-ryoron.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHAZ25sxi6hlgrgqTfBMARuHffdstDxVmidB08mpjLKYQ8MbJAXgfT-kYujkFvupiD0KjRUGhK_pwpMOw5P3Omc4c1OyScmbnwaFfmA1QrhB30chH4U6G3xyGPyL5APUrAGVFoLS0rbSiba46pCS_eFIpChVwOuPsPPCWdS",
+        "title": "granddukes.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH3P9Xb537-kQRkuUBYQvNqRvslUV_WbG6Amelc9w3WLQ-aj0lRFCp9boxa8Ev1r5dRtugD4Prh5Ob8VjkEtBjvkLFPu5XrdzZONrqaIY2jQxN_edHAsfav9IgaFEzS5sfEcg==",
+        "title": "4travel.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQELRtiTU4Kv5gTr0ksZ4dF7hUvLCh6ThvauSe4P7Lt8_UosUbZKeFPVTiFziVeGpT29Ri5yATSc5rHBlhcm5iztWb-oASLNZ5kuKF3Q3MXUDxGFcZbC1S5frmpsjPTq",
+        "title": "jouhou.nagoya"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGwshIkoIrxbJARcWCc8_4TRZaPYlSxKuqJzDvsi2i2PaSlVvJZIcRzVihhpW0vKGWFA5IQS-P_fjvujYnDkg9L6G_PMmenhRQQpdq73pR8cthA9SJuw-oYghjkkxvNx9ZvjFhpZw==",
+        "title": "hitosara.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHbmmF2u5Qk-ALc2denmWTlQZKnEhiJW_dSdd2qJRofNb4CWfY7cSkOSHztll8s9yMsANGrhWPPj6TZhwSNEsIl1qUcAo-f0NPzWr5iCj4zcGaYEpB-PGLsMQdb",
+        "title": "hitosara.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFh-WesIUfLpSVmIWTADcPHN07b8S_eRPhoWPyn-6gVOCf3wTVwWke2ZKDilfZmZ0y0q4rdXQThpRXuy4EU8sBB4k42Zb7oeywN2oq2kFGy9CgSKoR69aXp2hS_Z1k=",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEXwweU4vnaLOW4aazAqMKZuFkVX9Ux1birHElM6747geI-GGJxUMICf09rlF5hZOn8Cb1fRvPLHcTI8hkwLz7TdVutwQ5sgcmb00AmhS5nAwG03cSCX-utaM-_3YWP",
+        "title": "gnavi.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGgrp7gPK9c5MoNvSb_6_oby3CtCXmk54ZQg3rcrTw4yB49io-1kbg00HZi-d1-AT8W7t88-BdHaoxGJmjBj4PxRcel9M8hCziz-lDkV5_FvxIfYQJdxvSxZjAmJmg3Ke8PNA==",
+        "title": "gnavi.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHHDNdnJscAxVmsPMtT-4DoEALewP-Mrzrkjf4dxlsa9aviL2GNc4ju9dGz1lkGa8-93johAliroYVVjy5_nnzm_WN1TEqGWZ4THAyo5-Fl6o2ZUA2RRUmbAmRxYAL_Fb4xlHzW7SIupgXh_caWvm7v231DhJFsYsYncQ==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFk1K6C1yYwnCMDP9T__kUd0CEagC8W_HeyRfxNy7CC4kQscy0vlrqszJI1sZSj5heNtWlmCMomk1cnvvFQlK0aYYPtGhoJCX8xgFPOlCH04ceuaiGH03mJzvmzRFlfWYSHRpUSo0DEYg==",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFpClyQFrPhquYqjVJ_MT0KgUzxl7OuOJRz83qDFooLzqaiHwVnhUKv7cgIVX7Z0DAFVo6vjQUMsjnKsDCxZiFbe0lCoQyfWtxKzPdrHXuKOX_SFs3vASU2Zw6GiKX17tB8qIL3WxIlkwSSW2DnvTvFu0w=",
+        "title": "super-sweets.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEwkzWyr16UpJxTMieJEOtqBhWigwfOApBT-hWCrN2LAla-g_StmhSgs1biVZLOynqR480eoxQa7bDMafQ11vbkspOfi850ihoVnsCNXduqXwYjoNhO3KxbrB9GWMSuny5bNFypGGQ3bmgUjdJNFQQKpL0I1A==",
+        "title": "hisayaodorilunch.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGHYXwOK0n9xazRfWWWvJDh7yiyuZgSNKHo3YfD7lHwv5P-9OmdSMI1cajB1EhO9b-LKWD2WTtarFPV6bFFsFCkLmVuKCnuc_ct10C_SIVKkXVIMA_9zRgjbKOG2u0wx3kL8XxJe4s=",
+        "title": "youtube.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE8vi8Y2gRdWP_vwrkbnOPOXlqjJgHMwBFkpYcgBgrFDV70JugU4q5yOj7uDapBE4bqoYOjwihH1AGb1c38mGESJ4Rh9Be7qvRZjBLo87Yu_6oEzMon8kQUN42L8yIlxUqFaQ==",
+        "title": "cuisine-kingdom.com"
+      }
+    ]
+  },
   "store_id": "manual_賛否両論名古屋",
   "store_name": "賛否両論 名古屋",
   "area": "名古屋市千種区",
   "genre": "日本料理",
-  "rating": "4.3",
-  "generated_at": "2026-08-19T06:40:42.124Z"
+  "rating": "4.2",
+  "generated_at": "2026-08-24T18:41:53.165Z"
 }

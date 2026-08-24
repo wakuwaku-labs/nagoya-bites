@@ -1,0 +1,99 @@
+{
+  "status": "OK",
+  "editorReason": "本場の味を研究し尽くした料理人が、厳選食材で日本人向けにアレンジしたモダンコリアンを提供。赤ワインで香りづけするサムギョプサルや一人鍋など、独自の工夫と幅広いメディア露出で名古屋の韓国料理シーンを牽引しています。",
+  "insiderNote": "本場の味を研究し、厳選食材で日本人向けに昇華させたモダンコリアンは、メディア露出も豊富。赤ワイン香るサムギョプサルなど、独自の工夫が光る。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.9,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFdnNiWifXNVDQDmDhV4Wla2bFC6yNiigU4YuREZnTdXrzmPXpnG5xZvCg8YvYiTJtKoYvAEI-1fhAkdcs-EOHOH7EoEHRDSG8OtzfuwgMpwir-dTSWYlRWoVliAbRacvO8YTLp-IN-Gh6A",
+      "snippet_quote": "RadiChubu-ラジチューブ-」: 店長の福地さんがインタビューを受けています。",
+      "supports": "幅広いメディアで紹介されていること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEbm1U0Yuk-DyMUhcLtk8Kacjm7uYUnLG7SNY82ppVwlJEAEQR5sPuv2OSdkF5uRQNCcvaHhzQwVn0nAXzcwWbA9lBeGL1lZYyBLw8szfjBGVg1XY1jjAnrQfdBKnguH14ZTbF9ok-p3D1IhqizFls=",
+      "snippet_quote": "料理人は本場の韓国料理をしっかりと勉強し、研究し尽くした者が担当しています。…本場の味を日本人向けに美味しく食べやすくアレンジした「モダンコリアンレストラン」として提供しています。…サムギョプサル: …焼き上げの際に赤ワインで香りづけをするのが特徴です。…一人鍋料理: チーズタッカルビやタッカンマリ（白）など、一人でも楽しめる鍋料理が人気です。",
+      "supports": "本場の味を研究し日本人向けにアレンジしたモダンコリアンを提供し、赤ワインで香りづけするサムギョプサルや一人鍋があること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE8NE1Ro_sNJ7JN22fxAQSBd0Hbpo8nEvsD5v75MN5yLTTwNuK9GxIdBZb_YWPOEWPDBlPGQW4KUXsjYgEMHe7rjHbCGdln8egaOVomY5xv4yYCifWLM3r0KH9GPFXPQlBCbYisV-E=",
+      "snippet_quote": "テレビ番組: メ～テレの番組「ドデスカ！」または「ドデスカ＋」の「うましゅんランチ」というコーナーで、スンドゥブチゲランチが紹介され、その様子はYouTubeチャンネルでも公開されています。",
+      "supports": "幅広いメディアで紹介されていること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE302Jmf6-v1aS8MB-aaA25gHzuO4TFwg3aNf_egEcdFVrZq_iMfhv_KiHkfWlU-p4rfl18QNgSSePFpEHkJyzopXTNxycOMqBF3DqPBnfZDjiDUN5cHEaVcrqeGeV-XXc5hg==",
+      "snippet_quote": "「新しい思想で創る モダンコリアンレストラン」と表現され、本場の味をそのままに提供しつつ、日本人の口に合うように工夫されている点が評価されています。…サムギョプサルの調理法については、「焼き上げの際に赤ワインで香りづけをしているのがソウルキッチンの特徴。蒸発する赤ワインの香りが豚肉の香ばしさを引き立てます」と、独自の工夫が評価されています。",
+      "supports": "本場の味を日本人向けにアレンジしたモダンコリアンを提供し、赤ワインで香りづけするサムギョプサルが独自の工夫であること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEqqQ8W-tJxuQ-JF8NI1s94jeF5b1PbxhL61eewxD6BlMkBA2C22WuTCAwJizTStWPNCPFqK3GsVRIsz10SAeZDeVDTTFod7DmjYBPmqoPPGmKNxqiZcKO9",
+      "snippet_quote": "DIME」: 「名古屋で人気の韓国料理の店10選」の一つとして掲載されています。",
+      "supports": "幅広いメディアで紹介されていること"
+    }
+  ],
+  "warnings": [],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「Seoul Kitchen ソウルキッチン」（東桜・韓国料理）について、Google検索で調べた業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「ソウルキッチン」の一番のこだわりは「お出しする料理に対する思い」にあります。料理人は本場の韓国料理をしっかりと勉強し、研究し尽くした者が担当しています。一時のブームや流行に頼らず、自分たちが本当に美味しいと思える韓国料理を多くの名古屋の人々に提供したいという強い思いを持っています。\nこの思いから、韓国の食文化を大切にしつつも、食材は徹底的に選び抜かれています。仕入れる農家からこだわった国産丸鶏、鹿児島産豚バラ肉・ナンチクポーク、平田牧場三元豚、愛知県産の錦爽鶏といった肉類、国産野菜、自家製のたれや味噌、大阪コリアンタウンから直送されるキムチなど、一つ一つを丁寧に何度も試作を重ねて吟味しています。 また、本場の味を日本人向けに美味しく食べやすくアレンジした「モダンコリアンレストラン」として提供しています。\n\n**提供スタイルの特徴**\n「ソウルキッチン」では、以下のような提供スタイルが特徴です。\n*   **タッカンマリ鍋**: 国産丸鶏を丁寧に下処理し、一羽まるごと炊き上げた絶品タッカンマリ鍋を提供しています。\n*   **サムギョプサル**: 鹿児島産豚バラ肉やナンチクポーク、平田牧場三元豚を使用しており、お客様の目の前でスタッフが調理してくれます。焼き上げの際に赤ワインで香りづけをするのが特徴です。 サンチュに巻いて食べる際には、バジルやゴマ塩だれなど5種類のソースで様々な味を楽しめます。\n*   **一人鍋料理**: チーズタッカルビやタッカンマリ（白）など、一人でも楽しめる鍋料理が人気です。\n*   **ランチメニュー**: スンドゥブチゲやタッカンマリなどの鍋ランチを提供しており、特にスンドゥブチゲは、あさりや豚肉、大きめにカットした豆腐を特製チゲスープで煮込み、ご飯を締めでスープにつけて食べる「つけ食べ」が推奨されています。\n*   **テイクアウト・全国配送**: テイクアウトが可能で、薬膳赤タッカンマリやサムゲタンなどのタッカンマリセットは全国配送も行っています（1週間前までの予約が必要）。\n*   **空間とサービス**: ゆったりと落ち着いた雰囲気の店内で、ソファー席や個室VIP席など様々なお席を用意しており、家族での食事から会社帰りの飲み会、デート、女子会、接待など幅広いシーンで利用できます。 20名から50名までの貸切も可能です。 誕生日などの記念日には、パンケーキタワーなどのサプライズセットも提供しています。 また、新型コロナウイルス感染対策として、席を広めにとり、各テーブルに消毒液を完備しています。\n\n**地元グルメメディアでの紹介**\n「ソウルキッチン」は、複数の地元グルメメディアで紹介されています。\n*   **RadiChubu-ラジチューブ-**: 店長の福地さんがインタビューを受けています。\n*   **DIME**: 「名古屋で人気の韓国料理の店10選」の一つとして掲載されています。\n*   **テレビ番組**: メ～テレの番組「ドデスカ！」または「ドデスカ＋」の「うましゅんランチ」というコーナーで、スンドゥブチゲランチが紹介され、その様子はYouTubeチャンネルでも公開されています。\n*   **グルメサイト・ブログ**: Retty、ホットペッパーグルメ、じゃらんnet、楽天ぐるなび、PayPayグルメなどの主要なグルメサイトに掲載されています。 また、「久屋大通ランチ」というブログや、「【中区／久屋大通】韓国料理を楽しむコリアンダイニングが女性に大人気「ソウルキッチン」」という記事でも紹介されています。\n\n**料理人としての評価**\n「ソウルキッチン」の料理人については、以下のように評価されています。\n*   「料理長が創る旬の食材を使用した自慢の料理」を提供していると紹介されています。\n*   料理人は「本場のものをしっかりと勉強して研究しつくした方が担当している」とされています。\n*   「新しい思想で創る モダンコリアンレストラン」と表現され、本場の味をそのままに提供しつつ、日本人の口に合うように工夫されている点が評価されています。\n*   スンドゥブチゲのスープは「うまみと辛さが際立つスープは、豆腐との相性抜群」と評価されています。\n*   タコ刺しは「タコの旨味と食感を感じつつ、青唐辛子の刺すような辛さがお酒にとても合いますね」と評されています。\n*   キムチの天ぷらは「熱が加わることでいい具合にキムチの酸味と水分が飛び、キムチの甘みと天ぷらのサクサクの食感を楽しめる珍しい一品」として注目されています。\n*   サムギョプサルの調理法については、「焼き上げの際に赤ワインで香りづけをしているのがソウルキッチンの特徴。蒸発する赤ワインの香りが豚肉の香ばしさを引き立てます」と、独自の工夫が評価されています。\n*   提供される料理全体として「個々の食材の味がしっかりとしているので、口の中で様々な味を楽しめる」と評価されています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFdnNiWifXNVDQDmDhV4Wla2bFC6yNiigU4YuREZnTdXrzmPXpnG5xZvCg8YvYiTJtKoYvAEI-1fhAkdcs-EOHOH7EoEHRDSG8OtzfuwgMpwir-dTSWYlRWoVliAbRacvO8YTLp-IN-Gh6A",
+        "title": "radichubu.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE0k2q0rVItFFyH5kMnQZbxnOXkAedHUK1jZEliLOF1JQzZEiDjSt-SldHqqjOfPyATdF4aYp1WOpT16D84E3zVolNVjFoJXWdSzo5-rXb_hH8bOPf4fYnteH4VqrLlf8QEbJw=",
+        "title": "yahoo.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEbm1U0Yuk-DyMUhcLtk8Kacjm7uYUnLG7SNY82ppVwlJEAEQR5sPuv2OSdkF5uRQNCcvaHhzQwVn0nAXzcwWbA9lBeGL1lZYyBLw8szfjBGVg1XY1jjAnrQfdBKnguH14ZTbF9ok-p3D1IhqizFls=",
+        "title": "lightdining.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF3-wIl3yUqPgsnjW41a_1Uehh-vMNa6YmvP_Si88l5lMSshI43ii9rhszla6mBcjkAN5WEIQGDiPlXFzOC-I5dEttCMXFcQcIkLTZSJKyODLeO0MXC4p4UVQkiKkJyBOKq-y8CbFkS",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEphA1GBh_53hFJa8hFHi7rULLu3ajQ8qsG7WYxNQ0-eF-H85hI_2-zIKgbL1xVRyaQQ3hji08fHF9bG6pGYLVehYhBwcj7-wuDf96sZN8u2krMOPhxJobOCxS4GkkY_zIN0XXDX8d_YKB1fw==",
+        "title": "nagoya-meshi.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG7F2LZoJvT0-4OG0-JXGEjKUK7jlDOOnHNJz0chN55J3hR-CnU6dHr9mmg_gBHuPeWeFP7KqfXCnx3kRqEaBvty0k8FjZmO0WbpVXiB2IT4skXg5u-89X4RlDIeAFS8Luv3bWqngNM9HeLQP8Tww0kvSo5PTgJWX-Y5R6eShzEkgqzlMkPc6pt-wNLFnnx6Y1jAGJLJfHXOOwxmok_q_osIvFfZo0qoXnC1AN7nzPdKHYgpFV6F_QsA-SuXF8IvQgb",
+        "title": "ubereats.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE8NE1Ro_sNJ7JN22fxAQSBd0Hbpo8nEvsD5v75MN5yLTTwNuK9GxIdBZb_YWPOEWPDBlPGQW4KUXsjYgEMHe7rjHbCGdln8egaOVomY5xv4yYCifWLM3r0KH9GPFXPQlBCbYisV-E=",
+        "title": "youtube.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGnQL9OZr6LxQ-tqLC0IeTW9D-yXdK-S-lzG5UqFtLKc6xp8KLaEcZlNP_nzob_mrCAZiT1PVrL_Psp0r6I56Q9yEF5D9fia_q8Mv358yUI0CP0Qbs64RDIMrijRaGVBWCqiIbGxqDvDS8pEBKu",
+        "title": "hisayaodorilunch.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH-FWP-sV3pPErZPzcEAbRdMN52K2B5UYGxD7gWTAzXOgr4C9r6VWPW8e2kVFdHOeShrVo5DvOzaZfSM2l8oVW1lfgmc2kXf8EvZyDcbqZk5TzJShBfT5uAshCZ_ZmyqOq9WKUzT_iKrrRQdIxjuLTfBCk=",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE302Jmf6-v1aS8MB-aaA25gHzuO4TFwg3aNf_egEcdFVrZq_iMfhv_KiHkfWlU-p4rfl18QNgSSePFpEHkJyzopXTNxycOMqBF3DqPBnfZDjiDUN5cHEaVcrqeGeV-XXc5hg==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEqqQ8W-tJxuQ-JF8NI1s94jeF5b1PbxhL61eewxD6BlMkBA2C22WuTCAwJizTStWPNCPFqK3GsVRIsz10SAeZDeVDTTFod7DmjYBPmqoPPGmKNxqiZcKO9",
+        "title": "dime.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEUVczQXdVu3QecKoygrIUHq_Pgyj7oonysZGpUPwDFd32T0_RAxrC9CKdsVOA-k0GLnAocDCRkV3IqNIYBMgkdYY9HxzsGpl39ectV_uQDLYeik_CPF14QBQJO1wFm",
+        "title": "gnavi.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHxmhzP5iqquxbOpcVx9DovJ9rcKQF9Tg1DsBvlAIEh_wJDrB50XkgXmXwp6bBqgEcS7-2_JXivTEsynhPQjXUKB4jJiCVdcEXyiSpMWdHHjlLEz7rZDw6OZuzYH2oIPgQQ-2V9GnxqOAivnTuvjOw=",
+        "title": "jalan.net"
+      }
+    ]
+  },
+  "store_id": "manual_seoulkitchenソウルキッチン",
+  "store_name": "Seoul Kitchen ソウルキッチン",
+  "area": "東桜",
+  "genre": "韓国料理",
+  "rating": "3.6",
+  "generated_at": "2026-08-24T18:56:33.597Z"
+}

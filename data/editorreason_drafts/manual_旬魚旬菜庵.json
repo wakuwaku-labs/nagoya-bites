@@ -1,0 +1,22 @@
+{
+  "status": "INSUFFICIENT_EVIDENCE",
+  "editorReason": "",
+  "insiderNote": "",
+  "visitStatus": "desk_automated",
+  "confidence": 0,
+  "sources_used": [],
+  "warnings": [
+    "検索グラウンディングで関連URLが見つからなかった"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "「旬魚旬菜 庵」（名古屋市中村区・居酒屋、魚介料理・海鮮料理）について、Google検索で店主のこだわり、提供スタイルの特徴、地元グルメメディアでの紹介、料理人としての評価といった業界視点の情報を検索しましたが、関連情報は見つかりませんでした。",
+    "groundingUrls": []
+  },
+  "store_id": "manual_旬魚旬菜庵",
+  "store_name": "旬魚旬菜 庵",
+  "area": "名古屋市中村区",
+  "genre": "居酒屋、魚介料理・海鮮料理",
+  "rating": "3.4",
+  "generated_at": "2026-08-24T19:04:21.715Z"
+}

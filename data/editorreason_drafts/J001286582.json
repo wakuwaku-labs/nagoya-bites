@@ -1,0 +1,70 @@
+{
+  "status": "OK",
+  "editorReason": "複数の主要グルメメディアに掲載され、NAGOYA BITESの「名古屋のバー・ワインバー10選」や「一人飲み完全ガイド」にも選出されるなど、業界からの注目度が高い一軒。フレンドリーな接客で、飲み会や誕生日パーティー、2軒目利用など幅広いシーンで支持されています。",
+  "insiderNote": "NAGOYA BITESの「バー・ワインバー10選」や「一人飲み完全ガイド」に選出されるなど、地元メディアからの評価も高く、業界内での注目度も伺えます。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFYdPk85dRofS5JQSLTvSjxLzQeDam9qIME0iGj91ctRxcjx9k9-Yz1krTogUnDCAQMmWAIZjwQhXJNxZMyySyfN70zxKRUaehdudUE36KHAmyq0AdXU0nhicUz3Rnf2kjGsfzERA==",
+      "snippet_quote": "スタッフはフレンドリーで、利用客は楽しい時間を過ごせると評価しています。",
+      "supports": "BULMAROのスタッフがフレンドリーであること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFYdPk85dRofS5JQSLTvSjxLzQeDam9qIME0iGj91ctRxcjx9k9-Yz1krTogUnDCAQMmWAIZjwQhXJNxZMyySyfN70zxKRUaehdudUE36KHAmyq0AdXU0nhicUz3Rnf2kjGsfzERA==",
+      "snippet_quote": "飲み会や誕生日パーティーにも利用でき、ペルー料理も提供されています。また、2軒目の利用にもおすすめされています。",
+      "supports": "BULMAROが飲み会や誕生日パーティー、2軒目利用など幅広いシーンで利用されていること"
+    }
+  ],
+  "warnings": [
+    "4件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「BULMARO」に関して、Google検索で得られた業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n店主はカンパリをシェイクするだけで、苦味が隠れて甘みを感じる一杯になることに衝撃を受けたとされており、このカンパリシェイクはふわっと空気をはらんだ優しい味わいが特徴です。また、ケーキのクリームは注文を受けてから泡立てるため、ふわふわの食感が楽しめるよう提供されています。\n\n**提供スタイルの特徴**\nスタッフはフレンドリーで、利用客は楽しい時間を過ごせると評価しています。飲み会や誕生日パーティーにも利用でき、ペルー料理も提供されています。また、2軒目の利用にもおすすめされています。\n\n**地元グルメメディアでの紹介**\n「BULMARO」は、ホットペッパーグルメ、NAGOYA BITES、NAVITIME、ヒトサラ、Retty、ヤッピーダイニングといった複数のグルメメディアに掲載されています。NAGOYA BITESでは、「名古屋のバー・ワインバー10選【2026年版】」や「名古屋 一人飲み完全ガイド 2026」といった特集にこの店舗が登場すると紹介されています。\n\n**料理人としての評価**\n検索結果からは、料理人としての特定の評価に関する情報は確認できませんでした。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGunHqsAG3gHFIdSCQbp5m27rXz0rnQjalopVr2U2VY8Ea_OyWvDxY6NUZG05S9SE6r3LIFx9JIBQxWX9qHIwSlinH-gdYTxOg8oFGsrZOfSsffeBEQ3B1EUoK7I8E11qOgpw==",
+        "title": "baron-rouge.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGkJEirxhHFnNw-XUnxknIoK1fL3VulQyd3wASTX1ZM3ulqWzpm28SK2I3nz4oHhwJ95ekSxBBfCLswL6RUcBW7yU9QZEjAc2ZqjHegRhFU2j6aE8N-jAsf90GSCEMsTdPS",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFYdPk85dRofS5JQSLTvSjxLzQeDam9qIME0iGj91ctRxcjx9k9-Yz1krTogUnDCAQMmWAIZjwQhXJNxZMyySyfN70zxKRUaehdudUE36KHAmyq0AdXU0nhicUz3Rnf2kjGsfzERA==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEbnIxc9LA5DSRvekFFq2pbz8mVSJz9qAdKvzaeRAPof24uBrtp9jWFqVNVe4l13C7R5UN7M1rxUjVhvypc1i1bxC-0Izp88pDwV9uSQQVc64y_C4cLRohKfYliXglLhdxRvmSqC3bHves=",
+        "title": "nagoya-bites.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHSFHU6jdDTob7Fc6__z1DDzYQc2ynOM5sdsAQ6tAHijLj8vueTamV2YdhLO8fNhYh2kJJg3BPKFw6ShF99_rmzr5HYwCCqtfpaKwL-mUfmwAVj5FsLSSbSX2yXEKt6lq_AFgm19r2OR09TM9NkAF05S1067fTJrLxrn7VG3owg_uosALEUTfF-rBzlVA==",
+        "title": "navitime.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHL6oaJy81bP1yL4MZDWKGvCIV5FjcYCQSzOEbD05DDI9v9VmxFoJrBU-6sq7wqd9joaQvLBZVeRNgZ9QoucAhoYK29XxG5smv6PEnJQ0pbF1fkmhajBKIULEA=",
+        "title": "hitosara.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF2s0UAxtcexR8xUi53T7d0yH3NfvHpBjiyUDsiOfe3uSnGKCGG-R2SEfog4GgbAMXrCmH8Kawqfly6i_gDFtTk9ofmYEWkhbWJieWVzN-rBLf1-Ml_8Y80pnqlVzZuOr9rjA==",
+        "title": "hitosara.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPhqBOBcgTDQSCff6k6MVh8EFZ8jm4PoAauZtt0QclH9x02gdEY4ezBjOC7_QDU1WojPZhMCjYCWVeMmv_zYUe4yKtkxl1A6wRE6U-C1xvS1o-1qZE7MnpRjJrE4vyceoga1x8PM8vbuXFUxhzUGD-yg==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF3DF0zINcLA-mr5eyfSVyApfEgJViZ5aKkg6f-xv8VyqIW0CYi19_8CcAI7ra950Kst6HJXsGDgmGlQFVq72jM0H_KTorE6ib-X8iSvOIDY3G_I9q9AhAkH7zu6fY=",
+        "title": "yapy.jp"
+      }
+    ]
+  },
+  "store_id": "J001286582",
+  "store_name": "BULMARO",
+  "area": "栄(ミナミ)/矢場町/大須/上前津",
+  "genre": "バー・カクテル",
+  "rating": "5",
+  "generated_at": "2026-08-24T19:06:34.165Z"
+}

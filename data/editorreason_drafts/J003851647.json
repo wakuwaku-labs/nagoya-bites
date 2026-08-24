@@ -1,0 +1,114 @@
+{
+  "status": "OK",
+  "editorReason": "厳選海鮮と、博多屋台を思わせる濃厚豚骨おでんを軸に、全130品3,300円の高コスパ食べ飲み放題を実現。お通し・席料なしで、ちょい飲みから宴会まで対応する戦略的なメニュー構成が魅力です。",
+  "insiderNote": "厳選海鮮と濃厚豚骨おでんを軸に、130品3,300円の高コスパ食べ飲み放題を提供。お通し・席料なしで、ちょい飲みから宴会まで幅広い利用シーンに対応する戦略的な業態です。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGqcZdpVycB2EWKx3c8sdeZMecJ8L7j8cqRaxGAvYeSj57GR-S4lEdr8ACFF7qii8oItITT9uEbMFk3sJIMkaSRd41p8YWTZ8nC3xCE5yMoGz9CxpjMIyFWTtn7bqQP9FJhZKwXjNA=",
+      "snippet_quote": "明治10年創業の豊洲魚屋から直送される極上の海鮮を使用しており、長年受け継がれた職人の目利きによって、その日一番の鮮度と旨味を持つ魚介だけを厳選しているとされています。",
+      "supports": "厳選された海鮮を提供していること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGqcZdpVycB2EWKx3c8sdeZMecJ8L7j8cqRaxGAvYeSj57GR-S4lEdr8ACFF7qii8oItITT9uEbMFk3sJIMkaSRd41p8YWTZ8nC3xCE5yMoGz9CxpjMIyFWTtn7bqQP9FJhZKwXjNA=",
+      "snippet_quote": "濃厚な豚骨スープをベースとしたおでんを提供しており、豚骨特有のまろやかなコクと深い旨味をたっぷり含ませたこだわりの一品です。博多屋台を思わせる濃厚豚骨おでんは、豚骨と鶏白湯を合わせた出汁が具材に絡む、従来のおでんとは一線を画す味わいが特徴とされています。",
+      "supports": "濃厚な豚骨おでんを提供していること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGXzbCFLSACm5l0CawYB_Uftj7qH7BSyp1fDWASRBfULH0pLS7IO1uehmHMbxcdszpop9S-vu1LGHRsQZyDRks3_anfNHplD9moKr5V0ZjUyKYE8X_UX_e4Bq05bBt_Jt9wQBSIEJretA==",
+      "snippet_quote": "博多屋台を思わせる濃厚豚骨おでんは、豚骨と鶏白湯を合わせた出汁が具材に絡む、従来のおでんとは一線を画す味わいが特徴とされています。",
+      "supports": "博多屋台を思わせる濃厚豚骨おでんを提供していること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGXzbCFLSACm5l0CawYB_Uftj7qH7BSyp1fDWASRBfULH0pLS7IO1uehmHMbxcdszpop9S-vu1LGHRsQZyDRks3_anfNHplD9moKr5V0ZjUyKYE8X_UX_e4Bq05bBt_Jt9wQBSIEJretA==",
+      "snippet_quote": "全130品が税込3,300円で楽しめる食べ飲み放題業態を主軸としています。",
+      "supports": "全130品3,300円の高コスパ食べ飲み放題を提供していること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGXzbCFLSACm5l0CawYB_Uftj7qH7BSyp1fDWASRBfULH0pLS7IO1uehmHMbxcdszpop9S-vu1LGHRsQZyDRks3_anfNHplD9moKr5V0ZjUyKYE8X_UX_e4Bq05bBt_Jt9wQBSIEJretA==",
+      "snippet_quote": "お通しや席料などの追加料金は一切なく、2時間たっぷり食べ飲み放題が可能です。",
+      "supports": "お通しや席料などの追加料金がないこと"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGXzbCFLSACm5l0CawYB_Uftj7qH7BSyp1fDWASRBfULH0pLS7IO1uehmHMbxcdszpop9S-vu1LGHRsQZyDRks3_anfNHplD9moKr5V0ZjUyKYE8X_UX_e4Bq05bBt_Jt9wQBSIEJretA==",
+      "snippet_quote": "気軽にちょい飲みから宴会まで幅広い利用シーンに対応しています。",
+      "supports": "ちょい飲みから宴会まで幅広い利用シーンに対応していること"
+    }
+  ],
+  "warnings": [
+    "4件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「海鮮と豚骨おでん 食べ飲み放題 おすすめ屋 名駅4丁目店」について、Google検索で得られた業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n*   **厳選された海鮮の提供:** 明治10年創業の豊洲魚屋から直送される極上の海鮮を使用しており、長年受け継がれた職人の目利きによって、その日一番の鮮度と旨味を持つ魚介だけを厳選しているとされています。単なる刺身の数合わせではなく、一皿ごとの完成度にこだわっている点が特徴です。期間限定で提供される天然マグロの中トロは、職人が厳選した品質の良い個体を仕入れ、脂の口溶けに加え、赤身由来の力強い旨味や香りがより明確に感じられる「味の深み」を楽しめるとしています。\n*   **濃厚な豚骨おでん:** 濃厚な豚骨スープをベースとしたおでんを提供しており、豚骨特有のまろやかなコクと深い旨味をたっぷり含ませたこだわりの一品です。博多屋台を思わせる濃厚豚骨おでんは、豚骨と鶏白湯を合わせた出汁が具材に絡む、従来のおでんとは一線を画す味わいが特徴とされています。定番の大根や卵に加え、柔らか茹でタンや焼売など様々な組み合わせが楽しめます。特に名物の「厚切りタンおでん」は、分厚くカットしたタンを柔らかく煮込み、豚骨出汁の深いコクとともに楽しめる人気メニューです。〆には豚骨ラーメンが用意されており、紅ショウガや高菜を加えて自分好みに仕上げる楽しみ方も提案されています。\n\n**提供スタイルの特徴**\n*   **高コスパの食べ飲み放題:** 全130品が税込3,300円で楽しめる食べ飲み放題業態を主軸としています。お通しや席料などの追加料金は一切なく、2時間たっぷり食べ飲み放題が可能です。3時間コースや、生ビール付きの飲み放題単品プラン（900円）も提供されています。\n*   **多様なメニュー構成:** 新鮮な刺身の升盛りやサーモン、塩だれビンチョウなどの海鮮メニューが食べ放題に含まれます。また、明太もつ鍋や魚介醤油の鶏ちゃんこなどの鍋料理も食べ放題で提供されています。\n*   **単品注文とちょい飲み対応:** 名物おでんが90円から、ハイボールやサワーが180円からという安価な単品プランも用意されており、気軽にちょい飲みから宴会まで幅広い利用シーンに対応しています。\n*   **注文の利便性:** 注文は席から楽に行えるシステムです。\n*   **喫煙環境:** 全席喫煙可能ですが、加熱式たばこ限定です。紙たばこを利用する方向けに喫煙専用室も設けられています。\n\n**地元グルメメディアでの紹介**\n「海鮮と豚骨おでん 食べ飲み放題 おすすめ屋 名駅4丁目店」は、楽天ぐるなび、ホットペッパーグルメ、Retty、PayPayグルメ、じゃらんnet、ヒトサラといった主要なグルメ情報サイトに掲載されています。また、PR TIMESにて期間限定の天然マグロの中トロ食べ放題キャンペーンに関するプレスリリースが配信されています。これらのサイトは全国的に利用されていますが、名古屋に特化したローカルグルメメディアでの紹介に関する具体的な情報は見つかりませんでした。\n\n**料理人としての評価**\n特定の料理人やシェフ個人の評価に関する直接的な情報は見つかりませんでした。しかし、Rettyの口コミでは、食べ飲み放題でありながら「食べ放題のクオリティを超えてくる」と評され、特に「鶏白湯の鍋」が絶品であるとの声があります。これは、提供される料理の品質が高く評価されていることを示唆しています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH-DveevTCYebMtCn4QVnDG5dVFGpl9W8GaGrpLgFVrQ9_IpOKExe7VjdFTr7rOGfO0lZPLVNZrqoiqnRbIXhe3fUn16XVFAyQTzhlgYqUVMn0KdTclNcvE-ybSHslyfxjd0VNpCyD-",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH2KmhasW1-EPBObCPJedce5BSdW3zgZGSJQD28M2zWBAzR7QMojoibgH4mAHj_pAgvVnzv-URPwiw437hq-4Iz4QXcUe1ca6aQV7HjiZsXEnrxOb0s076eqRuANeIW42-6u-_ZC4MhHeCw8_zEsY1tu3Tb574=",
+        "title": "prtimes.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGqcZdpVycB2EWKx3c8sdeZMecJ8L7j8cqRaxGAvYeSj57GR-S4lEdr8ACFF7qii8oItITT9uEbMFk3sJIMkaSRd41p8YWTZ8nC3xCE5yMoGz9CxpjMIyFWTtn7bqQP9FJhZKwXjNA=",
+        "title": "osusumeya.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGXzbCFLSACm5l0CawYB_Uftj7qH7BSyp1fDWASRBfULH0pLS7IO1uehmHMbxcdszpop9S-vu1LGHRsQZyDRks3_anfNHplD9moKr5V0ZjUyKYE8X_UX_e4Bq05bBt_Jt9wQBSIEJretA==",
+        "title": "gnavi.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEhePxJwjMw_vRvkwsCrGKsMJiJnocGzKqWmWE_NQtVMCTZeY7wKCKb_maAVyDYmuiGfAGJ877QOssuNGqVQ3gifI8dTaAcXTF8F8hQjhuKEWKV9bAh09EEwjf4otjR",
+        "title": "gnavi.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFiBcQs_-bMnIGcoNO4D2cCVT66_H_HBW_LJOABNKeEUQFkKGiW-l4dM7dbxtLgdN6hHmYcNMP2viEW7aAAhRHXw5ffA-sd6KiFIdT_69Sx__O8XlJSeUMHRJaVAeMhJjiJS7M=",
+        "title": "yahoo.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGEx8NxI_pZKVhrfuOu8INOCFixfDv3RTQ-cbCb-_UK4l4cdRXjy5O_CNl36qgtIlqIfmiM6774k5HhVAmAcroUpj27uU_SUjdXijOleBY283afkXNeXppzTHYEc0_o6IYyiaOBqMi6yPuYKqJ9YlyMIg==",
+        "title": "claris-b.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFK05-1a1l8pQfy4kKkAI9ngJgf4I9kMACjJCXSGglVn9oHW04Y84eJrSkdJ_NIgfZkt_PE5a70n1vvD7XuRCnGLMKqD5CVsuqxJ_NGqYMJLdicPQ==",
+        "title": "gorp.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFDb7YAclpLgi9iHnDz4bTzRpySxl0UWlFMWALELL4SQ-Qfe_IkN8x0Cz_0-L7CZ2o0UqPrPoeTo7q6LC--MU4JfQ5GA78YMh-TqibZ7blrsk5wnQE5HpqCb29DgaO5iCgSDA==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHHZ8ocawkTquE-2iQsSYtipDAb-wBJ8K0lxqnhUXTdOoqIu9qo5n2XLWTnCa8btcRrDwm667orRNmm7_tcqxRPM2Qud7WA8jb_6gT-mMV_7cSYY6KSec3IpOdspx861HNuAawG11A6",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHHP9HWP8mAsOb9j2QvjvVkFDIuT_FIf0H6E7l_hEcsYVIFTcIIODJQJq7FsmDwGcGBdGodEf-QjxiTWW0WtzDVzjZ0KhDMOrzHDi15r0bXLmy0HuLfLBc82NMm-eg89vEHVMpGqYQuVe2SqdPqxHZvEazmYC5X5I1bpmZqEIa21N7pmw==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFHckhCG5JUvgGbghWavMStHsD88pQ89Vu9oP0w3Xq87A-LwpsVs6qFxfXU4uJilzJA7DXf_OUpUfdiiCoIHvu-Vclf1mvPZYVfkkrKEXtH1RI9OwY45gFwygFmqSHVh6OH4TF9-_Suefk=",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQ4L1ET93DO6P9zh0GFBgvkrGggY1NTrNCxQUZTqJaGSY7iw3W-vTH4ewNND84_hpSyGZyLuKg2FgEUiP47kISGff8QWrNEmpl6BQWOY_gUsMrcSxTbC46MudYvwlU2yCLX_Yex2rfoELh4vHGi5kDzME=",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQESgInsWBijK9_T1I8VPiZ6Q9w9uH1urOAAeZBTvVy8KH8MSuHfxFA6Slh_E9Vyes2LrtZfMI8V3Y5MH-FZmW4wCVWR0rH0A74c7o0-JFc4T5hYdFiI0OKX5V8FJXah7hT-9ysUaLCu3CsvldwW4WA=",
+        "title": "jalan.net"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGVD3zT0PWENvd4BK6iRMpXoWTnhQSigeB2uicfbgTLVkhQSVFvCwT1YbG2w7RaxHLGQyac3GYyuiD-TKCl0PKv04zaaiaFsdldCwvQ47WWtS8Z0AzxiT5ir2cX",
+        "title": "hitosara.com"
+      }
+    ]
+  },
+  "store_id": "J003851647",
+  "store_name": "海鮮と豚骨おでん 食べ飲み放題 おすすめ屋 名駅4丁目店",
+  "area": "名古屋駅",
+  "genre": "居酒屋",
+  "rating": "4.4",
+  "generated_at": "2026-08-24T19:09:47.265Z"
+}
