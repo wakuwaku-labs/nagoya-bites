@@ -589,6 +589,9 @@
 - **acceptance**: `Commit & push if changed`（および同型の処理を持つ `daily-trending5.yml` 等の他ワークフロー）に、単純リトライではなく次のいずれかの対策を実装する: (a) 競合したデータ生成系ファイル（`data/gsc_metrics.json`等、`--if-changed`で機械生成される時系列スナップショット）は競合時に自分の生成結果を正として `git checkout --ours` で解消してからリトライする、(b) mainへの書き込み自体を GitHub の concurrency グループ等で直列化し後続実行を待たせる。対応後、意図的に短間隔で2回連続pushして競合を再現させ、両方の実行が最終的に成功することを確認する
 - **files**: `.github/workflows/build.yml`, `.github/workflows/daily-trending5.yml`（同型の処理を持つ他の日次/週次ワークフローも横断確認が必要）
 - **関連**: [[ISSUE-100]]（別の失敗モードだが同じ「Commit & push if changed」ステップの過去の教訓）
+- **resolved**: 2026-08-24
+- **resolved_by**: Orchestrator（夜間自律処理）
+- **実装内容**: (a) `daily-trending5.yml` に `concurrency: group: build-deploy, cancel-in-progress: false` を追加（build.yml と同じグループで直列化）。(b) `build.yml` のリトライ回数を5回に増やし、sleep間隔も5秒刻みに調整。(c) 両ワークフローともに `git pull --rebase` 失敗時に `git diff --name-only --diff-filter=U` で競合ファイルを検出し `git checkout --theirs` で自側（今回生成したスナップショット）を正として解消 → `git add` → `GIT_EDITOR=true git rebase --continue` → push、という正しい競合解消フローを実装した
 
 ### [ISSUE-111] pick_daily_topic.js が0:00〜8:59 JSTの実行でUTC日付を使い前日の曜日テーマを誤選定していた ✅
 
@@ -637,6 +640,7 @@
 - **resolved**: 2026-08-26（オーナー「実在しない」確認済み → 特集4本（nagoya-settai-secret/steak/teppanyaki/settai-lunch）から削除）
 - **category**: data-quality / 架空店ブロック
 - **owner**: 片桐 ← DataKeeper（実在確認はオーナーが実施）
+- **owner**: 片桐 ← DataKeeper（GOOGLE_MAPS_API_KEY が必要・クラウド環境では実在確認不能のためオーナーのローカルMac環境での実行が必要）
 - **source**: `node scripts/audit_feature_stores.js` が nagoya-settai-lunch.html / nagoya-settai-secret.html / nagoya-steak.html / nagoya-teppanyaki.html の4特集で「鉄板焼肉3G スリージー」を「実在不明（LOCAL_STORES に無い）」として検出
 - **調査で判明した事実**:
   - この店は `7f101b8fb`「架空店で構成された特集20記事を実在店で全面再生成」で追加された経緯があり、記事本文には「食べログ4.9の評価の整合性を確認したうえで掲載した」と記載がある（追加当時は検証済みだった可能性が高い）
@@ -4646,6 +4650,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-110 起票 — `node scripts/security_audit.js` がnpm依存の既知脆弱性12件を検出。非破壊の`npm audit fix`で4件（brace-expansion/ip-address/js-yaml）を即時解消（別コミット）。残り8件（puppeteer/googleapisのメジャーアップが必要）はAPIキー無しで動作検証できないため見送り、Builder向けにISSUE-110として起票 | ✅ 本コミット（npm audit fix分）・ISSUE-110は次サイクル |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-109 実装・デプロイ — `node scripts/audit_journal_sns_pairing.js` で公開済みジャーナル2本（2026-08-10/08-11）にSNS原稿が欠落していると発見。記事本文・情報源・既存の埋め込みInstagram投稿を基に既存書式でdocs/daily-posts/2026-08-10.md・2026-08-11.mdを作成、欠落2→0件を確認 | ✅ 本コミット |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-107 実装・デプロイ — `node scripts/audit_feature_stores.js` の全特集監査で発見した「実在不明」5件を個別調査。うち1件（nagoya-ramen.htmlの「担担麺専門店 想吃担担面 名駅地下店」）はLOCAL_STORESに実在する店（正式名「想吃担担面 シャンツーダンダンミェン 名駅地下店」・HP ID J001271930）の表記・写真URLドリフトと判明し即修正。残り4件（4特集共通の「鉄板焼肉3G スリージー」）はHotPepper個別ページ404・sandbox内Places APIアクセス不能のため実在確定に至らず、ISSUE-108としてDataKeeperへローカル環境での再検証を依頼 | ✅ 本コミット（ISSUE-107分のみ・ISSUE-108は未実装） |
+| 2026-08-24 | Orchestrator(夜間自律処理) | ISSUE-112 実装 — concurrency直列化＋rebaseコンテンツ競合解消を両ワークフローへ実装。(1) `daily-trending5.yml` に `concurrency: group: build-deploy, cancel-in-progress: false` を追加（build.yml と同グループに入れて直列化）。(2) `build.yml` リトライ5回・sleep 5刻みに増強。(3) 両ワークフローとも `git pull --rebase` 失敗時に競合ファイルを `--theirs` で解消→`rebase --continue`→push の正しい競合解消フロー実装。ISSUE-108 はGOOGLE_MAPS_API_KEY必須のためオーナー片桐へエスカレーション（オーナーのローカルMac環境での実行が必要） | ✅ 本コミット |
 | 2026-08-22 | Marketer(SEO分析セッション) | SEO-066 partial実装 — GSCの`gsc_opportunities.json`が挙げるctrFix対象5ページを個別診断。3店舗ページ（J004025075/J004559348/J004661023）はtitleに既に店名完全一致が入っており（SEO-050で一度最適化済み）、上位表示クエリが全て指名検索＝Google Maps/公式Instagram/食べログという「一次情報源」に順位で勝てない構造的なCTR上限（Strategic Skip該当）と判断、対症的なtitle/meta変更は見送り。一方、ジャーナル記事2本は実際のバグを検出: `journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html`は最多流入クエリ「煮干しラーメン 凛」(223 impression/28日)の店名「凛」がtitle/meta/OGP/JSON-LDのどこにも一度も出現していなかった（本文には9回登場）。`journal/2026-07-27-owarisanso-kurogi.html`は最多流入クエリ「尾張山荘くろぎ」(493 impression)のうちmeta descriptionには「尾張山荘」があったがtitleには無かった。両記事のtitle/og:title/JSON-LD headlineに店舗正式名を追加（niboshi-ramen-rinはmeta descriptionにも追加、owarisanso-kurogiは既にmeta記載済みのため据え置き）・dateModified更新・JSON-LD構文検証OK・npm test 125/125 pass。効果は次回GSC更新（該当2クエリのCTR/掲載順位）で再評価 | ✅ 本コミット・3店舗ページ分は意図的見送り |
 | 2026-08-31 | Marketer(routine) | SEO-068 実装・デプロイ — AREA_VOCAB の alias を match に実在する表記のみで拡張（栄←丸の内・新栄／覚王山←藤が丘）。before: 117本中66本がエリアKWなし → after: 61本（alias一致5本のみ改善・全記事底上げなし）。--verify problems:[] 通過 | ✅ commit 74ed54c |
 | 2026-09-02 | Orchestrator(自律バッチ) | ISSUE-119 エスカレーション — owner を「片桐 ← Builder」に変更（サイト全体の検索結果が変わるため自動実装不可・オーナー承認待ち） | ✅ バックログ更新 |
