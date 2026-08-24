@@ -2,11 +2,11 @@
   "version": 1,
   "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
   "last_run": {
-    "date": "2026-08-23",
-    "recorded_at": "2026-08-24T03:08:02.740Z",
+    "date": "2026-08-24",
+    "recorded_at": "2026-08-24T23:35:05.670Z",
     "status": "ok",
     "reason": null,
-    "verdict": "indeterminate",
+    "verdict": "deployed",
     "missing_fixes": []
   },
   "observations": [
@@ -51,6 +51,27 @@
       "missing_fixes": [],
       "evidence": [],
       "recorded_at": "2026-08-24T03:08:02.735Z"
+    },
+    {
+      "date": "2026-08-24",
+      "kind": "daily",
+      "verdict": "deployed",
+      "missing_fixes": [],
+      "evidence": [
+        {
+          "key": "ga4_unknown_aggregated",
+          "fix_id": "SEO-063",
+          "verdict": "deployed",
+          "line": "① ⚠️ 判別不能（GA4しきい値）（17訪問 / 34%）"
+        },
+        {
+          "key": "ga4_threshold_notice",
+          "fix_id": "SEO-063",
+          "verdict": "deployed",
+          "line": "⚠️ この日はGA4のしきい値が効き 38% が判別不能です。流入構成は30日集計（search_channel_metrics.json）をご参照ください。"
+        }
+      ],
+      "recorded_at": "2026-08-24T23:35:05.664Z"
     }
   ]
 }
