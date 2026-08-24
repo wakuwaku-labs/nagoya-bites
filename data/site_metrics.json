@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-08-24T00:12:50.354Z",
+  "generatedAt": "2026-08-24T03:14:02.261Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 793,
-    "pageViews": 1314,
-    "sessions": 933,
-    "avgSessionDuration": 156.7,
-    "bounceRate": 0.331,
-    "pagesPerSession": 1.41
+    "activeUsers": 796,
+    "pageViews": 1315,
+    "sessions": 936,
+    "avgSessionDuration": 156.3,
+    "bounceRate": 0.333,
+    "pagesPerSession": 1.4
   },
   "channels": {
     "sessions": {
-      "organic": 639,
-      "direct": 200,
+      "organic": 640,
+      "direct": 202,
       "social": 90,
       "referral": 13,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 67.8,
-      "direct": 21.2,
-      "social": 9.6,
+      "organic": 67.7,
+      "direct": 21.4,
+      "social": 9.5,
       "referral": 1.4,
       "paid": 0,
       "other": 0
@@ -36,7 +36,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 238
+      "sessions": 239
     },
     {
       "source": "(direct)",
@@ -56,7 +56,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 18
+      "sessions": 20
     },
     {
       "source": "openai",
@@ -103,12 +103,12 @@
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
       "pageViews": 62,
-      "sessions": 60
+      "sessions": 61
     }
   ],
   "cta": {
     "outboundClicks": 91,
-    "ctaClickRate": 9.8,
+    "ctaClickRate": 9.7,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -173,7 +173,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 4.4,
-    "ctaClickRate_direct": 19,
+    "ctaClickRate_direct": 18.8,
     "ctaClickRate_social": 27.8,
     "byPage": [
       {
@@ -485,7 +485,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 793,
+    "value": 796,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
