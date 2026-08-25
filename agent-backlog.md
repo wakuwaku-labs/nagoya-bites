@@ -352,7 +352,9 @@
 
 ### [SEO-069] GAS側レポートが旧コードのまま動き続け、日次アドバイスが4件の修正済みバグの上で生成されている（未反映を誰も検知していない）
 
-- **priority**: P1 → **status**: partial（acceptance 1〜5 完了＝検知と通知は稼働。6 はオーナーのデプロイ後に閉じる）
+- **priority**: P1 → **status**: done（2026-08-25 に acceptance 6 も完了。`clasp push` で4件とも本番反映し `clasp pull` でバイト一致を確認）
+- **2026-08-25 追記（重要な前提の訂正）**: 本チケットは「GAS へのデプロイはオーナー本人の GUI 操作が必要（代行不可）」を前提に書かれていたが、**これは誤りだった**。`.gas-deploy/.clasp.json` と clasp 認証がこの Mac に揃っており、`./deploy-gas.sh` でエージェントから反映できる。この誤った前提のため SEO-047 は26日・SEO-062 は6日、「オーナー待ち」として滞留していた。以後 GAS の反映はオーナーを待たない
+- **2026-08-25 追記（検知の穴）**: 本チケットが作った痕跡検知は**文字列照合のみ**で、出力文字列を変えない修正（SEO-062）を原理的に検出できなかった。数値乖離による検知を [[SEO-074]] で追加済み
 - **detected**: 2026-08-23
 - **resolved_scope**: 2026-08-24（Orchestrator）— 本チケットの担当範囲「検知と通知」を実装
 - **category**: SEO / ops / data-quality
@@ -621,7 +623,7 @@
 - **次のアクション（オーナー本人のみ可能）**: GSC「インデックス登録レポート」で「検証を試す」を押すと、Google側に再クロールを促せる（本チケットの技術対応が事実として反映されているため通るはず）。ログインが要るため自動化不可
 ### [SEO-063] 日次レポートの「どこから来た？」が GA4 のしきい値適用で 62% 判別不能になり、検索流入比率を 62%→21% に押し下げてアドバイスの前提を壊している
 
-- **priority**: P1 → **status**: partial（コード修正完了・**GAS未反映で効果ゼロ**。実デプロイはオーナーのGASエディタ操作待ち）
+- **priority**: P1 → **status**: done（2026-08-25: `clasp push` で本番反映し `clasp pull` でバイト一致を確認。オーナー操作は不要になった・SEO-074）
 - **⚠️ 2026-08-24 追記（[[SEO-069]]）— status を done から partial に戻した**: コード修正は完了しているが **GAS 側は旧コードのまま動いており、この修正の効果は一度も出ていない**。`done` にしたことで Notion からアーカイブされ、効果ゼロのまま追跡対象の外に消えていた（CLAUDE.md の言う「気づけるはず」＝検知ではなく記録）。反映は `node scripts/check_gas_deploy_health.js` で機械判定でき、未反映が続けば `.github/workflows/gas-deploy-watchdog.yml` が Issue を起票する。**反映が確認できた時点で done に戻す**（それが本チケットの本当の完了）
 - **detected**: 2026-08-20
 - **resolved**: 2026-08-20
@@ -704,7 +706,7 @@
 
 ### [SEO-062] LINE日次/週次レポートの直帰率・平均滞在が `pagePath` 次元つきで集計され、サイト全体値と乖離している（3ヶ月ぶん🔴誤警報を生み続けた集計バグ）
 
-- **priority**: P1 → **status**: partial（コード修正完了・**GAS未反映で効果ゼロ**。実デプロイはオーナーのGASエディタ操作待ち）
+- **priority**: P1 → **status**: done（2026-08-25: `clasp push` で本番反映し `clasp pull` でバイト一致を確認。オーナー操作は不要になった・SEO-074）
 - **⚠️ 2026-08-24 追記（[[SEO-069]]）— status を done から partial に戻した**: コード修正は完了しているが **GAS 側は旧コードのまま動いており、この修正の効果は一度も出ていない**。`done` にしたことで Notion からアーカイブされ、効果ゼロのまま追跡対象の外に消えていた（CLAUDE.md の言う「気づけるはず」＝検知ではなく記録）。反映は `node scripts/check_gas_deploy_health.js` で機械判定でき、未反映が続けば `.github/workflows/gas-deploy-watchdog.yml` が Issue を起票する。**反映が確認できた時点で done に戻す**（それが本チケットの本当の完了）
 - **resolved**: 2026-08-19
 - **resolved_by**: commit eb62b63f6
@@ -1484,7 +1486,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 ### [SEO-057] 日次/週次レポートが「生成AI流入」を名前で呼べず、最大流入元が `(not set) / (not set)` として届いている（改善ループの入力そのものが歪む）
 
-- **priority**: P2 → **status**: partial（コード修正完了・**GAS未反映で効果ゼロ**。実デプロイはオーナーのGASエディタ操作待ち）
+- **priority**: P2 → **status**: done（2026-08-25: `clasp push` で本番反映し `clasp pull` でバイト一致を確認。オーナー操作は不要になった・SEO-074）
 - **⚠️ 2026-08-24 追記（[[SEO-069]]）— status を done から partial に戻した**: コード修正は完了しているが **GAS 側は旧コードのまま動いており、この修正の効果は一度も出ていない**。`done` にしたことで Notion からアーカイブされ、効果ゼロのまま追跡対象の外に消えていた（CLAUDE.md の言う「気づけるはず」＝検知ではなく記録）。反映は `node scripts/check_gas_deploy_health.js` で機械判定でき、未反映が続けば `.github/workflows/gas-deploy-watchdog.yml` が Issue を起票する。**反映が確認できた時点で done に戻す**（それが本チケットの本当の完了）
 - **resolved**: 2026-08-19
 - **resolved_by**: /solve-next（Marketer）
@@ -2282,7 +2284,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 ### [SEO-047] LINE日次レポートの直帰率アラートが小サンプルでも毎回「異常」と誤検知していた問題
 
-- **priority**: P1 → **status**: in_progress（コード修正済み・GASへの実デプロイはオーナー操作待ち）
+- **priority**: P1 → **status**: done（2026-08-25: `clasp push` で本番反映し `clasp pull` でバイト一致を確認。オーナー操作は不要になった・SEO-074）
 - **detected**: 2026-07-30（オーナー指摘「毎回直帰率が異常に高いと出るが、合っているか？」）
 - **category**: SEO / data-quality
 - **owner**: Marketer
