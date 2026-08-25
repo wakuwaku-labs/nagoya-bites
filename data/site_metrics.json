@@ -1,62 +1,62 @@
 {
-  "generatedAt": "2026-08-25T00:13:54.029Z",
+  "generatedAt": "2026-08-25T06:34:29.335Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 819,
-    "pageViews": 1352,
-    "sessions": 961,
-    "avgSessionDuration": 156.3,
-    "bounceRate": 0.332,
+    "activeUsers": 835,
+    "pageViews": 1378,
+    "sessions": 977,
+    "avgSessionDuration": 157,
+    "bounceRate": 0.318,
     "pagesPerSession": 1.41
   },
   "channels": {
     "sessions": {
-      "organic": 665,
-      "direct": 203,
-      "social": 90,
+      "organic": 679,
+      "direct": 194,
+      "social": 91,
       "referral": 13,
       "paid": 0,
-      "other": 6
+      "other": 7
     },
     "pct": {
-      "organic": 68.1,
-      "direct": 20.8,
+      "organic": 69,
+      "direct": 19.7,
       "social": 9.2,
       "referral": 1.3,
       "paid": 0,
-      "other": 0.6
+      "other": 0.7
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 274
+      "sessions": 281
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 245
+      "sessions": 249
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 164
+      "sessions": 167
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 130
+      "sessions": 133
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 85
+      "sessions": 86
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 25
+      "sessions": 13
     },
     {
       "source": "openai",
@@ -76,24 +76,24 @@
     {
       "source": "(data not available)",
       "medium": "(data not available)",
-      "sessions": 6
+      "sessions": 7
     }
   ],
   "topPages": [
     {
       "path": "/",
-      "pageViews": 253,
-      "sessions": 141
+      "pageViews": 258,
+      "sessions": 144
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 184,
-      "sessions": 154
+      "pageViews": 187,
+      "sessions": 155
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 112,
-      "sessions": 107
+      "pageViews": 114,
+      "sessions": 108
     },
     {
       "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
@@ -102,13 +102,13 @@
     },
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
-      "pageViews": 65,
-      "sessions": 62
+      "pageViews": 66,
+      "sessions": 64
     }
   ],
   "cta": {
-    "outboundClicks": 96,
-    "ctaClickRate": 10,
+    "outboundClicks": 97,
+    "ctaClickRate": 9.9,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -116,7 +116,7 @@
       },
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 21
+        "clicks": 22
       },
       {
         "domain": "maps.google.com",
@@ -161,16 +161,16 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 32,
+      "organic": 33,
       "direct": 39,
       "social": 25,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 4.8,
-    "ctaClickRate_direct": 19.2,
-    "ctaClickRate_social": 27.8,
+    "ctaClickRate_organic": 4.9,
+    "ctaClickRate_direct": 20.1,
+    "ctaClickRate_social": 27.5,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -182,7 +182,7 @@
       },
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 9
+        "clicks": 10
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -266,7 +266,7 @@
       {
         "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 9
+        "clicks": 10
       },
       {
         "path": "/",
@@ -421,7 +421,7 @@
       },
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 9
+        "clicks": 10
       },
       {
         "path": "/",
@@ -468,11 +468,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 66
+    "reservationClicks": 67
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 819,
+    "value": 835,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
