@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T23:40:20.839Z",
+  "generatedAt": "2026-08-25T00:13:57.094Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -7,32 +7,32 @@
     "ctrFix": [
       {
         "query": "くろぎ 名古屋",
-        "impressions": 139,
+        "impressions": 130,
         "clicks": 2,
         "position": 9.7,
-        "ctr": 1.44,
+        "ctr": 1.54,
         "expectedCtr": 2.6,
-        "missedClicks": 1.6
+        "missedClicks": 1.4
       }
     ],
     "ctrFixGeoless": [
       {
         "query": "一人飲み",
-        "impressions": 225,
+        "impressions": 222,
         "clicks": 3,
         "position": 4.2,
-        "ctr": 1.33,
+        "ctr": 1.35,
         "expectedCtr": 7.6,
-        "missedClicks": 14.1
+        "missedClicks": 13.9
       },
       {
         "query": "やきまる亭",
-        "impressions": 224,
+        "impressions": 218,
         "clicks": 3,
         "position": 7.8,
-        "ctr": 1.34,
+        "ctr": 1.38,
         "expectedCtr": 3.4,
-        "missedClicks": 4.5
+        "missedClicks": 4.3
       },
       {
         "query": "喫茶時々",
@@ -65,19 +65,19 @@
     "rankPush": [
       {
         "query": "尾張山荘くろぎ",
-        "impressions": 416,
+        "impressions": 381,
         "clicks": 4,
         "position": 10.1,
-        "ctr": 0.96,
-        "upsideClicks": 7.7
+        "ctr": 1.05,
+        "upsideClicks": 6.7
       },
       {
         "query": "アルマデシュラスコ 名駅",
-        "impressions": 101,
+        "impressions": 95,
         "clicks": 2,
-        "position": 10.1,
-        "ctr": 1.98,
-        "upsideClicks": 0.8
+        "position": 10.2,
+        "ctr": 2.11,
+        "upsideClicks": 0.7
       }
     ]
   },
@@ -93,22 +93,22 @@
         "missedClicks": 14
       },
       {
-        "page": "/stores/J004559348.html",
-        "impressions": 586,
-        "clicks": 8,
-        "position": 8.3,
-        "ctr": 1.37,
-        "expectedCtr": 3.1,
-        "missedClicks": 10
+        "page": "/stores/J004025075.html",
+        "impressions": 514,
+        "clicks": 11,
+        "position": 6.6,
+        "ctr": 2.14,
+        "expectedCtr": 4.4,
+        "missedClicks": 11.6
       },
       {
-        "page": "/stores/J004025075.html",
-        "impressions": 534,
-        "clicks": 14,
-        "position": 6.6,
-        "ctr": 2.62,
-        "expectedCtr": 4.4,
-        "missedClicks": 9.5
+        "page": "/stores/J004559348.html",
+        "impressions": 564,
+        "clicks": 8,
+        "position": 8.3,
+        "ctr": 1.42,
+        "expectedCtr": 3.1,
+        "missedClicks": 9.4
       },
       {
         "page": "/stores/J004661023.html",
@@ -121,23 +121,23 @@
       },
       {
         "page": "/journal/2026-07-27-owarisanso-kurogi.html",
-        "impressions": 861,
-        "clicks": 14,
+        "impressions": 814,
+        "clicks": 13,
         "position": 9.4,
-        "ctr": 1.63,
+        "ctr": 1.6,
         "expectedCtr": 2.7,
-        "missedClicks": 9
+        "missedClicks": 8.8
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2524,
-        "clicks": 14,
-        "position": 24.2,
-        "ctr": 0.55,
-        "upsideClicks": 56.8
+        "impressions": 2467,
+        "clicks": 13,
+        "position": 24.4,
+        "ctr": 0.53,
+        "upsideClicks": 56
       }
     ]
   },
@@ -150,8 +150,8 @@
     "pageRankPush": 1,
     "topPageCtrFix": [
       "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
-      "/stores/J004559348.html",
-      "/stores/J004025075.html"
+      "/stores/J004025075.html",
+      "/stores/J004559348.html"
     ]
   }
 }
