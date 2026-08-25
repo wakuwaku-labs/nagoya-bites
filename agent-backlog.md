@@ -8,7 +8,7 @@
 
 ### [SEO-073] GAS 周りの「生きているように見えて死んでいる」配線2件 — 旧ミラーが誤診を生み、自動デプロイフックは常に無稼働
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: partial（実装は完了・commit f0793f9d8／残りはオーナー操作2件）
 - **detected**: 2026-08-25
 - **category**: SEO
 - **owner**: Marketer + Builder
@@ -27,10 +27,10 @@
   1. 2026-08-25 の日次トリアージで、root の旧ミラーを本番コードと誤認したまま「日次レポートの直帰率94%は壊れている」とオーナーへ報告した。**実際には `.gas-deploy/Code.js` に SEO-062 の修正が入っており、08-24 のレポートには SEO-063 の新文言が出ている＝新コードで動いている**。誤診の直接原因が本課題
   2. 同日起票の [[SEO-072]] の根拠表が、旧ミラーの行番号（`:292-294` 等）を出典として引用していた（**本修正で `.gas-deploy/Code.js` の行へ訂正済み**）
 - **acceptance**:
-  1. 旧ミラー2本（`Google分析オートLINE送信.js` / `gas_line_report.js`）を**削除**し、正本を `.gas-deploy/Code.js` の1本にする（git 履歴に残るため情報は失われない）。`CLAUDE.md` と `tests/gas_health.test.js` の参照も正本へ張り替える
-  2. `.gas-auto-deploy-hook.sh` を (a) 監視対象を `.gas-deploy/Code.js` へ (b) 参照パスをハードコードから**スクリプト自身の位置基準**へ 修正する。移転しても壊れない形にする（[[ISSUE-084]] 原則1: 監視は対象と同じ場所の前提に依存させない）
-  3. フックが `.claude/settings.json` に未登録である事実を明示する。**登録はオーナー操作**（`.claude/settings.json` はエージェントの自己改変ブロック対象で編集できない）。登録しない判断なら、フック自体を削除して「動くように見えるコード」を残さない
-  4. 退行防止: root に GAS スクリプトの重複が再出現したら CI で検出する（`node scripts/audit_gas_mirror.js --check` を build.yml へ）。判定は「`.gas-deploy/Code.js` 以外に GAS 専用 API（`AnalyticsData.Properties` 等）を含む .js が repo 直下に存在しないこと」という検証可能な事実で行う（制約10）
+  1. ✅ 旧ミラー2本（`Google分析オートLINE送信.js` / `gas_line_report.js`）を**削除**し、正本を `.gas-deploy/Code.js` の1本にする（git 履歴に残るため情報は失われない）。`CLAUDE.md` と `tests/gas_health.test.js` の参照も正本へ張り替える
+  2. ✅ `.gas-auto-deploy-hook.sh` を (a) 監視対象を `.gas-deploy/Code.js` へ (b) 参照パスをハードコードから**スクリプト自身の位置基準**へ 修正する。移転しても壊れない形にする（[[ISSUE-084]] 原則1: 監視は対象と同じ場所の前提に依存させない）
+  3. ⏳ **オーナー操作**: フックが `.claude/settings.json` に未登録である事実を明示する。**登録はオーナー操作**（`.claude/settings.json` はエージェントの自己改変ブロック対象で編集できない）。登録しない判断なら、フック自体を削除して「動くように見えるコード」を残さない
+  4. ✅ 退行防止: root に GAS スクリプトの重複が再出現したら CI で検出する（`node scripts/audit_gas_mirror.js --check` を build.yml へ）。判定は「`.gas-deploy/Code.js` 以外に GAS 専用 API（`AnalyticsData.Properties` 等）を含む .js が repo 直下に存在しないこと」という検証可能な事実で行う（制約10）
 - **未解決（オーナー確認が要る）**: 2026-08-24 の日次直帰率 **94%** が新コードの正しい出力なのかは、GA4 を直接引かないと確定できない（`GA4_SERVICE_ACCOUNT_KEY` は GitHub Secrets にあり手元から引けない）。30日値は 33.1%・週次(08-17〜08-23)は 35% のため**単日としては外れ値**。GA4 UI で 2026-08-24 単日の直帰率を確認できれば確定する
 - **files**: `Google分析オートLINE送信.js`（削除）, `gas_line_report.js`（削除）, `.gas-auto-deploy-hook.sh`, `CLAUDE.md`, `tests/gas_health.test.js`, `scripts/audit_gas_mirror.js`（新規）, `.github/workflows/build.yml`
 
