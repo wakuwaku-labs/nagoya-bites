@@ -330,6 +330,16 @@ jobs:
         # 日次更新まで止まる）。ここで落ちれば Actions の失敗通知がオーナーのメールに届く。
         run: node scripts/audit_trust_wording.js --check
 
+      - name: GAS レポートスクリプトの正本が1本であることの監査（旧ミラー再出現の検知）
+        # 2026-08-25（SEO-073）: 同じレポート配信スクリプトの複製が repo 内に3本あった
+        # （gas_line_report.js 2026-06-01 / Google分析オートLINE送信.js 2026-06-02 /
+        #  .gas-deploy/Code.js 2026-08-20＝本番）。後の2本には SEO-047/057/062/063 の修正が
+        # 入っておらず、旧ミラーを本番コードと誤読した結果、実際に誤診がオーナーへ報告された。
+        # 判定は「GA4 Data API（AnalyticsData.Properties）を含む .js が正本以外に無いこと」
+        # という検証できる事実のみで行う（制約10）。gas_scores.js / gas_tagging.js は
+        # 別プロジェクトの GAS なので検出対象外。
+        run: node scripts/audit_gas_mirror.js --check
+
       - name: sitemap.xml 全URLの生存監査（404/リダイレクト検知・GSC通知の代替検知）
         # 2026-08 に Search Console から「サイトマップ内のページがインデックスに登録されない
         # （要因: リダイレクト / 404）」の通知メールが届いたが、メール本文には対象URLが

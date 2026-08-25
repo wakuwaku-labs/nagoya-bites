@@ -7,8 +7,10 @@
  *   「GASは単一ファイル Code.js で運用。重複ファイル（"Code 2.js"等）混入は
  *    top-level二重宣言でコンパイル全体が落ちる → レポート不送信になるので厳禁。」
  *
- * デプロイ経路: deploy-gas.sh が `Google分析オートLINE送信.js` を .gas-deploy/Code.js に
- * コピーして clasp push する。よって「デプロイされる実体」= 単一ファイルの中身を検査する。
+ * デプロイ経路: deploy-gas.sh が `.gas-deploy/Code.js` をそのまま clasp push する。
+ * よって「デプロイされる実体」= このファイルの中身を検査する。
+ * （2026-08-25 SEO-073: root の旧ミラー `Google分析オートLINE送信.js` は 2026-06-02 で
+ *   凍結しており4件の修正が入っていなかったため削除。正本は .gas-deploy/Code.js の1本）
  */
 
 const { test } = require('node:test');
@@ -17,7 +19,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = path.resolve(__dirname, '..');
-const GAS_SRC = path.join(ROOT, 'Google分析オートLINE送信.js');
+const GAS_SRC = path.join(ROOT, '.gas-deploy', 'Code.js');
 const GAS_DEPLOY_DIR = path.join(ROOT, '.gas-deploy');
 
 /** トップレベル（行頭・インデント無し）の宣言名を集める */

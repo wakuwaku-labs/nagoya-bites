@@ -6,6 +6,34 @@
 
 ---
 
+### [SEO-073] GAS 周りの「生きているように見えて死んでいる」配線2件 — 旧ミラーが誤診を生み、自動デプロイフックは常に無稼働
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-08-25
+- **category**: SEO
+- **owner**: Marketer + Builder
+- **source**: 2026-08-25 のオーナー質問「直帰率はあってますか？」の調査中に発見。**この罠が実際に誤診を発生させた**（下記「実害」）
+- **brand-filter**: ✅ 適合 — CLAUDE.md「無人自動化の監視を設計するときの原則」の同一クラス（ISSUE-084）。今回は警報ではなく**参照先と実行経路**が「あるように見えて無い」状態。制約10（検証できる事実で判定する）の土台であり、間違ったファイルを事実の出典にすると全ての判定が汚染される
+- **検証できる事実（実行して確認した内容）**:
+  | 事実 | 出典 |
+  |---|---|
+  | デプロイの正本は `.gas-deploy/Code.js` の1本に統一済み。`deploy-gas.sh` 自身がヘッダで「root の `Google分析オートLINE送信.js` は 2026-06-02 を最後に更新が止まっていた」と明記している | `deploy-gas.sh:1-13`（2026-08-24 SEO-069 で修正） |
+  | それでも旧ミラーは**削除されず repo 直下に残っている**。SEO-047 / SEO-057 / SEO-062 / SEO-063 の4修正がいずれも入っておらず、`判別不能` の出現数は root=**0** / `.gas-deploy/Code.js`=**9** | `grep -c 判別不能` 両ファイル |
+  | 実は複製は**3本**あった: `gas_line_report.js`（2026-06-01・1,091行）/ `Google分析オートLINE送信.js`（2026-06-02）/ `.gas-deploy/Code.js`（2026-08-20・本番）。前2本は本番と**32個のトップレベル関数名を共有**し、`.gas-deploy/Code.js:2` のヘッダコメントは今も `gas_line_report.js` を名乗っている＝同一スクリプトの世代違い | `comm -12` で関数名を突合 |
+  | `.gas-auto-deploy-hook.sh` が監視しているのは**旧ミラーの方**（`*"Google分析オートLINE送信.js"*`）。**本番ソース `.gas-deploy/Code.js` を編集しても自動デプロイは発火しない**（逆向きに配線されている） | `.gas-auto-deploy-hook.sh:20` |
+  | 同フックの参照パスは `/Users/katagirijakutou/Desktop/nagoya-bites/`。リポジトリは `~/nagoya-bites` へ移転済みで**このパスは存在しない**。`.clasp.json` 存在チェックが必ず失敗し、フックは毎回**何もせず exit 0** する | `.gas-auto-deploy-hook.sh:25-27` ／ `ls -d` で不在を確認 |
+  | そもそもこのフックは `.claude/settings.json` / `settings.local.json` の**どちらにも登録されていない**（grep ヒット0件）。＝ファイルは存在するが呼ばれる経路が無い | `grep -n gas-auto-deploy .claude/settings*.json` |
+- **実害（推測ではなく発生済み）**:
+  1. 2026-08-25 の日次トリアージで、root の旧ミラーを本番コードと誤認したまま「日次レポートの直帰率94%は壊れている」とオーナーへ報告した。**実際には `.gas-deploy/Code.js` に SEO-062 の修正が入っており、08-24 のレポートには SEO-063 の新文言が出ている＝新コードで動いている**。誤診の直接原因が本課題
+  2. 同日起票の [[SEO-072]] の根拠表が、旧ミラーの行番号（`:292-294` 等）を出典として引用していた（**本修正で `.gas-deploy/Code.js` の行へ訂正済み**）
+- **acceptance**:
+  1. 旧ミラー2本（`Google分析オートLINE送信.js` / `gas_line_report.js`）を**削除**し、正本を `.gas-deploy/Code.js` の1本にする（git 履歴に残るため情報は失われない）。`CLAUDE.md` と `tests/gas_health.test.js` の参照も正本へ張り替える
+  2. `.gas-auto-deploy-hook.sh` を (a) 監視対象を `.gas-deploy/Code.js` へ (b) 参照パスをハードコードから**スクリプト自身の位置基準**へ 修正する。移転しても壊れない形にする（[[ISSUE-084]] 原則1: 監視は対象と同じ場所の前提に依存させない）
+  3. フックが `.claude/settings.json` に未登録である事実を明示する。**登録はオーナー操作**（`.claude/settings.json` はエージェントの自己改変ブロック対象で編集できない）。登録しない判断なら、フック自体を削除して「動くように見えるコード」を残さない
+  4. 退行防止: root に GAS スクリプトの重複が再出現したら CI で検出する（`node scripts/audit_gas_mirror.js --check` を build.yml へ）。判定は「`.gas-deploy/Code.js` 以外に GAS 専用 API（`AnalyticsData.Properties` 等）を含む .js が repo 直下に存在しないこと」という検証可能な事実で行う（制約10）
+- **未解決（オーナー確認が要る）**: 2026-08-24 の日次直帰率 **94%** が新コードの正しい出力なのかは、GA4 を直接引かないと確定できない（`GA4_SERVICE_ACCOUNT_KEY` は GitHub Secrets にあり手元から引けない）。30日値は 33.1%・週次(08-17〜08-23)は 35% のため**単日としては外れ値**。GA4 UI で 2026-08-24 単日の直帰率を確認できれば確定する
+- **files**: `Google分析オートLINE送信.js`（削除）, `gas_line_report.js`（削除）, `.gas-auto-deploy-hook.sh`, `CLAUDE.md`, `tests/gas_health.test.js`, `scripts/audit_gas_mirror.js`（新規）, `.github/workflows/build.yml`
+
 ### [SEO-072] レポートの「予約・店舗詳細」が index.html のイベント名しか数えず、実際に読まれている面（特集・ジャーナル・店舗ページ5,548枚）のコンバージョンが構造的にゼロで届く
 
 - **priority**: P1 → **status**: ready
@@ -18,12 +46,12 @@
 - **検証できる事実（実行して確認した内容）**:
   | 事実 | 出典 |
   |---|---|
-  | GAS の `analyze()` はイベント名を**完全一致3種**でしか拾わない: `cta_click` / `cta_gmap_click` / `modal_open` | `Google分析オートLINE送信.js:292-294` |
+  | GAS の `analyze()` はイベント名を**完全一致3種**でしか拾わない: `cta_click` / `cta_gmap_click` / `modal_open` | `.gas-deploy/Code.js:317-319` |
   | ジャーナル記事の予約導線は `cta_reserve` で発火する（**22本**が使用）。この名前は上記3種に無く、**ジャーナル経由の予約クリックは1件も数に入らない**。同じ記事の `cta_gmap_click`（マップ）だけは数えられている＝片肺 | `grep -l cta_reserve journal/*.html` = 22/111 ／ [[SEO-054]] が採用したイベント名 |
   | 特集の店舗遷移は `feature_store_click`（50箇所）で発火。これも3種に無く、**特集から店舗情報へ進んだ行動は「店舗詳細」に計上されない** | `grep -ho trackEvent features/*.html` |
   | 静的店舗ページ **5,548枚**が発火するイベントは `outbound_click` のみ。`cta_click`/`modal_open`/`cta_reserve` を出すページは**0枚**。＝サイト最大の面のコンバージョンが全て計測外 | `ls stores/*.html`=5548 ／ `grep -l ... stores/*.html`=0 ／ `gen-store-pages.js:618-619` |
   | 2026-08-24 の実測ページ構成は 42PV 中トップページ **2PV（約5%）**。TOP5 の残りは全て特集・ジャーナル＝**その日の流入のほぼ全量が、数えられるイベントを出せない面に着地していた** | 日次レポート 2026-08-24 |
-  | それでもレポートは `ctaRate = ctaCount / users` を根拠に 🔴 を出し（`:232` 目安3% / `:590`）、成長スコアまで減点する（`:661-662`）。**発火し得ない指標で毎日警報が鳴っている** | `Google分析オートLINE送信.js` |
+  | それでもレポートは `ctaRate = ctaCount / users` を根拠に 🔴 を出し（`.gas-deploy/Code.js:237` 目安3% / `:631`）、成長スコアまで減点する（`:708-709`）。**発火し得ない指標で毎日警報が鳴っている** | `.gas-deploy/Code.js` |
   | 助言が要求した「特集冒頭の詳細導線」は既に存在: `features/nagoya-solo-dining.html` の導入直後 `.type-grid` に `../stores/*.html` への写真リンクが**6本**（`:243-270`）、各店舗カードに「詳細ページを見る」＋`feature_store_click` 計測（`:290` 以降・全10店） | features/nagoya-solo-dining.html |
 - **acceptance**:
   1. **まずイベント名の実測から始める**（制約10）。GA4 で直近30日の `cta_reserve` / `feature_store_click` / `outbound_click`（link_domain=hotpepper 等）の実数を取り、「本当に取りこぼしていた行動が何件あったか」を確定させる。ここで0件なら本チケットは計測ではなく**導線そのものの不在**へ再スコープする
@@ -32,7 +60,7 @@
   4. 修正は `.gas-deploy/Code.js` ミラーだけで終わらせない。GAS への実反映を [[SEO-069]] の判定器（`node scripts/check_gas_deploy_health.js`）で確認できる痕跡付きにする（＝直せたのに旧コードが数字を出し続ける事故を繰り返さない）
   5. `index.html` は単一ファイル維持（制約1）・`LOCAL_STORES` パターン不変（制約2）・フィルタ/検索/モーダル/IGエンベッド/Google評価を壊さない（制約5）
 - **効果測定**: 修正後の日次・週次レポートで「予約行動」が0でない日が出ること、および `data/site_metrics.json` の `cta` 系実数との突合が取れること。体感ではなく前後の実数で判定する
-- **files**: `Google分析オートLINE送信.js`, `.gas-deploy/Code.js`, `gen-store-pages.js`, `stores/*.html`（再生成）, `data/gas_deploy_policy.json`
+- **files**: `.gas-deploy/Code.js`（GASの正本）, `gen-store-pages.js`, `stores/*.html`（再生成）, `data/gas_deploy_policy.json`
 
 ### [SEO-070] 特集・日次ジャーナルの内部リンクが「本文の後ろ」にしか無く、記事を読み切らない読者に回遊の手がかりが一度も出ない
 
