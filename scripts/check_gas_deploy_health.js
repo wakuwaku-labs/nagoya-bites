@@ -80,7 +80,19 @@ function record() {
       process.exit(1);
     }
     const body = fs.readFileSync(file, 'utf8');
-    const r = analyzeReport(body, policy);
+
+    // 数値シグナル（SEO-074）の参照値。GAS レポートが主張した直帰率を、独立パイプライン
+    // fetch_ga4_views.js が同じ日の GA4 から取った値と突き合わせるために読む。
+    // 文字列を変えない修正（SEO-062）は文字列痕跡では検出できないため、これが唯一の検知経路。
+    // 参照が無ければ従来どおり文字列痕跡だけで判定する（鳴らさない側に倒す）。
+    let reference = null;
+    try {
+      const sm = JSON.parse(fs.readFileSync(path.join(REPO, 'data', 'site_metrics.json'), 'utf8'));
+      // 参照はレポート対象日と同じ日でなければ意味がない（別の日と比べると誤警報になる）
+      if (sm.dailyReference && sm.dailyReference.date === date) reference = sm.dailyReference;
+    } catch (e) { /* 参照が無い/壊れている日は数値判定をしない */ }
+
+    const r = analyzeReport(body, policy, reference);
 
     observation = {
       date,
@@ -89,6 +101,8 @@ function record() {
       missing_fixes: r.missing_fixes,
       // 証跡: 判定の根拠になった行そのものを残す。これが無いと第三者が後から検算できない
       evidence: r.matched.map((m) => ({ key: m.key, fix_id: m.fix_id, verdict: m.verdict, line: m.line })),
+      // 数値検算の材料（後から第三者が GA4 を開いて検算できるように両方の実数を残す）
+      numeric_reference: reference ? { date: reference.date, bounceRate: reference.bounceRate, sessions: reference.sessions } : null,
       recorded_at: new Date().toISOString(),
     };
 
@@ -154,7 +168,19 @@ function check() {
 
   // ---- 2. 旧コードのまま動いているか（indeterminate では絶対に鳴らさない）----
   // 直近の確定した観測（indeterminate を飛ばす）を新しい順に見る
-  const decided = observations.filter((o) => o.verdict === 'not_deployed' || o.verdict === 'deployed');
+  // デプロイ実績より前の観測は、その後に反映されている可能性があるので鳴らす根拠にしない。
+  // （鳴りっぱなしを避ける・ISSUE-084 原則6「復旧したら自動で静かにする」。SEO-074）
+  // 「デプロイした」という自己申告ではなく、clasp pull で本番の実体を引いて
+  // リポジトリと**バイト一致**を確認した記録だけを実績として扱う（制約10）。
+  const lastVerifiedDeploy = (health.deploys || [])
+    .filter((d) => d.verified_identical)
+    .map((d) => d.date)
+    .sort()
+    .pop() || null;
+
+  const decided = observations
+    .filter((o) => o.verdict === 'not_deployed' || o.verdict === 'deployed')
+    .filter((o) => !(lastVerifiedDeploy && o.verdict === 'not_deployed' && o.date <= lastVerifiedDeploy));
   const latestDecided = decided.length ? decided[decided.length - 1] : null;
 
   // 連続して not_deployed が続いた日数（確定した観測ベース）
@@ -211,6 +237,7 @@ function check() {
     last_run: lastRun,
     latest_decided: latestDecided,
     not_deployed_streak: notDeployedStreak,
+    last_verified_deploy: lastVerifiedDeploy,
     missing_fixes: missingFixes,
     pending_fixes: pending,
     observations_total: observations.length,

@@ -167,6 +167,37 @@ async function fetchSiteMetrics(analyticsdata) {
       : 0,
   };
 
+  // 1-b) 前日1日ぶんのトータル（GAS 日次レポートの検算用・SEO-074）。
+  //
+  // GAS の日次レポートは「昨日」を対象に配信される。その数字が正しいかを機械で検算するには、
+  // 同じ日を独立の経路で測った値が要る。SEO-062 の修正は出力文字列を変えないため、
+  // 文字列痕跡では部分デプロイを検出できなかった（2026-08-24 に直帰率 94% を出し続けた）。
+  // ここで取る値が scripts/lib/gas_deploy_trace.js の numeric_signals の参照値になる。
+  // 注: GAS 側は hostName=nagoya-bites.com で絞るがここでは絞らない。実測の差は約2pt で、
+  //     判定閾値（15pt）に対して十分小さい。
+  const yday = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  const ymd = yday.toISOString().slice(0, 10);
+  const dailyRes = await analyticsdata.properties.runReport({
+    property: `properties/${PROPERTY}`,
+    requestBody: {
+      dateRanges: [{ startDate: ymd, endDate: ymd }],
+      metrics: [
+        { name: 'sessions' },
+        { name: 'bounceRate' },
+        { name: 'screenPageViews' },
+      ],
+    },
+  });
+  const dv = (dailyRes.data.rows && dailyRes.data.rows[0])
+    ? dailyRes.data.rows[0].metricValues.map(v => v.value)
+    : null;
+  const dailyReference = dv ? {
+    date: ymd,
+    sessions: parseInt(dv[0], 10) || 0,
+    bounceRate: Math.round((parseFloat(dv[1]) || 0) * 1000) / 1000,
+    pageViews: parseInt(dv[2], 10) || 0,
+  } : null;
+
   // 2) 流入元（source × medium）
   const srcRes = await analyticsdata.properties.runReport({
     property: `properties/${PROPERTY}`,
@@ -392,6 +423,7 @@ async function fetchSiteMetrics(analyticsdata) {
     generatedAt: new Date().toISOString(),
     lookbackDays: LOOKBACK,
     totals,
+    dailyReference,
     channels: { sessions: channels, pct: channelPct },
     sourceBreakdown: sourceBreakdown.slice(0, 10),
     topPages,

@@ -10,32 +10,6 @@
     "indeterminate_never_alerts": true,
     "_indeterminate_never_alerts": "その日のデータがたまたま分岐を通らず痕跡が出なかった日（indeterminate）では絶対に鳴らさない。オオカミ少年化させない（ISSUE-084 原則6）。鳴らすのは『旧コード確定が続いたとき』と『ルーチンが報告してこないとき』だけ。"
   },
-  "pending_fixes": [
-    {
-      "id": "SEO-047",
-      "commit": "089e3381a",
-      "detected": "2026-07-30",
-      "summary": "直帰率・平均滞在の母数ゲート（訪問20件未満は参考値扱いにして課題化しない）"
-    },
-    {
-      "id": "SEO-062",
-      "commit": "eb62b63f6",
-      "detected": "2026-08-12",
-      "summary": "直帰率が pagePath 次元つき TOTAL 行から算出されていた集計バグの修正"
-    },
-    {
-      "id": "SEO-057",
-      "commit": "52d6f1ba0",
-      "detected": "2026-08-11",
-      "summary": "生成AI流入（ChatGPT等）を『openai検索』ではなく専用ラベルで表示"
-    },
-    {
-      "id": "SEO-063",
-      "commit": "64e0081ac",
-      "detected": "2026-08-19",
-      "summary": "GA4しきい値で潰れた行を1行に集約し、比率の分母を判別できた分に補正"
-    }
-  ],
   "_pending_fixes": "GAS へ未反映の修正。デプロイ操作1回でまとめて反映される。反映が確認できたらこの配列を空にする（＝そのとき watchdog は恒久的に静かになる）。",
   "signals": [
     {
@@ -94,5 +68,54 @@
   ],
   "_source_section_headings": "流入元セクションの開始を示す見出し。日次は『【どこから来た？ TOP3】』、週次は『【流入元 TOP3】』。",
   "source_row_pattern": "（\\s*[0-9０-９]+\\s*(?:訪問|%|％)",
-  "_source_row_pattern": "流入元セクションの『データ行』の形。日次『（16訪問 / 31%）』・週次『（29%）』の両方に一致し、散文（アドバイス文など）には一致しない。2026-08-24 実測: Gmail のプレーンテキスト変換で順位絵文字が U+FFFD に化けるため、絵文字に依存する判定は取りこぼす（＝検知が静かに死ぬ）。数値+単位の形は transport に影響されないのでこちらを正とする。"
+  "_source_row_pattern": "流入元セクションの『データ行』の形。日次『（16訪問 / 31%）』・週次『（29%）』の両方に一致し、散文（アドバイス文など）には一致しない。2026-08-24 実測: Gmail のプレーンテキスト変換で順位絵文字が U+FFFD に化けるため、絵文字に依存する判定は取りこぼす（＝検知が静かに死ぬ）。数値+単位の形は transport に影響されないのでこちらを正とする。",
+  "numeric_signals": [
+    {
+      "key": "bounce_rate_divergence",
+      "fix_id": "SEO-062",
+      "metric": "bounceRate",
+      "extract_pattern": "すぐ帰った(?:人の割合|率)[:：]\\s*(\\d+(?:\\.\\d+)?)\\s*%",
+      "reference": "data/site_metrics.json#dailyReference.bounceRate",
+      "max_divergence_pt": 15,
+      "min_sessions": 20,
+      "reason": "SEO-062 の修正は出力される『文字列』を変えず『数値』だけを変えるため、文字列照合の signals では原理的に検出できない。実際 2026-08-24 のレポートは SEO-063 の文字列痕跡があるので deployed と判定されたが、直帰率だけは旧コードの値（94%）を出し続けていた＝部分デプロイを見逃した。判定は『レポートが主張した直帰率』と『独立パイプライン fetch_ga4_views.js が同じ日の GA4 から取った直帰率』の差という、誰でも GA4 を開いて検算できる事実だけで行う（制約10）。"
+    }
+  ],
+  "_numeric_signals": "文字列ではなく数値の乖離で旧コードを検出する。乖離が max_divergence_pt を超えたら not_deployed（＝レポートの数字が独立実測と矛盾している）。参照値が無い日・セッション数が min_sessions 未満の日は indeterminate とし、絶対に鳴らさない（小サンプルのブレで誤警報を出さない・ISSUE-084 原則6）。閾値15ptの根拠: 2026-08-24 の実測乖離は 94% vs 34.2% = 約60pt で、正常時の想定乖離（GASはhostNameフィルタあり・参照側はなし）は実測2pt程度。",
+  "resolved_fixes": [
+    {
+      "id": "SEO-047",
+      "commit": "089e3381a",
+      "detected": "2026-07-30",
+      "summary": "直帰率・平均滞在の母数ゲート（訪問20件未満は参考値扱いにして課題化しない）",
+      "resolved": "2026-08-25",
+      "evidence": "clasp pull で本番の実体を取得し .gas-deploy/Code.js とバイト一致を確認（SEO-074）"
+    },
+    {
+      "id": "SEO-062",
+      "commit": "eb62b63f6",
+      "detected": "2026-08-12",
+      "summary": "直帰率が pagePath 次元つき TOTAL 行から算出されていた集計バグの修正",
+      "resolved": "2026-08-25",
+      "evidence": "clasp pull で本番の実体を取得し .gas-deploy/Code.js とバイト一致を確認（SEO-074）"
+    },
+    {
+      "id": "SEO-057",
+      "commit": "52d6f1ba0",
+      "detected": "2026-08-11",
+      "summary": "生成AI流入（ChatGPT等）を『openai検索』ではなく専用ラベルで表示",
+      "resolved": "2026-08-25",
+      "evidence": "clasp pull で本番の実体を取得し .gas-deploy/Code.js とバイト一致を確認（SEO-074）"
+    },
+    {
+      "id": "SEO-063",
+      "commit": "64e0081ac",
+      "detected": "2026-08-19",
+      "summary": "GA4しきい値で潰れた行を1行に集約し、比率の分母を判別できた分に補正",
+      "resolved": "2026-08-25",
+      "evidence": "clasp pull で本番の実体を取得し .gas-deploy/Code.js とバイト一致を確認（SEO-074）"
+    }
+  ],
+  "pending_fixes": [],
+  "_resolved_fixes": "2026-08-25 に clasp pull で本番プロジェクトを直接取得し、.gas-deploy/Code.js とバイト一致・ファイルは Code.js と appsscript.json の2本のみ（余分な旧ファイルなし）であることを確認したため、4件とも反映済みへ移した。以後の未反映検知は文字列痕跡（signals）と数値乖離（numeric_signals）が担う。"
 }

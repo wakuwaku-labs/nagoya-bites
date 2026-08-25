@@ -3,11 +3,13 @@
   "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
   "last_run": {
     "date": "2026-08-24",
-    "recorded_at": "2026-08-24T23:35:05.670Z",
+    "recorded_at": "2026-08-25T06:55:25.389Z",
     "status": "ok",
     "reason": null,
-    "verdict": "deployed",
-    "missing_fixes": []
+    "verdict": "not_deployed",
+    "missing_fixes": [
+      "SEO-062"
+    ]
   },
   "observations": [
     {
@@ -55,8 +57,10 @@
     {
       "date": "2026-08-24",
       "kind": "daily",
-      "verdict": "deployed",
-      "missing_fixes": [],
+      "verdict": "not_deployed",
+      "missing_fixes": [
+        "SEO-062"
+      ],
       "evidence": [
         {
           "key": "ga4_unknown_aggregated",
@@ -69,9 +73,30 @@
           "fix_id": "SEO-063",
           "verdict": "deployed",
           "line": "⚠️ この日はGA4のしきい値が効き 38% が判別不能です。流入構成は30日集計（search_channel_metrics.json）をご参照ください。"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "not_deployed",
+          "line": "レポート 94% vs GA4実測 32.5%（差 61.5pt / 許容 15pt）"
         }
       ],
-      "recorded_at": "2026-08-24T23:35:05.664Z"
+      "numeric_reference": {
+        "date": "2026-08-24",
+        "bounceRate": 0.325,
+        "sessions": 40
+      },
+      "recorded_at": "2026-08-25T06:55:25.383Z"
+    }
+  ],
+  "deploys": [
+    {
+      "date": "2026-08-25",
+      "method": "clasp push (deploy-gas.sh)",
+      "verified_identical": true,
+      "evidence": "clasp pull で本番プロジェクトを取得し .gas-deploy/Code.js とバイト一致を確認（ファイルは Code.js と appsscript.json の2本のみ・余分な旧ファイルなし）",
+      "repo_blob": "c489f4bc01826a49f22f25f1260ea93c6907f60c",
+      "note": "SEO-074。これ以前の not_deployed 観測は、この反映で解消済みとして警報対象から外す"
     }
   ]
 }

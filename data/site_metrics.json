@@ -498,5 +498,12 @@
       "takeoff": 3000,
       "healthy": 15000
     }
+  },
+  "dailyReference": {
+    "date": "2026-08-24",
+    "sessions": 40,
+    "bounceRate": 0.325,
+    "pageViews": 62,
+    "_source": "2026-08-25 に GA4 UI（トラフィック獲得・単日）で実測。以降は scripts/fetch_ga4_views.js が CI で自動更新する"
   }
 }

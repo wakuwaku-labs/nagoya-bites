@@ -76,7 +76,65 @@ function extractSourceLines(body, policy) {
  * @param {object} policy data/gas_deploy_policy.json
  * @returns {{verdict:string, matched:Array, missing_fixes:Array, source_lines:Array}}
  */
-function analyzeReport(body, policy = loadPolicy()) {
+/**
+ * 数値シグナル: レポートが主張した値と、独立パイプラインが GA4 から取った同日の実測値を比べる。
+ *
+ * なぜ必要か（SEO-074 の教訓）: SEO-062 の修正は出力される「文字列」を変えず「数値」だけを
+ * 変える。したがって文字列照合の signals では**原理的に検出できない**。実際 2026-08-24 の
+ * レポートは SEO-063 の文字列があるため deployed と判定されたが、直帰率だけ旧コードの値
+ * （94%／GA4 実測 34.2%）を出し続けていた。文字列で見えない修正は数値で見る。
+ *
+ * 判定は「レポートの数字」と「GA4 の数字」の差だけで行う＝誰でも GA4 を開いて検算できる（制約10）。
+ * 参照値が無い日、母数が小さい日は indeterminate にして**絶対に鳴らさない**（ISSUE-084 原則6）。
+ */
+function analyzeNumeric(body, reference, policy = loadPolicy()) {
+  const text = String(body || '');
+  const matched = [];
+
+  for (const sig of policy.numeric_signals || []) {
+    let re;
+    try {
+      re = new RegExp(sig.extract_pattern);
+    } catch (e) {
+      continue;
+    }
+    const m = text.match(re);
+    if (!m) continue; // レポートにその数値が載っていない日は判定しない
+
+    const reported = parseFloat(m[1]) / 100; // 「94%」→ 0.94
+    const ref = reference && typeof reference[sig.metric] === 'number' ? reference[sig.metric] : null;
+    const sessions = reference && typeof reference.sessions === 'number' ? reference.sessions : null;
+
+    if (ref === null) {
+      matched.push({ key: sig.key, fix_id: sig.fix_id, verdict: 'indeterminate',
+        reason: '参照値（独立実測）が無いため判定しない', reported });
+      continue;
+    }
+    if (sig.min_sessions && sessions !== null && sessions < sig.min_sessions) {
+      matched.push({ key: sig.key, fix_id: sig.fix_id, verdict: 'indeterminate',
+        reason: `母数不足（セッション ${sessions} < ${sig.min_sessions}）のため判定しない`, reported, reference: ref });
+      continue;
+    }
+
+    const divergencePt = Math.abs(reported - ref) * 100;
+    const over = divergencePt > (sig.max_divergence_pt || 15);
+    matched.push({
+      key: sig.key,
+      fix_id: sig.fix_id,
+      verdict: over ? 'not_deployed' : 'deployed',
+      reported,
+      reference: ref,
+      divergence_pt: Math.round(divergencePt * 10) / 10,
+      max_divergence_pt: sig.max_divergence_pt || 15,
+      // 第三者が検算できる形で残す
+      line: `レポート ${(reported * 100).toFixed(0)}% vs GA4実測 ${(ref * 100).toFixed(1)}%（差 ${divergencePt.toFixed(1)}pt / 許容 ${sig.max_divergence_pt}pt）`,
+      reason: sig.reason,
+    });
+  }
+  return matched;
+}
+
+function analyzeReport(body, policy = loadPolicy(), reference = null) {
   const text = String(body || '');
   const sourceLines = extractSourceLines(text, policy);
   const sourceText = sourceLines.join('\n');
@@ -103,6 +161,9 @@ function analyzeReport(body, policy = loadPolicy()) {
       });
     }
   }
+
+  // 数値シグナル（文字列では見えない修正を数値の矛盾で検出する）
+  for (const nm of analyzeNumeric(text, reference, policy)) matched.push(nm);
 
   const notDeployed = matched.filter((m) => m.verdict === 'not_deployed');
   const deployed = matched.filter((m) => m.verdict === 'deployed');
@@ -132,4 +193,4 @@ function daysBetween(fromYmd, toYmd) {
   return Math.round((b - a) / 86400000);
 }
 
-module.exports = { loadPolicy, analyzeReport, extractSourceLines, jstDate, daysBetween, POLICY_PATH };
+module.exports = { loadPolicy, analyzeReport, analyzeNumeric, extractSourceLines, jstDate, daysBetween, POLICY_PATH };
