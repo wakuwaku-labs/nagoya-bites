@@ -11,12 +11,9 @@ on:
 permissions:
   contents: write
 
-# ISSUE-112: build.yml と同じ concurrency グループに入れて直列化する。
-# daily-trending5.yml が先に push し、その push が build.yml を起動する流れで
-# 両者が同時実行になると gsc_metrics.json 等の時系列スナップショットで
-# コンテンツ競合が発生し、どちらかのコミットが丸ごと失われていた
-# （実測2回: 2026-08-23 04:30 JST / 05:53 JST）。
-# cancel-in-progress: false で後着をキューに積み、完了後に実行する。
+# ISSUE-112: build.yml と同じグループに入ることで、両者が同時に走って
+# data/cross_check_flags.json 等の本物のコンテンツ競合を起こすのを防ぐ。
+# cancel-in-progress: false = 実行中は中断せず、次の1件をキューして完走を待つ。
 concurrency:
   group: build-deploy
   cancel-in-progress: false
@@ -70,30 +67,37 @@ jobs:
           # build.js が生成する残余ファイルを破棄してから rebase（再実行時に再生成されるため安全）
           git checkout -- . 2>/dev/null || true
           git clean -fd 2>/dev/null || true
-          # ISSUE-112: コンテンツ競合（本物の別スナップショット同士の衝突）への対処を追加。
-          # 旧実装（git pull --rebase; git push || sleep 10 && ...）はリベース状態が残ると
-          # 全リトライが失敗し続けていた。build.yml と同じパターンで競合を検出・解消する。
+          # ISSUE-112: concurrency グループ（build-deploy）で build.yml と直列化済みのため
+          # コンテンツ競合は原理的に発生しないが、万一に備えて build.yml と同じ
+          # 5 回指数バックオフリトライ ＋ data/ スナップショット競合の自動解消を入れる。
           PUSHED=0
-          for i in 1 2 3; do
-            if ! git pull --rebase origin main 2>/dev/null; then
-              CONFLICTED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
-              if [ -n "$CONFLICTED" ]; then
-                echo "リベース競合を検出。自側（theirs）で解消します: $CONFLICTED"
-                echo "$CONFLICTED" | tr '\n' '\0' | xargs -0 git checkout --theirs -- 2>/dev/null || true
-                echo "$CONFLICTED" | tr '\n' '\0' | xargs -0 git add -- 2>/dev/null || true
-                GIT_EDITOR=true git rebase --continue 2>/dev/null \
-                  || git rebase --abort 2>/dev/null \
-                  || true
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main; then
+              if git push; then PUSHED=1; break; fi
+            else
+              # rebase 失敗 — data/ 配下のスナップショット競合のみ theirs（今回生成分）で解消
+              UNMERGED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
+              DATA_CONFLICTS=$(printf '%s' "$UNMERGED" | grep "^data/" || true)
+              OTHER_CONFLICTS=$(printf '%s' "$UNMERGED" | grep -v "^data/" || true)
+              if [ -z "$OTHER_CONFLICTS" ] && [ -n "$DATA_CONFLICTS" ]; then
+                echo "data/ スナップショット競合を自動解消: $(printf '%s' "$DATA_CONFLICTS" | tr '\n' ' ')"
+                printf '%s\n' "$DATA_CONFLICTS" | xargs git checkout --theirs --
+                printf '%s\n' "$DATA_CONFLICTS" | xargs git add
+                if GIT_EDITOR=true git rebase --continue; then
+                  if git push; then PUSHED=1; break; fi
+                else
+                  git rebase --abort 2>/dev/null || true
+                fi
               else
                 git rebase --abort 2>/dev/null || true
               fi
             fi
-            if git push; then PUSHED=1; break; fi
-            echo "push 失敗（試行 ${i}/3）。$((i * 10))秒待って再試行します"
-            sleep $((i * 10))
+            echo "push 失敗（試行 ${i}/5）。$((i * 5))秒待って再試行します"
+            sleep $((i * 5))
           done
           if [ "$PUSHED" != "1" ]; then
-            echo "::warning::3回リトライしてもpushできませんでした"
+            echo "::error::5回リトライしてもpushできませんでした。他のワークフローとの競合が解消しない可能性があります"
+            exit 1
           fi
 
       - name: 実行ログ

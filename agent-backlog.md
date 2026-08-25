@@ -575,6 +575,7 @@
 
 - **priority**: P1（当初P2・2回目発生の実害確認により引き上げ） → **status**: done
 - **resolved**: 2026-08-23
+- **priority**: P1（当初P2・2回目発生の実害確認により引き上げ） → **status**: in_progress
 - **detected**: 2026-08-23（オーナー就寝中の自律処理。本セッション自身が短時間に連続push→CI連続起動を招き実際に発生させて発覚）
 - **resolved**: 2026-08-26
 - **category**: CI / インフラ
