@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-25T07:20:22.259Z",
+  "generatedAt": "2026-08-25T12:39:06.713Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 837,
-    "pageViews": 1381,
-    "sessions": 979,
-    "avgSessionDuration": 156.8,
-    "bounceRate": 0.32,
-    "pagesPerSession": 1.41
+    "activeUsers": 854,
+    "pageViews": 1400,
+    "sessions": 998,
+    "avgSessionDuration": 155.9,
+    "bounceRate": 0.331,
+    "pagesPerSession": 1.4
   },
   "dailyReference": {
     "date": "2026-08-24",
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 682,
-      "direct": 195,
-      "social": 91,
+      "organic": 696,
+      "direct": 207,
+      "social": 92,
       "referral": 13,
       "paid": 0,
       "other": 7
     },
     "pct": {
-      "organic": 69,
-      "direct": 19.7,
-      "social": 9.2,
+      "organic": 68.6,
+      "direct": 20.4,
+      "social": 9.1,
       "referral": 1.3,
       "paid": 0,
       "other": 0.7
@@ -37,32 +37,32 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 283
+      "sessions": 292
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 250
+      "sessions": 252
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 167
+      "sessions": 169
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 133
+      "sessions": 136
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 86
+      "sessions": 87
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 14
+      "sessions": 24
     },
     {
       "source": "openai",
@@ -88,33 +88,33 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 258,
-      "sessions": 144
+      "pageViews": 260,
+      "sessions": 146
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 187,
-      "sessions": 155
+      "pageViews": 190,
+      "sessions": 158
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 114,
-      "sessions": 108
+      "pageViews": 116,
+      "sessions": 110
+    },
+    {
+      "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
+      "pageViews": 70,
+      "sessions": 68
     },
     {
       "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
       "pageViews": 67,
       "sessions": 64
-    },
-    {
-      "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
-      "pageViews": 67,
-      "sessions": 65
     }
   ],
   "cta": {
-    "outboundClicks": 97,
-    "ctaClickRate": 9.9,
+    "outboundClicks": 98,
+    "ctaClickRate": 9.8,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -122,7 +122,7 @@
       },
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 22
+        "clicks": 23
       },
       {
         "domain": "maps.google.com",
@@ -168,15 +168,15 @@
     "note": null,
     "byChannel": {
       "organic": 33,
-      "direct": 39,
+      "direct": 40,
       "social": 25,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 4.8,
-    "ctaClickRate_direct": 20,
-    "ctaClickRate_social": 27.5,
+    "ctaClickRate_organic": 4.7,
+    "ctaClickRate_direct": 19.3,
+    "ctaClickRate_social": 27.2,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -192,7 +192,7 @@
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 4
+        "clicks": 5
       },
       {
         "path": "/features/birthday-surprise.html",
@@ -287,7 +287,7 @@
       {
         "path": "/features/nagoya-hitsumabushi.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 4
+        "clicks": 5
       },
       {
         "path": "/",
@@ -435,7 +435,7 @@
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 4
+        "clicks": 5
       },
       {
         "path": "/features/birthday-surprise.html",
@@ -474,11 +474,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 67
+    "reservationClicks": 68
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 837,
+    "value": 854,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
