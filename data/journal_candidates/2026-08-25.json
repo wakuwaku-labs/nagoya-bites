@@ -1,0 +1,484 @@
+{
+  "date": "2026-08-25",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c2",
+      "title_draft": "同じ看板で経営が5つ、大須の矢場味仙で台湾ラーメンを一人飲みするなら知っておく話",
+      "verdict": "PASS",
+      "total": 100,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,接待,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 135字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "過去に掲載歴のある店（90日超） → 2"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c1",
+      "title_draft": "矢場味仙が45年ぶりに創業地へ戻る日、大須の364席と深夜1時を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,シーン,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 161字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "過去に掲載歴のある店（90日超） → 2"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -5 / novelty -3 / writability -2"
+    },
+    {
+      "id": "c4",
+      "title_draft": "栄の中華で宴会を組むなら、深夜1時まで開いている大箱をどう使うか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 89,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "中華",
+          "feature": "features/nagoya-chinese-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (予約,繁忙) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 110字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "過去に掲載歴のある店（90日超） → 2"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「中華」+2"
+        ]
+      },
+      "gate_note": "89点（自動公開ライン 100点）。主な不足: uniqueness -10 / topicality -8 / novelty -3"
+    },
+    {
+      "id": "c5",
+      "title_draft": "大須の老舗中華が持つ口コミ5801件、業界人はこの数字をどう読むか",
+      "verdict": "HOLD",
+      "total": 79,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "中華",
+          "feature": "features/nagoya-chinese-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (回転) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 120字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "過去に掲載歴のある店（90日超） → 2"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「中華」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "人手不足で消えた店が戻ってきた、大須の台湾ラーメン店から読むコスパの正体",
+      "verdict": "HOLD",
+      "total": 77,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 130字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "過去に掲載歴のある店（90日超） → 2"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c2",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "矢場味仙が45年ぶりに創業地へ戻る日、大須の364席と深夜1時を業界人が読む",
+      "lead_draft": "8月24日、千種区京命に「矢場味仙 下坪店」が開いた。人員不足で長期休業したまま閉店とみられていた店が、1981年の創業時と同じ屋号で戻ってきた。人手が足りずに畳んだ店は、普通そのまま消える。それでも復活できた理由は、栄と大須の間で364席を深夜1時まで回している本店の側にある。台湾ラーメンの看板を業界人の目で読み直す。",
+      "angle": "人員不足で休業した店が復活できるかどうかは「同一経営体が人を融通できる大箱を持っているか」で決まる。本店の364席・翌1時LO・ランチ999円という価格帯と回転の設計から、郊外店を再開できた経営の体力を読む。一人飲みから宴会までのシーン適性も併せて判定する。",
+      "main_store": {
+        "name": "台湾料理 矢場味仙",
+        "id": "J000389487",
+        "area": "栄(ミナミ)/矢場町/大須/上前津",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "中日BIZナビ「創業の地で復活へ『矢場味仙 下坪店』が24日オープン」",
+          "url": "https://biz.chunichi.co.jp/news/article/10/129596/",
+          "date": "2026-08-23"
+        },
+        {
+          "label": "矢場味仙 公式Instagram（下坪店オープン告知・スタッフ募集）",
+          "url": "https://www.instagram.com/yaba_misen/",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "号外NET 千種区「矢場味仙創業の地！長期休業中だった京命の下坪店が8/24に再オープン」",
+          "url": "https://nagoyameito-chikusa.goguynet.jp/2026/08/23/yabamisen_shimotsubo/",
+          "date": "2026-08-23"
+        },
+        {
+          "label": "矢場味仙 公式ブランドサイト「味仙グループの歴史」（1981年 下坪店として創業→1999年 矢場町へ）",
+          "url": "https://yabamisen.jp/history/",
+          "date": "2026-08-25"
+        },
+        {
+          "label": "ちくさん 千種区情報「京命の味仙 下坪店が矢場味仙 下坪店として復活」（人員不足による長期休業）",
+          "url": "https://chiku-san.com/20260609-itodho-kyomei-open/",
+          "date": "2026-06-09"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "同じ看板で経営が5つ、大須の矢場味仙で台湾ラーメンを一人飲みするなら知っておく話",
+      "lead_draft": "名古屋で「味仙に行く」と言うとき、実は5つの別会社から1社を選んでいる。今池・八事・矢場・藤が丘・日進竹の山は兄弟姉妹がそれぞれ独立して開いた別経営で、味も価格も閉店時間も違う。8月24日に創業地で復活した下坪店を入口に、矢場味仙という1社の設計を業界人の目で分解する。",
+      "angle": "暖簾分けブランドの系統差を「味の違い」ではなく「営業時間・席数・価格帯という経営判断の違い」として読む。矢場味仙は深夜1時LOで一人飲みに強い一方、接待には向かない理由を席配置から説明する。",
+      "main_store": {
+        "name": "台湾料理 矢場味仙",
+        "id": "J000389487",
+        "area": "栄(ミナミ)/矢場町/大須/上前津",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "矢場味仙 公式ブランドサイト「味仙グループの歴史」",
+          "url": "https://yabamisen.jp/history/",
+          "date": "2026-08-25"
+        },
+        {
+          "label": "中日BIZナビ「創業の地で復活へ『矢場味仙 下坪店』が24日オープン」",
+          "url": "https://biz.chunichi.co.jp/news/article/10/129596/",
+          "date": "2026-08-23"
+        },
+        {
+          "label": "矢場味仙 公式Instagram（下坪店オープン告知）",
+          "url": "https://www.instagram.com/yaba_misen/",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "じゃらんニュース「味仙の台湾ラーメンは店舗で味が違う」",
+          "url": "https://www.jalan.net/news/article/312639/",
+          "date": "2026-08-25"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "人手不足で消えた店が戻ってきた、大須の台湾ラーメン店から読むコスパの正体",
+      "lead_draft": "飲食店が人員不足で長期休業に入ると、そのまま閉店になるのが普通だ。8月24日、千種区京命の下坪店はその例外になった。栄と大須の間にある本店のランチ999円という値づけと、2000円台後半に着地する夜の客単価。この二段構えが何を支えているのかを業界人の目で読む。",
+      "angle": "ランチ999円と夜2001〜3000円の落差を「安い店」ではなく「昼で人を回し夜で稼ぐ二段構えの原価設計」として読み、コスパ判断の軸を示す。",
+      "main_store": {
+        "name": "台湾料理 矢場味仙",
+        "id": "J000389487",
+        "area": "栄(ミナミ)/矢場町/大須/上前津",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "中日BIZナビ「創業の地で復活へ『矢場味仙 下坪店』が24日オープン」",
+          "url": "https://biz.chunichi.co.jp/news/article/10/129596/",
+          "date": "2026-08-23"
+        },
+        {
+          "label": "ちくさん 千種区情報（人員不足による長期休業）",
+          "url": "https://chiku-san.com/20260609-itodho-kyomei-open/",
+          "date": "2026-06-09"
+        },
+        {
+          "label": "矢場味仙 公式Instagram（スタッフ募集を同時掲載）",
+          "url": "https://www.instagram.com/yaba_misen/",
+          "date": "2026-08-19"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "栄の中華で宴会を組むなら、深夜1時まで開いている大箱をどう使うか",
+      "lead_draft": "栄と大須の間、矢場町駅から徒歩7分の台湾料理店は翌1時まで開いている。二次会の受け皿として名古屋の宴会幹事に長く使われてきた店だ。8月24日に系列の創業地店が復活したこの機会に、大箱中華の宴会適性を業界人の目で点検する。",
+      "angle": "深夜営業の大箱を宴会・二次会の受け皿としてどう使うか、予約の入れ方と繁忙時間帯を幹事目線で示す。",
+      "main_store": {
+        "name": "台湾料理 矢場味仙",
+        "id": "J000389487",
+        "area": "栄(ミナミ)/矢場町/大須/上前津",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "矢場味仙 公式ブランドサイト",
+          "url": "https://yabamisen.jp/group/",
+          "date": "2026-08-25"
+        },
+        {
+          "label": "中日BIZナビ「創業の地で復活へ」",
+          "url": "https://biz.chunichi.co.jp/news/article/10/129596/",
+          "date": "2026-08-23"
+        },
+        {
+          "label": "矢場味仙 公式Instagram",
+          "url": "https://www.instagram.com/yaba_misen/",
+          "date": "2026-08-19"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "大須の老舗中華が持つ口コミ5801件、業界人はこの数字をどう読むか",
+      "lead_draft": "矢場町駅徒歩7分の台湾料理店には5801件のGoogle口コミがあり、評価は3.8にとどまる。数が多いのに星が伸びない店を、業界人は低評価店とは読まない。8月24日に創業地の系列店が復活したこの店を題材に、口コミ件数と評価の関係を分解する。",
+      "angle": "口コミ件数の多い老舗の星が伸びない構造（辛さの好み・深夜帯の客層・回転重視）を説明し、口コミ信頼度の読み方を示す。",
+      "main_store": {
+        "name": "台湾料理 矢場味仙",
+        "id": "J000389487",
+        "area": "栄(ミナミ)/矢場町/大須/上前津",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "中日BIZナビ「創業の地で復活へ」",
+          "url": "https://biz.chunichi.co.jp/news/article/10/129596/",
+          "date": "2026-08-23"
+        },
+        {
+          "label": "矢場味仙 公式ブランドサイト「味仙グループの歴史」",
+          "url": "https://yabamisen.jp/history/",
+          "date": "2026-08-25"
+        },
+        {
+          "label": "号外NET 千種区",
+          "url": "https://nagoyameito-chikusa.goguynet.jp/2026/08/23/yabamisen_shimotsubo/",
+          "date": "2026-08-23"
+        }
+      ]
+    }
+  ]
+}
