@@ -2,14 +2,12 @@
   "version": 1,
   "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
   "last_run": {
-    "date": "2026-08-24",
-    "recorded_at": "2026-08-25T06:55:25.389Z",
+    "date": "2026-08-25",
+    "recorded_at": "2026-08-26T01:31:11.136Z",
     "status": "ok",
     "reason": null,
-    "verdict": "not_deployed",
-    "missing_fixes": [
-      "SEO-062"
-    ]
+    "verdict": "deployed",
+    "missing_fixes": []
   },
   "observations": [
     {
@@ -87,6 +85,33 @@
         "sessions": 40
       },
       "recorded_at": "2026-08-25T06:55:25.383Z"
+    },
+    {
+      "date": "2026-08-25",
+      "kind": "daily",
+      "verdict": "deployed",
+      "missing_fixes": [],
+      "evidence": [
+        {
+          "key": "ga4_unknown_aggregated",
+          "fix_id": "SEO-063",
+          "verdict": "deployed",
+          "line": "① ⚠️ 判別不能（GA4しきい値）（24訪問 / 34%）"
+        },
+        {
+          "key": "ga4_threshold_notice",
+          "fix_id": "SEO-063",
+          "verdict": "deployed",
+          "line": "⚠️ この日はGA4のしきい値が効き 44% が判別不能です。流入構成は30日集計（search_channel_metrics.json）をご参照ください。"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "indeterminate"
+        }
+      ],
+      "numeric_reference": null,
+      "recorded_at": "2026-08-26T01:31:11.131Z"
     }
   ],
   "deploys": [

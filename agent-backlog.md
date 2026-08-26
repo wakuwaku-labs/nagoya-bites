@@ -6,6 +6,30 @@
 
 ---
 
+### [SEO-075] SEO-074 の数値検知が「参照値が常に1日古い」ため恒久的に indeterminate — 直帰率90%の真偽を誰も検算できないまま毎朝の🔴アドバイスの前提になっている
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-08-26
+- **category**: SEO / ops / data-quality
+- **owner**: Marketer + Builder
+- **source**: 2026-08-26 の日次SEOトリアージ。日次レポート(2026-08-25分)を `node scripts/check_gas_deploy_health.js --record` にかけたところ `bounce_rate_divergence: indeterminate` / `numeric_reference: null` が返り、その原因を追って判明
+- **brand-filter**: ✅ 適合 — 改善ループの**入力の正確性**を回復する課題であり、順位操作でもマネタイズでもない。[[SEO-062]] / [[SEO-063]] / [[SEO-069]] / [[SEO-074]] と同一クラス。CLAUDE.md「無人自動化の監視を設計するときの原則」3（「気づけるはず」を検知と数えない）の再発形＝**警報は実装されているが原理的に鳴れない**
+- **検証できる事実（誰でも同じ手順で再現できる）**:
+  1. `scripts/fetch_ga4_views.js:178-179` — `const yday = new Date(Date.now() - 24*60*60*1000); const ymd = yday.toISOString().slice(0,10);` ＝ **UTC基準**で前日を算出している
+  2. `.github/workflows/build.yml` の schedule は `cron: '0 18 * * *'`（＝03:00 JST）。実測の `data/site_metrics.json` の `generatedAt` は `2026-08-25T18:37:51.376Z`（＝2026-08-26 03:37 JST）。この時刻の **UTC前日は 2026-08-24**、一方 GAS 日次レポートが扱う **JSTの対象日は 2026-08-25** → **常に1日ずれる**（15:00Z〜24:00Z に走る限り構造的にずれ続ける）
+  3. `scripts/check_gas_deploy_health.js:92` — `if (sm.dailyReference && sm.dailyReference.date === date) reference = sm.dailyReference;` は**日付の厳密一致**。ずれると `reference = null` → `analyzeNumeric()` は `indeterminate` を返す
+  4. `data/gas_deploy_policy.json` の方針どおり indeterminate は**絶対に鳴らさない**（オオカミ少年化させないため・正しい設計）。結果として**この検知は永久に沈黙する**
+  5. `data/site_metrics.json` の `dailyReference` は SEO-074 のコミット `1381fd5ac` で手入力された `{"date":"2026-08-24","sessions":40,"bounceRate":0.325}` のまま、以降4回の CI 実行（`3271a18ea` / `9cc9d501e` / `128730f08` / `e872ed67f`）で**一度も日付が進んでいない**。`git show <commit>:data/site_metrics.json` で全コミット確認済み。**数値検知が実際に発火したのは、参照値が手入力で日付一致していた 2026-08-25 の1回だけ**
+  6. その沈黙の裏で、2026-08-26 到着分（対象日 2026-08-25）のレポートは直帰率 **90%** を出している。同じ GA4 プロパティの30日集計は `totals.bounceRate = 0.34`、直近で単日実測が取れている 2026-08-24 は `0.325`。**90% は 56〜58pt 乖離**しており、SEO-062 の修正が本番反映済み（`data/gas_deploy_health.json` の `deploys[0]`: clasp push・バイト一致確認）であるにもかかわらず旧値相当が出続けている疑いがある
+- **なぜ P1 か**: この数値検知は「文字列では原理的に見えない未反映」を捕まえるために [[SEO-074]] で新設したもの。**その検知自身が構造的に沈黙している**ため、SEO-062 が本当に効いているかを判定する手段が現在1つも無い。さらに未検算の 90% が毎朝の 🔴 アドバイスの前提として供給され続けており（2026-08-24 / 08-25 / 08-26 と3日連続で「直帰率が高い」🔴 が生成され、いずれも本トリアージで却下している）、**改善ループの入力が汚染されたまま**になっている
+- **acceptance**:
+  1. `scripts/fetch_ga4_views.js` の `yday` を **GA4プロパティのタイムゾーン（Asia/Tokyo）基準**の前日に直す（npm依存を足さずに実装する・制約4）。実行後の `data/site_metrics.json` の `dailyReference.date` が「実行日(JST)の前日」＝ GAS レポートの対象日と一致することで確認する
+  2. `scripts/check_gas_deploy_health.js` の厳密一致は維持してよいが、**参照値が対象日と違うときは `indeterminate` の理由文に「reference の日付」と「対象日」を明記**する。後から「なぜ黙ったのか」を第三者が検算できるようにする（制約10・証跡を出させる）
+  3. ①の後に 2026-08-26 到着分（対象日 2026-08-25）を `--record` し直し、`bounce_rate_divergence` が `deployed` / `not_deployed` のどちらかで**確定**すること（`indeterminate` のままなら未達）
+  4. 判定が `not_deployed` なら [[SEO-062]] を再オープンし GAS 側の直帰率算出を再調査する。`deployed` なら「直帰率90%は実データ」と確定し、[[SEO-062]] / [[SEO-074]] を正式に閉じたうえで、はじめて「直帰率が本当に高い」前提での施策検討に進む
+  5. 参照値が**進んでいないこと自体**を検知できるようにする（例: `dailyReference.date` が対象日より2日以上古い状態が続いたら `.github/workflows/gas-deploy-watchdog.yml` が原因つきで Issue を起票）。CLAUDE.md 原則1「監視は監視される対象と別の場所で動かす」に従い、判定はローカルではなくサーバ側 CI に置く
+  6. 閾値・パターンの変更は `data/gas_deploy_policy.json` で行い、判定器は `scripts/lib/gas_deploy_trace.js` の1本のまま維持する（単一情報源原則を壊さない）
+
 ### [SEO-074] SEO-062（直帰率の集計バグ）の修正が本番で効いていない — GA4実測 32.5% に対しレポートは 94% を出し続けている
 
 - **priority**: P1 → **status**: done（2026-08-25 に原因特定・本番反映・再発検知まで完了）
