@@ -1,78 +1,78 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-08-25T18:37:54.575Z",
+  "generatedAt": "2026-08-26T06:14:58.433Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 997,
+  "total_sessions": 1029,
   "engines": [
     {
       "key": "google",
       "label": "Google",
-      "sessions": 295,
-      "pct": 29.6,
+      "sessions": 303,
+      "pct": 29.4,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 295
+          "sessions": 303
         }
       ]
     },
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 248,
-      "pct": 24.9,
+      "sessions": 252,
+      "pct": 24.5,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 248
+          "sessions": 252
         }
       ]
     },
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 199,
-      "pct": 20,
+      "sessions": 213,
+      "pct": 20.7,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 170
+          "sessions": 172
         },
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 29
+          "sessions": 41
         }
       ]
     },
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 136,
-      "pct": 13.6,
+      "sessions": 138,
+      "pct": 13.4,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 136
+          "sessions": 138
         }
       ]
     },
     {
       "key": "ai_assistant",
       "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
-      "sessions": 105,
+      "sessions": 108,
       "pct": 10.5,
       "sources": [
         {
           "source": "chatgpt.com",
           "medium": "ai-assistant",
-          "sessions": 87
+          "sessions": 90
         },
         {
           "source": "openai",
@@ -89,13 +89,13 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 7,
-      "pct": 0.7,
+      "sessions": 8,
+      "pct": 0.8,
       "sources": [
         {
           "source": "(data not available)",
           "medium": "(data not available)",
-          "sessions": 7
+          "sessions": 8
         }
       ]
     },
@@ -121,31 +121,31 @@
     }
   ],
   "search_only": {
-    "total": 791,
+    "total": 808,
     "share": [
       {
         "key": "google",
         "label": "Google",
-        "sessions": 295,
-        "pct_of_search": 37.3
+        "sessions": 303,
+        "pct_of_search": 37.5
       },
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 248,
-        "pct_of_search": 31.4
+        "sessions": 252,
+        "pct_of_search": 31.2
       },
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 136,
-        "pct_of_search": 17.2
+        "sessions": 138,
+        "pct_of_search": 17.1
       },
       {
         "key": "ai_assistant",
         "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
-        "sessions": 105,
-        "pct_of_search": 13.3
+        "sessions": 108,
+        "pct_of_search": 13.4
       },
       {
         "key": "duckduckgo",
@@ -159,20 +159,20 @@
     "from": "2026-08-24",
     "to": "2026-08-25",
     "delta": {
-      "google": 29,
-      "bing": 15,
-      "direct": 10,
+      "google": 32,
+      "bing": 11,
+      "direct": 16,
       "yahoo": 12,
       "ai_assistant": 5,
       "other": 2,
-      "duckduckgo": 0,
+      "duckduckgo": -1,
       "social": 0
     }
   },
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 295 セッションのみ。Bing(248) + 生成AI(105) の 353 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 303 セッションのみ。Bing(252) + 生成AI(108) の 360 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
