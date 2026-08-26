@@ -100,7 +100,7 @@ function sendDailyReport() {
   const yesterday = getDateStr(-1);
   const data = fetchGA4Report(yesterday, yesterday);
   // 直帰率・平均滞在・流入元は「昨日」ではなく確定済みの日から取る（SEO-076）
-  data.settled = fetchSettledSlice(getDateStr(-SETTLED_LAG_DAYS));
+  data.settled = pickSettledSlice();
   const report = formatDailyReport(data, yesterday);
 
   // LINE送信
@@ -153,6 +153,38 @@ const HOST_FILTER = {
 // 変わらなかったのはこのため。訪問者数・ページ閲覧数・イベント数はイベントスコープで
 // 早く確定するため、従来どおり「昨日」を出す。
 const SETTLED_LAG_DAYS = 2;
+
+// 「まだ確定していない日」を機械で見分けるための閾値（SEO-076）。
+// 判定には、いま測ろうとしている直帰率そのものではなく**独立した観測可能な事実**を使う:
+// 参照元が `(not set)` / `(data not available)` / `(other)` に潰れているセッションの比率。
+//   実測（2026-08-26）: 未確定の日は 08-25 で 53%（39/74）・確定した日は 08-22/23/24 で 0〜3%。
+// レポートは day+8h に走るため D-2 でも経過は32時間で、GA4 が言う「最大48時間」を満たさない
+// 日がありうる。そこで固定ラグを信じ込まず、痕跡が出たら1日さかのぼる（最大 SETTLED_MAX_LAG_DAYS）。
+const SETTLED_UNKNOWN_SOURCE_MAX = 0.20;
+const SETTLED_MAX_LAG_DAYS = 4;
+
+// 確定済みのスライスを選ぶ。D-2 から順にさかのぼり、未確定の痕跡が消えた最初の日を採る。
+// どこまでさかのぼっても痕跡が残る場合は最後に見た日をそのまま使う（取り繕わず、対象日は
+// レポート本文に明記されるので読み手が判断できる）。
+function pickSettledSlice() {
+  var slice = null;
+  for (var lag = SETTLED_LAG_DAYS; lag <= SETTLED_MAX_LAG_DAYS; lag++) {
+    slice = fetchSettledSlice(getDateStr(-lag));
+    if (unknownSourceShare(slice.sources) <= SETTLED_UNKNOWN_SOURCE_MAX) return slice;
+  }
+  return slice;
+}
+
+// 参照元が潰れているセッションの比率（GA4 の集計が終わっていない日の指標）
+function unknownSourceShare(sources) {
+  var total = 0, unknown = 0;
+  (sources || []).forEach(function (r) {
+    var ses = parseInt(r.metrics[1] || 0) || 0;
+    total += ses;
+    if (isGa4Unknown(r.dimensions[0] || '', r.dimensions[1] || '')) unknown += ses;
+  });
+  return total > 0 ? unknown / total : 0;
+}
 
 // セッションスコープ指標だけを、確定済みの日から取る（SEO-076）。
 // fetchGA4Report と同じディメンションなしクエリ（SEO-062 の形）を使う。
