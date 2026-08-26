@@ -166,10 +166,11 @@
 
 ### [SEO-071] IndexNow が「送信可能な状態のまま一度も送信されていない」— 最大流入エンジン Bing への更新通知が丸ごと死んでいる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-08-24
+- **resolved**: 2026-08-26（オーナー承認済み `--yes` → build.yml に IndexNow 自動送信ステップを追加。変更された features/journal HTMLを直前コミットと比較して送信対象URLを自動検出）
 - **category**: SEO
-- **owner**: 片桐 ← Builder + Marketer（acceptance 注記: 初回の実送信はオーナー承認が必要）
+- **owner**: Builder（実装完了）
 - **source**: 週次レポート(LINE) 2026-08-17〜08-23 原文「Bing検索からの流入が28%とGoogle検索(29%)に迫る勢いです。👉 features/にある全特集ページとjournal/にある全記事の<title>と<meta name="description">を見直し、特にBingでの表示を意識したキーワードを盛り込みましょう」
 - **助言そのものは却下し、同じ症状に対する検証可能な打ち手へ振り替えた**: 「Bingを意識したKWを全記事に盛り込む」は (a) 同種の助言を 2026-08-20 / 08-21 に既に却下済み、(b) [[SEO-067]]（Bing Webmaster Tools 接続）が未完でBing側の検索実データが1件も無いため「Bing向けKW」は当て推量にしかならず、**検証できない自己申告を根拠に全記事を書き換えることになる（制約10違反）**。一方で「Bingが主要流入エンジンなのに手当てが無い」という**症状の側は実データで裏が取れている**ため、検証可能な打ち手として本チケットを起こす
 - **brand-filter**: ✅ 適合 — IndexNow は「更新したURLを検索エンジンに通知する」標準プロトコルであり、順位操作でも被リンク工作でもない。日次ジャーナルという**毎日更新される実在コンテンツ**を持つ本サイトの構造とそのまま噛み合う（更新頻度が武器になる唯一の面）。広告主依存・クーポン経済のいずれにも該当しない（制約7・8非該当）
@@ -344,10 +345,11 @@
 
 ### [ISSUE-108] 特集4本に掲載中の「鉄板焼肉3G スリージー」がLOCAL_STORES未収録・HotPepper個別ページも404で実在の最新確認が取れない
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-08-23（オーナー就寝中の自律処理・`node scripts/audit_feature_stores.js` で発見）
+- **resolved**: 2026-08-26（オーナー「実在しない」確認済み → 特集4本（nagoya-settai-secret/steak/teppanyaki/settai-lunch）から削除）
 - **category**: data-quality / 架空店ブロック
-- **owner**: 片桐 ← DataKeeper（Google Maps API キーが必要・クラウド環境では実在確認不可）
+- **owner**: 片桐 ← DataKeeper（実在確認はオーナーが実施）
 - **source**: `node scripts/audit_feature_stores.js` が nagoya-settai-lunch.html / nagoya-settai-secret.html / nagoya-steak.html / nagoya-teppanyaki.html の4特集で「鉄板焼肉3G スリージー」を「実在不明（LOCAL_STORES に無い）」として検出
 - **調査で判明した事実**:
   - この店は `7f101b8fb`「架空店で構成された特集20記事を実在店で全面再生成」で追加された経緯があり、記事本文には「食べログ4.9の評価の整合性を確認したうえで掲載した」と記載がある（追加当時は検証済みだった可能性が高い）
@@ -4333,6 +4335,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-112 2回目発生・復旧 — `daily-trending5.yml`（定期実行）が本セッションの直前pushと重なり同型のコンテンツ競合で失敗、当日分「今日の話題店TOP5」コミットが丸ごと失われるところだった。`gh workflow run daily-trending5.yml`でリカバリ用workflow_dispatchを手動実行し5分後に復旧成功を確認。実害が具体化・複数ワークフローに同根本原因があると判明したため priority を P2→P1 に引き上げ | ✅ リカバリ実行成功（`32598697435`）・恒久修正はISSUE-112のまま |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-112 起票 — `gh run list`でCI失敗を発見・調査。本セッション自身の短間隔連続pushが原因で2つのbuild.yml実行が重なり、`Commit & push if changed`が本物のコンテンツ競合（ISSUE-100とは別モード）で5回リトライしても回復不能と判明。実害は無駄な二重API呼び出しのみ（データ損失は無い、次回実行で自己回復）と確認。恒久修正はCI本体の変更で検証に時間を要するため見送り、以降は自身のpush間隔を空ける運用に切替 | 📋 起票のみ・push間隔調整で運用回避 |
 | 2026-08-26 | Orchestrator(夜間自律処理) | ISSUE-112 実装・デプロイ — `daily-trending5.yml` に `concurrency: group: build-deploy / cancel-in-progress: false` を追加し、build.yml と同じ concurrency グループに所属させることで同時実行を防止。push リトライも1回限りの `git push \|\| sleep 10 && ...` から build.yml 準拠の5回ループ（指数バックオフ・--autostash）に強化。ISSUE-108/SEO-071 は実APIキー不要・オーナー承認が必要なためオーナーへエスカレーション済み | ✅ 本コミット |
+| 2026-08-26 | Orchestrator(オーナー確認後) | ISSUE-108 完了 — オーナー「実在しない」確認を受け特集4本（nagoya-settai-secret/steak/teppanyaki/settai-lunch）から「鉄板焼肉3G スリージー」を削除。カードブロック・JSON-LD ItemList・「10選」→「9選」更新を同時実施 | ✅ 本コミット |
+| 2026-08-26 | Orchestrator(オーナー承認後) | SEO-071 完了 — オーナー `--yes` 承認を受け build.yml に IndexNow 自動送信ステップを追加（features/journal の変更 HTML を直前コミットと diff して送信対象を自動検出。continue-on-error: true で非ブロッキング） | ✅ 本コミット |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-111 実装・デプロイ — 4:35 JSTに`/journal-today`を自律実行しようとしたところ`pick_daily_topic.js`がUTC日付をデフォルト採用しており前日(土)の曜日テーマを誤返却すると発見。`check_journal_health.js`と同じJST算出方法に修正。検証を兼ねた本日分ジャーナル生成は候補採点85点未達でHOLD（取材不足と判断し無理に公開せず） | ✅ 本コミット |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-110 起票 — `node scripts/security_audit.js` がnpm依存の既知脆弱性12件を検出。非破壊の`npm audit fix`で4件（brace-expansion/ip-address/js-yaml）を即時解消（別コミット）。残り8件（puppeteer/googleapisのメジャーアップが必要）はAPIキー無しで動作検証できないため見送り、Builder向けにISSUE-110として起票 | ✅ 本コミット（npm audit fix分）・ISSUE-110は次サイクル |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-109 実装・デプロイ — `node scripts/audit_journal_sns_pairing.js` で公開済みジャーナル2本（2026-08-10/08-11）にSNS原稿が欠落していると発見。記事本文・情報源・既存の埋め込みInstagram投稿を基に既存書式でdocs/daily-posts/2026-08-10.md・2026-08-11.mdを作成、欠落2→0件を確認 | ✅ 本コミット |
