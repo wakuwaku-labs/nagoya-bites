@@ -379,3 +379,23 @@ jobs:
         # ISSUE-116の解消後にブロッキングへ切り替える。
         run: node scripts/audit_ogp_image_liveness.js --check
         continue-on-error: true
+
+      - name: IndexNow — 更新URLを Bing/Yandex に通知（SEO-071）
+        # このコミットで変更された features/*.html / journal/*.html の URL を
+        # IndexNow プロトコルで Bing（および Yandex）に即時通知する。
+        # 更新頻度が武器になるサイト（毎日ジャーナルを公開）において、
+        # クロール待ちを減らすためのプッシュ型通知。
+        # - キーファイル ec3ee6876b0d465ab4f7093ba5bc42d0.txt はリポジトリ root に実在
+        # - --yes で外部送信を有効化（オーナー承認済み 2026-08-26）
+        # - 送信対象は直前コミットで変更された HTML に限る（スパム的な全URL再送信はしない）
+        # - 失敗は非ブロッキング（送信エラーでデプロイが止まらないが、Actions ログに残る）
+        run: |
+          CHANGED_HTML=$(git diff --name-only HEAD~1 HEAD -- 'features/*.html' 'journal/*.html' 2>/dev/null || true)
+          if [ -z "$CHANGED_HTML" ]; then
+            echo "IndexNow: 変更された features/journal HTML なし。スキップします。"
+            exit 0
+          fi
+          URLS=$(echo "$CHANGED_HTML" | sed 's|^|https://nagoya-bites.com/|' | tr '\n' ' ')
+          echo "IndexNow 送信対象: $URLS"
+          node scripts/indexnow_ping.js $URLS --yes || echo "::warning::IndexNow 送信に失敗しました（次のビルドで再送されます）"
+        continue-on-error: true

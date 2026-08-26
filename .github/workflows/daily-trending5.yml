@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: build-deploy
+  cancel-in-progress: false
+
 jobs:
   daily-trending5:
     runs-on: ubuntu-latest
@@ -60,8 +64,17 @@ jobs:
           # build.js が生成する残余ファイルを破棄してから rebase（再実行時に再生成されるため安全）
           git checkout -- . 2>/dev/null || true
           git clean -fd 2>/dev/null || true
-          git pull --rebase origin main
-          git push || (sleep 10 && git pull --rebase origin main && git push)
+          PUSHED=0
+          for i in 1 2 3 4 5; do
+            git pull --rebase --autostash origin main || true
+            if git push; then PUSHED=1; break; fi
+            echo "push 失敗（試行 ${i}/5）。$((i * 5))秒待って再試行します"
+            sleep $((i * 5))
+          done
+          if [ "$PUSHED" != "1" ]; then
+            echo "::error::5回リトライしてもpushできませんでした（concurrency グループ内の競合）"
+            exit 1
+          fi
 
       - name: 実行ログ
         if: always()
