@@ -167,16 +167,24 @@ async function fetchSiteMetrics(analyticsdata) {
       : 0,
   };
 
-  // 1-b) 前日1日ぶんのトータル（GAS 日次レポートの検算用・SEO-074）。
+  // 1-b) GAS 日次レポートの検算用の参照値（SEO-074 / 日付基準を SEO-076 で是正）。
   //
-  // GAS の日次レポートは「昨日」を対象に配信される。その数字が正しいかを機械で検算するには、
-  // 同じ日を独立の経路で測った値が要る。SEO-062 の修正は出力文字列を変えないため、
-  // 文字列痕跡では部分デプロイを検出できなかった（2026-08-24 に直帰率 94% を出し続けた）。
-  // ここで取る値が scripts/lib/gas_deploy_trace.js の numeric_signals の参照値になる。
+  // GAS の日次レポートが主張する直帰率が正しいかを機械で検算するには、同じ日を独立の経路で
+  // 測った値が要る。SEO-062 の修正は出力文字列を変えないため、文字列痕跡では部分デプロイを
+  // 検出できなかった。ここで取る値が scripts/lib/gas_deploy_trace.js の参照値になる。
+  //
+  // 日付の取り方（SEO-076 で2点直した）:
+  //  1. **JST基準**にする。旧実装は `Date.now() - 24h` の UTC 日付で、CI が 15:00Z 以降に
+  //     走ると JST の前日と1日ずれて参照が常に日付不一致 → 数値検知が恒久的に沈黙していた。
+  //  2. **確定済みの日（D-2）**を取る。GA4 のセッションスコープ指標は確定まで最大48時間かかり、
+  //     前日値は 90% 台の未確定値になる（実測: 08-22 レポート91%→確定22.9%）。レポート側も
+  //     SETTLED_LAG_DAYS=2 の確定値を出すようにしたため、参照も同じ日でなければ比較できない。
   // 注: GAS 側は hostName=nagoya-bites.com で絞るがここでは絞らない。実測の差は約2pt で、
   //     判定閾値（15pt）に対して十分小さい。
-  const yday = new Date(Date.now() - 24 * 60 * 60 * 1000);
-  const ymd = yday.toISOString().slice(0, 10);
+  const SETTLED_LAG_DAYS = 2;  // .gas-deploy/Code.js の同名定数と一致させること
+  const jstNow = new Date(Date.now() + 9 * 60 * 60 * 1000);
+  const ref = new Date(jstNow.getTime() - SETTLED_LAG_DAYS * 24 * 60 * 60 * 1000);
+  const ymd = ref.toISOString().slice(0, 10);
   const dailyRes = await analyticsdata.properties.runReport({
     property: `properties/${PROPERTY}`,
     requestBody: {

@@ -59,9 +59,27 @@
       "scope": "source_lines",
       "pattern": "(openai|chatgpt|perplexity|gemini|copilot|anthropic)検索",
       "reason": "生成AI経由の流入が旧コードの `m === 'organic'` 分岐に落ちて『openai検索』等と誤ラベルされている。新コードはその手前で専用ラベルに分岐するため出力されない。"
+    },
+    {
+      "key": "settled_slice_label",
+      "fix_id": "SEO-076",
+      "verdict": "deployed",
+      "scope": "body",
+      "pattern": "（確定値・\\d{4}-\\d{2}-\\d{2}）",
+      "reason": "SEO-076 で追加した確定値ラベル。直帰率・平均滞在・流入元がどの日の確定値かを本文に刻む。旧コードには存在しない文字列。"
+    },
+    {
+      "key": "unsettled_same_day_metrics",
+      "fix_id": "SEO-076",
+      "verdict": "not_deployed",
+      "scope": "body",
+      "pattern": "【どこから来た？ TOP3】",
+      "reason": "新コードの日次レポートは流入元の見出しに必ず『（確定値・YYYY-MM-DD）』を付ける（formatDailyReport は s.date を常に持つ）。ラベルの無い裸の見出しは旧コードの出力＝前日の未確定値を出している状態。"
     }
   ],
   "_signals": "scope=source_lines は『【どこから来た？】/【流入元】セクションの各行』だけを見る（本文の他の場所に同じ語が出ても誤検出しないため）。scope=body は本文全体。verdict=not_deployed の痕跡が1つでも出れば旧コード確定（新コードでは原理的に出力できない文字列だから）。verdict=deployed の痕跡が出れば新コード確定。どちらも出なければ indeterminate（その日のデータが分岐を通らなかっただけ）で、これは異常ではない。",
+  "settled_date_pattern": "確定値・(\\d{4}-\\d{2}-\\d{2})",
+  "_settled_date_pattern": "SEO-076 以降、直帰率はレポート対象日ではなく『確定済みの日』の値として出る。数値照合（numeric_signals）の参照値は、この本文が名乗る日と同じ日でなければ比較として無意味なので、突合キーをここから取る。旧コード（このラベルが無い）ではレポート対象日を期待日にフォールバックする。",
   "source_section_headings": [
     "【どこから来た？",
     "【流入元"
@@ -78,7 +96,7 @@
       "reference": "data/site_metrics.json#dailyReference.bounceRate",
       "max_divergence_pt": 15,
       "min_sessions": 20,
-      "reason": "SEO-062 の修正は出力される『文字列』を変えず『数値』だけを変えるため、文字列照合の signals では原理的に検出できない。実際 2026-08-24 のレポートは SEO-063 の文字列痕跡があるので deployed と判定されたが、直帰率だけは旧コードの値（94%）を出し続けていた＝部分デプロイを見逃した。判定は『レポートが主張した直帰率』と『独立パイプライン fetch_ga4_views.js が同じ日の GA4 から取った直帰率』の差という、誰でも GA4 を開いて検算できる事実だけで行う（制約10）。"
+      "reason": "SEO-062 の修正は出力される『文字列』を変えず『数値』だけを変えるため、文字列照合の signals では原理的に検出できない。実際 2026-08-24 のレポートは SEO-063 の文字列痕跡があるので deployed と判定されたが、直帰率だけは旧コードの値（94%）を出し続けていた＝部分デプロイを見逃した。判定は『レポートが主張した直帰率』と『独立パイプライン fetch_ga4_views.js が同じ日の GA4 から取った直帰率』の差という、誰でも GA4 を開いて検算できる事実だけで行う（制約10）。SEO-076 以降、比較対象の日はレポート本文の『（確定値・YYYY-MM-DD）』から取る（両者とも確定済みの日を見るので、未確定値どうし・確定と未確定の突合という誤比較が起きない）。"
     }
   ],
   "_numeric_signals": "文字列ではなく数値の乖離で旧コードを検出する。乖離が max_divergence_pt を超えたら not_deployed（＝レポートの数字が独立実測と矛盾している）。参照値が無い日・セッション数が min_sessions 未満の日は indeterminate とし、絶対に鳴らさない（小サンプルのブレで誤警報を出さない・ISSUE-084 原則6）。閾値15ptの根拠: 2026-08-24 の実測乖離は 94% vs 34.2% = 約60pt で、正常時の想定乖離（GASはhostNameフィルタあり・参照側はなし）は実測2pt程度。",
