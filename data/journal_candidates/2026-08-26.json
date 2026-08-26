@@ -1,0 +1,432 @@
+{
+  "date": "2026-08-26",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "丸の内の予約が取れない鮨と日本料理、金曜19時が空かないのは席が埋まっているからではない",
+      "verdict": "PASS",
+      "total": 101,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "予約困難",
+          "feature": "features/hard-to-book.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 7件 → 15",
+          "話題の証跡URL 3件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 6件 (回転,仕込み,業界,構造,慣習,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 148字 +4",
+          "title 44字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「予約が取れない」+4",
+          "タイトルにジャンル語「鮨」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄の居酒屋の2時間制、90分で切り上げると店側で何が起きるか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 91,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 5件 (回転,仕込み,業界,構造,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 109字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-OPS-003) → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "91点（自動公開ライン 100点）。主な不足: topicality -13 / recency -3 / search_intent -3"
+    },
+    {
+      "id": "c5",
+      "title_draft": "名古屋のカウンター鮨が19時を売らない理由、予約枠は30分刻みで台帳は15分刻み",
+      "verdict": "HOLD",
+      "total": 71,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 128日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 4件 (仕込み,業界,相場,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 110字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初出コラム (COL-SEAT-003) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「カウンター」+4",
+          "タイトルにジャンル語「鮨」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "ネット予約で断られた名古屋の店に、電話だと席がある理由",
+      "verdict": "HOLD",
+      "total": 54,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 12,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 216日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 3件 (業界,構造,慣習) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 94字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-OPS-007) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [
+    {
+      "id": "c4",
+      "title_draft": "名古屋の焼肉、予約必須の店とふらっと入れる店を分ける仕入れの事情",
+      "verdict": "DISQUALIFIED",
+      "total": 0,
+      "disqualified_reasons": [
+        "同一コラムの再掲 (COL-SEAT-005, 2026-06-15)"
+      ],
+      "breakdown": null
+    }
+  ],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "industry_insider",
+      "column_id": "COL-SEAT-003",
+      "title_draft": "丸の内の予約が取れない鮨と日本料理、金曜19時が空かないのは席が埋まっているからではない",
+      "lead_draft": "金曜の19時で検索すると、名古屋の人気カウンターは軒並み×が並ぶ。ところが同じ店の19時45分や20時30分は普通に空いている。席が足りないのではなく、店が19時という時刻をそもそも売っていないからだ。予約枠は30分刻みで見えるが、店の卓管理は15分刻みで動いている。この段差を業界人の目で読む。",
+      "angle": "一斉スタート型（カウンター完全予約制）と2時間制の回転設計型では、予約枠の作り方が構造的に違う。前者は「部」単位でしか枠が出ないため15分ずらしても無駄で、後者は19時に入れると2回転目の仕込みが崩れるため19時枠を最初から閉じる。席数・LO・コース一斉スタートの有無・2時間制の表記から、自分が狙う店がどちらの慣習で回っているかを見分け、繁忙のピークを外して予約を取る実務を業界視点で解説する。",
+      "main_store": {
+        "name": "日本料理 𡈽方",
+        "id": "store-e697a5e69cace696",
+        "area": "名古屋市中区丸の内",
+        "genre": "日本料理、懐石・会席料理"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES / リクルート: ホットペッパーグルメ「席押さえ」新WebCM・最大5,000円割引チケット",
+          "url": "https://prtimes.jp/main/html/rd/p/000003234.000011414.html",
+          "date": "2026-08-20"
+        },
+        {
+          "label": "リクルート公式: 『ホットペッパーグルメ』「席押さえ」機能を全国で提供開始（予約店でも来店客の約63%が予約なし）",
+          "url": "https://www.recruit.co.jp/newsroom/pressrelease/2026/0122_146554.html",
+          "date": "2026-01-22"
+        },
+        {
+          "label": "PR TIMES / 料亭河文: 江戸前おまかせ鮨「鮨 うおのたな」— カウンター11席・夜2ターム制 17:30 / 19:45",
+          "url": "https://prtimes.jp/main/html/rd/p/000000117.000051750.html",
+          "date": "2025-09-16"
+        },
+        {
+          "label": "グルメ Watch: ホットペッパーグルメ、空席情報を確認して“すぐに”押さえられる「席押さえ」",
+          "url": "https://gourmet.watch.impress.co.jp/docs/news/2080238.html",
+          "date": "2026-01-22"
+        },
+        {
+          "label": "エビソル（ebica）飲食店予約レポート2025 — ピークタイム18〜21時、1組平均4.1人",
+          "url": "https://www.ebica.jp/news/press/reservation-report-2024-detail/",
+          "date": "2025-02-27"
+        },
+        {
+          "label": "note: ホットペッパーグルメ「席押さえ」完全攻略 — 時間帯の境目を狙う立ち回り",
+          "url": "https://note.com/globalyttrends/n/n42bf99f6bcd6",
+          "date": "2026-04-20"
+        },
+        {
+          "label": "料理王国: 名古屋の名店「日本料理 𡈽方」— 完全予約制カウンター、予約は6ヶ月先まで",
+          "url": "https://cuisine-kingdom.com/ldj-hijikata",
+          "date": "2025-11-04"
+        },
+        {
+          "label": "日本料理 𡈽方 公式Instagram（丸の内・完全予約制カウンター）",
+          "url": "https://www.instagram.com/nihonryori_hijikata/"
+        },
+        {
+          "label": "勝手口 河内屋／鮨うおのたな 公式Instagram（丸の内・料亭河文 敷地内）",
+          "url": "https://www.instagram.com/katteguchi_nagoya/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "column_id": "COL-OPS-003",
+      "title_draft": "栄の居酒屋の2時間制、90分で切り上げると店側で何が起きるか",
+      "lead_draft": "2時間制と書かれた札を見て、律儀に2時間で出る客と、90分で切り上げる客がいる。店の売上とオペレーションから見ると、この30分の差はどちらに効くのか。回転設計と客単価の相場から、業界人が2時間制の本当の意味を説明する。",
+      "angle": "2時間制は席の在庫管理であって滞在の上限ではない。仕込みとラストオーダーの逆算、客単価と回転の掛け算で店の狙いを読み、繁忙時間帯に短く使う客が得をする構造を業界視点で解く。",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "エビソル（ebica）飲食店予約レポート2025 — ピークタイム18〜21時、1組平均4.1人",
+          "url": "https://www.ebica.jp/news/press/reservation-report-2024-detail/",
+          "date": "2025-02-27"
+        },
+        {
+          "label": "リクルート公式: 「席押さえ」全国提供開始",
+          "url": "https://www.recruit.co.jp/newsroom/pressrelease/2026/0122_146554.html",
+          "date": "2026-01-22"
+        },
+        {
+          "label": "PR TIMES / リクルート: 「席押さえ」新WebCM・キャンペーン",
+          "url": "https://prtimes.jp/main/html/rd/p/000003234.000011414.html",
+          "date": "2026-08-20"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "industry_insider",
+      "column_id": "COL-OPS-007",
+      "title_draft": "ネット予約で断られた名古屋の店に、電話だと席がある理由",
+      "lead_draft": "予約サイトで満席と出た店に電話をかけたら、あっさり取れた。名古屋ではこの現象がまだ日常的に起きる。ネット在庫と店の実在庫がずれる仕組みを、予約台帳の運用と手数料の相場から業界人が説明する。",
+      "angle": "グルメサイトに開放する在庫は実在庫の一部で、手数料の構造上、常連と電話予約に卓を残す慣習がある。台帳の締め方・直前キャンセルの戻し方から、電話が今も強い業態と時間帯を業界視点で見分ける。",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "リクルート公式: 「席押さえ」全国提供開始 — 当日の空席・直前キャンセルが届いていない構造課題",
+          "url": "https://www.recruit.co.jp/newsroom/pressrelease/2026/0122_146554.html",
+          "date": "2026-01-22"
+        },
+        {
+          "label": "エビソル（ebica）飲食店予約レポート2025",
+          "url": "https://www.ebica.jp/news/press/reservation-report-2024-detail/",
+          "date": "2025-02-27"
+        },
+        {
+          "label": "グルメ Watch: 「席押さえ」機能をアプリに追加",
+          "url": "https://gourmet.watch.impress.co.jp/docs/news/2080238.html",
+          "date": "2026-01-22"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "industry_insider",
+      "column_id": "COL-SEAT-005",
+      "title_draft": "名古屋の焼肉、予約必須の店とふらっと入れる店を分ける仕入れの事情",
+      "lead_draft": "同じ価格帯の焼肉でも、予約必須の店と当日ふらっと入れる店がある。違いは人気の差ではなく、一頭買いか部位仕入れかという仕入れの設計にある。歩留まりと在庫の考え方から、業界人がこの分かれ道を解説する。",
+      "angle": "一頭買いの店は在庫を売り切る必要があるため予約で客数を確定させたがり、部位仕入れの店は当日の波に合わせられる。仕入れと歩留まり、繁忙時の回転から予約必須の理由を業界視点で読む。",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "栄",
+        "genre": "焼肉"
+      },
+      "sources": [
+        {
+          "label": "エビソル（ebica）飲食店予約レポート2025",
+          "url": "https://www.ebica.jp/news/press/reservation-report-2024-detail/",
+          "date": "2025-02-27"
+        },
+        {
+          "label": "リクルート公式: 「席押さえ」全国提供開始",
+          "url": "https://www.recruit.co.jp/newsroom/pressrelease/2026/0122_146554.html",
+          "date": "2026-01-22"
+        },
+        {
+          "label": "PR TIMES / リクルート: 「席押さえ」新WebCM・キャンペーン",
+          "url": "https://prtimes.jp/main/html/rd/p/000003234.000011414.html",
+          "date": "2026-08-20"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "industry_insider",
+      "column_id": "COL-SEAT-003",
+      "title_draft": "名古屋のカウンター鮨が19時を売らない理由、予約枠は30分刻みで台帳は15分刻み",
+      "lead_draft": "予約サイトの枠は30分刻みで並ぶ。しかし店の予約台帳は15分刻みで卓を動かしている。この刻みのズレが、金曜19時だけが不自然に埋まって見える正体だ。名古屋のカウンター業態の時間割から、狙い目の時刻を業界人が具体的に示す。",
+      "angle": "一斉スタートの鮨・日本料理は「部」で在庫を切るため、19時という時刻自体が商品として存在しない。席数と仕込みの逆算、繁忙の山の位置から、予約が実際に空く時刻の相場を業界視点で提示する。",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "丸の内",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES / 料亭河文: 「鮨 うおのたな」— 夜2ターム制 17:30 / 19:45",
+          "url": "https://prtimes.jp/main/html/rd/p/000000117.000051750.html",
+          "date": "2025-09-16"
+        },
+        {
+          "label": "リクルート公式: 「席押さえ」全国提供開始",
+          "url": "https://www.recruit.co.jp/newsroom/pressrelease/2026/0122_146554.html",
+          "date": "2026-01-22"
+        },
+        {
+          "label": "note: 「席押さえ」完全攻略 — 時間帯の境目を狙う",
+          "url": "https://note.com/globalyttrends/n/n42bf99f6bcd6",
+          "date": "2026-04-20"
+        }
+      ]
+    }
+  ]
+}

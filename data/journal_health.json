@@ -1,11 +1,11 @@
 {
   "description": "日次ジャーナル ローカル実行(launchd)の最終状態。journal-watchdog.yml が原因表示に使う。",
   "date": "2026-08-26",
-  "status": "hold",
-  "reason": "記事HTML（journal/2026-08-26-*.html）が存在しない。生成そのものが失敗しています。 実行時 Mac はバッテリー駆動でした。バッテリー駆動中は蓋閉じ(clamshell)スリープを caffeinate でも防げないため、生成中に接続が切断された可能性が高いです（2026-08-18 判明）。ACアダプタを接続した状態で再実行してください。",
+  "status": "ok",
+  "reason": "正常に公開",
   "photo_sources": {
     "google_places_api_key": "present",
     "_note": "優先3（Google Places）が利用可能"
   },
-  "recorded_at": "2026-08-26T14:10:02.582+09:00"
+  "recorded_at": "2026-08-26T15:41:55.288+09:00"
 }
