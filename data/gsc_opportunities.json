@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T08:51:32.974Z",
+  "generatedAt": "2026-08-26T13:53:17.225Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -8,30 +8,30 @@
     "ctrFixGeoless": [
       {
         "query": "一人飲み",
-        "impressions": 231,
+        "impressions": 246,
         "clicks": 3,
-        "position": 4.2,
-        "ctr": 1.3,
-        "expectedCtr": 7.6,
-        "missedClicks": 14.6
+        "position": 4.1,
+        "ctr": 1.22,
+        "expectedCtr": 7.8,
+        "missedClicks": 16.2
       },
       {
         "query": "やきまる亭",
-        "impressions": 221,
+        "impressions": 224,
         "clicks": 3,
         "position": 7.9,
-        "ctr": 1.36,
+        "ctr": 1.34,
         "expectedCtr": 3.3,
-        "missedClicks": 4.2
+        "missedClicks": 4.3
       },
       {
         "query": "喫茶時々",
-        "impressions": 238,
+        "impressions": 244,
         "clicks": 4,
         "position": 8.2,
-        "ctr": 1.68,
+        "ctr": 1.64,
         "expectedCtr": 3.1,
-        "missedClicks": 3.4
+        "missedClicks": 3.6
       },
       {
         "query": "煮干しラーメン 凛",
@@ -41,15 +41,6 @@
         "ctr": 2.68,
         "expectedCtr": 4,
         "missedClicks": 3
-      },
-      {
-        "query": "イルタッソ",
-        "impressions": 61,
-        "clicks": 2,
-        "position": 5.6,
-        "ctr": 3.28,
-        "expectedCtr": 5.4,
-        "missedClicks": 1.3
       }
     ],
     "rankPush": [
@@ -76,12 +67,12 @@
       },
       {
         "page": "/stores/J004025075.html",
-        "impressions": 517,
+        "impressions": 525,
         "clicks": 11,
         "position": 6.7,
-        "ctr": 2.13,
+        "ctr": 2.1,
         "expectedCtr": 4.3,
-        "missedClicks": 11.2
+        "missedClicks": 11.5
       },
       {
         "page": "/journal/2026-07-27-owarisanso-kurogi.html",
@@ -94,39 +85,39 @@
       },
       {
         "page": "/stores/J004661023.html",
-        "impressions": 562,
+        "impressions": 578,
         "clicks": 7,
-        "position": 8.5,
-        "ctr": 1.25,
+        "position": 8.6,
+        "ctr": 1.21,
         "expectedCtr": 3,
-        "missedClicks": 9.8
+        "missedClicks": 10.1
       },
       {
         "page": "/stores/J004559348.html",
-        "impressions": 573,
+        "impressions": 594,
         "clicks": 8,
-        "position": 8.3,
-        "ctr": 1.4,
-        "expectedCtr": 3.1,
-        "missedClicks": 9.6
+        "position": 8.4,
+        "ctr": 1.35,
+        "expectedCtr": 3,
+        "missedClicks": 10
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2635,
+        "impressions": 2703,
         "clicks": 12,
-        "position": 25,
-        "ctr": 0.46,
-        "upsideClicks": 61.7
+        "position": 24.8,
+        "ctr": 0.44,
+        "upsideClicks": 63.8
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
     "queryCtrFix": 0,
-    "queryCtrFixGeoless": 5,
+    "queryCtrFixGeoless": 4,
     "queryRankPush": 1,
     "pageCtrFix": 5,
     "pageRankPush": 1,
