@@ -116,6 +116,14 @@
   ],
   "deploys": [
     {
+      "date": "2026-08-26",
+      "method": "clasp push (deploy-gas.sh)",
+      "verified_identical": true,
+      "evidence": "clasp pull で本番プロジェクトを取得し .gas-deploy/Code.js とバイト一致を確認（sha256 ff5aab141efbf51bf7ce888260512bea770be322a2cc7c24bc5d9bc452f537c5・ファイルは Code.js と appsscript.json の2本のみ）",
+      "repo_blob": "7d270920e4df25f5aa799b1e07288677250d8fd3",
+      "note": "SEO-076。直帰率・平均滞在・回遊・流入元を確定済みの日から取る修正を反映（pickSettledSlice が D-2 から順に、参照元の潰れ比率が閾値以下になる最初の日を選ぶ）。これ以前の not_deployed 観測は解消済みとして警報対象から外す"
+    },
+    {
       "date": "2026-08-25",
       "method": "clasp push (deploy-gas.sh)",
       "verified_identical": true,

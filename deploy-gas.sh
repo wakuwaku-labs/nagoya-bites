@@ -42,6 +42,7 @@ check_marker "SEO-047 直帰率の母数ゲート"      "MIN_SESSIONS_FOR_RATE_A
 check_marker "SEO-057 生成AI流入ラベル"        "生成AI（ChatGPT等）"
 check_marker "SEO-062 直帰率の集計バグ修正"    "bounceRate"
 check_marker "SEO-063 GA4しきい値の集約"       "isGa4Unknown"
+check_marker "SEO-076 確定済みの日から取る"    "SETTLED_LAG_DAYS"
 
 if [ "$MISSING" = "1" ]; then
   echo ""

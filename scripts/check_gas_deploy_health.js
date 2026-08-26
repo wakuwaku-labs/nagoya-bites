@@ -86,10 +86,22 @@ function record() {
     // 文字列を変えない修正（SEO-062）は文字列痕跡では検出できないため、これが唯一の検知経路。
     // 参照が無ければ従来どおり文字列痕跡だけで判定する（鳴らさない側に倒す）。
     let reference = null;
+    let referenceNote = null;
     try {
       const sm = JSON.parse(fs.readFileSync(path.join(REPO, 'data', 'site_metrics.json'), 'utf8'));
-      // 参照はレポート対象日と同じ日でなければ意味がない（別の日と比べると誤警報になる）
-      if (sm.dailyReference && sm.dailyReference.date === date) reference = sm.dailyReference;
+      // SEO-076: 直帰率はレポート対象日ではなく「確定済みの日」の値として出る。どの日の値かは
+      // レポート本文に『（確定値・YYYY-MM-DD）』として刻まれているので、それを正として突き合わせる。
+      // 本文に無い（＝旧コード）場合はレポート対象日を期待日にする（従来どおりの判定）。
+      const sp = policy.settled_date_pattern
+        ? new RegExp(policy.settled_date_pattern) : /確定値・(\d{4}-\d{2}-\d{2})/;
+      const sm2 = body.match(sp);
+      const expected = sm2 ? sm2[1] : date;
+      if (sm.dailyReference && sm.dailyReference.date === expected) reference = sm.dailyReference;
+      else {
+        // なぜ黙ったのかを第三者が後から検算できるようにする（制約10・SEO-075）
+        referenceNote = `参照値の日付 ${sm.dailyReference ? sm.dailyReference.date : 'なし'} が` +
+          ` レポートが名乗る対象日 ${expected} と一致しないため数値判定をしない`;
+      }
     } catch (e) { /* 参照が無い/壊れている日は数値判定をしない */ }
 
     const r = analyzeReport(body, policy, reference);
@@ -103,6 +115,7 @@ function record() {
       evidence: r.matched.map((m) => ({ key: m.key, fix_id: m.fix_id, verdict: m.verdict, line: m.line })),
       // 数値検算の材料（後から第三者が GA4 を開いて検算できるように両方の実数を残す）
       numeric_reference: reference ? { date: reference.date, bounceRate: reference.bounceRate, sessions: reference.sessions } : null,
+      numeric_reference_skipped: reference ? null : referenceNote,
       recorded_at: new Date().toISOString(),
     };
 

@@ -99,6 +99,8 @@ function sendLineMessage(text) {
 function sendDailyReport() {
   const yesterday = getDateStr(-1);
   const data = fetchGA4Report(yesterday, yesterday);
+  // 直帰率・平均滞在・流入元は「昨日」ではなく確定済みの日から取る（SEO-076）
+  data.settled = pickSettledSlice();
   const report = formatDailyReport(data, yesterday);
 
   // LINE送信
@@ -113,10 +115,11 @@ function sendDailyReport() {
 
 // ─── 週次レポート ───
 function sendWeeklyReport() {
-  const endDate = getDateStr(-1);
-  const startDate = getDateStr(-7);
+  // 週の終端も確定済みの日にする（末日が未確定だと週の直帰率まで引きずられる・SEO-076）
+  const endDate = getDateStr(-SETTLED_LAG_DAYS);
+  const startDate = getDateStr(-SETTLED_LAG_DAYS - 6);
   const data = fetchGA4Report(startDate, endDate);
-  const prevData = fetchGA4Report(getDateStr(-14), getDateStr(-8));
+  const prevData = fetchGA4Report(getDateStr(-SETTLED_LAG_DAYS - 13), getDateStr(-SETTLED_LAG_DAYS - 7));
   const report = formatWeeklyReport(data, prevData, startDate, endDate);
 
   sendLineMessage(report);
@@ -127,15 +130,97 @@ function sendWeeklyReport() {
 }
 
 // ─── GA4 Data API ───
-function fetchGA4Report(startDate, endDate) {
-  // 本番ドメインのみ集計（localhost / プレビュー環境を除外）
-  const HOST_FILTER = {
-    filter: {
-      fieldName: 'hostName',
-      stringFilter: { matchType: 'EXACT', value: 'nagoya-bites.com' },
-    },
-  };
+// 本番ドメインのみ集計（localhost / プレビュー環境を除外）
+const HOST_FILTER = {
+  filter: {
+    fieldName: 'hostName',
+    stringFilter: { matchType: 'EXACT', value: 'nagoya-bites.com' },
+  },
+};
 
+// ─── GA4 の確定待ちラグ（SEO-076） ───
+// GA4 のセッションスコープ指標（直帰率・エンゲージメント率・平均滞在・流入元）は、その日が
+// 終わってから確定するまで最大48時間かかる。日次レポートは day+8h に配信されるため、
+// 「昨日」のこれらを読むと**集計途中の値**をそのまま出してしまっていた。
+//   実測（2026-08-26 に GA4 UI で確定値を突合）:
+//     08-22 レポート91% → 確定 22.9%（35セッション/27エンゲージ）
+//     08-23 レポート90% → 確定 37.2%（43/27）
+//     08-24 レポート94% → 確定 32.5%（40/27）
+//     30日ローリングの確定値は 35.1%（data/site_metrics.json）
+//   決定的な痕跡: 未確定の日は参照元の1位が `(not set)` / `Unassigned`（エンゲージメント率0%）
+//   になるが、確定した日にはその行がほぼ消える。＝しきい値ではなく「処理が終わっていない」。
+// これは SEO-062（pagePath 次元つき集計）とは別原因で、SEO-062 を本番反映しても数値が
+// 変わらなかったのはこのため。訪問者数・ページ閲覧数・イベント数はイベントスコープで
+// 早く確定するため、従来どおり「昨日」を出す。
+const SETTLED_LAG_DAYS = 2;
+
+// 「まだ確定していない日」を機械で見分けるための閾値（SEO-076）。
+// 判定には、いま測ろうとしている直帰率そのものではなく**独立した観測可能な事実**を使う:
+// 参照元が `(not set)` / `(data not available)` / `(other)` に潰れているセッションの比率。
+//   実測（2026-08-26）: 未確定の日は 08-25 で 53%（39/74）・確定した日は 08-22/23/24 で 0〜3%。
+// レポートは day+8h に走るため D-2 でも経過は32時間で、GA4 が言う「最大48時間」を満たさない
+// 日がありうる。そこで固定ラグを信じ込まず、痕跡が出たら1日さかのぼる（最大 SETTLED_MAX_LAG_DAYS）。
+const SETTLED_UNKNOWN_SOURCE_MAX = 0.20;
+const SETTLED_MAX_LAG_DAYS = 4;
+
+// 確定済みのスライスを選ぶ。D-2 から順にさかのぼり、未確定の痕跡が消えた最初の日を採る。
+// どこまでさかのぼっても痕跡が残る場合は最後に見た日をそのまま使う（取り繕わず、対象日は
+// レポート本文に明記されるので読み手が判断できる）。
+function pickSettledSlice() {
+  var slice = null;
+  for (var lag = SETTLED_LAG_DAYS; lag <= SETTLED_MAX_LAG_DAYS; lag++) {
+    slice = fetchSettledSlice(getDateStr(-lag));
+    if (unknownSourceShare(slice.sources) <= SETTLED_UNKNOWN_SOURCE_MAX) return slice;
+  }
+  return slice;
+}
+
+// 参照元が潰れているセッションの比率（GA4 の集計が終わっていない日の指標）
+function unknownSourceShare(sources) {
+  var total = 0, unknown = 0;
+  (sources || []).forEach(function (r) {
+    var ses = parseInt(r.metrics[1] || 0) || 0;
+    total += ses;
+    if (isGa4Unknown(r.dimensions[0] || '', r.dimensions[1] || '')) unknown += ses;
+  });
+  return total > 0 ? unknown / total : 0;
+}
+
+// セッションスコープ指標だけを、確定済みの日から取る（SEO-076）。
+// fetchGA4Report と同じディメンションなしクエリ（SEO-062 の形）を使う。
+function fetchSettledSlice(date) {
+  const totalsRequest = AnalyticsData.Properties.runReport({
+    dateRanges: [{ startDate: date, endDate: date }],
+    metrics: [
+      { name: 'activeUsers' },
+      { name: 'screenPageViews' },
+      { name: 'sessions' },
+      { name: 'averageSessionDuration' },
+      { name: 'bounceRate' },
+      { name: 'eventCount' },
+    ],
+    dimensionFilter: HOST_FILTER,
+  }, 'properties/' + GA4_PROPERTY_ID);
+
+  const sourceRequest = AnalyticsData.Properties.runReport({
+    dateRanges: [{ startDate: date, endDate: date }],
+    metrics: [{ name: 'activeUsers' }, { name: 'sessions' }],
+    dimensions: [{ name: 'sessionSource' }, { name: 'sessionMedium' }],
+    dimensionFilter: HOST_FILTER,
+    orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+    limit: 10,
+  }, 'properties/' + GA4_PROPERTY_ID);
+
+  return { date: date, totals: parseTotals(totalsRequest), sources: parseReport(sourceRequest) };
+}
+
+// セッションスコープ指標の正本。確定スライスがあればそれを、無ければ当該期間の値を返す
+// （週次はレポート期間そのものを確定済みの日で閉じるため、確定スライスを持たない）。
+function sessionScoped(data) {
+  return (data && data.settled) ? data.settled : { date: null, totals: data.totals, sources: data.sources };
+}
+
+function fetchGA4Report(startDate, endDate) {
   const request = AnalyticsData.Properties.runReport({
     dateRanges: [{ startDate: startDate, endDate: endDate }],
     metrics: [
@@ -308,7 +393,11 @@ function deviceToName(d) {
 
 // データを分析して各種指標を計算
 function analyze(data) {
-  const t = data.totals;
+  // イベントスコープ（訪問者数・PV・イベント数）は当日ぶんが早く確定するので data.totals を使う。
+  // セッションスコープ（直帰率・平均滞在・訪問回数・流入元）は確定済みの日から取る（SEO-076）。
+  const et = data.totals;
+  const s = sessionScoped(data);
+  const t = s.totals;
   const pps = t.sessions > 0 ? t.pageviews / t.sessions : 0;
 
   const nonBaseEvents = data.events.filter(e =>
@@ -320,15 +409,16 @@ function analyze(data) {
   const ctaCount = ctaEvent ? parseInt(ctaEvent.metrics[0]) : 0;
   const gmapCount = gmapEvent ? parseInt(gmapEvent.metrics[0]) : 0;
   const modalCount = modalEvent ? parseInt(modalEvent.metrics[0]) : 0;
-  const ctaRate = t.users > 0 ? ctaCount / t.users : 0;
+  // 予約クリック率はイベント側と同じ日で割らないと意味が合わない（分子は data.events＝当日）
+  const ctaRate = et.users > 0 ? ctaCount / et.users : 0;
 
   // 流入元の内訳
-  const srcTotal = data.sources.reduce((s, r) => s + parseInt(r.metrics[1] || 0), 0);
+  const srcTotal = s.sources.reduce((acc, r) => acc + parseInt(r.metrics[1] || 0), 0);
   let organicSessions = 0;
   let directSessions = 0;
   let socialSessions = 0;
   let unknownSessions = 0;  // SEO-063: GA4しきい値で判別不能なセッション数
-  data.sources.forEach(r => {
+  s.sources.forEach(r => {
     const src = (r.dimensions[0] || '').toLowerCase();
     const med = (r.dimensions[1] || '').toLowerCase();
     const ses = parseInt(r.metrics[1] || 0);
@@ -350,6 +440,10 @@ function analyze(data) {
   const mobilePct = devTotal > 0 && mobile ? parseInt(mobile.metrics[0]) / devTotal : 0;
 
   return {
+    // セッションスコープの正本（確定済みの日）。以降の判定・文面は全部これを使う
+    settledDate: s.date,
+    sessionTotals: t,
+    sessionSources: s.sources,
     pagesPerSession: pps,
     nonBaseEvents,
     ctaCount, gmapCount, modalCount, ctaRate,
@@ -505,13 +599,14 @@ function callClaudeAdvice(apiKey, model, prompt) {
 
 // AIに渡すプロンプト（その日の実データ＋サイトの強みを与え、汎用論を禁止する）
 function buildAdvicePrompt(data, a, date, isWeekly) {
-  const t = data.totals;
+  const et = data.totals;
+  const t = a.sessionTotals;   // 直帰率・滞在・訪問回数・流入元は確定済みの日の値（SEO-076）
   const period = isWeekly ? 'この1週間' : (String(date || getDateStr(-1)) + '（前日）');
 
   const topPages = topPagesForPrompt(data.pages, 5)
     .map((p, i) => '  ' + (i + 1) + '. ' + p.name + ' … ' + p.pv + '回閲覧').join('\n') || '  (データなし)';
 
-  const srcLines = (data.sources || []).slice(0, 5).map(s => {
+  const srcLines = (a.sessionSources || []).slice(0, 5).map(s => {
     const pct = a.srcTotal > 0 ? Math.round((parseInt(s.metrics[1]) || 0) / a.srcTotal * 100) : 0;
     return '  - ' + sourceToName(s.dimensions[0], s.dimensions[1]) + ': ' + s.metrics[1] + '訪問 (' + pct + '%)';
   }).join('\n') || '  (データなし)';
@@ -537,7 +632,9 @@ function buildAdvicePrompt(data, a, date, isWeekly) {
 '- 追わない領域（提案しない）: 匿名口コミの大量集積・クーポン経済・高級セグメント特化',
 '',
 '# ' + period + 'の実データ',
-'- 訪問者: ' + t.users + '人 ／ ページ閲覧: ' + t.pageviews + ' ／ 訪問回数(セッション): ' + t.sessions,
+'- 訪問者: ' + et.users + '人 ／ ページ閲覧: ' + et.pageviews,
+(a.settledDate ? '- ※ 直帰率・平均滞在・訪問回数・流入元は ' + a.settledDate + ' の確定値です（GA4はこれらの集計確定に最大48時間かかるため、前日値は使いません）。訪問者数・ページ閲覧数・人気ページ・行動イベントは ' + date + ' の値です。異なる日の数字を1つの因果として結び付けないこと。' : ''),
+'- 訪問回数(セッション): ' + t.sessions,
 '- 1訪問あたり閲覧: ' + a.pagesPerSession.toFixed(1) + 'ページ（目安2以上が良好）',
 '- 平均滞在: ' + secToText(t.avgDuration) + '（目安60秒以上）',
 '- 直帰率: ' + Math.round(t.bounceRate * 100) + '%（目安50%未満が良好・70%超は要注意）',
@@ -573,7 +670,7 @@ srcLines,
 
 // ─── ② ルールベースアドバイス（AIフォールバック／実数値・実ページ・実流入元を引用） ───
 function generateRuleBasedAdvice(data, a, date) {
-  const t = data.totals;
+  const t = a.sessionTotals;   // 直帰率・滞在・訪問回数は確定済みの日の値（SEO-076）
   const seed = daySeed(date);
   const cand = [];  // { sev, text } sev が大きいほど優先
 
@@ -581,7 +678,7 @@ function generateRuleBasedAdvice(data, a, date) {
   const topPageName = tops[0] ? tops[0].name : 'トップページ';
   const topPagePv = tops[0] ? tops[0].pv : 0;
   // SEO-063: 判別不能行（GA4しきい値）を topSrcRow の対象から除く
-  const topSrcRow = data.sources && data.sources.find(r =>
+  const topSrcRow = a.sessionSources && a.sessionSources.find(r =>
     !isGa4Unknown(r.dimensions[0] || '', r.dimensions[1] || '')
   );
   const topSrcName = topSrcRow ? sourceToName(topSrcRow.dimensions[0], topSrcRow.dimensions[1]) : null;
@@ -695,7 +792,8 @@ function generateRuleBasedAdvice(data, a, date) {
 
 // 全体の一言まとめ
 function overallVerdict(data, a) {
-  const t = data.totals;
+  const t = a.sessionTotals;   // 直帰率・滞在・訪問回数は確定済みの日の値（SEO-076）
+  const et = data.totals;      // 訪問者数は当日ぶん
   let score = 0;
   if (t.sessions >= MIN_SESSIONS_FOR_RATE_ALERT) {
     if (t.bounceRate <= BENCHMARKS.bounceRate.good) score++;
@@ -705,10 +803,10 @@ function overallVerdict(data, a) {
   }
   if (a.pagesPerSession >= BENCHMARKS.pagesPerSession.good) score++;
   else if (a.pagesPerSession < BENCHMARKS.pagesPerSession.warn) score--;
-  if (t.users >= 20 && a.ctaRate >= BENCHMARKS.ctaRate.good) score++;
-  else if (t.users >= 20 && a.ctaRate < BENCHMARKS.ctaRate.warn) score--;
+  if (et.users >= 20 && a.ctaRate >= BENCHMARKS.ctaRate.good) score++;
+  else if (et.users >= 20 && a.ctaRate < BENCHMARKS.ctaRate.warn) score--;
 
-  if (t.users < 5) return '😶 訪問者がまだ少なく判定困難';
+  if (et.users < 5) return '😶 訪問者がまだ少なく判定困難';
   if (score >= 2) return '🟢 好調です！この調子で';
   if (score <= -2) return '🔴 苦戦中 — テコ入れが必要';
   return '🟡 普通 — 改善余地あり';
@@ -718,6 +816,11 @@ function overallVerdict(data, a) {
 function formatDailyReport(data, date) {
   const t = data.totals;
   const a = analyze(data);
+  const s = sessionScoped(data);
+  const st = s.totals;
+  // 確定値の対象日をレポート本文に刻む。第三者（と check_gas_deploy_health.js）が
+  // 「どの日の確定値なのか」を後から検算できるようにするため（CLAUDE.md 制約10）。
+  const settledLabel = s.date ? '（確定値・' + s.date + '）' : '';
 
   let msg = '📊 NAGOYA BITES｜昨日のサイト状況\n';
   msg += '📅 ' + date + '（' + weekdayJa(date) + '）\n';
@@ -726,16 +829,21 @@ function formatDailyReport(data, date) {
 
   msg += '【サイトの人気度】\n';
   msg += '👥 訪問した人: ' + t.users + '人\n';
-  msg += '📄 見られたページ数: ' + t.pageviews + '\n';
+  msg += '📄 見られたページ数: ' + t.pageviews + '\n\n';
+
+  // SEO-076: 直帰率・平均滞在・回遊は「昨日」だと GA4 の集計が終わっておらず 90% 台の
+  // 見せかけの値が出る。確定済みの日の値を、対象日を明示して出す。
+  msg += '【読まれ方' + settledLabel + '】\n';
+  if (s.date) msg += '　※GA4は直帰率・滞在・流入元の確定に最大48時間かかるため、この区画だけ確定済みの日です\n';
   msg += '　└ 1人あたり ' + a.pagesPerSession.toFixed(1) + 'ページ ' +
     healthIcon(a.pagesPerSession, BENCHMARKS.pagesPerSession) + '\n';
-  msg += '⏱ 平均滞在時間: ' + secToText(t.avgDuration) + ' ' +
-    healthIcon(t.avgDuration, BENCHMARKS.avgDuration) + '\n';
+  msg += '⏱ 平均滞在時間: ' + secToText(st.avgDuration) + ' ' +
+    healthIcon(st.avgDuration, BENCHMARKS.avgDuration) + '\n';
   msg += '　（30秒未満＝読まれてない危険信号）\n';
-  msg += '↩️ すぐ帰った人の割合: ' + Math.round(t.bounceRate * 100) + '% ' +
-    healthIcon(t.bounceRate, BENCHMARKS.bounceRate, true) + '\n';
+  msg += '↩️ すぐ帰った人の割合: ' + Math.round(st.bounceRate * 100) + '% ' +
+    healthIcon(st.bounceRate, BENCHMARKS.bounceRate, true) + '\n';
   msg += '　（70%超＝要注意、50%未満＝良好）' +
-    (t.sessions < MIN_SESSIONS_FOR_RATE_ALERT ? '　※訪問' + t.sessions + '件と少なく参考値（課題化はしません）' : '') + '\n\n';
+    (st.sessions < MIN_SESSIONS_FOR_RATE_ALERT ? '　※訪問' + st.sessions + '件と少なく参考値（課題化はしません）' : '') + '\n\n';
 
   msg += '【人気だったページ TOP5】\n';
   data.pages.slice(0, 5).forEach((p, i) => {
@@ -754,16 +862,16 @@ function formatDailyReport(data, date) {
     }
   }
 
-  if (data.sources.length > 0) {
-    msg += '\n【どこから来た？ TOP3】\n';
+  if (a.sessionSources.length > 0) {
+    msg += '\n【どこから来た？ TOP3' + settledLabel + '】\n';
     if (a.highThreshold) {
       msg += '⚠️ この日はGA4のしきい値が効き ' + Math.round(a.unknownPct * 100) + '% が判別不能です。流入構成は30日集計（search_channel_metrics.json）をご参照ください。\n';
     }
-    data.sources.slice(0, 3).forEach((s, i) => {
+    a.sessionSources.slice(0, 3).forEach((row, i) => {
       const medal = ['🥇','🥈','🥉'][i];
-      const pct = a.srcTotal > 0 ? Math.round(parseInt(s.metrics[1]) / a.srcTotal * 100) : 0;
-      msg += medal + ' ' + sourceToName(s.dimensions[0], s.dimensions[1]) +
-        '（' + s.metrics[1] + '訪問 / ' + pct + '%）\n';
+      const pct = a.srcTotal > 0 ? Math.round(parseInt(row.metrics[1]) / a.srcTotal * 100) : 0;
+      msg += medal + ' ' + sourceToName(row.dimensions[0], row.dimensions[1]) +
+        '（' + row.metrics[1] + '訪問 / ' + pct + '%）\n';
     });
   }
 
@@ -798,7 +906,7 @@ function formatWeeklyReport(data, prevData, startDate, endDate) {
 
   let msg = '📊 NAGOYA BITES｜週次レポート\n';
   msg += '📅 ' + startDate + ' 〜 ' + endDate + '\n';
-  msg += '（先週比: ' + getDateStr(-14) + '〜' + getDateStr(-8) + '）\n';
+  msg += '（先週比: ' + getDateStr(-SETTLED_LAG_DAYS - 13) + '〜' + getDateStr(-SETTLED_LAG_DAYS - 7) + '）\n';
   msg += '━━━━━━━━━━━━━━━\n';
   msg += '🏁 一言: ' + overallVerdict(data, a) + '\n\n';
 
