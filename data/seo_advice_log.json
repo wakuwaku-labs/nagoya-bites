@@ -2190,6 +2190,36 @@
       "brand_reason": "採用（P1）: 順位操作でもマネタイズでもなく、改善ループの入力の正確性を回復する課題。SEO-062/063/069/074 と同一クラス。CLAUDE.md「無人自動化の監視を設計するときの原則」3（『気づけるはず』を検知と数えない）の再発形で、今回は警報が実装済みなのに原理的に鳴れない。文字列検知の穴を埋めるために作った数値検知そのものが沈黙しているため、SEO-062 が本当に効いているかを判定する手段が現在1つも無い。判定根拠は全て git show とファイル行番号で第三者が再現できる事実のみ（制約10）",
       "category": "SEO",
       "fingerprint": "5b3c04f80b2ad5d1"
+    },
+    {
+      "id": null,
+      "date": "2026-08-27",
+      "source": "line-daily",
+      "advice": "🔴 予約ボタンクリックが2回、店舗詳細を開いたのが1回と、ユーザーの行動が少ないです。訪問者42人に対してアクションが低調です。👉 トップページ(index.html)の店舗詳細モーダルや予約ボタンの視認性を高めるため、色やサイズを調整し、CTAの文言を「今すぐ予約」など具体的に変更しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下① 前提が検算不能（制約10）: SEO-072 の実測どおり GAS が数えるイベントは cta_click / cta_gmap_click / modal_open の完全一致3種のみ。当日の人気ページTOP5は5件中4件がジャーナル記事・特集で、そこで発火する cta_reserve（journal 22本）・feature_store_click（features 50箇所）・outbound_click（stores 5,548枚）は1件も計上されない。「行動が少ない」は利用者の行動の事実ではなく計測の穴。② 同型の助言を直近4日で4回判定済み（2026-08-24 SEO-072へ振替 / 08-24 週次 rejected『この店の空席をチェック』/ 08-26 rejected n=2ノイズ / 本件）。語が「今すぐ予約」に変わっただけで打ち手は同一、増分なし。③ 症状側は SEO-072（P1・ready・イベント名の意味単位への束ね直し）が既にカバー済みで、色・サイズ・煽り文言のチューニングは Moat（業界視点・実在保証・シーン専門性）を一切伸ばさず、「今すぐ」の緊急性訴求は広告ゼロ・編集独立のトーンと相反する",
+      "category": null,
+      "fingerprint": "5447c3b6dba1fd0e"
+    },
+    {
+      "id": null,
+      "date": "2026-08-27",
+      "source": "line-daily",
+      "advice": "🟡 人気ページTOP5のうち、ジャーナル記事が3件を占めていますが、トップページ閲覧数は6回と相対的に低いです。👉 journal/ の日次ジャーナル記事の冒頭や末尾に、関連するfeatures/ 特集ページへの導線をテキストリンクで追記し、回遊を促しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複: SEO-070（P2・ready・detected 2026-08-24）がこの助言そのものを採用済み。週次レポート 2026-08-17〜08-23 の原文『journal/の最新記事の冒頭に、関連するfeatures/の特集記事への内部リンクを追記しましょう』と同一の打ち手で、当該原文は fingerprint 75d4fe7eb0480747 で既にログ済み。加えて 2026-08-26 にも同型（フッターに2〜3本）を rejected 済み（既存 .related ＝ refresh_journal_related.js で実装済みのため増分なし）。再起票しない",
+      "category": null,
+      "fingerprint": "6a246ceb281f03e5"
+    },
+    {
+      "id": null,
+      "date": "2026-08-27",
+      "source": "line-daily",
+      "advice": "🟢 検索流入比率が87%と非常に高いですが、BingとYahooからの流入もそれぞれ10訪問とGoogleに次ぐ割合です。👉 docs/daily-posts/ にあるSNS投稿原稿を、BingとYahooの検索エンジンに最適化されたキーワード（例: 名古屋 穴場 ランチ）を意識して加筆修正し、各プラットフォームに投稿しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下① 打ち手が既に明示的に却下済みの型（制約10）: 「Bingを意識したKWを盛り込む」は SEO-071 で却下理由まで確定している——SEO-067（Bing Webmaster Tools 接続）がオーナー操作待ちで未完のため Bing 側の検索実データが1件も無く、「Bing向けKW」は当て推量にしかならず、検証できない自己申告を根拠に原稿・記事を書き換えることになる。② 因果の取り違え: SNS原稿（Note/Instagram/X）は SNS 配信面であって Bing/Yahoo の検索最適化レイヤーではない。さらに Yahoo! JAPAN の検索インデックスは Google のものであり、「Yahoo向けKW」は Google 向けと独立の対象として成立しない。③ 同型のSNS投稿助言を直近1週で4回判定済み（08-21 rejected / 08-22・08-23 duplicate / 08-25 rejected）。SNS配信の断絶という実在の症状側は既に起票済みで、KWは SEO-011 / SEO-007（ともに done）で journal_seo_keywords.json ＋ validator check16 により仕組み化済み＝KWは足りており、増分がない。④ Bing への手当てそのものは SEO-071（IndexNow 自動送信・2026-08-26 resolved）で検証可能な形で既に実装済み",
+      "category": null,
+      "fingerprint": "bb966ac12a9ee510"
     }
   ]
 }
