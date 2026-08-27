@@ -2220,6 +2220,36 @@
       "brand_reason": "却下① 打ち手が既に明示的に却下済みの型（制約10）: 「Bingを意識したKWを盛り込む」は SEO-071 で却下理由まで確定している——SEO-067（Bing Webmaster Tools 接続）がオーナー操作待ちで未完のため Bing 側の検索実データが1件も無く、「Bing向けKW」は当て推量にしかならず、検証できない自己申告を根拠に原稿・記事を書き換えることになる。② 因果の取り違え: SNS原稿（Note/Instagram/X）は SNS 配信面であって Bing/Yahoo の検索最適化レイヤーではない。さらに Yahoo! JAPAN の検索インデックスは Google のものであり、「Yahoo向けKW」は Google 向けと独立の対象として成立しない。③ 同型のSNS投稿助言を直近1週で4回判定済み（08-21 rejected / 08-22・08-23 duplicate / 08-25 rejected）。SNS配信の断絶という実在の症状側は既に起票済みで、KWは SEO-011 / SEO-007（ともに done）で journal_seo_keywords.json ＋ validator check16 により仕組み化済み＝KWは足りており、増分がない。④ Bing への手当てそのものは SEO-071（IndexNow 自動送信・2026-08-26 resolved）で検証可能な形で既に実装済み",
       "category": null,
       "fingerprint": "bb966ac12a9ee510"
+    },
+    {
+      "id": "SEO-077",
+      "date": "2026-08-28",
+      "source": "line-daily",
+      "advice": "🟡 訪問者35人に対し、人気ページは「nagoya-solo-dining」が8回閲覧と、特定のニーズが強いです。👉 features/nagoya-solo-dining の記事をSNS投稿原稿 docs/daily-posts/ に転用し、Note/Instagram/Xで「お一人様向け名古屋グルメ」をテーマに発信しましょう。",
+      "verdict": "adopted",
+      "brand_reason": "Moat「名古屋×シーン×業界人の目利き」の一人飯シーンは既に検索面で結果が出ている領域（SEO-059: 一人飲みがGSC平均4.8位＝唯一の1ページ目シーンKW）。既存の実在特集を既存の配信パイプラインに載せ直すだけで順位操作・広告主依存・クーポン経済のいずれにも該当しない。採用根拠は当日の8回閲覧（n=35で弱い）ではなく『107本の日次SNS原稿のうち solo-dining に触れたものが0本』という構造的欠落（grep -rl で検算可能）。docs/daily-posts はその日のジャーナル記事からのみ生成される設計のため、最も読まれている常設特集が配信レイヤーから丸ごと外れている",
+      "category": "SEO",
+      "fingerprint": "f4f3f43034b41cd8"
+    },
+    {
+      "id": null,
+      "date": "2026-08-28",
+      "source": "line-daily",
+      "advice": "🔴 予約ボタンクリックが0回、マップクリックも0回と、コンバージョンが全く発生していません。👉 index.htmlの店舗詳細モーダルと予約ボタンのデザインを改善し、店舗の魅力が伝わる写真や説明文を最上部に配置して予約への導線を強化しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下 — 計測が壊れている数値に対する施策のため（制約10）。SEO-072（P1 ready）で確定済みの通り、レポートの「予約・店舗詳細」は index.html のイベント名しか数えず、特集・ジャーナル・店舗ページ5,548枚のコンバージョンは構造的に常時ゼロで届く。当日の閲覧TOP5は特集3本＋ジャーナル1本＋トップ1本で、5面中4面はそもそもイベントを発火できない。ここでモーダルを作り直すのは計測アーティファクトの最適化にあたる。加えて n=35・店舗詳細2回では有意な信号がない。同種の助言は 2026-08-26 / 08-27 にも却下済み。症状側の正しい打ち手は SEO-072 が保持している",
+      "category": null,
+      "fingerprint": "700a9651879af28b"
+    },
+    {
+      "id": null,
+      "date": "2026-08-28",
+      "source": "line-daily",
+      "advice": "🟢 検索流入比率が73%と高いものの、Bing検索が23%とYahoo検索6%を合わせると、Google検索に匹敵する訪問数です。👉 journal/ の日次ジャーナル記事のタイトルと本文に、BingやYahooで検索されやすい「名古屋 穴場 一人飯」「名古屋 隠れ家 バー」などの具体的なキーワードを盛り込みましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複 — 同種の助言は 2026-08-20 / 08-21 / 08-24 に判定済み（SEO-071 で明文化: SEO-067＝Bing Webmaster Tools 接続が blocked のため Bing 側の検索実データが1件も無く、『Bing向けKW』は当て推量にしかならない＝制約10違反）。加えて Yahoo! JAPAN は Google のインデックスを使うため『BingやYahooで検索されやすいKW』という前提自体が成立しない。助言の有効部分（シーン語×エリア語の検索面を広げる）は SEO-068（P1 ready・discovery意図クエリの計画的拡張）が既に保持しており、KWマスタは data/journal_seo_keywords.json ＋ scripts/journal_seo_kw.js --suggest が正本",
+      "category": null,
+      "fingerprint": "d27a155ff19fd0a2"
     }
   ]
 }
