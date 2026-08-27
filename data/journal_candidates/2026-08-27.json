@@ -1,0 +1,468 @@
+{
+  "date": "2026-08-27",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名鉄百貨店で消えたキハチカフェが栄三越6階に、10時〜19時・予約なしの設計を業界人が読む",
+      "verdict": "PASS",
+      "total": 108,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (価格帯,席,予約,シーン,接待,デート,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 162字 +4",
+          "title 45字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅の百貨店カフェが栄に移った夏、キハチ・イオリ・トップスの移籍先を追う",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 17,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (席,予約,シーン) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 129字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -8 / recency -7 / uniqueness -5"
+    },
+    {
+      "id": "c2",
+      "title_draft": "伏見のおばんざい新店こじか食堂、客単価2,000円台の小箱がどう成立するか",
+      "verdict": "HOLD",
+      "total": 79,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (コース,席,予約,アラカルト,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 119字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「名駅」+1",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "池下に客単価1万円超の焼鳥、名古屋の焼鳥相場から外れた価格帯を読む",
+      "verdict": "HOLD",
+      "total": 73,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 3
+      },
+      "search_intent_links": [
+        {
+          "kw": "焼き鳥",
+          "feature": "features/nagoya-yakitori-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (コース,席,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 123字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「焼鳥」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "烏森にクラフトドーナツ3号店、290円のドーナツが住宅街の駅前を選ぶ理由",
+      "verdict": "HOLD",
+      "total": 64,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (シーン) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 122字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「名駅」+1",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "名鉄百貨店で消えたキハチカフェが栄三越6階に、10時〜19時・予約なしの設計を業界人が読む",
+      "lead_draft": "2026年2月28日、名鉄百貨店本店が71年の歴史を閉じ、キハチ カフェは東海からいったん姿を消した。その半年後の8月28日、名駅ではなく栄の百貨店6階で再出店する。フード1,750〜2,400円とスイーツ990円の二層、10時〜19時で夜を持たない営業、予約を受けない席の回し方を、価格帯・オペ・シーン適性の3点から読む。",
+      "angle": "百貨店閉店で東海から消えたカフェブランドの再出店を、フード2,400円とスイーツ990円＋コーヒー730円という価格帯の二層構造、10:00-19:00でL.O.18:15・予約不可という席の回転設計、夜営業を持たないため接待やデートではなく買い物客の休憩需要に全振りしたシーン適性から業界人が読む",
+      "main_store": {
+        "name": "キハチ カフェ 名古屋三越",
+        "id": "",
+        "area": "栄",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 株式会社名古屋三越 秋のリニューアル",
+          "url": "https://prtimes.jp/main/html/rd/p/000000006.000185183.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "キハチ公式 キハチ カフェ 名古屋三越",
+          "url": "https://www.kihachi.jp/restaurant-cafe/shoplist/sakae/",
+          "date": "2026-08-28"
+        },
+        {
+          "label": "流通ニュース 名古屋栄三越 秋のリニューアル",
+          "url": "https://www.ryutsuu.biz/store/s081942.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "名古屋情報通 名古屋栄三越が秋のリニューアル",
+          "url": "https://jouhou.nagoya/sakae-mitsukoshi-new2026/",
+          "date": "2026-08-20"
+        },
+        {
+          "label": "キハチ公式 名鉄百貨店本店 閉店のお知らせ",
+          "url": "https://www.kihachi.jp/news/restaurant-cafe/restaurant-cafe_1425.html",
+          "date": "2026-02-01"
+        },
+        {
+          "label": "都市商業研究所 名鉄百貨店本店 2月28日閉店",
+          "url": "https://toshoken.com/news/31665",
+          "date": "2026-02-19"
+        },
+        {
+          "label": "X 名古屋グルメ探偵 キハチカフェ栄三越へ",
+          "url": "https://x.com/gourmet_nagoya/status/2024424787662295387",
+          "date": "2026-02-20"
+        },
+        {
+          "label": "X 名古屋グルメ探偵 京都イオリカフェも栄三越へ",
+          "url": "https://x.com/gourmet_nagoya/status/2034111979603038604",
+          "date": "2026-07-15"
+        }
+      ],
+      "trending_signals": {
+        "evidence_urls": [
+          "https://x.com/gourmet_nagoya/status/2024424787662295387",
+          "https://x.com/gourmet_nagoya/status/2034111979603038604",
+          "https://x.com/gourmet_nagoya/status/2032998277336146138"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "伏見のおばんざい新店こじか食堂、客単価2,000円台の小箱がどう成立するか",
+      "lead_draft": "2026年8月26日、伏見におばんざいと酒の新店が開いた。予算帯は2,000〜2,999円。名駅でも栄でもない伏見という中間地点で、コースを置かずアラカルトだけで客単価2,000円台に着地させる設計を、席数と滞在時間から業界人の目で読む。",
+      "angle": "コースを置かずアラカルトのみで客単価2,000円台に着地させる小箱の設計を、席数と回転、平日夜の予約の取り方、一人飲み適性から業界人が読む",
+      "main_store": {
+        "name": "おばんざいとお酒 こじか食堂",
+        "id": "",
+        "area": "伏見",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "食べログ 名古屋市ニューオープン順",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-08-26"
+        },
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-26"
+        }
+      ],
+      "trending_signals": {
+        "evidence_urls": []
+      }
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "烏森にクラフトドーナツ3号店、290円のドーナツが住宅街の駅前を選ぶ理由",
+      "lead_daft": "",
+      "lead_draft": "テキサス発のクラフトドーナツ専門店が2026年8月25日、名古屋3店舗目を烏森に開いた。1個290〜390円、11時から売り切れ次第終了。栄でも名駅でもなく住宅街の駅前を3店舗目に選んだ理由を、単価と日販、仕込みの立ち上げ時間から業界人が読む。",
+      "angle": "単価290〜390円のドーナツ専門店が住宅街の駅前を選ぶ出店戦略を、日販の必要数と仕込みの立ち上げ時間、売り切れ終了という在庫設計、手土産シーンの適性から業界人が読む",
+      "main_store": {
+        "name": "BLANKET DONUTS 名古屋中村店",
+        "id": "",
+        "area": "烏森",
+        "genre": "ドーナツ"
+      },
+      "sources": [
+        {
+          "label": "食べログ 名古屋市ニューオープン順",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-08-25"
+        },
+        {
+          "label": "名古屋情報通 ブランケットドーナツ名古屋初店舗",
+          "url": "https://jouhou.nagoya/blanket-donuts/",
+          "date": "2025-06-05"
+        },
+        {
+          "label": "名古屋情報通 ブランケットドーナツ北区・楠",
+          "url": "https://jouhou.nagoya/blanket-donuts-kitaku/",
+          "date": "2025-12-15"
+        }
+      ],
+      "trending_signals": {
+        "evidence_urls": [
+          "https://www.instagram.com/blanket_donuts.nagoya/"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "池下に客単価1万円超の焼鳥、名古屋の焼鳥相場から外れた価格帯を読む",
+      "lead_draft": "2026年8月25日、池下に予算1万〜1万5,000円の焼鳥店が開いた。名古屋の焼鳥の相場は4,000〜6,000円で、その倍の位置に着地している。おまかせコース一本で1万円を超える焼鳥がどういう原価と席数で成立するのかを、業界人の目で分解する。",
+      "angle": "名古屋の焼鳥相場の倍にあたる客単価1万円超のおまかせコースが、カウンター席数と一斉スタートの回転、仕入れの原価率でどう成立するかを業界人が読む",
+      "main_store": {
+        "name": "やきとり 珀",
+        "id": "",
+        "area": "池下",
+        "genre": "焼鳥"
+      },
+      "sources": [
+        {
+          "label": "食べログ 名古屋市ニューオープン順",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-08-25"
+        }
+      ],
+      "trending_signals": {
+        "evidence_urls": []
+      }
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "名駅の百貨店カフェが栄に移った夏、キハチ・イオリ・トップスの移籍先を追う",
+      "lead_draft": "2026年2月28日に名鉄百貨店本店が閉店してから半年、そこで営業していたカフェとスイーツの店が相次いで名古屋栄三越に現れている。キハチ カフェは8月28日に6階へ、京都イオリカフェとトップスも栄へ。名駅から栄へのテナント移動が何を意味するかを業界人が読む。",
+      "angle": "百貨店閉店に伴うカフェテナントの移籍先を追い、名駅から栄への人流と賃料条件、百貨店内カフェの席時間と予約を受けない運用、買い物客の休憩需要というシーン適性から業界人が読む",
+      "main_store": {
+        "name": "キハチ カフェ 名古屋三越",
+        "id": "",
+        "area": "栄",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "都市商業研究所 名鉄百貨店本店 2月28日閉店",
+          "url": "https://toshoken.com/news/31665",
+          "date": "2026-02-19"
+        },
+        {
+          "label": "PR TIMES 株式会社名古屋三越 秋のリニューアル",
+          "url": "https://prtimes.jp/main/html/rd/p/000000006.000185183.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "X 名古屋グルメ探偵 京都イオリカフェも栄三越へ",
+          "url": "https://x.com/gourmet_nagoya/status/2034111979603038604",
+          "date": "2026-07-15"
+        }
+      ],
+      "trending_signals": {
+        "evidence_urls": [
+          "https://x.com/gourmet_nagoya/status/2032998277336146138"
+        ]
+      }
+    }
+  ]
+}
