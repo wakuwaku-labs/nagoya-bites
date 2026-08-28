@@ -220,6 +220,7 @@
 ### [SEO-077] 閲覧トップの常設特集（nagoya-solo-dining）が SNS 原稿の対象外で、最も読まれている面が107日間一度も発信されていない
 
 - **priority**: P2 → **status**: done（2026-09-02）
+- **priority**: P2 → **status**: done（2026-08-28 に `docs/daily-posts/feature-nagoya-solo-dining.md` 作成。Note/Instagram/X 3セクション構成・実在店10店確認済み）
 - **detected**: 2026-08-28
 - **resolved**: 2026-09-02
 - **category**: SEO / コンテンツ配信
@@ -293,6 +294,7 @@
 - **priority**: P1 → **status**: done（2026-08-27）
 - **resolved**: 2026-08-27
 - **resolved_by**: acceptance 7 完了 — `data/gas_deploy_policy.json` に `max_stale_reference_days: 4` を追加し、`.github/workflows/gas-deploy-watchdog.yml` に `ga4-reference-stale` ラベルで別 Issue を起票するステップを追加。正常時は自動クローズ（CLAUDE.md 原則6・ISSUE-084 原則2）
+- **priority**: P1 → **status**: done（acceptance 1〜6 すべて完了。5は 2026-08-28 に `check_gas_deploy_health.js` + `gas_deploy_policy.json` で実装）
 - **detected**: 2026-08-26
 - **resolved**: 2026-09-02
 - **category**: SEO / ops / data-quality
@@ -487,7 +489,7 @@
 - **priority**: P1 → **status**: ready（オーナー本人 or HOTPEPPER_API_KEY/GOOGLE_MAPS_API_KEYを持つ環境待ち）
 - **detected**: 2026-08-23（[[ISSUE-115]]で新設した`audit_ogp_image_liveness.js`をfeatures/journal全176件に対して実行し発見）
 - **category**: SEO / SNS / data-quality
-- **owner**: DataKeeper（写真再取得） + Builder（実行環境）
+- **owner**: 片桐 ← DataKeeper（写真再取得） + Builder（実行環境）（APIキー必須・クラウドセッション不可のためエスカレーション 2026-08-28）
 - **調査で判明した事実**: `node scripts/audit_ogp_image_liveness.js` を journal/*.html にも対象を広げて実行した結果、11件のog:imageが404/403だった（4件はHotPepper URL 404・重複1件を除くと3店、7件はGoogle Places署名URL失効）:
   | journal記事 | 掲載店 | 状態 |
   |---|---|---|
@@ -985,7 +987,7 @@
 - **priority**: P1 → **status**: ready（パイプラインは稼働確認済み。残るのは人手レビュー＆承認のみ）
 - **detected**: 2026-08-19（事業化ロードマップ Phase 2 の進捗確認中に発覚）
 - **category**: automation / moat / trust-score-business
-- **owner**: DataKeeper（稼働確認済み）→ Editor（`docs/editorreason-drafts.md` のレビュー・承認）
+- **owner**: 片桐 ← Editor（`docs/editorreason-drafts.md` のレビュー・承認・人手必須のためエスカレーション 2026-08-28）
 - **背景**: [[ISSUE-045]] で構築した4-stage自動収集パイプライン（Google CSE + Claude API + 引用必須プロンプト + 人手レビューゲート）は `.github/workflows/editorreason-batch.yml` として毎週月曜 JST 3:00 に実行されている。`gh run list` で確認すると2026-06-15〜2026-08-17まで**13週連続 success**だが、`gh run view --log` で中身を見ると**毎回同じ2026-05-24の実演デモ（3件処理・OK1/INSUFFICIENT2）を再出力しているだけ**で新規候補を1件も処理していない
 - **直接原因1（未設定）**: `gh secret list` で確認した結果、稼働に必要な `GOOGLE_CSE_KEY` / `GOOGLE_CSE_CX` / `ANTHROPIC_API_KEY` の3件がいずれも未設定。ワークフローはキー無しでもエラーにならず「変更なし」で正常終了する設計のため、CI上は3ヶ月間ずっと緑（success）のまま実質ゼロ稼働だった。CLAUDE.md「無人自動化の監視原則」が警告する**「検知はしているが誰にも届かない」型ではなく、そもそも動いていないことを success が覆い隠す型**の穴
 - **直接原因2（Google CSE自体が新規には使えなくなっていた）**: オーナーがGoogle CSE + Cloud API を新規作成・シークレット設定した後も、実行結果は全滅（`This project does not have the access to Custom Search JSON API`）。Google公式ドキュメント（[developers.google.com/custom-search/v1/overview](https://developers.google.com/custom-search/v1/overview)）に "The Custom Search JSON API is closed to new customers." と明記されており、**2025年に新規プロジェクトへの提供自体が停止されていた**と判明（コンソール上は有効化操作ができ「APIが有効です」と表示されるが実際の呼び出しは拒否される・設定ミスではない）

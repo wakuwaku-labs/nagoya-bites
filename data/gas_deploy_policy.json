@@ -9,8 +9,8 @@
     "_max_not_deployed_days": "『旧コードで動いている』と確定した状態が何日続いたら Issue を起票するか。デプロイはオーナー本人の操作なので、当日中の起票は急かしすぎる。2日連続＝週末を挟んでも気づける位置。",
     "indeterminate_never_alerts": true,
     "_indeterminate_never_alerts": "その日のデータがたまたま分岐を通らず痕跡が出なかった日（indeterminate）では絶対に鳴らさない。オオカミ少年化させない（ISSUE-084 原則6）。鳴らすのは『旧コード確定が続いたとき』と『ルーチンが報告してこないとき』だけ。",
-    "max_stale_reference_days": 4,
-    "_max_stale_reference_days": "fetch_ga4_views.js は D-2（JSTの2日前）を取るため、正常な dailyReference.date と今日の差分は2日。CIが2日以上スキップされると差分が4日以上になる（＝連続2回以上 CI が走らなかった）。この閾値を超えたら gas-deploy-watchdog.yml が原因つきで Issue を起票する（SEO-075）。"
+    "max_stale_reference_days": 3,
+    "_max_stale_reference_days": "data/site_metrics.json の dailyReference.date が何日以上古いと stale_reference 異常とするか（SEO-075 acceptance 5）。fetch_ga4_views.js は D-2（2日前）の確定値を書くため、3日以上は CI が1日以上止まっている証拠。参照値が無い日や読めない日は鳴らさない（鳴らさない側に倒す）。"
   },
   "_pending_fixes": "GAS へ未反映の修正。デプロイ操作1回でまとめて反映される。反映が確認できたらこの配列を空にする（＝そのとき watchdog は恒久的に静かになる）。",
   "signals": [
