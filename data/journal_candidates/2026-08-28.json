@@ -1,0 +1,519 @@
+{
+  "date": "2026-08-28",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c6",
+      "title_draft": "名駅の秋スイーツ、9月解禁 — 平日のコスパが高い理由",
+      "verdict": "PASS",
+      "total": 100,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        },
+        {
+          "kw": "スイーツ",
+          "feature": "features/nagoya-sweets.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 7件 (旬,時期,需要,予約,仕入れ,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 3件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 166字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "タイトルにジャンル語「スイーツ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c7",
+      "title_draft": "名駅スイーツの秋は9月解禁 — 予約が取れる曜日とコスパ",
+      "verdict": "PASS",
+      "total": 100,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        },
+        {
+          "kw": "スイーツ",
+          "feature": "features/nagoya-sweets.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 7件 (旬,時期,需要,予約,仕入れ,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 145字 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "タイトルにジャンル語「スイーツ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c8",
+      "title_draft": "名駅の秋フレンチはランチが得 — 9月のコスパの読み方",
+      "verdict": "PASS",
+      "total": 100,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        },
+        {
+          "kw": "フレンチ",
+          "feature": "features/nagoya-french-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 7件 (旬,時期,需要,予約,仕入れ,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 151字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "タイトルにジャンル語「フレンチ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c9",
+      "title_draft": "名駅の9月は新店ラッシュ — 秋の予約カレンダーとコスパ",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (旬,需要,予約,仕入れ,価格帯) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 142字 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -10 / search_intent -2"
+    },
+    {
+      "id": "c10",
+      "title_draft": "名駅の秋アフタヌーンティーは平日が得 — コスパの根拠",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 7件 (旬,時期,需要,予約,仕入れ,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 133字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -3 / search_intent -2"
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c6",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c6",
+      "theme": "seasonal",
+      "title_draft": "名駅の秋スイーツ、9月解禁 — 平日のコスパが高い理由",
+      "lead_draft": "名古屋の秋メニューは9月1日前後に一斉に解禁される。名駅18階のアフタヌーンティーが9月1日、栗とぶどうのスイーツブッフェが9月3日、秋のフレンチが9月11日、地下街のひつまぶし新店が9月4日。そして揃って平日と土日祝で300〜500円の価格差が引かれている。これは値引きではなく、回転の読みやすさを最初から価格に織り込んだ設計だ。",
+      "angle": "秋メニューの解禁時期が9月頭に寄るのは仕入れ契約と価格帯の改定が月次サイクルだから。平日と土日祝の差は、90分1回転のブッフェで満席が読める土日祝を強気に置き、席を埋めたい平日を下げた結果＝別商品の設計。需要が立ち上がる前の9月上旬平日は予約も取りやすく、旬の初物が同じ値段で食べられる業界人の狙い目。",
+      "main_store": {
+        "name": "The Living Room with SKY BAR 三井ガーデンホテル名古屋プレミア18F",
+        "id": "J001153090",
+        "area": "名駅",
+        "genre": "各国料理"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 名古屋「The Living Room with SKY BAR」秋の恵み【栗×かぼちゃ×キャラメル】のアフタヌーンティー",
+          "url": "https://prtimes.jp/main/html/rd/p/000000811.000010391.html",
+          "date": "2026-08-04"
+        },
+        {
+          "label": "マイナビニュース: 名古屋駅地下街「MEICHIKA」にひつまぶし専門店「まるや本店」がグランドオープン",
+          "url": "https://news.mynavi.jp/article/20260825-4866331/",
+          "date": "2026-08-25"
+        },
+        {
+          "label": "日本経済新聞: ベストブライダル、ストリングスホテル名古屋で「栗とぶどうのスイーツブッフェ〜Autumn Harvest〜」を開催",
+          "url": "https://www.nikkei.com/article/DGXZRSP711046_Q6A810C2000000/",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "PR TIMES: ストリングスホテル名古屋『秋の北海道コース』（開業10周年記念）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001341.000004975.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "CakeNews: ストリングスホテル名古屋 栗＆ブドウのスイーツビュッフェ、9月3日より木金土日祝日限定",
+          "url": "https://cake-news.com/region/chubu/aichi/2026/08/292756/",
+          "date": "2026-08-15"
+        },
+        {
+          "label": "OZmall: 名古屋ホテルの新作秋アフタヌーンティー6選",
+          "url": "https://www.ozmall.co.jp/restaurant/afternoontea/43475/",
+          "date": "2026-08-20"
+        }
+      ]
+    },
+    {
+      "id": "c7",
+      "theme": "seasonal",
+      "title_draft": "名駅スイーツの秋は9月解禁 — 予約が取れる曜日とコスパ",
+      "lead_draft": "ストリングスホテル名古屋の栗とぶどうのスイーツブッフェは9月3日から、木・金・土日祝のみの開催。木金は4,300円、土日祝は4,800円。500円差だが、この曜日設定こそがブッフェという商売の本体だ。限定日開催は仕込み量を確定させるための設計で、客側から見れば木金が最も条件のいい日になる。",
+      "angle": "限定日開催のブッフェは仕入れと仕込みの量を確定させるための設計。満席が読める土日祝と読めない木金で価格帯を分けるのは回転の差を吸収するため。需要が立ち上がる前の9月上旬は予約が薄く、旬の初物が最も取りやすい時期になる。業界人の見方ではここが年間で一番の狙い目。",
+      "main_store": {
+        "name": "ストリングスホテル 名古屋 Chef's Live Kitchen シェフズ ライブ キッチン",
+        "id": "J001263165",
+        "area": "名駅",
+        "genre": "スイーツ"
+      },
+      "sources": [
+        {
+          "label": "日本経済新聞: ベストブライダル、ストリングスホテル名古屋で「栗とぶどうのスイーツブッフェ〜Autumn Harvest〜」を開催",
+          "url": "https://www.nikkei.com/article/DGXZRSP711046_Q6A810C2000000/",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "PR TIMES: ストリングスホテル名古屋『栗とぶどうのスイーツブッフェ〜Autumn Harvest〜』",
+          "url": "https://prtimes.jp/main/html/rd/p/000001338.000004975.html",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "マイナビニュース: 名古屋駅地下街「MEICHIKA」にひつまぶし専門店「まるや本店」がグランドオープン",
+          "url": "https://news.mynavi.jp/article/20260825-4866331/",
+          "date": "2026-08-25"
+        },
+        {
+          "label": "CakeNews: ストリングスホテル名古屋 栗＆ブドウのスイーツビュッフェ、9月3日より木金土日祝日限定",
+          "url": "https://cake-news.com/region/chubu/aichi/2026/08/292756/",
+          "date": "2026-08-15"
+        },
+        {
+          "label": "OZmall: 名古屋ホテルの新作秋アフタヌーンティー6選",
+          "url": "https://www.ozmall.co.jp/restaurant/afternoontea/43475/",
+          "date": "2026-08-20"
+        }
+      ]
+    },
+    {
+      "id": "c8",
+      "theme": "seasonal",
+      "title_draft": "名駅の秋フレンチはランチが得 — 9月のコスパの読み方",
+      "lead_draft": "ストリングスホテル名古屋のグラマシースイートが、9月11日から秋の北海道コースを始める。ランチ平日4,840円、ディナー平日7,480円。同じ食材、同じ厨房で2,600円以上の差が出る。この差はサービス人員と滞在時間の差であって、皿の中身の差ではない。秋のコースを選ぶとき、業界人がまず見るのはここだ。",
+      "angle": "ランチとディナーの価格帯の差は原価ではなく人件費と滞在時間、つまり回転の差。秋コースは仕入れが同じなのでランチの方が原価率が高く客側が得をする。需要が立ち上がる前の9月上旬は予約が薄く、旬の初物を平日ランチで押さえるのが最も条件がいい時期。",
+      "main_store": {
+        "name": "ストリングスホテル 名古屋 GRAMERCY SUITE グラマシースイート",
+        "id": "J001263167",
+        "area": "名駅",
+        "genre": "フレンチ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: ストリングスホテル名古屋『秋の北海道コース』（開業10周年記念）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001341.000004975.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "マイナビニュース: 名古屋駅地下街「MEICHIKA」にひつまぶし専門店「まるや本店」がグランドオープン",
+          "url": "https://news.mynavi.jp/article/20260825-4866331/",
+          "date": "2026-08-25"
+        },
+        {
+          "label": "日本経済新聞: ベストブライダル、ストリングスホテル名古屋で秋のスイーツブッフェを開催",
+          "url": "https://www.nikkei.com/article/DGXZRSP711046_Q6A810C2000000/",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "CakeNews: ストリングスホテル名古屋 栗＆ブドウのスイーツビュッフェ",
+          "url": "https://cake-news.com/region/chubu/aichi/2026/08/292756/",
+          "date": "2026-08-15"
+        },
+        {
+          "label": "OZmall: 名古屋ホテルの新作秋アフタヌーンティー6選",
+          "url": "https://www.ozmall.co.jp/restaurant/afternoontea/43475/",
+          "date": "2026-08-20"
+        }
+      ]
+    },
+    {
+      "id": "c9",
+      "theme": "seasonal",
+      "title_draft": "名駅の9月は新店ラッシュ — 秋の予約カレンダーとコスパ",
+      "lead_draft": "名古屋の9月は、秋メニューの解禁と名駅の新店開業が重なる。9月1日にアフタヌーンティー、9月3日にスイーツブッフェ、9月4日に地下街メイチカのひつまぶし専門店、9月11日に秋のフレンチ。約2週間に集中するこの並びは偶然ではなく、飲食業のメニュー改定と出店のサイクルが揃っているからだ。",
+      "angle": "9月頭に解禁と開業が集中するのは、仕入れ契約・価格帯の改定・人員配置がいずれも月次サイクルで動くから。解禁直後は需要が立ち上がる前で予約が薄く、オペも慣らし期間のため席に余裕がある。旬の初物を同じ価格帯で取れる9月上旬平日が、業界人の見る狙い目。",
+      "main_store": {
+        "name": "The Living Room with SKY BAR 三井ガーデンホテル名古屋プレミア18F",
+        "id": "J001153090",
+        "area": "名駅",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "マイナビニュース: 名古屋駅地下街「MEICHIKA」にひつまぶし専門店「まるや本店」がグランドオープン",
+          "url": "https://news.mynavi.jp/article/20260825-4866331/",
+          "date": "2026-08-25"
+        },
+        {
+          "label": "PR TIMES: 名古屋「The Living Room with SKY BAR」秋のアフタヌーンティー",
+          "url": "https://prtimes.jp/main/html/rd/p/000000811.000010391.html",
+          "date": "2026-08-04"
+        },
+        {
+          "label": "日本経済新聞: ベストブライダル、ストリングスホテル名古屋で秋のスイーツブッフェを開催",
+          "url": "https://www.nikkei.com/article/DGXZRSP711046_Q6A810C2000000/",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "CakeNews: ストリングスホテル名古屋 栗＆ブドウのスイーツビュッフェ",
+          "url": "https://cake-news.com/region/chubu/aichi/2026/08/292756/",
+          "date": "2026-08-15"
+        },
+        {
+          "label": "OZmall: 名古屋ホテルの新作秋アフタヌーンティー6選",
+          "url": "https://www.ozmall.co.jp/restaurant/afternoontea/43475/",
+          "date": "2026-08-20"
+        }
+      ]
+    },
+    {
+      "id": "c10",
+      "theme": "seasonal",
+      "title_draft": "名駅の秋アフタヌーンティーは平日が得 — コスパの根拠",
+      "lead_draft": "名駅18階のラウンジが9月1日から秋のアフタヌーンティーを始める。栗とかぼちゃとキャラメル、平日4,700円・土日祝5,000円で要予約。14時から16時半、最終入店は15時。この「最終入店15時」という一行に、ホテルラウンジがどう席を回しているかが全部書いてある。",
+      "angle": "最終入店の締切は滞在時間を固定して回転を1本に確定させるための線引き。仕入れと人員を読み切るために席数を絞る代わりに、需要の薄い平日は価格帯を300円下げて埋める。9月上旬は秋の旬がまだ需要として立ち上がっておらず、予約が最も取りやすい時期になる。",
+      "main_store": {
+        "name": "The Living Room with SKY BAR 三井ガーデンホテル名古屋プレミア18F",
+        "id": "J001153090",
+        "area": "名駅",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 名古屋「The Living Room with SKY BAR」秋の恵み【栗×かぼちゃ×キャラメル】のアフタヌーンティー",
+          "url": "https://prtimes.jp/main/html/rd/p/000000811.000010391.html",
+          "date": "2026-08-04"
+        },
+        {
+          "label": "マイナビニュース: 名古屋駅地下街「MEICHIKA」にひつまぶし専門店「まるや本店」がグランドオープン",
+          "url": "https://news.mynavi.jp/article/20260825-4866331/",
+          "date": "2026-08-25"
+        },
+        {
+          "label": "日本経済新聞: ベストブライダル、ストリングスホテル名古屋で秋のスイーツブッフェを開催",
+          "url": "https://www.nikkei.com/article/DGXZRSP711046_Q6A810C2000000/",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "OZmall: 名古屋ホテルの新作秋アフタヌーンティー6選",
+          "url": "https://www.ozmall.co.jp/restaurant/afternoontea/43475/",
+          "date": "2026-08-20"
+        },
+        {
+          "label": "CakeNews: ストリングスホテル名古屋 栗＆ブドウのスイーツビュッフェ",
+          "url": "https://cake-news.com/region/chubu/aichi/2026/08/292756/",
+          "date": "2026-08-15"
+        }
+      ]
+    }
+  ]
+}
