@@ -2250,6 +2250,36 @@
       "brand_reason": "重複 — 同種の助言は 2026-08-20 / 08-21 / 08-24 に判定済み（SEO-071 で明文化: SEO-067＝Bing Webmaster Tools 接続が blocked のため Bing 側の検索実データが1件も無く、『Bing向けKW』は当て推量にしかならない＝制約10違反）。加えて Yahoo! JAPAN は Google のインデックスを使うため『BingやYahooで検索されやすいKW』という前提自体が成立しない。助言の有効部分（シーン語×エリア語の検索面を広げる）は SEO-068（P1 ready・discovery意図クエリの計画的拡張）が既に保持しており、KWマスタは data/journal_seo_keywords.json ＋ scripts/journal_seo_kw.js --suggest が正本",
       "category": null,
       "fingerprint": "d27a155ff19fd0a2"
+    },
+    {
+      "id": null,
+      "date": "2026-08-29",
+      "source": "line-daily",
+      "advice": "🔴 訪問者32人に対し予約ボタンクリック0回、店舗詳細を開いたのも0回と、行動イベントが極めて少ないです。👉 トップページ(index.html)の各店舗カードに「詳細を見る」ボタンを追加し、店舗詳細モーダルへの導線を強化しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複 — 打ち手そのものが SEO-041（旧 SEO-010）で判定完了済み。SEO-041 は status:wont_fix で『同種の提案が今後 SEO アドバイスで再来したら、この判定を根拠に duplicate として処理する』と明記している。本日再実測しても結論は不変: index.html:9505 の店舗カードは既にカード全体が onclick=\"openM(idx)\" で、role=\"button\" / aria-label=\"<店名>の詳細を見る\" を持つ＝『詳細を見る』は既に実装済みの動作であり、ボタンを足すとカード全体クリックと完全に同一動作の導線が二重になり、SEO-037(done)の44x44マップボタン・SEO-013(done)の予約ボタンのCTA領域を圧迫して視認性をむしろ下げる。加えて症状側の前提『行動イベント0回』は SEO-072（P1・ready）で確定済みの計測の穴: GAS analyze() は cta_click / cta_gmap_click / modal_open の完全一致3種しか数えず、当日の閲覧TOP5は特集3本＋ジャーナル1本＋トップ1本＝5面中4面がそもそもイベントを発火できない。n=32 でも有意な信号にならない",
+      "category": null,
+      "fingerprint": "e2707ea90c8ad72c"
+    },
+    {
+      "id": null,
+      "date": "2026-08-29",
+      "source": "line-daily",
+      "advice": "🟡 Bing検索からの流入が18訪問と最も多いですが、成果に繋がっていません。👉 「nagoya-solo-dining」特集ページの内容を充実させ、Bing検索で上位表示されているKWでのユーザーニーズに深く応える情報を追加しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下① 打ち手の根拠が原理的に存在しない（制約10）: 『Bing検索で上位表示されているKW』を知る手段が現時点で1つも無い。SEO-067（Bing Webmaster Tools 接続）はオーナー本人の操作待ちで blocked のため Bing 側の検索実データは1件も無く、SEO-071 で同じ理由により既に却下理由が確定している。当て推量のKWで最も読まれている常設特集の本文を書き換えることになる。② 改善対象が逆: solo-dining は『充実させるべき弱いページ』ではなく、サイトで最も強いページかつ他特集の参照モデルである。GSC実測（2026-07-30〜08-26）で 93クリック / 1,895表示 / CTR 4.91% / 平均7.8位＝全ページ中クリック1位、features 全29本の総表示の34%を1本で稼いでいる。SEO-060（done）は15本のシーンKWを実測比較し『差は本文量でも掲載店数でもなく見出し構造で、solo-dining（h2×5・h3×10・4,833字）が唯一の成功例』と結論しており、伸ばすべきは本ページではなく順位13〜29位で埋もれている残り14本＝SEO-068（P1・ready・discovery意図クエリの計画的拡張）が既に保持している。③ 『一人飲みで成果が取れていない』は SEO-059 で検証済みかつ否定済み: 地名あり（名古屋 一人飲み 等）は順位9.4の期待CTR約2.6〜3%に対し実測6.29%＝期待の2倍以上で機能しており、CTRを押し下げているのは地名なしの全国クエリ『一人飲み』単体（本日のGSCでも258表示・3クリック・4.1位）で、これは検索者の大半が名古屋在住でないための正常な低CTR。ここを取りに行くには title から地名の重みを下げるしかなく、全国区の一般語で大手ポータルと殴り合う Strategic Skip に該当する。④ 『成果に繋がっていません』の判定自体が SEO-072 の計測の穴に依存しており、Bing流入の成否は現状のイベント計測では原理的に測れない",
+      "category": null,
+      "fingerprint": "89d055e4460799b5"
+    },
+    {
+      "id": null,
+      "date": "2026-08-29",
+      "source": "line-daily",
+      "advice": "🟢 1訪問あたり閲覧が1.1ページと低く、複数ページ閲覧に繋がりづらい状況です。👉 人気ページ「nagoya-solo-dining」や「2026-08-27-sakae-mitsukoshi-kihachi-cafe」に、関連する別の特集ページや店舗への内部リンクを追記し回遊を促しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複 — SEO-070（P2・ready・detected 2026-08-24）がこの助言そのものを、指定された2面（features/ 側と journal/ 側）とも含めて既に保持している。SEO-070 の source は日次 2026-08-23 原文『人気の特集「nagoya-solo-dining」ページに、関連性の高い特集へのリンクを記事の冒頭・中盤・末尾に設置し、回遊を促しましょう』＋週次 2026-08-17〜08-23『journal/の最新記事の冒頭に、関連するfeatures/の特集記事への内部リンクを追記しましょう』の統合で、本日の助言と対象面・打ち手ともに一致する。本日再実測しても未実装の事実は不変: features/nagoya-solo-dining.html の .related より前（本文中）に他特集への実リンクは0本で、グローバルナビの /features/ ・/journal/ ・editorial-policy と自ページのcanonicalのみ。ジャーナル側は SEO-046（done・refresh_journal_related.js）が末尾 .related を自動生成済みで、残る差分は『本文の後ろにしか無い』という SEO-070 の課題そのもの。再起票しない",
+      "category": null,
+      "fingerprint": "95450a89bd6bce8b"
     }
   ]
 }
