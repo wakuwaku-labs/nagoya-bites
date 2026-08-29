@@ -64,6 +64,24 @@ jobs:
         run: node scripts/search_channel_metrics.js
         continue-on-error: true
 
+      - name: 写真の無い手動キュレーション店を HotPepper 公式写真で埋める（写真ソース優先2）
+        # Places 経路の前に走らせる。ここで埋まった店は 写真URL が入るので次の Places ステップが
+        # 対象から外し、API 呼び出しを二重に消費しない。
+        #
+        # なぜ必要か: data/photo_policy.json（オーナー投稿のみ採用）を既存データへ遡及適用した
+        # PR #166 で手動店の写真が 136/155 → 80/155 に落ちた。落ちた分の多くは
+        # コメダ珈琲 本店・喫茶マウンテンのように **オーナーが Google に写真を上げる見込みが
+        # 構造的に無い店** で、Places だけに頼る限り恒久的に空白になる。HotPepper 写真は
+        # 店側が媒体に提出した素材なので出所の観点では常にオーナー由来（写真ソース優先2）。
+        # おまけに imgfp.hotp.jp は期限付き署名URLではないため ISSUE-074 の失効問題も起きない。
+        #
+        # 誤マッチ（支店違い＝ISSUE-090 と同型）は 店名 / 支店名 / 区 の三重ゲートで塞ぐ。
+        # 判定器は tests/hotpepper_photo_fill.test.js が実データで固定している。
+        run: node scripts/fill_missing_photos_from_hotpepper.js
+        env:
+          HOTPEPPER_API_KEY: ${{ secrets.HOTPEPPER_API_KEY }}
+        continue-on-error: true
+
       - name: 手動キュレーション店の実写写真を Google Places API で取得＋失効URLの自動修復
         # ① 写真URLが空 or SVGプレースホルダーの店 → Google Places で店名+住所マッチングして実写取得
         # ② 既に写真URLがある店も **毎回配信の生死を検査**（ISSUE-074）。Places の
