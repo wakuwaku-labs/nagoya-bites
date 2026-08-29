@@ -142,11 +142,26 @@ function promote(url) {
  * HotPepper のキーワード検索。候補を最大20件返す。
  * keyword は店名・住所等を横断で見るため、店名だけで引いて候補側でゲートする。
  */
+let searchDiagLeft = 3;   // 最初の数件だけ生の応答を記録する（原因を運ぶため・ISSUE-084 原則5）
 async function searchShops(keyword) {
   const url = `${HP_BASE}/gourmet/v1/?key=${KEY}&keyword=${encodeURIComponent(keyword)}`
     + `&service_area=${SERVICE_AREA}&format=json&count=20`;
   const j = await getJson(url);
-  const arr = (j && j.results && j.results.shop) || [];
+  const res = (j && j.results) || {};
+  const arr = res.shop || [];
+
+  // 2026-08-29 の CI 初回実行で、121件中119件が0件・自社カタログに ID つきで実在する店まで
+  // 0件・かつ service_area=SA22 を付けているのに京都の店が返る、という結果になった。
+  // 何が返っているのかを見ないと原因を特定できないので、最初の数件だけ応答の要点を出す。
+  // （ローカルには HOTPEPPER_API_KEY が無く、CI でしか確かめられないため）
+  if (searchDiagLeft > 0) {
+    searchDiagLeft--;
+    const err = Array.isArray(res.error) ? res.error.map((e) => `${e.code}:${e.message}`).join(' / ') : '';
+    console.log(`  [診断] keyword="${keyword}" → available=${res.results_available ?? '?'}`
+      + ` returned=${res.results_returned ?? '?'} shops=${Array.isArray(arr) ? arr.length : 0}`
+      + (err ? ` ERROR=${err}` : '')
+      + (Array.isArray(arr) && arr[0] ? ` first="${arr[0].name}" @${(arr[0].address || '').slice(0, 20)}` : ''));
+  }
   return Array.isArray(arr) ? arr : [];
 }
 
@@ -190,6 +205,36 @@ function judgeCandidate(store, shop) {
 const isSvgOrEmpty = (u) => !u || u.includes('/assets/store-figures/');
 const daysSince = (d) => { const t = Date.parse(d); return isNaN(t) ? Infinity : Math.floor((Date.now() - t) / 86400000); };
 
+/**
+ * 既にカタログに入っている HotPepper 店を、API を叩かずに引ける候補集合として返す。
+ *
+ * data/stores.json には build.js が middle_area 単位で取得した HotPepper 店が
+ * 4,796件（ID・店名・住所・写真つき）入っている。これはそのまま「名古屋の HotPepper 索引」
+ * であり、キーワード検索を投げる前にここを照合すれば **API 呼び出しゼロ**で埋まる店がある。
+ *
+ * 2026-08-29 の CI 初回実行で、キーワード検索が 121件中 119件を「該当なし」と返し
+ * （自社カタログに ID つきで実在する「しら河 浄心本店」すら 0件）、さらに
+ * `service_area=SA22` を指定しているのに京都の店が返った。API 経路の原因が判明するまでの間も
+ * この索引経路は独立に機能するため、両方を順に試す。
+ */
+function catalogShops() {
+  const p = path.join(ROOT, 'data', 'stores.json');
+  if (!fs.existsSync(p)) return [];
+  let arr;
+  try { arr = JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return []; }
+  if (!Array.isArray(arr)) return [];
+  return arr
+    .filter((r) => r['ホットペッパーID'] && /imgfp\.hotp\.jp/.test(r['写真URL'] || ''))
+    .map((r) => ({
+      id: r['ホットペッパーID'],
+      name: r['店名'] || '',
+      address: r['住所'] || '',
+      photo: { pc: { l: r['写真URL'] } },
+      urls: { pc: `https://www.hotpepper.jp/str${r['ホットペッパーID']}/` },
+      __fromCatalog: true,
+    }));
+}
+
 async function main() {
   if (!KEY) {
     console.error('❌ HOTPEPPER_API_KEY が未設定です。');
@@ -219,21 +264,36 @@ async function main() {
   console.log(`写真なしの手動/話題店: ${all.filter((s) => isSvgOrEmpty(s['写真URL'])).length}件 → 今回の対象 ${targets.length}件`
     + `${DRY ? '（--dry-run: 書き込みなし）' : ''}\n`);
 
-  let ok = 0, miss = 0;
+  // 索引経路（API不要）。ここで当たった店はキーワード検索を投げない。
+  const catalog = catalogShops();
+  console.log(`カタログ内の HotPepper 店（API不要の照合先）: ${catalog.length}件`);
+
+  let ok = 0, miss = 0, fromCatalog = 0;
   const reasons = {};
   let done = 0;
   for (const s of targets) {
     if (done >= LIMIT) break;
     done++;
     const name = s['店名'] || '';
-    const shops = await searchShops(stripReading(name));
-    await new Promise((r) => setTimeout(r, 250));
 
+    // ① まずカタログ索引を照合（API 呼び出しゼロ）
     let picked = null, last = null;
-    for (const shop of shops) {
+    for (const shop of catalog) {
       const j = judgeCandidate(s, shop);
       if (j.ok) { picked = { shop, judge: j }; break; }
-      if (!last || j.sim > last.sim) last = j;
+      if (j.reason !== 'name-mismatch' && (!last || j.sim > last.sim)) last = j;
+    }
+
+    // ② 当たらなければキーワード検索
+    let shops = [];
+    if (!picked) {
+      shops = await searchShops(stripReading(name));
+      await new Promise((r) => setTimeout(r, 250));
+      for (const shop of shops) {
+        const j = judgeCandidate(s, shop);
+        if (j.ok) { picked = { shop, judge: j }; break; }
+        if (!last || j.sim > last.sim) last = j;
+      }
     }
 
     // 試行した事実を記録（API が応答した回だけ）＝次回のクールダウン基準
@@ -264,8 +324,11 @@ async function main() {
     }
 
     ok++;
+
+    if (picked.shop.__fromCatalog) fromCatalog++;
     const widthNote = /_480\.jpg$/.test(url) ? `${minW}px` : '元サイズ';
-    console.log(`✅ ${name} (一致度${picked.judge.sim}) → HotPepper 写真を採用 [${picked.shop.name}] ${widthNote}`);
+    console.log(`✅ ${name} (一致度${picked.judge.sim}) → HotPepper 写真を採用 [${picked.shop.name}] ${widthNote}`
+      + `${picked.shop.__fromCatalog ? '・カタログ索引' : '・キーワード検索'}`);
     if (DRY) continue;
     s['写真URL'] = url;
     s['ホットペッパーID'] = picked.shop.id || '';
@@ -299,7 +362,7 @@ async function main() {
   }
 
   console.log(`\n=== HotPepper 穴埋め結果 ===`);
-  console.log(`  採用 ${ok}件 / 見送り ${miss}件`);
+  console.log(`  採用 ${ok}件（カタログ索引 ${fromCatalog}件 / キーワード検索 ${ok - fromCatalog}件） / 見送り ${miss}件`);
   if (Object.keys(reasons).length) {
     console.log('  見送りの内訳:');
     for (const [r, n] of Object.entries(reasons).sort((a, b) => b[1] - a[1])) console.log(`    ${r}: ${n}件`);

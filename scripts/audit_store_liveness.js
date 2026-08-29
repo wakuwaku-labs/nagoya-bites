@@ -39,7 +39,53 @@ const tabelogId = (s) => {
 // 単独の「閉店」（例: 「2024年8月の閉店を経て…復活オープン」）は誤検出になるためWARN扱い。
 const HARD_TEXT = /閉店済|掲載保留|閉業|営業終了|閉館|廃業/;
 const WARN_TEXT = /移転|一時休業|休業中/;
-const TEXT_FIELDS = ['おすすめポイント', '備考', 'コメント', '話題コメント', '営業状況', '営業ステータス'];
+
+// 走査対象を「我々自身がその店の状態として宣言した欄」と「編集した地の文」に分ける。
+//
+// 地の文（おすすめポイント等）は、その店の状態を述べているとは限らない。実例（2026-08-28）:
+//   まるや本店 名古屋駅メイチカ店 … 2026年9月4日オープンの**新店**なのに、紹介文の
+//   「2026年2月の名鉄百貨店**閉業**で閉店した名駅店へ寄せられた声に応えた再出店」が
+//   HARD ワードに当たり、閉店確定と判定されていた。閉業したのは別の店である。
+// この誤判定で CI が 2026-08-28 から失敗し続け、以降のステップ（**データの
+// commit & push を含む**）が全て skip されていた＝写真も含め一切書き戻されていなかった。
+const STATUS_FIELDS = ['営業状況', '営業ステータス'];
+const PROSE_FIELDS = ['おすすめポイント', '備考', 'コメント', '話題コメント'];
+const TEXT_FIELDS = [...PROSE_FIELDS, ...STATUS_FIELDS];
+// 状態欄が「この店はこれから開く」と明言しているか。地の文の閉店ワードが
+// 他店・過去の出来事を指しているかを判別する、我々自身が書いた検証可能な事実。
+const OPENING_DECLARED = /オープン|開店|開業/;
+
+/**
+ * テキストからの営業実体判定（純関数・単体テスト対象）。
+ * @returns {null | {level:'hard'|'warn', 種別:string, 詳細:string}}
+ */
+function classifyText(s) {
+  const statusBlob = STATUS_FIELDS.map(k => s[k]).filter(Boolean).join(' ');
+  const proseBlob = PROSE_FIELDS.map(k => s[k]).filter(Boolean).join(' ');
+  const blob = `${statusBlob} ${proseBlob}`;
+
+  // 状態欄に閉店ワード＝我々自身がその店を閉店と宣言している。最も強い自社シグナル
+  if (HARD_TEXT.test(statusBlob)) {
+    return { level: 'hard', 種別: '閉店ワード(状態欄)', 詳細: (statusBlob.match(HARD_TEXT) || [])[0] };
+  }
+  if (HARD_TEXT.test(proseBlob)) {
+    // 地の文の閉店ワード。状態欄が開店を明言しているなら、その語は別店・過去の出来事を
+    // 指しているとみなして WARN に落とす（人が目で確かめられるよう記録は残す）。
+    // 状態欄に何も書かれていなければ従来どおり HARD＝掲載不可。
+    if (OPENING_DECLARED.test(statusBlob)) {
+      return {
+        level: 'warn',
+        種別: '閉店ワード(地の文・状態欄は開店を明言)',
+        詳細: `${(proseBlob.match(HARD_TEXT) || [])[0]} / 状態欄「${statusBlob}」`,
+      };
+    }
+    return { level: 'hard', 種別: '閉店ワード', 詳細: (proseBlob.match(HARD_TEXT) || [])[0] };
+  }
+  if (WARN_TEXT.test(blob)) {
+    return { level: 'warn', 種別: '移転/休業ワード', 詳細: (blob.match(WARN_TEXT) || [])[0] };
+  }
+  return null;
+}
 
 function loadJson(rel) {
   const p = path.join(ROOT, rel);
@@ -101,11 +147,9 @@ function main() {
     }
 
     // 3. テキスト走査
-    const blob = TEXT_FIELDS.map(k => s[k]).filter(Boolean).join(' ');
-    if (HARD_TEXT.test(blob)) {
-      hard.push({ where, 店名: s['店名'], エリア: s['エリア'], 種別: '閉店ワード', 詳細: (blob.match(HARD_TEXT) || [])[0] });
-    } else if (WARN_TEXT.test(blob)) {
-      warn.push({ where, 店名: s['店名'], エリア: s['エリア'], 種別: '移転/休業ワード', 詳細: (blob.match(WARN_TEXT) || [])[0] });
+    const t = classifyText(s);
+    if (t) {
+      (t.level === 'hard' ? hard : warn).push({ where, 店名: s['店名'], エリア: s['エリア'], 種別: t.種別, 詳細: t.詳細 });
     }
   }
 
@@ -132,4 +176,6 @@ function main() {
   console.log('\n[OK] 掲載不可の閉店店は検出されませんでした。');
 }
 
-main();
+module.exports = { classifyText };
+
+if (require.main === module) main();
