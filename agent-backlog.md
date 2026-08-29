@@ -223,6 +223,10 @@
 - **priority**: P2 → **status**: done（2026-08-28 に `docs/daily-posts/feature-nagoya-solo-dining.md` 作成。Note/Instagram/X 3セクション構成・実在店10店確認済み）
 - **detected**: 2026-08-28
 - **resolved**: 2026-09-02
+- **priority**: P2 → **status**: done
+- **detected**: 2026-08-28
+- **resolved**: 2026-08-29
+- **resolved_by**: Orchestrator（自律実行 2026-08-29）— `docs/daily-posts/feature-nagoya-solo-dining.md` を新規作成。Note/Instagram/X の3セクション構成（既存 `_template.md` 準拠）、掲載10店はすべて LOCAL_STORES 実在店（J001144610/J001147583/J001127221/J004492409/J003366509/J001217353/J003649439/J004422360/J003649513/J000392719）、写真候補は公式IG embed / Google Maps ビジネスプロフィール写真を指定（ストック写真不使用・制約9遵守）、日次ジャーナルの生成規則（YYYY-MM-DD.md）と別系統のファイル名（feature-*.md）で分離
 - **category**: SEO / コンテンツ配信
 - **owner**: Marketer
 - **source**: SEOアドバイス(LINE) 2026-08-27 原文「訪問者35人に対し、人気ページは『nagoya-solo-dining』が8回閲覧と、特定のニーズが強いです。👉 features/nagoya-solo-dining の記事をSNS投稿原稿 docs/daily-posts/ に転用し、Note/Instagram/Xで『お一人様向け名古屋グルメ』をテーマに発信しましょう」
@@ -3772,6 +3776,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **acceptance**: `data/journal_seo_keywords.json` の既存シーンKWのうち、`node scripts/journal_seo_kw.js --suggest` で「特集が薄い/未カバー」と判定されたシーン×エリアの組み合わせを洗い出す／未カバー上位から日次ジャーナル・特集記事のテーマ選定に反映（EDT-003「題材選定の型」に準拠、架空店ブロック厳守）／効果測定は `node scripts/gsc_query_intent.js` の discovery行の impressions_share・impressions 絶対値を追跡（総クリックではなく意図別内訳で判定。総クリックは指名検索の増減と混ざるため使わない）／施策実施後、次回GSC更新でdiscovery impressions_shareが2.6%から改善しているかを再評価
 - **ブランドガードレール**: 「シーンKWを増やす」ことが目的化して架空店・薄い特集を量産しないこと。既存特集とのカニバリ回避（SEO-005/SEO-006と同じ判断基準）。実施はEditor/Marketerの編集判断を要するため、本セッションでは診断のみで実装は次サイクルへ
 - **2026-08-22 診断実行（Orchestrator）**: `node scripts/journal_seo_kw.js --suggest` を実行し正常動作を確認。8月の未カバー上位候補として「栄×食べ歩き」（当月シーンに合致・in_season:true）「栄×接待」「栄×個室」「栄×宴会」を機械抽出（各コンボは既存特集への内部リンクも自動解決）。この診断結果は `/journal-today` の題材選定入力として日次サイクルで自動的に消費される設計のため、追加のコード実装は不要。**status は ready のまま据え置く**（施策実施＝日次ジャーナルでの実採用は今後の複数サイクルにわたる継続施策のため、1回のセッションで"done"にする性質のチケットではない）
+- **2026-08-29 実施（Orchestrator）**: [[SEO-077]] に紐づく「nagoya-solo-dining 特集のSNS原稿化」を実施。`docs/daily-posts/feature-nagoya-solo-dining.md` 新規作成（Note/Instagram/X 3セクション・掲載10店は全てLOCAL_STORES実在店）。discovery意図KW「名古屋 一人飲み」は GSC avg 4.8位（[[SEO-059]] 実績）かつ当特集が全PVの20.5%を占める実力を持ちながらSNS配信ゼロだった構造的欠落を補填。次サイクル以降は8月診断の「栄×食べ歩き」（in_season:true）等の日次ジャーナル題材への反映を継続する。**status は ready のまま継続**（多サイクル施策）
 
 - **2026-08-22 診断結果（`node scripts/gsc_query_intent.js` + `--suggest` + `--verify`）**:
   - **discovery シェア現況**: 6.1%（382表示/18クリック/CTR 4.71%/平均順位 6.7）→ 前回集計 2.6% から改善済み
