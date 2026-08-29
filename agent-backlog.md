@@ -6,6 +6,71 @@
 
 ---
 
+### [ISSUE-117] トップの話題店カードの半数が写真ゼロ — 写真採用基準の遡及適用で55店が一度に写真を失い、Places の取得停止に9日間誰も気づかなかった
+
+- **priority**: P1 → **status**: partial（原因特定・誤マッチ修正・HotPepper 経路の新設・停止の検知まで完了。残りは Places の日次上限とポリシー判断でオーナー待ち）
+- **detected**: 2026-08-29（オーナー報告「ちゃんと写真が表示されてない店舗が多数」）
+- **category**: UX / data-quality / 監視
+- **owner**: Builder + DataKeeper
+- **brand-filter**: ✅ 適合 — 実在保証（実写優先）を掲げるサイトのトップ面が空白で埋まっている状態の是正。順位操作・マネタイズのいずれにも当たらない
+- **検証できる事実（実行して確認した内容）**:
+  | 事実 | 出典 |
+  |---|---|
+  | 手動店の写真が 136/155 → 80/155 に落ちた（1コミットで55店が喪失） | `git show 830994f04^:data/manual_stores.json` との差分 |
+  | 失った55店のクレジットは全て個人名（`Yuzuki Arai` / `masayuki nakazato` 等）＝客投稿 | 同上 |
+  | 喪失した55件のURLは現在43件が403（Places署名URLの失効）＝git から戻すことは不可能 | 55件へ Range リクエスト |
+  | 現状 95/4,972店（1.9%）が写真なし。ただし **話題/編集部推薦の 67/140（48%）**に集中している | `data/stores.json` 集計 |
+  | 写真なし86店を Places で引き直すと、43店は「客投稿しかない」で基準不適合、3店は Unicode 正規化の不具合で誤って弾かれていた | Places details 実測 |
+  | Places は日次上限に当たると `OVER_QUERY_LIMIT — You have exceeded your daily request quota` を返し、`写真確認日` が 2026-08-21 で止まっていた | 同上 / `data/manual_stores.json` |
+- **問題の構造**: (1) `data/photo_policy.json` の「オーナー投稿のみ採用」を既存データへ遡及適用したため、**オーナーが Google に写真を上げる見込みが構造的に無い店**（コメダ珈琲 本店・喫茶マウンテン・餃子の王将 大須観音店 等）が恒久的に空白になった。(2) 空白時に出るプレースホルダーが全店共通の 800x380 SVG で、4:3 のカード枠に `object-fit:cover` で入るため左右が切れ「名古屋の一軒」が「屋の一軒」になり、**写真が無いのではなく画像が壊れて見えていた**。(3) 取得ステップは `continue-on-error: true` のためジョブは緑のままで、既存監査は「写真が無い」を基準どおりの正常として通すので、停止が**原理的に検出できなかった**（ISSUE-084 と同型）
+- **今回やったこと**:
+  1. `scripts/lib/photo_policy.js` の `norm()` に NFKC を追加。クレジットの 福 が U+FA1B（CJK互換漢字）で店名側が U+798F だったため、**オーナー本人が上げた写真が客投稿と誤判定**されていた（1文字差で Dice 0.44）
+  2. 店名の同一性判定を `scripts/lib/store_name_match.js` へ集約（Places 経路と新設の HotPepper 経路が同じ判定器を共有）。カタログ4,796件への総当たりで露見した**別店誤判定4件**（「旬彩料理 澤」⊃「彩」/「レストランくるみ」⊃「トラ」/「矢場とん 本店」⊃「昔の矢場とん 大須」/ 括弧内の商業施設名での一致）を、先頭一致＋長さ下限で塞いだ。回帰は `tests/store_name_match.test.js` で固定
+  3. `scripts/fill_missing_photos_from_hotpepper.js` を新設（写真ソース優先2）。imgfp.hotp.jp は署名URLではないため [[ISSUE-074]] の失効問題も起きない。誤マッチは 店名 / 支店名 / 区 の三重ゲートで塞ぐ（`tests/hotpepper_photo_fill.test.js`）
+  4. プレースホルダーを店ごとに 4:3 で描き分け（`nbStoreFigure()`）。切れる問題と「同じ茶色の板が並ぶ」問題を同時に解消
+  5. `data/photo_pipeline_health.json` ＋ `scripts/check_photo_pipeline_health.js` ＋ `.github/workflows/photo-watchdog.yml` を新設。**API が応答したか**を Issue でオーナーへ届ける（ISSUE-084 原則2・5）
+- **Places の日次上限を調べた結果（2026-08-30・当初の見立ては誤りだった）**:
+  - GCP プロジェクトは `optimal-transit-447015-e9`。`places-backend.googleapis.com/billable_default` の `1/d/{project}` に **consumer override 250/日**が入っていた（既定は無制限）。枠のリセットは**太平洋時間の0時＝JST 16:00**
+  - Cloud Monitoring の実測（`serviceruntime.googleapis.com/api/request_count`）:
+
+    | 日 | リクエスト | 備考 |
+    |---|---|---|
+    | 08-17〜08-22 | 975〜1,956/日 | 上限導入前。月予算 ¥6,000 を 08-20 に使い切った |
+    | 08-23〜08-27 | 6〜135/日 | クールダウン導入後 |
+    | 08-28 | 548（うち **146 が上限超過で 4xx**） | 一律7日クールダウンが同じ日に一斉失効する「週次の山」 |
+    | 08-29 | 1,349（うち **720 が 4xx**） | 大半は本調査ぶん |
+
+  - **単価と無料枠**（Cloud Billing Catalog API `services/213C-9623-1402/skus?currencyCode=JPY` の実値。誰でも同じエンドポイントで再現できる）:
+
+    | SKU | 無料枠/月 | 超過分 |
+    |---|---|---|
+    | Places - Text Search | 5,000件 | ¥5.2398/件 |
+    | Places Details | 5,000件 | ¥2.7837/件 |
+    | Places Photo | 1,000件 | ¥1.1462/件 |
+
+  - したがって **月1万件前後までは請求ゼロ**。月予算 ¥6,000（`billingAccounts/015217-3642F5-727561`）に対し、**250/日＝月7,500件は無料枠より低い**。この上限は金を節約せずスループットだけを削っていた
+  - ※ 調査中、無料枠を勘定に入れ忘れて「上限を上げると請求が増える」と2度誤った判断を書いた。**Places のコストは合計リクエスト数ではなく SKU 別に数えること**（単価が倍近く違い、無料枠も別勘定）
+  - 真の律速は「1件あたりの無駄打ち」だった。写真なし約120店を毎週引き直しており、そのうち43店は「Google 側に客投稿写真しか無い」＝何度引いても結果が変わらないと実測済みの店だった
+- **上限に合わせる側の実装（2026-08-30・完了）**:
+  1. **失敗理由に応じた指数バックオフ** — `photo-policy`（基準を満たす写真が無い）は 30→60→90日、`name-mismatch` は 14→30→60日。写真が増えるのは店のオーナーが Google に上げたときで、週単位の事象ではない。判定は `写真失敗回数` と `写真失敗理由` の2つだけ＝第三者が同じ計算を再現できる（制約10）。週次の山も同時にならす
+  2. **SKU 別・月次の枠**（Text Search 4,000 / Details 4,000 / Photo 800 ＝各無料枠の8割）を `data/photo_pipeline_health.json` に積算する。**このスクリプト由来の請求は原理的に ¥0** になり、残る2割は他経路（weekly-places.yml・ジャーナルの写真取得）のために空けてある。合計ではなく SKU 別に数えるのが要点で、合計だけ見ていると単価の高い Text Search に偏ったとき無料枠を先に食い破る
+  2-b. **日次 API 枠 200回**（`DAILY_API_BUDGET`）も併せて持つ。build.yml は push のたびに走る（実測で日十数回）ため、1回あたりの枠だけでは日を守れない。太平洋時間の1日で積算し、使い切った日は**API を1回も叩かずに終了**する
+  3. **上限超過を踏んだら即中断**。拒否され続けても課金対象の試行は積み上がるため
+  4. 上限超過で引けなかった回を「その店の失敗」として記録しない／`写真確認日` も刻まない（一度も正しく引けていない店が7日スキップされる穴を塞いだ）
+  5. 日次上限への到達が **3日続いたら** watchdog が Issue を立てる（1日は平常＝枠を使い切っただけ。続くなら枠が実需に足りておらず人の判断が要る）
+- **残っていること（オーナー判断）**:
+  1. **日次上限 250 → 300 への引き上げ**（オーナーの実行が必要）。300/日＝月9,000件で、SKU が Text Search / Details に分かれる限り両方とも無料枠 5,000 の内側に収まるため **請求は ¥0 のまま**。スクリプト側の SKU 枠（合計 8,800/月）がその内側をさらに保証する。auto mode の分類器がクラウド設定の書き換えをブロックするためエージェントからは実行できない:
+     ```bash
+     gcloud alpha services quota update --service=places-backend.googleapis.com --consumer=projects/optimal-transit-447015-e9 --metric=places-backend.googleapis.com/billable_default --unit='1/d/{project}' --value=300
+     ```
+  2. **ポリシー判断** — オーナー投稿写真が構造的に存在しない店について、客の投稿写真をクレジット明示の「代替枠」として認めるか。オーナーの指示により **HotPepper で埋めた後に判断**する
+- **acceptance**:
+  1. `node scripts/fill_missing_photos_from_hotpepper.js` を CI で1回以上完走させ、採用件数と見送り理由の内訳を確認する
+  2. 埋まらなかった店について 1〜2 の判断を行う
+  3. `node scripts/check_photo_pipeline_health.js` が健全を返し続ける（停止すれば Issue が立つ）
+- **関連**: [[ISSUE-074]]（Places署名URLの失効）/ [[ISSUE-084]]（警報を防音室で鳴らすな）/ [[ISSUE-090]]（記事と無関係な写真が顔になる事故＝支店違いゲートの動機）/ [[ISSUE-116]]（同じ失効が og:image 側に出たもの）
+- **files**: `scripts/lib/store_name_match.js`, `scripts/lib/photo_policy.js`, `scripts/fill_missing_photos_from_hotpepper.js`, `scripts/fetch_manual_store_photos.js`, `scripts/check_photo_pipeline_health.js`, `data/photo_pipeline_health.json`, `index.html`, `.github/workflows/build.yml`, `.github/workflows/photo-watchdog.yml`, `tests/store_name_match.test.js`, `tests/hotpepper_photo_fill.test.js`
+
 ### [SEO-077] 閲覧トップの常設特集（nagoya-solo-dining）が SNS 原稿の対象外で、最も読まれている面が107日間一度も発信されていない
 
 - **priority**: P2 → **status**: ready

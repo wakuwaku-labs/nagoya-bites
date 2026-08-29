@@ -1,0 +1,30 @@
+{
+  "places": {
+    "date": "2026-08-30",
+    "status": "quota_reached",
+    "quota_reached_streak": 1,
+    "reason": "OVER_QUERY_LIMIT — You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account",
+    "api_calls": 3,
+    "quota_day": "2026-08-29",
+    "api_calls_day": 6,
+    "daily_budget": 200,
+    "sku_month": "2026-08",
+    "sku_calls_month": {
+      "textsearch": 2,
+      "details": 1,
+      "photo": 0
+    },
+    "sku_monthly_budget": {
+      "textsearch": 4000,
+      "details": 4000,
+      "photo": 800
+    },
+    "sku_exhausted": "",
+    "skipped_by_daily_budget": false,
+    "responded": 1,
+    "failed": 2,
+    "attempted": 1,
+    "adopted": 0,
+    "recorded_at": "2026-08-29T15:26:12.830Z"
+  }
+}

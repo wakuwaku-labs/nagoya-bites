@@ -61,7 +61,87 @@ var NB_BRAND_FAVS={
   gmap:'https://www.google.com/s2/favicons?domain=maps.google.com&sz=64'
 };
 function nbBrandImg(name,size){var src=NB_BRAND_FAVS[name];if(!src)return '';var s=size||22;return '<img class="brand-fav" src="'+src+'" alt="" width="'+s+'" height="'+s+'" loading="lazy" decoding="async">';}
-function nbImgFallback(img){if(img&&img.src!==NB_IMG_FALLBACK){img.src=NB_IMG_FALLBACK;img.style.objectFit="cover";img.removeAttribute("onerror");img.removeAttribute("srcset");}}
+// 配信が死んだ写真の受け皿。
+// HotPepper の写真URLは店の掲載終了で 404 になる（2026-08-29 実測: 400件サンプルで2.5%
+// ＝カタログ全体で約120店）。ここで全店共通の "NB" 板に落とすと、店名も出ないベージュの
+// 四角が並ぶだけになるため、店が特定できるときは店ごとのプレースホルダーへ落とす。
+var NB_STORE_INDEX = null, NB_STORE_INDEX_SRC = null;
+function nbStoreByName(n){
+  if(!n)return null;
+  // ALL_STORES は TOP50 → 全件ロードで差し替わるので、配列の参照が変わったら作り直す
+  if(NB_STORE_INDEX_SRC!==(typeof ALL_STORES!=="undefined"?ALL_STORES:null)){
+    NB_STORE_INDEX={};
+    try{
+      NB_STORE_INDEX_SRC=ALL_STORES;
+      for(var i=0;i<ALL_STORES.length;i++){var s=ALL_STORES[i];
+        if(s&&s["店名"]&&!NB_STORE_INDEX[s["店名"]])NB_STORE_INDEX[s["店名"]]=s;}
+    }catch(e){return null;}
+  }
+  return NB_STORE_INDEX[n]||null;
+}
+function nbImgFallback(img){
+  if(!img||img.getAttribute("data-nb-fallback"))return;   // 二重発火・無限ループ防止
+  img.setAttribute("data-nb-fallback","1");
+  img.removeAttribute("onerror");
+  img.removeAttribute("srcset");
+  var s=nbStoreByName(img.getAttribute("alt")||"");
+  img.src=s?nbStoreFigure(s):NB_IMG_FALLBACK;
+  img.style.objectFit="cover";
+}
+// ── 写真の無い店のプレースホルダー（店ごとに描き分ける）──────────────────
+// 旧実装は全店で同一の /assets/store-figures/_fallback.svg を出していた。これには2つ欠陥があった:
+//   (1) その SVG は 800x380（約2.1:1）で、カード枠は 4:3。object-fit:cover で左右が大きく
+//       切り落とされ、「名古屋の一軒」が「屋の一軒」、「NAGOYA BITES」が「BITES」になる。
+//       ＝写真が無いのではなく「画像が壊れている」ように見えていた。
+//   (2) 写真の無い店が並ぶと、まったく同じ茶色の板が何枚も続き店の区別がつかない。
+//       2026-08-21 に写真採用基準を遡及適用して 55 店が写真を失って以降、トップの
+//       話題店カードでこれが常態化していた。
+// カード枠と同じ 4:3 で描き、店名・ジャンル・エリアを載せて店ごとに違う面にする。
+// 「無い写真を作る」ことはしない（CLAUDE.md 制約9・AI生成画像の禁止と同じ思想）。
+// これはあくまで「まだ写真が無い」ことを誠実に示すための面。
+function nbSvgEsc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+var NB_FIGURE_CACHE={};
+function nbStoreFigure(r){
+  var name=String((r&&r["店名"])||"名古屋の一軒");
+  // 読み仮名・別名義の括弧書き（「(なごの しばふくや めいえきてん)」）は面に載せない。
+  // 括弧を含めると2行目が読み仮名で埋まり、店名より読みの方が目立つ面になる。
+  var display=name.replace(/[（(][^）)]*[）)]/g,"").replace(/\s+/g," ").trim();
+  if(display)name=display;
+  var genre=String((r&&r["ジャンル"])||"").split("・")[0];
+  var area=String((r&&r["エリア"])||"");
+  var key=name+"|"+genre+"|"+area;
+  if(NB_FIGURE_CACHE[key])return NB_FIGURE_CACHE[key];
+  // 2行までで折り返す。空白があればそこを優先して切る（単語の途中で切らない）
+  var per=name.length>22?13:11;
+  var l1=name,l2="";
+  if(name.length>per){
+    // 空白があればそこで折る。無いときだけ強制改行する（"LA VAGABONDE" が
+    // "LA VAGABOND / E" のように単語の途中で切れるのを防ぐ）。
+    var cut=name.lastIndexOf(" ",per);
+    if(cut<=0)cut=name.lastIndexOf("　",per);
+    if(cut<=0){var nx=name.indexOf(" ",per);cut=nx>0?nx:per;}
+    l1=name.slice(0,cut).trim();
+    l2=name.slice(cut).trim();
+    if(l2.length>per)l2=l2.slice(0,per-1)+"…";
+  }
+  var fs=l1.length<=8?56:(l1.length<=12?46:38);
+  var sub=[genre,area].filter(Boolean).join("　/　");
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="'+nbSvgEsc(name)+'（写真準備中）">'
+    +'<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2a1a08"/><stop offset="100%" stop-color="#5a3a18"/></linearGradient></defs>'
+    +'<rect width="800" height="600" fill="url(#g)"/>'
+    +'<g opacity=".33" fill="none" stroke="#c4a060" stroke-width="2">'
+    +'<ellipse cx="620" cy="470" rx="150" ry="34"/><ellipse cx="620" cy="470" rx="104" ry="23"/></g>'
+    +'<rect x="64" y="150" width="3" height="210" fill="#c4a060" opacity=".9"/>'
+    +'<text x="88" y="186" fill="#c4a060" opacity=".8" font-family="\'Helvetica Neue\',Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>'
+    +'<text x="88" y="'+(l2?258:272)+'" fill="#fff" font-family="\'Hiragino Mincho ProN\',\'Yu Mincho\',\'Noto Serif JP\',serif" font-size="'+fs+'" font-weight="700">'+nbSvgEsc(l1)+'</text>'
+    +(l2?'<text x="88" y="'+(258+fs+10)+'" fill="#fff" font-family="\'Hiragino Mincho ProN\',\'Yu Mincho\',\'Noto Serif JP\',serif" font-size="'+fs+'" font-weight="700">'+nbSvgEsc(l2)+'</text>':'')
+    +(sub?'<text x="88" y="'+(l2?258+fs+56:336)+'" fill="#c4a060" opacity=".85" font-family="\'Hiragino Sans\',\'Noto Sans JP\',sans-serif" font-size="22">'+nbSvgEsc(sub)+'</text>':'')
+    +'<text x="88" y="530" fill="#c4a060" opacity=".55" font-family="\'Hiragino Sans\',\'Noto Sans JP\',sans-serif" font-size="19">写真準備中</text>'
+    +'</svg>';
+  var uri="data:image/svg+xml;utf8,"+encodeURIComponent(svg);
+  NB_FIGURE_CACHE[key]=uri;
+  return uri;
+}
 // 画像 CDN プロキシ — wsrv.nl 経由でリサイズ + シャープニング + WebP 配信。
 // Hot Pepper API は店舗によって L サイズが _238.jpg / _480.jpg と分かれるため、
 // 一旦 _480.jpg への昇格を試み、404 時は wsrv.nl の default パラメータで元 URL にフォールバック。
@@ -9451,7 +9531,7 @@ function buildCardHtml(r) {
     var idx = ALL_STORES.indexOf(r);
     var verified = nbVerifiedReel(r);
     var reel = (verified && verified.kind === 'reel') ? verified : null;  // カードに出すのは動画のみ
-    var photo = r['写真URL'] || '/assets/store-figures/_fallback.svg';
+    var photo = r['写真URL'] || nbStoreFigure(r);
     var hpUrl = hotpepperUrl(r);
     var genre = (r['ジャンル']||'').split('・')[0];
     var pref = r['都道府県'] || '';
@@ -9664,7 +9744,7 @@ function openM(i) {
   if (window.event && window.event.target && window.event.target.closest && window.event.target.closest('.fav-btn')) return;
   var r = ALL_STORES[i];
   trackEvent('modal_open', {store_name: r['店名'], genre: r['ジャンル'], area: r['エリア']});
-  var photo = r['写真URL'] || '/assets/store-figures/_fallback.svg';
+  var photo = r['写真URL'] || nbStoreFigure(r);
   var hpUrl = hotpepperUrl(r);
   renderMhi(r, photo);
   document.getElementById('mg').textContent = r['ジャンル'] || '';
@@ -10003,7 +10083,7 @@ function openM(i) {
           +'<div class="modal-related-stores">'+relStores.map(function(rs3){
             var rst=rs3.s, rsn=rst['店名']||'';
             var rsAlt=rsn.replace(/"/g,'&quot;');
-            var rsPhoto=rst['写真URL']||'/assets/store-figures/_fallback.svg';
+            var rsPhoto=rst['写真URL']||nbStoreFigure(rst);
             return '<button class="modal-rsc" onclick="closeM();setTimeout(function(){openM('+rs3.i+');},50)" aria-label="'+rsAlt+'の詳細を見る">'
               +'<img class="modal-rsc-img" src="'+nbImage(rsPhoto,480)+'" srcset="'+nbSrcset(rsPhoto,[240,480])+'" sizes="150px" alt="'+rsAlt+'" loading="lazy" decoding="async" width="160" height="100" onerror="nbImgFallback(this)">'
               +'<span class="modal-rsc-body"><span class="modal-rsc-name">'+rsn+'</span>'
@@ -10077,7 +10157,7 @@ function renderMhi(r, primaryPhoto) {
     var url = (r[f.key] || '').trim();
     if (url && !seen[url]) { photos.push({url: url, label: f.label}); seen[url] = true; }
   });
-  if (photos.length === 0) photos.push({url: '/assets/store-figures/_fallback.svg', label: ''});
+  if (photos.length === 0) photos.push({url: nbStoreFigure(r), label: ''});
   MHI_PHOTOS = photos;
   MHI_INDEX = 0;
   var storeName = r['店名'] || '店舗';
@@ -11061,7 +11141,7 @@ function buildRanking() {
   scrollEl.innerHTML = ranked.map(function(item, i) {
     var r = item.store;
     var idx = ALL_STORES.indexOf(r);
-    var photo = r['写真URL'] || '/assets/store-figures/_fallback.svg';
+    var photo = r['写真URL'] || nbStoreFigure(r);
     var genre = (r['ジャンル']||'').split('・')[0];
     return '<div class="rank-card" onclick="openM(' + idx + ')" role="button" tabindex="0">'
       + '<span class="rank-num">' + (i+1) + '</span>'
@@ -11098,7 +11178,7 @@ function buildTrendRanking() {
   }
   scrollEl.innerHTML = picks.map(function(r, i) {
     var idx = ALL_STORES.indexOf(r);
-    var photo = r['写真URL'] || '/assets/store-figures/_fallback.svg';
+    var photo = r['写真URL'] || nbStoreFigure(r);
     var genre = (r['ジャンル']||'').split('・')[0];
     var fresh = freshLabel(r['今日の話題鮮度']);
     var media = parseInt(r['今日の話題媒体数']) || 0;
@@ -11152,7 +11232,7 @@ function renderHistory() {
     var store = ALL_STORES.find(function(s) { return s['店名'] === name; });
     if (!store) return;
     var idx = ALL_STORES.indexOf(store);
-    var photo = store['写真URL'] || '/assets/store-figures/_fallback.svg';
+    var photo = store['写真URL'] || nbStoreFigure(store);
     cards.push('<div class="hist-card" onclick="openM(' + idx + ')" role="button" tabindex="0">'
       + '<img src="' + photo + '" alt="' + name + '" loading="lazy" decoding="async" width="240" height="140" onerror="nbImgFallback(this)">'
       + '<div class="hist-name">' + name + '</div>'

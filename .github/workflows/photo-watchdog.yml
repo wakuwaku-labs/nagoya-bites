@@ -1,0 +1,147 @@
+name: NAGOYA BITES — 店舗写真取得パイプライン 生存監視
+
+# なぜこのワークフローが必要か（2026-08-29 / ISSUE-084 の再適用）:
+#   Google Places API の課金上限に当たって以降、日次の写真取得は毎回
+#     OVER_QUERY_LIMIT — "You have exceeded your daily request quota for this API."
+#   を返し、写真を1件も取得できていなかった。にもかかわらず build.yml のその
+#   ステップは continue-on-error: true で回るため **ジョブは緑のまま**で、
+#   オーナーがサイトを見るまで9日間誰も気づかなかった。
+#
+#   既存のデータ監査（audit_photo_policy.js / audit_photo_coverage.js）は
+#   この故障を**原理的に検出できない**。どちらも「いま入っているデータが基準どおりか」を
+#   見るもので、「写真が無い」は基準どおりの正常だからである。壊れているのは取得経路の側で、
+#   その事実はデータの中に一切現れない。
+#
+#   ISSUE-084 の教訓（警報を防音室で鳴らすな）をそのまま適用する:
+#     1. 監視は監視対象と別の場所で回す  → 取得ステップと同じジョブに相乗りしない
+#     2. 通知は out-of-band に出す        → Issue 起票（GitHub が既定でオーナーにメールする）
+#     3. 「気づけるはず」を検知と数えない → 人がサイトやログを見に行かなくても届く
+#     5. 原因つきで出す                   → API が返した文面をそのまま Issue に載せる。
+#                                          「課金が止まっている」はコードでは直せないため、
+#                                          通知が唯一の復旧経路になる（原則4）
+#
+#   検知するのは「写真の無い店がある」ことではない。それは平常
+#   （オーナー投稿写真が存在しない店は data/photo_policy.json のとおり写真なしが正解）。
+#   検知するのは **取得経路が働けていないこと** だけ。この線引きがオオカミ少年化を防ぐ（原則6）。
+
+on:
+  schedule:
+    # 06:00 UTC = 15:00 JST。build.yml の日次実行より後になるよう遅らせている
+    # （心拍が当日ぶん書かれてから見る）。
+    - cron: '0 6 * * *'
+  workflow_dispatch: # 手動確認・復旧後の即時クローズ用
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 生存確認
+        id: check
+        run: |
+          # 異常なら exit 1 になるので、結果を握って後段に渡す
+          set +e
+          node scripts/check_photo_pipeline_health.js --json > /tmp/photo-health.json
+          set -e
+          echo "----- 判定結果 -----"
+          node scripts/check_photo_pipeline_health.js || true
+
+      - name: 異常なら Issue を起票/更新、復旧していればクローズ
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/photo-health.json', 'utf8'));
+            const label = 'photo-watchdog';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'open', labels: label, per_page: 20,
+            });
+            const existing = issues.find(i => i.title.startsWith('🔴 店舗写真の取得'));
+
+            // ---- 復旧している場合: 開いている Issue を閉じる（人の手を煩わせない）----
+            if (r.ok) {
+              if (existing) {
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: existing.number,
+                  body: `✅ 復旧を確認しました（JST ${r.today_jst}）。自動クローズします。`,
+                });
+                await github.rest.issues.update({
+                  owner, repo, issue_number: existing.number, state: 'closed',
+                });
+                core.info(`Issue #${existing.number} を復旧クローズしました。`);
+              } else {
+                core.info('健全。Issue の起票は不要です。');
+              }
+              return;
+            }
+
+            // ---- 異常あり: 起票 or 更新 ----
+            const kinds = [...new Set(r.problems.map(p => `${p.provider}:${p.kind}`))].join(', ');
+            const title = `🔴 店舗写真の取得が止まっています（${kinds}）`;
+
+            const lines = [];
+            lines.push('店舗写真の取得パイプラインの **生存確認に失敗**しました（JST ' + r.today_jst + ' 時点）。');
+            lines.push('');
+            lines.push('> このパイプラインが止まっていると、**新しく追加した店の写真が永久に付きません**。');
+            lines.push('> しかも既存のデータ監査は「写真が無い」を基準どおりの正常として通すため、');
+            lines.push('> この Issue が唯一の気づく手段です（2026-08-29 に9日間の見逃しが実際に起きました）。');
+            lines.push('');
+            lines.push('## 検出内容');
+            for (const p of r.problems) {
+              lines.push(`- **${p.provider} / ${p.kind}**`);
+              lines.push(`  - 状況: ${p.detail}`);
+              lines.push(`  - 対処: ${p.fix}`);
+            }
+            if (r.warnings.length) {
+              lines.push('');
+              lines.push('## 警告（それ自体は異常ではない）');
+              for (const w of r.warnings) lines.push(`- ${w}`);
+            }
+            lines.push('');
+            lines.push('## 各経路の状態');
+            for (const [k, v] of Object.entries(r.providers)) {
+              lines.push(`- \`${k}\`: ${v.status}${v.date ? `（${v.date} / ${v.silence_days}日前）` : ''}`
+                + (v.reason ? ` — ${v.reason}` : ''));
+            }
+            lines.push('');
+            lines.push('## 確認コマンド');
+            lines.push('```bash');
+            lines.push('node scripts/check_photo_pipeline_health.js');
+            lines.push('node scripts/audit_photo_coverage.js');
+            lines.push('```');
+            lines.push('');
+            lines.push('---');
+            lines.push('この Issue は生存確認が通ると自動でクローズされます（photo-watchdog.yml）。');
+            const body = lines.join('\n');
+
+            if (existing) {
+              await github.rest.issues.update({
+                owner, repo, issue_number: existing.number, title, body,
+              });
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: existing.number,
+                body: `再検出（JST ${r.today_jst}）。現在の問題: ${kinds}`,
+              });
+              core.setFailed(`店舗写真の取得が止まっています: ${kinds}`);
+            } else {
+              const { data: created } = await github.rest.issues.create({
+                owner, repo, title, body, labels: [label],
+              });
+              core.setFailed(`店舗写真の取得停止を検出し Issue #${created.number} を起票しました: ${kinds}`);
+            }

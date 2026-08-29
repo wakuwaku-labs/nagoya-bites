@@ -38,7 +38,7 @@ const path = require('path');
 const https = require('https');
 // 写真の採用基準（オーナー投稿か／解像度）は data/photo_policy.json が唯一の情報源。
 // 判定器を共有することで、この取得経路と audit_photo_policy.js の判定が食い違わないようにする。
-const { loadPolicy, judgePlacesPhoto, attributionName, VERIFIED_ALIASES } = require('./lib/photo_policy');
+const { loadPolicy, judgePlacesPhoto, attributionName } = require('./lib/photo_policy');
 
 const ROOT = path.resolve(__dirname, '..');
 const MANUAL_JSON = path.join(ROOT, 'data', 'manual_stores.json');
@@ -48,6 +48,74 @@ const KEY = process.env.GOOGLE_MAPS_API_KEY || process.env.GOOGLE_PLACES_API_KEY
 // この間隔で十分に取りこぼしを回収できる（週次の weekly-places.yml と同じオーダー）。
 const COOLDOWN_DAYS = 7;
 
+// ── 課金枠に収める設計（2026-08-30・実測にもとづく）─────────────────────────
+// 実測（Cloud Monitoring・serviceruntime request_count）:
+//   2026-08-17〜22 は 975〜1,956 req/日 で、Places の月予算 ¥6,000 を 08-20 に使い切った。
+//   その後 250 req/日 の上限（consumer override）が入り、08-28 は 146件、08-29 は 720件が
+//   上限超過で 4xx 拒否されている。つまり**上限は現に効いており、かつ枠は溢れている**。
+//
+// 一方で ¥6,000/月が買えるリクエスト数は、Text Search が $32/1,000（≒¥4.8/件）、
+// Place Details が $17/1,000（≒¥2.55/件）なので、月 1,250〜2,350件＝**日 40〜78件**でしかない。
+// すなわち 250/日 の上限は既に予算の3〜6倍であり、**上限を上げても請求が増えるだけ**で
+// 写真は増えない。増やすべきは枠ではなく「1件あたりの精度」と「無駄打ちの排除」。
+//
+// そこで3つの制御を入れる:
+//   1. 失敗理由に応じた指数的バックオフ（下記 BACKOFF_DAYS）
+//      … 「Google 側に基準を満たす写真が無い」店を毎週引き直しても結果は変わらない。
+//        写真が増えるのは店のオーナーが Google に上げたときで、それは週単位の事象ではない。
+//   2. 1回の実行あたりの API 呼び出し上限（MAX_API_CALLS_PER_RUN）
+//      … build.yml は push のたびに走る（日十数回）。1回目が日枠を食い潰すと残りは全部 4xx になる。
+//   3. 上限超過を検知したら即座に中断
+//      … 拒否され続けても課金対象の試行は積み上がる。気づいた時点で止めるのが最も安い。
+const BACKOFF_DAYS = {
+  // 店は特定できたが、基準を満たす写真が Google に1枚も無い。
+  // 解消にはオーナーがビジネスプロフィールに写真を上げる必要があり、月単位の事象。
+  'photo-policy': [30, 60, 90],
+  // Google 側で店を特定できない（閉店・未登録・別店しか出ない）。これも週では変わらない。
+  'name-mismatch': [14, 30, 60],
+  'out-of-area': [30, 60, 90],
+  'not-food': [30, 60, 90],
+};
+const BACKOFF_DEFAULT = [7, 14, 30];
+const MAX_BACKOFF_DAYS = 90;
+// 1回の実行で使ってよい API 呼び出し数。
+const MAX_API_CALLS_PER_RUN = 60;
+// 1日（Google の枠がリセットされる太平洋時間の1日）に使ってよい API 呼び出し数。
+//
+// なぜ「1回あたり」だけでは足りないか: build.yml は push のたびに走り、実測で日十数回に及ぶ。
+// 1回60回の枠でも 18回走れば 1,080回になり、Google 側の日次上限を軽く超える。
+// そこで**日をまたいで積算した実績**を data/photo_pipeline_health.json に持ち、
+// 使い切った日は API を1回も叩かずに終了する（＝上限超過の 4xx を出さない）。
+const DAILY_API_BUDGET = 200;
+
+// ── SKU 別・月次の枠（ここが請求を ¥0 に固定する本体）────────────────────────
+// Cloud Billing Catalog API（services/213C-9623-1402 = Places API）から取得した実価格
+// （2026-08-30・JPY建て。第三者が同じエンドポイントを叩けば再現できる）:
+//
+//   SKU                    無料枠/月    超過分の単価
+//   Places - Text Search   5,000件      ¥5.2398/件
+//   Places Details         5,000件      ¥2.7837/件
+//   Places Photo           1,000件      ¥1.1462/件
+//
+// 月予算は ¥6,000 だが、**無料枠の内側に収まっていれば請求は発生しない**。
+// そこで「¥6,000 を何件ぶん使えるか」ではなく「無料枠を超えない」を制御目標にする。
+// 呼び出し数そのものではなく SKU ごとに数えるのが要点で、合計だけを見ていると
+// 単価が倍近い Text Search に偏ったときに無料枠を先に食い破る。
+//
+// 各枠は無料枠の8割に置く（他の経路——weekly-places.yml・ジャーナルの写真取得——も
+// 同じプロジェクトの同じ SKU を消費するため、その分を残す）。
+const SKU_MONTHLY_BUDGET = { textsearch: 4000, details: 4000, photo: 800 };
+const SKU_LABEL = { textsearch: 'Text Search', details: 'Place Details', photo: 'Place Photo' };
+
+/** Google の日次枠がリセットされる太平洋時間の日付（JST 16:00 が境目） */
+function ptDate() {
+  return new Date(Date.now() - 8 * 3600 * 1000).toISOString().slice(0, 10);
+}
+/** 課金の無料枠がリセットされる月（太平洋時間基準） */
+function ptMonth() {
+  return ptDate().slice(0, 7);
+}
+
 if (!KEY) {
   console.error('❌ GOOGLE_MAPS_API_KEY（または GOOGLE_PLACES_API_KEY）が未設定です。');
   console.error('   例: GOOGLE_MAPS_API_KEY=AIza... node scripts/fetch_manual_store_photos.js');
@@ -56,9 +124,36 @@ if (!KEY) {
 
 // Places API が「応答したか」を記録する。ネットワーク障害・キー不正で全滅している状況と、
 // 「API は答えたが条件を満たす写真が無い」を区別するため（前者で写真URLを消さないための安全弁）。
-const apiHealth = { responded: 0, failed: 0 };
+// lastError は「なぜ失敗したのか」を人へ運ぶためのもの（ISSUE-084 原則5）。
+// Places API は課金停止・quota 超過を error_message に平文で書いて返す
+// （実例: "You have exceeded your daily request quota for this API. ...
+//   verify your project has an active billing account"）。
+// これを health ファイルに載せておけば、オーナーは Issue のタイトルを見ただけで
+// 「コードの不具合ではなく課金が止まっている」と分かり、ログを読みに行かなくて済む。
+const apiHealth = {
+  responded: 0, failed: 0, lastStatus: '', lastError: '', calls: 0, quotaExhausted: false,
+  // SKU 別の消費数。請求はここで決まるので、合計とは別に必ず分けて数える
+  sku: { textsearch: 0, details: 0, photo: 0 },
+  skuExhausted: '',
+};
+// 今月これまでの SKU 別消費（心拍ファイルから引き継ぐ）。main() が確定させる。
+let SPENT_MONTH = { textsearch: 0, details: 0, photo: 0 };
+/** その SKU をあと何回叩けるか（今月の無料枠の内側に留まるための残数） */
+const skuLeft = (kind) => SKU_MONTHLY_BUDGET[kind] - SPENT_MONTH[kind] - apiHealth.sku[kind];
+/** その SKU をこれ以上叩いてよいか。使い切っていたら記録して false */
+function skuAllow(kind) {
+  if (skuLeft(kind) > 0) return true;
+  if (!apiHealth.skuExhausted) apiHealth.skuExhausted = kind;
+  return false;
+}
+
+// この実行で使える呼び出し数（1回あたりの枠と、その日の残り枠の小さい方）。main() が確定させる。
+let RUN_BUDGET = MAX_API_CALLS_PER_RUN;
+/** この実行で残っている呼び出し枠 */
+const apiBudgetLeft = () => RUN_BUDGET - apiHealth.calls;
 
 function getJson(url) {
+  apiHealth.calls++;
   return new Promise((resolve) => {
     let body = '';
     const req = https.get(url, { timeout: 8000 }, (res) => {
@@ -68,13 +163,20 @@ function getJson(url) {
           const j = JSON.parse(body);
           // status が返っていれば API 自体は生きている（ZERO_RESULTS でも応答は応答）
           if (j && typeof j.status === 'string' && j.status !== 'REQUEST_DENIED' && j.status !== 'OVER_QUERY_LIMIT') apiHealth.responded++;
-          else apiHealth.failed++;
+          else {
+            apiHealth.failed++;
+            if (j && j.status) apiHealth.lastStatus = String(j.status);
+            if (j && j.error_message) apiHealth.lastError = String(j.error_message);
+            // 日枠超過は「待てば直る」類の失敗ではない。この日はもう1件も通らないので、
+            // 拒否され続けるより即座に止める方が安く、健全性の記録も正確になる。
+            if (j && (j.status === 'OVER_QUERY_LIMIT' || j.status === 'RESOURCE_EXHAUSTED')) apiHealth.quotaExhausted = true;
+          }
           resolve(j);
-        } catch { apiHealth.failed++; resolve(null); }
+        } catch { apiHealth.failed++; apiHealth.lastStatus = 'INVALID_RESPONSE'; resolve(null); }
       });
     });
-    req.on('error', () => { apiHealth.failed++; resolve(null); });
-    req.on('timeout', () => { req.destroy(); apiHealth.failed++; resolve(null); });
+    req.on('error', (e) => { apiHealth.failed++; apiHealth.lastStatus = 'NETWORK_ERROR'; apiHealth.lastError = e.message; resolve(null); });
+    req.on('timeout', () => { req.destroy(); apiHealth.failed++; apiHealth.lastStatus = 'TIMEOUT'; resolve(null); });
   });
 }
 
@@ -140,45 +242,10 @@ async function mapWithConcurrency(items, limit, fn) {
   return out;
 }
 
-// 店名照合用の正規化（空白・記号・一般ジャンル語を除去）
-const GENRE_WORDS = /専門店?|本格|個室|炭火焼?き?|焼き?鳥|焼肉|餃子|ラーメン|拉麺|らーめん|居酒屋|酒場|バー|カフェ|喫茶|鮨|寿司|うなぎ|鰻|天ぷら|割烹|会席|懐石|中華|中国料理|イタリアン|フレンチ|ビストロ|スイーツ|大福|プリン|チーズケーキ|パフェ|ジェラート|クレープ|トースト|フレンチトースト|サンド|カレー|ビュッフェ|ランチ|鉄板焼き?|ホルモン|和牛|神戸牛|名古屋コーチン|おまかせ|カウンター|コース|店|名古屋/g;
-function norm(s) {
-  // 〜/～（波ダッシュ・キャッチコピー装飾）は表記ゆれの典型（例:
-  // 「今日もパスタ日より ボロネ時々カルボ」= HotPepper側「今日もパスタ日より～ボロネーゼ時々カルボ～」
-  // で装飾ぶんの差だけで一致度が0.85を割っていた・2026-08-18実測）なので除去対象に含める。
-  return String(s || '').replace(/[\s　・,，、。\-—–|｜()（）【】「」『』:：〜～]/g, '').toLowerCase();
-}
-function core(s) {
-  return norm(String(s || '').replace(GENRE_WORDS, ''));
-}
-// 文字bigram Dice係数
-function dice(a, b) {
-  if (!a || !b) return 0;
-  if (a === b) return 1;
-  const bg = (s) => { const m = new Map(); for (let i = 0; i < s.length - 1; i++) { const g = s.slice(i, i + 2); m.set(g, (m.get(g) || 0) + 1); } return m; };
-  if (a.length < 2 || b.length < 2) return a === b ? 1 : (a.includes(b) || b.includes(a) ? 0.7 : 0);
-  const A = bg(a), B = bg(b); let inter = 0, total = 0;
-  for (const [g, c] of A) { total += c; if (B.has(g)) inter += Math.min(c, B.get(g)); }
-  for (const [, c] of B) total += c;
-  return (2 * inter) / total;
-}
-// 既知の表記ゆれ許可リストは scripts/lib/photo_policy.js が唯一の置き場所。
-// 店名マッチ（ここ）と写真クレジットのオーナー判定が同じ表を見るようにするため。
-
-// 店名 vs マッチ店名 の一致判定
-function namesMatch(storeName, matchedName) {
-  const sn = norm(storeName), mn = norm(matchedName);
-  if (!mn) return { ok: false, sim: 0 };
-  // 確認済みの表記ゆれ
-  const aliases = VERIFIED_ALIASES[storeName];
-  if (aliases && aliases.some(a => mn.includes(norm(a)))) return { ok: true, sim: 1 };
-  if (sn === mn || sn.includes(mn) || mn.includes(sn)) return { ok: true, sim: 1 };
-  const sc = core(storeName), mc = core(matchedName);
-  // コア（ジャンル語除去後）の包含 or 高Dice
-  if (sc.length >= 2 && mc.length >= 2 && (mc.includes(sc) || sc.includes(mc))) return { ok: true, sim: 0.9 };
-  const sim = Math.max(dice(sn, mn), dice(sc, mc));
-  return { ok: sim >= 0.85, sim: Math.round(sim * 100) / 100 };
-}
+// 店名の同一性判定は scripts/lib/store_name_match.js が唯一の判定器。
+// HotPepper 経由の穴埋め（fill_missing_photos_from_hotpepper.js）と同じ関数を使うことで、
+// 「Places では同一店と認めるが HotPepper では認めない」という経路ごとのブレを無くす。
+const { namesMatch } = require('./lib/store_name_match');
 
 // 飲食店業態か（よもぎ蒸しサロン等の非飲食を弾く）
 const FOOD_TYPES = ['restaurant', 'cafe', 'bar', 'bakery', 'food', 'meal_takeaway', 'meal_delivery'];
@@ -198,6 +265,8 @@ function isInNagoyaArea(addr) {
 //   先頭に返すことが半分あり（2026-08-16 実測 132件中66件）、photos[0] だけを見ると
 //   素人写真しか採れない店が出るため、採用基準（data/photo_policy.json）で上位N枚を走査する。
 async function detailsByPlaceId(placeId) {
+  if (!skuAllow('details')) return null;
+  apiHealth.sku.details++;
   const detailRes = await getJson(
     `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=photos,name,formatted_address,types&language=ja&key=${KEY}`
   );
@@ -225,6 +294,8 @@ function stripReading(name) {
 // （2026-08-18 実測: THE CUPS SAKAE が別店舗「THE CUPS Q」に化けて不採用になっていた）。
 // textsearch は候補を複数返すため、店名ゲートを通る候補が見つかるまで順に試せる。
 async function tryOneQuery(queryStr) {
+  if (!skuAllow('textsearch')) return [];
+  apiHealth.sku.textsearch++;
   const query = encodeURIComponent(queryStr);
   const res = await getJson(
     `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${query}&language=ja&key=${KEY}`
@@ -322,6 +393,8 @@ async function fetchPhoto(name, area, cachedPlaceId, store = {}) {
     };
   }
 
+  if (!skuAllow('photo')) return { reason: 'sku-budget', matchedName: best.matchedName };
+  apiHealth.sku.photo++;
   const cdnUrl = await resolveCdnUrl(
     `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=${picked.photo.photo_reference}&key=${KEY}`
   );
@@ -407,8 +480,23 @@ async function main() {
     if (isNaN(d)) return Infinity;
     return Math.floor((Date.now() - d) / 86400000);
   };
+  /**
+   * その店を次に試すまで空けるべき日数。
+   *
+   * 一律7日だと、同じ日に試した店が**同じ日にまとめて期限切れ**になり、週に一度
+   * 日枠を超える山ができる（2026-08-28 の 548件・うち146件が上限超過で拒否）。
+   * さらに「Google 側に基準を満たす写真が無い」店は何度引いても結果が変わらないため、
+   * その週次の山の大半は結果の分かっている無駄打ちだった。
+   * 失敗の理由と回数で間隔を伸ばし、山も同時にならす。
+   */
+  const backoffDaysFor = (s) => {
+    const n = Math.max(0, Number(s['写真失敗回数']) || 0);
+    if (n === 0) return COOLDOWN_DAYS;
+    const table = BACKOFF_DAYS[s['写真失敗理由']] || BACKOFF_DEFAULT;
+    return Math.min(table[Math.min(n - 1, table.length - 1)], MAX_BACKOFF_DAYS);
+  };
   const inCooldown = (s) => !force && !only && !s.__needsRefetch
-    && daysSince(s['写真確認日']) < COOLDOWN_DAYS;
+    && daysSince(s['写真確認日']) < backoffDaysFor(s);
   let cooldownSkipped = 0;
   const targets = allStores.filter(s => {
     if (!matchesOnly(s) || !(force || only || s.__needsRefetch || !hasRealPhoto(s))) return false;
@@ -416,13 +504,45 @@ async function main() {
     return true;
   });
   if (cooldownSkipped) {
-    console.log(`クールダウン中（前回試行から${COOLDOWN_DAYS}日未満）につきスキップ: ${cooldownSkipped}件\n`);
+    console.log(`バックオフ中につきスキップ: ${cooldownSkipped}件（初回${COOLDOWN_DAYS}日 → 失敗理由に応じて最長${MAX_BACKOFF_DAYS}日）\n`);
   }
+  // ── 課金の無料枠（SKU別・月次）の残りを確認する ──
+  SPENT_MONTH = readSpentMonth();
+  const skuLine = Object.keys(SKU_MONTHLY_BUDGET)
+    .map(k => `${SKU_LABEL[k]} ${SPENT_MONTH[k]}/${SKU_MONTHLY_BUDGET[k]}`).join(' / ');
+  console.log(`今月の消費（無料枠の内側に収める）: ${skuLine}`);
+  if (!force && !only && skuLeft('textsearch') <= 0 && skuLeft('details') <= 0) {
+    console.log('今月の SKU 枠を使い切っています。API を叩かずに終了します（請求を発生させないため）。');
+    writePhotoPipelineHealth({ attempted: 0, adopted: 0, skippedByDailyBudget: true });
+    return;
+  }
+
+  // ── 日次枠の残りを確認する（build.yml は日十数回走るので、1回あたりの枠だけでは日を守れない）──
+  const spentToday = readSpentToday();
+  const dailyLeft = DAILY_API_BUDGET - spentToday;
+  if (!force && !only && dailyLeft <= 0) {
+    console.log(`本日の API 枠（${DAILY_API_BUDGET}回/日・太平洋時間 ${ptDate()}）を使い切っています（消費 ${spentToday}回）。`);
+    console.log('API を叩かずに終了します。残りは枠がリセットされてから処理されます。');
+    writePhotoPipelineHealth({ attempted: 0, adopted: 0, skippedByDailyBudget: true });
+    return;
+  }
+  // この実行で使ってよい回数 = 1回あたりの枠と、日次枠の残りの小さい方
+  RUN_BUDGET = Math.max(0, Math.min(MAX_API_CALLS_PER_RUN, dailyLeft));
+  console.log(`今回の対象 ${targets.length}件 / この実行の API 枠 ${RUN_BUDGET}回`
+    + `（本日の残り ${dailyLeft}回 / 上限 ${DAILY_API_BUDGET}回）\n`);
 
   // ── Phase 2: 対象店だけ Places から取得（place_id キャッシュで API 呼び出しを節約）──
   let done = 0, ok = 0, miss = 0, 復活 = 0, policyRejected = 0;
+  let budgetStopped = false;
   for (const s of targets) {
     if (done >= limit) break;
+    // 上限超過を踏んだ日は、以降どの店を引いても通らない。粘らず止める（課金だけが積み上がるため）
+    if (apiHealth.quotaExhausted) { budgetStopped = true; break; }
+    // 1回の実行で日枠を食い潰さない。1店あたり最悪 2 textsearch + 5 details を使うので、
+    // 残り枠がそれを賄えないところで打ち切る（中途半端に打って失敗扱いにしない）
+    if (apiBudgetLeft() < 8) { budgetStopped = true; break; }
+    // 無料枠を使い切った SKU が出たら止める（ここから先は課金が発生する）
+    if (apiHealth.skuExhausted) { budgetStopped = true; break; }
     done++;
     const name = s['店名'] || '';
     const area = s['エリア'] || '';
@@ -431,7 +551,9 @@ async function main() {
     // 成功/失敗を問わず「試行した」ことを記録する（クールダウン判定の基準）。
     // API 自体が応答していない回（キー不正・quota・ネットワーク断）は記録しない
     // ＝一時的な障害を「7日間再試行不要」と誤解させないための安全弁。
-    if (apiHealth.responded > 0) {
+    // 上限超過で引けなかった回は「その店を試した」ことにしない。
+    // ここで日付を刻むと、一度も正しく引けていない店が7日間スキップされ続ける。
+    if (apiHealth.responded > 0 && !apiHealth.quotaExhausted) {
       s['写真確認日'] = new Date().toISOString().slice(0, 10);
     }
     if (r && r.url) {
@@ -440,6 +562,9 @@ async function main() {
       if (r.placeId) s['GooglePlaceID'] = r.placeId;   // 次回の再取得を安く・確実にする
       s['写真取得日'] = new Date().toISOString().slice(0, 10);
       if (r.photoWidth) s['写真幅'] = r.photoWidth;     // 実測幅。srcset の上限決定に使う
+      // 取れた店はバックオフの履歴を捨てる（次に失効したときは初回として扱う）
+      delete s['写真失敗回数'];
+      delete s['写真失敗理由'];
       ok++;
       if (wasDead) 復活++;
       const skip = r.skipped ? `・客投稿等${r.skipped}枚を除外` : '';
@@ -447,7 +572,19 @@ async function main() {
     } else {
       miss++;
       if (r?.reason === 'photo-policy') policyRejected++;
-      const why = r?.reason === 'name-mismatch'
+      // 失敗の回数と理由を残す。次回いつ試すか（バックオフ）はこの2つだけで決まる＝
+      // 後から第三者が同じ計算を再現できる（CLAUDE.md 制約10）。
+      // 上限超過で引けなかった回は「その店の失敗」ではないので数えない。
+      if (apiHealth.responded > 0 && !apiHealth.quotaExhausted) {
+        s['写真失敗回数'] = (Number(s['写真失敗回数']) || 0) + 1;
+        s['写真失敗理由'] = r?.reason || 'unknown';
+      }
+      const why = apiHealth.quotaExhausted
+        // 上限超過で候補を引けなかっただけ。店名の判定結果ではないので、そう書かない
+        // （旧実装は既定値の name-mismatch を表示し、一致度1の正しい候補まで
+        //   「別店マッチ」と報告していた）
+        ? '日次上限に到達して候補を取得できず → 次回に持ち越し'
+        : r?.reason === 'name-mismatch'
         ? `別店マッチのため不採用（候補:「${r.matchedName}」一致度${r.sim}）→ SVG維持`
         : r?.reason === 'photo-policy'
         ? `採用基準を満たす写真なし（${(r.policyRejects || []).join(' / ')}）→ SVG維持`
@@ -484,9 +621,110 @@ async function main() {
   for (const d of datasets) {
     fs.writeFileSync(d.file, JSON.stringify(d.root, null, 2) + '\n', 'utf8');
   }
-  console.log(`\n生存 ${生存}件 / 失効検知 ${失効}件 / クールダウン中${cooldownSkipped}件スキップ → 処理 ${done}件 / 実写採用 ${ok}件（うち失効差し替え ${復活}件）/ 不採用(SVG維持) ${miss}件`);
+  console.log(`\n生存 ${生存}件 / 失効検知 ${失効}件 / バックオフ中${cooldownSkipped}件スキップ → 処理 ${done}件 / 実写採用 ${ok}件（うち失効差し替え ${復活}件）/ 不採用(SVG維持) ${miss}件`);
   if (policyRejected) console.log(`  ↳ うち ${policyRejected}件は採用基準（客投稿の除外・解像度）で不採用。data/photo_policy.json 参照`);
+  console.log(`API 呼び出し ${apiHealth.calls}回 / この実行の枠 ${RUN_BUDGET}回（本日累計 ${readSpentToday() + apiHealth.calls}回 / 上限 ${DAILY_API_BUDGET}回）`);
+  if (budgetStopped) {
+    console.log(apiHealth.quotaExhausted
+      ? '  ↳ Google 側の日次上限に到達したため中断しました（残りは翌日以降に回ります）'
+      : apiHealth.skuExhausted
+      ? `  ↳ ${SKU_LABEL[apiHealth.skuExhausted]} の今月の無料枠を使い切ったため中断しました（これ以上は課金が発生します）`
+      : `  ↳ この実行の枠を使い切ったため中断しました（残り ${targets.length - done}件は次の実行へ）`);
+  }
+  console.log(`今月の消費: ` + Object.keys(SKU_MONTHLY_BUDGET)
+    .map(k => `${SKU_LABEL[k]} ${SPENT_MONTH[k] + apiHealth.sku[k]}/${SKU_MONTHLY_BUDGET[k]}`).join(' / '));
+
+  writePhotoPipelineHealth({ attempted: done, adopted: ok });
+
   console.log('次に: node build.js && node gen-store-pages.js');
+}
+
+/**
+ * 写真取得パイプラインの心拍を data/photo_pipeline_health.json に書く（ISSUE-084 の再適用）。
+ *
+ * なぜ必要か（2026-08-29 に判明）:
+ *   build.yml のこのステップは continue-on-error: true で回っている。Places API の課金が
+ *   止まった 2026-08-20 以降、この取得は毎回 OVER_QUERY_LIMIT で1件も取れていなかったが、
+ *   **ジョブは緑のまま**だった。写真が増えないこと自体はサイトを見ないと分からず、
+ *   実際に9日間気づかれなかった。データ側の監査（audit_photo_policy / audit_photo_coverage）も
+ *   「写真が無い」を基準どおりの正常として通すため、この故障は原理的に検出できない。
+ *
+ * そこで「取得が成功したか」ではなく「API が応答したか」を、リポジトリに出る場所へ書く。
+ * data/ 配下なのでコミットで Mac／CI の外へ出る（.local-logs/ に書いても誰にも届かない）。
+ * 鮮度と状態は自己申告できない——動いていないスクリプトはこのファイルを更新できない。
+ */
+/**
+ * 本日（太平洋時間）これまでに使った API 呼び出し数を心拍ファイルから読む。
+ * 実行ごとに別プロセスなので、日次の枠はここに積んで引き継ぐしかない。
+ */
+function readSpentToday() {
+  try {
+    const j = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'photo_pipeline_health.json'), 'utf8'));
+    const p = j.places || {};
+    return p.quota_day === ptDate() ? (Number(p.api_calls_day) || 0) : 0;
+  } catch { return 0; }
+}
+
+/** 今月（太平洋時間）これまでに使った SKU 別の呼び出し数を心拍ファイルから読む */
+function readSpentMonth() {
+  const zero = { textsearch: 0, details: 0, photo: 0 };
+  try {
+    const j = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'photo_pipeline_health.json'), 'utf8'));
+    const p = j.places || {};
+    if (p.sku_month !== ptMonth()) return zero;
+    return { ...zero, ...(p.sku_calls_month || {}) };
+  } catch { return zero; }
+}
+
+function writePhotoPipelineHealth(counts) {
+  const HEALTH = path.join(ROOT, 'data', 'photo_pipeline_health.json');
+  let root = {};
+  try { root = JSON.parse(fs.readFileSync(HEALTH, 'utf8')); } catch { root = {}; }
+  const jstDate = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+  // 日枠に当たった日は「壊れている」のではなく「使い切った」。原因が違えば対処も違うので
+  // 別の状態として記録する（watchdog は api_down だけを異常として鳴らす）。
+  const down = apiHealth.responded === 0 && (apiHealth.failed > 0 || counts.attempted > 0);
+  // 日枠到達が何日続いているか。1日なら平常（枠を使い切っただけ）だが、毎日続くなら
+  // 「枠が実需に足りていない」＝人が予算か設計を判断すべき状態なので、連続日数を数える。
+  // 前回と同じ日の再実行では二重に数えない。
+  const prev = root.places || {};
+  const prevDay = prev.quota_day;
+  const nowQuota = apiHealth.quotaExhausted;
+  const streak = nowQuota
+    ? (prev.date === jstDate ? (prev.quota_reached_streak || 1) : (prev.quota_reached_streak || 0) + 1)
+    : 0;
+  root.places = {
+    date: jstDate,
+    status: down ? 'api_down' : (nowQuota ? 'quota_reached' : 'ok'),
+    quota_reached_streak: streak,
+    // 原因を人へ運ぶ。Places は課金停止・quota 超過を error_message に平文で書いて返す
+    reason: (down || apiHealth.quotaExhausted) ? [apiHealth.lastStatus, apiHealth.lastError].filter(Boolean).join(' — ') : '',
+    api_calls: apiHealth.calls,
+    // 太平洋時間の1日で積算した消費（Google の枠のリセット境界に合わせる）
+    quota_day: ptDate(),
+    api_calls_day: (prevDay === ptDate() ? (Number(prev.api_calls_day) || 0) : 0) + apiHealth.calls,
+    daily_budget: DAILY_API_BUDGET,
+    // SKU 別・月次の消費（請求はここで決まる。無料枠の内側に収まっていれば ¥0）
+    sku_month: ptMonth(),
+    sku_calls_month: {
+      textsearch: SPENT_MONTH.textsearch + apiHealth.sku.textsearch,
+      details: SPENT_MONTH.details + apiHealth.sku.details,
+      photo: SPENT_MONTH.photo + apiHealth.sku.photo,
+    },
+    sku_monthly_budget: SKU_MONTHLY_BUDGET,
+    sku_exhausted: apiHealth.skuExhausted || '',
+    skipped_by_daily_budget: !!counts.skippedByDailyBudget,
+    responded: apiHealth.responded,
+    failed: apiHealth.failed,
+    attempted: counts.attempted,
+    adopted: counts.adopted,
+    recorded_at: new Date().toISOString(),
+  };
+  fs.writeFileSync(HEALTH, JSON.stringify(root, null, 2) + '\n', 'utf8');
+  if (down) {
+    console.error(`\n❌ Places API から一度も正常応答がありませんでした: ${root.places.reason || '原因不明'}`);
+    console.error('   写真は1件も増えません。data/photo_pipeline_health.json に記録しました（photo-watchdog.yml が検知します）。');
+  }
 }
 
 main();
