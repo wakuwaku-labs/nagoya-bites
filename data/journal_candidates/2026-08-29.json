@@ -1,0 +1,460 @@
+{
+  "date": "2026-08-29",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "藤が丘に北海道の生ドーナツ、290円のスイーツをコスパで読む",
+      "verdict": "PASS",
+      "total": 106,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        },
+        {
+          "kw": "スイーツ",
+          "feature": "features/nagoya-sweets.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (価格帯,コース,席,予約,シーン,アラカルト,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 120字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「コスパ」+4",
+          "タイトルにジャンル語「スイーツ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "名古屋2軒目の生ドーナツ、藤が丘のスイーツは19時閉店という設計をどう読むか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 91,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 3
+      },
+      "search_intent_links": [
+        {
+          "kw": "スイーツ",
+          "feature": "features/nagoya-sweets.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (予約,シーン,繁忙) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 106字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「スイーツ」+2"
+        ]
+      },
+      "gate_note": "91点（自動公開ライン 100点）。主な不足: search_intent -7 / topicality -5 / uniqueness -5"
+    },
+    {
+      "id": "c3",
+      "title_draft": "伏見にとんかつチェーン、ワンコインの相場が動く一人飲みの昼をどう見るか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "とんかつ",
+          "feature": "features/nagoya-tonkatsu.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 98字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「とんかつ」+2"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -17 / brand_fit -4 / search_intent -4"
+    },
+    {
+      "id": "c5",
+      "title_draft": "名古屋の生ドーナツはなぜ増え続けるのか、藤が丘の新店から相場を読む",
+      "verdict": "HOLD",
+      "total": 70,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 5,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (席) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 97字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「栄」+1",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "千種区に戻ってきた台湾ラーメンの原点、矢場味仙の下坪店を業界人が読む",
+      "verdict": "HOLD",
+      "total": 61,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 85字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "藤が丘に北海道の生ドーナツ、290円のスイーツをコスパで読む",
+      "lead_draft": "名東区の宝が丘に、札幌発の生ドーナツ専門店が本日オープンする。名古屋では桜山に続く2軒目。税込290〜460円の11種をテイクアウトだけで売り、11時から19時、売り切れ次第終了。席を持たない菓子店の値付けとオペを、業界人の目線で読み解く。",
+      "angle": "席を持たないテイクアウト専業の価格帯とオペを読む。コース/アラカルトの代わりに『1個単価×製造数』で成立する回転の考え方、売り切れ次第終了が示す仕込みの上限、予約が効かない業態で行列が出る理由、手土産というシーン適性まで。",
+      "main_store": {
+        "name": "MILK DO dore iku? 名古屋藤が丘店",
+        "id": "",
+        "area": "名東区・藤が丘",
+        "genre": "スイーツ・ドーナツ"
+      },
+      "sources": [
+        {
+          "label": "@Press プレスリリース（一次発表）",
+          "url": "https://www.atpress.ne.jp/news/622752",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "名古屋情報通【名東区】8月29日オープン",
+          "url": "https://jouhou.nagoya/milkdodoreiku-fujigaoka/",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "号外NET 名東・千種 公式情報公開",
+          "url": "https://nagoyameito-chikusa.goguynet.jp/2026/08/24/milkdodoreiku-2/",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "公式サイト ミルクドドレイク",
+          "url": "https://milkdo-doreiku.com/",
+          "date": "2026-08-29"
+        },
+        {
+          "label": "公式Instagram（約10.5万フォロワー）",
+          "url": "https://www.instagram.com/milkdodoreiku/",
+          "date": "2026-08-29"
+        },
+        {
+          "label": "名古屋情報通 名古屋1号店（桜山）",
+          "url": "https://jouhou.nagoya/milkdodoreiku-sakurayama/",
+          "date": "2026-05-30"
+        },
+        {
+          "label": "公式TikTok 全国店舗一覧の投稿（当時26店舗）",
+          "url": "https://www.tiktok.com/@milkdodoreiku/video/7474174411977788680",
+          "date": "2025-02-22"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "名古屋2軒目の生ドーナツ、藤が丘のスイーツは19時閉店という設計をどう読むか",
+      "lead_draft": "本日オープンの生ドーナツ専門店は、駅から徒歩9分の住宅地で駐車場を持たず、19時に閉める。仕事帰りの導線を最初から捨てた設計に見えるが、生クリームを詰める菓子の業態では合理がある。業界人が営業時間と立地から読む。",
+      "angle": "営業時間と立地から業態設計を読む。徒歩商圏・駐車場なし・19時閉店・売り切れ次第終了という条件が、生菓子のロス率と仕込み量にどう効くか、繁忙時間帯と予約不可の関係、手土産シーンでの使いどころ。",
+      "main_store": {
+        "name": "MILK DO dore iku? 名古屋藤が丘店",
+        "id": "",
+        "area": "名東区・藤が丘",
+        "genre": "スイーツ・ドーナツ"
+      },
+      "sources": [
+        {
+          "label": "@Press プレスリリース（一次発表）",
+          "url": "https://www.atpress.ne.jp/news/622752",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "名古屋情報通【名東区】8月29日オープン",
+          "url": "https://jouhou.nagoya/milkdodoreiku-fujigaoka/",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "号外NET 名東・千種 公式情報公開",
+          "url": "https://nagoyameito-chikusa.goguynet.jp/2026/08/24/milkdodoreiku-2/",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "公式Instagram",
+          "url": "https://www.instagram.com/milkdodoreiku/",
+          "date": "2026-08-29"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "伏見にとんかつチェーン、ワンコインの相場が動く一人飲みの昼をどう見るか",
+      "lead_draft": "伏見駅そばに、とんかつ・かつ丼の大型チェーンが出店した。都心の一等地でワンコイン近い価格帯を維持する店が増えると、周辺の定食相場そのものが動く。カウンター中心の席配置と回転を、業界人の目線で読む。",
+      "angle": "都心立地の低価格チェーン出店が周辺の価格帯に与える影響を、席配置・回転・繁忙時間帯から読む。",
+      "main_store": {
+        "name": "松のや 伏見店",
+        "id": "",
+        "area": "伏見",
+        "genre": "とんかつ"
+      },
+      "sources": [
+        {
+          "label": "開店閉店.com 愛知（新規オープン一覧）",
+          "url": "https://kaiten-heiten-24.com/category/aichi/",
+          "date": "2026-08-23"
+        },
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-27"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "千種区に戻ってきた台湾ラーメンの原点、矢場味仙の下坪店を業界人が読む",
+      "lead_draft": "ブランド発祥の地とされる千種区下坪に、矢場味仙が復活オープンした。同じ看板でも経営が分かれる名古屋の台湾ラーメン事情の中で、原点の店が戻る意味を、価格帯と席配置から読む。",
+      "angle": "同一看板・別経営という名古屋固有の構造を、原点店の復活から読む。",
+      "main_store": {
+        "name": "矢場味仙 下坪店",
+        "id": "",
+        "area": "千種区",
+        "genre": "台湾ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 矢場味仙 下坪店",
+          "url": "https://jouhou.nagoya/yaba-misen/",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "名古屋情報通 グルメ一覧",
+          "url": "https://jouhou.nagoya/category/gourmet/",
+          "date": "2026-08-27"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "名古屋の生ドーナツはなぜ増え続けるのか、藤が丘の新店から相場を読む",
+      "lead_draft": "栄の中日ビル、北区の楠、そして本日の藤が丘。名古屋では生ドーナツの専門店が短い間隔で増えている。1個300円台という価格帯がなぜ成立し、どこで頭打ちになるのか。新規参入が続く市況を業界人が読む。",
+      "angle": "生ドーナツ業態の相場形成を、参入コスト・席なし業態の坪効率・ロス率から読み、消費者側の使い分け（手土産か食べ歩きか）まで落とす。",
+      "main_store": {
+        "name": "MILK DO dore iku? 名古屋藤が丘店",
+        "id": "",
+        "area": "名東区・藤が丘",
+        "genre": "スイーツ・ドーナツ"
+      },
+      "sources": [
+        {
+          "label": "@Press プレスリリース（一次発表）",
+          "url": "https://www.atpress.ne.jp/news/622752",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "名古屋情報通【名東区】8月29日オープン",
+          "url": "https://jouhou.nagoya/milkdodoreiku-fujigaoka/",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "名古屋情報通 PIECE OF BAKE 名古屋初店舗",
+          "url": "https://jouhou.nagoya/piece-of-bake/",
+          "date": "2026-03-18"
+        },
+        {
+          "label": "名古屋情報通 ブランケットドーナツ 北区・楠",
+          "url": "https://jouhou.nagoya/blanket-donuts-kitaku/",
+          "date": "2025-12-15"
+        }
+      ]
+    }
+  ]
+}
