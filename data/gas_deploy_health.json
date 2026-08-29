@@ -2,8 +2,8 @@
   "version": 1,
   "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
   "last_run": {
-    "date": "2026-08-28",
-    "recorded_at": "2026-08-29T13:05:09.889Z",
+    "date": "2026-08-30",
+    "recorded_at": "2026-08-29T23:36:32.254Z",
     "status": "ok",
     "reason": null,
     "verdict": "deployed",
@@ -178,6 +178,28 @@
       "numeric_reference": null,
       "numeric_reference_skipped": "参照値の日付 2026-08-26 が レポートが名乗る対象日 2026-08-27 と一致しないため数値判定をしない",
       "recorded_at": "2026-08-29T13:05:09.883Z"
+    },
+    {
+      "date": "2026-08-30",
+      "kind": "daily",
+      "verdict": "deployed",
+      "missing_fixes": [],
+      "evidence": [
+        {
+          "key": "settled_slice_label",
+          "fix_id": "SEO-076",
+          "verdict": "deployed",
+          "line": "【読まれ方（確定値・2026-08-28）】"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "indeterminate"
+        }
+      ],
+      "numeric_reference": null,
+      "numeric_reference_skipped": "参照値の日付 2026-08-26 が レポートが名乗る対象日 2026-08-28 と一致しないため数値判定をしない",
+      "recorded_at": "2026-08-29T23:36:32.248Z"
     }
   ],
   "deploys": [

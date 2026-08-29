@@ -96,6 +96,35 @@
   3. `node scripts/check_photo_pipeline_health.js` が健全を返し続ける（停止すれば Issue が立つ）
 - **関連**: [[ISSUE-074]]（Places署名URLの失効）/ [[ISSUE-084]]（警報を防音室で鳴らすな）/ [[ISSUE-090]]（記事と無関係な写真が顔になる事故＝支店違いゲートの動機）/ [[ISSUE-116]]（同じ失効が og:image 側に出たもの）
 - **files**: `scripts/lib/store_name_match.js`, `scripts/lib/photo_policy.js`, `scripts/fill_missing_photos_from_hotpepper.js`, `scripts/fetch_manual_store_photos.js`, `scripts/check_photo_pipeline_health.js`, `data/photo_pipeline_health.json`, `index.html`, `.github/workflows/build.yml`, `.github/workflows/photo-watchdog.yml`, `tests/store_name_match.test.js`, `tests/hotpepper_photo_fill.test.js`
+### [SEO-078] エリア語マスタの `aliases` が実データのエリア名と噛み合っておらず、既存エリア圏内で書いた日でも「エリア語なし」になり検索の入口を1つ落としている
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-08-30
+- **category**: SEO
+- **owner**: Marketer + Editor
+- **source**: SEOアドバイス(LINE) 2026-08-29 原文「検索流入比率が89%と非常に高いですが、Bing検索がGoogle検索を上回っています。👉 journal/2026-08-29-fujigaoka-nama-donut-cospa.html の記事タイトルに『名古屋 藤が丘 生ドーナツ コスパ』のように、より具体的な場所と特徴のキーワードを追加し、Google検索からの流入も強化する実験をしましょう」
+- **再スコープ理由**: 助言の literal な指示（公開済み1本の遡及改題）は n=1 で効果を検証できず、また当該記事のタイトルには既に「藤が丘」「生ドーナツ」「コスパ」が入っている（`<title>藤が丘に北海道の生ドーナツ、290円のスイーツをコスパで読む`）＝助言が足せと言う語はすべて既にある。にもかかわらず採点器は「エリア語なし → +0」を返す。**助言が指した症状は本物だが、原因は記事側ではなくKWマスタ側にある**ため、そちらへスコープを移した
+- **brand-filter**: ✅ 適合 — 実在するエリアDB（4,972店）と実在する特集の対応関係を正すだけの整合修正で、順位操作でも語の詰め込みでも被リンク工作でもない。Moat「名古屋 × シーン × 業界人の目利き」の入口である discovery 意図（エリア語×シーン語）を、書いた記事が実際にはその圏内なのに取りこぼしている状態を解消する
+- **検証できる事実（助言の主張ではなく実行して確認した内容）**:
+  | 事実 | 出典（誰でも再実行できる） |
+  |---|---|
+  | 直近18本のジャーナルのうち3本が「エリア語なし」で採点が6点に張り付いている（08-20 平針 / 08-26 丸の内 / 08-29 藤が丘）。残り15本は8〜10点 | 各記事の `<title>` を `node scripts/journal_seo_kw.js --check "<title>"` に通した結果 |
+  | うち2本は**既存エリアKWの圏内**。`AREA_VOCAB` の `match`（データ側の照合語）には `本山・覚王山・藤が丘`（覚王山）・`丸の内` `新栄`（栄）が入っているのに、`aliases`（タイトル採点側の語）は `['覚王山','本山']` / `['栄','錦']` しかない | scripts/journal_seo_kw.js:76-84 |
+  | つまり**同じ語が「データ側では同じエリアと認める」のに「タイトル側では認めない」**という非対称が、採点器の中に固定されている | 同上 |
+  | 取りこぼしているエリアの規模は小さくない: 藤が丘を含む店 258件 / 丸の内を含む店 774件（母数 4,972件） | `data/stores.json` の集計 |
+  | `--verify` は**主KWのみ**を特集タイトルと照合しており、alias 追加では壊れない（現に alias `本山` は features/nagoya-kakuozan.html の title に無いが `--verify` は `checked:39 / problems:[]`） | `node scripts/journal_seo_kw.js --verify` |
+  | discovery 意図（シーン語×エリア語）は3意図中もっともCTRも掲載順位も良いのに表示シェアは最小（2.6%）＝入口の取りこぼしがそのまま Moat の露出不足に効く | data/gsc_metrics.json の intent（[[SEO-068]] と同じ出典） |
+- **acceptance**:
+  1. **変更前に分布を実測する**（制約10・品質ゲート原則5「閾値をいじる前に代表ケースで分布を実測する」）。公開済みジャーナル全本のタイトルを `--check` にかけ、「エリア語なし」の本数と score 分布を **before** として記録する
+  2. `AREA_VOCAB` の `aliases` を、**同じエントリの `match` に既に入っている実在エリア表記に限って**拡張する（覚王山 ← 藤が丘 / 栄 ← 丸の内・新栄 など）。`match` に無い語を `aliases` に足さない＝データに裏付けの無い語を入口に使わない
+  3. `node scripts/journal_seo_kw.js --verify` が `problems: []` のままであること／`--build` の再生成差分がエリア alias のみであること
+  4. **after** の分布を再測し、点数が上がるのは「alias で拾えるようになった本数」だけであること（全記事が一律に底上げされる＝ゲートを緩めただけ、になっていないことを数字で示す）
+  5. 平針（19件・`緑区・南区・天白区・瑞穂区` ブロック）のように**既存KWの圏内でないエリアは alias を足さない**。対応する特集が無い＝入口が実在しないため、必要なら features/ の新設として別チケットに切る（取り繕わない）
+  6. 既公開記事の遡及改題は本チケットの対象外。閉じるのは「今後の記事で入口を落とさないこと」
+  7. 効果測定は `node scripts/gsc_query_intent.js` の **discovery 行の impressions / impressions_share の前後比**（総クリックは指名検索の増減と混ざるため使わない）
+- **ブランドガードレール**: 「採点を上げること」が目的化しないこと。alias は必ず `match` によってデータ上の帰属が示せる語に限る。KWのためにタイトルの日本語を壊さない（`data/journal_seo_keywords.json` の rules.forbidden）
+- **関連**: [[SEO-011]]（シーンKWマスタの新設＝本チケットが直すのはその継ぎ目）/ [[SEO-068]]（discovery意図の検索面拡張＝同じ面を題材選定側から攻める。本件は採点器側の取りこぼしを塞ぐ）/ [[SEO-043]]（意図別の効果測定器）
+- **注記**: 助言が根拠にした「Bing が Google を上回る」という当日の内訳（n=30）は本チケットの根拠に**使っていない**。Bing 側の検索実データは [[SEO-067]]（Bing Webmaster Tools 接続）がオーナー操作待ちで存在せず、[[SEO-071]] の通り「Bing向けKW」は当て推量にしかならないため。本チケットが立つ根拠は Bing/Google の別ではなく、**採点器の中に実在する非対称**（`match` にあって `aliases` に無い）の側にある
 
 ### [SEO-077] 閲覧トップの常設特集（nagoya-solo-dining）が SNS 原稿の対象外で、最も読まれている面が107日間一度も発信されていない
 
