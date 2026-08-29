@@ -77,6 +77,22 @@
       "scope": "body",
       "pattern": "【どこから来た？ TOP3】",
       "reason": "新コードの日次レポートは流入元の見出しに必ず『（確定値・YYYY-MM-DD）』を付ける（formatDailyReport は s.date を常に持つ）。ラベルの無い裸の見出しは旧コードの出力＝前日の未確定値を出している状態。"
+    },
+    {
+      "key": "reserve_events_bundled",
+      "fix_id": "SEO-072",
+      "verdict": "deployed",
+      "scope": "body",
+      "pattern": "予約行動（cta合算）",
+      "reason": "SEO-072 で追加した予約行動の合算ラベル。RESERVE_EVENT_NAMES（cta_click+cta_reserve）の合計を出す新コードだけが出力する文字列。旧コードは『予約ボタンクリック』のままで出力できない。"
+    },
+    {
+      "key": "reserve_old_label",
+      "fix_id": "SEO-072",
+      "verdict": "not_deployed",
+      "scope": "body",
+      "pattern": "予約ボタンクリック: \\d+回 ／ マップ",
+      "reason": "旧コードが出力する予約カウントのラベル形式。新コードでは『予約行動（cta合算）』に変わるため出力されない。"
     }
   ],
   "_signals": "scope=source_lines は『【どこから来た？】/【流入元】セクションの各行』だけを見る（本文の他の場所に同じ語が出ても誤検出しないため）。scope=body は本文全体。verdict=not_deployed の痕跡が1つでも出れば旧コード確定（新コードでは原理的に出力できない文字列だから）。verdict=deployed の痕跡が出れば新コード確定。どちらも出なければ indeterminate（その日のデータが分岐を通らなかっただけ）で、これは異常ではない。",

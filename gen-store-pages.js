@@ -599,8 +599,8 @@ function renderStorePage(s, slug, relatedStores) {
 
   const tagPills = tags.map(t => `<span class="tag">${t}</span>`).join('');
   const linksHtml = [
-    hpUrl && `<a class="link-btn hp" href="${hpUrl}" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>`,
-    gmUrl && `<a class="link-btn gm" href="${gmUrl}" target="_blank" rel="noopener noreferrer">Googleマップ</a>`,
+    hpUrl && `<a class="link-btn hp" href="${hpUrl}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store_name:${JSON.stringify(name)},link_url:${JSON.stringify(hpUrl)}})">ホットペッパーで予約</a>`,
+    gmUrl && `<a class="link-btn gm" href="${gmUrl}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{store_name:${JSON.stringify(name)},link_url:${JSON.stringify(gmUrl)}})">Googleマップ</a>`,
     igUrl && `<a class="link-btn ig" href="${igUrl}" target="_blank" rel="noopener noreferrer">Instagram</a>`,
     tbUrl && `<a class="link-btn tb" href="${tbUrl}" target="_blank" rel="noopener noreferrer">食べログ</a>`,
     tkUrl && tkUrl !== '#' && `<a class="link-btn tk" href="${tkUrl}" target="_blank" rel="noopener noreferrer">TikTok</a>`,

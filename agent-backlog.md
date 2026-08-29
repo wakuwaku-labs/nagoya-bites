@@ -409,6 +409,9 @@
 - **priority**: P1 → **status**: done（実装完了）
 - **resolved**: 2026-08-31
 - **resolved_by**: /solve-next（Marketer/Builder）
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-08-29
+- **resolved_by**: Orchestrator（自律実行 2026-08-29）
 - **detected**: 2026-08-25
 - **category**: SEO
 - **owner**: Marketer + Builder
@@ -433,6 +436,14 @@
   5. `index.html` は単一ファイル維持（制約1）・`LOCAL_STORES` パターン不変（制約2）・フィルタ/検索/モーダル/IGエンベッド/Google評価を壊さない（制約5）
 - **効果測定**: 修正後の日次・週次レポートで「予約行動」が0でない日が出ること、および `data/site_metrics.json` の `cta` 系実数との突合が取れること。体感ではなく前後の実数で判定する
 - **files**: `.gas-deploy/Code.js`（GASの正本）, `gen-store-pages.js`, `stores/*.html`（再生成）, `data/gas_deploy_policy.json`
+- **2026-08-29 実装（Orchestrator）**:
+  1. `.gas-deploy/Code.js` に `RESERVE_EVENT_NAMES = ['cta_click','cta_reserve']` / `DETAIL_EVENT_NAMES = ['modal_open','feature_store_click']` を定数で定義
+  2. `analyze()` の予約行動カウントを `RESERVE_EVENT_NAMES` の合算（`reserveCount`）・詳細到達を `DETAIL_EVENT_NAMES` の合算（`detailCount`）に変更。`ctaCount`/`modalCount` は後方互換エイリアス
+  3. レポート文字列を「予約ボタンクリック」→「**予約行動（cta合算）**」・「店舗詳細を開いた」→「**詳細到達（modal合算）**」に変更（GAS 反映検知の文字列マーカー）
+  4. `data/gas_deploy_policy.json` に SEO-072 の `deployed` / `not_deployed` シグナル2件を追加（`reserve_events_bundled` / `reserve_old_label`）
+  5. `gen-store-pages.js` の HP ボタンに `trackEvent('cta_click',...)` / Google マップボタンに `trackEvent('cta_gmap_click',...)` を追加（再生成で消えない設計・5,548枚の store/*.html は `node gen-store-pages.js` の再実行で適用）
+  - QA: `node --check Code.js` OK / `node --check gen-store-pages.js` OK / JSON.parse OK
+  - **注記**: 静的店舗ページの再生成（`node gen-store-pages.js`）は本番 HotPepper API キーが必要なためオーナー環境での実行待ち。GAS 側は `./deploy-gas.sh` でオーナーが反映する必要あり
 
 ### [SEO-070] 特集・日次ジャーナルの内部リンクが「本文の後ろ」にしか無く、記事を読み切らない読者に回遊の手がかりが一度も出ない
 
