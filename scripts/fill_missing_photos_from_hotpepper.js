@@ -44,7 +44,7 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const { loadPolicy } = require('./lib/photo_policy');
-const { namesMatch } = require('./lib/store_name_match');
+const { namesMatch, branchToken, branchConflict } = require('./lib/store_name_match');
 
 const ROOT = path.resolve(__dirname, '..');
 const MANUAL_JSON = path.join(ROOT, 'data', 'manual_stores.json');
@@ -114,22 +114,6 @@ function wards(text) {
   return out;
 }
 
-/**
- * 支店名トークン（「◯◯店」）を取り出す。
- *
- * 店名ゲート（Dice）だけでは同一チェーンの別支店を分離できない。実測（2026-08-29）:
- *   「スパゲッティハウス ヨコイ 錦店」vs「スパゲッティハウス ヨコイ 住吉店」= 0.88（閾値0.85超）
- * 屋号が長いほど共通部分が支配的になり、支店名の差が沈む。しかも両店とも中区なので
- * 区ゲートも通ってしまう。＝ここを見ないと「別支店の写真が店の顔になる」（ISSUE-090 と同型）。
- *
- * 空白で区切られた末尾の「◯◯店」だけを支店名とみなす。空白が無い名前
- * （例「コメダ珈琲店」）は屋号の一部なので支店名として扱わない（取りこぼしを増やさない）。
- */
-function branchToken(name) {
-  const m = String(name || '').normalize('NFKC').trim().match(/[\s　]([^\s　]{1,8}店)$/);
-  return m ? m[1].toLowerCase() : '';
-}
-
 /** HotPepper のサムネURLを L サイズへ格上げ（build.js の normalizePhotoUrl と同じ規則） */
 function promote(url) {
   const u = String(url || '').trim();
@@ -175,9 +159,8 @@ function judgeCandidate(store, shop) {
   if (!m.ok) return { ok: false, reason: 'name-mismatch', detail: shop.name || '', sim: m.sim };
 
   // 支店名が双方に書かれているなら一致必須（長い屋号は Dice が支店差を飲み込むため）
-  const ourBranch = branchToken(name), theirBranch = branchToken(shop.name);
-  if (ourBranch && theirBranch && ourBranch !== theirBranch) {
-    return { ok: false, reason: 'branch-mismatch', detail: `${ourBranch} ≠ ${theirBranch}`, sim: m.sim };
+  if (branchConflict(name, shop.name)) {
+    return { ok: false, reason: 'branch-mismatch', detail: `${branchToken(name)} ≠ ${branchToken(shop.name)}`, sim: m.sim };
   }
 
   const addr = shop.address || '';

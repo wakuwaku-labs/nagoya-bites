@@ -14,7 +14,7 @@
 
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { isOwnerAttribution, judgePlacesPhoto, attributionName, loadPolicy } = require('../scripts/lib/photo_policy.js');
+const { isOwnerAttribution, judgePlacesPhoto, pickPhoto, attributionName, loadPolicy } = require('../scripts/lib/photo_policy.js');
 
 // ── オーナー投稿として採用されるべきクレジット（すべて実データ由来）──
 const OWNER_CASES = [
@@ -89,4 +89,45 @@ test('ポリシーは「客投稿の除外」を有効にしたままである',
   assert.equal(p.places.requireOwnerAttribution, true, 'requireOwnerAttribution が無効化されている');
   assert.ok(p.places.attributionMatchThreshold >= 0.8, '一致閾値が緩められている');
   assert.equal(p.prohibited.aiUpscale, true, 'AI超解像の禁止が解除されている');
+});
+
+// ── 代替枠（客投稿）の階層 ─────────────────────────────
+// 2026-08-30 オーナー承認で追加。オーナー写真が**1枚も無い店に限り**客投稿を採る。
+// ここが緩むと「オーナー写真があるのに素人写真を載せる」状態になるため、
+// 優先順位が守られていることを実データ由来の例で固定する。
+const KOMEDA = { '店名': 'コメダ珈琲 本店' };
+const ph = (w, credit) => ({ photo: { width: w, height: Math.round(w * 0.75) }, attribution: credit });
+
+test('オーナー写真があれば必ずそちらを採る（客投稿が先頭でも）', () => {
+  const r = pickPhoto([
+    ph(2000, 'Yuzuki Arai'),          // 客投稿が先頭
+    ph(1600, 'コメダ珈琲 本店'),       // オーナー写真は後ろ
+  ], KOMEDA);
+  assert.equal(r.picked.tier, 'owner');
+  assert.equal(r.picked.attribution, 'コメダ珈琲 本店');
+});
+
+test('オーナー写真が1枚も無ければ客投稿を代替枠として採る', () => {
+  const r = pickPhoto([ph(2000, 'Yuzuki Arai'), ph(1600, 'masayuki nakazato')], KOMEDA);
+  assert.equal(r.picked.tier, 'user');
+  assert.equal(r.picked.attribution, 'Yuzuki Arai', '走査順の最初の候補を採っていない');
+});
+
+test('クレジットの無い写真は代替枠にもしない（判定根拠が残らないため）', () => {
+  assert.equal(pickPhoto([ph(2000, '')], KOMEDA).picked, null);
+  assert.equal(pickPhoto([ph(2000, 'Google Maps')], KOMEDA).picked, null);
+});
+
+test('代替枠はオーナー写真より解像度の下限が高い', () => {
+  const p = loadPolicy().places;
+  assert.ok(p.userPhotoMinWidthPx > p.minWidthPx, '代替枠の下限がオーナー写真以下になっている');
+  // オーナー写真の下限(800)は超えるが代替枠の下限(1200)に届かない幅は採用しない
+  assert.equal(pickPhoto([ph(1000, 'Yuzuki Arai')], KOMEDA).picked, null);
+  assert.equal(pickPhoto([ph(1400, 'Yuzuki Arai')], KOMEDA).picked.tier, 'user');
+});
+
+test('解像度不足で落ちた写真は代替枠の候補にもしない', () => {
+  // too-small は「客投稿かどうか」以前の問題なので、代替枠へ回さない
+  const r = pickPhoto([ph(400, 'Yuzuki Arai')], KOMEDA);
+  assert.equal(r.picked, null);
 });

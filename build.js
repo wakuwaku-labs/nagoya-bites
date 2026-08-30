@@ -665,6 +665,9 @@ function manualStoreToRecord(m) {
     // canonical に持ち越さないと scripts/audit_photo_policy.js が後から検算できないため出力する
     // （data/photo_policy.json の判定は「第三者が確認できる事実」で行う・CLAUDE.md 制約10）。
     '写真クレジット': m['写真クレジット'] || '',
+    // 写真の出所（places-owner / places-user / hotpepper）。表示面でクレジットを出すか、
+    // 監査が代替枠を数えられるかがこの1フィールドに依存する（data/photo_policy.json の階層）。
+    '写真出所': m['写真出所'] || '',
     '写真幅': m['写真幅'] || '',
     'Instagram': m['Instagram'] || '',
     '食べログURL': m['食べログURL'] || '',

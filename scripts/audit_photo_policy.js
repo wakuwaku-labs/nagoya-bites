@@ -50,6 +50,8 @@ const stores = [
 ];
 
 const violations = { notOwner: [], noCredit: [], stockHost: [], selfHostedDerivative: [] };
+// 違反ではないが可視化する: 代替枠（客投稿）で載っている店
+const userFallback = [];
 let placesTotal = 0;
 
 const STOCK = policy.prohibited.stockPhotoHosts || [];
@@ -76,7 +78,17 @@ for (const s of stores) {
   if (!credit) { violations.noCredit.push(label); continue; }
 
   const r = isOwnerAttribution(credit, s['店名'], s['英語名']);
-  if (!r.owner) violations.notOwner.push(`${label} → credit="${credit}" (sim ${r.sim})`);
+  if (r.owner) continue;
+
+  // 2026-08-30: 客投稿を「代替枠」として認める階層を追加（オーナー承認）。
+  // ただし**出所が記録されている場合に限り**許容する。記録が無い客投稿は、
+  // 階層を通らずに別経路（手書き・巻き戻し）で入り込んだものなので従来どおり違反。
+  // ＝「認めた抜け道」と「気づかない混入」をデータ上で区別できる状態を保つ（制約10）。
+  if (policy.places.allowUserPhotoFallback && String(s['写真出所'] || '') === 'places-user') {
+    userFallback.push(`${label} → 撮影 "${credit}"`);
+    continue;
+  }
+  violations.notOwner.push(`${label} → credit="${credit}" (sim ${r.sim})`);
 }
 
 const total = Object.values(violations).reduce((n, a) => n + a.length, 0);
@@ -88,6 +100,13 @@ console.log(`  客投稿の混入（クレジット名≠店名）    : ${violat
 console.log(`  判定根拠なし（クレジット欠落）        : ${violations.noCredit.length}件`);
 console.log(`  禁止ストック写真                      : ${violations.stockHost.length}件`);
 console.log(`  AI超解像の派生画像を自ホスト          : ${violations.selfHostedDerivative.length}件`);
+// 違反ではないが、代替枠がどれだけ効いているか（＝素人写真が何店に出ているか）は毎日見える化する。
+// オーナー写真が後から出れば取得スクリプトが自動で差し替えるので、この数は減るのが正常。
+console.log(`\n  代替枠（客投稿・クレジット表示）      : ${userFallback.length}件${policy.places.allowUserPhotoFallback ? '' : '（現在は無効）'}`);
+if (LIST && userFallback.length) {
+  console.log('\n[userFallback]');
+  userFallback.forEach((x) => console.log(`  - ${x}`));
+}
 
 if (LIST) {
   for (const [k, arr] of Object.entries(violations)) {

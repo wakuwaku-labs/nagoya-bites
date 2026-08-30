@@ -38,7 +38,7 @@ const path = require('path');
 const https = require('https');
 // 写真の採用基準（オーナー投稿か／解像度）は data/photo_policy.json が唯一の情報源。
 // 判定器を共有することで、この取得経路と audit_photo_policy.js の判定が食い違わないようにする。
-const { loadPolicy, judgePlacesPhoto, attributionName } = require('./lib/photo_policy');
+const { loadPolicy, pickPhoto, attributionName } = require('./lib/photo_policy');
 
 const ROOT = path.resolve(__dirname, '..');
 const MANUAL_JSON = path.join(ROOT, 'data', 'manual_stores.json');
@@ -245,7 +245,7 @@ async function mapWithConcurrency(items, limit, fn) {
 // 店名の同一性判定は scripts/lib/store_name_match.js が唯一の判定器。
 // HotPepper 経由の穴埋め（fill_missing_photos_from_hotpepper.js）と同じ関数を使うことで、
 // 「Places では同一店と認めるが HotPepper では認めない」という経路ごとのブレを無くす。
-const { namesMatch } = require('./lib/store_name_match');
+const { namesMatch, branchToken, branchConflict } = require('./lib/store_name_match');
 
 // 飲食店業態か（よもぎ蒸しサロン等の非飲食を弾く）
 const FOOD_TYPES = ['restaurant', 'cafe', 'bar', 'bakery', 'food', 'meal_takeaway', 'meal_delivery'];
@@ -315,6 +315,12 @@ function passesGates(name, r) {
   if (!r || !r.matchedName) return { ok: false, reason: 'name-mismatch', label: '' };
   const m = namesMatch(name, r.matchedName);
   if (!m.ok) return { ok: false, reason: 'name-mismatch', label: r.matchedName, sim: m.sim };
+  // 支店違いを塞ぐ（HotPepper 経路と同じ判定器）。店名ゲートは通ってしまうことがある:
+  //   「やきとり大吉 今池店」は別名義「やきとり大吉」で「やきとり大吉 浅間町店」に一致する。
+  //   2026-08-30 に実際にこの取り違えで別支店の写真を採用しかけた。
+  if (branchConflict(name, r.matchedName)) {
+    return { ok: false, reason: 'branch-mismatch', label: `${r.matchedName}（${branchToken(name)} ≠ ${branchToken(r.matchedName)}）` };
+  }
   if (!isInNagoyaArea(r.address)) return { ok: false, reason: 'out-of-area', label: `${r.matchedName} @ ${r.address.slice(0, 24)}` };
   if (!isFoodPlace(r.types)) return { ok: false, reason: 'not-food', label: `${r.matchedName} (${(r.types || []).slice(0, 2).join(',')})` };
   return { ok: true, sim: m.sim };
@@ -374,16 +380,15 @@ async function fetchPhoto(name, area, cachedPlaceId, store = {}) {
   // Places の写真には「オーナーが上げた宣材」と「客が上げたスマホ写真」が混在し、
   // 先頭が客の写真であることが半分ある。上位N枚を順に見て、最初に基準を通った1枚を採る。
   // 全部落ちたら写真なし扱い（SVG維持）。取り繕って素人写真を載せない。
+  //
+  // 2026-08-30: オーナー写真が1枚も無い店に限り、客投稿を「代替枠」として採る階層を追加
+  // （data/photo_policy.json の allowUserPhotoFallback・オーナー承認済み）。
+  // 階層の判断は pickPhoto() が一手に持つ。ここは走査対象を渡すだけにして、
+  // 「オーナー写真を必ず優先する」規則が経路ごとにブレないようにする。
   const pol = loadPolicy().places;
-  const candidates = (best.photos || [best.photo]).filter(Boolean).slice(0, pol.scanPhotos);
-  let picked = null;
-  const rejects = [];
-  for (const ph of candidates) {
-    const attr = attributionName(ph) || 'Google Maps';
-    const j = judgePlacesPhoto(ph, attr, store);
-    if (j.ok) { picked = { photo: ph, attribution: attr, judge: j }; break; }
-    rejects.push(`${j.reason}${j.detail ? ` ${j.detail}` : ''}`);
-  }
+  const candidates = (best.photos || [best.photo]).filter(Boolean).slice(0, pol.scanPhotos)
+    .map((ph) => ({ photo: ph, attribution: attributionName(ph) || 'Google Maps' }));
+  const { picked, rejects } = pickPhoto(candidates, store);
   if (!picked) {
     return {
       reason: 'photo-policy',
@@ -402,6 +407,7 @@ async function fetchPhoto(name, area, cachedPlaceId, store = {}) {
   return {
     url: cdnUrl,
     attribution: picked.attribution,
+    tier: picked.tier,                                 // 'owner' | 'user'
     matchedName: best.matchedName,
     sim: best.sim,
     placeId: best.placeId,
@@ -562,13 +568,17 @@ async function main() {
       if (r.placeId) s['GooglePlaceID'] = r.placeId;   // 次回の再取得を安く・確実にする
       s['写真取得日'] = new Date().toISOString().slice(0, 10);
       if (r.photoWidth) s['写真幅'] = r.photoWidth;     // 実測幅。srcset の上限決定に使う
+      // 出所を必ず記録する。表示面でクレジットを出すか（客投稿か）の判断根拠であり、
+      // 監査が「代替枠が何店に出ているか」を数える唯一の手掛かりでもある（制約10）。
+      s['写真出所'] = r.tier === 'user' ? 'places-user' : 'places-owner';
       // 取れた店はバックオフの履歴を捨てる（次に失効したときは初回として扱う）
       delete s['写真失敗回数'];
       delete s['写真失敗理由'];
       ok++;
       if (wasDead) 復活++;
-      const skip = r.skipped ? `・客投稿等${r.skipped}枚を除外` : '';
-      console.log(`✅ ${name} (一致度${r.sim}${skip}) → ${wasDead ? '失効URLを差し替え' : '実写採用'} [${r.matchedName}]`);
+      const skip = r.skipped ? `・${r.skipped}枚を除外` : '';
+      const tierLabel = r.tier === 'user' ? '代替枠(客投稿・クレジット表示)' : 'オーナー写真';
+      console.log(`✅ ${name} (一致度${r.sim}${skip}) → ${wasDead ? '失効URLを差し替え' : tierLabel + 'を採用'} [${r.matchedName}] 撮影:${r.attribution}`);
     } else {
       miss++;
       if (r?.reason === 'photo-policy') policyRejected++;
@@ -601,11 +611,18 @@ async function main() {
       // --force/--only で「既にある写真を基準に照らして洗い直す」場合に非採用と判定しても
       // 古い客投稿URLが残り続ける抜け穴があった（採用基準ゲート新設後も既存違反が
       // 解消されなかった実際の原因）。
-      const staleNonCompliant = r?.reason === 'photo-policy' && /googleusercontent\.com/.test(s['写真URL'] || '');
+      // 支店違いで落ちたときは、今載っている Places 写真も別支店のものである疑いが強い。
+      // 「その店の写真だと確認できないもの」は載せ続けない（ISSUE-090 の教訓）。
+      const wrongBranch = r?.reason === 'branch-mismatch' && /googleusercontent\.com/.test(s['写真URL'] || '');
+      const staleNonCompliant = (r?.reason === 'photo-policy' || wrongBranch) && /googleusercontent\.com/.test(s['写真URL'] || '');
       if ((wasDead || staleNonCompliant) && apiHealth.responded > 0) {
         s['写真URL'] = '';
+        // 出所・幅・クレジットは写真URLとひと組。片方だけ残すと表示（クレジット表示の判定）と
+        // 監査（代替枠の件数）が実体とズレる
         delete s['写真クレジット'];
-        console.log(`   ↳ ${staleNonCompliant ? '基準を満たさない既存の客投稿写真をクリア' : '失効URLをクリア'}（JSON-LD/og:image が 403 を指さないように）`);
+        delete s['写真出所'];
+        delete s['写真幅'];
+        console.log(`   ↳ ${wrongBranch ? '別支店の写真だった疑いがあるためクリア' : staleNonCompliant ? '基準を満たさない既存写真をクリア' : '失効URLをクリア'}（JSON-LD/og:image が 403 を指さないように）`);
       } else if (wasDead) {
         console.log(`   ↳ API 応答なし → 失効URLは保持（次回再試行）`);
       }
