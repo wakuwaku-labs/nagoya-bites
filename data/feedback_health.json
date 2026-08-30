@@ -2,8 +2,8 @@
   "version": 1,
   "_comment": "消費者フィードバック改善ループの心拍。triage ルーチンが毎日（新着0件の日も）書き、コミットで Mac の外＝GitHub へ出す。.github/workflows/feedback-watchdog.yml が鮮度を見て、滞ったら Issue を起票する（＝オーナーにメール）。鮮度は自己申告できない（動いていないエージェントはファイルを更新できない）ため、これが本体の検知シグナル。status/reason は原因を人に運ぶための補助情報（ISSUE-084 原則5）。",
   "last_run": {
-    "date": "2026-08-29",
-    "recorded_at": "2026-08-29T13:02:47.431Z",
+    "date": "2026-08-30",
+    "recorded_at": "2026-08-30T12:38:28.296Z",
     "status": "ok",
     "reason": null,
     "queries": [
