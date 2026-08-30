@@ -1,0 +1,438 @@
+{
+  "date": "2026-08-30",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄の手羽先が大阪へ — 12席カウンターと22店舗、外に出る名古屋の鶏",
+      "verdict": "PASS",
+      "total": 110,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "手羽先",
+          "feature": "features/nagoya-tebasaki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 6件 (価格帯,席,シーン,オペ,回転,業界) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 3件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 163字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「カウンター」+4",
+          "タイトルにジャンル語「手羽先」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄と名駅で始まる名古屋グルメフェア — 宴会予約の2ヶ月前に何が起きるか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 6件 (価格帯,コース,席,予約,オペ,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 119字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「宴会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -8 / writability -2 / search_intent -2"
+    },
+    {
+      "id": "c4",
+      "title_draft": "栄のアジアン食べ放題新店、カウンターより先に席数を見る理由",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 91,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 5件 (価格帯,席,シーン,オペ,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 114字 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「カウンター」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "91点（自動公開ライン 100点）。主な不足: topicality -17 / search_intent -2"
+    },
+    {
+      "id": "c5",
+      "title_draft": "大須の老舗もなかがクレープになる — 名古屋の菓子が業態を替える理由",
+      "verdict": "HOLD",
+      "total": 79,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 15,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 3件 (価格帯,仕入れ,業界) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 114字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [
+    {
+      "id": "c2",
+      "title_draft": "栄の手羽先、3本580円と8本1,360円のどちらを頼むか — カウンターの一人飲み",
+      "verdict": "DISQUALIFIED",
+      "total": 0,
+      "disqualified_reasons": [
+        "同一店舗の再掲 (J004068058, 2026-08-19)"
+      ],
+      "breakdown": null
+    }
+  ],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "flexible",
+      "title_draft": "栄の手羽先が大阪へ — 12席カウンターと22店舗、外に出る名古屋の鶏",
+      "lead_draft": "この一週間で、名古屋の鶏が二つ外へ出た。8月21日にがブリチキン。が米国2号店を開け、8月28日には手羽先むつみが9月1日の大阪・梅田出店を発表している。同じ名古屋の鶏なのに、片方は12席のカウンター、もう片方は全国22店舗のフェア。外に出る型が正反対なのが面白い。名古屋で食べる側にこの差が何を意味するかを業界人の目で読む。",
+      "angle": "同じ週の一次リリース2件を並べ、12席・21席という席数と3本580円/5本890円/8本1,360円の本数逓減価格帯から、カウンター滞在型（深夜営業・回転を捨てる・揚げ置きできない手羽先のオペ）と多店舗居酒屋型（宴会シーンを取る）という業界の2つの型を読み解き、一人飲みと大人数でどちらを使うかまで落とす",
+      "main_store": {
+        "name": "手羽先むつみ 本店",
+        "id": "J001282169",
+        "area": "栄",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 【大阪・梅田】手羽先むつみが関西初上陸。梅田店が9月1日(火)オープン（株式会社TOBUTORI）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000001.000189737.html",
+          "date": "2026-08-28"
+        },
+        {
+          "label": "PR TIMES: 【がブリチキン。】名古屋発祥ブランドが贈る名古屋めし！味噌・手羽先を楽しむ「名古屋グルメフェア」開催（株式会社ブルームダイニングサービス）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000157.000051168.html",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "PR TIMES: 【がブリチキン。】アメリカロサンゼルス2号店「Gaburi Chicken Huntington Beach」がオープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000156.000051168.html",
+          "date": "2026-08-21"
+        },
+        {
+          "label": "手羽先むつみ 本店 公式Instagram（@tebasakimutsumi・今月のおすすめ一品を告知）",
+          "url": "https://www.instagram.com/tebasakimutsumi/",
+          "date": "2026-08-29"
+        },
+        {
+          "label": "がブリチキン。【公式】Instagram（@gabukichi_gaburichicken）",
+          "url": "https://www.instagram.com/gabukichi_gaburichicken/",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "がブリチキン。公式サイト 店舗一覧（株式会社ブルームダイニングサービス）",
+          "url": "https://gabuchiki.com/shop/",
+          "date": "2026-08-30"
+        },
+        {
+          "label": "名古屋情報通: 名古屋／愛知のニューオープン＆新店舗一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-29"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "flexible",
+      "title_draft": "栄の手羽先、3本580円と8本1,360円のどちらを頼むか — カウンターの一人飲み",
+      "lead_draft": "手羽先むつみが9月1日に大阪・梅田へ出る。関西初出店の箱は12席、深夜24時まで。名古屋の本店は2019年に21席のカウンターで始まった店だ。手羽先は3本580円、5本890円、8本1,360円。本数を増やすほど1本の単価が下がるこの値付けを、一人飲みの側からどう読むか。",
+      "angle": "本数逓減の価格帯（193円→178円→170円）とドリンクで利益を取る原価構造、席数12のオペから、カウンター一人飲みの回転とシーン適性を業界人視点で示す",
+      "main_store": {
+        "name": "手羽先むつみ 住吉店",
+        "id": "J004068058",
+        "area": "栄",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 手羽先むつみ 梅田店 9月1日オープン（株式会社TOBUTORI）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000001.000189737.html",
+          "date": "2026-08-28"
+        },
+        {
+          "label": "PR TIMES: がブリチキン。「名古屋グルメフェア」開催",
+          "url": "https://prtimes.jp/main/html/rd/p/000000157.000051168.html",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "手羽先むつみ 住吉店 公式Instagram（@tebasakimutsumi.sumiyoshi）",
+          "url": "https://www.instagram.com/tebasakimutsumi.sumiyoshi/",
+          "date": "2026-08-29"
+        },
+        {
+          "label": "名古屋情報通: ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-29"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "flexible",
+      "title_draft": "栄と名駅で始まる名古屋グルメフェア — 宴会予約の2ヶ月前に何が起きるか",
+      "lead_draft": "がブリチキン。が9月1日から10月31日まで、全国22店舗で「名古屋グルメフェア」を開く。愛知県内が20店舗を占める。名古屋の店が名古屋で名古屋めしをやる、という一見ねじれた企画を、忘年会予約が動き出す直前の仕込みとして業界人の目で読む。",
+      "angle": "9〜10月は宴会予約の獲得期という飲食店の年間サイクルから、フェアの狙い（新規客の試し打ちと宴会コースへの導線）を、席数・回転・価格帯・オペの観点で読む",
+      "main_store": {
+        "name": "がブリチキン。 錦通店",
+        "id": "J001114099",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: がブリチキン。「名古屋グルメフェア」開催",
+          "url": "https://prtimes.jp/main/html/rd/p/000000157.000051168.html",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "PR TIMES: がブリチキン。ロサンゼルス2号店オープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000156.000051168.html",
+          "date": "2026-08-21"
+        },
+        {
+          "label": "がブリチキン。【公式】Instagram",
+          "url": "https://www.instagram.com/gabukichi_gaburichicken/",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "がブリチキン。公式サイト 店舗一覧",
+          "url": "https://gabuchiki.com/shop/",
+          "date": "2026-08-30"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "flexible",
+      "title_draft": "栄のアジアン食べ放題新店、カウンターより先に席数を見る理由",
+      "lead_draft": "8月23日、栄にヤムヤムビュッフェが開いた。食べ放題業態は名古屋でこの夏だけで何軒も増えている。ただ、食べ放題は誰にとっても得な業態ではない。原価と回転の仕組みから、どういう客が得をしてどういう客が損をするかを業界人の目で書く。",
+      "angle": "食べ放題の原価設計（提供オペの速度と滞在時間で利益が決まる）と席数・回転から、価格帯とシーン別の向き不向きを示す",
+      "main_store": {
+        "name": "ヤムヤムビュッフェ Yum Yum Buffet 栄女子大店",
+        "id": "",
+        "area": "栄",
+        "genre": "アジア・エスニック"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通: ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-29"
+        },
+        {
+          "label": "PR TIMES: がブリチキン。「名古屋グルメフェア」開催",
+          "url": "https://prtimes.jp/main/html/rd/p/000000157.000051168.html",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "PR TIMES: 手羽先むつみ 梅田店 9月1日オープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000001.000189737.html",
+          "date": "2026-08-28"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "flexible",
+      "title_draft": "大須の老舗もなかがクレープになる — 名古屋の菓子が業態を替える理由",
+      "lead_draft": "創業119年の「元祖 鯱もなか本店」のもなか皮を使ったクレープ「鯱もなかアラモード」に、8月27日、抹茶味が加わった。老舗和菓子が自社の皮を他業態に流す動きは名古屋でここ数年増えている。作り手側の事情から、この動きの意味を読む。",
+      "angle": "和菓子の製造ラインの稼働率と歩留まり、仕入れと価格帯の関係から、老舗が業態を替えて出す業界の構造を読む",
+      "main_store": {
+        "name": "元祖 鯱もなか本店",
+        "id": "",
+        "area": "名古屋",
+        "genre": "スイーツ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 創業119年の老舗「元祖 鯱もなか本店」のもなか皮がクレープを彩る",
+          "url": "https://prtimes.jp/main/html/rd/p/000000023.000118877.html",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "PR TIMES: がブリチキン。「名古屋グルメフェア」開催",
+          "url": "https://prtimes.jp/main/html/rd/p/000000157.000051168.html",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "名古屋情報通: ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-08-29"
+        }
+      ]
+    }
+  ]
+}
