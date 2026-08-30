@@ -1,78 +1,73 @@
 {
-  "generatedAt": "2026-08-27T23:38:54.620Z",
+  "generatedAt": "2026-08-30T07:22:15.520Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 880,
-    "pageViews": 1425,
-    "sessions": 1031,
-    "avgSessionDuration": 149,
-    "bounceRate": 0.328,
+    "activeUsers": 926,
+    "pageViews": 1483,
+    "sessions": 1077,
+    "avgSessionDuration": 140.7,
+    "bounceRate": 0.298,
     "pagesPerSession": 1.38
   },
   "dailyReference": {
-    "date": "2026-08-26",
-    "sessions": 48,
-    "bounceRate": 0.188,
-    "pageViews": 66
+    "date": "2026-08-28",
+    "sessions": 35,
+    "bounceRate": 0.2,
+    "pageViews": 41
   },
   "channels": {
     "sessions": {
-      "organic": 735,
-      "direct": 204,
-      "social": 93,
-      "referral": 12,
+      "organic": 786,
+      "direct": 196,
+      "social": 91,
+      "referral": 11,
       "paid": 0,
-      "other": 1
+      "other": 0
     },
     "pct": {
-      "organic": 70.3,
-      "direct": 19.5,
-      "social": 8.9,
-      "referral": 1.1,
+      "organic": 72.5,
+      "direct": 18.1,
+      "social": 8.4,
+      "referral": 1,
       "paid": 0,
-      "other": 0.1
+      "other": 0
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 321
+      "sessions": 346
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 258
+      "sessions": 273
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 169
+      "sessions": 174
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 143
+      "sessions": 153
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 89
+      "sessions": 87
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 22
-    },
-    {
-      "source": "openai",
-      "medium": "(not set)",
-      "sessions": 9
+      "sessions": 11
     },
     {
       "source": "duckduckgo",
       "medium": "organic",
-      "sessions": 7
+      "sessions": 8
     },
     {
       "source": "openai",
@@ -80,26 +75,31 @@
       "sessions": 6
     },
     {
+      "source": "openai",
+      "medium": "(not set)",
+      "sessions": 6
+    },
+    {
       "source": "copilot.com",
       "medium": "(not set)",
-      "sessions": 4
+      "sessions": 5
     }
   ],
   "topPages": [
     {
       "path": "/",
-      "pageViews": 270,
-      "sessions": 153
+      "pageViews": 278,
+      "sessions": 156
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 197,
-      "sessions": 166
+      "pageViews": 227,
+      "sessions": 187
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 105,
-      "sessions": 101
+      "pageViews": 106,
+      "sessions": 100
     },
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
@@ -108,13 +108,13 @@
     },
     {
       "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
-      "pageViews": 69,
-      "sessions": 66
+      "pageViews": 71,
+      "sessions": 68
     }
   ],
   "cta": {
-    "outboundClicks": 103,
-    "ctaClickRate": 10,
+    "outboundClicks": 106,
+    "ctaClickRate": 9.8,
     "byDomain": [
       {
         "domain": "tabelog.com",
@@ -122,7 +122,7 @@
       },
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 26
+        "clicks": 27
       },
       {
         "domain": "maps.google.com",
@@ -134,11 +134,11 @@
       },
       {
         "domain": "www.instagram.com",
-        "clicks": 5
+        "clicks": 6
       },
       {
         "domain": "www.google.com",
-        "clicks": 2
+        "clicks": 3
       },
       {
         "domain": "www.tiktok.com",
@@ -167,16 +167,16 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 34,
-      "direct": 40,
-      "social": 29,
+      "organic": 39,
+      "direct": 37,
+      "social": 30,
       "referral": 0,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 4.6,
-    "ctaClickRate_direct": 19.6,
-    "ctaClickRate_social": 31.2,
+    "ctaClickRate_organic": 5,
+    "ctaClickRate_direct": 18.9,
+    "ctaClickRate_social": 33,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -188,7 +188,7 @@
       },
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 9
+        "clicks": 10
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -265,6 +265,14 @@
       {
         "path": "/journal/2026-08-26-marunouchi-friday-19ji-reservation.html",
         "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-27-sakae-mitsukoshi-kihachi-cafe.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
+        "clicks": 1
       }
     ],
     "byPageDomain": [
@@ -276,7 +284,7 @@
       {
         "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 9
+        "clicks": 10
       },
       {
         "path": "/",
@@ -324,11 +332,6 @@
         "clicks": 2
       },
       {
-        "path": "/index.html",
-        "domain": "maps.google.com",
-        "clicks": 2
-      },
-      {
         "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
         "domain": "jouhou.nagoya",
         "clicks": 2
@@ -360,7 +363,17 @@
       },
       {
         "path": "/index.html",
+        "domain": "maps.google.com",
+        "clicks": 1
+      },
+      {
+        "path": "/index.html",
         "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
+        "path": "/index.html",
+        "domain": "www.google.com",
         "clicks": 1
       },
       {
@@ -432,6 +445,16 @@
         "path": "/journal/2026-08-26-marunouchi-friday-19ji-reservation.html",
         "domain": "maps.google.com",
         "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-27-sakae-mitsukoshi-kihachi-cafe.html",
+        "domain": "maps.google.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
+        "domain": "www.instagram.com",
+        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
@@ -441,7 +464,7 @@
       },
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 9
+        "clicks": 10
       },
       {
         "path": "/",
@@ -488,11 +511,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 71
+    "reservationClicks": 72
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 880,
+    "value": 926,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
