@@ -148,4 +148,46 @@ function namesMatch(storeName, matchedName) {
   return { ok: sim >= 0.85, sim: Math.round(sim * 100) / 100 };
 }
 
-module.exports = { namesMatch, norm, core, dice, GENRE_WORDS };
+/**
+ * 支店名トークン（「◯◯店」）を取り出す。
+ *
+ * 店名ゲート（Dice / 包含）だけでは同一チェーンの別支店を分離できない。実測:
+ *   「スパゲッティハウス ヨコイ 錦店」vs「… 住吉店」= Dice 0.88（閾値0.85超）
+ *   「やきとり大吉 今池店」vs「やきとり大吉 浅間町店」= 別名義「やきとり大吉」で一致してしまう
+ * 屋号が長い／別名義が屋号だけだと、支店名の差が判定に効かない。
+ * ＝ここを見ないと「別支店の写真が店の顔になる」（ISSUE-090 と同型）。
+ *
+ * 空白で区切られた末尾の「◯◯店」だけを支店名とみなす。空白が無い名前
+ * （例「コメダ珈琲店」）は屋号の一部なので支店名として扱わない（取りこぼしを増やさない）。
+ */
+function branchToken(name) {
+  // 上限を 24 文字にしているのは、商業施設名がそのまま支店名になるため。
+  // 短すぎると「名古屋タカシマヤゲートタワーモール店」「JR名古屋髙島屋店」が
+  // どちらもトークンとして取れず、別館の店を同一店として通してしまう（2026-08-30 実測）。
+  const m = String(name || '').normalize('NFKC').trim().match(/[\s　]([^\s　]{1,24}店)$/);
+  return m ? m[1].toLowerCase() : '';
+}
+
+/**
+ * 支店名の表記ゆれを畳む。同じ支店でも媒体ごとに書き方が揺れる（実測 2026-08-30）:
+ *   「泉店」↔「泉本店」 /「大曽根店」↔「名古屋大曽根店」
+ *   「名古屋タカシマヤゲートタワーモール店」↔「ゲートタワーモール店」
+ * 「本」「名古屋」「駅」を落としたうえで、一方が他方を含めば同じ支店とみなす。
+ */
+function branchCore(token) {
+  return String(token || '').replace(/本|名古屋|駅/g, '').replace(/店$/, '');
+}
+
+/**
+ * 双方に支店名が書かれていて、それが食い違っていないか。
+ * 片方にしか無い場合は判定しない（住所・区で裏を取る側に委ねる）。
+ */
+function branchConflict(a, b) {
+  const x = branchToken(a), y = branchToken(b);
+  if (!x || !y || x === y) return false;
+  const cx = branchCore(x), cy = branchCore(y);
+  if (!cx || !cy) return false;                       // 「本店」同士など、核が消える組は判定しない
+  return !(cx === cy || cx.includes(cy) || cy.includes(cx));
+}
+
+module.exports = { namesMatch, branchToken, branchConflict, branchCore, norm, core, dice, GENRE_WORDS };

@@ -180,6 +180,47 @@ function judgePlacesPhoto(photo, attribution, store) {
   return { ok: true, reason: 'ok', detail: '', sim: 0 };
 }
 
+/**
+ * 走査した候補の中から、採用する1枚を階層順に選ぶ。
+ *
+ * 階層（data/photo_policy.json の _note_tiers が正本）:
+ *   (1) オーナー投稿（クレジット名＝店名）
+ *   (2) 客投稿（allowUserPhotoFallback 有効時のみ・クレジット必須・解像度は上乗せ）
+ *   (3) 採用なし → 店舗固有プレースホルダー
+ *
+ * (1) が1枚でもあれば必ず (1) を採る。取得スクリプトは毎回 (1) を探し直すので、
+ * 後からオーナーが写真を上げれば自動で (1) へ差し替わる。
+ *
+ * judgePlacesPhoto は「その写真がオーナー投稿か」を答える役目のままにしてある
+ * （客投稿を owner-photo と偽らない）。階層の判断だけをここに置く。
+ *
+ * @param {Array<{photo:object, attribution:string}>} candidates 走査順の候補
+ * @param {object} store
+ * @returns {{picked:null|{photo:object, attribution:string, tier:'owner'|'user'}, rejects:string[]}}
+ */
+function pickPhoto(candidates, store) {
+  const p = loadPolicy().places;
+  const rejects = [];
+  let userFallback = null;
+
+  for (const c of candidates) {
+    const j = judgePlacesPhoto(c.photo, c.attribution, store);
+    if (j.ok) return { picked: { ...c, tier: 'owner' }, rejects };
+    rejects.push(`${j.reason}${j.detail ? ` ${j.detail}` : ''}`);
+
+    // 代替枠の候補として保持（採用は走査を終えてオーナー写真が無かったときだけ）
+    if (!p.allowUserPhotoFallback || userFallback) continue;
+    if (j.reason !== 'not-owner-photo') continue;             // 解像度不足等は代替枠にもしない
+    const credit = String(c.attribution || '').trim();
+    if (p.userPhotoRequiresCredit && (!credit || credit === 'Google Maps')) continue;
+    const w = Number(c.photo.widthPx || c.photo.width || 0);
+    if (p.userPhotoMinWidthPx && w && w < p.userPhotoMinWidthPx) continue;
+    userFallback = { ...c, tier: 'user' };
+  }
+
+  return { picked: userFallback, rejects };
+}
+
 /** html_attributions の1件目からタグを剥いでクレジット名を取り出す */
 function attributionName(photo) {
   const raw = photo?.html_attributions?.[0] || photo?.authorAttributions?.[0]?.displayName || '';
@@ -191,4 +232,4 @@ const isPlacesPhotoUrl = (u) => /googleusercontent\.com/.test(String(u || ''));
 
 // core() は scripts/lib/hero_photo_gate.js（ジャーナルのヒーロー写真の帰属判定）でも使う。
 // 同じ屋号を経路ごとに別基準で照合すると判定がズレるため、正規化はここ1本に集約する。
-module.exports = { loadPolicy, isOwnerAttribution, judgePlacesPhoto, attributionName, isPlacesPhotoUrl, norm, core, dice, VERIFIED_ALIASES };
+module.exports = { loadPolicy, isOwnerAttribution, judgePlacesPhoto, pickPhoto, attributionName, isPlacesPhotoUrl, norm, core, dice, VERIFIED_ALIASES };

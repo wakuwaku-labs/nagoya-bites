@@ -78,6 +78,10 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const { placesKey } = require('./lib/places_key');
+// 店名の同一性判定。写真取得（fetch_manual_store_photos.js）と同じ判定器を共有する。
+// ここに店名ゲートが無かったため、Google のあいまい一致が返した**別の店**の
+// 評価・口コミ・口コミ信頼度がその店の値として表示されていた（2026-08-30 発覚）。
+const { namesMatch, branchConflict } = require('./lib/store_name_match');
 const { textFingerprint, authorFingerprint } = require('./lib/review_fingerprint');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -195,7 +199,9 @@ async function fetchPlaceDetails(placeId) {
 // --refresh 用: Find Place を介さず Place Details 1 コールで snapshot + レビューを取得
 // fields に rating/user_ratings_total/business_status を含めることで Find Place 分のコストが浮く
 async function fetchDetailsForRefresh(placeId) {
-  const fields = 'rating,user_ratings_total,business_status,reviews';
+  // name を含めるのは、保存済み placeId が本当にその店を指しているかを毎回検算するため。
+  // name は Basic フィールドなので rating 等と同じ課金区分＝追加コストは発生しない。
+  const fields = 'name,rating,user_ratings_total,business_status,reviews';
   const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=${fields}&language=ja&reviews_no_translations=true&key=${API_KEY}`;
   const res = await fetchJson(url);
   if (res.status === 'OVER_QUERY_LIMIT' || res.status === 'REQUEST_DENIED') {
@@ -207,6 +213,7 @@ async function fetchDetailsForRefresh(placeId) {
   }
   const result = res.result || {};
   return {
+    name: typeof result.name === 'string' ? result.name : '',
     rating: typeof result.rating === 'number' ? result.rating : null,
     user_ratings_total: typeof result.user_ratings_total === 'number' ? result.user_ratings_total : null,
     business_status: result.business_status || null,
@@ -329,6 +336,21 @@ async function runRefresh(stores, cache, history) {
         // placeId が失効（店の Google 掲載終了等）— キャッシュに印だけ付けて snapshot は積まない
         cache[q.id].detailsNotFoundAt = now;
         notFound++;
+      } else if (d.name && q.name && (!namesMatch(q.name, d.name).ok || branchConflict(q.name, d.name))) {
+        // 保存済み placeId が別の店を指していた。--refresh は Find Place を介さず placeId を
+        // 直叩きするため、ここで検算しないと**誤った紐付けが永久に更新され続ける**
+        // （2026-08-30 発覚。別店の評価・口コミ・口コミ信頼度が表示されていた）。
+        // 値は更新せず rejected に倒し、build.js が適用しないようにする。
+        // 次回の通常解決（Find Place ＋ 店名ゲート）で正しい店を引き直す。
+        console.warn(`  [${q.id}] ${q.name}: 保存済み placeId が「${d.name}」を指しています → 紐付けを破棄`);
+        cache[q.id] = {
+          fetchedAt: now,
+          rejected: true,
+          rejectReason: 'name-mismatch-on-refresh',
+          candidateName: d.name,
+          previousPlaceId: q.placeId
+        };
+        notFound++;
       } else {
         cache[q.id] = {
           ...cache[q.id],
@@ -433,6 +455,18 @@ async function main() {
       if (!candidate) {
         cache[id] = { fetchedAt: new Date().toISOString(), notFound: true };
         zeroResults++;
+      } else if (!namesMatch(name, candidate.name).ok || branchConflict(name, candidate.name)) {
+        // 住所（名古屋市内か）だけでは「名古屋市内の別の店」を弾けない。
+        // findplacefromtext は候補を1件しか返さないため、あいまい一致が外れたときの
+        // リカバリが無く、別店の rating / user_ratings_total がそのまま入っていた。
+        cache[id] = {
+          fetchedAt: new Date().toISOString(),
+          rejected: true,
+          rejectReason: 'name-mismatch',
+          candidateName: candidate.name,
+          candidateAddress: candidate.formatted_address
+        };
+        rejected++;
       } else if (!validateAddress(candidate.formatted_address, addr)) {
         cache[id] = {
           fetchedAt: new Date().toISOString(),

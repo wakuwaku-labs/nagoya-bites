@@ -142,6 +142,16 @@ function nbStoreFigure(r){
   NB_FIGURE_CACHE[key]=uri;
   return uri;
 }
+// 客が投稿した写真（代替枠）に撮影者クレジットを出す。
+// data/photo_policy.json の userPhotoRequiresCredit に対応する表示側の実装。
+// 出す理由は2つ: (1) Google Places の帰属要件を満たす (2) 読者に「これは店の宣材ではなく
+// 利用者が撮った写真だ」と伝える。オーナー写真（places-owner / hotpepper）には出さない。
+function nbPhotoCredit(r) {
+  if (!r || r['写真出所'] !== 'places-user') return '';
+  var c = String(r['写真クレジット'] || '').trim();
+  if (!c) return '';
+  return '<span class="photo-credit" title="Google マップの利用者が投稿した写真です">📷 ' + nbEscHtml(c) + '</span>';
+}
 // 画像 CDN プロキシ — wsrv.nl 経由でリサイズ + シャープニング + WebP 配信。
 // Hot Pepper API は店舗によって L サイズが _238.jpg / _480.jpg と分かれるため、
 // 一旦 _480.jpg への昇格を試み、404 時は wsrv.nl の default パラメータで元 URL にフォールバック。
@@ -456,6 +466,11 @@ body.search-query-active .card-why{display:flex;}
 .ci img{width:100%;height:100%;object-fit:cover;filter:saturate(1.06) contrast(1.03);transition:filter .5s,transform .7s cubic-bezier(.2,.7,.2,1);display:block;}
 .card:hover .ci img{filter:saturate(1.12) contrast(1.05);transform:scale(1.06);}
 .ci::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(28,28,26,.55) 0%,transparent 48%);pointer-events:none;}
+/* 代替枠（客投稿）の撮影者クレジット。帰属表示なので写真の上に必ず可視で置く */
+.photo-credit{position:absolute;left:8px;bottom:8px;z-index:3;max-width:calc(100% - 16px);
+  padding:3px 7px;border-radius:3px;background:rgba(10,10,8,.62);backdrop-filter:blur(4px);
+  color:rgba(255,255,255,.92);font-size:10px;line-height:1.4;letter-spacing:.02em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none;}
 /* ── カード内リール（所有者検証を通った動画のみ・タップで再生）── */
 /* 当たり判定は再生アイコンだけに絞る（写真の他の部分をタップしたら従来どおり店舗詳細が開く）*/
 .reel-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:66px;height:66px;display:flex;align-items:center;justify-content:center;background:transparent;border:0;padding:0;cursor:pointer;z-index:4;}
@@ -9579,7 +9594,7 @@ function buildCardHtml(r) {
       distBadge = '<span class="dist-badge' + (approx ? ' approx' : '') + '" title="' + (approx ? '現在地からの概算距離（エリア中心点）' : '現在地からの直線距離') + '">' + (approx ? '~' : '') + distText + '</span>';
     }
     return '<div class="card" onclick="openM(' + idx + ')" role="button" tabindex="0" aria-label="' + r['店名'] + 'の詳細を見る">'
-      + '<div class="ci">' + distBadge + '<img src="' + nbImage(photo, 600) + '" srcset="' + nbSrcset(photo, [400, 600, 800]) + '" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)">'
+      + '<div class="ci">' + distBadge + nbPhotoCredit(r) + '<img src="' + nbImage(photo, 600) + '" srcset="' + nbSrcset(photo, [400, 600, 800]) + '" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)">'
       + (reel ? '<button class="reel-play" onclick="nbPlayReel(event,this,\'' + reel.code + '\')" aria-label="' + nbEscHtml(r['店名']) + 'のリール動画を再生"><i aria-hidden="true"></i></button><span class="reel-tag">Reel</span>' : '')
       + '</div>'
       + '<span class="badge">' + genre + '</span>'
