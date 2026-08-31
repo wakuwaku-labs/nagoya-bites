@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ラフ＆ミートラウンジ　晴れテル。（栄・伏見・居酒屋）| NAGOYA BITES</title>
@@ -47,7 +47,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       "streetAddress": "愛知県名古屋市中区錦１丁目20-6高木ビル1階",
       "addressArea": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄"
     },
-    "image": "https://imgfp.hotp.jp/IMGH/36/42/P050213642/P050213642.jpg",
+    "image": "https://imgfp.hotp.jp/IMGH/77/84/P051107784/P051107784.jpg",
     "url": "https://nagoya-bites.com/stores/J004559294.html",
     "description": "伏見駅直近で二出口対応、5,500円帯、複数ルートからの集客に強い戦略的立地",
     "priceRange": "¥¥",
@@ -185,7 +185,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F36%2F42%2FP050213642%2FP050213642.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F36%2F42%2FP050213642%2FP050213642_480.jpg" srcset="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F36%2F42%2FP050213642%2FP050213642.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F36%2F42%2FP050213642%2FP050213642_480.jpg 480w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F36%2F42%2FP050213642%2FP050213642.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F36%2F42%2FP050213642%2FP050213642_480.jpg 800w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F36%2F42%2FP050213642%2FP050213642.jpg&w=832&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F36%2F42%2FP050213642%2FP050213642_480.jpg 832w" sizes="100vw" alt="ラフ＆ミートラウンジ　晴れテル。" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/36/42/P050213642/P050213642.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
+<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F77%2F84%2FP051107784%2FP051107784.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F77%2F84%2FP051107784%2FP051107784_480.jpg" srcset="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F77%2F84%2FP051107784%2FP051107784.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F77%2F84%2FP051107784%2FP051107784_480.jpg 480w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F77%2F84%2FP051107784%2FP051107784.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F77%2F84%2FP051107784%2FP051107784_480.jpg 800w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F77%2F84%2FP051107784%2FP051107784.jpg&w=847&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F77%2F84%2FP051107784%2FP051107784_480.jpg 847w" sizes="100vw" alt="ラフ＆ミートラウンジ　晴れテル。" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/77/84/P051107784/P051107784.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">

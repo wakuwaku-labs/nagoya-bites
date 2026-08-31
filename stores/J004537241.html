@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>うめのおく（栄・伏見・バー・カクテル）| NAGOYA BITES</title>
@@ -47,7 +47,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       "streetAddress": "愛知県名古屋市中区新栄１丁目-6-25",
       "addressArea": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄"
     },
-    "image": "https://imgfp.hotp.jp/IMGH/91/20/P051029120/P051029120.jpg",
+    "image": "https://imgfp.hotp.jp/IMGH/73/02/P051107302/P051107302.jpg",
     "url": "https://nagoya-bites.com/stores/J004537241.html",
     "description": "新栄町駅6分、3500円、バーとして新栄エリアの夜間滞留確保",
     "priceRange": "¥¥",
@@ -183,7 +183,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F91%2F20%2FP051029120%2FP051029120.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F91%2F20%2FP051029120%2FP051029120_480.jpg" srcset="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F91%2F20%2FP051029120%2FP051029120.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F91%2F20%2FP051029120%2FP051029120_480.jpg 480w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F91%2F20%2FP051029120%2FP051029120.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F91%2F20%2FP051029120%2FP051029120_480.jpg 800w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F91%2F20%2FP051029120%2FP051029120.jpg&w=1169&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F91%2F20%2FP051029120%2FP051029120_480.jpg 1169w" sizes="100vw" alt="うめのおく" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/91/20/P051029120/P051029120.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
+<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F73%2F02%2FP051107302%2FP051107302.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F73%2F02%2FP051107302%2FP051107302_480.jpg" srcset="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F73%2F02%2FP051107302%2FP051107302.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F73%2F02%2FP051107302%2FP051107302_480.jpg 480w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F73%2F02%2FP051107302%2FP051107302.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F73%2F02%2FP051107302%2FP051107302_480.jpg 800w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F73%2F02%2FP051107302%2FP051107302.jpg&w=1196&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F73%2F02%2FP051107302%2FP051107302_480.jpg 1196w" sizes="100vw" alt="うめのおく" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/73/02/P051107302/P051107302.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
@@ -293,7 +293,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
       <li><a href="J004067647.html">シーシャラウンジ プラーナ 名古屋栄店</a></li>
       <li><a href="J003532623.html">REX POKER NAGOYA レックスポーカーナゴヤ</a></li>
       <li><a href="J003806456.html">Dr shisha Nagoya ドクターシーシャ</a></li>
-      <li><a href="J003498032.html">シーシャラウンジ チルラ 名古屋 グランデ 栄店</a></li>
+      <li><a href="J001134166.html">バームーンウォーク bar moon walk 錦通り店</a></li>
     </ul>
   </div>
 

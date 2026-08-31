@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>お食事処 Hug ハグ（天白・瑞穂・居酒屋）| NAGOYA BITES</title>
@@ -51,7 +51,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J004536441.html",
     "description": "鳴海駅2,000円台、ランチ営業で昼間の回転を狙える居酒屋",
     "priceRange": "¥",
-    "openingHours": "月～金: 11:30～14:00 （料理L.O. 13:30 ドリンクL.O. 13:30）17:00～翌0:00 （料理L.O. 23:30 ドリンクL.O. 23:30）土: 14:00～翌0:00 （料理L.O. 23:30 ドリンクL.O. 23:30）日: 13:00～22:00 （料理L.O. 21:30 ドリンクL.O. 21:30）",
+    "openingHours": "月～水、金: 11:30～14:00 （料理L.O. 13:30 ドリンクL.O. 13:30）17:00～翌0:00 （料理L.O. 23:30 ドリンクL.O. 23:30）土: 14:00～翌0:00 （料理L.O. 23:30 ドリンクL.O. 23:30）日: 14:00～22:00 （料理L.O. 21:30 ドリンクL.O. 21:30）",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.105",
@@ -215,7 +215,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 緑区・南区・天白区・瑞穂区</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市緑区浦里５-346-2</span></div>
     <div class="info-cell"><label>価格帯</label><span>2001～3000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月～金: 11:30～14:00 （料理L.O. 13:30 ドリンクL.O. 13:30）17:00～翌0:00 （料理L.O. 23:30 ドリンクL.O. 23:30）土: 14:00～翌0:00 （料理L.O. 23:30 ドリンクL.O. 23:30）日: 13:00～22:00 （料理L.O. 21:30 ドリンクL.O. 21:30）</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月～水、金: 11:30～14:00 （料理L.O. 13:30 ドリンクL.O. 13:30）17:00～翌0:00 （料理L.O. 23:30 ドリンクL.O. 23:30）土: 14:00～翌0:00 （料理L.O. 23:30 ドリンクL.O. 23:30）日: 14:00～22:00 （料理L.O. 21:30 ドリンクL.O. 21:30）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>名鉄名古屋本線鳴海駅東出口より徒歩約9分 </span></div>
   </div>

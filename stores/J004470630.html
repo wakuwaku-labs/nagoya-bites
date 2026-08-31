@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>もんじゃSAWAKAMI サワカミ 金山店（金山・居酒屋）| NAGOYA BITES</title>
@@ -51,7 +51,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J004470630.html",
     "description": "金山駅4分、3,500円で三線使い集合需要を捉える立地の強さが際立つ",
     "priceRange": "¥¥",
-    "openingHours": "月～木、日: 17:00～翌0:00 （料理L.O. 23:30 ドリンクL.O. 23:30）金: 17:00～翌1:00 （料理L.O. 翌0:30 ドリンクL.O. 翌0:30）土: 11:00～翌1:00 （料理L.O. 翌0:30 ドリンクL.O. 翌0:30）祝日: 11:00～翌0:00 （料理L.O. 23:30 ドリンクL.O. 23:30）",
+    "openingHours": "月～木、日: 17:00～23:30 （料理L.O. 23:00 ドリンクL.O. 23:00）金: 17:00～翌0:30 （料理L.O. 翌0:00 ドリンクL.O. 翌0:00）土: 11:00～翌0:30 （料理L.O. 翌0:00 ドリンクL.O. 翌0:00）祝日: 11:00～23:30 （料理L.O. 23:00 ドリンクL.O. 23:00）",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.1318",
@@ -214,7 +214,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 金山・神宮前・熱田区</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市熱田区金山町２丁目5‐9</span></div>
     <div class="info-cell"><label>価格帯</label><span>3001～4000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月～木、日: 17:00～翌0:00 （料理L.O. 23:30 ドリンクL.O. 23:30）金: 17:00～翌1:00 （料理L.O. 翌0:30 ドリンクL.O. 翌0:30）土: 11:00～翌1:00 （料理L.O. 翌0:30 ドリンクL.O. 翌0:30）祝日: 11:00～翌0:00 （料理L.O. 23:30 ドリンクL.O. 23:30）</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月～木、日: 17:00～23:30 （料理L.O. 23:00 ドリンクL.O. 23:00）金: 17:00～翌0:30 （料理L.O. 翌0:00 ドリンクL.O. 翌0:00）土: 11:00～翌0:30 （料理L.O. 翌0:00 ドリンクL.O. 翌0:00）祝日: 11:00～23:30 （料理L.O. 23:00 ドリンクL.O. 23:00）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>金山駅東口から徒歩5分◎ミュープラット金山の出口が最寄り。沢上交差点すぐ、赤い暖簾目印です。</span></div>
   </div>
