@@ -3670,7 +3670,9 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **ブランドガードレール**: Bing側データも他の検索ループと同じくMoat/Strategic Skipでtriageする。データが増えても採否判断の基準は変えない
 
 ### [SEO-068] discovery意図クエリ（シーン×エリア=Moat領域）の検索面を計画的に拡張する
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-08-31
+- **resolved_by**: 74ed54c
 - **detected**: 2026-08-22
 - **category**: SEO / コンテンツ戦略
 - **owner**: Editor / Marketer
@@ -4563,6 +4565,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-109 実装・デプロイ — `node scripts/audit_journal_sns_pairing.js` で公開済みジャーナル2本（2026-08-10/08-11）にSNS原稿が欠落していると発見。記事本文・情報源・既存の埋め込みInstagram投稿を基に既存書式でdocs/daily-posts/2026-08-10.md・2026-08-11.mdを作成、欠落2→0件を確認 | ✅ 本コミット |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-107 実装・デプロイ — `node scripts/audit_feature_stores.js` の全特集監査で発見した「実在不明」5件を個別調査。うち1件（nagoya-ramen.htmlの「担担麺専門店 想吃担担面 名駅地下店」）はLOCAL_STORESに実在する店（正式名「想吃担担面 シャンツーダンダンミェン 名駅地下店」・HP ID J001271930）の表記・写真URLドリフトと判明し即修正。残り4件（4特集共通の「鉄板焼肉3G スリージー」）はHotPepper個別ページ404・sandbox内Places APIアクセス不能のため実在確定に至らず、ISSUE-108としてDataKeeperへローカル環境での再検証を依頼 | ✅ 本コミット（ISSUE-107分のみ・ISSUE-108は未実装） |
 | 2026-08-22 | Marketer(SEO分析セッション) | SEO-066 partial実装 — GSCの`gsc_opportunities.json`が挙げるctrFix対象5ページを個別診断。3店舗ページ（J004025075/J004559348/J004661023）はtitleに既に店名完全一致が入っており（SEO-050で一度最適化済み）、上位表示クエリが全て指名検索＝Google Maps/公式Instagram/食べログという「一次情報源」に順位で勝てない構造的なCTR上限（Strategic Skip該当）と判断、対症的なtitle/meta変更は見送り。一方、ジャーナル記事2本は実際のバグを検出: `journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html`は最多流入クエリ「煮干しラーメン 凛」(223 impression/28日)の店名「凛」がtitle/meta/OGP/JSON-LDのどこにも一度も出現していなかった（本文には9回登場）。`journal/2026-07-27-owarisanso-kurogi.html`は最多流入クエリ「尾張山荘くろぎ」(493 impression)のうちmeta descriptionには「尾張山荘」があったがtitleには無かった。両記事のtitle/og:title/JSON-LD headlineに店舗正式名を追加（niboshi-ramen-rinはmeta descriptionにも追加、owarisanso-kurogiは既にmeta記載済みのため据え置き）・dateModified更新・JSON-LD構文検証OK・npm test 125/125 pass。効果は次回GSC更新（該当2クエリのCTR/掲載順位）で再評価 | ✅ 本コミット・3店舗ページ分は意図的見送り |
+| 2026-08-31 | Marketer(routine) | SEO-068 実装・デプロイ — AREA_VOCAB の alias を match に実在する表記のみで拡張（栄←丸の内・新栄／覚王山←藤が丘）。before: 117本中66本がエリアKWなし → after: 61本（alias一致5本のみ改善・全記事底上げなし）。--verify problems:[] 通過 | ✅ commit 74ed54c |
 
 ---
 
