@@ -3670,7 +3670,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **ブランドガードレール**: Bing側データも他の検索ループと同じくMoat/Strategic Skipでtriageする。データが増えても採否判断の基準は変えない
 
 ### [SEO-068] discovery意図クエリ（シーン×エリア=Moat領域）の検索面を計画的に拡張する
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: in_progress
 - **detected**: 2026-08-22
 - **category**: SEO / コンテンツ戦略
 - **owner**: Editor / Marketer
