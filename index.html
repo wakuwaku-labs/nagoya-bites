@@ -1162,6 +1162,13 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .scene-index-list a{display:inline-block;padding:.25rem .6rem;color:var(--muted);text-decoration:none;border:1px solid var(--border);border-radius:999px;}
 .scene-index-list a:hover{color:var(--gold);border-color:var(--gold);background:rgba(122,92,16,.06);}
 @media(max-width:640px){.scene-index{padding:1.2rem .8rem 0;}}
+/* ── PILL FOLD ── 選択肢が多いピル一覧を折りたたむ共通パターン（目的から探す / 絞り込みGENRE） */
+.scene-index-list.is-folded li:nth-child(n+9){display:none;}
+.filter-bar.is-folded .ft:nth-of-type(n+9){display:none;}
+.fold-toggle{display:inline-flex;align-items:center;gap:.3rem;margin-top:.5rem;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.08em;color:var(--gold);background:none;border:1px dashed var(--border);border-radius:999px;padding:.32rem .8rem;cursor:pointer;transition:border-color .2s;}
+.fold-toggle:hover{border-color:var(--gold);}
+.fold-toggle .fa{display:inline-block;transition:transform .2s;}
+.fold-toggle[aria-expanded="true"] .fa{transform:rotate(180deg);}
 /* ── STORE INDEX (内部リンク集 / SEO) ── */
 .store-index{max-width:1200px;margin:2.5rem auto 1rem;padding:1.5rem 1.2rem;border-top:1px solid var(--border);}
 .store-index-title{font-size:.85rem;font-weight:600;letter-spacing:.04em;color:var(--text);margin:0 0 .3rem;}
@@ -1708,10 +1715,11 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 
 <div class="cap-tabs" id="cap-tabs"></div>
 
-<div class="filter-bar">
+<div class="filter-bar" id="genre-filter-bar">
   <span class="fl">Genre</span>
   <div class="ft on" data-f="all">All</div>
 </div>
+<button type="button" class="fold-toggle" id="genre-fold-toggle" style="display:none" aria-expanded="false" aria-controls="genre-filter-bar"></button>
 
 <div class="tag-filter" id="tag-filter"></div>
 
@@ -7905,6 +7913,28 @@ function normalizeGenre(raw) {
   return 'その他グルメ';
 }
 
+// 選択肢が多いピル一覧を「先頭N件＋もっと見る」に折りたたむ共通ヘルパー（目的から探す / GENRE で共用）
+function initPillFold(container, toggleBtn, total, threshold) {
+  if (!container || !toggleBtn) return;
+  if (total <= threshold) {
+    toggleBtn.style.display = 'none';
+    container.classList.remove('is-folded');
+    return;
+  }
+  var hidden = total - threshold;
+  var collapsedLabel = 'もっと見る（+' + hidden + '） <span class="fa">▾</span>';
+  var expandedLabel = '閉じる <span class="fa">▾</span>';
+  container.classList.add('is-folded');
+  toggleBtn.style.display = '';
+  toggleBtn.setAttribute('aria-expanded', 'false');
+  toggleBtn.innerHTML = collapsedLabel;
+  toggleBtn.onclick = function() {
+    var stillFolded = container.classList.toggle('is-folded');
+    toggleBtn.setAttribute('aria-expanded', stillFolded ? 'false' : 'true');
+    toggleBtn.innerHTML = stillFolded ? collapsedLabel : expandedLabel;
+  };
+}
+
 function buildGenreTabs() {
   var present = {};
   ALL_STORES.forEach(function(s){
@@ -7921,6 +7951,7 @@ function buildGenreTabs() {
     t.classList.add('on');
     applyFilters();
   };
+  initPillFold(bar, document.getElementById('genre-fold-toggle'), genres.length, 8);
 }
 
 function buildAreaFilter() {
@@ -10910,6 +10941,26 @@ renderGrid = function(data) {
         else { sortAndRender(); scrollToResultsIfAbove(); }
         if (window.trackEvent) trackEvent('sort_change', { mode: mode });
       });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
+  }
+})();
+
+// 「目的から探す」のピル一覧が多い場合に折りたたむ（各グループ先頭8件＋もっと見る）
+(function foldSceneIndex(){
+  function bind(){
+    document.querySelectorAll('.scene-index-list').forEach(function(list){
+      var count = list.children.length;
+      if (count <= 8) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'fold-toggle';
+      list.insertAdjacentElement('afterend', btn);
+      initPillFold(list, btn, count, 8);
     });
   }
   if (document.readyState === 'loading') {
