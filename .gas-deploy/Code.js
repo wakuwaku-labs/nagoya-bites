@@ -403,12 +403,17 @@ function analyze(data) {
   const nonBaseEvents = data.events.filter(e =>
     !['page_view','session_start','first_visit','user_engagement','scroll'].includes(e.dimensions[0])
   );
-  const ctaEvent = data.events.find(e => e.dimensions[0] === 'cta_click');
+  // イベント名の束（後から追加しても1箇所を変えるだけ・SEO-072）
+  const RESERVATION_EVENTS = ['cta_click', 'cta_reserve'];
+  const DETAIL_EVENTS = ['modal_open', 'feature_store_click'];
+  function sumEvents(events, names) {
+    return events.filter(e => names.includes(e.dimensions[0]))
+                 .reduce(function(s, e) { return s + parseInt(e.metrics[0] || 0); }, 0);
+  }
+  const ctaCount = sumEvents(data.events, RESERVATION_EVENTS);
   const gmapEvent = data.events.find(e => e.dimensions[0] === 'cta_gmap_click');
-  const modalEvent = data.events.find(e => e.dimensions[0] === 'modal_open');
-  const ctaCount = ctaEvent ? parseInt(ctaEvent.metrics[0]) : 0;
   const gmapCount = gmapEvent ? parseInt(gmapEvent.metrics[0]) : 0;
-  const modalCount = modalEvent ? parseInt(modalEvent.metrics[0]) : 0;
+  const modalCount = sumEvents(data.events, DETAIL_EVENTS);
   // 予約クリック率はイベント側と同じ日で割らないと意味が合わない（分子は data.events＝当日）
   const ctaRate = et.users > 0 ? ctaCount / et.users : 0;
 
@@ -638,7 +643,7 @@ function buildAdvicePrompt(data, a, date, isWeekly) {
 '- 1訪問あたり閲覧: ' + a.pagesPerSession.toFixed(1) + 'ページ（目安2以上が良好）',
 '- 平均滞在: ' + secToText(t.avgDuration) + '（目安60秒以上）',
 '- 直帰率: ' + Math.round(t.bounceRate * 100) + '%（目安50%未満が良好・70%超は要注意）',
-'- 予約ボタンクリック: ' + a.ctaCount + '回 ／ マップ: ' + a.gmapCount + '回 ／ 店舗詳細を開いた: ' + a.modalCount + '回' + (a.outboundCount ? ' ／ 外部リンク: ' + a.outboundCount + '回' : ''),
+'- 予約行動（cta_click+cta_reserve）: ' + a.ctaCount + '回 ／ マップ: ' + a.gmapCount + '回 ／ 詳細到達（modal_open+feature_store_click）: ' + a.modalCount + '回' + (a.outboundCount ? ' ／ 外部リンク: ' + a.outboundCount + '回' : ''),
 '- 予約クリック率（予約÷訪問者）: ' + (a.ctaRate * 100).toFixed(1) + '%（目安3%）',
 '- 検索流入比率: ' + Math.round(a.organicPct * 100) + '%（判別できた' + a.identifiableSessions + '件中）' +
   ' ／ SNS流入比率: ' + Math.round(a.socialPct * 100) + '%' +

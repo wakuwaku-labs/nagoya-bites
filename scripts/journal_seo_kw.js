@@ -75,11 +75,11 @@ const SCENE_VOCAB = [
 const AREA_VOCAB = [
   { kw: '名駅',   aliases: ['名駅', '名古屋駅'],       feature: 'features/meieki.html',
     match: ['名古屋（名古屋駅/西区/中村区）', '名古屋駅', '名駅', '名古屋市中村区', '名古屋市西区'] },
-  { kw: '栄',     aliases: ['栄', '錦'],               feature: 'features/sakae.html',
+  { kw: '栄',     aliases: ['栄', '錦', '丸の内', '新栄'], feature: 'features/sakae.html',
     match: ['栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄', '栄(ミナミ)/矢場町/大須/上前津', '栄', '名古屋市中区', '錦', '名古屋市中区錦', '名古屋市中区栄', '中区 栄', '丸の内', '新栄'] },
   { kw: '大須',   aliases: ['大須'],                   feature: 'features/osu-food-walk.html',
     match: ['大須'] },
-  { kw: '覚王山', aliases: ['覚王山', '本山'],         feature: 'features/nagoya-kakuozan.html',
+  { kw: '覚王山', aliases: ['覚王山', '本山', '藤が丘'], feature: 'features/nagoya-kakuozan.html',
     match: ['本山・覚王山・藤が丘', '覚王山'] }
 ];
 

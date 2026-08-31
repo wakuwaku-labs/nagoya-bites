@@ -61,6 +61,22 @@
       "reason": "生成AI経由の流入が旧コードの `m === 'organic'` 分岐に落ちて『openai検索』等と誤ラベルされている。新コードはその手前で専用ラベルに分岐するため出力されない。"
     },
     {
+      "key": "reservation_bundle_label",
+      "fix_id": "SEO-072",
+      "verdict": "deployed",
+      "scope": "body",
+      "pattern": "予約行動（cta_click\\+cta_reserve）",
+      "reason": "SEO-072 で追加したイベント束ラベル。旧コードは『予約ボタンクリック』という固定文字列を出す。この文字列に差し替わった場合は SEO-072 以降のコードで動いている。"
+    },
+    {
+      "key": "reservation_old_label",
+      "fix_id": "SEO-072",
+      "verdict": "not_deployed",
+      "scope": "body",
+      "pattern": "予約ボタンクリック: \\d+回 ／ マップ",
+      "reason": "旧コードの出力形式。SEO-072 以降は『予約行動（cta_click+cta_reserve）』に変わるため、この形式は旧コードが動いている確証。"
+    },
+    {
       "key": "settled_slice_label",
       "fix_id": "SEO-076",
       "verdict": "deployed",
@@ -134,6 +150,13 @@
       "evidence": "clasp pull で本番の実体を取得し .gas-deploy/Code.js とバイト一致を確認（SEO-074）"
     }
   ],
-  "pending_fixes": [],
+  "pending_fixes": [
+    {
+      "id": "SEO-072",
+      "summary": "予約行動（cta_click+cta_reserve）と詳細到達（modal_open+feature_store_click）をイベント名の束として集計。旧コードの固定3種完全一致を廃止。",
+      "commit": "pending",
+      "detected": "2026-08-25"
+    }
+  ],
   "_resolved_fixes": "2026-08-25 に clasp pull で本番プロジェクトを直接取得し、.gas-deploy/Code.js とバイト一致・ファイルは Code.js と appsscript.json の2本のみ（余分な旧ファイルなし）であることを確認したため、4件とも反映済みへ移した。以後の未反映検知は文字列痕跡（signals）と数値乖離（numeric_signals）が担う。"
 }

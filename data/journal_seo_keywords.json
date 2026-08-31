@@ -1,6 +1,6 @@
 {
   "description": "日次ジャーナルの入口（検索意図）を担保するシーンKWマスタ。SEO-011（+SEO-007統合）。各KWは features/ の実在記事に紐づき、scripts/journal_seo_kw.js --verify で「特集ファイルが実在し、そのタイトルにその語が実際に使われている」ことを検証できる。.claude/commands/journal-today.md は自己改変ブロックで編集できないため、KW運用のルールはこのデータファイルと scripts/journal_seo_kw.js を単一の情報源とする。",
-  "updated": "2026-07-27",
+  "updated": "2026-08-31",
   "related_issue": "SEO-011 (SEO-007 統合)",
   "evidence": {
     "measured_on": "2026-07-27",
@@ -21,10 +21,12 @@
       "kw": "栄",
       "aliases": [
         "栄",
-        "錦"
+        "錦",
+        "丸の内",
+        "新栄"
       ],
       "feature": "features/sakae.html",
-      "store_count": 1941
+      "store_count": 1895
     },
     {
       "kw": "名駅",
@@ -33,16 +35,17 @@
         "名古屋駅"
       ],
       "feature": "features/meieki.html",
-      "store_count": 1041
+      "store_count": 1047
     },
     {
       "kw": "覚王山",
       "aliases": [
         "覚王山",
-        "本山"
+        "本山",
+        "藤が丘"
       ],
       "feature": "features/nagoya-kakuozan.html",
-      "store_count": 249
+      "store_count": 246
     },
     {
       "kw": "大須",
@@ -50,7 +53,7 @@
         "大須"
       ],
       "feature": "features/osu-food-walk.html",
-      "store_count": 20
+      "store_count": 22
     }
   ],
   "scenes": [
