@@ -1,0 +1,86 @@
+{
+  "status": "OK",
+  "editorReason": "ミシュラン三つ星を獲得し、名古屋の日本料理界を牽引する名店。完全予約制のカウンター8席で、素材の味を最大限に引き出す割烹スタイルが国内外の食通を魅了しています。",
+  "insiderNote": "ミシュラン三つ星を「唯一、本物の中の本物」と評され、メディア露出を避ける予約困難店。素材を尊重し、未来を見据えるサステナブルな料理哲学も注目されます。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF7qnaFCqf4CtP5E5mNP3i0yvCnM0zA6jgOZw7zVGGarugi5DDDbYcDe5r0UmC10R67SFVizDAl_6bywKi-5mZTYoyyBTpGkS73kBx1OzsWob74dxz_935oXNyxnkSsY3KeHbqxCb7CEabFbwsuYHK1eLE=",
+      "snippet_quote": "「日本料理 𡈽方」はミシュラン三つ星を獲得しています。",
+      "supports": "ミシュラン三つ星を獲得していること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHv9vmyHctUXTFloMFit31vd-SdnoTc6atwFAIeBsqPLxLPIpnKY9rD3g7AVHkCuLwLzCa-usY3hb9hrFHJwkEAbl_UMRrML-E6V-fqF5hwDC9tkcZ8rc844RIgDlXh1ofPkw==",
+      "snippet_quote": "「日本料理 𡈽方」はミシュラン三つ星を獲得しています。",
+      "supports": "ミシュラン三つ星を獲得していること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiLsyyu881O1NaiKJFJsjYq2c1-a5LU5lD6sAQbjeZbX_HxbrBzWaBdXjthrR8xZZAMb9KEj0iw54Pb8KUPT-oTyMmWQJySjT-z2GjhpZz7GhxYjx-HkT4943ZQR5MmLdhflMtnn-jDg==",
+      "snippet_quote": "「日本料理 𡈽方」は完全予約制で、席はカウンターのみ8席です。 料理人が目の前で調理し、出来立てを提供する割烹スタイルであると考えられます。",
+      "supports": "完全予約制、カウンター8席の割烹スタイルであること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF5Ck9ufxHWnEqSQcZzyWj62gM9P0_scEfeQF5e6xP94TGTNNA6P3uzxZxdLd3QI8aGhjNCtl5I58yrMI0i1BpywnHimXTXYXw_9erl5ZD2bL1QKvLLBxbTZpljc4Q=",
+      "snippet_quote": "「日本料理 𡈽方」は完全予約制で、席はカウンターのみ8席です。 料理人が目の前で調理し、出来立てを提供する割烹スタイルであると考えられます。",
+      "supports": "完全予約制、カウンター8席の割烹スタイルであること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF7qnaFCqf4CtP5E5mNP3i0yvCnM0zA6jgOZw7zVGGarugi5DDDbYcDe5r0UmC10R67SFVizDAl_6bywKi-5mZTYoyyBTpGkS73kBx1OzsWob74dxz_935oXNyxnkSsY3KeHbqxCb7CEabFbwsuYHK1eLE=",
+      "snippet_quote": "「Retty」の口コミでは、東海ミシュランにおいて数少ない「正当な評価」「唯一、本物の中の本物の三つ星獲得」と評されています。 また、「予約が取れないことでも有名で、メディア露出を避けている」とされ、「日本料理の頂点に位置する」と評されています。",
+      "supports": "ミシュラン三つ星の評価、予約困難であること、メディア露出を避けていること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtFKUHyiURXALUrQ2WBBGh_7Bt8WaZ-gcZY0zYGMv2ZxJdbuljSn4aFYXhYeNXS987LVy_Cfx0bfqcDZxZ5troWtC6VvG6JceqjeIMOELuk9Dz8_d7UV-SYzaDzEHXCSXTFDY=",
+      "snippet_quote": "この哲学には、素材を尊重し、文化をつなぎ、未来を見据えるサステナブルな視座が息づいていると評されています。",
+      "supports": "素材を尊重し、未来を見据えるサステナブルな視座を持つ料理哲学であること"
+    }
+  ],
+  "warnings": [
+    "1件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「日本料理 𡈽方」に関する業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n店主である土方章司氏は、「選び抜いた素材を、余すことなく生かす“素直な料理”」を提供することを哲学としています。この哲学には、素材を尊重し、文化をつなぎ、未来を見据えるサステナブルな視座が息づいていると評されています。料理においては、素材の味を最大限に引き出す「足し引きの妙」を重視しており、料理人にとって主役はあくまで素材であるというメッセージがカウンター越しに伝わるとされています。また、日本酒の選定にもこだわりがあり、「よき食中酒は、よき酸味を持つ」という考えに基づき、大阪の「秋鹿」を中心に、愛知の「長珍」、兵庫の「奥播磨」、香川の「悦凱陣」など、酸味のきれいな銘柄をセレクトしています。\n\n**提供スタイルの特徴**\n「日本料理 𡈽方」は完全予約制で、席はカウンターのみ8席です。日本らしい美意識が施された空間には、重厚な一枚板のカウンターが配されています。 料理は、旬の食材を使った創作和食が提供され、一品一品が目で見ても楽しめる盛り付けとなっています。 料理人が目の前で調理し、出来立てを提供する割烹スタイルであると考えられます。\n\n**地元グルメメディアでの紹介**\n「日本料理 𡈽方」は、レクサスオーナーのための特別な食体験「LEXUS DINING JOURNEY」の東海エリア第1号店として、『料理王国』とのコラボレーション企画で紹介されています。 また、「一休.comレストラン」や「Retty」といったグルメサイトにも掲載されており、特に「Retty」ではミシュラン三つ星獲得後、その評価の正当性が言及されています。\n\n**料理人としての評価**\n「日本料理 𡈽方」はミシュラン三つ星を獲得しています。 土方章司氏は、厳選された素材を無駄なく生かす「素直な料理」を提供し続ける料理人として評価されており、その哲学は素材を尊重し、文化をつなぎ、未来を見据えるサステナブルな視点を持つとされています。 「Retty」の口コミでは、東海ミシュランにおいて数少ない「正当な評価」「唯一、本物の中の本物の三つ星獲得」と評されています。 また、「予約が取れないことでも有名で、メディア露出を避けている」とされ、「日本料理の頂点に位置する」と評されています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtFKUHyiURXALUrQ2WBBGh_7Bt8WaZ-gcZY0zYGMv2ZxJdbuljSn4aFYXhYeNXS987LVy_Cfx0bfqcDZxZ5troWtC6VvG6JceqjeIMOELuk9Dz8_d7UV-SYzaDzEHXCSXTFDY=",
+        "title": "cuisine-kingdom.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiLsyyu881O1NaiKJFJsjYq2c1-a5LU5lD6sAQbjeZbX_HxbrBzWaBdXjthrR8xZZAMb9KEj0iw54Pb8KUPT-oTyMmWQJySjT-z2GjhpZz7GhxYjx-HkT4943ZQR5MmLdhflMtnn-jDg==",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF5Ck9ufxHWnEqSQcZzyWj62gM9P0_scEfeQF5e6xP94TGTNNA6P3uzxZxdLd3QI8aGhjNCtl5I58yrMI0i1BpywnHimXTXYXw_9erl5ZD2bL1QKvLLBxbTZpljc4Q=",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFklx2Nrobi17WXrANo55tc0qd56Bnav90HmbZwYLKlE2WxhtsEj_rF56emUzdWb0sl4J5aPRqnIqiWLdiIT33OjtIAa7fCZ4PqwPCcTpnJ99EHooPQJ3JJdWy_KaTohZ7aDbF_Ag==",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGL-wzM7GzGpYTHeXHUvN8cB_iaTo2gp-JoYAJXFyq31Rq17uwspyszZtcZgln0l78t0-j5ZRj85L4tXRuZmbQDlkhgJciRZRssBZD8FT1nj7gwvLW4IdycF9ptP73tH7QzSt5s7owtc9hEYMXZviPlINWK1H_hPPRCw3UjNzi0Z_eQiowbdPg9cx2iQJwQwTOHAZp2gwON7YovWOERNm1HNwiwH3GtxQMKd4ztNn2vY_mcgfAEPk2Nx1f-CGnatkMYy-R1PTTcUuBxjRNvqw0EOcpy0QK_OE5WPJzzLDaeuKLfMz-wf8FlMp-z9PBh4Zg0bCxq3iLZImhBX_wv28-9iKh0fPrA2G1tztM_x-epYUI5AcNetMg4oNLJbwM=",
+        "title": "kappodo.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGvlCnwtjIuGGjza7lO-6ewtUa1DrqC-SWL9IM-8k1W7J4yMKrD30KZeR2sPg3nTEf4R3MltRlWi4g9YwPt3GtzAHtXp6iIKccTvpGXnTH597CmQn27LEwkwi3DMUfEGq7lgvU=",
+        "title": "note.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF7qnaFCqf4CtP5E5mNP3i0yvCnM0zA6jgOZw7zVGGarugi5DDDbYcDe5r0UmC10R67SFVizDAl_6bywKi-5mZTYoyyBTpGkS73kBx1OzsWob74dxz_935oXNyxnkSsY3KeHbqxCb7CEabFbwsuYHK1eLE=",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHv9vmyHctUXTFloMFit31vd-SdnoTc6atwFAIeBsqPLxLPIpnKY9rD3g7AVHkCuLwLzCa-usY3hb9hrFHJwkEAbl_UMRrML-E6V-fqF5hwDC9tkcZ8rc844RIgDlXh1ofPkw==",
+        "title": "tableall.com"
+      }
+    ]
+  },
+  "store_id": "manual_日本料理𡈽方",
+  "store_name": "日本料理 𡈽方",
+  "area": "名古屋市中区",
+  "genre": "日本料理、懐石・会席料理",
+  "rating": "4.5",
+  "generated_at": "2026-08-31T22:38:10.054Z"
+}

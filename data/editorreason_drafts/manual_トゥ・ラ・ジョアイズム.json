@@ -1,15 +1,166 @@
 {
-  "status": "INSUFFICIENT_EVIDENCE",
-  "editorReason": "",
-  "insiderNote": "",
+  "status": "OK",
+  "editorReason": "シェフ須本氏が顧客カルテに基づき二度と同じ料理を出さない唯一無二のコースを提供。名古屋で最も予約困難な完全紹介制ながら、食べログアワード受賞歴も持つ、美食の芸術家による感動体験が魅力。",
+  "insiderNote": "シェフは医療用遠心分離機や丸ごと食材購入など、常識外の手間を惜しまず、分子ガストロノミーも取り入れた創作料理を展開。空間デザインも一流で、美食クリエイターの異名を持つ。",
   "visitStatus": "desk_automated",
-  "confidence": 0,
-  "sources_used": [],
-  "warnings": [],
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEC9MZB2pzDV2Syokn1YzY4tj5Bde9bo7c3VoRPrm5sG4WHZ-jHEBSByl71ufF1bx2W-5QfDq2n_TpWB4R94efTxaVPBYpI-QaoVlgzfZNYLpLlJfS77Gf2899j0D3lV2rOXAjz-b6P8LNTRpbvU387dg==",
+      "snippet_quote": "独創性が高く、他の店と同じような料理は一切出さず、完璧な顧客管理のもと、顧客ごとに異なるメニューを提供している点が特筆されます。",
+      "supports": "顧客カルテに基づく唯一無二の料理提供"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfU_xEqivrnoifELvJOEYQ8YolARj-ckLJAyGNUWS-vgzUE-2rtlQI9RdF876k92sus7uWFXpjVTA5qF9FGf1xAMnio55fFB6Q0QS7B_Ltt3vuRv7gpIOZttYDe2pwkJ0wM406z3tHGevlKLf1f1jRtg6eQRXraArP",
+      "snippet_quote": "独創性が高く、他の店と同じような料理は一切出さず、完璧な顧客管理のもと、顧客ごとに異なるメニューを提供している点が特筆されます。",
+      "supports": "顧客カルテに基づく唯一無二の料理提供"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEC9MZB2pzDV2Syokn1YzY4tj5Bde9bo7c3VoRPrm5sG4WHZ-jHEBSByl71ufF1bx2W-5QfDq2n_TpWB4R94efTxaVPBYpI-QaoVlgzfZNYLpLlJfS77Gf2899j0D3lV2rOXAjz-b6P8LNTRpbvU387dg==",
+      "snippet_quote": "「名古屋で最も予約が取れないレストラン」の一つとして知られており、一見客お断りの完全紹介制で、電話番号も非公開です。",
+      "supports": "名古屋で最も予約困難な完全紹介制"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfU_xEqivrnoifELvJOEYQ8YolARj-ckLJAyGNUWS-vgzUE-2rtlQI9RdF876k92sus7uWFXpjVTA5qF9FGf1xAMnio55fFB6Q0QS7B_Ltt3vuRv7gpIOZttYDe2pwkJ0wM406z3tHGevlKLf1f1jRtg6eQRXraArP",
+      "snippet_quote": "「名古屋で最も予約が取れないレストラン」の一つとして知られており、一見客お断りの完全紹介制で、電話番号も非公開です。",
+      "supports": "名古屋で最も予約困難な完全紹介制"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH1zR9LvcIgLFKCOuAe3Qw0brXNV3d9QY_MKxhUwXmYg_nuOrAlBfvxrgYNXUHN5wtF_Ip8Hmb5tz-Wnl8lBh8UM8W0I0wI-Wxb27wJiThx8znbWAJvzXgfffswf5Q=",
+      "snippet_quote": "The Tabelog Award 2023 Bronze",
+      "supports": "食べログアワード受賞歴"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG5XRbx6nOFsZ9NbEUog0ViJiiOAUadE54ByJENLB903fTpzp7J8ITcb1yhnOLYNEvuQd5dsKpO3CHzq3f_hPrF1-IWsVrcSHgfNKEjUzNIwo-AW3RUjkfvJaxjReHfGo-s1_03H_imidNIyg==",
+      "snippet_quote": "The Tabelog Award 2023 Bronze",
+      "supports": "食べログアワード受賞歴"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFxE8kUbwMti-_hNW1jHL6jHXp8bz4KYMTPDRC3U2VCAQZ6yQu1UqvyqILUTFbmCs2qyg_oMTsw76LthJewij0WXs9v3RBMkOKTyXw2EhssNQL4fO-se9-VjDG9wVH4cigE6MJAKA==",
+      "snippet_quote": "The Tabelog Award 2023 Bronze",
+      "supports": "食べログアワード受賞歴"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE0gporxXDZsEEjlPnEWWpjPxn4ZrFjPZBxVFY8kpNaye1pearG_ju8cTYGIxF1vKuXzYafKZunzJ1nx_XbBC0N-bEMbONkTdQcbLe-Fp8o29-x4vgTQ9-WwmedH_UqydvwMYNINOuQLw==",
+      "snippet_quote": "The Tabelog Award 2023 Bronze",
+      "supports": "食べログアワード受賞歴"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEC9MZB2pzDV2Syokn1YzY4tj5Bde9bo7c3VoRPrm5sG4WHZ-jHEBSByl71ufF1bx2W-5QfDq2n_TpWB4R94efTxaVPBYpI-QaoVlgzfZNYLpLlJfS77Gf2899j0D3lV2rOXAjz-b6P8LNTRpbvU387dg==",
+      "snippet_quote": "前身である「トゥ・ラ・ジョア」は食べログ4.5超え、「食べログアワード2017〜2021 SILVER」を受賞した名店でした。",
+      "supports": "前身店の食べログアワード受賞歴"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfU_xEqivrnoifELvJOEYQ8YolARj-ckLJAyGNUWS-vgzUE-2rtlQI9RdF876k92sus7uWFXpjVTA5qF9FGf1xAMnio55fFB6Q0QS7B_Ltt3vuRv7gpIOZttYDe2pwkJ0wM406z3tHGevlKLf1f1jRtg6eQRXraArP",
+      "snippet_quote": "前身である「トゥ・ラ・ジョア」は食べログ4.5超え、「食べログアワード2017〜2021 SILVER」を受賞した名店でした。",
+      "supports": "前身店の食べログアワード受賞歴"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEC9MZB2pzDV2Syokn1YzY4tj5Bde9bo7c3VoRPrm5sG4WHZ-jHEBSByl71ufF1bx2W-5QfDq2n_TpWB4R94efTxaVPBYpI-QaoVlgzfZNYLpLlJfS77Gf2899j0D3lV2rOXAjz-b6P8LNTRpbvU387dg==",
+      "snippet_quote": "ディズニーシーに携わった人物が空間デザインを手掛けたという情報もあります。",
+      "supports": "一流の空間デザイン"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfU_xEqivrnoifELvJOEYQ8YolARj-ckLJAyGNUWS-vgzUE-2rtlQI9RdF876k92sus7uWFXpjVTA5qF9FGf1xAMnio55fFB6Q0QS7B_Ltt3vuRv7gpIOZttYDe2pwkJ0wM406z3tHGevlKLf1f1jRtg6eQRXraArP",
+      "snippet_quote": "ディズニーシーに携わった人物が空間デザインを手掛けたという情報もあります。",
+      "supports": "一流の空間デザイン"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEC9MZB2pzDV2Syokn1YzY4tj5Bde9bo7c3VoRPrm5sG4WHZ-jHEBSByl71ufF1bx2W-5QfDq2n_TpWB4R94efTxaVPBYpI-QaoVlgzfZNYLpLlJfS77Gf2899j0D3lV2rOXAjz-b6P8LNTRpbvU387dg==",
+      "snippet_quote": "シェフ須本氏は「美食の芸術家」 や自称「美食クリエイター」 と評されています。",
+      "supports": "シェフが「美食クリエイター」と評されている"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfU_xEqivrnoifELvJOEYQ8YolARj-ckLJAyGNUWS-vgzUE-2rtlQI9RdF876k92sus7uWFXpjVTA5qF9FGf1xAMnio55fFB6Q0QS7B_Ltt3vuRv7gpIOZttYDe2pwkJ0wM406z3tHGevlKLf1f1jRtg6eQRXraArP",
+      "snippet_quote": "シェフ須本氏は「美食の芸術家」 や自称「美食クリエイター」 と評されています。",
+      "supports": "シェフが「美食クリエイター」と評されている"
+    }
+  ],
+  "warnings": [
+    "3件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「トゥ・ラ・ジョア イズム」に関する業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「トゥ・ラ・ジョア イズム」のシェフである須本氏は、厳選された食材を使用し、その日だけの唯一無二のコース料理を提供することにこだわっています。同じ顧客には二度と同じ料理を出さないというポリシーを持ち、定番の「Mのサラダ」以外は毎回異なる料理を提供するため、一人ひとりの顧客カルテを作成しています。\n料理は素材の持ち味を最大限に引き出すことを重視し、美しい器と厳選されたワインとのマリアージュによって五感を刺激する体験を提供しています。 また、キャビアのためにチョウザメを丸ごと購入したり、ココナッツシャーベットのためにココナッツを絞るところから始めるなど、気が遠くなるような手間と時間をかけています。\nフレンチをベースとしながらも、分子ガストロノミー、日本料理、中華料理など様々な要素を取り入れた創作料理を展開しており、医療用の遠心分離機を用いて鮑肝のコンソメの透明感を出すといった調理法へのこだわりも見られます。 シェフ自身が料理の特徴や食感、召し上がり方を説明することで、顧客に「満足を超えた感動」を提供することを目指しています。\n\n**提供スタイルの特徴**\n同店は名古屋・尾頭橋に位置する完全予約制のフュージョンレストランです。 「名古屋で最も予約が取れないレストラン」の一つとして知られており、一見客お断りの完全紹介制で、電話番号も非公開です。 毎年12月1日に翌年1年分の予約を電話のみで受け付けますが、一度訪れたことがないと予約できず、電話も殺到して繋がりにくい状況です。 初回訪問時には、既に来店経験のある客との同伴が必須とされており、現在は常連客しか予約が取れない状況となっています。\nシェフ須本氏自らがゲストを出迎えるサロン・レストラン形式で、店内は洗練された芸術的な空間が広がっています。 ディズニーシーに携わった人物が空間デザインを手掛けたという情報もあります。 カウンター席と個室が用意されています。 なお、カード決済およびQRコード決済は利用できません。\n\n**地元グルメメディアでの紹介**\n「トゥ・ラ・ジョア イズム」は、「The Tabelog Award 2023 Bronze」を受賞しています。 オープン半年時点で食べログの評価は4.15であり、前身である「トゥ・ラ・ジョア」は食べログ4.5超え、「食べログアワード2017〜2021 SILVER」を受賞した名店でした。 一休.comレストラン、PayPayグルメ、Retty、TERIYAKIなどの主要なグルメサイトで紹介されています。 また、鶴舞公園にオープンした系列店「トゥ・ラ・ジョア イズム セカンド」についても地元メディア「名古屋情報通」で報じられています。\n\n**料理人としての評価**\nシェフ須本氏は「美食の芸術家」 や自称「美食クリエイター」 と評されています。彼の料理は「満足を超えた感動の創造」を追求しており、アート、化学、そして料理そのものであると表現されることもあります。 独創性が高く、他の店と同じような料理は一切出さず、完璧な顧客管理のもと、顧客ごとに異なるメニューを提供している点が特筆されます。 食材のプレゼンテーションも高く評価されており、一品一品からシェフの探究心と情熱が伝わるとされています。 また、「変態的かつ天才的なものばかり」と評されることもあります。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH1zR9LvcIgLFKCOuAe3Qw0brXNV3d9QY_MKxhUwXmYg_nuOrAlBfvxrgYNXUHN5wtF_Ip8Hmb5tz-Wnl8lBh8UM8W0I0wI-Wxb27wJiThx8znbWAJvzXgfffswf5Q=",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFhy0HFA4nd1pPIaqOxB5hokdtucOMPzhThqedPyFspY8E2zGVvBrpYcyIXGFPE1df2uZfSjFEa74keCfRU2Ji62mUPCNm-z1LgNpZXoznsGM7rnCEJt0AoGhrAuyMtwWTLpQ8=",
+        "title": "yahoo.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG5XRbx6nOFsZ9NbEUog0ViJiiOAUadE54ByJENLB903fTpzp7J8ITcb1yhnOLYNEvuQd5dsKpO3CHzq3f_hPrF1-IWsVrcSHgfNKEjUzNIwo-AW3RUjkfvJaxjReHfGo-s1_03H_imidNIyg==",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEl0LRl1tnNHDS-qic2miBG-sorNesFQyC8rRf0Djz0craLCmnNaXkzqXFdNOFlmUIbxJEXtBqE1cobmkSUfil9-5kSzjSuwyO2hAc7GqC2ioFadZgTwKwJ2TPPueXe6cxuvQJmJk6PdG4exEjo4z3o",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEN_OQUl2Q9HbFZlwQFrQBwlwO52Ajr0mYcU1pPpNpDmOWxZ-jYtR_uL41f4dfpRBfUpxI4IOghA9CSsyD5KJMrQhQd2XV8EUp0juFh6WxoiGQfopjfuMLNTnOsCVj2f4XPp9ENlrPIo9tX5-ghpA==",
+        "title": "overalls.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH5LzNAOBt80QO41-tSyz1_mDVmAvV9TMcNZ6Kmcmqa300-qAraRoyhdOvlSKLpY5ejoTUBcgDgKiHXBN3Kyp_f3oMDd38taBJBf-U340WL_kKFDJ5VAA8quuCkEQ==",
+        "title": "teriyaki.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEY5CsyI_xahDuVTTH1xtGf8y8XAg1tXgTvXFSBlJkPea4X0Af9dkjUWYxtQp93vZUGek_EseaxMhC9m2_jnrzWBKfFWmFIy1zjDO4joyhzLgxAjj2ZdSNSlbiHmvhIAueaDWQZRFulVJMC9r0B",
+        "title": "inshokuten.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG39iFYtLxmqFdY6IHl9pw9jVG8_3fgr1atobWlJtQww1ut01JGMwfgS3pr9sG840HNG8_Z7YeMJJhOsrLzx7Ef038XhfTol_uIAjJbrshhn7Y71fobnmylk9DjRwkYgopGwc8P1mVjodgohwF4O1NqBgGq23rHZ-65XqGmyBZP",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFxE8kUbwMti-_hNW1jHL6jHXp8bz4KYMTPDRC3U2VCAQZ6yQu1UqvyqILUTFbmCs2qyg_oMTsw76LthJewij0WXs9v3RBMkOKTyXw2EhssNQL4fO-se9-VjDG9wVH4cigE6MJAKA==",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE0gporxXDZsEEjlPnEWWpjPxn4ZrFjPZBxVFY8kpNaye1pearG_ju8cTYGIxF1vKuXzYafKZunzJ1nx_XbBC0N-bEMbONkTdQcbLe-Fp8o29-x4vgTQ9-WwmedH_UqydvwMYNINOuQLw==",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHc0qpAf2iLqi8dtUgtdDlsnjAtQ1xdXKJXC9ko3WKR7lyP0jpJqnbUS4pcCvCs0rGMFIP1SU-xYFmc2sX_XW1CEGGtt-GTHp3mpiK-KsoikIipXmIGE_y12pGIVQ==",
+        "title": "teriyaki.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEC9MZB2pzDV2Syokn1YzY4tj5Bde9bo7c3VoRPrm5sG4WHZ-jHEBSByl71ufF1bx2W-5QfDq2n_TpWB4R94efTxaVPBYpI-QaoVlgzfZNYLpLlJfS77Gf2899j0D3lV2rOXAjz-b6P8LNTRpbvU387dg==",
+        "title": "takemachelin.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFfikC7cCM_7IoajNoN-1aJvi0jfLV9h2Y-_MMk2Jgtd8LrRva-RA-p0wDhFimIqZvcg_ERtIwwQVbJtnAnn-QhwFYMM8QN0Wa18dzqKQu87zaPwYDZA53kq_XIK8XqrQ5872qPKpvpfM4=",
+        "title": "toutlajoie-ism.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF348o2fzhL3Kb_SCPpewBj056nrv7Q9BAj-vD-5hoD1L4YUHzrES09AThTE2fzxDCrZYTCCPaPjEPfLIsiXHVYdJvfPctYkimNu4fgYoxdgNpxXkjbW-FzJ3ieobQaHCWZffMY3iEMbto2ozIF5gcq9Qc=",
+        "title": "livedoor.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfU_xEqivrnoifELvJOEYQ8YolARj-ckLJAyGNUWS-vgzUE-2rtlQI9RdF876k92sus7uWFXpjVTA5qF9FGf1xAMnio55fFB6Q0QS7B_Ltt3vuRv7gpIOZttYDe2pwkJ0wM406z3tHGevlKLf1f1jRtg6eQRXraArP",
+        "title": "livedoor.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGAP2jQ9v1OtddLSVHg4UFT-RfK_vjIFQ1mwalW49-8mUEHSNtNbesAt4VOlevxJyy52BF-DhV0PgOsUn8kE4DLyHWKF2LSYP0H4i3GcR3fJXtNHKefby1olYkR5fJ43DQ8Hg87lu_3REX8pA==",
+        "title": "blog.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGwqApWcbABn7IbMAnJeRkONumB-wEHW4a-EvjjPbwljtn63wao36JM4LDdkzI7ikZTxOZZxyocs5rLMdEq-pWfG4aSkMAlpAk5K4DEslvERbLRkbsYUamzxMljD2iQGNngJJNY6K75VHm9AtyPgkdNgrI=",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFTykpQiIOQjIUAw9Z-iKH6DttmIeKaSFc3CerQkkX6Qcr2tUNBKIgjo46INPx1Q7tC9jLFPj58N3rjeAtX7H0AsTIPtPbOA2FQWl5zCZArftdj26kJDSQ2xApDsXBfJ6Fj",
+        "title": "jouhou.nagoya"
+      }
+    ]
+  },
   "store_id": "manual_トゥ・ラ・ジョアイズム",
   "store_name": "トゥ・ラ・ジョア イズム",
   "area": "名古屋市中区",
   "genre": "イノベーティブ・フレンチ、創作料理",
-  "rating": "4.5",
-  "generated_at": "2026-08-19T07:00:23.869Z"
+  "rating": "4.6",
+  "generated_at": "2026-08-31T22:36:52.607Z"
 }

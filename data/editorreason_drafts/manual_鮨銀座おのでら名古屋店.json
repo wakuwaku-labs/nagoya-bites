@@ -1,15 +1,96 @@
 {
-  "status": "INSUFFICIENT_EVIDENCE",
-  "editorReason": "",
-  "insiderNote": "",
+  "status": "OK",
+  "editorReason": "「銀座から世界へ」をコンセプトに掲げ、ロサンゼルス店がミシュラン2つ星を獲得するなど世界で認められる「鮨 銀座おのでら」の名古屋店。地元メディアも注目する、その確かな実力とブランド力は業界でも際立っています。",
+  "insiderNote": "統括総料理長 坂上暁史氏の「一口ごとにドラマを創りたい」という思いを継承し、名古屋店の料理長 藤田拓也氏も総本店で修業。ベテランの握り手が心地よい接客で、鮨のサイズや好みに合わせた対応力も評価されています。",
   "visitStatus": "desk_automated",
-  "confidence": 0,
-  "sources_used": [],
+  "confidence": 0.9,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH5xo9es-En81EsXlvDGTAbpKdnYPNgzMhmV4YBB7jLdWM3g7TqYR5lK_K62S7UZOHHTpdLeMnhOlMPBMdk39pgTTjqDONszRj7vkKj1jMJqStxGbWbAbfRMnU-UYhHhNStNA==",
+      "snippet_quote": "「鮨 銀座おのでら 名古屋店」は、「銀座から世界へ」をコンセプトに、鮨を通じて日本文化を世界に伝えることを目指しています。",
+      "supports": "「鮨 銀座おのでら」の「銀座から世界へ」というコンセプト"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGw3skTcInuIIJjak1EKZRLwzSACTICKGUWDgdKcleWMgbRFLEHNj-s0u9wRnel7eNKaPC6h1ksoo4YIDu2SZlHis-Ol9jwP80FZYNGeFlK5A-nTJVyqsTXOcgBYjx4pQ==",
+      "snippet_quote": "「鮨 銀座おのでら」グループとしては、ロサンゼルス店が「ミシュランガイド カリフォルニア2022」において2つ星を獲得しており、その高い技術と評価が世界的に認められています。",
+      "supports": "「鮨 銀座おのでら」グループのロサンゼルス店がミシュラン2つ星を獲得した事実"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEbdJBeJ603dbVrqIbdaJnmOLCCbl7z7E6MfvHpEIo9Pjpj776AYAxdu9t6hZwCBVZZ198oO69EvqdhGCHKoGK-rlN5Bv4iIR8FJk6T4vnHJIwdDBTWmfSucyTvrnleXW5mQNVt",
+      "snippet_quote": "「鮨 銀座おのでら」グループとしては、ロサンゼルス店が「ミシュランガイド カリフォルニア2022」において2つ星を獲得しており、その高い技術と評価が世界的に認められています。",
+      "supports": "「鮨 銀座おのでら」グループのロサンゼルス店がミシュラン2つ星を獲得した事実"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGeHPHzaTQsHDvVwpyRmWVFzei1WZSJAkH9f4GI8P-6lTb8POlB_vTkkrxzOJa85oj95pWu3C_FEU6QYqCxEI3BBmbaNcCJPFIU8oruczwAE1OLNL2Tv3wi2GUV1Y0h9I0G_CgTNhwiKQZBcQ==",
+      "snippet_quote": "「鮨 銀座おのでら」グループとしては、ロサンゼルス店が「ミシュランガイド カリフォルニア2022」において2つ星を獲得しており、その高い技術と評価が世界的に認められています。",
+      "supports": "「鮨 銀座おのでら」グループのロサンゼルス店がミシュラン2つ星を獲得した事実"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF1OIikpEUVjDac1RLQTOzhvoP0ImK5flFf5yS0q5TBGLFumLwSoLtkdemSFWmLqGa0wuKN_cpXPbCswPq0oHgmGtDCKC_r49QGZAoVOup68_vwRbzGu-HJ-Xg9LY3Wdhk06p0-2kaR",
+      "snippet_quote": "「鮨 銀座おのでら 名古屋店」は、「食べログマガジン」で「世界でも認められている『鮨 銀座おのでら』が、名古屋に初出店！」として紹介されています。",
+      "supports": "「鮨 銀座おのでら」が世界で認められているという評価と地元メディアでの紹介"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEUD8KZ04CEjKrtQMbIM_AS44r075_jRwr7avhJiePrrxN46BkAN6Nl3jPwW5lmPwjsZz_De1JmFg6EbM_56yuWo9eivVCjcPdeLFnbJqAlvbhHP5z0yASPxW_0m3rKZW-zkcU15D0=",
+      "snippet_quote": "系列の「廻転鮨 銀座おのでら 名古屋店」のオープンが「名古屋情報通」で報じられるなど、地元メディアでも注目されています。",
+      "supports": "地元メディア（名古屋情報通）での注目"
+    }
+  ],
   "warnings": [],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「鮨 銀座おのでら 名古屋店」について、Google検索で見つかった業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「鮨 銀座おのでら 名古屋店」は、「銀座から世界へ」をコンセプトに、鮨を通じて日本文化を世界に伝えることを目指しています。統括総料理長である坂上暁史氏の「一口ごとにドラマを創りたい」という熱い思いと、確かな技術、豊かな感性を継承しているとされています。\n\n食材へのこだわりとして、豊洲市場から仕入れたネタや北海道直送の厳選食材を使用し、特に本まぐろは豊洲仲卸「やま幸」のものにこだわっています。また、地元の食材も積極的に取り入れ、中部地方にちなんだネタや三河中心のネタも提供することで、常に新鮮さを感じてもらえるよう工夫されています。季節感を味わえるよう日々趣向を凝らした食材を用意している点も特徴です。自家製小肌や自家製煮穴子など、ひと手間を惜しまない江戸前鮨を提供しています。\n\n**提供スタイルの特徴**\n店内は、総本店と同様のこだわりが感じられる、存在感のある白木のカウンターを中心とした温もりある空間です。黒を基調としたシックで高級感のある雰囲気も特徴です。お客様がリラックスして食事を楽しめるよう配慮されており、板前との会話も楽しめるスタイルです。\n\n器には、備前焼、有田焼、江戸切子といった日本の伝統工芸品が取り揃えられ、江戸前鮨との親和性を感じさせます。特に、人間国宝・伊勢崎 満氏の甥にあたる伊勢崎 競氏作の備前焼が壁の一部に取り入れられています。\n\n鮨のシャリは、2種類の赤酢を用いて酸味を利かせ、お米が硬すぎず口の中でハラリと解けるよう、温度管理にも配慮されています。ネタは男前の切付けで大振りであり、強めの赤シャリとの相性が良いと評価されています。サービス料が別途15%かかります。\n\n**地元グルメメディアでの紹介**\n「鮨 銀座おのでら 名古屋店」は、「食べログマガジン」で「世界でも認められている『鮨 銀座おのでら』が、名古屋に初出店！」として紹介されています。また、「一休レストラン」や「Retty」では、店舗情報や利用者のクチコミが掲載されています。グルメブロガーによる訪問記が「note」に掲載されたり、「中日ビル公式サイト」にも店舗情報が掲載されています。系列の「廻転鮨 銀座おのでら 名古屋店」のオープンが「名古屋情報通」で報じられるなど、地元メディアでも注目されています。\n\n**料理人としての評価**\n名古屋店の料理長は、鮨歴17年のベテランである藤田拓也氏が務めており、銀座おのでら総本店で修業を積んでいます。統括総料理長である坂上暁史氏の技術と感性を継承し、「鮨 銀座おのでら」の発展を担う存在とされています。\n\nまた、担当した握り手の佐藤晃太郎氏は、銀座おのでら総本店で修業したベテランであり、落ち着いた接客と程よい距離感で心地よいと評価されています。大将は気配りができ、鮨のサイズや好みに合わせてメニューを臨機応変に変える対応力も評価されています。\n\n「鮨 銀座おのでら」グループとしては、ロサンゼルス店が「ミシュランガイド カリフォルニア2022」において2つ星を獲得しており、その高い技術と評価が世界的に認められています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH5xo9es-En81EsXlvDGTAbpKdnYPNgzMhmV4YBB7jLdWM3g7TqYR5lK_K62S7UZOHHTpdLeMnhOlMPBMdk39pgTTjqDONszRj7vkKj1jMJqStxGbWbAbfRMnU-UYhHhNStNA==",
+        "title": "onodera-group.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEyDydJ8N3wVQBJVPZ17-EMxssRr8WIYl2hJKa1jS4Jo9m8gwO2DkLTqc9QSReSUiPLarHt9t9Rf9HmsWDVoqJeSSkKD7nDAWqthyYga5kXQNb2y5Cntx8zxSxnW2Y=",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFae8oZURA_rMMotryNR86nnF-VfJ4HrouGGgQVa4RqS7K-Tf0kBF5co4bzPtBlf77fhw1b1zftTcTVT8TH0StTOOLxtUcRu0Mm8cko3jd-mOBvzX7hRfRVovViypXbgryxrus=",
+        "title": "chunichi-building.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGdzse0fThxhA05Ikjz22v4Wg6z6x0BWOK7HwRwaA6keWyqWBZgo5eNx4Oe8sa807vyka-Ctay04TL02S9iAadH-DsjsFK9XCToQlhv74gqsGzJMxUR2Kia-A3O3F7D90-X5mKG4EjBLwc=",
+        "title": "note.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF1OIikpEUVjDac1RLQTOzhvoP0ImK5flFf5yS0q5TBGLFumLwSoLtkdemSFWmLqGa0wuKN_cpXPbCswPq0oHgmGtDCKC_r49QGZAoVOup68_vwRbzGu-HJ-Xg9LY3Wdhk06p0-2kaR",
+        "title": "tabelog.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGw3skTcInuIIJjak1EKZRLwzSACTICKGUWDgdKcleWMgbRFLEHNj-s0u9wRnel7eNKaPC6h1ksoo4YIDu2SZlHis-Ol9jwP80FZYNGeFlK5A-nTJVyqsTXOcgBYjx4pQ==",
+        "title": "onodera-group.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEbdJBeJ603dbVrqIbdaJnmOLCCbl7z7E6MfvHpEIo9Pjpj776AYAxdu9t6hZwCBVZZ198oO69EvqdhGCHKoGK-rlN5Bv4iIR8FJk6T4vnHJIwdDBTWmfSucyTvrnleXW5mQNVt",
+        "title": "onodera-group.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG2IDcObwiZ2-ct2W4kptFDpOMjRXY3my59T71dQSWVP9EwamIQ95Z4lDDYQQipQrIpfBkiMADgaS6wFXSHMkpwosc9EqOm7xhonDe5ymoU4pQ4fUXAYAWKEi7PMbjCxPama5tbVQ==",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGeHPHzaTQsHDvVwpyRmWVFzei1WZSJAkH9f4GI8P-6lTb8POlB_vTkkrxzOJa85oj95pWu3C_FEU6QYqCxEI3BBmbaNcCJPFIU8oruczwAE1OLNL2Tv3wi2GUV1Y0h9I0G_CgTNhwiKQZBcQ==",
+        "title": "yahoo.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHEwee-qHzCU-F4MBBsgMO05wUF7cBWh6XF7GJkHgoETDIxxoDhc24a1dXWGHecWaK6SFynIl2PK2MLT5ezXKUFpVnRsgzq6G2hpeftVDihzhcRNbIrsGw-Exdsvn-yl1FB56mpPv-7zkga6aPMMJHAI3L3BJcT2CWiX68=",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEUD8KZ04CEjKrtQMbIM_AS44r075_jRwr7avhJiePrrxN46BkAN6Nl3jPwW5lmPwjsZz_De1JmFg6EbM_56yuWo9eivVCjcPdeLFnbJqAlvbhHP5z0yASPxW_0m3rKZW-zkcU15D0=",
+        "title": "jouhou.nagoya"
+      }
+    ]
+  },
   "store_id": "manual_鮨銀座おのでら名古屋店",
   "store_name": "鮨 銀座おのでら 名古屋店",
   "area": "栄",
   "genre": "江戸前鮨",
-  "rating": "",
-  "generated_at": "2026-08-19T07:00:07.697Z"
+  "rating": "4.5",
+  "generated_at": "2026-08-31T22:40:30.705Z"
 }
