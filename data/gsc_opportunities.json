@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T09:31:10.173Z",
+  "generatedAt": "2026-08-31T12:46:01.325Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -8,21 +8,12 @@
     "ctrFixGeoless": [
       {
         "query": "一人飲み",
-        "impressions": 280,
+        "impressions": 295,
         "clicks": 3,
         "position": 4,
-        "ctr": 1.07,
+        "ctr": 1.02,
         "expectedCtr": 8,
-        "missedClicks": 19.4
-      },
-      {
-        "query": "やきまる亭",
-        "impressions": 183,
-        "clicks": 2,
-        "position": 8.1,
-        "ctr": 1.09,
-        "expectedCtr": 3.2,
-        "missedClicks": 3.8
+        "missedClicks": 20.6
       },
       {
         "query": "煮干しラーメン 凛",
@@ -32,6 +23,15 @@
         "ctr": 2.68,
         "expectedCtr": 4,
         "missedClicks": 3
+      },
+      {
+        "query": "やきまる亭",
+        "impressions": 189,
+        "clicks": 3,
+        "position": 8.2,
+        "ctr": 1.59,
+        "expectedCtr": 3.1,
+        "missedClicks": 2.9
       },
       {
         "query": "喫茶時々",
@@ -44,12 +44,12 @@
       },
       {
         "query": "イルタッソ",
-        "impressions": 62,
+        "impressions": 65,
         "clicks": 2,
         "position": 5.4,
-        "ctr": 3.23,
+        "ctr": 3.08,
         "expectedCtr": 5.6,
-        "missedClicks": 1.5
+        "missedClicks": 1.6
       }
     ],
     "rankPush": []
@@ -67,21 +67,21 @@
       },
       {
         "page": "/stores/J004559348.html",
-        "impressions": 605,
+        "impressions": 625,
         "clicks": 8,
-        "position": 8.3,
-        "ctr": 1.32,
-        "expectedCtr": 3.1,
-        "missedClicks": 10.6
+        "position": 8.4,
+        "ctr": 1.28,
+        "expectedCtr": 3,
+        "missedClicks": 11
       },
       {
         "page": "/stores/J004025075.html",
-        "impressions": 462,
-        "clicks": 8,
-        "position": 7,
-        "ctr": 1.73,
-        "expectedCtr": 4,
-        "missedClicks": 10.5
+        "impressions": 481,
+        "clicks": 10,
+        "position": 7.2,
+        "ctr": 2.08,
+        "expectedCtr": 3.8,
+        "missedClicks": 8.5
       },
       {
         "page": "/stores/J004661023.html",
@@ -97,11 +97,11 @@
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2770,
+        "impressions": 2983,
         "clicks": 8,
-        "position": 22.5,
-        "ctr": 0.29,
-        "upsideClicks": 69.5
+        "position": 22.9,
+        "ctr": 0.27,
+        "upsideClicks": 75.5
       }
     ]
   },
