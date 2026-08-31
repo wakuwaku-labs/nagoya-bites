@@ -1,42 +1,42 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-08-31T08:37:16.496Z",
+  "generatedAt": "2026-08-31T09:07:38.567Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1118,
+  "total_sessions": 1125,
   "engines": [
     {
       "key": "google",
       "label": "Google",
-      "sessions": 367,
-      "pct": 32.8,
+      "sessions": 370,
+      "pct": 32.9,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 367
+          "sessions": 370
         }
       ]
     },
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 278,
-      "pct": 24.9,
+      "sessions": 279,
+      "pct": 24.8,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 278
+          "sessions": 279
         }
       ]
     },
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 200,
-      "pct": 17.9,
+      "sessions": 202,
+      "pct": 18,
       "sources": [
         {
           "source": "(direct)",
@@ -46,20 +46,20 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 23
+          "sessions": 25
         }
       ]
     },
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 159,
+      "sessions": 160,
       "pct": 14.2,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 159
+          "sessions": 160
         }
       ]
     },
@@ -67,7 +67,7 @@
       "key": "ai_assistant",
       "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
       "sessions": 105,
-      "pct": 9.4,
+      "pct": 9.3,
       "sources": [
         {
           "source": "chatgpt.com",
@@ -113,24 +113,24 @@
     }
   ],
   "search_only": {
-    "total": 918,
+    "total": 923,
     "share": [
       {
         "key": "google",
         "label": "Google",
-        "sessions": 367,
-        "pct_of_search": 40
+        "sessions": 370,
+        "pct_of_search": 40.1
       },
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 278,
-        "pct_of_search": 30.3
+        "sessions": 279,
+        "pct_of_search": 30.2
       },
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 159,
+        "sessions": 160,
         "pct_of_search": 17.3
       },
       {
@@ -151,11 +151,11 @@
     "from": "2026-08-30",
     "to": "2026-08-31",
     "delta": {
-      "google": 9,
-      "bing": 4,
-      "direct": -17,
+      "google": 12,
+      "bing": 11,
+      "direct": -7,
       "yahoo": 2,
-      "ai_assistant": 2,
+      "ai_assistant": 3,
       "duckduckgo": 1,
       "social": 0
     }
@@ -163,7 +163,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 367 セッションのみ。Bing(278) + 生成AI(105) の 383 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 370 セッションのみ。Bing(279) + 生成AI(105) の 384 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
