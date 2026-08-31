@@ -305,18 +305,6 @@ nav.open{right:0;}
 .hero h1 .fade{opacity:.65;}
 .hero-sub{margin-top:1.4rem;font-size:.82rem;letter-spacing:.04em;color:var(--muted);line-height:1.9;max-width:520px;opacity:0;animation:up .9s .5s forwards;}
 .hero-sub strong{color:var(--text);font-weight:600;}
-/* ── HERO PROOF ── サイトの強み4点をファーストビューで即座に伝える（直帰率対策） */
-.hero-proof{margin-top:1.6rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;max-width:560px;opacity:0;animation:up .9s .58s forwards;}
-/* クリーム背景に白タイルだと差が出ないため、濃色ベタで抜く */
-.hero-proof-item{display:flex;align-items:center;gap:.6rem;background:var(--text);border-radius:3px;padding:.82rem .95rem;font-size:.8rem;font-weight:600;letter-spacing:.02em;color:#f2efe9;line-height:1.45;box-shadow:0 2px 8px rgba(28,28,26,.16);}
-/* チェックは淡い金の塗り円＋濃色の抜き。線アイコンだと濃色地で視線が止まらない */
-.hero-proof-item svg{flex:0 0 auto;width:18px;height:18px;padding:3.5px;border-radius:50%;background:#d9bd7e;stroke:var(--text);stroke-width:2.8;fill:none;stroke-linecap:round;stroke-linejoin:round;box-sizing:border-box;}
-/* テキストを匿名フレックスアイテムのままにすると最小幅まで潰れて「名古/屋・愛/知」と崩れる */
-.hero-proof-item .hpi-t{flex:1;min-width:0;}
-/* 「4媒/体」のように語中で割れると読めなくなるので強調語は折り返さない */
-.hero-proof-item strong{color:#e2c88d;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:.01em;white-space:nowrap;margin:0 .12em;}
-/* 幅が足りず1文字だけ次行に落ちるのを防ぐため、狭い画面では字送りと余白を詰める */
-@media(max-width:480px){.hero-proof{margin-top:1.25rem;gap:.4rem;}.hero-proof-item{font-size:.72rem;letter-spacing:0;padding:.68rem .7rem;gap:.42rem;}.hero-proof-item svg{width:16px;height:16px;padding:3px;}}
 .search-wrap{margin-top:2.2rem;display:flex;flex-wrap:wrap;gap:.6rem;max-width:460px;opacity:0;animation:up .9s .65s forwards;}
 .search-wrap input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.8rem 1.1rem;font-size:.8rem;border-radius:2px;outline:none;font-family:inherit;transition:border-color .2s;}
 .search-wrap input::placeholder{color:var(--dim);}
@@ -360,7 +348,6 @@ body:not(.search-active) #pagination{display:none !important;}
 /* SEARCH MODE — 検索/フィルター中は特集・ランキング等の回遊面を畳み、結果を最上部に出す
    （結果が特集や人気店の下に埋もれて見つけられない問題への対処。リセットで元に戻る） */
 body.search-active .feature-strip,
-body.search-active .why-band,
 body.search-active #trend-ranking-section,
 body.search-active #ranking-section,
 body.search-active #latest-journal-section,
@@ -952,26 +939,6 @@ h3.cn{margin:0 0 6px;font-family:'Noto Sans JP',sans-serif;}
 .auth-item .auth-icon{font-size:.9rem;line-height:1;}
 .auth-sep{color:rgba(247,245,241,.25);font-size:.7rem;}
 @media(max-width:640px){.authority-bar{padding:.55rem 1rem;font-size:.55rem;gap:.35rem 1rem;}.auth-sep{display:none;}}
-/* ── WHY BAND ── 選ばれる理由4本柱（トップでの強み訴求・直帰率対策） */
-.why-band{background:var(--bg2);border-bottom:1px solid var(--border);padding:clamp(2rem,4vw,2.9rem) 1.5rem clamp(2.2rem,4.5vw,3rem);}
-.why-band-inner{max-width:1180px;margin:0 auto;}
-.why-band-eyebrow{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;}
-.why-band-title{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-weight:300;font-size:clamp(1.15rem,2.6vw,1.6rem);line-height:1.5;color:var(--text);letter-spacing:.005em;margin-top:.55rem;}
-.why-band-title em{font-style:italic;color:var(--gold);font-weight:500;}
-.why-pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:1.5rem;border-top:1px solid rgba(122,92,16,.2);border-bottom:1px solid rgba(122,92,16,.2);}
-.why-pillar{border-left:1px solid rgba(122,92,16,.16);padding:1.4rem 1.3rem 1.5rem;display:flex;flex-direction:column;}
-.why-pillar:first-child{border-left:none;}
-.why-pillar-no{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.28em;color:var(--gold);margin-bottom:.7rem;}
-.why-pillar-title{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-size:1.02rem;font-weight:600;color:var(--text);line-height:1.5;letter-spacing:.01em;margin-bottom:.55rem;}
-.why-pillar-body{font-size:.74rem;line-height:1.9;color:var(--muted);flex:1;}
-.why-pillar-body strong{color:var(--gold);font-weight:700;font-family:'DM Mono',monospace;}
-.why-pillar-link{display:inline-block;margin-top:.9rem;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.14em;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.35);padding-bottom:.22rem;align-self:flex-start;transition:color .2s,border-color .2s;}
-.why-pillar-link::after{content:' →';}
-.why-pillar-link:hover{color:var(--ember-deep);border-color:var(--ember-deep);}
-.why-media-logos{display:flex;gap:.5rem;align-items:center;margin-top:.9rem;}
-.why-media-logos img{width:20px;height:20px;border-radius:3px;opacity:.9;}
-@media(max-width:900px){.why-pillars{grid-template-columns:repeat(2,1fr);}.why-pillar:nth-child(3){border-left:none;}.why-pillar:nth-child(n+3){border-top:1px solid rgba(122,92,16,.16);}}
-@media(max-width:560px){.why-band{padding:1.6rem 1rem 1.8rem;}.why-pillars{grid-template-columns:1fr;margin-top:1.2rem;}.why-pillar{border-left:none;border-top:1px solid rgba(122,92,16,.16);padding:1.1rem 0 1.2rem;}.why-pillar:first-child{border-top:none;}.why-pillar:nth-child(n+3){border-top:1px solid rgba(122,92,16,.16);}}
 /* ── NO-SAKURA BANNER ── */
 .no-sakura-banner{background:#fdfaf3;color:#1f1b18;padding:clamp(2rem,4vw,3rem) 1.5rem clamp(2.2rem,4.5vw,3.2rem);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
 .no-sakura-inner{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:1.3rem;}
@@ -1681,13 +1648,6 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   <div class="eyebrow">名古屋専門 × 飲食のプロの目利き × シーン別</div>
   <h1>飲食の<em>プロ</em>が、<br>名古屋<em>だけ</em>を<br><span class="fade">深く選んだ。</span></h1>
   <p class="hero-sub">名古屋で<strong>現役の飲食店マネージャー</strong>が、業界の内側の基準で編集する名古屋・愛知専門のグルメガイド。</p>
-  <!-- 強み4点をファーストビューで明示（直帰率対策）。数値は loadStores() が実データで上書きする -->
-  <div class="hero-proof" aria-label="このサイトの特長">
-    <span class="hero-proof-item"><svg viewBox="0 0 14 14" aria-hidden="true"><polyline points="2 7.5 5.5 11 12 3.5"/></svg><span class="hpi-t">現役の飲食店マネージャーが編集</span></span>
-    <span class="hero-proof-item"><svg viewBox="0 0 14 14" aria-hidden="true"><polyline points="2 7.5 5.5 11 12 3.5"/></svg><span class="hpi-t">名古屋・愛知<strong id="hero-proof-total">4,500</strong>店</span></span>
-    <span class="hero-proof-item"><svg viewBox="0 0 14 14" aria-hidden="true"><polyline points="2 7.5 5.5 11 12 3.5"/></svg><span class="hpi-t">広告ゼロ・サクラゼロ</span></span>
-    <span class="hero-proof-item"><svg viewBox="0 0 14 14" aria-hidden="true"><polyline points="2 7.5 5.5 11 12 3.5"/></svg><span class="hpi-t"><strong>4媒体</strong>を横断表示</span></span>
-  </div>
   <div class="search-wrap">
     <label for="si" class="visually-hidden">レストランを検索</label>
     <span class="search-field">
@@ -1777,51 +1737,45 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   <span class="auth-item"><strong>4媒体</strong>を1画面で見比べ</span>
 </div>
 
-<!-- 選ばれる理由（4本柱）：サイトの強みをトップで具体的に示す（直帰率対策）。
-     数値は loadStores() が実データから上書きするため、静的値は保守的な下限を書く（制約10）。 -->
-<section class="why-band" aria-labelledby="why-band-title">
-  <div class="why-band-inner">
-    <div class="why-band-head">
-      <p class="why-band-eyebrow">Why NAGOYA BITES</p>
-      <h2 class="why-band-title" id="why-band-title">食べログにも Google にも無い、<em>4つの理由</em>。</h2>
-    </div>
-    <div class="why-pillars">
+<!-- 今日の話題店（毎朝5:30 JST更新。鮮度＋多媒体露出のみで5店ピック。Google評価は不問。） -->
+<section class="trend-ranking-section" id="trend-ranking-section" style="display:none">
+  <div class="trend-ranking-header">
+    <span class="eyebrow trend-eyebrow">Trending · Today</span>
+    <h2>今日の話題店 <em id="trend-ranking-date">2026/8/31</em></h2>
+    <p class="trend-ranking-sub">鮮度と多媒体露出だけで選定。Google評価は不問。</p>
+  </div>
+  <div class="trend-ranking-scroll" id="trend-ranking-scroll"></div>
+</section>
 
-      <div class="why-pillar">
-        <div class="why-pillar-no">01</div>
-        <h3 class="why-pillar-title">編集しているのが、現役の飲食店マネージャー</h3>
-        <p class="why-pillar-body">名古屋で現役の飲食店マネージャーが、掲載の基準とおすすめ順の考え方を業界の内側の目線で設計しています。ライターでも編集者でもなく、同じ商売をしている人間の目線です。</p>
-        <a class="why-pillar-link" href="about.html">運営者について</a>
-      </div>
+<!-- 最新ジャーナル（毎朝配信の日次記事 最新3件。build_journal_index.js が静的挿入） -->
+<section class="latest-journal-section" id="latest-journal-section">
+  <div class="latest-journal-header">
+    <h2>Daily <em>Journal</em> — 毎朝1本、業界人の目利き</h2>
+    <a href="journal/index.html">View Archive</a>
+  </div>
+  <div class="latest-journal-cards">
+    <!-- LATEST_JOURNAL_START -->
+        <a class="latest-journal-card" href="journal/2026-08-31-nagoya-roadside-newstores-price.html">
+          <div class="ljc-date">2026-08-31</div>
+          <h3 class="ljc-title">栄の味噌ラーメンが中川区へ、900円と1,300円を業界人が読む</h3>
+          <p class="ljc-desc">2026年8月最終週、名古屋の新店3軒はいずれも駅前ではなく駐車場に面して開いた。同じ屋号で駅前1,000円未満・郊外1,300円という価格差がなぜ生まれるのかを、席数・営業時間・来店コストから業界人が読む週次ダイジェスト。</p>
+          <span class="ljc-theme">週次話題店</span>
+        </a>
 
-      <div class="why-pillar">
-        <div class="why-pillar-no">02</div>
-        <h3 class="why-pillar-title">名古屋・愛知だけを、深く</h3>
-        <p class="why-pillar-body">全国を薄く追わず、名古屋・愛知の<strong id="why-total">4,500</strong>店だけに絞って掲載。宴会・接待・デートなどシーン別の特集と、毎朝更新の日次ジャーナルで深さを積み上げています。</p>
-        <a class="why-pillar-link" href="features/index.html">シーン別の特集を見る</a>
-      </div>
+        <a class="latest-journal-card" href="journal/2026-08-30-nagoya-tebasaki-osaka.html">
+          <div class="ljc-date">2026-08-30</div>
+          <h3 class="ljc-title">栄の手羽先が大阪へ — 12席カウンターと22店舗、外に出る名古屋の鶏</h3>
+          <p class="ljc-desc">手羽先むつみが9月1日に関西初出店、がブリチキン。は米国2号店と全国22店舗のフェア。同じ週に外へ出た名古屋の鶏2つを、席数と価格帯とオペから業界人が読む。</p>
+          <span class="ljc-theme">今日の1軒</span>
+        </a>
 
-      <div class="why-pillar">
-        <div class="why-pillar-no">03</div>
-        <h3 class="why-pillar-title">サクラゼロ・広告表示ゼロ</h3>
-        <p class="why-pillar-body">掲載料・PR費・店舗からの金銭授受を一切受け取りません。だから「お金を払った店が上に出る」ことが構造上ありえない。招待や無償提供があれば必ずラベルで開示します。</p>
-        <a class="why-pillar-link" href="features/editorial-policy.html#trust-mechanisms">編集規約を読む</a>
-      </div>
-
-      <div class="why-pillar">
-        <div class="why-pillar-no">04</div>
-        <h3 class="why-pillar-title">各媒体を、1画面で見比べられる</h3>
-        <p class="why-pillar-body">1軒ごとに食べログ・Instagram・ホットペッパー・Googleの情報を並べて表示。<strong id="why-media">4,000</strong>店が2媒体以上で裏取り済みなので、タブを行き来せずに判断できます。</p>
-        <div class="why-media-logos" aria-hidden="true">
-          <img src="https://www.google.com/s2/favicons?domain=tabelog.com&amp;sz=64" alt="" width="20" height="20" loading="lazy" decoding="async">
-          <img src="https://www.google.com/s2/favicons?domain=instagram.com&amp;sz=64" alt="" width="20" height="20" loading="lazy" decoding="async">
-          <img src="https://www.google.com/s2/favicons?domain=hotpepper.jp&amp;sz=64" alt="" width="20" height="20" loading="lazy" decoding="async">
-          <img src="https://www.google.com/s2/favicons?domain=maps.google.com&amp;sz=64" alt="" width="20" height="20" loading="lazy" decoding="async">
-        </div>
-        <a class="why-pillar-link" href="features/integrity-method.html">裏取りの方法を見る</a>
-      </div>
-
-    </div>
+        <a class="latest-journal-card" href="journal/2026-08-29-fujigaoka-nama-donut-cospa.html">
+          <div class="ljc-date">2026-08-29</div>
+          <h3 class="ljc-title">藤が丘に北海道の生ドーナツ、290円のスイーツをコスパで読む</h3>
+          <p class="ljc-desc">名東区・宝が丘に札幌発の生ドーナツ専門店が本日オープン。名古屋では桜山に続く2軒目で、税込290〜460円の11種をテイクアウトのみ、11時〜19時・売り切れ次第終了で売る。席を持たない菓子店の値付けとオペを業界人が読む。</p>
+          <span class="ljc-theme">今日の1軒</span>
+        </a>
+      <!-- LATEST_JOURNAL_END -->
   </div>
 </section>
 
@@ -1855,16 +1809,6 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
   </div>
 </section>
 
-<!-- 今日の話題店（毎朝5:30 JST更新。鮮度＋多媒体露出のみで5店ピック。Google評価は不問。） -->
-<section class="trend-ranking-section" id="trend-ranking-section" style="display:none">
-  <div class="trend-ranking-header">
-    <span class="eyebrow trend-eyebrow">Trending · Today</span>
-    <h2>今日の話題店 <em id="trend-ranking-date">2026/8/31</em></h2>
-    <p class="trend-ranking-sub">鮮度と多媒体露出だけで選定。Google評価は不問。</p>
-  </div>
-  <div class="trend-ranking-scroll" id="trend-ranking-scroll"></div>
-</section>
-
 <!-- フィルターブロックは検索欄直下に移動済み（hero直後） -->
 
 <!-- ランキングセクション（GA4 集計の全ユーザー閲覧数。Google評価は使わない） -->
@@ -1874,38 +1818,6 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
     <h2>みんなが見ている店 <em>TOP 10</em></h2>
   </div>
   <div class="ranking-scroll" id="ranking-scroll"></div>
-</section>
-
-<!-- 最新ジャーナル（毎朝配信の日次記事 最新3件。build_journal_index.js が静的挿入） -->
-<section class="latest-journal-section" id="latest-journal-section">
-  <div class="latest-journal-header">
-    <h2>Daily <em>Journal</em> — 毎朝1本、業界人の目利き</h2>
-    <a href="journal/index.html">View Archive</a>
-  </div>
-  <div class="latest-journal-cards">
-    <!-- LATEST_JOURNAL_START -->
-        <a class="latest-journal-card" href="journal/2026-08-31-nagoya-roadside-newstores-price.html">
-          <div class="ljc-date">2026-08-31</div>
-          <h3 class="ljc-title">栄の味噌ラーメンが中川区へ、900円と1,300円を業界人が読む</h3>
-          <p class="ljc-desc">2026年8月最終週、名古屋の新店3軒はいずれも駅前ではなく駐車場に面して開いた。同じ屋号で駅前1,000円未満・郊外1,300円という価格差がなぜ生まれるのかを、席数・営業時間・来店コストから業界人が読む週次ダイジェスト。</p>
-          <span class="ljc-theme">週次話題店</span>
-        </a>
-
-        <a class="latest-journal-card" href="journal/2026-08-30-nagoya-tebasaki-osaka.html">
-          <div class="ljc-date">2026-08-30</div>
-          <h3 class="ljc-title">栄の手羽先が大阪へ — 12席カウンターと22店舗、外に出る名古屋の鶏</h3>
-          <p class="ljc-desc">手羽先むつみが9月1日に関西初出店、がブリチキン。は米国2号店と全国22店舗のフェア。同じ週に外へ出た名古屋の鶏2つを、席数と価格帯とオペから業界人が読む。</p>
-          <span class="ljc-theme">今日の1軒</span>
-        </a>
-
-        <a class="latest-journal-card" href="journal/2026-08-29-fujigaoka-nama-donut-cospa.html">
-          <div class="ljc-date">2026-08-29</div>
-          <h3 class="ljc-title">藤が丘に北海道の生ドーナツ、290円のスイーツをコスパで読む</h3>
-          <p class="ljc-desc">名東区・宝が丘に札幌発の生ドーナツ専門店が本日オープン。名古屋では桜山に続く2軒目で、税込290〜460円の11種をテイクアウトのみ、11時〜19時・売り切れ次第終了で売る。席を持たない菓子店の値付けとオペを業界人が読む。</p>
-          <span class="ljc-theme">今日の1軒</span>
-        </a>
-      <!-- LATEST_JOURNAL_END -->
-  </div>
 </section>
 
 <!-- 桜ゼロ宣言バナー：飲食業界の桜（やらせ口コミ）を排除する仕組みの可視化（編集独立性の訴求。回遊コンテンツの下に配置） -->
@@ -7748,25 +7660,12 @@ function fetchFullCatalog() {
 function loadStores(stores) {
   ALL_STORES = stores.filter(function(s){ return s['公開フラグ'] !== 'FALSE'; });
   FILTERED = ALL_STORES.slice();
-  // 権威性バー・強み表示の数値を実データから動的に反映（自己申告値を置かない：制約10）
+  // 権威性バーの数値を実データから動的に反映（自己申告値を置かない：制約10）
   var totalTxt = ALL_STORES.length.toLocaleString();
-  ['auth-total', 'hero-proof-total', 'why-total'].forEach(function(id) {
+  ['auth-total'].forEach(function(id) {
     var el = document.getElementById(id);
     if (el) el.textContent = totalTxt;
   });
-  // 「2媒体以上で裏取り済み」の実店舗数。媒体＝食べログ / Instagram / ホットペッパー / Google
-  var crossMediaEl = document.getElementById('why-media');
-  if (crossMediaEl) {
-    var crossMedia = ALL_STORES.filter(function(s) {
-      var n = 0;
-      if (s['食べログURL']) n++;
-      if (s['Instagram']) n++;
-      if (s['ホットペッパーID']) n++;
-      if (s['Google評価']) n++;
-      return n >= 2;
-    }).length;
-    crossMediaEl.textContent = crossMedia.toLocaleString();
-  }
   buildPrefTabs();
   buildGenreTabs();
   buildAreaFilter();
