@@ -3,10 +3,10 @@
   "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
   "last_run": {
     "date": "2026-08-30",
-    "recorded_at": "2026-08-29T23:36:32.254Z",
+    "recorded_at": "2026-08-31T05:35:57.024Z",
     "status": "ok",
     "reason": null,
-    "verdict": "deployed",
+    "verdict": "indeterminate",
     "missing_fixes": []
   },
   "observations": [
@@ -189,8 +189,29 @@
           "key": "settled_slice_label",
           "fix_id": "SEO-076",
           "verdict": "deployed",
-          "line": "【読まれ方（確定値・2026-08-28）】"
+          "line": "【読まれ方（確定値・2026-08-29）】"
         },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "deployed",
+          "line": "レポート 21% vs GA4実測 20.6%（差 0.4pt / 許容 15pt）"
+        }
+      ],
+      "numeric_reference": {
+        "date": "2026-08-29",
+        "bounceRate": 0.206,
+        "sessions": 34
+      },
+      "numeric_reference_skipped": null,
+      "recorded_at": "2026-08-31T05:35:38.394Z"
+    },
+    {
+      "date": "2026-08-30",
+      "kind": "weekly",
+      "verdict": "indeterminate",
+      "missing_fixes": [],
+      "evidence": [
         {
           "key": "bounce_rate_divergence",
           "fix_id": "SEO-062",
@@ -198,8 +219,8 @@
         }
       ],
       "numeric_reference": null,
-      "numeric_reference_skipped": "参照値の日付 2026-08-26 が レポートが名乗る対象日 2026-08-28 と一致しないため数値判定をしない",
-      "recorded_at": "2026-08-29T23:36:32.248Z"
+      "numeric_reference_skipped": "参照値の日付 2026-08-29 が レポートが名乗る対象日 2026-08-30 と一致しないため数値判定をしない",
+      "recorded_at": "2026-08-31T05:35:57.019Z"
     }
   ],
   "deploys": [
