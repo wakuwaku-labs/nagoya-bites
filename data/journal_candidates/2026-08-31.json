@@ -1,0 +1,524 @@
+{
+  "date": "2026-08-31",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄の味噌ラーメンが中川区へ、900円と1,300円を業界人が読む",
+      "verdict": "PASS",
+      "total": 110,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 3件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 9件 (新店,動向,比較,エリア,相場,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 188字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "大須の味仙が生まれた千種区に8年ぶり、台湾ラーメン850円を業界人が読む",
+      "verdict": "PASS",
+      "total": 108,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 9件 (新店,動向,比較,エリア,相場,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 140字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "今週の名古屋の新店は駅前に開かなかった — 栄の外の相場を業界人が読む",
+      "verdict": "PASS",
+      "total": 103,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 9件 (新店,動向,比較,エリア,相場,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 156字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅は催事、郊外は常設 — 今週の名古屋グルメの分かれ方を業界人が読む",
+      "verdict": "PASS",
+      "total": 103,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 9件 (新店,動向,比較,エリア,相場,予約,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 135字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "スーパー併設のバーガーキングが守山区に、20時閉店の理由を業界人が読む",
+      "verdict": "PASS",
+      "total": 101,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "バー",
+          "feature": "features/nagoya-bar-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 8件 (新店,動向,比較,エリア,相場,シーン,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 133字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「バー」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "weekly_digest",
+      "title_draft": "栄の味噌ラーメンが中川区へ、900円と1,300円を業界人が読む",
+      "lead_draft": "今週の名古屋、新店は駅前に開かなかった。中川区・千種区・守山区に3軒、いずれも駐車場が前提の立地である。なかでも札幌ラーメン みそ吟は、名古屋の既存3店がすべて中区（栄2店＋鶴舞）だったところへ初めて中区の外に出た。鶴舞店の価格帯は1,000円未満、対して中川区高杉店の看板は1,300円。同じ屋号で価格が変わるのは味の差ではなく、立地が客に先払いさせる来店コストの差である。",
+      "angle": "駅前と郊外の新店を価格帯で比較する。駅前は「ついで需要」で相場を下げても回転で取れるが、ロードサイドは運転と駐車という来店コストを客が先払いするぶん単価を上げられる。通し営業・定休日なしは車のエリア商圏の証拠で、電車のダイヤに縛られない14〜17時が死なない。席数と駐車場台数から家族・グループというシーン適性と滞在時間の設計を読み、予約を取らない業態が今週の動向としてどこに開いたかを見る。",
+      "main_store": {
+        "name": "札幌ラーメン みそ吟 中川区高杉店",
+        "id": "",
+        "area": "中川区",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通: コーンたっぷりの札幌味噌ラーメン『みそ吟』中川区・昭和橋通にオープン",
+          "url": "https://jouhou.nagoya/misogin-ramen/",
+          "date": "2026-08-30"
+        },
+        {
+          "label": "みそ吟 公式サイト 店舗情報（全8店・名古屋は中区3店）",
+          "url": "https://misogin.com/store/",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "みそ吟 名古屋 公式Instagram（栄プリンセス通り店）",
+          "url": "https://www.instagram.com/misogin_nagoya.sakae/",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "中日BIZナビ: 創業の地で復活へ 『矢場味仙 下坪店』が24日オープン",
+          "url": "https://biz.chunichi.co.jp/news/article/10/129596/",
+          "date": "2026-08-21"
+        },
+        {
+          "label": "X: 矢場味仙発祥の地 下坪店が復活オープン（おいでよ名古屋）",
+          "url": "https://x.com/oinagoya/status/2092598273194467331",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "X: 千種区情報『ちくさん』— 京命の味仙 下坪店跡地に台湾料理店がオープン",
+          "url": "https://x.com/chikusan_nagoya/status/2064264778517037404",
+          "date": "2026-06-09"
+        },
+        {
+          "label": "PR TIMES: バーガーキング 7・8月に計6店舗を出店（愛知・清水屋藤が丘店 8/31／株式会社ビーケー・ジャパン）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000421.000038980.html",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "名古屋情報通: バーガーキング 清水屋藤が丘店 オープン",
+          "url": "https://jouhou.nagoya/burgerking-fujigaoka/",
+          "date": "2026-08-31"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "weekly_digest",
+      "title_draft": "今週の名古屋の新店は駅前に開かなかった — 栄の外の相場を業界人が読む",
+      "lead_draft": "8月最終週に名古屋で開いた飲食店は、中川区昭和橋通の味噌ラーメン、千種区京命の台湾料理、守山区森孝のハンバーガー。共通点は駅ではなく駐車場に面していることだ。同じ週、JR名古屋タカシマヤは常設ではなく1週間の催事で回した。駅ナカは短期、郊外は常設という今週の分かれ方には、坪単価と席効率の計算がそのまま出ている。",
+      "angle": "今週の新店をエリア別に比較し、駅ナカの催事と郊外の常設という動向の分岐を読む。駅ナカは坪単価が高く常設の固定費に耐えないため催事で日商を取り、郊外は固定費が軽い代わりに集客を自前で作る。この非対称が価格帯の相場と回転の設計、そして客のシーン適性を分けている。予約の要否も立地で変わる。",
+      "main_store": {
+        "name": "札幌ラーメン みそ吟 中川区高杉店",
+        "id": "",
+        "area": "中川区",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通: みそ吟 中川区・昭和橋通にオープン",
+          "url": "https://jouhou.nagoya/misogin-ramen/",
+          "date": "2026-08-30"
+        },
+        {
+          "label": "みそ吟 公式サイト 店舗情報",
+          "url": "https://misogin.com/store/",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "中日BIZナビ: 創業の地で復活へ『矢場味仙 下坪店』が24日オープン",
+          "url": "https://biz.chunichi.co.jp/news/article/10/129596/",
+          "date": "2026-08-21"
+        },
+        {
+          "label": "X: 矢場味仙発祥の地 下坪店が復活オープン",
+          "url": "https://x.com/oinagoya/status/2092598273194467331",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "名古屋情報通: 『フランス展』JR名古屋タカシマヤ 8/26〜9/1",
+          "url": "https://jouhou.nagoya/france-takashimaya-2026/",
+          "date": "2026-08-25"
+        },
+        {
+          "label": "PR TIMES: バーガーキング 7・8月に計6店舗を出店",
+          "url": "https://prtimes.jp/main/html/rd/p/000000421.000038980.html",
+          "date": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "weekly_digest",
+      "title_draft": "大須の味仙が生まれた千種区に8年ぶり、台湾ラーメン850円を業界人が読む",
+      "lead_draft": "今週、千種区京命に矢場味仙 下坪店が再開業した。1981年の創業地で、約8年の休止を経ての復活である。台湾ラーメンは850円、水曜定休、11時から15時と17時から23時の中抜き営業。大須の店が1999年開業であることを踏まえると、このブランドの順番は郊外が先で繁華街が後だった。",
+      "angle": "中抜き営業と水曜定休はピーク型の回転設計で、通し営業の車商圏型とは人時の使い方が正反対。1階のみ稼働という再開の仕方から、席を絞って戻すセオリーと価格帯の据え置き、エリア相場との比較、予約なしで並ぶシーンを読む。今週の新店の動向に位置づける。",
+      "main_store": {
+        "name": "矢場味仙 下坪店",
+        "id": "",
+        "area": "千種区",
+        "genre": "台湾料理"
+      },
+      "sources": [
+        {
+          "label": "中日BIZナビ: 創業の地で復活へ『矢場味仙 下坪店』が24日オープン",
+          "url": "https://biz.chunichi.co.jp/news/article/10/129596/",
+          "date": "2026-08-21"
+        },
+        {
+          "label": "名古屋情報通: 矢場味仙 下坪店 復活オープン",
+          "url": "https://jouhou.nagoya/yaba-misen/",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "X: 矢場味仙発祥の地 下坪店が復活オープン",
+          "url": "https://x.com/oinagoya/status/2092598273194467331",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "矢場味仙 公式Instagram",
+          "url": "https://www.instagram.com/yaba_misen/",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "名古屋情報通: みそ吟 中川区・昭和橋通にオープン",
+          "url": "https://jouhou.nagoya/misogin-ramen/",
+          "date": "2026-08-30"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "weekly_digest",
+      "title_draft": "スーパー併設のバーガーキングが守山区に、20時閉店の理由を業界人が読む",
+      "lead_draft": "8月31日、清水屋藤が丘店の施設内にバーガーキングが開いた。守山区で唯一、名古屋市内では10店舗目。営業は10時から20時で、スーパーの営業時間に合わせて閉まる。24時間営業も深夜帯も持たない設計は、単独路面店ではなく商業施設のテナントであることの当然の帰結である。",
+      "angle": "施設テナントは家賃が売上歩合で、営業時間も施設に従属する。深夜の人時を持たずに済む代わりに閉店後の売上を捨てる。この交換条件を今週の他の新店と比較し、エリア相場・価格帯・回転・シーン適性の観点で動向として読む。",
+      "main_store": {
+        "name": "バーガーキング 清水屋藤が丘店",
+        "id": "",
+        "area": "守山区",
+        "genre": "ハンバーガー"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: バーガーキング 7・8月に計6店舗を出店（清水屋藤が丘店 8/31）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000421.000038980.html",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "名古屋情報通: バーガーキング 清水屋藤が丘店 オープン",
+          "url": "https://jouhou.nagoya/burgerking-fujigaoka/",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "流通ニュース: バーガーキング／7〜8月に計6店舗をオープン",
+          "url": "https://www.ryutsuu.biz/store/s072845.html",
+          "date": "2026-07-28"
+        },
+        {
+          "label": "X: 矢場味仙発祥の地 下坪店が復活オープン",
+          "url": "https://x.com/oinagoya/status/2092598273194467331",
+          "date": "2026-08-24"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "weekly_digest",
+      "title_draft": "名駅は催事、郊外は常設 — 今週の名古屋グルメの分かれ方を業界人が読む",
+      "lead_draft": "今週の名古屋は、JR名古屋タカシマヤでフランス展とトルコ菓子の限定出店が並び、一方で中川区・千種区・守山区には常設の新店が開いた。駅は1週間で撤収する催事、郊外は駐車場付きの常設。同じ7日間に起きた二つの動きは、坪単価と在庫リスクの計算がまったく違う場所で行われている。",
+      "angle": "催事は在庫と人時を持ち込み型にできるため撤退コストがほぼゼロ、常設は初期投資の回収を前提に価格帯を組む。この差をエリア別に比較し、今週の新店の動向・相場・回転・予約・シーン適性まで通して読む。",
+      "main_store": {
+        "name": "札幌ラーメン みそ吟 中川区高杉店",
+        "id": "",
+        "area": "中川区",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通: 『フランス展』JR名古屋タカシマヤ 8/26〜9/1",
+          "url": "https://jouhou.nagoya/france-takashimaya-2026/",
+          "date": "2026-08-25"
+        },
+        {
+          "label": "名古屋情報通: バクラヴァ専門店ナーディル・ギュル 9/1まで限定出店",
+          "url": "https://jouhou.nagoya/nadirgullu-limited202608/",
+          "date": "2026-08-26"
+        },
+        {
+          "label": "みそ吟 公式サイト 店舗情報",
+          "url": "https://misogin.com/store/",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "X: 矢場味仙発祥の地 下坪店が復活オープン",
+          "url": "https://x.com/oinagoya/status/2092598273194467331",
+          "date": "2026-08-24"
+        },
+        {
+          "label": "PR TIMES: バーガーキング 7・8月に計6店舗を出店",
+          "url": "https://prtimes.jp/main/html/rd/p/000000421.000038980.html",
+          "date": "2026-07-28"
+        }
+      ]
+    }
+  ]
+}
