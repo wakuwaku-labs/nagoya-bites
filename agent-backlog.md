@@ -333,7 +333,9 @@
 
 ### [SEO-072] レポートの「予約・店舗詳細」が index.html のイベント名しか数えず、実際に読まれている面（特集・ジャーナル・店舗ページ5,548枚）のコンバージョンが構造的にゼロで届く
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done（実装完了）
+- **resolved**: 2026-08-31
+- **resolved_by**: /solve-next（Marketer/Builder）
 - **detected**: 2026-08-25
 - **category**: SEO
 - **owner**: Marketer + Builder
