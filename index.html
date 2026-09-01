@@ -1184,6 +1184,8 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .store-index-list a:hover{color:var(--gold);border-bottom-color:var(--gold);}
 @media(max-width:640px){.store-index{padding:1.2rem .8rem;}.store-index-list{grid-template-columns:1fr;}.store-index-list li{font-size:.66rem;}}
 .store-index-area.cards-on>.store-index-list{display:none;}
+/* エリア数が多い（ロングテールの極小エリア含む）ため、主要12エリアのみ表示し残りは折りたたむ */
+.store-index.is-folded details.store-index-area:nth-of-type(n+13){display:none;}
 .si-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;padding:.7rem 0 .5rem 1.3rem;}
 .si-actions{display:flex;gap:.6rem;flex-wrap:wrap;padding:.1rem 0 1rem 1.3rem;}
 .si-more,.si-viewall{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:var(--gold);border:1px solid rgba(201,169,110,.4);padding:.42rem .95rem;border-radius:1px;cursor:pointer;background:transparent;transition:background .2s;}
@@ -10962,6 +10964,27 @@ renderGrid = function(data) {
       list.insertAdjacentElement('afterend', btn);
       initPillFold(list, btn, count, 8);
     });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
+  }
+})();
+
+// 「エリア別 全店舗一覧」はロングテールの極小エリアまで並ぶと非常に長くなるため、
+// 主要12エリアのみ表示し残りを「もっと見る」で折りたたむ
+(function foldStoreIndex(){
+  function bind(){
+    var section = document.getElementById('store-index');
+    if (!section) return;
+    var areas = section.querySelectorAll(':scope > details.store-index-area');
+    if (areas.length <= 12) return;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'fold-toggle';
+    section.appendChild(btn);
+    initPillFold(section, btn, areas.length, 12);
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', bind);
