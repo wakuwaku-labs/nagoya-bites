@@ -2390,6 +2390,36 @@
       "brand_reason": "重複 — SEO-068（P1 ready・discovery意図クエリの検索面を計画的に拡張）が同じ方向を保持しており、2026-08-22 の診断で journal_seo_kw.js --suggest により未カバー上位として「栄×接待」「栄×個室」を機械抽出済み。効果測定も gsc_query_intent.js の discovery 行の impressions_share で定義済み。加えて「特集記事をさらに充実させる」の literal な増分は薄い: 接待・個室シーンの特集は既に6本実在する（settai-guide / nagoya-settai-concierge / nagoya-settai-lunch / nagoya-settai-secret / private-room / nagoya-meieki-business-dinner）。GSC実測（08-02〜08-29・300クエリ）で接待/個室系は「名古屋 顔合わせ カジュアル 個室」1件のみ（1表示・23位）で、記事が足りないのではなく既存記事が検索面に出ていない状態＝SEO-068 の担当範囲。",
       "category": null,
       "fingerprint": "eab5aaf22b6dafb9"
+    },
+    {
+      "id": null,
+      "date": "2026-09-01",
+      "source": "line-daily",
+      "advice": "🔴 訪問者54人に対して予約ボタンクリックが0回と、成果に繋がっていません。👉 トップページ(index.html)の店舗詳細モーダル内にある予約ボタンを「空席確認・予約」など、次の行動を促す文言に変え、視認性を高めてください。",
+      "verdict": "rejected",
+      "brand_reason": "却下① 打ち手が既に実装済みで増分がない — index.html:9962 のモーダル予約ボタンは既に .modal-cta-btn（flex:1・420px以下で全幅・ブランドカラー）で、文言も「この店を予約する」＝次の行動を明示する動詞句。助言が例示する「空席確認・予約」との差は語の言い換えのみで、視認性の改善余地は存在しない。SEO-013(done) に「視認性が足りていない証拠が出てから触る」と判断記録あり。却下② 症状の前提が成立しない（制約10）— 同レポートの「店舗詳細を開いた: 1回」が示すとおりモーダル自体が1回しか開かれていない。予約ボタンはモーダルを開いた人にしか露出しないため、分母1に対する文言変更は効果を測ることが原理的にできず、真のボトルネックはモーダル到達（54→1）の上流にある。却下③ 数値そのものが構造的に不完全 — SEO-072（cta_click を特集・ジャーナル・店舗ページ5,548枚へ拡張）は check_gas_deploy_health.js の pending_fixes に残っており本番反映が未確定。実測で cta_click を発火する stores/*.html は4,973枚・features/*.html は6枚あり、レポートの「0回」は index.html 発火分しか数えていない可能性が高い。同型の助言は 2026-08-30(日次)・2026-08-31(週次) にも却下/重複判定済み",
+      "category": null,
+      "fingerprint": "9ef3cf585cb708a2"
+    },
+    {
+      "id": null,
+      "date": "2026-09-01",
+      "source": "line-daily",
+      "advice": "🟡 1訪問あたり閲覧が1.5ページと、他のページへの回遊が少ない状況です。👉 journal/記事の末尾に、関連するfeatures/特集記事への導線を「この記事もおすすめ」として追加し、回遊を促してください。",
+      "verdict": "duplicate",
+      "brand_reason": "重複 — ①助言の literal な打ち手は既に実装済み。最新記事 journal/2026-09-01-nishiki-steakhouse-settai-price.html の末尾には .related ブロック（:225-234）があり、features/nagoya-steak.html・features/index.html への導線を含む。scripts/refresh_journal_related.js が全記事で自動保守し、:245 で internal_link_click まで計測している＝「末尾に関連特集導線を追加」の増分はゼロ。②残る本当の欠落（導線が本文の後ろにしか無く、読み切らない読者に一度も出ない）は SEO-070（P2 ready・detected 2026-08-24）が保持しており、同一症状で 2026-08-31 の週次助言も同チケットへ重複判定済み。再起票しない",
+      "category": null,
+      "fingerprint": "c084b1ef927b1361"
+    },
+    {
+      "id": null,
+      "date": "2026-09-01",
+      "source": "line-daily",
+      "advice": "🟢 人気ページにソロダイニングの特集が入っており、ニーズが見られます。👉 docs/daily-posts/に「名古屋 ソロダイニング おすすめ」のキーワードでInstagram投稿原稿を新規作成し、SNSからの流入を増やしましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複 — SEO-077（P2 ready・detected 2026-08-28・owner=Marketer）がこの助言そのものを保持している。SEO-077 の source は 2026-08-27 の同型助言で、acceptance 1 に「docs/daily-posts/ 配下に常設特集を原稿化した1本（例 feature-nagoya-solo-dining.md）が Note/Instagram/X の3セクション構成で存在する」と明記済み。対象ページ（features/nagoya-solo-dining）・出力先（docs/daily-posts/）・目的（SNS流入）が完全に一致する。構造も不変で、docs/daily-posts/ 112本のうち solo-dining を扱った原稿は依然0本（常設特集は日次パイプラインの生成対象外という SEO-077 の指摘どおり）。本日の TOP1（12回閲覧）は SEO-077 の根拠を補強するだけで新規課題にはならない",
+      "category": null,
+      "fingerprint": "69c675e5738d512e"
     }
   ]
 }
