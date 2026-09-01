@@ -2420,6 +2420,46 @@
       "brand_reason": "重複 — SEO-077（P2 ready・detected 2026-08-28・owner=Marketer）がこの助言そのものを保持している。SEO-077 の source は 2026-08-27 の同型助言で、acceptance 1 に「docs/daily-posts/ 配下に常設特集を原稿化した1本（例 feature-nagoya-solo-dining.md）が Note/Instagram/X の3セクション構成で存在する」と明記済み。対象ページ（features/nagoya-solo-dining）・出力先（docs/daily-posts/）・目的（SNS流入）が完全に一致する。構造も不変で、docs/daily-posts/ 112本のうち solo-dining を扱った原稿は依然0本（常設特集は日次パイプラインの生成対象外という SEO-077 の指摘どおり）。本日の TOP1（12回閲覧）は SEO-077 の根拠を補強するだけで新規課題にはならない",
       "category": null,
       "fingerprint": "69c675e5738d512e"
+    },
+    {
+      "id": "SEO-080",
+      "date": "2026-09-02",
+      "source": "line-daily",
+      "advice": "【2026-09-01 日次レポートの取得実行中に自前で立てた指摘】週次triageの取得クエリ subject:\"📊 NAGOYA BITES 週次レポート\" newer_than:9d が0件を返すが、in:anywhere で引くと直近5本中2本（2026-08-30配信分 msg 1a054eddf9eea5f5 / 2026-08-09配信分 msg 19fe8c83d5ee42ef）がTRASHラベルで存在する。Gmail検索は既定でTRASHを除外するため、ゴミ箱に落ちた週次レポートは構造的に見逃され、しかもコマンド仕様が0件を「未着」として正常終了させるため誰にも届かない。",
+      "verdict": "adopted",
+      "brand_reason": "順位操作でもマネタイズでもなく、改善ループの入力の到達性を回復する課題。ISSUE-089（Gmailが実在メールに0件を返す）と同じ失敗クラスで、feedbackループでは data/feedback_policy.json の gmail_retrieval で既に塞がれているのにSEOループには未移植。CLAUDE.md「無人自動化の監視を設計するときの原則」3（気づけるはずを検知と数えない）の直接適用。証跡はmsg_idとラベルという第三者が検算できる事実のみ（制約10）。",
+      "category": "SEO",
+      "fingerprint": "7b217a3ac5671060"
+    },
+    {
+      "id": null,
+      "date": "2026-09-02",
+      "source": "line-daily",
+      "advice": "🔴 訪問者57人に対して、予約ボタンクリックとマップクリックが共に0回です。👉 トップページ(index.html)の店舗詳細モーダル内にある予約ボタンとGoogleマップ導線のデザインを大きく目立つように変更し、CTAであることを強調してください。",
+      "verdict": "rejected",
+      "brand_reason": "実装済みで増分が無い。SEO-003（モーダル内CTAの視認性・文言・2026-06-03 done）/ SEO-013（予約ボタン視認性＋文言「今すぐ予約」done）/ SEO-037（カードに予約・Googleマップを常時表示 done）/ SEO-042（特集冒頭CTAの統合 done）で同じ打ち手を4回実施済み。さらにSEO-041が実コードを見た上で「これ以上CTAを足すと領域を圧迫して予約・地図の視認性をむしろ下げる」と判定している。「0回」という症状の側はデザインではなく計測側の課題として既にSEO-072（done）で扱っており、GAS本番への反映確認はSEO-075で追跡中。同じ助言が5日連続（08-28/08-30/08-31/09-01/09-02）で来ているが、装飾を足す打ち手は打ち止め。",
+      "category": null,
+      "fingerprint": "eda7f2afaa657c94"
+    },
+    {
+      "id": null,
+      "date": "2026-09-02",
+      "source": "line-daily",
+      "advice": "🟡 人気ページTOP1が「nagoya-solo-dining」で21回閲覧と突出しています。👉 features/nagoya-solo-dining の記事に登場する店舗をトップページ(index.html)の検索フィルター上部に「おひとり様におすすめ」としてバナー表示し、回遊を促してください。",
+      "verdict": "rejected",
+      "brand_reason": "実装済み。index.html:1613 にトップの特集カルーセルとして nagoya-solo-dining の feature-card（実写サムネ＋「特集を読む」CTA）が既に常設されており、SEO-040（FVに価値提案＋人気特集導線を統合・done）の成果物そのもの。フィルター上部にさらにバナーを重ねると同一導線が二重になり、SEO-041 が判定した「同じ動作の導線が重複してCTA領域を圧迫する」問題を再生産する。なおsolo-diningの配信面の取りこぼし（SNS原稿0本）は別途 SEO-077 で ready として起票済み。",
+      "category": null,
+      "fingerprint": "467ee962faae070c"
+    },
+    {
+      "id": null,
+      "date": "2026-09-02",
+      "source": "line-daily",
+      "advice": "🟢 訪問者57人に対して、店舗詳細を開いたのが0回と、店舗情報への関心が低い可能性があります。👉 トップページ(index.html)の各店舗カードに「詳細を見る」などのテキストを追加し、クリックを促すように目立たせてください。",
+      "verdict": "duplicate",
+      "brand_reason": "SEO-041 が 2026-08-16 に実コード（index.html:9119 のカードは既にカード全体が onclick=openM() でモーダルを開く＋44pxの予約ボタン＋44x44のマップボタンを常時保持）を確認したうえで「不要」と判定済み（status: wont_fix）。同チケットに「同種の提案が今後SEOアドバイスで再来したら、この判定を根拠にduplicateとして処理する」と明記されているため、その規定どおり duplicate 処理。統合元の SEO-010 も superseded。",
+      "category": null,
+      "fingerprint": "4d0493abe8daad1a"
     }
   ]
 }
