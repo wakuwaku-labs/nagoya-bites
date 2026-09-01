@@ -1,0 +1,386 @@
+{
+  "date": "2026-09-01",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "錦のステーキハウスで接待、9,900円のランチと「サ別」の読み方",
+      "verdict": "PASS",
+      "total": 105,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "ステーキ",
+          "feature": "features/nagoya-steak.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 11件 (価格帯,コース,席,予約,シーン,接待,デート,アラカルト,一人飲み,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 163字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「錦」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「ステーキ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "朝6時に350円、中川区に増えた自家製麺うどんのコスパを読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 99,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,シーン,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 135字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「コスパ」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "99点（自動公開ライン 100点）。主な不足: search_intent -6 / uniqueness -5"
+    },
+    {
+      "id": "c2",
+      "title_draft": "錦にステーキの102席、接待とデートで座る場所が違う理由",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 96,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "ステーキ",
+          "feature": "features/nagoya-steak.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 8件 (席,予約,シーン,接待,デート,一人飲み,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 135字 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「錦」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「ステーキ」+2"
+        ]
+      },
+      "gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4"
+    }
+  ],
+  "disqualified": [
+    {
+      "id": "c4",
+      "title_draft": "名駅の線路上に90日だけのつけめん、期間限定店の席と回転を読む",
+      "verdict": "DISQUALIFIED",
+      "total": 0,
+      "disqualified_reasons": [
+        "同一店舗の再掲 (六厘舎 JR名古屋駅1番線店 in pending, 2026-08-21)"
+      ],
+      "breakdown": null
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅メイチカが3年半ぶりに開く、17店の並びを業界人が読む",
+      "verdict": "DISQUALIFIED",
+      "total": 0,
+      "disqualified_reasons": [
+        "同一店舗の再掲 (メイチカ in pending, 2026-08-28)"
+      ],
+      "breakdown": null
+    }
+  ],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "錦のステーキハウスで接待、9,900円のランチと「サ別」の読み方",
+      "lead_draft": "9月4日、名古屋観光ホテル1階にウルフギャング・ステーキハウスが東海エリア初出店する。表に出ている数字はランチコース9,900円、パーティメニューは17,600円から。ただしどれも「税込サ別」で、予約サイトが示す予算目安はランチ12,500円・ディナー25,000円と開きがある。この差額が何で埋まるのかを、業界人の目で読む。",
+      "angle": "表示価格が全て「税込サ別」である点を起点に、コースとアラカルトの価格帯の読み方、102席と個室4室・繁忙時2時間制という回転の設計、バーカウンターが予約不可であることから逆算した接待・デート・一人飲みのシーン適性を業界人の目で解く",
+      "main_store": {
+        "name": "ウルフギャング・ステーキハウス 名古屋店",
+        "id": "",
+        "area": "錦・伏見",
+        "genre": "ステーキ"
+      },
+      "sources": [
+        {
+          "label": "ナゴヤト: 9月4日いよいよオープン（プレビュー取材）",
+          "url": "https://nagoyato.com/posts/18368",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "公式: 9月4日グランドオープン・予約受付開始",
+          "url": "https://wolfgangssteakhouse.jp/news/ja/3606",
+          "date": "2026-07-07"
+        },
+        {
+          "label": "PR TIMES: 名古屋観光ホテル内にグランドオープン（エスパシオエンタープライズ）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000132.000097639.html",
+          "date": "2026-04-09"
+        },
+        {
+          "label": "TableCheck: 名古屋店 予約ページ（コース価格・運用ルール）",
+          "url": "https://www.tablecheck.com/ja/shops/wolfgangssteakhouse-nagoya/reserve"
+        },
+        {
+          "label": "WDI: 名古屋店 店舗情報（席数・営業時間）",
+          "url": "https://www.wdi.co.jp/restaurants-search/64185"
+        },
+        {
+          "label": "公式Instagram（ブランド公式）",
+          "url": "https://www.instagram.com/wolfgangssteakhousejapan/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "錦にステーキの102席、接待とデートで座る場所が違う理由",
+      "lead_draft": "東海エリア初のウルフギャング・ステーキハウスが9月4日、伏見の名古屋観光ホテル1階に開く。102席、8名個室が4室、そしてバーカウンター。同じ店でも、接待で使う席とデートで使う席、ふらり一人で寄る席は設計上まったく別物として用意されている。予約の取り方から逆算して読む。",
+      "angle": "個室4室の連結運用と予約不可のバーカウンターという席の作り分けから、接待・デート・一人飲みそれぞれのシーン適性と予約の取り方、繁忙時2時間制が示す回転の意図を業界人視点で読む",
+      "main_store": {
+        "name": "ウルフギャング・ステーキハウス 名古屋店",
+        "id": "",
+        "area": "錦・伏見",
+        "genre": "ステーキ"
+      },
+      "sources": [
+        {
+          "label": "ナゴヤト: 9月4日いよいよオープン（プレビュー取材）",
+          "url": "https://nagoyato.com/posts/18368",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "TableCheck: 名古屋店 予約ページ",
+          "url": "https://www.tablecheck.com/ja/shops/wolfgangssteakhouse-nagoya/reserve"
+        },
+        {
+          "label": "公式: 9月4日グランドオープン",
+          "url": "https://wolfgangssteakhouse.jp/news/ja/3606",
+          "date": "2026-07-07"
+        },
+        {
+          "label": "WDI: 名古屋店 店舗情報",
+          "url": "https://www.wdi.co.jp/restaurants-search/64185"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "朝6時に350円、中川区に増えた自家製麺うどんのコスパを読む",
+      "lead_draft": "9月1日、中川区太平通に朝6時から開くうどん店が加わった。かけうどん小350円、並420円。約30席・無休で、10時半までは珈琲が一杯無料になる。香川の朝うどん文化を持ち込んだこの屋号は名古屋で店を増やし続けている。なぜ朝6時の350円で成立するのかを業界人の目で読む。",
+      "angle": "自家製麺とセルフ式という原価とオペの組み合わせから、350円のかけうどんに740円の肉うどんを重ねる価格帯の設計、朝6時開店が取りに行く客層と回転、朝食シーンでの一人利用の適性を読む",
+      "main_store": {
+        "name": "日和製麺 太平通店",
+        "id": "",
+        "area": "中川区・太平通",
+        "genre": "うどん"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通: 中川区・太平通に9月1日オープン",
+          "url": "https://jouhou.nagoya/nichiwaseimen-nakagawa/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "東海テレビNEWS: 朝6時から営業するうどん店・客層の特徴",
+          "url": "https://www.tokai-tv.com/tokainews/feature/article_20250730_41565",
+          "date": "2025-07-30"
+        },
+        {
+          "label": "公式Instagram @nichiwaseimen",
+          "url": "https://www.instagram.com/nichiwaseimen/"
+        },
+        {
+          "label": "公式TikTok @nichiwaseimen",
+          "url": "https://www.tiktok.com/@nichiwaseimen"
+        },
+        {
+          "label": "Yahoo!ニュース: 徳重店オープン",
+          "url": "https://news.yahoo.co.jp/expert/articles/2e24dc05c959d3ba35548f164720159e4b957735",
+          "date": "2025-06-07"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "名駅の線路上に90日だけのつけめん、期間限定店の席と回転を読む",
+      "lead_draft": "JR名古屋駅1番線ホーム上に、つけめん専門店が9月1日から11月29日までの90日間だけ現れる。約60席、10時から22時まで。期間限定の駅ナカ店舗は、通常店とは在庫も人員配置もまったく違う設計で組まれる。90日で畳む前提の店をどう使うかを読む。",
+      "angle": "期間限定の駅ナカ店舗という前提から、約60席の回転と繁忙時間帯、通し営業の人員配置、一人利用のシーン適性を業界人視点で読む",
+      "main_store": {
+        "name": "六厘舎 JR名古屋駅1番線店",
+        "id": "",
+        "area": "名駅",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通: 六厘舎 期間限定オープン",
+          "url": "https://jouhou.nagoya/rokurinsha-tsukemen-2026/",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "ナゴヤト: JR名古屋駅の線路上に期間限定オープン",
+          "url": "https://nagoyato.com/posts/18216",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "グルメプレス: 六厘舎 名古屋駅1番線企画",
+          "url": "https://gourmetpress.net/1470909/",
+          "date": "2026-08-31"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "名駅メイチカが3年半ぶりに開く、17店の並びを業界人が読む",
+      "lead_draft": "名古屋駅の地下街メイチカが9月4日、約3年半ぶりにリニューアルオープンする。17の新店が一斉に並ぶ。駅直結の地下街は家賃も客層も地上とは別の論理で動いていて、どのジャンルをどこに置くかにその読みが出る。並びの設計から業界人の目で読む。",
+      "angle": "駅直結地下街の区画設計から、テナントの価格帯とジャンル配置、通勤客の繁忙時間帯と回転、一人利用のシーン適性を読む",
+      "main_store": {
+        "name": "メイチカ",
+        "id": "",
+        "area": "名駅",
+        "genre": "地下街"
+      },
+      "sources": [
+        {
+          "label": "ナゴヤト: メイチカが約3年半ぶりにリニューアルオープン",
+          "url": "https://nagoyato.com/posts/18049",
+          "date": "2026-08-26"
+        },
+        {
+          "label": "名古屋どっと: 名鉄のショップがメイチカに3店舗目",
+          "url": "https://nagoyadot.jp/new/105920/",
+          "date": "2026-08-26"
+        }
+      ]
+    }
+  ]
+}
