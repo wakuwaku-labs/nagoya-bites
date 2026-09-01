@@ -152,27 +152,6 @@ jobs:
             L.push('');
             L.push('`.gas-deploy/Code.js` はミラーで、実行主体は GAS 側です。CI からは反映できません。');
             L.push('');
-
-            // stale_numeric_reference 固有の対処ガイド
-            if (r.problems.some(p => p.kind === 'stale_numeric_reference')) {
-              L.push('### `stale_numeric_reference` が検出された場合');
-              L.push('');
-              L.push('`data/site_metrics.json` の `dailyReference` が古いまま更新されていません。');
-              L.push('これは GAS のデプロイ状態と直接は関係なく、**数値検知（SEO-074）が機能しなくなっている**問題です。');
-              L.push('');
-              L.push('確認手順:');
-              L.push('1. GitHub Actions の `build.yml` の最新実行を開き、`scripts/fetch_ga4_views.js` のステップが');
-              L.push('   正常終了しているか確認する');
-              L.push('2. 失敗していれば、認証エラー（GOOGLE_SERVICE_ACCOUNT_KEY など）を修正する');
-              L.push('3. 成功しているのに `dailyReference` が更新されない場合は、');
-              L.push('   `data/site_metrics.json` の commit/push ステップが正常に動いているか確認する');
-              L.push('4. 手元で `node scripts/fetch_ga4_views.js` を実行し `data/site_metrics.json` が更新されることを確認、');
-              L.push('   コミット・プッシュして CI を再実行する');
-              L.push('');
-            }
-
-            L.push('GAS デプロイの手順:');
-            L.push('');
             L.push('1. `.gas-deploy/Code.js` の中身を GAS エディタ（Google分析オートLINE送信）にコピペして保存する');
             L.push('   - または `clasp push`（`.gas-deploy/.clasp.json` あり。要 `clasp login`）');
             L.push('2. **重複ファイルを作らないこと**（`Code 2.js` 等が混ざると top-level 二重宣言で');
@@ -208,103 +187,134 @@ jobs:
               core.setFailed(`GAS 未反映を検出し Issue #${created.number} を起票しました: ${kinds}`);
             }
 
-      - name: 参照値（dailyReference）の鮮度を確認し Issue を起票/クローズ
-        if: always()
+  # ─────────────────────────────────────────────────────────────────────────────
+  # GA4 参照値の停滞を監視する（SEO-075 acceptance 5）
+  #
+  # 問題: `data/site_metrics.json` の `dailyReference.date` は CI が毎日更新する想定だが、
+  #       GA4 認証切れや fetch_ga4_views.js の失敗で止まると参照値が古いまま残る。
+  #       古い参照値のまま `check_gas_deploy_health.js` を実行すると日付が一致せず
+  #       `numeric_reference_skipped` になり、数値シグナルが永久に indeterminate になる
+  #       ＝「直帰率が本当に高いのかバグなのか」を誰も検算できない状態が続く（SEO-075）。
+  #
+  # 判定: `dailyReference.date` が JST 今日から2日以上古ければ異常とみなす。
+  #       日付の差は自己申告できない（GA4を引けていなければ date は進まない）ため、
+  #       CLAUDE.md 制約10「検証できる事実だけで判定」を満たす。
+  #
+  # 通知: 異常が続く間は Issue を開けたまま（ISSUE-084 の原則どおり）。
+  #       参照値が追いついたら自動クローズ（原則6: 鳴りっぱなしにしない）。
+  # ─────────────────────────────────────────────────────────────────────────────
+  ga4_reference_staleness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 参照値の鮮度を確認
+        id: ref_check
+        run: |
+          node -e "
+          const fs = require('fs');
+          // JST 今日
+          const jst = new Date(Date.now() + 9*60*60*1000).toISOString().slice(0,10);
+          let result;
+          try {
+            const sm = JSON.parse(fs.readFileSync('data/site_metrics.json', 'utf8'));
+            const refDate = sm.dailyReference && sm.dailyReference.date;
+            if (!refDate) {
+              result = { stale: true, refDate: null, daysBehind: 999, today: jst };
+            } else {
+              const daysBehind = Math.round((new Date(jst) - new Date(refDate)) / 86400000);
+              result = { stale: daysBehind >= 2, refDate, daysBehind, today: jst };
+            }
+          } catch(e) {
+            result = { stale: true, refDate: null, daysBehind: 999, today: jst, error: e.message };
+          }
+          fs.writeFileSync('/tmp/ref-staleness.json', JSON.stringify(result));
+          console.log(JSON.stringify(result));
+          "
+
+      - name: 鮮度異常なら Issue 起票/更新、正常なら自動クローズ
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/ref-staleness.json', 'utf8'));
             const label = 'ga4-reference-stale';
             const owner = context.repo.owner;
             const repo = context.repo.repo;
 
-            // --- 閾値を唯一の情報源から取る ---
-            const policy = JSON.parse(fs.readFileSync('data/gas_deploy_policy.json', 'utf8'));
-            const MAX_STALE = policy.watchdog.max_stale_reference_days || 4;
-
-            // --- 参照値の日付を取得 ---
-            const sm = JSON.parse(fs.readFileSync('data/site_metrics.json', 'utf8'));
-            const refDate = sm.dailyReference && sm.dailyReference.date;
-
-            // JST 今日
-            const nowJst = new Date(Date.now() + 9 * 60 * 60 * 1000);
-            const todayJst = nowJst.toISOString().slice(0, 10);
-
-            function daysBetween(from, to) {
-              return Math.floor((new Date(to) - new Date(from)) / 86400000);
-            }
-
-            const diffDays = refDate ? daysBetween(refDate, todayJst) : null;
-            const isStale = diffDays === null || diffDays >= MAX_STALE;
-
             const { data: issues } = await github.rest.issues.listForRepo({
               owner, repo, state: 'open', labels: label, per_page: 10,
             });
-            const existing = issues.find(i => i.title.startsWith('🟡 GA4参照値'));
+            const existing = issues.find(i => i.title.startsWith('🔴 GA4参照値'));
 
-            // --- 復旧（正常）: 開いている Issue を閉じる ---
-            if (!isStale) {
+            // ---- 正常: 開いている Issue があれば閉じる ----
+            if (!r.stale) {
               if (existing) {
                 await github.rest.issues.createComment({
                   owner, repo, issue_number: existing.number,
                   body:
-                    `✅ 参照値の鮮度が回復しました（JST ${todayJst}）。` +
-                    `\`dailyReference.date\` = \`${refDate}\`（今日との差 ${diffDays} 日）。` +
-                    '自動クローズします。',
+                    `✅ 回復を確認しました（JST ${r.today}）。` +
+                    `参照値の日付: \`${r.refDate}\`（${r.daysBehind}日遅れ → 閾値2日以内）。自動クローズします。`,
                 });
                 await github.rest.issues.update({
                   owner, repo, issue_number: existing.number, state: 'closed',
                 });
-                core.info(`Issue #${existing.number} を参照値回復でクローズしました。`);
+                core.info(`Issue #${existing.number} を復旧クローズしました。`);
               } else {
-                core.info(`参照値は正常（${refDate}、差 ${diffDays} 日）。Issue の起票は不要です。`);
+                core.info(`健全。参照値 ${r.refDate}（${r.daysBehind}日遅れ）。`);
               }
               return;
             }
 
-            // --- 異常: 起票 or 更新 ---
-            const reason = refDate
-              ? `\`dailyReference.date\` が \`${refDate}\` のまま進んでいません（今日 ${todayJst} との差: **${diffDays} 日**、閾値 ${MAX_STALE} 日）。`
-              : '`data/site_metrics.json` に `dailyReference` が存在しません。';
-
-            const title = `🟡 GA4参照値が古いまま更新されていません（${todayJst}）`;
-            const body = [
-              `毎朝の build.yml が \`fetch_ga4_views.js\` を実行して \`data/site_metrics.json\` の \`dailyReference\` を更新するはずですが、更新が止まっています（JST ${todayJst} 時点）。`,
-              '',
-              '## 検出内容',
-              reason,
-              '',
-              '## なぜこれが重要か',
-              '`dailyReference` は GAS レポートの直帰率が正しい値を出しているかを判定する「独立した参照値」です。',
-              '参照値が古いままだと `check_gas_deploy_health.js` の数値乖離チェックが常に `indeterminate` になり、',
-              '**旧コードのバグが出した直帰率をそのまま毎朝の 🔴 アドバイスの前提に使い続けても誰も気づけません**（SEO-075）。',
-              '',
-              '## 考えられる原因',
-              '- `build.yml` が 2 回以上連続でスキップ・失敗している',
-              '- `fetch_ga4_views.js` の GA4 認証（`GOOGLE_APPLICATION_CREDENTIALS_JSON` シークレット）が切れている',
-              '- `data/site_metrics.json` の書き込みが途中で中断された',
-              '',
-              '## 確認手順',
-              '1. Actions タブで `build.yml` の直近の実行履歴を確認する',
-              '2. 失敗しているなら `fetch_ga4_views.js` のログを見て原因を特定する',
-              '3. GA4 シークレットの有効期限を確認する（Settings → Secrets and variables → Actions）',
-              '',
-              '---',
-              'この Issue は `dailyReference.date` が今日から 3 日以内に更新されると自動クローズされます（gas-deploy-watchdog.yml）。',
-            ].join('\n');
+            // ---- 異常: 起票 or 更新 ----
+            const title = `🔴 GA4参照値の日付が ${r.daysBehind}日停滞しています（${r.refDate || 'なし'} → ${r.today}）`;
+            const L = [];
+            L.push(`\`data/site_metrics.json\` の \`dailyReference.date\`（GA4 数値突合に使う参照日）が、JST 基準で **${r.daysBehind} 日間** 進んでいません（JST ${r.today} 時点）。`);
+            L.push('');
+            L.push('> **なぜこれが重要か**: この参照値は `scripts/check_gas_deploy_health.js` が GAS レポートの直帰率を');
+            L.push('> GA4 実測値と突合するために使います。参照値が古いと日付一致に失敗し `numeric_reference_skipped` になり、');
+            L.push('> **数値シグナルが永久に `indeterminate` のまま** になります。');
+            L.push('> その結果「直帰率が本当に高いのか GAS のバグなのか」を誰も検算できない状態が続きます（SEO-075）。');
+            L.push('');
+            L.push('## 検出内容');
+            L.push(`- \`dailyReference.date\`: \`${r.refDate || '（なし）'}\``);
+            L.push(`- 今日 JST: \`${r.today}\``);
+            L.push(`- 停滞日数: **${r.daysBehind} 日**（閾値: 2日）`);
+            if (r.error) L.push(`- エラー: \`${r.error}\``);
+            L.push('');
+            L.push('## 考えられる原因');
+            L.push('');
+            L.push('1. **CI が `fetch_ga4_views.js` を実行できていない** — `build.yml` の実行ログを確認');
+            L.push('2. **GA4 の認証切れ** — GitHub Secrets の `GA4_CREDENTIALS` / `GA4_PROPERTY_ID` が有効か確認');
+            L.push('3. **スクリプトのバグ** — `scripts/fetch_ga4_views.js` が例外で終了している（CI ログ参照）');
+            L.push('');
+            L.push('## 確認コマンド');
+            L.push('```bash');
+            L.push('node -e "const s=require(\'./data/site_metrics.json\'); console.log(s.dailyReference);"');
+            L.push('```');
+            L.push('');
+            L.push('---');
+            L.push('この Issue は `dailyReference.date` が2日以内に回復すると自動クローズされます（gas-deploy-watchdog.yml）。');
+            const body = L.join('\n');
 
             if (existing) {
-              await github.rest.issues.update({
-                owner, repo, issue_number: existing.number, title, body,
-              });
+              await github.rest.issues.update({ owner, repo, issue_number: existing.number, title, body });
               await github.rest.issues.createComment({
                 owner, repo, issue_number: existing.number,
-                body: `再検出（JST ${todayJst}）。${reason}`,
+                body: `再検出（JST ${r.today}）。停滞 ${r.daysBehind} 日。参照値: ${r.refDate || 'なし'}`,
               });
-              core.setFailed(`GA4参照値の鮮度低下が継続: ${reason}`);
+              core.setFailed(`GA4参照値の停滞が継続しています: ${r.daysBehind}日`);
             } else {
               const { data: created } = await github.rest.issues.create({
                 owner, repo, title, body, labels: [label],
               });
-              core.setFailed(`GA4参照値が古いため Issue #${created.number} を起票: ${reason}`);
+              core.setFailed(`GA4参照値の停滞を検出し Issue #${created.number} を起票しました（${r.daysBehind}日）`);
             }

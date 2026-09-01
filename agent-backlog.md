@@ -299,6 +299,8 @@
 - **resolved**: 2026-08-27
 - **resolved_by**: acceptance 7 完了 — `data/gas_deploy_policy.json` に `max_stale_reference_days: 4` を追加し、`.github/workflows/gas-deploy-watchdog.yml` に `ga4-reference-stale` ラベルで別 Issue を起票するステップを追加。正常時は自動クローズ（CLAUDE.md 原則6・ISSUE-084 原則2）
 - **priority**: P1 → **status**: done（acceptance 1〜6 すべて完了。5は 2026-08-28 に `check_gas_deploy_health.js` + `gas_deploy_policy.json` で実装）
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-09-01
 - **detected**: 2026-08-26
 - **resolved**: 2026-09-02
 - **category**: SEO / ops / data-quality
@@ -323,6 +325,7 @@
   6. ✅ 維持。痕跡2件と `settled_date_pattern` は `data/gas_deploy_policy.json` に追加し、判定器は `scripts/lib/gas_deploy_trace.js` の1本のまま
   7. ✅ `data/gas_deploy_policy.json` の `watchdog` に `settled_lag_days: 2` / `max_stale_reference_days: 3` を追加。`scripts/check_gas_deploy_health.js` にチェック #5（`stale_numeric_reference` 問題）を追加。`.github/workflows/gas-deploy-watchdog.yml` に `stale_numeric_reference` 固有の対処ガイドを追加。日付ずれが `settled_lag_days + max_stale_reference_days = 5` 日を超えると `check_gas_deploy_health.js` が exit 1 を返し、watchdog.yml が Issue を起票する
   7. ✅ 参照値が対象日より2日以上古い状態が続いたら `.github/workflows/gas-deploy-watchdog.yml` が原因つきで Issue を起票する（上記 acceptance 5）。`data/gas_deploy_policy.json` の `max_stale_reference_days: 4` を閾値として `ga4-reference-stale` ラベルで別 Issue を起票・自動クローズ。2026-08-27 実装完了
+  7. ✅ 参照値が対象日より2日以上古い状態が続いたら `.github/workflows/gas-deploy-watchdog.yml` の `ga4_reference_staleness` ジョブが原因つきで Issue を起票する。`dailyReference.date` の JST日数差を自己申告できない事実で判定し、復旧時は自動クローズ（2026-09-01 実装）
 
 ### [SEO-074] SEO-062（直帰率の集計バグ）の修正が本番で効いていない — GA4実測 32.5% に対しレポートは 94% を出し続けている
 
