@@ -4746,6 +4746,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-22 | Marketer(routine) | SEO-068 診断 — gsc_query_intent.js でdiscovery意図シェアを計測（6.1%/382表示/18クリック/CTR 4.71%・前回2.6%から改善）。「一人飲み」が discovery の97%を占め1シーン依存と判明。journal_seo_kw.js --suggest で8月の未カバーcombo筆頭が「栄×食べ歩き」（in_season=true）と特定。--verify で39件全KW特集実在確認OK。テーマ選定・実記事執筆はEditorの次サイクルタスク | ⏸ 診断のみ・commitなし（status: in_progress） |
 | 2026-09-01 | Marketer+Builder(routine) | SEO-075 実装・デプロイ — gas-deploy-watchdog.yml に ga4_reference_staleness ジョブを追加。dailyReference.date が2日以上停滞したら Issue を起票・復旧で自動クローズ。YAML valid・2ジョブ確認済み | ✅ commit 074e5d64 |
 | 2026-09-02 | Orchestrator(EXPLICIT・ユーザー報告対応) | ISSUE-120 実装 — build.js: Google評価0を空文字化（偽の「GOOGLE評価 0」表示を防止）／話題フラグ・編集部推薦は出典URLが検証可能なURLでなければ剥がす。scripts/daily_store_discovery.js: 同じ検証を発掘パイプラインに追加し再発防止。`node -c` 構文OK・`npm test` 151件全pass・`node build.js` で対象3店（焼きそばスタンド らふ／焼肉ここから 名駅3丁目店／Wakana ～和奏～）のフラグ剥がしをログで確認。ローカルにHOTPEPPER_API_KEY無くフルビルド未完走のためCI委ね | ⏸ PR #201（マージ待ち） |
+| 2026-09-02 | Orchestrator(EXPLICIT・オーナー追加指示) | ISSUE-120 追加実装（写真の必須化） — オーナー方針確認（AskUserQuestion:「取得を強化して、それでも取得されない場合は非表示」）を受けて対応。build.yml: 未配線だった fill_missing_photos_from_hotpepper.js（写真ソース優先2）をPlaces取得の直後に追加。build.js / scripts/merge_pending_stores.js: 写真URL空 かつ 写真失敗理由（Places・HotPepper両方失敗の検証可能な記録）が立つ店を非表示化（新着未着手店は対象外）。data/photo_pipeline_health.json をCI commit対象に追加。`node build.js` で非表示29(manual)+7(pending)件をログ確認・`npm test` 151件全pass | ⏸ PR #201（マージ待ち） |
 
 ---
 
