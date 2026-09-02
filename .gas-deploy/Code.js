@@ -322,11 +322,6 @@ const BENCHMARKS = {
   ctaRate:         { good: 0.03, warn: 0.01 },  // 予約ボタンクリック率（クリック/訪問者）
 };
 
-// SEO-072: 予約行動・詳細到達のイベント名グループ（完全一致1種から漏れを防ぐ定数）
-// イベントを追加する場合はここだけ変更する（analyze()内の比較を増やさない）
-const RESERVE_EVENT_NAMES = ['cta_click', 'cta_reserve'];
-const DETAIL_EVENT_NAMES  = ['modal_open', 'feature_store_click'];
-
 // セッション数がこれ未満の日は、直帰率・平均滞在時間を「課題」として通知しない。
 // n=6〜20/日のような小サンプルでは1〜2人の挙動だけで直帰率が50pt動くため、
 // 通知のたびに「異常に高い」と出続けてしまう（ctaRate の t.users>=20 判定と同じ考え方）。
@@ -408,19 +403,20 @@ function analyze(data) {
   const nonBaseEvents = data.events.filter(e =>
     !['page_view','session_start','first_visit','user_engagement','scroll'].includes(e.dimensions[0])
   );
+  // 予約行動: index.html の cta_click + ジャーナル記事の cta_reserve（SEO-072）
+  const RESERVE_EVENTS = ['cta_click', 'cta_reserve'];
+  // 詳細到達: モーダル modal_open + 特集からの feature_store_click（SEO-072）
+  const DETAIL_EVENTS  = ['modal_open', 'feature_store_click'];
+  const sumEvt = (names) => names.reduce((s, n) => {
+    const e = data.events.find(ev => ev.dimensions[0] === n);
+    return s + (e ? parseInt(e.metrics[0]) : 0);
+  }, 0);
   const gmapEvent = data.events.find(e => e.dimensions[0] === 'cta_gmap_click');
-  const gmapCount = gmapEvent ? parseInt(gmapEvent.metrics[0]) : 0;
-  // SEO-072: 予約行動・詳細到達はグループ定数で束ねて合算（cta_reserve / feature_store_click も拾う）
-  const reserveCount = data.events
-    .filter(e => RESERVE_EVENT_NAMES.includes(e.dimensions[0]))
-    .reduce((sum, e) => sum + parseInt(e.metrics[0]), 0);
-  const detailCount = data.events
-    .filter(e => DETAIL_EVENT_NAMES.includes(e.dimensions[0]))
-    .reduce((sum, e) => sum + parseInt(e.metrics[0]), 0);
-  const ctaCount   = reserveCount;   // 後方互換エイリアス（既存の参照を壊さない）
-  const modalCount = detailCount;    // 後方互換エイリアス
+  const ctaCount   = sumEvt(RESERVE_EVENTS);
+  const gmapCount  = gmapEvent ? parseInt(gmapEvent.metrics[0]) : 0;
+  const modalCount = sumEvt(DETAIL_EVENTS);
   // 予約クリック率はイベント側と同じ日で割らないと意味が合わない（分子は data.events＝当日）
-  const ctaRate = et.users > 0 ? reserveCount / et.users : 0;
+  const ctaRate = et.users > 0 ? ctaCount / et.users : 0;
 
   // 流入元の内訳
   const srcTotal = s.sources.reduce((acc, r) => acc + parseInt(r.metrics[1] || 0), 0);
@@ -456,7 +452,6 @@ function analyze(data) {
     sessionSources: s.sources,
     pagesPerSession: pps,
     nonBaseEvents,
-    reserveCount, detailCount,
     ctaCount, gmapCount, modalCount, ctaRate,
     organicPct, socialPct, mobilePct,
     srcTotal, devTotal,
@@ -633,6 +628,7 @@ function buildAdvicePrompt(data, a, date, isWeekly) {
 '',
 '# サイトの構造（打ち手はこの実装に即して具体的に書く）',
 '- index.html 一枚に全店舗を掲載。検索／エリア・シーンのフィルタ／店舗詳細モーダル／予約ボタン(cta_click)／Googleマップ導線(cta_gmap_click)／Instagramエンベッドあり',
+'- journal/ の日次記事には予約導線(cta_reserve)あり。features/ の特集から店舗詳細への遷移は feature_store_click で計測。stores/ の静的店舗ページ（5500枚超）は cta_click(HP) / cta_gmap_click(マップ) で計測。',
 '- features/ にシーン別特集（名駅・栄・宴会・個室・接待・誕生日・デート・女子会・大人数 など20本）',
 '- journal/ に日次ジャーナル記事（毎日1本公開）',
 '- docs/daily-posts/ にSNS投稿原稿（Note／Instagram／X）が毎日用意されている',
@@ -649,8 +645,8 @@ function buildAdvicePrompt(data, a, date, isWeekly) {
 '- 1訪問あたり閲覧: ' + a.pagesPerSession.toFixed(1) + 'ページ（目安2以上が良好）',
 '- 平均滞在: ' + secToText(t.avgDuration) + '（目安60秒以上）',
 '- 直帰率: ' + Math.round(t.bounceRate * 100) + '%（目安50%未満が良好・70%超は要注意）',
-'- 予約行動（cta合算）: ' + a.reserveCount + '回 ／ マップ: ' + a.gmapCount + '回 ／ 詳細到達（modal合算）: ' + a.detailCount + '回' + (a.outboundCount ? ' ／ 外部リンク: ' + a.outboundCount + '回' : ''),
-'- 予約行動率（予約合算÷訪問者）: ' + (a.ctaRate * 100).toFixed(1) + '%（目安3%）',
+'- 予約ボタンクリック: ' + a.ctaCount + '回 ／ マップ: ' + a.gmapCount + '回 ／ 店舗詳細を開いた: ' + a.modalCount + '回' + (a.outboundCount ? ' ／ 外部リンク: ' + a.outboundCount + '回' : ''),
+'- 予約クリック率（予約÷訪問者）: ' + (a.ctaRate * 100).toFixed(1) + '%（目安3%）',
 '- 検索流入比率: ' + Math.round(a.organicPct * 100) + '%（判別できた' + a.identifiableSessions + '件中）' +
   ' ／ SNS流入比率: ' + Math.round(a.socialPct * 100) + '%' +
   (a.highThreshold ? '　※GA4のしきい値適用で' + Math.round(a.unknownPct * 100) + '%が判別不能のため比率の信頼性が低い' : ''),

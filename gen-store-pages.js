@@ -599,8 +599,8 @@ function renderStorePage(s, slug, relatedStores) {
 
   const tagPills = tags.map(t => `<span class="tag">${t}</span>`).join('');
   const linksHtml = [
-    hpUrl && `<a class="link-btn hp" href="${hpUrl}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store_name:${JSON.stringify(name)},link_url:${JSON.stringify(hpUrl)}})">ホットペッパーで予約</a>`,
-    gmUrl && `<a class="link-btn gm" href="${gmUrl}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{store_name:${JSON.stringify(name)},link_url:${JSON.stringify(gmUrl)}})">Googleマップ</a>`,
+    hpUrl && `<a class="link-btn hp" href="${hpUrl}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>`,
+    gmUrl && `<a class="link-btn gm" href="${gmUrl}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>`,
     igUrl && `<a class="link-btn ig" href="${igUrl}" target="_blank" rel="noopener noreferrer">Instagram</a>`,
     tbUrl && `<a class="link-btn tb" href="${tbUrl}" target="_blank" rel="noopener noreferrer">食べログ</a>`,
     tkUrl && tkUrl !== '#' && `<a class="link-btn tk" href="${tkUrl}" target="_blank" rel="noopener noreferrer">TikTok</a>`,
@@ -616,7 +616,7 @@ function renderStorePage(s, slug, relatedStores) {
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper\.jp/.test(h)){trackEvent('cta_click',params);}else if(/google\.com\/maps|maps\.google\.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${title}</title>
