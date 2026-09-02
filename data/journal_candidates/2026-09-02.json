@@ -1,0 +1,159 @@
+{
+  "date": "2026-09-02",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1b",
+      "title_draft": "栄のカウンター寿司で産地がバラバラな理由 — 名古屋の魚は仲卸で決まる",
+      "verdict": "PASS",
+      "total": 107,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 11件 → 15",
+          "話題の証跡URL 3件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 5件 (原価,仕入れ,業界,構造,相場) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 188字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「カウンター」+4",
+          "タイトルにジャンル語「寿司」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1b",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1b",
+      "theme": "industry_insider",
+      "column_id": "COL-SUPPLY-002",
+      "title_draft": "栄のカウンター寿司で産地がバラバラな理由 — 名古屋の魚は仲卸で決まる",
+      "lead_draft": "明石の真鯛、青森のイワシ、三重のアジ、クロムツ。栄のカウンター鮨が公開した『本日のおすすめ』は、産地がきれいに揃っていない。これは仕入れが雑なのではなく、その店が名古屋市中央卸売市場の仲卸から日々買っている証拠だ。水産のせり比率が17.1%まで下がった今、名古屋の魚料理の味は『どの仲卸と付き合っているか』でほぼ決まる。サンマ1匹1,400円の秋を前に、業界人の読み方を書く。",
+      "angle": "市場依存店とルート仕入れ店は、メニューの動き方で外から見分けられる。日替わり産地・当日予約枠が市場型のサイン、通年同一メニューと固定価格がルート型のサイン。原価と相場の変動を誰が引き受けるかという構造の違いを、卸3社・仲卸52社という名古屋固有の仕入れ地図から業界人視点で解く",
+      "main_store": {
+        "name": "寿司処 昴 栄店",
+        "id": "J004470380",
+        "area": "栄",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "読売テレビ「サンマが1匹1400円？網に入ったクロマグロは“捨てる”事態に」",
+          "url": "https://news.infoseek.co.jp/article/ytv_2026082908825389/",
+          "date": "2026-08-29"
+        },
+        {
+          "label": "FNNプライムオンライン「初物の値段は『500円超え』秋の味覚サンマが“高級魚”に?」",
+          "url": "https://news.yahoo.co.jp/articles/9608dfc96d0dead0bd2436c15604c0e7ed1f8c4e",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "TSURINEWS「2026年のサンマは『不漁』の予測 回遊は昨年度の4割程度か」",
+          "url": "https://tsurinews.jp/407971/",
+          "date": "2026-08-08"
+        },
+        {
+          "label": "名古屋市 公式「本場（名古屋市中央卸売市場）のご紹介」卸売6社・仲卸75社（水産52社）",
+          "url": "https://www.city.nagoya.jp/kurashi/shisetsu/1037173/1016131/1034832/1016278/1034833.html",
+          "date": "2024-04-01"
+        },
+        {
+          "label": "名古屋市 公式「中央卸売市場本場 大人のための市場見学 参加者募集」",
+          "url": "https://www.city.nagoya.jp/kurashi/boshu/1017843/1050354.html",
+          "date": "2026-07-27"
+        },
+        {
+          "label": "農林水産省「卸売市場流通」せり・入札は水産で17.1%まで低下",
+          "url": "https://www.maff.go.jp/j/shokusan/sijyo/info/attach/pdf/index-30.pdf",
+          "date": "2026-06-01"
+        },
+        {
+          "label": "帝国データバンク「飲食料品値上げ、9月は4千品目超え」（PR TIMES）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001397.000043465.html",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "寿司処 昴 栄店 公式Instagram「本日のおすすめ寿司」（産地の内訳を公開）",
+          "url": "https://www.instagram.com/sushidokoro__kou/reel/DX0vbdkBEjS/"
+        },
+        {
+          "label": "名古屋市中央卸売市場本場 公式X（@honjo222）",
+          "url": "https://x.com/honjo222"
+        },
+        {
+          "label": "note「【名古屋・中央市場の一軒】一力｜朝から市場の魚を肴に飲める食堂」",
+          "url": "https://note.com/neetlsnomihoudai/n/n257cc3af1b35",
+          "date": "2026-07-07"
+        },
+        {
+          "label": "飲食店ドットコム「飲食店の約7割が10%超の仕入れコスト増」",
+          "url": "https://www.inshokuten.com/foodist/article/8108/",
+          "date": "2026-05-20"
+        },
+        {
+          "label": "名古屋海産市場「名古屋中央卸売市場について」（せり・相対の定義）",
+          "url": "https://www.nagoyamarukai.co.jp/market/",
+          "date": "2026-04-01"
+        }
+      ]
+    }
+  ]
+}
