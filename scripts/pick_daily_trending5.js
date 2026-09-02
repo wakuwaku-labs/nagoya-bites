@@ -30,6 +30,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { hasVerifiableSource } = require('./lib/trending_source_gate');
 
 const ROOT = path.join(__dirname, '..');
 const TRENDING_PATH = path.join(ROOT, 'data', 'trending_stores.json');
@@ -251,6 +252,8 @@ function buildCandidatesFromSynced(trending, manual, today) {
   const candidates = [];
   for (const s of (trending.stores || [])) {
     if (s['話題フラグ'] !== true) continue;
+    // 出典URLが検証可能なURLでなければ選ばない（ISSUE-120・build.jsと同じ判定器を共有）
+    if (!hasVerifiableSource(s['出典URL'])) continue;
     if (s['有効期限'] && s['有効期限'] < today) continue;
     candidates.push({
       店名: s['店名'],
@@ -269,6 +272,8 @@ function buildCandidatesFromSynced(trending, manual, today) {
   for (const s of (manual.stores || [])) {
     const hasBuzz = s['話題フラグ'] === true || s['編集部推薦'] === true;
     if (!hasBuzz) continue;
+    // 出典URLが検証可能なURLでなければ選ばない（ISSUE-120・build.jsと同じ判定器を共有）
+    if (!hasVerifiableSource(s['出典URL'])) continue;
     if (s['有効期限'] && s['有効期限'] < today) continue;
     candidates.push({
       店名: s['店名'],
