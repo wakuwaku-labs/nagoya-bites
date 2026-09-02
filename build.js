@@ -677,7 +677,10 @@ function manualStoreToRecord(m) {
     '公開フラグ': 'TRUE',
     '備考': m['備考'] || '',
     'タグ': m['タグ'] || '',
-    'Google評価': m['Google評価'] != null ? String(m['Google評価']) : '',
+    // 0（未取得/未検証の意味で入っていることが多い）は「評価なし」として空文字にする。
+    // != null ガードだけだと 0 が String("0") になり、JS的に truthy な文字列として
+    // カード/モーダルに偽の「Google評価 0」表示が出る（2026-09-02・実店舗カードで発覚）。
+    'Google評価': (m['Google評価'] && parseFloat(m['Google評価']) > 0) ? String(m['Google評価']) : '',
     'Instagram投稿URL': '',
     'おすすめポイント': m['おすすめポイント'] || '',
     '内観写真URL': '',
@@ -734,6 +737,20 @@ function loadManualStores() {
       console.warn(`[manual] 有効期限切れ: ${m['店名']} (${m['有効期限']}) — フラグ類を落として投入`);
       m = { ...m, '話題フラグ': false, '編集部推薦': false };
       result.warnings++;
+    }
+    // 話題フラグ/編集部推薦は「後から第三者が検算できる出典URL」が無ければ剥がす。
+    // 出典URL に非URLのテキストラベル（番組名等）しか無い状態は、話題度80/100等の
+    // 自己申告スコアを検算不能なまま表示する ISSUE-077 と同じ失敗パターンのため
+    // （2026-09-02・実店舗カードで発覚）。出典URLが未記載（空配列）の店は、
+    // 人手キュレーションの既存店として従来通り許容する（ここで新たに縛らない）。
+    if (m['話題フラグ'] === true || m['編集部推薦'] === true) {
+      const sourceUrls = Array.isArray(m['出典URL']) ? m['出典URL'] : (m['出典URL'] ? [m['出典URL']] : []);
+      const hasVerifiableUrl = sourceUrls.some(u => typeof u === 'string' && /^https?:\/\//.test(u));
+      if (sourceUrls.length > 0 && !hasVerifiableUrl) {
+        console.warn(`[manual] 話題フラグ/編集部推薦だが出典URLが検証可能なURLでない: ${m['店名']} (出典URL: ${JSON.stringify(sourceUrls)}) — フラグを落として投入`);
+        m = { ...m, '話題フラグ': false, '編集部推薦': false };
+        result.warnings++;
+      }
     }
     // 日付形式チェック（警告のみ）
     if (m['追加日'] && !/^\d{4}-\d{2}-\d{2}$/.test(m['追加日'])) {

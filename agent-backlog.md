@@ -6,6 +6,38 @@
 
 ---
 
+### [ISSUE-120] 手動キュレーション店で「出典URLが実URLでない自己申告の話題スコア」と「Google評価0の偽表示」が本番カードに出ていた ✅
+
+- **priority**: P0 → **status**: ready（実装・ローカル検証済み。[PR #201](https://github.com/wakuwaku-labs/nagoya-bites/pull/201) マージ待ち）
+- **detected**: 2026-09-02
+- **category**: data-quality / trust
+- **owner**: Builder（実装）/ DataKeeper（対象3店の出典URL補完）
+- **source**: オーナー報告（本番 nagoya-bites.com のスクリーンショット。「焼きそばスタンド らふ」のカードが写真準備中・HOURS空欄のまま「GOOGLE評価 0」「話題度 話題沸騰 80/100」を表示しており、情報が薄いのに話題性だけ強調されて見える指摘）
+- **brand-filter**: ✅ 適合 — CLAUDE.md「品質ゲートを設計するときの原則（ISSUE-077 の教訓）」が既に禁じている「出典もなく誰も検算できない自己申告値（話題度90 等）」と全く同じ失敗パターンが、日次ジャーナルの採点とは別系統（手動キュレーション店の話題フラグ）で再発していた。制約7（ユーザーの信頼を毀損する施策は実装しない）・制約10（検証できる事実だけで判定）に直結
+- **検証できる事実（誰でも同じファイルを開いて再現できる。制約10）**:
+
+  | 事実 | 出典 |
+  |---|---|
+  | `焼きそばスタンド らふ` は `写真URL:""` / `Google評価:0` / `話題フラグ:true` / `編集部推薦:true` / `話題スコア:80` / `出典URL:["東海テレビ yum-yumグルメ"]`（URLでなくテキストラベル） | `data/manual_stores.json`（追加日2026-09-01・キュレーター編集部） |
+  | 同じ穴を通った他2件: `焼肉ここから 名駅3丁目店`（出典URL:["名古屋情報通"]・話題スコア85）/ `Wakana ～和奏～`（出典URL:["一休.comレストラン (情報源として)"]・話題スコア75） | 同上 |
+  | `build.js manualStoreToRecord()` は `Google評価` を `!= null` だけで文字列化しており、`0` が `String("0")` として通過する | `build.js`（修正前696行付近） |
+  | `index.html` のカード/モーダルは `r['Google評価'] ? … : ''` で判定しており、文字列 `"0"` は JS的に truthy なため「GOOGLE評価 0」が実表示される | `index.html:9521`, `:9727` |
+  | `build.js loadManualStores()` は必須8項目のみ検証し、`話題フラグ`/`編集部推薦` を立てる際に `出典URL` が実URLかどうかを一切検証していなかった | `build.js loadManualStores()`（修正前） |
+  | `calcTrendScore()` は `話題フラグ`/`編集部推薦` が true の店で `話題スコア`（自己申告値）を上限として直接採用し、`getTrendLabel(80)` が `話題沸騰` を返してカードのバッジ文言になる | `build.js:820-839` |
+  | `scripts/daily_store_discovery.js validateStore()`（`manual_stores.json` に直接書き込む日次自動発掘パイプライン。`.github/workflows/daily-store-add.yml` が毎日9:00 JSTに無人実行）は `出典URL` の**配列長のみ**を検証し、URL形式は検証していなかった。上記3店は全て `追加日` が近接しており、この経路からの混入と推定される | `scripts/daily_store_discovery.js`（修正前115行付近）, `.github/workflows/daily-store-add.yml` |
+
+- **resolution**:
+  1. `build.js manualStoreToRecord()`: `Google評価` が0以下のときは空文字にする（`(m['Google評価'] && parseFloat(m['Google評価']) > 0) ? String(...) : ''`）。既存の `mergeManualStores()`（上書き拡充パス）は元々 `if (m['Google評価'])` で0を弾いていたため、新規レコード生成パスだけがこのガードを欠いていた（実装の非対称が原因）
+  2. `build.js loadManualStores()`: `話題フラグ`/`編集部推薦` が true で `出典URL` が非空なのに実URL（`/^https?:\/\//`）を1件も含まない場合、既存の「有効期限切れ」ブロックと同じパターンでフラグを落として投入する（`data/manual_stores.json` 自体は書き換えない＝出典URLが後日補完されれば次回ビルドで自動的にバッジが復活する）
+  3. `scripts/daily_store_discovery.js validateStore()`: `出典URL` からURL形式でない項目を除去し、残り0件なら候補そのものを却下する（今後の自動発掘での再発防止。ローカルで実行確認済み — この変更が無ければ今後も同じ穴を通り続ける）
+  - **ローカル検証**: `node build.js` 実行時に3店それぞれで期待通りの警告が出力され、フラグが落ちることを確認（`[manual] 話題フラグ/編集部推薦だが出典URLが検証可能なURLでない: 焼きそばスタンド らふ …` 等）。本番相当のフルビルド（857→4974件相当の突合）はローカルに `HOTPEPPER_API_KEY` が無いため未実施 — CI（build.yml）が同じ変更で完走することの確認はPRマージ後に委ねる
+- **意図的にやらなかったこと**: 「写真 or Google評価が無い店は話題フラグを一律で外す」というより広いゲートも検討したが、対象168店中18店（矢場とん本店・コメダ珈琲本店・あつた蓬莱軒等、明らかに実在する著名店を含む）が該当し、既存の妥当な表示まで壊す blast radius だったため見送った。今回の実際の欠陥は「出典が非URLの自己申告」であり、そこだけを狙い撃ちする方が CLAUDE.md「ゲートは、正直な最良の成果物が余裕を持って通る位置に置く」原則に合う
+- **残作業（Editor/DataKeeper）**: 対象3店は正式な出典URL（東海テレビ yum-yumグルメの放送/配信ページ等）が見つかれば `data/manual_stores.json` の `出典URL` に追記するだけで話題フラグ表示が復活する。見つからなければ通常の掲載店として残る（掲載自体は取り消していない）
+- **files**: `build.js`, `scripts/daily_store_discovery.js`, `agent-backlog.md`
+- **関連**: [[ISSUE-097]]（同じ手動キュレーション店群の写真ゼロ問題・別原因）/ [[ISSUE-104]]（手動キュレーション店が信頼度判定から除外されていた別件）
+
+---
+
 ### [SEO-080] 週次レポートの5本に1〜2本が Gmail の「ゴミ箱」に入っており、週次triageの取得クエリは構造的にそれを 0件 として見逃す（見逃しても誰にも届かない）
 
 - **priority**: P2 → **status**: ready
@@ -4701,6 +4733,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-22 | DataKeeper(routine) | ISSUE-103 実装・デプロイ — places_resolved.json のrejected分析で判明した71件の他都道府県チェーン店（北海道・沖縄・熊本・三重等）をbuild.jsのEXCLUDED_HP_IDSに追加し、data/stores.json（5023→4952件）・data/crosscheck.json（5023→4952件）から除外。根本原因はfetch_places.jsが「栄」を名古屋・栄と誤解し他都市の栄町所在IDを取り込んでいたこと。再発防止のためscripts/audit_other_prefecture_stores.js（新設・--check で exit1・PASS確認済み）と.github/workflows/build.yml（非ブロッキング監査ステップ追加）を整備。QA-2: 71/5023=1.41%削減（閾値5%以内）・index.html TOP50は0店変化なし | ✅ commit bd00d50f |
 | 2026-08-22 | Marketer(routine) | SEO-068 診断 — gsc_query_intent.js でdiscovery意図シェアを計測（6.1%/382表示/18クリック/CTR 4.71%・前回2.6%から改善）。「一人飲み」が discovery の97%を占め1シーン依存と判明。journal_seo_kw.js --suggest で8月の未カバーcombo筆頭が「栄×食べ歩き」（in_season=true）と特定。--verify で39件全KW特集実在確認OK。テーマ選定・実記事執筆はEditorの次サイクルタスク | ⏸ 診断のみ・commitなし（status: in_progress） |
 | 2026-09-01 | Marketer+Builder(routine) | SEO-075 実装・デプロイ — gas-deploy-watchdog.yml に ga4_reference_staleness ジョブを追加。dailyReference.date が2日以上停滞したら Issue を起票・復旧で自動クローズ。YAML valid・2ジョブ確認済み | ✅ commit 074e5d64 |
+| 2026-09-02 | Orchestrator(EXPLICIT・ユーザー報告対応) | ISSUE-120 実装 — build.js: Google評価0を空文字化（偽の「GOOGLE評価 0」表示を防止）／話題フラグ・編集部推薦は出典URLが検証可能なURLでなければ剥がす。scripts/daily_store_discovery.js: 同じ検証を発掘パイプラインに追加し再発防止。`node -c` 構文OK・`npm test` 151件全pass・`node build.js` で対象3店（焼きそばスタンド らふ／焼肉ここから 名駅3丁目店／Wakana ～和奏～）のフラグ剥がしをログで確認。ローカルにHOTPEPPER_API_KEY無くフルビルド未完走のためCI委ね | ⏸ PR #201（マージ待ち） |
 
 ---
 
