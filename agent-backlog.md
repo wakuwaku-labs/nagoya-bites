@@ -575,8 +575,12 @@
 
 - **priority**: P1（当初P2・2回目発生の実害確認により引き上げ） → **status**: done
 - **resolved**: 2026-08-23
+- **priority**: P1（当初P2・2回目発生の実害確認により引き上げ） → **status**: in_progress
 - **detected**: 2026-08-23（オーナー就寝中の自律処理。本セッション自身が短時間に連続push→CI連続起動を招き実際に発生させて発覚）
 - **resolved**: 2026-08-26
+- **detected**: 2026-08-23（オーナー就寝中の自律処理。本セッション自身が短時間に連続push→CI連続起動を招き実際に発生させて発覚）
+- **resolved**: 2026-08-25
+- **resolved_by**: 252bc860
 - **category**: CI / インフラ
 - **owner**: Builder
 - **source**: `gh run view 32594601324` — "chore(notion): 同期ハッシュ更新（ISSUE-111追記分）" コミットの Build & Deploy が `Commit & push if changed` ステップで失敗（14分53秒）
@@ -4655,6 +4659,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-24 | Orchestrator(夜間自律処理) | ISSUE-112 実装 — concurrency直列化＋rebaseコンテンツ競合解消を両ワークフローへ実装。(1) `daily-trending5.yml` に `concurrency: group: build-deploy, cancel-in-progress: false` を追加（build.yml と同グループに入れて直列化）。(2) `build.yml` リトライ5回・sleep 5刻みに増強。(3) 両ワークフローとも `git pull --rebase` 失敗時に競合ファイルを `--theirs` で解消→`rebase --continue`→push の正しい競合解消フロー実装。ISSUE-108 はGOOGLE_MAPS_API_KEY必須のためオーナー片桐へエスカレーション（オーナーのローカルMac環境での実行が必要） | ✅ 本コミット |
 | 2026-08-24 | Orchestrator(夜間自律処理) | SEO-069 実装 — GAS未デプロイ検知システムを新設。`scripts/record_gas_deploy_status.js`（レポート本文から旧コードシグナル検出・data/gas_deploy_status.jsonへ記録）・`scripts/check_gas_deploy_status.js`（鮮度・状態判定・CI向け exit 1）・`.github/workflows/gas-deploy-watchdog.yml`（3日以上旧コード継続でIssue起票→デプロイ確認で自動クローズ）を実装。`agents/marketer.md` に `/seo-triage` 後の記録ルールを追記（コマンドファイルは自己改変ブロック対象）。SEO-057/062/063 のステータスを done→blocked（デプロイ待ち・追跡対象に復帰）に変更 | ✅ 本コミット |
 | 2026-08-24 | Orchestrator(夜間自律処理) | SEO-071 実装 — IndexNow を build.yml に配線。`scripts/indexnow_ping.js` に `--log-file <path>` オプションを追加（submit結果をJSONで保存・logged_atタイムスタンプ付き）。`.github/workflows/build.yml` 末尾に2ステップ追加: (1) `IndexNow 送信` — `INDEXNOW_ENABLED=true` 秘密変数が設定されている場合のみ `--yes` で実送信、既定はdry-run（外部通信なし）、`--recent 2`＋`--log-file data/indexnow_send_log.json`。(2) `IndexNow 送信ログをコミット` — `[skip actions]` でlog更新をpush。オーナーが `INDEXNOW_ENABLED` リポジトリ秘密変数を `true` に設定した時点から毎日自動送信が有効化される | ✅ 本コミット |
+| 2026-08-25 | Orchestrator(routine) | ISSUE-112 実装・デプロイ — build.yml/daily-trending5.yml の並走コンテンツ競合を修正。① daily-trending5.yml に concurrency group(build-deploy)を追加し build.yml と直列化（根本対策）② build.yml の `git pull --rebase \|\| true` バグ修正（競合を握りつぶし 5 回リトライが全て失敗する問題）③ data/ スナップショット競合を theirs（自分の生成版）で自動解消するロジックを build.yml / daily-trending5.yml に追加 ④ daily-store-add.yml も同型バグを修正・5 回リトライに統一。YAML 構文 3 ファイル検証済み | ✅ commit 252bc860 |
 | 2026-08-22 | Marketer(SEO分析セッション) | SEO-066 partial実装 — GSCの`gsc_opportunities.json`が挙げるctrFix対象5ページを個別診断。3店舗ページ（J004025075/J004559348/J004661023）はtitleに既に店名完全一致が入っており（SEO-050で一度最適化済み）、上位表示クエリが全て指名検索＝Google Maps/公式Instagram/食べログという「一次情報源」に順位で勝てない構造的なCTR上限（Strategic Skip該当）と判断、対症的なtitle/meta変更は見送り。一方、ジャーナル記事2本は実際のバグを検出: `journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html`は最多流入クエリ「煮干しラーメン 凛」(223 impression/28日)の店名「凛」がtitle/meta/OGP/JSON-LDのどこにも一度も出現していなかった（本文には9回登場）。`journal/2026-07-27-owarisanso-kurogi.html`は最多流入クエリ「尾張山荘くろぎ」(493 impression)のうちmeta descriptionには「尾張山荘」があったがtitleには無かった。両記事のtitle/og:title/JSON-LD headlineに店舗正式名を追加（niboshi-ramen-rinはmeta descriptionにも追加、owarisanso-kurogiは既にmeta記載済みのため据え置き）・dateModified更新・JSON-LD構文検証OK・npm test 125/125 pass。効果は次回GSC更新（該当2クエリのCTR/掲載順位）で再評価 | ✅ 本コミット・3店舗ページ分は意図的見送り |
 | 2026-08-31 | Marketer(routine) | SEO-068 実装・デプロイ — AREA_VOCAB の alias を match に実在する表記のみで拡張（栄←丸の内・新栄／覚王山←藤が丘）。before: 117本中66本がエリアKWなし → after: 61本（alias一致5本のみ改善・全記事底上げなし）。--verify problems:[] 通過 | ✅ commit 74ed54c |
 | 2026-09-02 | Orchestrator(自律バッチ) | ISSUE-119 エスカレーション — owner を「片桐 ← Builder」に変更（サイト全体の検索結果が変わるため自動実装不可・オーナー承認待ち） | ✅ バックログ更新 |

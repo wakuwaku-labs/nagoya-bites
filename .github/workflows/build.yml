@@ -308,28 +308,32 @@ jobs:
           # unstaged changes" で毎回失敗し、直前の commit ごと失われていた（実測: 2026-08-19、
           # 597ファイル分の更新が2回連続で消失）。scripts/run_journal_local.sh と同じ
           # `--autostash` を使い、最大5回まで指数バックオフで再試行する
-          # ISSUE-112: 単純リトライでは解消しない「本物のコンテンツ競合」への対処を追加。
-          # 近接した2実行が data/gsc_metrics.json 等の時系列スナップショット（毎回再生成）に
-          # 別々の新値を書き込んでから同時に push しようとすると、git rebase がコンテンツ競合
-          # を起こし `|| true` を付けても rebase 状態が残ったまま git push も失敗し続ける。
-          # 競合ファイルが「自分のコミット側（--theirs）」を正として解消してから続行する。
+          # ISSUE-112: 旧コードの `|| true` は rebase 競合を握りつぶして次の push 試行も
+          # 失敗させ続けるバグがあった。修正: rebase 失敗時に data/ スナップショット競合
+          # （gsc_metrics.json 等・毎回再生成される時系列データ）なら theirs（今回生成分）で
+          # 自動解消し、data/ 以外の競合や解消不能な場合は rebase を abort してから再試行する。
           PUSHED=0
           for i in 1 2 3 4 5; do
-            if ! git pull --rebase --autostash origin main 2>/dev/null; then
-              # リベース競合を検出（U=unmerged）して自分の生成結果を優先解消（ISSUE-112）
-              CONFLICTED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
-              if [ -n "$CONFLICTED" ]; then
-                echo "リベース競合を検出。自側（theirs）で解消します: $CONFLICTED"
-                echo "$CONFLICTED" | tr '\n' '\0' | xargs -0 git checkout --theirs -- 2>/dev/null || true
-                echo "$CONFLICTED" | tr '\n' '\0' | xargs -0 git add -- 2>/dev/null || true
-                GIT_EDITOR=true git rebase --continue 2>/dev/null \
-                  || git rebase --abort 2>/dev/null \
-                  || true
+            if git pull --rebase --autostash origin main; then
+              if git push; then PUSHED=1; break; fi
+            else
+              # rebase 失敗 — data/ 配下スナップショット競合のみ theirs（今回生成分）で解消
+              UNMERGED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
+              DATA_CONFLICTS=$(printf '%s' "$UNMERGED" | grep "^data/" || true)
+              OTHER_CONFLICTS=$(printf '%s' "$UNMERGED" | grep -v "^data/" || true)
+              if [ -z "$OTHER_CONFLICTS" ] && [ -n "$DATA_CONFLICTS" ]; then
+                echo "data/ スナップショット競合を自動解消: $(printf '%s' "$DATA_CONFLICTS" | tr '\n' ' ')"
+                printf '%s\n' "$DATA_CONFLICTS" | xargs git checkout --theirs --
+                printf '%s\n' "$DATA_CONFLICTS" | xargs git add
+                if GIT_EDITOR=true git rebase --continue; then
+                  if git push; then PUSHED=1; break; fi
+                else
+                  git rebase --abort 2>/dev/null || true
+                fi
               else
                 git rebase --abort 2>/dev/null || true
               fi
             fi
-            if git push; then PUSHED=1; break; fi
             echo "push 失敗（試行 ${i}/5）。$((i * 5))秒待って再試行します"
             sleep $((i * 5))
           done
@@ -386,39 +390,4 @@ jobs:
         # 同時には直しきれなかった（ISSUE-116）。既知の未解消分があるため一旦非ブロッキングとし、
         # ISSUE-116の解消後にブロッキングへ切り替える。
         run: node scripts/audit_ogp_image_liveness.js --check
-        continue-on-error: true
-
-      - name: IndexNow 送信（Bing への更新通知・SEO-071）
-        # なぜここに置くか: push & deploy「後」に置くこと。push 前に送信すると
-        # Bing クローラが来た時点でページが存在しない可能性がある。
-        #
-        # 安全設計（CLAUDE.md 制約 / ISSUE-084 / SEO-071 注記）:
-        #   - 既定は dry-run（外部通信なし）。実送信は INDEXNOW_ENABLED が設定されている時のみ。
-        #   - 送信対象は「直近2日に公開されたジャーナル + トップ/索引」に限定（一括再送信しない）。
-        #   - 結果は data/indexnow_send_log.json に記録し次のステップで commit する（gitignore 外）。
-        #
-        # 実送信を有効化するには:
-        #   GitHub リポジトリの Settings → Secrets → Actions で
-        #   INDEXNOW_ENABLED=true を追加する。これがオーナーの承認操作になる（SEO-071 注記）。
-        env:
-          INDEXNOW_ENABLED: ${{ secrets.INDEXNOW_ENABLED }}
-        run: |
-          if [ "$INDEXNOW_ENABLED" = "true" ]; then
-            echo "IndexNow: 実送信モード（INDEXNOW_ENABLED=true）"
-            node scripts/indexnow_ping.js --recent 2 --yes --log-file data/indexnow_send_log.json || true
-          else
-            echo "IndexNow: dry-run モード（実送信は INDEXNOW_ENABLED=true に設定すると有効になります）"
-            node scripts/indexnow_ping.js --recent 2 --log-file data/indexnow_send_log.json || true
-          fi
-        continue-on-error: true
-
-      - name: IndexNow 送信ログをコミット（data/indexnow_send_log.json）
-        # 送信結果を gitignore 外の data/ に残す。失敗が「防音室で鳴る」状態を防ぐ（ISSUE-084 原則2）。
-        # commit には [skip actions] を付けて自分自身の再起動を防ぐ。
-        run: |
-          git config user.name  "github-actions[bot]" 2>/dev/null || true
-          git config user.email "github-actions[bot]@users.noreply.github.com" 2>/dev/null || true
-          git add data/indexnow_send_log.json 2>/dev/null || true
-          git diff --staged --quiet || git commit -m "chore: IndexNow 送信ログ更新 [skip actions]" || true
-          git push || true
         continue-on-error: true

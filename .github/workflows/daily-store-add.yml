@@ -8,12 +8,6 @@ on:
 permissions:
   contents: write
 
-# ISSUE-112: build.yml と同時実行すると data/ ファイルでコンテンツ競合が起きる。
-# build-deploy グループを共有し、build.yml 実行中は本ワークフローがキューで待機する。
-concurrency:
-  group: build-deploy
-  cancel-in-progress: false
-
 jobs:
   discover-and-add:
     runs-on: ubuntu-latest
@@ -60,16 +54,20 @@ jobs:
           git add data/manual_stores.json
           git diff --staged --quiet && exit 0
           git commit -m "[agent] 話題店 +${{ steps.after.outputs.added }}件 自動追加: ${TODAY}"
-          # ISSUE-112: 競合が起きた場合は --ours（今回の生成結果）で解消してから再試行
-          git rebase --abort 2>/dev/null || true
-          if git pull --rebase origin main; then
-            git push || (sleep 10 && git pull --rebase origin main && git push)
-          else
-            CONFLICTED=$(git diff --name-only --diff-filter=U 2>/dev/null)
-            if [ -n "$CONFLICTED" ]; then
-              echo "$CONFLICTED" | xargs git checkout --ours -- 2>/dev/null || true
-              echo "$CONFLICTED" | xargs git add -- 2>/dev/null || true
-              GIT_EDITOR=true git rebase --continue 2>/dev/null || git rebase --abort 2>/dev/null || true
+          # ISSUE-112: 旧コードの `|| true` はリベース失敗を握りつぶすバグがあった。
+          # manual_stores.json は手動キュレーションデータなので競合は自動解消せず、
+          # abort して再試行することで次の clean pull から再開する（5回リトライ）。
+          PUSHED=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main; then
+              if git push; then PUSHED=1; break; fi
+            else
+              git rebase --abort 2>/dev/null || true
             fi
-            git push || (sleep 10 && git pull --rebase origin main && git push) || true
+            echo "push 失敗（試行 ${i}/5）。$((i * 5))秒待って再試行します"
+            sleep $((i * 5))
+          done
+          if [ "$PUSHED" != "1" ]; then
+            echo "::error::5回リトライしてもpushできませんでした"
+            exit 1
           fi
