@@ -6,6 +6,37 @@
 
 ---
 
+### [ISSUE-122] 「焼きそばスタンド らふ」が同一GooglePlaceIDで2重掲載されていた（カタログ全体で計21店名が2重掲載・後者は本セッションで解消、20店名は未調査） ✅
+
+- **priority**: P0 → **status**: done（対象1件は解消。カタログ全体の残20件は別課題として起票のみ）
+- **detected**: 2026-09-02
+- **category**: data-quality
+- **owner**: Builder（今回分の実装）/ DataKeeper（残20件の調査要）
+- **source**: [[ISSUE-120]] の本番反映確認中、本番 `data/stores.json` を直接フェッチして「焼きそばスタンド らふ」を検索したところ2件ヒットして発覚
+- **brand-filter**: ✅ 適合 — 同一店が2枚のカードとして重複掲載されると、閲覧数・トレンドスコア・「〇媒体掲載」表記が実態より水増しされて見える。制約10（検証できる事実だけで判定）に沿い、GooglePlaceID一致という機械的に検算可能な事実だけで同一店と断定した
+- **検証できる事実（制約10）**:
+
+  | 事実 | 出典 |
+  |---|---|
+  | `data/pending_stores.json` の「焼きそばスタンド らふ」（追加日2026-05-23・エリア「南区 鶴里」）と `data/manual_stores.json` の同名店（追加日2026-09-01・エリア「名古屋市南区」）が**完全一致するGooglePlaceID** `ChIJJyPnRpV7A2ARG4yL8wqVmNA` を持つ | 両ファイルの該当エントリ |
+  | pending側は 情報源URL（https://jouhou.nagoya/yakisoba-rafu/）・journal_url（journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html）・Instagramハンドルを持つ、4ヶ月前からの正規エントリ | 同上 |
+  | manual側は [[ISSUE-120]] で問題になった「出典URLが非URLテキストラベル」の当該エントリそのもの（追加日2026-09-01・編集部・自動発掘パイプライン由来と推定） | 同上 |
+  | `build.js mergeManualStores()` の重複判定は「ホットペッパーID一致」または「店名＋エリア完全一致」の2キーのみで、**GooglePlaceIDやエリア表記ゆれを見ない**ため、この組み合わせは重複として検出されずどちらも別レコードとしてカタログに投入されていた | `build.js` 792-800行付近 |
+  | カタログ全体（本番 `data/stores.json`・4,933件）で店名の完全一致による重複が**21店名**存在する（本件含む）。うち複数はエリア文字列まで完全一致しており、エリア表記ゆれでは説明できない別原因の重複も混在する | 本番 `/data/stores.json` を店名でグルーピングして実測（下記リスト） |
+
+- **resolution（本件のみ）**: `data/manual_stores.json` から重複エントリ（自動発掘パイプライン由来・追加日2026-09-01・話題スコア自己申告・出典URL非URL）を削除。pending側の正規エントリ（実写・実評価・実出典あり）のみ残す。`node -c` 構文OK・JSON構文OK（167件に減少・重複ゼロ確認済み）・`npm test` 151件全pass
+- **意図的にやらなかったこと**: 残り20店名の重複は今回調査していない。原因がエリア表記ゆれとは限らず（「肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店」等はエリア文字列まで完全一致しており全く別の混入経路の可能性がある）、`build.js` の重複判定キーを安易に緩める（例: 店名のみ一致で強制マージ）と、別々の実店舗が偶然同じ店名を持つケースを誤統合しかねない。**個別にGooglePlaceIDや住所で実在確認してから対処すべき**（[[ISSUE-103]]の架空店混入と対称的なリスク＝今度は実在2店を誤って1店に統合する事故）
+- **残20店名リスト（本番data/stores.json実測・2026-09-02）**: 裏の山の木の子 名古屋 / とんかつ朱寿 / 松軒亭 / しら河 浄心本店 / PASTA MANIA 鶴舞店 / 尾張山荘 くろぎ / コンパル 大須本店 / 肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店 / BeTogetherBeTogether 今夜Bar / 肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店 / ニューアラタマ 新瑞橋店 / ジガー バー シルクロード / てり串 金山店 / 居酒屋 旬囲い 名駅駅前店 / 豆家のりのり 和食 栄 / ばさら亭 名古屋栄店 / 串たつ 名古屋駅本店 / 串たつ 金山駅店 / 串たつ 名古屋駅西口店 / クワン 栄
+- **acceptance（次に着手する担当者向け）**:
+  1. 上記20店名それぞれについて、GooglePlaceID・住所・電話番号のいずれかで実在確認し「同一店か別店か」を機械的に判定する（自己申告に頼らない）
+  2. 同一店と確認できたものは、より情報の充実した側（実写・実出典・journal記事等がある方）を残し、もう一方を除去する
+  3. 別店（同名の別チェーン店等）と確認できたものは重複ではないため何もしない
+  4. 再発防止として、`build.js` の重複判定にGooglePlaceID/HotPepperURLベースの追加照合を検討する（ただし店名一致だけでの強制マージは誤統合リスクがあるため慎重に設計する）
+- **files**: `data/manual_stores.json`
+- **関連**: [[ISSUE-120]]（この重複の片割れが元々の不正確表示バグの発生源だった）/ [[ISSUE-103]]（実在検証の重要性という逆方向の教訓）
+
+---
+
 ### [ISSUE-121] Build & Deployが「他都道府県マッチ監査」で3回連続失敗し、ISSUE-120含む複数のmainマージが数時間ぶん本番未反映のまま放置されていた
 
 - **priority**: P0 → **status**: ready（実装・ローカル検証済み。[PR #205](https://github.com/wakuwaku-labs/nagoya-bites/pull/205) マージ待ち）
@@ -4786,7 +4817,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-09-02 | Orchestrator(EXPLICIT・ユーザー報告対応) | ISSUE-120 実装 — build.js: Google評価0を空文字化（偽の「GOOGLE評価 0」表示を防止）／話題フラグ・編集部推薦は出典URLが検証可能なURLでなければ剥がす。scripts/daily_store_discovery.js: 同じ検証を発掘パイプラインに追加し再発防止。`node -c` 構文OK・`npm test` 151件全pass・`node build.js` で対象3店（焼きそばスタンド らふ／焼肉ここから 名駅3丁目店／Wakana ～和奏～）のフラグ剥がしをログで確認。ローカルにHOTPEPPER_API_KEY無くフルビルド未完走のためCI委ね | ⏸ PR #201（マージ待ち） |
 | 2026-09-02 | Orchestrator(EXPLICIT・オーナー追加指示) | ISSUE-120 追加実装（写真の必須化） — オーナー方針確認（AskUserQuestion:「取得を強化して、それでも取得されない場合は非表示」）を受けて対応。build.yml: 未配線だった fill_missing_photos_from_hotpepper.js（写真ソース優先2）をPlaces取得の直後に追加。build.js / scripts/merge_pending_stores.js: 写真URL空 かつ 写真失敗理由（Places・HotPepper両方失敗の検証可能な記録）が立つ店を非表示化（新着未着手店は対象外）。data/photo_pipeline_health.json をCI commit対象に追加。`node build.js` で非表示29(manual)+7(pending)件をログ確認・`npm test` 151件全pass | ⏸ PR #201（マージ待ち） |
 | 2026-09-02 | Orchestrator(EMERGENCY) | ISSUE-121 発見・実装 — ユーザーが ISSUE-120 の反映を確認しようとして「まだ反映されてない」と報告 → CI実行履歴を調査し、07:01以降 `main` への push が3回連続で Build & Deploy 失敗（他都道府県マッチ監査でブロック・PR #201含む複数マージが本番未反映のまま放置）と判明。HotPepper公式ページを実フェッチして「焼肉酒房天禄 池下店」(J004678480)が実在の名古屋店（岐阜支店への誤マッチが原因）と検証し、data/other_prefecture_match_exceptions.json に登録。ローカルで audit_other_prefecture_matches.js --check が[OK]になることを確認。ISSUE-120後半（写真の必須化・PR#201マージ後に積んだため未取込だった分）を本ブロッカー修正の上にcherry-pickし直しPR #206として再提出 | ⏸ PR #205・PR #206（いずれもマージ待ち。gh pr mergeはauto-modeクラシファイアが拒否のためオーナー操作が必要） |
-| 2026-09-02 | Orchestrator(EMERGENCY) | PR #205・#206 マージ後、CI（Build & Deploy）が正常完走・本番反映を確認。しかしユーザー報告で「今日の話題店」TOP5だけ焼きそばスタンド らふが編集部推薦タグ付きで残存と発覚 → scripts/pick_daily_trending5.js が manual_stores.json を直読みし、build.js の出典URLゲートを経由していなかったことが根本原因と特定。scripts/lib/trending_source_gate.js（新設・hasVerifiableSource()）に判定を1本化し、build.js と pick_daily_trending5.js の両方が共有するよう修正。node scripts/pick_daily_trending5.js のローカル実行で対象3店がTOP5候補から正しく除外されることを確認・npm test 151件全pass | ⏸ PR作成準備中 |
+| 2026-09-02 | Orchestrator(EMERGENCY) | PR #205・#206 マージ後、CI（Build & Deploy）が正常完走・本番反映を確認。しかしユーザー報告で「今日の話題店」TOP5だけ焼きそばスタンド らふが編集部推薦タグ付きで残存と発覚 → scripts/pick_daily_trending5.js が manual_stores.json を直読みし、build.js の出典URLゲートを経由していなかったことが根本原因と特定。scripts/lib/trending_source_gate.js（新設・hasVerifiableSource()）に判定を1本化し、build.js と pick_daily_trending5.js の両方が共有するよう修正。node scripts/pick_daily_trending5.js のローカル実行で対象3店がTOP5候補から正しく除外されることを確認・npm test 151件全pass | ✅ PR #207 マージ済み・本番反映確認済み（「今日の話題店」TOP5から対象3店消失を確認） |
+| 2026-09-02 | Orchestrator(EMERGENCY) | ISSUE-122 発見・実装 — PR #207 反映確認のため本番 data/stores.json を直接フェッチし「焼きそばスタンド らふ」を検索したところ2件ヒット。pending_stores.json（2026-05-23・実写実評価実出典あり）と manual_stores.json（2026-09-01・ISSUE-120で問題化した自動発掘由来）が同一GooglePlaceIDを持つ重複と判明。manual_stores.json側の重複エントリを削除（167件に減少）。カタログ全体で店名完全一致の重複が計21件存在することも実測で判明したため、残20件はDataKeeper向けに別途起票のみ（誤統合リスクがあるため今回は手を付けず）。npm test 151件全pass | ⏸ PR作成準備中 |
 
 ---
 
