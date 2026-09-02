@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>餃子のネオ大衆酒場ニューカムラ（栄・伏見・居酒屋）| NAGOYA BITES</title>
@@ -51,7 +51,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J003673002.html",
     "description": "新栄町駅3分、1,750円で流動層への対応力が高い低単価戦略",
     "priceRange": "¥",
-    "openingHours": "月～金: 16:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）土、日、祝日: 14:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）",
+    "openingHours": "月、水、金: 13:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）火、木: 16:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）土、日、祝日: 14:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.1721",
@@ -215,7 +215,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市中区東桜２-18-24 サンマルコビル1階</span></div>
     <div class="info-cell"><label>価格帯</label><span>1501～2000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月～金: 16:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）土、日、祝日: 14:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月、水、金: 13:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）火、木: 16:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）土、日、祝日: 14:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>新栄町駅から徒歩3分</span></div>
   </div>
@@ -281,8 +281,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ003673002/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E9%A4%83%E5%AD%90%E3%81%AE%E3%83%8D%E3%82%AA%E5%A4%A7%E8%A1%86%E9%85%92%E5%A0%B4%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%AB%E3%83%A0%E3%83%A9%20%E6%A0%84%EF%BD%B7%EF%BE%80%E9%8C%A6%2F%E4%BC%8F%E8%A6%8B%E4%B8%B8%E3%81%AE%E5%86%85%2F%E6%B3%89%2F%E6%9D%B1%E6%A1%9C%2F%E6%96%B0%E6%A0%84" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ003673002/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E9%A4%83%E5%AD%90%E3%81%AE%E3%83%8D%E3%82%AA%E5%A4%A7%E8%A1%86%E9%85%92%E5%A0%B4%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%AB%E3%83%A0%E3%83%A9%20%E6%A0%84%EF%BD%B7%EF%BE%80%E9%8C%A6%2F%E4%BC%8F%E8%A6%8B%E4%B8%B8%E3%81%AE%E5%86%85%2F%E6%B3%89%2F%E6%9D%B1%E6%A1%9C%2F%E6%96%B0%E6%A0%84" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/new_kamura/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230103/23083553/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>

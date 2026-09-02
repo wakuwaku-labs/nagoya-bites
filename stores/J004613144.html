@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>焼肉ぽんが 名古屋伏見店（栄・矢場町・焼肉・ホルモン）| NAGOYA BITES</title>
@@ -271,8 +271,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ004613144/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E7%84%BC%E8%82%89%E3%81%BD%E3%82%93%E3%81%8C%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E4%BC%8F%E8%A6%8B%E5%BA%97%20%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ004613144/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E7%84%BC%E8%82%89%E3%81%BD%E3%82%93%E3%81%8C%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E4%BC%8F%E8%A6%8B%E5%BA%97%20%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
   </div>
 
   
@@ -291,7 +291,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
       <li><a href="J003893433.html">焼肉 玉ちゃん</a></li>
       <li><a href="J004469125.html">もうもう亭 大須</a></li>
       <li><a href="J004660302.html">焼肉　SEJONG　栄店　（セジョン）栄４丁目</a></li>
-      <li><a href="J000024933.html">和牛ホルモン焼 三國 本店</a></li>
+      <li><a href="J001041729.html">肉米雄一飯店</a></li>
     </ul>
   </div>
 

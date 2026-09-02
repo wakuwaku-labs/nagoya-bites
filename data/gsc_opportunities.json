@@ -1,19 +1,29 @@
 {
-  "generatedAt": "2026-08-31T12:46:01.325Z",
+  "generatedAt": "2026-09-02T13:57:28.640Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
   "byQuery": {
-    "ctrFix": [],
+    "ctrFix": [
+      {
+        "query": "焼肉 三郎 原店 名古屋市 レビュー",
+        "impressions": 214,
+        "clicks": 3,
+        "position": 9,
+        "ctr": 1.4,
+        "expectedCtr": 2.8,
+        "missedClicks": 3
+      }
+    ],
     "ctrFixGeoless": [
       {
         "query": "一人飲み",
-        "impressions": 295,
-        "clicks": 3,
+        "impressions": 298,
+        "clicks": 2,
         "position": 4,
-        "ctr": 1.02,
+        "ctr": 0.67,
         "expectedCtr": 8,
-        "missedClicks": 20.6
+        "missedClicks": 21.8
       },
       {
         "query": "煮干しラーメン 凛",
@@ -26,33 +36,24 @@
       },
       {
         "query": "やきまる亭",
-        "impressions": 189,
+        "impressions": 179,
         "clicks": 3,
-        "position": 8.2,
-        "ctr": 1.59,
+        "position": 8.3,
+        "ctr": 1.68,
         "expectedCtr": 3.1,
-        "missedClicks": 2.9
-      },
-      {
-        "query": "喫茶時々",
-        "impressions": 202,
-        "clicks": 3,
-        "position": 8.7,
-        "ctr": 1.49,
-        "expectedCtr": 2.9,
-        "missedClicks": 2.9
-      },
-      {
-        "query": "イルタッソ",
-        "impressions": 65,
-        "clicks": 2,
-        "position": 5.4,
-        "ctr": 3.08,
-        "expectedCtr": 5.6,
-        "missedClicks": 1.6
+        "missedClicks": 2.5
       }
     ],
-    "rankPush": []
+    "rankPush": [
+      {
+        "query": "ナショナルベーカリー",
+        "impressions": 206,
+        "clicks": 5,
+        "position": 11.9,
+        "ctr": 2.43,
+        "upsideClicks": 0.8
+      }
+    ]
   },
   "byPage": {
     "ctrFix": [
@@ -67,55 +68,55 @@
       },
       {
         "page": "/stores/J004559348.html",
-        "impressions": 625,
+        "impressions": 611,
         "clicks": 8,
         "position": 8.4,
-        "ctr": 1.28,
+        "ctr": 1.31,
         "expectedCtr": 3,
-        "missedClicks": 11
+        "missedClicks": 10.6
+      },
+      {
+        "page": "/stores/J004612794.html",
+        "impressions": 766,
+        "clicks": 11,
+        "position": 9.8,
+        "ctr": 1.44,
+        "expectedCtr": 2.6,
+        "missedClicks": 8.6
       },
       {
         "page": "/stores/J004025075.html",
-        "impressions": 481,
+        "impressions": 454,
         "clicks": 10,
         "position": 7.2,
-        "ctr": 2.08,
+        "ctr": 2.2,
         "expectedCtr": 3.8,
-        "missedClicks": 8.5
-      },
-      {
-        "page": "/stores/J004661023.html",
-        "impressions": 477,
-        "clicks": 6,
-        "position": 9.1,
-        "ctr": 1.26,
-        "expectedCtr": 2.8,
-        "missedClicks": 7.2
+        "missedClicks": 7.4
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2983,
+        "impressions": 3331,
         "clicks": 8,
-        "position": 22.9,
-        "ctr": 0.27,
-        "upsideClicks": 75.5
+        "position": 24.5,
+        "ctr": 0.24,
+        "upsideClicks": 85.3
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 0,
-    "queryCtrFixGeoless": 5,
-    "queryRankPush": 0,
+    "queryCtrFix": 1,
+    "queryCtrFixGeoless": 3,
+    "queryRankPush": 1,
     "pageCtrFix": 4,
     "pageRankPush": 1,
     "topPageCtrFix": [
       "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
       "/stores/J004559348.html",
-      "/stores/J004025075.html"
+      "/stores/J004612794.html"
     ]
   }
 }

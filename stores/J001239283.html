@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>磯丸水産 金山店（金山・居酒屋）| NAGOYA BITES</title>
@@ -47,7 +47,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       "streetAddress": "愛知県名古屋市中区金山２丁目１６－１６",
       "addressArea": "金山・神宮前・熱田区"
     },
-    "image": "https://imgfp.hotp.jp/IMGH/15/02/P050881502/P050881502_480.jpg",
+    "image": "https://imgfp.hotp.jp/IMGH/09/41/P051110941/P051110941_480.jpg",
     "url": "https://nagoya-bites.com/stores/J001239283.html",
     "description": "駅徒歩2分、2500円で競争激地での生存戦略",
     "priceRange": "¥",
@@ -185,7 +185,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F15%2F02%2FP050881502%2FP050881502_480.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F15%2F02%2FP050881502%2FP050881502_238.jpg" alt="磯丸水産 金山店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/15/02/P050881502/P050881502_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
+<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F09%2F41%2FP051110941%2FP051110941_480.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F09%2F41%2FP051110941%2FP051110941_238.jpg" alt="磯丸水産 金山店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/09/41/P051110941/P051110941_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
@@ -281,8 +281,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001239283/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E7%A3%AF%E4%B8%B8%E6%B0%B4%E7%94%A3%20%E9%87%91%E5%B1%B1%E5%BA%97%20%E9%87%91%E5%B1%B1%E3%83%BB%E7%A5%9E%E5%AE%AE%E5%89%8D%E3%83%BB%E7%86%B1%E7%94%B0%E5%8C%BA" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001239283/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E7%A3%AF%E4%B8%B8%E6%B0%B4%E7%94%A3%20%E9%87%91%E5%B1%B1%E5%BA%97%20%E9%87%91%E5%B1%B1%E3%83%BB%E7%A5%9E%E5%AE%AE%E5%89%8D%E3%83%BB%E7%86%B1%E7%94%B0%E5%8C%BA" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/isomarusuisan_official/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230101/23069070/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>

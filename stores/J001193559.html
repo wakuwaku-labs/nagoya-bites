@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>肉汁台湾餃子酒場 でら餃子 三郷店（栄・居酒屋）| NAGOYA BITES</title>
@@ -213,7 +213,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <div class="trust-breakdown">
     <h2>口コミ信頼度の内訳</h2>
     <p class="trust-headline"><span class="trust-tier cc-tier-NA">—</span><span class="trust-score">— / 100</span> — Googleの★と件数が取得できていないため、判定材料が足りません。</p>
-    <p class="trust-meta-line">検証 0/9項目 ・ Google口コミ取得日 2026-08-31</p>
+    <p class="trust-meta-line">検証 0/9項目 ・ Google口コミ取得日 2026-09-02</p>
     <p class="trust-breakdown-intro">口コミ信頼度は「この店のGoogle★と件数は、そのまま信じてよいか」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
       <div class="trust-axis-row trust-axis-unobserved">
         <span class="trust-axis-name">件数は十分か</span>
@@ -269,8 +269,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001193559/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E8%82%89%E6%B1%81%E5%8F%B0%E6%B9%BE%E9%A4%83%E5%AD%90%E9%85%92%E5%A0%B4%20%E3%81%A7%E3%82%89%E9%A4%83%E5%AD%90%20%E4%B8%89%E9%83%B7%E5%BA%97%20%E6%A0%84" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001193559/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E8%82%89%E6%B1%81%E5%8F%B0%E6%B9%BE%E9%A4%83%E5%AD%90%E9%85%92%E5%A0%B4%20%E3%81%A7%E3%82%89%E9%A4%83%E5%AD%90%20%E4%B8%89%E9%83%B7%E5%BA%97%20%E6%A0%84" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/deragyoza3510/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2303/A230302/23065032/" target="_blank" rel="noopener noreferrer">食べログ</a>
     <a class="link-btn tk" href="https://www.tiktok.com/search?q=%E8%82%89%E6%B1%81%E5%8F%B0%E6%B9%BE%E9%A4%83%E5%AD%90%E9%85%92%E5%A0%B4%20%E3%81%A7%E3%82%89%E9%A4%83%E5%AD%90%20%E4%B8%89%E9%83%B7%E5%BA%97%20%E6%A0%84" target="_blank" rel="noopener noreferrer">TikTok</a>

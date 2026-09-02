@@ -40,7 +40,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 }
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ItemList","name":"名古屋 接待向け店舗8選","numberOfItems":6,"itemListElement":[{"@type":"ListItem","position":1,"name":"Sergio セルジョ","url":"https://nagoya-bites.com/stores/J001145063.html"},{"@type":"ListItem","position":2,"name":"Osteria ONREDOM オステリア オンレドム","url":"https://nagoya-bites.com/stores/J001274495.html"},{"@type":"ListItem","position":3,"name":"中国料理 吉珍樓 ルーセントタワー店","url":"https://nagoya-bites.com/stores/J000691332.html"},{"@type":"ListItem","position":4,"name":"台湾飲茶cafe 茶坊","url":"https://nagoya-bites.com/stores/J001165935.html"},{"@type":"ListItem","position":5,"name":"四間道レストランMATSUURA","url":"https://nagoya-bites.com/stores/J003958549.html"},{"@type":"ListItem","position":6,"name":"デルフィーナ","url":"https://nagoya-bites.com/stores/J004444064.html"}]}
+{"@context":"https://schema.org","@type":"ItemList","name":"名古屋 接待向け店舗8選","numberOfItems":6,"itemListElement":[{"@type":"ListItem","position":1,"name":"Sergio セルジョ","url":"https://nagoya-bites.com/stores/J001145063.html"},{"@type":"ListItem","position":2,"name":"Osteria ONREDOM オステリア オンレドム","url":"https://nagoya-bites.com/stores/J001274495.html"},{"@type":"ListItem","position":3,"name":"リベルタ","url":"https://nagoya-bites.com/stores/J004576728.html"},{"@type":"ListItem","position":4,"name":"スーツァンレストラン陳 名古屋","url":"https://nagoya-bites.com/stores/J000107839.html"},{"@type":"ListItem","position":5,"name":"ノリタケの森 レストラン キルン","url":"https://nagoya-bites.com/stores/J003498414.html"},{"@type":"ListItem","position":6,"name":"中国海鮮料理 彩華","url":"https://nagoya-bites.com/stores/J000989122.html"}]}
 </script>
 <script type="application/ld+json">
 {
@@ -125,6 +125,11 @@ nav{display:none;}
 @media(max-width:640px){.store-photo{width:100%;height:180px;}}
 .art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}.art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}@media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}.store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:.78rem !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}.store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}.store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}.store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
 /*ROSTER_BADGE_CSS*/.store-new,.shop-new{display:inline-block;margin-left:.5rem;font-size:.6rem;font-weight:700;letter-spacing:.03em;color:#fff;background:#b08d2c;padding:.1rem .45rem;border-radius:3px;vertical-align:middle;white-space:nowrap;}
+/* SEASONAL_NOTE_CSS */
+.season-note{display:flex;align-items:flex-start;gap:.7rem;margin:0 0 1.6rem;padding:.9rem 1.05rem;border:1px solid rgba(176,141,44,.35);border-left:3px solid #b08d2c;border-radius:8px;background:rgba(176,141,44,.07);}
+.season-note-flag{flex:none;font-size:.68rem;font-weight:700;letter-spacing:.04em;color:#fff;background:#b08d2c;padding:.26rem .62rem;border-radius:999px;white-space:nowrap;}
+.season-note-text{margin:0;font-size:.9rem;line-height:1.75;color:#3a3a3a;}
+@media (prefers-color-scheme:dark){.season-note-text{color:#e8e4d8;}}
 </style>
 </head>
 <body>
@@ -166,6 +171,9 @@ nav{display:none;}
   </div>
 
   <div class="art-body">
+      <!-- SEASONAL_NOTE_START -->
+      <div class="season-note"><span class="season-note-flag">接待</span><p class="season-note-text">下期の接待シーズンに。失礼のない上質な個室で会食できる店を集めました。</p></div>
+      <!-- SEASONAL_NOTE_END -->
     <p class="art-intro">接待の目的は「相手に気持ちよくなってもらうこと」だ。料理の美味しさはその一部に過ぎない。個室の完全性、スタッフの機転、騒音レベル、タクシーの呼びやすさ——これらを総合的に評価して初めて接待向きと言える。</p>
 
     <div class="tips-box">
@@ -223,60 +231,60 @@ nav{display:none;}
 
       <div class="store-card">
         <div class="store-num">03</div>
-        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/92/93/P047959293/P047959293_480.jpg" alt="中国料理 吉珍樓 ルーセントタワー店" loading="lazy" width="160" height="120" decoding="async"></div>
+        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/63/61/P049596361/P049596361_480.jpg" alt="リベルタ" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J000691332.html">中国料理 吉珍樓 ルーセントタワー店</a></h3>
-          <div class="store-meta"><span>名古屋（名古屋駅/西区/中村区）</span><span>中華</span><span class="score">★ 4.2</span><span>5001～7000円</span></div>
-          <p class="store-desc">名駅直結中華で5,500円、ランチ需要で日中の売上基盤安定</p>
-          <div class="store-tags"><span class="store-tag">中華料理</span><span class="store-tag">5000円以上</span></div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J004576728.html">リベルタ</a></h3>
+          <div class="store-meta"><span>緑区・南区・天白区・瑞穂区</span><span>イタリアン</span><span class="score">★ 4.2</span><span>5001～7000円</span></div>
+          <p class="store-desc">植田駅15分圏内、5,500円で接待向け仕様。昼営業対応</p>
+          <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">5000円以上</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000691332.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ000691332/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004576728.html">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ004576728/" target="_blank" rel="noopener">予約はこちら →</a>
           </div>
         </div>
       </div>
 
       <div class="store-card">
         <div class="store-num">04</div>
-        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/14/85/P038311485/P038311485_480.jpg" alt="台湾飲茶cafe 茶坊" loading="lazy" width="160" height="120" decoding="async"></div>
+        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/90/25/P010579025/P010579025_480.jpg" alt="スーツァンレストラン陳 名古屋" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001165935.html">台湾飲茶cafe 茶坊</a></h3>
-          <div class="store-meta"><span>大曽根･千種･今池･池下･守山区</span><span>中華</span><span class="score">★ 4.4</span></div>
-          <p class="store-desc">一社駅徒歩6分、中華ランチ営業、昼食市場の優位取得</p>
-          <div class="store-tags"><span class="store-tag">中華料理</span></div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J000107839.html">スーツァンレストラン陳 名古屋</a></h3>
+          <div class="store-meta"><span>名古屋（名古屋駅/西区/中村区）</span><span>中華</span><span class="score">★ 4.3</span><span>7001～10000円</span></div>
+          <p class="store-desc">セントラルタワーズ12階で8,500円。駅直結で上層階、接待・大切な席として評価が安定。</p>
+          <div class="store-tags"><span class="store-tag">中華料理</span><span class="store-tag">5000円以上</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001165935.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001165935/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000107839.html">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ000107839/" target="_blank" rel="noopener">予約はこちら →</a>
           </div>
         </div>
       </div>
 
       <div class="store-card">
         <div class="store-num">05</div>
-        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/25/19/P045912519/P045912519_480.jpg" alt="四間道レストランMATSUURA" loading="lazy" width="160" height="120" decoding="async"></div>
+        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/22/44/P045102244/P045102244_480.jpg" alt="ノリタケの森 レストラン キルン" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003958549.html">四間道レストランMATSUURA</a><span class="store-new">今月の新顔</span></h3>
-          <div class="store-meta"><span>名古屋（名古屋駅/西区/中村区）</span><span>イタリアン</span><span class="score">★ 4.3</span><span>15001～20000円</span></div>
-          <p class="store-desc">国際センター駅徒歩6分、18,000円帯で接待・記念日需要を独占供給</p>
-          <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">5000円以上</span><span class="store-tag">誕生日・記念日</span></div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003498414.html">ノリタケの森 レストラン キルン</a><span class="store-new">今月の新顔</span></h3>
+          <div class="store-meta"><span>名古屋（名古屋駅/西区/中村区）</span><span>イタリアン</span><span class="score">★ 4.2</span><span>10001～15000円</span></div>
+          <p class="store-desc">亀島駅5分、1.2万円帯で接待指定が多い格付けの違い</p>
+          <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">5000円以上</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003958549.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003958549/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003498414.html">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003498414/" target="_blank" rel="noopener">予約はこちら →</a>
           </div>
         </div>
       </div>
 
       <div class="store-card">
         <div class="store-num">06</div>
-        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/76/19/P048257619/P048257619_480.jpg" alt="デルフィーナ" loading="lazy" width="160" height="120" decoding="async"></div>
+        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/76/84/P014907684/P014907684_480.jpg" alt="中国海鮮料理 彩華" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J004444064.html">デルフィーナ</a><span class="store-new">今月の新顔</span></h3>
-          <div class="store-meta"><span>大曽根･千種･今池･池下･守山区</span><span>イタリアン</span><span class="score">★ 4.4</span><span>10001～15000円</span></div>
-          <p class="store-desc">覚王山駅徒歩4分、1万円超の客単価を維持する格式店、接待利用が安定</p>
-          <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">5000円以上</span></div>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J000989122.html">中国海鮮料理 彩華</a><span class="store-new">今月の新顔</span></h3>
+          <div class="store-meta"><span>栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄</span><span>中華</span><span class="score">★ 4.2</span><span>10001～15000円</span></div>
+          <p class="store-desc">久屋大通駅5分、1万超中華はランチ営業で接待客の選択肢を広げる</p>
+          <div class="store-tags"><span class="store-tag">中華料理</span><span class="store-tag">5000円以上</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004444064.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004444064/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000989122.html">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ000989122/" target="_blank" rel="noopener">予約はこちら →</a>
           </div>
         </div>
       </div>

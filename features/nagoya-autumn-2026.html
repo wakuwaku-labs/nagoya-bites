@@ -114,7 +114,12 @@ footer a:hover{color:var(--gold);}
 @media(max-width:680px){.shop-grid{grid-template-columns:1fr;}.hero-title{font-size:1.6rem;}.hero{padding:2rem 1rem 1.5rem;}.content{padding:0 1rem 3rem;}}
 .art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}.art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}@media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}.store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:.78rem !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}.store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}.store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}.store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}.shop-card-photo{width:calc(100% + 2.8rem);aspect-ratio:16/9;object-fit:cover;display:block;margin:-1.4rem -1.4rem 1rem;border-radius:6px 6px 0 0;background:var(--bg2);}@media(max-width:640px){.shop-card-photo{width:100%;margin:-1rem -1rem .8rem;}}.shop-detail-link{display:inline-flex;align-items:center;gap:.35rem;margin-top:.9rem;background:var(--gold);color:#fff !important;padding:.5rem 1rem;border-radius:4px;font-size:.78rem;font-weight:500;text-decoration:none;letter-spacing:.04em;transition:background .15s,transform .1s;box-shadow:0 1px 3px rgba(122,92,16,.2);}.shop-detail-link:hover{background:var(--gold2);transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}.shop-detail-link::after{content:"→";margin-left:.15rem;}.related{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center;}.related-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.3rem;color:var(--white);margin-bottom:1.2rem;}.related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}.related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}.related-link:hover{background:rgba(122,92,16,.08);}
 /*ROSTER_BADGE_CSS*/.store-new,.shop-new{display:inline-block;margin-left:.5rem;font-size:.6rem;font-weight:700;letter-spacing:.03em;color:#fff;background:#b08d2c;padding:.1rem .45rem;border-radius:3px;vertical-align:middle;white-space:nowrap;}
-.shop-reserve-link{display:inline-flex;align-items:center;gap:.35rem;margin-top:.9rem;margin-left:.5rem;background:transparent;color:var(--gold) !important;padding:.5rem 1rem;border:1px solid var(--gold);border-radius:4px;font-size:.78rem;font-weight:500;text-decoration:none;letter-spacing:.04em;transition:background .15s,transform .1s;}.shop-reserve-link:hover{background:rgba(122,92,16,.08);transform:translateY(-1px);}@media(max-width:480px){.shop-reserve-link{margin-left:0;}}</style>
+.shop-reserve-link{display:inline-flex;align-items:center;gap:.35rem;margin-top:.9rem;margin-left:.5rem;background:transparent;color:var(--gold) !important;padding:.5rem 1rem;border:1px solid var(--gold);border-radius:4px;font-size:.78rem;font-weight:500;text-decoration:none;letter-spacing:.04em;transition:background .15s,transform .1s;}.shop-reserve-link:hover{background:rgba(122,92,16,.08);transform:translateY(-1px);}@media(max-width:480px){.shop-reserve-link{margin-left:0;}}/* SEASONAL_NOTE_CSS */
+.season-note{display:flex;align-items:flex-start;gap:.7rem;margin:0 0 1.6rem;padding:.9rem 1.05rem;border:1px solid rgba(176,141,44,.35);border-left:3px solid #b08d2c;border-radius:8px;background:rgba(176,141,44,.07);}
+.season-note-flag{flex:none;font-size:.68rem;font-weight:700;letter-spacing:.04em;color:#fff;background:#b08d2c;padding:.26rem .62rem;border-radius:999px;white-space:nowrap;}
+.season-note-text{margin:0;font-size:.9rem;line-height:1.75;color:#3a3a3a;}
+@media (prefers-color-scheme:dark){.season-note-text{color:#e8e4d8;}}
+</style>
 </head>
 
 <body>
@@ -148,6 +153,9 @@ footer a:hover{color:var(--gold);}
 </div>
 
 <div class="content">
+      <!-- SEASONAL_NOTE_START -->
+      <div class="season-note"><span class="season-note-flag">食欲の秋</span><p class="season-note-text">食欲の秋、開幕。松茸・秋刀魚・新米など旬の味覚が楽しめる店を今月版で選び直しました。</p></div>
+      <!-- SEASONAL_NOTE_END -->
   <h2 class="section-label">Selection — 実在確認済み</h2>
   <!-- SEO-042:TOP-CTA:START -->
 <style>
@@ -176,17 +184,17 @@ footer a:hover{color:var(--gold);}
       </span>
     </li>
     <li class="topcta-item">
-      <span class="topcta-name">手羽先むつみ 住吉店</span>
-      <span class="topcta-actions">
-        <a class="store-link" href="../stores/J004068058.html">店舗詳細</a>
-        <a class="store-link" href="https://www.hotpepper.jp/strJ004068058/" target="_blank" rel="noopener">今すぐ予約</a>
-      </span>
-    </li>
-    <li class="topcta-item">
       <span class="topcta-name">台所 宗や 金山</span>
       <span class="topcta-actions">
         <a class="store-link" href="../stores/J004089781.html">店舗詳細</a>
         <a class="store-link" href="https://www.hotpepper.jp/strJ004089781/" target="_blank" rel="noopener">今すぐ予約</a>
+      </span>
+    </li>
+    <li class="topcta-item">
+      <span class="topcta-name">wakamaru ワカマル 栄店</span>
+      <span class="topcta-actions">
+        <a class="store-link" href="../stores/J004422301.html">店舗詳細</a>
+        <a class="store-link" href="https://www.hotpepper.jp/strJ004422301/" target="_blank" rel="noopener">今すぐ予約</a>
       </span>
     </li>
   </ul>
@@ -210,22 +218,8 @@ footer a:hover{color:var(--gold);}
     </div>
 
     <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/43/78/P047104378/P047104378_480.jpg" alt="手羽先むつみ 住吉店" loading="lazy" decoding="async">
-      <div class="shop-num">02</div>
-      <div class="shop-name">手羽先むつみ 住吉店</div>
-      <div class="shop-area">栄 / 和食</div>
-      <p class="shop-desc">名古屋名物の手羽先は各店が独自のタレで差別化を図るが、あっさり系タレと掘りごたつの居心地が局地的な固定客を生んでいる。チェーン化せず住吉という単立地に絞った判断を評価して掲載した。</p>
-      <div class="shop-tags">
-        <span class="tag">10〜20名</span>
-        <span class="tag">5000円以上</span>
-        <span class="tag">★ 4.9</span>
-      </div>
-          <a href="../stores/J004068058.html" class="shop-detail-link">詳細ページを見る</a>
-    </div>
-
-    <div class="shop-card">
       <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/68/85/P048876885/P048876885_480.jpg" alt="台所 宗や 金山" loading="lazy" decoding="async">
-      <div class="shop-num">03</div>
+      <div class="shop-num">02</div>
       <div class="shop-name">台所 宗や 金山</div>
       <div class="shop-area">金山 / 居酒屋</div>
       <p class="shop-desc">「旬の食材」を謳う居酒屋は多いが、メニューの入れ替わり精度と素材説明の解像度が本物。金山エリアで満点評価を維持していることは、地元固定客と一見客の双方を取り込んでいる証拠と判断して掲載した。</p>
@@ -238,92 +232,23 @@ footer a:hover{color:var(--gold);}
     </div>
 
     <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/22/98/P046662298/P046662298_480.jpg" alt="産直鮮魚の海鮮酒場をかし" loading="lazy" decoding="async">
-      <div class="shop-num">04</div>
-      <div class="shop-name">産直鮮魚の海鮮酒場をかし</div>
-      <div class="shop-area">名古屋駅 / 居酒屋</div>
-      <p class="shop-desc">日本酒30種類 ご宴会コースも◎</p>
-      <div class="shop-tags">
-        <span class="tag">40〜50名</span>
-        <span class="tag">〜1000円</span>
-        <span class="tag">★ 4.8</span>
-      </div>
-          <a href="../stores/J001179548.html" class="shop-detail-link">詳細ページを見る</a>
-    </div>
-
-    <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/71/39/P033247139/P033247139_480.jpg" alt="雅じゃぽ イオンモール名古屋則武新町店" loading="lazy" decoding="async">
-      <div class="shop-num">05</div>
-      <div class="shop-name">雅じゃぽ イオンモール名古屋則武新町店</div>
-      <div class="shop-area">名古屋（名古屋駅/西区/中村区） / 和食</div>
-      <p class="shop-desc">駐車場2,100台、3,500円の和食は車来店層の受け皿としての価値</p>
-      <div class="shop-tags">
-        <span class="tag">和食</span>
-        <span class="tag">★ 4.5</span>
-      </div>
-          <a href="../stores/J001276428.html" class="shop-detail-link">詳細ページを見る</a>
-    </div>
-
-    <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/71/72/P044467172/P044467172_480.jpg" alt="名古屋きんしゃち 栄店" loading="lazy" decoding="async">
-      <div class="shop-num">06</div>
-      <div class="shop-name">名古屋きんしゃち 栄店<span class="shop-new">今月の新顔</span></div>
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/16/14/P048651614/P048651614_480.jpg" alt="wakamaru ワカマル 栄店" loading="lazy" decoding="async">
+      <div class="shop-num">03</div>
+      <div class="shop-name">wakamaru ワカマル 栄店</div>
       <div class="shop-area">栄 / 居酒屋</div>
-      <p class="shop-desc">きんしゃちブランドの栄展開は名古屋駅前店と共に名古屋めし居酒屋として複数拠点を持つ。観光客と地元客の双方に名古屋の食文化を伝える役割を果たしており4.7評価がその機能の有効性を示している。</p>
+      <p class="shop-desc">「秋田郷土料理」は名古屋の飲食市場では稀少カテゴリ。比内地鶏・きりたんぽ・いぶりがっこを名古屋で本格提供する業態は、地域食材の輸送コストを受容した上でのこだわりの発露であり、代替不可能なポジションを確立している。</p>
       <div class="shop-tags">
-        <span class="tag">100名以上</span>
+        <span class="tag">10〜20名</span>
         <span class="tag">5000円以上</span>
-        <span class="tag">★ 4.7</span>
+        <span class="tag">★ 5</span>
       </div>
-          <a href="../stores/J004005753.html" class="shop-detail-link">詳細ページを見る</a>
-    </div>
-
-    <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/01/43/P039270143/P039270143_480.jpg" alt="餃子のかっちゃん 名古屋駅3丁目店" loading="lazy" decoding="async">
-      <div class="shop-num">07</div>
-      <div class="shop-name">餃子のかっちゃん 名古屋駅3丁目店<span class="shop-new">今月の新顔</span></div>
-      <div class="shop-area">名古屋駅 / 居酒屋</div>
-      <p class="shop-desc">大衆居酒屋でありながら食べログ4.8を維持するのは、低価格帯では接客クオリティが評価の決め手になるため、むしろ難易度が高い。「賑やかな雰囲気」という価値を一貫して担保していることが掲載の根拠。</p>
-      <div class="shop-tags">
-        <span class="tag">90〜100名</span>
-        <span class="tag">2000〜3000円</span>
-        <span class="tag">★ 4.8</span>
-      </div>
-          <a href="../stores/J003828684.html" class="shop-detail-link">詳細ページを見る</a>
-    </div>
-
-    <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/01/43/P039270143/P039270143_480.jpg" alt="餃子のかっちゃん 金山駅前店" loading="lazy" decoding="async">
-      <div class="shop-num">08</div>
-      <div class="shop-name">餃子のかっちゃん 金山駅前店<span class="shop-new">今月の新顔</span></div>
-      <div class="shop-area">金山 / 居酒屋</div>
-      <p class="shop-desc">金山駅前という交通結節点での展開は帰宅途中や乗り換え客を取り込める立地優位性を活かした選択。金山店と共に金山エリアでのブランド存在感を維持しており利便性と品質の双方が4.7評価に反映されている。</p>
-      <div class="shop-tags">
-        <span class="tag">90〜100名</span>
-        <span class="tag">2000〜3000円</span>
-        <span class="tag">★ 4.7</span>
-      </div>
-          <a href="../stores/J003893597.html" class="shop-detail-link">詳細ページを見る</a>
-    </div>
-
-    <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg" alt="鰻のノリスケ" loading="lazy" decoding="async">
-      <div class="shop-num">09</div>
-      <div class="shop-name">鰻のノリスケ<span class="shop-new">今月の新顔</span></div>
-      <div class="shop-area">栄 / 和食</div>
-      <p class="shop-desc">親しみやすい屋号で鰻専門業態を展開するのは老舗名店が多い鰻市場に対するカジュアル路線での挑戦。食べログ4.7評価はカジュアル業態でも鰻の品質が妥協されていないことを示しており業界目線では評価できるポジショニング。</p>
-      <div class="shop-tags">
-        <span class="tag">30〜40名</span>
-        <span class="tag">3000〜5000円</span>
-        <span class="tag">★ 4.7</span>
-      </div>
-          <a href="../stores/J003984968.html" class="shop-detail-link">詳細ページを見る</a>
+          <a href="../stores/J004422301.html" class="shop-detail-link">詳細ページを見る</a>
     </div>
 
     <div class="shop-card">
       <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/26/65/P035122665/P035122665_480.jpg" alt="旬活和食 ままや" loading="lazy" decoding="async">
-      <div class="shop-num">10</div>
-      <div class="shop-name">旬活和食 ままや<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-num">04</div>
+      <div class="shop-name">旬活和食 ままや</div>
       <div class="shop-area">栄 / 和食</div>
       <p class="shop-desc">【厳選食材の旬活和食】 【板前の心と技】</p>
       <div class="shop-tags">
@@ -333,8 +258,92 @@ footer a:hover{color:var(--gold);}
       </div>
           <a href="../stores/J001022379.html" class="shop-detail-link">詳細ページを見る</a>
     </div>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/09/31/P040730931/P040730931_480.jpg" alt="新和食 ひとはし" loading="lazy" decoding="async">
+      <div class="shop-num">05</div>
+      <div class="shop-name">新和食 ひとはし</div>
+      <div class="shop-area">名古屋駅 / 和食</div>
+      <p class="shop-desc">厳選した日本酒やワイン 職人の手仕事</p>
+      <div class="shop-tags">
+        <span class="tag">30〜40名</span>
+        <span class="tag">5000円以上</span>
+        <span class="tag">★ 4.1</span>
+      </div>
+          <a href="../stores/J000955224.html" class="shop-detail-link">詳細ページを見る</a>
     </div>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"名古屋の秋グルメおすすめ10選【2026年版】","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"name":"季旬 栄店","url":"https://nagoya-bites.com/stores/J004444760.html"},{"@type":"ListItem","position":2,"name":"手羽先むつみ 住吉店","url":"https://nagoya-bites.com/stores/J004068058.html"},{"@type":"ListItem","position":3,"name":"台所 宗や 金山","url":"https://nagoya-bites.com/stores/J004089781.html"},{"@type":"ListItem","position":4,"name":"産直鮮魚の海鮮酒場をかし","url":"https://nagoya-bites.com/stores/J001179548.html"},{"@type":"ListItem","position":5,"name":"雅じゃぽ イオンモール名古屋則武新町店","url":"https://nagoya-bites.com/stores/J001276428.html"},{"@type":"ListItem","position":6,"name":"名古屋きんしゃち 栄店","url":"https://nagoya-bites.com/stores/J004005753.html"},{"@type":"ListItem","position":7,"name":"餃子のかっちゃん 名古屋駅3丁目店","url":"https://nagoya-bites.com/stores/J003828684.html"},{"@type":"ListItem","position":8,"name":"餃子のかっちゃん 金山駅前店","url":"https://nagoya-bites.com/stores/J003893597.html"},{"@type":"ListItem","position":9,"name":"鰻のノリスケ","url":"https://nagoya-bites.com/stores/J003984968.html"},{"@type":"ListItem","position":10,"name":"旬活和食 ままや","url":"https://nagoya-bites.com/stores/J001022379.html"}]}</script>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/43/78/P047104378/P047104378_480.jpg" alt="手羽先むつみ 住吉店" loading="lazy" decoding="async">
+      <div class="shop-num">06</div>
+      <div class="shop-name">手羽先むつみ 住吉店<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-area">栄 / 和食</div>
+      <p class="shop-desc">名古屋名物の手羽先は各店が独自のタレで差別化を図るが、あっさり系タレと掘りごたつの居心地が局地的な固定客を生んでいる。チェーン化せず住吉という単立地に絞った判断を評価して掲載した。</p>
+      <div class="shop-tags">
+        <span class="tag">10〜20名</span>
+        <span class="tag">5000円以上</span>
+        <span class="tag">★ 4.9</span>
+      </div>
+          <a href="../stores/J004068058.html" class="shop-detail-link">詳細ページを見る</a>
+    </div>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/34/95/P017433495/P017433495_480.jpg" alt="旬魚旬菜 きたむら" loading="lazy" decoding="async">
+      <div class="shop-num">07</div>
+      <div class="shop-name">旬魚旬菜 きたむら<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-area">栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄 / 居酒屋</div>
+      <p class="shop-desc">高岳駅1分の好立地、6,000円帯の居酒屋としては駅距離で有利、複線使いで来店誘導できる</p>
+      <div class="shop-tags">
+        <span class="tag">居酒屋</span>
+        <span class="tag">5000円以上</span>
+        <span class="tag">★ 4.1</span>
+      </div>
+          <a href="../stores/J000760856.html" class="shop-detail-link">詳細ページを見る</a>
+    </div>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/21/90/P048602190/P048602190_480.jpg" alt="旬醸まほろば 栄店" loading="lazy" decoding="async">
+      <div class="shop-num">08</div>
+      <div class="shop-name">旬醸まほろば 栄店<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-area">栄 / 居酒屋</div>
+      <p class="shop-desc">豊富なアラカルト料理♪ 2階は大人数OK</p>
+      <div class="shop-tags">
+        <span class="tag">80〜90名</span>
+        <span class="tag">5000円以上</span>
+        <span class="tag">★ 4.6</span>
+      </div>
+          <a href="../stores/J003917301.html" class="shop-detail-link">詳細ページを見る</a>
+    </div>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/10/17/P047641017/P047641017_480.jpg" alt="居酒屋 囲い屋 金山店" loading="lazy" decoding="async">
+      <div class="shop-num">09</div>
+      <div class="shop-name">居酒屋 囲い屋 金山店<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-area">金山 / 居酒屋</div>
+      <p class="shop-desc">■贅をつくした旬の味わい ■全国から取り寄せた地酒</p>
+      <div class="shop-tags">
+        <span class="tag">女子会</span>
+        <span class="tag">100名以上</span>
+        <span class="tag">★ 4.3</span>
+      </div>
+          <a href="../stores/J004025513.html" class="shop-detail-link">詳細ページを見る</a>
+    </div>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/63/86/P047506386/P047506386_480.jpg" alt="隠れ家個室居酒屋 囲い屋 金山店" loading="lazy" decoding="async">
+      <div class="shop-num">10</div>
+      <div class="shop-name">隠れ家個室居酒屋 囲い屋 金山店<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-area">金山 / 居酒屋</div>
+      <p class="shop-desc">■贅をつくした旬の味わい ■全国から取り寄せた地酒</p>
+      <div class="shop-tags">
+        <span class="tag">女子会</span>
+        <span class="tag">100名以上</span>
+        <span class="tag">★ 4.3</span>
+      </div>
+          <a href="../stores/J001293029.html" class="shop-detail-link">詳細ページを見る</a>
+    </div>
+    </div>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"名古屋の秋グルメおすすめ10選【2026年版】","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"name":"季旬 栄店","url":"https://nagoya-bites.com/stores/J004444760.html"},{"@type":"ListItem","position":2,"name":"台所 宗や 金山","url":"https://nagoya-bites.com/stores/J004089781.html"},{"@type":"ListItem","position":3,"name":"wakamaru ワカマル 栄店","url":"https://nagoya-bites.com/stores/J004422301.html"},{"@type":"ListItem","position":4,"name":"旬活和食 ままや","url":"https://nagoya-bites.com/stores/J001022379.html"},{"@type":"ListItem","position":5,"name":"新和食 ひとはし","url":"https://nagoya-bites.com/stores/J000955224.html"},{"@type":"ListItem","position":6,"name":"手羽先むつみ 住吉店","url":"https://nagoya-bites.com/stores/J004068058.html"},{"@type":"ListItem","position":7,"name":"旬魚旬菜 きたむら","url":"https://nagoya-bites.com/stores/J000760856.html"},{"@type":"ListItem","position":8,"name":"旬醸まほろば 栄店","url":"https://nagoya-bites.com/stores/J003917301.html"},{"@type":"ListItem","position":9,"name":"居酒屋 囲い屋 金山店","url":"https://nagoya-bites.com/stores/J004025513.html"},{"@type":"ListItem","position":10,"name":"隠れ家個室居酒屋 囲い屋 金山店","url":"https://nagoya-bites.com/stores/J001293029.html"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"名古屋の秋に旬を迎える食材は何ですか?","acceptedAnswer":{"@type":"Answer","text":"①松茸（9月下旬〜11月）、②秋刀魚（9月〜11月）、③栗（9月下旬〜10月）、④新蕎麦（9月下旬〜11月）、⑤新米（10月）、⑥銀杏（10月下旬〜11月）、⑦舞茸・しめじ等のキノコ類（9月〜11月）、⑧戻り鰹（10月）、⑨柿・梨・葡萄（9月〜10月）、⑩牡蠣（11月解禁）が代表的。秋限定コース・松茸尽くしコースは事前予約推奨で、9月中旬から各店が秋メニューを開始します。"}},{"@type":"Question","name":"秋の松茸料理はどこで食べるのがおすすめ?","acceptedAnswer":{"@type":"Answer","text":"懐石・会席の高級店（栄・伏見エリア）が松茸料理の本場で、土瓶蒸し・松茸ご飯・焼き松茸・松茸の天ぷらをコースで楽しめます。予算は1人15,000〜30,000円が松茸尽くしコースの標準。国産松茸（信州・岐阜産）と輸入松茸（中国・カナダ・モロッコ産）で価格が大きく異なり、国産だけのコースは20,000円以上、ミックスなら12,000〜18,000円が相場です。"}},{"@type":"Question","name":"秋限定の名古屋らしいグルメは?","acceptedAnswer":{"@type":"Answer","text":"①栗きんとん（中津川・恵那の銘菓・名古屋でも入手可能）、②新米のおにぎり（10月限定の各和食店）、③秋刀魚の塩焼き（居酒屋の定番）、④松茸の土瓶蒸し（懐石コースの華）、⑤栗のモンブラン（パティスリーの秋限定）、⑥新蕎麦の冷たい蕎麦（蕎麦専門店）。栗きんとんは中津川の老舗（すや・川上屋・恵那寿や）が名古屋市内にも支店を持ち、9月〜10月の期間限定販売です。"}},{"@type":"Question","name":"秋のデート向きグルメは?","acceptedAnswer":{"@type":"Answer","text":"①栗・ぶどう・梨を使った季節パフェ（カフェ・パティスリー）、②松茸尽くしコース（懐石・会席）、③新蕎麦と天ぷらコース（蕎麦専門店）、④秋限定ジビエコース（鹿・猪・鴨等のフレンチ・イタリアン）、⑤紅葉と一緒に楽しむ料亭ランチ（庭園付きの和食店）。予算1人8,000〜18,000円が秋デートの標準で、ワインペアリング・日本酒ペアリングを加えると更に充実します。"}},{"@type":"Question","name":"秋限定メニューはいつから提供されますか?","acceptedAnswer":{"@type":"Answer","text":"①9月初旬：秋刀魚・栗が登場、②9月下旬：松茸・新蕎麦・新米が解禁、③10月中旬：松茸尽くしコースが本格化、④11月初旬：牡蠣解禁、⑤11月下旬：松茸の終わり・蟹コースが開始、と段階的に秋メニューが展開。秋限定コースの予約は1〜2週間前推奨で、特に松茸尽くしコースは2〜3週間前から人気店は埋まり始めます。"}},{"@type":"Question","name":"秋の食材を使った隠れ家系店は?","acceptedAnswer":{"@type":"Answer","text":"名古屋には『季節食材を毎日仕入れて毎日メニューが変わる』隠れ家系の和食店・フレンチ・イタリアンが複数あり、秋には松茸・栗・キノコ類を使った日替わりコースが楽しめます。栄・伏見・覚王山・本山エリアに点在し、予算1人8,000〜15,000円が標準。事前予約時に『秋の食材を中心にお任せで』と伝えれば、その日の最高の食材で構成してくれます。Google マップで『季節限定』『日替わり』記載のある店が目印です。"}}]}</script>
 </div>
 

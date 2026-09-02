@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MOGU モグ 酒場（千種・大曽根・居酒屋）| NAGOYA BITES</title>
@@ -204,7 +204,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <div class="trust-breakdown">
     <h2>口コミ信頼度の内訳</h2>
     <p class="trust-headline"><span class="trust-tier cc-tier-NA">—</span><span class="trust-score">— / 100</span> — Googleの★と件数が取得できていないため、判定材料が足りません。</p>
-    <p class="trust-meta-line">検証 0/9項目 ・ Google口コミ取得日 2026-08-31</p>
+    <p class="trust-meta-line">検証 0/9項目 ・ Google口コミ取得日 2026-09-02</p>
     <p class="trust-breakdown-intro">口コミ信頼度は「この店のGoogle★と件数は、そのまま信じてよいか」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
       <div class="trust-axis-row trust-axis-unobserved">
         <span class="trust-axis-name">件数は十分か</span>
@@ -260,8 +260,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ004509235/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/MOGU%20%E3%83%A2%E3%82%B0%20%E9%85%92%E5%A0%B4%20%E5%A4%A7%E6%9B%BD%E6%A0%B9%EF%BD%A5%E5%8D%83%E7%A8%AE%EF%BD%A5%E4%BB%8A%E6%B1%A0%EF%BD%A5%E6%B1%A0%E4%B8%8B%EF%BD%A5%E5%AE%88%E5%B1%B1%E5%8C%BA" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ004509235/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/MOGU%20%E3%83%A2%E3%82%B0%20%E9%85%92%E5%A0%B4%20%E5%A4%A7%E6%9B%BD%E6%A0%B9%EF%BD%A5%E5%8D%83%E7%A8%AE%EF%BD%A5%E4%BB%8A%E6%B1%A0%EF%BD%A5%E6%B1%A0%E4%B8%8B%EF%BD%A5%E5%AE%88%E5%B1%B1%E5%8C%BA" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/ouchidecafe_mogu/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230114/23075896/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>

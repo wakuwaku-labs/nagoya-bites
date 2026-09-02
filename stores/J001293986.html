@@ -7,14 +7,14 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cafe Roissy カフェロイシー（栄・矢場町・カフェ・スイーツ）| NAGOYA BITES</title>
-<meta name="description" content="大須観音駅から徒歩2分のカフェ・スイーツ。予算1001～1500円。Google★3.5（口コミ15件）。新栄町駅徒歩圏のカフェ、ランチ営業で観光客・通勤層の併用実績。予約・地図・口コミを1ページで確認できます。">
+<meta name="description" content="大須観音駅から徒歩2分のカフェ・スイーツ。予算2001～3000円。Google★3.5（口コミ15件）。新栄町駅徒歩圏のカフェ、ランチ営業で観光客・通勤層の併用実績。予約・地図・口コミを1ページで確認できます。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/J001293986.html">
 <meta property="og:title" content="Cafe Roissy カフェロイシー（栄・矢場町・カフェ・スイーツ）| NAGOYA BITES">
-<meta property="og:description" content="大須観音駅から徒歩2分のカフェ・スイーツ。予算1001～1500円。Google★3.5（口コミ15件）。新栄町駅徒歩圏のカフェ、ランチ営業で観光客・通勤層の併用実績。予約・地図・口コミを1ページで確認できます。">
+<meta property="og:description" content="大須観音駅から徒歩2分のカフェ・スイーツ。予算2001～3000円。Google★3.5（口コミ15件）。新栄町駅徒歩圏のカフェ、ランチ営業で観光客・通勤層の併用実績。予約・地図・口コミを1ページで確認できます。">
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="https://nagoya-bites.com/stores/J001293986.html">
 <meta property="og:image" content="https://wsrv.nl/?url=https%3A%2F%2Fnagoya-bites.com%2Fassets%2Fog%2FJ001293986.svg&output=png&w=1200&h=630">
@@ -26,7 +26,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Cafe Roissy カフェロイシー（栄・矢場町・カフェ・スイーツ）| NAGOYA BITES">
-<meta name="twitter:description" content="大須観音駅から徒歩2分のカフェ・スイーツ。予算1001～1500円。Google★3.5（口コミ15件）。新栄町駅徒歩圏のカフェ、ランチ営業で観光客・通勤層の併用実績。予約・地図・口コミを1ページで確認できます。">
+<meta name="twitter:description" content="大須観音駅から徒歩2分のカフェ・スイーツ。予算2001～3000円。Google★3.5（口コミ15件）。新栄町駅徒歩圏のカフェ、ランチ営業で観光客・通勤層の併用実績。予約・地図・口コミを1ページで確認できます。">
 <meta name="twitter:image" content="https://wsrv.nl/?url=https%3A%2F%2Fnagoya-bites.com%2Fassets%2Fog%2FJ001293986.svg&output=png&w=1200&h=630">
 <link rel="manifest" href="../manifest.json">
 <meta name="theme-color" content="#7a5c10">
@@ -51,7 +51,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J001293986.html",
     "description": "新栄町駅徒歩圏のカフェ、ランチ営業で観光客・通勤層の併用実績",
     "priceRange": "¥",
-    "openingHours": "月、火、木～日: 11:00～18:00",
+    "openingHours": "月、火、木、日、祝日: 11:00～21:00 （料理L.O. 20:00 ドリンクL.O. 20:00）金、土、祝前日: 11:00～22:00 （料理L.O. 21:00 ドリンクL.O. 21:00）",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.161",
@@ -214,13 +214,13 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <div class="info-grid">
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 栄(ミナミ)/矢場町/大須/上前津</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市中区大須２丁目１１－１７ 大須黒川ビル1F</span></div>
-    <div class="info-cell"><label>価格帯</label><span>1001～1500円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月、火、木～日: 11:00～18:00</span></div>
+    <div class="info-cell"><label>価格帯</label><span>2001～3000円</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月、火、木、日、祝日: 11:00～21:00 （料理L.O. 20:00 ドリンクL.O. 20:00）金、土、祝前日: 11:00～22:00 （料理L.O. 21:00 ドリンクL.O. 21:00）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>地下鉄大須観音駅より徒歩約2分/伏見駅・上前津駅より徒歩約15分</span></div>
   </div>
 
-  <div class="tags"><span class="tag">カフェ</span></div>
+  <div class="tags"><span class="tag">カフェ</span><span class="tag">2000〜3000円</span></div>
 
   <div class="trust-breakdown">
     <h2>口コミ信頼度の内訳</h2>
@@ -281,8 +281,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001293986/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/Cafe%20Roissy%20%E3%82%AB%E3%83%95%E3%82%A7%E3%83%AD%E3%82%A4%E3%82%B7%E3%83%BC%20%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001293986/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/Cafe%20Roissy%20%E3%82%AB%E3%83%95%E3%82%A7%E3%83%AD%E3%82%A4%E3%82%B7%E3%83%BC%20%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/cafe_roissy/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230104/23083855/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>

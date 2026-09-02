@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>カフェダイニング 花音 御器所（鶴舞・八事・洋食）| NAGOYA BITES</title>
@@ -274,8 +274,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ000954767/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E3%82%AB%E3%83%95%E3%82%A7%E3%83%80%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0%20%E8%8A%B1%E9%9F%B3%20%E5%BE%A1%E5%99%A8%E6%89%80%20%E9%B6%B4%E8%88%9E%E3%83%BB%E5%85%AB%E4%BA%8B%E3%83%BB%E5%BE%A1%E5%99%A8%E6%89%80" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ000954767/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E3%82%AB%E3%83%95%E3%82%A7%E3%83%80%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0%20%E8%8A%B1%E9%9F%B3%20%E5%BE%A1%E5%99%A8%E6%89%80%20%E9%B6%B4%E8%88%9E%E3%83%BB%E5%85%AB%E4%BA%8B%E3%83%BB%E5%BE%A1%E5%99%A8%E6%89%80" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230108/23078858/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>
 
@@ -291,10 +291,10 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <div class="related-stores">
     <h2>鶴舞・八事・御器所の他の店</h2>
     <ul>
-      <li><a href="J003762303.html">ステーキ 海鮮 肉級</a></li>
       <li><a href="J001269897.html">Dining Kano</a></li>
       <li><a href="J001233946.html">ハロキ 山手通店</a></li>
       <li><a href="J000823116.html">カレー食堂 ホジャ・ナスレッディン</a></li>
+      <li><a href="J000397449.html">JUNOS</a></li>
     </ul>
   </div>
 

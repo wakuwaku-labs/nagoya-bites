@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>自然薯料理 和食 華花 守山店（千種・大曽根・和食）| NAGOYA BITES</title>
@@ -51,7 +51,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J001099010.html",
     "description": "神領駅15分圏、1,750円帯でランチ営業、ドライブイン需要を取り込める地方型和食",
     "priceRange": "¥",
-    "openingHours": "月～木: 11:00～15:00 （料理L.O. 14:30 ドリンクL.O. 14:30）金～日、祝日: 11:00～15:00 （料理L.O. 14:30 ドリンクL.O. 14:30）17:00～21:00 （料理L.O. 20:30 ドリンクL.O. 20:30）",
+    "openingHours": "月～日、祝日: 11:00～15:00 （料理L.O. 14:30 ドリンクL.O. 14:30）17:00～21:00 （料理L.O. 20:30 ドリンクL.O. 20:30）",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.182",
@@ -208,7 +208,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 大曽根･千種･今池･池下･守山区</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市守山区下志段味字熊田４０２－１　ライフガーデン志段味西エリア内</span></div>
     <div class="info-cell"><label>価格帯</label><span>1501～2000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月～木: 11:00～15:00 （料理L.O. 14:30 ドリンクL.O. 14:30）金～日、祝日: 11:00～15:00 （料理L.O. 14:30 ドリンクL.O. 14:30）17:00～21:00 （料理L.O. 20:30 ドリンクL.O. 20:30）</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月～日、祝日: 11:00～15:00 （料理L.O. 14:30 ドリンクL.O. 14:30）17:00～21:00 （料理L.O. 20:30 ドリンクL.O. 20:30）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>JR神領駅 徒歩15分／ 名古屋第二環状自動車道[小幡]インター下車、高蔵寺方面[濁り池]交差点を左折北方面へ200m右側</span></div>
   </div>
@@ -274,8 +274,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001099010/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E8%87%AA%E7%84%B6%E8%96%AF%E6%96%99%E7%90%86%20%E5%92%8C%E9%A3%9F%20%E8%8F%AF%E8%8A%B1%20%E5%AE%88%E5%B1%B1%E5%BA%97%20%E5%A4%A7%E6%9B%BD%E6%A0%B9%EF%BD%A5%E5%8D%83%E7%A8%AE%EF%BD%A5%E4%BB%8A%E6%B1%A0%EF%BD%A5%E6%B1%A0%E4%B8%8B%EF%BD%A5%E5%AE%88%E5%B1%B1%E5%8C%BA" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001099010/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E8%87%AA%E7%84%B6%E8%96%AF%E6%96%99%E7%90%86%20%E5%92%8C%E9%A3%9F%20%E8%8F%AF%E8%8A%B1%20%E5%AE%88%E5%B1%B1%E5%BA%97%20%E5%A4%A7%E6%9B%BD%E6%A0%B9%EF%BD%A5%E5%8D%83%E7%A8%AE%EF%BD%A5%E4%BB%8A%E6%B1%A0%EF%BD%A5%E6%B1%A0%E4%B8%8B%EF%BD%A5%E5%AE%88%E5%B1%B1%E5%8C%BA" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230112/23066032/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>
 
@@ -293,8 +293,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <ul>
       <li><a href="J000107880.html">しら河 今池店</a></li>
       <li><a href="J004660823.html">手羽先むつみ 今池店</a></li>
-      <li><a href="J004509219.html">和食おとは</a></li>
       <li><a href="J003784595.html">旬菜　縁</a></li>
+      <li><a href="J000401454.html">かっぱ寿司 名古屋白壁店</a></li>
     </ul>
   </div>
 

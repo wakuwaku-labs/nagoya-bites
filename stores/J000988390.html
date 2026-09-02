@@ -7,25 +7,25 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>三代目鳥メロ 名駅4丁目店（名駅・居酒屋）| NAGOYA BITES</title>
+<title>三代目 鳥メロ 名駅４丁目店（名駅・居酒屋）| NAGOYA BITES</title>
 <meta name="description" content="飲めます★名古屋駅から徒歩3分の居酒屋。予算2001～3000円。Google★4（口コミ789件）。昼11時営業2,000円、ミッドランド裏。開業時間早期化で昼飲み需要掘り起こし。予約・地図・口コミを1ページで確認できます。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/J000988390.html">
-<meta property="og:title" content="三代目鳥メロ 名駅4丁目店（名駅・居酒屋）| NAGOYA BITES">
+<meta property="og:title" content="三代目 鳥メロ 名駅４丁目店（名駅・居酒屋）| NAGOYA BITES">
 <meta property="og:description" content="飲めます★名古屋駅から徒歩3分の居酒屋。予算2001～3000円。Google★4（口コミ789件）。昼11時営業2,000円、ミッドランド裏。開業時間早期化で昼飲み需要掘り起こし。予約・地図・口コミを1ページで確認できます。">
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="https://nagoya-bites.com/stores/J000988390.html">
 <meta property="og:image" content="https://wsrv.nl/?url=https%3A%2F%2Fnagoya-bites.com%2Fassets%2Fog%2FJ000988390.svg&output=png&w=1200&h=630">
-<meta property="og:image:alt" content="三代目鳥メロ 名駅4丁目店 | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
-<meta name="twitter:image:alt" content="三代目鳥メロ 名駅4丁目店 | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
+<meta property="og:image:alt" content="三代目 鳥メロ 名駅４丁目店 | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
+<meta name="twitter:image:alt" content="三代目 鳥メロ 名駅４丁目店 | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="NAGOYA BITES">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="三代目鳥メロ 名駅4丁目店（名駅・居酒屋）| NAGOYA BITES">
+<meta name="twitter:title" content="三代目 鳥メロ 名駅４丁目店（名駅・居酒屋）| NAGOYA BITES">
 <meta name="twitter:description" content="飲めます★名古屋駅から徒歩3分の居酒屋。予算2001～3000円。Google★4（口コミ789件）。昼11時営業2,000円、ミッドランド裏。開業時間早期化で昼飲み需要掘り起こし。予約・地図・口コミを1ページで確認できます。">
 <meta name="twitter:image" content="https://wsrv.nl/?url=https%3A%2F%2Fnagoya-bites.com%2Fassets%2Fog%2FJ000988390.svg&output=png&w=1200&h=630">
 <link rel="manifest" href="../manifest.json">
@@ -37,7 +37,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   {
     "@context": "https://schema.org",
     "@type": "Restaurant",
-    "name": "三代目鳥メロ 名駅4丁目店",
+    "name": "三代目 鳥メロ 名駅４丁目店",
     "servesCuisine": "居酒屋",
     "address": {
       "@type": "PostalAddress",
@@ -51,7 +51,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J000988390.html",
     "description": "昼11時営業2,000円、ミッドランド裏。開業時間早期化で昼飲み需要掘り起こし。",
     "priceRange": "¥",
-    "openingHours": "月～木、日: 11:00～翌1:00金、土: 11:00～翌3:00",
+    "openingHours": "月～木、日: 11:00～翌1:00金、土、祝前日: 11:00～翌3:00",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.1709",
@@ -104,7 +104,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       {
         "@type": "ListItem",
         "position": 4,
-        "name": "三代目鳥メロ 名駅4丁目店",
+        "name": "三代目 鳥メロ 名駅４丁目店",
         "item": "https://nagoya-bites.com/stores/J000988390.html"
       }
     ]
@@ -185,7 +185,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614_480.jpg" srcset="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614_480.jpg 480w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614_480.jpg 800w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614.jpg&w=1000&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614_480.jpg 1000w" sizes="100vw" alt="三代目鳥メロ 名駅4丁目店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/36/14/P050823614/P050823614.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
+<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614_480.jpg" srcset="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614_480.jpg 480w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614_480.jpg 800w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614.jpg&w=1000&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F36%2F14%2FP050823614%2FP050823614_480.jpg 1000w" sizes="100vw" alt="三代目 鳥メロ 名駅４丁目店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/36/14/P050823614/P050823614.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
@@ -193,11 +193,11 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <span>›</span><a href="../#genre=%E5%B1%85%E9%85%92%E5%B1%8B">居酒屋</a>
     <span>›</span><a href="../#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89">名古屋（名古屋駅/西区/中村区）</a>
     <span>›</span>
-    <span>三代目鳥メロ 名駅4丁目店</span>
+    <span>三代目 鳥メロ 名駅４丁目店</span>
   </nav>
 
   <div class="genre-badge">居酒屋</div>
-  <h1>三代目鳥メロ 名駅4丁目店</h1>
+  <h1>三代目 鳥メロ 名駅４丁目店</h1>
   <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
     <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>4</div>
     <span class="ccs-badge" title="口コミ信頼度 A：そのまま参考にできます">口コミ信頼度<span class="ccs-tier cc-tier-A">A</span></span>
@@ -209,7 +209,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 名古屋（名古屋駅/西区/中村区）</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市中村区名駅４-4-34　タクトビル</span></div>
     <div class="info-cell"><label>価格帯</label><span>2001～3000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月～木、日: 11:00～翌1:00金、土: 11:00～翌3:00</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月～木、日: 11:00～翌1:00金、土、祝前日: 11:00～翌3:00</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>昼11時から毎日飲めます★名古屋駅から徒歩3分★ミッドランド裏　　名古屋　居酒屋</span></div>
   </div>
@@ -275,8 +275,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ000988390/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E4%B8%89%E4%BB%A3%E7%9B%AE%E9%B3%A5%E3%83%A1%E3%83%AD%20%E5%90%8D%E9%A7%854%E4%B8%81%E7%9B%AE%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ000988390/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E4%B8%89%E4%BB%A3%E7%9B%AE%20%E9%B3%A5%E3%83%A1%E3%83%AD%20%E5%90%8D%E9%A7%85%EF%BC%94%E4%B8%81%E7%9B%AE%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/torimero.ig/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2306/A230601/23061207/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>
@@ -296,8 +296,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <ul>
       <li><a href="J004403776.html">名古屋きんしゃち 名駅南店</a></li>
       <li><a href="J003737309.html">酔っ手羽 名駅3丁目店</a></li>
-      <li><a href="J000762007.html">半兵ヱ 名古屋駅舎東口 大名古屋ビルヂング裏通り店</a></li>
       <li><a href="J003649512.html">居酒屋 権兵衛 名駅店</a></li>
+      <li><a href="J004403777.html">権兵衛 名駅南店</a></li>
     </ul>
   </div>
 

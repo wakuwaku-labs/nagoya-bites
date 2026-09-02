@@ -7,14 +7,14 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>食堂伽羅（名駅・居酒屋）| NAGOYA BITES</title>
-<meta name="description" content="名駅の居酒屋。予算3001～4000円。予約・地図・口コミを1ページで確認できます。">
+<meta name="description" content="名駅の居酒屋。予算3001～4000円。Google★4（口コミ5件）。予約・地図・口コミを1ページで確認できます。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/J004678141.html">
 <meta property="og:title" content="食堂伽羅（名駅・居酒屋）| NAGOYA BITES">
-<meta property="og:description" content="名駅の居酒屋。予算3001～4000円。予約・地図・口コミを1ページで確認できます。">
+<meta property="og:description" content="名駅の居酒屋。予算3001～4000円。Google★4（口コミ5件）。予約・地図・口コミを1ページで確認できます。">
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="https://nagoya-bites.com/stores/J004678141.html">
 <meta property="og:image" content="https://imgfp.hotp.jp/IMGH/55/25/P050665525/P050665525_480.jpg">
@@ -26,7 +26,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="食堂伽羅（名駅・居酒屋）| NAGOYA BITES">
-<meta name="twitter:description" content="名駅の居酒屋。予算3001～4000円。予約・地図・口コミを1ページで確認できます。">
+<meta name="twitter:description" content="名駅の居酒屋。予算3001～4000円。Google★4（口コミ5件）。予約・地図・口コミを1ページで確認できます。">
 <meta name="twitter:image" content="https://imgfp.hotp.jp/IMGH/55/25/P050665525/P050665525_480.jpg">
 <link rel="manifest" href="../manifest.json">
 <meta name="theme-color" content="#7a5c10">
@@ -60,6 +60,21 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "acceptsReservations": true,
     "sameAs": [
       "https://www.hotpepper.jp/strJ004678141/"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4",
+      "bestRating": "5",
+      "ratingCount": "5"
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "口コミ信頼度（独自算定・広告非関与・段階 C）",
+        "value": 69,
+        "maxValue": 100,
+        "description": "「この店のGoogle★と件数は、そのまま信じてよいか」を、Googleの件数・★と件数のバランス・直近の口コミの傾向・評価の分布・第三者メディアの掲載のうち観測できた検証項目（7/9）だけで採点した参考指標。段階 C＝参考程度に。店の良し悪しの評価ではない。算定方法: https://nagoya-bites.com/features/integrity-method.html"
+      }
     ]
   },
   {
@@ -182,8 +197,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <div class="genre-badge">居酒屋</div>
   <h1>食堂伽羅</h1>
   <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
-    
-    <span class="ccs-badge ccs-badge-pending" title="口コミ信頼度 —：判定材料不足（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）">口コミ信頼度<span class="ccs-tier cc-tier-NA">—</span></span>
+    <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>4</div>
+    <span class="ccs-badge" title="口コミ信頼度 C：参考程度に">口コミ信頼度<span class="ccs-tier cc-tier-C">C</span></span>
   </div>
 
   
@@ -201,33 +216,33 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
 
   <div class="trust-breakdown">
     <h2>口コミ信頼度の内訳</h2>
-    <p class="trust-headline"><span class="trust-tier cc-tier-NA">—</span><span class="trust-score">— / 100</span> — Googleの★と件数が取得できていないため、判定材料が足りません。</p>
-    <p class="trust-meta-line">検証 0/9項目 ・ Google口コミ取得日 2026-08-31</p>
+    <p class="trust-headline"><span class="trust-tier cc-tier-C">C</span><span class="trust-score">69 / 100</span> — Google★4（5件）は、参考程度にしてください。</p>
+    <p class="trust-meta-line">検証 7/9項目 ・ Google口コミ取得日 2026-08-31</p>
     <p class="trust-breakdown-intro">口コミ信頼度は「この店のGoogle★と件数は、そのまま信じてよいか」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
-      <div class="trust-axis-row trust-axis-unobserved">
+      <div class="trust-axis-row">
         <span class="trust-axis-name">件数は十分か</span>
-        <span class="trust-axis-score">—</span>
-        <span class="trust-axis-reason">件数情報は未取得（判定保留・採点に含めません）</span>
+        <span class="trust-axis-score">2/10点</span>
+        <span class="trust-axis-reason">5件（サンプル不足）</span>
       </div>
-      <div class="trust-axis-row trust-axis-unobserved">
+      <div class="trust-axis-row">
         <span class="trust-axis-name">★と件数のバランス</span>
-        <span class="trust-axis-score">—</span>
-        <span class="trust-axis-reason">Google評価は未取得（判定保留・採点に含めません）</span>
+        <span class="trust-axis-score">5/15点</span>
+        <span class="trust-axis-reason">★4・件数5件（評価は標準）</span>
       </div>
-      <div class="trust-axis-row trust-axis-unobserved">
+      <div class="trust-axis-row">
         <span class="trust-axis-name">直近の評価は全体と一致するか</span>
-        <span class="trust-axis-score">—</span>
-        <span class="trust-axis-reason">最新レビュー未取得（判定保留・採点に含めません）</span>
+        <span class="trust-axis-score">6/6点</span>
+        <span class="trust-axis-reason">最新★4.0≒全体★4</span>
       </div>
-      <div class="trust-axis-row trust-axis-unobserved">
+      <div class="trust-axis-row">
         <span class="trust-axis-name">直近の評価のばらつき</span>
-        <span class="trust-axis-score">—</span>
-        <span class="trust-axis-reason">最新レビュー件数不足（判定保留・採点に含めません）</span>
+        <span class="trust-axis-score">6/6点</span>
+        <span class="trust-axis-reason">標準偏差0.89（自然な分布）</span>
       </div>
-      <div class="trust-axis-row trust-axis-unobserved">
+      <div class="trust-axis-row">
         <span class="trust-axis-name">評価の分布（両極に割れていないか）</span>
-        <span class="trust-axis-score">—</span>
-        <span class="trust-axis-reason">最新レビュー情報なし（判定保留）（判定保留・採点に含めません）</span>
+        <span class="trust-axis-score">15/15点</span>
+        <span class="trust-axis-reason">★5系2件・★1系0件・中間3件（自然な分布）</span>
       </div>
       <div class="trust-axis-row trust-axis-unobserved">
         <span class="trust-axis-name">口コミの増え方</span>
@@ -258,8 +273,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ004678141/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E9%A3%9F%E5%A0%82%E4%BC%BD%E7%BE%85%20%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ004678141/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E9%A3%9F%E5%A0%82%E4%BC%BD%E7%BE%85%20%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
   </div>
 
   
@@ -277,8 +292,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <ul>
       <li><a href="J004403776.html">名古屋きんしゃち 名駅南店</a></li>
       <li><a href="J003737309.html">酔っ手羽 名駅3丁目店</a></li>
-      <li><a href="J000762007.html">半兵ヱ 名古屋駅舎東口 大名古屋ビルヂング裏通り店</a></li>
       <li><a href="J003649512.html">居酒屋 権兵衛 名駅店</a></li>
+      <li><a href="J004403777.html">権兵衛 名駅南店</a></li>
     </ul>
   </div>
 

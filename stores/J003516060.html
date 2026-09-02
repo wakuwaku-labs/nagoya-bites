@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>餃子のネオ大衆酒場ニューカムラ 名駅二丁目店（名駅・居酒屋）| NAGOYA BITES</title>
@@ -51,7 +51,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J003516060.html",
     "description": "名駅1出口2分、2,000円台でランチ営業・空港バス直結の利便性",
     "priceRange": "¥",
-    "openingHours": "月～金: 16:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）土、日、祝日: 12:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）",
+    "openingHours": "月～金: 13:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）土、日、祝日: 12:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.1709",
@@ -215,7 +215,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 名古屋（名古屋駅/西区/中村区）</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市中村区名駅２丁目36-5</span></div>
     <div class="info-cell"><label>価格帯</label><span>2001～3000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月～金: 16:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）土、日、祝日: 12:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月～金: 13:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）土、日、祝日: 12:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>空港バス，名古屋市営地下鉄桜通線，名古屋市営地下鉄東山線名古屋駅１出口より徒歩約2分</span></div>
   </div>
@@ -281,8 +281,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ003516060/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E9%A4%83%E5%AD%90%E3%81%AE%E3%83%8D%E3%82%AA%E5%A4%A7%E8%A1%86%E9%85%92%E5%A0%B4%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%AB%E3%83%A0%E3%83%A9%20%E5%90%8D%E9%A7%85%E4%BA%8C%E4%B8%81%E7%9B%AE%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ003516060/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E9%A4%83%E5%AD%90%E3%81%AE%E3%83%8D%E3%82%AA%E5%A4%A7%E8%A1%86%E9%85%92%E5%A0%B4%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%AB%E3%83%A0%E3%83%A9%20%E5%90%8D%E9%A7%85%E4%BA%8C%E4%B8%81%E7%9B%AE%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/new_kamura/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230103/23083553/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>
@@ -302,8 +302,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <ul>
       <li><a href="J004403776.html">名古屋きんしゃち 名駅南店</a></li>
       <li><a href="J003737309.html">酔っ手羽 名駅3丁目店</a></li>
-      <li><a href="J000762007.html">半兵ヱ 名古屋駅舎東口 大名古屋ビルヂング裏通り店</a></li>
       <li><a href="J003649512.html">居酒屋 権兵衛 名駅店</a></li>
+      <li><a href="J004403777.html">権兵衛 名駅南店</a></li>
     </ul>
   </div>
 

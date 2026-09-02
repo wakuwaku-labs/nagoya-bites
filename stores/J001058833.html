@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ステーキ宮 今池店（千種・大曽根・洋食）| NAGOYA BITES</title>
@@ -51,7 +51,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J001058833.html",
     "description": "今池駅2番出口徒歩12分、ランチ営業でコスパ層を取込む洋食1,250円帯",
     "priceRange": "¥",
-    "openingHours": "月～木: 11:00～21:30 （料理L.O. 21:00 ドリンクL.O. 21:00）金、祝前日: 11:00～22:00 （料理L.O. 21:30 ドリンクL.O. 21:30）土、日、祝日: 10:00～22:00 （料理L.O. 21:30 ドリンクL.O. 21:30）",
+    "openingHours": "月～木: 11:00～21:30 （料理L.O. 21:00 ドリンクL.O. 21:00）金、祝前日: 11:00～22:00 （料理L.O. 21:30 ドリンクL.O. 21:30）土、日、祝日: 10:30～22:00 （料理L.O. 21:30 ドリンクL.O. 21:30）",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.182",
@@ -215,7 +215,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 大曽根･千種･今池･池下･守山区</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市千種区神田町１８-１３</span></div>
     <div class="info-cell"><label>価格帯</label><span>1001～1500円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月～木: 11:00～21:30 （料理L.O. 21:00 ドリンクL.O. 21:00）金、祝前日: 11:00～22:00 （料理L.O. 21:30 ドリンクL.O. 21:30）土、日、祝日: 10:00～22:00 （料理L.O. 21:30 ドリンクL.O. 21:30）</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月～木: 11:00～21:30 （料理L.O. 21:00 ドリンクL.O. 21:00）金、祝前日: 11:00～22:00 （料理L.O. 21:30 ドリンクL.O. 21:30）土、日、祝日: 10:30～22:00 （料理L.O. 21:30 ドリンクL.O. 21:30）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>名古屋市営地下鉄東山線，名古屋市営地下鉄桜通線今池(愛知)駅２出口より徒歩約12分</span></div>
   </div>
@@ -281,8 +281,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001058833/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E5%AE%AE%20%E4%BB%8A%E6%B1%A0%E5%BA%97%20%E5%A4%A7%E6%9B%BD%E6%A0%B9%EF%BD%A5%E5%8D%83%E7%A8%AE%EF%BD%A5%E4%BB%8A%E6%B1%A0%EF%BD%A5%E6%B1%A0%E4%B8%8B%EF%BD%A5%E5%AE%88%E5%B1%B1%E5%8C%BA" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001058833/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E5%AE%AE%20%E4%BB%8A%E6%B1%A0%E5%BA%97%20%E5%A4%A7%E6%9B%BD%E6%A0%B9%EF%BD%A5%E5%8D%83%E7%A8%AE%EF%BD%A5%E4%BB%8A%E6%B1%A0%EF%BD%A5%E6%B1%A0%E4%B8%8B%EF%BD%A5%E5%AE%88%E5%B1%B1%E5%8C%BA" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/steakmiya38/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230106/23047027/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>

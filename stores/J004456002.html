@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tripot cafe the PARK Tsurumai（鶴舞・八事・カフェ・スイーツ）| NAGOYA BITES</title>
@@ -281,8 +281,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ004456002/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/Tripot%20cafe%20the%20PARK%20Tsurumai%20%E9%B6%B4%E8%88%9E%E3%83%BB%E5%85%AB%E4%BA%8B%E3%83%BB%E5%BE%A1%E5%99%A8%E6%89%80" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ004456002/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/Tripot%20cafe%20the%20PARK%20Tsurumai%20%E9%B6%B4%E8%88%9E%E3%83%BB%E5%85%AB%E4%BA%8B%E3%83%BB%E5%BE%A1%E5%99%A8%E6%89%80" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/thepark.tripotcafe.tsurumai/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230105/23085131/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>
@@ -301,9 +301,9 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <h2>鶴舞・八事・御器所の他の店</h2>
     <ul>
       <li><a href="J003324539.html">パンケーキとロコモコのカフェ The Moana place</a></li>
-      <li><a href="J003410434.html">FLOWERS&amp;RETREAT ENKI フラワーズアンドリトリート エンキ</a></li>
       <li><a href="J004445064.html">月ト兎ト</a></li>
-      <li><a href="J004469398.html">D s cafe 853 ディーズカフェハチゴサン</a></li>
+      <li><a href="J001286816.html">ふくろうカフェ もふりこっと</a></li>
+      <li><a href="J000644253.html">珈琲家比呂野</a></li>
     </ul>
   </div>
 

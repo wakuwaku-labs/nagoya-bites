@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>赤から名古屋本店（名駅・焼肉・ホルモン）| NAGOYA BITES</title>
@@ -47,7 +47,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       "streetAddress": "愛知県名古屋市中村区名駅３－１６－１１",
       "addressArea": "名古屋（名古屋駅/西区/中村区）"
     },
-    "image": "https://imgfp.hotp.jp/IMGH/64/22/P050746422/P050746422_480.jpg",
+    "image": "https://imgfp.hotp.jp/IMGH/55/43/P051035543/P051035543_480.jpg",
     "url": "https://nagoya-bites.com/stores/J001144910.html",
     "description": "名古屋駅1分で3,500円焼肉、ユニモール直結でランチ客層も対応",
     "priceRange": "¥",
@@ -184,7 +184,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F64%2F22%2FP050746422%2FP050746422_480.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F64%2F22%2FP050746422%2FP050746422_238.jpg" alt="赤から名古屋本店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/64/22/P050746422/P050746422_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
+<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F55%2F43%2FP051035543%2FP051035543_480.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F55%2F43%2FP051035543%2FP051035543_238.jpg" alt="赤から名古屋本店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/55/43/P051035543/P051035543_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
@@ -274,8 +274,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001144910/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E8%B5%A4%E3%81%8B%E3%82%89%E5%90%8D%E5%8F%A4%E5%B1%8B%E6%9C%AC%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001144910/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E8%B5%A4%E3%81%8B%E3%82%89%E5%90%8D%E5%8F%A4%E5%B1%8B%E6%9C%AC%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/akakara_official/" target="_blank" rel="noopener noreferrer">Instagram</a>
   </div>
 

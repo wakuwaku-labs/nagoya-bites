@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>炉端薫る あげまん 大曽根店（千種・大曽根・居酒屋）| NAGOYA BITES</title>
@@ -51,7 +51,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J003693242.html",
     "description": "大曽根駅1分、個室8室で接待対応、4,000円超でも団体集客の安定感",
     "priceRange": "¥¥",
-    "openingHours": "月～日、祝日: 16:00～翌0:00 （料理L.O. 23:00 ドリンクL.O. 23:30）",
+    "openingHours": "月～日: 16:00～翌0:00 （料理L.O. 23:00 ドリンクL.O. 23:30）",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.182",
@@ -209,7 +209,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 大曽根･千種･今池･池下･守山区</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市北区大曽根３-1016 ライオンビル１F</span></div>
     <div class="info-cell"><label>価格帯</label><span>4001～5000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月～日、祝日: 16:00～翌0:00 （料理L.O. 23:00 ドリンクL.O. 23:30）</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月～日: 16:00～翌0:00 （料理L.O. 23:00 ドリンクL.O. 23:30）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>ＪＲ中央本線大曽根駅北口より徒歩約1分/デザイナー個室8室あり</span></div>
   </div>
@@ -275,8 +275,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ003693242/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E7%82%89%E7%AB%AF%E8%96%AB%E3%82%8B%20%E3%81%82%E3%81%92%E3%81%BE%E3%82%93%20%E5%A4%A7%E6%9B%BD%E6%A0%B9%E5%BA%97%20%E5%A4%A7%E6%9B%BD%E6%A0%B9%EF%BD%A5%E5%8D%83%E7%A8%AE%EF%BD%A5%E4%BB%8A%E6%B1%A0%EF%BD%A5%E6%B1%A0%E4%B8%8B%EF%BD%A5%E5%AE%88%E5%B1%B1%E5%8C%BA" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ003693242/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E7%82%89%E7%AB%AF%E8%96%AB%E3%82%8B%20%E3%81%82%E3%81%92%E3%81%BE%E3%82%93%20%E5%A4%A7%E6%9B%BD%E6%A0%B9%E5%BA%97%20%E5%A4%A7%E6%9B%BD%E6%A0%B9%EF%BD%A5%E5%8D%83%E7%A8%AE%EF%BD%A5%E4%BB%8A%E6%B1%A0%EF%BD%A5%E6%B1%A0%E4%B8%8B%EF%BD%A5%E5%AE%88%E5%B1%B1%E5%8C%BA" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/ageman_ageman/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230110/23087117/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>

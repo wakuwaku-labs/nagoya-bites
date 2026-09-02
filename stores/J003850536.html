@@ -7,14 +7,14 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>囲炉裏家さんかい（金山・居酒屋）| NAGOYA BITES</title>
-<meta name="description" content="金山駅から徒歩5分の居酒屋。予算7001～10000円。Google★4.9（口コミ31件）。金山4出口5分・7,500円帯、接待需要明記で評価が高い単価維持の実績店。予約・地図・口コミを1ページで確認できます。">
+<meta name="description" content="金山駅から徒歩5分の居酒屋。予算7001～10000円。Google★4.9（口コミ100件）。金山4出口5分・7,500円帯、接待需要明記で評価が高い単価維持の実績店。予約・地図・口コミを1ページで確認できます。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/J003850536.html">
 <meta property="og:title" content="囲炉裏家さんかい（金山・居酒屋）| NAGOYA BITES">
-<meta property="og:description" content="金山駅から徒歩5分の居酒屋。予算7001～10000円。Google★4.9（口コミ31件）。金山4出口5分・7,500円帯、接待需要明記で評価が高い単価維持の実績店。予約・地図・口コミを1ページで確認できます。">
+<meta property="og:description" content="金山駅から徒歩5分の居酒屋。予算7001～10000円。Google★4.9（口コミ100件）。金山4出口5分・7,500円帯、接待需要明記で評価が高い単価維持の実績店。予約・地図・口コミを1ページで確認できます。">
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="https://nagoya-bites.com/stores/J003850536.html">
 <meta property="og:image" content="https://wsrv.nl/?url=https%3A%2F%2Fnagoya-bites.com%2Fassets%2Fog%2FJ003850536.svg&output=png&w=1200&h=630">
@@ -26,7 +26,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="囲炉裏家さんかい（金山・居酒屋）| NAGOYA BITES">
-<meta name="twitter:description" content="金山駅から徒歩5分の居酒屋。予算7001～10000円。Google★4.9（口コミ31件）。金山4出口5分・7,500円帯、接待需要明記で評価が高い単価維持の実績店。予約・地図・口コミを1ページで確認できます。">
+<meta name="twitter:description" content="金山駅から徒歩5分の居酒屋。予算7001～10000円。Google★4.9（口コミ100件）。金山4出口5分・7,500円帯、接待需要明記で評価が高い単価維持の実績店。予約・地図・口コミを1ページで確認できます。">
 <meta name="twitter:image" content="https://wsrv.nl/?url=https%3A%2F%2Fnagoya-bites.com%2Fassets%2Fog%2FJ003850536.svg&output=png&w=1200&h=630">
 <link rel="manifest" href="../manifest.json">
 <meta name="theme-color" content="#7a5c10">
@@ -66,15 +66,15 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       "@type": "AggregateRating",
       "ratingValue": "4.9",
       "bestRating": "5",
-      "ratingCount": "31"
+      "ratingCount": "100"
     },
     "additionalProperty": [
       {
         "@type": "PropertyValue",
-        "name": "口コミ信頼度（独自算定・広告非関与・段階 D）",
-        "value": 55,
+        "name": "口コミ信頼度（独自算定・広告非関与・段階 B）",
+        "value": 79,
         "maxValue": 100,
-        "description": "「この店のGoogle★と件数は、そのまま信じてよいか」を、Googleの件数・★と件数のバランス・直近の口コミの傾向・評価の分布・第三者メディアの掲載のうち観測できた検証項目（5/9）だけで採点した参考指標。段階 D＝他の情報と合わせて判断を。店の良し悪しの評価ではない。算定方法: https://nagoya-bites.com/features/integrity-method.html"
+        "description": "「この店のGoogle★と件数は、そのまま信じてよいか」を、Googleの件数・★と件数のバランス・直近の口コミの傾向・評価の分布・第三者メディアの掲載のうち観測できた検証項目（6/9）だけで採点した参考指標。段階 B＝おおむね参考にできます。店の良し悪しの評価ではない。算定方法: https://nagoya-bites.com/features/integrity-method.html"
       }
     ]
   },
@@ -199,7 +199,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <h1>囲炉裏家さんかい</h1>
   <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
     <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>4.9</div>
-    <span class="ccs-badge" title="口コミ信頼度 D：他の情報と合わせて判断を">口コミ信頼度<span class="ccs-tier cc-tier-D">D</span></span>
+    <span class="ccs-badge" title="口コミ信頼度 B：おおむね参考にできます">口コミ信頼度<span class="ccs-tier cc-tier-B">B</span></span>
   </div>
 
   <div class="point-box"><p>金山4出口5分・7,500円帯、接待需要明記で評価が高い単価維持の実績店</p></div>
@@ -217,23 +217,23 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
 
   <div class="trust-breakdown">
     <h2>口コミ信頼度の内訳</h2>
-    <p class="trust-headline"><span class="trust-tier cc-tier-D">D</span><span class="trust-score">55 / 100</span> — Google★4.9（31件）は、他の情報と合わせて判断してください。</p>
-    <p class="trust-meta-line">検証 5/9項目 ・ Google口コミ取得日 2026-05-22</p>
+    <p class="trust-headline"><span class="trust-tier cc-tier-B">B</span><span class="trust-score">79 / 100</span> — Google★4.9（100件）は、おおむね参考にできます。</p>
+    <p class="trust-meta-line">検証 6/9項目 ・ Google口コミ取得日 2026-08-31</p>
     <p class="trust-breakdown-intro">口コミ信頼度は「この店のGoogle★と件数は、そのまま信じてよいか」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
       <div class="trust-axis-row">
         <span class="trust-axis-name">件数は十分か</span>
-        <span class="trust-axis-score">4/10点</span>
-        <span class="trust-axis-reason">31件（最低限のサンプル）</span>
+        <span class="trust-axis-score">8/10点</span>
+        <span class="trust-axis-reason">100件（十分なサンプル）</span>
       </div>
       <div class="trust-axis-row">
         <span class="trust-axis-name">★と件数のバランス</span>
-        <span class="trust-axis-score">3/15点</span>
-        <span class="trust-axis-reason">★4.9・件数31件（件数が少なく、高評価の裏付けが弱い）</span>
+        <span class="trust-axis-score">15/15点</span>
+        <span class="trust-axis-reason">★4.9・件数100件（高評価と十分な件数で整合）</span>
       </div>
       <div class="trust-axis-row">
         <span class="trust-axis-name">直近の評価は全体と一致するか</span>
-        <span class="trust-axis-score">6/6点</span>
-        <span class="trust-axis-reason">最新★5.0≒全体★4.9</span>
+        <span class="trust-axis-score">4/6点</span>
+        <span class="trust-axis-reason">最新★4.6・全体★4.9（軽微な乖離）</span>
       </div>
       <div class="trust-axis-row trust-axis-unobserved">
         <span class="trust-axis-name">直近の評価のばらつき</span>
@@ -242,8 +242,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
       </div>
       <div class="trust-axis-row">
         <span class="trust-axis-name">評価の分布（両極に割れていないか）</span>
-        <span class="trust-axis-score">11/15点</span>
-        <span class="trust-axis-reason">★5系5件・★1系0件・中間0件（高評価集中）</span>
+        <span class="trust-axis-score">8/15点</span>
+        <span class="trust-axis-reason">★5系3件・★1系0件・中間2件</span>
       </div>
       <div class="trust-axis-row trust-axis-unobserved">
         <span class="trust-axis-name">口コミの増え方</span>
@@ -274,8 +274,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ003850536/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E5%9B%B2%E7%82%89%E8%A3%8F%E5%AE%B6%E3%81%95%E3%82%93%E3%81%8B%E3%81%84%20%E9%87%91%E5%B1%B1%E3%83%BB%E7%A5%9E%E5%AE%AE%E5%89%8D%E3%83%BB%E7%86%B1%E7%94%B0%E5%8C%BA" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ003850536/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E5%9B%B2%E7%82%89%E8%A3%8F%E5%AE%B6%E3%81%95%E3%82%93%E3%81%8B%E3%81%84%20%E9%87%91%E5%B1%B1%E3%83%BB%E7%A5%9E%E5%AE%AE%E5%89%8D%E3%83%BB%E7%86%B1%E7%94%B0%E5%8C%BA" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230105/23089163/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>
 

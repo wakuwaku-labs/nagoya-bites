@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>バー シスル（栄・伏見・バー・カクテル）| NAGOYA BITES</title>
@@ -51,7 +51,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J004576814.html",
     "description": "伏見地下街1分直結、4500円バーは通勤・帰宅導線の優位性がある",
     "priceRange": "¥¥",
-    "openingHours": "月～金: 17:00～翌0:00 （ドリンクL.O. 23:30）土: 14:00～翌0:00 （ドリンクL.O. 23:30）日、祝日: 16:00～翌0:00 （ドリンクL.O. 23:30）",
+    "openingHours": "月～金: 17:00～翌1:00 （ドリンクL.O. 23:30）土: 14:00～翌0:00 （ドリンクL.O. 23:30）日、祝日: 16:00～翌0:00 （ドリンクL.O. 23:30）",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.1721",
@@ -209,7 +209,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市中区錦２丁目15-20 三永伏見ビル B1F</span></div>
     <div class="info-cell"><label>価格帯</label><span>4001～5000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月～金: 17:00～翌0:00 （ドリンクL.O. 23:30）土: 14:00～翌0:00 （ドリンクL.O. 23:30）日、祝日: 16:00～翌0:00 （ドリンクL.O. 23:30）</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月～金: 17:00～翌1:00 （ドリンクL.O. 23:30）土: 14:00～翌0:00 （ドリンクL.O. 23:30）日、祝日: 16:00～翌0:00 （ドリンクL.O. 23:30）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>名古屋市営地下鉄東山線伏見(愛知)駅伏見地下街出口より徒歩約1分</span></div>
   </div>
@@ -275,8 +275,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ004576814/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E3%83%90%E3%83%BC%20%E3%82%B7%E3%82%B9%E3%83%AB%20%E6%A0%84%EF%BD%B7%EF%BE%80%E9%8C%A6%2F%E4%BC%8F%E8%A6%8B%E4%B8%B8%E3%81%AE%E5%86%85%2F%E6%B3%89%2F%E6%9D%B1%E6%A1%9C%2F%E6%96%B0%E6%A0%84" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ004576814/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E3%83%90%E3%83%BC%20%E3%82%B7%E3%82%B9%E3%83%AB%20%E6%A0%84%EF%BD%B7%EF%BE%80%E9%8C%A6%2F%E4%BC%8F%E8%A6%8B%E4%B8%B8%E3%81%AE%E5%86%85%2F%E6%B3%89%2F%E6%9D%B1%E6%A1%9C%2F%E6%96%B0%E6%A0%84" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/bar.thistle/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230102/23071105/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>
@@ -297,7 +297,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
       <li><a href="J004067647.html">シーシャラウンジ プラーナ 名古屋栄店</a></li>
       <li><a href="J003532623.html">REX POKER NAGOYA レックスポーカーナゴヤ</a></li>
       <li><a href="J003806456.html">Dr shisha Nagoya ドクターシーシャ</a></li>
-      <li><a href="J001134166.html">バームーンウォーク bar moon walk 錦通り店</a></li>
+      <li><a href="J003498032.html">シーシャラウンジ チルラ 名古屋 グランデ 栄店</a></li>
     </ul>
   </div>
 

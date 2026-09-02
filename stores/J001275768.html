@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>寿司 天ぷら すしぱ 東桜店（栄・伏見・居酒屋）| NAGOYA BITES</title>
@@ -51,7 +51,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J001275768.html",
     "description": "久屋大通駅3分・複線使用可、3,500円で客層広い流動性重視",
     "priceRange": "¥¥",
-    "openingHours": "月～日、祝日、祝前日: 16:00～23:30 （料理L.O. 23:00 ドリンクL.O. 23:00）",
+    "openingHours": "月～日、祝日、祝前日: 16:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.1721",
@@ -209,7 +209,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市東区東桜１‐10-6</span></div>
     <div class="info-cell"><label>価格帯</label><span>3001～4000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月～日、祝日、祝前日: 16:00～23:30 （料理L.O. 23:00 ドリンクL.O. 23:00）</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月～日、祝日、祝前日: 16:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>最寄りは久屋大通駅３Ｂ出口より徒歩約3分/栄町駅７Ａ出口より徒歩約3分/栄駅４出口より徒歩約6分です！</span></div>
   </div>
@@ -275,8 +275,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001275768/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E5%AF%BF%E5%8F%B8%20%E5%A4%A9%E3%81%B7%E3%82%89%20%E3%81%99%E3%81%97%E3%81%B1%20%E6%9D%B1%E6%A1%9C%E5%BA%97%20%E6%A0%84%EF%BD%B7%EF%BE%80%E9%8C%A6%2F%E4%BC%8F%E8%A6%8B%E4%B8%B8%E3%81%AE%E5%86%85%2F%E6%B3%89%2F%E6%9D%B1%E6%A1%9C%2F%E6%96%B0%E6%A0%84" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ001275768/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E5%AF%BF%E5%8F%B8%20%E5%A4%A9%E3%81%B7%E3%82%89%20%E3%81%99%E3%81%97%E3%81%B1%20%E6%9D%B1%E6%A1%9C%E5%BA%97%20%E6%A0%84%EF%BD%B7%EF%BE%80%E9%8C%A6%2F%E4%BC%8F%E8%A6%8B%E4%B8%B8%E3%81%AE%E5%86%85%2F%E6%B3%89%2F%E6%9D%B1%E6%A1%9C%2F%E6%96%B0%E6%A0%84" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/sushipa_nagoya/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230103/23077124/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>

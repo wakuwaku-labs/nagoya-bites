@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>番菜百薬 栄店（栄・矢場町・居酒屋）| NAGOYA BITES</title>
@@ -47,7 +47,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       "streetAddress": "愛知県名古屋市中区栄４-13-15 ハットリビル1F",
       "addressArea": "栄(ミナミ)/矢場町/大須/上前津"
     },
-    "image": "https://imgfp.hotp.jp/IMGH/78/75/P049957875/P049957875_480.jpg",
+    "image": "https://imgfp.hotp.jp/IMGH/86/15/P051118615/P051118615_480.jpg",
     "url": "https://nagoya-bites.com/stores/J004559190.html",
     "description": "料理もドリンクも充実した居酒屋。栄エリアで人気",
     "priceRange": "¥¥",
@@ -185,7 +185,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   <a class="back-link" href="../">← 店舗一覧に戻る</a>
 </header>
 
-<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F78%2F75%2FP049957875%2FP049957875_480.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F78%2F75%2FP049957875%2FP049957875_238.jpg" alt="番菜百薬 栄店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/78/75/P049957875/P049957875_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
+<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F86%2F15%2FP051118615%2FP051118615_480.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F86%2F15%2FP051118615%2FP051118615_238.jpg" alt="番菜百薬 栄店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/86/15/P051118615/P051118615_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
@@ -217,7 +217,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <div class="info-cell"><label>価格帯</label><span>4001～5000円</span></div>
     <div class="info-cell"><label>営業時間</label><span>月～土: 17:00～翌0:00 （料理L.O. 23:00 ドリンクL.O. 23:30）</span></div>
     
-    <div class="info-cell"><label>アクセス・特徴</label><span>栄駅から徒歩3分の好立地</span></div>
+    <div class="info-cell"><label>アクセス・特徴</label><span>栄駅徒歩3分</span></div>
   </div>
 
   <div class="tags"><span class="tag">居酒屋</span><span class="tag">3000〜5000円</span></div>
@@ -281,8 +281,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ004559190/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/%E7%95%AA%E8%8F%9C%E7%99%BE%E8%96%AC%20%E6%A0%84%E5%BA%97%20%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ004559190/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/%E7%95%AA%E8%8F%9C%E7%99%BE%E8%96%AC%20%E6%A0%84%E5%BA%97%20%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/banzai.hyakuyaku.sakae/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230103/23095178/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>

@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;var params={link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)};if(/hotpepper.jp/.test(h)){trackEvent('cta_click',params);}else if(/google.com/maps|maps.google.com/.test(href)){trackEvent('cta_gmap_click',params);}else{trackEvent('outbound_click',params);}}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>toro restaurant（栄・伏見・イタリアン・フレンチ）| NAGOYA BITES</title>
@@ -51,7 +51,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J003958759.html",
     "description": "新栄町駅8分、5千5百円でランチ営業、フレンチの層の厚さが活きる",
     "priceRange": "¥¥",
-    "openingHours": "月～日、祝日: 11:00～14:30 （料理L.O. 14:00 ドリンクL.O. 14:00）17:30～22:30 （料理L.O. 22:00 ドリンクL.O. 22:00）",
+    "openingHours": "月、水～日、祝日: 11:00～14:30 （料理L.O. 14:00 ドリンクL.O. 14:00）17:30～22:30 （料理L.O. 22:00 ドリンクL.O. 22:00）",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.1721",
@@ -215,7 +215,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市中区新栄１-17-15</span></div>
     <div class="info-cell"><label>価格帯</label><span>5001～7000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月～日、祝日: 11:00～14:30 （料理L.O. 14:00 ドリンクL.O. 14:00）17:30～22:30 （料理L.O. 22:00 ドリンクL.O. 22:00）</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月、水～日、祝日: 11:00～14:30 （料理L.O. 14:00 ドリンクL.O. 14:00）17:30～22:30 （料理L.O. 22:00 ドリンクL.O. 22:00）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>名古屋市営地下鉄東山線新栄町駅より徒歩約8分/ＪＲ中央本線鶴舞駅名大病院口より徒歩約14分</span></div>
   </div>
@@ -281,8 +281,8 @@ footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ003958759/" target="_blank" rel="noopener noreferrer">ホットペッパーで予約</a>
-    <a class="link-btn gm" href="https://www.google.com/maps/search/toro%20restaurant%20%E6%A0%84%EF%BD%B7%EF%BE%80%E9%8C%A6%2F%E4%BC%8F%E8%A6%8B%E4%B8%B8%E3%81%AE%E5%86%85%2F%E6%B3%89%2F%E6%9D%B1%E6%A1%9C%2F%E6%96%B0%E6%A0%84" target="_blank" rel="noopener noreferrer">Googleマップ</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ003958759/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn gm" href="https://www.google.com/maps/search/toro%20restaurant%20%E6%A0%84%EF%BD%B7%EF%BE%80%E9%8C%A6%2F%E4%BC%8F%E8%A6%8B%E4%B8%B8%E3%81%AE%E5%86%85%2F%E6%B3%89%2F%E6%9D%B1%E6%A1%9C%2F%E6%96%B0%E6%A0%84" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/tororestaurant/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230104/23090749/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>
