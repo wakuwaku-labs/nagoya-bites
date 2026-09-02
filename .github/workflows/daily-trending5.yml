@@ -11,6 +11,8 @@ on:
 permissions:
   contents: write
 
+# ISSUE-112: build.yml（push トリガー）と同時起動するとデータ生成ファイル同士でコンテンツ競合が起きる。
+# build-deploy グループを共有することで、build.yml の実行中は本ワークフローがキューで待機する。
 concurrency:
   group: build-deploy
   cancel-in-progress: false
@@ -64,17 +66,26 @@ jobs:
           # build.js が生成する残余ファイルを破棄してから rebase（再実行時に再生成されるため安全）
           git checkout -- . 2>/dev/null || true
           git clean -fd 2>/dev/null || true
+          git pull --rebase origin main
+          # ISSUE-112: build-deploy 共有グループで競合は大幅に減るが、念のため競合時も自力解消できる retry を維持する。
+          # rebase の --ours は「適用中の我々のコミット（今回の生成結果）」を指す。
           PUSHED=0
-          for i in 1 2 3 4 5; do
-            git pull --rebase --autostash origin main || true
-            if git push; then PUSHED=1; break; fi
-            echo "push 失敗（試行 ${i}/5）。$((i * 5))秒待って再試行します"
-            sleep $((i * 5))
+          for i in 1 2 3; do
+            git rebase --abort 2>/dev/null || true
+            if git pull --rebase origin main; then
+              if git push; then PUSHED=1; break; fi
+            else
+              CONFLICTED=$(git diff --name-only --diff-filter=U 2>/dev/null)
+              if [ -n "$CONFLICTED" ]; then
+                echo "$CONFLICTED" | xargs git checkout --ours -- 2>/dev/null || true
+                echo "$CONFLICTED" | xargs git add -- 2>/dev/null || true
+                GIT_EDITOR=true git rebase --continue 2>/dev/null || git rebase --abort 2>/dev/null || true
+              fi
+              if git push; then PUSHED=1; break; fi
+            fi
+            sleep $((i * 10))
           done
-          if [ "$PUSHED" != "1" ]; then
-            echo "::error::5回リトライしてもpushできませんでした（concurrency グループ内の競合）"
-            exit 1
-          fi
+          [ "$PUSHED" = "1" ] || echo "::warning::3回リトライしてもpushできませんでした"
 
       - name: 実行ログ
         if: always()

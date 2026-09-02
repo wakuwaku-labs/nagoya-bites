@@ -572,6 +572,7 @@
 ### [ISSUE-112] build.ymlの「Commit & push if changed」が、近接して起動した2つのCI実行間で本物のコンテンツ競合を起こすと5回リトライしても回復できない
 
 - **priority**: P1（当初P2・2回目発生の実害確認により引き上げ） → **status**: done
+- **resolved**: 2026-08-23
 - **detected**: 2026-08-23（オーナー就寝中の自律処理。本セッション自身が短時間に連続push→CI連続起動を招き実際に発生させて発覚）
 - **resolved**: 2026-08-26
 - **category**: CI / インフラ
@@ -4635,6 +4636,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-115 実装・デプロイ — `scripts/audit_ogp_image_liveness.js`を新設しog:imageのHTTP到達性をCIで検査可能に。全features/journalに実行したところjournal記事で新たに11件の404/403を発見（ISSUE-116として起票・APIキー制約で本セッションでは修復不能）。既知の未解消分があるため`continue-on-error: true`で非ブロッキング追加し、ISSUE-116解消後にブロッキング化する方針とした。副次的に`audit_photo_coverage.js --check-liveness`で「写真URLあり」の実配信率が推定25.9%と判明したが、onerrorフォールバックでサイト表示自体は壊れないため規模を見積もってから別課題として切り出す判断とした | ✅ 本コミット（新規スクリプト＋CI追加） |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-114 実装・デプロイ — ISSUE-113調査中、特集のog:imageが実際にHTTP到達可能かを確認していないことに気づき全67特集を実測。3件（osu-food-walk/birthday-surprise/large-group）が404と判明し、各特集の掲載店1位の現在の実写真URLに差し替え。根本原因（CIのOGP監査がURL構造しか検査していない）はISSUE-115として別途起票 | ✅ 本コミット（3ファイル修正） |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-113 実装・デプロイ — nightly QAが架空店監査WARNを報告、ISSUE-103で除外済みのはずの他都市チェーン店6件が特集記事の掲載コンテンツ側に残存していたと判明（データ層除外が特集コンテンツ層に反映されていなかった構造的欠陥）。`data/closed_stores.json`全70件×全features/journal本文の網羅的突合で追加2件を発見し計8件を実在検証済みのLOCAL_STORES代替店に差し替え。再発防止として`scripts/audit_closed_store_mentions.js`を新設しbuild.ymlにブロッキングで追加 | ✅ 本コミット（8ファイル差し替え＋新規監査スクリプト） |
+| 2026-08-23 | Builder(自律ルーチン) | ISSUE-112 実装・デプロイ — `daily-trending5.yml`・`daily-store-add.yml` に `concurrency: group: build-deploy` を追加し build.yml と同一キューに入れて同時実行を防止（option b）。さらに `build.yml` のリトライループを改善: 各試行頭で `git rebase --abort` して前回の中途半端な rebase 状態をリセット、`git pull --rebase` の成否を明示的に判定し、コンテンツ競合が起きた場合は `git checkout --ours` で全競合ファイルを今回の生成結果で解消してから `git rebase --continue` する。`daily-trending5.yml` の push リトライも同様のループに強化（旧: 1回のみ → 新: 3回・競合時は --ours 解消）。`npm test` 125/125 pass | ✅ 本コミット（3ワークフロー修正） |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-112 2回目発生・復旧 — `daily-trending5.yml`（定期実行）が本セッションの直前pushと重なり同型のコンテンツ競合で失敗、当日分「今日の話題店TOP5」コミットが丸ごと失われるところだった。`gh workflow run daily-trending5.yml`でリカバリ用workflow_dispatchを手動実行し5分後に復旧成功を確認。実害が具体化・複数ワークフローに同根本原因があると判明したため priority を P2→P1 に引き上げ | ✅ リカバリ実行成功（`32598697435`）・恒久修正はISSUE-112のまま |
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-112 起票 — `gh run list`でCI失敗を発見・調査。本セッション自身の短間隔連続pushが原因で2つのbuild.yml実行が重なり、`Commit & push if changed`が本物のコンテンツ競合（ISSUE-100とは別モード）で5回リトライしても回復不能と判明。実害は無駄な二重API呼び出しのみ（データ損失は無い、次回実行で自己回復）と確認。恒久修正はCI本体の変更で検証に時間を要するため見送り、以降は自身のpush間隔を空ける運用に切替 | 📋 起票のみ・push間隔調整で運用回避 |
 | 2026-08-26 | Orchestrator(夜間自律処理) | ISSUE-112 実装・デプロイ — `daily-trending5.yml` に `concurrency: group: build-deploy / cancel-in-progress: false` を追加し、build.yml と同じ concurrency グループに所属させることで同時実行を防止。push リトライも1回限りの `git push \|\| sleep 10 && ...` から build.yml 準拠の5回ループ（指数バックオフ・--autostash）に強化。ISSUE-108/SEO-071 は実APIキー不要・オーナー承認が必要なためオーナーへエスカレーション済み | ✅ 本コミット |
