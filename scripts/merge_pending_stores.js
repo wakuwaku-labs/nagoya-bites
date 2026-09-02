@@ -77,22 +77,27 @@ function toLocalStoreShape(p) {
  * 店名重複はスキップ(既存側を優先)。
  */
 function mergePendingStores(existingStores) {
-  if (!fs.existsSync(PENDING)) return { merged: existingStores, addedCount: 0, skippedCount: 0 };
+  if (!fs.existsSync(PENDING)) return { merged: existingStores, addedCount: 0, skippedCount: 0, hiddenNoPhoto: 0 };
   const pending = JSON.parse(fs.readFileSync(PENDING, 'utf8'));
   const pendingList = pending.pending || [];
-  if (pendingList.length === 0) return { merged: existingStores, addedCount: 0, skippedCount: 0 };
+  if (pendingList.length === 0) return { merged: existingStores, addedCount: 0, skippedCount: 0, hiddenNoPhoto: 0 };
 
   const existingNames = new Set(existingStores.map(s => (s['店名'] || '').trim()));
   const result = existingStores.slice();
-  let added = 0, skipped = 0;
+  let added = 0, skipped = 0, hiddenNoPhoto = 0;
   pendingList.forEach(p => {
     if (!p['店名']) return;
     if (existingNames.has(p['店名'])) { skipped++; return; }
+    // 写真が無いまま掲載しない（オーナー承認・2026-09-02・ISSUE-120）。manual_stores.json と
+    // 同じ判定: fetch_manual_store_photos.js / fill_missing_photos_from_hotpepper.js が
+    // Places・HotPepper のどちらでも実写を見つけられなかったときにだけ書き込まれる
+    // 写真失敗理由 で判定する（まだ取得を試していない新着店は除外しない）。
+    if (!p['写真URL'] && p['写真失敗理由']) { hiddenNoPhoto++; return; }
     result.push(toLocalStoreShape(p));
     existingNames.add(p['店名']);
     added++;
   });
-  return { merged: result, addedCount: added, skippedCount: skipped };
+  return { merged: result, addedCount: added, skippedCount: skipped, hiddenNoPhoto };
 }
 
 function main() {

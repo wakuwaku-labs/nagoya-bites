@@ -768,6 +768,18 @@ function loadManualStores() {
       console.warn(`[manual] アクセス欄に「名古屋」を含まない: ${m['店名']} — isNagoyaStoreで弾かれる可能性あり`);
       result.warnings++;
     }
+    // 写真が無いまま掲載しない（オーナー承認・2026-09-02・ISSUE-120）。
+    // 「写真URLが空」だけでは判定しない — まだ取得を試していない新着店まで消えてしまう
+    // （scripts/fetch_manual_store_photos.js / fill_missing_photos_from_hotpepper.js が
+    // 一度も走っていない店を除外するのは早すぎる）。写真失敗理由 は上記2スクリプトが
+    // Places/HotPepper のどちらでも実写を見つけられなかった場合にのみ書き込む値なので、
+    // 「取得を試みて、それでも見つからなかった」ことを検算できる（制約10）。
+    // 写真が後日見つかれば 写真URL が入り、この条件は次回ビルドで自動的に外れる。
+    if (!m['写真URL'] && m['写真失敗理由']) {
+      console.warn(`[manual] 写真取得を試みたが未取得のため非表示: ${m['店名']} (理由: ${m['写真失敗理由']})`);
+      result.hiddenNoPhoto = (result.hiddenNoPhoto || 0) + 1;
+      continue;
+    }
     result.stores.push(manualStoreToRecord(m));
   }
   return result;
@@ -1028,7 +1040,7 @@ async function main() {
     const { mergePendingStores } = require('./scripts/merge_pending_stores.js');
     const pendingResult = mergePendingStores(mergedStores);
     mergedStores = pendingResult.merged;
-    console.log(`pending_stores: ${pendingResult.addedCount}件追加 / ${pendingResult.skippedCount}件既存`);
+    console.log(`pending_stores: ${pendingResult.addedCount}件追加 / ${pendingResult.skippedCount}件既存 / 写真取得未了で非表示${pendingResult.hiddenNoPhoto || 0}件`);
   } catch (e) {
     console.warn(`pending_stores マージ失敗: ${e.message}`);
   }
@@ -1038,7 +1050,7 @@ async function main() {
   const manualNew = mergeManualStores(mergedStores, manualResult.stores, existingHpIds);
   mergedStores.push(...manualNew);
   const manualEnriched = manualResult.stores.length - manualNew.length;
-  console.log(`手動キュレーション: 新規${manualNew.length}件 / 既存拡充${manualEnriched}件 / 無効${manualResult.invalid}件 (警告${manualResult.warnings}件)`);
+  console.log(`手動キュレーション: 新規${manualNew.length}件 / 既存拡充${manualEnriched}件 / 無効${manualResult.invalid}件 (警告${manualResult.warnings}件) / 写真取得未了で非表示${manualResult.hiddenNoPhoto || 0}件`);
 
   // 品質フィルタ：名古屋市内と確信できるものだけ残す
   const stores = [];

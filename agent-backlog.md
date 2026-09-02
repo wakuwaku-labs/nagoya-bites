@@ -6,9 +6,38 @@
 
 ---
 
+### [ISSUE-121] Build & Deployが「他都道府県マッチ監査」で3回連続失敗し、ISSUE-120含む複数のmainマージが数時間ぶん本番未反映のまま放置されていた
+
+- **priority**: P0 → **status**: ready（実装・ローカル検証済み。[PR #205](https://github.com/wakuwaku-labs/nagoya-bites/pull/205) マージ待ち）
+- **detected**: 2026-09-02
+- **category**: ci / ops-monitoring
+- **owner**: Builder
+- **source**: ユーザーが ISSUE-120 のデプロイ結果を確認しようとしたところ「まだ反映されてない」と報告 → CI実行履歴を確認し発覚
+- **brand-filter**: ✅ 適合 — CLAUDE.md「無人自動化の監視を設計するときの原則」1・3 に直結（監視対象=Build & Deployと、それを監視する仕組みが同じmainの成否に依存しており、CI自体が壊れると通知経路もろとも止まる。かつ「気づけるはず」を検知と数えない原則どおり、赤いCIバッジは受動的な表示であり誰かが能動的に見に行かないと発覚しない）
+- **検証できる事実（制約10）**:
+
+  | 事実 | 出典 |
+  |---|---|
+  | 2026-09-02 07:01:58 以降の `main` への push が **3回連続で Build & Deploy 失敗**（SEO-075マージ・PR #201マージ・feedback-triageコミット） | `gh run list --workflow=build.yml` |
+  | 失敗ステップは一貫して `他都道府県マッチ監査`（`node scripts/audit_other_prefecture_matches.js --check`）で exit code 1 | 各失敗runのログ |
+  | このステップは build.yml 内で `Commit & push if changed`（実際の本番反映ステップ）より**前**にある。したがって `node build.js` 自体は毎回成功していたが、その出力は一度も commit されていなかった | `.github/workflows/build.yml` の step順 |
+  | 原因: `data/places_resolved.json` の HotPepper ID `J004678480`（候補住所が岐阜県中津川市）が `data/closed_stores.json` にも `data/other_prefecture_match_exceptions.json` にも未登録のまま残っていた | 監査スクリプトの出力: `[FAIL] 未対応の他都道府県マッチが 1 件あります` |
+  | この間 `main` には ISSUE-120（Google評価0の偽表示是正・話題フラグの出典URLゲート）を含む複数の正当な修正がマージされていたが、**どれ一つ本番の index.html / data/stores.json に反映されていなかった**（ユーザー報告のスクリーンショットが証拠） | git log と本番表示の乖離 |
+
+- **resolution**:
+  1. HotPepper公式ページ（`https://www.hotpepper.jp/strJ004678480/`）を実フェッチして検証: 正式店名「焼肉酒房天禄　池下店」、住所「愛知県名古屋市千種区向陽1丁目12-19」（地下鉄池下駅徒歩2分）。`data/stores.json` 側の住所・緯度経度（35.182/136.942）とも独立して一致する**実在の名古屋店**と確認
+  2. Google Places側の却下原因は同名チェーンの岐阜県中津川市支店への誤マッチであり、店自体の混入ではない（既に承認済みの「エゾバルバンバン」ケース＝ホットペッパーID J001161829 と同型のパターン）
+  3. `data/other_prefecture_match_exceptions.json` に検証済み例外として登録。ローカルで `node scripts/audit_other_prefecture_matches.js --check` が `[OK]` になることを確認
+- **未完了**: PR #205 のマージ（Claude Codeのauto-modeクラシファイアが`gh pr merge`を拒否するため、オーナー本人の操作が必要）。マージ後、次回 `main` への push（または最短で次のスケジュール実行・毎日18:00 UTC=JST03:00）で Build & Deploy が正常完走し、これまで滞留していた全ての修正（ISSUE-120含む）が一括で本番反映される見込み
+- **再発防止の検討事項（未着手・別途判断が必要）**: 「Commit & push if changed」より前にあるブロッキング監査ステップが1つでも失敗すると、無関係の全ての修正が本番反映されなくなる構造そのものへの対処（例: データ生成とデプロイの分離、致命的でない監査の non-blocking 化の再検討）は本チケットのスコープ外。今回は個別の未対応データを解消することでの応急対応
+- **files**: `data/other_prefecture_match_exceptions.json`
+- **関連**: [[ISSUE-103]]（同型の他都道府県マッチ混入の原典）/ [[ISSUE-120]]（このブロッカーにより本番反映が遅延した修正）
+
+---
+
 ### [ISSUE-120] 手動キュレーション店で「出典URLが実URLでない自己申告の話題スコア」と「Google評価0の偽表示」が本番カードに出ていた ✅
 
-- **priority**: P0 → **status**: ready（実装・ローカル検証済み。[PR #201](https://github.com/wakuwaku-labs/nagoya-bites/pull/201) マージ待ち）
+- **priority**: P0 → **status**: partial（前半は [PR #201](https://github.com/wakuwaku-labs/nagoya-bites/pull/201) でマージ済みだが、無関係の [[ISSUE-121]]（CI ブロッカー）により本番未反映のまま数時間放置。後半（写真の必須化）は [PR #206](https://github.com/wakuwaku-labs/nagoya-bites/pull/206) でマージ待ち）
 - **detected**: 2026-09-02
 - **category**: data-quality / trust
 - **owner**: Builder（実装）/ DataKeeper（対象3店の出典URL補完）
@@ -35,6 +64,18 @@
 - **残作業（Editor/DataKeeper）**: 対象3店は正式な出典URL（東海テレビ yum-yumグルメの放送/配信ページ等）が見つかれば `data/manual_stores.json` の `出典URL` に追記するだけで話題フラグ表示が復活する。見つからなければ通常の掲載店として残る（掲載自体は取り消していない）
 - **files**: `build.js`, `scripts/daily_store_discovery.js`, `agent-backlog.md`
 - **関連**: [[ISSUE-097]]（同じ手動キュレーション店群の写真ゼロ問題・別原因）/ [[ISSUE-104]]（手動キュレーション店が信頼度判定から除外されていた別件）
+
+#### 追加対応（2026-09-02・オーナー追加指示: 「写真が必ず表示される様にして欲しい」）
+
+- **オーナーの回答（AskUserQuestion）**: 「取得を強化（画質も必ず一定以上ある様に）して、それでも取得されない場合は非表示」
+- **現状把握（本番相当データ `data/stores.json`・4,974店で実測）**: 写真なし54店（1.1%）、うち話題フラグ/編集部推薦が付く147店中42店（28.6%）
+- **画質**: `data/photo_policy.json` に既に下限あり（Places オーナー写真800px以上・客投稿代替枠1200px以上・HotPepper 480px以上）。新設は不要、既存ゲートを確認したのみ
+- **強化**: 既存の `scripts/fill_missing_photos_from_hotpepper.js`（写真ソース優先2・HotPepper公式写真での穴埋め・テスト済み `tests/hotpepper_photo_fill.test.js`）が実装済みなのに `.github/workflows/build.yml` に一度も配線されておらず、無人パイプラインでは Places（優先4）しか自動的に試されていなかった。`fetch_manual_store_photos.js` の直後・`node build.js` の前に追加し、無料枠内の既存 `HOTPEPPER_API_KEY` を渡すだけで有効化（追加のAPIキー調達不要）
+- **非表示ゲート**: `build.js loadManualStores()` と `scripts/merge_pending_stores.js mergePendingStores()` に、`写真URL` が空 かつ `写真失敗理由`（Places/HotPepper 両方が実写を見つけられなかった場合にのみ書き込まれる値）が立っている店を最終出力から除外する処理を追加。**「写真URLが空」単独では判定しない**（まだ取得を1度も試していない新着店まで消えてしまうため）。`写真失敗理由` は検証できる事実（制約10）で、写真が後日見つかれば `写真URL` が入り次回ビルドで自動的に再表示される
+- **ローカル検証（`node build.js`）**: 新設ログで非表示件数を可視化 — `手動キュレーション: ... / 写真取得未了で非表示29件`、`pending_stores: ... / 写真取得未了で非表示7件`（現状データでの実測値。HotPepper穴埋めがCIで走った後は減少する見込み）。`npm test` 151件全pass
+- **意図的にやらなかったこと**: 通常カタログ（HotPepper CSV由来・4,920店）の写真なし12店は対象外。これらは `写真失敗理由` の追跡機構（fetch_manual_store_photos.js の対象は manual_stores.json / pending_stores.json のみ）を持たず、同じ仕組みでの「試みて失敗」判定ができない。範囲拡張は別課題として切り出す必要がある
+- **files**: `build.js`, `scripts/merge_pending_stores.js`, `.github/workflows/build.yml`
+- **未完了（CIマージ後に確認が必要）**: HotPepper穴埋めステップの初回実行結果（採用件数）と、非表示になった店が今後どの程度自動回復するか
 
 ---
 
@@ -4734,6 +4775,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-22 | Marketer(routine) | SEO-068 診断 — gsc_query_intent.js でdiscovery意図シェアを計測（6.1%/382表示/18クリック/CTR 4.71%・前回2.6%から改善）。「一人飲み」が discovery の97%を占め1シーン依存と判明。journal_seo_kw.js --suggest で8月の未カバーcombo筆頭が「栄×食べ歩き」（in_season=true）と特定。--verify で39件全KW特集実在確認OK。テーマ選定・実記事執筆はEditorの次サイクルタスク | ⏸ 診断のみ・commitなし（status: in_progress） |
 | 2026-09-01 | Marketer+Builder(routine) | SEO-075 実装・デプロイ — gas-deploy-watchdog.yml に ga4_reference_staleness ジョブを追加。dailyReference.date が2日以上停滞したら Issue を起票・復旧で自動クローズ。YAML valid・2ジョブ確認済み | ✅ commit 074e5d64 |
 | 2026-09-02 | Orchestrator(EXPLICIT・ユーザー報告対応) | ISSUE-120 実装 — build.js: Google評価0を空文字化（偽の「GOOGLE評価 0」表示を防止）／話題フラグ・編集部推薦は出典URLが検証可能なURLでなければ剥がす。scripts/daily_store_discovery.js: 同じ検証を発掘パイプラインに追加し再発防止。`node -c` 構文OK・`npm test` 151件全pass・`node build.js` で対象3店（焼きそばスタンド らふ／焼肉ここから 名駅3丁目店／Wakana ～和奏～）のフラグ剥がしをログで確認。ローカルにHOTPEPPER_API_KEY無くフルビルド未完走のためCI委ね | ⏸ PR #201（マージ待ち） |
+| 2026-09-02 | Orchestrator(EXPLICIT・オーナー追加指示) | ISSUE-120 追加実装（写真の必須化） — オーナー方針確認（AskUserQuestion:「取得を強化して、それでも取得されない場合は非表示」）を受けて対応。build.yml: 未配線だった fill_missing_photos_from_hotpepper.js（写真ソース優先2）をPlaces取得の直後に追加。build.js / scripts/merge_pending_stores.js: 写真URL空 かつ 写真失敗理由（Places・HotPepper両方失敗の検証可能な記録）が立つ店を非表示化（新着未着手店は対象外）。data/photo_pipeline_health.json をCI commit対象に追加。`node build.js` で非表示29(manual)+7(pending)件をログ確認・`npm test` 151件全pass | ⏸ PR #201（マージ待ち） |
+| 2026-09-02 | Orchestrator(EMERGENCY) | ISSUE-121 発見・実装 — ユーザーが ISSUE-120 の反映を確認しようとして「まだ反映されてない」と報告 → CI実行履歴を調査し、07:01以降 `main` への push が3回連続で Build & Deploy 失敗（他都道府県マッチ監査でブロック・PR #201含む複数マージが本番未反映のまま放置）と判明。HotPepper公式ページを実フェッチして「焼肉酒房天禄 池下店」(J004678480)が実在の名古屋店（岐阜支店への誤マッチが原因）と検証し、data/other_prefecture_match_exceptions.json に登録。ローカルで audit_other_prefecture_matches.js --check が[OK]になることを確認。ISSUE-120後半（写真の必須化・PR#201マージ後に積んだため未取込だった分）を本ブロッカー修正の上にcherry-pickし直しPR #206として再提出 | ⏸ PR #205・PR #206（いずれもマージ待ち。gh pr mergeはauto-modeクラシファイアが拒否のためオーナー操作が必要） |
 
 ---
 
