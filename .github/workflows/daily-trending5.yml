@@ -11,8 +11,12 @@ on:
 permissions:
   contents: write
 
-# ISSUE-112: build.yml（push トリガー）と同時起動するとデータ生成ファイル同士でコンテンツ競合が起きる。
-# build-deploy グループを共有することで、build.yml の実行中は本ワークフローがキューで待機する。
+# ISSUE-112: build.yml と同じ concurrency グループに入れて直列化する。
+# daily-trending5.yml が先に push し、その push が build.yml を起動する流れで
+# 両者が同時実行になると gsc_metrics.json 等の時系列スナップショットで
+# コンテンツ競合が発生し、どちらかのコミットが丸ごと失われていた
+# （実測2回: 2026-08-23 04:30 JST / 05:53 JST）。
+# cancel-in-progress: false で後着をキューに積み、完了後に実行する。
 concurrency:
   group: build-deploy
   cancel-in-progress: false
@@ -66,26 +70,31 @@ jobs:
           # build.js が生成する残余ファイルを破棄してから rebase（再実行時に再生成されるため安全）
           git checkout -- . 2>/dev/null || true
           git clean -fd 2>/dev/null || true
-          git pull --rebase origin main
-          # ISSUE-112: build-deploy 共有グループで競合は大幅に減るが、念のため競合時も自力解消できる retry を維持する。
-          # rebase の --ours は「適用中の我々のコミット（今回の生成結果）」を指す。
+          # ISSUE-112: コンテンツ競合（本物の別スナップショット同士の衝突）への対処を追加。
+          # 旧実装（git pull --rebase; git push || sleep 10 && ...）はリベース状態が残ると
+          # 全リトライが失敗し続けていた。build.yml と同じパターンで競合を検出・解消する。
           PUSHED=0
           for i in 1 2 3; do
-            git rebase --abort 2>/dev/null || true
-            if git pull --rebase origin main; then
-              if git push; then PUSHED=1; break; fi
-            else
-              CONFLICTED=$(git diff --name-only --diff-filter=U 2>/dev/null)
+            if ! git pull --rebase origin main 2>/dev/null; then
+              CONFLICTED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
               if [ -n "$CONFLICTED" ]; then
-                echo "$CONFLICTED" | xargs git checkout --ours -- 2>/dev/null || true
-                echo "$CONFLICTED" | xargs git add -- 2>/dev/null || true
-                GIT_EDITOR=true git rebase --continue 2>/dev/null || git rebase --abort 2>/dev/null || true
+                echo "リベース競合を検出。自側（theirs）で解消します: $CONFLICTED"
+                echo "$CONFLICTED" | tr '\n' '\0' | xargs -0 git checkout --theirs -- 2>/dev/null || true
+                echo "$CONFLICTED" | tr '\n' '\0' | xargs -0 git add -- 2>/dev/null || true
+                GIT_EDITOR=true git rebase --continue 2>/dev/null \
+                  || git rebase --abort 2>/dev/null \
+                  || true
+              else
+                git rebase --abort 2>/dev/null || true
               fi
-              if git push; then PUSHED=1; break; fi
             fi
+            if git push; then PUSHED=1; break; fi
+            echo "push 失敗（試行 ${i}/3）。$((i * 10))秒待って再試行します"
             sleep $((i * 10))
           done
-          [ "$PUSHED" = "1" ] || echo "::warning::3回リトライしてもpushできませんでした"
+          if [ "$PUSHED" != "1" ]; then
+            echo "::warning::3回リトライしてもpushできませんでした"
+          fi
 
       - name: 実行ログ
         if: always()

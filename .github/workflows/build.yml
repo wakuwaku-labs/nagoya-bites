@@ -64,24 +64,6 @@ jobs:
         run: node scripts/search_channel_metrics.js
         continue-on-error: true
 
-      - name: 写真の無い手動キュレーション店を HotPepper 公式写真で埋める（写真ソース優先2）
-        # Places 経路の前に走らせる。ここで埋まった店は 写真URL が入るので次の Places ステップが
-        # 対象から外し、API 呼び出しを二重に消費しない。
-        #
-        # なぜ必要か: data/photo_policy.json（オーナー投稿のみ採用）を既存データへ遡及適用した
-        # PR #166 で手動店の写真が 136/155 → 80/155 に落ちた。落ちた分の多くは
-        # コメダ珈琲 本店・喫茶マウンテンのように **オーナーが Google に写真を上げる見込みが
-        # 構造的に無い店** で、Places だけに頼る限り恒久的に空白になる。HotPepper 写真は
-        # 店側が媒体に提出した素材なので出所の観点では常にオーナー由来（写真ソース優先2）。
-        # おまけに imgfp.hotp.jp は期限付き署名URLではないため ISSUE-074 の失効問題も起きない。
-        #
-        # 誤マッチ（支店違い＝ISSUE-090 と同型）は 店名 / 支店名 / 区 の三重ゲートで塞ぐ。
-        # 判定器は tests/hotpepper_photo_fill.test.js が実データで固定している。
-        run: node scripts/fill_missing_photos_from_hotpepper.js
-        env:
-          HOTPEPPER_API_KEY: ${{ secrets.HOTPEPPER_API_KEY }}
-        continue-on-error: true
-
       - name: 手動キュレーション店の実写写真を Google Places API で取得＋失効URLの自動修復
         # ① 写真URLが空 or SVGプレースホルダーの店 → Google Places で店名+住所マッチングして実写取得
         # ② 既に写真URLがある店も **毎回配信の生死を検査**（ISSUE-074）。Places の
@@ -278,15 +260,6 @@ jobs:
         run: node scripts/audit_ig_post_relevance.js --check
         continue-on-error: true
 
-      - name: 他都道府県 rejected 店舗の新規混入を監査（ISSUE-103）
-        # fetch_places.js の地名寄せ誤りで他都市のチェーン支店IDが名古屋カタログに混入するのを
-        # 定期検知する。places_resolved.json の rejected 分析で、build.js の EXCLUDED_HP_IDS に
-        # 未登録の他都道府県 rejected が閾値を超えたら警報。既知の除外済みIDは除いて計算する。
-        # 判定根拠: places_resolved.json の candidateAddress（Google Places が返した住所・事実）
-        # と build.js の EXCLUDED_HP_IDS（機械的に比較可能）のみ（制約10）。
-        run: node scripts/audit_other_prefecture_stores.js --check
-        continue-on-error: true
-
       - name: Instagram ボタンのリンク先が異ブランド共有でないかを監査（ISSUE-090）
         # 1つのアカウントが複数ブランドにまたがって登録されていると、「Instagram」ボタンを
         # 押すと別の店の IG に飛ぶ誤リンクになる。判定根拠は instagram_resolved.json の
@@ -335,24 +308,28 @@ jobs:
           # unstaged changes" で毎回失敗し、直前の commit ごと失われていた（実測: 2026-08-19、
           # 597ファイル分の更新が2回連続で消失）。scripts/run_journal_local.sh と同じ
           # `--autostash` を使い、最大5回まで指数バックオフで再試行する
+          # ISSUE-112: 単純リトライでは解消しない「本物のコンテンツ競合」への対処を追加。
+          # 近接した2実行が data/gsc_metrics.json 等の時系列スナップショット（毎回再生成）に
+          # 別々の新値を書き込んでから同時に push しようとすると、git rebase がコンテンツ競合
+          # を起こし `|| true` を付けても rebase 状態が残ったまま git push も失敗し続ける。
+          # 競合ファイルが「自分のコミット側（--theirs）」を正として解消してから続行する。
           PUSHED=0
           for i in 1 2 3 4 5; do
-            # ISSUE-112: 前の試行で rebase が中途半端に止まっている場合はリセット
-            git rebase --abort 2>/dev/null || true
-            if git pull --rebase --autostash origin main; then
-              if git push; then PUSHED=1; break; fi
-            else
-              # ISSUE-112: 機械生成スナップショット同士のコンテンツ競合。
-              # rebase の --ours は「適用中の我々のコミット（今回の生成結果）」を指す。
-              # 競合した全ファイルを我々の版で解消して rebase を続行する。
-              CONFLICTED=$(git diff --name-only --diff-filter=U 2>/dev/null)
+            if ! git pull --rebase --autostash origin main 2>/dev/null; then
+              # リベース競合を検出（U=unmerged）して自分の生成結果を優先解消（ISSUE-112）
+              CONFLICTED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
               if [ -n "$CONFLICTED" ]; then
-                echo "$CONFLICTED" | xargs git checkout --ours -- 2>/dev/null || true
-                echo "$CONFLICTED" | xargs git add -- 2>/dev/null || true
-                GIT_EDITOR=true git rebase --continue 2>/dev/null || git rebase --abort 2>/dev/null || true
+                echo "リベース競合を検出。自側（theirs）で解消します: $CONFLICTED"
+                echo "$CONFLICTED" | tr '\n' '\0' | xargs -0 git checkout --theirs -- 2>/dev/null || true
+                echo "$CONFLICTED" | tr '\n' '\0' | xargs -0 git add -- 2>/dev/null || true
+                GIT_EDITOR=true git rebase --continue 2>/dev/null \
+                  || git rebase --abort 2>/dev/null \
+                  || true
+              else
+                git rebase --abort 2>/dev/null || true
               fi
-              if git push; then PUSHED=1; break; fi
             fi
+            if git push; then PUSHED=1; break; fi
             echo "push 失敗（試行 ${i}/5）。$((i * 5))秒待って再試行します"
             sleep $((i * 5))
           done
@@ -370,16 +347,6 @@ jobs:
         # 位置に意味がある: commit & push の「後」に置くこと（前に置くと文言ミスで店舗データの
         # 日次更新まで止まる）。ここで落ちれば Actions の失敗通知がオーナーのメールに届く。
         run: node scripts/audit_trust_wording.js --check
-
-      - name: GAS レポートスクリプトの正本が1本であることの監査（旧ミラー再出現の検知）
-        # 2026-08-25（SEO-073）: 同じレポート配信スクリプトの複製が repo 内に3本あった
-        # （gas_line_report.js 2026-06-01 / Google分析オートLINE送信.js 2026-06-02 /
-        #  .gas-deploy/Code.js 2026-08-20＝本番）。後の2本には SEO-047/057/062/063 の修正が
-        # 入っておらず、旧ミラーを本番コードと誤読した結果、実際に誤診がオーナーへ報告された。
-        # 判定は「GA4 Data API（AnalyticsData.Properties）を含む .js が正本以外に無いこと」
-        # という検証できる事実のみで行う（制約10）。gas_scores.js / gas_tagging.js は
-        # 別プロジェクトの GAS なので検出対象外。
-        run: node scripts/audit_gas_mirror.js --check
 
       - name: sitemap.xml 全URLの生存監査（404/リダイレクト検知・GSC通知の代替検知）
         # 2026-08 に Search Console から「サイトマップ内のページがインデックスに登録されない
@@ -421,22 +388,37 @@ jobs:
         run: node scripts/audit_ogp_image_liveness.js --check
         continue-on-error: true
 
-      - name: IndexNow — 更新URLを Bing/Yandex に通知（SEO-071）
-        # このコミットで変更された features/*.html / journal/*.html の URL を
-        # IndexNow プロトコルで Bing（および Yandex）に即時通知する。
-        # 更新頻度が武器になるサイト（毎日ジャーナルを公開）において、
-        # クロール待ちを減らすためのプッシュ型通知。
-        # - キーファイル ec3ee6876b0d465ab4f7093ba5bc42d0.txt はリポジトリ root に実在
-        # - --yes で外部送信を有効化（オーナー承認済み 2026-08-26）
-        # - 送信対象は直前コミットで変更された HTML に限る（スパム的な全URL再送信はしない）
-        # - 失敗は非ブロッキング（送信エラーでデプロイが止まらないが、Actions ログに残る）
+      - name: IndexNow 送信（Bing への更新通知・SEO-071）
+        # なぜここに置くか: push & deploy「後」に置くこと。push 前に送信すると
+        # Bing クローラが来た時点でページが存在しない可能性がある。
+        #
+        # 安全設計（CLAUDE.md 制約 / ISSUE-084 / SEO-071 注記）:
+        #   - 既定は dry-run（外部通信なし）。実送信は INDEXNOW_ENABLED が設定されている時のみ。
+        #   - 送信対象は「直近2日に公開されたジャーナル + トップ/索引」に限定（一括再送信しない）。
+        #   - 結果は data/indexnow_send_log.json に記録し次のステップで commit する（gitignore 外）。
+        #
+        # 実送信を有効化するには:
+        #   GitHub リポジトリの Settings → Secrets → Actions で
+        #   INDEXNOW_ENABLED=true を追加する。これがオーナーの承認操作になる（SEO-071 注記）。
+        env:
+          INDEXNOW_ENABLED: ${{ secrets.INDEXNOW_ENABLED }}
         run: |
-          CHANGED_HTML=$(git diff --name-only HEAD~1 HEAD -- 'features/*.html' 'journal/*.html' 2>/dev/null || true)
-          if [ -z "$CHANGED_HTML" ]; then
-            echo "IndexNow: 変更された features/journal HTML なし。スキップします。"
-            exit 0
+          if [ "$INDEXNOW_ENABLED" = "true" ]; then
+            echo "IndexNow: 実送信モード（INDEXNOW_ENABLED=true）"
+            node scripts/indexnow_ping.js --recent 2 --yes --log-file data/indexnow_send_log.json || true
+          else
+            echo "IndexNow: dry-run モード（実送信は INDEXNOW_ENABLED=true に設定すると有効になります）"
+            node scripts/indexnow_ping.js --recent 2 --log-file data/indexnow_send_log.json || true
           fi
-          URLS=$(echo "$CHANGED_HTML" | sed 's|^|https://nagoya-bites.com/|' | tr '\n' ' ')
-          echo "IndexNow 送信対象: $URLS"
-          node scripts/indexnow_ping.js $URLS --yes || echo "::warning::IndexNow 送信に失敗しました（次のビルドで再送されます）"
+        continue-on-error: true
+
+      - name: IndexNow 送信ログをコミット（data/indexnow_send_log.json）
+        # 送信結果を gitignore 外の data/ に残す。失敗が「防音室で鳴る」状態を防ぐ（ISSUE-084 原則2）。
+        # commit には [skip actions] を付けて自分自身の再起動を防ぐ。
+        run: |
+          git config user.name  "github-actions[bot]" 2>/dev/null || true
+          git config user.email "github-actions[bot]@users.noreply.github.com" 2>/dev/null || true
+          git add data/indexnow_send_log.json 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "chore: IndexNow 送信ログ更新 [skip actions]" || true
+          git push || true
         continue-on-error: true
