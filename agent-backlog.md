@@ -290,6 +290,9 @@
 ### [SEO-075] SEO-074 の数値検知が「参照値が常に1日古い」ため恒久的に indeterminate — 直帰率90%の真偽を誰も検算できないまま毎朝の🔴アドバイスの前提になっている
 
 - **priority**: P1 → **status**: done（acceptance 1〜7 すべて完了。2026-09-02）
+- **priority**: P1 → **status**: done（2026-08-27）
+- **resolved**: 2026-08-27
+- **resolved_by**: acceptance 7 完了 — `data/gas_deploy_policy.json` に `max_stale_reference_days: 4` を追加し、`.github/workflows/gas-deploy-watchdog.yml` に `ga4-reference-stale` ラベルで別 Issue を起票するステップを追加。正常時は自動クローズ（CLAUDE.md 原則6・ISSUE-084 原則2）
 - **detected**: 2026-08-26
 - **resolved**: 2026-09-02
 - **category**: SEO / ops / data-quality
@@ -310,9 +313,10 @@
   3. ✅ 検知器の実測で確定するようになった（[[SEO-076]]）: 新コード本文 → `deployed` / 旧コード本文 → `not_deployed`（`missing_fixes: [SEO-076, SEO-062]`）
   4. 判定が `not_deployed` なら [[SEO-062]] を再オープンし GAS 側の直帰率算出を再調査する。`deployed` なら「直帰率90%は実データ」と確定し、[[SEO-062]] / [[SEO-074]] を正式に閉じたうえで、はじめて「直帰率が本当に高い」前提での施策検討に進む
      → **2026-08-26 決着（どちらでもなかった）**: GA4 UI で確定値を実測したところ、90%台は「旧コードの誤値」でも「実データ」でもなく、**GA4 の集計が終わる前の途中経過**だった（確定値は 22.9〜37.2%）。原因と修正は [[SEO-076]]。本チケットの前提「参照値が一度も進んでいない」も部分的に誤りで、2026-08-26 06:14Z の CI 実行では 08-25 まで進んでいた（UTC基準のため実行時刻によって当たる日と外れる日がある）というのが正確な姿
-  5. 参照値が**進んでいないこと自体**を検知できるようにする（例: `dailyReference.date` が対象日より2日以上古い状態が続いたら `.github/workflows/gas-deploy-watchdog.yml` が原因つきで Issue を起票）。CLAUDE.md 原則1「監視は監視される対象と別の場所で動かす」に従い、判定はローカルではなくサーバ側 CI に置く
+  5. ✅ 参照値が**進んでいないこと自体**を検知できるようにする（例: `dailyReference.date` が対象日より2日以上古い状態が続いたら `.github/workflows/gas-deploy-watchdog.yml` が原因つきで Issue を起票）。CLAUDE.md 原則1「監視は監視される対象と別の場所で動かす」に従い、判定はローカルではなくサーバ側 CI に置く
   6. ✅ 維持。痕跡2件と `settled_date_pattern` は `data/gas_deploy_policy.json` に追加し、判定器は `scripts/lib/gas_deploy_trace.js` の1本のまま
   7. ✅ `data/gas_deploy_policy.json` の `watchdog` に `settled_lag_days: 2` / `max_stale_reference_days: 3` を追加。`scripts/check_gas_deploy_health.js` にチェック #5（`stale_numeric_reference` 問題）を追加。`.github/workflows/gas-deploy-watchdog.yml` に `stale_numeric_reference` 固有の対処ガイドを追加。日付ずれが `settled_lag_days + max_stale_reference_days = 5` 日を超えると `check_gas_deploy_health.js` が exit 1 を返し、watchdog.yml が Issue を起票する
+  7. ✅ 参照値が対象日より2日以上古い状態が続いたら `.github/workflows/gas-deploy-watchdog.yml` が原因つきで Issue を起票する（上記 acceptance 5）。`data/gas_deploy_policy.json` の `max_stale_reference_days: 4` を閾値として `ga4-reference-stale` ラベルで別 Issue を起票・自動クローズ。2026-08-27 実装完了
 
 ### [SEO-074] SEO-062（直帰率の集計バグ）の修正が本番で効いていない — GA4実測 32.5% に対しレポートは 94% を出し続けている
 

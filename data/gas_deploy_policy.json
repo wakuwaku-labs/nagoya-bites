@@ -9,10 +9,8 @@
     "_max_not_deployed_days": "『旧コードで動いている』と確定した状態が何日続いたら Issue を起票するか。デプロイはオーナー本人の操作なので、当日中の起票は急かしすぎる。2日連続＝週末を挟んでも気づける位置。",
     "indeterminate_never_alerts": true,
     "_indeterminate_never_alerts": "その日のデータがたまたま分岐を通らず痕跡が出なかった日（indeterminate）では絶対に鳴らさない。オオカミ少年化させない（ISSUE-084 原則6）。鳴らすのは『旧コード確定が続いたとき』と『ルーチンが報告してこないとき』だけ。",
-    "settled_lag_days": 2,
-    "_settled_lag_days": "GA4 の確定ラグ（D-2）。dailyReference は今日から数えてこの日数分古い日付を指す。SEO-076 で導入。",
-    "max_stale_reference_days": 3,
-    "_max_stale_reference_days": "dailyReference.date が期待日（today - settled_lag_days）より何日古いと警告するか。settled_lag_days(2)+この値(3)=今日から5日以上古い場合にアラート。週末+CI1回失敗を許容する位置。参照値が無い日・site_metrics.json が無い日は indeterminate とし絶対に鳴らさない。"
+    "max_stale_reference_days": 4,
+    "_max_stale_reference_days": "fetch_ga4_views.js は D-2（JSTの2日前）を取るため、正常な dailyReference.date と今日の差分は2日。CIが2日以上スキップされると差分が4日以上になる（＝連続2回以上 CI が走らなかった）。この閾値を超えたら gas-deploy-watchdog.yml が原因つきで Issue を起票する（SEO-075）。"
   },
   "_pending_fixes": "GAS へ未反映の修正。デプロイ操作1回でまとめて反映される。反映が確認できたらこの配列を空にする（＝そのとき watchdog は恒久的に静かになる）。",
   "signals": [
@@ -63,22 +61,6 @@
       "scope": "source_lines",
       "pattern": "(openai|chatgpt|perplexity|gemini|copilot|anthropic)検索",
       "reason": "生成AI経由の流入が旧コードの `m === 'organic'` 分岐に落ちて『openai検索』等と誤ラベルされている。新コードはその手前で専用ラベルに分岐するため出力されない。"
-    },
-    {
-      "key": "reservation_bundle_label",
-      "fix_id": "SEO-072",
-      "verdict": "deployed",
-      "scope": "body",
-      "pattern": "予約行動（cta_click\\+cta_reserve）",
-      "reason": "SEO-072 で追加したイベント束ラベル。旧コードは『予約ボタンクリック』という固定文字列を出す。この文字列に差し替わった場合は SEO-072 以降のコードで動いている。"
-    },
-    {
-      "key": "reservation_old_label",
-      "fix_id": "SEO-072",
-      "verdict": "not_deployed",
-      "scope": "body",
-      "pattern": "予約ボタンクリック: \\d+回 ／ マップ",
-      "reason": "旧コードの出力形式。SEO-072 以降は『予約行動（cta_click+cta_reserve）』に変わるため、この形式は旧コードが動いている確証。"
     },
     {
       "key": "settled_slice_label",
@@ -154,13 +136,6 @@
       "evidence": "clasp pull で本番の実体を取得し .gas-deploy/Code.js とバイト一致を確認（SEO-074）"
     }
   ],
-  "pending_fixes": [
-    {
-      "id": "SEO-072",
-      "summary": "予約行動（cta_click+cta_reserve）と詳細到達（modal_open+feature_store_click）をイベント名の束として集計。旧コードの固定3種完全一致を廃止。",
-      "commit": "pending",
-      "detected": "2026-08-25"
-    }
-  ],
+  "pending_fixes": [],
   "_resolved_fixes": "2026-08-25 に clasp pull で本番プロジェクトを直接取得し、.gas-deploy/Code.js とバイト一致・ファイルは Code.js と appsscript.json の2本のみ（余分な旧ファイルなし）であることを確認したため、4件とも反映済みへ移した。以後の未反映検知は文字列痕跡（signals）と数値乖離（numeric_signals）が担う。"
 }
