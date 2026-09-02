@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-02T20:33:12.568Z",
+  "generatedAt": "2026-09-02T23:39:58.048Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1157,
+  "total_sessions": 1160,
   "engines": [
     {
       "key": "google",
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 287,
-      "pct": 24.8,
+      "pct": 24.7,
       "sources": [
         {
           "source": "bing",
@@ -35,31 +35,31 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 206,
-      "pct": 17.8,
+      "sessions": 208,
+      "pct": 17.9,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 178
+          "sessions": 179
         },
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 28
+          "sessions": 29
         }
       ]
     },
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 175,
-      "pct": 15.1,
+      "sessions": 176,
+      "pct": 15.2,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 175
+          "sessions": 176
         }
       ]
     },
@@ -67,7 +67,7 @@
       "key": "ai_assistant",
       "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
       "sessions": 92,
-      "pct": 8,
+      "pct": 7.9,
       "sources": [
         {
           "source": "chatgpt.com",
@@ -113,7 +113,7 @@
     }
   ],
   "search_only": {
-    "total": 951,
+    "total": 952,
     "share": [
       {
         "key": "google",
@@ -125,13 +125,13 @@
         "key": "bing",
         "label": "Bing",
         "sessions": 287,
-        "pct_of_search": 30.2
+        "pct_of_search": 30.1
       },
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 175,
-        "pct_of_search": 18.4
+        "sessions": 176,
+        "pct_of_search": 18.5
       },
       {
         "key": "ai_assistant",
@@ -153,7 +153,7 @@
     "delta": {
       "google": 14,
       "bing": 5,
-      "direct": -6,
+      "direct": -5,
       "yahoo": 14,
       "ai_assistant": -14,
       "duckduckgo": 1,
