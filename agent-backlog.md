@@ -77,6 +77,15 @@
 - **files**: `build.js`, `scripts/merge_pending_stores.js`, `.github/workflows/build.yml`
 - **未完了（CIマージ後に確認が必要）**: HotPepper穴埋めステップの初回実行結果（採用件数）と、非表示になった店が今後どの程度自動回復するか
 
+#### 追加対応（2026-09-02・PR #205/#206マージ後の本番確認で発覚: 「今日の話題店」TOP5だけ直っていなかった）
+
+- **症状**: PR #205（CIブロッカー解消）マージ後、本番の `data/stores.json` では焼きそばスタンド らふ等3店の `話題フラグ`/`編集部推薦` が正しく false になっていることを確認したが、トップページの「今日の話題店」TOP5には**焼きそばスタンド らふが1位・編集部推薦タグ付きで表示され続けていた**（ユーザー報告のスクリーンショット）
+- **根本原因**: `scripts/pick_daily_trending5.js`（TOP5選定・毎朝5:30 JST実行）は `data/manual_stores.json` を**直接読み込んでおり**、`build.js loadManualStores()` が適用する「出典URLが検証可能なURLか」のゲートを一切経由していなかった。判定器が2箇所に分裂しており、片方だけ直しても事故が残ることが実際に発生した
+- **resolution**: 判定ロジックを `scripts/lib/trending_source_gate.js`（新設・`hasVerifiableSource()`）の1本に集約し、`build.js` と `scripts/pick_daily_trending5.js` の両方がこれを require して使うよう変更（CLAUDE.md「判定器は1本に集約」原則）。出典URLが空配列（未記載）の店は従来通り対象外とし、対象3店のみを絞り込む設計は維持
+- **ローカル検証**: `node scripts/pick_daily_trending5.js` を実行し、対象3店がTOP5候補プールから正しく除外され、他の正当にソースURLを持つ店（鉄板焼 那古亭・壺中天・大銀杏 栄店・ぴよりんshop・レミニセンス）に自然に入れ替わることを確認。`node -c` 構文OK・`npm test` 151件全pass
+- **教訓**: 同じ生データ（manual_stores.json）を読む経路が複数（build.js のカード表示 / pick_daily_trending5.js のTOP5選定）ある場合、片方の判定を直しても検証は「両方の出力」を見ないと見逃す。次回以降、同種のゲートを追加する際は `grep -rn "話題フラグ\|編集部推薦" scripts/*.js` で読み手を洗い出してから直す
+- **files**: `scripts/lib/trending_source_gate.js`（新設）, `build.js`, `scripts/pick_daily_trending5.js`, `data/daily_trending5.json`
+
 ---
 
 ### [SEO-080] 週次レポートの5本に1〜2本が Gmail の「ゴミ箱」に入っており、週次triageの取得クエリは構造的にそれを 0件 として見逃す（見逃しても誰にも届かない）
@@ -4777,6 +4786,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-09-02 | Orchestrator(EXPLICIT・ユーザー報告対応) | ISSUE-120 実装 — build.js: Google評価0を空文字化（偽の「GOOGLE評価 0」表示を防止）／話題フラグ・編集部推薦は出典URLが検証可能なURLでなければ剥がす。scripts/daily_store_discovery.js: 同じ検証を発掘パイプラインに追加し再発防止。`node -c` 構文OK・`npm test` 151件全pass・`node build.js` で対象3店（焼きそばスタンド らふ／焼肉ここから 名駅3丁目店／Wakana ～和奏～）のフラグ剥がしをログで確認。ローカルにHOTPEPPER_API_KEY無くフルビルド未完走のためCI委ね | ⏸ PR #201（マージ待ち） |
 | 2026-09-02 | Orchestrator(EXPLICIT・オーナー追加指示) | ISSUE-120 追加実装（写真の必須化） — オーナー方針確認（AskUserQuestion:「取得を強化して、それでも取得されない場合は非表示」）を受けて対応。build.yml: 未配線だった fill_missing_photos_from_hotpepper.js（写真ソース優先2）をPlaces取得の直後に追加。build.js / scripts/merge_pending_stores.js: 写真URL空 かつ 写真失敗理由（Places・HotPepper両方失敗の検証可能な記録）が立つ店を非表示化（新着未着手店は対象外）。data/photo_pipeline_health.json をCI commit対象に追加。`node build.js` で非表示29(manual)+7(pending)件をログ確認・`npm test` 151件全pass | ⏸ PR #201（マージ待ち） |
 | 2026-09-02 | Orchestrator(EMERGENCY) | ISSUE-121 発見・実装 — ユーザーが ISSUE-120 の反映を確認しようとして「まだ反映されてない」と報告 → CI実行履歴を調査し、07:01以降 `main` への push が3回連続で Build & Deploy 失敗（他都道府県マッチ監査でブロック・PR #201含む複数マージが本番未反映のまま放置）と判明。HotPepper公式ページを実フェッチして「焼肉酒房天禄 池下店」(J004678480)が実在の名古屋店（岐阜支店への誤マッチが原因）と検証し、data/other_prefecture_match_exceptions.json に登録。ローカルで audit_other_prefecture_matches.js --check が[OK]になることを確認。ISSUE-120後半（写真の必須化・PR#201マージ後に積んだため未取込だった分）を本ブロッカー修正の上にcherry-pickし直しPR #206として再提出 | ⏸ PR #205・PR #206（いずれもマージ待ち。gh pr mergeはauto-modeクラシファイアが拒否のためオーナー操作が必要） |
+| 2026-09-02 | Orchestrator(EMERGENCY) | PR #205・#206 マージ後、CI（Build & Deploy）が正常完走・本番反映を確認。しかしユーザー報告で「今日の話題店」TOP5だけ焼きそばスタンド らふが編集部推薦タグ付きで残存と発覚 → scripts/pick_daily_trending5.js が manual_stores.json を直読みし、build.js の出典URLゲートを経由していなかったことが根本原因と特定。scripts/lib/trending_source_gate.js（新設・hasVerifiableSource()）に判定を1本化し、build.js と pick_daily_trending5.js の両方が共有するよう修正。node scripts/pick_daily_trending5.js のローカル実行で対象3店がTOP5候補から正しく除外されることを確認・npm test 151件全pass | ⏸ PR作成準備中 |
 
 ---
 

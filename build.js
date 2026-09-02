@@ -12,6 +12,7 @@
 const https = require('https');
 const fs   = require('fs');
 const path = require('path');
+const { hasVerifiableSource } = require('./scripts/lib/trending_source_gate');
 
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/1VUk4bRTPoIc7pHywzIJTwZr9WyUX7ioxlZzbxQHsjCQ/export?format=csv&gid=415662614';
 const HTML    = path.join(__dirname, 'index.html');
@@ -741,16 +742,15 @@ function loadManualStores() {
     // 話題フラグ/編集部推薦は「後から第三者が検算できる出典URL」が無ければ剥がす。
     // 出典URL に非URLのテキストラベル（番組名等）しか無い状態は、話題度80/100等の
     // 自己申告スコアを検算不能なまま表示する ISSUE-077 と同じ失敗パターンのため
-    // （2026-09-02・実店舗カードで発覚）。出典URLが未記載（空配列）の店は、
-    // 人手キュレーションの既存店として従来通り許容する（ここで新たに縛らない）。
-    if (m['話題フラグ'] === true || m['編集部推薦'] === true) {
-      const sourceUrls = Array.isArray(m['出典URL']) ? m['出典URL'] : (m['出典URL'] ? [m['出典URL']] : []);
-      const hasVerifiableUrl = sourceUrls.some(u => typeof u === 'string' && /^https?:\/\//.test(u));
-      if (sourceUrls.length > 0 && !hasVerifiableUrl) {
-        console.warn(`[manual] 話題フラグ/編集部推薦だが出典URLが検証可能なURLでない: ${m['店名']} (出典URL: ${JSON.stringify(sourceUrls)}) — フラグを落として投入`);
-        m = { ...m, '話題フラグ': false, '編集部推薦': false };
-        result.warnings++;
-      }
+    // （2026-09-02・実店舗カードで発覚）。判定は scripts/lib/trending_source_gate.js の
+    // 1本に集約し、pick_daily_trending5.js（今日の話題店TOP5）とも共有する。
+    // ここで一致しないと「カードは直ったのにTOP5だけ古いまま」という事故が起きる
+    // （実際に発生・原因は pick_daily_trending5.js が manual_stores.json を直読みし、
+    // この判定を経由していなかったこと）。
+    if ((m['話題フラグ'] === true || m['編集部推薦'] === true) && !hasVerifiableSource(m['出典URL'])) {
+      console.warn(`[manual] 話題フラグ/編集部推薦だが出典URLが検証可能なURLでない: ${m['店名']} (出典URL: ${JSON.stringify(m['出典URL'])}) — フラグを落として投入`);
+      m = { ...m, '話題フラグ': false, '編集部推薦': false };
+      result.warnings++;
     }
     // 日付形式チェック（警告のみ）
     if (m['追加日'] && !/^\d{4}-\d{2}-\d{2}$/.test(m['追加日'])) {
