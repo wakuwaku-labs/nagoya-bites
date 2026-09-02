@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-02T14:32:57.787Z",
+  "generatedAt": "2026-09-02T17:52:36.375Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -7,23 +7,23 @@
     "ctrFix": [
       {
         "query": "焼肉 三郎 原店 名古屋市 レビュー",
-        "impressions": 214,
+        "impressions": 279,
         "clicks": 3,
-        "position": 9,
-        "ctr": 1.4,
-        "expectedCtr": 2.8,
-        "missedClicks": 3
+        "position": 9.2,
+        "ctr": 1.08,
+        "expectedCtr": 2.7,
+        "missedClicks": 4.6
       }
     ],
     "ctrFixGeoless": [
       {
         "query": "一人飲み",
-        "impressions": 298,
+        "impressions": 310,
         "clicks": 2,
         "position": 4,
-        "ctr": 0.67,
+        "ctr": 0.65,
         "expectedCtr": 8,
-        "missedClicks": 21.8
+        "missedClicks": 22.8
       },
       {
         "query": "煮干しラーメン 凛",
@@ -36,12 +36,12 @@
       },
       {
         "query": "やきまる亭",
-        "impressions": 179,
+        "impressions": 184,
         "clicks": 3,
-        "position": 8.3,
-        "ctr": 1.68,
-        "expectedCtr": 3.1,
-        "missedClicks": 2.5
+        "position": 8.4,
+        "ctr": 1.63,
+        "expectedCtr": 3,
+        "missedClicks": 2.6
       }
     ],
     "rankPush": [
@@ -59,50 +59,50 @@
     "ctrFix": [
       {
         "page": "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
-        "impressions": 695,
+        "impressions": 696,
         "clicks": 11,
         "position": 7.5,
         "ctr": 1.58,
         "expectedCtr": 3.6,
-        "missedClicks": 14
+        "missedClicks": 14.1
       },
       {
         "page": "/stores/J004559348.html",
-        "impressions": 611,
+        "impressions": 619,
         "clicks": 8,
         "position": 8.4,
-        "ctr": 1.31,
+        "ctr": 1.29,
         "expectedCtr": 3,
-        "missedClicks": 10.6
+        "missedClicks": 10.8
       },
       {
         "page": "/stores/J004612794.html",
-        "impressions": 766,
+        "impressions": 771,
         "clicks": 11,
         "position": 9.8,
-        "ctr": 1.44,
+        "ctr": 1.43,
         "expectedCtr": 2.6,
-        "missedClicks": 8.6
+        "missedClicks": 8.7
       },
       {
         "page": "/stores/J004025075.html",
-        "impressions": 454,
+        "impressions": 472,
         "clicks": 10,
-        "position": 7.2,
-        "ctr": 2.2,
+        "position": 7.3,
+        "ctr": 2.12,
         "expectedCtr": 3.8,
-        "missedClicks": 7.4
+        "missedClicks": 7.7
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 3331,
+        "impressions": 3438,
         "clicks": 8,
-        "position": 24.5,
-        "ctr": 0.24,
-        "upsideClicks": 85.3
+        "position": 24.4,
+        "ctr": 0.23,
+        "upsideClicks": 88.4
       }
     ]
   },

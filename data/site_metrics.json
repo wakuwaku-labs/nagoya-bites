@@ -1,33 +1,33 @@
 {
-  "generatedAt": "2026-09-02T14:32:55.174Z",
+  "generatedAt": "2026-09-02T17:52:28.352Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1018,
-    "pageViews": 1662,
-    "sessions": 1193,
-    "avgSessionDuration": 150.3,
-    "bounceRate": 0.303,
-    "pagesPerSession": 1.39
+    "activeUsers": 999,
+    "pageViews": 1591,
+    "sessions": 1166,
+    "avgSessionDuration": 139.9,
+    "bounceRate": 0.307,
+    "pagesPerSession": 1.36
   },
   "dailyReference": {
-    "date": "2026-08-31",
-    "sessions": 60,
-    "bounceRate": 0.2,
-    "pageViews": 94
+    "date": "2026-09-01",
+    "sessions": 61,
+    "bounceRate": 0.344,
+    "pageViews": 78
   },
   "channels": {
     "sessions": {
-      "organic": 875,
-      "direct": 221,
-      "social": 88,
+      "organic": 864,
+      "direct": 214,
+      "social": 83,
       "referral": 17,
       "paid": 0,
       "other": 2
     },
     "pct": {
-      "organic": 72.7,
-      "direct": 18.4,
-      "social": 7.3,
+      "organic": 73.2,
+      "direct": 18.1,
+      "social": 7,
       "referral": 1.4,
       "paid": 0,
       "other": 0.2
@@ -37,17 +37,17 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 389
+      "sessions": 387
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 296
+      "sessions": 287
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 187
+      "sessions": 178
     },
     {
       "source": "yahoo",
@@ -57,12 +57,12 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 84
+      "sessions": 78
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 23
+      "sessions": 27
     },
     {
       "source": "duckduckgo",
@@ -70,13 +70,13 @@
       "sessions": 10
     },
     {
-      "source": "copilot.com",
-      "medium": "(not set)",
-      "sessions": 7
-    },
-    {
       "source": "openai",
       "medium": "organic",
+      "sessions": 5
+    },
+    {
+      "source": "copilot.com",
+      "medium": "(not set)",
       "sessions": 5
     },
     {
@@ -87,24 +87,24 @@
   ],
   "topPages": [
     {
-      "path": "/",
-      "pageViews": 298,
-      "sessions": 171
+      "path": "/features/nagoya-solo-dining.html",
+      "pageViews": 271,
+      "sessions": 231
     },
     {
-      "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 269,
-      "sessions": 228
+      "path": "/",
+      "pageViews": 257,
+      "sessions": 163
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 111,
-      "sessions": 104
+      "pageViews": 110,
+      "sessions": 103
     },
     {
       "path": "/index.html",
-      "pageViews": 90,
-      "sessions": 55
+      "pageViews": 87,
+      "sessions": 54
     },
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
@@ -113,40 +113,32 @@
     }
   ],
   "cta": {
-    "outboundClicks": 121,
-    "ctaClickRate": 10.1,
+    "outboundClicks": 100,
+    "ctaClickRate": 8.6,
     "byDomain": [
       {
         "domain": "tabelog.com",
-        "clicks": 45
+        "clicks": 35
       },
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 36
+        "clicks": 34
       },
       {
         "domain": "maps.google.com",
-        "clicks": 14
-      },
-      {
-        "domain": "www.instagram.com",
-        "clicks": 8
+        "clicks": 12
       },
       {
         "domain": "jouhou.nagoya",
-        "clicks": 7
+        "clicks": 6
+      },
+      {
+        "domain": "www.instagram.com",
+        "clicks": 5
       },
       {
         "domain": "www.google.com",
         "clicks": 3
-      },
-      {
-        "domain": "www.tiktok.com",
-        "clicks": 2
-      },
-      {
-        "domain": "biz.chunichi.co.jp",
-        "clicks": 1
       },
       {
         "domain": "milkdo-doreiku.com",
@@ -157,11 +149,11 @@
         "clicks": 1
       },
       {
-        "domain": "prtimes.jp",
+        "domain": "wolfgangssteakhouse.jp",
         "clicks": 1
       },
       {
-        "domain": "www.walkerplus.com",
+        "domain": "www.tiktok.com",
         "clicks": 1
       },
       {
@@ -171,24 +163,24 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 51,
-      "direct": 37,
-      "social": 31,
+      "organic": 50,
+      "direct": 24,
+      "social": 24,
       "referral": 2,
       "paid": 0,
       "other": 0
     },
     "ctaClickRate_organic": 5.8,
-    "ctaClickRate_direct": 16.7,
-    "ctaClickRate_social": 35.2,
+    "ctaClickRate_direct": 11.2,
+    "ctaClickRate_social": 28.9,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 36
+        "clicks": 29
       },
       {
         "path": "/",
-        "clicks": 25
+        "clicks": 15
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -203,20 +195,16 @@
         "clicks": 5
       },
       {
-        "path": "/features/birthday-surprise.html",
-        "clicks": 3
-      },
-      {
         "path": "/index.html",
-        "clicks": 3
-      },
-      {
-        "path": "/journal/2026-08-03-osu-shindo-weekly.html",
         "clicks": 3
       },
       {
         "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
         "clicks": 3
+      },
+      {
+        "path": "/features/birthday-surprise.html",
+        "clicks": 2
       },
       {
         "path": "/features/nagoya-italian-guide.html",
@@ -240,10 +228,6 @@
       },
       {
         "path": "/features/osu-food-walk.html",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-05-20-bib-gourmand-economics.html",
         "clicks": 1
       },
       {
@@ -289,13 +273,17 @@
       {
         "path": "/journal/2026-08-30-nagoya-tebasaki-osaka.html",
         "clicks": 1
+      },
+      {
+        "path": "/journal/2026-09-01-nishiki-steakhouse-settai-price.html",
+        "clicks": 1
       }
     ],
     "byPageDomain": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
         "domain": "tabelog.com",
-        "clicks": 36
+        "clicks": 29
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -310,27 +298,7 @@
       {
         "path": "/",
         "domain": "maps.google.com",
-        "clicks": 8
-      },
-      {
-        "path": "/",
-        "domain": "tabelog.com",
-        "clicks": 5
-      },
-      {
-        "path": "/",
-        "domain": "www.hotpepper.jp",
-        "clicks": 3
-      },
-      {
-        "path": "/",
-        "domain": "www.instagram.com",
-        "clicks": 3
-      },
-      {
-        "path": "/features/birthday-surprise.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 3
+        "clicks": 6
       },
       {
         "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
@@ -339,12 +307,22 @@
       },
       {
         "path": "/",
+        "domain": "tabelog.com",
+        "clicks": 2
+      },
+      {
+        "path": "/",
         "domain": "www.google.com",
         "clicks": 2
       },
       {
         "path": "/",
-        "domain": "www.tiktok.com",
+        "domain": "www.hotpepper.jp",
+        "clicks": 2
+      },
+      {
+        "path": "/features/birthday-surprise.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 2
       },
       {
@@ -365,6 +343,11 @@
       {
         "path": "/",
         "domain": "news.google.com",
+        "clicks": 1
+      },
+      {
+        "path": "/",
+        "domain": "www.tiktok.com",
         "clicks": 1
       },
       {
@@ -403,28 +386,8 @@
         "clicks": 1
       },
       {
-        "path": "/journal/2026-05-20-bib-gourmand-economics.html",
-        "domain": "www.walkerplus.com",
-        "clicks": 1
-      },
-      {
         "path": "/journal/2026-07-13-weekly-shinten-tsurumai-sakae.html",
         "domain": "www.instagram.com",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-08-03-osu-shindo-weekly.html",
-        "domain": "biz.chunichi.co.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-08-03-osu-shindo-weekly.html",
-        "domain": "jouhou.nagoya",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-08-03-osu-shindo-weekly.html",
-        "domain": "prtimes.jp",
         "clicks": 1
       },
       {
@@ -501,12 +464,17 @@
         "path": "/journal/2026-08-31-nagoya-roadside-newstores-price.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
+      },
+      {
+        "path": "/journal/2026-09-01-nishiki-steakhouse-settai-price.html",
+        "domain": "wolfgangssteakhouse.jp",
+        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 36
+        "clicks": 29
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -518,11 +486,11 @@
       },
       {
         "path": "/",
-        "clicks": 8
+        "clicks": 4
       },
       {
         "path": "/features/birthday-surprise.html",
-        "clicks": 3
+        "clicks": 2
       },
       {
         "path": "/features/nagoya-italian-guide.html",
@@ -565,11 +533,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 81
+    "reservationClicks": 69
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1018,
+    "value": 999,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
