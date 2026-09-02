@@ -36,6 +36,18 @@
 - **files**: `build.js`, `scripts/daily_store_discovery.js`, `agent-backlog.md`
 - **関連**: [[ISSUE-097]]（同じ手動キュレーション店群の写真ゼロ問題・別原因）/ [[ISSUE-104]]（手動キュレーション店が信頼度判定から除外されていた別件）
 
+#### 追加対応（2026-09-02・オーナー追加指示: 「写真が必ず表示される様にして欲しい」）
+
+- **オーナーの回答（AskUserQuestion）**: 「取得を強化（画質も必ず一定以上ある様に）して、それでも取得されない場合は非表示」
+- **現状把握（本番相当データ `data/stores.json`・4,974店で実測）**: 写真なし54店（1.1%）、うち話題フラグ/編集部推薦が付く147店中42店（28.6%）
+- **画質**: `data/photo_policy.json` に既に下限あり（Places オーナー写真800px以上・客投稿代替枠1200px以上・HotPepper 480px以上）。新設は不要、既存ゲートを確認したのみ
+- **強化**: 既存の `scripts/fill_missing_photos_from_hotpepper.js`（写真ソース優先2・HotPepper公式写真での穴埋め・テスト済み `tests/hotpepper_photo_fill.test.js`）が実装済みなのに `.github/workflows/build.yml` に一度も配線されておらず、無人パイプラインでは Places（優先4）しか自動的に試されていなかった。`fetch_manual_store_photos.js` の直後・`node build.js` の前に追加し、無料枠内の既存 `HOTPEPPER_API_KEY` を渡すだけで有効化（追加のAPIキー調達不要）
+- **非表示ゲート**: `build.js loadManualStores()` と `scripts/merge_pending_stores.js mergePendingStores()` に、`写真URL` が空 かつ `写真失敗理由`（Places/HotPepper 両方が実写を見つけられなかった場合にのみ書き込まれる値）が立っている店を最終出力から除外する処理を追加。**「写真URLが空」単独では判定しない**（まだ取得を1度も試していない新着店まで消えてしまうため）。`写真失敗理由` は検証できる事実（制約10）で、写真が後日見つかれば `写真URL` が入り次回ビルドで自動的に再表示される
+- **ローカル検証（`node build.js`）**: 新設ログで非表示件数を可視化 — `手動キュレーション: ... / 写真取得未了で非表示29件`、`pending_stores: ... / 写真取得未了で非表示7件`（現状データでの実測値。HotPepper穴埋めがCIで走った後は減少する見込み）。`npm test` 151件全pass
+- **意図的にやらなかったこと**: 通常カタログ（HotPepper CSV由来・4,920店）の写真なし12店は対象外。これらは `写真失敗理由` の追跡機構（fetch_manual_store_photos.js の対象は manual_stores.json / pending_stores.json のみ）を持たず、同じ仕組みでの「試みて失敗」判定ができない。範囲拡張は別課題として切り出す必要がある
+- **files**: `build.js`, `scripts/merge_pending_stores.js`, `.github/workflows/build.yml`
+- **未完了（CIマージ後に確認が必要）**: HotPepper穴埋めステップの初回実行結果（採用件数）と、非表示になった店が今後どの程度自動回復するか
+
 ---
 
 ### [SEO-080] 週次レポートの5本に1〜2本が Gmail の「ゴミ箱」に入っており、週次triageの取得クエリは構造的にそれを 0件 として見逃す（見逃しても誰にも届かない）

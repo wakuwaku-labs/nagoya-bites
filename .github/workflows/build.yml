@@ -77,6 +77,17 @@ jobs:
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
         continue-on-error: true
 
+      - name: 手動キュレーション店の写真をHotPepper公式写真で穴埋め（写真ソース優先2・ISSUE-120）
+        # Places はオーナー投稿写真しか採用しない（data/photo_policy.json）ため、Google に
+        # 客投稿しか無い店は Places 経路だけでは恒久的に写真ゼロになる。HotPepper 写真は
+        # 店側が媒体に提出した宣材なので帰属ゲート不要で採用できる（写真ソース優先2）。
+        # ここで見つからなかった店だけが「写真取得を試みたが未取得」として次段の build.js で
+        # 非表示になる（ユーザー承認・2026-09-02）。
+        run: node scripts/fill_missing_photos_from_hotpepper.js
+        env:
+          HOTPEPPER_API_KEY: ${{ secrets.HOTPEPPER_API_KEY }}
+        continue-on-error: true
+
       - name: Instagram 埋め込みの証跡を補充（削除済み投稿の検知も兼ねる）
         # 新しく増えた埋め込みの本文を回収し、削除された投稿（埋め込みが「リンクが壊れています」
         # と表示される状態）を検出する。1回あたり上限を設けて実行時間を抑える。
@@ -296,7 +307,7 @@ jobs:
           # Places で取得した pending 店の写真が毎回捨てられ、無駄な API 再取得が続く。
           # data/crosscheck.json: モーダル「内訳を見る」の遅延ロード元。ここが漏れていると
           # CI で毎ビルド生成されても捨てられ、フロントが古い内訳（一部店舗のみ）を出し続ける。
-          git add index.html features/index.html sitemap.xml data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json
+          git add index.html features/index.html sitemap.xml data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json
           # 特集本体(features/*.html)も commit 対象。月次ロスター更新の掲載店入替を反映する。
           git add features/ || true
           git add stores/ || true
