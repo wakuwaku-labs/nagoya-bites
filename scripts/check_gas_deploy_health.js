@@ -241,6 +241,31 @@ function check() {
     );
   }
 
+  // ---- 5. 数値参照値（dailyReference）が長期間進んでいない（SEO-075）----
+  try {
+    const sm = JSON.parse(fs.readFileSync(path.join(REPO, 'data', 'site_metrics.json'), 'utf8'));
+    const refDate = sm.dailyReference && sm.dailyReference.date;
+    if (refDate) {
+      const settledLag = Number.isFinite(w.settled_lag_days) ? w.settled_lag_days : 2;
+      const maxStale = Number.isFinite(w.max_stale_reference_days) ? w.max_stale_reference_days : 3;
+      const expectedDate = new Date(today + 'T00:00:00+09:00');
+      expectedDate.setDate(expectedDate.getDate() - settledLag);
+      const expectedStr = expectedDate.toISOString().slice(0, 10);
+      const staleDays = daysBetween(refDate, expectedStr);
+      if (staleDays !== null && staleDays > maxStale) {
+        problems.push({
+          kind: 'stale_numeric_reference',
+          detail:
+            `data/site_metrics.json の dailyReference が ${refDate} で止まっている` +
+            `（期待値 ${expectedStr}・${staleDays}日遅延・許容 ${maxStale}日）。` +
+            '数値検知（SEO-074）が永久に indeterminate になり、GAS 直帰率の乖離を検算できない。' +
+            'scripts/fetch_ga4_views.js が CI で正常に完走しているか、' +
+            'data/site_metrics.json の commit/push が成功しているかを確認する（SEO-075）。',
+        });
+      }
+    }
+  } catch (_e) { /* site_metrics.json が無い日はチェックしない */ }
+
   const result = {
     ok: problems.length === 0,
     today_jst: today,
