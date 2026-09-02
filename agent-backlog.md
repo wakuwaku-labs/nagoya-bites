@@ -6,6 +6,27 @@
 
 ---
 
+### [SEO-081] IndexNow 送信ステップが ISSUE-112 の build.yml 書き換えで消え、最大流入エンジン Bing への更新通知が再び死んでいる（SEO-071 は done のまま）
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-09-03
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEOアドバイス(LINE) 2026-09-02 原文「Bing検索からの流入が16訪問とGoogle検索に匹敵します。Bingユーザーを意識した対策が有効です。👉 docs/daily-posts/にあるSNS投稿原稿のうち、特に店舗紹介や特集記事のものをBingウェブマスターツールに登録し、Bing検索での露出強化とインデックス促進を図りましょう」
+- **原文からの是正**: 助言の**手段は誤り**なのでそのまま実装しない。Bing Webmaster Tools は「サイト／サイトマップ」を登録する場所であり、`docs/daily-posts/` の SNS 原稿（未公開の下書きテキスト）を登録する機能は存在しない。採用したのは**底流の指摘**（Bing が最大級の流入源なのに更新通知が届いていない）だけで、正しい手段は既に実装済みだったはずの IndexNow 送信の復旧である
+- **brand-filter**: ✅ 適合 — IndexNow は「更新したURLを検索エンジンに通知する」標準プロトコルで、順位操作でも被リンク工作でもない（[[SEO-071]] と同じ判断）。毎日更新される実在コンテンツ（日次ジャーナル）を持つ本サイトの構造と噛み合う。広告主依存・クーポン経済のいずれにも非該当（制約7・8非該当）
+- **検証できる事実（制約10 — 誰でも同じコマンドで検算できる）**:
+  | 事実 | 確認方法 |
+  |------|----------|
+  | 現在の `.github/workflows/build.yml` に IndexNow ステップが**存在しない** | `grep -i indexnow .github/workflows/build.yml` → 0件 |
+  | 送信ログが**一度も生成されていない** | `ls data/indexnow_send_log.json` → No such file |
+  | 削除したのは ISSUE-112（PR #181・2026-09-02 マージ） | `git show fcf9a0f07 -- .github/workflows/build.yml \| grep -E '^[-+].*[Ii]ndexNow'` → 9行すべて `-`（削除のみ・再追加なし） |
+  | 送信の前提（キーファイル）は生きている | `node scripts/indexnow_ping.js --status` → `ready_to_submit: true` |
+  | Bing は最大級の流入エンジン | 当日レポート: Bing 16訪問(28%) > Google 15訪問(26%) |
+- **なぜ P1 か**: ①出荷済み機能のサイレントな回帰であり、②backlog 上は [[SEO-071]] が `done` のままなので**誰も気づけない状態**（CLAUDE.md 無人自動化の監視原則3「気づけるはず＝検知ではない」に該当）、③影響先が最大流入エンジンへの更新通知＝日次ジャーナルの鮮度という本サイト唯一の構造的優位を殺す
+- **acceptance**: ① `.github/workflows/build.yml` に IndexNow 送信ステップと送信ログコミットステップを復旧する（[[SEO-071]] の実装内容＝`--recent 2` / `--log-file data/indexnow_send_log.json` / `INDEXNOW_ENABLED=true` のときだけ `--yes` で実送信し、既定は dry-run。外部送信を暗黙に既定化しない設計は維持）② 復旧を検証できる事実で確認する（`grep -i indexnow .github/workflows/build.yml` が該当行を返す ＋ CI 実行後に `data/indexnow_send_log.json` が生成される）③ **同種の回帰を今後は機械で検知する**: build.yml から IndexNow ステップが消えたことを検出する検査を追加し（例: `audit_*` 系スクリプトに1項目追加して build.yml 内のステップ存在を assert）、CI が落ちればオーナーのメールに届く out-of-band 通知になるようにする（ISSUE-084 原則1・2）④ [[SEO-071]] の done 表記に「2026-09-02 に ISSUE-112 で消失 → SEO-081 で復旧」の追記を入れ、done が嘘のまま残らないようにする ⑤ index.html は単一ファイル維持・既存CI（build/QA/監査）を壊さない（制約1・5）
+- **ブランドガードレール**: 送信対象は自サイトの実在する公開URLのみ。外部送信の実有効化（`INDEXNOW_ENABLED`）は既にオーナー承認済み（[[SEO-071]] 2026-08-26）だが、シークレット設定自体はオーナー操作。**復旧作業はシークレットの有無に関わらず先に完了させる**（未設定なら dry-run で回り、設定された瞬間に実送信になる）
+- **関連**: [[SEO-071]]（本体・done のまま消失）／[[SEO-067]]（Bing WMT 接続・オーナー操作待ちで blocked。IndexNow はこれを待たずに成立する）／[[SEO-039]]／[[ISSUE-112]]（削除の原因コミット）
+
 ### [ISSUE-122] 「焼きそばスタンド らふ」が同一GooglePlaceIDで2重掲載されていた（カタログ全体で計21店名が2重掲載・後者は本セッションで解消、20店名は未調査） ✅
 
 - **priority**: P0 → **status**: done（対象1件は解消。カタログ全体の残20件は別課題として起票のみ）
