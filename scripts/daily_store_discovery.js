@@ -108,11 +108,15 @@ function validateStore(s) {
   if (!/(名古屋市|愛知県)/.test((s['アクセス'] || '') + (s['エリア'] || ''))) {
     return '名古屋市/愛知県が住所に含まれない';
   }
-  // 出典URLが無い or 文字列の場合は配列に修正（1件でも通過、ただし警告）
+  // 出典URLが無い or 文字列の場合は配列に修正した上で、後から第三者が検算できる
+  // 実URL（http/https）だけを残す。番組名等のテキストラベルは非採用（1件でも通過、ただし警告）。
+  // ※ Gemini が「東海テレビ yum-yumグルメ」のようなテキストを出典URLに書いて検証不能なまま
+  //   話題フラグ/話題スコアが通過した事故があった（2026-09-02発覚・ISSUE-077と同じ失敗パターン）
   if (!Array.isArray(s['出典URL'])) {
     s['出典URL'] = s['出典URL'] ? [String(s['出典URL'])] : [];
   }
-  if (s['出典URL'].length === 0) return '出典URLが0件（最低1件必要）';
+  s['出典URL'] = s['出典URL'].filter(u => typeof u === 'string' && /^https?:\/\//.test(u));
+  if (s['出典URL'].length === 0) return '出典URLが検証可能なURLで0件（テキストラベルは不可・最低1件必要）';
   if (s['出典URL'].length === 1) {
     console.log(`    ⚠ ${s['店名']}: 出典URL1件のみ（推奨は2件）—通過`);
   }
