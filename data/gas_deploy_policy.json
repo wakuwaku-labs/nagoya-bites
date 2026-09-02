@@ -8,7 +8,11 @@
     "max_not_deployed_days": 2,
     "_max_not_deployed_days": "『旧コードで動いている』と確定した状態が何日続いたら Issue を起票するか。デプロイはオーナー本人の操作なので、当日中の起票は急かしすぎる。2日連続＝週末を挟んでも気づける位置。",
     "indeterminate_never_alerts": true,
-    "_indeterminate_never_alerts": "その日のデータがたまたま分岐を通らず痕跡が出なかった日（indeterminate）では絶対に鳴らさない。オオカミ少年化させない（ISSUE-084 原則6）。鳴らすのは『旧コード確定が続いたとき』と『ルーチンが報告してこないとき』だけ。"
+    "_indeterminate_never_alerts": "その日のデータがたまたま分岐を通らず痕跡が出なかった日（indeterminate）では絶対に鳴らさない。オオカミ少年化させない（ISSUE-084 原則6）。鳴らすのは『旧コード確定が続いたとき』と『ルーチンが報告してこないとき』だけ。",
+    "settled_lag_days": 2,
+    "_settled_lag_days": "GA4 の確定ラグ（D-2）。dailyReference は今日から数えてこの日数分古い日付を指す。SEO-076 で導入。",
+    "max_stale_reference_days": 3,
+    "_max_stale_reference_days": "dailyReference.date が期待日（today - settled_lag_days）より何日古いと警告するか。settled_lag_days(2)+この値(3)=今日から5日以上古い場合にアラート。週末+CI1回失敗を許容する位置。参照値が無い日・site_metrics.json が無い日は indeterminate とし絶対に鳴らさない。"
   },
   "_pending_fixes": "GAS へ未反映の修正。デプロイ操作1回でまとめて反映される。反映が確認できたらこの配列を空にする（＝そのとき watchdog は恒久的に静かになる）。",
   "signals": [

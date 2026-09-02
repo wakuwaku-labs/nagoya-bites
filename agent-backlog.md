@@ -70,7 +70,7 @@
 - **priority**: P1 → **status**: ready（原因特定・修正案と影響実測まで完了。**サイト全体の検索結果が変わるためオーナー承認待ち**・別PRで実施）
 - **detected**: 2026-08-30（[[ISSUE-117]] の重複解消でテスト対象に入った店が「自分の店名で検索して出てこない」ことから発覚）
 - **category**: 検索 / UX
-- **owner**: Builder
+- **owner**: 片桐 ← Builder
 - **原因**: `index.html` の `NB_PUNCT_RE` が長音符 `ー`(U+30FC) をハイフン類と同じ「記号」として除去している。長音符は記号ではなく文字なので、正規化で語が縮む:
   - `'バー'` → NFKC → かなfold → `'ばー'` → ー除去 → **`'ば'`**（1文字の概念語）
   - この `'ば'` が「し**ば**福や」の中に部分一致し、**店名の途中から1文字奪って**残骸 `'し福や'` を作る（未ヒット語になる）
@@ -187,8 +187,10 @@
 - **files**: `scripts/lib/store_name_match.js`, `scripts/lib/photo_policy.js`, `scripts/fill_missing_photos_from_hotpepper.js`, `scripts/fetch_manual_store_photos.js`, `scripts/check_photo_pipeline_health.js`, `data/photo_pipeline_health.json`, `index.html`, `.github/workflows/build.yml`, `.github/workflows/photo-watchdog.yml`, `tests/store_name_match.test.js`, `tests/hotpepper_photo_fill.test.js`
 ### [SEO-078] エリア語マスタの `aliases` が実データのエリア名と噛み合っておらず、既存エリア圏内で書いた日でも「エリア語なし」になり検索の入口を1つ落としている
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-08-31 commit 74ed54c3 で実装済み。2026-09-02 確認・遡及クローズ）
 - **detected**: 2026-08-30
+- **resolved**: 2026-08-31
+- **resolved_by**: 74ed54c3
 - **category**: SEO
 - **owner**: Marketer + Editor
 - **source**: SEOアドバイス(LINE) 2026-08-29 原文「検索流入比率が89%と非常に高いですが、Bing検索がGoogle検索を上回っています。👉 journal/2026-08-29-fujigaoka-nama-donut-cospa.html の記事タイトルに『名古屋 藤が丘 生ドーナツ コスパ』のように、より具体的な場所と特徴のキーワードを追加し、Google検索からの流入も強化する実験をしましょう」
@@ -217,8 +219,9 @@
 
 ### [SEO-077] 閲覧トップの常設特集（nagoya-solo-dining）が SNS 原稿の対象外で、最も読まれている面が107日間一度も発信されていない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-09-02）
 - **detected**: 2026-08-28
+- **resolved**: 2026-09-02
 - **category**: SEO / コンテンツ配信
 - **owner**: Marketer
 - **source**: SEOアドバイス(LINE) 2026-08-27 原文「訪問者35人に対し、人気ページは『nagoya-solo-dining』が8回閲覧と、特定のニーズが強いです。👉 features/nagoya-solo-dining の記事をSNS投稿原稿 docs/daily-posts/ に転用し、Note/Instagram/Xで『お一人様向け名古屋グルメ』をテーマに発信しましょう」
@@ -286,8 +289,9 @@
 
 ### [SEO-075] SEO-074 の数値検知が「参照値が常に1日古い」ため恒久的に indeterminate — 直帰率90%の真偽を誰も検算できないまま毎朝の🔴アドバイスの前提になっている
 
-- **priority**: P1 → **status**: partial（acceptance 1〜4・6 は [[SEO-076]] で完了。5「参照値が進んでいないこと自体のサーバ側検知」だけ未実装）
+- **priority**: P1 → **status**: done（acceptance 1〜7 すべて完了。2026-09-02）
 - **detected**: 2026-08-26
+- **resolved**: 2026-09-02
 - **category**: SEO / ops / data-quality
 - **owner**: Marketer + Builder
 - **source**: 2026-08-26 の日次SEOトリアージ。日次レポート(2026-08-25分)を `node scripts/check_gas_deploy_health.js --record` にかけたところ `bounce_rate_divergence: indeterminate` / `numeric_reference: null` が返り、その原因を追って判明
@@ -308,7 +312,7 @@
      → **2026-08-26 決着（どちらでもなかった）**: GA4 UI で確定値を実測したところ、90%台は「旧コードの誤値」でも「実データ」でもなく、**GA4 の集計が終わる前の途中経過**だった（確定値は 22.9〜37.2%）。原因と修正は [[SEO-076]]。本チケットの前提「参照値が一度も進んでいない」も部分的に誤りで、2026-08-26 06:14Z の CI 実行では 08-25 まで進んでいた（UTC基準のため実行時刻によって当たる日と外れる日がある）というのが正確な姿
   5. 参照値が**進んでいないこと自体**を検知できるようにする（例: `dailyReference.date` が対象日より2日以上古い状態が続いたら `.github/workflows/gas-deploy-watchdog.yml` が原因つきで Issue を起票）。CLAUDE.md 原則1「監視は監視される対象と別の場所で動かす」に従い、判定はローカルではなくサーバ側 CI に置く
   6. ✅ 維持。痕跡2件と `settled_date_pattern` は `data/gas_deploy_policy.json` に追加し、判定器は `scripts/lib/gas_deploy_trace.js` の1本のまま
-  7. ⬜ **残**: 参照値が対象日より2日以上古い状態が続いたら `.github/workflows/gas-deploy-watchdog.yml` が原因つきで Issue を起票する（上記 acceptance 5）。現状は理由を記録するところまでで、サーバ側の警報にはなっていない
+  7. ✅ `data/gas_deploy_policy.json` の `watchdog` に `settled_lag_days: 2` / `max_stale_reference_days: 3` を追加。`scripts/check_gas_deploy_health.js` にチェック #5（`stale_numeric_reference` 問題）を追加。`.github/workflows/gas-deploy-watchdog.yml` に `stale_numeric_reference` 固有の対処ガイドを追加。日付ずれが `settled_lag_days + max_stale_reference_days = 5` 日を超えると `check_gas_deploy_health.js` が exit 1 を返し、watchdog.yml が Issue を起票する
 
 ### [SEO-074] SEO-062（直帰率の集計バグ）の修正が本番で効いていない — GA4実測 32.5% に対しレポートは 94% を出し続けている
 
@@ -4627,6 +4631,10 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-08-23 | Orchestrator(夜間自律処理) | ISSUE-107 実装・デプロイ — `node scripts/audit_feature_stores.js` の全特集監査で発見した「実在不明」5件を個別調査。うち1件（nagoya-ramen.htmlの「担担麺専門店 想吃担担面 名駅地下店」）はLOCAL_STORESに実在する店（正式名「想吃担担面 シャンツーダンダンミェン 名駅地下店」・HP ID J001271930）の表記・写真URLドリフトと判明し即修正。残り4件（4特集共通の「鉄板焼肉3G スリージー」）はHotPepper個別ページ404・sandbox内Places APIアクセス不能のため実在確定に至らず、ISSUE-108としてDataKeeperへローカル環境での再検証を依頼 | ✅ 本コミット（ISSUE-107分のみ・ISSUE-108は未実装） |
 | 2026-08-22 | Marketer(SEO分析セッション) | SEO-066 partial実装 — GSCの`gsc_opportunities.json`が挙げるctrFix対象5ページを個別診断。3店舗ページ（J004025075/J004559348/J004661023）はtitleに既に店名完全一致が入っており（SEO-050で一度最適化済み）、上位表示クエリが全て指名検索＝Google Maps/公式Instagram/食べログという「一次情報源」に順位で勝てない構造的なCTR上限（Strategic Skip該当）と判断、対症的なtitle/meta変更は見送り。一方、ジャーナル記事2本は実際のバグを検出: `journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html`は最多流入クエリ「煮干しラーメン 凛」(223 impression/28日)の店名「凛」がtitle/meta/OGP/JSON-LDのどこにも一度も出現していなかった（本文には9回登場）。`journal/2026-07-27-owarisanso-kurogi.html`は最多流入クエリ「尾張山荘くろぎ」(493 impression)のうちmeta descriptionには「尾張山荘」があったがtitleには無かった。両記事のtitle/og:title/JSON-LD headlineに店舗正式名を追加（niboshi-ramen-rinはmeta descriptionにも追加、owarisanso-kurogiは既にmeta記載済みのため据え置き）・dateModified更新・JSON-LD構文検証OK・npm test 125/125 pass。効果は次回GSC更新（該当2クエリのCTR/掲載順位）で再評価 | ✅ 本コミット・3店舗ページ分は意図的見送り |
 | 2026-08-31 | Marketer(routine) | SEO-068 実装・デプロイ — AREA_VOCAB の alias を match に実在する表記のみで拡張（栄←丸の内・新栄／覚王山←藤が丘）。before: 117本中66本がエリアKWなし → after: 61本（alias一致5本のみ改善・全記事底上げなし）。--verify problems:[] 通過 | ✅ commit 74ed54c |
+| 2026-09-02 | Orchestrator(自律バッチ) | ISSUE-119 エスカレーション — owner を「片桐 ← Builder」に変更（サイト全体の検索結果が変わるため自動実装不可・オーナー承認待ち） | ✅ バックログ更新 |
+| 2026-09-02 | Orchestrator(自律バッチ) | SEO-075 acceptance 7 実装 — `data/gas_deploy_policy.json` に `settled_lag_days:2` / `max_stale_reference_days:3` を追加。`scripts/check_gas_deploy_health.js` にチェック #5（`stale_numeric_reference`）を追加。`.github/workflows/gas-deploy-watchdog.yml` に `stale_numeric_reference` 固有の対処ガイドを追加。status: partial → done | ✅ 本コミット |
+| 2026-09-02 | Orchestrator(自律バッチ) | SEO-077 実装 — `docs/daily-posts/feature-nagoya-solo-dining.md` を新規作成（Note/Instagram/X 3セクション構成。常設特集を SNS 配信パイプラインに接続）。status: ready → done | ✅ 本コミット |
+| 2026-09-02 | Orchestrator(自律バッチ) | SEO-078 遡及クローズ — commit 74ed54c3（2026-08-31）で実装済みを確認。status: ready → done（resolved_by: 74ed54c3） | ✅ バックログ更新 |
 
 ---
 

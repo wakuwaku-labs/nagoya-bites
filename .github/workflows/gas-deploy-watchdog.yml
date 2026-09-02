@@ -152,6 +152,27 @@ jobs:
             L.push('');
             L.push('`.gas-deploy/Code.js` はミラーで、実行主体は GAS 側です。CI からは反映できません。');
             L.push('');
+
+            // stale_numeric_reference 固有の対処ガイド
+            if (r.problems.some(p => p.kind === 'stale_numeric_reference')) {
+              L.push('### `stale_numeric_reference` が検出された場合');
+              L.push('');
+              L.push('`data/site_metrics.json` の `dailyReference` が古いまま更新されていません。');
+              L.push('これは GAS のデプロイ状態と直接は関係なく、**数値検知（SEO-074）が機能しなくなっている**問題です。');
+              L.push('');
+              L.push('確認手順:');
+              L.push('1. GitHub Actions の `build.yml` の最新実行を開き、`scripts/fetch_ga4_views.js` のステップが');
+              L.push('   正常終了しているか確認する');
+              L.push('2. 失敗していれば、認証エラー（GOOGLE_SERVICE_ACCOUNT_KEY など）を修正する');
+              L.push('3. 成功しているのに `dailyReference` が更新されない場合は、');
+              L.push('   `data/site_metrics.json` の commit/push ステップが正常に動いているか確認する');
+              L.push('4. 手元で `node scripts/fetch_ga4_views.js` を実行し `data/site_metrics.json` が更新されることを確認、');
+              L.push('   コミット・プッシュして CI を再実行する');
+              L.push('');
+            }
+
+            L.push('GAS デプロイの手順:');
+            L.push('');
             L.push('1. `.gas-deploy/Code.js` の中身を GAS エディタ（Google分析オートLINE送信）にコピペして保存する');
             L.push('   - または `clasp push`（`.gas-deploy/.clasp.json` あり。要 `clasp login`）');
             L.push('2. **重複ファイルを作らないこと**（`Code 2.js` 等が混ざると top-level 二重宣言で');
