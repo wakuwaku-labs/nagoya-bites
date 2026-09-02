@@ -1,16 +1,16 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-02T13:57:28.684Z",
+  "generatedAt": "2026-09-02T14:32:57.822Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1176,
+  "total_sessions": 1180,
   "engines": [
     {
       "key": "google",
       "label": "Google",
       "sessions": 389,
-      "pct": 33.1,
+      "pct": 33,
       "sources": [
         {
           "source": "google",
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 296,
-      "pct": 25.2,
+      "pct": 25.1,
       "sources": [
         {
           "source": "bing",
@@ -35,31 +35,31 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 207,
-      "pct": 17.6,
+      "sessions": 210,
+      "pct": 17.8,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 186
+          "sessions": 187
         },
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 21
+          "sessions": 23
         }
       ]
     },
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 174,
+      "sessions": 175,
       "pct": 14.8,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 174
+          "sessions": 175
         }
       ]
     },
@@ -95,7 +95,7 @@
       "key": "duckduckgo",
       "label": "DuckDuckGo",
       "sessions": 10,
-      "pct": 0.9,
+      "pct": 0.8,
       "sources": [
         {
           "source": "duckduckgo",
@@ -113,7 +113,7 @@
     }
   ],
   "search_only": {
-    "total": 969,
+    "total": 970,
     "share": [
       {
         "key": "google",
@@ -130,7 +130,7 @@
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 174,
+        "sessions": 175,
         "pct_of_search": 18
       },
       {
@@ -148,14 +148,14 @@
     ]
   },
   "trend": {
-    "from": "2026-08-30",
-    "to": "2026-08-31",
+    "from": "2026-08-31",
+    "to": "2026-09-02",
     "delta": {
-      "google": 18,
-      "bing": 15,
-      "direct": 4,
-      "yahoo": 4,
-      "ai_assistant": 4,
+      "google": 16,
+      "bing": 14,
+      "direct": -4,
+      "yahoo": 13,
+      "ai_assistant": -6,
       "duckduckgo": 1,
       "social": 0
     }
