@@ -51,14 +51,14 @@ var NB_ICONS={
 function nbIcon(name,extraClass){var sv=NB_ICONS[name]||'';return '<span class="nb-icon'+(extraClass?' '+extraClass:'')+'">'+sv+'</span>';}
 // 媒体ブランドアイコン — 各サービスの公式 favicon を Google S2 経由でフルカラー取得。
 // 公式アイコンを直に表示することで「自前で作った」雰囲気を排除し、媒体ロゴそのものの認知性を活かす。
-// sz=64 を 22px / 14px 表示で使うため 3x density 相当でクリスプに見える。
+// sz=128 でリクエストし、22px / 14px / 36px いずれの表示でもクリスプに見えるようにする。
 var NB_BRAND_FAVS={
-  hotpepper:'https://www.google.com/s2/favicons?domain=hotpepper.jp&sz=64',
-  tabelog:'https://www.google.com/s2/favicons?domain=tabelog.com&sz=64',
-  instagram:'https://www.google.com/s2/favicons?domain=instagram.com&sz=64',
-  tiktok:'https://www.google.com/s2/favicons?domain=tiktok.com&sz=64',
-  x:'https://www.google.com/s2/favicons?domain=x.com&sz=64',
-  gmap:'https://www.google.com/s2/favicons?domain=maps.google.com&sz=64'
+  hotpepper:'https://www.google.com/s2/favicons?domain=hotpepper.jp&sz=128',
+  tabelog:'https://www.google.com/s2/favicons?domain=tabelog.com&sz=128',
+  instagram:'https://www.google.com/s2/favicons?domain=instagram.com&sz=128',
+  tiktok:'https://www.google.com/s2/favicons?domain=tiktok.com&sz=128',
+  x:'https://www.google.com/s2/favicons?domain=x.com&sz=128',
+  gmap:'https://www.google.com/s2/favicons?domain=maps.google.com&sz=128'
 };
 function nbBrandImg(name,size){var src=NB_BRAND_FAVS[name];if(!src)return '';var s=size||22;return '<img class="brand-fav" src="'+src+'" alt="" width="'+s+'" height="'+s+'" loading="lazy" decoding="async">';}
 // 配信が死んだ写真の受け皿。
@@ -261,7 +261,7 @@ document.addEventListener('keydown',function(e){
 <link rel="preconnect" href="https://wsrv.nl" crossorigin>
 <link rel="preconnect" href="https://docs.google.com">
 <link rel="preconnect" href="https://www.google.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--border-h:rgba(0,0,0,0.28);--text:#1c1c1a;--muted:rgba(28,28,26,0.72);--dim:rgba(28,28,26,0.55);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;--ember:#b8541f;--ember-deep:#8c3a14;--ember-soft:#d97a3a;--warm-grad:linear-gradient(135deg,#d97a3a 0%,#b8541f 55%,#8c3a14 100%);--warm-glow:0 6px 20px rgba(184,84,31,.28),0 1px 3px rgba(140,58,20,.4);--rhythm-xs:clamp(1rem,2vw,1.5rem);--rhythm-sm:clamp(2rem,4vw,3rem);--rhythm-md:clamp(4rem,7vw,5.5rem);--rhythm-lg:clamp(6rem,10vw,9rem);}
 /* ── REUSABLE EYEBROW & ICON UTILITIES (絵文字廃止に伴うラベル統一) ── */
@@ -620,12 +620,12 @@ body.search-query-active .card-why{display:flex;}
 .fb-close:hover{color:var(--text);}
 @media(max-width:768px){.editor-note{font-size:.42rem;}.card-editor-lead,.card-insider-lead{-webkit-line-clamp:2;max-height:52px;}}
 .mmg{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;}
-.mb{display:flex;flex-direction:column;align-items:center;gap:.65rem;padding:1.05rem .4rem 1rem;border:1px solid var(--border);text-decoration:none;color:var(--text);transition:all .2s;border-radius:3px;background:#fff;}
-.mb:hover{border-color:var(--border-h);background:var(--surface);transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.05);}
-.mbi{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;line-height:1;}
-.mbi img.brand-fav{width:28px;height:28px;object-fit:contain;display:block;border-radius:5px;}
-.mbl{font-size:.58rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;font-family:'DM Mono',monospace;}
-.mb:hover .mbl{color:var(--text);}
+.mb{display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:1.15rem .4rem 1.05rem;border:1px solid var(--border);text-decoration:none;color:var(--text);transition:all .2s;border-radius:10px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.03);}
+.mb:hover{border-color:var(--border-h);background:var(--surface);transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.08);}
+.mbi{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;line-height:1;}
+.mbi img.brand-fav{width:36px;height:36px;object-fit:contain;display:block;border-radius:9px;box-shadow:0 2px 5px rgba(0,0,0,.14);}
+.mbl{font-size:.64rem;letter-spacing:.09em;color:var(--text);text-transform:uppercase;font-family:'DM Mono',monospace;font-weight:700;}
+.mb:hover .mbl{color:var(--gold);}
 .mb.mb-hp:hover{border-color:rgba(230,0,45,.45);}
 .mb.mb-tb:hover{border-color:rgba(255,140,0,.5);}
 .mb.mb-ig:hover{border-color:rgba(225,48,108,.45);}
@@ -9986,7 +9986,7 @@ function openM(i) {
   ];
   document.getElementById('mmg').innerHTML = items.map(function(m){
     var onclickAttr = m.track ? (' onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'' + m.track + '\'})"') : '';
-    return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '"' + onclickAttr + ' rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,28) + '</span><span class="mbl">' + m.label + '</span></a>';
+    return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '"' + onclickAttr + ' rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,36) + '</span><span class="mbl">' + m.label + '</span></a>';
   }).join('');
   setShareStore(r['店名'] || '');
   var mfavBtn = document.getElementById('modal-fav-btn');
