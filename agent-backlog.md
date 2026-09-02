@@ -816,9 +816,12 @@
 - **acceptance**: 次回 `weekly-places.yml` 実行後、`node -e "..."` 等で編集部推薦店のNA率が100%から大きく下がることを確認
 - **関連**: [[ISSUE-101]]（口コミ信頼度の判定材料不足がこの調査の発端）/ [[ISSUE-103]]（同じ調査から派生した別原因・他都市データ混入）
 
-### [ISSUE-103] カタログに他都市チェーン店舗が誤って「名古屋の店」として混入している疑い（71店・実在保証Moatの根幹に関わる）
+### [ISSUE-103] カタログに他都市チェーン店舗が誤って「名古屋の店」として混入している疑い（71店・実在保証Moatの根幹に関わる）✅
 
 - **priority**: P0 → **status**: done（acceptance 1〜4完了・5はオーナー判断待ちで別枠）
+- **priority**: P0 → **status**: done
+- **resolved**: 2026-08-22
+- **resolved_by**: commit bd00d50f
 - **detected**: 2026-08-20（オーナー報告「結構な店舗数で口コミ信頼度が表示されておらず判断材料が足りない」の原因調査中に発見）
 - **resolved**: 2026-08-22（Orchestrator・オーナー就寝中の自律処理）
 - **category**: data-quality / trust / 架空店ブロック関連
@@ -3738,6 +3741,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **priority**: P1 → **status**: done
 - **resolved**: 2026-08-31
 - **resolved_by**: 74ed54c
+- **priority**: P1 → **status**: in_progress
 - **detected**: 2026-08-22
 - **category**: SEO / コンテンツ戦略
 - **owner**: Editor / Marketer
@@ -3751,6 +3755,17 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **acceptance**: `data/journal_seo_keywords.json` の既存シーンKWのうち、`node scripts/journal_seo_kw.js --suggest` で「特集が薄い/未カバー」と判定されたシーン×エリアの組み合わせを洗い出す／未カバー上位から日次ジャーナル・特集記事のテーマ選定に反映（EDT-003「題材選定の型」に準拠、架空店ブロック厳守）／効果測定は `node scripts/gsc_query_intent.js` の discovery行の impressions_share・impressions 絶対値を追跡（総クリックではなく意図別内訳で判定。総クリックは指名検索の増減と混ざるため使わない）／施策実施後、次回GSC更新でdiscovery impressions_shareが2.6%から改善しているかを再評価
 - **ブランドガードレール**: 「シーンKWを増やす」ことが目的化して架空店・薄い特集を量産しないこと。既存特集とのカニバリ回避（SEO-005/SEO-006と同じ判断基準）。実施はEditor/Marketerの編集判断を要するため、本セッションでは診断のみで実装は次サイクルへ
 - **2026-08-22 診断実行（Orchestrator）**: `node scripts/journal_seo_kw.js --suggest` を実行し正常動作を確認。8月の未カバー上位候補として「栄×食べ歩き」（当月シーンに合致・in_season:true）「栄×接待」「栄×個室」「栄×宴会」を機械抽出（各コンボは既存特集への内部リンクも自動解決）。この診断結果は `/journal-today` の題材選定入力として日次サイクルで自動的に消費される設計のため、追加のコード実装は不要。**status は ready のまま据え置く**（施策実施＝日次ジャーナルでの実採用は今後の複数サイクルにわたる継続施策のため、1回のセッションで"done"にする性質のチケットではない）
+
+- **2026-08-22 診断結果（`node scripts/gsc_query_intent.js` + `--suggest` + `--verify`）**:
+  - **discovery シェア現況**: 6.1%（382表示/18クリック/CTR 4.71%/平均順位 6.7）→ 前回集計 2.6% から改善済み
+  - **集中リスク**: discoveryの382表示のうち「一人飲み」KW関連が約97%（372）を占め、他のシーンKWはほぼ未出現。1シーン依存は脆弱構造
+  - **KW台帳**: `--verify` → OK（39件全て特集実在・タイトル一致確認）
+  - **8月の未カバー優先combos（`--suggest` 出力）**:
+    1. **栄×食べ歩き**（in_season=true・8月旬） → sakae.html + osu-food-walk.html にリンク。ジャーナル1本で「栄エリアの食べ歩き」をカバーすると両特集への内部リンクが増え discovery 面を一気に追加できる（最優先）
+    2. **栄×個室**（in_season=false） → sakae.html + private-room.html
+    3. **栄×宴会**（in_season=false） → sakae.html + banquet.html
+    4. **栄×接待**（in_season=false） → sakae.html + nagoya-settai-secret.html
+  - **次アクション（Editor担当）**: 上記1（栄×食べ歩き）をジャーナル次回テーマとして優先検討。テーマ選定ガイドは agents/editor.md「ロングテール勝ち筋の型」参照。架空店厳禁・実在 LOCAL_STORES 限定
 
 ### [STR-001] マネタイズ第1弾実装：接待・宴会コンシェルジュLP + CTA計測 + 編集独立の透明化 ✅
 - **priority**: P1（事業健全性・Moat換金の第一歩） → **status**: done
@@ -4635,6 +4650,9 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-09-02 | Orchestrator(自律バッチ) | SEO-075 acceptance 7 実装 — `data/gas_deploy_policy.json` に `settled_lag_days:2` / `max_stale_reference_days:3` を追加。`scripts/check_gas_deploy_health.js` にチェック #5（`stale_numeric_reference`）を追加。`.github/workflows/gas-deploy-watchdog.yml` に `stale_numeric_reference` 固有の対処ガイドを追加。status: partial → done | ✅ 本コミット |
 | 2026-09-02 | Orchestrator(自律バッチ) | SEO-077 実装 — `docs/daily-posts/feature-nagoya-solo-dining.md` を新規作成（Note/Instagram/X 3セクション構成。常設特集を SNS 配信パイプラインに接続）。status: ready → done | ✅ 本コミット |
 | 2026-09-02 | Orchestrator(自律バッチ) | SEO-078 遡及クローズ — commit 74ed54c3（2026-08-31）で実装済みを確認。status: ready → done（resolved_by: 74ed54c3） | ✅ バックログ更新 |
+| 2026-08-22 | DataKeeper(routine) | ISSUE-103 実装・デプロイ — places_resolved.json のrejected分析で判明した71件の他都道府県チェーン店（北海道・沖縄・熊本・三重等）をbuild.jsのEXCLUDED_HP_IDSに追加し、data/stores.json（5023→4952件）・data/crosscheck.json（5023→4952件）から除外。根本原因はfetch_places.jsが「栄」を名古屋・栄と誤解し他都市の栄町所在IDを取り込んでいたこと。再発防止のためscripts/audit_other_prefecture_stores.js（新設・--check で exit1・PASS確認済み）と.github/workflows/build.yml（非ブロッキング監査ステップ追加）を整備。QA-2: 71/5023=1.41%削減（閾値5%以内）・index.html TOP50は0店変化なし | ✅ 本コミット |
+| 2026-08-22 | DataKeeper(routine) | ISSUE-103 実装・デプロイ — places_resolved.json のrejected分析で判明した71件の他都道府県チェーン店（北海道・沖縄・熊本・三重等）をbuild.jsのEXCLUDED_HP_IDSに追加し、data/stores.json（5023→4952件）・data/crosscheck.json（5023→4952件）から除外。根本原因はfetch_places.jsが「栄」を名古屋・栄と誤解し他都市の栄町所在IDを取り込んでいたこと。再発防止のためscripts/audit_other_prefecture_stores.js（新設・--check で exit1・PASS確認済み）と.github/workflows/build.yml（非ブロッキング監査ステップ追加）を整備。QA-2: 71/5023=1.41%削減（閾値5%以内）・index.html TOP50は0店変化なし | ✅ commit bd00d50f |
+| 2026-08-22 | Marketer(routine) | SEO-068 診断 — gsc_query_intent.js でdiscovery意図シェアを計測（6.1%/382表示/18クリック/CTR 4.71%・前回2.6%から改善）。「一人飲み」が discovery の97%を占め1シーン依存と判明。journal_seo_kw.js --suggest で8月の未カバーcombo筆頭が「栄×食べ歩き」（in_season=true）と特定。--verify で39件全KW特集実在確認OK。テーマ選定・実記事執筆はEditorの次サイクルタスク | ⏸ 診断のみ・commitなし（status: in_progress） |
 
 ---
 

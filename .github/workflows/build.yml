@@ -278,6 +278,15 @@ jobs:
         run: node scripts/audit_ig_post_relevance.js --check
         continue-on-error: true
 
+      - name: 他都道府県 rejected 店舗の新規混入を監査（ISSUE-103）
+        # fetch_places.js の地名寄せ誤りで他都市のチェーン支店IDが名古屋カタログに混入するのを
+        # 定期検知する。places_resolved.json の rejected 分析で、build.js の EXCLUDED_HP_IDS に
+        # 未登録の他都道府県 rejected が閾値を超えたら警報。既知の除外済みIDは除いて計算する。
+        # 判定根拠: places_resolved.json の candidateAddress（Google Places が返した住所・事実）
+        # と build.js の EXCLUDED_HP_IDS（機械的に比較可能）のみ（制約10）。
+        run: node scripts/audit_other_prefecture_stores.js --check
+        continue-on-error: true
+
       - name: Instagram ボタンのリンク先が異ブランド共有でないかを監査（ISSUE-090）
         # 1つのアカウントが複数ブランドにまたがって登録されていると、「Instagram」ボタンを
         # 押すと別の店の IG に飛ぶ誤リンクになる。判定根拠は instagram_resolved.json の
