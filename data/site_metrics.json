@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-03T09:17:28.171Z",
+  "generatedAt": "2026-09-03T10:43:05.398Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1011,
-    "pageViews": 1642,
-    "sessions": 1181,
+    "activeUsers": 1015,
+    "pageViews": 1645,
+    "sessions": 1186,
     "avgSessionDuration": 145.2,
-    "bounceRate": 0.296,
+    "bounceRate": 0.298,
     "pagesPerSession": 1.39
   },
   "dailyReference": {
@@ -17,16 +17,16 @@
   },
   "channels": {
     "sessions": {
-      "organic": 875,
-      "direct": 206,
+      "organic": 878,
+      "direct": 210,
       "social": 83,
       "referral": 17,
       "paid": 0,
       "other": 1
     },
     "pct": {
-      "organic": 74,
-      "direct": 17.4,
+      "organic": 73.8,
+      "direct": 17.7,
       "social": 7,
       "referral": 1.4,
       "paid": 0,
@@ -37,22 +37,22 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 391
+      "sessions": 392
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 290
+      "sessions": 291
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 183
+      "sessions": 184
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 179
+      "sessions": 180
     },
     {
       "source": "chatgpt.com",
@@ -62,7 +62,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 12
+      "sessions": 15
     },
     {
       "source": "duckduckgo",
@@ -88,18 +88,18 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 275,
-      "sessions": 234
+      "pageViews": 277,
+      "sessions": 236
     },
     {
       "path": "/",
-      "pageViews": 273,
-      "sessions": 167
+      "pageViews": 274,
+      "sessions": 168
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
       "pageViews": 112,
-      "sessions": 105
+      "sessions": 106
     },
     {
       "path": "/index.html",
@@ -113,7 +113,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 100,
+    "outboundClicks": 101,
     "ctaClickRate": 8.5,
     "byDomain": [
       {
@@ -122,7 +122,7 @@
       },
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 34
+        "clicks": 35
       },
       {
         "domain": "maps.google.com",
@@ -163,15 +163,15 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 50,
+      "organic": 51,
       "direct": 24,
       "social": 24,
       "referral": 2,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 5.7,
-    "ctaClickRate_direct": 11.7,
+    "ctaClickRate_organic": 5.8,
+    "ctaClickRate_direct": 11.4,
     "ctaClickRate_social": 28.9,
     "byPage": [
       {
@@ -188,7 +188,7 @@
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 9
+        "clicks": 10
       },
       {
         "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
@@ -293,7 +293,7 @@
       {
         "path": "/features/nagoya-hitsumabushi.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 9
+        "clicks": 10
       },
       {
         "path": "/",
@@ -482,7 +482,7 @@
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 9
+        "clicks": 10
       },
       {
         "path": "/",
@@ -533,11 +533,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 69
+    "reservationClicks": 70
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1011,
+    "value": 1015,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
