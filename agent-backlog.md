@@ -7,7 +7,9 @@
 ---
 
 ### [SEO-081] IndexNow 送信ステップが ISSUE-112 の build.yml 書き換えで消え、最大流入エンジン Bing への更新通知が再び死んでいる（SEO-071 は done のまま）
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-09-03
+- **resolved_by**: 42fd9478
 - **detected**: 2026-09-03
 - **category**: SEO
 - **owner**: Builder
@@ -4841,6 +4843,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-09-02 | Orchestrator(EMERGENCY) | ISSUE-121 発見・実装 — ユーザーが ISSUE-120 の反映を確認しようとして「まだ反映されてない」と報告 → CI実行履歴を調査し、07:01以降 `main` への push が3回連続で Build & Deploy 失敗（他都道府県マッチ監査でブロック・PR #201含む複数マージが本番未反映のまま放置）と判明。HotPepper公式ページを実フェッチして「焼肉酒房天禄 池下店」(J004678480)が実在の名古屋店（岐阜支店への誤マッチが原因）と検証し、data/other_prefecture_match_exceptions.json に登録。ローカルで audit_other_prefecture_matches.js --check が[OK]になることを確認。ISSUE-120後半（写真の必須化・PR#201マージ後に積んだため未取込だった分）を本ブロッカー修正の上にcherry-pickし直しPR #206として再提出 | ⏸ PR #205・PR #206（いずれもマージ待ち。gh pr mergeはauto-modeクラシファイアが拒否のためオーナー操作が必要） |
 | 2026-09-02 | Orchestrator(EMERGENCY) | PR #205・#206 マージ後、CI（Build & Deploy）が正常完走・本番反映を確認。しかしユーザー報告で「今日の話題店」TOP5だけ焼きそばスタンド らふが編集部推薦タグ付きで残存と発覚 → scripts/pick_daily_trending5.js が manual_stores.json を直読みし、build.js の出典URLゲートを経由していなかったことが根本原因と特定。scripts/lib/trending_source_gate.js（新設・hasVerifiableSource()）に判定を1本化し、build.js と pick_daily_trending5.js の両方が共有するよう修正。node scripts/pick_daily_trending5.js のローカル実行で対象3店がTOP5候補から正しく除外されることを確認・npm test 151件全pass | ✅ PR #207 マージ済み・本番反映確認済み（「今日の話題店」TOP5から対象3店消失を確認） |
 | 2026-09-02 | Orchestrator(EMERGENCY) | ISSUE-122 発見・実装 — PR #207 反映確認のため本番 data/stores.json を直接フェッチし「焼きそばスタンド らふ」を検索したところ2件ヒット。pending_stores.json（2026-05-23・実写実評価実出典あり）と manual_stores.json（2026-09-01・ISSUE-120で問題化した自動発掘由来）が同一GooglePlaceIDを持つ重複と判明。manual_stores.json側の重複エントリを削除（167件に減少）。カタログ全体で店名完全一致の重複が計21件存在することも実測で判明したため、残20件はDataKeeper向けに別途起票のみ（誤統合リスクがあるため今回は手を付けず）。npm test 151件全pass | ⏸ PR作成準備中 |
+| 2026-09-03 | Builder(routine) | SEO-081 実装・デプロイ — ISSUE-112（PR #181）で誤削除された IndexNow 送信ステップを build.yml に復旧。CI冒頭に自己診断ステップ（grep で IndexNow ステップ存在を assert）を追加して再消失を機械検知できるようにした。SEO-071 に回帰・復旧注記を追記。status: ready → done | ✅ commit 42fd9478 / PR #209 |
 
 ---
 
