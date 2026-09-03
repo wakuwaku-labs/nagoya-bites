@@ -192,8 +192,10 @@ SEO:
 
 4. 記事HTMLを作成
    - features/ ディレクトリに配置
-   - index.htmlのデザイントーンに合わせる
+   - `docs/design-system.md` の新規ページ雛形を使う（`<head>` に `assets/css/nb.css` を link）
+   - font-size のリテラル値を新規に書かない。トークン（`var(--fs-*)`）を使う（DSN-001）
    - SEO要素を全て含める
+   - 作成後 `node scripts/audit_design_system.js --check` を通す
 
 5. features/index.html にカードを追加（写真カードのパターン）
 

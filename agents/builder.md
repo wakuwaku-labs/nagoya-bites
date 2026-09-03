@@ -70,7 +70,9 @@ END
 
 ### features/ ディレクトリの編集ルール
 - 特集記事HTMLはindex.htmlとデザインの一貫性を保つ
-- CSS変数（:root）は index.html と同じ値を使う
+- `:root` を再定義しない。トークン（`var(--fs-*)` 等）は `assets/css/nb.css` のものを使う（DSN-001）
+- font-size のリテラル値（`12px` や `.8rem` 等）を新規に書かない。既存トークンで足りない場合は
+  Designer（agents/designer.md）に相談する
 - メタ情報（title, description, OGP）は記事ごとに最適化する
 - 内部リンク（トップ↔特集↔店舗）を必ず相互に設定する
 
@@ -130,9 +132,12 @@ git push origin main
 ### 実装前にユーザー確認が必要なもの
 - データスキーマの変更（LOCAL_STORESの構造）
 - 外部サービスの追加（新しいCDN依存）
-- 大規模なリデザイン（ページ全体のレイアウト変更）
+- 大規模なリデザイン（ページ全体のレイアウト変更）※デザインシステム（`data/design_system.json`
+  `assets/css/nb.css`）の範囲内での改修は Designer レビューのみで進めてよい
 - 機能の削除
 - マネタイズに関わる実装（広告枠の設置等）
+- デザインシステムからの逸脱（新規ページ・新規部品・テンプレート変更は Designer レビュー必須。
+  agents/designer.md 参照）
 
 ---
 

@@ -249,6 +249,15 @@ jobs:
         # ISSUE-050 の前例に倣い Inspector の月次レビュー後に手動 --delete-orphans する運用とする。
         run: node gen-store-pages.js --check-orphans
 
+      - name: デザインシステム準拠監査（DSN-001・可読性ゲート）
+        # 全ページが assets/css/nb.css・正本フォントURL・font-size床(12px)・許可フォントウェイトに
+        # 準拠しているかを検査する（scripts/audit_design_system.js）。stores/ は既存の閉店delist済み
+        # 「孤児」ページ（gen-store-pages.js の生成対象外・約630件・ISSUE-102と同種）が旧マークアップの
+        # まま残るため、当面は非ブロッキングで運用し、Designer が違反傾向を確認したうえで
+        # 段階的に blocking 化する（ISSUE-121 の教訓: 新設ゲートはCIが緑を1回確認してから昇格）。
+        run: node scripts/audit_design_system.js --report --sample 200
+        continue-on-error: true
+
       - name: 店舗写真カバレッジ監査（画質退行の検知・実写ゼロ店の可視化）
         # build.js normalizePhotoUrl() が HotPepper 縮小サムネ(_238等)を _480 へ昇格し、
         # さらに promote_store_photos.js が実測で原寸へ昇格するため、縮小サムネ残留は

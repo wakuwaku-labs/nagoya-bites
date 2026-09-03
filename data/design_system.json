@@ -1,0 +1,391 @@
+{
+  "_comment": "NAGOYA BITES デザインシステムの正本。scripts/audit_design_system.js と scripts/apply_design_system.js が参照する。閾値・許可リストの変更はこのファイルで行い、スクリプトは触らない。",
+  "version": "1.0.0",
+  "cssPath": "assets/css/nb.css",
+  "fontsUrl": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap",
+  "floorPx": 12,
+  "readablePx": 13,
+  "allowedFontWeights": [
+    400,
+    500,
+    600,
+    700
+  ],
+  "coreTokens": [
+    "--bg",
+    "--bg2",
+    "--surface",
+    "--card",
+    "--card-border",
+    "--border",
+    "--border-h",
+    "--text",
+    "--ink",
+    "--white",
+    "--muted",
+    "--dim",
+    "--gold",
+    "--gold2",
+    "--ember",
+    "--ember-deep",
+    "--ember-soft",
+    "--warm-grad",
+    "--warm-glow",
+    "--rhythm-xs",
+    "--rhythm-sm",
+    "--rhythm-md",
+    "--rhythm-lg",
+    "--green",
+    "--green-dim"
+  ],
+  "allowlist": {
+    "comment": "床未満(12px)が許容される選択子・ファイル。写真の帰属表示など、法的/慣例的理由で小さいままにするもの。ここに追加するときはDSN backlogに理由を書くこと。",
+    "selectors": [
+      ".photo-credit",
+      ".visually-hidden",
+      ".sr-only"
+    ],
+    "files": []
+  },
+  "legacyRewrites": {
+    "comment": "apply_design_system.js が既存ページの旧インライン規則をトークン値へ書き換えるための対応表。セレクタが完全一致した場合のみ置換する。",
+    "rules": [
+      {
+        "selector": ".art-body p",
+        "match": "font-size:.86rem;line-height:2;color:var(--muted);margin-bottom:1.2rem;",
+        "replace": "font-size:var(--fs-md);line-height:var(--lh-body);color:var(--muted);margin-bottom:1.2rem;"
+      },
+      {
+        "selector": ".art-body p",
+        "match": "font-size:1rem;",
+        "replace": "font-size:var(--fs-md);"
+      },
+      {
+        "selector": ".art-eyebrow",
+        "match": "font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;",
+        "replace": "font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;"
+      },
+      {
+        "selector": ".art-title",
+        "match": "font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.25;color:var(--white);margin-bottom:.8rem;",
+        "replace": "font-family:var(--font-display);font-weight:400;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.25;color:var(--white);margin-bottom:.8rem;"
+      },
+      {
+        "selector": ".art-meta",
+        "match": "font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--dim);margin-bottom:1.2rem;display:flex;gap:1rem;flex-wrap:wrap;",
+        "replace": "font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-bottom:1.2rem;display:flex;gap:1rem;flex-wrap:wrap;"
+      },
+      {
+        "selector": ".art-lead",
+        "match": "font-size:.88rem;line-height:2;color:var(--muted);border-left:2px solid var(--gold);padding-left:1.1rem;",
+        "replace": "font-size:var(--fs-md);line-height:2;color:var(--muted);border-left:2px solid var(--gold);padding-left:1.1rem;"
+      },
+      {
+        "selector": ".section-label",
+        "match": "font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2rem 0 .8rem;",
+        "replace": "font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--dim);text-transform:uppercase;margin:2rem 0 .8rem;"
+      },
+      {
+        "selector": ".art-body h2",
+        "match": "font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.3rem;color:var(--white);margin:2rem 0 .8rem;",
+        "replace": "font-family:var(--font-display);font-weight:400;font-size:1.3rem;color:var(--white);margin:2rem 0 .8rem;"
+      },
+      {
+        "selector": ".art-body h3",
+        "match": "font-family:'Noto Sans JP',sans-serif;font-weight:500;font-size:1rem;color:var(--white);margin:1.5rem 0 .6rem;",
+        "replace": "font-family:var(--font-body);font-weight:500;font-size:1rem;color:var(--white);margin:1.5rem 0 .6rem;"
+      },
+      {
+        "selector": ".insider-title",
+        "match": "font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;",
+        "replace": "font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;"
+      },
+      {
+        "selector": ".source-note",
+        "match": "background:var(--bg2);border:1px solid var(--border);padding:.8rem 1rem;border-radius:4px;margin:1.5rem 0;font-size:.7rem;line-height:1.7;color:var(--dim);",
+        "replace": "background:var(--bg2);border:1px solid var(--border);padding:.8rem 1rem;border-radius:4px;margin:1.5rem 0;font-size:var(--fs-xs);line-height:1.7;color:var(--dim);"
+      },
+      {
+        "selector": ".related-title",
+        "match": "font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;color:var(--white);margin-bottom:1rem;",
+        "replace": "font-family:var(--font-display);font-weight:400;font-size:1.2rem;color:var(--white);margin-bottom:1rem;"
+      },
+      {
+        "selector": ".store-num",
+        "match": "font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.9rem;color:var(--gold);opacity:.6;line-height:1;min-width:1.8rem;text-align:center;",
+        "replace": "font-family:var(--font-display);font-weight:400;font-size:1.9rem;color:var(--gold);opacity:.6;line-height:1;min-width:1.8rem;text-align:center;"
+      },
+      {
+        "selector": ".store-name",
+        "match": "font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:.98rem;color:var(--white);margin-bottom:.4rem;",
+        "replace": "font-family:var(--font-body);font-weight:600;font-size:.98rem;color:var(--white);margin-bottom:.4rem;"
+      },
+      {
+        "selector": ".store-meta",
+        "match": "display:flex;gap:.5rem;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.08em;color:var(--dim);margin-bottom:.5rem;",
+        "replace": "display:flex;gap:.5rem;flex-wrap:wrap;font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-bottom:.5rem;"
+      },
+      {
+        "selector": ".store-desc",
+        "match": "font-size:.78rem;line-height:1.8;color:var(--muted);margin-bottom:.6rem;",
+        "replace": "font-size:var(--fs-md);line-height:1.8;color:var(--muted);margin-bottom:.6rem;"
+      },
+      {
+        "selector": ".store-link",
+        "match": "display:inline-flex;align-items:center;gap:.3rem;font-size:.7rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.3rem .7rem;border-radius:2px;",
+        "replace": "display:inline-flex;align-items:center;gap:.3rem;font-size:var(--fs-xs);color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.3rem .7rem;border-radius:2px;"
+      },
+      {
+        "selector": ".art-img-credit",
+        "match": "font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;color:var(--dim);text-align:right;padding:.3rem 0;max-width:760px;margin:0 auto;",
+        "replace": "font-family:var(--font-mono);font-size:var(--fs-2xs);letter-spacing:.1em;color:var(--dim);text-align:right;padding:.3rem 0;max-width:760px;margin:0 auto;"
+      },
+      {
+        "selector": ".art-ig-cta-label",
+        "match": "font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.18em;color:#C13584;text-transform:uppercase;margin-bottom:.3rem;",
+        "replace": "font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.18em;color:#C13584;text-transform:uppercase;margin-bottom:.3rem;"
+      },
+      {
+        "selector": ".art-ig-cta-note",
+        "match": "font-size:.72rem;color:var(--muted);",
+        "replace": "font-size:var(--fs-md);color:var(--muted);"
+      },
+      {
+        "selector": ".related-title",
+        "match": "font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.3rem;color:var(--white);margin-bottom:1.2rem;",
+        "replace": "font-family:var(--font-display);font-weight:400;font-size:1.3rem;color:var(--white);margin-bottom:1.2rem;"
+      },
+      {
+        "selector": ".art-meta",
+        "match": "font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--dim);margin-bottom:1.5rem;display:flex;gap:1.2rem;flex-wrap:wrap;",
+        "replace": "font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-bottom:1.5rem;display:flex;gap:1.2rem;flex-wrap:wrap;"
+      },
+      {
+        "selector": ".art-eyebrow",
+        "match": "font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;",
+        "replace": "font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;"
+      },
+      {
+        "selector": ".art-title",
+        "match": "font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.9rem,4vw,3rem);line-height:1.2;color:var(--white);margin-bottom:1rem;",
+        "replace": "font-family:var(--font-display);font-weight:400;font-size:clamp(1.9rem,4vw,3rem);line-height:1.2;color:var(--white);margin-bottom:1rem;"
+      },
+      {
+        "selector": ".tips-title",
+        "match": "font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;",
+        "replace": "font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);margin-bottom:.6rem;"
+      },
+      {
+        "selector": ".art-lead",
+        "match": "font-size:.88rem;line-height:2;color:var(--muted);max-width:680px;border-left:2px solid var(--gold);padding-left:1.2rem;",
+        "replace": "font-size:var(--fs-md);line-height:2;color:var(--muted);max-width:680px;border-left:2px solid var(--gold);padding-left:1.2rem;"
+      },
+      {
+        "selector": ".topcta-head",
+        "match": "font-size:.74rem;letter-spacing:.12em;color:var(--gold,#7a5c10);margin-bottom:.15rem;",
+        "replace": "font-size:var(--fs-xs);letter-spacing:.12em;color:var(--gold,#7a5c10);margin-bottom:.15rem;"
+      },
+      {
+        "selector": ".tips-box li",
+        "match": "font-size:.8rem;line-height:1.9;color:var(--muted);",
+        "replace": "font-size:var(--fs-md);line-height:1.9;color:var(--muted);"
+      },
+      {
+        "selector": ".section-label",
+        "match": "font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2.5rem 0 .8rem;font-weight:400;",
+        "replace": "font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--dim);text-transform:uppercase;margin:2.5rem 0 .8rem;font-weight:400;"
+      },
+      {
+        "selector": ".art-intro",
+        "match": "font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:2rem;",
+        "replace": "font-size:var(--fs-md);line-height:2;color:var(--muted);margin-bottom:2rem;"
+      },
+      {
+        "selector": ".store-num",
+        "match": "font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2.2rem;color:var(--gold);opacity:.6;line-height:1;min-width:2rem;text-align:center;",
+        "replace": "font-family:var(--font-display);font-weight:400;font-size:2.2rem;color:var(--gold);opacity:.6;line-height:1;min-width:2rem;text-align:center;"
+      },
+      {
+        "selector": ".store-name",
+        "match": "font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:1rem;color:var(--white);margin:0 0 .4rem;",
+        "replace": "font-family:var(--font-body);font-weight:600;font-size:1rem;color:var(--white);margin:0 0 .4rem;"
+      },
+      {
+        "selector": ".store-meta",
+        "match": "display:flex;gap:.6rem;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:var(--dim);margin-bottom:.6rem;",
+        "replace": "display:flex;gap:.6rem;flex-wrap:wrap;font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-bottom:.6rem;"
+      },
+      {
+        "selector": ".hero-eyebrow",
+        "match": "font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;",
+        "replace": "font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;"
+      },
+      {
+        "selector": ".hero-title",
+        "match": "font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.2;color:var(--white);margin-bottom:.8rem;",
+        "replace": "font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.2;color:var(--white);margin-bottom:.8rem;"
+      },
+      {
+        "selector": ".hero-meta",
+        "match": "font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--dim);margin-bottom:1.2rem;display:flex;gap:1rem;flex-wrap:wrap;",
+        "replace": "font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-bottom:1.2rem;display:flex;gap:1rem;flex-wrap:wrap;"
+      },
+      {
+        "selector": ".hero-lead",
+        "match": "font-size:.88rem;line-height:2;color:var(--muted);border-left:2px solid var(--gold);padding-left:1.1rem;max-width:680px;",
+        "replace": "font-size:var(--fs-md);line-height:2;color:var(--muted);border-left:2px solid var(--gold);padding-left:1.1rem;max-width:680px;"
+      },
+      {
+        "selector": ".section-label",
+        "match": "font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2.5rem 0 1rem;font-weight:400;",
+        "replace": "font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--dim);text-transform:uppercase;margin:2.5rem 0 1rem;font-weight:400;"
+      },
+      {
+        "selector": "h2",
+        "match": "font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.5rem;color:var(--white);margin:2.5rem 0 1rem;",
+        "replace": "font-family:var(--font-display);font-weight:400;font-size:1.5rem;color:var(--white);margin:2.5rem 0 1rem;"
+      },
+      {
+        "selector": "p",
+        "match": "font-size:.86rem;line-height:2;color:var(--muted);margin-bottom:1.1rem;",
+        "replace": "font-size:var(--fs-md);line-height:2;color:var(--muted);margin-bottom:1.1rem;"
+      },
+      {
+        "selector": ".shop-num",
+        "match": "font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.2em;color:var(--dim);margin-bottom:.5rem;",
+        "replace": "font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.2em;color:var(--dim);margin-bottom:.5rem;"
+      },
+      {
+        "selector": ".shop-name",
+        "match": "font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--white);margin-bottom:.3rem;",
+        "replace": "font-family:var(--font-display);font-size:1.2rem;font-weight:400;color:var(--white);margin-bottom:.3rem;"
+      },
+      {
+        "selector": ".shop-area",
+        "match": "font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--gold);margin-bottom:.7rem;",
+        "replace": "font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);margin-bottom:.7rem;"
+      },
+      {
+        "selector": ".shop-desc",
+        "match": "font-size:.82rem;line-height:1.9;color:var(--muted);",
+        "replace": "font-size:var(--fs-md);line-height:1.9;color:var(--muted);"
+      },
+      {
+        "selector": ".tag",
+        "match": "font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.1em;padding:.2rem .55rem;border:1px solid var(--border);border-radius:2px;color:var(--dim);",
+        "replace": "font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;padding:.2rem .55rem;border:1px solid var(--border);border-radius:2px;color:var(--dim);"
+      },
+      {
+        "selector": ".faq-q",
+        "match": "font-family:'Noto Sans JP',sans-serif;font-weight:500;font-size:.9rem;color:var(--white);margin-bottom:.5rem;",
+        "replace": "font-family:var(--font-body);font-weight:500;font-size:var(--fs-md);color:var(--white);margin-bottom:.5rem;"
+      },
+      {
+        "selector": ".faq-a",
+        "match": "font-size:.84rem;line-height:1.9;color:var(--muted);",
+        "replace": "font-size:var(--fs-md);line-height:1.9;color:var(--muted);"
+      },
+      {
+        "selector": "footer p",
+        "match": "font-size:.68rem;color:var(--dim);letter-spacing:.08em;",
+        "replace": "font-size:var(--fs-md);color:var(--dim);letter-spacing:.08em;"
+      },
+      {
+        "selector": ".store-tag",
+        "match": "font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.08em;padding:.18rem .5rem;border:1px solid rgba(122,92,16,.3);color:var(--gold);border-radius:2px;",
+        "replace": "font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;padding:.18rem .5rem;border:1px solid rgba(122,92,16,.3);color:var(--gold);border-radius:2px;"
+      },
+      {
+        "selector": ".axes-title",
+        "match": "font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.8rem;",
+        "replace": "font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.8rem;"
+      },
+      {
+        "selector": ".axes-list li",
+        "match": "font-size:.82rem;line-height:1.9;color:var(--muted);padding:.2rem 0;padding-left:1rem;position:relative;",
+        "replace": "font-size:var(--fs-md);line-height:1.9;color:var(--muted);padding:.2rem 0;padding-left:1rem;position:relative;"
+      },
+      {
+        "selector": "h3",
+        "match": "font-family:'Noto Sans JP',sans-serif;font-weight:500;font-size:.96rem;color:var(--white);margin:1.8rem 0 .6rem;",
+        "replace": "font-family:var(--font-body);font-weight:500;font-size:.96rem;color:var(--white);margin:1.8rem 0 .6rem;"
+      },
+      {
+        "selector": ".faq-q",
+        "match": "font-weight:500;color:var(--white);font-size:.98rem;line-height:1.6;margin:0 0 .55rem;",
+        "replace": "font-weight:500;color:var(--white);font-size:var(--fs-md);line-height:1.6;margin:0 0 .55rem;"
+      },
+      {
+        "selector": ".faq-a",
+        "match": "font-weight:300;color:var(--muted);font-size:.9rem;line-height:1.85;margin:0;",
+        "replace": "font-weight:400;color:var(--muted);font-size:var(--fs-md);line-height:1.85;margin:0;"
+      },
+      {
+        "selector": ".store-desc",
+        "match": "font-size:.8rem;line-height:1.8;color:var(--muted);margin-bottom:.8rem;",
+        "replace": "font-size:var(--fs-md);line-height:1.8;color:var(--muted);margin-bottom:.8rem;"
+      },
+      {
+        "selector": ".store-link",
+        "match": "display:inline-flex;align-items:center;gap:.3rem;font-size:.72rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.3rem .7rem;border-radius:2px;transition:background .2s;",
+        "replace": "display:inline-flex;align-items:center;gap:.3rem;font-size:var(--fs-xs);color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.3rem .7rem;border-radius:2px;transition:background .2s;"
+      },
+      {
+        "selector": "/*ROSTER_BADGE_CSS*/.store-new,.shop-new",
+        "match": "display:inline-block;margin-left:.5rem;font-size:.6rem;font-weight:700;letter-spacing:.03em;color:#fff;background:#b08d2c;padding:.1rem .45rem;border-radius:3px;vertical-align:middle;white-space:nowrap;",
+        "replace": "display:inline-block;margin-left:.5rem;font-size:var(--fs-xs);font-weight:700;letter-spacing:.03em;color:#fff;background:#b08d2c;padding:.1rem .45rem;border-radius:3px;vertical-align:middle;white-space:nowrap;"
+      },
+      {
+        "selector": ".faq-q",
+        "match": "font-weight:500;font-size:.98rem;line-height:1.6;margin:0 0 .55rem;",
+        "replace": "font-weight:500;font-size:var(--fs-md);line-height:1.6;margin:0 0 .55rem;"
+      },
+      {
+        "selector": ".faq-a",
+        "match": "font-weight:300;font-size:.9rem;line-height:1.85;margin:0;",
+        "replace": "font-weight:400;font-size:var(--fs-md);line-height:1.85;margin:0;"
+      },
+      {
+        "selector": ".tips-box p",
+        "match": "font-size:.8rem;line-height:1.9;color:var(--muted);",
+        "replace": "font-size:var(--fs-md);line-height:1.9;color:var(--muted);"
+      },
+      {
+        "selector": ".faq-title",
+        "match": "font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.4rem;color:var(--white);margin-bottom:1.5rem;",
+        "replace": "font-family:var(--font-display);font-weight:400;font-size:1.4rem;color:var(--white);margin-bottom:1.5rem;"
+      },
+      {
+        "selector": ".faq-q",
+        "match": "font-weight:500;font-size:.85rem;color:var(--white);margin-bottom:.6rem;",
+        "replace": "font-weight:500;font-size:var(--fs-md);color:var(--white);margin-bottom:.6rem;"
+      },
+      {
+        "selector": ".faq-a",
+        "match": "font-size:.82rem;line-height:1.9;color:var(--muted);",
+        "replace": "font-size:var(--fs-md);line-height:1.9;color:var(--muted);"
+      }
+    ]
+  },
+  "chromeSelectors": [
+    "*",
+    "html",
+    "body",
+    "header",
+    ".logo",
+    ".logo em",
+    "nav",
+    "nav a",
+    "nav a:hover",
+    ".hamburger",
+    ".hamburger svg",
+    ".nav-overlay",
+    ".breadcrumb",
+    ".breadcrumb a",
+    ".breadcrumb a:hover",
+    ".breadcrumb span",
+    "footer",
+    ".fl2",
+    ".fc"
+  ]
+}
