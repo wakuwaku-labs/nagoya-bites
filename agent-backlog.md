@@ -7,7 +7,7 @@
 ---
 
 ### [SEO-081] IndexNow 送信ステップが ISSUE-112 の build.yml 書き換えで消え、最大流入エンジン Bing への更新通知が再び死んでいる（SEO-071 は done のまま）
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: in_progress
 - **detected**: 2026-09-03
 - **category**: SEO
 - **owner**: Builder
@@ -617,6 +617,7 @@
 - **resolved**: 2026-08-24
 - **detected**: 2026-08-24
 - **resolved**: 2026-08-26（オーナー承認済み `--yes` → build.yml に IndexNow 自動送信ステップを追加。変更された features/journal HTMLを直前コミットと比較して送信対象URLを自動検出）
+- **注記（回帰・復旧）**: 2026-09-02 に [[ISSUE-112]] の build.yml 書き換え（PR #181）で IndexNow ステップが誤って削除された。[[SEO-081]] で 2026-09-03 に復旧。CI自己診断ステップを同時追加し、再削除を機械検知できるようにした。
 - **category**: SEO
 - **owner**: Builder（実装完了）
 - **source**: 週次レポート(LINE) 2026-08-17〜08-23 原文「Bing検索からの流入が28%とGoogle検索(29%)に迫る勢いです。👉 features/にある全特集ページとjournal/にある全記事の<title>と<meta name="description">を見直し、特にBingでの表示を意識したキーワードを盛り込みましょう」
