@@ -54,7 +54,9 @@ Step 6a: 決定的 QA（自動・客観証跡）
 Step 6b: 独立レビュー（owner≠reviewer）
   - owner と異なる視点で /code-review を「diff のみ」入力に起動
   - リスク高（JSロジック / データ削除 / マネタイズ / LOCAL_STORES 変更）は /security-review も追加
-  - QA-5（UX 目視）は人/AI が担当（モバイル表示・CTA 導線）— qa_gate.js では自動化しない
+  - QA-5（UX 目視・可読性）は Designer が担当（agents/designer.md・DSN-001）
+    node scripts/audit_design_system.js --check
+    node scripts/measure_typography.js
   - 所見（指摘 or 承認）を review: フィールドに記録
 ```
 
@@ -66,7 +68,8 @@ Reviewer は「owner と異なる部門の観点」を借りて diff を読む�
 
 | 実装 owner | レビュー視点 | 主な観点 |
 |---|---|---|
-| Builder | Inspector / Strategist | UX劣化・CVR導線・制約5の機能保全 |
+| Builder | Inspector / Strategist / Designer | UX劣化・CVR導線・制約5の機能保全・可読性 |
+| Designer | Inspector | 制約5の機能保全・CVR導線とのトレードオフ |
 | Editor | Inspector | 独自性・実在検証（架空店ブロック）・JSON-LD整合 |
 | DataKeeper | Inspector | 件数・カバー率・isNagoya フィルタ退行 |
 | Marketer | Strategist | Strategic Skip 審査（広告主依存・順位操作の有無） |

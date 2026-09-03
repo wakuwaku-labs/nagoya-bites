@@ -74,7 +74,9 @@
 ## 絶対に守る制約（エージェント全員共通）
 
 ```
-1. index.html は単一ファイルで維持する（サイト用の新ファイル追加禁止 ※features/配下の特集記事・journal/配下の日次記事は例外）
+1. index.html は単一ファイルで維持する（サイト用の新ファイル追加禁止 ※例外: features/配下の特集記事・
+   journal/配下の日次記事、および共有スタイルシート assets/css/nb.css の1ファイルのみ。
+   これ以外の .css/.js 分離は引き続き禁止）
 2. var LOCAL_STORES = [...]; のパターンを壊さない
 3. テキストはすべて日本語
 4. サイト用の新npm依存関係を追加しない（CDNリンクはOK）
@@ -88,6 +90,13 @@
 10. 品質ゲート・スコア・監査の類は「検証できる事実」だけで判定する。
     エージェントが自由に書ける自己申告値を合否の分かれ目にしない（下記）
 11. 自動処理の失敗は「検知して終わり」にしない。警報は必ず、壊れた当人とは別の場所へ届ける（下記）
+12. 全ページはデザインシステムを通す（DSN-001・2026-09）。正本は `data/design_system.json` →
+    `assets/css/nb.css` → `docs/design-system.md`。新規ページ・新規ページ種別・新規UI部品・
+    テンプレート変更（gen-store-pages.js / journal/_template.html / scripts/gen_industry_features.js）
+    は Designer（agents/designer.md）のレビューと `node scripts/audit_design_system.js --check`
+    の通過が公開条件。可視テキストの font-size 12px 未満は禁止、ユーザーが読むテキストは
+    13px 以上。`:root` の再定義と font-size リテラルの新規追加（トークン `var(--fs-*)` を使わない
+    直書き）は禁止
 ```
 
 ### 無人自動化の監視を設計するときの原則（ISSUE-084 の教訓・全エージェント共通）
@@ -234,7 +243,7 @@
 
 ---
 
-## エージェント構成と役職（7名体制）
+## エージェント構成と役職（8名体制）
 
 ```
 Orchestrator（CEO）← agents/orchestrator.md
@@ -246,6 +255,9 @@ Orchestrator（CEO）← agents/orchestrator.md
 │   │
 │   ├── Builder             ← agents/builder.md
 │   │   └── 実装・UX最適化・成長ドリブン開発
+│   │
+│   ├── Designer            ← agents/designer.md
+│   │   └── 可読性・タイポグラフィ・デザインシステムの最終責任者（DSN-001で新設）
 │   │
 │   └── DataKeeper          ← agents/data-keeper.md
 │       └── データパイプライン・データ拡充戦略
@@ -282,10 +294,17 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `agents/orchestrator.md` | CEO の行動フロー・QAゲート定義 |
 | `agents/inspector.md` | Inspector のチェックリスト |
 | `agents/builder.md` | Builder の実装ルール |
+| `agents/designer.md` | Designer の役割・QA-5チェックリスト・新規ページの作り方（DSN-001） |
 | `agents/data-keeper.md` | DataKeeper の実行手順 |
 | `agents/marketer.md` | Marketer のマーケティング戦略 |
 | `agents/strategist.md` | Strategist の事業戦略 |
 | `agents/editor.md` | Editor の編集方針・コンテンツ基準 |
+| `data/design_system.json` | **デザインシステムの判定基準の正本**（正本フォントURL・font-size床12px・許可フォントウェイト・共通トークン一覧・legacyRewrites）。閾値変更はここで行いスクリプトは触らない |
+| `assets/css/nb.css` | **デザインシステムの実装本体**（トークン・基本タイポ・共通クローム: header/nav/footer/breadcrumb・共通部品）。全ページがこの1ファイルを読み込む（制約1の例外） |
+| `docs/design-system.md` | デザインシステムの人向け仕様書（書体・トークン・部品解剖・新規ページ雛形） |
+| `scripts/audit_design_system.js` | デザインシステム準拠の決定的ゲート。`--check`でCI向けexit 1、`--report`で違反一覧JSON |
+| `scripts/apply_design_system.js` | 既存ページへのデザインシステム一括適用（冪等）。`--dry-run`/`--only <dir>`/`--check` |
+| `scripts/measure_typography.js` | 可読性の実測（12px以下の文字割合・1画面の文字数・タップ対象サイズ）。before/afterの証跡 |
 | `index.html` | サイト本体（編集対象） |
 | `features/` | 特集記事ディレクトリ（Editor管轄） |
 | `journal/` | 日次記事ディレクトリ（Editor管轄・毎日1本公開） |

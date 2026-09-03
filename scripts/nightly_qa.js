@@ -86,6 +86,16 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/security_audit.js']],
 });
+// 4. デザインシステム準拠監査（DSN-001・SOFT。stores/の孤児ページが恒常的に違反を持つため
+//    blocking 化は build.yml 側で段階的に行う。ここでは傾向を毎晩報告する）
+checks.push({
+  id: 'design-system',
+  title: 'デザインシステム準拠監査（可読性ゲート・DSN-001）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_design_system.js', '--report', '--sample', '200']],
+});
 
 if (cat.buildCore.length) {
   checks.push({

@@ -122,6 +122,7 @@ Orchestrator（CEO — あなた）
 ├── 技術部門（プロダクト品質）
 │   ├── Inspector      ← サイト監査・競合ベンチマーク・CVR分析
 │   ├── Builder        ← 実装・UX最適化・成長ドリブン開発
+│   ├── Designer       ← 可読性・タイポグラフィ・デザインシステムの最終責任者（DSN-001）
 │   └── DataKeeper     ← データパイプライン・データ拡充戦略
 │
 ├── 事業部門（成長・収益）
@@ -272,7 +273,11 @@ Phase 3: 実装後QAゲート（Reviewer が独立検査し、CEO は所見を�
   Step B: 独立レビュー（owner ≠ reviewer）
     - owner と異なる視点で `/code-review` を diff 入力で起動（reviewer.md の owner→reviewer 対応表）
     - リスク高（JSロジック/データ削除/マネタイズ/LOCAL_STORES変更）は `/security-review` も
-    - QA-5（UX目視・モバイル表示/CTA導線）を人/AI が確認
+    - QA-5（UX目視・モバイル表示/CTA導線・可読性）は Designer が担当（DSN-001）。
+      チェックリストは agents/designer.md。証跡は `node scripts/audit_design_system.js --check`
+      と `node scripts/measure_typography.js` の JSON 出力
+    - 新規ページ・テンプレート変更（gen-store-pages.js / journal/_template.html /
+      scripts/gen_industry_features.js）・`<style>` 30行超の差分は Designer レビュー必須
     - 所見（承認 or 指摘）を `review:` フィールドに記録
 
   [QAゲート通過条件]
@@ -703,6 +708,7 @@ agent-backlog.md（マスター）を Notion DB「課題トラッカー」に常
 | `CTN-XXX` / `CTN-DAILY-XXX` | Editor | `CTN-DAILY-009` |
 | `BATCH-XXX` | 夜間バッチ実行 | `BATCH-008` |
 | `ORG-XXX` | Orchestrator（組織課題） | `ORG-001` |
+| `DSN-XXX` | Designer（デザイン・可読性課題） | `DSN-001` |
 | `MKT-XXX` | Marketer | `MKT-WEEKLY-2026-19` |
 | `STR-XXX` | Strategist | `STR-MONTHLY-2026-05` |
 

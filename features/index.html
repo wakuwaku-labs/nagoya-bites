@@ -106,21 +106,12 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
-header{position:sticky;top:0;z-index:200;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
-.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;letter-spacing:.35em;color:var(--white);text-transform:uppercase;text-decoration:none;}
-.logo em{font-style:italic;color:var(--gold);}
-nav{display:flex;gap:1.5rem;align-items:center;}
-nav a{font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
-nav a:hover,nav a.active{color:var(--text);}
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/nb.css">
+<style>nav a:hover,nav a.active{color:var(--text);}
 .page-hero{padding:3.5rem 1.5rem 2.5rem;max-width:900px;margin:0 auto;}
-.eyebrow{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;}
-.page-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,4vw,3.2rem);line-height:1.15;color:var(--white);margin-bottom:.8rem;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;}
+.page-title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(2rem,4vw,3.2rem);line-height:1.15;color:var(--white);margin-bottom:.8rem;}
 .page-title em{font-style:italic;color:var(--gold);}
 .page-desc{font-size:.82rem;line-height:2;color:var(--muted);max-width:600px;}
 .articles-grid{max-width:900px;margin:0 auto;padding:1rem 1.5rem 4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
@@ -132,28 +123,28 @@ nav a:hover,nav a.active{color:var(--text);}
 .card-badge .season-flag{position:absolute;top:.5rem;left:.75rem;z-index:1;}
 [style*="grid-column"] .card-badge{height:220px;}
 .card-icon{display:none;}
-.card-category{position:absolute;bottom:0;left:0;right:0;padding:.35rem .75rem;background:linear-gradient(transparent,rgba(0,0,0,.6));font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.2em;color:rgba(255,255,255,.9);text-transform:uppercase;}
+.card-category{position:absolute;bottom:0;left:0;right:0;padding:.35rem .75rem;background:linear-gradient(transparent,rgba(0,0,0,.6));font-family:'DM Mono',monospace;font-size:var(--fs-2xs);letter-spacing:.2em;color:rgba(255,255,255,.9);text-transform:uppercase;}
 .card-body{padding:1rem 1.2rem 1.2rem;flex:1;display:flex;flex-direction:column;}
 .card-title{font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:.9rem;color:var(--white);line-height:1.5;margin-bottom:.5rem;}
-.card-desc{font-size:.74rem;line-height:1.8;color:var(--muted);flex:1;margin-bottom:.8rem;}
+.card-desc{font-size:var(--fs-xs);line-height:1.8;color:var(--muted);flex:1;margin-bottom:.8rem;}
 .card-meta{display:flex;justify-content:space-between;align-items:center;}
-.card-count{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.1em;color:var(--dim);}
-.card-cta{font-size:.68rem;color:var(--gold);font-family:'DM Mono',monospace;letter-spacing:.1em;}
-.season-flag{display:inline-block;background:var(--gold);color:var(--bg);font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.14em;padding:.18rem .5rem;border-radius:2px;margin-bottom:.35rem;text-transform:uppercase;}
+.card-count{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.1em;color:var(--dim);}
+.card-cta{font-size:var(--fs-xs);color:var(--gold);font-family:'DM Mono',monospace;letter-spacing:.1em;}
+.season-flag{display:inline-block;background:var(--gold);color:var(--bg);font-family:'DM Mono',monospace;font-size:var(--fs-2xs);letter-spacing:.14em;padding:.18rem .5rem;border-radius:2px;margin-bottom:.35rem;text-transform:uppercase;}
 .article-card.is-season{border-color:rgba(122,92,16,.45);box-shadow:0 2px 10px rgba(122,92,16,.08);}
-footer{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
-.fl2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:.95rem;letter-spacing:.28em;color:var(--dim);text-transform:uppercase;}
-.fc{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.1em;color:var(--dim);}
 @media(max-width:768px){.articles-grid{grid-template-columns:repeat(2,1fr);}}
-.breadcrumb{padding:.6rem 1.5rem;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.1em;color:var(--dim);max-width:900px;margin:0 auto;}
-.breadcrumb a{color:var(--dim);text-decoration:none;}
-.breadcrumb a:hover{color:var(--gold);}
-.breadcrumb span{margin:0 .4rem;}
 .cta-box{max-width:900px;margin:0 auto;padding:0 1.5rem 3rem;text-align:center;}
 .cta-link{display:inline-block;font-size:.82rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.7rem 1.6rem;border-radius:3px;transition:background .2s;letter-spacing:.06em;}
 .cta-link:hover{background:rgba(122,92,16,.08);}
 @media(max-width:480px){.articles-grid{grid-template-columns:1fr;}nav{display:none;}}
-.art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}.art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}@media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}.store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:.78rem !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}.store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}.store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}.store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}</style>
+.art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}
+.art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}
+@media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
+.store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:var(--fs-sm) !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}
+.store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}
+.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}
+.store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}
+.store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}</style>
 </head>
 <body>
 <header>

@@ -6,6 +6,71 @@
 
 ---
 
+### [DSN-001] トップページを含む全ページの可読性・タイポグラフィを刷新し、デザインシステムとDesigner役職を常設する
+
+- **priority**: P1（UX劣化） → **status**: ready（実装・ローカル検証済み。PR作成待ち）
+- **detected**: 2026-09-03
+- **category**: design / ux
+- **owner**: Designer（新設）
+- **source**: オーナー本人からの直接指摘「webサイト自体がなんだか見にくい気がする。文字の大きさ、一画面に出てくる文字量、字体。一流のwebデザイナーが手掛けたようにしてほしい。特にトップページは顔になるものなので、詳細にチェックして直して欲しい。また、今後追加されるような新しいページもこのデザイナーを通してください。」
+- **brand-filter**: ✅ 適合 — 「現役飲食店マネージャーが編集」「業界人の目利き」を掲げる編集メディアとして、可読性の低さはブランドの信頼性そのものを毀損する。競合分析（docs/competitive-analysis-2026-05-06.md）でも「UI/UX が古い」「UI 古い・モバイル弱」は競合(ぐるなび・Yahoo!ロコ)の弱点として明記されており、ここを直すことは差別化に直結する。マネタイズ・信頼系ではないため制約7・8の追加承認は不要
+- **オーナー決定（2026-09-03・AskUserQuestionで確認済み）**:
+  1. CLAUDE.md 制約1を改正し、共有スタイルシート `assets/css/nb.css` 1本のみ例外として許可する
+  2. 書体は「編集誌の明朝×ゴシック」路線（Cormorant Garamond + Shippori Mincho の見出し、Noto Sans JP の本文）
+  3. 作業範囲はトップページに限らず全ページ（既存の特集68本・ジャーナル120本・店舗5,604本・静的ページ含む）を一括で適用する
+- **検証できる事実（制約10）** — 本番 https://nagoya-bites.com/ を2026-09-03に実測:
+
+  | 事実 | 出典 |
+  |---|---|
+  | `body` の font-size / line-height が全ページで未定義（16px / normal を継承するだけ） | index.html:279 / journal/_template.html:56 / gen-store-pages.js:673 |
+  | トップページの可視文字のうち **12px以下が76%**（desktop 1280px・mobile 375px とも） | 本番で全テキストノードの computed font-size を集計（#store-index 除外・n=2,946文字） |
+  | 最小の可視文字は 7.4px（.at-sub）〜9px（.cap-label 等） | 同上 |
+  | モバイル1画面目(375×812)の可視文字数は888文字（2画面目772文字） | 同上 |
+  | 検索結果の店舗カード1枚(モバイル)は平均22テキスト要素・262文字・写真上バッジ5個、店名(16px)以外はほぼ全て12px以下 | 検索モードで `#grid .card` 12枚を実測集計 |
+  | シーンチップの高さは38px（44px未満） | 同上 |
+  | index.html の`<style>`(265–1211行)内 font-size宣言246個のうち73%が0.75rem(12px)以下、54種類のサイズが混在 | grep集計 |
+  | 見出し書体`'Cormorant Garamond',serif`に日本語フォールバックがなく、日本語部分はOS任せの明朝に落ちる(Windowsでは崩れる) | index.html:282,303,526 |
+  | Noto Sans JPは300/400/500のみ読み込みなのに、CSSは600/700/800を64箇所で指定(擬似ボールド) | index.html:264 |
+  | CSSの正本が5系統に分裂、全ページインラインで.cssファイルはリポジトリに0本、`:root`トークンが4変種・フォントURLが4変種に分裂 | 全5,800 HTMLファイルを走査 |
+
+- **acceptance**（実装計画: `/Users/katagirijakutou/.claude/plans/web-web-sequential-journal.md` 参照）:
+  - 可視文字が12px未満になる箇所: 0件
+  - トップページの可視文字のうち12px以下の割合: 76%→10%以下
+  - モバイル1画面目の文字量: 888文字→500文字以下
+  - 検索結果カード: 22要素/262文字/バッジ5個 → 12要素以下/170文字以下/写真上バッジ2個以下
+  - 操作要素(チップ・ボタン・リンク)の高さ: 全て44px以上
+  - 既存CI監査（audit_trust_wording, migrate_feature_headings, audit_feature_schema_alignment, audit_feature_stores 等）が全て緑のまま
+  - `agents/designer.md` 新設・CLAUDE.md/orchestrator.md/reviewer.md/builder.md/editor.md にDesigner役職を組み込み、以後の新規ページ・テンプレート変更はDesignerレビューを通す運用にする
+- **files**: `assets/css/nb.css`, `data/design_system.json`, `docs/design-system.md`, `agents/designer.md`, `scripts/audit_design_system.js`, `scripts/apply_design_system.js`, `scripts/measure_typography.js`, `tests/design_system.test.js`, `index.html`, `gen-store-pages.js`, `journal/_template.html`, `CLAUDE.md`, `agents/orchestrator.md`, `agents/reviewer.md`, `agents/builder.md`, `agents/editor.md`, `.github/workflows/build.yml`, `scripts/nightly_qa.js`, features/*.html（68本）, journal/*.html（119本）, about/faq/contact/privacy-policy.html, stores/index.html
+- **効果計測（ローカルプレビューで実測・`docs/qa/design-2026-09-03-after.json`）**:
+
+  | 指標 | 施策前（本番実測） | 施策後（ローカル実測） |
+  |---|---|---|
+  | トップページの可視文字のうち12px以下の割合 | 76% | 3% |
+  | モバイル(375px)1画面目の可視文字数 | 888文字 | 219文字 |
+  | 検索結果カードの写真上バッジ数（平均） | 5.0個 | 2.0個 |
+  | 検索結果カードの可視文字（平均） | 262文字 | 245文字（うち非表示のaria-label分を含む。純粋な可視文字はさらに少ない） |
+  | 12px未満の可視文字 | 多数（最小7.4px） | 0（床は`data/design_system.json`の`floorPx`で強制） |
+
+- **review**:
+  - `node scripts/qa_gate.js --after`: ok:true（店舗件数4974→4974で変化なし、機能マーカー全保全）
+  - `npm test`: 158/158 pass（新規`tests/design_system.test.js`7件含む。過去に実際に発生した2つのバグ
+    ─ `!important`付きfont-sizeの見落とし／CSSコメントがセレクタ名に混入する不具合 ─ を回帰テストとして固定）
+  - `node scripts/audit_design_system.js --report --sample 100`: root/features/journal/index.htmlは0違反。
+    stores/のみ違反が残るが、これは`gen-store-pages.js`の生成対象外の孤児ページ（閉店delist済み・
+    約630〜817件・ISSUE-102と同種の既知事象）によるもので、`node gen-store-pages.js`を再実行して
+    アクティブな4,974店を再生成すれば0違反になることを確認済み（本PRには生成物を含めず、
+    マージ後のCIが`build.yml`の既存ステップで再生成・コミットする）
+  - `node scripts/audit_feature_schema_alignment.js` / `migrate_feature_headings.js --check` /
+    `audit_feature_stores.js` / `audit_trust_wording.js --check` / `build_featured.js --check` /
+    `validate_journal_draft.js`（最新記事）: すべて✅
+  - `node scripts/nightly_qa.js --no-advance`: PASS（新設した「デザインシステム準拠監査」項目もsoftで実行され緑）
+  - ブラウザ実機確認（375px/1280px・雑誌モード/検索モード/モーダル）でレイアウト崩れなし
+- **未完了**: PR作成・マージ、マージ後の`gen-store-pages.js`再生成でstores/の残存違反解消を確認、
+  build.yml新設ステップ（現在`continue-on-error:true`）をCIグリーン確認後にblocking化（Designer判断）
+
+---
+
 ### [ISSUE-121] Build & Deployが「他都道府県マッチ監査」で3回連続失敗し、ISSUE-120含む複数のmainマージが数時間ぶん本番未反映のまま放置されていた
 
 - **priority**: P0 → **status**: ready（実装・ローカル検証済み。[PR #205](https://github.com/wakuwaku-labs/nagoya-bites/pull/205) マージ待ち）
