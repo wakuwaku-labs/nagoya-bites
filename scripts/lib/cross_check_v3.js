@@ -10,9 +10,14 @@
 //       1 回以上完走し、textLen/incentiveHit 付き latestReviews と snapshots≥2 が
 //       蓄積開始していること
 //   (b) scripts/audit_crosscheck_v3.js のシャドー比較結果を agent-backlog.md に記録済みであること
-// 現時点（実装直後）でこの2つを満たせないのは、新シグナルの多くが「データが無ければ中立点」に
+//   (c) 配点・閾値の見直し: 2026-09-03 実測で 4,338 店（88%）が段階移動（目安 10% = 493 店）と
+//       なりガイドラインを大幅超過。段階分布を v2.1 に近づけるよう S7/S8 の重みを再調整する必要あり。
+// 現時点（実装直後）でこれらを満たせないのは、新シグナルの多くが「データが無ければ中立点」に
 // フォールバックする設計のため、今 build.js に繋いでも実質 v2 のスコアを別配点に付け替えるだけで
 // 終わり、Inspector の月次 ±10% ガイドラインの意味が壊れる（実データに基づかない一斉変動になる）。
+//
+// 2026-09-03 追記（ISSUE-086）: observed/parts および非難語排除を本ファイルに追加済み。
+// trust_display.js に接続できる状態だが、上記 (c) の配点再調整が先決。
 //
 // 活性化手順（ゲートを満たしたら）:
 //   1. build.js の `require('./scripts/lib/cross_check')` を
@@ -40,14 +45,14 @@
 
 function computeCrossCheckScore(store, placesHistoryEntry) {
   const breakdown = {
-    s1_googleRatingVsCount:    { score: 0, max: 12, reason: '' },
-    s2_reviewCountAbs:         { score: 0, max: 8,  reason: '' },
-    s3_dataCompleteness:       { score: 0, max: 10, reason: '' },
-    s4_mediaCrossCheck:        { score: 0, max: 10, reason: '' },
-    s5_operationContinuity:    { score: 0, max: 5,  reason: '' },
-    s6_instagramPresence:      { score: 0, max: 10, reason: '' },
-    s7_reviewTimeseries:       { score: 0, max: 25, reason: '' },
-    s8_reviewDistribution:     { score: 0, max: 20, reason: '' }
+    s1_googleRatingVsCount:    { score: 0, max: 12, reason: '', observed: false },
+    s2_reviewCountAbs:         { score: 0, max: 8,  reason: '', observed: false },
+    s3_dataCompleteness:       { score: 0, max: 10, reason: '', observed: true },
+    s4_mediaCrossCheck:        { score: 0, max: 10, reason: '', observed: false },
+    s5_operationContinuity:    { score: 0, max: 5,  reason: '', observed: true },
+    s6_instagramPresence:      { score: 0, max: 10, reason: '', observed: true },
+    s7_reviewTimeseries:       { score: 0, max: 25, reason: '', observed: false, parts: [] },
+    s8_reviewDistribution:     { score: 0, max: 20, reason: '', observed: false }
   };
 
   const rating = parseFloat(store['Google評価']) || 0;
@@ -58,9 +63,10 @@ function computeCrossCheckScore(store, placesHistoryEntry) {
 
   // ─── S1: Google★ vs 件数比率（max 12） ───
   if (count > 0 && rating > 0) {
+    breakdown.s1_googleRatingVsCount.observed = true;
     if (rating >= 4.6 && count < 50) {
       breakdown.s1_googleRatingVsCount.score = 2;
-      breakdown.s1_googleRatingVsCount.reason = `★${rating}・件数${count}件（少件数で高評価のためガチャレビュー疑い）`;
+      breakdown.s1_googleRatingVsCount.reason = `★${rating}・件数${count}件（件数が少なく、高評価の裏付けが弱い）`;
     } else if (rating >= 4.0 && count >= 100) {
       breakdown.s1_googleRatingVsCount.score = 12;
       breakdown.s1_googleRatingVsCount.reason = `★${rating}・件数${count}件（高評価と十分な件数で整合）`;
@@ -89,6 +95,7 @@ function computeCrossCheckScore(store, placesHistoryEntry) {
   }
 
   // ─── S2: レビュー件数絶対値（max 8） ───
+  breakdown.s2_reviewCountAbs.observed = count > 0;
   if (count >= 200)      { breakdown.s2_reviewCountAbs.score = 8; breakdown.s2_reviewCountAbs.reason = `${count}件（豊富なサンプル）`; }
   else if (count >= 100) { breakdown.s2_reviewCountAbs.score = 6; breakdown.s2_reviewCountAbs.reason = `${count}件（十分なサンプル）`; }
   else if (count >= 50)  { breakdown.s2_reviewCountAbs.score = 5; breakdown.s2_reviewCountAbs.reason = `${count}件（標準的なサンプル）`; }
@@ -114,6 +121,7 @@ function computeCrossCheckScore(store, placesHistoryEntry) {
 
   // ─── S4: 他媒体掲載クロスチェック（max 10・据え置き） ───
   const mfCount = new Set(mediaFeatures.map(m => m.name).filter(Boolean)).size;
+  breakdown.s4_mediaCrossCheck.observed = mfCount > 0;
   if (mfCount >= 4)      { breakdown.s4_mediaCrossCheck.score = 10; breakdown.s4_mediaCrossCheck.reason = `${mfCount}媒体に掲載（強い第三者検証）`; }
   else if (mfCount >= 2) { breakdown.s4_mediaCrossCheck.score = 8;  breakdown.s4_mediaCrossCheck.reason = `${mfCount}媒体に掲載`; }
   else if (mfCount === 1){ breakdown.s4_mediaCrossCheck.score = 5;  breakdown.s4_mediaCrossCheck.reason = '1媒体に掲載'; }
@@ -143,6 +151,7 @@ function computeCrossCheckScore(store, placesHistoryEntry) {
   const snapshots = (placesHistoryEntry && Array.isArray(placesHistoryEntry.snapshots)) ? placesHistoryEntry.snapshots : [];
   const latestReviews = (placesHistoryEntry && Array.isArray(placesHistoryEntry.latestReviews)) ? placesHistoryEntry.latestReviews : [];
   let s7a = 0, s7b = 0, s7c = 0, s7d = 0;
+  let s7aObs = false, s7bObs = false, s7cObs = false, s7dObs = false;
   const s7reasons = [];
   let openingBurstPattern = false;
   let reviewBurstCluster = false;
@@ -161,6 +170,7 @@ function computeCrossCheckScore(store, placesHistoryEntry) {
       rates.push((curr.total - prev.total) / days * 30);
     }
     if (rates.length >= 2) {
+      s7aObs = true;
       rate30Latest = rates[rates.length - 1];
       const sum = rates.reduce((a, b) => a + b, 0);
       const mean = sum / rates.length;
@@ -185,14 +195,15 @@ function computeCrossCheckScore(store, placesHistoryEntry) {
   if (latestReviews.length >= 3 && rating > 0) {
     const validRatings = latestReviews.map(r => r.rating).filter(r => typeof r === 'number');
     if (validRatings.length >= 3) {
+      s7bObs = true;
       const latestAvg = validRatings.reduce((a, b) => a + b, 0) / validRatings.length;
       const diff = latestAvg - rating;
       if (Math.abs(diff) <= 0.3) {
         s7b = 6; s7reasons.push(`最新★${latestAvg.toFixed(1)}≒全体★${rating}`);
       } else if (diff >= 0.8) {
-        s7b = 1; s7reasons.push(`最新★が全体より+${diff.toFixed(1)}（サクラ継続投入疑い）`);
+        s7b = 1; s7reasons.push(`直近${validRatings.length}件の平均★${latestAvg.toFixed(1)}が全体★${rating}より+${diff.toFixed(1)}高い`);
       } else if (diff <= -0.8) {
-        s7b = 1; s7reasons.push(`最新★が全体より${diff.toFixed(1)}（化粧剥がれパターン）`);
+        s7b = 1; s7reasons.push(`直近${validRatings.length}件の平均★${latestAvg.toFixed(1)}が全体★${rating}より${diff.toFixed(1)}低い`);
       } else {
         s7b = 4; s7reasons.push(`最新★${latestAvg.toFixed(1)}・全体★${rating}（軽微な乖離）`);
       }
@@ -207,12 +218,13 @@ function computeCrossCheckScore(store, placesHistoryEntry) {
   if (latestReviews.length >= 3) {
     const ratings = latestReviews.map(r => r.rating).filter(r => typeof r === 'number');
     if (ratings.length >= 3) {
+      s7cObs = true;
       const mean = ratings.reduce((a, b) => a + b, 0) / ratings.length;
       const stddev = Math.sqrt(ratings.reduce((a, b) => a + (b - mean) ** 2, 0) / ratings.length);
       if (stddev >= 0.5 && stddev <= 1.5) {
         s7c = 5; s7reasons.push(`標準偏差${stddev.toFixed(2)}（自然な分布）`);
       } else if (stddev < 0.5) {
-        s7c = 2; s7reasons.push(`標準偏差${stddev.toFixed(2)}（一様すぎ・評価操作疑い）`);
+        s7c = 2; s7reasons.push(`標準偏差${stddev.toFixed(2)}（評価が一様すぎます）`);
       } else {
         s7c = 2; s7reasons.push(`標準偏差${stddev.toFixed(2)}（極端な分散）`);
       }
@@ -229,6 +241,7 @@ function computeCrossCheckScore(store, placesHistoryEntry) {
   const timedReviews = latestReviews.filter(r => typeof r.time === 'number').map(r => r.time).sort((a, b) => a - b);
   const isLowPace = rate30Latest != null ? rate30Latest < 10 : count < 100;
   if (timedReviews.length >= 5) {
+    s7dObs = true;
     let maxCluster = 1;
     for (let i = 0; i < timedReviews.length; i++) {
       let c = 1;
@@ -253,6 +266,13 @@ function computeCrossCheckScore(store, placesHistoryEntry) {
 
   breakdown.s7_reviewTimeseries.score = s7a + s7b + s7c + s7d;
   breakdown.s7_reviewTimeseries.reason = s7reasons.join(' / ');
+  breakdown.s7_reviewTimeseries.observed = s7aObs || s7bObs || s7cObs || s7dObs;
+  breakdown.s7_reviewTimeseries.parts = [
+    { id: 's7a', score: s7a, max: 8, observed: s7aObs, reason: s7reasons[0] || '' },
+    { id: 's7b', score: s7b, max: 6, observed: s7bObs, reason: s7reasons[1] || '' },
+    { id: 's7c', score: s7c, max: 5, observed: s7cObs, reason: s7reasons[2] || '' },
+    { id: 's7d', score: s7d, max: 6, observed: s7dObs, reason: s7reasons[3] || '' }
+  ];
 
   // ─── S8: 評価分布の自然性（max 20） ───
   let uShapedDistribution = false;
@@ -320,6 +340,7 @@ function computeCrossCheckScore(store, placesHistoryEntry) {
 
   breakdown.s8_reviewDistribution.score = s8_1 + s8_2 + s8_3;
   breakdown.s8_reviewDistribution.reason = s8reasons.join(' / ');
+  breakdown.s8_reviewDistribution.observed = latestReviews.length >= 5;
 
   const total = Object.values(breakdown).reduce((sum, b) => sum + b.score, 0);
 

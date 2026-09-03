@@ -1,0 +1,494 @@
+{
+  "date": "2026-09-03",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅メイチカの舎鈴、20時に閉まる地下街で23時まで開くコスパ",
+      "verdict": "PASS",
+      "total": 108,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 9件 → 15",
+          "話題の証跡URL 3件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (席,予約,接待,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 164字 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "名駅メイチカの海老ラーメン一番軒、地下街のラーメンが二毛作にならない理由",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (席,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 120字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "名駅メイチカの風来坊が「惣菜」で出る意味 — 手羽先を座って食べない設計",
+      "verdict": "HOLD",
+      "total": 73,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "手羽先",
+          "feature": "features/nagoya-tebasaki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (席) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 90字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「手羽先」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "大須のウイスキー角打ち「たまにわ酒店」、量り売りが一人飲みに効く理由",
+      "verdict": "HOLD",
+      "total": 68,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 90字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅メイチカの「あんバターは名古屋のもの」、モーニング文化の外側であんこを売る",
+      "verdict": "HOLD",
+      "total": 66,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 8,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "モーニング",
+          "feature": "features/nagoya-morning.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 95字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「モーニング」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "名駅メイチカの舎鈴、20時に閉まる地下街で23時まで開くコスパ",
+      "lead_draft": "9月4日、名古屋駅の地下街メイチカが3年半ぶりに復活する。全17テナントのうち東海エリア初出店になるのが、つけめん専門店の舎鈴だ。2026年8月31日の運営元発表によれば38席、営業は10時から23時。地下街全体が20時に閉まるなかで、この店だけ3時間長い。つけめん並盛890円という価格と、閉店時刻の3時間を業界人の目で読む。",
+      "angle": "同じ会社の2枚看板が名駅に並ぶ構図で価格を読む。舎鈴890円（麺300g・改札外・地下街）と、8月に開いた六厘舎JR名古屋駅1番線店1,080円＋入場券150円（改札内・90日限定）は、実質340円差。さらに地下街の共通営業時間20時に対し舎鈴だけ23時までという席の使い方は、終電前の一人客と乗り換え客のどちらを取るかの設計判断。38席の回転と待ち時間、予約不可の券売機オペ、接待には向かず一人飲みの締めに向く理由まで。",
+      "main_store": {
+        "name": "舎鈴 メイチカ店",
+        "id": "",
+        "area": "名駅",
+        "genre": "つけめん"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES / 株式会社松富士食品「つけめん専門店『舎鈴』が中部地方へ初出店！9月4日、名古屋駅『メイチカ』にオープン」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000098.000087198.html",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "名古屋情報通「名古屋駅地下街『メイチカ』が2026年9月4日に復活！全17店舗のテナントリストを公開」",
+          "url": "https://jouhou.nagoya/meichika-renewal202609/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "中京テレビNEWS「名駅地下街『MEICHIKA』出店17テナント発表 東海初『舎鈴』、まるや本店、風来坊など」",
+          "url": "https://news.yahoo.co.jp/articles/961efff98af2dc1b89cb75fef1d48e534e425cd1",
+          "date": "2026-08-29"
+        },
+        {
+          "label": "メイチカ公式サイト",
+          "url": "https://www.meichika.jp/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "鉄道チャンネル「地下鉄名古屋駅直結の地下街『メイチカ』が9月4日リニューアル」",
+          "url": "https://tetsudo-ch.com/13037073.html",
+          "date": "2026-08-28"
+        },
+        {
+          "label": "ラーメンもぎ「舎鈴は六厘舎の姉妹ブランドだった｜毎日食べたいつけめん890円の設計思想」",
+          "url": "https://ramenmogi.com/sharin-tsukemen/",
+          "date": "2026-08-15"
+        },
+        {
+          "label": "名駅経済新聞「地下鉄名駅地下街『メイチカ』、9月4日にリニューアルへ」",
+          "url": "https://meieki.keizai.biz/headline/3777/",
+          "date": "2026-06-29"
+        },
+        {
+          "label": "中京テレビNEWS「名駅地下街『MEICHIKA』フロアマップ公開 オープン記念キャンペーンも実施へ」",
+          "url": "https://news.yahoo.co.jp/articles/234566623b4d8e59b6bfc824f8257d6c5a719db3",
+          "date": "2026-08-30"
+        },
+        {
+          "label": "X / 名古屋グルメ探偵 アスカイ「人気つけめん『舎鈴』東海エリア初店舗が名古屋駅地下街メイチカに9月オープン」",
+          "url": "https://x.com/gourmet_nagoya/status/2038567369904406773",
+          "date": "2026-03-30"
+        },
+        {
+          "label": "X / おいでよ名古屋「今年9月にリニューアルオープンする名古屋駅の地下街『メイチカ』…舎鈴(つけめん)がオープンする予定」",
+          "url": "https://x.com/oinagoya/status/2028416374033580486",
+          "date": "2026-03-02"
+        },
+        {
+          "label": "X / 名古屋市交通局（公式）「地下鉄名駅地下街『MEICHIKA』」",
+          "url": "https://x.com/nagoya_kotsu100/status/2070341289481220359",
+          "date": "2026-06-26"
+        },
+        {
+          "label": "舎鈴 公式サイト（つけめん SHARIN）",
+          "url": "https://tsukemen-sharin.com/",
+          "date": "2026-09-01"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "名駅メイチカの海老ラーメン一番軒、地下街のラーメンが二毛作にならない理由",
+      "lead_draft": "9月4日に復活する名古屋駅の地下街メイチカに、海老ラーメン一番軒が入る。地下街のラーメン店は昼と夜で客層が完全に入れ替わる特殊な立地だ。2026年9月時点の17テナント構成を見ながら、なぜこの区画にラーメンが2軒並ぶのかを業界人の目で読む。",
+      "angle": "地下街のラーメンは席数あたりの家賃が高く、回転で取り返すしかない。海老という単価を上げやすい素材の選択と、隣に舎鈴が入る競合配置の読み方。",
+      "main_store": {
+        "name": "海老ラーメン一番軒 メイチカ店",
+        "id": "",
+        "area": "名駅",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「名古屋駅地下街『メイチカ』が2026年9月4日に復活！全17店舗のテナントリストを公開」",
+          "url": "https://jouhou.nagoya/meichika-renewal202609/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "中京テレビNEWS「名駅地下街『MEICHIKA』出店17テナント発表」",
+          "url": "https://news.yahoo.co.jp/articles/961efff98af2dc1b89cb75fef1d48e534e425cd1",
+          "date": "2026-08-29"
+        },
+        {
+          "label": "メイチカ公式サイト",
+          "url": "https://www.meichika.jp/",
+          "date": "2026-09-01"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "名駅メイチカの風来坊が「惣菜」で出る意味 — 手羽先を座って食べない設計",
+      "lead_draft": "9月4日復活のメイチカに手羽先の風来坊が入るが、業態は飲食店ではなく惣菜だ。2026年9月時点のテナント表でも分類は惣菜になっている。座らせない手羽先という選択を業界人の目で読む。",
+      "angle": "地下街の坪単価では客席を持つより持ち帰りに振ったほうが利益率が高い。手羽先の惣菜化は名古屋土産の文脈とも重なる。",
+      "main_store": {
+        "name": "風来坊 メイチカ店",
+        "id": "",
+        "area": "名駅",
+        "genre": "手羽先"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「名古屋駅地下街『メイチカ』が2026年9月4日に復活！全17店舗のテナントリストを公開」",
+          "url": "https://jouhou.nagoya/meichika-renewal202609/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "中京テレビNEWS「名駅地下街『MEICHIKA』出店17テナント発表」",
+          "url": "https://news.yahoo.co.jp/articles/961efff98af2dc1b89cb75fef1d48e534e425cd1",
+          "date": "2026-08-29"
+        },
+        {
+          "label": "鉄道チャンネル「地下鉄名古屋駅直結の地下街『メイチカ』が9月4日リニューアル」",
+          "url": "https://tetsudo-ch.com/13037073.html",
+          "date": "2026-08-28"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "大須のウイスキー角打ち「たまにわ酒店」、量り売りが一人飲みに効く理由",
+      "lead_draft": "大須商店街に体験型ウイスキー専門店のたまにわ酒店 大須店が2026年8月6日にオープンした。角打ちと量り売りを組み合わせた業態で、名古屋初進出になる。一人飲みの視点で使い方を読む。",
+      "angle": "量り売りは在庫を客に預ける商売で、原価管理の考え方が居酒屋と根本的に違う。だから高い酒を1杯だけ試せる。",
+      "main_store": {
+        "name": "たまにわ酒店 大須店",
+        "id": "",
+        "area": "大須",
+        "genre": "バー"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES / 株式会社エーアイエス「大須商店街に体験型ウイスキー専門店が誕生」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000001.000183759.html",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "名古屋情報通 大須の記事一覧",
+          "url": "https://jouhou.nagoya/tag/%E5%A4%A7%E9%A0%88/",
+          "date": "2026-08-20"
+        },
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-09-01"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "名駅メイチカの「あんバターは名古屋のもの」、モーニング文化の外側であんこを売る",
+      "lead_draft": "9月4日復活のメイチカに、あんバター専門の菓子店が入る。名古屋の喫茶文化とあんこの相性は語り尽くされているが、地下街で菓子として売るのは別の商売だ。2026年9月時点のテナント構成から読む。",
+      "angle": "喫茶のモーニングで出るあんバターと、手土産として売るあんバターでは想定客が違う。地下街は乗り換え客の手土産導線。",
+      "main_store": {
+        "name": "あんバターは名古屋のもの メイチカ店",
+        "id": "",
+        "area": "名駅",
+        "genre": "スイーツ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「名古屋駅地下街『メイチカ』が2026年9月4日に復活！全17店舗のテナントリストを公開」",
+          "url": "https://jouhou.nagoya/meichika-renewal202609/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "中京テレビNEWS「名駅地下街『MEICHIKA』出店17テナント発表」",
+          "url": "https://news.yahoo.co.jp/articles/961efff98af2dc1b89cb75fef1d48e534e425cd1",
+          "date": "2026-08-29"
+        },
+        {
+          "label": "メイチカ公式サイト",
+          "url": "https://www.meichika.jp/",
+          "date": "2026-09-01"
+        }
+      ]
+    }
+  ]
+}

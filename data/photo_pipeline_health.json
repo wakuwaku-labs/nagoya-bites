@@ -1,18 +1,18 @@
 {
   "places": {
-    "date": "2026-08-30",
+    "date": "2026-09-03",
     "status": "ok",
     "quota_reached_streak": 0,
     "reason": "",
-    "api_calls": 3,
-    "quota_day": "2026-08-30",
-    "api_calls_day": 60,
+    "api_calls": 0,
+    "quota_day": "2026-09-03",
+    "api_calls_day": 0,
     "daily_budget": 200,
-    "sku_month": "2026-08",
+    "sku_month": "2026-09",
     "sku_calls_month": {
-      "textsearch": 41,
-      "details": 22,
-      "photo": 19
+      "textsearch": 2,
+      "details": 2,
+      "photo": 2
     },
     "sku_monthly_budget": {
       "textsearch": 4000,
@@ -21,10 +21,20 @@
     },
     "sku_exhausted": "",
     "skipped_by_daily_budget": false,
+    "responded": 0,
+    "failed": 0,
+    "attempted": 0,
+    "adopted": 0,
+    "recorded_at": "2026-09-03T08:52:14.145Z"
+  },
+  "hotpepper": {
+    "date": "2026-09-02",
+    "status": "ok",
+    "reason": "",
     "responded": 3,
     "failed": 0,
-    "attempted": 1,
+    "attempted": 3,
     "adopted": 0,
-    "recorded_at": "2026-08-30T08:18:33.712Z"
+    "recorded_at": "2026-09-02T14:33:00.882Z"
   }
 }

@@ -68,6 +68,57 @@
   - ブラウザ実機確認（375px/1280px・雑誌モード/検索モード/モーダル）でレイアウト崩れなし
 - **未完了**: PR作成・マージ、マージ後の`gen-store-pages.js`再生成でstores/の残存違反解消を確認、
   build.yml新設ステップ（現在`continue-on-error:true`）をCIグリーン確認後にblocking化（Designer判断）
+### [SEO-081] IndexNow 送信ステップが ISSUE-112 の build.yml 書き換えで消え、最大流入エンジン Bing への更新通知が再び死んでいる（SEO-071 は done のまま）
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-09-03
+- **resolved_by**: 42fd9478
+- **detected**: 2026-09-03
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEOアドバイス(LINE) 2026-09-02 原文「Bing検索からの流入が16訪問とGoogle検索に匹敵します。Bingユーザーを意識した対策が有効です。👉 docs/daily-posts/にあるSNS投稿原稿のうち、特に店舗紹介や特集記事のものをBingウェブマスターツールに登録し、Bing検索での露出強化とインデックス促進を図りましょう」
+- **原文からの是正**: 助言の**手段は誤り**なのでそのまま実装しない。Bing Webmaster Tools は「サイト／サイトマップ」を登録する場所であり、`docs/daily-posts/` の SNS 原稿（未公開の下書きテキスト）を登録する機能は存在しない。採用したのは**底流の指摘**（Bing が最大級の流入源なのに更新通知が届いていない）だけで、正しい手段は既に実装済みだったはずの IndexNow 送信の復旧である
+- **brand-filter**: ✅ 適合 — IndexNow は「更新したURLを検索エンジンに通知する」標準プロトコルで、順位操作でも被リンク工作でもない（[[SEO-071]] と同じ判断）。毎日更新される実在コンテンツ（日次ジャーナル）を持つ本サイトの構造と噛み合う。広告主依存・クーポン経済のいずれにも非該当（制約7・8非該当）
+- **検証できる事実（制約10 — 誰でも同じコマンドで検算できる）**:
+  | 事実 | 確認方法 |
+  |------|----------|
+  | 現在の `.github/workflows/build.yml` に IndexNow ステップが**存在しない** | `grep -i indexnow .github/workflows/build.yml` → 0件 |
+  | 送信ログが**一度も生成されていない** | `ls data/indexnow_send_log.json` → No such file |
+  | 削除したのは ISSUE-112（PR #181・2026-09-02 マージ） | `git show fcf9a0f07 -- .github/workflows/build.yml \| grep -E '^[-+].*[Ii]ndexNow'` → 9行すべて `-`（削除のみ・再追加なし） |
+  | 送信の前提（キーファイル）は生きている | `node scripts/indexnow_ping.js --status` → `ready_to_submit: true` |
+  | Bing は最大級の流入エンジン | 当日レポート: Bing 16訪問(28%) > Google 15訪問(26%) |
+- **なぜ P1 か**: ①出荷済み機能のサイレントな回帰であり、②backlog 上は [[SEO-071]] が `done` のままなので**誰も気づけない状態**（CLAUDE.md 無人自動化の監視原則3「気づけるはず＝検知ではない」に該当）、③影響先が最大流入エンジンへの更新通知＝日次ジャーナルの鮮度という本サイト唯一の構造的優位を殺す
+- **acceptance**: ① `.github/workflows/build.yml` に IndexNow 送信ステップと送信ログコミットステップを復旧する（[[SEO-071]] の実装内容＝`--recent 2` / `--log-file data/indexnow_send_log.json` / `INDEXNOW_ENABLED=true` のときだけ `--yes` で実送信し、既定は dry-run。外部送信を暗黙に既定化しない設計は維持）② 復旧を検証できる事実で確認する（`grep -i indexnow .github/workflows/build.yml` が該当行を返す ＋ CI 実行後に `data/indexnow_send_log.json` が生成される）③ **同種の回帰を今後は機械で検知する**: build.yml から IndexNow ステップが消えたことを検出する検査を追加し（例: `audit_*` 系スクリプトに1項目追加して build.yml 内のステップ存在を assert）、CI が落ちればオーナーのメールに届く out-of-band 通知になるようにする（ISSUE-084 原則1・2）④ [[SEO-071]] の done 表記に「2026-09-02 に ISSUE-112 で消失 → SEO-081 で復旧」の追記を入れ、done が嘘のまま残らないようにする ⑤ index.html は単一ファイル維持・既存CI（build/QA/監査）を壊さない（制約1・5）
+- **ブランドガードレール**: 送信対象は自サイトの実在する公開URLのみ。外部送信の実有効化（`INDEXNOW_ENABLED`）は既にオーナー承認済み（[[SEO-071]] 2026-08-26）だが、シークレット設定自体はオーナー操作。**復旧作業はシークレットの有無に関わらず先に完了させる**（未設定なら dry-run で回り、設定された瞬間に実送信になる）
+- **関連**: [[SEO-071]]（本体・done のまま消失）／[[SEO-067]]（Bing WMT 接続・オーナー操作待ちで blocked。IndexNow はこれを待たずに成立する）／[[SEO-039]]／[[ISSUE-112]]（削除の原因コミット）
+
+### [ISSUE-122] 「焼きそばスタンド らふ」が同一GooglePlaceIDで2重掲載されていた（カタログ全体で計21店名が2重掲載・後者は本セッションで解消、20店名は未調査） ✅
+
+- **priority**: P0 → **status**: done（対象1件は解消。カタログ全体の残20件は別課題として起票のみ）
+- **detected**: 2026-09-02
+- **category**: data-quality
+- **owner**: Builder（今回分の実装）/ DataKeeper（残20件の調査要）
+- **source**: [[ISSUE-120]] の本番反映確認中、本番 `data/stores.json` を直接フェッチして「焼きそばスタンド らふ」を検索したところ2件ヒットして発覚
+- **brand-filter**: ✅ 適合 — 同一店が2枚のカードとして重複掲載されると、閲覧数・トレンドスコア・「〇媒体掲載」表記が実態より水増しされて見える。制約10（検証できる事実だけで判定）に沿い、GooglePlaceID一致という機械的に検算可能な事実だけで同一店と断定した
+- **検証できる事実（制約10）**:
+
+  | 事実 | 出典 |
+  |---|---|
+  | `data/pending_stores.json` の「焼きそばスタンド らふ」（追加日2026-05-23・エリア「南区 鶴里」）と `data/manual_stores.json` の同名店（追加日2026-09-01・エリア「名古屋市南区」）が**完全一致するGooglePlaceID** `ChIJJyPnRpV7A2ARG4yL8wqVmNA` を持つ | 両ファイルの該当エントリ |
+  | pending側は 情報源URL（https://jouhou.nagoya/yakisoba-rafu/）・journal_url（journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html）・Instagramハンドルを持つ、4ヶ月前からの正規エントリ | 同上 |
+  | manual側は [[ISSUE-120]] で問題になった「出典URLが非URLテキストラベル」の当該エントリそのもの（追加日2026-09-01・編集部・自動発掘パイプライン由来と推定） | 同上 |
+  | `build.js mergeManualStores()` の重複判定は「ホットペッパーID一致」または「店名＋エリア完全一致」の2キーのみで、**GooglePlaceIDやエリア表記ゆれを見ない**ため、この組み合わせは重複として検出されずどちらも別レコードとしてカタログに投入されていた | `build.js` 792-800行付近 |
+  | カタログ全体（本番 `data/stores.json`・4,933件）で店名の完全一致による重複が**21店名**存在する（本件含む）。うち複数はエリア文字列まで完全一致しており、エリア表記ゆれでは説明できない別原因の重複も混在する | 本番 `/data/stores.json` を店名でグルーピングして実測（下記リスト） |
+
+- **resolution（本件のみ）**: `data/manual_stores.json` から重複エントリ（自動発掘パイプライン由来・追加日2026-09-01・話題スコア自己申告・出典URL非URL）を削除。pending側の正規エントリ（実写・実評価・実出典あり）のみ残す。`node -c` 構文OK・JSON構文OK（167件に減少・重複ゼロ確認済み）・`npm test` 151件全pass
+- **意図的にやらなかったこと**: 残り20店名の重複は今回調査していない。原因がエリア表記ゆれとは限らず（「肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店」等はエリア文字列まで完全一致しており全く別の混入経路の可能性がある）、`build.js` の重複判定キーを安易に緩める（例: 店名のみ一致で強制マージ）と、別々の実店舗が偶然同じ店名を持つケースを誤統合しかねない。**個別にGooglePlaceIDや住所で実在確認してから対処すべき**（[[ISSUE-103]]の架空店混入と対称的なリスク＝今度は実在2店を誤って1店に統合する事故）
+- **残20店名リスト（本番data/stores.json実測・2026-09-02）**: 裏の山の木の子 名古屋 / とんかつ朱寿 / 松軒亭 / しら河 浄心本店 / PASTA MANIA 鶴舞店 / 尾張山荘 くろぎ / コンパル 大須本店 / 肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店 / BeTogetherBeTogether 今夜Bar / 肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店 / ニューアラタマ 新瑞橋店 / ジガー バー シルクロード / てり串 金山店 / 居酒屋 旬囲い 名駅駅前店 / 豆家のりのり 和食 栄 / ばさら亭 名古屋栄店 / 串たつ 名古屋駅本店 / 串たつ 金山駅店 / 串たつ 名古屋駅西口店 / クワン 栄
+- **acceptance（次に着手する担当者向け）**:
+  1. 上記20店名それぞれについて、GooglePlaceID・住所・電話番号のいずれかで実在確認し「同一店か別店か」を機械的に判定する（自己申告に頼らない）
+  2. 同一店と確認できたものは、より情報の充実した側（実写・実出典・journal記事等がある方）を残し、もう一方を除去する
+  3. 別店（同名の別チェーン店等）と確認できたものは重複ではないため何もしない
+  4. 再発防止として、`build.js` の重複判定にGooglePlaceID/HotPepperURLベースの追加照合を検討する（ただし店名一致だけでの強制マージは誤統合リスクがあるため慎重に設計する）
+- **files**: `data/manual_stores.json`
+- **関連**: [[ISSUE-120]]（この重複の片割れが元々の不正確表示バグの発生源だった）/ [[ISSUE-103]]（実在検証の重要性という逆方向の教訓）
 
 ---
 
@@ -630,6 +681,7 @@
 - **resolved**: 2026-08-24
 - **detected**: 2026-08-24
 - **resolved**: 2026-08-26（オーナー承認済み `--yes` → build.yml に IndexNow 自動送信ステップを追加。変更された features/journal HTMLを直前コミットと比較して送信対象URLを自動検出）
+- **注記（回帰・復旧）**: 2026-09-02 に [[ISSUE-112]] の build.yml 書き換え（PR #181）で IndexNow ステップが誤って削除された。[[SEO-081]] で 2026-09-03 に復旧。CI自己診断ステップを同時追加し、再削除を機械検知できるようにした。
 - **category**: SEO
 - **owner**: Builder（実装完了）
 - **source**: 週次レポート(LINE) 2026-08-17〜08-23 原文「Bing検索からの流入が28%とGoogle検索(29%)に迫る勢いです。👉 features/にある全特集ページとjournal/にある全記事の<title>と<meta name="description">を見直し、特にBingでの表示を意識したキーワードを盛り込みましょう」
@@ -2528,6 +2580,14 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   v2.0 → **v2.1**（`scripts/lib/cross_check.js`）に更新し、各軸へ `observed:boolean` を追加、S7 に `parts:[s7a,s7b,s7c]` を追加。
   内部合成点 `crossCheckScore`（8軸100点・本 ISSUE が扱う分布・フラグ）は本ステップでは**変更していない**（ロスター等の依存を壊さないため）。
   **v3.0 を活性化するときは、v3 実装（`scripts/lib/cross_check_v3.js`）にも同じ observed/parts 付与が前提**（`scripts/lib/trust_display.js` が observed を読むため）。詳細は [[ISSUE-101]]。
+- **2026-09-03 追記（observed/parts 付与・禁止語排除 — ISSUE-086 準備作業）**:
+  `scripts/lib/cross_check_v3.js` に v2.1 と同等の `observed`/`parts` を追加し、trust_display.js に接続できる状態にした（`npm test` 151件全pass）。
+  同時に禁止語（サクラ/化粧/疑い/評価操作）を排除:
+  - S7b: `サクラ継続投入疑い` → `直近N件の平均★X.Xが全体★Yより+Z高い`
+  - S7b: `化粧剥がれパターン` → `直近N件の平均★X.Xが全体★Yより-Z低い`
+  - S7c: `評価操作疑い` → `評価が一様すぎます`
+  また **activate 手順のゲート(c)を新設**: 2026-09-03 実測で 4,338 店（88%）が段階移動（目安 10% = 493 店）となりガイドライン大幅超過のため、S7/S8 の重み再調整が v3.0 切替前に必要。
+  配点再調整はオーナー確認後の別タスクとし、本 ISSUE は「コード準備完了・切替保留」のまま継続。
 - **関連**: [[ISSUE-048]]（サクラチェッカー方式の元祖・食べログスクレイピングのStrategic Skip判断）/ [[ISSUE-049]]（V3化・S7/S8新設の前身）/ [[ISSUE-084]]（監視原則「検知して終わりにしない」を踏襲）/ [[ISSUE-101]]（口コミ信頼度の見せ方・採点再設計）
 
 ### [ISSUE-084] 日次ジャーナルが3日欠番（08-10/11/12）— 失敗の警報が「防音室の中」で鳴っていた ✅
@@ -4851,7 +4911,10 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-09-02 | Orchestrator(EXPLICIT・ユーザー報告対応) | ISSUE-120 実装 — build.js: Google評価0を空文字化（偽の「GOOGLE評価 0」表示を防止）／話題フラグ・編集部推薦は出典URLが検証可能なURLでなければ剥がす。scripts/daily_store_discovery.js: 同じ検証を発掘パイプラインに追加し再発防止。`node -c` 構文OK・`npm test` 151件全pass・`node build.js` で対象3店（焼きそばスタンド らふ／焼肉ここから 名駅3丁目店／Wakana ～和奏～）のフラグ剥がしをログで確認。ローカルにHOTPEPPER_API_KEY無くフルビルド未完走のためCI委ね | ⏸ PR #201（マージ待ち） |
 | 2026-09-02 | Orchestrator(EXPLICIT・オーナー追加指示) | ISSUE-120 追加実装（写真の必須化） — オーナー方針確認（AskUserQuestion:「取得を強化して、それでも取得されない場合は非表示」）を受けて対応。build.yml: 未配線だった fill_missing_photos_from_hotpepper.js（写真ソース優先2）をPlaces取得の直後に追加。build.js / scripts/merge_pending_stores.js: 写真URL空 かつ 写真失敗理由（Places・HotPepper両方失敗の検証可能な記録）が立つ店を非表示化（新着未着手店は対象外）。data/photo_pipeline_health.json をCI commit対象に追加。`node build.js` で非表示29(manual)+7(pending)件をログ確認・`npm test` 151件全pass | ⏸ PR #201（マージ待ち） |
 | 2026-09-02 | Orchestrator(EMERGENCY) | ISSUE-121 発見・実装 — ユーザーが ISSUE-120 の反映を確認しようとして「まだ反映されてない」と報告 → CI実行履歴を調査し、07:01以降 `main` への push が3回連続で Build & Deploy 失敗（他都道府県マッチ監査でブロック・PR #201含む複数マージが本番未反映のまま放置）と判明。HotPepper公式ページを実フェッチして「焼肉酒房天禄 池下店」(J004678480)が実在の名古屋店（岐阜支店への誤マッチが原因）と検証し、data/other_prefecture_match_exceptions.json に登録。ローカルで audit_other_prefecture_matches.js --check が[OK]になることを確認。ISSUE-120後半（写真の必須化・PR#201マージ後に積んだため未取込だった分）を本ブロッカー修正の上にcherry-pickし直しPR #206として再提出 | ⏸ PR #205・PR #206（いずれもマージ待ち。gh pr mergeはauto-modeクラシファイアが拒否のためオーナー操作が必要） |
-| 2026-09-02 | Orchestrator(EMERGENCY) | PR #205・#206 マージ後、CI（Build & Deploy）が正常完走・本番反映を確認。しかしユーザー報告で「今日の話題店」TOP5だけ焼きそばスタンド らふが編集部推薦タグ付きで残存と発覚 → scripts/pick_daily_trending5.js が manual_stores.json を直読みし、build.js の出典URLゲートを経由していなかったことが根本原因と特定。scripts/lib/trending_source_gate.js（新設・hasVerifiableSource()）に判定を1本化し、build.js と pick_daily_trending5.js の両方が共有するよう修正。node scripts/pick_daily_trending5.js のローカル実行で対象3店がTOP5候補から正しく除外されることを確認・npm test 151件全pass | ⏸ PR作成準備中 |
+| 2026-09-02 | Orchestrator(EMERGENCY) | PR #205・#206 マージ後、CI（Build & Deploy）が正常完走・本番反映を確認。しかしユーザー報告で「今日の話題店」TOP5だけ焼きそばスタンド らふが編集部推薦タグ付きで残存と発覚 → scripts/pick_daily_trending5.js が manual_stores.json を直読みし、build.js の出典URLゲートを経由していなかったことが根本原因と特定。scripts/lib/trending_source_gate.js（新設・hasVerifiableSource()）に判定を1本化し、build.js と pick_daily_trending5.js の両方が共有するよう修正。node scripts/pick_daily_trending5.js のローカル実行で対象3店がTOP5候補から正しく除外されることを確認・npm test 151件全pass | ✅ PR #207 マージ済み・本番反映確認済み（「今日の話題店」TOP5から対象3店消失を確認） |
+| 2026-09-02 | Orchestrator(EMERGENCY) | ISSUE-122 発見・実装 — PR #207 反映確認のため本番 data/stores.json を直接フェッチし「焼きそばスタンド らふ」を検索したところ2件ヒット。pending_stores.json（2026-05-23・実写実評価実出典あり）と manual_stores.json（2026-09-01・ISSUE-120で問題化した自動発掘由来）が同一GooglePlaceIDを持つ重複と判明。manual_stores.json側の重複エントリを削除（167件に減少）。カタログ全体で店名完全一致の重複が計21件存在することも実測で判明したため、残20件はDataKeeper向けに別途起票のみ（誤統合リスクがあるため今回は手を付けず）。npm test 151件全pass | ⏸ PR作成準備中 |
+| 2026-09-03 | Builder(routine) | SEO-081 実装・デプロイ — ISSUE-112（PR #181）で誤削除された IndexNow 送信ステップを build.yml に復旧。CI冒頭に自己診断ステップ（grep で IndexNow ステップ存在を assert）を追加して再消失を機械検知できるようにした。SEO-071 に回帰・復旧注記を追記。status: ready → done | ✅ commit 42fd9478 / PR #209 |
+| 2026-09-03 | Builder(routine) | ISSUE-086 準備作業 — cross_check_v3.js に observed/parts 付与（v2.1 と同等）・禁止語（サクラ継続投入疑い/化粧剥がれパターン/評価操作疑い）排除。activate ゲート(c)を新設（4338店88%が段階移動 → 重み再調整が必要）。npm test 151件全pass。status は in_progress 継続（切替保留） | ✅ このコミット |
 
 ---
 

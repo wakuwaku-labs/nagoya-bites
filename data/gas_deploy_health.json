@@ -2,8 +2,8 @@
   "version": 1,
   "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
   "last_run": {
-    "date": "2026-09-01",
-    "recorded_at": "2026-09-01T23:34:49.662Z",
+    "date": "2026-09-02",
+    "recorded_at": "2026-09-02T23:35:45.288Z",
     "status": "ok",
     "reason": null,
     "verdict": "deployed",
@@ -265,6 +265,33 @@
       "numeric_reference": null,
       "numeric_reference_skipped": "参照値の日付 2026-08-29 が レポートが名乗る対象日 2026-08-31 と一致しないため数値判定をしない",
       "recorded_at": "2026-09-01T23:34:49.656Z"
+    },
+    {
+      "date": "2026-09-02",
+      "kind": "daily",
+      "verdict": "deployed",
+      "missing_fixes": [],
+      "evidence": [
+        {
+          "key": "settled_slice_label",
+          "fix_id": "SEO-076",
+          "verdict": "deployed",
+          "line": "【読まれ方（確定値・2026-09-01）】"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "deployed",
+          "line": "レポート 32% vs GA4実測 34.4%（差 2.4pt / 許容 15pt）"
+        }
+      ],
+      "numeric_reference": {
+        "date": "2026-09-01",
+        "bounceRate": 0.344,
+        "sessions": 61
+      },
+      "numeric_reference_skipped": null,
+      "recorded_at": "2026-09-02T23:35:45.283Z"
     }
   ],
   "deploys": [
