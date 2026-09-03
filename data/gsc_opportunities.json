@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-02T23:39:58.007Z",
+  "generatedAt": "2026-09-03T00:14:36.795Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -13,18 +13,18 @@
         "ctr": 1.08,
         "expectedCtr": 2.7,
         "missedClicks": 4.6
+      },
+      {
+        "query": "リサールコーヒー 名古屋",
+        "impressions": 177,
+        "clicks": 2,
+        "position": 9.6,
+        "ctr": 1.13,
+        "expectedCtr": 2.6,
+        "missedClicks": 2.6
       }
     ],
     "ctrFixGeoless": [
-      {
-        "query": "一人飲み",
-        "impressions": 310,
-        "clicks": 2,
-        "position": 4,
-        "ctr": 0.65,
-        "expectedCtr": 8,
-        "missedClicks": 22.8
-      },
       {
         "query": "煮干しラーメン 凛",
         "impressions": 224,
@@ -36,22 +36,22 @@
       },
       {
         "query": "やきまる亭",
-        "impressions": 184,
+        "impressions": 180,
         "clicks": 3,
         "position": 8.4,
-        "ctr": 1.63,
+        "ctr": 1.67,
         "expectedCtr": 3,
-        "missedClicks": 2.6
+        "missedClicks": 2.5
       }
     ],
     "rankPush": [
       {
         "query": "ナショナルベーカリー",
-        "impressions": 206,
+        "impressions": 198,
         "clicks": 5,
         "position": 11.9,
-        "ctr": 2.43,
-        "upsideClicks": 0.8
+        "ctr": 2.53,
+        "upsideClicks": 0.5
       }
     ]
   },
@@ -68,55 +68,64 @@
       },
       {
         "page": "/stores/J004559348.html",
-        "impressions": 619,
-        "clicks": 8,
+        "impressions": 590,
+        "clicks": 7,
         "position": 8.4,
-        "ctr": 1.29,
+        "ctr": 1.19,
         "expectedCtr": 3,
-        "missedClicks": 10.8
-      },
-      {
-        "page": "/stores/J004612794.html",
-        "impressions": 771,
-        "clicks": 11,
-        "position": 9.8,
-        "ctr": 1.43,
-        "expectedCtr": 2.6,
-        "missedClicks": 8.7
+        "missedClicks": 10.9
       },
       {
         "page": "/stores/J004025075.html",
-        "impressions": 472,
-        "clicks": 10,
-        "position": 7.3,
-        "ctr": 2.12,
-        "expectedCtr": 3.8,
-        "missedClicks": 7.7
+        "impressions": 454,
+        "clicks": 7,
+        "position": 7.4,
+        "ctr": 1.54,
+        "expectedCtr": 3.7,
+        "missedClicks": 9.7
+      },
+      {
+        "page": "/stores/J004612794.html",
+        "impressions": 735,
+        "clicks": 11,
+        "position": 9.8,
+        "ctr": 1.5,
+        "expectedCtr": 2.6,
+        "missedClicks": 7.8
+      },
+      {
+        "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
+        "impressions": 626,
+        "clicks": 11,
+        "position": 8.8,
+        "ctr": 1.76,
+        "expectedCtr": 2.9,
+        "missedClicks": 7
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 3438,
+        "impressions": 3399,
         "clicks": 8,
-        "position": 24.4,
-        "ctr": 0.23,
-        "upsideClicks": 88.4
+        "position": 24.5,
+        "ctr": 0.24,
+        "upsideClicks": 87
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 1,
-    "queryCtrFixGeoless": 3,
+    "queryCtrFix": 2,
+    "queryCtrFixGeoless": 2,
     "queryRankPush": 1,
-    "pageCtrFix": 4,
+    "pageCtrFix": 5,
     "pageRankPush": 1,
     "topPageCtrFix": [
       "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
       "/stores/J004559348.html",
-      "/stores/J004612794.html"
+      "/stores/J004025075.html"
     ]
   }
 }
