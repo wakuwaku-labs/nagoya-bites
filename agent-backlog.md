@@ -2518,6 +2518,14 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   v2.0 → **v2.1**（`scripts/lib/cross_check.js`）に更新し、各軸へ `observed:boolean` を追加、S7 に `parts:[s7a,s7b,s7c]` を追加。
   内部合成点 `crossCheckScore`（8軸100点・本 ISSUE が扱う分布・フラグ）は本ステップでは**変更していない**（ロスター等の依存を壊さないため）。
   **v3.0 を活性化するときは、v3 実装（`scripts/lib/cross_check_v3.js`）にも同じ observed/parts 付与が前提**（`scripts/lib/trust_display.js` が observed を読むため）。詳細は [[ISSUE-101]]。
+- **2026-09-03 追記（observed/parts 付与・禁止語排除 — ISSUE-086 準備作業）**:
+  `scripts/lib/cross_check_v3.js` に v2.1 と同等の `observed`/`parts` を追加し、trust_display.js に接続できる状態にした（`npm test` 151件全pass）。
+  同時に禁止語（サクラ/化粧/疑い/評価操作）を排除:
+  - S7b: `サクラ継続投入疑い` → `直近N件の平均★X.Xが全体★Yより+Z高い`
+  - S7b: `化粧剥がれパターン` → `直近N件の平均★X.Xが全体★Yより-Z低い`
+  - S7c: `評価操作疑い` → `評価が一様すぎます`
+  また **activate 手順のゲート(c)を新設**: 2026-09-03 実測で 4,338 店（88%）が段階移動（目安 10% = 493 店）となりガイドライン大幅超過のため、S7/S8 の重み再調整が v3.0 切替前に必要。
+  配点再調整はオーナー確認後の別タスクとし、本 ISSUE は「コード準備完了・切替保留」のまま継続。
 - **関連**: [[ISSUE-048]]（サクラチェッカー方式の元祖・食べログスクレイピングのStrategic Skip判断）/ [[ISSUE-049]]（V3化・S7/S8新設の前身）/ [[ISSUE-084]]（監視原則「検知して終わりにしない」を踏襲）/ [[ISSUE-101]]（口コミ信頼度の見せ方・採点再設計）
 
 ### [ISSUE-084] 日次ジャーナルが3日欠番（08-10/11/12）— 失敗の警報が「防音室の中」で鳴っていた ✅
@@ -4844,6 +4852,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-09-02 | Orchestrator(EMERGENCY) | PR #205・#206 マージ後、CI（Build & Deploy）が正常完走・本番反映を確認。しかしユーザー報告で「今日の話題店」TOP5だけ焼きそばスタンド らふが編集部推薦タグ付きで残存と発覚 → scripts/pick_daily_trending5.js が manual_stores.json を直読みし、build.js の出典URLゲートを経由していなかったことが根本原因と特定。scripts/lib/trending_source_gate.js（新設・hasVerifiableSource()）に判定を1本化し、build.js と pick_daily_trending5.js の両方が共有するよう修正。node scripts/pick_daily_trending5.js のローカル実行で対象3店がTOP5候補から正しく除外されることを確認・npm test 151件全pass | ✅ PR #207 マージ済み・本番反映確認済み（「今日の話題店」TOP5から対象3店消失を確認） |
 | 2026-09-02 | Orchestrator(EMERGENCY) | ISSUE-122 発見・実装 — PR #207 反映確認のため本番 data/stores.json を直接フェッチし「焼きそばスタンド らふ」を検索したところ2件ヒット。pending_stores.json（2026-05-23・実写実評価実出典あり）と manual_stores.json（2026-09-01・ISSUE-120で問題化した自動発掘由来）が同一GooglePlaceIDを持つ重複と判明。manual_stores.json側の重複エントリを削除（167件に減少）。カタログ全体で店名完全一致の重複が計21件存在することも実測で判明したため、残20件はDataKeeper向けに別途起票のみ（誤統合リスクがあるため今回は手を付けず）。npm test 151件全pass | ⏸ PR作成準備中 |
 | 2026-09-03 | Builder(routine) | SEO-081 実装・デプロイ — ISSUE-112（PR #181）で誤削除された IndexNow 送信ステップを build.yml に復旧。CI冒頭に自己診断ステップ（grep で IndexNow ステップ存在を assert）を追加して再消失を機械検知できるようにした。SEO-071 に回帰・復旧注記を追記。status: ready → done | ✅ commit 42fd9478 / PR #209 |
+| 2026-09-03 | Builder(routine) | ISSUE-086 準備作業 — cross_check_v3.js に observed/parts 付与（v2.1 と同等）・禁止語（サクラ継続投入疑い/化粧剥がれパターン/評価操作疑い）排除。activate ゲート(c)を新設（4338店88%が段階移動 → 重み再調整が必要）。npm test 151件全pass。status は in_progress 継続（切替保留） | ✅ このコミット |
 
 ---
 
