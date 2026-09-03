@@ -6,6 +6,26 @@
 
 ---
 
+### [DATA-002] 手動キュレーション店舗の食べログURLが大量に無関係な別店を指していた事故を検知・修正し、実地監査の仕組みを新設
+
+- **priority**: P1（UX劣化・信頼毀損） → **status**: done
+- **detected**: 2026-09-03
+- **category**: data / trust
+- **owner**: DataKeeper / Builder
+- **source**: オーナー本人からの指摘「サラマンジェドゥカジノのホットペッパー、食べログのURLがおかしい。この店舗に限らず間違っているかどうかチェックするシステムになってない？なってなければ作って」
+- **経緯**: サラマンジェドゥカジノの食べログURL（`data/manual_stores.json`）が、無関係な閉店ラーメン店「若鯱家 名古屋パルコ店」のページを指していた。既存の `scripts/audit_manual_stores_links.js` はURLの「形式」しか見ておらず、この種の誤りを検出できなかった。
+- **対応**:
+  1. 単独店を修正（食べログURL・ホットペッパーID・食べログ評価。ホットペッパーIDは未設定だったため新規に判明分を追加）
+  2. `scripts/lib/store_link_identity.js` / `scripts/audit_store_link_identity.js` を新設。実際にURLをfetchし、ページ`<title>`の店名と我々の店名を `scripts/lib/store_name_match.js`（架空店ブロックと同じ判定器）で突き合わせる実地監査を実装
+  3. 手動キュレーション店舗167件全件に初回実地監査をかけたところ、**68件**（うち40件は当時サイトに表示中）の食べログURLが、マクドナルド/デニーズ/ファミリーマート/全く無関係な別の飲食店/404等、完全に別物を指していることが判明。同一パターンの過去事故（`scripts/clear_unverified_urls.js` のコメント参照：鮨銀座おのでら→ロピア 等）が繰り返されていたとみられる
+  4. `scripts/clear_broken_tabelog_links.js` で68件を `manual_stores.json` / `stores.json` / `stores/*.html`（可視CTAボタン+JSON-LD sameAs）の3層から空欄化（正しいURLへの差し替えは行わず、フロントのボタン非表示にフォールバック）
+  5. build.yml に日次 `--limit 20 --check`（非ブロッキング）を追加し、キャッシュ（`data/store_link_identity_checked.json`・60日）を日々持ち越して全件を継続監視する体制を新設
+- **検証できる事実（制約10）**: 修正前後で `node scripts/audit_store_link_identity.js --store "<店名>" --force` が sim=1（一致）を返すことを個別確認。`data/manual_stores.json` / `data/stores.json` / `stores/*.html`（5,592ファイル走査）のJSON構文は全て健全（`JSON.parse`成功）
+- **残課題**: sim>0（ふりがな併記・ローマ字表記差・「移転」表記等で閾値0.85未達）の境界事例6件は自動処理せず人の確認に残した。`data/store_link_identity_report.json` に一覧あり（雷杏/那古亭/KimiTote/京味もと井=おそらく正しいURL、cafe Villa/明道町中国菜一星=正しいURLだがtabelog側で閉店表示・要生存確認）
+- **files**: `data/manual_stores.json`, `data/stores.json`, `stores/*.html`（65件+7件+4件）, `scripts/lib/store_link_identity.js`, `scripts/audit_store_link_identity.js`, `scripts/clear_broken_tabelog_links.js`, `.github/workflows/build.yml`, `CLAUDE.md`
+
+---
+
 ### [DSN-001] トップページを含む全ページの可読性・タイポグラフィを刷新し、デザインシステムとDesigner役職を常設する
 
 - **priority**: P1（UX劣化） → **status**: ready（実装・ローカル検証済み。PR作成待ち）

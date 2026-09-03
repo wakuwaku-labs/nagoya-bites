@@ -181,6 +181,17 @@ jobs:
         run: node scripts/audit_manual_stores_links.js
         continue-on-error: true
 
+      - name: 外部リンク実地監査（食べログ/ホットペッパーが別店を指していないか・2026-09-03発覚分の再発防止）
+        # 上の audit_manual_stores_links.js は URL の「形式」だけを見ており、
+        # 「形式は個別店舗ページなのに実際には別の店（閉店店舗を含む）を指すURL」を
+        # 検出できなかった（ユーザー報告で発覚：サラマンジェドゥカジノの食べログURLが
+        # 無関係な閉店店舗のページを指していた）。実際にページを fetch し店名を突き合わせる
+        # ため店舗数が多いと時間がかかる → 1日あたり --limit 件だけ検証し、
+        # data/store_link_identity_checked.json のキャッシュ（60日有効）で日々持ち越して
+        # いずれ全件をカバーする。初回導入のため非ブロッキングで開始する。
+        run: node scripts/audit_store_link_identity.js --limit 20 --check
+        continue-on-error: true
+
       - name: ジャーナル記事とSNS原稿の対応漏れを監査（SEO-055・2026-08-10/11の欠落再発防止）
         # バックフィル公開（手動でjournal/*.htmlを直接作成するケース）はSNS原稿生成の
         # ブロッキング検証（run_journal_local.sh）を通らないため、生成漏れが実際に発生した。
@@ -324,7 +335,7 @@ jobs:
           # Places で取得した pending 店の写真が毎回捨てられ、無駄な API 再取得が続く。
           # data/crosscheck.json: モーダル「内訳を見る」の遅延ロード元。ここが漏れていると
           # CI で毎ビルド生成されても捨てられ、フロントが古い内訳（一部店舗のみ）を出し続ける。
-          git add index.html features/index.html sitemap.xml data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json
+          git add index.html features/index.html sitemap.xml data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/store_link_identity_checked.json data/store_link_identity_report.json
           # 特集本体(features/*.html)も commit 対象。月次ロスター更新の掲載店入替を反映する。
           git add features/ || true
           git add stores/ || true
