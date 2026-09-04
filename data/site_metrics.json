@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-03T20:33:09.058Z",
+  "generatedAt": "2026-09-04T07:44:16.015Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 980,
-    "pageViews": 1620,
-    "sessions": 1153,
-    "avgSessionDuration": 147.6,
-    "bounceRate": 0.306,
-    "pagesPerSession": 1.41
+    "activeUsers": 987,
+    "pageViews": 1630,
+    "sessions": 1163,
+    "avgSessionDuration": 143.5,
+    "bounceRate": 0.291,
+    "pagesPerSession": 1.4
   },
   "dailyReference": {
     "date": "2026-09-02",
@@ -17,42 +17,42 @@
   },
   "channels": {
     "sessions": {
-      "organic": 850,
-      "direct": 218,
+      "organic": 860,
+      "direct": 202,
       "social": 81,
       "referral": 14,
       "paid": 0,
-      "other": 2
+      "other": 3
     },
     "pct": {
-      "organic": 73,
-      "direct": 18.7,
+      "organic": 74.1,
+      "direct": 17.4,
       "social": 7,
       "referral": 1.2,
       "paid": 0,
-      "other": 0.2
+      "other": 0.3
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 380
+      "sessions": 383
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 280
+      "sessions": 286
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 178
+      "sessions": 183
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 175
+      "sessions": 176
     },
     {
       "source": "chatgpt.com",
@@ -60,14 +60,14 @@
       "sessions": 76
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 29
-    },
-    {
       "source": "duckduckgo",
       "medium": "organic",
       "sessions": 10
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 8
     },
     {
       "source": "copilot.com",
@@ -88,22 +88,22 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 279,
-      "sessions": 238
+      "pageViews": 283,
+      "sessions": 240
     },
     {
       "path": "/",
-      "pageViews": 276,
-      "sessions": 170
+      "pageViews": 270,
+      "sessions": 171
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 110,
+      "pageViews": 111,
       "sessions": 104
     },
     {
       "path": "/index.html",
-      "pageViews": 106,
+      "pageViews": 105,
       "sessions": 61
     },
     {
@@ -113,20 +113,20 @@
     }
   ],
   "cta": {
-    "outboundClicks": 109,
-    "ctaClickRate": 9.5,
+    "outboundClicks": 112,
+    "ctaClickRate": 9.6,
     "byDomain": [
+      {
+        "domain": "www.hotpepper.jp",
+        "clicks": 41
+      },
       {
         "domain": "tabelog.com",
         "clicks": 39
       },
       {
-        "domain": "www.hotpepper.jp",
-        "clicks": 39
-      },
-      {
         "domain": "maps.google.com",
-        "clicks": 12
+        "clicks": 13
       },
       {
         "domain": "jouhou.nagoya",
@@ -163,15 +163,15 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 55,
-      "direct": 30,
+      "organic": 64,
+      "direct": 24,
       "social": 22,
       "referral": 2,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 6.5,
-    "ctaClickRate_direct": 13.8,
+    "ctaClickRate_organic": 7.4,
+    "ctaClickRate_direct": 11.9,
     "ctaClickRate_social": 27.2,
     "byPage": [
       {
@@ -184,7 +184,7 @@
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 13
+        "clicks": 14
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -192,7 +192,7 @@
       },
       {
         "path": "/index.html",
-        "clicks": 11
+        "clicks": 13
       },
       {
         "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
@@ -288,7 +288,7 @@
       {
         "path": "/features/nagoya-hitsumabushi.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 13
+        "clicks": 14
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -337,7 +337,17 @@
       },
       {
         "path": "/index.html",
+        "domain": "maps.google.com",
+        "clicks": 2
+      },
+      {
+        "path": "/index.html",
         "domain": "www.google.com",
+        "clicks": 2
+      },
+      {
+        "path": "/index.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 2
       },
       {
@@ -372,16 +382,6 @@
       },
       {
         "path": "/features/osu-food-walk.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/index.html",
-        "domain": "maps.google.com",
-        "clicks": 1
-      },
-      {
-        "path": "/index.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
       },
@@ -483,7 +483,7 @@
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 13
+        "clicks": 14
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -491,7 +491,7 @@
       },
       {
         "path": "/index.html",
-        "clicks": 8
+        "clicks": 9
       },
       {
         "path": "/",
@@ -538,11 +538,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 78
+    "reservationClicks": 80
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 980,
+    "value": 987,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
