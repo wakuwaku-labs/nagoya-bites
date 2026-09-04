@@ -853,9 +853,9 @@ function formatDailyReport(data, date) {
     (st.sessions < MIN_SESSIONS_FOR_RATE_ALERT ? '　※訪問' + st.sessions + '件と少なく参考値（課題化はしません）' : '') + '\n\n';
 
   msg += '【人気だったページ TOP5】\n';
-  data.pages.slice(0, 5).forEach((p, i) => {
+  topPagesForPrompt(data.pages, 5).forEach((p, i) => {
     const medal = ['🥇','🥈','🥉','④','⑤'][i] || (i+1);
-    msg += medal + ' ' + pagePathToName(p.dimensions[0]) + '（' + p.metrics[1] + '回閲覧）\n';
+    msg += medal + ' ' + p.name + '（' + p.pv + '回閲覧）\n';
   });
 
   if (a.nonBaseEvents.length > 0) {
@@ -927,9 +927,9 @@ function formatWeeklyReport(data, prevData, startDate, endDate) {
     healthIcon(t.bounceRate, BENCHMARKS.bounceRate, true) + '\n\n';
 
   msg += '【人気ページ TOP5】\n';
-  data.pages.slice(0, 5).forEach((p, i) => {
+  topPagesForPrompt(data.pages, 5).forEach((p, i) => {
     const medal = ['🥇','🥈','🥉','④','⑤'][i] || (i+1);
-    msg += medal + ' ' + pagePathToName(p.dimensions[0]) + '（' + p.metrics[1] + '回）\n';
+    msg += medal + ' ' + p.name + '（' + p.pv + '回）\n';
   });
 
   if (a.nonBaseEvents.length > 0) {

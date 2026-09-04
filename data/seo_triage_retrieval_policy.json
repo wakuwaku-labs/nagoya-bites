@@ -1,0 +1,25 @@
+{
+  "_why": "2026-09-02 に週次レポートの取得クエリが構造的にゴミ箱を見逃すことが判明（SEO-080）。5本中1〜2本が Gmail ゴミ箱に振り分けられており、subject:...newer_than:9d では TRASH を除外するため存在しないのと同じになる。消費者フィードバックループで同種の問題（ISSUE-089）を data/feedback_policy.json で解決した設計を SEO triage 側にも移植する。",
+  "weekly": {
+    "primary_query": "subject:\"📊 NAGOYA BITES 週次レポート\" newer_than:9d",
+    "sweep_query": "subject:\"NAGOYA BITES 週次レポート\" newer_than:30d in:anywhere",
+    "sweep_when": "primary_query が0件のとき（ゴミ箱・迷惑メールを含む広い検索で拾い直す）",
+    "sweep_rationale": "Gmail の検索は既定で TRASH / SPAM を除外する。週次レポートは件名の絵文字有無・表記ゆれが少ないため subject: で絞れる。2026-09-02 実測で 2026-08-30 / 2026-08-09 の2本が TRASH 振り分けを確認",
+    "window_rationale": "窓は『取りこぼしを回収できる期間』。seo_advice_log.json の msg_id 突合（--check-dup）で再処理は防げるため、広くするほど偽陰性が翌週以降に自動回収される。週次は日次より窓を広く取る",
+    "reconcile_with_ledger": {
+      "enabled": true,
+      "how": "seo_advice_log.json の entries から source='line-weekly' かつ同一レポート由来の項目を検出し二重起票を防ぐ（--check-dup が担保）",
+      "note": "窓を広げても冪等性は --check-dup で担保されている"
+    },
+    "max_silence_days": 10,
+    "silence_rationale": "週次レポートは日曜日配信のため、次の月曜〜水曜まで（最大3日）は処理されていなくても正常。10日（日曜 + 3日猶予 × 1.4）を超えたら異常と判定する"
+  },
+  "daily": {
+    "primary_query": "subject:\"📊 NAGOYA BITES 日次レポート\" newer_than:3d",
+    "sweep_query": "subject:\"NAGOYA BITES 日次レポート\" newer_than:7d in:anywhere",
+    "sweep_when": "primary_query が0件のとき",
+    "max_silence_days": 3
+  },
+  "health_file": "data/seo_triage_weekly_health.json",
+  "health_rationale": "週次トリアージが動いたか否かを Mac の外（git push 済みのリポジトリ）に記録する。data/ 配下なので .gitignore に掛からず、feedback_health.json / journal_health.json と同じ設計。動いていないエージェントはファイルを更新できないため、鮮度は自己申告できない（制約10）"
+}

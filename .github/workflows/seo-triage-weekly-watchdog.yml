@@ -1,0 +1,144 @@
+name: NAGOYA BITES — SEO週次triage 生存監視
+
+# なぜこのワークフローが必要か（2026-09-04 / SEO-080）:
+#   週次レポートの5本に1〜2本が Gmail ゴミ箱に振り分けられており、
+#   週次triage コマンドの取得クエリ（subject:"..." newer_than:9d）は Gmail の既定で
+#   TRASH を除外するため、ゴミ箱に入ったメールを「存在しない」として扱う。
+#   その結果、週次triage が無音で丸ごとスキップされても誰も気づかない。
+#
+#   ISSUE-084 の教訓（警報を防音室で鳴らすな）をそのまま適用する:
+#     1. 監視は監視対象と別の場所で回す  → GitHub Actions（ローカル/クラウドルーチンとは独立）
+#     2. 通知は out-of-band に出す        → Issue 起票（GitHub が既定でオーナーにメールする）
+#     3. 「気づけるはず」を検知と数えない → 人がログを見に行かなくても届く
+#
+#   検知するのは「週次triage 自体が報告してこないこと」だけ（オオカミ少年化防止）:
+#     ・「採用課題が出なかった週」は平常。鳴らさない
+#     ・「seo_advice_log.json の line-weekly エントリが閾値日数途絶えた」だけが異常
+#
+#   判定は検証できる事実だけで行う（CLAUDE.md 制約10）:
+#     動いていないエージェントは seo_advice_log.json に追記できない。
+#     最終 line-weekly エントリの date を「自己申告できない」事実として使う。
+#
+#   閾値は data/seo_triage_retrieval_policy.json の weekly.max_silence_days が正本（既定 10 日）。
+#   週次は日曜配信・月〜水処理で 3〜4 日の余裕があり、10 日は 1 週スキップを許容する設定。
+#   オオカミ少年化（毎週火曜が 7 日で誤検知）を避けるため余裕を持たせている。
+
+on:
+  schedule:
+    # 03:30 UTC = 12:30 JST。週次レポートは日曜配信・月〜水処理が多いため水曜 12:30 JST を基準とし
+    # 毎日監視してファイルの鮮度で判定する（曜日限定より毎日の方がズレに強い）
+    - cron: '30 3 * * *'
+  workflow_dispatch: # 手動確認・復旧後の即時クローズ用
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 週次triage 生存確認
+        id: check
+        run: |
+          set +e
+          node scripts/check_seo_triage_weekly_health.js --json > /tmp/seo-weekly-health.json
+          echo "ok=$?" >> $GITHUB_OUTPUT
+          set -e
+          echo "----- 判定結果 -----"
+          node scripts/check_seo_triage_weekly_health.js || true
+
+      - name: 異常があれば Issue を起票/更新、正常なら自動クローズ
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/seo-weekly-health.json', 'utf8'));
+            const label = 'seo-triage-weekly-watchdog';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'open', labels: label, per_page: 10,
+            });
+            const existing = issues.find(i => i.title.startsWith('🔴 SEO週次triage'));
+
+            // ---- 正常: 開いている Issue を閉じる ----
+            if (r.ok) {
+              if (existing) {
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: existing.number,
+                  body: `✅ 復旧を確認しました（JST ${r.today_jst}）。最終 line-weekly エントリ: ${r.last_weekly_date}（${r.max_silence_days}日閾値内）。自動クローズします。`,
+                });
+                await github.rest.issues.update({
+                  owner, repo, issue_number: existing.number, state: 'closed',
+                });
+                core.info(`Issue #${existing.number} を復旧クローズしました。`);
+              } else {
+                core.info('週次triage は正常。Issue の起票は不要です。');
+              }
+              return;
+            }
+
+            // ---- 異常: 起票 or 更新 ----
+            const title = `🔴 SEO週次triage ${r.max_silence_days}日間沈黙（最終 ${r.last_weekly_date || '不明'}）`;
+
+            const lines = [];
+            lines.push(`SEO週次triageが **${r.max_silence_days} 日** の沈黙閾値を超えて報告してきていません（JST ${r.today_jst} 時点）。`);
+            lines.push('');
+            lines.push('## 検出内容');
+            for (const p of r.problems) lines.push(`- ${p}`);
+            if (r.warnings && r.warnings.length) {
+              lines.push('');
+              lines.push('## 警告');
+              for (const w of r.warnings) lines.push(`- ${w}`);
+            }
+            lines.push('');
+            lines.push('## 最も可能性が高い原因');
+            lines.push('週次レポートメールが **Gmail のゴミ箱** に振り分けられており、');
+            lines.push('取得クエリ（`subject:"📊 NAGOYA BITES 週次レポート" newer_than:9d`）が TRASH を除外するため 0件になっている。');
+            lines.push('');
+            lines.push('## 対処手順');
+            lines.push('1. Gmail で以下のクエリで検索する（ゴミ箱・迷惑メールを含む広い検索）:');
+            lines.push('   ```');
+            lines.push('   subject:"NAGOYA BITES 週次レポート" newer_than:30d in:anywhere');
+            lines.push('   ```');
+            lines.push('2. ゴミ箱内のレポートが見つかったら — 受信トレイへ移動し `/seo-triage-weekly` を手動実行');
+            lines.push('3. ゴミ箱にも見つからない場合 — GAS の週次スケジュールが動作しているか確認');
+            lines.push('   - スプレッドシートのトリガー設定を確認（毎週月曜 AM 実行の設定）');
+            lines.push('   - GAS 実行ログ（Apps Script › 実行数）で週次送信が成功しているか確認');
+            lines.push('4. 復旧後、/seo-triage-weekly を手動実行して seo_advice_log.json に line-weekly エントリが追記されることを確認');
+            lines.push('');
+            lines.push('## 参考');
+            lines.push('- 閾値ポリシー: `data/seo_triage_retrieval_policy.json`（`weekly.max_silence_days`）');
+            lines.push('- ヘルスチェック: `node scripts/check_seo_triage_weekly_health.js`');
+            lines.push('');
+            lines.push('---');
+            lines.push('この Issue は `seo_advice_log.json` に新しい `line-weekly` エントリが追記されると自動クローズされます（seo-triage-weekly-watchdog.yml）。');
+            const body = lines.join('\n');
+
+            if (existing) {
+              await github.rest.issues.update({
+                owner, repo, issue_number: existing.number, title, body,
+              });
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: existing.number,
+                body: `再検出（JST ${r.today_jst}）。最終 line-weekly エントリ: ${r.last_weekly_date || '不明'}`,
+              });
+              core.setFailed(`SEO週次triage の沈黙が継続しています（最終: ${r.last_weekly_date || '不明'}）`);
+            } else {
+              const { data: created } = await github.rest.issues.create({
+                owner, repo, title, body, labels: [label],
+              });
+              core.setFailed(`SEO週次triage の沈黙を検出し Issue #${created.number} を起票しました`);
+            }
