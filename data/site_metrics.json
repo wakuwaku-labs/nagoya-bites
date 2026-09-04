@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-04T08:14:19.498Z",
+  "generatedAt": "2026-09-04T13:29:10.880Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 990,
-    "pageViews": 1633,
-    "sessions": 1166,
-    "avgSessionDuration": 143.3,
-    "bounceRate": 0.292,
-    "pagesPerSession": 1.4
+    "activeUsers": 1012,
+    "pageViews": 1659,
+    "sessions": 1191,
+    "avgSessionDuration": 146.2,
+    "bounceRate": 0.306,
+    "pagesPerSession": 1.39
   },
   "dailyReference": {
     "date": "2026-09-02",
@@ -17,37 +17,37 @@
   },
   "channels": {
     "sessions": {
-      "organic": 860,
-      "direct": 204,
-      "social": 81,
-      "referral": 14,
+      "organic": 874,
+      "direct": 217,
+      "social": 83,
+      "referral": 15,
       "paid": 0,
-      "other": 5
+      "other": 7
     },
     "pct": {
-      "organic": 73.9,
-      "direct": 17.5,
-      "social": 7,
-      "referral": 1.2,
+      "organic": 73.1,
+      "direct": 18.1,
+      "social": 6.9,
+      "referral": 1.3,
       "paid": 0,
-      "other": 0.4
+      "other": 0.6
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 383
+      "sessions": 391
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 286
+      "sessions": 292
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 183
+      "sessions": 187
     },
     {
       "source": "yahoo",
@@ -57,16 +57,16 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 76
-    },
-    {
-      "source": "duckduckgo",
-      "medium": "organic",
-      "sessions": 10
+      "sessions": 78
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
+      "sessions": 19
+    },
+    {
+      "source": "duckduckgo",
+      "medium": "organic",
       "sessions": 10
     },
     {
@@ -75,36 +75,36 @@
       "sessions": 7
     },
     {
-      "source": "openai",
-      "medium": "organic",
+      "source": "(data not available)",
+      "medium": "(data not available)",
       "sessions": 5
     },
     {
-      "source": "(data not available)",
-      "medium": "(data not available)",
-      "sessions": 4
+      "source": "openai",
+      "medium": "organic",
+      "sessions": 5
     }
   ],
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 283,
-      "sessions": 241
+      "pageViews": 289,
+      "sessions": 248
     },
     {
       "path": "/",
-      "pageViews": 270,
-      "sessions": 171
+      "pageViews": 272,
+      "sessions": 174
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 112,
-      "sessions": 105
+      "pageViews": 117,
+      "sessions": 111
     },
     {
       "path": "/index.html",
-      "pageViews": 105,
-      "sessions": 61
+      "pageViews": 106,
+      "sessions": 63
     },
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
@@ -113,12 +113,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 112,
-    "ctaClickRate": 9.6,
+    "outboundClicks": 113,
+    "ctaClickRate": 9.5,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 41
+        "clicks": 42
       },
       {
         "domain": "tabelog.com",
@@ -163,7 +163,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 64,
+      "organic": 65,
       "direct": 24,
       "social": 22,
       "referral": 2,
@@ -171,8 +171,8 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.4,
-    "ctaClickRate_direct": 11.8,
-    "ctaClickRate_social": 27.2,
+    "ctaClickRate_direct": 11.1,
+    "ctaClickRate_social": 26.5,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -188,7 +188,7 @@
       },
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 13
+        "clicks": 14
       },
       {
         "path": "/index.html",
@@ -293,7 +293,7 @@
       {
         "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 13
+        "clicks": 14
       },
       {
         "path": "/index.html",
@@ -487,7 +487,7 @@
       },
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 13
+        "clicks": 14
       },
       {
         "path": "/index.html",
@@ -538,11 +538,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 80
+    "reservationClicks": 81
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 990,
+    "value": 1012,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
