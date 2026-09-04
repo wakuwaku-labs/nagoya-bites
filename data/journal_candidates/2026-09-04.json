@@ -1,0 +1,123 @@
+{
+  "date": "2026-09-04",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅『食堂 灯ル』の秋刀魚定食2,178円は高いのか安いのか",
+      "verdict": "PASS",
+      "total": 100,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (旬,相場,仕入れ,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 92字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "名駅『食堂 灯ル』の秋刀魚定食2,178円は高いのか安いのか",
+      "lead_draft": "大名古屋ビルヂングの秋グルメ企画で、名駅『食堂 灯ル』が9月1日からトロ秋刀魚の塩焼き定食2,178円を出し始めた。単品魚介を軸にした定食をこの価格で回す設計を、業界人の目で読み解く。",
+      "angle": "業界人の目線で、秋刀魚という原価が年によって大きく振れる旬の魚を軸にした定食を、仕入れ・原価率・回転・相場の変動をどう吸収して通常の価格帯に収めているかを分解する",
+      "main_store": {
+        "name": "食堂 灯ル",
+        "id": "J004558213",
+        "area": "名古屋市中村区（名駅）",
+        "genre": "和食・定食"
+      },
+      "column_id": "",
+      "sources": [
+        {
+          "label": "大名古屋ビルヂング 秋グルメ企画ページ",
+          "url": "https://dainagoyabuilding.com/article/event/13010/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "名古屋情報通『食堂 灯ル』オープン記事",
+          "url": "https://jouhou.nagoya/shokudou-tomoru/",
+          "date": "2026-03-16"
+        },
+        {
+          "label": "PR TIMES『食堂 灯ル』オープン公式リリース（株式会社エフリード）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000062.000100887.html",
+          "date": "2026-03-16"
+        },
+        {
+          "label": "食堂 灯ル 公式Instagramアカウント",
+          "url": "https://www.instagram.com/shokudou.tomoru/"
+        },
+        {
+          "label": "時事ドットコム 豊洲発 新鮮！魚の情報（2026年サンマ初値）",
+          "url": "https://www.jiji.com/jc/v8?id=20260719toyosunews",
+          "date": "2026-07-19"
+        }
+      ],
+      "trending_signals": {
+        "independent_domains": 5,
+        "buzz_urls": [
+          "https://www.instagram.com/shokudou.tomoru/"
+        ]
+      }
+    }
+  ]
+}
