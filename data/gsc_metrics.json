@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-04T13:29:13.931Z",
-  "siteUrl": "sc-domain:nagoya-bites.com",
+  "generatedAt": "2026-09-04T20:19:58.729Z",
+  "siteUrl": "https://nagoya-bites.com/",
   "dateRange": {
     "startDate": "2026-08-07",
     "endDate": "2026-09-03"
@@ -7071,41 +7071,41 @@
       "source": "data/journal_seo_keywords.json",
       "updated": "2026-08-31"
     },
-    "store_names_used": 7496,
+    "store_names_used": 8842,
     "total_queries": 3646,
     "summary": [
       {
         "intent": "navigational",
-        "queries": 2164,
-        "impressions": 17668,
-        "clicks": 72,
-        "ctr": 0.41,
-        "avg_position": 20.9,
-        "impressions_share": 64.4
+        "queries": 2398,
+        "impressions": 19470,
+        "clicks": 81,
+        "ctr": 0.42,
+        "avg_position": 21.2,
+        "impressions_share": 70.9
       },
       {
         "intent": "other",
-        "queries": 1354,
-        "impressions": 8382,
-        "clicks": 93,
-        "ctr": 1.11,
-        "avg_position": 20.2,
-        "impressions_share": 30.5
+        "queries": 1125,
+        "impressions": 6617,
+        "clicks": 84,
+        "ctr": 1.27,
+        "avg_position": 19.2,
+        "impressions_share": 24.1
       },
       {
         "intent": "discovery",
-        "queries": 128,
-        "impressions": 1393,
+        "queries": 123,
+        "impressions": 1356,
         "clicks": 47,
-        "ctr": 3.37,
-        "avg_position": 12,
-        "impressions_share": 5.1
+        "ctr": 3.47,
+        "avg_position": 11.3,
+        "impressions_share": 4.9
       }
     ],
     "kpi": {
-      "discovery_impressions": 1393,
+      "discovery_impressions": 1356,
       "discovery_clicks": 47,
-      "discovery_impressions_share": 5.1
+      "discovery_impressions_share": 4.9
     },
     "examples": {
       "discovery": [
@@ -7285,16 +7285,6 @@
           ]
         },
         {
-          "query": "居酒屋 権兵衛 名駅店",
-          "impressions": 11,
-          "clicks": 0,
-          "position": 28.3,
-          "signals": [
-            "area:名駅",
-            "genre:居酒屋"
-          ]
-        },
-        {
           "query": "名古屋 コスパ",
           "impressions": 10,
           "clicks": 1,
@@ -7341,16 +7331,6 @@
           ]
         },
         {
-          "query": "喫茶river リバー",
-          "impressions": 9,
-          "clicks": 0,
-          "position": 45.7,
-          "signals": [
-            "scene:モーニング",
-            "genre:バー"
-          ]
-        },
-        {
           "query": "名古屋 ご飯 デート",
           "impressions": 8,
           "clicks": 0,
@@ -7369,15 +7349,6 @@
           ]
         },
         {
-          "query": "喫茶river",
-          "impressions": 8,
-          "clicks": 0,
-          "position": 43.6,
-          "signals": [
-            "scene:モーニング"
-          ]
-        },
-        {
           "query": "うと かき氷 栄",
           "impressions": 7,
           "clicks": 0,
@@ -7385,6 +7356,34 @@
           "signals": [
             "area:栄",
             "genre:スイーツ"
+          ]
+        },
+        {
+          "query": "名古屋 誕生日 おしゃれ",
+          "impressions": 7,
+          "clicks": 0,
+          "position": 30.9,
+          "signals": [
+            "scene:誕生日"
+          ]
+        },
+        {
+          "query": "名古屋 顔合わせ",
+          "impressions": 7,
+          "clicks": 0,
+          "position": 34.3,
+          "signals": [
+            "scene:顔合わせ"
+          ]
+        },
+        {
+          "query": "名駅一人飲み",
+          "impressions": 7,
+          "clicks": 0,
+          "position": 11.9,
+          "signals": [
+            "scene:一人飲み",
+            "area:名駅"
           ]
         }
       ],
@@ -7426,22 +7425,6 @@
           ]
         },
         {
-          "query": "一魚魚一 はなれ",
-          "impressions": 124,
-          "clicks": 1,
-          "position": 8.5,
-          "signals": []
-        },
-        {
-          "query": "じゅわっち名駅",
-          "impressions": 110,
-          "clicks": 3,
-          "position": 7.7,
-          "signals": [
-            "area:名駅"
-          ]
-        },
-        {
           "query": "名古屋 1人飲み 男",
           "impressions": 101,
           "clicks": 8,
@@ -7470,6 +7453,24 @@
           "clicks": 0,
           "position": 10.2,
           "signals": []
+        },
+        {
+          "query": "焼肉 守山瀬古",
+          "impressions": 87,
+          "clicks": 0,
+          "position": 24.1,
+          "signals": [
+            "genre:焼肉"
+          ]
+        },
+        {
+          "query": "焼肉 円上",
+          "impressions": 82,
+          "clicks": 0,
+          "position": 31.2,
+          "signals": [
+            "genre:焼肉"
+          ]
         }
       ],
       "navigational": [
@@ -7488,7 +7489,7 @@
           "clicks": 1,
           "position": 7.6,
           "signals": [
-            "store:たこスタ 名古屋駅店"
+            "store:シーシャカフェバー Red Magic 名古屋駅店"
           ]
         },
         {
