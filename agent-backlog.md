@@ -226,7 +226,8 @@
 
 ### [SEO-080] 週次レポートの5本に1〜2本が Gmail の「ゴミ箱」に入っており、週次triageの取得クエリは構造的にそれを 0件 として見逃す（見逃しても誰にも届かない）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-09-04
 - **detected**: 2026-09-02
 - **category**: SEO / ops-monitoring
 - **owner**: Marketer + Builder
@@ -4936,7 +4937,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-09-02 | Orchestrator(EMERGENCY) | ISSUE-122 発見・実装 — PR #207 反映確認のため本番 data/stores.json を直接フェッチし「焼きそばスタンド らふ」を検索したところ2件ヒット。pending_stores.json（2026-05-23・実写実評価実出典あり）と manual_stores.json（2026-09-01・ISSUE-120で問題化した自動発掘由来）が同一GooglePlaceIDを持つ重複と判明。manual_stores.json側の重複エントリを削除（167件に減少）。カタログ全体で店名完全一致の重複が計21件存在することも実測で判明したため、残20件はDataKeeper向けに別途起票のみ（誤統合リスクがあるため今回は手を付けず）。npm test 151件全pass | ⏸ PR作成準備中 |
 | 2026-09-03 | Builder(routine) | SEO-081 実装・デプロイ — ISSUE-112（PR #181）で誤削除された IndexNow 送信ステップを build.yml に復旧。CI冒頭に自己診断ステップ（grep で IndexNow ステップ存在を assert）を追加して再消失を機械検知できるようにした。SEO-071 に回帰・復旧注記を追記。status: ready → done | ✅ commit 42fd9478 / PR #209 |
 | 2026-09-03 | Builder(routine) | ISSUE-086 準備作業 — cross_check_v3.js に observed/parts 付与（v2.1 と同等）・禁止語（サクラ継続投入疑い/化粧剥がれパターン/評価操作疑い）排除。activate ゲート(c)を新設（4338店88%が段階移動 → 重み再調整が必要）。npm test 151件全pass。status は in_progress 継続（切替保留） | ✅ このコミット |
-| 2026-09-04 | Orchestrator(routine) | SEO-079 実装・デプロイ — .gas-deploy/Code.js の日次/週次レポートのTOP5生成を `data.pages.slice(0,5)` から既存の `topPagesForPrompt(data.pages,5)` に置き換え。pagePath違いの同一ページが2行出る重複バグを修正。QA全通過（GASミラー変更のみ・index.html/build.js未変更）。status: ready → done | ✅ commit TBD |
+| 2026-09-04 | Orchestrator(routine) | SEO-079 実装・デプロイ — .gas-deploy/Code.js の日次/週次レポートのTOP5生成を `data.pages.slice(0,5)` から既存の `topPagesForPrompt(data.pages,5)` に置き換え。pagePath違いの同一ページが2行出る重複バグを修正。QA全通過（GASミラー変更のみ・index.html/build.js未変更）。status: ready → done | ✅ commit 1b0e6cf2 |
+| 2026-09-04 | Orchestrator(routine) | SEO-080 実装・デプロイ — data/seo_triage_retrieval_policy.json（Gmail sweep/reconcile 規則の正本）・scripts/check_seo_triage_weekly_health.js（seo_advice_log.jsonの line-weekly 沈黙を検証できる事実で検知）・.github/workflows/seo-triage-weekly-watchdog.yml（サーバ側監視・Issue起票でオーナーにメール）を新設。「見逃しても誰にも届かない」を解消。sweep実装はcommand file制約によりポリシー文書化のみ。status: ready → done | ✅ commit TBD |
 
 ---
 
