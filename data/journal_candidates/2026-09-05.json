@@ -1,0 +1,513 @@
+{
+  "date": "2026-09-05",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅の名古屋めし居酒屋と伏見の新フードホール、宴会の幹事が選ぶべきはどちらか",
+      "verdict": "PASS",
+      "total": 108,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 8件 → 15",
+          "話題の証跡URL 4件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (価格帯,コース,席,予約,接待,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 200字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅のひつまぶしを接待で使うなら、備長 大名古屋ビルヂング店の価格帯を先に読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 87,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "ひつまぶし",
+          "feature": "features/nagoya-hitsumabushi.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,予約,接待) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 163字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「ひつまぶし」+2"
+        ]
+      },
+      "gate_note": "87点（自動公開ライン 100点）。主な不足: topicality -13 / uniqueness -5 / recency -3"
+    },
+    {
+      "id": "c3",
+      "title_draft": "大須の若宮大通に手羽先の88店舗目、ライバル3社が隣り合う名古屋めしロードを読む",
+      "verdict": "HOLD",
+      "total": 76,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 15,
+        "uniqueness": 5,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "手羽先",
+          "feature": "features/nagoya-tebasaki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (席) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 169字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「手羽先」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "名駅ルーセント地下の名古屋めし居酒屋、1,500円台のコスパが崩れない理由",
+      "verdict": "HOLD",
+      "total": 72,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 172字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "名駅のとんかつが増え続ける9月、矢場とん三井ビル北館店を接待ランチで使う条件",
+      "verdict": "HOLD",
+      "total": 72,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "とんかつ",
+          "feature": "features/nagoya-tonkatsu.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 16日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (接待,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 170字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「とんかつ」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "名駅の名古屋めし居酒屋と伏見の新フードホール、宴会の幹事が選ぶべきはどちらか",
+      "lead_draft": "2026年9月中旬、名古屋観光ホテル1階に「名古屋めし食堂 丸八 伏見別邸」が入る。矢場とん・矢場味仙・世界の山ちゃん・ひつまぶし名古屋備長・串BISTRO92の5ブランドが一つのフロアに同居する編成だ。名古屋めしを一軒で全部出す業態は増えたが、宴会の幹事にとって「集積型」と「一会計型」はまったく別物である。名駅ルーセントタワー地下1階の丸八を軸に、価格・オペ・シーン適性の三点から使い分けを読む。",
+      "angle": "フードホール型は各店会計が原則で飲み放題コースが設計できない。1,501〜2,000円の価格帯で一会計を通せる居酒屋が宴会・接待・一人飲みで残る理由を、席配置・予約の取り方・回転の見方から業界人視点で説明する",
+      "main_store": {
+        "name": "名古屋めし食堂 丸八 名古屋ルーセントタワー",
+        "id": "J000759304",
+        "area": "名古屋（名古屋駅/西区/中村区）",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 名古屋めし食堂 丸八 伏見別邸 2026年9月、名古屋観光ホテル内にグランドオープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000145.000097639.html",
+          "date": "2026-06-29"
+        },
+        {
+          "label": "ナゴヤドット: ウルフギャング・ステーキハウス名古屋店が9月4日オープン【伏見／内覧会レポート】",
+          "url": "https://nagoyato.com/posts/18368",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "食品新聞: 名古屋めし3ブランドそろい踏み 矢場町に「世界の山ちゃん」",
+          "url": "https://shokuhin.net/153624/2026/07/17/ryutu/gaishoku/",
+          "date": "2026-07-17"
+        },
+        {
+          "label": "名古屋テレビ: 矢場町交差点に名古屋めし3ブランドそろい踏み",
+          "url": "https://www.nagoyatv.com/news/?id=036210",
+          "date": "2026-07-07"
+        },
+        {
+          "label": "ジェイグループホールディングス公式: 名古屋めし食堂 丸八 名駅店 店舗情報",
+          "url": "https://www.jgroup.jp/business/jproject/shop/80",
+          "date": "2026-09-05"
+        },
+        {
+          "label": "フーズチャネル: 名古屋めし食堂 丸八 伏見別邸 グランドオープン",
+          "url": "https://foods-ch.infomart.co.jp/news/303147",
+          "date": "2026-06-29"
+        },
+        {
+          "label": "X（話題の証跡）: 名古屋観光ホテルに今年9月ウルフギャング・ステーキハウス",
+          "url": "https://x.com/oinagoya/status/2042082471664349345",
+          "date": "2026-04-09"
+        },
+        {
+          "label": "X（話題の証跡）: 東海初「ウルフギャング・ステーキハウス」名古屋観光ホテルに9月",
+          "url": "https://x.com/fashionpressnet/status/2074478564351918183",
+          "date": "2026-07-07"
+        },
+        {
+          "label": "X（話題の証跡）: 丸八で矢場とんの味噌カツ、きしめんパスタも",
+          "url": "https://x.com/emiko410/status/1956144294907277644",
+          "date": "2025-08-15"
+        },
+        {
+          "label": "X（話題の証跡）: 丸八食堂でジェイグループHDの株主優待を利用",
+          "url": "https://x.com/KumikoTNGC/status/1888351475933581438",
+          "date": "2025-02-08"
+        },
+        {
+          "label": "株主優待ガイド（＠DIME）: 優待を拡充したジェイグループホールディングスの賢い利用法",
+          "url": "https://news.yahoo.co.jp/articles/dd9df39d3111f873224293077382402e6e005469",
+          "date": "2026-07-17"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "名駅ルーセント地下の名古屋めし居酒屋、1,500円台のコスパが崩れない理由",
+      "lead_draft": "名古屋めしを一軒で全部そろえる店は、観光客向けだと思われがちだ。だが名駅ルーセントタワー地下1階の丸八は、口コミ746件でGoogle3.9という「地元の日常店」の数字をしている。2026年9月中旬には同じ屋号の伏見別邸が名古屋観光ホテル1階に入る。価格帯1,501〜2,000円が動かない設計と、地下道直結という立地の意味を業界人の目で読む。",
+      "angle": "名古屋めしの単価は素材ではなく仕込みの共通化で決まる。複数名物を一店で回す厨房の裏側と、オフィスビル地下という立地がランチ・夜のどちらを支えているかをコスパの観点で説明する",
+      "main_store": {
+        "name": "名古屋めし食堂 丸八 名古屋ルーセントタワー",
+        "id": "J000759304",
+        "area": "名古屋（名古屋駅/西区/中村区）",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 名古屋めし食堂 丸八 伏見別邸 2026年9月グランドオープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000145.000097639.html",
+          "date": "2026-06-29"
+        },
+        {
+          "label": "ナゴヤドット: ウルフギャング・ステーキハウス名古屋店 9月4日オープン",
+          "url": "https://nagoyato.com/posts/18368",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "食品新聞: 名古屋めし3ブランドそろい踏み",
+          "url": "https://shokuhin.net/153624/2026/07/17/ryutu/gaishoku/",
+          "date": "2026-07-17"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "大須の若宮大通に手羽先の88店舗目、ライバル3社が隣り合う名古屋めしロードを読む",
+      "lead_draft": "2026年7月7日、世界の山ちゃんが矢場町エリアに初出店した。国内外88店舗目で、場所は矢場とんと矢場味仙のほぼ中間の2階。125席、想定客単価2,500〜3,000円という編成だ。競合が並ぶのは普通なら避ける立地だが、3社は「若宮大通を名古屋めしロードに」と協力を明言している。2026年9月には同じ顔ぶれが伏見のホテル1階にも集まる。",
+      "angle": "競合ブランドが隣接を選ぶのは集積で滞在時間を伸ばすため。125席・客単価2,500〜3,000円という数字から、大人数宴会と食べ歩き客のどちらを取りに行った設計かを業界人視点で読む",
+      "main_store": {
+        "name": "世界の山ちゃん 矢場町店",
+        "id": "",
+        "area": "栄(ミナミ)/矢場町/大須/上前津",
+        "genre": "手羽先"
+      },
+      "sources": [
+        {
+          "label": "食品新聞: 名古屋めし3ブランドそろい踏み 矢場町に「世界の山ちゃん」",
+          "url": "https://shokuhin.net/153624/2026/07/17/ryutu/gaishoku/",
+          "date": "2026-07-17"
+        },
+        {
+          "label": "名古屋テレビ: 矢場町交差点に名古屋めし3ブランドそろい踏み",
+          "url": "https://www.nagoyatv.com/news/?id=036210",
+          "date": "2026-07-07"
+        },
+        {
+          "label": "PR TIMES: 名古屋めし食堂 丸八 伏見別邸 2026年9月グランドオープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000145.000097639.html",
+          "date": "2026-06-29"
+        },
+        {
+          "label": "ナゴヤドット: ウルフギャング名古屋店 9月4日オープン",
+          "url": "https://nagoyato.com/posts/18368",
+          "date": "2026-09-01"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "名駅のとんかつが増え続ける9月、矢場とん三井ビル北館店を接待ランチで使う条件",
+      "lead_draft": "2026年9月、みそかつの矢場とんは伏見の名古屋観光ホテル1階に入る新フードホールへの出店と、清須市のコンセプト店という二方向に動いている。本店以外の顔が増えるほど、既存店の役割は逆にはっきりしてくる。名駅三井ビル北館店はGoogle4.5、価格帯1,501〜2,000円。名物一本の店を接待ランチに使えるかどうかを、席と時間の観点で読む。",
+      "angle": "名物一本の店は回転前提のため接待には向かないと言われるが、ビル内立地・時間帯・注文導線の三つが揃えば成立する。その条件を業界人視点で具体化する",
+      "main_store": {
+        "name": "矢場とん 名古屋駅三井ビル北館店",
+        "id": "J004612679",
+        "area": "名古屋（名古屋駅/西区/中村区）",
+        "genre": "とんかつ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 名古屋めし食堂 丸八 伏見別邸 2026年9月グランドオープン（矢場とん入居）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000145.000097639.html",
+          "date": "2026-06-29"
+        },
+        {
+          "label": "ナゴヤドット: 矢場とん初のコンセプト店「ぶーちゃんハウス」9月中旬オープン",
+          "url": "https://nagoyadot.jp/new/105305/",
+          "date": "2026-08-20"
+        },
+        {
+          "label": "食品新聞: 名古屋めし3ブランドそろい踏み",
+          "url": "https://shokuhin.net/153624/2026/07/17/ryutu/gaishoku/",
+          "date": "2026-07-17"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "名駅のひつまぶしを接待で使うなら、備長 大名古屋ビルヂング店の価格帯を先に読む",
+      "lead_draft": "ひつまぶし名古屋備長は2026年9月中旬、伏見の名古屋観光ホテル1階に入る「丸八 伏見別邸」へも出店する。同じ看板でも、フードホールの一区画と単独店では会計も予約も別物だ。名駅の大名古屋ビルヂング店は価格帯4,001〜5,000円、Google4.3。接待に使うときに何を見るべきかを、鰻の相場と席の作りから業界人の目で読む。",
+      "angle": "鰻は仕入れ相場が動くため価格帯が上下しやすい。単独店とフードホール区画で会計・予約・所要時間がどう変わるかを接待の観点で整理する",
+      "main_store": {
+        "name": "ひつまぶし 名古屋 備長 大名古屋ビルヂング店",
+        "id": "J001155162",
+        "area": "名古屋（名古屋駅/西区/中村区）",
+        "genre": "ひつまぶし"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 名古屋めし食堂 丸八 伏見別邸 2026年9月グランドオープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000145.000097639.html",
+          "date": "2026-06-29"
+        },
+        {
+          "label": "名古屋テレビ: 矢場町交差点に名古屋めし3ブランドそろい踏み",
+          "url": "https://www.nagoyatv.com/news/?id=036210",
+          "date": "2026-07-07"
+        },
+        {
+          "label": "ナゴヤドット: ウルフギャング名古屋店 9月4日オープン（同じホテル1階）",
+          "url": "https://nagoyato.com/posts/18368",
+          "date": "2026-09-01"
+        }
+      ]
+    }
+  ]
+}
