@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T07:23:23.892Z",
+  "generatedAt": "2026-09-05T09:59:02.708Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -7,23 +7,23 @@
     "ctrFix": [
       {
         "query": "焼肉 三郎 原店 名古屋市 レビュー",
-        "impressions": 430,
+        "impressions": 475,
         "clicks": 6,
-        "position": 9,
-        "ctr": 1.4,
+        "position": 9.1,
+        "ctr": 1.26,
         "expectedCtr": 2.8,
-        "missedClicks": 6
+        "missedClicks": 7.2
       }
     ],
     "ctrFixGeoless": [
       {
         "query": "やきまる亭",
-        "impressions": 166,
+        "impressions": 171,
         "clicks": 2,
         "position": 8.4,
-        "ctr": 1.2,
+        "ctr": 1.17,
         "expectedCtr": 3,
-        "missedClicks": 3.1
+        "missedClicks": 3.2
       },
       {
         "query": "煮干しラーメン 凛",
@@ -38,11 +38,11 @@
     "rankPush": [
       {
         "query": "ナショナルベーカリー",
-        "impressions": 160,
+        "impressions": 163,
         "clicks": 4,
-        "position": 12.2,
-        "ctr": 2.5,
-        "upsideClicks": 0.5
+        "position": 12.4,
+        "ctr": 2.45,
+        "upsideClicks": 0.6
       }
     ]
   },
@@ -50,7 +50,7 @@
     "ctrFix": [
       {
         "page": "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
-        "impressions": 696,
+        "impressions": 697,
         "clicks": 11,
         "position": 7.5,
         "ctr": 1.58,
@@ -59,12 +59,12 @@
       },
       {
         "page": "/stores/J004559348.html",
-        "impressions": 571,
+        "impressions": 574,
         "clicks": 7,
         "position": 8.5,
-        "ctr": 1.23,
+        "ctr": 1.22,
         "expectedCtr": 3,
-        "missedClicks": 10.1
+        "missedClicks": 10.2
       },
       {
         "page": "/journal/2026-08-22-osu-malachuan-self-price.html",
@@ -80,19 +80,19 @@
     "rankPush": [
       {
         "page": "/",
-        "impressions": 3449,
+        "impressions": 3693,
         "clicks": 9,
-        "position": 24.3,
-        "ctr": 0.26,
-        "upsideClicks": 87.6
+        "position": 24.6,
+        "ctr": 0.24,
+        "upsideClicks": 94.5
       },
       {
         "page": "/features/date.html",
-        "impressions": 227,
+        "impressions": 242,
         "clicks": 6,
         "position": 14.1,
-        "ctr": 2.64,
-        "upsideClicks": 0.4
+        "ctr": 2.48,
+        "upsideClicks": 0.8
       }
     ]
   },
