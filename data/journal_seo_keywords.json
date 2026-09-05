@@ -1,6 +1,6 @@
 {
   "description": "日次ジャーナルの入口（検索意図）を担保するシーンKWマスタ。SEO-011（+SEO-007統合）。各KWは features/ の実在記事に紐づき、scripts/journal_seo_kw.js --verify で「特集ファイルが実在し、そのタイトルにその語が実際に使われている」ことを検証できる。.claude/commands/journal-today.md は自己改変ブロックで編集できないため、KW運用のルールはこのデータファイルと scripts/journal_seo_kw.js を単一の情報源とする。",
-  "updated": "2026-08-31",
+  "updated": "2026-09-05",
   "related_issue": "SEO-011 (SEO-007 統合)",
   "evidence": {
     "measured_on": "2026-07-27",
@@ -116,6 +116,9 @@
       "kw": "一人飲み",
       "aliases": [
         "一人飲み",
+        "1人飲み",
+        "1人のみ",
+        "一人のみ",
         "カウンター",
         "立ち飲み"
       ],

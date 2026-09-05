@@ -61,7 +61,7 @@ const SCENE_VOCAB = [
   { kw: 'デート',   aliases: ['デート'],                         feature: 'features/date.html' },
   { kw: '女子会',   aliases: ['女子会'],                         feature: 'features/girls-party.html' },
   { kw: '誕生日',   aliases: ['誕生日', '記念日'],               feature: 'features/birthday.html' },
-  { kw: '一人飲み', aliases: ['一人飲み', 'カウンター', '立ち飲み'], feature: 'features/nagoya-solo-dining.html' },
+  { kw: '一人飲み', aliases: ['一人飲み', '1人飲み', '1人のみ', '一人のみ', 'カウンター', '立ち飲み'], feature: 'features/nagoya-solo-dining.html' },
   { kw: '顔合わせ', aliases: ['顔合わせ', '結納'],               feature: 'features/nagoya-kaoawase-washoku.html' },
   { kw: '接待ランチ', aliases: ['接待ランチ', '和食ランチ'],      feature: 'features/nagoya-settai-lunch.html' },
   { kw: '予約困難', aliases: ['予約困難', '予約が取れない'],      feature: 'features/hard-to-book.html' },
