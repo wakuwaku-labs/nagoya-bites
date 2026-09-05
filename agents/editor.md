@@ -408,15 +408,35 @@ retrip / ヒトサラ / PR TIMES / 番組公式 / note 等）から採用OK。**
     （**当日公開スキップは禁止 / 自己申告値の水増しも禁止**）
 4.  採用候補1本のみ本文を執筆（独自性3要件 + 最新情報フレーズ + sources≥3件）
 5.  input.json を /tmp に書く
-6.  node scripts/generate_daily_draft.js /tmp/input.json # HTML + md 生成
-7.  node scripts/validate_journal_draft.js <html> <md>   # 14項目QA（sources/最新情報含む）
+6.  node scripts/generate_daily_draft.js /tmp/input.json # HTML(+ 有効時のみ md)生成
+7.  node scripts/validate_journal_draft.js <html> <md>   # 14項目QA（md不在時は該当項目を自動スキップ）
 8.  ドラフトを journal/ へ移動
 9.  data/journal_published.json に追記
 10. node scripts/build_journal_index.js                  # 一覧+RSS+トップ更新
 11. node build.js                                        # sitemap + pending取込
 12. ユーザー承認 → git push
-13. docs/daily-posts/YYYY-MM-DD.md を Note/IG/X にコピペ投稿
+13. docs/daily-posts/YYYY-MM-DD.md を Note/IG/X にコピペ投稿（SNS原稿生成が有効な間のみ。次項参照）
 ```
+
+#### SNS原稿(docs/daily-posts/*.md)生成の一時停止（2026-09-05〜）
+
+> SNS投稿原稿はサイト外の別の仕組みで生成する運用に切り替わったため、日次ジャーナル側での
+> 重複生成を一旦停止した（オーナー指示）。**ジャーナル記事本体(HTML)の生成・公開フローには影響しない。**
+
+```
+唯一の情報源: data/journal_sns_draft_policy.json の generate_sns_draft
+  - false（現在の設定）: scripts/generate_daily_draft.js が docs/daily-posts/*.md の
+    書き出しをスキップする。Step 7 の validate_journal_draft.js は md 不在を検知すると
+    該当項目（8: 文字数チェック / 16: 検索意図とSNS原稿の整合）を自動でスキップし FAIL
+    にはしない（validator 側は元から md 引数省略に対応済みのためコード変更不要）。
+  - true に戻すだけで即再開する。scripts/generate_daily_draft.js のコード変更は不要。
+運用への影響:
+  - Step 13（Note/IG/Xへのコピペ投稿案内）は、md が生成されない間はスキップしてよい。
+  - .claude/commands/journal-today.md の Step 11 は自己改変ブロックで編集できないため
+    文言はそのまま残るが、md が存在しなければ実質的に案内対象が無い（取り繕う必要なし）。
+```
+
+
 
 ### 最新情報リサーチ（Step 2.5）の運用ルール
 
