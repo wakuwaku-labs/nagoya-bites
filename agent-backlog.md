@@ -8,8 +8,9 @@
 
 ### [SEO-082] 検索意図の分類器が「1人飲み」（数字表記）を discovery と数えず、SEO-011 の効果指標そのものが最大流入シーンを取りこぼしている
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-04
+- **resolved**: 2026-09-05
 - **category**: SEO
 - **owner**: Marketer
 - **source**: SEOアドバイス(LINE) 2026-09-03 原文「人気ページ2位の『特集: nagoya-solo-dining』について、SEOキーワード『名古屋 おひとりさま』での検索順位をチェックし、タイトルと説明文を最適化する案を検討してください」
@@ -4965,6 +4966,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-09-03 | Builder(routine) | ISSUE-086 準備作業 — cross_check_v3.js に observed/parts 付与（v2.1 と同等）・禁止語（サクラ継続投入疑い/化粧剥がれパターン/評価操作疑い）排除。activate ゲート(c)を新設（4338店88%が段階移動 → 重み再調整が必要）。npm test 151件全pass。status は in_progress 継続（切替保留） | ✅ このコミット |
 | 2026-09-04 | Orchestrator(routine) | SEO-079 実装・デプロイ — .gas-deploy/Code.js の日次/週次レポートのTOP5生成を `data.pages.slice(0,5)` から既存の `topPagesForPrompt(data.pages,5)` に置き換え。pagePath違いの同一ページが2行出る重複バグを修正。QA全通過（GASミラー変更のみ・index.html/build.js未変更）。status: ready → done | ✅ commit 1b0e6cf2 |
 | 2026-09-04 | Orchestrator(routine) | SEO-080 実装・デプロイ — data/seo_triage_retrieval_policy.json（Gmail sweep/reconcile 規則の正本）・scripts/check_seo_triage_weekly_health.js（seo_advice_log.jsonの line-weekly 沈黙を検証できる事実で検知）・.github/workflows/seo-triage-weekly-watchdog.yml（サーバ側監視・Issue起票でオーナーにメール）を新設。「見逃しても誰にも届かない」を解消。sweep実装はcommand file制約によりポリシー文書化のみ。status: ready → done | ✅ commit 951362e3 |
+| 2026-09-05 | Marketer(routine) | SEO-082 実装・デプロイ — data/journal_seo_keywords.json の scene「一人飲み」aliases に GSC実データで実在確認できた表記ゆれ「1人飲み」「1人のみ」「一人のみ」を追加。同時に scripts/journal_seo_kw.js の SCENE_VOCAB も同期更新。--verify: 39KW全通過。discovery 表示: 922 → 1,289（+39.8%）・クリック: 47 → 78（+65.9%）。「名古屋 1人飲み 男」が other → discovery に移動確認済み。シェア上昇は計測是正であり施策効果ではない旨を受け入れ条件5に従い明記。status: ready → done | ✅ commit PLACEHOLDER |
 
 ---
 
