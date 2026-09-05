@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-05T01:35:42.098Z",
-  "siteUrl": "sc-domain:nagoya-bites.com",
+  "generatedAt": "2026-09-05T07:23:23.828Z",
+  "siteUrl": "https://nagoya-bites.com/",
   "dateRange": {
     "startDate": "2026-08-08",
     "endDate": "2026-09-04"
@@ -6999,7 +6999,7 @@
   "intent": {
     "kw_dictionary": {
       "source": "data/journal_seo_keywords.json",
-      "updated": "2026-08-31"
+      "updated": "2026-09-05"
     },
     "store_names_used": 8841,
     "total_queries": 3610,
@@ -7015,27 +7015,27 @@
       },
       {
         "intent": "other",
-        "queries": 1113,
-        "impressions": 6484,
-        "clicks": 82,
-        "ctr": 1.26,
-        "avg_position": 19.3,
-        "impressions_share": 24
+        "queries": 1088,
+        "impressions": 6078,
+        "clicks": 52,
+        "ctr": 0.86,
+        "avg_position": 20,
+        "impressions_share": 22.5
       },
       {
         "intent": "discovery",
-        "queries": 122,
-        "impressions": 1346,
-        "clicks": 46,
-        "ctr": 3.42,
-        "avg_position": 11.3,
-        "impressions_share": 5
+        "queries": 147,
+        "impressions": 1752,
+        "clicks": 76,
+        "ctr": 4.34,
+        "avg_position": 10.5,
+        "impressions_share": 6.5
       }
     ],
     "kpi": {
-      "discovery_impressions": 1346,
-      "discovery_clicks": 46,
-      "discovery_impressions_share": 5
+      "discovery_impressions": 1752,
+      "discovery_clicks": 76,
+      "discovery_impressions_share": 6.5
     },
     "examples": {
       "discovery": [
@@ -7068,10 +7068,38 @@
           ]
         },
         {
+          "query": "名古屋 1人飲み 男",
+          "impressions": 99,
+          "clicks": 8,
+          "position": 6.9,
+          "signals": [
+            "scene:一人飲み"
+          ]
+        },
+        {
+          "query": "名古屋 1人飲み",
+          "impressions": 67,
+          "clicks": 6,
+          "position": 8.9,
+          "signals": [
+            "scene:一人飲み"
+          ]
+        },
+        {
           "query": "名駅 一人飲み",
           "impressions": 66,
           "clicks": 0,
           "position": 10.9,
+          "signals": [
+            "scene:一人飲み",
+            "area:名駅"
+          ]
+        },
+        {
+          "query": "名古屋駅1人飲み 男",
+          "impressions": 60,
+          "clicks": 7,
+          "position": 4.1,
           "signals": [
             "scene:一人飲み",
             "area:名駅"
@@ -7105,10 +7133,38 @@
           ]
         },
         {
+          "query": "名古屋駅 1人飲み",
+          "impressions": 42,
+          "clicks": 2,
+          "position": 11.3,
+          "signals": [
+            "scene:一人飲み",
+            "area:名駅"
+          ]
+        },
+        {
           "query": "一人飲み 名古屋",
           "impressions": 26,
           "clicks": 0,
           "position": 9,
+          "signals": [
+            "scene:一人飲み"
+          ]
+        },
+        {
+          "query": "1人飲み",
+          "impressions": 23,
+          "clicks": 1,
+          "position": 4.5,
+          "signals": [
+            "scene:一人飲み"
+          ]
+        },
+        {
+          "query": "名古屋 1人のみ",
+          "impressions": 22,
+          "clicks": 2,
+          "position": 7.3,
           "signals": [
             "scene:一人飲み"
           ]
@@ -7120,6 +7176,15 @@
           "position": 9.3,
           "signals": [
             "scene:デート"
+          ]
+        },
+        {
+          "query": "名古屋 一人のみ",
+          "impressions": 16,
+          "clicks": 2,
+          "position": 6.6,
+          "signals": [
+            "scene:一人飲み"
           ]
         },
         {
@@ -7177,6 +7242,16 @@
           ]
         },
         {
+          "query": "名駅 1人飲み",
+          "impressions": 12,
+          "clicks": 0,
+          "position": 12.1,
+          "signals": [
+            "scene:一人飲み",
+            "area:名駅"
+          ]
+        },
+        {
           "query": "韓国焼肉 mayakk calvi マヤクカルビ 栄店",
           "impressions": 12,
           "clicks": 0,
@@ -7205,6 +7280,15 @@
           ]
         },
         {
+          "query": "名古屋1人飲み",
+          "impressions": 11,
+          "clicks": 0,
+          "position": 7.3,
+          "signals": [
+            "scene:一人飲み"
+          ]
+        },
+        {
           "query": "居酒屋 一人飲み",
           "impressions": 11,
           "clicks": 0,
@@ -7230,175 +7314,6 @@
           "position": 12.1,
           "signals": [
             "scene:デート"
-          ]
-        },
-        {
-          "query": "名古屋 誕生日",
-          "impressions": 10,
-          "clicks": 0,
-          "position": 28.1,
-          "signals": [
-            "scene:誕生日"
-          ]
-        },
-        {
-          "query": "名古屋駅一人飲み",
-          "impressions": 10,
-          "clicks": 0,
-          "position": 11.6,
-          "signals": [
-            "scene:一人飲み",
-            "area:名駅"
-          ]
-        },
-        {
-          "query": "名古屋 ディナー 記念日",
-          "impressions": 9,
-          "clicks": 0,
-          "position": 31.2,
-          "signals": [
-            "scene:誕生日"
-          ]
-        },
-        {
-          "query": "名古屋 ご飯 デート",
-          "impressions": 8,
-          "clicks": 0,
-          "position": 16,
-          "signals": [
-            "scene:デート"
-          ]
-        },
-        {
-          "query": "名古屋 コスパ最強 グルメ",
-          "impressions": 8,
-          "clicks": 0,
-          "position": 10.3,
-          "signals": [
-            "scene:コスパ"
-          ]
-        },
-        {
-          "query": "うと かき氷 栄",
-          "impressions": 7,
-          "clicks": 0,
-          "position": 8.7,
-          "signals": [
-            "area:栄",
-            "genre:スイーツ"
-          ]
-        },
-        {
-          "query": "名古屋 誕生日 おしゃれ",
-          "impressions": 7,
-          "clicks": 0,
-          "position": 30.9,
-          "signals": [
-            "scene:誕生日"
-          ]
-        },
-        {
-          "query": "名古屋 顔合わせ",
-          "impressions": 7,
-          "clicks": 0,
-          "position": 34.3,
-          "signals": [
-            "scene:顔合わせ"
-          ]
-        },
-        {
-          "query": "名古屋 ディナー 誕生日",
-          "impressions": 6,
-          "clicks": 0,
-          "position": 31.3,
-          "signals": [
-            "scene:誕生日"
-          ]
-        }
-      ],
-      "other": [
-        {
-          "query": "韓炉 栄",
-          "impressions": 239,
-          "clicks": 0,
-          "position": 10.2,
-          "signals": [
-            "area:栄"
-          ]
-        },
-        {
-          "query": "煮干しラーメン 凛",
-          "impressions": 224,
-          "clicks": 6,
-          "position": 7,
-          "signals": [
-            "genre:ラーメン"
-          ]
-        },
-        {
-          "query": "煮干しラーメン凛",
-          "impressions": 152,
-          "clicks": 1,
-          "position": 7.9,
-          "signals": [
-            "genre:ラーメン"
-          ]
-        },
-        {
-          "query": "藤が丘 生ドーナツ",
-          "impressions": 135,
-          "clicks": 6,
-          "position": 7,
-          "signals": [
-            "area:覚王山"
-          ]
-        },
-        {
-          "query": "名古屋 1人飲み 男",
-          "impressions": 99,
-          "clicks": 8,
-          "position": 6.9,
-          "signals": []
-        },
-        {
-          "query": "北京飯店 ナゴヤドーム",
-          "impressions": 99,
-          "clicks": 4,
-          "position": 8.5,
-          "signals": []
-        },
-        {
-          "query": "焼肉 畑江通",
-          "impressions": 90,
-          "clicks": 0,
-          "position": 26.8,
-          "signals": [
-            "genre:焼肉"
-          ]
-        },
-        {
-          "query": "韓炉 名古屋",
-          "impressions": 88,
-          "clicks": 0,
-          "position": 10.2,
-          "signals": []
-        },
-        {
-          "query": "焼肉 守山瀬古",
-          "impressions": 85,
-          "clicks": 0,
-          "position": 24.1,
-          "signals": [
-            "genre:焼肉"
-          ]
-        },
-        {
-          "query": "焼肉 円上",
-          "impressions": 82,
-          "clicks": 0,
-          "position": 31.2,
-          "signals": [
-            "genre:焼肉"
           ]
         }
       ],
@@ -7491,6 +7406,94 @@
           "position": 9.5,
           "signals": [
             "store:BAR　SBAE 名古屋栄"
+          ]
+        }
+      ],
+      "other": [
+        {
+          "query": "韓炉 栄",
+          "impressions": 239,
+          "clicks": 0,
+          "position": 10.2,
+          "signals": [
+            "area:栄"
+          ]
+        },
+        {
+          "query": "煮干しラーメン 凛",
+          "impressions": 224,
+          "clicks": 6,
+          "position": 7,
+          "signals": [
+            "genre:ラーメン"
+          ]
+        },
+        {
+          "query": "煮干しラーメン凛",
+          "impressions": 152,
+          "clicks": 1,
+          "position": 7.9,
+          "signals": [
+            "genre:ラーメン"
+          ]
+        },
+        {
+          "query": "藤が丘 生ドーナツ",
+          "impressions": 135,
+          "clicks": 6,
+          "position": 7,
+          "signals": [
+            "area:覚王山"
+          ]
+        },
+        {
+          "query": "北京飯店 ナゴヤドーム",
+          "impressions": 99,
+          "clicks": 4,
+          "position": 8.5,
+          "signals": []
+        },
+        {
+          "query": "焼肉 畑江通",
+          "impressions": 90,
+          "clicks": 0,
+          "position": 26.8,
+          "signals": [
+            "genre:焼肉"
+          ]
+        },
+        {
+          "query": "韓炉 名古屋",
+          "impressions": 88,
+          "clicks": 0,
+          "position": 10.2,
+          "signals": []
+        },
+        {
+          "query": "焼肉 守山瀬古",
+          "impressions": 85,
+          "clicks": 0,
+          "position": 24.1,
+          "signals": [
+            "genre:焼肉"
+          ]
+        },
+        {
+          "query": "焼肉 円上",
+          "impressions": 82,
+          "clicks": 0,
+          "position": 31.2,
+          "signals": [
+            "genre:焼肉"
+          ]
+        },
+        {
+          "query": "焼肉 南区浜田町",
+          "impressions": 80,
+          "clicks": 0,
+          "position": 18.6,
+          "signals": [
+            "genre:焼肉"
           ]
         }
       ]
