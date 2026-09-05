@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T20:19:58.796Z",
+  "generatedAt": "2026-09-05T00:55:53.815Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -17,6 +17,15 @@
     ],
     "ctrFixGeoless": [
       {
+        "query": "やきまる亭",
+        "impressions": 166,
+        "clicks": 2,
+        "position": 8.4,
+        "ctr": 1.2,
+        "expectedCtr": 3,
+        "missedClicks": 3.1
+      },
+      {
         "query": "煮干しラーメン 凛",
         "impressions": 224,
         "clicks": 6,
@@ -24,25 +33,16 @@
         "ctr": 2.68,
         "expectedCtr": 4,
         "missedClicks": 3
-      },
-      {
-        "query": "やきまる亭",
-        "impressions": 182,
-        "clicks": 3,
-        "position": 8.3,
-        "ctr": 1.65,
-        "expectedCtr": 3.1,
-        "missedClicks": 2.6
       }
     ],
     "rankPush": [
       {
         "query": "ナショナルベーカリー",
-        "impressions": 184,
+        "impressions": 160,
         "clicks": 4,
-        "position": 12,
-        "ctr": 2.17,
-        "upsideClicks": 1.2
+        "position": 12.2,
+        "ctr": 2.5,
+        "upsideClicks": 0.5
       }
     ]
   },
@@ -58,42 +58,33 @@
         "missedClicks": 14.1
       },
       {
-        "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 586,
-        "clicks": 6,
-        "position": 8.7,
-        "ctr": 1.02,
-        "expectedCtr": 2.9,
-        "missedClicks": 11.1
-      },
-      {
-        "page": "/stores/J004025075.html",
-        "impressions": 466,
-        "clicks": 7,
-        "position": 7.5,
-        "ctr": 1.5,
-        "expectedCtr": 3.6,
-        "missedClicks": 9.8
-      },
-      {
         "page": "/stores/J004559348.html",
-        "impressions": 582,
-        "clicks": 8,
+        "impressions": 571,
+        "clicks": 7,
         "position": 8.5,
-        "ctr": 1.37,
+        "ctr": 1.23,
         "expectedCtr": 3,
-        "missedClicks": 9.5
+        "missedClicks": 10.1
+      },
+      {
+        "page": "/journal/2026-08-22-osu-malachuan-self-price.html",
+        "impressions": 321,
+        "clicks": 6,
+        "position": 7.8,
+        "ctr": 1.87,
+        "expectedCtr": 3.4,
+        "missedClicks": 4.8
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 3502,
+        "impressions": 3449,
         "clicks": 9,
-        "position": 24,
+        "position": 24.3,
         "ctr": 0.26,
-        "upsideClicks": 89
+        "upsideClicks": 87.6
       },
       {
         "page": "/features/date.html",
@@ -110,12 +101,12 @@
     "queryCtrFix": 1,
     "queryCtrFixGeoless": 2,
     "queryRankPush": 1,
-    "pageCtrFix": 4,
+    "pageCtrFix": 3,
     "pageRankPush": 2,
     "topPageCtrFix": [
       "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
-      "/journal/2026-08-04-sakae-leesar-coffee.html",
-      "/stores/J004025075.html"
+      "/stores/J004559348.html",
+      "/journal/2026-08-22-osu-malachuan-self-price.html"
     ]
   }
 }
