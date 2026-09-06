@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-06T11:14:49.925Z",
+  "generatedAt": "2026-09-06T12:09:52.415Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1015,
-    "pageViews": 1678,
-    "sessions": 1199,
-    "avgSessionDuration": 139.6,
-    "bounceRate": 0.305,
+    "activeUsers": 1016,
+    "pageViews": 1683,
+    "sessions": 1201,
+    "avgSessionDuration": 139.8,
+    "bounceRate": 0.306,
     "pagesPerSession": 1.4
   },
   "dailyReference": {
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 886,
-      "direct": 218,
+      "organic": 887,
+      "direct": 221,
       "social": 84,
       "referral": 14,
       "paid": 0,
       "other": 4
     },
     "pct": {
-      "organic": 73.5,
-      "direct": 18.1,
-      "social": 7,
+      "organic": 73.3,
+      "direct": 18.3,
+      "social": 6.9,
       "referral": 1.2,
       "paid": 0,
       "other": 0.3
@@ -37,7 +37,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 399
+      "sessions": 400
     },
     {
       "source": "bing",
@@ -47,7 +47,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 190
+      "sessions": 192
     },
     {
       "source": "yahoo",
@@ -62,7 +62,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 18
+      "sessions": 19
     },
     {
       "source": "duckduckgo",
@@ -93,8 +93,8 @@
     },
     {
       "path": "/",
-      "pageViews": 275,
-      "sessions": 177
+      "pageViews": 276,
+      "sessions": 178
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -103,8 +103,8 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 108,
-      "sessions": 62
+      "pageViews": 111,
+      "sessions": 63
     },
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
@@ -113,8 +113,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 101,
-    "ctaClickRate": 8.4,
+    "outboundClicks": 102,
+    "ctaClickRate": 8.5,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -122,7 +122,7 @@
       },
       {
         "domain": "tabelog.com",
-        "clicks": 30
+        "clicks": 31
       },
       {
         "domain": "maps.google.com",
@@ -159,20 +159,20 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 63,
+      "organic": 64,
       "direct": 15,
       "social": 21,
       "referral": 2,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.1,
-    "ctaClickRate_direct": 6.9,
+    "ctaClickRate_organic": 7.2,
+    "ctaClickRate_direct": 6.8,
     "ctaClickRate_social": 25,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 20
+        "clicks": 21
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -283,7 +283,7 @@
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
         "domain": "tabelog.com",
-        "clicks": 20
+        "clicks": 21
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -454,7 +454,7 @@
     "reservationClicksByPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 20
+        "clicks": 21
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -509,11 +509,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 75
+    "reservationClicks": 76
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1015,
+    "value": 1016,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
