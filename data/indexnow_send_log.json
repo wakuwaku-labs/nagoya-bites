@@ -1,15 +1,14 @@
 {
   "ok": true,
   "dry_run": true,
-  "would_send": 5,
+  "would_send": 4,
   "endpoint": "https://api.indexnow.org/indexnow",
   "urls": [
     "https://nagoya-bites.com/",
     "https://nagoya-bites.com/journal/",
     "https://nagoya-bites.com/features/",
-    "https://nagoya-bites.com/journal/2026-09-05-meieki-nagoyameshi-izakaya-enkai.html",
     "https://nagoya-bites.com/journal/2026-09-06-mizuho-asian-games-venue-yakiniku.html"
   ],
   "note": "--yes を付けると実際に送信する（外部通信が発生する）",
-  "logged_at": "2026-09-06T14:32:00.333Z"
+  "logged_at": "2026-09-06T20:13:37.651Z"
 }
