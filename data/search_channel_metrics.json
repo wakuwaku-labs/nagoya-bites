@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-06T05:36:22.493Z",
+  "generatedAt": "2026-09-06T05:48:41.319Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1170,
+  "total_sessions": 1171,
   "engines": [
     {
       "key": "google",
@@ -35,13 +35,13 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 202,
+      "sessions": 203,
       "pct": 17.3,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 188
+          "sessions": 189
         },
         {
           "source": "(not set)",
