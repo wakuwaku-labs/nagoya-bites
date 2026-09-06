@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-06T05:48:41.271Z",
+  "generatedAt": "2026-09-06T11:14:53.213Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -7,12 +7,12 @@
     "ctrFix": [
       {
         "query": "焼肉 三郎 原店 名古屋市 レビュー",
-        "impressions": 475,
+        "impressions": 514,
         "clicks": 6,
         "position": 9.1,
-        "ctr": 1.26,
+        "ctr": 1.17,
         "expectedCtr": 2.8,
-        "missedClicks": 7.2
+        "missedClicks": 8.2
       }
     ],
     "ctrFixGeoless": [
@@ -27,12 +27,12 @@
       },
       {
         "query": "やきまる亭",
-        "impressions": 155,
+        "impressions": 163,
         "clicks": 2,
         "position": 8.4,
-        "ctr": 1.29,
+        "ctr": 1.23,
         "expectedCtr": 3,
-        "missedClicks": 2.7
+        "missedClicks": 3
       }
     ],
     "rankPush": []
@@ -50,12 +50,12 @@
       },
       {
         "page": "/stores/J004559348.html",
-        "impressions": 544,
-        "clicks": 7,
-        "position": 8.5,
-        "ctr": 1.29,
+        "impressions": 546,
+        "clicks": 8,
+        "position": 8.6,
+        "ctr": 1.47,
         "expectedCtr": 3,
-        "missedClicks": 9.3
+        "missedClicks": 8.1
       },
       {
         "page": "/journal/2026-08-22-osu-malachuan-self-price.html",
@@ -71,19 +71,19 @@
     "rankPush": [
       {
         "page": "/",
-        "impressions": 3463,
+        "impressions": 3563,
         "clicks": 8,
-        "position": 24.4,
-        "ctr": 0.23,
-        "upsideClicks": 89
+        "position": 24.1,
+        "ctr": 0.22,
+        "upsideClicks": 91.9
       },
       {
         "page": "/features/date.html",
-        "impressions": 242,
+        "impressions": 261,
         "clicks": 6,
-        "position": 14.1,
-        "ctr": 2.48,
-        "upsideClicks": 0.8
+        "position": 13.8,
+        "ctr": 2.3,
+        "upsideClicks": 1.3
       }
     ]
   },
