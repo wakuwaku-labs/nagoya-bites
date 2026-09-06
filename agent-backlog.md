@@ -8,7 +8,7 @@
 
 ### [SEO-084] 特集48本の店舗リンクがクリック計測を持たず、「店舗詳細クリック0回」という助言が毎日そこから再生産されている（SEO-072 の残り穴）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-09-06
 - **category**: SEO
 - **owner**: Builder + Marketer
@@ -41,7 +41,7 @@
 - **priority**: P2 → **status**: ready
 - **detected**: 2026-09-05
 - **category**: SEO
-- **owner**: Editor + Builder
+- **owner**: 片桐 ← Editor + Builder（前提の変化: generate_sns_draft が false になったためaccept①「方針を決める」がオーナー判断。着手前にスコープを縮小するか close するかをオーナーに確認が必要と明記）
 - **⚠️ 前提の変化（2026-09-06 の日次トリアージで検出・着手前に必ず読むこと）**: 本チケットが前提にしていた「生成器が毎日プレースホルダ欄を出力し続ける」状態は、起票と同日（2026-09-05）のオーナー判断で解消している。`data/journal_sns_draft_policy.json` の `generate_sns_draft` が **false**（commit 0e998c25a「日次SNS原稿(docs/daily-posts)の自動生成を一旦停止」）になり、`scripts/generate_daily_draft.js` は md 自体を生成しない。理由は「SNS投稿原稿はサイト外の別の仕組みで生成する運用に切り替えたため」。したがって acceptance 2.（生成器に決定的に埋めさせる）と 3.（欄を廃止する）は**どちらも現時点では発火しない**。残っているのは既存113本の未記入分の扱いと、外部運用へ移った原稿の穴を検知する経路をどこに置くかという編集判断のみ。**着手前にスコープを縮小するか close するかをオーナーに確認すること**（自動生成が `true` に戻された場合は本チケットがそのまま復活する）
 - **source**: SEOアドバイス(LINE) 2026-09-04 原文「訪問回数が43とまだ少ないため、施策は実験と捉えましょう。👉 journal/2026-09-04-meieki-shokudo-tomoru-sanma-price の内容を元に、docs/daily-posts/のSNS投稿原稿を魅力的に改善し、SNS流入を増やしましょう」
 - **brand-filter**: ✅ 適合 — 助言の「原稿を魅力的にする」は精神論なので literal には採らず、調査で見つかった**検証できる欠落**へ振り替えて採用（SEO-081 / SEO-082 と同じパターン）。日次ジャーナルは我々が唯一持つ日次の一次コンテンツで、その配信面（SNS）の素材が半分以上の日で欠落しているのは Moat の配信側の穴。順位操作・広告主依存・クーポン経済・ストック写真のいずれにも該当しない
@@ -941,7 +941,7 @@
 - **priority**: P2 → **status**: ready
 - **detected**: 2026-08-23（オーナー就寝中の自律処理・`node scripts/security_audit.js` で発見）
 - **category**: security / tooling
-- **owner**: Builder
+- **owner**: 片桐 ← Builder（acceptance が「実APIキーが揃う環境（オーナーのローカルMacまたはCI）で実行し、影響スクリプトを実データで動作確認してからコミット」を必須としており、クラウドセッションでは実行不可）
 - **調査で判明した事実**: `npm audit` で12件の既知脆弱性（high 7 / moderate 4 / low 1）を検出。うち4件（brace-expansion / ip-address / js-yaml）は非破壊の `npm audit fix` で解消済み（[[ISSUE-109]]と同日・別コミット）。**残り8件は `--force` でのメジャーバージョンアップが必要**:
   | 脆弱性 | 深刻度 | 原因パッケージ | 必要な変更 |
   |---|---|---|---|
@@ -2678,6 +2678,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   v2.0 → **v2.1**（`scripts/lib/cross_check.js`）に更新し、各軸へ `observed:boolean` を追加、S7 に `parts:[s7a,s7b,s7c]` を追加。
   内部合成点 `crossCheckScore`（8軸100点・本 ISSUE が扱う分布・フラグ）は本ステップでは**変更していない**（ロスター等の依存を壊さないため）。
   **v3.0 を活性化するときは、v3 実装（`scripts/lib/cross_check_v3.js`）にも同じ observed/parts 付与が前提**（`scripts/lib/trust_display.js` が observed を読むため）。詳細は [[ISSUE-101]]。
+- **2026-09-06 確認（自動ルーチン）**: `node scripts/audit_crosscheck_v3.js` 実行結果 — 4339店（88%）が1階級以上移動（目安上限 493店）。データ蓄積は 100 → 350店（snapshots≥2）に増加（週次実行が継続）。gate(c) はまだ大幅超過のため、S7/S8 重み再調整（オーナー確認後の別タスク）を待って活性化は継続保留。
 - **2026-09-03 追記（observed/parts 付与・禁止語排除 — ISSUE-086 準備作業）**:
   `scripts/lib/cross_check_v3.js` に v2.1 と同等の `observed`/`parts` を追加し、trust_display.js に接続できる状態にした（`npm test` 151件全pass）。
   同時に禁止語（サクラ/化粧/疑い/評価操作）を排除:
