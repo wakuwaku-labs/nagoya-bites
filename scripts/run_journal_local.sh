@@ -236,6 +236,30 @@ trap 'rm -f "$LOCKFILE"' EXIT INT TERM
 log "=== 日次ジャーナル ローカル生成開始 (PID $$) ==="
 TODAY_JST=$(TZ=Asia/Tokyo date +%Y-%m-%d)
 
+# ---- SNS原稿(docs/daily-posts/<date>.md)を必須とするか ----
+# 唯一の情報源は data/journal_sns_draft_policy.json の generate_sns_draft。
+# 2026-09-05 にオーナー指示でこれが false になり generate_daily_draft.js が md を
+# 生成しなくなったが、このラッパーの公開前チェック(c)は md の実在を無条件に要求した
+# ままだったため、9/6 の記事は完成・published.json 登録済みなのに公開直前で die した
+# （＝構造的に必ず失敗する条件が残っていた。ISSUE-084 と同じ「止まっても人が見に行く
+# まで分からない」クラス）。validator 側は最初から md 省略可の設計なので、ここも
+# 同じ情報源を読んで分岐させる。
+# フェイルセーフのデフォルトは「必須」（ファイル欠損/破損時は従来どおり厳しく倒す）。
+sns_draft_enabled() {
+  node -e "
+    try {
+      const p = require('./data/journal_sns_draft_policy.json');
+      process.exit(p.generate_sns_draft === false ? 1 : 0);
+    } catch (e) { process.exit(0); }
+  " 2>/dev/null
+}
+if sns_draft_enabled; then
+  SNS_DRAFT_REQUIRED=1
+else
+  SNS_DRAFT_REQUIRED=0
+  log "ℹ️ data/journal_sns_draft_policy.json の generate_sns_draft=false のため、SNS原稿(docs/daily-posts/${TODAY_JST}.md)は生成されません。存在しないことを正常として扱います。"
+fi
+
 # 過去の HOLD が未解消なら毎朝知らせる（気づかないまま欠番が積み上がるのを防ぐ）
 PREV_HOLDS=$(ls "${LOG_DIR}"/HOLD-*.md 2>/dev/null | grep -v "HOLD-${TODAY_JST}.md" || true)
 if [ -n "$PREV_HOLDS" ]; then
@@ -521,13 +545,17 @@ if [ "$OK" != "1" ]; then
     fi
     hold "$MISSING_REASON"
   fi
-  if [ ! -f "$RESCUE_MD" ]; then
-    hold "SNS原稿（${RESCUE_MD}）が存在しない。生成が途中で止まっています。記事HTML=${RESCUE_HTML}"
+  if [ "$SNS_DRAFT_REQUIRED" = "1" ]; then
+    if [ ! -f "$RESCUE_MD" ]; then
+      hold "SNS原稿（${RESCUE_MD}）が存在しない。生成が途中で止まっています。記事HTML=${RESCUE_HTML}"
+    fi
+  else
+    RESCUE_MD=""
   fi
 
-  log "成果物を検出: ${RESCUE_HTML} / ${RESCUE_MD}"
+  log "成果物を検出: ${RESCUE_HTML}${RESCUE_MD:+ / ${RESCUE_MD}}"
   log "独立 validator で公開可否を判定します（品質ゲートは迂回しません）。"
-  if ! node scripts/validate_journal_draft.js "$RESCUE_HTML" "$RESCUE_MD" >>"$LOG" 2>&1; then
+  if ! node scripts/validate_journal_draft.js "$RESCUE_HTML" ${RESCUE_MD:+"$RESCUE_MD"} >>"$LOG" 2>&1; then
     hold "validator が FAIL。品質ゲートを通らないため公開しません。詳細は ${LOG} の末尾を確認してください。"
   fi
   log "✅ validator PASS。ラッパー側で published.json に登録します。"
@@ -574,13 +602,26 @@ fi
 log "✅ 記事HTML確認: $ARTICLE_HTML"
 
 # (c) docs/daily-posts/<date>.md が実在するか
+#     ただし SNS原稿の生成自体が停止されている場合（generate_sns_draft=false）は
+#     「無いのが正常」なので必須にしない。ここを無条件必須にしていたことが 9/6 の
+#     未公開事故の原因（上の SNS_DRAFT_REQUIRED のコメント参照）。
 DAILY_MD="docs/daily-posts/${TODAY_JST}.md"
-if [ ! -f "$DAILY_MD" ]; then
-  die "SNS原稿が見つかりません: $DAILY_MD。生成異常。"
+if [ "$SNS_DRAFT_REQUIRED" = "1" ]; then
+  if [ ! -f "$DAILY_MD" ]; then
+    die "SNS原稿が見つかりません: $DAILY_MD。生成異常。"
+  fi
+else
+  if [ -f "$DAILY_MD" ]; then
+    log "ℹ️ SNS原稿は不要設定ですが $DAILY_MD が存在するため validator に渡します。"
+  else
+    DAILY_MD=""
+    log "✅ SNS原稿チェックはスキップ（generate_sns_draft=false）"
+  fi
 fi
 
 # (d) 独立 validator（claude が PASS を主張しても、ラッパーが独立に検証）
-if ! node scripts/validate_journal_draft.js "$ARTICLE_HTML" "$DAILY_MD" >>"$LOG" 2>&1; then
+#     md は省略可（validator は mdPath 無指定時に該当項目を自動スキップする設計）。
+if ! node scripts/validate_journal_draft.js "$ARTICLE_HTML" ${DAILY_MD:+"$DAILY_MD"} >>"$LOG" 2>&1; then
   die "validator が FAIL を返しました（ラッパー側の独立検証）。$LOG の末尾を確認してください。"
 fi
 log "✅ ラッパー独立 validator PASS"

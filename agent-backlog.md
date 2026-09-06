@@ -187,6 +187,62 @@
 - **ブランドガードレール**: 送信対象は自サイトの実在する公開URLのみ。外部送信の実有効化（`INDEXNOW_ENABLED`）は既にオーナー承認済み（[[SEO-071]] 2026-08-26）だが、シークレット設定自体はオーナー操作。**復旧作業はシークレットの有無に関わらず先に完了させる**（未設定なら dry-run で回り、設定された瞬間に実送信になる）
 - **関連**: [[SEO-071]]（本体・done のまま消失）／[[SEO-067]]（Bing WMT 接続・オーナー操作待ちで blocked。IndexNow はこれを待たずに成立する）／[[SEO-039]]／[[ISSUE-112]]（削除の原因コミット）
 
+### [ISSUE-123] SNS原稿の生成停止（9/5）で日次ジャーナルのラッパーが「構造的に必ず失敗する」条件を抱え、9/6 の記事が完成・検証済みなのに公開直前で die して未公開のまま残った
+
+- **priority**: P1 → **status**: ready（① 恒久修正（ラッパーの分岐）は本PRで実装・検証済み ② **検知の穴は未着手＝本チケットの本体**）
+- **detected**: 2026-09-06
+- **category**: ops-monitoring / journal
+- **owner**: Editor + Builder
+- **source**: オーナーがサイトを見て「9/6 の記事が出ていない」と気づいた（＝**自動監視は一度も鳴っていない**）
+- **brand-filter**: ✅ 適合 — 日次ジャーナルは我々が唯一持つ日次の一次コンテンツで、鮮度そのものが Moat（「月刊スピード — 我々はジャーナル日次でむしろ勝つ」）。その停止と、停止に気づけないことの是正。順位操作・広告主依存・マネタイズのいずれにも該当しない
+- **これは [[ISSUE-084]] と同じクラス**: 自動化が止まったのに、人が能動的に見に行くまで誰も分からなかった。ただし ISSUE-084 は「警報の出力先が Mac の外に出なかった」ケースで、今回は **out-of-band の警報経路（journal-watchdog.yml）自体は存在するのに、この故障モードでは原理的に鳴らない**ケース
+
+#### 検証できる事実（制約10・すべて再現可能）
+
+| 事実 | 出典 |
+|---|---|
+| `data/journal_sns_draft_policy.json` の `generate_sns_draft` が **false** になった（オーナー判断） | commit `0e998c25a`（2026-09-05 18:58 JST・PR #216） |
+| `scripts/generate_daily_draft.js` はこれを読んで `docs/daily-posts/<date>.md` を生成しなくなった | `scripts/generate_daily_draft.js:76-83` `shouldGenerateSnsDraft()` |
+| しかし `scripts/run_journal_local.sh` の公開前チェック (c)（修正前 576-580行）は md の実在を**無条件に必須**としていた ＝ この条件は構造的に必ず失敗する | 修正前の `die "SNS原稿が見つかりません: $DAILY_MD。生成異常。"` |
+| 実際に 2026-09-06 09:15:16 の実行が、記事HTML確認の直後にこの行で終了している | `.local-logs/journal-2026-09-06.log` 末尾 |
+| 停止時点で記事は**完成し published.json への登録まで終わっていた**（残っていたのは commit/push だけ） | `journal/2026-09-06-mizuho-asian-games-venue-yakiniku.html` / `data/journal_published.json` |
+| 停止しても validator は無関係だった（validator は最初から md 省略可の設計） | `scripts/validate_journal_draft.js:37` `mdPath && fs.existsSync(mdPath)` / 項目8「md未指定のためスキップ」 |
+| 影響日数は 1日のみ。policy 変更が 9/5 の 09:00 実行**より後**（18:58）だったため、初めて踏んだのが 9/6 | commit 時刻と `check_journal_health.js --days 7`（9/5 まで欠番なし） |
+
+#### なぜ誰も気づけなかったか（本チケットの本体）
+
+| 事実 | 出典 |
+|---|---|
+| `journal-watchdog.yml` の発火条件は **published.json の欠番ただ一つ**。`data/journal_health.json` の `status` は Issue 本文の説明に使うだけ（`r.last_local_run`）で、**トリガーには一切使っていない** | `.github/workflows/journal-watchdog.yml` 欠番チェック step ＋ `r.ok` 分岐 |
+| そのため 09:15 JST に `status: "die"` ＋ 理由文字列まで正確に記録されていたのに、それを見て鳴るものが存在しない | `data/journal_health.json` |
+| **記事を公開した瞬間に欠番が消えるため、この事故は watchdog から永久に見えなくなる**（今回 PR #218 で公開したことで発火条件が消滅した） | 同上 |
+| cron は `0 3 * * *`（12:00 JST）だが、直近7回の実際の起動は **16:24〜18:18 JST**（GitHub のスケジュール遅延 4.4〜6.3時間） | `gh run list --workflow journal-watchdog.yml`（09-05 07:24Z / 09-04 07:41Z / 09-03 07:46Z / 09-02 07:36Z / 09-01 08:17Z / 08-31 09:18Z / 08-30 08:54Z） |
+| つまり 09:15 JST の失敗に対する**最短の通知が実測で 7〜9時間後**。オーナーが気づいた 14:00 JST より遅く、今回 watchdog は**一度も鳴っていない** | 上記 ＋ `gh issue list --label journal-watchdog`（9/6 の Issue は存在しない。最後は 9/4 の #213） |
+| さらに `die()` は `record_health` を呼ぶが `push_health` を呼ばない。`hold()` は両方呼ぶ。＝ **die 経路では理由文字列が Mac の外に出ない**（今回 GitHub に届いたのは PR #218 が journal_health.json を同梱したから） | `scripts/run_journal_local.sh:106` vs `hold()` の本体 |
+
+#### resolution（本PRで完了した分）
+
+- `scripts/run_journal_local.sh` に `sns_draft_enabled()` を追加し、`data/journal_sns_draft_policy.json` の `generate_sns_draft` を唯一の情報源として (c) を分岐させた（`generate_daily_draft.js` / `audit_journal_sns_pairing.js` と同じ読み方・フェイルセーフの既定は「必須」）
+- 公開前チェック (c) と自動復旧ブロックの両方（md を要求していたのは2箇所）を分岐対象にした
+- validator 呼び出しを `${DAILY_MD:+"$DAILY_MD"}` にして md 不在時は引数ごと外す（validator 側の既存スキップ設計と整合）
+- 4ケースで実測: ①false かつ md 不在→スキップして続行 ②true かつ md 不在→従来どおり die ③true かつ md あり→従来どおり validator に渡す ④policy 破損→必須のまま（フェイルセーフ）
+- `node scripts/validate_journal_draft.js <article>`（md 引数なし）→ **PASS**（項目8「md未指定のためスキップ」・項目16「SNS原稿は未指定のため照合スキップ」・項目15b ヒーロー写真の帰属OK）
+- 取り残されていた 9/6 の成果物の公開は PR #218（別セッション）で完了。`audit_journal_photos.js --check` 違反ゼロ / `check_journal_health.js --days 7` 欠番なし を確認済み
+
+#### acceptance（残件＝検知の穴）
+
+1. **`data/journal_health.json` の `status` を発火条件にする経路を作る**。「published.json に欠番がある」だけでなく「ローカル実行の最終状態が `die` / `hold` で、かつ当日中に `ok` に更新されていない」でも鳴るようにする。これが無い限り、**記事が公開されると事故が観測できなくなる**（今回まさにそれが起きた）
+2. **`die()` からも状態を push する**。現状 `hold()` だけが `push_health` を呼ぶため、die 経路の理由文字列は Mac から出ない。ただし `die()` は git が壊れている前提のごく初期（未解決 rebase 検出など）からも呼ばれるため、**無条件に push を足すと壊れた git 状態で push しに行く**。git が健全な地点以降に限定するなどの設計が要る（安易に1行足さないこと）
+3. **通知の遅さを事実として扱う**。cron は 12:00 JST だが実測の起動は 16:24〜18:18 JST（4.4〜6.3時間遅延）。09:00 の生成失敗に対して最短でも 7〜9時間後にしか届かない。cron を早める／複数回に分ける／別経路を足す のいずれかを、**推測ではなく `gh run list` の実測分布を根拠に**決める（制約10）
+4. **同じ「policy を足したら別の場所が構造的に必ず失敗する」を機械で拾えるようにする**。`data/*_policy.json` のフラグを読む実装が全経路で一致しているかを検査する（今回は `generate_daily_draft.js` と `audit_journal_sns_pairing.js` は読んでいたが `run_journal_local.sh` だけ読んでいなかった）
+5. **CLAUDE.md の記述を実態に合わせる**。`journal_sns_draft_policy.json` の行が「`validate_journal_draft.js` は md 不在時に該当項目を自動スキップする設計のため**コード変更不要**」と書いているが、これは validator だけを見た記述で、その手前のラッパーの事前チェックを見落としている。**この一文が「もう見なくていい」という誤った安心を作った**ので、憲法の記述としてどう直すかはオーナー判断で決める（本PRでは変更していない）
+6. 検証は自己申告値を使わない（制約10）。「鳴るようになったこと」は、`status: die` を人為的に書いた状態で watchdog を `workflow_dispatch` して Issue が立つことで確認する
+
+- **files**: `scripts/run_journal_local.sh`（本PRで修正済み）/ `.github/workflows/journal-watchdog.yml`（残件）/ `scripts/check_journal_health.js`（残件）/ `CLAUDE.md`（残件・オーナー判断）
+- **関連**: [[ISSUE-084]]（同クラス・警報が届かない）／[[ISSUE-096]]（ジャーナル欠番・clamshell sleep）／[[SEO-083]]（同じ policy 変更で前提が変わったチケット）／[PR #218](https://github.com/wakuwaku-labs/nagoya-bites/pull/218)（9/6 成果物の公開）
+
+---
+
 ### [ISSUE-122] 「焼きそばスタンド らふ」が同一GooglePlaceIDで2重掲載されていた（カタログ全体で計21店名が2重掲載・後者は本セッションで解消、20店名は未調査） ✅
 
 - **priority**: P0 → **status**: done（対象1件は解消。カタログ全体の残20件は別課題として起票のみ）
