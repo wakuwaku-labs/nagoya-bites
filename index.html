@@ -1483,6 +1483,46 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 </head>
 <body>
 
+<!-- ========== オープニング・スプラッシュ（全画面ロゴ） ========== -->
+<style>
+#nb-splash{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.15rem;padding:2rem;text-align:center;opacity:1;transition:opacity .6s ease;}
+#nb-splash.nb-hide{opacity:0;pointer-events:none;}
+#nb-splash .nbs-mark{font-family:var(--font-display);font-weight:400;color:var(--text);line-height:1.05;font-size:var(--fs-3xl);letter-spacing:.2em;text-transform:uppercase;opacity:0;animation:nbs-up 1s .08s cubic-bezier(.2,.7,.2,1) forwards;}
+#nb-splash .nbs-mark em{font-style:italic;color:var(--gold);}
+#nb-splash .nbs-rule{width:min(220px,42vw);height:1px;background:var(--gold);opacity:0;transform-origin:center;animation:nbs-rule .9s .5s ease forwards;}
+#nb-splash .nbs-sub{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.28em;text-transform:uppercase;color:var(--dim);opacity:0;animation:nbs-up .9s .68s ease forwards;}
+#nb-splash .nbs-jp{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:.16em;color:var(--muted);opacity:0;animation:nbs-up .9s .86s ease forwards;}
+@keyframes nbs-up{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+@keyframes nbs-rule{from{opacity:0;transform:scaleX(0);}to{opacity:.9;transform:scaleX(1);}}
+html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
+@media (prefers-reduced-motion:reduce){#nb-splash .nbs-mark,#nb-splash .nbs-rule,#nb-splash .nbs-sub,#nb-splash .nbs-jp{animation:none;opacity:1;transform:none;}}
+</style>
+<div id="nb-splash" role="presentation" aria-hidden="true">
+  <div class="nbs-mark">Nagoya <em>Bites</em></div>
+  <div class="nbs-rule"></div>
+  <div class="nbs-sub">Nagoya Restaurant Guide</div>
+  <div class="nbs-jp">名古屋グルメガイド</div>
+</div>
+<script>
+(function(){
+  var el=document.getElementById('nb-splash');
+  if(!el)return;
+  document.documentElement.classList.add('nb-splash-on');
+  var done=false;
+  function close(){
+    if(done)return; done=true;
+    el.classList.add('nb-hide');
+    document.documentElement.classList.remove('nb-splash-on');
+    setTimeout(function(){ if(el.parentNode)el.parentNode.removeChild(el); },650);
+  }
+  var t=setTimeout(close,1800);
+  el.addEventListener('click',function(){clearTimeout(t);close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){clearTimeout(t);close();}});
+})();
+</script>
+<!-- ========== /オープニング・スプラッシュ ========== -->
+
+
 <!-- A11y: スキップリンク（キーボード/スクリーンリーダー利用者向け、Tabで最初に表示） -->
 <a href="#main-content" class="skip-link">本文へスキップ</a>
 
