@@ -283,10 +283,11 @@ function scoreBadge(s) {
   return g !== null ? `★ ${g}` : '';
 }
 
-function renderStoreCard(entry, num) {
+function renderStoreCard(entry, num, featureSlug) {
   const s = entry.store;
   const id = esc(s['ホットペッパーID']);
   const name = esc(s['店名']);
+  const nameForJs = String(s['店名'] || '').replace(/'/g, "\\'");
   const photo = esc(s['写真URL']);
   const area = esc(s['エリア'] || '');
   const genre = genreShort(s);
@@ -296,26 +297,28 @@ function renderStoreCard(entry, num) {
   const isNew = entry.isNew ? '<span class="store-new">今月の新顔</span>' : '';
   const meta = [area && `<span>${area}</span>`, genre && `<span>${genre}</span>`, sb && `<span class="score">${sb}</span>`, price && `<span>${price}</span>`].filter(Boolean).join('');
   const tags = tagsOf(s, 3).map(t => `<span class="store-tag">${esc(t)}</span>`).join('');
+  const track = `onclick="trackEvent('feature_store_click',{store:'${nameForJs}',feature:'${featureSlug}'})"`;
   return `      <div class="store-card">
         <div class="store-num">${nn}</div>
         <div class="store-photo"><img src="${photo}" alt="${name}" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/${id}.html">${name}</a>${isNew}</h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/${id}.html" ${track}>${name}</a>${isNew}</h3>
           <div class="store-meta">${meta}</div>
           <p class="store-desc">${descOf(s, 110)}</p>
           <div class="store-tags">${tags}</div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/${id}.html">詳細ページを見る →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/${id}.html" ${track}>詳細ページを見る →</a>
             <a class="store-link" href="https://www.hotpepper.jp/str${id}/" target="_blank" rel="noopener">予約はこちら →</a>
           </div>
         </div>
       </div>`;
 }
 
-function renderShopCard(entry, num) {
+function renderShopCard(entry, num, featureSlug) {
   const s = entry.store;
   const id = esc(s['ホットペッパーID']);
   const name = esc(s['店名']);
+  const nameForJs = String(s['店名'] || '').replace(/'/g, "\\'");
   const photo = esc(s['写真URL']);
   const area = esc(s['エリア'] || '');
   const genre = genreShort(s);
@@ -325,6 +328,7 @@ function renderShopCard(entry, num) {
   const tagList = tagsOf(s, 2);
   if (sb) tagList.push(sb);
   const tags = tagList.map(t => `        <span class="tag">${esc(t)}</span>`).join('\n');
+  const track = `onclick="trackEvent('feature_store_click',{store:'${nameForJs}',feature:'${featureSlug}'})"`;
   return `    <div class="shop-card">
       <img class="shop-card-photo" src="${photo}" alt="${name}" loading="lazy" decoding="async">
       <div class="shop-num">${nn}</div>
@@ -334,7 +338,7 @@ function renderShopCard(entry, num) {
       <div class="shop-tags">
 ${tags}
       </div>
-          <a href="../stores/${id}.html" class="shop-detail-link">詳細ページを見る</a>
+          <a href="../stores/${id}.html" class="shop-detail-link" ${track}>詳細ページを見る</a>
     </div>`;
 }
 
@@ -436,7 +440,7 @@ function main() {
 
     // HTML 書き換え
     let html = fs.readFileSync(file, 'utf8');
-    const inner = final.map((e, i) => fc.format === 'shop-card' ? renderShopCard(e, i + 1) : renderStoreCard(e, i + 1)).join('\n\n');
+    const inner = final.map((e, i) => fc.format === 'shop-card' ? renderShopCard(e, i + 1, slug) : renderStoreCard(e, i + 1, slug)).join('\n\n');
     const replaced = replaceContainerInner(html, fc.container, inner);
     if (!replaced) { console.error(`  ✗ ${slug}: コンテナ .${fc.container} が特定できず未更新`); shortfalls++; continue; }
     html = replaceItemList(replaced, final);
