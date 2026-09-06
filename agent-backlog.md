@@ -8,8 +8,9 @@
 
 ### [SEO-084] 特集48本の店舗リンクがクリック計測を持たず、「店舗詳細クリック0回」という助言が毎日そこから再生産されている（SEO-072 の残り穴）
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-06
+- **completed**: 2026-09-06
 - **category**: SEO
 - **owner**: Builder + Marketer
 - **source**: SEOアドバイス(LINE) 2026-09-05 原文「訪問者42人に対し、予約・マップ・店舗詳細クリックが全て0回。サイトの目的を達成できていません。👉 index.html の各店舗カードに『詳細を見る』ボタンを追加し、クリック数を計測。予約ボタンの視認性も改善します」
@@ -4850,6 +4851,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-09-06 | Orchestrator(自律バッチ) | SEO-084: scripts/refresh_feature_rosters.js に featureSlug 引数追加・3リンク箇所に feature_store_click 注入。全55特集ページに計測を追加（未計測48本→0本）。ISSUE-086 gate(c) 超過確認・継続保留。ISSUE-110/SEO-083 をオーナーへエスカレーション | ✅ デプロイ済み (commit 83de89ba) |
 | 2026-04-15 | Inspector | 初回サイト監査・バックログ初期化 | 9件の課題を検出 |
 | 2026-04-15 | Orchestrator(FULL) | Hero修正・権威性バー・CTA修正・店舗別ページ1095件生成・sitemap 1→1097件・デプロイ | ✅ デプロイ済み (commit 3824014) |
 | 2026-04-15 | Builder | ISSUE-001,002,003,004,009を実装（CSS修正）・sitemap 1100件 | ✅ デプロイ済み |
