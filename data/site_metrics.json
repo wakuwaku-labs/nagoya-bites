@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-06T00:16:14.939Z",
+  "generatedAt": "2026-09-06T05:36:19.169Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 999,
-    "pageViews": 1645,
-    "sessions": 1176,
-    "avgSessionDuration": 138.7,
-    "bounceRate": 0.32,
+    "activeUsers": 1011,
+    "pageViews": 1669,
+    "sessions": 1190,
+    "avgSessionDuration": 139.8,
+    "bounceRate": 0.3,
     "pagesPerSession": 1.4
   },
   "dailyReference": {
@@ -17,52 +17,52 @@
   },
   "channels": {
     "sessions": {
-      "organic": 866,
-      "direct": 224,
-      "social": 82,
+      "organic": 880,
+      "direct": 212,
+      "social": 84,
       "referral": 14,
       "paid": 0,
-      "other": 6
+      "other": 4
     },
     "pct": {
-      "organic": 72.7,
-      "direct": 18.8,
-      "social": 6.9,
+      "organic": 73.7,
+      "direct": 17.8,
+      "social": 7,
       "referral": 1.2,
       "paid": 0,
-      "other": 0.5
+      "other": 0.3
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 392
+      "sessions": 396
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 283
+      "sessions": 288
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 185
+      "sessions": 188
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 175
+      "sessions": 179
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 77
+      "sessions": 79
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 29
+      "sessions": 14
     },
     {
       "source": "duckduckgo",
@@ -75,35 +75,35 @@
       "sessions": 7
     },
     {
-      "source": "(data not available)",
-      "medium": "(data not available)",
+      "source": "openai",
+      "medium": "organic",
       "sessions": 4
     },
     {
-      "source": "openai",
-      "medium": "organic",
+      "source": "service.smt.docomo.ne.jp",
+      "medium": "referral",
       "sessions": 4
     }
   ],
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 307,
-      "sessions": 262
+      "pageViews": 312,
+      "sessions": 265
     },
     {
       "path": "/",
-      "pageViews": 270,
-      "sessions": 175
+      "pageViews": 274,
+      "sessions": 176
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 110,
-      "sessions": 103
+      "pageViews": 114,
+      "sessions": 107
     },
     {
       "path": "/index.html",
-      "pageViews": 107,
+      "pageViews": 108,
       "sessions": 62
     },
     {
@@ -113,12 +113,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 99,
+    "outboundClicks": 100,
     "ctaClickRate": 8.4,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 43
+        "clicks": 44
       },
       {
         "domain": "tabelog.com",
@@ -159,16 +159,16 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 59,
-      "direct": 17,
+      "organic": 63,
+      "direct": 14,
       "social": 21,
       "referral": 2,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 6.8,
-    "ctaClickRate_direct": 7.6,
-    "ctaClickRate_social": 25.6,
+    "ctaClickRate_organic": 7.2,
+    "ctaClickRate_direct": 6.6,
+    "ctaClickRate_social": 25,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -176,7 +176,7 @@
       },
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 17
+        "clicks": 18
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -288,7 +288,7 @@
       {
         "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 17
+        "clicks": 18
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -458,7 +458,7 @@
       },
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 17
+        "clicks": 18
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -509,11 +509,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 73
+    "reservationClicks": 74
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 999,
+    "value": 1011,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
