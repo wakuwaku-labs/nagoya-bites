@@ -112,8 +112,6 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 ]</script>
 <style>
 body{min-height:100vh;}
-.back-link{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:500;letter-spacing:0;color:var(--muted);text-decoration:none;transition:color .2s;min-height:var(--tap-min);display:inline-flex;align-items:center;}
-.back-link:hover{color:var(--gold);}
 .hero-img{width:100%;height:260px;object-fit:cover;filter:brightness(.88) saturate(.85);display:block;}
 @media(min-width:768px){.hero-img{height:380px;}}
 .container{max-width:720px;margin:0 auto;padding:2rem 1.5rem 4rem;}
@@ -142,8 +140,8 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .ig-photos h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
-.link-btn.hp{background:#e6002d;color:#fff;border-color:#e6002d;}
-.link-btn.hp:hover{background:#c0001f;border-color:#c0001f;}
+.link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
+.link-btn.hp:hover{background:var(--gold2);border-color:var(--gold2);}
 .trust-breakdown{margin:1.6rem 0;padding:1.2rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
 .trust-breakdown h2{font-size:var(--fs-lg);margin:0 0 .5rem;}
 .trust-breakdown-intro{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);margin-bottom:.9rem;}
@@ -172,21 +170,41 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 </style>
 </head>
 <body>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
-  <a class="logo" href="../">Nagoya <em>Bites</em></a>
-  <a class="back-link" href="../">← 店舗一覧に戻る</a>
+  <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html" aria-current="page">店舗を探す</a>
+    <a href="../features/index.html">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
+  </nav>
 </header>
+<!-- NB-CHROME:HEADER:END -->
 
 <img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F27%2F49%2FP017882749%2FP017882749.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F27%2F49%2FP017882749%2FP017882749_480.jpg" srcset="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F27%2F49%2FP017882749%2FP017882749.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F27%2F49%2FP017882749%2FP017882749_480.jpg 480w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F27%2F49%2FP017882749%2FP017882749.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F27%2F49%2FP017882749%2FP017882749_480.jpg 800w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F27%2F49%2FP017882749%2FP017882749.jpg&w=1200&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F27%2F49%2FP017882749%2FP017882749_480.jpg 1200w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F27%2F49%2FP017882749%2FP017882749.jpg&w=1280&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F27%2F49%2FP017882749%2FP017882749_480.jpg 1280w" sizes="100vw" alt="備長扇屋 中川八熊通り店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/27/49/P017882749/P017882749.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
 
 <div class="container">
-  <nav class="breadcrumb" aria-label="パンくずリスト">
-    <a href="../">NAGOYA BITES</a>
-    <span>›</span><a href="../#genre=%E5%B1%85%E9%85%92%E5%B1%8B">居酒屋</a>
-    <span>›</span><a href="../#area=%E4%B8%AD%E5%B7%9D%E5%8C%BA%E3%83%BB%E6%B8%AF%E5%8C%BA">中川区・港区</a>
+  <!-- NB-CHROME:BREADCRUMB:START -->
+<nav aria-label="パンくずリスト">
+  <div class="breadcrumb">
+    <a href="../index.html">TOP</a>
     <span>›</span>
-    <span>備長扇屋 中川八熊通り店</span>
-  </nav>
+    <a href="../#genre=%E5%B1%85%E9%85%92%E5%B1%8B">居酒屋</a>
+    <span>›</span>
+    <a href="../#area=%E4%B8%AD%E5%B7%9D%E5%8C%BA%E3%83%BB%E6%B8%AF%E5%8C%BA">中川区・港区</a>
+    <span>›</span>
+    備長扇屋 中川八熊通り店
+  </div>
+</nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
   <div class="genre-badge">居酒屋</div>
   <h1>備長扇屋 中川八熊通り店</h1>
@@ -297,9 +315,60 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
   </div>
 </div>
 
-<footer>
-  <p class="fc">© <span id="yr"></span> NAGOYA BITES — 現役飲食店マネージャー監修 名古屋グルメガイド</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<!-- NB-CHROME:FOOTER:END -->
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
 </body>
 </html>
