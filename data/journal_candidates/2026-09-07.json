@@ -1,0 +1,492 @@
+{
+  "date": "2026-09-07",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅メイチカ復活の週、朝7時の中国茶と23時のラーメン — 今週の新店をコスパで比較",
+      "verdict": "PASS",
+      "total": 103,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 5件 (新店,比較,相場,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 180字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "リニア工事が名駅の飲食を動かしている — 3年半閉じた地下街が9月に開き直した理由",
+      "verdict": "HOLD",
+      "total": 77,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 161字 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "名駅の地下街で1,690円のラーメン、中川区で420円のうどん — 今週の新店が示した立地の値段",
+      "verdict": "HOLD",
+      "total": 76,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 2件 (新店,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 147字 +4",
+          "title 48字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "通過導線の地下街に、全席コンセントの茶店が入った — メイチカ復活が変えた名駅の待ち時間",
+      "verdict": "HOLD",
+      "total": 72,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 5,
+        "brand_fit": 8,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 1件 (回転) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 157字 +4",
+          "title 44字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "今週の名古屋、朝6時のうどんと夜23時のラーメン — 新店が取りに行った「空いている時間」",
+      "verdict": "HOLD",
+      "total": 66,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 5,
+        "brand_fit": 12,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 3
+      },
+      "search_intent_links": [
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 1件 (新店) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 152字 +4",
+          "title 45字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「名駅」+1",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "weekly_digest",
+      "title_draft": "名駅メイチカ復活の週、朝7時の中国茶と23時のラーメン — 今週の新店をコスパで比較",
+      "lead_draft": "2026年9月4日、名古屋駅の地下街メイチカが約3年半ぶりに復活した。17店中9店が飲食・食物販で、同じ週には中川区に朝6時開店のうどん店も開いている。今週の新店を並べて見えるのは、味ではなく価格帯と営業時間の設計だ。かけうどん420円と海老豚骨1,690円という相場の開き、朝7時と23時という時間の取り方を、エリアごとの回転の事情から業界人の目で比較する。",
+      "angle": "今週の新店を「立地の相場×営業時間×回転」で比較する。地下街の家賃が価格帯に出る一方、朝7時・23時という誰も開けていない時間を取りに行った設計を、席数と客単価から読む",
+      "main_store": {
+        "name": "海老豚骨ラーメン一番軒 メイチカ店",
+        "id": "",
+        "area": "名古屋（中村区・名駅）",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 株式会社ベスト・モア「300匹の甘エビから旨味を凝縮。名古屋発『一番軒』の新業態『海老豚骨ラーメン一番軒』がメイチカに9月4日オープン」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000035.000156848.html",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "PR TIMES Miradear株式会社「矢場町で1時間待ちを記録した中国茶カフェ『BEUTEA』がメイチカに日本2号店をグランドオープン」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000011.000173347.html",
+          "date": "2026-08-04"
+        },
+        {
+          "label": "中部経済新聞「名古屋駅地区の地下街『メイチカ』3年半ぶり営業再開 17店入居」",
+          "url": "https://www.chukei-news.co.jp/news/2026/09/04/OK0002609040201_01/",
+          "date": "2026-09-04"
+        },
+        {
+          "label": "note「【都市】MEICHIKA（名古屋駅）開業！_Vol.013」（開業翌日の現地観察・BEUTEAと一番軒に行列）",
+          "url": "https://note.com/mt_side/n/n58c044823e8e",
+          "date": "2026-09-07"
+        },
+        {
+          "label": "名古屋情報通「海老豚骨ラーメン一番軒がメイチカにオープン」",
+          "url": "https://jouhou.nagoya/ichibanken-ebi/",
+          "date": "2026-09-06"
+        },
+        {
+          "label": "名古屋情報通「名古屋駅地下街メイチカが2026年9月4日に復活！全17店舗のテナントリスト」",
+          "url": "https://jouhou.nagoya/meichika-renewal202609/",
+          "date": "2026-09-02"
+        },
+        {
+          "label": "名古屋情報通「日和製麺が中川区・太平通にオープン」",
+          "url": "https://jouhou.nagoya/nichiwaseimen-nakagawa/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "名古屋とりっぷ「メイチカがいよいよ復活！飲食店4店舗が9月4日に一斉オープン」",
+          "url": "https://nagoyato.com/posts/18423",
+          "date": "2026-09-03"
+        },
+        {
+          "label": "鉄道チャンネル「地下街『メイチカ』が9月4日リニューアル！東海エリア初出店のつけめん専門店など17店舗が集結」",
+          "url": "https://tetsudo-ch.com/13037073.html",
+          "date": "2026-09-01"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "weekly_digest",
+      "title_draft": "名駅の地下街で1,690円のラーメン、中川区で420円のうどん — 今週の新店が示した立地の値段",
+      "lead_draft": "2026年9月の第1週、名古屋では麺の新店が相次いだ。名駅地下街メイチカの海老豚骨ラーメンは特製1,690円、中川区太平通に開いたうどん店はかけ並420円。どちらも無休で朝から夜まで開ける。差の3倍近くは味ではなく立地が決めている。飲食の側から見れば当たり前のこの構造を、今週の実例で分解する。",
+      "angle": "価格差＝原価差ではなく賃料と回転数の差。席数・営業時間・想定客単価から、同じ週の新店2軒の損益構造を業界人視点で読み解く",
+      "main_store": {
+        "name": "海老豚骨ラーメン一番軒 メイチカ店",
+        "id": "",
+        "area": "名古屋（中村区・名駅）",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 株式会社ベスト・モア「海老豚骨ラーメン一番軒 メイチカに9月4日オープン」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000035.000156848.html",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "名古屋情報通「海老豚骨ラーメン一番軒がメイチカにオープン」",
+          "url": "https://jouhou.nagoya/ichibanken-ebi/",
+          "date": "2026-09-06"
+        },
+        {
+          "label": "名古屋情報通「日和製麺が中川区・太平通にオープン」",
+          "url": "https://jouhou.nagoya/nichiwaseimen-nakagawa/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "名古屋情報通「メイチカ全17店舗のテナントリスト」",
+          "url": "https://jouhou.nagoya/meichika-renewal202609/",
+          "date": "2026-09-02"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "weekly_digest",
+      "title_draft": "通過導線の地下街に、全席コンセントの茶店が入った — メイチカ復活が変えた名駅の待ち時間",
+      "lead_draft": "2026年9月4日に復活した名駅の地下街メイチカに、全席コンセントとWi-Fiを備えた中国茶の店が入った。地下街は本来「滞在させない」場所で、回転を捨てる設計は珍しい。朝7時から夜22時まで、約30席。今週オープンした9つの飲食・食物販を並べると、この1枠だけが明確に異質だ。名駅の待ち時間が商品になり始めている。",
+      "angle": "地下街テナントは通過客の回転で成立するのが定石。滞在型を1枠入れた編成の意図を、営業時間・席数・客単価（728〜1,013円）から読む",
+      "main_store": {
+        "name": "BEUTEA メイチカ店",
+        "id": "",
+        "area": "名古屋（中村区・名駅）",
+        "genre": "カフェ・中国茶"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「BEUTEA（茶仙子）がメイチカにオープン」",
+          "url": "https://jouhou.nagoya/beutea-meieki/",
+          "date": "2026-09-05"
+        },
+        {
+          "label": "名古屋情報通「メイチカ全17店舗のテナントリスト」",
+          "url": "https://jouhou.nagoya/meichika-renewal202609/",
+          "date": "2026-09-02"
+        },
+        {
+          "label": "名古屋とりっぷ「メイチカ復活・飲食4店舗が9月4日一斉オープン」",
+          "url": "https://nagoyato.com/posts/18423",
+          "date": "2026-09-03"
+        },
+        {
+          "label": "名古屋市交通局 公式X（メイチカ リニューアル告知）",
+          "url": "https://x.com/nagoya_kotsu100/status/2070341289481220359",
+          "date": "2026-09-04"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "weekly_digest",
+      "title_draft": "リニア工事が名駅の飲食を動かしている — 3年半閉じた地下街が9月に開き直した理由",
+      "lead_daft": "",
+      "lead_draft": "メイチカが3年半閉じていた理由は、飲食の不振ではなく工事だった。リニア中央新幹線の開業に向けた名古屋駅前広場再整備にあわせ、地下街の換気空調設備を入れ替えていた。2026年9月4日の再開で17店が入り、うち9店が飲食・食物販。名駅で「いつ行っても同じ店がある」が効かなくなった、その最初の週の記録として今週の新店を並べる。",
+      "angle": "駅前再整備という外部要因が飲食テナントの開閉を決める構造。復活後の編成（名古屋めし／全国チェーン／新業態／滞在型）から、次に何が動くかを業界人視点で読む",
+      "main_store": {
+        "name": "海老豚骨ラーメン一番軒 メイチカ店",
+        "id": "",
+        "area": "名古屋（中村区・名駅）",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「メイチカが2026年9月4日に復活！全17店舗のテナントリスト」",
+          "url": "https://jouhou.nagoya/meichika-renewal202609/",
+          "date": "2026-09-02"
+        },
+        {
+          "label": "名古屋とりっぷ「メイチカ復活・飲食4店舗が9月4日一斉オープン」",
+          "url": "https://nagoyato.com/posts/18423",
+          "date": "2026-09-03"
+        },
+        {
+          "label": "PR TIMES 株式会社ベスト・モア「海老豚骨ラーメン一番軒 メイチカに9月4日オープン」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000035.000156848.html",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "名古屋市交通局 公式X（メイチカ リニューアル告知）",
+          "url": "https://x.com/nagoya_kotsu100/status/2070341289481220359",
+          "date": "2026-09-04"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "weekly_digest",
+      "title_draft": "今週の名古屋、朝6時のうどんと夜23時のラーメン — 新店が取りに行った「空いている時間」",
+      "lead_draft": "2026年9月第1週に名古屋で開いた新店を並べると、狙いが時間帯に出ている。中川区のうどん店は朝6時開店、名駅地下街のラーメンは23時まで。名駅の地下街は20時前後に閉まる店が多く、朝夜は競合が薄い。飲食で最も安く客を取れるのは、味でも立地でもなく、誰も開けていない時間だ。今週の実例でその読み方を示す。",
+      "angle": "営業時間は最も安い差別化。朝6時・朝7時・夜23時という今週の新店の時間設計を、人件費とピーク分散の観点から読む",
+      "main_store": {
+        "name": "海老豚骨ラーメン一番軒 メイチカ店",
+        "id": "",
+        "area": "名古屋（中村区・名駅）",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「日和製麺が中川区・太平通にオープン」",
+          "url": "https://jouhou.nagoya/nichiwaseimen-nakagawa/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "名古屋情報通「海老豚骨ラーメン一番軒がメイチカにオープン」",
+          "url": "https://jouhou.nagoya/ichibanken-ebi/",
+          "date": "2026-09-06"
+        },
+        {
+          "label": "名古屋情報通「BEUTEA（茶仙子）がメイチカにオープン」",
+          "url": "https://jouhou.nagoya/beutea-meieki/",
+          "date": "2026-09-05"
+        },
+        {
+          "label": "PR TIMES 株式会社ベスト・モア「海老豚骨ラーメン一番軒 メイチカに9月4日オープン」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000035.000156848.html",
+          "date": "2026-08-31"
+        }
+      ]
+    }
+  ]
+}
