@@ -1,0 +1,37 @@
+{
+  "status": "INSUFFICIENT_EVIDENCE",
+  "editorReason": "",
+  "insiderNote": "",
+  "visitStatus": "desk_automated",
+  "confidence": 0,
+  "sources_used": [],
+  "warnings": [],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「焼きそばスタンド らふ」（南区 鶴里）に関して、Google検索で得られた業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n店主は健康・美容の分野にも精通しており、外食で不足しがちな野菜をたっぷり（焼きそば各種に野菜250g）使用していることにこだわりを持っています。食べ応えがありながらも後味が重すぎない美味しさを目指しているとのことです。麺は林製麺所のものを使用し、太めの茹で麺にこだわり、野菜の水分量も計算することで、モチモチとした弾力と喉ごしの良さを両立させています。\n\n**提供スタイルの特徴**\n「焼きそばスタンド らふ」は、カウンター8席のみの焼きそば専門店です。入店時に券売機で食券を購入するスタイルを採用しています。提供される焼きそばは、ソース、塩、激辛ホルモンなど4種類のラインナップがあり、全てにキャベツともやし合わせて250gの野菜が含まれています。定食への変更、トッピング追加、テイクアウトも可能で、注文後に鉄板で調理されます。特に、すき焼きのように生卵に絡めて食べるスタイルが特徴的です。また、「らふ」のロゴが入った練り物（ソーセージ）がトッピングされている点も、視覚的な魅力と店の個性を際立たせています。営業時間は11:00～17:00（L.O.16:30）で、日曜・月曜・祝日が定休日です。この営業時間と定休日は、住宅街の立地と少人数での運営を考慮した、効率的な店舗運営戦略と見られています。\n\n**地元グルメメディアでの紹介**\n「焼きそばスタンド らふ」は、地元名古屋のグルメ情報サイト「名古屋情報通」で、2026年5月7日のオープン情報とともに「野菜たっぷり！モチモチ食感の焼きそば専門店」として紹介されています。 また、「antonグダグダ備忘録 - ライブドアブログ」や「飛騨の彦爺Ⅱ」といった個人ブログでも、新規オープンや実食レポートが掲載されており、地元での注目度が伺えます。 「NAGOYA BITES」では、同店のビジネスモデルを「短時間・絞り込み・夜なし」という業界視点から分析し、その設計の透明性が長く愛される店になる要因と評価しています。\n\n**料理人としての評価**\n直接的な「料理人としての評価」という形式の記述は見当たりませんが、店主が健康・美容分野に精通していること、外食で不足しがちな野菜をたっぷり使うという配慮、林製麺所の麺を使用し、野菜の水分量まで計算して麺の食感を追求している点などから、素材へのこだわりと調理に対する丁寧な姿勢がうかがえます。 また、オリジナルの「らふ」マーク入りソーセージをトッピングとして提供するセンスも評価されています。 これらの情報は、店主が単に料理を提供するだけでなく、顧客の健康や食体験、さらには店舗のブランディングまで考慮した、多角的な視点を持つ料理人であることを示唆しています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEogAMr7m0sqTgz8LKgSVKB_Epor6GWnbj0MFsZKMtVW2SAsNFHN8w5qpm_abtFFbyUfAO31Jwo1sCH5RiyvrkDCDI305nXKDwaepFSp1ToaSh6DFkY6c5Sk5uTvtJJ8Q==",
+        "title": "jouhou.nagoya"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVJjrM2g1BeMtdBm2P9Q4N83n5PFUbJWxPFpKJDDOkjPR7RJbke3ns3_hOPxaiqNFcxeKvnm3DW9lqmbyzN_q-SBMejeUaTq172A4MPJVE5tvS0g4c8Kb7boeROqr7_-Dd2iUJhjEFFlj0GDCzDog8t0qTxXY=",
+        "title": "livedoor.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGapn96rsRXGZhuRuqzGYg6o7ITmrOKiEJFVEAT1bhvHLaIzcNQ-mMAbSHGZHrNlCzQJe8-wIU30i8APEYBJ_asQAyxzRpCW9m8FvGmKjE4weFtq_tArtuSelid_iGyZHUzkILCWRhfQq6okaolA0qn",
+        "title": "fc2.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEo_I0R4kXjpg4gxhJGEOCOLoaJGgtVBy3GiVO79j_NrR2dYkmNoh38zct0ry3FqBEJ811oIBZWN8aSnxanNUP9dbltBPZTFU_XdCk3JuRX04sn1jWPQAYb1LdjUoGCYv4Mvg0hytkWzWO9jXDVOsf5ybDZHMNgGnWuw1rn4UfmpSiY_cKvvyKyqQ==",
+        "title": "nagoya-bites.com"
+      }
+    ]
+  },
+  "store_id": "manual_焼きそばスタンドらふ",
+  "store_name": "焼きそばスタンド らふ",
+  "area": "南区 鶴里",
+  "genre": "焼きそば",
+  "rating": "4.4",
+  "generated_at": "2026-09-07T21:19:39.420Z"
+}
