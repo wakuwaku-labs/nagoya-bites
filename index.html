@@ -658,11 +658,17 @@ body.search-query-active .card-why{display:flex;}
 .modal-cta-hp:hover{filter:brightness(1.06);transform:translateY(-1px);box-shadow:var(--warm-glow);}
 .modal-cta-gm{background:var(--surface);color:var(--text)!important;font-weight:600;border:1px solid var(--border-h);box-shadow:0 1px 4px rgba(0,0,0,.08);}
 .modal-cta-gm:hover{background:var(--bg2);border-color:var(--border-h);box-shadow:0 3px 8px rgba(0,0,0,.12);}
+/* 電話する: 予約(塗り)と地図(中立アウトライン)の間に置く第3導線。同じアウトライン構造のまま
+   グリーンで色分けし、予約ボタンの主張を奪わずに独立した操作だと分かるようにする */
+.modal-cta-call{background:var(--surface);color:var(--green-dim)!important;font-weight:600;border:1px solid var(--green);box-shadow:0 1px 4px rgba(0,0,0,.08);gap:.4rem;}
+.modal-cta-call:hover{background:var(--bg2);border-color:var(--green-dim);box-shadow:0 3px 8px rgba(0,0,0,.12);}
+.modal-cta-call:disabled{opacity:.6;cursor:progress;}
+.modal-cta-call svg{width:16px;height:16px;flex:0 0 auto;fill:currentColor;}
 .m-sticky-cta{position:sticky;bottom:0;z-index:5;display:none;gap:var(--sp-2);padding:var(--sp-2) var(--sp-4) calc(var(--sp-2) + env(safe-area-inset-bottom,0px));background:rgba(247,245,241,.94);backdrop-filter:blur(12px);border-top:1px solid var(--border);}
 .m-sticky-cta.show{display:flex;}
 .m-sticky-cta .modal-cta-btn{min-height:var(--tap-min);padding:.55rem 1rem;font-size:var(--fs-sm);}
-.m-sticky-cta .modal-cta-gm{flex:0 0 auto;width:52px;padding:0;}
-.m-sticky-cta .modal-cta-gm svg{width:20px;height:20px;fill:currentColor;}
+.m-sticky-cta .modal-cta-gm,.m-sticky-cta .modal-cta-call{flex:0 0 auto;width:52px;padding:0;}
+.m-sticky-cta .modal-cta-gm svg,.m-sticky-cta .modal-cta-call svg{width:20px;height:20px;fill:currentColor;}
 @media(min-width:769px){.m-sticky-cta{display:none!important;}}
 /* 基本情報: 上層（最大6行・値がある行だけ）＋ 折りたたみ「設備・支払い」 */
 .m-info-rows{display:flex;flex-direction:column;}
@@ -9762,6 +9768,89 @@ function nbOpenInsiderForm(){
   else if (wrap) wrap.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
+// ── 電話するボタン: Places API ライブ取得（保存しない） ──
+// Google Maps Platform 利用規約により電話番号は warehousing 禁止・都度ライブ取得のみ許可
+// （developers.google.com/maps/documentation/places/web-service/policies）。
+// そのため LOCAL_STORES には焼き込まず、タップされた瞬間にだけ取得して tel: を発火する。
+// ブラウザ制限（HTTPリファラ: nagoya-bites.com のみ）付きキーを使用。GCP側にも
+// プロジェクト全体で1日300件のハードクォータを設定済み（既存の写真取得等と共有）。
+var NB_CALL_MAPS_KEY = 'AIzaSyBKD3MCHPdIPxHt-hZlh8EIv_8zMYDbgos';
+var NB_CALL_ICON_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg>';
+function nbCallBtnHtml(r, ctaEsc, iconOnly) {
+  if (!r.placeId) return '';
+  var label = iconOnly ? '' : '<span>電話する</span>';
+  return '<button type="button" class="modal-cta-btn modal-cta-call" onclick="nbCallStore(event,\'' + ctaEsc(r.placeId) + '\',\'' + ctaEsc(r['店名']) + '\',this)" aria-label="' + ctaEsc(r['店名']) + 'に電話する">' + NB_CALL_ICON_SVG + label + '</button>';
+}
+var NB_MAPS_JS_PROMISE = null;
+function nbLoadMapsJs() {
+  if (NB_MAPS_JS_PROMISE) return NB_MAPS_JS_PROMISE;
+  NB_MAPS_JS_PROMISE = new Promise(function(resolve, reject) {
+    if (window.google && window.google.maps && window.google.maps.places) { resolve(); return; }
+    window.__nbMapsReady = resolve;
+    var s = document.createElement('script');
+    s.src = 'https://maps.googleapis.com/maps/api/js?key=' + NB_CALL_MAPS_KEY + '&libraries=places&callback=__nbMapsReady&loading=async';
+    s.async = true;
+    s.onerror = function(){ NB_MAPS_JS_PROMISE = null; reject(new Error('maps-js-load-failed')); };
+    document.head.appendChild(s);
+  });
+  return NB_MAPS_JS_PROMISE;
+}
+// 同一ページ表示中だけの即席キャッシュ（保存はしない。閉じれば消える。二重タップの無駄打ち防止用）
+var NB_PHONE_MEM = {};
+// ブラウザ単位の簡易レート制限（暴発・誤連打での枠消費を防ぐ。1日20回まで）
+function nbCallTapAllowed() {
+  try {
+    var key = 'nb_call_taps_' + new Date().toISOString().slice(0, 10);
+    var n = parseInt(localStorage.getItem(key) || '0', 10);
+    if (n >= 20) return false;
+    localStorage.setItem(key, String(n + 1));
+    return true;
+  } catch (e) { return true; }
+}
+function nbCallBtnMsg(btn, msg) {
+  var span = btn.querySelector('span');
+  if (span) span.textContent = msg;
+  else btn.setAttribute('aria-label', msg);
+}
+function nbCallBtnReset(btn) {
+  btn.disabled = false;
+  nbCallBtnMsg(btn, '電話する');
+  btn.setAttribute('aria-label', (btn.getAttribute('data-store-name') || '') + 'に電話する');
+}
+function nbCallStore(ev, placeId, storeName, btn) {
+  ev.stopPropagation();
+  if (!placeId || !btn || btn.disabled) return;
+  btn.setAttribute('data-store-name', storeName);
+  trackEvent('cta_call_click', {store_name: storeName});
+  if (NB_PHONE_MEM[placeId]) { location.href = 'tel:' + NB_PHONE_MEM[placeId]; return; }
+  if (!nbCallTapAllowed()) {
+    nbCallBtnMsg(btn, '本日の上限です');
+    setTimeout(function(){ nbCallBtnReset(btn); }, 2500);
+    return;
+  }
+  btn.disabled = true;
+  nbCallBtnMsg(btn, '確認中…');
+  nbLoadMapsJs().then(function() {
+    var svc = new google.maps.places.PlacesService(document.createElement('div'));
+    svc.getDetails({placeId: placeId, fields: ['international_phone_number']}, function(place, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK && place && place.international_phone_number) {
+        var tel = place.international_phone_number.replace(/[^\d+]/g, '');
+        NB_PHONE_MEM[placeId] = tel;
+        nbCallBtnReset(btn);
+        location.href = 'tel:' + tel;
+      } else {
+        nbCallBtnMsg(btn, '電話番号なし');
+        btn.disabled = false;
+        setTimeout(function(){ nbCallBtnReset(btn); }, 2500);
+      }
+    });
+  }).catch(function() {
+    nbCallBtnMsg(btn, '通信エラー');
+    btn.disabled = false;
+    setTimeout(function(){ nbCallBtnReset(btn); }, 2500);
+  });
+}
+
 function openM(i) {
   // ハートボタン経由のクリックならモーダルを開かない
   if (window.event && window.event.target && window.event.target.closest && window.event.target.closest('.fav-btn')) return;
@@ -10013,17 +10102,23 @@ function openM(i) {
     igWrap.style.display = 'none';
     if (igWrap._pendingSrc !== undefined) igWrap._pendingSrc = null;
   }
-  // ── モーダル内 CTA（主: 予約＝塗り / 副: 地図＝アウトライン）。同じ2導線をスマホの追従バーにも出す ──
+  // ── モーダル内 CTA（主: 予約＝塗り / 副: 電話・地図＝アウトライン）。同じ導線をスマホの追従バーにも出す ──
   var ctaEsc = mCtaEsc;
   var ctaRow = document.getElementById('modal-cta-row');
   var stickyEl = document.getElementById('m-sticky-cta');
   var hpId2 = r['ホットペッパーID'] || '';
   var mapBtnHtml = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_cta\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認">地図で場所を確認する</a>';
   var hpBtnHtml = hpId2 ? '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="trackEvent(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>' : '';
-  if (ctaRow) { ctaRow.innerHTML = hpBtnHtml + mapBtnHtml; ctaRow.style.display = ''; }
+  var callBtnHtml = nbCallBtnHtml(r, ctaEsc, false);
+  if (ctaRow) { ctaRow.innerHTML = hpBtnHtml + callBtnHtml + mapBtnHtml; ctaRow.style.display = ''; }
   if (stickyEl) {
     var mapIconBtn = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_sticky\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a>';
-    stickyEl.innerHTML = hpId2 ? (hpBtnHtml + mapIconBtn) : mapBtnHtml;
+    var callIconBtn = nbCallBtnHtml(r, ctaEsc, true);
+    // HPありは3導線を「主(帯)＋アイコン2つ」で圧縮、HPなしで電話ありは2導線とも文字ボタンのまま
+    // 並べる（アイコンだけの塊が浮かないように）。どちらも無ければ従来通り地図単独の帯ボタン。
+    stickyEl.innerHTML = hpId2 ? (hpBtnHtml + callIconBtn + mapIconBtn)
+      : r.placeId ? (callBtnHtml + mapBtnHtml)
+      : mapBtnHtml;
     stickyEl.classList.remove('show');
   }
   // ── 媒体リンク（favicon＋名前の小チップ1行。Google マップは modal_media_row で計測を区別）──
