@@ -20,9 +20,15 @@ name: NAGOYA BITES — 日次ジャーナル 欠番監視
 
 on:
   schedule:
-    # 03:00 UTC = 12:00 JST。ローカルは 09:00 JST 起動で生成に最長40分程度かかるため、
-    # 正常日を誤検出しないよう十分な余裕を取った時刻に監視する。
-    - cron: '0 3 * * *'
+    # 2本のcronを置く理由（ISSUE-123・実測根拠）:
+    #   GitHubスケジュール遅延が実測で4.4〜6.3時間あり、03:00 UTC（JST12:00 意図）の
+    #   実際の起動は 16:24〜18:18 JST になっていた。通知が遅すぎる。
+    #   00:00 UTC（JST09:00 意図）を追加することで:
+    #     - 1回目: 実測 13:24〜15:18 JST（より早い通知）
+    #     - 2回目: 実測 16:24〜18:18 JST（バックアップ）
+    #   2本化で「どちらか早い方で届く」冗長性を確保する。
+    - cron: '0 0 * * *'  # 09:00 JST 意図（実測 13〜15 JST）— 早期検出用
+    - cron: '0 3 * * *'  # 12:00 JST 意図（実測 16〜18 JST）— バックアップ
   workflow_dispatch: # 手動確認・復旧後の即時クローズ用
 
 permissions:
@@ -43,6 +49,18 @@ jobs:
         with:
           node-version: '20'
 
+      - name: SNSポリシー連携チェック（退行防止・ISSUE-123）
+        run: |
+          # run_journal_local.sh が journal_sns_draft_policy.json を参照していることを確認。
+          # SNS原稿生成フラグ（generate_sns_draft）をラッパーが無視すると、
+          # フラグが false でも原稿ファイルを探して die する（9/6 事故の原因）。
+          if ! grep -q 'journal_sns_draft_policy.json' scripts/run_journal_local.sh; then
+            echo "❌ run_journal_local.sh が journal_sns_draft_policy.json を参照していません。"
+            echo "   SNSポリシーの参照が欠落しており、ISSUE-123 の再発リスクがあります。"
+            exit 1
+          fi
+          echo "✅ run_journal_local.sh は journal_sns_draft_policy.json を参照しています。"
+
       - name: 欠番チェック
         id: check
         run: |
@@ -60,84 +78,176 @@ jobs:
           script: |
             const fs = require('fs');
             const r = JSON.parse(fs.readFileSync('/tmp/journal-health.json', 'utf8'));
-            const label = 'journal-watchdog';
             const owner = context.repo.owner;
             const repo = context.repo.repo;
 
-            const { data: issues } = await github.rest.issues.listForRepo({
-              owner, repo, state: 'open', labels: label, per_page: 20,
-            });
-            const existing = issues.find(i => i.title.startsWith('🔴 日次ジャーナル欠番'));
+            // ===== トラック1: 欠番（published.json / 記事HTML の実在チェック）=====
+            {
+              const label = 'journal-watchdog';
+              const { data: issues } = await github.rest.issues.listForRepo({
+                owner, repo, state: 'open', labels: label, per_page: 20,
+              });
+              const existing = issues.find(i => i.title.startsWith('🔴 日次ジャーナル欠番'));
 
-            // ---- 復旧している場合: 開いている Issue を閉じる（人の手を煩わせない）----
-            if (r.ok) {
-              if (existing) {
-                await github.rest.issues.createComment({
-                  owner, repo, issue_number: existing.number,
-                  body: `✅ 復旧を確認しました（JST ${r.today_jst}）。直近${r.window_days}日に欠番はありません。自動クローズします。`,
-                });
-                await github.rest.issues.update({
-                  owner, repo, issue_number: existing.number, state: 'closed',
-                });
-                core.info(`Issue #${existing.number} を復旧クローズしました。`);
+              if (r.ok) {
+                if (existing) {
+                  await github.rest.issues.createComment({
+                    owner, repo, issue_number: existing.number,
+                    body: `✅ 復旧を確認しました（JST ${r.today_jst}）。直近${r.window_days}日に欠番はありません。自動クローズします。`,
+                  });
+                  await github.rest.issues.update({
+                    owner, repo, issue_number: existing.number, state: 'closed',
+                  });
+                  core.info(`Issue #${existing.number} を復旧クローズしました。`);
+                } else {
+                  core.info('欠番なし。Issue の起票は不要です。');
+                }
               } else {
-                core.info('欠番なし。Issue の起票は不要です。');
+                const dates = r.missing.map(m => m.date).join(', ');
+                const title = `🔴 日次ジャーナル欠番 ${r.missing_count}件（最新 ${r.missing[0].date}）`;
+
+                const lines = [];
+                lines.push(`直近${r.window_days}日で **${r.missing_count}件** の欠番を検出しました（JST ${r.today_jst} 時点）。`);
+                lines.push('');
+                lines.push('## 欠番の日');
+                for (const m of r.missing) lines.push(`- **${m.date}** — ${m.detail}`);
+                lines.push('');
+
+                const h = r.last_local_run;
+                lines.push('## ローカル実行（launchd）の最後の状態');
+                if (h) {
+                  lines.push(`- 対象日: \`${h.date}\``);
+                  lines.push(`- 状態: \`${h.status}\``);
+                  if (h.reason) lines.push(`- 理由: ${h.reason}`);
+                  if (h.recorded_at) lines.push(`- 記録時刻: ${h.recorded_at}`);
+                } else {
+                  lines.push('- `data/journal_health.json` が未取得です。');
+                  lines.push('- **launchd が一度も発火していない可能性があります**（Mac のスリープ/電源断、またはジョブの unload）。');
+                  lines.push('- 確認: `launchctl list | grep nagoyabites`');
+                }
+                lines.push('');
+                lines.push('## 対処');
+                lines.push('1. Mac 上で原因を特定する:');
+                lines.push('   ```bash');
+                lines.push('   node scripts/check_journal_health.js --days 7');
+                lines.push('   tail -40 ~/nagoya-bites/.local-logs/journal-$(date +%F).log');
+                lines.push('   ```');
+                lines.push('2. **認証切れ（`OAuth session expired` / `Failed to authenticate`）の場合** —');
+                lines.push('   これはコードでは直せません。Mac で `claude` を対話起動してログインし直してください。');
+                lines.push('   復旧後の確認: `claude --print "ok"` が応答すればOK。');
+                lines.push('3. 復旧後に手動で当日分を回す: `bash scripts/run_journal_local.sh`');
+                lines.push('4. 欠番のバックフィルが必要なら `/journal-today` を対象日で実行する。');
+                lines.push('');
+                lines.push('---');
+                lines.push('この Issue は欠番が解消されると自動でクローズされます（journal-watchdog.yml）。');
+                const body = lines.join('\n');
+
+                if (existing) {
+                  await github.rest.issues.update({
+                    owner, repo, issue_number: existing.number, title, body,
+                  });
+                  await github.rest.issues.createComment({
+                    owner, repo, issue_number: existing.number,
+                    body: `再検出（JST ${r.today_jst}）。現在の欠番: ${dates}`,
+                  });
+                  core.setFailed(`日次ジャーナルの欠番が継続しています: ${dates}`);
+                } else {
+                  const { data: created } = await github.rest.issues.create({
+                    owner, repo, title, body, labels: [label],
+                  });
+                  core.setFailed(`日次ジャーナルの欠番を検出し Issue #${created.number} を起票しました: ${dates}`);
+                }
               }
-              return;
             }
 
-            // ---- 欠番あり: 起票 or 更新 ----
-            const dates = r.missing.map(m => m.date).join(', ');
-            const title = `🔴 日次ジャーナル欠番 ${r.missing_count}件（最新 ${r.missing[0].date}）`;
-
-            const lines = [];
-            lines.push(`直近${r.window_days}日で **${r.missing_count}件** の欠番を検出しました（JST ${r.today_jst} 時点）。`);
-            lines.push('');
-            lines.push('## 欠番の日');
-            for (const m of r.missing) lines.push(`- **${m.date}** — ${m.detail}`);
-            lines.push('');
-
-            const h = r.last_local_run;
-            lines.push('## ローカル実行（launchd）の最後の状態');
-            if (h) {
-              lines.push(`- 対象日: \`${h.date}\``);
-              lines.push(`- 状態: \`${h.status}\``);
-              if (h.reason) lines.push(`- 理由: ${h.reason}`);
-              if (h.recorded_at) lines.push(`- 記録時刻: ${h.recorded_at}`);
-            } else {
-              lines.push('- `data/journal_health.json` が未取得です。');
-              lines.push('- **launchd が一度も発火していない可能性があります**（Mac のスリープ/電源断、またはジョブの unload）。');
-              lines.push('- 確認: `launchctl list | grep nagoyabites`');
-            }
-            lines.push('');
-            lines.push('## 対処');
-            lines.push('1. Mac 上で原因を特定する:');
-            lines.push('   ```bash');
-            lines.push('   node scripts/check_journal_health.js --days 7');
-            lines.push('   tail -40 ~/nagoya-bites/.local-logs/journal-$(date +%F).log');
-            lines.push('   ```');
-            lines.push('2. **認証切れ（`OAuth session expired` / `Failed to authenticate`）の場合** —');
-            lines.push('   これはコードでは直せません。Mac で `claude` を対話起動してログインし直してください。');
-            lines.push('   復旧後の確認: `claude --print "ok"` が応答すればOK。');
-            lines.push('3. 復旧後に手動で当日分を回す: `bash scripts/run_journal_local.sh`');
-            lines.push('4. 欠番のバックフィルが必要なら `/journal-today` を対象日で実行する。');
-            lines.push('');
-            lines.push('---');
-            lines.push('この Issue は欠番が解消されると自動でクローズされます（journal-watchdog.yml）。');
-            const body = lines.join('\n');
-
-            if (existing) {
-              await github.rest.issues.update({
-                owner, repo, issue_number: existing.number, title, body,
+            // ===== トラック2: ローカル自動化の失敗（ISSUE-123）=====
+            // 記事が手動でマニュアル公開されると欠番は消えるが、自動化が壊れているという
+            // 事実は残る。この独立したトラックで「公開はできているが自動化は壊れている」
+            // 状態を検知し、オーナーに届ける。
+            {
+              const label = 'journal-run-died';
+              const { data: issues } = await github.rest.issues.listForRepo({
+                owner, repo, state: 'open', labels: label, per_page: 20,
               });
-              await github.rest.issues.createComment({
-                owner, repo, issue_number: existing.number,
-                body: `再検出（JST ${r.today_jst}）。現在の欠番: ${dates}`,
-              });
-              core.setFailed(`日次ジャーナルの欠番が継続しています: ${dates}`);
-            } else {
-              const { data: created } = await github.rest.issues.create({
-                owner, repo, title, body, labels: [label],
-              });
-              core.setFailed(`日次ジャーナルの欠番を検出し Issue #${created.number} を起票しました: ${dates}`);
+              const existing = issues.find(i => i.title.startsWith('⚠️ 日次ジャーナル自動化'));
+
+              const h = r.last_local_run;
+              const runFailed = r.local_run_died || r.local_run_held;
+
+              if (!runFailed) {
+                // 自動化は正常 or 当日のデータが無い（まだ未発火）→ 既存 Issue を閉じる
+                if (existing) {
+                  await github.rest.issues.createComment({
+                    owner, repo, issue_number: existing.number,
+                    body: `✅ ローカル自動化の復旧を確認しました（JST ${r.today_jst}）。自動クローズします。`,
+                  });
+                  await github.rest.issues.update({
+                    owner, repo, issue_number: existing.number, state: 'closed',
+                  });
+                  core.info(`自動化Issue #${existing.number} を復旧クローズしました。`);
+                } else {
+                  core.info('自動化の異常なし。');
+                }
+              } else {
+                // die または hold → 起票 / 更新
+                const statusWord = r.local_run_died ? 'die（異常終了）' : 'hold（品質HOLD）';
+                const title = `⚠️ 日次ジャーナル自動化が ${r.today_jst} に ${statusWord} で終了`;
+
+                const lines = [];
+                lines.push(`ローカル自動化（launchd / \`run_journal_local.sh\`）が **${statusWord}** で終了しました。`);
+                lines.push('記事が別の経路（手動PRなど）で公開されていても、自動化自体は壊れています。');
+                lines.push('');
+                lines.push('## 自動化の最後の状態');
+                if (h) {
+                  lines.push(`- 対象日: \`${h.date}\``);
+                  lines.push(`- 状態: \`${h.status}\``);
+                  if (h.reason) lines.push(`- 理由: **${h.reason}**`);
+                  if (h.recorded_at) lines.push(`- 記録時刻: ${h.recorded_at}`);
+                }
+                lines.push('');
+                lines.push('## 欠番の状態');
+                if (r.ok) {
+                  lines.push('- 直近7日の欠番: **なし**（記事は手動または別経路で公開済み）');
+                } else {
+                  lines.push(`- 直近7日の欠番: **${r.missing_count}件**（${r.missing.map(m => m.date).join(', ')}）`);
+                }
+                lines.push('');
+                lines.push('## 対処');
+                lines.push('1. Mac 上でログを確認する:');
+                lines.push('   ```bash');
+                lines.push('   tail -40 ~/nagoya-bites/.local-logs/journal-$(date +%F).log');
+                lines.push('   node scripts/check_journal_health.js --days 7');
+                lines.push('   ```');
+                if (h && h.reason && h.reason.includes('SNS原稿')) {
+                  lines.push('2. **SNS原稿が見つからない（generate_sns_draft が false のはずなのに参照している）** —');
+                  lines.push('   `data/journal_sns_draft_policy.json` の `generate_sns_draft` が `false` になっているか確認してください。');
+                  lines.push('   `scripts/run_journal_local.sh` が同ファイルを正しく参照しているか確認してください。');
+                } else if (h && h.reason && (h.reason.includes('OAuth') || h.reason.includes('authenticate'))) {
+                  lines.push('2. **認証切れの場合** — Mac で `claude` を対話起動してログインし直してください。');
+                  lines.push('   復旧確認: `claude --print "ok"`');
+                } else {
+                  lines.push('2. 原因に応じて対処してください。');
+                }
+                lines.push('3. 復旧後に手動で当日分を回す: `bash scripts/run_journal_local.sh`');
+                lines.push('');
+                lines.push('---');
+                lines.push('この Issue はローカル自動化が正常終了（`status: ok`）した翌日に自動クローズされます（journal-watchdog.yml）。');
+                const body = lines.join('\n');
+
+                if (existing) {
+                  await github.rest.issues.update({
+                    owner, repo, issue_number: existing.number, title, body,
+                  });
+                  await github.rest.issues.createComment({
+                    owner, repo, issue_number: existing.number,
+                    body: `再検出（JST ${r.today_jst}）。自動化の状態: ${h ? h.status : '不明'}${h && h.reason ? ' — ' + h.reason : ''}`,
+                  });
+                  core.setFailed(`日次ジャーナル自動化の異常が継続しています（${statusWord}）`);
+                } else {
+                  const { data: created } = await github.rest.issues.create({
+                    owner, repo, title, body, labels: [label],
+                  });
+                  core.setFailed(`日次ジャーナル自動化の異常を検出し Issue #${created.number} を起票しました（${statusWord}）`);
+                }
+              }
             }
