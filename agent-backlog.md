@@ -6361,3 +6361,17 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
 - 1件ずつ解く: `/solve-next` スラッシュコマンド
 - agent-backlog.md が**マスター**、Notion は確認用ダッシュボード
 - `status: done` になった課題は Notion からアーカイブされて表示から消える
+
+---
+
+## 夜間QA検出課題（QA-*）
+
+### [QA-SEC-SECRET-GOOGLE-API-KEY] Google API key らしき文字列がコミットされている疑い（1箇所）
+- **priority**: P0 → **status**: ready
+- **detected**: 2026-09-08
+- **category**: Security
+- **owner**: DataKeeper
+- **source**: 夜間QA（scripts/nightly_qa.js 自動起票）2026-09-08
+- シークレット文字列スキャンで検出（値は秘匿）:
+-     index.html:9853
+- acceptance: 該当値を確認し本物なら即ローテーション＋履歴消去／誤検知なら .qa-secret-allowlist.txt に登録
