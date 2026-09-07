@@ -273,23 +273,23 @@ document.addEventListener('keydown',function(e){
 .txt-badge{display:inline-flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:var(--fs-xs);font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:.18rem .5rem;border-radius:2px;line-height:1;}
 .num-serif{font-family:'Cormorant Garamond',serif;font-weight:500;font-style:normal;letter-spacing:.01em;}
 ::selection{background:var(--gold);color:var(--bg);}
-@media(max-width:768px){
-.hamburger{display:block;}
-nav{position:fixed;top:0;right:-100%;width:70vw;max-width:280px;height:100vh;background:var(--bg);flex-direction:column;gap:0;padding:5rem 2rem 2rem;border-left:1px solid var(--border);box-shadow:-4px 0 24px rgba(0,0,0,.08);transition:right .3s ease;z-index:200;align-items:flex-start;}
-nav a{font-size:.82rem;padding:.9rem 0;border-bottom:1px solid var(--border);width:100%;letter-spacing:.12em;}
-nav.open{right:0;}
-.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:199;}
-.nav-overlay.open{display:block;}
-}
 /* ── HERO ── */
-.hero{padding:clamp(1.8rem,3.5vw,2.8rem) 2rem clamp(2.4rem,4vw,3.2rem);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 72% 38%,rgba(201,169,110,.07) 0%,transparent 65%);}
+.hero{padding:clamp(1.8rem,3.5vw,2.8rem) 1.5rem clamp(2.4rem,4vw,3.2rem);position:relative;}
+.nb-cover-copy{display:flex;flex-direction:column;justify-content:flex-end;}
 .hero .eyebrow{font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);margin-bottom:1.2rem;opacity:0;animation:up .8s .2s forwards;}
-.hero h1{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(2.9rem,6vw,5rem);line-height:1.04;letter-spacing:.005em;color:var(--white);opacity:0;animation:up .9s .35s forwards;}
+.hero h1{font-family:var(--font-display);font-weight:500;font-size:var(--fs-3xl);line-height:var(--lh-display);letter-spacing:.005em;color:var(--ink);opacity:0;animation:up .9s .35s forwards;}
 .hero h1 em{font-style:italic;color:var(--gold);}
 .hero h1 .fade{opacity:.65;}
-.hero-sub{margin-top:1.4rem;font-size:.82rem;letter-spacing:.04em;color:var(--muted);line-height:1.9;max-width:520px;opacity:0;animation:up .9s .5s forwards;}
+.hero-sub{margin-top:1.4rem;font-size:var(--fs-md);letter-spacing:0;color:var(--muted);line-height:var(--lh-body);max-width:34em;opacity:0;animation:up .9s .5s forwards;}
 .hero-sub strong{color:var(--text);font-weight:600;}
+/* ── COVER（DSN-003・表紙型ファーストビュー：左に見出し/検索/シーン導線、右に今月の特集） ── */
+@media(min-width:1024px){
+  .nb-cover{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:var(--sp-7);max-width:var(--container-wide);margin:0 auto;padding-left:.5rem;padding-right:.5rem;align-items:start;}
+  .nb-cover-copy{padding:clamp(1.5rem,3vw,2.5rem) 1rem clamp(1.5rem,3vw,2.5rem);}
+  .nb-cover-featured{padding-top:clamp(1.5rem,3vw,2.5rem);}
+}
+body.search-active .nb-cover{grid-template-columns:1fr;}
+body.search-active .nb-cover-featured{display:none;}
 .search-wrap{margin-top:2.2rem;display:flex;flex-wrap:wrap;gap:.6rem;max-width:460px;opacity:0;animation:up .9s .65s forwards;}
 .search-wrap input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.8rem 1.1rem;font-size:.8rem;border-radius:2px;outline:none;font-family:inherit;transition:border-color .2s;}
 .search-wrap input::placeholder{color:var(--dim);}
@@ -308,7 +308,7 @@ nav.open{right:0;}
 .scene-nav{margin-top:1.6rem;max-width:580px;opacity:0;animation:up .9s .8s forwards;}
 .scene-nav-row{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin-top:.7rem;}
 .scene-nav-row:first-child{margin-top:0;}
-.scene-nav-label{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.14em;color:var(--gold);white-space:nowrap;text-transform:uppercase;margin-right:.15rem;}
+.scene-nav-label{font-family:var(--font-body);font-weight:600;font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);white-space:nowrap;text-transform:none;margin-right:.15rem;}
 .scene-chip{background:rgba(201,169,110,.08);border:1px solid rgba(201,169,110,.32);color:var(--white);font-family:inherit;font-size:var(--fs-xs);letter-spacing:.03em;padding:.46rem .9rem;border-radius:3px;cursor:pointer;transition:all .18s;min-height:38px;display:inline-flex;align-items:center;}
 .scene-chip:hover{background:rgba(201,169,110,.2);border-color:var(--gold);}
 .scene-chip:active{transform:translateY(1px);}
@@ -747,7 +747,7 @@ body.search-query-active .card-why{display:flex;}
 .trend-eyebrow{color:#c5341a;letter-spacing:.32em;}
 .trend-ranking-header h2{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-weight:400;font-size:clamp(1.4rem,3vw,1.8rem);letter-spacing:.01em;color:var(--text);text-transform:none;margin:0;line-height:1.15;}
 .trend-ranking-header h2 em{color:var(--ember);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1em;letter-spacing:.02em;margin-left:.5rem;font-weight:400;}
-.trend-ranking-sub{font-family:'DM Mono',monospace;font-size:var(--fs-xs);color:var(--muted);margin:.2rem 0 0;letter-spacing:.14em;text-transform:uppercase;}
+.trend-ranking-sub{font-family:var(--font-body);font-size:var(--fs-sm);color:var(--muted);margin:.3rem 0 0;letter-spacing:0;text-transform:none;}
 .trend-ranking-scroll{display:flex;gap:1rem;overflow-x:auto;padding-bottom:.5rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
 .trend-ranking-scroll::-webkit-scrollbar{height:3px;}
 .trend-ranking-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px;}
@@ -822,7 +822,6 @@ footer{padding:1.5rem 1rem;}
 }
 @media(min-width:769px) and (max-width:900px){
 .grid{grid-template-columns:repeat(2,1fr);}
-.hero{padding:120px 2rem 60px;}
 }
 @media(min-width:769px) and (max-width:1024px){
 .grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;padding:1rem 1.2rem 2rem;}
@@ -896,33 +895,52 @@ h3.cn{margin:0 0 6px;font-family:'Noto Sans JP',sans-serif;}
 @media(max-width:640px){.feature-strip{padding:.9rem 1rem;gap:.7rem;}.feature-strip-cards{grid-template-columns:repeat(2,1fr);gap:.7rem;}.feature-card-body{padding:.75rem .85rem .9rem;}.feature-card-title{font-size:.88rem;}.feature-card-sub{font-size:var(--fs-xs);}}
 /* ── FEATURE TOP CAROUSEL ── 今月の特集をヘッダー直下・ファーストビュー最上部に横スクロールで出す。
    隣のカードを覗かせて「横に続く」ことを見せる（矢印やドットに頼らず指で払える形を優先） */
-.feature-top{padding:calc(56px + 1rem) 0 1.1rem;gap:.85rem;background:var(--bg);}
-.feature-top .feature-strip-label{padding:0 1.5rem;}
+.feature-top{padding:1.1rem 0;gap:.85rem;background:var(--bg);}
+.feature-top .feature-strip-label{padding:0 1.5rem;font-family:var(--font-body);text-transform:none;letter-spacing:0;font-size:var(--fs-xs);color:var(--gold);}
+.feature-top .feature-strip-label::before{display:none;}
 .feature-top .feature-strip-cards{display:flex;grid-template-columns:none;max-width:none;gap:.7rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:1.5rem;padding:.2rem 1.5rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .feature-top .feature-strip-cards::-webkit-scrollbar{display:none;}
-.feature-top .feature-card{position:relative;flex:0 0 min(560px,72vw);scroll-snap-align:start;border-radius:8px;border:none;background:#221f1c;}
+.feature-top .feature-card{position:relative;flex:0 0 min(560px,72vw);scroll-snap-align:start;border-radius:var(--r-lg);border:none;background:#221f1c;}
 .feature-top .feature-card-thumb{aspect-ratio:16/9;}
 /* 画像の上に文字を重ねるため、下からのグラデーションで可読性を確保する */
 .feature-top .feature-card-body{position:absolute;left:0;right:0;bottom:0;padding:2.4rem 1.1rem .95rem;gap:.25rem;flex:none;background:linear-gradient(to top,rgba(16,14,12,.86) 0%,rgba(16,14,12,.5) 48%,rgba(16,14,12,0) 100%);}
 .feature-top .feature-card-title{font-size:1.15rem;font-weight:600;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.4);}
 .feature-top .feature-card-title::after{display:none;}
-.feature-top .feature-card-sub{color:rgba(255,255,255,.82);letter-spacing:.12em;text-shadow:0 1px 5px rgba(0,0,0,.4);}
+.feature-top .feature-card-sub{color:rgba(255,255,255,.82);letter-spacing:0;text-shadow:0 1px 5px rgba(0,0,0,.4);font-family:var(--font-body);}
 .feature-top .feature-card-cta{display:none;}
 .feature-top-rail{position:relative;}
 /* 送りボタンはマウス環境の発見性のためだけに出す（指で払える端末では邪魔なので出さない） */
 .feature-top-nav{display:none;}
-@media(hover:hover) and (min-width:900px){
+@media(hover:hover) and (min-width:768px) and (max-width:1023px){
 .feature-top-nav{display:flex;align-items:center;justify-content:center;position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:40px;height:40px;border:none;border-radius:50%;background:rgba(255,255,255,.94);color:var(--text);font-size:1.4rem;line-height:1;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.18);transition:background .2s;}
 .feature-top-nav:hover{background:#fff;}
 .feature-top-nav[hidden]{display:none;}
 .feature-top-prev{left:.75rem;}
 .feature-top-next{right:.75rem;}
 }
-.feature-top-foot{display:flex;justify-content:center;}
-.feature-top-all{font-size:.76rem;letter-spacing:.06em;color:var(--gold);text-decoration:none;padding:.3rem .6rem;}
+.feature-top-foot{display:flex;justify-content:flex-end;padding:0 1.5rem;}
+.feature-top-all{font-size:var(--fs-sm);letter-spacing:0;color:var(--gold);text-decoration:none;padding:.3rem .6rem;min-height:var(--tap-min);display:inline-flex;align-items:center;}
+/* ── デスクトップ（≥1024px）: カバー右カラムの静的グリッド（1本大＋2本小・矢印/レール無し） ── */
+@media(min-width:1024px){
+  .nb-cover-featured .feature-top{padding:0;}
+  .nb-cover-featured .feature-top .feature-strip-label{padding:0;}
+  .nb-cover-featured .feature-top-foot{padding:0;}
+  .nb-cover-featured .feature-top .feature-strip-cards{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;overflow:visible;padding:0;max-width:none;scroll-snap-type:none;}
+  .nb-cover-featured .feature-top .feature-card{scroll-snap-align:none;}
+  .nb-cover-featured .feature-top .feature-card:nth-child(1){grid-column:1 / -1;}
+  .nb-cover-featured .feature-top .feature-card:nth-child(n+2){display:grid;grid-template-columns:104px 1fr;gap:.75rem;align-items:center;background:transparent;border:0;border-top:1px solid var(--border);border-radius:0;padding:.75rem 0 0;}
+  .nb-cover-featured .feature-top .feature-card:nth-child(n+2) .feature-card-thumb{aspect-ratio:4/3;border-radius:var(--r-sm);}
+  .nb-cover-featured .feature-top .feature-card:nth-child(n+2) .feature-card-body{position:static;padding:0;background:none;gap:.2rem;}
+  .nb-cover-featured .feature-top .feature-card:nth-child(n+2) .feature-card-title{color:var(--text);text-shadow:none;font-size:var(--fs-md);font-weight:500;}
+  .nb-cover-featured .feature-top .feature-card:nth-child(n+2) .feature-card-sub{color:var(--dim);text-shadow:none;font-size:var(--fs-xs);}
+  .nb-cover-featured .feature-top .feature-card:nth-child(n+2) .feature-card-season{display:none;}
+  .nb-cover-featured .feature-top .feature-card:nth-child(n+4){display:none;}
+  .nb-cover-featured .feature-top .feature-card-clone{display:none;}
+  .nb-cover-featured .feature-top-nav{display:none!important;}
+}
 .feature-top-all:hover{color:var(--ember-deep);text-decoration:underline;}
 @media(max-width:640px){
-.feature-top{padding:calc(52px + .8rem) 0 .85rem;gap:.6rem;}
+.feature-top{padding:.85rem 0;gap:.6rem;}
 .feature-top .feature-strip-label{padding:0 1rem;}
 .feature-top .feature-strip-cards{gap:.55rem;padding:.2rem 1rem;scroll-padding-left:1rem;}
 .feature-top .feature-card{flex:0 0 86vw;}
@@ -931,13 +949,11 @@ h3.cn{margin:0 0 6px;font-family:'Noto Sans JP',sans-serif;}
 }
 /* ── LATEST JOURNAL (最新の日次ジャーナル3件) ── */
 .latest-journal-section{padding:clamp(1.8rem,3.5vw,2.8rem) 1.5rem;background:var(--bg);border-bottom:1px solid var(--border);}
-.latest-journal-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.2rem;max-width:1100px;margin-left:auto;margin-right:auto;padding-bottom:.9rem;border-bottom:1px solid var(--border);}
-.latest-journal-header h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(1.4rem,3vw,1.8rem);color:var(--text);letter-spacing:.01em;line-height:1.1;}
-.latest-journal-header h2 em{font-style:italic;color:var(--gold);}
-.latest-journal-header a{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.22em;color:var(--gold);text-decoration:none;text-transform:uppercase;display:inline-flex;align-items:center;gap:.5rem;transition:gap .25s,color .25s;}
-.latest-journal-header a::after{content:"";display:inline-block;width:18px;height:1px;background:currentColor;transition:width .25s;}
-.latest-journal-header a:hover{color:var(--ember);}
-.latest-journal-header a:hover::after{width:28px;}
+.latest-journal-header{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;margin-bottom:1.2rem;max-width:1100px;margin-left:auto;margin-right:auto;padding-bottom:.9rem;border-bottom:1px solid var(--border);}
+.latest-journal-headline h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(1.4rem,3vw,1.8rem);color:var(--text);letter-spacing:.01em;line-height:1.1;}
+.latest-journal-headline h2 em{font-style:italic;color:var(--gold);}
+.latest-journal-lead{font-size:var(--fs-sm);color:var(--muted);margin-top:.3rem;}
+.latest-journal-header .nb-more{flex-shrink:0;}
 .latest-journal-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;max-width:1100px;margin:0 auto;}
 .latest-journal-card{display:flex;flex-direction:column;gap:.55rem;padding:1.2rem 1.25rem 1.3rem;background:#fff;border:0.5px solid #D3D1C7;border-radius:4px;text-decoration:none;color:inherit;transition:transform .3s ease,box-shadow .3s ease,border-color .3s;position:relative;}
 .latest-journal-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(122,92,16,.14);border-color:rgba(184,84,31,.45);}
@@ -956,20 +972,20 @@ h3.cn{margin:0 0 6px;font-family:'Noto Sans JP',sans-serif;}
 .auth-sep{color:rgba(247,245,241,.25);font-size:var(--fs-xs);}
 @media(max-width:640px){.authority-bar{padding:.55rem 1rem;font-size:var(--fs-xs);gap:.35rem 1rem;}.auth-sep{display:none;}}
 /* ── NO-SAKURA BANNER ── */
-.no-sakura-banner{background:#fdfaf3;color:#1f1b18;padding:clamp(2rem,4vw,3rem) 1.5rem clamp(2.2rem,4.5vw,3.2rem);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.no-sakura-banner{background:var(--ink);color:var(--bg);padding:clamp(2.5rem,5vw,3.8rem) 1.5rem clamp(2.8rem,5.5vw,4rem);}
 .no-sakura-inner{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:1.3rem;}
 .no-sakura-eyebrow{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:500;letter-spacing:0;color:var(--gold);}
-.no-sakura-title{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-weight:400;font-size:clamp(1.2rem,2.7vw,1.65rem);line-height:1.5;color:#1f1b18;letter-spacing:.005em;}
+.no-sakura-title{font-family:var(--font-display);font-weight:400;font-size:clamp(1.3rem,2.8vw,1.75rem);line-height:1.5;color:var(--bg);letter-spacing:.005em;}
 .no-sakura-title strong{color:var(--gold);font-weight:500;font-style:italic;}
-.no-sakura-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:.5rem;border-top:1px solid rgba(122,92,16,.2);border-bottom:1px solid rgba(122,92,16,.2);}
-.no-sakura-pillar{background:transparent;border:none;border-left:1px solid rgba(122,92,16,.18);padding:1.4rem 1.4rem 1.5rem;}
+.no-sakura-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:.5rem;border-top:1px solid rgba(247,245,241,.16);border-bottom:1px solid rgba(247,245,241,.16);}
+.no-sakura-pillar{background:transparent;border:none;border-left:1px solid rgba(247,245,241,.14);padding:1.4rem 1.4rem 1.5rem;}
 .no-sakura-pillar:first-child{border-left:none;}
-.no-sakura-pillar-label{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:.7rem;}
-.no-sakura-pillar-title{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-size:1.05rem;font-weight:500;color:#1f1b18;margin-bottom:.5rem;letter-spacing:.01em;line-height:1.4;}
-.no-sakura-pillar-body{font-size:var(--fs-xs);line-height:1.85;color:rgba(31,27,24,.72);}
+.no-sakura-pillar-label{font-family:var(--font-display);font-weight:500;font-size:var(--fs-3xl);color:var(--gold);margin-bottom:.4rem;line-height:1;}
+.no-sakura-pillar-title{font-family:var(--font-display);font-size:1.05rem;font-weight:500;color:var(--bg);margin-bottom:.5rem;letter-spacing:.01em;line-height:1.4;}
+.no-sakura-pillar-body{font-size:var(--fs-sm);line-height:1.85;color:rgba(247,245,241,.68);}
 .no-sakura-links{display:flex;flex-wrap:wrap;gap:.6rem .9rem;margin-top:.6rem;}
-.no-sakura-link{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.16em;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.55rem 1rem;border-radius:2px;transition:background .2s,color .2s;text-transform:uppercase;}
-.no-sakura-link:hover{background:rgba(122,92,16,.08);color:var(--ember-deep);}
+.no-sakura-link{font-family:var(--font-body);font-size:var(--fs-sm);letter-spacing:0;color:var(--bg);text-decoration:none;border:1px solid rgba(247,245,241,.4);padding:0 1.1rem;min-height:var(--tap-min);display:inline-flex;align-items:center;border-radius:var(--r-sm);transition:background .2s,border-color .2s;text-transform:none;}
+.no-sakura-link:hover{background:rgba(247,245,241,.1);border-color:var(--bg);}
 .nsl-arrow{display:inline-block;width:14px;color:var(--gold);margin-right:.55rem;font-weight:400;transition:width .25s ease,margin-right .25s ease;}
 .no-sakura-link:hover .nsl-arrow{width:22px;margin-right:.65rem;}
 @media(max-width:720px){.no-sakura-pillars{grid-template-columns:1fr;border-top:1px solid rgba(122,92,16,.2);}.no-sakura-pillar{border-left:none;border-top:1px solid rgba(122,92,16,.12);padding:1.1rem 0 1.2rem;}.no-sakura-pillar:first-child{border-top:none;}.no-sakura-banner{padding:1.6rem 1rem 1.8rem;}}
@@ -1170,8 +1186,8 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .sticky-search:focus-within .sticky-suggest,.sticky-search.suggest-visible .sticky-suggest{display:flex;}
 /* ── SCENE INDEX (目的から探す / 特集への発見導線) ── */
 .scene-index{max-width:1200px;margin:2.5rem auto 0;padding:1.5rem 1.2rem 0;border-top:1px solid var(--border);}
-.scene-index-title{font-size:.85rem;font-weight:600;letter-spacing:.04em;color:var(--text);margin:0 0 .3rem;}
-.scene-index-lead{font-size:var(--fs-xs);color:var(--muted);margin:0 0 1.1rem;}
+.scene-index-title{font-family:var(--font-display);font-weight:500;font-size:var(--fs-2xl);letter-spacing:0;color:var(--ink);margin:0 0 .4rem;}
+.scene-index-lead{font-size:var(--fs-sm);color:var(--muted);margin:0 0 1.1rem;}
 .scene-index-group{margin:0 0 1rem;}
 .scene-index-group-title{font-size:var(--fs-xs);font-weight:600;letter-spacing:.06em;color:var(--gold);margin:0 0 .45rem;}
 .scene-index-list{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:.3rem .5rem;}
@@ -1188,7 +1204,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .fold-toggle[aria-expanded="true"] .fa{transform:rotate(180deg);}
 /* ── STORE INDEX (内部リンク集 / SEO) ── */
 .store-index{max-width:1200px;margin:2.5rem auto 1rem;padding:1.5rem 1.2rem;border-top:1px solid var(--border);}
-.store-index-title{font-size:.85rem;font-weight:600;letter-spacing:.04em;color:var(--text);margin:0 0 .3rem;}
+.store-index-title{font-family:var(--font-display);font-weight:500;font-size:var(--fs-2xl);letter-spacing:0;color:var(--ink);margin:0 0 .4rem;}
 .store-index-lead{font-size:var(--fs-xs);color:var(--muted);margin:0 0 1rem;}
 .store-index-area{margin:.4rem 0;border-bottom:1px solid var(--border);}
 .store-index-area>summary{cursor:pointer;padding:.55rem .2rem;font-size:var(--fs-xs);letter-spacing:.04em;color:var(--text);list-style:none;}
@@ -1531,13 +1547,13 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 
 <!-- ========== オープニング・スプラッシュ（全画面ロゴ） ========== -->
 <style>
-#nb-splash{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.15rem;padding:2rem;text-align:center;opacity:1;transition:opacity .6s ease;}
+#nb-splash{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.15rem;padding:2rem;text-align:center;opacity:1;transition:opacity .35s ease;}
 #nb-splash.nb-hide{opacity:0;pointer-events:none;}
-#nb-splash .nbs-mark{font-family:var(--font-display);font-weight:400;color:var(--text);line-height:1.05;font-size:var(--fs-3xl);letter-spacing:.2em;text-transform:uppercase;opacity:0;animation:nbs-up 1s .08s cubic-bezier(.2,.7,.2,1) forwards;}
+#nb-splash .nbs-mark{font-family:var(--font-display);font-weight:400;color:var(--text);line-height:1.05;font-size:var(--fs-3xl);letter-spacing:.2em;text-transform:uppercase;opacity:0;animation:nbs-up .55s .05s cubic-bezier(.2,.7,.2,1) forwards;}
 #nb-splash .nbs-mark em{font-style:italic;color:var(--gold);}
-#nb-splash .nbs-rule{width:min(220px,42vw);height:1px;background:var(--gold);opacity:0;transform-origin:center;animation:nbs-rule .9s .5s ease forwards;}
-#nb-splash .nbs-sub{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.28em;text-transform:uppercase;color:var(--dim);opacity:0;animation:nbs-up .9s .68s ease forwards;}
-#nb-splash .nbs-jp{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:.16em;color:var(--muted);opacity:0;animation:nbs-up .9s .86s ease forwards;}
+#nb-splash .nbs-rule{width:min(220px,42vw);height:1px;background:var(--gold);opacity:0;transform-origin:center;animation:nbs-rule .45s .25s ease forwards;}
+#nb-splash .nbs-sub{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.28em;text-transform:uppercase;color:var(--dim);opacity:0;animation:nbs-up .45s .35s ease forwards;}
+#nb-splash .nbs-jp{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:.16em;color:var(--muted);opacity:0;animation:nbs-up .45s .42s ease forwards;}
 @keyframes nbs-up{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
 @keyframes nbs-rule{from{opacity:0;transform:scaleX(0);}to{opacity:.9;transform:scaleX(1);}}
 html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
@@ -1553,15 +1569,20 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 (function(){
   var el=document.getElementById('nb-splash');
   if(!el)return;
+  // DSN-003: 初回訪問のみ表示（同一タブのセッション中は再表示しない）
+  try{
+    if(sessionStorage.getItem('nb_splash')==='1'){ el.parentNode.removeChild(el); return; }
+    sessionStorage.setItem('nb_splash','1');
+  }catch(e){}
   document.documentElement.classList.add('nb-splash-on');
   var done=false;
   function close(){
     if(done)return; done=true;
     el.classList.add('nb-hide');
     document.documentElement.classList.remove('nb-splash-on');
-    setTimeout(function(){ if(el.parentNode)el.parentNode.removeChild(el); },650);
+    setTimeout(function(){ if(el.parentNode)el.parentNode.removeChild(el); },400);
   }
-  var t=setTimeout(close,1800);
+  var t=setTimeout(close,800);
   el.addEventListener('click',function(){clearTimeout(t);close();});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'){clearTimeout(t);close();}});
 })();
@@ -1600,24 +1621,69 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
   <button class="dismiss" id="pwa-dismiss-ios" aria-label="iOS でのホーム画面追加の案内を閉じる">後で</button>
 </div>
 
+<!-- NB-CHROME:HEADER:START -->
 <div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
-  <div class="logo">Nagoya <em>Bites</em></div>
-  <button class="hamburger" id="hamburger-btn" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false">
+  <a class="logo" href="index.html">Nagoya <em>Bites</em></a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
     <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
   </button>
-  <nav id="main-nav">
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
     <a href="#" class="nav-fav" id="nav-fav" onclick="event.preventDefault();showFavs();closeNav()"><span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.5-10-9.5C.5 7 3.5 3 8 3c2.5 0 3.5 1.5 4 2 .5-.5 1.5-2 4-2 4.5 0 7.5 4 6 8.5C19.5 16.5 12 21 12 21z"/></svg></span>保存済み(<span id="fav-count">0</span>)</a>
-    <a href="journal/index.html">ジャーナル</a>
+    <a href="index.html" aria-current="page">店舗を探す</a>
     <a href="features/index.html">特集</a>
-    <a href="stores/index.html">店舗一覧</a>
+    <a href="journal/index.html">ジャーナル</a>
     <a href="features/editorial-policy.html">編集規約</a>
-    <a href="about.html" class="nav-secondary">運営について</a>
+    <a href="about.html">運営について</a>
     <a href="faq.html" class="nav-secondary">よくある質問</a>
     <a href="contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
+<!-- NB-CHROME:HEADER:END -->
 
+<section class="hero nb-cover" id="main-content">
+  <div class="nb-cover-copy">
+  <div class="eyebrow">名古屋専門 × 飲食のプロの目利き × シーン別</div>
+  <h1>飲食の<em>プロ</em>が、<br>名古屋<em>だけ</em>を<br><span class="fade">深く選んだ。</span></h1>
+  <p class="hero-sub">名古屋で<strong>現役の飲食店マネージャー</strong>が、業界の内側の基準で編集する名古屋・愛知専門のグルメガイド。</p>
+  <div class="search-wrap">
+    <label for="si" class="visually-hidden">レストランを検索</label>
+    <span class="search-field">
+      <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
+      <button type="button" class="search-clear-btn" aria-label="検索語をクリア" onclick="clearSearchQuery()">×</button>
+    </span>
+    <button onclick="doSearch()" aria-label="検索">検索</button>
+    <div class="search-suggest" id="hero-suggest">
+      <span class="suggest-label">人気:</span>
+      <span class="suggest-pill" onclick="suggestSearch('個室')">個室</span>
+      <span class="suggest-pill" onclick="suggestSearch('焼肉')">焼肉</span>
+      <span class="suggest-pill" onclick="suggestSearch('デート')">デート</span>
+      <span class="suggest-pill" onclick="suggestSearch('忘年会')">忘年会</span>
+      <span class="suggest-pill" onclick="suggestSearch('名古屋駅')">名駅</span>
+      <span class="suggest-pill" onclick="suggestSearch('居酒屋')">居酒屋</span>
+    </div>
+  </div>
+  <div class="scene-nav" role="navigation" aria-label="シーン・エリアから探す">
+    <div class="scene-nav-row">
+      <span class="scene-nav-label">シーンで探す</span>
+      <button class="scene-chip" type="button" onclick="suggestSearch('宴会')">宴会・忘年会</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('接待')">接待・会食</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('デート')">デート</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('女子会')">女子会</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('記念日')">記念日</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('個室')">個室</button>
+    </div>
+    <div class="scene-nav-row">
+      <span class="scene-nav-label">エリアで探す</span>
+      <button class="scene-chip" type="button" onclick="suggestSearch('名古屋駅')">名駅</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('栄')">栄</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('大須')">大須</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('金山')">金山</button>
+      <button class="scene-chip" type="button" onclick="suggestSearch('伏見')">伏見</button>
+    </div>
+  </div>
+  </div>
+  <div class="nb-cover-featured">
 <!-- 今月の特集（トップ最上部・横スクロールカルーセル：ファーストビューで特集に触れられる入り口） -->
 <!-- ↓ このストリップは data/featured.json + scripts/build_featured.js が自動生成。手で編集しない。 -->
 <section class="feature-strip feature-top" aria-label="今月の特集">
@@ -1707,48 +1773,19 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
   </div><!-- /feature-top-rail -->
   <div class="feature-top-foot"><a class="feature-top-all" href="features/index.html">特集をすべて見る ›</a></div>
 </section>
-
-<section class="hero" id="main-content">
-  <div class="eyebrow">名古屋専門 × 飲食のプロの目利き × シーン別</div>
-  <h1>飲食の<em>プロ</em>が、<br>名古屋<em>だけ</em>を<br><span class="fade">深く選んだ。</span></h1>
-  <p class="hero-sub">名古屋で<strong>現役の飲食店マネージャー</strong>が、業界の内側の基準で編集する名古屋・愛知専門のグルメガイド。</p>
-  <div class="search-wrap">
-    <label for="si" class="visually-hidden">レストランを検索</label>
-    <span class="search-field">
-      <input id="si" type="text" placeholder="店名・エリア・ジャンル・タグで検索…" aria-label="レストランを検索">
-      <button type="button" class="search-clear-btn" aria-label="検索語をクリア" onclick="clearSearchQuery()">×</button>
-    </span>
-    <button onclick="doSearch()" aria-label="検索">検索</button>
-    <div class="search-suggest" id="hero-suggest">
-      <span class="suggest-label">人気:</span>
-      <span class="suggest-pill" onclick="suggestSearch('個室')">個室</span>
-      <span class="suggest-pill" onclick="suggestSearch('焼肉')">焼肉</span>
-      <span class="suggest-pill" onclick="suggestSearch('デート')">デート</span>
-      <span class="suggest-pill" onclick="suggestSearch('忘年会')">忘年会</span>
-      <span class="suggest-pill" onclick="suggestSearch('名古屋駅')">名駅</span>
-      <span class="suggest-pill" onclick="suggestSearch('居酒屋')">居酒屋</span>
-    </div>
-  </div>
-  <div class="scene-nav" role="navigation" aria-label="シーン・エリアから探す">
-    <div class="scene-nav-row">
-      <span class="scene-nav-label">シーンで探す</span>
-      <button class="scene-chip" type="button" onclick="suggestSearch('宴会')">宴会・忘年会</button>
-      <button class="scene-chip" type="button" onclick="suggestSearch('接待')">接待・会食</button>
-      <button class="scene-chip" type="button" onclick="suggestSearch('デート')">デート</button>
-      <button class="scene-chip" type="button" onclick="suggestSearch('女子会')">女子会</button>
-      <button class="scene-chip" type="button" onclick="suggestSearch('記念日')">記念日</button>
-      <button class="scene-chip" type="button" onclick="suggestSearch('個室')">個室</button>
-    </div>
-    <div class="scene-nav-row">
-      <span class="scene-nav-label">エリアで探す</span>
-      <button class="scene-chip" type="button" onclick="suggestSearch('名古屋駅')">名駅</button>
-      <button class="scene-chip" type="button" onclick="suggestSearch('栄')">栄</button>
-      <button class="scene-chip" type="button" onclick="suggestSearch('大須')">大須</button>
-      <button class="scene-chip" type="button" onclick="suggestSearch('金山')">金山</button>
-      <button class="scene-chip" type="button" onclick="suggestSearch('伏見')">伏見</button>
-    </div>
   </div>
 </section>
+
+<!-- 権威性バー -->
+<div class="authority-bar">
+  <span class="auth-item">名古屋・愛知 <span class="num-serif" id="auth-total">4,559</span>店掲載</span>
+  <span class="auth-sep">·</span>
+  <span class="auth-item"><strong>現役飲食店マネージャー</strong>が編集</span>
+  <span class="auth-sep">·</span>
+  <span class="auth-item">掲載料ゼロ・<strong>サクラゼロ</strong></span>
+  <span class="auth-sep">·</span>
+  <span class="auth-item"><strong>4媒体</strong>を1画面で見比べ</span>
+</div>
 
 <!-- アクティブフィルターチップ -->
 <div class="active-chips" id="active-chips"></div>
@@ -1791,21 +1828,9 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 
 </div><!-- /filter-panel -->
 
-<!-- 権威性バー -->
-<div class="authority-bar">
-  <span class="auth-item">名古屋・愛知 <span class="num-serif" id="auth-total">4,559</span>店掲載</span>
-  <span class="auth-sep">·</span>
-  <span class="auth-item"><strong>現役飲食店マネージャー</strong>が編集</span>
-  <span class="auth-sep">·</span>
-  <span class="auth-item">掲載料ゼロ・<strong>サクラゼロ</strong></span>
-  <span class="auth-sep">·</span>
-  <span class="auth-item"><strong>4媒体</strong>を1画面で見比べ</span>
-</div>
-
 <!-- 今日の話題店（毎朝5:30 JST更新。鮮度＋多媒体露出のみで5店ピック。Google評価は不問。） -->
 <section class="trend-ranking-section" id="trend-ranking-section" style="display:none">
   <div class="trend-ranking-header">
-    <span class="eyebrow trend-eyebrow">Trending · Today</span>
     <h2>今日の話題店 <em id="trend-ranking-date">2026/9/7</em></h2>
     <p class="trend-ranking-sub">鮮度と多媒体露出だけで選定。Google評価は不問。</p>
   </div>
@@ -1815,8 +1840,11 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <!-- 最新ジャーナル（毎朝配信の日次記事 最新3件。build_journal_index.js が静的挿入） -->
 <section class="latest-journal-section" id="latest-journal-section">
   <div class="latest-journal-header">
-    <h2>Daily <em>Journal</em> — 毎朝1本、業界人の目利き</h2>
-    <a href="journal/index.html">View Archive</a>
+    <div class="latest-journal-headline">
+      <h2>ジャーナル <em>Daily</em></h2>
+      <p class="latest-journal-lead">毎朝1本、業界人の目利きで読む名古屋の飲食。</p>
+    </div>
+    <a href="journal/index.html" class="nb-more">アーカイブを見る</a>
   </div>
   <div class="latest-journal-cards">
     <!-- LATEST_JOURNAL_START -->
@@ -1879,7 +1907,6 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <!-- ランキングセクション（GA4 集計の全ユーザー閲覧数。Google評価は使わない） -->
 <section class="ranking-section" id="ranking-section" style="display:none">
   <div class="ranking-header">
-    <span class="eyebrow ranking-eyebrow">Most Viewed</span>
     <h2>みんなが見ている店 <em>TOP 10</em></h2>
   </div>
   <div class="ranking-scroll" id="ranking-scroll"></div>
@@ -1931,7 +1958,6 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <div class="results-block" id="results-block">
   <div class="sec-head">
     <div class="sec-head-titleblock">
-      <span class="eyebrow sec-head-eyebrow">All Listings</span>
       <h2>掲載<em>店舗</em></h2>
     </div>
     <span class="cnt" id="cnt">-- 件</span>
@@ -7552,11 +7578,43 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 </div>
 <!-- FEEDBACK-WIDGET:END -->
 
-<footer>
-  <div class="fl2">Nagoya Bites</div>
-  <div class="fc" id="fc"></div>
-  <div class="fc"><a href="features/review-trust.html">口コミ信頼度の読み方</a> ／ <a href="features/editorial-policy.html">編集規約</a> ／ <a href="features/no-fake-reviews.html">桜ゼロ宣言</a></div>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="index.html">店舗を探す</a>
+      <a href="stores/index.html">エリア別 店舗一覧</a>
+      <a href="index.html#scene-index">目的から探す</a>
+      <a href="features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="features/index.html">特集記事</a>
+      <a href="journal/index.html">Daily Journal</a>
+      <a href="features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="features/editorial-policy.html">編集規約</a>
+      <a href="about.html">運営について</a>
+      <a href="faq.html">よくある質問</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
 
 <script>
 // ================================================================
@@ -9004,7 +9062,13 @@ function nbFeatureNormalize() {
 
 // scroll-snap + smooth はアニメーションごと無視される環境がある。1回目の送りで実際に動いたかを見て
 // 判定し、動かない環境では以後を即時スクロールに切り替える（「押しても何も起きない」を作らない）
+// DSN-003: ≥1024px はカバー右カラムの静的グリッド（複製・無限周回なし）、
+// ≤1023px は従来どおり横スクロールレール（複製して無限周回）。
+// ブレークポイントを跨いだ時（リサイズ/回転）は複製を付け外しして再計測する。
+var NB_FT_RAIL_MQ = window.matchMedia("(max-width:1023px)");
+
 function scrollFeatureTop(dir) {
+  if (!NB_FT_RAIL_MQ.matches) return;
   var rail = nbFeatureRail();
   if (!rail) return;
   var card = rail.querySelector(".feature-card");
@@ -9028,7 +9092,9 @@ function scrollFeatureTop(dir) {
   var rail = nbFeatureRail();
   if (!rail) return;
   var originals = [].slice.call(rail.querySelectorAll(".feature-card"));
-  if (originals.length >= 2) {
+
+  function cloneOn() {
+    if (rail.querySelector(".feature-card-clone") || originals.length < 2) return;
     NB_FT_ORIGIN = originals[0];
     var head = document.createDocumentFragment();
     var tail = document.createDocumentFragment();
@@ -9046,6 +9112,13 @@ function scrollFeatureTop(dir) {
     rail.appendChild(tail);
     rail.insertBefore(head, rail.firstChild);
   }
+  function cloneOff() {
+    var clones = rail.querySelectorAll(".feature-card-clone");
+    for (var i = 0; i < clones.length; i++) clones[i].remove();
+    NB_FT_LOOP = 0;
+    NB_FT_ORIGIN = null;
+    rail.scrollLeft = 0;
+  }
   function measure() {
     if (!NB_FT_ORIGIN) return;
     var first = rail.querySelector(".feature-card");
@@ -9054,15 +9127,21 @@ function scrollFeatureTop(dir) {
     NB_FT_LOOP = span > rail.clientWidth ? span : 0;
     if (NB_FT_LOOP) rail.scrollLeft = NB_FT_LOOP;
   }
-  measure();
+  function apply() {
+    if (NB_FT_RAIL_MQ.matches) { cloneOn(); measure(); } else { cloneOff(); }
+    syncFeatureTopNav();
+  }
+  apply();
   var settle = null;
   rail.addEventListener("scroll", function () {
+    if (!NB_FT_RAIL_MQ.matches) return;
     syncFeatureTopNav();
     clearTimeout(settle);
     settle = setTimeout(function () { nbFeatureNormalize(); syncFeatureTopNav(); }, 140);
   }, { passive: true });
-  window.addEventListener("resize", function () { measure(); syncFeatureTopNav(); });
-  syncFeatureTopNav();
+  window.addEventListener("resize", function () { if (NB_FT_RAIL_MQ.matches) measure(); syncFeatureTopNav(); });
+  if (NB_FT_RAIL_MQ.addEventListener) NB_FT_RAIL_MQ.addEventListener("change", apply);
+  else if (NB_FT_RAIL_MQ.addListener) NB_FT_RAIL_MQ.addListener(apply);
 })();
 
 function toggleFilterPanel() {
