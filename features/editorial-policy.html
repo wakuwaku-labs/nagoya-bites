@@ -51,87 +51,65 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   ]
 }
 </script>
-<style>.art-hero{padding:3rem 1.5rem 2.5rem;max-width:800px;margin:0 auto;}
-.art-eyebrow{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;}
-.art-title{font-family:var(--font-display);font-weight:400;font-size:clamp(1.9rem,4vw,3rem);line-height:1.2;color:var(--white);margin-bottom:1rem;}
-.art-title em{font-style:italic;color:var(--gold);}
-.art-meta{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-bottom:1.5rem;display:flex;gap:1.2rem;flex-wrap:wrap;}
-.art-lead{font-size:var(--fs-md);line-height:2;color:var(--muted);max-width:680px;border-left:2px solid var(--gold);padding-left:1.2rem;}
-.art-lead p{margin-bottom:.8rem;}
-.art-lead p:last-child{margin-bottom:0;}
-.art-body{max-width:800px;margin:0 auto;padding:0 1.5rem 4rem;}
-.section-label{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2.8rem 0 .8rem;font-weight:400;}
-.art-intro{font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:1.4rem;}
-.art-intro strong{color:var(--text);font-weight:500;}
-.tips-box{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);padding:1.2rem 1.4rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
-.tips-title{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);margin-bottom:.6rem;}
-.tips-box ul{padding-left:1.2rem;}
-.tips-box li{font-size:.8rem;line-height:1.9;color:var(--muted);margin-bottom:.25rem;}
-.tips-box li strong{color:var(--text);font-weight:500;}
-.pillar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.2rem 0 1.8rem;}
-.pillar-card{background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;padding:1.1rem 1.1rem 1.2rem;}
-.pillar-num{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.6rem;color:var(--gold);line-height:1;margin-bottom:.3rem;}
-.pillar-label{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.6rem;}
-.pillar-title{font-size:.88rem;font-weight:500;color:var(--text);margin-bottom:.55rem;line-height:1.5;}
-.pillar-body{font-size:.76rem;line-height:1.95;color:var(--muted);}
+<style>
+/* NB-EDITORIAL-STYLE v1: 共通の記事組版は assets/css/nb.css の記事システムが所有する。
+   ここは編集規約固有の柱グリッド・補足カード・目次のみ。 */
+.pillar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-4);margin:var(--sp-5) 0 var(--sp-6);}
+.pillar-card{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-md);padding:var(--sp-4) var(--sp-4) var(--sp-5);}
+.pillar-num{font-family:var(--font-display);font-weight:500;font-size:var(--fs-2xl);color:var(--gold);line-height:1;margin-bottom:.3rem;}
+.pillar-label{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:var(--ls-caps);color:var(--dim);text-transform:uppercase;margin-bottom:.6rem;}
+.pillar-title{font-size:var(--fs-md);font-weight:500;color:var(--ink);margin-bottom:.55rem;line-height:1.5;}
+.pillar-body{font-size:var(--fs-sm);line-height:1.95;color:var(--muted);}
 .pillar-body ul{padding-left:1rem;margin-top:.25rem;}
 .pillar-body li{margin-bottom:.3rem;}
 .role-list{list-style:none;padding-left:0;margin-top:.3rem;}
-.role-list li{font-size:.8rem;line-height:1.9;color:var(--muted);padding-left:1.1rem;position:relative;margin-bottom:.2rem;}
+.role-list li{font-size:var(--fs-md);line-height:1.9;color:var(--muted);padding-left:1.1rem;position:relative;margin-bottom:.2rem;}
 .role-list li::before{content:'—';position:absolute;left:0;color:var(--gold);}
 .role-list li strong{color:var(--text);font-weight:500;}
 .role-list li .role-note{display:block;font-size:var(--fs-xs);color:var(--dim);margin-top:.1rem;}
-.sub-principle{background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;padding:1rem 1.2rem;margin:.8rem 0;}
-.sub-principle h4{font-size:.84rem;font-weight:500;color:var(--text);margin-bottom:.35rem;}
-.sub-principle p{font-size:.78rem;line-height:1.9;color:var(--muted);}
-.body-para{font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:1rem;}
+.sub-principle{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-md);padding:var(--sp-4) var(--sp-5);margin:.8rem 0;}
+.sub-principle h4{font-size:var(--fs-md);font-weight:500;color:var(--ink);margin-bottom:.35rem;}
+.sub-principle p{font-size:var(--fs-sm);line-height:1.9;color:var(--muted);}
+.body-para{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--muted);margin-bottom:var(--sp-4);}
 .body-para strong{color:var(--text);font-weight:500;}
-.related{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center;}
-.related-title{font-family:var(--font-display);font-weight:400;font-size:1.3rem;color:var(--white);margin-bottom:1.2rem;}
-.related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}
-.related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}
-.related-link:hover{background:rgba(122,92,16,.08);}
-footer a{color:rgba(201,169,110,.7);text-decoration:none;}
-@media(max-width:640px){
-  nav{display:none;}
-  .pillar-grid{grid-template-columns:1fr;}
-}
-.art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}
-.art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}
-@media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
-.store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:var(--fs-sm) !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}
-.store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}
-.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}
-.store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}
-.store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}</style>
+.art-body a{color:var(--gold);}
+@media(max-width:640px){.pillar-grid{grid-template-columns:1fr;}}
+</style>
 </head>
 <body>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="../index.html">すべての店舗</a>
-    <a href="index.html">特集記事</a>
-    <a href="../journal/index.html">Journal</a>
-    <a href="../about.html">About</a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
+    <a href="../features/index.html">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html" aria-current="page">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
-
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
 <nav aria-label="パンくずリスト">
   <div class="breadcrumb">
-    <a href="../index.html">NAGOYA BITES</a>
+    <a href="../index.html">TOP</a>
     <span>›</span>
-    <a href="index.html">特集記事</a>
+    <a href="../features/index.html">特集</a>
     <span>›</span>
     編集規約
   </div>
 </nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
-<article>
-  <div class="art-hero-image">
-  <img src="../assets/feature-figures/editorial-policy.svg" alt="編集規約" loading="eager" fetchpriority="high">
-</div>
+<article class="nb-article">
 <div class="art-hero">
-    <p class="art-eyebrow">Editorial Policy</p>
+    <p class="art-eyebrow">NAGOYA BITES 編集部</p>
     <h1 class="art-title">編集<em>規約</em></h1>
     <div class="art-meta">
       <span>初版 2026年4月</span>
@@ -141,13 +119,30 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
     <div class="art-lead">
       <p>このページは、私たち編集部が NAGOYA BITES を運営するにあたって守っていることを、読者のみなさんに公開するためのものです。</p>
       <p>個人名や肩書きを前面に出していないのは、書き手が目立つためではなく、編集の独立性を守るためです。ミシュランガイドの調査員が身分を明かさないのと同じ理由で、私たちも編集部として匿名を選んでいます。</p>
-      <p>代わりに、<strong style="color:var(--text);">どう選び、どう書いているか</strong>をこのページですべて開示します。</p>
+      <p>代わりに、<strong>どう選び、どう書いているか</strong>をこのページですべて開示します。</p>
     </div>
   </div>
 
+  <nav class="nb-toc" aria-label="目次">
+    <p class="nb-footer-title">目次</p>
+    <ol>
+      <li><a href="#principles"><span class="num">01</span>編集方針の三本柱</a></li>
+      <li><a href="#selection"><span class="num">02</span>掲載基準</a></li>
+      <li><a href="#independence"><span class="num">03</span>編集の独立性</a></li>
+      <li><a href="#revenue-separation"><span class="num">03-B</span>収益と編集の分離</a></li>
+      <li><a href="#trust-mechanisms"><span class="num">04</span>信頼の仕組み</a></li>
+      <li><a href="#cross-check-integrity"><span class="num">04-D</span>機械統計レイヤー</a></li>
+      <li><a href="#anonymous"><span class="num">05</span>匿名である理由</a></li>
+      <li><a href="#inside-perspective"><span class="num">06</span>業界内部からの視点</a></li>
+      <li><a href="#decline"><span class="num">07</span>断る勇気</a></li>
+      <li><a href="#never"><span class="num">08</span>絶対にしないこと</a></li>
+      <li><a href="#amendments"><span class="num">09</span>改定について</a></li>
+    </ol>
+  </nav>
+
   <div class="art-body">
 
-    <h2 class="section-label">01 — Editorial Principles</h2>
+    <h2 class="section-label" id="principles">01 — Editorial Principles</h2>
     <p class="art-intro">
       NAGOYA BITES の編集方針は、<strong>何を載せるか・何を載せないか・どう書くか</strong>の三本柱で成り立っています。
       この三つが噛み合って初めて、他のグルメメディアと違うものを届けられると考えています。
@@ -192,7 +187,7 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
       </div>
     </div>
 
-    <p class="section-label" id="selection">02 — Selection Criteria</p>
+    <h2 class="section-label" id="selection">02 — Selection Criteria</h2>
     <p class="art-intro">
       一つの指標だけで判断せず、複数の信頼シグナルをクロスチェックしています。
       数字の裏側にある体験の厚みを、業界知識で読み解くのが編集部の仕事です。
@@ -208,7 +203,7 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
       </ul>
     </div>
 
-    <h2 class="section-label">03 — Independence</h2>
+    <h2 class="section-label" id="independence">03 — Independence</h2>
     <p class="art-intro">
       お金の流れを開示することは、編集の信頼性を担保するうえで最低限の約束です。
       現在および将来にわたって、次のルールを守ります。
@@ -222,7 +217,7 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
       </ul>
     </div>
 
-    <p class="section-label" id="revenue-separation">03-B — 収益と編集の分離</p>
+    <h2 class="section-label" id="revenue-separation">03-B — 収益と編集の分離</h2>
     <p class="art-intro">
       NAGOYA BITES は持続可能なメディアであるために、将来的に収益事業を持つ可能性があります。
       ただし、<strong>いかなる収益も「どの店を載せるか・どの順に見せるか・どう評価するか」には一切影響させません。</strong>
@@ -238,7 +233,7 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
       </ul>
     </div>
 
-    <p class="section-label" id="trust-mechanisms">04 — Trust Mechanisms</p>
+    <h2 class="section-label" id="trust-mechanisms">04 — Trust Mechanisms</h2>
     <p class="art-intro">
       飲食業界の広告媒体には、<strong>金銭授受や無償提供と引き換えに書かれた口コミ・PR 記事・SNS 投稿（いわゆる「桜」）</strong>が数多く混じっています。
       消費者が安心して店を選べる場をつくるために、NAGOYA BITES は<strong>桜が混じれない構造</strong>と、<strong>嘘がついても発覚する構造</strong>を併用します。
@@ -285,7 +280,7 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
       </div>
     </div>
 
-    <p class="section-label" id="cross-check-integrity" style="margin-top:2.4rem;">04-D — Cross-Check Integrity（機械統計レイヤー）</p>
+    <h2 class="section-label" id="cross-check-integrity">04-D — Cross-Check Integrity（機械統計レイヤー）</h2>
     <p class="art-intro">
       上記 A / B / C の 3 本柱に加え、サイト上の各店舗に対して<strong>「この店の Google の★と件数は、そのまま信じてよいか」に答える「口コミ信頼度」（SS〜Dの5段階・0〜100）を機械的に算出する仕組み</strong>を運用しています。
       Google Places API（★・件数・最新 5 件の★と投稿日）/ Hot Pepper API / 他メディア掲載履歴 — 取得可能な公式 API と既に編集部が確認しているデータだけを使い、
@@ -299,9 +294,9 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
     <div class="tips-box">
       <p class="tips-title">仕組みの全公開（第三者検証可能）</p>
       <ul>
-        <li><strong><a href="review-trust.html" style="color:var(--gold);">口コミ信頼度の読み方</a></strong>（1 分）／ <strong><a href="integrity-method.html" style="color:var(--gold);">口コミ信頼度の作り方</a></strong>（方法論） — 検証項目の定義・計算式・段階表示・戦わない領域・異議申立て窓口を完全公開</li>
-        <li>実装は公開リポジトリ <a href="https://github.com/wakuwaku-labs/nagoya-bites" target="_blank" rel="noopener noreferrer" style="color:var(--gold);">wakuwaku-labs/nagoya-bites</a> の <code>scripts/lib/cross_check.js</code>（採点）と <code>scripts/lib/trust_display.js</code>（段階への変換・基準は <code>data/trust_display_policy.json</code>）で第三者再現可能</li>
-        <li>誤判定が疑われる場合は <a href="mailto:editor@nagoya-bites.com?subject=%E5%8F%A3%E3%82%B3%E3%83%9F%E4%BF%A1%E9%A0%BC%E5%BA%A6%E3%81%AE%E4%BF%AE%E6%AD%A3%E4%BE%9D%E9%A0%BC" style="color:var(--gold);">editor@nagoya-bites.com</a> 宛にメール — 10 営業日以内に一次回答</li>
+        <li><strong><a href="review-trust.html">口コミ信頼度の読み方</a></strong>（1 分）／ <strong><a href="integrity-method.html">口コミ信頼度の作り方</a></strong>（方法論） — 検証項目の定義・計算式・段階表示・戦わない領域・異議申立て窓口を完全公開</li>
+        <li>実装は公開リポジトリ <a href="https://github.com/wakuwaku-labs/nagoya-bites" target="_blank" rel="noopener noreferrer">wakuwaku-labs/nagoya-bites</a> の <code>scripts/lib/cross_check.js</code>（採点）と <code>scripts/lib/trust_display.js</code>（段階への変換・基準は <code>data/trust_display_policy.json</code>）で第三者再現可能</li>
+        <li>誤判定が疑われる場合は <a href="mailto:editor@nagoya-bites.com?subject=%E5%8F%A3%E3%82%B3%E3%83%9F%E4%BF%A1%E9%A0%BC%E5%BA%A6%E3%81%AE%E4%BF%AE%E6%AD%A3%E4%BE%9D%E9%A0%BC">editor@nagoya-bites.com</a> 宛にメール — 10 営業日以内に一次回答</li>
       </ul>
     </div>
 
@@ -339,7 +334,7 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
     <div class="tips-box">
       <p class="tips-title">異議申立て・通報窓口</p>
       <ul>
-        <li><strong>店舗側からの異議申立て：</strong>「このレビューには事実誤認がある」「利害関係が開示されていない」等の申し立ては <a href="mailto:editor@nagoya-bites.com" style="color:var(--gold);">editor@nagoya-bites.com</a> 宛に。</li>
+        <li><strong>店舗側からの異議申立て：</strong>「このレビューには事実誤認がある」「利害関係が開示されていない」等の申し立ては <a href="mailto:editor@nagoya-bites.com">editor@nagoya-bites.com</a> 宛に。</li>
         <li><strong>読者からの通報：</strong>「このレビューは桜ではないか」と感じた場合も同窓口へ。匿名通報を歓迎します。</li>
         <li>受け付けた申立て・通報はすべて編集部内で記録し、<strong>10 営業日以内に一次回答</strong>します。</li>
       </ul>
@@ -347,10 +342,10 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
 
     <p class="body-para" style="margin-top:1.4rem;">
       業界人レビュワーの認証制度に応募したい方は、
-      <a href="become-reviewer.html" style="color:var(--gold);">業界人レビュワー募集ページ</a>から募集要項・必須義務・認証フローをご確認ください。
+      <a href="become-reviewer.html">業界人レビュワー募集ページ</a>から募集要項・必須義務・認証フローをご確認ください。
     </p>
 
-    <h2 class="section-label">05 — Why Anonymous</h2>
+    <h2 class="section-label" id="anonymous">05 — Why Anonymous</h2>
     <p class="art-intro">
       「業界人が運営している」と名乗るなら、なぜ名前を出さないのか——
       よく聞かれる問いに、きちんと答えます。
@@ -372,10 +367,10 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
         <li><strong>現役飲食店マネージャー</strong>（監修・個人運営）<span class="role-note">名古屋の飲食店で店長として現場に立つ立場から選定方針・掲載基準を最終判断</span></li>
         <li><strong>AIエージェント</strong>（データ収集・下書き作成）<span class="role-note">店舗データの収集・整合性チェック・記事下書きの生成を担当。公開判断は監修者が行う</span></li>
       </ul>
-      <p style="font-size:.72rem;color:var(--dim);margin-top:.8rem;line-height:1.8;">※ 「編集部」と表記していますが、運営は監修者1名＋AIエージェントによる個人運営です。氏名・所属店舗は非開示です。</p>
+      <p class="nb-note" style="margin-top:.8rem;">※ 「編集部」と表記していますが、運営は監修者1名＋AIエージェントによる個人運営です。氏名・所属店舗は非開示です。</p>
     </div>
 
-    <h2 class="section-label">06 — Inside Perspective</h2>
+    <h2 class="section-label" id="inside-perspective">06 — Inside Perspective</h2>
     <p class="art-intro">
       編集部の強みは、<strong>現場に立つ取材量ではなく、業界知識を使って情報を正しく読み解く解釈力</strong>です。
       他のグルメメディア・Google 評価・店舗写真・SNS 投稿など、
@@ -401,7 +396,7 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
       </ul>
     </div>
 
-    <h2 class="section-label">07 — The Courage to Decline</h2>
+    <h2 class="section-label" id="decline">07 — The Courage to Decline</h2>
     <p class="art-intro">
       <strong>「選ばない勇気」も編集の仕事</strong>です。
       1100 件を超えるデータベースを持っているからこそ、
@@ -421,7 +416,7 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
       <p>将来的に「編集部が今月最も通った店」「編集部員が自腹で友人を連れて行く店」など、使用実績ベースの指標を公開していきます。広告も点数もない、純粋な使用頻度こそが最も雄弁な推薦だと考えています。</p>
     </div>
 
-    <h2 class="section-label">08 — What We Never Do</h2>
+    <h2 class="section-label" id="never">08 — What We Never Do</h2>
     <p class="art-intro">
       編集部内部のルールのうち、読者のみなさんにも関わる項目を公開します。
       これらは編集会議で確認し合っている「絶対にやらないこと」のリストです。
@@ -438,13 +433,13 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
       </ul>
     </div>
 
-    <h2 class="section-label">09 — Amendments</h2>
+    <h2 class="section-label" id="amendments">09 — Amendments</h2>
     <p class="body-para">
       本規約は編集部で<strong>年1回以上</strong>見直します。
       重要な変更があった場合は、冒頭の「最終更新」日を更新し、必要に応じて改訂履歴を残します。
     </p>
     <p class="body-para">
-      規約について意見・指摘・質問があれば、<a href="../contact.html" style="color:var(--gold);">お問い合わせ</a>からお知らせください。
+      規約について意見・指摘・質問があれば、<a href="../contact.html">お問い合わせ</a>からお知らせください。
       読者のみなさんとの対話を通じて、この規約を育てていきたいと考えています。
     </p>
 
@@ -454,7 +449,7 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
 <div class="related">
   <p class="related-title">関連ページ</p>
   <div class="related-links">
-    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;">名古屋グルメ完全ガイド</a>
+    <a class="related-link is-primary" href="nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
     <a class="related-link" href="no-fake-reviews.html">桜の実態を読む</a>
     <a class="related-link" href="become-reviewer.html">業界人レビュワー募集</a>
     <a class="related-link" href="../journal/index.html">Journal（毎日1本）</a>
@@ -463,14 +458,64 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
     <a class="related-link" href="../contact.html">お問い合わせ</a>
   </div>
   <p style="margin-top:1.5rem;">
-    <a class="related-link" href="../index.html" style="background:rgba(122,92,16,.06);">トップページで全店舗を検索する →</a>
+    <a class="related-link is-primary" href="../index.html">トップページで全店舗を検索する →</a>
   </p>
 </div>
 
-<footer>
-  <a href="../index.html">NAGOYA BITES</a> &nbsp;—&nbsp; <span id="fc-year"></span>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
-<script>(function(){var fc=document.getElementById('fc-year');if(fc)fc.textContent='\u00A9 '+new Date().getFullYear()+' All Rights Reserved';})();</script>
+<!-- NB-CHROME:FOOTER:END -->
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
 </body>
 </html>

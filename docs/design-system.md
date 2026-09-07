@@ -133,3 +133,26 @@ media行     アイコンのみ、aria-labelでラベル維持
 | 操作要素の高さ | 44px以上 |
 
 計測は `node scripts/measure_typography.js` で行う。
+
+## 7. サイト共通クローム（DSN-003・2026-09）
+
+ヘッダー（ロゴ・ハンバーガー・ナビ）・パンくず・フッターは、`scripts/lib/site_chrome.js` を唯一の正本とする。**ナビ項目・フッターのリンク先はここだけに書く**。HTML に直接書かない。
+
+```
+主要ナビ（5項目）: 店舗を探す / 特集 / ジャーナル / 編集規約 / 運営について
+補助ナビ（≤900px ドロワーのみ）: よくある質問 / お問い合わせ
+フッター3群: 探す / 読む / 編集部
+```
+
+既存ページへの適用は `scripts/apply_site_chrome.js`（`apply_design_system.js` と同じ冪等スイープモデル）。
+
+```bash
+node scripts/apply_site_chrome.js --dry-run [--only root|features|journal|stores]
+node scripts/apply_site_chrome.js [--only <dir>]
+node scripts/apply_site_chrome.js --check          # 冪等性確認（CI 向け）
+node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 雛形出力
+```
+
+ヘッダー/パンくず/フッターは `<!-- NB-CHROME:HEADER|BREADCRUMB|FOOTER|SCRIPT:START/END -->` マーカーで囲む。新規ページ・新規生成器はこのマーカーを維持し、`renderHeader`/`renderBreadcrumb`/`renderFooter`/`chromeScript` を呼ぶこと。ナビの該当項目には `aria-current="page"` を付け、`class="active"` は使わない。
+
+記事系ページ（journal・features）の本文組版は `assets/css/nb.css` の記事システム（`.art-hero` / `.art-title` / `.art-body` / `.store-card` / `.related` / `.topcta` 等）が所有する。ページ固有の `<style>` にはこれらのセレクタのトップレベル定義を書かない。journal は `journal/_template.html` の `<style>` を正本とし、既存記事へは冪等スイープで揃える。features は SEO-042 TOP-CTA（`add_feature_top_cta.js`）・SEASONAL_NOTE（`build_featured.js`）・新顔バッジ（`refresh_feature_rosters.js`）の注入 CSS をマーカー行のみにし、実装は nb.css 側に置く。

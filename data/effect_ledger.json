@@ -107,6 +107,49 @@
       "target_value": 150,
       "followup_date": "2026-09-14",
       "followup": null
+    },
+    "DSN-003": {
+      "baseline": {
+        "date": "2026-09-07",
+        "metrics": {
+          "totals": {
+            "activeUsers": 1048,
+            "pageViews": 1782,
+            "sessions": 1253,
+            "avgSessionDuration": 150.7,
+            "bounceRate": 0.312,
+            "pagesPerSession": 1.42
+          },
+          "channels_pct": {
+            "organic": 71.2,
+            "direct": 20.4,
+            "social": 6.8,
+            "referral": 1.3,
+            "paid": 0,
+            "other": 0.3
+          },
+          "search_channels": {
+            "google": 407,
+            "bing": 297,
+            "direct": 249,
+            "yahoo": 182,
+            "ai_assistant": 86,
+            "duckduckgo": 14,
+            "social": 5,
+            "other": 4
+          },
+          "cta": {
+            "outboundClicks": 111,
+            "ctaClickRate": 8.9,
+            "ctaClickRate_organic": 7.5,
+            "ctaClickRate_direct": 7.3,
+            "ctaClickRate_social": 24.1
+          }
+        }
+      },
+      "target_metric": "bounce_rate",
+      "target_value": null,
+      "followup": null
     }
   }
 }

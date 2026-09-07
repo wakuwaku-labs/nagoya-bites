@@ -67,10 +67,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 </script>
 
 <style>a{color:inherit;text-decoration:none}
-.site-header{background:#1A1A18;color:#F5F3EE;padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
 .logo span{color:#C9A84C}
-.nav-back{margin-left:auto;font-size:.8rem;opacity:.7;border:1px solid rgba(255,255,255,.25);padding:5px 12px;border-radius:3px;transition:opacity .2s}
-.nav-back:hover{opacity:1}
 .hero{background:#1A1A18;color:#F5F3EE;padding:60px 20px 50px;text-align:center}
 .hero-label{font-size:var(--fs-xs);letter-spacing:.15em;text-transform:uppercase;color:#C9A84C;margin-bottom:14px}
 h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,5vw,2.6rem);font-weight:400;line-height:1.25;margin-bottom:16px}
@@ -146,10 +143,37 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
 .type-photo-credit{display:block;font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.06em;color:#8b8578;margin-top:.35rem;}</style>
 </head>
 <body>
-<header class="site-header">
-  <a href="../index.html" class="logo">NAGOYA <span>BITES</span></a>
-  <a href="index.html" class="nav-back">← 特集一覧</a>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+<header>
+  <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
+    <a href="../features/index.html" aria-current="page">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
+  </nav>
 </header>
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
+<nav aria-label="パンくずリスト">
+  <div class="breadcrumb">
+    <a href="../index.html">TOP</a>
+    <span>›</span>
+    <a href="../features/index.html">特集</a>
+    <span>›</span>
+    <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    <span>›</span>
+    名古屋 焼き鳥おすすめ 2026
+  </div>
+</nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
 <div class="art-hero-image">
   <img src="https://imgfp.hotp.jp/IMGH/38/71/P047653871/P047653871_480.jpg" alt="名古屋グルメ記事" loading="eager" fetchpriority="high">
@@ -454,9 +478,60 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
   </p>
 </div>
 
-<footer>
-  <p>© 2026 NAGOYA BITES — 業界人運営・編集独立・広告ゼロ | <a href="editorial-policy.html" style="color:#aaa">編集規約</a></p>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
 </body>
 </html>

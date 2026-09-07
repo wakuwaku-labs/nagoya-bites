@@ -271,11 +271,8 @@ function listFeatureSlugs() {
 const SEASON_NOTE_START = '<!-- SEASONAL_NOTE_START -->';
 const SEASON_NOTE_END   = '<!-- SEASONAL_NOTE_END -->';
 const SEASON_NOTE_CSS_MARK = '/* SEASONAL_NOTE_CSS */';
+// DSN-003: 見た目は assets/css/nb.css の .season-note が所有する。マーカー行のみ注入する。
 const SEASON_NOTE_CSS = `${SEASON_NOTE_CSS_MARK}
-.season-note{display:flex;align-items:flex-start;gap:.7rem;margin:0 0 1.6rem;padding:.9rem 1.05rem;border:1px solid rgba(176,141,44,.35);border-left:3px solid #b08d2c;border-radius:8px;background:rgba(176,141,44,.07);}
-.season-note-flag{flex:none;font-size:.68rem;font-weight:700;letter-spacing:.04em;color:#fff;background:#b08d2c;padding:.26rem .62rem;border-radius:999px;white-space:nowrap;}
-.season-note-text{margin:0;font-size:.9rem;line-height:1.75;color:#3a3a3a;}
-@media (prefers-color-scheme:dark){.season-note-text{color:#e8e4d8;}}
 `;
 function buildSeasonNote(badge, lead) {
   return `${SEASON_NOTE_START}\n      <div class="season-note"><span class="season-note-flag">${badge}</span><p class="season-note-text">${lead}</p></div>\n      ${SEASON_NOTE_END}`;

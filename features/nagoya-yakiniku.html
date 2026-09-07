@@ -67,17 +67,15 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 </script>
 
 <style>a{color:inherit;text-decoration:none;}
-.site-header{background:#fff;border-bottom:1px solid #e8e4dc;padding:0 1.5rem;position:sticky;top:0;z-index:100;}
-.header-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px;}
 .logo span{font-style:italic;color:#8b6914;}
-.hero{background:linear-gradient(135deg,#1a0a00 0%,#3d1a00 50%,#5c2800 100%);color:#fff;padding:4rem 1.5rem 3rem;text-align:center;}
-.hero-eyebrow{font-size:var(--fs-xs);letter-spacing:.18em;text-transform:uppercase;color:#d4a96a;margin-bottom:1rem;font-family:'DM Mono',monospace;}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:400;line-height:1.3;margin-bottom:1rem;}
-.hero h1 em{font-style:italic;color:#f0c87a;}
-.hero-sub{font-size:.9rem;color:rgba(255,255,255,.7);max-width:600px;margin:0 auto 1.5rem;}
-.hero-meta{font-size:var(--fs-xs);color:rgba(255,255,255,.5);font-family:'DM Mono',monospace;letter-spacing:.06em;}
+.hero{text-align:center;}
+.hero-eyebrow{font-size:var(--fs-xs);letter-spacing:0;text-transform:none;color:var(--gold);margin-bottom:1rem;font-family:var(--font-body);font-weight:500;}
+.hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,5vw,2.8rem);font-weight:500;line-height:1.3;margin-bottom:1rem;color:var(--ink);}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero-sub{font-size:var(--fs-md);color:var(--muted);max-width:600px;margin:0 auto 1.5rem;line-height:var(--lh-body);}
+.hero-meta{font-size:var(--fs-xs);color:var(--dim);font-family:var(--font-body);letter-spacing:0;}
 .hero-tags{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:1.2rem;}
-.hero-tag{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:2px;padding:.2rem .7rem;font-size:var(--fs-xs);letter-spacing:.06em;color:rgba(255,255,255,.8);}
+.hero-tag{background:rgba(122,92,16,.06);border:1px solid rgba(122,92,16,.3);border-radius:var(--r-pill);min-height:var(--tap-min);display:inline-flex;align-items:center;padding:0 .9rem;font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);}
 main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
 .lead-box{background:#fff;border-left:3px solid #8b6914;padding:1.2rem 1.5rem;margin-bottom:2.5rem;font-size:.95rem;line-height:1.9;}
 .lead-box strong{color:#5c3d00;}
@@ -111,13 +109,7 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
 .related-links{display:flex;flex-wrap:wrap;gap:.6rem;}
 .related-links a{font-size:.82rem;background:#fff;border:1px solid #e8e4dc;padding:.4rem .9rem;border-radius:2px;color:#555;}
 .related-links a:hover{border-color:#8b6914;color:#3d2800;}
-.site-footer{background:#1a1a1a;color:rgba(255,255,255,.5);text-align:center;padding:2rem 1rem;font-size:.75rem;}
-.site-footer a{color:rgba(255,255,255,.5);margin:0 .5rem;}
-@media(max-width:600px){
-  nav{display:none;}
-  .stores-grid{grid-template-columns:1fr;}
-  .hero{padding:3rem 1rem 2.5rem;}
-}
+@media(max-width:600px){.stores-grid{grid-template-columns:1fr;}.hero{padding:3rem 1rem 2.5rem;}}
 .art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}
 .art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}
 @media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
@@ -134,17 +126,37 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
 @media(max-width:640px){.store-photo{width:100%;height:160px;}}</style>
 </head>
 <body>
-<header class="site-header">
-  <div class="header-inner">
-    <a href="/" class="logo">NAGOYA <span>BITES</span></a>
-    <nav>
-      <a href="/">店舗を探す</a>
-      <a href="/features/">特集</a>
-      <a href="/journal/">Journal</a>
-      <a href="/features/editorial-policy.html">編集方針</a>
-    </nav>
-  </div>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+<header>
+  <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
+    <a href="../features/index.html" aria-current="page">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
+  </nav>
 </header>
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
+<nav aria-label="パンくずリスト">
+  <div class="breadcrumb">
+    <a href="../index.html">TOP</a>
+    <span>›</span>
+    <a href="../features/index.html">特集</a>
+    <span>›</span>
+    <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    <span>›</span>
+    名古屋 焼肉おすすめ 2026
+  </div>
+</nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
 <div class="art-hero-image">
   <img src="https://imgfp.hotp.jp/IMGH/87/45/P036678745/P036678745_480.jpg" alt="名古屋グルメ記事" loading="eager" fetchpriority="high">
@@ -165,12 +177,6 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
 </section>
 
 <main>
-  <nav class="breadcrumb" aria-label="パンくずリスト">
-    <a href="/">NAGOYA BITES</a><span>›</span>
-    <a href="/features/">特集</a><span>›</span>
-    名古屋 焼肉おすすめ 2026
-  </nav>
-
   <div class="lead-box">
     名古屋の焼肉シーンは「中間層が厚い」。1,000〜2,000円の食堂系から3万円超の高級和牛店まで存在するが、
     最も業界人が通うのは<strong>3,000〜6,000円帯の「精肉店直営」と「炭火ホルモン専門」</strong>だ。
@@ -180,20 +186,6 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
   </div>
 
   <!-- SEO-042:TOP-CTA:START -->
-<style>
-.topcta{--gold:#7a5c10;--gold2:#96720f;max-width:880px;margin:0 auto 2rem;padding:1.1rem 1.5rem 1.3rem;border:1px solid rgba(122,92,16,.22);border-radius:6px;background:rgba(122,92,16,.035);}
-.topcta-head{font-size:.74rem;letter-spacing:.12em;color:var(--gold,#7a5c10);margin-bottom:.15rem;}
-.topcta-sub{font-size:.8rem;color:var(--muted,#6b6b6b);margin-bottom:.85rem;line-height:1.6;}
-.topcta-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;}
-.topcta-item{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;}
-.topcta-name{font-size:.92rem;font-weight:500;min-width:0;}
-.topcta-actions{display:flex;gap:.5rem;flex-shrink:0;}
-.topcta .store-link{display:inline-flex;align-items:center;gap:.35rem;background:var(--gold,#7a5c10);color:#fff;border:1px solid var(--gold,#7a5c10);padding:.55rem 1.1rem;border-radius:4px;font-size:.78rem;font-weight:500;letter-spacing:.04em;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);transition:background .15s,transform .1s;}
-.topcta .store-link:hover{background:var(--gold2,#96720f);transform:translateY(-1px);}
-.topcta .store-link[href*="hotpepper"]{background:#fff;color:var(--gold,#7a5c10);border:1px solid var(--gold,#7a5c10);box-shadow:none;}
-.topcta .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
-@media(max-width:640px){.topcta{padding:1rem 1.1rem 1.15rem;}.topcta-item{flex-direction:column;align-items:flex-start;gap:.45rem;}.topcta-actions{width:100%;}}
-</style>
 <aside class="topcta" aria-label="この特集の注目店">
   <div class="topcta-head">EDITORS' PICK</div>
   <div class="topcta-sub">本文を読む前に動きたい方へ。編集部が上位に挙げた3軒の詳細と予約はこちらから。</div>
@@ -369,17 +361,43 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
   </div>
 </main>
 
-<footer class="site-footer">
-  <p>© 2026 NAGOYA BITES — 名古屋飲食業界人による目利きグルメガイド</p>
-  <p style="margin-top:.5rem;">
-    <a href="/features/editorial-policy.html">編集方針</a>
-    <a href="/features/no-fake-reviews.html">ステマ・虚偽排除</a>
-    <a href="/features/review-trust.html">口コミ信頼度の読み方</a> ／ <a href="/features/integrity-method.html">口コミ信頼度の作り方</a>
-    <a href="/features/">特集一覧</a>
-    <a href="/journal/">Journal</a>
-  </p>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
 
 <style>
 .faq-section{max-width:880px;margin:3rem auto 2rem;padding:0 1.5rem;font-family:inherit;}
@@ -422,5 +440,23 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
   </div>
 </section>
 
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
 </body>
 </html>

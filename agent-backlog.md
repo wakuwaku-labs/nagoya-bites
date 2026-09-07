@@ -6,6 +6,56 @@
 
 ---
 
+### [DSN-003] トップ/ジャーナル/特集/編集規約4ページ種別のプロ品質リデザイン＋サイト共通クローム統一
+
+- **priority**: P1（UX劣化） → **status**: done（実装・検証済み。PR作成待ち）
+- **detected**: 2026-09-07
+- **category**: design / ux
+- **owner**: Designer
+- **source**: オーナー本人からの直接依頼「トップページ・ジャーナル記事・特集記事・編集規約を、プロのWEBデザイナーが設計したかのようなデザイン・配置に変更してほしい」。DSN-001（[[DSN-001]]）・DSN-002（[[DSN-002]]）でタイポグラフィとモーダル/カードは刷新済みだが、本番観察（2026-09-07）で以下が残存: (1) ページ種別ごとにヘッダーナビ/パンくず/フッターの項目・形状がバラバラ（8種類以上のナビ変種、journal/features はモバイルで nav が丸ごと消える）、(2) トップの情報設計が積み上げ型でH1がカルーセル下に埋もれ英日二重見出しが残る、(3) 記事3種の先頭組版・CTA配色（HotPepper赤/Google青/gold混在）がファイルごとにばらつく、(4) デザイン監査が features 28件（TOP-CTA注入CSS）で main のまま exit 1
+- **オーナー決定（2026-09-07・AskUserQuestionで確認済み）**:
+  1. トップのファーストビューは「表紙型」— H1＋検索＋シーン導線（左）と今月の特集（右・1本大＋2本小）を1画面に統合。モバイルはH1→検索→チップ→特集レール
+  2. 共通クローム（ヘッダー/ナビ/パンくず/フッター）は全ページに統一 — 4ページ種別＋about/faq/contact/privacy＋stores 5,610ページ（gen-store-pages.js テンプレート更新＋CI再生成）
+  3. 全画面ロゴスプラッシュは初回訪問のみ・約0.8秒に短縮（sessionStorage）
+- **brand-filter**: ✅ 適合 — DSN-001/002 と同じ Moat（可読性・一貫性は自動化でしか維持できない）の延長。装飾ではなくタイポグラフィ・構造の一貫性を優先する Designer 哲学に沿う
+- **実装計画**: `/Users/katagirijakutou/.claude/plans/pure-brewing-kettle.md` に確定（Context・制約・デザイン仕様・Phase 0〜7・リスク・検証手順）。要点:
+  - Phase 1: `assets/css/nb.css` に共通クローム/セクション見出し/ボタン/記事システム/topcta/季節バナーのトークン化ルールを追加のみで拡張
+  - Phase 2: `scripts/lib/site_chrome.js`（ナビ5+2項目・フッター3群の正本）＋ `scripts/apply_site_chrome.js`（冪等スイープ・--check）を新設し、root/features/journal/stores(管理下)全ページへ適用。生成器3本（gen-store-pages.js / gen_industry_features.js / recreate_fabricated_features.js）も同期
+  - Phase 3: index.html を表紙型ヒーローに再構成（FEATURED領域はデスクトップ静的グリッド・モバイルはレール、既存カルーセルJSにmatchMediaガード）、セクション見出し統一、スプラッシュ短縮
+  - Phase 4: journal/_template.html のstyleをトークン化し123本の既存記事へ冪等スイープ
+  - Phase 5: features の記事CSSをnb.cssへ集約、SEO-042 TOP-CTA/SEASONAL_NOTE/ROSTER_BADGEの注入CSSをマーカー行のみに縮小
+  - Phase 6: 編集規約のSVGバナー撤去・文書型ヘッダー・静的TOC追加
+  - Phase 7: CI昇格・docs更新・フォローアップ起票
+  - 全フェーズで監査マーカー（FEATURED/SHOWCASE/LATEST_JOURNAL/SCENE-INDEX/STORE-INDEX/REVIEW_TRUST_BOX/SEO-042 TOP-CTA/SEASONAL_NOTE/FEATURED_SEASONAL/journal ENTRIES）のマークアップは不変（CSSのみ変更・md5で機械検証）
+- **ベースライン（実装前・2026-09-07 main 時点）**:
+  - `node scripts/track_metrics.js --baseline DSN-003`: data/effect_ledger.json に記録済み
+  - `node scripts/qa_gate.js --before`: store_count 4933 / markers {LOCAL_STORES:5, modal:88, filter:135, search:92, instagram:42, fetchFullCatalog:2, crossCheck:53, editorReason:17} / index_bytes 821902（/tmp/qa_gate_before.json）
+  - 凍結リージョン md5（実装後に一致を確認）: FEATURED_LABEL f76bbda4715fd840cd4cc9cdd790942d / FEATURED 09b36b0143dee6bc5ca0f684677e7023 / LATEST_JOURNAL bac10704a7e6bd843614238f683d0924 / SHOWCASE 3fadce495de6ec09bbcaa92e44dc8618 / REVIEW_TRUST_BOX f48d22e00746a979ecd26845826c9419 / SCENE-INDEX 874c5068fed0234a5df39427a2a17bcb / STORE-INDEX 9d92e68c1faf2fb798223e692a990d54 / features/index.html FEATURED_SEASONAL fa6767b76e44750b6a4bde63abeb14dc / journal/index.html ENTRIES 1b045a88697cd983e60455fd993fbd63
+- **files**: assets/css/nb.css, scripts/lib/site_chrome.js（新規）, scripts/apply_site_chrome.js（新規）, tests/site_chrome.test.js（新規）, index.html, journal/_template.html + journal/2*.html（123本）, features/*.html（68本）, gen-store-pages.js, scripts/gen_industry_features.js, scripts/recreate_fabricated_features.js（未対応・注記あり）, scripts/add_feature_top_cta.js, scripts/add_journal_site_intro.js, scripts/refresh_journal_related.js, scripts/build_featured.js, scripts/refresh_feature_rosters.js, .github/workflows/build.yml, docs/design-system.md, agents/designer.md, CLAUDE.md
+- **実装内容（Phase 0〜7 完了）**:
+  - Phase 1: `assets/css/nb.css` を193行→337行に拡張（クローム補強・`.nb-footer`3群・`.nb-section-head`・`.nb-btn`系・記事システム`.art-*`/`.store-card`/`.related`/`.topcta`・季節バナー/新顔バッジ・`.nb-toc`を追加のみで新設）
+  - Phase 2: `scripts/lib/site_chrome.js`（ナビ5+2項目・フッター3群の正本）と `scripts/apply_site_chrome.js`（冪等スイープ・`--dry-run`/`--check`/`--only`/`--strip-legacy-css`）を新設。root 5 + features 68 + journal 125 + `stores/index.html` の全ページへ適用。`gen-store-pages.js`（店舗詳細生成器）と `scripts/gen_industry_features.js`（業界特集生成器）を site_chrome 呼び出しに移行。`build.yml` に `apply_site_chrome.js --check --sample 200`（continue-on-error）を追加
+  - Phase 3: トップページを表紙型ヒーローに再構成（`.nb-cover` グリッド、FEATURED領域はデスクトップ静的グリッド1本大+2本小・モバイルはレール、カルーセルJSに `matchMedia` ガード追加）。セクション見出しの英日二重見出し（Trending・Most Viewed・All Listings）を削除。編集独立性の宣言を濃色ブロック化。スプラッシュを初回訪問のみ・約0.8秒に短縮（sessionStorage）
+  - Phase 4: `journal/_template.html` の `<style>` を journal 固有ルールのみに縮小（記事共通は nb.css へ）。123本の既存記事へ冪等スイープ適用。`add_journal_site_intro.js`/`refresh_journal_related.js` のinline styleをclass化
+  - Phase 5: `add_feature_top_cta.js`（SEO-042 TOP-CTA）・`build_featured.js`（SEASONAL_NOTE）・`refresh_feature_rosters.js`（新顔バッジ）の注入CSSをマーカー行のみに縮小し実装をnb.cssへ集約。`features/index.html` カードCSS・2本のダーク系ヒーロー（solo-dining/yakiniku）を文書型に統一
+  - Phase 6: `features/editorial-policy.html` のSVGバナー撤去・文書型ヘッダー・11項目の静的目次（TOC）追加・11個のsection-labelを`<h2>`+id統一・inline style除去
+  - Phase 7: `docs/design-system.md`§7・`agents/designer.md`・`CLAUDE.md`共有ファイル一覧を更新
+- **検証できる事実（制約10）**:
+  - `node scripts/audit_design_system.js --report --sample 400`: 597ファイル走査・非stores違反 **0件**（実装前は features 28件が既知違反）
+  - `node scripts/apply_site_chrome.js --check --sample 400`: files_changed 0（全ページ冪等）
+  - `node scripts/apply_design_system.js --check`: files_changed 0
+  - `node --test tests/*.test.js`: **176/176 pass**（新規 tests/site_chrome.test.js 12件を含む）
+  - `node scripts/qa_gate.js --after`: ok:true、店舗件数4933→4933（delta 0%）、LOCAL_STORES行未変更、marker_regressions:[]
+  - `node scripts/migrate_feature_headings.js --check` / `audit_trust_wording.js --check`（旧名称0件・禁止語0件）/ `normalize_og_images.js --check` / `build_featured.js --check`: 全て pass
+  - 凍結リージョン7領域（FEATURED_LABEL/FEATURED/LATEST_JOURNAL/SHOWCASE/REVIEW_TRUST_BOX/SCENE-INDEX/STORE-INDEX）+ features/index.html FEATURED_SEASONAL + journal/index.html ENTRIES の md5 が実装前後で完全一致（1バイトも不変）
+  - ブラウザ実機確認（375/1280px）: トップの表紙型ヒーロー・特集/ジャーナル/編集規約の統一ヘッダー・モバイルハンバーガードロワー（`toggleNav()`動作確認）・編集規約TOC 11リンク・`#trust-mechanisms`アンカー疎通、コンソールエラー0件
+- **未完了・残課題**:
+  - `scripts/recreate_fabricated_features.js`（一回限りの過去復旧スクリプト・`require.main`ガード無し）は今回未対応。実行すると副作用があるため触れず、フォローアップ扱い
+  - 孤児 stores 625〜823本（`data/stores.json` に無い旧店舗ページ）は方針どおり対象外（ISSUE-050/102の別チケット）
+  - `audit_design_system.js`/`apply_site_chrome.js` のCI blocking化は、本PRのCIが緑を1回確認してから実施（ISSUE-121方式）
+- **review**: 上記「検証できる事実」がacceptance。人手レビューはPR作成後に実施
+
+
 ### [DSN-002] 店舗詳細モーダル・一覧カードを全面再設計（DSN-001の適用第2弾・オーナー直接指摘）
 
 - **priority**: P1（UX劣化） → **status**: done（実装・検証済み。PR作成待ち）
@@ -5030,6 +5080,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-09-08 | Designer(EXPLICIT) | DSN-003: トップ/ジャーナル/特集/編集規約4ページ種別のプロ品質リデザイン＋サイト共通クローム統一（scripts/lib/site_chrome.js新設・全216ファイル） | ✅ コミット済み・PR作成待ち (commit 20cd42ec4) |
 | 2026-09-06 | Orchestrator(自律バッチ) | SEO-084: scripts/refresh_feature_rosters.js に featureSlug 引数追加・3リンク箇所に feature_store_click 注入。全55特集ページに計測を追加（未計測48本→0本）。ISSUE-086 gate(c) 超過確認・継続保留。ISSUE-110/SEO-083 をオーナーへエスカレーション | ✅ デプロイ済み (commit 83de89ba) |
 | 2026-04-15 | Inspector | 初回サイト監査・バックログ初期化 | 9件の課題を検出 |
 | 2026-04-15 | Orchestrator(FULL) | Hero修正・権威性バー・CTA修正・店舗別ページ1095件生成・sitemap 1→1097件・デプロイ | ✅ デプロイ済み (commit 3824014) |

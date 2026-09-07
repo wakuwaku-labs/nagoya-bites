@@ -50,61 +50,25 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   ]
 }
 </script>
-<style>nav a:hover,nav a.active{color:var(--text);}
-.art-hero{padding:2.5rem 1.5rem 2rem;max-width:760px;margin:0 auto;}
-.art-eyebrow{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
-.art-title{font-family:var(--font-display);font-weight:400;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.25;color:var(--white);margin-bottom:.8rem;}
-.art-title em{font-style:italic;color:var(--gold);}
-.art-meta{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-bottom:1.2rem;display:flex;gap:1rem;flex-wrap:wrap;}
-.art-lead{font-size:var(--fs-md);line-height:2;color:var(--muted);border-left:2px solid var(--gold);padding-left:1.1rem;}
-.art-body{max-width:760px;margin:0 auto;padding:0 1.5rem 3rem;}
-.section-label{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--dim);text-transform:uppercase;margin:2rem 0 .8rem;}
-.art-body p{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--muted);margin-bottom:1.2rem;}
-.art-body h2{font-family:var(--font-display);font-weight:400;font-size:1.3rem;color:var(--white);margin:2rem 0 .8rem;}
-.art-body h3{font-family:var(--font-body);font-weight:500;font-size:1rem;color:var(--white);margin:1.5rem 0 .6rem;}
-.insider-box{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);padding:1.1rem 1.3rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
-.insider-title{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;}
-.insider-box ul{padding-left:1.2rem;}
-.insider-box li{font-size:.8rem;line-height:1.9;color:var(--muted);margin-bottom:.4rem;}
-.store-list{display:flex;flex-direction:column;gap:1.3rem;margin:1.5rem 0;}
-.store-card{background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;padding:1.2rem;display:flex;gap:1rem;align-items:flex-start;}
-.store-num{font-family:var(--font-display);font-weight:400;font-size:1.9rem;color:var(--gold);opacity:.6;line-height:1;min-width:1.8rem;text-align:center;}
-.store-info{flex:1;}
-.store-name{font-family:var(--font-body);font-weight:600;font-size:.98rem;color:var(--white);margin-bottom:.4rem;}
-.store-meta{display:flex;gap:.5rem;flex-wrap:wrap;font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-bottom:.5rem;}
-.store-meta .score{color:#f5a623;font-weight:500;}
-.store-desc{font-size:var(--fs-md);line-height:1.8;color:var(--muted);margin-bottom:.6rem;}
-.store-link{display:inline-flex;align-items:center;gap:.3rem;font-size:var(--fs-xs);color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.3rem .7rem;border-radius:2px;}
-.store-link:hover{background:rgba(122,92,16,.08);}
-.source-note{background:var(--bg2);border:1px solid var(--border);padding:.8rem 1rem;border-radius:4px;margin:1.5rem 0;font-size:var(--fs-xs);line-height:1.7;color:var(--dim);}
-.source-note a{color:var(--gold);text-decoration:none;}
-.art-hero-ig{max-width:760px;margin:0 auto;padding:0 1.5rem 1rem;display:flex;justify-content:center;}
-.art-ig-cta{display:flex;align-items:center;gap:1rem;background:var(--bg2);border:1px solid var(--border);border-left:3px solid #C13584;padding:1rem 1.2rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
+<style>
+/* NB-JOURNAL-STYLE v1: 共通の記事組版(.art-hero/.art-title/.store-card/.related 等)は
+   assets/css/nb.css の記事システムが所有する。ここは journal 固有の残り(店舗CTA配色・IG導線)のみ。 */
+.store-meta .score{color:var(--gold2);font-weight:500;}
+/* SEO-054: 店舗カードの予約・地図導線（index.html のモーダルCTAと同じ配色規約） */
+.store-link-reserve{background:#e6002d;color:#fff!important;border-color:transparent;}
+.store-link-reserve:hover{background:#c9001e;}
+.store-link-map{background:#4285F4;color:#fff!important;border-color:transparent;}
+.store-link-map:hover{background:#2b6cd4;}
+.art-hero-ig{max-width:var(--container-mid);margin:0 auto;padding:0 1.5rem 1rem;display:flex;justify-content:center;}
+.art-ig-cta{display:flex;align-items:center;gap:1rem;background:var(--bg2);border:1px solid var(--border);border-left:3px solid #C13584;padding:1rem 1.2rem;border-radius:0 var(--r-md) var(--r-md) 0;margin:var(--sp-5) 0;}
 .art-ig-cta .ig-icon{font-size:1.4rem;flex-shrink:0;}
 .art-ig-cta-body{flex:1;}
-.art-ig-cta-label{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.18em;color:#C13584;text-transform:uppercase;margin-bottom:.3rem;}
-.art-ig-cta-handle{font-size:.82rem;font-weight:500;color:var(--white);margin-bottom:.2rem;}
+.art-ig-cta-label{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:#C13584;text-transform:none;margin-bottom:.3rem;}
+.art-ig-cta-handle{font-size:var(--fs-sm);font-weight:500;color:var(--ink);margin-bottom:.2rem;}
 .art-ig-cta-note{font-size:var(--fs-md);color:var(--muted);}
 .art-ig-cta a{text-decoration:none;color:inherit;}
 .art-ig-cta a:hover .art-ig-cta-handle{color:#C13584;}
-.art-hero-img{margin:0 auto;max-width:760px;width:100%;background:var(--bg2);overflow:hidden;}
-.art-hero-img img{width:100%;height:auto;display:block;max-height:460px;object-fit:cover;object-position:center 40%;}
-.art-img-credit{font-family:var(--font-mono);font-size:var(--fs-2xs);letter-spacing:.1em;color:var(--dim);text-align:right;padding:.3rem 0;max-width:760px;margin:0 auto;}
-.art-img-credit a{color:var(--dim);text-decoration:none;}
-.art-img-credit a:hover{color:var(--gold);}
-.related{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;}
-.related-title{font-family:var(--font-display);font-weight:400;font-size:1.2rem;color:var(--white);margin-bottom:1rem;}
-.related-links{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;}
-.related-link{font-size:.76rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1rem;border-radius:2px;}
-.related-link:hover{background:rgba(122,92,16,.08);}
-footer a{color:rgba(201,169,110,.7);text-decoration:none;}
-@media(max-width:640px){
-.art-body p{font-size:var(--fs-md);}
-.art-lead{font-size:.95rem;}
-.store-card{flex-direction:column;gap:.7rem;}
-.store-num{font-size:1.4rem;}
-nav{display:none;}
-}</style>
+</style>
 
 <!-- PHOTO SUGGESTIONS (編集メモ — 読者には非表示):
   - [shot_type] 看板料理 — うな重／ひつまぶしのアップ（HotPepper公式写真を使用中）
@@ -113,27 +77,37 @@ nav{display:none;}
 -->
 </head>
 <body>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="../index.html">すべての店舗</a>
-    <a href="index.html" class="active">Journal</a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
     <a href="../features/index.html">特集</a>
+    <a href="../journal/index.html" aria-current="page">ジャーナル</a>
     <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
-
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
 <nav aria-label="パンくずリスト">
   <div class="breadcrumb">
-    <a href="../index.html">NAGOYA BITES</a>
+    <a href="../index.html">TOP</a>
     <span>›</span>
-    <a href="index.html">Journal</a>
+    <a href="../journal/index.html">ジャーナル</a>
     <span>›</span>
     うなぎが安い夏——名駅『四代目菊川』、卸問屋直営という丑の日の選び方
   </div>
 </nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
-<article>
+<article class="nb-article">
   <div class="art-hero">
     <p class="art-eyebrow">今日の1軒</p>
     <h1 class="art-title">うなぎが安い夏——名駅『四代目菊川』、<em>卸問屋直営</em>という丑の日の選び方</h1>
@@ -151,7 +125,7 @@ nav{display:none;}
 </figure>
 
   <div class="art-body">
-<p class="nb-site-intro" style="font-size:.74rem;color:var(--dim);padding:.55rem .9rem;background:var(--bg2);border:1px solid var(--border);border-radius:4px;margin-bottom:1.5rem;line-height:1.7;">この記事は<a href="../index.html" style="color:var(--gold);text-decoration:none;">NAGOYA BITES</a> — 名古屋の厳選1,100店超を業界視点で紹介するグルメガイドの一部です。</p>
+<p class="nb-site-intro">この記事は<a href="../index.html">NAGOYA BITES</a> — 名古屋の厳選1,100店超を業界視点で紹介するグルメガイドの一部です。</p>
 
     <p>2026年7月26日の土用の丑の日を前に、今年のうなぎ相場は例年と様子が違う。直近ではシラスウナギの豊漁が伝えられ、卸値は前年より2割以上下がったと報じられている。900円台のうな丼が話題になるほどの安値だ。だが、この「安い年」を店頭価格の話だけで読むと足をすくわれる。専門店のうな重は、卸値が下がっても据え置きのままの店が少なくない。人件費と光熱費、そして焼き手の技術料が値段の大半を占めるからだ。</p>
 <h2>卸問屋直営という業態の読み方</h2>
@@ -200,17 +174,50 @@ nav{display:none;}
     <a class="related-link" href="2026-09-07-meieki-meichika-new-shops-weekly.html">名駅メイチカ復活の週、朝7時の中国茶と23時のラーメン</a>
     <a class="related-link" href="2026-09-06-mizuho-asian-games-venue-yakiniku.html">アジア大会の瑞穂、栄へ戻る前に会場徒歩5分の焼肉で宴会を組む</a>
     <a class="related-link" href="2026-09-05-meieki-nagoyameshi-izakaya-enkai.html">名駅の名古屋めし居酒屋と伏見の新フードホール、宴会の幹事が選ぶべきはどちらか</a>
-    <a class="related-link" href="index.html" style="background:rgba(122,92,16,.08);">Journal 一覧</a>
-    <a class="related-link" href="../features/nagoya-unaju.html" style="background:rgba(122,92,16,.08);">うなぎ・ひつまぶし10選</a>
+    <a class="related-link is-primary" href="index.html">Journal 一覧</a>
+    <a class="related-link is-primary" href="../features/nagoya-unaju.html">うなぎ・ひつまぶし10選</a>
     <a class="related-link" href="../features/index.html">特集をもっと見る</a>
     <a class="related-link" href="../index.html">全店舗を検索</a>
   </div>
 </div>
 
-<footer>
-  <p>© 2026 <a href="../index.html">NAGOYA BITES</a> — 名古屋の飲食人による目利きメディア</p>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
 <!-- SEO-052: 内部リンク（関連記事ブロック）のクリックとスクロール到達を計測。
      回遊アドバイスの採否を体感でなく実データで判定できるようにする -->
 <script class="nb-engagement-tracking">
@@ -229,5 +236,23 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   check();
 })();
 </script>
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
 </body>
 </html>

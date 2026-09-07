@@ -304,6 +304,8 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `docs/design-system.md` | デザインシステムの人向け仕様書（書体・トークン・部品解剖・新規ページ雛形） |
 | `scripts/audit_design_system.js` | デザインシステム準拠の決定的ゲート。`--check`でCI向けexit 1、`--report`で違反一覧JSON |
 | `scripts/apply_design_system.js` | 既存ページへのデザインシステム一括適用（冪等）。`--dry-run`/`--only <dir>`/`--check` |
+| `scripts/lib/site_chrome.js` | **サイト共通クローム（ヘッダー/ナビ/パンくず/フッター）の唯一の正本**（DSN-003・2026-09）。ナビ5項目・補助ナビ2項目・フッター3群のラベル/リンク先はここにのみ書く。`renderHeader`/`renderBreadcrumb`/`renderFooter`/`chromeScript` を生成器（gen-store-pages.js / gen_industry_features.js）と `scripts/apply_site_chrome.js` が共有する |
+| `scripts/apply_site_chrome.js` | 既存ページへサイト共通クロームを一括適用（冪等・`apply_design_system.js` と同じ運用モデル）。`--dry-run`/`--only <root\|features\|journal\|stores>`/`--check`/`--strip-legacy-css`。CI（build.yml）が日次で `--check --sample 200` を継続実行（当面 continue-on-error） |
 | `scripts/measure_typography.js` | 可読性の実測（12px以下の文字割合・1画面の文字数・タップ対象サイズ）。before/afterの証跡 |
 | `index.html` | サイト本体（編集対象） |
 | `features/` | 特集記事ディレクトリ（Editor管轄） |

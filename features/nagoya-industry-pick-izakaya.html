@@ -30,8 +30,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"業界人が推薦する名古屋の居酒屋10選","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"name":"台所 宗や 金山"},{"@type":"ListItem","position":2,"name":"お晩菜と炭火焼き みかん 栄 錦 伏見店"},{"@type":"ListItem","position":3,"name":"大衆割烹 八べゑ 錦３丁目店"},{"@type":"ListItem","position":4,"name":"炭火焼鳥 しげ 栄本店"},{"@type":"ListItem","position":5,"name":"ふぐ料理 徳福 錦店"},{"@type":"ListItem","position":6,"name":"居酒屋 炭ス すみす 名古屋駅前店"},{"@type":"ListItem","position":7,"name":"コモレビ　個室で味わう肴と日本酒"},{"@type":"ListItem","position":8,"name":"サカナのハチベエ 矢場町店"},{"@type":"ListItem","position":9,"name":"居酒屋 串焼き ちゃんぷ 金山 熱田店"},{"@type":"ListItem","position":10,"name":"大衆酒場 むに 栄住吉店"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},{"@type":"ListItem","position":2,"name":"特集記事","item":"https://nagoya-bites.com/features/"},{"@type":"ListItem","position":3,"name":"業界人が推薦する名古屋の居酒屋10選"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"名古屋の居酒屋で「業界人推薦」とはどういう意味ですか？","acceptedAnswer":{"@type":"Answer","text":"広告掲載・タイアップなしで、現役の飲食店マネージャーが「自分も行きたい」「同業者に紹介できる」と判断した店を指します。Google評価や口コミ件数だけでなく、仕入れの読み・席数設計・原価管理など、業界の中の人にしかわからない要素で評価しています。"}},{"@type":"Question","name":"editor_picks に登録された100店は全部「業界人推薦」ですか？","acceptedAnswer":{"@type":"Answer","text":"はい。editor_picks に登録するには、現役飲食店マネージャーによる editorReason（掲載判断の根拠）、mediaFeatures（他媒体掲載履歴）、insiderNote（業界人視点の解釈メモ）、visitStatus（visited / interview / desk）の4要素を満たす必要があります。本特集はそのうち居酒屋業態の10軒です。"}},{"@type":"Question","name":"タベログ・ホットペッパーのランキングとは何が違いますか？","acceptedAnswer":{"@type":"Answer","text":"タベログは匿名口コミの集積、ホットペッパーは予約数とクーポン経済が中心です。NAGOYA BITES は広告ゼロで、業界の中の人による解釈層（editorReason / insiderNote）を全店に付与しています。「なぜこの店が良いのか」を業界視点で説明できる点が違いです。"}}]}</script>
-<style>nav a:hover,nav a.active{color:var(--text);}
-.art-hero{padding:3rem 1.5rem 2.5rem;max-width:800px;margin:0 auto;}
+<style>.art-hero{padding:3rem 1.5rem 2.5rem;max-width:800px;margin:0 auto;}
 .art-eyebrow{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;}
 .art-title{font-family:var(--font-display);font-weight:400;font-size:clamp(1.9rem,4vw,3rem);line-height:1.2;color:var(--white);margin-bottom:1rem;}
 .art-title em{font-style:italic;color:var(--gold);}
@@ -74,8 +73,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}
 .related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}
 .related-link:hover{background:rgba(122,92,16,.08);}
-footer a{color:rgba(201,169,110,.7);text-decoration:none;}
-@media(max-width:640px){.store-card{flex-direction:column;gap:.7rem;}.store-num{font-size:1.4rem;}nav{gap:1rem;}nav a{font-size:var(--fs-xs);}}
+@media(max-width:640px){.store-card{flex-direction:column;gap:.7rem;}.store-num{font-size:1.4rem;}}
 .art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}
 .art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}
 @media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
@@ -89,25 +87,35 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
 @media(max-width:640px){.store-photo{width:100%;height:160px;}}</style>
 </head>
 <body>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="../index.html">すべての店舗</a>
-    <a href="index.html" class="active">特集</a>
-    <a href="../journal/index.html">Journal</a>
-    <a href="../about.html">About</a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
+    <a href="../features/index.html" aria-current="page">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
-
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
 <nav aria-label="パンくずリスト">
   <div class="breadcrumb">
-    <a href="../index.html">NAGOYA BITES</a>
+    <a href="../index.html">TOP</a>
     <span>›</span>
-    <a href="index.html">特集記事</a>
+    <a href="../features/index.html">特集</a>
     <span>›</span>
     業界人が推薦する名古屋の居酒屋10選
   </div>
 </nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
 <article>
   <div class="art-hero-image">
@@ -330,9 +338,60 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   </p>
 </div>
 
-<footer>
-  <p>© 2026 <a href="../index.html">NAGOYA BITES</a> — 名古屋の飲食人による目利きメディア</p>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
 </body>
 </html>

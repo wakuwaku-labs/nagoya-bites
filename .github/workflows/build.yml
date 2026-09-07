@@ -269,6 +269,13 @@ jobs:
         run: node scripts/audit_design_system.js --report --sample 200
         continue-on-error: true
 
+      - name: サイト共通クローム整合性監査（DSN-003・header/nav/breadcrumb/footer の統一）
+        # scripts/lib/site_chrome.js を正本に、全ページのクローム部分が再生成値と一致するかを検査する。
+        # gen-store-pages.js の直後に置くことで再生成済み stores/ も同じ基準で見る。
+        # ISSUE-121 の教訓: 新設ゲートは CI が緑を1回確認してから blocking へ昇格する（当面は非ブロッキング）。
+        run: node scripts/apply_site_chrome.js --check --sample 200
+        continue-on-error: true
+
       - name: 店舗写真カバレッジ監査（画質退行の検知・実写ゼロ店の可視化）
         # build.js normalizePhotoUrl() が HotPepper 縮小サムネ(_238等)を _480 へ昇格し、
         # さらに promote_store_photos.js が実測で原寸へ昇格するため、縮小サムネ残留は

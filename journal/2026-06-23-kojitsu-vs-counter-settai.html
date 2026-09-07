@@ -52,88 +52,62 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   ]
 }
 </script>
-<style>nav a:hover,nav a.active{color:var(--text);}
-.art-hero{padding:2.5rem 1.5rem 2rem;max-width:760px;margin:0 auto;}
-.art-eyebrow{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
-.art-title{font-family:var(--font-display);font-weight:400;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.25;color:var(--white);margin-bottom:.8rem;}
-.art-title em{font-style:italic;color:var(--gold);}
-.art-meta{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-bottom:1.2rem;display:flex;gap:1rem;flex-wrap:wrap;}
-.art-lead{font-size:var(--fs-md);line-height:2;color:var(--muted);border-left:2px solid var(--gold);padding-left:1.1rem;}
-.art-body{max-width:760px;margin:0 auto;padding:0 1.5rem 3rem;}
-.section-label{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--dim);text-transform:uppercase;margin:2rem 0 .8rem;}
-.art-body p{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--muted);margin-bottom:1.2rem;}
-.art-body h2{font-family:var(--font-display);font-weight:400;font-size:1.3rem;color:var(--white);margin:2rem 0 .8rem;}
-.art-body h3{font-family:var(--font-body);font-weight:500;font-size:1rem;color:var(--white);margin:1.5rem 0 .6rem;}
-.insider-box{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);padding:1.1rem 1.3rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
-.insider-title{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;}
-.insider-box ul{padding-left:1.2rem;}
-.insider-box li{font-size:.8rem;line-height:1.9;color:var(--muted);margin-bottom:.4rem;}
-.store-list{display:flex;flex-direction:column;gap:1.3rem;margin:1.5rem 0;}
-.store-card{background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;padding:1.2rem;display:flex;gap:1rem;align-items:flex-start;}
-.store-num{font-family:var(--font-display);font-weight:400;font-size:1.9rem;color:var(--gold);opacity:.6;line-height:1;min-width:1.8rem;text-align:center;}
-.store-info{flex:1;}
-.store-name{font-family:var(--font-body);font-weight:600;font-size:.98rem;color:var(--white);margin-bottom:.4rem;}
-.store-meta{display:flex;gap:.5rem;flex-wrap:wrap;font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-bottom:.5rem;}
-.store-meta .score{color:#f5a623;font-weight:500;}
-.store-desc{font-size:var(--fs-md);line-height:1.8;color:var(--muted);margin-bottom:.6rem;}
-.store-link{display:inline-flex;align-items:center;gap:.3rem;font-size:var(--fs-xs);color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.3rem .7rem;border-radius:2px;}
-.store-link:hover{background:rgba(122,92,16,.08);}
-.source-note{background:var(--bg2);border:1px solid var(--border);padding:.8rem 1rem;border-radius:4px;margin:1.5rem 0;font-size:var(--fs-xs);line-height:1.7;color:var(--dim);}
-.source-note a{color:var(--gold);text-decoration:none;}
-.art-hero-ig{max-width:760px;margin:0 auto;padding:0 1.5rem 1rem;display:flex;justify-content:center;}
-.art-ig-cta{display:flex;align-items:center;gap:1rem;background:var(--bg2);border:1px solid var(--border);border-left:3px solid #C13584;padding:1rem 1.2rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
+<style>
+/* NB-JOURNAL-STYLE v1: 共通の記事組版(.art-hero/.art-title/.store-card/.related 等)は
+   assets/css/nb.css の記事システムが所有する。ここは journal 固有の残り(店舗CTA配色・IG導線)のみ。 */
+.store-meta .score{color:var(--gold2);font-weight:500;}
+/* SEO-054: 店舗カードの予約・地図導線（index.html のモーダルCTAと同じ配色規約） */
+.store-link-reserve{background:#e6002d;color:#fff!important;border-color:transparent;}
+.store-link-reserve:hover{background:#c9001e;}
+.store-link-map{background:#4285F4;color:#fff!important;border-color:transparent;}
+.store-link-map:hover{background:#2b6cd4;}
+.art-hero-ig{max-width:var(--container-mid);margin:0 auto;padding:0 1.5rem 1rem;display:flex;justify-content:center;}
+.art-ig-cta{display:flex;align-items:center;gap:1rem;background:var(--bg2);border:1px solid var(--border);border-left:3px solid #C13584;padding:1rem 1.2rem;border-radius:0 var(--r-md) var(--r-md) 0;margin:var(--sp-5) 0;}
 .art-ig-cta .ig-icon{font-size:1.4rem;flex-shrink:0;}
 .art-ig-cta-body{flex:1;}
-.art-ig-cta-label{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.18em;color:#C13584;text-transform:uppercase;margin-bottom:.3rem;}
-.art-ig-cta-handle{font-size:.82rem;font-weight:500;color:var(--white);margin-bottom:.2rem;}
+.art-ig-cta-label{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:#C13584;text-transform:none;margin-bottom:.3rem;}
+.art-ig-cta-handle{font-size:var(--fs-sm);font-weight:500;color:var(--ink);margin-bottom:.2rem;}
 .art-ig-cta-note{font-size:var(--fs-md);color:var(--muted);}
 .art-ig-cta a{text-decoration:none;color:inherit;}
 .art-ig-cta a:hover .art-ig-cta-handle{color:#C13584;}
-.art-hero-img{margin:0 auto;max-width:760px;width:100%;background:var(--bg2);overflow:hidden;}
-.art-hero-img img{width:100%;height:auto;display:block;max-height:460px;object-fit:cover;object-position:center 40%;}
-.art-img-credit{font-family:var(--font-mono);font-size:var(--fs-2xs);letter-spacing:.1em;color:var(--dim);text-align:right;padding:.3rem 0;max-width:760px;margin:0 auto;}
-.art-img-credit a{color:var(--dim);text-decoration:none;}
-.art-img-credit a:hover{color:var(--gold);}
-.related{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;}
-.related-title{font-family:var(--font-display);font-weight:400;font-size:1.2rem;color:var(--white);margin-bottom:1rem;}
-.related-links{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;}
-.related-link{font-size:.76rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1rem;border-radius:2px;}
-.related-link:hover{background:rgba(122,92,16,.08);}
-footer a{color:rgba(201,169,110,.7);text-decoration:none;}
-@media(max-width:640px){
-.art-body p{font-size:var(--fs-md);}
-.art-lead{font-size:.95rem;}
-.store-card{flex-direction:column;gap:.7rem;}
-.store-num{font-size:1.4rem;}
-nav{display:none;}
-}</style>
+</style>
 
 <!-- PHOTO SUGGESTIONS (編集メモ — 読者には非表示):
   - [shot_type] 記事固有のイメージ図 — 個室とカウンターの機能比較を図解した self-host SVG
 -->
 </head>
 <body>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="../index.html">すべての店舗</a>
-    <a href="index.html" class="active">Journal</a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
     <a href="../features/index.html">特集</a>
+    <a href="../journal/index.html" aria-current="page">ジャーナル</a>
     <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
-
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
 <nav aria-label="パンくずリスト">
   <div class="breadcrumb">
-    <a href="../index.html">NAGOYA BITES</a>
+    <a href="../index.html">TOP</a>
     <span>›</span>
-    <a href="index.html">Journal</a>
+    <a href="../journal/index.html">ジャーナル</a>
     <span>›</span>
     個室が多い店 vs 一枚板カウンター——名古屋の接待シーンでどちらを選ぶか
   </div>
 </nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
-<article>
+<article class="nb-article">
   <div class="art-hero">
     <p class="art-eyebrow">業界の裏側コラム</p>
     <h1 class="art-title">個室が多い店 vs 一枚板カウンター——名古屋の<em>接待シーン</em>でどちらを選ぶか</h1>
@@ -151,7 +125,7 @@ nav{display:none;}
 </figure>
 
   <div class="art-body">
-<p class="nb-site-intro" style="font-size:.74rem;color:var(--dim);padding:.55rem .9rem;background:var(--bg2);border:1px solid var(--border);border-radius:4px;margin-bottom:1.5rem;line-height:1.7;">この記事は<a href="../index.html" style="color:var(--gold);text-decoration:none;">NAGOYA BITES</a> — 名古屋の厳選1,100店超を業界視点で紹介するグルメガイドの一部です。</p>
+<p class="nb-site-intro">この記事は<a href="../index.html">NAGOYA BITES</a> — 名古屋の厳選1,100店超を業界視点で紹介するグルメガイドの一部です。</p>
 
     <p>接待の幹事を任されると、まず迷うのが「個室のある店にするか、カウンターの店にするか」という一点だ。名古屋の栄・錦エリアの個室完備の割烹・鉄板焼きは、接待コースがおおむね1名12,000円〜18,000円前後に集中し、一枚板カウンターの寿司・割烹も8,000円台からのコースが目安になる。価格帯だけを見ると近いレンジに収まる店が多いだけに、選択肢が多いぶん判断に時間がかかる。だが業界人の視点では、この選択は「格の高さ」ではなく「商談の中身」で決めるべきものだ。</p><p>個室の最大の機能は「情報の遮断」にある。契約前の込み入った条件交渉、社外に聞かれたくない人事の話、競合が近くにいる可能性がある会合——こうした場面では、隣席に会話が漏れる心配のない個室一択になる。名古屋・栄には2〜12名まで対応する個室を持つ和食・鉄板焼き店が複数あり、少人数の密談から取引先を含めた会食まで幅広く受け止めている。半面、個室は店側のオペレーション上「その部屋専任のスタッフを割く」ことになりやすく、予約の柔軟性は下がる傾向がある。直近では平日夜の個室予約が2週間前でも埋まっているケースが増えており、接待日程が決まったら早めの確保が要る。</p><h2>カウンターが生む「場の温度」</h2><p>一方でカウンター、とくに一枚板の割烹や寿司店のカウンターは、初対面の相手との距離を縮める機能を持つ。目の前で仕事をする職人の手元を共通の話題にできるため、会話が途切れにくい。緊張感のある初回商談よりも、すでに関係ができている取引先との関係強化や、若手を交えたカジュアルな会食に向く。カウンター中心の店は個室に比べて席回転の融通が利きやすく、直前予約でも入れる余地が個室より残っている店が多い——これは店舗側が「常連との距離」を席設計の核に置いているためで、業界人が急な接待にカウンター店を勧める理由のひとつでもある。</p><div class="insider-box"><p class="insider-title">Inside Perspective — 業界人の目利き</p><ul><li>商談の機密度が高いほど個室、関係構築が目的ならカウンター——これが最初の判断軸。人数だけで決めると失敗しやすい</li><li>個室は「専任スタッフ確保」の都合上、予約は早め(1〜2週間前)が無難。カウンターは直前でも1〜2席なら入る余地が残っていることが多い</li><li>接待相手の業種によっても向き不向きがある。金融・士業など守秘性が高い業種は個室が安心されやすく、クリエイティブ系は逆にカウンターの空気を好む傾向がある</li></ul></div><p>結論として、個室とカウンターに優劣はない。今週の商談がどちらの性質を持つかを見極めたうえで、席タイプを先に決めてから店を選ぶ——この順番を守るだけで、接待の成功率は変わってくる。</p>
 
@@ -181,17 +155,50 @@ nav{display:none;}
     <a class="related-link" href="2026-09-07-meieki-meichika-new-shops-weekly.html">名駅メイチカ復活の週、朝7時の中国茶と23時のラーメン</a>
     <a class="related-link" href="2026-09-06-mizuho-asian-games-venue-yakiniku.html">アジア大会の瑞穂、栄へ戻る前に会場徒歩5分の焼肉で宴会を組む</a>
     <a class="related-link" href="2026-09-05-meieki-nagoyameshi-izakaya-enkai.html">名駅の名古屋めし居酒屋と伏見の新フードホール、宴会の幹事が選ぶべきはどちらか</a>
-    <a class="related-link" href="index.html" style="background:rgba(122,92,16,.08);">Journal 一覧</a>
-    <a class="related-link" href="../features/nagoya-settai-secret.html" style="background:rgba(122,92,16,.08);">失敗しない接待10選</a>
+    <a class="related-link is-primary" href="index.html">Journal 一覧</a>
+    <a class="related-link is-primary" href="../features/nagoya-settai-secret.html">失敗しない接待10選</a>
     <a class="related-link" href="../features/index.html">特集をもっと見る</a>
     <a class="related-link" href="../index.html">全店舗を検索</a>
   </div>
 </div>
 
-<footer>
-  <p>© 2026 <a href="../index.html">NAGOYA BITES</a> — 名古屋の飲食人による目利きメディア</p>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
 <!-- SEO-052: 内部リンク（関連記事ブロック）のクリックとスクロール到達を計測。
      回遊アドバイスの採否を体感でなく実データで判定できるようにする -->
 <script class="nb-engagement-tracking">
@@ -210,5 +217,23 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   check();
 })();
 </script>
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
 </body>
 </html>

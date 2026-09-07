@@ -362,7 +362,8 @@ function replaceContainerInner(html, containerClass, newInner) {
 }
 
 // ───────── 「今月の新顔」バッジ CSS を各特集に1回だけ注入（冪等） ─────────
-const BADGE_CSS = '.store-new,.shop-new{display:inline-block;margin-left:.5rem;font-size:.6rem;font-weight:700;letter-spacing:.03em;color:#fff;background:#b08d2c;padding:.1rem .45rem;border-radius:3px;vertical-align:middle;white-space:nowrap;}';
+// DSN-003: 見た目は assets/css/nb.css の .store-new,.shop-new が所有する。マーカー行のみ注入する。
+const BADGE_CSS = '';
 function injectBadgeCss(html) {
   if (html.includes('ROSTER_BADGE_CSS')) return html;
   const i = html.indexOf('</style>');

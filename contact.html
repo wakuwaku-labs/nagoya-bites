@@ -53,15 +53,6 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/nb.css">
 <style>::selection{background:var(--gold);color:var(--bg);}
-nav a:hover,nav a.active{color:var(--text);}
-@media(max-width:768px){
-.hamburger{display:block;}
-nav{position:fixed;top:0;right:-100%;width:70vw;max-width:280px;height:100vh;background:var(--bg);flex-direction:column;gap:0;padding:5rem 2rem 2rem;border-left:1px solid var(--border);box-shadow:-4px 0 24px rgba(0,0,0,.08);transition:right .3s ease;z-index:200;align-items:flex-start;}
-nav a{font-size:.82rem;padding:.9rem 0;border-bottom:1px solid var(--border);width:100%;letter-spacing:.12em;}
-nav.open{right:0;}
-.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:199;}
-.nav-overlay.open{display:block;}
-}
 .page{padding:100px 2rem 80px;max-width:680px;margin:0 auto;}
 .eyebrow{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1.4rem;opacity:0;animation:up .8s .1s forwards;}
 .page-title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(2.4rem,5vw,3.8rem);line-height:1.05;color:var(--white);margin-bottom:1rem;opacity:0;animation:up .9s .2s forwards;}
@@ -90,24 +81,28 @@ nav.open{right:0;}
 .msg.error{background:rgba(180,50,50,.07);border:1px solid rgba(180,50,50,.3);color:#9b3333;}
 .msg.show{display:block;}
 @keyframes up{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
-@media(max-width:600px){nav{gap:1rem;}nav a{font-size:var(--fs-xs);}.info-grid{grid-template-columns:1fr;}}</style>
+@media(max-width:600px){.info-grid{grid-template-columns:1fr;}}</style>
 </head>
 <body>
 
+<!-- NB-CHROME:HEADER:START -->
 <div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
-  <a class="logo" href="./">Nagoya <em>Bites</em></a>
-  <button class="hamburger" id="hamburger-btn" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false">
+  <a class="logo" href="index.html">Nagoya <em>Bites</em></a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
     <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
   </button>
-  <nav id="main-nav">
-    <a href="./">Top</a>
-    <a href="journal/index.html">Journal</a>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="index.html">店舗を探す</a>
     <a href="features/index.html">特集</a>
-    <a href="about.html">About</a>
-    <a href="contact.html" class="active">Contact</a>
+    <a href="journal/index.html">ジャーナル</a>
+    <a href="features/editorial-policy.html">編集規約</a>
+    <a href="about.html">運営について</a>
+    <a href="faq.html" class="nav-secondary">よくある質問</a>
+    <a href="contact.html" class="nav-secondary" aria-current="page">お問い合わせ</a>
   </nav>
 </header>
+<!-- NB-CHROME:HEADER:END -->
 
 <main class="page">
   <div class="eyebrow">Get in Touch</div>
@@ -169,10 +164,43 @@ nav.open{right:0;}
   </form>
 </main>
 
-<footer>
-  <div class="fl2">Nagoya Bites</div>
-  <div class="fc" id="fc-year"></div>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="index.html">店舗を探す</a>
+      <a href="stores/index.html">エリア別 店舗一覧</a>
+      <a href="index.html#scene-index">目的から探す</a>
+      <a href="features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="features/index.html">特集記事</a>
+      <a href="journal/index.html">Daily Journal</a>
+      <a href="features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="features/editorial-policy.html">編集規約</a>
+      <a href="about.html">運営について</a>
+      <a href="faq.html">よくある質問</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
 
 <script>
 (function(){var fc=document.getElementById('fc-year');if(fc)fc.textContent='\u00A9 '+new Date().getFullYear()+' All Rights Reserved';})();
@@ -253,5 +281,23 @@ form.addEventListener('submit', function(e) {
 });
 </script>
 
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
 </body>
 </html>

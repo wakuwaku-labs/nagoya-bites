@@ -184,36 +184,9 @@ function buildCta(stores) {
       </span>
     </li>`).join('');
 
-  // 既存の意匠（ゴールド #7a5c16 / .store-link のボタン形状）に揃える。新しい配色は導入しない。
-  //
-  // 重要: 特集のテンプレートは2系統あり、**`--gold` 変数を持たない**ページがある
-  // （実例: nagoya-solo-dining）。そこでは `var(--gold)` が空に解決するため、
-  // ボタンが透明・文字色が黒のまま出てしまう。しかもページ側の
-  // `.store-link[href*="hotpepper"]{color:var(--gold) !important}` が `!important` 付きで、
-  // スコープを強めただけでは勝てない。
-  // → `.topcta` 自身に変数を定義することで、**ページ側のルールも CTA の中では正しく解決する**。
-  //    値はサイト共通の #7a5c10 / #96720f（index.html・他特集と同一）。
-  //
-  // モバイルで負マージンによる全幅化はしない。親の左右 padding はテンプレートごとに違い
-  // （art-body 型は 1.5rem、季節特集の `.content` 型はより小さい）、固定値の
-  // `margin-left:-1.5rem` を当てると padding の小さい型で画面外にはみ出して
-  // 横スクロールが発生する（nagoya-summer-2026 で実測 scrollWidth 383px > 375px）。
-  // 見た目の全幅化より、どのテンプレートでも破綻しないことを優先する。
+  // DSN-003: 見た目は assets/css/nb.css の .topcta 一式が所有する。
+  // ここではマークアップのみを返す（ページごとの <style> 埋め込みはしない）。
   return `${START}
-<style>
-.topcta{--gold:#7a5c10;--gold2:#96720f;max-width:880px;margin:0 auto 2rem;padding:1.1rem 1.5rem 1.3rem;border:1px solid rgba(122,92,16,.22);border-radius:6px;background:rgba(122,92,16,.035);}
-.topcta-head{font-size:.74rem;letter-spacing:.12em;color:var(--gold,#7a5c10);margin-bottom:.15rem;}
-.topcta-sub{font-size:.8rem;color:var(--muted,#6b6b6b);margin-bottom:.85rem;line-height:1.6;}
-.topcta-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;}
-.topcta-item{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;}
-.topcta-name{font-size:.92rem;font-weight:500;min-width:0;}
-.topcta-actions{display:flex;gap:.5rem;flex-shrink:0;}
-.topcta .store-link{display:inline-flex;align-items:center;gap:.35rem;background:var(--gold,#7a5c10);color:#fff;border:1px solid var(--gold,#7a5c10);padding:.55rem 1.1rem;border-radius:4px;font-size:.78rem;font-weight:500;letter-spacing:.04em;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);transition:background .15s,transform .1s;}
-.topcta .store-link:hover{background:var(--gold2,#96720f);transform:translateY(-1px);}
-.topcta .store-link[href*="hotpepper"]{background:#fff;color:var(--gold,#7a5c10);border:1px solid var(--gold,#7a5c10);box-shadow:none;}
-.topcta .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
-@media(max-width:640px){.topcta{padding:1rem 1.1rem 1.15rem;}.topcta-item{flex-direction:column;align-items:flex-start;gap:.45rem;}.topcta-actions{width:100%;}}
-</style>
 <aside class="topcta" aria-label="この特集の注目店">
   <div class="topcta-head">EDITORS' PICK</div>
   <div class="topcta-sub">本文を読む前に動きたい方へ。編集部が上位に挙げた${stores.length}軒の詳細と予約はこちらから。</div>

@@ -46,8 +46,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 {"@type":"Question","name":"名古屋でうなぎのランチが食べられるお店はありますか？","acceptedAnswer":{"@type":"Answer","text":"鰻のノリスケ（栄）がGoogle評価4.7の実力店です。ひつまぶし発祥の地・名古屋ならではの丁寧な仕事が評価されています。ランチ営業あり。週末は混むため開店直後か平日が狙い目です。"}}
 ]}
 </script>
-<style>nav a:hover,nav a.active{color:var(--text);}
-.art-hero{padding:3rem 1.5rem 2.5rem;max-width:800px;margin:0 auto;}
+<style>.art-hero{padding:3rem 1.5rem 2.5rem;max-width:800px;margin:0 auto;}
 .art-eyebrow{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;}
 .art-title{font-family:var(--font-display);font-weight:400;font-size:clamp(1.9rem,4vw,3rem);line-height:1.2;color:var(--white);margin-bottom:1rem;}
 .art-title em{font-style:italic;color:var(--gold);}
@@ -86,13 +85,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}
 .related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}
 .related-link:hover{background:rgba(122,92,16,.08);}
-footer a{color:rgba(201,169,110,.7);text-decoration:none;}
-@media(max-width:640px){
-.store-card{flex-direction:column;gap:.7rem;}
-.store-num{font-size:1.4rem;}
-nav{gap:1rem;}
-nav a{font-size:var(--fs-xs);}
-}
+@media(max-width:640px){.store-card{flex-direction:column;gap:.7rem;}.store-num{font-size:1.4rem;}}
 .art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}
 .art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}
 @media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
@@ -104,33 +97,40 @@ nav a{font-size:var(--fs-xs);}
 .store-link::after{content:"→";margin-left:.15rem;font-weight:400;}
 .store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}
 .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
-/*ROSTER_BADGE_CSS*/.store-new,.shop-new{display:inline-block;margin-left:.5rem;font-size:var(--fs-xs);font-weight:700;letter-spacing:.03em;color:#fff;background:#b08d2c;padding:.1rem .45rem;border-radius:3px;vertical-align:middle;white-space:nowrap;}
+/*ROSTER_BADGE_CSS*/
 /* SEASONAL_NOTE_CSS */
-.season-note{display:flex;align-items:flex-start;gap:.7rem;margin:0 0 1.6rem;padding:.9rem 1.05rem;border:1px solid rgba(176,141,44,.35);border-left:3px solid #b08d2c;border-radius:8px;background:rgba(176,141,44,.07);}
-.season-note-flag{flex:none;font-size:var(--fs-xs);font-weight:700;letter-spacing:.04em;color:#fff;background:#b08d2c;padding:.26rem .62rem;border-radius:999px;white-space:nowrap;}
-.season-note-text{margin:0;font-size:.9rem;line-height:1.75;color:#3a3a3a;}
-@media (prefers-color-scheme:dark){.season-note-text{color:#e8e4d8;}}</style>
+</style>
 </head>
 <body>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="../index.html">すべての店舗</a>
-    <a href="index.html" class="active">特集</a>
-    <a href="../journal/index.html">Journal</a>
-    <a href="../about.html">About</a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
+    <a href="../features/index.html" aria-current="page">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
-
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
 <nav aria-label="パンくずリスト">
   <div class="breadcrumb">
-    <a href="../index.html">NAGOYA BITES</a>
+    <a href="../index.html">TOP</a>
     <span>›</span>
-    <a href="index.html">特集記事</a>
+    <a href="../features/index.html">特集</a>
     <span>›</span>
     名古屋 接待・個室 和食ランチ おすすめ10選
   </div>
 </nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
 <article>
   <div class="art-hero-image">
@@ -321,20 +321,6 @@ nav a{font-size:var(--fs-xs);}
 
 <section class="faq-section">
   <!-- SEO-042:TOP-CTA:START -->
-<style>
-.topcta{--gold:#7a5c10;--gold2:#96720f;max-width:880px;margin:0 auto 2rem;padding:1.1rem 1.5rem 1.3rem;border:1px solid rgba(122,92,16,.22);border-radius:6px;background:rgba(122,92,16,.035);}
-.topcta-head{font-size:.74rem;letter-spacing:.12em;color:var(--gold,#7a5c10);margin-bottom:.15rem;}
-.topcta-sub{font-size:.8rem;color:var(--muted,#6b6b6b);margin-bottom:.85rem;line-height:1.6;}
-.topcta-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;}
-.topcta-item{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;}
-.topcta-name{font-size:.92rem;font-weight:500;min-width:0;}
-.topcta-actions{display:flex;gap:.5rem;flex-shrink:0;}
-.topcta .store-link{display:inline-flex;align-items:center;gap:.35rem;background:var(--gold,#7a5c10);color:#fff;border:1px solid var(--gold,#7a5c10);padding:.55rem 1.1rem;border-radius:4px;font-size:.78rem;font-weight:500;letter-spacing:.04em;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);transition:background .15s,transform .1s;}
-.topcta .store-link:hover{background:var(--gold2,#96720f);transform:translateY(-1px);}
-.topcta .store-link[href*="hotpepper"]{background:#fff;color:var(--gold,#7a5c10);border:1px solid var(--gold,#7a5c10);box-shadow:none;}
-.topcta .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
-@media(max-width:640px){.topcta{padding:1rem 1.1rem 1.15rem;}.topcta-item{flex-direction:column;align-items:flex-start;gap:.45rem;}.topcta-actions{width:100%;}}
-</style>
 <aside class="topcta" aria-label="この特集の注目店">
   <div class="topcta-head">EDITORS' PICK</div>
   <div class="topcta-sub">本文を読む前に動きたい方へ。編集部が上位に挙げた3軒の詳細と予約はこちらから。</div>
@@ -399,9 +385,60 @@ nav a{font-size:var(--fs-xs);}
   </div>
 </div>
 
-<footer>
-  <p>© 2026 <a href="../index.html">NAGOYA BITES</a> — 名古屋の飲食人による目利きメディア</p>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
 </body>
 </html>

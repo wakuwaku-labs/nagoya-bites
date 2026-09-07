@@ -39,6 +39,7 @@ DSN-001（2026-09）でオーナー本人の直接指摘（「サイトが見に
 - `<style>` または `assets/css/` に触る 30 行超の差分
 - `buildCardHtml` / `buildTrendRanking` / モーダル markup の変更
 - `journal/_template.html` / `gen-store-pages.js` テンプレート / `scripts/gen_industry_features.js STYLE` の変更
+- `scripts/lib/site_chrome.js`（サイト共通クローム: ヘッダー/ナビ/パンくず/フッターの正本）の変更
 - フォント・色トークンの変更
 
 上記に該当しない軽微な CSS 修正（誤字・色の微調整1行など）は Builder が自己判断してよい。
