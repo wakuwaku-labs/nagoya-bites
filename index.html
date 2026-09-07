@@ -432,12 +432,13 @@ body.search-query-active .card-why{display:flex;}
 .skel-line.w60{width:60%;}
 .skel-line.w40{width:40%;}
 /* ── CARD ── */
-.card{background:#fff;border:0.5px solid #D3D1C7;cursor:pointer;position:relative;transition:background .25s,box-shadow .25s;display:flex;flex-direction:column;padding:12px;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.06);}
-.card:hover{background:#F1EFE8;box-shadow:0 4px 16px rgba(0,0,0,.1);}
-.ci{height:220px;aspect-ratio:4/3;overflow:hidden;position:relative;background:var(--surface);border-radius:6px 6px 0 0;margin:-12px -12px 12px;width:calc(100% + 24px);}
+.card{background:#fff;border:1px solid var(--card-border);cursor:pointer;position:relative;transition:background .25s,box-shadow .25s,border-color .25s;display:flex;flex-direction:column;padding:12px;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.card:hover{background:#FBFAF7;border-color:var(--border-h);box-shadow:0 8px 24px rgba(0,0,0,.09);}
+/* 写真は比率固定（固定高を廃止）。読み込み前はベージュの下地＝灰色の空状態を見せない */
+.ci{aspect-ratio:4/3;height:auto;overflow:hidden;position:relative;background:var(--bg2);border-radius:11px 11px 0 0;margin:-12px -12px 12px;width:calc(100% + 24px);}
 .ci img{width:100%;height:100%;object-fit:cover;filter:saturate(1.06) contrast(1.03);transition:filter .5s,transform .7s cubic-bezier(.2,.7,.2,1);display:block;}
 .card:hover .ci img{filter:saturate(1.12) contrast(1.05);transform:scale(1.06);}
-.ci::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(28,28,26,.55) 0%,transparent 48%);pointer-events:none;}
+.ci::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(28,28,26,.42) 0%,transparent 45%);pointer-events:none;}
 /* 代替枠（客投稿）の撮影者クレジット。帰属表示なので写真の上に必ず可視で置く */
 .photo-credit{position:absolute;left:8px;bottom:8px;z-index:3;max-width:calc(100% - 16px);
   padding:3px 7px;border-radius:3px;background:rgba(10,10,8,.62);backdrop-filter:blur(4px);
@@ -461,9 +462,9 @@ body.search-query-active .card-why{display:flex;}
 .reel-close{position:absolute;top:.5rem;right:.5rem;z-index:6;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(10,10,8,.72);color:#fff;font-size:1rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .grid.list-mode .reel-play,.grid.list-mode .reel-tag{display:none;}
 @media (prefers-reduced-motion:reduce){.card:hover .reel-play i{transform:none;}}
-.badge{position:absolute;top:.9rem;left:.9rem;font-family:var(--font-body);font-weight:500;font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);border:1px solid rgba(201,169,110,.4);padding:.25rem .6rem;background:rgba(10,10,8,.72);backdrop-filter:blur(6px);z-index:2;border-radius:var(--r-sm);}
+.badge{position:absolute;top:.9rem;left:.9rem;font-family:var(--font-body);font-weight:500;font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);border:1px solid rgba(255,255,255,.5);padding:.25rem .65rem;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);z-index:2;border-radius:999px;}
 /* ── 優先バッジ（写真右上に1つだけ・DSN-001） ── */
-.card-flag{position:absolute;top:.9rem;right:.9rem;font-family:var(--font-body);font-weight:700;font-size:var(--fs-xs);letter-spacing:0;color:#fff;padding:.25rem .65rem;border-radius:var(--r-sm);z-index:3;box-shadow:0 1px 4px rgba(0,0,0,.25);}
+.card-flag{position:absolute;top:.9rem;right:.9rem;font-family:var(--font-body);font-weight:700;font-size:var(--fs-xs);letter-spacing:0;color:#fff;padding:.25rem .7rem;border-radius:var(--page-r-chip,999px);z-index:3;box-shadow:0 1px 4px rgba(0,0,0,.25);}
 .card-flag.trend-hot{background:linear-gradient(135deg,#d97a3a,#b8541f);}
 .card-flag.trend-rising{background:linear-gradient(135deg,#c9915a,#96720f);}
 .card-flag.trend-warm{background:linear-gradient(135deg,#a8895a,#7a5c10);}
@@ -472,15 +473,16 @@ body.search-query-active .card-why{display:flex;}
 .card-flag.flag-pro{background:var(--gold);}
 .cb{padding:0;}
 .cn{font-family:var(--font-body);font-weight:600;font-size:var(--fs-lg);color:#2C2C2A;margin-bottom:6px;line-height:1.35;max-height:44px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
-.cmeta{display:flex;gap:.6rem;font-size:var(--fs-xs);color:#5F5E5A;margin-bottom:8px;flex-wrap:wrap;align-items:center;}
+.cmeta{display:flex;gap:.25rem .7rem;font-size:var(--fs-xs);color:var(--muted);margin-bottom:8px;flex-wrap:wrap;align-items:center;line-height:1.5;}
+.cmeta .cc-cell .cc-l{font-family:var(--font-body);font-weight:500;color:var(--dim);margin-right:.25rem;}
 .gscore{color:#f5a623;font-weight:500;}
 .mig-embed-box{width:100%;max-width:400px;margin:0 auto 1.5rem;}
 .mig-embed-box iframe{width:100%;height:560px;border-radius:12px;}
 .cbook{padding-bottom:.85rem;border-bottom:1px solid var(--border);}
 .cbook a{font-size:var(--fs-xs);color:var(--gold);text-decoration:none;border:1px solid rgba(201,169,110,.38);padding:.22rem .65rem;border-radius:1px;transition:background .2s;}
 .cbook a:hover{background:rgba(201,169,110,.12);}
-.mrow{padding:.5rem 0 0;border-top:0.5px solid #D3D1C7;display:flex;flex-wrap:wrap;gap:.28rem;}
-.ml{display:inline-flex;align-items:center;gap:.22rem;padding:.2rem .48rem;font-size:var(--fs-xs);letter-spacing:.05em;text-decoration:none;color:#5F5E5A;border:0.5px solid #D3D1C7;border-radius:2px;transition:all .2s;}
+.mrow{padding:.5rem 0 0;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.35rem;}
+.ml{display:inline-flex;align-items:center;justify-content:center;gap:.22rem;min-width:var(--tap-min);min-height:36px;padding:.2rem .55rem;font-size:var(--fs-xs);letter-spacing:0;text-decoration:none;color:var(--muted);border:1px solid var(--border);border-radius:999px;background:var(--card);transition:all .2s;}
 .ml:hover{color:var(--text);border-color:var(--border-h);}
 .ig:hover{color:#e1306c;border-color:rgba(225,48,108,.4);}
 .hp:hover{color:#e6002d;border-color:rgba(230,0,45,.4);}
@@ -488,18 +490,22 @@ body.search-query-active .card-why{display:flex;}
 .tk:hover{color:#fff;border-color:rgba(255,255,255,.35);background:#010101;}
 .xx:hover{color:#fff;border-color:rgba(255,255,255,.3);background:#111;}
 .gm:hover{color:#4285F4;border-color:rgba(66,133,244,.4);}
-/* ── MODAL ── */
-.ov{display:none;position:fixed;inset:0;z-index:500;background:rgba(5,5,4,.9);backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:1.5rem;}
+/* ── MODAL（店舗詳細シート・2026-09 再設計）──
+   方針: 写真が最初・店名が最大・指標は1つ・言葉を先に・空は描かない・色は塗らない。
+   角丸などページ固有トークンは :root を触らず .ov スコープに --page- 接頭辞で定義（DSN-001）。 */
+.ov{display:none;position:fixed;inset:0;z-index:500;background:rgba(5,5,4,.78);backdrop-filter:blur(14px);align-items:flex-end;justify-content:center;padding:0;--page-r-sheet:20px;--page-r-card:12px;--page-r-chip:999px;}
 .ov.open{display:flex;}
-.modal{background:var(--bg2);border:1px solid var(--border-h);max-width:680px;width:100%;max-height:88vh;overflow-y:auto;animation:min .3s ease;}
-@keyframes min{from{opacity:0;transform:translateY(22px) scale(.98);}to{opacity:1;transform:none;}}
-.mhi{height:340px;position:relative;overflow:hidden;}
-.mhi img{width:100%;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.03);}
-.mhi::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(28,28,26,.45) 0%,transparent 42%);pointer-events:none;}
+.modal{position:relative;background:var(--bg);border:0;max-width:760px;width:100%;max-height:92vh;max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;border-radius:var(--page-r-sheet) var(--page-r-sheet) 0 0;box-shadow:0 -8px 40px rgba(0,0,0,.35);animation:min .32s cubic-bezier(.22,.61,.36,1);}
+@keyframes min{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:none;}}
+@media(min-width:769px){.ov{align-items:center;padding:1.5rem;}.modal{max-height:88vh;border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.4);}}
+/* ヒーロー: 全幅・比率固定・文字を重ねない（♡ と × だけ）。読み込み中は店舗固有SVGが下地に出る */
+.mhi{position:relative;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);background-size:cover;background-position:center;}
+@media(min-width:769px){.mhi{aspect-ratio:16/10;}}
+.mhi img{width:100%;height:100%;object-fit:cover;display:block;}
 .mhi-track{display:flex;height:100%;transition:transform .32s cubic-bezier(.22,.61,.36,1);touch-action:pan-y;}
 .mhi-track.dragging{transition:none;}
 .mhi-track img{flex:0 0 100%;}
-.mhi-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(10,10,8,.55);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.92);width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;z-index:3;padding:0;transition:background .2s,opacity .2s;}
+.mhi-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(10,10,8,.55);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.92);width:var(--tap-min);height:var(--tap-min);display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;z-index:3;padding:0;transition:background .2s,opacity .2s;}
 .mhi-nav svg{width:18px;height:18px;display:block;}
 .mhi-nav:hover{background:rgba(10,10,8,.85);}
 .mhi-nav:disabled{opacity:.35;cursor:default;}
@@ -507,58 +513,79 @@ body.search-query-active .card-why{display:flex;}
 .mhi-prev{left:.7rem;}
 .mhi-next{right:.7rem;}
 .mhi-dots{position:absolute;left:0;right:0;bottom:.65rem;display:flex;justify-content:center;gap:.35rem;z-index:3;}
-.mhi-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45);transition:all .2s;cursor:pointer;padding:0;border:none;}
-.mhi-dot.active{background:#fff;width:16px;border-radius:3px;}
-.modal-title-block{padding-bottom:1.2rem;border-bottom:1px solid var(--border);margin-bottom:1.2rem;}
-.mig{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.22em;color:var(--ember);text-transform:uppercase;margin-bottom:.6rem;font-weight:600;}
-.min2{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:400;color:var(--text);line-height:1.12;margin-top:.3rem;letter-spacing:.01em;}
-.mbody{padding:1.6rem 1.8rem 1.4rem;}
-@media(max-width:768px){.mhi{height:240px;}.min2{font-size:1.7rem;}.mbody{padding:1.3rem 1.2rem 1.2rem;}}
-.minfo{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:.5rem 1rem;padding:1rem 0;border-bottom:1px solid var(--border);margin-bottom:1.4rem;align-items:baseline;}
-.mic{display:contents;}
-.mic label{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.12em;color:var(--dim);text-transform:uppercase;padding:.3rem 0;white-space:nowrap;}
-.mic span{font-size:.78rem;color:var(--text);line-height:1.5;padding:.3rem 0;border-bottom:1px solid rgba(0,0,0,.05);}
-.photo-grid-wrap{margin-bottom:1.6rem;}
-.photo-grid-label{font-family:'DM Mono',monospace;font-size:var(--fs-2xs);letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.7rem;}
-.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.photo-grid-item{position:relative;overflow:hidden;border-radius:2px;background:var(--surface);aspect-ratio:4/5;}
-.photo-grid-item iframe{width:100%;height:100%;border:none;display:block;pointer-events:none;}
-.photo-grid-item-label{font-family:'DM Mono',monospace;font-size:var(--fs-2xs);letter-spacing:.14em;color:var(--dim);text-transform:uppercase;text-align:center;margin-top:.3rem;}
-@media(max-width:768px){.photo-grid{grid-template-columns:repeat(2,1fr);}.photo-grid-item{aspect-ratio:4/3;}.photo-grid-item:last-child{display:none;}}
-.mml{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:.9rem;}
-/* おすすめポイント */
-.mpoint-box{background:rgba(122,92,16,.07);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:.95rem 1.1rem;margin-bottom:1.4rem;}
-.mpoint-box .mpoint-label{font-family:'DM Mono',monospace;font-size:var(--fs-2xs);letter-spacing:.22em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:.5rem;}
-.mpoint-box p{font-size:.82rem;line-height:1.85;color:var(--text);}
+.mhi-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.45);transition:all .2s;cursor:pointer;padding:0;border:none;}
+.mhi-dot.active{background:#fff;width:18px;border-radius:4px;}
+.mhi .photo-credit{left:auto;right:10px;bottom:10px;}
+.mbody{padding:var(--sp-5) var(--sp-4) var(--sp-6);}
+@media(min-width:769px){.mbody{padding:var(--sp-6) var(--sp-6) var(--sp-6);}}
+/* 識別ブロック: ジャンル（日本語キッカー）→ 店名（セリフ・最大）→ エリア·最寄駅 */
+.m-head{display:flex;flex-direction:column;gap:var(--sp-2);}
+.m-kicker{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3);min-height:1.6em;}
+.mig{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:500;color:var(--gold);letter-spacing:0;line-height:1.4;}
+.m-flag{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;color:var(--gold);background:rgba(255,255,255,.9);border:1px solid rgba(122,92,16,.28);padding:.22rem .65rem;border-radius:var(--page-r-chip);white-space:nowrap;line-height:1.4;}
+.m-flag.trend-hot{color:#fff;background:linear-gradient(135deg,#d97a3a,#b8541f);border-color:transparent;}
+.m-flag.trend-rising{color:#fff;background:linear-gradient(135deg,#c9915a,#96720f);border-color:transparent;}
+.m-flag.trend-warm{color:#fff;background:linear-gradient(135deg,#a8895a,#7a5c10);border-color:transparent;}
+.m-flag.flag-editor{color:#fff;background:linear-gradient(135deg,#2d6a4f,#1b4332);border-color:transparent;}
+.m-flag.flag-insider{color:#fff;background:rgba(42,106,90,.94);border-color:transparent;}
+.min2{font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:500;color:var(--ink);line-height:var(--lh-display);letter-spacing:var(--ls-display);overflow-wrap:anywhere;}
+.m-sub{font-size:var(--fs-sm);color:var(--muted);line-height:var(--lh-ui);display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .7rem;}
+.m-sub .m-dot::before{content:'·';color:var(--dim);margin-right:.7rem;}
+/* at-a-glance: 口コミ信頼度 / Google★（件数）/ 価格帯 / 本日 の最大4セル（値がある時だけ）。ヘアラインの表 */
+.m-glance{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:var(--sp-4);}
+.m-glance:empty{display:none;}
+.m-gcell{background:var(--bg);padding:var(--sp-3) var(--sp-3) var(--sp-3) 0;display:flex;flex-direction:column;gap:.15rem;min-width:0;}
+.m-gcell+.m-gcell{padding-left:var(--sp-3);}
+.m-gcell.is-link{cursor:pointer;}
+.m-gcell.is-link:hover .m-glabel{color:var(--gold);}
+.m-glabel{font-size:var(--fs-xs);color:var(--dim);font-weight:500;letter-spacing:0;line-height:1.4;white-space:nowrap;}
+.m-gval{font-size:var(--fs-md);color:var(--text);font-weight:600;line-height:var(--lh-ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:baseline;gap:.3rem;}
+.m-gval .num{font-family:var(--font-mono);font-weight:500;}
+.m-gval .cc-tier{font-family:var(--font-mono);font-weight:700;font-size:var(--fs-xl);line-height:1;}
+.m-gval .m-star{color:#d4a017;}
+.m-gval .m-star svg{width:.9em;height:.9em;fill:currentColor;vertical-align:-.08em;}
+.m-gval .m-count{font-size:var(--fs-xs);color:var(--dim);font-weight:500;}
+.m-gval .m-open{color:var(--green);}
+.m-gval .m-closed{color:var(--ember-deep);}
+/* 節見出し: 金の短い罫 + 日本語ラベル（英日二重見出しは使わない） */
+.m-section{margin-top:var(--sp-6);}
+.m-section-title{font-size:var(--fs-xs);font-weight:600;color:var(--dim);letter-spacing:0;margin-bottom:var(--sp-3);display:flex;align-items:center;gap:.55rem;line-height:1.4;}
+.m-section-title::before{content:'';flex:0 0 14px;height:1px;background:var(--gold);opacity:.7;}
+.mml{font-size:var(--fs-xs);font-weight:600;color:var(--dim);letter-spacing:0;margin-bottom:var(--sp-3);display:flex;align-items:center;gap:.55rem;line-height:1.4;}
+.mml::before{content:'';flex:0 0 14px;height:1px;background:var(--gold);opacity:.7;}
+/* 編集部の視点（署名行 → リード本文 → 業界人メモ → おすすめシーン → 掲載媒体）。色付きの箱は使わず金の細罫1本 */
+.m-editorial{margin-top:var(--sp-6);}
+.m-sig{font-size:var(--fs-xs);color:var(--muted);line-height:1.6;display:flex;flex-wrap:wrap;align-items:center;gap:.15rem .35rem;margin-bottom:var(--sp-3);}
+.m-sig strong{color:var(--text);font-weight:600;}
+.m-sig .m-dot::before{content:'·';color:var(--dim);margin:0 .2rem;}
+.m-lead{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--text);border-left:2px solid var(--gold);padding-left:var(--sp-4);margin:0;}
+.m-note{margin-top:var(--sp-4);padding-left:calc(var(--sp-4) + 2px);}
+.m-note-h{font-size:var(--fs-xs);font-weight:600;color:var(--gold);margin-bottom:.3rem;letter-spacing:0;}
+.m-note p{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--muted);margin:0;}
+.m-chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:var(--sp-4);}
+.m-chip{font-size:var(--fs-xs);color:var(--muted);border:1px solid var(--border);padding:.3rem .75rem;border-radius:var(--page-r-chip);background:var(--card);line-height:1.4;white-space:nowrap;}
+.m-chip.scene{color:var(--gold);border-color:rgba(122,92,16,.3);}
+.m-media-line{font-size:var(--fs-xs);color:var(--dim);margin-top:var(--sp-3);line-height:1.7;}
+.m-media-line a{color:var(--gold);text-decoration:underline;text-decoration-color:rgba(122,92,16,.4);text-underline-offset:3px;}
 /* ── カードのリード文（編集部/業界人/プロの目利き・接頭辞は1行のkickerに統合・DSN-001） ── */
 .card-lead{font-size:var(--fs-sm);color:var(--text);line-height:1.65;padding:.55rem .8rem .55rem .85rem;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;max-height:64px;margin-bottom:12px;flex-grow:1;border-left:2px solid var(--gold);background:rgba(122,92,16,.04);border-radius:0 3px 3px 0;}
 .card-lead-kicker{font-weight:600;color:var(--gold);}
-.editor-reason-box{background:rgba(90,62,0,.06);border-left:3px solid #7a5c00;border-radius:0 4px 4px 0;padding:.95rem 1.1rem;margin-bottom:1rem;}
-.editor-reason-box .mpoint-label{color:#7a5c00;}
-.media-features-box{background:rgba(30,80,30,.05);border-left:3px solid #3a7a3a;border-radius:0 4px 4px 0;padding:.95rem 1.1rem;margin-bottom:1rem;}
-.media-features-box .mpoint-label{color:#3a7a3a;}
-.media-features-box ul{margin:.4rem 0 0;padding:0 0 0 1.1rem;font-size:.8rem;line-height:1.8;color:var(--text);}
-.media-features-box li{margin-bottom:.1rem;}
-.insider-note-box{background:rgba(20,60,50,.06);border-left:3px solid #2a6a5a;border-radius:0 4px 4px 0;padding:.95rem 1.1rem;margin-bottom:1.4rem;}
-.insider-note-box .mpoint-label{color:#2a6a5a;}
-.insider-note-box p{font-size:.82rem;line-height:1.85;color:var(--text);}
-.insider-reviews-box{background:rgba(20,60,50,.04);border-left:3px solid #2a6a5a;border-radius:0 4px 4px 0;padding:.95rem 1.1rem;margin-bottom:1.4rem;}
-.insider-reviews-box .mpoint-label{color:#2a6a5a;}
-.ir-list{list-style:none;padding:0;margin:.6rem 0 0;display:flex;flex-direction:column;gap:.2rem;}
-.ir-item{padding:.7rem 0;border-top:1px dashed rgba(42,106,90,.25);}
-.ir-item:first-child{border-top:none;padding-top:.2rem;}
-.ir-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem;margin-bottom:.4rem;}
-.ir-name{font-weight:600;font-size:.82rem;color:var(--text);}
+/* 業界人レビュー（1件以上ある時だけ節を出す。0件は末尾の投稿リンクのみ） */
+.insider-reviews-box{margin-top:var(--sp-6);}
+.ir-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--sp-3);}
+.ir-item{padding:var(--sp-4);background:var(--card);border:1px solid var(--border);border-radius:var(--page-r-card);}
+.ir-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.35rem .6rem;margin-bottom:.5rem;}
+.ir-name{font-weight:600;font-size:var(--fs-md);color:var(--text);}
 .ir-title{font-size:var(--fs-xs);color:var(--dim);}
-.ir-genre{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.1em;padding:.15rem .5rem;background:rgba(42,106,90,.12);color:#2a6a5a;border-radius:2px;text-transform:uppercase;}
+.ir-genre{font-size:var(--fs-xs);padding:.15rem .6rem;background:rgba(122,92,16,.08);color:var(--gold);border-radius:var(--page-r-chip);letter-spacing:0;}
 .ir-years{font-size:var(--fs-xs);color:var(--muted);}
-.ir-body{font-size:.8rem;line-height:1.85;color:var(--text);margin:0;white-space:pre-wrap;}
-.ir-meta{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.08em;color:var(--dim);margin-top:.35rem;text-transform:uppercase;}
-.ir-empty{font-size:.75rem;color:var(--dim);margin:.3rem 0 .2rem;line-height:1.7;}
-.insider-cta{display:inline-block;margin-top:.9rem;padding:.6rem 1.1rem;background:#2a6a5a;color:#fff;font-size:.82rem;font-weight:600;text-decoration:none;border:none;border-radius:4px;cursor:pointer;transition:background .2s;}
-.insider-cta:hover{background:#1e5145;color:#fff;}
+.ir-body{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--text);margin:0;white-space:pre-wrap;}
+.ir-meta{font-size:var(--fs-xs);color:var(--dim);margin-top:.5rem;letter-spacing:0;}
+.ir-empty{font-size:var(--fs-sm);color:var(--dim);margin:0;line-height:1.7;}
+.insider-cta{display:inline-flex;align-items:center;justify-content:center;min-height:var(--tap-min);margin-top:var(--sp-3);padding:.6rem 1.35rem;background:var(--card);color:var(--gold);font-size:var(--fs-sm);font-weight:600;text-decoration:none;border:1px solid rgba(122,92,16,.35);border-radius:var(--page-r-chip);cursor:pointer;transition:background .2s,border-color .2s;}
+.insider-cta:hover{background:rgba(122,92,16,.06);border-color:var(--gold);color:var(--gold);}
 /* レビュー投稿フォーム */
-.ir-form-wrap{margin-top:1rem;padding:1rem 1.1rem;background:rgba(255,255,255,.6);border:1px solid rgba(42,106,90,.25);border-radius:4px;}
+.ir-form-wrap{margin-top:var(--sp-4);padding:var(--sp-4);background:var(--card);border:1px solid var(--border);border-radius:var(--page-r-card);}
 .ir-form-wrap[hidden]{display:none;}
 .ir-form-intro{font-size:var(--fs-xs);color:var(--dim);line-height:1.7;margin:0 0 .9rem;}
 .ir-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
@@ -567,22 +594,23 @@ body.search-query-active .card-why{display:flex;}
 .ir-field label{font-size:var(--fs-xs);color:var(--text);font-weight:600;}
 .ir-field .req{color:#c0392b;font-size:var(--fs-xs);margin-left:.2rem;font-weight:600;}
 .ir-field .opt{color:var(--dim);font-size:var(--fs-xs);margin-left:.2rem;font-weight:400;}
-.ir-field input[type=text],.ir-field select,.ir-field textarea{padding:.55rem .7rem;font-size:.82rem;border:1px solid rgba(0,0,0,.18);border-radius:3px;background:#fff;color:var(--text);font-family:inherit;box-sizing:border-box;width:100%;}
-.ir-field input[type=text]:focus,.ir-field select:focus,.ir-field textarea:focus{outline:none;border-color:#2a6a5a;box-shadow:0 0 0 2px rgba(42,106,90,.15);}
+.ir-field input[type=text],.ir-field select,.ir-field textarea{padding:.6rem .75rem;font-size:var(--fs-md);border:1px solid rgba(0,0,0,.18);border-radius:10px;background:#fff;color:var(--text);font-family:inherit;box-sizing:border-box;width:100%;min-height:var(--tap-min);}
+.ir-field input[type=text]:focus,.ir-field select:focus,.ir-field textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 2px rgba(122,92,16,.15);}
 .ir-field textarea{min-height:7rem;resize:vertical;line-height:1.7;}
 .ir-field .hint{font-size:var(--fs-xs);color:var(--dim);line-height:1.5;}
-.ir-consent{display:flex;align-items:flex-start;gap:.5rem;margin-top:.8rem;padding:.6rem;background:rgba(42,106,90,.05);border-radius:3px;}
+.ir-consent{display:flex;align-items:flex-start;gap:.5rem;margin-top:.8rem;padding:.65rem .8rem;background:var(--bg2);border-radius:10px;}
 .ir-consent input{margin-top:.15rem;flex-shrink:0;}
 .ir-consent label{font-size:var(--fs-xs);color:var(--text);line-height:1.6;cursor:pointer;}
 .ir-actions{display:flex;align-items:center;gap:.8rem;margin-top:1rem;flex-wrap:wrap;}
-.ir-submit{padding:.7rem 1.6rem;background:#2a6a5a;color:#fff;font-size:.82rem;font-weight:600;border:none;border-radius:4px;cursor:pointer;transition:background .2s;}
-.ir-submit:hover:not(:disabled){background:#1e5145;}
-.ir-submit:disabled{background:#8aada3;cursor:not-allowed;}
-.ir-cancel{padding:.65rem 1rem;background:transparent;color:var(--dim);font-size:.75rem;border:1px solid rgba(0,0,0,.15);border-radius:4px;cursor:pointer;}
-.ir-cancel:hover{background:rgba(0,0,0,.04);}
-.ir-status{font-size:.75rem;line-height:1.6;padding:.7rem .9rem;border-radius:3px;margin-top:.7rem;display:none;}
-.ir-status.ok{display:block;background:rgba(42,106,90,.12);color:#2a6a5a;border:1px solid rgba(42,106,90,.35);}
+.ir-submit{min-height:var(--tap-min);padding:.6rem 1.6rem;background:var(--warm-grad);color:#fff;font-size:var(--fs-sm);font-weight:700;border:none;border-radius:var(--page-r-chip);cursor:pointer;box-shadow:0 2px 8px rgba(184,84,31,.28);transition:filter .2s,transform .2s,box-shadow .2s;}
+.ir-submit:hover:not(:disabled){filter:brightness(1.06);transform:translateY(-1px);box-shadow:var(--warm-glow);}
+.ir-submit:disabled{background:var(--surface);color:var(--dim);cursor:not-allowed;box-shadow:none;}
+.ir-cancel{min-height:var(--tap-min);padding:.6rem 1.1rem;background:transparent;color:var(--dim);font-size:var(--fs-sm);border:1px solid rgba(0,0,0,.15);border-radius:var(--page-r-chip);cursor:pointer;transition:background .2s,border-color .2s;}
+.ir-cancel:hover{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.28);}
+.ir-status{font-size:var(--fs-sm);line-height:1.6;padding:.7rem .9rem;border-radius:10px;margin-top:.7rem;display:none;}
+.ir-status.ok{display:block;background:rgba(46,125,50,.08);color:var(--green);border:1px solid rgba(46,125,50,.3);}
 .ir-status.ng{display:block;background:rgba(192,57,43,.08);color:#c0392b;border:1px solid rgba(192,57,43,.35);}
+.m-ir-link{display:inline-flex;align-items:center;min-height:var(--tap-min);font-size:var(--fs-sm);color:var(--gold);text-decoration:underline;text-decoration-color:rgba(122,92,16,.4);text-underline-offset:3px;background:none;border:0;padding:0;cursor:pointer;font-family:inherit;}
 @media (max-width:640px){.ir-form-grid{grid-template-columns:1fr;}}
 /* サイトフィードバック（フローティング「ご意見」ボタン + パネル） */
 #fb-fab{position:fixed;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));left:1.5rem;z-index:290;padding:.55rem .9rem;background:#2a6a5a;color:#fff;font-size:var(--fs-xs);font-weight:600;letter-spacing:.04em;border:none;border-radius:999px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.25);transition:background .2s;}
@@ -597,61 +625,66 @@ body.search-query-active .card-why{display:flex;}
 .fb-close{background:transparent;border:none;color:var(--dim);font-size:1rem;line-height:1;cursor:pointer;padding:.25rem .4rem;}
 .fb-close:hover{color:var(--text);}
 @media(max-width:768px){.card-lead{-webkit-line-clamp:2;max-height:52px;}}
-.mmg{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;}
-.mb{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.6rem;padding:1.15rem .4rem 1.05rem;border:1px solid var(--border);text-decoration:none;color:var(--text);transition:all .2s;border-radius:10px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.03);}
-.mb:hover{border-color:var(--border-h);background:var(--surface);transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.08);}
-.mbi{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;width:36px;height:36px;line-height:1;}
-.mbi img.brand-fav{max-width:100%;max-height:100%;object-fit:contain;display:block;border-radius:9px;box-shadow:0 2px 5px rgba(0,0,0,.14);}
-/* ブランドfaviconは背景いっぱいの塗りでも中の白いグリフ自体の太さ・余白がまちまちで、
-   食べログ（線が細い箸のイラスト）とX（Xの中に余白が多い）はHOTPEPPER/INSTAGRAM/TIKTOKより
-   一回り小さく見える。Google Mapsは透明な余白そのものが大きい（塗り面積70% vs 他100%）。
-   3つとも拡大＋mbiのoverflow:hiddenでトリミングし、見た目の大きさを揃える */
-.mb-tb .mbi img.brand-fav{transform:scale(1.18);}
-.mb-xx .mbi img.brand-fav{transform:scale(1.18);}
-.mb-gm .mbi img.brand-fav{transform:scale(1.22);}
-.mbl{display:flex;align-items:center;justify-content:center;min-height:calc(1.3em * 2);font-size:var(--fs-xs);line-height:1.3;letter-spacing:.09em;color:var(--text);text-transform:uppercase;font-family:'DM Mono',monospace;font-weight:700;}
-.mb:hover .mbl{color:var(--gold);}
-.mb.mb-hp:hover{border-color:rgba(230,0,45,.45);}
-.mb.mb-tb:hover{border-color:rgba(255,140,0,.5);}
-.mb.mb-ig:hover{border-color:rgba(225,48,108,.45);}
-.mb.mb-tk:hover{border-color:rgba(10,10,8,.55);background:#fafaf7;}
-.mb.mb-xx:hover{border-color:rgba(10,10,8,.55);background:#fafaf7;}
-.mb.mb-gm:hover{border-color:rgba(66,133,244,.45);}
+/* 媒体リンク: favicon＋名前の小チップを横1行（各44px高・横スクロール）。予約/地図CTAとの重複タイルは廃止 */
+.mmg{display:flex;gap:.45rem;overflow-x:auto;padding:2px 0 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.mmg::-webkit-scrollbar{display:none;}
+.mb{display:inline-flex;align-items:center;gap:.45rem;flex:0 0 auto;min-height:var(--tap-min);padding:0 .9rem 0 .6rem;border:1px solid var(--border);border-radius:var(--page-r-chip);background:var(--card);color:var(--text);text-decoration:none;white-space:nowrap;transition:border-color .2s,background .2s;}
+.mb:hover{border-color:var(--border-h);background:var(--surface);}
+.mbi{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;width:18px;height:18px;line-height:1;}
+.mbi img.brand-fav{width:18px;height:18px;object-fit:contain;display:block;border-radius:4px;}
+.mbl{font-family:var(--font-body);font-size:var(--fs-sm);font-weight:500;letter-spacing:0;color:var(--text);line-height:1;}
 /* ── SEO-004 モーダル内 関連特集・関連店舗 ── */
-.modal-related{padding:1rem 1.5rem 1.2rem;border-top:1px solid var(--border);}
-.modal-related-title{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.16em;color:var(--dim);text-transform:uppercase;margin-bottom:.75rem;}
-.modal-related-features{display:flex;flex-direction:column;gap:0;}
-.modal-related-features a{font-size:.8rem;color:var(--gold);text-decoration:none;padding:.42rem 0;border-bottom:1px solid var(--border);display:block;line-height:1.45;}
-.modal-related-features a:last-child{border-bottom:none;}
-.modal-related-features a:hover{color:var(--gold2);}
-.modal-related-stores-label{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin:.9rem 0 .45rem;}
-.modal-related-stores{display:flex;gap:.6rem;overflow-x:auto;padding-bottom:.45rem;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;}
-.modal-related-stores::-webkit-scrollbar{height:3px;}
-.modal-related-stores::-webkit-scrollbar-thumb{background:var(--border-h);border-radius:2px;}
-.modal-rsc{flex:0 0 150px;scroll-snap-align:start;display:flex;flex-direction:column;padding:0;overflow:hidden;background:var(--surface);border:1px solid var(--border-h);border-radius:3px;cursor:pointer;color:var(--text);font-family:'Noto Sans JP',sans-serif;text-align:left;transition:all .15s;}
-.modal-rsc-img{width:100%;aspect-ratio:16/10;height:auto;object-fit:cover;display:block;background:var(--border);}
-.modal-rsc-body{display:block;padding:.42rem .55rem .5rem;}
-.modal-rsc-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:.76rem;line-height:1.35;overflow:hidden;}
-.modal-rsc-meta{display:block;margin-top:.2rem;font-size:var(--fs-xs);color:var(--dim);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.modal-rsc:hover{border-color:var(--gold);color:var(--gold);}
-.modal-rsc:hover .modal-rsc-meta{color:var(--gold2);}
-@media(max-width:640px){.modal-related-stores{gap:.5rem;}.modal-rsc{flex:0 0 132px;}}
-/* ── SEO-003 モーダル内 CTA ── */
-/* SEO-049: 予約(HP)と地図の排他 if/else を併置に変更したため、行を flex 化して
-   2ボタンでも1ボタンでも同じ見た目になるようにする（flex:1 が両ケースを吸収） */
-.modal-cta-row{padding:.8rem 1.5rem 1rem;display:flex;gap:.6rem;}
-.modal-cta-btn{display:block;flex:1;min-width:0;width:auto;padding:.9rem 1rem;text-align:center;text-decoration:none;font-size:.88rem;font-weight:500;letter-spacing:.05em;border-radius:4px;transition:background .2s;cursor:pointer;border:none;}
-@media(max-width:420px){.modal-cta-row{flex-wrap:wrap;}.modal-cta-row .modal-cta-btn{flex:1 1 100%;}}
-.modal-cta-hp{background:#e6002d;color:#fff!important;}
-.modal-cta-hp:hover{background:#c9001e;}
-.modal-cta-gm{background:#4285F4;color:#fff!important;}
-.modal-cta-gm:hover{background:#2b6cd4;}
+/* 関連: 「この店が載っている特集」は編集の厚みとして本文寄り、「似た雰囲気のお店」は末尾 */
+.modal-related-features{display:flex;flex-direction:column;}
+.modal-related-features a{font-size:var(--fs-md);color:var(--text);text-decoration:none;padding:.65rem 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:1rem;line-height:1.5;min-height:var(--tap-min);}
+.modal-related-features a:first-child{border-top:0;}
+.modal-related-features a::after{content:'→';color:var(--gold);flex-shrink:0;}
+.modal-related-features a:hover{color:var(--gold);}
+.modal-related-stores{display:flex;gap:var(--sp-3);overflow-x:auto;padding:2px 0 .5rem;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.modal-related-stores::-webkit-scrollbar{display:none;}
+.modal-rsc{flex:0 0 160px;scroll-snap-align:start;display:flex;flex-direction:column;padding:0;overflow:hidden;background:var(--card);border:1px solid var(--border);border-radius:var(--page-r-card);cursor:pointer;color:var(--text);font-family:var(--font-body);text-align:left;transition:border-color .15s,box-shadow .2s;}
+.modal-rsc-img{width:100%;aspect-ratio:4/3;height:auto;object-fit:cover;display:block;background:var(--bg2);}
+.modal-rsc-body{display:block;padding:.55rem .7rem .7rem;}
+.modal-rsc-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:var(--fs-sm);font-weight:600;line-height:1.4;overflow:hidden;}
+.modal-rsc-meta{display:block;margin-top:.2rem;font-size:var(--fs-xs);color:var(--dim);line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.modal-rsc:hover{border-color:var(--gold);box-shadow:0 6px 16px rgba(122,92,16,.12);}
+@media(max-width:640px){.modal-rsc{flex:0 0 148px;}}
+/* ── モーダル内 CTA（主: 予約＝塗り1系統 / 副: 地図＝アウトライン）。at-a-glance 直下に置き、
+   スマホでは画面外に出た時だけ追従バー（.m-sticky-cta）に同じ2導線を出す ── */
+#modal-cta-row{display:flex;gap:var(--sp-2);margin-top:var(--sp-4);}
+.modal-cta-btn{display:inline-flex;align-items:center;justify-content:center;flex:1 1 0;min-width:0;min-height:52px;padding:.8rem 1rem;text-align:center;text-decoration:none;font-size:var(--fs-sm);font-weight:600;letter-spacing:0;border-radius:var(--page-r-chip);transition:background .2s,transform .2s,box-shadow .2s,filter .2s;cursor:pointer;border:none;line-height:1.3;}
+@media(max-width:420px){#modal-cta-row{flex-wrap:wrap;}#modal-cta-row .modal-cta-btn{flex:1 1 100%;}}
+.modal-cta-hp{background:var(--warm-grad);color:#fff!important;font-weight:700;font-size:var(--fs-lg);box-shadow:0 2px 10px rgba(184,84,31,.32);}
+.modal-cta-hp:hover{filter:brightness(1.06);transform:translateY(-1px);box-shadow:var(--warm-glow);}
+.modal-cta-gm{background:var(--surface);color:var(--text)!important;font-weight:600;border:1px solid var(--border-h);box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.modal-cta-gm:hover{background:var(--bg2);border-color:var(--border-h);box-shadow:0 3px 8px rgba(0,0,0,.12);}
+.m-sticky-cta{position:sticky;bottom:0;z-index:5;display:none;gap:var(--sp-2);padding:var(--sp-2) var(--sp-4) calc(var(--sp-2) + env(safe-area-inset-bottom,0px));background:rgba(247,245,241,.94);backdrop-filter:blur(12px);border-top:1px solid var(--border);}
+.m-sticky-cta.show{display:flex;}
+.m-sticky-cta .modal-cta-btn{min-height:var(--tap-min);padding:.55rem 1rem;font-size:var(--fs-sm);}
+.m-sticky-cta .modal-cta-gm{flex:0 0 auto;width:52px;padding:0;}
+.m-sticky-cta .modal-cta-gm svg{width:20px;height:20px;fill:currentColor;}
+@media(min-width:769px){.m-sticky-cta{display:none!important;}}
+/* 基本情報: 上層（最大6行・値がある行だけ）＋ 折りたたみ「設備・支払い」 */
+.m-info-rows{display:flex;flex-direction:column;}
+.m-info-row{display:grid;grid-template-columns:5.5em 1fr;gap:var(--sp-3);padding:.7rem 0;border-top:1px solid var(--border);font-size:var(--fs-md);line-height:1.6;}
+.m-info-row:first-child{border-top:0;padding-top:0;}
+.m-info-row .l{font-size:var(--fs-xs);color:var(--dim);font-weight:500;padding-top:.25em;letter-spacing:0;}
+.m-info-row .v{color:var(--text);min-width:0;overflow-wrap:anywhere;}
+.m-info-row .v a{color:var(--text);text-decoration:underline;text-decoration-color:rgba(122,92,16,.4);text-underline-offset:3px;}
+.m-info-row .v a:hover{color:var(--gold);}
+.m-info-row .v .num{font-family:var(--font-mono);}
+.m-info details{margin-top:var(--sp-3);border-top:1px solid var(--border);}
+.m-info summary{font-size:var(--fs-sm);color:var(--muted);cursor:pointer;padding:.6rem 0;min-height:var(--tap-min);display:flex;align-items:center;gap:.4rem;list-style:none;}
+.m-info summary::-webkit-details-marker{display:none;}
+.m-info summary::before{content:'＋';color:var(--gold);font-weight:600;}
+.m-info details[open] summary::before{content:'－';}
+.m-info .m-chips{margin-top:0;padding-bottom:var(--sp-3);}
+@media(min-width:769px){.m-info-rows{display:grid;grid-template-columns:1fr 1fr;column-gap:var(--sp-6);}.m-info-row:nth-child(2){border-top:0;padding-top:0;}}
+/* 共有・確認情報（末尾）。店の余韻を回遊在庫で終わらせない */
+.m-footnote{margin-top:var(--sp-4);font-size:var(--fs-xs);color:var(--dim);line-height:1.7;}
+.m-footnote a{color:var(--gold);}
 /* カード内 .ml の小サイズ favicon */
 .ml img.brand-fav{width:14px;height:14px;object-fit:contain;display:inline-block;vertical-align:-.18em;margin-right:.32rem;border-radius:2px;flex-shrink:0;}
-/* ── MODAL INFO TABLE ── */
-.modal-info-table{display:grid;grid-template-columns:auto 1fr;gap:.4rem 1rem;font-size:.78rem;margin:1rem 0;}
-.modal-info-label{color:var(--dim);font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.1em;text-transform:uppercase;padding:.3rem 0;}
-.modal-info-value{color:var(--text);padding:.3rem 0;border-bottom:1px solid var(--border);}
 /* ── PRO'S PICK BADGE ── */
 /* ── TREND BADGE ── */
 .trend-badge{position:absolute;top:.9rem;right:.9rem;font-size:var(--fs-xs);font-weight:700;padding:.2rem .55rem;border-radius:2px;z-index:3;backdrop-filter:blur(6px);letter-spacing:.06em;animation:trendPulse 2s ease-in-out infinite;}
@@ -663,36 +696,33 @@ body.search-query-active .card-why{display:flex;}
 .cc-tier-C{color:#5f6b63;}
 .cc-tier-D{color:#767676;}
 .cc-tier-NA{color:#767676;font-style:italic;font-weight:600;}
-.cross-check-box{background:rgba(46,125,50,.05);border-left:3px solid #2e7d32;border-radius:0 4px 4px 0;padding:.95rem 1.1rem;margin-bottom:1rem;}
-.cross-check-box .mpoint-label{color:#2e7d32;}
-.cross-check-box.cc-box-SS{background:rgba(27,94,32,.07);border-left-color:#1b5e20;}
-.cross-check-box.cc-box-SS .mpoint-label{color:#1b5e20;}
-.cross-check-box.cc-box-C,.cross-check-box.cc-box-D{background:rgba(95,107,99,.06);border-left-color:#5f6b63;}
-.cross-check-box.cc-box-C .mpoint-label,.cross-check-box.cc-box-D .mpoint-label{color:#5f6b63;}
-.cross-check-box.cc-box-pending{background:rgba(120,120,120,.05);border-left-color:#767676;}
-.cross-check-box.cc-box-pending .mpoint-label{color:#707070;}
-.cross-check-box .cc-summary{display:flex;align-items:baseline;gap:.55rem;flex-wrap:wrap;margin:.4rem 0 .25rem;}
-.cross-check-box .cc-tier-badge{font-size:1.7rem;font-weight:700;font-family:'DM Mono',monospace;line-height:1;}
-.cross-check-box .cc-score{font-size:1.05rem;font-weight:700;font-family:'DM Mono',monospace;line-height:1;}
-.cross-check-box .cc-score-suffix{font-size:var(--fs-xs);color:var(--dim);letter-spacing:.06em;}
-.cross-check-box .cc-headline{flex-basis:100%;font-size:.88rem;color:var(--text);line-height:1.55;margin-top:.15rem;}
-.cross-check-box .cc-meta-line{font-size:var(--fs-xs);color:var(--dim);letter-spacing:.04em;margin:.2rem 0 .45rem;}
-.cross-check-box .cc-pending-note{font-size:var(--fs-xs);color:var(--dim);margin:.55rem 0 0;line-height:1.6;font-style:italic;}
-.cross-check-box details{margin-top:.35rem;}
-.cross-check-box summary{cursor:pointer;padding:.25rem 0;font-size:var(--fs-xs);color:var(--dim);outline:none;}
+.cross-check-box{margin-top:var(--sp-6);padding:var(--sp-4);background:var(--card);border:1px solid var(--border);border-radius:var(--page-r-card);}
+.cross-check-box .mpoint-label{font-size:var(--fs-xs);font-weight:600;color:var(--dim);letter-spacing:0;margin-bottom:var(--sp-3);display:flex;align-items:center;gap:.55rem;line-height:1.4;}
+.cross-check-box .mpoint-label::before{content:'';flex:0 0 14px;height:1px;background:var(--gold);opacity:.7;}
+.cross-check-box .cc-summary{display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap;}
+.cross-check-box .cc-tier-badge{font-size:var(--fs-2xl);font-weight:700;font-family:var(--font-mono);line-height:1;}
+.cross-check-box .cc-score{font-size:var(--fs-xl);font-weight:500;font-family:var(--font-mono);line-height:1;}
+.cross-check-box .cc-score-suffix{font-size:var(--fs-xs);color:var(--dim);letter-spacing:0;margin-left:-.4rem;}
+.cross-check-box .cc-headline{flex-basis:100%;font-size:var(--fs-md);color:var(--text);line-height:1.6;margin-top:.15rem;}
+.cross-check-box .cc-meta-line{font-size:var(--fs-xs);color:var(--dim);letter-spacing:0;margin:.5rem 0 0;}
+.cross-check-box .cc-pending-note{font-size:var(--fs-xs);color:var(--dim);margin:.6rem 0 0;line-height:1.6;}
+.cross-check-box details{margin-top:var(--sp-3);border-top:1px solid var(--border);}
+.cross-check-box summary{cursor:pointer;padding:.6rem 0;min-height:var(--tap-min);display:flex;align-items:center;gap:.4rem;font-size:var(--fs-sm);color:var(--muted);outline:none;list-style:none;}
+.cross-check-box summary::-webkit-details-marker{display:none;}
+.cross-check-box summary::before{content:'＋';color:var(--gold);font-weight:600;}
+.cross-check-box details[open] summary::before{content:'－';}
 .cross-check-box summary:hover{color:var(--text);}
-.cross-check-box summary::-webkit-details-marker{color:#2e7d32;}
-.cross-check-box .cc-breakdown{list-style:none;padding:0;margin:.5rem 0 0;font-size:.76rem;}
-.cross-check-box .cc-breakdown li{display:flex;gap:.6rem;padding:.4rem 0;border-top:1px solid rgba(46,125,50,.1);}
+.cross-check-box .cc-breakdown{list-style:none;padding:0;margin:.25rem 0 0;font-size:var(--fs-sm);}
+.cross-check-box .cc-breakdown li{display:flex;gap:.6rem;padding:.45rem 0;border-top:1px solid var(--border);}
 .cross-check-box .cc-breakdown li:first-child{border-top:none;}
-.cross-check-box .cc-breakdown .cc-sig-score{font-family:'DM Mono',monospace;font-weight:700;color:#2e7d32;min-width:3.2rem;flex-shrink:0;}
+.cross-check-box .cc-breakdown .cc-sig-score{font-family:var(--font-mono);font-weight:500;color:var(--gold);min-width:3.4rem;flex-shrink:0;}
 .cross-check-box .cc-breakdown li.cc-unobserved .cc-sig-score{color:var(--dim);font-weight:400;}
-.cross-check-box .cc-breakdown .cc-sig-reason{flex:1;color:var(--text);line-height:1.55;}
+.cross-check-box .cc-breakdown .cc-sig-reason{flex:1;color:var(--text);line-height:1.6;}
 .cross-check-box .cc-breakdown .cc-sig-reason strong{color:var(--dim);font-weight:600;margin-right:.3rem;}
-.cross-check-box .cc-meta-heading{font-size:var(--fs-xs);color:var(--dim);margin:.75rem 0 0;font-weight:600;}
-.cross-check-box .cc-breakdown-meta .cc-sig-score{color:var(--dim);font-weight:500;}
-.cross-check-box .cc-note{font-size:var(--fs-xs);color:var(--dim);margin:.7rem 0 0;line-height:1.65;}
-.cross-check-box .cc-note a{color:#2e7d32;text-decoration:underline;}
+.cross-check-box .cc-meta-heading{font-size:var(--fs-xs);color:var(--dim);margin:.9rem 0 0;font-weight:600;}
+.cross-check-box .cc-breakdown-meta .cc-sig-score{color:var(--dim);font-weight:400;}
+.cross-check-box .cc-note{font-size:var(--fs-xs);color:var(--dim);margin:var(--sp-3) 0 0;line-height:1.7;}
+.cross-check-box .cc-note a{color:var(--gold);text-decoration:underline;text-decoration-color:rgba(122,92,16,.4);text-underline-offset:3px;}
 .trend-hot{background:rgba(220,38,38,.88);color:#fff;}
 .trend-rising{background:rgba(234,128,28,.88);color:#fff;}
 .trend-warm{background:rgba(202,168,62,.85);color:#1a1a18;}
@@ -780,7 +810,6 @@ header{height:52px;}
 .sec-head{padding:1.4rem 1rem 1rem;}
 .hpc{padding:.5rem 1rem;}
 .grid{grid-template-columns:1fr;gap:16px;padding:1rem;}
-.minfo{grid-template-columns:auto 1fr;}
 footer{padding:1.5rem 1rem;}
 .pref-tabs{padding:.5rem .9rem;}
 .cap-tabs{padding:.5rem .9rem;}
@@ -963,16 +992,19 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .card-rating svg{width:12px;height:12px;fill:#d4a017;flex-shrink:0;}
 /* ── CARD BOOK CTA ── */
 .card-cta{padding:0;margin-bottom:12px;margin-top:auto;display:flex;gap:6px;}
-.card-cta a{display:flex;align-items:center;justify-content:center;flex:1 1 auto;min-width:0;height:44px;background:var(--warm-grad);color:#fff;font-size:var(--fs-xs);letter-spacing:.14em;text-transform:uppercase;border-radius:3px;text-decoration:none;font-weight:600;transition:transform .2s ease,box-shadow .25s ease,filter .2s;box-shadow:0 1px 3px rgba(140,58,20,.25);}
+.card-cta a{display:flex;align-items:center;justify-content:center;flex:1 1 auto;min-width:0;height:44px;background:var(--warm-grad);color:#fff;font-size:var(--fs-sm);letter-spacing:0;border-radius:999px;text-decoration:none;font-weight:700;transition:transform .2s ease,box-shadow .25s ease,filter .2s;box-shadow:0 1px 3px rgba(140,58,20,.25);}
 /* 予約と併置する地図ボタン（モーダルを開かずに場所を確認できるようにする） */
-.card-cta a.card-cta-map{flex:0 0 44px;width:44px;background:#4285F4;box-shadow:0 1px 3px rgba(66,133,244,.3);}
-.card-cta a.card-cta-map svg{width:18px;height:18px;fill:#fff;}
+.card-cta a.card-cta-map{flex:0 0 44px;width:44px;background:var(--surface);border:1px solid var(--border-h);box-shadow:none;}
+.card-cta a.card-cta-map svg{width:18px;height:18px;fill:var(--text);}
+.card-cta a.card-cta-map:hover{box-shadow:0 3px 8px rgba(0,0,0,.12);filter:none;}
+.card-cta a.card-cta-map-only{background:var(--surface);color:var(--text);border:1px solid var(--border-h);box-shadow:none;text-transform:none;letter-spacing:0;font-size:var(--fs-sm);}
+.card-cta a.card-cta-map-only:hover{box-shadow:0 3px 8px rgba(0,0,0,.12);filter:none;}
 .card-cta a:hover{transform:translateY(-1px);box-shadow:var(--warm-glow);filter:brightness(1.05);}
 .card-cta a:active{transform:translateY(0);box-shadow:0 1px 3px rgba(140,58,20,.25);}
 /* ── CARD ACTIVE STATE ── */
 .card:active{transform:scale(.99);background:#F1EFE8;}
 /* ── MODAL IMPROVEMENTS ── */
-.mcl{position:absolute;top:.9rem;background:rgba(10,10,8,.7);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.92);width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;z-index:3;transition:all .2s;padding:0;}
+.mcl{position:absolute;top:.9rem;background:rgba(10,10,8,.62);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.92);width:var(--tap-min);height:var(--tap-min);display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;z-index:3;transition:all .2s;padding:0;}
 .mcl svg{width:18px;height:18px;display:block;}
 .mcl:hover{background:rgba(10,10,8,.92);color:#fff;transform:scale(1.06);}
 .mcl-fav{right:3.6rem;}
@@ -995,9 +1027,10 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .card-cta{padding:0;margin-bottom:12px;}
 }
 /* ── SHARE BUTTONS (MODAL) ── */
-.share-bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);}
-.share-bar-label{font-family:'DM Mono',monospace;font-size:var(--fs-2xs);letter-spacing:.2em;color:var(--dim);text-transform:uppercase;width:100%;margin-bottom:.2rem;}
-.sbtn{display:inline-flex;align-items:center;gap:.35rem;padding:.45rem .85rem;font-size:var(--fs-xs);letter-spacing:.06em;border:1px solid var(--border);border-radius:2px;background:transparent;color:var(--muted);cursor:pointer;text-decoration:none;transition:all .2s;font-family:'Noto Sans JP',sans-serif;}
+.share-bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:var(--sp-6);padding-top:var(--sp-4);border-top:1px solid var(--border);align-items:center;}
+.share-bar-label{font-size:var(--fs-xs);font-weight:600;color:var(--dim);letter-spacing:0;width:100%;margin-bottom:.2rem;display:flex;align-items:center;gap:.55rem;}
+.share-bar-label::before{content:'';flex:0 0 14px;height:1px;background:var(--gold);opacity:.7;}
+.sbtn{display:inline-flex;align-items:center;gap:.4rem;min-height:var(--tap-min);padding:0 1rem;font-size:var(--fs-sm);letter-spacing:0;border:1px solid var(--border);border-radius:var(--page-r-chip);background:var(--card);color:var(--muted);cursor:pointer;text-decoration:none;transition:all .2s;font-family:var(--font-body);}
 .sbtn:hover{color:var(--text);border-color:var(--border-h);background:var(--surface);}
 .sbtn-x:hover{color:#000;border-color:rgba(0,0,0,.3);}
 .sbtn-line:hover{color:#06c755;border-color:rgba(6,199,85,.4);}
@@ -1043,7 +1076,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 /* ── LIST MODE ── */
 .grid.list-mode{grid-template-columns:1fr !important;gap:10px;}
 .grid.list-mode .card{flex-direction:row;padding:8px;align-items:stretch;}
-.grid.list-mode .ci{width:120px;min-width:120px;height:90px;margin:0;border-radius:4px;flex-shrink:0;}
+.grid.list-mode .ci{width:120px;min-width:120px;height:90px;aspect-ratio:auto;margin:0;border-radius:8px;flex-shrink:0;}
 .grid.list-mode .ci::after{display:none;}
 .grid.list-mode .cb{flex:1;padding:0 10px;display:flex;flex-direction:column;justify-content:center;}
 .grid.list-mode .cn{font-size:.85rem;margin-bottom:2px;}
@@ -1964,38 +1997,29 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
       <button class="mcl mcl-close" onclick="closeM()" aria-label="閉じる"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg></button>
     </div>
     <div class="mbody">
-      <div class="modal-title-block">
-        <div class="mig" id="mg"></div>
-        <div class="min2" id="mn"></div>
+      <div class="m-head">
+        <div class="m-kicker"><div class="mig" id="mg"></div><span class="m-flag" id="m-flag" style="display:none"></span></div>
+        <h2 class="min2" id="mn"></h2>
+        <div class="m-sub" id="m-sub"></div>
       </div>
-      <div class="minfo">
-        <div class="mic"><label>Area</label><span id="ma"></span></div>
-        <div class="mic"><label>Price</label><span id="mp"></span></div>
-        <div class="mic"><label>Hours</label><span id="mh"></span></div>
-        <div class="mic"><label>Access</label><span id="mac2"></span></div>
-        <div class="mic" id="mgscore-row" style="display:none"><label>Google評価</label><span id="mgscore"></span></div>
-        <div class="mic" id="mtrend-row" style="display:none"><label>話題度</label><span id="mtrend"></span></div>
-        <div class="mic" id="mvisit-row" style="display:none"><label>編集部</label><span id="mvisit"></span></div>
-      </div>
-      <div class="mpoint-box" id="mpoint-row" style="display:none">
-        <span class="mpoint-label">Pro's Pick — おすすめポイント</span>
-        <p id="mpoint"></p>
-      </div>
-      <div class="editor-reason-box" id="m-editor-reason" style="display:none">
-        <span class="mpoint-label">EDITOR'S PICK — 掲載理由</span>
-        <p id="m-editor-reason-body" style="font-size:.82rem;line-height:1.85;color:var(--text);margin:0;"></p>
-      </div>
-      <div class="media-features-box" id="m-media-features" style="display:none">
-        <span class="mpoint-label">MEDIA — 他メディア掲載</span>
-        <ul id="m-media-features-list"></ul>
-      </div>
-      <div class="insider-note-box" id="m-insider-note" style="display:none">
-        <span class="mpoint-label">INSIDER — 業界人メモ</span>
-        <p id="m-insider-note-body"></p>
-      </div>
+      <div class="m-glance" id="m-glance"></div>
+      <div id="modal-cta-row" style="display:none"></div>
+      <!-- 編集部の視点（署名 → リード → 業界人メモ → おすすめシーン → 掲載媒体 → 載っている特集） -->
+      <section class="m-editorial" id="m-editorial" style="display:none">
+        <div class="m-section-title">編集部の視点</div>
+        <div class="m-sig" id="m-sig"></div>
+        <p class="m-lead" id="m-lead"></p>
+        <div class="m-note" id="m-insider-note" style="display:none"><div class="m-note-h">業界人メモ</div><p id="m-insider-note-body"></p></div>
+        <div class="m-chips" id="m-scenes" style="display:none"></div>
+        <div class="m-media-line" id="m-media-features" style="display:none">掲載媒体: <span id="m-media-features-list"></span></div>
+      </section>
+      <section class="m-section" id="m-features-section" style="display:none">
+        <div class="m-section-title">この店が載っている特集</div>
+        <div class="modal-related-features" id="m-related-features"></div>
+      </section>
       <!-- REVIEW_TRUST_BOX_START -->
       <div class="cross-check-box" id="m-cross-check" style="display:none">
-        <span class="mpoint-label">REVIEW TRUST — 口コミ信頼度</span>
+        <span class="mpoint-label">口コミ信頼度</span>
         <div class="cc-summary">
           <span class="cc-tier-badge" id="m-cc-tier">—</span>
           <span class="cc-score" id="m-cc-score"></span>
@@ -2003,22 +2027,36 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
           <span class="cc-headline" id="m-cc-headline"></span>
         </div>
         <p class="cc-meta-line" id="m-cc-metaline"></p>
+        <p class="cc-pending-note" id="m-cc-pending-note" style="display:none">Googleの口コミデータがまだ十分に取得できていないため「判定材料不足」としています。店の評価が低いことを示すものではありません。</p>
         <details>
-          <summary id="m-cc-summary-label">内訳を見る — 7つの検証項目</summary>
+          <summary id="m-cc-summary-label">内訳と判定の考え方</summary>
           <ul class="cc-breakdown" id="m-cc-breakdown"></ul>
           <p class="cc-meta-heading" id="m-cc-meta-heading"></p>
           <ul class="cc-breakdown cc-breakdown-meta" id="m-cc-meta"></ul>
+          <p class="cc-note">
+            口コミ信頼度は「この店のGoogleの★と件数は、そのまま信じてよいか」を、件数・★と件数のバランス・直近の口コミの傾向・評価の分布・第三者メディアの掲載から機械的に判定した参考指標です。店の良し悪しを評価するものではありません。
+            読み方は<a href="features/review-trust.html">口コミ信頼度の読み方</a>、計算式は<a href="features/integrity-method.html">口コミ信頼度の作り方</a>を参照。
+            違和感がある場合は<a href="mailto:editor@nagoya-bites.com?subject=%E5%8F%A3%E3%82%B3%E3%83%9F%E4%BF%A1%E9%A0%BC%E5%BA%A6%E3%81%AE%E4%BF%AE%E6%AD%A3%E4%BE%9D%E9%A0%BC">編集部へ修正依頼</a>（editor@nagoya-bites.com）をお送りください。
+          </p>
         </details>
-        <p class="cc-pending-note" id="m-cc-pending-note" style="display:none">※ Googleの口コミデータがまだ十分に取得できていないため「判定材料不足」としています。店の評価が低いことを示すものではありません。</p>
-        <p class="cc-note">
-          口コミ信頼度は「この店のGoogleの★と件数は、そのまま信じてよいか」を、件数・★と件数のバランス・直近の口コミの傾向・評価の分布・第三者メディアの掲載から機械的に判定した参考指標です。店の良し悪しを評価するものではありません。
-          読み方は<a href="features/review-trust.html">口コミ信頼度の読み方</a>、計算式は<a href="features/integrity-method.html">口コミ信頼度の作り方</a>を参照。
-          違和感がある場合は<a href="mailto:editor@nagoya-bites.com?subject=%E5%8F%A3%E3%82%B3%E3%83%9F%E4%BF%A1%E9%A0%BC%E5%BA%A6%E3%81%AE%E4%BF%AE%E6%AD%A3%E4%BE%9D%E9%A0%BC">編集部へ修正依頼</a>（editor@nagoya-bites.com）をお送りください。
-        </p>
       </div>
       <!-- REVIEW_TRUST_BOX_END -->
-      <div class="insider-reviews-box" id="m-insider-reviews">
-        <span class="mpoint-label">INSIDER REVIEWS — 業界人レビュー</span>
+      <!-- 基本情報: 値がある行だけ（上層 最大6行）＋ 折りたたみ「設備・支払い」 -->
+      <section class="m-section m-info" id="m-info" style="display:none">
+        <div class="m-section-title">基本情報</div>
+        <div class="m-info-rows" id="m-info-rows"></div>
+        <details id="m-info-details" style="display:none">
+          <summary>設備・支払い</summary>
+          <div class="m-chips" id="m-info-chips"></div>
+        </details>
+      </section>
+      <div id="mig-wrap" class="m-section" style="display:none">
+        <div class="mml">Instagram の投稿</div>
+        <div class="mig-embed-box" id="mig-container"></div>
+      </div>
+      <!-- 業界人レビュー（1件以上ある時だけ表示。0件は末尾の投稿リンクから同じフォームを開く） -->
+      <section class="insider-reviews-box" id="m-insider-reviews" style="display:none">
+        <div class="m-section-title">業界人レビュー</div>
         <ul class="ir-list" id="m-insider-reviews-list"></ul>
         <p class="ir-empty" id="m-insider-reviews-empty" style="display:none">飲食業界で経験のある方の最初のレビューをお待ちしています。</p>
         <button type="button" id="m-insider-cta" class="insider-cta" aria-label="この店舗に業界人レビューを投稿する">このお店にレビューを書く</button>
@@ -2082,28 +2120,22 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
             <div class="ir-status" id="ir-status" role="status" aria-live="polite"></div>
           </form>
         </div>
+      </section>
+      <div class="m-section">
+        <div class="mml">各媒体で見る</div>
+        <div class="mmg" id="mmg"></div>
       </div>
-      <div id="photo-gallery-row" style="display:none">
-        <div class="photo-grid-wrap">
-          <div class="photo-grid-label">Photos</div>
-          <div class="photo-grid" id="photo-grid"></div>
-        </div>
-      </div>
-      <div id="mig-wrap" style="display:none">
-        <div class="mml">Instagram — 代表投稿</div>
-        <div class="mig-embed-box" id="mig-container"></div>
-      </div>
-      <div id="modal-cta-row" style="display:none"></div>
-      <div class="mml">Media Links — 各媒体で見る</div>
-      <div class="mmg" id="mmg"></div>
-      <div id="modal-related" style="display:none"></div>
+      <div id="modal-related" class="m-section" style="display:none"></div>
       <div class="share-bar" id="share-bar">
-        <div class="share-bar-label">Share — このお店をシェア</div>
+        <div class="share-bar-label">このお店をシェア</div>
         <button class="sbtn sbtn-x" id="share-x" onclick="shareToX()" aria-label="この店舗を X (旧 Twitter) でシェアする">𝕏 ポスト</button>
         <button class="sbtn sbtn-line" id="share-line" onclick="shareToLINE()" aria-label="この店舗を LINE でシェアする">LINE で送る</button>
         <button class="sbtn sbtn-copy" id="share-copy" onclick="copyShareLink()" aria-label="この店舗ページのリンクをコピーする"><span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>リンクをコピー</button>
       </div>
+      <p class="m-footnote" id="m-footnote"></p>
+      <p class="m-footnote" id="m-ir-linkwrap" style="display:none"><button type="button" class="m-ir-link" onclick="nbOpenInsiderForm()">この店の業界人レビューを書く</button></p>
     </div>
+    <div class="m-sticky-cta" id="m-sticky-cta"></div>
   </div>
 </div>
 
@@ -9453,8 +9485,6 @@ function buildCardHtml(r) {
     var mediaLinks = '<a class="ml hp" href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="Hotpepperで見る" title="Hotpepper">' + nbBrandImg('hotpepper',16) + '<span class="visually-hidden">Hotpepper</span></a>'
       + '<a class="ml tb" href="' + tabelogSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="食べログで見る" title="食べログ">' + nbBrandImg('tabelog',16) + '<span class="visually-hidden">食べログ</span></a>'
       + '<a class="ml ig" href="' + instagramSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="Instagramで見る" title="Instagram">' + nbBrandImg('instagram',16) + '<span class="visually-hidden">Instagram</span></a>'
-      + '<a class="ml tk" href="' + tiktokSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="TikTokで見る" title="TikTok">' + nbBrandImg('tiktok',16) + '<span class="visually-hidden">TikTok</span></a>'
-      + '<a class="ml xx" href="' + xSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="Xで見る" title="X">' + nbBrandImg('x',16) + '<span class="visually-hidden">X</span></a>'
       + '<a class="ml gm" href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="Googleマップで見る" title="Googleマップ">' + nbBrandImg('gmap',16) + '<span class="visually-hidden">Googleマップ</span></a>';
     var tags = (r['タグ']||'').split(',').map(function(t){return t.trim();}).filter(Boolean);
     var sceneTags = ['デート','女子会','接待','誕生日・記念日','歓送迎会','忘年会・新年会','家族・子連れ'];
@@ -9491,7 +9521,7 @@ function buildCardHtml(r) {
       var ccTierDef = (TRUST_POLICY.na && ccRt.t === TRUST_POLICY.na.id) ? TRUST_POLICY.na : null;
       if (!ccTierDef) for (var cti = 0; cti < TRUST_POLICY.tiers.length; cti++) { if (TRUST_POLICY.tiers[cti].id === ccRt.t) { ccTierDef = TRUST_POLICY.tiers[cti]; break; } }
       if (ccTierDef) {
-        ccMetaHtml = '<span data-l="' + TRUST_POLICY.name + '" class="cc-cell ' + ccTierDef.cssClass + '" title="' + TRUST_POLICY.name + ' ' + ccRt.t + '：' + ccTierDef.label + '（タップで内訳）">' + ccRt.t + '</span>';
+        ccMetaHtml = '<span data-l="' + TRUST_POLICY.name + '" class="cc-cell ' + ccTierDef.cssClass + '" title="' + TRUST_POLICY.name + ' ' + ccRt.t + '：' + ccTierDef.label + '（タップで内訳）"><span class="cc-l">' + (TRUST_POLICY.shortName || '信頼度') + '</span>' + ccRt.t + '</span>';
       }
     }
     // 検索中は「なぜこの店が出たか」をカード上で明示する（語が丸ごと含まれない一致もあるため）
@@ -9522,7 +9552,7 @@ function buildCardHtml(r) {
       + tagHtml
       + whyHtml
       + (r.editorReason ? '<div class="card-lead"><span class="card-lead-kicker">' + leadKicker + '</span>' + r.editorReason + '</div>' : r.insiderNote ? '<div class="card-lead"><span class="card-lead-kicker">' + leadKicker + '</span>' + r.insiderNote + '</div>' : r['おすすめポイント'] ? '<div class="card-lead"><span class="card-lead-kicker">' + leadKicker + '</span>' + r['おすすめポイント'] + '</div>' : '')
-      + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をホットペッパーで予約" rel="noopener noreferrer">ホットペッパーで予約</a><a class="card-cta-map" href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\'})" aria-label="' + r['店名'] + 'の場所をGoogleマップで確認" title="Googleマップで場所を確認" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\'})" aria-label="' + r['店名'] + 'をGoogleマップで確認" style="background:#4285F4" rel="noopener noreferrer">Googleマップで確認</a></div>')
+      + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をホットペッパーで予約" rel="noopener noreferrer">ホットペッパーで予約</a><a class="card-cta-map" href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\'})" aria-label="' + r['店名'] + 'の場所をGoogleマップで確認" title="Googleマップで場所を確認" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\'})" aria-label="' + r['店名'] + 'をGoogleマップで確認" class="card-cta-map-only" rel="noopener noreferrer">Googleマップで確認</a></div>')
       + '<div class="mrow">' + mediaLinks + '</div>'
       + '</div>';
 }
@@ -9660,6 +9690,78 @@ function renderPagination(totalPages) {
   pagEl.innerHTML = html;
 }
 
+// ── 店舗モーダル（2026-09 再設計）のヘルパー ─────────────────────────────
+function mEsc(t){ return String(t == null ? '' : t).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function mCtaEsc(t){ return String(t||'').replace(/'/g,'').replace(/</g,'').replace(/>/g,''); }
+function mInfoRow(label, valueHtml){ return valueHtml ? '<div class="m-info-row"><span class="l">' + label + '</span><span class="v">' + valueHtml + '</span></div>' : ''; }
+// 「◯◯駅 … 徒歩N分」をアクセス文から取り出す（取れない時は null＝表示しない）
+function mWalkFromAccess(access){
+  var m = String(access || '').match(/([^\s、。／\/・,，（）()]{1,16}?駅)[^\d]{0,14}?徒歩\D{0,3}(\d{1,2})\s*分/);
+  if (!m) return null;
+  return {station: m[1].replace(/^(地下鉄|JR|名鉄|近鉄|あおなみ線|市営地下鉄)/, ''), min: parseInt(m[2], 10)};
+}
+// 本日の営業/定休を「一意に判定できる時だけ」返す（曜日の単純列挙以外は null）。誤った「営業中」は出さない（制約7・10）
+function mTodayStatus(r){
+  var close = String(r['定休日'] || '').trim();
+  if (!close) return null;
+  if (/不定休/.test(close)) return null;
+  if (/年中無休|無休/.test(close)) return {kind:'open', text:'年中無休'};
+  var body = close.replace(/[（(].*?[）)]/g, '');
+  if (/[〜～\-－]/.test(body)) return null;
+  var esc = body.replace(/祝日/g, '祝').replace(/曜日?/g, '').replace(/\s+/g, '');
+  if (!/^[日月火水木金土・、,祝]+$/.test(esc)) return null;
+  var listed = esc.match(/[日月火水木金土]/g) || [];
+  if (!listed.length) return null;
+  var todayJ = ['日','月','火','水','木','金','土'][new Date().getDay()];
+  if (listed.indexOf(todayJ) !== -1) return {kind:'closed', text:'本日 定休日'};
+  var open = String(r['営業時間'] || '');
+  var ranges = open.match(/\d{1,2}:\d{2}\s*[〜～\-－]\s*(?:翌)?\d{1,2}:\d{2}/g) || [];
+  var t = '本日 営業日';
+  if (ranges.length === 1 && !/[日月火水木金土祝]/.test(open)) t += ' · ' + ranges[0].replace(/\s+/g, '');
+  return {kind:'open', text:t};
+}
+function mScrollTo(id){
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.scrollIntoView({behavior:'smooth', block:'start'});
+  var d = el.querySelector('details'); if (d) d.open = true;
+}
+// 旗は1つだけ（優先順: 話題ラベル ＞ 編集部推薦 ＞ 業界人推薦）— 一覧カードと同じ判定
+function nbStoreFlag(r){
+  var trendLabel = r['トレンドラベル'] || '';
+  var trendCls = trendLabel === '話題沸騰' ? 'trend-hot' : trendLabel === '注目上昇中' ? 'trend-rising' : trendLabel === 'じわじわ人気' ? 'trend-warm' : '';
+  if (trendLabel && trendCls) return {label: trendLabel, cls: trendCls};
+  if (r['編集部推薦'] === true) return {label: '編集部推薦', cls: 'flag-editor'};
+  if (r.insiderReviewCount) return {label: '業界人' + r.insiderReviewCount + '名推薦', cls: 'flag-insider'};
+  return null;
+}
+// スマホの追従CTA: 本文上部の CTA 行が上に消えた時だけ表示する
+var M_STICKY_OBS = null;
+function mSetupStickyCta(){
+  var sticky = document.getElementById('m-sticky-cta');
+  var row = document.getElementById('modal-cta-row');
+  var modal = document.querySelector('.modal');
+  if (M_STICKY_OBS) { M_STICKY_OBS.disconnect(); M_STICKY_OBS = null; }
+  if (!sticky || !row || !modal) return;
+  sticky.classList.remove('show');
+  if (!sticky.innerHTML || !('IntersectionObserver' in window)) return;
+  M_STICKY_OBS = new IntersectionObserver(function(entries){
+    var e = entries[0];
+    var rootTop = e.rootBounds ? e.rootBounds.top : 0;
+    sticky.classList.toggle('show', !e.isIntersecting && e.boundingClientRect.top < rootTop);
+  }, {root: modal, threshold: 0});
+  M_STICKY_OBS.observe(row);
+}
+// レビュー0件の店: 末尾のリンクから業界人レビュー節を出して投稿フォームを開く
+function nbOpenInsiderForm(){
+  var box = document.getElementById('m-insider-reviews');
+  var cta = document.getElementById('m-insider-cta');
+  var wrap = document.getElementById('m-insider-form');
+  if (box) box.style.display = '';
+  if (wrap && wrap.hidden && cta) cta.click();
+  else if (wrap) wrap.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
 function openM(i) {
   // ハートボタン経由のクリックならモーダルを開かない
   if (window.event && window.event.target && window.event.target.closest && window.event.target.closest('.fav-btn')) return;
@@ -9668,94 +9770,101 @@ function openM(i) {
   var photo = r['写真URL'] || nbStoreFigure(r);
   var hpUrl = hotpepperUrl(r);
   renderMhi(r, photo);
+  // ── 識別ブロック: ジャンル（日本語キッカー）/ 旗1つ / 店名 / エリア · 最寄駅 徒歩N分 ──
   document.getElementById('mg').textContent = r['ジャンル'] || '';
   document.getElementById('mn').textContent = r['店名'] || '';
-  document.getElementById('ma').textContent = (r['都道府県']||'') + ' ' + (r['エリア']||'');
-  var mpEl = document.getElementById('mp');
-  mpEl.textContent = r['価格帯'] || '';
-  var mpMic = mpEl.closest('.mic');
-  if (mpMic) mpMic.style.display = r['価格帯'] ? '' : 'none';
-  document.getElementById('mh').textContent = r['営業時間'] || '';
-  document.getElementById('mac2').textContent = r['アクセス'] || '';
-  var gscore = r['Google評価'] || '';
-  var mgscoreEl = document.getElementById('mgscore');
-  if (gscore) {
-    mgscoreEl.innerHTML = '<span class="nb-icon nb-icon-sm mgscore-star" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/></svg></span>' + gscore;
-  } else { mgscoreEl.textContent = ''; }
-  document.getElementById('mgscore-row').style.display = gscore ? '' : 'none';
-  var trendScore = parseInt(r['トレンドスコア']) || 0;
-  var trendLabel = r['トレンドラベル'] || '';
-  var trendEl = document.getElementById('mtrend');
-  var trendRow = document.getElementById('mtrend-row');
-  if (trendScore > 0) {
-    var trendClass = trendScore >= 80 ? 'hot' : trendScore >= 60 ? 'rising' : trendScore >= 40 ? 'warm' : 'low';
-    trendEl.innerHTML = (trendLabel ? '<span class="mtrend-label trend-' + trendClass + '">' + trendLabel + '</span>' : '')
-      + '<div class="trend-score-bar"><div class="trend-score-track"><div class="trend-score-fill ' + trendClass + '" style="width:' + trendScore + '%"></div></div><span class="trend-score-num">' + trendScore + '/100</span></div>';
-    trendRow.style.display = '';
-  } else {
-    trendRow.style.display = 'none';
+  var mFlagEl = document.getElementById('m-flag');
+  var mFlag = nbStoreFlag(r);
+  if (mFlag) { mFlagEl.textContent = mFlag.label; mFlagEl.className = 'm-flag ' + mFlag.cls; mFlagEl.style.display = ''; }
+  else { mFlagEl.textContent = ''; mFlagEl.className = 'm-flag'; mFlagEl.style.display = 'none'; }
+  var subParts = [];
+  var prefTxt = (r['都道府県'] && r['都道府県'] !== '愛知県') ? r['都道府県'] + ' ' : '';
+  if (r['エリア']) subParts.push(prefTxt + r['エリア']);
+  var walk = mWalkFromAccess(r['アクセス']);
+  var stationTxt = r['最寄駅'] ? (String(r['最寄駅']).replace(/駅$/, '') + '駅') : (walk ? walk.station : '');
+  if (stationTxt && walk) subParts.push(stationTxt + ' 徒歩' + walk.min + '分');
+  else if (stationTxt) subParts.push(stationTxt);
+  else if (r['アクセス']) subParts.push(String(r['アクセス']).slice(0, 40));
+  document.getElementById('m-sub').innerHTML = subParts.map(function(t, i2){ return '<span' + (i2 ? ' class="m-dot"' : '') + '>' + mEsc(t) + '</span>'; }).join('');
+  // ── at-a-glance（値がある時だけセルを作る: 口コミ信頼度 / Google★（件数）/ 価格帯 / 本日）──
+  var glance = [];
+  var TPg = (typeof TRUST_POLICY === 'object' && TRUST_POLICY && TRUST_POLICY.tiers && TRUST_POLICY.na) ? TRUST_POLICY : null;
+  var gRt = r.reviewTrust || null;
+  if (TPg && gRt && gRt.t) {
+    var gDef = (gRt.t === TPg.na.id) ? TPg.na : null;
+    if (!gDef) for (var gi = 0; gi < TPg.tiers.length; gi++) if (TPg.tiers[gi].id === gRt.t) { gDef = TPg.tiers[gi]; break; }
+    if (gDef) glance.push('<div class="m-gcell is-link" role="button" tabindex="0" onclick="mScrollTo(\'m-cross-check\')" onkeydown="if(event.key===\'Enter\')mScrollTo(\'m-cross-check\')" title="' + mEsc(TPg.name) + ' ' + mEsc(gRt.t) + '：' + mEsc(gDef.label) + '（タップで内訳）"><span class="m-glabel">' + mEsc(TPg.name) + '</span><span class="m-gval"><span class="cc-tier ' + gDef.cssClass + '">' + mEsc(gRt.t) + '</span><span class="m-count">' + mEsc(gDef.label) + '</span></span></div>');
   }
-  // ── 写真グリッド（内観・料理①・料理②）──
-  var photoFields = [
-    {key:'内観写真URL', label:'内観'},
-    {key:'料理写真URL1', label:'料理①'},
-    {key:'料理写真URL2', label:'料理②'}
-  ];
-  var photoGridEl = document.getElementById('photo-grid');
-  var photoGalleryRow = document.getElementById('photo-gallery-row');
-  var photoItems = photoFields.map(function(f) {
-    return {url: (r[f.key]||'').trim(), label: f.label};
-  }).filter(function(f){ return f.url; });
-  if (photoItems.length > 0) {
-    var igProfileUrl = (r['Instagram'] || '').trim();
-    photoGridEl.innerHTML = photoItems.map(function(item, idx) {
-      var url = item.url;
-      // CDN画像URL（scontent-*）はimgタグで直接表示、エラー時は非表示
-      var wrapId = 'pgw-' + idx;
-      return '<div id="' + wrapId + '">' +
-        '<div class="photo-grid-item">' +
-          (igProfileUrl
-            ? '<a href="' + igProfileUrl + '" target="_blank" rel="noopener noreferrer" style="display:block;height:100%;">'
-            : '') +
-          '<img src="' + url + '" alt="' + item.label + '" ' +
-            'style="width:100%;height:100%;object-fit:cover;display:block;" ' +
-            'onerror="document.getElementById(\'' + wrapId + '\').style.display=\'none\';checkPhotoGrid();">' +
-          (igProfileUrl ? '</a>' : '') +
-        '</div>' +
-        '<div class="photo-grid-item-label">' + item.label + '</div>' +
-      '</div>';
-    }).join('');
-    photoGalleryRow.style.display = '';
-  } else {
-    photoGridEl.innerHTML = '';
-    photoGalleryRow.style.display = 'none';
-  }
-
+  var gscoreN = parseFloat(r['Google評価']) || 0, gcountN = parseInt(r['口コミ数']) || 0;
+  if (gscoreN > 0) glance.push('<div class="m-gcell"><span class="m-glabel">Google 評価</span><span class="m-gval"><span class="m-star"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/></svg></span><span class="num">' + gscoreN + '</span>' + (gcountN ? '<span class="m-count">（' + gcountN.toLocaleString('ja-JP') + '件）</span>' : '') + '</span></div>');
+  var priceTxt = r['価格帯'] || r['価格帯目安'] || '';
+  if (priceTxt) glance.push('<div class="m-gcell"><span class="m-glabel">' + (r['価格帯'] ? '価格帯' : '価格帯の目安') + '</span><span class="m-gval">' + mEsc(priceTxt) + '</span></div>');
+  var todayS = mTodayStatus(r);
+  if (todayS) glance.push('<div class="m-gcell"><span class="m-glabel">本日</span><span class="m-gval"><span class="' + (todayS.kind === 'closed' ? 'm-closed' : 'm-open') + '">' + mEsc(todayS.text) + '</span></span></div>');
+  document.getElementById('m-glance').innerHTML = glance.join('');
+  // ── 編集部の視点（署名 → リード → 業界人メモ → おすすめシーン → 掲載媒体）──
   var point = (r['おすすめポイント'] || '').trim();
   // 宣伝・価格訴求系の文はおすすめポイントとして不適切なので非表示
   if (/チャージ|無料|0円|クーポン|割引|OFF|半額|ポイント|円～|食べ放題.*円|飲み放題.*円|コース.*円|\d{4}円/.test(point)) point = '';
   if (/^[\d,円税込~～＋\s\-−★☆♪◎●◆▼▲※!！%％]+$/.test(point)) point = '';
-  document.getElementById('mpoint').textContent = point;
-  document.getElementById('mpoint-row').style.display = point ? '' : 'none';
-  // 編集部ピック 4フィールド
   var editorReason = (r.editorReason || '').trim();
-  document.getElementById('m-editor-reason-body').textContent = editorReason;
-  document.getElementById('m-editor-reason').style.display = editorReason ? '' : 'none';
-  var mediaFeatures = r.mediaFeatures || [];
-  var mfList = document.getElementById('m-media-features-list');
-  if (mediaFeatures.length) {
-    mfList.innerHTML = mediaFeatures.map(function(m){
-      var text = m.name + (m.year ? '（' + m.year + '）' : '');
-      return m.url ? '<li><a href="' + m.url + '" target="_blank" rel="noopener noreferrer">' + text + '</a></li>' : '<li>' + text + '</li>';
-    }).join('');
-    document.getElementById('m-media-features').style.display = '';
-  } else {
-    mfList.innerHTML = '';
-    document.getElementById('m-media-features').style.display = 'none';
-  }
+  var selReason = (r['選定理由'] || '').trim();
+  var leadText = editorReason || selReason || point;
   var insiderNote = (r.insiderNote || '').trim();
+  var mediaFeatures = r.mediaFeatures || [];
+  var visitStatusMap = {visited: '訪問済', interview: '店主取材済', desk: '公開情報ベース', industry_known: '業界内で評判', desk_automated: '公開情報ベース（自動収集）'};
+  var visitLabel = visitStatusMap[r.visitStatus || ''] || '';
+  var sigParts = ['<strong>現役飲食店マネージャーが編集</strong>'];
+  if (visitLabel) sigParts.push(mEsc(visitLabel));
+  if (r['追加日']) sigParts.push('掲載 ' + mEsc(r['追加日']));
+  document.getElementById('m-sig').innerHTML = sigParts.map(function(t, i3){ return (i3 ? '<span class="m-dot"></span>' : '') + '<span>' + t + '</span>'; }).join('');
+  document.getElementById('m-lead').textContent = leadText;
+  document.getElementById('m-lead').style.display = leadText ? '' : 'none';
   document.getElementById('m-insider-note-body').textContent = insiderNote;
   document.getElementById('m-insider-note').style.display = insiderNote ? '' : 'none';
+  var scenes = Array.isArray(r['おすすめシーン']) ? r['おすすめシーン'].slice(0, 6) : [];
+  if (!scenes.length) {
+    var sceneTagsM = ['デート','女子会','接待','誕生日・記念日','歓送迎会','忘年会・新年会','家族・子連れ','個室','半個室','カウンター','テラス席','座敷','貸切可','隠れ家'];
+    scenes = (r['タグ'] || '').split(',').map(function(t){ return t.trim(); }).filter(function(t){ return sceneTagsM.indexOf(t) !== -1; }).slice(0, 5);
+  }
+  var scenesEl = document.getElementById('m-scenes');
+  scenesEl.innerHTML = scenes.map(function(t){ return '<span class="m-chip scene">' + mEsc(t) + '</span>'; }).join('');
+  scenesEl.style.display = scenes.length ? '' : 'none';
+  var mfList = document.getElementById('m-media-features-list');
+  if (mediaFeatures.length) {
+    mfList.innerHTML = mediaFeatures.slice(0, 6).map(function(m){
+      var text = mEsc(m.name) + (m.year ? '（' + mEsc(m.year) + '）' : '');
+      return m.url ? '<a href="' + mEsc(m.url) + '" target="_blank" rel="noopener noreferrer">' + text + '</a>' : text;
+    }).join('・');
+    document.getElementById('m-media-features').style.display = '';
+  } else { mfList.innerHTML = ''; document.getElementById('m-media-features').style.display = 'none'; }
+  document.getElementById('m-editorial').style.display = (leadText || insiderNote || scenes.length || mediaFeatures.length) ? '' : 'none';
+  // ── 基本情報（値がある行だけ・上層 最大6行 / 下層は設備チップ）──
+  var rows = [];
+  var gmapUrl0 = gmap(r['店名'], r['エリア'], r);
+  if (r['住所']) rows.push(mInfoRow('住所', '<a href="' + mEsc(gmapUrl0) + '" target="_blank" rel="noopener noreferrer" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + mCtaEsc(r['店名']) + '\',location:\'modal_address\'})">' + mEsc(r['住所']) + '</a>'));
+  if (r['アクセス']) rows.push(mInfoRow('アクセス', mEsc(r['アクセス'])));
+  if (r['営業時間']) rows.push(mInfoRow('営業時間', mEsc(r['営業時間'])));
+  if (r['定休日']) rows.push(mInfoRow('定休日', mEsc(r['定休日'])));
+  if (priceTxt) rows.push(mInfoRow(r['価格帯'] ? '価格帯' : '価格帯の目安', mEsc(priceTxt) + (r['ランチ'] ? ' <span class="m-count">（ランチ営業あり）</span>' : '')));
+  var seatParts = [];
+  if (r['席数']) seatParts.push('<span class="num">' + mEsc(r['席数']) + '</span>席');
+  if (r['個室']) { var pr = String(r['個室']).replace(/^あり\s*[：:]?\s*/, '').trim(); seatParts.push('個室あり' + (pr ? '（' + mEsc(pr) + '）' : '')); }
+  if (seatParts.length) rows.push(mInfoRow('席・個室', seatParts.join(' · ')));
+  document.getElementById('m-info-rows').innerHTML = rows.slice(0, 6).join('');
+  var chips = [];
+  if (r['カード可']) chips.push('カード可');
+  if (r['禁煙']) chips.push(mEsc(r['禁煙']));
+  if (r['駐車場']) chips.push('駐車場あり');
+  if (r['飲み放題']) chips.push('飲み放題あり');
+  if (r['食べ放題']) chips.push('食べ放題あり');
+  if (r['コース']) chips.push('コースあり');
+  if (r['宴会収容']) chips.push('宴会 最大' + mEsc(r['宴会収容']) + '名');
+  document.getElementById('m-info-chips').innerHTML = chips.map(function(c){ return '<span class="m-chip">' + c + '</span>'; }).join('');
+  var infoDetails = document.getElementById('m-info-details');
+  infoDetails.style.display = chips.length ? '' : 'none';
+  infoDetails.open = false;
+  document.getElementById('m-info').style.display = (rows.length || chips.length) ? '' : 'none';
   // REVIEW_TRUST_RENDER_START
   // ── 口コミ信頼度（段階 SS〜D・0-100・助言文・検証カバー率・Google口コミ取得日） ──
   // 語彙・段階は TRUST_POLICY（build が data/trust_display_policy.json を注入）。
@@ -9797,7 +9906,7 @@ function openM(i) {
     if (ccMetaLineEl) ccMetaLineEl.textContent = _ccFmt(TP.coverageLabel, { observed: ccCov[0] || '0', total: ccCov[1] || TP.checks.length })
       + (mRt.d ? ' ・ ' + _ccFmt(TP.lastCheckedLabel, { date: mRt.d }) : '');
     if (ccPendingNoteEl) ccPendingNoteEl.style.display = ccIsNa ? '' : 'none';
-    if (ccSummaryLabelEl) ccSummaryLabelEl.textContent = '内訳を見る — ' + TP.checks.length + 'つの検証項目';
+    if (ccSummaryLabelEl) ccSummaryLabelEl.textContent = '内訳と判定の考え方 — ' + TP.checks.length + 'つの検証項目';
     function _renderCcBreakdown(bd){
       if (!ccBreakdownEl) return;
       if (!bd) { ccBreakdownEl.innerHTML = ''; if (ccMetaEl) ccMetaEl.innerHTML = ''; if (ccMetaHeadEl) ccMetaHeadEl.textContent = ''; return; }
@@ -9870,21 +9979,15 @@ function openM(i) {
     }).join('');
     irListEl.style.display = '';
     irEmpty.style.display = 'none';
+    document.getElementById('m-insider-reviews').style.display = '';
+    document.getElementById('m-ir-linkwrap').style.display = 'none';
   } else {
     irListEl.innerHTML = '';
     irListEl.style.display = 'none';
     irEmpty.style.display = '';
-  }
-  var visitStatusMap = {visited: '訪問済', interview: '店主取材済', desk: '公開情報ベース'};
-  var visitStatus = r.visitStatus || '';
-  var mvisitEl = document.getElementById('mvisit');
-  var mvisitRow = document.getElementById('mvisit-row');
-  if (visitStatus && visitStatusMap[visitStatus]) {
-    mvisitEl.textContent = visitStatusMap[visitStatus];
-    mvisitRow.style.display = '';
-  } else {
-    mvisitEl.textContent = '';
-    mvisitRow.style.display = 'none';
+    // 0件の空セクションは描かない。末尾の投稿リンクから同じフォームを開く（nbOpenInsiderForm）
+    document.getElementById('m-insider-reviews').style.display = 'none';
+    document.getElementById('m-ir-linkwrap').style.display = '';
   }
   var igPost = (r['Instagram投稿URL'] || '').trim();
   // リール・写真とも同じ所有者検証を通す（検証を通らない投稿はモーダルにも出さない）
@@ -9910,38 +10013,33 @@ function openM(i) {
     igWrap.style.display = 'none';
     if (igWrap._pendingSrc !== undefined) igWrap._pendingSrc = null;
   }
-  // ── SEO-003 モーダル内 メインCTA ──
-  var ctaEsc = function(s){ return String(s||'').replace(/'/g,'').replace(/</g,'').replace(/>/g,''); };
+  // ── モーダル内 CTA（主: 予約＝塗り / 副: 地図＝アウトライン）。同じ2導線をスマホの追従バーにも出す ──
+  var ctaEsc = mCtaEsc;
   var ctaRow = document.getElementById('modal-cta-row');
-  if (ctaRow) {
-    var hpId2 = r['ホットペッパーID'] || '';
-    // SEO-049: 予約(HP)と地図を排他 if/else で出していたため、HotPepperID を持つ
-    // 97.2%の店で地図CTAが1つも描画されない構造だった。HPなし店の挙動は維持しつつ、
-    // HPあり店では両方を併置する（実在保証の要である「場所を確認できる」導線の回復）
-    var mapBtnHtml = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_cta\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認">地図で場所を確認する</a>';
-    if (hpId2) {
-      var hpBtnHtml = '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="trackEvent(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>';
-      ctaRow.innerHTML = hpBtnHtml + mapBtnHtml;
-    } else {
-      ctaRow.innerHTML = mapBtnHtml;
-    }
-    ctaRow.style.display = '';
+  var stickyEl = document.getElementById('m-sticky-cta');
+  var hpId2 = r['ホットペッパーID'] || '';
+  var mapBtnHtml = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_cta\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認">地図で場所を確認する</a>';
+  var hpBtnHtml = hpId2 ? '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="trackEvent(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>' : '';
+  if (ctaRow) { ctaRow.innerHTML = hpBtnHtml + mapBtnHtml; ctaRow.style.display = ''; }
+  if (stickyEl) {
+    var mapIconBtn = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_sticky\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a>';
+    stickyEl.innerHTML = hpId2 ? (hpBtnHtml + mapIconBtn) : mapBtnHtml;
+    stickyEl.classList.remove('show');
   }
+  // ── 媒体リンク（favicon＋名前の小チップ1行。Google マップは modal_media_row で計測を区別）──
   var items = [
-    {url:hpUrl, brand:'hotpepper', cls:'mb-hp', label:'Hotpepper'},
+    {url:hpUrl, brand:'hotpepper', cls:'mb-hp', label:'HotPepper'},
     {url:tabelogSearchUrl(r), brand:'tabelog', cls:'mb-tb', label:'食べログ'},
     {url:instagramSearchUrl(r), brand:'instagram', cls:'mb-ig', label:'Instagram'},
+    {url:gmap(r['店名'],r['エリア'],r), brand:'gmap', cls:'mb-gm', label:'Google マップ', track:'modal_media_row'},
     {url:tiktokSearchUrl(r), brand:'tiktok', cls:'mb-tk', label:'TikTok'},
-    {url:xSearchUrl(r), brand:'x', cls:'mb-xx', label:'X'},
-    // SEO-049: このボタンだけ trackEvent が無く cta_gmap_click が一切発火しない経路だった。
-    // location:'modal_media_row' で上の modal-cta-row 側（location:'modal_cta'）と区別する
-    {url:gmap(r['店名'],r['エリア'],r), brand:'gmap', cls:'mb-gm', label:'Google Maps', track:'modal_media_row'}
+    {url:xSearchUrl(r), brand:'x', cls:'mb-xx', label:'X'}
   ];
   document.getElementById('mmg').innerHTML = items.map(function(m){
     var onclickAttr = m.track ? (' onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'' + m.track + '\'})"') : '';
-    return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '"' + onclickAttr + ' rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,36) + '</span><span class="mbl">' + m.label + '</span></a>';
+    return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '"' + onclickAttr + ' rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,18) + '</span><span class="mbl">' + m.label + '</span></a>';
   }).join('');
-  setShareStore(r['店名'] || '');
+  setShareStore(r['店名'] || '', r['ホットペッパーID'] || '');
   var mfavBtn = document.getElementById('modal-fav-btn');
   var storeName = r['店名'] || '';
   mfavBtn.setAttribute('data-name', storeName);
@@ -9992,28 +10090,29 @@ function openM(i) {
       }
     }
     var relEl=document.getElementById('modal-related');
-    if(relEl){
-      var rh='';
+    var featEl=document.getElementById('m-related-features');
+    var featSec=document.getElementById('m-features-section');
+    if(featEl&&featSec){
       if(hits.length>0){
-        rh+='<div class="modal-related-features">'+hits.map(function(fe){
-          return '<a href="'+fe.u+'" target="_blank" rel="noopener noreferrer">'+fe.l+'</a>';
-        }).join('')+'</div>';
-      }
+        featEl.innerHTML=hits.map(function(fe){ return '<a href="'+fe.u+'" target="_blank" rel="noopener noreferrer">'+fe.l+'</a>'; }).join('');
+        featSec.style.display='';
+      } else { featEl.innerHTML=''; featSec.style.display='none'; }
+    }
+    if(relEl){
       if(relStores.length>0){
-        rh+='<div class="modal-related-stores-label">似た雰囲気のお店</div>'
+        relEl.innerHTML='<div class="m-section-title">似た雰囲気のお店</div>'
           +'<div class="modal-related-stores">'+relStores.map(function(rs3){
             var rst=rs3.s, rsn=rst['店名']||'';
             var rsAlt=rsn.replace(/"/g,'&quot;');
             var rsPhoto=rst['写真URL']||nbStoreFigure(rst);
             return '<button class="modal-rsc" onclick="closeM();setTimeout(function(){openM('+rs3.i+');},50)" aria-label="'+rsAlt+'の詳細を見る">'
-              +'<img class="modal-rsc-img" src="'+nbImage(rsPhoto,480)+'" srcset="'+nbSrcset(rsPhoto,[240,480])+'" sizes="150px" alt="'+rsAlt+'" loading="lazy" decoding="async" width="160" height="100" onerror="nbImgFallback(this)">'
+              +'<img class="modal-rsc-img" src="'+nbImage(rsPhoto,480)+'" srcset="'+nbSrcset(rsPhoto,[240,480])+'" sizes="160px" alt="'+rsAlt+'" loading="lazy" decoding="async" width="160" height="120" onerror="nbImgFallback(this)">'
               +'<span class="modal-rsc-body"><span class="modal-rsc-name">'+rsn+'</span>'
               +'<span class="modal-rsc-meta">'+((rst['ジャンル']||'').split('・')[0])+((rst['エリア'])?' · '+rst['エリア']:'')+'</span></span>'
               +'</button>';
           }).join('')+'</div>';
-      }
-      if(rh){relEl.innerHTML='<div class="modal-related-title">この特集もおすすめ</div>'+rh;relEl.style.display='';}
-      else{relEl.style.display='none';}
+        relEl.style.display='';
+      } else { relEl.innerHTML=''; relEl.style.display='none'; }
     }
   })();
   // ── Restaurant JSON-LD（モーダル開時に動的注入 / LLMO・AI検索最適化）──
@@ -10036,12 +10135,12 @@ function openM(i) {
       'image': r['写真URL'] || undefined,
       'openingHours': r['営業時間'] || undefined,
       'description': r['おすすめポイント'] || r['editorReason'] || undefined,
-      'aggregateRating': r['Google評価'] ? {
+      'aggregateRating': (r['Google評価'] && parseInt(r['口コミ数']) > 0) ? {
         '@type': 'AggregateRating',
         'ratingValue': r['Google評価'],
         'bestRating': '5',
         'worstRating': '1',
-        'ratingCount': '10'
+        'ratingCount': String(parseInt(r['口コミ数']))
       } : undefined
     };
     // undefined を除去
@@ -10052,9 +10151,15 @@ function openM(i) {
     el.textContent = JSON.stringify(schema);
     document.head.appendChild(el);
   })();
+  // 末尾の確認情報（出典・口コミ最終確認日・修正依頼）
+  var fnParts = ['掲載情報は HotPepper・Google の公開情報と編集部の確認に基づきます'];
+  if (r.reviewTrust && r.reviewTrust.d) fnParts.push('口コミ最終確認 ' + mEsc(r.reviewTrust.d));
+  document.getElementById('m-footnote').innerHTML = fnParts.join(' · ') + ' · <a href="mailto:editor@nagoya-bites.com?subject=' + encodeURIComponent('掲載情報の修正依頼: ' + (r['店名'] || '')) + '">修正を依頼する</a>';
   document.getElementById('ov').classList.add('open');
   document.body.style.overflow = 'hidden';
   document.getElementById('mobile-cta-bar').style.display='none';
+  var modalEl0 = document.querySelector('.modal'); if (modalEl0) modalEl0.scrollTop = 0;
+  mSetupStickyCta();
 }
 
 // ================================================================
@@ -10081,6 +10186,12 @@ function renderMhi(r, primaryPhoto) {
   if (photos.length === 0) photos.push({url: nbStoreFigure(r), label: ''});
   MHI_PHOTOS = photos;
   MHI_INDEX = 0;
+  var mhiEl = document.querySelector('.mhi');
+  if (mhiEl) {
+    mhiEl.style.backgroundImage = 'url("' + nbStoreFigure(r) + '")';
+    var oldCredit = mhiEl.querySelector('.photo-credit'); if (oldCredit) oldCredit.parentNode.removeChild(oldCredit);
+    if (typeof nbPhotoCredit === 'function') mhiEl.insertAdjacentHTML('beforeend', nbPhotoCredit(r));
+  }
   var storeName = r['店名'] || '店舗';
   var genre = r['ジャンル'] || '飲食店';
   document.getElementById('mhi-track').innerHTML = photos.map(function(p, idx) {
@@ -10089,7 +10200,7 @@ function renderMhi(r, primaryPhoto) {
     return '<img' + (idx === 0 ? ' id="mi"' : '') +
       ' src="' + nbImage(p.url, 1200) + '"' +
       ' srcset="' + nbSrcset(p.url, [800, 1200, 1600]) + '"' +
-      ' sizes="(max-width:768px) 100vw, 680px"' +
+      ' sizes="(max-width:768px) 100vw, 760px"' +
       ' alt="' + alt + '"' +
       (idx > 0 ? ' loading="lazy"' : '') + '>';
   }).join('');
@@ -10165,46 +10276,44 @@ function mhiGoTo(idx) {
   }, {passive: true});
 })();
 
-function checkPhotoGrid() {
-  var grid = document.getElementById('photo-grid');
-  var wrap = document.getElementById('photo-gallery-row');
-  if (!grid || !wrap) return;
-  var visible = grid.querySelectorAll('div[id^="pgw-"]:not([style*="display:none"])');
-  if (visible.length === 0) wrap.style.display = 'none';
-}
-
 function closeM() {
   document.getElementById('ov').classList.remove('open');
   document.body.style.overflow = '';
   document.getElementById('mobile-cta-bar').style.display='';
-  document.getElementById('photo-grid').innerHTML = '';
-  document.getElementById('photo-gallery-row').style.display = 'none';
   document.getElementById('mig-container').innerHTML = '';
   document.getElementById('mig-wrap').style.display = 'none';
+  var stickyC = document.getElementById('m-sticky-cta'); if (stickyC) { stickyC.classList.remove('show'); stickyC.innerHTML = ''; }
+  if (M_STICKY_OBS) { M_STICKY_OBS.disconnect(); M_STICKY_OBS = null; }
+  var ldPrev = document.getElementById('modal-store-jsonld'); if (ldPrev && ldPrev.parentNode) ldPrev.parentNode.removeChild(ldPrev);
 }
 document.getElementById('ov').addEventListener('click', function(e){ if(e.target===this) closeM(); });
 
 // ================================================================
 // SNS シェア機能
 // ================================================================
-var _shareStoreName = '';
-function setShareStore(name) { _shareStoreName = name; }
+var _shareStoreName = '', _shareStoreHpid = '';
+function setShareStore(name, hpid) { _shareStoreName = name; _shareStoreHpid = hpid || ''; }
+// 共有URLは店舗の deep link（#store=HPID。8848 付近の readHash が同じ店を開く）。旧実装はトップURL固定だった
+function nbStoreShareUrl() { return 'https://nagoya-bites.com/' + (_shareStoreHpid ? '#store=' + encodeURIComponent(_shareStoreHpid) : ''); }
 function shareToX() {
   trackEvent('share_x', {store_name: _shareStoreName});
   var text = '名古屋の「' + _shareStoreName + '」が気になる！ #NAGOYABITES #名古屋グルメ';
-  var url = 'https://nagoya-bites.com/';
+  var url = nbStoreShareUrl();
   window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url), '_blank', 'noopener,width=550,height=420');
 }
 function shareToLINE() {
   trackEvent('share_line', {store_name: _shareStoreName});
-  var text = '名古屋の「' + _shareStoreName + '」をチェック！\nhttps://nagoya-bites.com/';
+  var text = '名古屋の「' + _shareStoreName + '」をチェック！\n' + nbStoreShareUrl();
   window.open('https://line.me/R/msg/text/?' + encodeURIComponent(text), '_blank', 'noopener');
 }
 function copyShareLink() {
   trackEvent('share_copy', {store_name: _shareStoreName});
-  var url = 'https://nagoya-bites.com/';
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(url).then(function() {
+  var url = nbStoreShareUrl();
+  var writeP = (navigator.clipboard && navigator.clipboard.writeText) ? navigator.clipboard.writeText(url) : new Promise(function(res, rej){
+    try { var ta = document.createElement('textarea'); ta.value = url; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); var ok = document.execCommand('copy'); document.body.removeChild(ta); ok ? res() : rej(new Error('copy failed')); } catch (e) { rej(e); }
+  });
+  {
+    writeP.then(function() {
       var btn = document.getElementById('share-copy');
       btn.classList.add('copied');
       btn.textContent = 'コピーしました!';
