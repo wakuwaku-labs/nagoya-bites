@@ -646,6 +646,10 @@ body.search-query-active .card-why{display:flex;}
 .modal-cta-hp:hover{background:#c9001e;}
 .modal-cta-gm{background:#4285F4;color:#fff!important;}
 .modal-cta-gm:hover{background:#2b6cd4;}
+.modal-cta-call{background:var(--green);color:#fff!important;display:flex;align-items:center;justify-content:center;gap:.35rem;}
+.modal-cta-call:hover{background:var(--green-dim);}
+.modal-cta-call:disabled{opacity:.62;cursor:progress;}
+.modal-cta-call svg{width:15px;height:15px;flex:0 0 auto;fill:currentColor;}
 /* カード内 .ml の小サイズ favicon */
 .ml img.brand-fav{width:14px;height:14px;object-fit:contain;display:inline-block;vertical-align:-.18em;margin-right:.32rem;border-radius:2px;flex-shrink:0;}
 /* ── MODAL INFO TABLE ── */
@@ -2093,7 +2097,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
         <div class="mml">Instagram — 代表投稿</div>
         <div class="mig-embed-box" id="mig-container"></div>
       </div>
-      <div id="modal-cta-row" style="display:none"></div>
+      <div id="modal-cta-row" class="modal-cta-row" style="display:none"></div>
       <div class="mml">Media Links — 各媒体で見る</div>
       <div class="mmg" id="mmg"></div>
       <div id="modal-related" style="display:none"></div>
@@ -9658,6 +9662,74 @@ function renderPagination(totalPages) {
   pagEl.innerHTML = html;
 }
 
+// ── 電話するボタン: Places API ライブ取得（保存しない） ──
+// Google Maps Platform 利用規約により電話番号は warehousing 禁止・都度ライブ取得のみ許可
+// （developers.google.com/maps/documentation/places/web-service/policies）。
+// そのため LOCAL_STORES には焼き込まず、タップされた瞬間にだけ取得して tel: を発火する。
+// ブラウザ制限（HTTPリファラ: nagoya-bites.com のみ）付きキーを使用。GCP側にも
+// プロジェクト全体で1日300件のハードクォータを設定済み（既存の写真取得等と共有）。
+var NB_CALL_MAPS_KEY = 'AIzaSyBKD3MCHPdIPxHt-hZlh8EIv_8zMYDbgos';
+var NB_MAPS_JS_PROMISE = null;
+function nbLoadMapsJs() {
+  if (NB_MAPS_JS_PROMISE) return NB_MAPS_JS_PROMISE;
+  NB_MAPS_JS_PROMISE = new Promise(function(resolve, reject) {
+    if (window.google && window.google.maps && window.google.maps.places) { resolve(); return; }
+    window.__nbMapsReady = resolve;
+    var s = document.createElement('script');
+    s.src = 'https://maps.googleapis.com/maps/api/js?key=' + NB_CALL_MAPS_KEY + '&libraries=places&callback=__nbMapsReady&loading=async';
+    s.async = true;
+    s.onerror = function(){ NB_MAPS_JS_PROMISE = null; reject(new Error('maps-js-load-failed')); };
+    document.head.appendChild(s);
+  });
+  return NB_MAPS_JS_PROMISE;
+}
+// 同一ページ表示中だけの即席キャッシュ（保存はしない。閉じれば消える。二重タップの無駄打ち防止用）
+var NB_PHONE_MEM = {};
+// ブラウザ単位の簡易レート制限（暴発・誤連打での枠消費を防ぐ。1日20回まで）
+function nbCallTapAllowed() {
+  try {
+    var key = 'nb_call_taps_' + new Date().toISOString().slice(0, 10);
+    var n = parseInt(localStorage.getItem(key) || '0', 10);
+    if (n >= 20) return false;
+    localStorage.setItem(key, String(n + 1));
+    return true;
+  } catch (e) { return true; }
+}
+function nbCallBtnReset(btn, label) {
+  btn.disabled = false;
+  btn.querySelector('span').textContent = label;
+}
+function nbCallStore(ev, placeId, storeName, btn) {
+  ev.stopPropagation();
+  if (!placeId || !btn || btn.disabled) return;
+  trackEvent('cta_call_click', {store_name: storeName});
+  if (NB_PHONE_MEM[placeId]) { location.href = 'tel:' + NB_PHONE_MEM[placeId]; return; }
+  if (!nbCallTapAllowed()) {
+    btn.querySelector('span').textContent = '本日の上限に達しました';
+    setTimeout(function(){ nbCallBtnReset(btn, '電話する'); }, 2500);
+    return;
+  }
+  btn.disabled = true;
+  btn.querySelector('span').textContent = '確認中…';
+  nbLoadMapsJs().then(function() {
+    var svc = new google.maps.places.PlacesService(document.createElement('div'));
+    svc.getDetails({placeId: placeId, fields: ['international_phone_number']}, function(place, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK && place && place.international_phone_number) {
+        var tel = place.international_phone_number.replace(/[^\d+]/g, '');
+        NB_PHONE_MEM[placeId] = tel;
+        nbCallBtnReset(btn, '電話する');
+        location.href = 'tel:' + tel;
+      } else {
+        nbCallBtnReset(btn, '電話番号が見つかりません');
+        setTimeout(function(){ btn.querySelector('span').textContent = '電話する'; }, 2500);
+      }
+    });
+  }).catch(function() {
+    nbCallBtnReset(btn, '通信エラー・地図でご確認を');
+    setTimeout(function(){ btn.querySelector('span').textContent = '電話する'; }, 2500);
+  });
+}
+
 function openM(i) {
   // ハートボタン経由のクリックならモーダルを開かない
   if (window.event && window.event.target && window.event.target.closest && window.event.target.closest('.fav-btn')) return;
@@ -9917,11 +9989,16 @@ function openM(i) {
     // 97.2%の店で地図CTAが1つも描画されない構造だった。HPなし店の挙動は維持しつつ、
     // HPあり店では両方を併置する（実在保証の要である「場所を確認できる」導線の回復）
     var mapBtnHtml = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_cta\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認">地図で場所を確認する</a>';
+    // ── 電話するボタン（placeId がある店のみ）──
+    // 電話番号はどこにも保存しない。タップされた瞬間に Places API へライブ取得しに行き、
+    // 取れた番号でその場で tel: リンクを発火する（Google Maps Platform 利用規約: 電話番号は
+    // warehousing 禁止・都度ライブ取得のみ許可。CLAUDE.md 制約10とも整合する設計）。
+    var callBtnHtml = r.placeId ? '<button type="button" class="modal-cta-btn modal-cta-call" onclick="nbCallStore(event,\'' + ctaEsc(r.placeId) + '\',\'' + ctaEsc(r['店名']) + '\',this)" aria-label="' + ctaEsc(r['店名']) + 'に電話する"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg><span>電話する</span></button>' : '';
     if (hpId2) {
       var hpBtnHtml = '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="trackEvent(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>';
-      ctaRow.innerHTML = hpBtnHtml + mapBtnHtml;
+      ctaRow.innerHTML = hpBtnHtml + callBtnHtml + mapBtnHtml;
     } else {
-      ctaRow.innerHTML = mapBtnHtml;
+      ctaRow.innerHTML = callBtnHtml + mapBtnHtml;
     }
     ctaRow.style.display = '';
   }
