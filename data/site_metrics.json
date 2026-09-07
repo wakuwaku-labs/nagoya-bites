@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-07T04:35:26.996Z",
+  "generatedAt": "2026-09-07T10:11:16.584Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1021,
-    "pageViews": 1732,
-    "sessions": 1216,
-    "avgSessionDuration": 147.1,
-    "bounceRate": 0.298,
+    "activeUsers": 1040,
+    "pageViews": 1752,
+    "sessions": 1237,
+    "avgSessionDuration": 145.5,
+    "bounceRate": 0.308,
     "pagesPerSession": 1.42
   },
   "dailyReference": {
@@ -17,18 +17,18 @@
   },
   "channels": {
     "sessions": {
-      "organic": 888,
-      "direct": 225,
-      "social": 85,
-      "referral": 15,
+      "organic": 899,
+      "direct": 242,
+      "social": 86,
+      "referral": 16,
       "paid": 0,
       "other": 4
     },
     "pct": {
-      "organic": 73,
-      "direct": 18.5,
-      "social": 7,
-      "referral": 1.2,
+      "organic": 72.1,
+      "direct": 19.4,
+      "social": 6.9,
+      "referral": 1.3,
       "paid": 0,
       "other": 0.3
     }
@@ -37,37 +37,37 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 397
+      "sessions": 403
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 292
+      "sessions": 296
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 203
+      "sessions": 208
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 180
+      "sessions": 181
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 77
+      "sessions": 78
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 24
     },
     {
       "source": "duckduckgo",
       "medium": "organic",
       "sessions": 14
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 12
     },
     {
       "source": "copilot.com",
@@ -88,18 +88,18 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 315,
-      "sessions": 267
+      "pageViews": 317,
+      "sessions": 270
     },
     {
       "path": "/",
-      "pageViews": 305,
-      "sessions": 189
+      "pageViews": 307,
+      "sessions": 191
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 118,
-      "sessions": 110
+      "pageViews": 121,
+      "sessions": 113
     },
     {
       "path": "/index.html",
@@ -108,25 +108,25 @@
     },
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
-      "pageViews": 77,
-      "sessions": 72
+      "pageViews": 78,
+      "sessions": 73
     }
   ],
   "cta": {
-    "outboundClicks": 103,
-    "ctaClickRate": 8.5,
+    "outboundClicks": 109,
+    "ctaClickRate": 8.8,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 45
+        "clicks": 48
       },
       {
         "domain": "tabelog.com",
-        "clicks": 31
+        "clicks": 33
       },
       {
         "domain": "maps.google.com",
-        "clicks": 12
+        "clicks": 13
       },
       {
         "domain": "www.instagram.com",
@@ -159,28 +159,28 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 65,
-      "direct": 15,
+      "organic": 67,
+      "direct": 18,
       "social": 21,
       "referral": 2,
       "paid": 0,
-      "other": 0
+      "other": 1
     },
-    "ctaClickRate_organic": 7.3,
-    "ctaClickRate_direct": 6.7,
-    "ctaClickRate_social": 24.7,
+    "ctaClickRate_organic": 7.5,
+    "ctaClickRate_direct": 7.4,
+    "ctaClickRate_social": 24.4,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 21
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 17
+        "clicks": 18
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 15
+        "clicks": 17
       },
       {
         "path": "/index.html",
@@ -232,6 +232,10 @@
       },
       {
         "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
         "clicks": 1
       },
       {
@@ -291,17 +295,17 @@
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
         "domain": "tabelog.com",
-        "clicks": 21
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 17
+        "clicks": 18
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 15
+        "clicks": 17
       },
       {
         "path": "/index.html",
@@ -381,6 +385,11 @@
       {
         "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
         "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
+        "domain": "maps.google.com",
         "clicks": 1
       },
       {
@@ -472,15 +481,15 @@
     "reservationClicksByPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 21
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 17
+        "clicks": 18
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 15
+        "clicks": 17
       },
       {
         "path": "/index.html",
@@ -531,11 +540,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 76
+    "reservationClicks": 81
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1021,
+    "value": 1040,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
