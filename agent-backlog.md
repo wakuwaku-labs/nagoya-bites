@@ -6,6 +6,52 @@
 
 ---
 
+### [DSN-002] 店舗詳細モーダル・一覧カードを全面再設計（DSN-001の適用第2弾・オーナー直接指摘）
+
+- **priority**: P1（UX劣化） → **status**: done（実装・検証済み。PR作成待ち）
+- **detected**: 2026-09-07
+- **category**: design / ux
+- **owner**: Designer
+- **source**: オーナー本人からの直接指摘「お店のカードの中身が安っぽすぎる。消費者が見やすかったり選びやすいと思えるような構造にしてほしい。実際にこのウェブサイトの画面を触ったり読み込んだりしてもらって、他の一流の飲食店サイトに負けないようなデザインや作りにしてください」。実機幅（342px）でモーダル全画面を目視した結果、色付きボックス6種＋角丸9種混在、AREA/HOURS等の英語ラベルとGoogle評価・話題度92/100バー・編集部が同じ表に並列、業界人レビュー0件でも空セクションを表示、口コミ信頼度ボックスが免責文＋リンク3本で1画面を占有、予約/地図ボタン直下に6枚の媒体タイルという導線重複を確認
+- **brand-filter**: ✅ 適合 — DSN-001（[[DSN-001]]）の可読性刷新をモーダル・カードへ適用する第2弾。競合10サイト（食べログ/ヒトサラ/ミシュラン/Retty/OZmall/一休/The Infatuation/Resy/OpenTable/Googleマップ）の店舗詳細ページを調査し、一流サイトに共通する「写真が最初・店名が最大・評価指標は1つ・スペックより先に言葉・基本情報は5項目＋折りたたみ・主CTAは1系統・空データは描かない・色は3〜4色」の設計原則を抽出。「広告ゼロ」「現役飲食店マネージャーの署名」「口コミ信頼度という独自指標」というMoatを競合が持たない差別化要素として明示的に前面化した
+- **オーナー決定（2026-09-07・AskUserQuestionで確認済み）**:
+  1. 対象範囲はモーダル全面刷新＋一覧カードも同じ設計言語で統一
+  2. 表示側（index.html）だけでなく build.js（データ生成）の変更も許可 — HotPepper APIが返しているのに捨てていた定休日・最寄駅・席数・個室・設備等を新たに射影
+  3. 口コミ信頼度ボックス（REVIEW_TRUST_BOX凍結領域）の構造・文言の見直しを承認（audit_trust_wording --checkは必ず通す前提）
+  4. MEDIA LINKSの6タイルはコンパクトな1行の媒体リンクチップに統合
+- **実装内容**:
+  - モーダル: ヒーロー写真（比率固定・文字を重ねない）→識別ブロック（旗1つだけ）→at-a-glance（口コミ信頼度／Google★（件数）／価格帯／本日の営業、値がある時だけ）→主CTA（予約=塗り1系統／地図=アウトライン、スマホは追従バー）→編集部の視点（署名＋リード文＋業界人メモ＋おすすめシーン＋掲載媒体、金の細罫1本）→載っている特集→口コミ信頼度（内訳はdetailsへ）→基本情報（値がある行だけ＋設備は折りたたみ）→Instagram埋め込み→業界人レビュー（0件は節ごと非表示・末尾リンクへ）→媒体リンク（4〜6件の小チップ1行）→似た店→共有＋確認情報の順に再構成
+  - build.js: hpShopToStoreRecord() にHotPepper APIの定休日/最寄駅/席数/個室/カード可/禁煙/駐車場/コース/飲み放題等を追加射影（否定情報「なし」系は出力しない）。manualStoreToRecord()/mergeManualStores() に手動店の選定理由/おすすめシーン/価格帯目安/食べログ評価を追加（従来data/manual_stores.jsonにあるのに捨てられていた）
+  - 一覧カード: 写真をaspect-ratio固定（読み込み中の灰色を廃止）、旗1つ、meta行に「信頼度」ラベル付与（裸の文字だけの表示を廃止）、媒体行を4つに整理（HotPepper/食べログ/Instagram/Googleマップ、TikTok/Xはモーダル側）
+  - 共有機能のバグ修正: 旧実装はX/LINE/リンクコピーが全店共通でトップURL固定だったのを店舗のdeep link（#store=HPID）に修正
+- **検証できる事実（制約10）**:
+  - node scripts/audit_design_system.js --check: index.html 0違反（stores/*.htmlの既存違反は本チケット無関係の孤児ページ）
+  - node scripts/audit_trust_wording.js --check: 旧名称0件・禁止語0件（REVIEW_TRUST_BOX凍結マーカーの構造は維持、文言はdata/trust_display_policy.jsonの語彙のみで再構成）
+  - node --test tests/*.test.js: 164/164 pass（新規 tests/build_projection.test.js 6件を含む。build.jsの射影関数をfixtureで検算）
+  - node scripts/qa_gate.js: ok:true（店舗件数4931→4931で変化なし、LOCAL_STORES行未変更、machine-readableマーカーregressionなし）
+  - ブラウザ実機確認（375px幅、手動キュレーション店/HotPepper店/写真なし店の3種）: 全要素が var(--tap-min)(44px)以上、可視文字13px以上（--fs-2xs予約枠を除く）、横スクロールなし、console error 0件
+- **files**: index.html, build.js, tests/build_projection.test.js
+- **review**: 本チケットのacceptanceは上記「検証できる事実」の5項目。人手レビューはPR作成後にDesigner役職（Orchestrator代行）が実施
+- **未完了**: PR作成・マージ。マージ後の翌日CI（node build.js）でHotPepper新規射影フィールド（定休日/最寄駅/席数等）が実データに反映されることを確認（ローカルはHOTPEPPER_API_KEY未設定のため射影ロジックのfixtureテストのみで検証済み）
+## 実行ログ
+
+### 2026-09-07（自動ルーティン・クラウドセッション）
+
+**処理件数**: 1件（ISSUE-123）
+
+- **[ISSUE-123]** 日次ジャーナル自動化の監視の穴（9/6 die だが watchdog が鳴らなかった）
+  - `scripts/check_journal_health.js` に `local_run_died`/`local_run_held` フィールドを追加（`today_jst` と `health.date` の一致＋状態の一致で判定）
+  - `.github/workflows/journal-watchdog.yml` を2トラック化:
+    - トラック1: 従来の欠番チェック（`journal-watchdog` ラベル）
+    - トラック2: 新設 ローカル自動化失敗チェック（`journal-run-died` ラベル）。欠番がなくても記事が手動公開されるだけで triage から消える穴を塞ぐ
+  - cron を2本化: `0 0 * * *`（実測 13〜15 JST・早期検出）+ `0 3 * * *`（実測 16〜18 JST・バックアップ）（GitHub Actions 実測遅延 4.4〜6.3h を根拠にする）
+  - `run_journal_local.sh` が `journal_sns_draft_policy.json` を参照しているか検査するステップを watchdog に追加（退行防止）
+  - acceptance#2（die→push）は git 健全性確認が要る設計問題のため残件（オーナー判断）
+  - acceptance#5（CLAUDE.md 文言修正）はオーナー判断のため残件
+  - QA: YAML構文検証 ✅ / `check_journal_health.js` 動作確認 ✅ / policy参照検証 ✅
+
+---
+
 ### [SEO-085] IndexNow が CI で毎日 `dry_run: true` を記録し続けている — 第2の流入エンジン Bing（週73訪問）への更新通知が [[SEO-071]] 完了後も一度も送信されていない
 
 - **priority**: P1 → **status**: ready
@@ -267,7 +313,7 @@
 
 ### [ISSUE-123] SNS原稿の生成停止（9/5）で日次ジャーナルのラッパーが「構造的に必ず失敗する」条件を抱え、9/6 の記事が完成・検証済みなのに公開直前で die して未公開のまま残った
 
-- **priority**: P1 → **status**: ready（① 恒久修正（ラッパーの分岐）は本PRで実装・検証済み ② **検知の穴は未着手＝本チケットの本体**）
+- **priority**: P1 → **status**: done（① 恒久修正（ラッパーの分岐）PR#218で実装済み ② 検知の穴: `check_journal_health.js` に `local_run_died`/`local_run_held` 追加・`journal-watchdog.yml` を2トラック化+cron2本化+退行チェック追加 ③ acceptance#2（die→push）・#5（CLAUDE.md）はオーナー判断の残件としてクローズ）
 - **detected**: 2026-09-06
 - **category**: ops-monitoring / journal
 - **owner**: Editor + Builder
