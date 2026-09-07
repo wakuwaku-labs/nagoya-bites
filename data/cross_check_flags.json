@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-07T16:09:25.495Z",
+  "generatedAt": "2026-09-07T21:12:09.725Z",
   "version": "1.0",
-  "total": 537,
+  "total": 505,
   "flags": [
     {
       "店名": "薪火と肉と酒 コノハズク 名駅店",
@@ -256,6 +256,18 @@
       },
       "rating": 4.7,
       "reviewCount": 3,
+      "食べログURL": ""
+    },
+    {
+      "店名": "鳥あえず 金山店",
+      "エリア": "金山",
+      "ホットペッパーID": "J004470637",
+      "crossCheckScore": 68,
+      "flags": {
+        "sameReviewerAcrossStores": true
+      },
+      "rating": 4.2,
+      "reviewCount": 44,
       "食べログURL": ""
     },
     {
@@ -3019,9 +3031,10 @@
       "店名": "山葵野",
       "エリア": "栄(ミナミ)/矢場町/大須/上前津",
       "ホットペッパーID": "J000107588",
-      "crossCheckScore": 64,
+      "crossCheckScore": 61,
       "flags": {
-        "reviewBurstCluster": true
+        "reviewBurstCluster": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 4.2,
       "reviewCount": 88,
@@ -3359,10 +3372,9 @@
       "店名": "アクロアーマ",
       "エリア": "栄(ミナミ)/矢場町/大須/上前津",
       "ホットペッパーID": "J003958482",
-      "crossCheckScore": 57,
+      "crossCheckScore": 60,
       "flags": {
-        "gachaReviewSuspicion": true,
-        "sameReviewerAcrossStores": true
+        "gachaReviewSuspicion": true
       },
       "rating": 5,
       "reviewCount": 6,
@@ -3602,10 +3614,9 @@
       "店名": "自然派ビストロ ミチ",
       "エリア": "金山・神宮前・熱田区",
       "ホットペッパーID": "J003941137",
-      "crossCheckScore": 59,
+      "crossCheckScore": 62,
       "flags": {
-        "gachaReviewSuspicion": true,
-        "sameReviewerAcrossStores": true
+        "gachaReviewSuspicion": true
       },
       "rating": 4.8,
       "reviewCount": 38,
@@ -4159,18 +4170,6 @@
       "食べログURL": ""
     },
     {
-      "店名": "キッチンSolil ソレイユ",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J004402785",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.8,
-      "reviewCount": 15,
-      "食べログURL": ""
-    },
-    {
       "店名": "炭火焼 さすけ 池下店",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004089130",
@@ -4234,36 +4233,12 @@
       "店名": "キャッツ食堂",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J003599652",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.7,
-      "reviewCount": 19,
-      "食べログURL": ""
-    },
-    {
-      "店名": "焼肉Joe庵 黒川本店",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J004536129",
-      "crossCheckScore": 65,
-      "flags": {
-        "reviewBurstCluster": true
-      },
-      "rating": 4.5,
-      "reviewCount": 76,
-      "食べログURL": ""
-    },
-    {
-      "店名": "Belle Lapin ベルラパン",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J003922003",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.8,
-      "reviewCount": 18,
+      "reviewCount": 20,
       "食べログURL": ""
     },
     {
@@ -4294,36 +4269,36 @@
       "店名": "火の鶏",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004492053",
-      "crossCheckScore": 50,
+      "crossCheckScore": 45,
       "flags": {
         "gachaReviewSuspicion": true
       },
-      "rating": 4.8,
-      "reviewCount": 16,
+      "rating": 4.9,
+      "reviewCount": 20,
       "食べログURL": ""
     },
     {
       "店名": "隠れ家dining CURA 蔵",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J003497448",
-      "crossCheckScore": 57,
+      "crossCheckScore": 62,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.6,
-      "reviewCount": 31,
+      "reviewCount": 36,
       "食べログURL": ""
     },
     {
       "店名": "パルファン",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004536471",
-      "crossCheckScore": 67,
+      "crossCheckScore": 58,
       "flags": {
         "reviewBurstCluster": true
       },
-      "rating": 4.9,
-      "reviewCount": 66,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
@@ -4339,51 +4314,27 @@
       "食べログURL": ""
     },
     {
-      "店名": "BAR E sa いーさー",
+      "店名": "ひろ×ひろ HIRO×HIRO",
       "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J001217107",
+      "ホットペッパーID": "J003366426",
       "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
-      "rating": 4.9,
-      "reviewCount": 41,
-      "食べログURL": ""
-    },
-    {
-      "店名": "ひろ×ひろ HIRO×HIRO",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J003366426",
-      "crossCheckScore": 57,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
       "rating": 4.6,
-      "reviewCount": 45,
-      "食べログURL": ""
-    },
-    {
-      "店名": "misuto ミスト",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J004049332",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.9,
-      "reviewCount": 23,
+      "reviewCount": 49,
       "食べログURL": ""
     },
     {
       "店名": "La Tige ラティージュ",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004067138",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.8,
-      "reviewCount": 8,
+      "reviewCount": 12,
       "食べログURL": ""
     },
     {
@@ -4402,13 +4353,12 @@
       "店名": "ボードゲームカフェ 星コーヒー店",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004469269",
-      "crossCheckScore": 53,
+      "crossCheckScore": 58,
       "flags": {
-        "gachaReviewSuspicion": true,
         "reviewBurstCluster": true
       },
-      "rating": 4.8,
-      "reviewCount": 16,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
@@ -4427,9 +4377,10 @@
       "店名": "芋花恋 大曽根店",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J001280484",
-      "crossCheckScore": 50,
+      "crossCheckScore": 49,
       "flags": {
-        "uShapedDistribution": true
+        "uShapedDistribution": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 3.1,
       "reviewCount": 13,
@@ -4439,7 +4390,7 @@
       "店名": "昭和歌謡バーエデン",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004536470",
-      "crossCheckScore": 61,
+      "crossCheckScore": 63,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -4451,7 +4402,7 @@
       "店名": "Vert Zai ヴェール ザイ",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004509170",
-      "crossCheckScore": 51,
+      "crossCheckScore": 53,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -4463,7 +4414,7 @@
       "店名": "casualbar Zappa ザッパ",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004402367",
-      "crossCheckScore": 48,
+      "crossCheckScore": 50,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -4484,58 +4435,46 @@
       "食べログURL": ""
     },
     {
-      "店名": "ダイニングバーPiano",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J001274134",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.6,
-      "reviewCount": 16,
-      "食べログURL": ""
-    },
-    {
       "店名": "agap Dessert&Bar アガ",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004067398",
-      "crossCheckScore": 62,
+      "crossCheckScore": 59,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.8,
-      "reviewCount": 34,
+      "reviewCount": 35,
       "食べログURL": ""
     },
     {
       "店名": "Cafe MARI カフェマリ",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004492931",
-      "crossCheckScore": 55,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
-      "rating": 4.8,
-      "reviewCount": 10,
+      "rating": 4.7,
+      "reviewCount": 14,
       "食べログURL": ""
     },
     {
       "店名": "BAR WOMACK バー ウーマック",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J003497222",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 5,
-      "reviewCount": 7,
+      "reviewCount": 8,
       "食べログURL": ""
     },
     {
       "店名": "鮨処 宿木",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J003671336",
-      "crossCheckScore": 60,
+      "crossCheckScore": 62,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -4547,7 +4486,7 @@
       "店名": "旬菜　縁",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J003784595",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -4571,7 +4510,7 @@
       "店名": "創作料理 さくら",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J003693915",
-      "crossCheckScore": 48,
+      "crossCheckScore": 50,
       "flags": {
         "uShapedDistribution": true
       },
@@ -4583,7 +4522,7 @@
       "店名": "会席 小久保",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J000107682",
-      "crossCheckScore": 60,
+      "crossCheckScore": 62,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -4595,24 +4534,12 @@
       "店名": "Turtle タートル",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004025679",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.7,
-      "reviewCount": 21,
-      "食べログURL": ""
-    },
-    {
-      "店名": "串揚げダイニング 古代どん",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J003559480",
-      "crossCheckScore": 63,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.8,
-      "reviewCount": 18,
+      "reviewCount": 23,
       "食べログURL": ""
     },
     {
@@ -4628,83 +4555,46 @@
       "食べログURL": ""
     },
     {
-      "店名": "魚市肉鮮 ICHIBARU どんぶらこ",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J001268047",
-      "crossCheckScore": 56,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.6,
-      "reviewCount": 17,
-      "食べログURL": ""
-    },
-    {
       "店名": "居酒屋躍郎喜（おどろき）",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J003624605",
-      "crossCheckScore": 61,
+      "crossCheckScore": 63,
       "flags": {
         "gachaReviewSuspicion": true
       },
-      "rating": 4.7,
-      "reviewCount": 23,
+      "rating": 4.8,
+      "reviewCount": 33,
       "食べログURL": ""
     },
     {
       "店名": "わがやの食堂",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004576355",
-      "crossCheckScore": 55,
+      "crossCheckScore": 63,
       "flags": {
-        "gachaReviewSuspicion": true,
-        "reviewBurstCluster": true
+        "gachaReviewSuspicion": true
       },
-      "rating": 4.9,
-      "reviewCount": 9,
+      "rating": 4.8,
+      "reviewCount": 14,
       "食べログURL": ""
     },
     {
       "店名": "居酒屋 とも 名古屋",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J003715703",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.7,
-      "reviewCount": 18,
-      "食べログURL": ""
-    },
-    {
-      "店名": "おばんざい呑んじゃってQ",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J004576110",
-      "crossCheckScore": 48,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 5,
-      "reviewCount": 1,
-      "食べログURL": ""
-    },
-    {
-      "店名": "Bar DAY バーデイ",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J003581343",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.7,
-      "reviewCount": 9,
+      "reviewCount": 17,
       "食べログURL": ""
     },
     {
       "店名": "Wine Bar Kuroda ワインバークロダ",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J003497936",
-      "crossCheckScore": 55,
+      "crossCheckScore": 57,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -4716,24 +4606,12 @@
       "店名": "アンディ ベトナム",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J001294438",
-      "crossCheckScore": 48,
+      "crossCheckScore": 50,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 5,
       "reviewCount": 2,
-      "食べログURL": ""
-    },
-    {
-      "店名": "かなやま",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J003516304",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.7,
-      "reviewCount": 30,
       "食べログURL": ""
     },
     {
@@ -4746,30 +4624,6 @@
       },
       "rating": 4.6,
       "reviewCount": 38,
-      "食べログURL": ""
-    },
-    {
-      "店名": "country kitchen Potluck カントリーキッチンポットラック",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J004421389",
-      "crossCheckScore": 52,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.6,
-      "reviewCount": 24,
-      "食べログURL": ""
-    },
-    {
-      "店名": "巡蓮家",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J000734484",
-      "crossCheckScore": 53,
-      "flags": {
-        "uShapedDistribution": true
-      },
-      "rating": 3.8,
-      "reviewCount": 35,
       "食べログURL": ""
     },
     {
@@ -4812,19 +4666,19 @@
       "店名": "焼肉ふじなが",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J003763394",
-      "crossCheckScore": 57,
+      "crossCheckScore": 62,
       "flags": {
         "gachaReviewSuspicion": true
       },
-      "rating": 4.7,
-      "reviewCount": 34,
+      "rating": 4.8,
+      "reviewCount": 37,
       "食べログURL": ""
     },
     {
       "店名": "ＢＡＲ  ＣＯＭ’Ｓ",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J003967005",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -4836,79 +4690,31 @@
       "店名": "音楽とお数 池下わわ",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004025187",
-      "crossCheckScore": 61,
+      "crossCheckScore": 63,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.8,
-      "reviewCount": 16,
+      "reviewCount": 19,
       "食べログURL": ""
     },
     {
       "店名": "池下 Ponte ポンテ",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004444226",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 5,
-      "reviewCount": 14,
+      "reviewCount": 26,
       "食べログURL": ""
     },
     {
       "店名": "BAR DURALUMIN",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004559017",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 5,
-      "reviewCount": 5,
-      "食べログURL": ""
-    },
-    {
-      "店名": "炎",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J004591031",
-      "crossCheckScore": 48,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 5,
-      "reviewCount": 22,
-      "食べログURL": ""
-    },
-    {
-      "店名": "ラ・フェット La Fete",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J000805508",
-      "crossCheckScore": 55,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.6,
-      "reviewCount": 18,
-      "食べログURL": ""
-    },
-    {
-      "店名": "鉄板台所 すずや",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J001293485",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.6,
-      "reviewCount": 46,
-      "食べログURL": ""
-    },
-    {
-      "店名": "カラオケBARCENTRAL セントラル",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J003916909",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -4917,51 +4723,28 @@
       "食べログURL": ""
     },
     {
-      "店名": "Ve Tree ビートゥリー",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J001293445",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.6,
-      "reviewCount": 27,
-      "食べログURL": ""
-    },
-    {
-      "店名": "韓国居酒屋 とんあり 黒川店",
-      "エリア": "大曽根･千種･今池･池下･守山区",
-      "ホットペッパーID": "J004422238",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.6,
-      "reviewCount": 14,
-      "食べログURL": ""
-    },
-    {
       "店名": "chez Suzuki シェスズキ",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J004469172",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.7,
-      "reviewCount": 19,
+      "reviewCount": 23,
       "食べログURL": ""
     },
     {
       "店名": "焼鳥どん 名古屋新瑞橋店",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J004576075",
-      "crossCheckScore": 62,
+      "crossCheckScore": 64,
       "flags": {
-        "reviewBurstCluster": true
+        "reviewBurstCluster": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 4.4,
-      "reviewCount": 25,
+      "reviewCount": 58,
       "食べログURL": ""
     },
     {
@@ -4989,40 +4772,15 @@
       "食べログURL": ""
     },
     {
-      "店名": "和食処　みつ石",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J004559140",
-      "crossCheckScore": 59,
-      "flags": {
-        "gachaReviewSuspicion": true,
-        "reviewBurstCluster": true
-      },
-      "rating": 4.6,
-      "reviewCount": 9,
-      "食べログURL": ""
-    },
-    {
       "店名": "ヒュッテ",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J004493173",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
-      "rating": 4.8,
-      "reviewCount": 13,
-      "食べログURL": ""
-    },
-    {
-      "店名": "中華料理餃子工房 麻辣湯",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J004576917",
-      "crossCheckScore": 42,
-      "flags": {
-        "reviewBurstCluster": true
-      },
-      "rating": 3.8,
-      "reviewCount": 13,
+      "rating": 4.9,
+      "reviewCount": 15,
       "食べログURL": ""
     },
     {
@@ -5038,22 +4796,10 @@
       "食べログURL": ""
     },
     {
-      "店名": "久良",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J004536705",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 5,
-      "reviewCount": 15,
-      "食べログURL": ""
-    },
-    {
       "店名": "お番菜まるり",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J004558626",
-      "crossCheckScore": 55,
+      "crossCheckScore": 57,
       "flags": {
         "gachaReviewSuspicion": true,
         "reviewBurstCluster": true
@@ -5066,56 +4812,44 @@
       "店名": "韓国ダイニング アリラン",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J004536303",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.6,
-      "reviewCount": 7,
+      "reviewCount": 9,
       "食べログURL": ""
     },
     {
       "店名": "炭火焼き鳥せんど",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J004509242",
-      "crossCheckScore": 55,
+      "crossCheckScore": 57,
       "flags": {
         "gachaReviewSuspicion": true
       },
-      "rating": 4.7,
-      "reviewCount": 7,
+      "rating": 4.8,
+      "reviewCount": 18,
       "食べログURL": ""
     },
     {
       "店名": "Bistro & Cafe ARAKAZU アラカズ",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J004576130",
-      "crossCheckScore": 55,
+      "crossCheckScore": 57,
       "flags": {
         "gachaReviewSuspicion": true,
-        "reviewBurstCluster": true
+        "sameReviewerAcrossStores": true
       },
       "rating": 5,
-      "reviewCount": 7,
-      "食べログURL": ""
-    },
-    {
-      "店名": "カルビ大将 植田店",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J000025478",
-      "crossCheckScore": 59,
-      "flags": {
-        "uShapedDistribution": true
-      },
-      "rating": 3.8,
-      "reviewCount": 342,
+      "reviewCount": 9,
       "食べログURL": ""
     },
     {
       "店名": "居酒屋 栄",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J004576792",
-      "crossCheckScore": 48,
+      "crossCheckScore": 50,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -5127,72 +4861,24 @@
       "店名": "韓国家庭料理 みえちゃん食堂",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J003942334",
-      "crossCheckScore": 63,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.6,
-      "reviewCount": 38,
+      "reviewCount": 40,
       "食べログURL": ""
     },
     {
       "店名": "gallery & shisha cafe Absolem アブソレム",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J004576662",
-      "crossCheckScore": 55,
+      "crossCheckScore": 57,
       "flags": {
         "reviewBurstCluster": true
       },
-      "rating": 4.4,
-      "reviewCount": 7,
-      "食べログURL": ""
-    },
-    {
-      "店名": "ひのてつ 平針店",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J000856918",
-      "crossCheckScore": 54,
-      "flags": {
-        "uShapedDistribution": true
-      },
-      "rating": 3.3,
-      "reviewCount": 61,
-      "食べログURL": ""
-    },
-    {
-      "店名": "野菜巻き串にじ",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J003850080",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.9,
+      "rating": 4.5,
       "reviewCount": 8,
-      "食べログURL": ""
-    },
-    {
-      "店名": "BAR MIYABI バー ミヤビ",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J003693931",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.9,
-      "reviewCount": 16,
-      "食べログURL": ""
-    },
-    {
-      "店名": "食事処 みそなご",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J004509565",
-      "crossCheckScore": 55,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.7,
-      "reviewCount": 6,
       "食べログURL": ""
     },
     {
@@ -5211,67 +4897,31 @@
       "店名": "珈琲酒場 OGU",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J003959002",
-      "crossCheckScore": 63,
+      "crossCheckScore": 65,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.6,
-      "reviewCount": 32,
-      "食べログURL": ""
-    },
-    {
-      "店名": "BRIDGE",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J003393002",
-      "crossCheckScore": 61,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.8,
-      "reviewCount": 14,
-      "食べログURL": ""
-    },
-    {
-      "店名": "桜の駅 瑞穂店",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J001292521",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.6,
-      "reviewCount": 13,
+      "reviewCount": 33,
       "食べログURL": ""
     },
     {
       "店名": "お食事処　しんちゃん",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J003473491",
-      "crossCheckScore": 57,
+      "crossCheckScore": 59,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.6,
-      "reviewCount": 34,
-      "食べログURL": ""
-    },
-    {
-      "店名": "il PAESE イルパエーゼ",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J004509706",
-      "crossCheckScore": 48,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 5,
-      "reviewCount": 1,
+      "reviewCount": 37,
       "食べログURL": ""
     },
     {
       "店名": "仁の焼き肉",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J003672114",
-      "crossCheckScore": 60,
+      "crossCheckScore": 65,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -5283,7 +4933,7 @@
       "店名": "いざっくK na",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J003693501",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -5292,70 +4942,47 @@
       "食べログURL": ""
     },
     {
-      "店名": "S style studio エススタイルスタジオ 天白ルーム",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J004469943",
-      "crossCheckScore": 48,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 5,
-      "reviewCount": 2,
-      "食べログURL": ""
-    },
-    {
       "店名": "pizza Ricarica ピッツァ リカーリカ",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J003916187",
-      "crossCheckScore": 58,
+      "crossCheckScore": 62,
       "flags": {
         "gachaReviewSuspicion": true
       },
-      "rating": 4.8,
-      "reviewCount": 28,
-      "食べログURL": ""
-    },
-    {
-      "店名": "笠寺横丁",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J004050020",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.8,
-      "reviewCount": 12,
+      "rating": 4.7,
+      "reviewCount": 39,
       "食べログURL": ""
     },
     {
       "店名": "焼肉れんき",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J003942437",
-      "crossCheckScore": 63,
+      "crossCheckScore": 64,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 4.7,
-      "reviewCount": 25,
+      "reviewCount": 33,
       "食べログURL": ""
     },
     {
       "店名": "Bar BOND 18 バーボントエイティーン",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J004536072",
-      "crossCheckScore": 48,
+      "crossCheckScore": 53,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 5,
-      "reviewCount": 2,
+      "reviewCount": 4,
       "食べログURL": ""
     },
     {
       "店名": "呑ん処 とらのすけ",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J004049818",
-      "crossCheckScore": 48,
+      "crossCheckScore": 50,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -5367,36 +4994,13 @@
       "店名": "シオガマグチバル LUDENS",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J004089322",
-      "crossCheckScore": 58,
+      "crossCheckScore": 57,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 4.9,
-      "reviewCount": 22,
-      "食べログURL": ""
-    },
-    {
-      "店名": "LEGAL BAR DIGUP リーガルバーディコップ",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J003872384",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.8,
-      "reviewCount": 10,
-      "食べログURL": ""
-    },
-    {
-      "店名": "養老乃瀧 堀田店",
-      "エリア": "緑区・南区・天白区・瑞穂区",
-      "ホットペッパーID": "J000820843",
-      "crossCheckScore": 55,
-      "flags": {
-        "uShapedDistribution": true
-      },
-      "rating": 3.7,
-      "reviewCount": 53,
+      "reviewCount": 23,
       "食べログURL": ""
     },
     {
@@ -5415,13 +5019,12 @@
       "店名": "CHEDDAR",
       "エリア": "本山・覚王山・藤が丘",
       "ホットペッパーID": "J004558344",
-      "crossCheckScore": 57,
+      "crossCheckScore": 68,
       "flags": {
-        "gachaReviewSuspicion": true,
-        "reviewBurstCluster": true
+        "gachaReviewSuspicion": true
       },
       "rating": 4.7,
-      "reviewCount": 28,
+      "reviewCount": 44,
       "食べログURL": ""
     },
     {
@@ -5441,31 +5044,19 @@
       "店名": "1Place cafe Fluffies ワンプレイスカフェ フラッフィーズ 名東店",
       "エリア": "本山・覚王山・藤が丘",
       "ホットペッパーID": "J004591632",
-      "crossCheckScore": 45,
+      "crossCheckScore": 48,
       "flags": {
         "reviewBurstCluster": true
       },
-      "rating": 4.5,
-      "reviewCount": 20,
-      "食べログURL": ""
-    },
-    {
-      "店名": "トンドリ サムギョプサル",
-      "エリア": "本山・覚王山・藤が丘",
-      "ホットペッパーID": "J004591642",
-      "crossCheckScore": 38,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 5,
-      "reviewCount": 1,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
       "店名": "藤が丘 B.B.Q. バーベキュー",
       "エリア": "本山・覚王山・藤が丘",
       "ホットペッパーID": "J000861200",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -5477,37 +5068,37 @@
       "店名": "M+CAFE エムプラスカフェ",
       "エリア": "本山・覚王山・藤が丘",
       "ホットペッパーID": "J003984900",
-      "crossCheckScore": 55,
+      "crossCheckScore": 63,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.8,
-      "reviewCount": 16,
+      "reviewCount": 19,
       "食べログURL": ""
     },
     {
       "店名": "中国料理 卓龍",
       "エリア": "本山・覚王山・藤が丘",
       "ホットペッパーID": "J004536723",
-      "crossCheckScore": 55,
+      "crossCheckScore": 58,
       "flags": {
-        "gachaReviewSuspicion": true,
         "reviewBurstCluster": true
       },
-      "rating": 4.8,
-      "reviewCount": 28,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
       "店名": "SOLEA CAFE &BAR ソレア",
       "エリア": "本山・覚王山・藤が丘",
       "ホットペッパーID": "J004492117",
-      "crossCheckScore": 58,
+      "crossCheckScore": 55,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "sameReviewerAcrossStores": true
       },
-      "rating": 4.7,
-      "reviewCount": 11,
+      "rating": 4.6,
+      "reviewCount": 16,
       "食べログURL": ""
     },
     {
@@ -5538,7 +5129,7 @@
       "店名": "呑処　眞",
       "エリア": "本山・覚王山・藤が丘",
       "ホットペッパーID": "J001295502",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -5562,24 +5153,12 @@
       "店名": "炭火焼肉 善と月",
       "エリア": "本山・覚王山・藤が丘",
       "ホットペッパーID": "J001286615",
-      "crossCheckScore": 63,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.8,
-      "reviewCount": 33,
-      "食べログURL": ""
-    },
-    {
-      "店名": "魯寿ん",
-      "エリア": "本山・覚王山・藤が丘",
-      "ホットペッパーID": "J003784231",
-      "crossCheckScore": 55,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.8,
-      "reviewCount": 22,
+      "reviewCount": 36,
       "食べログURL": ""
     },
     {
@@ -5608,18 +5187,6 @@
       "食べログURL": ""
     },
     {
-      "店名": "DINING8 ダイニングエイト",
-      "エリア": "本山・覚王山・藤が丘",
-      "ホットペッパーID": "J004469149",
-      "crossCheckScore": 48,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.7,
-      "reviewCount": 11,
-      "食べログURL": ""
-    },
-    {
       "店名": "スキレットダイニング八龍",
       "エリア": "本山・覚王山・藤が丘",
       "ホットペッパーID": "J001236636",
@@ -5644,39 +5211,15 @@
       "食べログURL": ""
     },
     {
-      "店名": "ワイン&フードショップ ラパン",
-      "エリア": "本山・覚王山・藤が丘",
-      "ホットペッパーID": "J003624874",
-      "crossCheckScore": 55,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.8,
-      "reviewCount": 22,
-      "食べログURL": ""
-    },
-    {
       "店名": "地球食堂 こはる",
       "エリア": "本山・覚王山・藤が丘",
       "ホットペッパーID": "J001261846",
-      "crossCheckScore": 60,
+      "crossCheckScore": 62,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.7,
-      "reviewCount": 38,
-      "食べログURL": ""
-    },
-    {
-      "店名": "とんかつ朱寿",
-      "エリア": "本山・覚王山・藤が丘",
-      "ホットペッパーID": "J004558109",
-      "crossCheckScore": 60,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.8,
-      "reviewCount": 46,
+      "reviewCount": 39,
       "食べログURL": ""
     },
     {
@@ -5696,7 +5239,7 @@
       "店名": "ソラリウム",
       "エリア": "本山・覚王山・藤が丘",
       "ホットペッパーID": "J004576250",
-      "crossCheckScore": 58,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -5720,12 +5263,12 @@
       "店名": "こもれび 日本料理",
       "エリア": "本山・覚王山・藤が丘",
       "ホットペッパーID": "J000396204",
-      "crossCheckScore": 48,
+      "crossCheckScore": 50,
       "flags": {
         "uShapedDistribution": true
       },
-      "rating": 4,
-      "reviewCount": 20,
+      "rating": 3.9,
+      "reviewCount": 21,
       "食べログURL": ""
     },
     {
@@ -5744,7 +5287,7 @@
       "店名": "手づくりおはぎ ぐらんま",
       "エリア": "本山・覚王山・藤が丘",
       "ホットペッパーID": "J001284821",
-      "crossCheckScore": 60,
+      "crossCheckScore": 62,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -6326,6 +5869,42 @@
       "食べログURL": ""
     },
     {
+      "店名": "舎鈴 メイチカ店",
+      "エリア": "名古屋（中村区・名駅）",
+      "ホットペッパーID": "",
+      "crossCheckScore": 46,
+      "flags": {
+        "reviewBurstCluster": true
+      },
+      "rating": 4.3,
+      "reviewCount": 14,
+      "食べログURL": ""
+    },
+    {
+      "店名": "海老豚骨ラーメン一番軒 メイチカ店",
+      "エリア": "名古屋（中村区・名駅）",
+      "ホットペッパーID": "",
+      "crossCheckScore": 51,
+      "flags": {
+        "reviewBurstCluster": true
+      },
+      "rating": 4.1,
+      "reviewCount": 15,
+      "食べログURL": ""
+    },
+    {
+      "店名": "日和製麺 太平通店",
+      "エリア": "名古屋（中川区）",
+      "ホットペッパーID": "",
+      "crossCheckScore": 40,
+      "flags": {
+        "reviewBurstCluster": true
+      },
+      "rating": 3.5,
+      "reviewCount": 14,
+      "食べログURL": ""
+    },
+    {
       "店名": "鮨うおのたな",
       "エリア": "丸の内",
       "ホットペッパーID": "",
@@ -6519,6 +6098,43 @@
       },
       "rating": 4,
       "reviewCount": 15,
+      "食べログURL": ""
+    },
+    {
+      "店名": "覚王山カフェ Ji.Coo",
+      "エリア": "名古屋市千種区覚王山通",
+      "ホットペッパーID": "",
+      "crossCheckScore": 62,
+      "flags": {
+        "sameReviewerAcrossStores": true
+      },
+      "rating": 3.9,
+      "reviewCount": 485,
+      "食べログURL": ""
+    },
+    {
+      "店名": "焼肉ここから 名駅3丁目店",
+      "エリア": "名古屋市中村区",
+      "ホットペッパーID": "",
+      "crossCheckScore": 44,
+      "flags": {
+        "gachaReviewSuspicion": true,
+        "reviewBurstCluster": true
+      },
+      "rating": 4.8,
+      "reviewCount": 20,
+      "食べログURL": ""
+    },
+    {
+      "店名": "ルコネッサンス",
+      "エリア": "名古屋市東区",
+      "ホットペッパーID": "",
+      "crossCheckScore": 70,
+      "flags": {
+        "sameReviewerAcrossStores": true
+      },
+      "rating": 4.3,
+      "reviewCount": 125,
       "食べログURL": ""
     }
   ]
