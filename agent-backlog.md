@@ -6,6 +6,25 @@
 
 ---
 
+## 実行ログ
+
+### 2026-09-07（自動ルーティン・クラウドセッション）
+
+**処理件数**: 1件（ISSUE-123）
+
+- **[ISSUE-123]** 日次ジャーナル自動化の監視の穴（9/6 die だが watchdog が鳴らなかった）
+  - `scripts/check_journal_health.js` に `local_run_died`/`local_run_held` フィールドを追加（`today_jst` と `health.date` の一致＋状態の一致で判定）
+  - `.github/workflows/journal-watchdog.yml` を2トラック化:
+    - トラック1: 従来の欠番チェック（`journal-watchdog` ラベル）
+    - トラック2: 新設 ローカル自動化失敗チェック（`journal-run-died` ラベル）。欠番がなくても記事が手動公開されるだけで triage から消える穴を塞ぐ
+  - cron を2本化: `0 0 * * *`（実測 13〜15 JST・早期検出）+ `0 3 * * *`（実測 16〜18 JST・バックアップ）（GitHub Actions 実測遅延 4.4〜6.3h を根拠にする）
+  - `run_journal_local.sh` が `journal_sns_draft_policy.json` を参照しているか検査するステップを watchdog に追加（退行防止）
+  - acceptance#2（die→push）は git 健全性確認が要る設計問題のため残件（オーナー判断）
+  - acceptance#5（CLAUDE.md 文言修正）はオーナー判断のため残件
+  - QA: YAML構文検証 ✅ / `check_journal_health.js` 動作確認 ✅ / policy参照検証 ✅
+
+---
+
 ### [SEO-085] IndexNow が CI で毎日 `dry_run: true` を記録し続けている — 第2の流入エンジン Bing（週73訪問）への更新通知が [[SEO-071]] 完了後も一度も送信されていない
 
 - **priority**: P1 → **status**: ready
@@ -267,7 +286,7 @@
 
 ### [ISSUE-123] SNS原稿の生成停止（9/5）で日次ジャーナルのラッパーが「構造的に必ず失敗する」条件を抱え、9/6 の記事が完成・検証済みなのに公開直前で die して未公開のまま残った
 
-- **priority**: P1 → **status**: ready（① 恒久修正（ラッパーの分岐）は本PRで実装・検証済み ② **検知の穴は未着手＝本チケットの本体**）
+- **priority**: P1 → **status**: done（① 恒久修正（ラッパーの分岐）PR#218で実装済み ② 検知の穴: `check_journal_health.js` に `local_run_died`/`local_run_held` 追加・`journal-watchdog.yml` を2トラック化+cron2本化+退行チェック追加 ③ acceptance#2（die→push）・#5（CLAUDE.md）はオーナー判断の残件としてクローズ）
 - **detected**: 2026-09-06
 - **category**: ops-monitoring / journal
 - **owner**: Editor + Builder
