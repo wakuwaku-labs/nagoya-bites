@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T21:09:29.276Z",
+  "generatedAt": "2026-09-08T00:14:37.338Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -27,15 +27,24 @@
       },
       {
         "query": "やきまる亭",
-        "impressions": 155,
+        "impressions": 150,
         "clicks": 2,
         "position": 8.4,
-        "ctr": 1.29,
+        "ctr": 1.33,
         "expectedCtr": 3,
-        "missedClicks": 2.7
+        "missedClicks": 2.6
       }
     ],
-    "rankPush": []
+    "rankPush": [
+      {
+        "query": "ナショナルベーカリー",
+        "impressions": 117,
+        "clicks": 3,
+        "position": 12.9,
+        "ctr": 2.56,
+        "upsideClicks": 0.3
+      }
+    ]
   },
   "byPage": {
     "ctrFix": [
@@ -50,32 +59,41 @@
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 602,
+        "impressions": 600,
         "clicks": 7,
         "position": 8.6,
-        "ctr": 1.16,
+        "ctr": 1.17,
         "expectedCtr": 3,
-        "missedClicks": 10.8
+        "missedClicks": 10.7
       },
       {
         "page": "/stores/J004559348.html",
-        "impressions": 538,
+        "impressions": 528,
         "clicks": 8,
         "position": 8.6,
-        "ctr": 1.49,
+        "ctr": 1.52,
         "expectedCtr": 3,
-        "missedClicks": 7.9
+        "missedClicks": 7.6
+      },
+      {
+        "page": "/journal/2026-08-22-osu-malachuan-self-price.html",
+        "impressions": 321,
+        "clicks": 6,
+        "position": 7.8,
+        "ctr": 1.87,
+        "expectedCtr": 3.4,
+        "missedClicks": 4.8
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 3575,
+        "impressions": 3505,
         "clicks": 8,
-        "position": 24.2,
-        "ctr": 0.22,
-        "upsideClicks": 92.2
+        "position": 24.4,
+        "ctr": 0.23,
+        "upsideClicks": 90.1
       },
       {
         "page": "/features/date.html",
@@ -91,8 +109,8 @@
   "summary": {
     "queryCtrFix": 1,
     "queryCtrFixGeoless": 2,
-    "queryRankPush": 0,
-    "pageCtrFix": 3,
+    "queryRankPush": 1,
+    "pageCtrFix": 4,
     "pageRankPush": 2,
     "topPageCtrFix": [
       "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
