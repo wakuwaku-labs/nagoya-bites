@@ -2650,6 +2650,46 @@
       "brand_reason": "伸びトレンドの勝ち筋を伸ばす採用（週次コマンド Step 2 の規定に従いアクション仮説を起票側で立案）。全指標が前週比プラスの中で solo-dining 単独が閲覧の21.5%を占め、2位のトップページ58回の1.9倍。Moat「名古屋 × シーン × 業界人の目利き」そのものが効いている面なので、勝っている検索意図を GSC の discovery クエリで分解し同型シーンへ横展開する。SEO-038（ジャーナル側の勝ち筋分析・done）の特集側の対応物で、掲載店は実在店のみ・写真は実写優先を厳守する。",
       "category": "SEO",
       "fingerprint": "455fb06a37eaadc9"
+    },
+    {
+      "id": "SEO-088",
+      "date": "2026-09-08",
+      "source": "line-daily",
+      "advice": "訪問者53人に対し店舗詳細閲覧は9回、予約4回と、店舗への興味喚起は良好です。トップページ(index.html)の店舗一覧に「本日のおすすめ」など日替わりで目立つ店舗を1〜2店舗ピックアップし、クリック率を上げる実験をしましょう。",
+      "verdict": "adopted",
+      "brand_reason": "振替採用。literal な打ち手は既実装のため却下——「日替わりで目立つピック」は #trend-ranking-section「今日の話題店 TOP5」(index.html:1806) として上部に実装済みで、data/daily_trending5.json の history 8日分(2026-08-31〜09-07)の店名一覧が毎日異なることを実測し「固定されたまま」でないことも確認した。一方で助言が本来の目的として書く「クリック率を上げる実験」は現状 原理的に実行不能——openM() が出す modal_open (index.html:9935) に発火元パラメータが無く、その openM(idx) を引数なしで呼ぶカード面が5つある(.card/.modal-rsc/.rank-card/.trend-rank-card/.hist-card = index.html:9624/10279/11388/11440/11478)ため、詳細到達9回のうち今日の話題店面が何回を生んだかを分解できない。面の識別子(source)を modal_open に付与する計測へ振り替えて採用。見た目もCTA数も変えないため SEO-041 の判定とも矛盾しない。",
+      "category": "SEO",
+      "fingerprint": "441ab1367be11b34"
+    },
+    {
+      "id": null,
+      "date": "2026-09-08",
+      "source": "line-daily",
+      "advice": "人気ページ2位の「nagoya-solo-dining」は12回閲覧されています。ソロ活ニーズは高そうです。features/nagoya-solo-diningの記事内に、一人でも予約しやすい店舗の予約ボタン(cta_click)を特に目立つように配置しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下① 既実装で増分が無い——同ファイルは「今すぐ予約」ボタンを既に持ち(実測3本・DSN-003 の刷新前は17本)、モーダル側の視認性は SEO-003/013/049 で3巡実施済み。却下② 前提が誤り——助言が名指しする cta_click は、そのページでは一つも発火していない(発火するのは feature_cta_click×2 と outbound_click だけ)。つまり「cta_click を目立たせる」対象が存在しない。この計装欠落は 2026-09-07 に SEO-086(P1・ready)として起票済みで、判定はそちらに集約する。同型の助言(solo-dining の予約ボタンを目立たせよ)は直近2日で3回目。",
+      "category": null,
+      "fingerprint": "e088d270423d59ef"
+    },
+    {
+      "id": null,
+      "date": "2026-09-08",
+      "source": "line-daily",
+      "advice": "検索流入比率が67%と、Google検索からの流入が最も多いです。journal/2026-09-07-meieki-meichika-new-shops-weeklyを本日中にSNS投稿原稿(docs/daily-posts/)に準じてXに投稿し、ハッシュタグ「#名古屋グルメ #名駅ランチ #ニューオープン」を追加して検索流入の裾野を広げましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下① 打ち手の前提が失効している——docs/daily-posts/ のSNS原稿自動生成はオーナー指示で 2026-09-05 に停止済み(data/journal_sns_draft_policy.json の generate_sns_draft:false・別系統へ移行)。実際 docs/daily-posts/ の最新は 2026-09-05 で、助言が名指しする 2026-09-07 記事の原稿は存在しない。却下② 因果が成立しない——X のハッシュタグは検索エンジンのインデックスを広げるものではなく、助言が主張する「検索流入の裾野を広げる」への経路が無い(制約10: 検算できない主張を根拠にしない)。却下③ 実測でSNS流入は直近30日1249セッション中5件(0.4%)。なお助言の背景にある「検索流入への働きかけ」自体は正当で、その打ち手は GSC の外側にある Bing(295セッション・23.6%)と生成AI への更新通知＝IndexNow 実送信として SEO-085(P1・ready)で既に採用済み。",
+      "category": null,
+      "fingerprint": "b6abe9d3733f7f2f"
+    },
+    {
+      "id": null,
+      "date": "2026-09-08",
+      "source": "line-weekly",
+      "advice": "週次レポート 2026-08-30〜2026-09-05（アドバイス3件＋AI週次分析総括）",
+      "verdict": "duplicate",
+      "brand_reason": "同一の週次メール(期間 2026-08-30〜09-05)を 2026-09-07 に処理済みのため再判定しない。当時の判定: 予約ボタン視認性→SEO-086 に集約(重複)、回遊の関連リンク設置→SEO-086 に集約(重複)、Bing×SNS原稿登録→SEO-085 として振替採用、週次トレンド総括→SEO-087 として採用。今週分の週次レポートは未着(GAS の配信は日曜深夜のため次回)。",
+      "category": null,
+      "fingerprint": "05de751214a016fd"
     }
   ]
 }
