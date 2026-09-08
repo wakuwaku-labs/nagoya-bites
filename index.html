@@ -306,10 +306,11 @@ body.search-active .nb-cover-featured{display:none;}
 .search-wrap button:hover{background:var(--gold2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(122,92,16,.32);}
 /* ── 常時表示のシーン/エリア導線（直帰率対策・MEO-001） ── */
 .scene-nav{margin-top:1.6rem;max-width:580px;opacity:0;animation:up .9s .8s forwards;}
-.scene-nav-row{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin-top:.7rem;}
+.scene-nav-row{display:flex;flex-wrap:nowrap;gap:.45rem;align-items:center;margin-top:.7rem;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;}
+.scene-nav-row::-webkit-scrollbar{display:none;}
 .scene-nav-row:first-child{margin-top:0;}
-.scene-nav-label{font-family:var(--font-body);font-weight:600;font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);white-space:nowrap;text-transform:none;margin-right:.15rem;}
-.scene-chip{background:#fff;border:1px solid var(--border-h);color:var(--text);font-family:inherit;font-size:var(--fs-xs);letter-spacing:.03em;padding:.46rem .9rem;border-radius:var(--r-md);cursor:pointer;transition:all .18s;min-height:38px;display:inline-flex;align-items:center;box-shadow:0 1px 2px rgba(0,0,0,.05);}
+.scene-nav-label{font-family:var(--font-body);font-weight:600;font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);white-space:nowrap;text-transform:none;margin-right:.15rem;flex:0 0 auto;}
+.scene-chip{background:#fff;border:1px solid var(--border-h);color:var(--text);font-family:inherit;font-size:var(--fs-xs);letter-spacing:.03em;padding:.46rem .9rem;border-radius:var(--r-md);cursor:pointer;transition:all .18s;min-height:38px;display:inline-flex;align-items:center;box-shadow:0 1px 2px rgba(0,0,0,.05);white-space:nowrap;flex:0 0 auto;}
 .scene-chip:hover{background:rgba(122,92,16,.08);border-color:var(--gold);color:var(--gold2);box-shadow:0 2px 6px rgba(122,92,16,.15);}
 .scene-chip:active{transform:translateY(1px);}
 @media(max-width:480px){.scene-nav{max-width:100%;margin-top:1.3rem;}.scene-chip{font-size:var(--fs-xs);padding:.42rem .78rem;}}

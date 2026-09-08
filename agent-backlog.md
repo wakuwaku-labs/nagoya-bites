@@ -28,8 +28,12 @@
   - `node scripts/audit_design_system.js --check`: 出力JSONに `"file": "index.html"` の違反 **0件**（stores/*.html の既存125+件はベースラインで本変更前から存在・無関係。変更前後で diff なしを確認）
   - ローカル `python3 -m http.server` + `/opt/pw-browsers/chromium-1194` ヘッドレスChromiumで 390px幅のフルページスクリーンショットを変更前後で取得し、検索欄・チップが白地＋枠線で明確な操作要素として視認できることを確認
   - `git diff --stat index.html`: 1ファイル・22行変更（CSSのみ、HTML構造・JS・LOCAL_STORESは無変更）
+- **追加修正（同日・オーナーのフォローアップ指摘「シーンで探すのタブが2行になっている」）**:
+  - `.scene-nav-row`（シーンで探す/エリアで探すの各行）を `flex-wrap:wrap` から `flex-wrap:nowrap` + `overflow-x:auto`（スクロールバー非表示）に変更し、既存の `.mmg`/`.sort-chips`/`.cap-tabs` と同じ横スクロール方式に統一。2行折り返しを解消
+  - `audit_design_system.js --check` で index.html の新規違反0件を再確認
 - **files**: `index.html`
 
+### [DSN-004] ジャーナル本文が地の文だけで続き読みにくい — 太字/マーカー/色/文字サイズの強調ルールを新設
 
 - **priority**: P1（UX劣化） → **status**: done（実装・検証済み。PR作成待ち）
 - **detected**: 2026-09-08
