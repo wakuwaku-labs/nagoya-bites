@@ -292,12 +292,12 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <div class="related">
   <p class="related-title">関連ページ</p>
   <div class="related-links">
-    <a class="related-link" href="editorial-policy.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;">編集規約（信頼の仕組み）</a>
-    <a class="related-link" href="no-fake-reviews.html">桜の実態を読む</a>
-    <a class="related-link" href="../journal/index.html">Journal（毎日1本）</a>
-    <a class="related-link" href="index.html">特集記事一覧</a>
-    <a class="related-link" href="../about.html">About NAGOYA BITES</a>
-    <a class="related-link" href="../contact.html">お問い合わせ</a>
+    <a class="related-link" href="editorial-policy.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;" onclick="trackEvent('internal_link_click',{feature:'become-reviewer',link_url:'editorial-policy.html',block:'feature_related'})">編集規約（信頼の仕組み）</a>
+    <a class="related-link" href="no-fake-reviews.html" onclick="trackEvent('internal_link_click',{feature:'become-reviewer',link_url:'no-fake-reviews.html',block:'feature_related'})">桜の実態を読む</a>
+    <a class="related-link" href="../journal/index.html" onclick="trackEvent('internal_link_click',{feature:'become-reviewer',link_url:'../journal/index.html',block:'feature_related'})">Journal（毎日1本）</a>
+    <a class="related-link" href="index.html" onclick="trackEvent('internal_link_click',{feature:'become-reviewer',link_url:'index.html',block:'feature_related'})">特集記事一覧</a>
+    <a class="related-link" href="../about.html" onclick="trackEvent('internal_link_click',{feature:'become-reviewer',link_url:'../about.html',block:'feature_related'})">About NAGOYA BITES</a>
+    <a class="related-link" href="../contact.html" onclick="trackEvent('internal_link_click',{feature:'become-reviewer',link_url:'../contact.html',block:'feature_related'})">お問い合わせ</a>
   </div>
   <p style="margin-top:1.5rem;">
     <a class="related-link" href="../index.html" style="background:rgba(122,92,16,.06);">トップページで全店舗を検索する →</a>
@@ -359,5 +359,20 @@ window.closeNav = window.closeNav || function(){
 document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
 </script>
 <!-- NB-CHROME:SCRIPT:END -->
+<script class="nb-engagement-tracking">
+(function(){
+  var fired={},THRESH=[25,50,75,100];
+  function check(){
+    var doc=document.documentElement;
+    var top=window.pageYOffset||doc.scrollTop;
+    var max=(doc.scrollHeight-doc.clientHeight)||1;
+    var pct=Math.min(100,Math.round((top/max)*100));
+    THRESH.forEach(function(t){if(pct>=t&&!fired[t]){fired[t]=true;try{trackEvent('scroll_depth',{percent:t});}catch(err){}}});
+  }
+  var timer=null;
+  window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
+  check();
+})();
+</script>
 </body>
 </html>

@@ -298,6 +298,7 @@ function renderStoreCard(entry, num, featureSlug) {
   const meta = [area && `<span>${area}</span>`, genre && `<span>${genre}</span>`, sb && `<span class="score">${sb}</span>`, price && `<span>${price}</span>`].filter(Boolean).join('');
   const tags = tagsOf(s, 3).map(t => `<span class="store-tag">${esc(t)}</span>`).join('');
   const track = `onclick="trackEvent('feature_store_click',{store:'${nameForJs}',feature:'${featureSlug}'})"`;
+  const trackCta = `onclick="trackEvent('cta_click',{store:'${nameForJs}',feature:'${featureSlug}',target:'hotpepper'})"`;
   return `      <div class="store-card">
         <div class="store-num">${nn}</div>
         <div class="store-photo"><img src="${photo}" alt="${name}" loading="lazy" width="160" height="120" decoding="async"></div>
@@ -308,7 +309,7 @@ function renderStoreCard(entry, num, featureSlug) {
           <div class="store-tags">${tags}</div>
           <div class="store-actions">
             <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/${id}.html" ${track}>詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/str${id}/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/str${id}/" target="_blank" rel="noopener" ${trackCta}>予約はこちら →</a>
           </div>
         </div>
       </div>`;

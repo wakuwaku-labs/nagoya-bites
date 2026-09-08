@@ -158,8 +158,9 @@
 
 ### [SEO-086] 最も読まれているページ（週閲覧の21.5%）の「今すぐ予約」17本・「店舗詳細」15本が、レポートの集計対象イベントを一つも発火していない — [[SEO-084]] が「計測済み」と数えた反例
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-09-07
+- **resolved**: 2026-09-08
 - **category**: SEO / 計測
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-09-06 原文「訪問者34人に対し予約ボタンクリックが1回と、予約転換が課題です。👉 トップページの予約ボタンを目立たせるため、色とサイズを大きくし、ファーストビュー内の目立つ位置に配置変更を検討しましょう」／ 週次レポート(LINE) 2026-08-30〜09-05 原文「予約クリック率が0.3%と目標の3%を大きく下回っています。👉 トップページと『nagoya-solo-dining』特集の店舗詳細モーダル内に、予約ボタンをより目立つ色に変更し、『今すぐ予約』などの具体的な文言に修正しましょう」
@@ -480,8 +481,10 @@
 
 ### [ISSUE-121] Build & Deployが「他都道府県マッチ監査」で3回連続失敗し、ISSUE-120含む複数のmainマージが数時間ぶん本番未反映のまま放置されていた
 
-- **priority**: P0 → **status**: ready（実装・ローカル検証済み。[PR #205](https://github.com/wakuwaku-labs/nagoya-bites/pull/205) マージ待ち）
+- **priority**: P0 → **status**: done
 - **detected**: 2026-09-02
+- **resolved**: 2026-09-08
+- **resolved_by**: 06b6976f（auto-update store data で main に反映済み・`node scripts/audit_other_prefecture_matches.js --check` = [OK]確認）
 - **category**: ci / ops-monitoring
 - **owner**: Builder
 - **source**: ユーザーが ISSUE-120 のデプロイ結果を確認しようとしたところ「まだ反映されてない」と報告 → CI実行履歴を確認し発覚
@@ -5111,6 +5114,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
 | 2026-09-08 | Designer(EXPLICIT) | DSN-003: トップ/ジャーナル/特集/編集規約4ページ種別のプロ品質リデザイン＋サイト共通クローム統一（scripts/lib/site_chrome.js新設・全216ファイル） | ✅ コミット済み・PR作成待ち (commit 20cd42ec4) |
+| 2026-09-08 | Orchestrator(routine) | ISSUE-121: 他都道府県マッチ残存確認→修正は commit 06b6976f で main に反映済み・audit_other_prefecture_matches.js --check=[OK]確認・done クローズ | ✅ done（既存修正を確認） |
+| 2026-09-08 | Orchestrator(routine) | SEO-086: scripts/add_feature_tracking.js 新設・scripts/refresh_feature_rosters.js に cta_click 追加・features 67本にcta_click/feature_store_click/internal_link_click/scroll_depth を補完。機械検査OK | ✅ commit 予定 |
 | 2026-09-06 | Orchestrator(自律バッチ) | SEO-084: scripts/refresh_feature_rosters.js に featureSlug 引数追加・3リンク箇所に feature_store_click 注入。全55特集ページに計測を追加（未計測48本→0本）。ISSUE-086 gate(c) 超過確認・継続保留。ISSUE-110/SEO-083 をオーナーへエスカレーション | ✅ デプロイ済み (commit 83de89ba) |
 | 2026-04-15 | Inspector | 初回サイト監査・バックログ初期化 | 9件の課題を検出 |
 | 2026-04-15 | Orchestrator(FULL) | Hero修正・権威性バー・CTA修正・店舗別ページ1095件生成・sitemap 1→1097件・デプロイ | ✅ デプロイ済み (commit 3824014) |

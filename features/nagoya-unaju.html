@@ -178,22 +178,22 @@ footer p{font-size:var(--fs-md);color:var(--dim);letter-spacing:.08em;}
     <li class="topcta-item">
       <span class="topcta-name">鰻のノリスケ</span>
       <span class="topcta-actions">
-        <a class="store-link" href="../stores/J003984968.html">店舗詳細</a>
-        <a class="store-link" href="https://www.hotpepper.jp/strJ003984968/" target="_blank" rel="noopener">今すぐ予約</a>
+        <a class="store-link" href="../stores/J003984968.html" onclick="trackEvent('feature_store_click',{store:'J003984968',feature:'nagoya-unaju'})">店舗詳細</a>
+        <a class="store-link" href="https://www.hotpepper.jp/strJ003984968/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003984968',feature:'nagoya-unaju',target:'hotpepper'})">今すぐ予約</a>
       </span>
     </li>
     <li class="topcta-item">
       <span class="topcta-name">ふじさん名駅店 昼だけうなぎ屋 名駅店</span>
       <span class="topcta-actions">
-        <a class="store-link" href="../stores/J004090812.html">店舗詳細</a>
-        <a class="store-link" href="https://www.hotpepper.jp/strJ004090812/" target="_blank" rel="noopener">今すぐ予約</a>
+        <a class="store-link" href="../stores/J004090812.html" onclick="trackEvent('feature_store_click',{store:'J004090812',feature:'nagoya-unaju'})">店舗詳細</a>
+        <a class="store-link" href="https://www.hotpepper.jp/strJ004090812/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004090812',feature:'nagoya-unaju',target:'hotpepper'})">今すぐ予約</a>
       </span>
     </li>
     <li class="topcta-item">
       <span class="topcta-name">ひつまぶし稲生 いのう エスカ店</span>
       <span class="topcta-actions">
-        <a class="store-link" href="../stores/J004402326.html">店舗詳細</a>
-        <a class="store-link" href="https://www.hotpepper.jp/strJ004402326/" target="_blank" rel="noopener">今すぐ予約</a>
+        <a class="store-link" href="../stores/J004402326.html" onclick="trackEvent('feature_store_click',{store:'J004402326',feature:'nagoya-unaju'})">店舗詳細</a>
+        <a class="store-link" href="https://www.hotpepper.jp/strJ004402326/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004402326',feature:'nagoya-unaju',target:'hotpepper'})">今すぐ予約</a>
       </span>
     </li>
   </ul>
@@ -380,11 +380,11 @@ footer p{font-size:var(--fs-md);color:var(--dim);letter-spacing:.08em;}
 <div class="related">
   <p class="related-title">関連する特集記事</p>
   <div class="related-links">
-    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;">名古屋グルメ完全ガイド</a>
-    <a class="related-link" href="nagoya-hitsumabushi.html">ひつまぶし完全ガイド</a>
-    <a class="related-link" href="nagoya-seafood.html">海鮮・魚介10選</a>
-    <a class="related-link" href="nagoya-kaiseki-guide.html">懐石・会席10選</a>
-    <a class="related-link" href="nagoya-lunch-washoku.html">和食ランチ10選</a>
+    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;" onclick="trackEvent('internal_link_click',{feature:'nagoya-unaju',link_url:'nagoya-gourmet-guide.html',block:'feature_related'})">名古屋グルメ完全ガイド</a>
+    <a class="related-link" href="nagoya-hitsumabushi.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-unaju',link_url:'nagoya-hitsumabushi.html',block:'feature_related'})">ひつまぶし完全ガイド</a>
+    <a class="related-link" href="nagoya-seafood.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-unaju',link_url:'nagoya-seafood.html',block:'feature_related'})">海鮮・魚介10選</a>
+    <a class="related-link" href="nagoya-kaiseki-guide.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-unaju',link_url:'nagoya-kaiseki-guide.html',block:'feature_related'})">懐石・会席10選</a>
+    <a class="related-link" href="nagoya-lunch-washoku.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-unaju',link_url:'nagoya-lunch-washoku.html',block:'feature_related'})">和食ランチ10選</a>
   </div>
   <p class="related-journal" style="margin-top:1.2rem;font-size:.82rem;color:rgba(28,28,26,.62);line-height:1.7;">
     名古屋の最新グルメは <a class="related-link" href="../journal/index.html">デイリージャーナル</a> で毎朝更新中。
@@ -453,5 +453,20 @@ window.closeNav = window.closeNav || function(){
 document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
 </script>
 <!-- NB-CHROME:SCRIPT:END -->
+<script class="nb-engagement-tracking">
+(function(){
+  var fired={},THRESH=[25,50,75,100];
+  function check(){
+    var doc=document.documentElement;
+    var top=window.pageYOffset||doc.scrollTop;
+    var max=(doc.scrollHeight-doc.clientHeight)||1;
+    var pct=Math.min(100,Math.round((top/max)*100));
+    THRESH.forEach(function(t){if(pct>=t&&!fired[t]){fired[t]=true;try{trackEvent('scroll_depth',{percent:t});}catch(err){}}});
+  }
+  var timer=null;
+  window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
+  check();
+})();
+</script>
 </body>
 </html>

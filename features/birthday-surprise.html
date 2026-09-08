@@ -379,22 +379,22 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     <li class="topcta-item">
       <span class="topcta-name">居酒屋いくなら俺んち来い。金山店</span>
       <span class="topcta-actions">
-        <a class="store-link" href="../stores/J004559290.html">店舗詳細</a>
-        <a class="store-link" href="https://www.hotpepper.jp/strJ004559290/" target="_blank" rel="noopener">今すぐ予約</a>
+        <a class="store-link" href="../stores/J004559290.html" onclick="trackEvent('feature_store_click',{store:'J004559290',feature:'birthday-surprise'})">店舗詳細</a>
+        <a class="store-link" href="https://www.hotpepper.jp/strJ004559290/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004559290',feature:'birthday-surprise',target:'hotpepper'})">今すぐ予約</a>
       </span>
     </li>
     <li class="topcta-item">
       <span class="topcta-name">隠れ家イタリアンDime ダイム</span>
       <span class="topcta-actions">
-        <a class="store-link" href="../stores/J003872958.html">店舗詳細</a>
-        <a class="store-link" href="https://www.hotpepper.jp/strJ003872958/" target="_blank" rel="noopener">今すぐ予約</a>
+        <a class="store-link" href="../stores/J003872958.html" onclick="trackEvent('feature_store_click',{store:'J003872958',feature:'birthday-surprise'})">店舗詳細</a>
+        <a class="store-link" href="https://www.hotpepper.jp/strJ003872958/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003872958',feature:'birthday-surprise',target:'hotpepper'})">今すぐ予約</a>
       </span>
     </li>
     <li class="topcta-item">
       <span class="topcta-name">JAM S TACOS ジャムズタコス</span>
       <span class="topcta-actions">
-        <a class="store-link" href="../stores/J003916676.html">店舗詳細</a>
-        <a class="store-link" href="https://www.hotpepper.jp/strJ003916676/" target="_blank" rel="noopener">今すぐ予約</a>
+        <a class="store-link" href="../stores/J003916676.html" onclick="trackEvent('feature_store_click',{store:'J003916676',feature:'birthday-surprise'})">店舗詳細</a>
+        <a class="store-link" href="https://www.hotpepper.jp/strJ003916676/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003916676',feature:'birthday-surprise',target:'hotpepper'})">今すぐ予約</a>
       </span>
     </li>
   </ul>
@@ -419,13 +419,13 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <div class="related">
   <p class="related-title">関連する特集</p>
   <div class="related-links">
-    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;">名古屋グルメ完全ガイド</a>
-    <a class="related-link" href="meieki.html">名駅グルメ15選</a>
-    <a class="related-link" href="sakae.html">栄グルメ特集</a>
-    <a class="related-link" href="nagoya-lunch-washoku.html">名古屋ランチ 和食</a>
-    <a class="related-link" href="osu-food-walk.html">大須食べ歩き</a>
-    <a class="related-link" href="index.html">特集一覧</a>
-    <a class="related-link" href="../index.html">全店舗を検索</a>
+    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;" onclick="trackEvent('internal_link_click',{feature:'birthday-surprise',link_url:'nagoya-gourmet-guide.html',block:'feature_related'})">名古屋グルメ完全ガイド</a>
+    <a class="related-link" href="meieki.html" onclick="trackEvent('internal_link_click',{feature:'birthday-surprise',link_url:'meieki.html',block:'feature_related'})">名駅グルメ15選</a>
+    <a class="related-link" href="sakae.html" onclick="trackEvent('internal_link_click',{feature:'birthday-surprise',link_url:'sakae.html',block:'feature_related'})">栄グルメ特集</a>
+    <a class="related-link" href="nagoya-lunch-washoku.html" onclick="trackEvent('internal_link_click',{feature:'birthday-surprise',link_url:'nagoya-lunch-washoku.html',block:'feature_related'})">名古屋ランチ 和食</a>
+    <a class="related-link" href="osu-food-walk.html" onclick="trackEvent('internal_link_click',{feature:'birthday-surprise',link_url:'osu-food-walk.html',block:'feature_related'})">大須食べ歩き</a>
+    <a class="related-link" href="index.html" onclick="trackEvent('internal_link_click',{feature:'birthday-surprise',link_url:'index.html',block:'feature_related'})">特集一覧</a>
+    <a class="related-link" href="../index.html" onclick="trackEvent('internal_link_click',{feature:'birthday-surprise',link_url:'../index.html',block:'feature_related'})">全店舗を検索</a>
   </div>
   <p class="related-journal" style="margin-top:1.2rem;font-size:.82rem;color:rgba(28,28,26,.62);line-height:1.7;">
     名古屋の最新グルメは <a class="related-link" href="../journal/index.html">デイリージャーナル</a> で毎朝更新中。
@@ -487,5 +487,20 @@ window.closeNav = window.closeNav || function(){
 document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
 </script>
 <!-- NB-CHROME:SCRIPT:END -->
+<script class="nb-engagement-tracking">
+(function(){
+  var fired={},THRESH=[25,50,75,100];
+  function check(){
+    var doc=document.documentElement;
+    var top=window.pageYOffset||doc.scrollTop;
+    var max=(doc.scrollHeight-doc.clientHeight)||1;
+    var pct=Math.min(100,Math.round((top/max)*100));
+    THRESH.forEach(function(t){if(pct>=t&&!fired[t]){fired[t]=true;try{trackEvent('scroll_depth',{percent:t});}catch(err){}}});
+  }
+  var timer=null;
+  window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
+  check();
+})();
+</script>
 </body>
 </html>
