@@ -211,11 +211,11 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <div class="related">
   <p class="related-title">関連ページ</p>
   <div class="related-links">
-    <a class="related-link" href="integrity-method.html" style="background:rgba(46,125,50,.08);border-color:var(--green);font-weight:500;">口コミ信頼度の作り方（方法論）</a>
-    <a class="related-link" href="no-fake-reviews.html">桜ゼロ宣言（3 層防衛）</a>
-    <a class="related-link" href="editorial-policy.html">編集規約（信頼の仕組み）</a>
-    <a class="related-link" href="index.html">特集記事一覧</a>
-    <a class="related-link" href="../about.html">About NAGOYA BITES</a>
+    <a class="related-link" href="integrity-method.html" style="background:rgba(46,125,50,.08);border-color:var(--green);font-weight:500;" onclick="trackEvent('internal_link_click',{feature:'review-trust',link_url:'integrity-method.html',block:'feature_related'})">口コミ信頼度の作り方（方法論）</a>
+    <a class="related-link" href="no-fake-reviews.html" onclick="trackEvent('internal_link_click',{feature:'review-trust',link_url:'no-fake-reviews.html',block:'feature_related'})">桜ゼロ宣言（3 層防衛）</a>
+    <a class="related-link" href="editorial-policy.html" onclick="trackEvent('internal_link_click',{feature:'review-trust',link_url:'editorial-policy.html',block:'feature_related'})">編集規約（信頼の仕組み）</a>
+    <a class="related-link" href="index.html" onclick="trackEvent('internal_link_click',{feature:'review-trust',link_url:'index.html',block:'feature_related'})">特集記事一覧</a>
+    <a class="related-link" href="../about.html" onclick="trackEvent('internal_link_click',{feature:'review-trust',link_url:'../about.html',block:'feature_related'})">About NAGOYA BITES</a>
   </div>
   <p style="margin-top:1.5rem;">
     <a class="related-link" href="../index.html" style="background:rgba(46,125,50,.06);">トップページで全店舗を検索する →</a>
@@ -277,5 +277,20 @@ window.closeNav = window.closeNav || function(){
 document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
 </script>
 <!-- NB-CHROME:SCRIPT:END -->
+<script class="nb-engagement-tracking">
+(function(){
+  var fired={},THRESH=[25,50,75,100];
+  function check(){
+    var doc=document.documentElement;
+    var top=window.pageYOffset||doc.scrollTop;
+    var max=(doc.scrollHeight-doc.clientHeight)||1;
+    var pct=Math.min(100,Math.round((top/max)*100));
+    THRESH.forEach(function(t){if(pct>=t&&!fired[t]){fired[t]=true;try{trackEvent('scroll_depth',{percent:t});}catch(err){}}});
+  }
+  var timer=null;
+  window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
+  check();
+})();
+</script>
 </body>
 </html>

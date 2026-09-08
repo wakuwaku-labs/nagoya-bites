@@ -331,12 +331,12 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <div class="related">
   <p class="related-title">関連する特集</p>
   <div class="related-links">
-    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;">名古屋グルメ完全ガイド</a>
-    <a class="related-link" href="nagoya-industry-pick-izakaya.html">業界人推薦の居酒屋</a>
-    <a class="related-link" href="nagoya-settai-secret.html">失敗しない接待10選</a>
-    <a class="related-link" href="editorial-policy.html">編集規約</a>
-    <a class="related-link" href="index.html">特集一覧</a>
-    <a class="related-link" href="../index.html">全店舗を検索</a>
+    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;" onclick="trackEvent('internal_link_click',{feature:'nagoya-reservation-difficult',link_url:'nagoya-gourmet-guide.html',block:'feature_related'})">名古屋グルメ完全ガイド</a>
+    <a class="related-link" href="nagoya-industry-pick-izakaya.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-reservation-difficult',link_url:'nagoya-industry-pick-izakaya.html',block:'feature_related'})">業界人推薦の居酒屋</a>
+    <a class="related-link" href="nagoya-settai-secret.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-reservation-difficult',link_url:'nagoya-settai-secret.html',block:'feature_related'})">失敗しない接待10選</a>
+    <a class="related-link" href="editorial-policy.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-reservation-difficult',link_url:'editorial-policy.html',block:'feature_related'})">編集規約</a>
+    <a class="related-link" href="index.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-reservation-difficult',link_url:'index.html',block:'feature_related'})">特集一覧</a>
+    <a class="related-link" href="../index.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-reservation-difficult',link_url:'../index.html',block:'feature_related'})">全店舗を検索</a>
   </div>
   <p class="related-journal" style="margin-top:1.2rem;font-size:.82rem;color:rgba(28,28,26,.62);line-height:1.7;">
     名古屋の最新グルメは <a class="related-link" href="../journal/index.html">デイリージャーナル</a> で毎朝更新中。
@@ -398,5 +398,20 @@ window.closeNav = window.closeNav || function(){
 document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
 </script>
 <!-- NB-CHROME:SCRIPT:END -->
+<script class="nb-engagement-tracking">
+(function(){
+  var fired={},THRESH=[25,50,75,100];
+  function check(){
+    var doc=document.documentElement;
+    var top=window.pageYOffset||doc.scrollTop;
+    var max=(doc.scrollHeight-doc.clientHeight)||1;
+    var pct=Math.min(100,Math.round((top/max)*100));
+    THRESH.forEach(function(t){if(pct>=t&&!fired[t]){fired[t]=true;try{trackEvent('scroll_depth',{percent:t});}catch(err){}}});
+  }
+  var timer=null;
+  window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
+  check();
+})();
+</script>
 </body>
 </html>
