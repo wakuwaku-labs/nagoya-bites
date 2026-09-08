@@ -274,6 +274,12 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .art-body h3,.content h3{font-family:var(--font-body);font-weight:600;font-size:var(--fs-lg);color:var(--ink);margin:var(--sp-6) 0 var(--sp-2);}
 .art-body a,.content a{color:var(--gold);}
 .art-intro,.body-para{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--muted);margin-bottom:var(--sp-4);}
+/* DSN-004: 本文可読性の強調ルール(太字/マーカー/色/文字サイズ)。段落1つに1箇所を目安に、
+   要点(数字・判断軸・結論)だけへ絞って使う。多用すると強調が効かなくなるため乱用しない。 */
+.art-body strong,.content strong{color:var(--ink);font-weight:700;}
+.art-body mark,.content mark{background:rgba(122,92,16,.16);color:var(--ink);padding:.05em .2em;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
+.art-accent{color:var(--gold2);font-weight:600;}
+.art-num{font-family:var(--font-display);font-weight:500;font-size:var(--fs-lg);color:var(--gold2);}
 
 .tips-box,.insider-box,.source-note,.art-ig-cta,.nb-site-intro{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 var(--r-md) var(--r-md) 0;padding:var(--sp-4) var(--sp-5);margin:var(--sp-5) 0;}
 .tips-title,.insider-title{font-family:var(--font-body);font-weight:600;font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);text-transform:none;margin-bottom:var(--sp-2);}

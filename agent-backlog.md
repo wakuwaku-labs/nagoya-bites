@@ -6,6 +6,27 @@
 
 ---
 
+### [DSN-004] ジャーナル本文が地の文だけで続き読みにくい — 太字/マーカー/色/文字サイズの強調ルールを新設
+
+- **priority**: P1（UX劣化） → **status**: done（実装・検証済み。PR作成待ち）
+- **detected**: 2026-09-08
+- **category**: design / ux
+- **owner**: Designer
+- **source**: オーナー本人からの直接指摘「ジャーナル記事が読みにくいです。太字にする、マーカーを引く、文字の大きさを変える、色をかえるなど、変化を加えるべき点をしっかり考えて、変更して欲しい。今日の記事から、今後そうなる様に」
+- **brand-filter**: ✅ 適合 — DSN-001〜003 と同じ Moat（可読性・一貫性は自動化でしか維持できない）の延長。既存トークン（`--ink`/`--gold2`/`--fs-lg`）のみを使い、新しい色やリテラル font-size は導入していない（制約12）
+- **実装内容**:
+  - `assets/css/nb.css` に `.art-body strong,.content strong`（黒700太字）/ `.art-body mark,.content mark`（gold系ハイライト背景）/ `.art-accent`（gold2文字色600）/ `.art-num`（表示体+`--fs-lg`+gold2、価格等の数字用）の4種を追加。全てコアトークン参照のみ（新規リテラル値0件）
+  - `journal/2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html`（本日公開分）の本文へ適用し、1段落1〜2箇所に絞って強調（過剰強調を避ける）
+  - `docs/design-system.md`「3. do/don't」に「本文中の強調（DSN-004）」節を追加（マークアップ表・do/don't）
+  - `agents/editor.md`「日次運用」に強調ルールの節を追加。`.claude/commands/journal-today.md`（自己改変ブロックのため直接編集不可）は Step 4 で `agents/editor.md` の日次運用章を読む設計のため、今後の生成に自動で反映される
+- **検証できる事実（制約10）**:
+  - `node scripts/audit_design_system.js --report`: 追加した nb.css の新規ルールに起因する違反 **0件**（既存の stores/journal レガシー違反125+件は本変更前から存在するベースラインで無関係。差分比較で確認済み）
+  - ブラウザ実機確認（`http://localhost:8082/journal/2026-09-08-....html`、preview_start経由の実サーバー）: `getComputedStyle` で `strong`=rgb(10,10,8)/700、`mark`=背景rgba(122,92,16,.16)、`.art-accent`=rgb(150,114,15)/600、`.art-num`=rgb(150,114,15)/17px（本文15pxに対し拡大）を確認。スクリーンショットでも視覚的な強弱を確認
+- **未実施（今回のスコープ外）**: 過去124本の既存journal記事への遡及適用はしていない（今回は「今日の記事から」という指示どおり本日分＋今後の生成ルールのみ）。過去記事へ広げたい場合は別チケットで一括適用を検討
+- **review**: 上記「検証できる事実」がacceptance。人手レビューはPR作成後に実施
+
+---
+
 ### [SEO-088] 助言が求める「日替わりピックのクリック率実験」は現状**実行不能** — トップページの5つのカード面が全て発火元のない `modal_open` を出しており、どの面が詳細到達を生んだか分離できない
 
 - **priority**: P2 → **status**: ready
