@@ -1,6 +1,6 @@
 {
-  "date": "2026-09-08",
-  "head": "2b554c7ec6eb851b05e99403f78d2621efa0a687",
+  "date": "2026-09-09",
+  "head": "d3d7c6f9271dd4f990d9191a7cd4288ffa1420b8",
   "verdict": "FAIL",
   "findings": [
     {
@@ -18,14 +18,13 @@
       "id": "QA-SEC-NPM-AUDIT",
       "sev": "soft",
       "priority": "P2",
-      "title": "npm 依存に既知脆弱性 11 件（critical 0 / high 4 / moderate 7）",
+      "title": "npm 依存に既知脆弱性 12 件（critical 0 / high 5 / moderate 7）",
       "body": "`npm audit --omit=dev` 結果。\n- acceptance: 破壊的変更の無い範囲で `npm audit fix`／高リスクは個別精査／残存はリスク受容理由を記録／次回QAで推移を追跡（制約4: サイト用新依存は追加しない）"
     }
   ],
-  "created": [
-    "QA-SEC-SECRET-GOOGLE-API-KEY"
-  ],
+  "created": [],
   "existing": [
+    "QA-SEC-SECRET-GOOGLE-API-KEY",
     "QA-SEC-NPM-AUDIT"
   ]
 }
