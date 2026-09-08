@@ -6,6 +6,39 @@
 
 ---
 
+### [DSN-005] トップページの検索欄・シーン/エリアボタンのコントラスト不足＋フィードバックFABの配色ズレ
+
+- **priority**: P2（デザイン磨き） → **status**: done（実装・検証済み。PR作成待ち）
+- **detected**: 2026-09-08
+- **category**: design / ux
+- **owner**: Designer
+- **source**: オーナー本人からの直接指摘「トップページがダサいし見にくい 改善して」（スマホ実機スクリーンショット添付）
+- **brand-filter**: ✅ 適合 — DSN-001〜004 と同じ Moat（可読性・一貫性は自動化でしか維持できない）の延長。新規UI部品は追加せず、既存トークン（`--r-md`/`--border-h`/`--ink`/`--gold`/`--gold2`）のみを使用。新規リテラル font-size は0件（制約12）
+- **診断**:
+  - 検索欄・シーン/エリアチップの背景・枠線が背景色（ベージュ）に対し極端に低コントラスト（枠線 `var(--border)` = 黒10%不透明度、チップ塗り = ゴールド8%不透明度）で、「押せるボタン」に見えず地の文のように埋没していた
+  - 検索欄・検索ボタン・シーンチップ・絞り込みボタンの角丸がそれぞれ 2px/3px/6px とバラバラで統一感がなかった
+  - フローティング「ご意見を送る」ボタンだけ `#2a6a5a`（緑）のハードコード色で、サイト全体の黒×ゴールドの配色から浮いていた
+- **実装内容**（`index.html` 内 `<style>` のみ・新規ファイルなし）:
+  - `.search-wrap input` / `.sticky-search input`: 背景を白地に、枠線を `var(--border-h)`（黒28%）に強化、薄い box-shadow で立体感を追加
+  - `.search-wrap button` / `.sticky-search-btn`: box-shadow とホバー時の浮き上がり（translateY）を追加
+  - `.scene-chip`: 背景を白地＋`var(--border-h)`枠線に変更（従来のゴールド8%塗り→ほぼ透明を解消）、ホバー時にゴールド濃色に反転
+  - 検索欄・検索ボタン・シーン/エリアチップ・sticky検索の角丸をすべて `var(--r-md)`（6px、既存の絞り込みボタンと同値）に統一
+  - `#fb-fab` / `#fb-panel`: ハードコード緑 `#2a6a5a` / `#1e5145` / `rgba(42,106,90,...)` を `var(--ink)` / `var(--gold)` / `rgba(122,92,16,...)` に置換
+- **検証できる事実（制約10）**:
+  - `node scripts/audit_design_system.js --check`: 出力JSONに `"file": "index.html"` の違反 **0件**（stores/*.html の既存125+件はベースラインで本変更前から存在・無関係。変更前後で diff なしを確認）
+  - ローカル `python3 -m http.server` + `/opt/pw-browsers/chromium-1194` ヘッドレスChromiumで 390px幅のフルページスクリーンショットを変更前後で取得し、検索欄・チップが白地＋枠線で明確な操作要素として視認できることを確認
+  - `git diff --stat index.html`: 1ファイル・22行変更（CSSのみ、HTML構造・JS・LOCAL_STORESは無変更）
+- **追加修正1（同日・オーナーのフォローアップ指摘「シーンで探すのタブが2行になっている」）**:
+  - `.scene-nav-row`（シーンで探す/エリアで探すの各行）を `flex-wrap:wrap` から `flex-wrap:nowrap` + `overflow-x:auto`（スクロールバー非表示）に変更し、既存の `.mmg`/`.sort-chips`/`.cap-tabs` と同じ横スクロール方式に統一。2行折り返しを解消
+  - `audit_design_system.js --check` で index.html の新規違反0件を再確認
+- **追加修正2（同日・オーナーのフォローアップ指摘「深く選んだがおかしい」＝見出しに黒い箱が重なるスクリーンショット添付）**:
+  - **診断**: PWAの「ホーム画面に追加」案内バナー（iOS Safari版 `#pwa-banner-ios`／Android Chrome版 `#pwa-banner`）はどちらも `position:fixed` で、初回訪問から数秒後（iOSは3秒後）に自動表示される仕様。ビューポートの縦幅が短い端末（Safariのツールバー展開時など）だと、bottom固定のバナーがヒーロー見出し「深く選んだ。」に重なって表示され、CSS崩れのように見えていた。実機（iPhone Safari, UA spoofingで再現）とヘッドレスChromiumの両方で再現確認済み
+  - Android版バナー（`#pwa-banner`）は追加で、`flex-wrap` 未指定のため文言が1文字ずつ縦に折り返される別の表示崩れも確認（`flex-wrap:wrap;max-width:min(92vw,380px);justify-content:center;text-align:center` を追加して解消）
+  - 両バナー共通で、表示中は画面全体を暗くする背景オーバーレイ `#pwa-install-backdrop`（`rgba(10,10,8,.55)`、クリックで閉じる）を新設し、見出しへの重なりを「意図した案内モーダル」だと明確に視認できるようにした。バナー自体の位置・文言・「追加する」「後で」の機能は変更していない
+  - `#pwa-banner-ios` に `max-height:calc(100vh - 2rem);overflow-y:auto;` を追加し、極端に縦が短い画面でもボタンが画面外に出ないようにした
+  - 検証: `node --check` で該当インラインJSの構文エラー無し確認、`audit_design_system.js --check` で index.html 新規違反0件、UA偽装（iPhone Safari 17.4）＋ヘッドレスChromiumで修正前後のスクリーンショットを比較し重なり解消を確認
+- **files**: `index.html`
+
 ### [DSN-004] ジャーナル本文が地の文だけで続き読みにくい — 太字/マーカー/色/文字サイズの強調ルールを新設
 
 - **priority**: P1（UX劣化） → **status**: done（実装・検証済み。PR作成待ち）

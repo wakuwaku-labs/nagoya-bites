@@ -291,9 +291,9 @@ document.addEventListener('keydown',function(e){
 body.search-active .nb-cover{grid-template-columns:1fr;}
 body.search-active .nb-cover-featured{display:none;}
 .search-wrap{margin-top:2.2rem;display:flex;flex-wrap:wrap;gap:.6rem;max-width:460px;opacity:0;animation:up .9s .65s forwards;}
-.search-wrap input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.8rem 1.1rem;font-size:.8rem;border-radius:2px;outline:none;font-family:inherit;transition:border-color .2s;}
+.search-wrap input{flex:1;background:#fff;border:1px solid var(--border-h);color:var(--text);padding:.8rem 1.1rem;font-size:.8rem;border-radius:var(--r-md);outline:none;font-family:inherit;transition:border-color .2s,box-shadow .2s;box-shadow:0 1px 3px rgba(0,0,0,.06);}
 .search-wrap input::placeholder{color:var(--dim);}
-.search-wrap input:focus{border-color:var(--gold);}
+.search-wrap input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(122,92,16,.14);}
 /* 検索入力のクリア（×）ボタン（FB-001）。#si / #si2 を .search-field で包み、
    ボタンを入力欄の右端に重ねて配置する。入力に値がある時だけ表示（has-value）。 */
 .search-field{position:relative;flex:1;display:flex;align-items:center;min-width:0;}
@@ -302,25 +302,26 @@ body.search-active .nb-cover-featured{display:none;}
 .search-clear-btn{position:absolute;right:.35rem;top:50%;transform:translateY(-50%);width:1.7rem;height:1.7rem;display:none;align-items:center;justify-content:center;background:none;border:none;color:var(--dim);font-size:1.15rem;line-height:1;cursor:pointer;border-radius:50%;padding:0;}
 .search-clear-btn:hover{color:var(--text);background:var(--border);}
 .search-field.has-value .search-clear-btn{display:flex;}
-.search-wrap button{background:var(--gold);border:none;color:var(--bg);padding:.8rem 1.4rem;font-size:var(--fs-xs);letter-spacing:.16em;text-transform:uppercase;border-radius:2px;cursor:pointer;font-weight:500;transition:background .2s;}
-.search-wrap button:hover{background:var(--gold2);}
+.search-wrap button{background:var(--gold);border:none;color:var(--bg);padding:.8rem 1.4rem;font-size:var(--fs-xs);letter-spacing:.16em;text-transform:uppercase;border-radius:var(--r-md);cursor:pointer;font-weight:600;transition:background .2s,transform .15s,box-shadow .2s;box-shadow:0 2px 8px rgba(122,92,16,.28);}
+.search-wrap button:hover{background:var(--gold2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(122,92,16,.32);}
 /* ── 常時表示のシーン/エリア導線（直帰率対策・MEO-001） ── */
 .scene-nav{margin-top:1.6rem;max-width:580px;opacity:0;animation:up .9s .8s forwards;}
-.scene-nav-row{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin-top:.7rem;}
+.scene-nav-row{display:flex;flex-wrap:nowrap;gap:.45rem;align-items:center;margin-top:.7rem;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;}
+.scene-nav-row::-webkit-scrollbar{display:none;}
 .scene-nav-row:first-child{margin-top:0;}
-.scene-nav-label{font-family:var(--font-body);font-weight:600;font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);white-space:nowrap;text-transform:none;margin-right:.15rem;}
-.scene-chip{background:rgba(201,169,110,.08);border:1px solid rgba(201,169,110,.32);color:var(--white);font-family:inherit;font-size:var(--fs-xs);letter-spacing:.03em;padding:.46rem .9rem;border-radius:3px;cursor:pointer;transition:all .18s;min-height:38px;display:inline-flex;align-items:center;}
-.scene-chip:hover{background:rgba(201,169,110,.2);border-color:var(--gold);}
+.scene-nav-label{font-family:var(--font-body);font-weight:600;font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);white-space:nowrap;text-transform:none;margin-right:.15rem;flex:0 0 auto;}
+.scene-chip{background:#fff;border:1px solid var(--border-h);color:var(--text);font-family:inherit;font-size:var(--fs-xs);letter-spacing:.03em;padding:.46rem .9rem;border-radius:var(--r-md);cursor:pointer;transition:all .18s;min-height:38px;display:inline-flex;align-items:center;box-shadow:0 1px 2px rgba(0,0,0,.05);white-space:nowrap;flex:0 0 auto;}
+.scene-chip:hover{background:rgba(122,92,16,.08);border-color:var(--gold);color:var(--gold2);box-shadow:0 2px 6px rgba(122,92,16,.15);}
 .scene-chip:active{transform:translateY(1px);}
 @media(max-width:480px){.scene-nav{max-width:100%;margin-top:1.3rem;}.scene-chip{font-size:var(--fs-xs);padding:.42rem .78rem;}}
 /* ── STICKY SEARCH BAR ── */
 .sticky-search{position:sticky;top:56px;z-index:150;background:rgba(247,245,241,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:.6rem 1.5rem;display:flex;gap:.5rem;align-items:center;opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity .3s,transform .3s;}
 .sticky-search.visible{opacity:1;transform:translateY(0);pointer-events:auto;}
-.sticky-search input{flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.6rem .9rem;font-size:.82rem;border-radius:2px;outline:none;font-family:inherit;transition:border-color .2s;min-height:40px;}
+.sticky-search input{flex:1;background:#fff;border:1px solid var(--border-h);color:var(--text);padding:.6rem .9rem;font-size:.82rem;border-radius:var(--r-md);outline:none;font-family:inherit;transition:border-color .2s;min-height:40px;}
 .sticky-search input:focus{border-color:var(--gold);}
 .sticky-search input::placeholder{color:var(--dim);}
 .sticky-search .search-field input{padding-right:2.2rem;}
-.sticky-search-btn{background:var(--gold);border:none;color:var(--bg);padding:.6rem 1rem;font-size:var(--fs-xs);letter-spacing:.14em;text-transform:uppercase;border-radius:2px;cursor:pointer;font-weight:500;transition:background .2s;white-space:nowrap;min-height:40px;}
+.sticky-search-btn{background:var(--gold);border:none;color:var(--bg);padding:.6rem 1rem;font-size:var(--fs-xs);letter-spacing:.14em;text-transform:uppercase;border-radius:var(--r-md);cursor:pointer;font-weight:600;transition:background .2s;white-space:nowrap;min-height:40px;}
 .sticky-search-btn:hover{background:var(--gold2);}
 /* ── ACTIVE FILTER CHIPS ── */
 .active-chips{display:flex;flex-wrap:wrap;gap:.35rem;padding:.5rem 1.5rem;background:rgba(247,245,241,.97);border-bottom:1px solid var(--border);}
@@ -613,9 +614,9 @@ body.search-query-active .card-why{display:flex;}
 .m-ir-link{display:inline-flex;align-items:center;min-height:var(--tap-min);font-size:var(--fs-sm);color:var(--gold);text-decoration:underline;text-decoration-color:rgba(122,92,16,.4);text-underline-offset:3px;background:none;border:0;padding:0;cursor:pointer;font-family:inherit;}
 @media (max-width:640px){.ir-form-grid{grid-template-columns:1fr;}}
 /* サイトフィードバック（フローティング「ご意見」ボタン + パネル） */
-#fb-fab{position:fixed;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));left:1.5rem;z-index:290;padding:.55rem .9rem;background:#2a6a5a;color:#fff;font-size:var(--fs-xs);font-weight:600;letter-spacing:.04em;border:none;border-radius:999px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.25);transition:background .2s;}
-#fb-fab:hover{background:#1e5145;}
-#fb-panel{display:none;position:fixed;bottom:calc(4.4rem + env(safe-area-inset-bottom,0px));left:1rem;z-index:295;width:min(400px,calc(100vw - 2rem));max-height:min(72vh,560px);overflow-y:auto;background:#fdfcf8;border:1px solid rgba(42,106,90,.35);border-radius:6px;box-shadow:0 8px 32px rgba(0,0,0,.22);padding:1rem 1.1rem 1.1rem;}
+#fb-fab{position:fixed;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));left:1.5rem;z-index:290;padding:.55rem .9rem;background:var(--ink);color:#fff;font-size:var(--fs-xs);font-weight:600;letter-spacing:.04em;border:none;border-radius:999px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.25);transition:background .2s;}
+#fb-fab:hover{background:var(--gold);}
+#fb-panel{display:none;position:fixed;bottom:calc(4.4rem + env(safe-area-inset-bottom,0px));left:1rem;z-index:295;width:min(400px,calc(100vw - 2rem));max-height:min(72vh,560px);overflow-y:auto;background:#fdfcf8;border:1px solid rgba(122,92,16,.35);border-radius:6px;box-shadow:0 8px 32px rgba(0,0,0,.22);padding:1rem 1.1rem 1.1rem;}
 #fb-panel.open{display:block;}
 #fb-panel .ir-form-wrap{margin-top:0;padding:0;background:none;border:none;}
 #fb-panel .ir-form-grid{grid-template-columns:1fr;}
@@ -842,10 +843,11 @@ footer{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));}
 .cap-unit{font-size:var(--fs-xs);color:var(--muted);letter-spacing:.05em;}
 .cap-hint{font-family:'DM Mono',monospace;font-size:var(--fs-2xs);letter-spacing:.08em;color:var(--dim);}
 /* ── PWA インストールバナー ── */
-#pwa-banner{display:none;position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);z-index:999;background:var(--text);color:var(--bg);padding:.8rem 1.4rem;border-radius:2px;font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.1em;display:flex;align-items:center;gap:1rem;box-shadow:0 4px 24px rgba(0,0,0,.3);}
+#pwa-banner{display:none;position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;background:var(--text);color:var(--bg);padding:.8rem 1.4rem;border-radius:2px;font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.1em;flex-wrap:wrap;justify-content:center;text-align:center;max-width:min(92vw,380px);align-items:center;gap:.5rem 1rem;box-shadow:0 4px 24px rgba(0,0,0,.3);}
 #pwa-banner button{background:var(--gold);color:var(--bg);border:none;padding:.4rem .9rem;font-size:var(--fs-xs);letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border-radius:1px;}
 #pwa-banner .dismiss{background:transparent;color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.45);}
-#pwa-banner-ios{display:none;position:fixed;bottom:3rem;left:50%;transform:translateX(-50%);z-index:9999;background:#1a1a1a;color:#f7f5f1;padding:1.2rem 1.4rem 1rem;border-radius:12px;font-family:'DM Mono',monospace;flex-direction:column;align-items:center;gap:.4rem;box-shadow:0 8px 32px rgba(0,0,0,.5);text-align:center;width:88vw;max-width:340px;}
+#pwa-install-backdrop{display:none;position:fixed;inset:0;background:rgba(10,10,8,.55);z-index:9998;}
+#pwa-banner-ios{display:none;position:fixed;bottom:3rem;left:50%;transform:translateX(-50%);z-index:9999;background:#1a1a1a;color:#f7f5f1;padding:1.2rem 1.4rem 1rem;border-radius:12px;font-family:'DM Mono',monospace;flex-direction:column;align-items:center;gap:.4rem;box-shadow:0 8px 32px rgba(0,0,0,.5);text-align:center;width:88vw;max-width:340px;max-height:calc(100vh - 2rem);overflow-y:auto;}
 .pwa-ios-title{font-size:.78rem;font-weight:700;letter-spacing:.08em;}
 .pwa-ios-subtitle{font-size:var(--fs-xs);color:rgba(247,245,241,.5);letter-spacing:.06em;margin-bottom:.3rem;}
 .pwa-ios-guide{display:flex;flex-direction:column;align-items:center;gap:.15rem;width:100%;margin:.2rem 0;}
@@ -1603,6 +1605,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
   <button class="dismiss" id="pwa-dismiss" aria-label="ホーム画面追加の案内を閉じる">後で</button>
 </div>
 <!-- PWA インストールバナー（iOS） -->
+<div id="pwa-install-backdrop" style="display:none" aria-hidden="true"></div>
 <div id="pwa-banner-ios" style="display:none">
   <div class="pwa-ios-title">アプリとしてホーム画面に追加</div>
   <div class="pwa-ios-subtitle">オフラインでも使える・すぐアクセスできる</div>
@@ -10684,6 +10687,16 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// PWAインストール導線の背景オーバーレイ（Android/iOS共通）
+function showPwaInstallBackdrop() {
+  var bd = document.getElementById('pwa-install-backdrop');
+  if (bd) bd.style.display = 'block';
+}
+function hidePwaInstallBackdrop() {
+  var bd = document.getElementById('pwa-install-backdrop');
+  if (bd) bd.style.display = 'none';
+}
+
 // インストールプロンプトをキャッチ（Android Chrome）
 window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
@@ -10691,6 +10704,7 @@ window.addEventListener('beforeinstallprompt', function(e) {
   // バナーを表示
   var banner = document.getElementById('pwa-banner');
   if (banner) banner.style.display = 'flex';
+  showPwaInstallBackdrop();
 });
 
 // 「追加する」ボタン
@@ -10700,6 +10714,7 @@ document.getElementById('pwa-install-btn').addEventListener('click', function() 
     deferredPrompt.userChoice.then(function(result) {
       deferredPrompt = null;
       document.getElementById('pwa-banner').style.display = 'none';
+      hidePwaInstallBackdrop();
     });
   }
 });
@@ -10707,6 +10722,7 @@ document.getElementById('pwa-install-btn').addEventListener('click', function() 
 // 「後で」ボタン
 document.getElementById('pwa-dismiss').addEventListener('click', function() {
   document.getElementById('pwa-banner').style.display = 'none';
+  hidePwaInstallBackdrop();
   localStorage.setItem('pwa-banner-dismissed', Date.now());
 });
 
@@ -10720,13 +10736,18 @@ if (isIOS && !isStandalone) {
     setTimeout(function() {
       var b = document.getElementById('pwa-banner-ios');
       if (b) b.style.display = 'flex';
+      showPwaInstallBackdrop();
     }, 3000);
   }
 }
-document.getElementById('pwa-dismiss-ios').addEventListener('click', function() {
+function hidePwaIosBanner() {
   document.getElementById('pwa-banner-ios').style.display = 'none';
+  hidePwaInstallBackdrop();
   localStorage.setItem('pwa-banner-dismissed', Date.now());
-});
+}
+document.getElementById('pwa-dismiss-ios').addEventListener('click', hidePwaIosBanner);
+var pwaIosBackdropEl = document.getElementById('pwa-install-backdrop');
+if (pwaIosBackdropEl) pwaIosBackdropEl.addEventListener('click', hidePwaIosBanner);
 
 // インストール完了後バナーを非表示
 window.addEventListener('appinstalled', function() {
