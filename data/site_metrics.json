@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-08T15:15:26.350Z",
+  "generatedAt": "2026-09-08T20:46:00.895Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1049,
-    "pageViews": 1852,
-    "sessions": 1266,
-    "avgSessionDuration": 155.8,
+    "activeUsers": 1050,
+    "pageViews": 1858,
+    "sessions": 1268,
+    "avgSessionDuration": 157,
     "bounceRate": 0.31,
-    "pagesPerSession": 1.46
+    "pagesPerSession": 1.47
   },
   "dailyReference": {
     "date": "2026-09-07",
@@ -18,19 +18,19 @@
   "channels": {
     "sessions": {
       "organic": 905,
-      "direct": 262,
+      "direct": 264,
       "social": 88,
       "referral": 20,
       "paid": 0,
-      "other": 3
+      "other": 4
     },
     "pct": {
-      "organic": 70.8,
-      "direct": 20.5,
+      "organic": 70.6,
+      "direct": 20.6,
       "social": 6.9,
       "referral": 1.6,
       "paid": 0,
-      "other": 0.2
+      "other": 0.3
     }
   },
   "sourceBreakdown": [
@@ -47,7 +47,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 231
+      "sessions": 232
     },
     {
       "source": "yahoo",
@@ -62,7 +62,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 22
+      "sessions": 23
     },
     {
       "source": "duckduckgo",
@@ -98,13 +98,13 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 129,
-      "sessions": 75
+      "pageViews": 130,
+      "sessions": 76
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 121,
-      "sessions": 111
+      "pageViews": 122,
+      "sessions": 112
     },
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
@@ -167,7 +167,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.5,
-    "ctaClickRate_direct": 6.9,
+    "ctaClickRate_direct": 6.8,
     "ctaClickRate_social": 27.3,
     "byPage": [
       {
@@ -540,7 +540,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1049,
+    "value": 1050,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
