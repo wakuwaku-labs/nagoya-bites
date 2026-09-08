@@ -28,9 +28,15 @@
   - `node scripts/audit_design_system.js --check`: 出力JSONに `"file": "index.html"` の違反 **0件**（stores/*.html の既存125+件はベースラインで本変更前から存在・無関係。変更前後で diff なしを確認）
   - ローカル `python3 -m http.server` + `/opt/pw-browsers/chromium-1194` ヘッドレスChromiumで 390px幅のフルページスクリーンショットを変更前後で取得し、検索欄・チップが白地＋枠線で明確な操作要素として視認できることを確認
   - `git diff --stat index.html`: 1ファイル・22行変更（CSSのみ、HTML構造・JS・LOCAL_STORESは無変更）
-- **追加修正（同日・オーナーのフォローアップ指摘「シーンで探すのタブが2行になっている」）**:
+- **追加修正1（同日・オーナーのフォローアップ指摘「シーンで探すのタブが2行になっている」）**:
   - `.scene-nav-row`（シーンで探す/エリアで探すの各行）を `flex-wrap:wrap` から `flex-wrap:nowrap` + `overflow-x:auto`（スクロールバー非表示）に変更し、既存の `.mmg`/`.sort-chips`/`.cap-tabs` と同じ横スクロール方式に統一。2行折り返しを解消
   - `audit_design_system.js --check` で index.html の新規違反0件を再確認
+- **追加修正2（同日・オーナーのフォローアップ指摘「深く選んだがおかしい」＝見出しに黒い箱が重なるスクリーンショット添付）**:
+  - **診断**: PWAの「ホーム画面に追加」案内バナー（iOS Safari版 `#pwa-banner-ios`／Android Chrome版 `#pwa-banner`）はどちらも `position:fixed` で、初回訪問から数秒後（iOSは3秒後）に自動表示される仕様。ビューポートの縦幅が短い端末（Safariのツールバー展開時など）だと、bottom固定のバナーがヒーロー見出し「深く選んだ。」に重なって表示され、CSS崩れのように見えていた。実機（iPhone Safari, UA spoofingで再現）とヘッドレスChromiumの両方で再現確認済み
+  - Android版バナー（`#pwa-banner`）は追加で、`flex-wrap` 未指定のため文言が1文字ずつ縦に折り返される別の表示崩れも確認（`flex-wrap:wrap;max-width:min(92vw,380px);justify-content:center;text-align:center` を追加して解消）
+  - 両バナー共通で、表示中は画面全体を暗くする背景オーバーレイ `#pwa-install-backdrop`（`rgba(10,10,8,.55)`、クリックで閉じる）を新設し、見出しへの重なりを「意図した案内モーダル」だと明確に視認できるようにした。バナー自体の位置・文言・「追加する」「後で」の機能は変更していない
+  - `#pwa-banner-ios` に `max-height:calc(100vh - 2rem);overflow-y:auto;` を追加し、極端に縦が短い画面でもボタンが画面外に出ないようにした
+  - 検証: `node --check` で該当インラインJSの構文エラー無し確認、`audit_design_system.js --check` で index.html 新規違反0件、UA偽装（iPhone Safari 17.4）＋ヘッドレスChromiumで修正前後のスクリーンショットを比較し重なり解消を確認
 - **files**: `index.html`
 
 ### [DSN-004] ジャーナル本文が地の文だけで続き読みにくい — 太字/マーカー/色/文字サイズの強調ルールを新設

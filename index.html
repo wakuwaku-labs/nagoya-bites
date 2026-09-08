@@ -843,10 +843,11 @@ footer{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));}
 .cap-unit{font-size:var(--fs-xs);color:var(--muted);letter-spacing:.05em;}
 .cap-hint{font-family:'DM Mono',monospace;font-size:var(--fs-2xs);letter-spacing:.08em;color:var(--dim);}
 /* ── PWA インストールバナー ── */
-#pwa-banner{display:none;position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);z-index:999;background:var(--text);color:var(--bg);padding:.8rem 1.4rem;border-radius:2px;font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.1em;display:flex;align-items:center;gap:1rem;box-shadow:0 4px 24px rgba(0,0,0,.3);}
+#pwa-banner{display:none;position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);z-index:9999;background:var(--text);color:var(--bg);padding:.8rem 1.4rem;border-radius:2px;font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.1em;flex-wrap:wrap;justify-content:center;text-align:center;max-width:min(92vw,380px);align-items:center;gap:.5rem 1rem;box-shadow:0 4px 24px rgba(0,0,0,.3);}
 #pwa-banner button{background:var(--gold);color:var(--bg);border:none;padding:.4rem .9rem;font-size:var(--fs-xs);letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border-radius:1px;}
 #pwa-banner .dismiss{background:transparent;color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.45);}
-#pwa-banner-ios{display:none;position:fixed;bottom:3rem;left:50%;transform:translateX(-50%);z-index:9999;background:#1a1a1a;color:#f7f5f1;padding:1.2rem 1.4rem 1rem;border-radius:12px;font-family:'DM Mono',monospace;flex-direction:column;align-items:center;gap:.4rem;box-shadow:0 8px 32px rgba(0,0,0,.5);text-align:center;width:88vw;max-width:340px;}
+#pwa-install-backdrop{display:none;position:fixed;inset:0;background:rgba(10,10,8,.55);z-index:9998;}
+#pwa-banner-ios{display:none;position:fixed;bottom:3rem;left:50%;transform:translateX(-50%);z-index:9999;background:#1a1a1a;color:#f7f5f1;padding:1.2rem 1.4rem 1rem;border-radius:12px;font-family:'DM Mono',monospace;flex-direction:column;align-items:center;gap:.4rem;box-shadow:0 8px 32px rgba(0,0,0,.5);text-align:center;width:88vw;max-width:340px;max-height:calc(100vh - 2rem);overflow-y:auto;}
 .pwa-ios-title{font-size:.78rem;font-weight:700;letter-spacing:.08em;}
 .pwa-ios-subtitle{font-size:var(--fs-xs);color:rgba(247,245,241,.5);letter-spacing:.06em;margin-bottom:.3rem;}
 .pwa-ios-guide{display:flex;flex-direction:column;align-items:center;gap:.15rem;width:100%;margin:.2rem 0;}
@@ -1604,6 +1605,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
   <button class="dismiss" id="pwa-dismiss" aria-label="ホーム画面追加の案内を閉じる">後で</button>
 </div>
 <!-- PWA インストールバナー（iOS） -->
+<div id="pwa-install-backdrop" style="display:none" aria-hidden="true"></div>
 <div id="pwa-banner-ios" style="display:none">
   <div class="pwa-ios-title">アプリとしてホーム画面に追加</div>
   <div class="pwa-ios-subtitle">オフラインでも使える・すぐアクセスできる</div>
@@ -10685,6 +10687,16 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// PWAインストール導線の背景オーバーレイ（Android/iOS共通）
+function showPwaInstallBackdrop() {
+  var bd = document.getElementById('pwa-install-backdrop');
+  if (bd) bd.style.display = 'block';
+}
+function hidePwaInstallBackdrop() {
+  var bd = document.getElementById('pwa-install-backdrop');
+  if (bd) bd.style.display = 'none';
+}
+
 // インストールプロンプトをキャッチ（Android Chrome）
 window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
@@ -10692,6 +10704,7 @@ window.addEventListener('beforeinstallprompt', function(e) {
   // バナーを表示
   var banner = document.getElementById('pwa-banner');
   if (banner) banner.style.display = 'flex';
+  showPwaInstallBackdrop();
 });
 
 // 「追加する」ボタン
@@ -10701,6 +10714,7 @@ document.getElementById('pwa-install-btn').addEventListener('click', function() 
     deferredPrompt.userChoice.then(function(result) {
       deferredPrompt = null;
       document.getElementById('pwa-banner').style.display = 'none';
+      hidePwaInstallBackdrop();
     });
   }
 });
@@ -10708,6 +10722,7 @@ document.getElementById('pwa-install-btn').addEventListener('click', function() 
 // 「後で」ボタン
 document.getElementById('pwa-dismiss').addEventListener('click', function() {
   document.getElementById('pwa-banner').style.display = 'none';
+  hidePwaInstallBackdrop();
   localStorage.setItem('pwa-banner-dismissed', Date.now());
 });
 
@@ -10721,13 +10736,18 @@ if (isIOS && !isStandalone) {
     setTimeout(function() {
       var b = document.getElementById('pwa-banner-ios');
       if (b) b.style.display = 'flex';
+      showPwaInstallBackdrop();
     }, 3000);
   }
 }
-document.getElementById('pwa-dismiss-ios').addEventListener('click', function() {
+function hidePwaIosBanner() {
   document.getElementById('pwa-banner-ios').style.display = 'none';
+  hidePwaInstallBackdrop();
   localStorage.setItem('pwa-banner-dismissed', Date.now());
-});
+}
+document.getElementById('pwa-dismiss-ios').addEventListener('click', hidePwaIosBanner);
+var pwaIosBackdropEl = document.getElementById('pwa-install-backdrop');
+if (pwaIosBackdropEl) pwaIosBackdropEl.addEventListener('click', hidePwaIosBanner);
 
 // インストール完了後バナーを非表示
 window.addEventListener('appinstalled', function() {
