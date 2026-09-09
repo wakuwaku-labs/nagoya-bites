@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-09T04:46:11.596Z",
+  "generatedAt": "2026-09-09T06:50:06.657Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1051,
-    "pageViews": 1859,
-    "sessions": 1269,
-    "avgSessionDuration": 157.1,
-    "bounceRate": 0.31,
-    "pagesPerSession": 1.46
+    "activeUsers": 1053,
+    "pageViews": 1873,
+    "sessions": 1272,
+    "avgSessionDuration": 153.6,
+    "bounceRate": 0.292,
+    "pagesPerSession": 1.47
   },
   "dailyReference": {
     "date": "2026-09-07",
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 906,
-      "direct": 265,
+      "organic": 907,
+      "direct": 267,
       "social": 88,
       "referral": 20,
       "paid": 0,
       "other": 4
     },
     "pct": {
-      "organic": 70.6,
-      "direct": 20.7,
-      "social": 6.9,
+      "organic": 70.5,
+      "direct": 20.8,
+      "social": 6.8,
       "referral": 1.6,
       "paid": 0,
       "other": 0.3
@@ -42,7 +42,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 298
+      "sessions": 299
     },
     {
       "source": "(direct)",
@@ -62,7 +62,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 24
+      "sessions": 26
     },
     {
       "source": "duckduckgo",
@@ -88,22 +88,22 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 339,
+      "pageViews": 345,
       "sessions": 206
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 325,
+      "pageViews": 326,
       "sessions": 277
     },
     {
       "path": "/index.html",
-      "pageViews": 130,
-      "sessions": 76
+      "pageViews": 132,
+      "sessions": 77
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 122,
+      "pageViews": 121,
       "sessions": 112
     },
     {
@@ -114,7 +114,7 @@
   ],
   "cta": {
     "outboundClicks": 115,
-    "ctaClickRate": 9.1,
+    "ctaClickRate": 9,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -159,15 +159,15 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 68,
+      "organic": 69,
       "direct": 18,
       "social": 24,
       "referral": 5,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.5,
-    "ctaClickRate_direct": 6.8,
+    "ctaClickRate_organic": 7.6,
+    "ctaClickRate_direct": 6.7,
     "ctaClickRate_social": 27.3,
     "byPage": [
       {
@@ -324,6 +324,11 @@
         "clicks": 2
       },
       {
+        "path": "/features/date.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 2
+      },
+      {
         "path": "/features/nagoya-italian-guide.html",
         "domain": "www.hotpepper.jp",
         "clicks": 2
@@ -360,11 +365,6 @@
       },
       {
         "path": "/",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/features/date.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
       },
@@ -496,6 +496,10 @@
         "clicks": 2
       },
       {
+        "path": "/features/date.html",
+        "clicks": 2
+      },
+      {
         "path": "/features/nagoya-italian-guide.html",
         "clicks": 2
       },
@@ -509,10 +513,6 @@
       },
       {
         "path": "/",
-        "clicks": 1
-      },
-      {
-        "path": "/features/date.html",
         "clicks": 1
       },
       {
@@ -536,11 +536,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 86
+    "reservationClicks": 87
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1051,
+    "value": 1053,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-09T04:46:13.784Z",
+  "generatedAt": "2026-09-09T06:50:09.956Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1254,
+  "total_sessions": 1257,
   "engines": [
     {
       "key": "google",
@@ -22,21 +22,21 @@
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 298,
+      "sessions": 299,
       "pct": 23.8,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 298
+          "sessions": 299
         }
       ]
     },
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 256,
-      "pct": 20.4,
+      "sessions": 258,
+      "pct": 20.5,
       "sources": [
         {
           "source": "(direct)",
@@ -46,7 +46,7 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 24
+          "sessions": 26
         }
       ]
     },
@@ -122,19 +122,19 @@
     }
   ],
   "search_only": {
-    "total": 989,
+    "total": 990,
     "share": [
       {
         "key": "google",
         "label": "Google",
         "sessions": 408,
-        "pct_of_search": 41.3
+        "pct_of_search": 41.2
       },
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 298,
-        "pct_of_search": 30.1
+        "sessions": 299,
+        "pct_of_search": 30.2
       },
       {
         "key": "yahoo",
@@ -161,8 +161,8 @@
     "to": "2026-09-09",
     "delta": {
       "google": 0,
-      "bing": 0,
-      "direct": 0,
+      "bing": 1,
+      "direct": 1,
       "yahoo": 0,
       "ai_assistant": 0,
       "duckduckgo": 0,
@@ -173,7 +173,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 408 セッションのみ。Bing(298) + 生成AI(87) の 385 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 408 セッションのみ。Bing(299) + 生成AI(87) の 386 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
