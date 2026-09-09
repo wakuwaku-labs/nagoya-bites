@@ -62,7 +62,7 @@
 
 ### [SEO-088] 助言が求める「日替わりピックのクリック率実験」は現状**実行不能** — トップページの5つのカード面が全て発火元のない `modal_open` を出しており、どの面が詳細到達を生んだか分離できない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-09-09 実装・push済み。PR: claude/wizardly-ramanujan-qrn9d3）
 - **detected**: 2026-09-08
 - **category**: SEO / 計測
 - **owner**: Builder
@@ -187,10 +187,10 @@
 
 ### [SEO-085] IndexNow が CI で毎日 `dry_run: true` を記録し続けている — 第2の流入エンジン Bing（週73訪問）への更新通知が [[SEO-071]] 完了後も一度も送信されていない
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: ready（⚠️ エスカレーション: ステップ①の GitHub Secrets 設定はオーナー本人の操作が必要。自動実装不可）
 - **detected**: 2026-09-07
 - **category**: SEO
-- **owner**: Marketer（※ステップ①は GitHub Secrets 設定＝オーナー本人の操作）
+- **owner**: 片桐 ← Marketer（GitHub Secrets `INDEXNOW_ENABLED=true` をオーナーが設定するまで進行不能）
 - **source**: 週次レポート(LINE) 2026-08-30〜2026-09-05 原文「検索流入比率が75%と高い一方、Bing検索からの流入が73訪問とGoogleに次いで多いです。👉 docs/daily-posts/ にあるSNS投稿原稿をBingのWebマスターツールに登録し、Bing検索でのインデックス促進と表示改善を図りましょう」
 - **brand-filter**: ✅ 適合（振替採用）— 助言の literal な打ち手「SNS投稿原稿を Bing Webmaster Tools に登録」は**手段として成立しない**（BWT はサイトの所有権確認とURL送信のツールであり、SNS原稿を登録する場所ではない）ため却下。一方で助言の根拠「Bing が Google に次ぐ流入源」は実測どおり正しく、その打ち手として**既に実装済みで承認済みのIndexNowが実際には一度も発火していない**という検証可能な欠落へ振り替えて採用する（[[SEO-084]] と同じ振替パターン）。順位操作でも広告依存でもなく、自社の更新を検索エンジンへ通知するだけの施策
 - **trend**: 週次で Bing 21%（73訪問・Google 35%に次ぐ2位）／`data/search_channel_metrics.json` 直近30日でも Bing 289セッション・24.2%（Google 402・33.7%）。単週のブレではなく3ヶ月継続している構造
