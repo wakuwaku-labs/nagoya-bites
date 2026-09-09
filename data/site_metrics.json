@@ -1,73 +1,73 @@
 {
-  "generatedAt": "2026-09-09T12:39:24.565Z",
+  "generatedAt": "2026-09-09T20:28:53.057Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1066,
-    "pageViews": 1891,
-    "sessions": 1285,
-    "avgSessionDuration": 152.7,
-    "bounceRate": 0.298,
-    "pagesPerSession": 1.47
+    "activeUsers": 1024,
+    "pageViews": 1855,
+    "sessions": 1243,
+    "avgSessionDuration": 154,
+    "bounceRate": 0.301,
+    "pagesPerSession": 1.49
   },
   "dailyReference": {
-    "date": "2026-09-07",
-    "sessions": 68,
-    "bounceRate": 0.279,
-    "pageViews": 124
+    "date": "2026-09-08",
+    "sessions": 40,
+    "bounceRate": 0.3,
+    "pageViews": 83
   },
   "channels": {
     "sessions": {
-      "organic": 919,
-      "direct": 259,
-      "social": 88,
-      "referral": 20,
+      "organic": 875,
+      "direct": 265,
+      "social": 89,
+      "referral": 19,
       "paid": 0,
-      "other": 4
+      "other": 6
     },
     "pct": {
-      "organic": 71.2,
-      "direct": 20.1,
-      "social": 6.8,
-      "referral": 1.6,
+      "organic": 69.8,
+      "direct": 21.1,
+      "social": 7.1,
+      "referral": 1.5,
       "paid": 0,
-      "other": 0.3
+      "other": 0.5
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 414
+      "sessions": 400
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 304
+      "sessions": 294
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 235
+      "sessions": 236
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 183
+      "sessions": 165
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 81
+      "sessions": 82
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 15
+      "sessions": 20
     },
     {
       "source": "duckduckgo",
       "medium": "organic",
-      "sessions": 14
+      "sessions": 13
     },
     {
       "source": "copilot.com",
@@ -88,33 +88,33 @@
   "topPages": [
     {
       "path": "/",
-      "pageViews": 345,
-      "sessions": 207
+      "pageViews": 348,
+      "sessions": 209
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 334,
-      "sessions": 285
+      "pageViews": 328,
+      "sessions": 279
     },
     {
       "path": "/index.html",
-      "pageViews": 133,
+      "pageViews": 134,
       "sessions": 78
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 121,
-      "sessions": 112
+      "pageViews": 116,
+      "sessions": 106
     },
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
-      "pageViews": 79,
-      "sessions": 74
+      "pageViews": 53,
+      "sessions": 51
     }
   ],
   "cta": {
-    "outboundClicks": 116,
-    "ctaClickRate": 9,
+    "outboundClicks": 120,
+    "ctaClickRate": 9.7,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -122,7 +122,7 @@
       },
       {
         "domain": "tabelog.com",
-        "clicks": 34
+        "clicks": 37
       },
       {
         "domain": "maps.google.com",
@@ -155,20 +155,24 @@
       {
         "domain": "wolfgangssteakhouse.jp",
         "clicks": 1
+      },
+      {
+        "domain": "www.jiji.com",
+        "clicks": 1
       }
     ],
     "note": null,
     "byChannel": {
-      "organic": 69,
-      "direct": 18,
+      "organic": 67,
+      "direct": 24,
       "social": 24,
       "referral": 5,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.5,
-    "ctaClickRate_direct": 6.9,
-    "ctaClickRate_social": 27.3,
+    "ctaClickRate_organic": 7.7,
+    "ctaClickRate_direct": 9.1,
+    "ctaClickRate_social": 27,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -176,7 +180,7 @@
       },
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 20
+        "clicks": 19
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -184,7 +188,7 @@
       },
       {
         "path": "/index.html",
-        "clicks": 13
+        "clicks": 16
       },
       {
         "path": "/",
@@ -207,10 +211,6 @@
         "clicks": 2
       },
       {
-        "path": "/features/osu-food-walk.html",
-        "clicks": 2
-      },
-      {
         "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "clicks": 2
       },
@@ -219,11 +219,23 @@
         "clicks": 2
       },
       {
+        "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
+        "clicks": 2
+      },
+      {
+        "path": "/journal/2026-09-04-meieki-shokudo-tomoru-sanma-price.html",
+        "clicks": 2
+      },
+      {
         "path": "/features/nagoya-yakiniku.html",
         "clicks": 1
       },
       {
         "path": "/features/nagoya-yoshoku.html",
+        "clicks": 1
+      },
+      {
+        "path": "/features/osu-food-walk.html",
         "clicks": 1
       },
       {
@@ -279,10 +291,6 @@
         "clicks": 1
       },
       {
-        "path": "/journal/2026-09-04-meieki-shokudo-tomoru-sanma-price.html",
-        "clicks": 1
-      },
-      {
         "path": "/journal/2026-09-05-meieki-nagoyameshi-izakaya-enkai.html",
         "clicks": 1
       }
@@ -296,7 +304,7 @@
       {
         "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 20
+        "clicks": 19
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -306,7 +314,7 @@
       {
         "path": "/index.html",
         "domain": "tabelog.com",
-        "clicks": 7
+        "clicks": 10
       },
       {
         "path": "/",
@@ -334,11 +342,6 @@
         "clicks": 2
       },
       {
-        "path": "/features/osu-food-walk.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 2
-      },
-      {
         "path": "/index.html",
         "domain": "maps.google.com",
         "clicks": 2
@@ -359,6 +362,11 @@
         "clicks": 2
       },
       {
+        "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 2
+      },
+      {
         "path": "/",
         "domain": "news.google.com",
         "clicks": 1
@@ -375,6 +383,11 @@
       },
       {
         "path": "/features/nagoya-yoshoku.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/features/osu-food-walk.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
       },
@@ -469,6 +482,11 @@
         "clicks": 1
       },
       {
+        "path": "/journal/2026-09-04-meieki-shokudo-tomoru-sanma-price.html",
+        "domain": "www.jiji.com",
+        "clicks": 1
+      },
+      {
         "path": "/journal/2026-09-05-meieki-nagoyameshi-izakaya-enkai.html",
         "domain": "maps.google.com",
         "clicks": 1
@@ -481,7 +499,7 @@
       },
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 20
+        "clicks": 19
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -489,7 +507,7 @@
       },
       {
         "path": "/index.html",
-        "clicks": 9
+        "clicks": 12
       },
       {
         "path": "/features/birthday-surprise.html",
@@ -504,11 +522,11 @@
         "clicks": 2
       },
       {
-        "path": "/features/osu-food-walk.html",
+        "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "clicks": 2
       },
       {
-        "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
+        "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
         "clicks": 2
       },
       {
@@ -524,6 +542,10 @@
         "clicks": 1
       },
       {
+        "path": "/features/osu-food-walk.html",
+        "clicks": 1
+      },
+      {
         "path": "/journal/2026-08-16-sakae-magari-kakigori.html",
         "clicks": 1
       },
@@ -536,11 +558,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 87
+    "reservationClicks": 90
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1066,
+    "value": 1024,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
