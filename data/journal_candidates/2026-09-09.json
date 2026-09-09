@@ -1,0 +1,141 @@
+{
+  "date": "2026-09-09",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅の居酒屋、時給1,500円でも人が集まらない — 宴会予約前の3点",
+      "verdict": "PASS",
+      "total": 110,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 7件 (オペ,人件費,回転,業界,構造,相場,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 3件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 169字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "industry_insider",
+      "column_id": "COL-HR-003",
+      "title_draft": "名駅の居酒屋、時給1,500円でも人が集まらない — 宴会予約前の3点",
+      "lead_draft": "10月1日、愛知県の最低賃金が1,140円から1,195円へ上がる。55円増は過去2番目の上げ幅だ。この日を境に、名古屋の居酒屋がよく出す「時給1,500円」は最低賃金の1.26倍にすぎなくなる。それでも人は集まらない。業界人から見れば理由は時給ではなく、シフトの組み方にある。そしてその歪みは、宴会の席を押さえる客の側からも観測できる。",
+      "angle": "最低賃金1,195円で時給の求心力が消える構造を人件費と回転の実数で解き、繁忙ピークだけで組んだシフトというオペの歪みを、客が入店3分で読める3つのサインに翻訳して宴会・接待の予約前チェックに落とす。相場は業界の共通言語で語る。",
+      "main_store": {
+        "name": "トロ壱 名古屋駅前店",
+        "id": "J004470757",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "帝国データバンク「倒産集計 2026年8月報」人手不足倒産47件・物価高倒産85件",
+          "url": "https://www.tdb.co.jp/report/bankruptcy/aggregation/20260908-bankruptcy202608/",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "東京商工リサーチ「8月の『飲食業』倒産80件、年間最多ペース」酒場・ビヤホール16件",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203209_1527.html",
+          "date": "2026-09-04"
+        },
+        {
+          "label": "中日BIZナビ「愛知の最低賃金55円上げ1195円に 地方審議会が決定、10月1日から適用」",
+          "url": "https://biz.chunichi.co.jp/news/article/10/129664/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "帝国データバンク「人手不足に対する企業の動向調査（2026年7月）」非正社員不足は飲食店が業種別トップ",
+          "url": "https://www.tdb.co.jp/report/economic/20260817-laborshortage202607/",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "日本経済新聞「東海3県最低賃金、10月から引き上げ 愛知は1200円目前」",
+          "url": "https://www.nikkei.com/article/DGXZQOFD308EG0Q6A730C2000000/",
+          "date": "2026-07-31"
+        },
+        {
+          "label": "名古屋テレビ「愛知の最低賃金 55円増の時給1195円に 過去2番目の引き上げ幅で答申」",
+          "url": "https://www.nagoyatv.com/news/?id=036652",
+          "date": "2026-08-05"
+        },
+        {
+          "label": "note / UP TENPO 飲食店舗向上委員会「なぜ時給を“上げた”店ほど人件費率が下がるのか」飲食店アルバイト平均時給1,260円",
+          "url": "https://note.com/freejoblife_shuu/n/n9d5e65290179",
+          "date": "2026-06-11"
+        },
+        {
+          "label": "note / freee×AIコンサルタント「最低賃金＋55円では終わりません」発効時期と助成金の実務",
+          "url": "https://note.com/chusho_yosuke/n/n5b67fc3d53c4",
+          "date": "2026-08-03"
+        }
+      ]
+    }
+  ]
+}
