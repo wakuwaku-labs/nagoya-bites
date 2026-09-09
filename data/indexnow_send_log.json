@@ -1,15 +1,14 @@
 {
   "ok": true,
   "dry_run": true,
-  "would_send": 5,
+  "would_send": 4,
   "endpoint": "https://api.indexnow.org/indexnow",
   "urls": [
     "https://nagoya-bites.com/",
     "https://nagoya-bites.com/journal/",
     "https://nagoya-bites.com/features/",
-    "https://nagoya-bites.com/journal/2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html",
     "https://nagoya-bites.com/journal/2026-09-09-meieki-izakaya-jikyu1500-enkai.html"
   ],
   "note": "--yes を付けると実際に送信する（外部通信が発生する）",
-  "logged_at": "2026-09-09T12:50:43.790Z"
+  "logged_at": "2026-09-09T20:40:03.046Z"
 }
