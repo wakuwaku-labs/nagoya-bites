@@ -1,6 +1,6 @@
 {
-  "date": "2026-09-09",
-  "head": "d3d7c6f9271dd4f990d9191a7cd4288ffa1420b8",
+  "date": "2026-09-10",
+  "head": "6f4e6bcde7d96b66d6db02955e524e5e73f01aac",
   "verdict": "FAIL",
   "findings": [
     {
@@ -10,7 +10,7 @@
       "sev": "hard",
       "priority": "P0",
       "title": "Google API key らしき文字列がコミットされている疑い（1箇所）",
-      "body": "シークレット文字列スキャンで検出（値は秘匿）:\n    index.html:9853\n- acceptance: 該当値を確認し本物なら即ローテーション＋履歴消去／誤検知なら .qa-secret-allowlist.txt に登録"
+      "body": "シークレット文字列スキャンで検出（値は秘匿）:\n    index.html:9852\n- acceptance: 該当値を確認し本物なら即ローテーション＋履歴消去／誤検知なら .qa-secret-allowlist.txt に登録"
     },
     {
       "category": "Security",
