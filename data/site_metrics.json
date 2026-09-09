@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-09T01:48:29.718Z",
+  "generatedAt": "2026-09-09T04:46:11.596Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1050,
-    "pageViews": 1858,
-    "sessions": 1268,
-    "avgSessionDuration": 157,
+    "activeUsers": 1051,
+    "pageViews": 1859,
+    "sessions": 1269,
+    "avgSessionDuration": 157.1,
     "bounceRate": 0.31,
-    "pagesPerSession": 1.47
+    "pagesPerSession": 1.46
   },
   "dailyReference": {
     "date": "2026-09-07",
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 905,
-      "direct": 264,
+      "organic": 906,
+      "direct": 265,
       "social": 88,
       "referral": 20,
       "paid": 0,
@@ -26,7 +26,7 @@
     },
     "pct": {
       "organic": 70.6,
-      "direct": 20.6,
+      "direct": 20.7,
       "social": 6.9,
       "referral": 1.6,
       "paid": 0,
@@ -42,7 +42,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 297
+      "sessions": 298
     },
     {
       "source": "(direct)",
@@ -62,7 +62,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 23
+      "sessions": 24
     },
     {
       "source": "duckduckgo",
@@ -540,7 +540,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1050,
+    "value": 1051,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
