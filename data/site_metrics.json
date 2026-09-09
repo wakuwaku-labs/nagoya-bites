@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-09T06:50:06.657Z",
+  "generatedAt": "2026-09-09T12:39:24.565Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1053,
-    "pageViews": 1873,
-    "sessions": 1272,
-    "avgSessionDuration": 153.6,
-    "bounceRate": 0.292,
+    "activeUsers": 1066,
+    "pageViews": 1891,
+    "sessions": 1285,
+    "avgSessionDuration": 152.7,
+    "bounceRate": 0.298,
     "pagesPerSession": 1.47
   },
   "dailyReference": {
@@ -17,16 +17,16 @@
   },
   "channels": {
     "sessions": {
-      "organic": 907,
-      "direct": 267,
+      "organic": 919,
+      "direct": 259,
       "social": 88,
       "referral": 20,
       "paid": 0,
       "other": 4
     },
     "pct": {
-      "organic": 70.5,
-      "direct": 20.8,
+      "organic": 71.2,
+      "direct": 20.1,
       "social": 6.8,
       "referral": 1.6,
       "paid": 0,
@@ -37,22 +37,22 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 408
+      "sessions": 414
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 299
+      "sessions": 304
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 232
+      "sessions": 235
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 182
+      "sessions": 183
     },
     {
       "source": "chatgpt.com",
@@ -62,7 +62,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 26
+      "sessions": 15
     },
     {
       "source": "duckduckgo",
@@ -89,17 +89,17 @@
     {
       "path": "/",
       "pageViews": 345,
-      "sessions": 206
+      "sessions": 207
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 326,
-      "sessions": 277
+      "pageViews": 334,
+      "sessions": 285
     },
     {
       "path": "/index.html",
-      "pageViews": 132,
-      "sessions": 77
+      "pageViews": 133,
+      "sessions": 78
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -108,17 +108,17 @@
     },
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
-      "pageViews": 78,
-      "sessions": 73
+      "pageViews": 79,
+      "sessions": 74
     }
   ],
   "cta": {
-    "outboundClicks": 115,
+    "outboundClicks": 116,
     "ctaClickRate": 9,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 52
+        "clicks": 53
       },
       {
         "domain": "tabelog.com",
@@ -166,8 +166,8 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.6,
-    "ctaClickRate_direct": 6.7,
+    "ctaClickRate_organic": 7.5,
+    "ctaClickRate_direct": 6.9,
     "ctaClickRate_social": 27.3,
     "byPage": [
       {
@@ -199,6 +199,10 @@
         "clicks": 2
       },
       {
+        "path": "/features/date.html",
+        "clicks": 2
+      },
+      {
         "path": "/features/nagoya-italian-guide.html",
         "clicks": 2
       },
@@ -213,10 +217,6 @@
       {
         "path": "/journal/2026-08-31-nagoya-roadside-newstores-price.html",
         "clicks": 2
-      },
-      {
-        "path": "/features/date.html",
-        "clicks": 1
       },
       {
         "path": "/features/nagoya-yakiniku.html",
@@ -540,7 +540,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1053,
+    "value": 1066,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
