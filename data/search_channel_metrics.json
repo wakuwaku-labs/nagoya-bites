@@ -1,65 +1,65 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-10T12:39:27.164Z",
+  "generatedAt": "2026-09-10T20:27:46.439Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1252,
+  "total_sessions": 1244,
   "engines": [
     {
       "key": "google",
       "label": "Google",
-      "sessions": 402,
-      "pct": 32.1,
+      "sessions": 394,
+      "pct": 31.7,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 402
+          "sessions": 394
         }
       ]
     },
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 300,
-      "pct": 24,
+      "sessions": 292,
+      "pct": 23.5,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 300
+          "sessions": 292
         }
       ]
     },
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 263,
-      "pct": 21,
+      "sessions": 271,
+      "pct": 21.8,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 236
+          "sessions": 235
         },
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 27
+          "sessions": 36
         }
       ]
     },
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 166,
-      "pct": 13.3,
+      "sessions": 161,
+      "pct": 12.9,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 166
+          "sessions": 161
         }
       ]
     },
@@ -67,7 +67,7 @@
       "key": "ai_assistant",
       "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
       "sessions": 88,
-      "pct": 7,
+      "pct": 7.1,
       "sources": [
         {
           "source": "chatgpt.com",
@@ -84,13 +84,13 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 20,
-      "pct": 1.6,
+      "sessions": 25,
+      "pct": 2,
       "sources": [
         {
           "source": "(data not available)",
           "medium": "(data not available)",
-          "sessions": 15
+          "sessions": 20
         },
         {
           "source": "service.smt.docomo.ne.jp",
@@ -121,37 +121,37 @@
     }
   ],
   "search_only": {
-    "total": 969,
+    "total": 948,
     "share": [
       {
         "key": "google",
         "label": "Google",
-        "sessions": 402,
-        "pct_of_search": 41.5
+        "sessions": 394,
+        "pct_of_search": 41.6
       },
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 300,
-        "pct_of_search": 31
+        "sessions": 292,
+        "pct_of_search": 30.8
       },
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 166,
-        "pct_of_search": 17.1
+        "sessions": 161,
+        "pct_of_search": 17
       },
       {
         "key": "ai_assistant",
         "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
         "sessions": 88,
-        "pct_of_search": 9.1
+        "pct_of_search": 9.3
       },
       {
         "key": "duckduckgo",
         "label": "DuckDuckGo",
         "sessions": 13,
-        "pct_of_search": 1.3
+        "pct_of_search": 1.4
       }
     ]
   },
@@ -159,12 +159,12 @@
     "from": "2026-09-09",
     "to": "2026-09-10",
     "delta": {
-      "google": 0,
-      "bing": 0,
-      "direct": 1,
+      "google": 2,
+      "bing": 6,
+      "direct": 7,
       "yahoo": 1,
       "ai_assistant": 0,
-      "other": 4,
+      "other": 15,
       "duckduckgo": 0,
       "social": -4
     }
@@ -172,7 +172,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 402 セッションのみ。Bing(300) + 生成AI(88) の 388 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 394 セッションのみ。Bing(292) + 生成AI(88) の 380 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
