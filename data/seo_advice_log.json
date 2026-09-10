@@ -2750,6 +2750,36 @@
       "brand_reason": "前提が失効している。data/journal_sns_draft_policy.json の generate_sns_draft は 2026-09-05 にオーナー指示でfalseへ変更され、docs/daily-posts/ の最新は2026-09-05.mdで停止済み。助言が指す「最新記事(2026-09-09)のSNS原稿」は存在しないため実行不能。またSNSへの手動投稿はオーナー本人の行動でエージェントの実装課題にならない。同主旨は09-05・09-08・09-09と直近4日で3回却下済み。なおGASの助言生成側がこのポリシー変更を認識しておらず、停止した資材を推奨し続けている点はオーナーへ報告する",
       "category": null,
       "fingerprint": "50accd5609e30601"
+    },
+    {
+      "id": "SEO-089",
+      "date": "2026-09-10",
+      "source": "line-daily",
+      "advice": "🔴 予約ボタンクリック、マップクリック、店舗詳細オープンが全て0回と、行動イベントが全く発生していません。👉 トップページ(index.html)のファーストビューに「人気の店舗」や「今日のおすすめ」を3店舗程度ピックアップし、店舗詳細モーダルへの導線を強化しましょう",
+      "verdict": "adopted",
+      "brand_reason": "振替採用。literalな打ち手（FVに3店ピック）は却下——同種の助言は SEO-088（2026-09-09 done）で既に実装済みと確認済みで、かつ当日の閲覧は42PV中14PV(33%)が features/nagoya-solo-dining、トップは6PV(14%)しかなくFVを触っても当たらない。一方で助言の前提『行動イベントが全く発生していない』の側に検証可能な欠陥を発見: GASの RESERVE_EVENTS は cta_click/cta_reserve の2種のみで outbound_click を集計コードに一切含まない（.gas-deploy/Code.js:407、grep -c outbound_click = 0）。しかし SEO-072（status: done）の acceptance ② は『予約＝cta_click + cta_reserve + 予約ドメインへの outbound_click』と明記しており、done の acceptance が未実装のまま。実測では outbound_click は直近30日 99〜102クリック・ctaClickRate 8.4〜8.5%（data/metrics_history.json・独立GA4パイプライン）発火している。GAS反映判定は deployed でデプロイ遅れではなくコードの欠落。結果として事実に反する前提が🔴枠を毎日消費し同じ打ち手を再生産している（SEO-075/076 と同型）。順位操作・広告依存を伴わず自社実測を数え直すだけでMoatに適合。P1。acceptanceに『link_domainで予約ドメインに絞る（数え過ぎは数え漏れと同じ事故）』を必須で記載",
+      "category": "SEO",
+      "fingerprint": "71eab2902b0242d5"
+    },
+    {
+      "id": null,
+      "date": "2026-09-10",
+      "source": "line-daily",
+      "advice": "🟡 Bing検索からの流入が10訪問(40%)と最も多いです。Google検索(24%)を上回っています。👉 features/配下の特集記事（特にnagoya-solo-dining）やjournal/記事のタイトル・見出しにBing検索で上位表示されそうなキーワードを意識して追記・修正し、SEO効果を検証しましょう",
+      "verdict": "rejected",
+      "brand_reason": "却下（同一パターンの再来・制約10違反）。『Bingで上位表示されそうなKW』を推測して既存記事のタイトル・見出しを書き換える打ち手は、SEO-071 で明確に却下済みであり 2026-08-20 / 08-21 にも却下している。理由は変わっていない: SEO-067（Bing Webmaster Tools 接続）がオーナー本人の操作待ちで blocked のため Bing側の検索実データが1件も存在せず、『Bing向けKW』は当て推量にしかならない。検証できない自己申告を根拠に実在記事を書き換えるのは制約10（合否・改変を分ける入力は第三者が後から確認できるものに限る）に反する。加えて SEO-078 の注記どおり、Bing/Google の別は当日 n=25 程度の内訳で単日のブレを含む。なお助言が指す症状（Bingが最大流入エンジン）自体は実測どおり正しく（data/metrics_history.json 直近30日 Bing 289〜295 vs Google 392〜406、search_channel_metrics.json でも継続）、その正しい打ち手は既に SEO-085（IndexNow が CI で dry_run のまま一度も送信されていない・status ready・GitHub Secrets 設定がオーナー操作待ち）として起票済みのため、本件を新規起票する価値は無い",
+      "category": null,
+      "fingerprint": "95d864ec00353d7b"
+    },
+    {
+      "id": null,
+      "date": "2026-09-10",
+      "source": "line-daily",
+      "advice": "🟢 訪問者数42人に対しページ閲覧数も42と、ほとんど回遊が発生していません。👉 nagoya-solo-dining特集ページに「一人飲みにおすすめのバー特集(nagoya-bar-guide)」など関連する特集記事への内部リンクを設置し、ユーザーの回遊を促しましょう",
+      "verdict": "duplicate",
+      "brand_reason": "重複。SEO-070（status: ready・未着手）が同一の打ち手を扱っており、その source は 2026-08-23 の日次助言『人気の特集 nagoya-solo-dining ページに、関連性の高い特集へのリンクを記事の冒頭・中盤・末尾に設置し、回遊を促しましょう』でほぼ同文。fingerprint は数値差で不一致だったが意味的に同一のため再起票しない。SEO-070 が未解消であることは実測で確認済み: features/nagoya-solo-dining.html は関連特集への internal_link_click を6本持つが全て 427〜432行目/全511行＝ページ下部84%地点に集中しており、SEO-070 の指摘『本文の後ろにしかない』はそのまま成立している。回遊の横展開側は SEO-087（ready）も併走中",
+      "category": null,
+      "fingerprint": "d53489781008a09f"
     }
   ]
 }
