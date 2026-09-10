@@ -1,16 +1,16 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-09T23:37:44.987Z",
+  "generatedAt": "2026-09-10T00:14:48.964Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1225,
+  "total_sessions": 1227,
   "engines": [
     {
       "key": "google",
       "label": "Google",
       "sessions": 400,
-      "pct": 32.7,
+      "pct": 32.6,
       "sources": [
         {
           "source": "google",
@@ -35,7 +35,7 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 256,
+      "sessions": 257,
       "pct": 20.9,
       "sources": [
         {
@@ -46,20 +46,20 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 20
+          "sessions": 21
         }
       ]
     },
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 165,
+      "sessions": 166,
       "pct": 13.5,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 165
+          "sessions": 166
         }
       ]
     },
@@ -97,38 +97,37 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 5,
-      "pct": 0.4,
+      "sessions": 9,
+      "pct": 0.7,
       "sources": [
         {
           "source": "service.smt.docomo.ne.jp",
           "medium": "referral",
           "sessions": 5
+        },
+        {
+          "source": "(data not available)",
+          "medium": "(data not available)",
+          "sessions": 4
         }
       ]
     },
     {
       "key": "social",
       "label": "SNS",
-      "sessions": 4,
-      "pct": 0.3,
-      "sources": [
-        {
-          "source": "facebook.com",
-          "medium": "referral",
-          "sessions": 4
-        }
-      ]
+      "sessions": 0,
+      "pct": 0,
+      "sources": []
     }
   ],
   "search_only": {
-    "total": 960,
+    "total": 961,
     "share": [
       {
         "key": "google",
         "label": "Google",
         "sessions": 400,
-        "pct_of_search": 41.7
+        "pct_of_search": 41.6
       },
       {
         "key": "bing",
@@ -139,8 +138,8 @@
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 165,
-        "pct_of_search": 17.2
+        "sessions": 166,
+        "pct_of_search": 17.3
       },
       {
         "key": "ai_assistant",
