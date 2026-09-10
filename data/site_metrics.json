@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-10T00:14:45.803Z",
+  "generatedAt": "2026-09-10T12:39:23.888Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1025,
-    "pageViews": 1858,
-    "sessions": 1244,
-    "avgSessionDuration": 153.9,
-    "bounceRate": 0.301,
+    "activeUsers": 1053,
+    "pageViews": 1893,
+    "sessions": 1274,
+    "avgSessionDuration": 150.1,
+    "bounceRate": 0.303,
     "pagesPerSession": 1.49
   },
   "dailyReference": {
@@ -17,32 +17,32 @@
   },
   "channels": {
     "sessions": {
-      "organic": 876,
-      "direct": 266,
-      "social": 89,
+      "organic": 884,
+      "direct": 272,
+      "social": 90,
       "referral": 19,
       "paid": 0,
-      "other": 7
+      "other": 18
     },
     "pct": {
-      "organic": 69.7,
+      "organic": 68.9,
       "direct": 21.2,
-      "social": 7.1,
+      "social": 7,
       "referral": 1.5,
       "paid": 0,
-      "other": 0.6
+      "other": 1.4
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 400
+      "sessions": 402
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 294
+      "sessions": 300
     },
     {
       "source": "(direct)",
@@ -62,7 +62,12 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 21
+      "sessions": 27
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 15
     },
     {
       "source": "duckduckgo",
@@ -78,33 +83,28 @@
       "source": "service.smt.docomo.ne.jp",
       "medium": "referral",
       "sessions": 5
-    },
-    {
-      "source": "(data not available)",
-      "medium": "(data not available)",
-      "sessions": 4
     }
   ],
   "topPages": [
     {
       "path": "/",
-      "pageViews": 349,
-      "sessions": 210
+      "pageViews": 351,
+      "sessions": 213
     },
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 328,
-      "sessions": 279
+      "pageViews": 336,
+      "sessions": 287
     },
     {
       "path": "/index.html",
-      "pageViews": 135,
-      "sessions": 78
+      "pageViews": 137,
+      "sessions": 81
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 116,
-      "sessions": 106
+      "pageViews": 118,
+      "sessions": 109
     },
     {
       "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
@@ -114,7 +114,7 @@
   ],
   "cta": {
     "outboundClicks": 120,
-    "ctaClickRate": 9.6,
+    "ctaClickRate": 9.4,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -171,8 +171,8 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.6,
-    "ctaClickRate_direct": 9,
-    "ctaClickRate_social": 27,
+    "ctaClickRate_direct": 8.8,
+    "ctaClickRate_social": 26.7,
     "byPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -216,10 +216,6 @@
       },
       {
         "path": "/journal/2026-08-31-nagoya-roadside-newstores-price.html",
-        "clicks": 2
-      },
-      {
-        "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
         "clicks": 2
       },
       {
@@ -288,6 +284,10 @@
       },
       {
         "path": "/journal/2026-09-01-nishiki-steakhouse-settai-price.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
         "clicks": 1
       },
       {
@@ -362,11 +362,6 @@
         "clicks": 2
       },
       {
-        "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 2
-      },
-      {
         "path": "/",
         "domain": "news.google.com",
         "clicks": 1
@@ -477,6 +472,11 @@
         "clicks": 1
       },
       {
+        "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
         "path": "/journal/2026-09-04-meieki-shokudo-tomoru-sanma-price.html",
         "domain": "dainagoyabuilding.com",
         "clicks": 1
@@ -489,6 +489,11 @@
       {
         "path": "/journal/2026-09-05-meieki-nagoyameshi-izakaya-enkai.html",
         "domain": "maps.google.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 1
       }
     ],
@@ -526,10 +531,6 @@
         "clicks": 2
       },
       {
-        "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
-        "clicks": 2
-      },
-      {
         "path": "/",
         "clicks": 1
       },
@@ -556,13 +557,21 @@
       {
         "path": "/journal/2026-08-31-nagoya-roadside-newstores-price.html",
         "clicks": 1
+      },
+      {
+        "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html",
+        "clicks": 1
       }
     ],
     "reservationClicks": 90
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1025,
+    "value": 1053,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
