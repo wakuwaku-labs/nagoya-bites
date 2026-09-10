@@ -1078,7 +1078,8 @@
 
 ### [SEO-070] 特集・日次ジャーナルの内部リンクが「本文の後ろ」にしか無く、記事を読み切らない読者に回遊の手がかりが一度も出ない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-09-10 実装・push済み）
+- **resolved**: 2026-09-10
 - **detected**: 2026-08-24
 - **category**: SEO
 - **owner**: Builder + Editor
@@ -1101,6 +1102,14 @@
   4. `index.html` は単一ファイル維持（制約1）・`LOCAL_STORES` パターン不変（制約2）・フィルタ/検索/モーダル/IGエンベッド/Google評価を壊さない（制約5）
 - **効果測定**: `data/metrics_history.json` の pagesPerSession 前後比 ＋ [[SEO-052]] の `internal_link_click` 実数。体感ではなく数字で判定する
 - **files**: `scripts/refresh_journal_related.js`, `scripts/add_feature_top_cta.js`, `features/*.html`, `journal/*.html`
+- **実装ログ（2026-09-10）**:
+  - `scripts/refresh_journal_related.js` を拡張し、`refreshEarlyLink()` 関数を追加。`.nb-site-intro` の直後・最初の `<h2>` の前に `<!-- SEO-070:EARLY-LINK:START/END -->` マーカー方式で冪等注入（マーカー再実行で0変更確認済み）
+  - `TOPIC_FEATURES` + `matchTopicFeature()` の既存ロジックを流用。対応する `features/*.html` の実在確認付き（dead link ゼロ）
+  - `assets/css/nb.css` に `.nb-early-link` / `.nb-early-link a` を追加（`--fs-xs`=13px・`--gold` border-left 2px・コアトークンのみ・新規リテラル値0件）
+  - リンクに `trackEvent('internal_link_click',{block:'early_feature_link'})` 計測付与（[[SEO-052]] と同じ計測経路）
+  - 実行結果: 125記事中75本にEarlyLink注入、4本は `nb-site-intro` なし（旧テンプレート）でスキップ、5本は旧 `related-wrap` 形式でスキップ
+  - `audit_design_system.js --check` の exit 1 は変更前後で同一ベースライン（stores/ の既存125件・journal への新規違反0件を差分確認済み）
+  - 効果測定: 翌週以降の `data/metrics_history.json` の pagesPerSession 前後比 + `internal_link_click` block=`early_feature_link` の実数で判定
 
 ### [SEO-071] IndexNow が「送信可能な状態のまま一度も送信されていない」— 最大流入エンジン Bing への更新通知が丸ごと死んでいる ✅
 

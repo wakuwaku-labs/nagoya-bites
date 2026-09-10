@@ -8,6 +8,13 @@ const fs = require('fs');
 const path = require('path');
 
 const JOURNAL_DIR = path.join(__dirname, '..', 'journal');
+const FEATURES_DIR = path.join(__dirname, '..', 'features');
+
+const EARLY_START = '<!-- SEO-070:EARLY-LINK:START -->';
+const EARLY_END   = '<!-- SEO-070:EARLY-LINK:END -->';
+const RE_EARLY_BLOCK = new RegExp(
+  '<!-- SEO-070:EARLY-LINK:START -->[\\s\\S]*?<!-- SEO-070:EARLY-LINK:END -->'
+);
 
 function listPosts() {
   return fs.readdirSync(JOURNAL_DIR)
@@ -75,6 +82,48 @@ function matchTopicFeature(title) {
   return null;
 }
 
+function buildEarlyLinkHtml(topic) {
+  const onclick = `if(typeof trackEvent==='function')trackEvent('internal_link_click',{block:'early_feature_link'})`;
+  return `${EARLY_START}
+<p class="nb-early-link">関連特集: <a href="../features/${topic.slug}.html" onclick="${onclick}">${topic.label} →</a></p>
+${EARLY_END}`;
+}
+
+function refreshEarlyLink(file, postsMeta) {
+  const fp = path.join(JOURNAL_DIR, file);
+  let html = fs.readFileSync(fp, 'utf8');
+  const title = postsMeta[file] && postsMeta[file].title;
+  let topic = matchTopicFeature(title);
+  if (topic && !fs.existsSync(path.join(FEATURES_DIR, topic.slug + '.html'))) topic = null;
+
+  const hasBlock = RE_EARLY_BLOCK.test(html);
+
+  if (!topic) {
+    if (!hasBlock) return { file, earlyChanged: false };
+    const updated = html.replace(RE_EARLY_BLOCK, '');
+    fs.writeFileSync(fp, updated);
+    return { file, earlyChanged: true };
+  }
+
+  const block = buildEarlyLinkHtml(topic);
+  if (hasBlock) {
+    const updated = html.replace(RE_EARLY_BLOCK, block);
+    if (updated === html) return { file, earlyChanged: false };
+    fs.writeFileSync(fp, updated);
+    return { file, earlyChanged: true };
+  }
+
+  // Inject after </p> that closes .nb-site-intro
+  const introStart = html.indexOf('<p class="nb-site-intro">');
+  if (introStart < 0) return { file, earlyChanged: false, earlyReason: 'nb-site-intro not found' };
+  const introEnd = html.indexOf('</p>', introStart);
+  if (introEnd < 0) return { file, earlyChanged: false, earlyReason: 'nb-site-intro end not found' };
+  const at = introEnd + '</p>'.length;
+  const next = html.slice(0, at) + '\n' + block + '\n' + html.slice(at);
+  fs.writeFileSync(fp, next);
+  return { file, earlyChanged: true };
+}
+
 function buildRelatedHtml(currentFile, posts, postsMeta) {
   const others = posts.filter(f => f !== currentFile).slice(0, 3);
   const lines = [];
@@ -130,20 +179,21 @@ function main() {
   }
   console.log(`Found ${posts.length} posts`);
   let changed = 0;
+  let earlyChanged = 0;
   let skippedOld = 0;
   for (const f of posts) {
     const r = refreshFile(f, posts, postsMeta);
-    if (r.changed) {
-      changed++;
-    } else {
-      if (r.reason && r.reason.includes('旧 related-wrap')) skippedOld++;
-      else console.log(`SKIP ${f}: ${r.reason}`);
-    }
+    const e = refreshEarlyLink(f, postsMeta);
+    if (r.changed || e.earlyChanged) changed++;
+    if (r.reason && r.reason.includes('旧 related-wrap')) skippedOld++;
+    else if (!r.changed && r.reason && r.reason !== 'no diff') console.log(`SKIP(related) ${f}: ${r.reason}`);
+    if (e.earlyChanged) earlyChanged++;
+    else if (e.earlyReason) console.log(`SKIP(early) ${f}: ${e.earlyReason}`);
   }
   if (skippedOld > 0) {
     console.log(`SKIP（対象外）${skippedOld}件: 旧 related-wrap 形式。既存の手動キュレーション済みリンクを保持します。`);
   }
-  console.log(`Updated ${changed}/${posts.length} files`);
+  console.log(`Updated ${changed}/${posts.length} files (early-link injected: ${earlyChanged})`);
 }
 
 main();

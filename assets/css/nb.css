@@ -289,6 +289,8 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .source-note a{color:var(--gold);text-decoration:none;}
 .nb-site-intro{font-size:var(--fs-xs);color:var(--dim);line-height:var(--lh-ui);}
 .nb-site-intro a{color:var(--gold);text-decoration:none;}
+.nb-early-link{font-size:var(--fs-xs);color:var(--dim);border-left:2px solid var(--gold);padding:.35rem .75rem;margin:0 0 var(--sp-5);line-height:var(--lh-ui);}
+.nb-early-link a{color:var(--gold);text-decoration:none;font-weight:500;}
 
 .store-list{display:flex;flex-direction:column;gap:var(--sp-4);margin:var(--sp-5) 0;}
 .store-card{display:flex;gap:var(--sp-4);align-items:flex-start;background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-md);padding:var(--sp-5);margin-bottom:0;}
