@@ -1,0 +1,431 @@
+{
+  "date": "2026-09-11",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄のテレビ塔でお月見デート、21時閉館から逆算する夕食のラストオーダー",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 90,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (予約,シーン,価格帯) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 148字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「デート」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "90点（自動公開ライン 100点）。主な不足: topicality -13 / uniqueness -5 / search_intent -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "十五夜は金曜、満月は日曜未明——栄のお月見デートは土曜の夜が組みやすい",
+      "verdict": "HOLD",
+      "total": 80,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (予約) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 113字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「デート」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "テレビ塔の足元で食べるか、先に食べるか——栄の月見デートと席数21の店",
+      "verdict": "HOLD",
+      "total": 75,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 12,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 1件 (予約) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 56字 +2",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「デート」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "月見バーガーの季節、名古屋のチェーン限定メニューを価格で読む",
+      "verdict": "HOLD",
+      "total": 48,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 3,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "バー",
+          "feature": "features/nagoya-bar-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 16日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 77字 +2",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「バー」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "秋の月見メニュー、名古屋のからあげ定食に出た「とろろ×卵黄」",
+      "verdict": "HOLD",
+      "total": 29,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 12,
+        "writability": 6,
+        "novelty": 3,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 37字（短すぎ）→ +0",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "90点（自動公開ライン 100点）。主な不足: topicality -13 / uniqueness -5 / search_intent -2",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "栄のテレビ塔でお月見デート、21時閉館から逆算する夕食のラストオーダー",
+      "lead_draft": "中部電力 MIRAI TOWER の90m展望台で9月14日から「天空のお月見」が始まる。今年の十五夜は9月25日の金曜で、展望台は21時閉館・飲食の提供はない。デートの夕食は外で組むことになるが、食べるのが先か後かで選べる店が変わる。業界人の目で、久屋大通公園周辺のラストオーダーから逆算する。",
+      "angle": "展望台の閉館時刻と飲食店のラストオーダーを突き合わせ、金曜19時の予約集中を避けるデートの時間割を業界人視点で組む（価格帯・予約・席数・シーン）",
+      "main_store": {
+        "name": "炭焼牛たん東山レイヤード久屋大通パーク店",
+        "id": "J003883005",
+        "area": "栄",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（名古屋テレビ塔株式会社）NAKED 天空のお月見",
+          "url": "https://prtimes.jp/main/html/rd/p/000000025.000048901.html",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "PR TIMES（株式会社ネイキッド）NAKED 天空のお月見 2026",
+          "url": "https://prtimes.jp/main/html/rd/p/000001180.000008210.html",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "アストロアーツ 中秋の名月（2026年9月25日）",
+          "url": "https://www.astroarts.co.jp/special/2026moon/index-j.shtml"
+        },
+        {
+          "label": "ホットペッパー 炭焼牛たん東山レイヤード久屋大通パーク店",
+          "url": "https://www.hotpepper.jp/strJ003883005/"
+        },
+        {
+          "label": "ホットペッパー スコンター RAYARD Hisaya-odori Park店",
+          "url": "https://www.hotpepper.jp/strJ001250854/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "十五夜は金曜、満月は日曜未明——栄のお月見デートは土曜の夜が組みやすい",
+      "lead_draft": "2026年の十五夜は9月25日の金曜、満月の瞬間は27日の1時49分。テレビ塔の展望台イベントは土曜だけ21時40分まで開く。金曜19時の予約集中を避け、土曜に月を見てから食べるなら、ラストオーダー22時半の店が選択肢になる。",
+      "angle": "暦（十五夜と満月のずれ）と展望台の土曜延長営業から、予約の取りやすい曜日を業界人視点で読む",
+      "main_store": {
+        "name": "スコンター SUKHONTHA RAYARD Hisaya-odori Park店",
+        "id": "J001250854",
+        "area": "栄",
+        "genre": "アジア・エスニック料理"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（名古屋テレビ塔株式会社）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000025.000048901.html",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "アストロアーツ 中秋の名月",
+          "url": "https://www.astroarts.co.jp/special/2026moon/index-j.shtml"
+        },
+        {
+          "label": "ホットペッパー スコンター",
+          "url": "https://www.hotpepper.jp/strJ001250854/"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "月見バーガーの季節、名古屋のチェーン限定メニューを価格で読む",
+      "lead_draft": "マクドナルドの月見ファミリーが9月2日に始まり、各チェーンの月見メニューが出揃った。価格帯と販売期間を並べると、チェーンが9月に何を狙っているかが見える。",
+      "angle": "チェーンの月見限定の価格設計を業界人視点で比較",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": "ファストフード"
+      },
+      "sources": [
+        {
+          "label": "マクドナルド ニュースリリース",
+          "url": "https://www.mcdonalds.co.jp/company/news/2026/0826a/",
+          "date": "2026-08-26"
+        },
+        {
+          "label": "いこーよニュース 月見メニュー14選",
+          "url": "https://report.iko-yo.net/articles/33047"
+        },
+        {
+          "label": "ゼッテリア 月見フェア第二弾",
+          "url": "https://www.zetteria.jp/special/tsukimi_burger_202608/index.html"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "テレビ塔の足元で食べるか、先に食べるか——栄の月見デートと席数21の店",
+      "lead_draft": "展望台のお月見は18時開場。先に食べるなら17時に開く21席の店を押さえる手がある。小箱は予約で埋まるのが早い。",
+      "angle": "先に食べる派の時間割と小箱の予約の読み方",
+      "main_store": {
+        "name": "THE EAT SHOP izumi ザイートショップイズミ",
+        "id": "J003736414",
+        "area": "栄",
+        "genre": "イタリアン・フレンチ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社ネイキッド）",
+          "url": "https://prtimes.jp/main/html/rd/p/000001180.000008210.html",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "ホットペッパー THE EAT SHOP izumi",
+          "url": "https://www.hotpepper.jp/strJ003736414/"
+        },
+        {
+          "label": "アストロアーツ 中秋の名月",
+          "url": "https://www.astroarts.co.jp/special/2026moon/index-j.shtml"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "秋の月見メニュー、名古屋のからあげ定食に出た「とろろ×卵黄」",
+      "lead_draft": "から揚げチェーンの秋限定に、とろろと卵黄を合わせた月見からあげ定食が出た。",
+      "angle": "チェーン限定の月見アレンジ",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": "からあげ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES がブリチキン。",
+          "url": "https://prtimes.jp/main/html/rd/p/000000158.000051168.html"
+        },
+        {
+          "label": "いこーよニュース",
+          "url": "https://report.iko-yo.net/articles/33047"
+        }
+      ]
+    }
+  ]
+}
