@@ -441,6 +441,8 @@ function analyze(data) {
   const gmapEvent = data.events.find(e => e.dimensions[0] === 'cta_gmap_click');
   const gmapCount  = gmapEvent ? parseInt(gmapEvent.metrics[0]) : 0;
   const modalCount = sumEvt(DETAIL_EVENTS);
+  // 電話ボタン（cta_call_click）: 店舗詳細モーダルの「電話する」タップ回数
+  const callCount = sumEvt(['cta_call_click']);
   // SEO-089: outbound_click を予約ドメイン（hotpepper/tabelog等）と情報ドメインに分離して集計
   const outboundByDomain = data.outboundByDomain || [];
   const reserveOutboundCount = outboundByDomain
@@ -487,7 +489,7 @@ function analyze(data) {
     sessionSources: s.sources,
     pagesPerSession: pps,
     nonBaseEvents,
-    ctaCount, gmapCount, modalCount, ctaRate,
+    ctaCount, gmapCount, modalCount, ctaRate, callCount,
     outboundInfoCount,
     organicPct, socialPct, mobilePct,
     srcTotal, devTotal,
@@ -663,7 +665,7 @@ function buildAdvicePrompt(data, a, date, isWeekly) {
 'このサイトのオーナー（現役の飲食関係者・Web分析は素人）に向けて、' + period + 'のアクセス解析データから「今日やるべき具体的な改善策」を提案してください。',
 '',
 '# サイトの構造（打ち手はこの実装に即して具体的に書く）',
-'- index.html 一枚に全店舗を掲載。検索／エリア・シーンのフィルタ／店舗詳細モーダル／予約ボタン(cta_click)／Googleマップ導線(cta_gmap_click)／Instagramエンベッドあり',
+'- index.html 一枚に全店舗を掲載。検索／エリア・シーンのフィルタ／店舗詳細モーダル／予約ボタン(cta_click)／Googleマップ導線(cta_gmap_click)／電話ボタン(cta_call_click)／Instagramエンベッドあり',
 '- journal/ の日次記事には予約導線(cta_reserve)あり。features/ の特集から店舗詳細への遷移は feature_store_click で計測。stores/ の静的店舗ページ（5500枚超）は cta_click(HP) / cta_gmap_click(マップ) で計測。',
 '- features/ にシーン別特集（名駅・栄・宴会・個室・接待・誕生日・デート・女子会・大人数 など20本）',
 '- journal/ に日次ジャーナル記事（毎日1本公開）',
@@ -681,7 +683,7 @@ function buildAdvicePrompt(data, a, date, isWeekly) {
 '- 1訪問あたり閲覧: ' + a.pagesPerSession.toFixed(1) + 'ページ（目安2以上が良好）',
 '- 平均滞在: ' + secToText(t.avgDuration) + '（目安60秒以上）',
 '- 直帰率: ' + Math.round(t.bounceRate * 100) + '%（目安50%未満が良好・70%超は要注意）',
-'- 予約ボタンクリック（予約ドメイン外部リンク含む）: ' + a.ctaCount + '回 ／ 情報到達（マップ・Instagram等）: ' + (a.outboundInfoCount || 0) + '回 ／ マップ: ' + a.gmapCount + '回 ／ 店舗詳細を開いた: ' + a.modalCount + '回',
+'- 予約ボタンクリック（予約ドメイン外部リンク含む）: ' + a.ctaCount + '回 ／ 電話ボタン: ' + (a.callCount || 0) + '回 ／ 情報到達（マップ・Instagram等）: ' + (a.outboundInfoCount || 0) + '回 ／ マップ: ' + a.gmapCount + '回 ／ 店舗詳細を開いた: ' + a.modalCount + '回',
 '- 予約クリック率（予約÷訪問者）: ' + (a.ctaRate * 100).toFixed(1) + '%（目安3%）',
 '- 検索流入比率: ' + Math.round(a.organicPct * 100) + '%（判別できた' + a.identifiableSessions + '件中）' +
   ' ／ SNS流入比率: ' + Math.round(a.socialPct * 100) + '%' +
@@ -898,6 +900,7 @@ function formatDailyReport(data, date) {
     msg += '\n【ユーザーの行動】\n';
     if (a.modalCount) msg += '👀 店舗詳細を開いた: ' + a.modalCount + '回\n';
     if (a.ctaCount)   msg += '🔘 予約ボタン押した: ' + a.ctaCount + '回（予約ドメインへの外部リンク含む）\n';
+    if (a.callCount)  msg += '📞 電話ボタン押した: ' + a.callCount + '回\n';
     if (a.outboundInfoCount) msg += '🔗 情報到達（マップ・Instagram等）: ' + a.outboundInfoCount + '回\n';
     if (a.gmapCount)  msg += '🗺 マップ開いた: ' + a.gmapCount + '回\n';
     if (t.users >= 20) {
@@ -973,6 +976,7 @@ function formatWeeklyReport(data, prevData, startDate, endDate) {
     msg += '\n【ユーザーの行動】\n';
     if (a.modalCount) msg += '👀 店舗詳細: ' + a.modalCount + '回\n';
     if (a.ctaCount)   msg += '🔘 予約ボタン: ' + a.ctaCount + '回（予約ドメインへの外部リンク含む）\n';
+    if (a.callCount)  msg += '📞 電話ボタン: ' + a.callCount + '回\n';
     if (a.outboundInfoCount) msg += '🔗 情報到達（マップ・Instagram等）: ' + a.outboundInfoCount + '回\n';
     if (a.gmapCount)  msg += '🗺 マップ: ' + a.gmapCount + '回\n';
   }
@@ -1065,6 +1069,7 @@ function eventToName(event) {
   const map = {
     'cta_click': '予約ボタン',
     'cta_gmap_click': 'Googleマップ',
+    'cta_call_click': '電話ボタン',
     'modal_open': '店舗詳細',
     'search': '検索',
     'share_x': 'Xシェア',
