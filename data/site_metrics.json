@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-11T09:08:24.216Z",
+  "generatedAt": "2026-09-11T12:37:43.195Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1063,
-    "pageViews": 1916,
-    "sessions": 1287,
-    "avgSessionDuration": 151.4,
-    "bounceRate": 0.299,
+    "activeUsers": 1066,
+    "pageViews": 1918,
+    "sessions": 1290,
+    "avgSessionDuration": 151,
+    "bounceRate": 0.301,
     "pagesPerSession": 1.49
   },
   "dailyReference": {
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 909,
-      "direct": 271,
+      "organic": 910,
+      "direct": 274,
       "social": 93,
       "referral": 19,
       "paid": 0,
       "other": 5
     },
     "pct": {
-      "organic": 70.1,
-      "direct": 20.9,
-      "social": 7.2,
+      "organic": 69.9,
+      "direct": 21.1,
+      "social": 7.1,
       "referral": 1.5,
       "paid": 0,
       "other": 0.4
@@ -42,7 +42,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 314
+      "sessions": 315
     },
     {
       "source": "(direct)",
@@ -62,7 +62,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 22
+      "sessions": 25
     },
     {
       "source": "duckduckgo",
@@ -94,7 +94,7 @@
     {
       "path": "/features/nagoya-solo-dining.html",
       "pageViews": 350,
-      "sessions": 296
+      "sessions": 298
     },
     {
       "path": "/index.html",
@@ -114,7 +114,7 @@
   ],
   "cta": {
     "outboundClicks": 123,
-    "ctaClickRate": 9.6,
+    "ctaClickRate": 9.5,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -171,7 +171,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.5,
-    "ctaClickRate_direct": 9.6,
+    "ctaClickRate_direct": 9.5,
     "ctaClickRate_social": 25.8,
     "byPage": [
       {
@@ -571,7 +571,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1063,
+    "value": 1066,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
