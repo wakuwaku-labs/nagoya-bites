@@ -339,7 +339,17 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `data/ig_post_policy.json` | **店舗カードに埋め込む Instagram 投稿の採用基準の唯一の情報源**。埋め込むのは「その店の料理・内装・外観がわかる投稿」だけで、求人・休業案内・挨拶・御礼・店外イベント・他店まとめ・客室紹介は落とす。判定根拠は**公開 embed のキャプション本文だけ**＝誰でも同じURLを開いて検算できる事実（制約10）。**中核はハッシュタグを採点対象から外すこと**——飲食店の投稿はほぼ全てが `#焼肉 #名古屋グルメ` で終わるため、これを料理語として数えると「何の投稿でも通る」ゲートになる（ISSUE-092。実例: 焼肉店のカードに頂き物の苺のパック写真が出ていた）。判定器は `scripts/lib/ig_post_policy.js` の1本で、選定（`fetch_ig_posts_resolved.js`）・掲載（`build.js`）・監査（`audit_ig_post_relevance.js`）が同じ判定を共有する。語彙・閾値の変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_ig_post_relevance.js`（Builder/DataKeeper 共管） |
 | `scripts/select_ig_posts.js` | **埋め込み投稿の選び直し器**。基準（`data/ig_post_policy.json`）を通らない投稿しか無い店について、そのアカウントの最近の投稿を新しい順に判定し**最初に通った1件へ差し替える**。全部通らなければ埋め込みなしにする（取り繕わない＝写真選定と同じ思想）。**ログイン不要の公開エンドポイントだけを使う**ため Instagram の認証が切れていても回る（`fetch_ig_posts_resolved.js` は `.ig_cookies.json` 必須で、認証切れの間は選び直しが止まる）。投稿一覧が取れるアカウントは実測で約1/4のため、取れない分は既存投稿の判定に留まる。確認は `node scripts/select_ig_posts.js --dry-run`（Builder/DataKeeper 共管） |
 | `data/ig_post_evidence.json` | 埋め込み投稿の**証跡**（キャプション本文・投稿者・削除の有無）を shortcode をキーに保存する。これが無いと「なぜその投稿を選んだか」を後から検算できず、関連性の判定にかけることすらできない（旧データは postUrl/score/type しか持っていなかった）。回収は `node scripts/fetch_ig_post_evidence.js`（公開 embed からテキストのみ取得。ログイン不要・画像は一切ダウンロードしないため写真ポリシーに抵触しない）。**削除済み投稿の検出も兼ねる**（削除された投稿の埋め込みはサイト上で「リンクが壊れています」と表示されるため掲載から外す） |
-| `data/trending_stores.json` | 既存店舗への話題フラグ後付けマスター（DataKeeper管轄） |
+| `data/trending_stores.json` | 「今日の話題店」TOP5の**選定材料の唯一の情報源**（`stores[]`=話題フラグ付与済み・`candidates[]`=LOCAL_STORES未マッチの未登録店）。2026-09-11、オーナーから「今日の話題店がずっと同じラインナップ」と報告があり調査したところ、本ファイルが2026-04-21以来7店のまま・`manual_stores.json`の編集部推薦167店中121店が2026-08-21の一括登録から出典URLが一度も更新されていないことが判明（TOP5選定ロジック自体は毎朝正しく動いていたが、材料が3週間フリーズしていた）。新規発掘は[[話題店発掘ループ]]（下記）が継続的に供給する（DataKeeper/Editor 共管） |
+| `scripts/pick_daily_trending5.js` | 「今日の話題店」TOP5の**選定ロジックの唯一の情報源**。Google評価は使わず「鮮度（検出日からの経過）」＋「多媒体露出（トレンド情報源＋出典URLのdistinctホスト数）」＋編集部推薦ボーナスでスコアリングし、7日以内選出ペナルティと日替わりジッターで固定順位化を防ぐ。カード「顔」写真のための写真ゲート（実写を持つ店を優先選出）とジャンル多様性キャップ（同一粗ジャンル最大2件）も持つ。`node scripts/pick_daily_trending5.js dryrun`（書き出しなし）/ `run`（`data/daily_trending5.json`書き出し）。毎朝5:30 JST に `.github/workflows/daily-trending5.yml` が実行（DataKeeper管轄） |
+| `data/daily_trending5.json` | `pick_daily_trending5.js` の出力（当日TOP5＋直近7日分の履歴）。build.js が読み込みトップページに反映 |
+| `data/trending_url_history.json` | 出典URLの初回検出日を追跡する管理ファイル。`pick_daily_trending5.js`が新URLを検知すると該当店の`検出日`を自動で当日へ繰り上げる（Editorは出典URL追記だけでよい・手動更新不要） |
+| `scripts/fetch_trending_articles.js` | 新規話題店を`trending_stores.json`へ取り込む半自動パイプライン。`queries`＝検索クエリ一覧表示、`ingest-json <file>`＝店名＋出典URLのJSON配列を取り込み（LOCAL_STORES一致で`stores[]`へ・不一致で`candidates[]`へ）、`auto-promote`＝検出から3日以上＋出典URL2件以上貯まった`_auto:true`候補を話題フラグ=trueへ昇格。WebSearch/WebFetchはこのスクリプトの責務外（Claude Code Agent専用ツールのため）、定期実行は[[話題店発掘ループ]]（下記）が担う |
+| `scripts/lib/trending_queries.js` | 話題店発掘の**検索クエリ一覧の唯一の情報源**（`fetch_trending_articles.js`の手動表示・`trending_scout.js`の自動ローテーションが共有）。クエリの増減はここだけを編集する |
+| `data/trending_scout_policy.json` | **話題店発掘ループの運用ポリシーの唯一の情報源**（1回あたりのクエリ件数・自動昇格閾値・心拍の許容欠測日数）。`.claude/commands/*.md`は自己改変ブロックで編集できないため、運用ルールの変更はこのファイルで行う（`feedback_policy.json`と同じ設計）。手順の正本は`docs/trending-scout-runbook.md` |
+| `scripts/trending_scout.js` | 話題店発掘ループの決定的ヘルパー。`--next-queries`＝年間通算日起点でクエリを決定的にローテーション（現行37クエリ・6件/回で実測7日で全クエリを巡回）、`--health-write`＝心拍書き込み、`--report`＝実績要約。WebSearch/WebFetch本体は実行しない（Agent専用ツールのため） |
+| `data/trending_scout_health.json` | 話題店発掘ループの**心拍**。ルーチンが毎回（新規リード0件の日も）書いてコミットする。0件の日は成果物が心拍しか無いため、これが無いと「動いて0件」と「動かなかった」が外から区別できない（ISSUE-084の再適用） |
+| `.github/workflows/trending-scout-watchdog.yml` | **話題店発掘ループのサーバ側生存監視**。毎日14:00 JSTに心拍の鮮度を見て、`max_silence_days`（既定3日）を超えたらGitHub Issue起票（＝オーナーにメール）、復旧で自動クローズ。判定器は`scripts/check_trending_scout_health.js`（鮮度は自己申告できない＝動いていないエージェントはファイルを更新できないため、制約10を満たす） |
+| `docs/trending-scout-runbook.md` | **話題店発掘ループの手順の正本**（2026-09-11新設）。`fetch_trending_articles.js`のクエリをWebSearch→WebFetchで裏取り→`ingest-json`で取り込み→`auto-promote`で段階昇格、の一連をスケジュール済みClaudeルーチンとして定期実行する（`.claude/commands/*.md`が自己改変ブロックで作成できないため、docs直下に置きルーチンのプロンプトから直接参照する運用。`docs/feedback-triage-runbook.md`と同じ方式） |
 | `data/featured.json` | 特集鮮度設定。`monthlyScenes`=12ヶ月×需要シーンのカレンダー（月替わりでトップ特集面と見出しが自動更新）。`sceneLeads`=月×特集の季節リード（`build_featured.js` が当月シーンの記事本文冒頭に季節バナーを注入し、使い回し記事＝banquet等が「今月はこの用途」と本文で伴うようにする。当月外は自動削除・冪等）。検証は `node scripts/build_featured.js --check`（Editor/Builder 共管） |
 | `data/feature_rosters.json` | シーン特集の掲載店を月次で入れ替える選定基準（ハイブリッド＋バランス型スコア＋ハードゲート＋多様性補正）。`seasonalBias`=月×特集の季節キーワード加点で、同じ banquet.html でも7月は「ビアガーデン/ビール/テラス」寄り・12月は「忘年会/鍋」寄りに掲載店を月替わりで組み替える（ゲートは維持・純加点なので枠割れなし）。`node scripts/refresh_feature_rosters.js`（毎月1〜3日 build.yml が実行）で features/*.html の掲載店を再構成。検証は `--check`/内訳は `--dry-run`（☀=季節適合）（Builder/DataKeeper 共管・全掲載店は実在店のみ） |
 | `data/solve_next_policy.json` | `/solve-next` の**消化ポリシーの唯一の情報源**（1日の消化件数 `dailyQuota` / 滞留による優先度繰り上げ / クローズ扱いの status / オーナー本人待ちの除外）。`.claude/commands/*.md` は自己改変ブロックで編集できないため、挙動の変更はこのファイルで行う（`journal_gate_policy.json` と同じ設計）。判定器は `scripts/next_task.js`（Orchestrator管轄） |
@@ -512,6 +522,51 @@ node scripts/gsc_opportunities.js   # data/gsc_opportunities.json を再生成�
 ```
 node scripts/feedback_triage.js --report --days 30   # ループの中身（採用/却下/滞留）
 node scripts/check_feedback_health.js                # ループが動いているか（生存確認・CI と共有）
+```
+
+---
+
+## 話題店発掘ループ（「今日の話題店」の材料を枯らさない・2026-09-11新設）
+
+`scripts/pick_daily_trending5.js` によるTOP5の**選定ロジック**は毎朝正しく動いていても、
+その**材料**である `data/trending_stores.json` に新規の話題店が供給され続けなければ、
+候補プールが静的な母集団になり「日替わりで店名は変わるが同じような顔ぶれ」に戻る。
+2026-09-11、オーナーからの報告でこれが実際に発生していたと判明した（4月から新規0件・
+編集部推薦167店中121店が8月21日の一括登録から更新なし）。原因は「新規話題店を発掘して
+取り込む半自動パイプライン（`scripts/fetch_trending_articles.js`）が誰にも定期的に
+回されていなかった」こと。このループはその供給を構造的に保証する。
+
+```
+[実行] スケジュール済み Claude ルーチンが docs/trending-scout-runbook.md の手順を実行
+        （WebSearchで新規候補を探す → WebFetchで裏取り → ingest-jsonで取り込み）
+   ↓
+[段階ゲート] LOCAL_STORES に実在する店だけ自動反映対象（_auto:true・話題フラグ=false）。
+        検出から3日以上＋出典URL2件以上貯まったものだけ auto-promote で話題フラグ=true化。
+        LOCAL_STORES に無い店は candidates[] に留め置くだけで自動追加しない
+        （実在検証を経ずに manual_stores.json へは入れない・架空店ブロックと同じ規律）
+   ↓
+[生存] 実行のたびに（新規0件の日も）data/trending_scout_health.json に心拍を書いてコミット
+        → trending-scout-watchdog.yml がサーバ側で鮮度を監視し、滞れば Issue 起票＝オーナーにメール
+   ↓
+[消費] 翌朝5:30 JST の daily-trending5.yml（pick_daily_trending5.js）が、太った
+        trending_stores.json を材料にTOP5を選ぶ。このループは選定ロジックには触れない
+```
+
+### 原則
+
+- **鵜呑み禁止**: WebSearchのタイトル・スニペットだけで店名を確定させない。WebFetchによる
+  裏取りは省略可能な保険ではなく手順の一部（架空店ブロックと同じ規律）
+- **架空店を作らない**: LOCAL_STORES に無い新規店は `candidates[]` に留め置くだけ。
+  実在検証（`GOOGLE_MAPS_API_KEY`経由の三重検証）を経ずに自動で正式掲載しない
+- **選定ロジックには触れない**: このループは`trending_stores.json`を太らせる**供給側**。
+  TOP5の選び方（鮮度・多媒体露出のスコアリング）は`pick_daily_trending5.js`の責務のまま
+
+### 健診コマンド
+
+```
+node scripts/trending_scout.js --report              # ループの中身（心拍・候補数の要約）
+node scripts/check_trending_scout_health.js           # ループが動いているか（生存確認・CI と共有）
+node scripts/pick_daily_trending5.js dryrun            # 供給結果が明日のTOP5候補にどう効くか確認
 ```
 
 ---
