@@ -1,14 +1,15 @@
 {
   "ok": true,
   "dry_run": true,
-  "would_send": 4,
+  "would_send": 5,
   "endpoint": "https://api.indexnow.org/indexnow",
   "urls": [
     "https://nagoya-bites.com/",
     "https://nagoya-bites.com/journal/",
     "https://nagoya-bites.com/features/",
-    "https://nagoya-bites.com/journal/2026-09-10-marunouchi-italian-sunday-closed-settai.html"
+    "https://nagoya-bites.com/journal/2026-09-10-marunouchi-italian-sunday-closed-settai.html",
+    "https://nagoya-bites.com/journal/2026-09-11-sakae-mirai-tower-tsukimi-date-lastorder.html"
   ],
   "note": "--yes を付けると実際に送信する（外部通信が発生する）",
-  "logged_at": "2026-09-10T23:53:35.538Z"
+  "logged_at": "2026-09-11T00:21:04.296Z"
 }
