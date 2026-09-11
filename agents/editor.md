@@ -342,15 +342,24 @@ validator(`scripts/validate_journal_draft.js`) がキーワード出現で近似
 - 色は `art-accent`/`art-num` とも `var(--gold2)` 系のみ。新しい色を強調用に持ち込まない（CSSはnb.cssの正本を使うだけで、記事側の`<style>`に強調用の色を追加しない）
 - `insider-box`（Inside Perspective）は元々ゴールドの縁取りで強調済みなので、その中の `<li>` にはさらに重ねて強調しない
 
-### 「今日の話題店」TOP5 鮮度の維持（**運用は超シンプル**）
+### 「今日の話題店」TOP5 鮮度の維持（2026-09-11〜: 発掘は自動ループが継続供給）
 
 トップページの `📰 今日の話題店` は **鮮度＋多媒体露出だけ**で選定される（Google評価不問）。
 
-**Editor の作業は1つだけ**:
-- 外部メディアで話題店を確認したら `data/trending_stores.json` の対象店の **`出典URL[]`** にURLを追記する
-- それだけ。**`検出日` は自動で繰り上がる**（A案: pick_daily_trending5.js が翌朝に自動更新）
-- 新規話題店を発見したら `data/trending_stores.json` の `stores[]` に直接追加（または `pending_stores.json` 経由→翌日 trending に昇格）
+> 2026-09-11、オーナーから「ずっと同じラインナップ」と報告があり調査したところ、
+> `data/trending_stores.json` が4月から新規0件・編集部推薦の大半が8月21日一括登録から
+> 更新なしで候補プールが凍結していたと判明した。新規発掘を **話題店発掘ループ**
+> （CLAUDE.md「話題店発掘ループ」節・`docs/trending-scout-runbook.md`）が定期的に
+> 継続供給するようになったため、Editor が新規発掘を都度手動で行う必要は無くなった。
+
+**Editor の作業（任意・気づいたときだけでよい）**:
+- 自動ループが見逃しそうな一次情報（取材で直接知った話題・出典が特殊なSNS投稿等）に
+  気づいたら、`data/trending_stores.json` の対象店の **`出典URL[]`** にURLを追記する。
+  それだけで **`検出日` は自動で繰り上がる**（pick_daily_trending5.js が翌朝に自動更新）
+- 自動ループが `candidates[]` に溜めた LOCAL_STORES 未登録店のうち掲載したいものがあれば、
+  下記「実在検証は必須」の手順で `manual_stores.json` へ正式追加する
 - スコア配分・自動繰り上げの仕組みは [agents/data-keeper.md](./data-keeper.md) の「日次『今日の話題店』TOP5」参照
+- 発掘ループの健診: `node scripts/check_trending_scout_health.js`
 
 ### 🚫 実在検証は必須（架空店ブロック・CLAUDE.md 整合）
 

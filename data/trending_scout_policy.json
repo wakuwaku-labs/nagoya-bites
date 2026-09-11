@@ -1,0 +1,34 @@
+{
+  "description": "話題店発掘ループの運用ポリシー（単一の情報源）。.claude/commands/*.md は自己改変ブロックで編集できないため、運用ルールの変更は本ファイルで行う。手順の正本は docs/trending-scout-runbook.md。クエリ一覧の単一の情報源は scripts/lib/trending_queries.js。決定的処理（クエリローテーション/心拍書き込み/健診）は scripts/trending_scout.js。",
+  "why": "2026-09-11、オーナーから『今日の話題店がずっと同じラインナップ』と報告があり調査した結果、data/trending_stores.json は2026-04-21以来7店のまま、data/manual_stores.json の編集部推薦167店のうち121店は2026-08-21の一括登録から出典URLが一度も更新されておらず、TOP5選定（scripts/pick_daily_trending5.js）の候補プールが実質3週間フリーズしていたことが判明した。新規話題店を発掘して取り込む半自動パイプライン（scripts/fetch_trending_articles.js）は存在したが GitHub Actions に配線されておらず、誰も定期的に回していなかった。このポリシーは『定期的に回す』ことを構造的に保証するためのもの（ISSUE-084 原則1・2・3の適用: 監視ではなく供給ループそのものを外部スケジュールに乗せ、動いた証跡を心拍として外へ出す）。",
+  "queries": {
+    "source": "scripts/lib/trending_queries.js の RECOMMENDED_QUERIES（現行37件・増減時はここの件数記述ではなく同ファイルが正）",
+    "queries_per_run": 6,
+    "rotation": "day_of_year_jst 起点のオフセットで毎回 queries_per_run 件ずつ順送り（scripts/trending_scout.js --next-queries が算出）。gcd(queries_per_run, 全件数)=1 のとき重複なく巡回でき、現行37件・6件/回では実測7日で全クエリをカバーする。日付起点のため実行が多少ずれても重複・欠落が起きにくい",
+    "why_bounded": "1回の実行で全クエリをWebSearchすると呼び出しコストが大きい。ボトルネックは『広さ』より『継続性』——狭くても毎日回り続ける方が、広くて1回きりより新規発掘の総量が増える"
+  },
+  "verification": {
+    "rule": "WebSearchの検索結果一覧だけで店名を確定させない。有望な候補は必ずWebFetchで記事本文を確認し、店名・実際の開店/掲載事実を裏取りしてから出典URLとして採用する（CLAUDE.md『架空店ブロック』の一次情報確認と同じ規律）。",
+    "existing_stores_only_for_auto_flag": "自動で話題フラグ=trueにできるのは LOCAL_STORES（data/stores.json）に既に実在する店のみ（scripts/fetch_trending_articles.js の店名一致ロジックがゲート）。LOCAL_STORES に無い店は candidates[] に留め置き、実在検証（GOOGLE_MAPS_API_KEY 経由の三重検証）を経ないまま manual_stores.json へは追加しない"
+  },
+  "promote": {
+    "min_days_since_detected": 3,
+    "min_source_urls": 2,
+    "how": "node scripts/fetch_trending_articles.js auto-promote が判定・実行する（このポリシーの閾値を直接読むわけではなく同スクリプト内に同値でハードコードされている。変更する場合は両方を揃える）"
+  },
+  "caps": {
+    "max_new_stores_per_run": 5,
+    "max_new_candidates_per_run": 10,
+    "why": "1回の実行での取り込み急増を防ぎ異常検知しやすくするためのソフトな目安。超えても書き込み自体は止めない（ingest-jsonは冪等かつ話題フラグ=falseの人間レビュー待ち状態で追加するため実害が小さい）が、runbook のレポートで超過を明示しオーナーが把握できるようにする"
+  },
+  "health": {
+    "_why": "検知器（WebSearch）が0件を返しても、認証切れ等で実行自体が失敗しても、放っておくと外から区別できない。ループ自身に『動いた』と報告させ、心拍の鮮度で生存を判定する（CLAUDE.md ISSUE-084 原則2・3）。",
+    "heartbeat_file": "data/trending_scout_health.json",
+    "write_even_when_zero": true,
+    "write_note": "新規リードが0件の日もコミットする成果物が心拍しか無いため、必ず書く。0件の日と『動いていない』日を外から区別するのはこの心拍だけ",
+    "max_silence_days": 3,
+    "checker": "node scripts/check_trending_scout_health.js --json",
+    "watchdog": ".github/workflows/trending-scout-watchdog.yml（毎日 14:00 JST・欠測で Issue 起票＝オーナーにメール・復旧で自動クローズ）",
+    "do_not_alert_on": "『N日新規リードが0件』では通知しない。話題化するネタが無い日があるのは平常。通知するのは『ルーチンが報告してこないこと』だけ（ISSUE-084 原則6）"
+  }
+}
