@@ -138,6 +138,15 @@ const HOST_FILTER = {
   },
 };
 
+// 予約行動として数えるドメイン（SEO-089）。outbound_click がこのドメインに向いた
+// クリックだけを RESERVE_EVENTS と合算し、情報ドメイン（マップ・Instagram等）は別枠で表示する。
+const RESERVE_DOMAINS = new Set([
+  'www.hotpepper.jp', 'hotpepper.jp',
+  'tabelog.com', 'www.tabelog.com',
+  'ikyu.com', 'www.ikyu.com',
+  'ozmall.co.jp', 'www.ozmall.co.jp',
+]);
+
 // ─── GA4 の確定待ちラグ（SEO-076） ───
 // GA4 のセッションスコープ指標（直帰率・エンゲージメント率・平均滞在・流入元）は、その日が
 // 終わってから確定するまで最大48時間かかる。日次レポートは day+8h に配信されるため、
@@ -280,12 +289,30 @@ function fetchGA4Report(startDate, endDate) {
     dimensionFilter: HOST_FILTER,
   }, 'properties/' + GA4_PROPERTY_ID);
 
+  // SEO-089: outbound_click を link_domain 別に集計し、予約ドメインと情報ドメインを分離する
+  const outboundByDomainRequest = AnalyticsData.Properties.runReport({
+    dateRanges: [{ startDate: startDate, endDate: endDate }],
+    metrics: [{ name: 'eventCount' }],
+    dimensions: [{ name: 'customEvent:link_domain' }],
+    dimensionFilter: {
+      andGroup: {
+        expressions: [
+          HOST_FILTER,
+          { filter: { fieldName: 'eventName', stringFilter: { matchType: 'EXACT', value: 'outbound_click' } } },
+        ],
+      },
+    },
+    orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+    limit: 20,
+  }, 'properties/' + GA4_PROPERTY_ID);
+
   return {
     pages: parseReport(request),
     events: parseReport(eventRequest),
     sources: parseReport(sourceRequest),
     devices: parseReport(deviceRequest),
     totals: parseTotals(totalsRequest),
+    outboundByDomain: parseReport(outboundByDomainRequest),
   };
 }
 
@@ -412,9 +439,17 @@ function analyze(data) {
     return s + (e ? parseInt(e.metrics[0]) : 0);
   }, 0);
   const gmapEvent = data.events.find(e => e.dimensions[0] === 'cta_gmap_click');
-  const ctaCount   = sumEvt(RESERVE_EVENTS);
   const gmapCount  = gmapEvent ? parseInt(gmapEvent.metrics[0]) : 0;
   const modalCount = sumEvt(DETAIL_EVENTS);
+  // SEO-089: outbound_click を予約ドメイン（hotpepper/tabelog等）と情報ドメインに分離して集計
+  const outboundByDomain = data.outboundByDomain || [];
+  const reserveOutboundCount = outboundByDomain
+    .filter(r => RESERVE_DOMAINS.has(r.dimensions[0]))
+    .reduce((sum, r) => sum + (parseInt(r.metrics[0]) || 0), 0);
+  const outboundInfoCount = outboundByDomain
+    .filter(r => !RESERVE_DOMAINS.has(r.dimensions[0]))
+    .reduce((sum, r) => sum + (parseInt(r.metrics[0]) || 0), 0);
+  const ctaCount   = sumEvt(RESERVE_EVENTS) + reserveOutboundCount;
   // 予約クリック率はイベント側と同じ日で割らないと意味が合わない（分子は data.events＝当日）
   const ctaRate = et.users > 0 ? ctaCount / et.users : 0;
 
@@ -453,6 +488,7 @@ function analyze(data) {
     pagesPerSession: pps,
     nonBaseEvents,
     ctaCount, gmapCount, modalCount, ctaRate,
+    outboundInfoCount,
     organicPct, socialPct, mobilePct,
     srcTotal, devTotal,
     unknownSessions, unknownPct, identifiableSessions, highThreshold,
@@ -645,7 +681,7 @@ function buildAdvicePrompt(data, a, date, isWeekly) {
 '- 1訪問あたり閲覧: ' + a.pagesPerSession.toFixed(1) + 'ページ（目安2以上が良好）',
 '- 平均滞在: ' + secToText(t.avgDuration) + '（目安60秒以上）',
 '- 直帰率: ' + Math.round(t.bounceRate * 100) + '%（目安50%未満が良好・70%超は要注意）',
-'- 予約ボタンクリック: ' + a.ctaCount + '回 ／ マップ: ' + a.gmapCount + '回 ／ 店舗詳細を開いた: ' + a.modalCount + '回' + (a.outboundCount ? ' ／ 外部リンク: ' + a.outboundCount + '回' : ''),
+'- 予約ボタンクリック（予約ドメイン外部リンク含む）: ' + a.ctaCount + '回 ／ 情報到達（マップ・Instagram等）: ' + (a.outboundInfoCount || 0) + '回 ／ マップ: ' + a.gmapCount + '回 ／ 店舗詳細を開いた: ' + a.modalCount + '回',
 '- 予約クリック率（予約÷訪問者）: ' + (a.ctaRate * 100).toFixed(1) + '%（目安3%）',
 '- 検索流入比率: ' + Math.round(a.organicPct * 100) + '%（判別できた' + a.identifiableSessions + '件中）' +
   ' ／ SNS流入比率: ' + Math.round(a.socialPct * 100) + '%' +
@@ -861,7 +897,8 @@ function formatDailyReport(data, date) {
   if (a.nonBaseEvents.length > 0) {
     msg += '\n【ユーザーの行動】\n';
     if (a.modalCount) msg += '👀 店舗詳細を開いた: ' + a.modalCount + '回\n';
-    if (a.ctaCount)   msg += '🔘 予約ボタン押した: ' + a.ctaCount + '回\n';
+    if (a.ctaCount)   msg += '🔘 予約ボタン押した: ' + a.ctaCount + '回（予約ドメインへの外部リンク含む）\n';
+    if (a.outboundInfoCount) msg += '🔗 情報到達（マップ・Instagram等）: ' + a.outboundInfoCount + '回\n';
     if (a.gmapCount)  msg += '🗺 マップ開いた: ' + a.gmapCount + '回\n';
     if (t.users >= 20) {
       msg += '　→ 訪問100人あたり予約行動 約' + (a.ctaRate * 100).toFixed(1) + '人 ' +
@@ -935,7 +972,8 @@ function formatWeeklyReport(data, prevData, startDate, endDate) {
   if (a.nonBaseEvents.length > 0) {
     msg += '\n【ユーザーの行動】\n';
     if (a.modalCount) msg += '👀 店舗詳細: ' + a.modalCount + '回\n';
-    if (a.ctaCount)   msg += '🔘 予約ボタン: ' + a.ctaCount + '回\n';
+    if (a.ctaCount)   msg += '🔘 予約ボタン: ' + a.ctaCount + '回（予約ドメインへの外部リンク含む）\n';
+    if (a.outboundInfoCount) msg += '🔗 情報到達（マップ・Instagram等）: ' + a.outboundInfoCount + '回\n';
     if (a.gmapCount)  msg += '🗺 マップ: ' + a.gmapCount + '回\n';
   }
 
