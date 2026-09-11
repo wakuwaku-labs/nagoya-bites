@@ -8,7 +8,7 @@
 
 ### [SEO-089] 「予約行動」の分子が狭すぎて日によって 0 に落ちる — SEO-072 の acceptance ② が求めた「予約ドメインへの `outbound_click`」が実装されないまま done になり、🔴枠がその 0 に持っていかれる
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-09-11
 - **category**: SEO / 計測
 - **owner**: Marketer
@@ -200,6 +200,24 @@
 - **review**: 本チケットのacceptanceは上記「検証できる事実」の5項目。人手レビューはPR作成後にDesigner役職（Orchestrator代行）が実施
 - **未完了**: PR作成・マージ。マージ後の翌日CI（node build.js）でHotPepper新規射影フィールド（定休日/最寄駅/席数等）が実データに反映されることを確認（ローカルはHOTPEPPER_API_KEY未設定のため射影ロジックのfixtureテストのみで検証済み）
 ## 実行ログ
+
+### 2026-09-11（自動ルーティン・クラウドセッション）
+
+**処理件数**: 1件（SEO-089）
+
+- **[SEO-089]** GASの「予約行動」集計に `outbound_click`（予約ドメイン）を追加
+  - **acceptance ①確認**: `data/site_metrics.json` の `cta.byDomain` から直近30日の `outbound_click` を `link_domain` 別に確認
+    - 予約ドメイン: `www.hotpepper.jp` 53件 + `tabelog.com` 37件 = 90件
+    - 情報ドメイン: `maps.google.com` 14件・`www.instagram.com` 5件・その他11件 = 30件
+  - **変更ファイル**: `.gas-deploy/Code.js` のみ（`index.html`・特集HTML・店舗データには一切触れない）
+    1. `RESERVE_DOMAINS` 定数を1箇所に定義（hotpepper/tabelog/ikyu/ozmall）
+    2. `fetchGA4Report()` に `outbound_click × link_domain` の GA4 クエリを追加し `outboundByDomain` として返す
+    3. `analyze()` で `reserveOutboundCount`（予約ドメイン計）+ `outboundInfoCount`（情報ドメイン計）を計算し、`ctaCount = sumEvt(RESERVE_EVENTS) + reserveOutboundCount` に拡張
+    4. 日次・週次レポートの「ユーザーの行動」欄に「情報到達（マップ・Instagram等）: X回」行を追加
+    5. AI アドバイスプロンプトにも `outboundInfoCount` を含める
+  - **⚠️ GAS 未反映注意**: `.gas-deploy/Code.js` はリポジトリのミラーのみ。反映には GAS エディタでのコードコピー＆貼り付けとデプロイが必要（`docs/gas-deploy-verification-runbook.md`）。デプロイ後、翌日の日次レポートで「予約行動」の数字が 0〜4 回から実態値（数十回）に変わることで効果を確認する
+
+---
 
 ### 2026-09-07（自動ルーティン・クラウドセッション）
 
