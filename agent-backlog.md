@@ -203,7 +203,15 @@
 
 ### 2026-09-11（自動ルーティン・クラウドセッション）
 
-**処理件数**: 1件（SEO-089）
+**処理件数**: 2件（SEO-089、SEO-070）
+
+- **[SEO-070]** journal/ 本文冒頭への関連特集 CTA 追加（回遊改善）
+  - **acceptance ①確認（構造的証拠）**: `.related` ブロックは全 journal 記事で `</article>` の後（約84%深度）。`data/site_metrics.json` の pagesPerSession = 1.49（目安2.0を下回る継続状態）。GA4 の scroll_depth イベントは journal 記事に既存実装済みだが、ローカル参照不可のため構造的証拠で代用（CLAUDE.md 制約10 の精神に従い「検証できる範囲の事実のみ」）
+  - **acceptance ②実装**: `scripts/inject_journal_feature_cta.js` を新規作成（マーカー方式・冪等）。挿入位置は `<div class="art-body">` 直下の `<p class="nb-site-intro">...</p>` の後（本文の冒頭 ~15%深度）。対象はタイトルが TOPIC_FEATURES にマッチする記事のみ（126本中 80本・46本はマッチなしでスキップ）
+  - **acceptance ③実在保証**: features/SLUG.html の存在確認を挿入時に実行（リンク切れゼロ）。マッチングは `refresh_journal_related.js` の TOPIC_FEATURES と同一リスト
+  - **変更ファイル**: `scripts/inject_journal_feature_cta.js`（新規）、`journal/*.html`（80本更新）、`agent-backlog.md`
+  - **QA**: `node scripts/inject_journal_feature_cta.js --file 2026-09-08-...html` で冪等確認（`{"no_diff":1}`）、`node scripts/audit_design_system.js --report` で journal 関連違反ゼロ確認
+  - **効果測定**: 次回 pagesPerSession（`data/metrics_history.json`）と `internal_link_click` の `block:feature_cta_mid` が実測できたら前後比で判定
 
 - **[SEO-089]** GASの「予約行動」集計に `outbound_click`（予約ドメイン）を追加
   - **acceptance ①確認**: `data/site_metrics.json` の `cta.byDomain` から直近30日の `outbound_click` を `link_domain` 別に確認
@@ -1129,7 +1137,7 @@
 
 ### [SEO-070] 特集・日次ジャーナルの内部リンクが「本文の後ろ」にしか無く、記事を読み切らない読者に回遊の手がかりが一度も出ない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-09-11）
 - **detected**: 2026-08-24
 - **category**: SEO
 - **owner**: Builder + Editor
@@ -3041,8 +3049,14 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
     避けるには、週次実行を重ねて蓄積率を上げてから Step2（`audit_crosscheck_v3.js`再実行で
     分布影響を確認）に進むのが妥当。切替の最終判断（Step3）は保留のまま
 
+- **2026-09-11 定点観測（自動ルーティン）**:
+  `node scripts/audit_crosscheck_v3.js` 実行結果:
+  - snapshots≥2 の店舗数: **422件（7.8%）** — 1.9%（2026-08-18）から改善
+  - v3.0分布影響: **1階級以上の移動 4,336件**（目安上限492件 = 全体の10%）
+  - まだ目安の8.8倍。新シグナル（textLen/incentiveHit）は snapshots があっても適用されない店が多く、重み付け変更の影響が支配的。週次蓄積を継続し再評価する
+
 - **残タスク**: 週次実行（毎週月曜）を継続してsnapshots≥2の蓄積率を上げる → 十分な蓄積後に
-  `node scripts/audit_crosscheck_v3.js` で分布影響を再確認 → 問題なければ activate 手順の
+  `node scripts/audit_crosscheck_v3.js` で分布影響を再確認（目標: 移動件数 ≤ 492件）→ 問題なければ activate 手順の
   Step3以降（build.js切替）を実施。無料トライアル失効後（2026-08-20以降）は純粋な従量課金と
   なるため、`PLACES_DETAILS_BUDGET=100`（月≈¥1,429）が既存の¥1,500/月アラート内に収まって
   いることを次回請求サイクルで実額確認する。Inspector Step C-2（`agents/inspector.md`）で
