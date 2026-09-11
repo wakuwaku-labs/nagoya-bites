@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-10T23:42:29.697Z",
+  "generatedAt": "2026-09-11T00:10:04.535Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -16,68 +16,68 @@
       },
       {
         "query": "じゅわっち名駅",
-        "impressions": 151,
+        "impressions": 143,
         "clicks": 3,
         "position": 8.2,
-        "ctr": 1.99,
+        "ctr": 2.1,
         "expectedCtr": 3.1,
-        "missedClicks": 1.7
+        "missedClicks": 1.5
       },
       {
         "query": "のれんとコルク 名古屋",
-        "impressions": 119,
+        "impressions": 117,
         "clicks": 2,
         "position": 9.2,
-        "ctr": 1.68,
+        "ctr": 1.71,
         "expectedCtr": 2.7,
-        "missedClicks": 1.3
+        "missedClicks": 1.2
       }
     ],
     "ctrFixGeoless": [
       {
-        "query": "煮干しラーメン 凛",
-        "impressions": 224,
-        "clicks": 6,
-        "position": 7,
-        "ctr": 2.68,
-        "expectedCtr": 4,
-        "missedClicks": 3
+        "query": "やきまる亭",
+        "impressions": 155,
+        "clicks": 2,
+        "position": 8.3,
+        "ctr": 1.29,
+        "expectedCtr": 3.1,
+        "missedClicks": 2.8
       },
       {
-        "query": "やきまる亭",
-        "impressions": 159,
+        "query": "煮干しラーメン 凛",
+        "impressions": 146,
+        "clicks": 3,
+        "position": 7.6,
+        "ctr": 2.05,
+        "expectedCtr": 3.5,
+        "missedClicks": 2.1
+      },
+      {
+        "query": "喫茶時々",
+        "impressions": 117,
         "clicks": 2,
-        "position": 8.4,
-        "ctr": 1.26,
-        "expectedCtr": 3,
-        "missedClicks": 2.8
+        "position": 9,
+        "ctr": 1.71,
+        "expectedCtr": 2.8,
+        "missedClicks": 1.3
       }
     ],
-    "rankPush": [
-      {
-        "query": "ナショナルベーカリー",
-        "impressions": 89,
-        "clicks": 2,
-        "position": 14.3,
-        "ctr": 2.25,
-        "upsideClicks": 0.5
-      }
-    ]
+    "rankPush": []
   },
   "byPage": {
     "ctrFix": [
       {
         "page": "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
-        "impressions": 698,
-        "clicks": 11,
-        "position": 7.5,
-        "ctr": 1.58,
-        "expectedCtr": 3.6,
-        "missedClicks": 14.1
+        "impressions": 585,
+        "clicks": 7,
+        "position": 7.7,
+        "ctr": 1.2,
+        "expectedCtr": 3.4,
+        "missedClicks": 13.1
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 635,
+        "impressions": 633,
         "clicks": 8,
         "position": 8.5,
         "ctr": 1.26,
@@ -98,19 +98,19 @@
     "rankPush": [
       {
         "page": "/",
-        "impressions": 4269,
+        "impressions": 3975,
         "clicks": 9,
-        "position": 26.3,
-        "ctr": 0.21,
-        "upsideClicks": 110.6
+        "position": 25.7,
+        "ctr": 0.23,
+        "upsideClicks": 102.2
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
     "queryCtrFix": 3,
-    "queryCtrFixGeoless": 2,
-    "queryRankPush": 1,
+    "queryCtrFixGeoless": 3,
+    "queryRankPush": 0,
     "pageCtrFix": 3,
     "pageRankPush": 1,
     "topPageCtrFix": [

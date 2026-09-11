@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-10T23:42:26.131Z",
+  "generatedAt": "2026-09-11T00:10:01.224Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1039,
-    "pageViews": 1877,
-    "sessions": 1261,
-    "avgSessionDuration": 152.1,
+    "activeUsers": 1040,
+    "pageViews": 1878,
+    "sessions": 1262,
+    "avgSessionDuration": 151.9,
     "bounceRate": 0.313,
     "pagesPerSession": 1.49
   },
@@ -18,16 +18,16 @@
   "channels": {
     "sessions": {
       "organic": 864,
-      "direct": 280,
+      "direct": 282,
       "social": 90,
       "referral": 18,
       "paid": 0,
       "other": 24
     },
     "pct": {
-      "organic": 67.7,
-      "direct": 21.9,
-      "social": 7.1,
+      "organic": 67.6,
+      "direct": 22.1,
+      "social": 7,
       "referral": 1.4,
       "paid": 0,
       "other": 1.9
@@ -47,7 +47,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 235
+      "sessions": 236
     },
     {
       "source": "yahoo",
@@ -62,7 +62,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 37
+      "sessions": 38
     },
     {
       "source": "(data not available)",
@@ -98,8 +98,8 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 137,
-      "sessions": 81
+      "pageViews": 138,
+      "sessions": 82
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -171,7 +171,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.8,
-    "ctaClickRate_direct": 8.6,
+    "ctaClickRate_direct": 8.5,
     "ctaClickRate_social": 26.7,
     "byPage": [
       {
@@ -571,7 +571,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1039,
+    "value": 1040,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
