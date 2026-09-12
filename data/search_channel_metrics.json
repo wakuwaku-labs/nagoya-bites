@@ -1,16 +1,16 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-12T16:00:54.311Z",
+  "generatedAt": "2026-09-12T18:37:38.775Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1252,
+  "total_sessions": 1256,
   "engines": [
     {
       "key": "google",
       "label": "Google",
       "sessions": 406,
-      "pct": 32.4,
+      "pct": 32.3,
       "sources": [
         {
           "source": "google",
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 303,
-      "pct": 24.2,
+      "pct": 24.1,
       "sources": [
         {
           "source": "bing",
@@ -35,8 +35,8 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 254,
-      "pct": 20.3,
+      "sessions": 256,
+      "pct": 20.4,
       "sources": [
         {
           "source": "(direct)",
@@ -46,20 +46,20 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 20
+          "sessions": 22
         }
       ]
     },
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 174,
-      "pct": 13.9,
+      "sessions": 176,
+      "pct": 14,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 174
+          "sessions": 176
         }
       ]
     },
@@ -121,13 +121,13 @@
     }
   ],
   "search_only": {
-    "total": 992,
+    "total": 994,
     "share": [
       {
         "key": "google",
         "label": "Google",
         "sessions": 406,
-        "pct_of_search": 40.9
+        "pct_of_search": 40.8
       },
       {
         "key": "bing",
@@ -138,8 +138,8 @@
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 174,
-        "pct_of_search": 17.5
+        "sessions": 176,
+        "pct_of_search": 17.7
       },
       {
         "key": "ai_assistant",

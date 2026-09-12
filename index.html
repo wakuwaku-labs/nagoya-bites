@@ -7364,6 +7364,12 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <li><a href="index.html#q=%E8%A6%9A%E7%8E%8B%E5%B1%B1%E3%82%AB%E3%83%95%E3%82%A7%20Ji.Coo">覚王山カフェ Ji.Coo（名古屋市千種区覚王山通・カフェ、スイーツ）</a></li>
 </ul>
 </details>
+<details class="store-index-area" data-area="新栄">
+<summary>新栄（1店）</summary>
+<ul class="store-index-list">
+<li><a href="index.html#q=%E3%83%95%E3%83%A9%E3%83%B3%E3%82%B9%E6%83%A3%E8%8F%9C%E3%81%A8%E4%B8%B2%E3%82%AB%E3%83%84%20marbrade">フランス惣菜と串カツ marbrade（新栄・フレンチ・串カツ）</a></li>
+</ul>
+</details>
 <details class="store-index-area" data-area="名古屋市東区白壁">
 <summary>名古屋市東区白壁（1店）</summary>
 <ul class="store-index-list">
@@ -7530,12 +7536,6 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <summary>名古屋（中区・栄）（1店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=%E3%82%BD%E3%83%AB%E3%83%93%E3%83%B3%E5%90%8D%E5%8F%A4%E5%B1%8B%E6%A0%84%E5%BA%97">ソルビン名古屋栄店（名古屋（中区・栄）・カフェ / 韓国スイーツ）</a></li>
-</ul>
-</details>
-<details class="store-index-area" data-area="新栄">
-<summary>新栄（1店）</summary>
-<ul class="store-index-list">
-<li><a href="index.html#q=%E3%83%95%E3%83%A9%E3%83%B3%E3%82%B9%E6%83%A3%E8%8F%9C%E3%81%A8%E4%B8%B2%E3%82%AB%E3%83%84%20marbrade">フランス惣菜と串カツ marbrade（新栄・フレンチ・串カツ）</a></li>
 </ul>
 </details>
 </section>
@@ -7706,7 +7706,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '8af765d8bbb4';
+var STORES_JSON_VERSION = '5c411502961e';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
