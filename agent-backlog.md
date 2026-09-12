@@ -395,8 +395,9 @@
 
 ### [SEO-087] 週閲覧の21.5%が `nagoya-solo-dining` 1本に集中している勝ち筋を分解し、同型のシーン特集へ横展開する
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-07
+- **completed**: 2026-09-12
 - **category**: SEO / コンテンツ
 - **owner**: Editor
 - **source**: 週次レポート(LINE) 2026-08-30〜2026-09-05 の「🤖 週次トレンド」総括（訪問者293人 前週比 +10% / 閲覧数507 +40% / 訪問回数352 +19% / 成長ステータス「順調に伸びてます」・人気ページ① 特集 nagoya-solo-dining 109回）。総括が現状描写のみでアクションに落ちていないため、週次コマンド Step 2 の規定に従い起票側でアクション仮説を立案
@@ -3161,6 +3162,11 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   内部合成点 `crossCheckScore`（8軸100点・本 ISSUE が扱う分布・フラグ）は本ステップでは**変更していない**（ロスター等の依存を壊さないため）。
   **v3.0 を活性化するときは、v3 実装（`scripts/lib/cross_check_v3.js`）にも同じ observed/parts 付与が前提**（`scripts/lib/trust_display.js` が observed を読むため）。詳細は [[ISSUE-101]]。
 - **2026-09-06 確認（自動ルーチン）**: `node scripts/audit_crosscheck_v3.js` 実行結果 — 4339店（88%）が1階級以上移動（目安上限 493店）。データ蓄積は 100 → 350店（snapshots≥2）に増加（週次実行が継続）。gate(c) はまだ大幅超過のため、S7/S8 重み再調整（オーナー確認後の別タスク）を待って活性化は継続保留。
+- **2026-09-12 定点観測（自動ルーティン）**:
+  `node scripts/audit_crosscheck_v3.js` 実行結果:
+  - snapshots≥2 の店舗数: **422件（7.8%）** — 前回（2026-09-11: 422件）から変化なし。weekly-places.yml は毎週月曜実行で、本日（土曜）は実行なし。次回は2026-09-15（月）
+  - v3.0分布影響: **1階級以上の移動 4,337件**（目安上限≤492件）。引き続き大幅超過
+  - gate(c) 達成には蓄積率がさらに向上し移動件数が1/8以下まで縮小する必要。週次実行の継続を待つ
 - **2026-09-03 追記（observed/parts 付与・禁止語排除 — ISSUE-086 準備作業）**:
   `scripts/lib/cross_check_v3.js` に v2.1 と同等の `observed`/`parts` を追加し、trust_display.js に接続できる状態にした（`npm test` 151件全pass）。
   同時に禁止語（サクラ/化粧/疑い/評価操作）を排除:
@@ -5332,6 +5338,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-09-12 | Orchestrator(routine) | SEO-087: features/nagoya-meieki-solo-drinking.html 新設（名古屋駅×一人飲み 7店・pos10.4 の gap を埋める）。solo-dining.html と meieki.html に相互リンク追加。ISSUE-086 定点観測（snapshots≥2: 422件・gate超過継続） | ✅ デプロイ済み |
 | 2026-09-08 | Designer(EXPLICIT) | DSN-003: トップ/ジャーナル/特集/編集規約4ページ種別のプロ品質リデザイン＋サイト共通クローム統一（scripts/lib/site_chrome.js新設・全216ファイル） | ✅ コミット済み・PR作成待ち (commit 20cd42ec4) |
 | 2026-09-08 | Orchestrator(routine) | ISSUE-121: 他都道府県マッチ残存確認→修正は commit 06b6976f で main に反映済み・audit_other_prefecture_matches.js --check=[OK]確認・done クローズ | ✅ done（既存修正を確認） |
 | 2026-09-08 | Orchestrator(routine) | SEO-086: scripts/add_feature_tracking.js 新設・scripts/refresh_feature_rosters.js に cta_click 追加・features 67本にcta_click/feature_store_click/internal_link_click/scroll_depth を補完。機械検査OK | ✅ commit 予定 |
