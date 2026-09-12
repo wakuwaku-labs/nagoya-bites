@@ -191,6 +191,73 @@ function classifyPendingEntry(p) {
   return { state: 'hidden-verification-failed', label: `🚫 実在検証NG（${reason}）→ 非公開のまま保留（架空店ブロック）` };
 }
 
+/**
+ * 検証済み（pending_stores.json に実写あり）の候補を、trending_stores.json の
+ * stores[] へ 話題フラグ=true で追加する。
+ *
+ * 【なぜ必要か・2026-09-12発覚】
+ * add-pending は candidates[] のエントリに _promoted_to_pending を付けるだけで、
+ * stores[] には一切触れていなかった。scripts/pick_daily_trending5.js は
+ * stores[] の 話題フラグ=true（または manual_stores.json の編集部推薦）しか
+ * TOP5候補にしないため、Step 6で実在検証・掲載まで進めた店が「今日の話題店」の
+ * 候補プールには一切乗らないという抜け穴があった（このループそのものの存在理由
+ * ＝候補プール凍結の再発防止、に反する）。finalize はこの橋渡しの最後の一歩。
+ *
+ * Google Places三重検証を通った実在確認済みの店であり、既存の auto-promote
+ * （3日+出典2件のみで判定）より強い根拠を既に持っているため、_auto は付けず
+ * 直接 話題フラグ=true にする。
+ */
+function cmdFinalize(name) {
+  if (!name) { console.error('店名を指定してください'); process.exit(1); }
+  const trending = readJson(TRENDING_PATH, { stores: [], candidates: [] });
+  const candidates = (trending.candidates || []).filter(c => c && c['店名']);
+  const candidate = candidates.find(c => c['店名'] === name) || candidates.find(c => c['店名'].includes(name) || name.includes(c['店名']));
+  if (!candidate) {
+    console.error(`candidates[] に見つかりません（既にfinalize済みの可能性）: ${name}`);
+    process.exit(1);
+  }
+  if (!candidate._promoted_to_pending) {
+    console.error(`まだ add-pending されていません: ${candidate['店名']}`);
+    process.exit(1);
+  }
+  const pending = readJson(PENDING_PATH, { pending: [] });
+  const pendingEntry = (pending.pending || []).find(p => p['店名'] === candidate['店名'] && p['発掘元'] === 'trending-scout');
+  if (!pendingEntry) {
+    console.error(`pending_stores.json にエントリが見つかりません: ${candidate['店名']}`);
+    process.exit(1);
+  }
+  const cls = classifyPendingEntry(pendingEntry);
+  if (cls.state !== 'verified') {
+    console.error(`まだ検証済みではありません（${cls.state}）。今日の話題店候補には追加しません: ${candidate['店名']}`);
+    console.error(cls.label);
+    process.exit(1);
+  }
+
+  trending.stores = trending.stores || [];
+  if (trending.stores.some(s => s['店名'] === candidate['店名'])) {
+    console.error(`stores[] に既に同名エントリがあります: ${candidate['店名']}`);
+    process.exit(1);
+  }
+  const expireDate = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  trending.stores.push({
+    '店名': candidate['店名'],
+    'エリア': candidate['エリア'] || pendingEntry['エリア'] || '',
+    '話題フラグ': true,
+    'トレンド情報源': candidate['トレンド情報源'] || ['メディア記事'],
+    '出典URL': candidate['出典URL'] || [],
+    '話題スコア': candidate['話題スコア'] || 70,
+    '検出日': candidate['検出日'] || jstToday(),
+    '有効期限': expireDate,
+    'コメント': `${candidate['コメント'] || ''}（Step6: 一次情報確認+Google Places三重検証を通過し正式掲載）`.trim(),
+  });
+  // candidates[] からは削除する（stores[] へ完全移行。二重管理を避ける）
+  trending.candidates = candidates.filter(c => c['店名'] !== candidate['店名'])
+    .concat((trending.candidates || []).filter(c => !c || !c['店名']));
+  writeJson(TRENDING_PATH, trending);
+  console.log(`✅ 話題フラグ=true で stores[] へ追加しました: ${candidate['店名']}`);
+  console.log('次の node scripts/pick_daily_trending5.js dryrun で明日のTOP5候補への影響を確認できます。');
+}
+
 function cmdStatus(name) {
   const pending = readJson(PENDING_PATH, { pending: [] });
   const list = (pending.pending || []).filter(p => p['発掘元'] === 'trending-scout');
@@ -220,10 +287,13 @@ if (cmd === '--check' || cmd === 'check') {
   cmdAddPending(name, flags);
 } else if (cmd === 'status') {
   cmdStatus(rest[0]);
+} else if (cmd === 'finalize') {
+  cmdFinalize(rest[0]);
 } else {
   console.error('Usage:');
   console.error('  node scripts/promote_trending_candidate.js --check');
   console.error('  node scripts/promote_trending_candidate.js add-pending "<店名>" --area <エリア> --genre <ジャンル> --access <アクセス> --price <価格帯> --note "<おすすめポイント>" --source-confirm-url <URL>');
   console.error('  node scripts/promote_trending_candidate.js status ["<店名>"]');
+  console.error('  node scripts/promote_trending_candidate.js finalize "<店名>"   # statusが検証済みになったら、話題フラグ=trueでstores[]へ（今日の話題店の候補プールに入る）');
   process.exit(1);
 }

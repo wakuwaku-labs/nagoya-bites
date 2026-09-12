@@ -209,7 +209,28 @@ node scripts/promote_trending_candidate.js status "<店名>"
   が自動的に非公開のまま保留する。削除・取り繕いは不要）。レポートにその旨を記載する。
 - `status` が「検証済み」を示した場合: 次の `node build.js` 実行（build.yml が push を
   契機に自動実行）で公開される。このルーチン自身が `node build.js` を明示的に実行する
-  必要はない（Step 7 の push が build.yml をトリガーする）。
+  必要はない（Step 7 の push が build.yml をトリガーする）。**続けて Step 6-4 に進む
+  こと（省略しない）。**
+
+#### Step 6-4: 「今日の話題店」候補プールへの登録（**省略しない・2026-09-12発覚の抜け穴修正**）
+
+```bash
+node scripts/promote_trending_candidate.js finalize "<店名>"
+```
+
+> **なぜ必要か**: Step 6-3までは「サイトへの正式掲載」（`pending_stores.json`経由の
+> LOCAL_STORES掲載）だけを扱い、`data/trending_stores.json` の `stores[]` には一切
+> 触れていなかった。`scripts/pick_daily_trending5.js`（「今日の話題店」TOP5選定）は
+> `stores[]` の `話題フラグ=true` しか候補にしないため、Step 6-3で掲載まで進めた店が
+> TOP5候補プールには一度も入らないという抜け穴があった。このループの存在理由（候補
+> プールの凍結を防ぐ）そのものに反するため、Step 6-3の直後に必ず実行する。
+
+`finalize` は `status` が「検証済み」（実写あり）の店だけを `stores[]` へ
+`話題フラグ=true` で追加する（`classifyPendingEntry`の`verified`判定を再利用・
+未検証や実在検証NGの店は拒否してエラー終了する二重チェック）。追加後は
+`candidates[]` から削除し、二重管理を避ける。TOP5に実際に選ばれるかは
+`pick_daily_trending5.js` の鮮度・多媒体露出スコアリング次第（このループは候補
+プールに入れるところまでが責務で、選定ロジック自体は変更しない）。
 
 ### Step 7: コミット & push（**既定は main への直接push。ブランチ＋PRは実際のpush失敗時のみ**）
 
@@ -259,9 +280,11 @@ pull --rebase で競合した場合、対象が `data/trending_stores.json` / `d
 |------|---------------------|--------------|
 
 ### 🏪 掲載への橋渡し（Step 6・L件）
-| 店名 | 実在確認の出典 | Places検証結果 | 状態 |
-|------|----------------|-----------------|------|
-（GOOGLE_MAPS_API_KEY 未設定の場合は「今回はキー未設定のため見送り」と1行で明記）
+| 店名 | 実在確認の出典 | Places検証結果 | 話題フラグ化(finalize) | 状態 |
+|------|----------------|-----------------|--------------------------|------|
+（GOOGLE_MAPS_API_KEY 未設定の場合は「今回はキー未設定のため見送り」と1行で明記。
+「話題フラグ化」列は Step 6-4 の `finalize` が成功したか＝今日の話題店候補プールに
+入ったかを示す。検証済みなのに finalize していない店が残っていたら Step 6 未完了扱い）
 
 ---
 次アクション:
