@@ -22,8 +22,8 @@
     "why": "1回の実行での取り込み急増を防ぎ異常検知しやすくするためのソフトな目安。超えても書き込み自体は止めない（ingest-jsonは冪等かつ話題フラグ=falseの人間レビュー待ち状態で追加するため実害が小さい）が、runbook のレポートで超過を明示しオーナーが把握できるようにする"
   },
   "listing": {
-    "_why": "2026-09-12、オーナーから『candidates[]止まりの新規話題店を掲載まで進めたい』と要望があり追加。candidates[]（LOCAL_STORES未登録）を実在検証つきで data/pending_stores.json（build.js が次回ビルドで LOCAL_STORES へマージするキュー）へ橋渡しする段階。auto-promote（stores[]の話題フラグ=true化）と同じ段階ゲートの考え方を流用し、同日1本のURLだけで即時掲載に進めない（ISSUE-077の教訓＝閾値をいじる前に実測、当面はpromoteと同値で揃える）。",
-    "min_days_since_detected": 3,
+    "_why": "2026-09-12、オーナーから『candidates[]止まりの新規話題店を掲載まで進めたい』と要望があり追加。candidates[]（LOCAL_STORES未登録）を実在検証つきで data/pending_stores.json（build.js が次回ビルドで LOCAL_STORES へマージするキュー）へ橋渡しする段階。当初はauto-promote（stores[]の話題フラグ=true化）と同じ3日ゲートを流用したが、同日、オーナーから『3日待つのを何とかしてほしい』と要望があり min_days_since_detected を0に短縮した。この日数ゲートは『話題性としての裏付けが十分か』を見るものであり、架空店対策（一次情報での実在確認＋Google Places三重検証＝existence_verification/places_gate、下記）とは別物。日数ゲートを短縮しても実在検証は一切変更しないため、架空店ブロックの安全性は変わらない。単発記事1本だけでの即時進行を避ける最低限の歯止めとして min_source_urls は維持する。",
+    "min_days_since_detected": 0,
     "min_source_urls": 2,
     "how": "node scripts/promote_trending_candidate.js --check が判定する（このポリシーの listing.min_days_since_detected / listing.min_source_urls を読む。promote セクションとは別の値を持てるが、変更する場合は根拠を明記すること）",
     "existence_verification": {

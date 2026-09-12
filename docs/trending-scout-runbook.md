@@ -159,9 +159,11 @@ candidates[]（LOCAL_STORES未登録の話題店）を、実在検証つきで `
 node scripts/promote_trending_candidate.js --check
 ```
 
-検出から3日以上・出典URL2件以上（`data/trending_scout_policy.json` の `listing` セクション）
-を満たした候補だけが対象。同日発掘した候補をその日のうちに掲載まで進めない（ISSUE-077の
-段階ゲートと同じ思想）。0件なら Step 6 はスキップして Step 7 へ進む（異常ではない）。
+出典URL2件以上（`data/trending_scout_policy.json` の `listing` セクション）を満たした
+候補だけが対象。日数ゲートは2026-09-12にオーナー要望で撤廃済み（min_days_since_detected=0）
+——同日発掘の候補でも出典2件あれば対象になる。**ただしこれは「話題性としての裏付け」の
+バーであり、架空店対策そのものではない**。実在の裏取りは次のStep 6-1・6-3が本体で、
+そこは一切短縮していない。0件なら Step 6 はスキップして Step 7 へ進む（異常ではない）。
 
 #### Step 6-1: 一次情報による実在確認（**省略しない**）
 
