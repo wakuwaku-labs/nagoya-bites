@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-12T09:59:41.875Z",
+  "generatedAt": "2026-09-12T13:07:35.269Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1057,
-    "pageViews": 1912,
-    "sessions": 1280,
-    "avgSessionDuration": 155.3,
-    "bounceRate": 0.283,
-    "pagesPerSession": 1.49
+    "activeUsers": 1064,
+    "pageViews": 1930,
+    "sessions": 1289,
+    "avgSessionDuration": 158.4,
+    "bounceRate": 0.288,
+    "pagesPerSession": 1.5
   },
   "dailyReference": {
     "date": "2026-09-10",
@@ -17,27 +17,27 @@
   },
   "channels": {
     "sessions": {
-      "organic": 907,
-      "direct": 258,
+      "organic": 915,
+      "direct": 266,
       "social": 93,
       "referral": 18,
       "paid": 0,
-      "other": 7
+      "other": 8
     },
     "pct": {
-      "organic": 70.7,
-      "direct": 20.1,
+      "organic": 70.4,
+      "direct": 20.5,
       "social": 7.2,
       "referral": 1.4,
       "paid": 0,
-      "other": 0.5
+      "other": 0.6
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 406
+      "sessions": 411
     },
     {
       "source": "bing",
@@ -52,7 +52,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 172
+      "sessions": 175
     },
     {
       "source": "chatgpt.com",
@@ -60,14 +60,14 @@
       "sessions": 85
     },
     {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 17
+    },
+    {
       "source": "duckduckgo",
       "medium": "organic",
       "sessions": 14
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 10
     },
     {
       "source": "copilot.com",
@@ -88,18 +88,18 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 351,
-      "sessions": 298
+      "pageViews": 355,
+      "sessions": 302
     },
     {
       "path": "/",
-      "pageViews": 349,
+      "pageViews": 354,
       "sessions": 213
     },
     {
       "path": "/index.html",
-      "pageViews": 145,
-      "sessions": 84
+      "pageViews": 148,
+      "sessions": 85
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -113,7 +113,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 125,
+    "outboundClicks": 126,
     "ctaClickRate": 9.8,
     "byDomain": [
       {
@@ -130,7 +130,7 @@
       },
       {
         "domain": "www.instagram.com",
-        "clicks": 5
+        "clicks": 6
       },
       {
         "domain": "jouhou.nagoya",
@@ -164,13 +164,13 @@
     "note": null,
     "byChannel": {
       "organic": 68,
-      "direct": 27,
+      "direct": 28,
       "social": 25,
       "referral": 5,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.5,
+    "ctaClickRate_organic": 7.4,
     "ctaClickRate_direct": 10.5,
     "ctaClickRate_social": 26.9,
     "byPage": [
@@ -495,6 +495,11 @@
         "path": "/journal/2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
+      },
+      {
+        "path": "/journal/2026-09-12-sakae-sulbing-korean-bingsu.html",
+        "domain": "www.instagram.com",
+        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
@@ -571,7 +576,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1057,
+    "value": 1064,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
