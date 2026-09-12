@@ -3,7 +3,7 @@
   "_comment": "話題店発掘ループの心拍。trending-scout ルーチンが毎回（新規リード0件の日も）書き、コミットで Mac／クラウドの外＝GitHub へ出す。.github/workflows/trending-scout-watchdog.yml が鮮度を見て、滞ったら Issue を起票する（＝オーナーにメール）。鮮度は自己申告できない（動いていないエージェントはファイルを更新できない）ため、これが本体の検知シグナル。",
   "last_run": {
     "date": "2026-09-13",
-    "recorded_at": "2026-09-12T19:10:47.713Z",
+    "recorded_at": "2026-09-12T19:12:42.116Z",
     "status": "ok",
     "reason": null,
     "queries": [
@@ -18,7 +18,7 @@
     "matched_existing": 1,
     "new_candidates": 3,
     "promoted": 0,
-    "trending_stores_total": 13,
+    "trending_stores_total": 12,
     "trending_candidates_total": 3
   }
 }
