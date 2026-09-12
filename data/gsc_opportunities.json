@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T23:46:26.203Z",
+  "generatedAt": "2026-09-12T00:15:48.708Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -16,41 +16,23 @@
       },
       {
         "query": "じゅわっち名駅",
-        "impressions": 143,
-        "clicks": 3,
-        "position": 8.2,
-        "ctr": 2.1,
-        "expectedCtr": 3.1,
-        "missedClicks": 1.5
-      },
-      {
-        "query": "のれんとコルク 名古屋",
-        "impressions": 117,
+        "impressions": 138,
         "clicks": 2,
-        "position": 9.2,
-        "ctr": 1.71,
-        "expectedCtr": 2.7,
-        "missedClicks": 1.2
+        "position": 8.3,
+        "ctr": 1.45,
+        "expectedCtr": 3.1,
+        "missedClicks": 2.2
       }
     ],
     "ctrFixGeoless": [
       {
         "query": "やきまる亭",
-        "impressions": 164,
+        "impressions": 157,
         "clicks": 2,
-        "position": 8.3,
-        "ctr": 1.22,
-        "expectedCtr": 3.1,
-        "missedClicks": 3.1
-      },
-      {
-        "query": "煮干しラーメン 凛",
-        "impressions": 146,
-        "clicks": 3,
-        "position": 7.6,
-        "ctr": 2.05,
-        "expectedCtr": 3.5,
-        "missedClicks": 2.1
+        "position": 8.4,
+        "ctr": 1.27,
+        "expectedCtr": 3,
+        "missedClicks": 2.8
       }
     ],
     "rankPush": []
@@ -58,22 +40,22 @@
   "byPage": {
     "ctrFix": [
       {
-        "page": "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
-        "impressions": 585,
-        "clicks": 7,
-        "position": 7.7,
-        "ctr": 1.2,
-        "expectedCtr": 3.4,
-        "missedClicks": 13.1
-      },
-      {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 646,
+        "impressions": 644,
         "clicks": 8,
         "position": 8.5,
         "ctr": 1.24,
         "expectedCtr": 3,
-        "missedClicks": 11.4
+        "missedClicks": 11.3
+      },
+      {
+        "page": "/stores/J004025075.html",
+        "impressions": 407,
+        "clicks": 6,
+        "position": 8,
+        "ctr": 1.47,
+        "expectedCtr": 3.2,
+        "missedClicks": 7
       },
       {
         "page": "/journal/2026-08-22-osu-malachuan-self-price.html",
@@ -89,11 +71,11 @@
     "rankPush": [
       {
         "page": "/",
-        "impressions": 4173,
+        "impressions": 4115,
         "clicks": 10,
-        "position": 25.9,
+        "position": 26.1,
         "ctr": 0.24,
-        "upsideClicks": 106.8
+        "upsideClicks": 105.3
       },
       {
         "page": "/stores/J004678178.html",
@@ -107,14 +89,14 @@
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 3,
-    "queryCtrFixGeoless": 2,
+    "queryCtrFix": 2,
+    "queryCtrFixGeoless": 1,
     "queryRankPush": 0,
     "pageCtrFix": 3,
     "pageRankPush": 2,
     "topPageCtrFix": [
-      "/journal/2026-08-13-meieki-nishi-niboshi-ramen-rin.html",
       "/journal/2026-08-04-sakae-leesar-coffee.html",
+      "/stores/J004025075.html",
       "/journal/2026-08-22-osu-malachuan-self-price.html"
     ]
   }
