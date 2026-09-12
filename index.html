@@ -2251,7 +2251,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 
 <!-- STORE-INDEX:START 2026-09-12 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（4925店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（4927店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（832店）</summary>
@@ -7242,6 +7242,13 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <li><a href="index.html#q=%E8%A6%9A%E7%8E%8B%E5%B1%B1%E5%90%89%E8%8A%8B%20%E6%9C%AC%E5%BA%97">覚王山吉芋 本店（覚王山・さつまいも菓子）</a></li>
 </ul>
 </details>
+<details class="store-index-area" data-area="名古屋市中区錦">
+<summary>名古屋市中区錦（2店）</summary>
+<ul class="store-index-list">
+<li><a href="index.html#q=BRIANZA%20NAGOYA%20HAERA">BRIANZA NAGOYA HAERA（名古屋市中区錦・モダンイタリアン）</a></li>
+<li><a href="index.html#q=%E3%82%A6%E3%83%AB%E3%83%95%E3%82%AE%E3%83%A3%E3%83%B3%E3%82%B0%E3%83%BB%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E3%83%8F%E3%82%A6%E3%82%B9%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%BA%97">ウルフギャング・ステーキハウス 名古屋店（名古屋市中区錦・ステーキハウス）</a></li>
+</ul>
+</details>
 <details class="store-index-area" data-area="錦">
 <summary>錦（2店）</summary>
 <ul class="store-index-list">
@@ -7326,12 +7333,6 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <summary>名古屋市西区那古野（1店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=%E9%82%A3%E5%8F%A4%E9%87%8E%20%E3%81%BF%E3%81%A4%E6%9E%97">那古野 みつ林（名古屋市西区那古野・懐石・会席料理、日本料理）</a></li>
-</ul>
-</details>
-<details class="store-index-area" data-area="名古屋市中区錦">
-<summary>名古屋市中区錦（1店）</summary>
-<ul class="store-index-list">
-<li><a href="index.html#q=BRIANZA%20NAGOYA%20HAERA">BRIANZA NAGOYA HAERA（名古屋市中区錦・モダンイタリアン）</a></li>
 </ul>
 </details>
 <details class="store-index-area" data-area="名古屋市南区">
@@ -7532,6 +7533,12 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <li><a href="index.html#q=%E5%8C%97%E4%BA%AC%E6%9C%AC%E5%BA%97%20%E3%82%A4%E3%82%AA%E3%83%B3%E3%83%A2%E3%83%BC%E3%83%AB%E3%83%8A%E3%82%B4%E3%83%A4%E3%83%89%E3%83%BC%E3%83%A0%E5%89%8D%E5%BA%97">北京本店 イオンモールナゴヤドーム前店（ナゴヤドーム前・中華）</a></li>
 </ul>
 </details>
+<details class="store-index-area" data-area="名古屋（中区錦・伏見）">
+<summary>名古屋（中区錦・伏見）（1店）</summary>
+<ul class="store-index-list">
+<li><a href="index.html#q=%E3%82%A6%E3%83%AB%E3%83%95%E3%82%AE%E3%83%A3%E3%83%B3%E3%82%B0%E3%83%BB%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E3%83%8F%E3%82%A6%E3%82%B9%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%BA%97">ウルフギャング・ステーキハウス 名古屋店（名古屋（中区錦・伏見）・ステーキ / アメリカン）</a></li>
+</ul>
+</details>
 <details class="store-index-area" data-area="名古屋（中区・栄）">
 <summary>名古屋（中区・栄）（1店）</summary>
 <ul class="store-index-list">
@@ -7706,7 +7713,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '5c411502961e';
+var STORES_JSON_VERSION = '7c57a3d04427';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
