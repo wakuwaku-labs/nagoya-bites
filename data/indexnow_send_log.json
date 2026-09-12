@@ -1,15 +1,14 @@
 {
   "ok": true,
   "dry_run": true,
-  "would_send": 5,
+  "would_send": 4,
   "endpoint": "https://api.indexnow.org/indexnow",
   "urls": [
     "https://nagoya-bites.com/",
     "https://nagoya-bites.com/journal/",
     "https://nagoya-bites.com/features/",
-    "https://nagoya-bites.com/journal/2026-09-11-sakae-mirai-tower-tsukimi-date-lastorder.html",
     "https://nagoya-bites.com/journal/2026-09-12-sakae-sulbing-korean-bingsu.html"
   ],
   "note": "--yes を付けると実際に送信する（外部通信が発生する）",
-  "logged_at": "2026-09-12T13:18:49.707Z"
+  "logged_at": "2026-09-12T15:59:47.525Z"
 }
