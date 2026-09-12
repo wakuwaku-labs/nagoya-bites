@@ -21,6 +21,21 @@
     "max_new_candidates_per_run": 10,
     "why": "1回の実行での取り込み急増を防ぎ異常検知しやすくするためのソフトな目安。超えても書き込み自体は止めない（ingest-jsonは冪等かつ話題フラグ=falseの人間レビュー待ち状態で追加するため実害が小さい）が、runbook のレポートで超過を明示しオーナーが把握できるようにする"
   },
+  "listing": {
+    "_why": "2026-09-12、オーナーから『candidates[]止まりの新規話題店を掲載まで進めたい』と要望があり追加。candidates[]（LOCAL_STORES未登録）を実在検証つきで data/pending_stores.json（build.js が次回ビルドで LOCAL_STORES へマージするキュー）へ橋渡しする段階。auto-promote（stores[]の話題フラグ=true化）と同じ段階ゲートの考え方を流用し、同日1本のURLだけで即時掲載に進めない（ISSUE-077の教訓＝閾値をいじる前に実測、当面はpromoteと同値で揃える）。",
+    "min_days_since_detected": 3,
+    "min_source_urls": 2,
+    "how": "node scripts/promote_trending_candidate.js --check が判定する（このポリシーの listing.min_days_since_detected / listing.min_source_urls を読む。promote セクションとは別の値を持てるが、変更する場合は根拠を明記すること）",
+    "existence_verification": {
+      "rule": "候補が段階ゲートを満たしても、掲載前に必ずWebSearchで一次情報（食べログ/ホットペッパー/Retty/ぐるなび/公式サイト/公式Instagram/地域メディア）による実在確認を行う（agents/editor.md『掲載前チェック』と同一規律）。話題性の裏取り（Step 2）とは別物——話題性の出典（dressing等のメディア記事）だけでは実在確認にならない。",
+      "source_confirm_url_required": "node scripts/promote_trending_candidate.js add-pending は --source-confirm-url を必須にする。話題出典URL（発掘元_話題出典URL として記録）とは別に、実在確認に使った一次情報URLを独立して残すことで、後から第三者が『何が話題性の根拠か』と『何が実在確認の根拠か』を区別して検算できる（制約10）"
+    },
+    "places_gate": {
+      "rule": "add-pending 実行後、必ず GOOGLE_MAPS_API_KEY=... node scripts/fetch_manual_store_photos.js --only \"<店名>\" を実行し、node scripts/promote_trending_candidate.js status で結果を確認する。実行しない・未検証のまま放置すると、merge_pending_stores.js の hiddenNoPhoto ガード（写真失敗理由が未設定）が働かず、次の build.js で無検証のまま公開されてしまう（ISSUE-120の保護をすり抜ける唯一の抜け道）。",
+      "on_verification_failure": "写真失敗理由が name-mismatch / out-of-area / not-food のいずれか＝実在検証そのものに失敗。pending_stores.json には残るが merge_pending_stores.js が自動的に非公開のまま保留する（削除はしない・取り繕わない）。photo-policy＝実在は確認できたが採用基準を満たす写真が無い場合も同様に非公開のまま保留（将来写真が見つかれば自動公開）。",
+      "no_api_key_fallback": "GOOGLE_MAPS_API_KEY がこの実行環境に無い場合、add-pending 以降のステップ全体をスキップし、該当候補は candidates[] に留め置いたまま（_promoted_to_pending を付けない）レポートに理由を明記する。キーが無い状態での掲載は行わない。"
+    }
+  },
   "health": {
     "_why": "検知器（WebSearch）が0件を返しても、認証切れ等で実行自体が失敗しても、放っておくと外から区別できない。ループ自身に『動いた』と報告させ、心拍の鮮度で生存を判定する（CLAUDE.md ISSUE-084 原則2・3）。",
     "heartbeat_file": "data/trending_scout_health.json",

@@ -45,6 +45,11 @@ Claude ルーチン**（`/seo-triage` や `docs/feedback-triage-runbook.md` と�
 - 下流: `scripts/pick_daily_trending5.js`（毎朝5:30 JST・`.github/workflows/daily-trending5.yml`）
   が `話題フラグ=true` かつ検証可能な出典URLを持つ店を材料にTOP5を選ぶ。このループは
   その材料を絶やさないための**供給側**であり、TOP5の選定ロジック自体には触れない
+- 掲載への橋渡し（Step 6・2026-09-12〜）: `node scripts/promote_trending_candidate.js`
+  が candidates[] を実在検証つきで `data/pending_stores.json`（build.js が次回ビルドで
+  LOCAL_STORES へマージするキュー）へ橋渡しする。閾値は `data/trending_scout_policy.json`
+  の `listing` セクション。Google Places 三重検証（`GOOGLE_MAPS_API_KEY` 必須）を経ないと
+  掲載に進めない設計で、キーがこの実行環境に無ければ Step 6 全体をスキップする
 
 ---
 
@@ -110,11 +115,12 @@ node scripts/fetch_trending_articles.js ingest-json /tmp/trending_leads.json
 - **LOCAL_STORES（`data/stores.json`）に既に実在する店**は自動で `trending_stores.json`
   の `stores[]` に追加される（`話題フラグ=false`・`_auto:true`。まだ非表示、Step 5 で
   条件を満たせば自動昇格）
-- **LOCAL_STORES に無い店**は `candidates[]` に追加されるだけで**それ以上は何もしない**。
-  実在検証（`GOOGLE_MAPS_API_KEY` 経由の店名+住所+業態の三重検証）を経ないまま
-  `manual_stores.json` へ追加しない（架空店ブロック・CLAUDE.md 制約）。新規店の正式
-  追加は別ワークフロー（Editor/DataKeeper が `agents/editor.md` の「実在検証は必須」
-  手順で対応）
+- **LOCAL_STORES に無い店**は `candidates[]` に追加されるだけで、この Step 4 の時点では
+  それ以上何もしない。実在検証（一次情報の確認＋`GOOGLE_MAPS_API_KEY` 経由の店名+住所+
+  業態の三重検証）を経ないまま `manual_stores.json` / `pending_stores.json` へ追加しない
+  （架空店ブロック・CLAUDE.md 制約）。段階ゲートを満たした候補は下記 Step 6 で実在検証
+  つきの掲載橋渡しに進める。Step 6 を経ない新規店の正式追加は別ワークフロー
+  （Editor/DataKeeper が `agents/editor.md` の「実在検証は必須」手順で対応）
 
 `data/trending_scout_policy.json` の `caps`（既定: 新規店5件/新規候補10件）を超えて
 取り込んだ場合も処理自体は止めない。Step 8 のレポートで超過を明示する。
@@ -129,24 +135,93 @@ node scripts/fetch_trending_articles.js auto-promote
 `話題フラグ=true` に昇格する（=即日1本のURLだけで昇格させない。日をまたいで
 裏付けが増えたものだけを通す、という段階ゲート）。
 
-### Step 6: 既存の凍結店舗にも目を配る（任意・余力があれば）
+### Step 5b: 既存の凍結店舗にも目を配る（任意・余力があれば）
 
 `data/trending_stores.json` / `data/manual_stores.json` の既存店で、検出日が
 古いまま新しい媒体露出が無いか思い当たるものがあれば、Step 1-2 と同じ要領で
 出典URLを追記してよい（`検出日` は `pick_daily_trending5.js` が翌朝自動で繰り上げる）。
 これは Step 1-5 の主フローとは独立した任意の上乗せ。
 
+### Step 6: 実在検証→正式掲載（2026-09-12〜・オーナー要望で追加）
+
+> `data/trending_scout_policy.json` の `listing` セクションが単一の情報源。閾値変更は
+> そちらで行い、このrunbookは手順のみを記述する。
+
+candidates[]（LOCAL_STORES未登録の話題店）を、実在検証つきで `data/pending_stores.json`
+（build.js が次回ビルドで LOCAL_STORES へマージするキュー）へ橋渡しする。**Step 1-5とは
+別物**であることに注意: Step 1-5が確認するのは「話題性」（メディアが取り上げているか）
+であり、Step 6が確認するのは「実在」（本当にその店が存在するか）。前者だけでは架空店
+ブロックの要件を満たさない。
+
+#### Step 6-0: 段階ゲートの確認
+
+```bash
+node scripts/promote_trending_candidate.js --check
+```
+
+検出から3日以上・出典URL2件以上（`data/trending_scout_policy.json` の `listing` セクション）
+を満たした候補だけが対象。同日発掘した候補をその日のうちに掲載まで進めない（ISSUE-077の
+段階ゲートと同じ思想）。0件なら Step 6 はスキップして Step 7 へ進む（異常ではない）。
+
+#### Step 6-1: 一次情報による実在確認（**省略しない**）
+
+対象の各候補について、WebSearchで店名＋エリア＋「名古屋」を検索し、以下のいずれかの
+**一次情報**で実在を確認する（`agents/editor.md`「掲載前チェック」と同一規律）:
+食べログ / ホットペッパー / Retty / ぐるなび / 公式サイト / 公式Instagram / 地域メディア
+
+> **重要**: Step 1-2で確認した話題性の出典（dressing等のメディア記事）は実在確認の代わりに
+> ならない。メディアが取り上げている＝実在するとは限らない（架空店・誤情報の可能性を排除
+> できない）。ここは独立した確認が必要。
+
+確認できなければ、その候補は Step 6 を進めず candidates[] に留め置く（次回以降に再確認）。
+
+#### Step 6-2: pending_stores.json へ橋渡し
+
+実在確認できた候補について、アクセス（駅＋徒歩分）・価格帯・ジャンル・おすすめポイント
+（60-120字・業界視点で書く）を調べて登録する:
+
+```bash
+node scripts/promote_trending_candidate.js add-pending "<店名>" \
+  --area <エリア> --genre <ジャンル> --access "<駅名 徒歩X分>" --price "<価格帯>" \
+  --note "<おすすめポイント60-120字>" --source-confirm-url <Step6-1で確認した一次情報URL>
+```
+
+#### Step 6-3: Google Places 三重検証（**必須・省略禁止**）
+
+```bash
+GOOGLE_MAPS_API_KEY=... node scripts/fetch_manual_store_photos.js --only "<店名>"
+node scripts/promote_trending_candidate.js status "<店名>"
+```
+
+**このステップを省略すると、写真フィールドが空のまま次の `build.js` で無検証公開されて
+しまう**（`merge_pending_stores.js` の hiddenNoPhoto ガードは「写真失敗理由が設定済み」
+エントリしか保護しないため、一度も検証していない新規エントリはこの保護をすり抜ける）。
+`status` の結果が「未検証」のままなら、Step 6 は未完了として扱う。
+
+- `GOOGLE_MAPS_API_KEY` がこの実行環境に無い場合: Step 6-2以降を実行せず、その候補は
+  candidates[] に留め置いたまま（`_promoted_to_pending` を付けない）、レポートに
+  「GOOGLE_MAPS_API_KEY 未設定のため掲載作業を見送った」と明記する。キーが無い状態での
+  掲載は絶対に行わない。
+- `status` が「実在検証NG」（name-mismatch/out-of-area/not-food）または「写真基準未達」
+  を示した場合: pending_stores.json のエントリはそのままでよい（`merge_pending_stores.js`
+  が自動的に非公開のまま保留する。削除・取り繕いは不要）。レポートにその旨を記載する。
+- `status` が「検証済み」を示した場合: 次の `node build.js` 実行（build.yml が push を
+  契機に自動実行）で公開される。このルーチン自身が `node build.js` を明示的に実行する
+  必要はない（Step 7 の push が build.yml をトリガーする）。
+
 ### Step 7: コミット & push
 
 ```bash
-git add data/trending_stores.json
-git commit -m "[trending-scout] 話題店発掘: <日付>（新規N件/候補M件/昇格K件）"
+git add data/trending_stores.json data/trending_scout_health.json
+# Step 6 で pending_stores.json を更新した場合のみ追加
+git add data/pending_stores.json
+git commit -m "[trending-scout] 話題店発掘: <日付>（新規N件/候補M件/昇格K件/掲載橋渡しL件）"
 git pull --rebase origin main
 git push
 ```
 
-pull --rebase で競合した場合、対象が `data/trending_stores.json` のみであれば
-（他の自動ループと同時に走ることは想定していないため通常は起きない）、
+pull --rebase で競合した場合、対象が `data/trending_stores.json` / `data/pending_stores.json`
+のみであれば（他の自動ループと同時に走ることは想定していないため通常は起きない）、
 内容を人力でマージするか、リトライで解消する。
 
 ### Step 8: レポートを提示
@@ -163,11 +238,16 @@ pull --rebase で競合した場合、対象が `data/trending_stores.json` の�
 ### 🆕 未登録の新規候補（LOCAL_STORES未マッチ・M件）
 | 店名 | 出典 | 備考 |
 |------|------|------|
-（実在検証を経ないと掲載できないため、正式追加は別途 Editor/DataKeeper へ）
+（実在検証を経ないと掲載できないため、正式追加は別途 Editor/DataKeeper へ、または下記 Step 6 へ）
 
 ### ⬆️ 今回自動昇格（K件・話題フラグ=true化）
 | 店名 | 検出からの経過日数 | 出典URL件数 |
 |------|---------------------|--------------|
+
+### 🏪 掲載への橋渡し（Step 6・L件）
+| 店名 | 実在確認の出典 | Places検証結果 | 状態 |
+|------|----------------|-----------------|------|
+（GOOGLE_MAPS_API_KEY 未設定の場合は「今回はキー未設定のため見送り」と1行で明記）
 
 ---
 次アクション:
@@ -209,8 +289,9 @@ node scripts/trending_scout.js --health-write '{"status":"error","reason":"<エ�
 
 - **鵜呑み禁止**: WebSearchのタイトル・スニペットだけで店名を確定させない。Step 2 の
   WebFetchによる裏取りは省略可能な保険ではなく手順の一部
-- **架空店を作らない**: LOCAL_STORES に無い店は `candidates[]` に留め置くだけ。
-  実在検証を経ずに `manual_stores.json` へ自動追加しない
+- **架空店を作らない**: LOCAL_STORES に無い店は、実在検証（一次情報＋Places三重検証）を
+  経ずに `manual_stores.json` / `pending_stores.json` へ追加しない。検証を経ない間は
+  `candidates[]` に留め置くだけ
 - **段階ゲート**: 1本のURLだけで即昇格させない（Step 5・3日以上経過＋2URL以上）。
   正直な最良の成果物（裏取りが1件しか無い日）にも逃げ道を用意する（ISSUE-077 の教訓）
 - **ヘッドレスで止まらない**: 応答できる人がいない前提で動く。判断に迷っても
@@ -218,6 +299,11 @@ node scripts/trending_scout.js --health-write '{"status":"error","reason":"<エ�
 - **選定ロジックには触れない**: このループは `trending_stores.json` を太らせるだけ。
   TOP5の選び方（鮮度・多媒体露出のスコアリング）は `scripts/pick_daily_trending5.js` の
   責務のまま変更しない
+- **話題性≠実在**: Step 6の実在確認（一次情報＋Places三重検証）は、Step 1-2の話題性の
+  裏取りとは別物で、どちらか一方では架空店ブロックを満たさない。両方が必須
+- **キーが無ければ掲載しない**: `GOOGLE_MAPS_API_KEY` がこの実行環境に無い日は Step 6を
+  スキップする（候補は candidates[] に留め置くだけ）。鍵の不在を理由に検証を省略して
+  掲載を進めることは絶対にしない
 - **心拍を書かずに終了しない**: 0件の日も Step 9 は実行する。書かない終了は
   「静かな失敗」と区別がつかない
 
@@ -229,5 +315,13 @@ node scripts/trending_scout.js --health-write '{"status":"error","reason":"<エ�
   `status: "error"` で心拍を書いて終了。watchdog の Issue が唯一の復旧経路になる
 - `ingest-json` / `auto-promote` がエラーを返す → 内容を記録し、その回の取り込みは
   スキップして Step 9 に進む（ループ全体を止めない）
-- push が競合する → `data/trending_stores.json` のみの競合であれば内容をマージして
-  再試行。他ファイルまで競合していたら無理に解消せず、状況をそのままレポートして終了
+- Step 6 で `GOOGLE_MAPS_API_KEY` が未設定 → Step 6 全体をスキップし、レポートに
+  「GOOGLE_MAPS_API_KEY 未設定のため掲載作業を見送った」と明記して Step 7 へ進む
+  （候補は candidates[] のまま。ループ全体は止めない）
+- `fetch_manual_store_photos.js --only` の実行後も `status` が「未検証」のまま
+  → API障害等で検証が完了していない可能性が高い。pending_stores.json のエントリは
+  そのまま残してよい（次回実行時に再度 `fetch_manual_store_photos.js` を通せば
+  自然に解消する）が、レポートに「未検証のまま残っている」と明記する
+- push が競合する → `data/trending_stores.json` / `data/pending_stores.json` のみの
+  競合であれば内容をマージして再試行。他ファイルまで競合していたら無理に解消せず、
+  状況をそのままレポートして終了
