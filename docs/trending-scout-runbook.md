@@ -211,7 +211,7 @@ node scripts/promote_trending_candidate.js status "<店名>"
   契機に自動実行）で公開される。このルーチン自身が `node build.js` を明示的に実行する
   必要はない（Step 7 の push が build.yml をトリガーする）。
 
-### Step 7: コミット & push
+### Step 7: コミット & push（**既定は main への直接push。ブランチ＋PRは実際のpush失敗時のみ**）
 
 ```bash
 git add data/trending_stores.json data/trending_scout_health.json
@@ -222,9 +222,21 @@ git pull --rebase origin main
 git push
 ```
 
+> **2026-09-12の教訓**: ある回の実行が、Step 6（掲載橋渡し）で `pending_stores.json` を
+> 更新したことを理由に「実店舗を公開する変更だから」と自主判断でブランチを切り
+> ドラフトPRを作成し、mainに直接pushしなかった（PR #237）。これは誤り。
+> **Step 6の内容が含まれることは、ブランチ＋PRに切り替える理由にならない**。
+> `git push` が実際に protected branch 等で拒否された場合（エラーが返ってきた場合）
+> のみブランチを切りPRを作成する。エラーが出ていないのに「念のため」PR経由にする
+> 判断はしないこと——このループの成果物（`trending_stores.json`/`pending_stores.json`
+> の更新）は直接pushして構わない前提で設計されている（オーナー承認済み・冒頭の
+> 背景参照）。掲載の最終ゲートは既にStep 6の実在検証＋Google Places三重検証で
+> かかっており、PRでの人間レビューを追加のゲートにする設計にはなっていない。
+
 pull --rebase で競合した場合、対象が `data/trending_stores.json` / `data/pending_stores.json`
 のみであれば（他の自動ループと同時に走ることは想定していないため通常は起きない）、
-内容を人力でマージするか、リトライで解消する。
+内容を人力でマージするか、リトライで解消する。`git push` がエラーで拒否された場合に
+限り、作業ブランチを切ってpushしPRを作成し、レポートにPR URLを明記する。
 
 ### Step 8: レポートを提示
 
