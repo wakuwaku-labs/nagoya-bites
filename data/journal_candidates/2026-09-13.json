@@ -1,0 +1,457 @@
+{
+  "date": "2026-09-13",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "アジア大会の夜は22時が勝負、金山で大人数が座れる餃子居酒屋",
+      "verdict": "PASS",
+      "total": 106,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "大人数",
+          "feature": "features/large-group.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 5件 (価格帯,席,予約,オペ,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 176字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「大人数」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "食べ放題2,780円の設計を読む。金山の個室居酒屋で大人数を組む日",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 99,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 22,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 5件 (価格帯,席,予約,オペ,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 148字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「個室」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "99点（自動公開ライン 100点）。主な不足: brand_fit -4 / search_intent -4 / topicality -3"
+    },
+    {
+      "id": "c2",
+      "title_draft": "ヨドバシ名駅が9月16日開業、22時閉店後の名駅で接待は組めるか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 4件 (席,予約,接待,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 153字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「接待」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -8 / novelty -2 / search_intent -2"
+    },
+    {
+      "id": "c4",
+      "title_draft": "金山は通過駅である、という前提で選ぶ接待の一軒",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 92,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 4件 (価格帯,コース,席,業界) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 146字 +4",
+          "title 23字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「接待」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "92点（自動公開ライン 100点）。主な不足: topicality -8 / search_intent -6 / brand_fit -4"
+    },
+    {
+      "id": "c3",
+      "title_draft": "9月23日と27日の朝、中区は動かない。会食ランチの予約をずらす日",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 15,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 3件 (予約,相場,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 151字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「栄」+1",
+          "タイトルにシーン語「会食」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -13 / uniqueness -5 / search_intent -5"
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "flexible",
+      "title_draft": "アジア大会の夜は22時が勝負、金山で大人数が座れる餃子居酒屋",
+      "lead_draft": "9月19日開幕のアジア競技大会は、開閉会式も陸上も瑞穂。夜の競技が終わるのは21時台で、街に人が出るのは22時前後になる。ところが名古屋の居酒屋は料理ラストオーダー22時台が主流で、「観戦帰りに座って注文できる店」は思っているより少ない。金山駅前で料理L.O.が翌0時まである94席の餃子居酒屋を、価格帯・席の使われ方・向くシーンから業界人の目で読む。",
+      "angle": "会場最寄りから乗換なしで戻れる金山という立地と、料理L.O.翌0時・94席・個室ありというオペの条件を突き合わせ、観戦帰りの大人数がどの価格帯でどう座るかを、回転と予約の実務から読む",
+      "main_store": {
+        "name": "食べ放題 個室居酒屋 餃子のかっちゃん 金山駅前店",
+        "id": "J003893597",
+        "area": "金山",
+        "genre": "居酒屋 / 餃子"
+      },
+      "sources": [
+        {
+          "label": "中日新聞: 12日に名古屋市中村区などで聖火リレー（交通規制情報）",
+          "url": "https://www.chunichi.co.jp/article/1309969",
+          "date": "2026-09-11"
+        },
+        {
+          "label": "愛知・名古屋2026 大会公式: マラソン コースと交通規制情報",
+          "url": "https://www.aichi-nagoya2026.org/ja/marathon-competition-course-and-traffic-restrictions-information/",
+          "date": "2026-07-24"
+        },
+        {
+          "label": "第20回アジア競技大会 公式X",
+          "url": "https://x.com/AsianGames_2026",
+          "date": "2026-09-12"
+        },
+        {
+          "label": "餃子のかっちゃん 金山駅前店 公式Instagram",
+          "url": "https://www.instagram.com/kacchan_kanayamaekimae/",
+          "date": "2026-09-13"
+        },
+        {
+          "label": "ホットペッパー: 食べ放題 個室居酒屋 餃子のかっちゃん 金山駅前店",
+          "url": "https://www.hotpepper.jp/strJ003893597/",
+          "date": "2026-09-13"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "flexible",
+      "title_draft": "ヨドバシ名駅が9月16日開業、22時閉店後の名駅で接待は組めるか",
+      "lead_draft": "旧・名鉄百貨店本店にヨドバシカメラが9月16日に開業する。地下1階から4階まで約11,900平方メートル、営業は9時半から22時で年中無休の予定。名駅の人の流れは夕方以降に厚くなる。閉店直後の22時台に一気に人が動く街で、会食や接待の店をどう選ぶか。業界人の視点で、予約の入れ方と価格帯の読み方を整理する。",
+      "angle": "商業施設の閉店時刻が周辺飲食店の来店ピークと予約の埋まり方をどう動かすかを、席の回転と接待の下見という実務から読む",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名駅",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通: ヨドバシカメラが旧・名鉄百貨店本店に9月16日オープン",
+          "url": "https://jouhou.nagoya/yodobashi-meieki-open/",
+          "date": "2026-09-04"
+        },
+        {
+          "label": "中日新聞: 聖火リレー交通規制情報",
+          "url": "https://www.chunichi.co.jp/article/1309969",
+          "date": "2026-09-11"
+        },
+        {
+          "label": "第20回アジア競技大会 公式X",
+          "url": "https://x.com/AsianGames_2026",
+          "date": "2026-09-12"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "flexible",
+      "title_draft": "9月23日と27日の朝、中区は動かない。会食ランチの予約をずらす日",
+      "lead_draft": "アジア競技大会の競歩は9月23日と27日の午前7時半スタートで、コースは県庁・市役所周辺の中区。マラソンは26日の朝6時45分から11時20分にかけて瑞穂公園と都心を結ぶ。丸の内や錦で昼の会食を組む人にとって、この3日は移動時間の前提が変わる。仕入れと仕込みの側から見ても、朝の搬入が読めない日になる。",
+      "angle": "交通規制が飲食店の仕込みと搬入に与える影響という裏側から、会食ランチの予約をどの日に寄せるべきかを相場と回転の観点で読む",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "丸の内",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "愛知・名古屋2026 大会公式: マラソン コースと交通規制情報",
+          "url": "https://www.aichi-nagoya2026.org/ja/marathon-competition-course-and-traffic-restrictions-information/",
+          "date": "2026-07-24"
+        },
+        {
+          "label": "アジア大会 交通規制・混雑カレンダー",
+          "url": "https://www.toshinjyuken.co.jp/aichi_nagoya/?p=8754",
+          "date": "2026-08-18"
+        },
+        {
+          "label": "中日新聞: 聖火リレー交通規制情報",
+          "url": "https://www.chunichi.co.jp/article/1309969",
+          "date": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "flexible",
+      "title_draft": "金山は通過駅である、という前提で選ぶ接待の一軒",
+      "lead_draft": "金山は名古屋で二番目に乗降客が多い駅でありながら、街として滞在されにくい。乗り換えのために降りて、乗り換えたら帰ってしまうからだ。アジア競技大会の期間は瑞穂と笠寺の会場から乗換なしで戻れる駅になる。通過駅で店を続けるとはどういうことか、17時から翌0時まで開ける炉端焼きの席の作り方から読む。",
+      "angle": "通過駅の商圏では目的来店を作れないと生き残れないという構造を、席数と価格帯とコースの設計から業界人の目で読む",
+      "main_store": {
+        "name": "炉端焼き 燻銀 金山店",
+        "id": "J001186933",
+        "area": "金山",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "第20回アジア競技大会 公式X",
+          "url": "https://x.com/AsianGames_2026",
+          "date": "2026-09-12"
+        },
+        {
+          "label": "ホットペッパー: 炉端焼き 燻銀 金山店",
+          "url": "https://www.hotpepper.jp/strJ001186933/",
+          "date": "2026-09-13"
+        },
+        {
+          "label": "アジア大会 交通規制・混雑カレンダー",
+          "url": "https://www.toshinjyuken.co.jp/aichi_nagoya/?p=8754",
+          "date": "2026-08-18"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "flexible",
+      "title_draft": "食べ放題2,780円の設計を読む。金山の個室居酒屋で大人数を組む日",
+      "lead_draft": "食べ飲み放題2,780円という値付けは、原価だけを見ると成立しない。成立させているのは時間制限と席の回転、そして注文の集中を捌く厨房の作り方だ。金山駅から徒歩3分、94席で個室もある餃子居酒屋の値付けを分解しながら、大人数の幹事がこの価格帯で何を期待してよくて、何を期待すべきでないかを整理する。",
+      "angle": "食べ放題の価格帯がどう成立しているかを原価と回転と人件費から分解し、大人数の予約で幹事が確認すべき席とオペの条件を示す",
+      "main_store": {
+        "name": "食べ放題 個室居酒屋 餃子のかっちゃん 金山駅前店",
+        "id": "J003893597",
+        "area": "金山",
+        "genre": "居酒屋 / 餃子"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパー: 食べ放題 個室居酒屋 餃子のかっちゃん 金山駅前店",
+          "url": "https://www.hotpepper.jp/strJ003893597/",
+          "date": "2026-09-13"
+        },
+        {
+          "label": "餃子のかっちゃん 金山駅前店 公式Instagram",
+          "url": "https://www.instagram.com/kacchan_kanayamaekimae/",
+          "date": "2026-09-13"
+        },
+        {
+          "label": "第20回アジア競技大会 公式X",
+          "url": "https://x.com/AsianGames_2026",
+          "date": "2026-09-12"
+        }
+      ]
+    }
+  ]
+}
