@@ -2860,6 +2860,76 @@
       "brand_reason": "重複。solo-dining の勝ち筋分解・同型シーンへの横展開・相互リンクは SEO-087（ready・Editor）が扱っており、本文内の回遊導線は SEO-070（2026-09-11 done）で実装済み。トップでの紹介は SEO-088 で今日の話題店TOP5面が既存かつ計測済み。再起票しない",
       "category": null,
       "fingerprint": "603128714eb3d75c"
+    },
+    {
+      "id": null,
+      "date": "2026-09-14",
+      "source": "line-daily",
+      "advice": "🔴 予約ボタンクリックが0回、マップクリックも0回と、具体的な行動に繋がっていません。👉 トップページ(index.html)の店舗詳細モーダル内にある予約ボタンとGoogleマップ導線について、キャッチコピーやデザインをテストし、クリックを促す改善案を検討しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（主旨）。「予約行動が0回に落ちる」前提は SEO-089（予約行動の分子拡充・done・GAS反映済み=gas_deploy_health deployed）が扱った論点で、09-13 の同旨助言も却下済み。日次33人（確定値側22セッション）の母数では文言・デザインのテスト結果を判定できない。30日累計では outbound_click 118回・ctaClickRate 9.2%（data/site_metrics.json 2026-09-13）で導線は機能しており、単日の0は信号にならない。再起票しない",
+      "category": null,
+      "fingerprint": "16b975f236192f74"
+    },
+    {
+      "id": null,
+      "date": "2026-09-14",
+      "source": "line-daily",
+      "advice": "🟡 訪問者33人に対して「nagoya-solo-dining」が8回閲覧と、特定の特集ページにアクセスが集中しています。👉 features/nagoya-solo-dining の内容をさらに充実させ、関連する「一人飲み」「お一人様」といったキーワードで、Journal記事やSNS原稿(docs/daily-posts/)を強化し、来訪を促しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複。solo-dining の勝ち筋分解と「一人飲み×エリア」への横展開は SEO-087（ready）が 2026-09-09 追記で実測済みの論点そのもの。SNS原稿側は generate_sns_draft:false（2026-09-05）で停止中のため打ち手が成立せず、この誤前提は SEO-093 で生成器側に集約済み。再起票しない",
+      "category": null,
+      "fingerprint": "0a66299b7cc9ea03"
+    },
+    {
+      "id": null,
+      "date": "2026-09-14",
+      "source": "line-daily",
+      "advice": "🟢 検索流入比率が95%と高い一方、SNS流入が0%です。この強みをさらに伸ばしましょう。👉 docs/daily-posts/ にあるSNS投稿原稿を、InstagramやXだけでなく、Noteでも継続的に発信し、各記事へのリンクを設置して新たな流入経路を試しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下（前提が事実と合わない・制約10）。①docs/daily-posts/ のSNS原稿は generate_sns_draft:false（2026-09-05 オーナー判断）で停止中で「ある原稿を発信する」打ち手が成立しない（同じ誤前提は SEO-093 で助言生成器側の固定文 .gas-deploy/Code.js:672 に原因特定済み）②「SNS流入0%」は1日22セッションの確定値での話で、30日では social 91セッション=7.0%（data/site_metrics.json 2026-09-13）とゼロではない ③SNS発信の実行はオーナー本人の手動投稿で、このループが起票しても backlog から進められない",
+      "category": null,
+      "fingerprint": "c00e40da83345938"
+    },
+    {
+      "id": null,
+      "date": "2026-09-14",
+      "source": "line-weekly",
+      "advice": "週次トレンド総括（2026-09-06〜09-12 / 前週 08-30〜09-05）: 訪問者231人（先週293人）-21% / 閲覧数443（先週507）-13% / 訪問回数277（先週352）-21% / 平均滞在2分44秒 / 直帰率25% / 成長ステータス: 減速中（原因調査を）",
+      "verdict": "rejected",
+      "brand_reason": "起票見送り（原因調査はこの場で実施・構造的な減少は検出されず）。①比較対象の前週は閲覧 +40%・訪問者 +10% の突出週で、今週はその反動。4週の推移は 207→267→293→231 人で2週前（267）比では -13% ②30日累計セッションは 09-05 時点 1,175 → 09-13 時点 1,279 と観測史上最高水準で、09-07 以降 1,243〜1,279 の横ばい（data/site_metrics.json の git 履歴）＝下降トレンドは出ていない ③Google 側は GSC 28日クリック 543〜570・表示 47.5k〜50.5k で09-11〜09-13 安定（data/gsc_metrics.json）④social は30日で 82→91 と横ばいで、SNS原稿停止（09-05）による流入減も観測されない。単週のブレを原因調査チケットにすると施策の空振りを生む（ゲートは実測で判断・CLAUDE.md 品質ゲート原則5）。再評価条件: 次週も前週比マイナス（2週連続）または30日累計セッションが前週比で減少したら、その週の週次 triage で P1〜P2 の原因調査として起票する。補足: 見出し「好調です」（overallVerdict=直帰率・滞在などの質の比率）と「減速中」（前週比の量）は別軸の判定で、矛盾ではない（.gas-deploy/Code.js:839 / :1006）",
+      "category": null,
+      "fingerprint": "ef020638578128e2"
+    },
+    {
+      "id": null,
+      "date": "2026-09-14",
+      "source": "line-weekly",
+      "advice": "訪問者231人に対し、店舗詳細閲覧が29回、予約クリックが10回と、具体的なアクションが少ない状況です。👉 index.htmlの全店舗リストで、店舗名の下に「シーン別タグ（例: #接待 #個室）」を3つ程度追加し、ユーザーが興味を持つきっかけを増やしましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下（打ち手は実装済み）。index.html の buildCardHtml()（:9587-9595）が既にシーンタグ（デート/女子会/接待/誕生日・記念日/歓送迎会/忘年会・新年会/家族・子連れ）と空間タグ（個室/半個室/カウンター/テラス席/座敷/貸切可/隠れ家）を card-tags として最大3つ表示している＝助言の要求そのもの。前提の「アクションが少ない」も、週次の予約ボタン集計は面が狭い（SEO-089/SEO-088 の論点）一方で30日 outbound_click 118回・ctaClickRate 9.2%（data/site_metrics.json）",
+      "category": null,
+      "fingerprint": "50a0aa72c73520e0"
+    },
+    {
+      "id": null,
+      "date": "2026-09-14",
+      "source": "line-weekly",
+      "advice": "検索流入比率が70%と高いにも関わらず、BingとGoogleが同率で、Yahoo!検索も15%と分散しています。👉 docs/daily-posts/のSNS投稿原稿（特にInstagramとX）で、「名古屋 接待 個室」や「名古屋 宴会 大人数」といった強みとなる複合キーワードを、ハッシュタグや本文にさらに積極的に盛り込み、SNSからの流入を強化しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下。①SNS原稿生成は 2026-09-05 から停止中（data/journal_sns_draft_policy.json）で、この誤前提は SEO-093 に集約済み ②「名古屋 接待 個室」は GSC 28日上位クエリで「接待」表示0（SEO-090/SEO-092 で実測済み）＝実データに無いKWの推測書き足しは SEO-071 で却下済みのパターン ③検索エンジン分散への打ち手（SNSハッシュタグ）は Bing/Yahoo でのサイト表示に作用する経路が無い。Bing 側は SEO-085（IndexNow）/SEO-067（BWT）に集約済み",
+      "category": null,
+      "fingerprint": "202e0cf74f4641e2"
+    },
+    {
+      "id": null,
+      "date": "2026-09-14",
+      "source": "line-weekly",
+      "advice": "人気ページ2位の「nagoya-solo-dining」が87回閲覧されていますが、予約クリックには繋がりきっていません。👉 features/nagoya-solo-diningの特集ページに、ソロダイニング向けの予約導線（予約ボタン）をページ上部と下部に明確に配置し、CTAへのアクセスを改善しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（打ち手は実装済み）。features/nagoya-solo-dining.html は既に冒頭の絞り込みCTA（feature_cta_click×2・SEO-042/045 TOP-CTA）と「今すぐ予約」3本を持ち、計装も cta_click×10 / feature_store_click×16 / internal_link_click×6 / outbound_click を発火する（SEO-086 done で集計対象イベントの欠落を解消済み）。勝ち筋の分解と横展開は SEO-087（ready）で扱う。再起票しない",
+      "category": null,
+      "fingerprint": "cf24db357f3fdcbe"
     }
   ]
 }
