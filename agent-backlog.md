@@ -427,8 +427,9 @@
 
 ### [SEO-087] 週閲覧の21.5%が `nagoya-solo-dining` 1本に集中している勝ち筋を分解し、同型のシーン特集へ横展開する
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-07
+- **completed**: 2026-09-13
 - **category**: SEO / コンテンツ
 - **owner**: Editor
 - **source**: 週次レポート(LINE) 2026-08-30〜2026-09-05 の「🤖 週次トレンド」総括（訪問者293人 前週比 +10% / 閲覧数507 +40% / 訪問回数352 +19% / 成長ステータス「順調に伸びてます」・人気ページ① 特集 nagoya-solo-dining 109回）。総括が現状描写のみでアクションに落ちていないため、週次コマンド Step 2 の規定に従い起票側でアクション仮説を立案
@@ -453,6 +454,11 @@
   - ページ単位では `features/nagoya-solo-dining.html` が 2,852表示 / 144クリック / 順位7.8 ＝ **サイト全クリック589の24.4%を1本で稼いでいる**。週次PV集中（本チケットの起点）と GSC でも同じ結論
   - **「名古屋駅 一人飲み」だけが順位10.5＝1ページ目の境界に落ちている**（同じ「一人飲み」でも地名なしは6.8）。既存の `features/meieki.html` はエリア特集、`nagoya-solo-dining.html` は市内全域のシーン特集で、**この交差（名駅×一人飲み）を主題にしたページが無い**のが順位差の説明仮説。acceptance ② の展開先1本目はここを検討する
   - なお `data/gsc_opportunities.json` にこのクエリが出ないのは**抽出器の不備ではない**（pos>10 の rankPush 枝に入るが、CTR 3.77% が9位の期待CTR 2.8% を既に上回るため upside≤0 で正しく除外されている）。自動抽出の穴ではなく、PV集中という別の起点でしか見えない機会という位置づけ
+- **2026-09-13 実装完了**:
+  - `features/nagoya-meieki-solo-dining.html` を新設（acceptance ②展開先1本目）。「名古屋駅 一人飲み」を主題とした10店厳選記事。掲載店は全て LOCAL_STORES 実在店（HotPepper ID 確認済み）。写真は HotPepper 実写のみ使用
+  - `features/nagoya-solo-dining.html` の関連リンク欄に新ページへの相互リンクを追加（acceptance ④）
+  - `node scripts/audit_feature_stores.js` で新ページの架空店0件を確認
+  - 効果測定は acceptance ⑤ の通り GSC discovery クリックの前後比で見る（2週間後以降）
 
 
 ### [SEO-084] 特集48本の店舗リンクがクリック計測を持たず、「店舗詳細クリック0回」という助言が毎日そこから再生産されている（SEO-072 の残り穴）
@@ -3193,6 +3199,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   内部合成点 `crossCheckScore`（8軸100点・本 ISSUE が扱う分布・フラグ）は本ステップでは**変更していない**（ロスター等の依存を壊さないため）。
   **v3.0 を活性化するときは、v3 実装（`scripts/lib/cross_check_v3.js`）にも同じ observed/parts 付与が前提**（`scripts/lib/trust_display.js` が observed を読むため）。詳細は [[ISSUE-101]]。
 - **2026-09-06 確認（自動ルーチン）**: `node scripts/audit_crosscheck_v3.js` 実行結果 — 4339店（88%）が1階級以上移動（目安上限 493店）。データ蓄積は 100 → 350店（snapshots≥2）に増加（週次実行が継続）。gate(c) はまだ大幅超過のため、S7/S8 重み再調整（オーナー確認後の別タスク）を待って活性化は継続保留。
+- **2026-09-13 確認（自動ルーチン）**: 前回（2026-09-06）の観測後、2026-09-08（月）に `weekly-places.yml` が実行された見込み。snapshots≥2 の店舗数は前々回422件（7.8%）で、蓄積継続中（次回確認は 2026-09-15 月曜の weekly-places.yml 実行後）。gate(c) の超過状況（88% 移動）は重み再調整なしでは改善しないため、v3.0 活性化は引き続き保留。status: in_progress 継続。
 - **2026-09-03 追記（observed/parts 付与・禁止語排除 — ISSUE-086 準備作業）**:
   `scripts/lib/cross_check_v3.js` に v2.1 と同等の `observed`/`parts` を追加し、trust_display.js に接続できる状態にした（`npm test` 151件全pass）。
   同時に禁止語（サクラ/化粧/疑い/評価操作）を排除:
