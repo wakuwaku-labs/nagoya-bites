@@ -2830,6 +2830,36 @@
       "brand_reason": "前提が事実と異なる。SNS原稿の日次自動生成は data/journal_sns_draft_policy.json の generate_sns_draft:false により2026-09-05からオーナー指示で意図的に停止中（サイト外の別の仕組みで生成する運用へ切替）であり、docs/daily-posts/ の最新は2026-09-05.md。「毎日用意されている」は成立しない。加えて投稿実行はオーナー本人の手動行為でエージェント側に実装対象が無く、助言としても「SNSに投稿しましょう」以上の具体性が無い汎用論（Step4の却下条件「効果が薄い・汎用論で具体性が無いもの」に該当）。なお停止は障害ではなく設計どおりで、再開は同JSONをtrueに戻すだけ",
       "category": null,
       "fingerprint": "957a4ebda1c272df"
+    },
+    {
+      "id": null,
+      "date": "2026-09-13",
+      "source": "line-daily",
+      "advice": "🔴 訪問者19人に対し、予約ボタンクリックが0回と、予約に繋がっていません。👉 トップページ(index.html)の店舗詳細モーダルと予約ボタンのデザインをスマホで確認し、予約へ進む導線が分かりやすいか検証しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下（前提の0回が設計欠陥の証拠として成立しない・制約10）。当日の店舗詳細を開いた回数は1回で、予約ボタンはその詳細モーダルの中にある＝分母1に対する0は導線の分かりやすさについて何も示さない。当日32PVのうち最多は features/nagoya-solo-dining 9PV（28%）でトップは10PV、ボトルネックは予約ボタン以前の詳細到達にある。予約行動の分子自体は SEO-089（2026-09-11 done・GAS反映済み＝gas_deploy_health deployed）で拡充済みで、面別の発火元は SEO-088 で計測済み。19人1日分の母数では「スマホで確認」の結果を効果検証できず、打ち手も汎用論",
+      "category": null,
+      "fingerprint": "d38e49476d8807d3"
+    },
+    {
+      "id": "SEO-093",
+      "date": "2026-09-13",
+      "source": "line-daily",
+      "advice": "🟡 Bing検索からの流入が18訪問と最も多く、Google検索を上回っています。👉 docs/daily-posts/ にあるSNS投稿原稿（Note/Instagram/X）にBing検索ユーザーを意識したキーワード（例：名古屋 隠れ家 ビストロ）を追加し、SNSからの集客を強化する実験を始めましょう。",
+      "verdict": "adopted",
+      "brand_reason": "振替採用。literalな打ち手は却下: SNS原稿は generate_sns_draft:false（2026-09-05 オーナー判断）で停止中、SNS原稿へのKW追加はBingでのサイト表示に作用する経路が無く、KW推測の書き足しは SEO-071 で却下済み。一方、同じ誤前提の助言が停止後9日で5回出ている原因を .gas-deploy/Code.js:672 の固定文「docs/daily-posts/ にSNS投稿原稿が毎日用意されている」（ほか特集20本・:790 保険文）と特定。助言生成器の入力を事実に合わせる施策で SEO-092 と同時設計。サイト表示・順位に触れない",
+      "category": "SEO",
+      "fingerprint": "b1374d86b4185e92"
+    },
+    {
+      "id": null,
+      "date": "2026-09-13",
+      "source": "line-daily",
+      "advice": "🟢 人気ページ2位が「特集: nagoya-solo-dining」で9回閲覧と、ソロ活への関心が高いようです。👉 features/nagoya-solo-dining の内容をさらに充実させ、関連する店舗の情報をトップページ(index.html)でも目立つように紹介する改善を検討しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複。solo-dining の勝ち筋分解・同型シーンへの横展開・相互リンクは SEO-087（ready・Editor）が扱っており、本文内の回遊導線は SEO-070（2026-09-11 done）で実装済み。トップでの紹介は SEO-088 で今日の話題店TOP5面が既存かつ計測済み。再起票しない",
+      "category": null,
+      "fingerprint": "603128714eb3d75c"
     }
   ]
 }
