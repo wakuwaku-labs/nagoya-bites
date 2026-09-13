@@ -1,16 +1,16 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-13T20:22:56.965Z",
+  "generatedAt": "2026-09-13T23:37:26.896Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1253,
+  "total_sessions": 1255,
   "engines": [
     {
       "key": "google",
       "label": "Google",
       "sessions": 402,
-      "pct": 32.1,
+      "pct": 32,
       "sources": [
         {
           "source": "google",
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 298,
-      "pct": 23.8,
+      "pct": 23.7,
       "sources": [
         {
           "source": "bing",
@@ -35,8 +35,8 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 261,
-      "pct": 20.8,
+      "sessions": 262,
+      "pct": 20.9,
       "sources": [
         {
           "source": "(direct)",
@@ -46,20 +46,20 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 27
+          "sessions": 28
         }
       ]
     },
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 173,
-      "pct": 13.8,
+      "sessions": 174,
+      "pct": 13.9,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 173
+          "sessions": 174
         }
       ]
     },
@@ -121,13 +121,13 @@
     }
   ],
   "search_only": {
-    "total": 976,
+    "total": 977,
     "share": [
       {
         "key": "google",
         "label": "Google",
         "sessions": 402,
-        "pct_of_search": 41.2
+        "pct_of_search": 41.1
       },
       {
         "key": "bing",
@@ -138,8 +138,8 @@
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 173,
-        "pct_of_search": 17.7
+        "sessions": 174,
+        "pct_of_search": 17.8
       },
       {
         "key": "ai_assistant",
@@ -159,12 +159,12 @@
     "from": "2026-09-12",
     "to": "2026-09-13",
     "delta": {
-      "google": 6,
-      "bing": 2,
-      "direct": 2,
-      "yahoo": 0,
-      "ai_assistant": -3,
-      "other": 9,
+      "google": -4,
+      "bing": -5,
+      "direct": 5,
+      "yahoo": -3,
+      "ai_assistant": -6,
+      "other": 10,
       "duckduckgo": 0,
       "social": 0
     }
