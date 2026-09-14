@@ -80,7 +80,7 @@
 
 ### [SEO-097] llms.txt をCIで自動再生成する（現在2026-09-06から手動更新のまま・減衰中の生成AI流入の止血）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-14
 - **category**: SEO
 - **owner**: Builder
@@ -90,6 +90,24 @@
   1. `scripts/gen_llms_txt.js`（新規）が店舗数・特集一覧・エリア×ジャンルハブ一覧（SEO-094）などを `data/stores.json` / `data/area_genre_pages_manifest.json` から集計して `llms.txt` を再生成する
   2. `build.yml` に生成ステップを追加（`--check` で不一致検出）
   3. 既存の `audit_trust_wording.js` の `llms.txt` スコープを壊さない
+- **検証できる事実（実測・2026-09-14時点）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | 更新前の `llms.txt` は店舗数「4,584店」のまま固定（`data/stores.json` は営業中4,899店＝315店の乖離）、特集記事一覧は68本中44本のみ掲載（新規追加24本が漏れ） | `git log -- llms.txt` 最終更新2026-09-06 / `data/stores.json` 実測 |
+  | エリア11区分の内訳合計（4,455店）と冒頭の総数（4,584店）がそもそも129店分ズレていた＝手動集計時点から既に不整合だった | 更新前 `llms.txt` の記載値を合算 |
+- **実装内容**:
+  1. `scripts/gen_llms_txt.js`（新規）: `<!-- AUTO-GENERATED:<name>:start/end -->` マーカー方式（`scripts/build_featured.js` の FEATURED_START/END と同じ思想）で、llms.txt 内の店舗数・エリア別/ジャンル別内訳・特集記事一覧・エリア×ジャンルハブ一覧の4種のマーカーだけを再生成する。静的な編集文章（サイト紹介・競合比較表・名古屋めし紹介・引用時の注意書き等）はマーカーの外にあるため一切書き換えない
+  2. エリア/ジャンルの区分は独自に作らず、SEO-094 で導入済みの `data/area_genre_pages_policy.json` と `scripts/lib/area_genre_pages.js`（`normalizeArea`/`normalizeGenre`/`openStores`）をそのまま再利用（二重管理を避け、stores/area/ 配下のハブページと定義を完全に一致させる）
+  3. 特集記事一覧は `features/*.html` を実走査して `<title>`/`<meta description>` から機械抽出（編集ポリシー/メタページ6本は「サイトについて」節で個別リンク済みのため除外）。description は1文目がタイトルの言い換えに過ぎない場合は次の文を採用する簡易ヒューリスティックを実装
+  4. エリア×ジャンルハブ一覧は `data/area_genre_pages_manifest.json`（691本）から種別内訳（索引/エリア/ジャンル/条件）と、掲載店数上位5件の代表URLのみ抜粋（全691本は列挙しない）
+  5. `.github/workflows/build.yml` に生成ステップを追加。`gen_area_genre_pages.js`（manifest確定）の直後・`--check` 系監査より前に配置。初回は `continue-on-error: true`（ISSUE-121の教訓）。commit ステップの `git add` に `llms.txt` を追加
+  6. `llms.txt` にマーカーを導入（既存の静的文章はそのまま・数値/一覧セクションのみマーカー化）した上で1回再生成し、実データに更新（4,584→4,899店・特集44→62本掲載・エリア×ジャンルハブ一覧を新設）
+- **QAゲート（証跡）**:
+  - `node scripts/gen_llms_txt.js` → 再生成成功。`node scripts/gen_llms_txt.js --check` → 差分なしで exit 0（2回連続実行でも冪等）
+  - `node scripts/audit_trust_wording.js --check` → 旧名称0件・禁止語0件（マーカー導入後もスコープ・判定に影響なし）
+  - `python3 -c "import yaml; yaml.safe_load(open('.github/workflows/build.yml'))"` → 構文OK
+  - 目視確認: 「サイトについて」直下の解説文・競合比較表・名古屋めし紹介・データ層説明・引用時の注意書きの文言は更新前と同一（数値部分のみ差し替え）
+- **効果測定（数週間後フォローアップ）**: `node scripts/search_channel_metrics.js --report`（生成AI流入内訳）と `data/metrics_history.json` の ChatGPT経由セッション推移で回復傾向を確認する。GSC/GA4への反映には数週間かかるため、本チケットは実装完了をもって done とし、効果測定は別途フォローアップとする
 - **関連**: [[SEO-094]]（ハブ一覧の情報源として利用）
 
 ---
