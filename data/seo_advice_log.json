@@ -2930,6 +2930,16 @@
       "brand_reason": "重複（打ち手は実装済み）。features/nagoya-solo-dining.html は既に冒頭の絞り込みCTA（feature_cta_click×2・SEO-042/045 TOP-CTA）と「今すぐ予約」3本を持ち、計装も cta_click×10 / feature_store_click×16 / internal_link_click×6 / outbound_click を発火する（SEO-086 done で集計対象イベントの欠落を解消済み）。勝ち筋の分解と横展開は SEO-087（ready）で扱う。再起票しない",
       "category": null,
       "fingerprint": "cf24db357f3fdcbe"
+    },
+    {
+      "id": null,
+      "date": "2026-09-14",
+      "source": "line-weekly",
+      "advice": "【訂正】2026-09-14 週次トレンド総括（訪問者-21%）の却下理由④「social は30日で82→91と横ばい」の根拠誤り",
+      "verdict": "correction",
+      "brand_reason": "却下理由④は誤り。data/site_metrics.json の channels.social（約90）は SNS ではなく chatgpt.com 82 + copilot.com 7 だった。scripts/fetch_ga4_views.js の部分一致 /t\\.co/ が chatgp[t.co]m・copilo[t.co]m に誤一致し、GA4 が ChatGPT 流入に medium=ai-assistant を付け始めた 2026-07 中旬以降 social がほぼ全量生成AI流入になっていた（GAS .gas-deploy/Code.js の SNS流入比率も同じ誤判定）。実際のSNS流入は上位10流入元に出ない水準（1媒体30日6件未満）。SNS投稿はオーナーが別経路で運用しており、SNS原稿停止は流入変化の原因候補ではない（オーナー確認）。判定器を scripts/lib/traffic_source.js（ドメイン単位一致）に集約し、sourceBreakdown を上位10→全行保存に変更して修正。却下の結論①〜③（30日累計・GSCに構造的減少なし）は影響を受けない",
+      "category": "計測",
+      "fingerprint": "66e57ace243cb596"
     }
   ]
 }
