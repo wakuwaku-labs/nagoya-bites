@@ -7462,6 +7462,12 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <li><a href="index.html#q=%E5%92%8C%E3%82%AB%E3%83%95%E3%82%A7%20%E4%BE%98%E3%81%B3%E5%AF%82%E3%81%B3">和カフェ 侘び寂び（千種区 今池・和カフェ・甘味）</a></li>
 </ul>
 </details>
+<details class="store-index-area" data-area="名古屋（中区・栄）">
+<summary>名古屋（中区・栄）（1店）</summary>
+<ul class="store-index-list">
+<li><a href="index.html#q=%E3%82%BD%E3%83%AB%E3%83%93%E3%83%B3%E5%90%8D%E5%8F%A4%E5%B1%8B%E6%A0%84%E5%BA%97">ソルビン名古屋栄店（名古屋（中区・栄）・カフェ / 韓国スイーツ）</a></li>
+</ul>
+</details>
 <details class="store-index-area" data-area="中区 栄">
 <summary>中区 栄（1店）</summary>
 <ul class="store-index-list">
@@ -7478,6 +7484,12 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <summary>今池（1店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=%E5%BE%A1%E3%81%86%E3%81%A9%E3%82%93%E5%85%89%E5%8F%B2%20%E4%BB%8A%E6%B1%A0%E5%BA%97">御うどん光史 今池店（今池・うどん）</a></li>
+</ul>
+</details>
+<details class="store-index-area" data-area="名古屋（中区錦・伏見）">
+<summary>名古屋（中区錦・伏見）（1店）</summary>
+<ul class="store-index-list">
+<li><a href="index.html#q=%E3%82%A6%E3%83%AB%E3%83%95%E3%82%AE%E3%83%A3%E3%83%B3%E3%82%B0%E3%83%BB%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E3%83%8F%E3%82%A6%E3%82%B9%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%BA%97">ウルフギャング・ステーキハウス 名古屋店（名古屋（中区錦・伏見）・ステーキ / アメリカン）</a></li>
 </ul>
 </details>
 <details class="store-index-area" data-area="北区 志賀町">
@@ -7568,18 +7580,6 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <summary>名古屋（守山区・藤が丘）（1店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=%E3%83%90%E3%83%BC%E3%82%AC%E3%83%BC%E3%82%AD%E3%83%B3%E3%82%B0%20%E6%B8%85%E6%B0%B4%E5%B1%8B%E8%97%A4%E3%81%8C%E4%B8%98%E5%BA%97">バーガーキング 清水屋藤が丘店（名古屋（守山区・藤が丘）・ハンバーガー / ファストフード）</a></li>
-</ul>
-</details>
-<details class="store-index-area" data-area="名古屋（中区錦・伏見）">
-<summary>名古屋（中区錦・伏見）（1店）</summary>
-<ul class="store-index-list">
-<li><a href="index.html#q=%E3%82%A6%E3%83%AB%E3%83%95%E3%82%AE%E3%83%A3%E3%83%B3%E3%82%B0%E3%83%BB%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%E3%83%8F%E3%82%A6%E3%82%B9%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%BA%97">ウルフギャング・ステーキハウス 名古屋店（名古屋（中区錦・伏見）・ステーキ / アメリカン）</a></li>
-</ul>
-</details>
-<details class="store-index-area" data-area="名古屋（中区・栄）">
-<summary>名古屋（中区・栄）（1店）</summary>
-<ul class="store-index-list">
-<li><a href="index.html#q=%E3%82%BD%E3%83%AB%E3%83%93%E3%83%B3%E5%90%8D%E5%8F%A4%E5%B1%8B%E6%A0%84%E5%BA%97">ソルビン名古屋栄店（名古屋（中区・栄）・カフェ / 韓国スイーツ）</a></li>
 </ul>
 </details>
 </section>
@@ -7750,7 +7750,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = 'b17347ca05ff';
+var STORES_JSON_VERSION = 'b001f68a68de';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
