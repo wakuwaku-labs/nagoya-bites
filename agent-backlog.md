@@ -6,6 +6,39 @@
 
 ---
 
+### [ISSUE-124] HotPepper写真URL（imgfp.hotp.jp）のCDN側配信終了を検知する監査を新設。全件走査で4,926件中133件（約2.7%）が404
+
+- **priority**: P1 → **status**: in_progress（検知は実装・CI配線・全件走査まで完了／恒久修復の方針はオーナー承認待ち）
+- **detected**: 2026-09-15
+- **category**: data quality / photo
+- **owner**: Builder / DataKeeper
+- **source**: DSN-006（特集記事のヒーロー画像/店舗写真修正）の作業中にユーザーが実測で発見。サンプル21件中4件（約19%）が404。同じキャッシュURLは `stores/*.html`（gen-store-pages.js が直接埋め込み）や index.html のカードからも参照されるため、壊れた画像として既にサイト上に露出している可能性
+- **brand-filter**: ✅ 適合 — 「実在保証」「編集独立性」を Moat とするサイトで、壊れた画像を放置するのは信頼毀損（制約7）。判定は実際のHTTPステータスのみ（制約10）
+- **検証できる事実（誰でも再現可能）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | サンプル4件はサイズ違い（58/100/168/238/320/480px）すべてで404。`_480`への格上げが原因ではなく、HotPepper CDN上のアセット自体が完全に消失している | `curl -I` を各サイズで実行して確認 |
+  | 全件走査（4,926件・並列20）で133件が404（hotpepper: 4,646 ok / 133 dead、places: 147 ok / 0 dead）。既存コメント（index.html:65「400件サンプルで2.5%」）と同水準で、恒常的に発生し続けている | `node scripts/audit_photo_url_liveness.js` → `data/photo_url_liveness_report.json` |
+  | build.js は HOTPEPPER_API_KEY 設定時、毎日全middle_areaを再フェッチして`写真URL`を書き直す（`fetchHotPepperNagoyaStores`→`hpShopToStoreRecord`）。このCI監査ステップは build.js の直後に置いたため、ここで検出される404は「毎日フェッチし直しても直らない」＝HotPepper側のAPI応答とCDN配信自体が食い違っている証跡になる（ローカルにAPIキーが無くAPI応答自体は未検証。次回CI実行ログで、133件の`写真URL`がAPI再取得後も同一かを確認できる） | `build.js:606-616`, `.github/workflows/build.yml` の実行順序 |
+  | フロント側は既に `nbImgFallback`（onerror時に店ごとのSVGプレースホルダーへ差し替え）を持っており、404画像の破綻表示は緩和されている。ただし `<meta property="og:image">` やSSR初回描画（stores/*.html）はJSのonerrorが効く前にクローラ/初回ペイントへ影響するため、この経路は未対策 | `index.html:65-134`, `gen-store-pages.js:545` |
+- **実装内容（検知のみ）**:
+  1. `scripts/lib/photo_url_liveness.js`（判定器・唯一の情報源）: HEAD→（405/501/エラー時）GETフォールバック・リダイレクト追従・404/410を間隔を置いて2回連続観測できて初めてdead確定（単発のタイムアウト/5xx/403はunknownとし違反扱いしない＝ISSUE-084原則6のオオカミ少年化防止）
+  2. `scripts/audit_photo_url_liveness.js`（CLI）: `data/stores.json` の全`写真URL`を検査 → `data/photo_url_liveness_report.json`（店名・URL・ステータス・ホットペッパーID・写真アセットID・初検出日）。`--check`で dead>0 ならexit 1
+  3. `.github/workflows/build.yml` に新設ステップ追加（`audit_store_liveness.js`の直後・`gen-store-pages.js`の直前＝将来自動修復を足すとき店舗ページ生成が修復後の値を拾えるように配置）。新設ゲートのため`continue-on-error: true`（ISSUE-121の教訓）
+- **恒久修復の方針（提案・未実装・要承認）**:
+  検討した2案のうち、**(b)を機械的に実装することを推奨**:
+  - (a) build.js 取得時にHotPepperへ再取得 — 効果不明。ローカルでAPI未検証だが、このステップはbuild.jsの「後」に置いており、それでも404が再検出され続けるなら、HotPepper自身のAPI応答とCDN配信が既に食い違っている可能性があり、再取得では直らない見込み（次回CI実行で133件の再現性を確認してから判断すべき）
+  - **(b) 確定deadのURLを`写真URL`等から機械的にクリアし「写真なし」へ倒す（推奨）**: 判定根拠（2回連続404）は検証済みの事実であり、クリアは既存データの除去のみで新規の自己申告値を足さない（制約10）。「写真なし」は`photo_policy.json`の設計思想上すでに正規の状態（nbStoreFigureの店名入りSVGプレースホルダーが既に存在）。`scripts/clear_broken_tabelog_links.js`と同じ「安全側に倒し取り繕わない」パターンで実装可能
+  次アクション: DataKeeper/Builderが(b)の実装可否をオーナーに確認 → 承認後 `scripts/clear_dead_photo_urls.js` 相当を新設し、`data/photo_url_liveness_report.json`の`dead`配列を入力に `data/stores.json`・`stores/*.html`の該当箇所をクリア。gen-store-pages.jsの直後（このステップの後段）に配置
+- **QAゲート（証跡）**:
+  - `node --test tests/*.test.js` → 197 pass / 0 fail（既存192件を含め全て通過・回帰なし）
+  - `node scripts/audit_photo_url_liveness.js --store "焼肉ホタル"` 等で、ユーザー報告の4件すべてdead確定を再現
+  - `python3 -c "import yaml; yaml.safe_load(open('.github/workflows/build.yml'))"` でYAML構文検証
+- **files**: `scripts/lib/photo_url_liveness.js`, `scripts/audit_photo_url_liveness.js`, `data/photo_url_liveness_report.json`, `.github/workflows/build.yml`
+- **関連**: [[DSN-006]]（発見の発端）
+
+---
+
 ### [SEO-094] エリア×ジャンル×条件の一覧ページ（stores/area/配下・691ページ）を新設し、「栄 焼肉」「名駅 居酒屋 個室」のような検索面を初めて作った（死にリンクだった「もっと見る」導線も同時に修理）
 
 - **priority**: P1 → **status**: done
