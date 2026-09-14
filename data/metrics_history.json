@@ -2796,37 +2796,38 @@
     {
       "date": "2026-09-14",
       "totals": {
-        "activeUsers": 1065,
-        "pageViews": 1938,
-        "sessions": 1296,
-        "avgSessionDuration": 156.8,
-        "bounceRate": 0.282,
+        "activeUsers": 1066,
+        "pageViews": 1942,
+        "sessions": 1298,
+        "avgSessionDuration": 156.7,
+        "bounceRate": 0.283,
         "pagesPerSession": 1.5
       },
       "channels_pct": {
-        "organic": 70.1,
-        "direct": 20.8,
-        "social": 7.1,
+        "organic": 69.9,
+        "direct": 20.2,
+        "social": 0.6,
+        "ai_assistant": 7.6,
         "referral": 1.4,
         "paid": 0,
-        "other": 0.5
+        "other": 0.3
       },
       "search_channels": {
         "google": 411,
-        "bing": 308,
-        "direct": 255,
+        "bing": 311,
+        "direct": 257,
         "yahoo": 176,
-        "ai_assistant": 91,
+        "ai_assistant": 99,
+        "other": 29,
         "duckduckgo": 14,
-        "other": 12,
-        "social": 0
+        "social": 8
       },
       "cta": {
         "outboundClicks": 118,
         "ctaClickRate": 9.1,
         "ctaClickRate_organic": 7.2,
-        "ctaClickRate_direct": 11.1,
-        "ctaClickRate_social": 18.3
+        "ctaClickRate_direct": 11.4,
+        "ctaClickRate_social": 0
       }
     }
   ]

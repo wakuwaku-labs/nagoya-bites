@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-14T06:46:10.210Z",
+  "generatedAt": "2026-09-14T07:12:31.435Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1065,
-    "pageViews": 1938,
-    "sessions": 1296,
-    "avgSessionDuration": 156.8,
-    "bounceRate": 0.282,
+    "activeUsers": 1066,
+    "pageViews": 1942,
+    "sessions": 1298,
+    "avgSessionDuration": 156.7,
+    "bounceRate": 0.283,
     "pagesPerSession": 1.5
   },
   "dailyReference": {
@@ -18,19 +18,21 @@
   "channels": {
     "sessions": {
       "organic": 912,
-      "direct": 271,
-      "social": 93,
+      "direct": 264,
+      "social": 8,
+      "ai_assistant": 99,
       "referral": 18,
       "paid": 0,
-      "other": 7
+      "other": 4
     },
     "pct": {
-      "organic": 70.1,
-      "direct": 20.8,
-      "social": 7.1,
+      "organic": 69.9,
+      "direct": 20.2,
+      "social": 0.6,
+      "ai_assistant": 7.6,
       "referral": 1.4,
       "paid": 0,
-      "other": 0.5
+      "other": 0.3
     }
   },
   "sourceBreakdown": [
@@ -42,7 +44,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 308
+      "sessions": 309
     },
     {
       "source": "(direct)",
@@ -62,7 +64,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 16
+      "sessions": 18
     },
     {
       "source": "duckduckgo",
@@ -83,6 +85,96 @@
       "source": "unknown",
       "medium": "(not set)",
       "sessions": 6
+    },
+    {
+      "source": "copilot.com",
+      "medium": "ai-assistant",
+      "sessions": 5
+    },
+    {
+      "source": "facebook.com",
+      "medium": "referral",
+      "sessions": 4
+    },
+    {
+      "source": "ig",
+      "medium": "social",
+      "sessions": 4
+    },
+    {
+      "source": "teams.public.onecdn.static.microsoft",
+      "medium": "referral",
+      "sessions": 4
+    },
+    {
+      "source": "unknown",
+      "medium": "",
+      "sessions": 3
+    },
+    {
+      "source": "cn.bing.com",
+      "medium": "referral",
+      "sessions": 2
+    },
+    {
+      "source": "ecosia.org",
+      "medium": "organic",
+      "sessions": 2
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 1
+    },
+    {
+      "source": "blekko.com",
+      "medium": "referral",
+      "sessions": 1
+    },
+    {
+      "source": "greenmaven.com",
+      "medium": "referral",
+      "sessions": 1
+    },
+    {
+      "source": "openai",
+      "medium": "(not set)",
+      "sessions": 1
+    },
+    {
+      "source": "openai",
+      "medium": "organic",
+      "sessions": 1
+    },
+    {
+      "source": "perplexity",
+      "medium": "(not set)",
+      "sessions": 1
+    },
+    {
+      "source": "search.portal.auone.jp",
+      "medium": "referral",
+      "sessions": 1
+    },
+    {
+      "source": "sgyba.com",
+      "medium": "referral",
+      "sessions": 1
+    },
+    {
+      "source": "unknown",
+      "medium": "(none)",
+      "sessions": 1
+    },
+    {
+      "source": "webnocular.com",
+      "medium": "referral",
+      "sessions": 1
+    },
+    {
+      "source": "websearch.rakuten.co.jp",
+      "medium": "referral",
+      "sessions": 1
     }
   ],
   "topPages": [
@@ -98,8 +190,8 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 151,
-      "sessions": 87
+      "pageViews": 153,
+      "sessions": 88
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -165,14 +257,15 @@
     "byChannel": {
       "organic": 66,
       "direct": 30,
-      "social": 17,
+      "social": 0,
+      "ai_assistant": 17,
       "referral": 5,
       "paid": 0,
       "other": 0
     },
     "ctaClickRate_organic": 7.2,
-    "ctaClickRate_direct": 11.1,
-    "ctaClickRate_social": 18.3,
+    "ctaClickRate_direct": 11.4,
+    "ctaClickRate_social": 0,
     "byPage": [
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -576,7 +669,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1065,
+    "value": 1066,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
