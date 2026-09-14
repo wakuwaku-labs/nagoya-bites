@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T23:37:26.854Z",
+  "generatedAt": "2026-09-14T00:15:05.832Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -13,26 +13,17 @@
         "ctr": 0.95,
         "expectedCtr": 2.7,
         "missedClicks": 12.8
-      },
-      {
-        "query": "じゅわっち名駅",
-        "impressions": 136,
-        "clicks": 2,
-        "position": 8.4,
-        "ctr": 1.47,
-        "expectedCtr": 3,
-        "missedClicks": 2.1
       }
     ],
     "ctrFixGeoless": [
       {
         "query": "やきまる亭",
-        "impressions": 160,
+        "impressions": 149,
         "clicks": 2,
-        "position": 8.3,
-        "ctr": 1.25,
+        "position": 8.2,
+        "ctr": 1.34,
         "expectedCtr": 3.1,
-        "missedClicks": 2.9
+        "missedClicks": 2.7
       }
     ],
     "rankPush": []
@@ -41,21 +32,12 @@
     "ctrFix": [
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 678,
+        "impressions": 676,
         "clicks": 8,
         "position": 8.5,
         "ctr": 1.18,
         "expectedCtr": 3,
         "missedClicks": 12.3
-      },
-      {
-        "page": "/stores/J004025075.html",
-        "impressions": 406,
-        "clicks": 6,
-        "position": 8.1,
-        "ctr": 1.48,
-        "expectedCtr": 3.2,
-        "missedClicks": 6.8
       },
       {
         "page": "/journal/2026-08-22-osu-malachuan-self-price.html",
@@ -71,11 +53,11 @@
     "rankPush": [
       {
         "page": "/",
-        "impressions": 4412,
-        "clicks": 12,
-        "position": 26.2,
-        "ctr": 0.27,
-        "upsideClicks": 111.6
+        "impressions": 4281,
+        "clicks": 11,
+        "position": 26.1,
+        "ctr": 0.26,
+        "upsideClicks": 108.7
       },
       {
         "page": "/stores/J004678178.html",
@@ -89,14 +71,13 @@
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 2,
+    "queryCtrFix": 1,
     "queryCtrFixGeoless": 1,
     "queryRankPush": 0,
-    "pageCtrFix": 3,
+    "pageCtrFix": 2,
     "pageRankPush": 2,
     "topPageCtrFix": [
       "/journal/2026-08-04-sakae-leesar-coffee.html",
-      "/stores/J004025075.html",
       "/journal/2026-08-22-osu-malachuan-self-price.html"
     ]
   }
