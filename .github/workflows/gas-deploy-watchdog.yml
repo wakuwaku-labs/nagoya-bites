@@ -196,7 +196,10 @@ jobs:
   #       `numeric_reference_skipped` になり、数値シグナルが永久に indeterminate になる
   #       ＝「直帰率が本当に高いのかバグなのか」を誰も検算できない状態が続く（SEO-075）。
   #
-  # 判定: `dailyReference.date` が JST 今日から2日以上古ければ異常とみなす。
+  # 判定: `dailyReference.date` が JST 今日から `data/gas_deploy_policy.json` の
+  #       `watchdog.max_stale_reference_days`（既定3日）以上古ければ異常とみなす。
+  #       fetch_ga4_views.js は仕様上 D-2（2日前）の確定値を書くため、閾値を2日にすると
+  #       健全時でも毎日 daysBehind=2 で恒常的に誤検知する（2026-09 に実際に発生・オオカミ少年化）。
   #       日付の差は自己申告できない（GA4を引けていなければ date は進まない）ため、
   #       CLAUDE.md 制約10「検証できる事実だけで判定」を満たす。
   #
@@ -223,18 +226,21 @@ jobs:
           const fs = require('fs');
           // JST 今日
           const jst = new Date(Date.now() + 9*60*60*1000).toISOString().slice(0,10);
+          const policy = JSON.parse(fs.readFileSync('data/gas_deploy_policy.json', 'utf8'));
+          const maxStaleDays = Number.isFinite(policy.watchdog && policy.watchdog.max_stale_reference_days)
+            ? policy.watchdog.max_stale_reference_days : 3;
           let result;
           try {
             const sm = JSON.parse(fs.readFileSync('data/site_metrics.json', 'utf8'));
             const refDate = sm.dailyReference && sm.dailyReference.date;
             if (!refDate) {
-              result = { stale: true, refDate: null, daysBehind: 999, today: jst };
+              result = { stale: true, refDate: null, daysBehind: 999, today: jst, maxStaleDays };
             } else {
               const daysBehind = Math.round((new Date(jst) - new Date(refDate)) / 86400000);
-              result = { stale: daysBehind >= 2, refDate, daysBehind, today: jst };
+              result = { stale: daysBehind >= maxStaleDays, refDate, daysBehind, today: jst, maxStaleDays };
             }
           } catch(e) {
-            result = { stale: true, refDate: null, daysBehind: 999, today: jst, error: e.message };
+            result = { stale: true, refDate: null, daysBehind: 999, today: jst, maxStaleDays, error: e.message };
           }
           fs.writeFileSync('/tmp/ref-staleness.json', JSON.stringify(result));
           console.log(JSON.stringify(result));
@@ -262,7 +268,7 @@ jobs:
                   owner, repo, issue_number: existing.number,
                   body:
                     `✅ 回復を確認しました（JST ${r.today}）。` +
-                    `参照値の日付: \`${r.refDate}\`（${r.daysBehind}日遅れ → 閾値2日以内）。自動クローズします。`,
+                    `参照値の日付: \`${r.refDate}\`（${r.daysBehind}日遅れ → 閾値${r.maxStaleDays}日未満）。自動クローズします。`,
                 });
                 await github.rest.issues.update({
                   owner, repo, issue_number: existing.number, state: 'closed',
@@ -287,7 +293,7 @@ jobs:
             L.push('## 検出内容');
             L.push(`- \`dailyReference.date\`: \`${r.refDate || '（なし）'}\``);
             L.push(`- 今日 JST: \`${r.today}\``);
-            L.push(`- 停滞日数: **${r.daysBehind} 日**（閾値: 2日）`);
+            L.push(`- 停滞日数: **${r.daysBehind} 日**（閾値: ${r.maxStaleDays}日以上・\`data/gas_deploy_policy.json\` の \`watchdog.max_stale_reference_days\`）`);
             if (r.error) L.push(`- エラー: \`${r.error}\``);
             L.push('');
             L.push('## 考えられる原因');
@@ -302,7 +308,7 @@ jobs:
             L.push('```');
             L.push('');
             L.push('---');
-            L.push('この Issue は `dailyReference.date` が2日以内に回復すると自動クローズされます（gas-deploy-watchdog.yml）。');
+            L.push(`この Issue は \`dailyReference.date\` の遅れが${r.maxStaleDays}日未満に回復すると自動クローズされます（gas-deploy-watchdog.yml）。`);
             const body = L.join('\n');
 
             if (existing) {
