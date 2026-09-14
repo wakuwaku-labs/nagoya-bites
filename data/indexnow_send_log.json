@@ -1,14 +1,15 @@
 {
   "ok": true,
   "dry_run": true,
-  "would_send": 4,
+  "would_send": 5,
   "endpoint": "https://api.indexnow.org/indexnow",
   "urls": [
     "https://nagoya-bites.com/",
     "https://nagoya-bites.com/journal/",
     "https://nagoya-bites.com/features/",
-    "https://nagoya-bites.com/journal/2026-09-13-kanayama-late-night-gyoza-group.html"
+    "https://nagoya-bites.com/journal/2026-09-13-kanayama-late-night-gyoza-group.html",
+    "https://nagoya-bites.com/journal/2026-09-14-sakae-izakaya-new-openings-bonenkai.html"
   ],
   "note": "--yes を付けると実際に送信する（外部通信が発生する）",
-  "logged_at": "2026-09-13T23:48:41.517Z"
+  "logged_at": "2026-09-14T00:26:28.792Z"
 }
