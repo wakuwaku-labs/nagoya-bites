@@ -676,7 +676,7 @@
 
 ### [DSN-001] トップページを含む全ページの可読性・タイポグラフィを刷新し、デザインシステムとDesigner役職を常設する
 
-- **priority**: P1（UX劣化） → **status**: ready（実装・ローカル検証済み。PR作成待ち）
+- **priority**: P1（UX劣化） → **status**: partial（本体は PR #210 で実装・マージ済み・2026-09-03。残る acceptance は下記「未完了」1項目のみ）
 - **detected**: 2026-09-03
 - **category**: design / ux
 - **owner**: Designer（新設）
@@ -734,8 +734,20 @@
     `validate_journal_draft.js`（最新記事）: すべて✅
   - `node scripts/nightly_qa.js --no-advance`: PASS（新設した「デザインシステム準拠監査」項目もsoftで実行され緑）
   - ブラウザ実機確認（375px/1280px・雑誌モード/検索モード/モーダル）でレイアウト崩れなし
-- **未完了**: PR作成・マージ、マージ後の`gen-store-pages.js`再生成でstores/の残存違反解消を確認、
-  build.yml新設ステップ（現在`continue-on-error:true`）をCIグリーン確認後にblocking化（Designer判断）
+- **2026-09-14 是正（stale状態の解消・next_task.js誤分類の是正）**: 本チケットは実際には
+  **2026-09-03当日にPR #210としてマージ済み**（`git log --grep=DSN-001` で確認可能）だったが、
+  本欄の status が `ready（…PR作成待ち）` のまま11日間更新されておらず、`data/solve_next_policy.json`
+  の `awaitingHuman.notePatterns`（`"待ち"` を含む）に「PR作成**待ち**」の文字列がヒットして
+  「オーナー本人にしか進められない課題」に誤分類され続けていた（実際にはPRは作成済みで
+  オーナー操作は一切不要）。`node scripts/audit_design_system.js --report` で現況を再検証した結果、
+  違反577ファイルは**すべて`stores/`配下**（[[ISSUE-102]]の孤児ページ）で、root/features/journal/index.html
+  は違反0件と確認（PR #210の効果は維持されている）。以下の1点を除きacceptanceは満たされているため
+  `status: partial` に是正する
+- **未完了（残り1点・[[ISSUE-102]]待ち）**: `.github/workflows/build.yml` の
+  `node scripts/audit_design_system.js --report --sample 200` ステップは現在も `continue-on-error: true`。
+  これをブロッキング化すると、[[ISSUE-102]]（stores/の孤児ページ577件・削除はオーナー本人の判断待ち）が
+  解消するまで毎日CIが赤くなる。[[ISSUE-102]]の解消（またはaudit対象からの孤児ページ除外の恒久化）が
+  先行条件
 ### [SEO-081] IndexNow 送信ステップが ISSUE-112 の build.yml 書き換えで消え、最大流入エンジン Bing への更新通知が再び死んでいる（SEO-071 は done のまま）
 - **priority**: P1 → **status**: done
 - **resolved**: 2026-09-03
