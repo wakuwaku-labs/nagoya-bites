@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-14T09:02:30.160Z",
+  "generatedAt": "2026-09-14T09:14:44.883Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1069,
-    "pageViews": 1947,
-    "sessions": 1302,
-    "avgSessionDuration": 156.2,
-    "bounceRate": 0.284,
+    "activeUsers": 1072,
+    "pageViews": 1953,
+    "sessions": 1306,
+    "avgSessionDuration": 155.8,
+    "bounceRate": 0.286,
     "pagesPerSession": 1.5
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 915,
-      "direct": 267,
+      "organic": 918,
+      "direct": 271,
       "social": 8,
       "ai_assistant": 99,
       "referral": 18,
@@ -26,8 +26,8 @@
       "other": 5
     },
     "pct": {
-      "organic": 69.7,
-      "direct": 20.4,
+      "organic": 69.6,
+      "direct": 20.5,
       "social": 0.6,
       "ai_assistant": 7.5,
       "referral": 1.4,
@@ -39,12 +39,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 412
+      "sessions": 413
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 310
+      "sessions": 311
     },
     {
       "source": "(direct)",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 177
+      "sessions": 178
     },
     {
       "source": "chatgpt.com",
@@ -64,7 +64,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 21
+      "sessions": 25
     },
     {
       "source": "duckduckgo",
@@ -180,13 +180,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 362,
-      "sessions": 310
+      "pageViews": 363,
+      "sessions": 311
     },
     {
       "path": "/",
-      "pageViews": 356,
-      "sessions": 214
+      "pageViews": 357,
+      "sessions": 215
     },
     {
       "path": "/index.html",
@@ -206,7 +206,7 @@
   ],
   "cta": {
     "outboundClicks": 118,
-    "ctaClickRate": 9.1,
+    "ctaClickRate": 9,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -264,7 +264,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.2,
-    "ctaClickRate_direct": 11.2,
+    "ctaClickRate_direct": 11.1,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -669,7 +669,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1069,
+    "value": 1072,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
