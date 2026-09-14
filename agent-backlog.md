@@ -64,16 +64,21 @@
 
 ### [SEO-096] ジャーナルの題材選定に「検索されうる固有名詞（店名・商品名）を1本に最低1つ」を明文化し、`data/gsc_opportunities.json` の ctrFix対象2本（leesar coffee / malachuan）のタイトルを改題する
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-14
+- **resolved**: 2026-09-14
 - **category**: SEO / 編集
 - **owner**: Editor
 - **source**: SEO分析（オーナー依頼）。GSC実測でジャーナルのクリック上位は例外なく新店名・新商品名の指名検索（ヤムヤムビュッフェ83表示・藤が丘生ドーナツ148表示・リサールコーヒー176表示）である一方、ジャーナル76本合計で129クリックと薄い
 - **brand-filter**: ✅ 適合 — 日次ジャーナルは唯一の一次コンテンツ資産（Moat）。検索されうる固有名詞を含めるのは順位操作ではなく、実在店名の正確な記載という編集の基本
 - **acceptance**:
-  1. `agents/editor.md` に「タイトル・H1・descriptionに、その記事が扱う店・商品の正式名称を最低1つ含める」を追記（既存の「チェーン店の独自性確認」ガイドラインと同じ並び）
-  2. `data/gsc_opportunities.json` の `byPage.ctrFix`（`journal/2026-08-04-sakae-leesar-coffee.html` 676表示/8クリック、`journal/2026-08-22-osu-malachuan-self-price.html` 321表示/6クリック）のtitle/descriptionを店名がより明確になる形へ改題
-  3. `node scripts/journal_seo_kw.js --verify` を壊さない
+  1. ✅ `agents/editor.md` に「タイトル・description には検索されうる固有名詞を必ず1つ入れる（2026-09-14・SEO-096）」節を追記（既存の「チェーン店の独自性確認」ガイドラインと同じ並び・実例2件つき）
+  2. ✅ `data/gsc_opportunities.json` の `byPage.ctrFix` 対象2本のtitle/description/og:title/og:description/JSON-LD headline・description/breadcrumb name/H1を改題:
+     - `journal/2026-08-04-sakae-leesar-coffee.html`: 「リサールコーヒー」→「リサールコーヒー(Leesar)」に統一。GSC実測で「leesar nagoya メニュー」(37表示)等の英語クエリがタイトルに対応する手がかりを持たなかったため。あわせて「設計」→「メニュー設計」に変更し、複数クエリに出る「メニュー」語も自然に含めた
+     - `journal/2026-08-22-osu-malachuan-self-price.html`: 本文中には既にある実店名「龍さん家の大須麻辣串」（`data-hero-store`属性・store-cardのh3に既存）が、title/description/H1では「麻辣串」という食材カテゴリ名にしか言及していなかったため、店名を明記する形に改題
+  3. ✅ `node scripts/journal_seo_kw.js --verify` — `{"ok":true,"checked":44,"problems":[]}` で確認
+- **検証**: `node scripts/audit_design_system.js --check` で当該2ファイルに新規違反なし・JSON-LDの構文（`json.loads`相当のPythonパース）で両ファイルとも正常
+- **効果測定**: 改題後7〜14日のGSC実測（`node scripts/gsc_query_intent.js` / `data/gsc_opportunities.json`）でこの2ページのCTR前後比を次回SEOトリアージで確認する
 - **関連**: [[SEO-058]]（同種のCTR改善施策）
 
 ---
