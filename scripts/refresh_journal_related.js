@@ -49,7 +49,14 @@ function shortLabel(title) {
 // 回遊強化: journal タイトルから関連特集(features/)を1本マッチさせる。
 // 先頭から順に最初に一致したものを採用。確信が持てない場合は付けない（汎用ハブのみ）。
 const TOPIC_FEATURES = [
-  [/ひつまぶし|うなぎ|鰻/, 'nagoya-unaju', 'うなぎ・ひつまぶし10選'],
+  // SEO-091: 「ひつまぶし」を含むタイトルは、より専門性の高い単独ガイド
+  // （名古屋ひつまぶし完全ガイド・9店・FAQ付き）へ。「うなぎ/鰻」のみで
+  // 「ひつまぶし」を含まないタイトルは、うなぎ全般の10選ガイドへ。
+  // 旧: 1本の正規表現で両方とも nagoya-unaju に流しており、ひつまぶし単体の
+  // ジャーナル記事（例: 2026-06-09-hitsumabushi-touga-nagono.html）からも
+  // nagoya-hitsumabushi.html への内部リンクが一度も生成されていなかった。
+  [/ひつまぶし/, 'nagoya-hitsumabushi', '名古屋ひつまぶし完全ガイド'],
+  [/うなぎ|鰻/, 'nagoya-unaju', 'うなぎ・ひつまぶし10選'],
   [/手羽先/, 'nagoya-tebasaki', '手羽先完全ガイド'],
   [/味噌煮込み/, 'nagoya-miso-nikomi-udon', '味噌煮込みうどんガイド'],
   [/味噌かつ|とんかつ|トンカツ/, 'nagoya-tonkatsu', 'とんかつ・味噌かつ10選'],
