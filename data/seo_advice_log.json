@@ -2940,6 +2940,16 @@
       "brand_reason": "却下理由④は誤り。data/site_metrics.json の channels.social（約90）は SNS ではなく chatgpt.com 82 + copilot.com 7 だった。scripts/fetch_ga4_views.js の部分一致 /t\\.co/ が chatgp[t.co]m・copilo[t.co]m に誤一致し、GA4 が ChatGPT 流入に medium=ai-assistant を付け始めた 2026-07 中旬以降 social がほぼ全量生成AI流入になっていた（GAS .gas-deploy/Code.js の SNS流入比率も同じ誤判定）。実際のSNS流入は上位10流入元に出ない水準（1媒体30日6件未満）。SNS投稿はオーナーが別経路で運用しており、SNS原稿停止は流入変化の原因候補ではない（オーナー確認）。判定器を scripts/lib/traffic_source.js（ドメイン単位一致）に集約し、sourceBreakdown を上位10→全行保存に変更して修正。却下の結論①〜③（30日累計・GSCに構造的減少なし）は影響を受けない",
       "category": "計測",
       "fingerprint": "66e57ace243cb596"
+    },
+    {
+      "id": "SEO-090",
+      "date": "2026-09-14",
+      "source": "line-daily",
+      "advice": "【SEO-090診断結果】接待・個室特集6本(nagoya-settai-concierge/nagoya-settai-lunch/nagoya-settai-secret/settai-guide/private-room/nagoya-meieki-business-dinner)の28日GSC実測で、上位300クエリ(全3998件中)に「接待」「会食」を含むものが0件と確定。個室クエリ6件も5件が「顔合わせ」意図でnagoya-kaoawase-washoku.htmlが既に受けている。内部リンク最厚(263本)のprivate-roomでも0クリックのため内部リンク不足が主因でもない。結論=③需要そのものが無い。wont_fixで終了",
+      "verdict": "rejected",
+      "brand_reason": "③需要なしで着地。①カニバリは per-page クエリ内訳に乗るだけの表示自体が無く確認不能(=競合しようがない)。②「別の語(顔合わせ)に需要がある」は既にnagoya-kaoawase-washoku.htmlで手当て済みのため新規対応不要。2026-06のSEO-005/006/007が「名古屋 接待 個室」を勝ち筋と見て複数特集を制作した前提が、3ヶ月後の実データで誤りと判明した。features/6本は変更せず、掲載店への導線もそのまま維持。今後同種の「接待特集を増やす」助言が来ても本チケットの実測結果を根拠に再度duplicate/rejectedとする",
+      "category": "SEO",
+      "fingerprint": "7d9622c197be75ce"
     }
   ]
 }
