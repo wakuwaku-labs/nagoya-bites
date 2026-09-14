@@ -900,10 +900,13 @@ h3.cn{margin:0 0 6px;font-family:'Noto Sans JP',sans-serif;}
 .feature-top{padding:1.1rem 0;gap:.85rem;background:var(--bg);}
 .feature-top .feature-strip-label{padding:0 1.5rem;font-family:var(--font-body);text-transform:none;letter-spacing:0;font-size:var(--fs-xs);color:var(--gold);}
 .feature-top .feature-strip-label::before{display:none;}
-.feature-top .feature-strip-cards{display:flex;grid-template-columns:none;max-width:none;gap:.7rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:1.5rem;padding:.2rem 1.5rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.feature-top .feature-strip-cards{display:flex;grid-template-columns:none;max-width:none;gap:.7rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:1.5rem;padding:.2rem 1.5rem;-webkit-overflow-scrolling:touch;scrollbar-width:none;-webkit-mask-image:linear-gradient(to right,#000 0%,#000 88%,transparent 100%);mask-image:linear-gradient(to right,#000 0%,#000 88%,transparent 100%);}
 .feature-top .feature-strip-cards::-webkit-scrollbar{display:none;}
 .feature-top .feature-card{position:relative;flex:0 0 min(560px,72vw);scroll-snap-align:start;border-radius:var(--r-lg);border:none;background:#221f1c;}
-.feature-top .feature-card-thumb{aspect-ratio:16/9;}
+/* 出典の異なる写真（HotPepper各店の撮り下ろし）を同じ帯に並べると明るさ・色味がバラつくため、
+   共通のトーン（わずかな暖色寄せ・彩度/明度の均し）を掛けて「一つの特集シリーズ」に見せる */
+.feature-top .feature-card-thumb{aspect-ratio:16/9;filter:sepia(.08) saturate(1.08) contrast(1.05) brightness(.97);}
+.feature-top .feature-card:hover .feature-card-thumb{filter:sepia(.08) saturate(1.18) contrast(1.07) brightness(1);}
 /* 画像の上に文字を重ねるため、下からのグラデーションで可読性を確保する */
 .feature-top .feature-card-body{position:absolute;left:0;right:0;bottom:0;padding:2.4rem 1.1rem .95rem;gap:.25rem;flex:none;background:linear-gradient(to top,rgba(16,14,12,.86) 0%,rgba(16,14,12,.5) 48%,rgba(16,14,12,0) 100%);}
 .feature-top .feature-card-title{font-size:1.15rem;font-weight:600;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.4);}
