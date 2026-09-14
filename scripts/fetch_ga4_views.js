@@ -19,6 +19,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { isSocialSource, isAiAssistantSource } = require('./lib/traffic_source');
 
 const KEY_RAW    = process.env.GA4_SERVICE_ACCOUNT_KEY;
 const PROPERTY   = process.env.GA4_PROPERTY_ID;
@@ -121,17 +122,19 @@ async function main() {
   }
 }
 
-// 流入元を organic / direct / social / referral / other に分類
+// 流入元を organic / direct / social / ai_assistant / referral / other に分類
+// SNS・生成AIの判定は scripts/lib/traffic_source.js の1本に集約（ドメイン単位の一致）。
+// 旧実装の部分一致 /t\.co/ が chatgpt.com・copilot.com を SNS と数え、2026-07 中旬以降
+// channels.social がほぼ全量生成AI流入になっていた（2026-09-14 判明）。
+// 生成AIは organic 判定より先に見る（openai / organic のように medium が揺れるため）。
 function classifyChannel(source, medium) {
   const s = (source || '').toLowerCase();
   const m = (medium || '').toLowerCase();
+  if (isAiAssistantSource(s, m)) return 'ai_assistant';
   if (m === 'organic') return 'organic';
   if (s === '(direct)' || m === '(none)' || m === '(not set)') return 'direct';
-  if (m === 'referral') {
-    if (/twitter|t\.co|x\.com|instagram|facebook|line|tiktok|youtube/.test(s)) return 'social';
-    return 'referral';
-  }
-  if (/twitter|t\.co|x\.com|instagram|facebook|line|tiktok|youtube/.test(s)) return 'social';
+  if (isSocialSource(s)) return 'social';
+  if (m === 'referral') return 'referral';
   if (m === 'cpc' || m === 'paid') return 'paid';
   return 'other';
 }
@@ -217,7 +220,7 @@ async function fetchSiteMetrics(analyticsdata) {
       limit: '50',
     },
   });
-  const channels = { organic: 0, direct: 0, social: 0, referral: 0, paid: 0, other: 0 };
+  const channels = { organic: 0, direct: 0, social: 0, ai_assistant: 0, referral: 0, paid: 0, other: 0 };
   const sourceBreakdown = [];
   for (const row of srcRes.data.rows || []) {
     const source = row.dimensionValues[0].value;
@@ -293,7 +296,7 @@ async function fetchSiteMetrics(analyticsdata) {
           limit: '50',
         },
       });
-      const ctaByChannel = { organic: 0, direct: 0, social: 0, referral: 0, paid: 0, other: 0 };
+      const ctaByChannel = { organic: 0, direct: 0, social: 0, ai_assistant: 0, referral: 0, paid: 0, other: 0 };
       for (const row of ctaChannelRes.data.rows || []) {
         const src = row.dimensionValues[0].value;
         const med = row.dimensionValues[1].value;
@@ -433,7 +436,9 @@ async function fetchSiteMetrics(analyticsdata) {
     totals,
     dailyReference,
     channels: { sessions: channels, pct: channelPct },
-    sourceBreakdown: sourceBreakdown.slice(0, 10),
+    // 取得した全行（最大50）を保存する。上位10行だけだと月数件の SNS 流入が
+    // 閾値の下に沈んで観測できない（2026-09-14）
+    sourceBreakdown,
     topPages,
     cta,
     stageAssessment: { metric: 'activeUsers', value: uu, stage, thresholds: BENCHMARKS.monthlyUU },

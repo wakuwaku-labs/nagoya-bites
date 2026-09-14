@@ -385,6 +385,37 @@ function isGa4Unknown(src, medium) {
   return UNKNOWN.includes((src || '').toLowerCase()) || UNKNOWN.includes((medium || '').toLowerCase());
 }
 
+// 流入元がSNS／生成AIかをドメイン単位で判定する。
+// 旧実装は /twitter|t\.co|x\.com|instagram|facebook|line/ の部分一致で、chatgp[t.co]m・
+// copilo[t.co]m を SNS と数えていた（2026-09-14 判明。SNS流入比率が生成AI流入で水増しされ、
+// 実際のSNS流入が観測できなかった）。語彙は scripts/lib/traffic_source.js と同じ集合に揃える
+// （GAS は require できないため複製。差分が出たら CLI 側を正とする）。
+const SOCIAL_SOURCE_DOMAINS = ['t.co', 'x.com', 'twitter.com', 'instagram.com', 'facebook.com', 'fb.com', 'fb.me',
+  'threads.net', 'threads.com', 'line.me', 'line-apps.com', 'tiktok.com', 'youtube.com', 'youtu.be', 'note.com'];
+const SOCIAL_SOURCE_BARE = ['x', 'twitter', 'instagram', 'ig', 'facebook', 'fb', 'threads', 'line', 'tiktok', 'youtube', 'note'];
+const AI_SOURCE_DOMAINS = ['chatgpt.com', 'openai.com', 'perplexity.ai', 'claude.ai', 'gemini.google.com',
+  'bard.google.com', 'copilot.com', 'copilot.microsoft.com'];
+const AI_SOURCE_BARE = ['chatgpt', 'openai', 'perplexity', 'claude', 'gemini', 'copilot'];
+
+function sourceHost(src) {
+  return String(src || '').trim().toLowerCase().replace(/^[a-z]+:\/\//, '').split(/[\/?#:]/)[0];
+}
+
+function hostInDomains(host, domains, bare) {
+  if (!host) return false;
+  if (bare.indexOf(host) !== -1) return true;
+  return domains.some(d => host === d || host.endsWith('.' + d));
+}
+
+function isSocialTrafficSource(src) {
+  return hostInDomains(sourceHost(src), SOCIAL_SOURCE_DOMAINS, SOCIAL_SOURCE_BARE);
+}
+
+function isAiTrafficSource(src, medium) {
+  if (String(medium || '').trim().toLowerCase() === 'ai-assistant') return true;
+  return hostInDomains(sourceHost(src), AI_SOURCE_DOMAINS, AI_SOURCE_BARE);
+}
+
 // 流入元を素人向け表記に
 function sourceToName(src, medium) {
   const s = (src || '').toLowerCase();
@@ -398,15 +429,16 @@ function sourceToName(src, medium) {
   // 置かないと「openai / organic」が「openai検索」に誤ラベルされて再発する。
   // 語彙は scripts/search_channel_metrics.js の ai_assistant 判定と同じ集合に揃える
   // （2箇所で別々に育てない。差分が出たらCLI側=search_channel_metrics.jsを正とする）。
-  if (m === 'ai-assistant' || /openai|chatgpt|perplexity|claude\.ai|anthropic|gemini|bard\.google|copilot/.test(s)) {
+  if (isAiTrafficSource(s, m) || /anthropic/.test(s)) {
     return '🤖 生成AI（ChatGPT等）';
   }
   if (m === 'organic') return s + '検索';
   if (s === '(direct)' || m === '(none)') return '直接アクセス（お気に入り等）';
-  if (s.includes('t.co') || s.includes('twitter') || s.includes('x.com')) return 'X（旧Twitter）';
-  if (s.includes('instagram')) return 'Instagram';
-  if (s.includes('facebook')) return 'Facebook';
-  if (s.includes('line')) return 'LINE';
+  const host = sourceHost(s);
+  if (hostInDomains(host, ['t.co', 'x.com', 'twitter.com'], ['x', 'twitter'])) return 'X（旧Twitter）';
+  if (hostInDomains(host, ['instagram.com'], ['instagram', 'ig'])) return 'Instagram';
+  if (hostInDomains(host, ['facebook.com', 'fb.com', 'fb.me'], ['facebook', 'fb'])) return 'Facebook';
+  if (hostInDomains(host, ['line.me', 'line-apps.com'], ['line'])) return 'LINE';
   if (m === 'referral') return s + '（他サイトから）';
   return s + ' / ' + m;
 }
@@ -460,15 +492,17 @@ function analyze(data) {
   let organicSessions = 0;
   let directSessions = 0;
   let socialSessions = 0;
+  let aiSessions = 0;       // 生成AI流入（SNSと混ぜない・2026-09-14）
   let unknownSessions = 0;  // SEO-063: GA4しきい値で判別不能なセッション数
   s.sources.forEach(r => {
     const src = (r.dimensions[0] || '').toLowerCase();
     const med = (r.dimensions[1] || '').toLowerCase();
     const ses = parseInt(r.metrics[1] || 0);
     if (isGa4Unknown(src, med)) unknownSessions += ses;
+    else if (isAiTrafficSource(src, med)) aiSessions += ses;
     else if (med === 'organic') organicSessions += ses;
     else if (src === '(direct)' || med === '(none)') directSessions += ses;
-    else if (/twitter|t\.co|x\.com|instagram|facebook|line/.test(src)) socialSessions += ses;
+    else if (isSocialTrafficSource(src)) socialSessions += ses;
   });
   // SEO-063: 分母を「判別できたセッション数」に限定し、判別不能ぶんが比率を歪めるのを防ぐ
   const identifiableSessions = srcTotal - unknownSessions;
