@@ -6,6 +6,37 @@
 
 ---
 
+### [ISSUE-124] 特集69本中32本がジャンル/エリアと無関係な店で固定化していた（月次ローテーション対象を19→51特集に拡大し、誤ジャンル掲載も同時に是正）
+
+- **priority**: P1 → **status**: done（単一コンテナの32特集は対応済み。複数セクション5特集・別テンプレ7特集は未対応・下記フォローアップ）
+- **detected**: 2026-09-15（オーナー報告「特集ページの中で変わってない店舗がかなり見受けられる」）
+- **category**: content-freshness / data-quality
+- **owner**: Builder
+- **source**: [[ISSUE-071]]（2026-07-23）で「シーン特集19本のみ」を対象に月次ローテーションを導入した際、オーナー方針②「対象=シーン特集のみ（monthlyScenes 掲載の19特集）」により、ジャンル/エリア別の特集（`nagoya-steak.html` 等50本）は意図的にスコープ外とされていた。今回オーナーから改めて「変わらない店舗を変化させてほしい」との依頼があり、対象を拡大
+- **brand-filter**: ✅ 適合 — Moat「構造化DB × 業界人の目利き × シーン専門性」を毀損しない範囲で、既存の月次ローテーション基盤（バランス型スコア＋ハードゲート＋多様性補正）をそのまま流用。新規の広告・クーポン・ストック写真は一切伴わない。掲載店は全て `data/stores.json` に実在する店のみ（架空店ブロック厳守）
+- **検証できる事実（制約10）**:
+
+  | 事実 | 出典 |
+  |---|---|
+  | `data/feature_rosters.json` の `features` は19キーのみで、`features/*.html` 69本中50本（ジャンル/エリア別ガイド）は build.yml の月次ローテーション対象外だった | `data/feature_rosters.json`（変更前）・[[ISSUE-071]] |
+  | 対象外だった特集の掲載店は、2026-05 の「架空店で構成された特集20記事を実在店で全面再生成」（コミット `7f101b8fb`）以来、一度も入れ替わっていない。`features/nagoya-steak.html` 等の git log にロスター由来のコミットが皆無だった | `git log --since=2026-05 -- features/nagoya-steak.html features/nagoya-teppanyaki.html` 等 |
+  | それらの一部は**ジャンル名と掲載店が一致していない**（再生成時に緊急対応で「実在する店」を genre 無視でとにかく詰めた名残と推定）。実測例: `nagoya-kaiseki-guide.html`（懐石・会席特集）の掲載10店が全て「居酒屋」「焼肉」ジャンル。`nagoya-steak.html`（ステーキ特集）・`nagoya-teppanyaki.html`（鉄板焼き特集）・`nagoya-tonkatsu.html`（とんかつ特集）・`nagoya-sushi-guide.html`（鮨特集）も同様に無関係ジャンルで埋まっていた | 対象32特集の `.store-meta`/`.shop-area` を全件抽出して目視確認（本チケットの調査で実施） |
+- **実装内容**:
+  1. `data/feature_rosters.json` に32特集を追加（単一コンテナ [`.store-list`/`.shop-grid` が1つ] の特集のみ対象。既存のスコア式・ハードゲート・多様性補正・「今月の新顔」バッジ機構はそのまま流用し `refresh_feature_rosters.js` 本体は無改修）
+  2. ジャンル/エリアの scene 条件は、ページタイトル・既存掲載店の実態ではなく**ジャンルが本来意図する語**で設定（例: ステーキ特集は `data/stores.json` の店名/おすすめポイント等に「ステーキ」を含む店のみ）。`ジャンル` フィールド単独では「ステーキ」該当4件・「懐石」該当18件など母数が薄く（`ホットペッパーID` 不所持の編集部推薦店が多く `requireHotpepper` ハードゲートで落ちる）枠割れしたため、店名/タグ/おすすめポイント等を含む広いキーワード一致に切替（`gateKeyword:true`）て解決
+  3. エリア専業特集（`sakae.html` = 栄エリア横断、`osu-food-walk.html` = 大須、`meieki-hitori-nomi.html` = 名駅）は既存の `meieki.html` と同じ `area`+`gateArea` パターンを流用
+  4. 「業界人推薦」系（`industry-insiders-pick.html` 等6特集）はジャンルを固定せず、既存スコア式の `editorPickBonus`/`editorReasonBonus`（編集部推薦・editorReason付与店への純加点）に委ねる設計とした
+- **QAゲート**: `node scripts/refresh_feature_rosters.js --check` 全51特集プール充足・枠割れ0 ✅ / `npm test` 197件全通過 ✅ / `node scripts/audit_feature_stores.js` 実在不明2件（いずれも本チケット対象外の `fathers-day-2026.html`/`nagoya-ramen.html` で変更前から存在した既知事象・本チケットの32特集では0件、うち `nagoya-kaoawase-washoku.html` は逆に既存の実在不明1件を解消） ✅ / `node scripts/audit_feature_schema_alignment.js` 68件 EXIT0 ✅（既存ファイルの掲載店入替のみ・新規ページ追加は無し） / `node scripts/build_featured.js --check` 鮮度OK ✅ / `node scripts/audit_design_system.js --report` で `features/` 配下の違反0件 ✅ / 冪等性確認（同一月で再実行し差分ゼロ）✅
+- **意図的にやらなかったこと（フォローアップ）**:
+  1. **複数セクション構成の5特集**（`nagoya-cafe.html` / `nagoya-sweets.html` / `nagoya-kakuozan.html` / `nagoya-ramen.html` / `nagoya-gyoza.html`）は `.shop-grid`/`.store-list` コンテナが1ページに2〜6個あり、`refresh_feature_rosters.js` の「コンテナ1個を丸ごと差し替え」前提と噛み合わない（セクションごとに異なるジャンル細分＝例: ラーメンの「煮干し・醤油系」「豚骨系」等）。対応するには `replaceContainerInner` をセクション単位に拡張する script 改修が要る
+  2. **別テンプレートの7特集**（`nagoya-hitsumabushi.html` / `nagoya-tebasaki.html` / `nagoya-miso-nikomi-udon.html` / `nagoya-yakiniku.html` / `nagoya-solo-dining.html` / `nagoya-gourmet-guide.html` / `nagoya-settai-concierge.html`）は DSN-003 以降の新カードマークアップ（`.store-photo`/`.store-num`/`.store-name` 等の個別 div、`store-card`/`shop-card` ラッパー無し）や FAQ/リンク集ハブ形式で、既存の `renderStoreCard`/`renderShopCard` が出力する HTML と構造が異なるため今回は対象外
+  3. 上記12特集（5+7）と非店舗一覧ページ（`become-reviewer.html` 等6本）は本チケットのスコープ外のまま。着手する場合は `refresh_feature_rosters.js` にセクション対応・新テンプレ用レンダラーを追加してから `data/feature_rosters.json` に追記する
+- **acceptance（次に着手する担当者向け）**: 上記1・2の script 拡張後、`data/feature_rosters.json` に残り12特集を追記し `--check` で枠割れ0を確認する
+- **files**: `data/feature_rosters.json`, `features/*.html`（32本）, `agent-backlog.md`
+- **関連**: [[ISSUE-071]]（月次ローテーション基盤の初回実装・今回はその対象拡大）
+
+---
+
 ### [SEO-094] エリア×ジャンル×条件の一覧ページ（stores/area/配下・691ページ）を新設し、「栄 焼肉」「名駅 居酒屋 個室」のような検索面を初めて作った（死にリンクだった「もっと見る」導線も同時に修理）
 
 - **priority**: P1 → **status**: done
