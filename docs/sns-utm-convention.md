@@ -71,3 +71,28 @@ https://nagoya-bites.com/features/nagoya-solo-dining.html?utm_source=x&utm_mediu
 ```
 
 投稿前に目で確認するのは次の2点だけ: `utm_medium=social` が入っているか／`utm_source` が上の表の値か。
+
+## リール動画（Instagram / TikTok）を自動生成ツールで作る場合
+
+リールのキャプション内の URL は**タップできない**（Instagram・TikTok とも）。読者がサイトへ来る経路は**プロフィール欄のリンク**だけなので、UTM はキャプションではなくプロフィールリンクで効かせる。
+
+| 場所 | 対応 |
+|---|---|
+| Instagram プロフィールリンク | 付けない（Instagram が `ig / social` を自動付与） |
+| TikTok プロフィールリンク | 一度だけ手で設定: `https://nagoya-bites.com/?utm_source=tiktok&utm_medium=social&utm_campaign=profile` |
+| リンク集サービス（lit.link 等）を挟む場合 | その中の各リンクに `utm_source=<媒体>&utm_medium=social&utm_campaign=<記事ID>` を付ける |
+| リールのキャプション | URL を書かない（タップできず、URL 入りキャプションは読みにくくなるだけ） |
+
+プロフィールリンク経由では「どのリールから来たか」までは分からない。計測できるのは媒体単位（Instagram / TikTok）まで。
+
+動画生成ツールの指示文には次を追加する:
+
+```
+【サイトへの誘導ルール（リール動画・キャプション共通）】
+- キャプションに URL を書かない（リールのキャプション内リンクはタップできない）
+- サイトへの誘導は「プロフィールのリンクから見られます」の一文で行う
+- 誘導文の直後に、サイトで探すときの手がかりを1つだけ書く
+    例: 「NAGOYA BITES で『一人飲み』と検索」「特集『名古屋の一人飲み』で紹介中」
+  手がかりには、その動画が扱う記事のタイトルに実際に含まれる語を使う（記事に無い語を作らない）
+- 動画内のテロップにも URL は入れない（読み取れず、画面の情報量を減らすだけ）
+```
