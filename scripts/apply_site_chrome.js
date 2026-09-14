@@ -63,6 +63,17 @@ function managedStoreFiles() {
   }
 }
 
+function listHtmlFilesRecursive(dir) {
+  if (!fs.existsSync(dir)) return [];
+  let out = [];
+  for (const f of fs.readdirSync(dir)) {
+    const p = path.join(dir, f);
+    if (fs.statSync(p).isDirectory()) out = out.concat(listHtmlFilesRecursive(p));
+    else if (f.endsWith('.html')) out.push(p);
+  }
+  return out;
+}
+
 function collectTargets() {
   const groups = {
     root: ['index.html', 'about.html', 'faq.html', 'contact.html', 'privacy-policy.html']
@@ -72,9 +83,12 @@ function collectTargets() {
       .concat(path.join(ROOT, 'journal/_template.html')).filter(f => fs.existsSync(f)),
     stores: [path.join(ROOT, 'stores/index.html')].filter(f => fs.existsSync(f))
       .concat(managedStoreFiles()),
+    // SEO-094: エリア×ジャンル×条件ページ（stores/area/）。生成器が siteChrome を
+    // 直接呼んで作るため冪等のはずだが、退行検知のため常時 --check 対象に含める。
+    hubs: listHtmlFilesRecursive(path.join(ROOT, 'stores', 'area')),
   };
   if (only) return groups[only] || [];
-  return [...groups.root, ...groups.features, ...groups.journal, ...groups.stores];
+  return [...groups.root, ...groups.features, ...groups.journal, ...groups.stores, ...groups.hubs];
 }
 
 function sample(arr, n) {

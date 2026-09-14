@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}(function(){var p=new URLSearchParams(location.search);if(p.get('nb_owner')==='1'){localStorage.setItem('nb_internal','1');history.replaceState(null,'',location.pathname);}if(localStorage.getItem('nb_internal')==='1'){gtag('js',new Date());gtag('config','G-3LCZNGZPWJ',{traffic_type:'internal'});}else{gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');}})();function trackEvent(name,params){if(localStorage.getItem('nb_internal')==='1')return;if(typeof gtag==='function')gtag('event',name,params||{});}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>エリア×ジャンルで探す｜NAGOYA BITES 店舗一覧</title>
+<meta name="description" content="名古屋の飲食店をエリア×ジャンルで絞り込めるページ一覧。10エリア・実データのみで構成。">
+<link rel="canonical" href="https://nagoya-bites.com/stores/area/index.html">
+<meta property="og:title" content="エリア×ジャンルで探す｜NAGOYA BITES 店舗一覧">
+<meta property="og:description" content="名古屋の飲食店をエリア×ジャンルで絞り込めるページ一覧。10エリア・実データのみで構成。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nagoya-bites.com/stores/area/index.html">
+<meta property="og:image" content="https://nagoya-bites.com/icons/icon-512.png">
+<link rel="icon" href="../../icons/icon-192.png">
+<link rel="manifest" href="../../manifest.json">
+<meta name="theme-color" content="#0d0d0d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../../assets/css/nb.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"エリア×ジャンルで探す | NAGOYA BITES","url":"https://nagoya-bites.com/stores/area/index.html"}</script>
+
+<style>
+.hub-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:var(--sp-3);margin:var(--sp-5) 0;padding:var(--sp-4);background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-md);}
+.hub-stats dt{font-size:var(--fs-xs);color:var(--dim);margin-bottom:.2rem;}
+.hub-stats dd{font-size:var(--fs-xl);font-family:var(--font-display);color:var(--ink);margin:0;}
+.hub-more{margin:var(--sp-5) 0;}
+.hub-more summary{cursor:pointer;font-size:var(--fs-sm);color:var(--gold);min-height:var(--tap-min);display:flex;align-items:center;}
+.hub-more ul{list-style:none;padding:0;margin:var(--sp-3) 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.4rem .8rem;}
+.hub-more li a{font-size:var(--fs-sm);color:var(--muted);text-decoration:none;}
+.hub-more li a:hover{color:var(--gold);}
+.hub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--sp-3);margin:var(--sp-5) 0;}
+.hub-grid a{display:block;padding:var(--sp-4);background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-md);text-decoration:none;color:inherit;}
+.hub-grid a:hover{border-color:var(--gold);}
+.hub-grid .hg-label{font-size:var(--fs-lg);font-weight:600;color:var(--ink);}
+.hub-grid .hg-count{font-size:var(--fs-xs);color:var(--dim);}
+.faq-section{max-width:880px;margin:var(--sp-6) auto var(--sp-5);}
+.faq-list{margin-top:var(--sp-3);}
+.faq-item{border-top:1px solid var(--border);padding:var(--sp-4) 0;}
+.faq-item:last-child{border-bottom:1px solid var(--border);}
+.faq-q{font-weight:600;font-size:var(--fs-md);line-height:1.6;margin:0 0 .4rem;}
+.faq-q::before{content:"Q. ";color:var(--gold);font-weight:700;}
+.faq-a{font-size:var(--fs-md);line-height:1.85;margin:0;color:var(--muted);}
+.faq-a::before{content:"A. ";color:var(--gold);font-weight:500;}
+.hub-method{font-size:var(--fs-xs);color:var(--dim);margin-top:var(--sp-2);}
+</style>
+</head>
+<body>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+<header>
+  <a class="logo" href="../../index.html">Nagoya <em>Bites</em></a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../../index.html" aria-current="page">店舗を探す</a>
+    <a href="../../features/index.html">特集</a>
+    <a href="../../journal/index.html">ジャーナル</a>
+    <a href="../../features/editorial-policy.html">編集規約</a>
+    <a href="../../about.html">運営について</a>
+    <a href="../../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../../contact.html" class="nav-secondary">お問い合わせ</a>
+  </nav>
+</header>
+<!-- NB-CHROME:HEADER:END -->
+<div class="container">
+  <!-- NB-CHROME:BREADCRUMB:START -->
+<nav aria-label="パンくずリスト">
+  <div class="breadcrumb">
+    <a href="../../index.html">TOP</a>
+    <span>›</span>
+    <a href="../../stores/index.html">店舗一覧</a>
+    <span>›</span>
+    エリア×ジャンルで探す
+  </div>
+</nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
+  <p class="art-eyebrow">Restaurant Database — エリア×ジャンルで探す</p>
+  <h1 class="art-title">名古屋の飲食店を、<em>エリア×ジャンル</em>で絞り込む</h1>
+  <div class="art-lead"><p>NAGOYA BITES 掲載店を、主要10エリア×代表ジャンルの一覧に整理しました。各ページはGoogle評価・予算・営業時間などの実データだけで構成し、広告や掲載料による順位操作は一切行っていません。</p></div>
+  <h2 class="nb-section-head"><span>エリアから探す</span></h2>
+  <div class="hub-grid">
+    <a href="meieki/index.html">
+      <div class="hg-label">名駅（名古屋駅）</div>
+      <div class="hg-count">1043軒</div>
+    </a>
+    <a href="nishiki-fushimi/index.html">
+      <div class="hg-label">錦・伏見・丸の内</div>
+      <div class="hg-count">753軒</div>
+    </a>
+    <a href="yabacho-osu/index.html">
+      <div class="hg-label">矢場町・大須・上前津</div>
+      <div class="hg-count">730軒</div>
+    </a>
+    <a href="chikusa-imaike/index.html">
+      <div class="hg-label">千種・今池・大曽根</div>
+      <div class="hg-count">591軒</div>
+    </a>
+    <a href="sakae/index.html">
+      <div class="hg-label">栄</div>
+      <div class="hg-count">391軒</div>
+    </a>
+    <a href="midori-tempaku/index.html">
+      <div class="hg-label">緑区・南区・天白区・瑞穂区</div>
+      <div class="hg-count">378軒</div>
+    </a>
+    <a href="kanayama/index.html">
+      <div class="hg-label">金山・熱田</div>
+      <div class="hg-count">327軒</div>
+    </a>
+    <a href="kakuozan/index.html">
+      <div class="hg-label">覚王山・本山・藤が丘</div>
+      <div class="hg-count">245軒</div>
+    </a>
+    <a href="nakagawa-minato/index.html">
+      <div class="hg-label">中川区・港区</div>
+      <div class="hg-count">227軒</div>
+    </a>
+    <a href="tsurumai-yagoto/index.html">
+      <div class="hg-label">鶴舞・八事・御器所</div>
+      <div class="hg-count">176軒</div>
+    </a>
+  </div>
+  <details class="hub-more" open>
+    <summary>よく見られているエリア×ジャンル一覧</summary>
+    <ul>
+      <li><a href="meieki/izakaya.html">名駅（名古屋駅）の居酒屋（499軒）</a></li>
+      <li><a href="nishiki-fushimi/izakaya.html">錦・伏見・丸の内の居酒屋（247軒）</a></li>
+      <li><a href="chikusa-imaike/izakaya.html">千種・今池・大曽根の居酒屋（234軒）</a></li>
+      <li><a href="yabacho-osu/izakaya.html">矢場町・大須・上前津の居酒屋（214軒）</a></li>
+      <li><a href="kanayama/izakaya.html">金山・熱田の居酒屋（205軒）</a></li>
+      <li><a href="sakae/izakaya.html">栄の居酒屋（197軒）</a></li>
+      <li><a href="nishiki-fushimi/washoku.html">錦・伏見・丸の内の和食（121軒）</a></li>
+      <li><a href="midori-tempaku/izakaya.html">緑区・南区・天白区・瑞穂区の居酒屋（121軒）</a></li>
+      <li><a href="sakae/yakiniku.html">栄の焼肉・ホルモン（113軒）</a></li>
+      <li><a href="yabacho-osu/dining-bar.html">矢場町・大須・上前津のダイニングバー・バル（109軒）</a></li>
+      <li><a href="meieki/yakiniku.html">名駅（名古屋駅）の焼肉・ホルモン（97軒）</a></li>
+      <li><a href="nishiki-fushimi/dining-bar.html">錦・伏見・丸の内のダイニングバー・バル（93軒）</a></li>
+      <li><a href="meieki/washoku.html">名駅（名古屋駅）の和食（85軒）</a></li>
+      <li><a href="meieki/dining-bar.html">名駅（名古屋駅）のダイニングバー・バル（77軒）</a></li>
+      <li><a href="chikusa-imaike/yakiniku.html">千種・今池・大曽根の焼肉・ホルモン（71軒）</a></li>
+      <li><a href="kakuozan/izakaya.html">覚王山・本山・藤が丘の居酒屋（69軒）</a></li>
+      <li><a href="yabacho-osu/cafe.html">矢場町・大須・上前津のカフェ・スイーツ（67軒）</a></li>
+      <li><a href="yabacho-osu/washoku.html">矢場町・大須・上前津の和食（65軒）</a></li>
+      <li><a href="yabacho-osu/bar.html">矢場町・大須・上前津のバー・カクテル（65軒）</a></li>
+      <li><a href="tsurumai-yagoto/izakaya.html">鶴舞・八事・御器所の居酒屋（60軒）</a></li>
+      <li><a href="nakagawa-minato/izakaya.html">中川区・港区の居酒屋（59軒）</a></li>
+      <li><a href="chikusa-imaike/cafe.html">千種・今池・大曽根のカフェ・スイーツ（57軒）</a></li>
+      <li><a href="nishiki-fushimi/italian-french.html">錦・伏見・丸の内のイタリアン・フレンチ（55軒）</a></li>
+      <li><a href="nishiki-fushimi/bar.html">錦・伏見・丸の内のバー・カクテル（54軒）</a></li>
+    </ul>
+  </details>
+
+</div>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../../index.html">店舗を探す</a>
+      <a href="../../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../../index.html#scene-index">目的から探す</a>
+      <a href="../../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../../features/index.html">特集記事</a>
+      <a href="../../journal/index.html">Daily Journal</a>
+      <a href="../../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../../features/editorial-policy.html">編集規約</a>
+      <a href="../../about.html">運営について</a>
+      <a href="../../faq.html">よくある質問</a>
+      <a href="../../contact.html">お問い合わせ</a>
+      <a href="../../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
+</footer>
+<!-- NB-CHROME:FOOTER:END -->
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
+</body>
+</html>
