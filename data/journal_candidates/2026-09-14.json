@@ -1,0 +1,448 @@
+{
+  "date": "2026-09-14",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄に居酒屋の大箱が2軒、同じ週に開いた — 忘年会の下見は9月がいい",
+      "verdict": "PASS",
+      "total": 100,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 5件 (新店,比較,予約,シーン,価格帯) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 165字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅の地下街に立ち食い寿司、栄に大箱2軒 — 今週の名古屋新店まとめ",
+      "verdict": "HOLD",
+      "total": 69,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 12,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 67字 +2",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語がリードのみ「宴会」+1",
+          "タイトルにジャンル語「寿司」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "車道駅に1週間で3軒 — 名古屋の地味な駅が飲食店に選ばれ始めた",
+      "verdict": "HOLD",
+      "total": 68,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 8,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 2件 (エリア,相場) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 55字 +2",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄の新店2軒を宴会でどう使い分けるか — 個室120席と24時間営業78席",
+      "verdict": "HOLD",
+      "total": 67,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 12,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 128字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「個室」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "今週の栄は甘味が続く — 三越の6日間と久屋広場の肉フェス",
+      "verdict": "HOLD",
+      "total": 53,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 8,
+        "writability": 5,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "主役店が必要なテーマなのに main_store 未指定 → +0",
+          "lead 79字 +2",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "weekly_digest",
+      "title_draft": "栄に居酒屋の大箱が2軒、同じ週に開いた — 忘年会の下見は9月がいい",
+      "lead_draft": "9月7日に錦3丁目、9月10日に女子大小路。徒歩10分の距離に、どちらも飲み放題込み3,000円台の宴会向け新店が開いた。偶然ではない。10月から始まる宴会シーズンに間に合わせる逆算開店で、だからこそ幹事は本番ではなく今月に一度足を運ぶべきだ。120席の掘りごたつ個室と、24時間営業78席。同じ価格帯でも使いどころはまるで違う。",
+      "angle": "9月開店は忘年会需要からの逆算。オペが固まる前の新店を業界人の目で下見に使い、席数・宴会収容・価格帯・予約の取り方でシーン適性を比較する判断軸を示す",
+      "main_store": {
+        "name": "天ぷらとおでん　海鮮　焼き鳥　個室　居酒屋　飲み放題　天串（TENGUSHI）錦店",
+        "id": "J004661097",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 天串（TENGUSHI）錦店【9/7 OPEN】",
+          "url": "https://www.hotpepper.jp/strJ004661097/",
+          "date": "2026-09-07"
+        },
+        {
+          "label": "PR TIMES クリエイト・レストランツ・ホールディングス「磯丸水産 栄女子大店オープン」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000120.000177867.html",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "磯丸水産 公式ニュース「磯丸水産 栄女子大店OPEN」",
+          "url": "https://isomaru.jp/news/3499/",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "ホットペッパーグルメ 磯丸水産 栄女子大店",
+          "url": "https://www.hotpepper.jp/strJ004660828/",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "食べログ 名古屋市 ニューオープン順",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-09-14"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "weekly_digest",
+      "title_draft": "栄の新店2軒を宴会でどう使い分けるか — 個室120席と24時間営業78席",
+      "lead_draft": "同じ栄、同じ週、同じ3,000円台。それでも天串 錦店と磯丸水産 栄女子大店は、宴会での使いどころが正反対になる。掘りごたつ個室で120名まで通す設計と、深夜まで開いて30名までしか通さない設計。席数と宴会収容の差を読めば、一次会か二次会かは机上で決まる。",
+      "angle": "席数・宴会収容・禁煙・ラストオーダーの4項目で一次会/二次会の適性を分ける読み方",
+      "main_store": {
+        "name": "磯丸水産 栄女子大店",
+        "id": "J004660828",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES クリエイト・レストランツ・ホールディングス「磯丸水産 栄女子大店オープン」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000120.000177867.html",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "ホットペッパーグルメ 天串（TENGUSHI）錦店",
+          "url": "https://www.hotpepper.jp/strJ004661097/",
+          "date": "2026-09-07"
+        },
+        {
+          "label": "磯丸水産 公式ニュース 栄女子大店OPEN",
+          "url": "https://isomaru.jp/news/3499/",
+          "date": "2026-09-10"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "weekly_digest",
+      "title_draft": "今週の栄は甘味が続く — 三越の6日間と久屋広場の肉フェス",
+      "lead_draft": "9月11日から13日はエディオン久屋広場で約70店の全肉祭、9月16日からは栄三越4階であんこと抹茶の6日間。栄のイベント面が秋モードに切り替わった週だった。",
+      "angle": "栄のイベント動線と食事の組み立て方",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "栄",
+        "genre": "イベント"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 全肉祭",
+          "url": "https://jouhou.nagoya/zennikusai-sakae/",
+          "date": "2026-09-09"
+        },
+        {
+          "label": "名古屋情報通 あんこと抹茶に沼る6日間",
+          "url": "https://jouhou.nagoya/anko-matcha-event2026/",
+          "date": "2026-09-13"
+        },
+        {
+          "label": "食べログ 名古屋市 ニューオープン順",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-09-14"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "weekly_digest",
+      "title_draft": "車道駅に1週間で3軒 — 名古屋の地味な駅が飲食店に選ばれ始めた",
+      "lead_draft": "9月10日に海鮮居酒屋とジェラート、9月14日に居酒屋。千種と今池に挟まれた車道駅前に、1週間で3軒が開いた。",
+      "angle": "家賃相場と乗降客数から見る出店エリアの選ばれ方",
+      "main_store": {
+        "name": "あさり家わっしょい",
+        "id": "",
+        "area": "車道",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "食べログ 名古屋市 ニューオープン順",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-09-14"
+        },
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-09-13"
+        },
+        {
+          "label": "nagoyadot 新店情報まとめ",
+          "url": "https://nagoyadot.jp/new/",
+          "date": "2026-09-13"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "weekly_digest",
+      "title_draft": "名駅の地下街に立ち食い寿司、栄に大箱2軒 — 今週の名古屋新店まとめ",
+      "lead_draft": "9月8日にミヤコ地下街へ立喰い寿司、9月7日と10日に栄へ宴会向けの大箱が2軒。今週の名古屋は駅地下と繁華街で性格の違う新店が並んだ。",
+      "angle": "地下街と繁華街で出店の設計思想がどう違うか",
+      "main_store": {
+        "name": "立喰い寿司 魚椿 ミヤコ地下街店",
+        "id": "",
+        "area": "名駅",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "食べログ 名古屋市 ニューオープン順",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-09-14"
+        },
+        {
+          "label": "ホットペッパーグルメ 天串（TENGUSHI）錦店",
+          "url": "https://www.hotpepper.jp/strJ004661097/",
+          "date": "2026-09-07"
+        },
+        {
+          "label": "PR TIMES 磯丸水産 栄女子大店オープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000120.000177867.html",
+          "date": "2026-09-08"
+        }
+      ]
+    }
+  ]
+}
