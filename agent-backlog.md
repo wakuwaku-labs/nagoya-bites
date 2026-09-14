@@ -6,6 +6,35 @@
 
 ---
 
+### [ISSUE-125] 特集ロスターの月次反映を「月初1〜3日の固定日ゲート」から「自己修復＋生存監視」に変更（ISSUE-124の再発防止）
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-09-15（[[ISSUE-124]] の調査中に発見。オーナーからの追加依頼「しっかり自動更新されるように、今後の設定としてやってほしい」）
+- **category**: ops / reliability
+- **owner**: Builder
+- **source**: [[ISSUE-124]] の原因調査で、`refresh_feature_rosters.js` が実際には2026-08・2026-09とも一度も反映できていなかったことが判明した（設定は月次自動化のはずが、実質2026-07で止まっていた）
+- **brand-filter**: ✅ 適合 — CLAUDE.md「無人自動化の監視を設計するときの原則（ISSUE-084の教訓）」をそのまま適用。新規の広告・収益化要素は無し
+- **検証できる事実（制約10）**:
+
+  | 事実 | 出典 |
+  |---|---|
+  | 旧実装は `TZ=Asia/Tokyo date +%d` が `01`/`02`/`03` の時だけ `refresh_feature_rosters.js` を実行する固定日ゲートだった | `.github/workflows/build.yml`（変更前221-233行） |
+  | build.yml の「他都道府県マッチ監査（ISSUE-103再発防止）」ステップは `continue-on-error` が無く、失敗すると以降の全ステップ（ロスター更新・commit&push含む）が `skipped` になる | `gh api .../jobs` で該当run（例: `33454100830`）の各ステップの `conclusion` を確認 |
+  | 2026-09-01 の全5回のrunが、この監査ステップで失敗していた（`33454100830`/`33477355168`/`33502921166`/`33508742276`/`33556238531`/`33571998451` 全て `conclusion: failure`） | `gh run list --workflow=build.yml` を該当日でフィルタして実測 |
+  | `data/feature_rosters.json`（当時19特集）は最終更新が2026-07-24で、2026-08-01〜03・2026-09-01〜03 のいずれでも実際には更新されていなかった（`git log` に該当コミット無し） | `git log --since=2026-07-31 --until=2026-09-04 -- features/*.html` |
+- **実装内容**:
+  1. `scripts/refresh_feature_rosters.js` に `--if-stale` フラグを追加。日付ではなく `data/feature_roster_health.json` の「最終反映月」が今月と一致しているかで実行要否を判定する自己修復方式（今月まだなら何日でも実行・今月分反映済みなら即スキップ）。反映のたびに対象月・反映日・更新件数・枠割れ件数を心拍として書く（dry-run/checkでは書かない）
+  2. `.github/workflows/build.yml` のロスター更新ステップを `TZ=... date` の分岐から `node scripts/refresh_feature_rosters.js --if-stale`（毎日呼ぶだけ）に簡素化。git add 対象に `data/feature_roster_health.json` を追加
+  3. `scripts/check_feature_roster_health.js`（新規）: 心拍の鮮度を判定（月次カデンスのため許容既定40日・オオカミ少年化させない）
+  4. `.github/workflows/feature-roster-watchdog.yml`（新規）: 毎日15:00 JSTに生存確認し、異常なら GitHub Issue 起票（＝オーナーにメール）、復旧で自動クローズ。`journal-watchdog.yml`/`trending-scout-watchdog.yml`/`feedback-watchdog.yml` と同型
+  5. CLAUDE.md 共有ファイル一覧に4行追記
+- **QAゲート**: `node scripts/refresh_feature_rosters.js --if-stale` を2回連続実行し、1回目で反映・2回目でスキップすることを確認 ✅ / `--check`/`--dry-run` では心拍ファイルを書かないことを確認 ✅ / `node scripts/check_feature_roster_health.js` が健全時exit0・心拍を76日前に偽装した時exit1になることを確認 ✅ / `npm test` 197件全通過 ✅ / `python3 -c "import yaml"` で両ワークフローYAML構文OK ✅ / `data/feature_roster_health.json` が `.gitignore` 対象でないことを確認 ✅
+- **意図的にやらなかったこと**: 「他都道府県マッチ監査」ステップ自体の間欠的な失敗原因（[[ISSUE-103]]再発防止用の厳格ゲート）には手を入れていない。今回の対策はその失敗が今後も起きうる前提で、失敗してもロスター反映が丸ごと欠落しない設計にすることに絞った
+- **files**: `scripts/refresh_feature_rosters.js`, `.github/workflows/build.yml`, `scripts/check_feature_roster_health.js`（新規）, `.github/workflows/feature-roster-watchdog.yml`（新規）, `data/feature_roster_health.json`（新規・心拍）, `CLAUDE.md`
+- **関連**: [[ISSUE-124]]（本件の発端）/ ISSUE-084（無人自動化監視の原則・journal-watchdog/trending-scout-watchdog/feedback-watchdogと同型）
+
+---
+
 ### [ISSUE-124] 特集69本中32本がジャンル/エリアと無関係な店で固定化していた（月次ローテーション対象を19→51特集に拡大し、誤ジャンル掲載も同時に是正）
 
 - **priority**: P1 → **status**: done（単一コンテナの32特集は対応済み。複数セクション5特集・別テンプレ7特集は未対応・下記フォローアップ）
