@@ -235,18 +235,16 @@ jobs:
         # monthlyFeature(毎月の旬) と season.recurring(毎年判定) により常に最新感を保つ。冪等。
         run: node scripts/build_featured.js
 
-      - name: 特集の掲載店を月次ローテーション更新（毎月1〜3日のみ・その月の需要に合う店へ入替）
-        # data/feature_rosters.json のバランス型スコア＋ハードゲートで、シーン特集の
+      - name: 特集の掲載店を月次ローテーション更新（今月まだ未反映なら実行・自己修復）
+        # data/feature_rosters.json のバランス型スコア＋ハードゲートで、特集の
         # 掲載店を「実力上位の固定コア＋今月の新顔」に再構成する（ハイブリッド方式）。
-        # 掲載を月内で安定させるため月初(1〜3日 JST)のみ実行。全掲載店は実在店のみ（架空店ブロック）。
-        # 枠割れ(--check)はビルドを止めない（データ変動で一時的に起こりうるため警告扱い）。
-        run: |
-          D=$(TZ=Asia/Tokyo date +%d)
-          if [ "$D" = "01" ] || [ "$D" = "02" ] || [ "$D" = "03" ]; then
-            node scripts/refresh_feature_rosters.js
-          else
-            echo "月初(1〜3日 JST)以外のため特集ロスター更新はスキップ（掲載を月内で安定させる）"
-          fi
+        # 掲載を月内で安定させつつ、日付(1〜3日)ではなく data/feature_roster_health.json の
+        # 「最終反映月」で判定する(--if-stale)。手前のステップ（他都道府県マッチ監査等・
+        # continue-on-error 無し）が月初の数日たまたま失敗しても、パイプラインが次に成功した
+        # 日に自動で追いつく（ISSUE-125・固定日ゲートだと丸ごと1ヶ月欠落しても気づけなかった実績あり）。
+        # 全掲載店は実在店のみ（架空店ブロック）。枠割れ(--check)はビルドを止めない（データ変動で
+        # 一時的に起こりうるため警告扱い）。生存監視は feature-roster-watchdog.yml が別途行う。
+        run: node scripts/refresh_feature_rosters.js --if-stale
         continue-on-error: true
 
       - name: 特集上部CTAの自動付与（SEO-045・実データ追従型）
@@ -384,7 +382,7 @@ jobs:
           # Places で取得した pending 店の写真が毎回捨てられ、無駄な API 再取得が続く。
           # data/crosscheck.json: モーダル「内訳を見る」の遅延ロード元。ここが漏れていると
           # CI で毎ビルド生成されても捨てられ、フロントが古い内訳（一部店舗のみ）を出し続ける。
-          git add index.html features/index.html sitemap.xml llms.txt data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/store_link_identity_checked.json data/store_link_identity_report.json data/area_genre_pages_manifest.json data/photo_url_liveness_report.json
+          git add index.html features/index.html sitemap.xml llms.txt data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/feature_roster_health.json data/store_link_identity_checked.json data/store_link_identity_report.json data/area_genre_pages_manifest.json data/photo_url_liveness_report.json
           # 特集本体(features/*.html)も commit 対象。月次ロスター更新の掲載店入替を反映する。
           git add features/ || true
           git add stores/ || true

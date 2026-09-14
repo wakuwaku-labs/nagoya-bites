@@ -6,6 +6,69 @@
 
 ---
 
+### [ISSUE-127] 特集ロスターの月次反映を「月初1〜3日の固定日ゲート」から「自己修復＋生存監視」に変更（ISSUE-126の再発防止）
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-09-15（[[ISSUE-126]] の調査中に発見。オーナーからの追加依頼「しっかり自動更新されるように、今後の設定としてやってほしい」）
+- **category**: ops / reliability
+- **owner**: Builder
+- **source**: [[ISSUE-126]] の原因調査で、`refresh_feature_rosters.js` が実際には2026-08・2026-09とも一度も反映できていなかったことが判明した（設定は月次自動化のはずが、実質2026-07で止まっていた）
+- **brand-filter**: ✅ 適合 — CLAUDE.md「無人自動化の監視を設計するときの原則（ISSUE-084の教訓）」をそのまま適用。新規の広告・収益化要素は無し
+- **検証できる事実（制約10）**:
+
+  | 事実 | 出典 |
+  |---|---|
+  | 旧実装は `TZ=Asia/Tokyo date +%d` が `01`/`02`/`03` の時だけ `refresh_feature_rosters.js` を実行する固定日ゲートだった | `.github/workflows/build.yml`（変更前221-233行） |
+  | build.yml の「他都道府県マッチ監査（ISSUE-103再発防止）」ステップは `continue-on-error` が無く、失敗すると以降の全ステップ（ロスター更新・commit&push含む）が `skipped` になる | `gh api .../jobs` で該当run（例: `33454100830`）の各ステップの `conclusion` を確認 |
+  | 2026-09-01 の全5回のrunが、この監査ステップで失敗していた（`33454100830`/`33477355168`/`33502921166`/`33508742276`/`33556238531`/`33571998451` 全て `conclusion: failure`） | `gh run list --workflow=build.yml` を該当日でフィルタして実測 |
+  | `data/feature_rosters.json`（当時19特集）は最終更新が2026-07-24で、2026-08-01〜03・2026-09-01〜03 のいずれでも実際には更新されていなかった（`git log` に該当コミット無し） | `git log --since=2026-07-31 --until=2026-09-04 -- features/*.html` |
+- **実装内容**:
+  1. `scripts/refresh_feature_rosters.js` に `--if-stale` フラグを追加。日付ではなく `data/feature_roster_health.json` の「最終反映月」が今月と一致しているかで実行要否を判定する自己修復方式（今月まだなら何日でも実行・今月分反映済みなら即スキップ）。反映のたびに対象月・反映日・更新件数・枠割れ件数を心拍として書く（dry-run/checkでは書かない）
+  2. `.github/workflows/build.yml` のロスター更新ステップを `TZ=... date` の分岐から `node scripts/refresh_feature_rosters.js --if-stale`（毎日呼ぶだけ）に簡素化。git add 対象に `data/feature_roster_health.json` を追加
+  3. `scripts/check_feature_roster_health.js`（新規）: 心拍の鮮度を判定（月次カデンスのため許容既定40日・オオカミ少年化させない）
+  4. `.github/workflows/feature-roster-watchdog.yml`（新規）: 毎日15:00 JSTに生存確認し、異常なら GitHub Issue 起票（＝オーナーにメール）、復旧で自動クローズ。`journal-watchdog.yml`/`trending-scout-watchdog.yml`/`feedback-watchdog.yml` と同型
+  5. CLAUDE.md 共有ファイル一覧に4行追記
+- **QAゲート**: `node scripts/refresh_feature_rosters.js --if-stale` を2回連続実行し、1回目で反映・2回目でスキップすることを確認 ✅ / `--check`/`--dry-run` では心拍ファイルを書かないことを確認 ✅ / `node scripts/check_feature_roster_health.js` が健全時exit0・心拍を76日前に偽装した時exit1になることを確認 ✅ / `npm test` 197件全通過 ✅ / `python3 -c "import yaml"` で両ワークフローYAML構文OK ✅ / `data/feature_roster_health.json` が `.gitignore` 対象でないことを確認 ✅
+- **意図的にやらなかったこと**: 「他都道府県マッチ監査」ステップ自体の間欠的な失敗原因（[[ISSUE-103]]再発防止用の厳格ゲート）には手を入れていない。今回の対策はその失敗が今後も起きうる前提で、失敗してもロスター反映が丸ごと欠落しない設計にすることに絞った
+- **files**: `scripts/refresh_feature_rosters.js`, `.github/workflows/build.yml`, `scripts/check_feature_roster_health.js`（新規）, `.github/workflows/feature-roster-watchdog.yml`（新規）, `data/feature_roster_health.json`（新規・心拍）, `CLAUDE.md`
+- **関連**: [[ISSUE-126]]（本件の発端）/ ISSUE-084（無人自動化監視の原則・journal-watchdog/trending-scout-watchdog/feedback-watchdogと同型）
+
+---
+
+### [ISSUE-126] 特集69本中27本がジャンル/エリアと無関係な店で固定化していた（月次ローテーション対象を19→46特集に拡大し、誤ジャンル掲載も同時に是正）
+
+- **priority**: P1 → **status**: done（単一コンテナの27特集は対応済み。複数セクション5特集・別テンプレ7特集・下記5特集は未対応・下記フォローアップ）
+- **detected**: 2026-09-15（オーナー報告「特集ページの中で変わってない店舗がかなり見受けられる」）
+- **category**: content-freshness / data-quality
+- **owner**: Builder
+- **source**: [[ISSUE-071]]（2026-07-23）で「シーン特集19本のみ」を対象に月次ローテーションを導入した際、オーナー方針②「対象=シーン特集のみ（monthlyScenes 掲載の19特集）」により、ジャンル/エリア別の特集（`nagoya-steak.html` 等50本）は意図的にスコープ外とされていた。今回オーナーから改めて「変わらない店舗を変化させてほしい」との依頼があり、対象を拡大
+- **brand-filter**: ✅ 適合 — Moat「構造化DB × 業界人の目利き × シーン専門性」を毀損しない範囲で、既存の月次ローテーション基盤（バランス型スコア＋ハードゲート＋多様性補正）をそのまま流用。新規の広告・クーポン・ストック写真は一切伴わない。掲載店は全て `data/stores.json` に実在する店のみ（架空店ブロック厳守）
+- **検証できる事実（制約10）**:
+
+  | 事実 | 出典 |
+  |---|---|
+  | `data/feature_rosters.json` の `features` は19キーのみで、`features/*.html` 69本中50本（ジャンル/エリア別ガイド）は build.yml の月次ローテーション対象外だった | `data/feature_rosters.json`（変更前）・[[ISSUE-071]] |
+  | 対象外だった特集の掲載店は、2026-05 の「架空店で構成された特集20記事を実在店で全面再生成」（コミット `7f101b8fb`）以来、一度も入れ替わっていない。`features/nagoya-steak.html` 等の git log にロスター由来のコミットが皆無だった | `git log --since=2026-05 -- features/nagoya-steak.html features/nagoya-teppanyaki.html` 等 |
+  | それらの一部は**ジャンル名と掲載店が一致していない**（再生成時に緊急対応で「実在する店」を genre 無視でとにかく詰めた名残と推定）。実測例: `nagoya-kaiseki-guide.html`（懐石・会席特集）の掲載10店が全て「居酒屋」「焼肉」ジャンル。`nagoya-steak.html`（ステーキ特集）・`nagoya-teppanyaki.html`（鉄板焼き特集）・`nagoya-tonkatsu.html`（とんかつ特集）・`nagoya-sushi-guide.html`（鮨特集）も同様に無関係ジャンルで埋まっていた | 対象32特集の `.store-meta`/`.shop-area` を全件抽出して目視確認（本チケットの調査で実施） |
+- **実装内容**:
+  1. `data/feature_rosters.json` に27特集を追加（単一コンテナ [`.store-list`/`.shop-grid` が1つ] の特集のみ対象。既存のスコア式・ハードゲート・多様性補正・「今月の新顔」バッジ機構はそのまま流用し `refresh_feature_rosters.js` 本体は無改修）
+  2. ジャンル/エリアの scene 条件は、ページタイトル・既存掲載店の実態ではなく**ジャンルが本来意図する語**で設定（例: ステーキ特集は `data/stores.json` の店名/おすすめポイント等に「ステーキ」を含む店のみ）。`ジャンル` フィールド単独では「ステーキ」該当4件・「懐石」該当18件など母数が薄く（`ホットペッパーID` 不所持の編集部推薦店が多く `requireHotpepper` ハードゲートで落ちる）枠割れしたため、店名/タグ/おすすめポイント等を含む広いキーワード一致に切替（`gateKeyword:true`）て解決
+  3. エリア専業特集（`sakae.html` = 栄エリア横断、`osu-food-walk.html` = 大須、`meieki-hitori-nomi.html` = 名駅）は既存の `meieki.html` と同じ `area`+`gateArea` パターンを流用
+  4. 「業界人推薦」系（`industry-insiders-pick.html`/`kospa-insider.html`）はジャンルを固定せず、既存スコア式の `editorPickBonus`/`editorReasonBonus`（編集部推薦・editorReason付与店への純加点）に委ねる設計とした
+  5. マージ時に main へ先着していた PR#260（DSN-006・下記参照）と5特集（`nagoya-dining-professionals.html`/`nagoya-industry-pick-izakaya.html`/`nagoya-kaoawase-washoku.html`/`nagoya-reservation-difficult.html`/`nagoya-settai-secret.html`）で競合。これらは `editor_picks.json`/`stores.json` の `visitStatus`/`編集部推薦` に連動した実データ根拠のあるバッジ（`編集部訪問済`/`編集部推薦`）を PR#260 が付与したばかりで、`renderStoreCard` はそのバッジ表示に未対応（ロスター再生成のたびにバッジが消える）。バッジという実在検証済みの信頼シグナルをロスターの鮮度より優先し、**この5特集は今回の対象から除外**（下記フォローアップに追記。バッジ描画対応後に再検討）
+  6. `renderStoreCard` の「詳細ページを見る →」「予約はこちら →」に付いていた手書き矢印を除去（CSS `::after` と二重矢印になるバグ・PR#260 が既存HTMLを手直ししたのと同種の欠陥が生成器側にも残っていたため、生成器側で恒久修正。手直ししても次回のロスター再生成で復活するため）
+- **QAゲート**: `node scripts/refresh_feature_rosters.js --check` 全46特集プール充足・枠割れ0 ✅ / `npm test` 197件全通過 ✅ / `node scripts/audit_feature_stores.js` 実在不明3件（`fathers-day-2026.html`/`nagoya-ramen.html`/`nagoya-kaoawase-washoku.html` のいずれも本チケット対象外・変更前から存在した既知事象） ✅ / `node scripts/audit_feature_schema_alignment.js` 68件 EXIT0 ✅（既存ファイルの掲載店入替のみ・新規ページ追加は無し） / `node scripts/build_featured.js --check` 鮮度OK ✅ / `node scripts/audit_design_system.js --report` で `features/` 配下の違反0件 ✅ / 冪等性確認（同一月で再実行し差分ゼロ）✅ / マージ後、矢印除去とPR#260の `.store-actions` CSS/DM Mono修正が両立していることを目視確認
+- **意図的にやらなかったこと（フォローアップ）**:
+  1. **複数セクション構成の5特集**（`nagoya-cafe.html` / `nagoya-sweets.html` / `nagoya-kakuozan.html` / `nagoya-ramen.html` / `nagoya-gyoza.html`）は `.shop-grid`/`.store-list` コンテナが1ページに2〜6個あり、`refresh_feature_rosters.js` の「コンテナ1個を丸ごと差し替え」前提と噛み合わない（セクションごとに異なるジャンル細分＝例: ラーメンの「煮干し・醤油系」「豚骨系」等）。対応するには `replaceContainerInner` をセクション単位に拡張する script 改修が要る
+  2. **別テンプレートの7特集**（`nagoya-hitsumabushi.html` / `nagoya-tebasaki.html` / `nagoya-miso-nikomi-udon.html` / `nagoya-yakiniku.html` / `nagoya-solo-dining.html` / `nagoya-gourmet-guide.html` / `nagoya-settai-concierge.html`）は DSN-003 以降の新カードマークアップ（`.store-photo`/`.store-num`/`.store-name` 等の個別 div、`store-card`/`shop-card` ラッパー無し）や FAQ/リンク集ハブ形式で、既存の `renderStoreCard`/`renderShopCard` が出力する HTML と構造が異なるため今回は対象外
+  3. **`visitStatus`/`編集部推薦` バッジを持つ5特集**（`nagoya-dining-professionals.html`/`nagoya-industry-pick-izakaya.html`/`nagoya-kaoawase-washoku.html`/`nagoya-reservation-difficult.html`/`nagoya-settai-secret.html`）は上記実装内容5.の理由で対象外。`renderStoreCard`/`renderShopCard` に `編集部推薦`/`visitStatus==='visited'` を見てバッジ（`.store-badge` 等・PR#260 の意匠を再利用）を描画する対応を先に入れてから、ロスター対象に加える
+  4. 上記12特集（5+7）+ バッジ5特集の計17特集と非店舗一覧ページ（`become-reviewer.html` 等6本）は本チケットのスコープ外のまま。着手する場合は `refresh_feature_rosters.js` にセクション対応・新テンプレ用レンダラー・バッジ描画を追加してから `data/feature_rosters.json` に追記する
+- **acceptance（次に着手する担当者向け）**: 上記1・2・3の script 拡張後、`data/feature_rosters.json` に残り17特集を追記し `--check` で枠割れ0を確認する
+- **files**: `data/feature_rosters.json`, `features/*.html`（27本）, `scripts/refresh_feature_rosters.js`（矢印バグ修正）, `agent-backlog.md`
+- **関連**: [[ISSUE-071]]（月次ローテーション基盤の初回実装・今回はその対象拡大）/ DSN-006（PR#260・特集記事の写真/バッジ/矢印重複修正。本チケットとのマージ競合を5特集除外で解消）
+
+---
+
 ### [ISSUE-124] HotPepper写真URL（imgfp.hotp.jp）のCDN側配信終了を検知する監査を新設。全件走査で4,926件中133件（約2.7%）が404
 
 - **priority**: P1 → **status**: in_progress（検知は実装・CI配線・全件走査まで完了／恒久修復の方針はオーナー承認待ち）
