@@ -108,7 +108,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 @media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
 .store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:var(--fs-sm) !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}
 .store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}
-.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}
+.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}.store-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem;}
 .store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}
 .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
 /*ROSTER_BADGE_CSS*/
@@ -201,8 +201,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">久屋大通駅5分、6,000円帯フレンチ、丸の内接待層の指名率が安定</p>
           <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">5000円以上</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001145063.html" onclick="trackEvent('feature_store_click',{store:'Sergio セルジョ',feature:'settai-guide'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001145063/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001145063',feature:'settai-guide',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001145063.html" onclick="trackEvent('feature_store_click',{store:'Sergio セルジョ',feature:'settai-guide'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001145063/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001145063',feature:'settai-guide',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -216,8 +216,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">星ケ丘駅直結・1万超の格店、評価落ちない仕事量が接待選定の理由</p>
           <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">5000円以上</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001274495.html" onclick="trackEvent('feature_store_click',{store:'Osteria ONREDOM オステリア オンレドム',feature:'settai-guide'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001274495/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001274495',feature:'settai-guide',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001274495.html" onclick="trackEvent('feature_store_click',{store:'Osteria ONREDOM オステリア オンレドム',feature:'settai-guide'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001274495/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001274495',feature:'settai-guide',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -231,8 +231,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">久屋大通駅5分、1万超中華はランチ営業で接待客の選択肢を広げる</p>
           <div class="store-tags"><span class="store-tag">中華料理</span><span class="store-tag">5000円以上</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000989122.html" onclick="trackEvent('feature_store_click',{store:'中国海鮮料理 彩華',feature:'settai-guide'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ000989122/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J000989122',feature:'settai-guide',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000989122.html" onclick="trackEvent('feature_store_click',{store:'中国海鮮料理 彩華',feature:'settai-guide'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ000989122/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J000989122',feature:'settai-guide',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -246,8 +246,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">「名古屋で最も予約の取れないビストロ」と称される超人気店。わずか1日で2ヶ月分の予約が埋まるほどの人気を誇り、その理由は圧倒的なコストパフォーマンスと本格的なフレンチビストロ料理にあります。友人との食事やカジュアルなデ…</p>
           <div class="store-tags"></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000661748.html" onclick="trackEvent('feature_store_click',{store:'サラマンジェドゥカジノ',feature:'settai-guide'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ000661748/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J000661748',feature:'settai-guide',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000661748.html" onclick="trackEvent('feature_store_click',{store:'サラマンジェドゥカジノ',feature:'settai-guide'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ000661748/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J000661748',feature:'settai-guide',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -261,8 +261,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">徳重駅徒歩4分、1万5000円フレンチはランチ営業で記念日・接待の高客単価を確保</p>
           <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">5000円以上</span><span class="store-tag">誕生日・記念日</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003532896.html" onclick="trackEvent('feature_store_click',{store:'ル プランタン',feature:'settai-guide'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003532896/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003532896',feature:'settai-guide',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003532896.html" onclick="trackEvent('feature_store_click',{store:'ル プランタン',feature:'settai-guide'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003532896/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003532896',feature:'settai-guide',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -276,8 +276,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">伏見駅3分、1万2,000円の中華。接待ニーズで高評価を維持する格調高い店</p>
           <div class="store-tags"><span class="store-tag">中華料理</span><span class="store-tag">5000円以上</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001136803.html" onclick="trackEvent('feature_store_click',{store:'中国料理 王朝 ヒルトン名古屋',feature:'settai-guide'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001136803/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001136803',feature:'settai-guide',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001136803.html" onclick="trackEvent('feature_store_click',{store:'中国料理 王朝 ヒルトン名古屋',feature:'settai-guide'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001136803/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001136803',feature:'settai-guide',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>

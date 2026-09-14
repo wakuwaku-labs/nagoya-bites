@@ -68,7 +68,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 @media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
 .store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:var(--fs-sm) !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}
 .store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}
-.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}
+.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}.store-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem;}
 .store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}
 .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
 /*ROSTER_BADGE_CSS*/
@@ -154,8 +154,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">和食とお酒が楽しめる人気店。落ち着いた雰囲気が魅力</p>
           <div class="store-tags"><span class="store-tag">100名以上</span><span class="store-tag">3000〜5000円</span><span class="store-tag">個室</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003411794.html" onclick="trackEvent('feature_store_click',{store:'もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店',feature:'mothers-day'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003411794/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003411794',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003411794.html" onclick="trackEvent('feature_store_click',{store:'もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店',feature:'mothers-day'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003411794/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003411794',feature:'mothers-day',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -169,8 +169,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">金山の人気No.1のもつ鍋 個室 半個室もご用意♪</p>
           <div class="store-tags"><span class="store-tag">半個室</span><span class="store-tag">50〜60名</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001187588.html" onclick="trackEvent('feature_store_click',{store:'九州料理 椿 金山店',feature:'mothers-day'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001187588/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001187588',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001187588.html" onclick="trackEvent('feature_store_click',{store:'九州料理 椿 金山店',feature:'mothers-day'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001187588/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001187588',feature:'mothers-day',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -184,8 +184,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">徳重駅徒歩4分、1万5000円フレンチはランチ営業で記念日・接待の高客単価を確保</p>
           <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">5000円以上</span><span class="store-tag">誕生日・記念日</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003532896.html" onclick="trackEvent('feature_store_click',{store:'ル プランタン',feature:'mothers-day'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003532896/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003532896',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003532896.html" onclick="trackEvent('feature_store_click',{store:'ル プランタン',feature:'mothers-day'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003532896/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003532896',feature:'mothers-day',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -199,8 +199,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">矢場町駅徒歩1分、3,500円カフェ。駅出口直結でランチ客の滞留時間を伸ばす。</p>
           <div class="store-tags"><span class="store-tag">カフェ</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003851199.html" onclick="trackEvent('feature_store_click',{store:'シーシャカフェ 凛湊',feature:'mothers-day'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003851199/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003851199',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003851199.html" onclick="trackEvent('feature_store_click',{store:'シーシャカフェ 凛湊',feature:'mothers-day'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003851199/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003851199',feature:'mothers-day',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -214,8 +214,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">「名古屋で最も予約の取れないビストロ」と称される超人気店。わずか1日で2ヶ月分の予約が埋まるほどの人気を誇り、その理由は圧倒的なコストパフォーマンスと本格的なフレンチビストロ料理にあります。友人との食事やカジュアルなデ…</p>
           <div class="store-tags"></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000661748.html" onclick="trackEvent('feature_store_click',{store:'サラマンジェドゥカジノ',feature:'mothers-day'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ000661748/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J000661748',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000661748.html" onclick="trackEvent('feature_store_click',{store:'サラマンジェドゥカジノ',feature:'mothers-day'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ000661748/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J000661748',feature:'mothers-day',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -229,8 +229,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">フレンチ系で金山には少ないジャンル、4500円でランチ営業も展開</p>
           <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003829081.html" onclick="trackEvent('feature_store_click',{store:'BOU THE ROOF ボウザルーフ 金山店',feature:'mothers-day'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003829081/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003829081',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003829081.html" onclick="trackEvent('feature_store_click',{store:'BOU THE ROOF ボウザルーフ 金山店',feature:'mothers-day'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003829081/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003829081',feature:'mothers-day',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -244,8 +244,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">ささしまライブ駅徒歩4分、ランチ限定で割安感ある新興エリア和食</p>
           <div class="store-tags"><span class="store-tag">和食</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003737152.html" onclick="trackEvent('feature_store_click',{store:'うなぎ四代目菊川 グローバルゲート店',feature:'mothers-day'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003737152/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003737152',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003737152.html" onclick="trackEvent('feature_store_click',{store:'うなぎ四代目菊川 グローバルゲート店',feature:'mothers-day'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003737152/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003737152',feature:'mothers-day',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -259,8 +259,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">伏見駅5分、4500円和食ランチ営業は夜客を昼に逃がさない仕組み</p>
           <div class="store-tags"><span class="store-tag">和食</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004004794.html" onclick="trackEvent('feature_store_click',{store:'鰻割烹まるぜん',feature:'mothers-day'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004004794/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004004794',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004004794.html" onclick="trackEvent('feature_store_click',{store:'鰻割烹まるぜん',feature:'mothers-day'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ004004794/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004004794',feature:'mothers-day',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -274,8 +274,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">栄駅5分以内、6000円のイタランチでオフィス周辺の回転を見込む</p>
           <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003851462.html" onclick="trackEvent('feature_store_click',{store:'Oto樹 栄店',feature:'mothers-day'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003851462/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003851462',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003851462.html" onclick="trackEvent('feature_store_click',{store:'Oto樹 栄店',feature:'mothers-day'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003851462/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003851462',feature:'mothers-day',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -289,8 +289,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">国際センター駅徒歩6分、18,000円帯で接待・記念日需要を独占供給</p>
           <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">5000円以上</span><span class="store-tag">誕生日・記念日</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003958549.html" onclick="trackEvent('feature_store_click',{store:'四間道レストランMATSUURA',feature:'mothers-day'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003958549/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003958549',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003958549.html" onclick="trackEvent('feature_store_click',{store:'四間道レストランMATSUURA',feature:'mothers-day'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003958549/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003958549',feature:'mothers-day',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
