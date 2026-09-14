@@ -539,9 +539,53 @@ function analyze(data) {
 // Script Properties に ANTHROPIC_API_KEY を入れると Claude がその日の実データから
 // 具体策を書く。未設定 or 失敗時は下の強化版ルールエンジンに自動フォールバックする。
 function generateAdvice(data, a, date, isWeekly) {
-  const ai = generateAiAdvice(data, a, date, isWeekly);
+  // SEO-092: KWを名指しする場合は必ず自社の実測GSCクエリ（data/gsc_metrics.json）に
+  // 実在するものだけを使う。AI/ルールベースの両方でこのリストを共有する（1回の取得で足りる）。
+  const gscKeywords = fetchGscCandidateKeywords();
+  const ai = generateAiAdvice(data, a, date, isWeekly, gscKeywords);
   if (ai && ai.length) return ai;
-  return generateRuleBasedAdvice(data, a, date);
+  return generateRuleBasedAdvice(data, a, date, gscKeywords);
+}
+
+// ─── SEO-092: 実測GSCクエリから「伸びしろのあるKW候補」を抜く ───
+// GAS に Search Console API を叩かせるのではなく、このリポジトリが日次で
+// 生成・公開している data/gsc_metrics.json（GitHub Pages で誰でも閲覧できる
+// 静的JSON。CLAUDE.md の「判定ロジックはGASに持たせない」原則における“判定”とは
+// 採用/却下のような編集判断を指すため、ここでの決定的なフィルタ処理はそれに当たらない）を
+// そのまま読みに行く。pos 8〜20（1ページ目の境界〜2ページ目）＝タイトル/見出し改善や
+// 内部リンクで押し上げる余地があるクエリだけを表示回数順に抜き出す。
+// 取得できない場合は空配列を返し、呼び出し側はKWを名指ししない文言にフォールバックする
+// （データに無いKWを創作しない・CLAUDE.md制約10）。
+const GSC_METRICS_URL = 'https://nagoya-bites.com/data/gsc_metrics.json';
+function fetchGscCandidateKeywords() {
+  try {
+    const res = UrlFetchApp.fetch(GSC_METRICS_URL, { muteHttpExceptions: true });
+    if (res.getResponseCode() !== 200) {
+      Logger.log('GSC候補KW取得失敗: HTTP ' + res.getResponseCode());
+      return [];
+    }
+    const parsed = JSON.parse(res.getContentText());
+    const queries = parsed && (parsed.queries || parsed.topQueries) || [];
+    return queries
+      .filter(function (q) {
+        return q && q.query && typeof q.position === 'number' &&
+          q.position >= 8 && q.position <= 20 && (q.impressions || 0) >= 5;
+      })
+      .sort(function (x, y) { return (y.impressions || 0) - (x.impressions || 0); })
+      .slice(0, 8)
+      .map(function (q) {
+        return { query: String(q.query), impressions: q.impressions, position: q.position };
+      });
+  } catch (e) {
+    Logger.log('GSC候補KW取得例外: ' + e);
+    return [];
+  }
+}
+
+// 候補リストから日替わりで1件選ぶ（無ければ null＝呼び出し側はKWを名指ししない）
+function pickGscKeyword(list, seed) {
+  if (!list || !list.length) return null;
+  return list[((seed % list.length) + list.length) % list.length];
 }
 
 // Script Property を安全に読む
@@ -561,12 +605,11 @@ function rotate(arr, seed) {
   if (!arr || !arr.length) return '';
   return arr[((seed % arr.length) + arr.length) % arr.length];
 }
-// SEOで具体的に狙うロングテールKW（日替わりで提案を回す）
-const SEO_KEYWORDS = [
-  '「名古屋 接待 個室」', '「名古屋駅 宴会 コース」', '「栄 デート ディナー」',
-  '「名古屋 誕生日 サプライズ」', '「名古屋 女子会 個室」', '「名古屋 大人数 飲み放題」',
-  '「名古屋 隠れ家 居酒屋」', '「名古屋 記念日 レストラン」',
-];
+// SEO-092: 固定のロングテールKW例示リストは廃止した。
+// 「名古屋 接待 個室」「名古屋 一人ご飯 おすすめ」等の自己申告的な例示は、
+// 自社の実測（data/gsc_metrics.json）で表示0件のクエリを繰り返し提案する原因になっていた
+// （検証: agent-backlog.md [[SEO-092]]）。KWを名指しする場合は必ず
+// fetchGscCandidateKeywords() が返す実測クエリだけを使う。
 
 // 表示名で合算した人気ページ上位（プロンプト/ルール双方で使う・自己完結）
 function topPagesForPrompt(pages, n) {
@@ -584,8 +627,8 @@ function topPagesForPrompt(pages, n) {
 // ─── ① AIアドバイス（Gemini無料枠を優先 → Claude → 失敗時null） ───
 // Script Properties に GEMINI_API_KEY か ANTHROPIC_API_KEY のどちらかを入れれば有効化。
 // GEMINI_API_KEY は Google AI Studio で無料発行でき、1日1回のこの用途なら完全無料。
-function generateAiAdvice(data, a, date, isWeekly) {
-  const prompt = buildAdvicePrompt(data, a, date, isWeekly);
+function generateAiAdvice(data, a, date, isWeekly, gscKeywords) {
+  const prompt = buildAdvicePrompt(data, a, date, isWeekly, gscKeywords);
 
   const geminiKey = getProp('GEMINI_API_KEY', '');
   if (geminiKey) {
@@ -680,10 +723,16 @@ function callClaudeAdvice(apiKey, model, prompt) {
 }
 
 // AIに渡すプロンプト（その日の実データ＋サイトの強みを与え、汎用論を禁止する）
-function buildAdvicePrompt(data, a, date, isWeekly) {
+function buildAdvicePrompt(data, a, date, isWeekly, gscKeywords) {
   const et = data.totals;
   const t = a.sessionTotals;   // 直帰率・滞在・訪問回数・流入元は確定済みの日の値（SEO-076）
   const period = isWeekly ? 'この1週間' : (String(date || getDateStr(-1)) + '（前日）');
+  const kwList = gscKeywords || [];
+  const kwLines = kwList.length
+    ? kwList.map(function (k) {
+        return '  - 「' + k.query + '」（表示' + k.impressions + '回・平均' + Number(k.position).toFixed(1) + '位）';
+      }).join('\n')
+    : '  (該当データなし。KWを名指しする提案はしないこと)';
 
   const topPages = topPagesForPrompt(data.pages, 5)
     .map((p, i) => '  ' + (i + 1) + '. ' + p.name + ' … ' + p.pv + '回閲覧').join('\n') || '  (データなし)';
@@ -705,14 +754,17 @@ function buildAdvicePrompt(data, a, date, isWeekly) {
 '# サイトの構造（打ち手はこの実装に即して具体的に書く）',
 '- index.html 一枚に全店舗を掲載。検索／エリア・シーンのフィルタ／店舗詳細モーダル／予約ボタン(cta_click)／Googleマップ導線(cta_gmap_click)／電話ボタン(cta_call_click)／Instagramエンベッドあり',
 '- journal/ の日次記事には予約導線(cta_reserve)あり。features/ の特集から店舗詳細への遷移は feature_store_click で計測。stores/ の静的店舗ページ（5500枚超）は cta_click(HP) / cta_gmap_click(マップ) で計測。',
-'- features/ にシーン別特集（名駅・栄・宴会・個室・接待・誕生日・デート・女子会・大人数 など20本）',
+'- features/ にシーン別特集（名駅・栄・宴会・個室・接待・誕生日・デート・女子会・大人数 など。本数は随時増減するためここでは明記しない）',
 '- journal/ に日次ジャーナル記事（毎日1本公開）',
-'- docs/daily-posts/ にSNS投稿原稿（Note／Instagram／X）が毎日用意されている',
+'- SNS投稿は現在サイト外で手動運用しており、docs/daily-posts/ の自動原稿生成は停止中（2026-09-05〜）。SNS施策を提案する場合は「featuresの特集記事やjournalの日次記事の見出し・写真をそのまま使う」打ち手にすること（docs/daily-postsの原稿を流用する提案はしない）',
 '',
 '# このサイトの強み（提案はこの路線を伸ばす方向で）',
 '- 広告ゼロ・PR記事ゼロの編集独立性／現役飲食人による「業界人の目利き」',
-'- シーン別（接待・宴会・デート・個室）の専門性。大手ポータルが書けない独自KW（例: 名古屋 接待 個室）で勝つ',
+'- シーン別（接待・宴会・デート・個室）の専門性。大手ポータルが書けない独自の切り口で勝つ',
 '- 追わない領域（提案しない）: 匿名口コミの大量集積・クーポン経済・高級セグメント特化',
+'',
+'# 検索で伸びしろがあるKW候補（data/gsc_metrics.json の実測・pos8〜20＝1ページ目境界〜2ページ目）',
+kwLines,
 '',
 '# ' + period + 'の実データ',
 '- 訪問者: ' + et.users + '人 ／ ページ閲覧: ' + et.pageviews,
@@ -743,6 +795,7 @@ srcLines,
 '- データに無い数字を創作しない。訪問者が少ない日は「母数が少ないので◯◯を試す実験」という温度感にする。',
 '- 訪問回数(セッション)が20件未満の日は、直帰率・平均滞在時間を単独の主要課題として取り上げない（1〜2人の挙動だけで数十pt動く統計ノイズのため）。この場合は人気ページ・流入元・回遊など他の実データか「攻めの一手」を優先する。',
 '- 「判別できた〇件中」と記載されている日はGA4のしきい値が効き流入元の多くが判別不能になっている。そのような日は検索流入比率・SNS流入比率を主な根拠にしたアドバイスを避け、人気ページ・直帰率・回遊など他のデータを優先する。',
+'- KWを名指しする提案をする場合は、上の「検索で伸びしろがあるKW候補」に載っている語だけを使うこと。候補が無い場合や、載っていない語を思いついても、KWを名指しする提案はしない（存在を確認できないKWを創作しない）。',
 '- 専門用語を避け、素人が読んで即動ける日本語で。各項目は120字以内。',
 '- 出力はJSONのみ。前後に説明文やコードフェンス(```)を付けない。',
 '',
@@ -752,9 +805,10 @@ srcLines,
 }
 
 // ─── ② ルールベースアドバイス（AIフォールバック／実数値・実ページ・実流入元を引用） ───
-function generateRuleBasedAdvice(data, a, date) {
+function generateRuleBasedAdvice(data, a, date, gscKeywords) {
   const t = a.sessionTotals;   // 直帰率・滞在・訪問回数は確定済みの日の値（SEO-076）
   const seed = daySeed(date);
+  const kwList = gscKeywords || [];
   const cand = [];  // { sev, text } sev が大きいほど優先
 
   const tops = topPagesForPrompt(data.pages, 1);
@@ -820,12 +874,21 @@ function generateRuleBasedAdvice(data, a, date) {
       cand.push({ sev: 40, text: '⚠️ この日はGA4のしきい値が効き流入元の' + Math.round(a.unknownPct * 100) + '%が判別不能です\n　👉 流入構成は30日集計（search_channel_metrics.json）を参考に。今日は人気ページや回遊を見てください' });
     } else {
       if (a.organicPct < 0.30) {
-        cand.push({ sev: 80, text: '🔴 Google検索からの流入が' + Math.round(a.organicPct * 100) + '%と少なめ\n　👉 既存特集のタイトルとh1に ' + rotate(SEO_KEYWORDS, seed) + ' を入れ、本文の最初の2行にも自然に1回使う' });
+        // SEO-092: KWは自社の実測GSCクエリ（gscKeywords＝pos8〜20の実在クエリ）からのみ選ぶ。
+        // 候補が無い日は特定のKWを名指しせず、実データを見る行動そのものを打ち手にする
+        // （データに無いKWを創作しない・CLAUDE.md制約10）。
+        const kw = pickGscKeyword(kwList, seed);
+        cand.push({ sev: 80, text: kw
+          ? '🔴 Google検索からの流入が' + Math.round(a.organicPct * 100) + '%と少なめ\n　👉 実際に検索表示されている「' + kw.query + '」（平均' + Number(kw.position).toFixed(1) + '位）を含む特集のタイトル・h1・本文冒頭を見直す'
+          : '🔴 Google検索からの流入が' + Math.round(a.organicPct * 100) + '%と少なめ\n　👉 data/gsc_metrics.json の実クエリ一覧を確認し、伸びしろのあるページのタイトル・見出しを見直す' });
       } else if (a.organicPct >= 0.70) {
-        cand.push({ sev: 30, text: '🟢 検索流入' + Math.round(a.organicPct * 100) + '%と好調\n　👉 勢いに乗せて ' + rotate(SEO_KEYWORDS, seed + 3) + ' を狙う新特集を仕込み、検索の面を広げる' });
+        const kw2 = pickGscKeyword(kwList, seed + 3);
+        cand.push({ sev: 30, text: kw2
+          ? '🟢 検索流入' + Math.round(a.organicPct * 100) + '%と好調\n　👉 勢いに乗せて「' + kw2.query + '」（表示' + kw2.impressions + '回・平均' + Number(kw2.position).toFixed(1) + '位）を狙う特集・内部リンクを仕込み、検索の面を広げる'
+          : '🟢 検索流入' + Math.round(a.organicPct * 100) + '%と好調\n　👉 data/gsc_metrics.json の実クエリで伸びしろのある面を確認し、次に狙う特集を仕込む' });
       }
       if (a.socialPct < 0.05) {
-        cand.push({ sev: 50, text: '🟡 SNSからの流入がほぼゼロ\n　👉 ' + (featureName || '今日のジャーナル') + 'をInstagram/Xに「画像1枚＋一言」で投稿（docs/daily-posts の原稿を流用）' });
+        cand.push({ sev: 50, text: '🟡 SNSからの流入がほぼゼロ\n　👉 ' + (featureName || '今日のジャーナル') + 'をInstagram/Xに「画像1枚＋一言」で投稿（特集記事・ジャーナル記事の見出しと写真をそのまま使う）' });
       } else if (a.socialPct >= 0.25) {
         cand.push({ sev: 35, text: '🟢 SNS流入が' + Math.round(a.socialPct * 100) + '%と強い\n　👉 反応が出たテーマで連投し、プロフィールのサイトURL固定を確認する' });
       }
@@ -860,8 +923,11 @@ function generateRuleBasedAdvice(data, a, date) {
 
   // 課題が無い日は「攻めの一手」を日替わりで
   if (cand.length === 0) {
+    const kw3 = pickGscKeyword(kwList, seed);
     const grow = [
-      rotate(SEO_KEYWORDS, seed) + ' を狙う特集を1本企画する',
+      kw3
+        ? '「' + kw3.query + '」（表示' + kw3.impressions + '回・平均' + Number(kw3.position).toFixed(1) + '位）を狙う特集・内部リンクを1本企画する'
+        : 'data/gsc_metrics.json の実クエリを確認し、伸びしろのあるKWを狙う特集を1本企画する',
       hasJournal ? '反応が出た日次ジャーナルのテーマを、特集記事に格上げする' : '日次ジャーナルを再開し、毎日1本の更新リズムを取り戻す',
       '人気の「' + topPageName + '」と相性の良い隣接特集への内部リンクを増やす',
       (featureName || '今日の話題店') + 'をInstagram/Xに投稿し、新規の入口を1つ増やす',

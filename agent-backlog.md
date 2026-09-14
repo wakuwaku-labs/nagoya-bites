@@ -161,7 +161,7 @@
 
 ### [SEO-093] 日次アドバイス生成プロンプトに**失効した前提**（「docs/daily-posts/ にSNS原稿が毎日用意されている」「特集20本」）が固定文で埋め込まれており、停止済みのSNS原稿を使う助言が停止後9日間で5回出て助言枠を浪費している
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress（コード修正完了・GASへのデプロイ待ち。デプロイはオーナー本人の操作が必要）
 - **detected**: 2026-09-13
 - **category**: SEO / 計測
 - **owner**: Marketer
@@ -186,6 +186,16 @@
   4. `.gas-deploy/Code.js` はミラーにすぎないため、**GAS 側への反映はオーナー本人のデプロイ操作が必要**。反映確認は `docs/gas-deploy-verification-runbook.md` に従い、必要なら `data/gas_deploy_policy.json` に「新コードでは出力されない文字列」（例: `docs/daily-posts の原稿を流用`）を痕跡として追加する
   5. 効果は「SNS原稿の流用を促す助言」が反映後7日間の日次レポートに0回であること（メール本文で誰でも検算可能）で判定する
 - **関連**: [[SEO-092]]（同じ助言生成器の入力欠陥・同時設計）／[[SEO-085]]（Bing 側の正しい打ち手）／[[SEO-071]]（KW推測書き換えの却下）／[[SEO-069]]（GAS 反映監視）
+
+- **2026-09-14 追記（実装・[[SEO-092]] と同時設計・status: ready → in_progress）**:
+  - acceptance①②を [[SEO-092]] と**同じ関数**（`.gas-deploy/Code.js` の `buildAdvicePrompt` / `generateRuleBasedAdvice` / `generateAdvice`）へ1回の変更でまとめて実装した（**acceptance③の注意事項「別々に実装して後から実装した側が先を上書きしないこと」を遵守**。同一PRで両チケットを同時に触ったため上書きは発生しない）
+  - 「サイトの構造」の固定文を修正: `- docs/daily-posts/ にSNS投稿原稿（Note／Instagram／X）が毎日用意されている` を `- SNS投稿は現在サイト外で手動運用しており、docs/daily-posts/ の自動原稿生成は停止中（2026-09-05〜）。SNS施策を提案する場合は「featuresの特集記事やjournalの日次記事の見出し・写真をそのまま使う」打ち手にすること（docs/daily-postsの原稿を流用する提案はしない）` に置換（acceptance①前半）
+  - 特集本数の固定値「など20本」を撤去し「など（本数は随時増減するためここでは明記しない）」に変更（実数を都度取得する経路は追加せず、固定値をやめる方の選択肢を採った。acceptance①後半）
+  - ルールベース保険（旧 `:790` 相当）の `（docs/daily-posts の原稿を流用）` を `（特集記事・ジャーナル記事の見出しと写真をそのまま使う）` に置換（acceptance②）
+  - 固定例示KW（旧 `:676` の「名古屋 接待 個室」・`SEO_KEYWORDS` 定数）は [[SEO-092]] の対応と統合し、`data/gsc_metrics.json` の実測クエリから動的に選ぶ方式に一本化した（詳細は [[SEO-092]] 追記参照。acceptance③）
+  - `data/gas_deploy_policy.json` に痕跡パターンを追加: `sns_daily_posts_reuse_old_label`（not_deployed・`docs/daily-posts\s*の原稿を流用`）。`pending_fixes` に `SEO-093` を追加
+  - **デプロイは未実施**（オーナー本人の操作が必要・`docs/gas-deploy-verification-runbook.md`）。反映確認は次回以降の `node scripts/check_gas_deploy_health.js` の `deployed` 判定で行う（acceptance④）。デプロイ確認後に `pending_fixes` から `SEO-093` を除去し status を `done` にすること
+  - `npm test`（197件）・`node --check .gas-deploy/Code.js`・`node --test tests/gas_health.test.js`（トップレベル二重宣言なし含む）で退行なしを確認
 
 ---
 
@@ -275,7 +285,7 @@
 
 ### [SEO-092] 日次アドバイス生成器が GSC の実クエリを一切参照しておらず、「一人ご飯」「接待」など**自社の実データで表示0のKW**を繰り返し提案している（3日で2回・助言枠の構造的浪費）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress（コード修正完了・GASへのデプロイ待ち。デプロイはオーナー本人の操作が必要）
 - **detected**: 2026-09-12
 - **category**: SEO / 計測
 - **owner**: Marketer
@@ -300,6 +310,17 @@
 - **関連**: [[SEO-069]]（GAS 反映判定の仕組み）／[[SEO-087]]（2026-09-09 に同じ「一人ご飯」を実測で否定）／[[SEO-090]] [[SEO-091]]（本日この欠陥から生まれた助言2件の振替先）／[[SEO-043]]（GSC の取得解像度・本件が使う入力）／[[SEO-075]] [[SEO-076]]（助言枠が誤値に占領された同型事故）
 
 - **2026-09-13 追記（日次triage）**: 「接待 個室」が繰り返し出る出所の一つを特定。生成プロンプト本文に例示「名古屋 接待 個室」（`.gas-deploy/Code.js:676`）と固定リスト `SEO_KEYWORDS`（`:527-531`）が埋め込まれている。同じ関数に失効前提（SNS原稿・特集20本）もあり [[SEO-093]] として起票。**同時に設計すること**
+
+- **2026-09-14 追記（実装・[[SEO-093]] と同時設計・status: ready → in_progress）**:
+  - **事実確認（acceptance①）**: `grep -n "searchconsole\|webmasters\|gsc" .gas-deploy/Code.js` は0件。GSC参照は元から無いことを確定させた
+  - **実装（acceptance②）**: GASにGSC APIは叩かせず、このリポジトリが日次生成しGitHub Pagesで既に一般公開している `https://nagoya-bites.com/data/gsc_metrics.json`（`curl -sI` で200確認済み）を `UrlFetchApp.fetch()` で直接読みに行く方式にした（新しい配信ファイルを別途用意する必要が無かった）。新関数 `fetchGscCandidateKeywords()`（`.gas-deploy/Code.js`）が `queries[]` から **position 8〜20**（1ページ目境界〜2ページ目）かつ impressions≥5 の行を表示回数順に抽出し最大8件返す。取得失敗時は空配列（KWを名指ししないフォールバックへ）
+  - この抽出処理は「事実に基づく決定的フィルタ」であり、CLAUDE.mdが禁じる「GASに持たせない判定ロジック」（採用/却下等の編集判断）には当たらないと判断した。既存のGA4集計処理（`analyze()`等）もGAS内で行っており同種の実装パターン
+  - `buildAdvicePrompt()` に「検索で伸びしろがあるKW候補」セクションを新設し実測クエリ（語・表示回数・平均順位）を列挙。出力ルールに「候補リストに無いKWは名指ししない」を追加（acceptance③）
+  - ルールベース保険（`generateRuleBasedAdvice()`）の3箇所（Google検索流入少なめ／検索流入好調→新特集／課題が無い日の攻めの一手）を、ハードコード定数 `SEO_KEYWORDS`（削除）から `fetchGscCandidateKeywords()` の実測結果を使う方式に置換。候補が無い日は「data/gsc_metrics.jsonの実クエリを確認する」という具体KWを含まない文言にフォールバックする（データに無いKWを創作しない）
+  - `data/gas_deploy_policy.json` に痕跡パターンを追加: `stale_example_kw`（not_deployed・`名古屋 接待 個室|名古屋 一人ご飯 おすすめ`＝実測で表示0件のため新コードは原理的に出力しない）。`pending_fixes` に `SEO-092` を追加
+  - [[SEO-093]] の対応（失効前提の除去）と**同一PR・同一関数群**で実装し、片方が他方を上書きするリスクを排除した
+  - **デプロイは未実施**（オーナー本人の操作が必要）。反映確認は次回以降の `node scripts/check_gas_deploy_health.js` の `deployed` 判定＋「助言が名指しするKWが `data/gsc_metrics.json` に実在する割合」（acceptance⑤）で行う。デプロイ確認後に `pending_fixes` から `SEO-092` を除去し status を `done` にすること
+  - `npm test`（197件パス）・`node --check .gas-deploy/Code.js`（構文エラーなし）・`node --test tests/gas_health.test.js`（トップレベル二重宣言なし含む）で退行なしを確認
 
 ---
 

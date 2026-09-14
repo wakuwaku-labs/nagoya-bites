@@ -93,6 +93,22 @@
       "scope": "body",
       "pattern": "予約ボタンクリック: \\d+回 ／ マップ",
       "reason": "旧コードが出力する予約カウントのラベル形式。新コードでは『予約行動（cta合算）』に変わるため出力されない。"
+    },
+    {
+      "key": "sns_daily_posts_reuse_old_label",
+      "fix_id": "SEO-093",
+      "verdict": "not_deployed",
+      "scope": "body",
+      "pattern": "docs/daily-posts\\s*の原稿を流用",
+      "reason": "SEO-093 修正前のルールベース保険が出す固定文。SNS原稿の自動生成は2026-09-05に停止済み（data/journal_sns_draft_policy.json の generate_sns_draft:false）で docs/daily-posts/ に流用できる原稿は存在しないため、新コードはこの文字列を出力しない（特集記事・ジャーナル記事の見出し・写真を使う文言に置換済み）。SNS流入がほぼゼロの日にのみ出る条件付きシグナル（片側）。"
+    },
+    {
+      "key": "stale_example_kw",
+      "fix_id": "SEO-092",
+      "verdict": "not_deployed",
+      "scope": "body",
+      "pattern": "名古屋 接待 個室|名古屋 一人ご飯 おすすめ",
+      "reason": "旧コードのハードコードKW（SEO_KEYWORDS定数・プロンプト固定例示）由来のKW名指し。data/gsc_metrics.json の実測でどちらも直近28日間表示0件であり、新コード（fetchGscCandidateKeywords()が返す実測クエリのみを使う）がこれらを提案することは原理的にない。KWを名指しする助言が出た日にのみ出る条件付きシグナル（片側）。"
     }
   ],
   "_signals": "scope=source_lines は『【どこから来た？】/【流入元】セクションの各行』だけを見る（本文の他の場所に同じ語が出ても誤検出しないため）。scope=body は本文全体。verdict=not_deployed の痕跡が1つでも出れば旧コード確定（新コードでは原理的に出力できない文字列だから）。verdict=deployed の痕跡が出れば新コード確定。どちらも出なければ indeterminate（その日のデータが分岐を通らなかっただけ）で、これは異常ではない。",
@@ -152,6 +168,17 @@
       "evidence": "clasp pull で本番の実体を取得し .gas-deploy/Code.js とバイト一致を確認（SEO-074）"
     }
   ],
-  "pending_fixes": [],
+  "pending_fixes": [
+    {
+      "id": "SEO-092",
+      "detected": "2026-09-14",
+      "summary": "日次アドバイス生成のKW提案を、ハードコード例示（SEO_KEYWORDS定数・プロンプト固定例示「名古屋 接待 個室」）から data/gsc_metrics.json の実測クエリ（pos8〜20・fetchGscCandidateKeywords()）に切り替え。候補が無ければKWを名指ししない"
+    },
+    {
+      "id": "SEO-093",
+      "detected": "2026-09-14",
+      "summary": "プロンプトの失効前提（SNS原稿が毎日用意されている／特集20本固定値）を実態に合わせて修正し、ルールベース保険の『docs/daily-posts の原稿を流用』を実在資産（特集/ジャーナル記事の見出し・写真）を使う文言に置換。SEO-092と同一関数のため同時実装"
+    }
+  ],
   "_resolved_fixes": "2026-08-25 に clasp pull で本番プロジェクトを直接取得し、.gas-deploy/Code.js とバイト一致・ファイルは Code.js と appsscript.json の2本のみ（余分な旧ファイルなし）であることを確認したため、4件とも反映済みへ移した。以後の未反映検知は文字列痕跡（signals）と数値乖離（numeric_signals）が担う。"
 }
