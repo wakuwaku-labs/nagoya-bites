@@ -6653,7 +6653,7 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
 ## 夜間QA検出課題（QA-*）
 
 ### [QA-SEC-SECRET-GOOGLE-API-KEY] Google API key らしき文字列がコミットされている疑い（1箇所）
-- **priority**: P0 → **status**: ready
+- **priority**: P0 → **status**: wont_fix
 - **detected**: 2026-09-08
 - **category**: Security
 - **owner**: DataKeeper
@@ -6661,3 +6661,6 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
 - シークレット文字列スキャンで検出（値は秘匿）:
 -     index.html:9853
 - acceptance: 該当値を確認し本物なら即ローテーション＋履歴消去／誤検知なら .qa-secret-allowlist.txt に登録
+- **resolved**: 2026-09-14（誤検知・ローテーション不要）
+- **検証**: 検出箇所は `index.html` の `var NB_CALL_MAPS_KEY`（PR #224「電話する」ボタン用の Maps JavaScript API キー）。ブラウザで読み込む仕様上クライアントに置くしかない公開キーで、コード内コメントどおり HTTP リファラ制限付き。2026-09-14 にリファラ無しで Places Details Web Service を呼び、Google が `API keys with referer restrictions cannot be used with this API.`（REQUEST_DENIED）を返すことを実測で確認＝制限が効いている
+- **対応**: `.qa-secret-allowlist.txt` に**行単位**で登録。`scripts/security_audit.js` はファイル単位の除外しか持たず、`index.html` を丸ごと除外すると本物の鍵が混入しても検出できなくなるため、`パス::行の部分文字列` の書式を追加した（index.html の別の行に鍵を置くと従来どおり HARD 検出されることを確認）

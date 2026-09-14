@@ -14,7 +14,11 @@
  * 終了コード: HARD 検知があれば 1。
  * --json 指定時: 構造化された findings を stdout に JSON 出力（nightly_qa が Notion 起票に使う）。
  *
- * 誤検知の除外: .qa-secret-allowlist.txt に「パス部分文字列」を1行1件で書くとスキップ。
+ * 誤検知の除外: .qa-secret-allowlist.txt に1行1件で書くとスキップ。
+ *   - 「パス部分文字列」        … そのファイルを全チェックから除外（機密ファイル検査にも効く）
+ *   - 「パス部分文字列::行の部分文字列」 … シークレット文字列スキャンで、その行だけを除外
+ *     （index.html のように巨大な本体ファイルを丸ごと除外すると、将来本物の鍵が混入しても
+ *       検出できなくなるため、意図して公開しているブラウザ用キーは行単位で除外する）
  */
 
 const { execFileSync } = require('child_process');
@@ -39,7 +43,18 @@ const allowlist = (() => {
   if (!fs.existsSync(p)) return [];
   return fs.readFileSync(p, 'utf8').split('\n').map(s => s.trim()).filter(s => s && !s.startsWith('#'));
 })();
-const allowed = file => allowlist.some(a => file.includes(a));
+const fileAllow = allowlist.filter(a => !a.includes('::'));
+const lineAllow = allowlist.filter(a => a.includes('::')).map(a => {
+  const i = a.indexOf('::');
+  return [a.slice(0, i).trim(), a.slice(i + 2).trim()];
+});
+const allowed = file => fileAllow.some(a => file.includes(a));
+// git grep の1行（file:ln:content）が行単位の除外に当たるか
+const allowedLine = line => {
+  const m = line.match(/^([^:]+):\d+:(.*)$/);
+  if (!m) return false;
+  return lineAllow.some(([p, needle]) => p && needle && m[1].includes(p) && m[2].includes(needle));
+};
 
 // ── tracked files ─────────────────────────────────────
 let tracked = [];
@@ -78,7 +93,7 @@ for (const [label, re] of SECRET_PATTERNS) {
   } catch (e) {
     out = (e.stdout || '').toString(); // 無一致なら空
   }
-  const hits = out.split('\n').filter(Boolean).filter(line => !allowed(line.split(':')[0]));
+  const hits = out.split('\n').filter(Boolean).filter(line => !allowed(line.split(':')[0]) && !allowedLine(line));
   if (hits.length) {
     const sample = hits.slice(0, 5).map(l => {
       const [file, ln] = l.split(':');
