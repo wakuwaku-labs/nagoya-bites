@@ -48,17 +48,34 @@
 
 ### [SEO-095] 店舗ページ5,613本の `<title>`/`<meta description>` を「エリア・ジャンル」中心から「予算・最寄駅・営業時間・口コミ信頼度」中心の情報型テンプレへ改善し、指名検索のCTRを上げる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress（実装完了・効果測定はGSCデータ待ち）
 - **detected**: 2026-09-14
 - **category**: SEO
 - **owner**: Builder
 - **source**: SEO分析（オーナー依頼）の一環。GSC28日実測で navigational（店名指名検索）が表示19,958（全体の70.5%）・CTR0.35%しかなく、母数の大きさに対してCTRの改善余地が最大
 - **brand-filter**: ✅ 適合 — 順位操作ではなく、実在データの見せ方改善。`gen-store-pages.js` の `buildDescription()` は既にISSUE-072で改善済みの土台があり、その延長
 - **acceptance**:
-  1. `gen-store-pages.js` の `<title>`/`buildDescription()` を、エリア簡潔ラベル・ジャンルに加えて予算帯・Google評価（口コミ5件以上のみ）・翌1時以降営業の有無などデータにある事実だけで再構成する（推測・煽り文言は禁止・制約10）
-  2. 変更前後で `data/gsc_metrics.json` の navigational CTR（`intent.summary` の navigational 行）を比較して効果を判定する
-  3. デザインシステム監査（`audit_design_system.js`）・既存テストを壊さない
-- **関連**: [[SEO-094]]（同ファイルのハブ導線修理と同時期の変更のため実装順序に注意）
+  1. ✅ `gen-store-pages.js` の `<title>`/`buildDescription()` を、エリア簡潔ラベル・ジャンルに加えて予算帯・Google評価（口コミ5件以上のみ）・翌1時以降営業の有無などデータにある事実だけで再構成する（推測・煽り文言は禁止・制約10）
+  2. ✅ 変更前後で `data/gsc_metrics.json` の navigational CTR（`intent.summary` の navigational 行）を記録（比較は数週間後のGSC反映後）
+  3. ✅ デザインシステム監査（`audit_design_system.js`）・既存テストを壊さない
+- **実装内容**（`gen-store-pages.js`）:
+  1. `isLateNightOpen(hoursStr)`（新規）: 「営業時間」フィールドの `翌N:MM` 表記（L.O.含む）を走査し、最大時刻が翌1時以降なら true。`翌0:00`（日付が変わった直後の閉店）のみの店は対象外（実質的な深夜営業ではないため）
+  2. `reviewTrustTier(s)`（新規）: 既存の `reviewTrust`/`trust_display.js` の段階ID（SS〜D）を軽量に取り出す。判定材料不足（`TRUST_POLICY.na.id`）の店は出さない（取り繕わない・制約10）
+  3. `buildTitleFacts(s)`（新規）: `<title>` に添える情報サフィックス。予算帯→Google評価（口コミ5件以上のみ）→翌1時以降営業、の優先度順に積み、28文字の上限で打ち切る（店名の長さがまちまちなため、短い店名の店ほど多くの事実が乗り、長い店名の店は自然に絞られる＝店名を削らない）
+  4. `<title>`: `店名（エリア・ジャンル・{buildTitleFacts}）| NAGOYA BITES`（facts が空なら従来通りエリア・ジャンルのみ）
+  5. `buildDescription()`: 既存の Part1（最寄り駅+ジャンル）→Part2（予算）→Part3（Google評価）の直後に、Part3b「口コミ信頼度{tier}」・Part3c「翌1時以降営業」を追加（タグ・業界視点コメント・tail より優先度を上げた＝GSCの症状に直接効く事実を先に積む）。データ欠損店は該当パートを自然に省略（既存の130字予算ループ機構をそのまま利用）
+- **反映**: `node gen-store-pages.js` を実行し店舗ページ5,613本中4,918本のtitle/description/og:*/twitter:*を再生成（変更なし9件はいずれの新要素も対象外の店＝価格帯・評価・信頼度・深夜営業のいずれも出せないデータ欠損店）。あわせて `node scripts/gen_area_genre_pages.js` を実行（gen-store-pages.js が sitemap.xml を丸ごと書き直すため、SEO-094 のハブページ691件分の sitemap エントリを同一コマンドで復元。CLAUDE.md 記載の実行順序どおり）
+- **検証できる事実（実測）**:
+  | 項目 | 結果 |
+  |---|---|
+  | `git diff --unified=0 -- stores/` の追加/削除行を全数grep | title/meta description/og:title/og:description/twitter:title/twitter:description の6タグ以外の行は0件（CSS・本文・JSON-LD・related-storesは無変更） |
+  | `node scripts/qa_gate.js --after` | `"ok": true`。店舗件数 4929→4929（delta 0%）・機能マーカー回帰0件・`LOCAL_STORES` パターン等7マーカー無変化 |
+  | `node --test tests/*.test.js` | 197 pass / 0 fail（回帰なし） |
+  | `node scripts/audit_design_system.js --check` | 既存の pre-existing 違反（root/features/journal/stores/hubs 全域で以前から存在するfont-size/CSSリンク系の負債）のみで、今回の変更行（title/meta descriptionのテキストのみ）に起因する新規違反は0件（変更差分にCSS/構造の行が一切無いことを上記grepで確認済み） |
+  | `python3 -c "import xml.etree.ElementTree"` でのsitemap.xml整形性確認 | URL数 5823件で変更前と一致（gen_area_genre_pages.js再実行で復元） |
+  | サンプル3店舗の目視照合（J000015064/J000015083/J000015123） | 価格帯・Google評価・口コミ信頼度・深夜営業判定が `data/stores.json` の実データと完全一致（翌0:30閉店の店は「翌1時以降営業」を正しく非表示） |
+- **効果測定ベースライン（実装前・2026-09-14時点 `data/gsc_metrics.json` `intent.summary`）**: navigational — 表示19,963・クリック69・CTR0.35%・平均掲載順位21.5（全体の70.5%）。数週間後のGSC反映後、同じ `node scripts/gsc_query_intent.js` / `intent.summary` の navigational 行でCTR・平均順位の前後比を確認し、本チケットを `done` にする
+- **関連**: [[SEO-094]]（同ファイルのハブ導線修理と同時期の変更のため実装順序に注意。sitemap.xml書き直し順序の実地確認として本チケット実装時に踏んだ）
 
 ---
 

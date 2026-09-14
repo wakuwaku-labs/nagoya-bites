@@ -376,6 +376,57 @@ function accessSummary(access) {
   return head.length > 24 ? '' : head;
 }
 
+// SEO-095: 営業時間文字列から「翌1時以降営業」かどうかを判定する。
+// GSC28日実測で navigational（店名指名検索）は表示19,958（全体70.5%）に対しCTR0.35%しかなく、
+// 店名を知っている読者への意思決定材料が乏しいことが原因と特定。深夜営業の有無は
+// 「今夜行けるか」を左右する事実のため、L.O.（ラストオーダー）表記も含めて全ての
+// 「翌N:MM」を走査し、最大時刻が翌1時以降なら true とする。
+// 「翌0:00（＝日付が変わった直後に閉店）」だけの店は対象外（実質的な深夜営業とは言えない）。
+function isLateNightOpen(hoursStr) {
+  if (!hoursStr) return false;
+  let maxHour = -1;
+  const re = /翌(\d{1,2}):\d{2}/g;
+  let m;
+  while ((m = re.exec(hoursStr))) {
+    const h = parseInt(m[1], 10);
+    if (Number.isFinite(h) && h > maxHour) maxHour = h;
+  }
+  return maxHour >= 1;
+}
+
+// SEO-095: title/description 用の口コミ信頼度・段階IDだけを取り出す軽量版。
+// フル情報（見出し・内訳等）は renderStorePage 側の rtSlim/rt ロジックが別途持つ。
+// 判定材料不足（TRUST_POLICY.na.id）の店は「取り繕わない」方針により出さない（制約10）。
+function reviewTrustTier(s) {
+  const rtSlim = (s.reviewTrust && s.reviewTrust.t) ? s.reviewTrust : null;
+  if (!rtSlim) return null;
+  if (rtSlim.t === TRUST_POLICY.na.id) return null;
+  return rtSlim.t;
+}
+
+// SEO-095: <title> に添える情報型サフィックス（予算・Google評価・深夜営業）。
+// 優先度順に積み、文字数上限で打ち切る（店名の長さがまちまちなため、短い店名の店ほど
+// 多くの事実が乗り、長い店名の店は自然に絞られる＝店名を削ってまで詰め込まない）。
+function buildTitleFacts(s) {
+  const price   = s['価格帯'] || '';
+  const score   = s['Google評価'] || '';
+  const reviews = parseInt(s['口コミ数'] || '', 10);
+  const hours   = s['営業時間'] || '';
+  const facts = [];
+  if (price) facts.push(`予算${price}`);
+  if (score && Number.isFinite(reviews) && reviews >= 5) facts.push(`Google★${score}`);
+  if (isLateNightOpen(hours)) facts.push('翌1時以降営業');
+
+  const LIMIT = 28;
+  let out = '';
+  for (const f of facts) {
+    const next = out ? `${out}・${f}` : f;
+    if (next.length > LIMIT) break;
+    out = next;
+  }
+  return out;
+}
+
 function buildDescription(s) {
   const point = (s['おすすめポイント'] || '').trim().replace(/[。．]+$/, '');
   const genre = s['ジャンル'] || '';
@@ -384,14 +435,18 @@ function buildDescription(s) {
   const score = s['Google評価'] || '';
   const reviews = parseInt(s['口コミ数'] || '', 10);
   const tags  = (s['タグ'] || '').split(',').map(t => t.trim()).filter(Boolean);
+  const hours = s['営業時間'] || '';
   const parts = [];
 
-  // ── 並び順の根拠（SEO-050 / GSC 2026-08-05）──────────────────────
+  // ── 並び順の根拠（SEO-050 / GSC 2026-08-05、SEO-095 / GSC 2026-09-14）──────
   // 店舗ページは店名の指名検索で 8〜10 位に出るが CTR 0〜1.5%。
   // 旧説明文は「個室経営効率を重視した店舗設計」のような “経営者向けの分析” が
   // 先頭に来ており、店名で検索した消費者が知りたい「場所・予算・評価」が
   // SERP の可視領域（モバイル約120字）から押し出されていた。
   // よって「どこ・いくら・評価」を先に置き、業界視点のコメントは後ろに回す。
+  // SEO-095: GSC28日実測で navigational（店名指名検索）は表示19,958（全体70.5%）に対し
+  // CTR0.35%。店名を知っている読者が最後にためらう「今夜営業しているか／評価は信じてよいか」
+  // を埋めるため、口コミ信頼度・深夜営業の有無を事実ベースで追加する（推測・煽り文言は禁止）。
 
   // Part1: 最寄り駅 + ジャンル（無ければエリア + ジャンル）
   const access = accessSummary(s['アクセス']);
@@ -409,6 +464,15 @@ function buildDescription(s) {
   if (score && Number.isFinite(reviews) && reviews >= 5) {
     parts.push(`Google★${score}（口コミ${reviews}件）`);
   }
+
+  // Part3b（SEO-095）: 口コミ信頼度。既存の trust_display.js が算出した段階（SS〜D）を
+  // そのまま出す（新規のスコアリングは実装しない）。判定材料不足（—）の店は出さない。
+  const trustTier = reviewTrustTier(s);
+  if (trustTier) parts.push(`口コミ信頼度${trustTier}`);
+
+  // Part3c（SEO-095）: 翌1時以降営業。「営業時間」フィールドから機械判定できる場合のみ出す
+  // （欠損店は無理に埋めず自然に省略＝取り繕わない）。
+  if (isLateNightOpen(hours)) parts.push('翌1時以降営業');
 
   // Part4: 有用タグ（最大2件）
   const usefulTags = ['個室', '貸切', '飲み放題', '食べ放題', '女子会', '接待', 'テラス'].filter(t => tags.includes(t));
@@ -492,7 +556,12 @@ function renderStorePage(s, slug, relatedStores) {
   const gmUrl    = `https://www.google.com/maps/search/${encodeURIComponent(name + ' ' + area)}`;
   const pageUrl  = `${BASE_URL}/stores/${slug}.html`;
   // タイトルのエリアは検索結果で切れないよう簡潔ラベルに正規化（ISSUE-072・データは不変）
-  const title    = `${name}（${titleAreaLabel(area)}・${genre}）| NAGOYA BITES`;
+  // SEO-095: エリア・ジャンルに加えて予算・Google評価・深夜営業の有無を事実ベースで添える。
+  // 店名は長さがまちまちのため、事実は文字数上限で打ち切る（buildTitleFacts）＝店名を削らない。
+  const titleFacts = buildTitleFacts(s);
+  const title    = titleFacts
+    ? `${name}（${titleAreaLabel(area)}・${genre}・${titleFacts}）| NAGOYA BITES`
+    : `${name}（${titleAreaLabel(area)}・${genre}）| NAGOYA BITES`;
   const desc     = buildDescription(s);
   const priceRangeSym = mapPriceToSchemaRange(price);
 
