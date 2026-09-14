@@ -80,7 +80,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 @media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
 .store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:var(--fs-sm) !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}
 .store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}
-.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}
+.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}.store-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem;}
 .store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}
 .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
 .store-photo{width:160px;min-width:160px;height:120px;border-radius:4px;overflow:hidden;flex-shrink:0;}
@@ -159,8 +159,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">味噌とんちゃん屋の伏見展開は矢場町・栄ホルモンと共に名古屋のホルモン食文化を市内で広くカバーしている。伏見というビジネス街での展開はサラリーマンのランチ・仕事帰りの需要を意識した立地選定として合理的。</p>
           <div class="store-tags"><span class="store-tag">テラス席</span><span class="store-tag">40〜50名</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001140284.html" onclick="trackEvent('feature_store_click',{store:'伏見ホルモン 名古屋名物味噌とんちゃん屋',feature:'nagoya-yakiniku-guide'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001140284/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'伏見ホルモン 名古屋名物味噌とんちゃん屋',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001140284.html" onclick="trackEvent('feature_store_click',{store:'伏見ホルモン 名古屋名物味噌とんちゃん屋',feature:'nagoya-yakiniku-guide'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001140284/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'伏見ホルモン 名古屋名物味噌とんちゃん屋',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -174,8 +174,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">「前沢牛」という産地ブランドを屋号に据えることは、仕入れの安定性とコストへのコミットメントを対外的に宣言することと同義。岩手産前沢牛の名古屋での安定供給体制が確立されているかを公開情報で確認のうえ掲載した。</p>
           <div class="store-tags"><span class="store-tag">50〜60名</span><span class="store-tag">5000円以上</span><span class="store-tag">焼肉</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000742746.html" onclick="trackEvent('feature_store_click',{store:'前沢牛舎 伏見屋',feature:'nagoya-yakiniku-guide'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ000742746/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'前沢牛舎 伏見屋',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000742746.html" onclick="trackEvent('feature_store_click',{store:'前沢牛舎 伏見屋',feature:'nagoya-yakiniku-guide'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ000742746/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'前沢牛舎 伏見屋',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -189,8 +189,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">「ホルモン×刺し（生食）」の組み合わせは、鮮度管理と仕入れルートの質が直接クオリティに出る業態。名古屋国際センターという競合の少ない立地での高評価は、素材力への信頼が口コミで広がっていることを示す。</p>
           <div class="store-tags"><span class="store-tag">30〜40名</span><span class="store-tag">焼肉</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001276154.html" onclick="trackEvent('feature_store_click',{store:'すだく 名古屋国際センター店',feature:'nagoya-yakiniku-guide'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001276154/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'すだく 名古屋国際センター店',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001276154.html" onclick="trackEvent('feature_store_click',{store:'すだく 名古屋国際センター店',feature:'nagoya-yakiniku-guide'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001276154/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'すだく 名古屋国際センター店',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -204,8 +204,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">南口3分・焼肉4,500円帯、立地競争激しい中で客単価維持できる差別化</p>
           <div class="store-tags"><span class="store-tag">焼肉</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003532772.html" onclick="trackEvent('feature_store_click',{store:'飛騨牛焼肉 牛ざんまい 金山店',feature:'nagoya-yakiniku-guide'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003532772/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'飛騨牛焼肉 牛ざんまい 金山店',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003532772.html" onclick="trackEvent('feature_store_click',{store:'飛騨牛焼肉 牛ざんまい 金山店',feature:'nagoya-yakiniku-guide'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003532772/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'飛騨牛焼肉 牛ざんまい 金山店',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -219,8 +219,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">ふたごは大阪発の人気焼肉チェーンで名古屋への展開は全国規模での品質管理体制があることを示す。4.7評価での安定はチェーンとしての仕入れスケールメリットが地元独立店にも劣らない品質を実現していることの証。</p>
           <div class="store-tags"><span class="store-tag">5000円以上</span><span class="store-tag">焼肉</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001225500.html" onclick="trackEvent('feature_store_click',{store:'大阪焼肉 ホルモン ふたご 栄3丁目店',feature:'nagoya-yakiniku-guide'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001225500/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'大阪焼肉 ホルモン ふたご 栄3丁目店',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001225500.html" onclick="trackEvent('feature_store_click',{store:'大阪焼肉 ホルモン ふたご 栄3丁目店',feature:'nagoya-yakiniku-guide'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001225500/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'大阪焼肉 ホルモン ふたご 栄3丁目店',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -234,8 +234,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">NEWOPENながら満点評価を獲得しているのは、開業時のコンセプト設計と仕入れルートの完成度が高いことを示す。「番長厳選の肉」という主観的な差別化をオープン直後から実現できているのは、業界知見に裏打ちされた仕入れ力があ…</p>
           <div class="store-tags"><span class="store-tag">20〜30名</span><span class="store-tag">5000円以上</span><span class="store-tag">焼肉</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004537044.html" onclick="trackEvent('feature_store_click',{store:'焼肉酒場 番長',feature:'nagoya-yakiniku-guide'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004537044/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'焼肉酒場 番長',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004537044.html" onclick="trackEvent('feature_store_click',{store:'焼肉酒場 番長',feature:'nagoya-yakiniku-guide'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ004537044/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'焼肉酒場 番長',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -249,8 +249,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">錦の繁華街のど真ん中で高品質和牛を提供するポジションは、テナント料が最も高い立地での挑戦を意味する。食べログ4.9をそこで維持しているのは、客単価の高い層が固定客になっていることを示しており、立地戦略と商品力の整合性が…</p>
           <div class="store-tags"><span class="store-tag">30〜40名</span><span class="store-tag">5000円以上</span><span class="store-tag">焼肉</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003828168.html" onclick="trackEvent('feature_store_click',{store:'和牛やきにく 満開',feature:'nagoya-yakiniku-guide'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003828168/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'和牛やきにく 満開',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003828168.html" onclick="trackEvent('feature_store_click',{store:'和牛やきにく 満開',feature:'nagoya-yakiniku-guide'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003828168/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'和牛やきにく 満開',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -264,8 +264,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">A5カルビと生タンがうまい にんにくフェア開催中</p>
           <div class="store-tags"><span class="store-tag">40〜50名</span><span class="store-tag">5000円以上</span><span class="store-tag">焼肉</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003582200.html" onclick="trackEvent('feature_store_click',{store:'肉のよいち 新栄葵店',feature:'nagoya-yakiniku-guide'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003582200/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'肉のよいち 新栄葵店',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003582200.html" onclick="trackEvent('feature_store_click',{store:'肉のよいち 新栄葵店',feature:'nagoya-yakiniku-guide'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003582200/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'肉のよいち 新栄葵店',feature:'nagoya-yakiniku-guide',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>

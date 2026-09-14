@@ -155,11 +155,6 @@
       "scene": { "keyword": "予約困難|争奪|即完売|プレミア|人気店|行列", "gateKeyword": true },
       "fixed": []
     },
-    "nagoya-reservation-difficult": {
-      "format": "store-card", "container": "store-list", "slots": 10, "coreCount": 6,
-      "scene": { "keyword": "予約困難|人気店|行列|攻略|争奪", "gateKeyword": true },
-      "fixed": []
-    },
     "industry-insiders-pick": {
       "format": "store-card", "container": "store-list", "slots": 6, "coreCount": 4,
       "scene": { "genre": "居酒屋|ダイニング|フレンチ|イタリアン|懐石|和食|割烹", "keyword": "", "gateKeyword": false },
@@ -170,34 +165,14 @@
       "scene": { "genre": "居酒屋|ダイニング|イタリアン|中華|焼肉|バー", "keyword": "", "gateKeyword": false },
       "fixed": []
     },
-    "nagoya-dining-professionals": {
-      "format": "store-card", "container": "store-list", "slots": 10, "coreCount": 6,
-      "scene": { "genre": "居酒屋|焼肉|和食|割烹|フレンチ|鮨|寿司", "area": "栄|金山", "keyword": "", "gateArea": true },
-      "fixed": []
-    },
-    "nagoya-industry-pick-izakaya": {
-      "format": "store-card", "container": "store-list", "slots": 10, "coreCount": 6,
-      "scene": { "genre": "居酒屋", "keyword": "", "gateKeyword": false },
-      "fixed": []
-    },
     "meieki-hitori-nomi": {
       "format": "store-card", "container": "store-list", "slots": 6, "coreCount": 3,
       "scene": { "genre": "居酒屋|バー|立ち飲み", "area": "名駅|名古屋駅|中村区", "keyword": "一人|ひとり|カウンター|ふらっと", "gateKeyword": false, "gateArea": true },
       "fixed": []
     },
-    "nagoya-kaoawase-washoku": {
-      "format": "store-card", "container": "store-list", "slots": 7, "coreCount": 4,
-      "scene": { "genre": "和食|懐石|日本料理|うなぎ|割烹", "keyword": "顔合わせ|結納|ランチ|個室|会席", "gateKeyword": false },
-      "fixed": []
-    },
     "nagoya-settai-lunch": {
       "format": "shop-card", "container": "shop-grid", "slots": 9, "coreCount": 5,
       "scene": { "genre": "和食|割烹|日本料理|懐石", "keyword": "ランチ|接待|会食|個室", "gateKeyword": false },
-      "fixed": []
-    },
-    "nagoya-settai-secret": {
-      "format": "store-card", "container": "store-list", "slots": 8, "coreCount": 5,
-      "scene": { "genre": "割烹|日本料理|懐石|フレンチ|寿司|鮨|鉄板|うなぎ|中華", "keyword": "接待|会食|個室|大人|落ち着|上質", "gateKeyword": false, "minPrice": 5000 },
       "fixed": []
     },
     "osu-food-walk": {

@@ -18,9 +18,9 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://nagoya-bites.com/features/nagoya-kaoawase-washoku.html">
 <meta property="og:site_name" content="NAGOYA BITES">
-<meta property="og:image" content="https://nagoya-bites.com/assets/feature-figures/nagoya-kaoawase-washoku.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image" content="https://lh3.googleusercontent.com/place-photos/AG9NLjBJ-zO5fkiZ1NU7HPBuABDCx2P5_4zwhkgE5CHsai9SFb5FSl3kKanvKTkUQzdB3ZVjYcv7hTDtb4FQO7LtCZKQB_oJLkGpSeNeV5NUPZLMhV1V_JLF3hXIqCdxoVYS7XRXh-VGacNa0BCzIdo=s1600-w1108">
+<meta property="og:image:width" content="1108">
+<meta property="og:image:height" content="1600">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,15 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 {"@context":"https://schema.org","@type":"Article","headline":"名古屋 顔合わせ・結納 個室 和食ランチ おすすめ7選【2026年版】","description":"両家顔合わせ・結納の昼食会に使える名古屋の個室和食を、現役飲食人が厳選7軒。Google評価4.0以上の実在店のみ。","author":{"@type":"Organization","name":"NAGOYA BITES"},"publisher":{"@type":"Organization","name":"NAGOYA BITES","url":"https://nagoya-bites.com/"},"url":"https://nagoya-bites.com/features/nagoya-kaoawase-washoku.html","datePublished":"2026-06-04","dateModified":"2026-06-04"}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ItemList","name":"名古屋 顔合わせ・結納 個室和食ランチ おすすめ7選","numberOfItems":7,"itemListElement":[{"@type":"ListItem","position":1,"name":"手羽先むつみ 住吉店","url":"https://nagoya-bites.com/stores/J004068058.html"},{"@type":"ListItem","position":2,"name":"もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店","url":"https://nagoya-bites.com/stores/J003411794.html"},{"@type":"ListItem","position":3,"name":"九州料理 椿 金山店","url":"https://nagoya-bites.com/stores/J001187588.html"},{"@type":"ListItem","position":4,"name":"ふじさん名駅店 昼だけうなぎ屋 名駅店","url":"https://nagoya-bites.com/stores/J004090812.html"},{"@type":"ListItem","position":5,"name":"もつ鍋と痛風鍋 個室居酒屋 くろさわ 金山駅店","url":"https://nagoya-bites.com/stores/J003451211.html"},{"@type":"ListItem","position":6,"name":"うなぎ四代目菊川 グローバルゲート店","url":"https://nagoya-bites.com/stores/J003737152.html"},{"@type":"ListItem","position":7,"name":"しら河 名駅店","url":"https://nagoya-bites.com/stores/J001189956.html"}]}
+{"@context":"https://schema.org","@type":"ItemList","name":"名古屋 顔合わせ・結納 個室和食ランチ おすすめ7選","numberOfItems":7,"itemListElement":[
+{"@type":"ListItem","position":1,"name":"旬菜家 楽"},
+{"@type":"ListItem","position":2,"name":"日本料理 旬彩"},
+{"@type":"ListItem","position":3,"name":"うなぎのしろむら 泉店"},
+{"@type":"ListItem","position":4,"name":"旬彩倶楽部 鱗"},
+{"@type":"ListItem","position":5,"name":"鮨赤酢かぶと"},
+{"@type":"ListItem","position":6,"name":"鍋と和食 個室ダイニング ENISHI 金山店"},
+{"@type":"ListItem","position":7,"name":"全室水槽個室 柳橋 AONO（アオノ）名古屋駅店"}
+]}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -62,6 +70,10 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .store-num{font-family:var(--font-display);font-weight:400;font-size:2.2rem;color:var(--gold);opacity:.6;line-height:1;min-width:2rem;text-align:center;}
 .store-info{flex:1;}
 .store-name{font-family:var(--font-body);font-weight:600;font-size:1rem;color:var(--white);margin:0 0 .4rem;}
+.store-badge{display:inline-block;font-family:var(--font-body);font-weight:700;font-size:var(--fs-2xs);letter-spacing:0;color:#fff;background:var(--gold);padding:.1rem .4rem;border-radius:2px;margin-left:.4rem;vertical-align:middle;}
+.store-photo{width:160px;min-width:160px;height:120px;border-radius:4px;overflow:hidden;flex-shrink:0;}
+.store-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+@media(max-width:640px){.store-photo{width:100%;height:160px;}}
 .store-meta{display:flex;gap:.6rem;flex-wrap:wrap;font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-bottom:.6rem;}
 .store-meta .score{color:#f5a623;font-weight:500;}
 .store-desc{font-size:var(--fs-md);line-height:1.8;color:var(--muted);margin-bottom:.8rem;}
@@ -92,9 +104,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 @media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
 .store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:var(--fs-sm) !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;}
 .store-link:hover{background:rgba(122,92,16,.08);transform:translateY(-1px);}
-.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}
-/*ROSTER_BADGE_CSS*/
-</style>
+.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}</style>
 </head>
 <body>
 <!-- NB-CHROME:HEADER:START -->
@@ -129,7 +139,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 
 <article>
   <div class="art-hero-image">
-  <img src="../assets/feature-figures/nagoya-kaoawase-washoku.svg" alt="名古屋 顔合わせ・結納 個室和食ランチ" loading="eager" fetchpriority="high">
+  <img src="https://lh3.googleusercontent.com/place-photos/AG9NLjBJ-zO5fkiZ1NU7HPBuABDCx2P5_4zwhkgE5CHsai9SFb5FSl3kKanvKTkUQzdB3ZVjYcv7hTDtb4FQO7LtCZKQB_oJLkGpSeNeV5NUPZLMhV1V_JLF3hXIqCdxoVYS7XRXh-VGacNa0BCzIdo=s1600-w1108" alt="日本料理 旬彩 — 名古屋 顔合わせ・結納 個室和食ランチ" loading="eager" fetchpriority="high">
 </div>
 <div class="art-hero">
     <p class="art-eyebrow">Feature — シーン別特集</p>
@@ -155,142 +165,146 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 
     <p class="art-intro">顔合わせの食事会で大切なのは、奇をてらった料理ではなく「両家が落ち着いて話せる時間」です。名古屋は伏見〜栄に懐石・割烹の名店が集まり、名駅・金山には遠方の親御さんが集まりやすい個室和食があります。価格帯も雰囲気も異なりますが、どの店も「個室で、和食で、昼から品よく」というこのシーンの条件を満たす実在店だけを選びました。各店とも顔合わせでの利用は事前予約と「顔合わせで使う」旨の伝達を推奨します。</p>
 
-    <!-- SEO-042:TOP-CTA:START -->
-<aside class="topcta" aria-label="この特集の注目店">
-  <div class="topcta-head">EDITORS' PICK</div>
-  <div class="topcta-sub">本文を読む前に動きたい方へ。編集部が上位に挙げた3軒の詳細と予約はこちらから。</div>
-  <ul class="topcta-list">
-    <li class="topcta-item">
-      <span class="topcta-name">手羽先むつみ 住吉店</span>
-      <span class="topcta-actions">
-        <a class="store-link" href="../stores/J004068058.html">店舗詳細</a>
-        <a class="store-link" href="https://www.hotpepper.jp/strJ004068058/" target="_blank" rel="noopener">今すぐ予約</a>
-      </span>
-    </li>
-    <li class="topcta-item">
-      <span class="topcta-name">もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店</span>
-      <span class="topcta-actions">
-        <a class="store-link" href="../stores/J003411794.html">店舗詳細</a>
-        <a class="store-link" href="https://www.hotpepper.jp/strJ003411794/" target="_blank" rel="noopener">今すぐ予約</a>
-      </span>
-    </li>
-    <li class="topcta-item">
-      <span class="topcta-name">九州料理 椿 金山店</span>
-      <span class="topcta-actions">
-        <a class="store-link" href="../stores/J001187588.html">店舗詳細</a>
-        <a class="store-link" href="https://www.hotpepper.jp/strJ001187588/" target="_blank" rel="noopener">今すぐ予約</a>
-      </span>
-    </li>
-  </ul>
-</aside>
-<!-- SEO-042:TOP-CTA:END -->
-
-<h2 class="section-label">01 — 厳選7軒</h2>
+    <h2 class="section-label">01 — 厳選7軒</h2>
     <div class="store-list">
+
       <div class="store-card">
-        <div class="store-num">01</div>
-        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/43/78/P047104378/P047104378.jpg" alt="手羽先むつみ 住吉店" loading="lazy" width="160" height="120" decoding="async"></div>
+        <div class="store-num">1</div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J004068058.html" onclick="trackEvent('feature_store_click',{store:'手羽先むつみ 住吉店',feature:'nagoya-kaoawase-washoku'})">手羽先むつみ 住吉店</a></h3>
-          <div class="store-meta"><span>栄</span><span>和食</span><span class="score">★ 4.9</span><span>2001～3000円</span></div>
-          <p class="store-desc">名古屋名物の手羽先は各店が独自のタレで差別化を図るが、あっさり系タレと掘りごたつの居心地が局地的な固定客を生んでいる。チェーン化せず住吉という単立地に絞った判断を評価して掲載した。</p>
-          <div class="store-tags"><span class="store-tag">10〜20名</span><span class="store-tag">5000円以上</span><span class="store-tag">和食</span></div>
-          <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004068058.html" onclick="trackEvent('feature_store_click',{store:'手羽先むつみ 住吉店',feature:'nagoya-kaoawase-washoku'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004068058/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'手羽先むつみ 住吉店',feature:'nagoya-kaoawase-washoku',target:'hotpepper'})">予約はこちら →</a>
+          <h3 class="store-name">旬菜家 楽<span class="store-badge">編集部推薦</span></h3>
+          <div class="store-meta">
+            <span class="score">★ 4.4</span>
+            <span>東区</span>
+            <span>懐石・会席／日本料理</span>
           </div>
+          <div class="store-tags">
+            <span class="store-tag">ミシュラン掲載</span>
+            <span class="store-tag">懐石</span>
+            <span class="store-tag">特別な日</span>
+          </div>
+          <p class="store-desc">ミシュランガイドにも掲載される実力派の日本料理店。四季の旬を惜しみなく使った繊細な懐石と、落ち着いた和の空間が、格式を求める顔合わせ・結納に応える。「親御さんに名古屋の本物の和食を」という場面で間違いのない一軒。人気店ゆえ昼のコース・個室は早めの予約が確実だ。</p>
+          <a class="store-link" href="https://tabelog.com/aichi/A2301/A230104/23000109/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store_name:'旬菜家 楽'})">食べログで詳細・予約を確認</a>
         </div>
       </div>
 
       <div class="store-card">
-        <div class="store-num">02</div>
-        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/80/94/P048518094/P048518094_480.jpg" alt="もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店" loading="lazy" width="160" height="120" decoding="async"></div>
+        <div class="store-num">2</div>
+        <div class="store-photo"><img src="https://lh3.googleusercontent.com/place-photos/AG9NLjBJ-zO5fkiZ1NU7HPBuABDCx2P5_4zwhkgE5CHsai9SFb5FSl3kKanvKTkUQzdB3ZVjYcv7hTDtb4FQO7LtCZKQB_oJLkGpSeNeV5NUPZLMhV1V_JLF3hXIqCdxoVYS7XRXh-VGacNa0BCzIdo=s1600-w1108" alt="日本料理 旬彩" loading="lazy" width="160" height="120"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003411794.html" onclick="trackEvent('feature_store_click',{store:'もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店',feature:'nagoya-kaoawase-washoku'})">もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店</a></h3>
-          <div class="store-meta"><span>名古屋駅</span><span>和食</span><span class="score">★ 4.3</span><span>3001～4000円</span></div>
-          <p class="store-desc">和食とお酒が楽しめる人気店。落ち着いた雰囲気が魅力</p>
-          <div class="store-tags"><span class="store-tag">100名以上</span><span class="store-tag">3000〜5000円</span><span class="store-tag">個室</span></div>
-          <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003411794.html" onclick="trackEvent('feature_store_click',{store:'もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店',feature:'nagoya-kaoawase-washoku'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003411794/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店',feature:'nagoya-kaoawase-washoku',target:'hotpepper'})">予約はこちら →</a>
+          <h3 class="store-name">日本料理 旬彩<span class="store-badge">編集部推薦</span></h3>
+          <div class="store-meta">
+            <span class="score">★ 4.5</span>
+            <span>中区・伏見</span>
+            <span>日本料理／懐石・会席</span>
           </div>
+          <div class="store-tags">
+            <span class="store-tag">予約困難</span>
+            <span class="store-tag">少人数</span>
+            <span class="store-tag">大将と会話</span>
+          </div>
+          <p class="store-desc">季節感あふれる八寸と、丁寧にひいた出汁が光る隠れ家的な日本料理店。カウンター中心の構成のため、両家4〜6名程度の少人数顔合わせや、結婚の挨拶を兼ねた特別な会食に向く。大将との会話も場を和ませる。大人数や床の間付き個室を要する正式な結納には、席の形を事前に必ず確認したい。予約困難店のため日程は余裕をもって。</p>
+          <a class="store-link" href="https://tabelog.com/aichi/A2301/A230102/23000003/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store_name:'日本料理 旬彩'})">食べログで詳細・予約を確認</a>
         </div>
       </div>
 
       <div class="store-card">
-        <div class="store-num">03</div>
-        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/68/75/P048866875/P048866875_480.jpg" alt="九州料理 椿 金山店" loading="lazy" width="160" height="120" decoding="async"></div>
+        <div class="store-num">3</div>
+        <div class="store-photo"><img src="https://lh3.googleusercontent.com/place-photos/AG9NLjA46WtfV2NEQaYSnPN12EWV9gyY_omQSxUfk_4uGOlidLud_NrzV96iWTu2TIgPcE0-0ROets9V-xgnUH6iM-P5TwzopS55zrgcz1hEqORvEcVKLkQaYTsjlwBtfSX6eouzYgBH4HFMvjoKAyY=s1600-w1200" alt="うなぎのしろむら 泉店" loading="lazy" width="160" height="120"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001187588.html" onclick="trackEvent('feature_store_click',{store:'九州料理 椿 金山店',feature:'nagoya-kaoawase-washoku'})">九州料理 椿 金山店</a></h3>
-          <div class="store-meta"><span>金山</span><span>和食</span><span class="score">★ 4.3</span><span>4001～5000円</span></div>
-          <p class="store-desc">金山の人気No.1のもつ鍋 個室 半個室もご用意♪</p>
-          <div class="store-tags"><span class="store-tag">半個室</span><span class="store-tag">50〜60名</span><span class="store-tag">3000〜5000円</span></div>
-          <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001187588.html" onclick="trackEvent('feature_store_click',{store:'九州料理 椿 金山店',feature:'nagoya-kaoawase-washoku'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001187588/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'九州料理 椿 金山店',feature:'nagoya-kaoawase-washoku',target:'hotpepper'})">予約はこちら →</a>
+          <h3 class="store-name">うなぎのしろむら 泉店<span class="store-badge">編集部推薦</span></h3>
+          <div class="store-meta">
+            <span class="score">★ 4.3</span>
+            <span>東区・久屋大通</span>
+            <span>うなぎ</span>
           </div>
+          <div class="store-tags">
+            <span class="store-tag">名古屋めし</span>
+            <span class="store-tag">ゲスト招待</span>
+            <span class="store-tag">ランチ人気</span>
+          </div>
+          <p class="store-desc">ひつまぶし発祥の地らしく、活きの良い鰻を職人が丁寧に焼き上げる一軒。店側も「国内外のゲストを招く際にも喜ばれる」と語る通り、遠方から来る親御さんに名古屋名物でもてなしたい顔合わせに好適だ。鰻は縁起物として祝いの席にも収まりがよい。久屋大通駅から徒歩5分。ランチが人気のため、顔合わせの席数と個室・座敷の可否は予約時に確認を。</p>
+          <a class="store-link" href="https://tabelog.com/aichi/A2301/A230103/23067853/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store_name:'うなぎのしろむら 泉店'})">食べログで詳細・予約を確認</a>
         </div>
       </div>
 
       <div class="store-card">
-        <div class="store-num">04</div>
-        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/51/43/P050345143/P050345143.jpg" alt="ふじさん名駅店 昼だけうなぎ屋 名駅店" loading="lazy" width="160" height="120" decoding="async"></div>
+        <div class="store-num">4</div>
+        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/25/77/P020872577/P020872577.jpg" alt="旬彩倶楽部 鱗" loading="lazy" width="160" height="120"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J004090812.html" onclick="trackEvent('feature_store_click',{store:'ふじさん名駅店 昼だけうなぎ屋 名駅店',feature:'nagoya-kaoawase-washoku'})">ふじさん名駅店 昼だけうなぎ屋 名駅店</a></h3>
-          <div class="store-meta"><span>名古屋（名古屋駅/西区/中村区）</span><span>和食</span><span class="score">★ 4.5</span><span>5001～7000円</span></div>
-          <p class="store-desc">近鉄名古屋駅正面3分、5,500円でランチ営業、近鉄利用者の信頼系店舗</p>
-          <div class="store-tags"><span class="store-tag">和食</span><span class="store-tag">5000円以上</span></div>
-          <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004090812.html" onclick="trackEvent('feature_store_click',{store:'ふじさん名駅店 昼だけうなぎ屋 名駅店',feature:'nagoya-kaoawase-washoku'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004090812/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'ふじさん名駅店 昼だけうなぎ屋 名駅店',feature:'nagoya-kaoawase-washoku',target:'hotpepper'})">予約はこちら →</a>
+          <h3 class="store-name">旬彩倶楽部 鱗</h3>
+          <div class="store-meta">
+            <span class="score">★ 4.4</span>
+            <span>栄／伏見</span>
+            <span>和食</span>
           </div>
+          <div class="store-tags">
+            <span class="store-tag">個室</span>
+            <span class="store-tag">栄4分・伏見5分</span>
+            <span class="store-tag">会食向き</span>
+          </div>
+          <p class="store-desc">栄駅徒歩4分・伏見駅徒歩5分の二線使いで、両家どちらの最寄りからもアクセスしやすい個室和食。8,000円台のコース帯で、落ち着いた個室仕様が会食・顔合わせに収まる。常連がつきやすい安定した料理で、「肩肘張りすぎず、しかし品よく」という顔合わせの塩梅に合う。アクセスの良さは遠方ゲストにも親切だ。</p>
+          <a class="store-link" href="https://tabelog.com/aichi/A2301/A230103/23086739/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store_name:'旬彩倶楽部 鱗'})">食べログで詳細・予約を確認</a>
         </div>
       </div>
 
       <div class="store-card">
-        <div class="store-num">05</div>
-        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/06/49/P048910649/P048910649.jpg" alt="もつ鍋と痛風鍋 個室居酒屋 くろさわ 金山駅店" loading="lazy" width="160" height="120" decoding="async"></div>
+        <div class="store-num">5</div>
+        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/36/50/P038153650/P038153650.jpg" alt="鮨赤酢かぶと" loading="lazy" width="160" height="120"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003451211.html" onclick="trackEvent('feature_store_click',{store:'もつ鍋と痛風鍋 個室居酒屋 くろさわ 金山駅店',feature:'nagoya-kaoawase-washoku'})">もつ鍋と痛風鍋 個室居酒屋 くろさわ 金山駅店</a><span class="store-new">今月の新顔</span></h3>
-          <div class="store-meta"><span>金山</span><span>和食</span><span class="score">★ 4.3</span></div>
-          <p class="store-desc">厳選したブランド牛タン 牛タン刺しなど贅沢逸品</p>
-          <div class="store-tags"><span class="store-tag">50〜60名</span><span class="store-tag">3000〜5000円</span><span class="store-tag">個室</span></div>
-          <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003451211.html" onclick="trackEvent('feature_store_click',{store:'もつ鍋と痛風鍋 個室居酒屋 くろさわ 金山駅店',feature:'nagoya-kaoawase-washoku'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003451211/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'もつ鍋と痛風鍋 個室居酒屋 くろさわ 金山駅店',feature:'nagoya-kaoawase-washoku',target:'hotpepper'})">予約はこちら →</a>
+          <h3 class="store-name">鮨赤酢かぶと</h3>
+          <div class="store-meta">
+            <span class="score">★ 4.2</span>
+            <span>名駅</span>
+            <span>鮨</span>
           </div>
+          <div class="store-tags">
+            <span class="store-tag">個室</span>
+            <span class="store-tag">名駅徒歩5分</span>
+            <span class="store-tag">鮨</span>
+          </div>
+          <p class="store-desc">名古屋駅から徒歩5分、国際センター駅からは徒歩3分という集合しやすい立地の鮨店。赤酢のシャリで握る一万円台の和食コースで、個室対応のため接待でも顔合わせでも常連客がつく。寿司を主役にした顔合わせは華やかで、遠方の親御さんを名駅で迎えてそのまま個室へ、という動線が組みやすい。にぎりの提供形式・個室確約は予約時に相談を。</p>
+          <a class="store-link" href="https://tabelog.com/aichi/A2301/A230101/23077677/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store_name:'鮨赤酢かぶと'})">食べログで詳細・予約を確認</a>
         </div>
       </div>
 
       <div class="store-card">
-        <div class="store-num">06</div>
-        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/73/47/P047527347/P047527347.jpg" alt="うなぎ四代目菊川 グローバルゲート店" loading="lazy" width="160" height="120" decoding="async"></div>
+        <div class="store-num">6</div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003737152.html" onclick="trackEvent('feature_store_click',{store:'うなぎ四代目菊川 グローバルゲート店',feature:'nagoya-kaoawase-washoku'})">うなぎ四代目菊川 グローバルゲート店</a><span class="store-new">今月の新顔</span></h3>
-          <div class="store-meta"><span>名古屋（名古屋駅/西区/中村区）</span><span>和食</span><span class="score">★ 4.3</span><span>4001～5000円</span></div>
-          <p class="store-desc">ささしまライブ駅徒歩4分、ランチ限定で割安感ある新興エリア和食</p>
-          <div class="store-tags"><span class="store-tag">和食</span><span class="store-tag">3000〜5000円</span></div>
-          <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003737152.html" onclick="trackEvent('feature_store_click',{store:'うなぎ四代目菊川 グローバルゲート店',feature:'nagoya-kaoawase-washoku'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003737152/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'うなぎ四代目菊川 グローバルゲート店',feature:'nagoya-kaoawase-washoku',target:'hotpepper'})">予約はこちら →</a>
+          <h3 class="store-name">鍋と和食 個室ダイニング ENISHI 金山店</h3>
+          <div class="store-meta">
+            <span class="score">★ 4.4</span>
+            <span>金山</span>
+            <span>和食</span>
           </div>
+          <div class="store-tags">
+            <span class="store-tag">個室</span>
+            <span class="store-tag">金山駅徒歩1分</span>
+            <span class="store-tag">家族会食</span>
+          </div>
+          <p class="store-desc">金山駅北口から徒歩1分、乗り換えの要衝で両家が集まりやすい個室和食。厳選した和の食材を個室席で楽しめ、3,000〜5,000円台のコースから組めるため、肩の力を抜いた「食事会スタイル」の顔合わせに向く。format張った正式な結納より、まずは両家で打ち解けたいカジュアルな顔合わせに使いやすい一軒。アクセス最優先の家族会食にも。</p>
+          <a class="store-link" href="https://tabelog.com/aichi/A2301/A230106/23078247/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store_name:'鍋と和食 個室ダイニング ENISHI 金山店'})">食べログで詳細・予約を確認</a>
         </div>
       </div>
 
       <div class="store-card">
-        <div class="store-num">07</div>
-        <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/40/93/P038044093/P038044093.jpg" alt="しら河 名駅店" loading="lazy" width="160" height="120" decoding="async"></div>
+        <div class="store-num">7</div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001189956.html" onclick="trackEvent('feature_store_click',{store:'しら河 名駅店',feature:'nagoya-kaoawase-washoku'})">しら河 名駅店</a><span class="store-new">今月の新顔</span></h3>
-          <div class="store-meta"><span>名古屋（名古屋駅/西区/中村区）</span><span>和食</span><span class="score">★ 4.4</span><span>2001～3000円</span></div>
-          <p class="store-desc">駅直結でアクセス最強、和食ランチは名古屋駅圏の需要マジョリティ</p>
-          <div class="store-tags"><span class="store-tag">和食</span><span class="store-tag">2000〜3000円</span></div>
-          <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001189956.html" onclick="trackEvent('feature_store_click',{store:'しら河 名駅店',feature:'nagoya-kaoawase-washoku'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001189956/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'しら河 名駅店',feature:'nagoya-kaoawase-washoku',target:'hotpepper'})">予約はこちら →</a>
+          <h3 class="store-name">全室水槽個室 柳橋 AONO（アオノ）名古屋駅店</h3>
+          <div class="store-meta">
+            <span class="score">★ 4.0</span>
+            <span>名駅</span>
+            <span>和食（しゃぶしゃぶ）</span>
           </div>
+          <div class="store-tags">
+            <span class="store-tag">全室個室</span>
+            <span class="store-tag">名駅徒歩5分</span>
+            <span class="store-tag">10〜20名</span>
+          </div>
+          <p class="store-desc">名駅徒歩5分、全室個室が売りの和食店。しゃぶしゃぶを個室で囲めるため、両家の人数が読みにくいときや、年配の親御さんが多い席でも周囲を気にせず過ごせる。鍋を一緒につつく時間は自然と会話を生み、初対面の硬さをほどく効果がある。名駅集合でアクセスを最優先したい顔合わせ・食事会の現実解。コース内容と個室サイズは予約時に確認を。</p>
+          <a class="store-link" href="https://tabelog.com/aichi/A2301/A230101/23092140/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store_name:'全室水槽個室 柳橋 AONO（アオノ）名古屋駅店'})">食べログで詳細・予約を確認</a>
         </div>
       </div>
+
     </div><!-- /store-list -->
 
     <div class="tips-box">

@@ -6,13 +6,13 @@
 
 ---
 
-### [ISSUE-125] 特集ロスターの月次反映を「月初1〜3日の固定日ゲート」から「自己修復＋生存監視」に変更（ISSUE-124の再発防止）
+### [ISSUE-127] 特集ロスターの月次反映を「月初1〜3日の固定日ゲート」から「自己修復＋生存監視」に変更（ISSUE-126の再発防止）
 
 - **priority**: P1 → **status**: done
-- **detected**: 2026-09-15（[[ISSUE-124]] の調査中に発見。オーナーからの追加依頼「しっかり自動更新されるように、今後の設定としてやってほしい」）
+- **detected**: 2026-09-15（[[ISSUE-126]] の調査中に発見。オーナーからの追加依頼「しっかり自動更新されるように、今後の設定としてやってほしい」）
 - **category**: ops / reliability
 - **owner**: Builder
-- **source**: [[ISSUE-124]] の原因調査で、`refresh_feature_rosters.js` が実際には2026-08・2026-09とも一度も反映できていなかったことが判明した（設定は月次自動化のはずが、実質2026-07で止まっていた）
+- **source**: [[ISSUE-126]] の原因調査で、`refresh_feature_rosters.js` が実際には2026-08・2026-09とも一度も反映できていなかったことが判明した（設定は月次自動化のはずが、実質2026-07で止まっていた）
 - **brand-filter**: ✅ 適合 — CLAUDE.md「無人自動化の監視を設計するときの原則（ISSUE-084の教訓）」をそのまま適用。新規の広告・収益化要素は無し
 - **検証できる事実（制約10）**:
 
@@ -31,13 +31,13 @@
 - **QAゲート**: `node scripts/refresh_feature_rosters.js --if-stale` を2回連続実行し、1回目で反映・2回目でスキップすることを確認 ✅ / `--check`/`--dry-run` では心拍ファイルを書かないことを確認 ✅ / `node scripts/check_feature_roster_health.js` が健全時exit0・心拍を76日前に偽装した時exit1になることを確認 ✅ / `npm test` 197件全通過 ✅ / `python3 -c "import yaml"` で両ワークフローYAML構文OK ✅ / `data/feature_roster_health.json` が `.gitignore` 対象でないことを確認 ✅
 - **意図的にやらなかったこと**: 「他都道府県マッチ監査」ステップ自体の間欠的な失敗原因（[[ISSUE-103]]再発防止用の厳格ゲート）には手を入れていない。今回の対策はその失敗が今後も起きうる前提で、失敗してもロスター反映が丸ごと欠落しない設計にすることに絞った
 - **files**: `scripts/refresh_feature_rosters.js`, `.github/workflows/build.yml`, `scripts/check_feature_roster_health.js`（新規）, `.github/workflows/feature-roster-watchdog.yml`（新規）, `data/feature_roster_health.json`（新規・心拍）, `CLAUDE.md`
-- **関連**: [[ISSUE-124]]（本件の発端）/ ISSUE-084（無人自動化監視の原則・journal-watchdog/trending-scout-watchdog/feedback-watchdogと同型）
+- **関連**: [[ISSUE-126]]（本件の発端）/ ISSUE-084（無人自動化監視の原則・journal-watchdog/trending-scout-watchdog/feedback-watchdogと同型）
 
 ---
 
-### [ISSUE-124] 特集69本中32本がジャンル/エリアと無関係な店で固定化していた（月次ローテーション対象を19→51特集に拡大し、誤ジャンル掲載も同時に是正）
+### [ISSUE-126] 特集69本中27本がジャンル/エリアと無関係な店で固定化していた（月次ローテーション対象を19→46特集に拡大し、誤ジャンル掲載も同時に是正）
 
-- **priority**: P1 → **status**: done（単一コンテナの32特集は対応済み。複数セクション5特集・別テンプレ7特集は未対応・下記フォローアップ）
+- **priority**: P1 → **status**: done（単一コンテナの27特集は対応済み。複数セクション5特集・別テンプレ7特集・下記5特集は未対応・下記フォローアップ）
 - **detected**: 2026-09-15（オーナー報告「特集ページの中で変わってない店舗がかなり見受けられる」）
 - **category**: content-freshness / data-quality
 - **owner**: Builder
@@ -51,18 +51,94 @@
   | 対象外だった特集の掲載店は、2026-05 の「架空店で構成された特集20記事を実在店で全面再生成」（コミット `7f101b8fb`）以来、一度も入れ替わっていない。`features/nagoya-steak.html` 等の git log にロスター由来のコミットが皆無だった | `git log --since=2026-05 -- features/nagoya-steak.html features/nagoya-teppanyaki.html` 等 |
   | それらの一部は**ジャンル名と掲載店が一致していない**（再生成時に緊急対応で「実在する店」を genre 無視でとにかく詰めた名残と推定）。実測例: `nagoya-kaiseki-guide.html`（懐石・会席特集）の掲載10店が全て「居酒屋」「焼肉」ジャンル。`nagoya-steak.html`（ステーキ特集）・`nagoya-teppanyaki.html`（鉄板焼き特集）・`nagoya-tonkatsu.html`（とんかつ特集）・`nagoya-sushi-guide.html`（鮨特集）も同様に無関係ジャンルで埋まっていた | 対象32特集の `.store-meta`/`.shop-area` を全件抽出して目視確認（本チケットの調査で実施） |
 - **実装内容**:
-  1. `data/feature_rosters.json` に32特集を追加（単一コンテナ [`.store-list`/`.shop-grid` が1つ] の特集のみ対象。既存のスコア式・ハードゲート・多様性補正・「今月の新顔」バッジ機構はそのまま流用し `refresh_feature_rosters.js` 本体は無改修）
+  1. `data/feature_rosters.json` に27特集を追加（単一コンテナ [`.store-list`/`.shop-grid` が1つ] の特集のみ対象。既存のスコア式・ハードゲート・多様性補正・「今月の新顔」バッジ機構はそのまま流用し `refresh_feature_rosters.js` 本体は無改修）
   2. ジャンル/エリアの scene 条件は、ページタイトル・既存掲載店の実態ではなく**ジャンルが本来意図する語**で設定（例: ステーキ特集は `data/stores.json` の店名/おすすめポイント等に「ステーキ」を含む店のみ）。`ジャンル` フィールド単独では「ステーキ」該当4件・「懐石」該当18件など母数が薄く（`ホットペッパーID` 不所持の編集部推薦店が多く `requireHotpepper` ハードゲートで落ちる）枠割れしたため、店名/タグ/おすすめポイント等を含む広いキーワード一致に切替（`gateKeyword:true`）て解決
   3. エリア専業特集（`sakae.html` = 栄エリア横断、`osu-food-walk.html` = 大須、`meieki-hitori-nomi.html` = 名駅）は既存の `meieki.html` と同じ `area`+`gateArea` パターンを流用
-  4. 「業界人推薦」系（`industry-insiders-pick.html` 等6特集）はジャンルを固定せず、既存スコア式の `editorPickBonus`/`editorReasonBonus`（編集部推薦・editorReason付与店への純加点）に委ねる設計とした
-- **QAゲート**: `node scripts/refresh_feature_rosters.js --check` 全51特集プール充足・枠割れ0 ✅ / `npm test` 197件全通過 ✅ / `node scripts/audit_feature_stores.js` 実在不明2件（いずれも本チケット対象外の `fathers-day-2026.html`/`nagoya-ramen.html` で変更前から存在した既知事象・本チケットの32特集では0件、うち `nagoya-kaoawase-washoku.html` は逆に既存の実在不明1件を解消） ✅ / `node scripts/audit_feature_schema_alignment.js` 68件 EXIT0 ✅（既存ファイルの掲載店入替のみ・新規ページ追加は無し） / `node scripts/build_featured.js --check` 鮮度OK ✅ / `node scripts/audit_design_system.js --report` で `features/` 配下の違反0件 ✅ / 冪等性確認（同一月で再実行し差分ゼロ）✅
+  4. 「業界人推薦」系（`industry-insiders-pick.html`/`kospa-insider.html`）はジャンルを固定せず、既存スコア式の `editorPickBonus`/`editorReasonBonus`（編集部推薦・editorReason付与店への純加点）に委ねる設計とした
+  5. マージ時に main へ先着していた PR#260（DSN-006・下記参照）と5特集（`nagoya-dining-professionals.html`/`nagoya-industry-pick-izakaya.html`/`nagoya-kaoawase-washoku.html`/`nagoya-reservation-difficult.html`/`nagoya-settai-secret.html`）で競合。これらは `editor_picks.json`/`stores.json` の `visitStatus`/`編集部推薦` に連動した実データ根拠のあるバッジ（`編集部訪問済`/`編集部推薦`）を PR#260 が付与したばかりで、`renderStoreCard` はそのバッジ表示に未対応（ロスター再生成のたびにバッジが消える）。バッジという実在検証済みの信頼シグナルをロスターの鮮度より優先し、**この5特集は今回の対象から除外**（下記フォローアップに追記。バッジ描画対応後に再検討）
+  6. `renderStoreCard` の「詳細ページを見る →」「予約はこちら →」に付いていた手書き矢印を除去（CSS `::after` と二重矢印になるバグ・PR#260 が既存HTMLを手直ししたのと同種の欠陥が生成器側にも残っていたため、生成器側で恒久修正。手直ししても次回のロスター再生成で復活するため）
+- **QAゲート**: `node scripts/refresh_feature_rosters.js --check` 全46特集プール充足・枠割れ0 ✅ / `npm test` 197件全通過 ✅ / `node scripts/audit_feature_stores.js` 実在不明3件（`fathers-day-2026.html`/`nagoya-ramen.html`/`nagoya-kaoawase-washoku.html` のいずれも本チケット対象外・変更前から存在した既知事象） ✅ / `node scripts/audit_feature_schema_alignment.js` 68件 EXIT0 ✅（既存ファイルの掲載店入替のみ・新規ページ追加は無し） / `node scripts/build_featured.js --check` 鮮度OK ✅ / `node scripts/audit_design_system.js --report` で `features/` 配下の違反0件 ✅ / 冪等性確認（同一月で再実行し差分ゼロ）✅ / マージ後、矢印除去とPR#260の `.store-actions` CSS/DM Mono修正が両立していることを目視確認
 - **意図的にやらなかったこと（フォローアップ）**:
   1. **複数セクション構成の5特集**（`nagoya-cafe.html` / `nagoya-sweets.html` / `nagoya-kakuozan.html` / `nagoya-ramen.html` / `nagoya-gyoza.html`）は `.shop-grid`/`.store-list` コンテナが1ページに2〜6個あり、`refresh_feature_rosters.js` の「コンテナ1個を丸ごと差し替え」前提と噛み合わない（セクションごとに異なるジャンル細分＝例: ラーメンの「煮干し・醤油系」「豚骨系」等）。対応するには `replaceContainerInner` をセクション単位に拡張する script 改修が要る
   2. **別テンプレートの7特集**（`nagoya-hitsumabushi.html` / `nagoya-tebasaki.html` / `nagoya-miso-nikomi-udon.html` / `nagoya-yakiniku.html` / `nagoya-solo-dining.html` / `nagoya-gourmet-guide.html` / `nagoya-settai-concierge.html`）は DSN-003 以降の新カードマークアップ（`.store-photo`/`.store-num`/`.store-name` 等の個別 div、`store-card`/`shop-card` ラッパー無し）や FAQ/リンク集ハブ形式で、既存の `renderStoreCard`/`renderShopCard` が出力する HTML と構造が異なるため今回は対象外
-  3. 上記12特集（5+7）と非店舗一覧ページ（`become-reviewer.html` 等6本）は本チケットのスコープ外のまま。着手する場合は `refresh_feature_rosters.js` にセクション対応・新テンプレ用レンダラーを追加してから `data/feature_rosters.json` に追記する
-- **acceptance（次に着手する担当者向け）**: 上記1・2の script 拡張後、`data/feature_rosters.json` に残り12特集を追記し `--check` で枠割れ0を確認する
-- **files**: `data/feature_rosters.json`, `features/*.html`（32本）, `agent-backlog.md`
-- **関連**: [[ISSUE-071]]（月次ローテーション基盤の初回実装・今回はその対象拡大）
+  3. **`visitStatus`/`編集部推薦` バッジを持つ5特集**（`nagoya-dining-professionals.html`/`nagoya-industry-pick-izakaya.html`/`nagoya-kaoawase-washoku.html`/`nagoya-reservation-difficult.html`/`nagoya-settai-secret.html`）は上記実装内容5.の理由で対象外。`renderStoreCard`/`renderShopCard` に `編集部推薦`/`visitStatus==='visited'` を見てバッジ（`.store-badge` 等・PR#260 の意匠を再利用）を描画する対応を先に入れてから、ロスター対象に加える
+  4. 上記12特集（5+7）+ バッジ5特集の計17特集と非店舗一覧ページ（`become-reviewer.html` 等6本）は本チケットのスコープ外のまま。着手する場合は `refresh_feature_rosters.js` にセクション対応・新テンプレ用レンダラー・バッジ描画を追加してから `data/feature_rosters.json` に追記する
+- **acceptance（次に着手する担当者向け）**: 上記1・2・3の script 拡張後、`data/feature_rosters.json` に残り17特集を追記し `--check` で枠割れ0を確認する
+- **files**: `data/feature_rosters.json`, `features/*.html`（27本）, `scripts/refresh_feature_rosters.js`（矢印バグ修正）, `agent-backlog.md`
+- **関連**: [[ISSUE-071]]（月次ローテーション基盤の初回実装・今回はその対象拡大）/ DSN-006（PR#260・特集記事の写真/バッジ/矢印重複修正。本チケットとのマージ競合を5特集除外で解消）
+
+---
+
+### [ISSUE-124] HotPepper写真URL（imgfp.hotp.jp）のCDN側配信終了を検知する監査を新設。全件走査で4,926件中133件（約2.7%）が404
+
+- **priority**: P1 → **status**: in_progress（検知は実装・CI配線・全件走査まで完了／恒久修復の方針はオーナー承認待ち）
+- **detected**: 2026-09-15
+- **category**: data quality / photo
+- **owner**: Builder / DataKeeper
+- **source**: DSN-006（特集記事のヒーロー画像/店舗写真修正）の作業中にユーザーが実測で発見。サンプル21件中4件（約19%）が404。同じキャッシュURLは `stores/*.html`（gen-store-pages.js が直接埋め込み）や index.html のカードからも参照されるため、壊れた画像として既にサイト上に露出している可能性
+- **brand-filter**: ✅ 適合 — 「実在保証」「編集独立性」を Moat とするサイトで、壊れた画像を放置するのは信頼毀損（制約7）。判定は実際のHTTPステータスのみ（制約10）
+- **検証できる事実（誰でも再現可能）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | サンプル4件はサイズ違い（58/100/168/238/320/480px）すべてで404。`_480`への格上げが原因ではなく、HotPepper CDN上のアセット自体が完全に消失している | `curl -I` を各サイズで実行して確認 |
+  | 全件走査（4,926件・並列20）で133件が404（hotpepper: 4,646 ok / 133 dead、places: 147 ok / 0 dead）。既存コメント（index.html:65「400件サンプルで2.5%」）と同水準で、恒常的に発生し続けている | `node scripts/audit_photo_url_liveness.js` → `data/photo_url_liveness_report.json` |
+  | build.js は HOTPEPPER_API_KEY 設定時、毎日全middle_areaを再フェッチして`写真URL`を書き直す（`fetchHotPepperNagoyaStores`→`hpShopToStoreRecord`）。このCI監査ステップは build.js の直後に置いたため、ここで検出される404は「毎日フェッチし直しても直らない」＝HotPepper側のAPI応答とCDN配信自体が食い違っている証跡になる（ローカルにAPIキーが無くAPI応答自体は未検証。次回CI実行ログで、133件の`写真URL`がAPI再取得後も同一かを確認できる） | `build.js:606-616`, `.github/workflows/build.yml` の実行順序 |
+  | フロント側は既に `nbImgFallback`（onerror時に店ごとのSVGプレースホルダーへ差し替え）を持っており、404画像の破綻表示は緩和されている。ただし `<meta property="og:image">` やSSR初回描画（stores/*.html）はJSのonerrorが効く前にクローラ/初回ペイントへ影響するため、この経路は未対策 | `index.html:65-134`, `gen-store-pages.js:545` |
+- **実装内容（検知のみ）**:
+  1. `scripts/lib/photo_url_liveness.js`（判定器・唯一の情報源）: HEAD→（405/501/エラー時）GETフォールバック・リダイレクト追従・404/410を間隔を置いて2回連続観測できて初めてdead確定（単発のタイムアウト/5xx/403はunknownとし違反扱いしない＝ISSUE-084原則6のオオカミ少年化防止）
+  2. `scripts/audit_photo_url_liveness.js`（CLI）: `data/stores.json` の全`写真URL`を検査 → `data/photo_url_liveness_report.json`（店名・URL・ステータス・ホットペッパーID・写真アセットID・初検出日）。`--check`で dead>0 ならexit 1
+  3. `.github/workflows/build.yml` に新設ステップ追加（`audit_store_liveness.js`の直後・`gen-store-pages.js`の直前＝将来自動修復を足すとき店舗ページ生成が修復後の値を拾えるように配置）。新設ゲートのため`continue-on-error: true`（ISSUE-121の教訓）
+- **恒久修復の方針（提案・未実装・要承認）**:
+  検討した2案のうち、**(b)を機械的に実装することを推奨**:
+  - (a) build.js 取得時にHotPepperへ再取得 — 効果不明。ローカルでAPI未検証だが、このステップはbuild.jsの「後」に置いており、それでも404が再検出され続けるなら、HotPepper自身のAPI応答とCDN配信が既に食い違っている可能性があり、再取得では直らない見込み（次回CI実行で133件の再現性を確認してから判断すべき）
+  - **(b) 確定deadのURLを`写真URL`等から機械的にクリアし「写真なし」へ倒す（推奨）**: 判定根拠（2回連続404）は検証済みの事実であり、クリアは既存データの除去のみで新規の自己申告値を足さない（制約10）。「写真なし」は`photo_policy.json`の設計思想上すでに正規の状態（nbStoreFigureの店名入りSVGプレースホルダーが既に存在）。`scripts/clear_broken_tabelog_links.js`と同じ「安全側に倒し取り繕わない」パターンで実装可能
+  次アクション: DataKeeper/Builderが(b)の実装可否をオーナーに確認 → 承認後 `scripts/clear_dead_photo_urls.js` 相当を新設し、`data/photo_url_liveness_report.json`の`dead`配列を入力に `data/stores.json`・`stores/*.html`の該当箇所をクリア。gen-store-pages.jsの直後（このステップの後段）に配置
+- **QAゲート（証跡）**:
+  - `node --test tests/*.test.js` → 197 pass / 0 fail（既存192件を含め全て通過・回帰なし）
+  - `node scripts/audit_photo_url_liveness.js --store "焼肉ホタル"` 等で、ユーザー報告の4件すべてdead確定を再現
+  - `python3 -c "import yaml; yaml.safe_load(open('.github/workflows/build.yml'))"` でYAML構文検証
+- **files**: `scripts/lib/photo_url_liveness.js`, `scripts/audit_photo_url_liveness.js`, `data/photo_url_liveness_report.json`, `.github/workflows/build.yml`
+- **関連**: [[DSN-006]]（発見の発端）
+### [DSN-006] 特集記事6本のヒーロー画像（AIっぽいイメージ図/SVG）を実写に差し替え、店舗ごとの写真欠落・「編集部推薦」バッジの不整合を修正 ✅
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-09-15
+- **category**: design / trust
+- **owner**: Designer + Builder
+- **source**: オーナー報告（スクリーンショット添付）。「飲食人が通う名古屋の10軒」特集のヒーロー画像がAIで作成されたイメージ図（箸のSVGイラスト）になっている／特集内の店舗ごとに写真が無い／「編集部推薦」バッジが揃っていない、という3点の指摘。「全ての特集ページ・特集内の店舗ページに同じ修正を当てはめてほしい」という依頼
+- **調査で判明した事実（検証可能）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | `nagoya-dining-professionals.html` のヒーローは `assets/feature-figures/*.svg`（箸のイラスト）で実写ではない。同様に `nagoya-kaoawase-washoku.html` / `nagoya-meieki-business-dinner.html` も SVG イラストがヒーロー | 各ファイルの `.art-hero-image img` |
+  | 同ファイルは10店すべてに `.store-photo` の CSS 定義があるが、実際の店カードには**1件も** `<div class="store-photo">` が無かった（CSSだけ存在し使われていない） | grep差分 |
+  | `nagoya-dining-professionals.html` は10店**全員**に `✦ 編集部推薦` バッジを付けていたが、`data/editor_picks.json` の `visitStatus` を確認すると10店中2店（visited）のみが根拠を持ち、残り8店は `desk`（未訪問リサーチ）— バッジが実データと対応していなかった | `editor_picks.json` クロスチェック |
+  | 同種のテンプレート（`gen_industry_features.js` が生成した3本: industry-pick-izakaya / settai-secret / reservation-difficult）は `visitStatus` 連動の `編集部訪問済`/`取材済` バッジを正しく実装していたが、それでも店カード計28件中8件（3+1+4）で `.store-photo` が欠落していた | 全69特集ファイルの棚卸し（cards vs photoTags 集計） |
+  | `nagoya-kaoawase-washoku.html` の7店中2店（日本料理 旬彩／うなぎのしろむら 泉店）は `data/stores.json` の `編集部推薦: true` が実在するのに、当該ファイルにはバッジの CSS 定義すら存在しなかった。もう1店（旬菜家 楽）は `manual_stores.json` で `編集部推薦: true` だが `写真URL` が空欄（写真そのものが存在しない） | `stores.json` / `manual_stores.json` クロスチェック |
+  | 追加しようとした写真URLのうち4件（`data/stores.json` にキャッシュされた HotPepper 画像URL）が実際には **404**（CDN側で失効）だった。site全体で同じ画像IDを参照する `stores/*.html` も同様に壊れており、この特集記事群に限らないサイト全体のデータ鮮度問題と判明 | `curl -I` で全21件の追加予定URLを実測 |
+- **brand-filter**: ✅ 適合 — 制約9（実写優先・AI/ストック不使用）と制約10（検証できる事実だけで判定・自己申告値をゲートにしない）に直接対応。バッジは「アドホックに書いた文言」から「`editor_picks.json`/`stores.json`/`manual_stores.json` の実データに対応する表示」に置き換えた
+- **実装内容**:
+  1. ヒーロー画像: 3ファイル（dining-professionals / kaoawase-washoku / meieki-business-dinner）の SVG イラストを、その記事自身が掲載する店舗の実写（HotPepper／Google Places・既にサイト内で承認済みのURLを再利用）に差し替え。`og:image`/`twitter:image` も同じ実写に合わせて更新（SNS共有サムネイルがイラストのまま出る問題も同時に解消）
+  2. 店舗写真: 6ファイル・カード計55件のうち欠落していた28件に `.store-photo` を追加（`data/stores.json` の `写真URL` を参照）。404が判明した4件と、写真データが存在しない1件（旬菜家 楽）は「壊れた画像」を出すのではなく写真なし表示のまま残した（取り繕わない・制約10）
+  3. 編集部推薦/訪問済バッジ: `nagoya-dining-professionals.html` の全10店ブランケット表示を撤回し、`editor_picks.json` の `visitStatus==='visited'` の2店のみ `編集部訪問済` に付け替え。`nagoya-kaoawase-washoku.html` に `.store-badge` CSS を新設し、`編集部推薦: true` を持つ3店（旬菜家 楽／日本料理 旬彩／うなぎのしろむら 泉店）にのみ `編集部推薦` バッジを追加
+  4. デザインシステム: 上記6ファイルのうち4ファイルで `.store-badge`/`.media-features` に日本語テキストへ `DM Mono`（等幅フォント）が使われていた（`agents/designer.md` 禁止事項）ため `var(--font-body)` に統一
+- **QAゲート（証跡）**:
+  - `node scripts/audit_design_system.js --report` → 対象6ファイルの違反 0件
+  - `node scripts/audit_feature_stores.js` → 実在不明掲載店は既存の1件（旬菜家 楽・本タスク以前から）のみ、新規の劣化なし
+  - 追加した写真URL全21件を `curl -I` で実測し、404の4件は掲載を見送り／残り17件は 200 を確認
+  - HTMLタグバランス（div/article/h3）を6ファイルで機械検査 → 不整合0件
+  - ローカルサーバでヒーロー・店舗カード・バッジ表示を目視確認（スクリーンショット）
+- **follow-up**:
+  - `data/stores.json` の HotPepper 写真URLキャッシュが失効する問題（今回4件検出、`stores/*.html` にも同一の壊れたURLが伝播）は本タスクの範囲外。DataKeeper 向けに写真URL生存監視タスクを別途起票（下記 spawn_task 参照）
+  - `nagoya-kaoawase-washoku.html` の掲載店「旬菜家 楽」が `LOCAL_STORES` に実在しない（`audit_feature_stores.js` 検出・本タスク以前からの既知issue）の解消は未対応
+
+### [DSN-006 追加分] 店舗カードの「詳細ページを見る/予約はこちら」ボタンの矢印重複・視認性を修正 ✅
+
+- **detected**: 2026-09-15（オーナーがDSN-006の確認中に発見・スクリーンショット添付）
+- **description**: ユーザーがDSN-006の修正結果を確認中、ボタンのテキストに矢印が二重に出ている（「予約はこちら → →」）上、`.store-actions` にレイアウト用CSSが一切無く、2つのボタンが隙間なく縦に接触して見づらい状態を発見
+- **調査で判明した事実**: `.store-link` の CSS が `::after{content:"→"}` で矢印を自動付与する設計だが、リンクテキスト自体にも `→` が手書きで入っており二重矢印になっていた。`.store-actions{}` のCSS定義がどのファイルにも存在せず、ボタンが素のブロック/インラインフレックスの挙動で密着していた。同一パターンが特集記事20本（`nagoya-dining-professionals.html`系とは別系統の「ロスター」テンプレート群: banquet / birthday / date / enmkai-kanji / girls-party / gw-2026 / hard-to-book / industry-insiders-pick / kospa-insider / large-group / meieki-hitori-nomi / meieki / mothers-day / nagoya-lunch-washoku / nagoya-meieki-business-dinner / nagoya-yakiniku-guide / private-room / sakae / settai-guide / spring-terrace）全てに同一の欠陥が存在すると確認
+- **実装内容**: 20ファイル全てで (1) `.store-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem;}` を追加 (2) リンクテキストの手書き矢印（「詳細ページを見る →」「予約はこちら →」「食べログで詳細を見る →」）を除去し `::after` の1本の矢印のみに統一
+- **QAゲート**: `audit_design_system.js --report` で対象20ファイル違反0件／モバイル(375px)実機表示で複数ファイルを目視確認・ボタンの間隔と矢印が正常化
+- **副次的発見**: `sakae.html`/`meieki.html` で「焼肉ホタル 栄東店」の写真が表示されず（DSN-006で検出したHotPepper写真URL失効と同一店舗）。既存のDataKeeper向けフォローアップ課題（写真URL生存監視）の対象に含まれる、本件では未修正
 
 ---
 

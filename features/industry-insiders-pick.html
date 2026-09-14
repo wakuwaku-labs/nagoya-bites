@@ -99,7 +99,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 @media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
 .store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:var(--fs-sm) !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}
 .store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}
-.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}
+.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}.store-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem;}
 .store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}
 .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
 /*ROSTER_BADGE_CSS*/
@@ -177,8 +177,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">名古屋名物の手羽先は各店が独自のタレで差別化を図るが、あっさり系タレと掘りごたつの居心地が局地的な固定客を生んでいる。チェーン化せず住吉という単立地に絞った判断を評価して掲載した。</p>
           <div class="store-tags"><span class="store-tag">10〜20名</span><span class="store-tag">5000円以上</span><span class="store-tag">和食</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004068058.html" onclick="trackEvent('feature_store_click',{store:'手羽先むつみ 住吉店',feature:'industry-insiders-pick'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004068058/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'手羽先むつみ 住吉店',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004068058.html" onclick="trackEvent('feature_store_click',{store:'手羽先むつみ 住吉店',feature:'industry-insiders-pick'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ004068058/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'手羽先むつみ 住吉店',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -192,8 +192,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">「名古屋で最も予約の取れないビストロ」と称される超人気店。わずか1日で2ヶ月分の予約が埋まるほどの人気を誇り、その理由は圧倒的なコストパフォーマンスと本格的なフレンチビストロ料理にあります。友人との食事やカジュアルなデ…</p>
           <div class="store-tags"></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000661748.html" onclick="trackEvent('feature_store_click',{store:'サラマンジェドゥカジノ',feature:'industry-insiders-pick'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ000661748/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'サラマンジェドゥカジノ',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000661748.html" onclick="trackEvent('feature_store_click',{store:'サラマンジェドゥカジノ',feature:'industry-insiders-pick'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ000661748/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'サラマンジェドゥカジノ',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -207,8 +207,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">燻銀ブランドの金山展開は栄・伏見・波寄に続く拠点として名古屋市内の炉端焼き需要を広くカバーしている。ブランドとして複数拠点が一定水準の評価を維持しているのは炉端焼きの演出と料理品質の標準化が成功している証拠。</p>
           <div class="store-tags"><span class="store-tag">隠れ家</span><span class="store-tag">接待</span><span class="store-tag">歓送迎会</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001186933.html" onclick="trackEvent('feature_store_click',{store:'炉端焼き 燻銀 金山店',feature:'industry-insiders-pick'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001186933/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'炉端焼き 燻銀 金山店',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001186933.html" onclick="trackEvent('feature_store_click',{store:'炉端焼き 燻銀 金山店',feature:'industry-insiders-pick'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001186933/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'炉端焼き 燻銀 金山店',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -222,8 +222,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">名駅直結でワイン×肉、3,500円の競争力は昼営業で活きる。</p>
           <div class="store-tags"><span class="store-tag">バー</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001169923.html" onclick="trackEvent('feature_store_click',{store:'ニクバルダカラ 名駅シンフォニー豊田ビル',feature:'industry-insiders-pick'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001169923/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'ニクバルダカラ 名駅シンフォニー豊田ビル',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001169923.html" onclick="trackEvent('feature_store_click',{store:'ニクバルダカラ 名駅シンフォニー豊田ビル',feature:'industry-insiders-pick'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001169923/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'ニクバルダカラ 名駅シンフォニー豊田ビル',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -237,8 +237,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">きんしゃちというブランドは名古屋を象徴するシンボルを冠した地域密着の居酒屋。名古屋駅前という観光・出張客が多い立地で4.7評価を維持しているのは地元感と観光需要の双方を取り込んだメニュー設計が機能しているから。</p>
           <div class="store-tags"><span class="store-tag">テラス席</span><span class="store-tag">100名以上</span><span class="store-tag">5000円以上</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003763757.html" onclick="trackEvent('feature_store_click',{store:'名古屋きんしゃち 名古屋駅前店',feature:'industry-insiders-pick'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003763757/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'名古屋きんしゃち 名古屋駅前店',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003763757.html" onclick="trackEvent('feature_store_click',{store:'名古屋きんしゃち 名古屋駅前店',feature:'industry-insiders-pick'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003763757/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'名古屋きんしゃち 名古屋駅前店',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -252,8 +252,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">親しみやすい屋号で鰻専門業態を展開するのは老舗名店が多い鰻市場に対するカジュアル路線での挑戦。食べログ4.7評価はカジュアル業態でも鰻の品質が妥協されていないことを示しており業界目線では評価できるポジショニング。</p>
           <div class="store-tags"><span class="store-tag">30〜40名</span><span class="store-tag">3000〜5000円</span><span class="store-tag">和食</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003984968.html" onclick="trackEvent('feature_store_click',{store:'鰻のノリスケ',feature:'industry-insiders-pick'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003984968/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'鰻のノリスケ',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003984968.html" onclick="trackEvent('feature_store_click',{store:'鰻のノリスケ',feature:'industry-insiders-pick'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003984968/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'鰻のノリスケ',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>

@@ -320,8 +320,8 @@ function renderStoreCard(entry, num, featureSlug) {
           <p class="store-desc">${descOf(s, 110)}</p>
           <div class="store-tags">${tags}</div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/${id}.html" ${track}>詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/str${id}/" target="_blank" rel="noopener" ${trackCta}>予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/${id}.html" ${track}>詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/str${id}/" target="_blank" rel="noopener" ${trackCta}>予約はこちら</a>
           </div>
         </div>
       </div>`;

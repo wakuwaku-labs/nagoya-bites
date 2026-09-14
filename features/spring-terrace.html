@@ -75,7 +75,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 @media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
 .store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:var(--fs-sm) !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}
 .store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}
-.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}
+.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}.store-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem;}
 .store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}
 .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
 /*ROSTER_BADGE_CSS*/
@@ -156,8 +156,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">きんしゃちというブランドは名古屋を象徴するシンボルを冠した地域密着の居酒屋。名古屋駅前という観光・出張客が多い立地で4.7評価を維持しているのは地元感と観光需要の双方を取り込んだメニュー設計が機能しているから。</p>
           <div class="store-tags"><span class="store-tag">テラス席</span><span class="store-tag">100名以上</span><span class="store-tag">5000円以上</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003763757.html" onclick="trackEvent('feature_store_click',{store:'名古屋きんしゃち 名古屋駅前店',feature:'spring-terrace'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003763757/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'名古屋きんしゃち 名古屋駅前店',feature:'spring-terrace',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003763757.html" onclick="trackEvent('feature_store_click',{store:'名古屋きんしゃち 名古屋駅前店',feature:'spring-terrace'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003763757/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'名古屋きんしゃち 名古屋駅前店',feature:'spring-terrace',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -171,8 +171,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">アットホームな雰囲気の居酒屋。常連にも愛される</p>
           <div class="store-tags"><span class="store-tag">60〜70名</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003533146.html" onclick="trackEvent('feature_store_click',{store:'名駅ビアガーデン',feature:'spring-terrace'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003533146/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'名駅ビアガーデン',feature:'spring-terrace',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003533146.html" onclick="trackEvent('feature_store_click',{store:'名駅ビアガーデン',feature:'spring-terrace'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003533146/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'名駅ビアガーデン',feature:'spring-terrace',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -186,8 +186,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">ホテル10F、5千円台のカジュアルダイニング。大人向け落ち着き空間</p>
           <div class="store-tags"><span class="store-tag">バー</span><span class="store-tag">5000円以上</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001202808.html" onclick="trackEvent('feature_store_click',{store:'GRILL DINING&WINE 金山テラス',feature:'spring-terrace'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001202808/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'GRILL DINING&WINE 金山テラス',feature:'spring-terrace',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001202808.html" onclick="trackEvent('feature_store_click',{store:'GRILL DINING&WINE 金山テラス',feature:'spring-terrace'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001202808/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'GRILL DINING&WINE 金山テラス',feature:'spring-terrace',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -201,8 +201,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">徳重駅から車10分、1,500～2,000円の立ち位置でスイーツと軽食の使い分けが効く</p>
           <div class="store-tags"><span class="store-tag">カフェ</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001282809.html" onclick="trackEvent('feature_store_click',{store:'HOKI COFFEE TERRACE 緑区店 帆季珈琲テラス',feature:'spring-terrace'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001282809/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'HOKI COFFEE TERRACE 緑区店 帆季珈琲テラス',feature:'spring-terrace',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001282809.html" onclick="trackEvent('feature_store_click',{store:'HOKI COFFEE TERRACE 緑区店 帆季珈琲テラス',feature:'spring-terrace'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001282809/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'HOKI COFFEE TERRACE 緑区店 帆季珈琲テラス',feature:'spring-terrace',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -216,8 +216,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">テレビ塔徒歩1分、観光客流入で平日夜間でも客席回転が期待できる</p>
           <div class="store-tags"><span class="store-tag">バー</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001217020.html" onclick="trackEvent('feature_store_click',{store:'ダリグアダルーペ テラスハウス Daliguadalupe Terrace House',feature:'spring-terrace'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001217020/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'ダリグアダルーペ テラスハウス Daliguadalupe Terrace House',feature:'spring-terrace',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001217020.html" onclick="trackEvent('feature_store_click',{store:'ダリグアダルーペ テラスハウス Daliguadalupe Terrace House',feature:'spring-terrace'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001217020/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'ダリグアダルーペ テラスハウス Daliguadalupe Terrace House',feature:'spring-terrace',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -231,8 +231,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">名鉄6番出口1分、3,500円で磯丸水産ビル入り、看板物件による認知度</p>
           <div class="store-tags"><span class="store-tag">居酒屋</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001179704.html" onclick="trackEvent('feature_store_click',{store:'名古屋テラス 名駅店',feature:'spring-terrace'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001179704/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'名古屋テラス 名駅店',feature:'spring-terrace',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001179704.html" onclick="trackEvent('feature_store_click',{store:'名古屋テラス 名駅店',feature:'spring-terrace'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001179704/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'名古屋テラス 名駅店',feature:'spring-terrace',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -246,8 +246,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">久屋大通・栄駅2～5分、4500円帯の上質バル</p>
           <div class="store-tags"><span class="store-tag">バー</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001009436.html" onclick="trackEvent('feature_store_click',{store:'バルバ テラス BARBA terrace',feature:'spring-terrace'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001009436/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'バルバ テラス BARBA terrace',feature:'spring-terrace',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001009436.html" onclick="trackEvent('feature_store_click',{store:'バルバ テラス BARBA terrace',feature:'spring-terrace'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001009436/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'バルバ テラス BARBA terrace',feature:'spring-terrace',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -261,8 +261,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">栄駅直結サカエチカS8出口、焼肉2500円帯で観光客と地元客両取りの立地優位性</p>
           <div class="store-tags"><span class="store-tag">居酒屋</span><span class="store-tag">3000〜5000円</span><span class="store-tag">個室</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001168694.html" onclick="trackEvent('feature_store_click',{store:'CABANA TERRACE カバナテラス 名古屋栄店',feature:'spring-terrace'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001168694/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'CABANA TERRACE カバナテラス 名古屋栄店',feature:'spring-terrace',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001168694.html" onclick="trackEvent('feature_store_click',{store:'CABANA TERRACE カバナテラス 名古屋栄店',feature:'spring-terrace'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001168694/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'CABANA TERRACE カバナテラス 名古屋栄店',feature:'spring-terrace',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -276,8 +276,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">名駅裏マルナカ屋上5分、4,000円台ランチあり穴場感のある地元御用達</p>
           <div class="store-tags"><span class="store-tag">居酒屋</span><span class="store-tag">5000円以上</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004577121.html" onclick="trackEvent('feature_store_click',{store:'柳橋中央市場ビアガーデン',feature:'spring-terrace'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004577121/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'柳橋中央市場ビアガーデン',feature:'spring-terrace',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004577121.html" onclick="trackEvent('feature_store_click',{store:'柳橋中央市場ビアガーデン',feature:'spring-terrace'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ004577121/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'柳橋中央市場ビアガーデン',feature:'spring-terrace',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -291,8 +291,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">今池駅9番出口直近、夜景見えるテラス席、会社宴会で40名以上可能</p>
           <div class="store-tags"><span class="store-tag">バー</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001213249.html" onclick="trackEvent('feature_store_click',{store:'BELGIAN BEER KITCHEN Miyabi',feature:'spring-terrace'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001213249/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'BELGIAN BEER KITCHEN Miyabi',feature:'spring-terrace',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001213249.html" onclick="trackEvent('feature_store_click',{store:'BELGIAN BEER KITCHEN Miyabi',feature:'spring-terrace'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001213249/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'BELGIAN BEER KITCHEN Miyabi',feature:'spring-terrace',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>

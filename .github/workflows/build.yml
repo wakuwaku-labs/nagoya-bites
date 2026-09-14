@@ -157,6 +157,23 @@ jobs:
         # CLOSED_PERMANENTLY/閉店確定が混入したら exit 1 でデプロイをブロックする（制約7・信頼担保）。
         run: node scripts/audit_store_liveness.js
 
+      - name: 写真URLの生存確認（CDN側の配信終了検知）
+        # data/stores.json にキャッシュされた HotPepper 写真URL（imgfp.hotp.jp）の一部が
+        # CDN側で配信終了（404）していることが判明（2026-09・DSN-006作業中の実地確認・
+        # 全件走査で 4,926件中133件=約2.7%）。同じURLは stores/*.html・index.html カードからも
+        # 参照されるため、壊れた画像として既にサイト上に露出している可能性が高い。
+        # このステップは直前の node build.js（HotPepper再取得）の"後"に走るため、
+        # ここで再検出される dead は「毎日フェッチし直しても直らない」＝HotPepper側の
+        # API応答とCDN配信が食い違っている証跡になる（自然回復を待てない）。
+        # gen-store-pages.js（個別店舗ページ生成）より前に置くのは、将来この検知結果を
+        # 使って該当店の写真フィールドを空へ落とす自動修復を足すとき、店舗ページの再生成が
+        # 修復後の値を拾えるようにするため（現時点では検知のみ・修復は別途判断）。
+        # 判定は実際のHTTPステータス（404/410を2回連続観測）だけで行う（CLAUDE.md 制約10）。
+        # 基準・判定器は scripts/lib/photo_url_liveness.js の1本。新設ゲートのため
+        # 初回は continue-on-error（既存監査と同じ運用・ISSUE-121の教訓）。
+        run: node scripts/audit_photo_url_liveness.js --check
+        continue-on-error: true
+
       - name: 他都道府県マッチ監査（他都市チェーン店の誤登録を検知・ISSUE-103 再発防止）
         # 2026-08-20、71件の他都市店舗（大阪・神奈川・北海道等）が「栄」エリア・愛知県の
         # 名古屋店として誤登録されていたことが発覚（fetch_places.js は正しく却下していたが
@@ -365,7 +382,7 @@ jobs:
           # Places で取得した pending 店の写真が毎回捨てられ、無駄な API 再取得が続く。
           # data/crosscheck.json: モーダル「内訳を見る」の遅延ロード元。ここが漏れていると
           # CI で毎ビルド生成されても捨てられ、フロントが古い内訳（一部店舗のみ）を出し続ける。
-          git add index.html features/index.html sitemap.xml llms.txt data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/feature_roster_health.json data/store_link_identity_checked.json data/store_link_identity_report.json data/area_genre_pages_manifest.json
+          git add index.html features/index.html sitemap.xml llms.txt data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/feature_roster_health.json data/store_link_identity_checked.json data/store_link_identity_report.json data/area_genre_pages_manifest.json data/photo_url_liveness_report.json
           # 特集本体(features/*.html)も commit 対象。月次ロスター更新の掲載店入替を反映する。
           git add features/ || true
           git add stores/ || true

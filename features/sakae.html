@@ -81,7 +81,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 @media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
 .store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:var(--fs-sm) !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}
 .store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}
-.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}
+.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}.store-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem;}
 .store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}
 .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
 /*ROSTER_BADGE_CSS*/
@@ -166,8 +166,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">名古屋名物の手羽先は各店が独自のタレで差別化を図るが、あっさり系タレと掘りごたつの居心地が局地的な固定客を生んでいる。チェーン化せず住吉という単立地に絞った判断を評価して掲載した。</p>
           <div class="store-tags"><span class="store-tag">10〜20名</span><span class="store-tag">5000円以上</span><span class="store-tag">和食</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004068058.html" onclick="trackEvent('feature_store_click',{store:'手羽先むつみ 住吉店',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004068058/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'手羽先むつみ 住吉店',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004068058.html" onclick="trackEvent('feature_store_click',{store:'手羽先むつみ 住吉店',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ004068058/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'手羽先むつみ 住吉店',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -181,8 +181,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">居酒屋の価格帯で本格的な鮨を提供するポジションは、職人の出自と仕入れルートが問われる領域。「食人」という屋号に込めた食への姿勢と、栄での継続的な高評価が掲載の根拠。</p>
           <div class="store-tags"><span class="store-tag">10〜20名</span><span class="store-tag">3000〜5000円</span><span class="store-tag">居酒屋</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003649458.html" onclick="trackEvent('feature_store_click',{store:'鮨食人 五と二 栄店',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003649458/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'鮨食人 五と二 栄店',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003649458.html" onclick="trackEvent('feature_store_click',{store:'鮨食人 五と二 栄店',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003649458/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'鮨食人 五と二 栄店',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -196,8 +196,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">「UFOサムギョプサル」という名古屋初上陸の調理スタイルは、食体験の差別化軸として機能している。韓国料理の本場感と演出の両立が4.8評価を支えており、フォトジェニックな食体験がSNS経由の新規集客にも貢献しているとみら…</p>
           <div class="store-tags"><span class="store-tag">80〜90名</span><span class="store-tag">2000〜3000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003829547.html" onclick="trackEvent('feature_store_click',{store:'韓国サムギョプサル マルエイ 栄 住吉店',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003829547/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'韓国サムギョプサル マルエイ 栄 住吉店',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003829547.html" onclick="trackEvent('feature_store_click',{store:'韓国サムギョプサル マルエイ 栄 住吉店',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003829547/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'韓国サムギョプサル マルエイ 栄 住吉店',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -211,8 +211,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">名駅東7分・伏見西6分の両駅利用で、5,000～7,000円帯焼肉の接待対応力</p>
           <div class="store-tags"><span class="store-tag">焼肉</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003625137.html" onclick="trackEvent('feature_store_click',{store:'飛騨牛焼肉　牛ざんまい　納屋橋リバーサイド店',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003625137/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'飛騨牛焼肉　牛ざんまい　納屋橋リバーサイド店',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003625137.html" onclick="trackEvent('feature_store_click',{store:'飛騨牛焼肉　牛ざんまい　納屋橋リバーサイド店',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003625137/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'飛騨牛焼肉　牛ざんまい　納屋橋リバーサイド店',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -226,8 +226,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">栄駅6分、3,500円でバーニーズ層の夜間需要を拾える</p>
           <div class="store-tags"><span class="store-tag">バー</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004469121.html" onclick="trackEvent('feature_store_click',{store:'STAND BAR カシオペア',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004469121/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'STAND BAR カシオペア',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004469121.html" onclick="trackEvent('feature_store_click',{store:'STAND BAR カシオペア',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ004469121/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'STAND BAR カシオペア',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -241,8 +241,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">栄駅5分1,500円創作、ランチ営業で平日の稼働率補完</p>
           <div class="store-tags"></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000823101.html" onclick="trackEvent('feature_store_click',{store:'矢場とん 栄セントライズ店',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ000823101/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'矢場とん 栄セントライズ店',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000823101.html" onclick="trackEvent('feature_store_click',{store:'矢場とん 栄セントライズ店',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ000823101/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'矢場とん 栄セントライズ店',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -256,8 +256,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">栄駅2分直結、その他グルメ。栄駅出口の一等地争奪戦での配置。</p>
           <div class="store-tags"></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001276339.html" onclick="trackEvent('feature_store_click',{store:'ベッセルイン栄駅前',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001276339/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'ベッセルイン栄駅前',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001276339.html" onclick="trackEvent('feature_store_click',{store:'ベッセルイン栄駅前',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001276339/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'ベッセルイン栄駅前',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -271,8 +271,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">市役所駅7分直下、500円台ラーメン、横丁構成で回転型の食べ歩き需要</p>
           <div class="store-tags"><span class="store-tag">ラーメン</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001221056.html" onclick="trackEvent('feature_store_click',{store:'フジヤマ55 金シャチ横丁店',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001221056/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'フジヤマ55 金シャチ横丁店',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001221056.html" onclick="trackEvent('feature_store_click',{store:'フジヤマ55 金シャチ横丁店',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001221056/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'フジヤマ55 金シャチ横丁店',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -286,8 +286,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">「がブリチキン（からあげ専門）」は大衆居酒屋の枠内でからあげに特化するポジションを明確にしている。名物「からあげもも」を軸に定期的なキャンペーンを打ちながら4.8評価を維持しているのは、ファン化した固定客が形成されてい…</p>
           <div class="store-tags"><span class="store-tag">30〜40名</span><span class="store-tag">居酒屋</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001048681.html" onclick="trackEvent('feature_store_click',{store:'がブリチキン。 栄住吉店',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001048681/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'がブリチキン。 栄住吉店',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001048681.html" onclick="trackEvent('feature_store_click',{store:'がブリチキン。 栄住吉店',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001048681/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'がブリチキン。 栄住吉店',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -301,8 +301,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">「大衆価格で職人寿司」は矛盾に見えるが、仕込みの効率化と席数設計によって成立しうる。寿司・刺身・天ぷらを同一厨房で揃えるオペレーション力と原価管理が評価の根拠であり、業界人の目線で見ても再現性が高い。</p>
           <div class="store-tags"><span class="store-tag">10〜20名</span><span class="store-tag">5000円以上</span><span class="store-tag">居酒屋</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004445386.html" onclick="trackEvent('feature_store_click',{store:'大衆割烹 八べゑ 錦３丁目店',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004445386/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'大衆割烹 八べゑ 錦３丁目店',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004445386.html" onclick="trackEvent('feature_store_click',{store:'大衆割烹 八べゑ 錦３丁目店',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ004445386/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'大衆割烹 八べゑ 錦３丁目店',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -316,8 +316,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">肉バル×食べ飲み放題×個室という三要素の組み合わせは宴会需要を最大化する設計。栄での4.7評価は三要素がトレードオフなく成立していることを示しており業態設計の完成度が掲載の根拠。</p>
           <div class="store-tags"><span class="store-tag">50〜60名</span><span class="store-tag">5000円以上</span><span class="store-tag">個室</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003625187.html" onclick="trackEvent('feature_store_click',{store:'個室　肉バル　食べ飲み放題　トリコミート　名古屋栄店',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003625187/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'個室　肉バル　食べ飲み放題　トリコミート　名古屋栄店',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003625187.html" onclick="trackEvent('feature_store_click',{store:'個室　肉バル　食べ飲み放題　トリコミート　名古屋栄店',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003625187/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'個室　肉バル　食べ飲み放題　トリコミート　名古屋栄店',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -331,8 +331,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">もうもう亭という親しみやすい屋号で和牛炭火焼肉を提供するスタイルは高単価食材を気軽に楽しめる雰囲気設計として機能している。広小路という名古屋のメインストリートで4.7評価を維持しているのは確かな品質の証。</p>
           <div class="store-tags"><span class="store-tag">50〜60名</span><span class="store-tag">5000円以上</span><span class="store-tag">焼肉</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003625141.html" onclick="trackEvent('feature_store_click',{store:'炭火和牛焼肉　もうもう亭　栄　広小路店',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003625141/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'炭火和牛焼肉　もうもう亭　栄　広小路店',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003625141.html" onclick="trackEvent('feature_store_click',{store:'炭火和牛焼肉　もうもう亭　栄　広小路店',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003625141/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'炭火和牛焼肉　もうもう亭　栄　広小路店',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -346,8 +346,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">燻銀ブランドの栄展開は金山・伏見に続く拠点。炉端焼きの演出と個室の組み合わせを栄でも維持しながら4.7評価を獲得しているのはブランドの品質管理が多店舗でも機能していることを示す。</p>
           <div class="store-tags"><span class="store-tag">40〜50名</span><span class="store-tag">3000〜5000円</span><span class="store-tag">居酒屋</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003582129.html" onclick="trackEvent('feature_store_click',{store:'炉端焼き 燻銀 栄店',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003582129/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'炉端焼き 燻銀 栄店',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003582129.html" onclick="trackEvent('feature_store_click',{store:'炉端焼き 燻銀 栄店',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003582129/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'炉端焼き 燻銀 栄店',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -361,8 +361,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">SEJONGブランドの栄展開は名駅GEMSとは異なる価格帯を設定しており韓国焼肉の多様な客層をカバーする戦略的な棲み分けになっている。栄でのスタンダードラインとして4.7評価を維持しているのは価格帯内での品質が担保され…</p>
           <div class="store-tags"><span class="store-tag">40〜50名</span><span class="store-tag">5000円以上</span><span class="store-tag">焼肉</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003582213.html" onclick="trackEvent('feature_store_click',{store:'焼肉 SEJONG セジョン 栄店',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003582213/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'焼肉 SEJONG セジョン 栄店',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003582213.html" onclick="trackEvent('feature_store_click',{store:'焼肉 SEJONG セジョン 栄店',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003582213/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'焼肉 SEJONG セジョン 栄店',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -376,8 +376,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">季旬という屋号は旬の食材にこだわる姿勢を示している。季節ごとのメニュー変更を維持しながら4.7評価を保つのは仕入れルートと調理技術の両方が高水準であることを示している。</p>
           <div class="store-tags"><span class="store-tag">歓送迎会</span><span class="store-tag">忘年会・新年会</span><span class="store-tag">100名以上</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004444760.html" onclick="trackEvent('feature_store_click',{store:'季旬 栄店',feature:'sakae'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004444760/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'季旬 栄店',feature:'sakae',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004444760.html" onclick="trackEvent('feature_store_click',{store:'季旬 栄店',feature:'sakae'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ004444760/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'季旬 栄店',feature:'sakae',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
