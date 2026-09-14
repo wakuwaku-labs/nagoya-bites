@@ -274,6 +274,17 @@ jobs:
         run: node scripts/gen_area_genre_pages.js
         continue-on-error: true
 
+      - name: llms.txt を再生成（LLM向けサイト要約・SEO-097）
+        # data/stores.json（店舗数・エリア別/ジャンル別内訳）・data/area_genre_pages_manifest.json
+        # （SEO-094のエリア×ジャンルハブ一覧・上のステップで直前に更新済み）・features/*.html
+        # （特集記事一覧）から、llms.txt のうちデータドリブンな数値・一覧セクションだけを
+        # マーカー間で再生成する（静的な編集文章はそのまま保持）。2026-09-06の手動更新を
+        # 最後に一度も再生成されておらず、店舗数・特集記事一覧が実データと乖離していた
+        # （ChatGPT経由セッションの減衰傾向と符合）。gen_area_genre_pages.js の直後に
+        # 置く理由: 同ステップが直前に data/area_genre_pages_manifest.json を確定させるため。
+        run: node scripts/gen_llms_txt.js
+        continue-on-error: true
+
       - name: デザインシステム準拠監査（DSN-001・可読性ゲート）
         # 全ページが assets/css/nb.css・正本フォントURL・font-size床(12px)・許可フォントウェイトに
         # 準拠しているかを検査する（scripts/audit_design_system.js）。stores/ は既存の閉店delist済み
@@ -356,7 +367,7 @@ jobs:
           # Places で取得した pending 店の写真が毎回捨てられ、無駄な API 再取得が続く。
           # data/crosscheck.json: モーダル「内訳を見る」の遅延ロード元。ここが漏れていると
           # CI で毎ビルド生成されても捨てられ、フロントが古い内訳（一部店舗のみ）を出し続ける。
-          git add index.html features/index.html sitemap.xml data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/store_link_identity_checked.json data/store_link_identity_report.json data/area_genre_pages_manifest.json
+          git add index.html features/index.html sitemap.xml llms.txt data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/store_link_identity_checked.json data/store_link_identity_report.json data/area_genre_pages_manifest.json
           # 特集本体(features/*.html)も commit 対象。月次ロスター更新の掲載店入替を反映する。
           git add features/ || true
           git add stores/ || true
