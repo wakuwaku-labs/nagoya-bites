@@ -3,11 +3,28 @@
  * journal/2026-*.html の <div class="related"> を「直近3本の他journal + ナビリンク」に書き換える。
  * 各記事の <h1 class="art-title"> から <em> を剥いだ表示用タイトルを抽出して使う。
  * _template.html / index.html / feed.* は対象外。
+ *
+ * SEO-099: 関連特集CTA（下記 TOPIC_FEATURES によるジャンル一致）が特集にヒットした場合、
+ * その特集に対応するエリア×ジャンル×条件ハブ（stores/area/配下・SEO-094）も候補に加える。
+ * 対応関係は scripts/lib/hub_link_finder.js が journal_seo_keywords.json /
+ * area_genre_pages_policy.json / area_genre_pages_manifest.json だけを根拠に決定する
+ * （自己申告・推測は使わない・CLAUDE.md 制約10）。本ファイルは <div class="related"> を
+ * 毎回まるごと再構築するため、追加後もそのまま冪等性を保つ。
  */
 const fs = require('fs');
 const path = require('path');
+const { buildFeatureHubMap } = require('./lib/hub_link_finder');
 
 const JOURNAL_DIR = path.join(__dirname, '..', 'journal');
+const HUB_MAP = buildFeatureHubMap({ maxLinks: 2 });
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
 
 function listPosts() {
   return fs.readdirSync(JOURNAL_DIR)
@@ -91,6 +108,14 @@ function buildRelatedHtml(currentFile, posts, postsMeta) {
   const topic = matchTopicFeature(postsMeta[currentFile] && postsMeta[currentFile].title);
   if (topic) {
     lines.push(`    <a class="related-link is-primary" href="../features/${topic.slug}.html">${topic.label}</a>`);
+    // SEO-099: 一致した特集に対応するエリア×ジャンル×条件ハブがあれば追加候補にする
+    const hubLinks = HUB_MAP.get(`features/${topic.slug}.html`) || [];
+    for (const h of hubLinks) {
+      const href = `../${h.url}`;
+      lines.push(
+        `    <a class="related-link" href="${href}" onclick="trackEvent('internal_link_click',{link_url:'${href}',block:'journal_hub'})">${escapeHtml(h.label)}</a>`
+      );
+    }
   }
   lines.push('    <a class="related-link" href="../features/index.html">特集をもっと見る</a>');
   lines.push('    <a class="related-link" href="../index.html">全店舗を検索</a>');
