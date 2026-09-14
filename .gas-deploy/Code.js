@@ -439,6 +439,10 @@ function sourceToName(src, medium) {
   if (hostInDomains(host, ['instagram.com'], ['instagram', 'ig'])) return 'Instagram';
   if (hostInDomains(host, ['facebook.com', 'fb.com', 'fb.me'], ['facebook', 'fb'])) return 'Facebook';
   if (hostInDomains(host, ['line.me', 'line-apps.com'], ['line'])) return 'LINE';
+  if (hostInDomains(host, ['threads.net', 'threads.com'], ['threads'])) return 'Threads';
+  if (hostInDomains(host, ['note.com'], ['note'])) return 'note';
+  if (hostInDomains(host, ['tiktok.com'], ['tiktok'])) return 'TikTok';
+  if (hostInDomains(host, ['youtube.com', 'youtu.be'], ['youtube'])) return 'YouTube';
   if (m === 'referral') return s + '（他サイトから）';
   return s + ' / ' + m;
 }

@@ -56,3 +56,10 @@ test('GAS 側の複製判定器が CLI 側と同じ語彙で同じ結果を返�
     assert.equal(ctx.isAiTrafficSource(s, '(not set)'), isAiAssistantSource(s, '(not set)'), s);
   }
 });
+
+test('docs/sns-utm-convention.md の utm_source 値がすべて SNS と判定される', () => {
+  const doc = fs.readFileSync(path.join(__dirname, '..', 'docs', 'sns-utm-convention.md'), 'utf8');
+  const values = [...doc.matchAll(/^\| [^|]+ \| `([a-z]+)` \|$/gm)].map(m => m[1]);
+  assert.ok(values.length >= 8, `規約表から値を読めていない: ${values}`);
+  for (const v of values) assert.equal(isSocialSource(v), true, v);
+});
