@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-14T07:37:33.247Z",
-  "siteUrl": "https://nagoya-bites.com/",
+  "generatedAt": "2026-09-14T08:25:04.641Z",
+  "siteUrl": "sc-domain:nagoya-bites.com",
   "dateRange": {
     "startDate": "2026-08-17",
     "endDate": "2026-09-13"
@@ -6999,7 +6999,7 @@
   "intent": {
     "kw_dictionary": {
       "source": "data/journal_seo_keywords.json",
-      "updated": "2026-09-05"
+      "updated": "2026-09-14"
     },
     "store_names_used": 8840,
     "total_queries": 3998,
@@ -7015,27 +7015,27 @@
       },
       {
         "intent": "other",
-        "queries": 1248,
-        "impressions": 6180,
+        "queries": 1239,
+        "impressions": 6051,
         "clicks": 40,
-        "ctr": 0.65,
+        "ctr": 0.66,
         "avg_position": 22.4,
-        "impressions_share": 21.8
+        "impressions_share": 21.4
       },
       {
         "intent": "discovery",
-        "queries": 156,
-        "impressions": 2162,
+        "queries": 165,
+        "impressions": 2291,
         "clicks": 99,
-        "ctr": 4.58,
-        "avg_position": 10.2,
-        "impressions_share": 7.6
+        "ctr": 4.32,
+        "avg_position": 10.8,
+        "impressions_share": 8.1
       }
     ],
     "kpi": {
-      "discovery_impressions": 2162,
+      "discovery_impressions": 2291,
       "discovery_clicks": 99,
-      "discovery_impressions_share": 7.6
+      "discovery_impressions_share": 8.1
     },
     "examples": {
       "discovery": [
@@ -7093,6 +7093,16 @@
           "signals": [
             "scene:一人飲み",
             "area:名駅"
+          ]
+        },
+        {
+          "query": "焼肉 南区浜田町",
+          "impressions": 91,
+          "clicks": 0,
+          "position": 18.7,
+          "signals": [
+            "area:緑区・天白区",
+            "genre:焼肉"
           ]
         },
         {
@@ -7167,6 +7177,16 @@
           "position": 5.1,
           "signals": [
             "scene:一人飲み"
+          ]
+        },
+        {
+          "query": "南区浜田町 焼肉",
+          "impressions": 29,
+          "clicks": 0,
+          "position": 27.5,
+          "signals": [
+            "area:緑区・天白区",
+            "genre:焼肉"
           ]
         },
         {
@@ -7298,24 +7318,6 @@
             "scene:一人飲み",
             "area:名駅"
           ]
-        },
-        {
-          "query": "名古屋 1人飲み おすすめ",
-          "impressions": 12,
-          "clicks": 0,
-          "position": 8.5,
-          "signals": [
-            "scene:一人飲み"
-          ]
-        },
-        {
-          "query": "名古屋 ご飯 デート",
-          "impressions": 12,
-          "clicks": 0,
-          "position": 15.4,
-          "signals": [
-            "scene:デート"
-          ]
         }
       ],
       "navigational": [
@@ -7439,15 +7441,6 @@
           ]
         },
         {
-          "query": "焼肉 南区浜田町",
-          "impressions": 91,
-          "clicks": 0,
-          "position": 18.7,
-          "signals": [
-            "genre:焼肉"
-          ]
-        },
-        {
           "query": "権兵衛 名駅店 レビュー",
           "impressions": 90,
           "clicks": 0,
@@ -7493,6 +7486,13 @@
           "impressions": 64,
           "clicks": 1,
           "position": 7.5,
+          "signals": []
+        },
+        {
+          "query": "やんや",
+          "impressions": 55,
+          "clicks": 0,
+          "position": 35.4,
           "signals": []
         }
       ]
