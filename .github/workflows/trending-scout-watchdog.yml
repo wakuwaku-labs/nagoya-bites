@@ -1,0 +1,143 @@
+name: NAGOYA BITES — 話題店発掘ループ 生存監視
+
+# なぜこのワークフローが必要か（2026-09-11 / ISSUE-084 の再適用）:
+#   オーナーから「今日の話題店がずっと同じラインナップ」と報告があり調査したところ、
+#   新規話題店を発掘して data/trending_stores.json に取り込む半自動パイプライン
+#   （scripts/fetch_trending_articles.js）が一度もスケジュールに乗っておらず、
+#   候補プールが2026-04-21から実質フリーズしていたことが判明した。
+#
+#   docs/trending-scout-runbook.md を定期実行するループ（trending-scout ルーチン）を
+#   新設したが、これ自体が「気づけるはず」で止まっていては同じ発覚遅れが再発する。
+#   ISSUE-084 の教訓（警報を防音室で鳴らすな）をそのまま適用する:
+#     1. 監視は監視対象と別の場所で回す  → ローカル/クラウドのルーチンではなく GitHub Actions
+#     2. 通知は out-of-band に出す        → Issue 起票（GitHub が既定でオーナーにメールする）
+#     3. 「気づけるはず」を検知と数えない → 人がログを見に行かなくても届く
+#
+#   検知するのは「新規話題店が見つかっていないこと」ではない（話題化するネタが無い日は平常）。
+#   検知するのは trending-scout ルーチン自体が報告してこないことだけ（原則6・オオカミ少年化防止）。
+#
+#   判定は検証できる事実で行う（CLAUDE.md 制約10）:
+#     data/trending_scout_health.json の実在と last_run.date の鮮度。
+#     鮮度は自己申告できない——動いていないエージェントはファイルを更新できない。
+
+on:
+  schedule:
+    # 05:00 UTC = 14:00 JST。trending-scout ルーチンの実行時刻（daily-trending5.yml より前を想定）
+    # に依存しないよう、許容欠測日数（既定3日）側で余裕を持たせている。
+    - cron: '0 5 * * *'
+  workflow_dispatch: # 手動確認・復旧後の即時クローズ用
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 生存確認
+        id: check
+        run: |
+          set +e
+          node scripts/check_trending_scout_health.js --json > /tmp/trending-scout-health.json
+          set -e
+          echo "----- 判定結果 -----"
+          node scripts/check_trending_scout_health.js || true
+
+      - name: 異常なら Issue を起票/更新、復旧していればクローズ
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/trending-scout-health.json', 'utf8'));
+            const label = 'trending-scout-watchdog';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'open', labels: label, per_page: 20,
+            });
+            const existing = issues.find(i => i.title.startsWith('🔴 話題店発掘ループ'));
+
+            // ---- 復旧している場合: 開いている Issue を閉じる（人の手を煩わせない）----
+            if (r.ok) {
+              if (existing) {
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: existing.number,
+                  body: `✅ 復旧を確認しました（JST ${r.today_jst}）。最後の心拍: ${r.last_run.date}（${r.silence_days}日前）。自動クローズします。`,
+                });
+                await github.rest.issues.update({
+                  owner, repo, issue_number: existing.number, state: 'closed',
+                });
+                core.info(`Issue #${existing.number} を復旧クローズしました。`);
+              } else {
+                core.info('健全。Issue の起票は不要です。');
+              }
+              return;
+            }
+
+            // ---- 異常あり: 起票 or 更新 ----
+            const kinds = r.problems.map(p => p.kind).join(', ');
+            const title = `🔴 話題店発掘ループが報告してきていません（${kinds}）`;
+
+            const lines = [];
+            lines.push('話題店発掘ループの **生存確認に失敗**しました（JST ' + r.today_jst + ' 時点）。');
+            lines.push('');
+            lines.push('> このループが止まっていると、「今日の話題店」TOP5 の候補プールが再び');
+            lines.push('> フリーズし、日替わりで店名は変わっても同じ静的な母集団を循環するだけの状態に戻ります');
+            lines.push('> （2026-09-11 に一度発生・調査済み）。');
+            lines.push('');
+            lines.push('## 検出内容');
+            for (const p of r.problems) lines.push(`- **${p.kind}** — ${p.detail}`);
+            lines.push('');
+            lines.push('## 最後の心拍');
+            if (r.last_run) {
+              lines.push(`- 対象日: \`${r.last_run.date}\`（${r.silence_days}日前 / 許容 ${r.max_silence_days}日）`);
+              lines.push(`- 状態: \`${r.last_run.status}\``);
+              if (r.last_run.reason) lines.push(`- 理由: ${r.last_run.reason}`);
+              if (r.last_run.recorded_at) lines.push(`- 記録時刻: ${r.last_run.recorded_at}`);
+            } else {
+              lines.push('- `data/trending_scout_health.json` が未取得です。');
+              lines.push('- **trending-scout ルーチンが一度も心拍を書けていない可能性があります**（スケジュール未登録 / push 権限 OFF / 起動失敗）。');
+            }
+            lines.push('');
+            lines.push('## 対処');
+            lines.push('1. `docs/trending-scout-runbook.md` の手順で手動で1回回して、WebSearch/WebFetchが動くか確認する。');
+            lines.push('2. **`scout_error` の場合** — WebSearch/WebFetchツールの障害や認証切れが最有力。');
+            lines.push('   claude を対話起動して状況を確認してください。');
+            lines.push('3. **`stale_heartbeat` / `no_heartbeat` の場合** — ルーチン自体が動いていない、または');
+            lines.push('   動いてもコミット/push できていない。claude.ai のルーチン設定（スケジュール・**push 権限トグル**）を確認する。');
+            lines.push('4. 復旧したら手動で1回実行し、`data/trending_scout_health.json` が更新・コミットされることを確認する:');
+            lines.push('   ```bash');
+            lines.push('   node scripts/check_trending_scout_health.js');
+            lines.push('   ```');
+            lines.push('');
+            lines.push('---');
+            lines.push('この Issue は生存確認が通ると自動でクローズされます（trending-scout-watchdog.yml）。');
+            const body = lines.join('\n');
+
+            if (existing) {
+              await github.rest.issues.update({
+                owner, repo, issue_number: existing.number, title, body,
+              });
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: existing.number,
+                body: `再検出（JST ${r.today_jst}）。現在の問題: ${kinds}`,
+              });
+              core.setFailed(`話題店発掘ループの異常が継続しています: ${kinds}`);
+            } else {
+              const { data: created } = await github.rest.issues.create({
+                owner, repo, title, body, labels: [label],
+              });
+              core.setFailed(`話題店発掘ループの異常を検出し Issue #${created.number} を起票しました: ${kinds}`);
+            }

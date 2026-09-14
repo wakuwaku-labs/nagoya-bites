@@ -13,6 +13,40 @@ const https = require('https');
 const fs    = require('fs');
 const path  = require('path');
 const { titleAreaLabel } = require('./scripts/lib/area_label');
+const siteChrome = require('./scripts/lib/site_chrome');
+const areaGenrePages = require('./scripts/lib/area_genre_pages');
+
+// SEO-094: エリア×ジャンル一覧（stores/area/）のURL索引。「もっと見る」導線・パンくず・
+// JSON-LD が、生成済みハブが実在する店だけそこへリンクできるようにする（死にリンク回避）。
+// ハブの実在判定は data/stores.json 基準の plan（scripts/gen_area_genre_pages.js と同一の
+// プランナー・同一の閾値）で行う。 CSV 補完前の生データではなく stores.json を使うのは、
+// stores/area/ の生成元と完全に同じ集合で判定するため（食い違いによる死にリンクを防ぐ）。
+let __hubIndex = null;
+let __hubPolicy = null;
+function hubIndex() {
+  if (__hubIndex) return __hubIndex;
+  __hubIndex = new Map();
+  try {
+    const { loadStores } = require('./scripts/lib/load_stores');
+    __hubPolicy = areaGenrePages.loadPolicy();
+    const { pages } = areaGenrePages.planPages(loadStores(), __hubPolicy);
+    for (const p of pages) {
+      if (p.type === 'genre') __hubIndex.set(`${p.area.slug}::${p.genre.slug}`, p.url);
+    }
+  } catch (e) {
+    // ポリシー/プランナー未整備の環境（テスト等）では索引を空のまま返す（フォールバックのみ使う）
+  }
+  return __hubIndex;
+}
+function hubUrlFor(area, genre) {
+  hubIndex(); // __hubPolicy を確実に埋める（初回呼び出し時に1回だけ policy+plan を計算・キャッシュ）
+  if (!__hubPolicy) return null;
+  const a = areaGenrePages.normalizeArea(area, __hubPolicy);
+  const g = areaGenrePages.normalizeGenre(genre, __hubPolicy);
+  if (!a || !g) return null;
+  const url = __hubIndex.get(`${a.slug}::${g.slug}`);
+  return url || null;
+}
 
 // 口コミ信頼度の内訳。語彙・段階は data/trust_display_policy.json（唯一の情報源）、判定は
 // scripts/lib/trust_display.js。crosscheck.json はホットペッパーID をキーに 8 軸の
@@ -408,6 +442,9 @@ function renderStorePage(s, slug, relatedStores) {
   const name     = s['店名'] || '';
   const genre    = s['ジャンル'] || '';
   const area     = s['エリア'] || '';
+  // SEO-094: このセルにエリア×ジャンル一覧ページが実在するときだけそこへリンクする
+  const hubUrl   = hubUrlFor(area, genre);
+  const hubAbsUrl = hubUrl ? `${BASE_URL}/${hubUrl}` : null;
   const pref     = s['都道府県'] || '愛知県';
   const locality = s['市区町村'] || '';
   const street   = s['住所'] || '';
@@ -517,9 +554,10 @@ function renderStorePage(s, slug, relatedStores) {
     '@type': 'BreadcrumbList',
     'itemListElement': [
       { '@type': 'ListItem', 'position': 1, 'name': 'NAGOYA BITES', 'item': BASE_URL + '/' },
-      ...(genre ? [{ '@type': 'ListItem', 'position': 2, 'name': genre, 'item': `${BASE_URL}/#genre=${encodeURIComponent(genre)}` }] : []),
-      ...(area  ? [{ '@type': 'ListItem', 'position': genre ? 3 : 2, 'name': area + 'エリア', 'item': `${BASE_URL}/#area=${encodeURIComponent(area)}` }] : []),
-      { '@type': 'ListItem', 'position': (genre ? 1 : 0) + (area ? 1 : 0) + 2, 'name': name, 'item': pageUrl }
+      ...(hubAbsUrl ? [{ '@type': 'ListItem', 'position': 2, 'name': `${area}の${genre}`, 'item': hubAbsUrl }]
+        : genre ? [{ '@type': 'ListItem', 'position': 2, 'name': genre, 'item': `${BASE_URL}/#genre=${encodeURIComponent(genre)}` }] : []),
+      ...(!hubAbsUrl && area ? [{ '@type': 'ListItem', 'position': genre ? 3 : 2, 'name': area + 'エリア', 'item': `${BASE_URL}/#area=${encodeURIComponent(area)}` }] : []),
+      { '@type': 'ListItem', 'position': (hubAbsUrl ? 1 : (genre ? 1 : 0) + (area ? 1 : 0)) + 2, 'name': name, 'item': pageUrl }
     ]
   };
 
@@ -670,8 +708,6 @@ ${/imgfp\.hotp\.jp\/.+_480\.jpg/.test(photo) ? '<meta property="og:image:width" 
 <script type="application/ld+json">${JSON.stringify([jsonLd, breadcrumbLd], null, 2)}</script>
 <style>
 body{min-height:100vh;}
-.back-link{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:500;letter-spacing:0;color:var(--muted);text-decoration:none;transition:color .2s;min-height:var(--tap-min);display:inline-flex;align-items:center;}
-.back-link:hover{color:var(--gold);}
 .hero-img{width:100%;height:260px;object-fit:cover;filter:brightness(.88) saturate(.85);display:block;}
 @media(min-width:768px){.hero-img{height:380px;}}
 .container{max-width:720px;margin:0 auto;padding:2rem 1.5rem 4rem;}
@@ -700,8 +736,8 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .ig-photos h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
-.link-btn.hp{background:#e6002d;color:#fff;border-color:#e6002d;}
-.link-btn.hp:hover{background:#c0001f;border-color:#c0001f;}
+.link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
+.link-btn.hp:hover{background:var(--gold2);border-color:var(--gold2);}
 .trust-breakdown{margin:1.6rem 0;padding:1.2rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
 .trust-breakdown h2{font-size:var(--fs-lg);margin:0 0 .5rem;}
 .trust-breakdown-intro{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);margin-bottom:.9rem;}
@@ -730,21 +766,18 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 </style>
 </head>
 <body>
-<header>
-  <a class="logo" href="../">Nagoya <em>Bites</em></a>
-  <a class="back-link" href="../">← 店舗一覧に戻る</a>
-</header>
+${siteChrome.renderHeader({ depth: 1, active: 'top' })}
 
 <img class="hero-img" src="${heroSrc}"${heroSrcset ? ` srcset="${heroSrcset}" sizes="100vw"` : ''} alt="${name}" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="${heroOnerror}">
 
 <div class="container">
-  <nav class="breadcrumb" aria-label="パンくずリスト">
-    <a href="../">NAGOYA BITES</a>
-    ${genre ? `<span>›</span><a href="../#genre=${encodeURIComponent(genre)}">${genre}</a>` : ''}
-    ${area  ? `<span>›</span><a href="../#area=${encodeURIComponent(area)}">${area}</a>` : ''}
-    <span>›</span>
-    <span>${name}</span>
-  </nav>
+  ${siteChrome.renderBreadcrumb([
+    { href: 'index.html', label: 'TOP' },
+    hubUrl ? { href: `${siteChrome.prefix(1)}${hubUrl}`, label: `${area}の${genre}` }
+      : genre ? { href: `../#genre=${encodeURIComponent(genre)}`, label: genre } : null,
+    !hubUrl && area ? { href: `../#area=${encodeURIComponent(area)}`, label: area } : null,
+    { label: name },
+  ].filter(Boolean), { depth: 1 })}
 
   <div class="genre-badge">${genre}</div>
   <h1>${name}</h1>
@@ -775,14 +808,12 @@ ${trustBreakdownHtml}
   ${relatedStoresHtml}
 
   <div class="back-section">
-    <a href="../?area=${encodeURIComponent(area)}&genre=${encodeURIComponent(genre)}">← ${area}の${genre}をもっと見る</a>
+    <a href="${hubUrl ? siteChrome.prefix(1) + hubUrl : '../index.html#genre=' + encodeURIComponent(genre)}">← ${area}の${genre}をもっと見る</a>
   </div>
 </div>
 
-<footer>
-  <p class="fc">© <span id="yr"></span> NAGOYA BITES — 現役飲食店マネージャー監修 名古屋グルメガイド</p>
-</footer>
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+${siteChrome.renderFooter({ depth: 1 })}
+${siteChrome.chromeScript()}
 ${hasIgEmbed ? `<script>
 (function(){
   var el=document.querySelector('.instagram-media');

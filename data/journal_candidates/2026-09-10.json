@@ -1,0 +1,411 @@
+{
+  "date": "2026-09-10",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名古屋城前のイタリアンが日曜定休に。丸の内で接待を組む日の選び方",
+      "verdict": "PASS",
+      "total": 107,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "イタリアン",
+          "feature": "features/nagoya-italian-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (コース,席,接待,デート,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 138字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「イタリアン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "名城公園そばのイタリアン、アジア大会16日間の席の取り方",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 90,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 3
+      },
+      "search_intent_links": [
+        {
+          "kw": "イタリアン",
+          "feature": "features/nagoya-italian-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 114字 +4",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「イタリアン」+2"
+        ]
+      },
+      "gate_note": "90点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -7"
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄の久屋大通、餃子フェスの週末に一人飲みで逃げ込む店",
+      "verdict": "HOLD",
+      "total": 84,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 3,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "中華",
+          "feature": "features/nagoya-chinese-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "主役店が必要なテーマなのに main_store 未指定 → +0",
+          "lead 115字 +4",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「餃子」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "大須の食べ歩き、フローズンヨーグルト行列の裏側",
+      "verdict": "HOLD",
+      "total": 67,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 3,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "食べ歩き",
+          "feature": "features/osu-food-walk.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (回転) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 3件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "主役店が必要なテーマなのに main_store 未指定 → +0",
+          "lead 108字 +4",
+          "title 23字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「食べ歩き」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [
+    {
+      "id": "c3",
+      "title_draft": "名駅メイチカの海老豚骨ラーメン、通勤動線の価格帯を読む",
+      "verdict": "DISQUALIFIED",
+      "total": 0,
+      "disqualified_reasons": [
+        "同一店舗の再掲 (海老豚骨ラーメン一番軒 メイチカ店 in pending, 2026-09-07)"
+      ],
+      "breakdown": null
+    }
+  ],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "名古屋城前のイタリアンが日曜定休に。丸の内で接待を組む日の選び方",
+      "lead_draft": "アジア大会の競技は今日9月10日、IGアリーナの男子バスケから始まる。名古屋城の北で16日間人が動くその月に、城の南・丸の内の一軒は日曜を閉めた。名古屋最古の料亭「河文」の敷地に建つイタリアンの営業日程変更を、価格帯と席の使われ方から読む。接待の予約を入れる曜日が変わる話だ。",
+      "angle": "総席数70・宴会収容12・ランチ4,000〜6,000円/ディナー8,000〜9,000円のコース中心店が、観光動線ができる月に日曜を閉める意味を、ブライダル併設施設の回転と繁忙の置き方から読み、接待とデートで使う曜日の判断軸に落とす",
+      "main_store": {
+        "name": "THE KAWABUN NAGOYA ザ カワブン ナゴヤ",
+        "id": "J004004985",
+        "area": "丸の内",
+        "genre": "イタリアン"
+      },
+      "sources": [
+        {
+          "label": "共同通信「アジア大会、10日から競技開始 愛知・名古屋、32年ぶり日本で」",
+          "url": "https://news.yahoo.co.jp/articles/def937e5ecc45a21476664693b5d8a61dd22ccb5",
+          "date": "2026-09-09"
+        },
+        {
+          "label": "中日新聞「アジア・アジアパラ大会の競技日程発表 全競技の先陣は男子バスケ、9月10日から」",
+          "url": "https://www.chunichi.co.jp/article/1190643",
+          "date": "2026-01-09"
+        },
+        {
+          "label": "THE KAWABUN NAGOYA 公式サイト お知らせ（9月より日曜定休／9月20日はディナーのみ営業）",
+          "url": "https://www.thekawabunnagoya.com/thekawabunnagoya/",
+          "date": "2026-07-01"
+        },
+        {
+          "label": "ホットペッパー THE KAWABUN NAGOYA（営業時間・席数・平均予算）",
+          "url": "https://www.hotpepper.jp/strJ004004985/",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "THE KAWABUN NAGOYA 公式Instagram",
+          "url": "https://www.instagram.com/thekawabunnagoya/",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "第20回アジア競技大会 公式X",
+          "url": "https://x.com/AsianGames_2026",
+          "date": "2026-09-09"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄の久屋大通、餃子フェスの週末に一人飲みで逃げ込む店",
+      "lead_draft": "9月11日から13日まで、エディオン久屋広場に全肉祭が入る。栄の広場イベントは客を集める一方で、周辺の居酒屋の予約を読みにくくする。業界人が見る「フェス週末の栄」の空き方と、カウンターで一人飲みするなら何時に入るべきかを整理する。",
+      "angle": "広場イベント期間の栄は回転が読めなくなる。価格帯とカウンター席の埋まり方から一人飲みの入店時間を決める",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「全肉祭がエディオン久屋広場で9月11日から13日まで開催」",
+          "url": "https://jouhou.nagoya/zennikusai-sakae/",
+          "date": "2026-09-09"
+        },
+        {
+          "label": "ナゴヤトコトン「行列のできる名店 餃子フェス 2026 in名古屋」",
+          "url": "https://nagoyato.com/posts/18751",
+          "date": "2026-09-08"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "名駅メイチカの海老豚骨ラーメン、通勤動線の価格帯を読む",
+      "lead_draft": "9月6日にメイチカへ入った海老豚骨ラーメン一番軒は、地下街のラーメンとしては珍しい特濃スープを掲げる。地下街の飲食は回転と客単価の設計が地上と違う。名駅の通勤動線に置かれた一杯を、価格帯と席数から業界人視点で読む。",
+      "angle": "地下街の回転と価格帯の関係を見る",
+      "main_store": {
+        "name": "海老豚骨ラーメン一番軒 メイチカ店",
+        "id": "",
+        "area": "名駅",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「海老豚骨ラーメン一番軒がメイチカにオープン」",
+          "url": "https://jouhou.nagoya/ichibanken-ebi/",
+          "date": "2026-09-06"
+        },
+        {
+          "label": "ナゴヤトコトン「メイチカ テイクアウトグルメ6選」",
+          "url": "https://nagoyato.com/posts/18459",
+          "date": "2026-09-03"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "名城公園そばのイタリアン、アジア大会16日間の席の取り方",
+      "lead_draft": "IGアリーナの目の前、名城公園駅から徒歩2分のイタリアンは、大会期間中もっとも読みにくい立地に立つ。試合終了時刻に一斉に人が出る会場の隣で、店側は席をどう構えるか。観戦のあとに使うなら何時に予約を入れるべきかを業界人視点で書く。",
+      "angle": "会場至近店の予約とシーンの設計、価格帯と席の回転をどう読むか",
+      "main_store": {
+        "name": "GARB CASTELLO ガーブ カステッロ",
+        "id": "",
+        "area": "名城公園",
+        "genre": "イタリアン"
+      },
+      "sources": [
+        {
+          "label": "共同通信「アジア大会、10日から競技開始」",
+          "url": "https://news.yahoo.co.jp/articles/def937e5ecc45a21476664693b5d8a61dd22ccb5",
+          "date": "2026-09-09"
+        },
+        {
+          "label": "中日新聞「競技日程発表 全競技の先陣は男子バスケ」",
+          "url": "https://www.chunichi.co.jp/article/1190643",
+          "date": "2026-01-09"
+        },
+        {
+          "label": "第20回アジア競技大会 公式サイト 大会概要",
+          "url": "https://www.aichi-nagoya2026.org/tournament/overview/",
+          "date": "2026-09-01"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "大須の食べ歩き、フローズンヨーグルト行列の裏側",
+      "lead_draft": "韓国発のフローズンヨーグルト専門店が大須に2店舗目を出し、連日行列ができている。食べ歩きの街で行列が続く店と消える店を分けるのは味だけではない。提供時間・オペ・立地の3点から、大須の行列店の持続性を業界人視点で読む。",
+      "angle": "提供オペと回転、食べ歩き立地の相場観",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "大須",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "たべまろ「大須商店街の食べ歩き最新店舗13選」",
+          "url": "https://www.tabemaro.jp/column/osu-tabearuki-new/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "ナゴヤトコトン「10チャン あたりま縁日 IN大須」",
+          "url": "https://nagoyato.com/posts/18808",
+          "date": "2026-09-10"
+        }
+      ]
+    }
+  ]
+}

@@ -60,15 +60,9 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}
 .related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}
 .related-link:hover{background:rgba(122,92,16,.08);}
-footer a{color:rgba(201,169,110,.7);text-decoration:none;}
 .store-photo{flex-shrink:0;width:160px;height:120px;border-radius:4px;overflow:hidden;background:var(--bg2);}
 .store-photo img{width:100%;height:100%;object-fit:cover;}
-@media(max-width:640px){
-.store-card{flex-direction:column;gap:.8rem;}
-.store-num{font-size:1.6rem;}
-nav{display:none;}
-.store-photo{width:100%;height:180px;}
-}
+@media(max-width:640px){.store-card{flex-direction:column;gap:.8rem;}.store-num{font-size:1.6rem;}.store-photo{width:100%;height:180px;}}
 .art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}
 .art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}
 @media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
@@ -77,7 +71,8 @@ nav{display:none;}
 .store-link::after{content:"→";margin-left:.15rem;font-weight:400;}
 .store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}
 .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
-/*ROSTER_BADGE_CSS*/.store-new,.shop-new{display:inline-block;margin-left:.5rem;font-size:var(--fs-xs);font-weight:700;letter-spacing:.03em;color:#fff;background:#b08d2c;padding:.1rem .45rem;border-radius:3px;vertical-align:middle;white-space:nowrap;}</style>
+/*ROSTER_BADGE_CSS*/
+</style>
 <!-- FAQ-LD:START -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"母の日に予約できる名古屋のおしゃれなレストランはありますか?","acceptedAnswer":{"@type":"Answer","text":"NAGOYA BITESの母の日特集では、和食・イタリアン・フレンチ・カフェの落ち着いたジャンルでGoogle評価4.0以上の店舗を厳選。座席・通路幅にも配慮した店舗を中心に掲載しています。"}},{"@type":"Question","name":"母の日ランチの予算はどれくらい?","acceptedAnswer":{"@type":"Answer","text":"母の日ランチコースは3,500〜6,000円が中心、特別感を出す場合は7,000〜10,000円。ディナー移行すると一人8,000〜15,000円が目安です。"}},{"@type":"Question","name":"母の日は予約が取りづらいですか?","acceptedAnswer":{"@type":"Answer","text":"5月第2日曜は名古屋でも人気集中日です。1ヶ月前の予約が無難、人気店は2ヶ月前から予約開始します。"}},{"@type":"Question","name":"花やメッセージカードを用意してくれる店はありますか?","acceptedAnswer":{"@type":"Answer","text":"店舗により対応可否が異なります。記念日対応の表示がある店舗は相談可の場合が多いので、予約時に具体的に伝えてください。"}}]}
@@ -85,25 +80,35 @@ nav{display:none;}
 <!-- FAQ-LD:END -->
 </head>
 <body>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="../index.html">すべての店舗</a>
-    <a href="gw-2026.html">GW特集</a>
-    <a href="spring-terrace.html">春テラス特集</a>
-    <a href="../about.html">About</a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
+    <a href="../features/index.html" aria-current="page">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
-
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
 <nav aria-label="パンくずリスト">
   <div class="breadcrumb">
-    <a href="../index.html">NAGOYA BITES</a>
+    <a href="../index.html">TOP</a>
     <span>›</span>
-    <a href="index.html">特集記事</a>
+    <a href="../features/index.html">特集</a>
     <span>›</span>
     母の日ディナー・ランチ10選
   </div>
 </nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
 <article>
   <div class="art-hero-image">
@@ -144,13 +149,13 @@ nav{display:none;}
         <div class="store-num">01</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/80/94/P048518094/P048518094_480.jpg" alt="もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003411794.html">もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店</a></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003411794.html" onclick="trackEvent('feature_store_click',{store:'もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店',feature:'mothers-day'})">もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店</a></h3>
           <div class="store-meta"><span>名古屋駅</span><span>和食</span><span class="score">★ 4.3</span><span>3001～4000円</span></div>
           <p class="store-desc">和食とお酒が楽しめる人気店。落ち着いた雰囲気が魅力</p>
           <div class="store-tags"><span class="store-tag">100名以上</span><span class="store-tag">3000〜5000円</span><span class="store-tag">個室</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003411794.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003411794/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003411794.html" onclick="trackEvent('feature_store_click',{store:'もつ鍋と痛風鍋 個室居酒屋 くろさわ 名古屋駅店',feature:'mothers-day'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003411794/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003411794',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -159,13 +164,13 @@ nav{display:none;}
         <div class="store-num">02</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/68/75/P048866875/P048866875_480.jpg" alt="九州料理 椿 金山店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001187588.html">九州料理 椿 金山店</a></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001187588.html" onclick="trackEvent('feature_store_click',{store:'九州料理 椿 金山店',feature:'mothers-day'})">九州料理 椿 金山店</a></h3>
           <div class="store-meta"><span>金山</span><span>和食</span><span class="score">★ 4.3</span><span>4001～5000円</span></div>
           <p class="store-desc">金山の人気No.1のもつ鍋 個室 半個室もご用意♪</p>
           <div class="store-tags"><span class="store-tag">半個室</span><span class="store-tag">50〜60名</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001187588.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001187588/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001187588.html" onclick="trackEvent('feature_store_click',{store:'九州料理 椿 金山店',feature:'mothers-day'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001187588/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001187588',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -174,13 +179,13 @@ nav{display:none;}
         <div class="store-num">03</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/87/62/P041948762/P041948762_480.jpg" alt="ル プランタン" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003532896.html">ル プランタン</a></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003532896.html" onclick="trackEvent('feature_store_click',{store:'ル プランタン',feature:'mothers-day'})">ル プランタン</a></h3>
           <div class="store-meta"><span>緑区・南区・天白区・瑞穂区</span><span>イタリアン</span><span class="score">★ 4.4</span><span>15001～20000円</span></div>
           <p class="store-desc">徳重駅徒歩4分、1万5000円フレンチはランチ営業で記念日・接待の高客単価を確保</p>
           <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">5000円以上</span><span class="store-tag">誕生日・記念日</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003532896.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003532896/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003532896.html" onclick="trackEvent('feature_store_click',{store:'ル プランタン',feature:'mothers-day'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003532896/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003532896',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -189,13 +194,13 @@ nav{display:none;}
         <div class="store-num">04</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/61/34/P048386134/P048386134_480.jpg" alt="シーシャカフェ 凛湊" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003851199.html">シーシャカフェ 凛湊</a></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003851199.html" onclick="trackEvent('feature_store_click',{store:'シーシャカフェ 凛湊',feature:'mothers-day'})">シーシャカフェ 凛湊</a></h3>
           <div class="store-meta"><span>栄(ミナミ)/矢場町/大須/上前津</span><span>カフェ</span><span class="score">★ 4.9</span><span>3001～4000円</span></div>
           <p class="store-desc">矢場町駅徒歩1分、3,500円カフェ。駅出口直結でランチ客の滞留時間を伸ばす。</p>
           <div class="store-tags"><span class="store-tag">カフェ</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003851199.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003851199/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003851199.html" onclick="trackEvent('feature_store_click',{store:'シーシャカフェ 凛湊',feature:'mothers-day'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003851199/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003851199',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -204,13 +209,13 @@ nav{display:none;}
         <div class="store-num">05</div>
         <div class="store-photo"><img src="https://lh3.googleusercontent.com/place-photos/AG9NLjDE4WMf5swaMHBB0WNE0J7fp95LTVM8ziZAWNwhyahWz-upI96YaovPeCotDZIZpTtUXfu08bsf2VzHzHEw270gki4EfA8Ri7BlQijCQHD3jQSYCv2t0SL3435jmVM4QBL-lRsqG8niIGR73WES9jW6uA=s1600-w1200" alt="サラマンジェドゥカジノ" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J000661748.html">サラマンジェドゥカジノ</a></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J000661748.html" onclick="trackEvent('feature_store_click',{store:'サラマンジェドゥカジノ',feature:'mothers-day'})">サラマンジェドゥカジノ</a></h3>
           <div class="store-meta"><span>名古屋市中村区</span><span>フレンチビストロ</span><span class="score">★ 4.3</span></div>
           <p class="store-desc">「名古屋で最も予約の取れないビストロ」と称される超人気店。わずか1日で2ヶ月分の予約が埋まるほどの人気を誇り、その理由は圧倒的なコストパフォーマンスと本格的なフレンチビストロ料理にあります。友人との食事やカジュアルなデ…</p>
           <div class="store-tags"></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000661748.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ000661748/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000661748.html" onclick="trackEvent('feature_store_click',{store:'サラマンジェドゥカジノ',feature:'mothers-day'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ000661748/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J000661748',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -219,13 +224,13 @@ nav{display:none;}
         <div class="store-num">06</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/71/68/P046307168/P046307168_480.jpg" alt="BOU THE ROOF ボウザルーフ 金山店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003829081.html">BOU THE ROOF ボウザルーフ 金山店</a><span class="store-new">今月の新顔</span></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003829081.html" onclick="trackEvent('feature_store_click',{store:'BOU THE ROOF ボウザルーフ 金山店',feature:'mothers-day'})">BOU THE ROOF ボウザルーフ 金山店</a><span class="store-new">今月の新顔</span></h3>
           <div class="store-meta"><span>金山・神宮前・熱田区</span><span>イタリアン</span><span class="score">★ 4.6</span><span>4001～5000円</span></div>
           <p class="store-desc">フレンチ系で金山には少ないジャンル、4500円でランチ営業も展開</p>
           <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003829081.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003829081/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003829081.html" onclick="trackEvent('feature_store_click',{store:'BOU THE ROOF ボウザルーフ 金山店',feature:'mothers-day'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003829081/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003829081',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -234,13 +239,13 @@ nav{display:none;}
         <div class="store-num">07</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/73/47/P047527347/P047527347_480.jpg" alt="うなぎ四代目菊川 グローバルゲート店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003737152.html">うなぎ四代目菊川 グローバルゲート店</a><span class="store-new">今月の新顔</span></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003737152.html" onclick="trackEvent('feature_store_click',{store:'うなぎ四代目菊川 グローバルゲート店',feature:'mothers-day'})">うなぎ四代目菊川 グローバルゲート店</a><span class="store-new">今月の新顔</span></h3>
           <div class="store-meta"><span>名古屋（名古屋駅/西区/中村区）</span><span>和食</span><span class="score">★ 4.3</span><span>4001～5000円</span></div>
           <p class="store-desc">ささしまライブ駅徒歩4分、ランチ限定で割安感ある新興エリア和食</p>
           <div class="store-tags"><span class="store-tag">和食</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003737152.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003737152/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003737152.html" onclick="trackEvent('feature_store_click',{store:'うなぎ四代目菊川 グローバルゲート店',feature:'mothers-day'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003737152/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003737152',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -249,13 +254,13 @@ nav{display:none;}
         <div class="store-num">08</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/65/53/P047936553/P047936553_480.jpg" alt="鰻割烹まるぜん" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J004004794.html">鰻割烹まるぜん</a><span class="store-new">今月の新顔</span></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J004004794.html" onclick="trackEvent('feature_store_click',{store:'鰻割烹まるぜん',feature:'mothers-day'})">鰻割烹まるぜん</a><span class="store-new">今月の新顔</span></h3>
           <div class="store-meta"><span>栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄</span><span>和食</span><span class="score">★ 4.5</span><span>4001～5000円</span></div>
           <p class="store-desc">伏見駅5分、4500円和食ランチ営業は夜客を昼に逃がさない仕組み</p>
           <div class="store-tags"><span class="store-tag">和食</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004004794.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004004794/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004004794.html" onclick="trackEvent('feature_store_click',{store:'鰻割烹まるぜん',feature:'mothers-day'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ004004794/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004004794',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -264,13 +269,13 @@ nav{display:none;}
         <div class="store-num">09</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/01/80/P050710180/P050710180_480.jpg" alt="Oto樹 栄店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003851462.html">Oto樹 栄店</a><span class="store-new">今月の新顔</span></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003851462.html" onclick="trackEvent('feature_store_click',{store:'Oto樹 栄店',feature:'mothers-day'})">Oto樹 栄店</a><span class="store-new">今月の新顔</span></h3>
           <div class="store-meta"><span>栄(ミナミ)/矢場町/大須/上前津</span><span>イタリアン</span><span class="score">★ 4.7</span><span>4001～5000円</span></div>
           <p class="store-desc">栄駅5分以内、6000円のイタランチでオフィス周辺の回転を見込む</p>
           <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003851462.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003851462/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003851462.html" onclick="trackEvent('feature_store_click',{store:'Oto樹 栄店',feature:'mothers-day'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003851462/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003851462',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -279,13 +284,13 @@ nav{display:none;}
         <div class="store-num">10</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/25/19/P045912519/P045912519_480.jpg" alt="四間道レストランMATSUURA" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003958549.html">四間道レストランMATSUURA</a><span class="store-new">今月の新顔</span></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003958549.html" onclick="trackEvent('feature_store_click',{store:'四間道レストランMATSUURA',feature:'mothers-day'})">四間道レストランMATSUURA</a><span class="store-new">今月の新顔</span></h3>
           <div class="store-meta"><span>名古屋（名古屋駅/西区/中村区）</span><span>イタリアン</span><span class="score">★ 4.3</span><span>15001～20000円</span></div>
           <p class="store-desc">国際センター駅徒歩6分、18,000円帯で接待・記念日需要を独占供給</p>
           <div class="store-tags"><span class="store-tag">イタリアン</span><span class="store-tag">5000円以上</span><span class="store-tag">誕生日・記念日</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003958549.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003958549/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003958549.html" onclick="trackEvent('feature_store_click',{store:'四間道レストランMATSUURA',feature:'mothers-day'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003958549/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003958549',feature:'mothers-day',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -305,20 +310,6 @@ nav{display:none;}
 <!-- FAQ-HTML:START -->
   <section class="faq-section" aria-label="よくある質問">
     <!-- SEO-042:TOP-CTA:START -->
-<style>
-.topcta{--gold:#7a5c10;--gold2:#96720f;max-width:880px;margin:0 auto 2rem;padding:1.1rem 1.5rem 1.3rem;border:1px solid rgba(122,92,16,.22);border-radius:6px;background:rgba(122,92,16,.035);}
-.topcta-head{font-size:.74rem;letter-spacing:.12em;color:var(--gold,#7a5c10);margin-bottom:.15rem;}
-.topcta-sub{font-size:.8rem;color:var(--muted,#6b6b6b);margin-bottom:.85rem;line-height:1.6;}
-.topcta-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;}
-.topcta-item{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;}
-.topcta-name{font-size:.92rem;font-weight:500;min-width:0;}
-.topcta-actions{display:flex;gap:.5rem;flex-shrink:0;}
-.topcta .store-link{display:inline-flex;align-items:center;gap:.35rem;background:var(--gold,#7a5c10);color:#fff;border:1px solid var(--gold,#7a5c10);padding:.55rem 1.1rem;border-radius:4px;font-size:.78rem;font-weight:500;letter-spacing:.04em;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);transition:background .15s,transform .1s;}
-.topcta .store-link:hover{background:var(--gold2,#96720f);transform:translateY(-1px);}
-.topcta .store-link[href*="hotpepper"]{background:#fff;color:var(--gold,#7a5c10);border:1px solid var(--gold,#7a5c10);box-shadow:none;}
-.topcta .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
-@media(max-width:640px){.topcta{padding:1rem 1.1rem 1.15rem;}.topcta-item{flex-direction:column;align-items:flex-start;gap:.45rem;}.topcta-actions{width:100%;}}
-</style>
 <aside class="topcta" aria-label="この特集の注目店">
   <div class="topcta-head">EDITORS' PICK</div>
   <div class="topcta-sub">本文を読む前に動きたい方へ。編集部が上位に挙げた3軒の詳細と予約はこちらから。</div>
@@ -372,12 +363,12 @@ nav{display:none;}
 <div class="related">
   <p class="related-title">関連する特集記事</p>
   <div class="related-links">
-    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;">名古屋グルメ完全ガイド</a>
-    <a class="related-link" href="gw-2026.html">GW・連休おすすめ12選</a>
-    <a class="related-link" href="spring-terrace.html">春テラス・屋外10選</a>
-    <a class="related-link" href="birthday.html">誕生日・記念日10選</a>
-    <a class="related-link" href="private-room.html">個室グルメ10選</a>
-    <a class="related-link" href="date.html">デートディナー10選</a>
+    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;" onclick="trackEvent('internal_link_click',{feature:'mothers-day',link_url:'nagoya-gourmet-guide.html',block:'feature_related'})">名古屋グルメ完全ガイド</a>
+    <a class="related-link" href="gw-2026.html" onclick="trackEvent('internal_link_click',{feature:'mothers-day',link_url:'gw-2026.html',block:'feature_related'})">GW・連休おすすめ12選</a>
+    <a class="related-link" href="spring-terrace.html" onclick="trackEvent('internal_link_click',{feature:'mothers-day',link_url:'spring-terrace.html',block:'feature_related'})">春テラス・屋外10選</a>
+    <a class="related-link" href="birthday.html" onclick="trackEvent('internal_link_click',{feature:'mothers-day',link_url:'birthday.html',block:'feature_related'})">誕生日・記念日10選</a>
+    <a class="related-link" href="private-room.html" onclick="trackEvent('internal_link_click',{feature:'mothers-day',link_url:'private-room.html',block:'feature_related'})">個室グルメ10選</a>
+    <a class="related-link" href="date.html" onclick="trackEvent('internal_link_click',{feature:'mothers-day',link_url:'date.html',block:'feature_related'})">デートディナー10選</a>
   </div>
   <p class="related-journal" style="margin-top:1.2rem;font-size:.82rem;color:rgba(28,28,26,.62);line-height:1.7;">
     名古屋の最新グルメは <a class="related-link" href="../journal/index.html">デイリージャーナル</a> で毎朝更新中。
@@ -387,10 +378,76 @@ nav{display:none;}
   </p>
 </div>
 
-<footer>
-  <p>© 2026 <a href="../index.html">NAGOYA BITES</a> — 名古屋グルメの決定版ガイド</p>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
 
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
+<script class="nb-engagement-tracking">
+(function(){
+  var fired={},THRESH=[25,50,75,100];
+  function check(){
+    var doc=document.documentElement;
+    var top=window.pageYOffset||doc.scrollTop;
+    var max=(doc.scrollHeight-doc.clientHeight)||1;
+    var pct=Math.min(100,Math.round((top/max)*100));
+    THRESH.forEach(function(t){if(pct>=t&&!fired[t]){fired[t]=true;try{trackEvent('scroll_depth',{percent:t});}catch(err){}}});
+  }
+  var timer=null;
+  window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
+  check();
+})();
+</script>
 </body>
 </html>

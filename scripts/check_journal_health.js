@@ -98,14 +98,29 @@ try {
   /* 無くても判定は成立する（あくまで補足情報） */
 }
 
+// ローカル実行が今日 die して終わっていないか（published.json の欠番とは独立した検知）。
+// 記事が他のセッション/PR 経由でマニュアル公開されると欠番は消えるが、
+// ローカル自動化が壊れているという事実は残る（ISSUE-123）。
+const todayJst = jstDate(0);
+const localRunDied =
+  health &&
+  health.date === todayJst &&
+  health.status === 'die';
+const localRunHeld =
+  health &&
+  health.date === todayJst &&
+  health.status === 'hold';
+
 const result = {
   ok: missing.length === 0,
-  today_jst: jstDate(0),
+  today_jst: todayJst,
   window_days: DAYS,
   missing_count: missing.length,
   missing,
   checked,
   last_local_run: health,
+  local_run_died: !!localRunDied,
+  local_run_held: !!localRunHeld,
 };
 
 if (asJson) {
@@ -123,6 +138,14 @@ if (asJson) {
   }
   console.log('');
   console.log(result.ok ? '✅ 欠番なし' : `❌ 欠番 ${missing.length} 件: ${missing.map((m) => m.date).join(', ')}`);
+  if (result.local_run_died) {
+    console.log(`⚠️  ローカル実行が今日(${todayJst}) die で終了しています — 自動化が壊れています`);
+    if (health.reason) console.log(`   理由: ${health.reason}`);
+  }
+  if (result.local_run_held) {
+    console.log(`⚠️  ローカル実行が今日(${todayJst}) hold 状態です`);
+    if (health.reason) console.log(`   理由: ${health.reason}`);
+  }
 }
 
 process.exit(result.ok ? 0 : 1);

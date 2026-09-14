@@ -69,17 +69,15 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 </script>
 
 <style>a{color:inherit;text-decoration:none;}
-.site-header{background:#fff;border-bottom:1px solid #e8e4dc;padding:0 1.5rem;position:sticky;top:0;z-index:100;}
-.header-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px;}
 .logo span{font-style:italic;color:#8b6914;}
-.hero{background:linear-gradient(135deg,#0d1a2d 0%,#1a2d4d 50%,#243d5c 100%);color:#fff;padding:4rem 1.5rem 3rem;text-align:center;}
-.hero-eyebrow{font-size:var(--fs-xs);letter-spacing:.18em;text-transform:uppercase;color:#7ab3d4;margin-bottom:1rem;font-family:'DM Mono',monospace;}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:400;line-height:1.3;margin-bottom:1rem;}
-.hero h1 em{font-style:italic;color:#a8d4f0;}
-.hero-sub{font-size:.9rem;color:rgba(255,255,255,.7);max-width:600px;margin:0 auto 1.5rem;}
-.hero-meta{font-size:var(--fs-xs);color:rgba(255,255,255,.5);font-family:'DM Mono',monospace;letter-spacing:.06em;}
+.hero{text-align:center;}
+.hero-eyebrow{font-size:var(--fs-xs);letter-spacing:0;text-transform:none;color:var(--gold);margin-bottom:1rem;font-family:var(--font-body);font-weight:500;}
+.hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,5vw,2.8rem);font-weight:500;line-height:1.3;margin-bottom:1rem;color:var(--ink);}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero-sub{font-size:var(--fs-md);color:var(--muted);max-width:600px;margin:0 auto 1.5rem;line-height:var(--lh-body);}
+.hero-meta{font-size:var(--fs-xs);color:var(--dim);font-family:var(--font-body);letter-spacing:0;}
 .hero-tags{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:1.2rem;}
-.hero-tag{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:2px;padding:.2rem .7rem;font-size:var(--fs-xs);letter-spacing:.06em;color:rgba(255,255,255,.8);}
+.hero-tag{background:rgba(122,92,16,.06);border:1px solid rgba(122,92,16,.3);border-radius:var(--r-pill);min-height:var(--tap-min);display:inline-flex;align-items:center;padding:0 .9rem;font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);}
 main{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
 .lead-box{background:#fff;border-left:3px solid #2a5f8a;padding:1.2rem 1.5rem;margin-bottom:2.5rem;font-size:.95rem;line-height:1.9;}
 .lead-box strong{color:#0d3a5c;}
@@ -118,13 +116,7 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
 .related-links{display:flex;flex-wrap:wrap;gap:.6rem;}
 .related-links a{font-size:.82rem;background:#fff;border:1px solid #e8e4dc;padding:.4rem .9rem;border-radius:2px;color:#555;}
 .related-links a:hover{border-color:#2a5f8a;color:#0d3a5c;}
-.site-footer{background:#1a1a1a;color:rgba(255,255,255,.5);text-align:center;padding:2rem 1rem;font-size:.75rem;}
-.site-footer a{color:rgba(255,255,255,.5);margin:0 .5rem;}
-@media(max-width:600px){
-  nav{display:none;}
-  .stores-grid,.type-grid{grid-template-columns:1fr;}
-  .hero{padding:3rem 1rem 2.5rem;}
-}
+@media(max-width:600px){.stores-grid,.type-grid{grid-template-columns:1fr;}.hero{padding:3rem 1rem 2.5rem;}}
 .art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}
 .art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}
 @media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
@@ -152,17 +144,37 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
 .type-photo-credit{display:block;font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.06em;color:#8b8578;margin-top:.35rem;}</style>
 </head>
 <body>
-<header class="site-header">
-  <div class="header-inner">
-    <a href="/" class="logo">NAGOYA <span>BITES</span></a>
-    <nav>
-      <a href="/">店舗を探す</a>
-      <a href="/features/">特集</a>
-      <a href="/journal/">Journal</a>
-      <a href="/features/editorial-policy.html">編集方針</a>
-    </nav>
-  </div>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+<header>
+  <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
+    <a href="../features/index.html" aria-current="page">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
+  </nav>
 </header>
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
+<nav aria-label="パンくずリスト">
+  <div class="breadcrumb">
+    <a href="../index.html">TOP</a>
+    <span>›</span>
+    <a href="../features/index.html">特集</a>
+    <span>›</span>
+    <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    <span>›</span>
+    名古屋 一人飲み完全ガイド 2026
+  </div>
+</nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
 <div class="art-hero-image">
   <img src="https://lh3.googleusercontent.com/place-photos/AG9NLjDqZlUzunf6qO98HhkujSgTwLzEo1k_p1UBsd1fcTL7b_QYd5iDLsBWd3vxOGCSlAhCylpc7jMSBt3j7Dw9GdtFuqM6WmWGZyXNaqCIpHelqxmfCwitBac-D5UixpDbFcic_ujquFyeDEf37uk=s1600-w1600" alt="純系名古屋コーチン 鳥力 炭火で焼き上げる焼き鳥" loading="eager" fetchpriority="high" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='../assets/feature-figures/nagoya-solo-dining.svg';}">
@@ -183,12 +195,6 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
 </section>
 
 <main>
-  <nav class="breadcrumb" aria-label="パンくずリスト">
-    <a href="/">NAGOYA BITES</a><span>›</span>
-    <a href="/features/">特集</a><span>›</span>
-    名古屋 一人飲み完全ガイド 2026
-  </nav>
-
   <div class="lead-box">
     名古屋の一人飲みには、実は他都市にはない「業態の幅」がある。
     カウンター割烹から立ち飲み、ホルモン専門のカウンター席、深夜まで空いているバー、
@@ -198,20 +204,6 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
   </div>
 
   <!-- SEO-042:TOP-CTA:START -->
-<style>
-.topcta{--gold:#7a5c10;--gold2:#96720f;max-width:880px;margin:0 auto 2rem;padding:1.1rem 1.5rem 1.3rem;border:1px solid rgba(122,92,16,.22);border-radius:6px;background:rgba(122,92,16,.035);}
-.topcta-head{font-size:.74rem;letter-spacing:.12em;color:var(--gold,#7a5c10);margin-bottom:.15rem;}
-.topcta-sub{font-size:.8rem;color:var(--muted,#6b6b6b);margin-bottom:.85rem;line-height:1.6;}
-.topcta-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;}
-.topcta-item{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;}
-.topcta-name{font-size:.92rem;font-weight:500;min-width:0;}
-.topcta-actions{display:flex;gap:.5rem;flex-shrink:0;}
-.topcta .store-link{display:inline-flex;align-items:center;gap:.35rem;background:var(--gold,#7a5c10);color:#fff;border:1px solid var(--gold,#7a5c10);padding:.55rem 1.1rem;border-radius:4px;font-size:.78rem;font-weight:500;letter-spacing:.04em;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);transition:background .15s,transform .1s;}
-.topcta .store-link:hover{background:var(--gold2,#96720f);transform:translateY(-1px);}
-.topcta .store-link[href*="hotpepper"]{background:#fff;color:var(--gold,#7a5c10);border:1px solid var(--gold,#7a5c10);box-shadow:none;}
-.topcta .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
-@media(max-width:640px){.topcta{padding:1rem 1.1rem 1.15rem;}.topcta-item{flex-direction:column;align-items:flex-start;gap:.45rem;}.topcta-actions{width:100%;}}
-</style>
 <aside class="topcta" aria-label="この特集の注目店">
   <div class="topcta-head">EDITORS' PICK</div>
   <div class="topcta-sub">本文を読む前に動きたい方へ。編集部が上位に挙げた3軒の詳細と予約はこちらから。</div>
@@ -246,32 +238,32 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
 
   <div class="type-grid">
     <div class="type-card">
-      <a class="type-photo" href="../stores/J001201978.html"><img src="https://imgfp.hotp.jp/IMGH/71/71/P031387171/P031387171_480.jpg" alt="カウンター割烹・和食の掲載店 炭火割烹 魚炭 うおずみ" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 炭火割烹 魚炭 うおずみ</span></a>
+      <a class="type-photo" href="../stores/J001201978.html" onclick="trackEvent('feature_store_click',{store:'J001201978',feature:'nagoya-solo-dining'})"><img src="https://imgfp.hotp.jp/IMGH/71/71/P031387171/P031387171_480.jpg" alt="カウンター割烹・和食の掲載店 炭火割烹 魚炭 うおずみ" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 炭火割烹 魚炭 うおずみ</span></a>
       <h4>カウンター割烹・和食</h4>
       <p>板前との会話が自然に生まれる。1〜2時間で4,000〜7,000円が相場。一人で最も「贅沢な時間」を作れる業態。</p>
     </div>
     <div class="type-card">
-      <a class="type-photo" href="../stores/J001147583.html"><img src="https://imgfp.hotp.jp/IMGH/69/23/P047636923/P047636923_480.jpg" alt="焼き鳥・鳥料理専門の掲載店 鳥心 名駅本店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 鳥心 名駅本店</span></a>
+      <a class="type-photo" href="../stores/J001147583.html" onclick="trackEvent('feature_store_click',{store:'J001147583',feature:'nagoya-solo-dining'})"><img src="https://imgfp.hotp.jp/IMGH/69/23/P047636923/P047636923_480.jpg" alt="焼き鳥・鳥料理専門の掲載店 鳥心 名駅本店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 鳥心 名駅本店</span></a>
       <h4>焼き鳥・鳥料理専門</h4>
       <p>カウンター設計の店が多く、一人でも自然に溶け込める。2,000〜4,000円で十分楽しめる。名古屋コーチンが強み。</p>
     </div>
     <div class="type-card">
-      <a class="type-photo" href="../stores/J003851717.html"><img src="https://imgfp.hotp.jp/IMGH/42/96/P045614296/P045614296_480.jpg" alt="立ち飲み・スタンディングバーの掲載店 立ち飲み酒場 カレーうどん住吉" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 立ち飲み酒場 カレーうどん住吉</span></a>
+      <a class="type-photo" href="../stores/J003851717.html" onclick="trackEvent('feature_store_click',{store:'J003851717',feature:'nagoya-solo-dining'})"><img src="https://imgfp.hotp.jp/IMGH/42/96/P045614296/P045614296_480.jpg" alt="立ち飲み・スタンディングバーの掲載店 立ち飲み酒場 カレーうどん住吉" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 立ち飲み酒場 カレーうどん住吉</span></a>
       <h4>立ち飲み・スタンディングバー</h4>
       <p>1,500〜2,500円で完結する最も気軽な業態。隣の客との距離が近く、会話が生まれやすい。仕事帰りの30〜60分飲みに最適。</p>
     </div>
     <div class="type-card">
-      <a class="type-photo" href="../stores/J001134166.html"><img src="https://imgfp.hotp.jp/IMGH/38/41/P023393841/P023393841_480.jpg" alt="バー・クラフトビールの掲載店 バームーンウォーク bar moon walk 錦通り店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: バームーンウォーク bar moon walk 錦通り店</span></a>
+      <a class="type-photo" href="../stores/J001134166.html" onclick="trackEvent('feature_store_click',{store:'J001134166',feature:'nagoya-solo-dining'})"><img src="https://imgfp.hotp.jp/IMGH/38/41/P023393841/P023393841_480.jpg" alt="バー・クラフトビールの掲載店 バームーンウォーク bar moon walk 錦通り店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: バームーンウォーク bar moon walk 錦通り店</span></a>
       <h4>バー・クラフトビール</h4>
       <p>バーテンダーとの会話を楽しめる。3,000〜5,000円で2〜3時間。カウンター席が多く一人で自然に過ごせる環境。</p>
     </div>
     <div class="type-card">
-      <a class="type-photo" href="../stores/J001192997.html"><img src="https://imgfp.hotp.jp/IMGH/83/37/P031008337/P031008337_480.jpg" alt="ラーメン・麺系の掲載店 麺屋えび蔵" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 麺屋えび蔵</span></a>
+      <a class="type-photo" href="../stores/J001192997.html" onclick="trackEvent('feature_store_click',{store:'J001192997',feature:'nagoya-solo-dining'})"><img src="https://imgfp.hotp.jp/IMGH/83/37/P031008337/P031008337_480.jpg" alt="ラーメン・麺系の掲載店 麺屋えび蔵" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 麺屋えび蔵</span></a>
       <h4>ラーメン・麺系</h4>
       <p>一人飲み後の〆に最適。カウンター主体で一人客が9割の店も。深夜まで開いている名古屋の麺屋が業界人の定番〆。</p>
     </div>
     <div class="type-card">
-      <a class="type-photo" href="../stores/J004559388.html"><img src="https://imgfp.hotp.jp/IMGH/69/39/P049516939/P049516939_480.jpg" alt="おでん・居酒屋カウンターの掲載店 おでん 拍子木" loading="lazy" decoding="async"><span class="type-photo-credit">写真: おでん 拍子木</span></a>
+      <a class="type-photo" href="../stores/J004559388.html" onclick="trackEvent('feature_store_click',{store:'J004559388',feature:'nagoya-solo-dining'})"><img src="https://imgfp.hotp.jp/IMGH/69/39/P049516939/P049516939_480.jpg" alt="おでん・居酒屋カウンターの掲載店 おでん 拍子木" loading="lazy" decoding="async"><span class="type-photo-credit">写真: おでん 拍子木</span></a>
       <h4>おでん・居酒屋カウンター</h4>
       <p>カウンター越しに並ぶ鍋が見える設計が一体感を作る。2,000〜3,500円で季節の具材を楽しめる名古屋特有の業態。</p>
     </div>
@@ -292,7 +284,7 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
       <h3>鉄神 TESSIN 名古屋駅本店</h3>
       <div class="meta"><span class="tag">炭火焼き</span><span class="tag">カウンター</span></div>
       <p class="desc">炭火焼きを中心とした名駅の居酒屋。カウンター席で炭火の雰囲気を感じながら一人飲みできる。料理のクオリティが高く、一人でも満足度が高い使い方ができる。</p>
-      <a href="/stores/J001144610.html" class="link" onclick="trackEvent('feature_store_click',{store:'鉄神',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ001144610/" class="link" target="_blank" rel="noopener">ホットペッパーで予約</a>
+      <a href="/stores/J001144610.html" class="link" onclick="trackEvent('feature_store_click',{store:'J001144610',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ001144610/" class="link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001144610',feature:'nagoya-solo-dining',target:'hotpepper'})">ホットペッパーで予約</a>
     </div>
     <div class="store-card">
       <img class="store-card-photo-top" src="https://imgfp.hotp.jp/IMGH/69/23/P047636923/P047636923_480.jpg" alt="鳥心 名駅本店" loading="lazy" decoding="async">
@@ -300,7 +292,7 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
       <h3>鳥心 名駅本店</h3>
       <div class="meta"><span class="tag">焼き鳥</span><span class="tag">名古屋コーチン</span><span class="tag">★4.2</span></div>
       <p class="desc">名古屋駅地下街直結の好立地で焼き鳥を楽しめる一軒。地下街からそのままアクセスでき、仕事帰りの一人飲みに最適。名古屋コーチンを使ったメニューが看板。</p>
-      <a href="/stores/J001147583.html" class="link" onclick="trackEvent('feature_store_click',{store:'鳥心',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ001147583/" class="link" target="_blank" rel="noopener">ホットペッパーで予約</a>
+      <a href="/stores/J001147583.html" class="link" onclick="trackEvent('feature_store_click',{store:'J001147583',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ001147583/" class="link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001147583',feature:'nagoya-solo-dining',target:'hotpepper'})">ホットペッパーで予約</a>
     </div>
     <div class="store-card">
       <img class="store-card-photo-top" src="https://imgfp.hotp.jp/IMGH/73/77/P048657377/P048657377_480.jpg" alt="魚心あれば酒心 名古屋駅店" loading="lazy" decoding="async">
@@ -308,7 +300,7 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
       <h3>魚心あれば酒心 名古屋駅店</h3>
       <div class="meta"><span class="tag">魚介</span><span class="tag">日本酒</span></div>
       <p class="desc">魚介と日本酒に特化した一軒。カウンターで旬の刺身と地酒を楽しめる設計が一人飲みに向く。「魚と酒を静かに楽しみたい」というニーズに応える名駅の隠れ家。</p>
-      <a href="/stores/J001127221.html" class="link" onclick="trackEvent('feature_store_click',{store:'魚心',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ001127221/" class="link" target="_blank" rel="noopener">ホットペッパーで予約</a>
+      <a href="/stores/J001127221.html" class="link" onclick="trackEvent('feature_store_click',{store:'J001127221',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ001127221/" class="link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001127221',feature:'nagoya-solo-dining',target:'hotpepper'})">ホットペッパーで予約</a>
     </div>
     <div class="store-card">
       <img class="store-card-photo-top" src="https://imgfp.hotp.jp/IMGH/90/00/P048789000/P048789000_480.jpg" alt="餃子のかっちゃん 名古屋駅南口2号店" loading="lazy" decoding="async">
@@ -316,7 +308,7 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
       <h3>餃子のかっちゃん 名古屋駅南口2号店</h3>
       <div class="meta"><span class="tag">餃子</span><span class="tag">気軽</span><span class="tag">名駅南口</span></div>
       <p class="desc">餃子をつまみにビールを飲む、最もシンプルな一人飲みのかたち。気軽に入れて1,500〜2,500円でさっと飲める。深夜まで開いており〆にも使える。</p>
-      <a href="/stores/J004492409.html" class="link" onclick="trackEvent('feature_store_click',{store:'かっちゃん',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ004492409/" class="link" target="_blank" rel="noopener">ホットペッパーで予約</a>
+      <a href="/stores/J004492409.html" class="link" onclick="trackEvent('feature_store_click',{store:'J004492409',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ004492409/" class="link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004492409',feature:'nagoya-solo-dining',target:'hotpepper'})">ホットペッパーで予約</a>
     </div>
     <div class="store-card">
       <img class="store-card-photo-top" src="https://imgfp.hotp.jp/IMGH/89/96/P046598996/P046598996_480.jpg" alt="酔いどれ 名古屋駅前店" loading="lazy" decoding="async">
@@ -324,7 +316,7 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
       <h3>酔いどれ 名古屋駅前店</h3>
       <div class="meta"><span class="tag">立ち飲み系</span><span class="tag">大衆居酒屋</span></div>
       <p class="desc">気取らずに飲める大衆系居酒屋。一人で入っても全く浮かない雰囲気で、ビール1杯と料理2品で2,000円前後に収まるコスパが業界人に支持される。</p>
-      <a href="/stores/J003366509.html" class="link" onclick="trackEvent('feature_store_click',{store:'酔いどれ',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ003366509/" class="link" target="_blank" rel="noopener">ホットペッパーで予約</a>
+      <a href="/stores/J003366509.html" class="link" onclick="trackEvent('feature_store_click',{store:'J003366509',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ003366509/" class="link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003366509',feature:'nagoya-solo-dining',target:'hotpepper'})">ホットペッパーで予約</a>
     </div>
     <div class="store-card">
       <img class="store-card-photo-top" src="https://imgfp.hotp.jp/IMGH/93/02/P031649302/P031649302_480.jpg" alt="箱屋 名古屋駅前店" loading="lazy" decoding="async">
@@ -332,7 +324,7 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
       <h3>箱屋 名古屋駅前店</h3>
       <div class="meta"><span class="tag">和モダン</span><span class="tag">★4.5</span></div>
       <p class="desc">和モダンな空間が特徴の個室居酒屋だが、カウンター席での一人利用も可能。Google★4.5の高評価で、仕事の疲れを癒す質の高い一人時間を作れる。</p>
-      <a href="/stores/J001217353.html" class="link" onclick="trackEvent('feature_store_click',{store:'箱屋',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ001217353/" class="link" target="_blank" rel="noopener">ホットペッパーで予約</a>
+      <a href="/stores/J001217353.html" class="link" onclick="trackEvent('feature_store_click',{store:'J001217353',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ001217353/" class="link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001217353',feature:'nagoya-solo-dining',target:'hotpepper'})">ホットペッパーで予約</a>
     </div>
     <div class="store-card">
       <img class="store-card-photo-top" src="https://imgfp.hotp.jp/IMGH/49/87/P043924987/P043924987_480.jpg" alt="純系名古屋コーチン 鳥力" loading="lazy" decoding="async">
@@ -340,7 +332,7 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
       <h3>純系名古屋コーチン 鳥力</h3>
       <div class="meta"><span class="tag">名古屋コーチン</span><span class="tag">鳥料理</span></div>
       <p class="desc">純系名古屋コーチンに特化した専門店。焼き鳥・刺身・鍋と、名古屋コーチンのあらゆる食べ方を楽しめる。地元ならではの食材にこだわった一人飲みの贅沢。</p>
-      <a href="/stores/J003649439.html" class="link" onclick="trackEvent('feature_store_click',{store:'鳥力',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ003649439/" class="link" target="_blank" rel="noopener">ホットペッパーで予約</a>
+      <a href="/stores/J003649439.html" class="link" onclick="trackEvent('feature_store_click',{store:'J003649439',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ003649439/" class="link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003649439',feature:'nagoya-solo-dining',target:'hotpepper'})">ホットペッパーで予約</a>
     </div>
     <div class="store-card">
       <img class="store-card-photo-top" src="https://imgfp.hotp.jp/IMGH/55/25/P048015525/P048015525_480.jpg" alt="居酒屋 炭ス すみす 名古屋駅前店" loading="lazy" decoding="async">
@@ -348,7 +340,7 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
       <h3>居酒屋 炭ス すみす 名古屋駅前店</h3>
       <div class="meta"><span class="tag">炭火</span><span class="tag">★4.8</span></div>
       <p class="desc">炭火焼きを主軸にした居酒屋で★4.8という驚異的な評価。炭火の香ばしさを一人でじっくり味わえる環境が整っており、プレミアムな一人飲みに向く。</p>
-      <a href="/stores/J004422360.html" class="link" onclick="trackEvent('feature_store_click',{store:'すみす',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ004422360/" class="link" target="_blank" rel="noopener">ホットペッパーで予約</a>
+      <a href="/stores/J004422360.html" class="link" onclick="trackEvent('feature_store_click',{store:'J004422360',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ004422360/" class="link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004422360',feature:'nagoya-solo-dining',target:'hotpepper'})">ホットペッパーで予約</a>
     </div>
     <div class="store-card">
       <img class="store-card-photo-top" src="https://imgfp.hotp.jp/IMGH/48/48/P043204848/P043204848_480.jpg" alt="うまかばい 名古屋駅前店" loading="lazy" decoding="async">
@@ -356,7 +348,7 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
       <h3>うまかばい 名古屋駅前店</h3>
       <div class="meta"><span class="tag">九州料理</span><span class="tag">★4.8</span></div>
       <p class="desc">九州料理が揃う名古屋駅前の店。地鶏・明太子・馬刺しなど九州食材の品揃えが充実。一人でカウンターに座って九州の味を楽しむという非日常感が面白い。</p>
-      <a href="/stores/J003649513.html" class="link" onclick="trackEvent('feature_store_click',{store:'うまかばい',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ003649513/" class="link" target="_blank" rel="noopener">ホットペッパーで予約</a>
+      <a href="/stores/J003649513.html" class="link" onclick="trackEvent('feature_store_click',{store:'J003649513',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ003649513/" class="link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003649513',feature:'nagoya-solo-dining',target:'hotpepper'})">ホットペッパーで予約</a>
     </div>
     <div class="store-card">
       <img class="store-card-photo-top" src="https://imgfp.hotp.jp/IMGH/47/66/P031184766/P031184766_480.jpg" alt="焼肉食堂マルイ" loading="lazy" decoding="async">
@@ -364,7 +356,7 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
       <h3>焼肉食堂マルイ</h3>
       <div class="meta"><span class="tag">食堂系</span><span class="tag">焼肉</span><span class="tag">ランチOK</span></div>
       <p class="desc">一人焼肉を食堂感覚で楽しめる。グループ向けの焼肉とは違い、食堂スタイルの気軽さが一人でも入りやすい雰囲気を作っている。ランチ利用にも対応。</p>
-      <a href="/stores/J000392719.html" class="link" onclick="trackEvent('feature_store_click',{store:'マルイ焼肉',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ000392719/" class="link" target="_blank" rel="noopener">ホットペッパーで予約</a>
+      <a href="/stores/J000392719.html" class="link" onclick="trackEvent('feature_store_click',{store:'J000392719',feature:'nagoya-solo-dining'})">詳細ページを見る</a> <a href="https://www.hotpepper.jp/strJ000392719/" class="link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J000392719',feature:'nagoya-solo-dining',target:'hotpepper'})">ホットペッパーで予約</a>
     </div>
   </div>
 
@@ -432,12 +424,12 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
   <div class="related">
     <h2>関連する特集記事</h2>
     <div class="related-links">
-      <a href="/features/industry-insiders-pick.html">飲食業界人が本当に通う店10選</a>
-      <a href="/features/nagoya-yakiniku.html">名古屋 焼肉おすすめ 2026</a>
-      <a href="/features/hard-to-book.html">名古屋 予約困難店と代替店</a>
-      <a href="/features/kospa-insider.html">業界人が選ぶコスパ最強店</a>
-      <a href="/features/meieki.html">名古屋駅エリアのグルメ</a>
-      <a href="/features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド 2026年版</a>
+      <a href="/features/industry-insiders-pick.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-solo-dining',link_url:'/features/industry-insiders-pick.html',block:'feature_related'})">飲食業界人が本当に通う店10選</a>
+      <a href="/features/nagoya-yakiniku.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-solo-dining',link_url:'/features/nagoya-yakiniku.html',block:'feature_related'})">名古屋 焼肉おすすめ 2026</a>
+      <a href="/features/hard-to-book.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-solo-dining',link_url:'/features/hard-to-book.html',block:'feature_related'})">名古屋 予約困難店と代替店</a>
+      <a href="/features/kospa-insider.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-solo-dining',link_url:'/features/kospa-insider.html',block:'feature_related'})">業界人が選ぶコスパ最強店</a>
+      <a href="/features/meieki.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-solo-dining',link_url:'/features/meieki.html',block:'feature_related'})">名古屋駅エリアのグルメ</a>
+      <a href="/features/nagoya-gourmet-guide.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-solo-dining',link_url:'/features/nagoya-gourmet-guide.html',block:'feature_related'})">名古屋グルメ完全ガイド 2026年版</a>
     </div>
   <p class="related-journal" style="margin-top:1.2rem;font-size:.82rem;color:rgba(28,28,26,.62);line-height:1.7;">
     名古屋の最新グルメは <a class="related-link" href="../journal/index.html">デイリージャーナル</a> で毎朝更新中。
@@ -445,16 +437,75 @@ p{margin-bottom:1.1rem;font-size:.93rem;}
   </div>
 </main>
 
-<footer class="site-footer">
-  <p>© 2026 NAGOYA BITES — 名古屋飲食業界人による目利きグルメガイド</p>
-  <p style="margin-top:.5rem;">
-    <a href="/features/editorial-policy.html">編集方針</a>
-    <a href="/features/no-fake-reviews.html">ステマ・虚偽排除</a>
-    <a href="/features/review-trust.html">口コミ信頼度の読み方</a> ／ <a href="/features/integrity-method.html">口コミ信頼度の作り方</a>
-    <a href="/features/">特集一覧</a>
-    <a href="/journal/">Journal</a>
-  </p>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
+<script class="nb-engagement-tracking">
+(function(){
+  var fired={},THRESH=[25,50,75,100];
+  function check(){
+    var doc=document.documentElement;
+    var top=window.pageYOffset||doc.scrollTop;
+    var max=(doc.scrollHeight-doc.clientHeight)||1;
+    var pct=Math.min(100,Math.round((top/max)*100));
+    THRESH.forEach(function(t){if(pct>=t&&!fired[t]){fired[t]=true;try{trackEvent('scroll_depth',{percent:t});}catch(err){}}});
+  }
+  var timer=null;
+  window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
+  check();
+})();
+</script>
 </body>
 </html>

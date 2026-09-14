@@ -19,11 +19,10 @@ const fs = require('fs');
 
 const MARKER = 'nb-site-intro';
 const ANCHOR = '<div class="art-body">';
+// DSN-003: 見た目は assets/css/nb.css の .nb-site-intro が所有する（inline style は書かない）
 const INTRO_HTML =
-  `<p class="${MARKER}" style="font-size:.74rem;color:var(--dim);padding:.55rem .9rem;` +
-  `background:var(--bg2);border:1px solid var(--border);border-radius:4px;` +
-  `margin-bottom:1.5rem;line-height:1.7;">` +
-  `この記事は<a href="../index.html" style="color:var(--gold);text-decoration:none;">NAGOYA BITES</a>` +
+  `<p class="${MARKER}">` +
+  `この記事は<a href="../index.html">NAGOYA BITES</a>` +
   ` — 名古屋の厳選1,100店超を業界視点で紹介するグルメガイドの一部です。</p>`;
 
 const files = process.argv.slice(2).filter(f => f && f.endsWith('.html'));

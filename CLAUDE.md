@@ -75,8 +75,11 @@
 
 ```
 1. index.html は単一ファイルで維持する（サイト用の新ファイル追加禁止 ※例外: features/配下の特集記事・
-   journal/配下の日次記事、および共有スタイルシート assets/css/nb.css の1ファイルのみ。
-   これ以外の .css/.js 分離は引き続き禁止）
+   journal/配下の日次記事・stores/配下の店舗ページ（gen-store-pages.js が生成）・
+   stores/area/配下のエリア×ジャンル×条件一覧ページ（SEO-094・scripts/gen_area_genre_pages.js が
+   data/area_genre_pages_policy.json を正本に data/stores.json から決定的に生成する。手書き禁止・
+   閾値/マッピング変更はポリシーJSONのみで行う）、および共有スタイルシート assets/css/nb.css の
+   1ファイルのみ。これ以外の .css/.js 分離は引き続き禁止）
 2. var LOCAL_STORES = [...]; のパターンを壊さない
 3. テキストはすべて日本語
 4. サイト用の新npm依存関係を追加しない（CDNリンクはOK）
@@ -304,6 +307,12 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `docs/design-system.md` | デザインシステムの人向け仕様書（書体・トークン・部品解剖・新規ページ雛形） |
 | `scripts/audit_design_system.js` | デザインシステム準拠の決定的ゲート。`--check`でCI向けexit 1、`--report`で違反一覧JSON |
 | `scripts/apply_design_system.js` | 既存ページへのデザインシステム一括適用（冪等）。`--dry-run`/`--only <dir>`/`--check` |
+| `scripts/lib/site_chrome.js` | **サイト共通クローム（ヘッダー/ナビ/パンくず/フッター）の唯一の正本**（DSN-003・2026-09）。ナビ5項目・補助ナビ2項目・フッター3群のラベル/リンク先はここにのみ書く。`renderHeader`/`renderBreadcrumb`/`renderFooter`/`chromeScript` を生成器（gen-store-pages.js / gen_industry_features.js）と `scripts/apply_site_chrome.js` が共有する |
+| `data/area_genre_pages_policy.json` | **エリア×ジャンル×条件一覧ページ（stores/area/配下）の判定基準の唯一の情報源**（SEO-094・2026-09-14）。店舗ページの「もっと見る」（`../?area=…&genre=…`）が index.html の JS フィルタ（canonical は `/`）を指すだけの死にリンクで、Google からはエリア×ジャンルの検索面が1ページも存在しなかった問題への対応。エリア10群・ジャンル17・条件13軸（個室/深夜営業/日曜営業/喫煙可否/飲み放題/食べ放題/30名以上宴会可/駅徒歩3分以内/ランチ/予算帯/駐車場）を`data/stores.json`の実在フィールドだけから決定的に導出する（推測・自己申告値は使わない・制約10）。閾値変更はこのJSONで行いスクリプトは触らない。確認は`node scripts/gen_area_genre_pages.js --check`（Builder管轄） |
+| `data/area_genre_pages_manifest.json` | 上記ページの生成物台帳（path/type/count/contentHash/firstPublished/updated/status）。内容が変わった日だけ更新し、閾値割れは即noindex化＋90日後delete（取り繕わず`stub`にする）。`scripts/inject_store_links.js`（index.htmlの「エリア×ジャンルで探す」導線）と`scripts/indexnow_ping.js`（新規ハブの優先送信）が同じ台帳を読む |
+| `scripts/lib/area_genre_pages.js` | エリア×ジャンル×条件ページの決定的プランナー・正規化・条件13軸の述語。生成器（`gen_area_genre_pages.js`）・`gen-store-pages.js`（もっと見る/パンくず/JSON-LDのハブリンク化）・`scripts/inject_store_links.js`が共有する |
+| `scripts/gen_area_genre_pages.js` | 上記の生成器CLI。`node scripts/gen_area_genre_pages.js`（生成・sitemap.xml追記・manifest更新）/ `--dry-run` / `--check`（純粋な読み取り専用の差分検査・apply_site_chrome.jsと同じ意味）。gen-store-pages.js が sitemap.xml を丸ごと書き直すため、必ずその**直後**に実行する（build.yml参照） |
+| `scripts/apply_site_chrome.js` | 既存ページへサイト共通クロームを一括適用（冪等・`apply_design_system.js` と同じ運用モデル）。`--dry-run`/`--only <root\|features\|journal\|stores>`/`--check`/`--strip-legacy-css`。CI（build.yml）が日次で `--check --sample 200` を継続実行（当面 continue-on-error） |
 | `scripts/measure_typography.js` | 可読性の実測（12px以下の文字割合・1画面の文字数・タップ対象サイズ）。before/afterの証跡 |
 | `index.html` | サイト本体（編集対象） |
 | `features/` | 特集記事ディレクトリ（Editor管轄） |
@@ -311,6 +320,7 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `docs/daily-posts/` | 日次SNS原稿（Note/Instagram/X 3種、コピペ投稿用） |
 | `.claude/commands/journal-today.md` | `/journal-today` スラッシュコマンド（日次起動） |
 | `data/journal_gate_policy.json` | 日次ジャーナルの公開ゲート方針（PASS / PASS_WITH_NOTE / HOLD の閾値）。**運用ルールの唯一の情報源**。`.claude/commands/*.md` は自己改変ブロックで編集できないため、挙動の変更はこのファイルで行う。確認は `node scripts/score_journal_candidates.js --policy`（Editor/Orchestrator 共管） |
+| `data/journal_sns_draft_policy.json` | 日次ジャーナルのSNS原稿（`docs/daily-posts/*.md`: Note/Instagram/X用コピペ原稿）自動生成のオン/オフを切り替える唯一の情報源。`generate_sns_draft: false`（2026-09-05〜）で `scripts/generate_daily_draft.js` が md 生成をスキップする。SNS投稿原稿を別の仕組みで生成する運用に切り替えたための一時停止で、ジャーナル記事本体（HTML）の生成・公開フローには影響しない。`node scripts/validate_journal_draft.js` は md 不在時に該当項目を自動スキップする設計のためコード変更不要。再開は値を `true` に戻すだけ（Editor管轄） |
 | `data/journal_seo_keywords.json` | 日次ジャーナルの**入口（検索意図）**を担保するシーンKWマスタ。各KWは `features/` の実在記事に紐づく。採点器の `search_intent`（10点）がこれを使う。生成/検証は `node scripts/journal_seo_kw.js --build` / `--verify`、KW提案は `--suggest`（Marketer/Editor 共管・SEO-011） |
 | `scripts/journal_seo_kw.js` | シーンKWの単一の情報源。`--verify` で「特集ファイルが実在し、そのタイトルにその語が実際に使われている」ことを機械検証（自己申告値を使わないための担保）。`--check "<title>"` でタイトルの検索意図カバレッジを判定 |
 | `scripts/register_journal_entry.js` | 記事HTMLから published.json エントリを復元登録（冪等）。「記事はあるのに未登録」で止まった日の自動復旧に使う |
@@ -336,7 +346,17 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `data/ig_post_policy.json` | **店舗カードに埋め込む Instagram 投稿の採用基準の唯一の情報源**。埋め込むのは「その店の料理・内装・外観がわかる投稿」だけで、求人・休業案内・挨拶・御礼・店外イベント・他店まとめ・客室紹介は落とす。判定根拠は**公開 embed のキャプション本文だけ**＝誰でも同じURLを開いて検算できる事実（制約10）。**中核はハッシュタグを採点対象から外すこと**——飲食店の投稿はほぼ全てが `#焼肉 #名古屋グルメ` で終わるため、これを料理語として数えると「何の投稿でも通る」ゲートになる（ISSUE-092。実例: 焼肉店のカードに頂き物の苺のパック写真が出ていた）。判定器は `scripts/lib/ig_post_policy.js` の1本で、選定（`fetch_ig_posts_resolved.js`）・掲載（`build.js`）・監査（`audit_ig_post_relevance.js`）が同じ判定を共有する。語彙・閾値の変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_ig_post_relevance.js`（Builder/DataKeeper 共管） |
 | `scripts/select_ig_posts.js` | **埋め込み投稿の選び直し器**。基準（`data/ig_post_policy.json`）を通らない投稿しか無い店について、そのアカウントの最近の投稿を新しい順に判定し**最初に通った1件へ差し替える**。全部通らなければ埋め込みなしにする（取り繕わない＝写真選定と同じ思想）。**ログイン不要の公開エンドポイントだけを使う**ため Instagram の認証が切れていても回る（`fetch_ig_posts_resolved.js` は `.ig_cookies.json` 必須で、認証切れの間は選び直しが止まる）。投稿一覧が取れるアカウントは実測で約1/4のため、取れない分は既存投稿の判定に留まる。確認は `node scripts/select_ig_posts.js --dry-run`（Builder/DataKeeper 共管） |
 | `data/ig_post_evidence.json` | 埋め込み投稿の**証跡**（キャプション本文・投稿者・削除の有無）を shortcode をキーに保存する。これが無いと「なぜその投稿を選んだか」を後から検算できず、関連性の判定にかけることすらできない（旧データは postUrl/score/type しか持っていなかった）。回収は `node scripts/fetch_ig_post_evidence.js`（公開 embed からテキストのみ取得。ログイン不要・画像は一切ダウンロードしないため写真ポリシーに抵触しない）。**削除済み投稿の検出も兼ねる**（削除された投稿の埋め込みはサイト上で「リンクが壊れています」と表示されるため掲載から外す） |
-| `data/trending_stores.json` | 既存店舗への話題フラグ後付けマスター（DataKeeper管轄） |
+| `data/trending_stores.json` | 「今日の話題店」TOP5の**選定材料の唯一の情報源**（`stores[]`=話題フラグ付与済み・`candidates[]`=LOCAL_STORES未マッチの未登録店）。2026-09-11、オーナーから「今日の話題店がずっと同じラインナップ」と報告があり調査したところ、本ファイルが2026-04-21以来7店のまま・`manual_stores.json`の編集部推薦167店中121店が2026-08-21の一括登録から出典URLが一度も更新されていないことが判明（TOP5選定ロジック自体は毎朝正しく動いていたが、材料が3週間フリーズしていた）。新規発掘は[[話題店発掘ループ]]（下記）が継続的に供給する（DataKeeper/Editor 共管） |
+| `scripts/pick_daily_trending5.js` | 「今日の話題店」TOP5の**選定ロジックの唯一の情報源**。Google評価は使わず「鮮度（検出日からの経過）」＋「多媒体露出（トレンド情報源＋出典URLのdistinctホスト数）」＋編集部推薦ボーナスでスコアリングし、7日以内選出ペナルティと日替わりジッターで固定順位化を防ぐ。カード「顔」写真のための写真ゲート（実写を持つ店を優先選出）とジャンル多様性キャップ（同一粗ジャンル最大2件）も持つ。`node scripts/pick_daily_trending5.js dryrun`（書き出しなし）/ `run`（`data/daily_trending5.json`書き出し）。毎朝5:30 JST に `.github/workflows/daily-trending5.yml` が実行（DataKeeper管轄） |
+| `data/daily_trending5.json` | `pick_daily_trending5.js` の出力（当日TOP5＋直近7日分の履歴）。build.js が読み込みトップページに反映 |
+| `data/trending_url_history.json` | 出典URLの初回検出日を追跡する管理ファイル。`pick_daily_trending5.js`が新URLを検知すると該当店の`検出日`を自動で当日へ繰り上げる（Editorは出典URL追記だけでよい・手動更新不要） |
+| `scripts/fetch_trending_articles.js` | 新規話題店を`trending_stores.json`へ取り込む半自動パイプライン。`queries`＝検索クエリ一覧表示、`ingest-json <file>`＝店名＋出典URLのJSON配列を取り込み（LOCAL_STORES一致で`stores[]`へ・不一致で`candidates[]`へ）、`auto-promote`＝検出から3日以上＋出典URL2件以上貯まった`_auto:true`候補を話題フラグ=trueへ昇格。WebSearch/WebFetchはこのスクリプトの責務外（Claude Code Agent専用ツールのため）、定期実行は[[話題店発掘ループ]]（下記）が担う |
+| `scripts/lib/trending_queries.js` | 話題店発掘の**検索クエリ一覧の唯一の情報源**（`fetch_trending_articles.js`の手動表示・`trending_scout.js`の自動ローテーションが共有）。クエリの増減はここだけを編集する |
+| `data/trending_scout_policy.json` | **話題店発掘ループの運用ポリシーの唯一の情報源**（1回あたりのクエリ件数・自動昇格閾値・心拍の許容欠測日数）。`.claude/commands/*.md`は自己改変ブロックで編集できないため、運用ルールの変更はこのファイルで行う（`feedback_policy.json`と同じ設計）。手順の正本は`docs/trending-scout-runbook.md` |
+| `scripts/trending_scout.js` | 話題店発掘ループの決定的ヘルパー。`--next-queries`＝年間通算日起点でクエリを決定的にローテーション（現行37クエリ・6件/回で実測7日で全クエリを巡回）、`--health-write`＝心拍書き込み、`--report`＝実績要約。WebSearch/WebFetch本体は実行しない（Agent専用ツールのため） |
+| `data/trending_scout_health.json` | 話題店発掘ループの**心拍**。ルーチンが毎回（新規リード0件の日も）書いてコミットする。0件の日は成果物が心拍しか無いため、これが無いと「動いて0件」と「動かなかった」が外から区別できない（ISSUE-084の再適用） |
+| `.github/workflows/trending-scout-watchdog.yml` | **話題店発掘ループのサーバ側生存監視**。毎日14:00 JSTに心拍の鮮度を見て、`max_silence_days`（既定3日）を超えたらGitHub Issue起票（＝オーナーにメール）、復旧で自動クローズ。判定器は`scripts/check_trending_scout_health.js`（鮮度は自己申告できない＝動いていないエージェントはファイルを更新できないため、制約10を満たす） |
+| `docs/trending-scout-runbook.md` | **話題店発掘ループの手順の正本**（2026-09-11新設）。`fetch_trending_articles.js`のクエリをWebSearch→WebFetchで裏取り→`ingest-json`で取り込み→`auto-promote`で段階昇格、の一連をスケジュール済みClaudeルーチンとして定期実行する（`.claude/commands/*.md`が自己改変ブロックで作成できないため、docs直下に置きルーチンのプロンプトから直接参照する運用。`docs/feedback-triage-runbook.md`と同じ方式） |
 | `data/featured.json` | 特集鮮度設定。`monthlyScenes`=12ヶ月×需要シーンのカレンダー（月替わりでトップ特集面と見出しが自動更新）。`sceneLeads`=月×特集の季節リード（`build_featured.js` が当月シーンの記事本文冒頭に季節バナーを注入し、使い回し記事＝banquet等が「今月はこの用途」と本文で伴うようにする。当月外は自動削除・冪等）。検証は `node scripts/build_featured.js --check`（Editor/Builder 共管） |
 | `data/feature_rosters.json` | シーン特集の掲載店を月次で入れ替える選定基準（ハイブリッド＋バランス型スコア＋ハードゲート＋多様性補正）。`seasonalBias`=月×特集の季節キーワード加点で、同じ banquet.html でも7月は「ビアガーデン/ビール/テラス」寄り・12月は「忘年会/鍋」寄りに掲載店を月替わりで組み替える（ゲートは維持・純加点なので枠割れなし）。`node scripts/refresh_feature_rosters.js`（毎月1〜3日 build.yml が実行）で features/*.html の掲載店を再構成。検証は `--check`/内訳は `--dry-run`（☀=季節適合）（Builder/DataKeeper 共管・全掲載店は実在店のみ） |
 | `data/solve_next_policy.json` | `/solve-next` の**消化ポリシーの唯一の情報源**（1日の消化件数 `dailyQuota` / 滞留による優先度繰り上げ / クローズ扱いの status / オーナー本人待ちの除外）。`.claude/commands/*.md` は自己改変ブロックで編集できないため、挙動の変更はこのファイルで行う（`journal_gate_policy.json` と同じ設計）。判定器は `scripts/next_task.js`（Orchestrator管轄） |
@@ -349,6 +369,7 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `data/gsc_opportunities.json` | GSC 改善機会の抽出結果（ctr_fix=1ページ目低CTR / rank_push=2-3ページ目高需要）。`node scripts/gsc_opportunities.js`（build.yml が日次実行）。GSC改善ループの配信レイヤー（Marketer/Builder 共管） |
 | `scripts/gsc_query_intent.js` | GSC クエリを **discovery（シーン語/エリア語×ジャンル語＝取りに行く面）/ navigational（店名＝Strategic Skip の面）/ brand / other** に分類。辞書は `data/journal_seo_keywords.json` と共通で、**SEO-011 の効果はここの `discovery` の表示・クリックで判定する**（総クリックは指名検索の増減と混ざるため使わない）。確認は `node scripts/gsc_query_intent.js`（Marketer管轄・SEO-043） |
 | `data/search_channel_metrics.json` | **検索・AI流入のエンジン別内訳**（Bing / Google / 生成AI / Yahoo / DDG / SNS / 直接）。`node scripts/search_channel_metrics.js --report`。**GSC は Google しか映さないが、実測では検索経由の 48.5% が Bing・33.3% が生成AI・Google は 13.8%** のため、GSCループだけでは流入の大半が観測外になる。その盲点を `blind_spots` として自動で明示する（Marketer管轄・SEO-039） |
+| `scripts/lib/traffic_source.js` | **流入元の SNS / 生成AI 判定の唯一の情報源**（ドメイン単位の一致）。`fetch_ga4_views.js`（site_metrics.json の channels）と `search_channel_metrics.js` が共有し、GAS（`.gas-deploy/Code.js`）は require できないため同語彙を複製して `tests/traffic_source.test.js` で一致を検査する。2026-09-14、旧実装の部分一致 `/t\.co/` が chatgp**t.co**m・copilo**t.co**m を SNS と数え、2026-07 中旬以降 `channels.social`（30日約90）がほぼ全量生成AI流入になっていたと判明（実際のSNS流入は1媒体30日6件未満で観測できていなかった）。**部分一致に戻さない**。`site_metrics.json` の `sourceBreakdown` も上位10行→取得した全行（最大50）保存に変更（Marketer/Builder 共管） |
 | `scripts/indexnow_ping.js` | IndexNow（Bing/Yandex 対応のプッシュ型インデックス通知）。**外部送信は既定 dry-run**で `--yes` を付けたときだけ送信する。`--init` でキー生成、`--status` で設定確認。Bing Webmaster Tools への登録はクレデンシャルを伴うため**オーナー本人の操作**が必要 |
 | `data/gas_deploy_policy.json` | **GAS レポートの反映状況を判定する基準の唯一の情報源**（SEO-069）。毎朝のレポートを作る GAS は**リポジトリの外**で動き `.gas-deploy/Code.js` はミラーにすぎないため、修正をマージしても GAS 側は旧コードのまま動き続け、**修正済みのバグが出した数値の上で毎朝のアドバイスが生成され続ける**（2026-08 に SEO-047 が24日滞留）。判定は「新コードでは原理的に出力できない文字列」＝旧 `sourceToName()` の最終行が出す生文字列 `(not set) / (not set)` の有無だけで行い、誰でも該当日のメールを開いて目視で検算できる（制約10）。判定は**3値**（`not_deployed` / `deployed` / `indeterminate`）で、痕跡が出なかった日は**絶対に鳴らさない**（オオカミ少年化させない・ISSUE-084 原則6）。**文字列を変えない修正は文字列痕跡では原理的に検出できない**ため（SEO-062 は数値だけを変える修正で、SEO-063 の文字列があるだけで「反映済み」と誤判定され、直帰率 94%＝GA4実測 32.5% を出し続けた）、`numeric_signals` で「レポートが主張した数値」と「独立パイプライン `fetch_ga4_views.js` が同じ日の GA4 から取った数値」の乖離も見る（SEO-074）。参照値が無い日・母数が小さい日は必ず indeterminate に倒す。判定器は `scripts/lib/gas_deploy_trace.js` の1本に集約し、記録・検査・CI が同じ判定を共有する。閾値・痕跡パターンの変更はこのJSONで行いスクリプトは触らない。手順の正本は `docs/gas-deploy-verification-runbook.md`（Marketer/Orchestrator 共管） |
 | `scripts/check_gas_deploy_health.js` | 上記の記録＆検査。`--record --report-file <本文> --date <日> --kind daily/weekly` で痕跡を `data/gas_deploy_health.json` に書き（レポートが無い日も `--no-report` で心拍を残す＝「来ていない」と「動かなかった」を区別する）、引数なしで健全性を判定（異常なら exit 1）。**日次SEO triage ルーチンが毎回呼び、必ずコミットする**（`data/` 配下＝gitignore されないので Mac の外へ出る） |
@@ -509,6 +530,51 @@ node scripts/gsc_opportunities.js   # data/gsc_opportunities.json を再生成�
 ```
 node scripts/feedback_triage.js --report --days 30   # ループの中身（採用/却下/滞留）
 node scripts/check_feedback_health.js                # ループが動いているか（生存確認・CI と共有）
+```
+
+---
+
+## 話題店発掘ループ（「今日の話題店」の材料を枯らさない・2026-09-11新設）
+
+`scripts/pick_daily_trending5.js` によるTOP5の**選定ロジック**は毎朝正しく動いていても、
+その**材料**である `data/trending_stores.json` に新規の話題店が供給され続けなければ、
+候補プールが静的な母集団になり「日替わりで店名は変わるが同じような顔ぶれ」に戻る。
+2026-09-11、オーナーからの報告でこれが実際に発生していたと判明した（4月から新規0件・
+編集部推薦167店中121店が8月21日の一括登録から更新なし）。原因は「新規話題店を発掘して
+取り込む半自動パイプライン（`scripts/fetch_trending_articles.js`）が誰にも定期的に
+回されていなかった」こと。このループはその供給を構造的に保証する。
+
+```
+[実行] スケジュール済み Claude ルーチンが docs/trending-scout-runbook.md の手順を実行
+        （WebSearchで新規候補を探す → WebFetchで裏取り → ingest-jsonで取り込み）
+   ↓
+[段階ゲート] LOCAL_STORES に実在する店だけ自動反映対象（_auto:true・話題フラグ=false）。
+        検出から3日以上＋出典URL2件以上貯まったものだけ auto-promote で話題フラグ=true化。
+        LOCAL_STORES に無い店は candidates[] に留め置くだけで自動追加しない
+        （実在検証を経ずに manual_stores.json へは入れない・架空店ブロックと同じ規律）
+   ↓
+[生存] 実行のたびに（新規0件の日も）data/trending_scout_health.json に心拍を書いてコミット
+        → trending-scout-watchdog.yml がサーバ側で鮮度を監視し、滞れば Issue 起票＝オーナーにメール
+   ↓
+[消費] 翌朝5:30 JST の daily-trending5.yml（pick_daily_trending5.js）が、太った
+        trending_stores.json を材料にTOP5を選ぶ。このループは選定ロジックには触れない
+```
+
+### 原則
+
+- **鵜呑み禁止**: WebSearchのタイトル・スニペットだけで店名を確定させない。WebFetchによる
+  裏取りは省略可能な保険ではなく手順の一部（架空店ブロックと同じ規律）
+- **架空店を作らない**: LOCAL_STORES に無い新規店は `candidates[]` に留め置くだけ。
+  実在検証（`GOOGLE_MAPS_API_KEY`経由の三重検証）を経ずに自動で正式掲載しない
+- **選定ロジックには触れない**: このループは`trending_stores.json`を太らせる**供給側**。
+  TOP5の選び方（鮮度・多媒体露出のスコアリング）は`pick_daily_trending5.js`の責務のまま
+
+### 健診コマンド
+
+```
+node scripts/trending_scout.js --report              # ループの中身（心拍・候補数の要約）
+node scripts/check_trending_scout_health.js           # ループが動いているか（生存確認・CI と共有）
+node scripts/pick_daily_trending5.js dryrun            # 供給結果が明日のTOP5候補にどう効くか確認
 ```
 
 ---

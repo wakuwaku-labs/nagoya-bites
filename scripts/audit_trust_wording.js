@@ -86,7 +86,21 @@ function managedStoreFiles() {
   const managed = all.filter(f => ids.has(path.basename(f, '.html')));
   return { managed, orphanCount: all.length - managed.length };
 }
-const { managed: MANAGED_STORE_FILES, orphanCount: ORPHAN_STORE_COUNT } = managedStoreFiles();
+function listFilesRecursive(dir) {
+  const abs = path.join(ROOT, dir);
+  if (!fs.existsSync(abs)) return [];
+  let out = [];
+  for (const f of fs.readdirSync(abs)) {
+    const p = path.join(dir, f);
+    if (fs.statSync(path.join(ROOT, p)).isDirectory()) out = out.concat(listFilesRecursive(p));
+    else if (f.endsWith('.html')) out.push(p);
+  }
+  return out;
+}
+
+const { managed: MANAGED_STORE_FILES_BASE, orphanCount: ORPHAN_STORE_COUNT } = managedStoreFiles();
+// SEO-094: stores/area/（エリア×ジャンル×条件ページ）は常に生成器管理下なので無条件で含める
+const MANAGED_STORE_FILES = MANAGED_STORE_FILES_BASE.concat(listFilesRecursive('stores/area'));
 if (ORPHAN_STORE_COUNT > 0) {
   info.push(`stores/*.html: 孤児ページ ${ORPHAN_STORE_COUNT}件は data/stores.json に現存しないため本監査の対象外（gen-store-pages.js --delete-orphans で是正・別チケット）`);
 }

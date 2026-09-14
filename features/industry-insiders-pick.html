@@ -90,12 +90,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}
 .related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}
 .related-link:hover{background:rgba(122,92,16,.08);}
-footer a{color:rgba(201,169,110,.7);text-decoration:none;}
-@media(max-width:640px){
-.store-card{flex-direction:column;gap:.8rem;}
-.store-num{font-size:1.6rem;}
-nav{display:none;}
-}
+@media(max-width:640px){.store-card{flex-direction:column;gap:.8rem;}.store-num{font-size:1.6rem;}}
 .store-photo{flex-shrink:0;width:160px;height:120px;border-radius:4px;overflow:hidden;background:var(--bg2);}
 .store-photo img{width:100%;height:100%;object-fit:cover;}
 @media(max-width:640px){.store-photo{width:100%;height:180px;}}
@@ -109,25 +104,35 @@ nav{display:none;}
 .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}</style>
 </head>
 <body>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="../index.html">すべての店舗</a>
-    <a href="date.html">デート特集</a>
-    <a href="settai-guide.html">接待マニュアル</a>
-    <a href="../about.html">About</a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
+    <a href="../features/index.html" aria-current="page">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
-
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
 <nav aria-label="パンくずリスト">
   <div class="breadcrumb">
-    <a href="../index.html">NAGOYA BITES</a>
+    <a href="../index.html">TOP</a>
     <span>›</span>
-    <a href="index.html">特集記事</a>
+    <a href="../features/index.html">特集</a>
     <span>›</span>
-    飲食業界人が本当に通う名古屋の店
+    飲食業界人が本当に通う名古屋の店【業界人推薦10選】
   </div>
 </nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
 <article>
   <div class="art-hero-image">
@@ -166,13 +171,13 @@ nav{display:none;}
         <div class="store-num">01</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/10/01/P047481001/P047481001_480.jpg" alt="CARAVAN FUSHIMI キャラバンフシミ" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001277921.html">CARAVAN FUSHIMI キャラバンフシミ</a></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001277921.html" onclick="trackEvent('feature_store_click',{store:'CARAVAN FUSHIMI キャラバンフシミ',feature:'industry-insiders-pick'})">CARAVAN FUSHIMI キャラバンフシミ</a></h3>
           <div class="store-meta"><span>伏見</span><span>ダイニングバー</span><span class="score">★ 4.4</span></div>
           <p class="store-desc">伏見の路地裏にある隠れ家。スタッフの動きが無駄なく、業界人から見て「訓練されている」と感じる数少ない居酒屋。仕入れの質とオペレーションのバランスが際立つ。</p>
           <div class="store-tags"><span class="store-tag">業界人推薦</span><span class="store-tag">隠れ家</span><span class="store-tag">伏見</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001277921.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001277921/" target="_blank" rel="noopener noreferrer">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001277921.html" onclick="trackEvent('feature_store_click',{store:'CARAVAN FUSHIMI キャラバンフシミ',feature:'industry-insiders-pick'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001277921/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J001277921',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -181,13 +186,13 @@ nav{display:none;}
         <div class="store-num">02</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/12/75/P047841275/P047841275_480.jpg" alt="Cellarr（セラー）" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003624222.html">Cellarr（セラー）</a></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003624222.html" onclick="trackEvent('feature_store_click',{store:'Cellarr（セラー）',feature:'industry-insiders-pick'})">Cellarr（セラー）</a></h3>
           <div class="store-meta"><span>栄</span><span>ダイニングバー</span><span class="score">★ 4.6</span></div>
           <p class="store-desc">栄の半地下、個室完備。ワインの原価率が飲食店目線でも驚くほど良心的。オーナーのワイン愛が随所に感じられ、業界内で「ここのワインは本物」と評判が高い。</p>
           <div class="store-tags"><span class="store-tag">業界人推薦</span><span class="store-tag">個室</span><span class="store-tag">ワイン</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003624222.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003624222/" target="_blank" rel="noopener noreferrer">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003624222.html" onclick="trackEvent('feature_store_click',{store:'Cellarr（セラー）',feature:'industry-insiders-pick'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003624222/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J003624222',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -196,13 +201,13 @@ nav{display:none;}
         <div class="store-num">03</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/92/28/P034429228/P034429228_480.jpg" alt="酒とメシのイタリアンCOVO 栄店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001218171.html">酒とメシのイタリアンCOVO 栄店</a></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001218171.html" onclick="trackEvent('feature_store_click',{store:'酒とメシのイタリアンCOVO 栄店',feature:'industry-insiders-pick'})">酒とメシのイタリアンCOVO 栄店</a></h3>
           <div class="store-meta"><span>栄</span><span>イタリアン</span><span class="score">★ 4.5</span></div>
           <p class="store-desc">食材の質と価格帯のバランスが業界内で評価が高い。カジュアルな空間でイタリア料理の本質を出している。原価設計の巧みさが見て取れる、業界人が「ロールモデル」と呼ぶ店。</p>
           <div class="store-tags"><span class="store-tag">業界人推薦</span><span class="store-tag">イタリアン</span><span class="store-tag">栄</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001218171.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001218171/" target="_blank" rel="noopener noreferrer">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001218171.html" onclick="trackEvent('feature_store_click',{store:'酒とメシのイタリアンCOVO 栄店',feature:'industry-insiders-pick'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001218171/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J001218171',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -211,13 +216,13 @@ nav{display:none;}
         <div class="store-num">04</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/41/12/P042774112/P042774112_480.jpg" alt="豆家別邸 しびかま 名古屋駅 本店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001017021.html">豆家別邸 しびかま 名古屋駅 本店</a></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001017021.html" onclick="trackEvent('feature_store_click',{store:'豆家別邸 しびかま 名古屋駅 本店',feature:'industry-insiders-pick'})">豆家別邸 しびかま 名古屋駅 本店</a></h3>
           <div class="store-meta"><span>名古屋駅</span><span>懐石・和食</span><span class="score">★ 4.4</span></div>
           <p class="store-desc">名古屋駅直結とは思えない落ち着きと料理の丁寧さ。仕入れへのこだわりが業界人が見ても明らか。接待にも使えるが、業界人が「自分の食事」で選ぶことが多い和食の名店。</p>
           <div class="store-tags"><span class="store-tag">業界人推薦</span><span class="store-tag">和食・懐石</span><span class="store-tag">名古屋駅</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001017021.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001017021/" target="_blank" rel="noopener noreferrer">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001017021.html" onclick="trackEvent('feature_store_click',{store:'豆家別邸 しびかま 名古屋駅 本店',feature:'industry-insiders-pick'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001017021/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J001017021',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -226,13 +231,13 @@ nav{display:none;}
         <div class="store-num">05</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/19/33/P045821933/P045821933_480.jpg" alt="隠れ家 ビストロ THE LOTUS" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003736108.html">隠れ家 ビストロ THE LOTUS</a></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003736108.html" onclick="trackEvent('feature_store_click',{store:'隠れ家 ビストロ THE LOTUS',feature:'industry-insiders-pick'})">隠れ家 ビストロ THE LOTUS</a></h3>
           <div class="store-meta"><span>栄</span><span>フレンチ</span><span class="score">★ 4.3</span></div>
           <p class="store-desc">フレンチの技法を使いながら価格を抑えている。シェフの腕と仕入れルートの良さが同時に感じられる稀有な店。業界人が「技術に対して安すぎる」と口を揃える。</p>
           <div class="store-tags"><span class="store-tag">業界人推薦</span><span class="store-tag">フレンチ</span><span class="store-tag">隠れ家</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003736108.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003736108/" target="_blank" rel="noopener noreferrer">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003736108.html" onclick="trackEvent('feature_store_click',{store:'隠れ家 ビストロ THE LOTUS',feature:'industry-insiders-pick'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003736108/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J003736108',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -241,13 +246,13 @@ nav{display:none;}
         <div class="store-num">06</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/18/08/P046851808/P046851808_480.jpg" alt="隠れ家イタリアンDime ダイム" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003872958.html">隠れ家イタリアンDime ダイム</a></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003872958.html" onclick="trackEvent('feature_store_click',{store:'隠れ家イタリアンDime ダイム',feature:'industry-insiders-pick'})">隠れ家イタリアンDime ダイム</a></h3>
           <div class="store-meta"><span>名古屋駅</span><span>ダイニングバー</span><span class="score">★ 4.9</span></div>
           <p class="store-desc">ルーフトップという立地ながら料理の質を落とさない。業界人が「特別な夜に連れて行く」と口を揃える名古屋随一のルーフトップダイニング。予約困難だが訪れる価値は十分。</p>
           <div class="store-tags"><span class="store-tag">業界人推薦</span><span class="store-tag">ルーフトップ</span><span class="store-tag">予約困難</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003872958.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003872958/" target="_blank" rel="noopener noreferrer">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003872958.html" onclick="trackEvent('feature_store_click',{store:'隠れ家イタリアンDime ダイム',feature:'industry-insiders-pick'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003872958/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J003872958',feature:'industry-insiders-pick',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -259,10 +264,10 @@ nav{display:none;}
 <div class="related">
   <p class="related-title">関連する特集記事</p>
   <div class="related-links">
-    <a class="related-link" href="date.html">デート特集</a>
-    <a class="related-link" href="settai-guide.html">接待マニュアル</a>
-    <a class="related-link" href="hard-to-book.html">予約困難特集</a>
-    <a class="related-link" href="kospa-insider.html">コスパ最強グルメ</a>
+    <a class="related-link" href="date.html" onclick="trackEvent('internal_link_click',{feature:'industry-insiders-pick',link_url:'date.html',block:'feature_related'})">デート特集</a>
+    <a class="related-link" href="settai-guide.html" onclick="trackEvent('internal_link_click',{feature:'industry-insiders-pick',link_url:'settai-guide.html',block:'feature_related'})">接待マニュアル</a>
+    <a class="related-link" href="hard-to-book.html" onclick="trackEvent('internal_link_click',{feature:'industry-insiders-pick',link_url:'hard-to-book.html',block:'feature_related'})">予約困難特集</a>
+    <a class="related-link" href="kospa-insider.html" onclick="trackEvent('internal_link_click',{feature:'industry-insiders-pick',link_url:'kospa-insider.html',block:'feature_related'})">コスパ最強グルメ</a>
   </div>
   <p class="related-journal" style="margin-top:1.2rem;font-size:.82rem;color:rgba(28,28,26,.62);line-height:1.7;">
     名古屋の最新グルメは <a class="related-link" href="../journal/index.html">デイリージャーナル</a> で毎朝更新中。
@@ -272,13 +277,43 @@ nav{display:none;}
   </p>
 </div>
 
-<footer>
-  <a href="../index.html">NAGOYA BITES</a> &nbsp;—&nbsp;
-  <a href="../about.html">About</a> &nbsp;—&nbsp;
-  <a href="index.html">特集記事一覧</a> &nbsp;—&nbsp;
-  <span id="fc-year"></span>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
 
 <style>
 .faq-section{max-width:880px;margin:3rem auto 2rem;padding:0 1.5rem;font-family:inherit;}
@@ -293,20 +328,6 @@ nav{display:none;}
 </style>
 <section class="faq-section" id="faq">
   <!-- SEO-042:TOP-CTA:START -->
-<style>
-.topcta{--gold:#7a5c10;--gold2:#96720f;max-width:880px;margin:0 auto 2rem;padding:1.1rem 1.5rem 1.3rem;border:1px solid rgba(122,92,16,.22);border-radius:6px;background:rgba(122,92,16,.035);}
-.topcta-head{font-size:.74rem;letter-spacing:.12em;color:var(--gold,#7a5c10);margin-bottom:.15rem;}
-.topcta-sub{font-size:.8rem;color:var(--muted,#6b6b6b);margin-bottom:.85rem;line-height:1.6;}
-.topcta-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;}
-.topcta-item{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;}
-.topcta-name{font-size:.92rem;font-weight:500;min-width:0;}
-.topcta-actions{display:flex;gap:.5rem;flex-shrink:0;}
-.topcta .store-link{display:inline-flex;align-items:center;gap:.35rem;background:var(--gold,#7a5c10);color:#fff;border:1px solid var(--gold,#7a5c10);padding:.55rem 1.1rem;border-radius:4px;font-size:.78rem;font-weight:500;letter-spacing:.04em;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);transition:background .15s,transform .1s;}
-.topcta .store-link:hover{background:var(--gold2,#96720f);transform:translateY(-1px);}
-.topcta .store-link[href*="hotpepper"]{background:#fff;color:var(--gold,#7a5c10);border:1px solid var(--gold,#7a5c10);box-shadow:none;}
-.topcta .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
-@media(max-width:640px){.topcta{padding:1rem 1.1rem 1.15rem;}.topcta-item{flex-direction:column;align-items:flex-start;gap:.45rem;}.topcta-actions{width:100%;}}
-</style>
 <aside class="topcta" aria-label="この特集の注目店">
   <div class="topcta-head">EDITORS' PICK</div>
   <div class="topcta-sub">本文を読む前に動きたい方へ。編集部が上位に挙げた3軒の詳細と予約はこちらから。</div>
@@ -352,7 +373,38 @@ nav{display:none;}
     </div>
   </div>
 </section>
-
-<script>(function(){var fc=document.getElementById('fc-year');if(fc)fc.textContent='© '+new Date().getFullYear()+' All Rights Reserved';})();</script>
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
+<script class="nb-engagement-tracking">
+(function(){
+  var fired={},THRESH=[25,50,75,100];
+  function check(){
+    var doc=document.documentElement;
+    var top=window.pageYOffset||doc.scrollTop;
+    var max=(doc.scrollHeight-doc.clientHeight)||1;
+    var pct=Math.min(100,Math.round((top/max)*100));
+    THRESH.forEach(function(t){if(pct>=t&&!fired[t]){fired[t]=true;try{trackEvent('scroll_depth',{percent:t});}catch(err){}}});
+  }
+  var timer=null;
+  window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
+  check();
+})();
+</script>
 </body>
 </html>

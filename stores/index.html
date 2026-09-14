@@ -56,21 +56,9 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;--ember:#b8541f;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;}
-header{position:sticky;top:0;z-index:100;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
-.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.1rem;letter-spacing:.3em;color:var(--white);text-decoration:none;text-transform:uppercase;}
-.logo em{font-style:italic;color:var(--gold);}
-.back-link{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.14em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
-.back-link:hover{color:var(--gold);}
-.container{max-width:920px;margin:0 auto;padding:3rem 1.5rem 4rem;}
-.breadcrumb{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.1em;color:var(--dim);margin-bottom:1.6rem;display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;}
-.breadcrumb a{color:var(--dim);text-decoration:none;transition:color .2s;}
-.breadcrumb a:hover{color:var(--gold);}
-.breadcrumb span{color:var(--dim);opacity:.5;}
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/nb.css">
+<style>.container{max-width:920px;margin:0 auto;padding:3rem 1.5rem 4rem;}
 .eyebrow{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:.7rem;}
 h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,5vw,3.2rem);line-height:1.15;color:var(--white);margin-bottom:1rem;}
 h1 em{font-style:italic;color:var(--gold);}
@@ -91,12 +79,7 @@ h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.5rem;color
 .feature-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.6rem;margin-bottom:2.4rem;}
 .feature-link{display:block;padding:.85rem 1rem;background:#fff;border:0.5px solid #D3D1C7;border-radius:4px;text-decoration:none;font-size:.82rem;color:var(--text);transition:all .2s;}
 .feature-link:hover{background:rgba(122,92,16,.06);border-color:var(--gold);color:var(--gold);}
-footer{padding:2rem 1.5rem;text-align:center;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.16em;color:var(--dim);text-transform:uppercase;border-top:1px solid var(--border);margin-top:3rem;}
-footer a{color:var(--gold);text-decoration:none;}
 @media(max-width:640px){.container{padding:1.5rem 1rem 3rem;}.area-grid{grid-template-columns:1fr;}}
-
-/* === カードレイアウト === */
-body{background:var(--bg2);}
 .hero-img{display:block;width:calc(100% - 3rem);max-width:840px;margin:1.4rem auto 0;height:260px;object-fit:cover;border-radius:10px 10px 0 0;filter:none;}
 .container{max-width:840px;margin:0 auto 2rem;padding:1.8rem 2.2rem 2rem;background:#fff;border-radius:0 0 10px 10px;border:1px solid var(--border);border-top:none;box-shadow:0 4px 20px rgba(0,0,0,.07);}
 .point-box{background:rgba(122,92,16,.07);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:.9rem 1.1rem;margin-bottom:1.4rem;}
@@ -109,22 +92,34 @@ body{background:var(--bg2);}
   .container{padding:1.4rem 1.2rem 1.6rem;margin-bottom:1rem;border-radius:0 0 8px 8px;}
   .info-grid{padding:.9rem;}
 }
-
 /* === INSIDER REVIEWS (フォールバック) === */
 .insider-reviews-box{background:rgba(20,60,50,.04);border-left:3px solid #2a6a5a;border-radius:0 4px 4px 0;padding:.95rem 1.1rem;margin-bottom:1.4rem;}
 .insider-reviews-box .ir-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.22em;color:#2a6a5a;text-transform:uppercase;display:block;margin-bottom:.5rem;}
 .ir-empty{font-size:.75rem;color:var(--dim);margin:.3rem 0 .8rem;line-height:1.7;}
 .insider-cta{display:inline-block;padding:.6rem 1.1rem;background:#2a6a5a;color:#fff;font-size:.82rem;font-weight:600;text-decoration:none;border:none;border-radius:4px;cursor:pointer;transition:background .2s;}
-.insider-cta:hover{background:#1e4e42;}
-</style>
+.insider-cta:hover{background:#1e4e42;}</style>
 <script>(function(){if(location.search.indexOf("noredirect")!==-1)return;location.replace("../index.html#store=index");})();</script>
 </head>
 <body>
 
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
-  <a href="../index.html" class="logo">Nagoya <em>Bites</em></a>
-  <a href="../index.html" class="back-link">← TOP</a>
+  <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html" aria-current="page">店舗を探す</a>
+    <a href="../features/index.html">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
+  </nav>
 </header>
+<!-- NB-CHROME:HEADER:END -->
 
 <div class="container">
   <nav class="breadcrumb" aria-label="パンくずリスト">
@@ -138,68 +133,69 @@ body{background:var(--bg2);}
   <p class="lead">NAGOYA BITES 掲載の飲食店 4,500軒以上を、主要エリア別に整理しています。各店舗ページには、Google評価、営業時間、推薦コメント、ホットペッパー・食べログ・Instagram への導線まで集約。シーン別に深掘りしたい方は <a href="../features/" style="color:var(--gold);text-decoration:underline">特集記事</a> もご利用ください。</p>
 
   <h2>主要エリア（11区分・4,584店を網羅）</h2>
+  <p class="feature-link-lead" style="font-size:.78rem;color:var(--muted);margin:0 0 1rem;">各エリアの中でさらにジャンル・条件（個室・深夜営業・予算等）で絞り込みたい場合は <a href="area/index.html" style="color:var(--gold);text-decoration:underline">エリア×ジャンルで探す</a> をご覧ください。</p>
   <div class="area-grid">
-    <a class="area-card" href="../index.html#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89">
+    <a class="area-card" href="area/meieki/index.html">
       <div class="area-name">Meieki</div>
       <div class="area-jp">名古屋駅・西区・中村区</div>
       <div class="area-count">812店掲載</div>
       <div class="area-desc">新幹線・地下鉄ハブ。出張・接待・仕事帰りの個室と大型宴会場が充実。</div>
     </a>
-    <a class="area-card" href="../index.html#area=%E6%A0%84%E3%82%AD%E3%82%BF%E9%8C%A6%2F%E4%BC%8F%E8%A6%8B%E4%B8%B8%E3%81%AE%E5%86%85%2F%E6%B3%89%2F%E6%9D%B1%E6%A1%9C%2F%E6%96%B0%E6%A0%84">
+    <a class="area-card" href="area/nishiki-fushimi/index.html">
       <div class="area-name">Sakae N.</div>
       <div class="area-jp">栄キタ・錦・伏見・東桜・新栄</div>
       <div class="area-count">724店掲載</div>
       <div class="area-desc">大人の繁華街。割烹・寿司・バーまで深い夜の選択肢が並ぶ。</div>
     </a>
-    <a class="area-card" href="../index.html#area=%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5">
+    <a class="area-card" href="area/yabacho-osu/index.html">
       <div class="area-name">Sakae S.</div>
       <div class="area-jp">栄ミナミ・矢場町・大須・上前津</div>
       <div class="area-count">606店掲載</div>
       <div class="area-desc">若年・カジュアル・ナイトライフ。多国籍と食べ歩きの中心。</div>
     </a>
-    <a class="area-card" href="../index.html#area=%E5%A4%A7%E6%9B%BD%E6%A0%B9%C2%B7%E5%8D%83%E7%A8%AE%C2%B7%E4%BB%8A%E6%B1%A0%C2%B7%E6%B1%A0%E4%B8%8B%C2%B7%E5%AE%88%E5%B1%B1%E5%8C%BA">
+    <a class="area-card" href="area/chikusa-imaike/index.html">
       <div class="area-name">Higashi</div>
       <div class="area-jp">大曽根・千種・今池・池下・守山</div>
       <div class="area-count">512店掲載</div>
       <div class="area-desc">JR・地下鉄沿線の地元店密集。常連向けの居酒屋・焼肉が厚い。</div>
     </a>
-    <a class="area-card" href="../index.html#area=%E6%A0%84">
+    <a class="area-card" href="area/sakae/index.html">
       <div class="area-name">Sakae Core</div>
       <div class="area-jp">栄エリア（中心部）</div>
       <div class="area-count">415店掲載</div>
       <div class="area-desc">名古屋の象徴的繁華街。デート・女子会・接待まで全方位対応。</div>
     </a>
-    <a class="area-card" href="../index.html#area=%E7%B7%91%E5%8C%BA%E3%83%BB%E5%8D%97%E5%8C%BA%E3%83%BB%E5%A4%A9%E7%99%BD%E5%8C%BA%E3%83%BB%E7%91%9E%E7%A9%82%E5%8C%BA">
+    <a class="area-card" href="area/midori-tempaku/index.html">
       <div class="area-name">Minami</div>
       <div class="area-jp">緑区・南区・天白区・瑞穂区</div>
       <div class="area-count">373店掲載</div>
       <div class="area-desc">郊外ファミリー層の地元店。駐車場あり大箱と隠れ家が混在。</div>
     </a>
-    <a class="area-card" href="../index.html#area=%E6%9C%AC%E5%B1%B1%E3%83%BB%E8%A6%9A%E7%8E%8B%E5%B1%B1%E3%83%BB%E8%97%A4%E3%81%8C%E4%B8%98">
+    <a class="area-card" href="area/kakuozan/index.html">
       <div class="area-name">Kakuozan</div>
       <div class="area-jp">本山・覚王山・藤が丘</div>
       <div class="area-count">258店掲載</div>
       <div class="area-desc">名古屋の感度の高い人が集まる文教＆スイーツ・ビストロ密集帯。</div>
     </a>
-    <a class="area-card" href="../index.html#area=%E4%B8%AD%E5%B7%9D%E5%8C%BA%E3%83%BB%E6%B8%AF%E5%8C%BA">
+    <a class="area-card" href="area/nakagawa-minato/index.html">
       <div class="area-name">West-Port</div>
       <div class="area-jp">中川区・港区</div>
       <div class="area-count">206店掲載</div>
       <div class="area-desc">市場・港町のローカル海鮮、ロードサイドの大箱焼肉が中心。</div>
     </a>
-    <a class="area-card" href="../index.html#area=%E9%87%91%E5%B1%B1%E3%83%BB%E7%A5%9E%E5%AE%AE%E5%89%8D%E3%83%BB%E7%86%B1%E7%94%B0%E5%8C%BA">
+    <a class="area-card" href="area/kanayama/index.html">
       <div class="area-name">Kanayama</div>
       <div class="area-jp">金山・神宮前・熱田区</div>
       <div class="area-count">205店掲載</div>
       <div class="area-desc">中部国際空港アクセス良好。大型宴会場と熱田の老舗が混在。</div>
     </a>
-    <a class="area-card" href="../index.html#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85">
+    <a class="area-card" href="area/meieki/index.html">
       <div class="area-name">Meieki Sub</div>
       <div class="area-jp">名古屋駅（駅直近）</div>
       <div class="area-count">175店掲載</div>
       <div class="area-desc">JR名古屋駅徒歩圏。出張サラリーマンの夜の集積地。</div>
     </a>
-    <a class="area-card" href="../index.html#area=%E9%B6%B4%E8%88%9E%E3%83%BB%E5%85%AB%E4%BA%8B%E3%83%BB%E5%BE%A1%E5%99%A8%E6%89%80">
+    <a class="area-card" href="area/tsurumai-yagoto/index.html">
       <div class="area-name">Tsurumai</div>
       <div class="area-jp">鶴舞・八事・御器所</div>
       <div class="area-count">169店掲載</div>
@@ -248,9 +244,61 @@ body{background:var(--bg2);}
 <div class="insider-reviews-box"><span class="ir-label">INSIDER REVIEWS — 業界人レビュー</span><p class="ir-empty">飲食業界で経験のある方の最初のレビューをお待ちしています。</p><a class="insider-cta" href="../index.html#store=index&review=1">このお店にレビューを書く</a></div>
 </div>
 
-<footer>
-  © 2026 <a href="../index.html">NAGOYA BITES</a> — 名古屋グルメの決定版ガイド
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
 
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
 </body>
 </html>

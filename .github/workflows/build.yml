@@ -260,6 +260,20 @@ jobs:
         # ISSUE-050 の前例に倣い Inspector の月次レビュー後に手動 --delete-orphans する運用とする。
         run: node gen-store-pages.js --check-orphans
 
+      - name: エリア×ジャンル×条件ページ生成（stores/area/・SEO-094）
+        # data/area_genre_pages_policy.json を唯一の情報源に、data/stores.json から
+        # 決定的にエリア×ジャンル一覧ページ（stores/area/配下）を生成する。
+        # gen-store-pages.js の直後に置く理由: gen-store-pages.js 自身が sitemap.xml を
+        # 丸ごと書き直すため（buildSitemap()）、先に置くと本ステップの追記が消える。
+        # 本ステップは既存の /stores/area/ 区間だけを冪等に差し替えるので順序が重要。
+        # index.html の「エリア×ジャンルで探す」導線（scripts/inject_store_links.js、
+        # build.js 内で実行済み）は本ステップより前に走るため、当日の新規/消滅ハブが
+        # 反映されるのは翌日のビルドから（1日ラグ）。ハブの増減はヒステリシスで緩やかなため
+        # 実害は小さい。ISSUE-121 の教訓により新設ゲートは非ブロッキングで開始し、
+        # CI が緑を確認してから blocking 化する。
+        run: node scripts/gen_area_genre_pages.js
+        continue-on-error: true
+
       - name: デザインシステム準拠監査（DSN-001・可読性ゲート）
         # 全ページが assets/css/nb.css・正本フォントURL・font-size床(12px)・許可フォントウェイトに
         # 準拠しているかを検査する（scripts/audit_design_system.js）。stores/ は既存の閉店delist済み
@@ -267,6 +281,13 @@ jobs:
         # まま残るため、当面は非ブロッキングで運用し、Designer が違反傾向を確認したうえで
         # 段階的に blocking 化する（ISSUE-121 の教訓: 新設ゲートはCIが緑を1回確認してから昇格）。
         run: node scripts/audit_design_system.js --report --sample 200
+        continue-on-error: true
+
+      - name: サイト共通クローム整合性監査（DSN-003・header/nav/breadcrumb/footer の統一）
+        # scripts/lib/site_chrome.js を正本に、全ページのクローム部分が再生成値と一致するかを検査する。
+        # gen-store-pages.js の直後に置くことで再生成済み stores/ も同じ基準で見る。
+        # ISSUE-121 の教訓: 新設ゲートは CI が緑を1回確認してから blocking へ昇格する（当面は非ブロッキング）。
+        run: node scripts/apply_site_chrome.js --check --sample 200
         continue-on-error: true
 
       - name: 店舗写真カバレッジ監査（画質退行の検知・実写ゼロ店の可視化）
@@ -335,7 +356,7 @@ jobs:
           # Places で取得した pending 店の写真が毎回捨てられ、無駄な API 再取得が続く。
           # data/crosscheck.json: モーダル「内訳を見る」の遅延ロード元。ここが漏れていると
           # CI で毎ビルド生成されても捨てられ、フロントが古い内訳（一部店舗のみ）を出し続ける。
-          git add index.html features/index.html sitemap.xml data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/store_link_identity_checked.json data/store_link_identity_report.json
+          git add index.html features/index.html sitemap.xml data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/store_link_identity_checked.json data/store_link_identity_report.json data/area_genre_pages_manifest.json
           # 特集本体(features/*.html)も commit 対象。月次ロスター更新の掲載店入替を反映する。
           git add features/ || true
           git add stores/ || true

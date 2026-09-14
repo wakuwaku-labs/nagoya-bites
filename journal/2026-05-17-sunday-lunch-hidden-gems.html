@@ -53,62 +53,57 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   ]
 }
 </script>
-<style>nav a:hover,nav a.active{color:var(--text);}
-.art-hero{padding:2.5rem 1.5rem 2rem;max-width:760px;margin:0 auto;}
-.art-eyebrow{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
-.art-title{font-family:var(--font-display);font-weight:400;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.25;color:var(--white);margin-bottom:.8rem;}
-.art-title em{font-style:italic;color:var(--gold);}
-.art-meta{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-bottom:1.2rem;display:flex;gap:1rem;flex-wrap:wrap;}
-.art-lead{font-size:var(--fs-md);line-height:2;color:var(--muted);border-left:2px solid var(--gold);padding-left:1.1rem;}
-.art-body{max-width:760px;margin:0 auto;padding:0 1.5rem 3rem;}
-.section-label{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--dim);text-transform:uppercase;margin:2rem 0 .8rem;}
-.art-body p{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--muted);margin-bottom:1.2rem;}
-.art-body h2{font-family:var(--font-display);font-weight:400;font-size:1.3rem;color:var(--white);margin:2rem 0 .8rem;}
-.art-body h3{font-family:var(--font-body);font-weight:500;font-size:1rem;color:var(--white);margin:1.5rem 0 .6rem;}
-.insider-box{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);padding:1.1rem 1.3rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
-.insider-title{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;}
-.insider-box p{font-size:.8rem;line-height:1.9;color:var(--muted);}
-.insider-box ul{padding-left:1.2rem;}
-.insider-box li{font-size:.8rem;line-height:1.9;color:var(--muted);margin-bottom:.4rem;}
-.data-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.78rem;}
-.data-table th{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.14em;color:var(--dim);text-transform:uppercase;padding:.6rem .8rem;border-bottom:2px solid var(--border);text-align:left;}
-.data-table td{padding:.7rem .8rem;border-bottom:1px solid var(--border);color:var(--muted);line-height:1.6;}
-.data-table tr:last-child td{border-bottom:none;}
-.data-table .ok{color:#4a7c59;font-weight:500;}
-.data-table .ng{color:#8b4513;font-weight:500;}
-.hero-img{width:100%;height:260px;object-fit:cover;filter:brightness(.85) saturate(.8);display:block;margin-bottom:0;}
-@media(min-width:768px){.hero-img{height:360px;}}
-.source-note{background:var(--bg2);border:1px solid var(--border);padding:.8rem 1rem;border-radius:4px;margin:1.5rem 0;font-size:var(--fs-xs);line-height:1.7;color:var(--dim);}
-.source-note a{color:var(--gold);text-decoration:none;}
-.related-wrap{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 1.5rem;margin-top:2rem;}
-.related-title{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:1rem;max-width:760px;margin-left:auto;margin-right:auto;}
-.related-links{display:flex;gap:.7rem;flex-wrap:wrap;max-width:760px;margin:0 auto;}
-.related-link{font-size:.76rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.45rem 1rem;border-radius:2px;transition:background .2s;}
-.related-link:hover{background:rgba(122,92,16,.08);}
-footer a{color:rgba(201,169,110,.7);text-decoration:none;}
-@media(max-width:640px){.art-body p{font-size:var(--fs-md);}.art-lead{font-size:.95rem;}nav{gap:1rem;}nav a{font-size:var(--fs-xs);}}</style>
+<style>
+/* NB-JOURNAL-STYLE v1: 共通の記事組版(.art-hero/.art-title/.store-card/.related 等)は
+   assets/css/nb.css の記事システムが所有する。ここは journal 固有の残り(店舗CTA配色・IG導線)のみ。 */
+.store-meta .score{color:var(--gold2);font-weight:500;}
+/* SEO-054: 店舗カードの予約・地図導線（index.html のモーダルCTAと同じ配色規約） */
+.store-link-reserve{background:#e6002d;color:#fff!important;border-color:transparent;}
+.store-link-reserve:hover{background:#c9001e;}
+.store-link-map{background:#4285F4;color:#fff!important;border-color:transparent;}
+.store-link-map:hover{background:#2b6cd4;}
+.art-hero-ig{max-width:var(--container-mid);margin:0 auto;padding:0 1.5rem 1rem;display:flex;justify-content:center;}
+.art-ig-cta{display:flex;align-items:center;gap:1rem;background:var(--bg2);border:1px solid var(--border);border-left:3px solid #C13584;padding:1rem 1.2rem;border-radius:0 var(--r-md) var(--r-md) 0;margin:var(--sp-5) 0;}
+.art-ig-cta .ig-icon{font-size:1.4rem;flex-shrink:0;}
+.art-ig-cta-body{flex:1;}
+.art-ig-cta-label{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:#C13584;text-transform:none;margin-bottom:.3rem;}
+.art-ig-cta-handle{font-size:var(--fs-sm);font-weight:500;color:var(--ink);margin-bottom:.2rem;}
+.art-ig-cta-note{font-size:var(--fs-md);color:var(--muted);}
+.art-ig-cta a{text-decoration:none;color:inherit;}
+.art-ig-cta a:hover .art-ig-cta-handle{color:#C13584;}
+</style>
 </head>
 <body>
 
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="../index.html">すべての店舗</a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
     <a href="../features/index.html">特集</a>
-    <a href="index.html" class="active">Journal</a>
-    <a href="../about.html">About</a>
+    <a href="../journal/index.html" aria-current="page">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
-
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
 <nav aria-label="パンくずリスト">
   <div class="breadcrumb">
-    <a href="../index.html">NAGOYA BITES</a>
+    <a href="../index.html">TOP</a>
     <span>›</span>
-    <a href="index.html">Journal</a>
+    <a href="../journal/index.html">ジャーナル</a>
     <span>›</span>
     日曜ランチこそ業界人が狙う最大の穴
   </div>
 </nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
 <img class="hero-img"
   src="../assets/journal-figures/2026-05-17-sunday-lunch-hidden-gems.svg"
@@ -116,7 +111,7 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   loading="eager" decoding="async" fetchpriority="high"
   width="1200" height="630">
 
-<article>
+<article class="nb-article">
   <div class="art-hero">
     <p class="art-eyebrow">業界の裏側 — 2026.05.17</p>
     <h1 class="art-title">日曜ランチこそ<em>業界人が狙う</em><br>最大の穴 — 名古屋の実力店が「昼の顔」を見せる理由</h1>
@@ -129,7 +124,7 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   </div>
 
   <div class="art-body">
-<p class="nb-site-intro" style="font-size:.74rem;color:var(--dim);padding:.55rem .9rem;background:var(--bg2);border:1px solid var(--border);border-radius:4px;margin-bottom:1.5rem;line-height:1.7;">この記事は<a href="../index.html" style="color:var(--gold);text-decoration:none;">NAGOYA BITES</a> — 名古屋の厳選1,100店超を業界視点で紹介するグルメガイドの一部です。</p>
+<p class="nb-site-intro">この記事は<a href="../index.html">NAGOYA BITES</a> — 名古屋の厳選1,100店超を業界視点で紹介するグルメガイドの一部です。</p>
 
 
     <p class="section-label">01 — 日曜ランチはなぜ業界人にとって「穴」なのか</p>
@@ -283,10 +278,43 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   </div>
 </div>
 
-<footer>
-  <p>© 2026 NAGOYA BITES — 業界人運営・編集独立・広告ゼロ | <a href="../features/editorial-policy.html">編集規約</a> | <a href="../about.html">About</a></p>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
 <!-- SEO-052: 内部リンク（関連記事ブロック）のクリックとスクロール到達を計測。
      回遊アドバイスの採否を体感でなく実データで判定できるようにする -->
 <script class="nb-engagement-tracking">
@@ -305,5 +333,23 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   check();
 })();
 </script>
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
 </body>
 </html>

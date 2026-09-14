@@ -1,0 +1,7 @@
+{
+  "description": "日次ジャーナルのSNS原稿(docs/daily-posts/*.md: Note/Instagram/X用コピペ原稿)自動生成のオン/オフを切り替える唯一の情報源。scripts/generate_daily_draft.js がこの値を読んで挙動を変える。ジャーナル記事本体(journal/*.html)の生成・公開フロー(build_journal_index.js / build.js / git push)には一切影響しない。",
+  "generate_sns_draft": false,
+  "reason": "SNS投稿原稿はサイト外の別の仕組みで生成する運用に切り替えたため、日次ジャーナル側での重複生成を一旦停止(2026-09-05・オーナー指示)。",
+  "how_to_resume": "generate_sns_draft を true に戻すだけで再開する(scripts/generate_daily_draft.js のコード変更は不要)。",
+  "updated": "2026-09-05"
+}

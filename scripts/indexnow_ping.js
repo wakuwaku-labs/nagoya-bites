@@ -98,6 +98,22 @@ function recentUrls(days) {
       urls.add(`${ORIGIN}/journal/${e.slug}.html`);
     });
   }
+  // SEO-094: エリア×ジャンル一覧（stores/area/）の新規/更新ページ。初回公開直後は
+  // Bing に最優先で知らせたいため、manifest の updated が直近 N 日のものを混ぜる。
+  // MAX_URLS の枠を journal 側と食い合うため件数は限定的（数日かけて全件を送り切る設計）。
+  const manifestPath = path.join(ROOT, 'data', 'area_genre_pages_manifest.json');
+  if (fs.existsSync(manifestPath)) {
+    try {
+      const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+      const cutoff = Date.now() - days * 86400000;
+      (manifest.pages || [])
+        .filter(p => p.status === 'active' && p.updated && new Date(p.updated + 'T00:00:00+09:00').getTime() >= cutoff)
+        .filter(p => fs.existsSync(path.join(ROOT, p.path)))
+        .forEach(p => urls.add(`${ORIGIN}/${p.path}`));
+    } catch (e) {
+      // manifest 破損時は無視（IndexNow 送信自体は journal/トップだけでも成立させる）
+    }
+  }
   return Array.from(urls).slice(0, MAX_URLS);
 }
 

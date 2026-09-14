@@ -1,0 +1,417 @@
+{
+  "date": "2026-09-06",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "アジア大会の瑞穂、栄へ戻る前に会場徒歩5分の焼肉で宴会を組む",
+      "verdict": "PASS",
+      "total": 110,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 3件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 7件 (価格帯,席,予約,シーン,オペ,回転,業界) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 147字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "名古屋の155店中23店という数字、アジア大会の食の多様性を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 92,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 5件 (価格帯,予約,相場,仕入れ,オペ) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 127字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "92点（自動公開ライン 100点）。主な不足: topicality -8 / search_intent -6 / writability -2"
+    },
+    {
+      "id": "c4",
+      "title_draft": "名駅のヨドバシ開業が9月16日、周辺の飲食店が身構える理由",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 13,
+        "uniqueness": 20,
+        "brand_fit": 8,
+        "writability": 8,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 4件 (価格帯,相場,回転,業界) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 75字 +2",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄のPARCOに新フロア、名駅の地下街と同じ週に開いた意味",
+      "verdict": "HOLD",
+      "total": 74,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 20,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 4件 (席,相場,回転,業界) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 94字 +4",
+          "title 29字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "新瑞橋に32軒、瑞穂運動場に7軒 — 一駅の差が生む受け皿の厚み",
+      "verdict": "HOLD",
+      "total": 47,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 8,
+        "writability": 8,
+        "novelty": 3,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 36日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 4件 (席,予約,回転,業界) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 59字 +2",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "flexible",
+      "title_draft": "アジア大会の瑞穂、栄へ戻る前に会場徒歩5分の焼肉で宴会を組む",
+      "lead_draft": "9月19日、パロマ瑞穂スタジアムでアジア大会の開会式が始まる。仮設席を入れて約3万5千人。ところが当サイトの掲載データで会場徒歩10分圏の飲食店は7軒しかなく、営業時間と定休日を突き合わせると、会期16日間ずっと夜に開いている店は1軒もない。栄まで戻るか、会場前で粘るか。業界人の判断軸を書く。",
+      "angle": "会場徒歩10分圏7軒の営業時間と定休日を突き合わせ「16日間フルで夜営業する店はゼロ」という自社データの事実から、価格帯・席数・予約の取り方・回転のオペを業界人視点で読み、観戦後というシーンに合う一軒の選び方を示す",
+      "main_store": {
+        "name": "コーチン焼肉 べんがら亭 瑞穂店",
+        "id": "J001269208",
+        "area": "瑞穂区",
+        "genre": "焼肉・和食"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES／名古屋観光コンベンションビューロー「なごやめし普及促進協議会、『愛知・名古屋2026』にあわせて食の多様性に対応する飲食店の情報をガイドマップとステッカーで発信！」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000003.000188731.html",
+          "date": "2026-09-03"
+        },
+        {
+          "label": "Food Diversity.today「提供料理の90％がハラール対応！愛知・名古屋2026アジア・アジアパラ競技大会の選手用食堂を公開」",
+          "url": "https://fooddiversity.today/article_206463.html",
+          "date": "2026-08-23"
+        },
+        {
+          "label": "Olympics.com「アジア競技大会・愛知・名古屋2026｜実施競技・会場一覧・アクセス」",
+          "url": "https://www.olympics.com/ja/news/asian-games-aichi-nagoya-2026-list-of-sports-venues-and-access-information",
+          "date": "2026-08-01"
+        },
+        {
+          "label": "MICE TIMES ONLINE「名古屋『パロマ瑞穂スタジアム』2026年4月22日に供用開始へ！全席屋根付き30,000席」",
+          "url": "https://micetimes.jp/mizuho-paloma-2512/",
+          "date": "2026-04-10"
+        },
+        {
+          "label": "第20回アジア競技大会（2026／愛知・名古屋）公式X",
+          "url": "https://x.com/AsianGames_2026",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "コーチン焼肉 べんがら亭 瑞穂店 公式Instagram",
+          "url": "https://www.instagram.com/bengaratei_mizuhoten/",
+          "date": "2026-08-17"
+        },
+        {
+          "label": "プティヴォワリエ 公式Instagram",
+          "url": "https://www.instagram.com/petit_voilier2023/",
+          "date": "2026-08-17"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "flexible",
+      "title_draft": "名古屋の155店中23店という数字、アジア大会の食の多様性を業界人が読む",
+      "lead_draft": "なごやめし飲食店ガイドマップが5言語で出た。155店のうち食の多様性マークが付いたのは23店。内訳はノンポーク・ノンアルコール21店に対しハラール肉使用は4店。この偏りは意識の差ではなく厨房の構造から来ている。仕入れとオペの現実を業界人の視点で説明する。",
+      "angle": "ノンポーク対応21店とハラール肉4店の差を、仕入れ単価・専用フライヤー・仕込み動線という厨房のオペと相場から説明し、価格帯への跳ね返りと予約時に確認すべき点を示す",
+      "main_store": null,
+      "sources": [
+        {
+          "label": "PR TIMES／なごやめしガイドマップ",
+          "url": "https://prtimes.jp/main/html/rd/p/000000003.000188731.html",
+          "date": "2026-09-03"
+        },
+        {
+          "label": "Food Diversity.today 選手食堂",
+          "url": "https://fooddiversity.today/article_206463.html",
+          "date": "2026-08-23"
+        },
+        {
+          "label": "第20回アジア競技大会 公式X",
+          "url": "https://x.com/AsianGames_2026",
+          "date": "2026-09-01"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "flexible",
+      "title_draft": "栄のPARCOに新フロア、名駅の地下街と同じ週に開いた意味",
+      "lead_draft": "9月4日、栄のPARCOにENTER PARKが開いた。同じ週に名駅ではメイチカが約3年半ぶりに再開している。商業施設の飲食フロアが同時期に立ち上がるとき、業界の中では何が起きているのか。",
+      "angle": "商業施設の飲食テナントは開業時期が集客の相場を決めるという業界の構造を、席数と回転の設計から読む",
+      "main_store": null,
+      "sources": [
+        {
+          "label": "名古屋情報通 PARCO ENTER PARK",
+          "url": "https://jouhou.nagoya/parco-enter-park/",
+          "date": "2026-09-04"
+        },
+        {
+          "label": "名古屋情報通 メイチカ",
+          "url": "https://jouhou.nagoya/meichika-repo/",
+          "date": "2026-09-03"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "flexible",
+      "title_draft": "名駅のヨドバシ開業が9月16日、周辺の飲食店が身構える理由",
+      "lead_draft": "9月16日、名駅にヨドバシカメラが開く。アジア大会の3日前だ。大型商業施設の開業が周辺の飲食店に与える影響は、増客ではなく客層の入れ替えとして現れる。",
+      "angle": "大型店開業が周辺の価格帯と回転をどう動かすかを業界の相場観で読む",
+      "main_store": null,
+      "sources": [
+        {
+          "label": "名古屋情報通 ヨドバシ名駅",
+          "url": "https://jouhou.nagoya/yodobashi-meieki-open/",
+          "date": "2026-09-02"
+        },
+        {
+          "label": "第20回アジア競技大会 公式X",
+          "url": "https://x.com/AsianGames_2026",
+          "date": "2026-09-01"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "flexible",
+      "title_draft": "新瑞橋に32軒、瑞穂運動場に7軒 — 一駅の差が生む受け皿の厚み",
+      "lead_draft": "地下鉄で一駅しか離れていない新瑞橋と瑞穂運動場で、掲載店の数は32軒と7軒。この差はアジア大会の16日間に効いてくる。",
+      "angle": "駅前商圏の厚みは席数と回転の総量で決まるという業界の見方を、予約の取りやすさに翻訳する",
+      "main_store": null,
+      "sources": [
+        {
+          "label": "Olympics.com 会場一覧",
+          "url": "https://www.olympics.com/ja/news/asian-games-aichi-nagoya-2026-list-of-sports-venues-and-access-information",
+          "date": "2026-08-01"
+        },
+        {
+          "label": "MICE TIMES パロマ瑞穂スタジアム",
+          "url": "https://micetimes.jp/mizuho-paloma-2512/",
+          "date": "2026-04-10"
+        }
+      ]
+    }
+  ]
+}

@@ -2436,37 +2436,398 @@
     {
       "date": "2026-09-04",
       "totals": {
-        "activeUsers": 1012,
-        "pageViews": 1659,
-        "sessions": 1191,
-        "avgSessionDuration": 146.2,
-        "bounceRate": 0.306,
+        "activeUsers": 988,
+        "pageViews": 1623,
+        "sessions": 1165,
+        "avgSessionDuration": 148.6,
+        "bounceRate": 0.321,
         "pagesPerSession": 1.39
       },
       "channels_pct": {
-        "organic": 73.1,
-        "direct": 18.1,
-        "social": 6.9,
+        "organic": 72.3,
+        "direct": 18.8,
+        "social": 6.7,
         "referral": 1.3,
         "paid": 0,
-        "other": 0.6
+        "other": 0.9
       },
       "search_channels": {
-        "google": 391,
-        "bing": 292,
-        "direct": 206,
-        "yahoo": 176,
-        "ai_assistant": 90,
+        "google": 383,
+        "bing": 289,
+        "direct": 212,
+        "yahoo": 166,
+        "ai_assistant": 85,
         "duckduckgo": 10,
-        "other": 5,
+        "other": 9,
         "social": 0
       },
       "cta": {
-        "outboundClicks": 113,
+        "outboundClicks": 97,
+        "ctaClickRate": 8.3,
+        "ctaClickRate_organic": 7,
+        "ctaClickRate_direct": 5.9,
+        "ctaClickRate_social": 27.8
+      }
+    },
+    {
+      "date": "2026-09-05",
+      "totals": {
+        "activeUsers": 998,
+        "pageViews": 1644,
+        "sessions": 1175,
+        "avgSessionDuration": 138.8,
+        "bounceRate": 0.319,
+        "pagesPerSession": 1.4
+      },
+      "channels_pct": {
+        "organic": 72.6,
+        "direct": 18.8,
+        "social": 6.9,
+        "referral": 1.2,
+        "paid": 0,
+        "other": 0.5
+      },
+      "search_channels": {
+        "google": 392,
+        "bing": 283,
+        "direct": 214,
+        "yahoo": 174,
+        "ai_assistant": 88,
+        "duckduckgo": 11,
+        "other": 4,
+        "social": 0
+      },
+      "cta": {
+        "outboundClicks": 99,
+        "ctaClickRate": 8.4,
+        "ctaClickRate_organic": 6.8,
+        "ctaClickRate_direct": 7.6,
+        "ctaClickRate_social": 25.6
+      }
+    },
+    {
+      "date": "2026-09-06",
+      "totals": {
+        "activeUsers": 1012,
+        "pageViews": 1697,
+        "sessions": 1202,
+        "avgSessionDuration": 143.4,
+        "bounceRate": 0.31,
+        "pagesPerSession": 1.41
+      },
+      "channels_pct": {
+        "organic": 71.9,
+        "direct": 19.4,
+        "social": 7,
+        "referral": 1.1,
+        "paid": 0,
+        "other": 0.5
+      },
+      "search_channels": {
+        "google": 395,
+        "bing": 289,
+        "direct": 227,
+        "yahoo": 176,
+        "ai_assistant": 84,
+        "duckduckgo": 12,
+        "social": 5,
+        "other": 4
+      },
+      "cta": {
+        "outboundClicks": 102,
+        "ctaClickRate": 8.5,
+        "ctaClickRate_organic": 7.2,
+        "ctaClickRate_direct": 6.8,
+        "ctaClickRate_social": 24.7
+      }
+    },
+    {
+      "date": "2026-09-07",
+      "totals": {
+        "activeUsers": 1040,
+        "pageViews": 1802,
+        "sessions": 1250,
+        "avgSessionDuration": 151.9,
+        "bounceRate": 0.319,
+        "pagesPerSession": 1.44
+      },
+      "channels_pct": {
+        "organic": 70.5,
+        "direct": 21.3,
+        "social": 6.7,
+        "referral": 1.3,
+        "paid": 0,
+        "other": 0.3
+      },
+      "search_channels": {
+        "google": 406,
+        "bing": 295,
+        "direct": 261,
+        "yahoo": 180,
+        "ai_assistant": 85,
+        "duckduckgo": 14,
+        "social": 4,
+        "other": 4
+      },
+      "cta": {
+        "outboundClicks": 111,
+        "ctaClickRate": 8.9,
+        "ctaClickRate_organic": 7.5,
+        "ctaClickRate_direct": 7.4,
+        "ctaClickRate_social": 24.7
+      }
+    },
+    {
+      "date": "2026-09-08",
+      "totals": {
+        "activeUsers": 1050,
+        "pageViews": 1858,
+        "sessions": 1268,
+        "avgSessionDuration": 157,
+        "bounceRate": 0.31,
+        "pagesPerSession": 1.47
+      },
+      "channels_pct": {
+        "organic": 70.6,
+        "direct": 20.6,
+        "social": 6.9,
+        "referral": 1.6,
+        "paid": 0,
+        "other": 0.3
+      },
+      "search_channels": {
+        "google": 408,
+        "bing": 297,
+        "direct": 255,
+        "yahoo": 182,
+        "ai_assistant": 87,
+        "duckduckgo": 14,
+        "other": 5,
+        "social": 4
+      },
+      "cta": {
+        "outboundClicks": 115,
+        "ctaClickRate": 9.1,
+        "ctaClickRate_organic": 7.5,
+        "ctaClickRate_direct": 6.8,
+        "ctaClickRate_social": 27.3
+      }
+    },
+    {
+      "date": "2026-09-09",
+      "totals": {
+        "activeUsers": 1024,
+        "pageViews": 1856,
+        "sessions": 1243,
+        "avgSessionDuration": 154,
+        "bounceRate": 0.301,
+        "pagesPerSession": 1.49
+      },
+      "channels_pct": {
+        "organic": 69.8,
+        "direct": 21.1,
+        "social": 7.1,
+        "referral": 1.5,
+        "paid": 0,
+        "other": 0.5
+      },
+      "search_channels": {
+        "google": 400,
+        "bing": 294,
+        "direct": 256,
+        "yahoo": 165,
+        "ai_assistant": 88,
+        "duckduckgo": 13,
+        "other": 5,
+        "social": 4
+      },
+      "cta": {
+        "outboundClicks": 120,
+        "ctaClickRate": 9.7,
+        "ctaClickRate_organic": 7.7,
+        "ctaClickRate_direct": 9.1,
+        "ctaClickRate_social": 27
+      }
+    },
+    {
+      "date": "2026-09-10",
+      "totals": {
+        "activeUsers": 1039,
+        "pageViews": 1877,
+        "sessions": 1261,
+        "avgSessionDuration": 152.1,
+        "bounceRate": 0.313,
+        "pagesPerSession": 1.49
+      },
+      "channels_pct": {
+        "organic": 67.7,
+        "direct": 21.9,
+        "social": 7.1,
+        "referral": 1.4,
+        "paid": 0,
+        "other": 1.9
+      },
+      "search_channels": {
+        "google": 394,
+        "bing": 293,
+        "direct": 272,
+        "yahoo": 161,
+        "ai_assistant": 88,
+        "other": 26,
+        "duckduckgo": 13,
+        "social": 0
+      },
+      "cta": {
+        "outboundClicks": 120,
         "ctaClickRate": 9.5,
+        "ctaClickRate_organic": 7.8,
+        "ctaClickRate_direct": 8.6,
+        "ctaClickRate_social": 26.7
+      }
+    },
+    {
+      "date": "2026-09-11",
+      "totals": {
+        "activeUsers": 1053,
+        "pageViews": 1901,
+        "sessions": 1276,
+        "avgSessionDuration": 155.9,
+        "bounceRate": 0.306,
+        "pagesPerSession": 1.49
+      },
+      "channels_pct": {
+        "organic": 69.3,
+        "direct": 21.4,
+        "social": 7.2,
+        "referral": 1.4,
+        "paid": 0,
+        "other": 0.8
+      },
+      "search_channels": {
+        "google": 402,
+        "bing": 307,
+        "direct": 266,
+        "yahoo": 169,
+        "ai_assistant": 92,
+        "duckduckgo": 14,
+        "other": 13,
+        "social": 0
+      },
+      "cta": {
+        "outboundClicks": 123,
+        "ctaClickRate": 9.6,
+        "ctaClickRate_organic": 7.6,
+        "ctaClickRate_direct": 10.1,
+        "ctaClickRate_social": 23.7
+      }
+    },
+    {
+      "date": "2026-09-12",
+      "totals": {
+        "activeUsers": 1049,
+        "pageViews": 1912,
+        "sessions": 1275,
+        "avgSessionDuration": 159,
+        "bounceRate": 0.291,
+        "pagesPerSession": 1.5
+      },
+      "channels_pct": {
+        "organic": 70,
+        "direct": 20.7,
+        "social": 7.1,
+        "referral": 1.4,
+        "paid": 0,
+        "other": 0.8
+      },
+      "search_channels": {
+        "google": 406,
+        "bing": 303,
+        "direct": 256,
+        "yahoo": 176,
+        "ai_assistant": 95,
+        "duckduckgo": 14,
+        "other": 6,
+        "social": 0
+      },
+      "cta": {
+        "outboundClicks": 125,
+        "ctaClickRate": 9.8,
         "ctaClickRate_organic": 7.4,
-        "ctaClickRate_direct": 11.1,
-        "ctaClickRate_social": 26.5
+        "ctaClickRate_direct": 10.5,
+        "ctaClickRate_social": 27.2
+      }
+    },
+    {
+      "date": "2026-09-13",
+      "totals": {
+        "activeUsers": 1049,
+        "pageViews": 1919,
+        "sessions": 1281,
+        "avgSessionDuration": 157.9,
+        "bounceRate": 0.297,
+        "pagesPerSession": 1.5
+      },
+      "channels_pct": {
+        "organic": 68.9,
+        "direct": 21.3,
+        "social": 7,
+        "referral": 1.4,
+        "paid": 0,
+        "other": 1.4
+      },
+      "search_channels": {
+        "google": 402,
+        "bing": 298,
+        "direct": 262,
+        "yahoo": 174,
+        "ai_assistant": 89,
+        "other": 16,
+        "duckduckgo": 14,
+        "social": 0
+      },
+      "cta": {
+        "outboundClicks": 118,
+        "ctaClickRate": 9.2,
+        "ctaClickRate_organic": 7.4,
+        "ctaClickRate_direct": 10.9,
+        "ctaClickRate_social": 18.7
+      }
+    },
+    {
+      "date": "2026-09-14",
+      "totals": {
+        "activeUsers": 1066,
+        "pageViews": 1942,
+        "sessions": 1298,
+        "avgSessionDuration": 156.7,
+        "bounceRate": 0.283,
+        "pagesPerSession": 1.5
+      },
+      "channels_pct": {
+        "organic": 69.9,
+        "direct": 20.2,
+        "social": 0.6,
+        "ai_assistant": 7.6,
+        "referral": 1.4,
+        "paid": 0,
+        "other": 0.3
+      },
+      "search_channels": {
+        "google": 411,
+        "bing": 311,
+        "direct": 257,
+        "yahoo": 176,
+        "ai_assistant": 99,
+        "other": 29,
+        "duckduckgo": 14,
+        "social": 8
+      },
+      "cta": {
+        "outboundClicks": 118,
+        "ctaClickRate": 9.1,
+        "ctaClickRate_organic": 7.2,
+        "ctaClickRate_direct": 11.4,
+        "ctaClickRate_social": 0
       }
     }
   ]

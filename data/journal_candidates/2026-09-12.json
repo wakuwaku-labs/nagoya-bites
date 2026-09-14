@@ -1,0 +1,457 @@
+{
+  "date": "2026-09-12",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "韓国かき氷が名古屋初上陸、栄の40席デザートカフェをコスパで読む",
+      "verdict": "PASS",
+      "total": 101,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,シーン,デート) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 164字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "女子大小路に24時間営業の海鮮居酒屋、栄の二次会をコスパで組み直す",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 94,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,接待,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 133字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -13 / brand_fit -3"
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄の韓国スイーツ新店、行列整理の告知から読む開店直後の予約と待ち時間",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 90,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "スイーツ",
+          "feature": "features/nagoya-sweets.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (席,デート,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 126字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「スイーツ」+2"
+        ]
+      },
+      "gate_note": "90点（自動公開ライン 100点）。主な不足: topicality -8 / uniqueness -5 / brand_fit -4"
+    },
+    {
+      "id": "c4",
+      "title_draft": "名古屋観光ホテル1階に名古屋めしのフードホール、伏見で接待前の一杯を組む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 89,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,接待,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 142字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「接待」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "89点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -6 / writability -2"
+    },
+    {
+      "id": "c5",
+      "title_draft": "栄の新店ラッシュ、2階物件に出る店が増えた理由を家賃と回転で読む",
+      "verdict": "HOLD",
+      "total": 68,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 122字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "韓国かき氷が名古屋初上陸、栄の40席デザートカフェをコスパで読む",
+      "lead_draft": "栄・松坂屋向かいのビル2階に、韓国発のかき氷ブランド「ソルビン」が9月3日オープンした。名古屋初出店。きな粉餅小豆1,350円、アップルマンゴー1,750円、ドリンク715円から。一見すると高いが、40席・11時から21時通しという設計を見ると、これは喫茶ではなく軽食業態の値付けだ。業界人の目で、この価格と行列の読み方を書く。",
+      "angle": "かき氷単品1,350〜1,750円＋ドリンクで客単価2,000円超。この価格帯はカフェではなく軽食の相場で、トースト・クロッフルを併売する理由も滞在時間あたりの単価設計にある。2階・駐車場なし・40席・通し営業・無休というオペの前提から、行列に並ぶべき時間帯と、デート/女子会/一人休憩のどのシーンに向くかを判断軸で示す。",
+      "main_store": {
+        "name": "ソルビン名古屋栄店",
+        "id": "",
+        "area": "栄",
+        "genre": "カフェ・スイーツ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通『名古屋初上陸！韓国の人気カフェ ソルビンが栄にオープン』",
+          "url": "https://jouhou.nagoya/sulbing-sweets/",
+          "date": "2026-09-11"
+        },
+        {
+          "label": "ソルビン名古屋栄店 公式Instagram（@sulbing_nagoya）",
+          "url": "https://www.instagram.com/sulbing_nagoya/",
+          "date": "2026-09-03"
+        },
+        {
+          "label": "雪氷 SULBING 公式サイト（国内店舗一覧）",
+          "url": "https://www.sulbing.jp/here-we-are/",
+          "date": "2026-09-12"
+        },
+        {
+          "label": "Google マップ ソルビン名古屋栄店",
+          "url": "https://www.google.com/maps/search/?api=1&query=%E3%82%BD%E3%83%AB%E3%83%93%E3%83%B3%E5%90%8D%E5%8F%A4%E5%B1%8B%E6%A0%84%E5%BA%97",
+          "date": "2026-09-12"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "女子大小路に24時間営業の海鮮居酒屋、栄の二次会をコスパで組み直す",
+      "lead_draft": "栄駅徒歩3分、女子大小路に磯丸水産 栄女子大店が9月10日17時にオープンした。24時間営業。栄には既に錦店・栄三丁目店・プリンセス大通り店があり、同一ブランドが密集する。なぜこの立地にもう1軒なのか。二次会・シメの受け皿という業界の読み方で、使いどころを整理する。",
+      "angle": "24時間営業は深夜の人時売上ではなく『閉店時間に縛られない二次会の受け皿』を取りに行く設計。同ブランド密集は客の奪い合いではなく時間帯の棲み分けで、繁忙は20-22時と終電後の2山になる。予約の取り方・席の押さえ方と、接待には向かず打ち上げ/二次会に向く理由を価格帯から示す。",
+      "main_store": {
+        "name": "磯丸水産 栄女子大店",
+        "id": "J004660828",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "磯丸水産 公式ニュース『9月10日(木)17時 栄女子大店OPEN』",
+          "url": "https://isomaru.jp/news/3499/",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "PR TIMES『9月10日（木）17：00 磯丸水産 栄女子大店オープン』",
+          "url": "https://prtimes.jp/main/html/rd/p/000000120.000177867.html",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "ホットペッパー 磯丸水産 栄女子大店",
+          "url": "https://www.hotpepper.jp/strJ004660828/",
+          "date": "2026-09-12"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "栄の韓国スイーツ新店、行列整理の告知から読む開店直後の予約と待ち時間",
+      "lead_draft": "9月3日に栄でオープンした韓国かき氷のソルビン名古屋栄店が、公式Instagramで整列ルールの案内を出した。開店から1週間強で行列の運用告知が出るのは、想定以上に客が来ているサインだ。開店直後の店に何時に行くべきか、業界人はこの手の告知から逆算する。",
+      "angle": "開店直後の店は仕込み量と提供スピードが安定せず、行列告知は『オペが追いついていない時間帯がある』ことの裏返し。かき氷は氷を削る工程が律速で席回転が読みにくい。L.O.20時半・11時から通し・無休という条件から、待たずに入れる時間帯と、デートに使うなら避けるべき時間帯を具体的に示す。",
+      "main_store": {
+        "name": "ソルビン名古屋栄店",
+        "id": "",
+        "area": "栄",
+        "genre": "カフェ・スイーツ"
+      },
+      "sources": [
+        {
+          "label": "ソルビン名古屋栄店 公式Instagram（@sulbing_nagoya）",
+          "url": "https://www.instagram.com/sulbing_nagoya/",
+          "date": "2026-09-03"
+        },
+        {
+          "label": "名古屋情報通『韓国の人気カフェ ソルビンが栄にオープン』",
+          "url": "https://jouhou.nagoya/sulbing-sweets/",
+          "date": "2026-09-11"
+        },
+        {
+          "label": "雪氷 SULBING 公式サイト",
+          "url": "https://www.sulbing.jp/",
+          "date": "2026-09-12"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "名古屋観光ホテル1階に名古屋めしのフードホール、伏見で接待前の一杯を組む",
+      "lead_draft": "伏見・名古屋観光ホテルの1階に、矢場とん・矢場味仙・世界の山ちゃん・ひつまぶし名古屋備長・串BISTRO92が集まる『名古屋めし食堂 丸八 伏見別邸』が9月中旬にオープンする。同じホテルにはウルフギャング・ステーキハウスも入る。ホテル1階のテナント構成が変わる意味を業界人視点で読む。",
+      "angle": "ホテル1階に名古屋めしの有名ブランドを並べるのは、宿泊客のインバウンド需要とビジネス客の接待前後需要を同時に取る設計。1店あたりの席数を絞って併売するフードホール型は、時間帯ごとの繁忙差を吸収できる。接待の前後にどう使い分けるか、価格帯と席の押さえ方で示す。",
+      "main_store": {
+        "name": "名古屋めし食堂 丸八 伏見別邸",
+        "id": "",
+        "area": "伏見",
+        "genre": "名古屋めし"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES『名古屋めし食堂 丸八 伏見別邸 2026年9月グランドオープン』",
+          "url": "https://prtimes.jp/main/html/rd/p/000000145.000097639.html",
+          "date": "2026-06-29"
+        },
+        {
+          "label": "名古屋観光ホテル 公式お知らせ",
+          "url": "https://www.nagoyakankohotel.co.jp/news/",
+          "date": "2026-09-12"
+        },
+        {
+          "label": "名古屋情報通『ウルフギャング・ステーキハウス 伏見・名古屋観光ホテル内にオープン』",
+          "url": "https://jouhou.nagoya/wolfgangs-steakhouse/",
+          "date": "2026-09-05"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "栄の新店ラッシュ、2階物件に出る店が増えた理由を家賃と回転で読む",
+      "lead_draft": "9月の栄は新店が続く。9月3日に松坂屋向かいのビル2階へ韓国かき氷のソルビン、9月10日に女子大小路へ24時間営業の海鮮居酒屋。路面ではなく2階、あるいは既に同ブランドがある通り。この出店パターンには、家賃と回転の読み方という共通の事情がある。",
+      "angle": "2階物件は路面より賃料が2〜3割安いが視認性が落ちるため、SNSで指名して来る客を前提にした業態でないと成立しない。逆に路面が要る業態は通行量の多い通りで同ブランドを重ねて時間帯を分ける。この2パターンを栄の直近新店で対比し、客として『どっちの店が待たされるか』を判断する軸を示す。",
+      "main_store": {
+        "name": "ソルビン名古屋栄店",
+        "id": "",
+        "area": "栄",
+        "genre": "カフェ・スイーツ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通『韓国の人気カフェ ソルビンが栄にオープン』",
+          "url": "https://jouhou.nagoya/sulbing-sweets/",
+          "date": "2026-09-11"
+        },
+        {
+          "label": "磯丸水産 公式ニュース『栄女子大店OPEN』",
+          "url": "https://isomaru.jp/news/3499/",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "PR TIMES『磯丸水産 栄女子大店オープン』",
+          "url": "https://prtimes.jp/main/html/rd/p/000000120.000177867.html",
+          "date": "2026-09-08"
+        }
+      ]
+    }
+  ]
+}

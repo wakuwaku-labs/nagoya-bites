@@ -1,0 +1,471 @@
+{
+  "date": "2026-09-08",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "t1",
+      "title_draft": "覚王山・池下に焼肉の新顔。全面禁煙44席が語る、接待に使えるかの判断軸",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,コース,席,シーン) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 159字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「覚王山」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -8 / brand_fit -4"
+    },
+    {
+      "id": "t2",
+      "title_draft": "覚王山・池下の焼肉新店、平均予算5000〜8000円をどう読むか — 業界人の価格帯の見方",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 96,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (コース,席,接待,デート,アラカルト,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 171字 +4",
+          "title 45字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「覚王山」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      },
+      "gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -8 / brand_fit -4 / writability -2"
+    },
+    {
+      "id": "t4",
+      "title_draft": "覚王山・池下に44席の焼肉店。2階の半個室が接待とデートで効く理由",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,シーン,接待,デート,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 161字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「覚王山」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: topicality -8 / brand_fit -7"
+    },
+    {
+      "id": "t5",
+      "title_draft": "覚王山・池下の新店で考える、焼肉屋の「全面禁煙」はコスパにどう跳ね返るか",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 91,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,席,シーン) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 164字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「覚王山」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      },
+      "gate_note": "91点（自動公開ライン 100点）。主な不足: topicality -8 / uniqueness -5 / brand_fit -4"
+    },
+    {
+      "id": "t3",
+      "title_draft": "覚王山・池下の焼肉、木曜定休とランチ無しが意味すること。開店直後の予約が狙い目",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 87,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (予約,接待,デート) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 163字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「覚王山」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      },
+      "gate_note": "87点（自動公開ライン 100点）。主な不足: topicality -8 / uniqueness -5 / brand_fit -4"
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "t1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -8 / brand_fit -4",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "t1",
+      "theme": "today_one",
+      "title_draft": "覚王山・池下に焼肉の新顔。全面禁煙44席が語る、接待に使えるかの判断軸",
+      "lead_draft": "2026年9月2日、東山線・池下駅から徒歩2分の千種区向陽に焼肉店が開いた。44席、全面禁煙、木曜定休、17時開店のディナー専業。看板は花咲きタン2420円。焼肉店にとって全面禁煙は単なる方針ではなく、排煙設備の使い道を決める設計判断だ。この店の席と価格帯の組み方から、接待とデートのどちらに向くかを業界人の目で読む。",
+      "angle": "焼肉店の全面禁煙44席という設計を排煙設備とコストの観点から読み解き、花咲きタン2420円の単品積み上げと飲み放題付きコースの価格帯の読み方、2階半個室が効くシーン適性まで落とす",
+      "main_store": {
+        "name": "焼肉酒房天禄 池下店",
+        "id": "J004678480",
+        "area": "覚王山・池下",
+        "genre": "焼肉"
+      },
+      "sources": [
+        {
+          "label": "食べログ 名古屋市 新規オープン順一覧（焼肉酒房 天禄 池下店 2026年9月2日）",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "ホットペッパーグルメ 焼肉酒房天禄 池下店 店舗情報",
+          "url": "https://www.hotpepper.jp/strJ004678480/",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "焼肉酒房 天禄 公式Instagram（「池下店」ハイライトあり）",
+          "url": "https://www.instagram.com/yknk.tenroku/",
+          "date": "2026-09-08"
+        }
+      ]
+    },
+    {
+      "id": "t2",
+      "theme": "today_one",
+      "title_draft": "覚王山・池下の焼肉新店、平均予算5000〜8000円をどう読むか — 業界人の価格帯の見方",
+      "lead_draft": "池下駅徒歩2分に9月2日開いた焼肉店は、平均予算をディナー5000〜8000円と置いている。焼肉は単品を積み上げると青天井になりやすい業態で、この3000円の幅こそが店の設計思想そのものだ。看板の花咲きタンは2420円、一方で飲み放題付きのおまかせコースは全13品・厳選肉8品。アラカルトとコース、どちらで組むべきかを席数と回転から逆算する。",
+      "angle": "焼肉のアラカルトが青天井になる構造を前提に、花咲きタン2420円という単品単価と全13品のコース設計を突き合わせ、44席の回転前提から接待・デートで予算を外さない頼み方を示す",
+      "main_store": {
+        "name": "焼肉酒房天禄 池下店",
+        "id": "J004678480",
+        "area": "覚王山・池下",
+        "genre": "焼肉"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 焼肉酒房天禄 池下店 店舗情報",
+          "url": "https://www.hotpepper.jp/strJ004678480/",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "食べログ 名古屋市 新規オープン順一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "焼肉酒房 天禄 公式Instagram（「池下店」ハイライトあり）",
+          "url": "https://www.instagram.com/yknk.tenroku/",
+          "date": "2026-09-08"
+        }
+      ]
+    },
+    {
+      "id": "t3",
+      "theme": "today_one",
+      "title_draft": "覚王山・池下の焼肉、木曜定休とランチ無しが意味すること。開店直後の予約が狙い目",
+      "lead_draft": "9月2日に池下で開いた焼肉店は、17時開店でランチをやらず、木曜を定休にしている。業界の目で見ると、この2つは仕込みと人件費をどこに寄せるかの宣言だ。開店から1週間、口コミはまだほとんど付いていない。評価が固まる前のこの数週間は、人気が出れば取りにくくなる席を先に押さえられる窓でもある。価格帯とシーン適性を具体的に見ていく。",
+      "angle": "ディナー専業と週1定休という営業設計を仕込み・人件費の配分として読み、開店直後で口コミが少ない時期の予約の取りやすさと、接待やデートでの使いどころを業界人視点で示す",
+      "main_store": {
+        "name": "焼肉酒房天禄 池下店",
+        "id": "J004678480",
+        "area": "覚王山・池下",
+        "genre": "焼肉"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 焼肉酒房天禄 池下店 店舗情報",
+          "url": "https://www.hotpepper.jp/strJ004678480/",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "食べログ 名古屋市 新規オープン順一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "焼肉酒房 天禄 公式Instagram（「池下店」ハイライトあり）",
+          "url": "https://www.instagram.com/yknk.tenroku/",
+          "date": "2026-09-08"
+        }
+      ]
+    },
+    {
+      "id": "t4",
+      "theme": "today_one",
+      "title_draft": "覚王山・池下に44席の焼肉店。2階の半個室が接待とデートで効く理由",
+      "lead_draft": "池下駅から徒歩2分、9月2日に開いた焼肉店は44席のうち2階に4〜8名の半個室を持つ。焼肉店で階を分けるのは、煙と匂いの動線を階ごとに切り分けられるからだ。全面禁煙という選択と組み合わせると、この店が誰を迎えたいかが見えてくる。花咲きタン2420円を軸にした価格帯の読み方と、接待・デート・家族連れの向き不向きを整理する。",
+      "angle": "2階の半個室と全面禁煙を煙・匂いの動線設計として読み解き、44席という中箱の回転前提と花咲きタン2420円の価格帯から接待とデートのシーン適性を切り分ける",
+      "main_store": {
+        "name": "焼肉酒房天禄 池下店",
+        "id": "J004678480",
+        "area": "覚王山・池下",
+        "genre": "焼肉"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 焼肉酒房天禄 池下店 店舗情報",
+          "url": "https://www.hotpepper.jp/strJ004678480/",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "食べログ 名古屋市 新規オープン順一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "焼肉酒房 天禄 公式Instagram（「池下店」ハイライトあり）",
+          "url": "https://www.instagram.com/yknk.tenroku/",
+          "date": "2026-09-08"
+        }
+      ]
+    },
+    {
+      "id": "t5",
+      "theme": "today_one",
+      "title_draft": "覚王山・池下の新店で考える、焼肉屋の「全面禁煙」はコスパにどう跳ね返るか",
+      "lead_draft": "9月2日に池下で開いた44席の焼肉店は全面禁煙を掲げている。焼肉店の排煙は席ごとにダクトを引く重い設備投資で、そこに煙草の煙まで乗せるかどうかは原価と客層の両方に効く判断だ。全面禁煙にした店は何を取り、何を捨てているのか。平均予算5000〜8000円という価格帯の意味と合わせて、接待や家族での使い方まで業界人の視点で読み解く。",
+      "angle": "焼肉店の排煙設備という重い固定費の観点から全面禁煙という選択の損得を業界視点で説明し、平均予算5000〜8000円の価格帯の読み方と44席のシーン適性に接続する",
+      "main_store": {
+        "name": "焼肉酒房天禄 池下店",
+        "id": "J004678480",
+        "area": "覚王山・池下",
+        "genre": "焼肉"
+      },
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ 焼肉酒房天禄 池下店 店舗情報",
+          "url": "https://www.hotpepper.jp/strJ004678480/",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "食べログ 名古屋市 新規オープン順一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "焼肉酒房 天禄 公式Instagram（「池下店」ハイライトあり）",
+          "url": "https://www.instagram.com/yknk.tenroku/",
+          "date": "2026-09-08"
+        }
+      ]
+    }
+  ]
+}

@@ -47,8 +47,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/nb.css">
-<style>nav a:hover,nav a.active{color:var(--text);}
-.page-hero{padding:3rem 1.5rem 2rem;max-width:900px;margin:0 auto;}
+<style>.page-hero{padding:3rem 1.5rem 2rem;max-width:900px;margin:0 auto;}
 .eyebrow{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;}
 .page-title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(2rem,4vw,3rem);line-height:1.15;color:var(--white);margin-bottom:.8rem;}
 .page-title em{font-style:italic;color:var(--gold);}
@@ -67,29 +66,36 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .cta-box{max-width:900px;margin:0 auto;padding:0 1.5rem 3rem;text-align:center;}
 .cta-link{display:inline-block;font-size:.82rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.7rem 1.6rem;border-radius:3px;transition:background .2s;letter-spacing:.06em;margin:.3rem;}
 .cta-link:hover{background:rgba(122,92,16,.08);}
-@media(max-width:640px){
-  .journal-entry{grid-template-columns:1fr;gap:.4rem;}
-  nav{display:none;}
-}</style>
+@media(max-width:640px){.journal-entry{grid-template-columns:1fr;gap:.4rem;}}</style>
 </head>
 <body>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="../index.html">すべての店舗</a>
-    <a href="index.html" class="active">Journal</a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
     <a href="../features/index.html">特集</a>
+    <a href="../journal/index.html" aria-current="page">ジャーナル</a>
     <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
-
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
 <nav aria-label="パンくずリスト">
   <div class="breadcrumb">
-    <a href="../index.html">NAGOYA BITES</a>
+    <a href="../index.html">TOP</a>
     <span>›</span>
     Journal
   </div>
 </nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
 <div class="page-hero">
   <p class="eyebrow">Daily Journal</p>
@@ -108,6 +114,96 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 
 <div class="journal-list" id="journal-list">
   <!-- ENTRIES_START -->
+
+  <a class="journal-entry" href="2026-09-14-sakae-izakaya-new-openings-bonenkai.html">
+    <div class="entry-date">2026-09-14</div>
+    <div class="entry-body">
+      <h2>栄に居酒屋の大箱が2軒、同じ週に開いた — 忘年会の下見は9月がいい</h2>
+      <p>9月7日に錦3丁目、9月10日に女子大小路。栄に徒歩圏で宴会向けの新店が2軒開いた。120席の掘りごたつ個室と24時間営業78席を、価格帯・席数・宴会収容・予約の取り方から業界視点で比較する。</p>
+      <span class="entry-theme">週次話題店</span>
+    </div>
+  </a>
+
+  <a class="journal-entry" href="2026-09-13-kanayama-late-night-gyoza-group.html">
+    <div class="entry-date">2026-09-13</div>
+    <div class="entry-body">
+      <h2>アジア大会の夜は22時が勝負、金山で大人数が座れる餃子居酒屋</h2>
+      <p>9月19日開幕のアジア競技大会。観戦帰りに大人数で座れる店は、実は22時の壁で絞られる。料理L.O.翌0時・94席・個室ありの金山駅前の餃子居酒屋を、価格帯・オペ・シーン適性から業界視点で読む。</p>
+      <span class="entry-theme">今日の1軒</span>
+    </div>
+  </a>
+
+  <a class="journal-entry" href="2026-09-12-sakae-sulbing-korean-bingsu.html">
+    <div class="entry-date">2026-09-12</div>
+    <div class="entry-body">
+      <h2>韓国かき氷が名古屋初上陸、栄の40席デザートカフェをコスパで読む</h2>
+      <p>栄・松坂屋向かいのビル2階に韓国発のかき氷「ソルビン」が2026年9月3日オープン。1,350円のかき氷は高いのか。40席・通し営業・2階立地というオペの前提から、待たずに入れる時間帯とシーン適性を業界人視点で読む。</p>
+      <span class="entry-theme">今日の1軒</span>
+    </div>
+  </a>
+
+  <a class="journal-entry" href="2026-09-11-sakae-mirai-tower-tsukimi-date-lastorder.html">
+    <div class="entry-date">2026-09-11</div>
+    <div class="entry-body">
+      <h2>栄のテレビ塔でお月見デート、21時閉館から逆算する夕食のラストオーダー</h2>
+      <p>中部電力 MIRAI TOWERで9月14日から「天空のお月見」。十五夜の9月25日は金曜で展望台は21時閉館、飲食の提供はない。栄でお月見デートの夕食を、久屋大通公園周辺のラストオーダーから業界人が逆算する。</p>
+      <span class="entry-theme">季節短信</span>
+    </div>
+  </a>
+
+  <a class="journal-entry" href="2026-09-10-marunouchi-italian-sunday-closed-settai.html">
+    <div class="entry-date">2026-09-10</div>
+    <div class="entry-body">
+      <h2>名古屋城前のイタリアンが日曜定休に。丸の内で接待を組む日の選び方</h2>
+      <p>アジア大会の競技が今日9月10日、IGアリーナの男子バスケから始まる。城の北で人が動く月に、南の丸の内の一軒は日曜を閉めた。総席数70・ランチ4,000〜6,000円の店の営業日程変更を、接待とデートの曜日選びに落として読む。</p>
+      <span class="entry-theme">今日の1軒</span>
+    </div>
+  </a>
+
+  <a class="journal-entry" href="2026-09-09-meieki-izakaya-jikyu1500-enkai.html">
+    <div class="entry-date">2026-09-09</div>
+    <div class="entry-body">
+      <h2>名駅の居酒屋、時給1,500円でも人が集まらない — 宴会予約前の3点</h2>
+      <p>10月1日、愛知の最低賃金が1,195円へ。求人票の「時給1,500円」は最低賃金の1.26倍にすぎなくなる。それでも人が集まらない理由はシフトの組み方にあり、その歪みは宴会の席を押さえる客の側からも読める。</p>
+      <span class="entry-theme">業界の裏側</span>
+    </div>
+  </a>
+
+  <a class="journal-entry" href="2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html">
+    <div class="entry-date">2026-09-08</div>
+    <div class="entry-body">
+      <h2>覚王山・池下に焼肉の新顔。全面禁煙44席が語る、接待に使えるかの判断軸</h2>
+      <p>2026年9月2日、池下駅から徒歩2分に開いた焼肉店。44席・全面禁煙・木曜定休・ディナー専業という設計を、排煙設備と仕込みの都合から業界人の目で読み解き、花咲きタン2420円の価格帯の読み方と接待・デートでの使いどころまで具体的に示す。</p>
+      <span class="entry-theme">今日の1軒</span>
+    </div>
+  </a>
+
+  <a class="journal-entry" href="2026-09-07-meieki-meichika-new-shops-weekly.html">
+    <div class="entry-date">2026-09-07</div>
+    <div class="entry-body">
+      <h2>名駅メイチカ復活の週、朝7時の中国茶と23時のラーメン — 今週の新店をコスパで比較</h2>
+      <p>2026年9月4日、名駅の地下街メイチカが3年半ぶりに復活。同じ週に中川区では朝6時のうどん店も開いた。かけうどん420円と海老豚骨1,690円、その差を業界人が価格帯と営業時間から読む。</p>
+      <span class="entry-theme">週次話題店</span>
+    </div>
+  </a>
+
+  <a class="journal-entry" href="2026-09-06-mizuho-asian-games-venue-yakiniku.html">
+    <div class="entry-date">2026-09-06</div>
+    <div class="entry-body">
+      <h2>アジア大会の瑞穂、栄へ戻る前に会場徒歩5分の焼肉で宴会を組む</h2>
+      <p>9月19日開幕のアジア大会。約3万5千人が集まるパロマ瑞穂スタジアムの徒歩10分圏に、掲載店は7軒しかない。16日間フルで夜に開く店はゼロ。価格帯・予約・オペを業界人視点で読む。</p>
+      <span class="entry-theme">今日の1軒</span>
+    </div>
+  </a>
+
+  <a class="journal-entry" href="2026-09-05-meieki-nagoyameshi-izakaya-enkai.html">
+    <div class="entry-date">2026-09-05</div>
+    <div class="entry-body">
+      <h2>名駅の名古屋めし居酒屋と伏見の新フードホール、宴会の幹事が選ぶべきはどちらか</h2>
+      <p>2026年9月中旬、名古屋観光ホテル1階に名古屋めし5ブランドが同居する「丸八 伏見別邸」が入る。集積型と一会計型の違いを、名駅の丸八を軸に業界人が読む。</p>
+      <span class="entry-theme">今日の1軒</span>
+    </div>
+  </a>
 
   <a class="journal-entry" href="2026-09-04-meieki-shokudo-tomoru-sanma-price.html">
     <div class="entry-date">2026-09-04</div>
@@ -1119,11 +1215,43 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   <!-- ENTRIES_END -->
 </div>
 
-<footer>
-  <div class="fl2">Nagoya Bites</div>
-  <div class="fc" id="fc-year"></div>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
-<script>(function(){var fc=document.getElementById('fc-year');if(fc)fc.textContent='\u00A9 '+new Date().getFullYear()+' All Rights Reserved';})();</script>
+<!-- NB-CHROME:FOOTER:END -->
 <!-- SEO-052: 内部リンク（関連記事ブロック）のクリックとスクロール到達を計測。
      回遊アドバイスの採否を体感でなく実データで判定できるようにする -->
 <script class="nb-engagement-tracking">
@@ -1142,5 +1270,23 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   check();
 })();
 </script>
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
 </body>
 </html>

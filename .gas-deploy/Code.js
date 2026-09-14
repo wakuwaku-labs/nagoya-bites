@@ -138,6 +138,15 @@ const HOST_FILTER = {
   },
 };
 
+// 予約行動として数えるドメイン（SEO-089）。outbound_click がこのドメインに向いた
+// クリックだけを RESERVE_EVENTS と合算し、情報ドメイン（マップ・Instagram等）は別枠で表示する。
+const RESERVE_DOMAINS = new Set([
+  'www.hotpepper.jp', 'hotpepper.jp',
+  'tabelog.com', 'www.tabelog.com',
+  'ikyu.com', 'www.ikyu.com',
+  'ozmall.co.jp', 'www.ozmall.co.jp',
+]);
+
 // ─── GA4 の確定待ちラグ（SEO-076） ───
 // GA4 のセッションスコープ指標（直帰率・エンゲージメント率・平均滞在・流入元）は、その日が
 // 終わってから確定するまで最大48時間かかる。日次レポートは day+8h に配信されるため、
@@ -280,12 +289,30 @@ function fetchGA4Report(startDate, endDate) {
     dimensionFilter: HOST_FILTER,
   }, 'properties/' + GA4_PROPERTY_ID);
 
+  // SEO-089: outbound_click を link_domain 別に集計し、予約ドメインと情報ドメインを分離する
+  const outboundByDomainRequest = AnalyticsData.Properties.runReport({
+    dateRanges: [{ startDate: startDate, endDate: endDate }],
+    metrics: [{ name: 'eventCount' }],
+    dimensions: [{ name: 'customEvent:link_domain' }],
+    dimensionFilter: {
+      andGroup: {
+        expressions: [
+          HOST_FILTER,
+          { filter: { fieldName: 'eventName', stringFilter: { matchType: 'EXACT', value: 'outbound_click' } } },
+        ],
+      },
+    },
+    orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+    limit: 20,
+  }, 'properties/' + GA4_PROPERTY_ID);
+
   return {
     pages: parseReport(request),
     events: parseReport(eventRequest),
     sources: parseReport(sourceRequest),
     devices: parseReport(deviceRequest),
     totals: parseTotals(totalsRequest),
+    outboundByDomain: parseReport(outboundByDomainRequest),
   };
 }
 
@@ -358,6 +385,37 @@ function isGa4Unknown(src, medium) {
   return UNKNOWN.includes((src || '').toLowerCase()) || UNKNOWN.includes((medium || '').toLowerCase());
 }
 
+// 流入元がSNS／生成AIかをドメイン単位で判定する。
+// 旧実装は /twitter|t\.co|x\.com|instagram|facebook|line/ の部分一致で、chatgp[t.co]m・
+// copilo[t.co]m を SNS と数えていた（2026-09-14 判明。SNS流入比率が生成AI流入で水増しされ、
+// 実際のSNS流入が観測できなかった）。語彙は scripts/lib/traffic_source.js と同じ集合に揃える
+// （GAS は require できないため複製。差分が出たら CLI 側を正とする）。
+const SOCIAL_SOURCE_DOMAINS = ['t.co', 'x.com', 'twitter.com', 'instagram.com', 'facebook.com', 'fb.com', 'fb.me',
+  'threads.net', 'threads.com', 'line.me', 'line-apps.com', 'tiktok.com', 'youtube.com', 'youtu.be', 'note.com'];
+const SOCIAL_SOURCE_BARE = ['x', 'twitter', 'instagram', 'ig', 'facebook', 'fb', 'threads', 'line', 'tiktok', 'youtube', 'note'];
+const AI_SOURCE_DOMAINS = ['chatgpt.com', 'openai.com', 'perplexity.ai', 'claude.ai', 'gemini.google.com',
+  'bard.google.com', 'copilot.com', 'copilot.microsoft.com'];
+const AI_SOURCE_BARE = ['chatgpt', 'openai', 'perplexity', 'claude', 'gemini', 'copilot'];
+
+function sourceHost(src) {
+  return String(src || '').trim().toLowerCase().replace(/^[a-z]+:\/\//, '').split(/[\/?#:]/)[0];
+}
+
+function hostInDomains(host, domains, bare) {
+  if (!host) return false;
+  if (bare.indexOf(host) !== -1) return true;
+  return domains.some(d => host === d || host.endsWith('.' + d));
+}
+
+function isSocialTrafficSource(src) {
+  return hostInDomains(sourceHost(src), SOCIAL_SOURCE_DOMAINS, SOCIAL_SOURCE_BARE);
+}
+
+function isAiTrafficSource(src, medium) {
+  if (String(medium || '').trim().toLowerCase() === 'ai-assistant') return true;
+  return hostInDomains(sourceHost(src), AI_SOURCE_DOMAINS, AI_SOURCE_BARE);
+}
+
 // 流入元を素人向け表記に
 function sourceToName(src, medium) {
   const s = (src || '').toLowerCase();
@@ -371,15 +429,20 @@ function sourceToName(src, medium) {
   // 置かないと「openai / organic」が「openai検索」に誤ラベルされて再発する。
   // 語彙は scripts/search_channel_metrics.js の ai_assistant 判定と同じ集合に揃える
   // （2箇所で別々に育てない。差分が出たらCLI側=search_channel_metrics.jsを正とする）。
-  if (m === 'ai-assistant' || /openai|chatgpt|perplexity|claude\.ai|anthropic|gemini|bard\.google|copilot/.test(s)) {
+  if (isAiTrafficSource(s, m) || /anthropic/.test(s)) {
     return '🤖 生成AI（ChatGPT等）';
   }
   if (m === 'organic') return s + '検索';
   if (s === '(direct)' || m === '(none)') return '直接アクセス（お気に入り等）';
-  if (s.includes('t.co') || s.includes('twitter') || s.includes('x.com')) return 'X（旧Twitter）';
-  if (s.includes('instagram')) return 'Instagram';
-  if (s.includes('facebook')) return 'Facebook';
-  if (s.includes('line')) return 'LINE';
+  const host = sourceHost(s);
+  if (hostInDomains(host, ['t.co', 'x.com', 'twitter.com'], ['x', 'twitter'])) return 'X（旧Twitter）';
+  if (hostInDomains(host, ['instagram.com'], ['instagram', 'ig'])) return 'Instagram';
+  if (hostInDomains(host, ['facebook.com', 'fb.com', 'fb.me'], ['facebook', 'fb'])) return 'Facebook';
+  if (hostInDomains(host, ['line.me', 'line-apps.com'], ['line'])) return 'LINE';
+  if (hostInDomains(host, ['threads.net', 'threads.com'], ['threads'])) return 'Threads';
+  if (hostInDomains(host, ['note.com'], ['note'])) return 'note';
+  if (hostInDomains(host, ['tiktok.com'], ['tiktok'])) return 'TikTok';
+  if (hostInDomains(host, ['youtube.com', 'youtu.be'], ['youtube'])) return 'YouTube';
   if (m === 'referral') return s + '（他サイトから）';
   return s + ' / ' + m;
 }
@@ -412,9 +475,19 @@ function analyze(data) {
     return s + (e ? parseInt(e.metrics[0]) : 0);
   }, 0);
   const gmapEvent = data.events.find(e => e.dimensions[0] === 'cta_gmap_click');
-  const ctaCount   = sumEvt(RESERVE_EVENTS);
   const gmapCount  = gmapEvent ? parseInt(gmapEvent.metrics[0]) : 0;
   const modalCount = sumEvt(DETAIL_EVENTS);
+  // 電話ボタン（cta_call_click）: 店舗詳細モーダルの「電話する」タップ回数
+  const callCount = sumEvt(['cta_call_click']);
+  // SEO-089: outbound_click を予約ドメイン（hotpepper/tabelog等）と情報ドメインに分離して集計
+  const outboundByDomain = data.outboundByDomain || [];
+  const reserveOutboundCount = outboundByDomain
+    .filter(r => RESERVE_DOMAINS.has(r.dimensions[0]))
+    .reduce((sum, r) => sum + (parseInt(r.metrics[0]) || 0), 0);
+  const outboundInfoCount = outboundByDomain
+    .filter(r => !RESERVE_DOMAINS.has(r.dimensions[0]))
+    .reduce((sum, r) => sum + (parseInt(r.metrics[0]) || 0), 0);
+  const ctaCount   = sumEvt(RESERVE_EVENTS) + reserveOutboundCount;
   // 予約クリック率はイベント側と同じ日で割らないと意味が合わない（分子は data.events＝当日）
   const ctaRate = et.users > 0 ? ctaCount / et.users : 0;
 
@@ -423,15 +496,17 @@ function analyze(data) {
   let organicSessions = 0;
   let directSessions = 0;
   let socialSessions = 0;
+  let aiSessions = 0;       // 生成AI流入（SNSと混ぜない・2026-09-14）
   let unknownSessions = 0;  // SEO-063: GA4しきい値で判別不能なセッション数
   s.sources.forEach(r => {
     const src = (r.dimensions[0] || '').toLowerCase();
     const med = (r.dimensions[1] || '').toLowerCase();
     const ses = parseInt(r.metrics[1] || 0);
     if (isGa4Unknown(src, med)) unknownSessions += ses;
+    else if (isAiTrafficSource(src, med)) aiSessions += ses;
     else if (med === 'organic') organicSessions += ses;
     else if (src === '(direct)' || med === '(none)') directSessions += ses;
-    else if (/twitter|t\.co|x\.com|instagram|facebook|line/.test(src)) socialSessions += ses;
+    else if (isSocialTrafficSource(src)) socialSessions += ses;
   });
   // SEO-063: 分母を「判別できたセッション数」に限定し、判別不能ぶんが比率を歪めるのを防ぐ
   const identifiableSessions = srcTotal - unknownSessions;
@@ -452,7 +527,8 @@ function analyze(data) {
     sessionSources: s.sources,
     pagesPerSession: pps,
     nonBaseEvents,
-    ctaCount, gmapCount, modalCount, ctaRate,
+    ctaCount, gmapCount, modalCount, ctaRate, callCount,
+    outboundInfoCount,
     organicPct, socialPct, mobilePct,
     srcTotal, devTotal,
     unknownSessions, unknownPct, identifiableSessions, highThreshold,
@@ -627,7 +703,7 @@ function buildAdvicePrompt(data, a, date, isWeekly) {
 'このサイトのオーナー（現役の飲食関係者・Web分析は素人）に向けて、' + period + 'のアクセス解析データから「今日やるべき具体的な改善策」を提案してください。',
 '',
 '# サイトの構造（打ち手はこの実装に即して具体的に書く）',
-'- index.html 一枚に全店舗を掲載。検索／エリア・シーンのフィルタ／店舗詳細モーダル／予約ボタン(cta_click)／Googleマップ導線(cta_gmap_click)／Instagramエンベッドあり',
+'- index.html 一枚に全店舗を掲載。検索／エリア・シーンのフィルタ／店舗詳細モーダル／予約ボタン(cta_click)／Googleマップ導線(cta_gmap_click)／電話ボタン(cta_call_click)／Instagramエンベッドあり',
 '- journal/ の日次記事には予約導線(cta_reserve)あり。features/ の特集から店舗詳細への遷移は feature_store_click で計測。stores/ の静的店舗ページ（5500枚超）は cta_click(HP) / cta_gmap_click(マップ) で計測。',
 '- features/ にシーン別特集（名駅・栄・宴会・個室・接待・誕生日・デート・女子会・大人数 など20本）',
 '- journal/ に日次ジャーナル記事（毎日1本公開）',
@@ -645,7 +721,7 @@ function buildAdvicePrompt(data, a, date, isWeekly) {
 '- 1訪問あたり閲覧: ' + a.pagesPerSession.toFixed(1) + 'ページ（目安2以上が良好）',
 '- 平均滞在: ' + secToText(t.avgDuration) + '（目安60秒以上）',
 '- 直帰率: ' + Math.round(t.bounceRate * 100) + '%（目安50%未満が良好・70%超は要注意）',
-'- 予約ボタンクリック: ' + a.ctaCount + '回 ／ マップ: ' + a.gmapCount + '回 ／ 店舗詳細を開いた: ' + a.modalCount + '回' + (a.outboundCount ? ' ／ 外部リンク: ' + a.outboundCount + '回' : ''),
+'- 予約ボタンクリック（予約ドメイン外部リンク含む）: ' + a.ctaCount + '回 ／ 電話ボタン: ' + (a.callCount || 0) + '回 ／ 情報到達（マップ・Instagram等）: ' + (a.outboundInfoCount || 0) + '回 ／ マップ: ' + a.gmapCount + '回 ／ 店舗詳細を開いた: ' + a.modalCount + '回',
 '- 予約クリック率（予約÷訪問者）: ' + (a.ctaRate * 100).toFixed(1) + '%（目安3%）',
 '- 検索流入比率: ' + Math.round(a.organicPct * 100) + '%（判別できた' + a.identifiableSessions + '件中）' +
   ' ／ SNS流入比率: ' + Math.round(a.socialPct * 100) + '%' +
@@ -861,7 +937,9 @@ function formatDailyReport(data, date) {
   if (a.nonBaseEvents.length > 0) {
     msg += '\n【ユーザーの行動】\n';
     if (a.modalCount) msg += '👀 店舗詳細を開いた: ' + a.modalCount + '回\n';
-    if (a.ctaCount)   msg += '🔘 予約ボタン押した: ' + a.ctaCount + '回\n';
+    if (a.ctaCount)   msg += '🔘 予約ボタン押した: ' + a.ctaCount + '回（予約ドメインへの外部リンク含む）\n';
+    if (a.callCount)  msg += '📞 電話ボタン押した: ' + a.callCount + '回\n';
+    if (a.outboundInfoCount) msg += '🔗 情報到達（マップ・Instagram等）: ' + a.outboundInfoCount + '回\n';
     if (a.gmapCount)  msg += '🗺 マップ開いた: ' + a.gmapCount + '回\n';
     if (t.users >= 20) {
       msg += '　→ 訪問100人あたり予約行動 約' + (a.ctaRate * 100).toFixed(1) + '人 ' +
@@ -935,7 +1013,9 @@ function formatWeeklyReport(data, prevData, startDate, endDate) {
   if (a.nonBaseEvents.length > 0) {
     msg += '\n【ユーザーの行動】\n';
     if (a.modalCount) msg += '👀 店舗詳細: ' + a.modalCount + '回\n';
-    if (a.ctaCount)   msg += '🔘 予約ボタン: ' + a.ctaCount + '回\n';
+    if (a.ctaCount)   msg += '🔘 予約ボタン: ' + a.ctaCount + '回（予約ドメインへの外部リンク含む）\n';
+    if (a.callCount)  msg += '📞 電話ボタン: ' + a.callCount + '回\n';
+    if (a.outboundInfoCount) msg += '🔗 情報到達（マップ・Instagram等）: ' + a.outboundInfoCount + '回\n';
     if (a.gmapCount)  msg += '🗺 マップ: ' + a.gmapCount + '回\n';
   }
 
@@ -1027,6 +1107,7 @@ function eventToName(event) {
   const map = {
     'cta_click': '予約ボタン',
     'cta_gmap_click': 'Googleマップ',
+    'cta_call_click': '電話ボタン',
     'modal_open': '店舗詳細',
     'search': '検索',
     'share_x': 'Xシェア',

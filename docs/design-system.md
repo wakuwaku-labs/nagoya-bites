@@ -47,6 +47,30 @@ Cormorant Garamond と Shippori Mincho を組み合わせているのは、両�
 - 英語と日本語で同じ意味の見出しを二重に出さない
 - 読み込んでいないフォントウェイトを指定しない（許可: 400/500/600/700）
 
+### 本文中の強調（DSN-004・2026-09）
+
+journal / features の本文（`.art-body` / `.content`）が地の文だけで続くと読みにくいという
+オーナー指摘を受けて追加。太字・マーカー・色・文字サイズの4種を用意し、要点にだけ絞って使う。
+
+| 用途 | マークアップ | 見え方 |
+|---|---|---|
+| 事実・数字を強く見せる | `<strong>` | `var(--ink)` の黒 + font-weight 700 |
+| その段落の結論を読み飛ばされないようにする | `<mark>` | gold のうっすらしたハイライト背景 |
+| 判断軸・キーワードを地の文の色で目立たせる | `<span class="art-accent">` | `var(--gold2)` の文字色 + 600 |
+| 価格・数量など見出し級に見せたい数字 | `<span class="art-num">` | 表示体（Cormorant Garamond）+ `var(--fs-lg)` + `var(--gold2)` |
+
+**do**
+- 1段落につき強調は1〜2箇所まで。効かせたい要点（数字・判断・結論）だけに絞る
+- `<mark>` はその段落の「結論の一文」にのみ使う。複数使うと目が迷う
+- 色はすべて `var(--gold2)` 系（サイトの唯一のアクセントカラー）。強調のたびに違う色を足さない
+
+**don't**
+- ほぼ全文を太字/マーカーにする（強調が効かなくなる = 何も強調していないのと同じ）
+- 新しい色（赤・青など）を強調用に持ち込む。CTA配色（予約=gold、地図=blue）と混同させない
+- font-size をリテラルで書く。`.art-num` 以外で文字サイズを変えたいときは既存トークンを使う
+
+実装は `assets/css/nb.css` の `.art-body strong,.content strong` 以下（`.art-accent`/`.art-num` 定義の直前）。
+
 ---
 
 ## 4. 部品の解剖: 店舗カード（検索結果）
@@ -133,3 +157,26 @@ media行     アイコンのみ、aria-labelでラベル維持
 | 操作要素の高さ | 44px以上 |
 
 計測は `node scripts/measure_typography.js` で行う。
+
+## 7. サイト共通クローム（DSN-003・2026-09）
+
+ヘッダー（ロゴ・ハンバーガー・ナビ）・パンくず・フッターは、`scripts/lib/site_chrome.js` を唯一の正本とする。**ナビ項目・フッターのリンク先はここだけに書く**。HTML に直接書かない。
+
+```
+主要ナビ（5項目）: 店舗を探す / 特集 / ジャーナル / 編集規約 / 運営について
+補助ナビ（≤900px ドロワーのみ）: よくある質問 / お問い合わせ
+フッター3群: 探す / 読む / 編集部
+```
+
+既存ページへの適用は `scripts/apply_site_chrome.js`（`apply_design_system.js` と同じ冪等スイープモデル）。
+
+```bash
+node scripts/apply_site_chrome.js --dry-run [--only root|features|journal|stores]
+node scripts/apply_site_chrome.js [--only <dir>]
+node scripts/apply_site_chrome.js --check          # 冪等性確認（CI 向け）
+node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 雛形出力
+```
+
+ヘッダー/パンくず/フッターは `<!-- NB-CHROME:HEADER|BREADCRUMB|FOOTER|SCRIPT:START/END -->` マーカーで囲む。新規ページ・新規生成器はこのマーカーを維持し、`renderHeader`/`renderBreadcrumb`/`renderFooter`/`chromeScript` を呼ぶこと。ナビの該当項目には `aria-current="page"` を付け、`class="active"` は使わない。
+
+記事系ページ（journal・features）の本文組版は `assets/css/nb.css` の記事システム（`.art-hero` / `.art-title` / `.art-body` / `.store-card` / `.related` / `.topcta` 等）が所有する。ページ固有の `<style>` にはこれらのセレクタのトップレベル定義を書かない。journal は `journal/_template.html` の `<style>` を正本とし、既存記事へは冪等スイープで揃える。features は SEO-042 TOP-CTA（`add_feature_top_cta.js`）・SEASONAL_NOTE（`build_featured.js`）・新顔バッジ（`refresh_feature_rosters.js`）の注入 CSS をマーカー行のみにし、実装は nb.css 側に置く。

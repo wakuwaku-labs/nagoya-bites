@@ -6,10 +6,632 @@
 
 ---
 
-### [SEO-082] 検索意図の分類器が「1人飲み」（数字表記）を discovery と数えず、SEO-011 の効果指標そのものが最大流入シーンを取りこぼしている
+### [SEO-094] エリア×ジャンル×条件の一覧ページ（stores/area/配下・691ページ）を新設し、「栄 焼肉」「名駅 居酒屋 個室」のような検索面を初めて作った（死にリンクだった「もっと見る」導線も同時に修理）
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-09-14
+- **category**: SEO
+- **owner**: Builder
+- **source**: オーナー依頼「SEO分析と、月間10万PVを狙う実行可能なアクションプラン」への対応（Orchestrator STRATEGY/MARKETINGモード）。GSC28日実測で discovery クエリ（シーン/エリア×ジャンル語）は CTR 4.6%・平均10.2位と質が高いのに面積が表示の7.6%しかなく、エリア×ジャンルの検索面が1ページも存在しなかったことが根因と特定
+- **brand-filter**: ✅ 適合 — Moat「業界視点の構造化データ層」「名古屋×シーン×業界人の目利き」をそのまま検索面に変換する施策。広告・PR記事・クーポン・ストック写真のいずれも伴わない。全ページの数値（軒数・予算最頻帯・最寄り駅・深夜営業/個室件数）は `data/stores.json` の実在フィールドから機械集計した事実のみで、推測・自己申告値は使わない（制約10）
+- **検証できる事実（誰でも再現可能）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | 店舗ページの「もっと見る」（`../?area=…&genre=…`）は index.html の JS フィルタ（クエリ文字列）を指すが、`index.html` の `readHash()` はハッシュの `area`/`genre` キーしか読まず、クエリ文字列は一切読まない＝死にリンク | `gen-store-pages.js:773`（修理前）/ `index.html` `readHash()` |
+  | パンくず・BreadcrumbList JSON-LD も同型の `#genre=`/`#area=` を指しており、`area` はハッシュキーとしても未対応 | `gen-store-pages.js:739-740,553-555`（修理前） |
+  | GSC 28日（8/17〜9/13）: discovery（シーン/エリア×ジャンル語）は表示2,162（7.6%）・クリック99・CTR4.6%・平均10.2位。navigational（店名）は表示19,958（70.5%）・CTR0.35% | `data/gsc_metrics.json` `intent.summary` |
+  | `data/stores.json`（開店中4,899件）を実測した結果、エリア10群×ジャンル17（閾値10軒以上）で89ハブ、条件13軸（閾値8軒以上）で602ページ、計691ページが生成可能 | `node scripts/gen_area_genre_pages.js --dry-run` |
+- **実装内容**:
+  1. `data/area_genre_pages_policy.json`（唯一の情報源）＋ `scripts/lib/area_genre_pages.js`（決定的プランナー・条件13軸の述語）＋ `scripts/gen_area_genre_pages.js`（生成器・sitemap.xml冪等追記・manifest出力）を新設
+  2. `gen-store-pages.js` の「もっと見る」・パンくず・BreadcrumbList JSON-LD を、実在するハブがあればそこへ、無ければ `index.html#genre=`（旧 `#area=` は削除・ハッシュ対応済みのキーのみ使用）にフォールバックするよう修理
+  3. `stores/index.html` の11エリアカードを新ハブへリンク（旧 `#area=` は全滅していた）。ルートハブへの導線も追加
+  4. `scripts/inject_store_links.js` の scene-index に4群目「エリア×ジャンルで探す」を追加（`data/area_genre_pages_manifest.json` を情報源に上位12件・トップページの discovery 面を拡張）
+  5. `scripts/journal_seo_kw.js` の `AREA_VOCAB` に、専用特集記事を持たない5エリア（金山/千種・今池/鶴舞・八事/緑区・天白区/中川区・港区）を新ハブページ裏付けで追加。`--verify` 通過・`gsc_query_intent.js` がこれらの語を discovery と数えるようになる
+  6. `scripts/indexnow_ping.js` の `recentUrls()` に、manifest 上「直近更新」のハブを追加（Bing への優先通知）
+  7. `scripts/audit_design_system.js` / `scripts/apply_site_chrome.js` / `scripts/audit_trust_wording.js` の対象に `stores/area/` を追加（design system は常時全数・サンプリングしない）
+  8. `.github/workflows/build.yml` に生成ステップを追加（`gen-store-pages.js` の直後・sitemap.xml 上書き順序の制約による）。初回は `continue-on-error: true`（ISSUE-121 の教訓）
+  9. `tests/area_genre_pages.test.js` 新設（15件・条件述語の実データパターン・決定性・閾値/閉店除外・font-size床・sitemap重複無し）
+  10. CLAUDE.md 制約1に例外追記、共有ファイル一覧に4行追加
+- **QAゲート（証跡）**:
+  - `node --test tests/*.test.js` → 197 pass / 0 fail（既存182件を含め全て通過・回帰なし）
+  - `node scripts/audit_design_system.js --check`（`stores/area/` 691件のみ抽出）→ 違反0件（既存の孤児ページ debt とは無関係）
+  - `node scripts/apply_site_chrome.js --check --only hubs` → 691件中 0件差分（冪等）
+  - `node scripts/audit_trust_wording.js --check` → 旧名称0件・禁止語0件
+  - `python3 -c "import xml.etree.ElementTree"` で `sitemap.xml` の整形性を確認・691件のURLが重複無く追加（5,131→5,822件）
+  - `index.html` は SCENE-INDEX ブロック以外バイト単位で無変更（他ブロックへの副作用なし）
+- **ブランドガードレール**: 写真はHotPepper写真URLのみ参照（新規取得なし・ルール9準拠）。全ページ `noscript`/大量店名の共食い（SEO-050の反省）は再現しない設計（カード上限60件・残りは`<details>`の素リンク）。閾値割れページは即noindex化して取り繕わない
+- **未了（Designer正式レビュー待ち）**: 憲法制約12は「新規ページ種別はDesignerのレビューが公開条件」と定める。本チケットは `audit_design_system.js --check` の機械検証は通過済みだが、人間のDesignerレビュー（QA-5・モバイル実機確認）は未実施。CI ステップは `continue-on-error: true` で開始し、Designer確認後に blocking 化する
+- **効果測定（2週間後フォローアップ）**: `node scripts/track_metrics.js --followup SEO-094` で `data/gsc_metrics.json` の discovery 面積・Bing側は `search_channel_metrics.js --report`・`data/site_metrics.json` の `pagesPerSession` の前後比を見る（総クリックは指名検索と混ざるため使わない・SEO-043 の判定基準）
+- **関連**: [[SEO-087]]（solo-dining横展開・一人向け軸はデータ不足のため条件ページ化できず、featuresでの対応を継続）／[[SEO-090]]（接待特集0クリック・本チケットのハブへの統合を検討候補に）／[[SEO-091]]（ひつまぶし内部リンク）／[[SEO-011]]（シーンKW面拡張の先行事例）
+
+---
+
+### [SEO-095] 店舗ページ5,613本の `<title>`/`<meta description>` を「エリア・ジャンル」中心から「予算・最寄駅・営業時間・口コミ信頼度」中心の情報型テンプレへ改善し、指名検索のCTRを上げる
 
 - **priority**: P2 → **status**: ready
+- **detected**: 2026-09-14
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEO分析（オーナー依頼）の一環。GSC28日実測で navigational（店名指名検索）が表示19,958（全体の70.5%）・CTR0.35%しかなく、母数の大きさに対してCTRの改善余地が最大
+- **brand-filter**: ✅ 適合 — 順位操作ではなく、実在データの見せ方改善。`gen-store-pages.js` の `buildDescription()` は既にISSUE-072で改善済みの土台があり、その延長
+- **acceptance**:
+  1. `gen-store-pages.js` の `<title>`/`buildDescription()` を、エリア簡潔ラベル・ジャンルに加えて予算帯・Google評価（口コミ5件以上のみ）・翌1時以降営業の有無などデータにある事実だけで再構成する（推測・煽り文言は禁止・制約10）
+  2. 変更前後で `data/gsc_metrics.json` の navigational CTR（`intent.summary` の navigational 行）を比較して効果を判定する
+  3. デザインシステム監査（`audit_design_system.js`）・既存テストを壊さない
+- **関連**: [[SEO-094]]（同ファイルのハブ導線修理と同時期の変更のため実装順序に注意）
+
+---
+
+### [SEO-096] ジャーナルの題材選定に「検索されうる固有名詞（店名・商品名）を1本に最低1つ」を明文化し、`data/gsc_opportunities.json` の ctrFix対象2本（leesar coffee / malachuan）のタイトルを改題する
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-14
+- **category**: SEO / 編集
+- **owner**: Editor
+- **source**: SEO分析（オーナー依頼）。GSC実測でジャーナルのクリック上位は例外なく新店名・新商品名の指名検索（ヤムヤムビュッフェ83表示・藤が丘生ドーナツ148表示・リサールコーヒー176表示）である一方、ジャーナル76本合計で129クリックと薄い
+- **brand-filter**: ✅ 適合 — 日次ジャーナルは唯一の一次コンテンツ資産（Moat）。検索されうる固有名詞を含めるのは順位操作ではなく、実在店名の正確な記載という編集の基本
+- **acceptance**:
+  1. `agents/editor.md` に「タイトル・H1・descriptionに、その記事が扱う店・商品の正式名称を最低1つ含める」を追記（既存の「チェーン店の独自性確認」ガイドラインと同じ並び）
+  2. `data/gsc_opportunities.json` の `byPage.ctrFix`（`journal/2026-08-04-sakae-leesar-coffee.html` 676表示/8クリック、`journal/2026-08-22-osu-malachuan-self-price.html` 321表示/6クリック）のtitle/descriptionを店名がより明確になる形へ改題
+  3. `node scripts/journal_seo_kw.js --verify` を壊さない
+- **関連**: [[SEO-058]]（同種のCTR改善施策）
+
+---
+
+### [SEO-097] llms.txt をCIで自動再生成する（現在2026-09-06から手動更新のまま・減衰中の生成AI流入の止血）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-14
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEO分析（オーナー依頼）。`data/metrics_history.json` の30日窓で ChatGPT経由セッションが134（8/2）→91（9/14）と減衰傾向。`llms.txt` は店舗数・特集本数などの数値を含むが `build.yml` に生成ステップが無く2026-09-06の手動更新で止まっている
+- **brand-filter**: ✅ 適合 — ISSUE-042由来の唯一の非Google流入チャネルで、Moatの構造化データをAIへそのまま開示する施策。広告・順位操作いずれにも該当しない
+- **acceptance**:
+  1. `scripts/gen_llms_txt.js`（新規）が店舗数・特集一覧・エリア×ジャンルハブ一覧（SEO-094）などを `data/stores.json` / `data/area_genre_pages_manifest.json` から集計して `llms.txt` を再生成する
+  2. `build.yml` に生成ステップを追加（`--check` で不一致検出）
+  3. 既存の `audit_trust_wording.js` の `llms.txt` スコープを壊さない
+- **関連**: [[SEO-094]]（ハブ一覧の情報源として利用）
+
+---
+
+### [SEO-098] Instagram リール運用にUTM計測とストーリーズのリンクスタンプを導入し、bio着地先を「リールで紹介した店」一覧に変更する
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-14
+- **category**: SNS / 計測
+- **owner**: Marketer
+- **source**: オーナーへのヒアリング（2026-09-14・9月上旬開始・累計再生1万未満・bioはトップURLのみでUTMなし）。`data/site_metrics.json` の `sourceBreakdown` に instagram 行が過去一度も出ておらず、リールの効果が構造的に計測不能
+- **brand-filter**: ✅ 適合 — 自社の流入を正しく数えるだけの計測施策。順位操作・広告・クーポンのいずれにも該当しない
+- **acceptance**:
+  1. **オーナー本人操作**: Instagram bio のリンクを `?utm_source=instagram&utm_medium=social&utm_campaign=bio` 付きに変更（`docs/sns-utm-convention.md` の規約どおり）
+  2. **オーナー本人操作**: 今後のリール投稿はストーリーズのリンクスタンプに `utm_campaign=reel-<日付>-<slug>` を付けて着地URL（ハブ or 店舗ページ）へ誘導
+  3. Editor/Marketerが `features/instagram-picks.html`（新規特集）を作成し「リールで紹介した店」一覧とする。bioリンクの最終着地先候補にする
+  4. 効果は `data/site_metrics.json` の `sourceBreakdown` の `medium:"social"` 行と `utm_campaign` 別セッションで判定する（[[SEO-055]] の計測基盤を利用）
+- **ブランドガードレール**: 実際の投稿・bio変更はオーナー本人操作（外部発信のため自動化しない・SEO-055 acceptance④と同じ扱い）
+- **関連**: [[SEO-055]]（SNS流入0件検知の仕組み）／[[SEO-094]]（着地先となるハブページ）
+
+---
+
+### [SEO-099] トップページ・特集・ジャーナルから新設ハブ（stores/area/）への内部リンクを増やし、pages/session を 1.5→2.0 へ引き上げる
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-14
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEO分析（オーナー依頼）。`data/site_metrics.json` の `pagesPerSession` が1.5で、SEO-094で新設したハブへの導線がまだ `index.html` の1箇所（scene-index）のみ
+- **brand-filter**: ✅ 適合 — 既存資産の回遊改善で、新規コンテンツ追加を伴わない低リスク施策
+- **acceptance**:
+  1. 特集記事（features/*.html）から対応するエリア×ジャンルハブへのリンクを追加（`data/journal_seo_keywords.json` の genres[].feature / scenes[].feature の逆引きで対象を機械的に決定）
+  2. ジャーナル本文冒頭の関連特集CTA（[[SEO-070]]の仕組み）に、該当エリア×ジャンルのハブも追加候補にする
+  3. 変更前後で `data/site_metrics.json` の `pagesPerSession` を比較する
+- **関連**: [[SEO-094]]（リンク先本体）／[[SEO-070]]（関連特集CTAの仕組み）
+
+---
+
+### [SEO-093] 日次アドバイス生成プロンプトに**失効した前提**（「docs/daily-posts/ にSNS原稿が毎日用意されている」「特集20本」）が固定文で埋め込まれており、停止済みのSNS原稿を使う助言が停止後9日間で5回出て助言枠を浪費している
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-13
+- **category**: SEO / 計測
+- **owner**: Marketer
+- **source**: SEOアドバイス(LINE) 2026-09-12 原文「Bing検索からの流入が18訪問と最も多く、Google検索を上回っています。👉 docs/daily-posts/ にあるSNS投稿原稿（Note/Instagram/X）にBing検索ユーザーを意識したキーワード（例：名古屋 隠れ家 ビストロ）を追加し、SNSからの集客を強化する実験を始めましょう」
+- **brand-filter**: ✅ 適合（振替採用）— 助言の literal な打ち手（停止中のSNS原稿へKW追加）は却下し、**同じ誤前提の助言が繰り返し出る原因**＝生成プロンプト側の固定文へ振り替える（[[SEO-092]] と同じ「助言生成器の入力を事実に合わせる」系統）。サイト表示・店舗データ・順位には一切触れない。制約10（検証できる事実だけで判定する）を助言生成の入力側に適用する施策
+- **助言の literal な打ち手を却下した理由（実測・制約10）**:
+  1. SNS原稿の日次生成は `data/journal_sns_draft_policy.json` の `generate_sns_draft: false`（2026-09-05 オーナー判断・PR #216）で停止中。`docs/daily-posts/` に「毎日用意されている」原稿は存在しない
+  2. SNS原稿へのKW追加は Bing 検索でのサイト表示に作用する経路が無い（Bing 流入はサイトのページが Bing にインデックスされて起きる。Bing 側の打ち手は [[SEO-085]] IndexNow / [[SEO-067]] BWT に集約済み）
+  3. KWを推測して書き足す打ち手自体が [[SEO-071]] で却下済みのパターン
+- **検証できる事実（誰でも再現可能）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | AI助言のシステムプロンプトに固定文 `'- docs/daily-posts/ にSNS投稿原稿（Note／Instagram／X）が毎日用意されている'` がある | `.gas-deploy/Code.js:672` |
+  | 同プロンプトは特集を「20本」と記載。実際は `features/*.html`（index除く）67本 | `.gas-deploy/Code.js:670` / `ls features/*.html` |
+  | ルールベース保険の候補文も「docs/daily-posts の原稿を流用」を出力する | `.gas-deploy/Code.js:790` |
+  | SNS原稿停止（09-05）後、SNS原稿の流用を促す助言が triage 日 09-07（週次）・09-08・09-10・09-12・09-13 の**5回**出ており、09-07 は振替採用（SEO-085）、以降は毎回却下されている | `data/seo_advice_log.json` の advice に `daily-posts` を含む記録 |
+  | 本日の例示KW「名古屋 隠れ家 ビストロ」は固定リスト `SEO_KEYWORDS` の「名古屋 隠れ家 居酒屋」由来と見られ、同リスト先頭の「名古屋 接待 個室」はプロンプト本文にも例示されている＝[[SEO-092]] が観測した「表示0のKWの繰り返し提案」の出所の一つ | `.gas-deploy/Code.js:527-531` / `:676` |
+- **acceptance**:
+  1. プロンプトの「サイトの構造」から失効した固定文を除去または事実に合わせる（SNS原稿は「現在サイト外で運用・リポジトリ内には無い」旨に。特集本数は固定値をやめるか実数に）
+  2. ルールベース保険（`:790`）の「docs/daily-posts の原稿を流用」を、存在する資産を指す文言に置き換える
+  3. 固定例示KW（`:676` の「名古屋 接待 個室」・`SEO_KEYWORDS`）の扱いは [[SEO-092]]（GSC実クエリを入力に載せる）と**同じ関数を触るため一緒に設計する**。別々に実装して後から実装した側が先を上書きしないこと
+  4. `.gas-deploy/Code.js` はミラーにすぎないため、**GAS 側への反映はオーナー本人のデプロイ操作が必要**。反映確認は `docs/gas-deploy-verification-runbook.md` に従い、必要なら `data/gas_deploy_policy.json` に「新コードでは出力されない文字列」（例: `docs/daily-posts の原稿を流用`）を痕跡として追加する
+  5. 効果は「SNS原稿の流用を促す助言」が反映後7日間の日次レポートに0回であること（メール本文で誰でも検算可能）で判定する
+- **関連**: [[SEO-092]]（同じ助言生成器の入力欠陥・同時設計）／[[SEO-085]]（Bing 側の正しい打ち手）／[[SEO-071]]（KW推測書き換えの却下）／[[SEO-069]]（GAS 反映監視）
+
+---
+
+### [SEO-090] 憲法が「勝つ領域」と定める接待・個室シーンで、既に6本ある特集が28日で計26表示・**0クリック**。7本目を作る前に、この乖離を診断して統合/差別化/撤退を決める
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-12
+- **category**: SEO / コンテンツ戦略
+- **owner**: Marketer
+- **source**: SEOアドバイス(LINE) 2026-09-11 原文「訪問者39人に対して予約ボタンクリックが3回、予約クリック率7.7%と好調です！ 👉 この強みをさらに伸ばすため、Google検索で上位表示を狙う『名古屋 接待 個室』などの特集記事を新たに企画・作成し、予約ボタンへの導線を強化しましょう」
+- **brand-filter**: ✅ 適合（振替採用）— 助言の literal な打ち手「接待・個室特集を**新規作成**」は却下し、その前提になっている「この面はまだ手つかず」という誤認そのものを診断対象に振り替える（[[SEO-084]] [[SEO-086]] [[SEO-088]] [[SEO-089]] と同じ振替パターン）。接待・宴会のシーン専門性は CLAUDE.md が「我々が勝つ領域」に明記した Moat の中心であり、そこで**6本作って0クリック**という乖離を放置したまま7本目を足すのは、[[SEO-068]] のガードレール「既存特集とのカニバリ回避／薄い特集を量産しない」に正面から反する
+- **助言の literal な打ち手を却下した理由（すべて検証できる事実・制約10）**:
+  | 事実 | 根拠 |
+  |------|------|
+  | 接待・個室系の特集は**既に6本**実在する（`nagoya-settai-concierge` / `nagoya-settai-lunch` / `nagoya-settai-secret` / `settai-guide` / `private-room` / `nagoya-meieki-business-dinner`） | `ls features/` ＋各 `<title>` |
+  | その6本の28日実績は**合計26表示・0クリック**（settai-lunch 2表示、settai-secret 1表示、private-room 21表示、meieki-business-dinner 2表示、他2本は上位500ページに不出現） | `data/gsc_metrics.json`（2026-09-11生成 / 2026-08-14〜09-10） |
+  | 上位300クエリに「**接待**」「**会食**」を含むものは**1本も無い**（表示0）。「個室」は5クエリ・表示合計18で、しかもうち3件は「顔合わせ」意図（＝`nagoya-kaoawase-washoku` の面） | 同上 |
+  | 比較対象: 同じ28日で `nagoya-solo-dining` 単独が 2,896表示 / 145クリック。**接待6本の合計はその表示の 0.9%** | 同上 |
+  | 「予約クリック率7.7%と好調」という前提の数字も、分母39人・分子3回。[[SEO-089]] が指摘した「分子が狭く単日では信号にならない」レンジそのもの | `data/gsc_metrics.json` / [[SEO-089]] |
+- **論点（これが本チケットの問い）**: 接待は憲法上の Moat 領域なのに実測で取れていない。原因は次のどれか（**推測で決めず実測で切り分ける**）。① 6本が同一意図で共食いしていて、どれも権威を積めていない ② 接待の検索需要が Google では「接待」という語で立たず別の語（顔合わせ・会食・個室 ランチ・接待 失敗しない 等）で立っている ③ この意図が指名検索・地図に食われていて discovery 面が薄い
+- **acceptance**（すべて実データで検証可能・自己申告値を使わない）:
+  1. **まず実測から**。6本それぞれの GSC 表示/クリック/順位/流入クエリを `data/gsc_metrics.json` の `pageQueries` から取り出し、**どの2本以上が同じクエリで競合しているか**（カニバリの有無）を表で確定させる。0表示のページは「取れていない」ではなく「**そのクエリで出ていない**」ことをデータで示す
+  2. 上記①が確認できたら、**統合または差別化**を選ぶ（新規作成はしない）。統合する場合は 301 相当の内部リンク集約とし、既存 URL を消さない。差別化する場合は各本の主題（ランチ/夜/個室/名駅/コンシェルジュ）が `<title>` と h1 で読者に区別できる状態にする
+  3. 上記②が確認できたら、`data/journal_seo_keywords.json` のシーンKWに実データで立っている語を追加し、`node scripts/journal_seo_kw.js --verify` を通す（特集が実在し、そのタイトルにその語が実際に使われていることを機械検証）
+  4. 取れていない理由が③（需要そのものが無い）なら、**撤退も正当な結論として認める**。その場合は本チケットを wont_fix で閉じ、以後この助言が来ても同じ診断を繰り返さないよう `data/seo_advice_log.json` に理由を残す
+  5. 掲載店は全て LOCAL_STORES の実在店（`node scripts/audit_feature_stores.js` 検出ゼロ維持・架空店ブロック厳守）。写真は写真ソース優先順に従う
+  6. 効果は `scripts/gsc_query_intent.js` の discovery 行と、対象6本の表示/クリックの前後比で見る。総クリックは指名検索と混ざるため使わない（[[SEO-043]] の判定基準）
+- **ブランドガードレール**: 「勝つ領域と書いてあるから増やす」ではなく「**書いてあるのに取れていない理由を潰す**」チケット。順位操作・広告依存・クーポンを一切伴わない。統合の結果としてページを削除する場合でも、掲載していた実在店への導線は残す
+- **関連**: [[SEO-068]]（シーンKW面の拡張・done。本件はその接待面での不発を診断）／[[SEO-087]]（勝ち筋 solo-dining の分解・ready。本件はその**負け筋側**の対応物）／[[SEO-092]]（この助言が実データに無いKWを提案した構造原因）／[[SEO-089]]（前提の「予約7.7%」が信号にならないレンジである根拠）
+
+---
+
+### [SEO-091] `nagoya-hitsumabushi` が28日で327表示・**1クリック・平均順位28.2位（3ページ目）**。名古屋めしの中核シーンで検索面をほぼ取れていない原因を分解する
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-12
+- **category**: SEO / コンテンツ
+- **owner**: Editor
+- **source**: SEOアドバイス(LINE) 2026-09-11 原文「Bing検索からの流入が16訪問 (36%) と最も多いです。👉 Bing検索での上位表示をさらに安定させるため、人気ページの『nagoya-solo-dining』と『nagoya-hitsumabushi』のタイトルや見出しに、より具体的なキーワード（例: 名古屋 一人ご飯 おすすめ、名古屋 ひつまぶし ランチ）を追加し、SEOを強化しましょう」
+- **brand-filter**: ✅ 適合（振替採用・**助言の半分のみ**）— ひつまぶしは名古屋めしの中核で、業界人の目利きを最も出せる Moat 題材。一方で助言の literal な打ち手（タイトルへのKW追記）は採らず、**3ページ目に沈んでいる原因の分解**へ振り替える。順位操作を伴わず、内容・内部リンクの実力で押し上げる施策
+- **助言のうち solo-dining 側を採らない理由（実測・制約10）**:
+  - 助言が名指しする「**名古屋 一人ご飯 おすすめ**」は、28日の上位300クエリに**1本も存在しない**（「一人ご飯」を含むクエリ 表示0）。一方「一人飲み」は9クエリ・表示合計995（`名古屋 一人飲み` 268表示/25クリック/6.7位）
+  - これは [[SEO-087]] が 2026-09-09 に**同じ助言に対して同じ実測で既に否定済み**の論点であり、本チケットで再起票しない（その分は本日の triage で `duplicate` として記録）
+  - `nagoya-solo-dining` は28日で全サイトクリック552のうち145（**26.3%**）を1本で稼ぐ最大の資産。実データに無いKWのためにその `<title>` を触るのは、得るもの無く既存順位を崩すリスクだけを負う
+- **hitsumabushi 側を採る理由（検証できる事実）**:
+  | 事実 | 根拠 |
+  |------|------|
+  | `features/nagoya-hitsumabushi.html` = **327表示 / 1クリック / CTR 0.31% / 平均順位 28.2**（3ページ目） | `data/gsc_metrics.json`（2026-08-14〜09-10） |
+  | 上位300クエリに「ひつまぶし」を含むものは**0本**。＝表示はあるが、どの語で出ているかが上位クエリに入らないほど分散している | 同上 |
+  | 同じ題材のジャーナル `2026-06-09-hitsumabushi-touga-nagono` は 5表示/1クリック/20位。特集より順位が良い＝**特集側の弱さはドメイン全体の問題ではない** | 同上 |
+  | 現行 `<title>` は「名古屋ひつまぶし完全ガイド｜業界人が選ぶ名駅・栄・伏見の9店【2026年最新】｜NAGOYA BITES」。KWは既に入っており、**タイトル不足が28位の原因とは考えにくい** | `features/nagoya-hitsumabushi.html` |
+- **acceptance**（すべて実データで検証可能）:
+  1. **まず実測から**。`data/gsc_metrics.json` の `pageQueries` で当ページが実際に出ているクエリを全て取り出し、「ひつまぶし」単体なのか「ひつまぶし ランチ」「名古屋めし」等なのか、**どの語で28位なのか**を確定させる。ここで表示の大半が無関係クエリなら本チケットは「順位改善」ではなく「**題材の再設計**」へ再スコープする
+  2. 28位＝3ページ目は `gsc_opportunities.js` の `rank_push` 枝（pos 11〜30）の対象。タイトル微修正ではなく**内容の実力**で押す: 掲載9店の一次情報の厚み（`editorReason` / `insiderNote` / 価格帯 / 予約難易度）を点検し、薄い店を実在店で差し替えるか記述を足す
+  3. 内部リンクを張り直す。最大資産 `nagoya-solo-dining`（145クリック）と名古屋めし系ジャーナルから当ページへ、当ページから掲載9店の `stores/*.html` へ（[[SEO-045]] の CTA 自動付与が当ページに効いているかも `node scripts/add_feature_top_cta.js --check` で確認する）
+  4. **Bing 側の効果は GSC では測れない**（GSC は Google のみ）。助言の起点が Bing 36% である以上、効果測定は `node scripts/search_channel_metrics.js --report` のエンジン別内訳と併読する。Bing のクエリ別実データは [[SEO-067]]（オーナー本人操作待ち・blocked）が通るまで観測外であることを明記して着手する
+  5. 掲載店は全て LOCAL_STORES の実在店（`node scripts/audit_feature_stores.js` 検出ゼロ維持）。写真は写真ソース優先順に従い、汎用ストック写真を使わない
+  6. 効果は当ページの表示/クリック/平均順位の前後比（4週）で見る。体感では判定しない（制約10）
+- **ブランドガードレール**: 順位のためにKWを詰め込まない。ひつまぶしは競合（食べログ・ぐるなび・観光メディア）が極めて厚い面なので、**勝てないと判明したらその結論を書いて閉じる**のも正当な成果とする（[[SEO-090]] の acceptance 4 と同じ扱い）
+- **関連**: [[SEO-087]]（solo-dining の勝ち筋分解・ready。助言の solo-dining 側は全てそちらに集約）／[[SEO-067]]（Bing 実データ・blocked）／[[SEO-039]]（エンジン別内訳の観測レイヤー）／[[SEO-092]]（助言が実データに無いKWを出した構造原因）
+
+---
+
+### [SEO-092] 日次アドバイス生成器が GSC の実クエリを一切参照しておらず、「一人ご飯」「接待」など**自社の実データで表示0のKW**を繰り返し提案している（3日で2回・助言枠の構造的浪費）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-12
+- **category**: SEO / 計測
+- **owner**: Marketer
+- **source**: SEOアドバイス(LINE) 2026-09-11 の2件（「『名古屋 接待 個室』などの特集記事を新たに企画・作成」「タイトルや見出しに『名古屋 一人ご飯 おすすめ』を追加」）。2026-09-09 分の助言も同じ「一人ご飯」を出しており（[[SEO-087]] 2026-09-09 追記）、**同じ欠陥が繰り返している**
+- **brand-filter**: ✅ 適合 — 自社の実測データを正しく助言の入力に載せ直すだけの施策で、サイトの表示・導線・店舗データには一切触れない。順位操作・広告依存・PR記事のいずれにも当たらない。CLAUDE.md 制約10（検証できる事実だけで判定する）を助言生成の側にも適用する
+- **検証できる事実（誰でも同じ日のメールと `data/gsc_metrics.json` で再現できる）**:
+  | 助言が提案したKW | 28日の実測（2026-08-14〜09-10） |
+  |---|---|
+  | 名古屋 一人ご飯 おすすめ | 「一人ご飯」を含むクエリ **0本 / 表示0**（実在するのは「一人飲み」9クエリ・表示995） |
+  | 名古屋 接待 個室 | 「接待」**0本 / 表示0**、「会食」**0本 / 表示0**、「個室」5本・表示18（うち3本は顔合わせ意図） |
+  | 名古屋 ひつまぶし ランチ | 「ひつまぶし」を含むクエリ **0本**（ページは327表示あるが上位300クエリに語が出ない） |
+  - 一方、実際に立っているKWは `名古屋 一人飲み`（268表示/25クリック/6.7位）や `名古屋駅 一人飲み`（223表示/9クリック/**10.4位＝1ページ目の境界**）で、**こちらは一度も助言に出てこない**
+  - 原因の仮説: GAS のレポートは GA4 のページビューしか入力に持たず、**GSC のクエリを読んでいない**。そのため「人気ページ名から連想した、もっともらしい日本語」をKWとして出力している（`.gas-deploy/Code.js` に GSC 参照が無いことを acceptance 1 で確定させる）
+- **実害**: 毎日3枠しかない「💡今日のアドバイス」のうち、直近2回は**実データに存在しないKW**の提案に消えている。受け手側（この triage ループ）が毎回 GSC で照合して振り替えているため実害は水際で止まっているが、**止めているのは人手であり仕組みではない**。[[SEO-075]] [[SEO-076]]（誤値が1週間🔴枠を占めた）と同一クラスの助言枠浪費
+- **acceptance**（すべて実データで検証可能・自己申告値を使わない）:
+  1. **まず事実確認から**。`grep -n "searchconsole\|webmasters\|gsc" .gas-deploy/Code.js` で GSC 参照の有無を確定させる。参照が有るのに効いていないなら原因は別（そのときは本チケットを再スコープする）
+  2. 参照が無い場合、助言生成の入力に**自社の実クエリを渡す**。GAS から GSC API を叩く必要はない — 既に `data/gsc_metrics.json` が日次で更新されているので、**上位クエリのうち pos 8〜20（1ページ目の境界〜2ページ目）を抜いた短いリスト**を助言生成のプロンプトに同梱する経路を1本作る（実装方式は Marketer 判断。GAS 側に判定ロジックを持たせない原則は維持し、渡すのは事実のみ）
+  3. 助言がKWを名指しする場合は、**そのKWが `data/gsc_metrics.json` に実在すること**を条件にする。実在しないKWを提案させない（＝助言側にも「証跡を出させる」原則を適用。CLAUDE.md 品質ゲート原則2）
+  4. **デプロイ反映を必ず確認する**。`.gas-deploy/Code.js` はミラーであり、マージしても GAS 側は旧コードのまま動く（[[SEO-069]]）。`docs/gas-deploy-verification-runbook.md` の手順でデプロイし、翌日以降 `node scripts/check_gas_deploy_health.js` が `deployed` を出すことを確認する
+  5. 効果は「助言が名指しするKWが `data/gsc_metrics.json` に実在する割合」で測る。1週間分の助言で判定し、体感では判定しない（制約10）
+- **ブランドガードレール**: 助言を「当たり障りのないもの」にするための施策ではない。**実データに立脚した助言は今より鋭くなる**方向（例: 「名古屋駅 一人飲み が10.4位＝1ページ目の境界にいる」は、今の助言より具体的かつ行動可能）。Strategic Skip（指名検索の1位争い）を助言が推してきた場合は、従来どおりこの triage ループで却下する
+- **関連**: [[SEO-069]]（GAS 反映判定の仕組み）／[[SEO-087]]（2026-09-09 に同じ「一人ご飯」を実測で否定）／[[SEO-090]] [[SEO-091]]（本日この欠陥から生まれた助言2件の振替先）／[[SEO-043]]（GSC の取得解像度・本件が使う入力）／[[SEO-075]] [[SEO-076]]（助言枠が誤値に占領された同型事故）
+
+- **2026-09-13 追記（日次triage）**: 「接待 個室」が繰り返し出る出所の一つを特定。生成プロンプト本文に例示「名古屋 接待 個室」（`.gas-deploy/Code.js:676`）と固定リスト `SEO_KEYWORDS`（`:527-531`）が埋め込まれている。同じ関数に失効前提（SNS原稿・特集20本）もあり [[SEO-093]] として起票。**同時に設計すること**
+
+---
+
+### [SEO-089] 「予約行動」の分子が狭すぎて日によって 0 に落ちる — SEO-072 の acceptance ② が求めた「予約ドメインへの `outbound_click`」が実装されないまま done になり、🔴枠がその 0 に持っていかれる
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-09-11
+- **category**: SEO / 計測
+- **owner**: Marketer
+- **source**: SEOアドバイス(LINE) 2026-09-10 原文「🔴 予約ボタンクリック、マップクリック、店舗詳細オープンが全て0回と、行動イベントが全く発生していません。👉 トップページ(index.html)のファーストビューに『人気の店舗』や『今日のおすすめ』を3店舗程度ピックアップし、店舗詳細モーダルへの導線を強化しましょう」
+- **brand-filter**: ✅ 適合（振替採用）— 助言の literal な打ち手「FVに人気店3店をピックアップ」は却下し、助言の**前提になっている数字そのものの欠陥**へ振り替えて採用する（[[SEO-084]] [[SEO-085]] [[SEO-086]] [[SEO-088]] と同じ振替パターン）。自社の実測値を正しく数え直すだけの施策で、順位操作・広告依存・PR記事のいずれにも当たらない。Moat「構造化DB × 特集 × ジャーナルの三層編集」は**三層のコンバージョンが同じ物差しで数えられて初めて**どこを伸ばすか判断できる
+- **助言の literal な打ち手を却下した理由（実測・制約10）**:
+  1. 「日替わり/人気店のピックを FV に新設」は既に実装済みで、かつ [[SEO-088]]（2026-09-09 done）で面の識別子まで付与済み。同じ助言は 2026-09-07 分として既に振替処理している
+  2. 当日の閲覧の内訳は **42PV 中 14PV（33%）が `features/nagoya-solo-dining`**、トップページは 4+2=6PV（14%）。**読者が居る面はトップの FV ではなく特集**であり、FV を触っても当日の閲覧の 14% にしか当たらない
+  3. 母数 42人・1日分では新設した面の効果検証ができない（制約10）
+- **検証できる事実（誰でも再現可能）**:
+  | 事実 | 根拠 |
+  |------|------|
+  | GAS が「予約行動」として数える集合は `RESERVE_EVENTS = ['cta_click','cta_reserve']` の2種のみ。`outbound_click` は**集計コードのどこにも登場しない**（言及は解説文の中だけ） | `.gas-deploy/Code.js:407` ／ `grep -c "outbound_click" .gas-deploy/Code.js` = **0** |
+  | ところが [[SEO-072]]（**status: done**）の acceptance ② は「予約＝`cta_click` + `cta_reserve` + **予約ドメインへの `outbound_click`**」と明記していた。**done の acceptance が実装されていない** | `agent-backlog.md` SEO-072 acceptance ② |
+  | `outbound_click` は実際に発火しており量もある。独立パイプライン（`scripts/fetch_ga4_views.js` → `scripts/track_metrics.js`）の GA4 実測で **直近30日 99〜102クリック / `ctaClickRate` 8.4〜8.5%** | `data/metrics_history.json`（2026-09-05〜09-07 の `cta.outboundClicks`） |
+  | `outbound_click` は全ページ共通リスナーで、**特集68/68本・ジャーナル・店舗ページの全てが発火する**。レポートが数える5種を1つも出さないページが今も存在する（例: `stores/J000015119.html` は `outbound_click` のみ） | `index.html:36` ／ `grep -l` による実測 |
+  | この欠落は**デプロイ遅れではなくコードの欠落**。同日の GAS 反映判定は `verdict: deployed`（旧コードの痕跡なし） | `node scripts/check_gas_deploy_health.js` / `data/gas_deploy_health.json` |
+- **実害**: 分子が狭いため日次の予約行動が **0〜4回のレンジ**でしか動かず、0 に落ちた日は「行動イベントが全く発生していません」という**過大な断定**が生成AIアドバイスの入力になり、🔴（最高深刻度）枠を消費して「FVを直せ」という打ち手を生む。[[SEO-075]] [[SEO-076]]（直帰率90%台の誤値が1週間🔴枠を占めた）と同一クラスの、助言枠の浪費
+- **⚠️ 精度の注記（誇張しないための断り）**: 集計対象の5種が**常に0というわけではない**。前日トリアージの記録では 2026-09-08 に予約4回・2026-09-09 に1回が計上されている（この2値は前回エージェントの記録であり一次データで未再確認。acceptance ① で GA4 から取り直す）。つまり本件は「計測が全く死んでいる」のではなく「**分子が狭く母数も小さいため、0 と 4 の間を往復して単日では信号にならない**」という問題である。`outbound_click`（日あたり約3.4回相当）を意味単位で足せば、この往復の多くは説明がつく
+- **acceptance**:
+  1. **まず実測から**（制約10）。GA4 で直近30日の `outbound_click` を `link_domain` 別に集計し、予約ドメイン（hotpepper / tabelog / ikyu / ozmall 等）と情報ドメイン（instagram / google maps / 公式サイト）の**内訳を確定**させる。ここで予約ドメインが 0 件なら本チケットは「集計の欠落」ではなく「**予約導線そのものへの到達が無い**」へ再スコープする（＝助言の言う導線問題が真である可能性を潰さずに残す）
+  2. 予約ドメインへの `outbound_click` が確認できたら、GAS の `RESERVE_EVENTS` を**イベント名の集合ではなく意味単位**へ拡張する。`outbound_click` は全外部リンクで発火するため**必ず `link_domain` で絞る**（Instagram・マップ・公式サイトへのクリックを予約と数えない。数え過ぎは数え漏れと同じ品質事故）
+  3. 情報ドメインへのクリックは「予約行動」ではなく**別枠（例: 情報到達）**として表示する。0 と出すのではなく「何がどれだけ起きたか」を出す
+  4. 効果は次回以降の日次レポートで「予約行動 0.0人」の🔴が**事実に基づく数字に置き換わったか**で判定する。体感・自己申告値では判定しない（制約10）
+  5. 定数は1箇所に持つ（[[SEO-072]] acceptance ② の「散らばった完全一致比較を増やさない」を継承）
+- **ブランドガードレール**: 数え方を変えるだけで、サイトの表示・導線・店舗データには一切触れない。数字を「良く見せる」ための拡張ではないため、**予約と呼べないクリックを予約に混ぜない**（2 の `link_domain` 絞り込みは必須。これを省くと制約10 の「検証できる事実だけで判定する」に反する方向へ倒れる）
+- **関連**: [[SEO-072]]（本体・acceptance ② 未実装のまま done）／[[SEO-084]] [[SEO-086]]（サイト側の計装欠落・done。本件は**レポート側**の残り穴）／[[SEO-075]] [[SEO-076]]（誤値が🔴枠を占めた同型事故）／[[SEO-088]]（同じ助言の 2026-09-07 分の振替先）
+
+---
+
+### [DSN-005] トップページの検索欄・シーン/エリアボタンのコントラスト不足＋フィードバックFABの配色ズレ
+
+- **priority**: P2（デザイン磨き） → **status**: done（実装・検証済み。PR作成待ち）
+- **detected**: 2026-09-08
+- **category**: design / ux
+- **owner**: Designer
+- **source**: オーナー本人からの直接指摘「トップページがダサいし見にくい 改善して」（スマホ実機スクリーンショット添付）
+- **brand-filter**: ✅ 適合 — DSN-001〜004 と同じ Moat（可読性・一貫性は自動化でしか維持できない）の延長。新規UI部品は追加せず、既存トークン（`--r-md`/`--border-h`/`--ink`/`--gold`/`--gold2`）のみを使用。新規リテラル font-size は0件（制約12）
+- **診断**:
+  - 検索欄・シーン/エリアチップの背景・枠線が背景色（ベージュ）に対し極端に低コントラスト（枠線 `var(--border)` = 黒10%不透明度、チップ塗り = ゴールド8%不透明度）で、「押せるボタン」に見えず地の文のように埋没していた
+  - 検索欄・検索ボタン・シーンチップ・絞り込みボタンの角丸がそれぞれ 2px/3px/6px とバラバラで統一感がなかった
+  - フローティング「ご意見を送る」ボタンだけ `#2a6a5a`（緑）のハードコード色で、サイト全体の黒×ゴールドの配色から浮いていた
+- **実装内容**（`index.html` 内 `<style>` のみ・新規ファイルなし）:
+  - `.search-wrap input` / `.sticky-search input`: 背景を白地に、枠線を `var(--border-h)`（黒28%）に強化、薄い box-shadow で立体感を追加
+  - `.search-wrap button` / `.sticky-search-btn`: box-shadow とホバー時の浮き上がり（translateY）を追加
+  - `.scene-chip`: 背景を白地＋`var(--border-h)`枠線に変更（従来のゴールド8%塗り→ほぼ透明を解消）、ホバー時にゴールド濃色に反転
+  - 検索欄・検索ボタン・シーン/エリアチップ・sticky検索の角丸をすべて `var(--r-md)`（6px、既存の絞り込みボタンと同値）に統一
+  - `#fb-fab` / `#fb-panel`: ハードコード緑 `#2a6a5a` / `#1e5145` / `rgba(42,106,90,...)` を `var(--ink)` / `var(--gold)` / `rgba(122,92,16,...)` に置換
+- **検証できる事実（制約10）**:
+  - `node scripts/audit_design_system.js --check`: 出力JSONに `"file": "index.html"` の違反 **0件**（stores/*.html の既存125+件はベースラインで本変更前から存在・無関係。変更前後で diff なしを確認）
+  - ローカル `python3 -m http.server` + `/opt/pw-browsers/chromium-1194` ヘッドレスChromiumで 390px幅のフルページスクリーンショットを変更前後で取得し、検索欄・チップが白地＋枠線で明確な操作要素として視認できることを確認
+  - `git diff --stat index.html`: 1ファイル・22行変更（CSSのみ、HTML構造・JS・LOCAL_STORESは無変更）
+- **追加修正1（同日・オーナーのフォローアップ指摘「シーンで探すのタブが2行になっている」）**:
+  - `.scene-nav-row`（シーンで探す/エリアで探すの各行）を `flex-wrap:wrap` から `flex-wrap:nowrap` + `overflow-x:auto`（スクロールバー非表示）に変更し、既存の `.mmg`/`.sort-chips`/`.cap-tabs` と同じ横スクロール方式に統一。2行折り返しを解消
+  - `audit_design_system.js --check` で index.html の新規違反0件を再確認
+- **追加修正2（同日・オーナーのフォローアップ指摘「深く選んだがおかしい」＝見出しに黒い箱が重なるスクリーンショット添付）**:
+  - **診断**: PWAの「ホーム画面に追加」案内バナー（iOS Safari版 `#pwa-banner-ios`／Android Chrome版 `#pwa-banner`）はどちらも `position:fixed` で、初回訪問から数秒後（iOSは3秒後）に自動表示される仕様。ビューポートの縦幅が短い端末（Safariのツールバー展開時など）だと、bottom固定のバナーがヒーロー見出し「深く選んだ。」に重なって表示され、CSS崩れのように見えていた。実機（iPhone Safari, UA spoofingで再現）とヘッドレスChromiumの両方で再現確認済み
+  - Android版バナー（`#pwa-banner`）は追加で、`flex-wrap` 未指定のため文言が1文字ずつ縦に折り返される別の表示崩れも確認（`flex-wrap:wrap;max-width:min(92vw,380px);justify-content:center;text-align:center` を追加して解消）
+  - 両バナー共通で、表示中は画面全体を暗くする背景オーバーレイ `#pwa-install-backdrop`（`rgba(10,10,8,.55)`、クリックで閉じる）を新設し、見出しへの重なりを「意図した案内モーダル」だと明確に視認できるようにした。バナー自体の位置・文言・「追加する」「後で」の機能は変更していない
+  - `#pwa-banner-ios` に `max-height:calc(100vh - 2rem);overflow-y:auto;` を追加し、極端に縦が短い画面でもボタンが画面外に出ないようにした
+  - 検証: `node --check` で該当インラインJSの構文エラー無し確認、`audit_design_system.js --check` で index.html 新規違反0件、UA偽装（iPhone Safari 17.4）＋ヘッドレスChromiumで修正前後のスクリーンショットを比較し重なり解消を確認
+- **files**: `index.html`
+
+### [DSN-004] ジャーナル本文が地の文だけで続き読みにくい — 太字/マーカー/色/文字サイズの強調ルールを新設
+
+- **priority**: P1（UX劣化） → **status**: done（実装・検証済み。PR作成待ち）
+- **detected**: 2026-09-08
+- **category**: design / ux
+- **owner**: Designer
+- **source**: オーナー本人からの直接指摘「ジャーナル記事が読みにくいです。太字にする、マーカーを引く、文字の大きさを変える、色をかえるなど、変化を加えるべき点をしっかり考えて、変更して欲しい。今日の記事から、今後そうなる様に」
+- **brand-filter**: ✅ 適合 — DSN-001〜003 と同じ Moat（可読性・一貫性は自動化でしか維持できない）の延長。既存トークン（`--ink`/`--gold2`/`--fs-lg`）のみを使い、新しい色やリテラル font-size は導入していない（制約12）
+- **実装内容**:
+  - `assets/css/nb.css` に `.art-body strong,.content strong`（黒700太字）/ `.art-body mark,.content mark`（gold系ハイライト背景）/ `.art-accent`（gold2文字色600）/ `.art-num`（表示体+`--fs-lg`+gold2、価格等の数字用）の4種を追加。全てコアトークン参照のみ（新規リテラル値0件）
+  - `journal/2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html`（本日公開分）の本文へ適用し、1段落1〜2箇所に絞って強調（過剰強調を避ける）
+  - `docs/design-system.md`「3. do/don't」に「本文中の強調（DSN-004）」節を追加（マークアップ表・do/don't）
+  - `agents/editor.md`「日次運用」に強調ルールの節を追加。`.claude/commands/journal-today.md`（自己改変ブロックのため直接編集不可）は Step 4 で `agents/editor.md` の日次運用章を読む設計のため、今後の生成に自動で反映される
+- **検証できる事実（制約10）**:
+  - `node scripts/audit_design_system.js --report`: 追加した nb.css の新規ルールに起因する違反 **0件**（既存の stores/journal レガシー違反125+件は本変更前から存在するベースラインで無関係。差分比較で確認済み）
+  - ブラウザ実機確認（`http://localhost:8082/journal/2026-09-08-....html`、preview_start経由の実サーバー）: `getComputedStyle` で `strong`=rgb(10,10,8)/700、`mark`=背景rgba(122,92,16,.16)、`.art-accent`=rgb(150,114,15)/600、`.art-num`=rgb(150,114,15)/17px（本文15pxに対し拡大）を確認。スクリーンショットでも視覚的な強弱を確認
+- **未実施（今回のスコープ外）**: 過去124本の既存journal記事への遡及適用はしていない（今回は「今日の記事から」という指示どおり本日分＋今後の生成ルールのみ）。過去記事へ広げたい場合は別チケットで一括適用を検討
+- **review**: 上記「検証できる事実」がacceptance。人手レビューはPR作成後に実施
+
+---
+
+### [SEO-088] 助言が求める「日替わりピックのクリック率実験」は現状**実行不能** — トップページの5つのカード面が全て発火元のない `modal_open` を出しており、どの面が詳細到達を生んだか分離できない
+
+- **priority**: P2 → **status**: done（2026-09-09 実装・push済み。PR: claude/wizardly-ramanujan-qrn9d3）
+- **detected**: 2026-09-08
+- **category**: SEO / 計測
+- **owner**: Builder
+- **source**: SEOアドバイス(LINE) 2026-09-07 原文「訪問者53人に対し店舗詳細閲覧は9回、予約4回と、店舗への興味喚起は良好です。👉 トップページ(index.html)の店舗一覧に『本日のおすすめ』など日替わりで目立つ店舗を1〜2店舗ピックアップし、クリック率を上げる実験をしましょう」
+- **brand-filter**: ✅ 適合（振替採用）— 助言の literal な打ち手「日替わりの目立つピックを新設」は**既に実装済みで実際に日替わりしている**ため却下し、助言が本来の目的として書いている「**クリック率を上げる実験**」の側へ振り替えて採用する（[[SEO-084]] [[SEO-085]] [[SEO-086]] と同じ振替パターン）。面の識別子を足すだけで見た目もCTA数も変えないため、[[SEO-041]]「これ以上CTAを足すとCTA領域を圧迫する」の判定とも矛盾しない
+- **助言の literal な打ち手を却下した理由（実測・制約10）**:
+  1. 「日替わりで目立つ店舗をピックアップ」は `#trend-ranking-section`「今日の話題店 TOP5」として既に上部に実装済み（`index.html:1806`）。毎朝 `scripts/pick_daily_trending5.js` が `data/daily_trending5.json` を更新し、`buildTrendRanking()`（`index.html:11403`）が描画する
+  2. 「日替わり」も実測で成立している。`data/daily_trending5.json` の `history` 8日分（2026-08-31〜09-07）の `店名一覧` は**毎日異なる**。「実装したが固定されたまま」ではない
+  3. 助言が新設を促す根拠になった数字（当日53訪問・詳細9回・予約4回）は母数が小さく、新設しても効果検証ができない（制約10）
+- **検証できる事実（誰でも再現可能）**:
+  | 事実 | 出典 |
+  |---|---|
+  | `openM()` が出すのは `trackEvent('modal_open', {store_name, genre, area})` の1本だけで、**発火元の面を示すパラメータが無い** | `index.html:9935` |
+  | その `openM(idx)` を**引数なしで呼ぶカード面が5つある**: グリッド `.card` / モーダル内おすすめ `.modal-rsc` / 話題ランキング `.rank-card` / 今日の話題店 `.trend-rank-card` / 最近見た店 `.hist-card` | `index.html:9624 / 10279 / 11388 / 11440 / 11478` |
+  | レポートが「店舗詳細」として数えるのは `modal_open` + `feature_store_click` の2種のみ＝**面別に分解する術がない** | `.gas-deploy/Code.js:409` |
+  | よって「今日の話題店 TOP5 が詳細到達9回のうち何回を生んだか」は現在のデータからは**原理的に答えられない**。助言が求める「クリック率を上げる実験」は前後比を測れないため成立しない | 上記3点の帰結 |
+- **[[SEO-086]] との関係**: SEO-086 は `features/*.html`（特集）側の計装欠落、本件は `index.html`（トップ）側の**発火元の欠落**で、対象ファイルも故障モードも別。ただし「クリックイベントに面の識別子を付ける」という同系統の作業なので、**実装は SEO-086（P1）の後でよい**。両方が入って初めて「どの面が詳細到達を生んでいるか」が全面で言える
+- **acceptance**:
+  1. `openM(i, source)` に発火元を渡し、`modal_open` に `source` を付与する（値の例: `grid` / `trend_today` / `ranking` / `history` / `modal_reco`）
+  2. 上記5箇所すべての呼び出しを更新する。`source` 省略時は `unknown` にフォールバックし、**`modal_open` の総数は変えない**（前後比が壊れないこと）
+  3. **見た目を一切変えない**（追加するのは計測のみ・CTAは増やさない・カードのHTML構造を変えない）
+  4. 制約1を守る（`index.html` 単一ファイル内で完結・新規 .css/.js を作らない）
+  5. 機械検査: `openM(` の呼び出しのうち第2引数を持たないものが 0 本であることを1コマンドで確認できること（現在は5本）
+  6. 効果は2週間後に GA4 の `modal_open` を `source` 別に分解して実数で見る。体感・自己申告値では判定しない（制約10）
+- **ブランドガードレール**: 計測パラメータの追加のみで、掲載順位の操作・広告主依存・送客手数料を一切伴わない（制約7・8）。ピックの選定ロジック（`pick_daily_trending5.js`＝鮮度と多媒体露出のみ・Google評価不問）には手を触れない
+
+### [DSN-003] トップ/ジャーナル/特集/編集規約4ページ種別のプロ品質リデザイン＋サイト共通クローム統一
+
+- **priority**: P1（UX劣化） → **status**: done（実装・検証済み。PR作成待ち）
+- **detected**: 2026-09-07
+- **category**: design / ux
+- **owner**: Designer
+- **source**: オーナー本人からの直接依頼「トップページ・ジャーナル記事・特集記事・編集規約を、プロのWEBデザイナーが設計したかのようなデザイン・配置に変更してほしい」。DSN-001（[[DSN-001]]）・DSN-002（[[DSN-002]]）でタイポグラフィとモーダル/カードは刷新済みだが、本番観察（2026-09-07）で以下が残存: (1) ページ種別ごとにヘッダーナビ/パンくず/フッターの項目・形状がバラバラ（8種類以上のナビ変種、journal/features はモバイルで nav が丸ごと消える）、(2) トップの情報設計が積み上げ型でH1がカルーセル下に埋もれ英日二重見出しが残る、(3) 記事3種の先頭組版・CTA配色（HotPepper赤/Google青/gold混在）がファイルごとにばらつく、(4) デザイン監査が features 28件（TOP-CTA注入CSS）で main のまま exit 1
+- **オーナー決定（2026-09-07・AskUserQuestionで確認済み）**:
+  1. トップのファーストビューは「表紙型」— H1＋検索＋シーン導線（左）と今月の特集（右・1本大＋2本小）を1画面に統合。モバイルはH1→検索→チップ→特集レール
+  2. 共通クローム（ヘッダー/ナビ/パンくず/フッター）は全ページに統一 — 4ページ種別＋about/faq/contact/privacy＋stores 5,610ページ（gen-store-pages.js テンプレート更新＋CI再生成）
+  3. 全画面ロゴスプラッシュは初回訪問のみ・約0.8秒に短縮（sessionStorage）
+- **brand-filter**: ✅ 適合 — DSN-001/002 と同じ Moat（可読性・一貫性は自動化でしか維持できない）の延長。装飾ではなくタイポグラフィ・構造の一貫性を優先する Designer 哲学に沿う
+- **実装計画**: `/Users/katagirijakutou/.claude/plans/pure-brewing-kettle.md` に確定（Context・制約・デザイン仕様・Phase 0〜7・リスク・検証手順）。要点:
+  - Phase 1: `assets/css/nb.css` に共通クローム/セクション見出し/ボタン/記事システム/topcta/季節バナーのトークン化ルールを追加のみで拡張
+  - Phase 2: `scripts/lib/site_chrome.js`（ナビ5+2項目・フッター3群の正本）＋ `scripts/apply_site_chrome.js`（冪等スイープ・--check）を新設し、root/features/journal/stores(管理下)全ページへ適用。生成器3本（gen-store-pages.js / gen_industry_features.js / recreate_fabricated_features.js）も同期
+  - Phase 3: index.html を表紙型ヒーローに再構成（FEATURED領域はデスクトップ静的グリッド・モバイルはレール、既存カルーセルJSにmatchMediaガード）、セクション見出し統一、スプラッシュ短縮
+  - Phase 4: journal/_template.html のstyleをトークン化し123本の既存記事へ冪等スイープ
+  - Phase 5: features の記事CSSをnb.cssへ集約、SEO-042 TOP-CTA/SEASONAL_NOTE/ROSTER_BADGEの注入CSSをマーカー行のみに縮小
+  - Phase 6: 編集規約のSVGバナー撤去・文書型ヘッダー・静的TOC追加
+  - Phase 7: CI昇格・docs更新・フォローアップ起票
+  - 全フェーズで監査マーカー（FEATURED/SHOWCASE/LATEST_JOURNAL/SCENE-INDEX/STORE-INDEX/REVIEW_TRUST_BOX/SEO-042 TOP-CTA/SEASONAL_NOTE/FEATURED_SEASONAL/journal ENTRIES）のマークアップは不変（CSSのみ変更・md5で機械検証）
+- **ベースライン（実装前・2026-09-07 main 時点）**:
+  - `node scripts/track_metrics.js --baseline DSN-003`: data/effect_ledger.json に記録済み
+  - `node scripts/qa_gate.js --before`: store_count 4933 / markers {LOCAL_STORES:5, modal:88, filter:135, search:92, instagram:42, fetchFullCatalog:2, crossCheck:53, editorReason:17} / index_bytes 821902（/tmp/qa_gate_before.json）
+  - 凍結リージョン md5（実装後に一致を確認）: FEATURED_LABEL f76bbda4715fd840cd4cc9cdd790942d / FEATURED 09b36b0143dee6bc5ca0f684677e7023 / LATEST_JOURNAL bac10704a7e6bd843614238f683d0924 / SHOWCASE 3fadce495de6ec09bbcaa92e44dc8618 / REVIEW_TRUST_BOX f48d22e00746a979ecd26845826c9419 / SCENE-INDEX 874c5068fed0234a5df39427a2a17bcb / STORE-INDEX 9d92e68c1faf2fb798223e692a990d54 / features/index.html FEATURED_SEASONAL fa6767b76e44750b6a4bde63abeb14dc / journal/index.html ENTRIES 1b045a88697cd983e60455fd993fbd63
+- **files**: assets/css/nb.css, scripts/lib/site_chrome.js（新規）, scripts/apply_site_chrome.js（新規）, tests/site_chrome.test.js（新規）, index.html, journal/_template.html + journal/2*.html（123本）, features/*.html（68本）, gen-store-pages.js, scripts/gen_industry_features.js, scripts/recreate_fabricated_features.js（未対応・注記あり）, scripts/add_feature_top_cta.js, scripts/add_journal_site_intro.js, scripts/refresh_journal_related.js, scripts/build_featured.js, scripts/refresh_feature_rosters.js, .github/workflows/build.yml, docs/design-system.md, agents/designer.md, CLAUDE.md
+- **実装内容（Phase 0〜7 完了）**:
+  - Phase 1: `assets/css/nb.css` を193行→337行に拡張（クローム補強・`.nb-footer`3群・`.nb-section-head`・`.nb-btn`系・記事システム`.art-*`/`.store-card`/`.related`/`.topcta`・季節バナー/新顔バッジ・`.nb-toc`を追加のみで新設）
+  - Phase 2: `scripts/lib/site_chrome.js`（ナビ5+2項目・フッター3群の正本）と `scripts/apply_site_chrome.js`（冪等スイープ・`--dry-run`/`--check`/`--only`/`--strip-legacy-css`）を新設。root 5 + features 68 + journal 125 + `stores/index.html` の全ページへ適用。`gen-store-pages.js`（店舗詳細生成器）と `scripts/gen_industry_features.js`（業界特集生成器）を site_chrome 呼び出しに移行。`build.yml` に `apply_site_chrome.js --check --sample 200`（continue-on-error）を追加
+  - Phase 3: トップページを表紙型ヒーローに再構成（`.nb-cover` グリッド、FEATURED領域はデスクトップ静的グリッド1本大+2本小・モバイルはレール、カルーセルJSに `matchMedia` ガード追加）。セクション見出しの英日二重見出し（Trending・Most Viewed・All Listings）を削除。編集独立性の宣言を濃色ブロック化。スプラッシュを初回訪問のみ・約0.8秒に短縮（sessionStorage）
+  - Phase 4: `journal/_template.html` の `<style>` を journal 固有ルールのみに縮小（記事共通は nb.css へ）。123本の既存記事へ冪等スイープ適用。`add_journal_site_intro.js`/`refresh_journal_related.js` のinline styleをclass化
+  - Phase 5: `add_feature_top_cta.js`（SEO-042 TOP-CTA）・`build_featured.js`（SEASONAL_NOTE）・`refresh_feature_rosters.js`（新顔バッジ）の注入CSSをマーカー行のみに縮小し実装をnb.cssへ集約。`features/index.html` カードCSS・2本のダーク系ヒーロー（solo-dining/yakiniku）を文書型に統一
+  - Phase 6: `features/editorial-policy.html` のSVGバナー撤去・文書型ヘッダー・11項目の静的目次（TOC）追加・11個のsection-labelを`<h2>`+id統一・inline style除去
+  - Phase 7: `docs/design-system.md`§7・`agents/designer.md`・`CLAUDE.md`共有ファイル一覧を更新
+- **検証できる事実（制約10）**:
+  - `node scripts/audit_design_system.js --report --sample 400`: 597ファイル走査・非stores違反 **0件**（実装前は features 28件が既知違反）
+  - `node scripts/apply_site_chrome.js --check --sample 400`: files_changed 0（全ページ冪等）
+  - `node scripts/apply_design_system.js --check`: files_changed 0
+  - `node --test tests/*.test.js`: **176/176 pass**（新規 tests/site_chrome.test.js 12件を含む）
+  - `node scripts/qa_gate.js --after`: ok:true、店舗件数4933→4933（delta 0%）、LOCAL_STORES行未変更、marker_regressions:[]
+  - `node scripts/migrate_feature_headings.js --check` / `audit_trust_wording.js --check`（旧名称0件・禁止語0件）/ `normalize_og_images.js --check` / `build_featured.js --check`: 全て pass
+  - 凍結リージョン7領域（FEATURED_LABEL/FEATURED/LATEST_JOURNAL/SHOWCASE/REVIEW_TRUST_BOX/SCENE-INDEX/STORE-INDEX）+ features/index.html FEATURED_SEASONAL + journal/index.html ENTRIES の md5 が実装前後で完全一致（1バイトも不変）
+  - ブラウザ実機確認（375/1280px）: トップの表紙型ヒーロー・特集/ジャーナル/編集規約の統一ヘッダー・モバイルハンバーガードロワー（`toggleNav()`動作確認）・編集規約TOC 11リンク・`#trust-mechanisms`アンカー疎通、コンソールエラー0件
+- **未完了・残課題**:
+  - `scripts/recreate_fabricated_features.js`（一回限りの過去復旧スクリプト・`require.main`ガード無し）は今回未対応。実行すると副作用があるため触れず、フォローアップ扱い
+  - 孤児 stores 625〜823本（`data/stores.json` に無い旧店舗ページ）は方針どおり対象外（ISSUE-050/102の別チケット）
+  - `audit_design_system.js`/`apply_site_chrome.js` のCI blocking化は、本PRのCIが緑を1回確認してから実施（ISSUE-121方式）
+- **review**: 上記「検証できる事実」がacceptance。人手レビューはPR作成後に実施
+
+
+### [DSN-002] 店舗詳細モーダル・一覧カードを全面再設計（DSN-001の適用第2弾・オーナー直接指摘）
+
+- **priority**: P1（UX劣化） → **status**: done（実装・検証済み。PR作成待ち）
+- **detected**: 2026-09-07
+- **category**: design / ux
+- **owner**: Designer
+- **source**: オーナー本人からの直接指摘「お店のカードの中身が安っぽすぎる。消費者が見やすかったり選びやすいと思えるような構造にしてほしい。実際にこのウェブサイトの画面を触ったり読み込んだりしてもらって、他の一流の飲食店サイトに負けないようなデザインや作りにしてください」。実機幅（342px）でモーダル全画面を目視した結果、色付きボックス6種＋角丸9種混在、AREA/HOURS等の英語ラベルとGoogle評価・話題度92/100バー・編集部が同じ表に並列、業界人レビュー0件でも空セクションを表示、口コミ信頼度ボックスが免責文＋リンク3本で1画面を占有、予約/地図ボタン直下に6枚の媒体タイルという導線重複を確認
+- **brand-filter**: ✅ 適合 — DSN-001（[[DSN-001]]）の可読性刷新をモーダル・カードへ適用する第2弾。競合10サイト（食べログ/ヒトサラ/ミシュラン/Retty/OZmall/一休/The Infatuation/Resy/OpenTable/Googleマップ）の店舗詳細ページを調査し、一流サイトに共通する「写真が最初・店名が最大・評価指標は1つ・スペックより先に言葉・基本情報は5項目＋折りたたみ・主CTAは1系統・空データは描かない・色は3〜4色」の設計原則を抽出。「広告ゼロ」「現役飲食店マネージャーの署名」「口コミ信頼度という独自指標」というMoatを競合が持たない差別化要素として明示的に前面化した
+- **オーナー決定（2026-09-07・AskUserQuestionで確認済み）**:
+  1. 対象範囲はモーダル全面刷新＋一覧カードも同じ設計言語で統一
+  2. 表示側（index.html）だけでなく build.js（データ生成）の変更も許可 — HotPepper APIが返しているのに捨てていた定休日・最寄駅・席数・個室・設備等を新たに射影
+  3. 口コミ信頼度ボックス（REVIEW_TRUST_BOX凍結領域）の構造・文言の見直しを承認（audit_trust_wording --checkは必ず通す前提）
+  4. MEDIA LINKSの6タイルはコンパクトな1行の媒体リンクチップに統合
+- **実装内容**:
+  - モーダル: ヒーロー写真（比率固定・文字を重ねない）→識別ブロック（旗1つだけ）→at-a-glance（口コミ信頼度／Google★（件数）／価格帯／本日の営業、値がある時だけ）→主CTA（予約=塗り1系統／地図=アウトライン、スマホは追従バー）→編集部の視点（署名＋リード文＋業界人メモ＋おすすめシーン＋掲載媒体、金の細罫1本）→載っている特集→口コミ信頼度（内訳はdetailsへ）→基本情報（値がある行だけ＋設備は折りたたみ）→Instagram埋め込み→業界人レビュー（0件は節ごと非表示・末尾リンクへ）→媒体リンク（4〜6件の小チップ1行）→似た店→共有＋確認情報の順に再構成
+  - build.js: hpShopToStoreRecord() にHotPepper APIの定休日/最寄駅/席数/個室/カード可/禁煙/駐車場/コース/飲み放題等を追加射影（否定情報「なし」系は出力しない）。manualStoreToRecord()/mergeManualStores() に手動店の選定理由/おすすめシーン/価格帯目安/食べログ評価を追加（従来data/manual_stores.jsonにあるのに捨てられていた）
+  - 一覧カード: 写真をaspect-ratio固定（読み込み中の灰色を廃止）、旗1つ、meta行に「信頼度」ラベル付与（裸の文字だけの表示を廃止）、媒体行を4つに整理（HotPepper/食べログ/Instagram/Googleマップ、TikTok/Xはモーダル側）
+  - 共有機能のバグ修正: 旧実装はX/LINE/リンクコピーが全店共通でトップURL固定だったのを店舗のdeep link（#store=HPID）に修正
+- **検証できる事実（制約10）**:
+  - node scripts/audit_design_system.js --check: index.html 0違反（stores/*.htmlの既存違反は本チケット無関係の孤児ページ）
+  - node scripts/audit_trust_wording.js --check: 旧名称0件・禁止語0件（REVIEW_TRUST_BOX凍結マーカーの構造は維持、文言はdata/trust_display_policy.jsonの語彙のみで再構成）
+  - node --test tests/*.test.js: 164/164 pass（新規 tests/build_projection.test.js 6件を含む。build.jsの射影関数をfixtureで検算）
+  - node scripts/qa_gate.js: ok:true（店舗件数4931→4931で変化なし、LOCAL_STORES行未変更、machine-readableマーカーregressionなし）
+  - ブラウザ実機確認（375px幅、手動キュレーション店/HotPepper店/写真なし店の3種）: 全要素が var(--tap-min)(44px)以上、可視文字13px以上（--fs-2xs予約枠を除く）、横スクロールなし、console error 0件
+- **files**: index.html, build.js, tests/build_projection.test.js
+- **review**: 本チケットのacceptanceは上記「検証できる事実」の5項目。人手レビューはPR作成後にDesigner役職（Orchestrator代行）が実施
+- **未完了**: PR作成・マージ。マージ後の翌日CI（node build.js）でHotPepper新規射影フィールド（定休日/最寄駅/席数等）が実データに反映されることを確認（ローカルはHOTPEPPER_API_KEY未設定のため射影ロジックのfixtureテストのみで検証済み）
+## 実行ログ
+
+### 2026-09-11（自動ルーティン・クラウドセッション）
+
+**処理件数**: 2件（SEO-089、SEO-070）
+
+- **[SEO-070]** journal/ 本文冒頭への関連特集 CTA 追加（回遊改善）
+  - **acceptance ①確認（構造的証拠）**: `.related` ブロックは全 journal 記事で `</article>` の後（約84%深度）。`data/site_metrics.json` の pagesPerSession = 1.49（目安2.0を下回る継続状態）。GA4 の scroll_depth イベントは journal 記事に既存実装済みだが、ローカル参照不可のため構造的証拠で代用（CLAUDE.md 制約10 の精神に従い「検証できる範囲の事実のみ」）
+  - **acceptance ②実装**: `scripts/inject_journal_feature_cta.js` を新規作成（マーカー方式・冪等）。挿入位置は `<div class="art-body">` 直下の `<p class="nb-site-intro">...</p>` の後（本文の冒頭 ~15%深度）。対象はタイトルが TOPIC_FEATURES にマッチする記事のみ（126本中 80本・46本はマッチなしでスキップ）
+  - **acceptance ③実在保証**: features/SLUG.html の存在確認を挿入時に実行（リンク切れゼロ）。マッチングは `refresh_journal_related.js` の TOPIC_FEATURES と同一リスト
+  - **変更ファイル**: `scripts/inject_journal_feature_cta.js`（新規）、`journal/*.html`（80本更新）、`agent-backlog.md`
+  - **QA**: `node scripts/inject_journal_feature_cta.js --file 2026-09-08-...html` で冪等確認（`{"no_diff":1}`）、`node scripts/audit_design_system.js --report` で journal 関連違反ゼロ確認
+  - **効果測定**: 次回 pagesPerSession（`data/metrics_history.json`）と `internal_link_click` の `block:feature_cta_mid` が実測できたら前後比で判定
+
+- **[SEO-089]** GASの「予約行動」集計に `outbound_click`（予約ドメイン）を追加
+  - **acceptance ①確認**: `data/site_metrics.json` の `cta.byDomain` から直近30日の `outbound_click` を `link_domain` 別に確認
+    - 予約ドメイン: `www.hotpepper.jp` 53件 + `tabelog.com` 37件 = 90件
+    - 情報ドメイン: `maps.google.com` 14件・`www.instagram.com` 5件・その他11件 = 30件
+  - **変更ファイル**: `.gas-deploy/Code.js` のみ（`index.html`・特集HTML・店舗データには一切触れない）
+    1. `RESERVE_DOMAINS` 定数を1箇所に定義（hotpepper/tabelog/ikyu/ozmall）
+    2. `fetchGA4Report()` に `outbound_click × link_domain` の GA4 クエリを追加し `outboundByDomain` として返す
+    3. `analyze()` で `reserveOutboundCount`（予約ドメイン計）+ `outboundInfoCount`（情報ドメイン計）を計算し、`ctaCount = sumEvt(RESERVE_EVENTS) + reserveOutboundCount` に拡張
+    4. 日次・週次レポートの「ユーザーの行動」欄に「情報到達（マップ・Instagram等）: X回」行を追加
+    5. AI アドバイスプロンプトにも `outboundInfoCount` を含める
+  - **⚠️ GAS 未反映注意**: `.gas-deploy/Code.js` はリポジトリのミラーのみ。反映には GAS エディタでのコードコピー＆貼り付けとデプロイが必要（`docs/gas-deploy-verification-runbook.md`）。デプロイ後、翌日の日次レポートで「予約行動」の数字が 0〜4 回から実態値（数十回）に変わることで効果を確認する
+
+---
+
+### 2026-09-07（自動ルーティン・クラウドセッション）
+
+**処理件数**: 1件（ISSUE-123）
+
+- **[ISSUE-123]** 日次ジャーナル自動化の監視の穴（9/6 die だが watchdog が鳴らなかった）
+  - `scripts/check_journal_health.js` に `local_run_died`/`local_run_held` フィールドを追加（`today_jst` と `health.date` の一致＋状態の一致で判定）
+  - `.github/workflows/journal-watchdog.yml` を2トラック化:
+    - トラック1: 従来の欠番チェック（`journal-watchdog` ラベル）
+    - トラック2: 新設 ローカル自動化失敗チェック（`journal-run-died` ラベル）。欠番がなくても記事が手動公開されるだけで triage から消える穴を塞ぐ
+  - cron を2本化: `0 0 * * *`（実測 13〜15 JST・早期検出）+ `0 3 * * *`（実測 16〜18 JST・バックアップ）（GitHub Actions 実測遅延 4.4〜6.3h を根拠にする）
+  - `run_journal_local.sh` が `journal_sns_draft_policy.json` を参照しているか検査するステップを watchdog に追加（退行防止）
+  - acceptance#2（die→push）は git 健全性確認が要る設計問題のため残件（オーナー判断）
+  - acceptance#5（CLAUDE.md 文言修正）はオーナー判断のため残件
+  - QA: YAML構文検証 ✅ / `check_journal_health.js` 動作確認 ✅ / policy参照検証 ✅
+
+---
+
+### [SEO-085] IndexNow が CI で毎日 `dry_run: true` を記録し続けている — 第2の流入エンジン Bing（週73訪問）への更新通知が [[SEO-071]] 完了後も一度も送信されていない
+
+- **priority**: P1 → **status**: ready（⚠️ エスカレーション: ステップ①の GitHub Secrets 設定はオーナー本人の操作が必要。自動実装不可）
+- **detected**: 2026-09-07
+- **category**: SEO
+- **owner**: 片桐 ← Marketer（GitHub Secrets `INDEXNOW_ENABLED=true` をオーナーが設定するまで進行不能）
+- **source**: 週次レポート(LINE) 2026-08-30〜2026-09-05 原文「検索流入比率が75%と高い一方、Bing検索からの流入が73訪問とGoogleに次いで多いです。👉 docs/daily-posts/ にあるSNS投稿原稿をBingのWebマスターツールに登録し、Bing検索でのインデックス促進と表示改善を図りましょう」
+- **brand-filter**: ✅ 適合（振替採用）— 助言の literal な打ち手「SNS投稿原稿を Bing Webmaster Tools に登録」は**手段として成立しない**（BWT はサイトの所有権確認とURL送信のツールであり、SNS原稿を登録する場所ではない）ため却下。一方で助言の根拠「Bing が Google に次ぐ流入源」は実測どおり正しく、その打ち手として**既に実装済みで承認済みのIndexNowが実際には一度も発火していない**という検証可能な欠落へ振り替えて採用する（[[SEO-084]] と同じ振替パターン）。順位操作でも広告依存でもなく、自社の更新を検索エンジンへ通知するだけの施策
+- **trend**: 週次で Bing 21%（73訪問・Google 35%に次ぐ2位）／`data/search_channel_metrics.json` 直近30日でも Bing 289セッション・24.2%（Google 402・33.7%）。単週のブレではなく3ヶ月継続している構造
+- **検証できる事実（誰でも再現可能）**:
+  | 事実 | 出典 |
+  |---|---|
+  | CI が commit した送信ログは直近8世代すべて `dry_run: true`（実送信ゼロ・2026-09-04〜09-06） | `git log -- data/indexnow_send_log.json` の各世代を `git show` で確認 |
+  | 最新ログ（2026-09-06T20:13Z）も `"dry_run": true, "would_send": 4` | `data/indexnow_send_log.json` |
+  | 送信の可否は `INDEXNOW_ENABLED` シークレットのみで決まる（`if [ "$INDEXNOW_ENABLED" = "true" ]`） | `.github/workflows/build.yml:450-452` |
+  | 鍵ファイル・ホスト設定は完了済みで `ready_to_submit: true` | `node scripts/indexnow_ping.js --status` |
+  | [[SEO-071]] は 2026-08-26 に「オーナー承認済み `--yes`」で done とされ、[[SEO-081]] でステップ削除も復旧済み。**ステップは存在するが送信はされていない**という状態が誰にも通知されていなかった | `agent-backlog.md` [[SEO-071]] / [[SEO-081]] |
+- **なぜ気づけなかったか（ISSUE-084 原則の再適用）**: [[SEO-081]] が追加した CI 自己診断は「ステップが build.yml に存在するか」しか見ておらず、**ステップが存在したまま dry_run で空回りする**故障モードを検知できない。ログは毎日コミットされていた＝記録はあったが、人が見に行かないと分からない＝**検知ではない**（CLAUDE.md「気づけるはずを検知と数えない」）
+- **acceptance**:
+  1. オーナー本人が GitHub Secrets に `INDEXNOW_ENABLED=true` を設定する（**エージェントは実行しない**＝クレデンシャル操作）。前提として鍵ファイル `https://nagoya-bites.com/ec3ee6876b0d465ab4f7093ba5bc42d0.txt` が 200 を返すことを確認する
+  2. 設定後、`data/indexnow_send_log.json` に `dry_run: false` と実送信URL・レスポンスが記録されることを次回 build で確認する
+  3. **再発検知**: `dry_run: true` が N日連続で記録されたら鳴る自己診断を足す（[[SEO-081]] のステップ存在確認と同じ場所に、判定は「ログの `dry_run` 値」という検証できる事実だけで行う・制約10）。通知先はログではなく GitHub Issue（＝オーナーにメール）とし、復旧で自動クローズする（ISSUE-084 原則2・6）
+  4. 効果は Bing 経由セッションの前後比（`data/search_channel_metrics.json`）で見る。体感・自己申告値では判定しない
+- **ブランドガードレール**: IndexNow は自社サイトの更新URLを通知するだけで、順位操作・被リンク購入・自作自演を一切伴わない。[[SEO-067]]（Bing Webmaster Tools 登録・オーナー操作待ち）とは別件で、そちらが未了でも本件は単独で有効化できる
+
+### [SEO-086] 最も読まれているページ（週閲覧の21.5%）の「今すぐ予約」17本・「店舗詳細」15本が、レポートの集計対象イベントを一つも発火していない — [[SEO-084]] が「計測済み」と数えた反例
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-09-07
+- **resolved**: 2026-09-08
+- **category**: SEO / 計測
+- **owner**: Builder
+- **source**: SEOアドバイス(LINE) 2026-09-06 原文「訪問者34人に対し予約ボタンクリックが1回と、予約転換が課題です。👉 トップページの予約ボタンを目立たせるため、色とサイズを大きくし、ファーストビュー内の目立つ位置に配置変更を検討しましょう」／ 週次レポート(LINE) 2026-08-30〜09-05 原文「予約クリック率が0.3%と目標の3%を大きく下回っています。👉 トップページと『nagoya-solo-dining』特集の店舗詳細モーダル内に、予約ボタンをより目立つ色に変更し、『今すぐ予約』などの具体的な文言に修正しましょう」
+- **brand-filter**: ✅ 適合（振替採用）— 助言の literal な打ち手（色・サイズ・文言「今すぐ予約」）は**名指しされたページで既に文字通り実装済み**のため却下し、「予約クリック率0.3%」という数字が正しく測れていない側へ振り替えて採用（[[SEO-084]] と同じ振替パターン）。見た目は変えず計測だけを直すため [[SEO-041]]「これ以上CTAを足すとCTA領域を圧迫する」の判定とも矛盾しない
+- **助言の literal な打ち手を却下した理由（実測・制約10）**:
+  1. `features/nagoya-solo-dining.html` は既に `<a class="store-link" href="https://www.hotpepper.jp/strJ.../" ...>今すぐ予約</a>` を**17本**持つ。助言が要求する文言「今すぐ予約」は既にそのまま使われている
+  2. モーダル側の視認性は [[SEO-003]]（done 2026-06-03）・[[SEO-013]]（done 2026-07-29）・[[SEO-049]]（done 2026-08-19・予約と地図を併置）で3巡実施済み。同型の助言は [[SEO-084]] が 2026-08-24〜09-04 に10回以上判定している
+  3. 母数が小さすぎる（当日34訪問・予約1回）。色を変えて1回が2回になっても有意差を主張できず、「検証できない数字で合否を決めない」（制約10）に反する
+- **検証できる事実（誰でも再現可能）**:
+  | 事実 | 出典 |
+  |---|---|
+  | レポートが予約行動として数えるのは `cta_click` と `cta_reserve` の2種だけ | `.gas-deploy/Code.js:407` |
+  | 詳細到達として数えるのは `modal_open` と `feature_store_click` の2種だけ | `.gas-deploy/Code.js:409` |
+  | `nagoya-solo-dining.html` が発火するイベントは `feature_cta_click`（冒頭の絞り込みCTA 2本）と `outbound_click` のみ。**上記4種を1つも発火しない** | `grep -oE "trackEvent\('[a-z_]+'" features/nagoya-solo-dining.html` |
+  | 同ファイルは `stores/J*.html` への内部リンク15本を持つが、内部リンクは全ページ共通の `outbound_click` リスナーが `if(h===location.hostname)return;` で早期returnするため**イベントが一切出ない** | `index.html:36` |
+  | 同ファイルは `feature_store_click` を持たない18本の特集の1つ（68本中49本は保持） | `grep -L 'feature_store_click' features/*.html` |
+  | そのページの週閲覧は109回＝全閲覧507回の**21.5%で単独首位** | 週次レポート 2026-08-30〜09-05 |
+  | 関連特集リンク6本も無計装（全68特集の related-links アンカー369本中、無計装は12本＝その半数が本ファイル） | `features/*.html` 全走査 |
+  | `scroll_depth` はジャーナルには入っている（[[SEO-052]]）が、**特集68本すべてで0本**＝記事下部への到達率が測れない | `grep -l scroll_depth features/*.html` |
+- **[[SEO-084]] との関係（訂正を含む）**: SEO-084 は本ファイルを「`feature_store_click` を発火する計測済みの8本」に数え、「計測済みなのに0回だった＝実際にクリックされていない可能性も残る」と誠実に併記していた。**実測ではその前提が誤りで、本ファイルは計測されていない側**だった。つまり「予約1回・店舗詳細0回」の少なくとも一部は最人気ページの計測欠落で説明でき、同じ助言が毎日再生産される原因になっている
+- **2026-09-08 追記（引用数値の更新・欠落そのものは未解消）**: [[DSN-003]]（commit `d61b4a7d9`・2026-09-08）が `features/nagoya-solo-dining.html` を作り直したため、上表の本数は現在ずれている（実測: 「今すぐ予約」17→**3**本 / 「店舗詳細」15→**3**本 / hotpepper リンク **13**本 / `stores/` 内部リンク **10**本）。ただし**計装の状態は変わっていない**——同ファイルが発火するのは今も `feature_cta_click`×2 と `outbound_click` だけで、レポートの集計対象4種（`cta_click`/`cta_reserve`/`modal_open`/`feature_store_click`）は一つも出ない（`grep -oE "trackEvent\('[a-z_]+'" features/nagoya-solo-dining.html`）。デザイン刷新で本文が丸ごと書き換わった事実は、acceptance② の「個別HTMLを手で直さず出力元で付与する」をより重要にする（手で入れた計装は次の刷新で消える）
+- **acceptance**:
+  1. 特集の「今すぐ予約」（外部HotPepper）に `cta_click`、「店舗詳細」（内部 `stores/J*.html`）に `feature_store_click` を付与し、レポートの集計対象に載せる
+  2. 個別HTMLを手で直さない。出力元 `scripts/refresh_feature_rosters.js` / `build_features.js` 側で付与する（毎月1〜3日のロスター再構成で消えるため・[[SEO-084]] acceptance① と同じ理由）
+  3. 関連特集リンク（`.related-links` 内の無計装12本）に [[SEO-056]] と同じ `internal_link_click`（`block:'feature_related'`）を付与
+  4. 特集にも `scroll_depth`（25/50/75/100・各1回）を入れ、「記事下部の関連リンクまで到達しているか」を測れるようにする（[[SEO-012]] が残した申し送り「次に回遊を触るときは設置有無ではなくスクロール到達率・関連リンクのクリック率を見ること」の実行）
+  5. **見た目を一切変えない**（追加するのは計測のみ・CTAは増やさない）
+  6. 機械検査: 「`stores/J*.html` または hotpepper.jp へのリンクを持つのに集計対象イベントを持たない `features/*.html` の本数 = 0」を1コマンドで確認できること（現在は最低18本）
+  7. 効果は日次レポートの予約行動・店舗詳細の実数の前後比で見る（体感では判定しない）
+- **ブランドガードレール**: 計測の追加であり、予約導線の収益化（アフィリエイト・送客手数料）は含まない（制約8）。制約1を守る（`features/` と `scripts/` のみ・新規 .css/.js を作らない）
+
+### [SEO-087] 週閲覧の21.5%が `nagoya-solo-dining` 1本に集中している勝ち筋を分解し、同型のシーン特集へ横展開する
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-07
+- **category**: SEO / コンテンツ
+- **owner**: Editor
+- **source**: 週次レポート(LINE) 2026-08-30〜2026-09-05 の「🤖 週次トレンド」総括（訪問者293人 前週比 +10% / 閲覧数507 +40% / 訪問回数352 +19% / 成長ステータス「順調に伸びてます」・人気ページ① 特集 nagoya-solo-dining 109回）。総括が現状描写のみでアクションに落ちていないため、週次コマンド Step 2 の規定に従い起票側でアクション仮説を立案
+- **brand-filter**: ✅ 適合 — Moat「名古屋 × シーン × 業界人の目利き」そのものの強化。伸びているシーン（一人で入れる店）の型を実データから特定して次の編集に再現する施策で、順位操作・広告依存・クーポン・ストック写真を一切伴わない。[[SEO-038]]（done・ジャーナル記事の勝ち筋分析）の**特集側の対応物**であり、[[SEO-068]]（done・GSCクエリ起点の面拡張）とは起点データが異なる（こちらは週次PV集中）
+- **trend**: 閲覧数 前週比 +40%（363→507）と全体が伸びる中で、solo-dining 単独が109回＝**全閲覧の21.5%**。2位のトップページ58回の約1.9倍で、伸びが1本のシーン特集に集中している
+- **acceptance**:
+  1. solo-dining が勝っている理由を検証できるデータで分解する（GSCの流入クエリ・`data/gsc_query_intent.js` の discovery 判定・流入エンジン別内訳）。「一人客」「カウンター」等どの検索意図で取れているかを特定する
+  2. 同型で未カバーのシーンを2〜3本特定し、既存特集の強化または新規シーン特集として展開する。掲載店は**すべて LOCAL_STORES の実在店**に限る（架空店ブロック厳守）
+  3. 写真は写真ソース優先順（公式IG embed → HotPepper → プレスリリース → Places）に従う。汎用ストック写真は使わない
+  4. solo-dining 自身の関連リンクから展開先へ相互リンクを張り、集中している流入を回遊に変換する
+  5. 効果は展開先ページのPV・discovery クエリの表示/クリック（`scripts/gsc_query_intent.js`）の前後比で見る。総クリック数は指名検索と混ざるため使わない（SEO-043 の判定基準に従う）
+- **ブランドガードレール**: 「伸びているから量産する」ではなく、業界人の目利きとして書ける題材に限る。編集独立（広告ゼロ・PR記事ゼロ）を維持する
+- **2026-09-09 追記（日次トリアージで実測・着手前に必読）**: 同旨の助言が日次でも来たため（原文「『nagoya-solo-dining』のような\"一人ご飯\"系のキーワードで、新しく特集記事を作成・公開しましょう」）本チケットに集約した。ただし**助言が名指しする「一人ご飯」という検索意図は実データに存在しない**ため、そのまま着手すると勝ち筋を外す。展開先の第一候補は「一人ご飯」ではなく**「一人飲み」×エリア**である。検証できる事実（`data/gsc_metrics.json` 2026-09-08 生成 / 誰でも GSC で再現可能）:
+  | クエリ | 表示 | クリック | CTR | 掲載順位 |
+  |---|---|---|---|---|
+  | 名古屋 一人飲み | 275 | 24 | 8.73% | 6.8 |
+  | 名古屋駅 一人飲み | 212 | 8 | 3.77% | **10.5** |
+  | 名古屋 一人飲み 男 | 43 | 5 | 11.63% | 6.1 |
+  | 名古屋一人飲み | 64 | 3 | 4.69% | 6.5 |
+
+  - 上位25クエリに「一人ご飯」「ひとりごはん」「一人ランチ」は**1本も無い**。記事本文も「一人飲み」55回に対し「一人ご飯」0回で、ページの実体も夜の酒場側
+  - ページ単位では `features/nagoya-solo-dining.html` が 2,852表示 / 144クリック / 順位7.8 ＝ **サイト全クリック589の24.4%を1本で稼いでいる**。週次PV集中（本チケットの起点）と GSC でも同じ結論
+  - **「名古屋駅 一人飲み」だけが順位10.5＝1ページ目の境界に落ちている**（同じ「一人飲み」でも地名なしは6.8）。既存の `features/meieki.html` はエリア特集、`nagoya-solo-dining.html` は市内全域のシーン特集で、**この交差（名駅×一人飲み）を主題にしたページが無い**のが順位差の説明仮説。acceptance ② の展開先1本目はここを検討する
+  - なお `data/gsc_opportunities.json` にこのクエリが出ないのは**抽出器の不備ではない**（pos>10 の rankPush 枝に入るが、CTR 3.77% が9位の期待CTR 2.8% を既に上回るため upside≤0 で正しく除外されている）。自動抽出の穴ではなく、PV集中という別の起点でしか見えない機会という位置づけ
+
+
+### [SEO-084] 特集48本の店舗リンクがクリック計測を持たず、「店舗詳細クリック0回」という助言が毎日そこから再生産されている（SEO-072 の残り穴）
+
+- **priority**: P2 → **status**: done
+- **detected**: 2026-09-06
+- **completed**: 2026-09-06
+- **category**: SEO
+- **owner**: Builder + Marketer
+- **source**: SEOアドバイス(LINE) 2026-09-05 原文「訪問者42人に対し、予約・マップ・店舗詳細クリックが全て0回。サイトの目的を達成できていません。👉 index.html の各店舗カードに『詳細を見る』ボタンを追加し、クリック数を計測。予約ボタンの視認性も改善します」
+- **brand-filter**: ✅ 適合 — 助言の literal な打ち手（index.html に「詳細を見る」ボタンを増設）は却下し、助言の後半「クリック数を計測」に対応する**検証できる計測欠落**へ振り替えて採用（[[SEO-081]] / [[SEO-082]] / [[SEO-083]] と同じ振替パターン）。順位操作でもマネタイズでも広告主依存でもなく、改善ループの**入力の正確性**を回復する課題。[[SEO-072]]（イベント名の取りこぼし）の直系の残件で、CLAUDE.md 制約10「検証できる事実だけで判定する」の運用条件を守るための土台
+- **助言の literal な打ち手を却下した理由（実測・制約10）**:
+  1. **既に実装済みで増分ゼロ**: `index.html:9464` のトップページ店舗カードは `<div class="card" onclick="openM(idx)" role="button" tabindex="0" aria-label="○○の詳細を見る">` ＝**カード全体が「詳細を見る」ボタン**。さらに `index.html:9615` の `openM()` は先頭で `trackEvent('modal_open', {store_name, genre, area})` を発火しており、「クリック数を計測」も既に成立している
+  2. **予約ボタンの視認性**も同型の助言を直近14日で10回以上判定済み（08-24〜09-04）。[[SEO-041]] が実コードを見た上で「これ以上CTAを足すとCTA領域を圧迫して予約・地図の視認性をむしろ下げる」と判定している
+  3. **そもそも打ち手の面が違う**: 当日 46PV のうちトップページは **2PV（4.3%）**。読まれているのは特集（solo-dining 15PV）とジャーナル（7+2+2PV）＝**95.7% が index.html 以外**。index.html のカードをいじっても当日の症状の 4% にしか触れない
+- **検証できる事実（誰でも再現可能）**:
+  | 事実 | 出典 |
+  |---|---|
+  | レポートの「店舗詳細」は `modal_open` + `feature_store_click` の2種でしか数えない | `.gas-deploy/Code.js:409` |
+  | `features/*.html` 68本のうち **56本**が `stores/J*.html`（内部の店舗詳細ページ）へのリンクを持つ。多い順に banquet.html 48本 / meieki.html 48本 / gw-2026.html 36本 / date.html 33本 … | `node -e` で全件走査 |
+  | そのうち `feature_store_click`（または `cta_click`）を発火するのは **8本だけ**。残り **48本は1件も計測イベントを持たない** | 同上（発火するのは solo-dining / yakiniku / yakitori-guide / seafood / korean / settai-concierge / kaoawase-washoku / birthday-surprise / osu-food-walk） |
+  | 48本のリンクは**同一オリジン**（`nagoya-bites.com/stores/...`）のため、全ページ共通の `outbound_click` 自動計測リスナーは `if(h===location.hostname)return;` で早期 return する。＝**イベントが一切出ない**（外部リンクとしても拾われない） | `index.html:36` の delegated listener |
+  | 計測の無いリンクの出所は**1箇所の生成器**: `scripts/refresh_feature_rosters.js:303`（店名リンク）・`:308`（`詳細ページを見る →`）・`:337`（`shop-detail-link`）が `trackEvent` を持たないまま出力している。特集の掲載店は毎月1〜3日に build.yml がこの生成器で組み替えるため、**HTMLを手で直しても翌月に消える** | `scripts/refresh_feature_rosters.js` |
+  | 店舗ページ側は [[SEO-072]] で解消済み（5,608枚中 4,842枚が `cta_click`、5,031枚が `cta_gmap_click` を発火）。**残っている穴は features/ だけ** | `stores/*.html` 実測 |
+- **誠実に併記する反証**: 当日いちばん読まれた `nagoya-solo-dining`（15PV）は計測済みの8本の側にあり、それでも `feature_store_click` は0回だった。つまり「計測が無いから0に見える」だけで全部を説明することはできず、**実際にクリックされていない可能性も残る**。本チケットの主張は「0の原因を特定できる状態にする」ことであって「0は計測バグである」ではない。48本が盲点である限り、両者を区別する手段が無いこと自体が問題
+- **acceptance**:
+  1. `scripts/refresh_feature_rosters.js` の3箇所の出力に `onclick="trackEvent('feature_store_click',{store_name:'…',feature:'…'})"` を追加する（**個別HTMLを手で直さない**。翌月のロスター再構成で消えるため）
+  2. 既存48本へは生成器の再実行で反映する。掲載店の入れ替えを伴わない反映手段が無い場合は、計測属性だけを冪等に付与する小さな適用パスを設ける
+  3. **見た目を変えない**（[[SEO-041]] の判定を尊重し、新しいCTAボタンは足さない）。今回追加するのは計測だけ
+  4. 機械検査: 「`stores/J*.html` へのリンクを持つのに計測イベントを持たない `features/*.html` の本数 = 0」を1コマンドで確認できること（現在は48）
+  5. 効果は日次レポートの `feature_store_click` 実数の前後比で見る（体感・自己申告値では判定しない・制約10）
+  6. 制約1を守る（`features/` 配下のHTMLと `scripts/` のみ。新規 .css/.js は作らない）
+
+### [SEO-083] SNS原稿の「NotebookLM画像生成用テキスト」欄が生成器のプレースホルダのまま放置され、直近30日で22日ぶんの Instagram 画像素材が存在しない
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-05
+- **category**: SEO
+- **owner**: 片桐 ← Editor + Builder（前提の変化: generate_sns_draft が false になったためaccept①「方針を決める」がオーナー判断。着手前にスコープを縮小するか close するかをオーナーに確認が必要と明記）
+- **⚠️ 前提の変化（2026-09-06 の日次トリアージで検出・着手前に必ず読むこと）**: 本チケットが前提にしていた「生成器が毎日プレースホルダ欄を出力し続ける」状態は、起票と同日（2026-09-05）のオーナー判断で解消している。`data/journal_sns_draft_policy.json` の `generate_sns_draft` が **false**（commit 0e998c25a「日次SNS原稿(docs/daily-posts)の自動生成を一旦停止」）になり、`scripts/generate_daily_draft.js` は md 自体を生成しない。理由は「SNS投稿原稿はサイト外の別の仕組みで生成する運用に切り替えたため」。したがって acceptance 2.（生成器に決定的に埋めさせる）と 3.（欄を廃止する）は**どちらも現時点では発火しない**。残っているのは既存113本の未記入分の扱いと、外部運用へ移った原稿の穴を検知する経路をどこに置くかという編集判断のみ。**着手前にスコープを縮小するか close するかをオーナーに確認すること**（自動生成が `true` に戻された場合は本チケットがそのまま復活する）
+- **source**: SEOアドバイス(LINE) 2026-09-04 原文「訪問回数が43とまだ少ないため、施策は実験と捉えましょう。👉 journal/2026-09-04-meieki-shokudo-tomoru-sanma-price の内容を元に、docs/daily-posts/のSNS投稿原稿を魅力的に改善し、SNS流入を増やしましょう」
+- **brand-filter**: ✅ 適合 — 助言の「原稿を魅力的にする」は精神論なので literal には採らず、調査で見つかった**検証できる欠落**へ振り替えて採用（SEO-081 / SEO-082 と同じパターン）。日次ジャーナルは我々が唯一持つ日次の一次コンテンツで、その配信面（SNS）の素材が半分以上の日で欠落しているのは Moat の配信側の穴。順位操作・広告主依存・クーポン経済・ストック写真のいずれにも該当しない
+- **実測（2026-09-05・grep で誰でも再現可能）**: `docs/daily-posts/2026-*.md` 113本のうち **54本**（47.8%）が `*(NotebookLM画像生成用スライド未作成 — Editorが各スライドの…作成して埋めること)*` のプレースホルダのまま。**直近30本では22本が未記入**（08-14〜08-18・08-20〜08-23・08-25〜08-27・08-29〜08-30・09-01〜09-02・09-04 ほか）。出所は `scripts/generate_daily_draft.js:639` — ヘッドレス生成器が「Editorが後で埋めること」と書いた未完成の欄を毎日出力し続けており、その後段の人手ステップは3日に2日は発火していない。Note/X 本文は生成されるが、Instagram のカルーセル画像素材だけが毎日欠ける構造
+- **これは ISSUE-084 と同じクラス**: 生成器は毎日「未作成」と正直に書いているが、その警告は成果物ファイルの中だけで完結しており（誰も見に行かない）、欠落を外へ届ける経路が無い。113本ぶん積み上がって初めて grep で判明した
+- **acceptance**:
+  1. まず**方針を決める**（埋めるのか、欄ごと廃止するのか）。半分の日で埋まらない欄を毎日出力し続けるのは、未達のTODOを原稿に常設しているのと同じ
+  2. 「埋める」なら `scripts/generate_daily_draft.js` が記事本文から決定的にスライド（解説文＋画像プロンプト）を生成し、人手ステップに依存させない。生成できない日は欄自体を出さない（取り繕わない）
+  3. 「廃止」なら `generate_daily_draft.js:639` のプレースホルダを削除し、`docs/daily-posts/_template.md` と README からも欄を落とす
+  4. どちらに倒しても、`docs/daily-posts/` の未記入率を機械検査できるようにする（欠落が再び113本ぶん積み上がる前に検知が届くこと）
+  5. 効果は SNS 経由セッション（`data/search_channel_metrics.json` の SNS 行）の前後比で見る。総クリックでは指名検索と混ざるため使わない
+- **ブランドガードレール（重要）**: この欄は **NotebookLM等でAI画像を作る**ための素材である。オーナーから「ジャーナルの図解ヒーローはAIっぽくて閲覧意欲を削ぐ」というフィードバックが既に出ており（EDT-003）、CLAUDE.md 制約9 も実写優先を定める。**「埋める」に倒す場合でも、実在の料理・店舗写真の代用にしてはならない**（写真候補欄の公式Instagram embed / HotPepper 実写が優先）。この前提があるため、方針判断は Editor の編集判断（1.）を必ず先に置くこと。安易に「毎日AI画像を作る」へ倒さない
+
+### [SEO-082] 検索意図の分類器が「1人飲み」（数字表記）を discovery と数えず、SEO-011 の効果指標そのものが最大流入シーンを取りこぼしている
+
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-04
+- **resolved**: 2026-09-05
 - **category**: SEO
 - **owner**: Marketer
 - **source**: SEOアドバイス(LINE) 2026-09-03 原文「人気ページ2位の『特集: nagoya-solo-dining』について、SEOキーワード『名古屋 おひとりさま』での検索順位をチェックし、タイトルと説明文を最適化する案を検討してください」
@@ -137,6 +759,62 @@
 - **ブランドガードレール**: 送信対象は自サイトの実在する公開URLのみ。外部送信の実有効化（`INDEXNOW_ENABLED`）は既にオーナー承認済み（[[SEO-071]] 2026-08-26）だが、シークレット設定自体はオーナー操作。**復旧作業はシークレットの有無に関わらず先に完了させる**（未設定なら dry-run で回り、設定された瞬間に実送信になる）
 - **関連**: [[SEO-071]]（本体・done のまま消失）／[[SEO-067]]（Bing WMT 接続・オーナー操作待ちで blocked。IndexNow はこれを待たずに成立する）／[[SEO-039]]／[[ISSUE-112]]（削除の原因コミット）
 
+### [ISSUE-123] SNS原稿の生成停止（9/5）で日次ジャーナルのラッパーが「構造的に必ず失敗する」条件を抱え、9/6 の記事が完成・検証済みなのに公開直前で die して未公開のまま残った
+
+- **priority**: P1 → **status**: done（① 恒久修正（ラッパーの分岐）PR#218で実装済み ② 検知の穴: `check_journal_health.js` に `local_run_died`/`local_run_held` 追加・`journal-watchdog.yml` を2トラック化+cron2本化+退行チェック追加 ③ acceptance#2（die→push）・#5（CLAUDE.md）はオーナー判断の残件としてクローズ）
+- **detected**: 2026-09-06
+- **category**: ops-monitoring / journal
+- **owner**: Editor + Builder
+- **source**: オーナーがサイトを見て「9/6 の記事が出ていない」と気づいた（＝**自動監視は一度も鳴っていない**）
+- **brand-filter**: ✅ 適合 — 日次ジャーナルは我々が唯一持つ日次の一次コンテンツで、鮮度そのものが Moat（「月刊スピード — 我々はジャーナル日次でむしろ勝つ」）。その停止と、停止に気づけないことの是正。順位操作・広告主依存・マネタイズのいずれにも該当しない
+- **これは [[ISSUE-084]] と同じクラス**: 自動化が止まったのに、人が能動的に見に行くまで誰も分からなかった。ただし ISSUE-084 は「警報の出力先が Mac の外に出なかった」ケースで、今回は **out-of-band の警報経路（journal-watchdog.yml）自体は存在するのに、この故障モードでは原理的に鳴らない**ケース
+
+#### 検証できる事実（制約10・すべて再現可能）
+
+| 事実 | 出典 |
+|---|---|
+| `data/journal_sns_draft_policy.json` の `generate_sns_draft` が **false** になった（オーナー判断） | commit `0e998c25a`（2026-09-05 18:58 JST・PR #216） |
+| `scripts/generate_daily_draft.js` はこれを読んで `docs/daily-posts/<date>.md` を生成しなくなった | `scripts/generate_daily_draft.js:76-83` `shouldGenerateSnsDraft()` |
+| しかし `scripts/run_journal_local.sh` の公開前チェック (c)（修正前 576-580行）は md の実在を**無条件に必須**としていた ＝ この条件は構造的に必ず失敗する | 修正前の `die "SNS原稿が見つかりません: $DAILY_MD。生成異常。"` |
+| 実際に 2026-09-06 09:15:16 の実行が、記事HTML確認の直後にこの行で終了している | `.local-logs/journal-2026-09-06.log` 末尾 |
+| 停止時点で記事は**完成し published.json への登録まで終わっていた**（残っていたのは commit/push だけ） | `journal/2026-09-06-mizuho-asian-games-venue-yakiniku.html` / `data/journal_published.json` |
+| 停止しても validator は無関係だった（validator は最初から md 省略可の設計） | `scripts/validate_journal_draft.js:37` `mdPath && fs.existsSync(mdPath)` / 項目8「md未指定のためスキップ」 |
+| 影響日数は 1日のみ。policy 変更が 9/5 の 09:00 実行**より後**（18:58）だったため、初めて踏んだのが 9/6 | commit 時刻と `check_journal_health.js --days 7`（9/5 まで欠番なし） |
+
+#### なぜ誰も気づけなかったか（本チケットの本体）
+
+| 事実 | 出典 |
+|---|---|
+| `journal-watchdog.yml` の発火条件は **published.json の欠番ただ一つ**。`data/journal_health.json` の `status` は Issue 本文の説明に使うだけ（`r.last_local_run`）で、**トリガーには一切使っていない** | `.github/workflows/journal-watchdog.yml` 欠番チェック step ＋ `r.ok` 分岐 |
+| そのため 09:15 JST に `status: "die"` ＋ 理由文字列まで正確に記録されていたのに、それを見て鳴るものが存在しない | `data/journal_health.json` |
+| **記事を公開した瞬間に欠番が消えるため、この事故は watchdog から永久に見えなくなる**（今回 PR #218 で公開したことで発火条件が消滅した） | 同上 |
+| cron は `0 3 * * *`（12:00 JST）だが、直近7回の実際の起動は **16:24〜18:18 JST**（GitHub のスケジュール遅延 4.4〜6.3時間） | `gh run list --workflow journal-watchdog.yml`（09-05 07:24Z / 09-04 07:41Z / 09-03 07:46Z / 09-02 07:36Z / 09-01 08:17Z / 08-31 09:18Z / 08-30 08:54Z） |
+| つまり 09:15 JST の失敗に対する**最短の通知が実測で 7〜9時間後**。オーナーが気づいた 14:00 JST より遅く、今回 watchdog は**一度も鳴っていない** | 上記 ＋ `gh issue list --label journal-watchdog`（9/6 の Issue は存在しない。最後は 9/4 の #213） |
+| さらに `die()` は `record_health` を呼ぶが `push_health` を呼ばない。`hold()` は両方呼ぶ。＝ **die 経路では理由文字列が Mac の外に出ない**（今回 GitHub に届いたのは PR #218 が journal_health.json を同梱したから） | `scripts/run_journal_local.sh:106` vs `hold()` の本体 |
+
+#### resolution（本PRで完了した分）
+
+- `scripts/run_journal_local.sh` に `sns_draft_enabled()` を追加し、`data/journal_sns_draft_policy.json` の `generate_sns_draft` を唯一の情報源として (c) を分岐させた（`generate_daily_draft.js` / `audit_journal_sns_pairing.js` と同じ読み方・フェイルセーフの既定は「必須」）
+- 公開前チェック (c) と自動復旧ブロックの両方（md を要求していたのは2箇所）を分岐対象にした
+- validator 呼び出しを `${DAILY_MD:+"$DAILY_MD"}` にして md 不在時は引数ごと外す（validator 側の既存スキップ設計と整合）
+- 4ケースで実測: ①false かつ md 不在→スキップして続行 ②true かつ md 不在→従来どおり die ③true かつ md あり→従来どおり validator に渡す ④policy 破損→必須のまま（フェイルセーフ）
+- `node scripts/validate_journal_draft.js <article>`（md 引数なし）→ **PASS**（項目8「md未指定のためスキップ」・項目16「SNS原稿は未指定のため照合スキップ」・項目15b ヒーロー写真の帰属OK）
+- 取り残されていた 9/6 の成果物の公開は PR #218（別セッション）で完了。`audit_journal_photos.js --check` 違反ゼロ / `check_journal_health.js --days 7` 欠番なし を確認済み
+
+#### acceptance（残件＝検知の穴）
+
+1. **`data/journal_health.json` の `status` を発火条件にする経路を作る**。「published.json に欠番がある」だけでなく「ローカル実行の最終状態が `die` / `hold` で、かつ当日中に `ok` に更新されていない」でも鳴るようにする。これが無い限り、**記事が公開されると事故が観測できなくなる**（今回まさにそれが起きた）
+2. **`die()` からも状態を push する**。現状 `hold()` だけが `push_health` を呼ぶため、die 経路の理由文字列は Mac から出ない。ただし `die()` は git が壊れている前提のごく初期（未解決 rebase 検出など）からも呼ばれるため、**無条件に push を足すと壊れた git 状態で push しに行く**。git が健全な地点以降に限定するなどの設計が要る（安易に1行足さないこと）
+3. **通知の遅さを事実として扱う**。cron は 12:00 JST だが実測の起動は 16:24〜18:18 JST（4.4〜6.3時間遅延）。09:00 の生成失敗に対して最短でも 7〜9時間後にしか届かない。cron を早める／複数回に分ける／別経路を足す のいずれかを、**推測ではなく `gh run list` の実測分布を根拠に**決める（制約10）
+4. **同じ「policy を足したら別の場所が構造的に必ず失敗する」を機械で拾えるようにする**。`data/*_policy.json` のフラグを読む実装が全経路で一致しているかを検査する（今回は `generate_daily_draft.js` と `audit_journal_sns_pairing.js` は読んでいたが `run_journal_local.sh` だけ読んでいなかった）
+5. **CLAUDE.md の記述を実態に合わせる**。`journal_sns_draft_policy.json` の行が「`validate_journal_draft.js` は md 不在時に該当項目を自動スキップする設計のため**コード変更不要**」と書いているが、これは validator だけを見た記述で、その手前のラッパーの事前チェックを見落としている。**この一文が「もう見なくていい」という誤った安心を作った**ので、憲法の記述としてどう直すかはオーナー判断で決める（本PRでは変更していない）
+6. 検証は自己申告値を使わない（制約10）。「鳴るようになったこと」は、`status: die` を人為的に書いた状態で watchdog を `workflow_dispatch` して Issue が立つことで確認する
+
+- **files**: `scripts/run_journal_local.sh`（本PRで修正済み）/ `.github/workflows/journal-watchdog.yml`（残件）/ `scripts/check_journal_health.js`（残件）/ `CLAUDE.md`（残件・オーナー判断）
+- **関連**: [[ISSUE-084]]（同クラス・警報が届かない）／[[ISSUE-096]]（ジャーナル欠番・clamshell sleep）／[[SEO-083]]（同じ policy 変更で前提が変わったチケット）／[PR #218](https://github.com/wakuwaku-labs/nagoya-bites/pull/218)（9/6 成果物の公開）
+
+---
+
 ### [ISSUE-122] 「焼きそばスタンド らふ」が同一GooglePlaceIDで2重掲載されていた（カタログ全体で計21店名が2重掲載・後者は本セッションで解消、20店名は未調査） ✅
 
 - **priority**: P0 → **status**: done（対象1件は解消。カタログ全体の残20件は別課題として起票のみ）
@@ -170,8 +848,10 @@
 
 ### [ISSUE-121] Build & Deployが「他都道府県マッチ監査」で3回連続失敗し、ISSUE-120含む複数のmainマージが数時間ぶん本番未反映のまま放置されていた
 
-- **priority**: P0 → **status**: ready（実装・ローカル検証済み。[PR #205](https://github.com/wakuwaku-labs/nagoya-bites/pull/205) マージ待ち）
+- **priority**: P0 → **status**: done
 - **detected**: 2026-09-02
+- **resolved**: 2026-09-08
+- **resolved_by**: 06b6976f（auto-update store data で main に反映済み・`node scripts/audit_other_prefecture_matches.js --check` = [OK]確認）
 - **category**: ci / ops-monitoring
 - **owner**: Builder
 - **source**: ユーザーが ISSUE-120 のデプロイ結果を確認しようとしたところ「まだ反映されてない」と報告 → CI実行履歴を確認し発覚
@@ -699,7 +1379,7 @@
 
 ### [SEO-070] 特集・日次ジャーナルの内部リンクが「本文の後ろ」にしか無く、記事を読み切らない読者に回遊の手がかりが一度も出ない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-09-11）
 - **detected**: 2026-08-24
 - **category**: SEO
 - **owner**: Builder + Editor
@@ -891,7 +1571,7 @@
 - **priority**: P2 → **status**: ready
 - **detected**: 2026-08-23（オーナー就寝中の自律処理・`node scripts/security_audit.js` で発見）
 - **category**: security / tooling
-- **owner**: Builder
+- **owner**: 片桐 ← Builder（acceptance が「実APIキーが揃う環境（オーナーのローカルMacまたはCI）で実行し、影響スクリプトを実データで動作確認してからコミット」を必須としており、クラウドセッションでは実行不可）
 - **調査で判明した事実**: `npm audit` で12件の既知脆弱性（high 7 / moderate 4 / low 1）を検出。うち4件（brace-expansion / ip-address / js-yaml）は非破壊の `npm audit fix` で解消済み（[[ISSUE-109]]と同日・別コミット）。**残り8件は `--force` でのメジャーバージョンアップが必要**:
   | 脆弱性 | 深刻度 | 原因パッケージ | 必要な変更 |
   |---|---|---|---|
@@ -2611,8 +3291,14 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
     避けるには、週次実行を重ねて蓄積率を上げてから Step2（`audit_crosscheck_v3.js`再実行で
     分布影響を確認）に進むのが妥当。切替の最終判断（Step3）は保留のまま
 
+- **2026-09-11 定点観測（自動ルーティン）**:
+  `node scripts/audit_crosscheck_v3.js` 実行結果:
+  - snapshots≥2 の店舗数: **422件（7.8%）** — 1.9%（2026-08-18）から改善
+  - v3.0分布影響: **1階級以上の移動 4,336件**（目安上限492件 = 全体の10%）
+  - まだ目安の8.8倍。新シグナル（textLen/incentiveHit）は snapshots があっても適用されない店が多く、重み付け変更の影響が支配的。週次蓄積を継続し再評価する
+
 - **残タスク**: 週次実行（毎週月曜）を継続してsnapshots≥2の蓄積率を上げる → 十分な蓄積後に
-  `node scripts/audit_crosscheck_v3.js` で分布影響を再確認 → 問題なければ activate 手順の
+  `node scripts/audit_crosscheck_v3.js` で分布影響を再確認（目標: 移動件数 ≤ 492件）→ 問題なければ activate 手順の
   Step3以降（build.js切替）を実施。無料トライアル失効後（2026-08-20以降）は純粋な従量課金と
   なるため、`PLACES_DETAILS_BUDGET=100`（月≈¥1,429）が既存の¥1,500/月アラート内に収まって
   いることを次回請求サイクルで実額確認する。Inspector Step C-2（`agents/inspector.md`）で
@@ -2628,6 +3314,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   v2.0 → **v2.1**（`scripts/lib/cross_check.js`）に更新し、各軸へ `observed:boolean` を追加、S7 に `parts:[s7a,s7b,s7c]` を追加。
   内部合成点 `crossCheckScore`（8軸100点・本 ISSUE が扱う分布・フラグ）は本ステップでは**変更していない**（ロスター等の依存を壊さないため）。
   **v3.0 を活性化するときは、v3 実装（`scripts/lib/cross_check_v3.js`）にも同じ observed/parts 付与が前提**（`scripts/lib/trust_display.js` が observed を読むため）。詳細は [[ISSUE-101]]。
+- **2026-09-06 確認（自動ルーチン）**: `node scripts/audit_crosscheck_v3.js` 実行結果 — 4339店（88%）が1階級以上移動（目安上限 493店）。データ蓄積は 100 → 350店（snapshots≥2）に増加（週次実行が継続）。gate(c) はまだ大幅超過のため、S7/S8 重み再調整（オーナー確認後の別タスク）を待って活性化は継続保留。
 - **2026-09-03 追記（observed/parts 付与・禁止語排除 — ISSUE-086 準備作業）**:
   `scripts/lib/cross_check_v3.js` に v2.1 と同等の `observed`/`parts` を追加し、trust_display.js に接続できる状態にした（`npm test` 151件全pass）。
   同時に禁止語（サクラ/化粧/疑い/評価操作）を排除:
@@ -4799,6 +5486,10 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-09-08 | Designer(EXPLICIT) | DSN-003: トップ/ジャーナル/特集/編集規約4ページ種別のプロ品質リデザイン＋サイト共通クローム統一（scripts/lib/site_chrome.js新設・全216ファイル） | ✅ コミット済み・PR作成待ち (commit 20cd42ec4) |
+| 2026-09-08 | Orchestrator(routine) | ISSUE-121: 他都道府県マッチ残存確認→修正は commit 06b6976f で main に反映済み・audit_other_prefecture_matches.js --check=[OK]確認・done クローズ | ✅ done（既存修正を確認） |
+| 2026-09-08 | Orchestrator(routine) | SEO-086: scripts/add_feature_tracking.js 新設・scripts/refresh_feature_rosters.js に cta_click 追加・features 67本にcta_click/feature_store_click/internal_link_click/scroll_depth を補完。機械検査OK | ✅ commit 予定 |
+| 2026-09-06 | Orchestrator(自律バッチ) | SEO-084: scripts/refresh_feature_rosters.js に featureSlug 引数追加・3リンク箇所に feature_store_click 注入。全55特集ページに計測を追加（未計測48本→0本）。ISSUE-086 gate(c) 超過確認・継続保留。ISSUE-110/SEO-083 をオーナーへエスカレーション | ✅ デプロイ済み (commit 83de89ba) |
 | 2026-04-15 | Inspector | 初回サイト監査・バックログ初期化 | 9件の課題を検出 |
 | 2026-04-15 | Orchestrator(FULL) | Hero修正・権威性バー・CTA修正・店舗別ページ1095件生成・sitemap 1→1097件・デプロイ | ✅ デプロイ済み (commit 3824014) |
 | 2026-04-15 | Builder | ISSUE-001,002,003,004,009を実装（CSS修正）・sitemap 1100件 | ✅ デプロイ済み |
@@ -4965,6 +5656,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-09-03 | Builder(routine) | ISSUE-086 準備作業 — cross_check_v3.js に observed/parts 付与（v2.1 と同等）・禁止語（サクラ継続投入疑い/化粧剥がれパターン/評価操作疑い）排除。activate ゲート(c)を新設（4338店88%が段階移動 → 重み再調整が必要）。npm test 151件全pass。status は in_progress 継続（切替保留） | ✅ このコミット |
 | 2026-09-04 | Orchestrator(routine) | SEO-079 実装・デプロイ — .gas-deploy/Code.js の日次/週次レポートのTOP5生成を `data.pages.slice(0,5)` から既存の `topPagesForPrompt(data.pages,5)` に置き換え。pagePath違いの同一ページが2行出る重複バグを修正。QA全通過（GASミラー変更のみ・index.html/build.js未変更）。status: ready → done | ✅ commit 1b0e6cf2 |
 | 2026-09-04 | Orchestrator(routine) | SEO-080 実装・デプロイ — data/seo_triage_retrieval_policy.json（Gmail sweep/reconcile 規則の正本）・scripts/check_seo_triage_weekly_health.js（seo_advice_log.jsonの line-weekly 沈黙を検証できる事実で検知）・.github/workflows/seo-triage-weekly-watchdog.yml（サーバ側監視・Issue起票でオーナーにメール）を新設。「見逃しても誰にも届かない」を解消。sweep実装はcommand file制約によりポリシー文書化のみ。status: ready → done | ✅ commit 951362e3 |
+| 2026-09-05 | Marketer(routine) | SEO-082 実装・デプロイ — data/journal_seo_keywords.json の scene「一人飲み」aliases に GSC実データで実在確認できた表記ゆれ「1人飲み」「1人のみ」「一人のみ」を追加。同時に scripts/journal_seo_kw.js の SCENE_VOCAB も同期更新。--verify: 39KW全通過。discovery 表示: 922 → 1,289（+39.8%）・クリック: 47 → 78（+65.9%）。「名古屋 1人飲み 男」が other → discovery に移動確認済み。シェア上昇は計測是正であり施策効果ではない旨を受け入れ条件5に従い明記。status: ready → done | ✅ commit cd6ca0c2 |
 
 ---
 
@@ -6077,3 +6769,20 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
 - 1件ずつ解く: `/solve-next` スラッシュコマンド
 - agent-backlog.md が**マスター**、Notion は確認用ダッシュボード
 - `status: done` になった課題は Notion からアーカイブされて表示から消える
+
+---
+
+## 夜間QA検出課題（QA-*）
+
+### [QA-SEC-SECRET-GOOGLE-API-KEY] Google API key らしき文字列がコミットされている疑い（1箇所）
+- **priority**: P0 → **status**: wont_fix
+- **detected**: 2026-09-08
+- **category**: Security
+- **owner**: DataKeeper
+- **source**: 夜間QA（scripts/nightly_qa.js 自動起票）2026-09-08
+- シークレット文字列スキャンで検出（値は秘匿）:
+-     index.html:9853
+- acceptance: 該当値を確認し本物なら即ローテーション＋履歴消去／誤検知なら .qa-secret-allowlist.txt に登録
+- **resolved**: 2026-09-14（誤検知・ローテーション不要）
+- **検証**: 検出箇所は `index.html` の `var NB_CALL_MAPS_KEY`（PR #224「電話する」ボタン用の Maps JavaScript API キー）。ブラウザで読み込む仕様上クライアントに置くしかない公開キーで、コード内コメントどおり HTTP リファラ制限付き。2026-09-14 にリファラ無しで Places Details Web Service を呼び、Google が `API keys with referer restrictions cannot be used with this API.`（REQUEST_DENIED）を返すことを実測で確認＝制限が効いている
+- **対応**: `.qa-secret-allowlist.txt` に**行単位**で登録。`scripts/security_audit.js` はファイル単位の除外しか持たず、`index.html` を丸ごと除外すると本物の鍵が混入しても検出できなくなるため、`パス::行の部分文字列` の書式を追加した（index.html の別の行に鍵を置くと従来どおり HARD 検出されることを確認）

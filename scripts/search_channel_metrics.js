@@ -37,6 +37,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
+const { isSocialSource } = require('./lib/traffic_source');
 const SITE_METRICS = path.join(ROOT, 'data', 'site_metrics.json');
 const HISTORY = path.join(ROOT, 'data', 'metrics_history.json');
 const OUT_PATH = path.join(ROOT, 'data', 'search_channel_metrics.json');
@@ -53,7 +54,9 @@ const ENGINE_RULES = [
   { key: 'google',     label: 'Google',     match: ['google'], exclude: ['bard.google'] },
   { key: 'yahoo',      label: 'Yahoo!',     match: ['yahoo'] },
   { key: 'duckduckgo', label: 'DuckDuckGo', match: ['duckduckgo'] },
-  { key: 'social',     label: 'SNS',        match: ['x.com', 'twitter', 'instagram', 'facebook', 't.co', 'tiktok', 'youtube'] },
+  // SNS は部分一致にしない（'t.co' が chatgpt.com・microsoft.com 等に誤一致する）。
+  // 判定は scripts/lib/traffic_source.js の isSocialSource() に委ねる（fetch_ga4_views.js と共有）
+  { key: 'social',     label: 'SNS',        test: isSocialSource },
   { key: 'direct',     label: '直接/不明',  match: ['(direct)', '(not set)'] }
 ];
 
@@ -61,7 +64,7 @@ function classify(source) {
   const s = String(source || '').toLowerCase();
   for (const r of ENGINE_RULES) {
     if ((r.exclude || []).some(x => s.includes(x))) continue;
-    if (r.match.some(m => s.includes(m))) return r.key;
+    if (r.test ? r.test(s) : r.match.some(m => s.includes(m))) return r.key;
   }
   return 'other';
 }

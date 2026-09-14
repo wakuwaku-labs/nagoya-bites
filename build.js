@@ -593,6 +593,16 @@ function normalizePhotoUrl(url) {
   return u.replace(/(imgfp\.hotp\.jp\/.+?)_(?:58|100|168|238|320)\.jpg/, '$1_480.jpg');
 }
 
+// HotPepper の設備・可否フィールド（"あり"/"なし"/"利用可"/"利用不可"/"あり ：4名個室" 等の文字列）を、
+// 「利用できる時だけ」短い文字列として残す。"なし"/"不可" 系は空にして出力から落とす
+// （slimStoreForOutput が空値を除去するため、否定情報でテーブルを埋めない＝店舗モーダル再設計の方針）。
+function hpAvailability(v) {
+  const s = String(v == null ? '' : v).trim();
+  if (!s) return '';
+  if (/^(なし|不可|利用不可|無し|無)/.test(s)) return '';
+  return s.replace(/\s+/g, ' ').slice(0, 60);
+}
+
 function hpShopToStoreRecord(shop) {
   const name = shop.name || '';
   const areaName = (shop.middle_area && shop.middle_area.name) || (shop.small_area && shop.small_area.name) || '';
@@ -605,10 +615,16 @@ function hpShopToStoreRecord(shop) {
   const budget = (shop.budget && shop.budget.name) || '';
   const photo = normalizePhotoUrl((shop.photo && shop.photo.pc && (shop.photo.pc.l || shop.photo.pc.m || shop.photo.pc.s)) || '');
   const searchQ = encodeURIComponent(name + ' 名古屋');
+  // 店舗モーダル再設計（2026-09）: API が返しているのに捨てていた「予約判断に効く項目」を射影する。
+  // 定休日・最寄駅・席数・個室・設備は HotPepper グルメ API の標準レスポンスに含まれる
+  // （tel は API が返さないため常に空になる＝電話は当サイトでは出せない）。
+  const capacity = parseInt(shop.capacity, 10);
+  const partyCap = parseInt(shop.party_capacity, 10);
   return {
     '店名': name,
     '英語名': '',
     'ジャンル': genre,
+    'サブジャンル': (shop.sub_genre && shop.sub_genre.name) || '',
     'エリア': areaName,
     '都道府県': pref,
     '市区町村': locality,
@@ -617,8 +633,22 @@ function hpShopToStoreRecord(shop) {
     '経度': shop.lng != null ? String(shop.lng) : '',
     '電話': shop.tel || '',
     '価格帯': budget,
+    '平均予算': (shop.budget && shop.budget.average) || '',
     '営業時間': shop.open || '',
+    '定休日': String(shop.close || '').trim().slice(0, 80),
+    '最寄駅': String(shop.station_name || '').trim(),
     'アクセス': shop.access || '',
+    'キャッチ': String(shop.catch || '').trim().slice(0, 80),
+    '席数': Number.isFinite(capacity) && capacity > 0 ? String(capacity) : '',
+    '宴会収容': Number.isFinite(partyCap) && partyCap > 0 ? String(partyCap) : '',
+    '個室': hpAvailability(shop.private_room),
+    'カード可': hpAvailability(shop.card),
+    '禁煙': String(shop.non_smoking || '').trim(),
+    '駐車場': hpAvailability(shop.parking),
+    'ランチ': hpAvailability(shop.lunch),
+    'コース': hpAvailability(shop.course),
+    '飲み放題': hpAvailability(shop.free_drink),
+    '食べ放題': hpAvailability(shop.free_food),
     'ホットペッパーID': shop.id || '',
     '写真URL': photo,
     'Instagram': '',
@@ -696,6 +726,13 @@ function manualStoreToRecord(m) {
     'トレンド情報源': sources,
     'キュレーター': m['キュレーター'] || '',
     '追加日': m['追加日'] || '',
+    // 店舗モーダル再設計（2026-09）: 手動キュレーション店の編集情報を表示面へ持ち越す。
+    // 選定理由（99件・中央値57字）は editorReason が無い店のリード文、おすすめシーンはチップ、
+    // 価格帯目安は 価格帯 が無い手動店（約8割）の代替表示に使う。
+    '選定理由': String(m['選定理由'] || '').trim(),
+    'おすすめシーン': Array.isArray(m['おすすめシーン']) ? m['おすすめシーン'].map(String).filter(Boolean).slice(0, 6) : [],
+    '価格帯目安': String(m['価格帯目安'] || '').trim(),
+    '食べログ評価': (m['食べログ評価'] && parseFloat(m['食べログ評価']) > 0) ? String(m['食べログ評価']) : '',
     // サニタイゼーション迂回用の一時フラグ（LOCAL_STORES 書き込み前に削除）
     '__manual': true
   };
@@ -811,6 +848,11 @@ function mergeManualStores(mergedStores, manualStores, existingHpIds) {
       if (typeof m['話題スコア'] === 'number') hit['話題スコア'] = m['話題スコア'];
       if (m['話題コメント']) hit['話題コメント'] = m['話題コメント'];
       if (m['トレンド情報源']) hit['トレンド情報源'] = m['トレンド情報源'];
+      // 編集情報（選定理由・おすすめシーン・価格帯目安・食べログ評価）も既存レコードへ持ち越す
+      if (m['選定理由']) hit['選定理由'] = m['選定理由'];
+      if (m['おすすめシーン'] && m['おすすめシーン'].length) hit['おすすめシーン'] = m['おすすめシーン'];
+      if (m['価格帯目安']) hit['価格帯目安'] = m['価格帯目安'];
+      if (m['食べログ評価']) hit['食べログ評価'] = m['食べログ評価'];
       hit['__manual'] = true;  // サニタイゼーション迂回
       continue;
     }
@@ -2009,4 +2051,9 @@ ${sitemapEntries}
   }
 }
 
-main().catch(e => { console.error(e.message); process.exit(1); });
+// tests/ から射影関数を単体テストできるように export する（require 時は main() を走らせない）
+module.exports = { hpShopToStoreRecord, manualStoreToRecord, mergeManualStores, hpAvailability, normalizePhotoUrl, slimStoreForOutput };
+
+if (require.main === module) {
+  main().catch(e => { console.error(e.message); process.exit(1); });
+}

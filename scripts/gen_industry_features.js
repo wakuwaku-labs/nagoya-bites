@@ -10,6 +10,8 @@
  */
 const fs = require('fs');
 const path = require('path');
+const siteChrome = require('./lib/site_chrome');
+const DS = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'design_system.json'), 'utf8'));
 
 const ROOT = path.join(__dirname, '..');
 const picks = require(path.join(ROOT, 'data', 'editor_picks.json')).stores;
@@ -177,7 +179,7 @@ const features = [
 ];
 
 // 共通スタイル（nagoya-lunch-washoku.html と同一）
-const STYLE = `:root{--bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--border:rgba(0,0,0,0.1);--border-h:rgba(0,0,0,0.28);--text:#1c1c1a;--muted:rgba(28,28,26,0.6);--dim:rgba(28,28,26,0.38);--gold:#7a5c10;--gold2:#96720f;--white:#0a0a08;}*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}header{position:sticky;top:0;z-index:200;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,245,241,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.2rem;letter-spacing:.35em;color:var(--white);text-transform:uppercase;text-decoration:none;}.logo em{font-style:italic;color:var(--gold);}nav{display:flex;gap:1.5rem;align-items:center;}nav a{font-size:.68rem;letter-spacing:.16em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}nav a:hover,nav a.active{color:var(--text);}.breadcrumb{padding:.6rem 1.5rem;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.1em;color:var(--dim);max-width:800px;margin:0 auto;}.breadcrumb a{color:var(--dim);text-decoration:none;}.breadcrumb a:hover{color:var(--gold);}.breadcrumb span{margin:0 .4rem;}.art-hero{padding:3rem 1.5rem 2.5rem;max-width:800px;margin:0 auto;}.art-eyebrow{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;}.art-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.9rem,4vw,3rem);line-height:1.2;color:var(--white);margin-bottom:1rem;}.art-title em{font-style:italic;color:var(--gold);}.art-meta{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--dim);margin-bottom:1.5rem;display:flex;gap:1.2rem;flex-wrap:wrap;}.art-lead{font-size:.88rem;line-height:2;color:var(--muted);max-width:680px;border-left:2px solid var(--gold);padding-left:1.2rem;}.art-body{max-width:800px;margin:0 auto;padding:0 1.5rem 4rem;}.section-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2.5rem 0 .8rem;}.art-intro{font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:2rem;}.store-list{display:flex;flex-direction:column;gap:1.5rem;}.store-card{background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;padding:1.4rem;display:flex;gap:1.2rem;align-items:flex-start;transition:box-shadow .2s;}.store-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);}.store-num{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2.2rem;color:var(--gold);opacity:.6;line-height:1;min-width:2rem;text-align:center;}.store-info{flex:1;}.store-name{font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:1rem;color:var(--white);margin-bottom:.4rem;}.store-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.12em;color:#fff;background:var(--gold);padding:.1rem .4rem;border-radius:2px;margin-left:.4rem;vertical-align:middle;}.store-meta{display:flex;gap:.6rem;flex-wrap:wrap;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:var(--dim);margin-bottom:.6rem;}.store-desc{font-size:.8rem;line-height:1.8;color:var(--muted);margin-bottom:.6rem;}.insider-quote{font-size:.78rem;line-height:1.8;color:var(--muted);font-style:italic;border-left:2px solid var(--gold);padding:.2rem .8rem;margin:.4rem 0;background:rgba(122,92,16,.04);}.media-features{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.06em;color:var(--dim);margin-top:.4rem;}.store-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem;}.store-tag{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.08em;padding:.18rem .5rem;border:1px solid rgba(122,92,16,.3);color:var(--gold);border-radius:2px;}.tips-box{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);padding:1.2rem 1.4rem;border-radius:0 4px 4px 0;margin:2rem 0;}.tips-title{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;}.tips-box p{font-size:.8rem;line-height:1.9;color:var(--muted);}.tips-box ul{padding-left:1.2rem;}.tips-box li{font-size:.8rem;line-height:1.9;color:var(--muted);}.column{background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;padding:1.6rem;margin:2.5rem 0;}.column-title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.2rem;color:var(--white);margin-bottom:1rem;}.column-body p{font-size:.82rem;line-height:1.9;color:var(--muted);margin-bottom:.8rem;}.column-body strong{color:var(--gold);font-weight:500;}.faq-section{max-width:800px;margin:0 auto;padding:0 1.5rem 3rem;}.faq-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.4rem;color:var(--white);margin-bottom:1.5rem;}.faq-item{border-bottom:1px solid var(--border);padding:1.2rem 0;}.faq-q{font-weight:500;font-size:.85rem;color:var(--white);margin-bottom:.6rem;}.faq-q::before{content:'Q. ';color:var(--gold);}.faq-a{font-size:.82rem;line-height:1.9;color:var(--muted);}.faq-a::before{content:'A. ';color:var(--gold);font-weight:500;}.related{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center;}.related-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.3rem;color:var(--white);margin-bottom:1.2rem;}.related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}.related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}.related-link:hover{background:rgba(122,92,16,.08);}footer{background:var(--white);color:rgba(247,245,241,.5);padding:1.8rem 1.5rem;text-align:center;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.14em;}footer a{color:rgba(201,169,110,.7);text-decoration:none;}@media(max-width:640px){.store-card{flex-direction:column;gap:.7rem;}.store-num{font-size:1.4rem;}nav{gap:1rem;}nav a{font-size:.6rem;}}`;
+const STYLE = `.store-badge{display:inline-block;font-family:var(--font-body);font-size:var(--fs-2xs);font-weight:700;letter-spacing:0;color:var(--bg);background:var(--gold);padding:.1rem .4rem;border-radius:var(--r-sm);margin-left:.4rem;vertical-align:middle;}.insider-quote{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);font-style:italic;border-left:2px solid var(--gold);padding:.2rem .8rem;margin:.4rem 0;background:rgba(122,92,16,.04);}.media-features{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-top:.4rem;}.store-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem;}.store-tag{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;padding:.18rem .5rem;border:1px solid rgba(122,92,16,.3);color:var(--gold);border-radius:var(--r-sm);}.column{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-md);padding:1.6rem;margin:2.5rem 0;}.column-title{font-family:var(--font-display);font-weight:500;font-size:var(--fs-xl);color:var(--ink);margin-bottom:1rem;}.column-body p{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);margin-bottom:.8rem;}.column-body strong{color:var(--gold);font-weight:500;}.faq-section{max-width:var(--container-mid);margin:0 auto;padding:0 1.5rem 3rem;}.faq-title{font-family:var(--font-display);font-weight:500;font-size:var(--fs-xl);color:var(--ink);margin-bottom:1.5rem;}.faq-item{border-bottom:1px solid var(--border);padding:1.2rem 0;}.faq-q{font-weight:500;font-size:var(--fs-md);color:var(--ink);margin-bottom:.6rem;}.faq-q::before{content:'Q. ';color:var(--gold);}.faq-a{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);}.faq-a::before{content:'A. ';color:var(--gold);font-weight:500;}@media(max-width:640px){.store-card{flex-direction:column;gap:.7rem;}}`;
 
 const GA_SCRIPT = `<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
 <script>
@@ -256,7 +258,8 @@ ${GA_SCRIPT}
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="${DS.fontsUrl}" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/nb.css">
 <script type="application/ld+json">${articleJson}</script>
 <script type="application/ld+json">${itemListJson}</script>
 <script type="application/ld+json">${breadcrumbJson}</script>
@@ -264,25 +267,12 @@ ${GA_SCRIPT}
 <style>${STYLE}</style>
 </head>
 <body>
-<header>
-  <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="../index.html">すべての店舗</a>
-    <a href="index.html" class="active">特集</a>
-    <a href="../journal/index.html">Journal</a>
-    <a href="../about.html">About</a>
-  </nav>
-</header>
-
-<nav aria-label="パンくずリスト">
-  <div class="breadcrumb">
-    <a href="../index.html">NAGOYA BITES</a>
-    <span>›</span>
-    <a href="index.html">特集記事</a>
-    <span>›</span>
-    ${feature.titleText}
-  </div>
-</nav>
+${siteChrome.renderHeader({ depth: 1, active: 'features' })}
+${siteChrome.renderBreadcrumb([
+  { href: '../index.html', label: 'TOP' },
+  { href: 'index.html', label: '特集' },
+  { label: feature.titleText },
+], { depth: 1 })}
 
 <article>
   <div class="art-hero">
@@ -338,10 +328,8 @@ ${feature.related.map(r => `    <a class="related-link" href="${r.href}"${r.prim
   </div>
 </div>
 
-<footer>
-  <p>© 2026 <a href="../index.html">NAGOYA BITES</a> — 名古屋の飲食人による目利きメディア</p>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
-</footer>
+${siteChrome.renderFooter({ depth: 1 })}
+${siteChrome.chromeScript()}
 </body>
 </html>
 `;

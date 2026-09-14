@@ -67,10 +67,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 </script>
 
 <style>a{color:inherit;text-decoration:none}
-.site-header{background:#1A1A18;color:#F5F3EE;padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
 .logo span{color:#C9A84C}
-.nav-back{margin-left:auto;font-size:.8rem;opacity:.7;border:1px solid rgba(255,255,255,.25);padding:5px 12px;border-radius:3px;transition:opacity .2s}
-.nav-back:hover{opacity:1}
 .hero{background:#1A1A18;color:#F5F3EE;padding:60px 20px 50px;text-align:center}
 .hero-label{font-size:var(--fs-xs);letter-spacing:.15em;text-transform:uppercase;color:#C9A84C;margin-bottom:14px}
 h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,5vw,2.6rem);font-weight:400;line-height:1.25;margin-bottom:16px}
@@ -147,10 +144,37 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
 .type-photo-credit{display:block;font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.06em;color:#8b8578;margin-top:.35rem;}</style>
 </head>
 <body>
-<header class="site-header">
-  <a href="../index.html" class="logo">NAGOYA <span>BITES</span></a>
-  <a href="index.html" class="nav-back">← 特集一覧</a>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+<header>
+  <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
+    <a href="../features/index.html" aria-current="page">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
+  </nav>
 </header>
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
+<nav aria-label="パンくずリスト">
+  <div class="breadcrumb">
+    <a href="../index.html">TOP</a>
+    <span>›</span>
+    <a href="../features/index.html">特集</a>
+    <span>›</span>
+    <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    <span>›</span>
+    名古屋 海鮮・魚介おすすめ 2026
+  </div>
+</nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
 <div class="art-hero-image">
   <img src="https://imgfp.hotp.jp/IMGH/88/84/P045598884/P045598884_480.jpg" alt="海鮮・魚介" loading="eager" fetchpriority="high">
@@ -167,20 +191,6 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
     <p class="lead">名古屋は内陸都市という印象があるが、三河湾・知多半島・渥美半島に近く、翌朝には新鮮な魚介類が市内に届く。築地や豊洲ほどの知名度はないが、栄・名駅エリアの海鮮居酒屋と割烹のクオリティは全国水準と遜色ない。業界視点で「本当に魚が美味しい店」10店に絞り込んだ。</p>
 
     <!-- SEO-042:TOP-CTA:START -->
-<style>
-.topcta{--gold:#7a5c10;--gold2:#96720f;max-width:880px;margin:0 auto 2rem;padding:1.1rem 1.5rem 1.3rem;border:1px solid rgba(122,92,16,.22);border-radius:6px;background:rgba(122,92,16,.035);}
-.topcta-head{font-size:.74rem;letter-spacing:.12em;color:var(--gold,#7a5c10);margin-bottom:.15rem;}
-.topcta-sub{font-size:.8rem;color:var(--muted,#6b6b6b);margin-bottom:.85rem;line-height:1.6;}
-.topcta-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;}
-.topcta-item{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;}
-.topcta-name{font-size:.92rem;font-weight:500;min-width:0;}
-.topcta-actions{display:flex;gap:.5rem;flex-shrink:0;}
-.topcta .store-link{display:inline-flex;align-items:center;gap:.35rem;background:var(--gold,#7a5c10);color:#fff;border:1px solid var(--gold,#7a5c10);padding:.55rem 1.1rem;border-radius:4px;font-size:.78rem;font-weight:500;letter-spacing:.04em;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);transition:background .15s,transform .1s;}
-.topcta .store-link:hover{background:var(--gold2,#96720f);transform:translateY(-1px);}
-.topcta .store-link[href*="hotpepper"]{background:#fff;color:var(--gold,#7a5c10);border:1px solid var(--gold,#7a5c10);box-shadow:none;}
-.topcta .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
-@media(max-width:640px){.topcta{padding:1rem 1.1rem 1.15rem;}.topcta-item{flex-direction:column;align-items:flex-start;gap:.45rem;}.topcta-actions{width:100%;}}
-</style>
 <aside class="topcta" aria-label="この特集の注目店">
   <div class="topcta-head">EDITORS' PICK</div>
   <div class="topcta-sub">本文を読む前に動きたい方へ。編集部が上位に挙げた3軒の詳細と予約はこちらから。</div>
@@ -228,32 +238,32 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
     <h2>業態別・選び方ガイド</h2>
     <div class="type-grid">
       <div class="type-card">
-        <a class="type-photo" href="../stores/J003737452.html"><img src="https://imgfp.hotp.jp/IMGH/22/93/P044022293/P044022293_480.jpg" alt="海鮮居酒屋の掲載店 サカナのハチベエ 金山店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: サカナのハチベエ 金山店</span></a>
+        <a class="type-photo" href="../stores/J003737452.html" onclick="trackEvent('feature_store_click',{store:'J003737452',feature:'nagoya-seafood'})"><img src="https://imgfp.hotp.jp/IMGH/22/93/P044022293/P044022293_480.jpg" alt="海鮮居酒屋の掲載店 サカナのハチベエ 金山店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: サカナのハチベエ 金山店</span></a>
         <div class="type-name">海鮮居酒屋</div>
         <div class="type-desc">海鮮をおつまみに飲む。日替わり刺身が主力。2,000〜3,500円。</div>
       </div>
       <div class="type-card">
-        <a class="type-photo" href="../stores/J004445386.html"><img src="https://imgfp.hotp.jp/IMGH/49/96/P042254996/P042254996_480.jpg" alt="くずし割烹の掲載店 大衆割烹 八べゑ 錦３丁目店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 大衆割烹 八べゑ 錦３丁目店</span></a>
+        <a class="type-photo" href="../stores/J004445386.html" onclick="trackEvent('feature_store_click',{store:'J004445386',feature:'nagoya-seafood'})"><img src="https://imgfp.hotp.jp/IMGH/49/96/P042254996/P042254996_480.jpg" alt="くずし割烹の掲載店 大衆割烹 八べゑ 錦３丁目店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 大衆割烹 八べゑ 錦３丁目店</span></a>
         <div class="type-name">くずし割烹</div>
         <div class="type-desc">割烹技術をカジュアル価格帯で。刺身・揚げ物・〆物の流れ。3,000〜5,000円。</div>
       </div>
       <div class="type-card">
-        <a class="type-photo" href="../stores/J004067963.html"><img src="https://imgfp.hotp.jp/IMGH/81/74/P048218174/P048218174_480.jpg" alt="本格割烹・日本料理の掲載店 割烹嘉とう" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 割烹嘉とう</span></a>
+        <a class="type-photo" href="../stores/J004067963.html" onclick="trackEvent('feature_store_click',{store:'J004067963',feature:'nagoya-seafood'})"><img src="https://imgfp.hotp.jp/IMGH/81/74/P048218174/P048218174_480.jpg" alt="本格割烹・日本料理の掲載店 割烹嘉とう" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 割烹嘉とう</span></a>
         <div class="type-name">本格割烹・日本料理</div>
         <div class="type-desc">格式ある空間で一品仕立て。接待・記念日向け。5,000円以上。</div>
       </div>
       <div class="type-card">
-        <a class="type-photo" href="../stores/J001249360.html"><img src="https://imgfp.hotp.jp/IMGH/39/08/P045353908/P045353908.jpg" alt="藁焼き・炙り系の掲載店 柳橋市場の藁焼きの店 魚柳 うおやなぎ 名古屋駅店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 柳橋市場の藁焼きの店 魚柳 うおやなぎ 名古屋駅店</span></a>
+        <a class="type-photo" href="../stores/J001249360.html" onclick="trackEvent('feature_store_click',{store:'J001249360',feature:'nagoya-seafood'})"><img src="https://imgfp.hotp.jp/IMGH/39/08/P045353908/P045353908.jpg" alt="藁焼き・炙り系の掲載店 柳橋市場の藁焼きの店 魚柳 うおやなぎ 名古屋駅店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 柳橋市場の藁焼きの店 魚柳 うおやなぎ 名古屋駅店</span></a>
         <div class="type-name">藁焼き・炙り系</div>
         <div class="type-desc">炭火・藁の高温調理で海鮮を豪快に。煙とパフォーマンスが醍醐味。3,000〜4,000円。</div>
       </div>
       <div class="type-card">
-        <a class="type-photo" href="../stores/J004470380.html"><img src="https://imgfp.hotp.jp/IMGH/66/45/P049426645/P049426645_480.jpg" alt="鮨・寿司業態の掲載店 寿司処 昴 栄店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 寿司処 昴 栄店</span></a>
+        <a class="type-photo" href="../stores/J004470380.html" onclick="trackEvent('feature_store_click',{store:'J004470380',feature:'nagoya-seafood'})"><img src="https://imgfp.hotp.jp/IMGH/66/45/P049426645/P049426645_480.jpg" alt="鮨・寿司業態の掲載店 寿司処 昴 栄店" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 寿司処 昴 栄店</span></a>
         <div class="type-name">鮨・寿司業態</div>
         <div class="type-desc">カウンター握り〜食べ放題まで多様。業態により価格帯が大きく違う。</div>
       </div>
       <div class="type-card">
-        <a class="type-photo" href="../stores/J001179548.html"><img src="https://imgfp.hotp.jp/IMGH/22/98/P046662298/P046662298_480.jpg" alt="産地直送専門の掲載店 産直鮮魚の海鮮酒場をかし" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 産直鮮魚の海鮮酒場をかし</span></a>
+        <a class="type-photo" href="../stores/J001179548.html" onclick="trackEvent('feature_store_click',{store:'J001179548',feature:'nagoya-seafood'})"><img src="https://imgfp.hotp.jp/IMGH/22/98/P046662298/P046662298_480.jpg" alt="産地直送専門の掲載店 産直鮮魚の海鮮酒場をかし" loading="lazy" decoding="async"><span class="type-photo-credit">写真: 産直鮮魚の海鮮酒場をかし</span></a>
         <div class="type-name">産地直送専門</div>
         <div class="type-desc">特定産地（五島・三陸など）を前面に出した業態。希少性が売り。</div>
       </div>
@@ -276,7 +286,7 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
     <div class="store-list">
 
       <div class="store-card">
-        <a href="../stores/J003560374.html" onclick="trackEvent('feature_store_click',{store_id:'J003560374',feature:'nagoya-seafood',position:1})">
+        <a href="../stores/J003560374.html" onclick="trackEvent('feature_store_click',{store:'J003560374',feature:'nagoya-seafood'})">
           <img class="store-card-photo" src="https://imgfp.hotp.jp/IMGH/88/84/P045598884/P045598884_480.jpg" alt="店舗写真" loading="lazy" decoding="async">
           <div class="store-rank">01 / 10 — EDITOR'S TOP PICK</div>
           <h3 class="store-name">サカナのハチベエ 矢場町店</h3>
@@ -293,7 +303,7 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
       </div>
 
       <div class="store-card">
-        <a href="../stores/J004445386.html" onclick="trackEvent('feature_store_click',{store_id:'J004445386',feature:'nagoya-seafood',position:2})">
+        <a href="../stores/J004445386.html" onclick="trackEvent('feature_store_click',{store:'J004445386',feature:'nagoya-seafood'})">
           <img class="store-card-photo" src="https://imgfp.hotp.jp/IMGH/49/96/P042254996/P042254996_480.jpg" alt="店舗写真" loading="lazy" decoding="async">
           <div class="store-rank">02 / 10 — EDITOR'S TOP PICK</div>
           <h3 class="store-name">大衆割烹 八べゑ 錦3丁目店</h3>
@@ -310,7 +320,7 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
       </div>
 
       <div class="store-card">
-        <a href="../stores/J003649458.html" onclick="trackEvent('feature_store_click',{store_id:'J003649458',feature:'nagoya-seafood',position:3})">
+        <a href="../stores/J003649458.html" onclick="trackEvent('feature_store_click',{store:'J003649458',feature:'nagoya-seafood'})">
           <img class="store-card-photo" src="https://imgfp.hotp.jp/IMGH/93/41/P039939341/P039939341_480.jpg" alt="店舗写真" loading="lazy" decoding="async">
           <div class="store-rank">03 / 10</div>
           <h3 class="store-name">鮨食人 五と二 栄店</h3>
@@ -327,7 +337,7 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
       </div>
 
       <div class="store-card">
-        <a href="../stores/J004537140.html" onclick="trackEvent('feature_store_click',{store_id:'J004537140',feature:'nagoya-seafood',position:4})">
+        <a href="../stores/J004537140.html" onclick="trackEvent('feature_store_click',{store:'J004537140',feature:'nagoya-seafood'})">
           <img class="store-card-photo" src="https://imgfp.hotp.jp/IMGH/73/65/P049627365/P049627365_480.jpg" alt="店舗写真" loading="lazy" decoding="async">
           <div class="store-rank">04 / 10</div>
           <h3 class="store-name">福キタル 名古屋駅店</h3>
@@ -344,7 +354,7 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
       </div>
 
       <div class="store-card">
-        <a href="../stores/J001249360.html" onclick="trackEvent('feature_store_click',{store_id:'J001249360',feature:'nagoya-seafood',position:5})">
+        <a href="../stores/J001249360.html" onclick="trackEvent('feature_store_click',{store:'J001249360',feature:'nagoya-seafood'})">
           <img class="store-card-photo" src="https://imgfp.hotp.jp/IMGH/39/08/P045353908/P045353908.jpg" alt="店舗写真" loading="lazy" decoding="async">
           <div class="store-rank">05 / 10</div>
           <h3 class="store-name">柳橋市場の藁焼きの店 魚柳 うおやなぎ 名古屋駅店</h3>
@@ -361,7 +371,7 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
       </div>
 
       <div class="store-card">
-        <a href="../stores/J004026344.html" onclick="trackEvent('feature_store_click',{store_id:'J004026344',feature:'nagoya-seafood',position:6})">
+        <a href="../stores/J004026344.html" onclick="trackEvent('feature_store_click',{store:'J004026344',feature:'nagoya-seafood'})">
           <img class="store-card-photo" src="https://imgfp.hotp.jp/IMGH/76/19/P047217619/P047217619_480.jpg" alt="店舗写真" loading="lazy" decoding="async">
           <div class="store-rank">06 / 10</div>
           <h3 class="store-name">信貴や 名古屋駅本店</h3>
@@ -378,7 +388,7 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
       </div>
 
       <div class="store-card">
-        <a href="../stores/J001143693.html" onclick="trackEvent('feature_store_click',{store_id:'J001143693',feature:'nagoya-seafood',position:7})">
+        <a href="../stores/J001143693.html" onclick="trackEvent('feature_store_click',{store:'J001143693',feature:'nagoya-seafood'})">
           <img class="store-card-photo" src="https://imgfp.hotp.jp/IMGH/44/19/P045784419/P045784419_480.jpg" alt="店舗写真" loading="lazy" decoding="async">
           <div class="store-rank">07 / 10</div>
           <h3 class="store-name">くずし割烹 肴屋八兵衛 金山店</h3>
@@ -395,7 +405,7 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
       </div>
 
       <div class="store-card">
-        <a href="../stores/J000391341.html" onclick="trackEvent('feature_store_click',{store_id:'J000391341',feature:'nagoya-seafood',position:8})">
+        <a href="../stores/J000391341.html" onclick="trackEvent('feature_store_click',{store:'J000391341',feature:'nagoya-seafood'})">
           <img class="store-card-photo" src="https://imgfp.hotp.jp/IMGH/85/61/P035428561/P035428561_480.jpg" alt="店舗写真" loading="lazy" decoding="async">
           <div class="store-rank">08 / 10</div>
           <h3 class="store-name">海の蔵 五島</h3>
@@ -412,7 +422,7 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
       </div>
 
       <div class="store-card">
-        <a href="../stores/J000748706.html" onclick="trackEvent('feature_store_click',{store_id:'J000748706',feature:'nagoya-seafood',position:9})">
+        <a href="../stores/J000748706.html" onclick="trackEvent('feature_store_click',{store:'J000748706',feature:'nagoya-seafood'})">
           <img class="store-card-photo" src="https://imgfp.hotp.jp/IMGH/33/40/P044723340/P044723340_480.jpg" alt="店舗写真" loading="lazy" decoding="async">
           <div class="store-rank">09 / 10</div>
           <h3 class="store-name">くずし割烹 和dining 一昇 錦栄本店</h3>
@@ -428,7 +438,7 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
       </div>
 
       <div class="store-card">
-        <a href="../stores/J000796591.html" onclick="trackEvent('feature_store_click',{store_id:'J000796591',feature:'nagoya-seafood',position:10})">
+        <a href="../stores/J000796591.html" onclick="trackEvent('feature_store_click',{store:'J000796591',feature:'nagoya-seafood'})">
           <img class="store-card-photo" src="https://imgfp.hotp.jp/IMGH/94/31/P045729431/P045729431_480.jpg" alt="店舗写真" loading="lazy" decoding="async">
           <div class="store-rank">10 / 10</div>
           <h3 class="store-name">日本酒 鮨あしべ 錦</h3>
@@ -516,11 +526,11 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
 <div class="related">
   <p class="related-title">関連する特集記事</p>
   <div class="related-links">
-    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;">名古屋グルメ完全ガイド</a>
-    <a class="related-link" href="nagoya-sushi-guide.html">鮨8選</a>
-    <a class="related-link" href="nagoya-kaiseki-guide.html">懐石・会席10選</a>
-    <a class="related-link" href="nagoya-unaju.html">うなぎ・ひつまぶし10選</a>
-    <a class="related-link" href="nagoya-izakaya.html">居酒屋10選</a>
+    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;" onclick="trackEvent('internal_link_click',{feature:'nagoya-seafood',link_url:'nagoya-gourmet-guide.html',block:'feature_related'})">名古屋グルメ完全ガイド</a>
+    <a class="related-link" href="nagoya-sushi-guide.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-seafood',link_url:'nagoya-sushi-guide.html',block:'feature_related'})">鮨8選</a>
+    <a class="related-link" href="nagoya-kaiseki-guide.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-seafood',link_url:'nagoya-kaiseki-guide.html',block:'feature_related'})">懐石・会席10選</a>
+    <a class="related-link" href="nagoya-unaju.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-seafood',link_url:'nagoya-unaju.html',block:'feature_related'})">うなぎ・ひつまぶし10選</a>
+    <a class="related-link" href="nagoya-izakaya.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-seafood',link_url:'nagoya-izakaya.html',block:'feature_related'})">居酒屋10選</a>
   </div>
   <p class="related-journal" style="margin-top:1.2rem;font-size:.82rem;color:rgba(28,28,26,.62);line-height:1.7;">
     名古屋の最新グルメは <a class="related-link" href="../journal/index.html">デイリージャーナル</a> で毎朝更新中。
@@ -534,11 +544,43 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
   </p>
 </div>
 
-<footer>
-  <div style="margin-bottom:6px">NAGOYA BITES — 名古屋グルメの業界視点メディア</div>
-  <div id="fc-year"></div>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
 
 <style>
 .faq-section{max-width:880px;margin:3rem auto 2rem;padding:0 1.5rem;font-family:inherit;}
@@ -580,7 +622,38 @@ p{font-size:.93rem;margin-bottom:14px;color:#3A3A38}
     </div>
   </div>
 </section>
-
-<script>(function(){var fc=document.getElementById('fc-year');if(fc)fc.textContent='© '+new Date().getFullYear()+' All Rights Reserved';})();</script>
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
+<script class="nb-engagement-tracking">
+(function(){
+  var fired={},THRESH=[25,50,75,100];
+  function check(){
+    var doc=document.documentElement;
+    var top=window.pageYOffset||doc.scrollTop;
+    var max=(doc.scrollHeight-doc.clientHeight)||1;
+    var pct=Math.min(100,Math.round((top/max)*100));
+    THRESH.forEach(function(t){if(pct>=t&&!fired[t]){fired[t]=true;try{trackEvent('scroll_depth',{percent:t});}catch(err){}}});
+  }
+  var timer=null;
+  window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
+  check();
+})();
+</script>
 </body>
 </html>

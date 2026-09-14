@@ -69,6 +69,18 @@ const HTML_TEMPLATE = path.join(ROOT, 'journal', '_template.html');
 const MD_TEMPLATE = path.join(ROOT, 'docs', 'daily-posts', '_template.md');
 const DRAFTS_DIR = path.join(ROOT, 'journal', 'drafts');
 const POSTS_DIR = path.join(ROOT, 'docs', 'daily-posts');
+const SNS_DRAFT_POLICY_PATH = path.join(ROOT, 'data', 'journal_sns_draft_policy.json');
+
+// SNS原稿(docs/daily-posts/*.md)の自動生成は data/journal_sns_draft_policy.json が唯一の情報源。
+// ファイルが無い/壊れている場合は従来どおり生成する(フェイルセーフのデフォルトはON)。
+function shouldGenerateSnsDraft() {
+  try {
+    const policy = JSON.parse(fs.readFileSync(SNS_DRAFT_POLICY_PATH, 'utf8'));
+    return policy.generate_sns_draft !== false;
+  } catch (e) {
+    return true;
+  }
+}
 
 function esc(s) { return String(s || '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
 // onclick="trackEvent(...)" 内の JS 文字列リテラル用エスケープ（index.html の ctaEsc と同じ簡易方式）
@@ -847,8 +859,16 @@ async function main() {
   const htmlPath = path.join(DRAFTS_DIR, input.slug + '.html');
   const mdPath = path.join(POSTS_DIR, input.date + '.md');
   fs.writeFileSync(htmlPath, renderHtml(input));
-  fs.writeFileSync(mdPath, renderMd(input));
-  console.log(`✅ Draft 生成:\n  - ${path.relative(ROOT, htmlPath)}\n  - ${path.relative(ROOT, mdPath)}`);
+
+  const generateSns = shouldGenerateSnsDraft();
+  if (generateSns) {
+    fs.writeFileSync(mdPath, renderMd(input));
+  }
+
+  console.log(`✅ Draft 生成:\n  - ${path.relative(ROOT, htmlPath)}` +
+    (generateSns
+      ? `\n  - ${path.relative(ROOT, mdPath)}`
+      : `\n  - (SNS原稿は data/journal_sns_draft_policy.json の設定により生成をスキップ)`));
   if (input.hero_image_url) {
     console.log(`  🖼  ヒーロー画像: ${input.hero_image_url}`);
   }

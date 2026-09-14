@@ -61,7 +61,7 @@ const SCENE_VOCAB = [
   { kw: 'デート',   aliases: ['デート'],                         feature: 'features/date.html' },
   { kw: '女子会',   aliases: ['女子会'],                         feature: 'features/girls-party.html' },
   { kw: '誕生日',   aliases: ['誕生日', '記念日'],               feature: 'features/birthday.html' },
-  { kw: '一人飲み', aliases: ['一人飲み', 'カウンター', '立ち飲み'], feature: 'features/nagoya-solo-dining.html' },
+  { kw: '一人飲み', aliases: ['一人飲み', '1人飲み', '1人のみ', '一人のみ', 'カウンター', '立ち飲み'], feature: 'features/nagoya-solo-dining.html' },
   { kw: '顔合わせ', aliases: ['顔合わせ', '結納'],               feature: 'features/nagoya-kaoawase-washoku.html' },
   { kw: '接待ランチ', aliases: ['接待ランチ', '和食ランチ'],      feature: 'features/nagoya-settai-lunch.html' },
   { kw: '予約困難', aliases: ['予約困難', '予約が取れない'],      feature: 'features/hard-to-book.html' },
@@ -80,7 +80,20 @@ const AREA_VOCAB = [
   { kw: '大須',   aliases: ['大須'],                   feature: 'features/osu-food-walk.html',
     match: ['大須'] },
   { kw: '覚王山', aliases: ['覚王山', '本山', '藤が丘'], feature: 'features/nagoya-kakuozan.html',
-    match: ['本山・覚王山・藤が丘', '覚王山'] }
+    match: ['本山・覚王山・藤が丘', '覚王山'] },
+  // SEO-094: 以下5エリアには専用特集記事が無いため、data/area_genre_pages_policy.json の
+  // エリアハブ（stores/area/<slug>/index.html）を裏付け先にする。タイトルにエリア名を含む
+  // ため featureTitle()+hitOf() の検証が既存の特集と同じ仕組みで通る（コード変更不要）。
+  { kw: '金山',   aliases: ['金山', '熱田'],           feature: 'stores/area/kanayama/index.html',
+    match: ['金山・神宮前・熱田区', '金山', '熱田'] },
+  { kw: '千種・今池', aliases: ['千種', '今池', '大曽根'], feature: 'stores/area/chikusa-imaike/index.html',
+    match: ['大曽根･千種･今池･池下･守山区', '名古屋市千種区', '名古屋市千種区覚王山', '名古屋市東区', '東区', '名古屋市東区筒井'] },
+  { kw: '鶴舞・八事', aliases: ['鶴舞', '八事', '御器所'], feature: 'stores/area/tsurumai-yagoto/index.html',
+    match: ['鶴舞・八事・御器所', '鶴舞', '名古屋市昭和区', '昭和区'] },
+  { kw: '緑区・天白区', aliases: ['緑区', '天白区', '瑞穂区', '南区'], feature: 'stores/area/midori-tempaku/index.html',
+    match: ['緑区・南区・天白区・瑞穂区', '名古屋市南区'] },
+  { kw: '中川区・港区', aliases: ['中川区', '港区'],   feature: 'stores/area/nakagawa-minato/index.html',
+    match: ['中川区・港区', '名古屋（中川区）', '中川区'] }
 ];
 
 // ジャンル語 → 実在するジャンル特集

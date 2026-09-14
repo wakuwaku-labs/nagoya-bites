@@ -54,8 +54,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   ]
 }
 </script>
-<style>nav a:hover,nav a.active{color:var(--text);}
-.hero{padding:3rem 1.5rem 2rem;max-width:900px;margin:0 auto;}
+<style>.hero{padding:3rem 1.5rem 2rem;max-width:900px;margin:0 auto;}
 .hero-eyebrow{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
 .hero-title{font-family:var(--font-display);font-weight:400;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.2;color:var(--white);margin-bottom:.8rem;}
 .hero-title em{font-style:italic;color:var(--gold);}
@@ -95,8 +94,6 @@ p{font-size:var(--fs-md);line-height:2;color:var(--muted);margin-bottom:1.1rem;}
 .faq-a{font-size:var(--fs-md);line-height:1.9;color:var(--muted);}
 .divider{border:none;border-top:1px solid var(--border);margin:2rem 0;}
 footer p{font-size:var(--fs-md);color:var(--dim);letter-spacing:.08em;}
-footer a{color:var(--dim);text-decoration:none;}
-footer a:hover{color:var(--gold);}
 @media(max-width:680px){.shop-grid{grid-template-columns:1fr;}.hero-title{font-size:1.6rem;}.hero{padding:2rem 1rem 1.5rem;}.content{padding:0 1rem 3rem;}}
 .art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}
 .art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}
@@ -122,20 +119,35 @@ footer a:hover{color:var(--gold);}
 </head>
 
 <body>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
-  <a href="https://nagoya-bites.com/" class="logo">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="https://nagoya-bites.com/">店舗を探す</a>
-    <a href="https://nagoya-bites.com/features/" class="active">特集</a>
-    <a href="https://nagoya-bites.com/journal/">Journal</a>
+  <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
+    <a href="../features/index.html" aria-current="page">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
-
-<div class="breadcrumb">
-  <a href="https://nagoya-bites.com/">TOP</a><span>›</span>
-  <a href="https://nagoya-bites.com/features/">特集</a><span>›</span>
-  名古屋のモーニング・喫茶おすすめ10選【2026年版】
-</div>
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
+<nav aria-label="パンくずリスト">
+  <div class="breadcrumb">
+    <a href="../index.html">TOP</a>
+    <span>›</span>
+    <a href="../features/index.html">特集</a>
+    <span>›</span>
+    名古屋のモーニング・喫茶おすすめ10選【2026年版】
+  </div>
+</nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
 <div class="art-hero-image">
   <img src="https://imgfp.hotp.jp/IMGH/51/55/P048375155/P048375155_480.jpg" alt="名古屋のモーニング・喫茶" loading="eager" fetchpriority="high">
@@ -166,8 +178,8 @@ footer a:hover{color:var(--gold);}
         <span class="tag">3000〜5000円</span>
         <span class="tag">★4.9</span>
       </div>
-          <a href="../stores/J004445342.html" class="shop-detail-link">詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ004445342/" class="shop-reserve-link" target="_blank" rel="noopener">予約・空席確認</a>
+          <a href="../stores/J004445342.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'個室×夜カフェ  FYN フィン 栄店',feature:'nagoya-morning'})"> 詳細ページを見る</a>
+          <a href="https://www.hotpepper.jp/strJ004445342/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004445342',feature:'nagoya-morning',target:'hotpepper'})">予約・空席確認</a>
     </div>
     <div class="shop-card">
       <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/81/14/P050668114/P050668114.jpg" alt="malibu coffee マリブコーヒー" loading="lazy" decoding="async">
@@ -180,8 +192,8 @@ footer a:hover{color:var(--gold);}
         <span class="tag">早朝営業</span>
         <span class="tag">★4.3</span>
       </div>
-          <a href="../stores/J001193685.html" class="shop-detail-link">詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ001193685/" class="shop-reserve-link" target="_blank" rel="noopener">予約・空席確認</a>
+          <a href="../stores/J001193685.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'malibu coffee マリブコーヒー',feature:'nagoya-morning'})"> 詳細ページを見る</a>
+          <a href="https://www.hotpepper.jp/strJ001193685/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001193685',feature:'nagoya-morning',target:'hotpepper'})">予約・空席確認</a>
     </div>
     <div class="shop-card">
       <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/13/27/P040801327/P040801327_480.jpg" alt="キッサカバ PRONTO プロント 名古屋駅店" loading="lazy" decoding="async">
@@ -194,8 +206,8 @@ footer a:hover{color:var(--gold);}
         <span class="tag">2000〜3000円</span>
         
       </div>
-          <a href="../stores/J003433604.html" class="shop-detail-link">詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ003433604/" class="shop-reserve-link" target="_blank" rel="noopener">予約・空席確認</a>
+          <a href="../stores/J003433604.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'キッサカバ PRONTO プロント 名古屋駅店',feature:'nagoya-morning'})"> 詳細ページを見る</a>
+          <a href="https://www.hotpepper.jp/strJ003433604/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003433604',feature:'nagoya-morning',target:'hotpepper'})">予約・空席確認</a>
     </div>
     <div class="shop-card">
       <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/14/31/P047401431/P047401431_480.jpg" alt="ふわとろオムライスとチーズカフェ たまごのきもち。名駅店" loading="lazy" decoding="async">
@@ -208,8 +220,8 @@ footer a:hover{color:var(--gold);}
         <span class="tag">2000〜3000円</span>
         
       </div>
-          <a href="../stores/J001275381.html" class="shop-detail-link">詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ001275381/" class="shop-reserve-link" target="_blank" rel="noopener">予約・空席確認</a>
+          <a href="../stores/J001275381.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'ふわとろオムライスとチーズカフェ たまごのきもち。名駅店',feature:'nagoya-morning'})"> 詳細ページを見る</a>
+          <a href="https://www.hotpepper.jp/strJ001275381/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001275381',feature:'nagoya-morning',target:'hotpepper'})">予約・空席確認</a>
     </div>
     <div class="shop-card">
       <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/21/38/P048912138/P048912138_480.jpg" alt="日々の果物" loading="lazy" decoding="async">
@@ -221,8 +233,8 @@ footer a:hover{color:var(--gold);}
         <span class="tag">カフェ</span>
         
       </div>
-          <a href="../stores/J004470559.html" class="shop-detail-link">詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ004470559/" class="shop-reserve-link" target="_blank" rel="noopener">予約・空席確認</a>
+          <a href="../stores/J004470559.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'日々の果物',feature:'nagoya-morning'})"> 詳細ページを見る</a>
+          <a href="https://www.hotpepper.jp/strJ004470559/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004470559',feature:'nagoya-morning',target:'hotpepper'})">予約・空席確認</a>
     </div>
     <div class="shop-card">
       <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/60/96/P048886096/P048886096_480.jpg" alt="cafe 温 名古屋" loading="lazy" decoding="async">
@@ -234,8 +246,8 @@ footer a:hover{color:var(--gold);}
         <span class="tag">カフェ</span>
         
       </div>
-          <a href="../stores/J004469824.html" class="shop-detail-link">詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ004469824/" class="shop-reserve-link" target="_blank" rel="noopener">予約・空席確認</a>
+          <a href="../stores/J004469824.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'cafe 温 名古屋',feature:'nagoya-morning'})"> 詳細ページを見る</a>
+          <a href="https://www.hotpepper.jp/strJ004469824/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004469824',feature:'nagoya-morning',target:'hotpepper'})">予約・空席確認</a>
     </div>
     <div class="shop-card">
       <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/56/38/P045255638/P045255638_480.jpg" alt="NINE CAFE 名駅店 ナインカフェ" loading="lazy" decoding="async">
@@ -247,8 +259,8 @@ footer a:hover{color:var(--gold);}
         <span class="tag">バー</span>
         
       </div>
-          <a href="../stores/J003872957.html" class="shop-detail-link">詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ003872957/" class="shop-reserve-link" target="_blank" rel="noopener">予約・空席確認</a>
+          <a href="../stores/J003872957.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'NINE CAFE 名駅店 ナインカフェ',feature:'nagoya-morning'})"> 詳細ページを見る</a>
+          <a href="https://www.hotpepper.jp/strJ003872957/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003872957',feature:'nagoya-morning',target:'hotpepper'})">予約・空席確認</a>
     </div>
     <div class="shop-card">
       <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/23/55/P049252355/P049252355_480.jpg" alt="Panel Cafe パネルカフエ 名古屋駅前店" loading="lazy" decoding="async">
@@ -260,8 +272,8 @@ footer a:hover{color:var(--gold);}
         <span class="tag">カフェ</span>
         
       </div>
-          <a href="../stores/J004537080.html" class="shop-detail-link">詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ004537080/" class="shop-reserve-link" target="_blank" rel="noopener">予約・空席確認</a>
+          <a href="../stores/J004537080.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'Panel Cafe パネルカフエ 名古屋駅前店',feature:'nagoya-morning'})"> 詳細ページを見る</a>
+          <a href="https://www.hotpepper.jp/strJ004537080/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004537080',feature:'nagoya-morning',target:'hotpepper'})">予約・空席確認</a>
     </div>
     <div class="shop-card">
       <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/67/84/P036226784/P036226784_480.jpg" alt="ボドゲ&amp;カフェバー Gnade von KAGURA" loading="lazy" decoding="async">
@@ -273,8 +285,8 @@ footer a:hover{color:var(--gold);}
         <span class="tag">バー</span>
         
       </div>
-          <a href="../stores/J001249178.html" class="shop-detail-link">詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ001249178/" class="shop-reserve-link" target="_blank" rel="noopener">予約・空席確認</a>
+          <a href="../stores/J001249178.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'ボドゲ&amp;カフェバー Gnade von KAGURA',feature:'nagoya-morning'})"> 詳細ページを見る</a>
+          <a href="https://www.hotpepper.jp/strJ001249178/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001249178',feature:'nagoya-morning',target:'hotpepper'})">予約・空席確認</a>
     </div>
     <div class="shop-card">
       <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/52/62/P047615262/P047615262_480.jpg" alt="タテガミセカンドCafe 名駅3丁目店" loading="lazy" decoding="async">
@@ -286,8 +298,8 @@ footer a:hover{color:var(--gold);}
         <span class="tag">カフェ</span>
         
       </div>
-          <a href="../stores/J004090798.html" class="shop-detail-link">詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ004090798/" class="shop-reserve-link" target="_blank" rel="noopener">予約・空席確認</a>
+          <a href="../stores/J004090798.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'タテガミセカンドCafe 名駅3丁目店',feature:'nagoya-morning'})"> 詳細ページを見る</a>
+          <a href="https://www.hotpepper.jp/strJ004090798/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004090798',feature:'nagoya-morning',target:'hotpepper'})">予約・空席確認</a>
     </div>
   </div>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"名古屋のモーニング・喫茶おすすめ10選【2026年版】","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"name":"個室×夜カフェ  FYN フィン 栄店"},{"@type":"ListItem","position":2,"name":"malibu coffee マリブコーヒー"},{"@type":"ListItem","position":3,"name":"キッサカバ PRONTO プロント 名古屋駅店"},{"@type":"ListItem","position":4,"name":"ふわとろオムライスとチーズカフェ たまごのきもち。名駅店"},{"@type":"ListItem","position":5,"name":"日々の果物"},{"@type":"ListItem","position":6,"name":"cafe 温 名古屋"},{"@type":"ListItem","position":7,"name":"NINE CAFE 名駅店 ナインカフェ"},{"@type":"ListItem","position":8,"name":"Panel Cafe パネルカフエ 名古屋駅前店"},{"@type":"ListItem","position":9,"name":"ボドゲ&カフェバー Gnade von KAGURA"},{"@type":"ListItem","position":10,"name":"タテガミセカンドCafe 名駅3丁目店"}]}</script>
@@ -328,10 +340,10 @@ footer a:hover{color:var(--gold);}
 <div class="related">
   <p class="related-title">関連する特集記事</p>
   <div class="related-links">
-    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;">名古屋グルメ完全ガイド</a>
-    <a class="related-link" href="nagoya-cafe.html">カフェ10選</a>
-    <a class="related-link" href="nagoya-sweets.html">スイーツ10選</a>
-    <a class="related-link" href="nagoya-kakuozan.html">覚王山グルメ10選</a>
+    <a class="related-link" href="nagoya-gourmet-guide.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;" onclick="trackEvent('internal_link_click',{feature:'nagoya-morning',link_url:'nagoya-gourmet-guide.html',block:'feature_related'})">名古屋グルメ完全ガイド</a>
+    <a class="related-link" href="nagoya-cafe.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-morning',link_url:'nagoya-cafe.html',block:'feature_related'})">カフェ10選</a>
+    <a class="related-link" href="nagoya-sweets.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-morning',link_url:'nagoya-sweets.html',block:'feature_related'})">スイーツ10選</a>
+    <a class="related-link" href="nagoya-kakuozan.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-morning',link_url:'nagoya-kakuozan.html',block:'feature_related'})">覚王山グルメ10選</a>
   </div>
   <p class="related-journal" style="margin-top:1.2rem;font-size:.82rem;color:rgba(28,28,26,.62);line-height:1.7;">
     名古屋の最新グルメは <a class="related-link" href="../journal/index.html">デイリージャーナル</a> で毎朝更新中。
@@ -341,10 +353,75 @@ footer a:hover{color:var(--gold);}
   </p>
 </div>
 
-<footer>
-  <p><a href="https://nagoya-bites.com/">NAGOYA BITES</a> — 名古屋の飲食業界人が本当に通う店、1100件以上。</p>
-  <p style="margin-top:.5rem;"><a href="https://nagoya-bites.com/features/editorial-policy.html">編集方針</a> ／ <a href="https://nagoya-bites.com/features/no-fake-reviews.html">フェイクレビューゼロ宣言</a> ／ <a href="https://nagoya-bites.com/features/review-trust.html">口コミ信頼度の読み方</a> ／ <a href="https://nagoya-bites.com/features/integrity-method.html">口コミ信頼度の作り方</a></p>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
+<script class="nb-engagement-tracking">
+(function(){
+  var fired={},THRESH=[25,50,75,100];
+  function check(){
+    var doc=document.documentElement;
+    var top=window.pageYOffset||doc.scrollTop;
+    var max=(doc.scrollHeight-doc.clientHeight)||1;
+    var pct=Math.min(100,Math.round((top/max)*100));
+    THRESH.forEach(function(t){if(pct>=t&&!fired[t]){fired[t]=true;try{trackEvent('scroll_depth',{percent:t});}catch(err){}}});
+  }
+  var timer=null;
+  window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
+  check();
+})();
+</script>
 </body>
 </html>

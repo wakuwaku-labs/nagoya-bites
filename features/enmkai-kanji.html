@@ -90,12 +90,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}
 .related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}
 .related-link:hover{background:rgba(122,92,16,.08);}
-footer a{color:rgba(201,169,110,.7);text-decoration:none;}
-@media(max-width:640px){
-.store-card{flex-direction:column;gap:.8rem;}
-.store-num{font-size:1.6rem;}
-nav{display:none;}
-}
+@media(max-width:640px){.store-card{flex-direction:column;gap:.8rem;}.store-num{font-size:1.6rem;}}
 .store-photo{flex-shrink:0;width:160px;height:120px;border-radius:4px;overflow:hidden;background:var(--bg2);}
 .store-photo img{width:100%;height:100%;object-fit:cover;}
 @media(max-width:640px){.store-photo{width:100%;height:180px;}}
@@ -107,28 +102,39 @@ nav{display:none;}
 .store-link::after{content:"→";margin-left:.15rem;font-weight:400;}
 .store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}
 .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
-/*ROSTER_BADGE_CSS*/.store-new,.shop-new{display:inline-block;margin-left:.5rem;font-size:var(--fs-xs);font-weight:700;letter-spacing:.03em;color:#fff;background:#b08d2c;padding:.1rem .45rem;border-radius:3px;vertical-align:middle;white-space:nowrap;}</style>
+/*ROSTER_BADGE_CSS*/
+</style>
 </head>
 <body>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="../index.html">すべての店舗</a>
-    <a href="banquet.html">宴会特集</a>
-    <a href="settai-guide.html">接待マニュアル</a>
-    <a href="../about.html">About</a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
+    <a href="../features/index.html" aria-current="page">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
-
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
 <nav aria-label="パンくずリスト">
   <div class="breadcrumb">
-    <a href="../index.html">NAGOYA BITES</a>
+    <a href="../index.html">TOP</a>
     <span>›</span>
-    <a href="index.html">特集記事</a>
+    <a href="../features/index.html">特集</a>
     <span>›</span>
     名古屋の宴会幹事が絶対に失敗しない店選びマニュアル
   </div>
 </nav>
+<!-- NB-CHROME:BREADCRUMB:END -->
 
 <article>
   <div class="art-hero-image">
@@ -180,13 +186,13 @@ nav{display:none;}
         <div class="store-num">01</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/01/43/P039270143/P039270143_480.jpg" alt="餃子のかっちゃん 栄錦店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003785077.html">餃子のかっちゃん 栄錦店</a></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003785077.html" onclick="trackEvent('feature_store_click',{store:'餃子のかっちゃん 栄錦店',feature:'enmkai-kanji'})">餃子のかっちゃん 栄錦店</a></h3>
           <div class="store-meta"><span>栄</span><span>居酒屋</span><span class="score">★ 4.8</span><span>2001～3000円</span></div>
           <p class="store-desc">かっちゃんブランドが栄・名古屋駅の複数立地で4.8評価を維持しているのは立地ごとに客層が異なる中でもブランド品質が均一化されている証拠。ビール込み飲み放題777円という価格設定はコスト計算が正確でなければ成立しない。</p>
           <div class="store-tags"><span class="store-tag">90〜100名</span><span class="store-tag">2000〜3000円</span><span class="store-tag">居酒屋</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003785077.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003785077/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003785077.html" onclick="trackEvent('feature_store_click',{store:'餃子のかっちゃん 栄錦店',feature:'enmkai-kanji'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003785077/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003785077',feature:'enmkai-kanji',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -195,13 +201,13 @@ nav{display:none;}
         <div class="store-num">02</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/77/03/P045697703/P045697703_480.jpg" alt="炉端焼き 燻銀 金山店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001186933.html">炉端焼き 燻銀 金山店</a></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001186933.html" onclick="trackEvent('feature_store_click',{store:'炉端焼き 燻銀 金山店',feature:'enmkai-kanji'})">炉端焼き 燻銀 金山店</a></h3>
           <div class="store-meta"><span>金山</span><span>居酒屋</span><span class="score">★ 4.7</span><span>4001～5000円</span></div>
           <p class="store-desc">燻銀ブランドの金山展開は栄・伏見・波寄に続く拠点として名古屋市内の炉端焼き需要を広くカバーしている。ブランドとして複数拠点が一定水準の評価を維持しているのは炉端焼きの演出と料理品質の標準化が成功している証拠。</p>
           <div class="store-tags"><span class="store-tag">隠れ家</span><span class="store-tag">接待</span><span class="store-tag">歓送迎会</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001186933.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001186933/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001186933.html" onclick="trackEvent('feature_store_click',{store:'炉端焼き 燻銀 金山店',feature:'enmkai-kanji'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001186933/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001186933',feature:'enmkai-kanji',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -210,13 +216,13 @@ nav{display:none;}
         <div class="store-num">03</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/77/51/P044587751/P044587751_480.jpg" alt="inari いなり 栄店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003649402.html">inari いなり 栄店</a></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J003649402.html" onclick="trackEvent('feature_store_click',{store:'inari いなり 栄店',feature:'enmkai-kanji'})">inari いなり 栄店</a></h3>
           <div class="store-meta"><span>栄(ミナミ)/矢場町/大須/上前津</span><span>ダイニングバー</span><span class="score">★ 4.7</span><span>4001～5000円</span></div>
           <p class="store-desc">栄駅3分、4500円で小規模団体が気軽に入れるバル機能</p>
           <div class="store-tags"><span class="store-tag">バー</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003649402.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003649402/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003649402.html" onclick="trackEvent('feature_store_click',{store:'inari いなり 栄店',feature:'enmkai-kanji'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003649402/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003649402',feature:'enmkai-kanji',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -225,13 +231,13 @@ nav{display:none;}
         <div class="store-num">04</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/44/19/P045784419/P045784419_480.jpg" alt="くずし割烹 肴屋八兵衛 金山店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001143693.html">くずし割烹 肴屋八兵衛 金山店</a><span class="store-new">今月の新顔</span></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001143693.html" onclick="trackEvent('feature_store_click',{store:'くずし割烹 肴屋八兵衛 金山店',feature:'enmkai-kanji'})">くずし割烹 肴屋八兵衛 金山店</a><span class="store-new">今月の新顔</span></h3>
           <div class="store-meta"><span>金山</span><span>居酒屋</span><span class="score">★ 4.6</span><span>2001～3000円</span></div>
           <p class="store-desc">席の使い方はお客様次第 新鮮な旬魚のお寿司</p>
           <div class="store-tags"><span class="store-tag">歓送迎会</span><span class="store-tag">忘年会・新年会</span><span class="store-tag">20〜30名</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001143693.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001143693/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001143693.html" onclick="trackEvent('feature_store_click',{store:'くずし割烹 肴屋八兵衛 金山店',feature:'enmkai-kanji'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001143693/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001143693',feature:'enmkai-kanji',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -240,13 +246,13 @@ nav{display:none;}
         <div class="store-num">05</div>
         <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/08/28/P045820828/P045820828_480.jpg" alt="2000円 食べ放題飲み放題 居酒屋 おすすめ屋 名古屋駅店" loading="lazy" width="160" height="120" decoding="async"></div>
         <div class="store-info">
-          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001280293.html">2000円 食べ放題飲み放題 居酒屋 おすすめ屋 名古屋駅店</a><span class="store-new">今月の新顔</span></h3>
+          <h3 class="store-name"><a href="https://nagoya-bites.com/stores/J001280293.html" onclick="trackEvent('feature_store_click',{store:'2000円 食べ放題飲み放題 居酒屋 おすすめ屋 名古屋駅店',feature:'enmkai-kanji'})">2000円 食べ放題飲み放題 居酒屋 おすすめ屋 名古屋駅店</a><span class="store-new">今月の新顔</span></h3>
           <div class="store-meta"><span>名古屋駅</span><span>居酒屋</span><span class="score">★ 4.4</span><span>1501～2000円</span></div>
           <p class="store-desc">リーズナブルな食べ飲み放題が魅力。コスパ重視に最適</p>
           <div class="store-tags"><span class="store-tag">100名以上</span><span class="store-tag">2000〜3000円</span><span class="store-tag">食べ放題</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001280293.html">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001280293/" target="_blank" rel="noopener">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001280293.html" onclick="trackEvent('feature_store_click',{store:'2000円 食べ放題飲み放題 居酒屋 おすすめ屋 名古屋駅店',feature:'enmkai-kanji'})">詳細ページを見る →</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001280293/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001280293',feature:'enmkai-kanji',target:'hotpepper'})">予約はこちら →</a>
           </div>
         </div>
       </div>
@@ -257,10 +263,10 @@ nav{display:none;}
 <div class="related">
   <p class="related-title">関連する特集記事</p>
   <div class="related-links">
-    <a class="related-link" href="banquet.html">宴会特集</a>
-    <a class="related-link" href="large-group.html">大人数特集</a>
-    <a class="related-link" href="settai-guide.html">接待マニュアル</a>
-    <a class="related-link" href="kospa-insider.html">コスパ最強グルメ</a>
+    <a class="related-link" href="banquet.html" onclick="trackEvent('internal_link_click',{feature:'enmkai-kanji',link_url:'banquet.html',block:'feature_related'})">宴会特集</a>
+    <a class="related-link" href="large-group.html" onclick="trackEvent('internal_link_click',{feature:'enmkai-kanji',link_url:'large-group.html',block:'feature_related'})">大人数特集</a>
+    <a class="related-link" href="settai-guide.html" onclick="trackEvent('internal_link_click',{feature:'enmkai-kanji',link_url:'settai-guide.html',block:'feature_related'})">接待マニュアル</a>
+    <a class="related-link" href="kospa-insider.html" onclick="trackEvent('internal_link_click',{feature:'enmkai-kanji',link_url:'kospa-insider.html',block:'feature_related'})">コスパ最強グルメ</a>
   </div>
   <p class="related-journal" style="margin-top:1.2rem;font-size:.82rem;color:rgba(28,28,26,.62);line-height:1.7;">
     名古屋の最新グルメは <a class="related-link" href="../journal/index.html">デイリージャーナル</a> で毎朝更新中。
@@ -270,13 +276,43 @@ nav{display:none;}
   </p>
 </div>
 
-<footer>
-  <a href="../index.html">NAGOYA BITES</a> &nbsp;—&nbsp;
-  <a href="../about.html">About</a> &nbsp;—&nbsp;
-  <a href="index.html">特集記事一覧</a> &nbsp;—&nbsp;
-  <span id="fc-year"></span>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
 
 <style>
 .faq-section{max-width:880px;margin:3rem auto 2rem;padding:0 1.5rem;font-family:inherit;}
@@ -310,7 +346,38 @@ nav{display:none;}
     </div>
   </div>
 </section>
-
-<script>(function(){var fc=document.getElementById('fc-year');if(fc)fc.textContent='© '+new Date().getFullYear()+' All Rights Reserved';})();</script>
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
+<script class="nb-engagement-tracking">
+(function(){
+  var fired={},THRESH=[25,50,75,100];
+  function check(){
+    var doc=document.documentElement;
+    var top=window.pageYOffset||doc.scrollTop;
+    var max=(doc.scrollHeight-doc.clientHeight)||1;
+    var pct=Math.min(100,Math.round((top/max)*100));
+    THRESH.forEach(function(t){if(pct>=t&&!fired[t]){fired[t]=true;try{trackEvent('scroll_depth',{percent:t});}catch(err){}}});
+  }
+  var timer=null;
+  window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
+  check();
+})();
+</script>
 </body>
 </html>

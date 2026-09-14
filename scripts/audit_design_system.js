@@ -48,6 +48,17 @@ function listHtmlFiles(dir, opts) {
     .map(f => path.join(dir, f));
 }
 
+function listHtmlFilesRecursive(dir) {
+  if (!fs.existsSync(dir)) return [];
+  let out = [];
+  for (const f of fs.readdirSync(dir)) {
+    const p = path.join(dir, f);
+    if (fs.statSync(p).isDirectory()) out = out.concat(listHtmlFilesRecursive(p));
+    else if (f.endsWith('.html')) out.push(p);
+  }
+  return out;
+}
+
 function collectTargets() {
   const rootFiles = ['index.html', 'about.html', 'faq.html', 'contact.html', 'privacy-policy.html']
     .map(f => path.join(ROOT, f))
@@ -55,6 +66,9 @@ function collectTargets() {
   const featureFiles = listHtmlFiles(path.join(ROOT, 'features'));
   const journalFiles = listHtmlFiles(path.join(ROOT, 'journal'), { excludeTemplate: true });
   let storeFiles = listHtmlFiles(path.join(ROOT, 'stores'));
+  // SEO-094: stores/area/ 配下（エリア×ジャンル×条件ページ）は生成器が全ページを一律に
+  // 同じテンプレートで作るため、常に全数を見る（storeFiles と違いサンプリングしない）。
+  const hubFiles = listHtmlFilesRecursive(path.join(ROOT, 'stores', 'area'));
 
   if (sampleN && storeFiles.length > sampleN) {
     // 決定的サンプリング（ファイル名でソートしてから均等間隔抽出。実行のたびに同じ集合になる）
@@ -65,7 +79,7 @@ function collectTargets() {
     storeFiles = sampled;
   }
 
-  return { rootFiles, featureFiles, journalFiles, storeFiles };
+  return { rootFiles, featureFiles, journalFiles, storeFiles, hubFiles };
 }
 
 function relDepth(filePath) {
@@ -214,8 +228,8 @@ function auditFile(file, violations) {
 }
 
 function main() {
-  const { rootFiles, featureFiles, journalFiles, storeFiles } = collectTargets();
-  const allFiles = [...rootFiles, ...featureFiles, ...journalFiles, ...storeFiles];
+  const { rootFiles, featureFiles, journalFiles, storeFiles, hubFiles } = collectTargets();
+  const allFiles = [...rootFiles, ...featureFiles, ...journalFiles, ...storeFiles, ...hubFiles];
   const violations = [];
 
   allFiles.forEach(f => {
@@ -229,7 +243,7 @@ function main() {
   const result = {
     ok: violations.length === 0,
     files_scanned: allFiles.length,
-    breakdown: { root: rootFiles.length, features: featureFiles.length, journal: journalFiles.length, stores: storeFiles.length },
+    breakdown: { root: rootFiles.length, features: featureFiles.length, journal: journalFiles.length, stores: storeFiles.length, hubs: hubFiles.length },
     violations,
   };
 

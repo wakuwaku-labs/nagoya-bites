@@ -110,20 +110,27 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .cta-box{max-width:800px;margin:0 auto;padding:2rem 1.5rem 3rem;text-align:center;}
 .cta-link{display:inline-block;font-size:.82rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.7rem 1.6rem;border-radius:3px;transition:background .2s;letter-spacing:.06em;}
 .cta-link:hover{background:rgba(122,92,16,.08);}
-footer a{color:rgba(201,169,110,.7);text-decoration:none;}
-@media(max-width:640px){nav{display:none;}.faq-q{font-size:.82rem;}}</style>
+@media(max-width:640px){.faq-q{font-size:.82rem;}}</style>
 </head>
 <body>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="index.html">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="index.html">すべての店舗</a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="index.html">店舗を探す</a>
     <a href="features/index.html">特集</a>
-    <a href="about.html">About</a>
-    <a href="faq.html" class="active">Q&A</a>
-    <a href="contact.html">Contact</a>
+    <a href="journal/index.html">ジャーナル</a>
+    <a href="features/editorial-policy.html">編集規約</a>
+    <a href="about.html">運営について</a>
+    <a href="faq.html" class="nav-secondary" aria-current="page">よくある質問</a>
+    <a href="contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
+<!-- NB-CHROME:HEADER:END -->
 
 <nav aria-label="パンくずリスト">
   <div class="breadcrumb">
@@ -206,6 +213,60 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   <a class="cta-link" href="index.html">← トップページで全店舗を検索する</a>
 </div>
 
-<footer>&copy; 2025 NAGOYA BITES — 現役飲食人が選ぶ名古屋グルメ</footer>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="index.html">店舗を探す</a>
+      <a href="stores/index.html">エリア別 店舗一覧</a>
+      <a href="index.html#scene-index">目的から探す</a>
+      <a href="features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="features/index.html">特集記事</a>
+      <a href="journal/index.html">Daily Journal</a>
+      <a href="features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="features/editorial-policy.html">編集規約</a>
+      <a href="about.html">運営について</a>
+      <a href="faq.html">よくある質問</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
+</footer>
+<!-- NB-CHROME:FOOTER:END -->
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
 </body>
 </html>

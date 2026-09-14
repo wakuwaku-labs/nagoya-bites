@@ -101,8 +101,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .related-link{font-size:.75rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.45rem 1rem;border-radius:2px;}
 .related-link:hover{background:rgba(122,92,16,.08);}
 .back-top{display:block;text-align:center;padding:1.3rem;font-size:.8rem;color:var(--gold);text-decoration:none;border-top:1px solid var(--border);}
-footer a{color:rgba(201,169,110,.7);text-decoration:none;}
-@media(max-width:640px){nav{display:none;}.art-body{font-size:.85rem;}.art-body h2{font-size:1.15rem;}}
+@media(max-width:640px){.art-body{font-size:.85rem;}.art-body h2{font-size:1.15rem;}}
 .art-hero-image{max-width:880px;margin:0 auto 1.2rem;padding:0 1.5rem;}
 .art-hero-image img{width:100%;height:auto;aspect-ratio:16/7;object-fit:cover;border-radius:8px;display:block;}
 @media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
@@ -118,22 +117,37 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
 .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}</style>
 </head>
 <body>
+<!-- NB-CHROME:HEADER:START -->
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
-  <nav>
-    <a href="../index.html">すべての店舗</a>
-    <a href="index.html">特集一覧</a>
-    <a href="nagoya-gourmet-guide.html">完全ガイド</a>
-    <a href="../journal/index.html">Journal</a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="../index.html">店舗を探す</a>
+    <a href="../features/index.html" aria-current="page">特集</a>
+    <a href="../journal/index.html">ジャーナル</a>
+    <a href="../features/editorial-policy.html">編集規約</a>
+    <a href="../about.html">運営について</a>
+    <a href="../faq.html" class="nav-secondary">よくある質問</a>
+    <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
-
+<!-- NB-CHROME:HEADER:END -->
+<!-- NB-CHROME:BREADCRUMB:START -->
 <nav aria-label="パンくずリスト">
   <div class="breadcrumb">
-    <a href="../index.html">NAGOYA BITES</a><span>›</span><a href="index.html">特集</a><span>›</span><a href="nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a><span>›</span>ひつまぶし
+    <a href="../index.html">TOP</a>
+    <span>›</span>
+    <a href="../features/index.html">特集</a>
+    <span>›</span>
+    <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    <span>›</span>
+    名古屋ひつまぶし完全ガイド
   </div>
 </nav>
-
+<!-- NB-CHROME:BREADCRUMB:END -->
 
 <div class="art-hero-image">
   <img src="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg" alt="ひつまぶし" loading="eager" fetchpriority="high">
@@ -157,20 +171,6 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
 <section class="art-body">
 
 <!-- SEO-042:TOP-CTA:START -->
-<style>
-.topcta{--gold:#7a5c10;--gold2:#96720f;max-width:880px;margin:0 auto 2rem;padding:1.1rem 1.5rem 1.3rem;border:1px solid rgba(122,92,16,.22);border-radius:6px;background:rgba(122,92,16,.035);}
-.topcta-head{font-size:.74rem;letter-spacing:.12em;color:var(--gold,#7a5c10);margin-bottom:.15rem;}
-.topcta-sub{font-size:.8rem;color:var(--muted,#6b6b6b);margin-bottom:.85rem;line-height:1.6;}
-.topcta-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem;}
-.topcta-item{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;}
-.topcta-name{font-size:.92rem;font-weight:500;min-width:0;}
-.topcta-actions{display:flex;gap:.5rem;flex-shrink:0;}
-.topcta .store-link{display:inline-flex;align-items:center;gap:.35rem;background:var(--gold,#7a5c10);color:#fff;border:1px solid var(--gold,#7a5c10);padding:.55rem 1.1rem;border-radius:4px;font-size:.78rem;font-weight:500;letter-spacing:.04em;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);transition:background .15s,transform .1s;}
-.topcta .store-link:hover{background:var(--gold2,#96720f);transform:translateY(-1px);}
-.topcta .store-link[href*="hotpepper"]{background:#fff;color:var(--gold,#7a5c10);border:1px solid var(--gold,#7a5c10);box-shadow:none;}
-.topcta .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
-@media(max-width:640px){.topcta{padding:1rem 1.1rem 1.15rem;}.topcta-item{flex-direction:column;align-items:flex-start;gap:.45rem;}.topcta-actions{width:100%;}}
-</style>
 <aside class="topcta" aria-label="この特集の注目店">
   <div class="topcta-head">EDITORS' PICK</div>
   <div class="topcta-sub">本文を読む前に動きたい方へ。編集部が上位に挙げた3軒の詳細と予約はこちらから。</div>
@@ -241,8 +241,8 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   <div class="store-meta"><span>和食 / ひつまぶし</span><span>名古屋駅徒歩3分</span><span>個室あり</span></div>
   <div class="store-desc">名古屋を代表する「備長」グループの大名古屋ビルヂング内店舗。新幹線改札から徒歩3分の立地で、出張の前後に使い勝手が最高の1軒。予約可能で、ランチタイムは開店11:00直後なら当日席も狙える。</div>
   <div class="store-insider">ビル内店舗は地上を歩かずにアクセスできるため、雨天・真夏・真冬でもストレスなし。名駅の備長3店舗（大名古屋ビルヂング・エスカ・ラシック）は料理の基本品質が揃っているので、混雑状況で店舗を変える運用が業界人の常識です。</div>
-  <a class="store-link" href="../stores/J001155162.html">詳細ページを見る</a>
-  <a class="store-link" href="https://www.hotpepper.jp/strJ001155162/" target="_blank" rel="noopener noreferrer">予約はこちら</a>
+  <a class="store-link" href="../stores/J001155162.html" onclick="trackEvent('feature_store_click',{store:'ひつまぶし 名古屋 備長 大名古屋ビルヂング店',feature:'nagoya-hitsumabushi'})">詳細ページを見る</a>
+  <a class="store-link" href="https://www.hotpepper.jp/strJ001155162/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J001155162',feature:'nagoya-hitsumabushi',target:'hotpepper'})">予約はこちら</a>
 </div></div><div class="store">
   <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/34/22/P021753422/P021753422_480.jpg" alt="ひつまぶし 名古屋 備長 エスカ店" loading="lazy" width="160" height="120" decoding="async"></div>
   <div class="store-body">
@@ -250,8 +250,8 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   <div class="store-meta"><span>和食 / ひつまぶし</span><span>エスカ地下街</span><span>新幹線口徒歩3分</span></div>
   <div class="store-desc">新幹線改札から地下直結で最短。新幹線の時間に追われる出張族・観光客に圧倒的に使われる。昼は行列必至だが、回転は早め。</div>
   <div class="store-insider">エスカ地下街は名古屋駅新幹線口改札から地下通路で直結。雨天でも傘なしでたどり着ける。帰りの新幹線前に駆け込める30〜45分枠の使い方ができるのがこの店の強み。</div>
-  <a class="store-link" href="../stores/J000725563.html">詳細ページを見る</a>
-  <a class="store-link" href="https://www.hotpepper.jp/strJ000725563/" target="_blank" rel="noopener noreferrer">予約はこちら</a>
+  <a class="store-link" href="../stores/J000725563.html" onclick="trackEvent('feature_store_click',{store:'ひつまぶし 名古屋 備長 エスカ店',feature:'nagoya-hitsumabushi'})">詳細ページを見る</a>
+  <a class="store-link" href="https://www.hotpepper.jp/strJ000725563/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J000725563',feature:'nagoya-hitsumabushi',target:'hotpepper'})">予約はこちら</a>
 </div></div><div class="store">
   <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/30/29/P047523029/P047523029_480.jpg" alt="ひつまぶし稲生 いのう エスカ店" loading="lazy" width="160" height="120" decoding="async"></div>
   <div class="store-body">
@@ -259,8 +259,8 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   <div class="store-meta"><span>和食 / ひつまぶし</span><span>エスカ地下街</span></div>
   <div class="store-desc">備長と並びエスカ地下街で認知が高いひつまぶし専門店。串焼きなど鰻の前菜も揃い、ランチコースの設計が明快。</div>
   <div class="store-insider">同じエスカ地下街内で備長と稲生が並存する構図は、単なる競合ではなく「混雑分散装置」として機能しています。片方が行列なら即もう片方に移動するのが出張族の王道。</div>
-  <a class="store-link" href="../stores/J004402326.html">詳細ページを見る</a>
-  <a class="store-link" href="https://www.hotpepper.jp/strJ004402326/" target="_blank" rel="noopener noreferrer">予約はこちら</a>
+  <a class="store-link" href="../stores/J004402326.html" onclick="trackEvent('feature_store_click',{store:'ひつまぶし稲生 いのう エスカ店',feature:'nagoya-hitsumabushi'})">詳細ページを見る</a>
+  <a class="store-link" href="https://www.hotpepper.jp/strJ004402326/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J004402326',feature:'nagoya-hitsumabushi',target:'hotpepper'})">予約はこちら</a>
 </div></div><h3>栄エリア（ラシック／名古屋城・金シャチ横丁）</h3>
 
 <div class="store">
@@ -270,8 +270,8 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   <div class="store-meta"><span>和食 / ひつまぶし</span><span>栄ラシック内</span><span>買い物帰りに最適</span></div>
   <div class="store-desc">栄のショッピングビル「ラシック」内。栄で買い物した流れでディナーに使える導線設計。予約可能で、家族連れ・観光客の利用が多い。</div>
   <div class="store-insider">ラシックはデパート型ビルなので、ディナー利用でも駐車場（ラシック契約）が使いやすい。家族3世代での食事会や、記念日の食事会に使い勝手の良いのが栄店の特徴です。</div>
-  <a class="store-link" href="../stores/J000025296.html">詳細ページを見る</a>
-  <a class="store-link" href="https://www.hotpepper.jp/strJ000025296/" target="_blank" rel="noopener noreferrer">予約はこちら</a>
+  <a class="store-link" href="../stores/J000025296.html" onclick="trackEvent('feature_store_click',{store:'ひつまぶし 名古屋 備長 ラシック店',feature:'nagoya-hitsumabushi'})">詳細ページを見る</a>
+  <a class="store-link" href="https://www.hotpepper.jp/strJ000025296/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J000025296',feature:'nagoya-hitsumabushi',target:'hotpepper'})">予約はこちら</a>
 </div></div><div class="store">
   <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/35/63/P044283563/P044283563_480.jpg" alt="会席料理 ひつまぶし 雅MASA" loading="lazy" width="160" height="120" decoding="async"></div>
   <div class="store-body">
@@ -279,8 +279,8 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   <div class="store-meta"><span>和食 / 会席</span><span>栄・東桜</span><span>接待・記念日向け</span></div>
   <div class="store-desc">ひつまぶしを会席料理の一品として出す高級和食。接待・顔合わせ・重要な会食に向き、静かな空間と丁寧なサービス設計。</div>
   <div class="store-insider">ひつまぶし単品で使うのは勿体ない店。前菜・刺身・椀物・ひつまぶし・デザートの会席フルコース8,000〜15,000円枠で使うと全体のバランスが最適化されます。接待なら個室指定を忘れずに。</div>
-  <a class="store-link" href="../stores/J003806845.html">詳細ページを見る</a>
-  <a class="store-link" href="https://www.hotpepper.jp/strJ003806845/" target="_blank" rel="noopener noreferrer">予約はこちら</a>
+  <a class="store-link" href="../stores/J003806845.html" onclick="trackEvent('feature_store_click',{store:'会席料理 ひつまぶし 雅MASA',feature:'nagoya-hitsumabushi'})">詳細ページを見る</a>
+  <a class="store-link" href="https://www.hotpepper.jp/strJ003806845/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J003806845',feature:'nagoya-hitsumabushi',target:'hotpepper'})">予約はこちら</a>
 </div></div><h3>伏見エリア（ビジネス街の実力店）</h3>
 
 <div class="store">
@@ -290,8 +290,8 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   <div class="store-meta"><span>和食 / ひつまぶし</span><span>伏見・丸の内</span></div>
   <div class="store-desc">伏見のオフィス街に佇む隠れ家的ひつまぶし専門店。観光客より地元ビジネスパーソンの利用が多く、席数が限られる分、落ち着いた体験ができる。</div>
   <div class="store-insider">名駅・栄の観光色が強いビル内店舗とは一線を画し、「名古屋の地元民が日常のちょっといい日に使う店」のカテゴリ。接待の一歩手前、カジュアルな会食に使えるポジショニングが貴重です。</div>
-  <a class="store-link" href="../stores/J001283397.html">詳細ページを見る</a>
-  <a class="store-link" href="https://www.hotpepper.jp/strJ001283397/" target="_blank" rel="noopener noreferrer">予約はこちら</a>
+  <a class="store-link" href="../stores/J001283397.html" onclick="trackEvent('feature_store_click',{store:'ひつまぶし 一葉',feature:'nagoya-hitsumabushi'})">詳細ページを見る</a>
+  <a class="store-link" href="https://www.hotpepper.jp/strJ001283397/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J001283397',feature:'nagoya-hitsumabushi',target:'hotpepper'})">予約はこちら</a>
 </div></div><div class="store">
   <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/99/09/P048399909/P048399909_480.jpg" alt="鰻 ひつまぶし 金鯱うなぎ 伏見店" loading="lazy" width="160" height="120" decoding="async"></div>
   <div class="store-body">
@@ -299,8 +299,8 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   <div class="store-meta"><span>和食 / うなぎ</span><span>伏見</span></div>
   <div class="store-desc">伏見駅徒歩圏の鰻・ひつまぶし専門店。白焼き・う巻きなどの鰻料理も充実し、ひつまぶし以外の鰻体験もセットで楽しめる。</div>
   <div class="store-insider">ひつまぶし単品で終わらず、う巻き・白焼き・肝吸いの鰻フルラインを一度に体験したいときに向く。鰻料理の全体像を知りたい観光客・出張族にまず勧める1軒です。</div>
-  <a class="store-link" href="../stores/J004445210.html">詳細ページを見る</a>
-  <a class="store-link" href="https://www.hotpepper.jp/strJ004445210/" target="_blank" rel="noopener noreferrer">予約はこちら</a>
+  <a class="store-link" href="../stores/J004445210.html" onclick="trackEvent('feature_store_click',{store:'鰻 ひつまぶし 金鯱うなぎ 伏見店',feature:'nagoya-hitsumabushi'})">詳細ページを見る</a>
+  <a class="store-link" href="https://www.hotpepper.jp/strJ004445210/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J004445210',feature:'nagoya-hitsumabushi',target:'hotpepper'})">予約はこちら</a>
 </div></div><h3>栄ミナミ・大須エリア</h3>
 
 <div class="store">
@@ -310,8 +310,8 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   <div class="store-meta"><span>和食 / ひつまぶし</span><span>栄ミナミ・矢場町</span><span>炭火焼</span></div>
   <div class="store-desc">炭火焼にこだわる専門店。ガス焼きとは香ばしさが明確に違い、鰻を「焼き物」として楽しめる設計。</div>
   <div class="store-insider">炭火焼の店は焼き手の技量で品質が大きく変わるため、繁忙時間より開店直後の1順目を狙うのが業界人のコツ。鰻の焼きは焼き上がり直後が最も香ばしく、皮の食感が立つ瞬間が一度きりだからです。</div>
-  <a class="store-link" href="../stores/J001284178.html">詳細ページを見る</a>
-  <a class="store-link" href="https://www.hotpepper.jp/strJ001284178/" target="_blank" rel="noopener noreferrer">予約はこちら</a>
+  <a class="store-link" href="../stores/J001284178.html" onclick="trackEvent('feature_store_click',{store:'炭焼ひつまぶし鰻 むなぎ 武奈伎',feature:'nagoya-hitsumabushi'})">詳細ページを見る</a>
+  <a class="store-link" href="https://www.hotpepper.jp/strJ001284178/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J001284178',feature:'nagoya-hitsumabushi',target:'hotpepper'})">予約はこちら</a>
 </div></div><div class="store">
   <div class="store-photo"><img src="https://imgfp.hotp.jp/IMGH/52/30/P046355230/P046355230_480.jpg" alt="鰻のノリスケ" loading="lazy" width="160" height="120" decoding="async"></div>
   <div class="store-body">
@@ -319,8 +319,8 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   <div class="store-meta"><span>和食 / うなぎ</span><span>栄</span><span class="score">★ Google 4.7</span></div>
   <div class="store-desc">Google評価4.7と名古屋のうなぎ店で最上位クラスの実力店。ひつまぶしを含む鰻メニューの基本品質が非常に高く、栄エリアで外さない1軒。</div>
   <div class="store-insider">Google評価4.7帯は名古屋の和食店でも屈指の高評価。予約の取りにくさも比例して上がるため、記念日・出張での使用は2週間前から押さえるのが安全。カウンターが快適。</div>
-  <a class="store-link" href="../stores/J003984968.html">詳細ページを見る</a>
-  <a class="store-link" href="https://www.hotpepper.jp/strJ003984968/" target="_blank" rel="noopener noreferrer">予約はこちら</a>
+  <a class="store-link" href="../stores/J003984968.html" onclick="trackEvent('feature_store_click',{store:'鰻のノリスケ',feature:'nagoya-hitsumabushi'})">詳細ページを見る</a>
+  <a class="store-link" href="https://www.hotpepper.jp/strJ003984968/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{store:'J003984968',feature:'nagoya-hitsumabushi',target:'hotpepper'})">予約はこちら</a>
 </div></div><h2>シーン別おすすめ — 業界人の推奨マップ</h2>
 <ul>
   <li><strong>出張・新幹線利用</strong> → 備長エスカ店・稲生エスカ店（改札から地下直結）</li>
@@ -361,12 +361,12 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
 <div class="related">
   <p class="related-title">関連する名古屋グルメ</p>
   <div class="related-links">
-    <a class="related-link" href="nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
-    <a class="related-link" href="nagoya-miso-nikomi-udon.html">味噌煮込みうどん</a>
-    <a class="related-link" href="nagoya-tebasaki.html">手羽先</a>
-    <a class="related-link" href="meieki.html">名駅グルメ15選</a>
-    <a class="related-link" href="sakae.html">栄グルメ15選</a>
-    <a class="related-link" href="nagoya-lunch-washoku.html">和食ランチ10選</a>
+    <a class="related-link" href="nagoya-gourmet-guide.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-hitsumabushi',link_url:'nagoya-gourmet-guide.html',block:'feature_related'})">名古屋グルメ完全ガイド</a>
+    <a class="related-link" href="nagoya-miso-nikomi-udon.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-hitsumabushi',link_url:'nagoya-miso-nikomi-udon.html',block:'feature_related'})">味噌煮込みうどん</a>
+    <a class="related-link" href="nagoya-tebasaki.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-hitsumabushi',link_url:'nagoya-tebasaki.html',block:'feature_related'})">手羽先</a>
+    <a class="related-link" href="meieki.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-hitsumabushi',link_url:'meieki.html',block:'feature_related'})">名駅グルメ15選</a>
+    <a class="related-link" href="sakae.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-hitsumabushi',link_url:'sakae.html',block:'feature_related'})">栄グルメ15選</a>
+    <a class="related-link" href="nagoya-lunch-washoku.html" onclick="trackEvent('internal_link_click',{feature:'nagoya-hitsumabushi',link_url:'nagoya-lunch-washoku.html',block:'feature_related'})">和食ランチ10選</a>
   </div>
   <p class="related-journal" style="margin-top:1.2rem;font-size:.82rem;color:rgba(28,28,26,.62);line-height:1.7;">
     名古屋の最新グルメは <a class="related-link" href="../journal/index.html">デイリージャーナル</a> で毎朝更新中。
@@ -375,10 +375,43 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
 
 <a class="back-top" href="../index.html">← トップページで全4,559店舗を検索する</a>
 
-<footer>
-  <p>© NAGOYA BITES — <a href="editorial-policy.html">編集規約</a> / <a href="index.html">特集一覧</a></p>
-  <p class="feedback-nudge" style="margin-top:.4rem;font-size:.68rem;color:rgba(247,245,241,.4);">情報の誤りやご意見は <a href="../index.html#feedback" style="color:rgba(201,169,110,.7);">こちら</a> からお寄せください。</p>
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="../index.html">店舗を探す</a>
+      <a href="../stores/index.html">エリア別 店舗一覧</a>
+      <a href="../index.html#scene-index">目的から探す</a>
+      <a href="../features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="../features/index.html">特集記事</a>
+      <a href="../journal/index.html">Daily Journal</a>
+      <a href="../features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="../features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="../features/editorial-policy.html">編集規約</a>
+      <a href="../about.html">運営について</a>
+      <a href="../faq.html">よくある質問</a>
+      <a href="../contact.html">お問い合わせ</a>
+      <a href="../privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="../index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
 </footer>
+<!-- NB-CHROME:FOOTER:END -->
 
 <style>
 .faq-section{max-width:880px;margin:3rem auto 2rem;padding:0 1.5rem;font-family:inherit;}
@@ -417,5 +450,38 @@ footer a{color:rgba(201,169,110,.7);text-decoration:none;}
   </div>
 </section>
 
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
+<script class="nb-engagement-tracking">
+(function(){
+  var fired={},THRESH=[25,50,75,100];
+  function check(){
+    var doc=document.documentElement;
+    var top=window.pageYOffset||doc.scrollTop;
+    var max=(doc.scrollHeight-doc.clientHeight)||1;
+    var pct=Math.min(100,Math.round((top/max)*100));
+    THRESH.forEach(function(t){if(pct>=t&&!fired[t]){fired[t]=true;try{trackEvent('scroll_depth',{percent:t});}catch(err){}}});
+  }
+  var timer=null;
+  window.addEventListener('scroll',function(){if(timer)return;timer=setTimeout(function(){timer=null;check();},200);},{passive:true});
+  check();
+})();
+</script>
 </body>
 </html>
