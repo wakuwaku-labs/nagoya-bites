@@ -114,7 +114,7 @@
 
 ### [SEO-099] トップページ・特集・ジャーナルから新設ハブ（stores/area/）への内部リンクを増やし、pages/session を 1.5→2.0 へ引き上げる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress（実装・機械照合・冪等性確認まで完了。効果測定は数週間分のGSC/GA4データが溜まってから判定するため done にはしない）
 - **detected**: 2026-09-14
 - **category**: SEO
 - **owner**: Builder
@@ -125,6 +125,14 @@
   2. ジャーナル本文冒頭の関連特集CTA（[[SEO-070]]の仕組み）に、該当エリア×ジャンルのハブも追加候補にする
   3. 変更前後で `data/site_metrics.json` の `pagesPerSession` を比較する
 - **関連**: [[SEO-094]]（リンク先本体）／[[SEO-070]]（関連特集CTAの仕組み）
+- **2026-09-14 追記（実施内容）**:
+  1. **対応関係の決定ロジック**: 新設 `scripts/lib/hub_link_finder.js` が唯一の情報源。`data/journal_seo_keywords.json` の `areas[]/scenes[]/genres[]` から「対象となる特集ファイル」の集合を作り（`feature` が `features/` 始まりのものだけ＝既にハブ自体を指すエントリは除外）、各特集について `data/area_genre_pages_policy.json` の `genres[].feature` / `areas[].feature` / `conditions[].feature` の逆引きでエリア×ジャンル（×条件）の組み合わせを求め、`data/area_genre_pages_manifest.json`（`status:"active"` のみ）＋実ファイル存在（`fs.existsSync`）の二重確認を通った候補だけを掲載店数（count）降順で採用する。存在しないURLは一切生成しない（自己申告・推測なし・制約10）
+  2. **特集記事への挿入**: 新設 `scripts/inject_hub_links_into_features.js`（`node scripts/inject_hub_links_into_features.js` / `--dry-run` / `--check`）が全68特集を機械的に走査し、対応ハブがある**16特集**に「エリアで探す」ブロック（最大3リンク／本、既存の `.related`/`.related-title`/`.related-links`/`.related-link` クラスを再利用・新規CSSなし）を挿入。挿入位置は全特集に存在する唯一の共通アンカー `<!-- NB-CHROME:FOOTER:START -->` の直前（`.related` 内部のレイアウトが特集ごとに手書きでバラバラなため、一番安定した箇所を選んだ）。`<!-- SEO-099:HUB-LINKS:START/END -->` マーカーで冪等に管理（2回目実行で差分ゼロを確認済み）。**追加リンク数: 42本（16特集）**
+  3. **ジャーナル関連CTAへの拡張**: 既存の [[SEO-070]] 実装 `scripts/refresh_journal_related.js` を拡張。同スクリプトが既にタイトル正規表現でジャンル特集を1本マッチさせている箇所（`TOPIC_FEATURES`）で、その特集に対応するハブがあれば `hub_link_finder.buildFeatureHubMap({maxLinks:2})` から最大2本を追加候補として `related-links` に含める。同スクリプトは `.related` ブロックを毎回まるごと再構築する設計のため、追加後も冪等性は保たれる（2回連続実行で `Updated 0/130 files` を確認済み）。**追加リンク数: 95本（130記事中51記事に反映。残りは対応するジャンル一致が無い、または旧 related-wrap 形式の5記事）**
+  4. **機械照合**: 挿入した特集42本＋ジャーナル95本＝**計137本**のハブリンクについて、`href` を実ファイルパスへ解決し `fs.existsSync` で全件存在確認 → **不整合0件**
+  5. **デザインシステム監査**: `node scripts/audit_design_system.js --check` は exit 1（既存の `stores/*.html` 側の違反）だが、これは本チケット着手前から存在するベースライン（変更前後で出力が完全に同一であることを確認済み＝`git stash` での前後比較）。`features/` と `journal/` に新規違反は0件
+  6. **ローカル目視確認**: `python3 -m http.server` で `features/nagoya-yakiniku.html` と `journal/2026-09-09-meieki-izakaya-jikyu1500-enkai.html` を開き、「エリアで探す」ブロックの表示とリンククリック→ハブページ（`stores/area/sakae/yakiniku.html` 等）への遷移をブラウザで実地確認
+  7. **効果測定方法（今回は「測定方法」の明記に留める。実測は数週間後）**: 変更前の `data/site_metrics.json`（`generatedAt: 2026-09-14T08:25:01.655Z` / `lookbackDays: 30`）時点の `totals.pagesPerSession = 1.5`（`benchmarks.pagesPerSession.good = 2` / `warn = 1.3`）を基準値として記録。今後の日次ビルドで同ファイルが更新され次第、`pagesPerSession` の推移と、`block:'feature_hub'` / `block:'journal_hub'` の `trackEvent('internal_link_click', ...)` のクリック実績（GA4連携時）を突き合わせて改善を判定する。新規ハブページ自体も 2026-09-14 公開のため、GSCのインデックス反映を待つ必要がある（体感ではなく次回の `data/site_metrics.json` 更新値で判定＝制約10）
 
 ---
 
