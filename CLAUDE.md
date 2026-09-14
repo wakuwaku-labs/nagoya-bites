@@ -75,8 +75,11 @@
 
 ```
 1. index.html は単一ファイルで維持する（サイト用の新ファイル追加禁止 ※例外: features/配下の特集記事・
-   journal/配下の日次記事、および共有スタイルシート assets/css/nb.css の1ファイルのみ。
-   これ以外の .css/.js 分離は引き続き禁止）
+   journal/配下の日次記事・stores/配下の店舗ページ（gen-store-pages.js が生成）・
+   stores/area/配下のエリア×ジャンル×条件一覧ページ（SEO-094・scripts/gen_area_genre_pages.js が
+   data/area_genre_pages_policy.json を正本に data/stores.json から決定的に生成する。手書き禁止・
+   閾値/マッピング変更はポリシーJSONのみで行う）、および共有スタイルシート assets/css/nb.css の
+   1ファイルのみ。これ以外の .css/.js 分離は引き続き禁止）
 2. var LOCAL_STORES = [...]; のパターンを壊さない
 3. テキストはすべて日本語
 4. サイト用の新npm依存関係を追加しない（CDNリンクはOK）
@@ -305,6 +308,10 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `scripts/audit_design_system.js` | デザインシステム準拠の決定的ゲート。`--check`でCI向けexit 1、`--report`で違反一覧JSON |
 | `scripts/apply_design_system.js` | 既存ページへのデザインシステム一括適用（冪等）。`--dry-run`/`--only <dir>`/`--check` |
 | `scripts/lib/site_chrome.js` | **サイト共通クローム（ヘッダー/ナビ/パンくず/フッター）の唯一の正本**（DSN-003・2026-09）。ナビ5項目・補助ナビ2項目・フッター3群のラベル/リンク先はここにのみ書く。`renderHeader`/`renderBreadcrumb`/`renderFooter`/`chromeScript` を生成器（gen-store-pages.js / gen_industry_features.js）と `scripts/apply_site_chrome.js` が共有する |
+| `data/area_genre_pages_policy.json` | **エリア×ジャンル×条件一覧ページ（stores/area/配下）の判定基準の唯一の情報源**（SEO-094・2026-09-14）。店舗ページの「もっと見る」（`../?area=…&genre=…`）が index.html の JS フィルタ（canonical は `/`）を指すだけの死にリンクで、Google からはエリア×ジャンルの検索面が1ページも存在しなかった問題への対応。エリア10群・ジャンル17・条件13軸（個室/深夜営業/日曜営業/喫煙可否/飲み放題/食べ放題/30名以上宴会可/駅徒歩3分以内/ランチ/予算帯/駐車場）を`data/stores.json`の実在フィールドだけから決定的に導出する（推測・自己申告値は使わない・制約10）。閾値変更はこのJSONで行いスクリプトは触らない。確認は`node scripts/gen_area_genre_pages.js --check`（Builder管轄） |
+| `data/area_genre_pages_manifest.json` | 上記ページの生成物台帳（path/type/count/contentHash/firstPublished/updated/status）。内容が変わった日だけ更新し、閾値割れは即noindex化＋90日後delete（取り繕わず`stub`にする）。`scripts/inject_store_links.js`（index.htmlの「エリア×ジャンルで探す」導線）と`scripts/indexnow_ping.js`（新規ハブの優先送信）が同じ台帳を読む |
+| `scripts/lib/area_genre_pages.js` | エリア×ジャンル×条件ページの決定的プランナー・正規化・条件13軸の述語。生成器（`gen_area_genre_pages.js`）・`gen-store-pages.js`（もっと見る/パンくず/JSON-LDのハブリンク化）・`scripts/inject_store_links.js`が共有する |
+| `scripts/gen_area_genre_pages.js` | 上記の生成器CLI。`node scripts/gen_area_genre_pages.js`（生成・sitemap.xml追記・manifest更新）/ `--dry-run` / `--check`（純粋な読み取り専用の差分検査・apply_site_chrome.jsと同じ意味）。gen-store-pages.js が sitemap.xml を丸ごと書き直すため、必ずその**直後**に実行する（build.yml参照） |
 | `scripts/apply_site_chrome.js` | 既存ページへサイト共通クロームを一括適用（冪等・`apply_design_system.js` と同じ運用モデル）。`--dry-run`/`--only <root\|features\|journal\|stores>`/`--check`/`--strip-legacy-css`。CI（build.yml）が日次で `--check --sample 200` を継続実行（当面 continue-on-error） |
 | `scripts/measure_typography.js` | 可読性の実測（12px以下の文字割合・1画面の文字数・タップ対象サイズ）。before/afterの証跡 |
 | `index.html` | サイト本体（編集対象） |

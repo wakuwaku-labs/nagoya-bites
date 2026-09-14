@@ -6,6 +6,128 @@
 
 ---
 
+### [SEO-094] エリア×ジャンル×条件の一覧ページ（stores/area/配下・691ページ）を新設し、「栄 焼肉」「名駅 居酒屋 個室」のような検索面を初めて作った（死にリンクだった「もっと見る」導線も同時に修理）
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-09-14
+- **category**: SEO
+- **owner**: Builder
+- **source**: オーナー依頼「SEO分析と、月間10万PVを狙う実行可能なアクションプラン」への対応（Orchestrator STRATEGY/MARKETINGモード）。GSC28日実測で discovery クエリ（シーン/エリア×ジャンル語）は CTR 4.6%・平均10.2位と質が高いのに面積が表示の7.6%しかなく、エリア×ジャンルの検索面が1ページも存在しなかったことが根因と特定
+- **brand-filter**: ✅ 適合 — Moat「業界視点の構造化データ層」「名古屋×シーン×業界人の目利き」をそのまま検索面に変換する施策。広告・PR記事・クーポン・ストック写真のいずれも伴わない。全ページの数値（軒数・予算最頻帯・最寄り駅・深夜営業/個室件数）は `data/stores.json` の実在フィールドから機械集計した事実のみで、推測・自己申告値は使わない（制約10）
+- **検証できる事実（誰でも再現可能）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | 店舗ページの「もっと見る」（`../?area=…&genre=…`）は index.html の JS フィルタ（クエリ文字列）を指すが、`index.html` の `readHash()` はハッシュの `area`/`genre` キーしか読まず、クエリ文字列は一切読まない＝死にリンク | `gen-store-pages.js:773`（修理前）/ `index.html` `readHash()` |
+  | パンくず・BreadcrumbList JSON-LD も同型の `#genre=`/`#area=` を指しており、`area` はハッシュキーとしても未対応 | `gen-store-pages.js:739-740,553-555`（修理前） |
+  | GSC 28日（8/17〜9/13）: discovery（シーン/エリア×ジャンル語）は表示2,162（7.6%）・クリック99・CTR4.6%・平均10.2位。navigational（店名）は表示19,958（70.5%）・CTR0.35% | `data/gsc_metrics.json` `intent.summary` |
+  | `data/stores.json`（開店中4,899件）を実測した結果、エリア10群×ジャンル17（閾値10軒以上）で89ハブ、条件13軸（閾値8軒以上）で602ページ、計691ページが生成可能 | `node scripts/gen_area_genre_pages.js --dry-run` |
+- **実装内容**:
+  1. `data/area_genre_pages_policy.json`（唯一の情報源）＋ `scripts/lib/area_genre_pages.js`（決定的プランナー・条件13軸の述語）＋ `scripts/gen_area_genre_pages.js`（生成器・sitemap.xml冪等追記・manifest出力）を新設
+  2. `gen-store-pages.js` の「もっと見る」・パンくず・BreadcrumbList JSON-LD を、実在するハブがあればそこへ、無ければ `index.html#genre=`（旧 `#area=` は削除・ハッシュ対応済みのキーのみ使用）にフォールバックするよう修理
+  3. `stores/index.html` の11エリアカードを新ハブへリンク（旧 `#area=` は全滅していた）。ルートハブへの導線も追加
+  4. `scripts/inject_store_links.js` の scene-index に4群目「エリア×ジャンルで探す」を追加（`data/area_genre_pages_manifest.json` を情報源に上位12件・トップページの discovery 面を拡張）
+  5. `scripts/journal_seo_kw.js` の `AREA_VOCAB` に、専用特集記事を持たない5エリア（金山/千種・今池/鶴舞・八事/緑区・天白区/中川区・港区）を新ハブページ裏付けで追加。`--verify` 通過・`gsc_query_intent.js` がこれらの語を discovery と数えるようになる
+  6. `scripts/indexnow_ping.js` の `recentUrls()` に、manifest 上「直近更新」のハブを追加（Bing への優先通知）
+  7. `scripts/audit_design_system.js` / `scripts/apply_site_chrome.js` / `scripts/audit_trust_wording.js` の対象に `stores/area/` を追加（design system は常時全数・サンプリングしない）
+  8. `.github/workflows/build.yml` に生成ステップを追加（`gen-store-pages.js` の直後・sitemap.xml 上書き順序の制約による）。初回は `continue-on-error: true`（ISSUE-121 の教訓）
+  9. `tests/area_genre_pages.test.js` 新設（15件・条件述語の実データパターン・決定性・閾値/閉店除外・font-size床・sitemap重複無し）
+  10. CLAUDE.md 制約1に例外追記、共有ファイル一覧に4行追加
+- **QAゲート（証跡）**:
+  - `node --test tests/*.test.js` → 197 pass / 0 fail（既存182件を含め全て通過・回帰なし）
+  - `node scripts/audit_design_system.js --check`（`stores/area/` 691件のみ抽出）→ 違反0件（既存の孤児ページ debt とは無関係）
+  - `node scripts/apply_site_chrome.js --check --only hubs` → 691件中 0件差分（冪等）
+  - `node scripts/audit_trust_wording.js --check` → 旧名称0件・禁止語0件
+  - `python3 -c "import xml.etree.ElementTree"` で `sitemap.xml` の整形性を確認・691件のURLが重複無く追加（5,131→5,822件）
+  - `index.html` は SCENE-INDEX ブロック以外バイト単位で無変更（他ブロックへの副作用なし）
+- **ブランドガードレール**: 写真はHotPepper写真URLのみ参照（新規取得なし・ルール9準拠）。全ページ `noscript`/大量店名の共食い（SEO-050の反省）は再現しない設計（カード上限60件・残りは`<details>`の素リンク）。閾値割れページは即noindex化して取り繕わない
+- **未了（Designer正式レビュー待ち）**: 憲法制約12は「新規ページ種別はDesignerのレビューが公開条件」と定める。本チケットは `audit_design_system.js --check` の機械検証は通過済みだが、人間のDesignerレビュー（QA-5・モバイル実機確認）は未実施。CI ステップは `continue-on-error: true` で開始し、Designer確認後に blocking 化する
+- **効果測定（2週間後フォローアップ）**: `node scripts/track_metrics.js --followup SEO-094` で `data/gsc_metrics.json` の discovery 面積・Bing側は `search_channel_metrics.js --report`・`data/site_metrics.json` の `pagesPerSession` の前後比を見る（総クリックは指名検索と混ざるため使わない・SEO-043 の判定基準）
+- **関連**: [[SEO-087]]（solo-dining横展開・一人向け軸はデータ不足のため条件ページ化できず、featuresでの対応を継続）／[[SEO-090]]（接待特集0クリック・本チケットのハブへの統合を検討候補に）／[[SEO-091]]（ひつまぶし内部リンク）／[[SEO-011]]（シーンKW面拡張の先行事例）
+
+---
+
+### [SEO-095] 店舗ページ5,613本の `<title>`/`<meta description>` を「エリア・ジャンル」中心から「予算・最寄駅・営業時間・口コミ信頼度」中心の情報型テンプレへ改善し、指名検索のCTRを上げる
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-14
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEO分析（オーナー依頼）の一環。GSC28日実測で navigational（店名指名検索）が表示19,958（全体の70.5%）・CTR0.35%しかなく、母数の大きさに対してCTRの改善余地が最大
+- **brand-filter**: ✅ 適合 — 順位操作ではなく、実在データの見せ方改善。`gen-store-pages.js` の `buildDescription()` は既にISSUE-072で改善済みの土台があり、その延長
+- **acceptance**:
+  1. `gen-store-pages.js` の `<title>`/`buildDescription()` を、エリア簡潔ラベル・ジャンルに加えて予算帯・Google評価（口コミ5件以上のみ）・翌1時以降営業の有無などデータにある事実だけで再構成する（推測・煽り文言は禁止・制約10）
+  2. 変更前後で `data/gsc_metrics.json` の navigational CTR（`intent.summary` の navigational 行）を比較して効果を判定する
+  3. デザインシステム監査（`audit_design_system.js`）・既存テストを壊さない
+- **関連**: [[SEO-094]]（同ファイルのハブ導線修理と同時期の変更のため実装順序に注意）
+
+---
+
+### [SEO-096] ジャーナルの題材選定に「検索されうる固有名詞（店名・商品名）を1本に最低1つ」を明文化し、`data/gsc_opportunities.json` の ctrFix対象2本（leesar coffee / malachuan）のタイトルを改題する
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-14
+- **category**: SEO / 編集
+- **owner**: Editor
+- **source**: SEO分析（オーナー依頼）。GSC実測でジャーナルのクリック上位は例外なく新店名・新商品名の指名検索（ヤムヤムビュッフェ83表示・藤が丘生ドーナツ148表示・リサールコーヒー176表示）である一方、ジャーナル76本合計で129クリックと薄い
+- **brand-filter**: ✅ 適合 — 日次ジャーナルは唯一の一次コンテンツ資産（Moat）。検索されうる固有名詞を含めるのは順位操作ではなく、実在店名の正確な記載という編集の基本
+- **acceptance**:
+  1. `agents/editor.md` に「タイトル・H1・descriptionに、その記事が扱う店・商品の正式名称を最低1つ含める」を追記（既存の「チェーン店の独自性確認」ガイドラインと同じ並び）
+  2. `data/gsc_opportunities.json` の `byPage.ctrFix`（`journal/2026-08-04-sakae-leesar-coffee.html` 676表示/8クリック、`journal/2026-08-22-osu-malachuan-self-price.html` 321表示/6クリック）のtitle/descriptionを店名がより明確になる形へ改題
+  3. `node scripts/journal_seo_kw.js --verify` を壊さない
+- **関連**: [[SEO-058]]（同種のCTR改善施策）
+
+---
+
+### [SEO-097] llms.txt をCIで自動再生成する（現在2026-09-06から手動更新のまま・減衰中の生成AI流入の止血）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-14
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEO分析（オーナー依頼）。`data/metrics_history.json` の30日窓で ChatGPT経由セッションが134（8/2）→91（9/14）と減衰傾向。`llms.txt` は店舗数・特集本数などの数値を含むが `build.yml` に生成ステップが無く2026-09-06の手動更新で止まっている
+- **brand-filter**: ✅ 適合 — ISSUE-042由来の唯一の非Google流入チャネルで、Moatの構造化データをAIへそのまま開示する施策。広告・順位操作いずれにも該当しない
+- **acceptance**:
+  1. `scripts/gen_llms_txt.js`（新規）が店舗数・特集一覧・エリア×ジャンルハブ一覧（SEO-094）などを `data/stores.json` / `data/area_genre_pages_manifest.json` から集計して `llms.txt` を再生成する
+  2. `build.yml` に生成ステップを追加（`--check` で不一致検出）
+  3. 既存の `audit_trust_wording.js` の `llms.txt` スコープを壊さない
+- **関連**: [[SEO-094]]（ハブ一覧の情報源として利用）
+
+---
+
+### [SEO-098] Instagram リール運用にUTM計測とストーリーズのリンクスタンプを導入し、bio着地先を「リールで紹介した店」一覧に変更する
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-14
+- **category**: SNS / 計測
+- **owner**: Marketer
+- **source**: オーナーへのヒアリング（2026-09-14・9月上旬開始・累計再生1万未満・bioはトップURLのみでUTMなし）。`data/site_metrics.json` の `sourceBreakdown` に instagram 行が過去一度も出ておらず、リールの効果が構造的に計測不能
+- **brand-filter**: ✅ 適合 — 自社の流入を正しく数えるだけの計測施策。順位操作・広告・クーポンのいずれにも該当しない
+- **acceptance**:
+  1. **オーナー本人操作**: Instagram bio のリンクを `?utm_source=instagram&utm_medium=social&utm_campaign=bio` 付きに変更（`docs/sns-utm-convention.md` の規約どおり）
+  2. **オーナー本人操作**: 今後のリール投稿はストーリーズのリンクスタンプに `utm_campaign=reel-<日付>-<slug>` を付けて着地URL（ハブ or 店舗ページ）へ誘導
+  3. Editor/Marketerが `features/instagram-picks.html`（新規特集）を作成し「リールで紹介した店」一覧とする。bioリンクの最終着地先候補にする
+  4. 効果は `data/site_metrics.json` の `sourceBreakdown` の `medium:"social"` 行と `utm_campaign` 別セッションで判定する（[[SEO-055]] の計測基盤を利用）
+- **ブランドガードレール**: 実際の投稿・bio変更はオーナー本人操作（外部発信のため自動化しない・SEO-055 acceptance④と同じ扱い）
+- **関連**: [[SEO-055]]（SNS流入0件検知の仕組み）／[[SEO-094]]（着地先となるハブページ）
+
+---
+
+### [SEO-099] トップページ・特集・ジャーナルから新設ハブ（stores/area/）への内部リンクを増やし、pages/session を 1.5→2.0 へ引き上げる
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-14
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEO分析（オーナー依頼）。`data/site_metrics.json` の `pagesPerSession` が1.5で、SEO-094で新設したハブへの導線がまだ `index.html` の1箇所（scene-index）のみ
+- **brand-filter**: ✅ 適合 — 既存資産の回遊改善で、新規コンテンツ追加を伴わない低リスク施策
+- **acceptance**:
+  1. 特集記事（features/*.html）から対応するエリア×ジャンルハブへのリンクを追加（`data/journal_seo_keywords.json` の genres[].feature / scenes[].feature の逆引きで対象を機械的に決定）
+  2. ジャーナル本文冒頭の関連特集CTA（[[SEO-070]]の仕組み）に、該当エリア×ジャンルのハブも追加候補にする
+  3. 変更前後で `data/site_metrics.json` の `pagesPerSession` を比較する
+- **関連**: [[SEO-094]]（リンク先本体）／[[SEO-070]]（関連特集CTAの仕組み）
+
+---
+
 ### [SEO-093] 日次アドバイス生成プロンプトに**失効した前提**（「docs/daily-posts/ にSNS原稿が毎日用意されている」「特集20本」）が固定文で埋め込まれており、停止済みのSNS原稿を使う助言が停止後9日間で5回出て助言枠を浪費している
 
 - **priority**: P2 → **status**: ready

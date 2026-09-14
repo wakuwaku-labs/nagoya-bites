@@ -1,6 +1,6 @@
 {
   "description": "日次ジャーナルの入口（検索意図）を担保するシーンKWマスタ。SEO-011（+SEO-007統合）。各KWは features/ の実在記事に紐づき、scripts/journal_seo_kw.js --verify で「特集ファイルが実在し、そのタイトルにその語が実際に使われている」ことを検証できる。.claude/commands/journal-today.md は自己改変ブロックで編集できないため、KW運用のルールはこのデータファイルと scripts/journal_seo_kw.js を単一の情報源とする。",
-  "updated": "2026-09-05",
+  "updated": "2026-09-14",
   "related_issue": "SEO-011 (SEO-007 統合)",
   "evidence": {
     "measured_on": "2026-07-27",
@@ -26,7 +26,7 @@
         "新栄"
       ],
       "feature": "features/sakae.html",
-      "store_count": 1895
+      "store_count": 1867
     },
     {
       "kw": "名駅",
@@ -35,7 +35,37 @@
         "名古屋駅"
       ],
       "feature": "features/meieki.html",
-      "store_count": 1047
+      "store_count": 1043
+    },
+    {
+      "kw": "千種・今池",
+      "aliases": [
+        "千種",
+        "今池",
+        "大曽根"
+      ],
+      "feature": "stores/area/chikusa-imaike/index.html",
+      "store_count": 597
+    },
+    {
+      "kw": "緑区・天白区",
+      "aliases": [
+        "緑区",
+        "天白区",
+        "瑞穂区",
+        "南区"
+      ],
+      "feature": "stores/area/midori-tempaku/index.html",
+      "store_count": 380
+    },
+    {
+      "kw": "金山",
+      "aliases": [
+        "金山",
+        "熱田"
+      ],
+      "feature": "stores/area/kanayama/index.html",
+      "store_count": 328
     },
     {
       "kw": "覚王山",
@@ -48,12 +78,31 @@
       "store_count": 246
     },
     {
+      "kw": "中川区・港区",
+      "aliases": [
+        "中川区",
+        "港区"
+      ],
+      "feature": "stores/area/nakagawa-minato/index.html",
+      "store_count": 228
+    },
+    {
+      "kw": "鶴舞・八事",
+      "aliases": [
+        "鶴舞",
+        "八事",
+        "御器所"
+      ],
+      "feature": "stores/area/tsurumai-yagoto/index.html",
+      "store_count": 176
+    },
+    {
       "kw": "大須",
       "aliases": [
         "大須"
       ],
       "feature": "features/osu-food-walk.html",
-      "store_count": 22
+      "store_count": 21
     }
   ],
   "scenes": [

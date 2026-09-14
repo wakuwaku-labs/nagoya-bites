@@ -143,13 +143,48 @@ ${items.join('\n')}
 </div>`;
   }).filter(Boolean).join('\n');
 
-  if (!rendered) return null;
+  // SEO-094: 4群目「エリア×ジャンルで探す」。エリア×ジャンル一覧ページ（stores/area/）の
+  // 唯一の情報源は data/area_genre_pages_manifest.json（scripts/gen_area_genre_pages.js の生成物）。
+  // 上位12件を店舗数の多い順に載せる。トップページから discovery 意図の面を厚くする目的は
+  // シーン/エリア/ジャンル群と同じ（SEO-011 の効果指標＝gsc_query_intent.js の discovery で測る）。
+  const hubGroupHtml = (() => {
+    const manifestPath = path.join(ROOT, 'data', 'area_genre_pages_manifest.json');
+    if (!fs.existsSync(manifestPath)) return '';
+    let manifest;
+    try { manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8')); } catch (e) { return ''; }
+    const hubs = (manifest.pages || [])
+      .filter(p => p.type === 'genre' && p.status === 'active' && fs.existsSync(path.join(ROOT, p.path)))
+      .sort((a, b) => (b.count || 0) - (a.count || 0))
+      .slice(0, 12);
+    if (!hubs.length) return '';
+    const rootPage = (manifest.pages || []).find(p => p.type === 'root' && p.status === 'active');
+    let agPolicy = null;
+    try { agPolicy = require('./lib/area_genre_pages').loadPolicy(); } catch (e) { /* ポリシー未整備なら slug をそのまま使う */ }
+    const areaLabelOf = slug => (agPolicy && agPolicy.areas.find(a => a.slug === slug) || {}).label || slug;
+    const genreLabelOf = slug => (agPolicy && agPolicy.genres.find(g => g.slug === slug) || {}).label || slug;
+    const items = hubs.map(h => {
+      const m = h.path.match(/^stores\/area\/([^/]+)\/([^/.]+)\.html$/);
+      const label = m ? `${areaLabelOf(m[1])}の${genreLabelOf(m[2])}` : h.path;
+      return `<li><a href="${escapeHtml(h.path)}">${escapeHtml(label)}（${h.count}軒）</a></li>`;
+    });
+    const moreLink = rootPage ? `<li><a href="${escapeHtml(rootPage.path)}">エリア×ジャンルをすべて見る →</a></li>` : '';
+    return `<div class="scene-index-group">
+<h3 class="scene-index-group-title">エリア×ジャンルで探す</h3>
+<ul class="scene-index-list">
+${items.join('\n')}
+${moreLink}
+</ul>
+</div>`;
+  })();
+
+  const rendered2 = [rendered, hubGroupHtml].filter(Boolean).join('\n');
+  if (!rendered2) return null;
 
   return `<!-- SCENE-INDEX:START -->
 <section id="scene-index" class="scene-index" aria-label="目的から探す">
 <h2 class="scene-index-title">目的から探す</h2>
 <p class="scene-index-lead">シーン・エリア・ジャンルごとに、現役の飲食店マネージャーが選び直した特集をまとめています。</p>
-${rendered}
+${rendered2}
 </section>
 <!-- SCENE-INDEX:END -->`;
 }
