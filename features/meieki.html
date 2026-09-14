@@ -81,7 +81,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 @media(max-width:640px){.art-hero-image img{aspect-ratio:3/2;border-radius:0;}.art-hero-image{padding:0;}}
 .store-link{display:inline-flex !important;align-items:center;gap:.35rem;background:var(--gold);color:#fff !important;border:none !important;padding:.55rem 1.1rem !important;border-radius:4px;font-size:var(--fs-sm) !important;font-weight:500;letter-spacing:.04em;transition:background .15s,transform .1s;text-decoration:none;box-shadow:0 1px 3px rgba(122,92,16,.2);}
 .store-link:hover{background:var(--gold2) !important;transform:translateY(-1px);box-shadow:0 3px 8px rgba(122,92,16,.3);}
-.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}
+.store-link::after{content:"→";margin-left:.15rem;font-weight:400;}.store-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem;}
 .store-link[href*="hotpepper"]{background:#fff;color:var(--gold) !important;border:1px solid var(--gold) !important;box-shadow:none;}
 .store-link[href*="hotpepper"]:hover{background:rgba(122,92,16,.08);}
 /*ROSTER_BADGE_CSS*/
@@ -166,8 +166,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">大衆居酒屋でありながら食べログ4.8を維持するのは、低価格帯では接客クオリティが評価の決め手になるため、むしろ難易度が高い。「賑やかな雰囲気」という価値を一貫して担保していることが掲載の根拠。</p>
           <div class="store-tags"><span class="store-tag">90〜100名</span><span class="store-tag">2000〜3000円</span><span class="store-tag">居酒屋</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003828684.html" onclick="trackEvent('feature_store_click',{store:'餃子のかっちゃん 名古屋駅3丁目店',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003828684/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003828684',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003828684.html" onclick="trackEvent('feature_store_click',{store:'餃子のかっちゃん 名古屋駅3丁目店',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003828684/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003828684',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -181,8 +181,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">博多の炉端焼き文化を名古屋駅前で展開するコンセプトは九州料理ファンへの明確な訴求力を持つ。炉端というスタイルと博多の食材の組み合わせは再現性が難しく食べログ4.7の維持はそれが本物であることを示している。</p>
           <div class="store-tags"><span class="store-tag">40〜50名</span><span class="store-tag">5000円以上</span><span class="store-tag">居酒屋</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004470552.html" onclick="trackEvent('feature_store_click',{store:'炉端焼き アナタと博多 名古屋駅前店',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004470552/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004470552',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004470552.html" onclick="trackEvent('feature_store_click',{store:'炉端焼き アナタと博多 名古屋駅前店',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ004470552/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004470552',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -196,8 +196,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">名駅東7分・伏見西6分の両駅利用で、5,000～7,000円帯焼肉の接待対応力</p>
           <div class="store-tags"><span class="store-tag">焼肉</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003625137.html" onclick="trackEvent('feature_store_click',{store:'飛騨牛焼肉　牛ざんまい　納屋橋リバーサイド店',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003625137/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003625137',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003625137.html" onclick="trackEvent('feature_store_click',{store:'飛騨牛焼肉　牛ざんまい　納屋橋リバーサイド店',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003625137/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003625137',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -211,8 +211,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">駐車場2,100台、3,500円の和食は車来店層の受け皿としての価値</p>
           <div class="store-tags"><span class="store-tag">和食</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001276428.html" onclick="trackEvent('feature_store_click',{store:'雅じゃぽ イオンモール名古屋則武新町店',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001276428/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001276428',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001276428.html" onclick="trackEvent('feature_store_click',{store:'雅じゃぽ イオンモール名古屋則武新町店',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001276428/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001276428',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -226,8 +226,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">名駅直結でワイン×肉、3,500円の競争力は昼営業で活きる。</p>
           <div class="store-tags"><span class="store-tag">バー</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001169923.html" onclick="trackEvent('feature_store_click',{store:'ニクバルダカラ 名駅シンフォニー豊田ビル',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001169923/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001169923',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001169923.html" onclick="trackEvent('feature_store_click',{store:'ニクバルダカラ 名駅シンフォニー豊田ビル',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001169923/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001169923',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -241,8 +241,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">「名古屋で最も予約の取れないビストロ」と称される超人気店。わずか1日で2ヶ月分の予約が埋まるほどの人気を誇り、その理由は圧倒的なコストパフォーマンスと本格的なフレンチビストロ料理にあります。友人との食事やカジュアルなデ…</p>
           <div class="store-tags"></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000661748.html" onclick="trackEvent('feature_store_click',{store:'サラマンジェドゥカジノ',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ000661748/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J000661748',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000661748.html" onclick="trackEvent('feature_store_click',{store:'サラマンジェドゥカジノ',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ000661748/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J000661748',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -256,8 +256,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">川名駅徒歩10分、501～1000円帯で気軽に立ち寄れるスイーツ専門。県道30号線沿いで駐車利便も◎</p>
           <div class="store-tags"><span class="store-tag">カフェ</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000644253.html" onclick="trackEvent('feature_store_click',{store:'珈琲家比呂野',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ000644253/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J000644253',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J000644253.html" onclick="trackEvent('feature_store_click',{store:'珈琲家比呂野',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ000644253/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J000644253',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -271,8 +271,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">伏見駅5分、3,500円の洋食、ランチ営業で名駅からの昼客も視野、立地効率が良い</p>
           <div class="store-tags"><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001215857.html" onclick="trackEvent('feature_store_click',{store:'カフェカナル 1610 ホテルJALシティ名古屋 錦 2F',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001215857/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001215857',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001215857.html" onclick="trackEvent('feature_store_click',{store:'カフェカナル 1610 ホテルJALシティ名古屋 錦 2F',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001215857/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001215857',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -286,8 +286,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">日本酒30種類 ご宴会コースも◎</p>
           <div class="store-tags"><span class="store-tag">40〜50名</span><span class="store-tag">〜1000円</span><span class="store-tag">海鮮</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001179548.html" onclick="trackEvent('feature_store_click',{store:'産直鮮魚の海鮮酒場をかし',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001179548/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001179548',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001179548.html" onclick="trackEvent('feature_store_click',{store:'産直鮮魚の海鮮酒場をかし',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001179548/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001179548',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -301,8 +301,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">近鉄名古屋駅正面3分、5,500円でランチ営業、近鉄利用者の信頼系店舗</p>
           <div class="store-tags"><span class="store-tag">和食</span><span class="store-tag">5000円以上</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004090812.html" onclick="trackEvent('feature_store_click',{store:'ふじさん名駅店 昼だけうなぎ屋 名駅店',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004090812/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004090812',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004090812.html" onclick="trackEvent('feature_store_click',{store:'ふじさん名駅店 昼だけうなぎ屋 名駅店',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ004090812/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004090812',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -316,8 +316,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">ミヤコ地下街4出口3分、4,500円で昼営業。焼肉は昼営業で客単価安定層を確保。</p>
           <div class="store-tags"><span class="store-tag">焼肉</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001203646.html" onclick="trackEvent('feature_store_click',{store:'肉のよいち 名駅本店',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001203646/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001203646',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001203646.html" onclick="trackEvent('feature_store_click',{store:'肉のよいち 名駅本店',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001203646/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001203646',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -331,8 +331,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">駅徒歩7分は名古屋駅圏で競争力あり、3千円帯バーは数少ない存在</p>
           <div class="store-tags"><span class="store-tag">バー</span><span class="store-tag">3000〜5000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003599374.html" onclick="trackEvent('feature_store_click',{store:'シーシャカフェバー Red Magic 名古屋駅店',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003599374/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003599374',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003599374.html" onclick="trackEvent('feature_store_click',{store:'シーシャカフェバー Red Magic 名古屋駅店',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003599374/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003599374',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -346,8 +346,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">駅6分で2,500円、20名超の団体対応が可能な居酒屋</p>
           <div class="store-tags"><span class="store-tag">居酒屋</span><span class="store-tag">2000〜3000円</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004403776.html" onclick="trackEvent('feature_store_click',{store:'名古屋きんしゃち 名駅南店',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ004403776/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004403776',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J004403776.html" onclick="trackEvent('feature_store_click',{store:'名古屋きんしゃち 名駅南店',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ004403776/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004403776',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -361,8 +361,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">おしゃれな雰囲気のダイニング。特別な日にもおすすめ</p>
           <div class="store-tags"><span class="store-tag">100名以上</span><span class="store-tag">5000円以上</span><span class="store-tag">居酒屋</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003942920.html" onclick="trackEvent('feature_store_click',{store:'海乃鶏 名古屋駅前店',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ003942920/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003942920',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J003942920.html" onclick="trackEvent('feature_store_click',{store:'海乃鶏 名古屋駅前店',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ003942920/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003942920',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
@@ -376,8 +376,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
           <p class="store-desc">◆駅近名古屋駅3分 ◆創業40余年の歴史の味</p>
           <div class="store-tags"><span class="store-tag">70〜80名</span><span class="store-tag">2000〜3000円</span><span class="store-tag">焼肉</span></div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001203878.html" onclick="trackEvent('feature_store_click',{store:'大衆ホルモン やきにく 煙力 名駅広小路店',feature:'meieki'})">詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/strJ001203878/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001203878',feature:'meieki',target:'hotpepper'})">予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/J001203878.html" onclick="trackEvent('feature_store_click',{store:'大衆ホルモン やきにく 煙力 名駅広小路店',feature:'meieki'})">詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/strJ001203878/" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001203878',feature:'meieki',target:'hotpepper'})">予約はこちら</a>
           </div>
         </div>
       </div>
