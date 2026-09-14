@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-14T17:27:23.616Z",
+  "generatedAt": "2026-09-14T18:01:19.021Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1068,
-    "pageViews": 1969,
-    "sessions": 1313,
-    "avgSessionDuration": 161.3,
-    "bounceRate": 0.299,
-    "pagesPerSession": 1.5
+    "activeUsers": 1069,
+    "pageViews": 1981,
+    "sessions": 1315,
+    "avgSessionDuration": 162.6,
+    "bounceRate": 0.3,
+    "pagesPerSession": 1.51
   },
   "dailyReference": {
     "date": "2026-09-13",
@@ -18,21 +18,21 @@
   "channels": {
     "sessions": {
       "organic": 909,
-      "direct": 293,
+      "direct": 295,
       "social": 8,
       "ai_assistant": 100,
       "referral": 19,
       "paid": 0,
-      "other": 10
+      "other": 11
     },
     "pct": {
-      "organic": 67.9,
-      "direct": 21.9,
+      "organic": 67.7,
+      "direct": 22,
       "social": 0.6,
       "ai_assistant": 7.5,
       "referral": 1.4,
       "paid": 0,
-      "other": 0.7
+      "other": 0.8
     }
   },
   "sourceBreakdown": [
@@ -64,7 +64,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 42
+      "sessions": 44
     },
     {
       "source": "duckduckgo",
@@ -117,6 +117,11 @@
       "sessions": 4
     },
     {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 2
+    },
+    {
       "source": "cn.bing.com",
       "medium": "referral",
       "sessions": 2
@@ -125,11 +130,6 @@
       "source": "ecosia.org",
       "medium": "organic",
       "sessions": 2
-    },
-    {
-      "source": "(data not available)",
-      "medium": "(data not available)",
-      "sessions": 1
     },
     {
       "source": "blekko.com",
@@ -190,13 +190,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 362,
-      "sessions": 312
+      "pageViews": 364,
+      "sessions": 313
     },
     {
       "path": "/",
-      "pageViews": 359,
-      "sessions": 218
+      "pageViews": 360,
+      "sessions": 219
     },
     {
       "path": "/index.html",
@@ -274,7 +274,7 @@
       "other": 4
     },
     "ctaClickRate_organic": 7.2,
-    "ctaClickRate_direct": 12.6,
+    "ctaClickRate_direct": 12.5,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -685,7 +685,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1068,
+    "value": 1069,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
