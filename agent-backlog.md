@@ -6,6 +6,49 @@
 
 ---
 
+### [DSN-006] 特集記事6本のヒーロー画像（AIっぽいイメージ図/SVG）を実写に差し替え、店舗ごとの写真欠落・「編集部推薦」バッジの不整合を修正 ✅
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-09-15
+- **category**: design / trust
+- **owner**: Designer + Builder
+- **source**: オーナー報告（スクリーンショット添付）。「飲食人が通う名古屋の10軒」特集のヒーロー画像がAIで作成されたイメージ図（箸のSVGイラスト）になっている／特集内の店舗ごとに写真が無い／「編集部推薦」バッジが揃っていない、という3点の指摘。「全ての特集ページ・特集内の店舗ページに同じ修正を当てはめてほしい」という依頼
+- **調査で判明した事実（検証可能）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | `nagoya-dining-professionals.html` のヒーローは `assets/feature-figures/*.svg`（箸のイラスト）で実写ではない。同様に `nagoya-kaoawase-washoku.html` / `nagoya-meieki-business-dinner.html` も SVG イラストがヒーロー | 各ファイルの `.art-hero-image img` |
+  | 同ファイルは10店すべてに `.store-photo` の CSS 定義があるが、実際の店カードには**1件も** `<div class="store-photo">` が無かった（CSSだけ存在し使われていない） | grep差分 |
+  | `nagoya-dining-professionals.html` は10店**全員**に `✦ 編集部推薦` バッジを付けていたが、`data/editor_picks.json` の `visitStatus` を確認すると10店中2店（visited）のみが根拠を持ち、残り8店は `desk`（未訪問リサーチ）— バッジが実データと対応していなかった | `editor_picks.json` クロスチェック |
+  | 同種のテンプレート（`gen_industry_features.js` が生成した3本: industry-pick-izakaya / settai-secret / reservation-difficult）は `visitStatus` 連動の `編集部訪問済`/`取材済` バッジを正しく実装していたが、それでも店カード計28件中8件（3+1+4）で `.store-photo` が欠落していた | 全69特集ファイルの棚卸し（cards vs photoTags 集計） |
+  | `nagoya-kaoawase-washoku.html` の7店中2店（日本料理 旬彩／うなぎのしろむら 泉店）は `data/stores.json` の `編集部推薦: true` が実在するのに、当該ファイルにはバッジの CSS 定義すら存在しなかった。もう1店（旬菜家 楽）は `manual_stores.json` で `編集部推薦: true` だが `写真URL` が空欄（写真そのものが存在しない） | `stores.json` / `manual_stores.json` クロスチェック |
+  | 追加しようとした写真URLのうち4件（`data/stores.json` にキャッシュされた HotPepper 画像URL）が実際には **404**（CDN側で失効）だった。site全体で同じ画像IDを参照する `stores/*.html` も同様に壊れており、この特集記事群に限らないサイト全体のデータ鮮度問題と判明 | `curl -I` で全21件の追加予定URLを実測 |
+- **brand-filter**: ✅ 適合 — 制約9（実写優先・AI/ストック不使用）と制約10（検証できる事実だけで判定・自己申告値をゲートにしない）に直接対応。バッジは「アドホックに書いた文言」から「`editor_picks.json`/`stores.json`/`manual_stores.json` の実データに対応する表示」に置き換えた
+- **実装内容**:
+  1. ヒーロー画像: 3ファイル（dining-professionals / kaoawase-washoku / meieki-business-dinner）の SVG イラストを、その記事自身が掲載する店舗の実写（HotPepper／Google Places・既にサイト内で承認済みのURLを再利用）に差し替え。`og:image`/`twitter:image` も同じ実写に合わせて更新（SNS共有サムネイルがイラストのまま出る問題も同時に解消）
+  2. 店舗写真: 6ファイル・カード計55件のうち欠落していた28件に `.store-photo` を追加（`data/stores.json` の `写真URL` を参照）。404が判明した4件と、写真データが存在しない1件（旬菜家 楽）は「壊れた画像」を出すのではなく写真なし表示のまま残した（取り繕わない・制約10）
+  3. 編集部推薦/訪問済バッジ: `nagoya-dining-professionals.html` の全10店ブランケット表示を撤回し、`editor_picks.json` の `visitStatus==='visited'` の2店のみ `編集部訪問済` に付け替え。`nagoya-kaoawase-washoku.html` に `.store-badge` CSS を新設し、`編集部推薦: true` を持つ3店（旬菜家 楽／日本料理 旬彩／うなぎのしろむら 泉店）にのみ `編集部推薦` バッジを追加
+  4. デザインシステム: 上記6ファイルのうち4ファイルで `.store-badge`/`.media-features` に日本語テキストへ `DM Mono`（等幅フォント）が使われていた（`agents/designer.md` 禁止事項）ため `var(--font-body)` に統一
+- **QAゲート（証跡）**:
+  - `node scripts/audit_design_system.js --report` → 対象6ファイルの違反 0件
+  - `node scripts/audit_feature_stores.js` → 実在不明掲載店は既存の1件（旬菜家 楽・本タスク以前から）のみ、新規の劣化なし
+  - 追加した写真URL全21件を `curl -I` で実測し、404の4件は掲載を見送り／残り17件は 200 を確認
+  - HTMLタグバランス（div/article/h3）を6ファイルで機械検査 → 不整合0件
+  - ローカルサーバでヒーロー・店舗カード・バッジ表示を目視確認（スクリーンショット）
+- **follow-up**:
+  - `data/stores.json` の HotPepper 写真URLキャッシュが失効する問題（今回4件検出、`stores/*.html` にも同一の壊れたURLが伝播）は本タスクの範囲外。DataKeeper 向けに写真URL生存監視タスクを別途起票（下記 spawn_task 参照）
+  - `nagoya-kaoawase-washoku.html` の掲載店「旬菜家 楽」が `LOCAL_STORES` に実在しない（`audit_feature_stores.js` 検出・本タスク以前からの既知issue）の解消は未対応
+
+### [DSN-006 追加分] 店舗カードの「詳細ページを見る/予約はこちら」ボタンの矢印重複・視認性を修正 ✅
+
+- **detected**: 2026-09-15（オーナーがDSN-006の確認中に発見・スクリーンショット添付）
+- **description**: ユーザーがDSN-006の修正結果を確認中、ボタンのテキストに矢印が二重に出ている（「予約はこちら → →」）上、`.store-actions` にレイアウト用CSSが一切無く、2つのボタンが隙間なく縦に接触して見づらい状態を発見
+- **調査で判明した事実**: `.store-link` の CSS が `::after{content:"→"}` で矢印を自動付与する設計だが、リンクテキスト自体にも `→` が手書きで入っており二重矢印になっていた。`.store-actions{}` のCSS定義がどのファイルにも存在せず、ボタンが素のブロック/インラインフレックスの挙動で密着していた。同一パターンが特集記事20本（`nagoya-dining-professionals.html`系とは別系統の「ロスター」テンプレート群: banquet / birthday / date / enmkai-kanji / girls-party / gw-2026 / hard-to-book / industry-insiders-pick / kospa-insider / large-group / meieki-hitori-nomi / meieki / mothers-day / nagoya-lunch-washoku / nagoya-meieki-business-dinner / nagoya-yakiniku-guide / private-room / sakae / settai-guide / spring-terrace）全てに同一の欠陥が存在すると確認
+- **実装内容**: 20ファイル全てで (1) `.store-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem;}` を追加 (2) リンクテキストの手書き矢印（「詳細ページを見る →」「予約はこちら →」「食べログで詳細を見る →」）を除去し `::after` の1本の矢印のみに統一
+- **QAゲート**: `audit_design_system.js --report` で対象20ファイル違反0件／モバイル(375px)実機表示で複数ファイルを目視確認・ボタンの間隔と矢印が正常化
+- **副次的発見**: `sakae.html`/`meieki.html` で「焼肉ホタル 栄東店」の写真が表示されず（DSN-006で検出したHotPepper写真URL失効と同一店舗）。既存のDataKeeper向けフォローアップ課題（写真URL生存監視）の対象に含まれる、本件では未修正
+
+---
+
 ### [SEO-094] エリア×ジャンル×条件の一覧ページ（stores/area/配下・691ページ）を新設し、「栄 焼肉」「名駅 居酒屋 個室」のような検索面を初めて作った（死にリンクだった「もっと見る」導線も同時に修理）
 
 - **priority**: P1 → **status**: done
