@@ -1,0 +1,465 @@
+{
+  "date": "2026-09-15",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "今池・大久手山本屋の味噌煮込みが海外の棚へ——業界人が読む輸出の設計",
+      "verdict": "PASS",
+      "total": 110,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "味噌煮込みうどん",
+          "feature": "features/nagoya-miso-nikomi-udon.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,シーン,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 158字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「今池」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「味噌煮込み」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "今池の味噌煮込み、なぜ「山本屋」が三つあるのか——業界人の目利き",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "味噌煮込みうどん",
+          "feature": "features/nagoya-miso-nikomi-udon.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,予約,シーン,接待,デート) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 3件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 123字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「今池」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「味噌煮込み」+2"
+        ]
+      },
+      "gate_note": "97点（自動公開ライン 100点）。主な不足: topicality -13"
+    },
+    {
+      "id": "c3",
+      "title_draft": "新栄のフレンチ串カツ marbrade、名店の跡を継ぐという選択",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 89,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "フレンチ",
+          "feature": "features/nagoya-french-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,予約,シーン,デート,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 113字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「フレンチ」+2"
+        ]
+      },
+      "gate_note": "89点（自動公開ライン 100点）。主な不足: topicality -13 / brand_fit -4 / search_intent -4"
+    },
+    {
+      "id": "c5",
+      "title_draft": "今池・大久手山本屋、46席を通しで開け続ける回転の設計",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 87,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,シーン,一人飲み,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 109字 +4",
+          "title 27字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「今池」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "87点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -6 / brand_fit -4"
+    },
+    {
+      "id": "c4",
+      "title_draft": "東桜の鉄板フレンチ L'atelier K、7席という価格の決め方",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 86,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 3
+      },
+      "search_intent_links": [
+        {
+          "kw": "フレンチ",
+          "feature": "features/nagoya-french-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 8件 (価格帯,コース,席,予約,シーン,接待,デート,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 113字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「フレンチ」+2"
+        ]
+      },
+      "gate_note": "86点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -7 / brand_fit -4"
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "今池・大久手山本屋の味噌煮込みが海外の棚へ——業界人が読む輸出の設計",
+      "lead_draft": "2026年9月14日、名古屋めしの老舗・大久手山本屋が家庭用キットの海外展開を発表した。シンガポールのDON DON DONKI、そして香港。すでに香港2店・ソウル・深圳に実店舗を持つ店が、いま「棚」を取りに行く意味を、編集部は価格帯と回転のふたつから読む。吹上3分・今池5分、46席の本店は今日も通しで開いている。",
+      "angle": "業界人視点で、海外出店から物販への移行を「席数46・通し営業の回転」と「ランチ1,200円／夜2,000円／宴会4,000円の価格帯」から読み、一人飲みにも個室の宴会にも効く使い分けのシーン適性まで落とす",
+      "main_store": {
+        "name": "大久手山本屋",
+        "id": "",
+        "area": "千種区大久手（吹上・今池）",
+        "genre": "味噌煮込みうどん"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 名古屋めしの老舗「大久手山本屋」とアイケイがタッグ 海外向けに味噌煮込みうどんを発売",
+          "url": "https://prtimes.jp/main/html/rd/p/000000473.000016153.html",
+          "date": "2026-09-14"
+        },
+        {
+          "label": "大久手山本屋 公式サイト（国内3店・海外4店・こだわり）",
+          "url": "https://a-yamamotoya.co.jp/",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "大久手山本屋 公式X（@yamamotoya_miso）",
+          "url": "https://x.com/yamamotoya_miso",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "大久手山本屋 公式Instagram（@yamamotoya_official）",
+          "url": "https://www.instagram.com/yamamotoya_official/",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "ぐるなび: 味噌煮込みうどん 山本屋 大久手店（席数・予算・アクセス）",
+          "url": "https://r.gnavi.co.jp/8a9xe3fh0000/",
+          "date": "2026-09-15"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "今池の味噌煮込み、なぜ「山本屋」が三つあるのか——業界人の目利き",
+      "lead_draft": "名古屋で味噌煮込みうどんを探すと「山本屋」が三つ出てくる。本店、総本家、そして大久手。旅行者はまず迷い、地元の人ですら説明できない。大正14年の大須から分かれた三系統を整理したうえで、価格帯と席の作りがどう違うのかを編集部が業界人の視点で並べる。",
+      "angle": "三系統の違いを価格帯・席・予約のしやすさで比較し、接待やデートなど用途別のシーン適性に落とす",
+      "main_store": {
+        "name": "大久手山本屋",
+        "id": "",
+        "area": "千種区大久手（吹上・今池）",
+        "genre": "味噌煮込みうどん"
+      },
+      "sources": [
+        {
+          "label": "大久手山本屋 公式サイト「山本屋について」",
+          "url": "https://a-yamamotoya.co.jp/about/",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "PR TIMES: 大久手山本屋×アイケイ 海外向け味噌煮込みうどん",
+          "url": "https://prtimes.jp/main/html/rd/p/000000473.000016153.html",
+          "date": "2026-09-14"
+        },
+        {
+          "label": "ぐるなび: 山本屋 大久手店",
+          "url": "https://r.gnavi.co.jp/8a9xe3fh0000/",
+          "date": "2026-09-15"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "新栄のフレンチ串カツ marbrade、名店の跡を継ぐという選択",
+      "lead_draft": "新栄で長く愛された串カツの名店が幕を下ろし、そのあとにフランス惣菜と串カツの店が入った。居抜きでも看板の継承でもない、「跡を継ぐ」という第三の選択が名古屋の路面店で起きている。14席の設計と価格帯から、編集部がその判断を読む。",
+      "angle": "名店の後継という業態転換を、14席という席数と2,000〜3,000円の価格帯、予約の取り方から読み、一人飲みとデートのシーン適性に落とす",
+      "main_store": {
+        "name": "フランス惣菜と串カツ marbrade",
+        "id": "",
+        "area": "新栄",
+        "genre": "フレンチ・串カツ"
+      },
+      "sources": [
+        {
+          "label": "dressing: 『まんもちゃん』のDNAを受け継ぐ『marbrade』",
+          "url": "https://www.gnavi.co.jp/dressing/article/21919/",
+          "date": "2019-02-10"
+        },
+        {
+          "label": "食べログ: フランス惣菜と串カツ マルブラード",
+          "url": "https://tabelog.com/aichi/A2301/A230104/23067674/",
+          "date": "2026-09-13"
+        },
+        {
+          "label": "Retty: フランス惣菜と串カツmarbrade",
+          "url": "https://retty.me/area/PRE23/ARE64/SUB6401/100001215910/",
+          "date": "2026-09-13"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "東桜の鉄板フレンチ L'atelier K、7席という価格の決め方",
+      "lead_draft": "東桜の路地に7席だけの鉄板フレンチがある。鉄板焼きとフレンチを掛けた業態は名古屋に少なくないが、7席で15,000円台を成立させる設計は簡単ではない。自然派ワイン約100種という在庫の持ち方を含め、編集部が業界人の視点で読む。",
+      "angle": "7席・15,000円台のコース価格帯を、仕込みと回転、予約の取り方から読み、接待とデートのシーン適性に落とす",
+      "main_store": {
+        "name": "L'atelier K",
+        "id": "",
+        "area": "東桜",
+        "genre": "鉄板フレンチ"
+      },
+      "sources": [
+        {
+          "label": "dressing: 正統派フレンチの道を歩んだシェフが、あえて「鉄板フレンチ」にこだわるワケ",
+          "url": "https://www.gnavi.co.jp/dressing/article/21285/",
+          "date": "2019-01-20"
+        },
+        {
+          "label": "ヒトサラ: L'atelier K",
+          "url": "https://hitosara.com/0032028423/",
+          "date": "2026-09-13"
+        },
+        {
+          "label": "公式: ラトリエK",
+          "url": "https://latelier.jp/",
+          "date": "2026-09-15"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "今池・大久手山本屋、46席を通しで開け続ける回転の設計",
+      "lead_draft": "11時から21時まで、中休みなし。味噌煮込みうどんの老舗が46席を通しで開け続けているのは、根性ではなく設計だ。土鍋で一杯ずつ煮込む料理は、実は回転と相性が悪い。それでも通しが成立する理由を、編集部が厨房の側から読む。",
+      "angle": "通し営業と土鍋提供の相性を仕込みと繁忙のずらし方から読み、席数46と価格帯、一人飲みのシーン適性に落とす",
+      "main_store": {
+        "name": "大久手山本屋",
+        "id": "",
+        "area": "千種区大久手（吹上・今池）",
+        "genre": "味噌煮込みうどん"
+      },
+      "sources": [
+        {
+          "label": "ぐるなび: 山本屋 大久手店（席数・営業時間）",
+          "url": "https://r.gnavi.co.jp/8a9xe3fh0000/",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "大久手山本屋 公式店舗ページ",
+          "url": "https://a-yamamotoya.co.jp/store/",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "名古屋コンシェルジュ: 山本屋大久手店",
+          "url": "https://www.nagoya-info.jp/gourmet/detail/7/",
+          "date": "2026-09-15"
+        }
+      ]
+    }
+  ]
+}
