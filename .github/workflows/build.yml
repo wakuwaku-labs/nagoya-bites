@@ -302,12 +302,12 @@ jobs:
 
       - name: デザインシステム準拠監査（DSN-001・可読性ゲート）
         # 全ページが assets/css/nb.css・正本フォントURL・font-size床(12px)・許可フォントウェイトに
-        # 準拠しているかを検査する（scripts/audit_design_system.js）。stores/ は既存の閉店delist済み
-        # 「孤児」ページ（gen-store-pages.js の生成対象外・約630件・ISSUE-102と同種）が旧マークアップの
-        # まま残るため、当面は非ブロッキングで運用し、Designer が違反傾向を確認したうえで
-        # 段階的に blocking 化する（ISSUE-121 の教訓: 新設ゲートはCIが緑を1回確認してから昇格）。
-        run: node scripts/audit_design_system.js --report --sample 200
-        continue-on-error: true
+        # 準拠しているかを検査する（scripts/audit_design_system.js）。
+        # storeAuditScope=active_only（data/design_system.json）で孤児ページ（ISSUE-102・
+        # data/stores.json に HP ID が存在しない閉店 delist 済みの残骸）を監査対象から除外し、
+        # アクティブな店舗ページのみを検査する。これにより ISSUE-102 の解消を待たずにブロッキング化できる。
+        # DSN-001 acceptance: 孤児ページ除外の恒久化（ISSUE-102 の待ち を回避する代替パス）。
+        run: node scripts/audit_design_system.js --check --sample 200
 
       - name: サイト共通クローム整合性監査（DSN-003・header/nav/breadcrumb/footer の統一）
         # scripts/lib/site_chrome.js を正本に、全ページのクローム部分が再生成値と一致するかを検査する。
