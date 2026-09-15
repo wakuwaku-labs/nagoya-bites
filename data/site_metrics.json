@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-15T15:06:31.099Z",
+  "generatedAt": "2026-09-15T15:19:22.431Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1077,
-    "pageViews": 2000,
-    "sessions": 1327,
-    "avgSessionDuration": 161,
-    "bounceRate": 0.292,
+    "activeUsers": 1079,
+    "pageViews": 2002,
+    "sessions": 1330,
+    "avgSessionDuration": 160.6,
+    "bounceRate": 0.294,
     "pagesPerSession": 1.51
   },
   "dailyReference": {
@@ -18,21 +18,21 @@
   "channels": {
     "sessions": {
       "organic": 933,
-      "direct": 292,
+      "direct": 294,
       "social": 8,
       "ai_assistant": 98,
       "referral": 19,
       "paid": 0,
-      "other": 6
+      "other": 7
     },
     "pct": {
-      "organic": 68.8,
-      "direct": 21.5,
+      "organic": 68.7,
+      "direct": 21.6,
       "social": 0.6,
       "ai_assistant": 7.2,
       "referral": 1.4,
       "paid": 0,
-      "other": 0.4
+      "other": 0.5
     }
   },
   "sourceBreakdown": [
@@ -64,7 +64,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 38
+      "sessions": 40
     },
     {
       "source": "unknown",
@@ -107,13 +107,13 @@
       "sessions": 4
     },
     {
-      "source": "(data not available)",
-      "medium": "(data not available)",
-      "sessions": 3
-    },
-    {
       "source": "unknown",
       "medium": "",
+      "sessions": 4
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
       "sessions": 3
     },
     {
@@ -186,17 +186,17 @@
     {
       "path": "/features/nagoya-solo-dining.html",
       "pageViews": 378,
-      "sessions": 325
+      "sessions": 326
     },
     {
       "path": "/",
-      "pageViews": 351,
-      "sessions": 214
+      "pageViews": 352,
+      "sessions": 215
     },
     {
       "path": "/index.html",
       "pageViews": 160,
-      "sessions": 92
+      "sessions": 93
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -269,7 +269,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.1,
-    "ctaClickRate_direct": 13.7,
+    "ctaClickRate_direct": 13.6,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -649,7 +649,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1077,
+    "value": 1079,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
