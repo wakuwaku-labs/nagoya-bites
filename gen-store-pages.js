@@ -705,14 +705,21 @@ function renderStorePage(s, slug, relatedStores) {
   // 選定結果と食い違う場合（主役が選定キャッシュと別経路で上書きされている等）に上限を超えない
   // ための最終防衛線。data/ig_post_policy.json の maxPostsPerStore が唯一の情報源。
   const igAllUrls = [igPostUrl, ...igExtraUrls].slice(0, IG_MAX_POSTS_PER_STORE);
+  // ⚠️ 2026-09-16: 当初 CSS Grid（.ig-grid）で複数カードを並べていたが、本番で実際に
+  //   Instagramへログイン済みの通常ブラウザで確認したところ、既存の単一投稿ページ（Grid未使用）
+  //   では表示されるのに、この複数投稿ページ（Grid使用）だけ表示されない差が実地で確認された。
+  //   Grid/Flexコンテナは絶対配置された子要素（embed.jsが読み込み中に一時的に使う
+  //   position:absolute）の配置基準（containing block）を通常のブロック要素と変えてしまう
+  //   仕様があり、embed.js側の読み込み完了検知を妨げている可能性が高いため、レイアウトを
+  //   Grid/Flexに一切依存しない形（単純な縦積み・既存の単一投稿ページと同一の入れ子構造）に戻した。
+  //   複数カードの横並び表示は、この構造的な差を無くした上で再度安全な形（CSS multi-column等）
+  //   を検証してから再導入する。
   const igEmbedHtml = hasIgEmbed ? `
   <div class="ig-photos">
     <h2>公式Instagramの実際の写真</h2>
-    <div class="ig-grid">
-${igAllUrls.map(url => `      <blockquote class="instagram-media" data-instgrm-permalink="${url}" data-instgrm-version="14" style="margin:0;max-width:540px;min-width:280px;width:100%;background:#fff;border:1px solid var(--border);border-radius:3px;">
-        <a href="${url}" target="_blank" rel="noopener noreferrer">${name} の公式Instagram投稿を見る</a>
-      </blockquote>`).join('\n')}
-    </div>
+${igAllUrls.map(url => `    <blockquote class="instagram-media" data-instgrm-permalink="${url}" data-instgrm-version="14" style="margin:0 auto 1.2rem;max-width:540px;min-width:280px;width:100%;background:#fff;border:1px solid var(--border);border-radius:3px;">
+      <a href="${url}" target="_blank" rel="noopener noreferrer">${name} の公式Instagram投稿を見る</a>
+    </blockquote>`).join('\n')}
   </div>` : '';
 
   const tagPills = tags.map(t => `<span class="tag">${t}</span>`).join('');
@@ -814,8 +821,6 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .links-section h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .ig-photos{margin:0 0 2rem;}
 .ig-photos h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
-.ig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem;justify-items:center;}
-.ig-grid .instagram-media{justify-self:center;}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
