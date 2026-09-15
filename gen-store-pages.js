@@ -713,16 +713,21 @@ function renderStorePage(s, slug, relatedStores) {
   //   固定高さ(560px)で直接埋め込む方式を使っており、こちらは実機で表示を確認できた
   //   （postMessageによる動的リサイズに依存しないため、その完了待ちが要らない）。
   //   店舗ページ側もモーダルと同一の実績ある方式に合わせた。
+  //   2026-09-16 追記: この方式は固定高さのiframeを直接挿入するだけで、旧方式（公式embed.js）の
+  //   ような「読み込み中だけ position:absolute になる」挙動が無い。そのため CSS Grid で並べても
+  //   以前のような読み込み完了検知の阻害は起きない（オーナー要望「1画面に4つ」に対応・グリッド化）。
   const igEmbedHtml = hasIgEmbed ? `
   <div class="ig-photos">
     <h2>公式Instagramの実際の写真</h2>
+    <div class="ig-embed-grid">
 ${igAllUrls.map(url => {
     const reelM = url.match(/\/reel\/([A-Za-z0-9_-]+)/);
     const postM = url.match(/\/p\/([A-Za-z0-9_-]+)/);
     const code = reelM ? reelM[1] : (postM ? postM[1] : '');
     const embedSrc = reelM ? `https://www.instagram.com/reel/${code}/embed/` : `https://www.instagram.com/p/${code}/embed/`;
-    return `    <div class="ig-embed-box" data-ig-src="${embedSrc}"><a href="${url}" target="_blank" rel="noopener noreferrer">${name} の公式Instagram投稿を見る</a></div>`;
+    return `      <div class="ig-embed-box" data-ig-src="${embedSrc}"><a href="${url}" target="_blank" rel="noopener noreferrer">${name} の公式Instagram投稿を見る</a></div>`;
   }).join('\n')}
+    </div>
   </div>` : '';
 
   const tagPills = tags.map(t => `<span class="tag">${t}</span>`).join('');
@@ -824,7 +829,8 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .links-section h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .ig-photos{margin:0 0 2rem;}
 .ig-photos h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
-.ig-embed-box{width:100%;max-width:400px;margin:0 auto 1.2rem;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.ig-embed-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;}
+.ig-embed-box{width:100%;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
 .ig-embed-box iframe{width:100%;height:560px;border:0;display:block;}
 .ig-embed-box a{display:block;padding:1rem;color:var(--text);font-size:var(--fs-sm);text-decoration:underline;}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
