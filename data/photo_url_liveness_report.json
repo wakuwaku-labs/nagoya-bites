@@ -1,12 +1,12 @@
 {
   "version": 1,
   "lastRun": "2026-09-15",
-  "lastRunAt": "2026-09-15T07:10:49.975Z",
+  "lastRunAt": "2026-09-15T12:46:31.333Z",
   "checked": 4925,
   "summary": {
     "ok": 4789,
-    "dead": 136,
-    "unknown": 0,
+    "dead": 135,
+    "unknown": 1,
     "byHost": {
       "places": {
         "ok": 147,
@@ -15,8 +15,8 @@
       },
       "hotpepper": {
         "ok": 4642,
-        "dead": 136,
-        "unknown": 0
+        "dead": 135,
+        "unknown": 1
       }
     }
   },
@@ -762,16 +762,6 @@
       "lastChecked": "2026-09-15"
     },
     {
-      "店名": "金鯱酒場 きんしゃちさかば 金山店",
-      "host": "hotpepper",
-      "url": "https://imgfp.hotp.jp/IMGH/19/86/P044451986/P044451986_480.jpg",
-      "status": 404,
-      "ホットペッパーID": "J003763710",
-      "写真アセットID": "P044451986",
-      "firstDetected": "2026-09-15",
-      "lastChecked": "2026-09-15"
-    },
-    {
       "店名": "鍋屋ほたる 大須本店",
       "host": "hotpepper",
       "url": "https://imgfp.hotp.jp/IMGH/07/63/P048310763/P048310763_480.jpg",
@@ -1382,5 +1372,11 @@
       "lastChecked": "2026-09-15"
     }
   ],
-  "unknownSample": []
+  "unknownSample": [
+    {
+      "店名": "尚以",
+      "url": "https://imgfp.hotp.jp/IMGH/35/86/P039753586/P039753586_480.jpg",
+      "error": "timeout"
+    }
+  ]
 }
