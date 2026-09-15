@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-14T21:32:27.389Z",
+  "generatedAt": "2026-09-15T00:42:22.055Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1069,
-    "pageViews": 1989,
-    "sessions": 1315,
-    "avgSessionDuration": 163.6,
-    "bounceRate": 0.3,
+    "activeUsers": 1072,
+    "pageViews": 1994,
+    "sessions": 1319,
+    "avgSessionDuration": 163.2,
+    "bounceRate": 0.302,
     "pagesPerSession": 1.51
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 910,
-      "direct": 295,
+      "organic": 915,
+      "direct": 297,
       "social": 8,
       "ai_assistant": 102,
       "referral": 19,
@@ -27,9 +27,9 @@
     },
     "pct": {
       "organic": 67.7,
-      "direct": 21.9,
+      "direct": 22,
       "social": 0.6,
-      "ai_assistant": 7.6,
+      "ai_assistant": 7.5,
       "referral": 1.4,
       "paid": 0,
       "other": 0.8
@@ -39,7 +39,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 407
+      "sessions": 408
     },
     {
       "source": "bing",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 179
+      "sessions": 183
     },
     {
       "source": "chatgpt.com",
@@ -64,7 +64,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 44
+      "sessions": 46
     },
     {
       "source": "duckduckgo",
@@ -190,8 +190,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 364,
-      "sessions": 313
+      "pageViews": 367,
+      "sessions": 315
     },
     {
       "path": "/",
@@ -216,7 +216,7 @@
   ],
   "cta": {
     "outboundClicks": 127,
-    "ctaClickRate": 9.7,
+    "ctaClickRate": 9.6,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -685,7 +685,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1069,
+    "value": 1072,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
