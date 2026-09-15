@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-15T15:19:22.431Z",
+  "generatedAt": "2026-09-15T15:42:03.242Z",
   "lookbackDays": 30,
   "totals": {
     "activeUsers": 1079,
-    "pageViews": 2002,
+    "pageViews": 2003,
     "sessions": 1330,
-    "avgSessionDuration": 160.6,
+    "avgSessionDuration": 162,
     "bounceRate": 0.294,
     "pagesPerSession": 1.51
   },
@@ -18,7 +18,7 @@
   "channels": {
     "sessions": {
       "organic": 933,
-      "direct": 294,
+      "direct": 296,
       "social": 8,
       "ai_assistant": 98,
       "referral": 19,
@@ -26,8 +26,8 @@
       "other": 7
     },
     "pct": {
-      "organic": 68.7,
-      "direct": 21.6,
+      "organic": 68.6,
+      "direct": 21.7,
       "social": 0.6,
       "ai_assistant": 7.2,
       "referral": 1.4,
@@ -49,7 +49,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 234
+      "sessions": 235
     },
     {
       "source": "yahoo",
@@ -137,6 +137,11 @@
       "sessions": 2
     },
     {
+      "source": "unknown",
+      "medium": "(none)",
+      "sessions": 2
+    },
+    {
       "source": "blekko.com",
       "medium": "referral",
       "sessions": 1
@@ -167,11 +172,6 @@
       "sessions": 1
     },
     {
-      "source": "unknown",
-      "medium": "(none)",
-      "sessions": 1
-    },
-    {
       "source": "webnocular.com",
       "medium": "referral",
       "sessions": 1
@@ -195,7 +195,7 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 160,
+      "pageViews": 161,
       "sessions": 93
     },
     {
@@ -269,7 +269,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.1,
-    "ctaClickRate_direct": 13.6,
+    "ctaClickRate_direct": 13.5,
     "ctaClickRate_social": 0,
     "byPage": [
       {

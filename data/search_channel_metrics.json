@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-15T15:19:26.445Z",
+  "generatedAt": "2026-09-15T15:42:06.306Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1359,
+  "total_sessions": 1361,
   "engines": [
     {
       "key": "google",
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 330,
-      "pct": 24.3,
+      "pct": 24.2,
       "sources": [
         {
           "source": "bing",
@@ -40,13 +40,13 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 274,
+      "sessions": 275,
       "pct": 20.2,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 234
+          "sessions": 235
         },
         {
           "source": "(not set)",
@@ -114,8 +114,8 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 46,
-      "pct": 3.4,
+      "sessions": 47,
+      "pct": 3.5,
       "sources": [
         {
           "source": "unknown",
@@ -148,6 +148,11 @@
           "sessions": 2
         },
         {
+          "source": "unknown",
+          "medium": "(none)",
+          "sessions": 2
+        },
+        {
           "source": "blekko.com",
           "medium": "referral",
           "sessions": 1
@@ -165,11 +170,6 @@
         {
           "source": "sgyba.com",
           "medium": "referral",
-          "sessions": 1
-        },
-        {
-          "source": "unknown",
-          "medium": "(none)",
           "sessions": 1
         },
         {
@@ -255,13 +255,13 @@
     "from": "2026-09-14",
     "to": "2026-09-15",
     "delta": {
-      "google": 11,
+      "google": 4,
       "bing": 18,
-      "direct": -6,
-      "yahoo": 7,
-      "ai_assistant": 1,
-      "other": 3,
-      "duckduckgo": 0,
+      "direct": -11,
+      "yahoo": 3,
+      "ai_assistant": -4,
+      "other": 6,
+      "duckduckgo": -2,
       "social": 0
     }
   },
