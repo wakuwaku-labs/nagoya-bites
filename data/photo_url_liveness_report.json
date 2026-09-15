@@ -1,0 +1,1382 @@
+{
+  "version": 1,
+  "lastRun": "2026-09-15",
+  "lastRunAt": "2026-09-15T12:46:31.333Z",
+  "checked": 4925,
+  "summary": {
+    "ok": 4789,
+    "dead": 135,
+    "unknown": 1,
+    "byHost": {
+      "places": {
+        "ok": 147,
+        "dead": 0,
+        "unknown": 0
+      },
+      "hotpepper": {
+        "ok": 4642,
+        "dead": 135,
+        "unknown": 1
+      }
+    }
+  },
+  "dead": [
+    {
+      "店名": "焼肉ホタル 栄東店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/45/80/P048954580/P048954580_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004422261",
+      "写真アセットID": "P048954580",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "焼肉酒場 番長",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/24/41/P049482441/P049482441_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004537044",
+      "写真アセットID": "P049482441",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "個室×夜カフェ  FYN フィン 栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/51/55/P048375155/P048375155_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004445342",
+      "写真アセットID": "P048375155",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "鶏ん家 栄住吉店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/66/63/P049706663/P049706663_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004536812",
+      "写真アセットID": "P049706663",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "ウマカーよかばい 名古屋駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/54/02/P026575402/P026575402_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001168209",
+      "写真アセットID": "P026575402",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "日本酒と干物と燻製　居酒屋かけはし",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/43/90/P049584390/P049584390_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004559158",
+      "写真アセットID": "P049584390",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "鶏ん家 名古屋新栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/58/71/P046325871/P046325871_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003985167",
+      "写真アセットID": "P046325871",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "焼肉はなび 栄",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/41/10/P048754110/P048754110_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003828556",
+      "写真アセットID": "P048754110",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "焼肉 福 錦通り店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/90/42/P043989042/P043989042_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001292845",
+      "写真アセットID": "P043989042",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "韓国居酒屋 個室完備 MYONDON（ミョンドン） 金山店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/85/48/P048908548/P048908548_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003721004",
+      "写真アセットID": "P048908548",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "薪火と肉と酒 コノハズク 名駅店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/23/29/P049552329/P049552329_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004559300",
+      "写真アセットID": "P049552329",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "THE SEJONG GEMS ザ セジョン ジェムズ 名駅店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/24/74/P044822474/P044822474_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003829821",
+      "写真アセットID": "P044822474",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "個室　肉バル　食べ飲み放題　トリコミート　名古屋栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/13/56/P044701356/P044701356_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003625187",
+      "写真アセットID": "P044701356",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "居酒屋 一番 栄3丁目店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/29/19/P046942919/P046942919_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004026750",
+      "写真アセットID": "P046942919",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "炭火焼肉 flower フラワー 名古屋駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/40/01/P045314001/P045314001_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001258795",
+      "写真アセットID": "P045314001",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "焼肉 福 名駅西口店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/90/50/P043989050/P043989050_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001177901",
+      "写真アセットID": "P043989050",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "絆串 栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/34/86/P045733486/P045733486_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004576920",
+      "写真アセットID": "P045733486",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "アカリバ 金山",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/84/40/P049308440/P049308440_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004470692",
+      "写真アセットID": "P049308440",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "大衆酒泉テルマエ 名古屋駅前泉",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/55/27/P048785527/P048785527_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001281942",
+      "写真アセットID": "P048785527",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "馬刺し肉寿司 たてがみ 名古屋駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/98/32/P046999832/P046999832_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001160450",
+      "写真アセットID": "P046999832",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "下町の牛 栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/27/98/P049732798/P049732798_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003917262",
+      "写真アセットID": "P049732798",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "大衆酒泉テルマエ 金山泉",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/69/30/P048786930/P048786930_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003649372",
+      "写真アセットID": "P048786930",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "とりいちず 金山店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/69/94/P049476994/P049476994_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003785030",
+      "写真アセットID": "P049476994",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "しゃぶしゃぶ雅 栄 伏見",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/94/08/P049539408/P049539408_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003559044",
+      "写真アセットID": "P049539408",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "【栄限定】食べ飲み放題2500円 ひねり蛇口ハイ×食べ飲み放題 大衆酒泉テルマエ",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/63/75/P048786375/P048786375_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003474639",
+      "写真アセットID": "P048786375",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "居酒屋 トリノトリコ 栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/04/01/P045560401/P045560401_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004026752",
+      "写真アセットID": "P045560401",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "よだれ屋 錦栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/88/21/P049358821/P049358821_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004537287",
+      "写真アセットID": "P049358821",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "鶏っこ商店 名古屋駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/19/67/P047521967/P047521967_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004090630",
+      "写真アセットID": "P047521967",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "大阪焼肉 ホルモン ふたご 栄3丁目店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/83/38/P049438338/P049438338_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001225500",
+      "写真アセットID": "P049438338",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "大阪焼肉 ふたご 錦店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/83/38/P049438338/P049438338_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001210360",
+      "写真アセットID": "P049438338",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "居酒屋 炭ス すみす 名古屋駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/48/20/P048144820/P048144820_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004422360",
+      "写真アセットID": "P048144820",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "肉の名古屋邸",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/75/11/P046667511/P046667511_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003894223",
+      "写真アセットID": "P046667511",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "とりいちず 栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/69/83/P049476983/P049476983_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003807140",
+      "写真アセットID": "P049476983",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "THE GARDEN ザ ガーデン 栄",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/08/07/P037980807/P037980807_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001202874",
+      "写真アセットID": "P037980807",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "手羽八 てばはち 錦本店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/51/50/P047205150/P047205150_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004026589",
+      "写真アセットID": "P047205150",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "大衆韓国 新栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/75/72/P048727572/P048727572_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003942574",
+      "写真アセットID": "P048727572",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "富や 栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/60/74/P041456074/P041456074_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003298695",
+      "写真アセットID": "P041456074",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "七輪呑家 里估",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/99/06/P049579906/P049579906_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004558641",
+      "写真アセットID": "P049579906",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "焼肉一気　名古屋駅西店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/99/15/P048479915/P048479915_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003297123",
+      "写真アセットID": "P048479915",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "炭ス 栄錦店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/89/18/P049428918/P049428918_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004537289",
+      "写真アセットID": "P049428918",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "刺しと土鍋 大人の居酒屋たてがみ栄本店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/07/67/P048270767/P048270767_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001153152",
+      "写真アセットID": "P048270767",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "モイッチョ 栄",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/94/18/P025579418/P025579418_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000694542",
+      "写真アセットID": "P025579418",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "毎日!北海道物産展 ネオ炉端 道南農林水産部 栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/24/03/P048932403/P048932403_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001041733",
+      "写真アセットID": "P048932403",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "KollaBo コラボ 栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/36/47/P046593647/P046593647_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001231989",
+      "写真アセットID": "P046593647",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "定楽屋 名古屋金山店 食べ飲み放題",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/33/18/P047533318/P047533318_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001193045",
+      "写真アセットID": "P047533318",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "九州料理 椿 金山店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/68/75/P048866875/P048866875_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001187588",
+      "写真アセットID": "P048866875",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "ダイニングバー フォーシーズン",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/86/53/P049358653/P049358653_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000016564",
+      "写真アセットID": "P049358653",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "焼肉エース 栄住吉店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/41/12/P046714112/P046714112_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003942768",
+      "写真アセットID": "P046714112",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "ヤマダモンゴル 名古屋新栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/61/94/P049496194/P049496194_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004005425",
+      "写真アセットID": "P049496194",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "おでん さかな 日本酒 隠れ家酒場 雅 MIYABI 金山店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/31/36/P047963136/P047963136_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001225580",
+      "写真アセットID": "P047963136",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "名古屋名物　完全個室　居酒屋　飲み放題　金鯱酒場（きんしゃちさかば）　錦店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/96/69/P044579669/P044579669_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003785146",
+      "写真アセットID": "P044579669",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "大名古屋酒場 坊主 栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/62/92/P041716292/P041716292_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003498507",
+      "写真アセットID": "P041716292",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "焼肉ホタル 新栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/45/80/P048954580/P048954580_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004493305",
+      "写真アセットID": "P048954580",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "海鮮山 栄 錦店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/52/08/P044845208/P044845208_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000994194",
+      "写真アセットID": "P044845208",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "炭火焼鳥 しげ 栄本店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/14/06/P045791406/P045791406_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000015250",
+      "写真アセットID": "P045791406",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "傳DEN 金山駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/10/98/P047641098/P047641098_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003581252",
+      "写真アセットID": "P047641098",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "全室水槽個室  柳橋 AONO（アオノ）名古屋駅店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/07/30/P049580730/P049580730_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004559333",
+      "写真アセットID": "P049580730",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "治兵衛 名駅店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/92/62/P049119262/P049119262_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003763640",
+      "写真アセットID": "P049119262",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "メカラウロコ 栄 住吉店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/40/51/P047394051/P047394051_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004067791",
+      "写真アセットID": "P047394051",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "赤から栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/52/69/P049795269/P049795269_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000015490",
+      "写真アセットID": "P049795269",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "あみやき亭 栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/56/76/P049205676/P049205676_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001190028",
+      "写真アセットID": "P049205676",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "てり串 金山店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/60/69/P048966069/P048966069_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003941397",
+      "写真アセットID": "P048966069",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "うまかもん 金山駅店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/90/82/P048849082/P048849082_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004470580",
+      "写真アセットID": "P048849082",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "天海 てんかい 金山駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/93/39/P045319339/P045319339_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003498673",
+      "写真アセットID": "P045319339",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "炭火焼鳥 しげ 金山店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/30/24/P049433024/P049433024_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004026414",
+      "写真アセットID": "P049433024",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "鍋と和食 個室ダイニング ENISHI 金山店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/45/46/P038794546/P038794546_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001259546",
+      "写真アセットID": "P038794546",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "よだれ屋 名古屋駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/36/08/P049173608/P049173608_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004090629",
+      "写真アセットID": "P049173608",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "賄賂 新栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/55/38/P046925538/P046925538_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004025290",
+      "写真アセットID": "P046925538",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "なかた 錦本店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/13/82/P048931382/P048931382_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001231148",
+      "写真アセットID": "P048931382",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "肉ト魚　大衆酒場　ひとめぼれ　金山駅南口店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/42/52/P048204252/P048204252_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004445409",
+      "写真アセットID": "P048204252",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "寧々家 一宮駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/37/06/P049773706/P049773706_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001011062",
+      "写真アセットID": "P049773706",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "炭火焼鳥 しげ 知立店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/41/50/P048944150/P048944150_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001250380",
+      "写真アセットID": "P048944150",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "ネオ炉端 道南農林水産部 新栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/10/48/P048651048/P048651048_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000019038",
+      "写真アセットID": "P048651048",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "ネオ炉端 道南農林水産部 錦本店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/61/28/P048576128/P048576128_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000016757",
+      "写真アセットID": "P048576128",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "鍋屋ほたる 大須本店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/07/63/P048310763/P048310763_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001052510",
+      "写真アセットID": "P048310763",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "地鶏坊主 一宮駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/97/95/P048659795/P048659795_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001218275",
+      "写真アセットID": "P048659795",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "美味かもん 金山駅店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/15/58/P048761558/P048761558_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004470584",
+      "写真アセットID": "P048761558",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "手羽八 てばはち 金山駅店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/24/03/P049652403/P049652403_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004403667",
+      "写真アセットID": "P049652403",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "個室　焼き鳥居酒屋　3時間食べ飲み放題　トリノトリコ　金山駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/04/01/P045560401/P045560401_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004445429",
+      "写真アセットID": "P045560401",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "大衆食堂 あまつ 名駅広小路通店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/54/56/P047645456/P047645456_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004090200",
+      "写真アセットID": "P047645456",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "練りものとだし おでこ",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/47/74/P049574774/P049574774_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004559180",
+      "写真アセットID": "P049574774",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "ホルモン高橋",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/14/97/P049331497/P049331497_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004536462",
+      "写真アセットID": "P049331497",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "精肉店直営 はなぶさ精肉店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/95/00/P049179500/P049179500_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003341340",
+      "写真アセットID": "P049179500",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "鳥心 名駅 太閤口店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/15/58/P049531558/P049531558_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004537186",
+      "写真アセットID": "P049531558",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "焼肉赤身にくがとう　名古屋店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/75/36/P049717536/P049717536_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004578003",
+      "写真アセットID": "P049717536",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "影法師",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/68/16/P043546816/P043546816_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003739005",
+      "写真アセットID": "P043546816",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "肉亭 まぼたん",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/82/73/P038318273/P038318273_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001280024",
+      "写真アセットID": "P038318273",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "さかなや道場 名古屋駅太閤通口店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/55/29/P049785529/P049785529_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000729743",
+      "写真アセットID": "P049785529",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "炭火焼肉 スギモト 名古屋うまいもん通り広小路口店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/05/81/P049180581/P049180581_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001262798",
+      "写真アセットID": "P049180581",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "豆鳥 栄 住吉店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/96/84/P045539684/P045539684_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001179822",
+      "写真アセットID": "P045539684",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "伍味酉 本店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/65/90/P048496590/P048496590_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000016017",
+      "写真アセットID": "P048496590",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "楽蔵 うたげ 名古屋栄錦通り店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/78/04/P046057804/P046057804_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000049497",
+      "写真アセットID": "P046057804",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "磯丸水産 栄三丁目店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/28/90/P042962890/P042962890_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000766001",
+      "写真アセットID": "P042962890",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "串カツあらた 錦店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/03/99/P047260399/P047260399_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001190086",
+      "写真アセットID": "P047260399",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "浜焼き海鮮居酒屋 大庄水産 錦店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/67/95/P040796795/P040796795_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000401926",
+      "写真アセットID": "P040796795",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "焼肉いっぽん 新栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/84/69/P042928469/P042928469_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000016500",
+      "写真アセットID": "P042928469",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "牛角 小野田店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/21/18/P048992118/P048992118_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000534213",
+      "写真アセットID": "P048992118",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "全席完全個室居酒屋　牛煌（GYUOU）金山本店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/98/85/P044529885/P044529885_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003298852",
+      "写真アセットID": "P044529885",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "名駅酒場 名古屋駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/74/72/P048397472/P048397472_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003985335",
+      "写真アセットID": "P048397472",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "磯丸水産 名駅3丁目店 海鮮 居酒屋",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/28/53/P048742853/P048742853_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001203934",
+      "写真アセットID": "P048742853",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "個室創作和食と完全個室 和蔵名古屋栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/31/07/P049393107/P049393107_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001217403",
+      "写真アセットID": "P049393107",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "個室居酒屋 こころざし 栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/44/36/P048454436/P048454436_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001193073",
+      "写真アセットID": "P048454436",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "楽蔵 RAKUZO 名古屋伏見店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/14/58/P047231458/P047231458_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000740538",
+      "写真アセットID": "P047231458",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "茗菜縁 久屋大通",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/04/83/P025260483/P025260483_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000762035",
+      "写真アセットID": "P025260483",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "磯丸水産 プリンセス大通り店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/65/90/P042966590/P042966590_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001223755",
+      "写真アセットID": "P042966590",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "炭火焼肉 くぐ琉",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/37/14/P048293714/P048293714_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000980322",
+      "写真アセットID": "P048293714",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "かぶと屋 別館 名古屋駅店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/76/39/P046717639/P046717639_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003560149",
+      "写真アセットID": "P046717639",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "名古屋メシとお酒 きしめんズズズ 栄三丁目店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/42/40/P049754240/P049754240_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004558969",
+      "写真アセットID": "P049754240",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "あみやき亭 安城 東栄町 店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/23/80/P049432380/P049432380_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000412985",
+      "写真アセットID": "P049432380",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "鉄神 TESSIN 名古屋駅本店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/40/21/P049244021/P049244021_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001144610",
+      "写真アセットID": "P049244021",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "個室居酒屋 喰海 名古屋駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/93/70/P049399370/P049399370_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001202815",
+      "写真アセットID": "P049399370",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "天ぷらと海鮮と蕎麦 天場 TENBA 栄 錦本店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/64/45/P044086445/P044086445_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001275331",
+      "写真アセットID": "P044086445",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "居酒屋 天海 伏見駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/58/71/P046095871/P046095871_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003917287",
+      "写真アセットID": "P046095871",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "赤から金山南口店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/52/69/P049795269/P049795269_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001028444",
+      "写真アセットID": "P049795269",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "海鮮 炉端焼き 喰海 くうかい 金山店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/30/81/P048093081/P048093081_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001239016",
+      "写真アセットID": "P048093081",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "天ぷらとおでん 天串 TENGUSHI 金山駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/68/87/P047626887/P047626887_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001226111",
+      "写真アセットID": "P047626887",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "三代目鳥メロ 栄広小路店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/65/20/P049696520/P049696520_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000861688",
+      "写真アセットID": "P049696520",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "居酒屋 みちのく屋 酒店 金山",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/32/22/P044753222/P044753222_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003432885",
+      "写真アセットID": "P044753222",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "天ぷらとおでん 天串 TENGUSHI 岩倉駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/60/57/P048496057/P048496057_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003649348",
+      "写真アセットID": "P048496057",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "ワンランク上の世界の山ちゃん　山　名古屋駅店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/71/74/P043497174/P043497174_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003348002",
+      "写真アセットID": "P043497174",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "九州小町 名古屋駅",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/96/47/P047809647/P047809647_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000711621",
+      "写真アセットID": "P047809647",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "東北商店 名駅店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/69/07/P045846907/P045846907_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001118621",
+      "写真アセットID": "P045846907",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "バーデンバーデン 栄",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/45/08/P049174508/P049174508_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001223700",
+      "写真アセットID": "P049174508",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "個室居酒屋 東北商店 金山東口店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/42/32/P048634232/P048634232_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001100054",
+      "写真アセットID": "P048634232",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "居酒屋 地鶏坊主 名古屋駅 本店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/63/07/P049396307/P049396307_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000743079",
+      "写真アセットID": "P049396307",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "居酒屋 呑屋 かぶと",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/49/88/P047134988/P047134988_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000759374",
+      "写真アセットID": "P047134988",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "はかた野菜巻き串 きばくもん 栄店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/49/44/P042394944/P042394944_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001168912",
+      "写真アセットID": "P042394944",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "肉と旬の海鮮 ゆらり 金山店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/02/48/P049610248/P049610248_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001109181",
+      "写真アセットID": "P049610248",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "九州小町 金山二丁目",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/84/43/P042188443/P042188443_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J000972568",
+      "写真アセットID": "P042188443",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "il Bamboccio イル バンボッチョ 名古屋駅店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/22/98/P048772298/P048772298_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001017490",
+      "写真アセットID": "P048772298",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "鉄神 TESSHIN 金山駅前店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/30/14/P047623014/P047623014_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001169778",
+      "写真アセットID": "P047623014",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "うまみ堂 名古屋駅店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/02/13/P049580213/P049580213_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001119127",
+      "写真アセットID": "P049580213",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "蕎麦酒 そばえもん KITTE キッテ 名古屋店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/01/83/P048990183/P048990183_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004493131",
+      "写真アセットID": "P048990183",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "クワン 栄",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/22/08/P048222208/P048222208_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001099072",
+      "写真アセットID": "P048222208",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    },
+    {
+      "店名": "トオリミチ",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/14/57/P047371457/P047371457_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J004470448",
+      "写真アセットID": "P047371457",
+      "firstDetected": "2026-09-15",
+      "lastChecked": "2026-09-15"
+    }
+  ],
+  "unknownSample": [
+    {
+      "店名": "尚以",
+      "url": "https://imgfp.hotp.jp/IMGH/35/86/P039753586/P039753586_480.jpg",
+      "error": "timeout"
+    }
+  ]
+}

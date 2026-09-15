@@ -1,0 +1,114 @@
+{
+  "status": "OK",
+  "editorReason": "「マツコの知らない世界」で絶賛され、食べログ百名店にも複数年選出。職人が手切りしたさつまいもを自家製蜜で仕上げる「吉芋花火」は、百貨店やオンラインでも展開し、幅広い客層に愛される名古屋の銘菓です。",
+  "insiderNote": "職人の手仕事と品質へのこだわりが、マツコ・デラックス氏絶賛の「吉芋花火」を生み出しています。百貨店やオンライン展開で販路を広げつつ、生けんぴの鮮度と冷凍対応で顧客ニーズに応える戦略も秀逸です。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHCfzKOGVSVFTj-MCH-4q9tKPJzxZkCCybikstxBWN-Uw-ShJQ1mmQHxqSobs7ScpRy9kUIrC-JWEPVdACX05I1Hs0-zyjgocaW8bTuwJQSjOkpAWmpij1vbc1ZSfIZ764niVd4lXI=",
+      "snippet_quote": "「覚王山吉芋」は、テレビ番組「マツコの知らない世界」で紹介され、マツコ・デラックスさんが絶賛した名店として知られています。",
+      "supports": "テレビ番組「マツコの知らない世界」で紹介され、マツコ・デラックスが絶賛したこと。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFoxt8d248Eqa_tM79Z2CEtX0E4xEdI8Dp86TRmElu7rcyMMAgYMGXdSw4f1eZMdC8q2kToRPllUqYf1oHGDiRbSz1LZ5drTmvp9yf8sFigAlUzp3c6BVrGdAc=",
+      "snippet_quote": "食べログ スイーツ 百名店 EASTに2018年から3年連続で選出されるなど、高い評価を得ています。",
+      "supports": "食べログ スイーツ 百名店 EASTに複数年連続で選出されていること。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFoxt8d248Eqa_tM79Z2CEtX0E4xEdI8Dp86TRmElu7rcyMMAgYMGXdSw4f1eZMdC8q2kToRPllUqYf1oHGDiRbSz1LZ5drTmvp9yf8sFigAlUzp3c6BVrGdAc=",
+      "snippet_quote": "「覚王山吉芋」の製品は、職人が一本一本包丁で細切りにした生のさつまいもを使用している点が強調されています。",
+      "supports": "職人が一本一本包丁で細切りにした生のさつまいもを使用していること。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFoxt8d248Eqa_tM79Z2CEtX0E4xEdI8Dp86TRmElu7rcyMMAgYMGXdSw4f1eZMdC8q2kToRPllUqYf1oHGDiRbSz1LZ5drTmvp9yf8sFigAlUzp3c6BVrGdAc=",
+      "snippet_quote": "創業初期からの看板商品である芋けんぴ「吉芋花火」は、生のさつまいもを細切りにし、風味の良い菜種油で揚げ、自家製蜜を絡めた自信作とされています。",
+      "supports": "看板商品「吉芋花火」が自家製蜜で仕上げられていること。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFoxt8d248Eqa_tM79Z2CEtX0E4xEdI8Dp86TRmElu7rcyMMAgYMGXdSw4f1eZMdC8q2kToRPllUqYf1oHGDiRbSz1LZ5drTmvp9yf8sFigAlUzp3c6BVrGdAc=",
+      "snippet_quote": "名古屋市内に本店を含め6店舗を展開しており、名鉄百貨店や松坂屋名古屋本館、ジェイアール髙島屋などの百貨店にも出店しているため、アクセスしやすいのが特徴です。また、オンラインショップでの購入も可能で、冷凍商品として提供されています。",
+      "supports": "百貨店やオンラインショップで展開していること。"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFoxt8d248Eqa_tM79Z2CEtX0E4xEdI8Dp86TRmElu7rcyMMAgYMGXdSw4f1eZMdC8q2kToRPllUqYf1oHGDiRbSz1LZ5drTmvp9yf8sFigAlUzp3c6BVrGdAc=",
+      "snippet_quote": "「素朴で気取らない芋菓子」として幅広い客層に愛されています。",
+      "supports": "幅広い客層に愛されていること。"
+    }
+  ],
+  "warnings": [
+    "1件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「覚王山吉芋 本店」に関する業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n覚王山吉芋は「変わらぬおいしさをお伝えしたい」というこだわりを持ち、商品の品質を重視しています。創業初期からの看板商品である芋けんぴ「吉芋花火」は、生のさつまいもを細切りにし、風味の良い菜種油で揚げ、自家製蜜を絡めた自信作とされています。使用する蜜は、一般的な芋けんぴよりも水分量が多く、芋にしっかり染み込んでも固まらず、ジューシーな甘さが楽しめるよう工夫されています。また、「素朴で気取らない芋菓子」として幅広い客層に愛されています。\n\n**提供スタイルの特徴**\n覚王山吉芋 本店はテイクアウト専門店です。名古屋市内に本店を含め6店舗を展開しており、名鉄百貨店や松坂屋名古屋本館、ジェイアール髙島屋などの百貨店にも出店しているため、アクセスしやすいのが特徴です。また、オンラインショップでの購入も可能で、冷凍商品として提供されています。看板商品である「吉芋花火」は「生けんぴ」と呼ばれ、消費期限が製造日を含めて3日間と短く、購入当日に食べるのが最も美味しいとされています。冷凍保存すれば約3ヶ月日持ちし、自然解凍で出来たて同様の美味しさが楽しめます。蜜を絡めた商品のため、食べる際はお手拭きやお箸の用意が推奨されています。大学芋の「拍子木」には特製の蜜が付属しています。\n\n**地元グルメメディアでの紹介**\n「覚王山吉芋」は、テレビ番組「マツコの知らない世界」で紹介され、マツコ・デラックスさんが絶賛した名店として知られています。メディアで紹介される機会も多いとされています。また、食べログ スイーツ 百名店 EASTに2018年から3年連続で選出されるなど、高い評価を得ています。名古屋最大級のWebメディア「ナゴレコ」や「名古屋おもてなし武将隊ブログ」でも紹介されています。\n\n**料理人としての評価**\n「覚王山吉芋」の製品は、職人が一本一本包丁で細切りにした生のさつまいもを使用している点が強調されています。特に「吉芋花火」の細切り芋けんぴは、揚げ加減の調整が難しいにもかかわらず焦げがないと評価されており、職人の技術の高さがうかがえます。食べログ百名店に複数年連続で選出されていることは、専門家や一般の消費者から商品に対する高い評価を受けていることを示しています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFoxt8d248Eqa_tM79Z2CEtX0E4xEdI8Dp86TRmElu7rcyMMAgYMGXdSw4f1eZMdC8q2kToRPllUqYf1oHGDiRbSz1LZ5drTmvp9yf8sFigAlUzp3c6BVrGdAc=",
+        "title": "kichiimo.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEvW4q0_a858ivCPV7JGRzdQVJi4e-wVxpgPSRGy6VK04Umc0Ih-c-8rdfjBxCj6sMYTacR39BOSCsgRB8UxWwFfeeLdPWp-MEgtjU0YfQ2dHUvwY0_jnx9L5VHlKTJifBkNqZFjMI=",
+        "title": "youtube.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfIHCWwyu4HCpQru6WfUK57ECFKKSLcVvkg7IdfdE6dp1mVtFLlczegQ36hdX5vQor6C3pRXMXf4x1FCLo5-RX11JaF0iaX-a2N03oOpDn_u4n930=",
+        "title": "kichiimo.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHCfzKOGVSVFTj-MCH-4q9tKPJzxZkCCybikstxBWN-Uw-ShJQ1mmQHxqSobs7ScpRy9kUIrC-JWEPVdACX05I1Hs0-zyjgocaW8bTuwJQSjOkpAWmpij1vbc1ZSfIZ764niVd4lXI=",
+        "title": "youtube.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGzaBZTBki3aEnBYG3cZIDOPyLN3ACXd9HuzHQMeKTUNFVkPfV0XdBMLkC9T_WJ2TGncJXQBAHKYR825wcAvxpGSdt6ETkNdnuwXCcM8SfaIN24EisXWqACVxVIo8uDy4dGU98I_FtQC-24i2m8IQkY",
+        "title": "ichibiki.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPHOYpFd-J7sS-SlY-jSaDSd5Bt0tJrtxtK5zvrHXUGkmDLtOnz_CMBXZDicY9nT9xUbyiFTqF0qB6H7TDZl-YH7arXm6jGYJ9KQwmqqK-4Ljw_OOyC7M022CtMrGeVmPmCdKTr2G-7YXMXH7x",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF8Yw8L2OnDgSUSN4vqcBmA5HMdenLXH0dc5p6_1PSIYPw9dBQ6vJ02milNEUKgHX3jYU-hKI7S3SvUVh_VIACKCw23hpHcyzZyjRvlEKBmRL1blhyuTXdgeu2SOaI99-aNRfk=",
+        "title": "kitanago.info"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHJsORAhX8vqaQC_Xhh6TKKCIcckqJd_pHqp79ZoTKimzuBWSGpQ-GmLM2Rb8GzvG-BO6rWPbQrHjcNiWzL7UhLWJu6gHdCerZVYE83irMMZ8mkoGMy7TYHGhrGWMe0NMhi0SLUjxZQX4URHW5GMg==",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGa57utmoD7TRVCKEGQJf8wee7thV3QXMBi1iOx-TpVb2vdF2EImK5iXGkJVAZXix8_vDm22EFZ76Zfl7S1wfD_2i_Mrh0kD4VUPaZbiZfv6qEfmjCT-XWqkxzjoFM4THrqwGsj5UXyrsXlDGVHJNa3UOSP3La2Dy9QyYlGsuFWOc_QdwZgFEm4JOkZOObMunbK1uYzdJHGz1Pk5Fom7gonP2vtrVfNT3QPMI7VlmY9E8bvYfJ8NbnDkRcHyOzBmmK5H3pZ9hJs3zYjjiyEa9nb1NTayxUFg01_0rToAj3TXfxHb5mtmAob0yY5xmsNd6RIpEL3XLq9DSrHhV6Qdb7LzZbt5SUH0HmgkUa21VZQWrdqif6jkgDM3hUGCmNs-Znt",
+        "title": "shirahamakoumuten.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFFTQhFPaLXI_a75OXpBhG0g_Vo57RP6bXO7JdZhbqrKQtDVs_xB670XMFJtv3em3LQhuXExTQQLNNKYKPr2ip0jjSH85NiDNRPk0Jn4CsvjqWkgpLcgwQxRF2WV3-Hi3mw",
+        "title": "rs-life.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE9eEdQon1-i2qCYM2kRbdlXB4qSbJcfG_btXb2AtDEWw0HusigfhCDWaahYPGDC8BvMaunNAQxBeqfMhZ8zPkxsZB2VLhc6Ic6BUzqAz7WdHs61hKlY4j-XTDVZ61HJ3RNPuJRVhejFjbxLHGK",
+        "title": "hw-frankie.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEPKUHTI9MorFkwGjIZW2THVl2gT1-40Zw97z2XjZkjS3tMvBOcc5v8M9s4N3slOSvxzZMHAIaSw6AlxXROLUaqqDaug4EMXudMR8XHkG5h0oayOTVhvkQo0t1N_msTVmoWHxhjH-TPYWM=",
+        "title": "gltjp.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEp3jmqX87SdBQsWP_Xh0deBVWXfCuhcYucAMFpDEYYGqDHwComUc7K-dDROfyIMWva0yEpqXlpDJd7H9_wdhmjmgC4B362eV58Nff1zXUtWoLeAoC8yKEKCU1-5rcKtWjb",
+        "title": "note.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFvhTpSp2hhaBv97djX1A0pCx32kqQL_e6qfgFY-K1X51CCxur_D_sSD232RFMX1EuuGevHj5QgIyUR7d39bZrsjIlKxKYMT7yO1v4tOrSAD3Nkn5_d9WcvKgt2fHqlp_5XpnlDyXVj",
+        "title": "busho-tai-blog.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEyWksK_vih6FNFKKsTopWEpakr6WFKFoekNLCSXPVLrq_7Prc_3tvkfuAgtXUoHV_vAgbLqovaKzJFBMzgAeCZu4jPLdYOwmJR2nUw_jsTK_9N5iW1FbNJ8X5xJeGrEyax4gDcJ64ToTurJDng",
+        "title": "nagoya-meshi.com"
+      }
+    ]
+  },
+  "store_id": "manual_覚王山吉芋本店",
+  "store_name": "覚王山吉芋 本店",
+  "area": "覚王山",
+  "genre": "さつまいも菓子",
+  "rating": "4.3",
+  "generated_at": "2026-09-14T21:37:38.283Z"
+}

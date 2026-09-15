@@ -1,0 +1,141 @@
+name: NAGOYA BITES — 特集ロスター生存監視
+
+# なぜこのワークフローが必要か（2026-09-15 / ISSUE-125・ISSUE-084 の再適用）:
+#   ISSUE-124 で特集の月次店舗ローテーション対象を19→51特集に拡大する過程で、旧実装が
+#   「build.yml の月初(1〜3日 JST)だけ実行」という固定日ゲートだったことが判明した。
+#   その3日間に手前のステップ（他都道府県マッチ監査等・continue-on-error 無し）が
+#   たまたま失敗すると、その月はローテーションが丸ごと欠落したまま誰も気づけない
+#   （実測: 2026-08-01〜03・2026-09-01〜03 とも該当日の全runが失敗し欠落。
+#   オーナーから「変わらない店舗がある」と報告があるまで発覚しなかった）。
+#
+#   対策として refresh_feature_rosters.js は「今月まだ未反映か」で判定する自己修復
+#   方式（--if-stale）に変更したが、これ自体が「気づけるはず」で止まっていては
+#   同じ発覚遅れが再発する。ISSUE-084 の教訓（警報を防音室で鳴らすな）を適用する:
+#     1. 監視は監視対象と別の場所で回す  → build.yml のステップではなく独立ワークフロー
+#     2. 通知は out-of-band に出す        → Issue 起票（GitHub が既定でオーナーにメールする）
+#     3. 「気づけるはず」を検知と数えない → 人がログを見に行かなくても届く
+#
+#   検知するのは「今日ローテーションが動かなかったこと」ではない（月次カデンスなので
+#   平常）。検知するのは「丸1ヶ月分、反映が滞っていること」だけ（オオカミ少年化防止）。
+#
+#   判定は検証できる事実で行う（CLAUDE.md 制約10）:
+#     data/feature_roster_health.json の実在と last_run.date の鮮度。
+#     鮮度は自己申告できない——動いていない自動化はファイルを更新できない。
+
+on:
+  schedule:
+    # 06:00 UTC = 15:00 JST。build.yml は毎日複数回走るため、当日中に反映済みなら
+    # このタイミングで既に心拍が更新されているはず（許容日数側で余裕は持たせている）。
+    - cron: '0 6 * * *'
+  workflow_dispatch: # 手動確認・復旧後の即時クローズ用
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 生存確認
+        id: check
+        run: |
+          set +e
+          node scripts/check_feature_roster_health.js --json > /tmp/feature-roster-health.json
+          set -e
+          echo "----- 判定結果 -----"
+          node scripts/check_feature_roster_health.js || true
+
+      - name: 異常なら Issue を起票/更新、復旧していればクローズ
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/feature-roster-health.json', 'utf8'));
+            const label = 'feature-roster-watchdog';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'open', labels: label, per_page: 20,
+            });
+            const existing = issues.find(i => i.title.startsWith('🔴 特集ロスター'));
+
+            // ---- 復旧している場合: 開いている Issue を閉じる（人の手を煩わせない）----
+            if (r.ok) {
+              if (existing) {
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: existing.number,
+                  body: `✅ 復旧を確認しました（JST ${r.today_jst}）。最終反映: ${r.last_run ? r.last_run.date : '不明'}（${r.silence_days}日前）。自動クローズします。`,
+                });
+                await github.rest.issues.update({
+                  owner, repo, issue_number: existing.number, state: 'closed',
+                });
+                core.info(`Issue #${existing.number} を復旧クローズしました。`);
+              } else {
+                core.info('健全。Issue の起票は不要です。');
+              }
+              return;
+            }
+
+            // ---- 異常あり: 起票 or 更新 ----
+            const kinds = r.problems.map(p => p.kind).join(', ');
+            const title = `🔴 特集ロスターが1ヶ月以上反映されていません（${kinds}）`;
+
+            const lines = [];
+            lines.push('特集の月次店舗ローテーションの **生存確認に失敗**しました（JST ' + r.today_jst + ' 時点）。');
+            lines.push('');
+            lines.push('> これが止まっていると、特集ページ（`features/nagoya-steak.html` 等51本）の掲載店が');
+            lines.push('> 固定化し、「変わらない店舗がある」という2026-09-15と同種の問題が再発します。');
+            lines.push('');
+            lines.push('## 検出内容');
+            for (const p of r.problems) lines.push(`- **${p.kind}** — ${p.detail}`);
+            lines.push('');
+            lines.push('## 最後の反映');
+            if (r.last_run) {
+              lines.push(`- 対象月: \`${r.last_run.month}\` / 反映日: \`${r.last_run.date}\`（${r.silence_days}日前 / 許容 ${r.max_silence_days}日）`);
+              lines.push(`- 状態: \`${r.last_run.status}\`（対象${r.last_run.targets}件中 更新${r.last_run.updated}件 / 枠割れ${r.last_run.shortfalls}件）`);
+            } else {
+              lines.push('- `data/feature_roster_health.json` が未取得です。');
+              lines.push('- **`refresh_feature_rosters.js --if-stale` が一度も反映を記録できていない可能性があります**（ステップ実行 / push 権限 / スケジュール自体を疑う）。');
+            }
+            lines.push('');
+            lines.push('## 対処');
+            lines.push('1. build.yml の直近runで「特集の掲載店を月次ローテーション更新」ステップが実行されているか確認する（`continue-on-error: true` のため失敗してもジョブ全体は緑になる点に注意）。');
+            lines.push('2. その手前のステップ（他都道府県マッチ監査・単体テスト等）が継続的に失敗し、パイプラインがそこで止まっていないか確認する。');
+            lines.push('3. 手動で1回実行して反映・push できるか確認する:');
+            lines.push('   ```bash');
+            lines.push('   node scripts/refresh_feature_rosters.js --if-stale');
+            lines.push('   node scripts/check_feature_roster_health.js');
+            lines.push('   ```');
+            lines.push('4. 復旧したら `data/feature_roster_health.json` がコミット・pushされていることを確認する。');
+            lines.push('');
+            lines.push('---');
+            lines.push('この Issue は生存確認が通ると自動でクローズされます（feature-roster-watchdog.yml）。');
+            const body = lines.join('\n');
+
+            if (existing) {
+              await github.rest.issues.update({
+                owner, repo, issue_number: existing.number, title, body,
+              });
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: existing.number,
+                body: `再検出（JST ${r.today_jst}）。現在の問題: ${kinds}`,
+              });
+              core.setFailed(`特集ロスターの異常が継続しています: ${kinds}`);
+            } else {
+              const { data: created } = await github.rest.issues.create({
+                owner, repo, title, body, labels: [label],
+              });
+              core.setFailed(`特集ロスターの異常を検出し Issue #${created.number} を起票しました: ${kinds}`);
+            }

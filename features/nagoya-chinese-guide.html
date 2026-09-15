@@ -115,7 +115,9 @@ footer p{font-size:var(--fs-md);color:var(--dim);letter-spacing:.08em;}
 .related-link:hover{background:rgba(122,92,16,.08);}
 .shop-reserve-link{display:inline-flex;align-items:center;gap:.35rem;margin-top:.9rem;margin-left:.5rem;background:transparent;color:var(--gold) !important;padding:.5rem 1rem;border:1px solid var(--gold);border-radius:4px;font-size:.78rem;font-weight:500;text-decoration:none;letter-spacing:.04em;transition:background .15s,transform .1s;}
 .shop-reserve-link:hover{background:rgba(122,92,16,.08);transform:translateY(-1px);}
-@media(max-width:480px){.shop-reserve-link{margin-left:0;}}</style>
+@media(max-width:480px){.shop-reserve-link{margin-left:0;}}
+/*ROSTER_BADGE_CSS*/
+</style>
 </head>
 
 <body>
@@ -164,11 +166,41 @@ footer p{font-size:var(--fs-md);color:var(--dim);letter-spacing:.08em;}
 </div>
 
 <div class="content">
-  <h2 class="section-label">Selection — 実在確認済み</h2>
+  <!-- SEO-042:TOP-CTA:START -->
+<aside class="topcta" aria-label="この特集の注目店">
+  <div class="topcta-head">EDITORS' PICK</div>
+  <div class="topcta-sub">本文を読む前に動きたい方へ。編集部が上位に挙げた3軒の詳細と予約はこちらから。</div>
+  <ul class="topcta-list">
+    <li class="topcta-item">
+      <span class="topcta-name">ワンタンバー</span>
+      <span class="topcta-actions">
+        <a class="store-link" href="../stores/J001231609.html">店舗詳細</a>
+        <a class="store-link" href="https://www.hotpepper.jp/strJ001231609/" target="_blank" rel="noopener">今すぐ予約</a>
+      </span>
+    </li>
+    <li class="topcta-item">
+      <span class="topcta-name">陳麻婆豆腐 ラシック店</span>
+      <span class="topcta-actions">
+        <a class="store-link" href="../stores/J000429952.html">店舗詳細</a>
+        <a class="store-link" href="https://www.hotpepper.jp/strJ000429952/" target="_blank" rel="noopener">今すぐ予約</a>
+      </span>
+    </li>
+    <li class="topcta-item">
+      <span class="topcta-name">中国菜 たな華</span>
+      <span class="topcta-actions">
+        <a class="store-link" href="../stores/J003365698.html">店舗詳細</a>
+        <a class="store-link" href="https://www.hotpepper.jp/strJ003365698/" target="_blank" rel="noopener">今すぐ予約</a>
+      </span>
+    </li>
+  </ul>
+</aside>
+<!-- SEO-042:TOP-CTA:END -->
+
+<h2 class="section-label">Selection — 実在確認済み</h2>
   <h2>名古屋の中華料理 厳選10店</h2>
   <div class="shop-grid">
     <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/35/04/P034423504/P034423504_480.jpg" alt="ワンタンバー" loading="lazy" decoding="async">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/35/04/P034423504/P034423504.jpg" alt="ワンタンバー" loading="lazy" decoding="async">
       <div class="shop-num">01</div>
       <div class="shop-name">ワンタンバー</div>
       <div class="shop-area">金山 / 中華</div>
@@ -176,139 +208,135 @@ footer p{font-size:var(--fs-md);color:var(--dim);letter-spacing:.08em;}
       <div class="shop-tags">
         <span class="tag">20〜30名</span>
         <span class="tag">1000〜2000円</span>
-        <span class="tag">★4.9</span>
+        <span class="tag">★ 4.9</span>
       </div>
-          <a href="../stores/J001231609.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'ワンタンバー',feature:'nagoya-chinese-guide'})"> 詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ001231609/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001231609',feature:'nagoya-chinese-guide',target:'hotpepper'})">予約・空席確認</a>
+          <a href="../stores/J001231609.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'ワンタンバー',feature:'nagoya-chinese-guide'})">詳細ページを見る</a>
     </div>
+
     <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/54/66/P047385466/P047385466_480.jpg" alt="中華料理 緑亭" loading="lazy" decoding="async">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/45/45/P041604545/P041604545.jpg" alt="陳麻婆豆腐 ラシック店" loading="lazy" decoding="async">
       <div class="shop-num">02</div>
-      <div class="shop-name">中華料理 緑亭</div>
-      <div class="shop-area">栄 / 居酒屋</div>
-      <p class="shop-desc">5/29NewOpen 豊富なアルコールをご用意</p>
+      <div class="shop-name">陳麻婆豆腐 ラシック店</div>
+      <div class="shop-area">栄(ミナミ)/矢場町/大須/上前津 / 中華</div>
+      <p class="shop-desc">ラシック8階で栄駅直結、ランチ営業で客単価2,500円、中華専門の回転率型</p>
       <div class="shop-tags">
-        <span class="tag">50〜60名</span>
-        <span class="tag">5000円以上</span>
-        <span class="tag">★4.4</span>
-      </div>
-          <a href="../stores/J004026308.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'中華料理 緑亭',feature:'nagoya-chinese-guide'})"> 詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ004026308/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J004026308',feature:'nagoya-chinese-guide',target:'hotpepper'})">予約・空席確認</a>
-    </div>
-    <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/31/52/P049453152/P049453152_480.jpg" alt="一八 栄錦店" loading="lazy" decoding="async">
-      <div class="shop-num">03</div>
-      <div class="shop-name">一八 栄錦店</div>
-      <div class="shop-area">栄 / 居酒屋</div>
-      <p class="shop-desc">本格中華の居酒屋 朝5時まで営業のらーめん</p>
-      <div class="shop-tags">
-        <span class="tag">30〜40名</span>
-        <span class="tag">5000円以上</span>
-        <span class="tag">★4.2</span>
-      </div>
-          <a href="../stores/J003829329.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'一八 栄錦店',feature:'nagoya-chinese-guide'})"> 詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ003829329/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003829329',feature:'nagoya-chinese-guide',target:'hotpepper'})">予約・空席確認</a>
-    </div>
-    <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/76/42/P045097642/P045097642_480.jpg" alt="中華料理栄徳" loading="lazy" decoding="async">
-      <div class="shop-num">04</div>
-      <div class="shop-name">中華料理栄徳</div>
-      <div class="shop-area">栄 / 中華</div>
-      <p class="shop-desc">◆充実2H食べ飲み放題 ◆居酒屋メニューもご用意</p>
-      <div class="shop-tags">
-        <span class="tag">40〜50名</span>
-        <span class="tag">5000円以上</span>
-        <span class="tag">★4.2</span>
-      </div>
-          <a href="../stores/J003872355.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'中華料理栄徳',feature:'nagoya-chinese-guide'})"> 詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ003872355/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003872355',feature:'nagoya-chinese-guide',target:'hotpepper'})">予約・空席確認</a>
-    </div>
-    <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/58/75/P036345875/P036345875_480.jpg" alt="NANI 回転小火鍋 熱田六番南店" loading="lazy" decoding="async">
-      <div class="shop-num">05</div>
-      <div class="shop-name">NANI 回転小火鍋 熱田六番南店</div>
-      <div class="shop-area">金山 / 中華</div>
-      <p class="shop-desc">自分でアレンジ自己流鍋 どんなシーンにも♪</p>
-      <div class="shop-tags">
-        <span class="tag">20〜30名</span>
-        <span class="tag">5000円以上</span>
-        <span class="tag">★4.1</span>
-      </div>
-          <a href="../stores/J001250372.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'NANI 回転小火鍋 熱田六番南店',feature:'nagoya-chinese-guide'})"> 詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ001250372/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001250372',feature:'nagoya-chinese-guide',target:'hotpepper'})">予約・空席確認</a>
-    </div>
-    <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/61/21/P039776121/P039776121_480.jpg" alt="心人 名古屋駅店" loading="lazy" decoding="async">
-      <div class="shop-num">06</div>
-      <div class="shop-name">心人 名古屋駅店</div>
-      <div class="shop-area">名古屋駅 / 居酒屋</div>
-      <p class="shop-desc">中華料理が楽しめるダイニング。気軽に立ち寄れる</p>
-      <div class="shop-tags">
-        <span class="tag">隠れ家</span>
-        <span class="tag">50〜60名</span>
-        <span class="tag">★3.9</span>
-      </div>
-          <a href="../stores/J001001436.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'心人 名古屋駅店',feature:'nagoya-chinese-guide'})"> 詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ001001436/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001001436',feature:'nagoya-chinese-guide',target:'hotpepper'})">予約・空席確認</a>
-    </div>
-    <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/22/77/P042032277/P042032277_480.jpg" alt="肉汁台湾餃子酒場 でら餃子 三郷店" loading="lazy" decoding="async">
-      <div class="shop-num">07</div>
-      <div class="shop-name">肉汁台湾餃子酒場 でら餃子 三郷店</div>
-      <div class="shop-area">栄 / 居酒屋</div>
-      <p class="shop-desc">でら餃子自慢の餃子 クーポンで500円OFF</p>
-      <div class="shop-tags">
-        <span class="tag">10〜20名</span>
+        <span class="tag">中華料理</span>
         <span class="tag">2000〜3000円</span>
-        <span class="tag">★3.9</span>
+        <span class="tag">★ 4.5</span>
       </div>
-          <a href="../stores/J001193559.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'肉汁台湾餃子酒場 でら餃子 三郷店',feature:'nagoya-chinese-guide'})"> 詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ001193559/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J001193559',feature:'nagoya-chinese-guide',target:'hotpepper'})">予約・空席確認</a>
+          <a href="../stores/J000429952.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'陳麻婆豆腐 ラシック店',feature:'nagoya-chinese-guide'})">詳細ページを見る</a>
     </div>
+
     <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/31/94/P044993194/P044993194_480.jpg" alt="立ち呑み 中華 忘 bow" loading="lazy" decoding="async">
-      <div class="shop-num">08</div>
-      <div class="shop-name">立ち呑み 中華 忘 bow</div>
-      <div class="shop-area">栄 / 居酒屋</div>
-      <p class="shop-desc">こだわりのスイングカラン 季節ごとに違った美味しさ</p>
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/44/82/P041604482/P041604482.jpg" alt="陳麻婆豆腐 大名古屋ビルヂング店" loading="lazy" decoding="async">
+      <div class="shop-num">03</div>
+      <div class="shop-name">陳麻婆豆腐 大名古屋ビルヂング店</div>
+      <div class="shop-area">名古屋（名古屋駅/西区/中村区） / 中華</div>
+      <p class="shop-desc">名古屋駅桜通口3分、1700円の価格破壊で昼客獲得</p>
       <div class="shop-tags">
-        <span class="tag">20〜30名</span>
-        <span class="tag">5000円以上</span>
-        <span class="tag">★3.8</span>
+        <span class="tag">中華料理</span>
+        <span class="tag">★ 4.3</span>
       </div>
-          <a href="../stores/J003850060.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'立ち呑み 中華 忘 bow',feature:'nagoya-chinese-guide'})"> 詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ003850060/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003850060',feature:'nagoya-chinese-guide',target:'hotpepper'})">予約・空席確認</a>
+          <a href="../stores/J001215406.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'陳麻婆豆腐 大名古屋ビルヂング店',feature:'nagoya-chinese-guide'})">詳細ページを見る</a>
     </div>
+
     <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/59/92/P042225992/P042225992_480.jpg" alt="四川風中華 華澄味" loading="lazy" decoding="async">
-      <div class="shop-num">09</div>
-      <div class="shop-name">四川風中華 華澄味</div>
-      <div class="shop-area">大須 / 中華</div>
-      <p class="shop-desc">【パクチー×本格中華】 宴会も普段のお食事も</p>
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/22/35/P040132235/P040132235_480.jpg" alt="中国菜 たな華" loading="lazy" decoding="async">
+      <div class="shop-num">04</div>
+      <div class="shop-name">中国菜 たな華</div>
+      <div class="shop-area">緑区・南区・天白区・瑞穂区 / 中華</div>
+      <p class="shop-desc">鳴海駅徒歩5分2,000円超、ランチで中食需要を取り込む</p>
       <div class="shop-tags">
-        <span class="tag">40〜50名</span>
+        <span class="tag">中華料理</span>
+        <span class="tag">2000〜3000円</span>
+        <span class="tag">★ 4.5</span>
+      </div>
+          <a href="../stores/J003365698.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'中国菜 たな華',feature:'nagoya-chinese-guide'})">詳細ページを見る</a>
+    </div>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/93/78/P049329378/P049329378.jpg" alt="台北館" loading="lazy" decoding="async">
+      <div class="shop-num">05</div>
+      <div class="shop-name">台北館</div>
+      <div class="shop-area">栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄 / 中華</div>
+      <p class="shop-desc">栄駅8分、3500円でランチ営業、中華の日中売上見込める立地</p>
+      <div class="shop-tags">
+        <span class="tag">中華料理</span>
         <span class="tag">3000〜5000円</span>
-        <span class="tag">★3.8</span>
+        <span class="tag">★ 4.6</span>
       </div>
-          <a href="../stores/J003582062.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'四川風中華 華澄味',feature:'nagoya-chinese-guide'})"> 詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ003582062/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J003582062',feature:'nagoya-chinese-guide',target:'hotpepper'})">予約・空席確認</a>
+          <a href="../stores/J004536412.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'台北館',feature:'nagoya-chinese-guide'})">詳細ページを見る</a>
     </div>
+
     <div class="shop-card">
-      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/04/83/P025260483/P025260483_480.jpg" alt="茗菜縁 久屋大通" loading="lazy" decoding="async">
-      <div class="shop-num">10</div>
-      <div class="shop-name">茗菜縁 久屋大通</div>
-      <div class="shop-area">栄 / 中華</div>
-      <p class="shop-desc">【ハッピーアワー♪】 単品飲み放2時間1800円～</p>
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/01/99/P039240199/P039240199.jpg" alt="チャイニーズレストラン 春" loading="lazy" decoding="async">
+      <div class="shop-num">06</div>
+      <div class="shop-name">チャイニーズレストラン 春<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-area">本山・覚王山・藤が丘 / 中華</div>
+      <p class="shop-desc">覚王山駅徒歩10分、3,000円帯でランチ営業。中華需要を定時利用で確保</p>
       <div class="shop-tags">
-        <span class="tag">テラス席</span>
-        <span class="tag">40〜50名</span>
-        <span class="tag">★3.7</span>
+        <span class="tag">中華料理</span>
+        <span class="tag">3000〜5000円</span>
+        <span class="tag">★ 4.2</span>
       </div>
-          <a href="../stores/J000762035.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'茗菜縁 久屋大通',feature:'nagoya-chinese-guide'})"> 詳細ページを見る</a>
-          <a href="https://www.hotpepper.jp/strJ000762035/" class="shop-reserve-link" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{store:'J000762035',feature:'nagoya-chinese-guide',target:'hotpepper'})">予約・空席確認</a>
+          <a href="../stores/J001294013.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'チャイニーズレストラン 春',feature:'nagoya-chinese-guide'})">詳細ページを見る</a>
     </div>
-  </div>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"名古屋の中華料理おすすめ10選【2026年版】","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"name":"ワンタンバー"},{"@type":"ListItem","position":2,"name":"中華料理 緑亭"},{"@type":"ListItem","position":3,"name":"一八 栄錦店"},{"@type":"ListItem","position":4,"name":"中華料理栄徳"},{"@type":"ListItem","position":5,"name":"NANI 回転小火鍋 熱田六番南店"},{"@type":"ListItem","position":6,"name":"心人 名古屋駅店"},{"@type":"ListItem","position":7,"name":"肉汁台湾餃子酒場 でら餃子 三郷店"},{"@type":"ListItem","position":8,"name":"立ち呑み 中華 忘 bow"},{"@type":"ListItem","position":9,"name":"四川風中華 華澄味"},{"@type":"ListItem","position":10,"name":"茗菜縁 久屋大通"}]}</script>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/00/13/P037410013/P037410013_480.jpg" alt="開華亭" loading="lazy" decoding="async">
+      <div class="shop-num">07</div>
+      <div class="shop-name">開華亭<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-area">緑区・南区・天白区・瑞穂区 / 中華</div>
+      <p class="shop-desc">塩釜口駅10分、2501円帯中華ランチで商業圏の平日需要が堅い。</p>
+      <div class="shop-tags">
+        <span class="tag">中華料理</span>
+        <span class="tag">2000〜3000円</span>
+        <span class="tag">★ 4.1</span>
+      </div>
+          <a href="../stores/J000398774.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'開華亭',feature:'nagoya-chinese-guide'})">詳細ページを見る</a>
+    </div>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/75/33/P039347533/P039347533.jpg" alt="四川料理 蘭州ラーメン 牛王 ぎゅうおう 本陣駅前店" loading="lazy" decoding="async">
+      <div class="shop-num">08</div>
+      <div class="shop-name">四川料理 蘭州ラーメン 牛王 ぎゅうおう 本陣駅前店<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-area">名古屋（名古屋駅/西区/中村区） / 中華</div>
+      <p class="shop-desc">東山線1分で1,500円中華、日中の単価取りやすい好立地</p>
+      <div class="shop-tags">
+        <span class="tag">中華料理</span>
+        <span class="tag">★ 4</span>
+      </div>
+          <a href="../stores/J001287246.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'四川料理 蘭州ラーメン 牛王 ぎゅうおう 本陣駅前店',feature:'nagoya-chinese-guide'})">詳細ページを見る</a>
+    </div>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/30/87/P047493087/P047493087.jpg" alt="楊國福 名古屋栄店" loading="lazy" decoding="async">
+      <div class="shop-num">09</div>
+      <div class="shop-name">楊國福 名古屋栄店<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-area">栄(ミナミ)/矢場町/大須/上前津 / 中華</div>
+      <p class="shop-desc">栄駅直近で1,200円、昼飯需要の回転早さで時給換算の効率が違う</p>
+      <div class="shop-tags">
+        <span class="tag">中華料理</span>
+        <span class="tag">★ 4.1</span>
+      </div>
+          <a href="../stores/J004090772.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'楊國福 名古屋栄店',feature:'nagoya-chinese-guide'})">詳細ページを見る</a>
+    </div>
+
+    <div class="shop-card">
+      <img class="shop-card-photo" src="https://imgfp.hotp.jp/IMGH/17/64/P049061764/P049061764_480.jpg" alt="餃子のひょっとこ" loading="lazy" decoding="async">
+      <div class="shop-num">10</div>
+      <div class="shop-name">餃子のひょっとこ<span class="shop-new">今月の新顔</span></div>
+      <div class="shop-area">栄(ミナミ)/矢場町/大須/上前津 / 中華</div>
+      <p class="shop-desc">矢場町駅10分、2,500円帯の中華、ランチ層厚い</p>
+      <div class="shop-tags">
+        <span class="tag">中華料理</span>
+        <span class="tag">2000〜3000円</span>
+        <span class="tag">★ 4.8</span>
+      </div>
+          <a href="../stores/J004421851.html" class="shop-detail-link" onclick="trackEvent('feature_store_click',{store:'餃子のひょっとこ',feature:'nagoya-chinese-guide'})">詳細ページを見る</a>
+    </div>
+    </div>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"名古屋の中華料理おすすめ10選【2026年版】","numberOfItems":10,"itemListElement":[{"@type":"ListItem","position":1,"name":"ワンタンバー","url":"https://nagoya-bites.com/stores/J001231609.html"},{"@type":"ListItem","position":2,"name":"陳麻婆豆腐 ラシック店","url":"https://nagoya-bites.com/stores/J000429952.html"},{"@type":"ListItem","position":3,"name":"陳麻婆豆腐 大名古屋ビルヂング店","url":"https://nagoya-bites.com/stores/J001215406.html"},{"@type":"ListItem","position":4,"name":"中国菜 たな華","url":"https://nagoya-bites.com/stores/J003365698.html"},{"@type":"ListItem","position":5,"name":"台北館","url":"https://nagoya-bites.com/stores/J004536412.html"},{"@type":"ListItem","position":6,"name":"チャイニーズレストラン 春","url":"https://nagoya-bites.com/stores/J001294013.html"},{"@type":"ListItem","position":7,"name":"開華亭","url":"https://nagoya-bites.com/stores/J000398774.html"},{"@type":"ListItem","position":8,"name":"四川料理 蘭州ラーメン 牛王 ぎゅうおう 本陣駅前店","url":"https://nagoya-bites.com/stores/J001287246.html"},{"@type":"ListItem","position":9,"name":"楊國福 名古屋栄店","url":"https://nagoya-bites.com/stores/J004090772.html"},{"@type":"ListItem","position":10,"name":"餃子のひょっとこ","url":"https://nagoya-bites.com/stores/J004421851.html"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"名古屋の中華の予算相場はいくらですか?","acceptedAnswer":{"@type":"Answer","text":"街中華（町の中華屋）で1人1,500〜2,500円、本格中華で3,500〜6,500円、北京・広東・四川料理の専門高級店で7,000〜15,000円が名古屋の実勢。コース利用なら4,500〜8,000円帯が最も選択肢豊富で、4〜6人での円卓利用には円卓料金（1,000〜3,000円）が別途必要な店も。フカヒレ・北京ダック等の高級食材を含むコースは10,000〜20,000円が相場です。"}},{"@type":"Question","name":"名古屋で本格中華が楽しめる店はどこ?","acceptedAnswer":{"@type":"Answer","text":"広東料理特化なら『鳳麟』『東天紅』、北京料理なら『北京飯店』『万豪記』、四川料理は『川香苑』『重慶飯店』、上海料理は『上海楼』『陳麻婆豆腐』が業界内評価。本場経験を持つシェフが調理する店ほど信頼度が高く、メニューに『中国国家資格 中華調理師』記載があるかが目安。栄・伏見エリアに本格派が集中、名駅エリアはホテル中華（マリオット・ヒルトン）が信頼の選択肢です。"}},{"@type":"Question","name":"点心・小籠包・餃子で名古屋のおすすめは?","acceptedAnswer":{"@type":"Answer","text":"点心専門なら『點點心 名古屋店』（飲茶式点心）、小籠包は『鼎泰豐』（台北本店の名古屋分店）、餃子は『餃子の王将』『ぎょうざ満州』『ぎょうざ専門 大須』が業界内評価。手作り点心は皮の薄さと餡のジューシーさが命で、メニューに『手作り』『当日仕込み』記載がある店が本格派。1人2,000〜3,500円で本格点心ランチが楽しめます。"}},{"@type":"Question","name":"中華料理で大人数の宴会をするときのコツは?","acceptedAnswer":{"@type":"Answer","text":"①円卓利用は4〜10人が標準で、6〜8人が最も使いやすい。②コース料金は1人5,000〜10,000円で12〜15皿構成が定型。③配膳は時計回りに回し、ホスト（幹事）が一番奥に座る慣習。④紹興酒を頼むときは温め（30〜40℃）が美味しい飲み方。⑤予約は1〜2週間前、年末年始は1ヶ月前。⑥支払いは事前予約時にコース＋飲み放題で固定が会計トラブルゼロ。"}},{"@type":"Question","name":"名古屋の街中華でおすすめの店はありますか?","acceptedAnswer":{"@type":"Answer","text":"昔ながらの街中華は『中華そば 龍門』（千種）、『中華料理 大宝』（千種）、『中華料理 萬楽』（栄）、『中華料理 山口』（覚王山）など。1人1,500〜2,500円で麻婆豆腐定食・天津飯定食・ラーメン+半チャーハンセット等を楽しめます。地元の業界人は『街中華はマスター歴を確認』が定石で、20年以上続く店ほど安定した味と信頼があります。"}},{"@type":"Question","name":"名古屋の中華は予約必須ですか?","acceptedAnswer":{"@type":"Answer","text":"街中華は予約不要・飛び込み可、本格中華のディナーは予約推奨、円卓利用・コース利用は予約必須です。金土夜は1〜2週間前、年末年始は1ヶ月前が安全圏。点心ランチ系（飲茶）は週末予約推奨、平日ランチは飛び込み可。誕生日・記念日には『北京ダック』『フカヒレ姿煮』など華やかな料理を予約時に追加注文しておくとサプライズ感が高まります。"}}]}</script>
 </div>
 

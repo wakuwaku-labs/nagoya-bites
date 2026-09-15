@@ -24,8 +24,13 @@
  *   node scripts/refresh_feature_rosters.js --only=banquet  # 1特集だけ
  *   node scripts/refresh_feature_rosters.js --dry-run       # 書き換えず選定結果を表示
  *   node scripts/refresh_feature_rosters.js --check         # プール健診のみ(枠割れで exit 1)
+ *   node scripts/refresh_feature_rosters.js --if-stale      # 今月まだ未反映の時だけ実行(自己修復)
  *
- * 自動実行: .github/workflows/build.yml が毎月1日に実行し features/*.html を自動コミット。
+ * 自動実行: .github/workflows/build.yml が毎日 `--if-stale` で呼ぶ（ISSUE-125）。日付では
+ * なく data/feature_roster_health.json の「最終反映月」で判定するため、手前のステップが
+ * 月初の数日たまたま失敗しても、パイプラインが次に成功した日に自動で追いつく。反映後は
+ * 心拍を記録し、月内に何度呼ばれても2回目以降は即スキップ（余計なコミットを作らない）。
+ * 生存監視: `node scripts/check_feature_roster_health.js`（.github/workflows/feature-roster-watchdog.yml）。
  */
 const fs = require('fs');
 const path = require('path');
@@ -35,6 +40,7 @@ const ROOT = path.resolve(__dirname, '..');
 const CONFIG = path.join(ROOT, 'data', 'feature_rosters.json');
 const CLOSED = path.join(ROOT, 'data', 'closed_stores.json');
 const FEATURES_DIR = path.join(ROOT, 'features');
+const HEALTH = path.join(ROOT, 'data', 'feature_roster_health.json');
 
 // ───────── ユーティリティ ─────────
 const norm = (s) => String(s || '').normalize('NFKC').replace(/\s|　/g, '').replace(/&amp;/g, '&').toLowerCase();
@@ -45,6 +51,12 @@ function monthJST(override) {
   const now = new Date();
   const jst = new Date(now.getTime() + 9 * 3600 * 1000);
   return jst.toISOString().slice(0, 7);
+}
+function todayJST() {
+  return new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+}
+function readHealth() {
+  try { return JSON.parse(fs.readFileSync(HEALTH, 'utf8')); } catch (e) { return null; }
 }
 // 月文字列(YYYY-MM)を安定した整数シードに（年をまたいでも毎月ずれる）
 function monthSeed(ym) {
@@ -308,8 +320,8 @@ function renderStoreCard(entry, num, featureSlug) {
           <p class="store-desc">${descOf(s, 110)}</p>
           <div class="store-tags">${tags}</div>
           <div class="store-actions">
-            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/${id}.html" ${track}>詳細ページを見る →</a>
-            <a class="store-link" href="https://www.hotpepper.jp/str${id}/" target="_blank" rel="noopener" ${trackCta}>予約はこちら →</a>
+            <a class="store-link store-link-internal" href="https://nagoya-bites.com/stores/${id}.html" ${track}>詳細ページを見る</a>
+            <a class="store-link" href="https://www.hotpepper.jp/str${id}/" target="_blank" rel="noopener" ${trackCta}>予約はこちら</a>
           </div>
         </div>
       </div>`;
@@ -393,12 +405,27 @@ function main() {
   const only = (args.find(a => a.startsWith('--only=')) || '').split('=')[1] || null;
   const dryRun = args.includes('--dry-run');
   const checkMode = args.includes('--check');
+  const ifStale = args.includes('--if-stale');
 
   const cfg = JSON.parse(fs.readFileSync(CONFIG, 'utf8'));
   const stores = loadStores();
   const closed = loadClosedSet();
   const ym = monthJST(monthArg);
   const seed = monthSeed(ym);
+
+  // --if-stale: 日付(1〜3日)ではなく「今月まだ反映していないか」で判定する（自己修復）。
+  // build.yml が日次で1〜3日だけ呼ぶ従来方式だと、その3日間に他ステップ（他都道府県マッチ監査等・
+  // continue-on-error 無し）が失敗して手前で止まった月は、その月まるごとローテーションが
+  // 欠落したまま気づかれない（実測: 2026-08-01〜03/2026-09-01〜03 とも欠落・オーナー報告で発覚）。
+  // 心拍(HEALTH)の対象月が今月と違えば、日付に関わらず何日でも実行する＝次にパイプラインが
+  // 手前のゲートを通った日に必ず追いつく。月内の安定性(1ヶ月に1回だけ)は month seed の冪等性で担保。
+  if (ifStale && !dryRun && !checkMode) {
+    const h = readHealth();
+    if (h && h.last_run && h.last_run.month === ym) {
+      console.log(`[roster] --if-stale: 今月(${ym})は反映済み（最終反映 ${h.last_run.date}）のためスキップ`);
+      return;
+    }
+  }
   const monthKey = String(parseInt(ym.split('-')[1], 10)); // "7"
   const seasonalBiasOf = cfg.seasonalBias || {};
   const poolFor = buildPool(stores, cfg, closed);
@@ -456,6 +483,22 @@ function main() {
   console.log(`\n[roster] 更新 ${updated}件 / 枠割れ・失敗 ${shortfalls}件`);
   if (checkMode && shortfalls > 0) { console.error('[roster] --check: 枠割れありのため exit 1'); process.exit(1); }
   if (checkMode) console.log('[roster] --check: 全対象でプール充足 ✓');
+
+  // dry-run/check は下見のため心拍を書かない。実書き込み(--only 等の部分実行含む)だけ記録する。
+  // ISSUE-084 の原則5(通知は原因つきで出す)に沿い、watchdog がそのまま人に見せられる粒度で残す。
+  if (!dryRun && !checkMode) {
+    fs.writeFileSync(HEALTH, JSON.stringify({
+      last_run: {
+        month: ym,
+        date: todayJST(),
+        recorded_at: new Date().toISOString(),
+        targets: targets.length,
+        updated,
+        shortfalls,
+        status: shortfalls > 0 ? 'partial' : 'ok',
+      },
+    }, null, 2) + '\n');
+  }
 }
 
 if (require.main === module) main();

@@ -139,6 +139,141 @@
       "format": "store-card", "container": "store-list", "slots": 11, "coreCount": 5,
       "scene": { "genre": "居酒屋|ダイニング|イタリアン|海鮮|焼肉|寿司|鮨|和食|中華|カフェ", "keyword": "家族|個室|ランチ|連休|子連れ|記念日|集まり|大人数", "gateKeyword": false },
       "fixed": []
+    },
+    "birthday": {
+      "format": "store-card", "container": "store-list", "slots": 5, "coreCount": 3,
+      "scene": { "genre": "イタリアン|フレンチ|ダイニング|割烹|日本料理|鉄板|焼肉|創作", "keyword": "誕生日|記念日|お祝い|バースデー|ケーキ|サプライズ", "gateKeyword": false, "minPrice": 3000 },
+      "fixed": []
+    },
+    "birthday-surprise": {
+      "format": "store-card", "container": "store-list", "slots": 9, "coreCount": 5,
+      "scene": { "genre": "イタリアン|ダイニング|割烹|焼肉|居酒屋|創作", "keyword": "サプライズ|誕生日|バースデー|ケーキ|お祝い", "gateKeyword": false },
+      "fixed": []
+    },
+    "hard-to-book": {
+      "format": "store-card", "container": "store-list", "slots": 5, "coreCount": 3,
+      "scene": { "keyword": "予約困難|争奪|即完売|プレミア|人気店|行列", "gateKeyword": true },
+      "fixed": []
+    },
+    "industry-insiders-pick": {
+      "format": "store-card", "container": "store-list", "slots": 6, "coreCount": 4,
+      "scene": { "genre": "居酒屋|ダイニング|フレンチ|イタリアン|懐石|和食|割烹", "keyword": "", "gateKeyword": false },
+      "fixed": []
+    },
+    "kospa-insider": {
+      "format": "store-card", "container": "store-list", "slots": 5, "coreCount": 3,
+      "scene": { "genre": "居酒屋|ダイニング|イタリアン|中華|焼肉|バー", "keyword": "", "gateKeyword": false },
+      "fixed": []
+    },
+    "meieki-hitori-nomi": {
+      "format": "store-card", "container": "store-list", "slots": 6, "coreCount": 3,
+      "scene": { "genre": "居酒屋|バー|立ち飲み", "area": "名駅|名古屋駅|中村区", "keyword": "一人|ひとり|カウンター|ふらっと", "gateKeyword": false, "gateArea": true },
+      "fixed": []
+    },
+    "nagoya-settai-lunch": {
+      "format": "shop-card", "container": "shop-grid", "slots": 9, "coreCount": 5,
+      "scene": { "genre": "和食|割烹|日本料理|懐石", "keyword": "ランチ|接待|会食|個室", "gateKeyword": false },
+      "fixed": []
+    },
+    "osu-food-walk": {
+      "format": "store-card", "container": "store-list", "slots": 8, "coreCount": 4,
+      "scene": { "area": "大須", "keyword": "食べ歩き|テイクアウト|ひとくち|串", "gateKeyword": false, "gateArea": true },
+      "fixed": []
+    },
+    "sakae": {
+      "format": "store-card", "container": "store-list", "slots": 15, "coreCount": 8,
+      "scene": { "area": "栄|矢場町|伏見|久屋大通|新栄", "keyword": "", "gateArea": true },
+      "fixed": []
+    },
+    "nagoya-bar-guide": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "バー", "keyword": "ワイン|ワインバー", "gateKeyword": false },
+      "fixed": []
+    },
+    "nagoya-bar": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "バー", "keyword": "カクテル|カクテルバー", "gateKeyword": false },
+      "fixed": []
+    },
+    "nagoya-chinese-guide": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "中華|中国料理", "keyword": "", "gateKeyword": false },
+      "fixed": []
+    },
+    "nagoya-dining-bar": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "ダイニングバー|バー", "keyword": "", "gateKeyword": false },
+      "fixed": []
+    },
+    "nagoya-french-guide": {
+      "format": "shop-card", "container": "shop-grid", "slots": 8, "coreCount": 4,
+      "scene": { "genre": "フレンチ|フランス料理", "keyword": "", "gateKeyword": false },
+      "fixed": []
+    },
+    "nagoya-italian-guide": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "イタリアン", "keyword": "", "gateKeyword": false },
+      "fixed": []
+    },
+    "nagoya-izakaya": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "居酒屋", "keyword": "", "gateKeyword": false },
+      "fixed": []
+    },
+    "nagoya-kaiseki-guide": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "keyword": "懐石|会席|京料理", "gateKeyword": true },
+      "fixed": []
+    },
+    "nagoya-korean": {
+      "format": "store-card", "container": "store-list", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "韓国料理", "keyword": "", "gateKeyword": false },
+      "fixed": []
+    },
+    "nagoya-morning": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "モーニング|喫茶|カフェ", "keyword": "モーニング|朝", "gateKeyword": true },
+      "fixed": []
+    },
+    "nagoya-seafood": {
+      "format": "store-card", "container": "store-list", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "海鮮|割烹|寿司|鮨|居酒屋", "keyword": "海鮮|魚介|鮮魚|刺身", "gateKeyword": true },
+      "fixed": []
+    },
+    "nagoya-steak": {
+      "format": "shop-card", "container": "shop-grid", "slots": 9, "coreCount": 4,
+      "scene": { "keyword": "ステーキ|ステーキハウス", "gateKeyword": true },
+      "fixed": []
+    },
+    "nagoya-sushi-guide": {
+      "format": "shop-card", "container": "shop-grid", "slots": 8, "coreCount": 4,
+      "scene": { "keyword": "寿司|鮨", "gateKeyword": true },
+      "fixed": []
+    },
+    "nagoya-teppanyaki": {
+      "format": "shop-card", "container": "shop-grid", "slots": 9, "coreCount": 4,
+      "scene": { "keyword": "鉄板|鉄板焼", "gateKeyword": true },
+      "fixed": []
+    },
+    "nagoya-tonkatsu": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "keyword": "とんかつ|カツ", "gateKeyword": true },
+      "fixed": []
+    },
+    "nagoya-yakitori-guide": {
+      "format": "store-card", "container": "store-list", "slots": 10, "coreCount": 5,
+      "scene": { "keyword": "焼き鳥|焼鳥|串焼き|やきとり|炭火焼き鳥|地鶏", "gateKeyword": true },
+      "fixed": []
+    },
+    "nagoya-yakitori": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "keyword": "焼き鳥|焼鳥|串焼き|やきとり", "gateKeyword": true },
+      "fixed": []
+    },
+    "nagoya-yoshoku": {
+      "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
+      "scene": { "genre": "洋食", "keyword": "", "gateKeyword": false },
+      "fixed": []
     }
   }
 }
