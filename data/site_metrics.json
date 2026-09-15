@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-15T15:42:03.242Z",
+  "generatedAt": "2026-09-15T16:01:33.613Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1079,
+    "activeUsers": 1080,
     "pageViews": 2003,
-    "sessions": 1330,
-    "avgSessionDuration": 162,
-    "bounceRate": 0.294,
-    "pagesPerSession": 1.51
+    "sessions": 1332,
+    "avgSessionDuration": 161.8,
+    "bounceRate": 0.295,
+    "pagesPerSession": 1.5
   },
   "dailyReference": {
     "date": "2026-09-14",
@@ -18,7 +18,7 @@
   "channels": {
     "sessions": {
       "organic": 933,
-      "direct": 296,
+      "direct": 299,
       "social": 8,
       "ai_assistant": 98,
       "referral": 19,
@@ -26,8 +26,8 @@
       "other": 7
     },
     "pct": {
-      "organic": 68.6,
-      "direct": 21.7,
+      "organic": 68.4,
+      "direct": 21.9,
       "social": 0.6,
       "ai_assistant": 7.2,
       "referral": 1.4,
@@ -64,7 +64,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 40
+      "sessions": 42
     },
     {
       "source": "unknown",
@@ -117,6 +117,11 @@
       "sessions": 3
     },
     {
+      "source": "unknown",
+      "medium": "(none)",
+      "sessions": 3
+    },
+    {
       "source": "cn.bing.com",
       "medium": "referral",
       "sessions": 2
@@ -134,11 +139,6 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 2
-    },
-    {
-      "source": "unknown",
-      "medium": "(none)",
       "sessions": 2
     },
     {
@@ -196,7 +196,7 @@
     {
       "path": "/index.html",
       "pageViews": 161,
-      "sessions": 93
+      "sessions": 94
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -210,12 +210,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 125,
-    "ctaClickRate": 9.4,
+    "outboundClicks": 126,
+    "ctaClickRate": 9.5,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 56
+        "clicks": 57
       },
       {
         "domain": "tabelog.com",
@@ -261,7 +261,7 @@
     "note": null,
     "byChannel": {
       "organic": 66,
-      "direct": 40,
+      "direct": 41,
       "social": 0,
       "ai_assistant": 14,
       "referral": 5,
@@ -269,12 +269,12 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.1,
-    "ctaClickRate_direct": 13.5,
+    "ctaClickRate_direct": 13.7,
     "ctaClickRate_social": 0,
     "byPage": [
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 20
+        "clicks": 21
       },
       {
         "path": "/",
@@ -381,7 +381,7 @@
       {
         "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 20
+        "clicks": 21
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -582,7 +582,7 @@
     "reservationClicksByPage": [
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 20
+        "clicks": 21
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -645,11 +645,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 86
+    "reservationClicks": 87
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1079,
+    "value": 1080,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

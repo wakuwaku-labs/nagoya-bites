@@ -1,16 +1,16 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-15T15:42:06.306Z",
+  "generatedAt": "2026-09-15T16:01:37.245Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1361,
+  "total_sessions": 1364,
   "engines": [
     {
       "key": "google",
       "label": "Google",
       "sessions": 411,
-      "pct": 30.2,
+      "pct": 30.1,
       "sources": [
         {
           "source": "google",
@@ -40,8 +40,8 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 275,
-      "pct": 20.2,
+      "sessions": 277,
+      "pct": 20.3,
       "sources": [
         {
           "source": "(direct)",
@@ -51,7 +51,7 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 40
+          "sessions": 42
         }
       ]
     },
@@ -59,7 +59,7 @@
       "key": "yahoo",
       "label": "Yahoo!",
       "sessions": 182,
-      "pct": 13.4,
+      "pct": 13.3,
       "sources": [
         {
           "source": "yahoo",
@@ -114,7 +114,7 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 47,
+      "sessions": 48,
       "pct": 3.5,
       "sources": [
         {
@@ -143,13 +143,13 @@
           "sessions": 3
         },
         {
-          "source": "ecosia.org",
-          "medium": "organic",
-          "sessions": 2
-        },
-        {
           "source": "unknown",
           "medium": "(none)",
+          "sessions": 3
+        },
+        {
+          "source": "ecosia.org",
+          "medium": "organic",
           "sessions": 2
         },
         {
@@ -257,10 +257,10 @@
     "delta": {
       "google": 4,
       "bing": 18,
-      "direct": -11,
+      "direct": -10,
       "yahoo": 3,
       "ai_assistant": -4,
-      "other": 6,
+      "other": 7,
       "duckduckgo": -2,
       "social": 0
     }
