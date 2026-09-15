@@ -66,6 +66,23 @@ function collectTargets() {
   const featureFiles = listHtmlFiles(path.join(ROOT, 'features'));
   const journalFiles = listHtmlFiles(path.join(ROOT, 'journal'), { excludeTemplate: true });
   let storeFiles = listHtmlFiles(path.join(ROOT, 'stores'));
+
+  // storeAuditScope=active_only: 孤児ページ（data/stores.json に HP ID が存在しない stores/*.html）を
+  // 監査対象から除外する（ISSUE-102 の孤児ページは旧テンプレートで design system 非準拠だが、
+  // 毎日の gen-store-pages.js で再生成される active 店舗ページは全て準拠している）。
+  // 判定は検証できる事実（data/stores.json への HP ID 実在）のみ（CLAUDE.md 制約10）。
+  if (DS.storeAuditScope === 'active_only') {
+    try {
+      const storesData = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/stores.json'), 'utf8'));
+      const activeHpIds = new Set(storesData.map(s => s['ホットペッパーID']).filter(Boolean));
+      storeFiles = storeFiles.filter(f => {
+        const id = path.basename(f, '.html');
+        return activeHpIds.has(id);
+      });
+    } catch (e) {
+      // stores.json が読めない場合は全ファイルを対象にする（安全側に倒す）
+    }
+  }
   // SEO-094: stores/area/ 配下（エリア×ジャンル×条件ページ）は生成器が全ページを一律に
   // 同じテンプレートで作るため、常に全数を見る（storeFiles と違いサンプリングしない）。
   const hubFiles = listHtmlFilesRecursive(path.join(ROOT, 'stores', 'area'));

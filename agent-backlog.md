@@ -275,7 +275,7 @@
 - **priority**: P2 → **status**: ready
 - **detected**: 2026-09-14
 - **category**: SNS / 計測
-- **owner**: Marketer
+- **owner**: 片桐 ← Marketer（acceptance 1・2 がオーナー本人の Instagram 操作のため自動実施不可）
 - **source**: オーナーへのヒアリング（2026-09-14・9月上旬開始・累計再生1万未満・bioはトップURLのみでUTMなし）。`data/site_metrics.json` の `sourceBreakdown` に instagram 行が過去一度も出ておらず、リールの効果が構造的に計測不能
 - **brand-filter**: ✅ 適合 — 自社の流入を正しく数えるだけの計測施策。順位操作・広告・クーポンのいずれにも該当しない
 - **acceptance**:
@@ -930,7 +930,7 @@
 
 ### [DSN-001] トップページを含む全ページの可読性・タイポグラフィを刷新し、デザインシステムとDesigner役職を常設する
 
-- **priority**: P1（UX劣化） → **status**: partial（本体は PR #210 で実装・マージ済み・2026-09-03。残る acceptance は下記「未完了」1項目のみ）
+- **priority**: P1（UX劣化） → **status**: done（本体は PR #210 で実装・マージ済み・2026-09-03。残る CI ブロッキング化は 2026-09-15 に完了：storeAuditScope=active_only で孤児ページを除外し --check で本番CI ゲート化）
 - **detected**: 2026-09-03
 - **category**: design / ux
 - **owner**: Designer（新設）
@@ -5752,6 +5752,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-09-15 | Orchestrator(routine) | DSN-001: audit_design_system.js CI ステップをブロッキング化。storeAuditScope=active_only で孤児ページ836件を除外し --check 化（0 violations, 1096 files, 197 tests pass）。SEO-098 をオーナー本人操作必須のためエスカレーション（owner: 片桐←Marketer） | ✅ commit daebb694 |
 | 2026-09-08 | Designer(EXPLICIT) | DSN-003: トップ/ジャーナル/特集/編集規約4ページ種別のプロ品質リデザイン＋サイト共通クローム統一（scripts/lib/site_chrome.js新設・全216ファイル） | ✅ コミット済み・PR作成待ち (commit 20cd42ec4) |
 | 2026-09-08 | Orchestrator(routine) | ISSUE-121: 他都道府県マッチ残存確認→修正は commit 06b6976f で main に反映済み・audit_other_prefecture_matches.js --check=[OK]確認・done クローズ | ✅ done（既存修正を確認） |
 | 2026-09-08 | Orchestrator(routine) | SEO-086: scripts/add_feature_tracking.js 新設・scripts/refresh_feature_rosters.js に cta_click 追加・features 67本にcta_click/feature_store_click/internal_link_click/scroll_depth を補完。機械検査OK | ✅ commit 予定 |
