@@ -2281,7 +2281,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 
 <!-- STORE-INDEX:START 2026-09-15 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（4929店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（4930店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（836店）</summary>
@@ -7582,6 +7582,12 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <li><a href="index.html#q=%E3%83%90%E3%83%BC%E3%82%AC%E3%83%BC%E3%82%AD%E3%83%B3%E3%82%B0%20%E6%B8%85%E6%B0%B4%E5%B1%8B%E8%97%A4%E3%81%8C%E4%B8%98%E5%BA%97">バーガーキング 清水屋藤が丘店（名古屋（守山区・藤が丘）・ハンバーガー / ファストフード）</a></li>
 </ul>
 </details>
+<details class="store-index-area" data-area="千種区大久手">
+<summary>千種区大久手（1店）</summary>
+<ul class="store-index-list">
+<li><a href="index.html#q=%E5%A4%A7%E4%B9%85%E6%89%8B%E5%B1%B1%E6%9C%AC%E5%B1%8B">大久手山本屋（千種区大久手・味噌煮込みうどん）</a></li>
+</ul>
+</details>
 </section>
 <!-- STORE-INDEX:END -->
 
@@ -7750,7 +7756,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '65614af5372e';
+var STORES_JSON_VERSION = '3e3840f60f21';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
