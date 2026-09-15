@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-15T13:53:32.494Z",
+  "generatedAt": "2026-09-15T14:18:06.623Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1099,
-    "pageViews": 2034,
-    "sessions": 1351,
+    "activeUsers": 1100,
+    "pageViews": 2037,
+    "sessions": 1354,
     "avgSessionDuration": 161.9,
-    "bounceRate": 0.292,
-    "pagesPerSession": 1.51
+    "bounceRate": 0.291,
+    "pagesPerSession": 1.5
   },
   "dailyReference": {
     "date": "2026-09-13",
@@ -18,21 +18,21 @@
   "channels": {
     "sessions": {
       "organic": 946,
-      "direct": 296,
+      "direct": 298,
       "social": 8,
       "ai_assistant": 103,
       "referral": 19,
       "paid": 0,
-      "other": 3
+      "other": 5
     },
     "pct": {
-      "organic": 68.8,
-      "direct": 21.5,
+      "organic": 68.6,
+      "direct": 21.6,
       "social": 0.6,
       "ai_assistant": 7.5,
       "referral": 1.4,
       "paid": 0,
-      "other": 0.2
+      "other": 0.4
     }
   },
   "sourceBreakdown": [
@@ -64,7 +64,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 35
+      "sessions": 37
     },
     {
       "source": "unknown",
@@ -105,6 +105,11 @@
       "source": "teams.public.onecdn.static.microsoft",
       "medium": "referral",
       "sessions": 4
+    },
+    {
+      "source": "unknown",
+      "medium": "",
+      "sessions": 3
     },
     {
       "source": "(data not available)",
@@ -170,28 +175,23 @@
       "source": "websearch.rakuten.co.jp",
       "medium": "referral",
       "sessions": 1
-    },
-    {
-      "source": "unknown",
-      "medium": "",
-      "sessions": 1
     }
   ],
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 381,
+      "pageViews": 382,
       "sessions": 328
     },
     {
       "path": "/",
-      "pageViews": 362,
-      "sessions": 221
+      "pageViews": 363,
+      "sessions": 222
     },
     {
       "path": "/index.html",
-      "pageViews": 159,
-      "sessions": 91
+      "pageViews": 160,
+      "sessions": 92
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -205,7 +205,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 128,
+    "outboundClicks": 129,
     "ctaClickRate": 9.5,
     "byDomain": [
       {
@@ -226,7 +226,7 @@
       },
       {
         "domain": "www.google.com",
-        "clicks": 4
+        "clicks": 5
       },
       {
         "domain": "news.google.com",
@@ -256,7 +256,7 @@
     "note": null,
     "byChannel": {
       "organic": 66,
-      "direct": 41,
+      "direct": 42,
       "social": 0,
       "ai_assistant": 16,
       "referral": 5,
@@ -264,7 +264,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 7,
-    "ctaClickRate_direct": 13.9,
+    "ctaClickRate_direct": 14.1,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -272,12 +272,12 @@
         "clicks": 20
       },
       {
-        "path": "/index.html",
+        "path": "/",
         "clicks": 19
       },
       {
-        "path": "/",
-        "clicks": 18
+        "path": "/index.html",
+        "clicks": 19
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -411,6 +411,11 @@
         "clicks": 9
       },
       {
+        "path": "/",
+        "domain": "www.google.com",
+        "clicks": 3
+      },
+      {
         "path": "/index.html",
         "domain": "maps.google.com",
         "clicks": 3
@@ -423,11 +428,6 @@
       {
         "path": "/",
         "domain": "news.google.com",
-        "clicks": 2
-      },
-      {
-        "path": "/",
-        "domain": "www.google.com",
         "clicks": 2
       },
       {
@@ -675,7 +675,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1099,
+    "value": 1100,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

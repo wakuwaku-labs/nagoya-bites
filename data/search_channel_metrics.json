@@ -1,16 +1,16 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-15T13:53:35.680Z",
+  "generatedAt": "2026-09-15T14:18:10.023Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1375,
+  "total_sessions": 1379,
   "engines": [
     {
       "key": "google",
       "label": "Google",
       "sessions": 418,
-      "pct": 30.4,
+      "pct": 30.3,
       "sources": [
         {
           "source": "google",
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 330,
-      "pct": 24,
+      "pct": 23.9,
       "sources": [
         {
           "source": "bing",
@@ -40,8 +40,8 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 277,
-      "pct": 20.1,
+      "sessions": 279,
+      "pct": 20.2,
       "sources": [
         {
           "source": "(direct)",
@@ -51,7 +51,7 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 35
+          "sessions": 37
         }
       ]
     },
@@ -114,8 +114,8 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 41,
-      "pct": 3,
+      "sessions": 43,
+      "pct": 3.1,
       "sources": [
         {
           "source": "unknown",
@@ -131,6 +131,11 @@
           "source": "teams.public.onecdn.static.microsoft",
           "medium": "referral",
           "sessions": 4
+        },
+        {
+          "source": "unknown",
+          "medium": "",
+          "sessions": 3
         },
         {
           "source": "(data not available)",
@@ -170,11 +175,6 @@
         {
           "source": "websearch.rakuten.co.jp",
           "medium": "referral",
-          "sessions": 1
-        },
-        {
-          "source": "unknown",
-          "medium": "",
           "sessions": 1
         }
       ]
@@ -250,9 +250,9 @@
     "from": "2026-09-14",
     "to": "2026-09-15",
     "delta": {
-      "google": 8,
+      "google": 11,
       "bing": 18,
-      "direct": -9,
+      "direct": -8,
       "yahoo": 7,
       "ai_assistant": 1,
       "other": 1,
