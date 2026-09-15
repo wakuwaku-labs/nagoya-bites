@@ -28,7 +28,7 @@ puppeteer.use(StealthPlugin());
 const fs   = require('fs');
 const path = require('path');
 // 掲載可否の判定は共通の1本を使う（基準は data/ig_post_policy.json）
-const { judgeUrl } = require('./lib/ig_post_policy.js');
+const { judgeUrl, loadPolicy } = require('./lib/ig_post_policy.js');
 const { shortcodeOf } = require('./fetch_ig_post_evidence.js');
 
 const ROOT          = path.join(__dirname, '..');
@@ -106,7 +106,9 @@ async function fetchPostMeta(page, postUrl) {
   });
 }
 
-async function getBestPost(page, profileUrl, storeName) {
+// 基準を通った投稿を上限件数（data/ig_post_policy.json の maxPostsPerStore）まで集める。
+// 先頭がカードの主役（従来どおり）、2件目以降は店舗ページの複数投稿表示（2026-09-15オーナー承認）に使う。
+async function getBestPosts(page, profileUrl, storeName, maxPosts) {
   try {
     const reelsUrl = profileUrl.replace(/\/?$/, '/reels/');
     await page.goto(reelsUrl, { waitUntil: 'networkidle2', timeout: 15000 });
@@ -114,10 +116,19 @@ async function getBestPost(page, profileUrl, storeName) {
     const isLoggedIn = await page.evaluate(() => !document.querySelector('input[name="username"]'));
     if (!isLoggedIn) return null;
     let candidates = await collectCandidates(page, '/reel/', 'reel', MAX_CANDIDATES);
-    if (candidates.length === 0) {
+    // 複数投稿表示（2026-09-15オーナー承認）: reels タブが1件だけでも、上限件数(maxPosts)に
+    // 満たない間は投稿一覧（/p/）も見て候補を増やす。以前は reels が0件のときだけ見に行っていたが、
+    // それだと「reelsに1件だけある」店が投稿一覧の他の投稿を一切候補にできなかった。
+    if (candidates.length < maxPosts) {
       await page.goto(profileUrl, { waitUntil: 'networkidle2', timeout: 15000 });
       await sleep(1800);
-      candidates = await collectCandidates(page, '/p/', 'post', MAX_CANDIDATES);
+      const seen = new Set(candidates.map(c => c.url));
+      const gridCandidates = await collectCandidates(page, '/p/', 'post', MAX_CANDIDATES);
+      for (const c of gridCandidates) {
+        if (seen.has(c.url)) continue;
+        seen.add(c.url);
+        candidates.push(c);
+      }
     }
     if (candidates.length === 0) return null;
 
@@ -126,9 +137,12 @@ async function getBestPost(page, profileUrl, storeName) {
     candidates = candidates.map(c => ({ ...c, score: scoreContent(c) }));
     candidates.sort((a, b) => b.score - a.score);
 
-    // 上位N件の本文を読み、最初に基準を通った1件を採る。全部落ちたら「投稿なし」に落とす。
+    // 上位N件の本文を読み、基準を通ったものを上限件数まで採る。全部落ちたら「投稿なし」に落とす。
     // （data/photo_policy.json の写真選定と同じ考え方＝取り繕わない・ISSUE-092）
+    const picked = [];
+    const rejectedAll = [];
     for (const c of candidates.slice(0, CAPTION_FETCH)) {
+      if (picked.length >= maxPosts) break;
       try {
         const meta = await fetchPostMeta(page, c.url);
         c.caption = meta.caption; c.location = meta.location;
@@ -138,16 +152,17 @@ async function getBestPost(page, profileUrl, storeName) {
         evidence: { [shortcodeOf(c.url)]: { caption: c.caption } }
       });
       if (verdict.ok) {
-        return {
+        picked.push({
           url: c.url, score: scoreContent(c), type: c.type,
           caption: c.caption || '', alt: c.alt || '', location: c.location || '',
           relevance: verdict.verdict
-        };
+        });
+      } else {
+        rejectedAll.push(verdict.verdict);
       }
-      c.rejected = verdict.verdict;
     }
     // 基準を通る投稿が無かった＝この店には埋め込みを付けない
-    return { url: null, rejectedAll: candidates.slice(0, CAPTION_FETCH).map(c => c.rejected).filter(Boolean) };
+    return { picked, rejectedAll };
   } catch (e) { return null; }
 }
 
@@ -189,6 +204,7 @@ async function main() {
   await page.setCookie(...cookies);
 
   let processed = 0, found = 0;
+  const maxPosts = (loadPolicy().thresholds && loadPolicy().thresholds.maxPostsPerStore) || 1;
 
   for (let i = startIdx; i < targets.length; i++) {
     if (processed >= BATCH_SIZE) {
@@ -202,17 +218,22 @@ async function main() {
     const { id, store, igUrl } = targets[i];
     process.stdout.write(`[${i + 1}/${targets.length}] ${store.slice(0, 20)} ... `);
 
-    const result = await getBestPost(page, igUrl, store);
-    if (result && result.url) {
+    const result = await getBestPosts(page, igUrl, store, maxPosts);
+    if (result && result.picked.length) {
+      const primary = result.picked[0];
       posts[id] = {
-        postUrl: result.url, score: result.score, type: result.type,
+        postUrl: primary.url, score: primary.score, type: primary.type,
         // 所有者検証の証跡（第三者アカの投稿を出してよいかの判定材料）
-        caption: result.caption, alt: result.alt, location: result.location,
+        caption: primary.caption, alt: primary.alt, location: primary.location,
         // 内容の関連性判定の結果（data/ig_post_policy.json 基準）
-        relevance: result.relevance,
-        fetchedAt: new Date().toISOString()
+        relevance: primary.relevance,
+        fetchedAt: new Date().toISOString(),
+        // 2枚目以降（あれば）。主役と同じ登録アカウントの投稿のみが対象なので
+        // ここに URL/種別以外の情報は持たせない（証跡は shortcode で ig_post_evidence.json 側にはないため
+        // gen-store-pages.js の所有者検証はアカウント一致だけで行う＝select_ig_posts.js と同じ設計）
+        extraPosts: result.picked.slice(1).map(p => ({ postUrl: p.url, type: p.type }))
       };
-      console.log(`${result.url} (${result.type}, ${result.relevance})`);
+      console.log(`${primary.url} (${primary.type}, ${primary.relevance})${result.picked.length > 1 ? ` 他${result.picked.length - 1}件` : ''}`);
       found++;
     } else if (result) {
       // 候補は取れたが、どれも「料理・内装・外観がわかる投稿」ではなかった。
@@ -239,4 +260,7 @@ async function main() {
   console.log(`\n完了: ${processed}件処理、${found}件取得`);
 }
 
-main().catch(e => { console.error('エラー:', e.message); process.exit(1); });
+if (require.main === module) {
+  main().catch(e => { console.error('エラー:', e.message); process.exit(1); });
+}
+module.exports = { getBestPosts, COOKIE_FILE };

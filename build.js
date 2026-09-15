@@ -1753,6 +1753,24 @@ async function main() {
         if (ev) { s['動画証跡'] = ev; evidenceTagged++; }
       }
       console.log(`Instagram投稿の証跡付与: ${evidenceTagged}件`);
+
+      // ── 2枚目以降の候補をマージ（店舗ページの複数投稿表示・2026-09-15オーナー承認）──
+      // scripts/select_ig_posts.js が主役と同じ登録アカウントから選んだ追加投稿を
+      // Instagram投稿URL一覧 に積む。所有者検証（アカウント一致）は gen-store-pages.js が
+      // 主役と同じ規則で行うため、ここでは「主役の枠に既に入っている」店だけを対象にする。
+      let igExtraMerged = 0;
+      for (const s of slimStores) {
+        const id = s['ホットペッパーID'];
+        if (!id || !s['Instagram投稿URL']) continue;
+        const extra = igPostsCache[id] && igPostsCache[id].extraPosts;
+        if (!Array.isArray(extra) || !extra.length) continue;
+        const urls = extra
+          .map(e => e && e.postUrl)
+          .filter(u => IG_POST_URL_RE.test(u))
+          .map(u => u.replace(/\?.*$/, ''));
+        if (urls.length) { s['Instagram投稿URL一覧'] = urls; igExtraMerged++; }
+      }
+      console.log(`Instagram追加投稿URLマージ: ${igExtraMerged}件`);
     } catch (e) {
       console.warn(`instagram_posts.json マージ失敗: ${e.message}`);
     }
@@ -1791,6 +1809,20 @@ async function main() {
       s['Instagram投稿URL'] = '';
       delete s['動画証跡'];
       relDropped++;
+      // 主役が関連性ゲートで落ちたら、2枚目以降も一緒に落とす
+      // （主役無しで追加投稿だけ残ると、埋め込み欄そのものが主役不在になる）
+      delete s['Instagram投稿URL一覧'];
+    }
+    // 2枚目以降も同じ基準で個別に検査する（主役が通っても追加投稿ごとに内容は違うため）
+    let relExtraDropped = 0, relExtraKept = 0;
+    for (const s of slimStores) {
+      const extras = s['Instagram投稿URL一覧'];
+      if (!Array.isArray(extras) || !extras.length) continue;
+      const kept = extras.filter(u => judgeUrl(u, { storeName: s['店名'] || '' }).ok);
+      relExtraDropped += extras.length - kept.length;
+      relExtraKept += kept.length;
+      if (kept.length) s['Instagram投稿URL一覧'] = kept;
+      else delete s['Instagram投稿URL一覧'];
     }
     const breakdown = Object.entries(relTally)
       .filter(([v]) => v !== 'PASS')
@@ -1798,6 +1830,7 @@ async function main() {
       .map(([v, n]) => `${v}=${n}`)
       .join(' ');
     console.log(`Instagram投稿の関連性ゲート: 掲載 ${relKept}件 / 除外 ${relDropped}件${breakdown ? ` (${breakdown})` : ''}`);
+    console.log(`Instagram追加投稿の関連性ゲート: 掲載 ${relExtraKept}件 / 除外 ${relExtraDropped}件`);
   } catch (e) {
     console.warn(`Instagram投稿の関連性ゲート失敗: ${e.message}`);
   }

@@ -130,13 +130,24 @@ function collectTargets() {
 
   try {
     const posts = JSON.parse(fs.readFileSync(POSTS_FILE, 'utf8'));
-    for (const rec of Object.values(posts)) if (rec && rec.postUrl) add(rec.postUrl);
+    for (const rec of Object.values(posts)) {
+      if (!rec) continue;
+      if (rec.postUrl) add(rec.postUrl);
+      // 2枚目以降（店舗ページの複数投稿表示・2026-09-15オーナー承認）。
+      // select_ig_posts.js は候補を評価した時点で証跡を書くが、fetch_ig_posts_resolved.js は
+      // 書かないため、ここで拾わないと build.js の関連性ゲートが証跡なしで全て落としてしまう。
+      if (Array.isArray(rec.extraPosts)) for (const e of rec.extraPosts) if (e && e.postUrl) add(e.postUrl);
+    }
   } catch (_) {}
 
   // Sheets 由来（「Instagram投稿URL」列）もキャッシュに無いので拾う
   try {
     const { loadStores } = require('./lib/load_stores.js');
-    for (const s of loadStores()) add((s['Instagram投稿URL'] || '').trim());
+    for (const s of loadStores()) {
+      add((s['Instagram投稿URL'] || '').trim());
+      const extras = s['Instagram投稿URL一覧'];
+      if (Array.isArray(extras)) for (const u of extras) add(u);
+    }
   } catch (_) {}
 
   return urls;

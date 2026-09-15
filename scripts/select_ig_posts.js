@@ -35,7 +35,7 @@
 const fs   = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
-const { judgePost, shortcodeOf } = require('./lib/ig_post_policy.js');
+const { judgePost, shortcodeOf, loadPolicy } = require('./lib/ig_post_policy.js');
 
 const ROOT          = path.join(__dirname, '..');
 const POSTS_FILE    = path.join(ROOT, 'data', 'instagram_posts.json');
@@ -135,10 +135,14 @@ function main() {
         continue;
       }
 
-      // 新しい順に見て、最初に基準を通った1件を採る
-      let picked = null;
+      // 新しい順に見て、基準を通ったものを上限件数まで採る（先頭がカードの主役＝従来どおり）。
+      // 追加分（2枚目以降）は同じ登録アカウントからの投稿なので、所有者検証は
+      // scripts/audit_reel_ownership.js が主役と同じ規則（アカウント一致）で別途行う。
+      const maxPosts = (loadPolicy().thresholds && loadPolicy().thresholds.maxPostsPerStore) || 1;
+      const picked = [];
       const tried = [];
       for (const p of list) {
+        if (picked.length >= maxPosts) break;
         // 判定に使うのは本文だけ（判定器が見るのも本文だけ）。
         // accessibility_caption は「何が写っているか」の直接の証跡になり得るが、
         // 実測ではほぼ全ての投稿で null のため、あてにせず証跡としてのみ保存する
@@ -151,29 +155,33 @@ function main() {
           ...(p.alt ? { alt: p.alt } : {}),
           fetchedAt: new Date().toISOString()
         };
-        if (v.ok) { picked = { ...p, verdict: v }; break; }
+        if (v.ok) { picked.push({ ...p, verdict: v }); continue; }
         tried.push(v.verdict);
       }
 
-      if (picked) {
+      if (picked.length) {
         stats.replaced++;
-        const url = `https://www.instagram.com/${t.handle}/${picked.isVideo ? 'reel' : 'p'}/${picked.shortcode}/`;
+        const urlOf = p => `https://www.instagram.com/${t.handle}/${p.isVideo ? 'reel' : 'p'}/${p.shortcode}/`;
+        const primary = picked[0];
         if (!DRY) {
           // 前の投稿のフィールドは引き継がない。caption / alt / location は
           // scripts/audit_reel_ownership.js の evidenceFor() が「その投稿がその店を
           // 写しているか」の判定に使うため、別の投稿の証跡が残ると所有者検証が狂う。
           posts[t.id] = {
-            postUrl: url,
-            type: picked.isVideo ? 'reel' : 'post',
-            caption: picked.caption.slice(0, 500),
-            alt: picked.alt || '',
+            postUrl: urlOf(primary),
+            type: primary.isVideo ? 'reel' : 'post',
+            caption: primary.caption.slice(0, 500),
+            alt: primary.alt || '',
             location: '',            // このAPIからは取得できない（推測で埋めない）
-            relevance: picked.verdict.verdict,
+            relevance: primary.verdict.verdict,
             selectedBy: 'select_ig_posts',
-            fetchedAt: new Date().toISOString()
+            fetchedAt: new Date().toISOString(),
+            // 2枚目以降（あれば）。主役と同じ登録アカウントの投稿のみが対象なので
+            // ここに URL/種別以外の情報は持たせない（証跡は shortcode で ig_post_evidence.json 側にある）
+            extraPosts: picked.slice(1).map(p => ({ postUrl: urlOf(p), type: p.isVideo ? 'reel' : 'post' }))
           };
         }
-        console.log(`[${i}] ${t.store.slice(0, 18).padEnd(20)} → 採用 ${picked.shortcode} (${picked.verdict.reason.slice(0, 44)})`);
+        console.log(`[${i}] ${t.store.slice(0, 18).padEnd(20)} → 採用 ${primary.shortcode}${picked.length > 1 ? ` 他${picked.length - 1}件` : ''} (${primary.verdict.reason.slice(0, 44)})`);
       } else {
         stats.stillNone++;
         if (!DRY) {

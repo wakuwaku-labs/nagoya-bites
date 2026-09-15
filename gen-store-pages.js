@@ -15,6 +15,8 @@ const path  = require('path');
 const { titleAreaLabel } = require('./scripts/lib/area_label');
 const siteChrome = require('./scripts/lib/site_chrome');
 const areaGenrePages = require('./scripts/lib/area_genre_pages');
+const { loadPolicy: loadIgPostPolicy } = require('./scripts/lib/ig_post_policy');
+const IG_MAX_POSTS_PER_STORE = (loadIgPostPolicy().thresholds && loadIgPostPolicy().thresholds.maxPostsPerStore) || 1;
 
 // SEO-094: エリア×ジャンル一覧（stores/area/）のURL索引。「もっと見る」導線・パンくず・
 // JSON-LD が、生成済みハブが実在する店だけそこへリンクできるようにする（死にリンク回避）。
@@ -696,12 +698,21 @@ function renderStorePage(s, slug, relatedStores) {
   //   であることがあり、その場合この見出しは誤情報になる（判定は audit_reel_ownership.js）。
   const hasIgEmbed = s.__igVerified === true
     && /^https:\/\/www\.instagram\.com\/[A-Za-z0-9_.]+\/(p|reel)\/[A-Za-z0-9_-]+\/?$/.test(igPostUrl);
+  // 2枚目以降（所有者検証済み・gen-store-pages.js の localStores 走査で __igExtraVerified に積んだもの）。
+  // 主役（igPostUrl）と合わせて最大 data/ig_post_policy.json の maxPostsPerStore 件まで並べる。
+  const igExtraUrls = hasIgEmbed && Array.isArray(s.__igExtraVerified) ? s.__igExtraVerified : [];
+  // 通常は選定スクリプトが主役込みで上限を守って選ぶが、Sheets/手動データで主役が
+  // 選定結果と食い違う場合（主役が選定キャッシュと別経路で上書きされている等）に上限を超えない
+  // ための最終防衛線。data/ig_post_policy.json の maxPostsPerStore が唯一の情報源。
+  const igAllUrls = [igPostUrl, ...igExtraUrls].slice(0, IG_MAX_POSTS_PER_STORE);
   const igEmbedHtml = hasIgEmbed ? `
   <div class="ig-photos">
     <h2>公式Instagramの実際の写真</h2>
-    <blockquote class="instagram-media" data-instgrm-permalink="${igPostUrl}" data-instgrm-version="14" style="margin:0 auto;max-width:540px;min-width:280px;width:100%;background:#fff;border:1px solid var(--border);border-radius:3px;">
-      <a href="${igPostUrl}" target="_blank" rel="noopener noreferrer">${name} の公式Instagram投稿を見る</a>
-    </blockquote>
+    <div class="ig-grid">
+${igAllUrls.map(url => `      <blockquote class="instagram-media" data-instgrm-permalink="${url}" data-instgrm-version="14" style="margin:0;max-width:540px;min-width:280px;width:100%;background:#fff;border:1px solid var(--border);border-radius:3px;">
+        <a href="${url}" target="_blank" rel="noopener noreferrer">${name} の公式Instagram投稿を見る</a>
+      </blockquote>`).join('\n')}
+    </div>
   </div>` : '';
 
   const tagPills = tags.map(t => `<span class="tag">${t}</span>`).join('');
@@ -803,6 +814,8 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .links-section h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .ig-photos{margin:0 0 2rem;}
 .ig-photos h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
+.ig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem;justify-items:center;}
+.ig-grid .instagram-media{justify-self:center;}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
@@ -885,7 +898,7 @@ ${siteChrome.renderFooter({ depth: 1 })}
 ${siteChrome.chromeScript()}
 ${hasIgEmbed ? `<script>
 (function(){
-  var el=document.querySelector('.instagram-media');
+  var el=document.querySelector('.ig-photos');
   if(!el)return;
   var loaded=false;
   function load(){if(loaded)return;loaded=true;var sc=document.createElement('script');sc.async=true;sc.src='https://www.instagram.com/embed.js';document.body.appendChild(sc);}
@@ -1015,17 +1028,44 @@ async function main() {
   // 別の店の投稿が混ざると誤情報になる。index.html のカード/モーダルと同じ判定器を通し、
   // 検証を通った店だけ埋め込む（形式チェックだけでは所有者を確かめられない）。
   {
-    const { audit } = require('./scripts/audit_reel_ownership.js');
-    const { results } = audit(localStores);
+    const { audit, acctHandle, normH, sameBrand } = require('./scripts/audit_reel_ownership.js');
+    const { results, byPost } = audit(localStores);
     const verified = new Set(
       results.filter(r => r.verdict.startsWith('PASS')).map(r => r.hpId || r.store)
     );
-    let igVerified = 0;
+    const POST_RE = /^https:\/\/www\.instagram\.com\/([A-Za-z0-9._]+)\/(reel|p)\/([A-Za-z0-9_-]+)/;
+    let igVerified = 0, igExtraVerified = 0;
     for (const ls of localStores) {
-      ls.__igVerified = verified.has(ls['ホットペッパーID'] || ls['店名']);
+      const key = ls['ホットペッパーID'] || ls['店名'];
+      ls.__igVerified = verified.has(key);
       if (ls.__igVerified) igVerified++;
+
+      // ── 2枚目以降の所有者検証（店舗ページの複数投稿表示）──────────────────
+      // 追加投稿は select_ig_posts.js / fetch_ig_posts_resolved.js が「店の登録アカウント」
+      // からしか採らない設計。ここではその前提を投稿ごとに確かめ直す＝
+      // 投稿アカウントが登録アカウントと一致 or 同一ブランド接頭辞、かつそのアカウントが
+      // 別ブランドの複数店で共有されていないこと。
+      // 主役の verdict 文字列（PASS_OWN/PASS_EVIDENCE等）では判定しない。evidenceFor() は
+      // 「主役と登録アカウントが一致していても」証跡があれば PASS_EVIDENCE を先に返す実装のため、
+      // verdict ラベルだけでは「登録アカウント本人か」を正しく判別できない（アカウント一致は
+      // ここで改めて実アカウント名同士を比較する）。
+      const extraUrls = Array.isArray(ls['Instagram投稿URL一覧']) ? ls['Instagram投稿URL一覧'] : [];
+      ls.__igExtraVerified = [];
+      const acctNorm = normH(acctHandle(ls['Instagram']));
+      if (ls.__igVerified && extraUrls.length && acctNorm) {
+        for (const url of extraUrls) {
+          const m = String(url).match(POST_RE);
+          if (!m) continue;
+          const handle = normH(m[1]);
+          if (!(handle === acctNorm || handle.startsWith(acctNorm) || acctNorm.startsWith(handle))) continue;
+          const sharers = byPost.get(handle) || [];
+          if (sharers.length > 1 && !sameBrand(sharers)) continue;
+          ls.__igExtraVerified.push(url);
+        }
+        if (ls.__igExtraVerified.length) igExtraVerified++;
+      }
     }
-    console.log(`Instagram埋め込み 所有者検証通過: ${igVerified}件`);
+    console.log(`Instagram埋め込み 所有者検証通過: ${igVerified}件（うち追加投稿あり: ${igExtraVerified}件）`);
   }
 
   // 各 LOCAL_STORE を CSV で補完してマージ
