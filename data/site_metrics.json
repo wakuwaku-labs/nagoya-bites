@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-15T16:01:33.613Z",
+  "generatedAt": "2026-09-15T20:54:28.932Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1080,
-    "pageViews": 2003,
-    "sessions": 1332,
-    "avgSessionDuration": 161.8,
+    "activeUsers": 1084,
+    "pageViews": 2013,
+    "sessions": 1336,
+    "avgSessionDuration": 165.6,
     "bounceRate": 0.295,
-    "pagesPerSession": 1.5
+    "pagesPerSession": 1.51
   },
   "dailyReference": {
     "date": "2026-09-14",
@@ -17,34 +17,34 @@
   },
   "channels": {
     "sessions": {
-      "organic": 933,
-      "direct": 299,
+      "organic": 937,
+      "direct": 301,
       "social": 8,
-      "ai_assistant": 98,
-      "referral": 19,
+      "ai_assistant": 99,
+      "referral": 20,
       "paid": 0,
-      "other": 7
+      "other": 8
     },
     "pct": {
-      "organic": 68.4,
+      "organic": 68.2,
       "direct": 21.9,
       "social": 0.6,
       "ai_assistant": 7.2,
-      "referral": 1.4,
+      "referral": 1.5,
       "paid": 0,
-      "other": 0.5
+      "other": 0.6
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 411
+      "sessions": 414
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 328
+      "sessions": 329
     },
     {
       "source": "(direct)",
@@ -59,12 +59,12 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 79
+      "sessions": 80
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 42
+      "sessions": 44
     },
     {
       "source": "unknown",
@@ -92,6 +92,11 @@
       "sessions": 6
     },
     {
+      "source": "unknown",
+      "medium": "",
+      "sessions": 5
+    },
+    {
       "source": "facebook.com",
       "medium": "referral",
       "sessions": 4
@@ -104,11 +109,6 @@
     {
       "source": "teams.public.onecdn.static.microsoft",
       "medium": "referral",
-      "sessions": 4
-    },
-    {
-      "source": "unknown",
-      "medium": "",
       "sessions": 4
     },
     {
@@ -140,6 +140,11 @@
       "source": "openai",
       "medium": "organic",
       "sessions": 2
+    },
+    {
+      "source": "2881.com",
+      "medium": "referral",
+      "sessions": 1
     },
     {
       "source": "blekko.com",
@@ -185,17 +190,17 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 378,
-      "sessions": 326
+      "pageViews": 380,
+      "sessions": 327
     },
     {
       "path": "/",
-      "pageViews": 352,
-      "sessions": 215
+      "pageViews": 353,
+      "sessions": 216
     },
     {
       "path": "/index.html",
-      "pageViews": 161,
+      "pageViews": 164,
       "sessions": 94
     },
     {
@@ -210,8 +215,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 126,
-    "ctaClickRate": 9.5,
+    "outboundClicks": 128,
+    "ctaClickRate": 9.6,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -223,15 +228,15 @@
       },
       {
         "domain": "maps.google.com",
-        "clicks": 21
+        "clicks": 22
+      },
+      {
+        "domain": "www.google.com",
+        "clicks": 6
       },
       {
         "domain": "www.instagram.com",
         "clicks": 6
-      },
-      {
-        "domain": "www.google.com",
-        "clicks": 5
       },
       {
         "domain": "news.google.com",
@@ -261,15 +266,15 @@
     "note": null,
     "byChannel": {
       "organic": 66,
-      "direct": 41,
+      "direct": 43,
       "social": 0,
       "ai_assistant": 14,
       "referral": 5,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.1,
-    "ctaClickRate_direct": 13.7,
+    "ctaClickRate_organic": 7,
+    "ctaClickRate_direct": 14.3,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -278,7 +283,7 @@
       },
       {
         "path": "/",
-        "clicks": 19
+        "clicks": 20
       },
       {
         "path": "/index.html",
@@ -301,6 +306,10 @@
         "clicks": 3
       },
       {
+        "path": "/journal/2026-09-12-sakae-sulbing-korean-bingsu.html",
+        "clicks": 3
+      },
+      {
         "path": "/features/birthday-surprise.html",
         "clicks": 2
       },
@@ -318,10 +327,6 @@
       },
       {
         "path": "/journal/2026-09-04-meieki-shokudo-tomoru-sanma-price.html",
-        "clicks": 2
-      },
-      {
-        "path": "/journal/2026-09-12-sakae-sulbing-korean-bingsu.html",
         "clicks": 2
       },
       {
@@ -406,7 +411,7 @@
       {
         "path": "/",
         "domain": "www.google.com",
-        "clicks": 3
+        "clicks": 4
       },
       {
         "path": "/index.html",
@@ -461,6 +466,11 @@
       {
         "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "domain": "www.hotpepper.jp",
+        "clicks": 2
+      },
+      {
+        "path": "/journal/2026-09-12-sakae-sulbing-korean-bingsu.html",
+        "domain": "maps.google.com",
         "clicks": 2
       },
       {
@@ -570,11 +580,6 @@
       },
       {
         "path": "/journal/2026-09-12-sakae-sulbing-korean-bingsu.html",
-        "domain": "maps.google.com",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-09-12-sakae-sulbing-korean-bingsu.html",
         "domain": "www.instagram.com",
         "clicks": 1
       }
@@ -649,7 +654,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1080,
+    "value": 1084,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
