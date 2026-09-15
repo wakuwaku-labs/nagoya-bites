@@ -133,6 +133,8 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .links-section h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .ig-photos{margin:0 0 2rem;}
 .ig-photos h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
+.ig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem;justify-items:center;}
+.ig-grid .instagram-media{justify-self:center;}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
@@ -210,9 +212,11 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 
   <div class="ig-photos">
     <h2>公式Instagramの実際の写真</h2>
-    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/miyabi.meiekinishi/p/Ct3cf5CvBHU/" data-instgrm-version="14" style="margin:0 auto;max-width:540px;min-width:280px;width:100%;background:#fff;border:1px solid var(--border);border-radius:3px;">
-      <a href="https://www.instagram.com/miyabi.meiekinishi/p/Ct3cf5CvBHU/" target="_blank" rel="noopener noreferrer">おでんと炉端焼き 大人の隠れ家酒場 雅　名駅店 の公式Instagram投稿を見る</a>
-    </blockquote>
+    <div class="ig-grid">
+      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/miyabi.meiekinishi/p/Ct3cf5CvBHU/" data-instgrm-version="14" style="margin:0;max-width:540px;min-width:280px;width:100%;background:#fff;border:1px solid var(--border);border-radius:3px;">
+        <a href="https://www.instagram.com/miyabi.meiekinishi/p/Ct3cf5CvBHU/" target="_blank" rel="noopener noreferrer">おでんと炉端焼き 大人の隠れ家酒場 雅　名駅店 の公式Instagram投稿を見る</a>
+      </blockquote>
+    </div>
   </div>
   <div class="info-grid">
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 名古屋（名古屋駅/西区/中村区）</span></div>
@@ -372,7 +376,7 @@ document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=
 <!-- NB-CHROME:SCRIPT:END -->
 <script>
 (function(){
-  var el=document.querySelector('.instagram-media');
+  var el=document.querySelector('.ig-photos');
   if(!el)return;
   var loaded=false;
   function load(){if(loaded)return;loaded=true;var sc=document.createElement('script');sc.async=true;sc.src='https://www.instagram.com/embed.js';document.body.appendChild(sc);}
