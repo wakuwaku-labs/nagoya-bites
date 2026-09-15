@@ -2950,6 +2950,36 @@
       "brand_reason": "③需要なしで着地。①カニバリは per-page クエリ内訳に乗るだけの表示自体が無く確認不能(=競合しようがない)。②「別の語(顔合わせ)に需要がある」は既にnagoya-kaoawase-washoku.htmlで手当て済みのため新規対応不要。2026-06のSEO-005/006/007が「名古屋 接待 個室」を勝ち筋と見て複数特集を制作した前提が、3ヶ月後の実データで誤りと判明した。features/6本は変更せず、掲載店への導線もそのまま維持。今後同種の「接待特集を増やす」助言が来ても本チケットの実測結果を根拠に再度duplicate/rejectedとする",
       "category": "SEO",
       "fingerprint": "7d9622c197be75ce"
+    },
+    {
+      "id": null,
+      "date": "2026-09-15",
+      "source": "line-daily",
+      "advice": "🟡 検索流入比率が74%と高い一方で、SNS流入比率は0%です。検索以外の流入を増やす余地があります。👉 docs/daily-posts/ に用意されているSNS投稿原稿を、InstagramとXで必ず発信し、サイトへの導線を確保しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-093/SEO-098 に集約済み）。①SNS原稿の日次生成は data/journal_sns_draft_policy.json で 2026-09-05 から停止中で「用意されている原稿」は存在しない＝この誤前提を生む生成プロンプトの固定文は SEO-093 で修正済み・GAS未反映（本日も同じ文言が出た＝未デプロイの実地証跡）②SNS流入0%は発信不足ではなく計測の穴（sourceBreakdown に instagram 行が出ない・PR#241でsocial誤分類是正）で、UTM計測は SEO-098（ready・オーナー操作）で扱う。2026-09-14 の同種助言も却下済み。再起票しない",
+      "category": null,
+      "fingerprint": "a2e8af3528b564a5"
+    },
+    {
+      "id": null,
+      "date": "2026-09-15",
+      "source": "line-daily",
+      "advice": "🟢 予約クリック率7.0%は良好ですが、訪問者数が43人と少ないため、全体的なCV数向上には訪問者数増加が不可欠です。👉 人気ページTOP5の特集記事（nagoya-solo-dining, nagoya-hitsumabushiなど）のタイトルや説明文に、関連性の高いキーワードをさらに追加し、検索エンジンからの流入を増やしましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-087/SEO-091/SEO-092 に集約済み）。solo-dining のタイトル改変は SEO-091 で実測却下済み（28日で全サイトクリックの26.3%を稼ぐ最大資産で、推測KWのための改変は既存順位を崩すリスクのみ）。hitsumabushi の3ページ目沈下は SEO-091（in_progress）で原因分解中＝KW追記ではなく内容・内部リンクで押し上げる方針。KWを具体名なしに「さらに追加」する打ち手は SEO-071/SEO-092 で却下済みのパターン（GSC実クエリ非参照）。SEO-092 も GAS 未反映",
+      "category": null,
+      "fingerprint": "bfcf64e68cfdbe6d"
+    },
+    {
+      "id": null,
+      "date": "2026-09-15",
+      "source": "line-daily",
+      "advice": "🟡 1訪問あたり閲覧が1.3ページと、サイト内の回遊が少ない傾向です。ユーザーが他の店舗や特集を見つけられていない可能性があります。👉 index.htmlの店舗詳細モーダル下部や、journal/記事の文中に、関連性の高いfeatures/の特集記事への内部リンクを2〜3箇所追加し、回遊を促しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（打ち手は実装済み）。index.html の店舗詳細モーダルは SEO-004 で関連特集セクション（#m-features-section / .modal-related-features・ジャンル/タグ/エリアから自動マッチ）を既に持つ。journal/ 記事は冒頭の関連特集CTAを SEO-070（done 2026-09-11）で実装済みで、直近5本とも features/ リンク10〜11本。pages/session 引き上げは SEO-099（in_progress・新設ハブへの内部リンク追加、効果測定待ち）で扱う。単日1.3は測定待ち期間中の値で再起票の根拠にならない",
+      "category": null,
+      "fingerprint": "3646eb8cf37b5ae3"
     }
   ]
 }
