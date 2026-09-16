@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-16T17:31:50.317Z",
+  "generatedAt": "2026-09-16T19:12:33.650Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1094,
+    "activeUsers": 1095,
     "pageViews": 1984,
-    "sessions": 1342,
-    "avgSessionDuration": 154,
+    "sessions": 1343,
+    "avgSessionDuration": 153.9,
     "bounceRate": 0.282,
     "pagesPerSession": 1.48
   },
@@ -18,7 +18,7 @@
   "channels": {
     "sessions": {
       "organic": 946,
-      "direct": 290,
+      "direct": 293,
       "social": 8,
       "ai_assistant": 102,
       "referral": 20,
@@ -26,8 +26,8 @@
       "other": 6
     },
     "pct": {
-      "organic": 69,
-      "direct": 21.1,
+      "organic": 68.8,
+      "direct": 21.3,
       "social": 0.6,
       "ai_assistant": 7.4,
       "referral": 1.5,
@@ -64,7 +64,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 36
+      "sessions": 37
     },
     {
       "source": "unknown",
@@ -110,6 +110,11 @@
       "source": "teams.public.onecdn.static.microsoft",
       "medium": "referral",
       "sessions": 4
+    },
+    {
+      "source": "unknown",
+      "medium": "(none)",
+      "sessions": 3
     },
     {
       "source": "cn.bing.com",
@@ -164,11 +169,6 @@
     {
       "source": "sgyba.com",
       "medium": "referral",
-      "sessions": 1
-    },
-    {
-      "source": "unknown",
-      "medium": "(none)",
       "sessions": 1
     },
     {
@@ -269,7 +269,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.4,
-    "ctaClickRate_direct": 15.5,
+    "ctaClickRate_direct": 15.4,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -649,7 +649,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1094,
+    "value": 1095,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
