@@ -415,6 +415,7 @@ document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=
     io.observe(wrap);
   }else{load();}
 
+  // スワイプ式カルーセル（1画面1枚・矢印/ドット操作対応・オーナー要望 2026-09-16）
   var carousel=wrap.querySelector('.ig-carousel');
   if(!carousel)return;
   var track=carousel.querySelector('.ig-carousel-track');
