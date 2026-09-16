@@ -2261,7 +2261,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <div class="scene-index-group">
 <h3 class="scene-index-group-title">エリア×ジャンルで探す</h3>
 <ul class="scene-index-list">
-<li><a href="stores/area/meieki/izakaya.html">名駅（名古屋駅）の居酒屋（496軒）</a></li>
+<li><a href="stores/area/meieki/izakaya.html">名駅（名古屋駅）の居酒屋（497軒）</a></li>
 <li><a href="stores/area/nishiki-fushimi/izakaya.html">錦・伏見・丸の内の居酒屋（247軒）</a></li>
 <li><a href="stores/area/chikusa-imaike/izakaya.html">千種・今池・大曽根の居酒屋（234軒）</a></li>
 <li><a href="stores/area/yabacho-osu/izakaya.html">矢場町・大須・上前津の居酒屋（214軒）</a></li>
@@ -2367,7 +2367,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <li><a href="stores/J003693424.html">motsu sen もつ せん（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
 <li><a href="stores/J001238474.html">Mr Mushroom ミスターマッシュルーム 名古屋駅店（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
 <li><a href="stores/J004088000.html">mUah BAKE ムアベイク（名古屋（名古屋駅/西区/中村区）・カフェ・スイーツ）</a></li>
-<li><a href="index.html#q=Music%20Bar%20%E3%82%AB%E3%83%8E%E3%83%B3">Music Bar カノン（名古屋（名古屋駅/西区/中村区）・バー・カクテル）</a></li>
+<li><a href="stores/J004695000.html">Music Bar カノン（名古屋（名古屋駅/西区/中村区）・バー・カクテル）</a></li>
 <li><a href="stores/J004682003.html">NAGOYA BEER STATION 浩養園（名古屋（名古屋駅/西区/中村区）・ダイニングバー・バル）</a></li>
 <li><a href="stores/J004612963.html">Nagoya Dining SAYURI サユリ（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
 <li><a href="stores/J004576720.html">NICKSTOCK ニックストック 名古屋駅前店（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
@@ -7754,7 +7754,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = 'e5f4c46a81c7';
+var STORES_JSON_VERSION = '4ea0d85148cf';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
