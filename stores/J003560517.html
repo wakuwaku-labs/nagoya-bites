@@ -10,11 +10,11 @@ function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,p
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHINA KISSHO nagoya チャイナ キッショウ ナゴヤ（名駅・中華）| NAGOYA BITES</title>
-<meta name="description" content="ささしまライブ駅から徒歩3分の中華。予算10001～15000円。Google★4.6（口コミ92件）。本格中華料理が揃う。名駅エリアで人気。予約・地図・口コミを1ページで確認できます。">
+<title>CHINA KISSHO nagoya チャイナ キッショウ ナゴヤ（名駅・中華・予算10001～15000円・Google★4.6）| NAGOYA BITES</title>
+<meta name="description" content="ささしまライブ駅から徒歩3分の中華。予算10001～15000円。Google★4.6（口コミ92件）。口コミ信頼度C。本格中華料理が揃う。名駅エリアで人気。予約・地図・口コミを1ページで確認できます。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/J003560517.html">
-<meta property="og:title" content="CHINA KISSHO nagoya チャイナ キッショウ ナゴヤ（名駅・中華）| NAGOYA BITES">
-<meta property="og:description" content="ささしまライブ駅から徒歩3分の中華。予算10001～15000円。Google★4.6（口コミ92件）。本格中華料理が揃う。名駅エリアで人気。予約・地図・口コミを1ページで確認できます。">
+<meta property="og:title" content="CHINA KISSHO nagoya チャイナ キッショウ ナゴヤ（名駅・中華・予算10001～15000円・Google★4.6）| NAGOYA BITES">
+<meta property="og:description" content="ささしまライブ駅から徒歩3分の中華。予算10001～15000円。Google★4.6（口コミ92件）。口コミ信頼度C。本格中華料理が揃う。名駅エリアで人気。予約・地図・口コミを1ページで確認できます。">
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="https://nagoya-bites.com/stores/J003560517.html">
 <meta property="og:image" content="https://imgfp.hotp.jp/IMGH/89/35/P042128935/P042128935.jpg">
@@ -23,8 +23,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:site_name" content="NAGOYA BITES">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="CHINA KISSHO nagoya チャイナ キッショウ ナゴヤ（名駅・中華）| NAGOYA BITES">
-<meta name="twitter:description" content="ささしまライブ駅から徒歩3分の中華。予算10001～15000円。Google★4.6（口コミ92件）。本格中華料理が揃う。名駅エリアで人気。予約・地図・口コミを1ページで確認できます。">
+<meta name="twitter:title" content="CHINA KISSHO nagoya チャイナ キッショウ ナゴヤ（名駅・中華・予算10001～15000円・Google★4.6）| NAGOYA BITES">
+<meta name="twitter:description" content="ささしまライブ駅から徒歩3分の中華。予算10001～15000円。Google★4.6（口コミ92件）。口コミ信頼度C。本格中華料理が揃う。名駅エリアで人気。予約・地図・口コミを1ページで確認できます。">
 <meta name="twitter:image" content="https://imgfp.hotp.jp/IMGH/89/35/P042128935/P042128935.jpg">
 <link rel="manifest" href="../manifest.json">
 <meta name="theme-color" content="#7a5c10">
@@ -89,18 +89,12 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "中華",
-        "item": "https://nagoya-bites.com/#genre=%E4%B8%AD%E8%8F%AF"
+        "name": "名古屋（名古屋駅/西区/中村区）の中華",
+        "item": "https://nagoya-bites.com/stores/area/meieki/chinese.html"
       },
       {
         "@type": "ListItem",
         "position": 3,
-        "name": "名古屋（名古屋駅/西区/中村区）エリア",
-        "item": "https://nagoya-bites.com/#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89"
-      },
-      {
-        "@type": "ListItem",
-        "position": 4,
         "name": "CHINA KISSHO nagoya チャイナ キッショウ ナゴヤ",
         "item": "https://nagoya-bites.com/stores/J003560517.html"
       }
@@ -135,6 +129,10 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .links-section h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .ig-photos{margin:0 0 2rem;}
 .ig-photos h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
+.ig-embed-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;}
+.ig-embed-box{width:100%;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.ig-embed-box iframe{width:100%;height:560px;border:0;display:block;}
+.ig-embed-box a{display:block;padding:1rem;color:var(--text);font-size:var(--fs-sm);text-decoration:underline;}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
@@ -194,9 +192,7 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
   <div class="breadcrumb">
     <a href="../index.html">TOP</a>
     <span>›</span>
-    <a href="../#genre=%E4%B8%AD%E8%8F%AF">中華</a>
-    <span>›</span>
-    <a href="../#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89">名古屋（名古屋駅/西区/中村区）</a>
+    <a href="../stores/area/meieki/chinese.html">名古屋（名古屋駅/西区/中村区）の中華</a>
     <span>›</span>
     CHINA KISSHO nagoya チャイナ キッショウ ナゴヤ
   </div>
@@ -301,13 +297,13 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
     <ul>
       <li><a href="J001215406.html">陳麻婆豆腐 大名古屋ビルヂング店</a></li>
       <li><a href="J004660521.html">中村苑</a></li>
+      <li><a href="J000107839.html">スーツァンレストラン陳 名古屋</a></li>
       <li><a href="J004612567.html">厨匠マーラータン</a></li>
-      <li><a href="J000691332.html">中国料理 吉珍樓 ルーセントタワー店</a></li>
     </ul>
   </div>
 
   <div class="back-section">
-    <a href="../?area=%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89&genre=%E4%B8%AD%E8%8F%AF">← 名古屋（名古屋駅/西区/中村区）の中華をもっと見る</a>
+    <a href="../stores/area/meieki/chinese.html">← 名古屋（名古屋駅/西区/中村区）の中華をもっと見る</a>
   </div>
 </div>
 
