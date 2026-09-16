@@ -713,20 +713,28 @@ function renderStorePage(s, slug, relatedStores) {
   //   固定高さ(560px)で直接埋め込む方式を使っており、こちらは実機で表示を確認できた
   //   （postMessageによる動的リサイズに依存しないため、その完了待ちが要らない）。
   //   店舗ページ側もモーダルと同一の実績ある方式に合わせた。
-  //   2026-09-16 追記: この方式は固定高さのiframeを直接挿入するだけで、旧方式（公式embed.js）の
-  //   ような「読み込み中だけ position:absolute になる」挙動が無い。そのため CSS Grid で並べても
-  //   以前のような読み込み完了検知の阻害は起きない（オーナー要望「1画面に4つ」に対応・グリッド化）。
+  //   2026-09-16 追記: グリッド表示（1画面に複数枚）はオーナー確認の結果、1枚あたりの表示領域が
+  //   狭くカードの内容量（写真の実高さ）が投稿ごとに違うため、チラ見えの出方が投稿ごとにバラバラで
+  //   統一した見た目にできなかった。1画面1枚のスワイプ式カルーセルに変更（オーナー要望・2026-09-16）。
+  //   1枚ずつ広く見せられるため、写真の視認性とチラ見え対策を両立しやすい。
   const igEmbedHtml = hasIgEmbed ? `
   <div class="ig-photos">
     <h2>公式Instagramの実際の写真</h2>
-    <div class="ig-embed-grid">
+    <div class="ig-carousel">
+      <div class="ig-carousel-track">
 ${igAllUrls.map(url => {
     const reelM = url.match(/\/reel\/([A-Za-z0-9_-]+)/);
     const postM = url.match(/\/p\/([A-Za-z0-9_-]+)/);
     const code = reelM ? reelM[1] : (postM ? postM[1] : '');
     const embedSrc = reelM ? `https://www.instagram.com/reel/${code}/embed/` : `https://www.instagram.com/p/${code}/embed/`;
-    return `      <div class="ig-embed-box" data-ig-src="${embedSrc}"><a href="${url}" target="_blank" rel="noopener noreferrer">${name} の公式Instagram投稿を見る</a></div>`;
+    return `        <div class="ig-embed-box" data-ig-src="${embedSrc}"><a href="${url}" target="_blank" rel="noopener noreferrer">${name} の公式Instagram投稿を見る</a></div>`;
   }).join('\n')}
+      </div>
+${igAllUrls.length > 1 ? `      <button type="button" class="ig-carousel-nav ig-carousel-prev" aria-label="前の写真">‹</button>
+      <button type="button" class="ig-carousel-nav ig-carousel-next" aria-label="次の写真">›</button>
+      <div class="ig-carousel-dots">
+${igAllUrls.map((_, i) => `        <span class="ig-carousel-dot${i === 0 ? ' active' : ''}"></span>`).join('\n')}
+      </div>` : ''}
     </div>
   </div>` : '';
 
@@ -829,10 +837,18 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .links-section h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .ig-photos{margin:0 0 2rem;}
 .ig-photos h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
-.ig-embed-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;}
-.ig-embed-box{width:100%;aspect-ratio:6/5;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;}
+.ig-carousel{position:relative;max-width:420px;margin:0 auto;}
+.ig-carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.ig-carousel-track::-webkit-scrollbar{display:none;}
+.ig-embed-box{flex:0 0 100%;width:100%;aspect-ratio:6/5;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;scroll-snap-align:center;}
 .ig-embed-box iframe{width:100%;height:560px;border:0;display:block;position:absolute;top:-58px;left:0;}
 .ig-embed-box a{display:block;padding:1rem;color:var(--text);font-size:var(--fs-sm);text-decoration:underline;}
+.ig-carousel-nav{position:absolute;top:50%;transform:translateY(-50%);width:2.2rem;height:2.2rem;border-radius:50%;background:rgba(255,255,255,.92);border:1px solid var(--border);color:var(--text);font-size:1.3rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;padding:0;}
+.ig-carousel-prev{left:.4rem;}
+.ig-carousel-next{right:.4rem;}
+.ig-carousel-dots{display:flex;justify-content:center;gap:.4rem;margin-top:.7rem;}
+.ig-carousel-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .2s;}
+.ig-carousel-dot.active{background:var(--gold);}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
@@ -933,6 +949,42 @@ ${hasIgEmbed ? `<script>
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){load();io.disconnect();}});},{rootMargin:'600px'});
     io.observe(wrap);
   }else{load();}
+
+  // スワイプ式カルーセル（1画面1枚・矢印/ドット操作対応・オーナー要望 2026-09-16）
+  var carousel=wrap.querySelector('.ig-carousel');
+  if(!carousel)return;
+  var track=carousel.querySelector('.ig-carousel-track');
+  var slides=track?track.children:[];
+  var prevBtn=carousel.querySelector('.ig-carousel-prev');
+  var nextBtn=carousel.querySelector('.ig-carousel-next');
+  var dots=carousel.querySelectorAll('.ig-carousel-dot');
+  if(!track||slides.length<2)return;
+  function goTo(i){
+    i=Math.max(0,Math.min(slides.length-1,i));
+    track.scrollTo({left:slides[i].offsetLeft,behavior:'smooth'});
+  }
+  function currentIndex(){
+    var best=0,bestDist=Infinity;
+    for(var i=0;i<slides.length;i++){
+      var d=Math.abs(slides[i].offsetLeft-track.scrollLeft);
+      if(d<bestDist){bestDist=d;best=i;}
+    }
+    return best;
+  }
+  function updateDots(){
+    var idx=currentIndex();
+    for(var i=0;i<dots.length;i++)dots[i].classList.toggle('active',i===idx);
+  }
+  if(prevBtn)prevBtn.addEventListener('click',function(){goTo(currentIndex()-1);});
+  if(nextBtn)nextBtn.addEventListener('click',function(){goTo(currentIndex()+1);});
+  for(var d=0;d<dots.length;d++){
+    (function(idx){dots[idx].addEventListener('click',function(){goTo(idx);});})(d);
+  }
+  var scrollTimer=null;
+  track.addEventListener('scroll',function(){
+    if(scrollTimer)clearTimeout(scrollTimer);
+    scrollTimer=setTimeout(updateDots,80);
+  });
 })();
 </script>
 ` : ''}</body>
