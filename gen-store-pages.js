@@ -126,18 +126,28 @@ const SITEMAP_OUT = path.join(__dirname, 'sitemap.xml');
 // ================================================================
 // HTTP 取得
 // ================================================================
-function fetchUrl(url) {
+function fetchUrlOnce(url) {
   return new Promise((resolve, reject) => {
-    https.get(url, res => {
+    const req = https.get(url, res => {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        return fetchUrl(res.headers.location).then(resolve).catch(reject);
+        return fetchUrlOnce(res.headers.location).then(resolve).catch(reject);
       }
       let data = '';
       res.setEncoding('utf8');
       res.on('data', c => data += c);
       res.on('end', () => resolve(data));
     }).on('error', reject);
+    req.setTimeout(20000, () => { req.destroy(); reject(new Error(`タイムアウト: ${url}`)); });
   });
+}
+
+async function fetchUrl(url, retries = 2) {
+  try {
+    return await fetchUrlOnce(url);
+  } catch (e) {
+    if (retries <= 0) throw e;
+    return fetchUrl(url, retries - 1);
+  }
 }
 
 // ================================================================
