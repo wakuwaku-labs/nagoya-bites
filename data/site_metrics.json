@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-15T20:54:28.932Z",
+  "generatedAt": "2026-09-16T07:29:29.975Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1084,
-    "pageViews": 2013,
-    "sessions": 1336,
-    "avgSessionDuration": 165.6,
-    "bounceRate": 0.295,
+    "activeUsers": 1096,
+    "pageViews": 2036,
+    "sessions": 1347,
+    "avgSessionDuration": 161.9,
+    "bounceRate": 0.272,
     "pagesPerSession": 1.51
   },
   "dailyReference": {
@@ -17,59 +17,59 @@
   },
   "channels": {
     "sessions": {
-      "organic": 937,
-      "direct": 301,
+      "organic": 950,
+      "direct": 279,
       "social": 8,
-      "ai_assistant": 99,
+      "ai_assistant": 100,
       "referral": 20,
       "paid": 0,
-      "other": 8
+      "other": 1
     },
     "pct": {
-      "organic": 68.2,
-      "direct": 21.9,
+      "organic": 70,
+      "direct": 20.5,
       "social": 0.6,
-      "ai_assistant": 7.2,
+      "ai_assistant": 7.4,
       "referral": 1.5,
       "paid": 0,
-      "other": 0.6
+      "other": 0.1
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 414
+      "sessions": 418
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 329
+      "sessions": 337
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 235
+      "sessions": 236
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 182
+      "sessions": 183
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 80
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 44
+      "sessions": 82
     },
     {
       "source": "unknown",
       "medium": "(not set)",
-      "sessions": 19
+      "sessions": 25
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 18
     },
     {
       "source": "duckduckgo",
@@ -92,11 +92,6 @@
       "sessions": 6
     },
     {
-      "source": "unknown",
-      "medium": "",
-      "sessions": 5
-    },
-    {
       "source": "facebook.com",
       "medium": "referral",
       "sessions": 4
@@ -110,16 +105,6 @@
       "source": "teams.public.onecdn.static.microsoft",
       "medium": "referral",
       "sessions": 4
-    },
-    {
-      "source": "(data not available)",
-      "medium": "(data not available)",
-      "sessions": 3
-    },
-    {
-      "source": "unknown",
-      "medium": "(none)",
-      "sessions": 3
     },
     {
       "source": "cn.bing.com",
@@ -152,11 +137,6 @@
       "sessions": 1
     },
     {
-      "source": "chatgpt.com",
-      "medium": "(none)",
-      "sessions": 1
-    },
-    {
       "source": "greenmaven.com",
       "medium": "referral",
       "sessions": 1
@@ -177,6 +157,11 @@
       "sessions": 1
     },
     {
+      "source": "unknown",
+      "medium": "",
+      "sessions": 1
+    },
+    {
       "source": "webnocular.com",
       "medium": "referral",
       "sessions": 1
@@ -190,23 +175,23 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 380,
-      "sessions": 327
+      "pageViews": 382,
+      "sessions": 329
     },
     {
       "path": "/",
-      "pageViews": 353,
-      "sessions": 216
+      "pageViews": 357,
+      "sessions": 217
     },
     {
       "path": "/index.html",
-      "pageViews": 164,
-      "sessions": 94
+      "pageViews": 165,
+      "sessions": 95
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 116,
-      "sessions": 107
+      "pageViews": 118,
+      "sessions": 108
     },
     {
       "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
@@ -215,16 +200,16 @@
     }
   ],
   "cta": {
-    "outboundClicks": 128,
-    "ctaClickRate": 9.6,
+    "outboundClicks": 133,
+    "ctaClickRate": 9.9,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 57
+        "clicks": 60
       },
       {
         "domain": "tabelog.com",
-        "clicks": 30
+        "clicks": 32
       },
       {
         "domain": "maps.google.com",
@@ -265,24 +250,28 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 66,
-      "direct": 43,
+      "organic": 69,
+      "direct": 45,
       "social": 0,
       "ai_assistant": 14,
       "referral": 5,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7,
-    "ctaClickRate_direct": 14.3,
+    "ctaClickRate_organic": 7.3,
+    "ctaClickRate_direct": 16.1,
     "ctaClickRate_social": 0,
     "byPage": [
+      {
+        "path": "/",
+        "clicks": 21
+      },
       {
         "path": "/features/nagoya-solo-dining.html",
         "clicks": 21
       },
       {
-        "path": "/",
+        "path": "/features/nagoya-hitsumabushi.html",
         "clicks": 20
       },
       {
@@ -290,12 +279,8 @@
         "clicks": 19
       },
       {
-        "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 18
-      },
-      {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 16
+        "clicks": 18
       },
       {
         "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
@@ -391,12 +376,12 @@
       {
         "path": "/features/nagoya-hitsumabushi.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 18
+        "clicks": 20
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
         "domain": "tabelog.com",
-        "clicks": 16
+        "clicks": 18
       },
       {
         "path": "/index.html",
@@ -414,6 +399,11 @@
         "clicks": 4
       },
       {
+        "path": "/",
+        "domain": "www.hotpepper.jp",
+        "clicks": 3
+      },
+      {
         "path": "/index.html",
         "domain": "maps.google.com",
         "clicks": 3
@@ -426,11 +416,6 @@
       {
         "path": "/",
         "domain": "news.google.com",
-        "clicks": 2
-      },
-      {
-        "path": "/",
-        "domain": "www.hotpepper.jp",
         "clicks": 2
       },
       {
@@ -591,11 +576,11 @@
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 18
+        "clicks": 20
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 16
+        "clicks": 18
       },
       {
         "path": "/index.html",
@@ -603,7 +588,7 @@
       },
       {
         "path": "/",
-        "clicks": 3
+        "clicks": 4
       },
       {
         "path": "/features/birthday-surprise.html",
@@ -650,11 +635,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 87
+    "reservationClicks": 92
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1084,
+    "value": 1096,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
