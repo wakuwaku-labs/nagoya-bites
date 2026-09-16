@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-16T16:34:59.491Z",
+  "generatedAt": "2026-09-16T16:49:13.011Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1369,
+  "total_sessions": 1370,
   "engines": [
     {
       "key": "google",
@@ -109,8 +109,8 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 51,
-      "pct": 3.7,
+      "sessions": 52,
+      "pct": 3.8,
       "sources": [
         {
           "source": "unknown",
@@ -125,7 +125,7 @@
         {
           "source": "unknown",
           "medium": "",
-          "sessions": 5
+          "sessions": 6
         },
         {
           "source": "teams.public.onecdn.static.microsoft",
@@ -252,10 +252,10 @@
     "delta": {
       "google": -3,
       "bing": 9,
-      "direct": -20,
+      "direct": -15,
       "yahoo": 3,
       "ai_assistant": 1,
-      "other": 0,
+      "other": 1,
       "duckduckgo": 0,
       "social": 0
     }
