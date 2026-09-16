@@ -2980,6 +2980,36 @@
       "brand_reason": "重複（打ち手は実装済み）。index.html の店舗詳細モーダルは SEO-004 で関連特集セクション（#m-features-section / .modal-related-features・ジャンル/タグ/エリアから自動マッチ）を既に持つ。journal/ 記事は冒頭の関連特集CTAを SEO-070（done 2026-09-11）で実装済みで、直近5本とも features/ リンク10〜11本。pages/session 引き上げは SEO-099（in_progress・新設ハブへの内部リンク追加、効果測定待ち）で扱う。単日1.3は測定待ち期間中の値で再起票の根拠にならない",
       "category": null,
       "fingerprint": "3646eb8cf37b5ae3"
+    },
+    {
+      "id": null,
+      "date": "2026-09-16",
+      "source": "line-daily",
+      "advice": "🟢 訪問者44人中、予約ボタンクリックが2回で予約クリック率4.5%と好調です。この予約意欲を逃さないようにしましょう。👉 トップページのファーストビューに「シーン別特集」への導線を強化し、ユーザーが求める情報へ素早く到達できるようUIを改善してください。",
+      "verdict": "rejected",
+      "brand_reason": "却下（打ち手は既に実装済み＋前提が診断になっていない・制約10）。①index.html のファーストビュー（section.hero.nb-cover:1654）は既に .scene-nav（シーンで探す=宴会・忘年会/接待・会食/デート/女子会/記念日/個室 ＋ エリアで探す=名駅/栄/大須/金山/伏見）と、.nb-cover-featured 内の feature-strip feature-top（今月の特集カード・build_featured.js が月替わりで自動生成）の2系統の特集導線を持つ。さらに #scene-index「目的から探す」も同一ページ内にある＝「導線が無い」という前提が成立しない ②助言の前提「予約クリック率4.5%と好調」は良好の報告であって欠陥の指摘ではなく、何を直すべきかを特定していない ③当日のTOP5でトップページは59PV中6PV（10%）で、閲覧の大半は特集記事側。FVを触っても読者のいる面に当たらない（同じ理由で 2026-09-10 の同旨助言も literal 部分を却下し SEO-088 へ振替済み） ④SEO-088 の実測どおりトップの5つのカード面は全て発火元のない modal_open を出すため、FV導線を強化しても面別の効果を分離できない＝効果測定が成立しない",
+      "category": null,
+      "fingerprint": "ee6ffb440c9648bd"
+    },
+    {
+      "id": "SEO-101",
+      "date": "2026-09-16",
+      "source": "line-daily",
+      "advice": "🟡 流入元TOP5で生成AIからの流入が3訪問と発生しています。新しい検索体験への対応を試す好機です。👉 docs/daily-posts/ にあるSNS投稿原稿を元に、各店舗の「おすすめ利用シーン」を明記したQ&A形式のコンテンツをjournal/記事内に追記し、AI検索からの流入を狙いましょう。",
+      "verdict": "adopted",
+      "brand_reason": "振替採用（グレー採用・要検討メモ付き）。literal な打ち手の前提「docs/daily-posts/ にSNS投稿原稿がある」は失効しており却下（data/journal_sns_draft_policy.json の generate_sns_draft:false で 2026-09-05 から生成停止。SEO-093 が生成プロンプトの固定文を修正済みだが GAS 未反映で、この誤前提の助言は停止後6回目＝未デプロイの実地証跡）。一方「journal に Q&A が無い」という指摘部分は実データで成立: journal/*.html 133本は FAQPage JSON-LD も可視Q&A本文も 0本（記事本文に h2 自体が無く、grep でヒットする「よくある質問」は全てヘッダー/フッター共通ナビのリンク）で、features/*.html は 69本中64本が FAQPage を持つ。生成AI経由は直近30日99セッション（検索・AI発見分1036の9.6%・前スナップショット比-3で微減）で、Moat（業界人が用途を明言する解釈層）をAIが引用できる形にするだけの施策＝順位操作・広告・クーポン・ストック写真のいずれも伴わない。ただし全133本への機械的付与は ISSUE-060（テンプレFAQ使い回しで別テーマのQ&Aが全ページに混入した事故）と「AIっぽくて閲覧意欲を削ぐ」体裁の両方を招くため、閲覧上位3本での試行に限定し効果が出なければ率直にクローズする条件付きで ready 化した",
+      "category": "SEO",
+      "fingerprint": "f32bc866ce3f015c"
+    },
+    {
+      "id": "SEO-100",
+      "date": "2026-09-16",
+      "source": "line-daily",
+      "advice": "🟢 人気ページTOP5のうち4つが特集記事です。ユーザーは特定のニーズを持って来訪していることが分かります。👉 features/ の各特集ページ上部に、関連する店舗への導線を分かりやすく設置し、店舗詳細モーダルへの遷移（現在11回）をさらに増やせるよう改善してください。",
+      "verdict": "adopted",
+      "brand_reason": "採用（実測で穴が確認できたため）。SEO-042 で確立済みの冒頭CTAが特集68本中39本にしか無く、未設置29本のうち17本は本文に実在確認済みの店舗ページリンク（stores/J*.html）を3件以上持つ＝材料があるのに設置されていない。原因は add_feature_top_cta.js が掲載店を ItemList JSON-LD からのみ取得する設計で、この17本の ItemList が name だけで店舗URL/IDを持たないため「材料なし」でスキップされること。加えて node scripts/add_feature_top_cta.js --all --check は would_add 8本・updated 4本（月次ロスター入替でCTAが旧店のまま）を報告するのに、build.yml:254 は --all 無し実行で既定33本しか見ないため この12本はCIで永久に追従しない。今日のTOP5の③ nagoya-sweets（5PV）も未設置17本の1つ。なお助言の指標「店舗詳細モーダルへの遷移（現在11回）」は却下（特集の店舗リンクは静的な stores/J*.html へ遷移し modal_open を発火するのは index.html のカード面だけ・制約10）。効果は SEO-084 で入れた feature_store_click の前後比で見る",
+      "category": "SEO",
+      "fingerprint": "89e70f0ce92b137f"
     }
   ]
 }

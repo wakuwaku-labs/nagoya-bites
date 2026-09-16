@@ -6,6 +6,61 @@
 
 ---
 
+### [SEO-100] 掲載店を持つ特集17本に冒頭CTA（SEO-042）が無く、CI も既定33本しか追従していない（今日のTOP5の③ `nagoya-sweets` を含む）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-16
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEOアドバイス(LINE) 2026-09-15 原文「人気ページTOP5のうち4つが特集記事です。👉 features/ の各特集ページ上部に、関連する店舗への導線を分かりやすく設置し、店舗詳細モーダルへの遷移（現在11回）をさらに増やせるよう改善してください」
+- **brand-filter**: ✅ 適合 — 実在店の既存導線を「読者が最初に取れる行動」の位置へ置くUX改善で、[[SEO-042]] で確立済みの設計を未適用ページへ広げるだけ。順位操作・広告依存・クーポン・ストック写真のいずれも伴わない
+- **助言のうち却下した部分（制約10）**: 「店舗詳細モーダルへの遷移（現在11回）」は本件の指標として使えない。特集の店舗リンクは `../stores/J*.html`（静的な店舗ページ）へ遷移するもので、`modal_open` を発火するのは `index.html` のカード面だけ。効果は [[SEO-084]] で入れた `feature_store_click` で見る
+- **検証できる事実（2026-09-16 実測・誰でも再現可能）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | 特集68本（index除く）のうち冒頭CTAを持つのは39本で、**29本が未設置** | `grep -l "SEO-042:TOP-CTA" features/*.html` |
+  | 未設置29本のうち**17本は本文に実在する店舗ページリンク（`stores/J*.html` が実在）を3件以上持つ**＝CTAを作る材料は既にある | 下記の対象一覧（件数は実在確認済みの店舗ページ数） |
+  | `scripts/add_feature_top_cta.js` は掲載店を **ItemList JSON-LD からのみ**取得するが、この17本の ItemList は `name` だけで店舗URL/IDを持たないため「材料なし」と判定されスキップされている | `features/nagoya-sweets.html:50-59`（`{"@type":"ListItem","position":1,"name":"PATISSERIE NAJAC …"}` 形式）／`scripts/add_feature_top_cta.js` の実在保証ブロック |
+  | `node scripts/add_feature_top_cta.js --all --check` は would_add 8本 / **updated 4本**（月次ロスター入替で掲載店が変わったのにCTAが旧店のまま）を報告する。しかし `.github/workflows/build.yml:254` は `--all` 無しで実行しており既定33本しか対象にしないため、**この12本はCIで永久に追従しない** | 実行結果 `{"unchanged":35,"no_itemlist":22,"updated":4,"would_add":8}`／`.github/workflows/build.yml:247,254` |
+  | 今日のTOP5の③ `nagoya-sweets`（5PV）は未設置17本の1つ | 日次レポート 2026-09-15 |
+- **対象17本**: enmkai-kanji(5店) / fathers-day-2026(16) / nagoya-cafe(5) / nagoya-dining-bar(10) / nagoya-french-guide(8) / nagoya-gyoza(10) / nagoya-italian-guide(10) / nagoya-kaiseki-guide(10) / nagoya-kakuozan(9) / nagoya-ramen(9) / nagoya-settai-lunch(9) / nagoya-steak(9) / nagoya-sweets(9) / nagoya-teppanyaki(9) / nagoya-yakitori-guide(15) / nagoya-yoshoku(10) / settai-guide(6)
+- **acceptance**:
+  1. `add_feature_top_cta.js` の掲載店取得を、ItemList JSON-LD に加えて**本文の `stores/J*.html` リンク**へフォールバックさせる。実在保証（`stores/J*.html` の実在＋`data/closed_stores.json` 非掲載）は現行のまま維持し、3店に満たない特集はスキップする（水増ししない・架空店ブロック厳守）
+  2. `build.yml:254` のステップが `updated`（ロスター入替でCTAが陳腐化した特集）も拾うようにする（`--all` 化するか、既定ターゲットの決め方を「材料が取れる全特集」に変える）
+  3. `node scripts/audit_feature_stores.js` の検出ゼロ維持／`node scripts/audit_design_system.js --check` に新規違反を出さない／冪等（2回連続実行で差分ゼロ）
+  4. 効果は対象17本の `feature_store_click` 発火数の前後比で見る（`modal_open` は使わない＝上記却下理由）。ただし [[SEO-090]] の実測で接待系は需要自体が無いと確定しているため、`nagoya-settai-lunch` / `settai-guide` は効果判定の主対象から外す
+- **関連**: [[SEO-042]]（CTAの設計本体・本件はその未適用分）／[[SEO-084]]（`feature_store_click` 計測）／[[ISSUE-127]]（月次ロスター反映の自己修復）／[[SEO-090]]（接待系の需要なし実測）
+
+---
+
+### [SEO-101] ジャーナル133本に Q&A が1本も無い（特集は64/69がFAQPage保有）— 生成AI経由99セッション/30日の引用面を journal だけ取り逃している
+
+- **priority**: P2 → **status**: ready（**グレー採用・要検討メモ付き**。着手前に下記「要検討」を読むこと）
+- **detected**: 2026-09-16
+- **category**: SEO / コンテンツ
+- **owner**: Editor
+- **source**: SEOアドバイス(LINE) 2026-09-15 原文「流入元TOP5で生成AIからの流入が3訪問と発生しています。👉 docs/daily-posts/ にあるSNS投稿原稿を元に、各店舗の『おすすめ利用シーン』を明記したQ&A形式のコンテンツをjournal/記事内に追記し、AI検索からの流入を狙いましょう」
+- **brand-filter**: ✅ 適合（**振替採用**）— literal な打ち手の前提（「docs/daily-posts/ にSNS投稿原稿がある」）は失効しており却下する（[[SEO-093]]・2026-09-05 に生成停止済み。本日でこの誤前提の助言は6回目＝GAS未反映の実地証跡）。一方「journal に Q&A が無い」という指摘は実データで成立し、Moat（業界人が用途を明言する解釈層）をAIが引用できる形にするだけの施策なので、そちらへ振り替えて採用する
+- **検証できる事実（2026-09-16 実測）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | `journal/*.html` 133本のうち FAQPage JSON-LD を持つのは **0本** | `grep -l FAQPage journal/*.html` |
+  | 同133本に可視のQ&A本文も無い（記事本文に `<h2>` 自体が無く、ヒットする「よくある質問」は全てヘッダー/フッターの共通ナビのリンク） | `journal/2026-09-15-imaike-okute-yamamotoya-misonikomi-export.html:92,212` |
+  | 対して `features/*.html` は 69本中 **64本**が FAQPage を持つ | `grep -l FAQPage features/*.html` |
+  | `journal/_template.html` の JSON-LD は BlogPosting と BreadcrumbList の2種のみ | `journal/_template.html:31,45` |
+  | 生成AI経由は直近30日で **99セッション**（検索・AIで発見された1036セッションの9.6%）。前スナップショット比 -3 で微減 | `node scripts/search_channel_metrics.js --report` |
+- **要検討（グレー採用の理由・着手前に必読）**: ジャーナルは1本あたり本文14段落程度の短い日次記事で、見出し構造を持たない設計。全133本へ機械的にQ&Aを足すと (a) [[ISSUE-060]] と同じ「テンプレFAQの使い回しで別テーマのQ&Aが全ページに混入する」失敗クラス、(b) オーナーが繰り返し指摘している「AIっぽくて閲覧意欲を削ぐ」体裁、の両方を招く。**生成器での自動量産はしない**前提で設計すること
+- **acceptance**:
+  1. 対象は「その記事が主役として扱う店を持つ記事」に限る。Q&Aの答えは `data/stores.json` の検証できるフィールド（タグ／予算／営業時間／エリア）と記事本文に既にある事実だけから書く。書けない記事にはFAQを付けない（水増ししない・制約10）
+  2. 1記事ごとに固有のQ&Aであること。`scripts/audit_feature_schema_alignment.js` の FAQ 整合判定（corpus類似度 0.50）を journal にも適用し、テンプレ使い回しを機械検出できるようにする
+  3. 可視FAQと JSON-LD の verbatim 一致（features 側で確立済みの方式・`scripts/sync_visible_faq_from_jsonld.js`）を維持する
+  4. `journal/_template.html` を変更する場合は DSN-001 により Designer レビューと `node scripts/audit_design_system.js --check` の通過が公開条件
+  5. **まず直近30日の閲覧上位ジャーナル3本だけで試す**。効果が出なければ横展開せず率直にクローズする（[[SEO-091]] と同じガードレール）
+  6. 効果は `node scripts/search_channel_metrics.js --report` の生成AI行と `data/metrics_history.json` の ChatGPT経由セッション推移の前後比で見る。総クリックは指名検索と混ざるため使わない（[[SEO-043]] の判定基準）
+- **関連**: [[SEO-097]]（llms.txt・同じ生成AI面の別打ち手・done）／[[SEO-093]]（この助言の誤前提の出所・GAS未反映）／ISSUE-060（FAQ使い回し事故）／[[SEO-070]]（journal の関連特集CTA・同じ挿入面）
+
+---
+
 ### [ISSUE-128] Instagram公式埋め込みウィジェットが `X-Frame-Options: DENY` を受け全店舗で機能しなくなっている（写真ソース優先1が事実上使用不能・「なぜ」は未確定）
 
 - **priority**: P0 → **status**: ready（何が起きているかは確定。**なぜ起きているか**（下記2仮説）は未確定のため、恒久対策は追加調査後）
@@ -394,6 +449,7 @@
   - `data/gas_deploy_policy.json` に痕跡パターンを追加: `sns_daily_posts_reuse_old_label`（not_deployed・`docs/daily-posts\s*の原稿を流用`）。`pending_fixes` に `SEO-093` を追加
   - **デプロイは未実施**（オーナー本人の操作が必要・`docs/gas-deploy-verification-runbook.md`）。反映確認は次回以降の `node scripts/check_gas_deploy_health.js` の `deployed` 判定で行う（acceptance④）。デプロイ確認後に `pending_fixes` から `SEO-093` を除去し status を `done` にすること
   - `npm test`（197件）・`node --check .gas-deploy/Code.js`・`node --test tests/gas_health.test.js`（トップレベル二重宣言なし含む）で退行なしを確認
+- **2026-09-16 追記（未反映の実地証跡・日次トリアージ）**: 本日の日次レポート（件名 2026-09-15）の助言②が再び「docs/daily-posts/ にあるSNS投稿原稿を元に…」と出力した。SNS原稿停止（09-05）後これで**6回目**（09-07/09-08/09-10/09-12/09-13 に続く）。acceptance⑤の「反映後7日間で0回」は**まだ1度も開始できていない**＝GASが旧コードで動き続けていることの実地証跡。なお `data/gas_deploy_policy.json` の痕跡パターン `sns_daily_posts_reuse_old_label`（`docs/daily-posts\s*の原稿を流用`）はルールベース保険側の文字列のみを見るため、AI生成側が出す今回の言い回しは捕捉できず、`check_gas_deploy_health.js --record` の判定は `deployed`（SEO-076 の確定値ラベル痕跡による）のままになる。**痕跡パターンにAI生成側の言い回しを足すかどうかは実装判断のため本ループでは変更していない**（日次triageは ready 起票までが責務）。助言の中身は [[SEO-101]] へ振替採用済み
 
 ---
 
