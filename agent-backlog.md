@@ -2420,6 +2420,7 @@
   - 夜間〜朝は充電器を接続したままにする（最も簡単で確実）
   - または生成完了までは蓋を開けておく／外部ディスプレイを繋いでおく
   - 根本的には、この自動化を「閉じたラップトップ」ではなく常時電源のある機材（Mac mini 等）や cron 実行できるサーバ側に移す方が構造的に安定する（中長期の検討事項）
+- **再発（2026-09-16・別の失敗文言）**: バッテリー駆動中に `Can't reach the API server — check your internet or DNS (ENOTFOUND)` で生成失敗。接続断ではなく名前解決失敗の文言だったため再試行パターンに一致せず、3回リトライが一度も発火しないまま HOLD になった（「エラー文言の形が変わるとリトライ機構が丸ごと空振りする」壊れ方の再現）。09-17 に判定パターンへ ENOTFOUND/EAI_AGAIN を追加し、09-16 分は手動バックフィルで公開。**運用側の残課題（充電器接続）は未解消のまま**
 - **acceptance**: 上記いずれかの運用対応をオーナーが行った後、7日間 `Connection closed mid-response` によるHOLDが再発しないこと。再発した場合は `journal_health.json` に電源状態が記録されているので、次にAC電源でも起きるのか切り分けられる
 
 ---
@@ -6023,6 +6024,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-09-04 | Orchestrator(routine) | SEO-079 実装・デプロイ — .gas-deploy/Code.js の日次/週次レポートのTOP5生成を `data.pages.slice(0,5)` から既存の `topPagesForPrompt(data.pages,5)` に置き換え。pagePath違いの同一ページが2行出る重複バグを修正。QA全通過（GASミラー変更のみ・index.html/build.js未変更）。status: ready → done | ✅ commit 1b0e6cf2 |
 | 2026-09-04 | Orchestrator(routine) | SEO-080 実装・デプロイ — data/seo_triage_retrieval_policy.json（Gmail sweep/reconcile 規則の正本）・scripts/check_seo_triage_weekly_health.js（seo_advice_log.jsonの line-weekly 沈黙を検証できる事実で検知）・.github/workflows/seo-triage-weekly-watchdog.yml（サーバ側監視・Issue起票でオーナーにメール）を新設。「見逃しても誰にも届かない」を解消。sweep実装はcommand file制約によりポリシー文書化のみ。status: ready → done | ✅ commit 951362e3 |
 | 2026-09-05 | Marketer(routine) | SEO-082 実装・デプロイ — data/journal_seo_keywords.json の scene「一人飲み」aliases に GSC実データで実在確認できた表記ゆれ「1人飲み」「1人のみ」「一人のみ」を追加。同時に scripts/journal_seo_kw.js の SCENE_VOCAB も同期更新。--verify: 39KW全通過。discovery 表示: 922 → 1,289（+39.8%）・クリック: 47 → 78（+65.9%）。「名古屋 1人飲み 男」が other → discovery に移動確認済み。シェア上昇は計測是正であり施策効果ではない旨を受け入れ条件5に従い明記。status: ready → done | ✅ commit cd6ca0c2 |
+| 2026-09-17 | Editor+Builder(対話) | ジャーナル欠番 2026-09-16 を手動バックフィル — launchd 実行はバッテリー駆動中の DNS 解決失敗（`API Error: Can't reach the API server — check your internet or DNS (ENOTFOUND)`）で生成失敗し、`run_journal_local.sh` の再試行判定の正規表現に ENOTFOUND が無かったため1回で即 HOLD（ISSUE-096 と同クラス・電源運用の穴）。`journal/2026-09-16-sakae-hitorinomi-shinya-ryokin-kozo.html`（業界の裏側・COL-LAW-008 新設。水曜ローテが提示した COL-LAW-001 は 06-17 に使用済みで backlog の used フラグだけが false のまま＝pick_daily_topic が再提示する不整合を修正）を score 104 PASS / validator PASS / hero gate PASS で登録。あわせて再試行判定に `ENOTFOUND|EAI_AGAIN|Can't reach the API server|check your internet or DNS` を追加 | ✅ 本コミット |
 
 ---
 
