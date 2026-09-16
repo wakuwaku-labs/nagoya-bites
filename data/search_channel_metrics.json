@@ -1,16 +1,16 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-16T15:24:06.348Z",
+  "generatedAt": "2026-09-16T16:34:59.491Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1363,
+  "total_sessions": 1369,
   "engines": [
     {
       "key": "google",
       "label": "Google",
       "sessions": 411,
-      "pct": 30.2,
+      "pct": 30,
       "sources": [
         {
           "source": "google",
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 340,
-      "pct": 24.9,
+      "pct": 24.8,
       "sources": [
         {
           "source": "bing",
@@ -40,18 +40,18 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 259,
-      "pct": 19,
+      "sessions": 264,
+      "pct": 19.3,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 227
+          "sessions": 228
         },
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 32
+          "sessions": 36
         }
       ]
     },
@@ -59,7 +59,7 @@
       "key": "yahoo",
       "label": "Yahoo!",
       "sessions": 185,
-      "pct": 13.6,
+      "pct": 13.5,
       "sources": [
         {
           "source": "yahoo",
@@ -109,7 +109,7 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 50,
+      "sessions": 51,
       "pct": 3.7,
       "sources": [
         {
@@ -123,13 +123,13 @@
           "sessions": 7
         },
         {
-          "source": "teams.public.onecdn.static.microsoft",
-          "medium": "referral",
-          "sessions": 4
-        },
-        {
           "source": "unknown",
           "medium": "",
+          "sessions": 5
+        },
+        {
+          "source": "teams.public.onecdn.static.microsoft",
+          "medium": "referral",
           "sessions": 4
         },
         {
@@ -250,11 +250,11 @@
     "from": "2026-09-15",
     "to": "2026-09-16",
     "delta": {
-      "google": 6,
-      "bing": 16,
-      "direct": -8,
-      "yahoo": 4,
-      "ai_assistant": 2,
+      "google": -3,
+      "bing": 9,
+      "direct": -20,
+      "yahoo": 3,
+      "ai_assistant": 1,
       "other": 0,
       "duckduckgo": 0,
       "social": 0
