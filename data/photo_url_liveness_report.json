@@ -1,12 +1,12 @@
 {
   "version": 1,
   "lastRun": "2026-09-17",
-  "lastRunAt": "2026-09-16T15:32:33.083Z",
+  "lastRunAt": "2026-09-16T16:41:23.618Z",
   "checked": 4924,
   "summary": {
-    "ok": 4784,
-    "dead": 134,
-    "unknown": 6,
+    "ok": 4788,
+    "dead": 136,
+    "unknown": 0,
     "byHost": {
       "places": {
         "ok": 147,
@@ -14,9 +14,9 @@
         "unknown": 0
       },
       "hotpepper": {
-        "ok": 4637,
-        "dead": 134,
-        "unknown": 6
+        "ok": 4641,
+        "dead": 136,
+        "unknown": 0
       }
     }
   },
@@ -1360,38 +1360,27 @@
       "写真アセットID": "P043497174",
       "firstDetected": "2026-09-16",
       "lastChecked": "2026-09-17"
-    }
-  ],
-  "unknownSample": [
-    {
-      "店名": "下の一色 グローバルゲート店",
-      "url": "https://imgfp.hotp.jp/IMGH/75/88/P048917588/P048917588_480.jpg",
-      "error": "timeout"
     },
     {
-      "店名": "サンマルク 名古屋ラシック店",
-      "url": "https://imgfp.hotp.jp/IMGH/23/42/P051022342/P051022342_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "上海湯包小館 金山店",
-      "url": "https://imgfp.hotp.jp/IMGH/25/80/P049932580/P049932580_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "和み居酒屋 だんらんや 久屋大通店",
-      "url": "https://imgfp.hotp.jp/IMGH/48/38/P034584838/P034584838_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "ロッキンロビン ROCKIN'ROBIN 大須店",
-      "url": "https://imgfp.hotp.jp/IMGH/18/29/P038071829/P038071829_480.jpg",
-      "error": "timeout"
+      "店名": "THE GARDEN ザ ガーデン 栄",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/08/07/P037980807/P037980807_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001202874",
+      "写真アセットID": "P037980807",
+      "firstDetected": "2026-09-17",
+      "lastChecked": "2026-09-17"
     },
     {
       "店名": "バーデンバーデン 栄",
+      "host": "hotpepper",
       "url": "https://imgfp.hotp.jp/IMGH/45/08/P049174508/P049174508_480.jpg",
-      "error": "timeout"
+      "status": 404,
+      "ホットペッパーID": "J001223700",
+      "写真アセットID": "P049174508",
+      "firstDetected": "2026-09-17",
+      "lastChecked": "2026-09-17"
     }
-  ]
+  ],
+  "unknownSample": []
 }
