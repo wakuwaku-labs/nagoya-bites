@@ -1,0 +1,160 @@
+{
+  "date": "2026-09-16",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄の居酒屋で一人飲み、0時をまたぐ一杯が高くつく理由 — ココイチ深夜料金7%の先にある名古屋の構造",
+      "verdict": "PASS",
+      "total": 104,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 2,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 11件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 8件 (オペ,人件費,回転,業界,構造,慣習,相場,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 229字 +4",
+          "title 50字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "過去に掲載歴のある店（90日超） → 2"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "industry_insider",
+      "column_id": "COL-LAW-008",
+      "title_draft": "栄の居酒屋で一人飲み、0時をまたぐ一杯が高くつく理由 — ココイチ深夜料金7%の先にある名古屋の構造",
+      "lead_draft": "ココイチが9月1日、22時から翌5時の注文に7%の深夜料金を付けた。はま寿司・すき家・松屋は7%、ガスト・サイゼリヤ・デニーズは10%。チェーンが次々に「夜は高い」と言い始めたのに、名古屋の居酒屋のメニューに深夜料金の文字はほとんど無い。無いのではなく、見えない場所に折り込まれている。10月1日に最低賃金が1,195円へ上がり、9月15日には食料品の消費税1%が閣議決定されて外食と酒だけが10%に残った。0時をまたぐ一杯の値段を、業界人の側から分解する。",
+      "angle": "労基法の深夜割増25%（22〜5時）と最低賃金1,195円で深夜の1時間は最低でも約1,494円という人件費の構造を起点に、チェーンは深夜料金で表に出し、個人の居酒屋は席料・お通し・L.O.前倒し・翌0時閉店という業界の慣習で吸収している差を読む。風営法の深夜届出（0時の境界）と消費税減税の外食除外を重ね、営業時間表から回転とオペを逆算し、一人飲み・二軒目の店選びと相場感に翻訳する。繁忙の年末に向けて0時以降に席が取りやすくなる理由まで。",
+      "main_store": {
+        "name": "wakamaru ワカマル 栄店",
+        "id": "J004422301",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "NHK「食料品消費税減税の大綱 閣議決定 来年4月から2年間 税率1％に」（外食・酒類は対象外）",
+          "url": "https://news.web.nhk/newsweb/na/nd-20260915de50259",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "nippon.com（時事通信）「消費減税、大綱を閣議決定＝来春から２年間食料品１％―所得連動給付、２９年度本格化」",
+          "url": "https://www.nippon.com/ja/news/yjj2026091500791/",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "中日BIZナビ「ココイチ 深夜料金導入 午後10～午前5時にプラス7％」",
+          "url": "https://biz.chunichi.co.jp/news/article/10/129905/",
+          "date": "2026-08-28"
+        },
+        {
+          "label": "株式会社壱番屋「深夜料金の導入および一部トッピング価格改定に関するお知らせ」",
+          "url": "https://www.ichibanya.co.jp/comp/whatsnew/docs/50dbab80a003e9e05e82744940410e034bb0886e.pdf",
+          "date": "2026-08-28"
+        },
+        {
+          "label": "フードリンクニュース「ココイチ、深夜料金7％導入 採用広がるが、吉野家は未だ」",
+          "url": "https://www.foodrink.co.jp/news/2026/08/3161647.html",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "Yahoo!ニュース エキスパート（山路力也）「ココイチも『深夜料金』導入へ なぜ外食の深夜料金が増えているのか？」",
+          "url": "https://news.yahoo.co.jp/expert/articles/68d6fa61f9b44366c1bfbe5005468b53db437a0d",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "X トレンド「ココイチが9月1日から深夜7%料金導入とトッピング値上げ発表」",
+          "url": "https://x.com/i/trending/2093244259923353863",
+          "date": "2026-08-28"
+        },
+        {
+          "label": "note / ダイドウジ「『夜10時を過ぎたら高くなる？』飲食店の深夜料金が当たり前になる日。」",
+          "url": "https://note.com/dai_douzi/n/n55e81570e801",
+          "date": "2026-08-31"
+        },
+        {
+          "label": "中日BIZナビ「愛知の最低賃金55円上げ1195円に 地方審議会が決定、10月1日から適用」",
+          "url": "https://biz.chunichi.co.jp/news/article/10/129664/",
+          "date": "2026-08-22"
+        },
+        {
+          "label": "ツナグ行政書士事務所「愛知県で深夜酒類提供飲食店営業をはじめるには」（客室9.5㎡・照度20ルクス・住居系用途地域では不可）",
+          "url": "https://tsunagu-office.net/archives/19142",
+          "date": "2026-06-27"
+        },
+        {
+          "label": "愛知県警察「深夜における酒類提供飲食店営業の営業開始届出手続」（営業開始10日前までに所轄署へ）",
+          "url": "https://www.pref.aichi.jp/police/shinsei/fuei/kyoka/hoan/shinyaeigyou.html"
+        },
+        {
+          "label": "ホットペッパーグルメ「日本酒と秋田料理 居酒屋wakamaru 栄店」（18:00〜翌4:00・20席・平均予算3,000〜4,000円）",
+          "url": "https://www.hotpepper.jp/strJ004422301/"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}

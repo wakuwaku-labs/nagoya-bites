@@ -503,7 +503,10 @@ if [ "$SKIP_CLAUDE" = "0" ]; then
       log "最大試行回数（${MAX_CLAUDE_ATTEMPTS}）に到達。諦めます。"
       break
     fi
-    if ! grep -qE "socket connection was closed|Connection closed mid-response|Connection error|stream (was )?(closed|interrupted)|FailedToOpenSocket|ECONNRESET|ECONNREFUSED|EPIPE|ETIMEDOUT|network|Unable to connect to API|API Error: 5[0-9][0-9]|Overloaded" "$LOG"; then
+    # 2026-09-16: バッテリー駆動中の DNS 解決失敗（"API Error: Can't reach the API server — check your
+    # internet or DNS (ENOTFOUND)"）がこの一覧に無く、リトライが一度も発火せず即 HOLD になった。
+    # ENOTFOUND / EAI_AGAIN は名前解決の一時失敗（スリープ復帰直後・回線切替時）で、再試行で直る典型なので追加。
+    if ! grep -qE "socket connection was closed|Connection closed mid-response|Connection error|stream (was )?(closed|interrupted)|FailedToOpenSocket|ECONNRESET|ECONNREFUSED|EPIPE|ETIMEDOUT|ENOTFOUND|EAI_AGAIN|network|Unable to connect to API|Can't reach the API server|check your internet or DNS|API Error: 5[0-9][0-9]|Overloaded" "$LOG"; then
       log "既知のネットワーク一時エラーではないためリトライしません。"
       break
     fi
@@ -540,7 +543,7 @@ if [ "$OK" != "1" ]; then
 
   if [ -z "$RESCUE_HTML" ]; then
     MISSING_REASON="記事HTML（journal/${TODAY_JST}-*.html）が存在しない。生成そのものが失敗しています。"
-    if [ "$POWER_SOURCE" = "Battery" ] && grep -qE "Connection closed mid-response|socket connection was closed|ECONNRESET|stream (was )?(closed|interrupted)" "$LOG"; then
+    if [ "$POWER_SOURCE" = "Battery" ] && grep -qE "Connection closed mid-response|socket connection was closed|ECONNRESET|ENOTFOUND|EAI_AGAIN|Can't reach the API server|stream (was )?(closed|interrupted)" "$LOG"; then
       MISSING_REASON="${MISSING_REASON} 実行時 Mac はバッテリー駆動でした。バッテリー駆動中は蓋閉じ(clamshell)スリープを caffeinate でも防げないため、生成中に接続が切断された可能性が高いです（2026-08-18 判明）。ACアダプタを接続した状態で再実行してください。"
     fi
     hold "$MISSING_REASON"
