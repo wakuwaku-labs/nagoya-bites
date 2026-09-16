@@ -1,16 +1,16 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-16T19:12:37.087Z",
+  "generatedAt": "2026-09-16T20:55:05.202Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1375,
+  "total_sessions": 1378,
   "engines": [
     {
       "key": "google",
       "label": "Google",
       "sessions": 411,
-      "pct": 29.9,
+      "pct": 29.8,
       "sources": [
         {
           "source": "google",
@@ -40,7 +40,7 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 265,
+      "sessions": 266,
       "pct": 19.3,
       "sources": [
         {
@@ -51,7 +51,7 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 37
+          "sessions": 38
         }
       ]
     },
@@ -59,7 +59,7 @@
       "key": "yahoo",
       "label": "Yahoo!",
       "sessions": 185,
-      "pct": 13.5,
+      "pct": 13.4,
       "sources": [
         {
           "source": "yahoo",
@@ -114,8 +114,8 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 54,
-      "pct": 3.9,
+      "sessions": 56,
+      "pct": 4.1,
       "sources": [
         {
           "source": "unknown",
@@ -130,7 +130,7 @@
         {
           "source": "unknown",
           "medium": "",
-          "sessions": 6
+          "sessions": 7
         },
         {
           "source": "teams.public.onecdn.static.microsoft",
@@ -146,6 +146,11 @@
           "source": "ecosia.org",
           "medium": "organic",
           "sessions": 2
+        },
+        {
+          "source": "(data not available)",
+          "medium": "(data not available)",
+          "sessions": 1
         },
         {
           "source": "2881.com",
@@ -257,10 +262,10 @@
     "delta": {
       "google": -3,
       "bing": 9,
-      "direct": -15,
+      "direct": -14,
       "yahoo": 3,
       "ai_assistant": 3,
-      "other": 2,
+      "other": 4,
       "duckduckgo": 0,
       "social": 0
     }
