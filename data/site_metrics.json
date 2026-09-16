@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-16T16:49:09.686Z",
+  "generatedAt": "2026-09-16T17:31:50.317Z",
   "lookbackDays": 30,
   "totals": {
     "activeUsers": 1094,
-    "pageViews": 1982,
+    "pageViews": 1984,
     "sessions": 1342,
-    "avgSessionDuration": 153.2,
+    "avgSessionDuration": 154,
     "bounceRate": 0.282,
     "pagesPerSession": 1.48
   },
@@ -20,16 +20,16 @@
       "organic": 946,
       "direct": 290,
       "social": 8,
-      "ai_assistant": 100,
+      "ai_assistant": 102,
       "referral": 20,
       "paid": 0,
       "other": 6
     },
     "pct": {
-      "organic": 69.1,
-      "direct": 21.2,
+      "organic": 69,
+      "direct": 21.1,
       "social": 0.6,
-      "ai_assistant": 7.3,
+      "ai_assistant": 7.4,
       "referral": 1.5,
       "paid": 0,
       "other": 0.4
@@ -59,7 +59,7 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 82
+      "sessions": 83
     },
     {
       "source": "(not set)",
@@ -142,6 +142,11 @@
       "sessions": 1
     },
     {
+      "source": "chatgpt.com",
+      "medium": "(none)",
+      "sessions": 1
+    },
+    {
       "source": "greenmaven.com",
       "medium": "referral",
       "sessions": 1
@@ -186,11 +191,11 @@
     {
       "path": "/",
       "pageViews": 314,
-      "sessions": 206
+      "sessions": 207
     },
     {
       "path": "/index.html",
-      "pageViews": 172,
+      "pageViews": 173,
       "sessions": 98
     },
     {
