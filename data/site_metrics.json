@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-16T13:11:27.022Z",
+  "generatedAt": "2026-09-16T13:49:58.403Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1110,
-    "pageViews": 2064,
-    "sessions": 1364,
-    "avgSessionDuration": 160.7,
+    "activeUsers": 1113,
+    "pageViews": 2067,
+    "sessions": 1367,
+    "avgSessionDuration": 160.5,
     "bounceRate": 0.279,
     "pagesPerSession": 1.51
   },
@@ -17,10 +17,10 @@
   },
   "channels": {
     "sessions": {
-      "organic": 960,
+      "organic": 962,
       "direct": 296,
       "social": 8,
-      "ai_assistant": 100,
+      "ai_assistant": 101,
       "referral": 21,
       "paid": 0,
       "other": 3
@@ -29,7 +29,7 @@
       "organic": 69.2,
       "direct": 21.3,
       "social": 0.6,
-      "ai_assistant": 7.2,
+      "ai_assistant": 7.3,
       "referral": 1.5,
       "paid": 0,
       "other": 0.2
@@ -39,12 +39,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 419
+      "sessions": 420
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 343
+      "sessions": 344
     },
     {
       "source": "(direct)",
@@ -59,7 +59,7 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 82
+      "sessions": 83
     },
     {
       "source": "(not set)",
@@ -180,8 +180,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 385,
-      "sessions": 333
+      "pageViews": 386,
+      "sessions": 334
     },
     {
       "path": "/",
@@ -205,16 +205,16 @@
     }
   ],
   "cta": {
-    "outboundClicks": 134,
-    "ctaClickRate": 9.8,
+    "outboundClicks": 136,
+    "ctaClickRate": 9.9,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 61
+        "clicks": 62
       },
       {
         "domain": "tabelog.com",
-        "clicks": 32
+        "clicks": 33
       },
       {
         "domain": "maps.google.com",
@@ -255,21 +255,21 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 69,
+      "organic": 70,
       "direct": 46,
       "social": 0,
-      "ai_assistant": 14,
+      "ai_assistant": 15,
       "referral": 5,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.2,
+    "ctaClickRate_organic": 7.3,
     "ctaClickRate_direct": 15.5,
     "ctaClickRate_social": 0,
     "byPage": [
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 22
+        "clicks": 23
       },
       {
         "path": "/",
@@ -280,12 +280,12 @@
         "clicks": 20
       },
       {
-        "path": "/index.html",
+        "path": "/features/nagoya-kaoawase-washoku.html",
         "clicks": 19
       },
       {
-        "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 18
+        "path": "/index.html",
+        "clicks": 19
       },
       {
         "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
@@ -376,7 +376,7 @@
       {
         "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 22
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -386,7 +386,7 @@
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
         "domain": "tabelog.com",
-        "clicks": 18
+        "clicks": 19
       },
       {
         "path": "/index.html",
@@ -577,7 +577,7 @@
     "reservationClicksByPage": [
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 22
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -585,7 +585,7 @@
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 18
+        "clicks": 19
       },
       {
         "path": "/index.html",
@@ -640,11 +640,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 93
+    "reservationClicks": 95
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1110,
+    "value": 1113,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
