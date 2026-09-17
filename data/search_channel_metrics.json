@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-17T19:51:24.305Z",
+  "generatedAt": "2026-09-17T20:59:09.658Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1392,
+  "total_sessions": 1393,
   "engines": [
     {
       "key": "google",
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 346,
-      "pct": 24.9,
+      "pct": 24.8,
       "sources": [
         {
           "source": "bing",
@@ -41,7 +41,7 @@
       "key": "direct",
       "label": "直接/不明",
       "sessions": 268,
-      "pct": 19.3,
+      "pct": 19.2,
       "sources": [
         {
           "source": "(direct)",
@@ -109,8 +109,8 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 60,
-      "pct": 4.3,
+      "sessions": 61,
+      "pct": 4.4,
       "sources": [
         {
           "source": "unknown",
@@ -125,7 +125,7 @@
         {
           "source": "unknown",
           "medium": "",
-          "sessions": 5
+          "sessions": 6
         },
         {
           "source": "teams.public.onecdn.static.microsoft",
