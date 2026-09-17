@@ -3,9 +3,9 @@
   "why": "2026-09-11、オーナーから『今日の話題店がずっと同じラインナップ』と報告があり調査した結果、data/trending_stores.json は2026-04-21以来7店のまま、data/manual_stores.json の編集部推薦167店のうち121店は2026-08-21の一括登録から出典URLが一度も更新されておらず、TOP5選定（scripts/pick_daily_trending5.js）の候補プールが実質3週間フリーズしていたことが判明した。新規話題店を発掘して取り込む半自動パイプライン（scripts/fetch_trending_articles.js）は存在したが GitHub Actions に配線されておらず、誰も定期的に回していなかった。このポリシーは『定期的に回す』ことを構造的に保証するためのもの（ISSUE-084 原則1・2・3の適用: 監視ではなく供給ループそのものを外部スケジュールに乗せ、動いた証跡を心拍として外へ出す）。",
   "queries": {
     "source": "scripts/lib/trending_queries.js の RECOMMENDED_QUERIES（現行37件・増減時はここの件数記述ではなく同ファイルが正）",
-    "queries_per_run": 6,
-    "rotation": "day_of_year_jst 起点のオフセットで毎回 queries_per_run 件ずつ順送り（scripts/trending_scout.js --next-queries が算出）。gcd(queries_per_run, 全件数)=1 のとき重複なく巡回でき、現行37件・6件/回では実測7日で全クエリをカバーする。日付起点のため実行が多少ずれても重複・欠落が起きにくい",
-    "why_bounded": "1回の実行で全クエリをWebSearchすると呼び出しコストが大きい。ボトルネックは『広さ』より『継続性』——狭くても毎日回り続ける方が、広くて1回きりより新規発掘の総量が増える"
+    "queries_per_run": 12,
+    "rotation": "day_of_year_jst 起点のオフセットで毎回 queries_per_run 件ずつ順送り（scripts/trending_scout.js --next-queries が算出）。gcd(queries_per_run, 全件数)=1 のとき重複なく巡回でき、現行37件・12件/回では実測4日弱で全クエリをカバーする（旧6件/回では7日）。日付起点のため実行が多少ずれても重複・欠落が起きにくい",
+    "why_bounded": "1回の実行で全クエリをWebSearchすると呼び出しコストが大きい。ボトルネックは『広さ』より『継続性』——狭くても毎日回り続ける方が、広くて1回きりより新規発掘の総量が増える。2026-09-17、オーナーから『掲載サイクルをもっと速く』と要望があり調査した結果、公開自体（検証済みpending→LOCAL_STORES）はbuild.yml日次実行で既に即日〜翌日と高速で、真のボトルネックは『まだカタログに無い新規店の発見』側だった（同日実行では6クエリ中5件が既存カタログ一致、新規candidatesは1件のみ）。実在検証（Places三重検証・出典2件ルール）は緩めず、探索の幅だけを6→12件/回に倍増して発見率を上げる（1日あたりのWebSearch/WebFetchコストは許容範囲で継続性は維持）"
   },
   "verification": {
     "rule": "WebSearchの検索結果一覧だけで店名を確定させない。有望な候補は必ずWebFetchで記事本文を確認し、店名・実際の開店/掲載事実を裏取りしてから出典URLとして採用する（CLAUDE.md『架空店ブロック』の一次情報確認と同じ規律）。",
