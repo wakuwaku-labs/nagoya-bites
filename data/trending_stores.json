@@ -147,7 +147,8 @@
         "https://x.com/gourmet_nagoya/status/2038567369904406773",
         "https://jouhou.nagoya/meichika-renewal/",
         "https://prtimes.jp/main/html/rd/p/000000098.000087198.html",
-        "https://news.yahoo.co.jp/articles/306d389ec8f99e24004cb12abf217051677cbe6f"
+        "https://news.yahoo.co.jp/articles/306d389ec8f99e24004cb12abf217051677cbe6f",
+        "https://nagoyato.com/posts/18423"
       ],
       "話題スコア": 70,
       "検出日": "2026-09-13",
@@ -167,7 +168,8 @@
       "出典URL": [
         "https://jouhou.nagoya/ichibanken-ebi/",
         "https://news.yahoo.co.jp/articles/2f3c6af1afb453101d39b9f83f46cd974249467e",
-        "https://www.meichika.jp/shopguide/ichibanken.html"
+        "https://www.meichika.jp/shopguide/ichibanken.html",
+        "https://nagoyato.com/posts/18423"
       ],
       "話題スコア": 75,
       "検出日": "2026-09-13",
@@ -307,6 +309,55 @@
       "_auto": true
     },
     {
+      "店名": "まるや本店 名古屋駅メイチカ店",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "話題フラグ": false,
+      "トレンド情報源": [
+        "地域メディア"
+      ],
+      "出典URL": [
+        "https://nagoyato.com/posts/18423"
+      ],
+      "話題スコア": 70,
+      "検出日": "2026-09-17",
+      "有効期限": "2026-12-16",
+      "コメント": "名古屋駅地下街メイチカが2026-09-04にリニューアル一斉オープン。名鉄百貨店からの移転で、ひつまぶし専門店として駅弁テイクアウトにも対応",
+      "_auto": true
+    },
+    {
+      "店名": "とん八",
+      "エリア": "名古屋（中区・鶴舞）",
+      "話題フラグ": true,
+      "トレンド情報源": [
+        "地域メディア",
+        "メディア記事"
+      ],
+      "出典URL": [
+        "https://jouhou.nagoya/tonpachi/",
+        "https://otonano-shumatsu.com/articles/377428"
+      ],
+      "話題スコア": 70,
+      "検出日": "2026-09-17",
+      "有効期限": "2026-12-16",
+      "コメント": "創業30年以上の鶴舞の隠れた名店。八丁味噌ベースの濃厚味噌ダレと「味噌チーズひれかつ」がインスタ映えで話題 / LOCAL_STORES 未登録 / LOCAL_STORES 未登録（Step6: 一次情報確認+Google Places三重検証を通過し正式掲載）"
+    },
+    {
+      "店名": "SALT BAKERY（ソルトベーカリー）",
+      "エリア": "昭和区",
+      "話題フラグ": true,
+      "トレンド情報源": [
+        "地域メディア記事"
+      ],
+      "出典URL": [
+        "https://panyasan-navi.net/?p=13589",
+        "https://tsurumagarden.com/shop/"
+      ],
+      "話題スコア": 62,
+      "検出日": "2026-09-14",
+      "有効期限": "2026-12-16",
+      "コメント": "鶴舞公園ツルマガーデンに韓国式塩パン専門店が2026年9月3日オープン、SNSで話題の韓国式塩パンを提供 / LOCAL_STORES 未登録（Step6: 一次情報確認+Google Places三重検証を通過し正式掲載）"
+    },
+    {
       "店名": "ウルフギャング・ステーキハウス 名古屋店",
       "エリア": "名古屋市中区錦",
       "話題フラグ": false,
@@ -382,23 +433,6 @@
       "コメント": "マレーシア発の中国茶カフェ。矢場町本店が1時間待ちの行列で話題、メイチカに日本2号店。2026-09-04オープン（LOCAL_STORES未登録） / LOCAL_STORES 未登録"
     },
     {
-      "_comment": "マッチング失敗した候補店。人間レビュー後に Google Sheets に追加 → stores セクションに移す。現在は空"
-    },
-    {
-      "店名": "SALT BAKERY（ソルトベーカリー）",
-      "エリア": "昭和区",
-      "ジャンル": "",
-      "トレンド情報源": [
-        "地域メディア記事"
-      ],
-      "出典URL": [
-        "https://panyasan-navi.net/?p=13589"
-      ],
-      "話題スコア": 60,
-      "検出日": "2026-09-14",
-      "コメント": "鶴舞公園ツルマガーデンに韓国式塩パン専門店が2026年9月3日オープン、SNSで話題の韓国式塩パンを提供 / LOCAL_STORES 未登録"
-    },
-    {
       "店名": "ぴよりんvillage",
       "エリア": "名古屋市中村区（JR名古屋駅中央コンコース）",
       "ジャンル": "",
@@ -414,19 +448,27 @@
     },
     {
       "店名": "牛たん 牛串 かわせ",
-      "エリア": "名駅",
-      "ジャンル": "",
+      "エリア": "名古屋（中村区・名駅）",
+      "ジャンル": "牛タン",
       "トレンド情報源": [
-        "TikTok",
+        "ブログ",
+        "SNS(X/TikTok)",
         "グルメメディア"
       ],
       "出典URL": [
+        "https://dairin61.hatenablog.com/entry/2026/01/10/221608",
+        "https://x.com/gourmetroad5/status/2030179867892011370",
         "https://kelly-net.jp/enjoytoday/201903040600434114.html",
         "https://retty.me/area/PRE23/ARE61/SUB6101/100000822213/"
       ],
-      "話題スコア": 55,
+      "話題スコア": 72,
       "検出日": "2026-09-17",
-      "コメント": "名駅の牛タン・牛串専門店。開店10分で満席になる行列店としてTikTokで再燃・複数グルメサイトに掲載済み / LOCAL_STORES 未登録"
+      "コメント": "名駅裏路地の牛タン専門店。分厚い炭火焼き牛タンの「赤富士盛り」がTikTok/Xで話題化し行列が発生。開店10分で満席になる行列店としても複数グルメサイトで確認 / LOCAL_STORES 未登録",
+      "_promoted_to_pending": true,
+      "_promoted_at": "2026-09-18"
+    },
+    {
+      "_comment": "マッチング失敗した候補店。人間レビュー後に Google Sheets に追加 → stores セクションに移す。現在は空"
     }
   ]
 }
