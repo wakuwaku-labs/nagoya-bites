@@ -2261,7 +2261,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <div class="scene-index-group">
 <h3 class="scene-index-group-title">エリア×ジャンルで探す</h3>
 <ul class="scene-index-list">
-<li><a href="stores/area/meieki/izakaya.html">名駅（名古屋駅）の居酒屋（497軒）</a></li>
+<li><a href="stores/area/meieki/izakaya.html">名駅（名古屋駅）の居酒屋（495軒）</a></li>
 <li><a href="stores/area/nishiki-fushimi/izakaya.html">錦・伏見・丸の内の居酒屋（247軒）</a></li>
 <li><a href="stores/area/chikusa-imaike/izakaya.html">千種・今池・大曽根の居酒屋（234軒）</a></li>
 <li><a href="stores/area/yabacho-osu/izakaya.html">矢場町・大須・上前津の居酒屋（214軒）</a></li>
@@ -7753,7 +7753,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = 'b51344593378';
+var STORES_JSON_VERSION = '0e90dd42cfdc';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
