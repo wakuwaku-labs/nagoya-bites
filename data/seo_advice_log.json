@@ -3010,6 +3010,36 @@
       "brand_reason": "採用（実測で穴が確認できたため）。SEO-042 で確立済みの冒頭CTAが特集68本中39本にしか無く、未設置29本のうち17本は本文に実在確認済みの店舗ページリンク（stores/J*.html）を3件以上持つ＝材料があるのに設置されていない。原因は add_feature_top_cta.js が掲載店を ItemList JSON-LD からのみ取得する設計で、この17本の ItemList が name だけで店舗URL/IDを持たないため「材料なし」でスキップされること。加えて node scripts/add_feature_top_cta.js --all --check は would_add 8本・updated 4本（月次ロスター入替でCTAが旧店のまま）を報告するのに、build.yml:254 は --all 無し実行で既定33本しか見ないため この12本はCIで永久に追従しない。今日のTOP5の③ nagoya-sweets（5PV）も未設置17本の1つ。なお助言の指標「店舗詳細モーダルへの遷移（現在11回）」は却下（特集の店舗リンクは静的な stores/J*.html へ遷移し modal_open を発火するのは index.html のカード面だけ・制約10）。効果は SEO-084 で入れた feature_store_click の前後比で見る",
       "category": "SEO",
       "fingerprint": "89e70f0ce92b137f"
+    },
+    {
+      "id": null,
+      "date": "2026-09-17",
+      "source": "line-daily",
+      "advice": "🔴 訪問者50人に対し、店舗詳細を開いたのは7回、予約ボタンクリックは3回と、CVR改善の余地が大きい。👉 トップページ(index.html)のファーストビューに、季節やトレンドに合わせたおすすめ店舗を3店舗ピックアップして表示し、店舗詳細への導線を強化する。",
+      "verdict": "duplicate",
+      "brand_reason": "同趣旨を処理済み。(1) トップFVには既に日替わりの「今日の話題店」TOP5 が実装済み（pick_daily_trending5.js が鮮度＋多媒体露出で毎朝5:30に選び直す／index.html に3箇所）。(2) 同じ助言を SEO-088（2026-09-08・本日のおすすめ日替わりピック）と SEO-089（2026-09-10・FVに人気店3店舗）で受け、いずれも done。SEO-088 の診断結果は「トップの5つのカード面が全て発火元のない modal_open を出しており、どの面が詳細到達を生んだか分離できない＝ピック実験は実行不能」で、計測側を先に直して閉じている。新しい面を足す前に、その計測が効いているかを次の実データで見る段階。「季節加味」の追加についても、TOP5の選定は検証できる事実（鮮度・多媒体露出）だけで組む設計（制約10）のため、助言の一語だけを根拠に重み付けを足さない。",
+      "category": null,
+      "fingerprint": "10a1814b784cb52f"
+    },
+    {
+      "id": null,
+      "date": "2026-09-17",
+      "source": "line-daily",
+      "advice": "🟡 人気ページTOP3に特集記事が2つランクインしており、中でも「nagoya-solo-dining」が15回閲覧と注目度が高い。👉 特集「nagoya-solo-dining」の記事内で、関連する店舗への導線を強化するため、記事中に掲載されている店舗の予約ボタン(cta_reserve)を目立つように配置し、クリック率を向上させる。",
+      "verdict": "duplicate",
+      "brand_reason": "実装済み。SEO-013（2026-07-29 done・人気特集本文にCTA設置）→ SEO-042（冒頭CTAの設計統合・対象に nagoya-solo-dining を明記）→ SEO-100（2026-09-17 done・掲載店を持つ特集17本へ横展開）で完了済み。実ファイルを実地検証: features/nagoya-solo-dining.html に冒頭CTAブロック（topcta / topcta-item 3件 / topcta-actions 3件）と、本文中の a.store-link「今すぐ予約」6箇所＋HotPepper予約リンク計25箇所が存在する。同種の助言は 2026-09-09・09-13 に却下、09-14 に重複として処理済み。これ以上の「目立たせる」は効果検証できない意匠変更（SEO-013 が意図的に見送った論点と同じ）。",
+      "category": null,
+      "fingerprint": "367791e77b994aa4"
+    },
+    {
+      "id": null,
+      "date": "2026-09-17",
+      "source": "line-daily",
+      "advice": "🟢 検索流入比率が78%と高い一方、SNS流入比率は0%と全く活用できていない。👉 docs/daily-posts/ に毎日用意されているSNS投稿原稿（Note／Instagram／X）を、今日中にすべて投稿し、SNSからの集客を試みる。",
+      "verdict": "rejected",
+      "brand_reason": "前提が失効している。(1)「毎日用意されている」は誤り — SNS原稿の自動生成は 2026-09-05 にオーナー指示で停止済み（data/journal_sns_draft_policy.json: generate_sns_draft=false）。docs/daily-posts/ の最新は 2026-09-05 で、今日投稿できる原稿は存在しない。(2) SNS運用はリポジトリ外の別の仕組みへ移管済みで、流入はUTMで計測する方針。(3) 「SNS流入0%」自体も異常ではない — 2026-09-14 の traffic_source 判定修正（部分一致 t.co が chatgpt.com/copilot.com を誤ってSNSに数えていた）以降、実SNS流入は元々1媒体30日6件未満で観測閾値以下と判明している（旧socialの大半は生成AI流入だった）。(4) 同種助言は 2026-09-10・09-12・09-14 に却下済み。加えて「今日中に全部投稿」はオーナー本人の手作業であり、backlog の実装課題にならない。",
+      "category": null,
+      "fingerprint": "e7b270a243e4b6c9"
     }
   ]
 }
