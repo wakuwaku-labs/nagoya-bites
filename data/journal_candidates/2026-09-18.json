@@ -1,0 +1,119 @@
+{
+  "date": "2026-09-18",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄・久屋大通に27蔵81銘柄「秋酒祭 愛知2026」、コイン制の相場を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 93,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 6件 (旬,需要,予約,相場,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 174字 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "93点（自動公開ライン 100点）。主な不足: topicality -10 / recency -3 / writability -2"
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "93点（自動公開ライン 100点）。主な不足: topicality -10 / recency -3 / writability -2",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "栄・久屋大通に27蔵81銘柄「秋酒祭 愛知2026」、コイン制の相場を業界人が読む",
+      "lead_draft": "10月3日・4日、久屋大通公園（栄）で愛知県内27酒蔵81銘柄が集まる「秋酒祭 愛知〜AUTUMN SAKE FEST 2026〜」が開かれる。前売スターターセット3,000円はコイン10枚と猪口のセットで、当日券は3,600円。旬の需要期にあわせたコイン先払い制の相場設計を業界人が読み、飲み足りない続きを予約で受け止める栄の居酒屋2軒を添える。",
+      "angle": "コイン先払い制の価格帯設計（未使用コインの扱い・前売と当日の相場差600円）を旬の需要期に業界人の目で読み、会場が混む土日の回転を踏まえ、飲み足りない分を予約で受け止める栄の居酒屋2軒への動線を示す",
+      "main_store": {
+        "name": "十八代 光蔵 みつくら 栄本店",
+        "id": "J001178883",
+        "area": "栄",
+        "genre": "居酒屋・日本酒"
+      },
+      "column_id": null,
+      "sources": [
+        {
+          "label": "PR TIMES『秋酒祭 愛知〜AUTUMN SAKE FEST 2026〜』出品銘柄発表（ZIP-FM）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000237.000048223.html",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "グルメプレス『秋酒祭 愛知2026』フード出店発表",
+          "url": "https://gourmetpress.net/1480477/",
+          "date": "2026-09-11"
+        },
+        {
+          "label": "秋酒祭 愛知 公式サイト（ZIP-FM）",
+          "url": "https://zip-fm.co.jp/akizake26/",
+          "date": "2026-09-11"
+        },
+        {
+          "label": "SPICE『秋酒祭 愛知2026』選りすぐり81銘柄発表",
+          "url": "https://spice.eplus.jp/articles/348547",
+          "date": "2026-08-28"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}
