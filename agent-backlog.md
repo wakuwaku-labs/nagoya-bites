@@ -37,6 +37,32 @@
 
 ---
 
+### [ISSUE-130] `nightly-qa.yml` はハード失敗のIssue起票/更新だけを実装しており、回復時の自動クローズが無い — Issue #83が3日分の緑runの後も開いたまま残っていた
+
+- **priority**: P3 → **status**: done
+- **detected**: 2026-09-18（Issue #83「🔴 夜間QA FAIL 2026-09-14」のセキュリティ誤検知が2026-09-14に修正済み（commit 4e2cfd8b56）で、以降の夜間QA runが3回連続PASSしていたにもかかわらず、Issueが開いたまま放置されているのを本セッションで発見。事実確認のうえ本セッションでクローズ済み）
+- **resolved**: 2026-09-18
+- **resolved_by**: 本コミット（`.github/workflows/nightly-qa.yml`）
+- **category**: ops-monitoring / ci
+- **owner**: Builder
+- **source**: 本セッションでの直接調査（`gh issue view 83` / `gh run list --workflow nightly-qa.yml` / ローカル `node scripts/security_audit.js` 再実行で復旧を確認しクローズ）
+- **brand-filter**: ✅ 適合 — CI監視の設計改善のみ。CLAUDE.md「無人自動化の監視を設計するときの原則」原則6「復旧したら自動で静かにする（オオカミ少年化させない）」にそのまま該当
+- **検証できる事実（制約10）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | `.github/workflows/nightly-qa.yml` の Issue 起票ステップは「ハード失敗時のみ」実行される設計で、回復時（PASS）にIssueを閉じる分岐が存在しない | `.github/workflows/nightly-qa.yml`（コメント「ハード失敗時のみ Issue を起票して朝に気づけるようにする」／`issues.create`/`issues.update`のみで`issues.update(state:'closed')`相当の呼び出しが無い） |
+  | Issue #83 は2026-07-30頃から2026-09-14まで断続的に「再発」コメントが27件付いていたが、修正（commit 4e2cfd8b56・2026-09-14 16:27 JST）後の09-14/09-15/09-16の夜間QA run（`gh run list --workflow nightly-qa.yml`でいずれも`success`、ログに「判定: PASS」）でも一切言及されず開いたままだった | `gh issue view 83 --comments` ／ `gh run view <各run> --log` |
+  | 他の同種watchdog（`journal-watchdog.yml`/`feedback-watchdog.yml`/`trending-scout-watchdog.yml`/`gas-deploy-watchdog.yml`/`feature-roster-watchdog.yml`）は全て復旧時の自動クローズを実装済みで、`nightly-qa.yml` だけがこのパターンから外れている | 各workflowファイルの`state:'closed'`相当の分岐（例: `journal-watchdog.yml`の既存Issue自動クローズロジック）と`nightly-qa.yml`の比較 |
+- **acceptance**:
+  1. `nightly-qa.yml` に「今回PASS かつ 既存のオープンIssue（タイトル `🔴 夜間QA FAIL` で始まる）が存在する」場合の自動クローズ分岐を追加する（他watchdogと同じパターンを踏襲）
+  2. クローズ時のコメントに「何が直って復旧したか」ではなく「PASSを確認した run のURL」等、検証できる事実を残す（自己申告にしない）
+  3. YAML構文検証・可能ならローカルでロジックの単体的な確認（`actions/github-script`部分は実行困難なため、他watchdogの既存実装との構造比較で代替可）
+- **files**: `.github/workflows/nightly-qa.yml`
+- **関連**: ISSUE-084（無人自動化監視の原則・原則6の再適用）／[[ISSUE-129]]（同種の『レポートが来ない』盲点・別ループ）
+- **2026-09-18 実装**: `journal-watchdog.yml` と同じパターンで「PASSなら既存のオープンIssueを復旧クローズ」ステップを追加。トリガーは `if: steps.qa.outcome == 'success'`（`nightly_qa.js` は hardFails 有無で exit 1/0 を返す実装のため、job全体のsuccess()ではなくQAステップ単体のoutcomeを見て他ステップの偶発的失敗と区別）。クローズコメントには当該runのURLのみを載せ、自己申告の「直った理由」は書かない（acceptance②）。`python3 -c "import yaml"` でYAML構文検証OK・`npm test` 197件退行なし確認済み（acceptance③）。Issue #83自体は同セッションで先に手動クローズ済みのため、本実装の効果は次回以降のPASS runで確認される
+
+---
+
 ### [SEO-102] `scripts/refresh_journal_related.js` の TOPIC_FEATURES にジャンル重複特集（焼肉2本・バー3本）が未整理で、journal からの内部リンクが片方にしか流れない
 
 - **priority**: P3 → **status**: in_progress（acceptance①の重なり率実測は完了。②③の実装はEditorの角度確認待ち）

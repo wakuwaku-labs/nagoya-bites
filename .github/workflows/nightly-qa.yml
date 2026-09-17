@@ -108,3 +108,32 @@ jobs:
                 title, body, labels: [label],
               });
             }
+
+      - name: PASSなら既存のオープンIssueを復旧クローズ（ISSUE-130・オオカミ少年化防止）
+        # ハード失敗ステップは if:failure() でのみ動くため、回復日（PASS）には既存Issueを
+        # 誰も閉じない設計だった（Issue #83が復旧後も3日分の緑runを跨いで放置された実例）。
+        # journal-watchdog.yml 等、他のwatchdogと同じ「復旧したら自動で静かにする」パターンを揃える。
+        if: steps.qa.outcome == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const label = 'nightly-qa';
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: 'open', labels: label, per_page: 20,
+            });
+            const existing = issues.find(i => i.title.startsWith('🔴 夜間QA FAIL'));
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: existing.number,
+                body: `✅ 復旧を確認しました（このrun: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId} が PASS）。自動クローズします。`,
+              });
+              await github.rest.issues.update({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: existing.number, state: 'closed',
+              });
+              core.info(`Issue #${existing.number} を復旧クローズしました。`);
+            } else {
+              core.info('オープンな夜間QA Issue はありません。');
+            }
