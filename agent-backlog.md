@@ -1122,6 +1122,7 @@
     index.html 書き換えを中断（想定どおりで本チケットの変更とは無関係。index.html自体は無変更）
   - **status**: in_progress → **done**
   - **resolved**: 2026-09-18
+  - **resolved_by**: 58b80e2c0e
   - **files**: `gen-store-pages.js`, `scripts/audit_design_system.js`, `data/store_page_orphans.json`（新規）,
     `stores/index.html`, `.github/workflows/build.yml`
 ### [SEO-081] IndexNow 送信ステップが ISSUE-112 の build.yml 書き換えで消え、最大流入エンジン Bing への更新通知が再び死んでいる（SEO-071 は done のまま）
@@ -5875,6 +5876,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-09-18 | Designer(/solve-next) | DSN-001残件実装・デプロイ | ✅ commit 58b80e2c0e |
 | 2026-09-08 | Designer(EXPLICIT) | DSN-003: トップ/ジャーナル/特集/編集規約4ページ種別のプロ品質リデザイン＋サイト共通クローム統一（scripts/lib/site_chrome.js新設・全216ファイル） | ✅ コミット済み・PR作成待ち (commit 20cd42ec4) |
 | 2026-09-08 | Orchestrator(routine) | ISSUE-121: 他都道府県マッチ残存確認→修正は commit 06b6976f で main に反映済み・audit_other_prefecture_matches.js --check=[OK]確認・done クローズ | ✅ done（既存修正を確認） |
 | 2026-09-08 | Orchestrator(routine) | SEO-086: scripts/add_feature_tracking.js 新設・scripts/refresh_feature_rosters.js に cta_click 追加・features 67本にcta_click/feature_store_click/internal_link_click/scroll_depth を補完。機械検査OK | ✅ commit 予定 |
