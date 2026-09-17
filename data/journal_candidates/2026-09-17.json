@@ -1,0 +1,463 @@
+{
+  "date": "2026-09-17",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "うなぎのしろむら丸の内店の個室利用料10% — 5連休に鰻を囲む前に",
+      "verdict": "PASS",
+      "total": 100,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        },
+        {
+          "kw": "ひつまぶし",
+          "feature": "features/nagoya-hitsumabushi.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 140字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "タイトルにシーン語「個室」+4",
+          "タイトルにジャンル語「うなぎ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "鰻会席9,350円の和食おとは、平安通で19席 — 5連休の少人数会食をコスパで読む",
+      "verdict": "HOLD",
+      "total": 63,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 12,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 22日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (席,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 126字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「会食」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "敬老の日に鰻を予約するなら丸の内 — うなぎのしろむらの56席と全面禁煙が効く理由",
+      "verdict": "HOLD",
+      "total": 60,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "ひつまぶし",
+          "feature": "features/nagoya-hitsumabushi.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 22日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (席) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 140字 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "シーン語がリードのみ「接待」+1",
+          "タイトルにジャンル語「うなぎ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "丸の内の炭火うなぎ、うな木の3,500円帯 — 接待の下見を連休前に済ませる",
+      "verdict": "HOLD",
+      "total": 60,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 8,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "ひつまぶし",
+          "feature": "features/nagoya-hitsumabushi.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 22日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (接待) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 106字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「うなぎ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "昼だけうなぎ屋 名駅店の2,000円台、5連休のランチが一番強い時間帯になる理由",
+      "verdict": "HOLD",
+      "total": 55,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "ひつまぶし",
+          "feature": "features/nagoya-hitsumabushi.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 22日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 135字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「うなぎ」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "うなぎのしろむら丸の内店の個室利用料10% — 5連休に鰻を囲む前に",
+      "lead_draft": "シラスウナギは豊漁で卸値は前年比24.8%安。それでも専門店のうな重は下がらない。9月19日からの11年ぶりシルバーウィーク、敬老の日に三世代で鰻を囲むなら、丸の内駅徒歩2分のうなぎのしろむら丸の内店が個室利用料10%・15%と明示している価格設計こそ、業界人が最初に読む一行だ。",
+      "angle": "豊漁でも下がらない鰻の価格帯と、個室利用料10%/15%という席料の設計を突き合わせ、5連休の三世代会食というシーンに向けて予約の順番・提供時間・回転を業界人視点で読む",
+      "main_store": {
+        "name": "うなぎのしろむら 丸の内店",
+        "id": "J004026662",
+        "area": "丸の内",
+        "genre": "和食・うなぎ"
+      },
+      "sources": [
+        {
+          "label": "tabemaro「【2026年】シルバーウィークはいつ？11年ぶり5連休の名古屋・愛知おでかけ23選」",
+          "url": "https://www.tabemaro.jp/column/silverweek/",
+          "date": "2026-08-26"
+        },
+        {
+          "label": "sanchi.jp「稚魚は豊漁、卸値は25%下落 — それでもうな重が安くならない4つの理由」",
+          "url": "https://sanchi.jp/data/reports/unagi-price-paradox/",
+          "date": "2026-06-05"
+        },
+        {
+          "label": "じゃらんニュース「【2026年】シルバーウィークはいつ？連休は何する？」",
+          "url": "https://www.jalan.net/news/article/366851/",
+          "date": "2026-05-15"
+        },
+        {
+          "label": "日本経済新聞「うなぎが5年ぶり豊漁 稚魚7〜8割安、うな重値下がり期待」",
+          "url": "https://www.nikkei.com/article/DGXZQOUB124CX0S5A310C2000000/",
+          "date": "2026-03-13"
+        },
+        {
+          "label": "食べログ「うなぎのしろむら 丸の内店」店舗ページ",
+          "url": "https://tabelog.com/aichi/A2301/A230103/23056889/",
+          "date": "2026-09-17"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "敬老の日に鰻を予約するなら丸の内 — うなぎのしろむらの56席と全面禁煙が効く理由",
+      "lead_draft": "9月21日は敬老の日。今年は9月19日から23日までの5連休で、三世代の会食が一気に集中する。うなぎのしろむら 丸の内店は56席・宴会収容30名・全面禁煙・カード可で、ランチは10時半から通しで15時まで。祖父母を待たせない導線という観点から、この店の設計を業界人の目で分解する。",
+      "angle": "高齢者同席の会食を、席数・禁煙・開店時刻・提供時間・支払い方法という5つのオペ要素で評価する",
+      "main_store": {
+        "name": "うなぎのしろむら 丸の内店",
+        "id": "J004026662",
+        "area": "丸の内",
+        "genre": "和食・うなぎ"
+      },
+      "sources": [
+        {
+          "label": "tabemaro「【2026年】シルバーウィークはいつ？11年ぶり5連休の名古屋・愛知おでかけ23選」",
+          "url": "https://www.tabemaro.jp/column/silverweek/",
+          "date": "2026-08-26"
+        },
+        {
+          "label": "じゃらんニュース「【2026年】シルバーウィークはいつ？連休は何する？」",
+          "url": "https://www.jalan.net/news/article/366851/",
+          "date": "2026-05-15"
+        },
+        {
+          "label": "sanchi.jp「稚魚は豊漁、卸値は25%下落」",
+          "url": "https://sanchi.jp/data/reports/unagi-price-paradox/",
+          "date": "2026-06-05"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "鰻会席9,350円の和食おとは、平安通で19席 — 5連休の少人数会食をコスパで読む",
+      "lead_draft": "平安通駅徒歩5分の和食おとはは19席・個室ありで、キャッチに鰻会席全8品9,350円を掲げる。ランチ平均3,000円・ディナー平均6,000円という二段構えは、5連休の少人数会食にどう効くのか。豊漁で卸値が下がった2026年の鰻相場と突き合わせて読む。",
+      "angle": "小箱19席の店が鰻会席9,350円を出す意味を、原価と回転数の観点で読む",
+      "main_store": {
+        "name": "和食おとは",
+        "id": "J004509219",
+        "area": "平安通",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "tabemaro「【2026年】シルバーウィークはいつ？11年ぶり5連休の名古屋・愛知おでかけ23選」",
+          "url": "https://www.tabemaro.jp/column/silverweek/",
+          "date": "2026-08-26"
+        },
+        {
+          "label": "sanchi.jp「稚魚は豊漁、卸値は25%下落」",
+          "url": "https://sanchi.jp/data/reports/unagi-price-paradox/",
+          "date": "2026-06-05"
+        },
+        {
+          "label": "日本経済新聞「うなぎが5年ぶり豊漁」",
+          "url": "https://www.nikkei.com/article/DGXZQOUB124CX0S5A310C2000000/",
+          "date": "2026-03-13"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "昼だけうなぎ屋 名駅店の2,000円台、5連休のランチが一番強い時間帯になる理由",
+      "lead_draft": "近鉄名古屋駅正面から徒歩3分、昼はうなぎ屋・夜は居酒屋という二毛作で回す店がある。平均予算2,000〜2,500円、口コミ1,048件。11年ぶりの5連休で名古屋駅の人出が増える9月19日からの5日間、この価格帯が効く時間帯と、避けるべき時間帯を業界人視点で切り分ける。",
+      "angle": "昼うなぎ・夜居酒屋の二毛作業態を、家賃と人件費の観点で読み、連休の使いどころを示す",
+      "main_store": {
+        "name": "ふじさん名駅店 昼だけうなぎ屋 名駅店",
+        "id": "J004090812",
+        "area": "名駅",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "tabemaro「【2026年】シルバーウィークはいつ？11年ぶり5連休の名古屋・愛知おでかけ23選」",
+          "url": "https://www.tabemaro.jp/column/silverweek/",
+          "date": "2026-08-26"
+        },
+        {
+          "label": "sanchi.jp「稚魚は豊漁、卸値は25%下落」",
+          "url": "https://sanchi.jp/data/reports/unagi-price-paradox/",
+          "date": "2026-06-05"
+        },
+        {
+          "label": "じゃらんニュース「【2026年】シルバーウィークはいつ？」",
+          "url": "https://www.jalan.net/news/article/366851/",
+          "date": "2026-05-15"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "丸の内の炭火うなぎ、うな木の3,500円帯 — 接待の下見を連休前に済ませる",
+      "lead_draft": "備長炭火 うな木は48席・個室あり・平均予算3,500〜4,000円。丸の内から栄北にかけては平日接待の需要が厚く、連休は逆に空く。5連休を下見に使うという発想で、うなぎの専門店を接待用途で評価する判断軸を示す。",
+      "angle": "連休の閑散を下見に使う逆張りの視点から、うなぎ専門店を接待適性で採点する",
+      "main_store": {
+        "name": "備長炭火 うな木",
+        "id": "J004403584",
+        "area": "栄北・錦",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "tabemaro「【2026年】シルバーウィークはいつ？11年ぶり5連休の名古屋・愛知おでかけ23選」",
+          "url": "https://www.tabemaro.jp/column/silverweek/",
+          "date": "2026-08-26"
+        },
+        {
+          "label": "sanchi.jp「稚魚は豊漁、卸値は25%下落」",
+          "url": "https://sanchi.jp/data/reports/unagi-price-paradox/",
+          "date": "2026-06-05"
+        },
+        {
+          "label": "じゃらんニュース「【2026年】シルバーウィークはいつ？」",
+          "url": "https://www.jalan.net/news/article/366851/",
+          "date": "2026-05-15"
+        }
+      ]
+    }
+  ]
+}
