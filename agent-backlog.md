@@ -6,6 +6,33 @@
 
 ---
 
+### [SEO-102] `scripts/refresh_journal_related.js` の TOPIC_FEATURES にジャンル重複特集（焼肉2本・バー3本）が未整理で、journal からの内部リンクが片方にしか流れない
+
+- **priority**: P3 → **status**: ready
+- **detected**: 2026-09-18
+- **category**: SEO / コンテンツ整理
+- **owner**: Editor / Builder
+- **source**: [[SEO-091]] の2026-09-14追記「TOPIC_FEATURES に無関係な既存ドリフト1件を検知したが本チケットの対象外のため別途フォローアップとして起票」を受けての棚卸し（当時は起票されないまま残っていた）。SEO-091が実際に直した「ひつまぶし/うなぎ」（1本の正規表現に2つの異なる特集を統合していたため、より専門的な方の特集に journal からの内部リンクが一度も生成されていなかった）と**同じ失敗クラス**が他にも残っていないかを `scripts/refresh_journal_related.js` の `TOPIC_FEATURES`（journal タイトル→特集の正規表現マッチテーブル）と `features/*.html` の実在ファイルを突き合わせて確認した
+- **brand-filter**: ✅ 適合 — 既存資産（特集68本）の内部リンク配分の是正のみ。新規コンテンツ・順位操作・広告要素なし
+- **検証できる事実（制約10）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | `features/nagoya-yakiniku.html`（焼肉おすすめ10店）と `features/nagoya-yakiniku-guide.html`（焼肉8選）が別ファイルとして両方実在するが、`TOPIC_FEATURES` の焼肉系正規表現 `/焼肉\|焼き肉\|ホルモン\|肉割烹\|和牛\|松阪牛/` は `nagoya-yakiniku` 1本にしか紐付いていない。焼肉系の journal 記事から `nagoya-yakiniku-guide.html` への内部リンクは正規表現の仕組み上ずっと生成されない | `scripts/refresh_journal_related.js:51-92` の `TOPIC_FEATURES` 配列 ＋ `ls features/*.html` |
+  | 同様に `features/nagoya-yakitori.html`（焼き鳥10選）と `features/nagoya-yakitori-guide.html`（焼き鳥8選）の2本があるが、`TOPIC_FEATURES` の焼鳥系は `nagoya-yakitori` にしか紐付かない | 同上 |
+  | バー系は `features/nagoya-bar.html`・`features/nagoya-bar-guide.html`・`features/nagoya-dining-bar.html` の3本が実在するが、`TOPIC_FEATURES` の `/バー\|カクテル\|ウイスキー\|ワイン/` は `nagoya-bar-guide` 1本にしか紐付かない | 同上 |
+  | この6本（yakiniku-guide/yakitori-guide/nagoya-bar/nagoya-dining-bar）は `data/feature_rosters.json` の月次ローテーション対象にも入っていない（[[ISSUE-126]] で対象拡大した46特集のリストに含まれない）ため、journal内部リンク・月次ロスターのどちらからも回遊経路を持たない「孤立特集」になっている可能性がある | `data/feature_rosters.json` の `features` キー一覧を目視確認 |
+- **判断が必要な点（着手前にEditorが決めること・本チケットでは決めない）**:
+  1. これらの重複ペアは「意図的に別角度で作った差別化特集」なのか「過去に重複して作られてしまった実質同一特集」なのかの精査が先。`<title>`/`<h1>`/掲載店を比較し、後者なら統合（301相当の内部リンク集約）、前者ならTOPIC_FEATURESに両方を差別化条件（例: 「炭火」「個室」等の追加キーワード）で追加する
+  2. 統合する場合、既存URLは削除せず内部リンクで集約する（[[SEO-090]] acceptance②と同じ方針）
+- **acceptance**:
+  1. 上記6本それぞれの掲載店・切り口を比較し、重複か差別化かを判定する（実データ: 掲載店の重なり率・GSCの表示/クリック実績があれば併読）
+  2. 差別化と判定した特集は `TOPIC_FEATURES` に固有の正規表現条件を追加し、journal からの内部リンクが両方に流れるようにする
+  3. 実質重複と判定した特集は統合方針を立て、Editorの承認を得てから実施する（既存URLは残す）
+  4. `node scripts/refresh_journal_related.js` 実行後、`node --test tests/*.test.js` で退行なしを確認
+- **関連**: [[SEO-091]]（本チケットの起点となった発見元・ひつまぶし/うなぎの同種修正は完了済み）／[[ISSUE-126]]（月次ロスター対象拡大・この6本は対象外のまま残っている）
+
+---
+
 ### [ISSUE-128] Instagram公式埋め込みウィジェット（blockquote.instagram-media + 公式embed.js）が店舗ページで機能しない ✅ 直接iframe方式への切替で解決
 
 - **priority**: P0 → **status**: done（stores/*.html を index.html モーダルと同じ「直接iframe埋め込み」方式に統一し解決。「なぜ公式ウィジェットのpostMessageリサイズ通知が返らないか」自体はInstagram側の内部事情のため最終確定はしていないが、実害（表示されない）は解消した）
