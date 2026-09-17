@@ -122,6 +122,7 @@ const CSV_URL     = 'https://docs.google.com/spreadsheets/d/1VUk4bRTPoIc7pHywzIJ
 const BASE_URL    = 'https://nagoya-bites.com';
 const OUT_DIR     = path.join(__dirname, 'stores');
 const SITEMAP_OUT = path.join(__dirname, 'sitemap.xml');
+const ORPHANS_OUT = path.join(__dirname, 'data', 'store_page_orphans.json');
 
 // ================================================================
 // HTTP 取得
@@ -1258,6 +1259,18 @@ async function main() {
       } else {
         console.log(`削除する場合は --delete-orphans を付けて再実行（破壊的）`);
       }
+    }
+    // DSN-001: 孤児スラグ一覧を永続化する。audit_design_system.js 等の監査スクリプトが
+    // これを読み、削除できない（ISSUE-102・オーナー承認待ち）孤児ページを監査対象から
+    // 恒久的に除外できるようにする（TEST_MODE は --limit で店舗リストが打ち切られ全店が
+    // 「孤児」に見えてしまうため書き出さない＝既存マニフェストを壊さない）。
+    if (!TEST_MODE) {
+      fs.writeFileSync(ORPHANS_OUT, JSON.stringify({
+        generatedAt: new Date().toISOString(),
+        activeSlugCount: expected.size,
+        orphanCount: orphans.length,
+        orphanSlugs: orphans,
+      }, null, 2) + '\n', 'utf8');
     }
   }
 

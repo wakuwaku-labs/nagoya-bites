@@ -1029,9 +1029,9 @@
 
 ---
 
-### [DSN-001] トップページを含む全ページの可読性・タイポグラフィを刷新し、デザインシステムとDesigner役職を常設する
+### [DSN-001] トップページを含む全ページの可読性・タイポグラフィを刷新し、デザインシステムとDesigner役職を常設する ✅
 
-- **priority**: P1（UX劣化） → **status**: partial（本体は PR #210 で実装・マージ済み・2026-09-03。残る acceptance は下記「未完了」1項目のみ）
+- **priority**: P1（UX劣化） → **status**: done（本体は PR #210 で実装・マージ済み・2026-09-03。残る acceptance 1項目も 2026-09-18 に解消・下記参照）
 - **detected**: 2026-09-03
 - **category**: design / ux
 - **owner**: Designer（新設）
@@ -1098,11 +1098,33 @@
   違反577ファイルは**すべて`stores/`配下**（[[ISSUE-102]]の孤児ページ）で、root/features/journal/index.html
   は違反0件と確認（PR #210の効果は維持されている）。以下の1点を除きacceptanceは満たされているため
   `status: partial` に是正する
-- **未完了（残り1点・[[ISSUE-102]]待ち）**: `.github/workflows/build.yml` の
-  `node scripts/audit_design_system.js --report --sample 200` ステップは現在も `continue-on-error: true`。
-  これをブロッキング化すると、[[ISSUE-102]]（stores/の孤児ページ577件・削除はオーナー本人の判断待ち）が
-  解消するまで毎日CIが赤くなる。[[ISSUE-102]]の解消（またはaudit対象からの孤児ページ除外の恒久化）が
-  先行条件
+- **2026-09-18 解決（残り1点の解消・/solve-next・監査対象からの孤児ページ除外の恒久化を採用）**:
+  [[ISSUE-102]]本体（孤児ページの実削除）はオーナー本人の承認待ちのまま変わっていないが、
+  backlog に書かれていたもう一方の選択肢「audit対象からの孤児ページ除外の恒久化」を実装した:
+  1. `gen-store-pages.js` の `--check-orphans`（build.yml で既に毎日実行中）が計算する孤児スラグ
+     一覧を `data/store_page_orphans.json` に永続化するようにした（削除はしない・検知結果の保存のみ）
+  2. `scripts/audit_design_system.js` がこのマニフェストを読み、`stores/` の監査対象から孤児ページ
+     （687件・2026-09-18時点）を恒久的に除外するようにした（マニフェスト不在時は従来どおり無除外・
+     安全側）。同じ理由で `stores/area/` の stub 化ハブページ（SEO-094・`data/area_genre_pages_manifest.json`
+     の `status:"stub"` 1件）も除外対象に加えた（削除はできないが「移動しました」の最小リダイレクト
+     HTMLで意図的にデザインシステム対象外のため、同種の誤検知だった）
+  3. 上記除外の結果、`stores/index.html`（孤児でもstubでもない実ページ）に残っていた本物の違反
+     6件（`.eyebrow`/`.area-count`/`.area-desc`/`.insider-reviews-box .ir-label` の font-size床未満、
+     `h1`/`h2` の disallowed font-weight:300）を発見・修正した（既存トークン `var(--fs-xs)` /
+     `font-weight:400` に置換。他ページの `.eyebrow` 実装と表記を揃えた）
+  4. ローカルで `node scripts/audit_design_system.js --check`（サンプリングなし・全5,827ファイル）が
+     `violations: []` / exit 0 を確認できたため、`.github/workflows/build.yml` の該当ステップから
+     `continue-on-error: true` を外し `--report` → `--check` に変更（ブロッキング化）
+  - **QA**: `node --test tests/*.test.js` 197/197 pass（design_system.test.js 7件含む）/
+    `node scripts/audit_design_system.js --check --sample 200`（build.yml と同一コマンド）exit 0 /
+    `node scripts/apply_design_system.js --check` 0差分 / YAML構文検証OK /
+    `node build.js` はローカルにHotPepper APIキーが無いため店舗数急減の安全装置が正しく作動し
+    index.html 書き換えを中断（想定どおりで本チケットの変更とは無関係。index.html自体は無変更）
+  - **status**: in_progress → **done**
+  - **resolved**: 2026-09-18
+  - **resolved_by**: 58b80e2c0e
+  - **files**: `gen-store-pages.js`, `scripts/audit_design_system.js`, `data/store_page_orphans.json`（新規）,
+    `stores/index.html`, `.github/workflows/build.yml`
 ### [SEO-081] IndexNow 送信ステップが ISSUE-112 の build.yml 書き換えで消え、最大流入エンジン Bing への更新通知が再び死んでいる（SEO-071 は done のまま）
 - **priority**: P1 → **status**: done
 - **resolved**: 2026-09-03
@@ -5854,6 +5876,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-09-18 | Designer(/solve-next) | DSN-001残件実装・デプロイ | ✅ commit 58b80e2c0e |
 | 2026-09-08 | Designer(EXPLICIT) | DSN-003: トップ/ジャーナル/特集/編集規約4ページ種別のプロ品質リデザイン＋サイト共通クローム統一（scripts/lib/site_chrome.js新設・全216ファイル） | ✅ コミット済み・PR作成待ち (commit 20cd42ec4) |
 | 2026-09-08 | Orchestrator(routine) | ISSUE-121: 他都道府県マッチ残存確認→修正は commit 06b6976f で main に反映済み・audit_other_prefecture_matches.js --check=[OK]確認・done クローズ | ✅ done（既存修正を確認） |
 | 2026-09-08 | Orchestrator(routine) | SEO-086: scripts/add_feature_tracking.js 新設・scripts/refresh_feature_rosters.js に cta_click 追加・features 67本にcta_click/feature_store_click/internal_link_click/scroll_depth を補完。機械検査OK | ✅ commit 予定 |
