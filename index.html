@@ -2281,7 +2281,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 
 <!-- STORE-INDEX:START 2026-09-17 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（4927店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（4926店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（834店）</summary>
@@ -5563,13 +5563,12 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 </ul>
 </details>
 <details class="store-index-area" data-area="栄">
-<summary>栄（377店）</summary>
+<summary>栄（376店）</summary>
 <ul class="store-index-list">
 <li><a href="stores/J003474639.html">【栄限定】食べ飲み放題2500円 ひねり蛇口ハイ×食べ飲み放題 大衆酒泉テルマエ（栄・居酒屋）</a></li>
 <li><a href="stores/J004026554.html">0秒レモンサワー ときわ亭 名古屋栄店（栄・焼肉・ホルモン）</a></li>
 <li><a href="stores/J001277921.html">CARAVAN FUSHIMI キャラバンフシミ（栄・ダイニングバー・バル）</a></li>
 <li><a href="stores/J003624222.html">Cellarr（セラー）（栄・ダイニングバー・バル）</a></li>
-<li><a href="index.html#q=cen">cen（栄・イノベーティブ和食）</a></li>
 <li><a href="stores/J003599948.html">Dining Bar ELLEN ダイニングバー エレン 栄店（栄・居酒屋）</a></li>
 <li><a href="stores/J004537262.html">El Gordo エルゴルド（栄・ダイニングバー・バル）</a></li>
 <li><a href="stores/J003341464.html">Farm&amp; ファームアンド（栄・ダイニングバー・バル）</a></li>
@@ -7753,7 +7752,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = 'a749251b50b4';
+var STORES_JSON_VERSION = '8da4ecaaa274';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
