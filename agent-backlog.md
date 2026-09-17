@@ -6,6 +6,37 @@
 
 ---
 
+### [ISSUE-129] GASの日次レポートメールが2026-09-16 23:07 JSTを最後に2日間（09-17・09-18）届いていない — SEOアドバイス改善ループが2日間完全停止
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-09-18（Gmail実地調査中に発覚。当セッションが `/seo-triage` 相当の作業でGmailを確認したところ、直近の「NAGOYA BITES 日次レポート」が2026-09-16のものしか見つからなかった）
+- **category**: ops-monitoring / SEO
+- **owner**: 片桐（GAS実行ログの確認はオーナー本人のみ可能）← Marketer（症状の切り分け）
+- **source**: 本セッションでGmail検索 `subject:日次レポート in:anywhere`（時間フィルタなし・全フォルダ横断）を実行した結果、最新が2026-09-16T23:07:07Z で、2026-09-17・09-18ぶんが1件も存在しない（Trash内も含めて0件）
+- **brand-filter**: ✅ 適合 — 検知・記録のみ。サイト表示・データ・順位には触れない
+- **検証できる事実（制約10・誰でも同じ手順で再現・検算できる）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | 直近の「NAGOYA BITES 日次レポート」は2026-09-16 23:07 JST（`wakato1251999@gmail.com` 宛の自己送信）。それ以降0件 | Gmail検索 `subject:日次レポート in:anywhere`（先頭3件のみ取得・時間フィルタなし） |
+  | 09-14/09-15/09-16の3通は過去に受信箱からTrashへ移動済み（`labelIds` に `TRASH` を含む）。ただし `in:anywhere` はTrashも走査するため、これは受信そのものが止まった説明にはならない（Trash内にも09-17・09-18ぶんが存在しない） | 同上の `labelIds` フィールド |
+  | 週次レポートとは別物（週次は「🤖 AI週次分析」件名・日次は「📊 NAGOYA BITES 日次レポート」件名）で、本チケットは日次のみを対象とする | `docs/*` の件名仕様・CLAUDE.md「SEOアドバイス改善ループ」節 |
+  | `check_gas_deploy_health.js --record` で09-16レポート本文を機械照合した結果、`verdict: "not_deployed"`（`stale_example_kw` 痕跡・SEO-092が未反映のまま） — レポート自体は届いていた09-16時点でも、既知の未反映修正2件（[[SEO-092]] [[SEO-093]]）はまだ生きていた | 本セッションで実行・`data/gas_deploy_health.json` に記録済み |
+  | `.github/workflows/gas-deploy-watchdog.yml`（GASレポート反映監視）は09-17時点では `success`（まだ2連続未反映を検出していないため）。この watchdog は「レポートの中身が旧コードか」は見るが「レポートがそもそも届いているか」は見ない設計のため、**今回の『メール自体が来ない』症状は原理的に検出できない**（盲点） | `.github/workflows/gas-deploy-watchdog.yml` の判定ロジック（`scripts/check_gas_deploy_health.js`）を確認 |
+  | `gh issue list --state open` に本件に対応する Issue は無い（`#182` はSNS配信断絶・別件、`#83` は夜間QA FAIL・別件） | `gh issue list --state open` |
+- **考えられる原因（未確定・オーナーのGAS実行ログ確認が必要）**:
+  1. GAS側のトリガー（時限イベント）が無効化・削除された
+  2. GAS実行が例外で落ちている（Apps Script の実行数/時間割り当て超過、認証切れ、GA4/GSC API側の変更等）
+  3. Gmail送信自体は成功しているが、フィルタ等で別ラベル/別アカウントに振られている（ただし `in:anywhere` 全走査で0件のため可能性は低い）
+- **acceptance**:
+  1. オーナーが Google Apps Script のエディタで対象プロジェクトを開き、「実行数」（Executions）ログを確認し、09-17・09-18に実行自体が発生しているか・エラーで落ちていないかを確認する
+  2. 実行が発生していない場合はトリガー（時限イベント）の設定を確認し、必要なら再設定する
+  3. 実行はされているがエラーの場合は、エラーメッセージをこのチケットに追記し、原因（API変更・認証切れ等）を切り分ける
+  4. 復旧確認は本セッションと同じ手順（`subject:日次レポート in:anywhere` で当日ぶんの受信を確認）で行う
+  5. **今回のような『レポートそのものが届かない』盲点を今後は検知できるようにする**: `check_gas_deploy_health.js` の健全性判定に「直近Nデー日次レポートの受信有無」も見る経路を追加するか、別チケットとして再設計を検討する（本チケットでは症状の記録と復旧依頼までに留め、監視の再設計は着手しない）
+- **関連**: [[SEO-092]] [[SEO-093]]（未反映のまま09-16時点でも生きていることが確認できた既知チケット）／[[SEO-069]]（GAS反映監視の初出）／ISSUE-084（無人自動化監視の原則・本件はその「盲点」の実例）
+
+---
+
 ### [SEO-102] `scripts/refresh_journal_related.js` の TOPIC_FEATURES にジャンル重複特集（焼肉2本・バー3本）が未整理で、journal からの内部リンクが片方にしか流れない
 
 - **priority**: P3 → **status**: ready
@@ -488,6 +519,7 @@
   - **デプロイは未実施**（オーナー本人の操作が必要・`docs/gas-deploy-verification-runbook.md`）。反映確認は次回以降の `node scripts/check_gas_deploy_health.js` の `deployed` 判定で行う（acceptance④）。デプロイ確認後に `pending_fixes` から `SEO-093` を除去し status を `done` にすること
   - `npm test`（197件）・`node --check .gas-deploy/Code.js`・`node --test tests/gas_health.test.js`（トップレベル二重宣言なし含む）で退行なしを確認
 - **2026-09-16 追記（未反映の実地証跡・日次トリアージ）**: 本日の日次レポート（件名 2026-09-15）の助言②が再び「docs/daily-posts/ にあるSNS投稿原稿を元に…」と出力した。SNS原稿停止（09-05）後これで**6回目**（09-07/09-08/09-10/09-12/09-13 に続く）。acceptance⑤の「反映後7日間で0回」は**まだ1度も開始できていない**＝GASが旧コードで動き続けていることの実地証跡。なお `data/gas_deploy_policy.json` の痕跡パターン `sns_daily_posts_reuse_old_label`（`docs/daily-posts\s*の原稿を流用`）はルールベース保険側の文字列のみを見るため、AI生成側が出す今回の言い回しは捕捉できず、`check_gas_deploy_health.js --record` の判定は `deployed`（SEO-076 の確定値ラベル痕跡による）のままになる。**痕跡パターンにAI生成側の言い回しを足すかどうかは実装判断のため本ループでは変更していない**（日次triageは ready 起票までが責務）。助言の中身は [[SEO-101]] へ振替採用済み
+- **2026-09-18 追記（7回目を確認・以降レポート自体が途絶）**: 09-16 23:07 JST の日次レポートでも「docs/daily-posts/ のSNS投稿原稿で…盛り込み」が出力されており**7回目**。`node scripts/check_gas_deploy_health.js --record --report-file <本文> --date 2026-09-16 --kind daily` で機械記録した結果、今回は `stale_example_kw`（SEO-092の固定例示KW「名古屋 接待 個室」）の痕跡で `verdict: "not_deployed"` と正しく判定された（`data/gas_deploy_health.json` に記録済み）。**さらに09-17・09-18の日次レポート自体が1通も届いていない**ことが判明したため、そちらは症状として [[ISSUE-129]] に切り出した（本チケットの未反映状況そのものは変わらず `in_progress` のまま）
 
 ---
 

@@ -2,12 +2,14 @@
   "version": 1,
   "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
   "last_run": {
-    "date": "2026-09-15",
-    "recorded_at": "2026-09-16T06:14:37.720Z",
+    "date": "2026-09-16",
+    "recorded_at": "2026-09-17T19:00:44.048Z",
     "status": "ok",
     "reason": null,
-    "verdict": "deployed",
-    "missing_fixes": []
+    "verdict": "not_deployed",
+    "missing_fixes": [
+      "SEO-092"
+    ]
   },
   "observations": [
     {
@@ -617,6 +619,29 @@
       "numeric_reference": null,
       "numeric_reference_skipped": "参照値の日付 2026-09-14 が レポートが名乗る対象日 2026-09-13 と一致しないため数値判定をしない",
       "recorded_at": "2026-09-16T06:14:37.714Z"
+    },
+    {
+      "date": "2026-09-16",
+      "kind": "daily",
+      "verdict": "not_deployed",
+      "missing_fixes": [
+        "SEO-092"
+      ],
+      "evidence": [
+        {
+          "key": "stale_example_kw",
+          "fix_id": "SEO-092",
+          "verdict": "not_deployed",
+          "line": "docs/daily-posts/ のSNS投稿原稿で、Bing検索での上位表示を意識したキーワード（例: 名古屋 接待 個室、名古屋 宴会 個室）を積極的に盛り込み、Bingウェブマスターツールでのサイト登録・最適化も検討しましょう。"
+        }
+      ],
+      "numeric_reference": {
+        "date": "2026-09-16",
+        "bounceRate": 0.105,
+        "sessions": 38
+      },
+      "numeric_reference_skipped": null,
+      "recorded_at": "2026-09-17T19:00:44.043Z"
     }
   ],
   "deploys": [
