@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-16T20:55:02.991Z",
+  "generatedAt": "2026-09-17T00:24:20.462Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1096,
-    "pageViews": 1986,
-    "sessions": 1344,
-    "avgSessionDuration": 153.8,
-    "bounceRate": 0.283,
+    "activeUsers": 1099,
+    "pageViews": 1989,
+    "sessions": 1348,
+    "avgSessionDuration": 153.4,
+    "bounceRate": 0.285,
     "pagesPerSession": 1.48
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 946,
-      "direct": 294,
+      "organic": 950,
+      "direct": 296,
       "social": 8,
       "ai_assistant": 102,
       "referral": 20,
@@ -26,11 +26,11 @@
       "other": 8
     },
     "pct": {
-      "organic": 68.7,
-      "direct": 21.3,
+      "organic": 68.6,
+      "direct": 21.4,
       "social": 0.6,
       "ai_assistant": 7.4,
-      "referral": 1.5,
+      "referral": 1.4,
       "paid": 0,
       "other": 0.6
     }
@@ -39,7 +39,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 411
+      "sessions": 412
     },
     {
       "source": "bing",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 185
+      "sessions": 188
     },
     {
       "source": "chatgpt.com",
@@ -64,7 +64,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 38
+      "sessions": 40
     },
     {
       "source": "unknown",
@@ -190,7 +190,7 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 386,
+      "pageViews": 387,
       "sessions": 334
     },
     {
@@ -274,7 +274,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.4,
-    "ctaClickRate_direct": 15.3,
+    "ctaClickRate_direct": 15.2,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -654,7 +654,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1096,
+    "value": 1099,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
