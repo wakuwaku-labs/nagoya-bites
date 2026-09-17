@@ -68,7 +68,36 @@ function collectTargets() {
   let storeFiles = listHtmlFiles(path.join(ROOT, 'stores'));
   // SEO-094: stores/area/ 配下（エリア×ジャンル×条件ページ）は生成器が全ページを一律に
   // 同じテンプレートで作るため、常に全数を見る（storeFiles と違いサンプリングしない）。
-  const hubFiles = listHtmlFilesRecursive(path.join(ROOT, 'stores', 'area'));
+  let hubFiles = listHtmlFilesRecursive(path.join(ROOT, 'stores', 'area'));
+
+  // DSN-001: 閾値割れで status:"stub" 化されたハブページ（data/area_genre_pages_manifest.json、
+  // SEO-094）は「移動しました」の最小リダイレクトHTMLのみで、意図的にデザインシステムの
+  // 対象外（header/footer等を持たない）。孤児ページと同じ理由で恒久的に除外する。
+  const hubManifestPath = path.join(ROOT, 'data', 'area_genre_pages_manifest.json');
+  if (fs.existsSync(hubManifestPath)) {
+    try {
+      const pages = JSON.parse(fs.readFileSync(hubManifestPath, 'utf8')).pages || [];
+      const stubPaths = new Set(pages.filter(p => p.status === 'stub').map(p => p.path));
+      hubFiles = hubFiles.filter(f => !stubPaths.has(path.relative(ROOT, f)));
+    } catch (e) {
+      // マニフェストが壊れている場合は除外せず全件を監査する（安全側）
+    }
+  }
+
+  // DSN-001: gen-store-pages.js --check-orphans が data/stores.json に無い旧テンプレの
+  // 「孤児」ページを検出し data/store_page_orphans.json に永続化している（ISSUE-102・削除は
+  // オーナー承認待ちで停止中）。削除できないページを監査対象に含め続けると、このゲートは
+  // 永久に blocking 化できない。孤児と分かっている分だけ恒久的に除外する（マニフェスト不在
+  // 時は何も除外しない＝従来どおりの安全側の挙動）。
+  const orphansPath = path.join(ROOT, 'data', 'store_page_orphans.json');
+  if (fs.existsSync(orphansPath)) {
+    try {
+      const orphanSlugs = new Set(JSON.parse(fs.readFileSync(orphansPath, 'utf8')).orphanSlugs || []);
+      storeFiles = storeFiles.filter(f => !orphanSlugs.has(path.basename(f, '.html')));
+    } catch (e) {
+      // マニフェストが壊れている場合は除外せず全件を監査する（安全側）
+    }
+  }
 
   if (sampleN && storeFiles.length > sampleN) {
     // 決定的サンプリング（ファイル名でソートしてから均等間隔抽出。実行のたびに同じ集合になる）
