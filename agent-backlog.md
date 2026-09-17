@@ -39,7 +39,7 @@
 
 ### [SEO-102] `scripts/refresh_journal_related.js` の TOPIC_FEATURES にジャンル重複特集（焼肉2本・バー3本）が未整理で、journal からの内部リンクが片方にしか流れない
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: in_progress（acceptance①の重なり率実測は完了。②③の実装はEditorの角度確認待ち）
 - **detected**: 2026-09-18
 - **category**: SEO / コンテンツ整理
 - **owner**: Editor / Builder
@@ -61,6 +61,16 @@
   3. 実質重複と判定した特集は統合方針を立て、Editorの承認を得てから実施する（既存URLは残す）
   4. `node scripts/refresh_journal_related.js` 実行後、`node --test tests/*.test.js` で退行なしを確認
 - **関連**: [[SEO-091]]（本チケットの起点となった発見元・ひつまぶし/うなぎの同種修正は完了済み）／[[ISSUE-126]]（月次ロスター対象拡大・この6本は対象外のまま残っている）
+- **2026-09-18 追記（acceptance①・掲載店の重なり率を実測）**: 各ページの `store:'名'` トラッキング属性から掲載店名を機械抽出し、Jaccard型の重なり件数を突き合わせた（自己申告の類似度ではなく掲載店名の完全一致だけを見る・制約10）:
+  | ペア | 重なり | 判定 |
+  |---|---|---|
+  | `nagoya-yakiniku`（20店）vs `nagoya-yakiniku-guide`（8店） | **1店のみ一致** | 掲載店がほぼ別集合 → **差別化特集**と判断してよい（統合対象ではない） |
+  | `nagoya-yakitori`（10店）vs `nagoya-yakitori-guide`（16店） | 5店一致 | 部分重複だが過半数（11/16）は`-guide`側の独自掲載 → **差別化寄り** |
+  | `nagoya-bar`（10店）vs `nagoya-bar-guide`（10店） | 3店一致 | 別集合寄り → **差別化寄り** |
+  | `nagoya-bar`（10店）vs `nagoya-dining-bar`（10店） | 3店一致 | 別集合寄り → **差別化寄り** |
+  | `nagoya-bar-guide`（10店）vs `nagoya-dining-bar`（10店） | **9店一致（90%）** | ほぼ同一集合 → **実質重複の統合候補**（`判断が必要な点1`の後者に該当） |
+
+  **示唆**: `nagoya-yakiniku`/`nagoya-yakiniku-guide` と `nagoya-bar`/`nagoya-dining-bar` は掲載店が別物のため、TOPIC_FEATURESへ差別化キーワードで両方追加してよい（acceptance②）。ただし**どのタイトル語をどちらに振り分けるか**（例: 「和牛」「炭火」等でyakiniku-guideを狙うか）は各ページの実際の切り口（`<title>`/本文の訴求軸）をEditorが確認してから決める必要があり、本チケットでは判定していない。一方 `nagoya-bar-guide` と `nagoya-dining-bar` は90%が同じ掲載店で、**新規に差別化ルールを作るのではなく統合（内部リンク集約）を検討すべき**候補として先に絞り込めた（acceptance③の対象はこの1ペアに事実上限定できる）
 
 ---
 
