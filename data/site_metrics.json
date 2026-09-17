@@ -1,70 +1,70 @@
 {
-  "generatedAt": "2026-09-17T12:03:00.408Z",
+  "generatedAt": "2026-09-17T17:20:43.334Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1135,
-    "pageViews": 2039,
-    "sessions": 1390,
-    "avgSessionDuration": 156.2,
-    "bounceRate": 0.287,
-    "pagesPerSession": 1.47
+    "activeUsers": 1111,
+    "pageViews": 1971,
+    "sessions": 1361,
+    "avgSessionDuration": 157.2,
+    "bounceRate": 0.295,
+    "pagesPerSession": 1.45
   },
   "dailyReference": {
-    "date": "2026-09-15",
-    "sessions": 50,
-    "bounceRate": 0.22,
-    "pageViews": 82
+    "date": "2026-09-16",
+    "sessions": 38,
+    "bounceRate": 0.105,
+    "pageViews": 51
   },
   "channels": {
     "sessions": {
-      "organic": 976,
-      "direct": 303,
+      "organic": 955,
+      "direct": 298,
       "social": 8,
-      "ai_assistant": 104,
+      "ai_assistant": 102,
       "referral": 20,
       "paid": 0,
-      "other": 4
+      "other": 6
     },
     "pct": {
-      "organic": 69,
-      "direct": 21.4,
+      "organic": 68.8,
+      "direct": 21.5,
       "social": 0.6,
       "ai_assistant": 7.3,
       "referral": 1.4,
       "paid": 0,
-      "other": 0.3
+      "other": 0.4
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 419
+      "sessions": 415
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 356
+      "sessions": 345
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 233
+      "sessions": 225
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 189
+      "sessions": 184
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 85
+      "sessions": 82
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 37
+      "sessions": 40
     },
     {
       "source": "unknown",
@@ -74,7 +74,7 @@
     {
       "source": "duckduckgo",
       "medium": "organic",
-      "sessions": 10
+      "sessions": 9
     },
     {
       "source": "copilot.com",
@@ -92,6 +92,11 @@
       "sessions": 7
     },
     {
+      "source": "unknown",
+      "medium": "",
+      "sessions": 5
+    },
+    {
       "source": "facebook.com",
       "medium": "referral",
       "sessions": 4
@@ -107,14 +112,9 @@
       "sessions": 4
     },
     {
-      "source": "unknown",
-      "medium": "",
+      "source": "openai",
+      "medium": "organic",
       "sessions": 3
-    },
-    {
-      "source": "cn.bing.com",
-      "medium": "referral",
-      "sessions": 2
     },
     {
       "source": "ecosia.org",
@@ -127,8 +127,8 @@
       "sessions": 2
     },
     {
-      "source": "openai",
-      "medium": "organic",
+      "source": "search.portal.auone.jp",
+      "medium": "referral",
       "sessions": 2
     },
     {
@@ -152,6 +152,11 @@
       "sessions": 1
     },
     {
+      "source": "cn.bing.com",
+      "medium": "referral",
+      "sessions": 1
+    },
+    {
       "source": "greenmaven.com",
       "medium": "referral",
       "sessions": 1
@@ -159,11 +164,6 @@
     {
       "source": "perplexity",
       "medium": "(not set)",
-      "sessions": 1
-    },
-    {
-      "source": "search.portal.auone.jp",
-      "medium": "referral",
       "sessions": 1
     },
     {
@@ -185,23 +185,23 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 397,
-      "sessions": 344
+      "pageViews": 394,
+      "sessions": 340
     },
     {
       "path": "/",
-      "pageViews": 317,
-      "sessions": 210
+      "pageViews": 305,
+      "sessions": 203
     },
     {
       "path": "/index.html",
-      "pageViews": 179,
-      "sessions": 101
+      "pageViews": 174,
+      "sessions": 99
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 118,
-      "sessions": 108
+      "pageViews": 116,
+      "sessions": 106
     },
     {
       "path": "/features/nagoya-tebasaki.html",
@@ -211,7 +211,7 @@
   ],
   "cta": {
     "outboundClicks": 141,
-    "ctaClickRate": 10.1,
+    "ctaClickRate": 10.4,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -272,8 +272,8 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.6,
-    "ctaClickRate_direct": 15.2,
+    "ctaClickRate_organic": 7.7,
+    "ctaClickRate_direct": 15.4,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -667,7 +667,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1135,
+    "value": 1111,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
