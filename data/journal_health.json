@@ -1,11 +1,11 @@
 {
   "description": "日次ジャーナル ローカル実行(launchd)の最終状態。journal-watchdog.yml が原因表示に使う。",
-  "date": "2026-09-16",
+  "date": "2026-09-17",
   "status": "ok",
-  "reason": "手動バックフィルで公開（launchd 実行はバッテリー駆動中のネットワーク断 ENOTFOUND で生成失敗。ラッパーの再試行判定に ENOTFOUND を追加）",
+  "reason": "正常に公開",
   "photo_sources": {
     "google_places_api_key": "present",
     "_note": "優先3（Google Places）が利用可能"
   },
-  "recorded_at": "2026-09-17T00:10:36+09:00"
+  "recorded_at": "2026-09-17T09:23:17.289+09:00"
 }

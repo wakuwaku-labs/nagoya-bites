@@ -101,6 +101,57 @@ function storesFromItemList(html) {
 }
 
 /**
+ * ItemList JSON-LD に URL が無い特集向けのフォールバック。
+ * HTML 本文の .shop-name + ../stores/J*.html リンクのペアから掲載店を取り出す。
+ *
+ * パターン（全 17 対象特集で確認済み）:
+ *   <div class="shop-name">店名</div>
+ *   ... (数行以内) ...
+ *   <a href="../stores/J004067962.html" ...>詳細ページを見る</a>
+ *
+ * position は DOM 出現順（1始まり）で付与する。
+ */
+function storesFromHtmlLinks(html) {
+  const out = [];
+  // .shop-name の位置とテキストを列挙
+  const nameRe = /<div class="shop-name">([^<]*)<\/div>/g;
+  const names = [];
+  let nm;
+  while ((nm = nameRe.exec(html)) !== null) {
+    names.push({ pos: nm.index, name: nm[1].trim() });
+  }
+  if (names.length === 0) return out;
+
+  // stores/J*.html リンクの位置と Jcode を列挙
+  const linkRe = /href="\.\.\/stores\/(J\d+)\.html"/g;
+  const links = [];
+  let lm;
+  while ((lm = linkRe.exec(html)) !== null) {
+    links.push({ pos: lm.index, jcode: lm[1] });
+  }
+  if (links.length === 0) return out;
+
+  // 各リンクに最近接の前方 .shop-name を対応付ける。
+  // 特集の構造は「shop-name → (説明文) → 店舗リンク → 次の shop-name → …」で一貫しており、
+  // リンク直前の shop-name が必ずその店のものになる。距離制限を設けない。
+  const usedJcodes = new Set();
+  for (const link of links) {
+    if (usedJcodes.has(link.jcode)) continue;
+    let best = null;
+    for (const n of names) {
+      if (n.pos < link.pos) {
+        if (!best || n.pos > best.pos) best = n;
+      }
+    }
+    if (best) {
+      out.push({ position: out.length + 1, name: best.name, jcode: link.jcode });
+      usedJcodes.add(link.jcode);
+    }
+  }
+  return out;
+}
+
+/**
  * 同一ブランドの別店舗が CTA に並ぶのを避ける。
  *
  * ItemList の上位はしばしば同じ看板の支店で埋まる（実例: ひつまぶし特集の1〜3位が
@@ -201,7 +252,9 @@ function applyTo(slug, opts) {
   if (!fs.existsSync(file)) return { slug, status: 'missing_file' };
   let html = fs.readFileSync(file, 'utf8');
 
-  const all = storesFromItemList(html);
+  let all = storesFromItemList(html);
+  const source = all.length > 0 ? 'itemlist' : 'html_links';
+  if (all.length === 0) all = storesFromHtmlLinks(html);
   if (all.length === 0) return { slug, status: 'no_itemlist' };
 
   const real = all.filter(s => isLinkable(s.jcode));
@@ -228,6 +281,7 @@ function applyTo(slug, opts) {
   return {
     slug,
     status: hasBlock ? (changed ? 'updated' : 'unchanged') : (opts.check ? 'would_add' : 'added'),
+    source,
     stores: usable.map(s => `${s.jcode}:${s.name}`)
   };
 }
@@ -260,4 +314,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { storesFromItemList, buildCta, sameBrand, pickDiverse };
+module.exports = { storesFromItemList, storesFromHtmlLinks, buildCta, sameBrand, pickDiverse };

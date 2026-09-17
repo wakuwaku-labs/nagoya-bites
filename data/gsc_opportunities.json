@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T16:49:12.963Z",
+  "generatedAt": "2026-09-17T12:03:03.836Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -36,12 +36,12 @@
       },
       {
         "query": "1人飲み",
-        "impressions": 42,
+        "impressions": 41,
         "clicks": 2,
         "position": 4.3,
-        "ctr": 4.76,
+        "ctr": 4.88,
         "expectedCtr": 7.4,
-        "missedClicks": 1.1
+        "missedClicks": 1
       }
     ],
     "rankPush": []
@@ -50,7 +50,7 @@
     "ctrFix": [
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 757,
+        "impressions": 755,
         "clicks": 9,
         "position": 8.6,
         "ctr": 1.19,
@@ -65,17 +65,26 @@
         "ctr": 1.86,
         "expectedCtr": 3.4,
         "missedClicks": 4.8
+      },
+      {
+        "page": "/stores/J004660861.html",
+        "impressions": 167,
+        "clicks": 6,
+        "position": 6.1,
+        "ctr": 3.59,
+        "expectedCtr": 4.9,
+        "missedClicks": 2.2
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 4522,
+        "impressions": 4451,
         "clicks": 9,
-        "position": 25.9,
+        "position": 26,
         "ctr": 0.2,
-        "upsideClicks": 117.6
+        "upsideClicks": 115.7
       },
       {
         "page": "/stores/J004678178.html",
@@ -92,11 +101,12 @@
     "queryCtrFix": 2,
     "queryCtrFixGeoless": 2,
     "queryRankPush": 0,
-    "pageCtrFix": 2,
+    "pageCtrFix": 3,
     "pageRankPush": 2,
     "topPageCtrFix": [
       "/journal/2026-08-04-sakae-leesar-coffee.html",
-      "/journal/2026-08-22-osu-malachuan-self-price.html"
+      "/journal/2026-08-22-osu-malachuan-self-price.html",
+      "/stores/J004660861.html"
     ]
   }
 }

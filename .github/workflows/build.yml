@@ -247,11 +247,12 @@ jobs:
         run: node scripts/refresh_feature_rosters.js --if-stale
         continue-on-error: true
 
-      - name: 特集上部CTAの自動付与（SEO-045・実データ追従型）
-        # data/view_counts.json の流入実績でターゲット特集を決め、各記事の ItemList 先頭から
-        # 3店を抽出して冒頭に CTA ブロックを追加する。build_featured.js / refresh_feature_rosters.js
-        # のあとに実行することで最新の掲載店状態を前提にした CTA が付与される。冪等。
-        run: node scripts/add_feature_top_cta.js
+      - name: 特集上部CTAの自動付与（SEO-042・全特集対象・冪等）
+        # --all で全 features/*.html を対象にする（SEO-100: 旧来は上位特集のみだったが、
+        # ItemList に URL のない特集 17本は HTML 本文の shop-name/stores リンクへフォールバック）。
+        # refresh_feature_rosters.js のあとに実行することで最新の掲載店状態を前提にした
+        # CTA が付与される。3店未満の特集は自動スキップ（水増ししない・架空店ブロック厳守）。
+        run: node scripts/add_feature_top_cta.js --all
         continue-on-error: true
 
       - name: 店舗写真を原寸マスターへ昇格（画質改善・実測ベース・冪等）

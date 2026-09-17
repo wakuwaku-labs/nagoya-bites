@@ -51,8 +51,9 @@
 
 ### [SEO-100] 掲載店を持つ特集17本に冒頭CTA（SEO-042）が無く、CI も既定33本しか追従していない（今日のTOP5の③ `nagoya-sweets` を含む）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-16
+- **closed**: 2026-09-17
 - **category**: SEO
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-09-15 原文「人気ページTOP5のうち4つが特集記事です。👉 features/ の各特集ページ上部に、関連する店舗への導線を分かりやすく設置し、店舗詳細モーダルへの遷移（現在11回）をさらに増やせるよう改善してください」
