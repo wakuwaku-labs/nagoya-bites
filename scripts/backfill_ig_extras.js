@@ -15,6 +15,7 @@
  * 使い方:
  *   node scripts/backfill_ig_extras.js            # 対象を上限50店まで処理
  *   node scripts/backfill_ig_extras.js --limit 100 # 上限を変える
+ *   node scripts/backfill_ig_extras.js --all       # 対象全店を処理（無停止で回し切る）
  *
  * 前提: 先に node ig_login.js で .ig_cookies.json を作成しておくこと。
  */
@@ -32,7 +33,8 @@ const EVIDENCE_FILE = path.join(ROOT, 'data', 'ig_post_evidence.json');
 
 const argv = process.argv.slice(2);
 const limitIdx = argv.indexOf('--limit');
-const LIMIT = limitIdx >= 0 && argv[limitIdx + 1] ? parseInt(argv[limitIdx + 1], 10) : 50;
+const ALL = argv.includes('--all');
+const LIMIT = ALL ? Infinity : (limitIdx >= 0 && argv[limitIdx + 1] ? parseInt(argv[limitIdx + 1], 10) : 50);
 
 function readJson(p, d) { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return d; } }
 
