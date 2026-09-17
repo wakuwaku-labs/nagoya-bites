@@ -79,7 +79,7 @@
 
 ### [SEO-101] ジャーナル133本に Q&A が1本も無い（特集は64/69がFAQPage保有）— 生成AI経由99セッション/30日の引用面を journal だけ取り逃している
 
-- **priority**: P2 → **status**: ready（**グレー採用・要検討メモ付き**。着手前に下記「要検討」を読むこと）
+- **priority**: P2 → **status**: in_progress（acceptance①〜⑤実装済み・⑥の効果測定はGSC/検索チャネルデータが数週間分溜まってから判定するためdoneにはしない）
 - **detected**: 2026-09-16
 - **category**: SEO / コンテンツ
 - **owner**: Editor
@@ -102,6 +102,17 @@
   5. **まず直近30日の閲覧上位ジャーナル3本だけで試す**。効果が出なければ横展開せず率直にクローズする（[[SEO-091]] と同じガードレール）
   6. 効果は `node scripts/search_channel_metrics.js --report` の生成AI行と `data/metrics_history.json` の ChatGPT経由セッション推移の前後比で見る。総クリックは指名検索と混ざるため使わない（[[SEO-043]] の判定基準）
 - **関連**: [[SEO-097]]（llms.txt・同じ生成AI面の別打ち手・done）／[[SEO-093]]（この助言の誤前提の出所・GAS未反映）／ISSUE-060（FAQ使い回し事故）／[[SEO-070]]（journal の関連特集CTA・同じ挿入面）
+- **2026-09-18 実装（/solve-next）**: acceptance⑤に従い、直近30日の閲覧上位ジャーナルのうち「その記事が主役として扱う単一店を持つ記事」3本だけに絞って着手（acceptance①）。対象選定は `data/gsc_metrics.json` の `topPages`（journal 8本中）をクリック数降順でスキャンし、複数店を横並びで扱う記事（`2026-08-24-sakae-korean-buffet-price-split.html`・2店舗紹介で「主役として扱う店」が1つに定まらない）はスキップして次点を採用:
+  - `journal/2026-08-29-fujigaoka-nama-donut-cospa.html`（MILK DO dore iku? 名古屋藤が丘店・14クリック）: イートイン可否のFAQ。答えは記事本文の「テイクアウト専業」「11時〜19時、売り切れ次第終了」「開店直後の11時台が狙い目」をそのまま使用
+  - `journal/2026-08-04-sakae-leesar-coffee.html`（リサールコーヒー 名古屋店・9クリック）: 営業時間のFAQ。答えは記事本文の曜日別開店時刻・完全ウォークイン・平日14〜16時の狙い目をそのまま使用
+  - `journal/2026-08-09-nagoyadome-pekin-honten.html`（北京本店 イオンモールナゴヤドーム前店・9クリック）: 看板メニュー価格のFAQ。答えは `store-desc`（980円/1,550円/+390円）と本文の混雑時間帯（日曜12時前後・15時台）をそのまま使用
+  - 3本とも設問の切り口を意図的に変え（イートイン可否／営業時間／価格）、同一質問文のテンプレ使い回しを避けた（acceptance②の「1記事ごとに固有」を文面レベルでも担保）
+  - `scripts/audit_feature_schema_alignment.js` を拡張し、journal のうち FAQPage を持つファイルだけを対象に corpus類似度0.50判定を適用する `faqOnly` モードを追加（features 側の Article/ItemList/Breadcrumb 判定はjournalの本文構造が違うため対象外のまま・acceptance②）。3本とも判定OK
+  - 可視FAQ（`<p class="faq-q">`/`<p class="faq-a">`）とJSON-LD（`FAQPage.mainEntity[].name`/`acceptedAnswer.text`）の verbatim一致をスクリプトで機械検証済み（acceptance③）
+  - `journal/_template.html` は変更していない（既存の個別記事3本のみに追記のため、DSN-001のDesignerゲート対象外・acceptance④）。CSSは features 側で確立済みの `.faq-item`/`.faq-q`/`.faq-a`（`var(--fs-md)` 等トークンのみ・新規リテラル無し）を各記事のインライン`<style>`に複製
+  - **QA**: `node scripts/audit_feature_schema_alignment.js` OK（features 68件・journal FAQPage保有3件）／`node scripts/audit_design_system.js --check`（全5,827ファイル）violations 0／`node --test tests/*.test.js` 197/197 pass／3ファイルのJSON-LD構文検証OK／ブラウザ実機確認（`http-server` 経由・モバイル幅）でFAQセクションの表示崩れなし
+  - **未完了（acceptance⑥）**: 効果測定は「反映後、生成AI経由セッションが増えるか」を`node scripts/search_channel_metrics.js --report`の前後比で見る設計のため、数週間分のデータが溜まってから別途確認する。効果が出なければ横展開せずクローズする方針（acceptance⑤のガードレール）は維持
+  - **files**: `journal/2026-08-29-fujigaoka-nama-donut-cospa.html`, `journal/2026-08-04-sakae-leesar-coffee.html`, `journal/2026-08-09-nagoyadome-pekin-honten.html`, `scripts/audit_feature_schema_alignment.js`
 
 ---
 ---
