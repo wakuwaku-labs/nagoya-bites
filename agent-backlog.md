@@ -2572,7 +2572,8 @@
 - **懸念点（オーナーに開示）**: `textsearch` は `findplacefromtext` と異なる Google Places API 課金SKU。対象は「写真が未取得/失効した店」のみ（全5000店ではない）で影響は限定的
 - **QAゲート**: `node -c` 構文チェック ✅ / `npm test`（94件）退行なし ✅ / 波ダッシュ正規化の実効果を実データで単体検証（0.78→0.88）✅
 - **未完**: (1) 那古野しば福やのHotPepper ID単発取得の実装（`HOTPEPPER_API_KEY` を持つ環境での検証が必要）(2) 客投稿のみの6件は代替ソース調達（Editor/DataKeeper の編集判断）(3) ローマ字/カタカナ表記ゆれのマッチング（別issueとして起票を検討）
-- **files**: `scripts/fetch_manual_store_photos.js`
+- **2026-09-18 追記（(1)は既に写真自体は解決済みと判明・canonical IDのみ残っていた是正）**: `data/manual_stores.json` の那古野しば福やレコードを確認したところ、`写真URL`・`写真出所:"hotpepper"`・`写真確認日`・`HP写真確認日`・`HotPepper照合ID:"J003671888"` が既に埋まっており、**実写自体は日次CI（`HOTPEPPER_API_KEY`を持つ環境）の写真照合パイプラインが既に解決済み**だった（本チケット記載時点の未完メモが古くなっていた）。ただし照合用の `HotPepper照合ID` は canonical な `ホットペッパーID`（予約リンク・店舗ページURLのスラグ生成に使う唯一のキー）へは反映されない設計（`build.js` の `mergeManualStores()` は `ホットペッパーID` 一致 → 店名+エリア一致の順で照合し、`HotPepper照合ID` は見ない）ため、この店だけ予約ボタン・クリーンな店舗ページスラグが欠けたままだった。`data/manual_stores.json` 全168件を機械照合した結果、同じギャップ（`HotPepper照合ID` はあるが `ホットペッパーID` が空）は他に4件あることも判明（本チケットでは対象外・[[ISSUE-097]]の範囲は那古野しば福やのみ是正）。検証済みの一致ID（一次情報源のHotPepper公式ページを日次パイプラインが既に確認済み）をそのまま `ホットペッパーID` へ昇格し、`node scripts/audit_manual_stores_links.js`（ホットペッパーID付き 2→3件・エラーなし）・`npm test`（197件）で退行なしを確認
+- **files**: `scripts/fetch_manual_store_photos.js`, `data/manual_stores.json`
 - **関連**: [[ISSUE-076]]（写真ゼロの別系統の真因・同じ三重ゲートの設計思想）
 
 ---
