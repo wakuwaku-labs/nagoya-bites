@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-17T00:24:20.462Z",
+  "generatedAt": "2026-09-17T06:52:31.704Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1099,
-    "pageViews": 1989,
-    "sessions": 1348,
-    "avgSessionDuration": 153.4,
-    "bounceRate": 0.285,
-    "pagesPerSession": 1.48
+    "activeUsers": 1116,
+    "pageViews": 2006,
+    "sessions": 1366,
+    "avgSessionDuration": 152.4,
+    "bounceRate": 0.294,
+    "pagesPerSession": 1.47
   },
   "dailyReference": {
     "date": "2026-09-15",
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 950,
-      "direct": 296,
+      "organic": 964,
+      "direct": 308,
       "social": 8,
       "ai_assistant": 102,
       "referral": 20,
@@ -26,10 +26,10 @@
       "other": 8
     },
     "pct": {
-      "organic": 68.6,
-      "direct": 21.4,
+      "organic": 68.4,
+      "direct": 21.8,
       "social": 0.6,
-      "ai_assistant": 7.4,
+      "ai_assistant": 7.2,
       "referral": 1.4,
       "paid": 0,
       "other": 0.6
@@ -39,22 +39,22 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 412
+      "sessions": 416
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 338
+      "sessions": 347
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 228
+      "sessions": 230
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 188
+      "sessions": 189
     },
     {
       "source": "chatgpt.com",
@@ -64,7 +64,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 40
+      "sessions": 50
     },
     {
       "source": "unknown",
@@ -190,33 +190,33 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 387,
-      "sessions": 334
+      "pageViews": 390,
+      "sessions": 337
     },
     {
       "path": "/",
-      "pageViews": 315,
-      "sessions": 207
+      "pageViews": 316,
+      "sessions": 208
     },
     {
       "path": "/index.html",
-      "pageViews": 173,
+      "pageViews": 174,
       "sessions": 98
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 113,
-      "sessions": 103
+      "pageViews": 116,
+      "sessions": 107
     },
     {
-      "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
+      "path": "/features/nagoya-tebasaki.html",
       "pageViews": 41,
-      "sessions": 41
+      "sessions": 42
     }
   ],
   "cta": {
     "outboundClicks": 135,
-    "ctaClickRate": 10,
+    "ctaClickRate": 9.9,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -273,8 +273,8 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.4,
-    "ctaClickRate_direct": 15.2,
+    "ctaClickRate_organic": 7.3,
+    "ctaClickRate_direct": 14.6,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -654,7 +654,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1099,
+    "value": 1116,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
