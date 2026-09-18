@@ -480,8 +480,9 @@
 - **priority**: P2 → **status**: ready
 - **detected**: 2026-09-14
 - **category**: SNS / 計測
-- **owner**: Marketer
+- **owner**: 片桐 ← Marketer（acceptance①②はオーナー本人操作・acceptance③「リールで紹介した店」一覧はオーナーが提供するまで着手不能）
 - **source**: オーナーへのヒアリング（2026-09-14・9月上旬開始・累計再生1万未満・bioはトップURLのみでUTMなし）。`data/site_metrics.json` の `sourceBreakdown` に instagram 行が過去一度も出ておらず、リールの効果が構造的に計測不能
+- **2026-09-18 エスカレーション（自動ルーチン）**: acceptance①②はInstagram bio・ストーリーズのリンクスタンプ変更でオーナー本人操作のみ。acceptance③の `features/instagram-picks.html` 作成は「リールで紹介した店」の一覧をオーナーが提供する必要があり、外部から特定する手段がないため着手不能。acceptance④（効果測定）は①〜③の先行が前提。全acceptanceがオーナー起点のためエスカレーション
 - **brand-filter**: ✅ 適合 — 自社の流入を正しく数えるだけの計測施策。順位操作・広告・クーポンのいずれにも該当しない
 - **acceptance**:
   1. **オーナー本人操作**: Instagram bio のリンクを `?utm_source=instagram&utm_medium=social&utm_campaign=bio` 付きに変更（`docs/sns-utm-convention.md` の規約どおり）
@@ -2559,7 +2560,8 @@
 - **priority**: P2 → **status**: in_progress（コード修正2件マージ済み・残件は per-店で別対応が必要）
 - **detected**: 2026-08-18（オーナー指摘「今日の話題店の3位・4位が実写になっていない」→「他の店舗も表示されてないものはしてほしい」に発展）
 - **category**: data-quality
-- **owner**: DataKeeper（Builder が実装）
+- **owner**: 片桐 ← DataKeeper（(1)HOTPEPPER_API_KEY保有環境での検証が必要・(2)客投稿のみ6店への代替ソース調達は編集部判断）
+- **2026-09-18 エスカレーション（自動ルーチン）**: 残件は全てオーナー起点。(1)那古野しば福やのHP-ID canonical昇格→ローカルに `HOTPEPPER_API_KEY` が無く実地検証不能（2026-09-18試行でCIがFAILしrevert済み）。(2)客投稿のみの6件→代替ソース調達（HotPepper/プレスリリース等）は「その店の写真かどうか」を判定する編集判断が必須。(3)ローマ字/カタカナ表記ゆれは「別途調査が必要・今回はスコープ外」と明記済み。自動ルーチンが進められる残件なし
 - **problem**: `manual_stores.json`/`pending_stores.json` 由来の24店が実写ゼロ（`/assets/store-figures/_fallback.svg`）のまま。制約9「実写優先」への違反ではなく `data/photo_policy.json` の各ゲートが意図通り不採用にした結果。**24件すべてが同じ原因ではなく、店ごとに異なる理由で落ちている**ため、一括の閾値緩和では解決しない（CLAUDE.md「閾値をいじる前に代表ケースで分布を実測する」原則どおり、個別に切り分けた）。
 - **1回目の修正（PR #147・マージ済み）**: `findplacefromtext`（候補1件のみ・単一候補が外れると詰む）→ `textsearch`（候補最大5件）に変更し、店名ゲートを通る候補が出るまで順に試すよう修正。読み仮名括弧書きの除去、不一致時ログの類似度表示バグ修正も同時実施。
   - **実効果の検証（本日2回目のCI実行ログで実測）**: この回だけでは実写採用 **0/24**（別店マッチの一致度が可視化されたのみで、上位候補内に正解が無いケースが大半だった）。効果ゼロではなく「診断精度が上がった」段階 — 以下の分類はこの回のログで判明した
@@ -3666,7 +3668,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **priority**: P1 → **status**: in_progress（Phase 0〜5完了・2026-08-18 Step2再開・v3.0コード完成/未活性化）
 - **detected**: 2026-08-14（ユーザー要望「サクラチェックの精度を上げたい」を受けて再調査）
 - **category**: trust / proof / differentiation
-- **owner**: DataKeeper + Builder
+- **owner**: 片桐 ← DataKeeper + Builder（v3.0配点再調整の設計判断・823店の表示グレード変動への承認が必要）
+- **2026-09-18 エスカレーション（自動ルーチン）**: gate(c) は4,345件移動（目安493件の8.8倍）で依然大幅超過。週次蓄積ペース+1.2pt/週では閾値到達まで数ヶ月単位を要する。2026-09-03のbacklog注記「配点再調整はオーナー確認後の別タスク」のとおり、移動幅を減らすにはS3/S7/S8の配点を再調整する設計判断が必要。再調整なしに閾値到達を待つ場合、その旨を明示的に意思決定する必要がある。どちらもオーナー判断のためエスカレーション（現状: v3.0未接続・実害なし）
 
 - **背景（実測で判明した精度問題）**:
   1. **S7（時系列健全性・20点）が構造的に死んでいた**: `scripts/fetch_places.js` が
