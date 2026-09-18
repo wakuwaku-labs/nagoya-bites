@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-17T20:59:05.540Z",
+  "generatedAt": "2026-09-18T08:08:39.444Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1112,
-    "pageViews": 1976,
-    "sessions": 1362,
-    "avgSessionDuration": 158.9,
-    "bounceRate": 0.295,
+    "activeUsers": 1135,
+    "pageViews": 2006,
+    "sessions": 1382,
+    "avgSessionDuration": 155.5,
+    "bounceRate": 0.277,
     "pagesPerSession": 1.45
   },
   "dailyReference": {
@@ -17,44 +17,44 @@
   },
   "channels": {
     "sessions": {
-      "organic": 955,
-      "direct": 301,
+      "organic": 976,
+      "direct": 290,
       "social": 8,
       "ai_assistant": 102,
       "referral": 20,
       "paid": 0,
-      "other": 7
+      "other": 5
     },
     "pct": {
-      "organic": 68.6,
-      "direct": 21.6,
+      "organic": 69.7,
+      "direct": 20.7,
       "social": 0.6,
       "ai_assistant": 7.3,
       "referral": 1.4,
       "paid": 0,
-      "other": 0.5
+      "other": 0.4
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 415
+      "sessions": 425
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 345
+      "sessions": 355
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 227
+      "sessions": 229
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 184
+      "sessions": 185
     },
     {
       "source": "chatgpt.com",
@@ -62,14 +62,14 @@
       "sessions": 82
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 41
-    },
-    {
       "source": "unknown",
       "medium": "(not set)",
-      "sessions": 31
+      "sessions": 34
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 25
     },
     {
       "source": "duckduckgo",
@@ -92,11 +92,6 @@
       "sessions": 7
     },
     {
-      "source": "unknown",
-      "medium": "",
-      "sessions": 6
-    },
-    {
       "source": "facebook.com",
       "medium": "referral",
       "sessions": 4
@@ -117,6 +112,16 @@
       "sessions": 3
     },
     {
+      "source": "unknown",
+      "medium": "",
+      "sessions": 3
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 2
+    },
+    {
       "source": "ecosia.org",
       "medium": "organic",
       "sessions": 2
@@ -135,11 +140,6 @@
       "source": "unknown",
       "medium": "(none)",
       "sessions": 2
-    },
-    {
-      "source": "(data not available)",
-      "medium": "(data not available)",
-      "sessions": 1
     },
     {
       "source": "2881.com",
@@ -185,23 +185,23 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 394,
-      "sessions": 340
+      "pageViews": 399,
+      "sessions": 344
     },
     {
       "path": "/",
       "pageViews": 307,
-      "sessions": 204
+      "sessions": 203
     },
     {
       "path": "/index.html",
-      "pageViews": 174,
-      "sessions": 99
+      "pageViews": 177,
+      "sessions": 102
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 116,
-      "sessions": 106
+      "pageViews": 117,
+      "sessions": 107
     },
     {
       "path": "/features/nagoya-tebasaki.html",
@@ -210,12 +210,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 141,
-    "ctaClickRate": 10.4,
+    "outboundClicks": 142,
+    "ctaClickRate": 10.3,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 63
+        "clicks": 64
       },
       {
         "domain": "tabelog.com",
@@ -264,16 +264,16 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 74,
-      "direct": 46,
+      "organic": 76,
+      "direct": 45,
       "social": 0,
       "ai_assistant": 16,
       "referral": 5,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.7,
-    "ctaClickRate_direct": 15.3,
+    "ctaClickRate_organic": 7.8,
+    "ctaClickRate_direct": 15.5,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -331,6 +331,10 @@
       {
         "path": "/journal/2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html",
         "clicks": 2
+      },
+      {
+        "path": "/features/birthday.html",
+        "clicks": 1
       },
       {
         "path": "/features/nagoya-yakiniku.html",
@@ -479,6 +483,11 @@
       {
         "path": "/",
         "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
+        "path": "/features/birthday.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 1
       },
       {
@@ -635,6 +644,10 @@
         "clicks": 2
       },
       {
+        "path": "/features/birthday.html",
+        "clicks": 1
+      },
+      {
         "path": "/features/nagoya-yakiniku.html",
         "clicks": 1
       },
@@ -663,11 +676,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 97
+    "reservationClicks": 98
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1112,
+    "value": 1135,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
