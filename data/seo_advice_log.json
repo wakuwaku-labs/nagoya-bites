@@ -3040,6 +3040,46 @@
       "brand_reason": "前提が失効している。(1)「毎日用意されている」は誤り — SNS原稿の自動生成は 2026-09-05 にオーナー指示で停止済み（data/journal_sns_draft_policy.json: generate_sns_draft=false）。docs/daily-posts/ の最新は 2026-09-05 で、今日投稿できる原稿は存在しない。(2) SNS運用はリポジトリ外の別の仕組みへ移管済みで、流入はUTMで計測する方針。(3) 「SNS流入0%」自体も異常ではない — 2026-09-14 の traffic_source 判定修正（部分一致 t.co が chatgpt.com/copilot.com を誤ってSNSに数えていた）以降、実SNS流入は元々1媒体30日6件未満で観測閾値以下と判明している（旧socialの大半は生成AI流入だった）。(4) 同種助言は 2026-09-10・09-12・09-14 に却下済み。加えて「今日中に全部投稿」はオーナー本人の手作業であり、backlog の実装課題にならない。",
       "category": null,
       "fingerprint": "e7b270a243e4b6c9"
+    },
+    {
+      "id": null,
+      "date": "2026-09-19",
+      "source": "line-daily",
+      "advice": "🟡 検索流入比率が77%と高い反面、SNS流入は0%。サイトの強みである「業界人の目利き」を活かしきれていません。👉 docs/daily-posts/ にあるSNS投稿原稿を使い、XとInstagramで『nagoya-solo-dining』と『nagoya-autumn-2026』の特集記事を本日中に投稿しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-093 / SEO-098 / SEO-101 に集約済み）。①前提「docs/daily-posts/ にあるSNS投稿原稿」は失効。data/journal_sns_draft_policy.json の generate_sns_draft:false により2026-09-05にオーナー指示で生成停止済みで、実ファイルも docs/daily-posts/ の最新が 2026-09-05.md＝14日間1本も増えていない（＝『ある原稿を発信する』という打ち手が成立しない）。②同型のSNS投稿助言は 2026-09-12 / 09-14 / 09-15 / 09-17 に判定済みで、SNSの実運用はリポジトリ外＋UTM計測という方針に移行済み（SEO-098 が ready で ownership を持つ）。③「SNS流入0%」の読み自体も注意が要る: data/site_metrics.json（30日・2026-09-18生成）の cta.byChannel は social:0 / ai_assistant:16 で、旧実装が social と誤分類していた分は PR#241 の traffic_source.js 修正で生成AIへ正しく振り替わっている。SNSが0なのは計測漏れではなく、サイト外運用の投稿にUTMが付いていないため（＝SEO-098 の acceptance そのもの）。新規起票は不要。",
+      "category": null,
+      "fingerprint": "2c06ed7fe11b8af9"
+    },
+    {
+      "id": null,
+      "date": "2026-09-19",
+      "source": "line-daily",
+      "advice": "🟢 訪問者43人に対し、人気ページ1位の『nagoya-solo-dining』が12回閲覧と回遊が集中しています。👉 『nagoya-solo-dining』特集記事の冒頭に「一人飲みにも使える個室・接待向け店舗はこちら」などの導線を設置し、関連特集への遷移を促しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-087 に集約・同チケットへ2026-09-19追記を実施）。①「導線が無い」という前提は誤り: features/nagoya-solo-dining.html は関連特集リンクを8本持ち（:424-434）、冒頭 :209 にも TOP-CTA がある。②ただし『位置』には実在の余地があり、関連特集リンクは全513行中 :424-434＝約83%地点（記事末尾）にしか無い。これは検証できる事実なので SEO-087 に追記して残した。③新規起票はしない: SEO-087 acceptance④（solo-dining の関連リンクから展開先へ相互リンクし回遊に変換する）が 2026-09-14 に実装済みで status:in_progress＝acceptance⑤の効果判定待ちであり、判定前に同じ箇所の位置を動かすと前後比が壊れて効果が測れなくなる（制約10・自分で観測不能にしない）。同じ acceptance を2枚のチケットに割らない。④実測の裏づけ: 30日で solo-dining の外部送客は24クリックで全ページ中最多＝冒頭CTAは効いている一方、pagesPerSession は1.45で回遊は薄い（data/site_metrics.json 2026-09-18生成）。",
+      "category": null,
+      "fingerprint": "247eaeb280d1ddb7"
+    },
+    {
+      "id": null,
+      "date": "2026-09-19",
+      "source": "line-daily",
+      "advice": "🟡 予約ボタンクリックが2回に対し、電話ボタン・マップ・Instagramへの導線クリックは0回です。👉 トップページ下部の「シーンから探す」エリアに「電話予約可」「当日予約OK」など、予約に繋がりやすいシーンを追加し、cta_call_clickを増やす実験をしましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下（前提が単日ノイズ＋打ち手が制約10と外部規約に抵触）。①前提が事実と合わない: 「マップ・Instagram 0回」は訪問43人・店舗詳細10回という単日の分母から出た数字にすぎず、30日実測（data/site_metrics.json 2026-09-18生成）では maps.google.com 24クリック / www.instagram.com 6クリック が実際に発生している。分母10で0回を『導線の欠陥』の証拠にするのは、2026-09-13・09-14 に同型で却下した『予約ボタン0回』とまったく同じ誤り。②打ち手『電話予約可』が実装不能: 電話するボタンは店舗詳細モーダル内で placeId を持つ店にのみ出る Places ライブ取得型で（index.html:9877-9888）、Google Maps Platform 利用規約が電話番号の warehousing を禁じているため、トップページで『電話予約可』を事前に絞り込むチップは原理的に作れない（絞り込むには全店の電話番号を保存する必要がある）。③打ち手『当日予約OK』が制約10違反: data/stores.json の33フィールド（店名/ジャンル/エリア/価格帯/タグ/おすすめシーン等）に予約可否・当日予約を示す項目は1つも無く、この軸を作ると検証できない自己申告値をユーザー向けフィルタとして提示することになる。掲載の実在保証を Moat とするサイトで、裏づけの無い『当日予約OK』を掲げるのは信頼毀損（制約7）。④なお既存の scene-nav（index.html:1676-1693）はシーン6種＋エリア5種を持ち、いずれも stores.json のタグ／おすすめシーンから実際に絞り込める語だけで構成されている＝この設計規律を崩さない。",
+      "category": null,
+      "fingerprint": "6df8fa85de11c8ef"
+    },
+    {
+      "id": "SEO-103",
+      "date": "2026-09-19",
+      "source": "internal-audit",
+      "advice": "【ループ内部監査】週次トリアージの規定クエリ subject:\"📊 NAGOYA BITES 週次レポート\" newer_than:9d が 0件を返したため、ISSUE-089 の規律に従い in:anywhere で sweep したところ、週次レポート5通（2026-08-16/08-23/08-30/09-06/09-13）が全て labelIds に TRASH を含む状態で存在していた。日次レポートは同じGAS・同じ宛先で INBOX に入っている。",
+      "verdict": "adopted",
+      "brand_reason": "採用（P1）。CLAUDE.md『無人自動化の監視を設計するときの原則』③「『気づけるはず』を検知と数えない」に直接該当する、このループ自身の欠陥。週次アームは『該当メール無し＝スキップ（正常終了）』と報告し続けるため、空振りが正常系に偽装される構造になっていた。検知は検証できる事実だけで成立している（Gmail の labelIds に TRASH が含まれること／同じ窓の primary 検索が0件を返すこと＝誰でも再現可能・制約10）。順位操作・広告・マネタイズを一切伴わない運用健全化のため Strategic Skip にも制約7・8にも抵触しない。なお TRASH へ振り分けている原因（Gmail フィルタが第一候補）の特定と解除はオーナー本人の操作が必要で、コード側から検証できない＝acceptance② はオーナー待ち。",
+      "category": "SEO",
+      "fingerprint": "9e4bfde42fdfd22f"
     }
   ]
 }
