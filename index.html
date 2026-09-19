@@ -2281,7 +2281,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 
 <!-- STORE-INDEX:START 2026-09-19 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（4916店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（4917店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（835店）</summary>
@@ -7559,6 +7559,12 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <li><a href="index.html#q=%E5%A4%A7%E4%B9%85%E6%89%8B%E5%B1%B1%E6%9C%AC%E5%B1%8B">大久手山本屋（千種区大久手・味噌煮込みうどん）</a></li>
 </ul>
 </details>
+<details class="store-index-area" data-area="清須市春日（名古屋市西区隣接）">
+<summary>清須市春日（名古屋市西区隣接）（1店）</summary>
+<ul class="store-index-list">
+<li><a href="index.html#q=%E7%9F%A2%E5%A0%B4%E3%81%A8%E3%82%93%20%E3%81%B6%E3%83%BC%E3%81%A1%E3%82%83%E3%82%93%E3%83%8F%E3%82%A6%E3%82%B9">矢場とん ぶーちゃんハウス（清須市春日（名古屋市西区隣接）・とんかつ）</a></li>
+</ul>
+</details>
 </section>
 <!-- STORE-INDEX:END -->
 
@@ -7727,7 +7733,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = 'f1895cea77c1';
+var STORES_JSON_VERSION = 'b67dd3eed51f';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
