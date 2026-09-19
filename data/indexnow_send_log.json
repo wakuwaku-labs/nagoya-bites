@@ -1,13 +1,14 @@
 {
   "ok": true,
   "dry_run": true,
-  "would_send": 123,
+  "would_send": 124,
   "endpoint": "https://api.indexnow.org/indexnow",
   "urls": [
     "https://nagoya-bites.com/",
     "https://nagoya-bites.com/journal/",
     "https://nagoya-bites.com/features/",
     "https://nagoya-bites.com/journal/2026-09-18-sakae-akizake-fes-2026-coin-price.html",
+    "https://nagoya-bites.com/journal/2026-09-19-kiyosu-yabaton-boochan-house.html",
     "https://nagoya-bites.com/stores/area/index.html",
     "https://nagoya-bites.com/stores/area/meieki/index.html",
     "https://nagoya-bites.com/stores/area/nishiki-fushimi/index.html",
@@ -129,5 +130,5 @@
     "https://nagoya-bites.com/stores/area/nakagawa-minato/ramen-parking.html"
   ],
   "note": "--yes を付けると実際に送信する（外部通信が発生する）",
-  "logged_at": "2026-09-19T00:22:26.477Z"
+  "logged_at": "2026-09-19T00:41:06.354Z"
 }
