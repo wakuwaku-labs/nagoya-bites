@@ -49,6 +49,36 @@
   3. 統合できない（同一と確認できない）組は**統合せず残す**。取り繕わない
   4. CI に重複検知を追加し、新たな重複が増えたら検出できるようにする
 
+### [EDT-004] ジャーナルの写真がヒーロー1枚だけで、本文が最後まで文字だけだった ✅ 本文にも写真を散らす仕組みを追加
+
+- **priority**: P2 → **status**: done
+- **detected**: 2026-09-20
+- **resolved**: 2026-09-20
+- **category**: content / UX
+- **owner**: Editor / Builder
+- **source**: オーナー報告「ジャーナルに使われる写真が一枚しかないので、もっと散りばめて3枚ほど使うようにして欲しい」
+- **brand-filter**: ✅ 適合 — 読者の可読性の改善。掲載する写真はこれまでどおり「その記事が扱う実在店の実写」だけで、帰属の基準は一切緩めていない（制約9・制約10 非該当の緩和なし）
+- **検証できる事実（制約10）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | 公開済みジャーナル全本が写真1枚（ヒーローのみ）だった | `node scripts/audit_journal_photos.js --days 40` の枚数分布「1枚:41本」 |
+  | 1店だけを扱う記事が多く、HotPepper は1店1枚しか持たない＝HotPepper だけでは増やせない | 直近20本中14本が店舗カード1件 |
+  | Places はオーナー投稿を複数枚返す（既存ポリシー `data/photo_policy.json` の `scanPhotos: 8` が前提にしている） | `scripts/fetch_manual_store_photos.js` の候補走査 |
+- **やったこと**:
+  1. `data/journal_photo_policy.json` に `bodyPhotos`（目安枚数 `targetTotal: 3`・配置規則）を追加。閾値はJSON側、スクリプトは触らない
+  2. `scripts/lib/journal_photos.js` を新設（収集・選定・配置の1本）。候補は記事が扱う店からのみ。採否判定は既存の2本（`photo_policy.js` / `hero_photo_gate.js`）をそのまま使い、新しい基準を増やしていない
+  3. `scripts/lib/hero_photo_gate.js` に `judgePhoto`（role 対応）と `extractBodyPhotosFromHtml` を追加。**宣言された出所（data-*-source）とURLから決まる出所が食い違う場合はURL側を採る**ようにした（宣言を信じると、HotPepper 画像に `places` と書くだけで所有店の逆引き照合を回避できた＝証跡が自己申告になっていた）
+  4. `scripts/generate_daily_draft.js` が本文写真を挿す。併せて、入力JSONに `photo_url` が無くても `data/stores.json` 側の写真URLでヒーローを補えるようにした
+  5. 公開前QAに 15c（本文写真の帰属・HARD FAIL）と 15d（枚数・**WARNING のみ**）を追加。枚数は合否にしない（足りない日に他店の写真を借りる動機を作らないため・品質ゲート原則1・4）
+  6. `scripts/audit_journal_photos.js`（CI日次）が本文写真も同じ判定で検査し、枚数分布を出す
+  7. `scripts/add_journal_body_photos.js` で公開済み記事へ後追い（冪等）。直近30日の31本のうち24本へ計41枚を挿入済み
+  8. `tests/journal_body_photos.test.js`（9件）— 配置・帰属・自己申告の回避不可を検査
+- **残作業（オーナー/次回実行）**:
+  - 2026-09-20 の作業中に Google Places の**日次クォータ（OVER_QUERY_LIMIT）を使い切った**ため、7本が1枚のまま。翌日以降に `node scripts/add_journal_body_photos.js --days 30` を再実行すれば冪等に埋まる（「候補なし」ではなく「引けなかった」と表示される）
+  - 30日より前の記事（約100本）は未処理。`--days` を伸ばして順次。API クォータ（250/日）を見ながら分割する
+  - 写真の中身（販促バナー・ロゴ画像でないか）は**機械判定しない**方針のまま。実例として 2026-09-20 の記事に入った HotPepper 写真は店のロゴ看板画像。気になる図は figure ごと削除して再実行すれば別候補が入る
+
+---
 ### [ISSUE-131] カードの食べログリンクが「その店の食べログページ」に飛ばない — 手動キュレーション店171件中129件が食べログURL空欄で検索ページにフォールバックしていた（＋Hot Pepper由来店のURLは一度も実地検証を通っていなかった）
 
 - **priority**: P1 → **status**: in_progress
