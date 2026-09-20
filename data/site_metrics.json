@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-20T12:52:13.085Z",
+  "generatedAt": "2026-09-20T13:08:51.520Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1155,
-    "pageViews": 1998,
-    "sessions": 1406,
-    "avgSessionDuration": 154.5,
+    "activeUsers": 1156,
+    "pageViews": 1999,
+    "sessions": 1407,
+    "avgSessionDuration": 154.4,
     "bounceRate": 0.286,
     "pagesPerSession": 1.42
   },
@@ -18,21 +18,21 @@
   "channels": {
     "sessions": {
       "organic": 986,
-      "direct": 305,
+      "direct": 306,
       "social": 8,
       "ai_assistant": 105,
       "referral": 20,
       "paid": 0,
-      "other": 10
+      "other": 11
     },
     "pct": {
-      "organic": 68.8,
+      "organic": 68.7,
       "direct": 21.3,
       "social": 0.6,
       "ai_assistant": 7.3,
       "referral": 1.4,
       "paid": 0,
-      "other": 0.7
+      "other": 0.8
     }
   },
   "sourceBreakdown": [
@@ -69,12 +69,17 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 38
+      "sessions": 39
     },
     {
       "source": "duckduckgo",
       "medium": "organic",
       "sessions": 11
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 7
     },
     {
       "source": "copilot.com",
@@ -90,11 +95,6 @@
       "source": "copilot.com",
       "medium": "(not set)",
       "sessions": 7
-    },
-    {
-      "source": "(data not available)",
-      "medium": "(data not available)",
-      "sessions": 6
     },
     {
       "source": "facebook.com",
@@ -281,7 +281,7 @@
       "other": 4
     },
     "ctaClickRate_organic": 7.7,
-    "ctaClickRate_direct": 17.4,
+    "ctaClickRate_direct": 17.3,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -730,7 +730,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1155,
+    "value": 1156,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

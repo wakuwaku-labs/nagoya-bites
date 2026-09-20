@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-20T12:52:17.053Z",
+  "generatedAt": "2026-09-20T13:08:54.904Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1434,
+  "total_sessions": 1436,
   "engines": [
     {
       "key": "google",
@@ -40,7 +40,7 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 258,
+      "sessions": 259,
       "pct": 18,
       "sources": [
         {
@@ -51,7 +51,7 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 38
+          "sessions": 39
         }
       ]
     },
@@ -59,7 +59,7 @@
       "key": "yahoo",
       "label": "Yahoo!",
       "sessions": 193,
-      "pct": 13.5,
+      "pct": 13.4,
       "sources": [
         {
           "source": "yahoo",
@@ -109,8 +109,8 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 78,
-      "pct": 5.4,
+      "sessions": 79,
+      "pct": 5.5,
       "sources": [
         {
           "source": "unknown",
@@ -118,14 +118,14 @@
           "sessions": 43
         },
         {
-          "source": "service.smt.docomo.ne.jp",
-          "medium": "referral",
+          "source": "(data not available)",
+          "medium": "(data not available)",
           "sessions": 7
         },
         {
-          "source": "(data not available)",
-          "medium": "(data not available)",
-          "sessions": 6
+          "source": "service.smt.docomo.ne.jp",
+          "medium": "referral",
+          "sessions": 7
         },
         {
           "source": "unknown",
