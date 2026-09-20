@@ -16,6 +16,7 @@
  *   node scripts/audit_store_link_identity.js --force          # キャッシュ無視で全件再検証
  *   node scripts/audit_store_link_identity.js --check          # 不一致があれば exit 1（CI向け）
  *   node scripts/audit_store_link_identity.js --scope all      # 手動店だけでなく掲載全店を対象にする
+ *   node scripts/audit_store_link_identity.js --scope all --kind tabelog --all  # 食べログURLだけ全件検証
  *
  * キャッシュ（data/store_link_identity_checked.json）:
  *   一度 ok:true と確認できたURLは MAX_AGE_DAYS の間は再検証をスキップする
@@ -29,7 +30,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const { checkTabelogUrl, checkHotpepperId } = require('./lib/store_link_identity');
+const { checkTabelogUrl, checkHotpepperId, buildPlacesAddressIndex } = require('./lib/store_link_identity');
 
 const ROOT = path.resolve(__dirname, '..');
 const MANUAL_PATH = path.join(ROOT, 'data', 'manual_stores.json');
@@ -41,7 +42,7 @@ const MAX_AGE_DAYS = 60;
 const MAX_AGE_MS = MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
 
 const args = process.argv.slice(2);
-const opts = { limit: 40, force: false, store: null, delayMs: 4000, jitterMs: 2000, check: false, scope: 'manual' };
+const opts = { limit: 40, force: false, store: null, delayMs: 4000, jitterMs: 2000, check: false, scope: 'manual', kind: 'all' };
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
   if (a === '--limit') opts.limit = parseInt(args[++i], 10);
@@ -51,6 +52,8 @@ for (let i = 0; i < args.length; i++) {
   else if (a === '--check') opts.check = true;
   else if (a === '--all') opts.limit = Infinity;
   else if (a === '--scope') opts.scope = args[++i];
+  else if (a === '--kind') opts.kind = args[++i];   // tabelog / hotpepper / all
+  else if (a === '--jitter') opts.jitterMs = parseInt(args[++i], 10);
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -97,16 +100,20 @@ async function main() {
   }
   const stores = loadTargetsSource(opts.scope);
   const cache = loadJson(CACHE_PATH, {});
+  // Google Places 由来の住所。食べログ側の住所と一致すれば同じ建物＝同じ店の証明に
+  // なるため、店名の表記ゆれ（「鉄板焼 那古亭」対「那古亭」）で誤って不一致に
+  // しないよう判定器へ渡す（解決器と同じ索引を共有）
+  const addressIndex = buildPlacesAddressIndex(ROOT);
 
   let targets = [];
   for (const s of stores) {
     const name = s['店名'] || '';
     if (opts.store && !name.includes(opts.store)) continue;
     const area = s['エリア'] || '';
-    if (classifyTabelogFormat(s['食べログURL']) === 'direct') {
+    if (opts.kind !== 'hotpepper' && classifyTabelogFormat(s['食べログURL']) === 'direct') {
       targets.push({ kind: 'tabelog', url: s['食べログURL'], storeName: name, area });
     }
-    if (s['ホットペッパーID'] && s['ホットペッパーID'].trim()) {
+    if (opts.kind !== 'tabelog' && s['ホットペッパーID'] && s['ホットペッパーID'].trim()) {
       targets.push({ kind: 'hotpepper', id: s['ホットペッパーID'].trim(), storeName: name, area });
     }
   }
@@ -131,7 +138,7 @@ async function main() {
 
     let result;
     if (t.kind === 'tabelog') {
-      result = await checkTabelogUrl(t.url, t.storeName);
+      result = await checkTabelogUrl(t.url, t.storeName, { address: addressIndex.get(t.storeName) || '' });
     } else {
       result = await checkHotpepperId(t.id, t.storeName);
     }
