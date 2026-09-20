@@ -206,7 +206,13 @@ jobs:
         # ため店舗数が多いと時間がかかる → 1日あたり --limit 件だけ検証し、
         # data/store_link_identity_checked.json のキャッシュ（60日有効）で日々持ち越して
         # いずれ全件をカバーする。初回導入のため非ブロッキングで開始する。
-        run: node scripts/audit_store_link_identity.js --limit 20 --check
+        # 2026-09-20: 対象を手動キュレーション店のみ → 掲載全店（--scope all）へ拡大。
+        # Hot Pepper 由来店の食べログURLは resolve_tabelog.js の旧スコアリング
+        # （ページ内に店名トークンが出れば採用）で機械的に埋められており、一度も
+        # 実地検証を通っていなかった。30件の等間隔サンプルで5件が別店・別支店を
+        # 指していたため、検知をここに通す。対象 8,400件 / キャッシュ60日なので
+        # 1日140件で全件を巡回できる計算だが、外部サイトへの負荷を抑えて60件で開始する。
+        run: node scripts/audit_store_link_identity.js --scope all --limit 60 --check
         continue-on-error: true
 
       - name: ジャーナル記事とSNS原稿の対応漏れを監査（SEO-055・2026-08-10/11の欠落再発防止）

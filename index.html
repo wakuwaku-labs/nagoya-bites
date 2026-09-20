@@ -9446,6 +9446,15 @@ function hotpepperUrl(r) {
   // ID 無しは Hot Pepper 公式キーワード検索（愛知県スコープ）
   return 'https://www.hotpepper.jp/yoyaku/SA33/keyword_' + encodeURIComponent(cleanStoreName(r['店名'] || '')) + '/';
 }
+// その店の食べログ「店舗ページ」を持っているか（＝リンク先が検索ページではないか）
+// 2026-09-20 オーナー報告「カードの食べログが店舗ページに飛ばない」への対応。
+// 店舗ページURLは実在検証（scripts/lib/store_link_identity.js）を通ったものだけを
+// 持つ方針のため、未検証の店は今後も検索フォールバックが残る。リンクの見た目が
+// 同じだと「店舗ページのはずが検索結果に飛ぶ」と読めてしまうので、ラベル側で
+// 「検索」であることを明示する（取り繕わない）。
+function hasTabelogStorePage(r) {
+  return !!(r['食べログURL'] && r['食べログURL'].trim());
+}
 function tabelogSearchUrl(r) {
   if (r['食べログURL'] && r['食べログURL'].trim()) return r['食べログURL'];
   // /aichi/ で既に愛知県絞り込み済みのため「名古屋」は不要（むしろヒット率を下げる）
@@ -9594,7 +9603,7 @@ function buildCardHtml(r) {
     var pref = r['都道府県'] || '';
     var area = r['エリア'] || '';
     var mediaLinks = '<a class="ml hp" href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="Hotpepperで見る" title="Hotpepper">' + nbBrandImg('hotpepper',16) + '<span class="visually-hidden">Hotpepper</span></a>'
-      + '<a class="ml tb" href="' + tabelogSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="食べログで見る" title="食べログ">' + nbBrandImg('tabelog',16) + '<span class="visually-hidden">食べログ</span></a>'
+      + '<a class="ml tb" href="' + tabelogSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="' + (hasTabelogStorePage(r) ? '食べログで見る' : '食べログで検索する') + '" title="' + (hasTabelogStorePage(r) ? '食べログ' : '食べログで検索') + '">' + nbBrandImg('tabelog',16) + '<span class="visually-hidden">食べログ</span></a>'
       + '<a class="ml ig" href="' + instagramSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="Instagramで見る" title="Instagram">' + nbBrandImg('instagram',16) + '<span class="visually-hidden">Instagram</span></a>'
       + '<a class="ml gm" href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="Googleマップで見る" title="Googleマップ">' + nbBrandImg('gmap',16) + '<span class="visually-hidden">Googleマップ</span></a>';
     var tags = (r['タグ']||'').split(',').map(function(t){return t.trim();}).filter(Boolean);
@@ -10229,7 +10238,7 @@ function openM(i, source) {
   // ── 媒体リンク（favicon＋名前の小チップ1行。Google マップは modal_media_row で計測を区別）──
   var items = [
     {url:hpUrl, brand:'hotpepper', cls:'mb-hp', label:'HotPepper'},
-    {url:tabelogSearchUrl(r), brand:'tabelog', cls:'mb-tb', label:'食べログ'},
+    {url:tabelogSearchUrl(r), brand:'tabelog', cls:'mb-tb', label:hasTabelogStorePage(r) ? '食べログ' : '食べログで検索'},
     {url:instagramSearchUrl(r), brand:'instagram', cls:'mb-ig', label:'Instagram'},
     {url:gmap(r['店名'],r['エリア'],r), brand:'gmap', cls:'mb-gm', label:'Google マップ', track:'modal_media_row'},
     {url:tiktokSearchUrl(r), brand:'tiktok', cls:'mb-tk', label:'TikTok'},

@@ -6,6 +6,39 @@
 
 ---
 
+### [ISSUE-131] カードの食べログリンクが「その店の食べログページ」に飛ばない — 手動キュレーション店171件中129件が食べログURL空欄で検索ページにフォールバックしていた（＋Hot Pepper由来店のURLは一度も実地検証を通っていなかった）
+
+- **priority**: P1 → **status**: in_progress
+- **detected**: 2026-09-20
+- **category**: data-quality / trust
+- **owner**: Builder / DataKeeper
+- **source**: オーナー報告（スクリーンショット添付・「尾張山荘 くろぎ」カードの食べログアイコンを丸囲み）「このカードに表示されている食べログのURLが、全店この店舗の食べログページに飛ばないです」
+- **brand-filter**: ✅ 適合 — 実在保証・出典の正確さはサイトのMoatそのもの。広告・順位操作・マネタイズのいずれにも触れない（制約7・8 非該当）
+- **検証できる事実（制約10・誰でも同じURLを開いて検算できる）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | カードの食べログアイコンは、`食べログURL` が空のとき**キーワード検索ページ**へフォールバックする設計 | `index.html` `tabelogSearchUrl()`（`https://tabelog.com/aichi/rstLst/?sw=<店名>`） |
+  | 報告の店「尾張山荘 くろぎ」は `食べログURL` が空。手動キュレーション店171件のうち**129件が空欄**で、これがトップの話題店・編集部推薦カードの大半を占める | `data/manual_stores.json`（`node scripts/resolve_manual_tabelog_links.js --report`） |
+  | 空欄になった直接の原因は 2026-09-03 の実地監査で、68件の食べログURLが無関係な別店・404 を指していたため一括空欄化したこと。**「消す」工程だけがあり「正しいURLを入れ直す」工程が無かった** | `scripts/clear_broken_tabelog_links.js` / `data/store_link_identity_report.json` |
+  | 検索フォールバック自体はPC・スマホとも動作する（`s.tabelog.com` へ転送され該当店が1件ヒットする）。つまり「リンク切れ」ではなく「店舗ページに着地しない」問題 | 実機相当のブラウザで `?sw=尾張山荘 くろぎ` を開くと「1 / 1件・尾張山荘くろぎ」 |
+  | **Hot Pepper 由来店の食べログURL 3,638件は、一度も実地検証を通っていない**。`scripts/resolve_tabelog.js` の旧スコアリング（ページ内に店名トークンが2点以上出れば採用）で機械的に埋められたもので、日次監査 `audit_store_link_identity.js` の対象は `data/manual_stores.json` だけだった | 監査スクリプト冒頭の `MANUAL_PATH` 固定 / `data/tabelog_resolved.json`（4,005件・最終更新 2026-08-23） |
+  | その母集団から**等間隔30件を抽出して実地検証**したところ、明確に別店・別支店を指すものが5件（約17%）。例: 「旬亭 本郷」→ 本郷亭 名駅店 / 「アジアン料理 ゴルカ」→ マラ アジアン料理 / 「居酒屋ホタル 名駅西店」→ ホタル今池店 / 「鳥開 総本店 FC金山店」→ 鳥開総本家 名駅エスカ店 / 「カラオケJOYJOY 金山駅前店」→ 岡崎248六名店 | サンプル監査（`scripts/lib/store_link_identity.js` の判定器をそのまま使用） |
+  | 同じサンプルで、実際は正しいのに不一致と出る**偽陽性**も判明。食べログの予約ページは `<title>` が「<店名>のご予約」になるが判定器がこの接尾辞を落としておらず、「野ら田」対「野ら田のご予約」が sim=0.5 で不一致になっていた | `scripts/lib/store_link_identity.js` `tabelogNameFromTitle()` |
+- **対応（本コミット）**:
+  1. `scripts/resolve_manual_tabelog_links.js` を新設。手動店の空欄を **2つのゲート（名前＋所在地）を両方通ったものだけ**で埋める。名前ゲートは日次監査と**同じ判定器**（`namesMatch()`）を使うため、ここで入れたURLが翌日の監査で不一致になることは原理的に起きない。所在地ゲートは食べログ側 JSON-LD の `addressLocality` と我々の区情報の照合で、チェーンの支店取り違えを弾く。通らなかった店は**空欄のまま残す**（取り繕わない＝写真ポリシーと同じ思想）
+  2. `scripts/lib/store_link_identity.js`: `<title>` の「のご予約」接尾辞を除去（上記の偽陽性を解消）
+  3. `.github/workflows/build.yml`: 日次の実地監査を `--scope all --limit 60` へ拡大し、Hot Pepper 由来店のURLも検知対象に入れた（対象 約8,400件・キャッシュ60日で巡回）
+  4. `index.html`: 店舗ページURLを持たない店のリンクは「食べログで検索」と表示を変え、検索ページに飛ぶことを隠さない
+- **acceptance**:
+  1. 手動キュレーション店の `食べログURL` 保有率が上がり、入れたURLが `node scripts/audit_store_link_identity.js --scope manual --force` で不一致ゼロであること
+     → **実施済み（2026-09-20）**: 空欄129件を解決器にかけ **71件を確定**（42→113件・保有率66%）。
+       所在地の裏付け内訳は ward 59件 / station 1件 / sole-name-match 11件。
+       書き込んだ71件は全件、名前ゲート（`namesMatch()`）を通過することを再検算済み。
+       残り58件は no-verified-candidate 36 / no-candidates 16 / ambiguous-candidates 4 /
+       our-locality-contradictory 1 / branch-locality-mismatch 1 で、**空欄のまま**（検索フォールバック）
+  2. 日次CIの `--scope all` 監査が回り、`data/store_link_identity_report.json` に Hot Pepper 由来店の不一致が蓄積し始めること
+  3. 蓄積した不一致を `scripts/clear_broken_tabelog_links.js` と同じ方針（sim=0 は空欄化・境界事例は人の確認に残す）で処理する運用を回すこと（**本課題では未実施**。3,638件の再解決は外部サイトへの負荷が大きく、実行判断はオーナーに委ねる）
+
 ### [SEO-104] 日次ジャーナルの launchd ラッパーが、9時に走る**他ルーチンの実行中の未コミット成果物**を「前回実行の残骸」と誤認して stash に退避している（本日、本ループ自身の `not_deployed` 記録が消えかけた）
 
 - **priority**: P1 → **status**: done
