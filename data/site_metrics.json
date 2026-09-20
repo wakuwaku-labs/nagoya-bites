@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-19T20:06:26.088Z",
+  "generatedAt": "2026-09-20T00:08:34.525Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1125,
-    "pageViews": 1946,
-    "sessions": 1369,
+    "activeUsers": 1126,
+    "pageViews": 1947,
+    "sessions": 1371,
     "avgSessionDuration": 153.4,
-    "bounceRate": 0.289,
+    "bounceRate": 0.29,
     "pagesPerSession": 1.42
   },
   "dailyReference": {
@@ -18,16 +18,16 @@
   "channels": {
     "sessions": {
       "organic": 950,
-      "direct": 296,
+      "direct": 297,
       "social": 8,
       "ai_assistant": 98,
       "referral": 20,
       "paid": 0,
-      "other": 22
+      "other": 23
     },
     "pct": {
       "organic": 68.1,
-      "direct": 21.2,
+      "direct": 21.3,
       "social": 0.6,
       "ai_assistant": 7,
       "referral": 1.4,
@@ -62,14 +62,14 @@
       "sessions": 78
     },
     {
-      "source": "unknown",
+      "source": "(not set)",
       "medium": "(not set)",
       "sessions": 38
     },
     {
-      "source": "(not set)",
+      "source": "unknown",
       "medium": "(not set)",
-      "sessions": 37
+      "sessions": 38
     },
     {
       "source": "(data not available)",
@@ -97,6 +97,11 @@
       "sessions": 7
     },
     {
+      "source": "unknown",
+      "medium": "",
+      "sessions": 5
+    },
+    {
       "source": "facebook.com",
       "medium": "referral",
       "sessions": 4
@@ -114,11 +119,6 @@
     {
       "source": "teams.public.onecdn.static.microsoft",
       "medium": "referral",
-      "sessions": 4
-    },
-    {
-      "source": "unknown",
-      "medium": "",
       "sessions": 4
     },
     {
@@ -190,8 +190,8 @@
     },
     {
       "path": "/",
-      "pageViews": 275,
-      "sessions": 191
+      "pageViews": 276,
+      "sessions": 192
     },
     {
       "path": "/index.html",
@@ -211,7 +211,7 @@
   ],
   "cta": {
     "outboundClicks": 139,
-    "ctaClickRate": 10.2,
+    "ctaClickRate": 10.1,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -689,7 +689,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1125,
+    "value": 1126,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

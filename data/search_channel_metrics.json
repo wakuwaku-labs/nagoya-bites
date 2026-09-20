@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-19T20:06:29.655Z",
+  "generatedAt": "2026-09-20T00:08:38.167Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1394,
+  "total_sessions": 1396,
   "engines": [
     {
       "key": "google",
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 337,
-      "pct": 24.2,
+      "pct": 24.1,
       "sources": [
         {
           "source": "bing",
@@ -40,8 +40,8 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 254,
-      "pct": 18.2,
+      "sessions": 255,
+      "pct": 18.3,
       "sources": [
         {
           "source": "(direct)",
@@ -51,7 +51,7 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 37
+          "sessions": 38
         }
       ]
     },
@@ -109,8 +109,8 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 85,
-      "pct": 6.1,
+      "sessions": 86,
+      "pct": 6.2,
       "sources": [
         {
           "source": "unknown",
@@ -129,17 +129,17 @@
         },
         {
           "source": "unknown",
+          "medium": "",
+          "sessions": 5
+        },
+        {
+          "source": "unknown",
           "medium": "(none)",
           "sessions": 4
         },
         {
           "source": "teams.public.onecdn.static.microsoft",
           "medium": "referral",
-          "sessions": 4
-        },
-        {
-          "source": "unknown",
-          "medium": "",
           "sessions": 4
         },
         {
@@ -260,7 +260,7 @@
       "direct": -3,
       "yahoo": 0,
       "ai_assistant": -1,
-      "other": 12,
+      "other": 13,
       "duckduckgo": 2,
       "social": 0
     }
