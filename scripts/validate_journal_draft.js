@@ -17,7 +17,8 @@ const path = require('path');
 // 検索意図（シーンKW）判定は scripts/journal_seo_kw.js に一元化（SEO-011）
 const { checkText } = require('./journal_seo_kw');
 // ヒーロー写真の帰属判定は scripts/lib/hero_photo_gate.js に一元化（2026-08-17 の事故）
-const { judgeHero, findReuse, extractHeroFromHtml } = require('./lib/hero_photo_gate');
+const { judgeHero, judgePhoto, findReuse, extractHeroFromHtml, extractBodyPhotosFromHtml } = require('./lib/hero_photo_gate');
+const { bodyPolicy } = require('./lib/journal_photos');
 
 const ROOT = path.join(__dirname, '..');
 const PUBLISHED = path.join(ROOT, 'data', 'journal_published.json');
@@ -247,6 +248,54 @@ function checkJournal(htmlPath, mdPath) {
         : `ヒーロー写真の帰属OK（${heroArticle.heroSource || 'figure'}）`
     });
   }
+
+  // 15c. 本文写真（art-body-img）も同じ帰属の判定を通す（HARD FAIL）
+  //      本文に写真を散らすようにしたぶん、「実写でありさえすれば何でもいい」経路が
+  //      ヒーロー以外にも増えた。基準はヒーローと同一（scripts/lib/hero_photo_gate.js）。
+  //      ここを緩めると、主役店の写真が足りない日に別店の写真を本文へ入れる動機ができる。
+  const bodyPhotos = extractBodyPhotosFromHtml(html, heroSlug, heroDate);
+  const bodyFails = [];
+  const bodyWarns = [];
+  for (const bp of bodyPhotos) {
+    if (bp.heroUrl && bp.heroUrl === heroArticle.heroUrl) {
+      bodyFails.push(`[body_same_as_hero] 本文写真がヒーローと同じ画像です: ${bp.heroUrl.slice(0, 60)}`);
+      continue;
+    }
+    const v = judgePhoto(bp);
+    for (const f of v.findings) {
+      (f.level === 'fail' ? bodyFails : bodyWarns).push(`[${f.code}] ${f.msg}`);
+    }
+  }
+  const bodyDupes = bodyPhotos.map(b => b.heroUrl).filter(Boolean)
+    .filter((u, i, arr) => arr.indexOf(u) !== i);
+  if (bodyDupes.length) bodyFails.push(`[body_duplicate] 同じ画像が本文に2回出ています: ${bodyDupes[0].slice(0, 60)}`);
+
+  if (bodyFails.length) {
+    pass('15c_body_photos_belong_to_article', false,
+      `❌ 本文写真が不適切です。\n     ` + bodyFails.join('\n     ') +
+      `\n     → 候補が足りない日は枚数を減らすのが正解です（他店の写真を借りない）。`);
+  } else {
+    results.push({
+      id: '15c_body_photos_belong_to_article', ok: true, warn: bodyWarns.length > 0,
+      msg: bodyWarns.length
+        ? `⚠️ WARNING: ${bodyWarns.join(' / ')}`
+        : (bodyPhotos.length ? `本文写真の帰属OK（${bodyPhotos.length}枚）` : '本文写真なし')
+    });
+  }
+
+  // 15d. 記事の写真枚数（WARNING のみ・絶対に FAIL にしない）
+  //      写真1枚だけの記事は読み進めるあいだ目が休まらないので目安枚数を置く。
+  //      ただし枚数を合否にすると、候補が足りない日に「他店の写真を借りる」「図で水増しする」
+  //      動機が生まれる（CLAUDE.md 品質ゲート原則1・4）。だから警告に留める。
+  const photoPol = bodyPolicy();
+  const totalPhotos = (heroArticle.heroUrl ? 1 : 0) + bodyPhotos.length;
+  results.push({
+    id: '15d_photo_count', ok: true, warn: totalPhotos < photoPol.targetTotal,
+    msg: totalPhotos < photoPol.targetTotal
+      ? `⚠️ WARNING: 記事内の写真が ${totalPhotos}枚（目安 ${photoPol.targetTotal}枚）。`
+        + `主役店の候補が尽きているなら増やさなくてよい（取り繕わない）`
+      : `記事内の写真 ${totalPhotos}枚（目安 ${photoPol.targetTotal}枚）`
+  });
 
   // 16. 検索意図（シーンKW）とSNS原稿の整合（WARNING — SEO-011）
   //     記事タイトルに使ったシーンKW/エリア語が docs/daily-posts/ の原稿にも載っているかを見る。

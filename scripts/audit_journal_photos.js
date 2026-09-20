@@ -12,6 +12,9 @@
  *   node scripts/audit_journal_photos.js --check    # 違反があれば exit 1（CI向け）
  *   node scripts/audit_journal_photos.js --days 30  # 直近N日だけ見る
  *
+ * ヒーローだけでなく本文写真（art-body-img）も同じ判定を通す。本文に写真を散らすように
+ * なったぶん、「その記事の店の写真か」を検証しない経路を作らないため。
+ *
  * 【なぜ存在するか】
  *   2026-08-17、記事の主役2店に写真が無かったため、記事に一行触れただけの別店の販促バナーが
  *   記事の顔になって公開された。validator は「汎用ストック写真でないこと」しか見ておらず、
@@ -21,7 +24,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { judgeHero, findReuse, extractHeroFromHtml, loadPolicy } = require('./lib/hero_photo_gate');
+const { judgeHero, judgePhoto, findReuse, extractHeroFromHtml, extractBodyPhotosFromHtml, loadPolicy } = require('./lib/hero_photo_gate');
 
 const ROOT = path.resolve(__dirname, '..');
 const JOURNAL_DIR = path.join(ROOT, 'journal');
@@ -49,6 +52,7 @@ function main() {
   }
 
   const heroes = [];
+  const photoCounts = [];
   const failures = [];
   const warnings = [];
 
@@ -63,6 +67,25 @@ function main() {
     for (const fd of verdict.findings) {
       const rec = { slug, date, ...fd, heroUrl: article.heroUrl };
       (fd.level === 'fail' ? failures : warnings).push(rec);
+    }
+
+    // 本文写真（art-body-img）— 判定はヒーローと同一
+    const bodyPhotos = extractBodyPhotosFromHtml(html, slug, date);
+    photoCounts.push({ slug, date, total: (article.heroUrl ? 1 : 0) + bodyPhotos.length });
+    const seenInArticle = new Set([article.heroUrl].filter(Boolean));
+    for (const bp of bodyPhotos) {
+      if (bp.heroUrl && seenInArticle.has(bp.heroUrl)) {
+        failures.push({ slug, date, level: 'fail', code: 'body_duplicate',
+          msg: `同じ画像が記事内で2回使われています（ヒーローまたは他の本文写真と同一）: ${bp.heroUrl.slice(0, 70)}`,
+          heroUrl: bp.heroUrl });
+        continue;
+      }
+      if (bp.heroUrl) seenInArticle.add(bp.heroUrl);
+      const v = judgePhoto(bp);
+      for (const fd of v.findings) {
+        const rec = { slug, date, ...fd, code: `body:${fd.code}`, heroUrl: bp.heroUrl };
+        (fd.level === 'fail' ? failures : warnings).push(rec);
+      }
     }
     if (args.verbose) {
       const mark = verdict.level === 'fail' ? '❌' : verdict.level === 'warn' ? '⚠️ ' : '✅';
@@ -113,6 +136,20 @@ function main() {
     for (const [code, slugs] of byCode) {
       console.log(`  [${code}] ${slugs.length}本: ${slugs.slice(0, 6).join(', ')}${slugs.length > 6 ? ` ほか${slugs.length - 6}本` : ''}`);
     }
+  }
+
+  // 記事あたりの写真枚数（情報提供のみ・合否には使わない）。
+  // 枚数を合否にすると、候補が足りない日に他店の写真を借りる動機が生まれる
+  // （CLAUDE.md 品質ゲート原則1・4）。ここでは「今どうなっているか」を見えるようにするだけ。
+  if (photoCounts.length) {
+    const target = (policy.bodyPhotos || {}).targetTotal || 3;
+    const dist = new Map();
+    for (const p of photoCounts) dist.set(p.total, (dist.get(p.total) || 0) + 1);
+    const line = Array.from(dist.entries()).sort((a, b) => a[0] - b[0])
+      .map(([n, c]) => `${n}枚:${c}本`).join(' / ');
+    const short = photoCounts.filter(p => p.total < target).length;
+    console.log(`\n📊 記事あたりの写真枚数（目安 ${target}枚）: ${line}`);
+    if (short) console.log(`   目安に届かない記事 ${short}本 — node scripts/add_journal_body_photos.js で候補を探せます`);
   }
 
   const bad = failures.length + reuseFail.length;

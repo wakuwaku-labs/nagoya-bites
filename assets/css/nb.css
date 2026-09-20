@@ -268,6 +268,13 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .art-img-credit a{color:var(--dim);text-decoration:none;}
 .art-img-credit a:hover{color:var(--gold);}
 
+/* 本文中の写真（記事の途中に散らす。判定・配置は scripts/lib/journal_photos.js が持つ）。
+   ヒーローより一回り小さくして、本文の流れを断ち切らない見え方にする。 */
+.art-body-img{margin:var(--sp-6) auto;background:var(--bg2);border-radius:var(--r-md);overflow:hidden;}
+.art-body-img img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;display:block;}
+@media(min-width:768px){.art-body-img img{aspect-ratio:3/2;max-height:400px;}}
+.art-body-img .art-img-credit{padding:.35rem .1rem 0;}
+
 .art-body,.content{max-width:var(--container-prose);margin:0 auto;padding:0 1.5rem var(--rhythm-md);font-size:var(--fs-md);line-height:var(--lh-body);}
 .art-body p,.content p{color:var(--muted);margin-bottom:var(--sp-5);}
 .art-body h2,.content h2,.section-label{font-family:var(--font-display);font-weight:500;font-size:var(--fs-xl);color:var(--ink);margin:var(--sp-7) 0 var(--sp-3);padding-top:var(--sp-4);border-top:2px solid var(--gold);}
