@@ -971,8 +971,10 @@
 
 ### [SEO-103] 週次レポートのメールが全て TRASH に入っており、`/seo-triage-weekly` の規定クエリでは**原理的に1通も見つけられない**（週次アームの静かな空振り）
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-09-19
+- **resolved**: 2026-09-20
+- **resolved_by**: acceptance.1（runbook）+ acceptance.4（watchdog）実装済み。acceptance.2（Gmail フィルタ解除）・acceptance.3（遡り triage）はオーナーへエスカレーション
 - **category**: SEO / 運用監視
 - **owner**: Marketer
 - **source**: 日次SEOトリアージ 2026-09-19 の週次アーム実行中に検出（internal-audit）。助言由来ではなくループ自身の欠陥
@@ -6066,6 +6068,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-09-20 | Builder(routine) | SEO-103: 週次トリアージ watchdog 新設（scripts/check_seo_triage_weekly_health.js + .github/workflows/seo-triage-weekly-watchdog.yml）・docs/seo-triage-weekly-runbook.md 作成（in:anywhere クエリ手順）。Gmail フィルタ解除・遡り triage はオーナーへエスカレーション | ✅ 本コミットに含む |
 | 2026-09-20 | Builder(routine) | SEO-104: launchd ラッパーのスタッシュ対象をジャーナル固有パスに限定・out-of-band 通知追加 | ✅ commit e6db43e |
 | 2026-09-18 | Designer(/solve-next) | DSN-001残件実装・デプロイ | ✅ commit 58b80e2c0e |
 | 2026-09-08 | Designer(EXPLICIT) | DSN-003: トップ/ジャーナル/特集/編集規約4ページ種別のプロ品質リデザイン＋サイト共通クローム統一（scripts/lib/site_chrome.js新設・全216ファイル） | ✅ コミット済み・PR作成待ち (commit 20cd42ec4) |
