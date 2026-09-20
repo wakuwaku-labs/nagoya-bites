@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-20T15:44:23.399Z",
+  "generatedAt": "2026-09-20T20:22:56.914Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1126,
-    "pageViews": 1947,
-    "sessions": 1365,
-    "avgSessionDuration": 155,
-    "bounceRate": 0.29,
+    "activeUsers": 1132,
+    "pageViews": 1954,
+    "sessions": 1370,
+    "avgSessionDuration": 154.9,
+    "bounceRate": 0.292,
     "pagesPerSession": 1.43
   },
   "dailyReference": {
@@ -17,34 +17,34 @@
   },
   "channels": {
     "sessions": {
-      "organic": 953,
-      "direct": 301,
+      "organic": 956,
+      "direct": 306,
       "social": 8,
-      "ai_assistant": 104,
+      "ai_assistant": 105,
       "referral": 20,
       "paid": 0,
-      "other": 11
+      "other": 15
     },
     "pct": {
-      "organic": 68.2,
-      "direct": 21.5,
+      "organic": 67.8,
+      "direct": 21.7,
       "social": 0.6,
       "ai_assistant": 7.4,
       "referral": 1.4,
       "paid": 0,
-      "other": 0.8
+      "other": 1.1
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 417
+      "sessions": 418
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 333
+      "sessions": 335
     },
     {
       "source": "(direct)",
@@ -64,7 +64,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 44
+      "sessions": 49
     },
     {
       "source": "unknown",
@@ -72,14 +72,14 @@
       "sessions": 43
     },
     {
-      "source": "duckduckgo",
-      "medium": "organic",
+      "source": "(data not available)",
+      "medium": "(data not available)",
       "sessions": 11
     },
     {
-      "source": "(data not available)",
-      "medium": "(data not available)",
-      "sessions": 7
+      "source": "duckduckgo",
+      "medium": "organic",
+      "sessions": 11
     },
     {
       "source": "copilot.com",
@@ -127,6 +127,11 @@
       "sessions": 3
     },
     {
+      "source": "chatgpt.com",
+      "medium": "(none)",
+      "sessions": 2
+    },
+    {
       "source": "ecosia.org",
       "medium": "organic",
       "sessions": 2
@@ -149,11 +154,6 @@
     {
       "source": "blekko.com",
       "medium": "referral",
-      "sessions": 1
-    },
-    {
-      "source": "chatgpt.com",
-      "medium": "(none)",
       "sessions": 1
     },
     {
@@ -190,8 +190,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 395,
-      "sessions": 346
+      "pageViews": 396,
+      "sessions": 347
     },
     {
       "path": "/",
@@ -205,8 +205,8 @@
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 106,
-      "sessions": 96
+      "pageViews": 108,
+      "sessions": 98
     },
     {
       "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
@@ -215,12 +215,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 151,
+    "outboundClicks": 152,
     "ctaClickRate": 11.1,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 67
+        "clicks": 68
       },
       {
         "domain": "tabelog.com",
@@ -280,13 +280,13 @@
       "organic": 73,
       "direct": 52,
       "social": 0,
-      "ai_assistant": 17,
+      "ai_assistant": 18,
       "referral": 5,
       "paid": 0,
       "other": 4
     },
-    "ctaClickRate_organic": 7.7,
-    "ctaClickRate_direct": 17.3,
+    "ctaClickRate_organic": 7.6,
+    "ctaClickRate_direct": 17,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -318,6 +318,10 @@
         "clicks": 4
       },
       {
+        "path": "/features/nagoya-miso-nikomi-udon.html",
+        "clicks": 3
+      },
+      {
         "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "clicks": 3
       },
@@ -335,10 +339,6 @@
       },
       {
         "path": "/features/nagoya-italian-guide.html",
-        "clicks": 2
-      },
-      {
-        "path": "/features/nagoya-miso-nikomi-udon.html",
         "clicks": 2
       },
       {
@@ -454,6 +454,11 @@
         "clicks": 3
       },
       {
+        "path": "/features/nagoya-miso-nikomi-udon.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 3
+      },
+      {
         "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
         "domain": "www.instagram.com",
         "clicks": 3
@@ -480,11 +485,6 @@
       },
       {
         "path": "/features/nagoya-italian-guide.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 2
-      },
-      {
-        "path": "/features/nagoya-miso-nikomi-udon.html",
         "domain": "www.hotpepper.jp",
         "clicks": 2
       },
@@ -656,6 +656,10 @@
         "clicks": 12
       },
       {
+        "path": "/features/nagoya-miso-nikomi-udon.html",
+        "clicks": 3
+      },
+      {
         "path": "/features/birthday.html",
         "clicks": 2
       },
@@ -665,10 +669,6 @@
       },
       {
         "path": "/features/nagoya-italian-guide.html",
-        "clicks": 2
-      },
-      {
-        "path": "/features/nagoya-miso-nikomi-udon.html",
         "clicks": 2
       },
       {
@@ -700,11 +700,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 103
+    "reservationClicks": 104
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1126,
+    "value": 1132,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
