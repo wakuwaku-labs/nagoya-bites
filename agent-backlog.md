@@ -8,8 +8,10 @@
 
 ### [SEO-104] 日次ジャーナルの launchd ラッパーが、9時に走る**他ルーチンの実行中の未コミット成果物**を「前回実行の残骸」と誤認して stash に退避している（本日、本ループ自身の `not_deployed` 記録が消えかけた）
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-09-20
+- **resolved**: 2026-09-20
+- **resolved_by**: e6db43e（acceptance.1/.2 実装。.3/.4 はローカルMac操作が必要なため別途実施）
 - **category**: ops-monitoring / CI
 - **owner**: Builder
 - **source**: 【ループ内部監査】2026-09-20 の日次トリアージ実行中（09:00 JST 前後）に、本ループが書いた `data/gas_deploy_health.json`（2026-09-19 の `verdict: not_deployed` 記録）と `agent-backlog.md` の追記が、作業ツリーから消えた。`git stash list` を引いたところ `stash@{0}: auto-cleanup-debris-20260920-090121` に両方が入っており、`git stash pop` で手動復旧した
@@ -969,7 +971,7 @@
 
 ### [SEO-103] 週次レポートのメールが全て TRASH に入っており、`/seo-triage-weekly` の規定クエリでは**原理的に1通も見つけられない**（週次アームの静かな空振り）
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: in_progress
 - **detected**: 2026-09-19
 - **category**: SEO / 運用監視
 - **owner**: Marketer
@@ -6064,6 +6066,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-09-20 | Builder(routine) | SEO-104: launchd ラッパーのスタッシュ対象をジャーナル固有パスに限定・out-of-band 通知追加 | ✅ commit e6db43e |
 | 2026-09-18 | Designer(/solve-next) | DSN-001残件実装・デプロイ | ✅ commit 58b80e2c0e |
 | 2026-09-08 | Designer(EXPLICIT) | DSN-003: トップ/ジャーナル/特集/編集規約4ページ種別のプロ品質リデザイン＋サイト共通クローム統一（scripts/lib/site_chrome.js新設・全216ファイル） | ✅ コミット済み・PR作成待ち (commit 20cd42ec4) |
 | 2026-09-08 | Orchestrator(routine) | ISSUE-121: 他都道府県マッチ残存確認→修正は commit 06b6976f で main に反映済み・audit_other_prefecture_matches.js --check=[OK]確認・done クローズ | ✅ done（既存修正を確認） |
