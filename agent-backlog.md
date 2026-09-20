@@ -8,7 +8,7 @@
 
 ### [SEO-104] 日次ジャーナルの launchd ラッパーが、9時に走る**他ルーチンの実行中の未コミット成果物**を「前回実行の残骸」と誤認して stash に退避している（本日、本ループ自身の `not_deployed` 記録が消えかけた）
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: in_progress
 - **detected**: 2026-09-20
 - **category**: ops-monitoring / CI
 - **owner**: Builder
