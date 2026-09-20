@@ -221,6 +221,44 @@ function pickPhoto(candidates, store) {
   return { picked: userFallback, rejects };
 }
 
+/**
+ * 同じ店の写真を「複数枚」選ぶ（ジャーナルの本文写真用）。
+ *
+ * pickPhoto() が1枚を選ぶのと同じ判定（judgePlacesPhoto）をそのまま全候補に当て、
+ * オーナー投稿 → （許可時のみ）客投稿 の順に最大 limit 枚を返す。
+ * 選定規則を増やさない＝1枚目と2枚目で基準が変わらないようにするため、
+ * ここでは判定を1つも足していない（採用順の規則だけを持つ）。
+ *
+ * @param {Array<{photo:object, attribution:string}>} candidates 走査順の候補
+ * @param {object} store
+ * @param {number} limit 最大枚数
+ * @returns {{picked:Array<{photo:object, attribution:string, tier:'owner'|'user'}>, rejects:string[]}}
+ */
+function pickPhotos(candidates, store, limit) {
+  const p = loadPolicy().places;
+  const rejects = [];
+  const owners = [];
+  const users = [];
+
+  for (const c of candidates) {
+    const j = judgePlacesPhoto(c.photo, c.attribution, store);
+    if (j.ok) { owners.push({ ...c, tier: 'owner' }); continue; }
+    rejects.push(`${j.reason}${j.detail ? ` ${j.detail}` : ''}`);
+
+    if (!p.allowUserPhotoFallback) continue;
+    if (j.reason !== 'not-owner-photo') continue;             // 解像度不足等は代替枠にもしない
+    const credit = String(c.attribution || '').trim();
+    if (p.userPhotoRequiresCredit && (!credit || credit === 'Google Maps')) continue;
+    const w = Number(c.photo.widthPx || c.photo.width || 0);
+    if (p.userPhotoMinWidthPx && w && w < p.userPhotoMinWidthPx) continue;
+    users.push({ ...c, tier: 'user' });
+  }
+
+  // オーナー写真が1枚でもあれば、そちらを先に使い切る（pickPhoto と同じ優先順）。
+  const picked = owners.concat(owners.length ? [] : users).slice(0, Math.max(0, limit || 0));
+  return { picked, rejects };
+}
+
 /** html_attributions の1件目からタグを剥いでクレジット名を取り出す */
 function attributionName(photo) {
   const raw = photo?.html_attributions?.[0] || photo?.authorAttributions?.[0]?.displayName || '';
@@ -232,4 +270,4 @@ const isPlacesPhotoUrl = (u) => /googleusercontent\.com/.test(String(u || ''));
 
 // core() は scripts/lib/hero_photo_gate.js（ジャーナルのヒーロー写真の帰属判定）でも使う。
 // 同じ屋号を経路ごとに別基準で照合すると判定がズレるため、正規化はここ1本に集約する。
-module.exports = { loadPolicy, isOwnerAttribution, judgePlacesPhoto, pickPhoto, attributionName, isPlacesPhotoUrl, norm, core, dice, VERIFIED_ALIASES };
+module.exports = { loadPolicy, isOwnerAttribution, judgePlacesPhoto, pickPhoto, pickPhotos, attributionName, isPlacesPhotoUrl, norm, core, dice, VERIFIED_ALIASES };

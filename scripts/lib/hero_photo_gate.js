@@ -146,10 +146,12 @@ function isStockHost(url, policy) {
  * }
  * 戻り値 { ok, level: 'fail'|'warn'|'ok', findings: [{code, level, msg}] }
  * ──────────────────────────────────────────────────────────────── */
-function judgeHero(article) {
+function judgePhoto(article) {
   const policy = loadPolicy();
   const findings = [];
   const add = (level, code, msg) => findings.push({ level, code, msg });
+  // 役割ラベル。判定そのものは hero / body で同一にする（本文写真だけ基準が緩い、を作らない）。
+  const R = article.role === 'body' ? '本文写真' : 'ヒーロー写真';
 
   const url = article.heroUrl || '';
   const names = (article.storeNames || []).filter(Boolean);
@@ -163,7 +165,7 @@ function judgeHero(article) {
 
   if (!url) {
     add(enforce ? 'fail' : 'warn', 'hero_missing',
-      'ヒーロー画像がありません（写真の自動取得が失敗した可能性）');
+      `${R}がありません（写真の自動取得が失敗した可能性）`);
     return finish(findings);
   }
 
@@ -180,7 +182,16 @@ function judgeHero(article) {
   }
 
   // 3. 帰属 — この記事の店の写真か
-  const source = article.heroSource || classifySource(url, article);
+  //    宣言された出所（data-*-source）と、URL から機械的に決まる出所が食い違う場合は URL を採る。
+  //    宣言を優先すると、HotPepper の画像に places と書くだけで所有店の逆引き照合を回避できてしまう
+  //    （＝証跡が自己申告になる。CLAUDE.md 制約10）。判定には検算できる側だけを使う。
+  const classified = classifySource(url, article);
+  const declared = article.heroSource || '';
+  const source = (classified !== 'unknown' && declared && declared !== classified) ? classified : (declared || classified);
+  if (classified !== 'unknown' && declared && declared !== classified) {
+    add('warn', 'source_attr_mismatch',
+      `証跡の出所（${declared}）と画像URLの出所（${classified}）が食い違っています。URL側で判定しました`);
+  }
 
   if (source === 'figure' || source === 'self-hosted') {
     // 記事固有であること = ファイル名に記事slugを含む
@@ -203,7 +214,7 @@ function judgeHero(article) {
       const matched = owners.find(o => names.some(n => namesMatch(o, n, th)));
       if (!matched) {
         add('fail', 'hero_store_mismatch',
-          `ヒーロー写真が記事の店の写真ではありません。\n` +
+          `${R}が記事の店の写真ではありません。\n` +
           `       画像の所有店: ${owners.join(' / ')}\n` +
           `       記事の店    : ${names.join(' / ') || '(なし)'}\n` +
           `       → 主役店の写真が無い場合、他店の写真を借りてはいけない。記事固有のイメージ図に倒すこと（CLAUDE.md 写真ソースの優先順・最終手段）`);
@@ -237,11 +248,11 @@ function judgeHero(article) {
     if (article.heroStore) {
       if (!names.some(n => namesMatch(article.heroStore, n, th))) {
         add('fail', 'hero_store_mismatch',
-          `ヒーロー写真の取得元店舗（${article.heroStore}）が記事の店（${names.join(' / ') || 'なし'}）と一致しません`);
+          `${R}の取得元店舗（${article.heroStore}）が記事の店（${names.join(' / ') || 'なし'}）と一致しません`);
       }
     } else {
       add(enforce ? 'fail' : 'warn', 'places_attribution_missing',
-        `Google Places 写真に取得元店舗の証跡がありません。figure タグに data-hero-store="店名" を付けてください（URLからは逆引きできないため、証跡を成果物に持たせる）`);
+        `Google Places 写真に取得元店舗の証跡がありません。figure タグに ${article.role === 'body' ? 'data-photo-store' : 'data-hero-store'}="店名" を付けてください（URLからは逆引きできないため、証跡を成果物に持たせる）`);
     }
   } else if (source === 'instagram') {
     const acct = (url.match(/instagram\.com\/([^/]+)\/(?:p|reel|tv)\//) || [])[1];
@@ -258,7 +269,7 @@ function judgeHero(article) {
     }
   } else if (source === 'unknown') {
     add('fail', 'hero_source_unknown',
-      `ヒーロー画像の出所を機械判定できません: ${url.slice(0, 80)}\n` +
+      `${R}の出所を機械判定できません: ${url.slice(0, 80)}\n` +
       `       許可: Instagram embed / HotPepper / Google Places / assets/journal-figures / assets/journal-photos`);
   }
 
@@ -269,6 +280,11 @@ function judgeHero(article) {
   }
 
   return finish(findings);
+}
+
+/** 後方互換: ヒーロー写真の判定（role 省略時は hero） */
+function judgeHero(article) {
+  return judgePhoto({ ...article, role: article.role || 'hero' });
 }
 
 function finish(findings) {
@@ -362,9 +378,39 @@ function extractHeroFromHtml(html, slug, date) {
   };
 }
 
+/* ────────────────────────────────────────────────────────────────
+ * 記事HTMLから本文写真（art-body-img）を取り出す
+ *
+ * ヒーローとは class も属性名も分けてある（data-photo-source / data-photo-store）。
+ * 分けているのは、監査が「顔の写真」と「本文の写真」を取り違えないため。
+ * 判定そのものは judgePhoto で共通（本文写真だけ基準が緩い、を作らない）。
+ * ──────────────────────────────────────────────────────────────── */
+function extractBodyPhotosFromHtml(html, slug, date) {
+  const storeNames = Array.from(html.matchAll(/class="store-name">([^<]+)</g)).map(m => m[1].trim());
+  const out = [];
+  for (const m of html.matchAll(/<figure class="art-body-img"([^>]*)>([\s\S]*?)<\/figure>/g)) {
+    const attrs = m[1] || '';
+    const inner = m[2] || '';
+    out.push({
+      role: 'body',
+      slug, date,
+      heroUrl: (inner.match(/<img[^>]*src="([^"]+)"/) || [])[1] || '',
+      heroSource: (attrs.match(/data-photo-source="([^"]*)"/) || [])[1] || '',
+      heroStore: (attrs.match(/data-photo-store="([^"]*)"/) || [])[1] || '',
+      caption: (inner.match(/<figcaption[^>]*>([\s\S]*?)<\/figcaption>/) || ['', ''])[1]
+        .replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
+      storeNames,
+      html,
+    });
+  }
+  return out;
+}
+
 module.exports = {
   loadPolicy,
   judgeHero,
+  judgePhoto,
+  extractBodyPhotosFromHtml,
   findReuse,
   extractHeroFromHtml,
   classifySource,

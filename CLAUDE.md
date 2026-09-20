@@ -215,6 +215,24 @@
 確認は `node scripts/audit_journal_photos.js`（Editor/Builder 共管）
 ```
 
+記事の写真は1枚で終わらせない（本文にも散らす・2026-09-20）:
+
+> ジャーナルの写真はヒーロー1枚だけで、本文は最後まで文字が続いていた。読者の目が休まらず、
+> 店の様子も1枚でしか伝わらない。本文の途中にも写真を挿す。
+
+```
+1. 増やすのは「枚数」であって「基準」ではない
+   本文写真もヒーローと同じ帰属の判定（scripts/lib/hero_photo_gate.js の judgePhoto）を通す。
+   その記事が扱う店の写真であること・出所を書けない写真は載せないこと、はどちらも変わらない
+2. 候補が足りない日は増やさない（取り繕わない）
+   枚数は合否ゲートにしない。枚数で落とすと「他店の写真を借りる」「図で水増しする」動機が生まれる
+   （CLAUDE.md 品質ゲート原則1・4）。validator は警告でしか言わない
+3. 写真を取りに行けなかったことを「候補なし」と同じ顔にしない
+   Places のクォータ切れ・認証エラーは理由つきで出す（写真が無い店と区別できないと後から分からない）
+4. 目安は data/journal_photo_policy.json の bodyPhotos（targetTotal=3）。閾値変更はJSONで行う
+5. 中身（販促バナー・ロゴ画像でないか）は機械で判定しない。目で見て差し替える（判定器を賢くしない）
+```
+
 品質ゲート（新規店・既存店を問わず、写真がサイトに入る全経路に適用）:
   基準の正本は `data/photo_policy.json`、判定器は `scripts/lib/photo_policy.js` の1本。
   - 優先3（Places）の写真は「クレジット名＝店名」＝オーナーがビジネスプロフィールから
@@ -329,8 +347,10 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `data/journal_health.json` | ローカル実行（launchd）の最終状態（ok / hold ＋ 理由）。**Mac の外へ push される**ため、watchdog の Issue が「認証切れ／品質HOLD／接続断」のどれかを原因つきで表示できる。`.local-logs/` は gitignore 対象で外に出ないことへの対策（ISSUE-084） |
 | `build.js` | データ埋め込みスクリプト（DataKeeper管轄） |
 | `data/photo_policy.json` | **店舗写真の採用基準の唯一の情報源**。Google Places の写真には「オーナーが上げた宣材」と「客が上げたスマホ写真」が混在し、実測で半々（2026-08-16・132件中66件が客投稿）。判定根拠は `authorAttributions`（写真クレジット）＝後から第三者が検算できる事実だけを使う（制約10）。判定器は `scripts/lib/photo_policy.js` の1本に集約し、取得（`fetch_manual_store_photos.js`）と監査（`audit_photo_policy.js`）が同じ判定を共有する。閾値変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_photo_policy.js`（Builder/DataKeeper 共管） |
-| `data/journal_photo_policy.json` | **ジャーナルのヒーロー写真の採用基準の唯一の情報源**。`data/photo_policy.json` が「その写真を店舗データに載せてよいか」を見るのに対し、こちらは「その写真をその記事の顔に使ってよいか」を見る。2026-08-17、記事の主役2店に写真が無かったため記事に一行触れただけの別店の販促バナーが顔になった事故を受けて新設。判定は検証できる事実だけ（HotPepper画像URL→所有店の逆引き／記事HTMLに刻んだ `data-hero-store`／記事slugと図のファイル名の対応）で行う（制約10）。判定器は `scripts/lib/hero_photo_gate.js` の1本に集約し、生成・公開前QA・日次CI監査が同じ判定を共有する。閾値変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_journal_photos.js`（Editor/Builder 共管） |
+| `data/journal_photo_policy.json` | **ジャーナルのヒーロー写真の採用基準の唯一の情報源**。`data/photo_policy.json` が「その写真を店舗データに載せてよいか」を見るのに対し、こちらは「その写真をその記事の顔に使ってよいか」を見る。2026-08-17、記事の主役2店に写真が無かったため記事に一行触れただけの別店の販促バナーが顔になった事故を受けて新設。判定は検証できる事実だけ（HotPepper画像URL→所有店の逆引き／記事HTMLに刻んだ `data-hero-store`／記事slugと図のファイル名の対応）で行う（制約10）。判定器は `scripts/lib/hero_photo_gate.js` の1本に集約し、生成・公開前QA・日次CI監査が同じ判定を共有する。閾値変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_journal_photos.js`（Editor/Builder 共管）。2026-09-20 に `bodyPhotos`（本文写真の目安枚数・配置）を追加 |
 | `scripts/audit_journal_photos.js` | 公開済み全記事のヒーロー写真を検査し、「記事と無関係な写真」「別記事との使い回し」「出所不明のまま公開」を検出。`--check` で違反あれば exit 1（build.yml が日次実行＝人がサイトを見に行かなくても検知が届く） |
+| `scripts/lib/journal_photos.js` | **ジャーナルの本文写真（ヒーロー以外の記事内写真）の収集・選定・配置の唯一の情報源**（2026-09-20）。記事の写真がヒーロー1枚だけで本文が最後まで文字だったため新設。候補は「その記事が扱う店」からだけ集め（HotPepper 公式写真＋Places のオーナー投稿）、採否は既存の判定器をそのまま使う（Places の写真は `scripts/lib/photo_policy.js`、記事との帰属は `scripts/lib/hero_photo_gate.js` の `judgePhoto`）＝ここで新しい基準を増やさない。配置は見出し（h2）の手前へ均等に散らし、見出しが足りない記事は段落の切れ目に落とす。Places がクォータ切れ・認証エラーで引けなかった場合は「候補なし」と区別して理由を返す（写真が無い店と取りに行けなかった店を同じ顔にしない）。生成（`generate_daily_draft.js`）と後追い（`add_journal_body_photos.js`）が同じこの1本を通る（Builder/Editor 共管） |
+| `scripts/add_journal_body_photos.js` | 公開済み記事へ本文写真を後から挿す（冪等）。`--dry-run` / `--days N` / `--only <slugの一部>` / `--limit N`。`GOOGLE_MAPS_API_KEY` があれば Places も候補に入る（1店1枚しか持たない HotPepper だけでは1店記事が増やせないため）。**CI では回さない** — 外部APIを叩くうえ、写真の中身（販促バナー・ロゴ画像でないか）は機械判定しないと決めてあるので、結果を人が見てからコミットする運用（Builder/Editor 共管） |
 | `scripts/fetch_press_release_photo.js` | プレスリリースの報道用写真を取得（写真ソース優先3）。開店直後で実写が存在しない新店を救う経路。対応配信元（規約で報道目的の無償利用が明示許諾されているもの）の正本は同ファイルの `SUPPORTED`。`node scripts/fetch_press_release_photo.js <リリースURL>`（Editor管轄） |
 | `docs/journal-photo-sources-setup.md` | 写真ソースの**配線手順の正本**。日次ジャーナルは launchd のローカル実行のため GitHub Secrets が届かず、Places のキーは `~/.config/nagoya-bites/journal.env` に置く必要がある。PR TIMES メディアユーザー登録の手順も含む（どちらもオーナー本人の操作） |
 | `scripts/lib/og_figure_png.js` | **図解SVG→OGP用PNG変換の唯一の情報源**。X / Facebook / LINE の OGP クローラは **SVG をレンダリングしない**ため、図解を `og:image` にした記事はSNS共有でサムネイルが出ず、日次ジャーナルの主要導線（SNS手動投稿）の CTR を丸ごと落とす。npm依存を足さず（制約4）、マシンに既にある Chrome/Chromium ヘッドレス（無ければ rsvg-convert）を呼ぶ。元図を等比縮小して 1200x630 のラッパーSVGに入れ子にし、背景は元図の全面rectの fill を流用する＝**画素を発明しない**（制約9のAI超解像禁止と同じ思想）。成功判定は出力PNGの IHDR 実寸のみ（制約10）。対象は `assets/journal-figures/` と `assets/feature-figures/`（Builder管轄・ISSUE-095） |
