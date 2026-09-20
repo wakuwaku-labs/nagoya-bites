@@ -15,6 +15,7 @@
  *   node scripts/audit_store_link_identity.js --store "サラマンジェ"  # 店名部分一致で1店のみ
  *   node scripts/audit_store_link_identity.js --force          # キャッシュ無視で全件再検証
  *   node scripts/audit_store_link_identity.js --check          # 不一致があれば exit 1（CI向け）
+ *   node scripts/audit_store_link_identity.js --scope all      # 手動店だけでなく掲載全店を対象にする
  *
  * キャッシュ（data/store_link_identity_checked.json）:
  *   一度 ok:true と確認できたURLは MAX_AGE_DAYS の間は再検証をスキップする
@@ -32,6 +33,7 @@ const { checkTabelogUrl, checkHotpepperId } = require('./lib/store_link_identity
 
 const ROOT = path.resolve(__dirname, '..');
 const MANUAL_PATH = path.join(ROOT, 'data', 'manual_stores.json');
+const STORES_PATH = path.join(ROOT, 'data', 'stores.json');
 const CACHE_PATH = path.join(ROOT, 'data', 'store_link_identity_checked.json');
 const REPORT_PATH = path.join(ROOT, 'data', 'store_link_identity_report.json');
 
@@ -39,7 +41,7 @@ const MAX_AGE_DAYS = 60;
 const MAX_AGE_MS = MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
 
 const args = process.argv.slice(2);
-const opts = { limit: 40, force: false, store: null, delayMs: 4000, jitterMs: 2000, check: false };
+const opts = { limit: 40, force: false, store: null, delayMs: 4000, jitterMs: 2000, check: false, scope: 'manual' };
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
   if (a === '--limit') opts.limit = parseInt(args[++i], 10);
@@ -48,6 +50,7 @@ for (let i = 0; i < args.length; i++) {
   else if (a === '--delay') opts.delayMs = parseInt(args[++i], 10);
   else if (a === '--check') opts.check = true;
   else if (a === '--all') opts.limit = Infinity;
+  else if (a === '--scope') opts.scope = args[++i];
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -70,9 +73,29 @@ function cacheKey(kind, url, storeName) {
   return crypto.createHash('md5').update(`${kind}|${url}|${storeName}`).digest('hex');
 }
 
-async function main() {
+// 検証対象の母集団
+//   manual … data/manual_stores.json（手動キュレーション店・従来の既定）
+//   all    … data/stores.json（サイトに載る全店。手動店もここに含まれる）
+// all を足したのは、Hot Pepper 由来店の食べログURLが scripts/resolve_tabelog.js の
+// 旧スコアリング（ページ内に店名トークンが出れば採用）で機械的に埋められており、
+// 一度も実地検証を通っていなかったため（2026-09-20・30件の等間隔サンプルで
+// 5件が別店・別支店を指していた）。
+function loadTargetsSource(scope) {
+  if (scope === 'all') {
+    const raw = loadJson(STORES_PATH, []);
+    const arr = Array.isArray(raw) ? raw : (raw.stores || []);
+    return arr;
+  }
   const raw = loadJson(MANUAL_PATH, { stores: [] });
-  const stores = Array.isArray(raw.stores) ? raw.stores : [];
+  return Array.isArray(raw.stores) ? raw.stores : [];
+}
+
+async function main() {
+  if (!['manual', 'all'].includes(opts.scope)) {
+    console.error(`--scope は manual / all のいずれか（指定: ${opts.scope}）`);
+    process.exit(2);
+  }
+  const stores = loadTargetsSource(opts.scope);
   const cache = loadJson(CACHE_PATH, {});
 
   let targets = [];
@@ -88,7 +111,7 @@ async function main() {
     }
   }
 
-  console.log(`=== 外部リンク実地検証 (対象候補 ${targets.length}件) ===`);
+  console.log(`=== 外部リンク実地検証 (scope=${opts.scope} / 対象候補 ${targets.length}件) ===`);
 
   let checkedCount = 0;
   let skippedFresh = 0;

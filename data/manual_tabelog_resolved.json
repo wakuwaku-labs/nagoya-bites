@@ -1,0 +1,2437 @@
+{
+  "勝手口 河内屋::丸の内": {
+    "store": "勝手口 河内屋",
+    "エリア": "丸の内",
+    "url": "https://tabelog.com/aichi/A2301/A230102/23093642/",
+    "matchedName": "勝手口 河内屋",
+    "title": "勝手口 河内屋のご予約 - 丸の内/居酒屋 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "station",
+      "our": "丸の内",
+      "theirs": "名古屋市中区"
+    },
+    "query": "勝手口 河内屋",
+    "checkedAt": "2026-09-20T08:17:17.518Z"
+  },
+  "麺や 六三六::名駅": {
+    "store": "麺や 六三六",
+    "エリア": "名駅",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23033417/",
+        "gate": "locality",
+        "reason": "ward-mismatch",
+        "our": "名古屋市千種区",
+        "theirs": "名古屋市中村区",
+        "matchedName": "麺や　六三六 名駅店 （メンヤロクサンロク）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230105/23033425/",
+        "gate": "locality",
+        "reason": "ward-mismatch",
+        "our": "名古屋市千種区",
+        "theirs": "名古屋市中区",
+        "matchedName": "麺や　六三六 大須本店"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23062067/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "天ぷら酒場 NAKASHO"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23066696/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "カレーうどん千吉 ウインクあいち店"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:17:28.885Z"
+  },
+  "麺屋はなび::高畑": {
+    "store": "麺屋はなび",
+    "エリア": "高畑",
+    "url": "https://tabelog.com/aichi/A2301/A230113/23008839/",
+    "matchedName": "麺屋はなび 高畑本店",
+    "title": "麺屋はなび 高畑本店 - 高畑/ラーメン | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中川区",
+      "theirs": "名古屋市中川区"
+    },
+    "query": "麺屋はなび",
+    "checkedAt": "2026-09-20T08:17:40.657Z"
+  },
+  "ラーメン 山岡家 名古屋::港区": {
+    "store": "ラーメン 山岡家 名古屋",
+    "エリア": "港区",
+    "failed": true,
+    "reason": "branch-locality-mismatch",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230113/23092649/",
+        "gate": "locality",
+        "reason": "ward-mismatch",
+        "our": "名古屋市中村区/名古屋市港区",
+        "theirs": "名古屋市中川区",
+        "matchedName": "ラーメン山岡家 名古屋太平通店"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230112/23039842/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.67,
+        "matchedName": "山岡家 宝神店"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:17:47.578Z"
+  },
+  "COFFEE KAJITA::名東区": {
+    "store": "COFFEE KAJITA",
+    "エリア": "名東区",
+    "url": "https://tabelog.com/aichi/A2301/A230111/23001204/",
+    "matchedName": "coffee Kajita （コーヒー カジタ）",
+    "title": "coffee Kajita （コーヒー カジタ） - 一社/カフェ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市千種区/名古屋市名東区",
+      "theirs": "名古屋市名東区"
+    },
+    "query": "COFFEE KAJITA",
+    "checkedAt": "2026-09-20T08:17:58.286Z"
+  },
+  "TRUNK COFFEE::東区": {
+    "store": "TRUNK COFFEE",
+    "エリア": "東区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230104/23053718/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.59,
+        "matchedName": "トランクコーヒーバー 高岳本店 （TRUNK COFFEE BAR ）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230105/23082756/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.56,
+        "matchedName": "トランクコーヒーラボ 東別院店 （TRUNK COFFEE LAB）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230105/23064084/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.44,
+        "matchedName": "トランクコーヒー&クラフトビア （Trunk Coffee & Craft Beer）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23074555/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "Style Kitchen"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:18:10.370Z"
+  },
+  "コメダ珈琲 本店::昭和区": {
+    "store": "コメダ珈琲 本店",
+    "エリア": "昭和区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23079848/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.5,
+        "matchedName": "コメダ珈琲 TAKEOUT"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23003909/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.38,
+        "matchedName": "コメダ珈琲店 エスカ店 （コメダコーヒーテン）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230108/23000640/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.53,
+        "matchedName": "コメダ珈琲店 本店 （コメダコーヒーテン）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230103/23091704/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.57,
+        "matchedName": "コメダ珈琲 大須大津通店"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:18:23.264Z"
+  },
+  "喫茶ユキ::東区": {
+    "store": "喫茶ユキ",
+    "エリア": "東区",
+    "failed": true,
+    "reason": "our-locality-contradictory",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230112/23041271/",
+        "gate": "locality",
+        "reason": "ward-mismatch",
+        "our": "名古屋市中区/名古屋市東区",
+        "theirs": "名古屋市熱田区",
+        "matchedName": "喫茶ユキ"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230105/23080685/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.33,
+        "matchedName": "喫茶 ゆき"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2303/A230302/23071421/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.13,
+        "matchedName": "喫茶 ミキ （【旧店名】喫茶 お食事 樹）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:18:36.326Z"
+  },
+  "喫茶マウンテン::昭和区": {
+    "store": "喫茶マウンテン",
+    "エリア": "昭和区",
+    "failed": true,
+    "reason": "ambiguous-candidates",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230109/23071691/",
+        "gate": "locality",
+        "reason": "ward-mismatch",
+        "our": "名古屋市昭和区",
+        "theirs": "名古屋市西区",
+        "matchedName": "マウンテン （MOUNTAIN）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23097102/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.38,
+        "matchedName": "Mountain HUB （マウンテンハブ）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:18:48.500Z"
+  },
+  "餃子の王将 大須観音店::大須": {
+    "store": "餃子の王将 大須観音店",
+    "エリア": "大須",
+    "url": "https://tabelog.com/aichi/A2301/A230105/23044193/",
+    "matchedName": "餃子の王将 大須観音店",
+    "title": "餃子の王将 大須観音店 - 大須観音/餃子 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "餃子の王将 大須観音店",
+    "checkedAt": "2026-09-20T08:18:55.582Z"
+  },
+  "覚王山フルーツ大福 弁才天::覚王山": {
+    "store": "覚王山フルーツ大福 弁才天",
+    "エリア": "覚王山",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230110/23074063/",
+        "gate": "locality",
+        "reason": "ward-mismatch",
+        "our": "名古屋市千種区",
+        "theirs": "名古屋市北区",
+        "matchedName": "覚王山 フルーツ大福 弁才天 尼ヶ坂店"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23074397/",
+        "gate": "locality",
+        "reason": "ward-mismatch",
+        "our": "名古屋市千種区",
+        "theirs": "名古屋市中村区",
+        "matchedName": "覚王山フルーツ大福 弁才天 名駅店"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23077202/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.64,
+        "matchedName": "弁才天･と､餅 大名古屋ビル店 （【旧店名】覚王山フルーツ大福 弁才天）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230105/23073784/",
+        "gate": "locality",
+        "reason": "ward-mismatch",
+        "our": "名古屋市千種区",
+        "theirs": "名古屋市中区",
+        "matchedName": "覚王山フルーツ大福 弁才天 上前津店"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:19:07.310Z"
+  },
+  "割烹 季節料理 花わさび::栄": {
+    "store": "割烹 季節料理 花わさび",
+    "エリア": "栄",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:19:09.709Z"
+  },
+  "矢場とん 本店::大須": {
+    "store": "矢場とん 本店",
+    "エリア": "大須",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230103/23000134/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.31,
+        "matchedName": "名古屋名物 みそかつ 矢場とん 矢場町本店 （やばとん）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23000136/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.29,
+        "matchedName": "名古屋名物 みそかつ 矢場とん 名古屋駅エスカ店 （やばとん）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230103/23082472/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.46,
+        "matchedName": "昔の矢場とん 錦3丁目店"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2304/A230402/23008311/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.26,
+        "matchedName": "名古屋名物 みそかつ 矢場とん 中部国際空港店 （やばとん）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:19:24.863Z"
+  },
+  "味処叶::栄": {
+    "store": "味処叶",
+    "エリア": "栄",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23000292/",
+    "matchedName": "味処 叶 （あじどころ かのう）",
+    "title": "味処 叶 （あじどころ かのう） - 栄（名古屋）/かつ丼 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "味処叶",
+    "checkedAt": "2026-09-20T08:19:38.474Z"
+  },
+  "あつた蓬莱軒 本店::熱田": {
+    "store": "あつた蓬莱軒 本店",
+    "エリア": "熱田",
+    "url": "https://tabelog.com/aichi/A2301/A230112/23000063/",
+    "matchedName": "あつた蓬莱軒 本店 （蓬莱陣屋）",
+    "title": "あつた蓬莱軒 本店 （蓬莱陣屋） - 熱田神宮伝馬町/うなぎ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市熱田区",
+      "theirs": "名古屋市熱田区"
+    },
+    "query": "あつた蓬莱軒 本店",
+    "checkedAt": "2026-09-20T08:19:57.724Z"
+  },
+  "まるや本店 名古屋駅店::名駅": {
+    "store": "まるや本店 名古屋駅店",
+    "エリア": "名駅",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23058358/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.8,
+        "matchedName": "まるや本店 JR名古屋駅店"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23004983/",
+        "gate": "name",
+        "reason": "closed",
+        "sim": 1,
+        "matchedName": "まるや本店 名駅店 （○や）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:20:07.493Z"
+  },
+  "ひつまぶし名古屋備長 エスカ店::名駅": {
+    "store": "ひつまぶし名古屋備長 エスカ店",
+    "エリア": "名駅",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23014923/",
+        "gate": "fetch",
+        "reason": "timeout"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23090975/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "うなぎのことぶき"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230110/23001254/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "白壁カフェ花ごよみ （ハナゴヨミ）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23059074/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.4,
+        "matchedName": "ひつまぶし名古屋備長 大名古屋ビルヂング店 （ヒツマブシナゴヤビンチョウ）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:20:48.443Z"
+  },
+  "竹葉亭 名古屋店::名駅": {
+    "store": "竹葉亭 名古屋店",
+    "エリア": "名駅",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23000313/",
+    "matchedName": "東京竹葉亭 名古屋店 （とうきょうちくようてい）",
+    "title": "東京竹葉亭 名古屋店 （とうきょうちくようてい）のご予約 - 名古屋/うなぎ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "sole-name-match",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "竹葉亭 名古屋店",
+    "checkedAt": "2026-09-20T08:21:04.359Z"
+  },
+  "ひつまぶし 稲生 エスカ店::名駅": {
+    "store": "ひつまぶし 稲生 エスカ店",
+    "エリア": "名駅",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23001424/",
+    "matchedName": "ひつまぶし 稲生 エスカ店 （いのう）",
+    "title": "ひつまぶし 稲生 エスカ店 （いのう）のご予約 - 名古屋/うなぎ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "ひつまぶし 稲生 エスカ店",
+    "checkedAt": "2026-09-20T08:21:16.951Z"
+  },
+  "やきとり大吉 今池店::今池": {
+    "store": "やきとり大吉 今池店",
+    "エリア": "今池",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2305/A230501/23015188/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.45,
+        "matchedName": "やきとり 大吉 大林店 （やきとりだいきち）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230111/23015185/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.45,
+        "matchedName": "やきとり 大吉 一社店 （やきとりだいきち）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2304/A230401/23015189/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.45,
+        "matchedName": "やきとり 大吉 大府店 （やきとりだいきち）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2303/A230302/23053157/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.2,
+        "matchedName": "焼き鳥 大吉 前後店"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:21:29.473Z"
+  },
+  "鳥開総本家 名駅西口店::名駅": {
+    "store": "鳥開総本家 名駅西口店",
+    "エリア": "名駅",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23002365/",
+    "matchedName": "鳥開総本家 名駅西口店 （とりかいそうほんけ）",
+    "title": "鳥開総本家 名駅西口店 （とりかいそうほんけ）のご予約 - 名古屋/焼き鳥 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "鳥開総本家 名駅西口店",
+    "checkedAt": "2026-09-20T08:21:40.314Z"
+  },
+  "レストランくるみ::伏見": {
+    "store": "レストランくるみ",
+    "エリア": "伏見",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2304/A230401/23019107/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.41,
+        "matchedName": "ひかりのさとファームレストラン （【旧店名：自然食レストランくるみ】）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2303/A230301/23035956/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.62,
+        "matchedName": "レストラン 和み"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230112/23008904/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.57,
+        "matchedName": "レストラン ふる里"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230113/23006203/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.44,
+        "matchedName": "レストラン キルン （Kiln）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:21:54.841Z"
+  },
+  "珈琲処 ボンボン::東区": {
+    "store": "珈琲処 ボンボン",
+    "エリア": "東区",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:21:57.566Z"
+  },
+  "喫茶ツヅキ::中村区": {
+    "store": "喫茶ツヅキ",
+    "エリア": "中村区",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23016117/",
+    "matchedName": "喫茶ツヅキ",
+    "title": "喫茶ツヅキ - 中村日赤/喫茶店 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "喫茶ツヅキ",
+    "checkedAt": "2026-09-20T08:22:11.743Z"
+  },
+  "小川珈琲 名古屋南店::南区": {
+    "store": "小川珈琲 名古屋南店",
+    "エリア": "南区",
+    "url": "https://tabelog.com/aichi/A2301/A230112/23052816/",
+    "matchedName": "小川珈琲 名古屋南店",
+    "title": "小川珈琲 名古屋南店 - 道徳/喫茶店 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市南区",
+      "theirs": "名古屋市南区"
+    },
+    "query": "小川珈琲 名古屋南店",
+    "checkedAt": "2026-09-20T08:22:17.946Z"
+  },
+  "美濃吉 名古屋松坂屋店::栄": {
+    "store": "美濃吉 名古屋松坂屋店",
+    "エリア": "栄",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23002745/",
+    "matchedName": "美濃吉 名古屋松坂屋店 （みのきち）",
+    "title": "美濃吉 名古屋松坂屋店 （みのきち） - 矢場町/弁当 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "美濃吉 名古屋松坂屋店",
+    "checkedAt": "2026-09-20T08:22:25.770Z"
+  },
+  "木曽路 名駅IMAI店::名駅": {
+    "store": "木曽路 名駅IMAI店",
+    "エリア": "名駅",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23002128/",
+    "matchedName": "木曽路 名駅IMAIビル店 （キソジ）",
+    "title": "木曽路 名駅IMAIビル店 （キソジ） - 近鉄名古屋/しゃぶしゃぶ | 食べログ",
+    "sim": 0.9,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "木曽路 名駅IMAI店",
+    "checkedAt": "2026-09-20T08:22:37.842Z"
+  },
+  "しゃぶしゃぶ温野菜 名古屋栄店::栄": {
+    "store": "しゃぶしゃぶ温野菜 名古屋栄店",
+    "エリア": "栄",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23063409/",
+    "matchedName": "しゃぶしゃぶ温野菜 名古屋栄店",
+    "title": "しゃぶしゃぶ温野菜 名古屋栄店のご予約 - 栄（名古屋）/しゃぶしゃぶ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "しゃぶしゃぶ温野菜 名古屋栄店",
+    "checkedAt": "2026-09-20T08:23:06.187Z"
+  },
+  "焼肉韓国キッチン 琉球庵::栄": {
+    "store": "焼肉韓国キッチン 琉球庵",
+    "エリア": "栄",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:23:13.407Z"
+  },
+  "大衆割烹 八べゑ 錦3丁目店::錦": {
+    "store": "大衆割烹 八べゑ 錦3丁目店",
+    "エリア": "錦",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23093455/",
+    "matchedName": "大衆割烹 八べゑ 錦3丁目店",
+    "title": "大衆割烹 八べゑ 錦3丁目店のご予約 - 栄（名古屋）/居酒屋 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "大衆割烹 八べゑ 錦3丁目店",
+    "checkedAt": "2026-09-20T08:23:34.094Z"
+  },
+  "酒肴日和 かしわや::栄": {
+    "store": "酒肴日和 かしわや",
+    "エリア": "栄",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23077161/",
+    "matchedName": "地酒と地鶏 酒肴日和 かしわや （【旧店名】とりだし）",
+    "title": "地酒と地鶏 酒肴日和 かしわや （【旧店名】とりだし）のご予約 - 栄（名古屋）/居酒屋 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "酒肴日和 かしわや",
+    "checkedAt": "2026-09-20T08:23:46.422Z"
+  },
+  "TENBAR::矢場町": {
+    "store": "TENBAR",
+    "エリア": "矢場町",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230103/23066955/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.38,
+        "matchedName": "TENBAR Bar×Restaurant （テンバー）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230105/23065420/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.43,
+        "matchedName": "BONBAR （ぼんばー）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230110/23093115/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.5,
+        "matchedName": "6teen bar （シックスティーンバー）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230108/23088172/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.5,
+        "matchedName": "JIN BAR （ジン バー）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:24:09.161Z"
+  },
+  "SAKE BAR 結 -MUSUBI-::伏見": {
+    "store": "SAKE BAR 結 -MUSUBI-",
+    "エリア": "伏見",
+    "url": "https://tabelog.com/aichi/A2301/A230102/23070375/",
+    "matchedName": "sakebar結 （musubi）",
+    "title": "sakebar結 （musubi）のご予約 - 伏見/日本酒バー | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "SAKE BAR 結 -MUSUBI-",
+    "checkedAt": "2026-09-20T08:24:16.336Z"
+  },
+  "珈琲ぶりこ::大須": {
+    "store": "珈琲ぶりこ",
+    "エリア": "大須",
+    "url": "https://tabelog.com/aichi/A2301/A230105/23003902/",
+    "matchedName": "珈琲ぶりこ （コーヒー ブリコ）",
+    "title": "珈琲ぶりこ （コーヒー ブリコ） - 上前津/カフェ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "珈琲ぶりこ",
+    "checkedAt": "2026-09-20T08:24:37.841Z"
+  },
+  "アロマフレスカ名古屋::栄": {
+    "store": "アロマフレスカ名古屋",
+    "エリア": "栄",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23005178/",
+    "matchedName": "アロマフレスカ 名古屋 （Aroma-fresca）",
+    "title": "アロマフレスカ 名古屋 （Aroma-fresca）のご予約 - 矢場町/イタリアン | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "アロマフレスカ名古屋",
+    "checkedAt": "2026-09-20T08:24:57.824Z"
+  },
+  "炭焼うな富士 名古屋駅太閤口店::名駅": {
+    "store": "炭焼うな富士 名古屋駅太閤口店",
+    "エリア": "名駅",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23087705/",
+    "matchedName": "炭焼うな富士 名古屋駅太閤口店",
+    "title": "炭焼うな富士 名古屋駅太閤口店のご予約 - 名古屋/うなぎ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "炭焼うな富士 名古屋駅太閤口店",
+    "checkedAt": "2026-09-20T08:25:44.929Z"
+  },
+  "BOUL'ANGE 名古屋タカシマヤゲートタワーモール店::名駅": {
+    "store": "BOUL'ANGE 名古屋タカシマヤゲートタワーモール店",
+    "エリア": "名駅",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:25:47.965Z"
+  },
+  "大衆酒場 やまと 名古屋駅前店::名駅": {
+    "store": "大衆酒場 やまと 名古屋駅前店",
+    "エリア": "名駅",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23062826/",
+    "matchedName": "大衆酒場 やまと 名古屋駅前店 （ヤマト）",
+    "title": "大衆酒場 やまと 名古屋駅前店 （ヤマト） - 名鉄名古屋/居酒屋 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "大衆酒場 やまと 名古屋駅前店",
+    "checkedAt": "2026-09-20T08:25:53.578Z"
+  },
+  "ぎょうざや たつみ::新栄": {
+    "store": "ぎょうざや たつみ",
+    "エリア": "新栄",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230104/23053109/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.44,
+        "matchedName": "たつみ"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:25:58.582Z"
+  },
+  "ぴよりんshop::名駅": {
+    "store": "ぴよりんshop",
+    "エリア": "名駅",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23067929/",
+    "matchedName": "ぴよりんshop",
+    "title": "ぴよりんshop - 名古屋/ケーキ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "ぴよりんshop",
+    "checkedAt": "2026-09-20T08:26:10.149Z"
+  },
+  "肉屋 雪月花 NAGOYA::名駅": {
+    "store": "肉屋 雪月花 NAGOYA",
+    "エリア": "名駅",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23061072/",
+        "gate": "name",
+        "reason": "closed",
+        "sim": 1,
+        "matchedName": "肉屋 雪月花 NAGOYA"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23082303/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.09,
+        "matchedName": "TANAKA YAKINIKU RESTAURANTE （タナカ ヤキニク レストランテ）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23095918/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "グリルつばき"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230104/23005899/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "イノーヴェ （Innover）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:26:22.409Z"
+  },
+  "Seoul Kitchen ソウルキッチン::東桜": {
+    "store": "Seoul Kitchen ソウルキッチン",
+    "エリア": "東桜",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:26:24.584Z"
+  },
+  "ROCCA & FRIENDS CREPERIE to TEA 名古屋店::錦": {
+    "store": "ROCCA & FRIENDS CREPERIE to TEA 名古屋店",
+    "エリア": "錦",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230103/23075332/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.78,
+        "matchedName": "ロッカ&フレンズ クレープリートティー 名古屋店 （ROCCA&FRIENDS CREPERIE to TEA）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:26:29.180Z"
+  },
+  "シャンテーコジマ::天白区": {
+    "store": "シャンテーコジマ",
+    "エリア": "天白区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230111/23002577/",
+        "gate": "name",
+        "reason": "closed",
+        "sim": 1,
+        "matchedName": "シャンテーコジマ"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230111/23004991/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "茶房もちつき庵"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230111/23005377/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "ビッテ （Bitte）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:26:38.816Z"
+  },
+  "喫茶ゾウメシ::西区": {
+    "store": "喫茶ゾウメシ",
+    "エリア": "西区",
+    "url": "https://tabelog.com/aichi/A2301/A230113/23065080/",
+    "matchedName": "喫茶ゾウメシ",
+    "title": "喫茶ゾウメシ - 亀島/カフェ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市西区",
+      "theirs": "名古屋市西区"
+    },
+    "query": "喫茶ゾウメシ",
+    "checkedAt": "2026-09-20T08:26:50.706Z"
+  },
+  "鮨 結::名古屋市中区": {
+    "store": "鮨 結",
+    "エリア": "名古屋市中区",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:26:52.983Z"
+  },
+  "壺中天::名古屋市東区": {
+    "store": "壺中天",
+    "エリア": "名古屋市東区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230104/23000380/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.25,
+        "matchedName": "フランス料理 壺中天 （コチュウテン）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230110/23003592/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "ガーデンレストラン徳川園"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23001296/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "ワインラウンジ＆レストラン セパージュ 名古屋店 （Cepages）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23000325/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "ミクニナゴヤ （MIKUNI NAGOYA）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:27:07.182Z"
+  },
+  "うなぎのしろむら 泉店::名古屋市東区": {
+    "store": "うなぎのしろむら 泉店",
+    "エリア": "名古屋市東区",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23056889/",
+    "matchedName": "うなぎのしろむら",
+    "title": "うなぎのしろむらのご予約 - 久屋大通/うなぎ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市東区",
+      "theirs": "名古屋市東区"
+    },
+    "query": "うなぎのしろむら 泉店",
+    "checkedAt": "2026-09-20T08:27:19.148Z"
+  },
+  "日本料理 旬彩::名古屋市中区": {
+    "store": "日本料理 旬彩",
+    "エリア": "名古屋市中区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2302/A230202/23035437/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.6,
+        "matchedName": "日本料理 吉祥"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230103/23002847/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.6,
+        "matchedName": "日本料理 佐藤"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2305/A230503/23066358/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.6,
+        "matchedName": "日本料理 四季"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2303/A230301/23091269/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.6,
+        "matchedName": "日本料理 古今"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:27:30.362Z"
+  },
+  "喫茶、食堂、民宿。なごのや::名古屋市西区": {
+    "store": "喫茶、食堂、民宿。なごのや",
+    "エリア": "名古屋市西区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230102/23055948/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.38,
+        "matchedName": "なごのや （【旧店名】西アサヒ）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:27:34.917Z"
+  },
+  "炭焼 うな富士 栄HAERA店::名古屋市中区": {
+    "store": "炭焼 うな富士 栄HAERA店",
+    "エリア": "名古屋市中区",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23095666/",
+    "matchedName": "炭焼 うな富士 栄HAERA店",
+    "title": "炭焼 うな富士 栄HAERA店のご予約 - 栄（名古屋）/うなぎ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "炭焼 うな富士 栄HAERA店",
+    "checkedAt": "2026-09-20T08:27:42.179Z"
+  },
+  "鮨 土方::名古屋市東区": {
+    "store": "鮨 土方",
+    "エリア": "名古屋市東区",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23050373/",
+    "matchedName": "鮨 土方",
+    "title": "鮨 土方 - 栄（名古屋）/寿司 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "sole-name-match",
+      "our": "名古屋市東区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "鮨 土方",
+    "checkedAt": "2026-09-20T08:27:54.205Z"
+  },
+  "旬菜家 楽::名古屋市東区": {
+    "store": "旬菜家 楽",
+    "エリア": "名古屋市東区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230113/23035215/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.57,
+        "matchedName": "旬菜家もり"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:27:58.800Z"
+  },
+  "名駅 すし継::名古屋市中村区": {
+    "store": "名駅 すし継",
+    "エリア": "名古屋市中村区",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23095419/",
+    "matchedName": "名駅 すし継",
+    "title": "名駅 すし継のご予約 - 名古屋/寿司 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "名駅 すし継",
+    "checkedAt": "2026-09-20T08:28:03.519Z"
+  },
+  "鮨 旬美::名古屋市中区": {
+    "store": "鮨 旬美",
+    "エリア": "名古屋市中区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230109/23093262/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.67,
+        "matchedName": "鮨旬美 西川"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23023439/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.67,
+        "matchedName": "鮨旬美西川"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230109/23093567/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "尾張 粋 稲葉"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230102/23077695/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "鮨 権左衛門"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:28:16.608Z"
+  },
+  "オーベルジュ・ド・リル ナゴヤ::名古屋市中村区": {
+    "store": "オーベルジュ・ド・リル ナゴヤ",
+    "エリア": "名古屋市中村区",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23004079/",
+    "matchedName": "オーベルジュ・ド・リル ナゴヤ",
+    "title": "オーベルジュ・ド・リル ナゴヤのご予約 - 名鉄名古屋/フレンチ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "オーベルジュ・ド・リル ナゴヤ",
+    "checkedAt": "2026-09-20T08:28:29.126Z"
+  },
+  "BRIANZA NAGOYA HAERA::名古屋市中区錦": {
+    "store": "BRIANZA NAGOYA HAERA",
+    "エリア": "名古屋市中区錦",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23095628/",
+    "matchedName": "BRIANZA NAGOYA HAERA （ブリアンツァナゴヤ）",
+    "title": "BRIANZA NAGOYA HAERA （ブリアンツァナゴヤ）のご予約 - 栄（名古屋）/イタリアン | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "BRIANZA NAGOYA HAERA",
+    "checkedAt": "2026-09-20T08:28:34.028Z"
+  },
+  "トゥ・ラ・ジョア::名古屋市中区栄": {
+    "store": "トゥ・ラ・ジョア",
+    "エリア": "名古屋市中区栄",
+    "url": "https://tabelog.com/aichi/A2301/A230105/23078483/",
+    "matchedName": "トゥ・ラ・ジョア イズム （Tout La Joie Ism）",
+    "title": "トゥ・ラ・ジョア イズム （Tout La Joie Ism） - 尾頭橋/イノベーティブ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "トゥ・ラ・ジョア",
+    "checkedAt": "2026-09-20T08:28:46.641Z"
+  },
+  "花いち::名古屋市西区": {
+    "store": "花いち",
+    "エリア": "名古屋市西区",
+    "url": "https://tabelog.com/aichi/A2301/A230109/23013684/",
+    "matchedName": "花いち",
+    "title": "花いち - 浄心/日本料理 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市西区",
+      "theirs": "名古屋市西区"
+    },
+    "query": "花いち",
+    "checkedAt": "2026-09-20T08:28:58.890Z"
+  },
+  "旬彩料理 澤::名古屋市中区錦": {
+    "store": "旬彩料理 澤",
+    "エリア": "名古屋市中区錦",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:29:01.053Z"
+  },
+  "CANALIA trattoria＆cafe::名古屋市中村区": {
+    "store": "CANALIA trattoria＆cafe",
+    "エリア": "名古屋市中村区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23096011/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.7,
+        "matchedName": "CANALIA torattoria&cafe （カナリアトラットリアアンドカフェ）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:29:05.673Z"
+  },
+  "料亭 か茂免::名古屋市東区": {
+    "store": "料亭 か茂免",
+    "エリア": "名古屋市東区",
+    "url": "https://tabelog.com/aichi/A2301/A230109/23000499/",
+    "matchedName": "料亭か茂免 （かもめ）",
+    "title": "料亭か茂免 （かもめ） - 清水/日本料理 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市東区",
+      "theirs": "名古屋市東区"
+    },
+    "query": "料亭 か茂免",
+    "checkedAt": "2026-09-20T08:29:17.060Z"
+  },
+  "ハウセスト ライフ＋カフェ::名古屋市南区": {
+    "store": "ハウセスト ライフ＋カフェ",
+    "エリア": "名古屋市南区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230112/23069788/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.49,
+        "matchedName": "ハウセスト ライフカフェ （HOUSest-LIFE+CAFE）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:29:21.941Z"
+  },
+  "大衆酒場フレンチマン::名古屋市中村区": {
+    "store": "大衆酒場フレンチマン",
+    "エリア": "名古屋市中村区",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23095596/",
+    "matchedName": "大衆酒場 フレンチマン 名古屋店",
+    "title": "大衆酒場 フレンチマン 名古屋店 - 名鉄名古屋/居酒屋 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "大衆酒場フレンチマン",
+    "checkedAt": "2026-09-20T08:29:26.466Z"
+  },
+  "トゥ・ラ・ジョア イズム::名古屋市中区": {
+    "store": "トゥ・ラ・ジョア イズム",
+    "エリア": "名古屋市中区",
+    "failed": true,
+    "reason": "ambiguous-candidates",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230105/23087838/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.46,
+        "matchedName": "Tout La Joie Ism Ⅱ （トゥ・ラ・ジョア イズム セカンド）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230105/23086713/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "古美術喫茶 翔"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:29:38.209Z"
+  },
+  "旬彩::名古屋市中区": {
+    "store": "旬彩",
+    "エリア": "名古屋市中区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230112/23084965/",
+        "gate": "locality",
+        "reason": "ward-mismatch",
+        "our": "名古屋市中区",
+        "theirs": "名古屋市瑞穂区",
+        "matchedName": "旬彩"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230111/23050664/",
+        "gate": "locality",
+        "reason": "ward-mismatch",
+        "our": "名古屋市中区",
+        "theirs": "長久手市",
+        "matchedName": "旬彩"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230113/23041432/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.29,
+        "matchedName": "旬彩 天ぷら 心来(しんら）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230103/23086739/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.22,
+        "matchedName": "旬彩倶楽部 鱗 （ウロコ）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:29:49.811Z"
+  },
+  "鮨 いちかわ::名古屋市東区": {
+    "store": "鮨 いちかわ",
+    "エリア": "名古屋市東区",
+    "url": "https://tabelog.com/aichi/A2305/A230502/23021513/",
+    "matchedName": "いちかわ",
+    "title": "いちかわ - 中岡崎/豆腐料理 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "sole-name-match",
+      "our": "名古屋市東区",
+      "theirs": "岡崎市"
+    },
+    "query": "鮨 いちかわ",
+    "checkedAt": "2026-09-20T08:30:00.621Z"
+  },
+  "炭焼 うな富士::名古屋市昭和区": {
+    "store": "炭焼 うな富士",
+    "エリア": "名古屋市昭和区",
+    "url": "https://tabelog.com/aichi/A2301/A230105/23000105/",
+    "matchedName": "炭焼うな富士 （うなふじ）",
+    "title": "炭焼うな富士 （うなふじ）のご予約 - 鶴舞/うなぎ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市昭和区",
+      "theirs": "名古屋市昭和区"
+    },
+    "query": "炭焼 うな富士",
+    "checkedAt": "2026-09-20T08:30:12.841Z"
+  },
+  "焼鳥 〇座::名古屋市中区": {
+    "store": "焼鳥 〇座",
+    "エリア": "名古屋市中区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230103/23077768/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.22,
+        "matchedName": "焼鳥居酒屋 鷭串"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:30:17.442Z"
+  },
+  "旬魚旬菜 庵::名古屋市中村区": {
+    "store": "旬魚旬菜 庵",
+    "エリア": "名古屋市中村区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230104/23032961/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.55,
+        "matchedName": "旬魚旬菜 きたむら"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:30:21.640Z"
+  },
+  "完全個室居酒屋 哉月::名古屋市中村区": {
+    "store": "完全個室居酒屋 哉月",
+    "エリア": "名古屋市中村区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2305/A230501/23073643/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.6,
+        "matchedName": "完全個室居酒屋 川端 （かわばた）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2305/A230502/23076331/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.52,
+        "matchedName": "完全個室居酒屋 虎白 東岡崎店 （こはく）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23097129/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.52,
+        "matchedName": "完全個室居酒屋 名古屋の宴 名駅本店"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23097238/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.4,
+        "matchedName": "完全個室居酒屋 海鮮と炉端焼き 三河屋 名古屋駅前店"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:30:34.557Z"
+  },
+  "しら河 浄心本店::名古屋市西区": {
+    "store": "しら河 浄心本店",
+    "エリア": "名古屋市西区",
+    "url": "https://tabelog.com/aichi/A2301/A230109/23001045/",
+    "matchedName": "しら河 浄心本店 （しらかわ）",
+    "title": "しら河 浄心本店 （しらかわ）のご予約 - 浄心/うなぎ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市西区",
+      "theirs": "名古屋市西区"
+    },
+    "query": "しら河 浄心本店",
+    "checkedAt": "2026-09-20T08:30:49.375Z"
+  },
+  "山本屋総本家 本家::名古屋市中区": {
+    "store": "山本屋総本家 本家",
+    "エリア": "名古屋市中区",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23000111/",
+    "matchedName": "山本屋総本家 本家 （やまもとやそうほんけ）",
+    "title": "山本屋総本家 本家 （やまもとやそうほんけ） - 矢場町/うどん | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "山本屋総本家 本家",
+    "checkedAt": "2026-09-20T08:31:03.923Z"
+  },
+  "裏の山の木の子 名古屋::名古屋市中村区": {
+    "store": "裏の山の木の子 名古屋",
+    "エリア": "名古屋市中村区",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23096535/",
+    "matchedName": "裏の山の木の子 名古屋",
+    "title": "裏の山の木の子 名古屋のご予約 - 近鉄名古屋/火鍋 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "裏の山の木の子 名古屋",
+    "checkedAt": "2026-09-20T08:31:08.928Z"
+  },
+  "鮨屋 とんぼ 住吉店::名古屋市中区": {
+    "store": "鮨屋 とんぼ 住吉店",
+    "エリア": "名古屋市中区",
+    "url": "https://tabelog.com/aichi/A2301/A230102/23073442/",
+    "matchedName": "鮨屋 とんぼ 伏見店",
+    "title": "鮨屋 とんぼ 伏見店 - 伏見/寿司 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "鮨屋 とんぼ 住吉店",
+    "checkedAt": "2026-09-20T08:31:21.536Z"
+  },
+  "ラ・ベットラ・ダ・オチアイ ナゴヤ::名古屋市中村区": {
+    "store": "ラ・ベットラ・ダ・オチアイ ナゴヤ",
+    "エリア": "名古屋市中村区",
+    "url": "https://tabelog.com/aichi/A2301/A230106/23006693/",
+    "matchedName": "ラ・ベットラ・ダ・オチアイ ナゴヤ （LA BETTOLA da Ochiai NAGOYA）",
+    "title": "ラ・ベットラ・ダ・オチアイ ナゴヤ （LA BETTOLA da Ochiai NAGOYA）のご予約 - 池下/イタリアン | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "sole-name-match",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市千種区"
+    },
+    "query": "ラ・ベットラ・ダ・オチアイ ナゴヤ",
+    "checkedAt": "2026-09-20T08:31:26.968Z"
+  },
+  "中国料理 旬彩::名古屋市中区": {
+    "store": "中国料理 旬彩",
+    "エリア": "名古屋市中区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230108/23050534/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.6,
+        "matchedName": "中国料理 四川"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230112/23063575/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.43,
+        "matchedName": "中国料理 千琇 （チシュウ）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23015588/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.6,
+        "matchedName": "中国料理千龍"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2304/A230402/23001472/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.46,
+        "matchedName": "中国料理 久田 （ヒサダ）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:31:39.652Z"
+  },
+  "料亭 か茂免 (かもめ)::名古屋市東区白壁": {
+    "store": "料亭 か茂免 (かもめ)",
+    "エリア": "名古屋市東区白壁",
+    "url": "https://tabelog.com/aichi/A2301/A230109/23000499/",
+    "matchedName": "料亭か茂免 （かもめ）",
+    "title": "料亭か茂免 （かもめ） - 清水/日本料理 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市東区",
+      "theirs": "名古屋市東区"
+    },
+    "query": "料亭 か茂免",
+    "checkedAt": "2026-09-20T08:31:50.344Z"
+  },
+  "トゥ・ラ・ジョア イズム (Tou La Joie Ism)::名古屋市中区": {
+    "store": "トゥ・ラ・ジョア イズム (Tou La Joie Ism)",
+    "エリア": "名古屋市中区",
+    "failed": true,
+    "reason": "ambiguous-candidates",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230105/23087838/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.77,
+        "matchedName": "Tout La Joie Ism Ⅱ （トゥ・ラ・ジョア イズム セカンド）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230105/23086713/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "古美術喫茶 翔"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:32:02.190Z"
+  },
+  "那古野 しば福や 名駅店 (なごの しばふくや めいえきてん)::名古屋市中村区": {
+    "store": "那古野 しば福や 名駅店 (なごの しばふくや めいえきてん)",
+    "エリア": "名古屋市中村区",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23087680/",
+    "matchedName": "那古野 しば福や 名駅店 （なごや しばふくや）",
+    "title": "那古野 しば福や 名駅店 （なごや しばふくや）のご予約 - 国際センター/うなぎ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "那古野 しば福や 名駅店",
+    "checkedAt": "2026-09-20T08:32:09.061Z"
+  },
+  "焼肉 神宮::名古屋市熱田区": {
+    "store": "焼肉 神宮",
+    "エリア": "名古屋市熱田区",
+    "failed": true,
+    "reason": "ambiguous-candidates",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230105/23085664/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.15,
+        "matchedName": "大衆焼肉 こたろう 金山店"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230110/23082637/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.14,
+        "matchedName": "大衆焼肉こたろう 黒川本店"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:32:21.262Z"
+  },
+  "鰻 木屋::名古屋市中区": {
+    "store": "鰻 木屋",
+    "エリア": "名古屋市中区",
+    "url": "https://tabelog.com/aichi/A2301/A230109/23000133/",
+    "matchedName": "鰻 木屋 （うなぎきや）",
+    "title": "鰻 木屋 （うなぎきや）のご予約 - 東大手/うなぎ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "sole-name-match",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市東区"
+    },
+    "query": "鰻 木屋",
+    "checkedAt": "2026-09-20T08:32:33.538Z"
+  },
+  "尾張山荘 くろぎ::名古屋市中村区": {
+    "store": "尾張山荘 くろぎ",
+    "エリア": "名古屋市中村区",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23097051/",
+    "matchedName": "尾張山荘くろぎ",
+    "title": "尾張山荘くろぎのご予約 - 名鉄名古屋/日本料理 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "尾張山荘 くろぎ",
+    "checkedAt": "2026-09-20T08:32:38.324Z"
+  },
+  "とりやき酒場 鶏ん家 名古屋新栄店::名古屋市中区": {
+    "store": "とりやき酒場 鶏ん家 名古屋新栄店",
+    "エリア": "名古屋市中区",
+    "url": "https://tabelog.com/aichi/A2301/A230104/23091520/",
+    "matchedName": "鶏ん家 名古屋新栄店",
+    "title": "鶏ん家 名古屋新栄店のご予約 - 新栄町/鳥料理 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "とりやき酒場 鶏ん家 名古屋新栄店",
+    "checkedAt": "2026-09-20T08:32:43.227Z"
+  },
+  "ウルフギャング・ステーキハウス 名古屋店::名古屋市中区錦": {
+    "store": "ウルフギャング・ステーキハウス 名古屋店",
+    "エリア": "名古屋市中区錦",
+    "url": "https://tabelog.com/aichi/A2301/A230102/23097053/",
+    "matchedName": "ウルフギャング・ステーキハウス 名古屋店",
+    "title": "ウルフギャング・ステーキハウス 名古屋店のご予約 - 伏見/ステーキ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "ウルフギャング・ステーキハウス 名古屋店",
+    "checkedAt": "2026-09-20T08:32:48.463Z"
+  },
+  "右江田（うえだ）::名古屋市中川区": {
+    "store": "右江田（うえだ）",
+    "エリア": "名古屋市中川区",
+    "url": "https://tabelog.com/aichi/A2301/A230105/23014106/",
+    "matchedName": "右江田 （うえだ【旧店名】英）",
+    "title": "右江田 （うえだ【旧店名】英） - 山王/寿司 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中川区",
+      "theirs": "名古屋市中川区"
+    },
+    "query": "右江田",
+    "checkedAt": "2026-09-20T08:33:00.447Z"
+  },
+  "カーサ・オリーバ (CASA OLIVA)::名古屋市中区": {
+    "store": "カーサ・オリーバ (CASA OLIVA)",
+    "エリア": "名古屋市中区",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23097155/",
+    "matchedName": "カーサ オリーバ （CASA OLIVA）",
+    "title": "カーサ オリーバ （CASA OLIVA） - 栄（名古屋）/イタリアン | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "カーサ・オリーバ",
+    "checkedAt": "2026-09-20T08:33:05.173Z"
+  },
+  "炭焼 うな富士 本店::名古屋市昭和区": {
+    "store": "炭焼 うな富士 本店",
+    "エリア": "名古屋市昭和区",
+    "url": "https://tabelog.com/aichi/A2301/A230105/23000105/",
+    "matchedName": "炭焼うな富士 （うなふじ）",
+    "title": "炭焼うな富士 （うなふじ）のご予約 - 鶴舞/うなぎ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市昭和区",
+      "theirs": "名古屋市昭和区"
+    },
+    "query": "炭焼 うな富士 本店",
+    "checkedAt": "2026-09-20T08:33:17.996Z"
+  },
+  "鮨 旬美 西川::名古屋市中村区": {
+    "store": "鮨 旬美 西川",
+    "エリア": "名古屋市中村区",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23023439/",
+    "matchedName": "鮨旬美西川",
+    "title": "鮨旬美西川 - 名古屋/寿司 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "鮨 旬美 西川",
+    "checkedAt": "2026-09-20T08:33:30.051Z"
+  },
+  "板前割烹 花いち::名古屋市西区": {
+    "store": "板前割烹 花いち",
+    "エリア": "名古屋市西区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230109/23013684/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.67,
+        "matchedName": "花いち"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:33:34.781Z"
+  },
+  "喫茶、食堂、民宿。西アサヒ::名古屋市西区": {
+    "store": "喫茶、食堂、民宿。西アサヒ",
+    "エリア": "名古屋市西区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230102/23055948/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.38,
+        "matchedName": "なごのや （【旧店名】西アサヒ）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:33:39.545Z"
+  },
+  "LA VAGABONDE (ラ・ヴァガボンド)::名古屋市中区": {
+    "store": "LA VAGABONDE (ラ・ヴァガボンド)",
+    "エリア": "名古屋市中区",
+    "url": "https://tabelog.com/aichi/A2301/A230105/23040370/",
+    "matchedName": "ラ・ヴァガボンド （LA VAGABONDE）",
+    "title": "ラ・ヴァガボンド （LA VAGABONDE） - 鶴舞/フレンチ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "LA VAGABONDE",
+    "checkedAt": "2026-09-20T08:33:44.427Z"
+  },
+  "御懐石 志ら玉::名古屋市北区": {
+    "store": "御懐石 志ら玉",
+    "エリア": "名古屋市北区",
+    "url": "https://tabelog.com/aichi/A2301/A230110/23003010/",
+    "matchedName": "御懐石 志ら玉 （おんかいせき しらたま）",
+    "title": "御懐石 志ら玉 （おんかいせき しらたま）のご予約 - 上飯田/日本料理 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市北区",
+      "theirs": "名古屋市北区"
+    },
+    "query": "御懐石 志ら玉",
+    "checkedAt": "2026-09-20T08:33:55.897Z"
+  },
+  "ミクニナゴヤ::名古屋市中村区": {
+    "store": "ミクニナゴヤ",
+    "エリア": "名古屋市中村区",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23000325/",
+    "matchedName": "ミクニナゴヤ （MIKUNI NAGOYA）",
+    "title": "ミクニナゴヤ （MIKUNI NAGOYA）のご予約 - 名古屋/フレンチ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "ミクニナゴヤ",
+    "checkedAt": "2026-09-20T08:34:08.617Z"
+  },
+  "日本料理 𡈽方::名古屋市中区": {
+    "store": "日本料理 𡈽方",
+    "エリア": "名古屋市中区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2302/A230202/23035437/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.55,
+        "matchedName": "日本料理 吉祥"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230103/23002847/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.55,
+        "matchedName": "日本料理 佐藤"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2305/A230503/23066358/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.55,
+        "matchedName": "日本料理 四季"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2303/A230301/23091269/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.55,
+        "matchedName": "日本料理 古今"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:34:19.611Z"
+  },
+  "鮨 猪子::名古屋市東区": {
+    "store": "鮨 猪子",
+    "エリア": "名古屋市東区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230103/23093270/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "鮨 子都菜"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:34:23.824Z"
+  },
+  "レミニセンス::名古屋市中区": {
+    "store": "レミニセンス",
+    "エリア": "名古屋市中区",
+    "url": "https://tabelog.com/aichi/A2301/A230106/23085308/",
+    "matchedName": "レミニセンス （Reminiscence）",
+    "title": "レミニセンス （Reminiscence）のご予約 - 車道/フレンチ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "sole-name-match",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市東区"
+    },
+    "query": "レミニセンス",
+    "checkedAt": "2026-09-20T08:34:36.395Z"
+  },
+  "馳走 隠::名古屋市中区": {
+    "store": "馳走 隠",
+    "エリア": "名古屋市中区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2305/A230502/23024722/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.25,
+        "matchedName": "馳走ちゃぼうず"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:34:40.698Z"
+  },
+  "鮨てんび::名古屋市千種区": {
+    "store": "鮨てんび",
+    "エリア": "名古屋市千種区",
+    "url": "https://tabelog.com/aichi/A2301/A230106/23081310/",
+    "matchedName": "鮨てんび 今池店",
+    "title": "鮨てんび 今池店のご予約 - 今池/寿司 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市千種区",
+      "theirs": "名古屋市千種区"
+    },
+    "query": "鮨てんび",
+    "checkedAt": "2026-09-20T08:34:52.045Z"
+  },
+  "PASTA MANIA 鶴舞店::名古屋市中区": {
+    "store": "PASTA MANIA 鶴舞店",
+    "エリア": "名古屋市中区",
+    "url": "https://tabelog.com/aichi/A2301/A230105/23097097/",
+    "matchedName": "PASTAMANIA 鶴舞店 （パスタマニア）",
+    "title": "PASTAMANIA 鶴舞店 （パスタマニア） - 鶴舞/パスタ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "PASTA MANIA 鶴舞店",
+    "checkedAt": "2026-09-20T08:34:59.269Z"
+  },
+  "郷土素材料理 山人昔楼::名古屋市東区": {
+    "store": "郷土素材料理 山人昔楼",
+    "エリア": "名古屋市東区",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:35:02.016Z"
+  },
+  "飛騨牛一頭家 馬喰一代 名古屋WEST::名古屋市中村区": {
+    "store": "飛騨牛一頭家 馬喰一代 名古屋WEST",
+    "エリア": "名古屋市中村区",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23009376/",
+    "matchedName": "飛騨牛一頭家 馬喰一代 名古屋WEST （ばくろいちだい）",
+    "title": "飛騨牛一頭家 馬喰一代 名古屋WEST （ばくろいちだい）のご予約 - 名古屋/焼肉 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "sole-name-match",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市西区"
+    },
+    "query": "飛騨牛一頭家 馬喰一代 名古屋WEST",
+    "checkedAt": "2026-09-20T08:35:12.638Z"
+  },
+  "THE CUPS SAKAE::名古屋市中区": {
+    "store": "THE CUPS SAKAE",
+    "エリア": "名古屋市中区",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:35:14.876Z"
+  },
+  "洋食亭 塩釜口店::名古屋市天白区": {
+    "store": "洋食亭 塩釜口店",
+    "エリア": "名古屋市天白区",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:35:21.679Z"
+  },
+  "うなぎのしろむら 柳橋本店::名古屋市中村区": {
+    "store": "うなぎのしろむら 柳橋本店",
+    "エリア": "名古屋市中村区",
+    "url": "https://tabelog.com/aichi/A2301/A230103/23056889/",
+    "matchedName": "うなぎのしろむら",
+    "title": "うなぎのしろむらのご予約 - 久屋大通/うなぎ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "sole-name-match",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市東区"
+    },
+    "query": "うなぎのしろむら 柳橋本店",
+    "checkedAt": "2026-09-20T08:35:27.087Z"
+  },
+  "鮨 旬楽::名古屋市中区錦": {
+    "store": "鮨 旬楽",
+    "エリア": "名古屋市中区錦",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230109/23093262/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.33,
+        "matchedName": "鮨旬美 西川"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23023439/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.33,
+        "matchedName": "鮨旬美西川"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:35:34.354Z"
+  },
+  "ラ・グランターブル・ドゥ・キタムラ::名古屋市東区泉": {
+    "store": "ラ・グランターブル・ドゥ・キタムラ",
+    "エリア": "名古屋市東区泉",
+    "url": "https://tabelog.com/aichi/A2301/A230109/23000185/",
+    "matchedName": "ラ・グランターブル ドゥ キタムラ （Ｌａ Grande Ｔａｂｌｅ de KITAMURA）",
+    "title": "ラ・グランターブル ドゥ キタムラ （Ｌａ Grande Ｔａｂｌｅ de KITAMURA）のご予約 - 高岳/フレンチ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市東区",
+      "theirs": "名古屋市東区"
+    },
+    "query": "ラ・グランターブル・ドゥ・キタムラ",
+    "checkedAt": "2026-09-20T08:35:39.623Z"
+  },
+  "錦三丁目 いち藤::名古屋市中区錦": {
+    "store": "錦三丁目 いち藤",
+    "エリア": "名古屋市中区錦",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:35:41.901Z"
+  },
+  "喫茶リヨン::名古屋市中村区名駅": {
+    "store": "喫茶リヨン",
+    "エリア": "名古屋市中村区名駅",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23003160/",
+    "matchedName": "リヨン",
+    "title": "リヨン - 近鉄名古屋/喫茶店 | 食べログ",
+    "sim": 0.9,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市中村区"
+    },
+    "query": "喫茶リヨン",
+    "checkedAt": "2026-09-20T08:35:50.718Z"
+  },
+  "賛否両論 名古屋::名古屋市千種区": {
+    "store": "賛否両論 名古屋",
+    "エリア": "名古屋市千種区",
+    "url": "https://tabelog.com/aichi/A2301/A230106/23050795/",
+    "matchedName": "賛否両論 名古屋",
+    "title": "賛否両論 名古屋のご予約 - 池下/日本料理 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市千種区",
+      "theirs": "名古屋市千種区"
+    },
+    "query": "賛否両論 名古屋",
+    "checkedAt": "2026-09-20T08:36:02.356Z"
+  },
+  "懐石 志ら玉::名古屋市東区": {
+    "store": "懐石 志ら玉",
+    "エリア": "名古屋市東区",
+    "url": "https://tabelog.com/aichi/A2301/A230110/23003010/",
+    "matchedName": "御懐石 志ら玉 （おんかいせき しらたま）",
+    "title": "御懐石 志ら玉 （おんかいせき しらたま）のご予約 - 上飯田/日本料理 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "sole-name-match",
+      "our": "名古屋市東区",
+      "theirs": "名古屋市北区"
+    },
+    "query": "懐石 志ら玉",
+    "checkedAt": "2026-09-20T08:36:13.347Z"
+  },
+  "日々担々 守山店::名古屋市守山区": {
+    "store": "日々担々 守山店",
+    "エリア": "名古屋市守山区",
+    "url": "https://tabelog.com/aichi/A2303/A230302/23096737/",
+    "matchedName": "日々担々 守山店",
+    "title": "日々担々 守山店 - 印場/汁なし担々麺 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市守山区",
+      "theirs": "名古屋市守山区"
+    },
+    "query": "日々担々 守山店",
+    "checkedAt": "2026-09-20T08:36:18.146Z"
+  },
+  "Reminiscence / レミニセンス::名古屋市東区筒井": {
+    "store": "Reminiscence / レミニセンス",
+    "エリア": "名古屋市東区筒井",
+    "url": "https://tabelog.com/aichi/A2301/A230106/23085308/",
+    "matchedName": "レミニセンス （Reminiscence）",
+    "title": "レミニセンス （Reminiscence）のご予約 - 車道/フレンチ | 食べログ",
+    "sim": 0.91,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市東区",
+      "theirs": "名古屋市東区"
+    },
+    "query": "Reminiscence / レミニセンス",
+    "checkedAt": "2026-09-20T08:36:24.886Z"
+  },
+  "LA VAGABONDE -ラ・ヴァガボンド-::名古屋市中区千代田": {
+    "store": "LA VAGABONDE -ラ・ヴァガボンド-",
+    "エリア": "名古屋市中区千代田",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:36:27.004Z"
+  },
+  "京味 もと井::名古屋市千種区覚王山": {
+    "store": "京味 もと井",
+    "エリア": "名古屋市千種区覚王山",
+    "url": "https://tabelog.com/aichi/A2301/A230107/23077259/",
+    "matchedName": "京味 もと井",
+    "title": "京味 もと井 - 覚王山/日本料理 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市千種区",
+      "theirs": "名古屋市千種区"
+    },
+    "query": "京味 もと井",
+    "checkedAt": "2026-09-20T08:36:38.787Z"
+  },
+  "那古野 みつ林::名古屋市西区那古野": {
+    "store": "那古野 みつ林",
+    "エリア": "名古屋市西区那古野",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23053832/",
+    "matchedName": "那古野みつ林 （ミツバヤシ）",
+    "title": "那古野みつ林 （ミツバヤシ） - 国際センター/日本料理 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市西区",
+      "theirs": "名古屋市西区"
+    },
+    "query": "那古野 みつ林",
+    "checkedAt": "2026-09-20T08:36:45.592Z"
+  },
+  "炉ばた茶屋 魚とし::名古屋市南区鳴尾": {
+    "store": "炉ばた茶屋 魚とし",
+    "エリア": "名古屋市南区鳴尾",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230107/23088313/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.25,
+        "matchedName": "とし"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2305/A230502/23076391/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.07,
+        "matchedName": "生簀炉ばた 源喜 ブルー フィッシュ スペシャリティ 38 （生簀炉ばた 源喜 Blue fish speciality 38）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:36:52.175Z"
+  },
+  "コンパル 大須本店::名古屋市中区大須": {
+    "store": "コンパル 大須本店",
+    "エリア": "名古屋市中区大須",
+    "url": "https://tabelog.com/aichi/A2301/A230105/23002607/",
+    "matchedName": "コンパル 大須本店",
+    "title": "コンパル 大須本店 - 上前津/喫茶店 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "コンパル 大須本店",
+    "checkedAt": "2026-09-20T08:37:03.815Z"
+  },
+  "焼肉 飛騨牛一頭家 馬喰一代 名古屋WEST::名古屋市中村区名駅": {
+    "store": "焼肉 飛騨牛一頭家 馬喰一代 名古屋WEST",
+    "エリア": "名古屋市中村区名駅",
+    "url": "https://tabelog.com/aichi/A2301/A230101/23009376/",
+    "matchedName": "飛騨牛一頭家 馬喰一代 名古屋WEST （ばくろいちだい）",
+    "title": "飛騨牛一頭家 馬喰一代 名古屋WEST （ばくろいちだい）のご予約 - 名古屋/焼肉 | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "sole-name-match",
+      "our": "名古屋市中村区",
+      "theirs": "名古屋市西区"
+    },
+    "query": "焼肉 飛騨牛一頭家 馬喰一代 名古屋WEST",
+    "checkedAt": "2026-09-20T08:37:08.400Z"
+  },
+  "覚王山カフェ Ji.Coo::名古屋市千種区覚王山通": {
+    "store": "覚王山カフェ Ji.Coo",
+    "エリア": "名古屋市千種区覚王山通",
+    "url": "https://tabelog.com/aichi/A2301/A230107/23005677/",
+    "matchedName": "覚王山カフェ Ji.Coo. （ジクー）",
+    "title": "覚王山カフェ Ji.Coo. （ジクー）のご予約 - 覚王山/カフェ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市千種区",
+      "theirs": "名古屋市千種区"
+    },
+    "query": "覚王山カフェ Ji.Coo",
+    "checkedAt": "2026-09-20T08:37:13.169Z"
+  },
+  "鉄板焼き 澤::名古屋市中区錦": {
+    "store": "鉄板焼き 澤",
+    "エリア": "名古屋市中区錦",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2306/A230603/23076706/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.67,
+        "matchedName": "鉄板焼"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2302/A230201/23080917/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.43,
+        "matchedName": "鉄板焼き ひつじの隠れ家"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23079389/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.32,
+        "matchedName": "名駅 鉄板焼き 森本Ｘ Premium"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23073467/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.3,
+        "matchedName": "名駅個室 鉄板焼き 天頂 （ITADAKI）"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:37:24.971Z"
+  },
+  "Reminiscence::名古屋市中区": {
+    "store": "Reminiscence",
+    "エリア": "名古屋市中区",
+    "url": "https://tabelog.com/aichi/A2301/A230106/23085308/",
+    "matchedName": "レミニセンス （Reminiscence）",
+    "title": "レミニセンス （Reminiscence）のご予約 - 車道/フレンチ | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "sole-name-match",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市東区"
+    },
+    "query": "Reminiscence",
+    "checkedAt": "2026-09-20T08:37:33.852Z"
+  },
+  "懐石料理 かもめ::名古屋市東区": {
+    "store": "懐石料理 かもめ",
+    "エリア": "名古屋市東区",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:37:36.053Z"
+  },
+  "日本料理 徳川::名古屋市東区": {
+    "store": "日本料理 徳川",
+    "エリア": "名古屋市東区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230101/23021612/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.43,
+        "matchedName": "日本料理 よし川 エスカ店"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2302/A230202/23035437/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.6,
+        "matchedName": "日本料理 吉祥"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230103/23002847/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.6,
+        "matchedName": "日本料理 佐藤"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2305/A230503/23066358/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.6,
+        "matchedName": "日本料理 四季"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:37:46.986Z"
+  },
+  "鮨 猪股::名古屋市東区泉": {
+    "store": "鮨 猪股",
+    "エリア": "名古屋市東区泉",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:37:48.841Z"
+  },
+  "焼肉ここから 名駅3丁目店::名古屋市中村区": {
+    "store": "焼肉ここから 名駅3丁目店",
+    "エリア": "名古屋市中村区",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:37:51.075Z"
+  },
+  "ルコネッサンス::名古屋市東区": {
+    "store": "ルコネッサンス",
+    "エリア": "名古屋市東区",
+    "failed": true,
+    "reason": "no-verified-candidate",
+    "retryable": false,
+    "tried": [
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230105/23049147/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0.46,
+        "matchedName": "Reconnaissance （ルコネッサンス）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230102/23049214/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "シンジコガ （Shinji Koga）"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2304/A230402/23001357/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "麺房 昭和呈"
+      },
+      {
+        "url": "https://tabelog.com/aichi/A2301/A230105/23053555/",
+        "gate": "name",
+        "reason": "name-mismatch",
+        "sim": 0,
+        "matchedName": "ロンネフェルト 名古屋"
+      }
+    ],
+    "checkedAt": "2026-09-20T08:38:02.884Z"
+  },
+  "Wakana ～和奏～::名古屋市中区": {
+    "store": "Wakana ～和奏～",
+    "エリア": "名古屋市中区",
+    "url": "https://tabelog.com/aichi/A2301/A230102/23053534/",
+    "matchedName": "Wakana ～和奏～ （ワカナ）",
+    "title": "Wakana ～和奏～ （ワカナ） - 大須観音/イタリアン | 食べログ",
+    "sim": 1,
+    "locality": {
+      "basis": "ward",
+      "our": "名古屋市中区",
+      "theirs": "名古屋市中区"
+    },
+    "query": "Wakana ～和奏～",
+    "checkedAt": "2026-09-20T08:38:07.213Z"
+  },
+  "喫茶、食堂、民宿。なごや::名古屋市中区": {
+    "store": "喫茶、食堂、民宿。なごや",
+    "エリア": "名古屋市中区",
+    "failed": true,
+    "reason": "no-candidates",
+    "retryable": false,
+    "tried": [],
+    "checkedAt": "2026-09-20T08:38:09.430Z"
+  }
+}
