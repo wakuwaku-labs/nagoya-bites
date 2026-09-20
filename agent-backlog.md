@@ -6,6 +6,34 @@
 
 ---
 
+### [SEO-104] 日次ジャーナルの launchd ラッパーが、9時に走る**他ルーチンの実行中の未コミット成果物**を「前回実行の残骸」と誤認して stash に退避している（本日、本ループ自身の `not_deployed` 記録が消えかけた）
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-09-20
+- **category**: ops-monitoring / CI
+- **owner**: Builder
+- **source**: 【ループ内部監査】2026-09-20 の日次トリアージ実行中（09:00 JST 前後）に、本ループが書いた `data/gas_deploy_health.json`（2026-09-19 の `verdict: not_deployed` 記録）と `agent-backlog.md` の追記が、作業ツリーから消えた。`git stash list` を引いたところ `stash@{0}: auto-cleanup-debris-20260920-090121` に両方が入っており、`git stash pop` で手動復旧した
+- **brand-filter**: ✅ 適合 — 運用健全化のみ。順位操作・広告・マネタイズ・サイト表示のいずれにも触れない（制約7・8 非該当）。CLAUDE.md「無人自動化の監視を設計するときの原則」③「『気づけるはず』を検知と数えない」／②「通知は out-of-band に出す」に直接該当する、監視系自身の欠陥
+- **検証できる事実（制約10・誰でも同じ手順で再現・検算できる）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | ラッパーは起動時に作業ツリーが汚れていれば**中身を問わず**名前付き stash に退避し、**pop しない** | `scripts/run_journal_local.sh:318-326`（`DEBRIS_MSG="auto-cleanup-debris-..."` / コメント「起動時点で残っている汚れ」＝前回実行の残骸という前提） |
+  | その前提が成り立たない。リポジトリは単一書き手ではなく、9時前後に他の自動ルーチン（本SEOトリアージ・フィードバック triage・話題店発掘）が同じ作業ツリーへ書く | `~/Library/LaunchAgents/com.nagoyabites.journal.plist` は `Hour 9 / Minute 0` 起動。本日の stash 生成時刻は 09:01:21 で、本ループの書き込み直後 |
+  | 今日実際に退避されたのは前回の残骸ではなく**実行中の成果物2件** | `git stash show --stat stash@{0}` → `agent-backlog.md +5` / `data/gas_deploy_health.json +40 -4` |
+  | 同じ事象は単発ではない。直近30日で `auto-cleanup-debris-*` は **6本**（09-05 / 09-06 / 09-09 / 09-13 / 09-19 / 09-20）あり、**全6本が `data/gas_deploy_health.json`（本ループの心拍）を含む**。09-06 の1本は `agent-backlog.md +31`＝起票1件ぶんの本文を丸ごと含む | `git stash list` ＋ 各 `git stash show --stat stash@{N}` |
+  | 退避されたことは `.local-logs/journal-YYYY-MM-DD.log` にしか書かれない＝**gitignore 対象で Mac の外に出ない**。書いた側のルーチンには一切通知されない | `run_journal_local.sh:320-326` の `log()` 出力先（`.local-logs/`） |
+  | 実害の経路が今日まさに成立していた: `gas-deploy-watchdog.yml` は**コミットされた** `data/gas_deploy_health.json` の `not_deployed` が2回連続したときに Issue を起票する。今日退避された記録はその1回目（2026-09-19 / `stale_example_kw` / SEO-092 未反映）で、復旧しなければカウンタは永久に2に届かない | `scripts/check_gas_deploy_health.js` の出力「2026-09-19 の daily レポートで旧コードを検出（1回連続）。2回連続で Issue を起票する」／退避前の HEAD 版 observations は 2026-09-18 で終わっていた |
+  | 過去の欠測と整合する（断定はしない）: observations には **2026-08-29 と 2026-09-08 が無い**。08-29 は `auto-cleanup-debris-20260829-090007` が存在する日 | `data/gas_deploy_health.json` の observations 一覧 ／ `git stash list` |
+- **acceptance**:
+  1. 「起動時点の汚れ＝前回実行の残骸」という前提を捨てる。退避の対象を**ジャーナル自身が生成するパス**に限定するか、他ルーチンの実行中（ロック/心拍で判定）は退避せず待避・スキップする設計にする。どのパスが誰の持ち物かは検証できる事実（パス）で決め、推測で判定しない
+  2. **退避したら out-of-band に通知する**（ISSUE-084 原則2・5）。`.local-logs/` への `log()` だけで終わらせない。stash を作った事実・対象ファイル・復旧コマンド（`git stash pop stash@{N}`）を、`data/` 配下の心拍に書いてコミットするか GitHub Issue を起票し、オーナーのメールに届く経路へ出す
+  3. 既存 stash 5本（08-27〜09-19 ぶん）の中身を棚卸しし、**コミットされないまま失われている成果物が無いか**確認する。特に `agent-backlog.md +31` を含む `auto-cleanup-debris-20260906-090007`（起票1件ぶん）は本文を実際に読んで、現行 backlog に同等の記載があるか照合する
+  4. 再現テストで確認する: 他ルーチンの未コミット差分がある状態でラッパーを起動し、①その差分が退避されない（または②通知が実際に飛ぶ）ことを検証できる出力で示す
+  5. 既存の防御（`--autostash` 保険・rebase 中断の畳み込み・untracked 残骸の除去）は壊さない。ジャーナルが「作業ツリー汚染で pull が死ぬ」という元の事故クラス（2026-06-18〜22 / 2026-07-24 / 2026-07-31）へ退行させない
+- **ブランドガードレール**: 本件は監視の配線の修理であり、サイト表示・データ・掲載店・順位のいずれにも触れない。`index.html` 単一ファイル制約（制約1）とも無関係
+- **関連**: [[SEO-069]]（GAS 反映監視の本体。今日退避されかけたのはこの監視の入力）／[[SEO-092]] [[SEO-093]]（未反映のまま生きている修正＝退避された記録が指していた対象）／[[SEO-103]]（本ループ自身のもう1つの静かな空振り・週次アーム）／[[ISSUE-084]]（原則の出典）
+- **本ループ側の暫定対応（今日実施）**: 退避分を `git stash pop` で復旧し、トリアージ成果物（`agent-backlog.md` / `data/gas_deploy_health.json` / `data/seo_advice_log.json`）を**その場でコミット**した。書いたら即コミットすれば次回の起動時刻衝突では退避対象にならない。なお本ループの手順書（`.claude/commands/seo-triage.md`・スケジュールタスク定義）は自己改変ブロックで編集できないため、この運用は本チケットの記録をもって申し送りとする
+
 ### [ISSUE-129] GASの日次レポートメールが2026-09-16 23:07 JSTを最後に2日間（09-17・09-18）届いていない — SEOアドバイス改善ループが2日間完全停止
 
 - **priority**: P1 → **status**: wont_fix（2026-09-19 実地再検証で**前提が誤りと判明**・下記の訂正参照。GAS は一度も止まっていない）
@@ -1079,6 +1107,11 @@
   - `features/nagoya-solo-dining.html` の関連特集リンクは8本あるが、**全て `:424-434`＝全513行中の約83%地点（記事末尾）にのみ存在**する。冒頭の `:209` にある TOP-CTA は「編集部が上位に挙げた3軒の詳細と予約」＝**店舗への導線**であり、特集間の導線ではない
   - 30日実測（`data/site_metrics.json` 2026-09-18 生成）: solo-dining の外部送客は **24クリックで全ページ中最多**（`cta.byPage`）＝冒頭 TOP-CTA 自体は機能している。一方 `totals.pagesPerSession` は **1.45** で回遊は薄いまま＝「送客は強いが回遊は弱い」という非対称が数字に出ている
   - したがって「関連特集導線を冒頭へ上げる」は acceptance④ の**次の打ち手候補**として妥当。ただし**④で追加した末尾相互リンクの効果判定（acceptance⑤）が出る前に位置を動かすと前後比が壊れる**ため、**⑤の判定後に着手する**。新規起票はせず本チケットの順序に載せる（同じ acceptance を2枚に割らない）
+
+- **2026-09-20 追記（日次トリアージで実測・新規起票はしない）**: 同旨の助言が日次で三度目の再来（原文「features/に『おひとりさま向け』の特集記事を増やし、index.html のトップページから特集への導線を強化して、ニッチなニーズへの対応をさらに伸ばしましょう」）。**前半「一人向け特集を増やす」は 2026-09-14 に acceptance② として実施済み**（`features/meieki-hitori-nomi.html`）で、効果判定（acceptance⑤）待ちのため重ねて起票しない。後半「トップからの導線」について実測した事実のみ記録する:
+  - `index.html` は `features/nagoya-solo-dining.html` へ **2箇所**（`:1745` トップ特集面の feature-card ／ `:2212` シーン別リンク一覧「名古屋の一人飲み」）で導線を持つ＝助言の言う「導線が無い」は事実と異なる
+  - 一方 **`features/meieki-hitori-nomi.html` は `index.html` から1リンクも無い**（`grep -c 'meieki-hitori-nomi' index.html` → 0）。ただしこれは異常値ではなく、特集68本中 **21本**が index.html 未リンク（ハブは `features/index.html`）＝本ページ固有の欠落ではない。被リンクは `features/nagoya-solo-dining.html` / `features/meieki.html` / `features/index.html` の3本＋`sitemap.xml` 登録済みで孤児ではない
+  - `data/gsc_metrics.json`（2026-09-19 生成）に本ページの行は **まだ0件**（公開6日目・クロール待ち）。**トップ導線を足すかどうかは、まず acceptance⑤ の前後比が出てから判断する**（クロール前に導線を増やすと「新設の効果」と「導線追加の効果」が分離できなくなる・制約10）
 
 ### [SEO-084] 特集48本の店舗リンクがクリック計測を持たず、「店舗詳細クリック0回」という助言が毎日そこから再生産されている（SEO-072 の残り穴）
 

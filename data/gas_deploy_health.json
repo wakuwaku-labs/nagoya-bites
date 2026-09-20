@@ -2,12 +2,14 @@
   "version": 1,
   "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
   "last_run": {
-    "date": "2026-09-18",
-    "recorded_at": "2026-09-19T00:12:13.723Z",
+    "date": "2026-09-19",
+    "recorded_at": "2026-09-19T23:57:44.230Z",
     "status": "ok",
     "reason": null,
-    "verdict": "deployed",
-    "missing_fixes": []
+    "verdict": "not_deployed",
+    "missing_fixes": [
+      "SEO-092"
+    ]
   },
   "observations": [
     {
@@ -694,6 +696,36 @@
       },
       "numeric_reference_skipped": null,
       "recorded_at": "2026-09-19T00:12:13.718Z"
+    },
+    {
+      "date": "2026-09-19",
+      "kind": "daily",
+      "verdict": "not_deployed",
+      "missing_fixes": [
+        "SEO-092"
+      ],
+      "evidence": [
+        {
+          "key": "settled_slice_label",
+          "fix_id": "SEO-076",
+          "verdict": "deployed",
+          "line": "【読まれ方（確定値・2026-09-18）】"
+        },
+        {
+          "key": "stale_example_kw",
+          "fix_id": "SEO-092",
+          "verdict": "not_deployed",
+          "line": "👉 docs/daily-posts/のSNS投稿原稿に、Bing検索で上位表示されやすいキーワード（例: 名古屋 接待 個室）を盛り込み、検索エンジンからの流入をさらに強化する文章を準備しましょう。"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "indeterminate"
+        }
+      ],
+      "numeric_reference": null,
+      "numeric_reference_skipped": "参照値の日付 2026-09-17 が レポートが名乗る対象日 2026-09-18 と一致しないため数値判定をしない",
+      "recorded_at": "2026-09-19T23:57:44.225Z"
     }
   ],
   "deploys": [

@@ -3080,6 +3080,46 @@
       "brand_reason": "採用（P1）。CLAUDE.md『無人自動化の監視を設計するときの原則』③「『気づけるはず』を検知と数えない」に直接該当する、このループ自身の欠陥。週次アームは『該当メール無し＝スキップ（正常終了）』と報告し続けるため、空振りが正常系に偽装される構造になっていた。検知は検証できる事実だけで成立している（Gmail の labelIds に TRASH が含まれること／同じ窓の primary 検索が0件を返すこと＝誰でも再現可能・制約10）。順位操作・広告・マネタイズを一切伴わない運用健全化のため Strategic Skip にも制約7・8にも抵触しない。なお TRASH へ振り分けている原因（Gmail フィルタが第一候補）の特定と解除はオーナー本人の操作が必要で、コード側から検証できない＝acceptance② はオーナー待ち。",
       "category": "SEO",
       "fingerprint": "9e4bfde42fdfd22f"
+    },
+    {
+      "id": null,
+      "date": "2026-09-20",
+      "source": "line-daily",
+      "advice": "🟡 予約クリック率が6.1%と高い一方で、予約ボタンクリックは2回と少ないです。👉 index.htmlの全店舗掲載箇所に、予約ボタン（cta_click）を視認性の高い位置に常に表示し、クリック率を最大化する導線を強化しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下（打ち手が既に実装済み＋前提が単日ノイズ）。①『全店舗掲載箇所に予約ボタンを常に表示』は実装済み: index.html:9672 のカード生成が ホットペッパーID を持つ全店に card-cta『ホットペッパーで予約』を常時描画し、モーダルにも :10222 で『この店を予約する』が出る。data/stores.json 実測で 4,917店中 4,773店（97.1%）が該当。②残る144店（2.9%）は予約URL自体が存在しない店で、ボタンを足すには存在しない予約先を作ることになる＝実在保証の毀損（制約7）。③前提の数字も助言内で自己矛盾している（『予約クリック率6.1%が高い』と『クリック2回が少ない』は同じ2クリック÷訪問33人。単日の分母33で多寡を論じている）。30日実測（data/site_metrics.json 2026-09-19生成）では outboundClicks 143 / ctaClickRate 10.4% / hotpepper.jp 64クリックで、導線が死んでいる事実は無い。④同型『予約ボタンを増やせ／視認性を上げろ』は 2026-09-13・09-14 に同じ根拠で却下済み、原型の SEO-084（2026-09-06 done）で計測穴は既に塞いでいる。",
+      "category": null,
+      "fingerprint": "622982b36c969b61"
+    },
+    {
+      "id": null,
+      "date": "2026-09-20",
+      "source": "line-daily",
+      "advice": "🟡 検索流入比率が83%と非常に高く、特にBing検索が41%と最も多いです。👉 docs/daily-posts/のSNS投稿原稿に、Bing検索で上位表示されやすいキーワード（例: 名古屋 接待 個室）を盛り込み、検索エンジンからの流入をさらに強化する文章を準備しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（Bing側の打ち手は SEO-085 / SEO-081 に、助言生成器の欠陥は SEO-092 に集約済み）。①手段が成立しない: SNS投稿原稿は公開ページではないため Bing のインデックス対象にならず、そこへKWを入れても Bing 検索順位に作用する経路が無い（2026-09-12 に同一構造の助言を同じ理由で却下済み・SEO-085 brand-filter に記録）。②前提のファイルが存在しない: docs/daily-posts/ の原稿自動生成は 2026-09-05 にオーナー指示で停止済み（data/journal_sns_draft_policy.json: generate_sns_draft=false）で最新は 2026-09-05.md。③根拠『Bingが最大級の流入源』自体は正しい（search_channel_metrics.js 実測・直近30日で検索発見1,059セッション中 Bing 348＝32.9%）が、その正しい打ち手は IndexNow 実送信（SEO-085 ready）と Bing Webmaster Tools 登録（SEO-067 blocked・オーナー操作待ち）に既に起票済み。④本項目は同時に SEO-092 の未反映証跡でもある: check_gas_deploy_health.js --record が本文の『（例: 名古屋 接待 個室）』を stale_example_kw 痕跡として検出し verdict=not_deployed（1回連続）を記録した＝助言生成器が GSC 実クエリを参照しない旧コードのまま動いている。2回連続で gas-deploy-watchdog が Issue を起票する。",
+      "category": null,
+      "fingerprint": "8512e736852634dd"
+    },
+    {
+      "id": null,
+      "date": "2026-09-20",
+      "source": "line-daily",
+      "advice": "🟢 人気ページTOP1が「nagoya-solo-dining」で6回閲覧されています。👉 features/に「おひとりさま向け」の特集記事を増やし、index.htmlのトップページから特集への導線を強化して、ニッチなニーズへの対応をさらに伸ばしましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-087 に集約・同チケットへ 2026-09-20 追記を実施）。①前半『一人向け特集を増やす』は 2026-09-14 に SEO-087 acceptance② として実施済み（features/meieki-hitori-nomi.html＝名駅×一人飲み。掲載6店は data/stores.json と機械照合済み・架空店ブロック通過）。効果判定（acceptance⑤）待ちで status:in_progress のため、同じ acceptance を2枚のチケットに割らない。②後半『トップからの導線が弱い』は事実と異なる: index.html は nagoya-solo-dining へ2箇所（:1745 feature-card ／ :2212 シーン別リンク一覧）で導線を持つ。③新設ページ側は index.html から未リンクだが、特集68本中21本が同様（ハブは features/index.html）で本ページ固有の欠落ではなく、被リンク3本＋sitemap 登録済みで孤児でもない。④data/gsc_metrics.json（2026-09-19生成）に本ページの行はまだ0件＝公開6日目でクロール前。ここでトップ導線を足すと『新設の効果』と『導線追加の効果』が分離できなくなるため、acceptance⑤の前後比が出るまで動かさない（制約10）。同型助言は 09-09・09-19 にも SEO-087 へ集約済み。",
+      "category": null,
+      "fingerprint": "020f088872fab9a3"
+    },
+    {
+      "id": "SEO-104",
+      "date": "2026-09-20",
+      "source": "internal-audit",
+      "advice": "【ループ内部監査】日次トリアージ実行中（2026-09-20 09:01:21 JST）に、本ループが書いた data/gas_deploy_health.json（2026-09-19 の verdict:not_deployed 記録）と agent-backlog.md の追記が作業ツリーから消えた。git stash list に auto-cleanup-debris-20260920-090121 として退避されており、scripts/run_journal_local.sh:318-326 が起動時の作業ツリーの汚れを中身を問わず『前回実行の残骸』とみなして stash push（pop しない）していた。直近30日で同種の stash は6本あり、全6本が本ループの心拍ファイルを含む。",
+      "verdict": "adopted",
+      "brand_reason": "採用（P1）。CLAUDE.md『無人自動化の監視を設計するときの原則』②（通知は out-of-band に出す）③（『気づけるはず』を検知と数えない）に該当する監視系自身の欠陥で、判定は検証できる事実だけで成立する（git stash list / git stash show --stat / run_journal_local.sh の該当行 / launchd plist の 9:00 起動 — 誰でも再現・検算できる・制約10）。実害の経路も今日まさに成立していた: gas-deploy-watchdog は『コミットされた』health の not_deployed が2連続したときに Issue を起票する設計で、今日退避されたのはその1回目（SEO-092 未反映の痕跡）だったため、復旧しなければカウンタが2に届かず out-of-band 通知が永久に出なかった。順位操作・広告・マネタイズを一切伴わず Strategic Skip にも制約7・8にも非該当。暫定対応として退避分を git stash pop で復旧し、本日のトリアージ成果物をその場でコミットした。",
+      "category": "ops-monitoring",
+      "fingerprint": "4d2821de5e3b876e"
     }
   ]
 }
