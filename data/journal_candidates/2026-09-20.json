@@ -1,0 +1,479 @@
+{
+  "date": "2026-09-20",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "錦の名古屋めし食堂 丸八 伏見別邸、手羽先も味噌かつも一会計の宴会",
+      "verdict": "PASS",
+      "total": 100,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "手羽先",
+          "feature": "features/nagoya-tebasaki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 6件 (価格帯,席,予約,接待,オペ,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 208字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「錦」+4",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「手羽先」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "錦の名古屋観光ホテル1階が9月に総入れ替え、手羽先とNYステーキが同じ床に並ぶ接待の選び方",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 8,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "手羽先",
+          "feature": "features/nagoya-tebasaki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 2件 (接待,業界) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 185字 +4",
+          "title 45字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「錦」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「手羽先」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅サンロードに名古屋初のリエージュワッフル、栄の洒落CAFEと同じ9月25日に開くカフェ2軒",
+      "verdict": "HOLD",
+      "total": 77,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 2件 (シーン,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 161字 +4",
+          "title 47字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "錦の新フードホールに駐車場提携がない理由、丸八 伏見別邸を地下鉄客だけに絞った設計を読む",
+      "verdict": "HOLD",
+      "total": 71,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 1件 (回転) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 149字 +4",
+          "title 44字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「錦」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "錦で味噌かつも台湾ラーメンも通しで頼める、丸八 伏見別邸が11時〜22時を選んだ一人飲みの事情",
+      "verdict": "HOLD",
+      "total": 70,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(flexible) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 147字 +4",
+          "title 47字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「錦」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "flexible",
+      "title_draft": "錦の名古屋めし食堂 丸八 伏見別邸、手羽先も味噌かつも一会計の宴会",
+      "lead_draft": "2026年9月17日、名古屋観光ホテル1階に「名古屋めし食堂 丸八 伏見別邸」が開いた。矢場とん・矢場味仙・世界の山ちゃん・ひつまぶし備長が同じ客席を共有する編成だ。編集部は9月5日、開業前のこの店を「各ブランド別会計になるから幹事向きではない」と予測で書いた。実際に開いた店は違った。130席・最大60名貸切・卓上QRで全ブランド横断注文の一会計型である。訂正したうえで、宴会に使えるのかを価格とオペから読み直す。",
+      "angle": "開業前に当サイトが書いた「各ブランド別会計＝幹事に不向き」という予測を訂正し、実際の130席・最大60名貸切・卓上QR一会計というオペと、みそかつ定食2,300円/台湾ラーメン950円という価格帯、11時〜22時通し営業の回転設計から、宴会の予約と接待の可否を読む",
+      "main_store": {
+        "name": "名古屋めし食堂 丸八 伏見別邸",
+        "id": "",
+        "area": "錦・伏見",
+        "genre": "名古屋めし"
+      },
+      "sources": [
+        {
+          "label": "ジェイグループホールディングス 公式ニュース",
+          "url": "https://www.jgroup.jp/news/20260916-3440/",
+          "date": "2026-09-16"
+        },
+        {
+          "label": "名古屋めし食堂 丸八 伏見別邸 公式サイト",
+          "url": "https://nagoyamaruhachi.jproject-shop.jp/fushimi-bettei/",
+          "date": "2026-09-17"
+        },
+        {
+          "label": "PR TIMES / エスパシオエンタープライズ",
+          "url": "https://prtimes.jp/main/html/rd/p/000000145.000097639.html",
+          "date": "2026-09-16"
+        },
+        {
+          "label": "PR TIMES / エスワイフード「世界の山ちゃん丸八別邸」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000009.000183380.html",
+          "date": "2026-09-17"
+        },
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/maruhachi-shokudou-fushimi/",
+          "date": "2026-09-18"
+        },
+        {
+          "label": "ナゴヤドット",
+          "url": "https://nagoyato.com/posts/19066",
+          "date": "2026-09-17"
+        },
+        {
+          "label": "東海テレビ（Yahoo!ニュース）",
+          "url": "https://news.yahoo.co.jp/articles/a125249a329cc673cdb7ec0e103b72025418c110",
+          "date": "2026-09-18"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "flexible",
+      "title_draft": "錦の名古屋観光ホテル1階が9月に総入れ替え、手羽先とNYステーキが同じ床に並ぶ接待の選び方",
+      "lead_draft": "2026年9月、名古屋観光ホテルの1階に「名古屋めし食堂 丸八 伏見別邸」とウルフギャング・ステーキハウス名古屋店が相次いで入った。価格帯1,000〜5,000円の名古屋めしと、東海初出店の高単価ステーキハウスが同じフロアに並ぶ。ホテルが直営レストランを抱える時代から、外部テナントに床を貸す時代への転換である。接待でホテルを使う判断軸がどう変わるかを業界人の目で読む。",
+      "angle": "ホテルF&Bの直営→テナント化という業界構造の転換を、同一フロアに並んだ2業態の価格差から読み、接待でホテルを指定する意味を問い直す",
+      "main_store": {
+        "name": "名古屋めし食堂 丸八 伏見別邸",
+        "id": "",
+        "area": "錦・伏見",
+        "genre": "名古屋めし"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES / ウルフギャング・ステーキハウス名古屋店",
+          "url": "https://prtimes.jp/main/html/rd/p/000000132.000097639.html",
+          "date": "2026-09-04"
+        },
+        {
+          "label": "ジェイグループホールディングス 公式ニュース",
+          "url": "https://www.jgroup.jp/news/20260916-3440/",
+          "date": "2026-09-16"
+        },
+        {
+          "label": "PR TIMES / エスパシオエンタープライズ",
+          "url": "https://prtimes.jp/main/html/rd/p/000000145.000097639.html",
+          "date": "2026-09-16"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "flexible",
+      "title_draft": "錦で味噌かつも台湾ラーメンも通しで頼める、丸八 伏見別邸が11時〜22時を選んだ一人飲みの事情",
+      "lead_draft": "名古屋めしの有名店は、単独店だと昼と夜で営業が割れる。2026年9月17日に開いた「名古屋めし食堂 丸八 伏見別邸」は11時から22時までの通し営業で、L.O.は21時30分。中休みを作らない設計は、4ブランドが厨房を共有しているから成立する。出張者の遅い一人飲みという穴をどう埋めたかを読む。",
+      "angle": "通し営業とラストオーダーの設定を、複数ブランドの厨房共有という原価/人員の裏側から読み、一人客が使える時間帯を割り出す",
+      "main_store": {
+        "name": "名古屋めし食堂 丸八 伏見別邸",
+        "id": "",
+        "area": "錦・伏見",
+        "genre": "名古屋めし"
+      },
+      "sources": [
+        {
+          "label": "名古屋めし食堂 丸八 伏見別邸 公式サイト",
+          "url": "https://nagoyamaruhachi.jproject-shop.jp/fushimi-bettei/",
+          "date": "2026-09-17"
+        },
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/maruhachi-shokudou-fushimi/",
+          "date": "2026-09-18"
+        },
+        {
+          "label": "ナゴヤドット",
+          "url": "https://nagoyato.com/posts/19066",
+          "date": "2026-09-17"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "flexible",
+      "title_draft": "錦の新フードホールに駐車場提携がない理由、丸八 伏見別邸を地下鉄客だけに絞った設計を読む",
+      "lead_draft": "ホテル1階の飲食店なのに、地下駐車場の提携サービスがない。2026年9月17日に開業した「名古屋めし食堂 丸八 伏見別邸」は、伏見駅1番出口から徒歩1分という立地を持ちながら、車で来る客をあえて想定していない。駐車サービスを付けないという判断が店側の原価と回転に何をもたらすかを、業界人の目で読む。",
+      "angle": "駐車場提携の有無という見落とされがちな条件を、駐車サービス料の原価負担と回転率の観点から読み、車移動前提の宴会幹事に注意を促す",
+      "main_store": {
+        "name": "名古屋めし食堂 丸八 伏見別邸",
+        "id": "",
+        "area": "錦・伏見",
+        "genre": "名古屋めし"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/maruhachi-shokudou-fushimi/",
+          "date": "2026-09-18"
+        },
+        {
+          "label": "名古屋めし食堂 丸八 伏見別邸 公式サイト",
+          "url": "https://nagoyamaruhachi.jproject-shop.jp/fushimi-bettei/",
+          "date": "2026-09-17"
+        },
+        {
+          "label": "ジェイグループホールディングス 公式ニュース",
+          "url": "https://www.jgroup.jp/news/20260916-3440/",
+          "date": "2026-09-16"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "flexible",
+      "title_draft": "名駅サンロードに名古屋初のリエージュワッフル、栄の洒落CAFEと同じ9月25日に開くカフェ2軒",
+      "lead_draft": "2026年9月25日、名駅直結の地下街サンロードに焼きたてリエージュワッフル専門店「BEL BUTTER WAFFLE」が名古屋初出店する。同じ日、栄にはポップカルチャー体験型の「洒落CAFE」も開く。地下街の物販型カフェとIPコラボカフェでは、必要な席数も滞在時間もまったく違う。カフェ2業態の設計差を業界人の目で読む。",
+      "angle": "テイクアウト主体の地下街スイーツとIPコラボカフェの滞在時間・客単価・回転の違いを比較し、どちらがどのシーンに向くかを示す",
+      "main_store": {
+        "name": "BEL BUTTER WAFFLE",
+        "id": "",
+        "area": "名駅",
+        "genre": "スイーツ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES / DAY TO LIFE",
+          "url": "https://prtimes.jp/main/html/rd/p/000000438.000007024.html",
+          "date": "2026-09-16"
+        },
+        {
+          "label": "PR TIMES / Anique 洒落CAFE",
+          "url": "https://prtimes.jp/main/html/rd/p/000000308.000048489.html",
+          "date": "2026-09-12"
+        },
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/",
+          "date": "2026-09-18"
+        }
+      ]
+    }
+  ]
+}
