@@ -28,6 +28,8 @@
  */
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
 const https = require('https');
 const { namesMatch } = require('./store_name_match');
 
@@ -89,6 +91,50 @@ function tabelogNameFromTitle(title) {
   return { name: t, closed };
 }
 
+// ─── 住所による同一性証明 ────────────────────────────────────────────
+// 店名の表記ゆれ（「鉄板焼 那古亭」対「那古亭」、「コメダ珈琲 本店」対
+// 「コメダ珈琲店 本店」）は名前の類似度だけでは詰められない。一方、住所は
+// Google Places（我々が placeId で保持）と食べログ（JSON-LD PostalAddress）の
+// 両方から機械的に取れて、町名＋番地が完全一致すれば**同じ建物を指している**
+// ことの証明になる。名前より強い証拠なので、一致したときは名前ゲートの結果に
+// かかわらず「その店のページ」と判定する（制約10・誰でも同じ2つのページを
+// 開いて検算できる）。逆に、住所が取れないとき・食い違うときは何も主張しない。
+function normalizeJpAddress(input) {
+  if (!input) return '';
+  let s = String(input).normalize('NFKC');
+  s = s.replace(/^日本[、,]?\s*/, '').replace(/〒\s*\d{3}-?\d{4}\s*/g, '');
+  s = s.replace(/愛知県/g, '').replace(/名古屋市/g, '');
+  s = s.replace(/^(千種|東|北|西|中村|中|昭和|瑞穂|熱田|中川|港|南|守山|緑|名東|天白)区/, '');
+  s = s.replace(/[ー−‐–—―ｰ]/g, '-');
+  s = s.replace(/丁目|番地|番|号/g, '-');
+  s = s.replace(/\s+/g, ' ').trim();
+  const town = (s.match(/^[^0-9]+/) || [''])[0].replace(/[\s-]+$/, '').trim();
+  const rest = s.slice(town.length);
+  // 番地は「数字と区切りだけが続く範囲」まで。以降のビル名・階数は比較に使わない
+  const numPart = (rest.match(/^[\s0-9-]+/) || [''])[0];
+  const nums = numPart.split(/[^0-9]+/).filter(Boolean);
+  if (!town || nums.length === 0) return '';
+  return `${town}${nums.join('-')}`;
+}
+
+// 食べログ店舗ページの JSON-LD から住所（区＋番地）を取り出す
+function tabelogAddressFromHtml(html) {
+  const blocks = [...html.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi)].map((m) => m[1]);
+  const find = (o) => {
+    if (!o || typeof o !== 'object') return null;
+    if (o.address && typeof o.address === 'object' && o.address.addressLocality) return o.address;
+    for (const k of Object.keys(o)) { const r = find(o[k]); if (r) return r; }
+    return null;
+  };
+  for (const b of blocks) {
+    let json;
+    try { json = JSON.parse(b); } catch (e) { continue; }
+    const a = find(json);
+    if (a) return { locality: String(a.addressLocality || ''), street: String(a.streetAddress || '') };
+  }
+  return null;
+}
+
 function hotpepperNameFromTitle(title) {
   let t = title.replace(/\s*\|\s*ホットペッパーグルメ\s*$/, '');
   t = t.replace(/\([^)]*\)\s*$/, '').replace(/（[^）]*）\s*$/, '');
@@ -117,6 +163,8 @@ function bestMatch(storeName, matchedName) {
 }
 
 // ─── 検証本体 ────────────────────────────────────────────────────────
+// opts.address … 我々が別経路（Google Places）で持っている住所。渡すと住所一致を
+//                 同一性の証明として使う（名前の表記ゆれで落とさないため）
 async function checkTabelogUrl(url, storeName, opts) {
   let html;
   try {
@@ -128,11 +176,19 @@ async function checkTabelogUrl(url, storeName, opts) {
   if (!title) return { ok: false, reason: 'no-title', url, storeName };
   const { name: matchedName, closed } = tabelogNameFromTitle(title);
   const match = bestMatch(storeName, matchedName);
+  // 住所が渡されていれば、名前の表記ゆれより強い証拠として先に照合する
+  const wantAddress = normalizeJpAddress((opts && opts.address) || '');
+  const pageAddress = wantAddress ? tabelogAddressFromHtml(html) : null;
+  const gotAddress = pageAddress ? normalizeJpAddress(`${pageAddress.locality}${pageAddress.street}`) : '';
+  const addressMatch = !!(wantAddress && gotAddress && wantAddress === gotAddress);
+  const ok = (match.ok || addressMatch) && !closed;
   return {
-    ok: match.ok && !closed,
-    reason: !match.ok ? 'name-mismatch' : (closed ? 'closed' : null),
+    ok,
+    reason: ok ? null : (closed ? 'closed' : 'name-mismatch'),
+    via: addressMatch ? (match.ok ? 'name+address' : 'address') : (match.ok ? 'name' : null),
     sim: match.sim,
     matchedName,
+    matchedAddress: gotAddress || null,
     closed,
     url,
     storeName,
@@ -163,8 +219,37 @@ async function checkHotpepperId(id, storeName, opts) {
   };
 }
 
+// 店名 → Google Places 由来の住所（同一性の証明に使う）。
+// placeId は data/stores.json、Places 応答は data/places_resolved.json にある。
+// 解決器（resolve_manual_tabelog_links.js）と監査（audit_store_link_identity.js）が
+// 同じ索引を共有することで、「解決器は住所で通したが監査は名前で落とす」ズレを防ぐ。
+function buildPlacesAddressIndex(root) {
+  const ROOT = root || path.resolve(__dirname, '..', '..');
+  const index = new Map();
+  let stores = [];
+  try {
+    const raw = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'stores.json'), 'utf8'));
+    stores = Array.isArray(raw) ? raw : (raw.stores || []);
+  } catch (e) { return index; }
+  let places = {};
+  try { places = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'places_resolved.json'), 'utf8')); }
+  catch (e) { return index; }
+  const byPlaceId = new Map();
+  for (const v of Object.values(places)) {
+    if (v && v.placeId && v.formatted_address) byPlaceId.set(v.placeId, v.formatted_address);
+  }
+  for (const s of stores) {
+    const addr = s.placeId ? byPlaceId.get(s.placeId) : null;
+    if (addr) index.set(s['店名'], addr);
+  }
+  return index;
+}
+
 module.exports = {
   fetchHtml,
+  buildPlacesAddressIndex,
+  normalizeJpAddress,
+  tabelogAddressFromHtml,
   extractTitle,
   tabelogNameFromTitle,
   hotpepperNameFromTitle,

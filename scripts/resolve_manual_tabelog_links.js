@@ -46,6 +46,7 @@
  *   node scripts/resolve_manual_tabelog_links.js --limit 20    # 件数を絞る（レート制限対策）
  *   node scripts/resolve_manual_tabelog_links.js --store "くろぎ"
  *   node scripts/resolve_manual_tabelog_links.js --force       # キャッシュ無視で再解決
+ *   node scripts/resolve_manual_tabelog_links.js --retry-failed # 未解決だった店だけ再挑戦
  *   node scripts/resolve_manual_tabelog_links.js --report      # 解決状況の要約のみ（通信しない）
  */
 'use strict';
@@ -53,8 +54,10 @@
 const fs = require('fs');
 const path = require('path');
 const {
-  fetchHtml, extractTitle, tabelogNameFromTitle, bestMatch,
+  fetchHtml, extractTitle, tabelogNameFromTitle, bestMatch, normalizeJpAddress,
+  buildPlacesAddressIndex,
 } = require('./lib/store_link_identity');
+const { coreStoreName } = require('./lib/store_core_name');
 
 const ROOT = path.resolve(__dirname, '..');
 const MANUAL = path.join(ROOT, 'data', 'manual_stores.json');
@@ -62,7 +65,7 @@ const CACHE = path.join(ROOT, 'data', 'manual_tabelog_resolved.json');
 
 // ─── CLI ─────────────────────────────────────────────────────────────
 const argv = process.argv.slice(2);
-const opts = { dryRun: false, force: false, report: false, limit: null, store: null, delayMs: 1500 };
+const opts = { dryRun: false, force: false, report: false, retryFailed: false, limit: null, store: null, delayMs: 1500 };
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
   if (a === '--dry-run') opts.dryRun = true;
@@ -71,6 +74,7 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--limit') opts.limit = parseInt(argv[++i], 10);
   else if (a === '--store') opts.store = argv[++i];
   else if (a === '--delay') opts.delayMs = parseInt(argv[++i], 10);
+  else if (a === '--retry-failed') opts.retryFailed = true;
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -92,6 +96,9 @@ function saveCache(c) {
   fs.writeFileSync(CACHE, JSON.stringify(c, null, 2) + '\n');
 }
 const keyOf = (s) => `${s['店名']}::${s['エリア'] || ''}`;
+
+// 住所索引（同一性の証明に使う）は監査と共有する — scripts/lib/store_link_identity.js
+const ADDRESS_INDEX = buildPlacesAddressIndex(ROOT);
 
 // ─── 検索クエリ（店名から） ──────────────────────────────────────────
 // 丸括弧の読みがな・【】の装飾だけ落とす。支店サフィックスは落とさない
@@ -223,10 +230,40 @@ async function searchCandidates(query) {
 }
 
 // ─── 1店ぶん解決 ─────────────────────────────────────────────────────
-async function resolveOne(store) {
-  const query = searchQuery(store['店名']);
-  if (query.length < 2) return { failed: true, reason: 'query-too-short' };
+// 検索に投げる語は2段。まず店名そのまま、当たらなければ業態語を落とした固有名詞だけ
+// （実測: 「割烹 季節料理 花わさび」「鮨 結」は店名そのままだと検索結果が0件になる）。
+// 判定ゲートは両方の段で同一なので、語を増やしても採用基準は緩まない。
+function queryPlan(store) {
+  const full = searchQuery(store['店名']);
+  const core = searchQuery(coreStoreName(store['店名']));
+  const out = [];
+  if (full.length >= 2) out.push(full);
+  if (core.length >= 2 && core !== full) out.push(core);
+  return out;
+}
 
+async function resolveOne(store) {
+  const plan = queryPlan(store);
+  if (plan.length === 0) return { failed: true, reason: 'query-too-short' };
+
+  let lastReason = 'no-candidates';
+  const triedAll = [];
+  for (const query of plan) {
+    const r = await resolveWithQuery(store, query);
+    if (!r.failed) return { ...r, tried: [...triedAll, ...(r.tried || [])] };
+    triedAll.push(...(r.tried || []));
+    lastReason = r.reason;
+    // 「決められない」系（候補が複数通った／我々のデータが矛盾）は語を変えても
+    // 結論が変わらないので、ここで打ち切る
+    if (['ambiguous-candidates', 'our-locality-contradictory', 'branch-locality-mismatch', 'search-error'].includes(r.reason)) {
+      return { ...r, tried: triedAll };
+    }
+    if (plan.length > 1) await sleep(opts.delayMs);
+  }
+  return { failed: true, reason: lastReason, query: plan[plan.length - 1], tried: triedAll };
+}
+
+async function resolveWithQuery(store, query) {
   let candidates;
   try {
     candidates = await searchCandidates(query);
@@ -249,6 +286,19 @@ async function resolveOne(store) {
     }
     const title = extractTitle(html);
     const { name: matchedName, closed } = tabelogNameFromTitle(title);
+    // 住所ゲート（最優先）— Google Places の住所と食べログの住所が一致したら、
+    // 店名の表記ゆれに関係なくその店のページと確定できる
+    const wantAddress = normalizeJpAddress(ADDRESS_INDEX.get(store['店名']) || '');
+    const pageAddr = tabelogAddress(html);
+    const gotAddress = pageAddr ? normalizeJpAddress(`${pageAddr.addressLocality || ''}${pageAddr.streetAddress || ''}`) : '';
+    if (!closed && wantAddress && gotAddress && wantAddress === gotAddress) {
+      return {
+        url: cand.url, matchedName, title,
+        sim: Number((bestMatch(store['店名'], matchedName).sim || 0).toFixed(3)),
+        locality: { basis: 'address', our: wantAddress, theirs: gotAddress },
+        query, tried,
+      };
+    }
     // 名前ゲート（日次監査 audit_store_link_identity.js と同じ判定器）
     const match = bestMatch(store['店名'], matchedName);
     if (!match.ok || closed) {
@@ -355,6 +405,7 @@ function report() {
       if (!c) return true;
       if (c.url) return false;                 // 解決済み（未反映なら下で反映される）
       if (c.failed && c.retryable) return true; // 通信失敗は再挑戦する
+      if (c.failed && opts.retryFailed) return true; // --retry-failed: 検索語を増やした等で再挑戦する
       return false;                            // ゲートで落ちた店は再挑戦しない
     });
   }

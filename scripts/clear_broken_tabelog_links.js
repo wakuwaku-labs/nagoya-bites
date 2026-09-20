@@ -9,6 +9,10 @@
  * ローマ字表記の差で閾値未達なだけの疑いがあるもの）は対象外とし、人による個別確認に残す
  * （品質ゲート原則: 検証できる事実だけで機械的に判定する。閾値ぎりぎりのものを自動処理しない）。
  *
+ * 解決キャッシュ（data/tabelog_resolved.json）も同時に failed 化する。これを忘れると
+ * build.js が「食べログURLが空の店」をキャッシュで埋め戻すため、消したURLが翌日のCIで
+ * 蘇る（2026-09-20 に Hot Pepper 由来店へ対象を広げた際に判明）。
+ *
  * 削除であって「正しいURLへの差し替え」ではない。正しいURLの再調査は別途行う。
  * フロントは 食べログURL が空なら食べログボタンを出さない（gen-store-pages.js の
  * `tbUrl && ...` 分岐 / index.html の同等ロジック）ため、安全に「リンク非表示」へ落ちる
@@ -28,6 +32,7 @@ const CACHE_PATH = path.join(ROOT, 'data', 'store_link_identity_checked.json');
 const MANUAL_PATH = path.join(ROOT, 'data', 'manual_stores.json');
 const STORES_JSON_PATH = path.join(ROOT, 'data', 'stores.json');
 const STORES_DIR = path.join(ROOT, 'stores');
+const TABELOG_CACHE_PATH = path.join(ROOT, 'data', 'tabelog_resolved.json');
 
 const dryRun = process.argv.includes('--dry-run');
 
@@ -162,6 +167,38 @@ function patchStoreHtmlFiles(targets) {
   return filesTouched;
 }
 
+/**
+ * 解決キャッシュ（data/tabelog_resolved.json）からも取り除く。
+ *
+ * これを忘れると**消したURLが翌日の build.js で蘇る**。build.js は
+ * 「食べログURLが空の店」をこのキャッシュで埋め戻す設計のため
+ * （build.js の「キャッシュからInstagram/食べログURLをマージ」）、
+ * stores.json だけを空にしても次のCIで元に戻ってしまう。
+ * エントリは消さずに failed 印と消した理由・消した元URLを残す
+ * （後から第三者が「なぜ空欄なのか」を検算できるようにするため・制約10）。
+ */
+function patchTabelogResolvedCache(targets) {
+  if (!fs.existsSync(TABELOG_CACHE_PATH)) return 0;
+  const cache = JSON.parse(fs.readFileSync(TABELOG_CACHE_PATH, 'utf8'));
+  const byUrl = new Set(targets.map((t) => t.url));
+  let n = 0;
+  for (const [id, entry] of Object.entries(cache)) {
+    if (!entry || !entry.tabelog || !byUrl.has(entry.tabelog)) continue;
+    cache[id] = {
+      store: entry.store,
+      failed: true,
+      failedBy: 'tabelog',
+      clearedBy: 'identity-audit',
+      clearedReason: '実地検証でリンク先が別店（sim=0）または404だったため空欄化',
+      previousUrl: entry.tabelog,
+      resolvedAt: new Date().toISOString(),
+    };
+    n++;
+  }
+  if (!dryRun && n) fs.writeFileSync(TABELOG_CACHE_PATH, JSON.stringify(cache, null, 2) + '\n', 'utf8');
+  return n;
+}
+
 function main() {
   const targets = loadTargets();
   console.log(`対象URL: ${targets.length}件${dryRun ? ' (--dry-run)' : ''}`);
@@ -176,6 +213,9 @@ function main() {
 
   const n3 = patchStoreHtmlFiles(targets);
   console.log(`stores/*.html: ${n3}ファイル修正`);
+
+  const n4 = patchTabelogResolvedCache(targets);
+  console.log(`data/tabelog_resolved.json: ${n4}件を failed 化（再埋め戻しの防止）`);
 
   if (dryRun) console.log('\n--dry-run のため実際の書き換えはしていません');
 }
