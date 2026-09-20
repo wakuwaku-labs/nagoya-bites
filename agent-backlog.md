@@ -6,6 +6,26 @@
 
 ---
 
+### [ISSUE-133] 食べログが【閉店】と表示している店を22件掲載し続けている（Google Places は20件を OPERATIONAL と返しており、判定が割れている）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-21
+- **category**: data-liveness / trust
+- **owner**: DataKeeper
+- **source**: ISSUE-131 の食べログURL全件実地検証（3,579件）の副産物。リンク先ページの `<title>` が `【閉店】` で始まる店が35件あり、うち22件は店名・住所からその店自身のページと同定できた
+- **brand-filter**: ✅ 適合 — 実在保証はサイトの根幹（2026-06 の閉店店舗混入と同型の検知）。広告・マネタイズに触れない
+- **検証できる事実（制約10）**:
+  | 事実 | 根拠 |
+  |---|---|
+  | 食べログ側が `【閉店】` を出している掲載店が22件（別店へのリンクだった13件は除外済み） | `data/store_link_identity_checked.json` の `reason: closed` かつ店名/住所が一致するもの |
+  | そのうち **20件は Google Places の `business_status` が `OPERATIONAL`**。残り2件は `CLOSED_TEMPORARILY`（本格江戸前寿司 女子大寿司 本店 / 牡蠣 貝料理居酒屋 貝しぐれ 栄泉店） | `data/places_resolved.json` |
+  | 22件には「改名」も混ざっている（例: 「本格江戸前寿司 女子大寿司 本店」→ 食べログ側タイトルは `鮨-sushi-Aoi （【旧店名】本格江戸前寿司 女子大寿司 本店）`、「Cafe & Pizzeria Harbor」→ `【旧店名】ザ カップス ハーバー カフェ`）。**閉店とは限らない** | 同上のタイトル文字列 |
+- **acceptance**:
+  1. 22件を一次情報（公式SNS・電話・Google の最新口コミ）で1件ずつ確認する。**食べログの【閉店】表示だけを根拠に掲載を落とさない**（改名・移転が混ざっているため）
+  2. 閉店が確定した店は `data/closed_stores.json` に一次情報のURL付きで登録し、`scripts/audit_store_liveness.js` の既存フローで除外する
+  3. 改名だった店は店名・食べログURLを新名称へ更新する
+  4. この検知は今後 `audit_store_link_identity.js --scope all` の日次実行で自動的に上がってくる。**`reason: closed` を定期的に拾う導線**（レポートへの分離表示など）を作る
+
 ### [ISSUE-132] 同じ店が複数の掲載レコードとして並んでいる（placeId 重複194組・店名完全一致20組）— 片方だけ食べログURLを持つため「同じ店なのにリンクが出るカードと出ないカード」が混在する
 
 - **priority**: P2 → **status**: ready
@@ -60,7 +80,22 @@
        残り58件は no-verified-candidate 36 / no-candidates 16 / ambiguous-candidates 4 /
        our-locality-contradictory 1 / branch-locality-mismatch 1 で、**空欄のまま**（検索フォールバック）
   2. 日次CIの `--scope all` 監査が回り、`data/store_link_identity_report.json` に Hot Pepper 由来店の不一致が蓄積し始めること
-  3. 蓄積した不一致を `scripts/clear_broken_tabelog_links.js` と同じ方針（sim=0 は空欄化・境界事例は人の確認に残す）で処理する運用を回すこと（**本課題では未実施**。3,638件の再解決は外部サイトへの負荷が大きく、実行判断はオーナーに委ねる）
+  3. 蓄積した不一致を `scripts/clear_broken_tabelog_links.js` と同じ方針（sim=0 は空欄化・境界事例は人の確認に残す）で処理する運用を回すこと
+     → **実施済み（2026-09-20〜21・オーナー承認のうえ一括検証）**:
+       `node scripts/audit_store_link_identity.js --scope all --kind tabelog --all` で
+       **3,579件を実地検証**（スキップ85件・未検証0件）。結果は一致 2,680件 / 不一致 900件
+       （name-mismatch 873 / 閉店表示 35 / fetch-error 53※403のボット遮断で判定不能）。
+       name-mismatch 873件のうち **770件は「我々が Google Places で持つ住所」と
+       「リンク先ページの JSON-LD 住所」が食い違う＝別の建物**だった。
+       そこで空欄化の基準に「住所違い」を追加し（sim の大小より強い証拠）、
+       **843URL / 店舗774件 / 店舗ページ978ファイル**を空欄化した。
+       同時に `data/tabelog_resolved.json` の981件を failed 化（これをしないと
+       build.js が空欄をキャッシュから埋め戻し、翌日のCIで消したURLが蘇る）。
+       残した境界事例: 住所がどちらか取れない103件（人の確認用に
+       `data/store_link_identity_report.json` に残置）。
+  4. 食べログURL保有率は 3,665件 → **2,891件**（4,911件中）に下がる。これは後退ではなく、
+     **「その店のページに飛ばないリンク」が可視化されて消えた**結果。空欄の店はカードが
+     食べログ検索へのフォールバックになる（リンク自体は出る）
 
 ### [SEO-104] 日次ジャーナルの launchd ラッパーが、9時に走る**他ルーチンの実行中の未コミット成果物**を「前回実行の残骸」と誤認して stash に退避している（本日、本ループ自身の `not_deployed` 記録が消えかけた）
 

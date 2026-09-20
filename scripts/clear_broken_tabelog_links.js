@@ -4,10 +4,14 @@
  * 実地検証で確認した食べログURLを、manual_stores.json / stores.json / stores/*.html の
  * 3層から取り除く。
  *
- * 対象は data/store_link_identity_checked.json のうち sim===0（=リンク先ページのタイトルに
- * 我々の店名の痕跡が一切無い）のものだけに限定する。sim>0（那古亭/雷杏等、ふりがな併記や
- * ローマ字表記の差で閾値未達なだけの疑いがあるもの）は対象外とし、人による個別確認に残す
- * （品質ゲート原則: 検証できる事実だけで機械的に判定する。閾値ぎりぎりのものを自動処理しない）。
+ * 対象は data/store_link_identity_checked.json のうち、次のいずれかに該当するものだけ。
+ *   (a) sim===0 … リンク先ページのタイトルに我々の店名の痕跡が一切無い
+ *   (b) confirmed-404 … リンク先ページ自体が存在しない
+ *   (c) 住所違い … 店名が一致せず、かつ我々が Google Places で持つ住所とリンク先の
+ *       住所（JSON-LD）が食い違う＝別の建物を指している（2026-09-20 追加）
+ * sim>0 でも住所が食い違えば (c) で落とす。逆に、どちらかの住所が取れない場合は
+ * 何も主張できないので対象外とし、人による個別確認に残す
+ * （品質ゲート原則: 検証できる事実だけで機械的に判定する。推測で消さない）。
  *
  * 解決キャッシュ（data/tabelog_resolved.json）も同時に failed 化する。これを忘れると
  * build.js が「食べログURLが空の店」をキャッシュで埋め戻すため、消したURLが翌日のCIで
@@ -26,6 +30,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { buildPlacesAddressIndex, normalizeJpAddress } = require('./lib/store_link_identity');
 
 const ROOT = path.resolve(__dirname, '..');
 const CACHE_PATH = path.join(ROOT, 'data', 'store_link_identity_checked.json');
@@ -38,6 +43,7 @@ const dryRun = process.argv.includes('--dry-run');
 
 function loadTargets() {
   const cache = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8'));
+  const addressIndex = buildPlacesAddressIndex(ROOT);
   const targets = [];
   for (const c of Object.values(cache)) {
     if (c.kind !== 'tabelog') continue;
@@ -46,8 +52,21 @@ function loadTargets() {
     // confirmed-404: リンク先ページ自体が存在しない（HTTP 404 を実地確認済み）
     const isNameMismatch = c.reason === 'name-mismatch' && (c.sim || 0) === 0;
     const isConfirmed404 = c.reason === 'confirmed-404';
-    if (!isNameMismatch && !isConfirmed404) continue;
-    targets.push({ storeName: c.storeName, url: c.url });
+    // address-mismatch: 名前が一致しない**うえに**、我々が Google Places で持つ住所と
+    // リンク先ページの住所（JSON-LD）が食い違う＝別の建物を指している。
+    // sim の大小より強い証拠なので、sim>0 でも対象にする（2026-09-20 の全件検証では
+    // name-mismatch 873件のうち 770件がこれに該当した）。住所がどちらか取れない場合は
+    // 何も主張できないので対象外＝人の確認に残す（品質ゲート原則: 検証できる事実だけ）。
+    const ourAddress = normalizeJpAddress(addressIndex.get(c.storeName) || '');
+    const theirAddress = c.matchedAddress || '';
+    const isAddressMismatch = c.reason === 'name-mismatch'
+      && !!ourAddress && !!theirAddress && ourAddress !== theirAddress;
+    if (!isNameMismatch && !isConfirmed404 && !isAddressMismatch) continue;
+    targets.push({
+      storeName: c.storeName,
+      url: c.url,
+      why: isConfirmed404 ? '404' : (isAddressMismatch ? `住所違い(${ourAddress}≠${theirAddress})` : '店名の痕跡なし'),
+    });
   }
   return targets;
 }
@@ -202,7 +221,7 @@ function patchTabelogResolvedCache(targets) {
 function main() {
   const targets = loadTargets();
   console.log(`対象URL: ${targets.length}件${dryRun ? ' (--dry-run)' : ''}`);
-  targets.forEach((t) => console.log(`  - ${t.storeName}: ${t.url}`));
+  targets.forEach((t) => console.log(`  - ${t.storeName}: ${t.url}${t.why ? ` — ${t.why}` : ''}`));
   console.log('');
 
   const n1 = patchManualStores(targets);
