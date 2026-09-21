@@ -1,0 +1,456 @@
+{
+  "date": "2026-09-21",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅の一人飲み、99円の居酒屋「どての大黒」とBEL BUTTER WAFFLE",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 6件 (新店,比較,エリア,相場,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 181字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -10 / writability -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "椿町8丁目に「大黒」が3店。名駅西口のドミナント出店を業界人が読む",
+      "verdict": "HOLD",
+      "total": 76,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 1件 (回転) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 128字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "どて串99円に席料88円。名駅「どての大黒」の伝票を業界人が組み立てる",
+      "verdict": "HOLD",
+      "total": 75,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 124字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "ヨドバシ名鉄名古屋店が開業した週、名古屋駅の飲食は館外に出た",
+      "verdict": "HOLD",
+      "total": 69,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 133字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名古屋駅」+4",
+          "シーン語がリードのみ「一人飲み」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名古屋駅の地下街は「滞留」で稼がない。サンロードのBEL BUTTER WAFFLE 250円の設計",
+      "verdict": "HOLD",
+      "total": 65,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 12,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 133字 +4",
+          "title 50字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名古屋駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -10 / writability -2",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "weekly_digest",
+      "title_draft": "名駅の一人飲み、99円の居酒屋「どての大黒」とBEL BUTTER WAFFLE",
+      "lead_draft": "2026年9月の名古屋駅は、新店より先に人の流れが変わった。9月16日にヨドバシカメラ マルチメディア名鉄名古屋店が約11,900平方メートルで開業し、その前日15日には西口の椿町に立呑み「どての大黒」が開店。25日には地下街サンロードに「BEL BUTTER WAFFLE」が名古屋初出店する。どちらも席で稼がない低単価の新店だ。業界人の目で、この並びを読む。",
+      "angle": "名駅の新店を価格帯と回転で比較する。どて串99円＋席料88円の立ち飲みと250円テイクアウトという「席を持たない設計」を、名駅エリアの相場・通過客の滞留時間・ドミナント出店という業界視点で読む",
+      "main_store": {
+        "name": "立呑み どての大黒 椿町店",
+        "id": "",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通『立呑み どての大黒』名古屋駅西にオープン",
+          "url": "https://jouhou.nagoya/dote-daikoku/",
+          "date": "2026-09-20"
+        },
+        {
+          "label": "PR TIMES: BEL BUTTER WAFFLE 名古屋サンロード店 名古屋初出店",
+          "url": "https://prtimes.jp/main/html/rd/p/000000438.000007024.html",
+          "date": "2026-09-18"
+        },
+        {
+          "label": "流通ニュース: ヨドバシカメラ マルチメディア名鉄名古屋店 9月16日オープン",
+          "url": "https://www.ryutsuu.biz/store/s090484.html",
+          "date": "2026-09-04"
+        },
+        {
+          "label": "光フードサービス公式 Miit「立呑み どての大黒 椿町店 9月15日OPEN！」",
+          "url": "https://hikari-food-service.jp/miit/",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "ヨドバシカメラ公式: マルチメディア名鉄名古屋店 2026年9月16日オープン",
+          "url": "https://global.yodobashi/news/2222/",
+          "date": "2026-09-16"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "weekly_digest",
+      "title_draft": "椿町8丁目に「大黒」が3店。名駅西口のドミナント出店を業界人が読む",
+      "lead_draft": "名古屋駅西口の椿町8丁目に、9月15日「立呑み どての大黒」が開いた。同じ番地の並びには既に「立呑み 焼きとん 大黒 椿町店」と「名駅西口店」がある。同一資本の立ち飲みが1ブロックに3店。カニバリを承知で固める理由を、予約・回転・人員シフトの観点から読む。",
+      "angle": "同一ブランドを1ブロックに集中させるドミナント出店の採算構造を、立ち飲みの回転率と人員融通の観点で解説する",
+      "main_store": {
+        "name": "立呑み どての大黒 椿町店",
+        "id": "",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通『立呑み どての大黒』名古屋駅西にオープン",
+          "url": "https://jouhou.nagoya/dote-daikoku/",
+          "date": "2026-09-20"
+        },
+        {
+          "label": "光フードサービス公式サイト（大黒ブランド）",
+          "url": "https://hikari-food-service.jp/daikoku",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "日本証券新聞: 光フードサービス 東証グロース・名証ネクスト新規上場",
+          "url": "https://www.nsjournal.jp/",
+          "date": "2024-02-28"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "weekly_digest",
+      "title_draft": "ヨドバシ名鉄名古屋店が開業した週、名古屋駅の飲食は館外に出た",
+      "lead_draft": "9月16日、旧・名鉄百貨店本店の居抜きでヨドバシカメラ マルチメディア名鉄名古屋店が開業した。約11,900平方メートル、地下1階から4階まで。ただしレストランフロアの発表はない。人は集まるが館内で食べられない。その受け皿が、西口の立ち飲みと地下街のテイクアウトだ。",
+      "angle": "大型商業施設に飲食フロアが無いとき、周辺の低単価業態がどう受け皿になるかを立地と時間帯の観点で読む",
+      "main_store": {
+        "name": "立呑み どての大黒 椿町店",
+        "id": "",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "流通ニュース: ヨドバシカメラ マルチメディア名鉄名古屋店 9月16日オープン",
+          "url": "https://www.ryutsuu.biz/store/s090484.html",
+          "date": "2026-09-04"
+        },
+        {
+          "label": "名古屋情報通『立呑み どての大黒』名古屋駅西にオープン",
+          "url": "https://jouhou.nagoya/dote-daikoku/",
+          "date": "2026-09-20"
+        },
+        {
+          "label": "PR TIMES: BEL BUTTER WAFFLE 名古屋サンロード店",
+          "url": "https://prtimes.jp/main/html/rd/p/000000438.000007024.html",
+          "date": "2026-09-18"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "weekly_digest",
+      "title_draft": "どて串99円に席料88円。名駅「どての大黒」の伝票を業界人が組み立てる",
+      "lead_draft": "9月15日に名古屋駅西口へ開いた立呑み「どての大黒」は、どて串99円、串カツみそ121円、どて味噌きしめん572円。2階の座席は1名につき席料88円がつく。安いと感じるか高いと感じるかは、何杯飲んで何分いるかで反転する。実際の伝票を組み立てて読む。",
+      "angle": "立ち飲みの単品価格と席料を合算して滞在時間別の実質単価を計算し、一人飲み・二軒目・待ち時間の使い分けを示す",
+      "main_store": {
+        "name": "立呑み どての大黒 椿町店",
+        "id": "",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通『立呑み どての大黒』名古屋駅西にオープン",
+          "url": "https://jouhou.nagoya/dote-daikoku/",
+          "date": "2026-09-20"
+        },
+        {
+          "label": "光フードサービス公式サイト（大黒ブランド）",
+          "url": "https://hikari-food-service.jp/daikoku",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "PR TIMES: BEL BUTTER WAFFLE 名古屋サンロード店",
+          "url": "https://prtimes.jp/main/html/rd/p/000000438.000007024.html",
+          "date": "2026-09-18"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "weekly_digest",
+      "title_draft": "名古屋駅の地下街は「滞留」で稼がない。サンロードのBEL BUTTER WAFFLE 250円の設計",
+      "lead_draft": "9月25日、ナゴヤ地下街サンロードに「BEL BUTTER WAFFLE」が名古屋初出店する。看板商品はプレミアムバターワッフル250円、営業は10時から20時、テイクアウト対応。席を持たない地下街のスイーツが、どの数字で成立しているのか。通過人数と坪効率から読む。",
+      "angle": "地下街のテイクアウト業態が席ではなく通過客で採算を取る構造を、営業時間・単価・坪効率の観点で読む",
+      "main_store": {
+        "name": "BEL BUTTER WAFFLE 名古屋サンロード店",
+        "id": "",
+        "area": "名駅",
+        "genre": "カフェ・スイーツ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: BEL BUTTER WAFFLE 名古屋サンロード店 名古屋初出店",
+          "url": "https://prtimes.jp/main/html/rd/p/000000438.000007024.html",
+          "date": "2026-09-18"
+        },
+        {
+          "label": "流通ニュース: ヨドバシカメラ マルチメディア名鉄名古屋店 9月16日オープン",
+          "url": "https://www.ryutsuu.biz/store/s090484.html",
+          "date": "2026-09-04"
+        },
+        {
+          "label": "名古屋情報通『立呑み どての大黒』名古屋駅西にオープン",
+          "url": "https://jouhou.nagoya/dote-daikoku/",
+          "date": "2026-09-20"
+        }
+      ]
+    }
+  ]
+}
