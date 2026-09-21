@@ -1,0 +1,14 @@
+{
+  "_note": "ジャーナル起動時に他ルーチンの未コミット差分が検出された記録（SEO-104）",
+  "entries": [
+    {
+      "detected_at": "2026-09-21T09:08:19.948+09:00",
+      "files": [
+        "agent-backlog.md",
+        "data/gas_deploy_health.json"
+      ],
+      "action": "skipped_stash",
+      "message": "ジャーナルは退避せず続行。`git stash pop` 等の手動操作は不要。他ルーチンが書いたとみられる差分。"
+    }
+  ]
+}

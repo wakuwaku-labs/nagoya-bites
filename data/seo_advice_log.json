@@ -3120,6 +3120,76 @@
       "brand_reason": "採用（P1）。CLAUDE.md『無人自動化の監視を設計するときの原則』②（通知は out-of-band に出す）③（『気づけるはず』を検知と数えない）に該当する監視系自身の欠陥で、判定は検証できる事実だけで成立する（git stash list / git stash show --stat / run_journal_local.sh の該当行 / launchd plist の 9:00 起動 — 誰でも再現・検算できる・制約10）。実害の経路も今日まさに成立していた: gas-deploy-watchdog は『コミットされた』health の not_deployed が2連続したときに Issue を起票する設計で、今日退避されたのはその1回目（SEO-092 未反映の痕跡）だったため、復旧しなければカウンタが2に届かず out-of-band 通知が永久に出なかった。順位操作・広告・マネタイズを一切伴わず Strategic Skip にも制約7・8にも非該当。暫定対応として退避分を git stash pop で復旧し、本日のトリアージ成果物をその場でコミットした。",
       "category": "ops-monitoring",
       "fingerprint": "4d2821de5e3b876e"
+    },
+    {
+      "id": null,
+      "date": "2026-09-21",
+      "source": "line-daily",
+      "advice": "🟢 予約クリック率が26.7%と非常に高いので、この強みを最大化しましょう！👉 トップページの検索フィルタ下部に「今日予約できるお店」セクションを追加し、即時予約可能な店舗を優先表示する。",
+      "verdict": "rejected",
+      "brand_reason": "却下（前提のデータが存在せず、実装すると自己申告値の捏造になる・制約10／実在保証のMoat毀損）。①『今日予約できる』『即時予約可能』を判定する材料がゼロ: data/stores.json の全69フィールド（店名〜個室）に空席・予約可否・在庫を示すカラムが一切無く、HotPepper/食べログのリンクからも当日の空き状況は取得できない。表示するには検証できない値を我々が作るしかない。②『予約リンク保有店を優先表示』と好意的に読み替えても増分が無い: ホットペッパーID保有は4,769/4,911店＝97.1%で、97%を3%の上に並べ替えるだけの施策になる。③そもそも予約ボタンはカード・モーダル・店舗ページ5,618本の3面に既に常時表示（SEO-037 done）。なお助言自身が『26.7%と非常に高い』と現状を肯定しており、直すべき症状が原文の中に存在しない（週次コマンドStep2の『現状描写のみはアクションが無ければ起票しない』に該当）。",
+      "category": null,
+      "fingerprint": "feb0502f964c6c82"
+    },
+    {
+      "id": null,
+      "date": "2026-09-21",
+      "source": "line-daily",
+      "advice": "🟡 人気ページTOP5に日次ジャーナル記事「2026-09-19-kiyosu-yabaton-boochan-house」が8回閲覧でランクインしています。👉 docs/daily-posts/ にあるSNS投稿原稿（Note／Instagram／X）について、本日分を速やかに投稿し、ジャーナル記事への導線を強化する。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-093 に集約済み・本日同チケットへ追記）。前提『docs/daily-posts/ にSNS投稿原稿がある』は失効している: data/journal_sns_draft_policy.json の generate_sns_draft が 2026-09-05 のオーナー判断で false になり、日次SNS原稿は生成されていない。助言生成器のプロンプトにこの失効前提が固定文で埋まっている件は SEO-093 が扱っており、コード修正済み・GASデプロイ待ち（オーナー本人の操作）。check_gas_deploy_health.js も『反映待ち: SEO-092, SEO-093』を報告しており、本日の日次・週次の両方に同じ失効助言が出たこと自体が未反映の直接証拠。SNS投稿の実行自体もリポジトリ外のオーナー行動（SEO-098/SEO-101 が計測側を担当）。",
+      "category": null,
+      "fingerprint": "22d8cee1f79a4761"
+    },
+    {
+      "id": null,
+      "date": "2026-09-21",
+      "source": "line-daily",
+      "advice": "🟢 1訪問あたり閲覧が1.1ページと低く、回遊が少ないため、関連ページへの誘導を強化しましょう。👉 人気ページ1位のジャーナル記事「2026-09-19-kiyosu-yabaton-boochan-house」内に、関連する「nagoya-miso-nikomi-udon」などの特集記事への内部リンクを設置する。",
+      "verdict": "rejected",
+      "brand_reason": "却下（打ち手は既に実装済み・実地確認）。名指しされた journal/2026-09-19-kiyosu-yabaton-boochan-house.html を実測したところ、既に『関連記事』セクションを3箇所持ち、features/ への内部リンクを6本（nagoya-tonkatsu / nagoya-gourmet-guide / industry-insiders-pick / review-trust / no-fake-reviews / editorial-policy）＋特集一覧・ジャーナル一覧を保有、内部リンク総数36本。しかも主題（矢場とん＝みそかつ）に一致する nagoya-tonkatsu が既にリンク済みで、助言が指定した nagoya-miso-nikomi-udon は料理が異なり主題一致リンクとしては既存のものに劣る。回遊導線の追加余地は SEO-070/SEO-099（in_progress）が扱っており、当日の1.1ページは訪問45人という単日母数の振れ（独立パイプライン data/site_metrics.json の30日窓では1.42）。",
+      "category": null,
+      "fingerprint": "781c2bdc52c029ee"
+    },
+    {
+      "id": null,
+      "date": "2026-09-21",
+      "source": "line-weekly",
+      "advice": "週次トレンド総括: 訪問者273人（前週231）+18% / 閲覧数416（前週443）-6% / 訪問回数326（前週277）+18% / 平均滞在2分21秒 / 直帰率24% / 流入 Bing32%・Google26%・Yahoo11% / 成長ステータス 順調に伸びてます",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-099 に集約・本日同チケットへ実測データ点を追記）。訪問+18%に対し閲覧-6%＝週窓のpages/sessionは1.60→1.28で、これは SEO-099 の acceptance③『変更前後で pagesPerSession を比較する』が待っていた測定対象そのもの。ただし新規起票はしない: ①独立パイプライン data/site_metrics.json（GA4・30日窓）では1.45→1.42の微減にとどまり週窓ほどの落ち込みは観測されない（窓長による振れ）。②GSC上位に stores/J004678178.html（1,080表示・16クリック）等の店舗ページが実クリックを獲得し始めており、SEO-094/SEO-095 で新設した単ページ入口が増えれば分母だけ伸びてpages/sessionは下がる＝入口の構成変化であり回遊の悪化と断定できない。③店舗ページ側の回遊導線は実装済みを確認（エリアハブ1本＋関連店舗4本＋特集リンク）。数字が下がったことだけを根拠に施策失敗と判定しないよう、測定方法の補足を SEO-099 に追記した（制約10）。",
+      "category": null,
+      "fingerprint": "e46396c1802e4797"
+    },
+    {
+      "id": "SEO-105",
+      "date": "2026-09-21",
+      "source": "line-weekly",
+      "advice": "🔴 訪問者273人に対し、予約ボタンクリックは31回と高いものの、電話ボタンは2回と極めて少ないです。👉 index.htmlの全店舗詳細モーダルとstores/の静的店舗ページで、電話ボタンの視認性を高めるため、色やサイズを大きく変更し「今すぐ電話」といった文言を追加してください。",
+      "verdict": "adopted",
+      "brand_reason": "振替採用。literalな打ち手（色/サイズを大きく変更＋「今すぐ電話」文言）は却下——①『視認性が低い』前提が未検証: index.htmlのモーダル電話ボタンは placeId保有4,722/4,911店（96.2%）で描画され（index.html:9884 nbCallBtnHtml）、タップ上限20回/日は通常利用の制約にならない。②色/サイズの直変更は DSN-001（制約12）に抵触しDesignerレビューとaudit_design_system --check を経ずに実施できない。③『31回vs2回』は面積の違い（予約ボタンはカード・モーダル・店舗ページ5,618本の3面／電話ボタンはモーダル内の1面のみ・週の店舗詳細オープンは93回）。一方で実測により構造的欠落が確認できたため振替採用: stores/*.html で tel: リンクを持つページは 0本/5,618本、gen-store-pages.js:754-755 が出すCTAはホットペッパー予約・Googleマップ・Instagramの3種のみ。ホットペッパーIDも食べログURLも持たない115店（うち placeId保有109店・編集部推薦67店）の静的ページは実質Googleマップ1本しか行動導線が無く、Moat の中核である編集部推薦店ほど導線が細い。対象を109店に限定しタップ時のみPlaces Detailsを呼ぶ既存方式を共有する形で起票（SEO-105・P2・owner=Builder）。効果は cta_call_click の前後4週比較＋分母併記で判定し、分母不足なら判定不能と記録する（制約10）。",
+      "category": "SEO",
+      "fingerprint": "c8de4790e18986ee"
+    },
+    {
+      "id": null,
+      "date": "2026-09-21",
+      "source": "line-weekly",
+      "advice": "🟡 SNS流入比率が0%で、せっかくのDocs/daily-posts/の原稿が活用されていません。👉 Docs/daily-posts/にあるNote/Instagram/Xの投稿原稿を毎日必ずSNSに投稿し、特に人気記事「nagoya-solo-dining」を引用してSNSからの流入を促してください。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-093 / SEO-098 / SEO-101 に集約済み・同日の日次助言とも同旨）。①前提『Docs/daily-posts/の原稿』は失効: generate_sns_draft:false（2026-09-05〜）でSNS原稿は生成されていない。助言生成器側の失効前提は SEO-093（GASデプロイ待ち・オーナー操作）。②『SNS流入比率0%』の読み方にも注意が要る: scripts/lib/traffic_source.js の修正（2026-09-14）で判明した通り、旧実装の部分一致が chatgpt.com/copilot.com をSNSと誤集計していたため過去の社会流入値は信頼できず、実SNS流入は1媒体30日6件未満で元々観測下限にある。③投稿実行自体はリポジトリ外のオーナー行動で、計測側（UTM・リンクスタンプ）は SEO-098（ready）が担当。コード側に新規の実行可能差分が無い。",
+      "category": null,
+      "fingerprint": "14055a1dba165673"
+    },
+    {
+      "id": null,
+      "date": "2026-09-21",
+      "source": "line-weekly",
+      "advice": "🟢 訪問回数326回に対し、1訪問あたり閲覧が1.3ページと伸び悩んでおり、せっかくの特集記事への導線が弱い可能性があります。👉 index.htmlのトップページに、人気ページTOP5である「nagoya-solo-dining」などの特集記事へのバナーやリンクを大きく設置し、回遊を促してください。",
+      "verdict": "rejected",
+      "brand_reason": "却下（打ち手は既に実装済み・実地確認）。index.html のトップページは既に特集導線を多層で持つ: ファーストビュー帯の『特集をすべて見る ›』(1784行)『すべての特集を見る →』(1911行)、シーン別リンク16本（接待/個室/宴会/大人数/デート/女子会/誕生日/一人飲み=nagoya-solo-dining/顔合わせ/接待ランチ/予約困難/コスパ/モーニング/食べ歩き/業界人ほか・2205-2223行）、エリア別リンク群（栄/名駅/覚王山ほか・2225行〜）、ヘッダーナビの『特集』。名指しの nagoya-solo-dining も『名古屋の一人飲み』として既に設置済み（2212行）。同種の打ち手は SEO-040 / SEO-009（FVの人気特集導線統合）で done 済みで、増分となる具体的欠落の指摘が原文に無い。回遊の測定と追加導線は SEO-099（in_progress）が継続中。",
+      "category": null,
+      "fingerprint": "dc811b3bfb75a027"
     }
   ]
 }
