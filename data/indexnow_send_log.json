@@ -1,13 +1,14 @@
 {
   "ok": true,
   "dry_run": true,
-  "would_send": 152,
+  "would_send": 165,
   "endpoint": "https://api.indexnow.org/indexnow",
   "urls": [
     "https://nagoya-bites.com/",
     "https://nagoya-bites.com/journal/",
     "https://nagoya-bites.com/features/",
     "https://nagoya-bites.com/journal/2026-09-20-nishiki-maruhachi-fushimi-bettei-enkai.html",
+    "https://nagoya-bites.com/journal/2026-09-21-meieki-dote-daikoku-bel-butter-waffle.html",
     "https://nagoya-bites.com/stores/area/index.html",
     "https://nagoya-bites.com/stores/area/meieki/index.html",
     "https://nagoya-bites.com/stores/area/sakae/index.html",
@@ -133,8 +134,14 @@
     "https://nagoya-bites.com/stores/area/midori-tempaku/italian-french-budget-3000.html",
     "https://nagoya-bites.com/stores/area/midori-tempaku/italian-french-budget-5000-plus.html",
     "https://nagoya-bites.com/stores/area/midori-tempaku/italian-french-parking.html",
+    "https://nagoya-bites.com/stores/area/midori-tempaku/chinese.html",
     "https://nagoya-bites.com/stores/area/midori-tempaku/chinese-sunday.html",
+    "https://nagoya-bites.com/stores/area/midori-tempaku/chinese-non-smoking.html",
+    "https://nagoya-bites.com/stores/area/midori-tempaku/chinese-nomihodai.html",
     "https://nagoya-bites.com/stores/area/midori-tempaku/chinese-group-30.html",
+    "https://nagoya-bites.com/stores/area/midori-tempaku/chinese-lunch.html",
+    "https://nagoya-bites.com/stores/area/midori-tempaku/chinese-budget-3000.html",
+    "https://nagoya-bites.com/stores/area/midori-tempaku/chinese-parking.html",
     "https://nagoya-bites.com/stores/area/midori-tempaku/yoshoku-budget-3000.html",
     "https://nagoya-bites.com/stores/area/midori-tempaku/ramen.html",
     "https://nagoya-bites.com/stores/area/midori-tempaku/ramen-lunch.html",
@@ -143,6 +150,12 @@
     "https://nagoya-bites.com/stores/area/kanayama/izakaya-non-smoking.html",
     "https://nagoya-bites.com/stores/area/kanayama/italian-french.html",
     "https://nagoya-bites.com/stores/area/kanayama/italian-french-lunch.html",
+    "https://nagoya-bites.com/stores/area/kakuozan/izakaya.html",
+    "https://nagoya-bites.com/stores/area/kakuozan/izakaya-non-smoking.html",
+    "https://nagoya-bites.com/stores/area/kakuozan/izakaya-nomihodai.html",
+    "https://nagoya-bites.com/stores/area/kakuozan/izakaya-group-30.html",
+    "https://nagoya-bites.com/stores/area/kakuozan/izakaya-walk-3.html",
+    "https://nagoya-bites.com/stores/area/kakuozan/izakaya-lunch.html",
     "https://nagoya-bites.com/stores/area/kakuozan/cafe-budget-3000.html",
     "https://nagoya-bites.com/stores/area/kakuozan/italian-french.html",
     "https://nagoya-bites.com/stores/area/kakuozan/italian-french-sunday.html",
@@ -158,5 +171,5 @@
     "https://nagoya-bites.com/stores/area/nakagawa-minato/ramen-parking.html"
   ],
   "note": "--yes を付けると実際に送信する（外部通信が発生する）",
-  "logged_at": "2026-09-20T20:37:03.238Z"
+  "logged_at": "2026-09-21T00:37:23.248Z"
 }
