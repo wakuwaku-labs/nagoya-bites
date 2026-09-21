@@ -28,8 +28,10 @@
 
 ### [ISSUE-132] 同じ店が複数の掲載レコードとして並んでいる（placeId 重複194組・店名完全一致20組）— 片方だけ食べログURLを持つため「同じ店なのにリンクが出るカードと出ないカード」が混在する
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-20
+- **resolved**: 2026-09-21
+- **resolved_by**: Builder（自動ルーティン /solve-next）
 - **category**: data-quality
 - **owner**: DataKeeper / Builder
 - **source**: ISSUE-131（食べログリンクの修理）の検証中に発見。報告店「尾張山荘 くろぎ」が本番 `data/stores.json` に2レコードあり、片方だけ新しい食べログURLを持っていた
@@ -48,6 +50,11 @@
   2. 統合時は情報の多い方を残し、欠けているフィールド（食べログURL・Instagram・写真・おすすめポイント等）を相互に補完する。**手動キュレーション店の編集部フィールドを失わない**こと
   3. 統合できない（同一と確認できない）組は**統合せず残す**。取り繕わない
   4. CI に重複検知を追加し、新たな重複が増えたら検出できるようにする
+- **やったこと（2026-09-21・自動ルーティン /solve-next）**:
+  1. `scripts/audit_duplicate_stores.js` を新設。判定: placeId一致 ＋ `namesMatch().ok` の両方を要求（placeIdだけで機械統合しない・制約10）。194組のplaceId重複を走査し、namesMatch一致の**48組（真の重複）** と、namesMatch不一致の**146組（Places解決の誤り・統合しない）** に分類
+  2. `node scripts/audit_duplicate_stores.js --fix` で48組50件を統合（4,912件 → 4,862件）。情報が豊富な方を primary にして欠けているフィールドを補完（食べログURL・Instagram・おすすめポイント・編集部フラグ等）。手動キュレーション店の編集部フィールドは primary の richness スコアが高い方に引き継がれた
+  3. `build.js` の `mergeManualStores()` に衝突キー3（placeId ＋ namesMatch）を追加。次回 build.js 実行時から、エリア表記ゆれで見逃していた同一店を正しくマージできる
+  4. `.github/workflows/build.yml` に `node scripts/audit_duplicate_stores.js --check` を追加（CI日次・continue-on-error）
 
 ### [EDT-004] ジャーナルの写真がヒーロー1枚だけで、本文が最後まで文字だけだった ✅ 本文にも写真を散らす仕組みを追加
 
@@ -81,7 +88,9 @@
 ---
 ### [ISSUE-131] カードの食べログリンクが「その店の食べログページ」に飛ばない — 手動キュレーション店171件中129件が食べログURL空欄で検索ページにフォールバックしていた（＋Hot Pepper由来店のURLは一度も実地検証を通っていなかった）
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-09-21
+- **resolved_by**: Builder（自動ルーティン /solve-next）
 - **detected**: 2026-09-20
 - **category**: data-quality / trust
 - **owner**: Builder / DataKeeper
@@ -3999,6 +4008,12 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   - snapshots≥2 の店舗数: **484件（9.0%・母数5,382件）** — 422件/7.8%（2026-09-11）から微増（週あたり+1.2pt）
   - v3.0分布影響: **1階級以上の移動 4,345件**（目安上限493件）— 前回4,336件からほぼ横ばい
   - まだ目安の8.8倍で不変。この1週間の蓄積では移動幅は縮小していない（重み付け変更が支配的という前回の分析どおり）。現在の週あたり蓄積ペース（約+1.2pt/週）が続く前提だと、閾値到達には数ヶ月単位を要する見込み。activate は引き続き保留し、次回定点観測（週次実行後）で継続確認する
+
+- **2026-09-21 定点観測（自動ルーティン・/solve-next）**:
+  `node scripts/audit_crosscheck_v3.js` 実行結果:
+  - snapshots≥2 の店舗数: **484件（9.0%・母数5,382件）** — 2026-09-18 から変化なし（週次 --refresh 未実行）
+  - v3.0分布影響: **1階級以上の移動 4,304件**（目安上限491件）— 前回4,345件から微減（-41件）
+  - 依然として目安の8.8倍超。activate gate 未達、引き続き保留。次回 --refresh 実行後に再確認する
 
 - **残タスク**: 週次実行（毎週月曜）を継続してsnapshots≥2の蓄積率を上げる → 十分な蓄積後に
   `node scripts/audit_crosscheck_v3.js` で分布影響を再確認（目標: 移動件数 ≤ 492件）→ 問題なければ activate 手順の
