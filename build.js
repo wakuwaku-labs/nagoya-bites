@@ -13,6 +13,7 @@ const https = require('https');
 const fs   = require('fs');
 const path = require('path');
 const { hasVerifiableSource } = require('./scripts/lib/trending_source_gate');
+const { namesMatch } = require('./scripts/lib/store_name_match');
 
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/1VUk4bRTPoIc7pHywzIJTwZr9WyUX7ioxlZzbxQHsjCQ/export?format=csv&gid=415662614';
 const HTML    = path.join(__dirname, 'index.html');
@@ -834,6 +835,11 @@ function mergeManualStores(mergedStores, manualStores, existingHpIds) {
     // 衝突キー2: 店名＋エリア
     if (!hit) {
       hit = mergedStores.find(s => s['店名'] === m['店名'] && s['エリア'] === m['エリア']);
+    }
+    // 衝突キー3: placeId + 店名類似（エリア表記ゆれで衝突キー2を通過した重複を捕捉）
+    if (!hit && m['placeId']) {
+      const candidate = mergedStores.find(s => s['placeId'] && s['placeId'] === m['placeId']);
+      if (candidate && namesMatch(candidate['店名'], m['店名']).ok) hit = candidate;
     }
     if (hit) {
       // 上書き拡充（店名は既存優先、Instagram/写真URL/おすすめポイント/フラグは manual 優先）

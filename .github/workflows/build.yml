@@ -222,6 +222,14 @@ jobs:
         run: node scripts/audit_journal_sns_pairing.js
         continue-on-error: true
 
+      - name: stores.json 重複レコード検査（ISSUE-132・placeId+店名一致による同一店重複）
+        # placeId が一致し namesMatch() が true の組を真の重複と判定。
+        # placeId だけでは Places 解決の誤り（異なる支店が同一placeId）を取り込むため
+        # 店名確認を必須にする（制約10 検証できる事実だけで判定）。
+        # --fix で既存重複を統合済み（ISSUE-132・2026-09-21）。今後の退行を検知。
+        run: node scripts/audit_duplicate_stores.js --check
+        continue-on-error: true
+
       - name: agent-backlog.md 重複ID監査（並列起票の採番衝突を検知・ORG-004）
         # 並列エージェント/複数 workflow が同じ番号で起票する事故を検知（ISSUE-048/059 で実発生）。
         # 既知4件(ISSUE-007/018/048/STR-001)は KNOWN_DUPLICATES でWL。新規重複だけ exit 1。
