@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T20:22:59.640Z",
+  "generatedAt": "2026-09-21T00:23:14.446Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -16,23 +16,23 @@
       },
       {
         "query": "リサールコーヒー 名古屋",
-        "impressions": 181,
+        "impressions": 144,
         "clicks": 2,
-        "position": 9.7,
-        "ctr": 1.1,
+        "position": 9.8,
+        "ctr": 1.39,
         "expectedCtr": 2.6,
-        "missedClicks": 2.7
+        "missedClicks": 1.7
       }
     ],
     "ctrFixGeoless": [
       {
         "query": "一人飲み",
-        "impressions": 194,
+        "impressions": 181,
         "clicks": 4,
         "position": 4.1,
-        "ctr": 2.06,
+        "ctr": 2.21,
         "expectedCtr": 7.8,
-        "missedClicks": 11.1
+        "missedClicks": 10.1
       },
       {
         "query": "cm 伏見",
@@ -50,41 +50,32 @@
     "ctrFix": [
       {
         "page": "/stores/J004660861.html",
-        "impressions": 485,
+        "impressions": 483,
         "clicks": 14,
         "position": 5.6,
-        "ctr": 2.89,
+        "ctr": 2.9,
         "expectedCtr": 5.4,
-        "missedClicks": 12.2
+        "missedClicks": 12.1
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 646,
-        "clicks": 9,
-        "position": 8.7,
-        "ctr": 1.39,
-        "expectedCtr": 2.9,
-        "missedClicks": 9.9
-      },
-      {
-        "page": "/journal/2026-08-22-osu-malachuan-self-price.html",
-        "impressions": 290,
-        "clicks": 6,
-        "position": 7.8,
-        "ctr": 2.07,
-        "expectedCtr": 3.4,
-        "missedClicks": 3.7
+        "impressions": 568,
+        "clicks": 8,
+        "position": 8.6,
+        "ctr": 1.41,
+        "expectedCtr": 3,
+        "missedClicks": 8.8
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 4408,
+        "impressions": 4169,
         "clicks": 8,
-        "position": 25.9,
-        "ctr": 0.18,
-        "upsideClicks": 115.5
+        "position": 25.7,
+        "ctr": 0.19,
+        "upsideClicks": 108.8
       },
       {
         "page": "/stores/J004678178.html",
@@ -101,12 +92,11 @@
     "queryCtrFix": 2,
     "queryCtrFixGeoless": 2,
     "queryRankPush": 0,
-    "pageCtrFix": 3,
+    "pageCtrFix": 2,
     "pageRankPush": 2,
     "topPageCtrFix": [
       "/stores/J004660861.html",
-      "/journal/2026-08-04-sakae-leesar-coffee.html",
-      "/journal/2026-08-22-osu-malachuan-self-price.html"
+      "/journal/2026-08-04-sakae-leesar-coffee.html"
     ]
   }
 }
