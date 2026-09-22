@@ -5508,14 +5508,15 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **ブランドガードレール**: KW詰め込み・順位操作禁止。タイトル変更時に既存被リンク（内部）が壊れないか確認。広告・PR・送客手数料導線は含めない（編集独立・制約7/8）
 
 ### [SEO-067] Bing Webmaster Tools を接続し最大流入エンジンの検索実データを可視化する
-- **priority**: P2 → **status**: blocked（owner本人操作待ち）
+- **priority**: P2 → **status**: in_progress（acceptance①完了。②が残作業）
 - **detected**: 2026-08-22
+- **resolved_step1**: 2026-09-22（オーナー本人が Bing Webmaster Tools に `nagoya-bites.com` を登録。サイトマップ4件（sitemap.xml/stores/llms.txt/sitemap-index.xml）を送信・処理中を確認済み）
 - **category**: SEO / 計測
-- **owner**: 片桐（オーナー本人）／設定後の活用はMarketer
+- **owner**: 片桐（オーナー本人・acceptance①完了）／②はMarketer
 - **source**: SEO改善分析セッション（ユーザー依頼によるサイト監査）。`data/search_channel_metrics.json`実測（直近30日）で Bing 26.5%（245セッション）が Google 25.4%（235セッション）を上回り最大の検索流入エンジンと判明。一方 `data/gsc_metrics.json` は Google Search Console 専用データで Bing の掲載順位・CTR・クエリは一切見えていない
 - **brand-filter**: ✅ 適合 — 既存のGSC改善ループ（`scripts/gsc_opportunities.js`）と同じ「自社の実測データを起点にMoat/Strategic Skipで施策化する」ループをBingにも拡張するだけ。広告・順位操作は伴わない
 - **why-not-agent**: Bing Webmaster Toolsへのサイト登録・所有権確認はGoogleアカウント/メールでの認証を伴うクレデンシャル操作のため、エージェントは代行できない（制約: パスワード/認証情報の代行操作は行わない）。`scripts/indexnow_ping.js`（IndexNow鍵生成・送信）は実装済みで登録後すぐ使える
-- **acceptance**: ① https://www.bing.com/webmasters にオーナー本人が `nagoya-bites.com` を登録・所有権確認（sitemap-index.xml も登録）／② 登録後、Marketerが Bing Webmaster Tools API または CSV エクスポートを使い `fetch_gsc_metrics.js` と対になる `fetch_bing_metrics.js` を新設しBing側のクエリ・ページ別実データを取得できるようにする／③ `scripts/indexnow_ping.js --init && --status` で鍵設定を確認し `--yes` で本稼働に切り替える
+- **acceptance**: ① https://www.bing.com/webmasters にオーナー本人が `nagoya-bites.com` を登録・所有権確認（sitemap-index.xml も登録）→ ✅完了（2026-09-22） ／② 登録後、Marketerが Bing Webmaster Tools API または CSV エクスポートを使い `fetch_gsc_metrics.js` と対になる `fetch_bing_metrics.js` を新設しBing側のクエリ・ページ別実データを取得できるようにする → 未着手（次の作業） ／③ `scripts/indexnow_ping.js --init && --status` で鍵設定を確認し本稼働に切り替える → [[SEO-085]] の `INDEXNOW_ENABLED=true` 設定（2026-09-22・オーナー完了）で代替達成。BWT左メニューの「IndexNow」ページで鍵ファイル `ec3ee6876b0d465ab4f7093ba5bc42d0.txt` の認識状況を確認すること
 - **ブランドガードレール**: Bing側データも他の検索ループと同じくMoat/Strategic Skipでtriageする。データが増えても採否判断の基準は変えない
 
 ### [SEO-068] discovery意図クエリ（シーン×エリア=Moat領域）の検索面を計画的に拡張する
