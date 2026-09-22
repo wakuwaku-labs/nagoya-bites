@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-22T00:19:35.263Z",
+  "generatedAt": "2026-09-22T07:25:45.449Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1148,
-    "pageViews": 1977,
-    "sessions": 1388,
-    "avgSessionDuration": 155.9,
-    "bounceRate": 0.295,
+    "activeUsers": 1158,
+    "pageViews": 1991,
+    "sessions": 1398,
+    "avgSessionDuration": 155.8,
+    "bounceRate": 0.276,
     "pagesPerSession": 1.42
   },
   "dailyReference": {
@@ -17,34 +17,34 @@
   },
   "channels": {
     "sessions": {
-      "organic": 965,
-      "direct": 299,
+      "organic": 981,
+      "direct": 280,
       "social": 8,
-      "ai_assistant": 107,
-      "referral": 20,
+      "ai_assistant": 108,
+      "referral": 21,
       "paid": 0,
-      "other": 18
+      "other": 10
     },
     "pct": {
-      "organic": 68.1,
-      "direct": 21.1,
+      "organic": 69.7,
+      "direct": 19.9,
       "social": 0.6,
-      "ai_assistant": 7.6,
-      "referral": 1.4,
+      "ai_assistant": 7.7,
+      "referral": 1.5,
       "paid": 0,
-      "other": 1.3
+      "other": 0.7
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 427
+      "sessions": 431
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 341
+      "sessions": 348
     },
     {
       "source": "(direct)",
@@ -54,12 +54,12 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 183
+      "sessions": 187
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 87
+      "sessions": 89
     },
     {
       "source": "unknown",
@@ -69,26 +69,26 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 39
-    },
-    {
-      "source": "(data not available)",
-      "medium": "(data not available)",
-      "sessions": 18
+      "sessions": 20
     },
     {
       "source": "duckduckgo",
       "medium": "organic",
-      "sessions": 12
+      "sessions": 13
     },
     {
-      "source": "copilot.com",
-      "medium": "ai-assistant",
-      "sessions": 7
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 10
     },
     {
       "source": "service.smt.docomo.ne.jp",
       "medium": "referral",
+      "sessions": 8
+    },
+    {
+      "source": "copilot.com",
+      "medium": "ai-assistant",
       "sessions": 7
     },
     {
@@ -147,11 +147,6 @@
       "sessions": 1
     },
     {
-      "source": "chatgpt.com",
-      "medium": "(none)",
-      "sessions": 1
-    },
-    {
       "source": "cn.bing.com",
       "medium": "referral",
       "sessions": 1
@@ -185,13 +180,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 403,
-      "sessions": 350
+      "pageViews": 404,
+      "sessions": 353
     },
     {
       "path": "/",
-      "pageViews": 258,
-      "sessions": 182
+      "pageViews": 259,
+      "sessions": 183
     },
     {
       "path": "/index.html",
@@ -200,8 +195,8 @@
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 107,
-      "sessions": 98
+      "pageViews": 108,
+      "sessions": 100
     },
     {
       "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
@@ -210,8 +205,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 161,
-    "ctaClickRate": 11.6,
+    "outboundClicks": 163,
+    "ctaClickRate": 11.7,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -219,7 +214,7 @@
       },
       {
         "domain": "tabelog.com",
-        "clicks": 40
+        "clicks": 41
       },
       {
         "domain": "maps.google.com",
@@ -242,6 +237,10 @@
         "clicks": 3
       },
       {
+        "domain": "milkdo-doreiku.com",
+        "clicks": 2
+      },
+      {
         "domain": "news.google.com",
         "clicks": 2
       },
@@ -255,10 +254,6 @@
       },
       {
         "domain": "hikari-food-service.jp",
-        "clicks": 1
-      },
-      {
-        "domain": "milkdo-doreiku.com",
         "clicks": 1
       },
       {
@@ -276,16 +271,16 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 76,
-      "direct": 61,
+      "organic": 77,
+      "direct": 59,
       "social": 0,
-      "ai_assistant": 17,
-      "referral": 5,
+      "ai_assistant": 21,
+      "referral": 6,
       "paid": 0,
-      "other": 2
+      "other": 0
     },
-    "ctaClickRate_organic": 7.9,
-    "ctaClickRate_direct": 20.4,
+    "ctaClickRate_organic": 7.8,
+    "ctaClickRate_direct": 21.1,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -297,12 +292,12 @@
         "clicks": 24
       },
       {
-        "path": "/index.html",
+        "path": "/features/nagoya-kaoawase-washoku.html",
         "clicks": 21
       },
       {
-        "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 20
+        "path": "/index.html",
+        "clicks": 21
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -310,7 +305,7 @@
       },
       {
         "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
-        "clicks": 5
+        "clicks": 6
       },
       {
         "path": "/journal/2026-09-12-sakae-sulbing-korean-bingsu.html",
@@ -418,7 +413,7 @@
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
         "domain": "tabelog.com",
-        "clicks": 20
+        "clicks": 21
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -511,6 +506,11 @@
         "clicks": 2
       },
       {
+        "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
+        "domain": "milkdo-doreiku.com",
+        "clicks": 2
+      },
+      {
         "path": "/journal/2026-09-21-meieki-dote-daikoku-bel-butter-waffle.html",
         "domain": "jouhou.nagoya",
         "clicks": 2
@@ -563,11 +563,6 @@
       {
         "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
         "domain": "maps.google.com",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
-        "domain": "milkdo-doreiku.com",
         "clicks": 1
       },
       {
@@ -668,7 +663,7 @@
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 20
+        "clicks": 21
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -731,11 +726,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 109
+    "reservationClicks": 110
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1148,
+    "value": 1158,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
