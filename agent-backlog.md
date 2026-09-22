@@ -8,10 +8,11 @@
 
 ### [SEO-107] `gsc_opportunities.json` の実データ機会2件 — ①「レビュー」検索785表示に店舗ページのtitle/descriptionが一語も応えていない ②1桁順位なのにCTRがほぼ0%の店（評価データそのものが欠落している疑い）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress（①のコード実装済み・反映待ち。②は`GOOGLE_MAPS_API_KEY`が本環境に無く未着手）
 - **detected**: 2026-09-22
 - **category**: SEO
 - **owner**: Builder / DataKeeper
+- **2026-09-22 進捗**: acceptance②（`gen-store-pages.js` `buildDescription()`のPart3を「口コミ${reviews}件」→「口コミレビュー${reviews}件」に変更）を実装（`npm test` 211/211 pass）。`stores/*.html`・`sitemap.xml`の再生成はこのセッションでは意図的に行っていない — `gen-store-pages.js`単体実行を試したところ、`sitemap.xml`からarea/genreハブページのURL約4,134件が丸ごと消える副作用を実際に確認した（CLAUDE.mdが警告する既知の落とし穴どおり。直後に`gen_area_genre_pages.js`を実行する必要がある）。生成物への反映は次回の日次build（`build.yml`の正しい実行順）に委ねる。acceptance③（次回GSC更新での前後比較）・④⑤（センチ伏見店の評価データ再取得・検証）は本環境にAPIキーが無いため未着手のまま
 - **source**: オーナー「閲覧数が全く増えてない、原因は？」への回答調査（Orchestrator診断セッション）。`data/gsc_opportunities.json` の `byPage.ctrFix` / `byQuery.ctrFix` / `byPage.rankPush` から、既存チケットで未カバーの2件を抽出
 - **brand-filter**: ✅ 適合 — どちらも「検索者が実際に求めている情報（レビュー・評価）を、うちのページが答えられていない」という一次データに基づく改善。順位操作・広告・文言の煽りは一切伴わない（SEO-095/SEO-050と同型の是正）
 
