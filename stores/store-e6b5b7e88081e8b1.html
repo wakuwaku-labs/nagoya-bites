@@ -130,6 +130,7 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .ig-carousel-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .2s;}
 .ig-carousel-dot.active{background:var(--gold);}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
+button.link-btn{font:inherit;cursor:pointer;}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
 .link-btn.hp:hover{background:var(--gold2);border-color:var(--gold2);}
@@ -275,6 +276,7 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
   <div class="links-section">
     <h2>予約・情報を確認</h2>
     <a class="link-btn gm" href="https://www.google.com/maps/search/%E6%B5%B7%E8%80%81%E8%B1%9A%E9%AA%A8%E3%83%A9%E3%83%BC%E3%83%A1%E3%83%B3%E4%B8%80%E7%95%AA%E8%BB%92%20%E3%83%A1%E3%82%A4%E3%83%81%E3%82%AB%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E4%B8%AD%E6%9D%91%E5%8C%BA%E3%83%BB%E5%90%8D%E9%A7%85%EF%BC%89" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
+    <button type="button" class="link-btn tel" onclick="nbCallStore(event,'ChIJzddni_N3A2ARgXeNVTttV_M','海老豚骨ラーメン一番軒 メイチカ店',this)" aria-label="海老豚骨ラーメン一番軒 メイチカ店に電話する"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;fill:currentColor;flex-shrink:0"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg><span>電話する</span></button>
   </div>
 
   
@@ -354,5 +356,15 @@ window.closeNav = window.closeNav || function(){
 document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
 </script>
 <!-- NB-CHROME:SCRIPT:END -->
+<script>
+var NB_CALL_MAPS_KEY='AIzaSyBKD3MCHPdIPxHt-hZlh8EIv_8zMYDbgos';
+var NB_MAPS_JS_PROMISE=null;
+function nbLoadMapsJs(){if(NB_MAPS_JS_PROMISE)return NB_MAPS_JS_PROMISE;NB_MAPS_JS_PROMISE=new Promise(function(resolve,reject){if(window.google&&window.google.maps&&window.google.maps.places){resolve();return;}window.__nbMapsReady=resolve;var s=document.createElement('script');s.src='https://maps.googleapis.com/maps/api/js?key='+NB_CALL_MAPS_KEY+'&libraries=places&callback=__nbMapsReady&loading=async';s.async=true;s.onerror=function(){NB_MAPS_JS_PROMISE=null;reject(new Error('maps-js-load-failed'));};document.head.appendChild(s);});return NB_MAPS_JS_PROMISE;}
+var NB_PHONE_MEM={};
+function nbCallTapAllowed(){try{var key='nb_call_taps_'+new Date().toISOString().slice(0,10);var n=parseInt(localStorage.getItem(key)||'0',10);if(n>=20)return false;localStorage.setItem(key,String(n+1));return true;}catch(e){return true;}}
+function nbCallBtnMsg(btn,msg){var span=btn.querySelector('span');if(span)span.textContent=msg;else btn.setAttribute('aria-label',msg);}
+function nbCallBtnReset(btn){btn.disabled=false;nbCallBtnMsg(btn,'電話する');btn.setAttribute('aria-label',(btn.getAttribute('data-store-name')||'')+'に電話する');}
+function nbCallStore(ev,placeId,storeName,btn){ev.stopPropagation();if(!placeId||!btn||btn.disabled)return;btn.setAttribute('data-store-name',storeName);if(typeof trackEvent==='function')trackEvent('cta_call_click',{store_name:storeName});if(NB_PHONE_MEM[placeId]){location.href='tel:'+NB_PHONE_MEM[placeId];return;}if(!nbCallTapAllowed()){nbCallBtnMsg(btn,'本日の上限です');setTimeout(function(){nbCallBtnReset(btn);},2500);return;}btn.disabled=true;nbCallBtnMsg(btn,'確認中…');nbLoadMapsJs().then(function(){var svc=new google.maps.places.PlacesService(document.createElement('div'));svc.getDetails({placeId:placeId,fields:['international_phone_number']},function(place,status){if(status===google.maps.places.PlacesServiceStatus.OK&&place&&place.international_phone_number){var tel=place.international_phone_number.replace(/[^\d+]/g,'');NB_PHONE_MEM[placeId]=tel;nbCallBtnReset(btn);location.href='tel:'+tel;}else{nbCallBtnMsg(btn,'電話番号なし');btn.disabled=false;setTimeout(function(){nbCallBtnReset(btn);},2500);}});}).catch(function(){nbCallBtnMsg(btn,'通信エラー');btn.disabled=false;setTimeout(function(){nbCallBtnReset(btn);},2500);});}
+</script>
 </body>
 </html>
