@@ -36,7 +36,7 @@
 - **priority**: P2 → **status**: ready
 - **detected**: 2026-09-21
 - **category**: data-liveness / trust
-- **owner**: DataKeeper
+- **owner**: 片桐（acceptance.1: 公式SNS・電話・Googleの最新口コミでの22件一次確認はオーナー本人が必要）
 - **source**: ISSUE-131 の食べログURL全件実地検証（3,579件）の副産物。リンク先ページの `<title>` が `【閉店】` で始まる店が35件あり、うち22件は店名・住所からその店自身のページと同定できた
 - **brand-filter**: ✅ 適合 — 実在保証はサイトの根幹（2026-06 の閉店店舗混入と同型の検知）。広告・マネタイズに触れない
 - **検証できる事実（制約10）**:
@@ -106,8 +106,10 @@
 ---
 ### [ISSUE-131] カードの食べログリンクが「その店の食べログページ」に飛ばない — 手動キュレーション店171件中129件が食べログURL空欄で検索ページにフォールバックしていた（＋Hot Pepper由来店のURLは一度も実地検証を通っていなかった）
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-09-20
+- **resolved**: 2026-09-22
+- **resolved_by**: 090cd8c4
 - **category**: data-quality / trust
 - **owner**: Builder / DataKeeper
 - **source**: オーナー報告（スクリーンショット添付・「尾張山荘 くろぎ」カードの食べログアイコンを丸囲み）「このカードに表示されている食べログのURLが、全店この店舗の食べログページに飛ばないです」
@@ -153,8 +155,9 @@
      食べログ検索へのフォールバックになる（リンク自体は出る）
 ### [SEO-105] 予約手段を持たない115店（うち編集部推薦67店）の静的店舗ページに行動導線が Googleマップ しか無い — 電話CTAが `stores/` 5,618本に1本も存在しない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-21
+- **resolved**: 2026-09-22
 - **category**: SEO
 - **owner**: Builder
 - **source**: 週次レポート(LINE) 2026-09-13〜2026-09-19 原文「訪問者273人に対し、予約ボタンクリックは31回と高いものの、電話ボタンは2回と極めて少ないです。👉 index.htmlの全店舗詳細モーダルとstores/の静的店舗ページで、電話ボタンの視認性を高めるため、色やサイズを大きく変更し「今すぐ電話」といった文言を追加してください。」
@@ -6243,6 +6246,9 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-09-22 | Orchestrator(routine) | ISSUE-133 owner を片桐へ変更（エスカレーション）— acceptance.1の22件一次確認（公式SNS・電話・Googleの最新口コミ）はオーナー本人操作が必要なため自動ルーチンでは実施不可 | ⏸ owner変更のみ。本コミットに含む |
+| 2026-09-22 | Builder(routine) | SEO-105: gen-store-pages.js に電話CTA（タップ時のみ Places Details 取得・`nbCallStore` 同一実装）追加。対象52店（no hpId・no tbUrl・placeId保有）。`audit_design_system.js --check` 違反0件維持。4915ページ再生成 | ✅ 本コミットに含む |
+| 2026-09-22 | Orchestrator(routine) | ISSUE-131 done化 — 全acceptance実施済み確認（resolve_manual_tabelog_links.js新設・偽陽性修正・CI拡大・843URL空欄化、PR #283/#285 マージ済み）をもってdone | ✅ commit 本コミットに含む |
 | 2026-09-20 | Builder(routine) | SEO-103: 週次トリアージ watchdog 新設（scripts/check_seo_triage_weekly_health.js + .github/workflows/seo-triage-weekly-watchdog.yml）・docs/seo-triage-weekly-runbook.md 作成（in:anywhere クエリ手順）。Gmail フィルタ解除・遡り triage はオーナーへエスカレーション | ✅ 本コミットに含む |
 | 2026-09-20 | Builder(routine) | SEO-104: launchd ラッパーのスタッシュ対象をジャーナル固有パスに限定・out-of-band 通知追加 | ✅ commit e6db43e |
 | 2026-09-18 | Designer(/solve-next) | DSN-001残件実装・デプロイ | ✅ commit 58b80e2c0e |
