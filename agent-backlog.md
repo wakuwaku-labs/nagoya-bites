@@ -1222,10 +1222,11 @@
 
 ### [SEO-085] IndexNow が CI で毎日 `dry_run: true` を記録し続けている — 第2の流入エンジン Bing（週73訪問）への更新通知が [[SEO-071]] 完了後も一度も送信されていない
 
-- **priority**: P1 → **status**: ready（⚠️ エスカレーション: ステップ①の GitHub Secrets 設定はオーナー本人の操作が必要。自動実装不可）
+- **priority**: P1 → **status**: in_progress（オーナーが GitHub Secrets `INDEXNOW_ENABLED=true` を設定完了。acceptance②の実送信確認は次回build待ち）
 - **detected**: 2026-09-07
+- **resolved_step1**: 2026-09-22（オーナー本人がGitHub Secretsに`INDEXNOW_ENABLED=true`を設定）
 - **category**: SEO
-- **owner**: 片桐 ← Marketer（GitHub Secrets `INDEXNOW_ENABLED=true` をオーナーが設定するまで進行不能）
+- **owner**: Marketer（次回buildで`data/indexnow_send_log.json`の`dry_run:false`を確認し、acceptance③の再発検知を実装する）
 - **source**: 週次レポート(LINE) 2026-08-30〜2026-09-05 原文「検索流入比率が75%と高い一方、Bing検索からの流入が73訪問とGoogleに次いで多いです。👉 docs/daily-posts/ にあるSNS投稿原稿をBingのWebマスターツールに登録し、Bing検索でのインデックス促進と表示改善を図りましょう」
 - **brand-filter**: ✅ 適合（振替採用）— 助言の literal な打ち手「SNS投稿原稿を Bing Webmaster Tools に登録」は**手段として成立しない**（BWT はサイトの所有権確認とURL送信のツールであり、SNS原稿を登録する場所ではない）ため却下。一方で助言の根拠「Bing が Google に次ぐ流入源」は実測どおり正しく、その打ち手として**既に実装済みで承認済みのIndexNowが実際には一度も発火していない**という検証可能な欠落へ振り替えて採用する（[[SEO-084]] と同じ振替パターン）。順位操作でも広告依存でもなく、自社の更新を検索エンジンへ通知するだけの施策
 - **trend**: 週次で Bing 21%（73訪問・Google 35%に次ぐ2位）／`data/search_channel_metrics.json` 直近30日でも Bing 289セッション・24.2%（Google 402・33.7%）。単週のブレではなく3ヶ月継続している構造
