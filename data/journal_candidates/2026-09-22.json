@@ -1,0 +1,479 @@
+{
+  "date": "2026-09-22",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄の韓国料理「サウィ食堂」ナッコプセ2180円を女子会で読み解く",
+      "verdict": "PASS",
+      "total": 105,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "女子会",
+          "feature": "features/girls-party.html"
+        },
+        {
+          "kw": "韓国料理",
+          "feature": "features/nagoya-korean.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,接待,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 153字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「女子会」+4",
+          "タイトルにジャンル語「韓国料理」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄・韓国料理の新顔「サウィ食堂」は一人飲みに向くのか——ナッコプセ専門店の席の読み方",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "韓国料理",
+          "feature": "features/nagoya-korean.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (席,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 125字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「韓国料理」+2"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -13 / uniqueness -10 / writability -2"
+    },
+    {
+      "id": "c4",
+      "title_draft": "丸の内「勝手口 河内屋」——400年の料亭の裏口から入る接待の第二案",
+      "verdict": "HOLD",
+      "total": 74,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 12,
+        "writability": 10,
+        "novelty": 2,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (接待) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 116字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "過去に掲載歴のある店（90日超） → 2"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "タイトルにシーン語「接待」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "丸の内「鮨うおのたな」昼3800円・夜7800円の2ターム制をどう使うか",
+      "verdict": "HOLD",
+      "total": 52,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 63日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (予約) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 119字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "シーン語がリードのみ「接待」+1",
+          "タイトルにジャンル語「鮨」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "名駅「大衆酒場フレンチマン」198円の小皿で昼飲みは成立するか",
+      "verdict": "HOLD",
+      "total": 48,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "フレンチ",
+          "feature": "features/nagoya-french-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 174日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 110字 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「フレンチ」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "栄の韓国料理「サウィ食堂」ナッコプセ2180円を女子会で読み解く",
+      "lead_draft": "2026年7月9日、栄の錦に東海初のナッコプセ専門店が開いた。韓国・釜山発祥のタコとホルモンとエビの旨辛鍋で、看板の一皿は2,180円から。ただしこの値段は2人前からの表示で、ここを読み違えると予算感が丸ごとずれる。34席・11時から23時の通し営業という設計と合わせて、業界人の目で使いどころを整理する。",
+      "angle": "「2,180円〜」は2人前からの鍋価格で、1人あたり約1,090円。HotPepperの平均予算3,000円との差1,900円が飲み物と締めのポックンパの積み上げ分——単品特化業態の価格帯は鍋単体ではなく着地で読む。34席の通し営業・年中無休・セントラルパーク8A出口徒歩0分という立地と回転の設計、そして全面禁煙・カード可・2人前からのシェア前提が女子会に向き一人飲みと接待には向かない理由、卓上鍋に対して席が狭いという実利用者の指摘まで。",
+      "main_store": {
+        "name": "サウィ食堂 名古屋栄店",
+        "id": "J004633449",
+        "area": "栄",
+        "genre": "韓国料理"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 【東海初上陸】ナッコプセ専門店「サウィ食堂」、愛知県名古屋市に出店決定！",
+          "url": "https://prtimes.jp/main/html/rd/p/000000022.000144523.html",
+          "date": "2026-05-07"
+        },
+        {
+          "label": "PR TIMES: ナッコプセ専門店「サウィ食堂」、7月9日に名古屋栄店オープン！",
+          "url": "https://prtimes.jp/main/html/rd/p/000000026.000144523.html",
+          "date": "2026-07-09"
+        },
+        {
+          "label": "NAGOYAJIN: 「サウィ食堂」名古屋栄店オープン！東海初ナッコプセ専門店のメニュー・値段",
+          "url": "https://nagoyajin.nagoya/sawee-shokudo-sakae/",
+          "date": "2026-07-21"
+        },
+        {
+          "label": "モランボン 八田靖史: 日本の韓国料理はナッコプセが次の天下を取るようです",
+          "url": "https://www.moranbong.co.jp/hanshoku/gourmet/detail/11023.html",
+          "date": "2025-07-15"
+        },
+        {
+          "label": "ぐるなび通信: 【2026上半期】最新外食トレンドキーワード",
+          "url": "https://pro.gnavi.co.jp/magazine/t_res/cat_7/a_4869/",
+          "date": "2026-01-27"
+        },
+        {
+          "label": "ホットペッパー: サウィ食堂 名古屋栄店（錦/韓国料理）",
+          "url": "https://www.hotpepper.jp/strJ004633449/",
+          "date": "2026-09-21"
+        },
+        {
+          "label": "Instagram: サウィ食堂.名古屋栄店 公式投稿（ポッサム）",
+          "url": "https://www.instagram.com/p/DX2_66jExJj/",
+          "date": "2026-09-14"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄・韓国料理の新顔「サウィ食堂」は一人飲みに向くのか——ナッコプセ専門店の席の読み方",
+      "lead_draft": "東海初のナッコプセ専門店が栄・錦に開いて2か月半。34席・通し営業・年中無休という数字だけ見ると使い勝手がよさそうに映るが、看板の鍋が2人前からという一点で客層の設計は決まっている。卓上調理の専門店を一人で使えるかどうかを、席とオペの側から判断する。",
+      "angle": "卓上調理×2人前スタートの鍋業態は、席の回転と火口の数で客層が決まる。34席・全面禁煙・カード可という条件から一人客の居場所を検証する。",
+      "main_store": {
+        "name": "サウィ食堂 名古屋栄店",
+        "id": "J004633449",
+        "area": "栄",
+        "genre": "韓国料理"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: ナッコプセ専門店「サウィ食堂」、7月9日に名古屋栄店オープン！",
+          "url": "https://prtimes.jp/main/html/rd/p/000000026.000144523.html",
+          "date": "2026-07-09"
+        },
+        {
+          "label": "NAGOYAJIN: 「サウィ食堂」名古屋栄店オープン！メニュー・値段・場所・営業時間",
+          "url": "https://nagoyajin.nagoya/sawee-shokudo-sakae/",
+          "date": "2026-07-21"
+        },
+        {
+          "label": "ホットペッパー: サウィ食堂 名古屋栄店（錦/韓国料理）",
+          "url": "https://www.hotpepper.jp/strJ004633449/",
+          "date": "2026-09-21"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "名駅「大衆酒場フレンチマン」198円の小皿で昼飲みは成立するか",
+      "lead_draft": "大名古屋ビルヂング3階に、大阪で昼飲みの聖地と呼ばれた店が東海初進出して半年が経った。フレンチのシェフが考えた小皿が198円から並び、客単価は3,200円。23席で11時から23時まで通す設計を、原価とオペの側から読む。",
+      "angle": "198円の小皿は集客の入口で、利益は看板の2,400円台の皿とドリンクで取る——大衆酒場の価格設計を業界人の目で分解する。",
+      "main_store": {
+        "name": "大衆酒場フレンチマン 名古屋店",
+        "id": "",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 大衆酒場フレンチマン 名古屋店オープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000004.000116722.html",
+          "date": "2026-04-01"
+        },
+        {
+          "label": "ぐるなび通信: 【2026上半期】最新外食トレンドキーワード",
+          "url": "https://pro.gnavi.co.jp/magazine/t_res/cat_7/a_4869/",
+          "date": "2026-01-27"
+        },
+        {
+          "label": "モランボン 八田靖史: 韓国グルメトレンド",
+          "url": "https://www.moranbong.co.jp/hanshoku/gourmet/detail/11435.html",
+          "date": "2026-01-20"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "丸の内「勝手口 河内屋」——400年の料亭の裏口から入る接待の第二案",
+      "lead_draft": "創業400年の料亭・河文のバックヤードを改装したカウンター和食が、丸の内で1年を回した。カウンター13席にテーブルと個室を備え、17時開店・日曜休み。料亭本体とは別の価格で職人の手を使えるこの業態を、接待の使い分けという観点で読む。",
+      "angle": "老舗料亭がバックヤードに別業態を入れるのは、遊休スペースの収益化と若年層の入口作りを同時に解く一手——その設計を接待の第二案として読む。",
+      "main_store": {
+        "name": "勝手口 河内屋",
+        "id": "",
+        "area": "丸の内",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 料亭河文に新業態「勝手口 河内屋」「鮨 うおのたな」開業",
+          "url": "https://prtimes.jp/main/html/rd/p/000000117.000051750.html",
+          "date": "2025-09-16"
+        },
+        {
+          "label": "ぐるなび通信: 【2026上半期】最新外食トレンドキーワード",
+          "url": "https://pro.gnavi.co.jp/magazine/t_res/cat_7/a_4869/",
+          "date": "2026-01-27"
+        },
+        {
+          "label": "ホットペッパー: サウィ食堂 名古屋栄店",
+          "url": "https://www.hotpepper.jp/strJ004633449/",
+          "date": "2026-09-21"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "丸の内「鮨うおのたな」昼3800円・夜7800円の2ターム制をどう使うか",
+      "lead_draft": "料亭河文の敷地内に開いたカウンター11席のおまかせ鮨は、昼3,800円・夜7,800円の明快な二本立てで、しかも1日2ターム制をとる。時間で区切る鮨屋は予約の取り方が変わる。デートと会食のどちらに寄せるべきかを、席と回しの側から整理する。",
+      "angle": "2ターム制のおまかせ鮨は、単価ではなく滞在時間で設計されている——予約の入れ方と時間の使い方を業界人の目で読む。",
+      "main_store": {
+        "name": "鮨うおのたな",
+        "id": "",
+        "area": "丸の内",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 料亭河文に新業態「勝手口 河内屋」「鮨 うおのたな」開業",
+          "url": "https://prtimes.jp/main/html/rd/p/000000117.000051750.html",
+          "date": "2025-09-16"
+        },
+        {
+          "label": "ぐるなび通信: 【2026上半期】最新外食トレンドキーワード",
+          "url": "https://pro.gnavi.co.jp/magazine/t_res/cat_7/a_4869/",
+          "date": "2026-01-27"
+        },
+        {
+          "label": "NAGOYAJIN: 名古屋の新店情報",
+          "url": "https://nagoyajin.nagoya/sawee-shokudo-sakae/",
+          "date": "2026-07-21"
+        }
+      ]
+    }
+  ]
+}
