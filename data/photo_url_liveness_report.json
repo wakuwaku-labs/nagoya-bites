@@ -1,12 +1,12 @@
 {
   "version": 1,
   "lastRun": "2026-09-22",
-  "lastRunAt": "2026-09-22T12:38:22.735Z",
+  "lastRunAt": "2026-09-22T13:08:28.924Z",
   "checked": 4911,
   "summary": {
-    "ok": 4758,
-    "dead": 132,
-    "unknown": 21,
+    "ok": 4775,
+    "dead": 136,
+    "unknown": 0,
     "byHost": {
       "places": {
         "ok": 137,
@@ -14,9 +14,9 @@
         "unknown": 0
       },
       "hotpepper": {
-        "ok": 4621,
-        "dead": 132,
-        "unknown": 21
+        "ok": 4638,
+        "dead": 136,
+        "unknown": 0
       }
     }
   },
@@ -1312,6 +1312,36 @@
       "lastChecked": "2026-09-22"
     },
     {
+      "店名": "炭火焼鳥 しげ 知立店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/41/50/P048944150/P048944150_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001250380",
+      "写真アセットID": "P048944150",
+      "firstDetected": "2026-09-22",
+      "lastChecked": "2026-09-22"
+    },
+    {
+      "店名": "金鯱酒場 きんしゃちさかば 金山店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/19/86/P044451986/P044451986_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J003763710",
+      "写真アセットID": "P044451986",
+      "firstDetected": "2026-09-22",
+      "lastChecked": "2026-09-22"
+    },
+    {
+      "店名": "鍋屋ほたる 大須本店",
+      "host": "hotpepper",
+      "url": "https://imgfp.hotp.jp/IMGH/07/63/P048310763/P048310763_480.jpg",
+      "status": 404,
+      "ホットペッパーID": "J001052510",
+      "写真アセットID": "P048310763",
+      "firstDetected": "2026-09-22",
+      "lastChecked": "2026-09-22"
+    },
+    {
       "店名": "個室　焼き鳥居酒屋　3時間食べ飲み放題　トリノトリコ　金山駅前店",
       "host": "hotpepper",
       "url": "https://imgfp.hotp.jp/IMGH/04/01/P045560401/P045560401_480.jpg",
@@ -1340,108 +1370,17 @@
       "写真アセットID": "P042966590",
       "firstDetected": "2026-09-22",
       "lastChecked": "2026-09-22"
-    }
-  ],
-  "unknownSample": [
-    {
-      "店名": "シーシャカフェ＆バーmuse名古屋店",
-      "url": "https://imgfp.hotp.jp/IMGH/58/09/P049805809/P049805809_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "パーフェクト ビア キッチン PERFECT BEER KITCHEN 名古屋栄",
-      "url": "https://imgfp.hotp.jp/IMGH/02/58/P045770258/P045770258_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "鉄板焼き 常套句",
-      "url": "https://imgfp.hotp.jp/IMGH/56/83/P050585683/P050585683_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "わっくん",
-      "url": "https://imgfp.hotp.jp/IMGH/95/88/P047069588/P047069588_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "串揚げ 串焼き ひなた",
-      "url": "https://imgfp.hotp.jp/IMGH/44/61/P048074461/P048074461_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "Cafe & Bar ゆきっち",
-      "url": "https://imgfp.hotp.jp/IMGH/42/85/P045334285/P045334285_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "旬楽亭 はなれ",
-      "url": "https://imgfp.hotp.jp/IMGH/42/24/P046364224/P046364224_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "DARTS BAR Rodeo ロデオ 栄店",
-      "url": "https://imgfp.hotp.jp/IMGH/66/34/P045036634/P045036634_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "たこ焼き酒場Tako ry",
-      "url": "https://imgfp.hotp.jp/IMGH/73/14/P042707314/P042707314_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "Bar Ragtime",
-      "url": "https://imgfp.hotp.jp/IMGH/34/04/P037693404/P037693404_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "焼肉鄭家 JEONG GA チョンガ 栄店",
-      "url": "https://imgfp.hotp.jp/IMGH/39/61/P048833961/P048833961_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "炭火焼鳥 しげ 知立店",
-      "url": "https://imgfp.hotp.jp/IMGH/41/50/P048944150/P048944150_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "金鯱酒場 きんしゃちさかば 金山店",
-      "url": "https://imgfp.hotp.jp/IMGH/19/86/P044451986/P044451986_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "鍋屋ほたる 大須本店",
-      "url": "https://imgfp.hotp.jp/IMGH/07/63/P048310763/P048310763_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "愛笑",
-      "url": "https://imgfp.hotp.jp/IMGH/34/09/P037843409/P037843409_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "なごやめしと炭火焼鳥 我楽多文庫 千種 車道店",
-      "url": "https://imgfp.hotp.jp/IMGH/97/77/P050279777/P050279777_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "ベトナム料理 フォーゴン 大須店",
-      "url": "https://imgfp.hotp.jp/IMGH/22/48/P048252248/P048252248_480.jpg",
-      "error": "timeout"
     },
     {
       "店名": "クワン 栄",
+      "host": "hotpepper",
       "url": "https://imgfp.hotp.jp/IMGH/22/08/P048222208/P048222208_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "dining bar Libertas",
-      "url": "https://imgfp.hotp.jp/IMGH/92/11/P041719211/P041719211_480.jpg",
-      "error": "timeout"
-    },
-    {
-      "店名": "S style studio エススタイルスタジオ 天白ルーム",
-      "url": "https://imgfp.hotp.jp/IMGH/58/75/P048315875/P048315875_480.jpg",
-      "error": "timeout"
+      "status": 404,
+      "ホットペッパーID": "J001099072",
+      "写真アセットID": "P048222208",
+      "firstDetected": "2026-09-22",
+      "lastChecked": "2026-09-22"
     }
-  ]
+  ],
+  "unknownSample": []
 }

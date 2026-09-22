@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-22T12:30:20.443Z",
+  "generatedAt": "2026-09-22T13:02:04.943Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1165,
-    "pageViews": 2000,
-    "sessions": 1408,
-    "avgSessionDuration": 155.5,
-    "bounceRate": 0.281,
+    "activeUsers": 1166,
+    "pageViews": 2001,
+    "sessions": 1409,
+    "avgSessionDuration": 156.1,
+    "bounceRate": 0.282,
     "pagesPerSession": 1.42
   },
   "dailyReference": {
@@ -18,16 +18,16 @@
   "channels": {
     "sessions": {
       "organic": 981,
-      "direct": 286,
+      "direct": 287,
       "social": 8,
       "ai_assistant": 108,
       "referral": 21,
       "paid": 0,
-      "other": 18
+      "other": 19
     },
     "pct": {
-      "organic": 69,
-      "direct": 20.1,
+      "organic": 68.9,
+      "direct": 20.2,
       "social": 0.6,
       "ai_assistant": 7.6,
       "referral": 1.5,
@@ -69,12 +69,12 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 26
+      "sessions": 27
     },
     {
       "source": "(data not available)",
       "medium": "(data not available)",
-      "sessions": 17
+      "sessions": 18
     },
     {
       "source": "duckduckgo",
@@ -185,8 +185,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 409,
-      "sessions": 358
+      "pageViews": 410,
+      "sessions": 359
     },
     {
       "path": "/",
@@ -210,8 +210,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 163,
-    "ctaClickRate": 11.6,
+    "outboundClicks": 165,
+    "ctaClickRate": 11.7,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -226,11 +226,11 @@
         "clicks": 22
       },
       {
-        "domain": "www.google.com",
-        "clicks": 7
+        "domain": "www.instagram.com",
+        "clicks": 9
       },
       {
-        "domain": "www.instagram.com",
+        "domain": "www.google.com",
         "clicks": 7
       },
       {
@@ -277,7 +277,7 @@
     "note": null,
     "byChannel": {
       "organic": 77,
-      "direct": 59,
+      "direct": 61,
       "social": 0,
       "ai_assistant": 21,
       "referral": 6,
@@ -285,7 +285,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.8,
-    "ctaClickRate_direct": 20.6,
+    "ctaClickRate_direct": 21.3,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -361,6 +361,10 @@
         "clicks": 2
       },
       {
+        "path": "/journal/2026-09-22-sakae-sawee-nakgopsae.html",
+        "clicks": 2
+      },
+      {
         "path": "/features/kospa-insider.html",
         "clicks": 1
       },
@@ -402,10 +406,6 @@
       },
       {
         "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-09-05-meieki-nagoyameshi-izakaya-enkai.html",
         "clicks": 1
       }
     ],
@@ -518,6 +518,11 @@
       {
         "path": "/journal/2026-09-21-meieki-dote-daikoku-bel-butter-waffle.html",
         "domain": "jouhou.nagoya",
+        "clicks": 2
+      },
+      {
+        "path": "/journal/2026-09-22-sakae-sawee-nakgopsae.html",
+        "domain": "www.instagram.com",
         "clicks": 2
       },
       {
@@ -735,7 +740,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1165,
+    "value": 1166,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
