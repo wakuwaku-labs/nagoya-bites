@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-23T10:44:17.916Z",
+  "generatedAt": "2026-09-23T11:10:06.315Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1407,
+  "total_sessions": 1408,
   "engines": [
     {
       "key": "google",
@@ -109,8 +109,8 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 87,
-      "pct": 6.2,
+      "sessions": 88,
+      "pct": 6.3,
       "sources": [
         {
           "source": "unknown",
@@ -120,7 +120,7 @@
         {
           "source": "(data not available)",
           "medium": "(data not available)",
-          "sessions": 11
+          "sessions": 12
         },
         {
           "source": "service.smt.docomo.ne.jp",
@@ -261,8 +261,8 @@
     "to": "2026-09-23",
     "delta": {
       "google": 11,
-      "bing": 6,
-      "direct": -4,
+      "bing": 7,
+      "direct": -3,
       "yahoo": 6,
       "ai_assistant": 2,
       "other": -9,
