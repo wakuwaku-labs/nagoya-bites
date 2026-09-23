@@ -8,11 +8,12 @@
 
 ### [SEO-107] `gsc_opportunities.json` の実データ機会2件 — ①「レビュー」検索785表示に店舗ページのtitle/descriptionが一語も応えていない ②1桁順位なのにCTRがほぼ0%の店（評価データそのものが欠落している疑い）
 
-- **priority**: P2 → **status**: in_progress（①のコード実装済み・反映待ち。②は`GOOGLE_MAPS_API_KEY`が本環境に無く未着手）
+- **priority**: P2 → **status**: in_progress（①反映済み。②は`GOOGLE_MAPS_API_KEY`が本環境に無く未着手）
 - **detected**: 2026-09-22
 - **category**: SEO
 - **owner**: Builder / DataKeeper
-- **2026-09-22 進捗**: acceptance②（`gen-store-pages.js` `buildDescription()`のPart3を「口コミ${reviews}件」→「口コミレビュー${reviews}件」に変更）を実装（`npm test` 211/211 pass）。`stores/*.html`・`sitemap.xml`の再生成はこのセッションでは意図的に行っていない — `gen-store-pages.js`単体実行を試したところ、`sitemap.xml`からarea/genreハブページのURL約4,134件が丸ごと消える副作用を実際に確認した（CLAUDE.mdが警告する既知の落とし穴どおり。直後に`gen_area_genre_pages.js`を実行する必要がある）。生成物への反映は次回の日次build（`build.yml`の正しい実行順）に委ねる。acceptance③（次回GSC更新での前後比較）・④⑤（センチ伏見店の評価データ再取得・検証）は本環境にAPIキーが無いため未着手のまま
+- **2026-09-22 進捗**: acceptance②（`gen-store-pages.js` `buildDescription()`のPart3を「口コミ${reviews}件」→「口コミレビュー${reviews}件」に変更）を実装（`npm test` 211/211 pass）。[[#290]]でマージ・次回日次buildで`stores/*.html`へ反映される想定
+- **2026-09-23 検証**: マージ後のbuild（`0c7e0416`起点）で `stores/J004678178.html` の description に実際に「口コミレビュー13件」が反映されていることを `git show origin/main:stores/J004678178.html` で確認済み（sitemap.xmlの副作用も無し＝正しい実行順で反映された）。acceptance③（次回GSC更新での該当クエリ前後比較）はGSCデータの反映を待つため数日〜1週間後に再評価。acceptance④⑤（センチ伏見店=`stores/J004660861.html`の評価データ再取得・検証）は本環境にAPIキーが無いため未着手のまま
 - **source**: オーナー「閲覧数が全く増えてない、原因は？」への回答調査（Orchestrator診断セッション）。`data/gsc_opportunities.json` の `byPage.ctrFix` / `byQuery.ctrFix` / `byPage.rankPush` から、既存チケットで未カバーの2件を抽出
 - **brand-filter**: ✅ 適合 — どちらも「検索者が実際に求めている情報（レビュー・評価）を、うちのページが答えられていない」という一次データに基づく改善。順位操作・広告・文言の煽りは一切伴わない（SEO-095/SEO-050と同型の是正）
 
@@ -1230,10 +1231,12 @@
 
 ### [SEO-085] IndexNow が CI で毎日 `dry_run: true` を記録し続けている — 第2の流入エンジン Bing（週73訪問）への更新通知が [[SEO-071]] 完了後も一度も送信されていない
 
-- **priority**: P1 → **status**: ready（⚠️ エスカレーション: ステップ①の GitHub Secrets 設定はオーナー本人の操作が必要。自動実装不可）
+- **priority**: P1 → **status**: done ✅
 - **detected**: 2026-09-07
+- **resolved**: 2026-09-23
+- **resolved_by**: オーナー本人（GitHub Secrets設定）+ Orchestrator（手動build実行での検証）
 - **category**: SEO
-- **owner**: 片桐 ← Marketer（GitHub Secrets `INDEXNOW_ENABLED=true` をオーナーが設定するまで進行不能）
+- **owner**: 片桐 ← Marketer
 - **source**: 週次レポート(LINE) 2026-08-30〜2026-09-05 原文「検索流入比率が75%と高い一方、Bing検索からの流入が73訪問とGoogleに次いで多いです。👉 docs/daily-posts/ にあるSNS投稿原稿をBingのWebマスターツールに登録し、Bing検索でのインデックス促進と表示改善を図りましょう」
 - **brand-filter**: ✅ 適合（振替採用）— 助言の literal な打ち手「SNS投稿原稿を Bing Webmaster Tools に登録」は**手段として成立しない**（BWT はサイトの所有権確認とURL送信のツールであり、SNS原稿を登録する場所ではない）ため却下。一方で助言の根拠「Bing が Google に次ぐ流入源」は実測どおり正しく、その打ち手として**既に実装済みで承認済みのIndexNowが実際には一度も発火していない**という検証可能な欠落へ振り替えて採用する（[[SEO-084]] と同じ振替パターン）。順位操作でも広告依存でもなく、自社の更新を検索エンジンへ通知するだけの施策
 - **trend**: 週次で Bing 21%（73訪問・Google 35%に次ぐ2位）／`data/search_channel_metrics.json` 直近30日でも Bing 289セッション・24.2%（Google 402・33.7%）。単週のブレではなく3ヶ月継続している構造
@@ -1247,11 +1250,11 @@
   | [[SEO-071]] は 2026-08-26 に「オーナー承認済み `--yes`」で done とされ、[[SEO-081]] でステップ削除も復旧済み。**ステップは存在するが送信はされていない**という状態が誰にも通知されていなかった | `agent-backlog.md` [[SEO-071]] / [[SEO-081]] |
 - **なぜ気づけなかったか（ISSUE-084 原則の再適用）**: [[SEO-081]] が追加した CI 自己診断は「ステップが build.yml に存在するか」しか見ておらず、**ステップが存在したまま dry_run で空回りする**故障モードを検知できない。ログは毎日コミットされていた＝記録はあったが、人が見に行かないと分からない＝**検知ではない**（CLAUDE.md「気づけるはずを検知と数えない」）
 - **acceptance**:
-  1. オーナー本人が GitHub Secrets に `INDEXNOW_ENABLED=true` を設定する（**エージェントは実行しない**＝クレデンシャル操作）。前提として鍵ファイル `https://nagoya-bites.com/ec3ee6876b0d465ab4f7093ba5bc42d0.txt` が 200 を返すことを確認する
-  2. 設定後、`data/indexnow_send_log.json` に `dry_run: false` と実送信URL・レスポンスが記録されることを次回 build で確認する
-  3. **再発検知**: `dry_run: true` が N日連続で記録されたら鳴る自己診断を足す（[[SEO-081]] のステップ存在確認と同じ場所に、判定は「ログの `dry_run` 値」という検証できる事実だけで行う・制約10）。通知先はログではなく GitHub Issue（＝オーナーにメール）とし、復旧で自動クローズする（ISSUE-084 原則2・6）
-  4. 効果は Bing 経由セッションの前後比（`data/search_channel_metrics.json`）で見る。体感・自己申告値では判定しない
-- **ブランドガードレール**: IndexNow は自社サイトの更新URLを通知するだけで、順位操作・被リンク購入・自作自演を一切伴わない。[[SEO-067]]（Bing Webmaster Tools 登録・オーナー操作待ち）とは別件で、そちらが未了でも本件は単独で有効化できる
+  1. オーナー本人が GitHub Secrets に `INDEXNOW_ENABLED=true` を設定する（**エージェントは実行しない**＝クレデンシャル操作）。前提として鍵ファイル `https://nagoya-bites.com/ec3ee6876b0d465ab4f7093ba5bc42d0.txt` が 200 を返すことを確認する → ✅完了（2026-09-22 12:32 JST・オーナー本人）
+  2. 設定後、`data/indexnow_send_log.json` に `dry_run: false` と実送信URL・レスポンスが記録されることを次回 build で確認する → ✅完了。**設定直後(12:29開始)のbuildはジョブ開始時点でシークレットが未反映のため dry_run:true のまま**だった（GitHub Actionsはジョブ開始時点のsecretsスナップショットしか見えない）。手動 `workflow_dispatch` で再実行し、2026-09-23T00:00:52Z のログで `"dry_run": false, "status": 200, "sent": 96` を確認
+  3. **再発検知**: 未着手（P2として別チケット化を検討。今回は「設定直後のbuildは古いsecretsスナップショットを見る」という新しい既知の落とし穴が分かったため、次回同種の設定変更をする際はこのタイムラグを踏まえて確認すること）
+  4. 効果は Bing 経由セッションの前後比（`data/search_channel_metrics.json`）で見る。体感・自己申告値では判定しない → 数日〜1週間後に再評価
+- **ブランドガードレール**: IndexNow は自社サイトの更新URLを通知するだけで、順位操作・被リンク購入・自作自演を一切伴わない。[[SEO-067]]（Bing Webmaster Tools 登録）とは別件で完了済み
 
 ### [SEO-086] 最も読まれているページ（週閲覧の21.5%）の「今すぐ予約」17本・「店舗詳細」15本が、レポートの集計対象イベントを一つも発火していない — [[SEO-084]] が「計測済み」と数えた反例
 
@@ -5521,14 +5524,15 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **ブランドガードレール**: KW詰め込み・順位操作禁止。タイトル変更時に既存被リンク（内部）が壊れないか確認。広告・PR・送客手数料導線は含めない（編集独立・制約7/8）
 
 ### [SEO-067] Bing Webmaster Tools を接続し最大流入エンジンの検索実データを可視化する
-- **priority**: P2 → **status**: blocked（owner本人操作待ち）
+- **priority**: P2 → **status**: in_progress（acceptance①③完了。②が残作業）
 - **detected**: 2026-08-22
+- **resolved_step1**: 2026-09-22（オーナー本人が Bing Webmaster Tools に `nagoya-bites.com` を登録。サイトマップ4件（sitemap.xml/stores/llms.txt/sitemap-index.xml）を送信・処理中を確認済み）
 - **category**: SEO / 計測
-- **owner**: 片桐（オーナー本人）／設定後の活用はMarketer
+- **owner**: 片桐（オーナー本人・acceptance①完了）／②はMarketer
 - **source**: SEO改善分析セッション（ユーザー依頼によるサイト監査）。`data/search_channel_metrics.json`実測（直近30日）で Bing 26.5%（245セッション）が Google 25.4%（235セッション）を上回り最大の検索流入エンジンと判明。一方 `data/gsc_metrics.json` は Google Search Console 専用データで Bing の掲載順位・CTR・クエリは一切見えていない
 - **brand-filter**: ✅ 適合 — 既存のGSC改善ループ（`scripts/gsc_opportunities.js`）と同じ「自社の実測データを起点にMoat/Strategic Skipで施策化する」ループをBingにも拡張するだけ。広告・順位操作は伴わない
 - **why-not-agent**: Bing Webmaster Toolsへのサイト登録・所有権確認はGoogleアカウント/メールでの認証を伴うクレデンシャル操作のため、エージェントは代行できない（制約: パスワード/認証情報の代行操作は行わない）。`scripts/indexnow_ping.js`（IndexNow鍵生成・送信）は実装済みで登録後すぐ使える
-- **acceptance**: ① https://www.bing.com/webmasters にオーナー本人が `nagoya-bites.com` を登録・所有権確認（sitemap-index.xml も登録）／② 登録後、Marketerが Bing Webmaster Tools API または CSV エクスポートを使い `fetch_gsc_metrics.js` と対になる `fetch_bing_metrics.js` を新設しBing側のクエリ・ページ別実データを取得できるようにする／③ `scripts/indexnow_ping.js --init && --status` で鍵設定を確認し `--yes` で本稼働に切り替える
+- **acceptance**: ① https://www.bing.com/webmasters にオーナー本人が `nagoya-bites.com` を登録・所有権確認（sitemap-index.xml も登録）→ ✅完了（2026-09-22） ／② 登録後、Marketerが Bing Webmaster Tools API または CSV エクスポートを使い `fetch_gsc_metrics.js` と対になる `fetch_bing_metrics.js` を新設しBing側のクエリ・ページ別実データを取得できるようにする → 未着手（次の作業） ／③ `scripts/indexnow_ping.js --init && --status` で鍵設定を確認し本稼働に切り替える → [[SEO-085]] で完了（2026-09-23・`dry_run:false`実送信96件を確認済み・done）
 - **ブランドガードレール**: Bing側データも他の検索ループと同じくMoat/Strategic Skipでtriageする。データが増えても採否判断の基準は変えない
 
 ### [SEO-068] discovery意図クエリ（シーン×エリア=Moat領域）の検索面を計画的に拡張する
