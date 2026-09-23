@@ -433,7 +433,7 @@
 
 ### [SEO-101] ジャーナル133本に Q&A が1本も無い（特集は64/69がFAQPage保有）— 生成AI経由99セッション/30日の引用面を journal だけ取り逃している
 
-- **priority**: P2 → **status**: in_progress（acceptance①〜⑤実装済み・⑥の効果測定はGSC/検索チャネルデータが数週間分溜まってから判定するためdoneにはしない）
+- **priority**: P2 → **status**: done（acceptance⑥の効果測定完了・効果なしのため横展開せずクローズ）
 - **detected**: 2026-09-16
 - **category**: SEO / コンテンツ
 - **owner**: Editor
@@ -465,7 +465,7 @@
   - 可視FAQ（`<p class="faq-q">`/`<p class="faq-a">`）とJSON-LD（`FAQPage.mainEntity[].name`/`acceptedAnswer.text`）の verbatim一致をスクリプトで機械検証済み（acceptance③）
   - `journal/_template.html` は変更していない（既存の個別記事3本のみに追記のため、DSN-001のDesignerゲート対象外・acceptance④）。CSSは features 側で確立済みの `.faq-item`/`.faq-q`/`.faq-a`（`var(--fs-md)` 等トークンのみ・新規リテラル無し）を各記事のインライン`<style>`に複製
   - **QA**: `node scripts/audit_feature_schema_alignment.js` OK（features 68件・journal FAQPage保有3件）／`node scripts/audit_design_system.js --check`（全5,827ファイル）violations 0／`node --test tests/*.test.js` 197/197 pass／3ファイルのJSON-LD構文検証OK／ブラウザ実機確認（`http-server` 経由・モバイル幅）でFAQセクションの表示崩れなし
-  - **未完了（acceptance⑥）**: 効果測定は「反映後、生成AI経由セッションが増えるか」を`node scripts/search_channel_metrics.js --report`の前後比で見る設計のため、数週間分のデータが溜まってから別途確認する。効果が出なければ横展開せずクローズする方針（acceptance⑤のガードレール）は維持
+  - **2026-09-23 acceptance⑥ 完了（効果なし・クローズ）**: `data/search_channel_metrics.json` の生成AI(ai_assistant)セッション推移を実装前後で追跡。**08-20(施策前・119セッション/13.5%) → 08-25(103) → 09-02(100) → 09-07(84) → 09-12(92) → 09-17(102) → 09-22(107・7.6%)**。絶対数は施策前と同水準、シェアは全体流入が伸びる中で13.5%→7.6%へむしろ低下。3本という小規模パイロットで検出できる効果ではない可能性はあるが、**検出できる改善が確認できなかった**という事実をそのまま記録する（品質ゲート原則5・取り繕わない）。acceptance⑤のガードレールどおり**133本全体への横展開はしない**。理由: ①効果が未確認の施策を全記事に機械的に適用するとISSUE-060と同型の水増しリスクを負う ②オーナーの既存フィードバック（[[journal-hero-photos-over-diagrams]]・AIっぽい体裁は閲覧意欲を削ぐ）と同じ懸念がQ&A形式にも当てはまりうる。既存3本のFAQはそのまま残す（個別に事実ベースで書いたもので、撤去する理由は無い）
   - **files**: `journal/2026-08-29-fujigaoka-nama-donut-cospa.html`, `journal/2026-08-04-sakae-leesar-coffee.html`, `journal/2026-08-09-nagoyadome-pekin-honten.html`, `scripts/audit_feature_schema_alignment.js`
 
 ---
