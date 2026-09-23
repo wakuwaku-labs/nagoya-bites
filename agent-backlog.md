@@ -93,7 +93,7 @@
 
 ### [ISSUE-132] 同じ店が複数の掲載レコードとして並んでいる（placeId 重複194組・店名完全一致20組）— 片方だけ食べログURLを持つため「同じ店なのにリンクが出るカードと出ないカード」が混在する
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-09-20
 - **category**: data-quality
 - **owner**: DataKeeper / Builder
@@ -112,7 +112,15 @@
   1. 重複の判定は**検証できる事実だけ**で行う（placeId 一致 ＋ `scripts/lib/store_name_match.js` の `namesMatch()` か `normalizeJpAddress()` の住所一致）。placeId だけで機械的に統合しない（上記「うなぎのしろむら」のような Places 側の誤りを取り込んでしまうため）
   2. 統合時は情報の多い方を残し、欠けているフィールド（食べログURL・Instagram・写真・おすすめポイント等）を相互に補完する。**手動キュレーション店の編集部フィールドを失わない**こと
   3. 統合できない（同一と確認できない）組は**統合せず残す**。取り繕わない
-  4. CI に重複検知を追加し、新たな重複が増えたら検出できるようにする
+  4. ✅ CI に重複検知を追加し、新たな重複が増えたら検出できるようにする
+- **2026-09-23 実装（自動ルーティン）**:
+  - acceptance④: `scripts/audit_duplicate_stores.js` を新設（読み取り専用の重複検出スクリプト）
+  - 重複判定は「店名完全一致」または「placeId一致＋namesMatch()」のみ（制約10・acceptance①）
+  - `data/store_duplicate_baseline.json` に現在の確定重複58件を記録（CI比較の基準値）
+  - `data/store_duplicate_report.json` に詳細一覧（`--report`オプション）
+  - `build.yml` に `--check` ステップを追加（continue-on-error: 新規重複の増加を検知）
+  - 2026-09-23時点の実測: **確定重複58件**（名前一致20件＋placeId+namesMatch 38件）・不確定143件
+  - acceptance②③（統合操作）は HOTPEPPER_API_KEY を持つ環境でのテストが必要なため別セッションへ（本セッションではデータを一切変更しない）
 
 ### [EDT-004] ジャーナルの写真がヒーロー1枚だけで、本文が最後まで文字だけだった ✅ 本文にも写真を散らす仕組みを追加
 
@@ -4097,6 +4105,12 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   - v3.0分布影響: **1階級以上の移動 4,345件**（目安上限493件）— 前回4,336件からほぼ横ばい
   - まだ目安の8.8倍で不変。この1週間の蓄積では移動幅は縮小していない（重み付け変更が支配的という前回の分析どおり）。現在の週あたり蓄積ペース（約+1.2pt/週）が続く前提だと、閾値到達には数ヶ月単位を要する見込み。activate は引き続き保留し、次回定点観測（週次実行後）で継続確認する
 
+- **2026-09-23 定点観測（自動ルーティン）**:
+  `node scripts/audit_crosscheck_v3.js` 実行結果:
+  - snapshots≥2 の店舗数: **495件（9.2%・母数5,388件）** — 484件/9.0%（2026-09-18）から微増（+11件・週あたり+1.2pt ペース維持）
+  - v3.0分布影響: **1階級以上の移動 4,301件**（目安上限491件）— 前回4,345件から微減（-44件・誤差レベル）
+  - 目安の約8.8倍で前回とほぼ不変。蓄積は継続しているが移動幅の縮小は見られない。activate は引き続き保留
+
 - **残タスク**: 週次実行（毎週月曜）を継続してsnapshots≥2の蓄積率を上げる → 十分な蓄積後に
   `node scripts/audit_crosscheck_v3.js` で分布影響を再確認（目標: 移動件数 ≤ 492件）→ 問題なければ activate 手順の
   Step3以降（build.js切替）を実施。無料トライアル失効後（2026-08-20以降）は純粋な従量課金と
@@ -6286,6 +6300,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-09-23 | Builder(routine) | ISSUE-132 acceptance④: scripts/audit_duplicate_stores.js 新設・build.yml に CI 重複検知ステップ追加。確定重複58件ベースライン保存（名前一致20件＋placeId+namesMatch 38件）。統合操作（acceptance②③）は API キー必要のため別セッションへ | ✅ commit本コミット |
+| 2026-09-23 | Orchestrator(routine) | ISSUE-086: 定点観測（snapshots≥2=495件/9.2%、tier移動4,301件/目安491件・目安の8.8倍で前回不変）。activate引き続き保留 | ✅ backlog更新 |
 | 2026-09-22 | Orchestrator(routine) | ISSUE-133 owner を片桐へ変更（エスカレーション）— acceptance.1の22件一次確認（公式SNS・電話・Googleの最新口コミ）はオーナー本人操作が必要なため自動ルーチンでは実施不可 | ⏸ owner変更のみ。本コミットに含む |
 | 2026-09-22 | Builder(routine) | SEO-105: gen-store-pages.js に電話CTA（タップ時のみ Places Details 取得・`nbCallStore` 同一実装）追加。対象52店（no hpId・no tbUrl・placeId保有）。`audit_design_system.js --check` 違反0件維持。4915ページ再生成 | ✅ 本コミットに含む |
 | 2026-09-22 | Orchestrator(routine) | ISSUE-131 done化 — 全acceptance実施済み確認（resolve_manual_tabelog_links.js新設・偽陽性修正・CI拡大・843URL空欄化、PR #283/#285 マージ済み）をもってdone | ✅ commit 本コミットに含む |
