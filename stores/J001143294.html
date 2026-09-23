@@ -10,11 +10,11 @@ function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,p
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YURT 大名古屋ビルヂング店（名駅・ダイニングバー・バル）| NAGOYA BITES</title>
-<meta name="description" content="・名古屋駅から徒歩3分のダイニングバー・バル。予算2001～3000円。Google★3.6（口コミ466件）。予約・地図・口コミを1ページで確認できます。">
+<title>YURT 大名古屋ビルヂング店（名駅・ダイニングバー・バル・予算2001～3000円・Google★3.6）| NAGOYA BITES</title>
+<meta name="description" content="・名古屋駅から徒歩3分のダイニングバー・バル。予算2001～3000円。Google★3.6（口コミレビュー466件）。口コミ信頼度B。予約・地図・口コミを1ページで確認できます。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/J001143294.html">
-<meta property="og:title" content="YURT 大名古屋ビルヂング店（名駅・ダイニングバー・バル）| NAGOYA BITES">
-<meta property="og:description" content="・名古屋駅から徒歩3分のダイニングバー・バル。予算2001～3000円。Google★3.6（口コミ466件）。予約・地図・口コミを1ページで確認できます。">
+<meta property="og:title" content="YURT 大名古屋ビルヂング店（名駅・ダイニングバー・バル・予算2001～3000円・Google★3.6）| NAGOYA BITES">
+<meta property="og:description" content="・名古屋駅から徒歩3分のダイニングバー・バル。予算2001～3000円。Google★3.6（口コミレビュー466件）。口コミ信頼度B。予約・地図・口コミを1ページで確認できます。">
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="https://nagoya-bites.com/stores/J001143294.html">
 <meta property="og:image" content="https://imgfp.hotp.jp/IMGH/58/02/P041495802/P041495802.jpg">
@@ -23,8 +23,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:site_name" content="NAGOYA BITES">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="YURT 大名古屋ビルヂング店（名駅・ダイニングバー・バル）| NAGOYA BITES">
-<meta name="twitter:description" content="・名古屋駅から徒歩3分のダイニングバー・バル。予算2001～3000円。Google★3.6（口コミ466件）。予約・地図・口コミを1ページで確認できます。">
+<meta name="twitter:title" content="YURT 大名古屋ビルヂング店（名駅・ダイニングバー・バル・予算2001～3000円・Google★3.6）| NAGOYA BITES">
+<meta name="twitter:description" content="・名古屋駅から徒歩3分のダイニングバー・バル。予算2001～3000円。Google★3.6（口コミレビュー466件）。口コミ信頼度B。予約・地図・口コミを1ページで確認できます。">
 <meta name="twitter:image" content="https://imgfp.hotp.jp/IMGH/58/02/P041495802/P041495802.jpg">
 <link rel="manifest" href="../manifest.json">
 <meta name="theme-color" content="#7a5c10">
@@ -89,18 +89,12 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "ダイニングバー・バル",
-        "item": "https://nagoya-bites.com/#genre=%E3%83%80%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0%E3%83%90%E3%83%BC%E3%83%BB%E3%83%90%E3%83%AB"
+        "name": "名古屋（名古屋駅/西区/中村区）のダイニングバー・バル",
+        "item": "https://nagoya-bites.com/stores/area/meieki/dining-bar.html"
       },
       {
         "@type": "ListItem",
         "position": 3,
-        "name": "名古屋（名古屋駅/西区/中村区）エリア",
-        "item": "https://nagoya-bites.com/#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89"
-      },
-      {
-        "@type": "ListItem",
-        "position": 4,
         "name": "YURT 大名古屋ビルヂング店",
         "item": "https://nagoya-bites.com/stores/J001143294.html"
       }
@@ -135,7 +129,20 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .links-section h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .ig-photos{margin:0 0 2rem;}
 .ig-photos h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
+.ig-carousel{position:relative;max-width:420px;margin:0 auto;}
+.ig-carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.ig-carousel-track::-webkit-scrollbar{display:none;}
+.ig-embed-box{flex:0 0 100%;width:100%;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;scroll-snap-align:center;}
+.ig-embed-box iframe{width:100%;height:560px;border:0;display:block;}
+.ig-embed-box a{display:block;padding:1rem;color:var(--text);font-size:var(--fs-sm);text-decoration:underline;}
+.ig-carousel-nav{position:absolute;top:50%;transform:translateY(-50%);width:2.2rem;height:2.2rem;border-radius:50%;background:rgba(255,255,255,.92);border:1px solid var(--border);color:var(--text);font-size:1.3rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;padding:0;}
+.ig-carousel-prev{left:.4rem;}
+.ig-carousel-next{right:.4rem;}
+.ig-carousel-dots{display:flex;justify-content:center;gap:.4rem;margin-top:.7rem;}
+.ig-carousel-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .2s;}
+.ig-carousel-dot.active{background:var(--gold);}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
+button.link-btn{font:inherit;cursor:pointer;}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
 .link-btn.hp:hover{background:var(--gold2);border-color:var(--gold2);}
@@ -194,9 +201,7 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
   <div class="breadcrumb">
     <a href="../index.html">TOP</a>
     <span>›</span>
-    <a href="../#genre=%E3%83%80%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0%E3%83%90%E3%83%BC%E3%83%BB%E3%83%90%E3%83%AB">ダイニングバー・バル</a>
-    <span>›</span>
-    <a href="../#area=%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89">名古屋（名古屋駅/西区/中村区）</a>
+    <a href="../stores/area/meieki/dining-bar.html">名古屋（名古屋駅/西区/中村区）のダイニングバー・バル</a>
     <span>›</span>
     YURT 大名古屋ビルヂング店
   </div>
@@ -299,15 +304,15 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
   <div class="related-stores">
     <h2>名古屋（名古屋駅/西区/中村区）の他の店</h2>
     <ul>
-      <li><a href="J001026238.html">BASARA 名古屋店</a></li>
       <li><a href="J001169923.html">ニクバルダカラ 名駅シンフォニー豊田ビル</a></li>
       <li><a href="J001287376.html">ミッドタウンBBQ 名古屋</a></li>
       <li><a href="J004026361.html">ダイニングダーツバーBee 名駅店</a></li>
+      <li><a href="J001195403.html">THE GOHAN ザ ゴハン classic pavilion</a></li>
     </ul>
   </div>
 
   <div class="back-section">
-    <a href="../?area=%E5%90%8D%E5%8F%A4%E5%B1%8B%EF%BC%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%2F%E8%A5%BF%E5%8C%BA%2F%E4%B8%AD%E6%9D%91%E5%8C%BA%EF%BC%89&genre=%E3%83%80%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0%E3%83%90%E3%83%BC%E3%83%BB%E3%83%90%E3%83%AB">← 名古屋（名古屋駅/西区/中村区）のダイニングバー・バルをもっと見る</a>
+    <a href="../stores/area/meieki/dining-bar.html">← 名古屋（名古屋駅/西区/中村区）のダイニングバー・バルをもっと見る</a>
   </div>
 </div>
 
