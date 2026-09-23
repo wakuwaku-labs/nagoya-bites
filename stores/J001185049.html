@@ -10,11 +10,11 @@ function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,p
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>はかた野菜巻き串 きばくもん 名駅店（名駅・居酒屋・予算3001～4000円・Google★3.5）| NAGOYA BITES</title>
-<meta name="description" content="名古屋駅から徒歩3分の居酒屋。予算3001～4000円。Google★3.5（口コミ88件）。口コミ信頼度B。ユニモール10番出口直結、フレンチ4,500円で駅直結イタリアンより差別化。予約・地図・口コミを1ページで確認できます。">
+<title>はかた野菜巻き串 きばくもん 名駅店（名駅・居酒屋・予算4001～5000円・Google★3.5）| NAGOYA BITES</title>
+<meta name="description" content="名古屋駅から徒歩3分の居酒屋。予算4001～5000円。Google★3.5（口コミレビュー88件）。口コミ信頼度B。ユニモール10番出口直結、フレンチ4,500円で駅直結イタリアンより差別化。予約・地図・口コミを1ページで確認できます。">
 <link rel="canonical" href="https://nagoya-bites.com/stores/J001185049.html">
-<meta property="og:title" content="はかた野菜巻き串 きばくもん 名駅店（名駅・居酒屋・予算3001～4000円・Google★3.5）| NAGOYA BITES">
-<meta property="og:description" content="名古屋駅から徒歩3分の居酒屋。予算3001～4000円。Google★3.5（口コミ88件）。口コミ信頼度B。ユニモール10番出口直結、フレンチ4,500円で駅直結イタリアンより差別化。予約・地図・口コミを1ページで確認できます。">
+<meta property="og:title" content="はかた野菜巻き串 きばくもん 名駅店（名駅・居酒屋・予算4001～5000円・Google★3.5）| NAGOYA BITES">
+<meta property="og:description" content="名古屋駅から徒歩3分の居酒屋。予算4001～5000円。Google★3.5（口コミレビュー88件）。口コミ信頼度B。ユニモール10番出口直結、フレンチ4,500円で駅直結イタリアンより差別化。予約・地図・口コミを1ページで確認できます。">
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="https://nagoya-bites.com/stores/J001185049.html">
 <meta property="og:image" content="https://wsrv.nl/?url=https%3A%2F%2Fnagoya-bites.com%2Fassets%2Fog%2FJ001185049.svg&output=png&w=1200&h=630">
@@ -25,8 +25,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:site_name" content="NAGOYA BITES">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="はかた野菜巻き串 きばくもん 名駅店（名駅・居酒屋・予算3001～4000円・Google★3.5）| NAGOYA BITES">
-<meta name="twitter:description" content="名古屋駅から徒歩3分の居酒屋。予算3001～4000円。Google★3.5（口コミ88件）。口コミ信頼度B。ユニモール10番出口直結、フレンチ4,500円で駅直結イタリアンより差別化。予約・地図・口コミを1ページで確認できます。">
+<meta name="twitter:title" content="はかた野菜巻き串 きばくもん 名駅店（名駅・居酒屋・予算4001～5000円・Google★3.5）| NAGOYA BITES">
+<meta name="twitter:description" content="名古屋駅から徒歩3分の居酒屋。予算4001～5000円。Google★3.5（口コミレビュー88件）。口コミ信頼度B。ユニモール10番出口直結、フレンチ4,500円で駅直結イタリアンより差別化。予約・地図・口コミを1ページで確認できます。">
 <meta name="twitter:image" content="https://wsrv.nl/?url=https%3A%2F%2Fnagoya-bites.com%2Fassets%2Fog%2FJ001185049.svg&output=png&w=1200&h=630">
 <link rel="manifest" href="../manifest.json">
 <meta name="theme-color" content="#7a5c10">
@@ -146,6 +146,7 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .ig-carousel-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .2s;}
 .ig-carousel-dot.active{background:var(--gold);}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
+button.link-btn{font:inherit;cursor:pointer;}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
 .link-btn.hp:hover{background:var(--gold2);border-color:var(--gold2);}
@@ -223,7 +224,7 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
   <div class="info-grid">
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 名古屋（名古屋駅/西区/中村区）</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市中村区名駅３丁目24-9　吉十ビル</span></div>
-    <div class="info-cell"><label>価格帯</label><span>3001～4000円</span></div>
+    <div class="info-cell"><label>価格帯</label><span>4001～5000円</span></div>
     <div class="info-cell"><label>営業時間</label><span>月～木: 17:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）金、祝前日: 17:00～翌0:00 （料理L.O. 23:00 ドリンクL.O. 23:30）土: 16:00～翌0:00 （料理L.O. 23:00 ドリンクL.O. 23:30）日、祝日: 16:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>名古屋駅より徒歩3分！正面ロータリーすぐジュンク堂の裏（ユニモール6番出口すぐ）★居酒屋はきばくもん名駅店へ！</span></div>

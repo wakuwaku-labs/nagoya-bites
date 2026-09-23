@@ -25,6 +25,10 @@ const fs = require('fs');
 const path = require('path');
 
 const FEATURES_DIR = path.join(__dirname, '..', 'features');
+// SEO-101: journal/*.html にも FAQPage を導入する際、features と同じ「別テーマ汚染」検出を
+// 使い回す。journal の Article/Breadcrumb は features と本文構造が違いすぎて誤検出しうるため、
+// journal 側は FAQPage の corpus 照合のみ対象にする（journalOnlyFaq オプション）。
+const JOURNAL_DIR = path.join(__dirname, '..', 'journal');
 const THRESHOLD = 0.13; // 類似度がこれ未満なら mismatch（0.13 で「ラーメンテンプレ汚染」と false-positive を分離可能）
 // ISSUE-063: FAQ設問は title 単独だと語彙ズレで偽陽性になるため、title＋h1＋本文の「ページコーパス」と照合する。
 // 本文との照合は日本語の定型表現で底上げされるため、title 比較より高い閾値を用いる。
@@ -100,8 +104,10 @@ function extractJsonLdBlocks(html) {
   return blocks;
 }
 
-function audit(filename) {
-  const filePath = path.join(FEATURES_DIR, filename);
+function audit(filename, dir, opts) {
+  dir = dir || FEATURES_DIR;
+  opts = opts || {};
+  const filePath = path.join(dir, filename);
   const html = fs.readFileSync(filePath, 'utf8');
   const title = extract(html, /<title[^>]*>([^<]+)<\/title>/);
   const h1 = extract(html, /<h1[^>]*>([\s\S]*?)<\/h1>/).replace(/<[^>]+>/g, '');
@@ -116,6 +122,7 @@ function audit(filename) {
       issues.push({ kind: 'json_parse_error', detail: b._parseError });
       continue;
     }
+    if (opts.faqOnly && b['@type'] !== 'FAQPage') continue;
     if (b['@type'] === 'Article') {
       const headline = b.headline || '';
       const sim = similarity(title, headline);
@@ -173,25 +180,39 @@ function audit(filename) {
 }
 
 function main() {
-  const files = fs.readdirSync(FEATURES_DIR)
+  const featureFiles = fs.readdirSync(FEATURES_DIR)
     .filter(f => f.endsWith('.html') && f !== 'index.html');
+  // SEO-101: journal は FAQPage を持つファイルだけを対象にする（大半はまだ FAQ を持たず、
+  // Article/Breadcrumb は features 用の閾値では検証していないため対象外＝journalOnlyFaq）。
+  const journalFiles = fs.readdirSync(JOURNAL_DIR)
+    .filter(f => f.endsWith('.html') && f !== 'index.html' && !f.startsWith('_'))
+    .filter(f => fs.readFileSync(path.join(JOURNAL_DIR, f), 'utf8').includes('"@type": "FAQPage"'));
 
   const failed = [];
   let total = 0;
-  for (const f of files) {
-    const result = audit(f);
+  for (const f of featureFiles) {
+    const result = audit(f, FEATURES_DIR);
     if (result.issues.length > 0) {
       failed.push(result);
       total += result.issues.length;
     }
   }
+  for (const f of journalFiles) {
+    const result = audit(f, JOURNAL_DIR, { faqOnly: true });
+    result.filename = 'journal/' + result.filename;
+    if (result.issues.length > 0) {
+      failed.push(result);
+      total += result.issues.length;
+    }
+  }
+  const files = featureFiles.length + journalFiles.length;
 
   if (failed.length === 0) {
-    console.log(`✅ features/*.html ${files.length} 件: スキーマ整合性 OK（全件で title/h1/Article/ItemList/Breadcrumb/FAQPage が一致）`);
+    console.log(`✅ features/*.html ${featureFiles.length} 件: スキーマ整合性 OK（全件で title/h1/Article/ItemList/Breadcrumb/FAQPage が一致）／journal FAQPage保有 ${journalFiles.length} 件: FAQ整合性 OK`);
     process.exit(0);
   }
 
-  console.error(`❌ ${failed.length}/${files.length} 件で ${total} 件のスキーマ汚染を検出:\n`);
+  console.error(`❌ ${failed.length}/${files} 件で ${total} 件のスキーマ汚染を検出:\n`);
   for (const r of failed) {
     console.error(`── ${r.filename}`);
     console.error(`   title: ${r.title}`);

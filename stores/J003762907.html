@@ -60,7 +60,6 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     },
     "acceptsReservations": true,
     "sameAs": [
-      "https://tabelog.com/aichi/A2301/A230113/23088372/",
       "https://www.hotpepper.jp/strJ003762907/"
     ],
     "aggregateRating": {
@@ -136,6 +135,7 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .ig-carousel-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .2s;}
 .ig-carousel-dot.active{background:var(--gold);}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
+button.link-btn{font:inherit;cursor:pointer;}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
 .link-btn.hp:hover{background:var(--gold2);border-color:var(--gold2);}
@@ -282,7 +282,6 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
     <h2>予約・情報を確認</h2>
     <a class="link-btn hp" href="https://www.hotpepper.jp/strJ003762907/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
     <a class="link-btn gm" href="https://www.google.com/maps/search/K%20SHOCK%20CHITOY%20%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%83%E3%82%AF%20%E3%83%81%E3%83%BC%E3%83%88%E3%82%A4%20%E4%B8%AD%E5%B7%9D%E5%8C%BA%E3%83%BB%E6%B8%AF%E5%8C%BA" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
-    <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230113/23088372/" target="_blank" rel="noopener noreferrer">食べログ</a>
   </div>
 
   

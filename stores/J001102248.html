@@ -48,7 +48,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       "streetAddress": "愛知県名古屋市中村区名駅３丁目17番21号",
       "addressArea": "名古屋（名古屋駅/西区/中村区）"
     },
-    "image": "https://imgfp.hotp.jp/IMGH/05/54/P026790554/P026790554.jpg",
+    "image": "https://imgfp.hotp.jp/IMGH/05/54/P026790554/P026790554_480.jpg",
     "url": "https://nagoya-bites.com/stores/J001102248.html",
     "description": "料理もドリンクも充実した居酒屋。名駅エリアで人気",
     "priceRange": "¥¥",
@@ -132,7 +132,20 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .links-section h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .ig-photos{margin:0 0 2rem;}
 .ig-photos h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
+.ig-carousel{position:relative;max-width:420px;margin:0 auto;}
+.ig-carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.ig-carousel-track::-webkit-scrollbar{display:none;}
+.ig-embed-box{flex:0 0 100%;width:100%;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;scroll-snap-align:center;}
+.ig-embed-box iframe{width:100%;height:560px;border:0;display:block;}
+.ig-embed-box a{display:block;padding:1rem;color:var(--text);font-size:var(--fs-sm);text-decoration:underline;}
+.ig-carousel-nav{position:absolute;top:50%;transform:translateY(-50%);width:2.2rem;height:2.2rem;border-radius:50%;background:rgba(255,255,255,.92);border:1px solid var(--border);color:var(--text);font-size:1.3rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;padding:0;}
+.ig-carousel-prev{left:.4rem;}
+.ig-carousel-next{right:.4rem;}
+.ig-carousel-dots{display:flex;justify-content:center;gap:.4rem;margin-top:.7rem;}
+.ig-carousel-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .2s;}
+.ig-carousel-dot.active{background:var(--gold);}
 .link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.1rem;font-size:var(--fs-sm);letter-spacing:0;text-decoration:none;border:1px solid var(--border);border-radius:2px;color:var(--text);background:var(--bg2);transition:all .2s;margin:.25rem .3rem .25rem 0;min-height:var(--tap-min);}
+button.link-btn{font:inherit;cursor:pointer;}
 .link-btn:hover{border-color:var(--border-h);background:var(--surface);}
 .link-btn.hp{background:var(--gold);color:var(--bg);border-color:var(--gold);}
 .link-btn.hp:hover{background:var(--gold2);border-color:var(--gold2);}
@@ -183,7 +196,7 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 </header>
 <!-- NB-CHROME:HEADER:END -->
 
-<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F05%2F54%2FP026790554%2FP026790554.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F05%2F54%2FP026790554%2FP026790554_480.jpg" srcset="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F05%2F54%2FP026790554%2FP026790554.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F05%2F54%2FP026790554%2FP026790554_480.jpg 480w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F05%2F54%2FP026790554%2FP026790554.jpg&w=800&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F05%2F54%2FP026790554%2FP026790554_480.jpg 800w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F05%2F54%2FP026790554%2FP026790554.jpg&w=1200&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F05%2F54%2FP026790554%2FP026790554_480.jpg 1200w, https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F05%2F54%2FP026790554%2FP026790554.jpg&w=1280&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F05%2F54%2FP026790554%2FP026790554_480.jpg 1280w" sizes="100vw" alt="ハマキン Hamakin 名駅店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/05/54/P026790554/P026790554.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
+<img class="hero-img" src="https://wsrv.nl/?url=imgfp.hotp.jp%2FIMGH%2F05%2F54%2FP026790554%2FP026790554_480.jpg&w=480&output=webp&q=82&we=1&sharp=2&default=imgfp.hotp.jp%2FIMGH%2F05%2F54%2FP026790554%2FP026790554_238.jpg" alt="ハマキン Hamakin 名駅店" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="if(!this.dataset.f){this.dataset.f=1;this.src='https://imgfp.hotp.jp/IMGH/05/54/P026790554/P026790554_480.jpg';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}">
 
 <div class="container">
   <!-- NB-CHROME:BREADCRUMB:START -->

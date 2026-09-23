@@ -59,8 +59,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/nb.css">
 <style>.container{max-width:920px;margin:0 auto;padding:3rem 1.5rem 4rem;}
-.eyebrow{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:.7rem;}
-h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,5vw,3.2rem);line-height:1.15;color:var(--white);margin-bottom:1rem;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:.7rem;}
+h1{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(2rem,5vw,3.2rem);line-height:1.15;color:var(--white);margin-bottom:1rem;}
 h1 em{font-style:italic;color:var(--gold);}
 .lead{font-size:.92rem;line-height:1.85;color:var(--muted);margin-bottom:2.4rem;max-width:680px;}
 .area-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-bottom:3rem;}
@@ -69,9 +69,9 @@ h1 em{font-style:italic;color:var(--gold);}
 .area-name{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.5rem;color:var(--white);margin-bottom:.2rem;}
 .area-name em{font-style:italic;color:var(--gold);}
 .area-jp{font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:.6rem;}
-.area-count{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:.5rem;}
-.area-desc{font-size:.72rem;line-height:1.7;color:var(--muted);}
-h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.5rem;color:var(--white);margin:2.4rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+.area-count{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:.5rem;}
+.area-desc{font-size:var(--fs-xs);line-height:1.7;color:var(--muted);}
+h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.5rem;color:var(--white);margin:2.4rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
 .cta-block{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.6rem 1.4rem;text-align:center;margin-bottom:2rem;}
 .cta-block p{font-size:.86rem;line-height:1.85;color:var(--muted);margin-bottom:1.1rem;}
 .cta-btn{display:inline-block;padding:.8rem 1.6rem;background:linear-gradient(135deg,#d97a3a 0%,#b8541f 55%,#8c3a14 100%);color:#fff;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;border-radius:3px;text-decoration:none;font-weight:600;box-shadow:0 1px 3px rgba(140,58,20,.25);transition:transform .2s,box-shadow .25s;}
@@ -94,7 +94,7 @@ h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.5rem;color
 }
 /* === INSIDER REVIEWS (フォールバック) === */
 .insider-reviews-box{background:rgba(20,60,50,.04);border-left:3px solid #2a6a5a;border-radius:0 4px 4px 0;padding:.95rem 1.1rem;margin-bottom:1.4rem;}
-.insider-reviews-box .ir-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.22em;color:#2a6a5a;text-transform:uppercase;display:block;margin-bottom:.5rem;}
+.insider-reviews-box .ir-label{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.22em;color:#2a6a5a;text-transform:uppercase;display:block;margin-bottom:.5rem;}
 .ir-empty{font-size:.75rem;color:var(--dim);margin:.3rem 0 .8rem;line-height:1.7;}
 .insider-cta{display:inline-block;padding:.6rem 1.1rem;background:#2a6a5a;color:#fff;font-size:.82rem;font-weight:600;text-decoration:none;border:none;border-radius:4px;cursor:pointer;transition:background .2s;}
 .insider-cta:hover{background:#1e4e42;}</style>

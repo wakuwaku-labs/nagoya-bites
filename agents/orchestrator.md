@@ -603,7 +603,7 @@ Orchestrator が**ターンを閉じる前に必ず行う**チェックリスト
 
 ### デプロイ
 - ステータス: ✅ デプロイ済み / ⏸ 見送り / ❌ 失敗
-- URL: https://nagoya-bites.com/
+- URL: https://nagoya-bites.com/?nb_owner=1（確認用。オーナー自身のクリックをGA4の生成AI流入等に誤混入させないための印。詳細: docs/ga4-internal-traffic-verification.md）
 
 ### バックログ状況
 - 解消した課題: X件

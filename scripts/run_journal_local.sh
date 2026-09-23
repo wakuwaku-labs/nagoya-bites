@@ -144,12 +144,14 @@ record_health() {
 
 # 状態ファイルだけを surgical に push する。記事本体の commit/push とは独立させ、
 # 失敗しても本処理を止めない（監視は published.json 側でも成立するため）。
+# data/journal_stash_alert.json も一緒に出す（SEO-104: out-of-band 通知経路）。
 push_health() {
   git add data/journal_health.json >>"$LOG" 2>&1 || return 0
-  git diff --staged --quiet -- data/journal_health.json && return 0
+  [ -e "data/journal_stash_alert.json" ] && git add data/journal_stash_alert.json >>"$LOG" 2>&1
+  git diff --staged --quiet && return 0
   git -c user.name="NAGOYA BITES Daily" -c user.email="daily@nagoya-bites" \
       commit -m "chore(journal): ローカル実行状態を記録 ${TODAY_JST:-unknown} [skip actions]" \
-      -- data/journal_health.json >>"$LOG" 2>&1 || return 0
+      >>"$LOG" 2>&1 || return 0
   if ! git push origin main >>"$LOG" 2>&1; then
     git pull --rebase --autostash origin main >>"$LOG" 2>&1 \
       && git push origin main >>"$LOG" 2>&1 \
@@ -312,16 +314,51 @@ done < <(git ls-files --others --exclude-standard -z)
 # stash→pop するだけで根治しないため、日をまたいで別の変更（他エージェントが
 # 触った agent-backlog.md 等）と衝突し、reapply 失敗で pull ごと死ぬ
 # （2026-07-24 の実事故: agent-backlog.md で UU 発生・9時ジョブが以後停止）。
-# ここで「起動時点で残っている汚れ」は前回実行の残骸として名前付き stash に
-# 退避し、pull はクリーンな working tree に対して行う（--autostash は保険として残す
-# が、通常は空振りになるはず）。stash は pop せず残す＝データは失わず、
-# 必要なら `git stash list` から手動で拾える。
-if [ -n "$(git status --porcelain)" ]; then
+# SEO-104: 「起動時の汚れ＝前回実行の残骸」という前提は成り立たない。9時台には
+# SEO トリアージ・フィードバック triage・話題店発掘が同じ作業ツリーへ書く。
+# → 退避対象をジャーナル固有パスに限定し、他ルーチンの成果物には触れない。
+# → 他ルーチンとみられる差分を検出したら data/journal_stash_alert.json に記録
+#    し push_health 経由で GitHub（＝メール）へ out-of-band に通知する（ISSUE-084 原則2）。
+_JOURNAL_OWNED_RE='^(journal/|docs/daily-posts/|data/journal_|data/pending_stores\.json|data/editorial_column_backlog\.json|assets/journal-figures/|index\.html)'
+JOURNAL_DEBRIS=()
+OTHER_DIRTY_FILES=()
+while IFS= read -r line; do
+  f="${line:3}"
+  if [[ "$f" =~ $_JOURNAL_OWNED_RE ]]; then
+    JOURNAL_DEBRIS+=("$f")
+  else
+    OTHER_DIRTY_FILES+=("$f")
+  fi
+done < <(git status --porcelain)
+
+if [ ${#OTHER_DIRTY_FILES[@]} -gt 0 ]; then
+  log "⚠️ 他ルーチンとみられる未コミット差分 ${#OTHER_DIRTY_FILES[@]} 件を検出（退避しません・他ルーチンの成果物を壊さないため）:"
+  printf '   %s\n' "${OTHER_DIRTY_FILES[@]}" | tee -a "$LOG"
+  # out-of-band 通知: tracked ファイルに書いて push_health 経由で GitHub へ届ける（ISSUE-084 原則2）
+  node -e '
+    const fs = require("fs");
+    const files = JSON.parse(process.argv[1]);
+    let existing = {_note:"ジャーナル起動時に他ルーチンの未コミット差分が検出された記録（SEO-104）",entries:[]};
+    try { existing = JSON.parse(fs.readFileSync("data/journal_stash_alert.json","utf8")); } catch(_){}
+    existing.entries.unshift({
+      detected_at: new Date(Date.now()+9*3600000).toISOString().replace("Z","+09:00"),
+      files,
+      action:"skipped_stash",
+      message:"ジャーナルは退避せず続行。`git stash pop` 等の手動操作は不要。他ルーチンが書いたとみられる差分。"
+    });
+    if(existing.entries.length>30) existing.entries=existing.entries.slice(0,30);
+    fs.writeFileSync("data/journal_stash_alert.json",JSON.stringify(existing,null,2)+"\n");
+  ' "$(printf '%s\n' "${OTHER_DIRTY_FILES[@]}" | node -e 'const l=[];process.stdin.on("data",d=>l.push(...d.toString().split("\n").filter(Boolean)));process.stdin.on("end",()=>process.stdout.write(JSON.stringify(l)));' 2>/dev/null)" 2>>"$LOG" \
+    && log "out-of-band 通知: data/journal_stash_alert.json に記録（push_health で GitHub へ出ます）" \
+    || log "⚠️ journal_stash_alert.json の書き込みに失敗（続行）"
+fi
+
+if [ ${#JOURNAL_DEBRIS[@]} -gt 0 ]; then
   DEBRIS_MSG="auto-cleanup-debris-$(TZ=Asia/Tokyo date +%Y%m%d-%H%M%S)"
-  log "起動時点で working tree に残置差分を検出。前回実行の残骸として stash に退避します: ${DEBRIS_MSG}"
-  git status --porcelain | tee -a "$LOG"
-  git stash push -u -m "$DEBRIS_MSG" >>"$LOG" 2>&1 \
-    && log "退避完了。git stash list で確認できます（pop はしません）。" \
+  log "ジャーナル固有の残置差分 ${#JOURNAL_DEBRIS[@]} 件を stash に退避: ${DEBRIS_MSG}"
+  printf '   %s\n' "${JOURNAL_DEBRIS[@]}" | tee -a "$LOG"
+  git stash push -u -m "$DEBRIS_MSG" -- "${JOURNAL_DEBRIS[@]}" >>"$LOG" 2>&1 \
+    && log "退避完了。復元: git stash pop stash@{0}（pop はしません）。" \
     || log "⚠️ stash 退避に失敗しましたが続行します（pull 側の --autostash に委ねます）。"
 fi
 
@@ -693,6 +730,7 @@ TRACKED_UPDATES=(
   data/journal_health.json
   data/pending_stores.json
   data/editorial_column_backlog.json
+  data/journal_stash_alert.json
   index.html
   journal/feed.xml
   journal/feed.atom

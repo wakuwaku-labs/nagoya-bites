@@ -206,7 +206,21 @@ jobs:
         # ため店舗数が多いと時間がかかる → 1日あたり --limit 件だけ検証し、
         # data/store_link_identity_checked.json のキャッシュ（60日有効）で日々持ち越して
         # いずれ全件をカバーする。初回導入のため非ブロッキングで開始する。
-        run: node scripts/audit_store_link_identity.js --limit 20 --check
+        # 2026-09-20: 対象を手動キュレーション店のみ → 掲載全店（--scope all）へ拡大。
+        # Hot Pepper 由来店の食べログURLは resolve_tabelog.js の旧スコアリング
+        # （ページ内に店名トークンが出れば採用）で機械的に埋められており、一度も
+        # 実地検証を通っていなかった。30件の等間隔サンプルで5件が別店・別支店を
+        # 指していたため、検知をここに通す。対象 8,400件 / キャッシュ60日なので
+        # 1日140件で全件を巡回できる計算だが、外部サイトへの負荷を抑えて60件で開始する。
+        run: node scripts/audit_store_link_identity.js --scope all --limit 60 --check
+        continue-on-error: true
+
+      - name: 重複店舗レコードを監査（ISSUE-132・新たな重複の増加を検知）
+        # data/stores.json で「店名完全一致」または「placeId一致＋namesMatch()」の
+        # 確定重複グループ数がベースライン（data/store_duplicate_baseline.json）より
+        # 増えたら exit 1。既存の58件は受け入れ済みで、新規重複の混入だけを止める。
+        # placeId だけで判定しない（チェーン店が共有 placeId を持つ例があるため）。
+        run: node scripts/audit_duplicate_stores.js --check
         continue-on-error: true
 
       - name: ジャーナル記事とSNS原稿の対応漏れを監査（SEO-055・2026-08-10/11の欠落再発防止）
@@ -303,12 +317,15 @@ jobs:
 
       - name: デザインシステム準拠監査（DSN-001・可読性ゲート）
         # 全ページが assets/css/nb.css・正本フォントURL・font-size床(12px)・許可フォントウェイトに
-        # 準拠しているかを検査する（scripts/audit_design_system.js）。stores/ は既存の閉店delist済み
-        # 「孤児」ページ（gen-store-pages.js の生成対象外・約630件・ISSUE-102と同種）が旧マークアップの
-        # まま残るため、当面は非ブロッキングで運用し、Designer が違反傾向を確認したうえで
-        # 段階的に blocking 化する（ISSUE-121 の教訓: 新設ゲートはCIが緑を1回確認してから昇格）。
-        run: node scripts/audit_design_system.js --report --sample 200
-        continue-on-error: true
+        # 準拠しているかを検査する（scripts/audit_design_system.js --check）。stores/ の「孤児」
+        # ページ（data/stores.json 未掲載の旧テンプレ残骸・ISSUE-102・削除はオーナー承認待ちで
+        # 停止中）と stores/area/ の stub 化ハブページ（SEO-094）は、直前の
+        # gen-store-pages.js --check-orphans が書き出す data/store_page_orphans.json と
+        # data/area_genre_pages_manifest.json を唯一の情報源として恒久的に除外している
+        # （audit_design_system.js のロジック側で対応済み・閾値変更はマニフェスト側で行う）。
+        # 2026-09-18 にローカルで全件（サンプリングなし）0件を確認して blocking 化した
+        # （ISSUE-121 の教訓どおり、CIが緑を確認できる状態にしてから昇格）。
+        run: node scripts/audit_design_system.js --check --sample 200
 
       - name: サイト共通クローム整合性監査（DSN-003・header/nav/breadcrumb/footer の統一）
         # scripts/lib/site_chrome.js を正本に、全ページのクローム部分が再生成値と一致するかを検査する。

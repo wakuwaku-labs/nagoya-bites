@@ -1,18 +1,18 @@
 {
   "places": {
-    "date": "2026-09-17",
+    "date": "2026-09-23",
     "status": "ok",
     "quota_reached_streak": 0,
     "reason": "",
     "api_calls": 0,
-    "quota_day": "2026-09-17",
+    "quota_day": "2026-09-22",
     "api_calls_day": 0,
     "daily_budget": 200,
     "sku_month": "2026-09",
     "sku_calls_month": {
-      "textsearch": 101,
-      "details": 14,
-      "photo": 14
+      "textsearch": 156,
+      "details": 129,
+      "photo": 111
     },
     "sku_monthly_budget": {
       "textsearch": 4000,
@@ -25,16 +25,30 @@
     "failed": 0,
     "attempted": 0,
     "adopted": 0,
-    "recorded_at": "2026-09-17T12:03:08.941Z"
+    "recorded_at": "2026-09-22T23:48:37.617Z"
   },
   "hotpepper": {
-    "date": "2026-09-16",
+    "date": "2026-09-21",
     "status": "ok",
     "reason": "",
-    "responded": 2,
+    "responded": 4,
     "failed": 0,
-    "attempted": 2,
+    "attempted": 4,
     "adopted": 0,
-    "recorded_at": "2026-09-16T07:44:41.498Z"
+    "recorded_at": "2026-09-21T00:23:20.104Z"
+  },
+  "journal_photos": {
+    "sku_month": "2026-09",
+    "sku_calls_month": {
+      "textsearch": 0,
+      "details": 5,
+      "photo": 12
+    },
+    "sku_monthly_budget": {
+      "details": 1000,
+      "photo": 300,
+      "textsearch": 300
+    },
+    "last_run": "2026-09-23T00:12:49.109Z"
   }
 }

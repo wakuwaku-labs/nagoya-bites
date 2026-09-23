@@ -2,8 +2,8 @@
   "version": 1,
   "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
   "last_run": {
-    "date": "2026-09-15",
-    "recorded_at": "2026-09-16T06:14:37.720Z",
+    "date": "2026-09-22",
+    "recorded_at": "2026-09-22T23:46:09.801Z",
     "status": "ok",
     "reason": null,
     "verdict": "deployed",
@@ -617,6 +617,208 @@
       "numeric_reference": null,
       "numeric_reference_skipped": "参照値の日付 2026-09-14 が レポートが名乗る対象日 2026-09-13 と一致しないため数値判定をしない",
       "recorded_at": "2026-09-16T06:14:37.714Z"
+    },
+    {
+      "date": "2026-09-16",
+      "kind": "daily",
+      "verdict": "not_deployed",
+      "missing_fixes": [
+        "SEO-092"
+      ],
+      "evidence": [
+        {
+          "key": "stale_example_kw",
+          "fix_id": "SEO-092",
+          "verdict": "not_deployed",
+          "line": "docs/daily-posts/ のSNS投稿原稿で、Bing検索での上位表示を意識したキーワード（例: 名古屋 接待 個室、名古屋 宴会 個室）を積極的に盛り込み、Bingウェブマスターツールでのサイト登録・最適化も検討しましょう。"
+        }
+      ],
+      "numeric_reference": {
+        "date": "2026-09-16",
+        "bounceRate": 0.105,
+        "sessions": 38
+      },
+      "numeric_reference_skipped": null,
+      "recorded_at": "2026-09-17T19:00:44.043Z"
+    },
+    {
+      "date": "2026-09-17",
+      "kind": "daily",
+      "verdict": "deployed",
+      "missing_fixes": [],
+      "evidence": [
+        {
+          "key": "settled_slice_label",
+          "fix_id": "SEO-076",
+          "verdict": "deployed",
+          "line": "【読まれ方（確定値・2026-09-16）】"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "deployed",
+          "line": "レポート 6% vs GA4実測 10.5%（差 4.5pt / 許容 15pt）"
+        }
+      ],
+      "numeric_reference": {
+        "date": "2026-09-16",
+        "bounceRate": 0.105,
+        "sessions": 38
+      },
+      "numeric_reference_skipped": null,
+      "recorded_at": "2026-09-17T23:36:46.633Z"
+    },
+    {
+      "date": "2026-09-18",
+      "kind": "daily",
+      "verdict": "deployed",
+      "missing_fixes": [],
+      "evidence": [
+        {
+          "key": "settled_slice_label",
+          "fix_id": "SEO-076",
+          "verdict": "deployed",
+          "line": "【読まれ方（確定値・2026-09-17）】"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "deployed",
+          "line": "レポート 28% vs GA4実測 28.8%（差 0.8pt / 許容 15pt）"
+        }
+      ],
+      "numeric_reference": {
+        "date": "2026-09-17",
+        "bounceRate": 0.288,
+        "sessions": 59
+      },
+      "numeric_reference_skipped": null,
+      "recorded_at": "2026-09-19T00:12:13.718Z"
+    },
+    {
+      "date": "2026-09-19",
+      "kind": "daily",
+      "verdict": "not_deployed",
+      "missing_fixes": [
+        "SEO-092"
+      ],
+      "evidence": [
+        {
+          "key": "settled_slice_label",
+          "fix_id": "SEO-076",
+          "verdict": "deployed",
+          "line": "【読まれ方（確定値・2026-09-18）】"
+        },
+        {
+          "key": "stale_example_kw",
+          "fix_id": "SEO-092",
+          "verdict": "not_deployed",
+          "line": "👉 docs/daily-posts/のSNS投稿原稿に、Bing検索で上位表示されやすいキーワード（例: 名古屋 接待 個室）を盛り込み、検索エンジンからの流入をさらに強化する文章を準備しましょう。"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "indeterminate"
+        }
+      ],
+      "numeric_reference": null,
+      "numeric_reference_skipped": "参照値の日付 2026-09-17 が レポートが名乗る対象日 2026-09-18 と一致しないため数値判定をしない",
+      "recorded_at": "2026-09-19T23:57:44.225Z"
+    },
+    {
+      "date": "2026-09-20",
+      "kind": "daily",
+      "verdict": "deployed",
+      "missing_fixes": [],
+      "evidence": [
+        {
+          "key": "settled_slice_label",
+          "fix_id": "SEO-076",
+          "verdict": "deployed",
+          "line": "【読まれ方（確定値・2026-09-19）】"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "indeterminate"
+        }
+      ],
+      "numeric_reference": null,
+      "numeric_reference_skipped": "参照値の日付 2026-09-18 が レポートが名乗る対象日 2026-09-19 と一致しないため数値判定をしない",
+      "recorded_at": "2026-09-20T23:45:51.068Z"
+    },
+    {
+      "date": "2026-09-20",
+      "kind": "weekly",
+      "verdict": "indeterminate",
+      "missing_fixes": [],
+      "evidence": [
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "indeterminate"
+        }
+      ],
+      "numeric_reference": null,
+      "numeric_reference_skipped": "参照値の日付 2026-09-18 が レポートが名乗る対象日 2026-09-20 と一致しないため数値判定をしない",
+      "recorded_at": "2026-09-20T23:46:09.292Z"
+    },
+    {
+      "date": "2026-09-21",
+      "kind": "daily",
+      "verdict": "not_deployed",
+      "missing_fixes": [
+        "SEO-092"
+      ],
+      "evidence": [
+        {
+          "key": "settled_slice_label",
+          "fix_id": "SEO-076",
+          "verdict": "deployed",
+          "line": "【読まれ方（確定値・2026-09-20）】"
+        },
+        {
+          "key": "stale_example_kw",
+          "fix_id": "SEO-092",
+          "verdict": "not_deployed",
+          "line": "👉 docs/daily-posts/ のSNS投稿原稿を参考に、InstagramとXで「名古屋 業界人 目利き」「名古屋 接待 個室」といった強みキーワードを毎日投稿し、流入数を増やす実験をしましょう。"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "deployed",
+          "line": "レポート 28% vs GA4実測 27.5%（差 0.5pt / 許容 15pt）"
+        }
+      ],
+      "numeric_reference": {
+        "date": "2026-09-20",
+        "bounceRate": 0.275,
+        "sessions": 51
+      },
+      "numeric_reference_skipped": null,
+      "recorded_at": "2026-09-22T00:15:15.967Z"
+    },
+    {
+      "date": "2026-09-22",
+      "kind": "daily",
+      "verdict": "deployed",
+      "missing_fixes": [],
+      "evidence": [
+        {
+          "key": "settled_slice_label",
+          "fix_id": "SEO-076",
+          "verdict": "deployed",
+          "line": "【読まれ方（確定値・2026-09-21）】"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "indeterminate"
+        }
+      ],
+      "numeric_reference": null,
+      "numeric_reference_skipped": "参照値の日付 2026-09-20 が レポートが名乗る対象日 2026-09-21 と一致しないため数値判定をしない",
+      "recorded_at": "2026-09-22T23:46:09.795Z"
     }
   ],
   "deploys": [

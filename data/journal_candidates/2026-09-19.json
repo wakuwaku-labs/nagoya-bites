@@ -1,0 +1,457 @@
+{
+  "date": "2026-09-19",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "矢場とん「ぶーちゃんハウス」が清須に開店、名古屋のとんかつ店が市内を選ばなかった理由を業界人が読む",
+      "verdict": "PASS",
+      "total": 103,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "とんかつ",
+          "feature": "features/nagoya-tonkatsu.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 7件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (価格帯,席,予約,シーン,接待,デート,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 3件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 152字 +4",
+          "title 49字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「とんかつ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "伏見の名古屋めし食堂 丸八 伏見別邸が開業、5ブランド同居の一会計を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 89,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (価格帯,コース,席,予約,シーン,接待,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 143字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "89点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -6 / writability -2"
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅の牛たん牛串かわせ、開店10分で満席になる店の席と回転を読む",
+      "verdict": "HOLD",
+      "total": 63,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2756日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,予約,シーン,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 105字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語がリードのみ「一人飲み」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "丸の内の勝手口 河内屋が1年、400年料亭のバックヤード業態を席数から読む",
+      "verdict": "HOLD",
+      "total": 62,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 2,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 204日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,シーン,接待) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 127字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "過去に掲載歴のある店（90日超） → 2"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "シーン語がリードのみ「個室」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄のサウィ食堂、韓国釜山のナッコプセが東海初上陸 — 2人前からの注文ルールをコスパで読む",
+      "verdict": "HOLD",
+      "total": 61,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 12,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 79日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,シーン,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 131字 +4",
+          "title 45字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "矢場とん「ぶーちゃんハウス」が清須に開店、名古屋のとんかつ店が市内を選ばなかった理由を業界人が読む",
+      "lead_draft": "みそかつの矢場とんが、初のコンセプト店舗「ぶーちゃんハウス」を2026年9月18日に開いた。場所は名古屋市内ではなく清須市春日、自社の製造工場1階。わらじとんかつ定食1,800円は市内店とほぼ同額で、営業は11時から21時まで。なぜ一等地ではなく工場の1階なのか。席の使われ方と滞在時間から業界人が読む。",
+      "angle": "工場1階という立地・100種のグッズ・ステージ併設が、価格帯を上げずに客単価と滞在時間を伸ばす設計であることを、矢場町本店の予約なし回転型オペと比較して読む。休日の家族連れシーンに向き、接待・デートには向かない理由も席の構成から明示する。",
+      "main_store": {
+        "name": "矢場とん ぶーちゃんハウス",
+        "id": "",
+        "area": "清須市春日（名古屋市西区隣接）",
+        "genre": "とんかつ"
+      },
+      "sources": [
+        {
+          "label": "中日新聞『矢場とんがコンセプトショップ「ぶーちゃんハウス」を18日オープン 清須工場1階を改装』",
+          "url": "https://www.chunichi.co.jp/article/1312079",
+          "date": "2026-09-16"
+        },
+        {
+          "label": "名古屋情報通『矢場とん新ブランド ぶーちゃんハウス 清須市春日にオープン』",
+          "url": "https://jouhou.nagoya/yabaton-boochanhouse/",
+          "date": "2026-09-17"
+        },
+        {
+          "label": "PR TIMES 株式会社矢場とん『初のコンセプトショップ「ぶーちゃんハウス」グランドオープン』",
+          "url": "https://prtimes.jp/main/html/rd/p/000000008.000153345.html",
+          "date": "2026-09-03"
+        },
+        {
+          "label": "PR TIMES 株式会社矢場とん『清須に新たな食の拠点誕生』",
+          "url": "https://prtimes.jp/main/html/rd/p/000000006.000153345.html",
+          "date": "2026-08-10"
+        },
+        {
+          "label": "東海テレビ（Yahoo!ニュース）『限定のシェイクも…清須市の製造工場に18日オープン』",
+          "url": "https://news.yahoo.co.jp/articles/5a1e99aea9afb83a88c82ecaf5ad56e397e80c76"
+        },
+        {
+          "label": "矢場とん【公式】X グランドオープン告知",
+          "url": "https://x.com/YabatonO/status/2095440810338861368"
+        },
+        {
+          "label": "矢場とん公式Instagram 新店舗告知",
+          "url": "https://www.instagram.com/p/Db2n0DTSBD8/"
+        },
+        {
+          "label": "NAGOYA.（ナゴヤドット）『豪雨の影響でオープンが9/18に延期』",
+          "url": "https://nagoyadot.jp/new/105305/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "伏見の名古屋めし食堂 丸八 伏見別邸が開業、5ブランド同居の一会計を業界人が読む",
+      "lead_draft": "名古屋観光ホテル1階に、矢場とん・世界の山ちゃん・矢場味仙・ひつまぶし名古屋備長・串BISTRO92が同居する「名古屋めし食堂 丸八 伏見別邸」が2026年9月17日に開業した。11時から22時まで年中無休。複数ブランドを一会計でまとめる設計が、宴会の幹事にとって何を意味するかを読む。",
+      "angle": "5ブランド同居のフードホールで、席の割り当てと注文の一会計化が回転にどう効くか。価格帯とコースの有無、予約のしやすさ、接待には使いにくい理由をシーン別に読む。",
+      "main_store": {
+        "name": "名古屋めし食堂 丸八 伏見別邸",
+        "id": "",
+        "area": "伏見",
+        "genre": "名古屋めし"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES エスパシオエンタープライズ『名古屋めし食堂 丸八 伏見別邸 グランドオープン』",
+          "url": "https://prtimes.jp/main/html/rd/p/000000145.000097639.html",
+          "date": "2026-06-29"
+        },
+        {
+          "label": "ジェイグループホールディングス『名古屋めし食堂 丸八 伏見別邸をオープン』",
+          "url": "https://www.jgroup.jp/news/20260916-3440/",
+          "date": "2026-09-16"
+        },
+        {
+          "label": "名古屋情報通『矢場とん、山ちゃん、矢場味仙、備長の複合店』",
+          "url": "https://jouhou.nagoya/maruhachi-shokudou-fushimi/",
+          "date": "2026-09-16"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "栄のサウィ食堂、韓国釜山のナッコプセが東海初上陸 — 2人前からの注文ルールをコスパで読む",
+      "lead_draft": "地下鉄栄駅から徒歩2分、たての街ビル1階に韓国釜山発祥のナッコプセ専門店「サウィ食堂」が東海初出店した。タコ・ホルモン・エビを一つの鍋で煮る料理で、複数名なら2人前からの注文が必要という独特のルールを持つ。11時から23時までの通し営業が何を狙っているかを読む。",
+      "angle": "鍋料理の2人前ルールが席の回転と原価にどう効くか。通し営業の価格帯とシーン適性、一人飲みでも使える理由を読む。",
+      "main_store": {
+        "name": "サウィ食堂.名古屋栄店",
+        "id": "",
+        "area": "栄",
+        "genre": "韓国料理"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES『ナッコプセ専門店 サウィ食堂 名古屋栄店オープン』",
+          "url": "https://prtimes.jp/main/html/rd/p/000000026.000144523.html",
+          "date": "2026-07-02"
+        },
+        {
+          "label": "PR TIMES『【東海初上陸】ナッコプセ専門店 サウィ食堂、愛知県名古屋市に出店決定』",
+          "url": "https://prtimes.jp/main/html/rd/p/000000022.000144523.html",
+          "date": "2026-05-07"
+        },
+        {
+          "label": "名古屋情報通 グルメ一覧",
+          "url": "https://jouhou.nagoya/category/gourmet/"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "丸の内の勝手口 河内屋が1年、400年料亭のバックヤード業態を席数から読む",
+      "lead_draft": "400年の歴史を持つ料亭・河文の勝手口から入るカウンター和食居酒屋「勝手口 河内屋」が開業から1年を迎えた。カウンター13席にテーブル8名、個室4名の計25席。予算4,000円から7,000円という設定が、料亭本体と何をどう分けているのかを業界人が読む。",
+      "angle": "料亭のバックヤードを使ったカジュアル業態が、本体の価格帯とどう住み分けるか。カウンター席の配置と予約の取り方、接待の二次会シーンに向く理由を読む。",
+      "main_store": {
+        "name": "勝手口 河内屋",
+        "id": "",
+        "area": "丸の内",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES『400年の歴史ある料亭の「勝手口」から入る隠れ家』",
+          "url": "https://prtimes.jp/main/html/rd/p/000000117.000051750.html",
+          "date": "2025-09-02"
+        },
+        {
+          "label": "東海テレビ『名古屋400年の老舗「河文」が仕掛けた秘密の居酒屋』",
+          "url": "https://www.tokai-tv.com/tokainews/feature/article_20260227_44884",
+          "date": "2026-02-27"
+        },
+        {
+          "label": "名古屋情報通『勝手口 河内屋 丸の内にオープン』",
+          "url": "https://jouhou.nagoya/katteguchi-kawabun/",
+          "date": "2025-10-05"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "名駅の牛たん牛串かわせ、開店10分で満席になる店の席と回転を読む",
+      "lead_draft": "名駅の牛タン・牛串専門店「牛たん 牛串 かわせ」が、開店10分で満席になる店としてTikTokで再燃している。串に振った価格帯と、カウンター中心の席構成が、その回転の速さとどう結びついているのかを業界人が読む。",
+      "angle": "串物の価格帯と一人飲みのシーン適性。カウンター中心の席構成が回転に効く仕組みと、予約なしで入るための時間帯を読む。",
+      "main_store": {
+        "name": "牛たん 牛串 かわせ",
+        "id": "",
+        "area": "名駅",
+        "genre": "焼き鳥"
+      },
+      "sources": [
+        {
+          "label": "KELLY『名駅の牛タン専門店』",
+          "url": "https://kelly-net.jp/enjoytoday/201903040600434114.html",
+          "date": "2019-03-04"
+        },
+        {
+          "label": "Retty 店舗ページ",
+          "url": "https://retty.me/area/PRE23/ARE61/SUB6101/100000822213/"
+        },
+        {
+          "label": "名古屋情報通 グルメ一覧",
+          "url": "https://jouhou.nagoya/category/gourmet/"
+        }
+      ]
+    }
+  ]
+}

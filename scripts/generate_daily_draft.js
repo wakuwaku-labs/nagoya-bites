@@ -63,6 +63,8 @@ const https = require('https');
 const { judgeHero } = require('./lib/hero_photo_gate');
 // 図解SVG→OGP用PNG変換は scripts/lib/og_figure_png.js に一元化（ISSUE-095）
 const OG = require('./lib/og_figure_png.js');
+// 本文写真（ヒーロー以外の記事内写真）の収集・選定・配置は scripts/lib/journal_photos.js に一元化
+const JP = require('./lib/journal_photos.js');
 
 const ROOT = path.join(__dirname, '..');
 const HTML_TEMPLATE = path.join(ROOT, 'journal', '_template.html');
@@ -477,6 +479,21 @@ async function fetchPhotoForArticle(input) {
     }
   }
 
+  // 0b. 入力JSONに photo_url が無くても、その店が data/stores.json（manual/pending 含む）に
+  //     居れば公式写真URLを持っている。Editor の書き漏れで「写真なし」になるのを防ぐ。
+  //     所有店は画像URLから逆引きできる＝帰属は後から第三者が検算できる（制約10）。
+  if (!store.photo_url && store.name) {
+    const rec = JP.findStoreRecord(store) || {};
+    const hpUrl = rec['写真URL'] || '';
+    if (/imgfp\.hotp\.jp/.test(hpUrl)) {
+      const storePhoto = await tryStorePhoto(hpUrl);
+      if (storePhoto) {
+        process.stdout.write(` 📷 店舗公式写真 (HotPepper / データ由来)\n`);
+        return { ...storePhoto, store_name: store.name };
+      }
+    }
+  }
+
   // 1. Instagram 公式 embed（stores[0].instagram_post_url 指定時）
   if (store.instagram_post_url) {
     process.stdout.write(` 📷 Instagram embed\n`);
@@ -800,6 +817,68 @@ function assertHeroBelongsToArticle(input) {
   );
 }
 
+/**
+ * 本文の途中に写真を散らす（ヒーロー1枚だけで最後まで文字が続く記事にしない）。
+ *
+ * 増やすのは枚数であって基準ではない。追加する写真もヒーローと同じ帰属の判定
+ * （scripts/lib/hero_photo_gate.js）を通し、通らない候補は黙って捨てる。
+ * 候補が足りない日は1枚のままでよい ── 足りないからといって他店の写真を借りない
+ * （CLAUDE.md 写真ソースの優先順・2026-08-17 の事故）。
+ *
+ * 写真の取得に失敗しても記事生成は止めない。ヘッドレス実行なので、
+ * ここで投げるとその日の成果物ごと失う（CLAUDE.md 品質ゲート原則6）。
+ */
+async function attachBodyPhotos(input) {
+  const pol = JP.bodyPolicy();
+  if (!pol.enabled) return;
+  const heroCount = (input.hero_image_url || input.hero_image_is_instagram) ? 1 : 0;
+  const need = Math.max(0, Math.min(pol.targetTotal, pol.maxTotal) - heroCount);
+  if (!need) return;
+
+  let photos = [];
+  try {
+    photos = await JP.collectBodyPhotos(input.stores || [], {
+      need,
+      excludeUrls: [input.hero_image_url].filter(Boolean),
+    });
+  } catch (e) {
+    console.warn(`  ⚠️  本文写真の取得に失敗（記事はヒーローのみで生成します）: ${e.message}`);
+    return;
+  }
+  const apiErr = JP.placesError();
+  if (apiErr) {
+    console.warn(`  ⚠️  Google Places を引けませんでした（${apiErr.status}）— 本文写真が少ない原因はここ。`);
+    console.warn('     写真が無いのではなく取りに行けていない。復旧後に node scripts/add_journal_body_photos.js --only <slug> で補える。');
+  }
+  if (!photos.length) {
+    console.log('  🖼  本文写真: 候補なし（ヒーローのみ。取り繕って他店の写真は借りない）');
+    return;
+  }
+
+  const storeNames = (input.stores || []).map(s => s.name).filter(Boolean);
+  const figures = [];
+  for (const photo of photos) {
+    const verdict = JP.judgeBodyPhoto(photo, { slug: input.slug, date: input.date, storeNames });
+    const fails = verdict.findings.filter(f => f.level === 'fail');
+    if (fails.length) {
+      console.warn(`  ⚠️  本文写真を見送り（${photo.storeName}）: ${fails.map(f => f.code).join(', ')}`);
+      continue;
+    }
+    const fig = JP.figureHtml(photo);
+    if (fig) figures.push({ fig, photo });
+  }
+  if (!figures.length) return;
+
+  const res = JP.insertIntoBody(input.body_html || '', figures.map(f => f.fig));
+  input.body_html = res.html;
+  if (res.inserted) {
+    console.log(`  🖼  本文写真 ${res.inserted}枚（記事全体で ${heroCount + res.inserted}枚）`);
+    figures.slice(0, res.inserted).forEach(({ photo }) => {
+      console.log(`      - ${photo.storeName} [${photo.source}${photo.tier === 'user' ? '/利用者投稿' : ''}]`);
+    });
+  }
+}
+
 async function main() {
   const input = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
   if (!fs.existsSync(DRAFTS_DIR)) fs.mkdirSync(DRAFTS_DIR, { recursive: true });
@@ -850,6 +929,14 @@ async function main() {
   // 実際、主役2店に写真が無かった日に、記事へ一行触れただけの別店の販促バナーが顔になった。
   // 判定器は scripts/lib/hero_photo_gate.js の1本（生成時・公開前QA・日次CI監査が共有）。
   assertHeroBelongsToArticle(input);
+
+  // --- 本文写真（ヒーロー以外）---
+  // 帰属チェックの「後」に置く。ヒーローが不適格な日は記事そのものを作り直すため、
+  // 先に本文写真を集めても無駄になる。
+  await attachBodyPhotos(input);
+  // Places の消費を共有台帳へ積む（店舗写真パイプライン側の自制がこの消費を見られるように）
+  const skuUsed = JP.flushSkuUsage();
+  if (skuUsed) console.log(`  📒 Places 消費: Details ${skuUsed.details} / Photo ${skuUsed.photo}（data/photo_pipeline_health.json）`);
 
   // og:image を SNS が描画できる形（絶対URL・ラスタ画像）に確定させる（ISSUE-095）
   // 帰属チェックの「後」に置くこと。先に置くと、記事に載せてはいけない画像の

@@ -1,80 +1,90 @@
 {
-  "generatedAt": "2026-09-17T12:03:00.408Z",
+  "generatedAt": "2026-09-22T23:48:28.680Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1135,
-    "pageViews": 2039,
-    "sessions": 1390,
-    "avgSessionDuration": 156.2,
-    "bounceRate": 0.287,
-    "pagesPerSession": 1.47
+    "activeUsers": 1134,
+    "pageViews": 1952,
+    "sessions": 1376,
+    "avgSessionDuration": 156.4,
+    "bounceRate": 0.284,
+    "pagesPerSession": 1.42
   },
   "dailyReference": {
-    "date": "2026-09-15",
-    "sessions": 50,
-    "bounceRate": 0.22,
-    "pageViews": 82
+    "date": "2026-09-21",
+    "sessions": 52,
+    "bounceRate": 0.25,
+    "pageViews": 62
   },
   "channels": {
     "sessions": {
-      "organic": 976,
-      "direct": 303,
+      "organic": 948,
+      "direct": 290,
       "social": 8,
-      "ai_assistant": 104,
-      "referral": 20,
+      "ai_assistant": 102,
+      "referral": 21,
       "paid": 0,
-      "other": 4
+      "other": 25
     },
     "pct": {
-      "organic": 69,
-      "direct": 21.4,
+      "organic": 68,
+      "direct": 20.8,
       "social": 0.6,
       "ai_assistant": 7.3,
-      "referral": 1.4,
+      "referral": 1.5,
       "paid": 0,
-      "other": 0.3
+      "other": 1.8
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 419
+      "sessions": 411
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 356
+      "sessions": 342
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 233
+      "sessions": 208
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 189
+      "sessions": 180
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 85
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 37
+      "sessions": 83
     },
     {
       "source": "unknown",
       "medium": "(not set)",
-      "sessions": 31
+      "sessions": 48
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 32
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 24
     },
     {
       "source": "duckduckgo",
       "medium": "organic",
-      "sessions": 10
+      "sessions": 13
+    },
+    {
+      "source": "service.smt.docomo.ne.jp",
+      "medium": "referral",
+      "sessions": 8
     },
     {
       "source": "copilot.com",
@@ -82,14 +92,9 @@
       "sessions": 7
     },
     {
-      "source": "service.smt.docomo.ne.jp",
-      "medium": "referral",
-      "sessions": 7
-    },
-    {
       "source": "copilot.com",
       "medium": "(not set)",
-      "sessions": 7
+      "sessions": 6
     },
     {
       "source": "facebook.com",
@@ -107,14 +112,9 @@
       "sessions": 4
     },
     {
-      "source": "unknown",
-      "medium": "",
+      "source": "openai",
+      "medium": "organic",
       "sessions": 3
-    },
-    {
-      "source": "cn.bing.com",
-      "medium": "referral",
-      "sessions": 2
     },
     {
       "source": "ecosia.org",
@@ -127,8 +127,8 @@
       "sessions": 2
     },
     {
-      "source": "openai",
-      "medium": "organic",
+      "source": "search.portal.auone.jp",
+      "medium": "referral",
       "sessions": 2
     },
     {
@@ -137,17 +137,17 @@
       "sessions": 2
     },
     {
-      "source": "(data not available)",
-      "medium": "(data not available)",
-      "sessions": 1
-    },
-    {
       "source": "2881.com",
       "medium": "referral",
       "sessions": 1
     },
     {
       "source": "blekko.com",
+      "medium": "referral",
+      "sessions": 1
+    },
+    {
+      "source": "cn.bing.com",
       "medium": "referral",
       "sessions": 1
     },
@@ -162,13 +162,13 @@
       "sessions": 1
     },
     {
-      "source": "search.portal.auone.jp",
+      "source": "sgyba.com",
       "medium": "referral",
       "sessions": 1
     },
     {
-      "source": "sgyba.com",
-      "medium": "referral",
+      "source": "unknown",
+      "medium": "",
       "sessions": 1
     },
     {
@@ -186,52 +186,64 @@
     {
       "path": "/features/nagoya-solo-dining.html",
       "pageViews": 397,
-      "sessions": 344
+      "sessions": 349
     },
     {
       "path": "/",
-      "pageViews": 317,
-      "sessions": 210
+      "pageViews": 259,
+      "sessions": 183
     },
     {
       "path": "/index.html",
-      "pageViews": 179,
-      "sessions": 101
+      "pageViews": 157,
+      "sessions": 95
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 118,
-      "sessions": 108
+      "pageViews": 107,
+      "sessions": 100
     },
     {
-      "path": "/features/nagoya-tebasaki.html",
-      "pageViews": 42,
-      "sessions": 43
+      "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
+      "pageViews": 41,
+      "sessions": 41
     }
   ],
   "cta": {
-    "outboundClicks": 141,
-    "ctaClickRate": 10.1,
+    "outboundClicks": 161,
+    "ctaClickRate": 11.7,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 63
+        "clicks": 68
       },
       {
         "domain": "tabelog.com",
-        "clicks": 34
+        "clicks": 39
       },
       {
         "domain": "maps.google.com",
-        "clicks": 24
-      },
-      {
-        "domain": "www.google.com",
-        "clicks": 6
+        "clicks": 21
       },
       {
         "domain": "www.instagram.com",
-        "clicks": 6
+        "clicks": 9
+      },
+      {
+        "domain": "www.google.com",
+        "clicks": 7
+      },
+      {
+        "domain": "prtimes.jp",
+        "clicks": 4
+      },
+      {
+        "domain": "jouhou.nagoya",
+        "clicks": 3
+      },
+      {
+        "domain": "milkdo-doreiku.com",
+        "clicks": 2
       },
       {
         "domain": "news.google.com",
@@ -242,15 +254,11 @@
         "clicks": 1
       },
       {
-        "domain": "jouhou.nagoya",
+        "domain": "gourmetpress.net",
         "clicks": 1
       },
       {
-        "domain": "milkdo-doreiku.com",
-        "clicks": 1
-      },
-      {
-        "domain": "prtimes.jp",
+        "domain": "hikari-food-service.jp",
         "clicks": 1
       },
       {
@@ -260,56 +268,72 @@
       {
         "domain": "www.jiji.com",
         "clicks": 1
+      },
+      {
+        "domain": "zip-fm.co.jp",
+        "clicks": 1
       }
     ],
     "note": null,
     "byChannel": {
-      "organic": 74,
-      "direct": 46,
+      "organic": 73,
+      "direct": 61,
       "social": 0,
-      "ai_assistant": 16,
-      "referral": 5,
+      "ai_assistant": 21,
+      "referral": 6,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.6,
-    "ctaClickRate_direct": 15.2,
+    "ctaClickRate_organic": 7.7,
+    "ctaClickRate_direct": 21,
     "ctaClickRate_social": 0,
     "byPage": [
       {
-        "path": "/features/nagoya-solo-dining.html",
-        "clicks": 24
-      },
-      {
-        "path": "/index.html",
-        "clicks": 21
-      },
-      {
         "path": "/",
-        "clicks": 20
+        "clicks": 30
       },
       {
-        "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 20
+        "path": "/features/nagoya-solo-dining.html",
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
+        "clicks": 20
+      },
+      {
+        "path": "/index.html",
         "clicks": 19
       },
       {
+        "path": "/features/nagoya-hitsumabushi.html",
+        "clicks": 18
+      },
+      {
         "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
-        "clicks": 5
+        "clicks": 6
       },
       {
         "path": "/journal/2026-09-12-sakae-sulbing-korean-bingsu.html",
         "clicks": 4
       },
       {
+        "path": "/journal/2026-09-21-meieki-dote-daikoku-bel-butter-waffle.html",
+        "clicks": 4
+      },
+      {
+        "path": "/features/nagoya-miso-nikomi-udon.html",
+        "clicks": 3
+      },
+      {
         "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "clicks": 3
       },
       {
-        "path": "/features/birthday-surprise.html",
+        "path": "/journal/2026-09-18-sakae-akizake-fes-2026-coin-price.html",
+        "clicks": 3
+      },
+      {
+        "path": "/features/birthday.html",
         "clicks": 2
       },
       {
@@ -333,7 +357,19 @@
         "clicks": 2
       },
       {
-        "path": "/features/nagoya-yakiniku.html",
+        "path": "/journal/2026-09-19-kiyosu-yabaton-boochan-house.html",
+        "clicks": 2
+      },
+      {
+        "path": "/journal/2026-09-22-sakae-sawee-nakgopsae.html",
+        "clicks": 2
+      },
+      {
+        "path": "/features/kospa-insider.html",
+        "clicks": 1
+      },
+      {
+        "path": "/features/nagoya-sweets.html",
         "clicks": 1
       },
       {
@@ -350,14 +386,6 @@
       },
       {
         "path": "/journal/2026-08-09-nagoyadome-pekin-honten.html",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-08-18-noritake-garden-pasta.html",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-08-21-meieki-1bansen-rokurinsha.html",
         "clicks": 1
       },
       {
@@ -378,10 +406,6 @@
       },
       {
         "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-09-05-meieki-nagoyameshi-izakaya-enkai.html",
         "clicks": 1
       }
     ],
@@ -389,41 +413,56 @@
       {
         "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 24
-      },
-      {
-        "path": "/features/nagoya-hitsumabushi.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 20
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
         "domain": "tabelog.com",
-        "clicks": 19
+        "clicks": 20
+      },
+      {
+        "path": "/features/nagoya-hitsumabushi.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 18
       },
       {
         "path": "/index.html",
         "domain": "tabelog.com",
-        "clicks": 13
+        "clicks": 12
       },
       {
         "path": "/",
-        "domain": "maps.google.com",
-        "clicks": 8
-      },
-      {
-        "path": "/",
-        "domain": "www.google.com",
-        "clicks": 4
-      },
-      {
-        "path": "/index.html",
-        "domain": "maps.google.com",
-        "clicks": 4
+        "domain": "tabelog.com",
+        "clicks": 7
       },
       {
         "path": "/",
         "domain": "www.hotpepper.jp",
+        "clicks": 7
+      },
+      {
+        "path": "/",
+        "domain": "maps.google.com",
+        "clicks": 6
+      },
+      {
+        "path": "/",
+        "domain": "www.google.com",
+        "clicks": 5
+      },
+      {
+        "path": "/",
+        "domain": "www.instagram.com",
+        "clicks": 3
+      },
+      {
+        "path": "/features/nagoya-miso-nikomi-udon.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 3
+      },
+      {
+        "path": "/index.html",
+        "domain": "maps.google.com",
         "clicks": 3
       },
       {
@@ -442,12 +481,7 @@
         "clicks": 2
       },
       {
-        "path": "/",
-        "domain": "www.instagram.com",
-        "clicks": 2
-      },
-      {
-        "path": "/features/birthday-surprise.html",
+        "path": "/features/birthday.html",
         "domain": "www.hotpepper.jp",
         "clicks": 2
       },
@@ -477,12 +511,27 @@
         "clicks": 2
       },
       {
-        "path": "/",
-        "domain": "tabelog.com",
+        "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
+        "domain": "milkdo-doreiku.com",
+        "clicks": 2
+      },
+      {
+        "path": "/journal/2026-09-21-meieki-dote-daikoku-bel-butter-waffle.html",
+        "domain": "jouhou.nagoya",
+        "clicks": 2
+      },
+      {
+        "path": "/journal/2026-09-22-sakae-sawee-nakgopsae.html",
+        "domain": "www.instagram.com",
+        "clicks": 2
+      },
+      {
+        "path": "/features/kospa-insider.html",
+        "domain": "www.hotpepper.jp",
         "clicks": 1
       },
       {
-        "path": "/features/nagoya-yakiniku.html",
+        "path": "/features/nagoya-sweets.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
       },
@@ -507,16 +556,6 @@
         "clicks": 1
       },
       {
-        "path": "/journal/2026-08-18-noritake-garden-pasta.html",
-        "domain": "tabelog.com",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-08-21-meieki-1bansen-rokurinsha.html",
-        "domain": "maps.google.com",
-        "clicks": 1
-      },
-      {
         "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "domain": "maps.google.com",
         "clicks": 1
@@ -534,11 +573,6 @@
       {
         "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
         "domain": "maps.google.com",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
-        "domain": "milkdo-doreiku.com",
         "clicks": 1
       },
       {
@@ -595,31 +629,70 @@
         "path": "/journal/2026-09-12-sakae-sulbing-korean-bingsu.html",
         "domain": "www.instagram.com",
         "clicks": 1
+      },
+      {
+        "path": "/journal/2026-09-18-sakae-akizake-fes-2026-coin-price.html",
+        "domain": "gourmetpress.net",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-09-18-sakae-akizake-fes-2026-coin-price.html",
+        "domain": "prtimes.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-09-18-sakae-akizake-fes-2026-coin-price.html",
+        "domain": "zip-fm.co.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-09-19-kiyosu-yabaton-boochan-house.html",
+        "domain": "maps.google.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-09-19-kiyosu-yabaton-boochan-house.html",
+        "domain": "prtimes.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-09-21-meieki-dote-daikoku-bel-butter-waffle.html",
+        "domain": "hikari-food-service.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-09-21-meieki-dote-daikoku-bel-butter-waffle.html",
+        "domain": "prtimes.jp",
+        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
       {
         "path": "/features/nagoya-solo-dining.html",
-        "clicks": 24
-      },
-      {
-        "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 20
+        "clicks": 23
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 19
+        "clicks": 20
+      },
+      {
+        "path": "/features/nagoya-hitsumabushi.html",
+        "clicks": 18
       },
       {
         "path": "/index.html",
-        "clicks": 15
+        "clicks": 14
       },
       {
         "path": "/",
-        "clicks": 4
+        "clicks": 14
       },
       {
-        "path": "/features/birthday-surprise.html",
+        "path": "/features/nagoya-miso-nikomi-udon.html",
+        "clicks": 3
+      },
+      {
+        "path": "/features/birthday.html",
         "clicks": 2
       },
       {
@@ -635,7 +708,11 @@
         "clicks": 2
       },
       {
-        "path": "/features/nagoya-yakiniku.html",
+        "path": "/features/kospa-insider.html",
+        "clicks": 1
+      },
+      {
+        "path": "/features/nagoya-sweets.html",
         "clicks": 1
       },
       {
@@ -644,10 +721,6 @@
       },
       {
         "path": "/features/osu-food-walk.html",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-08-18-noritake-garden-pasta.html",
         "clicks": 1
       },
       {
@@ -663,11 +736,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 97
+    "reservationClicks": 107
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1135,
+    "value": 1134,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
