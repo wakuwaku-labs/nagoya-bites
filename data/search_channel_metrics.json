@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-22T20:55:57.968Z",
+  "generatedAt": "2026-09-22T23:48:32.376Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1391,
+  "total_sessions": 1394,
   "engines": [
     {
       "key": "google",
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 343,
-      "pct": 24.7,
+      "pct": 24.6,
       "sources": [
         {
           "source": "bing",
@@ -40,8 +40,8 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 238,
-      "pct": 17.1,
+      "sessions": 240,
+      "pct": 17.2,
       "sources": [
         {
           "source": "(direct)",
@@ -51,7 +51,7 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 30
+          "sessions": 32
         }
       ]
     },
@@ -109,8 +109,8 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 96,
-      "pct": 6.9,
+      "sessions": 97,
+      "pct": 7,
       "sources": [
         {
           "source": "unknown",
@@ -120,7 +120,7 @@
         {
           "source": "(data not available)",
           "medium": "(data not available)",
-          "sessions": 23
+          "sessions": 24
         },
         {
           "source": "service.smt.docomo.ne.jp",
@@ -255,12 +255,12 @@
     "from": "2026-09-21",
     "to": "2026-09-22",
     "delta": {
-      "google": 4,
-      "bing": 7,
-      "direct": -12,
-      "yahoo": 4,
-      "ai_assistant": 1,
-      "other": 3,
+      "google": -16,
+      "bing": 1,
+      "direct": -11,
+      "yahoo": -3,
+      "ai_assistant": -5,
+      "other": 8,
       "duckduckgo": 1,
       "social": 0
     }
