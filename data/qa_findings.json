@@ -1,8 +1,17 @@
 {
-  "date": "2026-09-22",
-  "head": "577fbac714e5e0844ff6eae1ffa7eabe88aa6f49",
-  "verdict": "PASS",
+  "date": "2026-09-23",
+  "head": "5e57dce8ede81e5a08f4a30b29d3184983922816",
+  "verdict": "FAIL",
   "findings": [
+    {
+      "category": "Security",
+      "owner": "DataKeeper",
+      "id": "QA-SEC-SECRET-GOOGLE-API-KEY",
+      "sev": "hard",
+      "priority": "P0",
+      "title": "Google API key らしき文字列がコミットされている疑い（53箇所）",
+      "body": "シークレット文字列スキャンで検出（値は秘匿）:\n    gen-store-pages.js:1008\n    stores/awayuki.html:376\n    stores/canalia-trattoriacafe.html:370\n    stores/guru.html:361\n    stores/haera-2.html:376\n- acceptance: 該当値を確認し本物なら即ローテーション＋履歴消去／誤検知なら .qa-secret-allowlist.txt に登録"
+    },
     {
       "category": "Security",
       "owner": "DataKeeper",
@@ -15,6 +24,7 @@
   ],
   "created": [],
   "existing": [
+    "QA-SEC-SECRET-GOOGLE-API-KEY",
     "QA-SEC-NPM-AUDIT"
   ]
 }

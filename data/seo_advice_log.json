@@ -3220,6 +3220,36 @@
       "brand_reason": "却下（打ち手に作用機序が無い＋読者に向いていない文章で編集品質を下げる）。①提案文言『この記事はChatGPT/Geminiで検索した方も歓迎です』は人間の読者に何の情報も与えず、生成AI側のクロール・引用選択にも作用する経路が無い（AI引用は構造化データ・Q&A・一次情報の明示で決まり、AIへの呼びかけ文では決まらない）。読者に向けた文章でないものを記事冒頭＝最も読まれる位置に置くのは、編集独立性を掲げるサイトの品質を落とす。②根拠の数字（生成AI 6訪問）自体は正しく、生成AI面は既に取りに行っている: SEO-101（journal 133本へQ&A追加・生成AI経由99セッション/30日の引用面）と SEO-097（llms.txt のCI自動再生成・done）が同じ面の正しい打ち手として起票済み。③同型の助言（2026-09-15『AI検索からの流入を狙いましょう』）は SEO-101 として採用済みで、面としての重複でもある。",
       "category": null,
       "fingerprint": "7986a240da1e2d3b"
+    },
+    {
+      "id": null,
+      "date": "2026-09-23",
+      "source": "line-daily",
+      "advice": "🔴 予約ボタンクリックが0回と、ユーザーの行動喚起ができていません。👉 トップページや人気記事「nagoya-solo-dining」に予約ボタンや電話ボタンを目立つように配置し、視認性を高めてください。",
+      "verdict": "rejected",
+      "brand_reason": "却下① 提案された打ち手が3経路とも既に実装済みで増分が無い（index.html: 「電話する」6/「予約する」2/nbCallStore 2・tel: 3／features/nagoya-solo-dining.html: SEO-042冒頭CTA 2箇所＋「予約はこちらから。」／stores/: 電話CTAは SEO-105 で 2026-09-22 に52店へ反映済み #289）。② 前提が検算不能（制約10）— 訪問29人・予約0回は多寡を論じられる母数ではない（同型の助言を 09-19/09-20/09-21 にも判定済み）。③ 編集上の矛盾 — nagoya-solo-dining は本文が『予約なしで入れる店がほとんど』『予約不要で18時以降に入れる』を主題にした一人飲み特集で、予約ボタンの強調は記事の趣旨と衝突する",
+      "category": null,
+      "fingerprint": "7eaba7c9d08c53ec"
+    },
+    {
+      "id": null,
+      "date": "2026-09-23",
+      "source": "line-daily",
+      "advice": "🟡 訪問者29人に対し、ページ閲覧が28と、ほとんどのユーザーが1ページしか見ていません。👉 人気ページ「nagoya-solo-dining」の下部に関連する「nagoya-hitsumabushi」など他の特集記事への導線を設置し、回遊を促してください。",
+      "verdict": "rejected",
+      "brand_reason": "却下① 名指しされた導線がそのまま既に存在する — features/nagoya-solo-dining.html:424-434 の「関連する特集記事」ブロックに8本の特集リンクがあり、助言が例示した nagoya-hitsumabushi は :434 で既にリンク済み（trackEvent internal_link_click / block:feature_related で計測済み）。特集68本すべてが他特集への発リンクを1本以上持つ（scripts/add_related_features.js で担保）。② 前提が検算不能（制約10）— 訪問29人・閲覧28の単日分母で回遊の多寡は判定できない。なお店舗カード→特集の逆引き（真に欠けている方向）は SEO-106 で ready 起票済み",
+      "category": null,
+      "fingerprint": "74317c931dfdf6fd"
+    },
+    {
+      "id": null,
+      "date": "2026-09-23",
+      "source": "line-daily",
+      "advice": "🟢 検索流入比率が75%と高い一方、SNS流入は0%です。👉 docs/daily-posts/ にあるSNS投稿原稿を、InstagramやXで毎日投稿し、SNSからの流入を増やす実験をしてください。",
+      "verdict": "rejected",
+      "brand_reason": "却下① 前提が誤り — docs/daily-posts/ の自動生成は data/journal_sns_draft_policy.json の generate_sns_draft:false により 2026-09-05 にオーナー指示で停止済みで、最新ファイルは 2026-09-05.md。『にあるSNS投稿原稿を毎日投稿』は存在しない在庫を前提にしている。SNS投稿はリポジトリ外の別系統で運用しUTMで計測する方針。② SNS流入0%の測定前提も再考済み — 旧 channels.social はドメイン部分一致の誤判定で生成AI流入を混入させていた（scripts/lib/traffic_source.js で是正済み）。③ SNS原稿停止後これで通算8回目の同型助言（09-07/08/10/12/13/16/20 に続く）で、GAS側プロンプトが旧前提のまま動いている実地証跡。本日の痕跡判定は check_gas_deploy_health.js --record で deployed（SEO-076ラベル検出・SEO-092痕跡は今回出ず）として記録済み",
+      "category": null,
+      "fingerprint": "fe4a72690404dee8"
     }
   ]
 }

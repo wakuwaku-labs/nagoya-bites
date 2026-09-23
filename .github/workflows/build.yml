@@ -215,6 +215,14 @@ jobs:
         run: node scripts/audit_store_link_identity.js --scope all --limit 60 --check
         continue-on-error: true
 
+      - name: 重複店舗レコードを監査（ISSUE-132・新たな重複の増加を検知）
+        # data/stores.json で「店名完全一致」または「placeId一致＋namesMatch()」の
+        # 確定重複グループ数がベースライン（data/store_duplicate_baseline.json）より
+        # 増えたら exit 1。既存の58件は受け入れ済みで、新規重複の混入だけを止める。
+        # placeId だけで判定しない（チェーン店が共有 placeId を持つ例があるため）。
+        run: node scripts/audit_duplicate_stores.js --check
+        continue-on-error: true
+
       - name: ジャーナル記事とSNS原稿の対応漏れを監査（SEO-055・2026-08-10/11の欠落再発防止）
         # バックフィル公開（手動でjournal/*.htmlを直接作成するケース）はSNS原稿生成の
         # ブロッキング検証（run_journal_local.sh）を通らないため、生成漏れが実際に発生した。
