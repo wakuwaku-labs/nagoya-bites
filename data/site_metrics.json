@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-23T11:10:02.956Z",
+  "generatedAt": "2026-09-23T12:36:59.924Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1151,
-    "pageViews": 1978,
-    "sessions": 1393,
-    "avgSessionDuration": 155,
-    "bounceRate": 0.274,
+    "activeUsers": 1159,
+    "pageViews": 1986,
+    "sessions": 1401,
+    "avgSessionDuration": 154.9,
+    "bounceRate": 0.276,
     "pagesPerSession": 1.42
   },
   "dailyReference": {
@@ -18,21 +18,21 @@
   "channels": {
     "sessions": {
       "organic": 973,
-      "direct": 287,
+      "direct": 292,
       "social": 9,
       "ai_assistant": 104,
       "referral": 23,
       "paid": 0,
-      "other": 12
+      "other": 18
     },
     "pct": {
-      "organic": 69.1,
-      "direct": 20.4,
+      "organic": 68.6,
+      "direct": 20.6,
       "social": 0.6,
-      "ai_assistant": 7.4,
+      "ai_assistant": 7.3,
       "referral": 1.6,
       "paid": 0,
-      "other": 0.9
+      "other": 1.3
     }
   },
   "sourceBreakdown": [
@@ -49,7 +49,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 211
+      "sessions": 212
     },
     {
       "source": "yahoo",
@@ -69,17 +69,17 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 24
+      "sessions": 28
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 18
     },
     {
       "source": "duckduckgo",
       "medium": "organic",
       "sessions": 14
-    },
-    {
-      "source": "(data not available)",
-      "medium": "(data not available)",
-      "sessions": 12
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -195,8 +195,8 @@
     },
     {
       "path": "/",
-      "pageViews": 259,
-      "sessions": 183
+      "pageViews": 260,
+      "sessions": 184
     },
     {
       "path": "/index.html",
@@ -210,21 +210,21 @@
     },
     {
       "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
-      "pageViews": 41,
-      "sessions": 41
+      "pageViews": 42,
+      "sessions": 42
     }
   ],
   "cta": {
-    "outboundClicks": 162,
-    "ctaClickRate": 11.6,
+    "outboundClicks": 164,
+    "ctaClickRate": 11.7,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 68
+        "clicks": 69
       },
       {
         "domain": "tabelog.com",
-        "clicks": 39
+        "clicks": 40
       },
       {
         "domain": "maps.google.com",
@@ -282,12 +282,12 @@
     "note": null,
     "byChannel": {
       "organic": 73,
-      "direct": 62,
+      "direct": 63,
       "social": 0,
       "ai_assistant": 21,
       "referral": 6,
       "paid": 0,
-      "other": 0
+      "other": 1
     },
     "ctaClickRate_organic": 7.5,
     "ctaClickRate_direct": 21.6,
@@ -303,7 +303,7 @@
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 20
+        "clicks": 21
       },
       {
         "path": "/index.html",
@@ -318,6 +318,10 @@
         "clicks": 6
       },
       {
+        "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
+        "clicks": 4
+      },
+      {
         "path": "/journal/2026-09-12-sakae-sulbing-korean-bingsu.html",
         "clicks": 4
       },
@@ -327,10 +331,6 @@
       },
       {
         "path": "/features/nagoya-miso-nikomi-udon.html",
-        "clicks": 3
-      },
-      {
-        "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "clicks": 3
       },
       {
@@ -423,7 +423,7 @@
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
         "domain": "tabelog.com",
-        "clicks": 20
+        "clicks": 21
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -471,6 +471,11 @@
         "clicks": 3
       },
       {
+        "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 3
+      },
+      {
         "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
         "domain": "www.instagram.com",
         "clicks": 3
@@ -507,11 +512,6 @@
       },
       {
         "path": "/index.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 2
-      },
-      {
-        "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "domain": "www.hotpepper.jp",
         "clicks": 2
       },
@@ -683,7 +683,7 @@
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 20
+        "clicks": 21
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
@@ -702,6 +702,10 @@
         "clicks": 3
       },
       {
+        "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
+        "clicks": 3
+      },
+      {
         "path": "/features/birthday.html",
         "clicks": 2
       },
@@ -711,10 +715,6 @@
       },
       {
         "path": "/features/nagoya-italian-guide.html",
-        "clicks": 2
-      },
-      {
-        "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "clicks": 2
       },
       {
@@ -746,11 +746,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 107
+    "reservationClicks": 109
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1151,
+    "value": 1159,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

@@ -1,16 +1,16 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-23T11:10:06.315Z",
+  "generatedAt": "2026-09-23T12:37:03.730Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1408,
+  "total_sessions": 1419,
   "engines": [
     {
       "key": "google",
       "label": "Google",
       "sessions": 422,
-      "pct": 30,
+      "pct": 29.7,
       "sources": [
         {
           "source": "google",
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 350,
-      "pct": 24.9,
+      "pct": 24.7,
       "sources": [
         {
           "source": "bing",
@@ -40,18 +40,18 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 235,
-      "pct": 16.7,
+      "sessions": 240,
+      "pct": 16.9,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 211
+          "sessions": 212
         },
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 24
+          "sessions": 28
         }
       ]
     },
@@ -59,7 +59,7 @@
       "key": "yahoo",
       "label": "Yahoo!",
       "sessions": 186,
-      "pct": 13.2,
+      "pct": 13.1,
       "sources": [
         {
           "source": "yahoo",
@@ -72,7 +72,7 @@
       "key": "ai_assistant",
       "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
       "sessions": 104,
-      "pct": 7.4,
+      "pct": 7.3,
       "sources": [
         {
           "source": "chatgpt.com",
@@ -109,8 +109,8 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 88,
-      "pct": 6.3,
+      "sessions": 94,
+      "pct": 6.6,
       "sources": [
         {
           "source": "unknown",
@@ -120,7 +120,7 @@
         {
           "source": "(data not available)",
           "medium": "(data not available)",
-          "sessions": 12
+          "sessions": 18
         },
         {
           "source": "service.smt.docomo.ne.jp",
@@ -265,7 +265,7 @@
       "direct": -3,
       "yahoo": 6,
       "ai_assistant": 2,
-      "other": -9,
+      "other": -8,
       "duckduckgo": 1,
       "social": 1
     }
