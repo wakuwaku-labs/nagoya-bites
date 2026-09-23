@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-23T05:42:23.736Z",
+  "generatedAt": "2026-09-23T06:10:31.417Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1140,
-    "pageViews": 1965,
-    "sessions": 1382,
-    "avgSessionDuration": 155.8,
-    "bounceRate": 0.268,
+    "activeUsers": 1143,
+    "pageViews": 1968,
+    "sessions": 1385,
+    "avgSessionDuration": 155.4,
+    "bounceRate": 0.27,
     "pagesPerSession": 1.42
   },
   "dailyReference": {
@@ -18,21 +18,21 @@
   "channels": {
     "sessions": {
       "organic": 970,
-      "direct": 280,
+      "direct": 281,
       "social": 9,
       "ai_assistant": 104,
       "referral": 23,
       "paid": 0,
-      "other": 6
+      "other": 9
     },
     "pct": {
-      "organic": 69.7,
+      "organic": 69.5,
       "direct": 20.1,
       "social": 0.6,
-      "ai_assistant": 7.5,
-      "referral": 1.7,
+      "ai_assistant": 7.4,
+      "referral": 1.6,
       "paid": 0,
-      "other": 0.4
+      "other": 0.6
     }
   },
   "sourceBreakdown": [
@@ -69,12 +69,17 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 18
+      "sessions": 19
     },
     {
       "source": "duckduckgo",
       "medium": "organic",
       "sessions": 14
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 9
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -85,11 +90,6 @@
       "source": "copilot.com",
       "medium": "ai-assistant",
       "sessions": 7
-    },
-    {
-      "source": "(data not available)",
-      "medium": "(data not available)",
-      "sessions": 6
     },
     {
       "source": "copilot.com",
@@ -190,8 +190,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 400,
-      "sessions": 349
+      "pageViews": 401,
+      "sessions": 350
     },
     {
       "path": "/",
@@ -750,7 +750,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1140,
+    "value": 1143,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

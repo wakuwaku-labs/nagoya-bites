@@ -2281,7 +2281,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 
 <!-- STORE-INDEX:START 2026-09-23 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（4911店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（4913店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（836店）</summary>
@@ -5561,7 +5561,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 </ul>
 </details>
 <details class="store-index-area" data-area="栄">
-<summary>栄（376店）</summary>
+<summary>栄（377店）</summary>
 <ul class="store-index-list">
 <li><a href="stores/J003474639.html">【栄限定】食べ飲み放題2500円 ひねり蛇口ハイ×食べ飲み放題 大衆酒泉テルマエ（栄・居酒屋）</a></li>
 <li><a href="stores/J004026554.html">0秒レモンサワー ときわ亭 名古屋栄店（栄・焼肉・ホルモン）</a></li>
@@ -5918,6 +5918,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <li><a href="stores/J003785146.html">名古屋名物　完全個室　居酒屋　飲み放題　金鯱酒場（きんしゃちさかば）　錦店（栄・居酒屋）</a></li>
 <li><a href="stores/J001223732.html">夜桜OSU（栄・焼肉・ホルモン）</a></li>
 <li><a href="stores/J000694368.html">癒しDining きなが（栄・居酒屋）</a></li>
+<li><a href="index.html#q=%E6%9C%89%E4%BC%9D%E4%BA%AD%20%E5%8C%A0">有伝亭 匠（栄・うどん・カレーうどん）</a></li>
 <li><a href="stores/J003850060.html">立ち呑み 中華 忘 bow（栄・居酒屋）</a></li>
 <li><a href="stores/J004559180.html">練りものとだし おでこ（栄・ダイニングバー・バル）</a></li>
 <li><a href="stores/J000958669.html">炉ばた 浜っ子（栄・居酒屋）</a></li>
@@ -7559,6 +7560,12 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <li><a href="index.html#q=%E7%9F%A2%E5%A0%B4%E3%81%A8%E3%82%93%20%E3%81%B6%E3%83%BC%E3%81%A1%E3%82%83%E3%82%93%E3%83%8F%E3%82%A6%E3%82%B9">矢場とん ぶーちゃんハウス（清須市春日（名古屋市西区隣接）・とんかつ）</a></li>
 </ul>
 </details>
+<details class="store-index-area" data-area="伏見・栄">
+<summary>伏見・栄（1店）</summary>
+<ul class="store-index-list">
+<li><a href="index.html#q=%E5%B3%B6%E6%AD%A3">島正（伏見・栄・郷土料理・どて焼き）</a></li>
+</ul>
+</details>
 </section>
 <!-- STORE-INDEX:END -->
 
@@ -7727,7 +7734,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '20a3f1401ef6';
+var STORES_JSON_VERSION = 'f967a5670601';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
