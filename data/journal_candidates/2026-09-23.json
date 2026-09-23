@@ -1,0 +1,502 @@
+{
+  "date": "2026-09-23",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c6",
+      "title_draft": "名駅の居酒屋がモーニングを始めた理由——最低賃金1,195円の朝",
+      "verdict": "PASS",
+      "total": 103,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "モーニング",
+          "feature": "features/nagoya-morning.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 8件 → 15",
+          "話題の証跡URL 4件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 8件 (原価,オペ,人件費,回転,業界,構造,慣習,相場) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 172字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「モーニング」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄の個室居酒屋で紙の領収書しか出ない店の事情 —— インボイスと接待の実務",
+      "verdict": "HOLD",
+      "total": 69,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 8日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 1件 (業界) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 94字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初出コラム (COL-LAW-003) → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "名駅の居酒屋のラストオーダーが22時に寄る理由 —— 業界人が読む深夜割増と閉店時刻の関係",
+      "verdict": "HOLD",
+      "total": 63,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 26日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 1件 (回転) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 172字 +4",
+          "title 45字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "HACCP完全義務化から5年、名古屋の飲食店で消えた作業と残った作業",
+      "verdict": "HOLD",
+      "total": 61,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 20日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 2件 (オペ,仕込み) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 100字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-LAW-002) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "栄のバーの喫煙可・加熱式可・完全禁煙、一人飲みで外さない見分け方",
+      "verdict": "HOLD",
+      "total": 45,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "バー",
+          "feature": "features/nagoya-bar-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 48日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 94字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「バー」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c6",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c6",
+      "theme": "industry_insider",
+      "column_id": "COL-HR-008-MORNING",
+      "title_draft": "名駅の居酒屋がモーニングを始めた理由——最低賃金1,195円の朝",
+      "lead_draft": "10月1日、愛知県の最低賃金が1,195円になる。55円の上げ幅は過去最大級だ。名古屋は総務省の家計調査で喫茶代の支出が全国1位（2025年分・年20,276円）の街だが、掲載4,768店の営業時間を実測すると9時前に開く店は172店、全体の3.6%しかない。朝は儲からない——その常識の内側で、名駅の居酒屋が6時30分に暖簾を出し始めている。",
+      "angle": "朝営業が掲載4,768店中172店（3.6%）しかない実測から、モーニングの原価と人件費の構造を読む。10月1日発効の愛知県最低賃金1,195円が朝の1時間を押し上げる一方、喫茶のモーニングは客単価が低く回転も読めない。名駅の居酒屋が朝定食1,980円で朝を取りに行くオペの設計、コーヒーチケットで採算を後ろに送る名古屋の商慣習、予約サイトの営業時間欄に朝が載らないため検索に出てこない相場まで業界人視点で分解する",
+      "main_store": {
+        "name": "治兵衛 名古屋駅店",
+        "id": "J003324806",
+        "area": "名古屋（名古屋駅/西区/中村区）",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "労務ドットコム「愛知の最低賃金は2026年10月1日より55円引き上げの1,195円へ」",
+          "url": "https://roumu.com/archives/132786.html",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "愛知県「愛知県の最低賃金」",
+          "url": "https://www.pref.aichi.jp/adv/ba.php?id=800",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "STORES Magazine「食品消費税1%はいつから？2027年4月の変更点」（外食・酒類は対象外）",
+          "url": "https://stores.fun/magazine/articles/food-tax-reduction-2027-guide",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "じゃらんニュース「【2026】名古屋モーニング14選」（大衆酒場治兵衛 名駅店の朝定食1,980円・6時30分〜）",
+          "url": "https://www.jalan.net/news/article/217637/",
+          "date": "2026-06-19"
+        },
+        {
+          "label": "ホットペッパーグルメ「炭火焼き鳥と煮込み 個室居酒屋 治兵衛 名古屋駅店」（治兵衛のあさげ）",
+          "url": "https://www.hotpepper.jp/strJ003324806/"
+        },
+        {
+          "label": "All About「支出額全国1位、名古屋人が『喫茶店』を愛する意外な理由」（家計調査2025年分・喫茶代20,276円）",
+          "url": "https://allabout.co.jp/gm/gc/519124/",
+          "date": "2026-05-21"
+        },
+        {
+          "label": "日本経済新聞「コーヒー豆、6年ぶり需給緩和へ 1杯の値段は高止まり続く見通し」",
+          "url": "https://www.nikkei.com/article/DGXZQOUB135TP0T10C26A2000000/",
+          "date": "2026-02-13"
+        },
+        {
+          "label": "X / 名古屋名著読書会（名古屋の喫茶店はモーニングで儲けようとは思っていない・コーヒーチケットで利益が出る）",
+          "url": "https://x.com/nagoyabookclub/status/2021390980898009383"
+        },
+        {
+          "label": "X / tabemaro公式（名古屋駅 ボン・ヴォヤージュ 7:00〜のニューレトロ喫茶）",
+          "url": "https://x.com/tabemaro/status/2008735349812437320"
+        },
+        {
+          "label": "X / コメダ珈琲店公式（モーニングは毎朝開店から11時まで）",
+          "url": "https://x.com/KomedaOfficial/status/2092386667873403090"
+        },
+        {
+          "label": "X / おいでよ名古屋（伏見珈琲館のモーニング）",
+          "url": "https://x.com/oinagoya/status/2036208618459079092"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "column_id": "COL-LAW-008",
+      "title_draft": "名駅の居酒屋のラストオーダーが22時に寄る理由 —— 業界人が読む深夜割増と閉店時刻の関係",
+      "lead_draft": "閉店時間が早くなったのは人手不足だけが理由ではない。労基法は22時から翌5時の労働に25%以上の割増を義務づけており、10月1日からの愛知県最低賃金1,195円に掛けると深夜帯の時給は1,494円になる。掲載4,768店の実測では、0時をまたぐ店は名駅エリアで限られる。ラストオーダーの位置は、店の意欲ではなく人件費の折り返し点で決まっている。",
+      "angle": "深夜割増25%と最低賃金改定が閉店時刻・ラストオーダー設計に与える影響を、名駅エリアの営業時間分布の実測と外食チェーンの深夜料金7%導入から読む。予約の取り方・回転・一人飲みの入店タイミングまで",
+      "main_store": {
+        "name": "ダイニングダーツバーBee 名駅店",
+        "id": "",
+        "area": "名古屋駅",
+        "genre": "ダイニングバー・バル"
+      },
+      "sources": [
+        {
+          "label": "労務ドットコム「愛知の最低賃金は2026年10月1日より55円引き上げの1,195円へ」",
+          "url": "https://roumu.com/archives/132786.html",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "株式会社壱番屋「深夜料金の導入および一部トッピング価格改定に関するお知らせ」",
+          "url": "https://www.ichibanya.co.jp/comp/whatsnew/docs/50dbab80a003e9e05e82744940410e034bb0886e.pdf",
+          "date": "2026-08-28"
+        },
+        {
+          "label": "Yahoo!ニュース エキスパート「なぜ飲食店の閉店時間は早くなったのか？」",
+          "url": "https://news.yahoo.co.jp/expert/articles/a722f26360de54342d0cf7ea6375dfd8279b226f",
+          "date": "2026-03-10"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c3",
+      "theme": "industry_insider",
+      "column_id": "COL-LAW-003",
+      "title_draft": "栄の個室居酒屋で紙の領収書しか出ない店の事情 —— インボイスと接待の実務",
+      "lead_draft": "接待の会計で、インボイス登録番号のない紙の領収書を出す店がある。登録の有無は店の怠慢ではなく、小規模店の対応コストと客層の構造から決まっている。2026年秋、経費精算の現場で何が起きるか。",
+      "angle": "インボイス制度の登録有無が接待・会食の経費精算に与える影響を、価格帯・客単価・席数から業界人視点で読む",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "国税庁 インボイス制度特設サイト",
+          "url": "https://www.nta.go.jp/taxes/shiraberu/zeimokubetsu/shohi/keigenzeiritsu/invoice.htm",
+          "date": "2026-04-01"
+        },
+        {
+          "label": "STORES Magazine「食品消費税1%はいつから？2027年4月の変更点」",
+          "url": "https://stores.fun/magazine/articles/food-tax-reduction-2027-guide",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "労務ドットコム「愛知の最低賃金は2026年10月1日より55円引き上げの1,195円へ」",
+          "url": "https://roumu.com/archives/132786.html",
+          "date": "2026-08-06"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c4",
+      "theme": "industry_insider",
+      "column_id": "COL-LAW-002",
+      "title_draft": "HACCP完全義務化から5年、名古屋の飲食店で消えた作業と残った作業",
+      "lead_draft": "2021年6月の完全施行から5年。衛生管理計画と記録は日常になったが、現場に残ったのは紙の温度記録と、冷蔵庫の前に貼られた一覧表だった。名古屋市の手引きと現場の運用のあいだにある差を業界人視点で読む。",
+      "angle": "HACCP義務化後のオペ変化を、仕込み量・記録作業・人員配置から読む",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": "和食"
+      },
+      "sources": [
+        {
+          "label": "名古屋市「HACCPの考え方を取り入れた衛生管理」",
+          "url": "https://www.city.nagoya.jp/kenkofukushi/eisei/1014927/1015056/1015074/1015076.html",
+          "date": "2026-04-01"
+        },
+        {
+          "label": "厚生労働省「HACCPの考え方を取り入れた衛生管理」",
+          "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/shokuhin/haccp/01_00019.html",
+          "date": "2026-04-01"
+        },
+        {
+          "label": "愛知県「愛知県の食中毒発生状況」",
+          "url": "https://www.pref.aichi.jp/soshiki/eisei/hasseijoukyou.html",
+          "date": "2026-09-03"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c5",
+      "theme": "industry_insider",
+      "column_id": "COL-LAW-006",
+      "title_draft": "栄のバーの喫煙可・加熱式可・完全禁煙、一人飲みで外さない見分け方",
+      "lead_draft": "改正健康増進法から数年、名古屋の分煙は店ごとにばらついたまま固まった。掲載データで見ると、喫煙可の表示が残るのはバーと居酒屋に偏る。一人飲みでカウンターに座る前に、どこを見れば外さないか。",
+      "angle": "受動喫煙防止法の経過措置と店の席配置・換気投資の関係を、掲載データの禁煙区分の実測から読む",
+      "main_store": {
+        "name": "bar Jiro栄 錦",
+        "id": "",
+        "area": "栄キタ/錦",
+        "genre": "バー・カクテル"
+      },
+      "sources": [
+        {
+          "label": "厚生労働省 なくそう！望まない受動喫煙",
+          "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/kenkou/tobacco/main.html",
+          "date": "2026-04-01"
+        },
+        {
+          "label": "名古屋市「受動喫煙防止対策」",
+          "url": "https://www.city.nagoya.jp/kenkofukushi/page/0000112338.html",
+          "date": "2026-04-01"
+        },
+        {
+          "label": "労務ドットコム「愛知の最低賃金は2026年10月1日より55円引き上げの1,195円へ」",
+          "url": "https://roumu.com/archives/132786.html",
+          "date": "2026-08-06"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}
