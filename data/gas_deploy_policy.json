@@ -103,6 +103,14 @@
       "reason": "SEO-093 修正前のルールベース保険が出す固定文。SNS原稿の自動生成は2026-09-05に停止済み（data/journal_sns_draft_policy.json の generate_sns_draft:false）で docs/daily-posts/ に流用できる原稿は存在しないため、新コードはこの文字列を出力しない（特集記事・ジャーナル記事の見出し・写真を使う文言に置換済み）。SNS流入がほぼゼロの日にのみ出る条件付きシグナル（片側）。"
     },
     {
+      "key": "sns_daily_posts_path_reference",
+      "fix_id": "SEO-093",
+      "verdict": "not_deployed",
+      "scope": "body",
+      "pattern": "docs/daily-posts",
+      "reason": "SEO-093 修正後のプロンプトは『SNS原稿は現在サイト外で運用・リポジトリ内には無い』を前提とするため、助言が読者にこのパスの原稿を使わせる文言は新コードでは出力されない。既存の sns_daily_posts_reuse_old_label はルールベース保険側の固定文『docs/daily-posts の原稿を流用』だけを見ており、AI生成側が毎回変える言い回し（例 2026-09-22『docs/daily-posts/ にあるSNS投稿原稿を、InstagramやXで毎日投稿し』）を原理的に捕捉できなかった。そのため停止後8回の再発が全て deployed と記録され watchdog が一度も鳴らなかった（ISSUE-084 原則3『気づけるはずを検知と数えない』の再発）。言い回しではなくパス文字列そのものを見ることで、AI生成・ルールベースのどちらの経路でも1本で捕捉する。誰でも当日のメールを開いて Ctrl+F すれば検算できる（制約10）。反映されれば出力が止まり自動で静かになる（原則6）。"
+    },
+    {
       "key": "stale_example_kw",
       "fix_id": "SEO-092",
       "verdict": "not_deployed",
