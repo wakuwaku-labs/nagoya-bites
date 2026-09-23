@@ -49,7 +49,7 @@
 
 ### [SEO-106] 店舗カードに「掲載特集」ラベルを出し、DB→特集の逆引き導線を作る（現在は特集→店舗の一方通行で、401店が持つ編集資産がカード上で不可視）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress（実装済み・効果測定は次回GSC/クリック計測を待つ）
 - **detected**: 2026-09-22
 - **category**: SEO
 - **owner**: Builder
@@ -71,6 +71,14 @@
   5. `index.html` 単一ファイル維持（制約1）・`var LOCAL_STORES = [...]` パターン不変（制約2）・フィルター/検索/モーダル/IGエンベッド/Google評価表示の非破壊（制約5）
   6. 効果測定は**ラベルのクリック数そのもの**（acceptance②の実測値）で見る。「店舗詳細クリック」総数は [[SEO-084]] の計測追加と混ざるため単独では使わない（[[SEO-043]] の判定基準）
 - **関連**: [[SEO-056]]（特集→ジャーナルの一方通行を閉じた同型の課題・done）／[[SEO-070]]（内部リンクが本文後方にしか無い）／[[SEO-099]]（stores/area ハブへの内部リンク増）／[[SEO-084]]（特集の店舗リンク計測）／[[DSN-002]]（カード・モーダルの再設計）
+- **2026-09-23 実装**:
+  1. `scripts/lib/feature_store_match.js` を新設（acceptance①）。`scripts/audit_feature_stores.js` の実在判定ロジック（完全一致／内包一致／識別力トークン2つ以上共有）をそのまま抽出し、両者が1本を共有する形にリファクタ（`audit_feature_stores.js` の出力が変わっていないことを実データで確認済み）。特集の表示タイトルは `features/index.html` の `card-title`（`parseFeatureCards` と同じ抽出元）を正本にし、対応するカードが無い特集（编集規約ページ等9本）はラベル化しない（取り繕わない）
+  2. `build.js` に `buildFeatureStoreMap(stores)` の呼び出しを追加（今回のビルドで確定した店舗配列に対して実行・`data/stores.json` の1build遅れを避ける）。対応が取れた店だけ `s['掲載特集'] = [{slug,title},...]` を付与し、既存の `slimStoreForOutput` 経由でそのまま LOCAL_STORES に乗る（新しい出力経路を作らない）。実データで**326店**（うち92店が2本以上）に付与されることを確認（ticket記載の401店より少ないのは日々の店舗データ変動によるもの）
+  3. `index.html` の `buildCardHtml()` に `card-featured` ブロックを追加。最大2本を実リンクで表示し、3本以上は「ほか◯本」（1本目の特集へ誘導）。クリックは既存の `internal_link_click` イベント規約に `block:'card_featured_in'`（超過分は`'card_featured_in_more'`）を付与して計測（acceptance②）。リンク先は `buildFeatureStoreMap` が実在確認済みの特集ファイルのみのため、`audit_feature_stores.js` の「リンク切れ0」は維持される（acceptance③）
+  4. Designer人格レビューは本セッションでは実施不可（エージェント不在）のため、`agents/designer.md` QA-5相当を自己適用: 新規CSS（`.card-featured`/`.cf-kicker`/`.cf-link`）は全て既存トークン（`var(--fs-xs)`＝13px・`var(--gold)`・`var(--dim)`・`var(--border)`）を再利用し新規リテラルは追加していない。`.related-link`（features側の内部リンクpill）と同じ視覚言語（gold文字・薄いgold枠）を踏襲。`node scripts/audit_design_system.js --check` violations 0 を確認（acceptance④・自動ゲートは通過、人間レビューは次回オーナー確認時に補う）
+  5. 制約1（単一ファイル）・制約2（LOCAL_STORESパターン）・制約5（フィルタ/検索/モーダル非破壊）を維持。ブラウザ実機確認（`http-server`・`ALL_STORES`にテストデータ注入して`renderGrid`実行）でカード描画・モーダル開閉（`openM`）に副作用が無いことを確認、コンソールエラー無し（acceptance⑤）
+  6. `tests/feature_store_match.test.js` を新設（8件）。`npm test` 219/219 pass
+  - **未完了（acceptance⑥）**: 効果測定（ラベルのクリック数）は実装直後のため未計測。次回以降のイベント集計で確認する
 
 ### [ISSUE-133] 食べログが【閉店】と表示している店を22件掲載し続けている（Google Places は20件を OPERATIONAL と返しており、判定が割れている）
 

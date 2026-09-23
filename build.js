@@ -919,6 +919,7 @@ const { computeCrossCheckScore } = require('./scripts/lib/cross_check_v22');
 const { buildFingerprintIndex, evaluateStoreFingerprint } = require('./scripts/lib/review_fingerprint');
 const trustDisplay = require('./scripts/lib/trust_display');
 const { placesKey } = require('./scripts/lib/places_key');
+const { buildFeatureStoreMap } = require('./scripts/lib/feature_store_match');
 
 async function fetchHotPepperNagoyaStores() {
   if (!HP_API_KEY) {
@@ -1644,6 +1645,21 @@ async function main() {
     }
   }
   console.log(`自動タグ付与: ${autoTagCount}件（タグなし → ジャンル/価格帯ベース）`);
+
+  // SEO-106: 店舗 → 掲載特集の逆引き（DB→特集の一方通行を閉じる）。
+  // audit_feature_stores.js と同じ判定器（scripts/lib/feature_store_match.js）を、
+  // 今回のビルドで確定した stores（この後 data/stores.json として永続化される配列）に対して使う。
+  // 対応が取れた店だけに 掲載特集 を付与し（取り繕わない）、2本以上は表示側で「ほか◯本」に丸める。
+  const featureStoreMap = buildFeatureStoreMap(stores);
+  let featureLabelCount = 0;
+  for (const s of stores) {
+    const feats = featureStoreMap.get(s);
+    if (feats && feats.length) {
+      s['掲載特集'] = feats;
+      featureLabelCount++;
+    }
+  }
+  console.log(`掲載特集ラベル付与: ${featureLabelCount}店（特集68本の掲載店を逆引き・SEO-106）`);
 
   // 1. LOCAL_STORESを全店舗データで置き換え
   //    ISSUE-015-P1: 出力時に不要フィールド・空値を除去して serialize 量を削減
