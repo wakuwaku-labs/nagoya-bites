@@ -1,7 +1,7 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-24T12:37:19.748Z",
+  "generatedAt": "2026-09-24T12:52:28.142Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
   "total_sessions": 1403,
@@ -265,13 +265,13 @@
     "from": "2026-09-23",
     "to": "2026-09-24",
     "delta": {
-      "google": 0,
-      "bing": 1,
-      "direct": 4,
-      "yahoo": 0,
-      "ai_assistant": 1,
-      "other": 0,
-      "duckduckgo": 0,
+      "google": 8,
+      "bing": 8,
+      "direct": 0,
+      "yahoo": 3,
+      "ai_assistant": 5,
+      "other": -9,
+      "duckduckgo": 2,
       "social": 0
     }
   },
