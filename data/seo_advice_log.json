@@ -3250,6 +3250,36 @@
       "brand_reason": "却下① 前提が誤り — docs/daily-posts/ の自動生成は data/journal_sns_draft_policy.json の generate_sns_draft:false により 2026-09-05 にオーナー指示で停止済みで、最新ファイルは 2026-09-05.md。『にあるSNS投稿原稿を毎日投稿』は存在しない在庫を前提にしている。SNS投稿はリポジトリ外の別系統で運用しUTMで計測する方針。② SNS流入0%の測定前提も再考済み — 旧 channels.social はドメイン部分一致の誤判定で生成AI流入を混入させていた（scripts/lib/traffic_source.js で是正済み）。③ SNS原稿停止後これで通算8回目の同型助言（09-07/08/10/12/13/16/20 に続く）で、GAS側プロンプトが旧前提のまま動いている実地証跡。本日の痕跡判定は check_gas_deploy_health.js --record で deployed（SEO-076ラベル検出・SEO-092痕跡は今回出ず）として記録済み",
       "category": null,
       "fingerprint": "fe4a72690404dee8"
+    },
+    {
+      "id": null,
+      "date": "2026-09-24",
+      "source": "line-daily",
+      "advice": "🔴 予約クリック率が12.1%と高い一方で、電話・マップ・Instagramへの情報到達が0回です。👉 index.htmlとstores/店舗詳細ページで、予約ボタンを目立たせ、電話やマップの導線は一旦目立たない位置に移動させるか、予約ボタンに統合する実験をしましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下。①前提が1日 n=33・情報到達0回の母数で、この助言が求める「実験」の効果判定が成立しない（制約10／SEO-089 が記録した「信号にならないレンジ」と同型）。②2026-09-22 に SEO-105 で『予約導線を持たない109店（うち編集部推薦67店）の静的ページに電話CTAを新設』を done にしたばかりで、本助言はその真逆＝唯一の行動導線を隠す打ち手になる。③電話・マップ（＝店に直接つながる手段）を削って外部予約ドメインへ寄せるのは送客導線への偏重で、広告主非依存・編集独立の立場と整合しない（制約7）。④色/サイズ/配置の直変更は DSN-001（制約12）で Designer レビューと audit_design_system.js --check が公開条件。",
+      "category": null,
+      "fingerprint": "a183219fdcf54475"
+    },
+    {
+      "id": null,
+      "date": "2026-09-24",
+      "source": "line-daily",
+      "advice": "🟡 人気ページTOP5に「nagoya-solo-dining」が5回閲覧でランクイン。ソロ活ニーズが高いようです。👉 features/nagoya-solo-dining のタイトルや記事内容を見直し、さらに「名古屋 おひとりさま」「名古屋 一人ご飯」といったKWで検索上位を狙えるよう、具体的な店舗名やシーンを追記しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複。solo-dining の勝ち筋分解・横展開は SEO-087（in_progress）に集約済みで再起票しない。名指しKWは実測で不在: data/gsc_metrics.json（2026-09-23生成・28日・上位300クエリ）で「おひとりさま」0本/表示0、「一人ご飯」0本/表示0。実在するのは「一人飲み」10本/表示845/クリック59（名古屋駅 一人飲み 180表示・10.5位＝1ページ目の境界）。サイト最大資産の title を実データに無いKWで触るのは得るもの無く既存順位を崩すリスクのみ。本日「おひとりさま」という新顔の0表示KWを観測したため SEO-092（助言生成器がGSC実クエリを参照していない・GASデプロイ待ち）に 2026-09-24 追記として記録した。",
+      "category": null,
+      "fingerprint": "209ad2ca6e71b1f5"
+    },
+    {
+      "id": null,
+      "date": "2026-09-24",
+      "source": "line-daily",
+      "advice": "🟢 Google検索からの流入が11訪問と最も多いです。特定の検索エンジンに依存しすぎるとリスクがあります。👉 docs/daily-posts/ にあるSNS投稿原稿を使い、X（旧Twitter）やInstagramで人気記事（例: nagoya-solo-dining）を積極的に発信し、SNSからの流入経路を強化する実験を今日から始めましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複。失効した前提（docs/daily-posts/ にSNS原稿が毎日用意されている）に基づく助言は SEO-093（in_progress・GASデプロイ待ち）が扱っており再起票しない。事実: data/journal_sns_draft_policy.json の generate_sns_draft は 2026-09-05 からオーナー指示で false、docs/daily-posts/ の最新原稿は 2026-09-05 で19日前。SNS投稿はリポジトリ外運用でサイト側のコード施策ではない。同日の check_gas_deploy_health.js --record も本助言文を根拠に not_deployed（SEO-093 未反映・3回連続）と判定している。",
+      "category": null,
+      "fingerprint": "88ab741ba50aa8b9"
     }
   ]
 }

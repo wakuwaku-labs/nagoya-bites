@@ -1,34 +1,34 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-23T12:37:03.730Z",
+  "generatedAt": "2026-09-24T00:12:14.235Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1419,
+  "total_sessions": 1392,
   "engines": [
     {
       "key": "google",
       "label": "Google",
-      "sessions": 422,
-      "pct": 29.7,
+      "sessions": 411,
+      "pct": 29.5,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 422
+          "sessions": 411
         }
       ]
     },
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 350,
-      "pct": 24.7,
+      "sessions": 342,
+      "pct": 24.6,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 349
+          "sessions": 341
         },
         {
           "source": "cn.bing.com",
@@ -40,44 +40,44 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 240,
-      "pct": 16.9,
+      "sessions": 242,
+      "pct": 17.4,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 212
+          "sessions": 207
         },
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 28
+          "sessions": 35
         }
       ]
     },
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 186,
-      "pct": 13.1,
+      "sessions": 176,
+      "pct": 12.6,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 186
+          "sessions": 176
         }
       ]
     },
     {
       "key": "ai_assistant",
       "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
-      "sessions": 104,
-      "pct": 7.3,
+      "sessions": 103,
+      "pct": 7.4,
       "sources": [
         {
           "source": "chatgpt.com",
           "medium": "ai-assistant",
-          "sessions": 85
+          "sessions": 83
         },
         {
           "source": "copilot.com",
@@ -92,7 +92,7 @@
         {
           "source": "openai",
           "medium": "organic",
-          "sessions": 3
+          "sessions": 4
         },
         {
           "source": "openai",
@@ -109,8 +109,8 @@
     {
       "key": "other",
       "label": "その他",
-      "sessions": 94,
-      "pct": 6.6,
+      "sessions": 95,
+      "pct": 6.8,
       "sources": [
         {
           "source": "unknown",
@@ -120,7 +120,7 @@
         {
           "source": "(data not available)",
           "medium": "(data not available)",
-          "sessions": 18
+          "sessions": 19
         },
         {
           "source": "service.smt.docomo.ne.jp",
@@ -222,31 +222,31 @@
     }
   ],
   "search_only": {
-    "total": 1076,
+    "total": 1046,
     "share": [
       {
         "key": "google",
         "label": "Google",
-        "sessions": 422,
-        "pct_of_search": 39.2
+        "sessions": 411,
+        "pct_of_search": 39.3
       },
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 350,
-        "pct_of_search": 32.5
+        "sessions": 342,
+        "pct_of_search": 32.7
       },
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 186,
-        "pct_of_search": 17.3
+        "sessions": 176,
+        "pct_of_search": 16.8
       },
       {
         "key": "ai_assistant",
         "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
-        "sessions": 104,
-        "pct_of_search": 9.7
+        "sessions": 103,
+        "pct_of_search": 9.8
       },
       {
         "key": "duckduckgo",
@@ -257,23 +257,23 @@
     ]
   },
   "trend": {
-    "from": "2026-09-22",
-    "to": "2026-09-23",
+    "from": "2026-09-23",
+    "to": "2026-09-24",
     "delta": {
-      "google": 11,
-      "bing": 7,
-      "direct": -3,
-      "yahoo": 6,
-      "ai_assistant": 2,
-      "other": -8,
-      "duckduckgo": 1,
-      "social": 1
+      "google": 0,
+      "bing": 1,
+      "direct": 3,
+      "yahoo": 0,
+      "ai_assistant": 1,
+      "other": 0,
+      "duckduckgo": 0,
+      "social": 0
     }
   },
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 422 セッションのみ。Bing(350) + 生成AI(104) の 454 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 411 セッションのみ。Bing(342) + 生成AI(103) の 445 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],

@@ -1,0 +1,446 @@
+{
+  "date": "2026-09-24",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "千種・車道のイタリアン「Pizzeria mimi」カウンター12席で1人1ピッツァ",
+      "verdict": "PASS",
+      "total": 108,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "イタリアン",
+          "feature": "features/nagoya-italian-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (席,予約,シーン,デート,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 196字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「千種」+4",
+          "タイトルにシーン語「カウンター」+4",
+          "タイトルにジャンル語「イタリアン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "金山の札幌らーめん戸倉、味噌1,100円は高いのか — 15席の個人店を原価で読む",
+      "verdict": "HOLD",
+      "total": 81,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (席,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 154字 +4",
+          "title 41字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "シーン語がリードのみ「一人飲み」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅でら横丁が2027年に17店 — インバウンド飲食ビルの採算を業界人が読む",
+      "verdict": "HOLD",
+      "total": 73,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 136字 +4",
+          "title 39字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "車道駅前に12席、月火が休みのピッツェリア — 週5日営業という選択",
+      "verdict": "HOLD",
+      "total": 65,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 0,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 121字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "焼き菓子工房がピッツェリアを開く理由 — 車道「Pizzeria mimi」の高加水生地と粉の商売",
+      "verdict": "HOLD",
+      "total": 62,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 12,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 141字 +4",
+          "title 49字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「一人飲み」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "千種・車道のイタリアン「Pizzeria mimi」カウンター12席で1人1ピッツァ",
+      "lead_draft": "2026年9月19日、地下鉄車道駅の出口から歩いて1〜2分、東区筒井にカウンター12席だけのピッツェリア「Pizzeria mimi（ピッツェリア ミミ）」が開いた。スコーンと焼き菓子の工房「Lycka」の新業態で、生地はパン職人とパティシエの協業。マルゲリータ1,892円、1名につきワンドリンク・ワンピッツァのオーダー制。この価格と制度は、12席という箱から逆算すると全部つながっている。",
+      "angle": "カウンター12席・1人1ピッツァのオーダー制・マルゲリータ1,892円を「席数×客単価×回転」で逆算し、予約の取り方と向くシーン（一人飲み/デート/少人数）まで業界人視点で読む",
+      "main_store": {
+        "name": "Pizzeria mimi",
+        "id": "",
+        "area": "車道",
+        "genre": "イタリアン・ピッツェリア"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「人気スコーン店から生まれたピッツェリア『Pizzeria mimi』車道駅前にオープン」",
+          "url": "https://jouhou.nagoya/pizzeria-mimi/",
+          "date": "2026-09-23"
+        },
+        {
+          "label": "きぃ@メイドキッチンカー（X）レセプション実食報告",
+          "url": "https://x.com/key_NarraTive/status/2102746981420744862",
+          "date": "2026-09-18"
+        },
+        {
+          "label": "スコーンと焼き菓子 リッカ 公式Instagram（@lycka_bake）",
+          "url": "https://www.instagram.com/lycka_bake/",
+          "date": "2026-09-20"
+        },
+        {
+          "label": "日清製粉ウェルナ パスタなど212品値上げ 小麦売り渡し価格改定（日本経済新聞）",
+          "url": "https://www.nikkei.com/article/DGXZQOUC148BO0U6A510C2000000/",
+          "date": "2026-05-14"
+        },
+        {
+          "label": "帝国データバンク「食品主要195社 価格改定動向調査（2026年3月）」",
+          "url": "https://www.tdb.co.jp/report/economic/20260227-neage26y02/",
+          "date": "2026-02-27"
+        },
+        {
+          "label": "Lycka ONLINE STORE",
+          "url": "https://lyckabake.stores.jp/",
+          "date": "2026-09-01"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "金山の札幌らーめん戸倉、味噌1,100円は高いのか — 15席の個人店を原価で読む",
+      "lead_draft": "2026年9月14日、金山総合駅の東口から徒歩5分、熱田区波寄町に「札幌らーめん戸倉」が開いた。味噌ラーメン1,100円、味噌チャーシューメン1,300円。約15席のカウンターとテーブル、日曜祝日が休み。平日の昼と夜だけを回す設計で、1,100円という価格は名古屋の味噌ラーメン相場のどこに置かれているのか。",
+      "angle": "15席・日祝休みという設計から、ランチ回転とディナー客単価のバランスを業界人視点で読む",
+      "main_store": {
+        "name": "札幌らーめん戸倉",
+        "id": "",
+        "area": "金山",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「札幌らーめん戸倉」",
+          "url": "https://jouhou.nagoya/sappororamen-tokura/",
+          "date": "2026-09-22"
+        },
+        {
+          "label": "札幌らーめん戸倉 公式Instagram",
+          "url": "https://www.instagram.com/sappororamen_tokura/",
+          "date": "2026-09-20"
+        },
+        {
+          "label": "帝国データバンク「食品主要195社 価格改定動向調査（2026年3月）」",
+          "url": "https://www.tdb.co.jp/report/economic/20260227-neage26y02/",
+          "date": "2026-02-27"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "焼き菓子工房がピッツェリアを開く理由 — 車道「Pizzeria mimi」の高加水生地と粉の商売",
+      "lead_draft": "スコーンと焼き菓子の工房「Lycka」が、2026年9月19日に東区筒井でピッツェリア「Pizzeria mimi」を始めた。カウンター12席、高加水の生地、マルゲリータ1,892円。菓子屋がピッツァに出るのは思いつきではなく、粉と窯という同じ資産を昼夜で二度使う商売の設計である。",
+      "angle": "焼き菓子工房→ピッツェリアという業態展開を「粉・窯・人の兼用」という原価構造から読む",
+      "main_store": {
+        "name": "Pizzeria mimi",
+        "id": "",
+        "area": "車道",
+        "genre": "イタリアン・ピッツェリア"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「Pizzeria mimi」",
+          "url": "https://jouhou.nagoya/pizzeria-mimi/",
+          "date": "2026-09-23"
+        },
+        {
+          "label": "Lycka ONLINE STORE",
+          "url": "https://lyckabake.stores.jp/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "日清製粉ウェルナ パスタなど212品値上げ（日本経済新聞）",
+          "url": "https://www.nikkei.com/article/DGXZQOUC148BO0U6A510C2000000/",
+          "date": "2026-05-14"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "車道駅前に12席、月火が休みのピッツェリア — 週5日営業という選択",
+      "lead_draft": "東区筒井の「Pizzeria mimi」は月曜と火曜が定休で、水木金は夜だけ、土日だけ昼を開ける。2026年9月19日に開いたばかりの12席のピッツェリアが選んだこの営業設計は、人手が採れない2026年の飲食店が取りうる数少ない解のひとつだ。",
+      "angle": "週5日・夜主体という営業設計を人時生産性の観点から読む",
+      "main_store": {
+        "name": "Pizzeria mimi",
+        "id": "",
+        "area": "車道",
+        "genre": "イタリアン・ピッツェリア"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「Pizzeria mimi」",
+          "url": "https://jouhou.nagoya/pizzeria-mimi/",
+          "date": "2026-09-23"
+        },
+        {
+          "label": "きぃ@メイドキッチンカー（X）",
+          "url": "https://x.com/key_NarraTive/status/2102746981420744862",
+          "date": "2026-09-18"
+        },
+        {
+          "label": "帝国データバンク「食品主要195社 価格改定動向調査（2026年3月）」",
+          "url": "https://www.tdb.co.jp/report/economic/20260227-neage26y02/",
+          "date": "2026-02-27"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "名駅でら横丁が2027年に17店 — インバウンド飲食ビルの採算を業界人が読む",
+      "lead_draft": "名古屋駅から徒歩4分の名駅4丁目に、17店舗が入る飲食ビル「名駅でら横丁」が2027年10月開業予定と発表された。短期定期借地による都市型土地活用で、居酒屋・寿司・もつ焼き・炉端焼きなどを集積する。訪日客を狙う横丁型施設が名古屋で成立するのかを、テナント側の採算から読む。",
+      "angle": "横丁型飲食ビルのテナント採算（坪効率・共益費・回遊性）を業界人視点で読む",
+      "main_store": {
+        "name": "名駅でら横丁",
+        "id": "",
+        "area": "名駅",
+        "genre": "飲食ビル"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES「名古屋駅 徒歩4分、インバウンド対応型飲食ビル『名駅でら横丁』誕生！」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000042.000011808.html",
+          "date": "2026-09-18"
+        },
+        {
+          "label": "名古屋情報通 ニューオープン一覧",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-09-23"
+        },
+        {
+          "label": "帝国データバンク「食品主要195社 価格改定動向調査（2026年3月）」",
+          "url": "https://www.tdb.co.jp/report/economic/20260227-neage26y02/",
+          "date": "2026-02-27"
+        }
+      ]
+    }
+  ]
+}

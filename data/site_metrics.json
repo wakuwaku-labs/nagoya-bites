@@ -1,65 +1,65 @@
 {
-  "generatedAt": "2026-09-23T12:36:59.924Z",
+  "generatedAt": "2026-09-24T00:12:10.335Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1159,
-    "pageViews": 1986,
-    "sessions": 1401,
-    "avgSessionDuration": 154.9,
-    "bounceRate": 0.276,
-    "pagesPerSession": 1.42
+    "activeUsers": 1130,
+    "pageViews": 1931,
+    "sessions": 1371,
+    "avgSessionDuration": 152.9,
+    "bounceRate": 0.28,
+    "pagesPerSession": 1.41
   },
   "dailyReference": {
-    "date": "2026-09-21",
-    "sessions": 52,
-    "bounceRate": 0.25,
-    "pageViews": 62
+    "date": "2026-09-22",
+    "sessions": 30,
+    "bounceRate": 0.133,
+    "pageViews": 32
   },
   "channels": {
     "sessions": {
-      "organic": 973,
-      "direct": 292,
+      "organic": 944,
+      "direct": 294,
       "social": 9,
-      "ai_assistant": 104,
+      "ai_assistant": 103,
       "referral": 23,
       "paid": 0,
-      "other": 18
+      "other": 19
     },
     "pct": {
-      "organic": 68.6,
-      "direct": 20.6,
+      "organic": 67.8,
+      "direct": 21.1,
       "social": 0.6,
-      "ai_assistant": 7.3,
-      "referral": 1.6,
+      "ai_assistant": 7.4,
+      "referral": 1.7,
       "paid": 0,
-      "other": 1.3
+      "other": 1.4
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 422
+      "sessions": 411
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 349
+      "sessions": 341
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 212
+      "sessions": 207
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 186
+      "sessions": 176
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 85
+      "sessions": 83
     },
     {
       "source": "unknown",
@@ -69,12 +69,12 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 28
+      "sessions": 35
     },
     {
       "source": "(data not available)",
       "medium": "(data not available)",
-      "sessions": 18
+      "sessions": 19
     },
     {
       "source": "duckduckgo",
@@ -107,14 +107,14 @@
       "sessions": 4
     },
     {
-      "source": "teams.public.onecdn.static.microsoft",
-      "medium": "referral",
+      "source": "openai",
+      "medium": "organic",
       "sessions": 4
     },
     {
-      "source": "openai",
-      "medium": "organic",
-      "sessions": 3
+      "source": "teams.public.onecdn.static.microsoft",
+      "medium": "referral",
+      "sessions": 4
     },
     {
       "source": "ecosia.org",
@@ -190,37 +190,37 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 403,
-      "sessions": 352
+      "pageViews": 382,
+      "sessions": 345
     },
     {
       "path": "/",
-      "pageViews": 260,
-      "sessions": 184
+      "pageViews": 255,
+      "sessions": 179
     },
     {
       "path": "/index.html",
-      "pageViews": 157,
-      "sessions": 95
+      "pageViews": 155,
+      "sessions": 93
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 109,
-      "sessions": 101
+      "pageViews": 105,
+      "sessions": 97
     },
     {
       "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
-      "pageViews": 42,
-      "sessions": 42
+      "pageViews": 41,
+      "sessions": 41
     }
   ],
   "cta": {
-    "outboundClicks": 164,
-    "ctaClickRate": 11.7,
+    "outboundClicks": 158,
+    "ctaClickRate": 11.5,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 69
+        "clicks": 64
       },
       {
         "domain": "tabelog.com",
@@ -228,7 +228,7 @@
       },
       {
         "domain": "maps.google.com",
-        "clicks": 21
+        "clicks": 20
       },
       {
         "domain": "www.instagram.com",
@@ -281,25 +281,21 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 73,
-      "direct": 63,
+      "organic": 68,
+      "direct": 62,
       "social": 0,
       "ai_assistant": 21,
       "referral": 6,
       "paid": 0,
       "other": 1
     },
-    "ctaClickRate_organic": 7.5,
-    "ctaClickRate_direct": 21.6,
+    "ctaClickRate_organic": 7.2,
+    "ctaClickRate_direct": 21.1,
     "ctaClickRate_social": 0,
     "byPage": [
       {
         "path": "/",
-        "clicks": 30
-      },
-      {
-        "path": "/features/nagoya-solo-dining.html",
-        "clicks": 23
+        "clicks": 29
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
@@ -311,6 +307,10 @@
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
+        "clicks": 18
+      },
+      {
+        "path": "/features/nagoya-solo-dining.html",
         "clicks": 18
       },
       {
@@ -416,17 +416,17 @@
     ],
     "byPageDomain": [
       {
-        "path": "/features/nagoya-solo-dining.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 23
-      },
-      {
         "path": "/features/nagoya-kaoawase-washoku.html",
         "domain": "tabelog.com",
         "clicks": 21
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 18
+      },
+      {
+        "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
         "clicks": 18
       },
@@ -448,7 +448,7 @@
       {
         "path": "/",
         "domain": "maps.google.com",
-        "clicks": 6
+        "clicks": 5
       },
       {
         "path": "/",
@@ -678,15 +678,15 @@
     ],
     "reservationClicksByPage": [
       {
-        "path": "/features/nagoya-solo-dining.html",
-        "clicks": 23
-      },
-      {
         "path": "/features/nagoya-kaoawase-washoku.html",
         "clicks": 21
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
+        "clicks": 18
+      },
+      {
+        "path": "/features/nagoya-solo-dining.html",
         "clicks": 18
       },
       {
@@ -746,11 +746,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 109
+    "reservationClicks": 104
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1159,
+    "value": 1130,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
