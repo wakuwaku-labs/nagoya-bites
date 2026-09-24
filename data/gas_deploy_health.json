@@ -2,8 +2,8 @@
   "version": 1,
   "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
   "last_run": {
-    "date": "2026-09-23",
-    "recorded_at": "2026-09-23T23:46:06.791Z",
+    "date": "2026-09-24",
+    "recorded_at": "2026-09-24T23:46:48.462Z",
     "status": "ok",
     "reason": null,
     "verdict": "not_deployed",
@@ -864,6 +864,36 @@
       "numeric_reference": null,
       "numeric_reference_skipped": "参照値の日付 2026-09-21 が レポートが名乗る対象日 2026-09-22 と一致しないため数値判定をしない",
       "recorded_at": "2026-09-23T23:46:06.785Z"
+    },
+    {
+      "date": "2026-09-24",
+      "kind": "daily",
+      "verdict": "not_deployed",
+      "missing_fixes": [
+        "SEO-093"
+      ],
+      "evidence": [
+        {
+          "key": "settled_slice_label",
+          "fix_id": "SEO-076",
+          "verdict": "deployed",
+          "line": "【読まれ方（確定値・2026-09-23）】"
+        },
+        {
+          "key": "sns_daily_posts_path_reference",
+          "fix_id": "SEO-093",
+          "verdict": "not_deployed",
+          "line": "docs/daily-posts/にある今日のSNS投稿原稿（Note, Instagram, X）を全て投稿し、最新のジャーナル記事(journal/)への導線を確保する。"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "indeterminate"
+        }
+      ],
+      "numeric_reference": null,
+      "numeric_reference_skipped": "参照値の日付 2026-09-22 が レポートが名乗る対象日 2026-09-23 と一致しないため数値判定をしない",
+      "recorded_at": "2026-09-24T23:46:48.457Z"
     }
   ],
   "deploys": [

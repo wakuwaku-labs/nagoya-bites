@@ -6,6 +6,28 @@
 
 ---
 
+### [SEO-108] 特集→ジャーナル個別記事のリンクが 2026-08-19 の一回実行で凍結している（以後の36本が特集から一度も辿れず、最大入口の nagoya-solo-dining は同シーンの記事が6本あるのに0本）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-25
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEOアドバイス(LINE) 2026-09-24 原文「ページ閲覧が60回と訪問者32人に対して平均1.3ページと回遊が少ないです。👉 人気ページ「nagoya-solo-dining」に、関連するソロ活向けの店舗記事（journal/）への内部リンクを3件追加し、回遊を促す」
+- **brand-filter**: ✅ 適合（振替採用）— Moat「構造化DB × 特集 × 日次ジャーナルの三層編集」の層間リンクの保守。literal な打ち手（1特集に手で3本足す）は採らず、実測で見つかった構造欠陥に振り替える。順位操作・広告・クーポン・ストック写真を伴わず、リンク先は公開済みの実在記事のみ
+- **実測（2026-09-25）**:
+  - `scripts/add_feature_journal_links.js`（[[SEO-056]]・2026-08-19）は `related-journal-articles` マーカーを持つ特集を**スキップする一回実行型**で、build.yml / 日次ラッパーのどこからも呼ばれていない（`grep -rn add_feature_journal_links .github/` 0件）。published 132本のうち 2026-08-19 以降の **36本**は特集側に一度も反映されていない
+  - 対応付けが「店舗ID の一致」のみのため、`features/nagoya-solo-dining.html`（週閲覧の最大集中ページ・[[SEO-087]]）は `journal/` への個別リンク **0本**（索引 `../journal/index.html` のみ3本）。一方 journal/ には一人飲み・カウンター系の記事が実在する（`2026-08-19-sakae-solo-last-order-signs` / `2026-08-25-misen-five-lineages-osu-solo` / `2026-09-16-sakae-hitorinomi-shinya-ryokin-kozo` / `2026-09-24-kurumamichi-pizzeria-mimi-counter12` 等）
+  - `data/journal_seo_keywords.json` は既に KW「一人飲み」→ `features/nagoya-solo-dining.html` を紐づけている＝**検証可能な第二の対応キー**が既存データにある
+- **acceptance**:
+  1. `add_feature_journal_links.js` を「マーカーがあればスキップ」から「マーカー区間を再生成（冪等・差分があるときだけ書く）」に変え、`--check` を追加
+  2. 対応キーに「ジャーナル記事タイトルが `journal_seo_keywords.json` の KW（またはその表記揺れ）を含み、その KW の feature が当該特集である」を追加（店舗ID一致と並列）。判定は検証できる事実だけ（制約10）。上限件数・新しい順は既存ルールに従い、上限はスクリプト定数ではなく既存ポリシーJSONに置く
+  3. build.yml（または日次ジャーナルのラッパーの `--only` 運用に準じた差分適用）で日次実行し、新規ジャーナルが翌日までに特集側へ反映されること
+  4. `features/nagoya-solo-dining.html` に一人飲み系の実在ジャーナル記事リンクが入ることを実測で確認。リンク先404ゼロ・JSON-LD不汚染・`audit_feature_stores.js` 検出数が前後で不変・`audit_design_system.js --check` 通過
+  5. 効果は `internal_link_click`（block='feature_journal'）の前後比で判定（1日の PV/訪問 は n が小さく判定に使わない）
+- **関連**: [[SEO-056]]（本チケットの前身・一回実行で完了扱い）／[[SEO-087]]（solo-dining の勝ち筋分解・Editor）／[[SEO-046]]（逆方向 journal→特集は `refresh_journal_related.js` で日次自動化済み＝同じ運用に揃える）／[[SEO-106]]（DB→特集の逆引き）
+
+---
+
 ### [SEO-107] `gsc_opportunities.json` の実データ機会2件 — ①「レビュー」検索785表示に店舗ページのtitle/descriptionが一語も応えていない ②1桁順位なのにCTRがほぼ0%の店（評価データそのものが欠落している疑い）
 
 - **priority**: P2 → **status**: in_progress（①反映済み。②は`GOOGLE_MAPS_API_KEY`が本環境に無く未着手）

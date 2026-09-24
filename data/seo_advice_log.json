@@ -3280,6 +3280,36 @@
       "brand_reason": "重複。失効した前提（docs/daily-posts/ にSNS原稿が毎日用意されている）に基づく助言は SEO-093（in_progress・GASデプロイ待ち）が扱っており再起票しない。事実: data/journal_sns_draft_policy.json の generate_sns_draft は 2026-09-05 からオーナー指示で false、docs/daily-posts/ の最新原稿は 2026-09-05 で19日前。SNS投稿はリポジトリ外運用でサイト側のコード施策ではない。同日の check_gas_deploy_health.js --record も本助言文を根拠に not_deployed（SEO-093 未反映・3回連続）と判定している。",
       "category": null,
       "fingerprint": "88ab741ba50aa8b9"
+    },
+    {
+      "id": null,
+      "date": "2026-09-24",
+      "source": "line-daily",
+      "advice": "🔴 予約ボタンクリックが0回。訪問者32人に対して予約率0.0%は改善が必要です。👉 トップページ(index.html)と特集ページ(features/)の予約ボタン(cta_click)の文言を「空席確認・予約」に変更し、視認性を高める。",
+      "verdict": "rejected",
+      "brand_reason": "却下（前提が単日ノイズ・制約10）。当日の店舗詳細を開いた回数は3回で、予約ボタンはその詳細モーダル内にある＝分母3に対する0は文言・視認性について何も示さない（2026-09-13/09-23 に同型を却下済み）。文言変更の効果をこの母数で判定する手段も無い。予約導線の実体課題は SEO-089（done）/SEO-105 に集約済み",
+      "category": null,
+      "fingerprint": "a710fa0b1a703a15"
+    },
+    {
+      "id": "SEO-108",
+      "date": "2026-09-24",
+      "source": "line-daily",
+      "advice": "🟡 ページ閲覧が60回と訪問者32人に対して平均1.3ページと回遊が少ないです。👉 人気ページ「nagoya-solo-dining」に、関連するソロ活向けの店舗記事（journal/）への内部リンクを3件追加し、回遊を促す。",
+      "verdict": "adopted",
+      "brand_reason": "振替採用。literalな手作業3本追加は採らず、実測で判明した構造欠陥に振替: SEO-056 の add_feature_journal_links.js はマーカー有りをスキップする一回実行型でCI未配線、2026-08-19以降の36本が特集側に未反映。店舗ID一致のみの対応付けのため solo-dining は一人飲み系ジャーナルが実在するのに個別リンク0本。journal_seo_keywords.json のKW→特集対応を第二キーに加え日次再生成化する。Moat『三層編集』の層間リンク保守",
+      "category": "SEO",
+      "fingerprint": "9418b7cfe243835d"
+    },
+    {
+      "id": null,
+      "date": "2026-09-24",
+      "source": "line-daily",
+      "advice": "🟢 SNS流入比率が0%と、SNSからの集客が全くありません。👉 docs/daily-posts/にある今日のSNS投稿原稿（Note, Instagram, X）を全て投稿し、最新のジャーナル記事(journal/)への導線を確保する。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-093 に集約済み・GASデプロイ待ち）。前提『docs/daily-posts/ に今日の原稿がある』は失効: data/journal_sns_draft_policy.json の generate_sns_draft:false（2026-09-05〜オーナー判断）。SNS投稿はリポジトリ外運用で、SNS流入0%は計測上の観測外（traffic_source.js 修正後1媒体30日6件未満）。この助言が出続けること自体が GAS 旧コードの痕跡",
+      "category": null,
+      "fingerprint": "3c30b529849f7cbb"
     }
   ]
 }
