@@ -1,65 +1,65 @@
 {
-  "generatedAt": "2026-09-24T12:52:24.937Z",
+  "generatedAt": "2026-09-24T21:14:53.624Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1145,
-    "pageViews": 1968,
-    "sessions": 1388,
-    "avgSessionDuration": 152.3,
-    "bounceRate": 0.27,
-    "pagesPerSession": 1.42
+    "activeUsers": 1106,
+    "pageViews": 1931,
+    "sessions": 1348,
+    "avgSessionDuration": 154.2,
+    "bounceRate": 0.281,
+    "pagesPerSession": 1.43
   },
   "dailyReference": {
-    "date": "2026-09-22",
-    "sessions": 30,
-    "bounceRate": 0.133,
-    "pageViews": 32
+    "date": "2026-09-23",
+    "sessions": 36,
+    "bounceRate": 0.194,
+    "pageViews": 45
   },
   "channels": {
     "sessions": {
-      "organic": 965,
-      "direct": 290,
+      "organic": 924,
+      "direct": 299,
       "social": 9,
-      "ai_assistant": 107,
-      "referral": 24,
+      "ai_assistant": 105,
+      "referral": 23,
       "paid": 0,
-      "other": 8
+      "other": 16
     },
     "pct": {
-      "organic": 68.8,
-      "direct": 20.7,
-      "social": 0.6,
+      "organic": 67.2,
+      "direct": 21.7,
+      "social": 0.7,
       "ai_assistant": 7.6,
       "referral": 1.7,
       "paid": 0,
-      "other": 0.6
+      "other": 1.2
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 419
+      "sessions": 393
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 348
+      "sessions": 338
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 211
+      "sessions": 209
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 179
+      "sessions": 174
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 85
+      "sessions": 81
     },
     {
       "source": "unknown",
@@ -69,7 +69,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 27
+      "sessions": 37
     },
     {
       "source": "duckduckgo",
@@ -79,7 +79,7 @@
     {
       "source": "(data not available)",
       "medium": "(data not available)",
-      "sessions": 8
+      "sessions": 14
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -122,23 +122,28 @@
       "sessions": 3
     },
     {
+      "source": "unknown",
+      "medium": "(none)",
+      "sessions": 3
+    },
+    {
+      "source": "chatgpt.com",
+      "medium": "(none)",
+      "sessions": 2
+    },
+    {
       "source": "openai",
       "medium": "(not set)",
       "sessions": 2
     },
     {
-      "source": "search.portal.auone.jp",
+      "source": "websearch.rakuten.co.jp",
       "medium": "referral",
       "sessions": 2
     },
     {
       "source": "unknown",
-      "medium": "(none)",
-      "sessions": 2
-    },
-    {
-      "source": "websearch.rakuten.co.jp",
-      "medium": "referral",
+      "medium": "",
       "sessions": 2
     },
     {
@@ -182,6 +187,11 @@
       "sessions": 1
     },
     {
+      "source": "search.portal.auone.jp",
+      "medium": "referral",
+      "sessions": 1
+    },
+    {
       "source": "sgyba.com",
       "medium": "referral",
       "sessions": 1
@@ -195,41 +205,41 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 387,
-      "sessions": 348
+      "pageViews": 386,
+      "sessions": 347
     },
     {
       "path": "/",
-      "pageViews": 256,
-      "sessions": 180
+      "pageViews": 254,
+      "sessions": 178
     },
     {
       "path": "/index.html",
-      "pageViews": 157,
+      "pageViews": 160,
       "sessions": 95
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 107,
-      "sessions": 99
+      "pageViews": 101,
+      "sessions": 93
     },
     {
-      "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
-      "pageViews": 41,
-      "sessions": 41
+      "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
+      "pageViews": 38,
+      "sessions": 36
     }
   ],
   "cta": {
-    "outboundClicks": 160,
-    "ctaClickRate": 11.5,
+    "outboundClicks": 156,
+    "ctaClickRate": 11.6,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 64
+        "clicks": 62
       },
       {
         "domain": "tabelog.com",
-        "clicks": 40
+        "clicks": 38
       },
       {
         "domain": "maps.google.com",
@@ -286,16 +296,16 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 69,
-      "direct": 63,
+      "organic": 68,
+      "direct": 62,
       "social": 0,
-      "ai_assistant": 22,
+      "ai_assistant": 20,
       "referral": 6,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.2,
-    "ctaClickRate_direct": 21.7,
+    "ctaClickRate_organic": 7.4,
+    "ctaClickRate_direct": 20.7,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -304,27 +314,23 @@
       },
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 21
+        "clicks": 19
       },
       {
         "path": "/index.html",
         "clicks": 19
       },
       {
-        "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 18
-      },
-      {
         "path": "/features/nagoya-solo-dining.html",
         "clicks": 18
       },
       {
-        "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
-        "clicks": 6
+        "path": "/features/nagoya-hitsumabushi.html",
+        "clicks": 17
       },
       {
-        "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
-        "clicks": 4
+        "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
+        "clicks": 6
       },
       {
         "path": "/journal/2026-09-12-sakae-sulbing-korean-bingsu.html",
@@ -336,6 +342,10 @@
       },
       {
         "path": "/features/nagoya-miso-nikomi-udon.html",
+        "clicks": 3
+      },
+      {
+        "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "clicks": 3
       },
       {
@@ -423,17 +433,17 @@
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
         "domain": "tabelog.com",
-        "clicks": 21
-      },
-      {
-        "path": "/features/nagoya-hitsumabushi.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 18
+        "clicks": 19
       },
       {
         "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
         "clicks": 18
+      },
+      {
+        "path": "/features/nagoya-hitsumabushi.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 17
       },
       {
         "path": "/index.html",
@@ -476,11 +486,6 @@
         "clicks": 3
       },
       {
-        "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 3
-      },
-      {
         "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
         "domain": "www.instagram.com",
         "clicks": 3
@@ -517,6 +522,11 @@
       },
       {
         "path": "/index.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 2
+      },
+      {
+        "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "domain": "www.hotpepper.jp",
         "clicks": 2
       },
@@ -689,15 +699,15 @@
     "reservationClicksByPage": [
       {
         "path": "/features/nagoya-kaoawase-washoku.html",
-        "clicks": 21
-      },
-      {
-        "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 18
+        "clicks": 19
       },
       {
         "path": "/features/nagoya-solo-dining.html",
         "clicks": 18
+      },
+      {
+        "path": "/features/nagoya-hitsumabushi.html",
+        "clicks": 17
       },
       {
         "path": "/index.html",
@@ -712,10 +722,6 @@
         "clicks": 3
       },
       {
-        "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
-        "clicks": 3
-      },
-      {
         "path": "/features/birthday.html",
         "clicks": 2
       },
@@ -725,6 +731,10 @@
       },
       {
         "path": "/features/nagoya-italian-guide.html",
+        "clicks": 2
+      },
+      {
+        "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "clicks": 2
       },
       {
@@ -756,11 +766,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 104
+    "reservationClicks": 100
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1145,
+    "value": 1106,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

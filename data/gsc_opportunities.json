@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-24T12:52:28.043Z",
+  "generatedAt": "2026-09-24T21:14:56.698Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -18,30 +18,30 @@
     "ctrFixGeoless": [
       {
         "query": "一人飲み",
-        "impressions": 142,
+        "impressions": 147,
         "clicks": 4,
-        "position": 4,
-        "ctr": 2.82,
-        "expectedCtr": 8,
-        "missedClicks": 7.4
+        "position": 4.1,
+        "ctr": 2.72,
+        "expectedCtr": 7.8,
+        "missedClicks": 7.5
       },
       {
         "query": "cm 伏見",
-        "impressions": 77,
+        "impressions": 82,
         "clicks": 2,
-        "position": 5.6,
-        "ctr": 2.6,
-        "expectedCtr": 5.4,
-        "missedClicks": 2.2
+        "position": 5.7,
+        "ctr": 2.44,
+        "expectedCtr": 5.3,
+        "missedClicks": 2.3
       },
       {
         "query": "1人飲み",
-        "impressions": 46,
+        "impressions": 47,
         "clicks": 2,
         "position": 4.2,
-        "ctr": 4.35,
+        "ctr": 4.26,
         "expectedCtr": 7.6,
-        "missedClicks": 1.5
+        "missedClicks": 1.6
       }
     ],
     "rankPush": []
@@ -50,32 +50,32 @@
     "ctrFix": [
       {
         "page": "/stores/J004660861.html",
-        "impressions": 601,
-        "clicks": 15,
-        "position": 5.6,
-        "ctr": 2.5,
-        "expectedCtr": 5.4,
-        "missedClicks": 17.4
+        "impressions": 651,
+        "clicks": 17,
+        "position": 5.7,
+        "ctr": 2.61,
+        "expectedCtr": 5.3,
+        "missedClicks": 17.5
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 447,
+        "impressions": 458,
         "clicks": 7,
         "position": 8.6,
-        "ctr": 1.57,
+        "ctr": 1.53,
         "expectedCtr": 3,
-        "missedClicks": 6.2
+        "missedClicks": 6.5
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 4105,
+        "impressions": 4187,
         "clicks": 9,
-        "position": 25.9,
-        "ctr": 0.22,
-        "upsideClicks": 105.9
+        "position": 25.8,
+        "ctr": 0.21,
+        "upsideClicks": 108.4
       },
       {
         "page": "/stores/J004678178.html",
