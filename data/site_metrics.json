@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-23T21:08:08.032Z",
+  "generatedAt": "2026-09-23T23:48:56.291Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1127,
-    "pageViews": 1930,
-    "sessions": 1367,
-    "avgSessionDuration": 153.2,
-    "bounceRate": 0.278,
+    "activeUsers": 1129,
+    "pageViews": 1931,
+    "sessions": 1370,
+    "avgSessionDuration": 153,
+    "bounceRate": 0.28,
     "pagesPerSession": 1.41
   },
   "dailyReference": {
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 943,
-      "direct": 290,
+      "organic": 944,
+      "direct": 293,
       "social": 9,
-      "ai_assistant": 102,
+      "ai_assistant": 103,
       "referral": 23,
       "paid": 0,
       "other": 19
     },
     "pct": {
-      "organic": 68,
-      "direct": 20.9,
+      "organic": 67.9,
+      "direct": 21.1,
       "social": 0.6,
       "ai_assistant": 7.4,
       "referral": 1.7,
@@ -44,7 +44,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 340
+      "sessions": 341
     },
     {
       "source": "(direct)",
@@ -69,7 +69,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 31
+      "sessions": 34
     },
     {
       "source": "(data not available)",
@@ -107,14 +107,14 @@
       "sessions": 4
     },
     {
-      "source": "teams.public.onecdn.static.microsoft",
-      "medium": "referral",
+      "source": "openai",
+      "medium": "organic",
       "sessions": 4
     },
     {
-      "source": "openai",
-      "medium": "organic",
-      "sessions": 3
+      "source": "teams.public.onecdn.static.microsoft",
+      "medium": "referral",
+      "sessions": 4
     },
     {
       "source": "ecosia.org",
@@ -190,8 +190,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 381,
-      "sessions": 344
+      "pageViews": 382,
+      "sessions": 345
     },
     {
       "path": "/",
@@ -216,7 +216,7 @@
   ],
   "cta": {
     "outboundClicks": 158,
-    "ctaClickRate": 11.6,
+    "ctaClickRate": 11.5,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -290,7 +290,7 @@
       "other": 1
     },
     "ctaClickRate_organic": 7.2,
-    "ctaClickRate_direct": 21.4,
+    "ctaClickRate_direct": 21.2,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -750,7 +750,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1127,
+    "value": 1129,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
