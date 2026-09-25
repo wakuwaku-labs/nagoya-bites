@@ -1767,6 +1767,52 @@
       "写真取得日": "2026-09-24",
       "写真幅": 4000,
       "写真出所": "places-user"
+    },
+    {
+      "店名": "TOOLCAFE 名古屋店",
+      "ジャンル": "カフェ（ベーカリー）",
+      "エリア": "名駅南",
+      "アクセス": "あおなみ線ささしまライブ駅から徒歩約11分（中村区名駅南3丁目）",
+      "価格帯": "501～1000円",
+      "情報源": "https://tabelog.com/aichi/A2301/A230101/23096242/",
+      "おすすめポイント": "建築会社が営む今池「TOOL CAFE」の姉妹店。2026年5月に名駅南へオープンし、焼き立てパン70円からとドッグ同伴可のテラス席が人気で東海テレビでも紹介された。",
+      "営業状況": "営業中",
+      "追加日": "2026-09-26",
+      "merged": false,
+      "発掘元_話題出典URL": [
+        "https://news.yahoo.co.jp/articles/7eef23d4bbf0a55fc839bc0fe8465769f904c016",
+        "https://x.com/nagoya1016/status/2054125475099037823"
+      ],
+      "発掘元_コメント": "建築会社が営む今池TOOL CAFEの姉妹店として2026年5月12日に名駅南にオープン。焼き立てパン70円からが人気で東海テレビのニュース番組でも紹介された / LOCAL_STORES 未登録",
+      "発掘元": "trending-scout",
+      "写真確認日": "2026-09-25",
+      "写真URL": "https://lh3.googleusercontent.com/place-photos/AG9NLjAbVZMurjOCcFedcxMrNDxD-cLUAdVMKkF1AtTePUtQi-8geIJZOr9rULzgaO5TL_pGriB0pIPscDGtTfK3psGu-mb27rzG7vVqUc1nk6JWmem4cRHP9Jo9Zq8J7e3tHDz0peMVMUbw_2VADnQ8NNauYg=s1600-w1200",
+      "写真クレジット": "ゆみち",
+      "GooglePlaceID": "ChIJ2TA9FgB3A2AR5sS7Hg8Iw9w",
+      "写真取得日": "2026-09-25",
+      "写真幅": 3024,
+      "写真出所": "places-user"
+    },
+    {
+      "店名": "東鮓本店 名古屋栄三越店",
+      "ジャンル": "寿司（テイクアウト専門）",
+      "エリア": "栄",
+      "アクセス": "地下鉄栄駅直結・名古屋栄三越 地下1階（中区栄3-5-1）",
+      "価格帯": "1001～1500円",
+      "情報源": "https://tabelog.com/aichi/A2301/A230103/23095531/",
+      "おすすめポイント": "明治2年創業の老舗寿司店。2026年3月の名古屋栄三越地下グルメ大規模リニューアルに合わせてB1F食品フロアへ新規出店したテイクアウト専門店で、握りやちらしが揃う。",
+      "営業状況": "営業中",
+      "追加日": "2026-09-26",
+      "merged": false,
+      "発掘元_話題出典URL": [
+        "https://jouhou.nagoya/mitsukoshi-renewal2026/",
+        "https://tabelog.com/aichi/A2301/A230103/23095531/"
+      ],
+      "発掘元_コメント": "明治2年創業の名古屋の老舗寿司店が、2026年3月の名古屋栄三越地下グルメ大規模リニューアルに合わせてB1F食品フロアへ新規出店したテイクアウト専門店（既存の「東鮓本店」他店舗とは別のLOCAL_STORES未登録エリア）/ LOCAL_STORES 未登録。取り込み時、fetch_trending_articles.js の部分一致マッチング（s['店名'].includes(name)）が無関係な既存店「東」（栄・錦の居酒屋）に誤マッチしたため手動で candidates[] へ訂正（要: マッチング関数の完全一致/十分な長さでの部分一致への修正）",
+      "発掘元": "trending-scout",
+      "写真確認日": "2026-09-25",
+      "写真失敗回数": 1,
+      "写真失敗理由": "name-mismatch"
     }
   ]
 }

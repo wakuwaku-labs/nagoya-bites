@@ -2,29 +2,29 @@
   "version": 1,
   "_comment": "話題店発掘ループの心拍。trending-scout ルーチンが毎回（新規リード0件の日も）書き、コミットで Mac／クラウドの外＝GitHub へ出す。.github/workflows/trending-scout-watchdog.yml が鮮度を見て、滞ったら Issue を起票する（＝オーナーにメール）。鮮度は自己申告できない（動いていないエージェントはファイルを更新できない）ため、これが本体の検知シグナル。",
   "last_run": {
-    "date": "2026-09-24",
-    "recorded_at": "2026-09-23T20:07:21.940Z",
+    "date": "2026-09-26",
+    "recorded_at": "2026-09-25T19:18:04.926Z",
     "status": "ok",
     "reason": null,
     "queries": [
-      "サブロー 名古屋 グルメ",
-      "名古屋ジャーニー 特集",
-      "東海テレビ グルメ 名古屋",
-      "CBC 名古屋 紹介",
-      "メ〜テレ 飲食店",
-      "ケンミンショー 名古屋",
-      "名古屋 retrip 人気",
-      "名古屋 icotto おすすめ",
-      "名古屋 MATCHA 訪日",
-      "名古屋 tabi-labo グルメ",
-      "名古屋 TikTok 話題",
-      "名古屋 インスタ映え カフェ"
+      "名古屋 話題 飲食店 2026",
+      "名古屋 新店 オープン",
+      "名古屋 行列ができる店",
+      "名古屋 予約 取れない",
+      "名古屋 トレンド レストラン",
+      "栄 話題の店",
+      "名駅 新店 2026",
+      "名古屋 雑誌 掲載 レストラン",
+      "名古屋 dressing 特集",
+      "名古屋 マカロニ グルメ",
+      "名古屋 ヒトサラ おすすめ",
+      "名古屋 OZmall 特集"
     ],
-    "leads_found": 5,
-    "matched_existing": 2,
+    "leads_found": 3,
+    "matched_existing": 0,
     "new_candidates": 3,
     "promoted": 0,
-    "trending_stores_total": 28,
-    "trending_candidates_total": 7
+    "trending_stores_total": 29,
+    "trending_candidates_total": 9
   }
 }
