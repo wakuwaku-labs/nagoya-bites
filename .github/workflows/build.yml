@@ -261,6 +261,14 @@ jobs:
         run: node scripts/refresh_feature_rosters.js --if-stale
         continue-on-error: true
 
+      - name: 特集→ジャーナルリンク更新（SEO-108・全特集対象・冪等）
+        # 各特集に対応するジャーナル記事（店舗ID一致 OR シーンKW一致）へのリンクを
+        # <!-- SEO-108:JOURNAL-LINKS:START/END --> マーカーで冪等に更新する。
+        # refresh_feature_rosters.js のあとに実行して最新の掲載店状態を前提にする。
+        # 実在するジャーナルHTMLが無いリンクは出さない（verifyLinks）。
+        run: node scripts/add_feature_journal_links.js
+        continue-on-error: true
+
       - name: 特集上部CTAの自動付与（SEO-042・全特集対象・冪等）
         # --all で全 features/*.html を対象にする（SEO-100: 旧来は上位特集のみだったが、
         # ItemList に URL のない特集 17本は HTML 本文の shop-name/stores リンクへフォールバック）。

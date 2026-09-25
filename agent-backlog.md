@@ -8,7 +8,7 @@
 
 ### [SEO-108] 特集→ジャーナル個別記事のリンクが 2026-08-19 の一回実行で凍結している（以後の36本が特集から一度も辿れず、最大入口の nagoya-solo-dining は同シーンの記事が6本あるのに0本）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-25
 - **category**: SEO
 - **owner**: Builder
@@ -1200,6 +1200,21 @@
 - **review**: 本チケットのacceptanceは上記「検証できる事実」の5項目。人手レビューはPR作成後にDesigner役職（Orchestrator代行）が実施
 - **未完了**: PR作成・マージ。マージ後の翌日CI（node build.js）でHotPepper新規射影フィールド（定休日/最寄駅/席数等）が実データに反映されることを確認（ローカルはHOTPEPPER_API_KEY未設定のため射影ロジックのfixtureテストのみで検証済み）
 ## 実行ログ
+
+### 2026-09-25（自動ルーティン・クラウドセッション）
+
+**処理件数**: 1件（SEO-108）
+
+- **[SEO-108]** 特集→ジャーナルリンクを冪等・KW対応で日次更新に
+  - **acceptance ①実装**: `scripts/add_feature_journal_links.js` を「マーカーがあればスキップ」から「`<!-- SEO-108:JOURNAL-LINKS:START/END -->` 区間を再生成（冪等・差分があるときだけ書く）」に完全書き直し。旧形式（`class="related-journal-articles"` のみ）は自動 migrate（MIGRATED）。`--check` フラグ追加（差分あれば exit 1・CI向け）
+  - **acceptance ②実装**: 対応キーに「ジャーナルタイトルが `journal_seo_keywords.json` のエイリアスを含み、そのKWのfeatureが当該特集」を追加（店舗ID一致と並列・制約10準拠）。上限 `maxFeatureJournalLinks: 3` を `data/journal_seo_keywords.json` に追加
+  - **acceptance ③実装**: `.github/workflows/build.yml` の `refresh_feature_rosters.js` ステップ直後に `node scripts/add_feature_journal_links.js` ステップを追加（`continue-on-error: true`）
+  - **acceptance ④確認**: `nagoya-solo-dining.html` に `2026-09-24-kurumamichi-pizzeria-mimi-counter12`・`2026-09-21-meieki-dote-daikoku-bel-butter-waffle`・`2026-09-16-sakae-hitorinomi-shinya-ryokin-kozo` の3本が挿入（`verifyLinks` で404ゼロ確認済み）。`audit_design_system.js --check` violations: 0。`audit_feature_stores.js` 検出数: 変化なし（8件のまま・別途対応中の既知課題）。`--check` exit 0（冪等確認済み）
+  - **実行結果**: inserted=26 / migrated=21 / unchanged=17 / removed=4 / skipped=0
+  - **変更ファイル**: `scripts/add_feature_journal_links.js`、`data/journal_seo_keywords.json`、`.github/workflows/build.yml`、`features/*.html`（51本）、`agent-backlog.md`
+  - **acceptance ⑤効果測定**: `internal_link_click`（block='feature_journal'）の前後比は翌日以降の実測で判定
+
+---
 
 ### 2026-09-11（自動ルーティン・クラウドセッション）
 
