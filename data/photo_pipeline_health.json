@@ -1,16 +1,16 @@
 {
   "places": {
-    "date": "2026-09-25",
+    "date": "2026-09-26",
     "status": "ok",
     "quota_reached_streak": 0,
     "reason": "",
-    "api_calls": 0,
-    "quota_day": "2026-09-24",
-    "api_calls_day": 0,
+    "api_calls": 2,
+    "quota_day": "2026-09-25",
+    "api_calls_day": 2,
     "daily_budget": 200,
     "sku_month": "2026-09",
     "sku_calls_month": {
-      "textsearch": 160,
+      "textsearch": 162,
       "details": 126,
       "photo": 100
     },
@@ -21,21 +21,21 @@
     },
     "sku_exhausted": "",
     "skipped_by_daily_budget": false,
-    "responded": 0,
-    "failed": 0,
-    "attempted": 0,
-    "adopted": 0,
-    "recorded_at": "2026-09-24T23:48:46.347Z"
-  },
-  "hotpepper": {
-    "date": "2026-09-24",
-    "status": "ok",
-    "reason": "",
     "responded": 2,
     "failed": 0,
-    "attempted": 2,
+    "attempted": 1,
     "adopted": 0,
-    "recorded_at": "2026-09-24T00:12:18.488Z"
+    "recorded_at": "2026-09-25T21:08:18.028Z"
+  },
+  "hotpepper": {
+    "date": "2026-09-26",
+    "status": "ok",
+    "reason": "",
+    "responded": 12,
+    "failed": 0,
+    "attempted": 12,
+    "adopted": 0,
+    "recorded_at": "2026-09-25T21:08:24.486Z"
   },
   "journal_photos": {
     "sku_month": "2026-09",
