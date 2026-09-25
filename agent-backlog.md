@@ -1214,6 +1214,11 @@
   - **変更ファイル**: `scripts/add_feature_journal_links.js`、`data/journal_seo_keywords.json`、`.github/workflows/build.yml`、`features/*.html`（51本）、`agent-backlog.md`
   - **acceptance ⑤効果測定**: `internal_link_click`（block='feature_journal'）の前後比は翌日以降の実測で判定
 
+- **[SEO-060] acceptance⑤** effect_ledger.json に GSC 28日値（2026-08-27〜2026-09-23）を followup として記録
+  - **結果**: solo_dining 53→184クリック（+247%）・目標150クリック達成。date 0→10クリック・position 18.8→12.3。banquet/private-room/settai-secretは依然 topPages 圏外（impressions 閾値未満）
+  - **所見**: 見出し階層(H2/H3)単独では大半のシーンKWは動かなかった（acceptance④訂正済み）。banquetのmonthlyScenes前倒し（2026-09-23）の効果測定は4週間後。discovery合計: 79→199クリック・3393→3268表示（solo_diningの単独爆発が主因）
+  - **変更ファイル**: `data/effect_ledger.json`、`agent-backlog.md`
+
 ---
 
 ### 2026-09-11（自動ルーティン・クラウドセッション）
@@ -3076,7 +3081,7 @@ URLが絶対か / PNGが実在するか。エージェントの自己申告値�
 ---
 ### [SEO-060] シーンKW 15本中14本が2ページ目以降で埋もれている（discovery 表示シェアが 2.2% しかない構造原因）
 
-- **priority**: P1 → **status**: in_progress（2026-09-23再オープン。実装自体はdoneだったが4週間後効果確認で大半のシーンが未改善と判明したため）
+- **priority**: P1 → **status**: in_progress（acceptance⑤のeffect_ledger記録を2026-09-25に完了。banquet/private-room/settai-secretは依然効果未出。nagoya-settai-lunch/nagoya-morningの掲載店0件問題がEditor残件）
 - **detected**: 2026-08-17（オーナーの「数字が落ちている」という問いに対する GSC 6ヶ月エクスポートの分解から判明）
 - **category**: SEO / コンテンツ
 - **owner**: Marketer（KW設計）/ Editor（本文拡充）/ Builder（内部リンク）
