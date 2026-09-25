@@ -1,0 +1,419 @@
+{
+  "date": "2026-09-25",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄の炭焼うな富士、秋コース8800円が本店では出ない——うなぎ店の回転を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "ひつまぶし",
+          "feature": "features/nagoya-hitsumabushi.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 7件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 4件 (予約,シーン,相場,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 167字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「うなぎ」+2"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -10 / writability -2"
+    },
+    {
+      "id": "c5",
+      "title_draft": "栄・久屋大通の秋酒祭2026が10月3日開幕、27蔵の回り方",
+      "verdict": "HOLD",
+      "total": 64,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 84字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "名古屋の秋アフタヌーンティー、栄・名駅のホテル6軒を価格帯で並べる",
+      "verdict": "HOLD",
+      "total": 61,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 92字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "名駅・大名古屋ビルヂングの秋グルメ19店、380円から始まる秋の一杯",
+      "verdict": "HOLD",
+      "total": 52,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 3,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "Strategic Skip 該当 1件 (クーポン) → -5",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 127字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [
+    {
+      "id": "c3",
+      "title_draft": "名駅ホーム上に六厘舎が期間限定、秋のつけめんを立ち食いで読む",
+      "verdict": "DISQUALIFIED",
+      "total": 0,
+      "disqualified_reasons": [
+        "同一店舗の再掲 (六厘舎 JR名古屋駅1番線店 in pending, 2026-08-21)"
+      ],
+      "breakdown": null
+    }
+  ],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -10 / writability -2",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "栄の炭焼うな富士、秋コース8800円が本店では出ない——うなぎ店の回転を業界人が読む",
+      "lead_draft": "9月26日、炭焼うな富士が秋の季節限定コースを始める。秋刀魚・栗・さつま芋に名古屋コーチン水炊きまで付く8,800円／11,000円の二本立てだが、提供されるのは本店・名古屋駅太閤口店・神楽坂店を除く13店舗。名古屋で最も行列するうなぎ店が、自分の本店でコースを出さない。その線引きに、うなぎ店の滞在時間と回転の設計が丸ごと出ている。",
+      "angle": "秋の季節限定コースの「出す店・出さない店」の線引きを、営業時間（本店20:30閉 vs 栄HAERA店23:00閉）と客単価・滞在時間・回転率・席数から業界人視点で読む。8,800円と11,000円の差額2,200円＝名古屋コーチン水炊き一品という価格設計、コース予約と単品客の予約枠の取り合い、名駅の秋メニュー相場（380円〜2,178円）との比較、接待・会食・デートのシーン適性まで。",
+      "main_store": {
+        "name": "炭焼 うな富士 栄HAERA店",
+        "id": "",
+        "area": "栄",
+        "genre": "うなぎ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES｜株式会社かぶらやグループ『秋刀魚や栗 名古屋コーチン水炊きなど旬の味覚とうなぎを味わう 季節限定コースが登場』",
+          "url": "https://prtimes.jp/main/html/rd/p/000000034.000123811.html",
+          "date": "2026-09-18"
+        },
+        {
+          "label": "炭焼 うな富士 公式サイト｜店舗のご案内",
+          "url": "https://sumiyaki-unafuji.com/shops/",
+          "date": "2026-09-25"
+        },
+        {
+          "label": "大名古屋ビルヂング『おいしい秋に出合う。大名古屋ビルヂングの秋グルメ』",
+          "url": "https://dainagoyabuilding.com/article/event/13010/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "一休.comレストラン｜炭焼うな富士 名駅店",
+          "url": "https://restaurant.ikyu.com/120323",
+          "date": "2026-09-25"
+        },
+        {
+          "label": "フーズチャネル『秋刀魚や栗 名古屋コーチン水炊きなど旬の味覚とうなぎを味わう 季節限定コースが登場』",
+          "url": "https://foods-ch.infomart.co.jp/news/333785",
+          "date": "2026-09-18"
+        },
+        {
+          "label": "グルメプレス『秋刀魚や栗 名古屋コーチン水炊きなど旬の味覚とうなぎを味わう 季節限定コースが登場』",
+          "url": "https://gourmetpress.net/1482769/",
+          "date": "2026-09-18"
+        },
+        {
+          "label": "食べログ｜炭焼うな富士（鶴舞）料理メニュー",
+          "url": "https://tabelog.com/aichi/A2301/A230105/23000105/dtlmenu/",
+          "date": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "名駅・大名古屋ビルヂングの秋グルメ19店、380円から始まる秋の一杯",
+      "lead_draft": "名駅の大名古屋ビルヂングが9月1日から11月10日まで、19店舗19メニューの秋グルメ企画を走らせている。きのこマリネ380円から北海道産トロ秋刀魚の塩焼き定食2,178円まで、価格の振れ幅が大きい。館内企画の値付けには、テナント側の事情がそのまま出る。",
+      "angle": "商業ビルの館内グルメ企画が「共通クーポン付きで単品を安く出す」構造を、テナントの集客コスト負担という業界視点で読む",
+      "main_store": {
+        "name": "大衆酒場フレンチマン",
+        "id": "",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "大名古屋ビルヂング『おいしい秋に出合う。大名古屋ビルヂングの秋グルメ』",
+          "url": "https://dainagoyabuilding.com/article/event/13010/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "大名古屋ビルヂング『甘い秋のひととき。大名古屋ビルヂングで楽しむ秋スイーツ』",
+          "url": "https://dainagoyabuilding.com/article/event/13011/",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "tabemaro『【2026年10月】名古屋・愛知のイベント40選』",
+          "url": "https://www.tabemaro.jp/column/october/",
+          "date": "2026-09-20"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "名駅ホーム上に六厘舎が期間限定、秋のつけめんを立ち食いで読む",
+      "lead_draft": "JR名古屋駅1番線の企画スペースに、東京のつけめん店「六厘舎」が期間限定で入る。ホーム上という特殊立地は、滞在時間が列車の発車時刻に縛られる。秋の名駅で、つけめんという提供時間の長い商品をどう回すのか。",
+      "angle": "ホーム上の期間限定営業という極端な立地制約を、提供時間・客席回転・仕込み量の観点で業界人視点で読む",
+      "main_store": {
+        "name": "六厘舎 JR名古屋駅1番線店",
+        "id": "",
+        "area": "名駅",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES｜名古屋ステーション開発『JR名古屋駅1番線企画2026年秋 つけめん専門店 六厘舎 期間限定オープン！』",
+          "url": "https://prtimes.jp/main/html/rd/p/000000041.000108483.html",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "tabemaro『【2026年10月】名古屋・愛知のイベント40選』",
+          "url": "https://www.tabemaro.jp/column/october/",
+          "date": "2026-09-20"
+        },
+        {
+          "label": "walkerplus 名古屋市のイベント【2026年10月】",
+          "url": "https://www.walkerplus.com/event_list/10/ar0623100/nagoya/",
+          "date": "2026-09-20"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "名古屋の秋アフタヌーンティー、栄・名駅のホテル6軒を価格帯で並べる",
+      "lead_draft": "名古屋のホテルラウンジが秋のアフタヌーンティーを一斉に切り替えた。栗・ぶどう・かぼちゃが並ぶスタンドは、見た目こそ似るが価格帯は幅がある。ヌン活の選び方を、滞在時間と単価の関係で読む。",
+      "angle": "ホテルラウンジの秋アフタヌーンティーを、2時間制・ドリンクおかわり有無・原価構成という業界視点で比較する",
+      "main_store": {
+        "name": "（ホテルラウンジ複数）",
+        "id": "",
+        "area": "栄",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "ナゴヤトコトン『名古屋の秋はアフタヌーンティーの秋！ 期間限定アフタヌーンティー6+2選』",
+          "url": "https://nagoyato.com/posts/5420",
+          "date": "2026-09-05"
+        },
+        {
+          "label": "tabemaro『【2026年10月】名古屋・愛知のイベント40選』",
+          "url": "https://www.tabemaro.jp/column/october/",
+          "date": "2026-09-20"
+        },
+        {
+          "label": "大名古屋ビルヂング『甘い秋のひととき。大名古屋ビルヂングで楽しむ秋スイーツ』",
+          "url": "https://dainagoyabuilding.com/article/event/13011/",
+          "date": "2026-09-01"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "栄・久屋大通の秋酒祭2026が10月3日開幕、27蔵の回り方",
+      "lead_draft": "久屋大通のエディオン久屋広場で、10月3日・4日に秋酒祭 愛知2026が開かれる。愛知の27蔵が集まるコイン制のイベントで、混雑時間帯の選び方がそのまま満足度を決める。",
+      "angle": "コイン制日本酒イベントの回り方を、蔵の配置と混雑ピークから業界人視点で読む",
+      "main_store": {
+        "name": "秋酒祭 愛知2026（久屋大通公園）",
+        "id": "",
+        "area": "栄",
+        "genre": "日本酒"
+      },
+      "sources": [
+        {
+          "label": "久屋大通公園 公式イベント情報",
+          "url": "https://www.hisayaodoripark.com/category/nagoya-event/%E3%82%B0%E3%83%AB%E3%83%A1%EF%BC%86%E3%83%89%E3%83%AA%E3%83%B3%E3%82%AF/",
+          "date": "2026-09-20"
+        },
+        {
+          "label": "tabemaro『【2026年10月】名古屋・愛知のイベント40選』",
+          "url": "https://www.tabemaro.jp/column/october/",
+          "date": "2026-09-20"
+        },
+        {
+          "label": "walkerplus 名古屋市のイベント【2026年10月】",
+          "url": "https://www.walkerplus.com/event_list/10/ar0623100/nagoya/",
+          "date": "2026-09-20"
+        }
+      ]
+    }
+  ]
+}
