@@ -2,13 +2,14 @@
   "version": 1,
   "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
   "last_run": {
-    "date": "2026-09-24",
-    "recorded_at": "2026-09-24T23:46:48.462Z",
+    "date": "2026-09-25",
+    "recorded_at": "2026-09-25T23:45:26.834Z",
     "status": "ok",
     "reason": null,
     "verdict": "not_deployed",
     "missing_fixes": [
-      "SEO-093"
+      "SEO-093",
+      "SEO-092"
     ]
   },
   "observations": [
@@ -894,6 +895,43 @@
       "numeric_reference": null,
       "numeric_reference_skipped": "参照値の日付 2026-09-22 が レポートが名乗る対象日 2026-09-23 と一致しないため数値判定をしない",
       "recorded_at": "2026-09-24T23:46:48.457Z"
+    },
+    {
+      "date": "2026-09-25",
+      "kind": "daily",
+      "verdict": "not_deployed",
+      "missing_fixes": [
+        "SEO-093",
+        "SEO-092"
+      ],
+      "evidence": [
+        {
+          "key": "settled_slice_label",
+          "fix_id": "SEO-076",
+          "verdict": "deployed",
+          "line": "【読まれ方（確定値・2026-09-24）】"
+        },
+        {
+          "key": "sns_daily_posts_path_reference",
+          "fix_id": "SEO-093",
+          "verdict": "not_deployed",
+          "line": "今日公開のジャーナル記事（journal/2026-09-26-…）とSNS投稿原稿（docs/daily-posts/2026-09-26-…）を連携し、InstagramとXで積極的に発信しましょう。"
+        },
+        {
+          "key": "stale_example_kw",
+          "fix_id": "SEO-092",
+          "verdict": "not_deployed",
+          "line": "「名古屋 接待 個室」など強みである専門性の高いキーワードで、Google検索順位を上げるための記事（journal/）を執筆・公開しましょう。"
+        },
+        {
+          "key": "bounce_rate_divergence",
+          "fix_id": "SEO-062",
+          "verdict": "indeterminate"
+        }
+      ],
+      "numeric_reference": null,
+      "numeric_reference_skipped": "参照値の日付 2026-09-23 が レポートが名乗る対象日 2026-09-24 と一致しないため数値判定をしない",
+      "recorded_at": "2026-09-25T23:45:26.829Z"
     }
   ],
   "deploys": [

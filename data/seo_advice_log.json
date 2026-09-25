@@ -3310,6 +3310,36 @@
       "brand_reason": "重複（SEO-093 に集約済み・GASデプロイ待ち）。前提『docs/daily-posts/ に今日の原稿がある』は失効: data/journal_sns_draft_policy.json の generate_sns_draft:false（2026-09-05〜オーナー判断）。SNS投稿はリポジトリ外運用で、SNS流入0%は計測上の観測外（traffic_source.js 修正後1媒体30日6件未満）。この助言が出続けること自体が GAS 旧コードの痕跡",
       "category": null,
       "fingerprint": "3c30b529849f7cbb"
+    },
+    {
+      "id": null,
+      "date": "2026-09-25",
+      "source": "line-daily",
+      "advice": "🟡 検索流入比率が72%と高いものの、SNS流入は0%です。👉 今日公開のジャーナル記事（journal/2026-09-26-…）とSNS投稿原稿（docs/daily-posts/2026-09-26-…）を連携し、InstagramとXで積極的に発信しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下（前提が失効・既判定の再来）。docs/daily-posts/ のSNS原稿自動生成は data/journal_sns_draft_policy.json generate_sns_draft:false（2026-09-05 オーナー判断）で停止中で、名指しされた 2026-09-26 の原稿ファイルは存在しない。SNS投稿自体はリポジトリ外運用でUTM計測する方針。同じ誤前提は 09-14/09-17/09-23 に却下済みで、助言生成器側の是正は SEO-093（GAS未反映）に集約済み。",
+      "category": null,
+      "fingerprint": "92596b595c8277a4"
+    },
+    {
+      "id": "SEO-109",
+      "date": "2026-09-25",
+      "source": "line-daily",
+      "advice": "🟢 人気ページTOP1に「nagoya-solo-dining」（10回閲覧）が来ています。ソロ需要の顕在化が見られます。👉 トップページのフィルタに「お一人様」を追加し、この特集ページへの導線を強化しましょう。また、関連店舗の店舗詳細モーダルにも導線を設置しましょう。",
+      "verdict": "adopted",
+      "brand_reason": "一部採用。index.html の常時表示 .scene-nav「シーンで探す」6チップに一人飲みが無い一方、GSC実測で「名古屋 一人飲み」303表示/36クリック/5.5位が discovery 最大群、solo-dining は GA4閲覧TOP1を反復。検索側の hitori 概念は実装済みのためチップ追加のみで入口を作れる＝Moat「シーン別専門性」の強化で順位操作を伴わない。店舗詳細への導線部分は stores/*.html 2,403本が既に solo-dining へリンク済みのため範囲外。owner=Builder。",
+      "category": "SEO",
+      "fingerprint": "e94642e27ec17fc5"
+    },
+    {
+      "id": null,
+      "date": "2026-09-25",
+      "source": "line-daily",
+      "advice": "🟡 訪問者40人のうち、Google検索からの流入は7件に留まります。Bing検索に大きく差をつけられています。👉 「名古屋 接待 個室」など強みである専門性の高いキーワードで、Google検索順位を上げるための記事（journal/）を執筆・公開しましょう。",
+      "verdict": "rejected",
+      "brand_reason": "却下（実データに無いKWの推測書き足し）。「名古屋 接待 個室」は SEO-090 の診断で GSC 表示ほぼ0＝需要なしで着地済み（09-14 にも同KWの助言を却下）。接待・個室特集は既に6本あり、journal を足しても作用する検索需要が無い。Google/Bing比は単日の流入元比で、GSC の discovery クエリで評価する方針（SEO-043）。実在する需要KW（一人飲み）への手当ては SEO-109 で採用。",
+      "category": null,
+      "fingerprint": "953547dc086d2676"
     }
   ]
 }
