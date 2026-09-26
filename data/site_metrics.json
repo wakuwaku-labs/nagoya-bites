@@ -1,65 +1,65 @@
 {
-  "generatedAt": "2026-09-26T12:37:12.356Z",
+  "generatedAt": "2026-09-26T20:41:18.497Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1124,
-    "pageViews": 1934,
-    "sessions": 1363,
-    "avgSessionDuration": 155.2,
-    "bounceRate": 0.266,
-    "pagesPerSession": 1.42
+    "activeUsers": 1098,
+    "pageViews": 1898,
+    "sessions": 1331,
+    "avgSessionDuration": 155.4,
+    "bounceRate": 0.267,
+    "pagesPerSession": 1.43
   },
   "dailyReference": {
-    "date": "2026-09-24",
+    "date": "2026-09-25",
     "sessions": 40,
-    "bounceRate": 0.175,
-    "pageViews": 59
+    "bounceRate": 0.325,
+    "pageViews": 45
   },
   "channels": {
     "sessions": {
-      "organic": 943,
-      "direct": 281,
+      "organic": 915,
+      "direct": 279,
       "social": 9,
-      "ai_assistant": 108,
+      "ai_assistant": 107,
       "referral": 24,
       "paid": 0,
-      "other": 2
+      "other": 3
     },
     "pct": {
-      "organic": 69,
-      "direct": 20.6,
+      "organic": 68.4,
+      "direct": 20.9,
       "social": 0.7,
-      "ai_assistant": 7.9,
+      "ai_assistant": 8,
       "referral": 1.8,
       "paid": 0,
-      "other": 0.1
+      "other": 0.2
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 390
+      "sessions": 383
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 353
+      "sessions": 339
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 210
+      "sessions": 206
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 179
+      "sessions": 172
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 85
+      "sessions": 84
     },
     {
       "source": "unknown",
@@ -67,14 +67,14 @@
       "sessions": 52
     },
     {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 19
+    },
+    {
       "source": "duckduckgo",
       "medium": "organic",
       "sessions": 18
-    },
-    {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 17
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -117,6 +117,11 @@
       "sessions": 3
     },
     {
+      "source": "unknown",
+      "medium": "",
+      "sessions": 3
+    },
+    {
       "source": "openai",
       "medium": "(not set)",
       "sessions": 2
@@ -129,11 +134,6 @@
     {
       "source": "websearch.rakuten.co.jp",
       "medium": "referral",
-      "sessions": 2
-    },
-    {
-      "source": "unknown",
-      "medium": "",
       "sessions": 2
     },
     {
@@ -195,23 +195,23 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 393,
-      "sessions": 353
+      "pageViews": 382,
+      "sessions": 343
     },
     {
       "path": "/",
-      "pageViews": 247,
-      "sessions": 174
+      "pageViews": 241,
+      "sessions": 169
     },
     {
       "path": "/index.html",
-      "pageViews": 161,
-      "sessions": 96
+      "pageViews": 160,
+      "sessions": 95
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 104,
-      "sessions": 96
+      "pageViews": 100,
+      "sessions": 93
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
@@ -220,12 +220,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 157,
-    "ctaClickRate": 11.5,
+    "outboundClicks": 156,
+    "ctaClickRate": 11.7,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 63
+        "clicks": 62
       },
       {
         "domain": "tabelog.com",
@@ -289,13 +289,13 @@
       "organic": 70,
       "direct": 60,
       "social": 0,
-      "ai_assistant": 19,
+      "ai_assistant": 18,
       "referral": 6,
       "paid": 0,
       "other": 2
     },
-    "ctaClickRate_organic": 7.4,
-    "ctaClickRate_direct": 21.4,
+    "ctaClickRate_organic": 7.7,
+    "ctaClickRate_direct": 21.5,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -316,7 +316,7 @@
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 17
+        "clicks": 16
       },
       {
         "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
@@ -433,7 +433,7 @@
       {
         "path": "/features/nagoya-hitsumabushi.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 17
+        "clicks": 16
       },
       {
         "path": "/index.html",
@@ -712,7 +712,7 @@
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
-        "clicks": 17
+        "clicks": 16
       },
       {
         "path": "/index.html",
@@ -779,11 +779,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 100
+    "reservationClicks": 99
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1124,
+    "value": 1098,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
