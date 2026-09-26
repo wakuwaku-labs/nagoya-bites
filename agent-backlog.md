@@ -6,6 +6,26 @@
 
 ---
 
+### [SEO-110] ジャーナルの店舗カード→店舗ページのリンクが 2026-07-30 の一括補修で凍結している（以後30記事・39カードが、店舗ページが存在するのに外部リンクのまま）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-09-27
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEOアドバイス(LINE) 2026-09-26 原文「人気記事『2026-09-24-kurumamichi-pizzeria-mimi-counter12』から、関連するfeatures/の特集記事やstores/の店舗ページへの内部リンクを増やす」
+- **brand-filter**: ✅ 適合（振替採用）— literal な「1記事に手でリンクを足す」は採らない。名指しの記事を実測すると特集リンク（nagoya-italian-guide ×2 / nagoya-solo-dining / industry-insiders-pick）とエリア×ジャンルハブ3本は既に張られており、**欠けているのは記事の主役店 Pizzeria mimi 自身の店舗ページ `stores/pizzeria-mimi.html`（2026-09-24 生成・実在）へのリンクだけ**だった。原因を追うと構造欠陥: `generate_daily_draft.js` の `storeDetailLink()` は生成時点で `s.id` がある店しか内部リンクにできず、新店（記事公開と同日以降に `stores/` が生成される店）のカードは外部リンク（Instagram/公式/Googleマップ）で固定される。[[ISSUE-078]] の過去記事補修（2026-07-30）は一回実行で、以後は誰も張り替えていない（[[SEO-108]] と同型の「一回実行で凍結」）。Moat の構造化DB（店舗ページ＝実在検証済みの資産）を、最も読まれる入口（日次ジャーナル）から辿れるようにするだけで、順位操作・広告・新規ページ追加を伴わない
+- **実測（2026-09-27・`stores/*.html` 5,633本の見出し/JSON-LD name の正引き索引と `journal/*.html` の `.store-card` を店名完全一致（NFKC）で突合）**:
+  - 全カード161件のうち内部リンク済み119件・**店舗ページが存在するのに外部リンクのまま39件（30記事・全体の24%）**。すべて 2026-07-30 以降の記事
+  - 直近の例: 09-24 Pizzeria mimi / 09-21 BEL BUTTER WAFFLE・どての大黒 / 09-20 丸八 伏見別邸（HP ID J004678792 を持つのに外部リンク）/ 09-15 大久手山本屋
+  - 同名で複数ページがある店が3件（カーサ・オリーバ / 矢場味仙 下坪店 / ウルフギャング）＝自動では確定させない
+- **acceptance**:
+  1. 冪等な張り替えスクリプト（例: `scripts/relink_journal_store_cards.js`、`--dry-run` / `--check`）を追加。判定は ISSUE-078 追補と同じ「`stores/*.html` の実ファイルの name → ファイル名」の正引き索引＋店名完全一致のみ（slug の再現計算はしない＝制約10）。同名複数ページ・不一致は張り替えずレポートに残す（取り繕わない）
+  2. 張り替えは `.store-card` の「詳細を見る →」を `../stores/{slug}.html` に替え、元の外部リンク（公式/Instagram）は失わずに併置する。`data/journal_published.json` の `store_ids` も補完
+  3. 一回実行で終わらせない: build.yml（gen-store-pages.js の後）に `--check` を日次で配線し、新たに店舗ページが生成された店を検知・張り替えできるようにする（CI で書き換えるか検知のみにするかは実装時に判断。検知のみなら警報は out-of-band＝ISSUE-084 原則）
+  4. 実施後に上記スキャンを再実行して「店舗ページ有り・外部リンクのまま」が同名複数ページの3件以外ゼロ。`node scripts/audit_design_system.js --check` 通過・`validate_journal_draft.js` の新規FAIL増加ゼロ
+  5. 効果測定: 2週間後に GA4 の journal→stores 遷移（`location:'journal_store_card'` 系イベント）と pages/session を前後比較。単日の数値では判定しない
+- **却下した部分**: 同日の助言のうち「features/ 特集への内部リンクを増やす」は名指し記事で既に4特集へ張られており増分が無い。特集→ジャーナル方向の凍結は [[SEO-108]] で起票済み
+
 ### [SEO-109] トップの常時表示「シーンで探す」に一人飲みチップが無い（GSC最大の discovery KW「名古屋 一人飲み」と閲覧TOP1特集への入口がトップに出ていない）
 
 - **priority**: P2 → **status**: ready
