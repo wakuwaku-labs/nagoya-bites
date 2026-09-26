@@ -31,8 +31,10 @@
 
 ### [SEO-108] 特集→ジャーナル個別記事のリンクが 2026-08-19 の一回実行で凍結している（以後の36本が特集から一度も辿れず、最大入口の nagoya-solo-dining は同シーンの記事が6本あるのに0本）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-25
+- **resolved**: 2026-09-26
+- **resolved_by**: routine
 - **category**: SEO
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-09-24 原文「ページ閲覧が60回と訪問者32人に対して平均1.3ページと回遊が少ないです。👉 人気ページ「nagoya-solo-dining」に、関連するソロ活向けの店舗記事（journal/）への内部リンクを3件追加し、回遊を促す」
@@ -1226,12 +1228,20 @@
 
 ### 2026-09-26（自動ルーティン・クラウドセッション）
 
-**処理件数**: 1件（SEO-109）
+**処理件数**: 2件（SEO-109、SEO-108）
 
 - **[SEO-109]** トップ「シーンで探す」に「一人飲み」チップを追加
   - `index.html:1691` に `<button class="scene-chip" onclick="suggestSearch('一人飲み')">一人飲み</button>` を追加
   - 既存 `hitori` 概念（`nbC('hitori','scene','一人・少人数', …)`）で検索がそのまま機能する
   - QA: `audit_design_system.js --check` 通過（violations: []）・LOCAL_STORES 件数不変・diff 1行のみ
+
+- **[SEO-108]** 特集→ジャーナルリンクを冪等・日次更新化
+  - `scripts/add_feature_journal_links.js` を「マーカーがあればスキップ」から「マーカー区間を毎回再生成（冪等・差分があるときだけ書く）」に変更。`SECTION_RE` で先頭の水平空白を消去して re-inject が二重インデントにならない仕様。`--check` モード（差分あれば exit 1・CI向け）を追加
+  - KW突合（`journal_seo_keywords.json` の feature→KW マッピング）を第二の対応キーとして追加。`nagoya-solo-dining.html` は店舗ID一致では 0本だったが KW「一人飲み」突合で 3本取得できた
+  - build.yml に日次実行ステップを追加（`continue-on-error: true`）
+  - 実行結果: modified=44 noChange=3 noMatch=21（全 features/*.html 68本）。リンク先 HTML ファイルの実在確認を通過（架空リンクゼロ）
+  - 冪等確認: 2回目実行 modified=0 noChange=47（✅）
+  - QA: HTML 構造 balanced（div 3 opens / 3 closes in .related section）・`audit_design_system.js --check` 通過
 
 ---
 

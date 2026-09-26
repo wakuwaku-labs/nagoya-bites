@@ -261,6 +261,14 @@ jobs:
         run: node scripts/refresh_feature_rosters.js --if-stale
         continue-on-error: true
 
+      - name: 特集→ジャーナル個別リンクの日次更新（SEO-108・冪等・差分あるときだけ書く）
+        # add_feature_journal_links.js を日次実行し、新規ジャーナルを翌日までに特集側へ反映する。
+        # 旧来は「マーカーがあればスキップ」で 2026-08-19 以降 36本が凍結していた（SEO-108）。
+        # 対応キー2つ（店舗ID突合 + journal_seo_keywords.json の KW突合）を並列で使い、
+        # solo-dining のような「KW一致だが店舗IDで取れない」ケースも捕捉する。
+        run: node scripts/add_feature_journal_links.js
+        continue-on-error: true
+
       - name: 特集上部CTAの自動付与（SEO-042・全特集対象・冪等）
         # --all で全 features/*.html を対象にする（SEO-100: 旧来は上位特集のみだったが、
         # ItemList に URL のない特集 17本は HTML 本文の shop-name/stores リンクへフォールバック）。
