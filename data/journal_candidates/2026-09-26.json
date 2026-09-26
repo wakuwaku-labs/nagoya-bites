@@ -1,0 +1,437 @@
+{
+  "date": "2026-09-26",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄の忘年会に「ちゃんこ九重」10月16日開店、横綱コース1万円の読み方",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 7件 (価格帯,コース,席,予約,シーン,接待,アラカルト) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 3件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 179字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -10 / search_intent -2"
+    },
+    {
+      "id": "c5",
+      "title_draft": "栄・夜来香 本店の中華、宴会コースの組み方",
+      "verdict": "HOLD",
+      "total": 47,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "中華",
+          "feature": "features/nagoya-chinese-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 78日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (コース) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 41字 +2",
+          "title 21字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「中華」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "丸の内・勝手口 河内屋、400年の料亭の裏口に居酒屋がある理由",
+      "verdict": "HOLD",
+      "total": 46,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 2,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 211日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 85字 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "過去に掲載歴のある店（90日超） → 2"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "シーン語がリードのみ「個室」+1",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "伏見・島正のどて焼き、一人飲みのカウンターが回る速さ",
+      "verdict": "HOLD",
+      "total": 43,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 10,
+        "brand_fit": 8,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 117日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (一人飲み,回転) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 55字 +2",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「一人飲み」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "栄・有伝亭 匠のカレーうどん、昼の回転をどう作っているか",
+      "verdict": "HOLD",
+      "total": 37,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 37日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 42字 +2",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -10 / search_intent -2",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "栄の忘年会に「ちゃんこ九重」10月16日開店、横綱コース1万円の読み方",
+      "lead_draft": "2026年9月25日、TKPが名古屋・栄に九重部屋直伝のちゃんこ料理店「ちゃんこ九重」を10月16日に開くと発表した。アパホテル〈名古屋栄駅前〉EXCELLENT の5階、54席に個室5室、日曜祝日定休。横綱コース10,000円・大関コース8,000円・鍋単品3,000円という値付けと、同じ建物に貸会議室を持つ会社が鍋業態を選んだ設計を、業界人の目で読む。",
+      "angle": "貸会議室会社が同一建物内に鍋業態を置く=会議後の会食を館内で完結させる設計。日曜祝日定休・個室5室/54席・ランチ11月開始という条件から、価格帯（コース8000/10000円とアラカルト鍋3000円の使い分け）・オペの裏側（鍋は仕込み平準化で少人数運営が効く／立ち上げはディナー一本に絞る定石）・シーン適性（接待と部署単位の忘年会、予約は10月中）を具体的に示す",
+      "main_store": {
+        "name": "ちゃんこ九重",
+        "id": "",
+        "area": "栄（名古屋市中区錦）",
+        "genre": "ちゃんこ鍋・和食"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: TKP、名古屋・栄に九重部屋直伝のちゃんこ料理店「ちゃんこ九重」を10月16日オープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000561.000024137.html",
+          "date": "2026-09-25"
+        },
+        {
+          "label": "財経新聞: TKP 名古屋・栄に九重部屋直伝「ちゃんこ九重」を10月16日オープン",
+          "url": "https://www.zaikei.co.jp/article/20260925/871267.html",
+          "date": "2026-09-25"
+        },
+        {
+          "label": "株探ニュース: TKP---名古屋・栄に九重部屋直伝「ちゃんこ九重」を10月16日オープン",
+          "url": "https://kabutan.jp/stock/news?code=3479&b=n202609251222",
+          "date": "2026-09-25"
+        },
+        {
+          "label": "ダイヤモンド・ザイ: ＴＫＰ---名古屋・栄に九重部屋直伝「ちゃんこ九重」を10月16日オープン",
+          "url": "https://diamond.jp/zai/articles/-/1073407",
+          "date": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "丸の内・勝手口 河内屋、400年の料亭の裏口に居酒屋がある理由",
+      "lead_draft": "老舗料亭「河文」のバックヤードを改装した「勝手口 河内屋」。カウンター13席・個室1室で、正面玄関ではなく勝手口から入る。料亭が大衆業態を併設する設計を業界人視点で読む。",
+      "angle": "料亭が同一建物に低単価業態を置いて客単価の分散と厨房稼働の平準化を図る設計を読む",
+      "main_store": {
+        "name": "勝手口 河内屋",
+        "id": "J004698880",
+        "area": "丸の内",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES: 400年の歴史ある料亭の「勝手口」から入る隠れ家",
+          "url": "https://prtimes.jp/main/html/rd/p/000000117.000051750.html",
+          "date": "2025-09-16"
+        },
+        {
+          "label": "東海テレビNEWS: 勝手口から入る背徳感…名古屋400年の老舗「河文」が仕掛けた秘密の居酒屋",
+          "url": "https://www.tokai-tv.com/tokainews/feature/article_20260227_44884",
+          "date": "2026-02-27"
+        },
+        {
+          "label": "名古屋情報通: 老舗料亭から生まれた気軽に立ち寄れる和食居酒屋『勝手口 河内屋』",
+          "url": "https://jouhou.nagoya/katteguchi-kawabun/",
+          "date": "2025-09-18"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "伏見・島正のどて焼き、一人飲みのカウンターが回る速さ",
+      "lead_draft": "戦後すぐの創業から続く「島正」。どて焼きと串カツのカウンターがなぜ長く続くのかを、回転と仕込みの観点から読む。",
+      "angle": "単品特化のどて焼き店の仕込みと回転設計を一人飲み視点で読む",
+      "main_store": {
+        "name": "島正",
+        "id": "",
+        "area": "伏見・栄",
+        "genre": "郷土料理・どて焼き"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通: 島正",
+          "url": "https://jouhou.nagoya/shimasho/",
+          "date": "2026-06-01"
+        },
+        {
+          "label": "るるぶ&more: 島正",
+          "url": "https://rurubu.jp/andmore/spot/80023583",
+          "date": "2026-05-01"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "栄・有伝亭 匠のカレーうどん、昼の回転をどう作っているか",
+      "lead_draft": "栄のうどん・カレーうどん店「有伝亭 匠」。昼のピークをどう捌くかを業界人視点で読む。",
+      "angle": "麺業態のランチピーク設計を読む",
+      "main_store": {
+        "name": "有伝亭 匠",
+        "id": "",
+        "area": "栄",
+        "genre": "うどん・カレーうどん"
+      },
+      "sources": [
+        {
+          "label": "tabemaro: 有伝亭 匠",
+          "url": "https://www.tabemaro.jp/shop/arudenteitakumi/",
+          "date": "2026-08-20"
+        },
+        {
+          "label": "おいなごや: 有伝亭",
+          "url": "https://oinagoya.com/arudentei/",
+          "date": "2026-08-15"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "栄・夜来香 本店の中華、宴会コースの組み方",
+      "lead_draft": "栄の中華料理店「夜来香 栄本店」。宴会コースの品数と価格の関係を業界人視点で読む。",
+      "angle": "中華の宴会コース設計を読む",
+      "main_store": {
+        "name": "夜来香 栄本店",
+        "id": "",
+        "area": "栄",
+        "genre": "中華料理"
+      },
+      "sources": [
+        {
+          "label": "LIFE DESIGNS: 夜来香",
+          "url": "https://life-designs.jp/webmagazine/eiraishan/",
+          "date": "2026-07-10"
+        },
+        {
+          "label": "名古屋めし: 夜来香 栄本店",
+          "url": "https://nagoya-meshi.com/area/sakae/ieraishan",
+          "date": "2026-06-20"
+        }
+      ]
+    }
+  ]
+}
