@@ -304,6 +304,14 @@ jobs:
         run: node scripts/gen_area_genre_pages.js
         continue-on-error: true
 
+      - name: ジャーナル店舗カード内部リンク整合性監査（SEO-110）
+        # gen-store-pages.js の直後に置く理由: stores/*.html の最新 slug 索引が確定してから
+        # ジャーナル側の「詳細を見る →」と照合する（新しい店舗ページが増えるたびに拾える）。
+        # --check は未リンクカードが残っていれば exit 1。最初は continue-on-error で開始し、
+        # CI が緑を確認してから blocking 化する（ISSUE-121 の教訓）。
+        run: node scripts/relink_journal_store_cards.js --check
+        continue-on-error: true
+
       - name: llms.txt を再生成（LLM向けサイト要約・SEO-097）
         # data/stores.json（店舗数・エリア別/ジャンル別内訳）・data/area_genre_pages_manifest.json
         # （SEO-094のエリア×ジャンルハブ一覧・上のステップで直前に更新済み）・features/*.html
