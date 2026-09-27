@@ -51,8 +51,9 @@
 
 ### [SEO-108] 特集→ジャーナル個別記事のリンクが 2026-08-19 の一回実行で凍結している（以後の36本が特集から一度も辿れず、最大入口の nagoya-solo-dining は同シーンの記事が6本あるのに0本）
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-25
+- **resolved**: 2026-09-27
 - **category**: SEO
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-09-24 原文「ページ閲覧が60回と訪問者32人に対して平均1.3ページと回遊が少ないです。👉 人気ページ「nagoya-solo-dining」に、関連するソロ活向けの店舗記事（journal/）への内部リンクを3件追加し、回遊を促す」
@@ -6585,6 +6586,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-09-17 | Editor+Builder(対話) | ジャーナル欠番 2026-09-16 を手動バックフィル — launchd 実行はバッテリー駆動中の DNS 解決失敗（`API Error: Can't reach the API server — check your internet or DNS (ENOTFOUND)`）で生成失敗し、`run_journal_local.sh` の再試行判定の正規表現に ENOTFOUND が無かったため1回で即 HOLD（ISSUE-096 と同クラス・電源運用の穴）。`journal/2026-09-16-sakae-hitorinomi-shinya-ryokin-kozo.html`（業界の裏側・COL-LAW-008 新設。水曜ローテが提示した COL-LAW-001 は 06-17 に使用済みで backlog の used フラグだけが false のまま＝pick_daily_topic が再提示する不整合を修正）を score 104 PASS / validator PASS / hero gate PASS で登録。あわせて再試行判定に `ENOTFOUND|EAI_AGAIN|Can't reach the API server|check your internet or DNS` を追加 | ✅ 本コミット |
 | 2026-09-24 | Orchestrator(朝9時自律バッチ) | 安全タスク調査 — `status: ready` の全7件を精査した結果、実装可能な安全タスクはゼロ。内訳: ISSUE-133（食べログ閉店22件・要人手目視・owner=片桐）/ SEO-098（Instagram UTM計測・acceptance①②がオーナー本人操作）/ SEO-083（SNS原稿NotebookLM・owner=片桐）/ ISSUE-119（長音符正規化バグ・owner=片桐・オーナー承認待ち）/ ISSUE-116（og:image HTTP到達不能・HOTPEPPER_API_KEY/GOOGLE_MAPS_API_KEY必要・owner=片桐）/ ISSUE-110（npm脆弱性・owner=片桐）/ ISSUE-099（editorReason自動収集・人手レビュー待ち）。全件すでに owner=片桐 または API キー不可・クラウド環境制約により安全候補なし。正常終了（0件は許容）。 | ⏸ 実装なし |
 | 2026-09-27 | Builder(routine) | SEO-109 実装・デプロイ — index.html の `.scene-nav` シーンで探す行に「一人飲み」チップ（`suggestSearch('一人飲み')`）を追加。`hitori` 概念は既存で定義済みのためロジック変更なし。`audit_design_system.js --check` violations 0 / QA全通過。status: ready → done | ✅ このコミット |
+| 2026-09-27 | Builder(routine) | SEO-108 実装・デプロイ — `scripts/add_feature_journal_links.js` を「マーカーがあればスキップ」から冪等再生成型に変更。対応キーにKW（`data/journal_seo_keywords.json` scenes[].aliases）を追加（店舗ID一致と並列）。`--check` フラグ追加。build.yml に日次ステップを配線（continue-on-error）。33特集に一人飲み系ジャーナル含む最新3本を初期反映。`audit_design_system.js --check` violations 0 / `audit_feature_stores.js` 実在不明8件で不変。status: in_progress → done | ✅ このコミット |
 | 2026-09-27 | Builder(routine) | SEO-110 実装・デプロイ — `scripts/relink_journal_store_cards.js` 新規作成（`--dry-run`/`--check`）。stores/*.html の JSON-LD name 正引き索引（5,633本）で journal 全カード(161件)を照合し、30件（21記事）を内部リンクに張り替え（外部リンクは保持）。同名複数ページ3件・店舗ページ無し2件はスキップし報告。`data/journal_published.json` の store_ids 補完。`.github/workflows/build.yml` に `--check` ステップを gen-store-pages.js 直後に配線（continue-on-error で開始）。status: in_progress → done | ✅ このコミット |
 
 ---
