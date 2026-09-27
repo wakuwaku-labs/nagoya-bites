@@ -3370,6 +3370,76 @@
       "brand_reason": "振替採用。名指し記事は特集4本・エリア×ジャンルハブ3本へ既にリンク済みで、欠けていたのは主役店自身の店舗ページ（stores/pizzeria-mimi.html・実在）へのリンクだけ。原因は構造欠陥: storeDetailLink() は生成時に s.id がある店しか内部リンクにできず、ISSUE-078 の過去記事補修（07-30）は一回実行で凍結。実測で30記事・39カード（全161件の24%）が店舗ページ有りなのに外部リンクのまま。冪等な張り替え＋日次検知で Moat の構造化DBをジャーナルから辿れるようにする（SEO-108 と同型）",
       "category": "SEO",
       "fingerprint": "5d5b60f770db7486"
+    },
+    {
+      "id": null,
+      "date": "2026-09-27",
+      "source": "line-daily",
+      "advice": "🟡 検索流入比率が73%あるものの、SNS流入が0%です。👉 docs/daily-posts/ にある本日のSNS投稿原稿を、InstagramとXで必ず投稿しましょう。投稿時間を午前中/ランチタイムに設定し、リーチを最大化します。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-093/SEO-098/SEO-101 に集約済み）。前提の docs/daily-posts/ のSNS原稿は 2026-09-05 から生成停止中（data/journal_sns_draft_policy.json）で、SNS投稿はリポジトリ外運用。失効前提の助言が出続けるのは GAS 未反映（SEO-092/093・オーナー本人のデプロイ待ち）が原因",
+      "category": null,
+      "fingerprint": "913c65d1b6351ed4"
+    },
+    {
+      "id": null,
+      "date": "2026-09-27",
+      "source": "line-daily",
+      "advice": "🟡 訪問者30人に対して「店舗詳細を開いた」のは1回と、店舗への興味喚起が不十分です。👉 人気ページ1位の「2026-09-24-kurumamichi-pizzeria-mimi-counter12」の記事冒頭に、店舗の魅力が伝わる写真と「詳細を見る」ボタンを大きく設置しましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-110 に集約）。ジャーナル記事から店舗ページへの導線は SEO-110（07-30以降の30記事・39カードが店舗ページではなく外部リンクのまま凍結）が構造的原因として ready 済みで、09-24 記事も対象期間内。記事にはヒーロー写真が既にあり、店舗詳細イベントは index.html のモーダル計測でジャーナル記事上の行動を拾わないため『1回』は記事の導線不足を示す指標でもない（n=30の単日値）",
+      "category": null,
+      "fingerprint": "25dd5513dfcf4ff5"
+    },
+    {
+      "id": null,
+      "date": "2026-09-27",
+      "source": "line-daily",
+      "advice": "🟢 予約クリック率が6.7%と良好ですが、電話ボタンクリックは0回です。👉 全ての店舗詳細モーダルと静的店舗ページで、予約ボタンのすぐ横に「電話で予約」ボタンを分かりやすく配置し、視認性を高めましょう。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-105 で対応済み・done）。モーダルは placeId 保有店に電話ボタンを既に描画し、静的店舗ページの電話CTA欠落は SEO-105 で解消済み。単日n=30で電話0回は施策根拠にならない",
+      "category": null,
+      "fingerprint": "9de6e115ed895b23"
+    },
+    {
+      "id": null,
+      "date": "2026-09-26",
+      "source": "line-weekly",
+      "advice": "週次トレンド総括: 訪問者247人（前週273）-10% / 閲覧数337（前週416）-19% / 訪問回数275（前週326）-16% / 平均滞在2分6秒 / 直帰率25% / 成長ステータス 減速中（原因調査を）",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-099 に集約・同チケットへ実測データ点を追記）。3週系列は訪問者231→273→247で連続下落ではなく振れ。GA4 30日窓の pagesPerSession は 1.42→1.43 で横ばい。単週の振れで原因調査チケットを新設しない（制約10）",
+      "category": null,
+      "fingerprint": "272de0ee32aa3735"
+    },
+    {
+      "id": null,
+      "date": "2026-09-26",
+      "source": "line-weekly",
+      "advice": "🟡 予約クリック率が15.0%と高いが、訪問者247人と母数が少ない。👉 docs/daily-posts/ にあるSNS投稿原稿を毎日InstagramとXで発信し、サイトへの流入を増やす。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-093/SEO-098/SEO-101 に集約済み）。SNS原稿は 2026-09-05 から生成停止中でSNS投稿はリポジトリ外運用。同日の日次助言とも同旨",
+      "category": null,
+      "fingerprint": "cef3e9d351b7565f"
+    },
+    {
+      "id": null,
+      "date": "2026-09-26",
+      "source": "line-weekly",
+      "advice": "🟡 1訪問あたり閲覧が1.2ページと、目安の2ページを下回っている。👉 人気1位の「nagoya-solo-dining」特集記事内に、関連性の高い他の特集記事（例: デート、女子会）への内部リンクを設置する。",
+      "verdict": "rejected",
+      "brand_reason": "却下。①features/nagoya-solo-dining.html は既に関連特集リンク群（meieki-hitori-nomi / hard-to-book / industry-insiders-pick / kospa-insider / meieki / hitsumabushi / yakiniku / gourmet-guide）を保有（実地確認） ②例示の「デート」「女子会」は一人客の検索意図と逆向きのシーンで、関連性の低いリンクはシーン専門性（Moat）を薄める ③同特集の真の導線欠落（同シーンのジャーナル6本へのリンク0本）は SEO-108 で ready 済み、pages/session の効果測定は SEO-099 で継続中",
+      "category": null,
+      "fingerprint": "238aa06833e5b8a1"
+    },
+    {
+      "id": null,
+      "date": "2026-09-26",
+      "source": "line-weekly",
+      "advice": "🟢 検索流入比率が76%と高い一方で、SNS流入比率は0%と全く活用できていない。👉 journal/ の日次記事をSNSで紹介する際、記事内容に合う「#名古屋グルメ」「#名古屋カフェ」といったハッシュタグを複数追加して投稿する。",
+      "verdict": "rejected",
+      "brand_reason": "却下。SNS投稿の実施・文面はリポジトリ外運用（オーナーが別の仕組みで生成・投稿）で、サイト/SEOの実装課題ではない。SNS流入の計測はUTMで行う運用が既にある。また『SNS流入0%』は旧 traffic_source の誤分類修正（部分一致 t.co 問題・2026-09-14）後の実測で、SNS流入は元々小さく観測閾値未満——汎用的なハッシュタグ追加は具体的な改善仮説を持たない",
+      "category": null,
+      "fingerprint": "310c00d22763e6a9"
     }
   ]
 }
