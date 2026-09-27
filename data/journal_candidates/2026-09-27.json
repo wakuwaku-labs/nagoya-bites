@@ -1,0 +1,468 @@
+{
+  "date": "2026-09-27",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "丸の内の喫茶「升半茶店」——抹茶2.6倍でもスイーツ2200円の理由",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 97,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "モーニング",
+          "feature": "features/nagoya-morning.html"
+        },
+        {
+          "kw": "スイーツ",
+          "feature": "features/nagoya-sweets.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 22日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 9件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 199字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "タイトルにシーン語「喫茶」+4",
+          "タイトルにジャンル語「スイーツ」+2"
+        ]
+      },
+      "gate_note": "97点（自動公開ライン 100点）。主な不足: recency -13"
+    },
+    {
+      "id": "c2",
+      "title_draft": "大須のカフェ「サワディーチャオ」15席と雑貨で作る食べ歩きの休憩地点",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 94,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 13,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "食べ歩き",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 163字 +4",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "タイトルにシーン語「食べ歩き」+4",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      },
+      "gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -12 / brand_fit -4"
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄の商業施設が飲食を増やしている——メルサ改装と松坂屋の名古屋めし",
+      "verdict": "HOLD",
+      "total": 84,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 13,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 3件 (予約,価格帯,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 3件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 155字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「宴会」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "伏見のカウンター「島正」昭和24年のどて焼きを一人飲みで読む",
+      "verdict": "HOLD",
+      "total": 60,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 8,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 483日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,予約,シーン,一人飲み,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 134字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「栄」+1",
+          "タイトルにシーン語「一人飲み」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "円頓寺のカフェ「Cafe MARU」ドレスプリン1600円が呼ぶ人の流れ",
+      "verdict": "HOLD",
+      "total": 50,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 4,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 566日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,シーン,デート,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 148字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "97点（自動公開ライン 100点）。主な不足: recency -13",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "丸の内の喫茶「升半茶店」——抹茶2.6倍でもスイーツ2200円の理由",
+      "lead_draft": "抹茶の原料であるてん茶の平均出荷価格は、2026年産で前年比2.6倍の1kg8,562円をつけた。原料が2.6倍になった年に、丸の内の升半茶店 本店は抹茶スイーツ5種のプレートを2,200円で出している。2023年の公開価格は1,980円。上げ幅は11%で止まっている。この差は企業努力という言葉では説明できない。天保11年創業の茶問屋が、20席の喫茶で何を値段に乗せ、何を乗せていないのかを読む。",
+      "angle": "てん茶2.6倍の年に1840年創業の茶問屋が20席の喫茶を回せる理由を、原価の吸収先（点て出しか加工品か）・テイクアウト限定ソフトによる席の回転分離・日祝休が示す本業の重心という業界人の裏側目線で読み、平日午後の一人客という価格帯とシーン適性まで示す",
+      "main_store": {
+        "name": "升半茶店 本店",
+        "id": "J001089744",
+        "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "genre": "カフェ・スイーツ"
+      },
+      "sources": [
+        {
+          "label": "時事通信「抹茶ブーム、茶葉高騰 農家に熱気も、思わぬ余波」",
+          "url": "https://www.jiji.com/jc/article?k=2026090400647&g=soc",
+          "date": "2026-09-05"
+        },
+        {
+          "label": "日本農業新聞「抹茶増産の動き加速 新工場続々、原料園地拡大も」",
+          "url": "https://www.agrinews.co.jp/news/index/378362",
+          "date": "2026-05-04"
+        },
+        {
+          "label": "農林中金総合研究所「抹茶ブームと煎茶高騰」",
+          "url": "https://www.nochuri.co.jp/genba/pdf/otr20260514.pdf",
+          "date": "2026-05-14"
+        },
+        {
+          "label": "日本経済新聞「抹茶、葉も機械も足りない」",
+          "url": "https://www.nikkei.com/article/DGXZQOUC128OC0S5A910C2000000/",
+          "date": "2025-09-10"
+        },
+        {
+          "label": "note・大木賢「抹茶ブームの裏で、農家を訪れて見た現状」",
+          "url": "https://note.com/kenohki/n/n505652d7a490",
+          "date": "2025-08-13"
+        },
+        {
+          "label": "升半茶店 公式サイト（升半カフェのご案内）",
+          "url": "https://www.masuhan.jp/cafe.html"
+        },
+        {
+          "label": "升半茶店 本店 公式Instagram",
+          "url": "https://www.instagram.com/masuhan_matcha_no.1/"
+        },
+        {
+          "label": "名古屋情報通「升半茶店 本店」2023年時点の価格記録",
+          "url": "https://jouhou.nagoya/masuhan-matcha/",
+          "date": "2023-07-08"
+        },
+        {
+          "label": "ホットペッパーグルメ 升半茶店 本店 メニュー（現行価格）",
+          "url": "https://www.hotpepper.jp/strJ001089744/food/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "大須のカフェ「サワディーチャオ」15席と雑貨で作る食べ歩きの休憩地点",
+      "lead_draft": "大須商店街の南、裏門前町から200mほど下った上前津1丁目に、タイ・チェンマイのカフェ＆雑貨店が9月17日に開いた。イートインは約15席、営業は11時から18時まで。ドリンクは700〜950円で、物販はチェンマイの雑貨とドイプームエン産のオーガニックアラビカ。カフェと物販を1店に同居させる設計は、大須の人流をどう受けるのか。",
+      "angle": "15席のカフェに雑貨の物販を同居させる坪効率の設計を、客単価の価格帯・滞留時間と席の回転・食べ歩き客の休憩需要というシーン適性から業界人の目線で読む",
+      "main_store": {
+        "name": "SawaddeeChao（サワディーチャオ）",
+        "id": "",
+        "area": "上前津・大須",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「タイの世界を楽しむカフェ・雑貨店『サワディーチャオ』上前津にオープン」",
+          "url": "https://jouhou.nagoya/sawaddee-chao/",
+          "date": "2026-09-25"
+        },
+        {
+          "label": "SawaddeeChao 公式Instagram（@sawaddee_chao943）",
+          "url": "https://www.instagram.com/sawaddee_chao943/"
+        },
+        {
+          "label": "名古屋情報通 新店一覧（掲載日の確認）",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-09-26"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "weekly_digest",
+      "title_draft": "栄の商業施設が飲食を増やしている——メルサ改装と松坂屋の名古屋めし",
+      "lead_draft": "9月24日にメルサ栄本店の大規模改装が公表され、2027年春のリニューアルが決まった。その1週間前には矢場味仙の松坂屋名古屋店への10月1日出店が出ている。栄駅直結のHAERAは地下2階に108席の大型店を入れた。栄の商業施設が、いま揃って飲食の面積を増やしている。宴会シーズン前のこの動きを業界人の目で読む。",
+      "angle": "栄の商業施設が宴会シーズン前に飲食テナントの面積を増やす動きを、席数と回転・館の営業時間に縛られる予約の取り方・館内飲食の価格帯設計というオペの裏側から読む",
+      "main_store": {
+        "name": "メルサ栄本店",
+        "id": "",
+        "area": "栄",
+        "genre": "商業施設"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「『メルサ栄本店』が大規模改装。2027年春にリニューアルオープン予定」",
+          "url": "https://jouhou.nagoya/category/open/",
+          "date": "2026-09-24"
+        },
+        {
+          "label": "博多もつ鍋おおやま 公式note（栄HAERA店）",
+          "url": "https://note.com/ooyama_motu/n/nd5eef8f8e4a3",
+          "date": "2026-09-17"
+        },
+        {
+          "label": "名古屋情報通「名古屋めし食堂 丸八」",
+          "url": "https://jouhou.nagoya/",
+          "date": "2026-09-16"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "伏見のカウンター「島正」昭和24年のどて焼きを一人飲みで読む",
+      "lead_draft": "伏見駅から3分、栄2丁目の島正は昭和24年創業のどて焼き店だ。八丁味噌のダシで煮込んだどて焼きは豆腐・こんにゃく・大根・卵・里芋・牛すじの6種。1階のカウンターは予約を取らず先着順で、予約できるのは3階の個室だけ。この非対称な予約設計に、老舗の回転の考え方が出ている。",
+      "angle": "1階カウンターは予約不可で3階個室だけ予約可という非対称な設計を、串単位の価格帯の積み上げ・繁忙時間帯の回転・一人飲みとサシ飲みのシーン適性から読む",
+      "main_store": {
+        "name": "島正",
+        "id": "",
+        "area": "伏見・栄",
+        "genre": "郷土料理・どて焼き"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「名古屋味噌おでんの名店！伏見『島正』」",
+          "url": "https://jouhou.nagoya/shimasho/",
+          "date": "2024-11-20"
+        },
+        {
+          "label": "るるぶ&more. 島正",
+          "url": "https://rurubu.jp/andmore/spot/80023583",
+          "date": "2025-06-01"
+        },
+        {
+          "label": "食べログ 島正 メニュー",
+          "url": "https://tabelog.com/aichi/A2301/A230102/23001853/dtlmenu/"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "円頓寺のカフェ「Cafe MARU」ドレスプリン1600円が呼ぶ人の流れ",
+      "lead_draft": "円頓寺本町商店街のCafe MARUは、黒蜜を注ぐと流れ落ちるドレス型のプリンで知られる。ドレスプリンと抹茶ラテのセットは1,600円。国際センター駅から徒歩7〜8分という決して強くない立地に、全国からインスタグラマーが来る。動画映えを前提に設計された商品が、商店街の人流にどう作用するかを読む。",
+      "angle": "動画映え前提の商品設計が席の回転と価格帯にどう跳ね返るかを、撮影滞留時間・平日と週末の繁忙差・一人客とデートのシーン適性から業界人の目で読む",
+      "main_store": {
+        "name": "Cafe MARU（カフェ マル）",
+        "id": "",
+        "area": "円頓寺",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "Yahoo!ニュース エキスパート「ドレスプリン」",
+          "url": "https://news.yahoo.co.jp/expert/articles/4da65ab3e6fc3110cdbceadb11b107926f609331",
+          "date": "2025-01-26"
+        },
+        {
+          "label": "Yahoo!ニュース エキスパート（続報）",
+          "url": "https://news.yahoo.co.jp/expert/articles/70d67b373165d72d1439a03c0a54a616d3bc681a",
+          "date": "2025-03-10"
+        }
+      ]
+    }
+  ]
+}
