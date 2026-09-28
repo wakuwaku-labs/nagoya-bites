@@ -64,6 +64,7 @@ const path = require('path');
 // 検索意図（シーンKW）の採点は scripts/journal_seo_kw.js に一元化する。
 // KW は features/ の実在記事に裏付けられ、`--verify` で第三者が確認できる（自己申告値ではない）。
 const { scoreSearchIntent } = require('./journal_seo_kw');
+const sourceDiversity = require('./lib/journal_source_diversity');
 
 const ROOT = path.join(__dirname, '..');
 const DATA = path.join(ROOT, 'data');
@@ -320,14 +321,22 @@ function scoreRecency(candidate, today) {
  * 話題性: 「話題だ」と主張させるのではなく、**話題の証跡を URL で出せているか**を測る。
  * 旧版の x_mentions / buzz_score（自己申告・出典なし）は全廃した。
  *   - 取材の広がり(15): sources の独立ドメイン数
+ *       直近のジャーナルで出典が寄りすぎている二次媒体（saturated）は数えない。
+ *       書くのは自由だが、同じ媒体の後追いでは「広く取材した」ことにならない
+ *       （data/journal_source_diversity_policy.json・2026-09-28）
  *   - 話題の証跡(10) : X / Instagram / TikTok 等、実在する言及URLの本数
  */
-function scoreTopicality(candidate) {
+function scoreTopicality(candidate, saturated = []) {
   const sources = candidate.sources || [];
   const reasons = [];
   const hosts = sources.map(s => hostOf(s.url)).filter(Boolean);
-  const domains = new Set(hosts);
+  const all = new Set(hosts);
+  const domains = new Set([...all].filter(h => !sourceDiversity.isSaturated(h, saturated)));
   const n = domains.size;
+  const skipped = [...all].filter(h => !domains.has(h));
+  if (skipped.length) {
+    reasons.push(`出典が偏っている媒体 ${skipped.join(',')} は独立ドメインに数えない（別媒体・一次発表で裏を取ると加点）`);
+  }
 
   let breadth = 0;
   if (n >= 4) breadth = 15;
@@ -486,7 +495,7 @@ function buildGateNote(result, policy) {
   return `${result.total}点（自動公開ライン ${policy.auto_publish_min}点）。主な不足: ${gaps.join(' / ') || 'なし'}`;
 }
 
-function scoreOne(candidate, published, today, policy) {
+function scoreOne(candidate, published, today, policy, saturated = []) {
   const disqual = checkDisqualified(candidate, published, today);
   if (disqual.length > 0) {
     return {
@@ -499,7 +508,7 @@ function scoreOne(candidate, published, today, policy) {
     };
   }
   const recency = scoreRecency(candidate, today);
-  const topicality = scoreTopicality(candidate);
+  const topicality = scoreTopicality(candidate, saturated);
   const uniqueness = scoreUniqueness(candidate);
   const brandFit = scoreBrandFit(candidate);
   const writability = scoreWritability(candidate);
@@ -542,7 +551,8 @@ function scoreAll(candidates, opts = {}) {
   const today = opts.today || todayISO();
   const policy = opts.policy || loadGatePolicy();
   const published = opts.published || loadJSON(PUBLISHED_PATH, { entries: [] });
-  const scored = candidates.map(c => scoreOne(c, published, today, policy));
+  const diversity = opts.diversity || sourceDiversity.measure({ today });
+  const scored = candidates.map(c => scoreOne(c, published, today, policy, diversity.saturated));
   const ranked = scored.slice().sort((a, b) => b.total - a.total);
   const disqualified = scored.filter(r => r.verdict === 'DISQUALIFIED');
   const eligible = ranked.filter(r => r.verdict === 'PASS' || r.verdict === 'PASS_WITH_NOTE');
@@ -559,6 +569,8 @@ function scoreAll(candidates, opts = {}) {
     selected_id: selected ? selected.id : null,
     selected_verdict: selected ? selected.verdict : null,
     selected_gate_note: selected && selected.gate_note ? selected.gate_note : '',
+    // 採点時点で「独立ドメインに数えなかった」媒体（後から検算できるよう残す）
+    saturated_sources: diversity.saturated,
     // HOLD しか無い日だけフォールバックが必要（＝当日公開ゼロを避ける工程へ進む）
     fallback_needed: !selected,
     // 後から採点を再現・監査できるよう入力も保存する（ISSUE-077）
@@ -585,6 +597,9 @@ function printRanking(result, explain) {
   console.log(`ゲート方針: ${p.auto_publish_min}点以上=自動公開 / ${p.review_publish_min}点以上=記録を残して公開 / それ未満=HOLD`);
   console.log(`採用候補: ${result.selected_id || '(なし — HOLD のみ)'}${result.selected_verdict ? ` [${result.selected_verdict}]` : ''}`);
   if (result.selected_gate_note) console.log(`  gate_note: ${result.selected_gate_note}`);
+  if (result.saturated_sources && result.saturated_sources.length) {
+    console.log(`出典の偏り: ${result.saturated_sources.join(', ')} は直近の記事で使われすぎているため独立ドメインに数えません（別媒体・一次発表を足すと話題性が上がります）`);
+  }
   if (result.disqualified.length) {
     console.log(`\n[失格] ${result.disqualified.length}件`);
     result.disqualified.forEach(d => {
