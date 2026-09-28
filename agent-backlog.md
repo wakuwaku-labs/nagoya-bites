@@ -27,6 +27,24 @@
   5. 効果測定: 2週間後に GA4 の journal→stores 遷移（`location:'journal_store_card'` 系イベント）と pages/session を前後比較。単日の数値では判定しない
 - **却下した部分**: 同日の助言のうち「features/ 特集への内部リンクを増やす」は名指し記事で既に4特集へ張られており増分が無い。特集→ジャーナル方向の凍結は [[SEO-108]] で起票済み
 
+### [SEO-112] GSC の観測範囲が「上位500ページ」で切れており、表示回数の約半分と新設ページ・トップページのクエリが見えていなかった
+
+- **priority**: P2 → **status**: in_progress（取得側は実装済み。次回の日次ビルドで data/gsc_metrics.json に pageTypes / homeQueries が出ることを確認したら done）
+- **detected**: 2026-09-28
+- **category**: SEO（計測）
+- **owner**: Builder
+- **source**: オーナー「SEOがまた伸びてない」（2026-09-28）を受けた停滞調査（[[SEO-111]] と同じ調査）
+- **実測（2026-09-28・data/gsc_metrics.json 28日窓）**:
+  - `pages` は上位500行で切っており最小表示が1回まで下がっている。上位500ページの表示合計は約2.37万回で、サイト全体 46,553回の**約半分**。残り約2.3万回は500位より下のページに出ていて観測不能だった
+  - そのため新設の `stores/area/`（約690件・[[SEO-094]]）が表示を得始めても見えない
+  - [[SEO-058]] で「トップページは必ずクエリ観測対象に含める」としたが、ページ×クエリの上位5,000行を取ってから絞る方式のため、表示が小さなクエリに分散するトップページは1行も取れていなかった（トップページは 4,155表示・平均26.8位・10クリックなのに `pageQueries` に不在）
+- **対応**（`scripts/fetch_gsc_metrics.js`）:
+  1. ページ取得を 500 → 25,000行（API上限）へ。集計は全件、保存する生の行は従来どおり上位500件（`pages`・既存の読み手の挙動は不変）。取得件数は `pagesFetched`
+  2. `pageTypes`: ページ種別（home / area_hub / store / journal / feature / other）ごとの ページ数・表示・クリック・CTR・加重平均順位。種別は URL パスの形だけで決まる（誰でも検算できる・制約10）
+  3. `homeQueries`: page フィルタ付きの専用リクエストでトップページのクエリ上位200件を取る。`pageQueries` にもトップページが入る
+  4. `tests/gsc_page_types.test.js` を追加（分類・集計・既存の groupPageQueries の挙動維持）
+- **次の一手（データが出てから）**: `homeQueries` を見て、トップページが何の検索で27位にいるのかを判定する（指名検索なら Strategic Skip、「名古屋 グルメ」等の discovery 語なら title/meta の見直し）。`pageTypes.area_hub` の表示が 2〜4週で立ち上がるかで SEO-094 の成否を判定する
+
 ### [SEO-109] トップの常時表示「シーンで探す」に一人飲みチップが無い（GSC最大の discovery KW「名古屋 一人飲み」と閲覧TOP1特集への入口がトップに出ていない）
 
 - **priority**: P2 → **status**: done
