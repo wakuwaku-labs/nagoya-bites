@@ -40,7 +40,13 @@ const OUT_PATH = path.join(__dirname, '..', 'data', 'gsc_metrics.json');
 // シーンKWの表示実態が原理的に見えなかった（＝SEO-011 の効果を測れなかった）。
 // API は 1 リクエストあたり最大 25,000 行。日次1回のジョブなのでコスト影響は無い。
 const QUERY_ROW_LIMIT = parseInt(process.env.GSC_QUERY_ROW_LIMIT || '5000', 10);
-const PAGE_ROW_LIMIT = parseInt(process.env.GSC_PAGE_ROW_LIMIT || '500', 10);
+// SEO-112: ページは 500 → 25,000 行（API 上限）。上位500で切ると最小表示が1回まで下がっており、
+// 500位より下のページ（新設の stores/area/ 約690件など）が表示を得始めても観測できなかった。
+// 集計（pageTypes）は全件で行い、生の行は PAGE_STORE_LIMIT 件だけ保存する。
+const PAGE_ROW_LIMIT = parseInt(process.env.GSC_PAGE_ROW_LIMIT || '25000', 10);
+const PAGE_STORE_LIMIT = 500;
+// SEO-112: トップページのクエリは page フィルタ付きの専用リクエストで取る（下の 4b）
+const HOME_QUERY_ROW_LIMIT = 200;
 const PAGE_QUERY_ROW_LIMIT = parseInt(process.env.GSC_PAGE_QUERY_ROW_LIMIT || '5000', 10);
 // ファイルサイズ抑制: 集計は全件で行い、生の行は上位のみ保存する
 const QUERY_STORE_LIMIT = 300;
@@ -94,6 +100,43 @@ function groupPageQueries(pqRows, allPages) {
     byPage.set(page, list);
   });
   return Array.from(byPage.entries()).map(([page, queries]) => ({ page, queries }));
+}
+
+// SEO-112: URL をページ種別に分類する（パスの形だけで決まる＝誰でも検算できる）。
+// ページ種別ごとの 表示/クリック/ページ数 を日次で残し、「どの面が伸びて、どの面が止まったか」を
+// git 履歴だけで追えるようにする（2026-09-28 の停滞調査では、上位500行の制約で
+// stores/area/ が観測不能だったうえ、種別の集計を毎回手で作り直す必要があった）。
+const PAGE_TYPE_RULES = [
+  ['home', p => p === '/' || p === '/index.html'],
+  ['area_hub', p => p.startsWith('/stores/area/')],
+  ['store', p => p.startsWith('/stores/')],
+  ['journal', p => p.startsWith('/journal/')],
+  ['feature', p => p.startsWith('/features/')],
+];
+
+function classifyPageType(url) {
+  let p;
+  try { p = new URL(url).pathname; } catch (_) { return 'other'; }
+  for (const [type, test] of PAGE_TYPE_RULES) if (test(p)) return type;
+  return 'other';
+}
+
+function summarizePageTypes(pages) {
+  const byType = {};
+  for (const r of pages || []) {
+    const t = classifyPageType(r.page);
+    const b = byType[t] || (byType[t] = { pages: 0, clicks: 0, impressions: 0, _pos: 0 });
+    b.pages++;
+    b.clicks += r.clicks || 0;
+    b.impressions += r.impressions || 0;
+    b._pos += (r.position || 0) * (r.impressions || 0);
+  }
+  for (const b of Object.values(byType)) {
+    b.ctr = b.impressions ? Math.round((b.clicks / b.impressions) * 10000) / 10000 : 0;
+    b.position = b.impressions ? Math.round((b._pos / b.impressions) * 10) / 10 : 0;
+    delete b._pos;
+  }
+  return byType;
 }
 
 // SEO-043: require されたときは終了しない（groupPageQueries を認証なしでテストするため）。
@@ -218,6 +261,7 @@ async function main() {
     position: Math.round((r.position || 0) * 10) / 10,
   }));
   const topPages = allPages.slice(0, 15); // 既存の読み手との後方互換
+  const pageTypes = summarizePageTypes(allPages);
 
   // 4) ページ × クエリ（SEO-043）
   //    「どのページが、どのクエリで、何位に出ているか」。トップページは 2,262表示・
@@ -232,6 +276,33 @@ async function main() {
     pageQueries = groupPageQueries(pqRows, allPages);
   } catch (e) {
     console.log(`ページ×クエリの取得に失敗（スキップ）: ${e.message}`);
+  }
+
+  // 4b) トップページのクエリ（SEO-112）
+  //    SEO-058 でトップページを 4) の観測対象に必ず含めるようにしたが、4) は全ページ×全クエリの
+  //    上位 PAGE_QUERY_ROW_LIMIT 行を取ってから絞るため、表示が多数の小さなクエリに分散する
+  //    トップページの行は上位に入らず、実際には1件も取れていなかった（2026-09-28 時点で
+  //    トップページ 4,155表示・平均26.8位なのに pageQueries に不在）。page フィルタで直接取る。
+  let homeQueries = null;
+  try {
+    const homeUrl = /^https?:\/\//.test(siteUrl) ? siteUrl : DEFAULT_SITE_URL;
+    const hqRows = await query(searchconsole, siteUrl, {
+      ...dateRange, dimensions: ['query'], rowLimit: HOME_QUERY_ROW_LIMIT,
+      dimensionFilterGroups: [{ filters: [{ dimension: 'page', operator: 'equals', expression: homeUrl }] }],
+      orderBy: [{ field: 'impressions', descending: true }],
+    });
+    homeQueries = { page: homeUrl, queries: hqRows.map(r => ({
+      query: r.keys[0],
+      clicks: r.clicks || 0,
+      impressions: r.impressions || 0,
+      ctr: Math.round((r.ctr || 0) * 10000) / 10000,
+      position: Math.round((r.position || 0) * 10) / 10,
+    })) };
+    if (!pageQueries.some(pq => pq.page === homeUrl) && homeQueries.queries.length) {
+      pageQueries.push({ page: homeUrl, queries: homeQueries.queries.slice(0, PAGE_QUERY_PER_PAGE) });
+    }
+  } catch (e) {
+    console.log(`トップページのクエリ取得に失敗（スキップ）: ${e.message}`);
   }
 
   // 5) 検索意図の内訳（SEO-043）— SEO-011 の効果測定器
@@ -256,8 +327,11 @@ async function main() {
     // SEO-043 で追加した高解像度データ
     queries: allQueries.slice(0, QUERY_STORE_LIMIT),
     queriesFetched: allQueries.length,
-    pages: allPages,
+    pages: allPages.slice(0, PAGE_STORE_LIMIT),
+    pagesFetched: allPages.length,
+    pageTypes,
     pageQueries,
+    homeQueries,
     intent,
     benchmarks: BENCHMARKS,
   };
@@ -290,4 +364,4 @@ if (require.main === module) main().catch(err => {
   process.exit(0);
 });
 
-module.exports = { groupPageQueries };
+module.exports = { groupPageQueries, classifyPageType, summarizePageTypes };
