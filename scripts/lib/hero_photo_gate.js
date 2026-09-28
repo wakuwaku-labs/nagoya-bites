@@ -29,7 +29,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..', '..');
 const POLICY_PATH = path.join(ROOT, 'data', 'journal_photo_policy.json');
 
-const { core, dice } = require('./photo_policy');
+const { norm, core, dice } = require('./photo_policy');
 const { loadStores } = require('./load_stores');
 
 let _policy = null;
@@ -44,8 +44,14 @@ function loadPolicy() {
  * ──────────────────────────────────────────────────────────────── */
 function namesMatch(a, b, threshold) {
   if (!a || !b) return false;
+  const na = norm(a), nb = norm(b);
+  if (!na || !nb) return false;
+  if (na === nb) return true;
   const ca = core(a), cb = core(b);
-  if (!ca || !cb) return false;
+  // core() が屋号ごと消してしまう名前はコアで比べられない
+  // （実例:「升半茶店 本店」は「[^\s]{1,6}店」と「本店」で空になり、同じ店名どうしが不一致になった）。
+  // そのときは正規化した全体名で、同じ閾値のまま比べる。
+  if (!ca || !cb) return dice(na, nb) >= threshold;
   if (ca === cb) return true;
   if (ca.includes(cb) || cb.includes(ca)) return true;
   return dice(ca, cb) >= threshold;

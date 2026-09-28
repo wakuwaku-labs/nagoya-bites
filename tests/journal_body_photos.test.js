@@ -99,6 +99,16 @@ test('出所の自己申告では照合を回避できない（URL側で判定�
   assert.ok(verdict.findings.some(f => f.code === 'source_attr_mismatch'));
 });
 
+test('屋号が一般語で消える店名でも、同じ店は一致し別の店は一致しない', () => {
+  // core() は「升半茶店 本店」を空にする（[^\s]{1,6}店 と 本店）。空どうしを不一致にすると
+  // 記事の店そのものの写真が hero_store_mismatch で落ちていた（2026-09-27 記事）。
+  const base = { role: 'body', ...ARTICLE, heroUrl: 'https://lh3.googleusercontent.com/place-photos/x', heroSource: 'places' };
+  assert.strictEqual(judgePhoto({ ...base, heroStore: '升半茶店 本店', storeNames: ['升半茶店 本店'] }).ok, true);
+  const other = judgePhoto({ ...base, heroStore: '丸八茶店 本店', storeNames: ['升半茶店 本店'] });
+  assert.strictEqual(other.ok, false);
+  assert.ok(other.findings.some(f => f.code === 'hero_store_mismatch'));
+});
+
 test('公開済み記事: 本文写真は記事の店に帰属している（退行検知）', () => {
   const dir = path.join(ROOT, 'journal');
   const files = fs.readdirSync(dir).filter(f => /^\d{4}-\d{2}-\d{2}-.+\.html$/.test(f));
