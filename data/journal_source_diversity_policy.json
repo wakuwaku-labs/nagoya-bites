@@ -1,0 +1,22 @@
+{
+  "description": "日次ジャーナルの出典の偏りを抑える方針の唯一の情報源。scripts/lib/journal_source_diversity.js が読み、scripts/fetch_trending_articles.js suggest-queries（取材クエリ）と scripts/score_journal_candidates.js（取材の広がり）が同じ判定を共有する。閾値の変更はこのJSONで行いスクリプトは触らない。",
+  "window_days": 30,
+  "min_articles": 7,
+  "saturation_share": 0.3,
+  "exempt_domains": {
+    "_reason": "偏りを測るのは『二次媒体（ローカルメディア・まとめ・ブログ）』だけ。店・企業の一次発表や一次報道、実在確認用の店舗ページ、SNS の言及は、何本の記事に出ても『他媒体の切り口をなぞっている』ことにはならないため対象外にする。",
+    "primary": ["prtimes.jp", "atpress.ne.jp", "value-press.com", "kyodonewsprwire.jp", "nhk.or.jp", "news.web.nhk", "asahi.com", "yomiuri.co.jp", "mainichi.jp", "nikkei.com", "chunichi.co.jp", "jiji.com", "tokai-tv.com", "nagoyatv.com", "ctv.co.jp", "chukyo-tv.co.jp", "pref.aichi.jp", "city.nagoya.jp"],
+    "listing": ["tabelog.com", "hotpepper.jp", "gnavi.co.jp", "retty.me", "hitosara.com", "restaurant.ikyu.com", "tablecheck.com", "nagoya-bites.com"],
+    "social": ["x.com", "twitter.com", "instagram.com", "tiktok.com", "youtube.com", "youtu.be"]
+  },
+  "alternative_outlets": {
+    "_reason": "飽和した媒体の代わりに当たる媒体。過去のジャーナルで実際に出典として使われた実在媒体だけを並べる（新しい媒体を足すときも、まず一度ジャーナルで出典にしてから）。",
+    "sites": ["nagoyato.com", "gourmetpress.net", "walkerplus.com", "fashion-press.net", "nagoyajin.nagoya", "nagoyameito-chikusa.goguynet.jp", "tabemaro.jp", "chukei-news.co.jp", "inshokuten.com", "foods-ch.infomart.co.jp", "straightpress.jp", "note.com"]
+  },
+  "rationale": "2026-09-28、オーナーから『ジャーナルの記事が名古屋情報通を元にしたものが多すぎる』と指摘。実測で公開済みジャーナル直近62本のうち55%（34本）が jouhou.nagoya を出典に含み、記事の筆頭出典でも17本で PR TIMES に次ぐ2位だった。二次媒体で2位以下は15%未満。原因は取材手順（Step 2.5）で名古屋情報通の新店カテゴリを新店の一覧として毎日読んでいたこと。同じ媒体の後追いが続くと、他媒体の切り口をなぞる記事になり独自性（Moat: 業界人の解釈層）が薄まる。媒体の使用を禁じるのではなく、(1) 取材クエリでその媒体を除外し代替媒体を当たらせ、(2) 採点の『取材の広がり（独立ドメイン数）』に飽和媒体を数えない、の2段で重みを分散させる。判定は公開済み記事HTMLの情報源欄（第三者が検算できる事実）だけで行う（制約10）。飽和率が閾値を下回れば自動で解除される。",
+  "notes": [
+    "saturation_share を動かす前に node scripts/lib/journal_source_diversity.js で直近の分布を実測すること（品質ゲート原則5）。",
+    "飽和媒体を出典に書くこと自体は減点しない（独立ドメインに数えないだけ）。一次情報をその媒体でしか得られない日に、捏造か公開ゼロかの二択を迫らないため（品質ゲート原則4）。"
+  ],
+  "updated": "2026-09-28"
+}

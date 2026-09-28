@@ -25,6 +25,7 @@
 const fs = require('fs');
 const path = require('path');
 const { RECOMMENDED_QUERIES, QUERY_TEMPLATES, RECOMMENDED_SITES } = require('./lib/trending_queries');
+const sourceDiversity = require('./lib/journal_source_diversity');
 
 const TRENDING_PATH = path.join(__dirname, '..', 'data', 'trending_stores.json');
 const INDEX_PATH = path.join(__dirname, '..', 'index.html');
@@ -153,6 +154,27 @@ function cmdSuggestQueries(theme, genre, area) {
     .replace(/\s+/g, ' ')
     .trim()
   );
+  // 出典の偏り対策（data/journal_source_diversity_policy.json）:
+  // 直近のジャーナルで出典が特定の二次媒体に寄っているときは、汎用クエリからその媒体を外し、
+  // 代わりに別媒体を名指しするクエリを足す（媒体の使用を禁じるのではなく、先に他を当たらせる）
+  const diversity = sourceDiversity.measure();
+  const excl = diversity.saturated.map(h => `-site:${h}`).join(' ');
+  const diversified = excl
+    ? queries.map(q => (/\bsite:/.test(q) ? q : `${q} ${excl}`))
+    : queries;
+  const altQueries = [];
+  if (diversity.saturated.length) {
+    const policy = sourceDiversity.loadPolicy() || {};
+    const alts = ((policy.alternative_outlets || {}).sites || [])
+      .filter(h => !sourceDiversity.isSaturated(h, diversity.saturated));
+    // 年間通算日で決定的にローテーション（毎日同じ代替媒体に偏らない）
+    const doy = Math.floor((today - new Date(year, 0, 0)) / 86400000);
+    const topic = genre || area || '新店';
+    for (let i = 0; i < Math.min(3, alts.length); i++) {
+      altQueries.push(`site:${alts[(doy + i) % alts.length]} 名古屋 ${topic} ${dateFilter}`.replace(/\s+/g, ' ').trim());
+    }
+  }
+
   console.log(JSON.stringify({
     theme,
     genre,
@@ -161,7 +183,18 @@ function cmdSuggestQueries(theme, genre, area) {
     month,
     year,
     season,
-    queries
+    queries: [...diversified, ...altQueries],
+    source_diversity: {
+      window_days: diversity.window_days,
+      articles: diversity.articles,
+      saturated: diversity.saturated.map(h => {
+        const s = diversity.shares.find(x => x.host === h);
+        return { host: h, articles: s.count, share: Math.round(s.share * 100) + '%' };
+      }),
+      instruction: diversity.saturated.length
+        ? `直近${diversity.window_days}日のジャーナルは ${diversity.saturated.join(', ')} を出典にした記事が多すぎる。今日の新店・話題の探索はこの媒体の新店一覧から始めず、上のクエリ（この媒体を除外済み）と代替媒体クエリで他の媒体・一次発表を先に当たること。この媒体を出典に書いてもよいが、採点の「独立ドメイン数」には数えない。`
+        : '出典の偏りはありません。'
+    }
   }, null, 2));
 }
 
