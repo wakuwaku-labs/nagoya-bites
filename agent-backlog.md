@@ -8,7 +8,8 @@
 
 ### [SEO-110] ジャーナルの店舗カード→店舗ページのリンクが 2026-07-30 の一括補修で凍結している（以後30記事・39カードが、店舗ページが存在するのに外部リンクのまま）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-09-28
 - **detected**: 2026-09-27
 - **category**: SEO
 - **owner**: Builder
