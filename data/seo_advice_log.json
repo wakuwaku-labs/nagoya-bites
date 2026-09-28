@@ -3440,6 +3440,36 @@
       "brand_reason": "却下。SNS投稿の実施・文面はリポジトリ外運用（オーナーが別の仕組みで生成・投稿）で、サイト/SEOの実装課題ではない。SNS流入の計測はUTMで行う運用が既にある。また『SNS流入0%』は旧 traffic_source の誤分類修正（部分一致 t.co 問題・2026-09-14）後の実測で、SNS流入は元々小さく観測閾値未満——汎用的なハッシュタグ追加は具体的な改善仮説を持たない",
       "category": null,
       "fingerprint": "310c00d22763e6a9"
+    },
+    {
+      "id": null,
+      "date": "2026-09-28",
+      "source": "line-daily",
+      "advice": "🟡 検索流入比率82%・2ページ目KW多い。👉「名古屋駅 一人飲み」を狙い features/nagoya-solo-dining を強化。見出し・本文にKWを自然に盛り込み index.html からの導線を強化",
+      "verdict": "duplicate",
+      "brand_reason": "重複。solo-dining の勝ち筋分解・KW強化は SEO-087 に集約済み、index.html からの導線は SEO-109（トップ「シーンで探す」に一人飲みチップ追加・2026-09-28 done）で実装済み。名駅×一人飲みは features/meieki-hitori-nomi が別途受け皿として存在し solo-dining から既にリンク済み（09-26 判定）。再起票せず",
+      "category": null,
+      "fingerprint": "a7ba1969343275bb"
+    },
+    {
+      "id": null,
+      "date": "2026-09-28",
+      "source": "line-daily",
+      "advice": "🟡 訪問61人に対し店舗詳細7回・予約2回と転換が少ない。👉 index.html の各店舗カードに「予約する」ボタンを直接配置",
+      "verdict": "duplicate",
+      "brand_reason": "重複・実装済み。店舗カードの予約ボタン＋地図ボタン常時表示は SEO-037（done）で実装済み（08-16 にも同旨を duplicate 判定）。単日61人の転換率は母数が小さくノイズ",
+      "category": null,
+      "fingerprint": "10e86cbd8aed51b9"
+    },
+    {
+      "id": "SEO-111",
+      "date": "2026-09-28",
+      "source": "line-daily",
+      "advice": "🟢 人気ページ1位が日次記事 2026-09-27-marunouchi-masuhan-matcha-price（15回）。👉 この記事から関連店舗ページや特集（features/nagoya-cafe 等）への内部リンクを増設し回遊を促す",
+      "verdict": "adopted",
+      "brand_reason": "振替採用（P2・owner=Builder）。名指し記事は既に店舗ページ・特集3本へリンク済みで字面の増分は小さいが、実測で refresh_journal_related.js の関連記事が話題を見ない『直近3本』固定と判明（抹茶・喫茶記事→とんかつ/ちゃんこ/うなぎ）。検算できるトピック一致で関連記事を選び直す構造修正に振替。Moat『三層編集』の内部回遊を強化、順位操作・広告導線なし",
+      "category": "SEO",
+      "fingerprint": "a54d361daf15957e"
     }
   ]
 }
