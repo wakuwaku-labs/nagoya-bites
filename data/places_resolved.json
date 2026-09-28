@@ -52494,40 +52494,11 @@
     ]
   },
   "J003942568": {
-    "fetchedAt": "2026-05-22T06:56:22.265Z",
-    "placeId": "ChIJW-h2CgB3A2ARrbSRLuw-fgE",
-    "name": "osteria vanna",
-    "formatted_address": "日本、〒450-0002 愛知県名古屋市中村区名駅３丁目５−１４ B1F",
-    "rating": 4.7,
-    "user_ratings_total": 7,
-    "business_status": "OPERATIONAL",
-    "latestReviews": [
-      {
-        "rating": 4,
-        "time": 1770021340,
-        "relativeTime": "3 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1770862023,
-        "relativeTime": "3 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1771583950,
-        "relativeTime": "3 か月前"
-      },
-      {
-        "rating": 5,
-        "time": 1779253347,
-        "relativeTime": "過去 1 週間以内"
-      },
-      {
-        "rating": 5,
-        "time": 1775700592,
-        "relativeTime": "1 か月前"
-      }
-    ]
+    "fetchedAt": "2026-09-28T22:46:43.799Z",
+    "rejected": true,
+    "rejectReason": "name-mismatch-on-refresh",
+    "candidateName": "osteria vanna",
+    "previousPlaceId": "ChIJW-h2CgB3A2ARrbSRLuw-fgE"
   },
   "J001113949": {
     "fetchedAt": "2026-05-22T06:56:22.995Z",
@@ -204987,5 +204958,20 @@
     "rejectReason": "name-mismatch",
     "candidateName": "ふる里 ナゴヤ地下街サンロード店",
     "candidateAddress": "日本、〒450-0002 愛知県名古屋市中村区名駅４丁目８−７−２５"
+  },
+  "manual:レストラン エルミタージュ|名古屋市東区": {
+    "fetchedAt": "2026-09-28T22:46:39.576Z",
+    "notFound": true
+  },
+  "manual:The Living Room with SKY BAR|名古屋市中村区": {
+    "fetchedAt": "2026-09-28T22:46:40.123Z",
+    "rejected": true,
+    "rejectReason": "name-mismatch",
+    "candidateName": "ザ・リビングルーム・ウィズ・スカイバー",
+    "candidateAddress": "日本、〒450-0002 愛知県名古屋市中村区名駅４丁目１１−２７ シンフォニー豊田ビル 三井ガーデン ホテル名古屋プレミア 18階"
+  },
+  "manual:Cafe MARU（カフェ マル）|円頓寺": {
+    "fetchedAt": "2026-09-28T22:46:40.390Z",
+    "error": "Places API OVER_QUERY_LIMIT: You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account"
   }
 }
