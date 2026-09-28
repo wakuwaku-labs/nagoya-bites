@@ -172,3 +172,18 @@ test('sitemap.xml: stores/area/ のURLが重複なく含まれる', () => {
   const unique = new Set(locs);
   assert.equal(locs.length, unique.size, 'stores/area/ のURLがsitemap内で重複している');
 });
+
+test('sitemap.xml をコミットするワークフローは build.yml だけ（stores/area/ の消失防止）', () => {
+  // build.js 単体の sitemap は stores/area/ を含まない。build.js だけを回す別ワークフローが
+  // sitemap.xml をコミットすると、本番 sitemap からエリア×ジャンルページが消える
+  // （2026-09 に daily-trending5.yml が毎晩これを起こしていた）。
+  const dir = path.join(__dirname, '..', '.github', 'workflows');
+  if (!fs.existsSync(dir)) return;
+  const offenders = fs.readdirSync(dir)
+    .filter(f => /\.ya?ml$/.test(f) && f !== 'build.yml')
+    .filter(f => {
+      const src = fs.readFileSync(path.join(dir, f), 'utf8').replace(/\\\n/g, ' ');
+      return src.split('\n').some(line => !/^\s*#/.test(line) && /git add\b.*\bsitemap\.xml\b/.test(line));
+    });
+  assert.deepEqual(offenders, [], `build.yml 以外が sitemap.xml を git add している: ${offenders.join(', ')}`);
+});

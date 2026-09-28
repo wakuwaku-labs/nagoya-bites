@@ -55,9 +55,15 @@ jobs:
           # 選定だけが index.html と data/stores.json とで食い違う（ISSUE: 2026-08-21
           # 写真ゲート導入時に発覚。ALL_STORES は data/stores.json 側で上書きされるため
           # 古い方が実際の表示に勝ってしまう）。build.yml の git add 対象と揃えておく。
+          # ただし sitemap.xml だけは例外でコミットしない（2026-09-28）。build.js 単体の
+          # sitemap は stores/area/（SEO-094・約690件）を含まず、店舗URLの集合も
+          # gen-store-pages.js と異なる。これをコミットしていたため、毎晩このワークフローが
+          # エリア×ジャンルページを本番 sitemap から消し、翌日の build.yml が戻す
+          # 反復が起きていた。sitemap.xml の正本は build.yml（build.js → gen-store-pages.js
+          # → gen_area_genre_pages.js の順）だけが書く。未コミット分は下の checkout で破棄される。
           git add data/daily_trending5.json data/trending_stores.json data/manual_stores.json \
             data/trending_url_history.json data/stores.json data/cross_check_flags.json \
-            data/crosscheck.json index.html sitemap.xml stores/ page-names.json 2>/dev/null || true
+            data/crosscheck.json index.html stores/ page-names.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "コミット対象の変更がありません。"
             exit 0
