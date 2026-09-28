@@ -855,8 +855,9 @@
 
 ### [SEO-093] 日次アドバイス生成プロンプトに**失効した前提**（「docs/daily-posts/ にSNS原稿が毎日用意されている」「特集20本」）が固定文で埋め込まれており、停止済みのSNS原稿を使う助言が停止後9日間で5回出て助言枠を浪費している
 
-- **priority**: P2 → **status**: in_progress（コード修正完了・GASへのデプロイ待ち。デプロイはオーナー本人の操作が必要）
+- **priority**: P2 → **status**: in_progress（コード修正完了・2026-09-28 18:53 JST に clasp push でGASへ反映済み。翌朝レポートでの反映確認待ち）
 - **detected**: 2026-09-13
+- **2026-09-28 追記（GASデプロイ実施・SEOループより）**: オーナー指示「自動でやって」を受け、`.gas-deploy/` から `clasp push -f` を実行。事前に `clasp pull` でリモートを取得し、差分が SEO-092/093 の変更分のみ（リモート固有の変更なし・appsscript.json 同一・`node --check` 通過・`GSC_METRICS_URL` は HTTP 200）であることを確認してから上書き。push 後の再 pull でリモート＝リポジトリ版の一致を確認済み。**反映の確定判定は翌朝（2026-09-29）の日次レポートで `node scripts/check_gas_deploy_health.js` が `deployed` を返すこと**で行い、確認できたら `data/gas_deploy_policy.json` の `pending_fixes` を空にして本チケットを done にする（runbook「反映されたら」）。
 - **category**: SEO / 計測
 - **owner**: Marketer
 - **source**: SEOアドバイス(LINE) 2026-09-12 原文「Bing検索からの流入が18訪問と最も多く、Google検索を上回っています。👉 docs/daily-posts/ にあるSNS投稿原稿（Note/Instagram/X）にBing検索ユーザーを意識したキーワード（例：名古屋 隠れ家 ビストロ）を追加し、SNSからの集客を強化する実験を始めましょう」
@@ -999,8 +1000,9 @@
 
 ### [SEO-092] 日次アドバイス生成器が GSC の実クエリを一切参照しておらず、「一人ご飯」「接待」など**自社の実データで表示0のKW**を繰り返し提案している（3日で2回・助言枠の構造的浪費）
 
-- **priority**: P2 → **status**: in_progress（コード修正完了・GASへのデプロイ待ち。デプロイはオーナー本人の操作が必要）
+- **priority**: P2 → **status**: in_progress（コード修正完了・2026-09-28 18:53 JST に clasp push でGASへ反映済み。翌朝レポートでの反映確認待ち）
 - **detected**: 2026-09-12
+- **2026-09-28 追記（GASデプロイ実施・SEOループより）**: オーナー指示「自動でやって」を受け、`.gas-deploy/` から `clasp push -f` を実行。事前に `clasp pull` でリモートを取得し、差分が SEO-092/093 の変更分のみ（リモート固有の変更なし・appsscript.json 同一・`node --check` 通過・`GSC_METRICS_URL` は HTTP 200）であることを確認してから上書き。push 後の再 pull でリモート＝リポジトリ版の一致を確認済み。**反映の確定判定は翌朝（2026-09-29）の日次レポートで `node scripts/check_gas_deploy_health.js` が `deployed` を返すこと**で行い、確認できたら `data/gas_deploy_policy.json` の `pending_fixes` を空にして本チケットを done にする（runbook「反映されたら」）。
 - **category**: SEO / 計測
 - **owner**: Marketer
 - **source**: SEOアドバイス(LINE) 2026-09-11 の2件（「『名古屋 接待 個室』などの特集記事を新たに企画・作成」「タイトルや見出しに『名古屋 一人ご飯 おすすめ』を追加」）。2026-09-09 分の助言も同じ「一人ご飯」を出しており（[[SEO-087]] 2026-09-09 追記）、**同じ欠陥が繰り返している**
