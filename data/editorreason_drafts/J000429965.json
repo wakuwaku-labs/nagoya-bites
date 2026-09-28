@@ -1,0 +1,84 @@
+{
+  "status": "OK",
+  "editorReason": "キムラーメンは、背脂の甘みが特徴的な豚骨醤油スープと、喉越しの良い中太麺が高く評価されています。ランチタイムにはライスと数種類のお惣菜が食べ放題となり、顧客満足度を高めるサービスも魅力です。",
+  "insiderNote": "店主は4種の味噌と酒粕を使った味噌だれや、背脂の甘みが特徴の豚骨醤油スープにこだわり、サイドメニューも充実。ランチのお惣菜食べ放題など、顧客満足度を高める工夫が光る。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.9,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNS_BIZceHJzdbPSpAKo4HIDk_jvhRonksBPnDvTpMu0PMalj2n4IHFc8g3x0j7QnumAywaZaqAd2JrwRyHf41w-rPDNbKcyYuLMNxy0sFcRipFk95gGMETih4afbJ0BcS4buJVG3Al-6y1U80MWSy5w==",
+      "snippet_quote": "豚骨醤油スープは絶品で独特の背脂の甘みが癖になる味",
+      "supports": "背脂の甘みが特徴的な豚骨醤油スープの評価"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJA3JH2-dDU1iCrwugKYCKKaH0pxZc0EdLdZGa1PVSHM5ukpJLDeqtNZ1vlKmnn2jKygqec8Iabe31XxyiW4YpPGLp3sdhsEFmzIOpjwbJLlVxdj8XM9Zj82gcI4gmBNrgohcAcRGLWWBby5y8WimtdZ-NUztn8zk_tg==",
+      "snippet_quote": "濃厚でコクある出汁の旨みが効いたスープながらもコテコテ感はあまりなく、ボソッとした食感の中太麺と程よくジューシーで肉感もあるチャーシューも絡めながら美味しく堪能できる",
+      "supports": "豚骨醤油スープの濃厚さとバランス、中太麺の食感とスープとの絡みの評価"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzI5Kmai8ebT4rq57OoT8hME2M_Jk_ApYCgRWLvzI0tfA5-UuVFtRd4RUN_Tknl6L97cbMedmWJYoZaQCqN_QiYSvui6MUeStf8nDEXylbilwOEgqOKN1ayoqVi5O8Bmk12cBkcag-mQMxshWR4sOTpydo9RS6yejF",
+      "snippet_quote": "麺が旨～いΨ(￣∇￣)Ψ 素晴らしく喉越しの良い麺だがしっかりとスープを持ち上げてマジ旨！",
+      "supports": "喉越しの良い麺の評価"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNS_BIZceHJzdbPSpAKo4HIDk_jvhRonksBPnDvTpMu0PMalj2n4IHFc8g3x0j7QnumAywaZaqAd2JrwRyHf41w-rPDNbKcyYuLMNxy0sFcRipFk95gGMETih4afbJ0BcS4buJVG3Al-6y1U80MWSy5w==",
+      "snippet_quote": "ランチタイムには、ライスと数種類のお惣菜が食べ放題となるサービスがあり",
+      "supports": "ランチタイムのライスとお惣菜食べ放題サービス"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJA3JH2-dDU1iCrwugKYCKKaH0pxZc0EdLdZGa1PVSHM5ukpJLDeqtNZ1vlKmnn2jKygqec8Iabe31XxyiW4YpPGLp3sdhsEFmzIOpjwbJLlVxdj8XM9Zj82gcI4gmBNrgohcAcRGLWWBby5y8WimtdZ-NUztn8zk_tg==",
+      "snippet_quote": "ランチタイムには、ライスと数種類のお惣菜が食べ放題となるサービスがあり",
+      "supports": "ランチタイムのライスとお惣菜食べ放題サービス"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzI5Kmai8ebT4rq57OoT8hME2M_Jk_ApYCgRWLvzI0tfA5-UuVFtRd4RUN_Tknl6L97cbMedmWJYoZaQCqN_QiYSvui6MUeStf8nDEXylbilwOEgqOKN1ayoqVi5O8Bmk12cBkcag-mQMxshWR4sOTpydo9RS6yejF",
+      "snippet_quote": "ランチタイムには、ライスと数種類のお惣菜が食べ放題となるサービスがあり",
+      "supports": "ランチタイムのライスとお惣菜食べ放題サービス"
+    }
+  ],
+  "warnings": [],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「キムラーメン」に関する業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「キムラーメン」の店主は、味噌ラーメンにおいて4種の味噌と酒粕をたっぷり使ったこだわりの味噌だれを使用しているとされています。また、豚骨醤油スープは背脂の甘みが特徴的で、こってりながらもしつこさがないバランスの取れた味に仕上げることにこだわっているようです。さらに、生姜が効いた独特の味わいのスープや、三河産の味の濃い卵とサイコロチャーシュー、ネギを組み合わせた「たまごかけごはん」など、サイドメニューにもこだわりが見られます。特に、二郎系ラーメンでは珍しい茹でキャベツを野菜の選択肢として提供している点や、人気のある美味しいチャーシューも店主のこだわりが反映されていると言えます。\n\n**提供スタイルの特徴**\n同店は、季節限定メニューや子供向けの企画、さらに「キムたまご」の提供など、家族連れにも配慮したサービスを展開しています。ランチタイムには、ライスと数種類のお惣菜が食べ放題となるサービスがあり、これらのお惣菜とご飯だけで定食のように楽しめる点が特徴です。また、白ごはんはおかわり自由で、ランチサービスとしてメンマの豆板醬炒めが提供されることもあります。店内はカウンター席が座りやすい高さに設定されており、おもちゃやフィギュアが多数飾られたレトロな雰囲気も特徴の一つです。接客については、奥さんが元気で、大将は寡黙ながらも優しいと評されており、家族での来店時にはトッピングの分け方などにも親切に対応してくれるという声があります。席数は16席で、全席禁煙です。\n\n**地元グルメメディアでの紹介**\n「キムラーメン」は、地元グルメメディアで度々取り上げられている有名店とされています。具体的には、「シージャの食べ歩きブログ～東海ツゥレポ」のような地域の食べ歩きブログで紹介された実績があります。\n\n**料理人としての評価**\n検索結果から、料理人個人の具体的な評価や受賞歴に関する直接的な情報は見つかりませんでした。しかし、顧客からの口コミでは、そのラーメンの味が高く評価されています。特に、豚骨醤油スープは「絶品で独特の背脂の甘みが癖になる味」、「濃厚でコクある出汁の旨みが効いたスープながらもコテコテ感はあまりなく、ボソッとした食感の中太麺と程よくジューシーで肉感もあるチャーシューも絡めながら美味しく堪能できる」、「濃厚スープに太麺は最高の組み合わせ」、「麺が旨～いΨ(￣∇￣)Ψ 素晴らしく喉越しの良い麺だがしっかりとスープを持ち上げてマジ旨！」といった声があり、これらの評価は料理人の技術とこだわりが反映されたものと言えます。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEA5UyDyLouHrRliBlDegSiM0L6Y0o3p9pakjlUF9zuda2NXUErke5ocAAOQvcKUkYQajHtlJy5m7TLMBnHkGy3783evHLGYWHQyILbGkscnk3sWqK_punjDE90LmraF1zVmhyF",
+        "title": "ekiten.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNS_BIZceHJzdbPSpAKo4HIDk_jvhRonksBPnDvTpMu0PMalj2n4IHFc8g3x0j7QnumAywaZaqAd2JrwRyHf41w-rPDNbKcyYuLMNxy0sFcRipFk95gGMETih4afbJ0BcS4buJVG3Al-6y1U80MWSy5w==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJA3JH2-dDU1iCrwugKYCKKaH0pxZc0EdLdZGa1PVSHM5ukpJLDeqtNZ1vlKmnn2jKygqec8Iabe31XxyiW4YpPGLp3sdhsEFmzIOpjwbJLlVxdj8XM9Zj82gcI4gmBNrgohcAcRGLWWBby5y8WimtdZ-NUztn8zk_tg==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzI5Kmai8ebT4rq57OoT8hME2M_Jk_ApYCgRWLvzI0tfA5-UuVFtRd4RUN_Tknl6L97cbMedmWJYoZaQCqN_QiYSvui6MUeStf8nDEXylbilwOEgqOKN1ayoqVi5O8Bmk12cBkcag-mQMxshWR4sOTpydo9RS6yejF",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGPIGNf09X28x7glXUkkF04zDB3Jn6G5ad3XSxg79uPUfL-gvjqJvNYXXj0mlYYNUtgpSts770APv2eqhGp2n6YQ8YgDQx8CmEViPTqfx3QHHQ1_yqcD457nOuUPYlsUeLO",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFGy7YK6-Xkt2ZPw2tG4cxzFiHjaKZLO5ZZIT1F7yzJFT7Ra-PKBBAKGB3p9k4mNnLKTqiPgBAeUfE-tjpcScPyrCdmCXRqgAtfqwOJWeRFlzEws8bQddC7ioamG7RS9WKZR5oj8PvpedjwBU3ggsWmYhI=",
+        "title": "livedoor.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEsU4BDszVHGfqaQLKKu5ksAWRT9mSvwyCB8zIcEQ07Z6kLbRWLUBO-kJuvCa_Vx7Si2K3RQnquyOyJMsT78TGgUhAv_hIbqV58FnbtLeRY_YS1VxpO-4E59rqAuJXKLhXvAgln9f1paQGvtsR8yA==",
+        "title": "jalan.net"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFA1Q0zhPkIAmcRwG_Z_Zzxgs2p0E82auZ_2BOCjM2xU_TF6npXuCZCbtzhELwgqMeT2oYLz_T2WUbGjOf7OIHTAoeL7Q76SDK_leJ9Q-SUm_OVu27zlIDD6ZSjlTq_2IW_YQa5Nlr3ZuIK0cevFw==",
+        "title": "navitime.co.jp"
+      }
+    ]
+  },
+  "store_id": "J000429965",
+  "store_name": "キムラーメン",
+  "area": "名古屋（名古屋駅/西区/中村区）",
+  "genre": "ラーメン",
+  "rating": "4",
+  "generated_at": "2026-09-28T23:03:45.866Z"
+}

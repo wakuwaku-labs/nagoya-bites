@@ -1,0 +1,99 @@
+{
+  "status": "OK",
+  "editorReason": "名古屋で本場沖縄の味を追求し、沖縄直送の新鮮食材で多様な料理を提供。リーズナブルな価格設定と時間帯割引で集客力も高い。堀川の夜景を楽しめる席や宴会対応も魅力で、幅広いニーズに応える居酒屋として評価できる。",
+  "insiderNote": "沖縄直送食材による本場の味再現は、名古屋で差別化を図る強み。多様な調理法とリーズナブルな価格設定、時間帯割引は集客に有効。宴会対応も可能で、幅広い客層を取り込める。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEPZChNoP_PHerqL_SeWTHoXa8R1o02Vovg_Ec1bd4a4XqtRwJo7R4AfGF6-DOxG70UTFiq8tETDXCk5QY82Iq97eMPyzJpnSR73mmw45Vw5vcu9MRJg4wmRARj_no1ggg35tPimde3yVQptzU=",
+      "snippet_quote": "本場沖縄の味を楽しめる！沖縄から直送された新鮮な食材を使った本場の沖縄料理が名古屋で楽しめる",
+      "supports": "本場沖縄の味と直送食材へのこだわり"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHlgZrhL8cmqSiYA-hnNety-JNHRuIqUEz-OWlbftXJvNtyAokMAaQ3SMy0hF3GRggh_qUcdiRY0syN8k7HRXsHfP4KiNCmYM7spHGae2MrYuucJaz3u1kn6vabqVcqR5g2CQ==",
+      "snippet_quote": "沖縄から直送された新鮮な食材を使用し、沖縄の海と大地の恵みを活かした料理を提供しています。",
+      "supports": "沖縄直送食材と本場の味の提供"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFWXZoQHIR5ij-SaDlcskFyhqnQvXztHFgLYhiyVcl7hgtEa8fX6oJShco_LJpsqrzrVOzcXl_vq4EYd5vXnnlZfp_qBmB6cjkzHaToROb1BzGecMOQucFZkv4iDkwjAtxy9yi7Bfy7",
+      "snippet_quote": "ゴーヤチャンプルーやラフテーといった定番料理に加え、あぐー豚や金目鯛のネギしゃぶなど、沖縄の魅力が詰まった料理を堪能できます。",
+      "supports": "定番から特色ある沖縄料理の提供"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH_FEY1xZKif4uh7d-RLISi4uk2O7PxENaz8bCOZKFiU_3eoEY-VyXgxDCSCunAVrotiKV_bDdz_az7MEoCe2eOXNyqVn73Qrg_dwdGWLgARcDMHrfuZUQDzqOh8q83nn60O42f676y",
+      "snippet_quote": "ボリューム満点の「沖縄刺身5点盛り」はリーズナブルな価格で提供されています。",
+      "supports": "リーズナブルな価格設定"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEPZChNoP_PHerqL_SeWTHoXa8R1o02Vovg_Ec1bd4a4XqtRwJo7R4AfGF6-DOxG70UTFiq8tETDXCk5QY82Iq97eMPyzJpnSR73mmw45Vw5vcu9MRJg4wmRARj_no1ggg35tPimde3yVQptzU=",
+      "snippet_quote": "泡盛サワー・レモンサワー・生ビールが時間帯に関わらず1時間100円引きになるサービスも提供されており、仕事帰りの利用にも適しています。",
+      "supports": "時間帯に関わらないドリンク割引サービス"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHlgZrhL8cmqSiYA-hnNety-JNHRuIqUEz-OWlbftXJvNtyAokMAaQ3SMy0hF3GRggh_qUcdiRY0syN8k7HRXsHfP4KiNCmYM7spHGae2MrYuucJaz3u1kn6vabqVcqR5g2CQ==",
+      "snippet_quote": "店内はにぎやかな雰囲気で、堀川のライトアップも楽しめるテーブル席があり",
+      "supports": "堀川の夜景を楽しめる席の提供"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEPZChNoP_PHerqL_SeWTHoXa8R1o02Vovg_Ec1bd4a4XqtRwJo7R4AfGF6-DOxG70UTFiq8tETDXCk5QY82Iq97eMPyzJpnSR73mmw45Vw5vcu9MRJg4wmRARj_no1ggg35tPimde3yVQptzU=",
+      "snippet_quote": "40名から最大45名までの貸切も可能で、各種宴会にも対応しています。",
+      "supports": "貸切・宴会対応"
+    }
+  ],
+  "warnings": [
+    "1件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「琉球酒場 魚がしの銀次 名古屋店」に関して、Google検索で得られた業界視点の情報は以下の通りです。\n\n**店主のこだわり・提供スタイルの特徴:**\n「琉球酒場 魚がしの銀次 名古屋店」は、本場沖縄の味を名古屋で楽しめることにこだわっています。沖縄から直送された新鮮な食材を使用し、沖縄の海と大地の恵みを活かした料理を提供しています。現地で愛される本場の味をそのまま名古屋で再現することがお店のこだわりとされており、沖縄からの直送食材や沖縄の食べ方を再現したメニューが豊富に用意されています。ゴーヤチャンプルーやラフテーといった定番料理に加え、あぐー豚や金目鯛のネギしゃぶなど、沖縄の魅力が詰まった料理を堪能できます。特に新鮮な魚介は、刺身だけでなく、カルパッチョ、にんにくが効いたバター焼き、シークワーサーポン酢でさっぱりと食べられる「まるごとフライ」、特製の出汁にくぐらせて食べる「ネギしゃぶ」など、様々な調理法で提供されています。ボリューム満点の「沖縄刺身5点盛り」はリーズナブルな価格で提供されています。また、泡盛サワー・レモンサワー・生ビールが時間帯に関わらず1時間100円引きになるサービスも提供されており、仕事帰りの利用にも適しています。店内はにぎやかな雰囲気で、堀川のライトアップも楽しめるテーブル席があり、友人や家族との食事、デートや夫婦での利用、さらには40名から最大45名までの貸切も可能で、各種宴会にも対応しています。ランチタイムには、照喜名製麺所のちぢれ麺を使った鶏白湯沖縄そばやミニタコライスなども提供されています。\n\n**地元グルメメディアでの紹介:**\n「琉球酒場 魚がしの銀次 名古屋店」は、ホットペッパーグルメや楽天ぐるなびといった主要なグルメメディアに掲載されています。ホットペッパーグルメでは、おすすめポイントとして「本場沖縄の味を楽しめる！沖縄から直送された新鮮な食材を使った本場の沖縄料理が名古屋で楽しめる」「仕事帰りの飲みにも最適」「大切な人と楽しい時間を◎」などが挙げられています。また、口コミや写真も多数掲載されており、ネット予約も可能です。楽天ぐるなびでも店舗情報や地図、電話番号が紹介されています。\n\n**料理人としての評価:**\nGoogle検索で「琉球酒場 魚がしの銀次 名古屋店」の料理人個人の具体的な評価に関する直接的な情報は見つかりませんでした。\n\n**関連情報が見つかりませんでした**\n店主のこだわりについて、本場沖縄の味の再現と直送食材の使用という点は明確ですが、店主個人の詳細な経歴や料理哲学といった深いこだわりに関する情報は検索結果からは得られませんでした。また、提供スタイルの特徴についても、堀川の夜景を楽しめる席や貸切対応といった空間的な特徴はありますが、料理の提供方法における独自性や特別な演出に関する具体的な記述は見当たりませんでした。料理人としての個別の評価についても、具体的な情報は見つかりませんでした。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEPZChNoP_PHerqL_SeWTHoXa8R1o02Vovg_Ec1bd4a4XqtRwJo7R4AfGF6-DOxG70UTFiq8tETDXCk5QY82Iq97eMPyzJpnSR73mmw45Vw5vcu9MRJg4wmRARj_no1ggg35tPimde3yVQptzU=",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHlgZrhL8cmqSiYA-hnNety-JNHRuIqUEz-OWlbftXJvNtyAokMAaQ3SMy0hF3GRggh_qUcdiRY0syN8k7HRXsHfP4KiNCmYM7spHGae2MrYuucJaz3u1kn6vabqVcqR5g2CQ==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQELfqvc_6S1QWoFu4zsoF6_KZN9U3DcodOaZk-ACGOz84rJ_LAMjTyszX8FPIzDVKL-6F8OzuZl1Is-4jU2KNxsFE6mqkThGSvKKQj837NFyMB9ka9PhizMXTnPeRlXA6E8",
+        "title": "gogo-myway.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEKPmABlHx8M70_zjci6PfVQAWg8vHoPYt0XTL4GCDiEGRZhnrWF7YBQ0NalVPdYFGAAsYcK2KTvNHVWhnsVhuKHPnqU97HnJJyrgdI7WXSV2FYHYfbBqfgDZMba-Ru1W_EfEbcxD9YHe2BP0XNPBbHz-IDKKZ3xHcrZo28XuPpT-0QzQ==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFWXZoQHIR5ij-SaDlcskFyhqnQvXztHFgLYhiyVcl7hgtEa8fX6oJShco_LJpsqrzrVOzcXl_vq4EYd5vXnnlZfp_qBmB6cjkzHaToROb1BzGecMOQucFZkv4iDkwjAtxy9yi7Bfy7",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH94sgFkhQR1Iz-mAHtcUGKBqcNyYaVXck-wKVuymXI9iPABbc4tlEvLSG-k3zA-9md9w5QRQcaUV159DQGUS_9E1YtbJM0gDldKVOghCknnkgYzVNu71jbxKu3xAqw",
+        "title": "gnavi.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHDKVBWtmbxaPJkXM2Y3ZTEpu53KnEY_ijkCPzxhe62J_fzg-9_T7gxFvp8GzEUN-3vJ1WkEhLHV2vTsMAAQ4uSQFWsHLmYbZovH7Pi0jbcM51mZ1AebynuCMahXNGhE2_kwp4Hs-4GLpH7vuT07Tdq",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH_FEY1xZKif4uh7d-RLISi4uk2O7PxENaz8bCOZKFiU_3eoEY-VyXgxDCSCunAVrotiKV_bDdz_az7MEoCe2eOXNyqVn73Qrg_dwdGWLgARcDMHrfuZUQDzqOh8q83nn60O42f676y",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtS3fcBeUPmqBTtFMlYDLU_81cz2pHQb7DHtfC64ziX89PS0TyvMd6TxGxSF08qvc8fvSh3tV2RF4r_QJZAvzPLYsMyPZJsUfBGW1KtkUMWDZ4stRaCInu-O42vU_4e27qW5b85DC20w==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGv_aiRYBGvKbBW6XQOqM7kD5AILoeAij19LUHG_vlll6w4jze9xUnOdBcO1ui5tMlWCIgz36oiFzYHeOd6deasVQ-uuSY9OxERYnQENh1v3awq12cq_mNIkNPMdZrQESnsDXNOg9WD7kpt9h4uNA==",
+        "title": "owst.jp"
+      }
+    ]
+  },
+  "store_id": "J004421573",
+  "store_name": "琉球酒場 魚がしの銀次 名古屋店",
+  "area": "名古屋（名古屋駅/西区/中村区）",
+  "genre": "居酒屋",
+  "rating": "4.1",
+  "generated_at": "2026-09-28T23:02:19.560Z"
+}

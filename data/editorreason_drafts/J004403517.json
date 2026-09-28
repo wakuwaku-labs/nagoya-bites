@@ -1,0 +1,50 @@
+{
+  "status": "OK",
+  "editorReason": "主要グルメサイトに掲載されネット予約にも対応しているため、集客力と利便性が高い。じゃらんnetの名古屋市中区韓国料理ランキングで7位にランクインしており、一定の評価を得ている点が業界視点で注目される。",
+  "insiderNote": "主要グルメサイト掲載とネット予約対応で集客力と利便性が高く、じゃらんnetのランキング入りも評価の証。貸切可能で女子会にも人気な点は、幅広い客層を取り込める強みとなる。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFBHYpon_EwdiLynkComqvHMvx6ITYYhLqWFtO4D57ZlptqLuXBIdrAJhy0a-RaEGWN00nBo29f112FEkdWjGKahAZTENIxSsbEvrS5TawqSPeRf31Yk-sep3ZGhEzL",
+      "snippet_quote": "ホットペッパーグルメやヤッピーダイニングなどの主要なグルメサイトにも掲載されており、ネット予約も可能です。",
+      "supports": "主要グルメサイトへの掲載とネット予約対応"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEccks61JFhqglvuZjP701Fyu35zqPeKEdUb7xyRuGHwxU0SlBU8ep6x2nzAIjDfG3gV50qITwYv1Z8Co3QeydWC4jIRnMM32cB37zzZz4VQ14VTQstm0Ps9SS7KUZiUhMdP6jBoUAhJq-L0mlL6K_h",
+      "snippet_quote": "じゃらんnetの「名古屋市中区の韓国料理ランキング」で7位にランクインしています。",
+      "supports": "じゃらんnetのランキング入り"
+    }
+  ],
+  "warnings": [
+    "2件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「じゃんと1番家」（韓国料理）についてGoogle検索で調査した結果、以下の情報が見つかりました。\n\n**提供スタイルの特徴**\n「じゃんと1番家」は、マッコリ2本とチャミスル1本、そしてお酒に合う韓国料理がセットになった「マッコリセット」を提供しています。定番のサムギョプサルや、旨みが凝縮された「ムギョ洞テナガダコ炒め」などがおすすめ料理として挙げられています。店内は20名から32名までの貸切も可能で、大人数でもゆったりと過ごせる空間が特徴です。木のぬくもりを感じるアットホームな雰囲気で、韓国の家庭料理をリーズナブルな価格で楽しめるとされています。女子会にも人気のマッコリを飲みながら、チヂミやサムギョプサルをシェアして楽しむことが推奨されています。\n\n**地元グルメメディアでの紹介**\n「じゃんと1番家」は、じゃらんnetの「名古屋市中区の韓国料理ランキング」で7位にランクインしています。 ホットペッパーグルメやヤッピーダイニングなどの主要なグルメサイトにも掲載されており、ネット予約も可能です。\n\n**店主のこだわり・料理人としての評価**\nGoogle検索で「じゃんと1番家」の店主のこだわりや、料理人としての具体的な評価に関する直接的な情報は見つかりませんでした。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEj1-bKGQnth4G9TwNyMrtWLa8RXNMrU8U12f2U0du8GgOEHPlMLYaekFxzpk-c-gGtel_osZMLJeDdNCBhnvEqTzQudWyBIuL-sWAa1hm7KzydA6NLZdMte5XpKRDl8HcLaA==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEccks61JFhqglvuZjP701Fyu35zqPeKEdUb7xyRuGHwxU0SlBU8ep6x2nzAIjDfG3gV50qITwYv1Z8Co3QeydWC4jIRnMM32cB37zzZz4VQ14VTQstm0Ps9SS7KUZiUhMdP6jBoUAhJq-L0mlL6K_h",
+        "title": "jalan.net"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFBHYpon_EwdiLynkComqvHMvx6ITYYhLqWFtO4D57ZlptqLuXBIdrAJhy0a-RaEGWN00nBo29f112FEkdWjGKahAZTENIxSsbEvrS5TawqSPeRf31Yk-sep3ZGhEzL",
+        "title": "yapy.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEd8_vDTlGGI0qQIRG_PuP6GI56y9lGdBfG0Z5_IfDqT251RTso4gaA3g-4T0Kuuw9Z6NnRXKIwSuuxBL451naYEmKo6SfflGW659D403rClpMxf-aRq0n8z2SQiRdd4AP1YqIPbSlRn_ydHKEFFME=",
+        "title": "jalan.net"
+      }
+    ]
+  },
+  "store_id": "J004403517",
+  "store_name": "じゃんと1番家",
+  "area": "栄(ミナミ)/矢場町/大須/上前津",
+  "genre": "韓国料理",
+  "rating": "4.8",
+  "generated_at": "2026-09-28T23:04:17.902Z"
+}
