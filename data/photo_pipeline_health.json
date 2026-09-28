@@ -1,18 +1,18 @@
 {
   "places": {
-    "date": "2026-09-27",
-    "status": "ok",
-    "quota_reached_streak": 0,
-    "reason": "",
-    "api_calls": 0,
-    "quota_day": "2026-09-26",
-    "api_calls_day": 0,
+    "date": "2026-09-28",
+    "status": "quota_reached",
+    "quota_reached_streak": 1,
+    "reason": "OVER_QUERY_LIMIT — You have exceeded your daily request quota for this API. If you did not set a custom daily request quota, verify your project has an active billing account: http://g.co/dev/maps-no-account",
+    "api_calls": 4,
+    "quota_day": "2026-09-28",
+    "api_calls_day": 4,
     "daily_budget": 200,
     "sku_month": "2026-09",
     "sku_calls_month": {
-      "textsearch": 164,
-      "details": 126,
-      "photo": 100
+      "textsearch": 166,
+      "details": 128,
+      "photo": 101
     },
     "sku_monthly_budget": {
       "textsearch": 4000,
@@ -21,21 +21,21 @@
     },
     "sku_exhausted": "",
     "skipped_by_daily_budget": false,
-    "responded": 0,
-    "failed": 0,
-    "attempted": 0,
-    "adopted": 0,
-    "recorded_at": "2026-09-26T23:48:27.840Z"
+    "responded": 1,
+    "failed": 3,
+    "attempted": 2,
+    "adopted": 1,
+    "recorded_at": "2026-09-28T11:03:16.615Z"
   },
   "hotpepper": {
-    "date": "2026-09-26",
+    "date": "2026-09-28",
     "status": "ok",
     "reason": "",
-    "responded": 9,
+    "responded": 57,
     "failed": 0,
-    "attempted": 9,
-    "adopted": 0,
-    "recorded_at": "2026-09-26T00:14:28.406Z"
+    "attempted": 58,
+    "adopted": 1,
+    "recorded_at": "2026-09-28T11:03:39.893Z"
   },
   "journal_photos": {
     "sku_month": "2026-09",
