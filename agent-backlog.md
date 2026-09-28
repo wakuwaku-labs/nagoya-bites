@@ -6,6 +6,21 @@
 
 ---
 
+### [SEO-111] エリア×ジャンルページ（SEO-094・約690件）が毎晩、本番 sitemap.xml から消されていた
+
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-09-28
+- **detected**: 2026-09-28
+- **category**: SEO
+- **owner**: Builder
+- **source**: オーナー「SEOがまた伸びてない」（2026-09-28）を受けた GSC 実測の分解調査
+- **原因**: `daily-trending5.yml`（毎朝の今日の話題店TOP5）が `node build.js` だけを回し、その出力の `sitemap.xml` を `git add` していた。build.js 単体の sitemap には `stores/area/` が入らないため、毎晩 690件が本番 sitemap から消え、翌日の build.yml（build.js → gen-store-pages.js → gen_area_genre_pages.js）が戻す反復になっていた。git 履歴で 9/22〜9/27 の毎晩「TOP5コミット=area 0件 / build.yml コミット=area 689〜690件」を確認。**2026-09-27 20:55 UTC 以降は build.yml がテスト失敗（下記）で止まっているため、area 0件の sitemap が戻されないまま本番に残っている**（`curl https://nagoya-bites.com/sitemap.xml | grep -c stores/area` → 0）
+- **副次的な発見**: 2つの sitemap は店舗URLの集合も食い違っている（build.js 版にだけ店舗738件＋contact.html/faq.html。738件は data/stores.json に無い孤児ページ＝`gen-store-pages.js --check-orphans` の887件と同系統と推定）。sitemap が日ごとに約1,400URL入れ替わる状態だった。孤児ページの扱いは本件では触らない
+- **対応**: `daily-trending5.yml` の `git add` から `sitemap.xml` を外した（sitemap の正本は build.yml だけが書く）。再発防止に `tests/area_genre_pages.test.js` へ「build.yml 以外のワークフローが sitemap.xml を git add していないこと」の静的検査を追加（旧ワークフローで失敗することを確認済み）。既存テスト「stores/area/ のURLが重複なく含まれる」は0件でも通ってしまうため、消失は検知できていなかった
+- **効果測定**: build.yml 復旧後、`curl` で本番 sitemap の stores/area 件数が 690前後で安定していること。2〜4週後に GSC で `stores/area/` の表示回数が出始めるか（現状は上位500ページに1件も入っていない）
+
+---
+
 ### [SEO-110] ジャーナルの店舗カード→店舗ページのリンクが 2026-07-30 の一括補修で凍結している（以後30記事・39カードが、店舗ページが存在するのに外部リンクのまま）
 
 - **priority**: P2 → **status**: done
