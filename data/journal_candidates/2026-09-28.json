@@ -1,0 +1,457 @@
+{
+  "date": "2026-09-28",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "鶴舞・荒畑のとんかつ「仲由」ランチ1200円と定食1800円を業界人が読む",
+      "verdict": "PASS",
+      "total": 104,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "鶴舞・八事",
+          "feature": "stores/area/tsurumai-yagoto/index.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "とんかつ",
+          "feature": "features/nagoya-tonkatsu.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 7件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 183字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「鶴舞」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「とんかつ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "とんかつ専門店「仲由」がかつ丼1500円を残した意味——鶴舞・荒畑の新店を業界人が読む",
+      "verdict": "HOLD",
+      "total": 76,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "鶴舞・八事",
+          "feature": "stores/area/tsurumai-yagoto/index.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "とんかつ",
+          "feature": "features/nagoya-tonkatsu.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (席) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 139字 +4",
+          "title 43字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「鶴舞」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「とんかつ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "上前津のタイカフェ「サワディーチャオ」700円のタプティムグローブ、大須南の15席を読む",
+      "verdict": "HOLD",
+      "total": 70,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "大須",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 3日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (席,シーン) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 100字 +4",
+          "title 44字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大須」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "金山の「札幌ラーメン 戸倉」味噌チャーシュー1300円、日祝休みの15席を業界人が読む",
+      "verdict": "HOLD",
+      "total": 65,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 4,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (席) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 103字 +4",
+          "title 43字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "丸の内・料亭河文の勝手口に生まれた2業態「河内屋」と「鮨うおのたな」1年後",
+      "verdict": "HOLD",
+      "total": 47,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 10,
+        "brand_fit": 12,
+        "writability": 8,
+        "novelty": 2,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 358日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 2件 (比較,予約) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 121字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "過去に掲載歴のある店（90日超） → 2"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "シーン語がリードのみ「一人飲み」+1",
+          "タイトルにジャンル語「鮨」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "鶴舞・荒畑のとんかつ「仲由」ランチ1200円と定食1800円を業界人が読む",
+      "lead_draft": "8月6日に荒畑駅そば、鶴舞公園の西に開いた「とんかつ 仲由」。上ロースとんかつ定食1,800円に対し、平日と土のランチは1,200円。同じ厨房で600円の差がつくのはなぜか。開店時は11時から19時の通し営業だったのが、9月下旬には月・火・水が昼だけになっている。24席・テーブルとボックスという席の作りと合わせて、この店が何を捨てて何を取ったかを業界人の目で読む。",
+      "angle": "定食1800円/単品1500円/ランチ1200円という3段の価格帯を、原価ではなく『席の回転』と『人の数』から読む。24席テーブル+ボックスは回転より滞在を許す配置で、通し営業から中抜けへ営業コマを畳んだ判断と整合する。一人ランチ・家族の昼のどのシーンに向くか、予約を取らない店での並びの読み方まで具体的に。",
+      "main_store": {
+        "name": "とんかつ 仲由",
+        "id": "",
+        "area": "鶴舞・荒畑（昭和区）",
+        "genre": "とんかつ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「鶴舞公園近く『とんかつ 仲由』で味わう厚切りジューシーな味噌カツ」",
+          "url": "https://jouhou.nagoya/tonkatsu-nakayoshi/",
+          "date": "2026-09-27"
+        },
+        {
+          "label": "大杉カツ丼の月に向かって喰え！「【新店】とんかつ仲由はレベルが高い！」",
+          "url": "https://osugi-katsudon.hatenadiary.jp/entry/2026/09/19/190000",
+          "date": "2026-09-19"
+        },
+        {
+          "label": "しょうわん「8/6(木)『とんかつ 仲由(なかよし)』が荒畑・鶴舞にオープン！！」",
+          "url": "https://sho-wan.com/20260806-nakayoshi-tsurumai-open/",
+          "date": "2026-08-09"
+        },
+        {
+          "label": "開店閉店.com「【開店】とんかつ 仲由」",
+          "url": "https://kaiten-heiten-24.com/tonkatsu-nakayoshi/",
+          "date": "2026-08-06"
+        },
+        {
+          "label": "とんかつ 仲由 公式Instagram（@tonkatsu.nakayoshi）",
+          "url": "https://www.instagram.com/reel/Dbmwy95zCdh/",
+          "date": "2026-08-09"
+        },
+        {
+          "label": "食べログ とんかつ 仲由（荒畑／とんかつ）",
+          "url": "https://tabelog.com/aichi/A2301/A230108/23096455/",
+          "date": "2026-09-27"
+        },
+        {
+          "label": "名古屋グルメ探偵アスカイ（X）『とんかつ 仲由』開店告知",
+          "url": "https://x.com/gourmet_nagoya/status/2084951271401005158",
+          "date": "2026-08-05"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "とんかつ専門店「仲由」がかつ丼1500円を残した意味——鶴舞・荒畑の新店を業界人が読む",
+      "lead_draft": "8月に荒畑で開いた「とんかつ 仲由」のおしながきには、かつ丼1,500円がある。定食と同額。近年のとんかつ専門店はかつ丼を置かない店が増えているのに、なぜ残したのか。厚み12mm超の肉を使う店が、丼という一番安く見える器に同じ値段をつけた判断を、価格帯と一人客のシーンから読む。",
+      "angle": "かつ丼を残す=一人客と短時間客を取りにいく設計。定食と同額にすることで客単価を落とさず、揚げ置きしない専門店のオペをどう守るか。カウンターのない24席で一人客をどう座らせるかまで踏み込む。",
+      "main_store": {
+        "name": "とんかつ 仲由",
+        "id": "",
+        "area": "鶴舞・荒畑（昭和区）",
+        "genre": "とんかつ"
+      },
+      "sources": [
+        {
+          "label": "大杉カツ丼の月に向かって喰え！「【新店】とんかつ仲由はレベルが高い！」",
+          "url": "https://osugi-katsudon.hatenadiary.jp/entry/2026/09/19/190000",
+          "date": "2026-09-19"
+        },
+        {
+          "label": "名古屋情報通「鶴舞公園近く『とんかつ 仲由』で味わう厚切りジューシーな味噌カツ」",
+          "url": "https://jouhou.nagoya/tonkatsu-nakayoshi/",
+          "date": "2026-09-27"
+        },
+        {
+          "label": "開店閉店.com「【開店】とんかつ 仲由」",
+          "url": "https://kaiten-heiten-24.com/tonkatsu-nakayoshi/",
+          "date": "2026-08-06"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "金山の「札幌ラーメン 戸倉」味噌チャーシュー1300円、日祝休みの15席を業界人が読む",
+      "lead_draft": "9月14日、金山総合駅の東口から徒歩5分に札幌ラーメンの新店が開いた。味噌チャーシューメン1,300円、席は約15席、休みは日曜と祝日。繁華街の週末を捨てて平日の昼夜に寄せた設計を、価格帯とシーンから読む。",
+      "angle": "日祝休み=通勤客に張る立地判断。15席の小箱で昼夜2コマを回す人員設計と、トッピング課金（バター100円〜キムチ250円）で客単価を積む価格設計を業界視点で。",
+      "main_store": {
+        "name": "札幌ラーメン 戸倉",
+        "id": "",
+        "area": "金山（熱田区）",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「濃厚熱々な札幌ラーメンを味わえる店『戸倉』金山駅近くにオープン」",
+          "url": "https://jouhou.nagoya/sappororamen-tokura/",
+          "date": "2026-09-22"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "上前津のタイカフェ「サワディーチャオ」700円のタプティムグローブ、大須南の15席を読む",
+      "lead_draft": "9月17日、大須商店街の南、裏門前町から200mにタイのカフェ＆雑貨店が開いた。タプティムグローブ700円、約15席、営業は11時から18時。夜を持たない小箱がどこで採算を取るのかを業界人の目で読む。",
+      "angle": "イートイン15席＋物販という二毛作。カフェ単体では埋まらない坪効率を雑貨で埋める設計と、18時閉めの人員設計。一人客・女子会のシーン適性まで。",
+      "main_store": {
+        "name": "サワディーチャオ",
+        "id": "",
+        "area": "上前津・大須（中区）",
+        "genre": "カフェ"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「タイの世界を楽しむカフェ・雑貨店『サワディーチャオ』上前津にオープン」",
+          "url": "https://jouhou.nagoya/sawaddee-chao/",
+          "date": "2026-09-25"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "weekly_digest",
+      "title_draft": "丸の内・料亭河文の勝手口に生まれた2業態「河内屋」と「鮨うおのたな」1年後",
+      "lead_draft": "400年続く料亭・河文の勝手口から入る居酒屋「勝手口 河内屋」と、同じ建物のカウンター鮨「鮨うおのたな」。昼3,800円・夜7,800円の鮨と、4,000〜7,000円のアラカルト。老舗料亭が客単価を落とさずに間口を広げた2業態を並べて読む。",
+      "angle": "同一施設・同一運営の2業態を、席数（11席と25席）と予約導線（TableCheck）と客単価から比較する。料亭が持つ調理と仕入れをどう小箱に落としたか。",
+      "main_store": {
+        "name": "勝手口 河内屋",
+        "id": "",
+        "area": "丸の内",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社Plan・Do・See）2業態オープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000117.000051750.html",
+          "date": "2025-09-16"
+        },
+        {
+          "label": "名古屋情報通「老舗料亭『河文』の勝手口から入る」",
+          "url": "https://jouhou.nagoya/katteguchi-kawabun/",
+          "date": "2025-10-05"
+        }
+      ]
+    }
+  ]
+}
