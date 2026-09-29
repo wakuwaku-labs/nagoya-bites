@@ -107,8 +107,9 @@
 
 ### [SEO-108] 特集→ジャーナル個別記事のリンクが 2026-08-19 の一回実行で凍結している（以後の36本が特集から一度も辿れず、最大入口の nagoya-solo-dining は同シーンの記事が6本あるのに0本）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-25
+- **resolved**: 2026-09-29
 - **category**: SEO
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-09-24 原文「ページ閲覧が60回と訪問者32人に対して平均1.3ページと回遊が少ないです。👉 人気ページ「nagoya-solo-dining」に、関連するソロ活向けの店舗記事（journal/）への内部リンクを3件追加し、回遊を促す」
@@ -6650,6 +6651,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-09-17 | Editor+Builder(対話) | ジャーナル欠番 2026-09-16 を手動バックフィル — launchd 実行はバッテリー駆動中の DNS 解決失敗（`API Error: Can't reach the API server — check your internet or DNS (ENOTFOUND)`）で生成失敗し、`run_journal_local.sh` の再試行判定の正規表現に ENOTFOUND が無かったため1回で即 HOLD（ISSUE-096 と同クラス・電源運用の穴）。`journal/2026-09-16-sakae-hitorinomi-shinya-ryokin-kozo.html`（業界の裏側・COL-LAW-008 新設。水曜ローテが提示した COL-LAW-001 は 06-17 に使用済みで backlog の used フラグだけが false のまま＝pick_daily_topic が再提示する不整合を修正）を score 104 PASS / validator PASS / hero gate PASS で登録。あわせて再試行判定に `ENOTFOUND|EAI_AGAIN|Can't reach the API server|check your internet or DNS` を追加 | ✅ 本コミット |
 | 2026-09-29 | Builder(routine) | SEO-113: refresh_journal_related.js を「同一トピック優先 → 直近順で補完」に変更。90記事のrelated更新・冪等性確認(Updated 0/144)・テスト228件全通過 | ✅ commit TBD |
 | 2026-09-29 | Orchestrator(routine) | ISSUE-086 エスカレーション: audit_crosscheck_v3で4355店(87.8%)がtier移動・textLen=0のままでgate2未クリア。owner=片桐に変更 | ⚠️ owner変更のみ |
+| 2026-09-29 | Builder(routine) | SEO-108: add_feature_journal_links.js を冪等化（マーカー区間を毎回再生成・差分のみ書く）＋journal_seo_keywords.json KW照合を追加（店舗ID照合と並列）。nagoya-solo-dining に一人飲み系3本追加確認済み。49特集更新・build.yml日次実行設定・228テスト全通過・DSN violations 0 | ✅ commit TBD |
 | 2026-09-24 | Orchestrator(朝9時自律バッチ) | 安全タスク調査 — `status: ready` の全7件を精査した結果、実装可能な安全タスクはゼロ。内訳: ISSUE-133（食べログ閉店22件・要人手目視・owner=片桐）/ SEO-098（Instagram UTM計測・acceptance①②がオーナー本人操作）/ SEO-083（SNS原稿NotebookLM・owner=片桐）/ ISSUE-119（長音符正規化バグ・owner=片桐・オーナー承認待ち）/ ISSUE-116（og:image HTTP到達不能・HOTPEPPER_API_KEY/GOOGLE_MAPS_API_KEY必要・owner=片桐）/ ISSUE-110（npm脆弱性・owner=片桐）/ ISSUE-099（editorReason自動収集・人手レビュー待ち）。全件すでに owner=片桐 または API キー不可・クラウド環境制約により安全候補なし。正常終了（0件は許容）。 | ⏸ 実装なし |
 
 ---

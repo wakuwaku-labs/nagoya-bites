@@ -269,6 +269,14 @@ jobs:
         run: node scripts/add_feature_top_cta.js --all
         continue-on-error: true
 
+      - name: 特集→ジャーナル個別記事リンク更新（SEO-108・冪等・日次）
+        # 特集の店舗IDおよび journal_seo_keywords.json の KW aliases と
+        # ジャーナルタイトルを照合し、最新3本を related-journal-articles ブロックに反映する。
+        # マーカー区間を毎回再生成する冪等実装（差分があるときだけ書く）のため、
+        # features/ の変更は git add features/ が拾って当日の commit に含まれる。
+        run: node scripts/add_feature_journal_links.js
+        continue-on-error: true
+
       - name: 店舗写真を原寸マスターへ昇格（画質改善・実測ベース・冪等）
         # Hot Pepper の _480.jpg は 480px しかなく、モーダル(約2000px相当)で 4倍に
         # 引き伸ばされてボケていた。サフィックスなしURLが投稿時の原寸(720〜1280px)を返すため、
