@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-28T23:48:08.298Z",
+  "generatedAt": "2026-09-29T12:40:35.592Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1123,
-    "pageViews": 1940,
-    "sessions": 1370,
-    "avgSessionDuration": 154.3,
-    "bounceRate": 0.28,
-    "pagesPerSession": 1.42
+    "activeUsers": 1154,
+    "pageViews": 1977,
+    "sessions": 1402,
+    "avgSessionDuration": 153.3,
+    "bounceRate": 0.278,
+    "pagesPerSession": 1.41
   },
   "dailyReference": {
     "date": "2026-09-27",
@@ -17,44 +17,44 @@
   },
   "channels": {
     "sessions": {
-      "organic": 911,
-      "direct": 316,
+      "organic": 928,
+      "direct": 335,
       "social": 9,
-      "ai_assistant": 105,
+      "ai_assistant": 106,
       "referral": 27,
       "paid": 0,
-      "other": 4
+      "other": 1
     },
     "pct": {
-      "organic": 66.4,
-      "direct": 23,
-      "social": 0.7,
-      "ai_assistant": 7.7,
-      "referral": 2,
+      "organic": 66,
+      "direct": 23.8,
+      "social": 0.6,
+      "ai_assistant": 7.5,
+      "referral": 1.9,
       "paid": 0,
-      "other": 0.3
+      "other": 0.1
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 376
+      "sessions": 380
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 343
+      "sessions": 355
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 242
+      "sessions": 257
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 171
+      "sessions": 172
     },
     {
       "source": "chatgpt.com",
@@ -64,7 +64,12 @@
     {
       "source": "unknown",
       "medium": "(not set)",
-      "sessions": 55
+      "sessions": 58
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 18
     },
     {
       "source": "duckduckgo",
@@ -72,14 +77,14 @@
       "sessions": 17
     },
     {
-      "source": "(not set)",
-      "medium": "(not set)",
-      "sessions": 17
-    },
-    {
       "source": "service.smt.docomo.ne.jp",
       "medium": "referral",
       "sessions": 10
+    },
+    {
+      "source": "openai",
+      "medium": "organic",
+      "sessions": 6
     },
     {
       "source": "copilot.com",
@@ -97,11 +102,6 @@
       "sessions": 5
     },
     {
-      "source": "openai",
-      "medium": "organic",
-      "sessions": 5
-    },
-    {
       "source": "copilot.com",
       "medium": "(not set)",
       "sessions": 5
@@ -114,11 +114,6 @@
     {
       "source": "ig",
       "medium": "social",
-      "sessions": 4
-    },
-    {
-      "source": "unknown",
-      "medium": "",
       "sessions": 4
     },
     {
@@ -190,13 +185,18 @@
       "source": "webnocular.com",
       "medium": "referral",
       "sessions": 1
+    },
+    {
+      "source": "unknown",
+      "medium": "",
+      "sessions": 1
     }
   ],
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 359,
-      "sessions": 329
+      "pageViews": 361,
+      "sessions": 331
     },
     {
       "path": "/",
@@ -205,13 +205,13 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 168,
-      "sessions": 108
+      "pageViews": 172,
+      "sessions": 113
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 100,
-      "sessions": 92
+      "pageViews": 104,
+      "sessions": 96
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
@@ -221,7 +221,7 @@
   ],
   "cta": {
     "outboundClicks": 156,
-    "ctaClickRate": 11.4,
+    "ctaClickRate": 11.1,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -294,8 +294,8 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.4,
-    "ctaClickRate_direct": 20.3,
+    "ctaClickRate_organic": 7.2,
+    "ctaClickRate_direct": 19.1,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -783,7 +783,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1123,
+    "value": 1154,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
