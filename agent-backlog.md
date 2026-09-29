@@ -22,8 +22,9 @@
 ---
 ### [SEO-113] ジャーナルの「関連記事」3本が話題と無関係な“直近3本”固定（閲覧1位の抹茶・喫茶記事から、とんかつ／ちゃんこ／うなぎ記事へ送っている）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-29
+- **resolved**: 2026-09-29
 - **category**: SEO
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-09-28 原文「人気ページ1位が日次記事『2026-09-27-marunouchi-masuhan-matcha-price』で15回閲覧…この記事から関連する店舗ページや特集（例: features/nagoya-cafeなど）への内部リンクを増設し、ユーザーの回遊を促しましょう」
@@ -4131,7 +4132,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **priority**: P1 → **status**: in_progress（Phase 0〜5完了・2026-08-18 Step2再開・v3.0コード完成/未活性化）
 - **detected**: 2026-08-14（ユーザー要望「サクラチェックの精度を上げたい」を受けて再調査）
 - **category**: trust / proof / differentiation
-- **owner**: DataKeeper + Builder
+- **owner**: 片桐 ← DataKeeper + Builder
 
 - **背景（実測で判明した精度問題）**:
   1. **S7（時系列健全性・20点）が構造的に死んでいた**: `scripts/fetch_places.js` が
@@ -6647,6 +6648,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 2026-09-04 | Orchestrator(routine) | SEO-080 実装・デプロイ — data/seo_triage_retrieval_policy.json（Gmail sweep/reconcile 規則の正本）・scripts/check_seo_triage_weekly_health.js（seo_advice_log.jsonの line-weekly 沈黙を検証できる事実で検知）・.github/workflows/seo-triage-weekly-watchdog.yml（サーバ側監視・Issue起票でオーナーにメール）を新設。「見逃しても誰にも届かない」を解消。sweep実装はcommand file制約によりポリシー文書化のみ。status: ready → done | ✅ commit 951362e3 |
 | 2026-09-05 | Marketer(routine) | SEO-082 実装・デプロイ — data/journal_seo_keywords.json の scene「一人飲み」aliases に GSC実データで実在確認できた表記ゆれ「1人飲み」「1人のみ」「一人のみ」を追加。同時に scripts/journal_seo_kw.js の SCENE_VOCAB も同期更新。--verify: 39KW全通過。discovery 表示: 922 → 1,289（+39.8%）・クリック: 47 → 78（+65.9%）。「名古屋 1人飲み 男」が other → discovery に移動確認済み。シェア上昇は計測是正であり施策効果ではない旨を受け入れ条件5に従い明記。status: ready → done | ✅ commit cd6ca0c2 |
 | 2026-09-17 | Editor+Builder(対話) | ジャーナル欠番 2026-09-16 を手動バックフィル — launchd 実行はバッテリー駆動中の DNS 解決失敗（`API Error: Can't reach the API server — check your internet or DNS (ENOTFOUND)`）で生成失敗し、`run_journal_local.sh` の再試行判定の正規表現に ENOTFOUND が無かったため1回で即 HOLD（ISSUE-096 と同クラス・電源運用の穴）。`journal/2026-09-16-sakae-hitorinomi-shinya-ryokin-kozo.html`（業界の裏側・COL-LAW-008 新設。水曜ローテが提示した COL-LAW-001 は 06-17 に使用済みで backlog の used フラグだけが false のまま＝pick_daily_topic が再提示する不整合を修正）を score 104 PASS / validator PASS / hero gate PASS で登録。あわせて再試行判定に `ENOTFOUND|EAI_AGAIN|Can't reach the API server|check your internet or DNS` を追加 | ✅ 本コミット |
+| 2026-09-29 | Builder(routine) | SEO-113: refresh_journal_related.js を「同一トピック優先 → 直近順で補完」に変更。90記事のrelated更新・冪等性確認(Updated 0/144)・テスト228件全通過 | ✅ commit TBD |
+| 2026-09-29 | Orchestrator(routine) | ISSUE-086 エスカレーション: audit_crosscheck_v3で4355店(87.8%)がtier移動・textLen=0のままでgate2未クリア。owner=片桐に変更 | ⚠️ owner変更のみ |
 | 2026-09-24 | Orchestrator(朝9時自律バッチ) | 安全タスク調査 — `status: ready` の全7件を精査した結果、実装可能な安全タスクはゼロ。内訳: ISSUE-133（食べログ閉店22件・要人手目視・owner=片桐）/ SEO-098（Instagram UTM計測・acceptance①②がオーナー本人操作）/ SEO-083（SNS原稿NotebookLM・owner=片桐）/ ISSUE-119（長音符正規化バグ・owner=片桐・オーナー承認待ち）/ ISSUE-116（og:image HTTP到達不能・HOTPEPPER_API_KEY/GOOGLE_MAPS_API_KEY必要・owner=片桐）/ ISSUE-110（npm脆弱性・owner=片桐）/ ISSUE-099（editorReason自動収集・人手レビュー待ち）。全件すでに owner=片桐 または API キー不可・クラウド環境制約により安全候補なし。正常終了（0件は許容）。 | ⏸ 実装なし |
 
 ---

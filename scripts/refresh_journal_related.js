@@ -100,12 +100,26 @@ function matchTopicFeature(title) {
 }
 
 function buildRelatedHtml(currentFile, posts, postsMeta) {
-  const others = posts.filter(f => f !== currentFile).slice(0, 3);
+  const currentMeta = postsMeta[currentFile];
+  const currentTopic = matchTopicFeature(currentMeta && currentMeta.title);
+
+  const others = posts.filter(f => f !== currentFile);
+
+  // SEO-113: トピック（またはエリア）が一致する記事を優先し、足りない分だけ直近順で埋める
+  const topicMatched = currentTopic
+    ? others.filter(f => {
+        const t = matchTopicFeature(postsMeta[f] && postsMeta[f].title);
+        return t && t.slug === currentTopic.slug;
+      })
+    : [];
+  const topicSet = new Set(topicMatched);
+  const recent = others.filter(f => !topicSet.has(f));
+  const selected = [...topicMatched, ...recent].slice(0, 3);
   const lines = [];
   lines.push('<div class="related">');
   lines.push('  <p class="related-title">関連記事</p>');
   lines.push('  <div class="related-links">');
-  for (const f of others) {
+  for (const f of selected) {
     const meta = postsMeta[f];
     if (!meta) continue;
     lines.push(`    <a class="related-link" href="${f}">${shortLabel(meta.title)}</a>`);
