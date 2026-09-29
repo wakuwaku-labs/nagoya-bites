@@ -1,0 +1,287 @@
+{
+  "date": "2026-09-29",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄の深夜ラーメン新店「燈 tou」つけ麺1100円と12席を業界人が読む",
+      "verdict": "PASS",
+      "total": 103,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,予約,シーン,一人飲み,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 161字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄のつけ麺「燈 tou」割烹のしつらえと美濃焼、プロデュース会社の新ブランド",
+      "verdict": "HOLD",
+      "total": 65,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 12,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "海鮮",
+          "feature": "features/nagoya-seafood.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 96字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「一人飲み」+1",
+          "タイトルにジャンル語「割烹」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "名駅4丁目に17店舗の「名駅でら横丁」2027年秋、定期借地の飲食ビルを業界人が読む",
+      "verdict": "HOLD",
+      "total": 56,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 16日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 93字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "栄の深夜ラーメン新店「燈 tou」つけ麺1100円と12席を業界人が読む",
+      "lead_draft": "栄3丁目に10月6日、つけ麺専門店「燈 tou」が開店する。12席のカウンターで、営業は深夜25時半（金土祝前は26時半）まで無休。濃厚つけ麺1,100円からA5和牛の2,600円まで価格帯の幅が広い。ラーメン店を数十軒プロデュースしてきた会社の新ブランドを、価格帯・席の回転・予約不要の深夜シーンという業界人の目で読む。",
+      "angle": "業界人視点: 1,100円の主力と2,600円の上限で客単価を引き上げる価格帯設計、12席カウンターの回転と深夜の時間帯別オペ、二軒目・一人飲み後の締めというシーン適性、予約不可前提の並び方",
+      "main_store": {
+        "name": "燈 tou",
+        "id": "",
+        "area": "栄",
+        "genre": "つけ麺"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社エフリード）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000066.000100887.html",
+          "date": "2026-09-28"
+        },
+        {
+          "label": "グルメプレス",
+          "url": "https://gourmetpress.net/1484296/",
+          "date": "2026-09-28"
+        },
+        {
+          "label": "財経新聞",
+          "url": "https://www.zaikei.co.jp/releases/3632056/",
+          "date": "2026-09-28"
+        },
+        {
+          "label": "株式会社エフリード 公式サイト",
+          "url": "https://f-lead.jp/",
+          "date": "2026-09-29"
+        },
+        {
+          "label": "燈 tou 公式Instagram",
+          "url": "https://www.instagram.com/tsukamen.tou/",
+          "date": "2026-09-28"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄のつけ麺「燈 tou」割烹のしつらえと美濃焼、プロデュース会社の新ブランド",
+      "lead_draft": "墨色の壁と一枚板のカウンター、美濃焼の器。10月6日に栄で開店するつけ麺専門店「燈 tou」は、ラーメンの店舗プロデュースを多く手がける会社の新ブランドだ。つけ麺を割烹の文法で出す狙いを読む。",
+      "angle": "内装と器で単価を支える設計",
+      "main_store": {
+        "name": "燈 tou",
+        "id": "",
+        "area": "栄",
+        "genre": "つけ麺"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES",
+          "url": "https://prtimes.jp/main/html/rd/p/000000066.000100887.html",
+          "date": "2026-09-28"
+        },
+        {
+          "label": "グルメプレス",
+          "url": "https://gourmetpress.net/1484296/",
+          "date": "2026-09-28"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "名駅4丁目に17店舗の「名駅でら横丁」2027年秋、定期借地の飲食ビルを業界人が読む",
+      "lead_draft": "名古屋駅から徒歩4分の名駅4丁目に、地上3階・17店舗規模の飲食ビル「名駅でら横丁」が2027年10月に開業予定と発表された。短期の定期借地を使う横丁ビルの事業設計を、出店側の目で読む。",
+      "angle": "定期借地横丁の家賃構造と出店者の回収期間",
+      "main_store": {
+        "name": "名駅でら横丁",
+        "id": "",
+        "area": "名駅",
+        "genre": "横丁"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES",
+          "url": "https://prtimes.jp/main/html/rd/p/000000042.000011808.html",
+          "date": "2026-09-08"
+        },
+        {
+          "label": "NAGOYA.",
+          "url": "https://nagoyadot.jp/new/106442/",
+          "date": "2026-09-13"
+        }
+      ]
+    }
+  ]
+}
