@@ -1,36 +1,36 @@
 {
-  "generatedAt": "2026-09-29T12:40:35.592Z",
+  "generatedAt": "2026-09-29T21:55:16.703Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1154,
-    "pageViews": 1977,
-    "sessions": 1402,
-    "avgSessionDuration": 153.3,
-    "bounceRate": 0.278,
-    "pagesPerSession": 1.41
+    "activeUsers": 1129,
+    "pageViews": 1920,
+    "sessions": 1367,
+    "avgSessionDuration": 153.2,
+    "bounceRate": 0.277,
+    "pagesPerSession": 1.4
   },
   "dailyReference": {
-    "date": "2026-09-27",
-    "sessions": 33,
-    "bounceRate": 0.364,
-    "pageViews": 34
+    "date": "2026-09-28",
+    "sessions": 72,
+    "bounceRate": 0.403,
+    "pageViews": 89
   },
   "channels": {
     "sessions": {
-      "organic": 928,
-      "direct": 335,
+      "organic": 899,
+      "direct": 332,
       "social": 9,
-      "ai_assistant": 106,
-      "referral": 27,
+      "ai_assistant": 100,
+      "referral": 29,
       "paid": 0,
-      "other": 1
+      "other": 2
     },
     "pct": {
-      "organic": 66,
-      "direct": 23.8,
-      "social": 0.6,
-      "ai_assistant": 7.5,
-      "referral": 1.9,
+      "organic": 65.6,
+      "direct": 24.2,
+      "social": 0.7,
+      "ai_assistant": 7.3,
+      "referral": 2.1,
       "paid": 0,
       "other": 0.1
     }
@@ -39,27 +39,27 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 380
+      "sessions": 363
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 355
+      "sessions": 353
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 257
+      "sessions": 254
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 172
+      "sessions": 164
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 85
+      "sessions": 81
     },
     {
       "source": "unknown",
@@ -74,7 +74,7 @@
     {
       "source": "duckduckgo",
       "medium": "organic",
-      "sessions": 17
+      "sessions": 15
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -102,11 +102,6 @@
       "sessions": 5
     },
     {
-      "source": "copilot.com",
-      "medium": "(not set)",
-      "sessions": 5
-    },
-    {
       "source": "ecosia.org",
       "medium": "organic",
       "sessions": 4
@@ -115,6 +110,11 @@
       "source": "ig",
       "medium": "social",
       "sessions": 4
+    },
+    {
+      "source": "copilot.com",
+      "medium": "(not set)",
+      "sessions": 3
     },
     {
       "source": "openai",
@@ -129,6 +129,11 @@
     {
       "source": "websearch.rakuten.co.jp",
       "medium": "referral",
+      "sessions": 2
+    },
+    {
+      "source": "unknown",
+      "medium": "",
       "sessions": 2
     },
     {
@@ -152,6 +157,11 @@
       "sessions": 1
     },
     {
+      "source": "cosmoage.com",
+      "medium": "referral",
+      "sessions": 1
+    },
+    {
       "source": "gemini",
       "medium": "(not set)",
       "sessions": 1
@@ -163,6 +173,11 @@
     },
     {
       "source": "hispavista.com",
+      "medium": "referral",
+      "sessions": 1
+    },
+    {
+      "source": "isearch.com",
       "medium": "referral",
       "sessions": 1
     },
@@ -185,47 +200,42 @@
       "source": "webnocular.com",
       "medium": "referral",
       "sessions": 1
-    },
-    {
-      "source": "unknown",
-      "medium": "",
-      "sessions": 1
     }
   ],
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 361,
-      "sessions": 331
+      "pageViews": 350,
+      "sessions": 321
     },
     {
       "path": "/",
-      "pageViews": 233,
-      "sessions": 166
+      "pageViews": 225,
+      "sessions": 162
     },
     {
       "path": "/index.html",
-      "pageViews": 172,
-      "sessions": 113
+      "pageViews": 164,
+      "sessions": 110
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 104,
-      "sessions": 96
+      "pageViews": 101,
+      "sessions": 93
     },
     {
-      "path": "/features/nagoya-autumn-2026.html",
-      "pageViews": 42,
-      "sessions": 44
+      "path": "/journal/index.html",
+      "pageViews": 43,
+      "sessions": 38
     }
   ],
   "cta": {
-    "outboundClicks": 156,
-    "ctaClickRate": 11.1,
+    "outboundClicks": 151,
+    "ctaClickRate": 11,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 60
+        "clicks": 59
       },
       {
         "domain": "tabelog.com",
@@ -233,15 +243,15 @@
       },
       {
         "domain": "maps.google.com",
-        "clicks": 19
+        "clicks": 18
       },
       {
         "domain": "www.instagram.com",
-        "clicks": 13
+        "clicks": 11
       },
       {
         "domain": "www.google.com",
-        "clicks": 7
+        "clicks": 6
       },
       {
         "domain": "prtimes.jp",
@@ -286,7 +296,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 67,
+      "organic": 62,
       "direct": 64,
       "social": 0,
       "ai_assistant": 19,
@@ -294,8 +304,8 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 7.2,
-    "ctaClickRate_direct": 19.1,
+    "ctaClickRate_organic": 6.9,
+    "ctaClickRate_direct": 19.3,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -308,23 +318,19 @@
       },
       {
         "path": "/index.html",
-        "clicks": 19
-      },
-      {
-        "path": "/features/nagoya-solo-dining.html",
-        "clicks": 17
+        "clicks": 18
       },
       {
         "path": "/features/nagoya-hitsumabushi.html",
         "clicks": 16
       },
       {
-        "path": "/journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html",
-        "clicks": 6
+        "path": "/features/nagoya-solo-dining.html",
+        "clicks": 16
       },
       {
-        "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
-        "clicks": 5
+        "path": "/journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html",
+        "clicks": 6
       },
       {
         "path": "/journal/2026-09-12-sakae-sulbing-korean-bingsu.html",
@@ -356,6 +362,10 @@
       },
       {
         "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
+        "clicks": 2
+      },
+      {
+        "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
         "clicks": 2
       },
       {
@@ -426,12 +436,12 @@
         "clicks": 19
       },
       {
-        "path": "/features/nagoya-solo-dining.html",
+        "path": "/features/nagoya-hitsumabushi.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 17
+        "clicks": 16
       },
       {
-        "path": "/features/nagoya-hitsumabushi.html",
+        "path": "/features/nagoya-solo-dining.html",
         "domain": "www.hotpepper.jp",
         "clicks": 16
       },
@@ -497,22 +507,12 @@
       },
       {
         "path": "/index.html",
-        "domain": "www.google.com",
-        "clicks": 2
-      },
-      {
-        "path": "/index.html",
         "domain": "www.hotpepper.jp",
         "clicks": 2
       },
       {
         "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
         "domain": "milkdo-doreiku.com",
-        "clicks": 2
-      },
-      {
-        "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
-        "domain": "www.instagram.com",
         "clicks": 2
       },
       {
@@ -556,6 +556,11 @@
         "clicks": 1
       },
       {
+        "path": "/index.html",
+        "domain": "www.google.com",
+        "clicks": 1
+      },
+      {
         "path": "/journal/2026-08-04-sakae-leesar-coffee.html",
         "domain": "prtimes.jp",
         "clicks": 1
@@ -573,11 +578,6 @@
       {
         "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-08-29-fujigaoka-nama-donut-cospa.html",
-        "domain": "maps.google.com",
         "clicks": 1
       },
       {
@@ -707,11 +707,11 @@
         "clicks": 19
       },
       {
-        "path": "/features/nagoya-solo-dining.html",
-        "clicks": 17
+        "path": "/features/nagoya-hitsumabushi.html",
+        "clicks": 16
       },
       {
-        "path": "/features/nagoya-hitsumabushi.html",
+        "path": "/features/nagoya-solo-dining.html",
         "clicks": 16
       },
       {
@@ -779,11 +779,11 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 98
+    "reservationClicks": 97
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1154,
+    "value": 1129,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
