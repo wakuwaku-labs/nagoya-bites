@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-09-29T21:55:20.540Z",
+  "generatedAt": "2026-09-29T23:46:04.335Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1371,
+  "total_sessions": 1372,
   "engines": [
     {
       "key": "google",
@@ -71,13 +71,13 @@
     {
       "key": "ai_assistant",
       "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
-      "sessions": 100,
-      "pct": 7.3,
+      "sessions": 101,
+      "pct": 7.4,
       "sources": [
         {
           "source": "chatgpt.com",
           "medium": "ai-assistant",
-          "sessions": 81
+          "sessions": 82
         },
         {
           "source": "openai",
@@ -237,7 +237,7 @@
     }
   ],
   "search_only": {
-    "total": 996,
+    "total": 997,
     "share": [
       {
         "key": "google",
@@ -255,13 +255,13 @@
         "key": "yahoo",
         "label": "Yahoo!",
         "sessions": 164,
-        "pct_of_search": 16.5
+        "pct_of_search": 16.4
       },
       {
         "key": "ai_assistant",
         "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
-        "sessions": 100,
-        "pct_of_search": 10
+        "sessions": 101,
+        "pct_of_search": 10.1
       },
       {
         "key": "duckduckgo",
@@ -275,20 +275,20 @@
     "from": "2026-09-28",
     "to": "2026-09-29",
     "delta": {
-      "google": 4,
-      "bing": 12,
-      "direct": 18,
-      "yahoo": 1,
-      "ai_assistant": 1,
-      "other": 1,
-      "duckduckgo": 0,
+      "google": -13,
+      "bing": 10,
+      "direct": 15,
+      "yahoo": -7,
+      "ai_assistant": -5,
+      "other": 4,
+      "duckduckgo": -2,
       "social": 0
     }
   },
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 363 セッションのみ。Bing(354) + 生成AI(100) の 454 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 363 セッションのみ。Bing(354) + 生成AI(101) の 455 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],

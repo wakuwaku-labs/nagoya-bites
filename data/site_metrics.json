@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-29T21:55:16.703Z",
+  "generatedAt": "2026-09-29T23:46:00.698Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1129,
-    "pageViews": 1920,
-    "sessions": 1367,
-    "avgSessionDuration": 153.2,
-    "bounceRate": 0.277,
+    "activeUsers": 1130,
+    "pageViews": 1921,
+    "sessions": 1368,
+    "avgSessionDuration": 153,
+    "bounceRate": 0.278,
     "pagesPerSession": 1.4
   },
   "dailyReference": {
@@ -20,16 +20,16 @@
       "organic": 899,
       "direct": 332,
       "social": 9,
-      "ai_assistant": 100,
+      "ai_assistant": 101,
       "referral": 29,
       "paid": 0,
       "other": 2
     },
     "pct": {
-      "organic": 65.6,
+      "organic": 65.5,
       "direct": 24.2,
       "social": 0.7,
-      "ai_assistant": 7.3,
+      "ai_assistant": 7.4,
       "referral": 2.1,
       "paid": 0,
       "other": 0.1
@@ -59,7 +59,7 @@
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 81
+      "sessions": 82
     },
     {
       "source": "unknown",
@@ -220,8 +220,8 @@
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 101,
-      "sessions": 93
+      "pageViews": 102,
+      "sessions": 94
     },
     {
       "path": "/journal/index.html",
@@ -783,7 +783,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1129,
+    "value": 1130,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
