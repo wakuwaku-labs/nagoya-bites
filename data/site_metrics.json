@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-28T22:57:59.957Z",
+  "generatedAt": "2026-09-28T23:48:08.298Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1121,
-    "pageViews": 1937,
-    "sessions": 1367,
-    "avgSessionDuration": 154.6,
-    "bounceRate": 0.279,
+    "activeUsers": 1123,
+    "pageViews": 1940,
+    "sessions": 1370,
+    "avgSessionDuration": 154.3,
+    "bounceRate": 0.28,
     "pagesPerSession": 1.42
   },
   "dailyReference": {
@@ -18,21 +18,21 @@
   "channels": {
     "sessions": {
       "organic": 911,
-      "direct": 314,
+      "direct": 316,
       "social": 9,
       "ai_assistant": 105,
       "referral": 27,
       "paid": 0,
-      "other": 3
+      "other": 4
     },
     "pct": {
-      "organic": 66.5,
-      "direct": 22.9,
+      "organic": 66.4,
+      "direct": 23,
       "social": 0.7,
       "ai_assistant": 7.7,
       "referral": 2,
       "paid": 0,
-      "other": 0.2
+      "other": 0.3
     }
   },
   "sourceBreakdown": [
@@ -49,7 +49,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 240
+      "sessions": 242
     },
     {
       "source": "yahoo",
@@ -119,7 +119,7 @@
     {
       "source": "unknown",
       "medium": "",
-      "sessions": 3
+      "sessions": 4
     },
     {
       "source": "openai",
@@ -200,13 +200,13 @@
     },
     {
       "path": "/",
-      "pageViews": 232,
-      "sessions": 165
+      "pageViews": 233,
+      "sessions": 166
     },
     {
       "path": "/index.html",
-      "pageViews": 166,
-      "sessions": 106
+      "pageViews": 168,
+      "sessions": 108
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -295,7 +295,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 7.4,
-    "ctaClickRate_direct": 20.4,
+    "ctaClickRate_direct": 20.3,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -783,7 +783,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1121,
+    "value": 1123,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

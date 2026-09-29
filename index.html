@@ -2290,7 +2290,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 
 <!-- STORE-INDEX:START 2026-09-28 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（4962店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（4961店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（838店）</summary>
@@ -7162,7 +7162,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 </ul>
 </details>
 <details class="store-index-area" data-area="大須">
-<summary>大須（21店）</summary>
+<summary>大須（20店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=WAKASA%20Cafe%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%A4%A7%E9%A0%88%E5%BA%97">WAKASA Cafe 名古屋大須店（大須・カフェ）</a></li>
 <li><a href="stores/J004067845.html">World Dining Bar ゑびす（大須・ダイニングバー・バル）</a></li>
@@ -7184,7 +7184,6 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <li><a href="stores/J001280024.html">肉亭 まぼたん（大須・焼肉・ホルモン）</a></li>
 <li><a href="stores/J000706887.html">名古屋メシ居酒屋 なごみどり 大須本店（大須・居酒屋）</a></li>
 <li><a href="index.html#q=%E7%8F%88%E7%90%B2%E3%81%B6%E3%82%8A%E3%81%93">珈琲ぶりこ（大須・古民家カフェ）</a></li>
-<li><a href="index.html#q=%E9%A4%83%E5%AD%90%E3%81%AE%E7%8E%8B%E5%B0%86%20%E5%A4%A7%E9%A0%88%E8%A6%B3%E9%9F%B3%E5%BA%97">餃子の王将 大須観音店（大須・定番・ボリューム）</a></li>
 </ul>
 </details>
 <details class="store-index-area" data-area="名古屋市中村区">
@@ -7807,7 +7806,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '39427ff52458';
+var STORES_JSON_VERSION = '9d83406431bd';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
