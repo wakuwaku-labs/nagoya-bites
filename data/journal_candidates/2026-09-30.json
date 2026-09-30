@@ -1,0 +1,471 @@
+{
+  "date": "2026-09-30",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "錦の焼き鳥「八百万」で接待、HACCP義務化5年で残る店の条件",
+      "verdict": "PASS",
+      "total": 107,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "焼き鳥",
+          "feature": "features/nagoya-yakitori-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 7件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 6件 (仕入れ,オペ,人件費,仕込み,業界,構造) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 3件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 196字 +4",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「錦」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「焼き鳥」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄の居酒屋で忘年会、食中毒警戒期間が終わる日に幹事が見る衛生管理",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 15日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 6件 (オペ,人件費,仕込み,業界,構造,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 80字 +4",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-LAW-002) → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: recency -13 / topicality -8 / brand_fit -4"
+    },
+    {
+      "id": "c3",
+      "title_draft": "名駅のラーメン店が消える理由——8月の飲食業倒産80件と記録の重さ",
+      "verdict": "HOLD",
+      "total": 80,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 20日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 5件 (原価,オペ,人件費,業界,構造) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 73字 +2",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-LAW-002) → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "厚労省のHACCP記録アプリで名古屋の小さな店の朝はどう変わったか",
+      "verdict": "HOLD",
+      "total": 66,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 117日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 5件 (オペ,人件費,仕込み,業界,慣習) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 68字 +2",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-LAW-002) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "金山の居酒屋で個室接待、なごやHACCP認定26施設に居酒屋がゼロの理由",
+      "verdict": "HOLD",
+      "total": 62,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 33日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 6件 (オペ,人件費,回転,業界,構造,慣習) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 86字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初出コラム (COL-LAW-002) → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "industry_insider",
+      "title_draft": "錦の焼き鳥「八百万」で接待、HACCP義務化5年で残る店の条件",
+      "lead_draft": "2021年6月のHACCP完全義務化から5年。名古屋市の「なごやHACCP自主管理宣言施設」は2026年7月末で26施設、飲食店営業を含むのはホテルや社員食堂系だけで、街場の居酒屋や焼き鳥店は一つもない。一方で飲食業の倒産は8月だけで80件と30年で最多。認定の有無ではなく「記録が回っているか」が店の体力をどう映すのか、名古屋観光ホテル直営「やきとり 八百万」を手がかりに業界人の目で読む。",
+      "angle": "業界人視点でHACCP義務化5年後の店のオペ構造を読む——記録が回る店は仕入れ・仕込み・人件費の管理も回る。認定26施設に街場の居酒屋がゼロという事実の裏側と、接待の店選びで見るべき点",
+      "main_store": {
+        "name": "やきとり 八百万/名古屋観光ホテル",
+        "id": "J004559386",
+        "area": "錦・伏見",
+        "genre": "焼き鳥"
+      },
+      "column_id": "COL-LAW-002",
+      "sources": [
+        {
+          "label": "厚生労働省 食中毒（夏期一斉取締り 実施結果・令和8年9月24日現在）",
+          "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/shokuhin/syokuchu/index.html",
+          "date": "2026-09-24"
+        },
+        {
+          "label": "名古屋市 令和8年食中毒発生状況（速報値）",
+          "url": "https://www.city.nagoya.jp/kenkofukushi/eisei/1014927/1015166/1015167/1044681.html",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "名古屋市 なごやHACCP自主管理宣言施設",
+          "url": "https://www.city.nagoya.jp/kenkofukushi/eisei/1014927/1014928/1014979/1042262.html",
+          "date": "2026-08-28"
+        },
+        {
+          "label": "愛知県 食中毒警戒期間について",
+          "url": "https://www.pref.aichi.jp/soshiki/eisei/keikaikikan.html",
+          "date": "2026-05-27"
+        },
+        {
+          "label": "東京商工リサーチ 8月の「飲食業」倒産80件",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203209_1527.html",
+          "date": "2026-09-04"
+        },
+        {
+          "label": "日本経済新聞 食品衛生をアプリで記録、厚労省開発",
+          "url": "https://www.nikkei.com/article/DGXZQOUA050U70V00C26A6000000/",
+          "date": "2026-06-05"
+        },
+        {
+          "label": "日本食品衛生協会（X）HACCP手引書・記録様式・無料記録アプリ",
+          "url": "https://x.com/jfha_nisshoku/status/2099664354811810173",
+          "date": "2026-09-15"
+        },
+        {
+          "label": "東京商工リサーチ（X）8月の飲食業倒産",
+          "url": "https://x.com/TSR_NEWS/status/2095749958192496677",
+          "date": "2026-09-04"
+        },
+        {
+          "label": "ホットペッパーグルメ やきとり 八百万/名古屋観光ホテル",
+          "url": "https://www.hotpepper.jp/strJ004559386/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "title_draft": "栄の居酒屋で忘年会、食中毒警戒期間が終わる日に幹事が見る衛生管理",
+      "lead_draft": "愛知県の夏期食中毒警戒期間は9月30日で終わり、次の冬期は12月1日から。忘年会の予約が動き出すこの時期に、幹事が店で何を見ればよいのかを業界人の目で整理する。",
+      "angle": "業界人視点で忘年会シーズン前の衛生管理を読む——仕込みの温度管理と繁忙期のオペ、人件費の構造",
+      "main_store": null,
+      "column_id": "COL-LAW-002",
+      "sources": [
+        {
+          "label": "愛知県 食中毒警戒期間について",
+          "url": "https://www.pref.aichi.jp/soshiki/eisei/keikaikikan.html",
+          "date": "2026-05-27"
+        },
+        {
+          "label": "名古屋市 令和8年食中毒発生状況（速報値）",
+          "url": "https://www.city.nagoya.jp/kenkofukushi/eisei/1014927/1015166/1015167/1044681.html",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "日本食品衛生協会（X）",
+          "url": "https://x.com/jfha_nisshoku/status/2099664354811810173",
+          "date": "2026-09-15"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "industry_insider",
+      "title_draft": "名駅のラーメン店が消える理由——8月の飲食業倒産80件と記録の重さ",
+      "lead_draft": "8月の飲食業倒産は80件で30年で最多。ラーメン店は前年比166%増。人手が薄い小規模店ほどHACCPの記録が回らなくなる構造を業界人の目で読む。",
+      "angle": "業界人視点で小規模店の記録コストを読む——人件費・オペ・原価の構造",
+      "main_store": null,
+      "column_id": "COL-LAW-002",
+      "sources": [
+        {
+          "label": "東京商工リサーチ 8月の「飲食業」倒産80件",
+          "url": "https://www.tsr-net.co.jp/data/detail/1203209_1527.html",
+          "date": "2026-09-04"
+        },
+        {
+          "label": "ITmedia 飲食店の倒産が過去最多ペース",
+          "url": "https://www.itmedia.co.jp/business/articles/2609/10/news014.html",
+          "date": "2026-09-10"
+        },
+        {
+          "label": "東京商工リサーチ（X）",
+          "url": "https://x.com/TSR_NEWS/status/2095749958192496677",
+          "date": "2026-09-04"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "industry_insider",
+      "title_draft": "厚労省のHACCP記録アプリで名古屋の小さな店の朝はどう変わったか",
+      "lead_draft": "厚労省が6月5日に公開した無料の記録アプリ。手書きの記録表からスマホへ移った小規模店で仕込み前の10分がどう変わるかを業界人視点で読む。",
+      "angle": "業界人視点で記録オペの変化を読む——仕込み・人件費・慣習",
+      "main_store": null,
+      "column_id": "COL-LAW-002",
+      "sources": [
+        {
+          "label": "厚労省 HACCP衛生管理記録アプリの公開について",
+          "url": "https://www.mhlw.go.jp/stf/newpage_73595.html",
+          "date": "2026-06-05"
+        },
+        {
+          "label": "日本経済新聞",
+          "url": "https://www.nikkei.com/article/DGXZQOUA050U70V00C26A6000000/",
+          "date": "2026-06-05"
+        },
+        {
+          "label": "厚労省食品安全情報（X）",
+          "url": "https://x.com/Shokuhin_ANZEN/status/2062780327014391935",
+          "date": "2026-06-05"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "industry_insider",
+      "title_draft": "金山の居酒屋で個室接待、なごやHACCP認定26施設に居酒屋がゼロの理由",
+      "lead_draft": "名古屋市が認定する「なごやHACCP自主管理宣言施設」は26施設。飲食店営業を含むのはホテルと社員食堂系だけで、街場の居酒屋はゼロ。認定を取らない理由を業界の構造から読む。",
+      "angle": "業界人視点で認定制度と現場の構造を読む——オペ・人件費・慣習・回転",
+      "main_store": null,
+      "column_id": "COL-LAW-002",
+      "sources": [
+        {
+          "label": "名古屋市 なごやHACCP自主管理宣言施設",
+          "url": "https://www.city.nagoya.jp/kenkofukushi/eisei/1014927/1014928/1014979/1042262.html",
+          "date": "2026-08-28"
+        },
+        {
+          "label": "名古屋市 HACCPの考え方を取り入れた衛生管理",
+          "url": "https://www.city.nagoya.jp/kenkofukushi/eisei/1014927/1015056/1015074/1015076.html",
+          "date": "2026-06-12"
+        },
+        {
+          "label": "JFIC HACCP3日コース 名古屋",
+          "url": "https://www.jffic.or.jp/seminar/6555"
+        }
+      ]
+    }
+  ]
+}
