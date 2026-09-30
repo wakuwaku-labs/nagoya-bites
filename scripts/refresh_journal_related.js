@@ -100,7 +100,24 @@ function matchTopicFeature(title) {
 }
 
 function buildRelatedHtml(currentFile, posts, postsMeta) {
-  const others = posts.filter(f => f !== currentFile).slice(0, 3);
+  // 同じトピック（TOPIC_FEATURES）の記事を優先して3本を選ぶ（SEO-113）
+  // 該当ゼロの記事は直近3本フォールバック（退行なし）
+  const topic = matchTopicFeature(postsMeta[currentFile] && postsMeta[currentFile].title);
+  const othersAll = posts.filter(f => f !== currentFile);
+  let others;
+  if (topic) {
+    const sameTopic = othersAll.filter(f => {
+      const t = matchTopicFeature(postsMeta[f] && postsMeta[f].title);
+      return t && t.slug === topic.slug;
+    });
+    const rest = othersAll.filter(f => {
+      const t = matchTopicFeature(postsMeta[f] && postsMeta[f].title);
+      return !(t && t.slug === topic.slug);
+    });
+    others = [...sameTopic, ...rest].slice(0, 3);
+  } else {
+    others = othersAll.slice(0, 3);
+  }
   const lines = [];
   lines.push('<div class="related">');
   lines.push('  <p class="related-title">関連記事</p>');
@@ -112,7 +129,6 @@ function buildRelatedHtml(currentFile, posts, postsMeta) {
   }
   lines.push('    <a class="related-link is-primary" href="index.html">Journal 一覧</a>');
   // タイトルにジャン/シーンが含まれれば、対応する特集へのトピックリンクを1本追加（回遊強化）
-  const topic = matchTopicFeature(postsMeta[currentFile] && postsMeta[currentFile].title);
   if (topic) {
     lines.push(`    <a class="related-link is-primary" href="../features/${topic.slug}.html">${topic.label}</a>`);
     // SEO-099: 一致した特集に対応するエリア×ジャンル×条件ハブがあれば追加候補にする

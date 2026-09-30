@@ -20,10 +20,12 @@
 - **効果測定**: build.yml 復旧後、`curl` で本番 sitemap の stores/area 件数が 690前後で安定していること。2〜4週後に GSC で `stores/area/` の表示回数が出始めるか（現状は上位500ページに1件も入っていない）
 
 ---
-### [SEO-113] ジャーナルの「関連記事」3本が話題と無関係な“直近3本”固定（閲覧1位の抹茶・喫茶記事から、とんかつ／ちゃんこ／うなぎ記事へ送っている）
+### [SEO-113] ジャーナルの「関連記事」3本が話題と無関係な”直近3本”固定（閲覧1位の抹茶・喫茶記事から、とんかつ／ちゃんこ／うなぎ記事へ送っている）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-29
+- **resolved**: 2026-09-30
+- **resolved_by**: Builder（Cloud）
 - **category**: SEO
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-09-28 原文「人気ページ1位が日次記事『2026-09-27-marunouchi-masuhan-matcha-price』で15回閲覧…この記事から関連する店舗ページや特集（例: features/nagoya-cafeなど）への内部リンクを増設し、ユーザーの回遊を促しましょう」
@@ -1301,6 +1303,20 @@
 - **review**: 本チケットのacceptanceは上記「検証できる事実」の5項目。人手レビューはPR作成後にDesigner役職（Orchestrator代行）が実施
 - **未完了**: PR作成・マージ。マージ後の翌日CI（node build.js）でHotPepper新規射影フィールド（定休日/最寄駅/席数等）が実データに反映されることを確認（ローカルはHOTPEPPER_API_KEY未設定のため射影ロジックのfixtureテストのみで検証済み）
 ## 実行ログ
+
+### 2026-09-30（自動ルーティン・クラウドセッション）
+
+**処理件数**: 1件（SEO-113）
+
+- **[SEO-113]** ジャーナル関連記事を同一トピック優先で選出
+  - **acceptance ①（退行なし）**: 228/228 tests pass（`node --test tests/*.test.js`）、`audit_design_system.js --check` 違反 0
+  - **acceptance ②（冪等性）**: `node scripts/refresh_journal_related.js` 2回目実行 → `Updated 0/145 files` 確認
+  - **acceptance ③（名指し記事）**: `2026-09-27-marunouchi-masuhan-matcha-price.html`（「升半茶店」抹茶）の関連記事1本目が `2026-09-23-meieki-izakaya-morning-minimum-wage.html`（モーニング）になっていることを確認（同一トピック: nagoya-morning）
+  - **実装**: `scripts/refresh_journal_related.js` の `buildRelatedHtml()` を改修。`matchTopicFeature(title)` を先頭で呼び、同一スラグの記事を優先 → 不足分を直近順で補完する2段階選択に変更（旧: 単純に `slice(0, 3)` 直近3本固定）
+  - **変更ファイル**: `scripts/refresh_journal_related.js`、`journal/*.html`（92本更新）、`agent-backlog.md`
+  - **効果測定**: 2週間後（2026-10-14頃）にGA4の journal ページの pages/session を前後比較
+
+---
 
 ### 2026-09-11（自動ルーティン・クラウドセッション）
 
