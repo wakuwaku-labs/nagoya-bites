@@ -3500,6 +3500,36 @@
       "brand_reason": "重複（SEO-107 ①に集約・同クエリ571表示/9.7位は同チケットの acceptance③対照実験の測定対象そのもの）。literalな打ち手は却下: stores/*.html は gen-store-pages.js の生成物で1店だけ手編集は次回生成で消える（SEO-086 と同判断）。また取材・来店の裏付けなく『目利きレビュー』を書き足すのは実在保証Moatの毀損＝作文による水増し（制約7・10）。店の insiderNote は実地知見がある場合のみ Editor が manual_stores 経由で付ける",
       "category": null,
       "fingerprint": "58921724761e8de7"
+    },
+    {
+      "id": null,
+      "date": "2026-09-30",
+      "source": "line-daily",
+      "advice": "🔴 予約クリック率が0.0%と低迷、CTAが機能していません。👉 index.htmlの全店舗掲載箇所とjournal/記事の予約ボタンを、より視認性の高い色に変更し「今すぐ予約」など行動を促す文言に修正する。",
+      "verdict": "rejected",
+      "brand_reason": "却下（前提が単日ノイズ・制約10／制約7）。当日の店舗詳細は9回＝予約ボタンが見える分母が9で、0クリックは視認性について何も示さない（09-23/09-24/09-26/09-29 に同型を同理由で却下済み）。予約・電話導線は SEO-105（done）で整備済み。「今すぐ予約」等の急かす文言は送客サイト的な煽りで、編集独立・広告ゼロの信頼担保と相反する",
+      "category": null,
+      "fingerprint": "b5f78bec9a47c42a"
+    },
+    {
+      "id": null,
+      "date": "2026-09-30",
+      "source": "line-daily",
+      "advice": "🟡 訪問者33人に対して店舗詳細が開かれたのが9回と、店舗への興味喚起が不十分です。👉 人気ページTOP1の「2026-09-29-sakae-tsukemen-tou-counter12」記事内に、関連性の高い店舗のfeatures/特集記事へのリンクやindex.htmlの店舗詳細モーダルへの導線を強化する。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-110 done／SEO-113 ready に集約）。名指し記事は既に features/nagoya-ramen・nagoya-gourmet-guide と stores/area の栄・名駅ラーメン一覧へリンク済み。主役店「燈 tou」は開店直後で店舗DB未掲載のため店舗ページへのリンクを張れないのは正しい状態（架空リンクを作らない）。関連記事の話題近接化は SEO-113 で対応予定",
+      "category": null,
+      "fingerprint": "d3bebf2e623ee7dc"
+    },
+    {
+      "id": null,
+      "date": "2026-09-30",
+      "source": "line-daily",
+      "advice": "🟢 検索流入比率が50%と一定の成果がありますが、Bing検索がGoogle検索を上回っています。👉 伸びしろがあるKW候補「名古屋駅 一人飲み」に特化したfeatures/特集記事を新規作成し、index.htmlから目立つように導線を設置する。",
+      "verdict": "duplicate",
+      "brand_reason": "重複。「名古屋駅 一人飲み」の受け皿は features/meieki-hitori-nomi.html が既存（新規作成は自己カニバリになる）、トップ導線は SEO-109（done・一人飲みチップ）、特集強化は SEO-087（in_progress・GSC前後比待ち）に集約済み。09-28/09-29 にも同旨を重複判定",
+      "category": null,
+      "fingerprint": "2d97268ecbde1f1a"
     }
   ]
 }
