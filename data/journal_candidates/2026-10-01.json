@@ -1,0 +1,299 @@
+{
+  "date": "2026-10-01",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄・矢場町に「矢場味仙 松坂屋名古屋店」今日開店、台湾ラーメン38席を一人飲みで読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,シーン,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 139字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -10 / writability -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "松坂屋名古屋店「酒＆DINING」が全店開業、矢場味仙で一人飲みは成立するか",
+      "verdict": "HOLD",
+      "total": 81,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 15,
+        "brand_fit": 12,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (席,予約,一人飲み) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 115字 +4",
+          "title 38字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「一人飲み」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄の百貨店に台湾ラーメン、矢場味仙 松坂屋名古屋店の予算2500円を読む",
+      "verdict": "HOLD",
+      "total": 77,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (価格帯) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 101字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -10 / writability -2",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "栄・矢場町に「矢場味仙 松坂屋名古屋店」今日開店、台湾ラーメン38席を一人飲みで読む",
+      "lead_draft": "2026年10月1日、元祖台湾ラーメンの矢場味仙が松坂屋名古屋店の北館地下1階に開店した。6店舗目にして百貨店は初。これで「酒＆DINING」フロアの全店舗が出そろう。38席・中抜き営業・ラストオーダー21時30分という数字から、一人飲みと買い物帰りの使い方を業界人の目で読む。",
+      "angle": "百貨店の酒フロアに入った台湾料理店を、価格帯（単品かつまみ＋酒か）・38席の席配置・中抜き営業と予約・一人飲みのシーン適性から業界人が読む",
+      "main_store": {
+        "name": "矢場味仙 松坂屋名古屋店",
+        "id": "J004698396",
+        "area": "栄・矢場町",
+        "genre": "台湾料理"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（大丸松坂屋百貨店）矢場味仙 百貨店初出店",
+          "url": "https://prtimes.jp/main/html/rd/p/000003954.000025003.html",
+          "date": "2026-09-17"
+        },
+        {
+          "label": "ナゴヤト 矢場味仙 松坂屋名古屋店",
+          "url": "https://nagoyato.com/posts/19492",
+          "date": "2026-09-29"
+        },
+        {
+          "label": "フーズチャネル 矢場味仙が松坂屋に登場",
+          "url": "https://foods-ch.infomart.co.jp/news/333582",
+          "date": "2026-09-17"
+        },
+        {
+          "label": "ホットペッパー 矢場味仙 松坂屋名古屋店",
+          "url": "https://www.hotpepper.jp/strJ004698396/",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "サカエ経済新聞 松坂屋名古屋店北館地下1階がリニューアル",
+          "url": "https://sakae.keizai.biz/headline/3755/",
+          "date": "2024-11-28"
+        },
+        {
+          "label": "中日BIZナビ 矢場味仙 下坪店",
+          "url": "https://biz.chunichi.co.jp/news/article/10/129596/",
+          "date": "2026-08-24"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "松坂屋名古屋店「酒＆DINING」が全店開業、矢場味仙で一人飲みは成立するか",
+      "lead_draft": "松坂屋名古屋店北館地下1階の酒＆DININGフロアが、10月1日の矢場味仙開店で全店舗オープンになった。2024年11月の改装から約2年、酒販店2つと飲食店が並ぶフロアの最後のピースが台湾料理だった理由を、席数と営業時間から読む。",
+      "angle": "フロア全体の再編の最後のピースとして矢場味仙を読む（席・予約・一人飲み）",
+      "main_store": {
+        "name": "矢場味仙 松坂屋名古屋店",
+        "id": "J004698396",
+        "area": "栄・矢場町",
+        "genre": "台湾料理"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES",
+          "url": "https://prtimes.jp/main/html/rd/p/000003954.000025003.html",
+          "date": "2026-09-17"
+        },
+        {
+          "label": "ナゴヤト",
+          "url": "https://nagoyato.com/posts/19492",
+          "date": "2026-09-29"
+        },
+        {
+          "label": "サカエ経済新聞",
+          "url": "https://sakae.keizai.biz/headline/3755/",
+          "date": "2024-11-28"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "栄の百貨店に台湾ラーメン、矢場味仙 松坂屋名古屋店の予算2500円を読む",
+      "lead_draft": "矢場味仙が10月1日に松坂屋名古屋店へ出店した。ホットペッパーの登録では平均予算2,500〜3,000円、38席。台湾ラーメン単品で帰るか、小袋と青菜炒めで一杯やるかで会計がどう変わるかを業界人が読む。",
+      "angle": "価格帯の読み方（単品 vs つまみ＋酒）中心",
+      "main_store": {
+        "name": "矢場味仙 松坂屋名古屋店",
+        "id": "J004698396",
+        "area": "栄・矢場町",
+        "genre": "台湾料理"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES",
+          "url": "https://prtimes.jp/main/html/rd/p/000003954.000025003.html",
+          "date": "2026-09-17"
+        },
+        {
+          "label": "ホットペッパー",
+          "url": "https://www.hotpepper.jp/strJ004698396/",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "フーズチャネル",
+          "url": "https://foods-ch.infomart.co.jp/news/333582",
+          "date": "2026-09-17"
+        }
+      ]
+    }
+  ]
+}
