@@ -107,7 +107,9 @@
 
 ### [SEO-108] 特集→ジャーナル個別記事のリンクが 2026-08-19 の一回実行で凍結している（以後の36本が特集から一度も辿れず、最大入口の nagoya-solo-dining は同シーンの記事が6本あるのに0本）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-10-01
+- **resolved_by**: Builder (Claude Sonnet 4.6 automated session)
 - **detected**: 2026-09-25
 - **category**: SEO
 - **owner**: Builder
@@ -7778,3 +7780,28 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
 - **resolved**: 2026-09-14（誤検知・ローテーション不要）
 - **検証**: 検出箇所は `index.html` の `var NB_CALL_MAPS_KEY`（PR #224「電話する」ボタン用の Maps JavaScript API キー）。ブラウザで読み込む仕様上クライアントに置くしかない公開キーで、コード内コメントどおり HTTP リファラ制限付き。2026-09-14 にリファラ無しで Places Details Web Service を呼び、Google が `API keys with referer restrictions cannot be used with this API.`（REQUEST_DENIED）を返すことを実測で確認＝制限が効いている
 - **対応**: `.qa-secret-allowlist.txt` に**行単位**で登録。`scripts/security_audit.js` はファイル単位の除外しか持たず、`index.html` を丸ごと除外すると本物の鍵が混入しても検出できなくなるため、`パス::行の部分文字列` の書式を追加した（index.html の別の行に鍵を置くと従来どおり HARD 検出されることを確認）
+
+---
+
+## 実行ログ（2026-10-01 自律セッション）
+
+### セッション概要
+- **実行日時**: 2026-10-01（スケジュール自動起動）
+- **実行モデル**: Builder（自律モード・QA通過で自動デプロイ承認済み）
+- **消化タスク数**: 2件（上限3件）
+
+### SEO-113（完了）
+- **内容**: ジャーナルの「関連記事」を「直近3本固定」から「同トピック優先→直近補完」に変更
+- **変更ファイル**: `scripts/refresh_journal_related.js`
+- **実測**: 抹茶・喫茶記事（`2026-09-27-marunouchi-masuhan-matcha-price`）の関連欄がモーニング系記事を先頭に表示するよう変化。script run: 94 updated / 0 on 2nd run（冪等確認）
+- **コミット**: `2e02c0a`
+
+### SEO-108（完了）
+- **内容**: `add_feature_journal_links.js` を「マーカーあればスキップ（一回実行型）」から「マーカー区間を冪等再生成・差分があるときだけ書く」に全面改修。第二の対応キー（`journal_seo_keywords.json` の KW/aliases ↔ タイトル一致）を追加。`--check` モードを追加。`build.yml` に日次ステップを追加
+- **変更ファイル**: `scripts/add_feature_journal_links.js`, `.github/workflows/build.yml`
+- **実測**:
+  - 45 features にジャーナルリンクを付与（うち 36 本が今回初めて反映）
+  - `features/nagoya-solo-dining.html` に一人飲み系ジャーナル3本が入ったことを実測で確認
+  - 2回目実行: modified=0 upToDate=45（冪等確認）
+  - `audit_design_system.js --check --sample 50`: violations=0
+

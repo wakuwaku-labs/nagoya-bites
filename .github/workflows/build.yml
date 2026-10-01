@@ -269,6 +269,14 @@ jobs:
         run: node scripts/add_feature_top_cta.js --all
         continue-on-error: true
 
+      - name: 特集→ジャーナルリンク更新（SEO-108・冪等・差分があるときだけ書く）
+        # 新しいジャーナル記事が公開されるたびに特集ページのリンク区間を自動で更新する。
+        # 鍵1: store_id 突合（data/journal_published.json ↔ features/*.html の href）
+        # 鍵2: journal_seo_keywords.json の KW/aliases ↔ ジャーナル記事タイトル
+        # マーカー（SEO-108:JOURNAL-LINKS:START/END）で区間を識別して置換するため冪等。
+        run: node scripts/add_feature_journal_links.js
+        continue-on-error: true
+
       - name: 店舗写真を原寸マスターへ昇格（画質改善・実測ベース・冪等）
         # Hot Pepper の _480.jpg は 480px しかなく、モーダル(約2000px相当)で 4倍に
         # 引き伸ばされてボケていた。サフィックスなしURLが投稿時の原寸(720〜1280px)を返すため、
