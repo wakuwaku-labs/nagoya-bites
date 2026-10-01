@@ -22,7 +22,8 @@
 ---
 ### [SEO-113] ジャーナルの「関連記事」3本が話題と無関係な“直近3本”固定（閲覧1位の抹茶・喫茶記事から、とんかつ／ちゃんこ／うなぎ記事へ送っている）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-10-01
 - **detected**: 2026-09-29
 - **category**: SEO
 - **owner**: Builder
