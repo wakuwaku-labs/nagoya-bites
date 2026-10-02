@@ -1,47 +1,47 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-02T12:36:50.741Z",
+  "generatedAt": "2026-10-02T21:52:04.123Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1360,
+  "total_sessions": 1336,
   "engines": [
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 366,
-      "pct": 26.9,
+      "sessions": 361,
+      "pct": 27,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 366
+          "sessions": 361
         }
       ]
     },
     {
       "key": "google",
       "label": "Google",
-      "sessions": 351,
-      "pct": 25.8,
+      "sessions": 349,
+      "pct": 26.1,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 351
+          "sessions": 349
         }
       ]
     },
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 272,
-      "pct": 20,
+      "sessions": 264,
+      "pct": 19.8,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 255
+          "sessions": 247
         },
         {
           "source": "(not set)",
@@ -53,64 +53,21 @@
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 158,
-      "pct": 11.6,
+      "sessions": 150,
+      "pct": 11.2,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 158
-        }
-      ]
-    },
-    {
-      "key": "ai_assistant",
-      "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
-      "sessions": 95,
-      "pct": 7,
-      "sources": [
-        {
-          "source": "chatgpt.com",
-          "medium": "ai-assistant",
-          "sessions": 77
-        },
-        {
-          "source": "openai",
-          "medium": "organic",
-          "sessions": 6
-        },
-        {
-          "source": "copilot.com",
-          "medium": "ai-assistant",
-          "sessions": 6
-        },
-        {
-          "source": "copilot.com",
-          "medium": "(not set)",
-          "sessions": 3
-        },
-        {
-          "source": "gemini",
-          "medium": "(not set)",
-          "sessions": 1
-        },
-        {
-          "source": "openai",
-          "medium": "(not set)",
-          "sessions": 1
-        },
-        {
-          "source": "perplexity",
-          "medium": "(not set)",
-          "sessions": 1
+          "sessions": 150
         }
       ]
     },
     {
       "key": "other",
       "label": "その他",
-      "sessions": 94,
-      "pct": 6.9,
+      "sessions": 95,
+      "pct": 7.1,
       "sources": [
         {
           "source": "unknown",
@@ -178,8 +135,56 @@
           "sessions": 1
         },
         {
+          "source": "unknown",
+          "medium": "",
+          "sessions": 1
+        },
+        {
           "source": "websearch.rakuten.co.jp",
           "medium": "referral",
+          "sessions": 1
+        }
+      ]
+    },
+    {
+      "key": "ai_assistant",
+      "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
+      "sessions": 93,
+      "pct": 7,
+      "sources": [
+        {
+          "source": "chatgpt.com",
+          "medium": "ai-assistant",
+          "sessions": 77
+        },
+        {
+          "source": "openai",
+          "medium": "organic",
+          "sessions": 7
+        },
+        {
+          "source": "copilot.com",
+          "medium": "ai-assistant",
+          "sessions": 5
+        },
+        {
+          "source": "copilot.com",
+          "medium": "(not set)",
+          "sessions": 1
+        },
+        {
+          "source": "gemini",
+          "medium": "(not set)",
+          "sessions": 1
+        },
+        {
+          "source": "openai",
+          "medium": "(not set)",
+          "sessions": 1
+        },
+        {
+          "source": "perplexity",
+          "medium": "(not set)",
           "sessions": 1
         }
       ]
@@ -206,48 +211,48 @@
         {
           "source": "facebook.com",
           "medium": "referral",
-          "sessions": 4
+          "sessions": 5
         },
         {
           "source": "ig",
           "medium": "social",
-          "sessions": 4
+          "sessions": 3
         }
       ]
     }
   ],
   "search_only": {
-    "total": 986,
+    "total": 969,
     "share": [
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 366,
-        "pct_of_search": 37.1
+        "sessions": 361,
+        "pct_of_search": 37.3
       },
       {
         "key": "google",
         "label": "Google",
-        "sessions": 351,
-        "pct_of_search": 35.6
+        "sessions": 349,
+        "pct_of_search": 36
       },
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 158,
-        "pct_of_search": 16
+        "sessions": 150,
+        "pct_of_search": 15.5
       },
       {
         "key": "ai_assistant",
         "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
-        "sessions": 95,
+        "sessions": 93,
         "pct_of_search": 9.6
       },
       {
         "key": "duckduckgo",
         "label": "DuckDuckGo",
         "sessions": 16,
-        "pct_of_search": 1.6
+        "pct_of_search": 1.7
       }
     ]
   },
@@ -255,20 +260,20 @@
     "from": "2026-10-01",
     "to": "2026-10-02",
     "delta": {
-      "bing": 0,
-      "google": 2,
-      "direct": 2,
-      "yahoo": 1,
-      "ai_assistant": 0,
+      "bing": 13,
+      "google": 8,
+      "direct": 8,
+      "yahoo": 2,
       "other": 0,
-      "duckduckgo": 0,
+      "ai_assistant": 1,
+      "duckduckgo": 1,
       "social": 0
     }
   },
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 351 セッションのみ。Bing(366) + 生成AI(95) の 461 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 349 セッションのみ。Bing(361) + 生成AI(93) の 454 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
