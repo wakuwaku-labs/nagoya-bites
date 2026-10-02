@@ -892,7 +892,13 @@ async function main() {
   //   4. ジャンル別 curated Unsplash（フォールバック）
   // instagram_post_url は手動指定の hero_image_url より優先する（実店舗写真を最優先）。
   const store0 = (input.stores || [])[0] || {};
-  const hasRealPhotoSource = store0.instagram_post_url || store0.photo_url || process.env.GOOGLE_MAPS_API_KEY;
+  // プレスリリース写真（CLAUDE.md 優先3）が手動指定されている場合、Places（優先4）で上書きしない。
+  // data/journal_photo_policy.json の preferOrder は instagram > hotpepper > press > places。
+  // 旧実装は GOOGLE_MAPS_API_KEY があるだけで無条件に自動取得へ入り、Editor が目で選んだ
+  // リリースの料理写真を Places の写真で潰していた（2026-10-02 実測）。
+  const isPressHero = /prcdn\.freetls\.fastly\.net|prtimes\.jp\/i\//.test(input.hero_image_url || '');
+  const hasRealPhotoSource = store0.instagram_post_url || store0.photo_url
+    || (process.env.GOOGLE_MAPS_API_KEY && !isPressHero);
 
   if (store0.instagram_post_url) {
     // 実投稿の embed を最優先（手動 hero_image_url があっても上書き）

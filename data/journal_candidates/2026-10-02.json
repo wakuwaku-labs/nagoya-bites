@@ -1,0 +1,421 @@
+{
+  "date": "2026-10-02",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅の上海蟹、10月解禁——マリオット梨杏の美食会35,000円と伏見・王朝の中華コース16,000円、接待の相場を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        },
+        {
+          "kw": "中華",
+          "feature": "features/nagoya-chinese-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 4件 (予約,シーン,相場,仕入れ) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 151字 +4",
+          "title 64字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「接待」+4",
+          "タイトルにジャンル語「中華」+2"
+        ]
+      },
+      "gate_note": "97点（自動公開ライン 100点）。主な不足: topicality -10 / writability -3"
+    },
+    {
+      "id": "c5",
+      "title_draft": "本山の上海料理 紅蘭、秋限定の上海蟹を4,500円ランチで出せる理由",
+      "verdict": "HOLD",
+      "total": 77,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 15,
+        "brand_fit": 8,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "覚王山",
+          "feature": "features/nagoya-kakuozan.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (仕入れ,価格帯,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 62字 +2",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「本山」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "伏見・ヒルトン名古屋「王朝」の上海蟹ビュッフェが10月7日開始、宴会で個室を押さえる順番",
+      "verdict": "HOLD",
+      "total": 75,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "個室",
+          "feature": "features/private-room.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 2件 (繁忙,予約) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 96字 +4",
+          "title 44字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「個室」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "名古屋まつり2026は行列なし、栄の店が10月17日・18日に混む時間帯",
+      "verdict": "HOLD",
+      "total": 65,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 17,
+        "uniqueness": 15,
+        "brand_fit": 8,
+        "writability": 6,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 25日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 3件 (需要,予約,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 75字 +2",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [
+    {
+      "id": "c4",
+      "title_draft": "ささしま・ストリングスホテルの秋の北海道コース、平日ディナー7,480円の時期と席",
+      "verdict": "DISQUALIFIED",
+      "total": 0,
+      "disqualified_reasons": [
+        "同一店舗の再掲 (J001263167, 2026-08-28)"
+      ],
+      "breakdown": null
+    }
+  ],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "97点（自動公開ライン 100点）。主な不足: topicality -10 / writability -3",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "名駅の上海蟹、10月解禁——マリオット梨杏の美食会35,000円と伏見・王朝の中華コース16,000円、接待の相場を業界人が読む",
+      "lead_draft": "10月は上海蟹の季節。名古屋マリオットアソシアホテル18階の中国料理「梨杏」が10月24日・25日の2日間限定で35,000円の美食会を発表し、伏見のヒルトン名古屋「王朝」は10月6日から上海蟹と黒毛和牛のコース16,000円を始める。同じ上海蟹で2倍の差がつく理由を、仕入れと席と予約の設計から読む。",
+      "angle": "陽澄湖産の仕入れ原価と2日間限定の売り切り設計、接待シーンでの予約の取り方、16,000円と35,000円の相場の読み方を業界人視点で",
+      "main_store": {
+        "name": "中国料理 梨杏 名古屋マリオットアソシアホテル",
+        "id": "",
+        "area": "名駅",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（JR東海ホテルズ）梨杏 美食会",
+          "url": "https://prtimes.jp/main/html/rd/p/000000280.000076395.html",
+          "date": "2026-09-28"
+        },
+        {
+          "label": "ヒルトン名古屋 王朝 ディナー公式",
+          "url": "https://nagoya.hiltonjapan.co.jp/restaurants/lp/ouchou-dinner",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "ヒルトン名古屋 王朝 プラン一覧",
+          "url": "https://nagoya.hiltonjapan.co.jp/restaurants/ouchou/plans",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "PR TIMES 梨杏 上海蟹コース（2023年）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000032.000076395.html",
+          "date": "2023-10-09"
+        },
+        {
+          "label": "nagoya-meshi 麗穂 上海蟹コース",
+          "url": "https://nagoya-meshi.com/area/meieki/reiho",
+          "date": "2024-11-25"
+        },
+        {
+          "label": "HotPepper 上海料理 紅蘭",
+          "url": "https://www.hotpepper.jp/strJ001281697/",
+          "date": "2026-10-02"
+        },
+        {
+          "label": "OZmall 王朝 ビュッフェ",
+          "url": "https://www.ozmall.co.jp/restaurant/7308/buffet/",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "伏見・ヒルトン名古屋「王朝」の上海蟹ビュッフェが10月7日開始、宴会で個室を押さえる順番",
+      "lead_draft": "ヒルトン名古屋3階の中国料理「王朝」が10月7日から12月29日まで上海蟹と和牛のチャイニーズビュッフェを開く。102席・個室5室の店で、宴会幹事が個室を取る時期と予算の組み方を業界人が読む。",
+      "angle": "ビュッフェ原価率と個室の予約順、宴会の繁忙期を業界人視点で",
+      "main_store": {
+        "name": "中国料理 王朝 ヒルトン名古屋",
+        "id": "J001136803",
+        "area": "伏見",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "ヒルトン名古屋 王朝 プラン一覧",
+          "url": "https://nagoya.hiltonjapan.co.jp/restaurants/ouchou/plans",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "OZmall 王朝 ビュッフェ",
+          "url": "https://www.ozmall.co.jp/restaurant/7308/buffet/",
+          "date": "2026-10-02"
+        },
+        {
+          "label": "一休 王朝 クチコミ",
+          "url": "https://restaurant.ikyu.com/100396/reviews",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "名古屋まつり2026は行列なし、栄の店が10月17日・18日に混む時間帯",
+      "lead_draft": "第72回名古屋まつりは10月17日・18日、久屋大通公園を主会場に行われるが今年は郷土英傑行列が実施されない。栄の飲食店がどの時間帯に混むのかを読む。",
+      "angle": "イベント日の回転と予約の需要",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "栄",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "久屋大通パーク 名古屋まつり",
+          "url": "https://www.hisayaodoripark.com/2026/nagoya-festival-2026/",
+          "date": "2026-09-07"
+        },
+        {
+          "label": "名古屋まつり公式X",
+          "url": "https://x.com/nagoya_matsuri/status/2023210692036510172",
+          "date": "2026-09-01"
+        },
+        {
+          "label": "AichiNow",
+          "url": "https://www.aichinow.pref.aichi.jp/events/detail/62/",
+          "date": "2026-09-01"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "ささしま・ストリングスホテルの秋の北海道コース、平日ディナー7,480円の時期と席",
+      "lead_draft": "ストリングスホテル名古屋1階「グラマシースイート」の秋の北海道コースは11月12日まで。平日7,480円と土日祝8,030円の差を、ホテルの稼働と予約から読む。",
+      "angle": "平日と休日の価格差、予約の取り方、接待シーン適性",
+      "main_store": {
+        "name": "ストリングスホテル 名古屋 GRAMERCY SUITE グラマシースイート",
+        "id": "J001263167",
+        "area": "名駅",
+        "genre": "フレンチ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES ストリングスホテル名古屋",
+          "url": "https://prtimes.jp/main/html/rd/p/000001341.000004975.html",
+          "date": "2026-08-19"
+        },
+        {
+          "label": "HotPepper グラマシースイート",
+          "url": "https://www.hotpepper.jp/strJ001263167/",
+          "date": "2026-10-02"
+        },
+        {
+          "label": "X PR TIMES TRAVEL",
+          "url": "https://x.com/PRTIMES_TRAVEL/status/2086728551701917907",
+          "date": "2026-09-20"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "本山の上海料理 紅蘭、秋限定の上海蟹を4,500円ランチで出せる理由",
+      "lead_draft": "一社駅徒歩5分の上海料理 紅蘭が秋限定の上海蟹を掲げる。ランチ4,500円の価格帯で上海蟹を出せる仕入れと回転の設計を読む。",
+      "angle": "仕入れ・回転・ランチの価格帯",
+      "main_store": {
+        "name": "上海料理 紅蘭",
+        "id": "J001281697",
+        "area": "本山",
+        "genre": "中華"
+      },
+      "sources": [
+        {
+          "label": "HotPepper 上海料理 紅蘭",
+          "url": "https://www.hotpepper.jp/strJ001281697/",
+          "date": "2026-10-02"
+        },
+        {
+          "label": "Retty 上海料理まとめ",
+          "url": "https://retty.me/area/PRE23/LCAT14/CAT124/PUR12/",
+          "date": "2026-10-02"
+        },
+        {
+          "label": "nagoya-meshi 麗穂",
+          "url": "https://nagoya-meshi.com/area/meieki/reiho",
+          "date": "2024-11-25"
+        }
+      ]
+    }
+  ]
+}
