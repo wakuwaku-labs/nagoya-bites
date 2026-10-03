@@ -48,8 +48,15 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
             const pr = context.payload.pull_request;
-            const { data: f } = await github.rest.repos.getContent({ owner, repo, path: 'data/routine_pr_automerge_policy.json', ref: 'main' });
-            const policy = JSON.parse(Buffer.from(f.content, 'base64').toString('utf8'));
+            let policy;
+            try {
+              const { data: f } = await github.rest.repos.getContent({ owner, repo, path: 'data/routine_pr_automerge_policy.json', ref: 'main' });
+              policy = JSON.parse(Buffer.from(f.content, 'base64').toString('utf8'));
+            } catch (e) {
+              core.warning(`main にポリシーが読めないため自動マージしません: ${e.message}`);
+              core.setOutput('eligible', 'false');
+              return;
+            }
             if (!policy.branch_prefixes.some(p => pr.head.ref.startsWith(p))) {
               core.info(`対象外のブランチ: ${pr.head.ref}`);
               core.setOutput('eligible', 'false');
@@ -153,8 +160,14 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            const { data: f } = await github.rest.repos.getContent({ owner, repo, path: 'data/routine_pr_automerge_policy.json', ref: 'main' });
-            const policy = JSON.parse(Buffer.from(f.content, 'base64').toString('utf8'));
+            let policy;
+            try {
+              const { data: f } = await github.rest.repos.getContent({ owner, repo, path: 'data/routine_pr_automerge_policy.json', ref: 'main' });
+              policy = JSON.parse(Buffer.from(f.content, 'base64').toString('utf8'));
+            } catch (e) {
+              core.setFailed(`data/routine_pr_automerge_policy.json を main から読めません: ${e.message}`);
+              return;
+            }
             const label = 'routine-pr-automerge';
             const prs = await github.paginate(github.rest.pulls.list, { owner, repo, state: 'open', base: 'main', per_page: 100 });
             const now = Date.now();
