@@ -22,7 +22,8 @@
 ---
 ### [SEO-113] ジャーナルの「関連記事」3本が話題と無関係な“直近3本”固定（閲覧1位の抹茶・喫茶記事から、とんかつ／ちゃんこ／うなぎ記事へ送っている）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-10-03
 - **detected**: 2026-09-29
 - **category**: SEO
 - **owner**: Builder
@@ -1301,6 +1302,17 @@
 - **review**: 本チケットのacceptanceは上記「検証できる事実」の5項目。人手レビューはPR作成後にDesigner役職（Orchestrator代行）が実施
 - **未完了**: PR作成・マージ。マージ後の翌日CI（node build.js）でHotPepper新規射影フィールド（定休日/最寄駅/席数等）が実データに反映されることを確認（ローカルはHOTPEPPER_API_KEY未設定のため射影ロジックのfixtureテストのみで検証済み）
 ## 実行ログ
+
+### 2026-10-03（自動ルーティン・クラウドセッション）
+
+**処理件数**: 1件（SEO-113）
+
+- **[SEO-113]** ジャーナル関連記事を「直近3本」から「同トピック優先→直近順補完」に変更
+  - **実装**: `scripts/refresh_journal_related.js` に `matchAllTopicSlugs()` を追加し、各投稿のメタデータにトピック Set を事前計算。`buildRelatedHtml()` で現記事との TOPIC_FEATURES スラッグ重複を持つ記事を優先し、不足分を直近順で補完（重複ゼロ記事は従来と同挙動で退行なし）
+  - **検証**: 2回目実行で `Updated 0`（冪等性確認）。名指し記事（抹茶・喫茶記事）の関連3本が全てカフェ/スイーツ/モーニング系に変わったことを実測確認
+  - **QA**: `node --test tests/*.test.js` 228/228 pass / `node scripts/audit_design_system.js --check` 違反0
+
+---
 
 ### 2026-09-11（自動ルーティン・クラウドセッション）
 

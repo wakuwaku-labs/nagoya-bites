@@ -99,8 +99,35 @@ function matchTopicFeature(title) {
   return null;
 }
 
+// 記事タイトルに一致する TOPIC_FEATURES の slug を全件返す
+function matchAllTopicSlugs(title) {
+  if (!title) return new Set();
+  const slugs = new Set();
+  for (const [re, slug] of TOPIC_FEATURES) {
+    if (re.test(title)) slugs.add(slug);
+  }
+  return slugs;
+}
+
 function buildRelatedHtml(currentFile, posts, postsMeta) {
-  const others = posts.filter(f => f !== currentFile).slice(0, 3);
+  // 同トピック優先: 現記事の TOPIC slugs と1つでも重なる他記事を前に並べる
+  // （重なりがゼロなら直近順のまま・退行なし）
+  const currentTopics = (postsMeta[currentFile] && postsMeta[currentFile].topics) || new Set();
+  const candidates = posts.filter(f => f !== currentFile);
+  let topicFirst, rest;
+  if (currentTopics.size > 0) {
+    topicFirst = candidates.filter(f => {
+      const t = postsMeta[f] && postsMeta[f].topics;
+      if (!t || t.size === 0) return false;
+      for (const s of currentTopics) { if (t.has(s)) return true; }
+      return false;
+    });
+    rest = candidates.filter(f => !topicFirst.includes(f));
+  } else {
+    topicFirst = [];
+    rest = candidates;
+  }
+  const others = [...topicFirst, ...rest].slice(0, 3);
   const lines = [];
   lines.push('<div class="related">');
   lines.push('  <p class="related-title">関連記事</p>');
@@ -158,7 +185,7 @@ function main() {
   for (const f of posts) {
     const html = fs.readFileSync(path.join(JOURNAL_DIR, f), 'utf8');
     const title = extractTitle(html);
-    if (title) postsMeta[f] = { title };
+    if (title) postsMeta[f] = { title, topics: matchAllTopicSlugs(title) };
   }
   console.log(`Found ${posts.length} posts`);
   let changed = 0;
