@@ -1,0 +1,203 @@
+{
+  "date": "2026-10-03",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "錦・伏見のホテルカフェ「ラウンジ ジャルダン」ピエール・エルメ第二幕、実質7,820円を女子会で読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "女子会",
+          "feature": "features/girls-party.html"
+        },
+        {
+          "kw": "カフェ",
+          "feature": "features/nagoya-cafe.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (席,予約,シーン,接待,デート,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 171字 +4",
+          "title 50字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「錦」+4",
+          "タイトルにシーン語「女子会」+4",
+          "タイトルにジャンル語「カフェ」+2"
+        ]
+      },
+      "gate_note": "97点（自動公開ライン 100点）。主な不足: topicality -10 / writability -3"
+    },
+    {
+      "id": "c2",
+      "title_draft": "中川区に「なかがわ 街仲食堂 by ジーバーFOOD」10月10日開店、シニアが握るおむすび食堂を業界人が読む",
+      "verdict": "HOLD",
+      "total": 66,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 0,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "中川区・港区",
+          "feature": "stores/area/nakagawa-minato/index.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "バー",
+          "feature": "features/nagoya-bar-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 133字 +4",
+          "title 55字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「中川区」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「バー」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "97点（自動公開ライン 100点）。主な不足: topicality -10 / writability -3",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "錦・伏見のホテルカフェ「ラウンジ ジャルダン」ピエール・エルメ第二幕、実質7,820円を女子会で読む",
+      "lead_draft": "名古屋観光ホテル1階のラウンジ ジャルダンで10月1日、ピエール・エルメ・パリとのコラボアフタヌーンティー第二幕が始まった。表示は6,800円〜（税込・サ別）、サービス料込みで7,820円。夕方のハイティーは9,200円で、差額1,380円でアルコールが飲み放題になる。105分制と50席の回し方から、女子会とデートの使い分けを業界人が読む。",
+      "angle": "サ別表記の実質価格・105分制の回転設計・50席ソファ席のシーン適性（女子会・デート・接待前の手土産下見）を業界人視点で読む。予約は直通電話",
+      "main_store": {
+        "name": "ラウンジ ジャルダン 名古屋観光ホテル",
+        "id": "J004470589",
+        "area": "伏見",
+        "genre": "カフェ・スイーツ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（エスパシオエンタープライズ）ピエール・エルメ・パリ コラボレーション アフタヌーンティー第二幕",
+          "url": "https://prtimes.jp/main/html/rd/p/000000151.000097639.html",
+          "date": "2026-09-11"
+        },
+        {
+          "label": "ナゴヤト「ピエール・エルメ・パリ コラボ アフタヌーンティー第二幕」",
+          "url": "https://nagoyato.com/posts/19502",
+          "date": "2026-09-28"
+        },
+        {
+          "label": "OZmall ラウンジ ジャルダン/名古屋観光ホテル アフタヌーンティー",
+          "url": "https://www.ozmall.co.jp/restaurant/8709/afternoontea/",
+          "date": "2026-10-03"
+        },
+        {
+          "label": "ホットペッパーグルメ ラウンジ ジャルダン 名古屋観光ホテル",
+          "url": "https://www.hotpepper.jp/strJ004470589/",
+          "date": "2026-10-03"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "中川区に「なかがわ 街仲食堂 by ジーバーFOOD」10月10日開店、シニアが握るおむすび食堂を業界人が読む",
+      "lead_draft": "名古屋市中川区吉津に10月10日、地域のシニアが注文を受けてから握るおむすび食堂が開く。営業は11時から14時の3時間だけ。デイサービスを運営する介護事業者が主体となり、全国101地域の仕組みを持ち込む。人手不足の飲食業で、ランチ3時間だけの店がどう回るのかを読む。",
+      "angle": "人手不足時代のシニア雇用×ランチ3時間営業のオペ設計を業界人視点で読む",
+      "main_store": {
+        "name": "なかがわ 街仲食堂 by ジーバーFOOD",
+        "id": "",
+        "area": "中川区",
+        "genre": "定食・おむすび"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（ジーバー）",
+          "url": "https://prtimes.jp/main/html/rd/p/000000028.000138955.html",
+          "date": "2026-10-01"
+        }
+      ]
+    }
+  ]
+}
