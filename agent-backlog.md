@@ -3245,8 +3245,16 @@ URLが絶対か / PNGが実在するか。エージェントの自己申告値�
   - **実装（2026-09-23）**: `monthlyScenes[9]`/`[10]` に `banquet` を4件目のシーンとして純増（既存3シーンは削らない・9月・10月の他シーンを差し替えない）。対応する `sceneLeads[9]`/`[10]` の季節バナー文言も追加。`node scripts/build_featured.js` を実行し、`index.html` の特集ストリップ（ストリップ採用8件・banquetが4番目）と `features/banquet.html` の本文冒頭季節バナーへ反映済み
   - **QAゲート**: `npm test` 211/211 pass／`audit_design_system.js --check` 違反0／`audit_feature_stores.js` に本変更由来の新規検出なし（既存の無関係な実在不明4件のみ）
   - **効果判定**: 次回以降のGSC更新で `banquet.html` 関連クエリ（「忘年会」「宴会」系）の表示回数・掲載順位を前後比較する。今回も**露出量は既に反証済みの変数**であることを踏まえ、動かなかった場合は「露出不足ではなかった」という反証結果として正直に記録し、それ以上は同じ手を繰り返さないこと（品質ゲート原則5）
+- **2026-10-02 追記（自動ルーティン）**:
+  - `gsc_query_intent.js` discovery share: **29.7%**（前回2026-09-23: 2.2% → 大幅改善。topPages date.html=11.7位、banquet.html 未ランクイン継続）
+  - **shop-name テンプレート（旧テンプレ・26本/262件）への h3 適用 — 本日完了**:
+    - `nagoya-morning.html`・`nagoya-settai-lunch.html` を調査すると掲載店は0件ではなく（morningは10店・settaiは9店）、`<div class="shop-name">` という**旧テンプレのクラス名**を使っており、元の migration が `class="store-name"` しか対象にしていなかったため見落とされていた
+    - `scripts/migrate_feature_headings.js` にテンプレート3系統目（`div.shop-name` → `h3.shop-name`）を追加し、26ファイル/262件を一括変換。CSS margin patch（`margin:0 0 .3rem`）も同時適用
+    - `--check` ゲート通過（全特集 h3 完全適用）。`features/` の変更のため build.js は N/A
+  - **banquet.html 非ランクイン**: 9月下旬〜10月の旬にもかかわらず GSC top15 に入らず。`monthlyScenes` 追加（2026-09-23）の効果はまだ表れていない可能性、または別要因がある。4週間後（2026-10-30目安）に再確認
+
 - **判明した残件（別途対応が必要）**:
-  - `nagoya-settai-lunch.html`（接待ランチ）と `nagoya-morning.html`（モーニング）は**掲載店が0件**のため h3 が付かない。見出し階層以前に中身が無く、シーンKWとして登録されているのに実質空の記事になっている
+  - ~~`nagoya-settai-lunch.html`（接待ランチ）と `nagoya-morning.html`（モーニング）は**掲載店が0件**のため h3 が付かない。見出し階層以前に中身が無く、シーンKWとして登録されているのに実質空の記事になっている~~ ✅ **2026-10-02 完了**: 両ページとも掲載店は存在していた（旧テンプレの `div.shop-name` だったため見落とされていた）。`migrate_feature_headings.js` を拡張して 26ファイル h3 適用済み
   - ~~`banquet.html` に「よくある質問」h2 が**重複して2つ**存在する（`data/feature_faqs.json` 由来の生成分と元原稿分の二重化）。他特集にも同様の重複がある可能性があり要棚卸し~~ ✅ **2026-08-19 完了**: banquet / birthday / gw-2026 / mothers-day / private-room の5ファイルで古い静的FAQセクション（`<section id="faq">`）を削除。各ファイル1つのみに統一
 - **備考**: 表示回数（インプレッション）を成果指標にしない。5/8 の店舗ページ大量公開（1,095→4,585本）が生んだ表示バブルの正常化と混ざり、施策の効果が読めなくなるため
 
@@ -4294,6 +4302,13 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   - snapshots≥2 の店舗数: **495件（9.2%・母数5,388件）** — 前回（2026-09-23）から変化なし（週次実行を1回挟んだが追加なし）
   - v3.0分布影響: **1階級以上の移動 4,356件**（目安上限496件）— 前回4,301件から微増（+55件・誤差レベル）
   - 目安の約8.8倍で前回とほぼ不変。蓄積ペースが頭打ち傾向。activate は引き続き保留
+
+- **2026-10-02 定点観測（自動ルーティン）**:
+  `node scripts/audit_crosscheck_v3.js` 実行結果:
+  - snapshots≥2 の店舗数: **495件（9.2%・母数5,388件）** — 前回（2026-09-28）から変化なし（週次実行1回挟んだが追加なし・4週連続停滞）
+  - v3.0分布影響: **1階級以上の移動 4,350件**（目安上限496件）— 前回4,356件から微減（誤差レベル・目安の8.8倍）
+  - 対象店舗数: 4,958件（前回比増はHotPepper追加分）
+  - 4週間スナップショット蓄積ゼロ（PLACES_DETAILS_BUDGET=100 週次実行が動いていない可能性）。activate は引き続き保留
 
 - **残タスク**: 週次実行（毎週月曜）を継続してsnapshots≥2の蓄積率を上げる → 十分な蓄積後に
   `node scripts/audit_crosscheck_v3.js` で分布影響を再確認（目標: 移動件数 ≤ 492件）→ 問題なければ activate 手順の
@@ -6486,12 +6501,15 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
 | 2026-09-23 | Builder(routine) | ISSUE-132 acceptance④: scripts/audit_duplicate_stores.js 新設・build.yml に CI 重複検知ステップ追加。確定重複58件ベースライン保存（名前一致20件＋placeId+namesMatch 38件）。統合操作（acceptance②③）は API キー必要のため別セッションへ | ✅ commit本コミット |
+| 2026-10-02 | Orchestrator(routine) | ISSUE-086: 定点観測（snapshots≥2=495件/9.2%・4週連続停滞、tier移動4,350件/目安496件）。activate引き続き保留 | ✅ backlog更新 |
+| 2026-10-02 | Orchestrator(routine) | SEO-060: shop-name旧テンプレ(26本/262件)へh3適用完了—migrate_feature_headings.js拡張（3系統目div.shop-name追加）。discovery share 29.7%確認 | ✅ commit本コミット |
 | 2026-09-23 | Orchestrator(routine) | ISSUE-086: 定点観測（snapshots≥2=495件/9.2%、tier移動4,301件/目安491件・目安の8.8倍で前回不変）。activate引き続き保留 | ✅ backlog更新 |
 | 2026-09-22 | Orchestrator(routine) | ISSUE-133 owner を片桐へ変更（エスカレーション）— acceptance.1の22件一次確認（公式SNS・電話・Googleの最新口コミ）はオーナー本人操作が必要なため自動ルーチンでは実施不可 | ⏸ owner変更のみ。本コミットに含む |
 | 2026-09-22 | Builder(routine) | SEO-105: gen-store-pages.js に電話CTA（タップ時のみ Places Details 取得・`nbCallStore` 同一実装）追加。対象52店（no hpId・no tbUrl・placeId保有）。`audit_design_system.js --check` 違反0件維持。4915ページ再生成 | ✅ 本コミットに含む |
 | 2026-09-22 | Orchestrator(routine) | ISSUE-131 done化 — 全acceptance実施済み確認（resolve_manual_tabelog_links.js新設・偽陽性修正・CI拡大・843URL空欄化、PR #283/#285 マージ済み）をもってdone | ✅ commit 本コミットに含む |
 | 2026-09-20 | Builder(routine) | SEO-103: 週次トリアージ watchdog 新設（scripts/check_seo_triage_weekly_health.js + .github/workflows/seo-triage-weekly-watchdog.yml）・docs/seo-triage-weekly-runbook.md 作成（in:anywhere クエリ手順）。Gmail フィルタ解除・遡り triage はオーナーへエスカレーション | ✅ 本コミットに含む |
 | 2026-09-20 | Builder(routine) | SEO-104: launchd ラッパーのスタッシュ対象をジャーナル固有パスに限定・out-of-band 通知追加 | ✅ commit e6db43e |
+| 2026-09-19 | Orchestrator(自律バッチ) | 課題消化トリアージ: next_task.js 出力7件を安全フィルタで評価。全件ブロック/実装済み待ちのため実装0件。ISSUE-086（重み再調整・オーナー判断待ち）・ISSUE-097（HOTPEPPER_API_KEY必要）・SEO-098（bio/リール変更はオーナー本人操作）・SEO-087/091/099/101（実装済み・GSC/GA4データ待ち） | ⏸ 実装0件・ブロック理由を記録 |
 | 2026-09-18 | Designer(/solve-next) | DSN-001残件実装・デプロイ | ✅ commit 58b80e2c0e |
 | 2026-09-08 | Designer(EXPLICIT) | DSN-003: トップ/ジャーナル/特集/編集規約4ページ種別のプロ品質リデザイン＋サイト共通クローム統一（scripts/lib/site_chrome.js新設・全216ファイル） | ✅ コミット済み・PR作成待ち (commit 20cd42ec4) |
 | 2026-09-08 | Orchestrator(routine) | ISSUE-121: 他都道府県マッチ残存確認→修正は commit 06b6976f で main に反映済み・audit_other_prefecture_matches.js --check=[OK]確認・done クローズ | ✅ done（既存修正を確認） |
