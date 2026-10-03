@@ -106,7 +106,44 @@
       "target_metric": "discovery_clicks_features",
       "target_value": 150,
       "followup_date": "2026-09-14",
-      "followup": null
+      "followup": {
+        "date": "2026-09-24",
+        "note": "施策後38日値（GSC 28日窓: 2026-08-27〜2026-09-23）。複合施策: 見出し階層(2026-08-17) + monthlyScenes[9][10]にbanquet追加(2026-09-23) + SEO-108ジャーナルリンク設置(2026-09-25)",
+        "metrics": {
+          "features_discovery": {
+            "solo_dining_clicks": 184,
+            "solo_dining_impressions": 2887,
+            "solo_dining_ctr": 0.0637,
+            "solo_dining_position": 7.5,
+            "banquet_clicks": null,
+            "banquet_impressions": null,
+            "banquet_ctr": null,
+            "banquet_position": null,
+            "date_clicks": 10,
+            "date_impressions": 305,
+            "date_ctr": 0.0328,
+            "date_position": 12.3,
+            "private_room_clicks": null,
+            "private_room_impressions": null,
+            "private_room_ctr": null,
+            "private_room_position": null,
+            "kaoawase_clicks": 5,
+            "kaoawase_impressions": 76,
+            "kaoawase_ctr": 0.0658,
+            "kaoawase_position": 26.8,
+            "hard_to_book_clicks": null,
+            "hard_to_book_impressions": null,
+            "hard_to_book_ctr": null,
+            "hard_to_book_position": null
+          },
+          "features_total": {
+            "clicks": 199,
+            "impressions": 3268,
+            "discovery_share_of_impressions": 0.0708
+          }
+        },
+        "verdict": "目標150クリック達成（199クリック）。solo_diningが53→184（+247%）・date 0→10・kaoawase 3→5。banquet/private-room/settai-secretは依然topPages(15件)圏外＝表示回数が閾値未満のまま。見出し階層単独では大半のシーンKWは動かなかった（acceptance④の訂正に記録済み）。banquetはmonthlyScenes追加（2026-09-23）の効果測定は4週間後に要確認"
+      }
     },
     "DSN-003": {
       "baseline": {

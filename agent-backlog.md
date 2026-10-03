@@ -22,7 +22,8 @@
 ---
 ### [SEO-113] ジャーナルの「関連記事」3本が話題と無関係な“直近3本”固定（閲覧1位の抹茶・喫茶記事から、とんかつ／ちゃんこ／うなぎ記事へ送っている）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-10-03
 - **detected**: 2026-09-29
 - **category**: SEO
 - **owner**: Builder
@@ -106,8 +107,9 @@
 
 ### [SEO-108] 特集→ジャーナル個別記事のリンクが 2026-08-19 の一回実行で凍結している（以後の36本が特集から一度も辿れず、最大入口の nagoya-solo-dining は同シーンの記事が6本あるのに0本）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-09-25
+- **resolved**: 2026-10-03
 - **category**: SEO
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-09-24 原文「ページ閲覧が60回と訪問者32人に対して平均1.3ページと回遊が少ないです。👉 人気ページ「nagoya-solo-dining」に、関連するソロ活向けの店舗記事（journal/）への内部リンクを3件追加し、回遊を促す」
@@ -1301,6 +1303,22 @@
 - **review**: 本チケットのacceptanceは上記「検証できる事実」の5項目。人手レビューはPR作成後にDesigner役職（Orchestrator代行）が実施
 - **未完了**: PR作成・マージ。マージ後の翌日CI（node build.js）でHotPepper新規射影フィールド（定休日/最寄駅/席数等）が実データに反映されることを確認（ローカルはHOTPEPPER_API_KEY未設定のため射影ロジックのfixtureテストのみで検証済み）
 ## 実行ログ
+
+### 2026-10-03（自動ルーティン・クラウドセッション）
+
+**処理件数**: 2件（SEO-113、SEO-108）
+
+- **[SEO-113]** ジャーナル関連記事を「直近3本」から「同トピック優先→直近順補完」に変更
+  - **実装**: `scripts/refresh_journal_related.js` に `matchAllTopicSlugs()` を追加し、各投稿のメタデータにトピック Set を事前計算。`buildRelatedHtml()` で現記事との TOPIC_FEATURES スラッグ重複を持つ記事を優先し、不足分を直近順で補完（重複ゼロ記事は従来と同挙動で退行なし）
+  - **検証**: 2回目実行で `Updated 0`（冪等性確認）。名指し記事（抹茶・喫茶記事）の関連3本が全てカフェ/スイーツ/モーニング系に変わったことを実測確認
+  - **QA**: `node --test tests/*.test.js` 228/228 pass / `node scripts/audit_design_system.js --check` 違反0
+
+- **[SEO-108]** 特集→ジャーナルリンクを冪等・日次化 + KW一致を追加対応キーに
+  - **実装**: `scripts/add_feature_journal_links.js` を「マーカー検出でスキップ固定」から「毎回再生成・差分があるときだけ書く」冪等方式に全面書き換え。対応キーに KW一致（`journal_seo_keywords.json` のエイリアス→特集スラッグ逆引き）を追加（store_id 一致と並列）。`--check` フラグで CI向け exit 1。`.github/workflows/build.yml` に日次ステップ追加
+  - **検証**: 3回目実行で `modified=0 noDiff=45`（冪等性確認）。`features/nagoya-solo-dining.html` に一人飲み系 KW 一致の実在ジャーナル記事3本入りを実測確認
+  - **QA**: `node --test tests/*.test.js` 228/228 pass / `node scripts/audit_design_system.js --check` 違反0
+
+---
 
 ### 2026-09-11（自動ルーティン・クラウドセッション）
 
