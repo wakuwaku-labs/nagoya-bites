@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-03T19:15:51.938Z",
+  "generatedAt": "2026-10-03T20:38:31.268Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1338,
+  "total_sessions": 1341,
   "engines": [
     {
       "key": "bing",
@@ -23,7 +23,7 @@
       "key": "google",
       "label": "Google",
       "sessions": 350,
-      "pct": 26.2,
+      "pct": 26.1,
       "sources": [
         {
           "source": "google",
@@ -35,13 +35,13 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 259,
+      "sessions": 260,
       "pct": 19.4,
       "sources": [
         {
           "source": "(direct)",
           "medium": "(none)",
-          "sessions": 243
+          "sessions": 244
         },
         {
           "source": "(not set)",
@@ -53,13 +53,13 @@
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 149,
-      "pct": 11.1,
+      "sessions": 151,
+      "pct": 11.3,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 149
+          "sessions": 151
         }
       ]
     },
@@ -217,7 +217,7 @@
     }
   ],
   "search_only": {
-    "total": 975,
+    "total": 977,
     "share": [
       {
         "key": "bing",
@@ -229,13 +229,13 @@
         "key": "google",
         "label": "Google",
         "sessions": 350,
-        "pct_of_search": 35.9
+        "pct_of_search": 35.8
       },
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 149,
-        "pct_of_search": 15.3
+        "sessions": 151,
+        "pct_of_search": 15.5
       },
       {
         "key": "ai_assistant",
@@ -255,11 +255,11 @@
     "from": "2026-10-02",
     "to": "2026-10-03",
     "delta": {
-      "bing": 0,
-      "google": -1,
-      "direct": -7,
+      "bing": 2,
+      "google": 1,
+      "direct": -5,
       "yahoo": -1,
-      "ai_assistant": 3,
+      "ai_assistant": 4,
       "other": 1,
       "duckduckgo": 0,
       "social": 0
