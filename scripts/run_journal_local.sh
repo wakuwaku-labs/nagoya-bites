@@ -737,6 +737,22 @@ TRACKED_UPDATES=(
   journal/index.html
 )
 
+# claude 実行中にグローバルの Session Autopilot フックが autopilot/work-* ブランチを切って
+# 自動コミットすると、以降の `git push origin main` は古い main を送るだけで拒否される
+# （2026-10-03 事故: 記事は生成・コミット済みなのに push 失敗で未公開）。
+# そのブランチが main の子孫なら main をそこへ早送りして戻す（作業ツリーはそのまま）。
+CUR_BRANCH=$(git branch --show-current)
+if [ "$CUR_BRANCH" != "main" ]; then
+  log "⚠️ 現在のブランチが main ではありません（${CUR_BRANCH}）。main へ戻します。"
+  if [ -n "$CUR_BRANCH" ] && git merge-base --is-ancestor main HEAD; then
+    git checkout -B main HEAD >>"$LOG" 2>&1 || die "main への付け替えに失敗（${CUR_BRANCH}）"
+    git branch -D "$CUR_BRANCH" >>"$LOG" 2>&1 || true
+    log "main を ${CUR_BRANCH} の先端へ早送りしました。"
+  else
+    die "ブランチ ${CUR_BRANCH:-detached} が main の子孫ではありません。手動で確認してください。"
+  fi
+fi
+
 git add "${TODAY_FILES[@]}" 2>>"$LOG" || true
 for f in "${TRACKED_UPDATES[@]}"; do
   [ -e "$f" ] && git add "$f" 2>>"$LOG" || true
