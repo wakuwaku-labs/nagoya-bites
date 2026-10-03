@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "_comment": "定期ルーチンが作ったPRを自動マージする基準の唯一の情報源（.github/workflows/routine-pr-automerge.yml が読む）。2026-10-04、ルーチンのPRがマージされないまま31件溜まり、話題店発掘の心拍が9/24で止まり、課題消化ルーチンが同じ課題（SEO-108等）のPRを毎日作り直していたため新設。対象はブランチ名の接頭辞で決める（ルーチンごとに固定・PR作者は対話セッションと同じアカウントのため作者では区別できない）。対話セッションのPR（claude/<話題名>）は対象外＝人が見てからマージする。",
+  "branch_prefixes": [
+    "claude/tender-carson-",
+    "claude/wizardly-ramanujan-"
+  ],
+  "_branch_prefixes_note": "tender-carson=話題店発掘ループ（docs/trending-scout-runbook.md）／wizardly-ramanujan=課題消化（/solve-next）。ルーチンのブランチ名が変わったらここを直す。",
+  "blocked_paths": [
+    ".github/workflows/"
+  ],
+  "_blocked_paths_note": "GITHUB_TOKEN ではワークフローを変更するPRをマージできない（GitHub の仕様）。CI自体を書き換える変更でもあるため、これらは人の確認に回す（Issueで通知）。",
+  "stale_hours": 24,
+  "_stale_hours_note": "対象PRがこの時間を超えて開いたままなら Issue を起票する（＝オーナーにメール）。無くなれば自動クローズ。"
+}

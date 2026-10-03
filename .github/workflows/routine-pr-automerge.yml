@@ -1,0 +1,212 @@
+name: NAGOYA BITES — ルーチンPRの自動マージ
+
+# なぜこのワークフローが必要か（2026-10-04）:
+#   クラウドの定期ルーチン（話題店発掘 / 課題消化 /solve-next）は main へ直接 push できず、
+#   作業ブランチ＋PR に倒れる。そのPRを誰もマージしないまま 31 件溜まり、
+#     - 話題店発掘の成果と心拍が 9/24 から main に届かず（PR の中で止まっていた）
+#     - 課題消化ルーチンが「未完了のまま」の同じ課題（SEO-108 等）を毎日作り直し、重複PRが7本並んだ
+#   ルーチンのプロンプト側を直しても同じ穴は残る（push 権限・実行環境に依存する）ため、
+#   受け口である GitHub 側で「QA を通ったルーチンPRはマージする」ことを保証する。
+#
+#   対象の判定はブランチ名の接頭辞だけ（data/routine_pr_automerge_policy.json）。
+#   対話セッションの PR は対象外＝人が見てからマージする。
+#   QA（npm test・デザインシステム監査・変更された JSON の構文）を通らなければマージしない（制約6）。
+#   マージできなかったPRは放置せず、一定時間で Issue 起票（＝オーナーにメール・ISSUE-084 の原則）。
+#
+#   注意: GITHUB_TOKEN によるマージは push イベントで他のワークフローを起動しないため、
+#   マージ後に build.yml（Build & Deploy）を workflow_dispatch で明示的に起動する。
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    branches: [main]
+  schedule:
+    # 毎時17分: 開いたままのルーチンPRを点検し、滞留していれば Issue で知らせる
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  actions: write
+
+jobs:
+  automerge:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && startsWith(github.event.pull_request.head.ref, 'claude/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: routine-pr-automerge-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+
+    steps:
+      - name: 対象か判定（ポリシーは main の版を読む）
+        id: gate
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const pr = context.payload.pull_request;
+            let policy;
+            try {
+              const { data: f } = await github.rest.repos.getContent({ owner, repo, path: 'data/routine_pr_automerge_policy.json', ref: 'main' });
+              policy = JSON.parse(Buffer.from(f.content, 'base64').toString('utf8'));
+            } catch (e) {
+              core.warning(`main にポリシーが読めないため自動マージしません: ${e.message}`);
+              core.setOutput('eligible', 'false');
+              return;
+            }
+            if (!policy.branch_prefixes.some(p => pr.head.ref.startsWith(p))) {
+              core.info(`対象外のブランチ: ${pr.head.ref}`);
+              core.setOutput('eligible', 'false');
+              return;
+            }
+            const files = await github.paginate(github.rest.pulls.listFiles, { owner, repo, pull_number: pr.number, per_page: 100 });
+            const blocked = files.map(x => x.filename).filter(fn => policy.blocked_paths.some(b => fn.startsWith(b)));
+            if (blocked.length) {
+              await github.rest.issues.createComment({ owner, repo, issue_number: pr.number,
+                body: `🤚 自動マージ対象外です（人の確認が必要なパスを含む: ${blocked.map(b => '`' + b + '`').join(', ')}）。` });
+              core.setOutput('eligible', 'false');
+              return;
+            }
+            // mergeable は作成直後 null のことがあるため待つ
+            let mergeable = null;
+            for (let i = 0; i < 12 && mergeable === null; i++) {
+              const { data } = await github.rest.pulls.get({ owner, repo, pull_number: pr.number });
+              mergeable = data.mergeable;
+              if (mergeable === null) await new Promise(r => setTimeout(r, 5000));
+            }
+            if (mergeable === false) {
+              await github.rest.issues.createComment({ owner, repo, issue_number: pr.number,
+                body: '⚠️ main と競合しているため自動マージできません。ブランチを main に追従させると再判定されます。' });
+              core.setOutput('eligible', 'false');
+              return;
+            }
+            core.setOutput('eligible', 'true');
+            core.setOutput('changed_json', files.filter(x => x.status !== 'removed' && x.filename.endsWith('.json')).map(x => x.filename).join('\n'));
+
+      - name: PR（main とのマージ結果）をチェックアウト
+        if: steps.gate.outputs.eligible == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - name: Node.js セットアップ
+        if: steps.gate.outputs.eligible == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 依存関係インストール
+        if: steps.gate.outputs.eligible == 'true'
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: 'true'
+        run: npm install --no-audit --no-fund --silent
+
+      - name: QA — 変更された JSON の構文
+        if: steps.gate.outputs.eligible == 'true'
+        env:
+          CHANGED_JSON: ${{ steps.gate.outputs.changed_json }}
+        run: |
+          printf '%s\n' "$CHANGED_JSON" | while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            node -e 'JSON.parse(require("fs").readFileSync(process.argv[1],"utf8"))' "$f" || { echo "JSON 構文エラー: $f"; exit 1; }
+          done
+
+      - name: QA — 単体・回帰テスト
+        if: steps.gate.outputs.eligible == 'true'
+        run: npm test
+
+      - name: QA — デザインシステム監査
+        if: steps.gate.outputs.eligible == 'true'
+        run: node scripts/audit_design_system.js --check --sample 200
+
+      - name: マージして Build & Deploy を起動
+        if: steps.gate.outputs.eligible == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const number = context.payload.pull_request.number;
+            const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: number });
+            if (pr.state !== 'open') { core.info('既にクローズ済み'); return; }
+            if (pr.draft) {
+              await github.graphql(`mutation($id: ID!) { markPullRequestReadyForReview(input: {pullRequestId: $id}) { clientMutationId } }`, { id: pr.node_id });
+            }
+            await github.rest.pulls.merge({ owner, repo, pull_number: number, merge_method: 'squash', sha: pr.head.sha });
+            await github.rest.issues.createComment({ owner, repo, issue_number: number,
+              body: '✅ QA（JSON構文・npm test・デザインシステム監査）を通過したため自動マージしました（routine-pr-automerge.yml）。' });
+            await github.rest.actions.createWorkflowDispatch({ owner, repo, workflow_id: 'build.yml', ref: 'main' });
+            core.info(`#${number} をマージし build.yml を起動しました`);
+
+      - name: QA 失敗を PR に記録
+        if: failure() && steps.gate.outputs.eligible == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const url = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
+            await github.rest.issues.createComment({ owner, repo, issue_number: context.payload.pull_request.number,
+              body: `❌ QA に失敗したため自動マージしませんでした。詳細: ${url}` });
+
+  sweep:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 滞留しているルーチンPRを Issue で知らせる／解消したら閉じる
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            let policy;
+            try {
+              const { data: f } = await github.rest.repos.getContent({ owner, repo, path: 'data/routine_pr_automerge_policy.json', ref: 'main' });
+              policy = JSON.parse(Buffer.from(f.content, 'base64').toString('utf8'));
+            } catch (e) {
+              core.setFailed(`data/routine_pr_automerge_policy.json を main から読めません: ${e.message}`);
+              return;
+            }
+            const label = 'routine-pr-automerge';
+            const prs = await github.paginate(github.rest.pulls.list, { owner, repo, state: 'open', base: 'main', per_page: 100 });
+            const now = Date.now();
+            const stale = prs.filter(p => policy.branch_prefixes.some(x => p.head.ref.startsWith(x)))
+              .filter(p => (now - new Date(p.created_at).getTime()) / 3600000 > policy.stale_hours);
+
+            const { data: issues } = await github.rest.issues.listForRepo({ owner, repo, state: 'open', labels: label, per_page: 20 });
+            const existing = issues.find(i => i.title.startsWith('🔴 ルーチンのPRが'));
+
+            if (stale.length === 0) {
+              if (existing) {
+                await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body: '✅ 滞留していたルーチンPRが無くなりました。自動クローズします。' });
+                await github.rest.issues.update({ owner, repo, issue_number: existing.number, state: 'closed' });
+              }
+              core.info('滞留なし');
+              return;
+            }
+
+            const lines = [];
+            lines.push(`定期ルーチンのPRが **${policy.stale_hours}時間以上** マージされずに残っています。`);
+            lines.push('自動マージは「QA失敗」「main との競合」「ワークフロー変更を含む」のいずれかで止まります。各PRのコメントに理由があります。');
+            lines.push('');
+            lines.push('## 滞留中のPR');
+            for (const p of stale) {
+              const h = Math.floor((now - new Date(p.created_at).getTime()) / 3600000);
+              lines.push(`- #${p.number} ${p.title}（${h}時間・\`${p.head.ref}\`）`);
+            }
+            lines.push('');
+            lines.push('## 対処');
+            lines.push('- 競合: 同じ課題の新しいPRがあれば古い方を閉じる。無ければブランチを main に追従させる（push で自動再判定）');
+            lines.push('- QA失敗: 失敗したチェックを直して push する');
+            lines.push('- ワークフロー変更を含む: 内容を確認して手動でマージする');
+            lines.push('');
+            lines.push('---');
+            lines.push('滞留が解消すると自動でクローズされます（routine-pr-automerge.yml）。');
+            const title = `🔴 ルーチンのPRが ${stale.length} 件マージされずに残っています`;
+            const body = lines.join('\n');
+            if (existing) {
+              await github.rest.issues.update({ owner, repo, issue_number: existing.number, title, body });
+            } else {
+              await github.rest.issues.create({ owner, repo, title, body, labels: [label] });
+            }
