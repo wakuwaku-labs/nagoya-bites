@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02T21:52:04.088Z",
+  "generatedAt": "2026-10-03T15:35:01.404Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -7,12 +7,12 @@
     "ctrFix": [
       {
         "query": "名古屋 1人飲み 男",
-        "impressions": 67,
-        "clicks": 3,
-        "position": 5.3,
-        "ctr": 4.48,
-        "expectedCtr": 5.7,
-        "missedClicks": 0.8
+        "impressions": 60,
+        "clicks": 2,
+        "position": 5.8,
+        "ctr": 3.33,
+        "expectedCtr": 5.2,
+        "missedClicks": 1.1
       }
     ],
     "ctrFixGeoless": [
@@ -27,12 +27,12 @@
       },
       {
         "query": "一人飲み",
-        "impressions": 76,
+        "impressions": 74,
         "clicks": 4,
         "position": 3.9,
-        "ctr": 5.26,
+        "ctr": 5.41,
         "expectedCtr": 8.3,
-        "missedClicks": 2.3
+        "missedClicks": 2.1
       }
     ],
     "rankPush": [
@@ -50,41 +50,41 @@
     "ctrFix": [
       {
         "page": "/stores/J004660861.html",
-        "impressions": 878,
+        "impressions": 871,
         "clicks": 19,
         "position": 6.1,
-        "ctr": 2.16,
+        "ctr": 2.18,
         "expectedCtr": 4.9,
-        "missedClicks": 24.1
+        "missedClicks": 23.7
       },
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 521,
+        "impressions": 502,
         "clicks": 5,
         "position": 8.3,
-        "ctr": 0.96,
+        "ctr": 1,
         "expectedCtr": 3.1,
-        "missedClicks": 11
+        "missedClicks": 10.4
       },
       {
         "page": "/stores/J004660223.html",
-        "impressions": 576,
+        "impressions": 555,
         "clicks": 12,
-        "position": 7.7,
-        "ctr": 2.08,
+        "position": 7.8,
+        "ctr": 2.16,
         "expectedCtr": 3.4,
-        "missedClicks": 7.8
+        "missedClicks": 6.7
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 3282,
+        "impressions": 3182,
         "clicks": 11,
-        "position": 25.4,
-        "ctr": 0.34,
-        "upsideClicks": 80.7
+        "position": 25.8,
+        "ctr": 0.35,
+        "upsideClicks": 78
       }
     ]
   },
