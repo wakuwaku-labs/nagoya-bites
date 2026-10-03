@@ -33,12 +33,14 @@ const CHECK = process.argv.includes('--check');
 const DRY = process.argv.includes('--dry-run');
 
 /**
- * 店名の markup は特集テンプレートに2系統ある（実測）。どちらも1行で完結している。
+ * 店名の markup は特集テンプレートに3系統ある（実測）。どちらも1行で完結している。
  *   A: <div class="store-name"><a …>店名</a></div>          … roster生成テンプレート（268件/29本）
  *   B: <span class="store-name">店名</span>（flexな .store-head の中） … 手羽先/ひつまぶし系（21件/3本）
+ *   C: <div class="shop-name">店名</div>                    … 旧テンプレート（262件/26本）
  */
 const STORE_NAME_RE = /<div class="store-name">(.*?)<\/div>/g;
 const STORE_NAME_SPAN_RE = /<span class="store-name">(.*?)<\/span>/g;
+const SHOP_NAME_RE = /<div class="shop-name">(.*?)<\/div>/g;
 const SECTION_LABEL_RE = /<p class="section-label">(.*?)<\/p>/g;
 
 /**
@@ -50,14 +52,17 @@ const SECTION_LABEL_RE = /<p class="section-label">(.*?)<\/p>/g;
 function patchCss(html) {
   let out = html;
 
-  // .store-name — margin-top を殺す（既存の margin-bottom / 無指定の双方に対応）
-  out = out.replace(/\.store-name\{([^}]*)\}/g, (m, decls) => {
-    if (/(^|;)\s*margin\s*:/.test(decls)) return m;            // 既に shorthand なら触らない
-    const mb = decls.match(/margin-bottom\s*:\s*([^;]+)/);
-    const cleaned = decls.replace(/margin-bottom\s*:[^;]+;?/, '').replace(/;;+/g, ';');
-    const margin = `margin:0 0 ${mb ? mb[1].trim() : '0'};`;
-    return `.store-name{${cleaned.replace(/;?$/, ';')}${margin}}`.replace(/\{;/, '{');
-  });
+  // .store-name / .shop-name — margin-top を殺す（既存の margin-bottom / 無指定の双方に対応）
+  for (const cls of ['store-name', 'shop-name']) {
+    const re = new RegExp(`\\.${cls}\\{([^}]*)\\}`, 'g');
+    out = out.replace(re, (m, decls) => {
+      if (/(^|;)\s*margin\s*:/.test(decls)) return m;          // 既に shorthand なら触らない
+      const mb = decls.match(/margin-bottom\s*:\s*([^;]+)/);
+      const cleaned = decls.replace(/margin-bottom\s*:[^;]+;?/, '').replace(/;;+/g, ';');
+      const margin = `margin:0 0 ${mb ? mb[1].trim() : '0'};`;
+      return `.${cls}{${cleaned.replace(/;?$/, ';')}${margin}}`.replace(/\{;/, '{');
+    });
+  }
 
   // .section-label — <p> は normal、<h2> は bold になるため font-weight を明示する
   out = out.replace(/\.section-label\{([^}]*)\}/g, (m, decls) => {
@@ -78,6 +83,10 @@ function migrate(html) {
   out = out.replace(STORE_NAME_SPAN_RE, (m, inner) => {
     storeNames++;
     return `<h3 class="store-name">${inner}</h3>`;
+  });
+  out = out.replace(SHOP_NAME_RE, (m, inner) => {
+    storeNames++;
+    return `<h3 class="shop-name">${inner}</h3>`;
   });
   out = out.replace(SECTION_LABEL_RE, (m, inner) => {
     sectionLabels++;
