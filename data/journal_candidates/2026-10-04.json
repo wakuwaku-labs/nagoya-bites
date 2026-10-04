@@ -1,0 +1,440 @@
+{
+  "date": "2026-10-04",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄のイタリアン「BRIANZA NAGOYA」は昼が本番｜平日3,800円と昼夜同額コース",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 92,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 25,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "イタリアン",
+          "feature": "features/nagoya-italian-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 23日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 2件 → 10"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (コース,予約,接待,デート,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 172字 +4",
+          "title 45字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「接待」+1",
+          "タイトルにジャンル語「イタリアン」+2"
+        ]
+      },
+      "gate_note": "92点（自動公開ライン 100点）。主な不足: recency -13 / search_intent -3 / writability -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "BRIANZA NAGOYA HAERAの個室8名・10名で組む栄の接待｜コース8,800円の段取り",
+      "verdict": "HOLD",
+      "total": 64,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "接待",
+          "feature": "features/nagoya-settai-secret.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 23日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (接待) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 123字 +4",
+          "title 50字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「接待」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "HAERA開業4ヶ月、4階レストランフロアの使い分け",
+      "verdict": "HOLD",
+      "total": 56,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 12,
+        "uniqueness": 5,
+        "brand_fit": 8,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 12日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (シーン) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 60字 +2",
+          "title 26字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "BRIANZA NAGOYA HAERA デートは窓際指定で",
+      "verdict": "HOLD",
+      "total": 51,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 13,
+        "uniqueness": 10,
+        "brand_fit": 12,
+        "writability": 6,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "デート",
+          "feature": "features/date.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 115日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (予約,デート) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 36字（短すぎ）→ +0",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「栄」+1",
+          "タイトルにシーン語「デート」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄 ちはら寿し｜おまかせ握り3,000円のカウンター8席",
+      "verdict": "HOLD",
+      "total": 40,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2866日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 63字 +2",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「カウンター」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "92点（自動公開ライン 100点）。主な不足: recency -13 / search_intent -3 / writability -2",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "栄のイタリアン「BRIANZA NAGOYA」は昼が本番｜平日3,800円と昼夜同額コース",
+      "lead_draft": "栄・HAERA4階のモダンイタリアン「BRIANZA NAGOYA HAERA」。開業から4ヶ月、コース表を並べると5,500円・8,800円・12,000円の3本が昼も夜も同じ値段で、平日昼だけ3,800円の5品がある。夜景を取るか、窓の光と価格を取るか。業界人の目で、コース価格の読み方と予約の取り方、接待・デートでのの使い分けを整理した。",
+      "angle": "昼夜同額コース＝夜は眺望と時間の値段。平日ランチ3,800円の位置づけ、ランチL.O.13:30の回転、個室8・10名の接待適性、デートは窓際指定の予約術",
+      "main_store": {
+        "name": "BRIANZA NAGOYA ブリアンツァナゴヤ",
+        "id": "J004612878",
+        "area": "栄",
+        "genre": "イタリアン"
+      },
+      "sources": [
+        {
+          "label": "@Press BRIANZA NAGOYA HAERA 東海初出店リリース",
+          "url": "https://www.atpress.ne.jp/news/598915",
+          "date": "2026-06-11"
+        },
+        {
+          "label": "ホットペッパー BRIANZA NAGOYA コース一覧（2026-10-04閲覧）",
+          "url": "https://www.hotpepper.jp/strJ004612878/course/",
+          "date": ""
+        },
+        {
+          "label": "シャチホコニュース ハエラ栄 全店舗の営業時間ガイド（2026-09-11更新）",
+          "url": "https://www.shachihoko.news/haera-sakae-open/",
+          "date": "2026-09-11"
+        },
+        {
+          "label": "note 船井香緒里 BRIANZA NAGOYA HAERA 東海初出店",
+          "url": "https://note.com/kaorifunai/n/n4fdf8f0effdc",
+          "date": "2026-06-15"
+        },
+        {
+          "label": "note やまと 栄・HAERAのレストラン完全攻略",
+          "url": "https://note.com/yamato1215/n/nbe1c1540656b",
+          "date": "2026-05-08"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "BRIANZA NAGOYA HAERAの個室8名・10名で組む栄の接待｜コース8,800円の段取り",
+      "lead_draft": "栄・HAERA4階のBRIANZA NAGOYA HAERAには8名と10名の個室がある。駅直結・全席禁煙・飲み放題なし。接待幹事が見るべきは、コース8,800円とワインの持ち方、そしてL.O.の早さだ。業界人の視点で、接待での組み方を整理する。",
+      "angle": "個室2室の接待運用、飲み放題なし＝ワインの決め方、L.O.21:30から逆算する開始時刻",
+      "main_store": {
+        "name": "BRIANZA NAGOYA ブリアンツァナゴヤ",
+        "id": "J004612878",
+        "area": "栄",
+        "genre": "イタリアン"
+      },
+      "sources": [
+        {
+          "label": "@Press リリース",
+          "url": "https://www.atpress.ne.jp/news/598915",
+          "date": "2026-06-11"
+        },
+        {
+          "label": "ホットペッパー 店舗ページ（2026-10-04閲覧）",
+          "url": "https://www.hotpepper.jp/strJ004612878/",
+          "date": ""
+        },
+        {
+          "label": "シャチホコニュース（2026-09-11更新）",
+          "url": "https://www.shachihoko.news/haera-sakae-open/",
+          "date": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "栄 ちはら寿し｜おまかせ握り3,000円のカウンター8席",
+      "lead_draft": "栄のホテル地下にある、カウンター8席の寿司店。おまかせ握り3,000円という価格の読み方と、日曜定休の意味を業界人視点で見る。",
+      "angle": "ホテル地下の寿司カウンター、日祝休み＝平日客中心",
+      "main_store": {
+        "name": "ちはら寿し",
+        "id": "",
+        "area": "栄",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "CLAP ちはら寿し",
+          "url": "https://clapltd.com/gourmet/chihara_sushi/",
+          "date": "2018-11-29"
+        },
+        {
+          "label": "ヒトサラ ちはら寿し",
+          "url": "https://hitosara.com/0032000151/",
+          "date": ""
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "today_one",
+      "title_draft": "HAERA開業4ヶ月、4階レストランフロアの使い分け",
+      "lead_draft": "HAERA開業から4ヶ月。4階のレストランフロアは11時から23時まで。BRIANZA・よろにく等の使い分けを整理する。",
+      "angle": "施設フロアのシーン別使い分け",
+      "main_store": {
+        "name": "BRIANZA NAGOYA ブリアンツァナゴヤ",
+        "id": "J004612878",
+        "area": "栄",
+        "genre": "イタリアン"
+      },
+      "sources": [
+        {
+          "label": "シャチホコニュース（2026-09-11更新）",
+          "url": "https://www.shachihoko.news/haera-sakae-open/",
+          "date": "2026-09-11"
+        },
+        {
+          "label": "ファッションプレス ハエラ特集",
+          "url": "https://www.fashion-press.net/news/147003",
+          "date": "2026-05-20"
+        },
+        {
+          "label": "tabemaro ハエラ全65店",
+          "url": "https://www.tabemaro.jp/column/haera/",
+          "date": "2026-09-22"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "BRIANZA NAGOYA HAERA デートは窓際指定で",
+      "lead_draft": "栄の夜景を望むHAERA4階のイタリアン。デートでの予約の取り方を整理。",
+      "angle": "デート・記念日の窓際予約",
+      "main_store": {
+        "name": "BRIANZA NAGOYA ブリアンツァナゴヤ",
+        "id": "J004612878",
+        "area": "栄",
+        "genre": "イタリアン"
+      },
+      "sources": [
+        {
+          "label": "@Press リリース",
+          "url": "https://www.atpress.ne.jp/news/598915",
+          "date": "2026-06-11"
+        },
+        {
+          "label": "note やまと",
+          "url": "https://note.com/yamato1215/n/nbe1c1540656b",
+          "date": "2026-05-08"
+        }
+      ]
+    }
+  ]
+}
