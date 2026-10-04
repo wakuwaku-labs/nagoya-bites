@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T20:38:31.217Z",
+  "generatedAt": "2026-10-04T00:20:39.844Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -7,12 +7,12 @@
     "ctrFix": [
       {
         "query": "名古屋 1人飲み 男",
-        "impressions": 60,
+        "impressions": 58,
         "clicks": 2,
         "position": 5.8,
-        "ctr": 3.33,
+        "ctr": 3.45,
         "expectedCtr": 5.2,
-        "missedClicks": 1.1
+        "missedClicks": 1
       }
     ],
     "ctrFixGeoless": [
@@ -27,12 +27,12 @@
       },
       {
         "query": "一人飲み",
-        "impressions": 74,
+        "impressions": 72,
         "clicks": 4,
         "position": 3.9,
-        "ctr": 5.41,
+        "ctr": 5.56,
         "expectedCtr": 8.3,
-        "missedClicks": 2.1
+        "missedClicks": 2
       }
     ],
     "rankPush": [
@@ -50,41 +50,50 @@
     "ctrFix": [
       {
         "page": "/stores/J004660861.html",
-        "impressions": 871,
+        "impressions": 864,
         "clicks": 19,
-        "position": 6.1,
-        "ctr": 2.18,
-        "expectedCtr": 4.9,
-        "missedClicks": 23.7
+        "position": 6,
+        "ctr": 2.2,
+        "expectedCtr": 5,
+        "missedClicks": 24.2
       },
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 502,
+        "impressions": 480,
         "clicks": 5,
         "position": 8.3,
-        "ctr": 1,
+        "ctr": 1.04,
         "expectedCtr": 3.1,
-        "missedClicks": 10.4
+        "missedClicks": 9.8
       },
       {
         "page": "/stores/J004660223.html",
-        "impressions": 555,
+        "impressions": 549,
         "clicks": 12,
         "position": 7.8,
-        "ctr": 2.16,
+        "ctr": 2.19,
         "expectedCtr": 3.4,
-        "missedClicks": 6.7
+        "missedClicks": 6.4
+      },
+      {
+        "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
+        "impressions": 317,
+        "clicks": 6,
+        "position": 8.7,
+        "ctr": 1.89,
+        "expectedCtr": 2.9,
+        "missedClicks": 3.3
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 3182,
+        "impressions": 3088,
         "clicks": 11,
-        "position": 25.8,
-        "ctr": 0.35,
-        "upsideClicks": 78
+        "position": 25.9,
+        "ctr": 0.36,
+        "upsideClicks": 75.3
       }
     ]
   },
@@ -93,7 +102,7 @@
     "queryCtrFix": 1,
     "queryCtrFixGeoless": 2,
     "queryRankPush": 1,
-    "pageCtrFix": 3,
+    "pageCtrFix": 4,
     "pageRankPush": 1,
     "topPageCtrFix": [
       "/stores/J004660861.html",
