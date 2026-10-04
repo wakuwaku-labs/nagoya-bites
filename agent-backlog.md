@@ -6,6 +6,27 @@
 
 ---
 
+### [SEO-114] ジャーナル末尾の「エリア×ジャンル」導線が記事のエリアを無視している（栄の記事から名駅・緑区のラーメン一覧へ送っている）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-04
+- **category**: SEO
+- **owner**: Builder
+- **source**: SEOアドバイス(LINE) 2026-10-03 原文「人気ページ1位は日次記事。👉 2026-09-29-sakae-tsukemen-tou-counter12 の記事下部に、関連性の高い『栄』や『つけ麺』の features/特集記事への導線をテキストリンクで3つ追記する」— 1記事への手書き追記ではなく、調査で判明した構造欠陥に振替採用
+- **調査（2026-10-04・検証できる事実）**:
+  - 閲覧1位の `journal/2026-09-29-sakae-tsukemen-tou-counter12.html`（栄の記事）の関連ブロックが出しているハブは `stores/area/meieki/ramen.html` と `stores/area/midori-tempaku/ramen.html`。栄のハブ（`stores/area/sakae/…`）もエリア特集 `features/sakae.html` も出ていない
+  - 原因: `scripts/refresh_journal_related.js` の `buildRelatedHtml()` が、タイトルから一致した**ジャンル特集**の `HUB_MAP`（`scripts/lib/hub_link_finder.js` の `buildFeatureHubMap`＝特集単位で固定の上位ハブ）をそのまま流しており、**記事自体のエリアを一切見ていない**
+  - 同型の例（直近40本の目視）: `2026-10-01-sakae-yabamisen-…`→meieki/midori-tempaku、`2026-09-22-sakae-sawee-…`→meieki/yabacho-osu、`2026-09-26-sakae-chanko-…`→meieki/nishiki-fushimi、`2026-10-03-fushimi-jardin-…`→chikusa-imaike/yabacho-osu
+- **brand-filter**: ✅ 適合 — Moat「構造化DB×特集×日次ジャーナルの三層編集」の内部回遊を、記事のエリア（slug・本文の店舗エリアという検証できる事実）で正しくつなぎ直す。現状は読者を記事と無関係な地域の一覧へ送っており、回遊以前に「名古屋×シーン×目利き」の文脈を壊している。順位操作・広告導線ではない
+- **acceptance**:
+  1. 記事のエリアを決定的に推定する（優先: 記事が扱う店舗の `data/stores.json` のエリア → slug 先頭語 → タイトル）。照合語は `data/area_genre_pages_policy.json` の `areas[].match` を正本にし、スクリプトに語彙を増やさない
+  2. 関連ブロックのハブは「記事エリア×一致ジャンル」の実在ハブ（manifest status=live）を最優先、無ければ記事エリアのエリア特集（`areas[].feature`）、どちらも無いときだけ従来の特集単位ハブに落とす。**記事エリア外のハブを無言で並べない**
+  3. エリアが特定できない記事（広域・郊外）は従来挙動のまま（退行なし）
+  4. `node scripts/refresh_journal_related.js` を全記事に再適用し、`2026-09-29-sakae-tsukemen-tou-counter12` が `stores/area/sakae/…`（または `features/sakae.html`）を出すこと。不一致件数の before/after を記録
+  5. 効果は `internal_link_click`（block:journal_hub）と pages/session の前後比で 2〜3週後に判定
+
+---
+
 ### [SEO-111] エリア×ジャンルページ（SEO-094・約690件）が毎晩、本番 sitemap.xml から消されていた
 
 - **priority**: P1 → **status**: done

@@ -3530,6 +3530,66 @@
       "brand_reason": "重複。「名古屋駅 一人飲み」の受け皿は features/meieki-hitori-nomi.html が既存（新規作成は自己カニバリになる）、トップ導線は SEO-109（done・一人飲みチップ）、特集強化は SEO-087（in_progress・GSC前後比待ち）に集約済み。09-28/09-29 にも同旨を重複判定",
       "category": null,
       "fingerprint": "2d97268ecbde1f1a"
+    },
+    {
+      "id": null,
+      "date": "2026-10-02",
+      "source": "line-daily",
+      "advice": "🔴 予約ボタンクリックが0回です。👉 トップページ(index.html)の全店舗詳細モーダルとjournal/記事のcta_reserveボタンの視認性を高め、予約への導線を強化しましょう。特に人気ページ「nagoya-solo-dining」に掲載店舗の予約ボタンを最優先で改善。",
+      "verdict": "rejected",
+      "brand_reason": "却下（前提が単日ノイズ・制約10）。当日の店舗詳細を開いた回数は2回＝予約ボタンが見える分母が2で、0クリックは視認性について何も示さない（09-23/09-24/09-26/09-29/09-30 に同型を同理由で却下済み）。予約・電話導線は SEO-105（done）、計測の分子は SEO-089 で整備済み",
+      "category": null,
+      "fingerprint": "c98fb7671396ca5f"
+    },
+    {
+      "id": null,
+      "date": "2026-10-02",
+      "source": "line-daily",
+      "advice": "🟡 検索順位10位前後のキーワードが多数。👉「青ノ月」「六六堂 栄」など8〜9位の店舗名KWで stores/ 静的店舗ページのタイトルタグと見出しに店舗名を正確に記載し、Googleマップ導線(cta_gmap_click)を強調。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-29 に同主旨を判定済み）。単一店名のナビゲーショナルクエリは公式・Googleマップに譲る Strategic Skip の面。静的店舗ページは gen-store-pages.js が店名を title/h1 に既に出力しており、Googleマップ導線も SEO-105 で整備済み",
+      "category": null,
+      "fingerprint": "6a51fe8b4d2ea5f6"
+    },
+    {
+      "id": null,
+      "date": "2026-10-02",
+      "source": "line-daily",
+      "advice": "🟢「名古屋駅 一人飲み」が平均10.2位。👉 features/に「名古屋駅 一人飲み」特化の特集を新規作成し、nagoya-solo-dining から内部リンク。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-28/09-29/09-30 に判定済み）。受け皿の features/meieki-hitori-nomi.html が既存で、新規作成は自己カニバリになる。トップ導線は SEO-109（done）、特集強化は SEO-087 に集約済み",
+      "category": null,
+      "fingerprint": "cf5d67cb9e25c925"
+    },
+    {
+      "id": null,
+      "date": "2026-10-03",
+      "source": "line-daily",
+      "advice": "🟢 予約クリック率3.9%は目標達成。しかし予約ボタンクリックは2回と絶対数が少ない。👉 index.html の全店舗一覧で予約ボタンの色をサイトのキーカラーである赤色に変更する。",
+      "verdict": "rejected",
+      "brand_reason": "却下（前提が自己矛盾かつ単日ノイズ・制約10／制約12）。助言自身が目標達成を認めており、2回という母数では色の効果を判定できない。ボタン色の直書き変更はデザインシステム（DSN-001・トークン経由のみ）の管理下で、単日指標を根拠にした変更はしない。予約導線は SEO-105/SEO-089 で整備済み",
+      "category": null,
+      "fingerprint": "2c2f8c8a23fb22da"
+    },
+    {
+      "id": "SEO-114",
+      "date": "2026-10-03",
+      "source": "line-daily",
+      "advice": "🟡 1訪問あたり閲覧1.3ページで回遊が少ない。人気ページ1位は日次記事。👉 2026-09-29-sakae-tsukemen-tou-counter12 の記事下部に、関連性の高い「栄」や「つけ麺」のfeatures/特集記事への導線をテキストリンクで3つ追記する。",
+      "verdict": "adopted",
+      "brand_reason": "振替採用。調査で、ジャーナル関連ブロックのエリア×ジャンルハブが記事のエリアを無視し特集単位の固定ハブを流している構造欠陥を確認（栄の記事→名駅・緑区のラーメン一覧）。1記事の手書き追記ではなく refresh_journal_related.js を記事エリア優先に直す。三層編集の内部回遊を検証可能な事実でつなぎ直す施策",
+      "category": "SEO",
+      "fingerprint": "921ab2794b131b84"
+    },
+    {
+      "id": null,
+      "date": "2026-10-03",
+      "source": "line-daily",
+      "advice": "🟢 検索流入比率71%。Bing検索がGoogle検索に迫る。👉「名古屋駅 一人飲み」を意識し、nagoya-solo-dining の記事冒頭に「名古屋駅で一人飲みを楽しむなら」というリード文を追記。",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-28〜09-30 に同主旨を判定済み）。名駅×一人飲みの受け皿は features/meieki-hitori-nomi.html で、市内全域の solo-dining 冒頭を名駅に寄せると自己カニバリ。特集強化は SEO-087 に集約済み",
+      "category": null,
+      "fingerprint": "fc24aef966ac18aa"
     }
   ]
 }
