@@ -2,11 +2,12 @@
   "version": 1,
   "_comment": "GAS 反映状況の痕跡。triage ルーチンが毎回（レポートが無い日も）書き、コミットで Mac の外＝GitHub へ出す。gas-deploy-watchdog.yml がこれを読み、旧コードのままの状態が続いたら Issue を起票する（＝オーナーにメール）。判定は data/gas_deploy_policy.json の痕跡だけで行い、自己申告は使わない（CLAUDE.md 制約10）。",
   "last_run": {
-    "date": "2026-10-01",
-    "recorded_at": "2026-10-01T23:45:52.221Z",
-    "status": "no_report",
-    "reason": "2026-10-01分の日次レポートが Gmail に無い（08:44 JST時点・件名検索/in:anywhere/ゴミ箱含むsweepとも0件。GASの定時08:07送信の未発火を疑う。09-08以来23日ぶりの欠落・週次09-27〜10-03は10-05着予定で未着は正常）",
-    "verdict": null
+    "date": "2026-10-03",
+    "recorded_at": "2026-10-04T23:45:09.932Z",
+    "status": "ok",
+    "reason": null,
+    "verdict": "indeterminate",
+    "missing_fixes": []
   },
   "observations": [
     {
@@ -1075,6 +1076,30 @@
       },
       "numeric_reference_skipped": null,
       "recorded_at": "2026-10-01T05:10:03.350Z"
+    },
+    {
+      "date": "2026-10-03",
+      "kind": "weekly",
+      "verdict": "indeterminate",
+      "missing_fixes": [],
+      "evidence": [],
+      "numeric_reference": {
+        "date": "2026-10-03",
+        "bounceRate": 0.365,
+        "sessions": 52
+      },
+      "numeric_reference_skipped": null,
+      "recorded_at": "2026-10-04T23:45:09.921Z"
+    },
+    {
+      "date": "2026-10-04",
+      "kind": "daily",
+      "verdict": "indeterminate",
+      "missing_fixes": [],
+      "evidence": [],
+      "numeric_reference": null,
+      "numeric_reference_skipped": "参照値の日付 2026-10-03 が レポートが名乗る対象日 2026-10-04 と一致しないため数値判定をしない",
+      "recorded_at": "2026-10-04T23:45:09.830Z"
     }
   ],
   "deploys": [

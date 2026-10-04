@@ -3590,6 +3590,66 @@
       "brand_reason": "重複（09-28〜09-30 に同主旨を判定済み）。名駅×一人飲みの受け皿は features/meieki-hitori-nomi.html で、市内全域の solo-dining 冒頭を名駅に寄せると自己カニバリ。特集強化は SEO-087 に集約済み",
       "category": null,
       "fingerprint": "fc24aef966ac18aa"
+    },
+    {
+      "id": null,
+      "date": "2026-10-05",
+      "source": "line-daily",
+      "advice": "予約クリック率が14.0%と高い反面、電話ボタンクリックは0回。index.htmlおよびstores/の全店舗ページで電話ボタンを予約ボタンの隣に移動し視認性を高める",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-105 done で静的店舗ページの電話CTA追加済み・モーダルは placeId 保有店に電話ボタンを既に描画／09-24・09-27・09-29 に同主旨を判定済み）。前提の電話0回も当日の店舗詳細6回という母数では視認性の証拠にならない（制約10）。",
+      "category": null,
+      "fingerprint": "09159549a555970c"
+    },
+    {
+      "id": null,
+      "date": "2026-10-05",
+      "source": "line-daily",
+      "advice": "SNS流入0%。features/のデート特集の見出しと写真を使い「名古屋 デート ディナー」を意識したSNS投稿を今日作成・発信する",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-25〜09-27 に判定済み・SEO-093/098/101 に集約）。SNS投稿はリポジトリ外運用でサイト/SEOの実装課題ではなく、SNS原稿自動生成も 2026-09-05 から意図的に停止中。",
+      "category": null,
+      "fingerprint": "83c5aa264a2f6453"
+    },
+    {
+      "id": null,
+      "date": "2026-10-05",
+      "source": "line-daily",
+      "advice": "nagoya-solo-dining の記事タイトルに「名古屋駅」を追加し「名古屋駅 一人飲み」の検索流入を強化",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-29/09-30/10-02/10-03 に同主旨を判定済み）。名駅×一人飲みの受け皿は features/meieki-hitori-nomi.html が既存で、solo-dining のタイトルへ名古屋駅を足すと自己カニバリになる。導線は SEO-109 でトップに設置済み。",
+      "category": null,
+      "fingerprint": "8e5b76ccd440e41b"
+    },
+    {
+      "id": null,
+      "date": "2026-10-05",
+      "source": "line-weekly",
+      "advice": "予約クリック率6.4%は目安超えだが、予約ボタンを店舗詳細モーダル・特集・日次記事で目立たせ視認性を高める",
+      "verdict": "rejected",
+      "brand_reason": "却下（前提が自己矛盾かつ週20クリックの小母数・制約10／制約12）。助言自身が目安3%の2倍超を認めており、改善すべき欠陥の根拠がない。予約CTAの視認性・色は10-03 に同旨を却下済みで、デザインシステム（制約12）外の個別強調は行わない。",
+      "category": null,
+      "fingerprint": "2a012cdb2d65e65b"
+    },
+    {
+      "id": null,
+      "date": "2026-10-05",
+      "source": "line-weekly",
+      "advice": "「名古屋 デート ディナー」が平均13.8位。features/に同名のデート特化特集を新規作成し予約導線を設置",
+      "verdict": "rejected",
+      "brand_reason": "却下。受け皿の features/date.html（名古屋 デートディナーおすすめ10選）が既存で、GSC上も同ページが11.5位・305表示。同KWの新規特集は自己カニバリで順位を割る。date.html の順位押上げは既存の特集KW強化ワークストリーム（discovery share 29.7%まで改善・SEO-043系）で追跡中のため新規起票しない。",
+      "category": null,
+      "fingerprint": "639d5853d71c0d04"
+    },
+    {
+      "id": null,
+      "date": "2026-10-05",
+      "source": "line-weekly",
+      "advice": "PCアクセス61%・スマホ39%。index.htmlと人気記事のスマホ表示を再確認し予約ボタン・モーダル・フィルタの使い勝手を検証",
+      "verdict": "rejected",
+      "brand_reason": "却下（前提が日次と矛盾・具体的欠陥なしの汎用論）。同日の日次レポートはスマホ65%/PC35%と逆で、週次の端末比は検算できない（制約10）。スマホ検証は 09-10 に同旨を却下済みで、モバイルUIは SEO-049 等で実測済み。",
+      "category": null,
+      "fingerprint": "9cbd491cb16fd711"
     }
   ]
 }
