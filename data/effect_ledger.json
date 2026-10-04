@@ -143,6 +143,16 @@
           }
         },
         "verdict": "目標150クリック達成（199クリック）。solo_diningが53→184（+247%）・date 0→10・kaoawase 3→5。banquet/private-room/settai-secretは依然topPages(15件)圏外＝表示回数が閾値未満のまま。見出し階層単独では大半のシーンKWは動かなかった（acceptance④の訂正に記録済み）。banquetはmonthlyScenes追加（2026-09-23）の効果測定は4週間後に要確認"
+      },
+      "followup2": {
+        "date": "2026-10-04",
+        "note": "施策完了後47日値（gsc_query_intent.js・topPages 300件対象）。2026-10-02実測の discovery_share_of_impressions が 29.7%（施策前 2.2% → 13.5倍）に到達。acceptance⑤（effect_ledger記録）完了。banquet.html はこの時点もトップページ圏外継続（2026-10-30 に再確認予定・パッシブ観測のみ）",
+        "metrics": {
+          "features_total": {
+            "discovery_share_of_impressions": 0.297
+          }
+        },
+        "verdict": "目標 discovery share 10% を 29.7% で大幅達成。h3見出し適用（2026-08-17〜2026-10-02）＋monthlyScenes banquet追加（2026-09-23）の複合効果。banquet 単体の順位改善は未確認（2026-10-30まで受動観測）"
       }
     },
     "DSN-003": {

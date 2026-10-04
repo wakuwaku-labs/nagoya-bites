@@ -67,11 +67,13 @@
 
 ### [SEO-112] GSC の観測範囲が「上位500ページ」で切れており、表示回数の約半分と新設ページ・トップページのクエリが見えていなかった
 
-- **priority**: P2 → **status**: in_progress（取得側は実装済み。次回の日次ビルドで data/gsc_metrics.json に pageTypes / homeQueries が出ることを確認したら done）
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-10-04
 - **detected**: 2026-09-28
 - **category**: SEO（計測）
 - **owner**: Builder
 - **source**: オーナー「SEOがまた伸びてない」（2026-09-28）を受けた停滞調査（[[SEO-111]] と同じ調査）
+- **2026-10-04 完了確認**: `data/gsc_metrics.json` (generatedAt: 2026-10-03T20:38:31Z) で `pageTypes` / `homeQueries` の出力を確認。`pagesFetched: 3156`（旧上限500の6.3倍）。`pageTypes.area_hub` = 27ページ・79表示・0クリック（新設ページとして想定の立ち上がり早期）。`homeQueries` = 上位クエリは指名検索（店名系）→ **Strategic Skip が適切と判定**（discovery 語が弱いのでトップの title/meta 変更は効果薄）。`nextStep` は SEO-094（area_hub 表示回数が2〜4週後に増加するか継続観測）
 - **実測（2026-09-28・data/gsc_metrics.json 28日窓）**:
   - `pages` は上位500行で切っており最小表示が1回まで下がっている。上位500ページの表示合計は約2.37万回で、サイト全体 46,553回の**約半分**。残り約2.3万回は500位より下のページに出ていて観測不能だった
   - そのため新設の `stores/area/`（約690件・[[SEO-094]]）が表示を得始めても見えない
@@ -130,12 +132,16 @@
 
 ### [SEO-107] `gsc_opportunities.json` の実データ機会2件 — ①「レビュー」検索785表示に店舗ページのtitle/descriptionが一語も応えていない ②1桁順位なのにCTRがほぼ0%の店（評価データそのものが欠落している疑い）
 
-- **priority**: P2 → **status**: in_progress（①反映済み。②は`GOOGLE_MAPS_API_KEY`が本環境に無く未着手）
+- **priority**: P2 → **status**: done
+- **resolved**: 2026-10-04
 - **detected**: 2026-09-22
 - **category**: SEO
 - **owner**: Builder / DataKeeper
 - **2026-09-22 進捗**: acceptance②（`gen-store-pages.js` `buildDescription()`のPart3を「口コミ${reviews}件」→「口コミレビュー${reviews}件」に変更）を実装（`npm test` 211/211 pass）。[[#290]]でマージ・次回日次buildで`stores/*.html`へ反映される想定
 - **2026-09-23 検証**: マージ後のbuild（`0c7e0416`起点）で `stores/J004678178.html` の description に実際に「口コミレビュー13件」が反映されていることを `git show origin/main:stores/J004678178.html` で確認済み（sitemap.xmlの副作用も無し＝正しい実行順で反映された）。acceptance③（次回GSC更新での該当クエリ前後比較）はGSCデータの反映を待つため数日〜1週間後に再評価。acceptance④⑤（センチ伏見店=`stores/J004660861.html`の評価データ再取得・検証）は本環境にAPIキーが無いため未着手のまま
+- **2026-10-04 完了記録**:
+  - **① CTR対照実験（acceptance③）**: `data/gsc_metrics.json` 2026-10-03の28日窓で「焼肉 三郎 原店 名古屋市 レビュー」を照合 → **785表示/7クリック/CTR0.89% → 271表示/1クリック/CTR0.37%**（表示自体が1/3に落ちていCTRも悪化）。acceptance③の定義「改善しなければ『レビューという語の有無は効かない』という反証結果として記録し、それ以上は追わない」に基づき、施策の効果なしと判断。それ以上は追わない（取り繕わない）
+  - **② sampling（acceptance⑤）**: GOOGLE_MAPS_API_KEYが本環境に無いため acceptance④は省略。GSC4〜7位のストアページ34件を走査 → **32/34件（94%）に Google評価データなし**（評価データを持つのはJ004677008=3.9・J003893387のみ）。仮説「評価データの有無がCTR差の説明変数」は「同順位帯のほぼ全店が評価なし」という実測で否定された。acceptance⑤の定義「有意差が確認できない場合は原因不明のまま記録し、取り繕った修正はしない」に基づき完了
 - **source**: オーナー「閲覧数が全く増えてない、原因は？」への回答調査（Orchestrator診断セッション）。`data/gsc_opportunities.json` の `byPage.ctrFix` / `byQuery.ctrFix` / `byPage.rankPush` から、既存チケットで未カバーの2件を抽出
 - **brand-filter**: ✅ 適合 — どちらも「検索者が実際に求めている情報（レビュー・評価）を、うちのページが答えられていない」という一次データに基づく改善。順位操作・広告・文言の煽りは一切伴わない（SEO-095/SEO-050と同型の是正）
 
@@ -3180,7 +3186,8 @@ URLが絶対か / PNGが実在するか。エージェントの自己申告値�
 ---
 ### [SEO-060] シーンKW 15本中14本が2ページ目以降で埋もれている（discovery 表示シェアが 2.2% しかない構造原因）
 
-- **priority**: P1 → **status**: in_progress（2026-09-23再オープン。実装自体はdoneだったが4週間後効果確認で大半のシーンが未改善と判明したため）
+- **priority**: P1 → **status**: done
+- **resolved**: 2026-10-04
 - **detected**: 2026-08-17（オーナーの「数字が落ちている」という問いに対する GSC 6ヶ月エクスポートの分解から判明）
 - **category**: SEO / コンテンツ
 - **owner**: Marketer（KW設計）/ Editor（本文拡充）/ Builder（内部リンク）
@@ -6500,6 +6507,9 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-10-04 | Orchestrator(routine) | SEO-112 done化: pagesFetched=3156・pageTypes/homeQueries実在確認（2026-10-03 GSC）。homeQueriesは指名検索→Strategic Skip | ✅ backlog更新 |
+| 2026-10-04 | Orchestrator(routine) | SEO-107 done化: ①CTR 0.89%→0.37%（改善なし・acceptance③記録して追わない）。⑤sampling 32/34件評価データなし・仮説否定（acceptance⑤記録して取り繕わない） | ✅ backlog更新 |
+| 2026-10-04 | Orchestrator(routine) | SEO-060 done化: discovery_share 2.2%→29.7%（目標10%大幅超過）・effect_ledger followup2追記。banquet.html=2026-10-30受動観測継続 | ✅ backlog+ledger更新 |
 | 2026-09-23 | Builder(routine) | ISSUE-132 acceptance④: scripts/audit_duplicate_stores.js 新設・build.yml に CI 重複検知ステップ追加。確定重複58件ベースライン保存（名前一致20件＋placeId+namesMatch 38件）。統合操作（acceptance②③）は API キー必要のため別セッションへ | ✅ commit本コミット |
 | 2026-10-02 | Orchestrator(routine) | ISSUE-086: 定点観測（snapshots≥2=495件/9.2%・4週連続停滞、tier移動4,350件/目安496件）。activate引き続き保留 | ✅ backlog更新 |
 | 2026-10-02 | Orchestrator(routine) | SEO-060: shop-name旧テンプレ(26本/262件)へh3適用完了—migrate_feature_headings.js拡張（3系統目div.shop-name追加）。discovery share 29.7%確認 | ✅ commit本コミット |
