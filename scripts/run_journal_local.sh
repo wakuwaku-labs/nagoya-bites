@@ -287,7 +287,15 @@ git checkout main >>"$LOG" 2>&1 || die "git checkout main 失敗"
 # 既知のビルド副産物（cross_check_flags.json / crosscheck.json）は claude/build の度に変動するため、
 # pull 前に origin/main の版へ強制リセットして恒常的な UU 発生を断つ。
 # （これらは build 系スクリプトが必要時に再生成するため、ローカル差分を捨ててOK）
-git fetch origin main >>"$LOG" 2>&1 || die "git fetch origin main 失敗"
+# スリープ明け直後の起動ではネットワークがまだ繋がっておらず ssh が即失敗する
+# （2026-10-04 事故: 13:27 の起動で fetch 1回失敗→その日は公開ゼロ）。待って再試行する。
+FETCH_OK=0
+for i in 1 2 3 4 5 6; do
+  if git fetch origin main >>"$LOG" 2>&1; then FETCH_OK=1; break; fi
+  log "git fetch 失敗（${i}/6）。ネットワーク復帰を待って30秒後に再試行します。"
+  sleep 30
+done
+[ "$FETCH_OK" = "1" ] || die "git fetch origin main 失敗（6回・約3分再試行してもネットワークに繋がらず）"
 for f in data/cross_check_flags.json data/crosscheck.json; do
   if [ -f "$f" ] && ! git diff --quiet -- "$f"; then
     log "ビルド副産物 ${f} のローカル差分を捨てて origin/main の版にリセット"
