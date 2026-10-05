@@ -1,4 +1,4 @@
-status: in_progress
+status: done
 
 # 目的
 Nagoya Bitesの課題管理をNotionからLinearへ移行し、Linearを唯一の作業トラッカーにする。
