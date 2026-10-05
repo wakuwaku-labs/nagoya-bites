@@ -258,9 +258,9 @@
   3. `node scripts/sync_backlog_to_linear.js` の dry-run で、新規分の `missingFields` が空になる。
   4. 既存の未完了 Issue（37件）を Project に紐づける。セッションブリーフィングの「未設定: Project」が 0 になる。
 
-### [ISSUE-142] 父の日特集の「寿司・割烹」「うなぎ」「カジュアル」セクションに焼肉店が並んでいる状態を、見出しと中身が一致する掲載に直す
+### [ISSUE-142] 父の日特集の「寿司・割烹」「うなぎ」「カジュアル」セクションに焼肉店が並んでいる状態を、見出しと中身が一致する掲載に直す ✅
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-06
 - **category**: content / trust
 - **owner**: Editor
@@ -271,6 +271,12 @@
   3. シーズン外（父の日は6月）のため、2027年版として作り直すか現行ページを直すかを Editor が判断し、判断を本文に書く
   4. `npm test`・`node scripts/audit_feature_stores.js`・`node scripts/audit_design_system.js --check` を通す
 - **関連**: [[ISSUE-141]]（発見元）／[[ISSUE-139]]
+- **結果（2026-10-06）**:
+  - 選定: 既存ロスター（`scripts/refresh_feature_rosters.js` の `buildPool`＝営業中・名古屋・写真あり・Google評価3.9以上・バランス型スコア）をそのまま使い、見出しの業態で絞って上位3軒ずつ。寿司・うなぎは該当店の多くが Places 由来でホットペッパーID を持たず、ロスターの ID ゲートでは0件になるため、このゲートだけ外した（店舗ページ `stores/store-*.html` は生成済みで実在確認済み）。客投稿写真（places-user）の店は載せない。同じスラグを共有する重複行（炭焼 うな富士 本店ほか）は避けた
+  - 寿司・割烹（焼き肉 夏恋・京都焼肉なおき → 鮨 銀座おのでら 名古屋店・鮨てんび・鮨 土方）／うなぎ（焼肉まる源 → 那古野 しば福や 名駅店・うなぎのしろむら 泉店・炭焼うな富士 名古屋駅太閤口店）／カジュアル（和牛やきにく 満開・前沢牛舎 伏見屋・GYUJIN 名駅本店 → 中国厨房 YUAN・おやじダイニング はなれ・屋台屋 民食天成。おすすめポイントに家族層の記載がある店）
+  - 紹介文は stores.json の「おすすめポイント」（DB の事実）のみ。写真は DB の写真URLのみ。件数 16選 → 19選（title/description/og/JSON-LD/h1/hero-meta/本文、`features/index.html`・`data/featured.json`・`llms.txt`・`page-names.json`）
+  - 判断（acceptance③）: 2027年版は新規作成せず現行ページを直す。URL・被リンク・評価を引き継げ、来年は日付と店の更新だけで済むため。ただし本文の日付（2026年6月21日）は2026年版のまま
+  - 確認: `npm test` 279件通過・`audit_feature_stores.js` 実在不明0/リンク切れ0・`audit_design_system.js --check` 違反0
 
 ### [ISSUE-141] 特集の見出し「N選」と実際の掲載数のずれ7件を実数に揃え、ロスターが複数セクション特集を壊す不具合と再発経路を塞ぐ ✅
 
