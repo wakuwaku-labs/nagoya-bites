@@ -1,0 +1,298 @@
+{
+  "date": "2026-10-05",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "熱田区に札幌味噌ラーメンの新店が2軒——金山『札幌らーめん 戸倉』と神宮前『サッポロラーメン専門 荒畑』を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "出典が偏っている媒体 jouhou.nagoya は独立ドメインに数えない（別媒体・一次発表で裏を取ると加点）",
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 5件 (新店,比較,予約,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 184字 +4",
+          "title 59字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -5 / brand_fit -4 / writability -3"
+    },
+    {
+      "id": "c2",
+      "title_draft": "金山の札幌らーめん 戸倉は現金のみ・予約不可、昼夜の2部制を業界人が読む",
+      "verdict": "HOLD",
+      "total": 76,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 17,
+        "uniqueness": 5,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 4日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 1件 (シーン) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 85字 +4",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "サッポロラーメン専門 荒畑が神宮前に2店目、9席カウンターの業態設計を読む",
+      "verdict": "HOLD",
+      "total": 61,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 6,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "出典が偏っている媒体 jouhou.nagoya は独立ドメインに数えない（別媒体・一次発表で裏を取ると加点）",
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(weekly_digest) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 59字 +2",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「カウンター」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -5 / brand_fit -4 / writability -3",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "weekly_digest",
+      "title_draft": "熱田区に札幌味噌ラーメンの新店が2軒——金山『札幌らーめん 戸倉』と神宮前『サッポロラーメン専門 荒畑』を業界人が読む",
+      "lead_draft": "9月14日に金山の裏手へ『札幌らーめん 戸倉』、10月2日に神宮前へ『サッポロラーメン専門 荒畑』。どちらも熱田区で、どちらも札幌の味噌ラーメンを名乗る新店だ。名古屋は台湾ラーメンと味噌煮込みの街で、本格の札幌味噌を正面から出す店は少なかった。同じ区の1.5km圏で並んだ2軒の価格設計・席数・営業時間・支払いを並べ、一人ランチと夜の一杯でどう使い分けるかを整理する。",
+      "angle": "熱田区の同ジャンル新店2軒の比較。味噌ラーメン950円台と1000円台の価格設計、カウンター9席と約20席の席数と回転、昼夜の営業時間、現金のみ支払いと予約不可、一人ランチ向きか夜の締めか、というシーン適性を業界人が読む",
+      "main_store": {
+        "name": "札幌らーめん 戸倉",
+        "id": "",
+        "area": "金山",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "X 名古屋グルメ探偵 アスカイ 札幌らーめん 戸倉 訪問投稿",
+          "url": "https://x.com/gourmet_nagoya/status/2105639153635569770",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "名古屋情報通 サッポロラーメン専門 荒畑 神宮前",
+          "url": "https://jouhou.nagoya/sappororamen-arahata-jingumae/",
+          "date": "2026-10-03"
+        },
+        {
+          "label": "食べログ 札幌らーめん 戸倉",
+          "url": "https://tabelog.com/aichi/A2301/A230105/23097867/"
+        },
+        {
+          "label": "ラーメン荒畑（ZERO CO., LTD. 公式サイト）",
+          "url": "https://ramen-zerogroup.ne.jp/brand04/shop/"
+        },
+        {
+          "label": "ブログ康復路 サッポロラーメン専門 荒畑",
+          "url": "https://kang-fu-lu.com/2026/07/13/noodles_nagoya_tenpakuku_sapporo-arahata/",
+          "date": "2026-07-13"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "weekly_digest",
+      "title_draft": "金山の札幌らーめん 戸倉は現金のみ・予約不可、昼夜の2部制を業界人が読む",
+      "lead_draft": "9月14日開店の札幌らーめん 戸倉。昼11時から15時、夜18時から22時の2部制で、日曜祝日が定休。支払いは現金のみ。小さな店がこの設計を選ぶ理由を価格と席数から読む。",
+      "angle": "戸倉1店の価格設計と席数、昼夜2部制、現金のみ、一人ランチのシーン適性",
+      "main_store": {
+        "name": "札幌らーめん 戸倉",
+        "id": "",
+        "area": "金山",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "X 名古屋グルメ探偵 アスカイ",
+          "url": "https://x.com/gourmet_nagoya/status/2105639153635569770",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "食べログ 札幌らーめん 戸倉",
+          "url": "https://tabelog.com/aichi/A2301/A230105/23097867/"
+        },
+        {
+          "label": "ラーメンデイズ 札幌らーめん 戸倉",
+          "url": "https://ramendays.jp/restaurant/929705d0-cb9f-4af5-b8c1-247e801a52e9"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c3",
+      "theme": "weekly_digest",
+      "title_draft": "サッポロラーメン専門 荒畑が神宮前に2店目、9席カウンターの業態設計を読む",
+      "lead_draft": "7月に塩釜口で始まった新業態が、10月2日に神宮前へ。9席のカウンター、950円の味噌。拡大の設計を業界人の目で読む。",
+      "angle": "荒畑の新業態の席数9席・950円・バター追加の客単価設計、昼夜営業時間、拡大戦略",
+      "main_store": {
+        "name": "サッポロラーメン専門 荒畑",
+        "id": "",
+        "area": "神宮前",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 荒畑 神宮前",
+          "url": "https://jouhou.nagoya/sappororamen-arahata-jingumae/",
+          "date": "2026-10-03"
+        },
+        {
+          "label": "ラーメン荒畑 公式",
+          "url": "https://ramen-zerogroup.ne.jp/brand04/shop/"
+        },
+        {
+          "label": "食べログ 札幌ラーメン専門 荒畑",
+          "url": "https://tabelog.com/aichi/A2301/A230111/23096644/"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}
