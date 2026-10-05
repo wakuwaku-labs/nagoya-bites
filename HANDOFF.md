@@ -1,4 +1,4 @@
-status: done
+status: in_progress
 
 # 目的
 Nagoya Bitesの課題管理をNotionからLinearへ移行し、Linearを唯一の作業トラッカーにする。
@@ -27,7 +27,7 @@ Nagoya Bitesの課題管理をNotionからLinearへ移行し、Linearを唯一�
 - ユーザーがNotionからLinearへの全件移行を明示した。対象は会話文脈上、Notionの課題トラッカーとそれを維持する運用経路。
 
 # 次にやること
-- Linearを唯一の進捗管理先として日常運用する。
+- API失敗時にもQA IDを保留する修正を検証し、mainへ反映する。
 
 # 試したが駄目だったこと
 - この実行環境にLinear専用MCPコネクタは見当たらない。Orca CLIの接続で移行・運用できる。
