@@ -3650,6 +3650,36 @@
       "brand_reason": "却下（前提が日次と矛盾・具体的欠陥なしの汎用論）。同日の日次レポートはスマホ65%/PC35%と逆で、週次の端末比は検算できない（制約10）。スマホ検証は 09-10 に同旨を却下済みで、モバイルUIは SEO-049 等で実測済み。",
       "category": null,
       "fingerprint": "9cbd491cb16fd711"
+    },
+    {
+      "id": null,
+      "date": "2026-10-06",
+      "source": "line-daily",
+      "advice": "🟢 予約クリック率10.3%は非常に良好。👉 トップページ(index.html)のファーストビューに「名古屋 デート ディナー」などの特集への導線を大きく目立つように追加",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-17 にトップFV導線の同主旨を判定済み）。FVは日替わり「今日の話題店」TOP5が担い、シーン特集への入口は常時表示「シーンで探す」（デート含む・SEO-109で一人飲み追加済み）が既存。date.html の順位押上げは 10-05 週次判定どおり既存特集のKW強化側に集約。予約率10.3%は1日6クリックの小母数で、特定特集をFVへ昇格させる根拠にならない（制約10）。",
+      "category": null,
+      "fingerprint": "a2c28626b0eac114"
+    },
+    {
+      "id": null,
+      "date": "2026-10-06",
+      "source": "line-daily",
+      "advice": "🟡 検索順位8〜20位のキーワードを狙う。👉 features/ に「名古屋駅 一人飲み」に特化した特集記事を作成し関連店舗を掲載",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-28/09-30/10-02/10-03/10-05 に同主旨を判定済み）。受け皿 features/meieki-hitori-nomi.html が既存で新規作成は自己カニバリ。トップ導線は SEO-109（done）、特集強化は SEO-087 に集約。",
+      "category": null,
+      "fingerprint": "1557b3c0f503a769"
+    },
+    {
+      "id": null,
+      "date": "2026-10-06",
+      "source": "line-daily",
+      "advice": "🟢 人気ページTOP1が特集 nagoya-solo-dining。👉 journal/ の日次記事で「うまい魚が食べたくて」など一人でも入りやすい魚料理の店をテーマに記事を作成・公開",
+      "verdict": "rejected",
+      "brand_reason": "却下（08-21 と同旨＋恒常運用で増分なし）。日次ジャーナルの題材は検証可能な一次情報・出典（score_journal_candidates.js／journal_gate_policy.json）で毎日選ぶ設計で、アクセス解析から特定店を名指しして書かせるのは出典なき題材選定になり編集独立性と品質ゲート原則（制約10）に反する。「一人」系KWは data/journal_seo_keywords.json 登録済みで search_intent 採点に既に反映（SEO-011）。solo-dining と一人飲み系ジャーナルの相互リンクは backlog 既存課題で扱い中。",
+      "category": null,
+      "fingerprint": "294d6f9b691bbaed"
     }
   ]
 }
