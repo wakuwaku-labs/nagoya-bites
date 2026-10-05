@@ -1,20 +1,20 @@
 ---
-description: LINE で届く「週次レポート」（🤖 AI週次分析＋💡今週のアドバイス）を貼り付けると、NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）を通して採用/却下を判定し、採用分を agent-backlog.md に ready で起票 → Notion 課題トラッカーへ同期する。日次の /seo-triage と同じループの週次版（前週比トレンド対応）。
+description: LINE で届く「週次レポート」（🤖 AI週次分析＋💡今週のアドバイス）を貼り付けると、NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）を通して採用/却下を判定し、採用分を agent-backlog.md に ready で起票 → Linearへ同期する。日次の /seo-triage と同じループの週次版（前週比トレンド対応）。
 ---
 
 # /seo-triage-weekly — 週次レポートのAI分析をブランドフィルターに通して課題化する
 
 毎週 LINE に届く週次レポートの「🤖 AI週次分析（前週比）」と「💡 今週のアドバイス」を、
 **鵜呑みにせず** NAGOYA BITES のブランド・方向性という総合フィルターに通し、
-適合分だけを Notion 課題トラッカーに `ready` で出す。却下は理由とともにログへ残す。
+適合分だけを Linearに `Todo` で出す。却下は理由とともにログへ残す。
 
-日次の `/seo-triage` と**完全に同じ仕組み・同じスクリプト・同じ Notion 同期**を使う。
+日次の `/seo-triage` と**完全に同じ仕組み・同じスクリプト・同じ Linear同期**を使う。
 違いは入力が「週次レポート（前週比トレンド付き）」であり、`source` を `line-weekly` で記録する点だけ。
 
 **使い方（手動）**: LINE の週次レポート本文をこのコマンドに続けて貼り付ける。
 
 **使い方（自動・スケジュール起動）**: 引数が空のときは Step 0 で Gmail から最新の週次レポートメールを自動取得し、以降を**全自動**で処理する（人の貼り付け不要）。
-判定・起票・Notion同期の原理は日次 `/seo-triage` と**完全に同一**。違いは入力が週次（前週比トレンド付き）で `source` を `line-weekly` で記録する点だけ。
+判定・起票・Linear同期の原理は日次 `/seo-triage` と**完全に同一**。違いは入力が週次（前週比トレンド付き）で `source` を `line-weekly` で記録する点だけ。
 
 ---
 
@@ -23,7 +23,7 @@ description: LINE で届く「週次レポート」（🤖 AI週次分析＋💡
 - 採用課題マスター: `agent-backlog.md`（ID 接頭辞 `SEO-` / owner=Marketer / category=SEO）
 - ループの記憶（採用・却下・重複の全履歴）: `data/seo_advice_log.json`（append-only・`source` で日次/週次を区別）
 - 決定的ヘルパー: `node scripts/seo_triage.js`（ID採番 / 重複検知 / ログ追記 / 健診レポート）
-- Notion 同期: 既存の `/sync-backlog`（スキーマ変更不要・そのまま流用）
+- Linear同期: 既存の `/sync-backlog`（スキーマ変更不要・そのまま流用）
 - レポート配信元: GAS（`Google分析オートLINE送信.js`）が週次レポートを件名「📊 NAGOYA BITES 週次レポート <開始>〜<終了>」で Gmail 送信。自動運用はこのメールを入力にする。
 
 ---
@@ -105,7 +105,7 @@ node scripts/seo_triage.js --next-id   # 例: SEO-004。2件目以降は連番�
 ```
 
 `agent-backlog.md` の「## 進行中・完了タスク」直下に、既存パーサ準拠の形式で追記する
-（`**priority** / **status** / **detected** / **category** / **owner**` を必ず含める。これが無いと Notion 同期で欠落する）:
+（`**priority** / **status** / **detected** / **category** / **owner**` を必ず含める。これが無いとLinear Issueの説明に欠落する）:
 
 ```markdown
 ### [SEO-004] <施策を一言で・効果が伝わる動詞で>
@@ -135,14 +135,17 @@ node scripts/seo_triage.js --log-append '[
 `fingerprint` は省略可（スクリプトが正規化して自動付与 → 次回の重複検知に効く）。
 `source` を省くと既定 `line-daily` になるので**週次では必ず明示**する。
 
-### Step 7: Notion へ同期
+### Step 7: Linearへ同期
 
 採用が1件以上あれば `/sync-backlog` のフローを内部実行する:
 ```bash
-node scripts/sync_backlog_to_notion.js --if-changed
+node scripts/sync_backlog_to_linear.js
 ```
-`changed: true` なら `/sync-backlog` の手順で MCP 経由 create/update を実施。
-採用課題が `ready / 担当部署 / カテゴリ` で Notion 課題トラッカーに出現する。
+差分を確認後、Linearへ反映する:
+```bash
+node scripts/sync_backlog_to_linear.js --apply
+```
+採用課題が `Todo / 担当部署 / カテゴリ` でLinearに出現する。
 （採用ゼロ＝backlog 無変更なら同期はスキップしてよい。）
 
 ### Step 8: トリアージ表を提示（可視化＋上書き余地）
@@ -155,7 +158,7 @@ node scripts/sync_backlog_to_notion.js --if-changed
 ### 📈 今週のトレンド要約（AI週次分析より）
 - <総括を1〜2行で。最も動いた指標を数値付きで>
 
-### ✅ 採用 → Notion に ready で起票（N件）
+### ✅ 採用 → LinearにTodoで起票（N件）
 | ID | 施策 | 前週比の根拠 | ブランド適合理由 | 優先度 |
 |----|------|--------------|------------------|--------|
 | SEO-004 | … | 検索流入 -32% | Moat「シーン別専門性」を強化 | P1 |
@@ -194,4 +197,4 @@ node scripts/sync_backlog_to_notion.js --if-changed
 
 - 貼り付けが空、かつ Step 0 の Gmail 取得でも週次レポートが見つからない → 「本文を貼ってください」と促して終了（自動運用ではGAS未送信/件名変更を疑う）
 - `--check-dup` / `--log-append` がエラー JSON を返す → ユーザーに内容を見せて中断（ログ不整合を防ぐ）
-- Step 7 の Notion 同期失敗 → backlog 起票は完了しているので、その旨を伝え「後で `/sync-backlog` 再実行」を促す
+- Step 7 の Linear同期失敗 → backlog 起票は完了しているので、その旨を伝え「後で `/sync-backlog` 再実行」を促す

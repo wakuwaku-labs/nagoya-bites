@@ -10,13 +10,13 @@
 
 サイト利用者から index.html のフローティング「ご意見」ボタン経由で届く声を、**鵜呑みにせず**
 NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）に通し、適合分だけを
-`agent-backlog.md` に `ready` で起票 → Notion 課題トラッカーへ同期する。却下は理由とともにログへ残す。
-既存の `/seo-triage` と同じ思想・同じ部品（`scripts/lib/backlog_ids.js` / `sync_backlog_to_notion.js`）を流用している。
+`agent-backlog.md` に `ready` で起票 → Linear Issueへ同期する。却下は理由とともにログへ残す。
+既存の `/seo-triage` と同じ思想・同じ部品（`scripts/lib/backlog_ids.js` / `sync_backlog_to_linear.js`）を流用している。
 
 **使い方（手動）**: メール本文や利用者からの生の指摘テキストをこの runbook の手順に沿って渡す。
 
 **使い方（自動・スケジュール起動）**: 引数が空のときは Step 0 で Gmail から Formspree 通知メールを
-自動取得し、以降を**全自動**で処理する（人の貼り付け不要）。判定・起票・Notion同期の原理は手動時と完全に同一。
+自動取得し、以降を**全自動**で処理する（人の貼り付け不要）。判定・起票・Linear同期の原理は手動時と完全に同一。
 
 ---
 
@@ -30,7 +30,7 @@ NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）に�
 - 生存確認（このループが動いているかの記録）: `data/feedback_health.json`（心拍・毎日更新してコミット）
 - サーバ側監視: `.github/workflows/feedback-watchdog.yml`（毎日 13:00 JST。心拍が滞ると Issue 起票＝
   オーナーにメール。復旧で自動クローズ）。判定器は `node scripts/check_feedback_health.js`
-- Notion 同期: 既存の `/sync-backlog`（スキーマ変更不要・そのまま流用。`ID_PREFIX_TO_OWNER` に `FB` 登録済み）
+- Linear同期: `/sync-backlog` がOrca CLI経由でLinearへ反映（`ID_PREFIX_TO_OWNER` に `FB` 登録済み）
 - 収集元: index.html のフローティング「ご意見」ボタン → Formspree（`https://formspree.io/f/xaqaygze`、
   `_subject: '[site-feedback] <種類>'`）→ 通知メールが Gmail（wakato1251999@gmail.com）に届く
 
@@ -181,13 +181,14 @@ node scripts/feedback_triage.js --log-append '[
 `--log-append` がメールアドレスの自動マスクと本文500字への切詰めを行う（決定的処理・手作業でのマスク不要）。
 `fingerprint` は省略可（スクリプトが正規化して自動付与）。
 
-### Step 7: Notion へ同期
+### Step 7: Linearへ同期
 
 起票が1件以上あれば:
 ```bash
-node scripts/sync_backlog_to_notion.js --if-changed
+node scripts/sync_backlog_to_linear.js
+node scripts/sync_backlog_to_linear.js --apply
 ```
-`changed: true` なら `/sync-backlog` の手順で MCP 経由 create/update を実施。
+差分内容を確認し、Orca CLI経由でLinear Issueを作成・更新する。
 （起票ゼロ＝backlog 無変更なら同期はスキップしてよい。）
 
 ### Step 8: トリアージ表を提示（可視化＋上書き余地）
@@ -296,5 +297,5 @@ node scripts/feedback_triage.js --health-write '{"status":"gmail_error","reason"
   復旧は対話ログインが必要でコードでは直せないため、watchdog の Issue が唯一の復旧経路になる
 - `--check-dup` / `--log-append` がエラー JSON を返す → 内容を記録し、その回のフィードバックは
   スキップして次に進む（ループ全体を止めない）
-- Step 7 の Notion 同期失敗 → backlog 起票は完了しているので、その旨を残して正常終了
-  （後で `/sync-backlog` 再実行で回収できる）
+- Step 7 の Linear同期失敗 → backlog 起票は完了しているので、その旨を残して正常終了
+  （後で `/sync-backlog` を再実行して回収する）

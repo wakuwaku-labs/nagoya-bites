@@ -166,9 +166,9 @@ Claude Codeでこのプロジェクトを開いたとき、または何かを頼
 **まず以下を実行してから判断する**。スキップ禁止。
 
 ```
-Step 0: .notion_sync_pending ファイルが存在するか確認
-         → 存在すれば即座に /sync-backlog を実行（前回ターンで agent-backlog.md が変わった証拠）
-         → これが ORG-001（CEO の運用ルール再開）を技術的に強制する
+Step 0: Linear同期が必要なbacklog変更があるか確認
+         → 必要なら同期スクリプトをdry-runし、差分確認後 --apply
+         → .notion_sync_pending は旧Notion運用の残存marker。Notionへ同期しない
 
 Step 1: agent-backlog.md を読む
          → 未解決タスクの数・最高優先度・直近のログを確認
@@ -543,7 +543,7 @@ Phase 4: デプロイと報告
 ❌ 競合の動向を無視して内向きの改善だけに終始する
 ❌ 短期施策だけ追って長期的なブランド資産を毀損する
 ❌ 課題発見後、agent-backlog.md に追記しないまま会話を閉じる（ORG-001 違反）
-❌ agent-backlog.md を編集した後、Notion 同期を行わずにターンを終える
+❌ agent-backlog.md を編集した後、必要なLinear Issueを作らずにターンを終える
 ❌ デプロイした実装を「エージェント実行ログ」表に記録しないまま会話を閉じる（ORG-001 違反）
 ```
 
@@ -559,14 +559,14 @@ Orchestrator が**ターンを閉じる前に必ず行う**チェックリスト
    - /solve-next 経由なら Step 9 で自動的に追加される
    - 手動実装（EXPLICIT/EMERGENCY 等）でも CEO が忘れずに記録する
 
-☑ Step B: agent-backlog.md を編集した場合 → /sync-backlog を実行
-   - Stop hook が `node scripts/sync_backlog_to_notion.js --if-changed` を自動実行
-   - changed:true なら .notion_sync_pending マーカーが立つ
-   - 次ターン Step 0 で必ず /sync-backlog を最初に実行
+☑ Step B: agent-backlog.md に課題の新規追加・状態変更があった場合
+   - `node scripts/sync_backlog_to_linear.js` で差分を確認
+   - 差分が妥当なら `node scripts/sync_backlog_to_linear.js --apply`
+   - Linear Issueの状態・優先度を読み戻して確認
 
-☑ Step C: done になった課題があった場合 → Notion ダッシュボードから消えたか確認
-   - ISSUE-039 で確立した notion-move-pages フローでデータソース外へ退避
-   - 「タイトルに ✅ を付けるだけ」では不十分（ISSUE-027 で発覚）
+☑ Step C: done になった課題があった場合 → 対応するLinear IssueがDoneか確認
+   - Linear URLを完了報告と実行ログに記録
+   - Notion元データは監査用アーカイブとして維持し、更新しない
 
 ☑ Step D: 完了報告を出す（orchestrator.md「報告フォーマット」章に従う）
 ```
@@ -647,57 +647,43 @@ Orchestrator が**ターンを閉じる前に必ず行う**チェックリスト
 
 ---
 
-## Notion ダッシュボード運用
+## Linear課題運用
 
-agent-backlog.md（マスター）を Notion DB「課題トラッカー」に常時自動同期する仕組みを 2026-05-06 に導入。
+Notion課題トラッカーの48行をLinearチーム `P` へ移行した。進捗・状態・担当者・コメントはLinearで確認し、詳細仕様・受け入れ条件・採番の正本は `agent-backlog.md` に保持する。Orca CLIでbacklogからLinearへ一方向同期し、CIからLinearへ直接書き込まない。
 
-### 構造
-
-```
-[agent-backlog.md] ← マスター（リポジトリ内、永続履歴）
-        ↓ scripts/sync_backlog_to_notion.js
-[Notion DB「課題トラッカー」] ← ダッシュボード（残課題のみ表示）
-   親ページ: https://www.notion.so/35826260227a81e595aaf5d9fc4caa6c
-```
-
-### 3つのスラッシュコマンド
+### コマンド
 
 | コマンド | 用途 |
 |---|---|
-| `/sync-backlog` | agent-backlog.md → Notion を手動同期。done になった課題は Notion から消える |
-| `/solve-next` | 優先度最高の未着手タスクを1件解いてデプロイし、Notion に反映 |
+| `/sync-backlog` | backlogの差分をLinearへ同期（dry-runで確認後に適用） |
+| `/solve-next` | 優先度最高の課題を選び、Linear Issueとbacklogの状態を更新して進める |
 | `/journal-today` | 既存の日次運用（変更なし） |
 
-### 自動同期の仕組み（Stop hook）
+### Linear同期
 
-`.claude/settings.json` の Stop hook がターン終了時に毎回 2 つを実行する（**導入手順: `docs/stop-hook-setup.md`**）:
-1. `node scripts/sync_backlog_to_notion.js --if-changed` → 出力が `changed:true` のとき hook の shell が `.notion_sync_pending` マーカーを立てる
-   （sync スクリプト自体は純粋パーサーで marker を書かない。marker を立てるのは hook 層の責務として分離している）
-2. `node scripts/audit_backlog_ids.js` → 重複ID（並列起票の採番衝突）を push 前に早期検知
+`data/linear_sync_state.json` がbacklog IDとLinear Issue IDの対応台帳。既存Issueの説明は上書きせず、新しいbacklog課題のみLinearへ作成する。重複元IDの4件にはLinearのDuplicate状態とduplicate-of関係を設定する。
 
-次回ターン開始時、Orchestrator は **Step 0 で必ずこのマーカーを確認**し、存在すれば `/sync-backlog` を最初に実行する。
-これにより「課題が起票されたら絶対 Notion に反映される」が保証される。
+```bash
+node scripts/sync_backlog_to_linear.js
+node scripts/sync_backlog_to_linear.js --apply
+node scripts/audit_backlog_ids.js
+```
 
-> 注（2026-06-02・ORG-004）: 以前はこの節の記述に反し `settings.json` も Stop hook も**実在しなかった**（憲法と実装の乖離）。
-> エージェントは自己改変ブロックで `settings.json` を書けないため、オーナーが上記手順で導入する。
-> **hook 未導入でも重複IDは CI（build.yml の `audit_backlog_ids` ステップ）が最終防壁として検知する。**
+Notion同期スクリプトとstateファイルは読み取りアーカイブとして保持し、通常運用で実行しない。Notion元データは監査用に残す。
 
 ### 運用ルール
 
-1. **agent-backlog.md がマスター** — Notion を直接編集してもリポジトリには反映されない
-2. **done タスクは Notion から消える** — アーカイブされて「やるべきこと」だけが画面に映る
-3. **agent-backlog.md の編集後は必ず /sync-backlog** — Stop hook が忘れない仕組みを担保
+1. **agent-backlog.md** は課題詳細・受け入れ条件・採番の正本。作業状態はLinear Issueにも反映する。
+2. **done**になった課題はLinearでDoneにし、Notion元データは監査用アーカイブとして保持する。
+3. **課題追加・状態変更時**は `/sync-backlog` で差分を確認してLinearへ反映する。
 4. **`/solve-next` の選定は `scripts/next_task.js` の出力を正とする**（2026-08-16 / ISSUE-088）
    ```bash
    node scripts/next_task.js          # 本日の担当分（data/solve_next_policy.json の dailyQuota 件）
    node scripts/next_task.js --all    # 列全体（滞留日数つき）
    ```
-   - 消化件数は `data/solve_next_policy.json` の `dailyQuota`（現在 **2件**）。**1件目を QAゲート通過・デプロイまで完了してから2件目に進む**（並行実装しない）。QAが落ちたらその時点で打ち切り、残りは翌日へ。CLAUDE.md 制約6は不変
-   - **滞留日数で実効優先度が1段だけ繰り上がる**（P3→P2→P1・P0へは決して昇格しない）。同点P2の列で古い課題が永久に順番待ちになる構造への対処（SEO-008 が54日滞留した実例）
-   - **オーナー本人にしか進められない課題は選ばない**（owner が片桐／status 注記に「〜待ち」等）。混ぜると毎朝それを選んでは何もできずに終わる。除外した分は必ず `👤 オーナー待ち` として別枠表示し、オーナーが自分の番だと分かる状態にする（制約11）
-   - 手で優先度を上書きしたい場合は `agent-backlog.md` の `priority` を根拠つきで書き換える。**スクリプトの出力を無視して選ばない**（選定理由が検証できなくなる）
-   - **`.claude/commands/solve-next.md` の「1ターン1件の原則」は本ルールで上書きされる**（当該ファイルは自己改変ブロックで編集できないため、憲法側で明示する）。暴走防止の意図は `dailyQuota` の上限と「1件ずつ QA を通してから次へ」で担保する
-5. **新規課題発見時は agent-backlog.md に追記** — Notion 直入力ではない（マスター違反）
+   - 消化件数、滞留日数による実効優先度、オーナー待ち除外は従来どおり維持する。
+   - 手で優先度を上書きする場合はbacklogを変更後、同期スクリプトでLinearへ反映する。
+5. **新規課題発見時はagent-backlog.mdに追記し、Linear Issueも作成する**。
 
 ### ID 接頭辞と起票責任
 

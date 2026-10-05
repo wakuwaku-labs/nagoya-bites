@@ -67,7 +67,7 @@
     "0件でも心拍（data/feedback_health.json）を書いてコミットする。書かない終了は「静かな失敗」と区別できない",
     "Gmail を引けなかった場合は 0件と報告しない。心拍に status=gmail_error と理由を書いて終了する（watchdog が拾う）",
     "判断に迷っても人間の承認を待って停止しない。「要検討メモ付き採用」か「理由付き却下」のどちらかに倒す（ISSUE-077 教訓）",
-    "Notion 同期に失敗しても backlog 起票済みの旨を残して正常終了する"
+    "Linear同期に失敗してもbacklog起票済みの旨を残して正常終了する"
   ],
   "known_residual_risk": {
     "description": "Formspree に届いたのに Gmail に一度も配送されなかった投稿は、Gmail 側をいくら広く引いても検出できない（検知器と収集経路が同一系統のため）。独立した突合には Formspree の submissions API が要る。",

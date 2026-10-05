@@ -226,10 +226,10 @@ console.log(`  差分: ${sinceRef}..${head.slice(0, 9)} / 変更 ${files.length}
 for (const r of results) console.log(`  ${icon(r.ok)} [${r.hard ? 'hard' : 'soft'}] ${r.title}`);
 console.log(`  レポート: ${path.relative(ROOT, reportPath)}`);
 
-// ── 発見事項を Notion 課題トラッカーへ流す ────────────
+// ── 発見事項をbacklogへ起票しLinear同期の対象にする ────────────
 // 設計: ここでは agent-backlog.md に [QA-*] エントリを冪等起票するだけ。
-//       実際の Notion 反映は既存の sync_backlog_to_notion.js → /sync-backlog（Notion MCP）が担う。
-//       「修正点が見つかったら必ず Notion にタスクとして残す」を単一経路（backlog）で保証する。
+//       Linearへの反映はOrca CLIで /sync-backlog を実行したときに行う。
+//       「修正点が見つかったら必ずLinear同期対象のbacklogにタスクとして残す」を単一経路で保証する。
 function collectFindings() {
   const out = [];
   for (const [bin, args] of [['node', ['scripts/security_audit.js', '--json']], ['node', ['scripts/perf_audit.js', '--json', '--no-record']]]) {
@@ -291,8 +291,8 @@ fs.writeFileSync(path.join(ROOT, 'data', 'qa_findings.json'),
   JSON.stringify({ date: today, head, verdict, findings, created: routed.created, existing: routed.existing }, null, 2) + '\n');
 
 if (findings.length) {
-  console.log(`  Notion連携: 発見 ${findings.length} 件 / backlog 新規起票 ${routed.created.length} 件${routed.created.length ? '（' + routed.created.join(', ') + '）' : ''}・既存 ${routed.existing.length} 件`);
-  if (routed.created.length) console.log('  → 次回の backlog→Notion 同期（/sync-backlog）で課題トラッカーへ反映されます');
+  console.log(`  Linear同期対象: 発見 ${findings.length} 件 / backlog 新規起票 ${routed.created.length} 件${routed.created.length ? '（' + routed.created.join(', ') + '）' : ''}・既存 ${routed.existing.length} 件`);
+  if (routed.created.length) console.log('  → 次回のbacklog→Linear同期（/sync-backlog）でLinearへ反映されます');
 }
 
 // ── マーカー前進（次回の差分起点を HEAD に）───────────
