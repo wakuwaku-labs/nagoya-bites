@@ -292,7 +292,7 @@ fs.writeFileSync(path.join(ROOT, 'data', 'qa_findings.json'),
 
 if (findings.length) {
   console.log(`  Linear同期対象: 発見 ${findings.length} 件 / backlog 新規起票 ${routed.created.length} 件${routed.created.length ? '（' + routed.created.join(', ') + '）' : ''}・既存 ${routed.existing.length} 件`);
-  if (routed.created.length) console.log('  → 次回のbacklog→Linear同期（/sync-backlog）でLinearへ反映されます');
+  if (routed.created.length) console.log('  → GitHub ActionsからLinearへ自動同期します（ローカル実行時は /sync-backlog）');
 }
 
 // ── マーカー前進（次回の差分起点を HEAD に）───────────
