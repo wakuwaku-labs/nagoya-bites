@@ -1,10 +1,10 @@
 # editorReason 自動生成 draft レビュー（ISSUE-045）
 
-> **生成**: 2026-09-28T23:05:37.973Z
-> **対象**: 上位 50 候補 / 生成 49 件
-> **結果**: OK 47 / INSUFFICIENT 2 / WARN 0 / ERR 1
-> **自動マージ候補** (confidence ≥ 0.85): 16 件
-> **人手レビュー要**: 31 件
+> **生成**: 2026-10-05T23:57:38.842Z
+> **対象**: 上位 50 候補 / 生成 50 件
+> **結果**: OK 49 / INSUFFICIENT 1 / WARN 0 / ERR 0
+> **自動マージ候補** (confidence ≥ 0.85): 17 件
+> **人手レビュー要**: 32 件
 
 ## レビュー手順
 
@@ -99,30 +99,6 @@
 
 ---
 
-### トゥ・ラ・ジョア イズム (Tou La Joie Ism)（名古屋市中区 / イノベーティブ・フレンチ・★4.6）
-
-- **status**: OK 🟢 high-conf (自動マージ候補)
-- **confidence**: 0.9
-- **editorReason**: 「美食クリエイター」須本シェフが手掛ける、同じ客には二度と同じ料理を出さない独創的なイノベーティブフレンチ。The Tabelog Award 2023 Bronze受賞に裏打ちされた高い評価と、完全紹介制の「予約絶望店」という希少性が、業界内外で注目を集めています。
-- **insiderNote**: 「美食クリエイター」須本シェフの独創性は、医療用遠心分離機を用いた調理法にも表れる。完全紹介制で電話番号非公開、同じ客には二度と同じ料理を出さない徹底した顧客管理は、まさに「予約絶望店」の所以。
-- **sources_used**:
-  1. [シェフが「美食クリエイター」と称されていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFHKq9_AlZM9RXcGM7JBD8G50AjwqZ3cGriNsnFKE8zW3NOIqWQm-JMmGls4yZWR_C5er27ElNnDrb-v2Ig0w7j5G0pCgPS1wkqsSotmbTrtMyGKkTqR9aREddlyUrOx6OdGmn2ePD9xjllZy-pQ8g=)
-     > 彼は自らを「美食クリエイター」と称し、その料理は「美食の芸術家」が紡ぐ一期一会の創作料理と評されています。
-  2. [シェフの料理が「唯一無二の須本ワールド」と評されていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGhiviySgcfu8qrw6eqfjbU_1W1MTcm23HPEjZyfNxOR49KAoasgeLvPAE1gZqVAS2Q8JLZbKMbE9S9QnLtcrgHMZYgmwwtWE15XqrxPEKslaBCMGUKrYNdV-MK)
-     > 唯一無二の須本ワールド
-  3. [同じ客には二度と同じ料理を出さないというシェフのポリシー](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFHKq9_AlZM9RXcGM7JBD8G50AjwqZ3cGriNsnFKE8zW3NOIqWQm-JMmGls4yZWR_C5er27ElNnDrb-v2Ig0w7j5G0pCgPS1wkqsSotmbTrtMyGKkTqR9aREddlyUrOx6OdGmn2ePD9xjllZy-pQ8g=)
-     > 特に注目すべきは、同じ客には二度と同じ料理を出さないというシェフのポリシーで、完璧な顧客管理のもと、来店ごとに異なるメニューが提供されます。
-  4. [The Tabelog Award 2023 Bronzeを受賞していること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFHKq9_AlZM9RXcGM7JBD8G50AjwqZ3cGriNsnFKE8zW3NOIqWQm-JMmGls4yZWR_C5er27ElNnDrb-v2Ig0w7j5G0pCgPS1wkqsSotmbTrtMyGKkTqR9aREddlyUrOx6OdGmn2ePD9xjllZy-pQ8g=)
-     > 食べログでは、オープンから半年で4.15の評価を獲得し、「The Tabelog Award 2023 Bronze」を受賞しています。
-  5. [完全紹介制で「予約絶望店」と評されるほどの予約の難しさがあること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFHKq9_AlZM9RXcGM7JBD8G50AjwqZ3cGriNsnFKE8zW3NOIqWQm-JMmGls4yZWR_C5er27ElNnDrb-v2Ig0w7j5G0pCgPS1wkqsSotmbTrtMyGKkTqR9aREddlyUrOx6OdGmn2ePD9xjllZy-pQ8g=)
-     > 「トゥ・ラ・ジョア イズム」も「一見さんお断りの完全紹介制レストラン」であり、電話番号も非公開とされています。過去に訪問したことがある人のみ予約が可能で、「予約絶望店」と評されるほどの予約の難しさがあります。
-  6. [医療用遠心分離機を用いた独創的な調理法](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFHKq9_AlZM9RXcGM7JBD8G50AjwqZ3cGriNsnFKE8zW3NOIqWQm-JMmGls4yZWR_C5er27ElNnDrb-v2Ig0w7j5G0pCgPS1wkqsSotmbTrtMyGKkTqR9aREddlyUrOx6OdGmn2ePD9xjllZy-pQ8g=)
-     > 料理の中には、医療用の遠心分離機を使用して透明感を追求した鮑肝のコンソメなど、独創的な調理法も取り入れられています。
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_トゥ・ラ・ジョアイズム(toulajoieism) -->
-
----
-
 ### 鶏そば 啜る 丸の内本店（丸の内 / 鶏白湯ラーメン・★4.3）
 
 - **status**: OK 🟡 review-required
@@ -137,25 +113,6 @@
 - **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
 
 <!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鶏そば啜る丸の内本店 -->
-
----
-
-### 鉄板焼 那古亭（名駅 / 鉄板焼ステーキ・★4.3）
-
-- **status**: OK 🟡 review-required
-- **confidence**: 0.6
-- **editorReason**: 名古屋マリオットアソシアホテル高層階に位置し、A5ランク和牛など厳選高級食材を熟練料理人が目の前で調理。圧倒的なライブ感と高評価の料理、名古屋の眺望が魅力で、主要グルメサイトでも多数の口コミを集める。
-- **insiderNote**: 熟練料理人が目の前で繰り広げる圧倒的なライブパフォーマンスは、単なる食事ではなく、五感で楽しむ体験を創出。食材の焼き加減や出汁、塩への丁寧なこだわりも光る。
-- **sources_used**:
-  1. [一休.comレストランで「料理・味」が高評価を得ている。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG8PWhX7xsf-9CFb_n_IGGnpVAkrRzT9GlAZHiDPKogK-HYiSMnyEDyf9jEVXsP3B-r7mz9kd9DRxr__l4myKBC84u8YirpjK5Nc7VN-dQ8s82Qj8SXsnNXpShJL-CEk30MZ74j7A==)
-     > 一休.comレストランでは「料理・味」が4.22と高得点を得ています。
-  2. [PayPayグルメで高評価を得ている。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHsp3LSVf0f_Di6v5rtFNhqe4ZevNQI1h7K-vAUShHIYvDOhWCqvZoE5NiQDT1wHRcgjNTkv1r25bXeOkGwqQHw9_Yy1z3y0EVq54F-Dq022pqnrTy_iTtMO1x8FfnzW_1zIgvUYgcJ3BNngQ==)
-     > PayPayグルメでは4.37と高得点を得ています。
-  3. [Rettyの口コミで、焼き加減や出汁、塩へのこだわり、シェフの手仕事が評価されている。主要グルメサイトで多数の口コミを集めている。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFGJPDDECtPXf-lexlfVt5dhWdmVBPfwkjCVKiMkK7AX_UXBG0DEnoVPGLVQNKARnPLrxQ76bKkfmjeeOTQb98moBd3iWeEygl_2umtUoAv4TS0jF27BOhBhQ9DGuLtzdiU4Vhfu1SkEm8PNVEkL_Qhqsg=)
-     > Rettyの口コミでは、「焼き加減、出汁や塩などのこだわり」や「シェフの手仕事が引き立つ料理」が評価されており、A5ランクのフィレステーキが「絶品で今まで食べた事のない美味しさ」と称賛されています。
-- **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鉄板焼那古亭 -->
 
 ---
 
@@ -194,61 +151,19 @@
 
 ---
 
-### 炭焼 うな富士 本店（名古屋市昭和区 / うなぎ (ひつまぶし、うなぎ料理)・★4.3）
+### 松軒亭（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄 / 洋食・★4.2）
 
 - **status**: OK 🟡 review-required
-- **confidence**: 0.6
-- **editorReason**: 創業25年でミシュラン掲載、食べログ百名店連続選出の実力店。希少な青うなぎと秘伝のタレ、地焼きにこだわり、激戦区名古屋で圧倒的な人気を誇る。独立店もミシュラン掲載されるなど、業界への影響力も大きい。
-- **insiderNote**: 創業者の長年の研究と経験に裏打ちされた青うなぎと秘伝のタレ、地焼きのこだわりが、激戦区で短期間に名店としての地位を確立。職人育成にも力を入れ、業界への貢献度も高い。
+- **confidence**: 0.8
+- **editorReason**: 和食料理人が手掛ける欧風カレー専門店。築100年の古民家を改装したクラシカルな空間で、出汁の旨味を活かした大人のご馳走カレーを堪能できます。
+- **insiderNote**: 和食料理人が手掛ける欧風カレー専門店として、出汁の旨味にこだわり、コクのある味わいを追求。築100年の古民家を改装した空間も魅力。
 - **sources_used**:
-  1. [希少な青うなぎの使用、地焼き調理法、秘伝のタレへのこだわり](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQExdUz1EL5iOZ3WoKTSFIXBkY1voo1rs0chiavU43-9xyxS8PypMeeV9FDC_MfLQ-tavjVH5dALmceSA90l54hB_BsefKMzUPhbg1gztbSRNdh6tKYzhhBWVegXs04V-vHgQLxJhKMzH5MZg6gg)
-     > 一般的なうなぎよりも3割以上大きい、希少な「青うなぎ」を厳選して使用しています。蒸す工程を挟まない「地焼き」という調理法を採用しており、時には1000度にもなる強い火力の炭火で、朝さばいたばかりのうなぎを骨まで焼き切ります。創業者が長年研究を重ねてきた門外不出のタレは、青うなぎとご飯との相性が抜群です。
-  2. [創業者の長年の研究と経験](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQExdUz1EL5iOZ3WoKTSFIXBkY1voo1rs0chiavU43-9xyxS8PypMeeV9FDC_MfLQ-tavjVH5dALmceSA90l54hB_BsefKMzUPhbg1gztbSRNdh6tKYzhhBWVegXs04V-vHgQLxJhKMzH5MZg6gg)
-     > 創業者の水野氏が長年かけて研究し継ぎ足してきた門外不出のタレが味の決め手となっています。水野氏は水産大学校卒業後、養魚飼料メーカーでウナギの飼育環境や体調管理、生育に携わり、約30年かけてウナギ業界のすべてを経験しました。休日には全国の鰻店を巡り食べ歩き、タレの糖度と塩分濃度を研究し、名古屋で好まれるタレを30代で開発しました。50歳で脱サラし、全国各地の著名なうなぎ店で修行を積んだ後、店を開店し
-- **warnings**: 10件のURLが実際の検索結果に無いため除外（要確認）
+  1. [和食料理人が手掛ける欧風カレー専門店であること、出汁の旨味を活かしたカレーであること、築100年の古民家を改装したクラシカルな空間であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH3d0pqOhmVfW45atMsR0N33Y5M74khQrGhh1M74Ps9Zt1KUU7N7jo4ALq5TCmcwgK6fgbg1wXq43AL-A0fh3Vzr73_vUhL1IXnYpbbVgbyhlib326GhLI478TOp7AW3SPp8UM0xyriOiOck8fJvcHKsS9563E0jkciGDh96ks9TNBwKfCUSpJeB1CLos4NsL2RgjU_6WXvY8TGvBEtOtdu0vXSkHizrADjjr7C1QyAWUxppGSUFzxPseIg488DezQzUw==)
+     > 新栄の「煮込み家 Matsu」と東桜の「松や酒店」のオーナーでもある和食料理人が手掛けており、「和食料理人のこだわりの出汁を使った旨味と甘味と辛味ある大人のご馳走カレー」をテーマにしています。築100年ほどの古民家を改装した店舗は、和と洋が織りなす古風でクラシカルな雰囲気が特徴です。
+  2. [和食料理人が手掛ける欧風カレー専門店であること、築100年の古民家を改装した店舗であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVRRqsJoM2pM2g9zKVw58LypuRKgZVJcLgclJtj59DHH3t_ALC0nJ2qLk9wUgct4F4UAPeJW_HX0bhwZJ58S8yFECSEsoJZ7tWasmOBBw23vzBPdXlhF5whgiQXy5os4ed-tc=)
+     > 和食料理人による欧風カレー専門店『松軒亭』千種にオープン
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_炭焼うな富士本店 -->
-
----
-
-### restaurant.m（栄 / クラシック × モダンフレンチ・★4.7）
-
-- **status**: OK 🟡 review-required
-- **confidence**: 0.6
-- **editorReason**: ミシュラン星獲得シェフが手掛けるクラシック×モダンフレンチ。確かな技術と情熱で東海食材を昇華させ、早くも地元メディアで高く評価される注目の一軒。
-- **insiderNote**: オーナーシェフ小林氏はミシュラン星やゴ・エ・ミヨ3トックの実績を持ち、クラシックな技法を現代に昇華させる手腕は業界でも高く評価されています。
-- **sources_used**:
-  1. [シェフのクラシックとモダンフレンチを融合させたコンセプト、東海地方の旬の食材へのこだわり、クラシック技法の現代への昇華、シェフの料理への情熱、ミシュラン星・ゴ・エ・ミヨ獲得実績、業界からの高い評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFtQyX3UBISNokpX15h_T4HjamgbzpCUfgz3NbuL_evRcX28vArhRmsM-GviNVZauK8arrX7DxYNmChAFksBvCOFZrrbv0fkjLVEmAsNiTcbelR)
-     > オーナーシェフの小林誠氏は、自身が修行してきたクラシックフレンチとモダンフレンチを軸に、「クラシック・モダン」をコンセプトとして料理を提供しています。多様化する現代における「美味しい」を常に追求し、東海地方の旬の食材を中心に、最も美味しく仕上がる調理法で仕上げることにこだわっています。また、クラシックなソースに不可欠な「フォンドボー」「コンソメ」「ヴォライユ」などの手間のかかる出汁やソースを丁寧に
-  2. [クラシックとモダンフレンチを融合させたコンセプト、東海地方の旬の食材の使用、シェフの確かな技術、シェフの料理への情熱、クラシック技法の現代への昇華](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGY_XkPwNbNJ1smFINJ2jzD7d_SWG6zgTdqLlFyeL8waz-FXVHnxGFB5aTDnTUx3OwGokIvTVKk7pfiaykPDWP0S6cxlh1RbnHjYX_g1iC1fgpwVDXfwLlDjSaKhQ==)
-     > 「restaurant.m」では、クラシックフレンチの技法を大切にしつつ、現代の感性を取り入れたモダンフレンチを融合させた料理を提供しています。東海地区でシェフ自らが厳選した旬の食材を中心に調理され、素材の持ち味を最大限に引き出すための調理法や盛り付けにもこだわりが見られます。スタッフは素朴でゲストを妙に緊張させない対応をしつつ、技術の高い料理を提供することで、幅広い客層に支持されています。
-  3. [シェフの確かな技術](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFnhRixDyKf_oH8Swz86Sz28FXR5mR56U2HaY-KRbQi-CeKMPCfJi-zyo7yEQHS6-bqDyv_ZldemOhuc8_suyHsvAAb-Zq5QR_5xgqSvEUEUm-c_Oc8VqLp5VtKS644UdLlE72R2NWXu4A=)
-     > スタッフは素朴でゲストを妙に緊張させない対応をしつつ、技術の高い料理を提供することで、幅広い客層に支持されています。
-  4. [地元メディアでの高い評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGrbkEPgttNhDV8mBO68KjDT1cwZaFN28VeA0Zq655yuAGKIRiCDX3IuYMU7m8Vae64pi9pwVLX3svf57BVmfOe9PIuXgfV30d1gSuxBlM6MHydHX1n-67isG4FdwJOCJB1mQZBwDMUd_A=)
-     > 2025年8月10日時点の口コミでは食べログの百名店にも選出され、3.94という非常に高い評価を得ています。
-  5. [シェフのミシュラン星・ゴ・エ・ミヨ獲得実績、業界からの高い評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVMcW3dy-LLU6ya32RdARX2nnuaBe2Q9GvF2lsI_TXwCUK9tgRKqLxNJh8q1XUvPFUWZLHycLGt5otOkwz4smkBPf5iQHggDhbeEJTGdvLl801CnqMj_QUrkQIQs7Fno0dDY_hhv1OmVY2534=)
-     > オーナーシェフの小林誠氏は1978年名古屋市生まれで、1998年に調理師学校を卒業後、「レストラン シェ・コーベ」に入社しました。2008年には同店の料理長に就任し、2019年にはJAL新ジャパンプロジェクトで国内線ファーストクラス機内食を監修するとともに、ミシュラン東海版で1つ星を獲得しています。さらに2020年にはゴ・エ・ミヨで15点3トックを獲得する実績を持ちます。2023年に「シェ・コーベ
-- **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_restaurant.m -->
-
----
-
-### 食堂 灯ル（名古屋市中村区 / 和食、定食、土鍋ごはん・★4.3）
-
-- **status**: OK 🟢 high-conf (自動マージ候補)
-- **confidence**: 0.9
-- **editorReason**: 「第二の食卓」をコンセプトに、炊きたての土鍋ごはんを中心とした和定食を提供。朝昼夜で異なる利用シーンに対応し、旬の素材を活かした質の高い料理が魅力。地元メディアでも注目され、日常に寄り添う食堂として期待されます。
-- **insiderNote**: 「第二の食卓」を掲げ、朝昼夜で異なる利用シーンに対応する提供スタイルが特徴。土鍋ごはんや旬の素材にこだわり、オープン時から複数の地元メディアで紹介されており、注目度の高さが伺えます。
-- **sources_used**:
-  1. [「第二の食卓」コンセプト、土鍋ごはん中心の和定食、朝昼夜の提供スタイル、旬の素材へのこだわり、地元メディアでの紹介](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFLbJNW2YuJ-V2kTSp3Z3_dYA-3IUjvZP6TaLBti4f6NQERl4MRUykaNRjGLf5cwTV_OE_n9K7cnGkdzhiqDwLTsecO29liu7szWJnzKALAMh2bmTk5KCkKfhMT)
-     > 「食堂 灯ル」は、「第二の食卓」をコンセプトに掲げ、街の人々の日常に寄り添い、温かな灯りをともす食堂を目指しています。炊き立ての土鍋ごはんを中心とした和定食を提供し、日常を照らすやさしい一膳、ほっと落ち着くひとときを提供することにこだわっています。旬の食材を使った派手さはないものの、素朴な料理の数々が日常を明るく照らすとされています。名物の銀鮭定食や味噌カツ煮、伊勢真鯛を使った一品など、素材にこだ
-  2. [「第二の食卓」コンセプト、土鍋ごはん中心の和定食、朝昼夜の提供スタイル、旬の素材へのこだわり、地元メディアでの紹介](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGsGlP2dNlESx9o0J2kKGAzryizOKLJ6T-ulWfDd3AoiPKZHPabY5stxJ-WOUsNHeTYuf2ln9VY7xKcQpt6Vh4BURgQjPFFrpNh0mZgpZ2ZMS5TIvI6MuJ6EAGUvTukLmnJ3HF6XeJ5rrL713wDQspI2sNWdw==)
-     > 「食堂 灯ル」は、「第二の食卓」をコンセプトに掲げ、街の人々の日常に寄り添い、温かな灯りをともす食堂を目指しています。炊き立ての土鍋ごはんを中心とした和定食を提供し、日常を照らすやさしい一膳、ほっと落ち着くひとときを提供することにこだわっています。旬の食材を使った派手さはないものの、素朴な料理の数々が日常を明るく照らすとされています。名物の銀鮭定食や味噌カツ煮、伊勢真鯛を使った一品など、素材にこだ
-  3. [地元メディアでの紹介](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFudMPuUfhRAeFRTDFHIf3azuYEDaUh08SnY91Yc8TzvxUGddGc7xogkDCPx5BVpBaUihCcnqBdDVYIUQidzyh40uD9gv4SvHgwtUiQyegE7ukxA4pyIOcwsNrbSfiJ_fk=)
-     > 「名古屋情報通」では「ご褒美定食を朝から味わえる店」として、開店直前の内覧会の様子とともに詳細が報じられています。
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_食堂灯ル -->
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004576942 -->
 
 ---
 
@@ -277,44 +192,26 @@
 
 ---
 
-### 鮨うおのたな（丸の内 / 江戸前おまかせ鮨・★4.8）
+### restaurant.m（栄 / クラシック × モダンフレンチ・★4.7）
 
 - **status**: OK 🟡 review-required
 - **confidence**: 0.6
-- **editorReason**: 老舗料亭「河文」の系譜を汲む隠れ家で、本格江戸前鮨を堪能できる一軒。旬素材へのこだわりと繊細な技巧が光り、ミシュラン星付き店も手掛ける運営会社の確かなノウハウが支える質の高い顧客体験を提供しています。
-- **insiderNote**: 東京で修業した女性職人が腕を振るい、その所作の美しさと心地よい会話が魅力。運営会社の顧客体験重視の育成が、洗練された握りを生み出しています。
+- **editorReason**: ミシュラン星獲得シェフが手掛けるクラシック×モダンフレンチ。確かな技術と情熱で東海食材を昇華させ、早くも地元メディアで高く評価される注目の一軒。
+- **insiderNote**: オーナーシェフ小林氏はミシュラン星やゴ・エ・ミヨ3トックの実績を持ち、クラシックな技法を現代に昇華させる手腕は業界でも高く評価されています。
 - **sources_used**:
-  1. [老舗料亭「河文」の系譜を汲む隠れ家的な立地と空間、旬素材へのこだわりと繊細な技巧](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF0guNNaWv8Nb5stEd2qkpQQcBr9v155axIMTpIx3D5cet2wPoWdJsQ7CXFUcFxRTt921ynBKcw9E96Lo3-p71Qa32Da_N4d_2oMGSuwGfQ47nJRlsC-vPadJB2gagwyYKGJc79t6_Jm4aIuK9hEw==)
-     > 「鮨うおのたな」は、400年続く老舗料亭「河文」の勝手口から入り、居酒屋「河内屋」の隣の扉を開くと現れる、看板もない隠れ家のような寿司処です。店内はカウンター席のみの洗練された空間で、老舗の品格と現代的な感性が調和しています。「鮨うおのたな」では、四季折々の旬素材や希少魚を用い、温度や香り、器の美しさまで計算し尽くされた繊細な一貫を提供することにこだわっています。
-  2. [運営会社Plan・Do・Seeがミシュラン星付き店も手掛けるノウハウを持つこと](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEr5wxgiYduV3OSzPVcVQDlan5HbxoZ1EF3dlj6PbauL2nmwdej3YLsvvtVMtlC_5Gs859UcIm6QSPvpVUK-PvwiJIiVqpzlz-k9fmuUxN8H28Jgl3BB48ndfVkhhqz95Q0zLrFec2PmDTiIF-M5NEpoBvsmJvJ)
-     > 運営会社である株式会社Plan・Do・Seeは、ミシュラン一つ星店『鮨麻布』の姉妹店も展開しており、世界に通用する「本物」の技術や運営ノウハウを身につける機会を提供しています。
-- **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
+  1. [シェフのクラシックとモダンフレンチを融合させたコンセプト、東海地方の旬の食材へのこだわり、クラシック技法の現代への昇華、シェフの料理への情熱、ミシュラン星・ゴ・エ・ミヨ獲得実績、業界からの高い評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFtQyX3UBISNokpX15h_T4HjamgbzpCUfgz3NbuL_evRcX28vArhRmsM-GviNVZauK8arrX7DxYNmChAFksBvCOFZrrbv0fkjLVEmAsNiTcbelR)
+     > オーナーシェフの小林誠氏は、自身が修行してきたクラシックフレンチとモダンフレンチを軸に、「クラシック・モダン」をコンセプトとして料理を提供しています。多様化する現代における「美味しい」を常に追求し、東海地方の旬の食材を中心に、最も美味しく仕上がる調理法で仕上げることにこだわっています。また、クラシックなソースに不可欠な「フォンドボー」「コンソメ」「ヴォライユ」などの手間のかかる出汁やソースを丁寧に
+  2. [クラシックとモダンフレンチを融合させたコンセプト、東海地方の旬の食材の使用、シェフの確かな技術、シェフの料理への情熱、クラシック技法の現代への昇華](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGY_XkPwNbNJ1smFINJ2jzD7d_SWG6zgTdqLlFyeL8waz-FXVHnxGFB5aTDnTUx3OwGokIvTVKk7pfiaykPDWP0S6cxlh1RbnHjYX_g1iC1fgpwVDXfwLlDjSaKhQ==)
+     > 「restaurant.m」では、クラシックフレンチの技法を大切にしつつ、現代の感性を取り入れたモダンフレンチを融合させた料理を提供しています。東海地区でシェフ自らが厳選した旬の食材を中心に調理され、素材の持ち味を最大限に引き出すための調理法や盛り付けにもこだわりが見られます。スタッフは素朴でゲストを妙に緊張させない対応をしつつ、技術の高い料理を提供することで、幅広い客層に支持されています。
+  3. [シェフの確かな技術](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFnhRixDyKf_oH8Swz86Sz28FXR5mR56U2HaY-KRbQi-CeKMPCfJi-zyo7yEQHS6-bqDyv_ZldemOhuc8_suyHsvAAb-Zq5QR_5xgqSvEUEUm-c_Oc8VqLp5VtKS644UdLlE72R2NWXu4A=)
+     > スタッフは素朴でゲストを妙に緊張させない対応をしつつ、技術の高い料理を提供することで、幅広い客層に支持されています。
+  4. [地元メディアでの高い評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGrbkEPgttNhDV8mBO68KjDT1cwZaFN28VeA0Zq655yuAGKIRiCDX3IuYMU7m8Vae64pi9pwVLX3svf57BVmfOe9PIuXgfV30d1gSuxBlM6MHydHX1n-67isG4FdwJOCJB1mQZBwDMUd_A=)
+     > 2025年8月10日時点の口コミでは食べログの百名店にも選出され、3.94という非常に高い評価を得ています。
+  5. [シェフのミシュラン星・ゴ・エ・ミヨ獲得実績、業界からの高い評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVMcW3dy-LLU6ya32RdARX2nnuaBe2Q9GvF2lsI_TXwCUK9tgRKqLxNJh8q1XUvPFUWZLHycLGt5otOkwz4smkBPf5iQHggDhbeEJTGdvLl801CnqMj_QUrkQIQs7Fno0dDY_hhv1OmVY2534=)
+     > オーナーシェフの小林誠氏は1978年名古屋市生まれで、1998年に調理師学校を卒業後、「レストラン シェ・コーベ」に入社しました。2008年には同店の料理長に就任し、2019年にはJAL新ジャパンプロジェクトで国内線ファーストクラス機内食を監修するとともに、ミシュラン東海版で1つ星を獲得しています。さらに2020年にはゴ・エ・ミヨで15点3トックを獲得する実績を持ちます。2023年に「シェ・コーベ
+- **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鮨うおのたな -->
-
----
-
-### 松軒亭（名古屋市千種区 / 欧風カレー専門店・★4.2）
-
-- **status**: OK 🟢 high-conf (自動マージ候補)
-- **confidence**: 0.9
-- **editorReason**: 和食料理人の店主が手掛ける欧風カレー専門店。出汁の旨味を活かした深みのある辛口カレーは、築100年の古民家空間で味わう大人のご馳走。地元メディアでも多数紹介されており、新店ながら注目度が高い。
-- **insiderNote**: 和食料理人の経験を活かし、出汁の旨味にこだわった欧風カレーは「旨味で押すタイプ」と評される。夜はおばんざいも提供し、居酒屋利用も可能。限定メニューも注目。
-- **sources_used**:
-  1. [店主が和食料理人であること、出汁にこだわった欧風カレーであること、築100年以上の古民家を改装した空間であること、地元メディアで紹介されたこと、夜におばんざいを提供し居酒屋利用できること、限定メニューがあること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG6cxX4_6YLR8G-o8srDVctB1ST9C3VqvXDf5GP0sPP7jzbhjdGJJUvSphArlZwpHRIjur6gA7ceT3nbs8fSjrn3SV8WIfCZ9xxa-8P1eGEc3mxuP-NWjaKkgNL4MvHnpNNXg==)
-     > 店主は和食料理人であり、出汁の旨味にこだわって辛口の欧風カレーを作り上げています。そのカレーは「和食料理人のこだわりの出汁を使った旨味と甘味と辛味ある大人のご馳走カレー」をテーマとしています。
-  2. [店主が和食料理人であること、築100年以上の古民家を改装した空間であること、カレーが「旨味で押すタイプ」と評されること、地元メディアで紹介されたこと、限定メニューがあること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGT2qUSyzHjntXj0uLln64dpTDVBq4TH7AOxizMvyWmAUxAD0LsQDu0tsZrNj6HGOxpHI7Gvo61XLgNz9lWX3_8P8PZsC4KbSHvcsRNVdKf4F-qjJn3890E)
-     > 和食料理人が作る欧風カレーの松軒亭。築100年以上の古民家を改装したお店で、旨味で押すタイプの欧風カレーが食べられます。
-  3. [店主が和食料理人であること、築100年以上の古民家を改装した空間であること、カレーが「コク旨のカレーが絶品」と評されること、地元メディアで紹介されたこと](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFYeFR_OSVKSLgfsfhui_AfTBBsp25J3Xd-Q_nVX8oCLmh5uTEu4n2JJbRwplorbKm6rOoSG8PXfAlUJDFbY3vWnlOoOkYHSfzj9WM5S64yTCc2scNo8Diiji-IiSkFDWCyB-T_SexWEmpQ32XAmUbp2rA8JcgtJG1KziL-Wrk6Le3RL5BYrL8c-TklxIFrDW0cqgPILSMcVZ4eITqsC221jRIsyNaUFdf8CJtBFB1jdLcmiq3VTJXJgaH8U_3H8PjG)
-     > 和食料理人が作る欧風カレーの松軒亭。築100年以上の古民家を改装したお店で、コク旨のカレーが絶品です。
-  4. [店主が和食料理人であること、築100年以上の古民家を改装した空間であること、カレーが「スパイスの風味豊かな、食欲そそる欧風カレー」と評されること、地元メディアで紹介されたこと](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE2ZwTiuZDMAxx4O3HpTxe3C4ipzs-UAWT9BfJa5esPfxKPKjFOt6gilHrt5qwtihQIZmmw1Ar9y_VeYwb_Q2MugrINKBboFsH0_vI5bKrvh1Ux4txcBQczgByOVvHe0weNpHEgv3pj)
-     > 和食料理人が作る欧風カレーの松軒亭。築100年以上の古民家を改装したお店で、スパイスの風味豊かな、食欲そそる欧風カレーが食べられます。
-  5. [夜におばんざいを提供し居酒屋利用できること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG4XyyomFPhyDnyyZUj2qkKSlSWWeTTThdfSEh5UmxVWd7r-0p3nNZqlAbKV5rkhGbNaJHaSoLi2injRHIvnJS0sczxDEOu1zTBn_hHTmQR7ftyqipjaEYpOJLRchdf2cgp3ngW4dY=)
-     > おばんざい
-  6. [夜におばんざいを提供し居酒屋利用できること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFoFe_hviR01zAwI5Nxz1WqTqdVa3vCSU4yC1hGvARC7tMLUkclWw5H22w4PfZ2T81Gj3U8puOSWdEJnKLqX718zwMjv_0Xz5tA4yG0kJFUEs_O9fIB_-F4woGCpw4-H5fE)
-     > おばんざい
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_松軒亭 -->
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_restaurant.m -->
 
 ---
 
@@ -341,20 +238,20 @@
 
 ---
 
-### 覚王山カフェ Ji.Coo（名古屋市千種区覚王山通 / カフェ、スイーツ・★3.9）
+### 鮨うおのたな（丸の内 / 江戸前おまかせ鮨・★4.8）
 
 - **status**: OK 🟡 review-required
 - **confidence**: 0.6
-- **editorReason**: 覚王山に位置し、スーパー2階という利便性も魅力のカフェ。モーニングやランチなど幅広い時間帯で利用でき、低糖質スイーツなど健康志向のニーズにも対応。地元メディアでも多数紹介される人気店です。
-- **insiderNote**: 「奇をてらわない上質なスタンダード」を追求し、日本紅茶協会認定の紅茶や毎朝手作りスイーツ、自然農法野菜のメニュー提供は、顧客満足度を高める上で重要な差別化要素です。
+- **editorReason**: 老舗料亭「河文」の系譜を汲む隠れ家で、本格江戸前鮨を堪能できる一軒。旬素材へのこだわりと繊細な技巧が光り、ミシュラン星付き店も手掛ける運営会社の確かなノウハウが支える質の高い顧客体験を提供しています。
+- **insiderNote**: 東京で修業した女性職人が腕を振るい、その所作の美しさと心地よい会話が魅力。運営会社の顧客体験重視の育成が、洗練された握りを生み出しています。
 - **sources_used**:
-  1. [覚王山に位置すること、スーパー2階に位置すること、モーニングやランチを提供すること、低糖質スイーツを提供すること、店主のこだわり（コンセプト、紅茶、スイーツ、野菜）](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFapAzNk7dQCPk7IPcnGaOU7HIQeNk7n3SVxJIHZ-azKlPa4MTG4JXb5k-fhxeUJlkvPMO48WkpbrPb7C0pvixyk5gNgNwtXwtl6rxnXe-xvvFa4af1K2YH)
-     > 名古屋市千種区の「覚王山カフェ Ji.Coo」について
-  2. [覚王山に位置すること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEOOSWjcrY6asGVZ1M1buyFpO1Ol5eELQ5NQz_DFWoQyZ8pUOtjCUgiMcG_pAquP88oAwNdwmd1g1JB9e8hexhYS_gW0rBKYLNif8dcUT2ImcoXWHOZtISQ6KFTClRxP9yJ2c4i)
-     > 「note」の「自然派情報通ゆっきー」による「【名古屋オーガニックグルメ】覚王山カフェJi.Coo.」
-- **warnings**: 3件のURLが実際の検索結果に無いため除外（要確認）
+  1. [老舗料亭「河文」の系譜を汲む隠れ家的な立地と空間、旬素材へのこだわりと繊細な技巧](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF0guNNaWv8Nb5stEd2qkpQQcBr9v155axIMTpIx3D5cet2wPoWdJsQ7CXFUcFxRTt921ynBKcw9E96Lo3-p71Qa32Da_N4d_2oMGSuwGfQ47nJRlsC-vPadJB2gagwyYKGJc79t6_Jm4aIuK9hEw==)
+     > 「鮨うおのたな」は、400年続く老舗料亭「河文」の勝手口から入り、居酒屋「河内屋」の隣の扉を開くと現れる、看板もない隠れ家のような寿司処です。店内はカウンター席のみの洗練された空間で、老舗の品格と現代的な感性が調和しています。「鮨うおのたな」では、四季折々の旬素材や希少魚を用い、温度や香り、器の美しさまで計算し尽くされた繊細な一貫を提供することにこだわっています。
+  2. [運営会社Plan・Do・Seeがミシュラン星付き店も手掛けるノウハウを持つこと](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEr5wxgiYduV3OSzPVcVQDlan5HbxoZ1EF3dlj6PbauL2nmwdej3YLsvvtVMtlC_5Gs859UcIm6QSPvpVUK-PvwiJIiVqpzlz-k9fmuUxN8H28Jgl3BB48ndfVkhhqz95Q0zLrFec2PmDTiIF-M5NEpoBvsmJvJ)
+     > 運営会社である株式会社Plan・Do・Seeは、ミシュラン一つ星店『鮨麻布』の姉妹店も展開しており、世界に通用する「本物」の技術や運営ノウハウを身につける機会を提供しています。
+- **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_覚王山カフェji.coo -->
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鮨うおのたな -->
 
 ---
 
@@ -593,51 +490,6 @@
 
 ---
 
-### ウルフギャング・ステーキハウス 名古屋店（名古屋市中区錦 / ステーキハウス・★）
-
-- **status**: OK 🟡 review-required
-- **confidence**: 0.6
-- **editorReason**: 東海初出店の「ウルフギャング・ステーキハウス」は、USDAプライムグレードの牛肉を28日間熟成し、900℃で焼き上げる本格ステーキを提供。熟成師が在籍し、記念日や接待にも最適な一流のサービスとエレガントな空間が魅力です。
-- **insiderNote**: 名古屋店には熟成期間を調整する「熟成師」が在籍。ゼネラルマネージャーは顧客情報に基づき最適なチームを編成し、お客様満足の最大化に努めています。
-- **sources_used**:
-  1. [東海エリア初出店であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFUHjuydgC7igRkmtXCHC4EDS6JIKfN_ia3iC6EbSNZ48nJXz7PnWWNfWZltGu3A-w4WuRVKlo6v61_3pYnS4hiiuGSKuzFQFMty1D6kikPHi9dML7r1Q9EBNqe)
-     > 「ウルフギャング・ステーキハウス 名古屋店」は、東海エリア初出店として複数の地元グルメメディアで紹介されています。具体的には、「ナゴヤトコトン」がオープニングイベントを取材し、店舗の魅力を伝えています。
-  2. [東海エリア初出店であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEyBMUH8oH4Swc-_Ne3hsPfa_OYDHC7YMDOsmSWcLLT_BntrpkpbL3herevLsstpskQSvS0K1rolHPWEBq78W-Q16Lrl2x5PcWv5koQC8dTbW4QpzH0PSsgBvqxE19Wv1ZRCXbeRrE=)
-     > 「名古屋情報通」は内覧会の様子を交えて詳細を伝えています。
-  3. [東海エリア初出店であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFMJoTQsx8Wy-1njQoecypNrkU6YenwLOUDIuzK8pXEc-ukTFAZUdSCOWZpkX4PPQZEDD_rRmL062kTQEreDxcZb7cwJZ_wT0jlqQHUu8NMBk_h7xNwNsh1Nw-roA7cGmgKBoJq2jjt)
-     > 「CLASSY.」や「Yahoo! JAPAN」の地域ニュースでも東海エリア初出店として報じられました。
-  4. [東海エリア初出店であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEPAisEcg-Uv2KRmPw6jm4yDJEIFRHttZQRFc4oN8TnPpGqM83G7SzCsEVOLadDCgIjNUnDD4JIVz8kykaXBbb_YHm2rK8YXa3vi62FM1-bGKWt3MYIyR3cnROzlO9_k_w3hhp5JFn8c00DRhG2LnVscDeMbfxRLmegwkxbzrOptwmiHTFnWA==)
-     > 「CLASSY.」や「Yahoo! JAPAN」の地域ニュースでも東海エリア初出店として報じられました。
-  5. [USDAプライムグレードの牛肉使用、28日間熟成、900℃で焼き上げ、熟成師の在籍、エレガントな空間であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPWvgYwEC8MOmQzJfLZ_idwry_Uj_cWyJ8oIbatBwUGHHaubSz2VMAnSVg9_5O9Ti7kQMpir1QKFwt7fbX1XVWOQvCbOMezHwclmKVJ7PIGAAPc_4yPpvMEGIjD_-EtEfDd3HQk6g0GtMFug==)
-     > ステーキ肉として世界最高峰とされる米国農務省（USDA）の最上級品質「プライムグレード」の牛肉のみを使用しています。この肉は、食肉に加工されてから一度も冷凍することなく、冷蔵のまま空輸で運ばれ、最高の美味しさを保つための輸送方法にもこだわっています。店舗に届いた肉は、店内の専用熟成庫で一定の温度・湿度管理のもと、28日間を目安にドライエイジング（乾燥熟成）されます。この熟成により、肉本来の酵素の働
-  6. [USDAプライムグレードの牛肉使用、28日間熟成、900℃で焼き上げ、熟成師の在籍、エレガントな空間であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFmIwdF5imp2lP3lfsMqv4dxAgwiGYDTZ5t9-DXFQB_J6Ic4RXxYWebAghi0ywRgMNxUuZn8ceivI3ayV6aVoSNOvlSp_IGJ-WXhHRVdy6iQJBFWGEmE4NJFmK3Nm1njEatfPBzqNW7DBQcoY74-e-wZ4FbB_8=)
-     > ステーキ肉として世界最高峰とされる米国農務省（USDA）の最上級品質「プライムグレード」の牛肉のみを使用しています。この肉は、食肉に加工されてから一度も冷凍することなく、冷蔵のまま空輸で運ばれ、最高の美味しさを保つための輸送方法にもこだわっています。店舗に届いた肉は、店内の専用熟成庫で一定の温度・湿度管理のもと、28日間を目安にドライエイジング（乾燥熟成）されます。この熟成により、肉本来の酵素の働
-  7. [USDAプライムグレードの牛肉使用、28日間熟成、900℃で焼き上げ、熟成師の在籍、エレガントな空間であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEMG3dW9tzRVUiBvfjBhA71D7GKUidIBZDIOF41v2S6_RLULn-k_8kXVVI-_FyN-16AJNfa3GtrxV1cbVxGb_jUxSUQ4DvoYZSyZ1-6_Q8TUNLSPX4V-ziM)
-     > ステーキ肉として世界最高峰とされる米国農務省（USDA）の最上級品質「プライムグレード」の牛肉のみを使用しています。この肉は、食肉に加工されてから一度も冷凍することなく、冷蔵のまま空輸で運ばれ、最高の美味しさを保つための輸送方法にもこだわっています。店舗に届いた肉は、店内の専用熟成庫で一定の温度・湿度管理のもと、28日間を目安にドライエイジング（乾燥熟成）されます。この熟成により、肉本来の酵素の働
-  8. [USDAプライムグレードの牛肉使用、28日間熟成、900℃で焼き上げ、熟成師の在籍、エレガントな空間であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGj2-KoFPGmh0qRsEentvr-DO5bkMvAjzBiN_otslzGD6qslPrxyUf-4cHD8h8T3bD8WxWtMuaIDvti_GfXx6MsAAT6avK7ofWXJ79QMy1d210bIMyLIBT6WLhM5MCSzm3dH-Ot__09-cqRGMxm)
-     > ステーキ肉として世界最高峰とされる米国農務省（USDA）の最上級品質「プライムグレード」の牛肉のみを使用しています。この肉は、食肉に加工されてから一度も冷凍することなく、冷蔵のまま空輸で運ばれ、最高の美味しさを保つための輸送方法にもこだわっています。店舗に届いた肉は、店内の専用熟成庫で一定の温度・湿度管理のもと、28日間を目安にドライエイジング（乾燥熟成）されます。この熟成により、肉本来の酵素の働
-  9. [記念日や接待にも最適な一流のサービスであること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHZYIOrVw0HO3B6X4RIdqKs8_cM9y6q4lQSwhspZuVXHKP-ppICt2BV4UCPwkFX-XEcRUKYrFf1IJ62VSC8RE4kPyQLDh2SV6I6VzfJkVadh2DIw79_RDbdUtxtgtYHmN8ZjnhBn9ytJm9hZpCgN5xs)
-     > 「リビング名古屋Web」では、家族の記念日にも利用できる極上ステーキの店として紹介されています。
-  10. [記念日や接待にも最適な一流のサービスであること、ゼネラルマネージャーが顧客情報に基づき最適なチームを編成し、お客様満足の最大化に努めていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFjIQRMMdhFNyf6itoexxyvcAmtXM6PMZ9wte7Ws7niGRIge-Wcfi9HywXpAy0T2-Py7yoionsRQXp7jYsdakLCtKw6kB5kp1fU_Twm2rc6DXb7dXPjORrTDQ3aRnK6s9GmThgmYmbdUbpkGdAr6q7JlzeKZisqJXIl9JA=)
-     > 高単価な接客や記念日・接待利用に対応できる一流の接客スキルが求められ、ワインの選定やペアリングの提案、英語を中心とした多言語対応で外国人ゲストへの対応も行われる、グローバルスタンダードのサービスが提供されます。ゼネラルマネージャーは、顧客の来店履歴やアレルギー情報などを確認し、スタッフの適性を見極めて最適なチームを編成するなど、お客様満足の最大化に努めています。
-  11. [記念日や接待にも最適な一流のサービスであること、ゼネラルマネージャーが顧客情報に基づき最適なチームを編成し、お客様満足の最大化に努めていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG4NZfGkYZyw_bbP9LP-FDnsz3WcFzpVAbsHoq5dCE5ttFiXQJ-fQO1SS0TH_lC7j_8GBbS9HpQ_4P2gDjJQmAU0r0zEriv0UOIAn2_m8fIWBHuldV-BG3l-FKE4tONCCk_HDjw2s7m6fJ0wLg=)
-     > 高単価な接客や記念日・接待利用に対応できる一流の接客スキルが求められ、ワインの選定やペアリングの提案、英語を中心とした多言語対応で外国人ゲストへの対応も行われる、グローバルスタンダードのサービスが提供されます。ゼネラルマネージャーは、顧客の来店履歴やアレルギー情報などを確認し、スタッフの適性を見極めて最適なチームを編成するなど、お客様満足の最大化に努めています。
-- **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_ウルフギャング・ステーキハウス名古屋店 -->
-
----
-
-### 焼きそばスタンド らふ（南区 鶴里 / 焼きそば・★4.4）
-
-- **status**: INSUFFICIENT_EVIDENCE ⚪ INSUFFICIENT
-- **confidence**: 0
-- **editorReason**: (なし)
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_焼きそばスタンドらふ -->
-
----
-
 ### 博多かわ屋 名駅店（名古屋駅 / 和食・★3.3）
 
 - **status**: OK 🟢 high-conf (自動マージ候補)
@@ -675,66 +527,6 @@
 
 ---
 
-### モツの杉ちゃん（大曽根･千種･今池･池下･守山区 / 焼肉・ホルモン・★4.6）
-
-- **status**: OK 🟢 high-conf (自動マージ候補)
-- **confidence**: 0.9
-- **editorReason**: 鮮度抜群の肉と20種の手作りタレ、釜炊き銀シャリなど、こだわり抜いた料理を提供。少量注文や深夜営業、手頃なドリンク価格で多様な客層を惹きつけ、多数の地元メディアで紹介される注目店だ。
-- **insiderNote**: 大阪での経験を持つ店主は「ありがとうを超えるサービス」をミッションに掲げ、スタッフの人材育成を重視。懐かしさを感じる内装もこだわりだ。
-- **sources_used**:
-  1. [鮮度抜群の肉、20種の手作りタレ、釜炊き銀シャリ、少量注文、深夜営業、手頃なドリンク価格、懐かしさを感じる内装](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFuXGTex_Vt0mwnDcZzvKxNcoq_9Lcri8awYFWpf178N2Lt4PPpBZuJml7tNA94FUe-291tXoQUjFUcoSeedolhGL_qt0miJiLbeDRF0TSEODBSAn0R2FFyH1tKdvoV_L8DEq4H8MY=)
-     > 「お酒は安く、味はおいしいと自信を持って出せるもののみを提供している」ことをこだわりとしています。素材にもこだわり、鮮度抜群の肉を仕入れ、卓上の七輪で焼いて提供しています。肉の種類に合わせて20種類の手作りタレを使い分けている点も特徴です。また、白飯の「銀シャリ」には富山県産のコシヒカリを使用し、注文を受けてから釜で炊き上げるため、提供までに約25分を要します。サイドメニューも手作りの品々が揃って
-  2. [鮮度抜群の肉、20種の手作りタレ、釜炊き銀シャリ、少量注文、深夜営業、手頃なドリンク価格、懐かしさを感じる内装](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiLB6QlimLxRb2r66du3LtJ4HWMWQGnZteZgkQwf6oVA9nG2BOZtm_rL-7it11KyCont_qu9G6upecqQ-jARrBrhCIo010_YR7_3pVEq6jeQ7iJFn0HRbK2VKI_XK_HbOIWRpkrdhdnQ==)
-     > 「お酒は安く、味はおいしいと自信を持って出せるもののみを提供している」ことをこだわりとしています。素材にもこだわり、鮮度抜群の肉を仕入れ、卓上の七輪で焼いて提供しています。肉の種類に合わせて20種類の手作りタレを使い分けている点も特徴です。また、白飯の「銀シャリ」には富山県産のコシヒカリを使用し、注文を受けてから釜で炊き上げるため、提供までに約25分を要します。サイドメニューも手作りの品々が揃って
-  3. [多数の地元メディアでの紹介](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGGEgU4feWo12G0Cn9Y8U9XQMp5WE9XZnKIw4ef6Wa5FZSK0H0m8qGJF6ScK3Z-5WdPHO645tlDLqrugAGtNIK8Dovz_IRsa73nhF1qKOoYTmxiO7ciC-Ddy4gamuYvuIHBTuuSCYgTIM7b)
-     > 東海テレビの「yum-yumグルメ」
-  4. [多数の地元メディアでの紹介](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQElGLJgIuS0ugI2krrUdTM4qNiW-JvqBfqlw6vs4OihFW8ywje3bFEQ3tN6jn4Vhp5rpb5gjQVftvdkS--UDVtyQo56SpJf7jM3YhV4QCw3p40MOAjSEAKc1S-xSidq2heqOCShlvJ63uwB_XA13Xlt8w==)
-     > Retty といった主要なグルメサイト
-  5. [店主の大阪での経験、ミッション、スタッフ育成](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF-xxL6V7uOiYJWubN2QqiLt5UQQAFMyumYKUexvFwrM5D2UhfmnALe6ZdqE4--QBI8IejDCO0cSTkRZJDaq_nOWQ4RZGUKcx_zlsD_EjaKDHiXBhsY-vAH4_crpzg19JUTgb0LH65wxQ==)
-     > 店主は大阪のホルモン屋での勤務経験があるとのことです。同店のミッションは「食を通じて、ありがとうを超えるサービスを提供すること」であり、スタッフ全員が“人に向き合う力”を育てることを重視しています。
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J003942339 -->
-
----
-
-### 【韓国料理】シガン生サムギョプサル専門店　今池（大曽根･千種･今池･池下･守山区 / 居酒屋・★4.3）
-
-- **status**: OK 🟡 review-required
-- **confidence**: 0.6
-- **editorReason**: 「シガン」ブランド初のFC店として、沖縄県産アグー豚の生サムギョプサルに特化。冷凍しない肉の品質と、セリサムギョプサルなどトレンドを取り入れたメニュー構成が強み。仕込みレベルや肉の火入れの安定性も評価され、高評価を獲得している。
-- **insiderNote**: 「シガン」ブランド初のFC店として、沖縄県産アグー豚の生サムギョプサルに特化。独自のルート配送で冷凍せず提供するこだわりは、肉の品質と仕込みレベルの高さに繋がっている。トレンドのセリサムギョプサルも提供し、市場ニーズを捉えている。
-- **sources_used**:
-  1. [有限会社マイプロジェクトの「シガン」ブランド初のフランチャイズ店舗であること、沖縄県産アグー豚を一度も冷凍せずに提供していること、セリサムギョプサルを提供していること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEKyFZ_nVmASE2cbUlAngUuGuUH2ht5TDxy_RNsnitEqI1K-DwL6Rpyv5D1d8zDfdRUgFGfvjj64BJjldEwCbJoKY2LTurPOXXW7vgez7SBByGjHNKQNtSMzqrlHaCfnn-o9UhOTii50JTcESJ24FrUzLaBuw==)
-     > 有限会社マイプロジェクトが展開する「シガン」ブランド初のフランチャイズ店舗として2024年11月20日にグランドオープンしました。
-  2. [NAGOYA BITESでの評価（仕込みレベル、肉の質と火入れの安定性）、Google評価の高さ](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQElMjHnT6jzJaK3TWLx3VxB9GF1NxJ1Kr2m0h6b_OhwakdZArvJ4I-UWpxXUPEW8SItxX6Za7FuISIIwGpZ2DX8CEvqK2H2vRkfMtYDFDFtlfGFgUrAYGaI53R51iZ5417rBMn6tRyHO90=)
-     > NAGOYA BITES」では、今池駅から徒歩1分、Google評価4.3（口コミ76件）で、韓国料理の仕込みレベルや肉の質と火入れにムラがないと評価されています。
-- **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004077003 -->
-
----
-
-### さむぎょぷさる専門店 ぽってじ家（大曽根･千種･今池･池下･守山区 / 韓国料理・★4.3）
-
-- **status**: OK 🟡 review-required
-- **confidence**: 0.6
-- **editorReason**: 国産ハーブ豚の厚切りサムギョプサルを専門とし、豊富な種類と店員が目の前で焼き上げる提供スタイルで、本場の味とサービスを追求。地元メディアにも多数紹介され、専門性と顧客体験へのこだわりが光る一軒。
-- **insiderNote**: 国産ハーブ豚の厚切りサムギョプサルや豊富なチヂミで専門性を確立。店員が目の前で焼き上げる提供は顧客体験を重視する表れ。地元メディア露出も多く、2025年には移転オープンも控える注目店。
-- **sources_used**:
-  1. [国産ハーブ豚の厚切りサムギョプサルを専門とし、豊富な種類を提供していること、店員が目の前で肉を焼き上げる提供スタイルであること、豊富なチヂミを提供していること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFKLCVa4gKQ9J3S6SM9kxr_q0s2FGEoiSQGOs6jI0pUm4Q3lU1Au7HUG_5sBdQ3ObDqRduz51vEu_teONlY9xzFAFgxX8ZQL3fEEBB9yEo0Fpoe12rKZQ2optptRPdjorg_PQoAcfs=)
-     > 「さむぎょぷさる専門店 ぽってじ家」では、脂身があっさりとした国産ハーブ豚を使用したサムギョプサルを提供しています。特に、厚さ2cmの「厚切りさむぎょぷさる」をイチオシとしており、肉そのものの美味しさを感じられることにこだわっています。また、ワインに漬け込んだ「ワインさむぎょぷさる」、オリジナル味噌で漬け込んだ「名古屋味噌さむぎょぷさる」、さっぱり爽やかな「レモンペッパーさむぎょぷさる」、4種類の
-  2. [国産ハーブ豚の厚切りサムギョプサルを専門とし、豊富な種類を提供していること、店員が目の前で肉を焼き上げる提供スタイルであること、豊富なチヂミを提供していること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFTY2JsXWcw5N194I6zVA1VpnS0OL2YUrxu2oWLv8kXWc4jE2hrueAjzqnKMfjZOLUnY3ZDvtdLivUseUSjeKTv8gYQQ-w6oKk6M-XYz2EgX9iCq-wockl38sklFdk=)
-     > 「さむぎょぷさる専門店 ぽってじ家」では、脂身があっさりとした国産ハーブ豚を使用したサムギョプサルを提供しています。特に、厚さ2cmの「厚切りさむぎょぷさる」をイチオシとしており、肉そのものの美味しさを感じられることにこだわっています。また、ワインに漬け込んだ「ワインさむぎょぷさる」、オリジナル味噌で漬け込んだ「名古屋味噌さむぎょぷさる」、さっぱり爽やかな「レモンペッパーさむぎょぷさる」、4種類の
-  3. [地元メディア（東海テレビNEWS）で紹介されていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEEyeQXShZgU5KGUJbQlpp46Y4emysxn8E8G_ggBrOg9KUUUDFQd9yYPgmgLrDC_UsNnaLq_Hvm7yXLxGCWZoCNEUakl6NKj-neAhot9gVeYTdNgkLwARg0DrQdSrHdg8J4fqa1Iw9EBjzoYI14X_oL_0AE)
-     > 「さむぎょぷさる専門店 ぽってじ家」は、東海テレビのニュース番組「東海テレビNEWS」やグルメ情報サイト「yum-yumグルメ」で紹介されています。
-  4. [地元メディア（東海テレビNEWS）で紹介されていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGwA6tSAL0Wn9wCjjBRRQj-ff33XkPOcnEkBvErPCS0kq98SICwq3ImGMWmRpTF4-b42c1vZNNqAxLhbVsqUMbVPpgJvQN0SuIhysLW0DfzEc0Um4Z9OmhF-I3_c4QbAZ1By98kajp8G7II)
-     > 「さむぎょぷさる専門店 ぽってじ家」は、東海テレビのニュース番組「東海テレビNEWS」やグルメ情報サイト「yum-yumグルメ」で紹介されています。
-- **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004026564 -->
-
----
-
 ### しら河 今池店（大曽根･千種･今池･池下･守山区 / 和食・★4.3）
 
 - **status**: OK 🟢 high-conf (自動マージ候補)
@@ -755,22 +547,6 @@
 
 ---
 
-### 松軒亭（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄 / 洋食・★4.2）
-
-- **status**: OK 🟡 review-required
-- **confidence**: 0.8
-- **editorReason**: 和食料理人が手掛ける欧風カレー専門店。築100年の古民家を改装したクラシカルな空間で、出汁の旨味を活かした大人のご馳走カレーを堪能できます。
-- **insiderNote**: 和食料理人が手掛ける欧風カレー専門店として、出汁の旨味にこだわり、コクのある味わいを追求。築100年の古民家を改装した空間も魅力。
-- **sources_used**:
-  1. [和食料理人が手掛ける欧風カレー専門店であること、出汁の旨味を活かしたカレーであること、築100年の古民家を改装したクラシカルな空間であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH3d0pqOhmVfW45atMsR0N33Y5M74khQrGhh1M74Ps9Zt1KUU7N7jo4ALq5TCmcwgK6fgbg1wXq43AL-A0fh3Vzr73_vUhL1IXnYpbbVgbyhlib326GhLI478TOp7AW3SPp8UM0xyriOiOck8fJvcHKsS9563E0jkciGDh96ks9TNBwKfCUSpJeB1CLos4NsL2RgjU_6WXvY8TGvBEtOtdu0vXSkHizrADjjr7C1QyAWUxppGSUFzxPseIg488DezQzUw==)
-     > 新栄の「煮込み家 Matsu」と東桜の「松や酒店」のオーナーでもある和食料理人が手掛けており、「和食料理人のこだわりの出汁を使った旨味と甘味と辛味ある大人のご馳走カレー」をテーマにしています。築100年ほどの古民家を改装した店舗は、和と洋が織りなす古風でクラシカルな雰囲気が特徴です。
-  2. [和食料理人が手掛ける欧風カレー専門店であること、築100年の古民家を改装した店舗であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVRRqsJoM2pM2g9zKVw58LypuRKgZVJcLgclJtj59DHH3t_ALC0nJ2qLk9wUgct4F4UAPeJW_HX0bhwZJ58S8yFECSEsoJZ7tWasmOBBw23vzBPdXlhF5whgiQXy5os4ed-tc=)
-     > 和食料理人による欧風カレー専門店『松軒亭』千種にオープン
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004576942 -->
-
----
-
 ### からみそラーメンふくろう 名駅店（名古屋（名古屋駅/西区/中村区） / ラーメン・★4）
 
 - **status**: OK 🟢 high-conf (自動マージ候補)
@@ -786,27 +562,6 @@
      > 店主の佐藤智雄は、ラーメン消費量日本一の山形県で人気の「龍上海」のからみそラーメンに感銘を受け、同店で修行を積みました。「究極のラーメン2014 新店部門1位」、「ラーメンWalker2014 新人賞金賞」、「食べログ ベストラーメン2014受賞」、「究極のラーメン2015 みそラーメン部門1位」、「食べログ名古屋 ラーメン部門2016年1位獲得」、「食べログ愛知 ラーメン部門2017年1位獲得」
 
 <!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J001283454 -->
-
----
-
-### 尾張山荘 くろぎ（名古屋市中村区 / 日本料理、割烹・★5）
-
-- **status**: OK 🟡 review-required
-- **confidence**: 0.6
-- **editorReason**: 東京の名店「くろぎ」オーナーシェフ黒木純氏が手掛ける新業態。名古屋駅前ながら古民家を移築した山荘のような空間で、京料理と愛知の食材を融合させた名古屋限定コースが楽しめる。特別な日に相応しい一軒。
-- **insiderNote**: 本店オーナー黒木純氏はミシュラン星獲得、アイアンシェフで注目。料理長由水氏は「くろぎ上海」総料理長として高い評価を得た実力者。
-- **sources_used**:
-  1. [東京の名店「くろぎ」の新業態であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE13M08Jo1G2BvIpoVrFasGnquqLbPZHGkYgHuVY85TjMf4qGFviBOb8VNUadIY9wX6k-LEZUahnETb_Zjnbkw8_yBAlpa4l_Vm7xYriNA1cm5N71sOMh74kTYItO_pp-QYc4S130dycynfc6jToNvMqs2NF8_u)
-     > 東京の名店「くろぎ」の新業態として、名古屋駅前に「尾張山荘 くろぎ」がオープン。
-  2. [東京の名店「くろぎ」の新業態であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF6tL5FLt7pNom1S5TDBdHJku7gBI1u_8pTxjMUsTkwzyCo5_RCc70RZ4_fk0hgj6USyAwUo3JyopCs00bd2OTIbQUyiBUlAjesSXS4uxM0TOJxqPEmMrnEDieE_N4XuUqyeNTrSRHIae5aOfI1ShBV6mp_WgqcMgEJ4jNFr7r2Y1nrQQ==)
-     > 東京の名店「くろぎ」の新業態「尾張山荘 くろぎ」が名古屋駅前にオープン！
-  3. [東京の名店「くろぎ」のオーナーシェフ黒木純氏が手掛ける新業態であること、古民家を移築した山荘のような空間であること、京料理と愛知の食材を融合させた名古屋限定コースが提供されること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGYPNpk_izryZtkzGvINeGevLiy8uT-r6IEYjCIXNyud2EHmQD5eCqAJ1x0qPQ7CVSlzGEAZB-tlN93tJo4EmyQ5GfIC-3ZSx0BMiPvhkZOJEXhsm0g0KHmpWSqwWbCmcAkFiRXL5Z4T9K2MXcdU-dRhCqJAUg=)
-     > 東京の日本料理店「くろぎ」のオーナーシェフ黒木純氏が手掛ける新業態「尾張山荘 くろぎ」が、2026年7月24日(金)に名古屋駅前に開業します。
-名古屋駅前という立地でありながら、築100年以上の古民家から移築した建材をふんだんに用いた店内は、山荘のような落ち着いた空間を演出。
-料理は、京料理の趣と愛知県の食材を融合させた名古屋限定のコースが提供されます。
-- **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_尾張山荘くろぎ -->
 
 ---
 
@@ -853,31 +608,6 @@
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
 <!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004510092 -->
-
----
-
-### 百濟 ペクチェ（大曽根･千種･今池･池下･守山区 / 韓国料理・★4.1）
-
-- **status**: OK 🟡 review-required
-- **confidence**: 0.6
-- **editorReason**: 「食の宝庫」全羅道の珍しい食材と、韓国西海岸産雌ワタリガニのカンジャンケジャンで本場の味を追求。豊富なミッパンチャンや異国情緒あふれる空間、丁寧な接客も魅力で、地元メディアや有名人にも愛される本格韓国料理店です。
-- **insiderNote**: 名古屋最大級のWebメディア「ナゴレコ」で人気と評され、他シェフもカンジャンケジャンを推薦。本場の味と雰囲気を楽しめる本格韓国料理店として、業界内でも注目されています。
-- **sources_used**:
-  1. [「食の宝庫」全羅道の珍しい食材を用いた伝統料理を提供していること、および主要グルメサイトに掲載されていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGzKEULnT4i5CUlbJV47xwy_CjzH9CBhrmxYCGGrhSAY4M3po0_0kXWrZqTdYVCxCGjs_K3JJjQCxoiA2koufk742c12bWRBOu7BXIHnTtXzKhKcQ==)
-     > 「百濟 ペクチェ」は、韓国の「食の宝庫」として知られる西海岸・全羅道で栄えた古代王国に由来しており、この地で親しまれてきたメセンイ、コダリ、コマクといった日本では珍しい食材を用いた、現地の伝統料理を提供することにこだわっています。
-  2. [名物のカンジャンケジャンが韓国西海岸産の雌ワタリガニを使用し、特製醤油ダレに漬け込まれていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEQFuM9xJCToo5txGE1CnEkWlra4JaT-KUVSWILQ2KlZ6ymd5bN5LxpVL7NuRp0-5_MV_tMVKr2sUPDWbNDrfcRoeAyb_BKze5VZaZR4si-z4rM5KFabKxFi5koj5aTqOx0o95rDusHdl6xPiuliLZY4cuEFMmeQsgDnw==)
-     > 特に名物のカンジャンケジャンは、韓国西海岸産の濃厚な旨みとぷりぷりとした身が特徴の雌ワタリガニを使用し、特製醤油ダレに漬け込むことで、身の甘みと醤油の深いコクが重なり合う逸品として提供されています。
-  3. [異国情緒あふれる空間作りがされていること、豊富なミッパンチャンが提供されること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFMUnk8QXAvtOfvVwzgnAXnYu3vHKJUOR_l8aWO4aJ5v_WlQ4fwAUsQ2qiwQudDum2F8ettNSlIFFc1MjDJ2SVNe2jBjtonn4Bq6xakgDFPrAYZPOXnzh0P7lKdYK86ZjaxrZ6zS9K_XaPaOvHmyMcsXiAA0ubGMwj-)
-     > 店内はアットホームで居心地の良いカジュアルな雰囲気で、お子様連れも歓迎されています。店内では韓国語が飛び交い、照明に韓紙が使われるなど、まるで韓国にいるかのような異国情緒を味わえる空間作りがされています。
-  4. [スタッフが親切で気配りがあり、料理の美味しい食べ方を丁寧に説明してくれること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGYMpM3s-xoNKb377PAx52DjN1GU9yg-Xmxj3L9EpnJpcRh9uDY48618BRoclGDGDyPJ2Pa9ZFOE8mcW-xPESSayx3kUP24TsHMF0nNSxlTzN8smTfkMWN_xC9SMorBbGUj7cU_z2QHepGL)
-     > 接客においては、スタッフが親切で気配りがあり、カンジャンケジャンなどの料理を最も美味しく食べる方法について丁寧に説明してくれるため、食事体験が向上すると評価されています。
-  5. [「ナゴレコ」で取り上げられ、名古屋の韓国料理店の中でも人気が高いと評されていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGHNu0k8uVp40lw5n9uFpmxGrh8pTYun8g5wZG5FiT9WjLQkT1gSHDdRFrw9Yzk1ZAyn-i6-CBgeTO8eBKAkeq2uvJcenuMIZFeS-QhkWHlLVJYbRy4yj_p57qLbjM7vc4XK_4w3499lAM=)
-     > 「名古屋最大級のWebメディア」と称される「ナゴレコ」でも取り上げられ、名古屋の韓国料理店の中でも人気が高いと評されています。
-  6. [グルメサイト「ヒトサラ」で他のシェフからカンジャンケジャンが特に美味しいと推薦されていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHl0QUvOaFDX2nafN2o0fE7lwvEtyJTDY_MAU35p7jj8qkRWe0INEeoH5D0GxTfhMa8QYSlngIDeM5stsc99BM9KtodNtxCK9XdQsq1Qvt-CFTyFuhO60nkUse_DqvpiQs3hM3cTA==)
-     > グルメサイト「ヒトサラ」において、他のシェフから「『カンチャンケジャン』がとくにおいしい」と推薦されています。
-- **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J000767376 -->
 
 ---
 
@@ -929,44 +659,25 @@
 
 ---
 
-### キムラーメン（名古屋（名古屋駅/西区/中村区） / ラーメン・★4）
+### とんかつ八千仙（名古屋（名古屋駅/西区/中村区） / 洋食・★4.2）
 
 - **status**: OK 🟢 high-conf (自動マージ候補)
 - **confidence**: 0.9
-- **editorReason**: キムラーメンは、背脂の甘みが特徴的な豚骨醤油スープと、喉越しの良い中太麺が高く評価されています。ランチタイムにはライスと数種類のお惣菜が食べ放題となり、顧客満足度を高めるサービスも魅力です。
-- **insiderNote**: 店主は4種の味噌と酒粕を使った味噌だれや、背脂の甘みが特徴の豚骨醤油スープにこだわり、サイドメニューも充実。ランチのお惣菜食べ放題など、顧客満足度を高める工夫が光る。
+- **editorReason**: 大正時代からの名店の味を受け継ぐ老舗として、店主の誇りが伝わる格別のとんかつを提供。注文後に揚げるスタイルで、肉の柔らかさも半端ないと高評価。昭和の雰囲気漂う路地裏の隠れた名店として、Rettyでも多数の口コミを集めています。
+- **insiderNote**: 大正時代からの名店の味を受け継ぎ、店主の仕事への誇りとプライドが味に表れるとんかつ店。注文後に揚げるスタイルもこだわりを感じさせます。
 - **sources_used**:
-  1. [背脂の甘みが特徴的な豚骨醤油スープの評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNS_BIZceHJzdbPSpAKo4HIDk_jvhRonksBPnDvTpMu0PMalj2n4IHFc8g3x0j7QnumAywaZaqAd2JrwRyHf41w-rPDNbKcyYuLMNxy0sFcRipFk95gGMETih4afbJ0BcS4buJVG3Al-6y1U80MWSy5w==)
-     > 豚骨醤油スープは絶品で独特の背脂の甘みが癖になる味
-  2. [豚骨醤油スープの濃厚さとバランス、中太麺の食感とスープとの絡みの評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJA3JH2-dDU1iCrwugKYCKKaH0pxZc0EdLdZGa1PVSHM5ukpJLDeqtNZ1vlKmnn2jKygqec8Iabe31XxyiW4YpPGLp3sdhsEFmzIOpjwbJLlVxdj8XM9Zj82gcI4gmBNrgohcAcRGLWWBby5y8WimtdZ-NUztn8zk_tg==)
-     > 濃厚でコクある出汁の旨みが効いたスープながらもコテコテ感はあまりなく、ボソッとした食感の中太麺と程よくジューシーで肉感もあるチャーシューも絡めながら美味しく堪能できる
-  3. [喉越しの良い麺の評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzI5Kmai8ebT4rq57OoT8hME2M_Jk_ApYCgRWLvzI0tfA5-UuVFtRd4RUN_Tknl6L97cbMedmWJYoZaQCqN_QiYSvui6MUeStf8nDEXylbilwOEgqOKN1ayoqVi5O8Bmk12cBkcag-mQMxshWR4sOTpydo9RS6yejF)
-     > 麺が旨～いΨ(￣∇￣)Ψ 素晴らしく喉越しの良い麺だがしっかりとスープを持ち上げてマジ旨！
-  4. [ランチタイムのライスとお惣菜食べ放題サービス](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNS_BIZceHJzdbPSpAKo4HIDk_jvhRonksBPnDvTpMu0PMalj2n4IHFc8g3x0j7QnumAywaZaqAd2JrwRyHf41w-rPDNbKcyYuLMNxy0sFcRipFk95gGMETih4afbJ0BcS4buJVG3Al-6y1U80MWSy5w==)
-     > ランチタイムには、ライスと数種類のお惣菜が食べ放題となるサービスがあり
-  5. [ランチタイムのライスとお惣菜食べ放題サービス](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJA3JH2-dDU1iCrwugKYCKKaH0pxZc0EdLdZGa1PVSHM5ukpJLDeqtNZ1vlKmnn2jKygqec8Iabe31XxyiW4YpPGLp3sdhsEFmzIOpjwbJLlVxdj8XM9Zj82gcI4gmBNrgohcAcRGLWWBby5y8WimtdZ-NUztn8zk_tg==)
-     > ランチタイムには、ライスと数種類のお惣菜が食べ放題となるサービスがあり
-  6. [ランチタイムのライスとお惣菜食べ放題サービス](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzI5Kmai8ebT4rq57OoT8hME2M_Jk_ApYCgRWLvzI0tfA5-UuVFtRd4RUN_Tknl6L97cbMedmWJYoZaQCqN_QiYSvui6MUeStf8nDEXylbilwOEgqOKN1ayoqVi5O8Bmk12cBkcag-mQMxshWR4sOTpydo9RS6yejF)
-     > ランチタイムには、ライスと数種類のお惣菜が食べ放題となるサービスがあり
+  1. [大正時代からの名店の味を受け継ぐ老舗であること、店主の仕事への誇りとプライドが味に表れていること、肉の柔らかさが高評価であること、注文後に揚げる提供スタイルであること、昭和の雰囲気と路地裏の隠れた名店であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQtPf353LsPK9eRFsxAT_bipxFQjkUYYR6zF_huNAZ5EAUFGtylHB8nYWNQxS_4ThMmKF1FbnbP6eaBXWbt37QMEOyaOY132TuY6W49g3dQnin2LgbkKgoiEXqaqnyqVjSWNcLW8pye0Jhew1VW4uO)
+     > 大正時代から昭和にかけて存在した「ステーキハウス八千代本店」の分店であり、その名店の味を引き継ぐ老舗として、提供されるとんかつは「格別の美味しさ」と評価されています。また、「仕事に誇りとプライドを感じるとんかつ」を提供し、「マスターのハートが味で伝わってくる」と評価されています。とんかつは「柔らかくていい仕事をしている」と評され、「肉の柔らかさも半端ない」という声もあります。注文が入ってからとんか
+  2. [大正時代からの名店の味を受け継ぐ老舗であること、店主の仕事への誇りとプライドが味に表れていること、肉の柔らかさが高評価であること、注文後に揚げる提供スタイルであること、昭和の雰囲気と路地裏の隠れた名店であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHJfyvz9HZ61JffmkJjCxN5zihxOAyxjw6HUCZbI2NnEMYsUNY0fcgOSPxsoPqjQmOUVnuIMcGasOA29OL7gTvi8sRAINJ_KEWOYneyvhpAlZEpCUtpNp8h9Zy7g9ziSwGzxiLrtuOCn9IuidRbm9yWF5VdCSJ4HR0VaPnbmgFeU0K7oH0C-gLVt-EWfWXmLRo08oZ91w-BvPWw7pLsEasp2pKt54eahaLyit4YPYt2D32A7FPOF0IIH4QHB90zgSRKgojRh_V73PVrDbB1ULOYgn6fwdsryQBOtMpi-f6Ytt4Oth8kN_p-mH6SlUMFif0B7Vkou9h1RXMKMYiW01NPWOYrSDWPTH4AW-Ziw_-hsv-DwGSiE5yxfYeffFBFG9B7blxYaCPMdacfcCbhnA==)
+     > 大正時代から昭和にかけて存在した「ステーキハウス八千代本店」の分店であり、その名店の味を引き継ぐ老舗として、提供されるとんかつは「格別の美味しさ」と評価されています。また、「仕事に誇りとプライドを感じるとんかつ」を提供し、「マスターのハートが味で伝わってくる」と評価されています。とんかつは「柔らかくていい仕事をしている」と評され、「肉の柔らかさも半端ない」という声もあります。注文が入ってからとんか
+  3. [注文後に揚げる提供スタイルであること、昭和の雰囲気と路地裏の隠れた名店であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHOgeZqLPElY2RaTHzt5AsX-y6ZFfi7C9Sezx7Q1dH926TndjPS4F50zLUFrTnncsdCk_ReR9_WVy8eISpuuiz4cw5xby8WhQ7iBs7yB-2yfpp7pezpse2nidM5UfNoTYVmqAA=)
+     > 注文が入ってからとんかつを揚げるため、小気味良い揚げる音が店内に響き、心地よい雰囲気を作り出しています。店内は昭和の雰囲気とノスタルジーを感じさせる空間で、路地裏にひっそりと佇む隠れた名店とされています。
+  4. [Rettyに多数の口コミが掲載され、高い評価を得ていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQUXiKmWHjz7TTJwSkfBWLviP_8phgnhmua38Td-XHkaxansqEHemcQOFpwsoK9MxCByXp6qWc8QpZG8Eh44nGE2b1W3jVtag_omlwB6vLG_ZyANW5DUOpDW1YsirT9jGDE7sdeiJWbIJGNAQXsxcpYw==)
+     > グルメサイトRettyに多数の口コミが掲載されており、ユーザーから高い評価を得ています。
+  5. [Rettyに多数の口コミが掲載され、高い評価を得ていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGqeQThEdbpRbwOWNN2fa0PLjoWg-N9lv4QkQLxp5DiDTR5ccSVSixuapGxVQZhmhDN3teeFaHyKsjWiIrzku5XkytgNa1F9PIEN4ji5BBHEDni_M9DClSRmrnrlANSA9tM21IZ5NSJM2m0ylCD1hiUgAFjgS3W92EzTA==)
+     > グルメサイトRettyに多数の口コミが掲載されており、ユーザーから高い評価を得ています。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J000429965 -->
-
----
-
-### じゃんと1番家（栄(ミナミ)/矢場町/大須/上前津 / 韓国料理・★4.8）
-
-- **status**: OK 🟡 review-required
-- **confidence**: 0.6
-- **editorReason**: 主要グルメサイトに掲載されネット予約にも対応しているため、集客力と利便性が高い。じゃらんnetの名古屋市中区韓国料理ランキングで7位にランクインしており、一定の評価を得ている点が業界視点で注目される。
-- **insiderNote**: 主要グルメサイト掲載とネット予約対応で集客力と利便性が高く、じゃらんnetのランキング入りも評価の証。貸切可能で女子会にも人気な点は、幅広い客層を取り込める強みとなる。
-- **sources_used**:
-  1. [主要グルメサイトへの掲載とネット予約対応](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFBHYpon_EwdiLynkComqvHMvx6ITYYhLqWFtO4D57ZlptqLuXBIdrAJhy0a-RaEGWN00nBo29f112FEkdWjGKahAZTENIxSsbEvrS5TawqSPeRf31Yk-sep3ZGhEzL)
-     > ホットペッパーグルメやヤッピーダイニングなどの主要なグルメサイトにも掲載されており、ネット予約も可能です。
-  2. [じゃらんnetのランキング入り](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEccks61JFhqglvuZjP701Fyu35zqPeKEdUb7xyRuGHwxU0SlBU8ep6x2nzAIjDfG3gV50qITwYv1Z8Co3QeydWC4jIRnMM32cB37zzZz4VQ14VTQstm0Ps9SS7KUZiUhMdP6jBoUAhJq-L0mlL6K_h)
-     > じゃらんnetの「名古屋市中区の韓国料理ランキング」で7位にランクインしています。
-- **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004403517 -->
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J000392943 -->
 
 ---
 
@@ -985,27 +696,6 @@
 
 ---
 
-### 寧々家 一宮駅前店（栄 / 居酒屋・★4.2）
-
-- **status**: OK 🟡 review-required
-- **confidence**: 0.6
-- **editorReason**: 全席個室でプライベートな空間を提供し、和洋中の創作料理と豊富なドリンクで幅広いニーズに応える居酒屋。主要グルメサイトへの積極的な掲載からも、顧客満足度と集客への高い意識が伺えます。
-- **insiderNote**: 店名に込められた「心を込めて美味しい料理とあたたかいサービスを提供していく」という志は、顧客体験を重視する現代の飲食店経営において重要な要素です。
-- **sources_used**:
-  1. [全席個室または半個室を多数完備しており、プライベートな空間でゆったりと過ごせる点](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG9UPEC0JBKuV8mgiYlTv6DAbO9t3om4KSdKs5NivJOBsqp27CPuBvX2eDPnPnY4HfwoghM3AZGfwj1iRay_RaHAzW1ftEPSJIi73Poy4gx5cBPifP4fXaTT_w40f8-AWf2)
-     > 全席個室でゆったりと過ごせる空間
-  2. [和・洋・中などの創作料理をベースにした多種多様な料理と、ノンアルコールカクテルも充実した豊富な種類のドリンクを提供している点](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG9UPEC0JBKuV8mgiYlTv6DAbO9t3om4KSdKs5NivJOBsqp27CPuBvX2eDPnPnY4HfwoghM3AZGfwj1iRay_RaHAzW1ftEPSJIi73Poy4gx5cBPifP4fXaTT_w40f8-AWf2)
-     > 和・洋・中などの創作料理をベースにした多種多様な料理と、ノンアルコールカクテルも充実した豊富な種類のドリンクを提供
-  3. [ホットペッパーグルメなど主要なグルメ情報サイトに掲載されている点](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG9UPEC0JBKuV8mgiYlTv6DAbO9t3om4KSdKs5NivJOBsqp27CPuBvX2eDPnPnY4HfwoghM3AZGfwj1iRay_RaHAzW1ftEPSJIi73Poy4gx5cBPifP4fXaTT_w40f8-AWf2)
-     > ホットペッパーグルメ
-  4. [店名に込められた「心を込めて美味しい料理とあたたかいサービスを提供していく」という志](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHeto4TRToQKKKuhbcccQ-36r0VW_8G2x5SBXrAoX-DmS3BXBT1Lg2xWx3iMoR2IL1MDExA4tv8G64V295DvPJDamGDTzkgIE8D42HiTULrfViAndbU6eiOO4og--FJ_g3L4jFJVo85Al9i)
-     > 「寧々家」という店名には、「テーブルの上に皿が乗り、心を込めて蓋をかぶせてある」という漢字の成り立ちから、「心を込めて美味しい料理とあたたかいサービスを提供していく」という志が込められています。
-- **warnings**: 3件のURLが実際の検索結果に無いため除外（要確認）
-
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J001011062 -->
-
----
-
 ### de trente ans ドゥ トランタン（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄 / ダイニングバー・バル・★5）
 
 - **status**: INSUFFICIENT_EVIDENCE ⚪ INSUFFICIENT
@@ -1016,23 +706,50 @@
 
 ---
 
-### 那古野 しば福や 名駅店 (なごの しばふくや めいえきてん)（名古屋市中村区 / ひつまぶし、丼もの、和食・★4.6）
+### 大衆焼肉 こたろう 守山小幡店（大曽根･千種･今池･池下･守山区 / 焼肉・ホルモン・★3）
 
-- **status**: OK 🟢 high-conf (自動マージ候補)
-- **confidence**: 0.9
-- **editorReason**: 名古屋のうなぎ名店で修行を積んだ店主が、実家養殖業の知見とサラリーマン経験を活かし、型にはまらないうなぎ料理と本格和食を提供。本店はミシュラン認定の実績を持ち、上質な空間で幅広い客層に対応する点が業界から注目される。
-- **insiderNote**: うなぎ養殖業出身で「うな富士」で修行した店主の確かな腕と、サラリーマン経験を活かした型にはまらないメニュー考案が強み。本店はミシュラン認定。上質な空間で幅広い客層に対応し、価格高騰下でも品質維持に努める姿勢は評価に値する。
+- **status**: OK 🟡 review-required
+- **confidence**: 0.8
+- **editorReason**: 独自の仕入れルートでA5ランク黒毛和牛をリーズナブルに提供。ドリンクも199円と低価格にこだわり、モバイルオーダーや多様な席種で幅広い客層に対応。高品質と利便性を両立した大衆焼肉店として注目。
+- **insiderNote**: 肉のプロによる目利きでA5ランク黒毛和牛を安定供給。ドリンクも「家で飲むより安い」を目標に設定し、顧客満足度を高める工夫が見られる。
 - **sources_used**:
-  1. [店主の経歴（実家がうなぎ養殖業、サラリーマン経験）、型にはまらないメニュー考案、本格和食の提供、上質な空間と幅広い客層への対応、本店のミシュラン認定](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHAW-557fM2C-Xe8-hA_2PXcG-RYDEiAXeSYmxt4jqm18qaSuKhQZ9DnZTQH-gQL20APovFDlfGhpCDgNItsL11Ft35RbccLuHQFzcUktRWGyFBlGj4rNoJBBgmPlemsQ==)
-     > 店主である柴田哲滝氏は、実家がうなぎの養殖業を営んでいたため、幼少期からうなぎに親しんできました。大学卒業後、8年間サラリーマンを経験した後に、父親の背中を見てうなぎの世界へ飛び込んだと語っています。サラリーマン時代の経験が「うなぎ料理の型にはまらない」という強みとなり、画期的なメニュー考案に繋がっていると考えています。また、「極上のうなぎと本格和食を楽しめるお店」として、接待や特別な会食に最適な
-  2. [店主の経歴（実家がうなぎ養殖業、サラリーマン経験）、型にはまらないメニュー考案、本格和食の提供、上質な空間と幅広い客層への対応、本店のミシュラン認定](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHD--2HxD94UA9-aAOUZecLfmD-TKIuimtPn9HMPRF5ZKnDD5Lo06vWmtFhq0hNectMiX6n6BYIyMFKGynMcnrX9gSVDyBvThIBNh-HQAEj564hvwV0ceI=)
-     > 店主である柴田哲滝氏は、実家がうなぎの養殖業を営んでいたため、幼少期からうなぎに親しんできました。大学卒業後、8年間サラリーマンを経験した後に、父親の背中を見てうなぎの世界へ飛び込んだと語っています。サラリーマン時代の経験が「うなぎ料理の型にはまらない」という強みとなり、画期的なメニュー考案に繋がっていると考えています。また、「極上のうなぎと本格和食を楽しめるお店」として、接待や特別な会食に最適な
-  3. [店主が名古屋のうなぎ名店「うな富士」で修行した経験](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQExVsUNdgQJnyqqMOgJpVdOKFVNMa0zmHwzQmc5MjfflxhyA60tYQqMHoaq7wdrBW1RgPDrTTMhbD_tpaxQwlrfG7fGNQwvoQfnjYd59S1B1YGn8g8i1PC4TXMbql0uDWgcoVuptA==)
-     > 店主の柴田哲滝氏は、名古屋を代表するうなぎの名店「うな富士」で約15年間修行を積んだ経験があります。
-  4. [店主が名古屋のうなぎ名店「うな富士」で修行した経験、本格和食の提供、本店のミシュラン認定](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGo7HwW9GM4G4s0Jw7O7PwvSwncMBegKyhrr8d2XzAwMMKSipnhFQZPotqwKtNYRTOKtm9Mvs6_9mnid0QDRhvZfZ9CP5obJskPshKhg7iUv2TuJ4I6qIrhVOY=)
-     > 店主の柴田哲滝氏は、名古屋を代表するうなぎの名店「うな富士」で約15年間修行を積んだ経験があります。 「那古野 しば福や 名駅店」では、うなぎ料理だけでなく、割烹出身の料理人による季節感あふれる和食も提供しています。 本店である「うなぎ家 しば福や」は、オープン翌年の2019年にはミシュランガイドのビブグルマン部門に認定されています。
+  1. [A5ランク黒毛和牛をリーズナブルに提供していること、肉のプロが目利きしていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgfI96KWMT-tZzyMWmHX8yaMHtFJGZUoMQEvg8odFyidBth4vAReC6_O6ef6upikiUE30eoBd9C60_PZyuyV8gwWKiscWnn07ajAJmXwps0pKTG92U72AY)
+     > 独自の仕入れルートにより、他店では提供できない価格でA5ランクの黒毛和牛を提供することにこだわっています。
+  2. [A5ランク黒毛和牛をリーズナブルに提供していること、肉のプロが目利きしていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtQbuyBK19CbdTxoDNIA9bfsc8XhEySO0erTNOxZn9iEHcsZNCHYWhG5sHnO_018Xx2MTnQFPy-LzKvnFABOBR87o4BAQY0yT9s6MfIBGgX2Wg4NAxTPuXsL-emCkEOkCtsr0=)
+     > 独自の仕入れルートにより、他店では提供できない価格でA5ランクの黒毛和牛を提供することにこだわっています。
+  3. [ドリンクを199円と低価格で提供していること、家で飲むより安いを目標にしていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgfI96KWMT-tZzyMWmHX8yaMHtFJGZUoMQEvg8odFyidBth4vAReC6_O6ef6upikiUE30eoBd9C60_PZyuyV8gwWKiscWnn07ajAJmXwps0pKTG92U72AY)
+     > ドリンクについても「家で飲むより安い」を目標に、レモンサワーやハイボールなどを199円（税込）で提供する価格設定にこだわっています。
+  4. [ドリンクを199円と低価格で提供していること、家で飲むより安いを目標にしていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtQbuyBK19CbdTxoDNIA9bfsc8XhEySO0erTNOxZn9iEHcsZNCHYWhG5sHnO_018Xx2MTnQFPy-LzKvnFABOBR87o4BAQY0yT9s6MfIBGgX2Wg4NAxTPuXsL-emCkEOkCtsr0=)
+     > ドリンクについても「家で飲むより安い」を目標に、レモンサワーやハイボールなどを199円（税込）で提供する価格設定にこだわっています。
+  5. [モバイルオーダーシステムを採用していること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgfI96KWMT-tZzyMWmHX8yaMHtFJGZUoMQEvg8odFyidBth4vAReC6_O6ef6upikiUE30eoBd9C60_PZyuyV8gwWKiscWnn07ajAJmXwps0pKTG92U72AY)
+     > オーダーは原則としてスマートフォンなどからのモバイルオーダーを採用しています。
+  6. [モバイルオーダーシステムを採用していること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtQbuyBK19CbdTxoDNIA9bfsc8XhEySO0erTNOxZn9iEHcsZNCHYWhG5sHnO_018Xx2MTnQFPy-LzKvnFABOBR87o4BAQY0yT9s6MfIBGgX2Wg4NAxTPuXsL-emCkEOkCtsr0=)
+     > オーダーは原則としてスマートフォンなどからのモバイルオーダーを採用しています。
+  7. [多様な利用シーンに対応する店内（ボックス席、個室）があること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgfI96KWMT-tZzyMWmHX8yaMHtFJGZUoMQEvg8odFyidBth4vAReC6_O6ef6upikiUE30eoBd9C60_PZyuyV8gwWKiscWnn07ajAJmXwps0pKTG92U72AY)
+     > 各席にロースターと排気ダクトが設けられたボックス席が中心で、仕切りがあり広めのテーブルやシートは家族連れなどの小グループが利用しやすい雰囲気です。引き戸のある個室席も用意されています。
+  8. [多様な利用シーンに対応する店内（ボックス席、個室）があること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtQbuyBK19CbdTxoDNIA9bfsc8XhEySO0erTNOxZn9iEHcsZNCHYWhG5sHnO_018Xx2MTnQFPy-LzKvnFABOBR87o4BAQY0yT9s6MfIBGgX2Wg4NAxTPuXsL-emCkEOkCtsr0=)
+     > 各席にロースターと排気ダクトが設けられたボックス席が中心で、仕切りがあり広めのテーブルやシートは家族連れなどの小グループが利用しやすい雰囲気です。引き戸のある個室席も用意されています。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_那古野しば福や名駅店(なごのしばふくやめいえきてん) -->
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004634164 -->
+
+---
+
+### うなぎのしろむら 泉本店（栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄 / 和食・★4.5）
+
+- **status**: OK 🟡 review-required
+- **confidence**: 0.6
+- **editorReason**: 名古屋名物ひつまぶしを卵黄醤油漬けなど独自の4通りで提供。さらに職人による完全無血化と熟成技術で生み出された「熟成うなぎのお造り」は、うなぎ料理の新たな可能性を切り拓く革新的な一品です。
+- **insiderNote**: 一尾入魂の精神で活きたまま捌き、独自のこなし焼きで仕上げる職人の技は、うなぎ本来の旨さを最大限に引き出しています。
+- **sources_used**:
+  1. [ひつまぶしの独自の提供方法、熟成うなぎのお造り、活きたまま捌くこだわり、独自のこなし焼き](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF2VxD4iL3S79rjKS4l5Cze7I1LFaoy1J7zmFA4iR4OyJMoWOd0oTRtfZaTpUJdFGB05kBF5Y3_h_0ZtoO5-pmY_Ny-Mupn7Ld56AncY3S8eolhZWCpzI8OVuraZ02QLBA=)
+     > 名古屋名物の「ひつまぶし」は、そのまま、薬味と、そして自家製の卵黄醤油漬けやとろろと一緒に、さらにお茶漬け出汁でと、独自の4通りの楽しみ方を提案しています。特に、一般的なひつまぶしの3杯目に出汁茶漬けを挟む代わりに、濃厚な卵黄をかけた卵かけごはんを提供するという独創的なスタイルも特徴です。さらに、うなぎの新しい楽しみ方として、長年の研究を経て職人の手によって完全無血化を実現した「5日間以上熟成させ
+  2. [ひつまぶしの独自の提供方法と熟成うなぎのお造り](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHCLLtQJs-zLFm1gLihOLBEFwR9PcsIZ0Dcr3Mi7bKrqBbdnz0Jk2m2lr556pGtBcAAFilh3CY2Jlh0qNZ9JOrgXaszuIlbdonc_uQUAVdoHqk7-8DFwjoPmfv8YtXQiipw-7VLvQ==)
+     > 名古屋名物の「ひつまぶし」は、そのまま、薬味と、そして自家製の卵黄醤油漬けやとろろと一緒に、さらにお茶漬け出汁でと、独自の4通りの楽しみ方を提案しています。特に、一般的なひつまぶしの3杯目に出汁茶漬けを挟む代わりに、濃厚な卵黄をかけた卵かけごはんを提供するという独創的なスタイルも特徴です。さらに、うなぎの新しい楽しみ方として、長年の研究を経て職人の手によって完全無血化を実現した「5日間以上熟成させ
+  3. [熟成うなぎのお造りという革新的な料理と職人の高い技術](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHEHET-WcSQwCHaqlGKsbTMWZ_AMVz_PB1919squltGTmhpe0jn8aNHEtT9AyrNLfYMehGu04bF2JfiWEDkq-nmJRYGiVcs7H_JHKwmXpFrx4oOx-A8VKcMilHBAWbh)
+     > 2024年12月には、三河一色産活うなぎを使用した熟成うなぎのお造りとしゃぶしゃぶ会席料理の予約受付を開始したことが報じられています。職人の技術は高く評価されており、活きたうなぎを丁寧に捌き、独自の技法「こなし焼き」で香ばしく、外はパリッと中はふっくらと焼き上げる技術が特徴です。特に、うなぎの生食と熟成に関する長年の研究を経て、職人の手によって「完全無血化」を実現し、5日間以上熟成させることで旨味
+- **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004026266 -->
 
 ---
 
@@ -1055,6 +772,31 @@
      > 葛原シェフの料理は、「余韻と記憶」というコンセプトに基づき、五感に深く刻まれる物語のような体験を提供すると評されています。0.1度単位で温度を見極める火入れや、素材の可能性を最大限に引き出す繊細な技術を駆使し、現代フレンチの枠に収まらない独自の世界観を追求しています。
 
 <!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_レミニセンス(reminiscence) -->
+
+---
+
+### 那古野 しば福や 名駅店（名古屋（名古屋駅/西区/中村区） / 和食・★4.6）
+
+- **status**: OK 🟡 review-required
+- **confidence**: 0.6
+- **editorReason**: 名古屋の名店『うな富士』で15年修行した店主が、実家の養殖業で培った目利きと異業種経験を活かし、伝統と革新を融合したうなぎ料理を提供。元の店舗はミシュランガイド・ビブグルマン認定実績があり、上質な空間で本格和食と共に楽しめる。
+- **insiderNote**: 店主は『うな富士』で15年修行し、実家の養殖業で培った目利きを持つ。異業種経験から型にはまらないメニューも考案。原材料高騰の中でも質を維持し、2026年2月に価格改定を実施。
+- **sources_used**:
+  1. [店主が「うな富士」で15年修行したこと、実家の養殖業で培った目利きを持つこと、異業種経験から型にはまらないメニューを考案すること、元の店舗がミシュランガイド・ビブグルマンに認定されたこと](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHDf1QVWRelp8KQylvxzq77UEU9cT1OISXYkhtAGxtT-2BVUwvuN0En7q_212YjVD5b5wwNjgxKxW9o3jpZHz-oCrXrPALFNR0BkjwLMOuo084osKfh8ayU9lvVrvJKjYtA)
+     > 店主の柴田哲滝氏は、名古屋の名店「うな富士」で15年間修行した経験を持ち、実家のうなぎ養殖業で培った目利きで上質なうなぎを厳選して仕入れていると評価されています。また、うなぎ料理の伝統的な枠にとらわれず、肝のアヒージョや鰻のスモークといった革新的なメニューを考案する能力も評価されています。元の「しば福や」（四間道）は、オープン翌年の2019年にはミシュランガイドのビブグルマン部門に認定されており、
+  2. [店主が実家の養殖業に携わり目利きを持つこと、異業種経験から型にはまらないメニューを考案すること、伝統と革新を融合したうなぎ料理を提供すること、上質な空間で本格和食を提供すること、原材料費高騰による価格改定](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHAH8nanCsc76QFPTlSuI-hFL9Mw6Xw7oKWIsTbpAq5jVgGxSmxVmwfjJmUol28xt6X9-xflDv1ds0ouDj9YebqcfHa1Vsiu5IGsyjQQ3I3zV2K7_b4OiF293pjTkYZyw==)
+     > 店主である柴田哲滝氏は、幼少期から実家のうなぎ養殖業に携わり、うなぎと密接な関係を築いてきました。大学卒業後、8年間異業種でサラリーマンを経験したことが、うなぎ料理の「型にはまらない」画期的なメニュー考案に繋がっていると述べています。また、名古屋の有名店「うな富士」で15年間修行を積んでおり、実家の養殖業で培った目利きで上質なうなぎを厳選して仕入れています。伝統的な蒲焼に加え、肝のアヒージョや鰻の
+  3. [上質な空間で本格和食を提供すること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGI2U5ZAM80ViRyHslP3XyL9qcPlsxKDPr6LUq0788VN6vtp3Y58VrSM7ztwiSvLwvg0PFhaJybtAm5Tt6f3nCJyQ7esxu4RS9f1EAcuugabzaotlnK3iw=)
+     > 和を基調とした落ち着いた雰囲気で洗練された印象の店内には約80席が設けられています。2階はカウンター席、3階はテーブル席が中心で、5部屋以上の個室も完備しています。
+  4. [上質な空間で本格和食を提供すること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFwSCxCG-BSKksheX0BvRDMmuU8cxfFcnvhXv6ZHznpVbYZ17FmucWcupaBW0Mq5Yn7TAmR8jukELmB4kHJftVYsMuvXN4l3kJBlmhO0jFyYcZPnnh72wewQe-21vcyPZ49IZNF0EoO)
+     > うなぎ料理だけでなく、四季折々の食材を活かした和食コースも提供しています。
+  5. [原材料費高騰による価格改定](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHQ79ny6eGjGHE1DFsImegW9h0G-Vzn9iiSyjbr19YR0-onuNoZgmW44H7ZQ-LGZQZdqqiaodijwcfa7WBoB_BI-O1h2wyMkt1vBIK2ZbJyu6BEe0h44H5ur-c=)
+     > 原材料費などの高騰がある中でも、質の高い料理提供に努めてきましたが、2026年2月より一部価格改定を行っています。
+  6. [店主が「うな富士」で15年修行したこと](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEvg101vP0voMwVqo9bmJAlKtUdkzpPlDY9sgbuCmePqUrCyZjaQJrvelx44atyqC7g1oXC8lwOYpnDVJqtQNXoqRXu-Rb7z-YbwT4Ja8Kp1p5glwc3JavZI_F2a4Fiwg==)
+     > 「至福のパリふわ 那古野しば福や 名駅店」として、名古屋駅近くで洗練された空間と極上のうなぎを楽しめる店として紹介されました。
+- **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J003671888 -->
 
 ---
 
@@ -1082,5 +824,327 @@
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
 <!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鮨旬美西川 -->
+
+---
+
+### トゥ・ラ・ジョア イズム（名古屋市中区 / イノベーティブ・フレンチ、創作料理・★4.6）
+
+- **status**: OK 🟡 review-required
+- **confidence**: 0.6
+- **editorReason**: シェフ須本氏が顧客カルテに基づき二度と同じ料理を出さない唯一無二のコースを提供。名古屋で最も予約困難な完全紹介制ながら、食べログアワード受賞歴も持つ、美食の芸術家による感動体験が魅力。
+- **insiderNote**: シェフは医療用遠心分離機や丸ごと食材購入など、常識外の手間を惜しまず、分子ガストロノミーも取り入れた創作料理を展開。空間デザインも一流で、美食クリエイターの異名を持つ。
+- **sources_used**:
+  1. [顧客カルテに基づく唯一無二の料理提供](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEC9MZB2pzDV2Syokn1YzY4tj5Bde9bo7c3VoRPrm5sG4WHZ-jHEBSByl71ufF1bx2W-5QfDq2n_TpWB4R94efTxaVPBYpI-QaoVlgzfZNYLpLlJfS77Gf2899j0D3lV2rOXAjz-b6P8LNTRpbvU387dg==)
+     > 独創性が高く、他の店と同じような料理は一切出さず、完璧な顧客管理のもと、顧客ごとに異なるメニューを提供している点が特筆されます。
+  2. [顧客カルテに基づく唯一無二の料理提供](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfU_xEqivrnoifELvJOEYQ8YolARj-ckLJAyGNUWS-vgzUE-2rtlQI9RdF876k92sus7uWFXpjVTA5qF9FGf1xAMnio55fFB6Q0QS7B_Ltt3vuRv7gpIOZttYDe2pwkJ0wM406z3tHGevlKLf1f1jRtg6eQRXraArP)
+     > 独創性が高く、他の店と同じような料理は一切出さず、完璧な顧客管理のもと、顧客ごとに異なるメニューを提供している点が特筆されます。
+  3. [名古屋で最も予約困難な完全紹介制](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEC9MZB2pzDV2Syokn1YzY4tj5Bde9bo7c3VoRPrm5sG4WHZ-jHEBSByl71ufF1bx2W-5QfDq2n_TpWB4R94efTxaVPBYpI-QaoVlgzfZNYLpLlJfS77Gf2899j0D3lV2rOXAjz-b6P8LNTRpbvU387dg==)
+     > 「名古屋で最も予約が取れないレストラン」の一つとして知られており、一見客お断りの完全紹介制で、電話番号も非公開です。
+  4. [名古屋で最も予約困難な完全紹介制](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfU_xEqivrnoifELvJOEYQ8YolARj-ckLJAyGNUWS-vgzUE-2rtlQI9RdF876k92sus7uWFXpjVTA5qF9FGf1xAMnio55fFB6Q0QS7B_Ltt3vuRv7gpIOZttYDe2pwkJ0wM406z3tHGevlKLf1f1jRtg6eQRXraArP)
+     > 「名古屋で最も予約が取れないレストラン」の一つとして知られており、一見客お断りの完全紹介制で、電話番号も非公開です。
+  5. [食べログアワード受賞歴](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH1zR9LvcIgLFKCOuAe3Qw0brXNV3d9QY_MKxhUwXmYg_nuOrAlBfvxrgYNXUHN5wtF_Ip8Hmb5tz-Wnl8lBh8UM8W0I0wI-Wxb27wJiThx8znbWAJvzXgfffswf5Q=)
+     > The Tabelog Award 2023 Bronze
+  6. [食べログアワード受賞歴](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG5XRbx6nOFsZ9NbEUog0ViJiiOAUadE54ByJENLB903fTpzp7J8ITcb1yhnOLYNEvuQd5dsKpO3CHzq3f_hPrF1-IWsVrcSHgfNKEjUzNIwo-AW3RUjkfvJaxjReHfGo-s1_03H_imidNIyg==)
+     > The Tabelog Award 2023 Bronze
+  7. [食べログアワード受賞歴](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFxE8kUbwMti-_hNW1jHL6jHXp8bz4KYMTPDRC3U2VCAQZ6yQu1UqvyqILUTFbmCs2qyg_oMTsw76LthJewij0WXs9v3RBMkOKTyXw2EhssNQL4fO-se9-VjDG9wVH4cigE6MJAKA==)
+     > The Tabelog Award 2023 Bronze
+  8. [食べログアワード受賞歴](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE0gporxXDZsEEjlPnEWWpjPxn4ZrFjPZBxVFY8kpNaye1pearG_ju8cTYGIxF1vKuXzYafKZunzJ1nx_XbBC0N-bEMbONkTdQcbLe-Fp8o29-x4vgTQ9-WwmedH_UqydvwMYNINOuQLw==)
+     > The Tabelog Award 2023 Bronze
+  9. [前身店の食べログアワード受賞歴](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEC9MZB2pzDV2Syokn1YzY4tj5Bde9bo7c3VoRPrm5sG4WHZ-jHEBSByl71ufF1bx2W-5QfDq2n_TpWB4R94efTxaVPBYpI-QaoVlgzfZNYLpLlJfS77Gf2899j0D3lV2rOXAjz-b6P8LNTRpbvU387dg==)
+     > 前身である「トゥ・ラ・ジョア」は食べログ4.5超え、「食べログアワード2017〜2021 SILVER」を受賞した名店でした。
+  10. [前身店の食べログアワード受賞歴](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfU_xEqivrnoifELvJOEYQ8YolARj-ckLJAyGNUWS-vgzUE-2rtlQI9RdF876k92sus7uWFXpjVTA5qF9FGf1xAMnio55fFB6Q0QS7B_Ltt3vuRv7gpIOZttYDe2pwkJ0wM406z3tHGevlKLf1f1jRtg6eQRXraArP)
+     > 前身である「トゥ・ラ・ジョア」は食べログ4.5超え、「食べログアワード2017〜2021 SILVER」を受賞した名店でした。
+  11. [一流の空間デザイン](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEC9MZB2pzDV2Syokn1YzY4tj5Bde9bo7c3VoRPrm5sG4WHZ-jHEBSByl71ufF1bx2W-5QfDq2n_TpWB4R94efTxaVPBYpI-QaoVlgzfZNYLpLlJfS77Gf2899j0D3lV2rOXAjz-b6P8LNTRpbvU387dg==)
+     > ディズニーシーに携わった人物が空間デザインを手掛けたという情報もあります。
+  12. [一流の空間デザイン](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfU_xEqivrnoifELvJOEYQ8YolARj-ckLJAyGNUWS-vgzUE-2rtlQI9RdF876k92sus7uWFXpjVTA5qF9FGf1xAMnio55fFB6Q0QS7B_Ltt3vuRv7gpIOZttYDe2pwkJ0wM406z3tHGevlKLf1f1jRtg6eQRXraArP)
+     > ディズニーシーに携わった人物が空間デザインを手掛けたという情報もあります。
+  13. [シェフが「美食クリエイター」と評されている](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEC9MZB2pzDV2Syokn1YzY4tj5Bde9bo7c3VoRPrm5sG4WHZ-jHEBSByl71ufF1bx2W-5QfDq2n_TpWB4R94efTxaVPBYpI-QaoVlgzfZNYLpLlJfS77Gf2899j0D3lV2rOXAjz-b6P8LNTRpbvU387dg==)
+     > シェフ須本氏は「美食の芸術家」 や自称「美食クリエイター」 と評されています。
+  14. [シェフが「美食クリエイター」と評されている](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfU_xEqivrnoifELvJOEYQ8YolARj-ckLJAyGNUWS-vgzUE-2rtlQI9RdF876k92sus7uWFXpjVTA5qF9FGf1xAMnio55fFB6Q0QS7B_Ltt3vuRv7gpIOZttYDe2pwkJ0wM406z3tHGevlKLf1f1jRtg6eQRXraArP)
+     > シェフ須本氏は「美食の芸術家」 や自称「美食クリエイター」 と評されています。
+- **warnings**: 3件のURLが実際の検索結果に無いため除外（要確認）
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_トゥ・ラ・ジョアイズム -->
+
+---
+
+### 壺中天（名古屋市東区 / フランス料理・★4.6）
+
+- **status**: OK 🟢 high-conf (自動マージ候補)
+- **confidence**: 0.9
+- **editorReason**: 名古屋のフレンチを牽引する名店。ミシュラン一つ星、ゴ・エ・ミヨ3トックを獲得し、オーナーシェフと若手シェフの二名体制で、伝統を継承しつつ「今の時代を彩る料理」を追求し続けている点が業界から高く評価されています。
+- **insiderNote**: 上井・河村両シェフの世代を超えた協業が、伝統と革新を両立する「今の時代を彩る料理」を生み出しています。フランスでの豊富な経験がその情熱を支えています。
+- **sources_used**:
+  1. [オーナーシェフと若手シェフの二名体制、伝統と進化の追求、「今の時代を彩る料理」のアップデート、ミシュラン1ツ星・ゴ・エ・ミヨ3トック獲得、名古屋の名店であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPdWszCR6QTpqHxmKNEb7Uu1za-qa1P4ooiowmeqqPd1XDHJq6uNdBi32OUlI6XDjgR2Fn0AiSsAoTQjekrOVIcJqtIk-1-Bfdku4J3zCRkKP2hftDyqupXHAP4r58GTPjUaetlL1zkD3wXXw=)
+     > 「壺中天」は、伝統的なフランス料理を追求しつつ、常に進化する一皿を提供しているレストランです。オーナーシェフの上井克輔氏とシェフの河村英幸氏の二名体制で料理が作られています。…世代の異なる両シェフは、フランスでの経験を経て日本でフランス料理を作り上げることへの情熱を共有しており、上井シェフはフランス料理が時代を映す料理であるため、世代の感性も重要だと語り、河村シェフへのリスペクトを示しています。彼
+  2. [ミシュラン1ツ星・ゴ・エ・ミヨ3トック獲得](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGxjXO3JlmgkRlHFuL8J7liVgHMVnpP3aEnxjpqaELCP4Yinbu8wLMvfXvjD2YMK3u2dhMJVOpCCwoN_3ufzTiayvrDaEfYWXqjdwc7AchbApoyDPzQEGL4VhnT4y5HRZ0=)
+     > ミシュランガイド愛知・岐阜・三重2019特別版で1ツ星を獲得しており、ゴ・エ・ミヨ2025では3トック（16/20点）の評価を受けています。
+  3. [オーナーシェフと若手シェフの二名体制、伝統と進化の追求、「今の時代を彩る料理」のアップデート](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHFZ5HX986wzeecTRY5wLwjLxBHvCjgQYAGzynQ2jpGD7EWXheq9E32cSR01cMXXTCQawvySyItk9tNQJZ-Zrvv5uBSFb8XMYXZ2ZzKsyLXpvWA)
+     > オーナーシェフの上井克輔氏とシェフの河村英幸氏の二名体制で料理が作られています。…世代の異なる両シェフは、フランスでの経験を経て日本でフランス料理を作り上げることへの情熱を共有しており、上井シェフはフランス料理が時代を映す料理であるため、世代の感性も重要だと語り、河村シェフへのリスペクトを示しています。彼らは「今の時代を彩る料理」のアップデートを重ねています。
+  4. [名古屋の賓客に愛される名店であること、ミシュラン1ツ星獲得](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGppwPKnIyIYh-x1FZNOin_jpvZY8j5ImiXxIpXYgN76Z71T9uuBLQvCGPsVMynoKC2QigGumEjL443nqh7LqPUsU-iJ-5G1oeriJ8V1vY1520OpTskb38tnkDiaRRbSkjU6cMYw8qk9zwW9g==)
+     > 「壺中天」は、名古屋の賓客に愛されてきた名店として知られています。…「ミシュラン一つ星として認められた名古屋の有名フレンチ」として取り上げられています。
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_壺中天 -->
+
+---
+
+### 懐石 志ら玉（名古屋市東区 / 懐石料理・★4.6）
+
+- **status**: OK 🟢 high-conf (自動マージ候補)
+- **confidence**: 0.9
+- **editorReason**: 茶の湯の美学が息づく空間で、地元食材を活かした繊細な懐石料理を提供。老舗料亭として、シェフやメディアからも高い評価を得ています。
+- **insiderNote**: 主人は茶道裏千家・武者小路千家を学び「室礼師」の号を持つ。茶の湯で培った美学が、空間のしつらえから料理、器、食後の抹茶に至るまで深く反映されています。
+- **sources_used**:
+  1. [茶の湯の美学が息づく空間であること、茶の湯の美学が空間のしつらえに反映されていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGkvWqCNnpocXsQiv-jMDRV1WV3CZ3IELifgmK6Ryqoz1ovPsudNN5kpHI5AUfzqU8A6fZclXK1KyZWBUwEtdbsIuxGcEm835R74EsTCX5bLu9smIXRHXdDNrZhDMHPRufkTg8=)
+     > SNUG CITY NAGOYAでは、名古屋の料亭の中でも茶の湯に秀でた料亭として知られ、センスの良いしつらえに数寄の心を感じられると評されています。
+  2. [茶の湯の美学が息づく空間であること、地元食材を活かした繊細な懐石料理を提供していること、茶の湯の美学が空間や料理に反映されていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFiIUUnph8wxA_molDSdCO3tF2srBpw15yBb6hW4dy4ClCVWf85QNJ0cmIFTgMzIfI10PYxoKbFrj2w5RmnT7IHkL--vb2a9Avh1h4wIV4uXCGp5vDz8b15AAXgh-ZdcAONbeZzX7DaKRwd-TRFOQ==)
+     > 「旅色」では、江戸時代の風情ある料亭で上質なひとときを過ごせる場所として紹介され、旬の食材を活かした彩り豊かな料理や日本酒との相性の良さが評価されています。
+  3. [地元食材を活かした繊細な懐石料理を提供していること、シェフから高い評価を得ていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF_e2nQ-J9Q4N3_B0C1sYCC2UZ1S1bv_IdfFoNljEC2fozVJp58CXGiyhZoscCnyTQWcLBuT3uOlYXsAulchcWGTGjuL44xu-6HpygqZAZObC8ambD5WRpwdLyLFlYTqEo7r_LK)
+     > 「ヒトサラ」に掲載されたシェフの口コミでは、「基本に忠実な技法で創られる繊細な日本料理は、いずれも絶品です」と評価されています。
+  4. [メディアから高い評価を得ていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQErz4z7V0rMRLhAzKq1sAg4LJIxNByiBjNhql6QHXFFOe9TYIuUR9nmitX2PG1dx7z9EgsP6ZtvELmhdKoSR54AKnqGrHoyE7329gCDPOf0-V9dkCAKkekHS0c1406TZH6NkyrN)
+     > 「一休.comレストラン」のクチコミでは、料理・味の評価が5点満点中5.00と非常に高く、顧客からの満足度も伺えます。
+  5. [主人が茶道裏千家・武者小路千家を学び「室礼師」の号を持つこと](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQENG8xD7yow-RaqzTVRB7JPzbWUJcP-slfJzIl0ViuN05uOo3wmubbG1HrcnbTYuIAjTHRDjMC2NmeW4G3fVnn7K10x2vcRxEgD7y2e6t68th4TRnDvThbSUg9zzPe1p6D7e3YM)
+     > 「懐石 志ら玉」の主人である柴山宗平氏は、昭和34年生まれで、10代の頃より茶道裏千家と華道石田流を学んでいます。立正大学文学部国文学科卒業後、家業である料亭「志ら玉」に従事し、裏千家伊住宗晃宗匠より「室礼師（しつらえし）」の号を授かっています。その後、武者小路千家に入門し、千宗屋宗匠に師事しています。
+  6. [主人が茶道裏千家・武者小路千家を学び「室礼師」の号を持つこと](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHMzkQzSrIEQbChPZi-_88A9jQ03p_qQCiY7EdygCPxkpRQKJk9tZd715EghDq5kw0zJcLM1AFp4RTB2gXKuA6T8D6mPO6LG6_5o_ZABR5GRKBU0E4-IY7WvnHRzFP8fji2QSJPGCA=)
+     > 「懐石 志ら玉」の主人である柴山宗平氏は、昭和34年生まれで、10代の頃より茶道裏千家と華道石田流を学んでいます。立正大学文学部国文学科卒業後、家業である料亭「志ら玉」に従事し、裏千家伊住宗晃宗匠より「室礼師（しつらえし）」の号を授かっています。
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_懐石志ら玉 -->
+
+---
+
+### 中華そば 雷杏 -RYAN- 名駅店（名駅 / 中華そば・★4.3）
+
+- **status**: OK 🟡 review-required
+- **confidence**: 0.6
+- **editorReason**: ミシュランガイド掲載店出身の店主が手掛ける人気店。卓上無料の生卵やブランド海苔、TKMスタイルで顧客体験を向上させ、名古屋市ラーメンランキング上位に。姉妹店展開も成功している。
+- **insiderNote**: ミシュランガイド掲載店出身の店主が手掛ける人気店。無料トッピングやTKMスタイルで顧客を惹きつけ、名古屋市ラーメンランキング上位に。姉妹店展開も進める成長株。
+- **sources_used**:
+  1. [ミシュランガイド掲載店出身の店主が手掛けているという事実](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEWLcoeHI6pyvzzvy5223-OayGfStckqfuIxmVw0fH_AkJ6EXef5LKfpDk0P7bkAOJjMJ6mB6uW6jEdKFcjwU0acnJxdYgCIgjWmbUkD1SpW2RQxm75FKylFwJgpT7EGwpsIEPd83pmV7AJ1tMZyb5b7g==)
+     > ミシュランガイド掲載のラーメン店出身の店主が手掛けていると紹介されており
+  2. [卓上無料の生卵やブランド海苔、生姜醬、TKMスタイルで顧客体験を向上させているという事実](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHQoEhlHt5ZNvc9XAl6aG0iTzYhG1yTIPGGTmFV19KpVkbtgp4aUKQrFQPH9Zdh4zeGnwa2i1Z-OMinsMGmsq2RgXzAHJo-0O6oI3efTGAlapUoOnJ1-oChm-0CPLT2Kmmh_L_Av_weFIFm-uf4g-Q4OSuSZYMkUtzRHc0tIeunUGa3NmfjHyit_kcaNbo9UfMv_NknxdzzT38iPOCGd52nl4j7nvV7ydYDb0xzUJkI0IZRUIOSb1ijBgGdm3EKb3zMFB1-wuMQl_duc9xpQ6o=)
+     > 無料で利用できる生卵やブランド海苔、生姜醬が卓上に用意されており、これらを自由に使える点が特徴です。特に「TKM（タマゴかけ麺）スタイル」として、生卵と麺を豪快にかき混ぜて食べる楽しみ方も提案されています。
+  3. [名古屋市で人気のラーメンランキングで上位にランクインしているという事実](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFU09O5rWekKQsv53k9A8_qxO85hHrI52iGTAm5UjjvyTcXyauxCIYhyYp7jFQKKEin90Y5FjFwtOwuL3y2wuLWqUgn7WU2Tt7_UHqfu4ERmvL3w-xHNfgHG0m2cUTNFepRNjFTT4is5emdkMIpFhO6HQ==)
+     > 「名古屋市で人気のラーメン」ランキングで上位にランクインしていることも確認できます。
+- **warnings**: 5件のURLが実際の検索結果に無いため除外（要確認）
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_中華そば雷杏-ryan-名駅店 -->
+
+---
+
+### 炭焼 うな富士（名古屋市昭和区 / うなぎ・★4.3）
+
+- **status**: OK 🟡 review-required
+- **confidence**: 0.6
+- **editorReason**: うなぎ激戦区名古屋で、高い評価と人気を誇る名店。各グルメサイトで高得点を獲得し、行列が絶えない名古屋屈指のうなぎ店として知られています。
+- **insiderNote**: 創業者の水産大学校での研究経験と鰻業界全般の知見が、希少な特大青うなぎと熟練の地焼き技術を支え、高い評価に繋がっています。
+- **sources_used**:
+  1. [うなぎ激戦区での高い評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHS55Ye6K73dTdSw5QT8ASa8qwOgssBj7FvZHXDDWOc3lr36UgY-JN3arLAwV28zlg7sgaVRsBdtFRFunwJrLlD5QgoPbHeU_9nPPQ7aK6efFJPyKFZVCydoCHKDrdHigA2hw4uQ0A1A7nqIYWoePBI5EGFHg==)
+     > うなぎ激戦区である愛知県において常に高い評価を得ています。
+  2. [名古屋屈指の名店としての評判と行列ができるほどの人気](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHS55Ye6K73dTdSw5QT8ASa8qwOgssBj7FvZHXDDWOc3lr36UgY-JN3arLAwV28zlg7sgaVRsBdtFRFunwJrLlD5QgoPbHeU_9nPPQ7aK6efFJPyKFZVCydoCHKDrdHigA2hw4uQ0A1A7nqIYWoePBI5EGFHg==)
+     > 「名古屋屈指のうなぎの名店」と評されており、「行列のできるうなぎの名店」としても知られ、繁忙期には最大3時間待ちの行列ができるほどの人気を誇ります。
+  3. [グルメサイトRettyでの高い評価とオススメ度](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQED5F9YlcI7LT8R-xeq6cLB18BCYX_sk2aEkageLENfYL44UzuBsCb30rgvO0jY9icbbVwdlE7SqRUZJg-poI_wysiKNiWh5Kw7jjdeGhtsjC0FFv_X0tKYi3D7vygsS_BAQY96p-siZ3lhHRH_DtjXhg==)
+     > 名古屋駅太閤口店が93%という高いオススメ度を獲得しており
+- **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_炭焼うな富士 -->
+
+---
+
+### 食堂　灯ル（名古屋（名古屋駅/西区/中村区） / 和食・★4.3）
+
+- **status**: OK 🟢 high-conf (自動マージ候補)
+- **confidence**: 0.9
+- **editorReason**: 「街の第二の食卓」を掲げ、土鍋ごはん中心の和定食を朝昼夜で提供。こだわりの食材と丁寧な調理で「鮭の塩焼きの最上級」と評されるなど、料理の質は折り紙付き。地元メディアでも「常に行列が絶えない人気店」として紹介されており、その集客力と顧客満足度の高さは特筆すべきです。
+- **insiderNote**: 運営会社エフリードの和食への強みが活かされ、土鍋ごはんや旬の食材にこだわる。QRコード注文やカウンター席完備で、現代のニーズに合わせた利便性と居心地の良さを両立している点も注目される。
+- **sources_used**:
+  1. [「街の皆さまの日常に寄り添う“第二の食卓”」をコンセプトに掲げ、炊きたての土鍋ごはんを中心とした和定食を提供していること。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF5b_JlGfPKz3_jwfE1FeBkptajOnmAXeBZ9-cOd2pC-_SThLHSAZHIfcpV3vPk3JKzezeJiskR8ChY6f6K0t0Yhd5G6KZTmTd_hxjWyQAiB-alpV73OjtCDvoetA==)
+     > 「街の皆さまの日常に寄り添う“第二の食卓”」をコンセプトに掲げています。特に「炊きたての土鍋ごはん」を中心とした和定食を提供し、日本人がどこかホッとするような馴染みの味を届けることにこだわっています。
+  2. [「街の皆さまの日常に寄り添う“第二の食卓”」をコンセプトに掲げ、炊きたての土鍋ごはんを中心とした和定食を提供していること。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfcxxg1lsQEln3VK5E1WFZRL1a3Yk5q5JqMZa2NDv2WaTn-FzUCypzQA5wJjOOeahRDaXPuwGOLqekHdhfGl7c2i0FgGMu_paN-gNKeLLQ6V07srP530KM91A-JtgcZ6eNzouYhLY--yN5uh1AbBmjWfLwXrA=)
+     > 「街の皆さまの日常に寄り添う“第二の食卓”」をコンセプトに掲げています。特に「炊きたての土鍋ごはん」を中心とした和定食を提供し、日本人がどこかホッとするような馴染みの味を届けることにこだわっています。
+  3. [朝・昼・夜と時間帯に合わせた異なる提供スタイルが特徴であること。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF5b_JlGfPKz3_jwfE1FeBkptajOnmAXeBZ9-cOd2pC-_SThLHSAZHIfcpV3vPk3JKzezeJiskR8ChY6f6K0t0Yhd5G6KZTmTd_hxjWyQAiB-alpV73OjtCDvoetA==)
+     > 朝・昼・夜と時間帯に合わせた異なる提供スタイルが特徴です。
+  4. [朝・昼・夜と時間帯に合わせた異なる提供スタイルが特徴であること。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfcxxg1lsQEln3VK5E1WFZRL1a3Yk5q5JqMZa2NDv2WaTn-FzUCypzQA5wJjOOeahRDaXPuwGOLqekHdhfGl7c2i0FgGMu_paN-gNKeLLQ6V07srP530KM91A-JtgcZ6eNzouYhLY--yN5uh1AbBmjWfLwXrA=)
+     > 朝・昼・夜と時間帯に合わせた異なる提供スタイルが特徴です。
+  5. [地元グルメメディアで「常に行列が絶えない人気店」と評されていること。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFekbIrxwtLFKiY8gZw5GMC3mkh931_9_v7RfjgaSIZuHXyO4SXR7NmxLv8qHxYjRNikvXDHOWvuT5yZJlXEbj7uCBU4YJbZfILq6J2yvLOUPfrrC98V3b8M1FYOWn1VMhN9EDbq5fM6nE52WBP2-sh)
+     > 大名古屋ビルヂング地下1階！常に行列が絶えない駅直結の人気定食屋
+  6. [地元グルメメディアで「行列が出来る人気店」と評されていること。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHnMCatzmAeXYRTWsmQBxmZeb7vjYmOjtyWO24vRZeKkWY8S0iSdeQsHYVd4C33wGYPeBDD_RKsLrJV4EKqXRZhM5v5CoIntAeZ6PBgfrcR5z8e0F6F5gI=)
+     > 行列が出来る人気店
+  7. [料理の質が「鮭の塩焼きの最上級」と高く評価されていること。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF5b_JlGfPKz3_jwfE1FeBkptajOnmAXeBZ9-cOd2pC-_SThLHSAZHIfcpV3vPk3JKzezeJiskR8ChY6f6K0t0Yhd5G6KZTmTd_hxjWyQAiB-alpV73OjtCDvoetA==)
+     > 「鮭の塩焼きの最上級と呼びたくなる仕上がり」
+  8. [料理の質が「鮭の塩焼きの最上級」と高く評価されていること。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfcxxg1lsQEln3VK5E1WFZRL1a3Yk5q5JqMZa2NDv2WaTn-FzUCypzQA5wJjOOeahRDaXPuwGOLqekHdhfGl7c2i0FgGMu_paN-gNKeLLQ6V07srP530KM91A-JtgcZ6eNzouYhLY--yN5uh1AbBmjWfLwXrA=)
+     > 「鮭の塩焼きの最上級と呼びたくなる仕上がり」
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004558213 -->
+
+---
+
+### しら河 浄心本店（名古屋（名古屋駅/西区/中村区） / 和食・★4.3）
+
+- **status**: OK 🟢 high-conf (自動マージ候補)
+- **confidence**: 0.9
+- **editorReason**: 昭和23年創業の日本料理店を母体とし、鰻の素材、焼き、秘伝のタレ、米、出汁に至るまで徹底したこだわりが光る。長年の歴史に裏打ちされた専門性と、幅広い客層に対応する懐の深さが、名古屋を代表する名店の地位を確立している。
+- **insiderNote**: 日本料理店として創業した歴史に由来する会席料理や季節の一品料理も豊富。鰻の素材、焼き、秘伝のタレ、米、出汁への徹底したこだわりが鰻通も唸らせる逸品を生み出す。
+- **sources_used**:
+  1. [昭和23年創業の日本料理店を母体としていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtFJ6JX1aLxkEuf7Esz-BD5oj0vYgrYdyucmI3ZYGNMVFY1WossOGFcNr0_MaORnElQrxsSAyUg94JMvwj18LATAQ6mz0vWzPqN8OtrIjsVTcuoQDolzalgH3ruLZEysSEA-RU9q-8mT8cjyQ=)
+     > 「しら河」の母体は、昭和23年（1948年）に天麩羅屋として開業し、その後「大森料理店」「料亭大森」として日本料理を提供してきた歴史があり
+  2. [日本料理店として創業した歴史に由来する会席料理や季節の一品料理を提供していること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGsV-tVbG3eW4feJn9VvUK1NKA-vPjIrEC_UIVaIDZs5YP70lljn3q3gF4_nOet4VLUCNwUrnr52f8KkDnJARWtVu4SOVwF0OTIedMicghXaL0tec_3HnHOeXQS)
+     > メニューは、名物のひつまぶしやうな重の他に、会席料理や季節ごとの一品料理を常時30種類ほど提供しており、これは日本料理店として創業した歴史に由来します。
+  3. [鰻、タレ、米、出汁に強いこだわりを持っていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF1579uaIM3jL15yxAszWLvbW0jLdoB_ysSDyzOKuIOHmPw2aXHc-JNQO4HYk1ongAs2cuUk_thxW1pqf8_eTP9z1bC41-biAk6BO0W__aOL1Tu36tINwWKyBsVCS-uNDhiIEHmNeZVHPc=)
+     > 「しら河 浄心本店」は、鰻、タレ、米、そしてひつまぶしを締めくくる出汁に強いこだわりを持っています。
+  4. [秘伝のタレにこだわりがあること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGsV-tVbG3eW4feJn9VvUK1NKA-vPjIrEC_UIVaIDZs5YP70lljn3q3gF4_nOet4VLUCNwUrnr52f8KkDnJARWtVu4SOVwF0OTIedMicghXaL0tec_3HnHOeXQS)
+     > タレは、昭和28年（1953年）の創業以来、数十年にわたり注ぎ足しながら受け継がれてきた秘伝の甘いたまり醤油ベースのものです。
+  5. [幅広い客層に対応していること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF1579uaIM3jL15yxAszWLvbW0jLdoB_ysSDyzOKuIOHmPw2aXHc-JNQO4HYk1ongAs2cuUk_thxW1pqf8_eTP9z1bC41-biAk6BO0W__aOL1Tu36tINwWKyBsVCS-uNDhiIEHmNeZVHPc=)
+     > 接待や会合、家族連れなど幅広い客層に対応しており、個室やお座敷も完備されています。
+  6. [幅広い客層に対応していること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHl7mBhRqu4RQGvzaYCQ3A4sQbqRUdX-wEsmFSISd3i0LKdoRrnQztjqrnzcUROtzuF0yf-irovkAdJgFZBLQmsIy6KNEhHHdusxBHWw2P7wZHFmJQrcI1NyluJnaqj-0JJNXOyPFav_6lRZ32gfcak4p8StEigg8KVSJ8Yf0FWjpgCzj6V83tyDo7GR9sondMK9z4=)
+     > 接待や会合、家族連れなど幅広い客層に対応しており、個室やお座敷も完備されています。
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J000107620 -->
+
+---
+
+### 熱田味噌拉麺ぶりゆ（熱田 / 味噌ラーメン・★4.3）
+
+- **status**: OK 🟡 review-required
+- **confidence**: 0.6
+- **editorReason**: 人気ラーメン店グループから独立した店主が、味噌ラーメンに特化。化学調味料不使用の自家製味噌ダレや名古屋コーチン白湯など素材にこだわり、調理工程も楽しめるオープンキッチンで提供。メディア露出も多く、行列ができるほどの人気を博している。
+- **insiderNote**: 人気ラーメン店グループ出身の店主が、味噌ラーメンに特化して独立。ラーメンクリエイターとしてのこだわりが随所に光り、地元メディアや同業者からも高く評価されている。オープン前から話題を集め、行列が絶えない人気店。
+- **sources_used**:
+  1. [人気ラーメン店グループからの独立と味噌ラーメン特化の経緯](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE9TpdUnQzcyfRByofkw4Ijg232xPyNmjSmatVuPeAVPhlj4pfPbMSvXsFtJLNgj-H1xwJ2bLHeQ2TASHdAfmatmMy1KBVAKbDjOPu8eSUp4DQqtudzSUwh3xNWdprW)
+     > 緑区の「拉麺ぶらい」、大府市の「RAMENぶろす」といった人気ラーメン店の系列店で店長を歴任した店主が、「次は味噌をやりたい」という思いから味噌ラーメンに特化したブランドとして立ち上げました。
+  2. [自家製味噌ダレや名古屋コーチン白湯など素材へのこだわり](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE9TpdUnQzcyfRByofkw4Ijg232xPyNmjSmatVuPeAVPhlj4pfPbMSvXsFtJLNgj-H1xwJ2bLHeQ2TASHdAfmatmMy1KBVAKbDjOPu8eSUp4DQqtudzSUwh3xNWdprW)
+     > 看板メニューの「みそらーめん」は、化学調味料不使用の自家製味噌ダレを使用し、名古屋コーチンの丸鶏を煮出した白湯スープに、飛騨牛脂の香味油を合わせています。
+  3. [調理工程を楽しめるオープンキッチンの提供スタイル](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE9TpdUnQzcyfRByofkw4Ijg232xPyNmjSmatVuPeAVPhlj4pfPbMSvXsFtJLNgj-H1xwJ2bLHeQ2TASHdAfmatmMy1KBVAKbDjOPu8eSUp4DQqtudzSUwh3xNWdprW)
+     > 店内は落ち着いたカフェのような雰囲気で、カウンター8席のみのオープンキッチンを採用しています。これは「味だけでなく調理工程も楽しんでほしい」という店主の思いから、カウンター席を通常よりも低く作る工夫もされています。
+  4. [メディアでの紹介と行列ができるほどの人気](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE9TpdUnQzcyfRByofkw4Ijg232xPyNmjSmatVuPeAVPhlj4pfPbMSvXsFtJLNgj-H1xwJ2bLHeQ2TASHdAfmatmMy1KBVAKbDjOPu8eSUp4DQqtudzSUwh3xNWdprW)
+     > CBCテレビの「デララバ」という番組の「ラーメン数珠つなぎ」企画で取り上げられ、東海地方の人気ラーメン店の店主からもイチオシとして紹介されました。
+- **warnings**: 5件のURLが実際の検索結果に無いため除外（要確認）
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_熱田味噌拉麺ぶりゆ -->
+
+---
+
+### LIGNIN（名古屋市中区栄 / 創作料理、フレンチ、イタリアン、薪火料理・★4.8）
+
+- **status**: OK 🟢 high-conf (自動マージ候補)
+- **confidence**: 0.9
+- **editorReason**: 店名LIGNINが示す薪火への深いこだわりと、フレンチ・イタリアンを融合した独創的なスタイルが魅力。炎の揺らぎや香り、音までもが五感を刺激し、匠の技で引き出された素材の旨味と燻香が特別な食体験を創出します。
+- **insiderNote**: 店名LIGNINが示す薪火への深いこだわりと、フレンチ・イタリアンを融合した独創的なスタイルが特徴。五感を刺激する空間演出と、ジャンルにとらわれない柔軟な発想が、食通を惹きつける要因です。
+- **sources_used**:
+  1. [店名の由来、薪火へのこだわり、フレンチ・イタリアンのフュージョンスタイル、五感で楽しむ空間演出、匠の技による素材の旨味と燻香、柔軟な発想による料理の評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHxGzT-hgeoTTYk8mwGvQVeL28eLYGvOqELAV4pKBuqjcSSpQmyyh6CrTtd2dQ8d_C5KpstzEzEZC_rd7Sxr43F6zDQdcflPPCvUiqoO1kEQURDIZboI38QJQA2BL-bNQ==)
+     > 「LIGNIN」という店名は、木を構成する成分である「リグニン」に由来しており、薪火料理への深いこだわりを示しています。店主は、薪火の穏やかな熱と立ち上る香りを最高の調味料と捉え、厳選された旬の食材が持つ旨味や甘みを最大限に引き出すことに注力しています。料理のベースにはフレンチの確かな技法がありながらも、イタリアンの軽やかさや自由な発想を取り入れた独創的なフュージョンスタイルを追求しています。単に
+  2. [店名の由来、薪火へのこだわり、フレンチ・イタリアンのフュージョンスタイル、五感で楽しむ空間演出、匠の技による素材の旨味と燻香、柔軟な発想による料理の評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEsfiZjLqTdSsP_M_xgu3OQIL3Wxyx3MiPsH6hdoGBMYgtSoZji4uZK4LNsRUWSBNuHWvfvRHp1wy8-lWEk-e3OoMv6NLdhvyXLyN3ZnmyYtVlDPg==)
+     > 「LIGNIN」という店名は、木を構成する成分である「リグニン」に由来しており、薪火料理への深いこだわりを示しています。店主は、薪火の穏やかな熱と立ち上る香りを最高の調味料と捉え、厳選された旬の食材が持つ旨味や甘みを最大限に引き出すことに注力しています。料理のベースにはフレンチの確かな技法がありながらも、イタリアンの軽やかさや自由な発想を取り入れた独創的なフュージョンスタイルを追求しています。単に
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_lignin -->
+
+---
+
+### 日本料理 𡈽方（名古屋市中区 / 日本料理、懐石・会席料理・★4.5）
+
+- **status**: OK 🟡 review-required
+- **confidence**: 0.6
+- **editorReason**: ミシュラン三つ星を獲得し、名古屋の日本料理界を牽引する名店。完全予約制のカウンター8席で、素材の味を最大限に引き出す割烹スタイルが国内外の食通を魅了しています。
+- **insiderNote**: ミシュラン三つ星を「唯一、本物の中の本物」と評され、メディア露出を避ける予約困難店。素材を尊重し、未来を見据えるサステナブルな料理哲学も注目されます。
+- **sources_used**:
+  1. [ミシュラン三つ星を獲得していること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF7qnaFCqf4CtP5E5mNP3i0yvCnM0zA6jgOZw7zVGGarugi5DDDbYcDe5r0UmC10R67SFVizDAl_6bywKi-5mZTYoyyBTpGkS73kBx1OzsWob74dxz_935oXNyxnkSsY3KeHbqxCb7CEabFbwsuYHK1eLE=)
+     > 「日本料理 𡈽方」はミシュラン三つ星を獲得しています。
+  2. [ミシュラン三つ星を獲得していること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHv9vmyHctUXTFloMFit31vd-SdnoTc6atwFAIeBsqPLxLPIpnKY9rD3g7AVHkCuLwLzCa-usY3hb9hrFHJwkEAbl_UMRrML-E6V-fqF5hwDC9tkcZ8rc844RIgDlXh1ofPkw==)
+     > 「日本料理 𡈽方」はミシュラン三つ星を獲得しています。
+  3. [完全予約制、カウンター8席の割烹スタイルであること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGiLsyyu881O1NaiKJFJsjYq2c1-a5LU5lD6sAQbjeZbX_HxbrBzWaBdXjthrR8xZZAMb9KEj0iw54Pb8KUPT-oTyMmWQJySjT-z2GjhpZz7GhxYjx-HkT4943ZQR5MmLdhflMtnn-jDg==)
+     > 「日本料理 𡈽方」は完全予約制で、席はカウンターのみ8席です。 料理人が目の前で調理し、出来立てを提供する割烹スタイルであると考えられます。
+  4. [完全予約制、カウンター8席の割烹スタイルであること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF5Ck9ufxHWnEqSQcZzyWj62gM9P0_scEfeQF5e6xP94TGTNNA6P3uzxZxdLd3QI8aGhjNCtl5I58yrMI0i1BpywnHimXTXYXw_9erl5ZD2bL1QKvLLBxbTZpljc4Q=)
+     > 「日本料理 𡈽方」は完全予約制で、席はカウンターのみ8席です。 料理人が目の前で調理し、出来立てを提供する割烹スタイルであると考えられます。
+  5. [ミシュラン三つ星の評価、予約困難であること、メディア露出を避けていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF7qnaFCqf4CtP5E5mNP3i0yvCnM0zA6jgOZw7zVGGarugi5DDDbYcDe5r0UmC10R67SFVizDAl_6bywKi-5mZTYoyyBTpGkS73kBx1OzsWob74dxz_935oXNyxnkSsY3KeHbqxCb7CEabFbwsuYHK1eLE=)
+     > 「Retty」の口コミでは、東海ミシュランにおいて数少ない「正当な評価」「唯一、本物の中の本物の三つ星獲得」と評されています。 また、「予約が取れないことでも有名で、メディア露出を避けている」とされ、「日本料理の頂点に位置する」と評されています。
+  6. [素材を尊重し、未来を見据えるサステナブルな視座を持つ料理哲学であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtFKUHyiURXALUrQ2WBBGh_7Bt8WaZ-gcZY0zYGMv2ZxJdbuljSn4aFYXhYeNXS987LVy_Cfx0bfqcDZxZ5troWtC6VvG6JceqjeIMOELuk9Dz8_d7UV-SYzaDzEHXCSXTFDY=)
+     > この哲学には、素材を尊重し、文化をつなぎ、未来を見据えるサステナブルな視座が息づいていると評されています。
+- **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_日本料理𡈽方 -->
+
+---
+
+### ひつまぶし 登河 那古野本店（丸の内 / うなぎ・ひつまぶし・★4.3）
+
+- **status**: OK 🟡 review-required
+- **confidence**: 0.6
+- **editorReason**: 伝統的な「地焼き」の職人技と厳選食材へのこだわりが、多くのメディアや利用客から高く評価されています。特に「ヒトサラ」と「ねとらぼ」のランキングで愛知県1位を獲得しており、その実力は折り紙付きです。
+- **insiderNote**: 築90年の古民家を改装した趣ある空間で、日本庭園を眺めながら食事ができる点は、観光客のおもてなしにも最適。入手困難な日本酒のラインナップも魅力です。
+- **sources_used**:
+  1. [職人の技と地焼き、厳選食材へのこだわりが高く評価されていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQELLpzvATWNWu29ONugcf_I0QEmX5u2Ui9UqPgfZrN3IDDJgyiuH3zzXJtQADSIppp-LgB-u6wD6T_xCuAXVqcmVwzy81FOzFGleCyu4d4M-lbTrK_OXfjOS8fnzNE=)
+     > 同店の料理は、その「職人の技」が高く評価されています。特に、備長炭による「地焼き」で、鰻の皮をパリッと香ばしく、身をふっくらと仕上げる技術は、多くのレビューで絶賛されています。厳選された上質な鰻の選定や、奥三河どりを一羽一羽丁寧に手作業で捌くといった、食材へのこだわりと調理の丁寧さも評価の対象となっています。
+  2. [ヒトサラとねとらぼのランキングで愛知県1位であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG2o8Sk7EFDOo6bDjfPl1yeNYbDt_Zg9vAZ3n7-zO0mTmF8Ei774tk6YV6B6_zP02YoiTFSxGqYc7yFI57dxtMfehZwWo8PHf5EUsl0LLtX8mAuRjhZovnyupzG)
+     > 料理人の顔が見えるグルメメディア「ヒトサラ」と「ねとらぼ」が発表した「愛知県のうなぎの名店」人気ランキング（2023年11月版）では1位を獲得しています。
+  3. [ヒトサラとねとらぼのランキングで愛知県1位であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE1d14robjIInx0E9VDS3D3UUOtIy5cDlPfvuqy1WhTh-RmbHUxj57fCC00zfMX-PGSfsoo2d2cVOWfKgXdrNU5_uenVyLTxfUUeASi8CStXhyA3WOToE_CBLUEppv4aCfjKj4EUbhb4bT_J779UIOS)
+     > 料理人の顔が見えるグルメメディア「ヒトサラ」と「ねとらぼ」が発表した「愛知県のうなぎの名店」人気ランキング（2023年11月版）では1位を獲得しています。
+  4. [各種グルメサイトでの高評価や利用客からの絶賛](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQELLpzvATWNWu29ONugcf_I0QEmX5u2Ui9UqPgfZrN3IDDJgyiuH3zzXJtQADSIppp-LgB-u6wD6T_xCuAXVqcmVwzy81FOzFGleCyu4d4M-lbTrK_OXfjOS8fnzNE=)
+     > 各種グルメサイトでの評価も高く、「一休.comレストラン」では総合評価4.05（5点満点中、10件の口コミに基づく）、サービス評価4.00を獲得しています。また、「macaroni」では4.3点（5点満点中、267件の口コミに基づく）、「ヒトサラ」と「ねとらぼ」のランキングでは愛知県のうなぎの名店で1位に選ばれています。利用客からは、鰻の「絶妙にパリッとして、身はふんわり脂がのってめっちゃ美味しい
+- **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_ひつまぶし登河那古野本店 -->
+
+---
+
+### 鉄板焼 那古亭（名駅 / 鉄板焼ステーキ・★4.3）
+
+- **status**: OK 🟡 review-required
+- **confidence**: 0.6
+- **editorReason**: 名古屋マリオットアソシアホテル高層階に位置し、A5ランク和牛など厳選高級食材を熟練料理人が目の前で調理。圧倒的なライブ感と高評価の料理、名古屋の眺望が魅力で、主要グルメサイトでも多数の口コミを集める。
+- **insiderNote**: 熟練料理人が目の前で繰り広げる圧倒的なライブパフォーマンスは、単なる食事ではなく、五感で楽しむ体験を創出。食材の焼き加減や出汁、塩への丁寧なこだわりも光る。
+- **sources_used**:
+  1. [一休.comレストランで「料理・味」が高評価を得ている。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG8PWhX7xsf-9CFb_n_IGGnpVAkrRzT9GlAZHiDPKogK-HYiSMnyEDyf9jEVXsP3B-r7mz9kd9DRxr__l4myKBC84u8YirpjK5Nc7VN-dQ8s82Qj8SXsnNXpShJL-CEk30MZ74j7A==)
+     > 一休.comレストランでは「料理・味」が4.22と高得点を得ています。
+  2. [PayPayグルメで高評価を得ている。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHsp3LSVf0f_Di6v5rtFNhqe4ZevNQI1h7K-vAUShHIYvDOhWCqvZoE5NiQDT1wHRcgjNTkv1r25bXeOkGwqQHw9_Yy1z3y0EVq54F-Dq022pqnrTy_iTtMO1x8FfnzW_1zIgvUYgcJ3BNngQ==)
+     > PayPayグルメでは4.37と高得点を得ています。
+  3. [Rettyの口コミで、焼き加減や出汁、塩へのこだわり、シェフの手仕事が評価されている。主要グルメサイトで多数の口コミを集めている。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFGJPDDECtPXf-lexlfVt5dhWdmVBPfwkjCVKiMkK7AX_UXBG0DEnoVPGLVQNKARnPLrxQ76bKkfmjeeOTQb98moBd3iWeEygl_2umtUoAv4TS0jF27BOhBhQ9DGuLtzdiU4Vhfu1SkEm8PNVEkL_Qhqsg=)
+     > Rettyの口コミでは、「焼き加減、出汁や塩などのこだわり」や「シェフの手仕事が引き立つ料理」が評価されており、A5ランクのフィレステーキが「絶品で今まで食べた事のない美味しさ」と称賛されています。
+- **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鉄板焼那古亭 -->
+
+---
+
+### 炭焼うな富士 名古屋駅太閤口店（名駅 / うなぎ・ひつまぶし・★4.4）
+
+- **status**: OK 🟡 review-required
+- **confidence**: 0.6
+- **editorReason**: 創業者がうなぎの一次から三次産業まで精通し、希少な青うなぎと秘伝のタレ、1000℃の炭火地焼きにこだわる。ミシュランや食べログで高評価を得る、うなぎ激戦区名古屋を代表する名店です。
+- **insiderNote**: 創業者は水産大学卒でうなぎ業界の川上から川下まで精通。理論に基づいた指導と新たなうなぎ開発にも注力し、職人たちがその技術と想いを継承しています。
+- **sources_used**:
+  1. [創業者のうなぎ業界への深い知見、秘伝のタレ、青うなぎ、地焼きのこだわり、ミシュラン・食べログでの評価、理論に基づいた指導と開発、職人の技術継承](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgjxRO09yonc1yM1kB6qQHi0mv2Koqpvgx5NEjZpMq-uwkQNen7gQa24E-m3wfOj-38X8UYZcJHNPdqD-EWHg2aFD3nhVq7URBSwZpBCkwaB_1MkxknC6rakzjWBQ=)
+     > 「炭焼うな富士」の創業者は水産大学卒業後、養魚飼料メーカーに勤務し、養殖用のうなぎの飼料研究・開発に携わりました。約30年かけて全国の養鰻業者や問屋と信頼関係を築き、うなぎの選別、さばき、出荷といった一次から三次産業まで、うなぎ業界の全てを経験しています。創業者の水野氏は、サラリーマン時代に全国のうなぎを食べ歩き、タレの糖度や塩分濃度を分析し、名古屋で好まれる味を独自に研究して門外不出の秘伝のタレ
+  2. [創業者のうなぎ業界への深い知見、秘伝のタレ、青うなぎ、地焼きのこだわり、ミシュラン・食べログでの評価、理論に基づいた指導と開発、職人の技術継承](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQACx5c5cS9t7_vZz_T85Lzq6y4rubfE_UNpaFxXNmjMPqqR48o73GXc5SCe-MgcTq1UM-isdkiSw84CAn6dUt9Y8ZprM2ty2h7egxbO1g1jkUXIq18RY52Csa3hzj4hJ5)
+     > 「炭焼うな富士」の創業者は水産大学卒業後、養魚飼料メーカーに勤務し、養殖用のうなぎの飼料研究・開発に携わりました。約30年かけて全国の養鰻業者や問屋と信頼関係を築き、うなぎの選別、さばき、出荷といった一次から三次産業まで、うなぎ業界の全てを経験しています。創業者の水野氏は、サラリーマン時代に全国のうなぎを食べ歩き、タレの糖度や塩分濃度を分析し、名古屋で好まれる味を独自に研究して門外不出の秘伝のタレ
+  3. [希少な青うなぎの使用、1000℃の炭火地焼きのこだわり](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFeCeOPXBXwHmyYWuKa99mddkOnULscLCYJZPQAfT06Ilpa4VSWn_DjH5KqbXF-MWTseGkQkfNKS8v3JtLiPJdJfWgRASTZvYTG5bq8eQyc7Kur8zFF_xpVC4LsQLt82nxVi2AFCWtuJ4YNtLYgYa8=)
+     > 厳選された特大の「青うなぎ」のみを使用することにこだわり、これは一般的なうなぎ屋のうなぎより3割以上大きく、身の厚さ、脂の乗り方、旨味が格別とされています。青うなぎはうなぎ全体の収穫量のわずか2割程度しか存在しない希少なものです。蒸す工程を挟まない「地焼き」にこだわり、時には1000℃にもなる強い火力の炭火で、朝さばきたてのうなぎを骨まで焼き切ります。
+  4. [1000℃の炭火地焼きのこだわり、熟練職人の技術](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG9NgUDoObyHylYf5UUB71bfw4FIX-ioga6zNMhqlYjFgoGu5OIAPryDclxcxnUr7XW8xsZTxcwhHwA3CUmw0Rj8OGfITh6EblQdF1RYvZ9j21V6J3Mb6v1s6lbh3m6pgREnfrwqmPSRFl7ZSk=)
+     > 蒸す工程を挟まない「地焼き」にこだわり、時には1000℃にもなる強い火力の炭火で、朝さばきたてのうなぎを骨まで焼き切ります。うなぎの世界では「焼き一生」と言われるほど、焼きの技術が重要視されており、炭焼うな富士の熟練した職人による1000度を超える炭火での地焼きは、その技術の高さが評価されています。
+  5. [ミシュラン・食べログでの高い評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFZFrFvF829FO8vv470PH6nVr2mXsSKwoNXIot-39ZdaYu6onrsouFimb89WAdQjRxjfLTQMLF3EfhPIN6xX8erdUwTBGJ1ht4KtOJE_1kskEUr8uaPUUXTZ3ItURZCTqW4FVxn_ccc5xucjYspO3JHZf-ZeNB2hc3nRjVRP0g=)
+     > 「炭焼うな富士」は、創業25年でミシュランガイド愛知・岐阜・三重2019特別版にて「ビブグルマン」を受賞し、食べログでは「THE TABELOG AWORD2020」のブロンズ、および「百名店2019」「百名店2018」に選出されるなど、うなぎ激戦区である愛知県で常に高い評価を得ています。
+  6. [ミシュラン・食べログでの高い評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFYIuu9HAsLI6zSvof-_ICpW2S4DbiDwWCfcWwN0bGylh-3oGz-f8T4ivG8GypUA8aobQkgrpYMytTxrJZF_4dbtLNawsP2g9QOQSPCshiPQNM4Dofhdh48A5WTzQSydaZAtAMjP5zMKwM=)
+     > 「炭焼うな富士」は、創業25年でミシュランガイド愛知・岐阜・三重2019特別版にて「ビブグルマン」を受賞し、食べログでは「THE TABELOG AWORD2020」のブロンズ、および「百名店2019」「百名店2018」に選出されるなど、うなぎ激戦区である愛知県で常に高い評価を得ています。
+- **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_炭焼うな富士名古屋駅太閤口店 -->
+
+---
+
+### 那古野 みつ林（名古屋市西区那古野 / 懐石・会席料理、日本料理・★4.5）
+
+- **status**: OK 🟢 high-conf (自動マージ候補)
+- **confidence**: 0.9
+- **editorReason**: 京都で研鑽を積んだ職人気質の店主が、那古野の地でカウンター越しに五感で楽しむ日本料理を提供。一皿一皿に込めた手仕事と、お客様一人ひとりに寄り添う細やかなおもてなしが、高い評価を得ています。
+- **insiderNote**: 京都の老舗旅館で研鑽を積んだ店主は、那古野を和食の街にしたいという思いで店を構えた。カウンターで「一魂一味」を貫き、出汁や水にも徹底的にこだわる職人気質が光る。
+- **sources_used**:
+  1. [店主の那古野という立地への思い、カウンターへのこだわり、一魂一味の姿勢、手仕事へのこだわり、お客様への細やかな気配り、出汁や水へのこだわり、そして店主の職人気質な姿勢](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFj_sK0EsNtVTNQG-_LmXU8_bt8u3qXsQb_Z99ZfWN2BzWgdhiL1730qQMGuCJbAuYa1HtQO4MByWpJCzrqjedXAy7ILNrGZeCzxWIWcJeBBIxAYhXaQqo9A9G6Zw==)
+     > 店主の三ッ林学氏は、賑やかすぎず静かで隠れ家的な場所を求めて那古野に店を構えました。名古屋駅から近く都心でありながら古い町並みが残る那古野の珍しさと将来性に魅力を感じたといいます。店名の頭に「那古野」を冠したのは、京都の祇園のように那古野も和食の店が集まり、街全体で盛り上がることで「あの街に行けば何かおいしいものに出会える、楽しい時間が過ごせる」場所になってほしいという思いがあるためです。また、三
+  2. [店主の京都での修業経験と職人気質な評価、カウンター中心の提供スタイル、五感で楽しむ季節感、お客様への心からのおもてなし、料理への繊細な仕事](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEnY1ISYPSbv_Ynb0y_pAboNnuyUf5XzriBj7Aah7kVOcn_U746wOzUINqRKo85chbbY1VVa7-3rCu2FUdixxt6yQhPDZ__wYPCYibA22KFXVcurxi6t78G8z_iuXH2GLXqTnecmqrSQ9T_)
+     > 「那古野 みつ林」はカウンター席が中心のスタイルで、料理人がお客様の食べるタイミングや反応を見ながら、温かいものは温かいうちに、最も美味しい状態で提供することを重視しています。 料理は食べるペースに合わせて手際よく仕上げられ、絶妙な間合いで供されます。 季節感を五感で楽しめるような工夫が凝らされており、例えば節分の時期には稲荷の狐を蕪で表現し、狐が好むとされるからしで菜の花を和え、鬼が嫌う柊の緑を
+  3. [複数のグルメサイトでの高い総合評価、料理の美味しさ、繊細な仕事、季節感、店主の細やかな気配りや丁寧な接客](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGD1DUNwekx8dLUUqDLPaGcPU-bAzPSUMbqcrk98b_1fcGjvBQFYa8mBG7nfjrqsjpr7kO3_UsvRbfDkrchWN0XffmpPLsx51LT55H7Vz_gVRXaOvGH4iGy8RZ7OA==)
+     > 一休.comレストランやPayPayグルメのクチコミでは、総合評価が4.38/5.0と高く、料理の美味しさ、繊細な仕事、季節感、そして店主の細やかな気配りや丁寧な接客（見送りなど）が特に評価されています。
+  4. [複数のグルメサイトでの高い総合評価、料理の美味しさ、繊細な仕事、季節感、店主の細やかな気配りや丁寧な接客](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHoSdTB94BCPukx8SIRrMcFWl533UrmU-0YdBPrSy37YL7DJSMW4PW_XY5iFjbRTxyu3SlgaLLXT8T1PINq---JoekdTnL_cPXogj8UgqiV_FurZtljGuQstZAoMAvB3dOQhQ==)
+     > 一休.comレストランやPayPayグルメのクチコミでは、総合評価が4.38/5.0と高く、料理の美味しさ、繊細な仕事、季節感、そして店主の細やかな気配りや丁寧な接客（見送りなど）が特に評価されています。
+
+<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_那古野みつ林 -->
 
 ---

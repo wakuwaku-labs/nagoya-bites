@@ -1,0 +1,100 @@
+{
+  "status": "OK",
+  "editorReason": "人気ラーメン店グループから独立した店主が、味噌ラーメンに特化。化学調味料不使用の自家製味噌ダレや名古屋コーチン白湯など素材にこだわり、調理工程も楽しめるオープンキッチンで提供。メディア露出も多く、行列ができるほどの人気を博している。",
+  "insiderNote": "人気ラーメン店グループ出身の店主が、味噌ラーメンに特化して独立。ラーメンクリエイターとしてのこだわりが随所に光り、地元メディアや同業者からも高く評価されている。オープン前から話題を集め、行列が絶えない人気店。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE9TpdUnQzcyfRByofkw4Ijg232xPyNmjSmatVuPeAVPhlj4pfPbMSvXsFtJLNgj-H1xwJ2bLHeQ2TASHdAfmatmMy1KBVAKbDjOPu8eSUp4DQqtudzSUwh3xNWdprW",
+      "snippet_quote": "緑区の「拉麺ぶらい」、大府市の「RAMENぶろす」といった人気ラーメン店の系列店で店長を歴任した店主が、「次は味噌をやりたい」という思いから味噌ラーメンに特化したブランドとして立ち上げました。",
+      "supports": "人気ラーメン店グループからの独立と味噌ラーメン特化の経緯"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE9TpdUnQzcyfRByofkw4Ijg232xPyNmjSmatVuPeAVPhlj4pfPbMSvXsFtJLNgj-H1xwJ2bLHeQ2TASHdAfmatmMy1KBVAKbDjOPu8eSUp4DQqtudzSUwh3xNWdprW",
+      "snippet_quote": "看板メニューの「みそらーめん」は、化学調味料不使用の自家製味噌ダレを使用し、名古屋コーチンの丸鶏を煮出した白湯スープに、飛騨牛脂の香味油を合わせています。",
+      "supports": "自家製味噌ダレや名古屋コーチン白湯など素材へのこだわり"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE9TpdUnQzcyfRByofkw4Ijg232xPyNmjSmatVuPeAVPhlj4pfPbMSvXsFtJLNgj-H1xwJ2bLHeQ2TASHdAfmatmMy1KBVAKbDjOPu8eSUp4DQqtudzSUwh3xNWdprW",
+      "snippet_quote": "店内は落ち着いたカフェのような雰囲気で、カウンター8席のみのオープンキッチンを採用しています。これは「味だけでなく調理工程も楽しんでほしい」という店主の思いから、カウンター席を通常よりも低く作る工夫もされています。",
+      "supports": "調理工程を楽しめるオープンキッチンの提供スタイル"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE9TpdUnQzcyfRByofkw4Ijg232xPyNmjSmatVuPeAVPhlj4pfPbMSvXsFtJLNgj-H1xwJ2bLHeQ2TASHdAfmatmMy1KBVAKbDjOPu8eSUp4DQqtudzSUwh3xNWdprW",
+      "snippet_quote": "CBCテレビの「デララバ」という番組の「ラーメン数珠つなぎ」企画で取り上げられ、東海地方の人気ラーメン店の店主からもイチオシとして紹介されました。",
+      "supports": "メディアでの紹介と行列ができるほどの人気"
+    }
+  ],
+  "warnings": [
+    "5件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「熱田味噌拉麺ぶりゆ」に関して、Google検索で得られた業界視点の情報は以下の通りです。\n\n**店主のこだわり・料理人としての評価**\n「熱田味噌拉麺ぶりゆ」は、2023年1月にオープンしたラーメン店で、緑区の「拉麺ぶらい」、大府市の「RAMENぶろす」といった人気ラーメン店の系列店です。これらのグループ店で店長を歴任した店主が、「次は味噌をやりたい」という思いから味噌ラーメンに特化したブランドとして立ち上げました。店主は「作り手の『楽しい』とお客さんの『おいしい』を求め続ける」という考えを持っています。ラーメンクリエイターとしてのこだわりが具材にも表れており、完成度の高い味噌ラーメンを提供していると評価されています。\n\n**提供スタイルの特徴**\n店内は落ち着いたカフェのような雰囲気で、カウンター8席のみのオープンキッチンを採用しています。これは「味だけでなく調理工程も楽しんでほしい」という店主の思いから、カウンター席を通常よりも低く作る工夫もされています。注文は入店後、券売機で購入するスタイルです。人気店のため、訪問時には待ち時間が発生することがあり、整理券制を導入している場合もあります。\n主なメニューは「みそらーめん」の他、「しおらーめん」や「シビカラみそらーめん」などがあります。また、替え玉のように楽しめる「和え玉（あえだま）」も提供されており、バジル和え玉やトリュフ和え玉といったユニークなものもあります。卓上には海老オイルやスパイス醤が用意されており、味の変化を楽しむことができます。\n\n**地元グルメメディアでの紹介**\n「熱田味噌拉麺ぶりゆ」は、地元名古屋の様々なグルメメディアで紹介されています。CBCテレビの「デララバ」という番組の「ラーメン数珠つなぎ」企画で取り上げられ、東海地方の人気ラーメン店の店主からもイチオシとして紹介されました。その他、Lemon8、ナゴレコ、名古屋情報通、Retty、YouTubeのグルメチャンネル、フードジャーナリストのブログ、ラーメン専門クチコミサイト「ラーメンデータベース」などで紹介されており、オープン前からラーメン好きの間で話題となり、多くの人が訪れていることが伺えます。特に、神宮小路というエリアで密かに注目を集め、土日のランチ時には行列ができるほどの人気と報じられています。\n\n**料理のこだわり**\n看板メニューの「みそらーめん」は、化学調味料不使用の自家製味噌ダレを使用し、名古屋コーチンの丸鶏を煮出した白湯スープに、飛騨牛脂の香味油を合わせています。麺は全粒粉の中細麺や細ストレート麺が使われており、濃厚なスープと絡みやすいように工夫されています。トッピングには低温調理された牛肉のレアチャーシューやミンチ、ワンタンの皮、九条ネギ、燻製煮玉子など、こだわりの具材が使用されています。塩ラーメンも、平子煮干し、昆布、様々な魚介節、数種類の塩などを使用し、新たな美味しさを追求しているとされています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHgXwQiadw2Y0FKlfH8bdouVPwYvsFrHcBXjDrD3oAeDHXbkIPswdOTM8OHNiYxK20mil4-Zq4TRs6luSYvGHt4QZPAe3knL2y6HVoyxmh666grRpeJ4lXHW8xiqfQ9lLrbUdR2wIP4h2KDiYMopcVcFxAmteEYym6OyAc=",
+        "title": "hicbc.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEDJDlnOp72yFbrB0GeJtW9Kbs71QyZv-sY-EQSU9y4lVgFG9dFCvhy8dOHBvW9gMTw-fEpNnaI7Gyd6agccJSyYht-y26UV3MszoPRviAh36iXJLu6Cb6GlaHHfeXf8zzFmFxUSKA8PseF",
+        "title": "nagoya-meshi.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE9TpdUnQzcyfRByofkw4Ijg232xPyNmjSmatVuPeAVPhlj4pfPbMSvXsFtJLNgj-H1xwJ2bLHeQ2TASHdAfmatmMy1KBVAKbDjOPu8eSUp4DQqtudzSUwh3xNWdprW",
+        "title": "jouhou.nagoya"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHGc09d1daKwFw6Dd8l97CTCfMnS0-2pxDM9r0X4AdQqEYJ_I89RZ_upEt5yXWXXMtX7Bb3VS4wtEpBvmHXHo05Oe3awQ2fnq1w6K1AvgUey3tbB_5VKS1My6xjvc_PDJTHpge0-CgUZve3wA0=",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGUAevImSQkqOJ2EXk-7pI_kLNShYMkCbKYUiIGYL6mcMAr7KEkHPaNomLb51t4d6PuOndZ-5Tbvf3s4qZI0LeMqGUrxcKokXupWtmb7_MDgJY12f4XHPKd1WzX9O-xJx2L5YZSv3XwYNOUjWz2pO3QysY=",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGu246MLYTpDfdv25juLYtQ2o12epH891E6srcSZy1xmqOn3JXYVzOLDheaYZTQocdYp3oXXMhdV_RHq8BRgJTdwjAXoC5nRhds6OSUGxg1cy4S29YLLw5d4_Uyiw==",
+        "title": "gourmetpress.net"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFzkjH9K1RKXWxYFsu_sKPzACOW-zBIELnLu-swesoSr2tYivV-op4brCAXuAVtWCFZyK6Cge00kxSJ9LE570rP3Ah5GScykDOQTh0fHGaRRs9snYiniTixGhA-cXhe0hxitj8RWIBiyGhj2RyW01Y0iLdTbGlfVAwQJ_Va23CKpSarCWLSuvSjP8JpDH4h5C0KDeuiVt4ad9mrVR3LdBdkbGCnukj8BQHhEBldZ2qtFEps0Eag8to5MdkQxgg=",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGfZ1pSDtDwIFQLy2YW2kn5gQa07n5-V42VIInjudQQZSqJ6KI0Yx15BXYeLDNw35RKW-9-TPNplQzIgXSmYOK95U0xTGSkiwlDruChuzhLooixQpkSQJ6dnniHkohHFPxl4ueymZZCl0unkcFYJXM=",
+        "title": "ameblo.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHz9JOf3EOMnc9MDeVM6yZ2eAxRhEvu7OAY9fxu6cc2rZlNVWIx7pYRvm2lmEm6wSwWGmLIq9q1BUxTeKDnkSx2J0DAS7Akv6Mck2GpyWsMJiJQg87K5jDOKPuAo5oPDU_Xuh7pxzIIsJ5t9A==",
+        "title": "note.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHVPOU2GCxDORwXXKxoBd6y0nhyrrhG81vK7L1DaMNOws0qfvhdCoPMXWDEJg0JsbF2blh5e0WqtIrH4LuNmgtbXZp1ENQ5bP2TM80meeQmXiCoEefoP8_RYBl3-Xk0ZDeFSzY9o-lDnYynedzK8VwYDiBeJeY1TSjeXsJmQMyOlIn-5Q==",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF83Axs7ewit23yFCvzLnHqpy8DEJ0iUM66d8jbNc1wRY6Oxrhcqvcw_Q0Ys5ppmd6eB9dcCI8UqPHsqxMqibeVWR1QdXY0Ci1W5kDlxDb-EQY7RxNbaA8eiSZpDT4d_sdm9ReS4KQ=",
+        "title": "youtube.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFd8xlldDqQwZxRsvAz4IupoRHePcYeX3Gk6OqofarOgm_U9oz1NHhn4x9SwhCa_gM5QTH7dUeHkiyjWNm2Un43XqSzrRHOaUzPWuL_ZR22Cklc3t6_gi_Ag8h-uF45kIZtRF5yRJ14n-HSqlc=",
+        "title": "livedoor.biz"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEP08WmFs7gFlGB1ddnGQulBqKTjVYXcH7QaQV7lPRZWqVoTlhosqxsvap990BjBNJ-SsR0WYiyc-qRQ_cbL8EL9vH1s6adpSEJUIGv86EWOoLhgpsnK7_CMbA5Zux9uwEPggY=",
+        "title": "supleks.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGOqvltQlbl99FkPH5h77pdFGDvFlPRuv0UeV8R6CxBaPltWkgF7USgDI2FsUc02L6BazBqvZo0BsNAVAMkTSq6Byp8BNk--o990kVzUT9BXpwgr3ll6vgqLj7WUMBcsZ2FN8BHo9k4vA==",
+        "title": "yuya-travellog.com"
+      }
+    ]
+  },
+  "store_id": "manual_熱田味噌拉麺ぶりゆ",
+  "store_name": "熱田味噌拉麺ぶりゆ",
+  "area": "熱田",
+  "genre": "味噌ラーメン",
+  "rating": "4.3",
+  "generated_at": "2026-10-05T23:56:17.024Z"
+}

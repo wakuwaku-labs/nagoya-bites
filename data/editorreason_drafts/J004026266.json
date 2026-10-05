@@ -1,0 +1,83 @@
+{
+  "status": "OK",
+  "editorReason": "名古屋名物ひつまぶしを卵黄醤油漬けなど独自の4通りで提供。さらに職人による完全無血化と熟成技術で生み出された「熟成うなぎのお造り」は、うなぎ料理の新たな可能性を切り拓く革新的な一品です。",
+  "insiderNote": "一尾入魂の精神で活きたまま捌き、独自のこなし焼きで仕上げる職人の技は、うなぎ本来の旨さを最大限に引き出しています。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF2VxD4iL3S79rjKS4l5Cze7I1LFaoy1J7zmFA4iR4OyJMoWOd0oTRtfZaTpUJdFGB05kBF5Y3_h_0ZtoO5-pmY_Ny-Mupn7Ld56AncY3S8eolhZWCpzI8OVuraZ02QLBA=",
+      "snippet_quote": "名古屋名物の「ひつまぶし」は、そのまま、薬味と、そして自家製の卵黄醤油漬けやとろろと一緒に、さらにお茶漬け出汁でと、独自の4通りの楽しみ方を提案しています。特に、一般的なひつまぶしの3杯目に出汁茶漬けを挟む代わりに、濃厚な卵黄をかけた卵かけごはんを提供するという独創的なスタイルも特徴です。さらに、うなぎの新しい楽しみ方として、長年の研究を経て職人の手によって完全無血化を実現した「5日間以上熟成させたうなぎのお造り」や「熟成うなぎのしゃぶしゃぶ会席料理」も提供しています。うなぎの調理においては、「一尾入魂」の精神で、お客様が来店してから活きたまま捌くことにこだわっています。捌きたての鮮度を重視し、うなぎ本来の栄養成分を余すことなく提供するため、捌いた後も真水で身を洗い流さないというこだわりがあります。焼き方については、職人が手焼きの炭火焼にこだわり、独自の「こなし焼き」という技法を用いています。",
+      "supports": "ひつまぶしの独自の提供方法、熟成うなぎのお造り、活きたまま捌くこだわり、独自のこなし焼き"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHCLLtQJs-zLFm1gLihOLBEFwR9PcsIZ0Dcr3Mi7bKrqBbdnz0Jk2m2lr556pGtBcAAFilh3CY2Jlh0qNZ9JOrgXaszuIlbdonc_uQUAVdoHqk7-8DFwjoPmfv8YtXQiipw-7VLvQ==",
+      "snippet_quote": "名古屋名物の「ひつまぶし」は、そのまま、薬味と、そして自家製の卵黄醤油漬けやとろろと一緒に、さらにお茶漬け出汁でと、独自の4通りの楽しみ方を提案しています。特に、一般的なひつまぶしの3杯目に出汁茶漬けを挟む代わりに、濃厚な卵黄をかけた卵かけごはんを提供するという独創的なスタイルも特徴です。さらに、うなぎの新しい楽しみ方として、長年の研究を経て職人の手によって完全無血化を実現した「5日間以上熟成させたうなぎのお造り」や「熟成うなぎのしゃぶしゃぶ会席料理」も提供しています。",
+      "supports": "ひつまぶしの独自の提供方法と熟成うなぎのお造り"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHEHET-WcSQwCHaqlGKsbTMWZ_AMVz_PB1919squltGTmhpe0jn8aNHEtT9AyrNLfYMehGu04bF2JfiWEDkq-nmJRYGiVcs7H_JHKwmXpFrx4oOx-A8VKcMilHBAWbh",
+      "snippet_quote": "2024年12月には、三河一色産活うなぎを使用した熟成うなぎのお造りとしゃぶしゃぶ会席料理の予約受付を開始したことが報じられています。職人の技術は高く評価されており、活きたうなぎを丁寧に捌き、独自の技法「こなし焼き」で香ばしく、外はパリッと中はふっくらと焼き上げる技術が特徴です。特に、うなぎの生食と熟成に関する長年の研究を経て、職人の手によって「完全無血化」を実現し、5日間以上熟成させることで旨味と食味が昇華された「熟成うなぎのお造り」を生み出している点は、高い専門性と革新的な技術を持つ料理人としての評価に繋がっています。",
+      "supports": "熟成うなぎのお造りという革新的な料理と職人の高い技術"
+    }
+  ],
+  "warnings": [
+    "1件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「うなぎのしろむら 泉本店」に関して、Google検索で得られた業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「うなぎのしろむら」は、お客様に活力と感動を届けることを理念としています。地元愛知の誇りである「三河一色産活うなぎ」を多くの人に味わってもらいたいという一心で創業されました。使用するうなぎは、良質な脂がのり、皮が柔らかいのが特徴の「日本一のうなぎ」と称される三河一色産活うなぎです。このうなぎは、矢作川の清流水を使用し、自然に近い環境でストレスなく育てられています。\n\nうなぎの調理においては、「一尾入魂」の精神で、お客様が来店してから活きたまま捌くことにこだわっています。捌きたての鮮度を重視し、うなぎ本来の栄養成分を余すことなく提供するため、捌いた後も真水で身を洗い流さないというこだわりがあります。焼き方については、職人が手焼きの炭火焼にこだわり、独自の「こなし焼き」という技法を用いています。これにより、外は香ばしく皮はパリッと、中はふっくらとした味わいに仕上げています。また、店内には生け簀が設置されており、毎日新鮮なうなぎを職人の手によって捌き、串打ち、焼き上げています。タレには、醸造の伝統と歴史のある地元愛知県産の醤油やみりんを選び、うなぎの旨さを引き立てる自家製のものを使用しています。\n\n**提供スタイルの特徴**\n店内は落ち着いた和モダンな空間で、ゆったりと食事を楽しめるようになっています。接待や会食、記念日、家族のお祝い、法要後の食事など、様々なシーンに対応できるよう個室も完備されており、全ての個室からは美しい中庭を臨むことができます。仕切りを外せば最大20名まで利用可能です。\n\n名古屋名物の「ひつまぶし」は、そのまま、薬味と、そして自家製の卵黄醤油漬けやとろろと一緒に、さらにお茶漬け出汁でと、独自の4通りの楽しみ方を提案しています。特に、一般的なひつまぶしの3杯目に出汁茶漬けを挟む代わりに、濃厚な卵黄をかけた卵かけごはんを提供するという独創的なスタイルも特徴です。\n\nさらに、うなぎの新しい楽しみ方として、長年の研究を経て職人の手によって完全無血化を実現した「5日間以上熟成させたうなぎのお造り」や「熟成うなぎのしゃぶしゃぶ会席料理」も提供しています。\n\n**地元グルメメディアでの紹介**\n「うなぎのしろむら 泉本店」は、一休レストラン、Trip.com、ホットペッパーグルメ、楽天ぐるなびといった主要なグルメサイトに掲載されています。また、Lemon8や個人グルメブログ「タケマシュラン」でも紹介されており、特に「皮がパリパリのひつまぶし」として評価されています。2024年12月には、三河一色産活うなぎを使用した熟成うなぎのお造りとしゃぶしゃぶ会席料理の予約受付を開始したことが報じられています。\n\n**料理人としての評価**\n職人の技術は高く評価されており、活きたうなぎを丁寧に捌き、独自の技法「こなし焼き」で香ばしく、外はパリッと中はふっくらと焼き上げる技術が特徴です。特に、うなぎの生食と熟成に関する長年の研究を経て、職人の手によって「完全無血化」を実現し、5日間以上熟成させることで旨味と食味が昇華された「熟成うなぎのお造り」を生み出している点は、高い専門性と革新的な技術を持つ料理人としての評価に繋がっています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH_JXutXX-i-lgOa1cFct6UjyO5FVeWnG6h0QBBScWOo4o8ZmHvHUgPQK1A1xdIzS2nGHb0XO8G6duRkRaOkQnoWhboSspoFSzwvcYOSrnRb4bab8RVL3QnKUW5tvU=",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF2VxD4iL3S79rjKS4l5Cze7I1LFaoy1J7zmFA4iR4OyJMoWOd0oTRtfZaTpUJdFGB05kBF5Y3_h_0ZtoO5-pmY_Ny-Mupn7Ld56AncY3S8eolhZWCpzI8OVuraZ02QLBA=",
+        "title": "unagi-shiromura.nagoya"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHCLLtQJs-zLFm1gLihOLBEFwR9PcsIZ0Dcr3Mi7bKrqBbdnz0Jk2m2lr556pGtBcAAFilh3CY2Jlh0qNZ9JOrgXaszuIlbdonc_uQUAVdoHqk7-8DFwjoPmfv8YtXQiipw-7VLvQ==",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHEHET-WcSQwCHaqlGKsbTMWZ_AMVz_PB1919squltGTmhpe0jn8aNHEtT9AyrNLfYMehGu04bF2JfiWEDkq-nmJRYGiVcs7H_JHKwmXpFrx4oOx-A8VKcMilHBAWbh",
+        "title": "getnews.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE2olsUbGd51650cAYp0QMGwZHrcZnioHyn1YwioVFT6Zupds4UqcMNidhJ7_KkfULPKuIMu7-BMGCRa48F0gFkRvroTt0CUx40jpk7Xs9cuzcgz1e4FER9K7IsgliMpJewlw==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQ-bmfION7XtLiDM69q1hhB7u1Lz7zBHUiXBfVESWkqA1om6AzTF2xIvo_2zqwl_vLzwW5bYtuIjfvM-i7zWK8mr8OuvyAjx2-yMmXPUCtTmr_e2C8ioDyYc3Na6vWJ1FW7XS4sq-L7GvG3dRoMiW96KyZ4jmHCh5eHE4rCZs=",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHz-h3xy5GE5Q3VARLcoG2IrOwpQV8wNA2m1dpEablpcto-jGer88HDCorOCfGYG5AJZRlBnPEEjTJ6uu-T2Y93_4JPGo9tNUfjbpcJ_1r7Jk5tGX2JCU7PXEBw5Vg7i86alkIN2bQiKB4i_UO-DIw=",
+        "title": "takemachelin.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFn1pk3x7pF9G5xOJdVTF1DYGWSQ4oWGw-wccINOlcTsxEJNVJH2T4MUJGo4asKKbxOEQ9SgnYetlrv9splckG6o7onEezZD_Tjw06k7J9R-Rg1loS648jgQihApBjEaNfwJ-aL6q4xUT8XsVlo7b2zVz8qOmZyV_qSNoCEU5UKhGUkMeqmfmdfxEk=",
+        "title": "trip.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFKAsowu3IpR7tmP-g4kFKQVleiPWxFrmZz_NcHJ88G-4GcGsKq9jbvyynA3W91ZPUNdZBFR-BNvZARzPbz2OE6ykBaUXMwMCNKZCZYem_BmddBSlVuGnqxyyI3coCg",
+        "title": "gnavi.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHADGDv-vryahGiWTNk7ctocKHt-EVSumDJEQ8Fzw9aC2C5lj5qyWHZRgbtEXvR1Y9kdkQJO9j5yZ0UVCONwn3ccAcAf-9DykeSz8c-otDSQIdcqHnuReYW1WR6",
+        "title": "gorp.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEwSSuHhkFx0KdPRpRXeDQXxsPT3Ss4C-1ZQrauVtoJSXvM-Q0qFAkxLEu3taphdbWASY3DYcB3B9KBLbpJo1WRetGYktij-tsSPInTlBYlD-fHgOEGj7TOuVGtv_glecvlPLB15h2wg-HxT_mHfCcPzM5Pivx7NIE19Z532ng=",
+        "title": "lemon8-app.com"
+      }
+    ]
+  },
+  "store_id": "J004026266",
+  "store_name": "うなぎのしろむら 泉本店",
+  "area": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+  "genre": "和食",
+  "rating": "4.5",
+  "generated_at": "2026-10-05T23:51:53.254Z"
+}

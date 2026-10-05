@@ -1,0 +1,107 @@
+{
+  "status": "OK",
+  "editorReason": "ミシュランガイド掲載店出身の店主が手掛ける人気店。卓上無料の生卵やブランド海苔、TKMスタイルで顧客体験を向上させ、名古屋市ラーメンランキング上位に。姉妹店展開も成功している。",
+  "insiderNote": "ミシュランガイド掲載店出身の店主が手掛ける人気店。無料トッピングやTKMスタイルで顧客を惹きつけ、名古屋市ラーメンランキング上位に。姉妹店展開も進める成長株。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEWLcoeHI6pyvzzvy5223-OayGfStckqfuIxmVw0fH_AkJ6EXef5LKfpDk0P7bkAOJjMJ6mB6uW6jEdKFcjwU0acnJxdYgCIgjWmbUkD1SpW2RQxm75FKylFwJgpT7EGwpsIEPd83pmV7AJ1tMZyb5b7g==",
+      "snippet_quote": "ミシュランガイド掲載のラーメン店出身の店主が手掛けていると紹介されており",
+      "supports": "ミシュランガイド掲載店出身の店主が手掛けているという事実"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHQoEhlHt5ZNvc9XAl6aG0iTzYhG1yTIPGGTmFV19KpVkbtgp4aUKQrFQPH9Zdh4zeGnwa2i1Z-OMinsMGmsq2RgXzAHJo-0O6oI3efTGAlapUoOnJ1-oChm-0CPLT2Kmmh_L_Av_weFIFm-uf4g-Q4OSuSZYMkUtzRHc0tIeunUGa3NmfjHyit_kcaNbo9UfMv_NknxdzzT38iPOCGd52nl4j7nvV7ydYDb0xzUJkI0IZRUIOSb1ijBgGdm3EKb3zMFB1-wuMQl_duc9xpQ6o=",
+      "snippet_quote": "無料で利用できる生卵やブランド海苔、生姜醬が卓上に用意されており、これらを自由に使える点が特徴です。特に「TKM（タマゴかけ麺）スタイル」として、生卵と麺を豪快にかき混ぜて食べる楽しみ方も提案されています。",
+      "supports": "卓上無料の生卵やブランド海苔、生姜醬、TKMスタイルで顧客体験を向上させているという事実"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFU09O5rWekKQsv53k9A8_qxO85hHrI52iGTAm5UjjvyTcXyauxCIYhyYp7jFQKKEin90Y5FjFwtOwuL3y2wuLWqUgn7WU2Tt7_UHqfu4ERmvL3w-xHNfgHG0m2cUTNFepRNjFTT4is5emdkMIpFhO6HQ==",
+      "snippet_quote": "「名古屋市で人気のラーメン」ランキングで上位にランクインしていることも確認できます。",
+      "supports": "名古屋市で人気のラーメンランキングで上位にランクインしているという事実"
+    }
+  ],
+  "warnings": [
+    "5件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「中華そば 雷杏 -RYAN- 名駅店」に関して、Google検索で見つかった業界視点の情報は以下の通りです。\n\n**店主のこだわり・料理人としての評価**\n「中華そば 雷杏 -RYAN- 名駅店」は、ミシュランガイド掲載のラーメン店出身の店主が手掛けていると紹介されており、店主のこだわりが感じられるお店であると評価されています。Googleクチコミ評価は4.3pt（1331クチコミ）と高く、人気を集めていることがうかがえます。\n\n**提供スタイルの特徴**\nこの店舗の提供スタイルの特徴として、熟成醤油生姜中華そばの香りとコクが絶妙な生姜の効いた醤油スープ、細麺、柔らかいチャーシュー、半熟卵などが挙げられます。また、無料で利用できる生卵やブランド海苔、生姜醬が卓上に用意されており、これらを自由に使える点が特徴です。特に「TKM（タマゴかけ麺）スタイル」として、生卵と麺を豪快にかき混ぜて食べる楽しみ方も提案されています。店内は木目調のカウンター席が中心で、おしゃれで落ち着いた雰囲気があり、清潔感があり、一人でも気軽に入れる環境が整っていると評されています。\n\n**地元グルメメディアでの紹介**\n「中華そば 雷杏 -RYAN- 名駅店」は、名古屋駅近くのラーメン店として複数のグルメブログや情報サイトで紹介されています。名古屋駅太閤口から徒歩5分というアクセス便利な立地も魅力の一つとして挙げられています。また、「名古屋市で人気のラーメン」ランキングで上位にランクインしていることも確認できます。姉妹店として「煮干しらーめん 凛」もオープンしており、こちらも生卵と海苔が使い放題という同様のサービスを提供しています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH41pFhDPS8Jgl1KEutW3PPQUXeLL_tyYi6XLVWkuIQk0Vvt7s-_aFgxBu9sUKr58XrgS5pF7nDQB3QfIjf_9PIx4HTDntt4pCmp7ZkwrVyyiS3l5YO",
+        "title": "lunch.nagoya"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHQoEhlHt5ZNvc9XAl6aG0iTzYhG1yTIPGGTmFV19KpVkbtgp4aUKQrFQPH9Zdh4zeGnwa2i1Z-OMinsMGmsq2RgXzAHJo-0O6oI3efTGAlapUoOnJ1-oChm-0CPLT2Kmmh_L_Av_weFIFm-uf4g-Q4OSuSZYMkUtzRHc0tIeunUGa3NmfjHyit_kcaNbo9UfMv_NknxdzzT38iPOCGd52nl4j7nvV7ydYDb0xzUJkI0IZRUIOSb1ijBgGdm3EKb3zMFB1-wuMQl_duc9xpQ6o=",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEWLcoeHI6pyvzzvy5223-OayGfStckqfuIxmVw0fH_AkJ6EXef5LKfpDk0P7bkAOJjMJ6mB6uW6jEdKFcjwU0acnJxdYgCIgjWmbUkD1SpW2RQxm75FKylFwJgpT7EGwpsIEPd83pmV7AJ1tMZyb5b7g==",
+        "title": "itmedia.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEUXmKxPhnzbVtgMdg3oktP7dmpBnhz5hKMdlXIc0QQQu5UKSz9VOx1uvhPz_d-D7PFeMPFIGqe6j_AaKO0YK4Yft4ztR-op0dkZ1BNBUIPq1FYXjWhiFkon-g4o0eoISDjFFhUZSmF8F99eS4D6VbSH8aFNBJ-wJPEkegqattNds9X2KLHMykV4XQDSlpfiVI8yPs89Yy97_OB9dDZ2zs6t7Hhwx_BVjn2cF2Tg4BAmtWa6fDXXeGhzEN3cCM=",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHcFBaCH41sGsJGQVbKKYwdrqFCLumR5AIh311Y70JuDNoP21uOxivcObNk9GeV58c0z6HdAvAm3cqau0tWKMbxH4A4xsFGKhh0vkluGH96ZP6g6UEWlo-LqrZHgwQrA7aEUIjvgLMKr20MAqI=",
+        "title": "hiroshiman.xyz"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFco7Ax2R1rwNvY1xh8l53jdD0Afpp2edS-6RFO2c3i5EAACDHryu-OLfpj9tpsP0apR8VQqcfj4KBLrpDh4L872DyN1nAoSbyI2vQ3MEqhVC3-DIbJk8Tfn6-WolVpKzqthOGL9NGS9DARqE2qiApecLnIJd6H-4RuMW5QM639JVdRHZrzb3k=",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHx8gmnuG-z8E4FJfsO0SisKAXAXwLohxkV0LFBj6u7fizF1nx_lgcA9TUj7O0qG7H6ONah59eWlySR9mYI8x3hQY-Ghe9rwNyKD-TuD5AA5aPosGAkQDhFE2o99xuTeQbUEs0fdM_-2pJsCZ2aDmCHszELO1ZPwEhYC64=",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFU09O5rWekKQsv53k9A8_qxO85hHrI52iGTAm5UjjvyTcXyauxCIYhyYp7jFQKKEin90Y5FjFwtOwuL3y2wuLWqUgn7WU2Tt7_UHqfu4ERmvL3w-xHNfgHG0m2cUTNFepRNjFTT4is5emdkMIpFhO6HQ==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFnVzXVc2my5unN3VAJpF3X0VmS0Vg1I5YGWo2IeAf8TpRB9TbrdkZd9Tg00rDDrJme0yo0VaCwWDdP52wIHATP0CcXOSEhIvNy0kSdeWYj2Q0Pye72P0GZVR-p-OLz2TE3cPNl-ycimNf-hoP_Dy450cerOIZkL880BfePYlI-D3vLArRTFli-l69ufA62WUO7Js0PEFmP1fJwxMfLS_YBzjEGAGjfGS9wL2NwPimdVcdHalsNetbLMppYeJssnFaEB3xGmEEIxYJ3kOnPyQSjVKe5m7zAAkI=",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHZftYAjzdMFBw43wSAZeBmxHXfoeiutxeWaBwcruBSJC1UGuGqu9O08g1swglWjURRkByr1SSUYj0x65VswGT_3y-af5qGJnQP-FKiKVNf9V9zGQNPDJw0Wk3wSiyjQHiM35aVxn5CrCfTMmKfJ80_o8m_3Km_z0q8gEN_FdvbbcF0twLJr7xOUv3lCtN-NemNrpDBVMjSJXzUTSEUGzdOn5xWixTdBFKk168h2ZuneYXiF-ueaIywpHnwgAkui4G6XMN4Bg==",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG-vC4JP42oo25Hf2iLU1phOjVFfUNK38o6uT9cpcsh1odvzETFhtHkRkdsTxp6eNDgjxdmXirw2bQGQUcqEQ6A91q5Tvsj8Dok5d790DhxZVU2vGAw4bgHeGpGSHpx-YiHhzYxQQ==",
+        "title": "youtube.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHeG-UtcjExGJuOJANlPol0WsRF93QGiNPA8Pa0B95C4Cc3j8BS-9RjNOwC7UETUopcC4_i6zmPtd-cqleWMFAHcJwusNc8cn0a9j5SWA0_X5giAs3l9ovSnkS4Ca-0pgEhOcoVSZZxRYGhEzUUpAYfqPAsCJhMNfWMBow7bxNb4PXV",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFaSs81gerIDVQNILy6YOVyG4qGWjLcieOgAhKznIgmse17asDPFhgVtnBzAzY7s8iYEmxLLm8OPzjNbkSDRD0-I1B0Az89_cfzFWIU_Ra6TcQPlHrBemGHpIOjo79keChQ",
+        "title": "blogmura.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHJQpCF_BhIldbo5-XlpqkJzG0Mc38SISLuVdpml9cvJIX02yIvRRGnahqeBRcyirwCm7rt5-8otmEKVdXI-ud_GQQMkaTVZcpAjp58_pwNs7yas6zUUS6uO4RazCKvVET1gKyVTgI=",
+        "title": "note.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEP3QEHjbqepPdNk53MCoekD343dJ1-fEf82e-DdSETzWKQuFruLrx7tLUi1BXVDovo08Nv3qNGkLxx2UkaeA7AdRTVCafKlTGLE4vtyNa_JL4CzGvTHCwiVIHiRLNgaDwvwLDu53LS5OAUwx_GEvfL1X5qZiH2rJHC",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFvAkxmKYeTdhm3jn5nxm2pewuLSvfoy2jwUGKgIMXcDQha_mv5QfYDBIAx7FWIOwxQXeMr7-fsVMjDtpLCr5IuOvSXuwVTq14ojROsKARr8gkhM28y4RCTb-occDGfXL7afHrbR3cKDPWqcBAE3C4qpN0UCQEfrH3FTdBCgrTUJqZrCrAAFKo=",
+        "title": "favoriteslibrary-ramen.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEd5bGs7NGkyJL67Xr3kHvTJ-OuqSG6hPC7J4dmwSXblGmEPPvFkZx8HPA1o36getfLQtlV-JFNj5yM-FVf97mJdSr61Jpm_ESiVScEj4yxZgTgxU1ipU8_WdYI",
+        "title": "oinagoya.com"
+      }
+    ]
+  },
+  "store_id": "manual_中華そば雷杏-ryan-名駅店",
+  "store_name": "中華そば 雷杏 -RYAN- 名駅店",
+  "area": "名駅",
+  "genre": "中華そば",
+  "rating": "4.3",
+  "generated_at": "2026-10-05T23:53:31.199Z"
+}
