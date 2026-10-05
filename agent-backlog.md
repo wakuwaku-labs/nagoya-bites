@@ -850,7 +850,7 @@
 
 ### [ISSUE-124] HotPepper写真URL（imgfp.hotp.jp）のCDN側配信終了を検知する監査を新設。全件走査で4,926件中133件（約2.7%）が404
 
-- **priority**: P1 → **status**: in_progress（検知は稼働中・恒久修復(b)はオーナー承認待ち）
+- **priority**: P1 → **status**: done（案(b)実装済み・2026-10-06。残件は下記「実施結果」参照）
 - **detected**: 2026-09-15
 - **category**: data quality / photo
 - **owner**: Builder / DataKeeper
@@ -880,6 +880,12 @@
 - **関連**: [[DSN-006]]（発見の発端）
 - **2026-10-06 追跡結果**: `data/photo_url_liveness_report.json` の dead は **149件**（HotPepper 149 / Places 0・unknown 0・ok 4,816）。9/15 の133件から増加＝毎日の build.js 再取得でも直らず新規失効が積み上がっている。build.yml のステップも稼働継続。
 - **オーナー操作（承認の一言のみ）**: 「(b) 確定deadのURLを機械的にクリアして写真なしへ倒す」を実装してよいか、課題IDで返答する。承認後 `scripts/clear_dead_photo_urls.js` を新設し gen-store-pages.js 直後に配置（`scripts/clear_broken_tabelog_links.js` と同型・約30分）。フロントは `nbImgFallback` で破綻表示を緩和済みで緊急性は中
+- **実施結果（2026-10-06・案(b)承認済み）**:
+  - 新設: `scripts/clear_dead_photo_urls.js`（`--dry-run`・冪等・新規確定300件超は停止/`--force-large`）、`scripts/lib/dead_photo_urls.js`、台帳 `data/dead_photo_urls.json`（写真アセットID単位・追記専用）、`tests/dead_photo_urls.test.js`。`build.js` の `normalizePhotoUrl` が台帳を引く＝毎日の API 再取得で壊れたURLが蘇らない。`build.yml` に監査の直後・gen-store-pages.js の前で実行するステップを追加
+  - 対象は監査が確定（404/410を2回連続観測）した分のみ。台帳 143アセット（レポート dead 149件）
+  - 前後件数: `data/stores.json` 写真URLあり 4,965 → 4,816（−149店。HotPepper 4,807 → 4,658）／`stores/*.html` 150ファイル再生成（149）＋孤児ページ J004537044-2 を手当て＝fallback SVG 表示／`features/*.html` 店カード等の壊れた画像26ブロックを除去（19ファイル）／manual_stores は 0件
+  - 確認: 店カード・モーダルは `nbStoreFigure`（店名入りSVG）へ倒れる／話題店の写真ゲートは「実写あり156件」から選出（TOP5は実写候補のみ）／`npm test` 全通過／`audit_design_system --check`・`audit_feature_stores` 違反0／他店の写真での代替なし
+  - **残件（未対応）**: ① `data/featured.json` の父の日カード thumb（季節外・再登場は2027-06・build_featured が thumb 必須のため自動除去不可。実写への差し替えは Editor 判断）② `journal/` 過去記事4本（2026-05-11/14/16/17）のヒーロー・og:image は出所帰属を含むため自動では触らない（要 Editor 判断）③ `sitemap-images.xml` の旧 imgfp 参照（生成元スクリプト不在の静的ファイル）。台帳は CDN の復活を再検査しない（復活時は台帳の該当行を削除）
 
 ### [DSN-006] 特集記事6本のヒーロー画像（AIっぽいイメージ図/SVG）を実写に差し替え、店舗ごとの写真欠落・「編集部推薦」バッジの不整合を修正 ✅
 

@@ -174,6 +174,15 @@ jobs:
         run: node scripts/audit_photo_url_liveness.js --check
         continue-on-error: true
 
+      - name: 配信終了が確定した写真URLを写真なしへ倒す（ISSUE-124）
+        # 直前の監査が確定（404/410を2回連続観測）させた HotPepper 写真を data/dead_photo_urls.json へ
+        # 追記し、data/stores.json・features/*.html から外す。台帳は build.js の normalizePhotoUrl が
+        # 参照するため、翌日の API 再取得で蘇らない。gen-store-pages.js の前に置く＝店舗ページは
+        # 空の 写真URL から再生成される。他店の写真では埋めない（写真なし表示に倒すだけ）。
+        # 新規の確定が300件を超える場合はスクリプトが止まる（誤爆防止）ため continue-on-error。
+        run: node scripts/clear_dead_photo_urls.js
+        continue-on-error: true
+
       - name: 他都道府県マッチ監査（他都市チェーン店の誤登録を検知・ISSUE-103 再発防止）
         # 2026-08-20、71件の他都市店舗（大阪・神奈川・北海道等）が「栄」エリア・愛知県の
         # 名古屋店として誤登録されていたことが発覚（fetch_places.js は正しく却下していたが
@@ -416,7 +425,7 @@ jobs:
           # Places で取得した pending 店の写真が毎回捨てられ、無駄な API 再取得が続く。
           # data/crosscheck.json: モーダル「内訳を見る」の遅延ロード元。ここが漏れていると
           # CI で毎ビルド生成されても捨てられ、フロントが古い内訳（一部店舗のみ）を出し続ける。
-          git add index.html features/index.html sitemap.xml llms.txt data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/feature_roster_health.json data/store_link_identity_checked.json data/store_link_identity_report.json data/area_genre_pages_manifest.json data/photo_url_liveness_report.json data/store_merge_pairs.json
+          git add index.html features/index.html sitemap.xml llms.txt data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/feature_roster_health.json data/store_link_identity_checked.json data/store_link_identity_report.json data/area_genre_pages_manifest.json data/photo_url_liveness_report.json data/dead_photo_urls.json data/store_merge_pairs.json
           # 特集本体(features/*.html)も commit 対象。月次ロスター更新の掲載店入替を反映する。
           git add features/ || true
           git add stores/ || true
