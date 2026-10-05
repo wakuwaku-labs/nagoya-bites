@@ -199,7 +199,7 @@
 
 ### [SEO-106] 店舗カードに「掲載特集」ラベルを出し、DB→特集の逆引き導線を作る（現在は特集→店舗の一方通行で、401店が持つ編集資産がカード上で不可視）
 
-- **priority**: P2 → **status**: in_progress（実装済み・効果測定は次回GSC/クリック計測を待つ）
+- **priority**: P2 → **status**: done（実装完了。ラベルのクリック数 `block:card_featured_in` の効果測定は計測蓄積後に別途確認）
 - **detected**: 2026-09-22
 - **category**: SEO
 - **owner**: Builder
@@ -228,6 +228,9 @@
   4. Designer人格レビューは本セッションでは実施不可（エージェント不在）のため、`agents/designer.md` QA-5相当を自己適用: 新規CSS（`.card-featured`/`.cf-kicker`/`.cf-link`）は全て既存トークン（`var(--fs-xs)`＝13px・`var(--gold)`・`var(--dim)`・`var(--border)`）を再利用し新規リテラルは追加していない。`.related-link`（features側の内部リンクpill）と同じ視覚言語（gold文字・薄いgold枠）を踏襲。`node scripts/audit_design_system.js --check` violations 0 を確認（acceptance④・自動ゲートは通過、人間レビューは次回オーナー確認時に補う）
   5. 制約1（単一ファイル）・制約2（LOCAL_STORESパターン）・制約5（フィルタ/検索/モーダル非破壊）を維持。ブラウザ実機確認（`http-server`・`ALL_STORES`にテストデータ注入して`renderGrid`実行）でカード描画・モーダル開閉（`openM`）に副作用が無いことを確認、コンソールエラー無し（acceptance⑤）
   6. `tests/feature_store_match.test.js` を新設（8件）。`npm test` 219/219 pass
+- **2026-10-06 追加実装（店舗ページへの逆引き）**:
+  - `gen-store-pages.js` に「掲載特集」セクションを追加。`buildFeatureStoreMap`（index.html カードと同じ照合1本）の結果で、features/*.html に実在掲載されている特集だけを出す（タグ推定の「この店舗が登場する特集」とは別枠・対応が無い店は非表示）。既存 `.related-features` のスタイル・トークンを再利用し新規CSS/リテラルなし。
+  - 確認: 生成で324店ページに出力（リンク先は実在特集）、`audit_design_system.js --check` violations 0、`audit_feature_stores.js` リンク切れ 0、`npm test` 274/274 pass。生成済み stores/*.html は build.yml の日次再生成で反映（本PRには含めない）。
   - **未完了（acceptance⑥）**: 効果測定（ラベルのクリック数）は実装直後のため未計測。次回以降のイベント集計で確認する
 
 ### [ISSUE-134] Linear の Project（KR）を作成して新規 Issue の自動作成を開通する

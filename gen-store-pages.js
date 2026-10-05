@@ -518,7 +518,7 @@ function buildDescription(s) {
 // ================================================================
 // HTML テンプレート
 // ================================================================
-function renderStorePage(s, slug, relatedStores) {
+function renderStorePage(s, slug, relatedStores, listedFeatures) {
   const name     = s['店名'] || '';
   const genre    = s['ジャンル'] || '';
   const area     = s['エリア'] || '';
@@ -646,6 +646,16 @@ function renderStorePage(s, slug, relatedStores) {
       { '@type': 'ListItem', 'position': (hubAbsUrl ? 1 : (genre ? 1 : 0) + (area ? 1 : 0)) + 2, 'name': name, 'item': pageUrl }
     ]
   };
+
+  // 掲載特集（SEO-106）: features/*.html に実在掲載されている特集だけ（feature_store_match.js の照合結果）。
+  // タグ推定の「関連特集」と違い、編集部が実際にこの店を載せた特集のみ。対応が無い店は出さない。
+  const listedHtml = (listedFeatures && listedFeatures.length) ? `
+  <div class="related-features listed-features">
+    <h2>掲載特集</h2>
+    <ul>
+      ${listedFeatures.map(f => `<li><a href="../features/${escapeHtml(f.slug)}.html">${escapeHtml(f.title)}</a></li>`).join('\n      ')}
+    </ul>
+  </div>` : '';
 
   // 関連特集(最大3本)
   const relatedFeatures = buildRelatedFeatures(s);
@@ -936,6 +946,7 @@ ${trustBreakdownHtml}
     ${linksHtml}
   </div>
 
+  ${listedHtml}
   ${relatedHtml}
   ${relatedStoresHtml}
 
@@ -1230,10 +1241,13 @@ async function main() {
     slugged.push({ store: s, slug });
   }
 
+  // SEO-106: 掲載特集の逆引き（features/*.html の実在掲載のみ・index.html カードと同じ照合）
+  const featureStoreMap = require('./scripts/lib/feature_store_match').buildFeatureStoreMap(slugged.map(x => x.store));
+
   for (const { store: s, slug } of slugged) {
     slugs.push(slug);
     const relatedStores = buildRelatedStores(s, slugged, slug);
-    const html = renderStorePage(s, slug, relatedStores);
+    const html = renderStorePage(s, slug, relatedStores, featureStoreMap.get(s) || []);
     if (!DRY_RUN) fs.writeFileSync(path.join(OUT_DIR, `${slug}.html`), html, 'utf8');
     generated++;
     if (generated % 100 === 0) process.stdout.write(`\r  ${generated}件生成済み...`);
