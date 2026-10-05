@@ -2,7 +2,7 @@
 /**
  * /solve-next の「次に解く課題」を決定的に選ぶ判定器
  *
- * 設計（seo_triage.js / sync_backlog_to_notion.js と同じ思想）:
+ * 設計（seo_triage.js / sync_backlog_to_linear.js と同じ思想）:
  *   - このスクリプトは「実装」をしない。順番だけを決める。
  *   - 順番の根拠は agent-backlog.md に実在する事実（priority / status / detected）だけ。
  *     エージェントが自由に書ける自己申告のスコアは使わない（CLAUDE.md 制約10）。

@@ -1,17 +1,17 @@
 ---
-description: LINE で届く「💡今日のアドバイス」（SEO/アクセス解析）を貼り付けると、NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）を通して採用/却下を判定し、採用分を agent-backlog.md に ready で起票 → Notion 課題トラッカーへ同期する。却下は理由付きでログに残す。
+description: LINE で届く「💡今日のアドバイス」（SEO/アクセス解析）を貼り付けると、NAGOYA BITES のブランド総合フィルター（Moat / Strategic Skip）を通して採用/却下を判定し、採用分を agent-backlog.md に ready で起票 → Linearへ同期する。却下は理由付きでログに残す。
 ---
 
 # /seo-triage — SEOアドバイスをブランドフィルターに通して課題化する
 
 毎日 LINE に届く SEO/アクセス解析の「💡今日のアドバイス」を、**鵜呑みにせず**
 NAGOYA BITES のブランド・方向性という総合フィルターに通し、
-適合分だけを Notion 課題トラッカーに `ready` で出す。却下は理由とともにログへ残す。
+適合分だけを Linearに `Todo` で出す。却下は理由とともにログへ残す。
 
 **使い方（手動）**: LINE のアドバイス本文をこのコマンドに続けて貼り付ける。
 
 **使い方（自動・スケジュール起動）**: 引数が空のときは Step 0 で Gmail から最新の日次レポートメールを自動取得し、その『💡今日のアドバイス』を入力にして以降を**全自動**で処理する（人の貼り付け不要）。
-判定・起票・Notion同期の原理は手動時と**完全に同一**。違いは入力の取得元が「人の貼り付け」か「Gmail自動取得」かだけ。
+判定・起票・Linear同期の原理は手動時と**完全に同一**。違いは入力の取得元が「人の貼り付け」か「Gmail自動取得」かだけ。
 
 ---
 
@@ -20,7 +20,7 @@ NAGOYA BITES のブランド・方向性という総合フィルターに通し�
 - 採用課題マスター: `agent-backlog.md`（ID 接頭辞 `SEO-` / owner=Marketer / category=SEO）
 - ループの記憶（採用・却下・重複の全履歴）: `data/seo_advice_log.json`（append-only）
 - 決定的ヘルパー: `node scripts/seo_triage.js`（ID採番 / 重複検知 / ログ追記 / 健診レポート）
-- Notion 同期: 既存の `/sync-backlog`（スキーマ変更不要・そのまま流用）
+- Linear同期: 既存の `/sync-backlog`（スキーマ変更不要・そのまま流用）
 - レポート配信元: GAS（`Google分析オートLINE送信.js`）が日次レポートを件名「📊 NAGOYA BITES 日次レポート <日付>」で Gmail 送信。自動運用はこのメールを入力にする。
 
 ---
@@ -90,7 +90,7 @@ node scripts/seo_triage.js --next-id   # 例: SEO-001。2件目以降は連番�
 ```
 
 `agent-backlog.md` の「## 進行中・完了タスク」直下に、既存パーサ準拠の形式で追記する
-（`**priority** / **status** / **detected** / **category** / **owner**` を必ず含める。これが無いと Notion 同期で欠落する）:
+（`**priority** / **status** / **detected** / **category** / **owner**` を必ず含める。これが無いとLinear Issueの説明に欠落する）:
 
 ```markdown
 ### [SEO-001] <施策を一言で・効果が伝わる動詞で>
@@ -117,14 +117,17 @@ node scripts/seo_triage.js --log-append '[
 ```
 `fingerprint` は省略可（スクリプトが正規化して自動付与 → 次回の重複検知に効く）。
 
-### Step 7: Notion へ同期
+### Step 7: Linearへ同期
 
 採用が1件以上あれば `/sync-backlog` のフローを内部実行する:
 ```bash
-node scripts/sync_backlog_to_notion.js --if-changed
+node scripts/sync_backlog_to_linear.js
 ```
-`changed: true` なら `/sync-backlog` の手順で MCP 経由 create/update を実施。
-採用課題が `ready / 担当部署 / カテゴリ` で Notion 課題トラッカーに出現する。
+差分を確認後、Linearへ反映する:
+```bash
+node scripts/sync_backlog_to_linear.js --apply
+```
+採用課題が `Todo / 担当部署 / カテゴリ` でLinearに出現する。
 （採用ゼロ＝backlog 無変更なら同期はスキップしてよい。）
 
 ### Step 8: トリアージ表を提示（可視化＋上書き余地）
@@ -134,7 +137,7 @@ node scripts/sync_backlog_to_notion.js --if-changed
 ```
 ## 🧭 SEOアドバイス トリアージ（<日付>）
 
-### ✅ 採用 → Notion に ready で起票（N件）
+### ✅ 採用 → LinearにTodoで起票（N件）
 | ID | 施策 | ブランド適合理由 | 優先度 |
 |----|------|------------------|--------|
 | SEO-001 | … | Moat「シーン別専門性」を強化 | P2 |
@@ -172,4 +175,4 @@ node scripts/sync_backlog_to_notion.js --if-changed
 
 - 貼り付けが空、かつ Step 0 の Gmail 取得でも日次レポートが見つからない → 「本文を貼ってください」と促して終了（自動運用ではGAS未送信/件名変更を疑う）
 - `--check-dup` / `--log-append` がエラー JSON を返す → ユーザーに内容を見せて中断（ログ不整合を防ぐ）
-- Step 7 の Notion 同期失敗 → backlog 起票は完了しているので、その旨を伝え「後で `/sync-backlog` 再実行」を促す
+- Step 7 の Linear同期失敗 → backlog 起票は完了しているので、その旨を伝え「後で `/sync-backlog` 再実行」を促す

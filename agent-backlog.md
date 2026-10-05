@@ -7818,15 +7818,18 @@ agent-backlog.md の実行ログが 2026-04-18 で停止し、Marketer / Strateg
 
 ---
 
-## Notion ダッシュボード連携
+## Linear課題管理
 
-このバックログは [Notion DB「課題トラッカー」](#) に常時自動同期される。
-詳細な運用ルールは [agents/orchestrator.md](agents/orchestrator.md) の「Notion ダッシュボード運用」章を参照。
+Notion課題トラッカーから移行したLinearが、課題の進捗・担当者・コメントを管理する場所。
+このbacklogは受け入れ条件・設計詳細・選定ポリシーの正本として維持する。
 
-- 同期スクリプト: [scripts/sync_backlog_to_notion.js](scripts/sync_backlog_to_notion.js)
-- 1件ずつ解く: `/solve-next` スラッシュコマンド
-- agent-backlog.md が**マスター**、Notion は確認用ダッシュボード
-- `status: done` になった課題は Notion からアーカイブされて表示から消える
+- Linearチーム: `P`（片桐若登）
+- 同期台帳: [data/linear_sync_state.json](data/linear_sync_state.json)
+- 同期スクリプト: [scripts/sync_backlog_to_linear.js](scripts/sync_backlog_to_linear.js)
+- 運用手順: [docs/linear-task-workflow.md](docs/linear-task-workflow.md)
+- 1件ずつ進める: `/solve-next`
+- backlogを変更した場合は `/sync-backlog` で差分確認後にLinearへ反映する。
+- Notion元データは監査用アーカイブとして保持し、Notion同期用スクリプトとstateは通常運用で使わない。
 
 ---
 

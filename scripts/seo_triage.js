@@ -2,7 +2,7 @@
 /**
  * SEO AIアドバイス → 改善ループ 決定的ヘルパー
  *
- * 設計（sync_backlog_to_notion.js と同じ思想）:
+ * 設計（sync_backlog_to_linear.js と同じ思想）:
  *   - このスクリプトは「判断」をしない。ブランドフィルター（採用/却下）の判断は
  *     /seo-triage コマンド（エージェント）が CLAUDE.md の Moat/Strategic Skip を根拠に行う。
  *   - ここで持つのは決定的処理だけ: ID採番 / 重複検知 / ログ追記 / 健診レポート。
