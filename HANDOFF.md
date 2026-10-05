@@ -53,6 +53,8 @@ Linear Issue作成時に画像で示された7つの品質ルールをCLAUDE.md�
 
 - 2026-10-06 夜間QAの自動起票（sync_qa_findings_to_linear.js）にも KR＋役割ラベルを付与。判定器は labelsForTask()/fieldsFromBlock() を共有。assign_linear_projects.js は説明文が backlog ブロックの QA 起票課題も補完対象に。GraphQL のフィールドは Linear のスキーマで確認済み（実起票はまだ発生していない）。
 
+- 2026-10-06 「Linearのタスクをガンガン終わらして」: done=SEO-092/093/106（PR #363/#361・Linear P-18/P-16/P-10）。効果判定待ち=SEO-091(10-13)/099(10-20)/087,095(10-27)。ISSUE-132 は PR #365（main build復旧・重複監査の見直し・残23組は人の判断）、夜間QA #292 は PR #364（公開Mapsキーの行単位許可）。検索テストを緩めた元の弱点を ISSUE-138(P-65) に起票。SEO-098 はリール紹介店リストがオーナー情報のため保留。
+
 # 試したが駄目だったこと
 - この実行環境にLinear専用MCPコネクタは見当たらない。Orca CLIの接続で移行・運用できる。
 - NotionのAI検索と複数データソースクエリは現プランで利用不可。課題DBの単一データソースqueryと通常の検索/fetchは利用可能。
