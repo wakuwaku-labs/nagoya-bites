@@ -37,7 +37,7 @@ Linear Issue作成時に画像で示された7つの品質ルールをCLAUDE.md�
 - 最終確認で `npm test` 249件成功、`git diff --check` 成功。主な変更コミットは `d3b79f84c9`、引き継ぎ更新は `01be4fd339` と `19bd7d9548`。作業ブランチへ最新 `origin/main` をマージ済み。
 
 # 次にやること
-- 2026-10-06 オーナー依頼で「おはよう/Linearにして/分解/振り返り/判断記録」を指示不要化。SessionStartフック(.claude/settings.json)→scripts/session_briefing.js、CLAUDE.md「自動で回す運用」、docs/decisions/0001、defaults(担当=me・期限P0/1/2/3=1/7/14/30日)。PR #347 マージ済み。ISSUE-134 完了。オーナー指摘で構成を Project=Nagoya Bites・KR=ラベル に修正（ADR 0003・33件移行済み）。空になったKR別Project4つの削除はオーナー確認待ち。残: ISSUE-135(P-62) 夜間サーバ側通知。
+- 2026-10-06 オーナー依頼で「おはよう/Linearにして/分解/振り返り/判断記録」を指示不要化。SessionStartフック(.claude/settings.json)→scripts/session_briefing.js、CLAUDE.md「自動で回す運用」、docs/decisions/0001、defaults(担当=me・期限P0/1/2/3=1/7/14/30日)。PR #347 マージ済み。ISSUE-134 完了。オーナー指摘で構成を Project=Nagoya Bites・KR=ラベル に修正（ADR 0003・33件移行済み）。既存33件の担当を一括設定済み。空になったKR別Project4つの削除はオーナーが承認したが、自動操作の権限設定で削除が止められたため、オーナーがLinear画面で削除する。残: ISSUE-135(P-62) 夜間サーバ側通知。
 - 2026-10-06 YouTube（ClaudeをLinearに住まわせる）の要点を `docs/linear-ai-native-playbook.md` に整理済み。推奨順: ①KRをLinear Projectにする（オーナー判断・自動起票のProject既定値もこれで決まる）②夜間Linear健康診断（14日放置/Urgent未着手/期限切れ→GitHub Issue通知）③おはよう・振り返り手順のdocs化 ④ADR置き場 ⑤着手可能ラベルでAI自動着手。
 - 自動起票のProject・期限の既定値を決め、CIと同期スクリプトへ反映する。
 - 初心者向けガイドを起点に、Linear課題IDを伝えて作業を依頼する。必要なら候補課題の担当をLinearで割り当てる。

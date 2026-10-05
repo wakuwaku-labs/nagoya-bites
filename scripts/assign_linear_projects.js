@@ -3,6 +3,7 @@
  * 未完了の Linear Issue を「Project = Nagoya Bites、KR = ラベル」の構成にそろえる（docs/decisions/0003）。
  *  - Project が未設定、または一時的に作った KR 別 Project（retiredProjects）にある Issue → Nagoya Bites へ
  *  - KR ラベル（"KR:" で始まる）が1つも無い Issue → category の規則（krLabelRules）で KR ラベルを追加
+ *  - 担当者が未設定の Issue → 既定の担当（assigneeId＝オーナー）を設定（期限は一斉に付けない: 起点が無く全件同時に期限が来るため）
  * 人が付けた別の Project・既存の KR ラベルは上書きしない。ラベルは追加のみ（既存ラベルを消さない）。
  *
  *   node scripts/assign_linear_projects.js           # dry-run（書き込みなし）
@@ -49,9 +50,10 @@ function plan(issues, tasks, defaults) {
     const hasKr = (issue.labels || []).some(l => isKrLabel(l.name || l));
     const category = categoryFor(issue, byId);
     const krLabel = hasKr ? null : krLabelForCategory(category, defaults);
-    if (!moveProject && !krLabel) continue;
+    const assignee = !issue.assignee && defaults.assigneeId ? defaults.assigneeId : null;
+    if (!moveProject && !krLabel && !assignee) continue;
     items.push({ identifier: issue.identifier, title: issue.title, category,
-      project: moveProject ? defaults.projectName : null, from: current, krLabel });
+      project: moveProject ? defaults.projectName : null, from: current, krLabel, assignee });
   }
   return items;
 }
@@ -72,8 +74,9 @@ function main() {
   for (const item of items) {
     try {
       if (item.project) once(['linear', 'save-issue', item.identifier, '--project', item.project, '--workspace', WORKSPACE, '--json']);
+      if (item.assignee) once(['linear', 'assignee', 'set', item.identifier, '--to-id', item.assignee, '--workspace', WORKSPACE, '--json']);
       if (item.krLabel) once(['linear', 'label', 'add', item.identifier, '--label', item.krLabel, '--workspace', WORKSPACE, '--json']);
-      console.log(`updated: ${item.identifier}${item.project ? ` → ${item.project}` : ''}${item.krLabel ? ` + ${item.krLabel}` : ''}`);
+      console.log(`updated: ${item.identifier}${item.project ? ` → ${item.project}` : ''}${item.krLabel ? ` + ${item.krLabel}` : ''}${item.assignee ? ' +担当' : ''}`);
     } catch (error) {
       failed.push(item.identifier);
       console.error(`failed: ${item.identifier} ${error.message.slice(0, 200)}`);
