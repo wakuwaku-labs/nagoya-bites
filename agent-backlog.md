@@ -258,6 +258,20 @@
   3. `node scripts/sync_backlog_to_linear.js` の dry-run で、新規分の `missingFields` が空になる。
   4. 既存の未完了 Issue（37件）を Project に紐づける。セッションブリーフィングの「未設定: Project」が 0 になる。
 
+### [ISSUE-142] 父の日特集の「寿司・割烹」「うなぎ」「カジュアル」セクションに焼肉店が並んでいる状態を、見出しと中身が一致する掲載に直す
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-06
+- **category**: content / trust
+- **owner**: Editor
+- **source**: ISSUE-141（PR #371）の調査で判明。`features/fathers-day-2026.html` は焼肉・寿司・うなぎ・カジュアルの4セクション構成だが、2026-07 導入の月次ロスター自動入れ替え（`scripts/refresh_feature_rosters.js`）が最初の `shop-grid` だけを置換していた影響などで、寿司・うなぎ・カジュアルの3セクションに載る6軒がすべて焼肉店になっている。見出しと掲載店が食い違い、読者を誤解させる（制約7）。PR #371 で複数コンテナの特集はロスター対象外にしたため、今後の自動置換による再発はない
+- **acceptance**:
+  1. 各セクションの掲載店が見出しの業態（寿司・割烹／うなぎ・ひつまぶし／家族向けカジュアル）に一致する。掲載店は LOCAL_STORES に実在する店だけを使う（架空店ブロック）
+  2. 一致する実在店が足りないセクションは、店を水増しせず掲載数を減らすか、セクションを統合・削除する。件数表記（N選）は `tests/feature_counts.test.js` が通る形で揃える
+  3. シーズン外（父の日は6月）のため、2027年版として作り直すか現行ページを直すかを Editor が判断し、判断を本文に書く
+  4. `npm test`・`node scripts/audit_feature_stores.js`・`node scripts/audit_design_system.js --check` を通す
+- **関連**: [[ISSUE-141]]（発見元）／[[ISSUE-139]]
+
 ### [ISSUE-141] 特集の見出し「N選」と実際の掲載数のずれ7件を実数に揃え、ロスターが複数セクション特集を壊す不具合と再発経路を塞ぐ ✅
 
 - **priority**: P2 → **status**: done
