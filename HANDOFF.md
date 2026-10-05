@@ -23,6 +23,7 @@ Nagoya Bitesの課題管理をNotionからLinearへ移行し、Linearを唯一�
 - `/sync-backlog`、`/solve-next`、日次・週次triage、Orchestrator、feedback/nightly-QA手順をLinearへ切替。Notion同期スクリプトとstateはアーカイブとして保持し、通常運用で実行しないと明記。
 - `.claude/settings.json`とNotion Stop hookは存在しなかったため、古いNotion用hook設定例を廃止し、Linear同期手順へ置換。
 - `agent-backlog.md`は課題仕様・受け入れ条件・採番の正本として維持し、Linearを進捗・担当・コメントの作業画面とする。
+- Linearで全件照合・運用切替後、Notionの48ページを課題トラッカーのデータソースから親ページ`35826260-227a-81e5-95aa-f5d9fc4caa6c`へ移動。データソースは0件、元ページはNotion fetchで閲覧可能なことを確認。削除せずアーカイブとして保持。
 - ユーザーがNotionからLinearへの全件移行を明示した。対象は会話文脈上、Notionの課題トラッカーとそれを維持する運用経路。
 
 # 次にやること
