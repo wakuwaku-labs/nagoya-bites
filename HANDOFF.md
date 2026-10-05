@@ -12,7 +12,7 @@ Linear初心者でも、課題を見つけて内容を理解し、作業を依�
 
 # できていること
 - 前回の移行は完了済み。Notion課題48件をLinearへ移行し、CIからQA課題を起票する仕組みも追加済み。
-- 現在のブランチは `codex/handoff-done`。調査開始時は作業ツリーがクリーンで、今回の変更は未コミット。ブランチは `origin/main` と1コミットずつ分岐している。
+- 現在のブランチは `codex/handoff-done`。変更はコミット済み。ブランチは `origin/main` より2コミット先行・1コミット遅れ。
 - 既存の `docs/linear-task-workflow.md` と `/sync-backlog`、`/solve-next` を確認。詳細前提や開発者向け説明が多く、初心者が最初に選ぶ操作が見えにくい。
 - `docs/linear-beginner-guide.md` を追加。課題の探し方、IDを使った依頼、進捗・質問・ブロック・完了の伝え方、Linearとbacklogの役割を説明。
 - `/solve-next` がLinear Issue ID・backlog IDを受け取り、指定課題から開始できるように手順を拡張。引数なしの候補選定は従来どおり。
