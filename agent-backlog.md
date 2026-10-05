@@ -258,6 +258,27 @@
   3. `node scripts/sync_backlog_to_linear.js` の dry-run で、新規分の `missingFields` が空になる。
   4. 既存の未完了 Issue（37件）を Project に紐づける。セッションブリーフィングの「未設定: Project」が 0 になる。
 
+### [ISSUE-141] 特集の見出し「N選」と実際の掲載数のずれ7件を実数に揃え、ロスターが複数セクション特集を壊す不具合と再発経路を塞ぐ ✅
+
+- **priority**: P2 → **status**: done
+- **detected**: 2026-10-06
+- **category**: 特集 / 品質
+- **owner**: Editor / Builder
+- **source**: オーナー報告（ISSUE-139 の「残る問題」）。h1 の N選 / JSON-LD ItemList numberOfItems / 店カード枚数が birthday-surprise 10/9/9・birthday 10/5/5・fathers-day-2026 10/9/16・gw-2026 12/11/11・osu-food-walk 10/8/8・private-room 10/9/9 で不一致。調査中に nagoya-settai-secret（9 / numberOfItems 9 / 要素8・カード8）も同種と判明
+- **背景**: 見出しの数字と実掲載数がずれると、読者と検索結果の期待を裏切る（制約7）。ロスター `data/feature_rosters.json` の slots が10未満の特集（birthday=5・private-room=9 等）は、見出しだけ旧来の10選のまま残っていた。fathers-day-2026 は焼肉・寿司・うなぎ・カジュアルの4セクション構成（`shop-grid` が4つ）なのに、`refresh_feature_rosters.js` の `replaceContainerInner` が最初の `shop-grid` だけを10店に置換し、ItemList も最初のロスター分（9件）に縮めていた
+- **ゴール**: 見出しの数字＝実在店の掲載数。店の水増しはしない。月次ロスターで再発しない
+- **acceptance**:
+  1. 7特集の title / meta description / og / JSON-LD（headline・description・ItemList の name・numberOfItems・要素）/ h1 / 本文の件数表記が実カード数と一致
+  2. `features/index.html`・`data/featured.json`・`index.html` の特集ラベルと、他特集の関連リンク文言が同じ件数
+  3. 決定的チェック（`scripts/lib/feature_counts.js`）を `refresh_feature_rosters.js` の実行時検査と `tests/feature_counts.test.js`（`npm test`）に追加
+  4. ロスターは同一コンテナが複数ある特集を対象外にする
+- **結果（2026-10-06）**:
+  - 件数（h1の旧→新）: birthday-surprise 10→9、birthday 10→5、gw-2026 12→11、osu-food-walk 10→8、private-room 10→9、nagoya-settai-secret 9→8（ItemList の numberOfItems 9→8）、fathers-day-2026 10→16（カード16枚が実数。ItemList を9件から全16店・店ページURL付きに再生成）
+  - fathers-day-2026 の原因: ロスターが複数セクションの最初のグリッドだけを置換していた。`refresh_feature_rosters.js` に「同一コンテナが2つ以上なら対象外」のガードを追加（以後は手動編集）
+  - 再発防止: `scripts/lib/feature_counts.js`（h1 の N選・ItemList numberOfItems・要素数・カード枚数の一致）。`refresh_feature_rosters.js`（`--only` / `--dry-run` 以外）が実行時にこれも検査し、不一致があれば枠割れと同じく失敗扱いにする。`tests/feature_counts.test.js` が全特集を検査する
+  - **要相談**: fathers-day-2026 の「寿司・割烹」「名古屋名物 うなぎ」「カジュアル」セクションに載っている6軒が全て焼肉店で、見出しと中身が合っていない（本件以前からの構成。シーズン終了済みのため未対応）
+- **関連**: [[ISSUE-139]]・[[ISSUE-140]]・[[ISSUE-127]]
+
 ### [ISSUE-140] 実在は確認できたのに掲載データ（stores.json）から落ちた店5軒の原因を調べ、必要なら正規の手順で戻す
 
 - **priority**: P2 → **status**: ready

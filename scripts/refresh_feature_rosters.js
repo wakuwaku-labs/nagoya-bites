@@ -440,6 +440,17 @@ function main() {
     const file = path.join(FEATURES_DIR, `${slug}.html`);
     if (!fs.existsSync(file)) { console.error(`  ✗ ${slug}: features/${slug}.html が無い`); shortfalls++; continue; }
 
+    // 複数セクション構成（同じコンテナが2つ以上）は最初のセクションしか置換できず、
+    // ItemList も最初のセクション分に縮むため、見出しの N選 と実掲載数がずれる（ISSUE-141・
+    // fathers-day-2026 が実例）。ロスター対象外として触らない。
+    {
+      const containers = (fs.readFileSync(file, 'utf8').match(new RegExp(`<div class="${fc.container}">`, 'g')) || []).length;
+      if (containers > 1) {
+        console.log(`  - ${slug}: ${fc.container} が ${containers} 箇所ある複数セクション構成のためロスター自動入れ替えの対象外（手動編集）`);
+        continue;
+      }
+    }
+
     const biasKw = seasonalBiasOf[monthKey] && seasonalBiasOf[monthKey][slug] || null;
     const pool = poolFor(fc, biasKw);
     if (pool.length < fc.slots) {
@@ -478,6 +489,13 @@ function main() {
     const seasonalN = final.filter(e => e.seasonalHit).length;
     console.log(`  ✓ ${slug}: ${final.length}店に更新（コア${final.filter(e => coreIds.has(String(e.store['ホットペッパーID']))).length}/新顔${final.filter(e => e.isNew).length}${biasKw ? `/季節適合${seasonalN}` : ''}）`);
     updated++;
+  }
+
+  // 見出しの N選 と JSON-LD ItemList・店カード枚数の一致（ISSUE-141）。--check と実書き込みの両方で検査。
+  if (!dryRun && !only) {
+    const bad = require('./lib/feature_counts').inspectAll();
+    bad.forEach(b => b.problems.forEach(p => console.error(`  ✗ ${b.file}: ${p}`)));
+    if (bad.length) shortfalls += bad.length;
   }
 
   console.log(`\n[roster] 更新 ${updated}件 / 枠割れ・失敗 ${shortfalls}件`);
