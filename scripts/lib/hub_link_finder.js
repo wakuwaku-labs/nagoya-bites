@@ -130,8 +130,87 @@ function buildFeatureHubMap({ maxLinks = 3 } = {}) {
   return result;
 }
 
+/**
+ * (SEO-114) 記事のエリアを検出する（slug優先 → タイトル照合）。
+ * data/area_genre_pages_policy.json の areas[].slug / areas[].match が唯一の語彙源。
+ * @param {string} filename  e.g. "2026-09-29-sakae-tsukemen.html"
+ * @param {string|null} title 記事の表示タイトル
+ * @param {object} policy  area_genre_pages_policy.json のオブジェクト
+ * @returns {string|null} area slug (e.g. "sakae") or null
+ */
+function detectArticleArea(filename, title, policy) {
+  // 1. slug の単語を area slug の構成語と照合
+  const m = filename.match(/^\d{4}-\d{2}-\d{2}-(.+)\.html$/);
+  if (m) {
+    const slugWords = new Set(m[1].split('-'));
+    for (const area of policy.areas) {
+      for (const word of area.slug.split('-')) {
+        if (slugWords.has(word)) return area.slug;
+      }
+    }
+  }
+  // 2. タイトルに areas[].match キーワードが含まれれば（最長一致優先）
+  if (title) {
+    let bestArea = null, bestLen = 0;
+    for (const area of policy.areas) {
+      for (const kw of [...area.match].sort((a, b) => b.length - a.length)) {
+        if (kw.length >= 2 && title.includes(kw)) {
+          if (kw.length > bestLen) { bestArea = area.slug; bestLen = kw.length; }
+          break;
+        }
+      }
+    }
+    if (bestArea) return bestArea;
+  }
+  return null;
+}
+
+/**
+ * (SEO-114) features/<featureSlug>.html → genre slug の逆引き。
+ */
+function featureToGenreSlug(featureSlug, policy) {
+  const featurePath = `features/${featureSlug}.html`;
+  for (const g of policy.genres) {
+    if (g.feature === featurePath) return g.slug;
+  }
+  return null;
+}
+
+/**
+ * (SEO-114) 記事エリア×ジャンルの最適ハブURLを返す。
+ * 優先1: stores/area/<areaSlug>/<genreSlug>.html (manifest active + file exists)
+ * 優先2: areas[slug=areaSlug].feature （エリア特集）
+ * @returns {{ url: string, type: 'area_genre'|'area_feature', label?: string }|null}
+ */
+function findAreaHub(areaSlug, featureSlug, policy, manifest) {
+  const byPath = buildManifestIndex(manifest);
+  const areaInfo = policy.areas.find(a => a.slug === areaSlug);
+
+  // 優先1: area×genre hub
+  const genreSlug = featureToGenreSlug(featureSlug, policy);
+  if (genreSlug) {
+    const hubPath = `stores/area/${areaSlug}/${genreSlug}.html`;
+    const hub = resolveHub(byPath, hubPath);
+    if (hub) {
+      const genreInfo = policy.genres.find(g => g.slug === genreSlug);
+      const areaLabel = areaInfo ? areaInfo.match[0] : areaSlug;
+      const genreLabel = genreInfo ? genreInfo.label : genreSlug;
+      return { url: hubPath, type: 'area_genre', label: `${areaLabel}の${genreLabel}を探す` };
+    }
+  }
+
+  // 優先2: area feature page
+  if (areaInfo && areaInfo.feature && fs.existsSync(path.join(ROOT, areaInfo.feature))) {
+    return { url: areaInfo.feature, type: 'area_feature' };
+  }
+
+  return null;
+}
+
 module.exports = {
   buildFeatureHubMap,
   collectTargetFeatures,
   loadJson,
+  detectArticleArea,
+  findAreaHub,
 };

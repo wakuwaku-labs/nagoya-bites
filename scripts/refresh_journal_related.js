@@ -13,10 +13,14 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { buildFeatureHubMap } = require('./lib/hub_link_finder');
+const { buildFeatureHubMap, detectArticleArea, findAreaHub } = require('./lib/hub_link_finder');
 
 const JOURNAL_DIR = path.join(__dirname, '..', 'journal');
 const HUB_MAP = buildFeatureHubMap({ maxLinks: 2 });
+
+// SEO-114: エリア×ジャンルハブの最適化用。policy/manifest は起動時に1回だけ読む。
+const POLICY = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'area_genre_pages_policy.json'), 'utf8'));
+const MANIFEST = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'area_genre_pages_manifest.json'), 'utf8'));
 
 function escapeHtml(s) {
   return String(s)
@@ -142,13 +146,45 @@ function buildRelatedHtml(currentFile, posts, postsMeta) {
   const topic = matchTopicFeature(postsMeta[currentFile] && postsMeta[currentFile].title);
   if (topic) {
     lines.push(`    <a class="related-link is-primary" href="../features/${topic.slug}.html">${topic.label}</a>`);
-    // SEO-099: 一致した特集に対応するエリア×ジャンル×条件ハブがあれば追加候補にする
-    const hubLinks = HUB_MAP.get(`features/${topic.slug}.html`) || [];
-    for (const h of hubLinks) {
-      const href = `../${h.url}`;
-      lines.push(
-        `    <a class="related-link" href="${href}" onclick="trackEvent('internal_link_click',{link_url:'${href}',block:'journal_hub'})">${escapeHtml(h.label)}</a>`
-      );
+    // SEO-114: 記事エリアを検出し、エリア×ジャンルの最適ハブを優先して出す。
+    // エリアが特定できたがハブが無い場合も含め「エリア外のハブを無言で並べない」原則に従う。
+    const articleTitle = postsMeta[currentFile] && postsMeta[currentFile].title;
+    const areaSlug = detectArticleArea(currentFile, articleTitle, POLICY);
+    let hubsAdded = false;
+    if (areaSlug) {
+      const areaHub = findAreaHub(areaSlug, topic.slug, POLICY, MANIFEST);
+      if (areaHub) {
+        if (areaHub.type === 'area_genre') {
+          const href = `../${areaHub.url}`;
+          lines.push(
+            `    <a class="related-link" href="${href}" onclick="trackEvent('internal_link_click',{link_url:'${href}',block:'journal_hub'})">${escapeHtml(areaHub.label)}</a>`
+          );
+          hubsAdded = true;
+        } else if (areaHub.type === 'area_feature') {
+          const featureSlug = areaHub.url.replace(/^features\//, '').replace(/\.html$/, '');
+          if (featureSlug !== topic.slug) {
+            // エリア特集ラベルを TOPIC_FEATURES から引く（語彙を一箇所に集約）
+            const entry = TOPIC_FEATURES.find(([, s]) => s === featureSlug);
+            const areaFeatureLabel = entry ? entry[2] : featureSlug;
+            const href = `../${areaHub.url}`;
+            lines.push(
+              `    <a class="related-link" href="${href}" onclick="trackEvent('internal_link_click',{link_url:'${href}',block:'journal_hub'})">${escapeHtml(areaFeatureLabel)}</a>`
+            );
+            hubsAdded = true;
+          }
+        }
+      }
+      // エリアは特定できたが対応ハブが無い場合 → hubsAdded=false → 下の従来ハブにフォールバック
+    }
+    if (!hubsAdded) {
+      // SEO-099: エリア不明 or エリア対応ハブ無しの場合のみ従来の特集単位ハブを使う
+      const hubLinks = HUB_MAP.get(`features/${topic.slug}.html`) || [];
+      for (const h of hubLinks) {
+        const href = `../${h.url}`;
+        lines.push(
+          `    <a class="related-link" href="${href}" onclick="trackEvent('internal_link_click',{link_url:'${href}',block:'journal_hub'})">${escapeHtml(h.label)}</a>`
+        );
+      }
     }
   }
   lines.push('    <a class="related-link" href="../features/index.html">特集をもっと見る</a>');
