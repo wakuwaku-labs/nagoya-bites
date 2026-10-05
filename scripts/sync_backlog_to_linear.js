@@ -10,7 +10,7 @@ const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { parseBacklog } = require('./next_task');
-const { projectForCategory } = require('./lib/linear_project_map');
+const { krLabelForCategory } = require('./lib/linear_project_map');
 
 const ROOT = path.resolve(__dirname, '..');
 const BACKLOG = path.join(ROOT, 'agent-backlog.md');
@@ -45,17 +45,17 @@ function addDays(isoDate, days) {
 
 /**
  * Fill missing create fields from data/linear_issue_defaults.json.
- * Explicit backlog values always win. Project is never guessed: it comes only
- * from the configured category rules (projectRules) or the default projectName.
+ * Explicit backlog values always win. Every issue belongs to the configured
+ * projectName (Nagoya Bites); the KR is a label chosen by krLabelRules.
  */
 function withCreateDefaults(task, defaults = {}, today = new Date().toISOString().slice(0, 10)) {
   const days = defaults.dueDateDaysByPriority?.[task.priority || 'P2'];
-  const project = task.project || projectForCategory(task.category, defaults);
   return {
     ...task,
+    krLabel: krLabelForCategory(task.category, defaults),
     assignee: task.assignee || defaults.assigneeName || null,
     dueDate: task.dueDate || (Number.isInteger(days) && days >= 0 ? addDays(today, days) : null),
-    project,
+    project: task.project || defaults.projectName || null,
   };
 }
 
@@ -188,7 +188,10 @@ function main() {
       '--workspace', WORKSPACE, '--json');
     if (item.priority) args.push('--priority', item.priority);
     if (item.description) args.push('--description', item.description);
-    if (item.action === 'create') args.push('--assignee', item.task.assignee, '--due-date', item.task.dueDate, '--project', item.task.project);
+    if (item.action === 'create') {
+      args.push('--assignee', item.task.assignee, '--due-date', item.task.dueDate, '--project', item.task.project);
+      if (item.task.krLabel) args.push('--label', item.task.krLabel);
+    }
     const run = spawnSync('orca', args, { encoding: 'utf8', maxBuffer: 2 * 1024 * 1024 });
     let result;
     try { result = JSON.parse(run.stdout || '{}'); } catch (_) { result = {}; }

@@ -1,7 +1,7 @@
 # 0002 Linear の Project を KR 単位で4つ作り、課題を category の規則で割り振る
 
 - 日付: 2026-10-06
-- 状態: 採用
+- 状態: 置き換え済み（[0003](0003-single-project-kr-labels.md)）
 - 関連: ISSUE-134 / `data/linear_issue_defaults.json` / `scripts/lib/linear_project_map.js` / `scripts/assign_linear_projects.js` / [0001](0001-linear-autonomous-operation.md)
 
 ## 背景
