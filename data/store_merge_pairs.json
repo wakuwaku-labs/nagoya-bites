@@ -1,0 +1,1406 @@
+{
+  "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
+  "mergedCount": 40,
+  "absorbedCount": 41,
+  "skippedCount": 24,
+  "merged": [
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "居酒屋 旬囲い 名駅駅前店",
+        "エリア": "名古屋駅",
+        "ホットペッパーID": "J003560344",
+        "placeId": "ChIJ0wM9hi93A2ARB-HHDTgY76U",
+        "slug": "J003560344"
+      },
+      "absorbed": [
+        {
+          "店名": "居酒屋 旬囲い 名駅駅前店",
+          "エリア": "名古屋駅",
+          "ホットペッパーID": "J003829458",
+          "placeId": "ChIJ0wM9hi93A2ARB-HHDTgY76U",
+          "slug": "J003829458"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "串たつ 名古屋駅西口店",
+        "エリア": "名古屋駅",
+        "ホットペッパーID": "J003763595",
+        "placeId": "ChIJz0f21eh2A2ARr6AwxmPFubg",
+        "slug": "J003763595"
+      },
+      "absorbed": [
+        {
+          "店名": "串たつ 名古屋駅西口店",
+          "エリア": "名古屋駅",
+          "ホットペッパーID": "J000729663",
+          "placeId": "ChIJz0f21eh2A2ARr6AwxmPFubg",
+          "slug": "J000729663"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "串たつ 名古屋駅本店",
+        "エリア": "名古屋駅",
+        "ホットペッパーID": "J003763596",
+        "placeId": "ChIJadLckMJ2A2AR2zPAmwfMu6I",
+        "slug": "J003763596"
+      },
+      "absorbed": [
+        {
+          "店名": "串たつ 名古屋駅本店",
+          "エリア": "名古屋駅",
+          "ホットペッパーID": "J000015083",
+          "placeId": "ChIJadLckMJ2A2AR2zPAmwfMu6I",
+          "slug": "J000015083"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "隠れ家イタリアン Dime ダイム",
+        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "ホットペッパーID": "J004591084",
+        "placeId": "ChIJS0-YJwB3A2ARln5IeGBWyb0",
+        "slug": "J004591084"
+      },
+      "absorbed": [
+        {
+          "店名": "隠れ家イタリアンDime ダイム",
+          "エリア": "名古屋駅",
+          "ホットペッパーID": "J003872958",
+          "placeId": "ChIJS0-YJwB3A2ARln5IeGBWyb0",
+          "slug": "J003872958"
+        }
+      ],
+      "filledFields": [
+        "Instagram",
+        "editorReason",
+        "insiderNote",
+        "visitStatus",
+        "タグ"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "豆家のりのり 和食 栄",
+        "エリア": "栄",
+        "ホットペッパーID": "J000716958",
+        "placeId": "ChIJq3QfD-lwA2ARbf9J5QnmMsg",
+        "slug": "J000716958"
+      },
+      "absorbed": [
+        {
+          "店名": "豆家のりのり 和食 栄",
+          "エリア": "栄",
+          "ホットペッパーID": "J003323657",
+          "placeId": "ChIJq3QfD-lwA2ARbf9J5QnmMsg",
+          "slug": "J003323657"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "ばさら亭 名古屋栄店",
+        "エリア": "栄",
+        "ホットペッパーID": "J004510059",
+        "placeId": "ChIJhw-e1SdxA2ARieLVC_TjDhM",
+        "slug": "J004510059"
+      },
+      "absorbed": [
+        {
+          "店名": "ばさら亭 名古屋栄店",
+          "エリア": "栄",
+          "ホットペッパーID": "J001293044",
+          "placeId": "ChIJhw-e1SdxA2ARieLVC_TjDhM",
+          "slug": "J001293044"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "焼肉　SEJONG　錦店　（セジョン）",
+        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "ホットペッパーID": "J004660303",
+        "placeId": "ChIJVT3aQdVwA2ARQXu5B5-yJ18",
+        "slug": "J004660303"
+      },
+      "absorbed": [
+        {
+          "店名": "焼肉 SEJONG 錦店 セジョン",
+          "エリア": "栄",
+          "ホットペッパーID": "J003736520",
+          "placeId": "ChIJVT3aQdVwA2ARQXu5B5-yJ18",
+          "slug": "J003736520"
+        }
+      ],
+      "filledFields": [
+        "Instagram",
+        "Instagram投稿URL",
+        "おすすめポイント",
+        "タグ"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "てり串 金山店",
+        "エリア": "金山・神宮前・熱田区",
+        "ホットペッパーID": "J001236573",
+        "placeId": "ChIJC84u0Gl3A2AR1SFTMoY8-9Q",
+        "slug": "J001236573"
+      },
+      "absorbed": [
+        {
+          "店名": "てり串 金山店",
+          "エリア": "金山",
+          "ホットペッパーID": "J003941397",
+          "placeId": "ChIJC84u0Gl3A2AR1SFTMoY8-9Q",
+          "slug": "J003941397"
+        }
+      ],
+      "filledFields": [
+        "タグ"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "串たつ 金山駅店",
+        "エリア": "金山",
+        "ホットペッパーID": "J003763594",
+        "placeId": "ChIJNeGrhk13A2AR0xHvE-psrE4",
+        "slug": "J003763594"
+      },
+      "absorbed": [
+        {
+          "店名": "串たつ 金山駅店",
+          "エリア": "金山",
+          "ホットペッパーID": "J000029144",
+          "placeId": "ChIJNeGrhk13A2AR0xHvE-psrE4",
+          "slug": "J000029144"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004026739",
+        "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
+        "slug": "J004026739"
+      },
+      "absorbed": [
+        {
+          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J004026741",
+          "placeId": "ChIJZZGMBAB3A2ARH9kiPsuBrGY",
+          "slug": "J004026741"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004026742",
+        "placeId": "ChIJW42pcAB3A2AR89zDL1dQ4Dk",
+        "slug": "J004026742"
+      },
+      "absorbed": [
+        {
+          "店名": "肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J004026737",
+          "placeId": "ChIJW42pcAB3A2AR89zDL1dQ4Dk",
+          "slug": "J004026737"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "炭火焼 鰻籠",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004493228",
+        "placeId": "ChIJX4-hv7lvA2ARg1EOQ5XbI58",
+        "slug": "J004493228"
+      },
+      "absorbed": [
+        {
+          "店名": "炭火焼　鰻籠",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J003603009",
+          "placeId": "ChIJX4-hv7lvA2ARg1EOQ5XbI58",
+          "slug": "J003603009"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "裏の山の木の子 名古屋",
+        "エリア": "名古屋市中村区",
+        "ホットペッパーID": "",
+        "placeId": "ChIJQ0B325V3A2AR3vq544bDVq0",
+        "slug": "store-e8a38fe381aee5b1"
+      },
+      "absorbed": [
+        {
+          "店名": "裏の山の木の子 名古屋",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J004634124",
+          "placeId": "",
+          "slug": "J004634124"
+        }
+      ],
+      "filledFields": [
+        "カード可",
+        "キャッチ",
+        "コース",
+        "サブジャンル",
+        "ホットペッパーID",
+        "ランチ",
+        "住所",
+        "価格帯",
+        "個室",
+        "営業時間",
+        "定休日",
+        "宴会収容",
+        "市区町村",
+        "席数",
+        "平均予算",
+        "最寄駅",
+        "禁煙",
+        "経度",
+        "緯度"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "食堂　灯ル",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004558213",
+        "placeId": "ChIJdeQdfAB3A2ARQelG2x-FIUQ",
+        "slug": "J004558213"
+      },
+      "absorbed": [
+        {
+          "店名": "食堂 灯ル",
+          "エリア": "名古屋市中村区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJdeQdfAB3A2ARQelG2x-FIUQ",
+          "slug": "store-e9a39fe5a08220e7"
+        }
+      ],
+      "filledFields": [
+        "mediaFeatures",
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由",
+        "食べログURL",
+        "食べログ評価"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "那古野 しば福や 名駅店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003671888",
+        "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
+        "slug": "J003671888"
+      },
+      "absorbed": [
+        {
+          "店名": "那古野 しば福や 名駅店 (なごの しばふくや めいえきてん)",
+          "エリア": "名古屋市中村区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJnW67G8p3A2ARX8O3SH7nuFk",
+          "slug": "store-e982a3e58fa4e987"
+        }
+      ],
+      "filledFields": [
+        "Instagram",
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由",
+        "食べログURL"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "しら河 浄心本店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J000107620",
+        "placeId": "ChIJh8FpXrp2A2AR_OXafePl90Q",
+        "slug": "J000107620"
+      },
+      "absorbed": [
+        {
+          "店名": "しら河 浄心本店",
+          "エリア": "名古屋市西区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJh8FpXrp2A2AR_OXafePl90Q",
+          "slug": "store-e38197e38289e6b2"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由",
+        "食べログURL"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "おばんざいのばんざい 栄本店",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J004493125",
+        "placeId": "ChIJ04CzJbBxA2ARcDkHcEj4yHs",
+        "slug": "J004493125"
+      },
+      "absorbed": [
+        {
+          "店名": "おばんざいのばんざい 栄本店",
+          "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+          "ホットペッパーID": "J004698812",
+          "placeId": "",
+          "slug": "J004698812"
+        }
+      ],
+      "filledFields": [
+        "サブジャンル"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "英吉利西屋 本店",
+        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "ホットペッパーID": "J004510140",
+        "placeId": "ChIJK6D4mil3A2ARX1np539fMGE",
+        "slug": "J004510140"
+      },
+      "absorbed": [
+        {
+          "店名": "英吉利西屋　本店",
+          "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+          "ホットペッパーID": "J004678947",
+          "placeId": "ChIJK6D4mil3A2ARX1np539fMGE",
+          "slug": "J004678947"
+        }
+      ],
+      "filledFields": [
+        "サブジャンル"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "松軒亭",
+        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "ホットペッパーID": "J004576942",
+        "placeId": "ChIJ6zOhUwBxA2AR0Qlv04euwt4",
+        "slug": "J004576942"
+      },
+      "absorbed": [
+        {
+          "店名": "松軒亭",
+          "エリア": "名古屋市千種区",
+          "ホットペッパーID": "",
+          "placeId": "",
+          "slug": "store-e69dbee8bb92e4ba"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由",
+        "食べログURL",
+        "食べログ評価"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "大成園 錦店",
+        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "ホットペッパーID": "J003411722",
+        "placeId": "ChIJ3X-mhNV2A2ARlZ0ARRrUrlE",
+        "slug": "J003411722"
+      },
+      "absorbed": [
+        {
+          "店名": "大成園 錦店",
+          "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+          "ホットペッパーID": "J004698866",
+          "placeId": "",
+          "slug": "J004698866"
+        }
+      ],
+      "filledFields": [
+        "サブジャンル"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "うなぎのしろむら 泉本店",
+        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "ホットペッパーID": "J004026266",
+        "placeId": "ChIJl2YP5NdwA2AR0skb--b6Cuw",
+        "slug": "J004026266"
+      },
+      "absorbed": [
+        {
+          "店名": "うなぎのしろむら 泉店",
+          "エリア": "名古屋市東区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJl2YP5NdwA2AR0skb--b6Cuw",
+          "slug": "store-e38186e381aae381"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由",
+        "食べログURL"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "BeTogetherBeTogether 今夜Bar",
+        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "ホットペッパーID": "J001275181",
+        "placeId": "ChIJb262-cNxA2ARCegOetKFhRY",
+        "slug": "J001275181"
+      },
+      "absorbed": [
+        {
+          "店名": "BeTogetherBeTogether 今夜Bar",
+          "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+          "ホットペッパーID": "J001259004",
+          "placeId": "ChIJb262-cNxA2ARCegOetKFhRY",
+          "slug": "J001259004"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "万歳賛称",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J004634200",
+        "placeId": "ChIJ04CzJbBxA2ARcDkHcEj4yHs",
+        "slug": "J004634200"
+      },
+      "absorbed": [
+        {
+          "店名": "万歳賛称",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J004698814",
+          "placeId": "",
+          "slug": "J004698814"
+        }
+      ],
+      "filledFields": [
+        "サブジャンル"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "韓炉 HANRO 名古屋栄店",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J004591229",
+        "placeId": "ChIJ0SCXTtRwA2ARx86mKRlfhmg",
+        "slug": "J004591229"
+      },
+      "absorbed": [
+        {
+          "店名": "韓炉 HANRO 名古屋栄店",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J004699066",
+          "placeId": "",
+          "slug": "J004699066"
+        }
+      ],
+      "filledFields": [
+        "サブジャンル"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "ジガー バー シルクロード",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J004493224",
+        "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
+        "slug": "J004493224"
+      },
+      "absorbed": [
+        {
+          "店名": "ジガー バー シルクロード",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J000015124",
+          "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
+          "slug": "J000015124"
+        }
+      ],
+      "filledFields": [
+        "Instagram"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "コンパル 大須本店",
+        "エリア": "名古屋市中区大須",
+        "ホットペッパーID": "",
+        "placeId": "ChIJh2A8fctwA2ARLFVqblDns64",
+        "slug": "store-e382b3e383b3e383"
+      },
+      "absorbed": [
+        {
+          "店名": "コンパル 大須本店",
+          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+          "ホットペッパーID": "J000430215",
+          "placeId": "ChIJh2A8fctwA2ARLFVqblDns64",
+          "slug": "J000430215"
+        }
+      ],
+      "filledFields": [
+        "ホットペッパーID",
+        "ランチ",
+        "住所",
+        "価格帯",
+        "営業時間",
+        "定休日",
+        "市区町村",
+        "席数",
+        "最寄駅",
+        "禁煙",
+        "経度",
+        "緯度",
+        "駐車場"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "珈琲 ぶりこ",
+        "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+        "ホットペッパーID": "J000108015",
+        "placeId": "ChIJ1yK0RMtwA2ARcZ9lMqg4JtQ",
+        "slug": "J000108015"
+      },
+      "absorbed": [
+        {
+          "店名": "珈琲ぶりこ",
+          "エリア": "大須",
+          "ホットペッパーID": "",
+          "placeId": "ChIJ1yK0RMtwA2ARcZ9lMqg4JtQ",
+          "slug": "store-e78f88e790b2e381"
+        }
+      ],
+      "filledFields": [
+        "mediaFeatures",
+        "おすすめポイント",
+        "キュレーター",
+        "タグ",
+        "トレンド情報源",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "食べログURL"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "焼肉神宮 金山本店",
+        "エリア": "金山・神宮前・熱田区",
+        "ホットペッパーID": "J001265259",
+        "placeId": "ChIJSUmr0w93A2AROIgu1QPPeng",
+        "slug": "J001265259"
+      },
+      "absorbed": [
+        {
+          "店名": "焼肉 神宮",
+          "エリア": "名古屋市熱田区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJSUmr0w93A2AROIgu1QPPeng",
+          "slug": "store-e784bce8828920e7"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由",
+        "食べログURL",
+        "食べログ評価"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "Alta vista アルタ ヴィスタ",
+        "エリア": "鶴舞・八事・御器所",
+        "ホットペッパーID": "J004493230",
+        "placeId": "ChIJ8fyMf7F7A2ARE5vFDSBoCdI",
+        "slug": "J004493230"
+      },
+      "absorbed": [
+        {
+          "店名": "Alta vistaアルタ ヴィスタ",
+          "エリア": "鶴舞・八事・御器所",
+          "ホットペッパーID": "J003942649",
+          "placeId": "ChIJ8fyMf7F7A2ARE5vFDSBoCdI",
+          "slug": "J003942649"
+        }
+      ],
+      "filledFields": [
+        "ランチ"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "LYCHI ライチ",
+        "エリア": "鶴舞・八事・御器所",
+        "ホットペッパーID": "J004633227",
+        "placeId": "ChIJD26mIgB7A2ARWBKN5ZN6JfQ",
+        "slug": "J004633227"
+      },
+      "absorbed": [
+        {
+          "店名": "LYCHI",
+          "エリア": "昭和区 川名",
+          "ホットペッパーID": "",
+          "placeId": "ChIJD26mIgB7A2ARWBKN5ZN6JfQ",
+          "slug": "lychi"
+        }
+      ],
+      "filledFields": [
+        "おすすめポイント",
+        "データソース",
+        "備考",
+        "営業状況",
+        "情報源URL",
+        "追加日"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "ニューアラタマ 新瑞橋店",
+        "エリア": "緑区・南区・天白区・瑞穂区",
+        "ホットペッパーID": "J004493222",
+        "placeId": "ChIJzxwPNV97A2ARo9Z4V-1Mb1Y",
+        "slug": "J004493222"
+      },
+      "absorbed": [
+        {
+          "店名": "ニューアラタマ 新瑞橋店",
+          "エリア": "緑区・南区・天白区・瑞穂区",
+          "ホットペッパーID": "J003671338",
+          "placeId": "ChIJzxwPNV97A2ARo9Z4V-1Mb1Y",
+          "slug": "J003671338"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "覚王山カフェ Ji.Coo. ジクー",
+        "エリア": "本山・覚王山・藤が丘",
+        "ホットペッパーID": "J000397154",
+        "placeId": "ChIJfyDhFHBwA2ARxHVSoaIFQBk",
+        "slug": "J000397154"
+      },
+      "absorbed": [
+        {
+          "店名": "覚王山カフェ Ji.Coo",
+          "エリア": "名古屋市千種区覚王山通",
+          "ホットペッパーID": "",
+          "placeId": "ChIJfyDhFHBwA2ARxHVSoaIFQBk",
+          "slug": "ji-coo"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "編集部推薦",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "選定理由",
+        "食べログURL",
+        "食べログ評価"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "尾頭橋 すみや",
+        "エリア": "中川区・港区",
+        "ホットペッパーID": "J003516273",
+        "placeId": "ChIJr7PBcU93A2ARQSlnz2fjctA",
+        "slug": "J003516273"
+      },
+      "absorbed": [
+        {
+          "店名": "尾頭橋すみや",
+          "エリア": "名古屋市中川区尾頭橋",
+          "ホットペッパーID": "",
+          "placeId": "ChIJr7PBcU93A2ARQSlnz2fjctA",
+          "slug": "store-e5b0bee9a0ade6a9"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "価格帯目安",
+        "編集部推薦",
+        "話題スコア",
+        "追加日",
+        "選定理由",
+        "食べログURL",
+        "食べログ評価"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "尾張山荘 くろぎ",
+        "エリア": "名古屋市中村区",
+        "ホットペッパーID": "",
+        "placeId": "ChIJm6tgDQB3A2ARldGuPJZJQv0",
+        "slug": "store-e5b0bee5bcb5e5b1"
+      },
+      "absorbed": [
+        {
+          "店名": "尾張山荘 くろぎ",
+          "エリア": "名駅",
+          "ホットペッパーID": "",
+          "placeId": "ChIJm6tgDQB3A2ARldGuPJZJQv0",
+          "slug": "store-e5b0bee5bcb5e5b1"
+        }
+      ],
+      "filledFields": [
+        "データソース",
+        "価格帯",
+        "備考",
+        "営業状況",
+        "情報源URL"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "PASTA MANIA 鶴舞店",
+        "エリア": "名古屋市中区",
+        "ホットペッパーID": "",
+        "placeId": "ChIJg9bsJPlxA2ARDhwM4x60Q20",
+        "slug": "pasta-mania"
+      },
+      "absorbed": [
+        {
+          "店名": "PASTA MANIA 鶴舞店",
+          "エリア": "鶴舞",
+          "ホットペッパーID": "",
+          "placeId": "ChIJg9bsJPlxA2ARDhwM4x60Q20",
+          "slug": "pasta-mania"
+        }
+      ],
+      "filledFields": [
+        "データソース",
+        "価格帯",
+        "備考",
+        "営業状況",
+        "情報源URL"
+      ]
+    },
+    {
+      "reasons": [
+        "name_exact"
+      ],
+      "kept": {
+        "店名": "ウルフギャング・ステーキハウス 名古屋店",
+        "エリア": "名古屋市中区錦",
+        "ホットペッパーID": "",
+        "placeId": "",
+        "slug": "store-e382a6e383abe383"
+      },
+      "absorbed": [
+        {
+          "店名": "ウルフギャング・ステーキハウス 名古屋店",
+          "エリア": "名古屋（中区錦・伏見）",
+          "ホットペッパーID": "",
+          "placeId": "ChIJC-7_RQB3A2ARdOpth7c6aO0",
+          "slug": "store-e382a6e383abe383"
+        }
+      ],
+      "filledFields": [
+        "Google評価",
+        "placeId",
+        "データソース",
+        "価格帯",
+        "備考",
+        "口コミ数",
+        "営業ステータス",
+        "営業状況",
+        "情報源URL"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "トゥ・ラ・ジョア イズム",
+        "エリア": "名古屋市中区",
+        "ホットペッパーID": "",
+        "placeId": "ChIJI0Un10l3A2ARfKNjvgQw4tE",
+        "slug": "store-e38388e382a5e383"
+      },
+      "absorbed": [
+        {
+          "店名": "トゥ・ラ・ジョア",
+          "エリア": "名古屋市中区栄",
+          "ホットペッパーID": "",
+          "placeId": "ChIJI0Un10l3A2ARfKNjvgQw4tE",
+          "slug": "store-e38388e382a5e383"
+        },
+        {
+          "店名": "トゥ・ラ・ジョア イズム (Tou La Joie Ism)",
+          "エリア": "名古屋市中区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJI0Un10l3A2ARfKNjvgQw4tE",
+          "slug": "tou-la-joie-ism"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン",
+        "おすすめポイント",
+        "トレンド情報源",
+        "価格帯目安",
+        "話題スコア",
+        "追加日",
+        "選定理由"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "料亭 か茂免 (かもめ)",
+        "エリア": "名古屋市東区白壁",
+        "ホットペッパーID": "",
+        "placeId": "ChIJaYvpoiZxA2ARtyUUx5IdjVs",
+        "slug": "store-e69699e4baad20e3"
+      },
+      "absorbed": [
+        {
+          "店名": "料亭 か茂免",
+          "エリア": "名古屋市東区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJaYvpoiZxA2ARtyUUx5IdjVs",
+          "slug": "store-e69699e4baad20e3"
+        }
+      ],
+      "filledFields": [
+        "おすすめポイント",
+        "追加日",
+        "選定理由"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "炭焼 うな富士",
+        "エリア": "名古屋市昭和区",
+        "ホットペッパーID": "",
+        "placeId": "ChIJJflGL6VwA2ARLO3QB-ruz4c",
+        "slug": "store-e782ade784bc20e3"
+      },
+      "absorbed": [
+        {
+          "店名": "炭焼 うな富士 本店",
+          "エリア": "名古屋市昭和区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJJflGL6VwA2ARLO3QB-ruz4c",
+          "slug": "store-e782ade784bc20e3"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン",
+        "トレンド情報源",
+        "話題スコア",
+        "話題フラグ"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "飛騨牛一頭家 馬喰一代 名古屋WEST",
+        "エリア": "名古屋市中村区",
+        "ホットペッパーID": "",
+        "placeId": "ChIJVXEklcJ2A2ARpgw6sDsvg2A",
+        "slug": "west"
+      },
+      "absorbed": [
+        {
+          "店名": "焼肉 飛騨牛一頭家 馬喰一代 名古屋WEST",
+          "エリア": "名古屋市中村区名駅",
+          "ホットペッパーID": "",
+          "placeId": "ChIJVXEklcJ2A2ARpgw6sDsvg2A",
+          "slug": "west"
+        }
+      ],
+      "filledFields": [
+        "おすすめシーン"
+      ]
+    }
+  ],
+  "skipped": [
+    {
+      "names": [
+        "炉端焼き 燻銀 伏見店",
+        "炉端焼き燻銀 伏見店にかい"
+      ],
+      "hpIds": [
+        "J003942663",
+        "J004634381"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "鶏ん家 名古屋新栄店",
+        "とりやき酒場 鶏ん家 名古屋新栄店"
+      ],
+      "hpIds": [
+        "J003985167",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "no_corroboration"
+    },
+    {
+      "names": [
+        "居酒屋 哉月",
+        "完全個室居酒屋 哉月"
+      ],
+      "hpIds": [
+        "J001143580",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "no_corroboration"
+    },
+    {
+      "names": [
+        "どて煮 やよい 大曽根 森下",
+        "どて煮　やよい"
+      ],
+      "hpIds": [
+        "J004469253",
+        "J004661256"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "居酒屋 煙 金山店",
+        "煙 金山店"
+      ],
+      "hpIds": [
+        "J004005730",
+        "J001293031"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "居酒屋 結う ゆう 金山駅前店",
+        "結う ゆう 金山駅前店"
+      ],
+      "hpIds": [
+        "J003324866",
+        "J003581285"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "居酒屋 傳DEN 金山駅前店",
+        "傳DEN 金山駅前店"
+      ],
+      "hpIds": [
+        "J003324868",
+        "J003581252"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "居酒屋 囲い屋 金山店",
+        "隠れ家個室居酒屋 囲い屋 金山店"
+      ],
+      "hpIds": [
+        "J004025513",
+        "J001293029"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "居酒屋 囲い屋 金山店",
+        "囲い屋 金山店"
+      ],
+      "hpIds": [
+        "J004025513",
+        "J004612496"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "肉ト魚　大衆酒場　ひとめぼれ　金山駅南口店",
+        "肉ト魚 大衆酒場 ひとめぼれ 金山駅前店"
+      ],
+      "hpIds": [
+        "J004445409",
+        "J004445415"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "居酒屋 権兵衛 名駅店",
+        "権兵衛 名駅南店"
+      ],
+      "hpIds": [
+        "J003649512",
+        "J004403777"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "喫茶River リバー",
+        "喫茶River"
+      ],
+      "hpIds": [
+        "J004025267",
+        "J001264243"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "Cafe & Bar ゆきっち",
+        "Cafe & Bar ゆきっち はなれ"
+      ],
+      "hpIds": [
+        "J003850472",
+        "J003850482"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "鳥正",
+        "鳥正 名古屋"
+      ],
+      "hpIds": [
+        "J003624313",
+        "J001286820"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "ONE on ONE 錦",
+        "ONE on ONE 栄店"
+      ],
+      "hpIds": [
+        "J003560485",
+        "J000726902"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "シャンタムール",
+        "シャンタムール サウス"
+      ],
+      "hpIds": [
+        "J000015669",
+        "J004591503"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "Sei Felice セイフェリーチェ",
+        "Seifelice セイフェリーチェ 栄"
+      ],
+      "hpIds": [
+        "J003763458",
+        "J003917091"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "Reconnaissance ルコネッサンス",
+        "ルコネッサンス"
+      ],
+      "hpIds": [
+        "J004402690",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "ward_conflict"
+    },
+    {
+      "names": [
+        "レストラン ロワール 鉄板焼",
+        "レストラン ロワール フレンチ 名古屋東急ホテル 栄"
+      ],
+      "hpIds": [
+        "J003916520",
+        "J003916519"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "大衆焼肉こたろう 金山駅店",
+        "大衆焼肉こたろう 金山駅"
+      ],
+      "hpIds": [
+        "J004403592",
+        "J003851745"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "ハチ鶏 大曽根駅店",
+        "ハチ鶏 大曽根"
+      ],
+      "hpIds": [
+        "J001216971",
+        "J004026527"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "YOHAKU COFFEE 今池1号店",
+        "YOHAKU COFFEE 今池2号店"
+      ],
+      "hpIds": [
+        "J003624657",
+        "J003624656"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "とんかつ朱寿",
+        "とんかつ朱寿"
+      ],
+      "hpIds": [
+        "J004558109",
+        ""
+      ],
+      "reason": "name_exact",
+      "blocker": "ward_conflict"
+    },
+    {
+      "names": [
+        "レミニセンス (Reminiscence)",
+        "レミニセンス"
+      ],
+      "hpIds": [
+        "",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "ward_conflict"
+    }
+  ]
+}
