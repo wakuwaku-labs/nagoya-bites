@@ -17,7 +17,9 @@
  *   node scripts/audit_duplicate_stores.js --report # 重複詳細を data/store_duplicate_report.json に出力
  *
  * このスクリプトはデータを一切書き換えない（読み取り専用）。
- * 統合操作は acceptance②③ に従い人手で行う。
+ * 統合は build.js が scripts/lib/store_dedup.js で行う（acceptance②③）。ここで検出されても
+ * 区・placeId・HotPepperID の食い違い等で「同一と確認できない」組は統合されずに残る
+ * （記録は data/store_merge_pairs.json の skipped）。
  *
  * ISSUE-132 の acceptance④: CI に重複検知を追加し、新たな重複が増えたら検出できるようにする
  */
