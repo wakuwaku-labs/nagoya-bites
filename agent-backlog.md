@@ -258,6 +258,42 @@
   3. `node scripts/sync_backlog_to_linear.js` の dry-run で、新規分の `missingFields` が空になる。
   4. 既存の未完了 Issue（37件）を Project に紐づける。セッションブリーフィングの「未設定: Project」が 0 になる。
 
+### [ISSUE-140] 実在は確認できたのに掲載データ（stores.json）から落ちた店5軒の原因を調べ、必要なら正規の手順で戻す
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-06
+- **category**: データ / 実在検証
+- **owner**: DataKeeper
+- **source**: ISSUE-139 の作業。夜間QAの `audit_feature_stores.js` が報告した11店のうち、次の5軒は一次情報（Yahoo!マップ・じゃらん・HotPepper・公式サイト）で営業が確認できる実在店なのに、`data/stores.json` から消えていた（`stores.json` は 2026-09-24〜10-05 の auto-update コミットで店が入れ替わっている。店数 4,914→4,968 の間に旧データのみの店が71件）。消えた理由（HotPepper 側の掲載変更か、ビルドの品質ゲートか）はこの作業では特定していない。特集からは ISSUE-139 で外してある
+  - 会席料理 ひつまぶし 雅MASA（HP J003806845・東区泉1-2-17・公式 https://kaisekimasa.com/）
+  - 餃子の王将 大須観音店（中区大須2-26-1・https://map.ohsho.co.jp/b/ohsho/info/1417/）
+  - 貸切スペース カフェ なごのや（HP J001209497・西区那古野1-6-13・https://www.hotpepper.jp/strJ001209497/）
+  - しゃぶしゃぶいちばん 名駅南店（HP J004509858・中村区名駅南1-23-14・https://akr2838731373.owst.jp/）
+  - 麺や 六三六 名駅店（中村区名駅4-4-38 ウインクあいち B1・https://map.yahoo.co.jp/v3/place/zeciu3pE-2A。旧「名駅西口店」は閉店表示。特集には「千種」と書いていたが住所が合わない）
+- **acceptance**:
+  1. 5軒それぞれが `stores.json` から落ちた直接の原因（出典データの消失か、ゲートによる除外か）を、コミット差分またはビルドログで特定して書く
+  2. 掲載し直す場合は `GOOGLE_MAPS_API_KEY` のある環境で `node scripts/fetch_manual_store_photos.js`（実在三重検証）を通した店だけ `manual_stores.json` へ追加する。通らなければ掲載しない（架空店ブロック）
+  3. 同じ原因で他にも落ちている店がないか、旧 `stores.json` との差分（71件）を一覧にして確認する
+  4. 特集へ戻す場合は `node scripts/audit_feature_stores.js` が 0 件のままであること
+- **関連**: [[ISSUE-139]]
+
+### [ISSUE-139] 特集に載っているのに LOCAL_STORES で実在確認できない店11軒を片付け、検出ゼロに戻す ✅
+
+- **priority**: P2 → **status**: done
+- **detected**: 2026-10-06
+- **category**: データ / 実在検証
+- **owner**: DataKeeper
+- **source**: 夜間QAのソフト警告（`node scripts/audit_feature_stores.js` が11特集で11店を報告）
+- **背景**: CLAUDE.md の架空店ブロックが「検出ゼロの維持」を規定している。店ごとに原因を切り分けた
+- **acceptance**: `audit_feature_stores.js` が0件／周辺の件数表記が実際の掲載数と一致／推測で実在と判定しない
+- **結果（2026-10-06）**:
+  - 表記ゆれ（実在レコードあり）: ふじさん名駅店 昼だけうなぎ屋 名駅店 ＝ DB上は「ふじさん別邸 昼だけうなぎ屋 名駅店」（HP J004090812 同一）。meieki・nagoya-lunch-washoku・nagoya-settai-lunch・nagoya-unaju は月次ロスター対象のため `refresh_feature_rosters.js --only` で DB から再選定し解消（枠数は変わらず）。照合は緩めていない
+  - 特集から除外（実在はするが DB に無い）: 雅MASA（nagoya-hitsumabushi 9→8店）、餃子の王将 大須観音店（nagoya-gyoza 10→9）、麺や 六三六（nagoya-ramen 12→11）。なごのや（girls-party）としゃぶしゃぶいちばん 名駅南店（nagoya-sukiyaki）はロスター再選定で他の実在店に入れ替わった。戻す可否は [[ISSUE-140]]
+  - 特集から除外（実在を確認できず）: 割烹 季節料理 花わさび（fathers-day-2026・「栄」の同名店は検索でヒットせず）、旬菜家 楽（nagoya-kaoawase-washoku 7→6。manual_stores にあるが写真・食べログURLが空で、検索でも確認できない。旧記録のとおり「旬彩」系テンプレ名の疑い）
+  - 件数表記は各特集の title/h1/meta/JSON-LD、`features/index.html` のカード、`data/featured.json`、`index.html` の特集ラベルまで揃えた
+- **残る問題**: `features/fathers-day-2026.html` は見出し・meta が「10選」のままで、実際のカードは約16枚（原因は未調査。ロスター再選定が最初のグリッドだけを10店にした可能性がある）。シーズン終了済みの特集のため今回は触れていない。ロスターが複数グリッドの特集を壊す不具合の可能性があり、要確認（[[ISSUE-140]] とは別）
+- **関連**: [[ISSUE-132]]・[[ISSUE-064]]・[[ISSUE-107]]
+
 ### [ISSUE-138] 店名にエリア語を含む店（例「那古野 しば福や 名駅店」）を店名で検索しても上位3件に出ない検索順位の弱点を直す
 
 - **priority**: P2 → **status**: ready
