@@ -1,5 +1,5 @@
 ---
-description: Notion DB「課題トラッカー」から優先度最高の未着手タスクを1件取って、担当エージェントが実装→QAゲート→デプロイ→agent-backlog.md 更新→Notion アーカイブまで一気通貫で実行する。
+description: agent-backlog.md から優先度最高の未着手タスクを選び、対応するLinear Issueを更新しながら実装→QA→デプロイまで進める。
 ---
 
 # /solve-next — 次の1件を解く
@@ -11,15 +11,16 @@ NAGOYA BITES の組織として、滞留タスクを順次消化するための�
 
 ## 実行フロー（必ずこの順番）
 
-### Step 1: Notion との同期を確実にする
+### Step 1: Linear Issueを確認
 
-最初に必ず `/sync-backlog` を内部実行し、Notion を最新化する：
+`agent-backlog.md`の選定結果を取得し、対象IDでLinearを検索する:
 
 ```bash
-node scripts/sync_backlog_to_notion.js --if-changed
+node scripts/next_task.js
+orca linear search "<選定したID>" --workspace all --limit 10 --json
 ```
 
-`changed: true` ならば `/sync-backlog` のフローを実行してから次へ。
+`[ID]`が一致し、Duplicate状態ではないLinear Issueを対応先にする。現在状態・優先度・担当者を読み込む。複数候補やID不一致があれば作業開始前に止めて照合する。Notion同期は行わない。
 
 ### Step 2: 次に解くタスクを選定
 
@@ -41,7 +42,11 @@ node scripts/sync_backlog_to_notion.js --if-changed
 
 ### Step 3: 着手宣言
 
-ユーザー承認後、agent-backlog.md の当該タスクの status を `in_progress` に更新（既に in_progress ならスキップ）。
+ユーザー承認後、Linear Issueとagent-backlog.mdの当該タスクを `In Progress` / `in_progress` に更新（既に着手済みならスキップ）。
+
+```bash
+orca linear status set <Linear-ID> --to "In Progress" --workspace <workspace-id> --json
+```
 
 ### Step 4: 担当エージェント仕様書を読む
 
@@ -110,17 +115,13 @@ git push origin HEAD:main
 
 これは ORG-001（CEO の実行ログ運用再開）の自動履行でもある。
 
-### Step 10: Notion を更新（done タスクをアーカイブ）
+### Step 10: Linearを完了状態にする
 
-agent-backlog.md が変わった結果、`/sync-backlog` を再実行：
+QA通過後、対応するLinear Issueを`Done`にし、backlogの`status: done`と`resolved`情報を更新する。必要な実装ログ・PRリンク・判断メモをIssueに残す。Notionは更新・アーカイブしない。
 
 ```bash
-node scripts/sync_backlog_to_notion.js --if-changed
+orca linear status set <Linear-ID> --to Done --workspace <workspace-id> --json
 ```
-
-`plan.archives` に当該 ID が含まれているはず。`/sync-backlog` Step 2 の手順（**ISSUE-039 で確立した `notion-move-pages` でデータソース外へ退避**）でアーカイブを実施し、state から `--remove <ID>` で page_id_map を整理。
-
-**重要**: アーカイブ完了後、Notion ダッシュボードから当該ページが消えていることを必ず確認する。「タイトルに ✅ を付けるだけ」では不十分（ISSUE-027 で発覚した不具合）。
 
 ### Step 11: 完了報告（orchestrator.md の報告フォーマット使用）
 
@@ -144,9 +145,9 @@ node scripts/sync_backlog_to_notion.js --if-changed
 - commit: <hash>
 - URL: https://nagoya-bites.com/
 
-### Notion 反映
-- ✅ <ID> をアーカイブ
-- ダッシュボード残課題: N件
+### Linear 反映
+- ✅ <Linear Issue ID> をDoneに更新
+- Linear Issue: <URL>
 
 ### 次の推奨アクション（CEO判断）
 - 次に `/solve-next` を実行すれば: [<次のID>] <タイトル>（PX）
@@ -179,4 +180,4 @@ node scripts/sync_backlog_to_notion.js --if-changed
 
 - Step 6 (QA) で失敗 → 修正サイクル繰り返し。3回失敗で STOP・ユーザーに判断を仰ぐ
 - Step 7 (push) で失敗 → ローカル commit は残し、ユーザーに手動 push を促す
-- Step 10 (Notion) で失敗 → デプロイは完了しているので、ユーザーに通知して `/sync-backlog` を後で再実行するよう促す
+- Linear更新で失敗 → 実装の完了状態を報告し、Issueの現在状態を読み戻してから必要な更新だけ再実行する

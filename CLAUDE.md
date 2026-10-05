@@ -411,13 +411,13 @@ Orchestrator（CEO）← agents/orchestrator.md
 ## SEOアドバイス改善ループ（`/seo-triage` 日次 / `/seo-triage-weekly` 週次）
 
 SEO/アクセス解析のアドバイスを、**鵜呑みにせず**ブランドの総合フィルターに
-通して改善に回す仕組み。日次・週次の**2系統が同じスクリプト・同じ Notion 同期**を共有する。
+通して改善に回す仕組み。日次・週次の**2系統が同じスクリプト・同じLinear同期**を共有する。
 
 ### 全自動の運用モデル（人の貼り付け不要）
 
 > 2026-06-01 から **完全自動**（ユーザーが「確認なしで即追記」を承認）。入力取得は
-> GAS のメール送信、判定は Claude（このCLAUDE.md が唯一の根拠）、起票は Notion MCP。
-> **判定ロジックは GAS に持たせない**（GAS は配信だけ・Notionトークンも持たせない）。
+> GAS のメール送信、判定は Claude（このCLAUDE.md が唯一の根拠）、課題はLinearへ登録。
+> **判定ロジックは GAS に持たせない**（GAS は配信だけ・Linear認証情報も持たせない）。
 > 日次レポートの原理と週次は**完全に同一**。
 
 ```
@@ -433,7 +433,7 @@ SEO/アクセス解析のアドバイスを、**鵜呑みにせず**ブランド
    ↓
 [判定] CLAUDE.md の Moat / Strategic Skip を根拠に採用/却下（次節）
    ↓
-[同期] 採用分を Notion MCP で課題トラッカーへ create/update（人の確認を挟まず即追記）
+[同期] 採用分を agent-backlog.md に起票し、Orca CLI経由でLinearへcreate/update（人の確認を挟まず登録）
 ```
 
 手動でも全く同じ: LINE 本文を `/seo-triage`（💡今日のアドバイス・source=line-daily）/
@@ -445,10 +445,10 @@ SEO/アクセス解析のアドバイスを、**鵜呑みにせず**ブランド
 ```
 2. CLAUDE.md の Moat / Strategic Skip を根拠にエージェントが採用/却下を判定
    ・採用 → agent-backlog.md に [SEO-NNN] を status: ready で起票（owner=Marketer / category=SEO）
-   ・却下 → data/seo_advice_log.json に理由付きで記録（backlog/Notion には出さない）
+   ・却下 → data/seo_advice_log.json に理由付きで記録（backlog/Linearには出さない）
    ・重複 → 過去判定済みは再起票しない（日次/週次を横断して衝突検知。数値違いは正規化で同種扱い）
            → 同じメールを再処理しても二重起票しない（冪等。スケジュール多重起動も安全）
-3. 採用分は Notion 課題トラッカーに自動同期（自分の目で必要可否を判断できる）
+3. 採用分はLinearへ自動同期（backlogの詳細を保ちつつ、進捗はLinearで確認する）
 4. 実装は /solve-next の YES ゲート経由（マネタイズ・信頼系は制約7・8でさらに承認必須）
    → このループが作るのは status:ready まで。コード実装・デプロイは別ゲート。
 5. ループ健診: node scripts/seo_triage.js --report --days 30           （全体）
@@ -533,7 +533,7 @@ node scripts/gsc_opportunities.js   # data/gsc_opportunities.json を再生成�
           （一次情報での確認 → 検証成立時のみ反映 → audit_store_liveness 等の監査通過）を必須で書く
         ・スパム/誹謗/個人情報 → data/feedback_log.json に理由付きで記録のみ（起票しない）
    ↓
-[同期] 採用・fact_check 分を Notion 課題トラッカーへ自動同期
+[同期] 採用・fact_check 分をLinearへ自動同期
    ↓
 [実装] /solve-next の YES ゲート経由（マネタイズ・信頼系は制約7・8でさらに承認必須）
 ```

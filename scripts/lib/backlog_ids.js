@@ -2,7 +2,7 @@
 /**
  * agent-backlog.md の ID 採番・正規化・重複検知 共通ライブラリ
  *
- * 設計（seo_triage.js / sync_backlog_to_notion.js と同じ思想）:
+ * 設計（seo_triage.js / sync_backlog_to_linear.js と同じ思想）:
  *   - このライブラリは「判断」をしない。決定的処理だけを持つ
  *     （採番 / 正規化 / fingerprint / 重複ID検知）。
  *   - 課題の採否・中身の判断はエージェントが CLAUDE.md を根拠に行う。
