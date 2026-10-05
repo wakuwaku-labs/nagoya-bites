@@ -8805,6 +8805,7 @@ function nbSearchRank(list, sq) {
   var qmult = 1;
   units.forEach(function(u){ if (u.kind === 'concept' && u.c.quality) qmult = Math.max(qmult, u.c.quality); });
 
+  var qFlat = nbNorm(sq.raw), allMask = (1 << n) - 1;
   var scored = [], flag = {};
   list.forEach(function(s) {
     var x = nbStoreIndex(s), mask = 0, pmask = 0, total = 0, why = [];
@@ -8816,6 +8817,19 @@ function nbSearchRank(list, sq) {
         if (why.length < 3) why.push(units[i].label);
       }
     }
+    // 検索語全体が店名にそのまま含まれる店（店名検索）は、エリア語・ジャンル語の積み上げより
+    // 上に置く（ISSUE-138）。「那古野 しば福や 名駅店」のように店名がエリア語を含むと、
+    // 概念ごとの加点が分割されて同じエリアの他店に負けるため。語が店名の大部分を占めるほど強い。
+    // 全ユニットを満たした扱いにして、必須条件で関連候補へ落とされないようにする。
+    var nameBonus = 0;
+    if (qFlat.length >= 3) {
+      var nf = x.name.split(NB_SEP).join('');
+      if (nf.indexOf(qFlat) !== -1) {
+        nameBonus = 200 + 400 * (qFlat.length / nf.length);
+        mask = allMask; pmask = allMask;
+      }
+    }
+    total += nameBonus;
     if (total <= 0) return;
     s.__score = total + nbQualityBonus(s, qmult);
     s.__why = why;
