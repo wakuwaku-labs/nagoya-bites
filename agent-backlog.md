@@ -253,6 +253,7 @@
 ### [ISSUE-132] 同じ店が複数の掲載レコードとして並んでいる（placeId 重複194組・店名完全一致20組）— 片方だけ食べログURLを持つため「同じ店なのにリンクが出るカードと出ないカード」が混在する
 
 - **priority**: P2 → **status**: in_progress
+- **2026-10-05 追記（PR #337 マージ済み）**: acceptance②③を実装。`scripts/lib/store_dedup.js` を build.js の閉店除外直後に通し、同一と確認できた組だけ統合（店名完全一致 or placeId一致＋namesMatch()。区・placeId・HP ID・支店名/号数の食い違いや裏付けなしは統合しない）。情報の多い方を残し空欄だけ補完、編集部フィールドは手動店優先（真偽OR・配列和集合）。実測: 39組統合・40件吸収（4,968→4,928）、見送り22組（hp_distinct 18 / ward_conflict 2 / no_corroboration 2）。記録は `data/store_merge_pairs.json`（build.yml のコミット対象に追加）。吸収側 `stores/*.html` は削除せず孤児検出のみ。**残**: マージ後CIのログ確認・吸収側ページの canonical/リダイレクト要否判断
 - **detected**: 2026-09-20
 - **category**: data-quality
 - **owner**: DataKeeper / Builder
@@ -3071,6 +3072,7 @@
 ### [ISSUE-097] 実写ゼロの手動キュレーション店24件（「今日の話題店」上位含む）の原因切り分けと部分是正
 
 - **priority**: P2 → **status**: in_progress（コード修正2件マージ済み・残件は per-店で別対応が必要）
+- **2026-10-05 追記（PR #338 マージ済み）**: 店名ゲートに「英字↔カナの子音読み一致」と「併記の片方だけの形」を追加（閾値0.85不変）。全5,024店の総当たりで新規一致4組（レミニセンス表記違い3・Reconnaissance/ルコネッサンス1）、既存一致の消失0、誤一致候補8組は回帰テスト化。ISSUE-132 の統合結果は不変（4,928件）を確認。那古野しば福やは写真がHotPepper公式で解決済み・`ホットペッパーID` 昇格は [[ISSUE-119]] 修正まで保留。**要確認（DataKeeper）**: 手動「ルコネッサンス」（東区泉）と HP「Reconnaissance」（中区東別院）のエリア食い違い。客投稿写真のみ6件・名古屋外同名2件はコードでは解決しない
 - **detected**: 2026-08-18（オーナー指摘「今日の話題店の3位・4位が実写になっていない」→「他の店舗も表示されてないものはしてほしい」に発展）
 - **category**: data-quality
 - **owner**: DataKeeper（Builder が実装）
