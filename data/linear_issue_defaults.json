@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "projectId": "63b9bbd1-793a-4ed3-9cd9-99e2854da8be",
   "projectName": "Nagoya Bites",
   "krLabelRules": [
@@ -86,5 +86,23 @@
     "P2": 14,
     "P3": 30
   },
-  "notes": "新規Issueの既定値。Linearの構成は Project=Nagoya Bites（全課題）、KR=ラベル（docs/decisions/0003）。backlog項目に assignee/due/project が無いとき sync_backlog_to_linear.js がここから補う（due＝起票日＋優先度ごとの日数、project＝projectName）。KRラベルは krLabelRules を上から評価（category の先頭語→全体の順、キーワード照合）し、当たらなければ付けない。retiredProjects は 2026-10-06 に一時的に作ったKR別Projectで、assign_linear_projects.js がそこから Nagoya Bites へ戻す。夜間QAは projectId を使う"
+  "notes": "新規Issueの既定値。Linearの構成は Project=Nagoya Bites（全課題）、KR=ラベル（docs/decisions/0003）。backlog項目に assignee/due/project が無いとき sync_backlog_to_linear.js がここから補う（due＝起票日＋優先度ごとの日数、project＝projectName）。KRラベルは krLabelRules を上から評価（category の先頭語→全体の順、キーワード照合）し、当たらなければ付けない。retiredProjects は 2026-10-06 に一時的に作ったKR別Projectで、assign_linear_projects.js がそこから Nagoya Bites へ戻す。夜間QAは projectId を使う。roleLabels は backlog の owner（役割名・自由記述）から AIエージェントの役割ラベル（担当:Builder 等）を付ける規則。Linear の担当者（assignee）はLinearユーザーしかなれないためオーナーのまま、役割はラベルで振り分ける（docs/decisions/0005）。owner に片桐/オーナーを含む課題には 担当:オーナー作業 を付ける",
+  "roleLabels": {
+    "prefix": "担当:",
+    "roles": [
+      "Orchestrator",
+      "Inspector",
+      "Builder",
+      "Designer",
+      "DataKeeper",
+      "Marketer",
+      "Strategist",
+      "Editor"
+    ],
+    "ownerActionLabel": "担当:オーナー作業",
+    "ownerActionKeywords": [
+      "片桐",
+      "オーナー"
+    ]
+  }
 }

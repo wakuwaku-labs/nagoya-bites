@@ -28,7 +28,7 @@ Linear課題を指定されたら、[初心者向けLinearガイド](docs/linear
 6. **ゴールと達成条件を書く** — 終了時に第三者が確認できる受け入れ条件を記載する。
 7. **30分以上の作業はsub-issueへ分割する** — 親Issueには全体ゴールを置き、独立して完了確認できる作業単位を子Issueにする。
 
-作成前に7項目を検査し、不明な担当者・期限・Projectを推測で埋めない。担当者と期限は `data/linear_issue_defaults.json` の既定値（担当＝オーナー、期限＝起票日＋優先度別日数）で補ってよい。これは設定済みの値であり推測ではない。Projectはすべて `projectName`（Nagoya Bites）。KRはラベルで表し、同ファイルの `krLabelRules`（category のキーワード規則・判定器 `scripts/lib/linear_project_map.js`）で付ける（オーナーに質問して作業を止めない・`docs/decisions/0003`）。質問できないCIでは不完全なIssueを作らず、課題IDを保留キューに残して不足項目をログへ出す。既存Issueを更新するだけの同期はこの新規作成ゲートの対象外。
+作成前に7項目を検査し、不明な担当者・期限・Projectを推測で埋めない。担当者と期限は `data/linear_issue_defaults.json` の既定値（担当＝オーナー、期限＝起票日＋優先度別日数）で補ってよい。これは設定済みの値であり推測ではない。Projectはすべて `projectName`（Nagoya Bites）。KRはラベルで表し、同ファイルの `krLabelRules`（category のキーワード規則・判定器 `scripts/lib/linear_project_map.js`）で付ける（オーナーに質問して作業を止めない・`docs/decisions/0003`）。AIエージェントの役割（Builder・Editor 等）は Linear の担当者ではなく `担当:<役割>` ラベルで表し、backlog の `owner` から同ファイルの `roleLabels` で付ける（オーナー本人の操作が要る課題は `担当:オーナー作業`・`docs/decisions/0005`）。質問できないCIでは不完全なIssueを作らず、課題IDを保留キューに残して不足項目をログへ出す。既存Issueを更新するだけの同期はこの新規作成ゲートの対象外。
 
 ## 自動で回す運用（指示を待たない・2026-10-06）
 

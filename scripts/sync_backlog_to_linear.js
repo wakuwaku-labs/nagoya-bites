@@ -10,7 +10,7 @@ const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { parseBacklog } = require('./next_task');
-const { krLabelForCategory } = require('./lib/linear_project_map');
+const { krLabelForCategory, roleLabelsForOwner } = require('./lib/linear_project_map');
 
 const ROOT = path.resolve(__dirname, '..');
 const BACKLOG = path.join(ROOT, 'agent-backlog.md');
@@ -53,6 +53,7 @@ function withCreateDefaults(task, defaults = {}, today = new Date().toISOString(
   return {
     ...task,
     krLabel: krLabelForCategory(task.category, defaults),
+    roleLabels: roleLabelsForOwner(task.owner, defaults),
     assignee: task.assignee || defaults.assigneeName || null,
     dueDate: task.dueDate || (Number.isInteger(days) && days >= 0 ? addDays(today, days) : null),
     project: task.project || defaults.projectName || null,
@@ -190,7 +191,7 @@ function main() {
     if (item.description) args.push('--description', item.description);
     if (item.action === 'create') {
       args.push('--assignee', item.task.assignee, '--due-date', item.task.dueDate, '--project', item.task.project);
-      if (item.task.krLabel) args.push('--label', item.task.krLabel);
+      for (const label of [item.task.krLabel, ...(item.task.roleLabels || [])].filter(Boolean)) args.push('--label', label);
     }
     const run = spawnSync('orca', args, { encoding: 'utf8', maxBuffer: 2 * 1024 * 1024 });
     let result;
