@@ -1450,8 +1450,43 @@ async function main() {
     }
   }
 
+  // ─── ISSUE-132: 同じ店の重複レコードを1枚に統合 ─────
+  // 手動キュレーション店（エリア＝名古屋市◯◯区）と Hot Pepper 由来店（エリア＝名駅 等）は
+  // 上の突合キー（ホットペッパーID／店名＋エリア）では同一店と判定できず、同じ店が2枚の
+  // カードで並ぶ（片方だけ食べログURLを持つ等）。placeId が確定するこの位置で、
+  // 検証できる事実だけ（店名完全一致 / placeId一致＋namesMatch、区・placeId・HotPepperID の
+  // 食い違いが無いこと）で同一と確認できた組だけを統合する。確認できない組は残す（取り繕わない）。
+  // 判定と統合は scripts/lib/store_dedup.js の1本（tests/store_dedup.test.js）。
+  // 消えるカードの stores/<slug>.html は削除しない（gen-store-pages.js の孤児検出に乗るだけ）。
+  // 統合ペアは data/store_merge_pairs.json に記録する（後日のリダイレクト等の材料）。
+  {
+    const { dedupeStores } = require('./scripts/lib/store_dedup');
+    let slugOf = () => '';
+    try { slugOf = require('./gen-store-pages.js').toSlug; } catch (_) { /* slug 記録なしで継続 */ }
+    const dd = dedupeStores(stores, { slugOf: (s) => { try { return slugOf(s) || ''; } catch (_) { return ''; } } });
+    const before = stores.length;
+    stores.length = 0;
+    stores.push(...dd.stores);
+    const absorbedCount = before - stores.length;
+    console.log(`重複統合（ISSUE-132）: ${dd.merged.length}組を統合（${absorbedCount}件を吸収） / 同一と確認できず残した組: ${dd.skipped.length}`);
+    // キー無しビルド（Hot Pepper 未取得）では店舗集合が縮小しているため記録を上書きしない
+    if (hpShops.length > 0) {
+      const mergePairsPath = path.join(__dirname, 'data', 'store_merge_pairs.json');
+      fs.writeFileSync(mergePairsPath, JSON.stringify({
+        _note: 'ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない',
+        mergedCount: dd.merged.length,
+        absorbedCount,
+        skippedCount: dd.skipped.length,
+        merged: dd.merged,
+        skipped: dd.skipped,
+      }, null, 2) + '\n', 'utf8');
+    } else {
+      console.log('  Hot Pepper 未取得のため data/store_merge_pairs.json は更新しません');
+    }
+  }
+
   // トレンドスコア算出
-  const newHpIds = new Set(newStores.map(s => s['ホットペッパーID']).filter(Boolean));
+  const newHpIds =new Set(newStores.map(s => s['ホットペッパーID']).filter(Boolean));
   let trendHot = 0, trendRising = 0, trendWarm = 0;
   for (const s of stores) {
     const isNew = newHpIds.has(s['ホットペッパーID']);
