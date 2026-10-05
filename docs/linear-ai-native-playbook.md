@@ -87,11 +87,11 @@
 | 振り返って | 区切りの最終チェックと同時に行う（未実行の回収・HANDOFF とメモリ・3回目の手作業のスクリプト化） |
 | この判断を残して | 今後を縛る選択をしたら、Claude が `docs/decisions/` に記録する |
 
-まだ人の判断が要るもの: Linear の Project（＝KR）を作ること。Project ができるまで、Linear への新規作成は保留されて backlog に残る。
+Project（＝KR）は 2026-10-06 に4つ作成済み。課題は category の規則で自動的に割り振る（`docs/decisions/0002-linear-projects-as-krs.md`）。KR を変えることだけはオーナーの判断。
 
 ## 4. 導入ロードマップ（推奨順）
 
-1. **KR を Linear Project にする（オーナー判断が必要）**
+1. ~~KR を Linear Project にする~~ → 2026-10-06 完了（ADR 0002）。以下は当時の叩き台
    動画の⑦。同時に、保留中だった「自動起票の Project 既定値」も決まる。
    叩き台（測れるデータで書く・既存の計測と対応させる）:
    - 検索から見つけてもらう … GSC の discovery クエリのクリック（`scripts/gsc_query_intent.js`）

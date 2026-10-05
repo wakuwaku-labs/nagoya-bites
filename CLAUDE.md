@@ -28,7 +28,7 @@ Linear課題を指定されたら、[初心者向けLinearガイド](docs/linear
 6. **ゴールと達成条件を書く** — 終了時に第三者が確認できる受け入れ条件を記載する。
 7. **30分以上の作業はsub-issueへ分割する** — 親Issueには全体ゴールを置き、独立して完了確認できる作業単位を子Issueにする。
 
-作成前に7項目を検査し、不明な担当者・期限・Projectを推測で埋めない。担当者と期限は `data/linear_issue_defaults.json` の既定値（担当＝オーナー、期限＝起票日＋優先度別日数）で補ってよい。これは設定済みの値であり推測ではない。Projectは同ファイルの `projectByCategory` / `projectName` に設定がある場合だけ使い、無ければbacklogに起票してLinearへの新規作成を保留する（オーナーに質問して作業を止めない）。質問できないCIでは不完全なIssueを作らず、課題IDを保留キューに残して不足項目をログへ出す。既存Issueを更新するだけの同期はこの新規作成ゲートの対象外。
+作成前に7項目を検査し、不明な担当者・期限・Projectを推測で埋めない。担当者と期限は `data/linear_issue_defaults.json` の既定値（担当＝オーナー、期限＝起票日＋優先度別日数）で補ってよい。これは設定済みの値であり推測ではない。Projectは同ファイルの `projectRules`（category のキーワード規則・判定器 `scripts/lib/linear_project_map.js`）で決め、どれにも当たらなければ受け皿の `projectName` に入れる（オーナーに質問して作業を止めない）。質問できないCIでは不完全なIssueを作らず、課題IDを保留キューに残して不足項目をログへ出す。既存Issueを更新するだけの同期はこの新規作成ゲートの対象外。
 
 ## 自動で回す運用（指示を待たない・2026-10-06）
 
@@ -424,6 +424,7 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `scripts/check_feature_roster_health.js` | 特集ロスターの**生存確認の唯一の情報源**。判定は検証できる事実だけ（`data/feature_roster_health.json` の実在と `last_run.date` の鮮度）で行い自己申告値を見ない（制約10）。月次カデンスのため数日の遅延は異常としない（許容既定40日・オオカミ少年化させない）。`node scripts/check_feature_roster_health.js`（`.github/workflows/feature-roster-watchdog.yml` が日次実行） |
 | `.github/workflows/feature-roster-watchdog.yml` | **特集ロスターのサーバ側生存監視**（毎日15:00 JST）。心拍が40日以上更新されていなければ GitHub Issue を起票（＝オーナーにメール）、復旧で自動クローズ。**ローカル故障モードから独立**（build.yml 自体の継続失敗を検知する側なので、build.yml 内のステップとしては置かない） |
 | `scripts/session_briefing.js` | **セッション開始時の自動ブリーフィング**（2026-10-06）。`.claude/settings.json` の SessionStart フックが毎回実行する。内容は、Linear の期限切れ・期限間近・緊急未着手・放置・進行中、HANDOFF の次の一手、未解決の GitHub 警報 Issue。判定は Linear の事実だけで行う（制約10）。取得失敗は理由つきで表示し、セッションは止めない。閾値の正本は `data/session_briefing_policy.json`（Orchestrator管轄） |
+| `scripts/assign_linear_projects.js` | Project 未設定の未完了 Linear Issue に、category の規則で Project を付ける（既に付いているものは上書きしない）。`--apply` で反映・既定 dry-run。セッションブリーフィングの「未設定: Project」が増えたら実行する（Orchestrator管轄） |
 | `docs/decisions/` | **判断の記録（ADR）**。今後を縛る選択（閾値・既定値・構成・運用ルール・やらないと決めたこと）を、Claude が指示を待たずに残す。書式は同ディレクトリの README |
 | `data/solve_next_policy.json` | `/solve-next` の**消化ポリシーの唯一の情報源**（1日の消化件数 `dailyQuota` / 滞留による優先度繰り上げ / クローズ扱いの status / オーナー本人待ちの除外）。`.claude/commands/*.md` は自己改変ブロックで編集できないため、挙動の変更はこのファイルで行う（`journal_gate_policy.json` と同じ設計）。判定器は `scripts/next_task.js`（Orchestrator管轄） |
 | `scripts/next_task.js` | **次に解く課題の決定的な選定器**。`agent-backlog.md` の priority / status / detected という**検証できる事実だけ**で順番を決める（制約10）。`node scripts/next_task.js` で本日の担当分、`--all` で列全体、`--check` で列の健全性（CI向け・警告あれば exit 1）。滞留日数で実効優先度を1段だけ繰り上げ（P0へは決して昇格させない）、**オーナー本人にしか進められない課題は選ばず別枠表示**する（Orchestrator管轄・2026-08-16） |

@@ -28,7 +28,7 @@ test('issue creation rejects missing metadata and impossible calendar dates', ()
 
 test('create defaults fill assignee and due date but never guess a project', () => {
   const { withCreateDefaults } = require('../scripts/sync_backlog_to_linear');
-  const defaults = { assigneeName: 'me', dueDateDaysByPriority: { P0: 1, P1: 7, P2: 14, P3: 30 }, projectByCategory: { SEO: '検索から見つけてもらう' }, projectName: null };
+  const defaults = { assigneeName: 'me', dueDateDaysByPriority: { P0: 1, P1: 7, P2: 14, P3: 30 }, projectRules: [{ project: '検索から見つけてもらう', keywords: ['seo'] }], projectName: null };
 
   const seo = withCreateDefaults({ priority: 'P1', category: 'SEO' }, defaults, '2026-10-06');
   assert.equal(seo.assignee, 'me');

@@ -232,7 +232,14 @@
 
 ### [ISSUE-134] Linear の Project（KR）を作成して新規 Issue の自動作成を開通する
 
-- **priority**: P1 → **status**: ready（オーナー本人待ち）
+- **priority**: P1 → **status**: done
+- **2026-10-06 完了**:
+  - オーナー承認のうえ、Linear 画面から Project を4つ作成した（検索から見つけてもらう／毎日の編集を止めない／実在と信頼を守る／運用を自動で回す）。既存の「Nagoya Bites」は受け皿に使う。
+  - category→Project の規則を `data/linear_issue_defaults.json` の `projectRules` に置き、判定器を `scripts/lib/linear_project_map.js` にした。
+  - 既存の未完了33件を `scripts/assign_linear_projects.js --apply` で紐づけ、読み戻しで残0件を確認した。
+  - 新規の backlog 同期は dry-run で `missingFields` が空になることを確認した。
+  - 夜間QA用の `projectId` は Nagoya Bites に設定した。
+  - 経緯は `docs/decisions/0002-linear-projects-as-krs.md`。
 - **detected**: 2026-10-06
 - **category**: ops
 - **owner**: Orchestrator（実操作はオーナー本人）

@@ -1,8 +1,29 @@
 {
-  "version": 2,
-  "projectId": null,
-  "projectName": null,
-  "projectByCategory": {},
+  "version": 3,
+  "projectId": "63b9bbd1-793a-4ed3-9cd9-99e2854da8be",
+  "projectName": "Nagoya Bites",
+  "projectRules": [
+    {
+      "project": "実在と信頼を守る",
+      "projectId": "c7ecc5b2-e1fc-4f14-b06d-df1f7f112c22",
+      "keywords": ["trust", "信頼", "data-quality", "data quality", "data-integrity", "integrity", "liveness", "架空店", "写真", "photo", "データ健全性", "データ", "data"]
+    },
+    {
+      "project": "運用を自動で回す",
+      "projectId": "70e03b1b-e015-48a8-aab9-856c89aac435",
+      "keywords": ["ops", "ci", "監視", "monitoring", "自動化", "automation", "インフラ", "infrastructure", "reliability", "可用性", "pipeline", "パイプライン", "qa", "security", "tooling", "組織", "notion"]
+    },
+    {
+      "project": "毎日の編集を止めない",
+      "projectId": "7a0ff0cf-1b42-450e-a1e0-552cf28da319",
+      "keywords": ["journal", "ジャーナル", "editorial", "編集", "content", "コンテンツ"]
+    },
+    {
+      "project": "検索から見つけてもらう",
+      "projectId": "9d1c9b96-9d25-4192-a103-c6bc87db36bd",
+      "keywords": ["seo", "検索", "sns", "ux", "a11y", "design", "cvr", "analytics", "計測", "performance", "visual", "表示"]
+    }
+  ],
   "assigneeId": "114d348a-8955-4f45-8247-56e56a34fa34",
   "assigneeName": "me",
   "dueDateDaysByPriority": {
@@ -11,5 +32,5 @@
     "P2": 14,
     "P3": 30
   },
-  "notes": "新規Issueの既定値。backlog項目に assignee/due/project が無いとき sync_backlog_to_linear.js がここから補う（due＝起票日＋優先度ごとの日数）。Projectは推測しない: projectByCategory（backlogのcategory→Project名）→ projectName の順に引き、どちらも未設定なら新規作成を保留する。夜間QAは projectId（UUID）を使う。判断の経緯は docs/decisions/0001-linear-autonomous-operation.md"
+  "notes": "新規Issueの既定値。backlog項目に assignee/due/project が無いとき sync_backlog_to_linear.js がここから補う（due＝起票日＋優先度ごとの日数）。Projectは projectRules を上から評価（category の先頭語→全体の順、キーワード部分一致・大文字小文字無視）し、どれにも当たらなければ projectName（全体の受け皿）。夜間QAは projectId（=Nagoya Bites）を使う。判断の経緯は docs/decisions/0001・0002"
 }

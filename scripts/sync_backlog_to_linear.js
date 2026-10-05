@@ -10,6 +10,7 @@ const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { parseBacklog } = require('./next_task');
+const { projectForCategory } = require('./lib/linear_project_map');
 
 const ROOT = path.resolve(__dirname, '..');
 const BACKLOG = path.join(ROOT, 'agent-backlog.md');
@@ -45,14 +46,11 @@ function addDays(isoDate, days) {
 /**
  * Fill missing create fields from data/linear_issue_defaults.json.
  * Explicit backlog values always win. Project is never guessed: it comes only
- * from the configured category map or the configured default project name.
+ * from the configured category rules (projectRules) or the default projectName.
  */
 function withCreateDefaults(task, defaults = {}, today = new Date().toISOString().slice(0, 10)) {
   const days = defaults.dueDateDaysByPriority?.[task.priority || 'P2'];
-  const project = task.project
-    || (task.category && defaults.projectByCategory?.[task.category])
-    || defaults.projectName
-    || null;
+  const project = task.project || projectForCategory(task.category, defaults);
   return {
     ...task,
     assignee: task.assignee || defaults.assigneeName || null,
