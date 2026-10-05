@@ -44,6 +44,8 @@ Linear Issue作成時に画像で示された7つの品質ルールをCLAUDE.md�
 
 - 2026-10-06 担当の件でオーナーが「3=AIエージェントを担当に」を選択し、エージェント選択は自動応答でCyrus（Claude Code）。Linearではエージェントは担当者ではなく委任先になる。接続済み0件。Cyrusはアカウント作成・Linear OAuth・GitHubアプリ導入・Claude認証が必要で全てオーナー操作。手順はdocs/linear-ai-native-playbook.md §4-6。接続後にdefaultsとassign_linear_projects.jsへ委任先を追加する。
 
+- 2026-10-06 ISSUE-135(P-62)完了: linear-watchdog.yml（毎朝8:00 JST・期限切れ/緊急未着手/14日放置→Issue、解消で自動クローズ、月曜に週次振り返りIssue）。PR #352、実キーで手動実行成功・#353振り返り起票、P-62をDoneへ同期。残りはオーナー操作のみ（Cyrus接続・空KR Project4つ削除）。
+
 # 試したが駄目だったこと
 - この実行環境にLinear専用MCPコネクタは見当たらない。Orca CLIの接続で移行・運用できる。
 - NotionのAI検索と複数データソースクエリは現プランで利用不可。課題DBの単一データソースqueryと通常の検索/fetchは利用可能。
