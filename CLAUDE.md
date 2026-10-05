@@ -14,6 +14,8 @@
 3. ユーザーの意図を分類し、実行モードを選ぶ
 ```
 
+Linear課題を指定されたら、[初心者向けLinearガイド](docs/linear-beginner-guide.md)に沿ってLinear Issueとbacklog仕様を照合してから進める。同期運用の詳細は `docs/linear-task-workflow.md` を参照。
+
 ---
 
 ## プロジェクト概要
