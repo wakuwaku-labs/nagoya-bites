@@ -14,7 +14,7 @@
 3. ユーザーの意図を分類し、実行モードを選ぶ
 ```
 
-Linear課題を指定されたら、[初心者向けLinearガイド](docs/linear-beginner-guide.md)に沿ってLinear Issueとbacklog仕様を照合してから進める。同期運用の詳細は `docs/linear-task-workflow.md` を参照。
+Linear課題を指定されたら、[初心者向けLinearガイド](docs/linear-beginner-guide.md)に沿ってLinear Issueとbacklog仕様を照合してから進める。同期運用の詳細は `docs/linear-task-workflow.md` を参照。運用の型と今後の導入順は `docs/linear-ai-native-playbook.md` を参照。
 
 ## Linear Issue品質ルール（全起票経路で必須）
 

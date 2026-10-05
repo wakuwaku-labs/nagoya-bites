@@ -37,6 +37,7 @@ Linear Issue作成時に画像で示された7つの品質ルールをCLAUDE.md�
 - 最終確認で `npm test` 249件成功、`git diff --check` 成功。主な変更コミットは `d3b79f84c9`、引き継ぎ更新は `01be4fd339` と `19bd7d9548`。作業ブランチへ最新 `origin/main` をマージ済み。
 
 # 次にやること
+- 2026-10-06 YouTube（ClaudeをLinearに住まわせる）の要点を `docs/linear-ai-native-playbook.md` に整理済み。推奨順: ①KRをLinear Projectにする（オーナー判断・自動起票のProject既定値もこれで決まる）②夜間Linear健康診断（14日放置/Urgent未着手/期限切れ→GitHub Issue通知）③おはよう・振り返り手順のdocs化 ④ADR置き場 ⑤着手可能ラベルでAI自動着手。
 - 自動起票のProject・期限の既定値を決め、CIと同期スクリプトへ反映する。
 - 初心者向けガイドを起点に、Linear課題IDを伝えて作業を依頼する。必要なら候補課題の担当をLinearで割り当てる。
 
@@ -63,6 +64,7 @@ Linear Issue作成時に画像で示された7つの品質ルールをCLAUDE.md�
 - 既存backlogは選定器と詳細仕様の正本として使われる。Linearを唯一の進捗管理先にしつつ、双方向二重更新を避ける片方向連携を設計する。
 
 # 関連ファイル
+- `docs/linear-ai-native-playbook.md`
 - `docs/linear-beginner-guide.md`
 - `agent-backlog.md`
 - `scripts/next_task.js`

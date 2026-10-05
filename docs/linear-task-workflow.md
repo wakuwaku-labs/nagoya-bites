@@ -1,6 +1,6 @@
 # Linear課題管理の運用
 
-初めて使う場合は、先に[Linearはじめてガイド](linear-beginner-guide.md)を読む。日々の作業はLinear上の課題を指定して依頼できる。同期スクリプトの実行は通常不要。
+初めて使う場合は、先に[Linearはじめてガイド](linear-beginner-guide.md)を読む。運用の型（会話からの起票・夜間スキャン・おはよう／振り返り・KRとProject）は[Linear × Claude 運用プレイブック](linear-ai-native-playbook.md)にまとめている。日々の作業はLinear上の課題を指定して依頼できる。同期スクリプトの実行は通常不要。
 
 ## 移行方針
 
