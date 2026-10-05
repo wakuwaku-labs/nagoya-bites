@@ -199,13 +199,27 @@ test('店名の部分一致が引き続き最上位に来る', () => {
     if (!r.slice(0, 3).some((x) => x['店名'] === name)) misses.push(name);
   }
   assert.ok(checked >= 20, `検証できた店名が少なすぎる: ${checked}`);
-  // 先頭40件はビルドごとの並び（重複統合 ISSUE-132 等）で入れ替わる。店名にエリア語（名駅 等）を
-  // 含む店は、エリア語の一致が店名一致より上に来て上位3件を外すことがある（検索エンジンの既知の
-  // 弱点・別課題）。1店の入れ替わりでビルド全体が落ちないよう、9割以上が上位3件に出ることを要求する。
-  assert.ok(
-    misses.length <= Math.floor(checked * 0.1),
-    `店名検索で自店が上位3件に出ない店が多すぎる(${misses.length}/${checked}): ${misses.join(' / ')}`
-  );
+  // 全件（40/40）が上位3件に出ること。店名にエリア語（名駅 等）を含む店も対象（ISSUE-138）。
+  assert.deepStrictEqual(misses, [], `店名検索で自店が上位3件に出ない店がある(${misses.length}/${checked}): ${misses.join(' / ')}`);
+});
+
+test('店名にエリア語を含む店は、店名（読み仮名・括弧抜き）でも上位3件に出る', () => {
+  const areaRe = /名駅|栄|金山|大須|伏見|錦|矢場町|今池|千種|星ヶ丘|藤が丘|上前津|丸の内|久屋|那古野/;
+  const strip = (n) => n.replace(/\s*[(（].*?[)）]\s*/g, ' ').trim();
+  const pool = STORES.filter((s) => areaRe.test(s['店名'] || '') && (s['店名'] || '').length >= 5);
+  assert.ok(pool.length >= 100, `対象店が少なすぎる: ${pool.length}`);
+  const misses = [];
+  for (const s of pool) {
+    for (const q of [s['店名'], strip(s['店名'])]) {
+      const r = search(q, 3);
+      if (!r.length) continue;
+      if (!r.some((x) => x['店名'] === s['店名'])) misses.push(q);
+    }
+  }
+  assert.deepStrictEqual(misses, [], `上位3件に出ない: ${misses.slice(0, 10).join(' / ')}`);
+  // エリア語だけの検索はエリア内の店を返し続ける
+  const top = search('名駅', 10);
+  assert.ok(top.length === 10 && top.every((s) => /名駅|名古屋駅|那古野|中村区/.test(areaText(s) + s['店名'])));
 });
 
 // ── 0件回避とフォールバック ───────────────────────────
