@@ -284,3 +284,35 @@ test('全店舗のインデックス構築が例外なく通る', () => {
     assert.ok(Number.isFinite(x.cap));
   }
 });
+
+// ── 長音符の正規化（ISSUE-119）────────────────────────
+test('長音符「ー」は記号として落とさず、語が縮まない', () => {
+  assert.strictEqual(engine.nbNorm('バー'), 'ばー');
+  assert.strictEqual(engine.nbNorm('ビール'), 'びーる');
+  assert.strictEqual(engine.nbNorm('ラーメン'), 'らーめん');
+  // ハイフン類は従来どおり除去する
+  assert.strictEqual(engine.nbNorm('a-b－c—d'), 'abcd');
+});
+
+test('「ビール」の上位にビル名だけの店が来ない', () => {
+  for (const s of search('ビール', 5)) {
+    assert.ok(/ビール|ビア|ブリュ|酒|beer/i.test(s['店名'] + s['ジャンル'] + (s['タグ'] || '')),
+      `ビール検索にビル名がヒット: ${s['店名']}`);
+  }
+});
+
+test('「バー」の上位がバー業態、「ラーメン」の上位がラーメン店', () => {
+  for (const s of search('バー', 5)) {
+    assert.ok(/バー|bar/i.test(s['店名'] + s['ジャンル']), `バー検索の上位がバーでない: ${s['店名']}`);
+  }
+  for (const s of search('ラーメン', 5)) {
+    assert.ok(/ラーメン|らーめん|麺/.test(s['店名'] + s['ジャンル']), `ラーメン検索の上位が違う: ${s['店名']}`);
+  }
+});
+
+test('「しば福や」は店名一致の店だけに絞られ、店名一致ボーナス（ISSUE-138）も保たれる', () => {
+  const r = search('しば福や');
+  assert.ok(r.length <= 10, `無関係な店が混ざる: ${r.length}件`);
+  assert.ok(r.slice(0, 3).every((s) => /しば福や/.test(s['店名'])));
+  assert.ok(/しば福や/.test(search('那古野 しば福や 名駅店', 1)[0]['店名']));
+});
