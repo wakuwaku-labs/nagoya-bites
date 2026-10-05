@@ -255,9 +255,21 @@
   3. `node scripts/sync_backlog_to_linear.js` の dry-run で、新規分の `missingFields` が空になる。
   4. 既存の未完了 Issue（37件）を Project に紐づける。セッションブリーフィングの「未設定: Project」が 0 になる。
 
-### [ISSUE-136] Cyrus を Linear に接続し、AI を委任先にできるようにする
+### [ISSUE-137] Linear の空になった KR 別 Project 4つを削除する
 
 - **priority**: P3 → **status**: blocked
+- **detected**: 2026-10-06
+- **category**: ops
+- **owner**: 片桐（Linear 画面での削除。自動操作では削除が止められた）
+- **source**: ADR 0003 で課題をすべて Nagoya Bites に戻した結果、KR 別 Project が空になった。オーナーは削除を承認済み
+- **acceptance**:
+  1. Linear の Projects から「検索から見つけてもらう」「毎日の編集を止めない」「実在と信頼を守る」「運用を自動で回す」の4つを削除する（各 Project の「…」→ Delete）
+  2. `orca linear project list --workspace all` で Nagoya Bites だけが残ることを確認する
+
+### [ISSUE-136] Cyrus を Linear に接続し、AI を委任先にできるようにする
+
+- **priority**: P3 → **status**: wont_fix
+- **2026-10-06 見送り**: オーナーが「A（今のまま課題IDを Claude Code に伝える）」を選択。理由と見直す条件は `docs/decisions/0004-no-linear-agent-for-now.md`。付記の KR 別 Project 削除は ISSUE-137 へ分離
 - **detected**: 2026-10-06
 - **category**: ops
 - **owner**: 片桐（接続はオーナー本人の操作。接続後の設定は Orchestrator）
