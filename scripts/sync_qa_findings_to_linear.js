@@ -38,13 +38,16 @@ async function main() {
   const qa = JSON.parse(fs.readFileSync(findingsPath, 'utf8'));
   const pending = fs.existsSync(pendingPath) ? JSON.parse(fs.readFileSync(pendingPath, 'utf8')) : [];
   const ids = [...new Set([...pending, ...(qa.created || [])])];
-  if (!ids.length) {
-    console.log('No new QA findings to create in Linear.');
-    return;
-  }
   if (!process.env.LINEAR_API_KEY) {
-    fs.writeFileSync(pendingPath, `${JSON.stringify(ids, null, 2)}\n`);
-    throw new Error('New QA findings are saved for retry, but the LINEAR_API_KEY GitHub Actions secret is not configured.');
+    if (ids.length) fs.writeFileSync(pendingPath, `${JSON.stringify(ids, null, 2)}\n`);
+    throw new Error('The LINEAR_API_KEY GitHub Actions secret is not configured.');
+  }
+
+  // Validate the configured secret even on runs with no findings, without logging it.
+  await gql('query VerifyLinearAuth { viewer { id } }', {});
+  if (!ids.length) {
+    console.log('Linear API authentication succeeded; no new QA findings to create.');
+    return;
   }
 
   const markdown = fs.readFileSync(backlogPath, 'utf8');

@@ -27,7 +27,7 @@ Nagoya Bitesの課題管理をNotionからLinearへ移行し、Linearを唯一�
 - ユーザーがNotionからLinearへの全件移行を明示した。対象は会話文脈上、Notionの課題トラッカーとそれを維持する運用経路。
 
 # 次にやること
-- GitHub Actions secret `LINEAR_API_KEY` を利用者が安全に登録し、workflow_dispatchで一度実行して自動同期を確認する。
+- API認証確認を含む最新workflowを再実行し、PR経由でmainへ合流する。
 
 # 試したが駄目だったこと
 - この実行環境にLinear専用MCPコネクタは見当たらない。Orca CLIの接続で移行・運用できる。
@@ -40,10 +40,11 @@ Nagoya Bitesの課題管理をNotionからLinearへ移行し、Linearを唯一�
 - Notionの課題トラッカーを削除・アーカイブするのは、Linear側の全件照合と運用切替が完了してからにする。元データを先に消さない。
 - 元課題IDはLinearのタイトル/説明に残す。Notion 48件には同一ID重複が確認されているため、Linear内で衝突を隠さずNotion URLも移行記録に含める。
 - LinearにBlocked状態はない。元Blockedの2件はTodoにマップし、blockerの詳細とNotion状態は説明文に保持した。
-- CIからLinearへの書き込み認証は設定していない。Linear同期はOrca CLIが使えるローカル環境で実行する。
-- 夜間QA→LinearのGitHub Actions同期スクリプトとworkflow接続を実装。未同期IDは `data/linear_sync_pending.json` に保持し、認証追加後の再試行に備える。secret登録と実workflow確認は未完了。
+- 夜間QA→LinearのGitHub Actions同期スクリプトとworkflow接続を実装。未同期IDは `data/linear_sync_pending.json` に保持し、再実行時に再試行する。
+- 利用者が `LINEAR_API_KEY` をGitHub Actions secretに登録済み。実装ブランチでworkflowを実行し、Linear API同期stepは成功した（このrunは新規課題0件のため、キー認証までは確認していない。認証検証を追加した最新コードを再実行する）。
 - CIからLinearへ直接書き込む場合は、Linear APIキーをGitHub Actions secretとして利用者が登録する。認証情報を会話やログに出さない。
-- テストスイートは実行していない。Linear Dry-runは0差分、チーム一覧は60件で非truncated、移行元48件・新規8件・Duplicateの4関係を読み戻して確認した。
+- `npm test`: 228件成功。`node --check scripts/sync_qa_findings_to_linear.js` と `git diff --check` も成功。
+- Nightly QA workflowは既存QAハード失敗で赤くなる（Linear同期step成功とは別の失敗）。
 - 既存backlogは選定器と詳細仕様の正本として使われる。Linearを唯一の進捗管理先にしつつ、双方向二重更新を避ける片方向連携を設計する。
 
 # 関連ファイル
