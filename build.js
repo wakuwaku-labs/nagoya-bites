@@ -13,6 +13,7 @@ const https = require('https');
 const fs   = require('fs');
 const path = require('path');
 const { hasVerifiableSource } = require('./scripts/lib/trending_source_gate');
+const { isDeadPhotoUrl } = require('./scripts/lib/dead_photo_urls');
 
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/1VUk4bRTPoIc7pHywzIJTwZr9WyUX7ioxlZzbxQHsjCQ/export?format=csv&gid=415662614';
 const HTML    = path.join(__dirname, 'index.html');
@@ -590,6 +591,9 @@ function normalizePhotoUrl(url) {
   const u = String(url || '').trim();
   if (!u) return '';
   if (/imgfp\.hotp\.jp\/.*noimage/i.test(u)) return '';
+  // CDN側で配信終了が確定した写真（data/dead_photo_urls.json・ISSUE-124）は写真なし扱い。
+  // 毎日の API 再取得で壊れたURLが蘇らないようにする台帳照合。
+  if (isDeadPhotoUrl(u)) return '';
   return u.replace(/(imgfp\.hotp\.jp\/.+?)_(?:58|100|168|238|320)\.jpg/, '$1_480.jpg');
 }
 
