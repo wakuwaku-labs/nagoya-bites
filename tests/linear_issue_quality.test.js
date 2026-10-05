@@ -26,24 +26,22 @@ test('issue creation rejects missing metadata and impossible calendar dates', ()
   assert.deepEqual(missingCreateFields({ assignee: null, dueDate: null, project: null }), ['assignee', 'dueDate', 'project']);
 });
 
-test('create defaults fill assignee and due date but never guess a project', () => {
+test('create defaults fill assignee, due date, the single project and a KR label', () => {
   const { withCreateDefaults } = require('../scripts/sync_backlog_to_linear');
-  const defaults = { assigneeName: 'me', dueDateDaysByPriority: { P0: 1, P1: 7, P2: 14, P3: 30 }, projectRules: [{ project: '検索から見つけてもらう', keywords: ['seo'] }], projectName: null };
+  const defaults = { assigneeName: 'me', dueDateDaysByPriority: { P0: 1, P1: 7, P2: 14, P3: 30 }, projectName: 'Nagoya Bites', krLabelRules: [{ label: 'KR:検索', keywords: ['seo'] }] };
 
   const seo = withCreateDefaults({ priority: 'P1', category: 'SEO' }, defaults, '2026-10-06');
-  assert.equal(seo.assignee, 'me');
-  assert.equal(seo.dueDate, '2026-10-13');
-  assert.equal(seo.project, '検索から見つけてもらう');
+  assert.deepEqual([seo.assignee, seo.dueDate, seo.project, seo.krLabel], ['me', '2026-10-13', 'Nagoya Bites', 'KR:検索']);
   assert.deepEqual(missingCreateFields(seo), []);
 
-  const unmapped = withCreateDefaults({ priority: 'P2', category: 'data-quality' }, defaults, '2026-12-25');
+  const unmapped = withCreateDefaults({ priority: 'P2', category: 'brand' }, defaults, '2026-12-25');
   assert.equal(unmapped.dueDate, '2027-01-08');
-  assert.deepEqual(missingCreateFields(unmapped), ['project']);
+  assert.equal(unmapped.krLabel, null);
+  assert.deepEqual(missingCreateFields(unmapped), []);
 
   const explicit = withCreateDefaults({ priority: 'P3', assignee: 'someone', dueDate: '2026-11-01', project: 'X', category: 'SEO' }, defaults, '2026-10-06');
   assert.deepEqual([explicit.assignee, explicit.dueDate, explicit.project], ['someone', '2026-11-01', 'X']);
 
-  const noPriority = withCreateDefaults({ category: 'SEO' }, defaults, '2026-10-06');
-  assert.equal(noPriority.dueDate, '2026-10-20');
+  assert.equal(withCreateDefaults({ category: 'SEO' }, defaults, '2026-10-06').dueDate, '2026-10-20');
   assert.deepEqual(missingCreateFields(withCreateDefaults({ priority: 'P1' }, {}, '2026-10-06')), ['assignee', 'dueDate', 'project']);
 });

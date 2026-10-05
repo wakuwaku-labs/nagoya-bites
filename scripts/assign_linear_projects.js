@@ -1,23 +1,26 @@
 #!/usr/bin/env node
 /**
- * Project 未設定の未完了 Linear Issue に、category の規則（data/linear_issue_defaults.json の projectRules）で
- * Project を付ける。既に Project がある Issue は触らない（人が付けた値を上書きしない）。
+ * 未完了の Linear Issue を「Project = Nagoya Bites、KR = ラベル」の構成にそろえる（docs/decisions/0003）。
+ *  - Project が未設定、または一時的に作った KR 別 Project（retiredProjects）にある Issue → Nagoya Bites へ
+ *  - KR ラベル（"KR:" で始まる）が1つも無い Issue → category の規則（krLabelRules）で KR ラベルを追加
+ * 人が付けた別の Project・既存の KR ラベルは上書きしない。ラベルは追加のみ（既存ラベルを消さない）。
  *
  *   node scripts/assign_linear_projects.js           # dry-run（書き込みなし）
- *   node scripts/assign_linear_projects.js --apply   # Linear へ反映
+ *   node scripts/assign_linear_projects.js --apply   # Linear へ反映（何度実行しても同じ結果＝冪等）
  *
  * category の出どころ: タイトル先頭の [ID] → agent-backlog.md の category。backlog に無い移行課題は
- * 説明文の「Notionカテゴリ」。どちらも無ければ受け皿（projectName）。
+ * 説明文の「Notionカテゴリ」。どちらも無ければ KR ラベルは付けない。
  */
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { parseBacklog } = require('./next_task');
-const { projectForCategory } = require('./lib/linear_project_map');
+const { krLabelForCategory, isKrLabel } = require('./lib/linear_project_map');
 
 const ROOT = path.resolve(__dirname, '..');
 const WORKSPACE = '130a2f2b-aa8e-4db1-9250-4fcadebbba1f';
 const ACTIVE = new Set(['backlog', 'unstarted', 'started']);
+const OWN_ISSUE = /^\[[A-Z]+(?:-[A-Z]+)*-\d+\]/;
 
 function orca(args) {
   const run = spawnSync('orca', args, { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
@@ -37,13 +40,20 @@ function categoryFor(issue, byId) {
 
 function plan(issues, tasks, defaults) {
   const byId = new Map(tasks.map(t => [t.id, t]));
-  return issues
-    // タイトルが [ID] で始まるもの＝このプロジェクトの課題だけ。Linear 既定のチュートリアル課題等は触らない。
-    .filter(i => ACTIVE.has(i.state?.type) && !i.project && /^\[[A-Z]+(?:-[A-Z]+)*-\d+\]/.test(i.title))
-    .map(i => {
-      const category = categoryFor(i, byId);
-      return { identifier: i.identifier, title: i.title, category, project: projectForCategory(category, defaults) };
-    });
+  const retired = new Set(defaults.retiredProjects || []);
+  const items = [];
+  // タイトルが [ID] で始まるもの＝このプロジェクトの課題だけ。Linear 既定のチュートリアル課題等は触らない。
+  for (const issue of issues.filter(i => ACTIVE.has(i.state?.type) && OWN_ISSUE.test(i.title))) {
+    const current = issue.project?.name || null;
+    const moveProject = (!current || retired.has(current)) && current !== defaults.projectName;
+    const hasKr = (issue.labels || []).some(l => isKrLabel(l.name || l));
+    const category = categoryFor(issue, byId);
+    const krLabel = hasKr ? null : krLabelForCategory(category, defaults);
+    if (!moveProject && !krLabel) continue;
+    items.push({ identifier: issue.identifier, title: issue.title, category,
+      project: moveProject ? defaults.projectName : null, from: current, krLabel });
+  }
+  return items;
 }
 
 function main() {
@@ -53,16 +63,17 @@ function main() {
   const listed = orca(['linear', 'list-issues', '--team', 'P', '--workspace', WORKSPACE, '--json']);
   if (listed.truncated) throw new Error('Linear issue listing was truncated; refusing to assign on a partial list');
   const items = plan(listed.issues || [], tasks, defaults);
-  const summary = items.reduce((a, x) => (a[x.project || '(なし)'] = (a[x.project || '(なし)'] || 0) + 1, a), {});
-  console.log(JSON.stringify({ mode: apply ? 'apply' : 'dry-run', total: items.length, summary, items }, null, 2));
+  const labels = items.reduce((a, x) => (x.krLabel && (a[x.krLabel] = (a[x.krLabel] || 0) + 1), a), {});
+  console.log(JSON.stringify({ mode: apply ? 'apply' : 'dry-run', total: items.length,
+    moveToProject: items.filter(x => x.project).length, labels, items }, null, 2));
   if (!apply) return;
   const failed = [];
+  const once = args => { try { orca(args); } catch (_) { orca(args); } }; // 一時的な失敗は1回だけ再試行（冪等な操作のみ）
   for (const item of items) {
-    if (!item.project) continue;
-    const args = ['linear', 'save-issue', item.identifier, '--project', item.project, '--workspace', WORKSPACE, '--json'];
     try {
-      try { orca(args); } catch (_) { orca(args); } // 一時的な失敗は1回だけ再試行（同じ値の上書きなので冪等）
-      console.log(`project: ${item.identifier} → ${item.project}`);
+      if (item.project) once(['linear', 'save-issue', item.identifier, '--project', item.project, '--workspace', WORKSPACE, '--json']);
+      if (item.krLabel) once(['linear', 'label', 'add', item.identifier, '--label', item.krLabel, '--workspace', WORKSPACE, '--json']);
+      console.log(`updated: ${item.identifier}${item.project ? ` → ${item.project}` : ''}${item.krLabel ? ` + ${item.krLabel}` : ''}`);
     } catch (error) {
       failed.push(item.identifier);
       console.error(`failed: ${item.identifier} ${error.message.slice(0, 200)}`);

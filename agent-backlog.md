@@ -240,6 +240,7 @@
   - 新規の backlog 同期は dry-run で `missingFields` が空になることを確認した。
   - 夜間QA用の `projectId` は Nagoya Bites に設定した。
   - 経緯は `docs/decisions/0002-linear-projects-as-krs.md`。
+  - **同日修正**: オーナー指摘「すべて Nagoya Bites プロジェクトの中の課題」を受けて、構成を「Project＝Nagoya Bites・KR＝ラベル」に変更した（`docs/decisions/0003-single-project-kr-labels.md`）。KR ラベル4つを Linear 画面で作成し、33件を Nagoya Bites へ戻してラベルを付けた。読み戻し: 未完了38件のうち Nagoya Bites 34件（残り4件は Linear 既定のチュートリアル）。KR 別 Project 4つは空になり、削除はオーナー確認待ち。
 - **detected**: 2026-10-06
 - **category**: ops
 - **owner**: Orchestrator（実操作はオーナー本人）

@@ -30,7 +30,7 @@ orca linear search "SEO-114" --workspace all --limit 10 --json
 orca linear issue P-5 --full --json
 ```
 
-新しい課題は `agent-backlog.md` に必要な仕様を記録し、`/sync-backlog` または上記同期コマンドからLinearへ登録する。backlog項目に `**assignee**`、`**due**`、`**project**` を書けばそれを使う。無い項目は `data/linear_issue_defaults.json` から補う（担当＝`assigneeName`、期限＝起票日＋`dueDateDaysByPriority`、Project＝`projectRules`（category のキーワード規則）→ 受け皿の `projectName`）。既存 Issue に Project が無いときは `node scripts/assign_linear_projects.js --apply` で付ける。夜間QAの自動起票は `data/linear_issue_defaults.json` の `projectId`（受け皿の Nagoya Bites）へ登録し、対応台帳をコミットする。登録に失敗したIDは `data/linear_sync_pending.json` に保持して次回に再試行する。Linear上の作業開始・完了時はIssueの状態とbacklogのstatusを揃える。同期スクリプトは既存の移行説明文を保持し、移行元の本文を上書きしない。
+新しい課題は `agent-backlog.md` に必要な仕様を記録し、`/sync-backlog` または上記同期コマンドからLinearへ登録する。backlog項目に `**assignee**`、`**due**`、`**project**` を書けばそれを使う。無い項目は `data/linear_issue_defaults.json` から補う（担当＝`assigneeName`、期限＝起票日＋`dueDateDaysByPriority`、Project＝`projectName`（Nagoya Bites）。KRは `krLabelRules`（category のキーワード規則）でラベルとして付く）。既存 Issue の Project や KR ラベルが欠けたときは `node scripts/assign_linear_projects.js --apply` でそろえる。夜間QAの自動起票は `data/linear_issue_defaults.json` の `projectId`（Nagoya Bites）へ登録し、対応台帳をコミットする。登録に失敗したIDは `data/linear_sync_pending.json` に保持して次回に再試行する。Linear上の作業開始・完了時はIssueの状態とbacklogのstatusを揃える。同期スクリプトは既存の移行説明文を保持し、移行元の本文を上書きしない。
 
 ## 状態・優先度の対応
 
