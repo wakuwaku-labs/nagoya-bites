@@ -7924,3 +7924,4 @@ Notion課題トラッカーから移行したLinearが、課題の進捗・担�
 - **resolved**: 2026-09-14（誤検知・ローテーション不要）
 - **検証**: 検出箇所は `index.html` の `var NB_CALL_MAPS_KEY`（PR #224「電話する」ボタン用の Maps JavaScript API キー）。ブラウザで読み込む仕様上クライアントに置くしかない公開キーで、コード内コメントどおり HTTP リファラ制限付き。2026-09-14 にリファラ無しで Places Details Web Service を呼び、Google が `API keys with referer restrictions cannot be used with this API.`（REQUEST_DENIED）を返すことを実測で確認＝制限が効いている
 - **対応**: `.qa-secret-allowlist.txt` に**行単位**で登録。`scripts/security_audit.js` はファイル単位の除外しか持たず、`index.html` を丸ごと除外すると本物の鍵が混入しても検出できなくなるため、`パス::行の部分文字列` の書式を追加した（index.html の別の行に鍵を置くと従来どおり HARD 検出されることを確認）
+- **再発の追記（2026-10-06）**: SEO-105（PR #289）が同じ公開キー（同一変数 `NB_CALL_MAPS_KEY`）を `gen-store-pages.js` と `stores/*.html` 52件へ展開し、夜間QAが53箇所で再検出（Issue #292）。同一値・リファラ制限の検証は上記のとおりのため、`.qa-secret-allowlist.txt` に行単位（`stores/::var NB_CALL_MAPS_KEY='AIza` / `gen-store-pages.js::…`）で追加。ゲート自体は緩めていない。
