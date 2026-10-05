@@ -565,7 +565,7 @@
 
 ### [SEO-102] `scripts/refresh_journal_related.js` の TOPIC_FEATURES にジャンル重複特集（焼肉2本・バー3本）が未整理で、journal からの内部リンクが片方にしか流れない
 
-- **priority**: P3 → **status**: in_progress（acceptance①の重なり率実測は完了。②③の実装はEditorの角度確認待ち）
+- **priority**: P3 → **status**: in_progress（acceptance②③はEditorの角度確認待ち・オーナー操作は不要）
 - **detected**: 2026-09-18
 - **category**: SEO / コンテンツ整理
 - **owner**: Editor / Builder
@@ -599,6 +599,7 @@
   **示唆**: `nagoya-yakiniku`/`nagoya-yakiniku-guide` と `nagoya-bar`/`nagoya-dining-bar` は掲載店が別物のため、TOPIC_FEATURESへ差別化キーワードで両方追加してよい（acceptance②）。ただし**どのタイトル語をどちらに振り分けるか**（例: 「和牛」「炭火」等でyakiniku-guideを狙うか）は各ページの実際の切り口（`<title>`/本文の訴求軸）をEditorが確認してから決める必要があり、本チケットでは判定していない。一方 `nagoya-bar-guide` と `nagoya-dining-bar` は90%が同じ掲載店で、**新規に差別化ルールを作るのではなく統合（内部リンク集約）を検討すべき**候補として先に絞り込めた（acceptance③の対象はこの1ペアに事実上限定できる）
 
 ---
+- **2026-10-06 点検**: 待ち条件（Editor＝AIの角度確認）は未実施のまま。前提のコード（TOPIC_FEATURES の1カテゴリ1特集構造）も変化なし。次の一手: Editor が `nagoya-yakiniku-guide` / `nagoya-dining-bar` の `<title>`・h1 を読んで振り分け語を決め、`scripts/refresh_journal_related.js` のリンク上限を「最大2本」に拡張する設計と同時に実装する（SEO-046 の自動実行と衝突しないよう冪等性を確認）。`nagoya-bar-guide`/`nagoya-dining-bar`（掲載店90%一致）は統合候補（既存URLは残し内部リンク集約）。30分超のため本スイープでは未着手
 
 ### [ISSUE-128] Instagram公式埋め込みウィジェット（blockquote.instagram-media + 公式embed.js）が店舗ページで機能しない ✅ 直接iframe方式への切替で解決
 
@@ -776,7 +777,7 @@
 
 ### [ISSUE-124] HotPepper写真URL（imgfp.hotp.jp）のCDN側配信終了を検知する監査を新設。全件走査で4,926件中133件（約2.7%）が404
 
-- **priority**: P1 → **status**: in_progress（検知は実装・CI配線・全件走査まで完了／恒久修復の方針はオーナー承認待ち）
+- **priority**: P1 → **status**: in_progress（検知は稼働中・恒久修復(b)はオーナー承認待ち）
 - **detected**: 2026-09-15
 - **category**: data quality / photo
 - **owner**: Builder / DataKeeper
@@ -804,6 +805,9 @@
   - `python3 -c "import yaml; yaml.safe_load(open('.github/workflows/build.yml'))"` でYAML構文検証
 - **files**: `scripts/lib/photo_url_liveness.js`, `scripts/audit_photo_url_liveness.js`, `data/photo_url_liveness_report.json`, `.github/workflows/build.yml`
 - **関連**: [[DSN-006]]（発見の発端）
+- **2026-10-06 追跡結果**: `data/photo_url_liveness_report.json` の dead は **149件**（HotPepper 149 / Places 0・unknown 0・ok 4,816）。9/15 の133件から増加＝毎日の build.js 再取得でも直らず新規失効が積み上がっている。build.yml のステップも稼働継続。
+- **オーナー操作（承認の一言のみ）**: 「(b) 確定deadのURLを機械的にクリアして写真なしへ倒す」を実装してよいか、課題IDで返答する。承認後 `scripts/clear_dead_photo_urls.js` を新設し gen-store-pages.js 直後に配置（`scripts/clear_broken_tabelog_links.js` と同型・約30分）。フロントは `nbImgFallback` で破綻表示を緩和済みで緊急性は中
+
 ### [DSN-006] 特集記事6本のヒーロー画像（AIっぽいイメージ図/SVG）を実写に差し替え、店舗ごとの写真欠落・「編集部推薦」バッジの不整合を修正 ✅
 
 - **priority**: P1 → **status**: done
@@ -1704,7 +1708,7 @@
 
 ### [SEO-083] SNS原稿の「NotebookLM画像生成用テキスト」欄が生成器のプレースホルダのまま放置され、直近30日で22日ぶんの Instagram 画像素材が存在しない
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: ready（要オーナー確認: 中止候補）
 - **detected**: 2026-09-05
 - **category**: SEO
 - **owner**: 片桐 ← Editor + Builder（前提の変化: generate_sns_draft が false になったためaccept①「方針を決める」がオーナー判断。着手前にスコープを縮小するか close するかをオーナーに確認が必要と明記）
@@ -1720,6 +1724,7 @@
   4. どちらに倒しても、`docs/daily-posts/` の未記入率を機械検査できるようにする（欠落が再び113本ぶん積み上がる前に検知が届くこと）
   5. 効果は SNS 経由セッション（`data/search_channel_metrics.json` の SNS 行）の前後比で見る。総クリックでは指名検索と混ざるため使わない
 - **ブランドガードレール（重要）**: この欄は **NotebookLM等でAI画像を作る**ための素材である。オーナーから「ジャーナルの図解ヒーローはAIっぽくて閲覧意欲を削ぐ」というフィードバックが既に出ており（EDT-003）、CLAUDE.md 制約9 も実写優先を定める。**「埋める」に倒す場合でも、実在の料理・店舗写真の代用にしてはならない**（写真候補欄の公式Instagram embed / HotPepper 実写が優先）。この前提があるため、方針判断は Editor の編集判断（1.）を必ず先に置くこと。安易に「毎日AI画像を作る」へ倒さない
+- **2026-10-06 点検**: `data/journal_sns_draft_policy.json` は `generate_sns_draft:false` のまま、`docs/daily-posts/` の最新は 2026-09-05.md で止まり新規原稿は生成されていない。前提（生成器が毎日プレースホルダ欄を出力）が消えており、**要オーナー確認: 中止候補**。オーナー操作: 「SNS原稿の生成を再開しない」なら課題IDで中止を指示。再開するなら policy を true に戻すだけで本課題の acceptance 1〜4 が復活する。既存の未記入113本は外部運用へ移った原稿のため放置で支障なし
 
 ### [SEO-082] 検索意図の分類器が「1人飲み」（数字表記）を discovery と数えず、SEO-011 の効果指標そのものが最大流入シーンを取りこぼしている
 
@@ -2007,7 +2012,7 @@
 
 ### [ISSUE-120] 手動キュレーション店で「出典URLが実URLでない自己申告の話題スコア」と「Google評価0の偽表示」が本番カードに出ていた ✅
 
-- **priority**: P0 → **status**: partial（前半は [PR #201](https://github.com/wakuwaku-labs/nagoya-bites/pull/201) でマージ済みだが、無関係の [[ISSUE-121]]（CI ブロッカー）により本番未反映のまま数時間放置。後半（写真の必須化）は [PR #206](https://github.com/wakuwaku-labs/nagoya-bites/pull/206) でマージ待ち）
+- **priority**: P0 → **status**: done（2026-10-06 本番反映を実測確認）
 - **detected**: 2026-09-02
 - **category**: data-quality / trust
 - **owner**: Builder（実装）/ DataKeeper（対象3店の出典URL補完）
@@ -2057,6 +2062,8 @@
 - **files**: `scripts/lib/trending_source_gate.js`（新設）, `build.js`, `scripts/pick_daily_trending5.js`, `data/daily_trending5.json`
 
 ---
+- **resolved**: 2026-10-06
+- **確認結果（2026-10-06）**: [PR #201](https://github.com/wakuwaku-labs/nagoya-bites/pull/201)（2026-09-02 11:59Z）・[PR #206](https://github.com/wakuwaku-labs/nagoya-bites/pull/206)（同 13:56Z）とも MERGED。本番 `https://nagoya-bites.com/data/stores.json`（4,968店）を直接取得して検証: 「焼肉ここから 名駅3丁目店」は `話題フラグ:false`・`編集部推薦:false`、「焼きそばスタンド らふ」は HotPepper 側と統合され Google評価4.4・写真あり。本番 `data/daily_trending5.json`（2026-10-05）に3店とも不在。写真なし店は全4,968店中3店のみ。「Google評価0の偽表示」「非URL出典の話題スコア」とも本番で再現しない
 
 ### [SEO-080] 週次レポートの5本に1〜2本が Gmail の「ゴミ箱」に入っており、週次triageの取得クエリは構造的にそれを 0件 として見逃す（見逃しても誰にも届かない）
 
@@ -2121,7 +2128,7 @@
 
 ### [ISSUE-119] 検索の正規化が長音符「ー」を記号として落とし、'バー'→'ば' / 'ビール'→'びる' で無関係な店に当たる
 
-- **priority**: P1 → **status**: ready（原因特定・修正案と影響実測まで完了。**サイト全体の検索結果が変わるためオーナー承認待ち**・別PRで実施）
+- **priority**: P1 → **status**: ready（修正は1文字・サイト検索の結果が変わるためオーナー承認待ち）
 - **detected**: 2026-08-30（[[ISSUE-117]] の重複解消でテスト対象に入った店が「自分の店名で検索して出てこない」ことから発覚）
 - **category**: 検索 / UX
 - **owner**: 片桐 ← Builder
@@ -2148,6 +2155,8 @@
   3. 修正後に [[ISSUE-117]] の `HotPepper照合ID` を `ホットペッパーID` へ昇格し、重複解消を有効化する
 - **関連**: [[ISSUE-117]]（この課題のせいで重複解消を先送りしている）
 - **files**: `index.html`（`NB_PUNCT_RE`）, `tests/search_relevance.test.js`
+- **2026-10-06 点検**: `index.html:8264` の `NB_PUNCT_RE` に `ー` が残ったまま（未修正）。関連 [[ISSUE-138]]（店名＋エリア語の検索順位）と同じ検索面。
+- **オーナー操作（承認の一言）**: 上記の前後比較表を見て「承認」と課題IDで返答。承認後は `NB_PUNCT_RE` から `ー` だけを外し `npm test`（search_relevance.test.js）通過 → ISSUE-117 の `HotPepper照合ID`→`ホットペッパーID` 昇格を実施（約20分）
 
 ### [ISSUE-118] 営業実体監査の誤検出1件で Build & Deploy が8日間失敗し、CI のデータ書き戻しが丸ごと止まっていた
 
@@ -2177,7 +2186,7 @@
 
 ### [ISSUE-117] トップの話題店カードの半数が写真ゼロ — 写真採用基準の遡及適用で55店が一度に写真を失い、Places の取得停止に9日間誰も気づかなかった
 
-- **priority**: P1 → **status**: partial（原因特定・誤マッチ修正・HotPepper 経路の新設・停止の検知まで完了。残りは Places の日次上限とポリシー判断でオーナー待ち）
+- **priority**: P1 → **status**: done（2026-10-06 acceptance 3項目を実測確認）
 - **detected**: 2026-08-29（オーナー報告「ちゃんと写真が表示されてない店舗が多数」）
 - **category**: UX / data-quality / 監視
 - **owner**: Builder + DataKeeper
@@ -2239,6 +2248,9 @@
   3. `node scripts/check_photo_pipeline_health.js` が健全を返し続ける（停止すれば Issue が立つ）
 - **関連**: [[ISSUE-074]]（Places署名URLの失効）/ [[ISSUE-084]]（警報を防音室で鳴らすな）/ [[ISSUE-090]]（記事と無関係な写真が顔になる事故＝支店違いゲートの動機）/ [[ISSUE-116]]（同じ失効が og:image 側に出たもの）
 - **files**: `scripts/lib/store_name_match.js`, `scripts/lib/photo_policy.js`, `scripts/fill_missing_photos_from_hotpepper.js`, `scripts/fetch_manual_store_photos.js`, `scripts/check_photo_pipeline_health.js`, `data/photo_pipeline_health.json`, `index.html`, `.github/workflows/build.yml`, `.github/workflows/photo-watchdog.yml`, `tests/store_name_match.test.js`, `tests/hotpepper_photo_fill.test.js`
+- **resolved**: 2026-10-06
+- **確認結果（2026-10-06）**: ①HotPepper穴埋めは build.yml で完走（`data/photo_pipeline_health.json`: 2026-10-05 HotPepper 試行55件・採用0件・応答55/失敗0。Places は試行3件・採用3件）。②表示中の話題フラグ/編集部推薦店 **129店中、写真なしは 0店**（修正前 67/140＝48%）、全体でも写真なし3/4,968店。残る判断（客投稿写真の代替枠・日次上限250→300）は対象が事実上なくなり不要: Places の実使用は日7回（`api_calls_day`）で上限250に遠く届かない。③`node scripts/check_photo_pipeline_health.js` は「健全」。photo-watchdog も直近成功。再発時は watchdog が Issue を起票する
+
 ### [SEO-078] エリア語マスタの `aliases` が実データのエリア名と噛み合っておらず、既存エリア圏内で書いた日でも「エリア語なし」になり検索の入口を1つ落としている
 
 - **priority**: P2 → **status**: done（2026-08-31 commit 74ed54c3 で実装済み。2026-09-02 確認・遡及クローズ）
@@ -2562,7 +2574,7 @@
 
 ### [ISSUE-116] journal記事のog:imageに11件のHTTP到達不能（404/Places署名URL失効）が見つかった。うち10件はAPIキーが無く本セッションでは修復不能
 
-- **priority**: P1 → **status**: ready（オーナー本人 or HOTPEPPER_API_KEY/GOOGLE_MAPS_API_KEYを持つ環境待ち）
+- **priority**: P1 → **status**: ready（APIキーのある環境での再取得待ち・異常は20件に増加）
 - **detected**: 2026-08-23（[[ISSUE-115]]で新設した`audit_ogp_image_liveness.js`をfeatures/journal全176件に対して実行し発見）
 - **category**: SEO / SNS / data-quality
 - **owner**: 片桐 ← DataKeeper（写真再取得） + Builder（実行環境）（APIキー必須・クラウドセッション不可のためエスカレーション 2026-08-28）
@@ -2583,6 +2595,8 @@
   4. 「実配信25.9%」の実態調査は、規模（3,585件相当）を踏まえて別チケットとして起票するか判断する
 - **files**: 該当journal記事7〜8本（上記表）, `.github/workflows/build.yml`（ブロッキング化の際に変更）
 - **関連**: [[ISSUE-114]]（同種だが自力修復できたケース）/ [[ISSUE-115]]（この発見に使った監査スクリプトの新設元）/ [[ISSUE-108]]（同じくAPIキー制約で本セッションでは完了できないケース）
+- **2026-10-06 再計測**: `node scripts/audit_ogp_image_liveness.js --check` が **20件** 異常（起票時11件）。HotPepper 404 が5件（journal）、Places署名URL失効403が15件（features/nagoya-kaoawase-washoku と journal 2026-05-27〜2026-09-07）。毎日増えており、og:image を `lh3.googleusercontent.com/place-photos/...` の署名URLで直書きする生成経路自体が失効する設計。このセッションには `GOOGLE_MAPS_API_KEY`/`HOTPEPPER_API_KEY` が無く再取得不可（外部API課金のため未実施）。
+- **オーナー操作**: キーのあるMac（`~/.config/nagoya-bites/journal.env`）で該当記事の写真を再取得するか、ヒーローを `assets/` 内の記事専用図に倒す判断を指示（HotPepper 画像の複製保存は規約上不可）。根治案は「Places署名URLを og:image に直書きしない」（要設計・別課題化推奨）
 
 ### [ISSUE-115] normalize_og_images.js --check にHTTP到達性チェックが無く、404のog:imageをCIが検知できない ✅
 
@@ -2883,7 +2897,7 @@
 
 ### [ISSUE-104] ホットペッパーID非保有の手動キュレーション店（編集部推薦・話題フラグ中心）が口コミ信頼度の判定対象から一律除外されていた
 
-- **priority**: P1 → **status**: in_progress（コード修正はマージ済み・実データ反映は次回 `weekly-places.yml` 実行待ち）
+- **priority**: P1 → **status**: done（2026-10-06 実データで確認）
 - **detected**: 2026-08-20（オーナーがスクリーンショットで「エノテーカ ピンキオーリ 名古屋」の口コミ信頼度「—」を報告。[[ISSUE-103]]調査中に発覚した71店の他都市混入とは別原因と判明）
 - **category**: trust / data-pipeline
 - **owner**: DataKeeper（Builder が実装）
@@ -2908,6 +2922,8 @@
 - **未完了（次回 `weekly-places.yml` 実行で反映）**: このセッションには `GOOGLE_PLACES_API_KEY` が無く、実際の Google Places 解決は実行できなかった（未設定時は `fetch_places.js` が exit 0 でスキップする仕様どおり）。次回の週次CI実行（Secretsにキー設定済み）で170店が自動的に解決対象に入る。**新規解決コストの見積り**: Find Place($17/1000)+Details($22/1000)で170店なら1回あたり1ドル未満（オーナー確認済み・承認済み）。既存店の`--refresh`予算0停止（Google Cloud課金枠確認待ち）とは独立の経路のため、この修正は再開判断を待たずに効く
 - **acceptance**: 次回 `weekly-places.yml` 実行後、`node -e "..."` 等で編集部推薦店のNA率が100%から大きく下がることを確認
 - **関連**: [[ISSUE-101]]（口コミ信頼度の判定材料不足がこの調査の発端）/ [[ISSUE-103]]（同じ調査から派生した別原因・他都市データ混入）
+- **resolved**: 2026-10-06
+- **確認結果（2026-10-06・待ち条件の充足を実測）**: `weekly-places.yml` は 08-24 以降の週次実行が全て success（直近 2026-09-28）。`data/stores.json`（4,968店）の `reviewTrust` が「—」の割合は、編集部推薦 **102店中10店（9.8%・修正前 100%）**／話題フラグ **94店中18店（19.1%・同93.5%）**／ホットペッパーID無し **166店中32店（19.3%・同100%）**。acceptance（編集部推薦店のNA率が100%から大きく下がる）を満たす。残りのNAは Places 不一致（`manual:` キー204件中9件が rejected）等の個別事情で本課題の構造欠陥ではない
 
 ### [ISSUE-103] カタログに他都市チェーン店舗が誤って「名古屋の店」として混入している疑い（71店・実在保証Moatの根幹に関わる）✅
 
@@ -2994,7 +3010,7 @@
 - **関連**: [[ISSUE-048]] [[ISSUE-049]] [[ISSUE-086]]（v3活性化時の前提を本ISSUEが追加）
 ### [ISSUE-102] stores/*.html に677件の孤児ページが放置されている（CI障害の原因・data/stores.json 未掲載店の旧テンプレページ）
 
-- **priority**: P2 → **status**: in_progress（サンプリング・方針決定・CI可視化まで完了／実削除はオーナー本人の手動実行が必要）
+- **priority**: P2 → **status**: in_progress（実削除はオーナー本人の手動実行待ち・孤児は737件に増加）
 - **detected**: 2026-08-20（[[ISSUE-101]] マージ直後、build.yml の `audit_trust_wording.js --check` が本番で失敗し発覚。実測: `git diff --stat` https://github.com/wakuwaku-labs/nagoya-bites/actions/runs/32354313646）
 - **category**: cleanup / seo / ci
 - **owner**: Builder + DataKeeper
@@ -3014,6 +3030,8 @@
   4. **CI実装**: `.github/workflows/build.yml` の「個別店舗ページ再生成」ステップに `--check-orphans` を追加（非ブロッキング・件数のみログ表示）
 - **オーナーへのアクション依頼**: 上記サンプリングで問題ケースが出なかったため、`node gen-store-pages.js --delete-orphans` を手動実行いただければ517件の孤児ページを安全に削除できます（このセッションでは破壊的ファイル削除としてauto-mode権限がブロックされたため未実施）
 - **関連**: [[ISSUE-050]]（孤児ページ削除の前例）/ [[ISSUE-101]]（本件の発覚元）
+- **2026-10-06 再計測**: `node gen-store-pages.js --check-orphans` で孤児 **737件**（8/22時点517件から増加。ISSUE-132 の重複統合で別IDページが孤児化した分を含む可能性が高く、削除前に統合先ページへの導線（sitemap/内部リンク）を確認すること）。
+- **オーナー操作**: ローカルMacのリポジトリで `node gen-store-pages.js --delete-orphans` を実行 → `git add stores/ sitemap.xml` → コミット → PR。サンプリング上、閉店・統合残骸のみで問題ケースは出ていない（8/22記録）。ただし統合由来が混ざるため、実行前に `--check-orphans` の一覧10件ほどを目視確認する
 
 ### [ISSUE-100] Search Console「サイトマップ内のページがインデックスに登録されない」通知への対応 — sitemap生存監査を新設
 
@@ -3060,7 +3078,7 @@
 
 ### [ISSUE-099] editorReason 自動収集パイプライン（ISSUE-045）が3ヶ月間サイレント無稼働だった — 必要シークレット3件が未設定
 
-- **priority**: P1 → **status**: ready（パイプラインは稼働確認済み。残るのは人手レビュー＆承認のみ）
+- **priority**: P1 → **status**: ready（パイプライン稼働中・draftの人手レビュー待ち）
 - **detected**: 2026-08-19（事業化ロードマップ Phase 2 の進捗確認中に発覚）
 - **category**: automation / moat / trust-score-business
 - **owner**: 片桐 ← Editor（`docs/editorreason-drafts.md` のレビュー・承認・人手必須のためエスカレーション 2026-08-28）
@@ -3081,6 +3099,8 @@
 - **note**: 稼働確認後は「success = 何かが起きた」ではなく「success = 新規処理件数」をログに明記する形へ `editorreason-batch.yml` を改善する余地あり（無稼働がsuccessに埋もれない設計。優先度は低いため本チケットでは対応せず）
 - **files**: `.github/workflows/editorreason-batch.yml`, `docs/editorreason-automation-setup.md`, `scripts/lib/gemini_grounded_extractor.js`（新規）, `scripts/build_editorreason_drafts.js`, `scripts/approve_editorreason_drafts.js`
 - **関連**: [[ISSUE-045]]（親チケット・本件はその稼働確認）
+- **2026-10-06 点検**: `editorreason-batch.yml` は毎週月曜 success を継続（直近 2026-09-28・9/7〜9/28 は全て実処理）。`docs/editorreason-drafts.md` は最新バッチで **49件生成（自動マージ候補16・人手レビュー要31）**、`[approved]`/`[reject]` は未記入。`data/stores.json` の editorReason 充填率は **2.07%（103/4,968）** で 8/19 から改善なし。
+- **オーナー操作**: `docs/editorreason-drafts.md` で採用する店の見出し下に `[approved]`（不採用は `[reject]`）を追記 → `node scripts/approve_editorreason_drafts.js` → `node build.js` → PR。公開文言は「業界視点」を名乗るためエージェントが代理承認しない（制約7）
 
 ### [STR-MONTHLY-2026-08] KPI月次スナップショット復旧（05月ベースライン以降、途絶していた記録を実データで再開）
 
@@ -5269,7 +5289,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **効果測定の次アクション**: `data/metrics_history.json` の bounceRate / pagesPerSession を導入後の前後比で確認（次回SEOアドバイス取り込み時に評価）
 
 ### [SEO-039] 流入の58%を占める Bing・生成AI を観測レイヤーに載せる（エンジン別内訳の固定化＋IndexNow）
-- **priority**: P1 → **status**: in_progress（観測レイヤーはdone・Bing WMT登録とIndexNow送信の有効化はオーナー操作/承認待ち）
+- **priority**: P1 → **status**: done（2026-10-06 確認）
 - **detected**: 2026-07-27
 - **category**: SEO
 - **owner**: Marketer
@@ -5287,6 +5307,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **検証**: `--report` で 504セッションを6エンジンに分類（Bing 34.9% / 直接 28% / 生成AI 24% / Google 9.9% / Yahoo 2.8% / DDG 0.4%）/ `--snapshot` 再実行で冪等（total_days 56 維持）/ `build.yml` YAML 妥当（ruby確認）/ IndexNow dry-run で実在7URLのみ抽出・外部通信ゼロ
 - **効果測定**: `data/search_channel_metrics.json` の `trend`（前回スナップショット比）。IndexNow 有効化後は Bing 経由セッションの推移で判定する
 - **関連**: [[SEO-011]]（入口KW・同じ「入口を増やす」系）/ ISSUE-042（llms.txt・生成AI流入の起点）/ ISSUE-072（GSCループ＝Googleのみを見ていた側）
+- **resolved**: 2026-10-06
+- **確認結果（2026-10-06）**: 観測レイヤーは稼働中（`data/search_channel_metrics.json` が日次更新・直近30日1,337セッション中 Bing 26.7%/Google 25.8%/生成AI 7.4%）。IndexNow は**既に有効**: キーファイルは本番で HTTP 200、`node scripts/indexnow_ping.js --status` が ready_to_submit、`data/indexnow_send_log.json` は `dry_run:false / status:200 / sent:178`（2026-10-05）。「送信有効化はオーナー承認待ち」の前提は解消済み。残る Bing Webmaster Tools 登録は [[SEO-067]] が担う（本課題からは切り離し）
 
 ### [SEO-038] 高流入ジャーナル記事のロングテール勝ち筋を分析し、同型テーマの横展開と関連特集への内部リンクで回遊に変換する
 - **priority**: P2 → **status**: done
@@ -6126,7 +6148,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **関連**: [ISSUE-043]（GA4/GSC接続）/ [ISSUE-054]（GSC 自動取得）/ [ISSUE-058]（build.yml git add 整備）
 
 ### [ISSUE-054] GSC インデックスカバレッジ確認と週次記録運用の整備 🟡
-- **priority**: P2 → **status**: in_progress（自動取得スクリプト実装済み・SA連携待ち）
+- **priority**: P2 → **status**: done（2026-10-06 自動取得の稼働を確認）
 - **detected**: 2026-05-20（起票コミット 307f643e1 より復元。滞留日数が測れず `scripts/next_task.js --check` が警告していたため補記）
 - **progress 2026-05-21**:
   - `scripts/fetch_gsc_metrics.js` を新設。GA4 のサービスアカウント（`GA4_SERVICE_ACCOUNT_KEY`）を流用し
@@ -6144,6 +6166,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
     5/13に検索流入が離陸。表示トップは**ほぼ店名検索で多くが0クリック**（クリック価値低）。発見型KWは `名古屋 一人飲み` のみ。
     → `docs/kpi-weekly.md` 2026-05-22 枠に記録。
   - **注記**: インデックス被覆数の一括取得は本 API では不可（URL Inspection は1URLずつ）。被覆全体像は当面 GSC 画面で確認。
+- **resolved**: 2026-10-06
+- **確認結果（2026-10-06）**: 「SA連携待ち」は解消済み。`data/gsc_metrics.json` は日次更新（generatedAt 2026-10-05・直近28日 クリック552/表示37,743/CTR1.46%/平均順位13.2・topQueries/topPages/pageTypes 付き）。週次記録は GSC 改善ループ（`gsc_opportunities.json`・CLAUDE.md「GSC 検索実データ改善ループ」）が代替。インデックス被覆数の一括取得は API で不可（上記注記のとおり）のため GSC 画面確認のみ残るが、acceptance の「確認と記録の運用整備」は満たす
 
 ### [ISSUE-055] 発見型ハブページの中身強化（organic 本筋・段階展開）✅
 - **priority**: P2 → **status**: done
