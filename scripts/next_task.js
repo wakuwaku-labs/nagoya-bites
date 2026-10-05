@@ -64,6 +64,9 @@ function parseBacklog(md) {
         detected: null,
         owner: null,
         category: null,
+        assignee: null,
+        dueDate: null,
+        project: null,
       };
       tasks.push(cur);
       continue;
@@ -88,6 +91,15 @@ function parseBacklog(md) {
 
     const ca = lines[i].match(/\*\*category\*\*\s*[:：]\s*([^\n]+)/);
     if (ca && !cur.category) cur.category = ca[1].trim();
+
+    const assignee = lines[i].match(/\*\*assignee\*\*\s*[:：]\s*([^\n]+)/i);
+    if (assignee && !cur.assignee) cur.assignee = assignee[1].trim();
+
+    const due = lines[i].match(/\*\*due\*\*\s*[:：]\s*(\d{4}-\d{2}-\d{2})/i);
+    if (due && !cur.dueDate) cur.dueDate = due[1];
+
+    const project = lines[i].match(/\*\*project\*\*\s*[:：]\s*([^\n]+)/i);
+    if (project && !cur.project) cur.project = project[1].trim();
   }
 
   return tasks;

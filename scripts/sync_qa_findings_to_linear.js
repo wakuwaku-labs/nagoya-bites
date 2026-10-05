@@ -9,6 +9,7 @@ const findingsPath = path.join(ROOT, 'data/qa_findings.json');
 const backlogPath = path.join(ROOT, 'agent-backlog.md');
 const statePath = path.join(ROOT, 'data/linear_sync_state.json');
 const pendingPath = path.join(ROOT, 'data/linear_sync_pending.json');
+const defaultsPath = path.join(ROOT, 'data/linear_issue_defaults.json');
 const priority = { P0: 1, P1: 2, P2: 3, P3: 4 };
 
 function mergePendingIds(pending, created) {
@@ -21,6 +22,26 @@ function remainingPendingIds(ids, completedId) {
 
 function persistPendingIds(ids) {
   fs.writeFileSync(pendingPath, `${JSON.stringify(ids, null, 2)}\n`);
+}
+
+function missingQaDefaults(defaults, priorities) {
+  const missing = [];
+  if (!defaults.projectId) missing.push('projectId');
+  if (!defaults.assigneeId) missing.push('assigneeId');
+  if (priorities.some(level => !Number.isInteger(defaults.dueDateDaysByPriority?.[level]) || defaults.dueDateDaysByPriority[level] < 0)) {
+    missing.push('dueDateDaysByPriority');
+  }
+  return missing;
+}
+
+function dueDateFrom(qaDate, days) {
+  const date = new Date(`${qaDate}T00:00:00Z`);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(qaDate || '') || Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== qaDate) {
+    throw new Error(`Invalid nightly QA date: ${qaDate}`);
+  }
+  if (!Number.isInteger(days) || days < 0) throw new Error(`Invalid due date offset: ${days}`);
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
 }
 
 async function gql(query, variables) {
@@ -64,6 +85,16 @@ async function main() {
   }
 
   const markdown = fs.readFileSync(backlogPath, 'utf8');
+  const defaults = JSON.parse(fs.readFileSync(defaultsPath, 'utf8'));
+  const issuePriorities = ids.map(id => {
+    const block = taskBlock(markdown, id);
+    return block.match(/\*\*priority\*\*\s*[:：]\s*(P[0-3])/i)?.[1] || 'P2';
+  });
+  const missingDefaults = missingQaDefaults(defaults, issuePriorities);
+  if (missingDefaults.length) {
+    throw new Error(`New QA findings remain queued; configure Linear issue defaults: ${missingDefaults.join(', ')}.`);
+  }
+
   const syncState = JSON.parse(fs.readFileSync(statePath, 'utf8'));
   syncState.issues ||= {};
   const query = `query TeamAndIssues($teamId: String!, $after: String) {
@@ -93,10 +124,13 @@ async function main() {
     if (!issue) {
       const block = taskBlock(markdown, id);
       const taskPriority = block.match(/\*\*priority\*\*\s*[:：]\s*(P[0-3])/i)?.[1] || 'P2';
+      const dueDate = dueDateFrom(qa.date, defaults.dueDateDaysByPriority[taskPriority]);
       const created = await gql(`mutation CreateIssue($input: IssueCreateInput!) {
         issueCreate(input: $input) { success issue { id identifier title url } }
       }`, { input: {
-        teamId: TEAM_ID, stateId: todo.id, title, description: block,
+        teamId: TEAM_ID, stateId: todo.id, title: `QAで検出した課題を調査・解消する: ${title.replace(/^\[[^\]]+\]\s*/, '')}`,
+        description: block, projectId: defaults.projectId, assigneeId: defaults.assigneeId,
+        dueDate,
         priority: priority[taskPriority] || priority.P2,
       } });
       if (!created.issueCreate?.success || !created.issueCreate.issue) throw new Error(`Linear did not create ${id}.`);
@@ -121,4 +155,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { mergePendingIds, remainingPendingIds, taskBlock };
+module.exports = { mergePendingIds, remainingPendingIds, taskBlock, missingQaDefaults, dueDateFrom };

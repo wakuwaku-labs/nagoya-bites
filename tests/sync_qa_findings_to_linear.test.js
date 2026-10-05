@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { mergePendingIds, remainingPendingIds, taskBlock } = require('../scripts/sync_qa_findings_to_linear');
+const { mergePendingIds, remainingPendingIds, taskBlock, missingQaDefaults, dueDateFrom } = require('../scripts/sync_qa_findings_to_linear');
 
 test('Linear sync retry queue merges pending and newly created IDs without duplicates', () => {
   assert.deepEqual(mergePendingIds(['QA-SEC-A', 'QA-SEC-B'], ['QA-SEC-B', 'QA-SEC-C']), [
@@ -36,4 +36,18 @@ test('Linear issue description ends at the next multi-segment QA ID heading', ()
     '- **priority**: P0 → **status**: ready',
     '- First finding body',
   ].join('\n'));
+});
+
+test('nightly Linear creation stays queued until project, assignee, and priority deadlines exist', () => {
+  assert.deepEqual(missingQaDefaults({ projectId: null, assigneeId: 'member', dueDateDaysByPriority: {} }, ['P0', 'P2']), [
+    'projectId', 'dueDateDaysByPriority',
+  ]);
+  assert.deepEqual(missingQaDefaults({ projectId: 'project', assigneeId: 'member', dueDateDaysByPriority: { P0: 0, P2: 14 } }, ['P0', 'P2']), []);
+});
+
+test('nightly due dates use valid UTC calendar dates and nonnegative whole-day offsets', () => {
+  assert.equal(dueDateFrom('2028-02-28', 1), '2028-02-29');
+  assert.equal(dueDateFrom('2026-12-31', 1), '2027-01-01');
+  assert.throws(() => dueDateFrom('2026-02-31', 1), /Invalid nightly QA date/);
+  assert.throws(() => dueDateFrom('2026-10-05', -1), /Invalid due date offset/);
 });

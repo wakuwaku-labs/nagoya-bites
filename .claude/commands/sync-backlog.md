@@ -22,6 +22,8 @@ Linear側では担当者・コメント・作業ログを管理し、課題の�
    node scripts/sync_backlog_to_linear.js --apply
    ```
 
+新規 `create` が含まれるときは、反映前に `CLAUDE.md` の「Linear Issue品質ルール」7項目を確認する。backlogの `owner` はLinear担当者本人の指定ではないため、実ユーザーを別途確定する。担当者・期日・Projectが不足していれば同期を実行せず、ユーザーに確認する。
+
 3. Linearの全課題を再読み込みし、作成・更新数を照合する。CLIが`linear_write_unconfirmed`を返した場合は、エラー内の`nextSteps`に従って対象Issueを読み戻し、反映済みなら再送しない。
 
 ## ルール

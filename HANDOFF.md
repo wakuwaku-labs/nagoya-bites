@@ -1,7 +1,9 @@
-status: done
+status: in_progress
 
 # 目的
 Linear初心者が課題を選び、内容を理解し、作業を依頼・確認できる橋渡しを整える。移行時の記録と判断もこのメモに保持する。
+
+Linear Issue作成時に画像で示された7つの品質ルールをCLAUDE.mdと起票フローへ適用する。
 
 # 完了条件
 - Notionの課題トラッカー全件をLinearへ移し、課題本文・ID・状態・優先度・カテゴリ・担当部署・日付を保持する。
@@ -10,6 +12,7 @@ Linear初心者が課題を選び、内容を理解し、作業を依頼・確�
 - 元データは移行検証後も安全なアーカイブとして残す。
 - Linear初心者向けに、課題の開き方・IDを使った依頼・進捗と完了の確認方法を案内する。
 - 特定のLinear IDから作業に入れる方法と、backlog仕様との対応確認を記載する。
+- 新規Issueに動詞タイトル、担当者、期限、初期状態、Project、背景、達成条件を揃え、30分超の作業をsub-issue化する。
 
 # できていること
 - Linearワークスペース「片桐若登」、チーム「片桐若登」（key `P`）を確認。Orca CLI経由で接続・操作可能。
@@ -34,7 +37,7 @@ Linear初心者が課題を選び、内容を理解し、作業を依頼・確�
 - 最終確認で `npm test` 249件成功、`git diff --check` 成功。主な変更コミットは `d3b79f84c9`、引き継ぎ更新は `01be4fd339` と `19bd7d9548`。作業ブランチへ最新 `origin/main` をマージ済み。
 
 # 次にやること
-- Linearを唯一の進捗管理先として日常運用する。
+- 自動起票のProject・期限の既定値を決め、CIと同期スクリプトへ反映する。
 - 初心者向けガイドを起点に、Linear課題IDを伝えて作業を依頼する。必要なら候補課題の担当をLinearで割り当てる。
 
 # 試したが駄目だったこと
@@ -49,6 +52,8 @@ Linear初心者が課題を選び、内容を理解し、作業を依頼・確�
 - 元課題IDはLinearのタイトル/説明に残す。Notion 48件には同一ID重複が確認されているため、Linear内で衝突を隠さずNotion URLも移行記録に含める。
 - LinearにBlocked状態はない。元Blockedの2件はTodoにマップし、blockerの詳細とNotion状態は説明文に保持した。
 - 夜間QA→LinearのGitHub Actions同期スクリプトとworkflow接続を実装。未同期IDは `data/linear_sync_pending.json` に保持し、再実行時に再試行する。
+- 7つのIssue品質ルールを `CLAUDE.md`、Linear運用文書、triage・同期コマンドに追加。backlog同期は担当者・有効な期日・Projectがない新規Issueを拒否し、CIはdefaults未設定時にIDをpendingへ保持する。
+- Linearの現状を読み取り確認: チームProjectは0件、team memberは1人。唯一の担当者IDはdefaultsへ設定済み。Projectと期限方針は未設定のため、自動新規Issueは意図的に保留する。
 - 新規QA IDはLinear API呼び出し前に保留キューへ保存し、同期台帳保存後に1件ずつキューから除く。API失敗や中断後の再実行でも重複を避けて回復する。
 - `QA-SEC-...` のようにハイフンを複数含むIDも見出し境界として認識し、隣の課題本文を説明に混ぜない。
 - 利用者が `LINEAR_API_KEY` をGitHub Actions secretに登録済み。実装ブランチで最新workflowを実行し、`viewer` API queryによるキー認証を確認。Linearへの新規起票対象が0件であることも確認。

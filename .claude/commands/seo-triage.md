@@ -84,6 +84,8 @@ node scripts/seo_triage.js --check-dup "<その施策のテキスト>"
 
 ### Step 5: 採用分を agent-backlog.md に起票
 
+Linearへ登録する前に `CLAUDE.md` の7品質ルールを適用する。既存のProjectから目的に合うものを選び、Linearの実担当者と期日を確定し、背景・達成条件を記載する。不足値があれば同期前にユーザーへ確認する。30分超の採用施策は親Issueとsub-issueへ分割する。
+
 採用が複数あるなら ID は連番。先頭IDを取得:
 ```bash
 node scripts/seo_triage.js --next-id   # 例: SEO-001。2件目以降は連番で手当て
@@ -98,6 +100,9 @@ node scripts/seo_triage.js --next-id   # 例: SEO-001。2件目以降は連番�
 - **detected**: <今日の日付 YYYY-MM-DD>
 - **category**: SEO
 - **owner**: Marketer
+- **assignee**: <Linearユーザー名またはID>
+- **due**: <YYYY-MM-DD>
+- **project**: <既存Linear Projectの正確な名前>
 - **source**: SEOアドバイス(LINE) <日付> 原文「<アドバイス原文を短く引用>」
 - **brand-filter**: ✅ 適合 — <Moat のどこを伸ばすか / なぜ順位操作でないか>
 - **acceptance**: <受け入れ条件。例: 対象特集のh1/タイトル/本文冒頭2行にKWを自然挿入・JSON-LD不汚染・体感KPIは次回SEOアドバイスで再評価>
