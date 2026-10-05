@@ -11,6 +11,18 @@ const statePath = path.join(ROOT, 'data/linear_sync_state.json');
 const pendingPath = path.join(ROOT, 'data/linear_sync_pending.json');
 const priority = { P0: 1, P1: 2, P2: 3, P3: 4 };
 
+function mergePendingIds(pending, created) {
+  return [...new Set([...(pending || []), ...(created || [])])];
+}
+
+function remainingPendingIds(ids, completedId) {
+  return ids.filter(id => id !== completedId);
+}
+
+function persistPendingIds(ids) {
+  fs.writeFileSync(pendingPath, `${JSON.stringify(ids, null, 2)}\n`);
+}
+
 async function gql(query, variables) {
   const response = await fetch('https://api.linear.app/graphql', {
     method: 'POST',
@@ -37,9 +49,10 @@ function taskBlock(markdown, id) {
 async function main() {
   const qa = JSON.parse(fs.readFileSync(findingsPath, 'utf8'));
   const pending = fs.existsSync(pendingPath) ? JSON.parse(fs.readFileSync(pendingPath, 'utf8')) : [];
-  const ids = [...new Set([...pending, ...(qa.created || [])])];
+  const ids = mergePendingIds(pending, qa.created);
+  // Record all work before network calls so transient failures cannot lose new IDs.
+  if (ids.length) persistPendingIds(ids);
   if (!process.env.LINEAR_API_KEY) {
-    if (ids.length) fs.writeFileSync(pendingPath, `${JSON.stringify(ids, null, 2)}\n`);
     throw new Error('The LINEAR_API_KEY GitHub Actions secret is not configured.');
   }
 
@@ -96,12 +109,16 @@ async function main() {
       source: 'agent-backlog',
     };
     fs.writeFileSync(statePath, `${JSON.stringify(syncState, null, 2)}\n`);
+    persistPendingIds(remainingPendingIds(ids, id));
     console.log(`${id} → ${issue.identifier}`);
   }
-  fs.writeFileSync(pendingPath, '[]\n');
 }
 
-main().catch(error => {
-  console.error(error.message);
-  process.exitCode = 1;
-});
+if (require.main === module) {
+  main().catch(error => {
+    console.error(error.message);
+    process.exitCode = 1;
+  });
+}
+
+module.exports = { mergePendingIds, remainingPendingIds };
