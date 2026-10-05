@@ -258,6 +258,34 @@
   3. `node scripts/sync_backlog_to_linear.js` の dry-run で、新規分の `missingFields` が空になる。
   4. 既存の未完了 Issue（37件）を Project に紐づける。セッションブリーフィングの「未設定: Project」が 0 になる。
 
+### [ISSUE-144] 配信終了した HotPepper 写真が残る3か所（過去ジャーナル4本のヒーロー・sitemap-images.xml・父の日カードの thumb）を直す
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-06
+- **category**: photo / SEO
+- **owner**: Editor
+- **source**: ISSUE-124（PR #377）の残件。確定済みの壊れた imgfp.hotp.jp URL を `scripts/clear_dead_photo_urls.js` で店舗データ・店舗ページ・特集から外したが、次の3か所は自動では直していない。(1) `journal/` の過去記事4本（2026-05-11/14/16/17）のヒーロー画像と og:image。写真の帰属（記事の主役店か）の判断を含むため、自動置換していない。(2) `sitemap-images.xml` の旧 imgfp 参照。生成元スクリプトがない静的ファイル。(3) `data/featured.json` の父の日カードの thumb。`build_featured` が thumb を必須とするため、自動除去できない（再登場は 2027-06）
+- **acceptance**:
+  1. 4記事のヒーローを `scripts/lib/hero_photo_gate.js` の判定を通る写真（その記事の主役店の写真）か、記事専用の図に置き換える。他店の写真は借りない。og:image は `node scripts/normalize_og_images.js --only <slug>` で揃える
+  2. `sitemap-images.xml` から配信終了URLを除く。生成元がないなら、生成手順を決めるか、ファイルの廃止を判断して本文に書く
+  3. 父の日カードの thumb を、特集の掲載店の実写に差し替える
+  4. `node scripts/audit_journal_photos.js --check` と `npm test` を通す
+- **関連**: [[ISSUE-124]]（発見元）／[[ISSUE-116]]（og:image の到達不能）
+
+### [ISSUE-143] HotPepper 由来の店が日次ビルドのたびに出入りする原因（取得の取りこぼし）を調べて止める
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-06
+- **category**: data
+- **owner**: DataKeeper
+- **source**: ISSUE-140（PR #376）の調査で判明。`data/stores.json` は日次ビルドで HotPepper API の取得結果から作り直される。2026-09-24〜10-05 の auto-update で43件が消え、94件が増えた。消えた店の中には実在が確認できた店（雅MASA・しゃぶしゃぶいちばん 名駅南店）もあり、閉店リスト・重複統合・除外リスト・品質フィルタには当たらない。特集掲載店が突然「実在不明」になる（ISSUE-139）原因にもなっている
+- **acceptance**:
+  1. `HOTPEPPER_API_KEY` がある環境（CI か オーナーの Mac）で、`build.js` の `fetchShopsByMiddleArea` の応答件数をエリア別に日をまたいで記録し、消えた店が API 側で一時的に返らないのか、取得処理（ページング・上限・エラー握りつぶし）の問題かを特定する
+  2. 取得処理の問題なら直す。API 側の揺れなら、一度掲載した店を1回の取得漏れで消さない仕組み（例: 連続N回の不在で初めて外す）を入れる。閾値は設定ファイルで持つ
+  3. 直したあと7日間の auto-update で、実在店の出入りが減ったことを件数で示す
+  4. `npm test` を通す
+- **関連**: [[ISSUE-140]]（発見元）／[[ISSUE-139]]／[[ISSUE-052]]（店舗データ大量消失）
+
 ### [ISSUE-142] 父の日特集の「寿司・割烹」「うなぎ」「カジュアル」セクションに焼肉店が並んでいる状態を、見出しと中身が一致する掲載に直す ✅
 
 - **priority**: P2 → **status**: done
