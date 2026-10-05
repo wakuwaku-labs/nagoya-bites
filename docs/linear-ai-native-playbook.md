@@ -104,6 +104,11 @@ Linear の構成は「Project＝Nagoya Bites（全課題）、KR＝ラベル」�
 4. ~~ADR の置き場を作る~~ → `docs/decisions/` を作成済み。残りは、`CLAUDE.md` に散っている教訓（ISSUE-077/084/090）を順に移すこと
 5. **「着手可能」ラベルで AI に自動着手させる**（動画の⑦の次段階）
    1〜2 が回り、達成条件の質が安定してから検討する。マネタイズ・信頼系の課題は対象外（制約7・8）。
+6. **AI エージェントを Linear の委任先にする**（2026-10-06 オーナー選択: Cyrus）
+   - Linear ではエージェントは「担当者（assignee）」ではなく「委任先（delegate）」になる。担当者はオーナーのまま残り、品質ルール2（担当者必須）はそのまま満たす。
+   - 2026-10-06 時点で接続済みのエージェントは0件。Anthropic 公式の Claude エージェントは Linear の一覧に無く、Claude Code を動かすのは第三者製の Cyrus（atcyrus.com）か Merlin。
+   - Cyrus に必要なもの: Cyrus のアカウント作成、Linear ワークスペースへの接続の許可（OAuth）、GitHub アプリのインストール（organization の管理者権限）、Claude の認証（Pro/Max か API キー）、実行場所（Mac・Linux か有料ホスティング）。どれもオーナー本人の操作で、Claude は代行しない（アカウント作成・権限許可のため）。
+   - 接続後に Claude 側でやること: 委任先の既定値を `data/linear_issue_defaults.json` に足し、`scripts/assign_linear_projects.js` を委任先も設定できるようにする。最初は1件だけ試し、PR が QA ゲート（制約6）を通る流れを確認してから広げる。マネタイズ・信頼系の課題は委任しない（制約7・8）。
 
 ---
 

@@ -42,6 +42,8 @@ Linear Issue作成時に画像で示された7つの品質ルールをCLAUDE.md�
 - 自動起票のProject・期限の既定値を決め、CIと同期スクリプトへ反映する。
 - 初心者向けガイドを起点に、Linear課題IDを伝えて作業を依頼する。必要なら候補課題の担当をLinearで割り当てる。
 
+- 2026-10-06 担当の件でオーナーが「3=AIエージェントを担当に」を選択し、エージェント選択は自動応答でCyrus（Claude Code）。Linearではエージェントは担当者ではなく委任先になる。接続済み0件。Cyrusはアカウント作成・Linear OAuth・GitHubアプリ導入・Claude認証が必要で全てオーナー操作。手順はdocs/linear-ai-native-playbook.md §4-6。接続後にdefaultsとassign_linear_projects.jsへ委任先を追加する。
+
 # 試したが駄目だったこと
 - この実行環境にLinear専用MCPコネクタは見当たらない。Orca CLIの接続で移行・運用できる。
 - NotionのAI検索と複数データソースクエリは現プランで利用不可。課題DBの単一データソースqueryと通常の検索/fetchは利用可能。
@@ -63,6 +65,8 @@ Linear Issue作成時に画像で示された7つの品質ルールをCLAUDE.md�
 - mainへrebase後の `npm test`: 249件成功。Linear同期キューと複数セグメントQA IDの境界テストを追加。`node --check scripts/sync_qa_findings_to_linear.js` と `git diff --check` も成功。
 - Nightly QA workflowは既存QAハード失敗で赤くなる（Linear同期step成功とは別の失敗）。
 - 既存backlogは選定器と詳細仕様の正本として使われる。Linearを唯一の進捗管理先にしつつ、双方向二重更新を避ける片方向連携を設計する。
+
+- 判断: エージェント選択はautopilotの自動応答（Cyrus）だったため、OAuth許可・アカウント作成は行わずオーナー操作として残した（権限付与は本人の明示承認が必要）。
 
 # 関連ファイル
 - `docs/linear-ai-native-playbook.md`
