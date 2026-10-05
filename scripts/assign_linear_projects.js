@@ -17,12 +17,15 @@ const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { parseBacklog } = require('./next_task');
-const { krLabelForCategory, isKrLabel, roleLabelsForOwner, isRoleLabel } = require('./lib/linear_project_map');
+const { krLabelForCategory, isKrLabel, roleLabelsForOwner, isRoleLabel, fieldsFromBlock } = require('./lib/linear_project_map');
 
 const ROOT = path.resolve(__dirname, '..');
 const WORKSPACE = '130a2f2b-aa8e-4db1-9250-4fcadebbba1f';
 const ACTIVE = new Set(['backlog', 'unstarted', 'started']);
 const OWN_ISSUE = /^\[[A-Z]+(?:-[A-Z]+)*-\d+\]/;
+// 夜間QAの自動起票はタイトルが「QAで検出した課題を…」で、説明文が backlog の課題ブロックそのもの
+const OWN_BLOCK = /^#{3}\s+\\?\[[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+\\?\]/m;
+const isOwnIssue = issue => OWN_ISSUE.test(issue.title) || OWN_BLOCK.test(issue.description || '');
 
 function orca(args) {
   const run = spawnSync('orca', args, { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
@@ -37,7 +40,7 @@ function categoryFor(issue, byId) {
   if (id && byId.get(id)?.category) return byId.get(id).category;
   const notion = (issue.description || '').match(/\*\*Notionカテゴリ:\*\*\s*([^\n]+)/);
   if (notion && notion[1].trim() !== '未設定') return notion[1].trim();
-  return null;
+  return fieldsFromBlock(issue.description).category;
 }
 
 function ownerFor(issue, byId) {
@@ -45,7 +48,7 @@ function ownerFor(issue, byId) {
   if (id && byId.get(id)?.owner) return byId.get(id).owner;
   const notion = (issue.description || '').match(/\*\*Notion担当部署:\*\*\s*([^\n]+)/);
   if (notion && notion[1].trim() !== '未設定') return notion[1].trim();
-  return null;
+  return fieldsFromBlock(issue.description).owner;
 }
 
 function plan(issues, tasks, defaults) {
@@ -53,7 +56,7 @@ function plan(issues, tasks, defaults) {
   const retired = new Set(defaults.retiredProjects || []);
   const items = [];
   // タイトルが [ID] で始まるもの＝このプロジェクトの課題だけ。Linear 既定のチュートリアル課題等は触らない。
-  for (const issue of issues.filter(i => ACTIVE.has(i.state?.type) && OWN_ISSUE.test(i.title))) {
+  for (const issue of issues.filter(i => ACTIVE.has(i.state?.type) && isOwnIssue(i))) {
     const current = issue.project?.name || null;
     const moveProject = (!current || retired.has(current)) && current !== defaults.projectName;
     const hasKr = (issue.labels || []).some(l => isKrLabel(l.name || l));

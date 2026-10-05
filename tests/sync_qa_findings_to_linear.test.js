@@ -51,3 +51,18 @@ test('nightly due dates use valid UTC calendar dates and nonnegative whole-day o
   assert.throws(() => dueDateFrom('2026-02-31', 1), /Invalid nightly QA date/);
   assert.throws(() => dueDateFrom('2026-10-05', -1), /Invalid due date offset/);
 });
+
+test('QA issues get KR and role labels resolved to ids; unknown or other-team labels are reported', () => {
+  const { resolveLabelIds } = require('../scripts/sync_qa_findings_to_linear');
+  const { labelsForTask, fieldsFromBlock } = require('../scripts/lib/linear_project_map');
+  const defaults = require('../data/linear_issue_defaults.json');
+  const block = '### [QA-SEC-1] x\n- **priority**: P2 → **status**: ready\n- **category**: Security\n- **owner**: DataKeeper\n';
+  const names = labelsForTask(fieldsFromBlock(block), defaults);
+  assert.deepEqual(names, ['KR:運用を自動で回す', '担当:DataKeeper']);
+  const nodes = [
+    { id: 'kr', name: 'KR:運用を自動で回す', team: null },
+    { id: 'other', name: '担当:DataKeeper', team: { id: 'another-team' } },
+  ];
+  assert.deepEqual(resolveLabelIds(names, nodes, 'team'), { ids: ['kr'], missing: ['担当:DataKeeper'] });
+  assert.deepEqual(resolveLabelIds([], nodes, 'team'), { ids: [], missing: [] });
+});

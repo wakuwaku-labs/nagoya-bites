@@ -10,7 +10,20 @@ const backlogPath = path.join(ROOT, 'agent-backlog.md');
 const statePath = path.join(ROOT, 'data/linear_sync_state.json');
 const pendingPath = path.join(ROOT, 'data/linear_sync_pending.json');
 const defaultsPath = path.join(ROOT, 'data/linear_issue_defaults.json');
+const { labelsForTask, fieldsFromBlock } = require('./lib/linear_project_map');
 const priority = { P0: 1, P1: 2, P2: 3, P3: 4 };
+
+/** ラベル名 → id。ワークスペース共通かこのチームのラベルだけを使い、Linear に無い名前は missing で返す。 */
+function resolveLabelIds(names, nodes, teamId) {
+  const usable = (nodes || []).filter(n => !n.team || n.team.id === teamId);
+  const ids = [];
+  const missing = [];
+  for (const name of names) {
+    const hit = usable.find(n => n.name === name);
+    if (hit) ids.push(hit.id); else missing.push(name);
+  }
+  return { ids, missing };
+}
 
 function mergePendingIds(pending, created) {
   return [...new Set([...(pending || []), ...(created || [])])];
@@ -125,12 +138,24 @@ async function main() {
       const block = taskBlock(markdown, id);
       const taskPriority = block.match(/\*\*priority\*\*\s*[:：]\s*(P[0-3])/i)?.[1] || 'P2';
       const dueDate = dueDateFrom(qa.date, defaults.dueDateDaysByPriority[taskPriority]);
+      // KR と役割のラベル（backlog同期と同じ判定器）。Linear に無いラベルがあっても起票は止めず、警告に残す。
+      const labelNames = labelsForTask(fieldsFromBlock(block), defaults);
+      let labelNodes = [];
+      try {
+        if (labelNames.length) labelNodes = (await gql(`query Labels($names: [String!]) {
+          issueLabels(first: 50, filter: { name: { in: $names } }) { nodes { id name team { id } } }
+        }`, { names: labelNames })).issueLabels.nodes;
+      } catch (error) {
+        console.warn(`::warning::${id}: ラベルを引けませんでした（${error.message}）。ラベルなしで起票します`);
+      }
+      const labels = resolveLabelIds(labelNames, labelNodes, TEAM_ID);
+      if (labels.missing.length) console.warn(`::warning::${id}: Linear に無いラベルを付けられませんでした: ${labels.missing.join(', ')}`);
       const created = await gql(`mutation CreateIssue($input: IssueCreateInput!) {
         issueCreate(input: $input) { success issue { id identifier title url } }
       }`, { input: {
         teamId: TEAM_ID, stateId: todo.id, title: `QAで検出した課題を調査・解消する: ${title.replace(/^\[[^\]]+\]\s*/, '')}`,
         description: block, projectId: defaults.projectId, assigneeId: defaults.assigneeId,
-        dueDate,
+        dueDate, labelIds: labels.ids,
         priority: priority[taskPriority] || priority.P2,
       } });
       if (!created.issueCreate?.success || !created.issueCreate.issue) throw new Error(`Linear did not create ${id}.`);
@@ -155,4 +180,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { mergePendingIds, remainingPendingIds, taskBlock, missingQaDefaults, dueDateFrom };
+module.exports = { mergePendingIds, remainingPendingIds, taskBlock, missingQaDefaults, dueDateFrom, resolveLabelIds };

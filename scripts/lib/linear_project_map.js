@@ -59,4 +59,18 @@ function isRoleLabel(name, defaults = {}) {
   return Boolean(prefix) && String(name || '').startsWith(prefix);
 }
 
-module.exports = { krLabelForCategory, isKrLabel, roleLabelsForOwner, isRoleLabel };
+/**
+ * 課題1件に付けるラベル（KR＋役割）。新規起票の全経路（backlog同期・夜間QA）と既存補完が共有する。
+ */
+function labelsForTask({ category, owner } = {}, defaults = {}) {
+  return [krLabelForCategory(category, defaults), ...roleLabelsForOwner(owner, defaults)].filter(Boolean);
+}
+
+/** backlog の課題ブロック（Markdown）から category / owner を読む。Linear が付ける \\ エスケープにも耐える。 */
+function fieldsFromBlock(block) {
+  const text = String(block || '').replace(/\\([\[\]_*])/g, '$1');
+  const field = name => (text.match(new RegExp(`\\*\\*${name}\\*\\*\\s*[:：]\\s*([^\\n（(]+)`)) || [])[1]?.trim() || null;
+  return { category: field('category'), owner: field('owner') };
+}
+
+module.exports = { krLabelForCategory, isKrLabel, roleLabelsForOwner, isRoleLabel, labelsForTask, fieldsFromBlock };

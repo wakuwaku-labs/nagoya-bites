@@ -47,3 +47,13 @@ test('adds role labels from backlog owner or Notion department, but keeps existi
     ['P-2', ['担当:Editor']],
   ]);
 });
+
+test('backfills labels on nightly-QA issues whose title has no [ID] but whose description is the backlog block', () => {
+  const withRoles = { ...defaults, roleLabels: { prefix: '担当:', roles: ['DataKeeper'], ownerActionLabel: '担当:オーナー作業', ownerActionKeywords: ['片桐'] } };
+  const items = plan([
+    issue('P-70', 'QAで検出した課題を調査・解消する: x', { project: { name: 'Nagoya Bites' }, assignee: { id: 'x' },
+      description: '### [QA-SEC-1] x\n- **category**: trust\n- **owner**: DataKeeper\n' }),
+    issue('P-1', 'Welcome to Linear', { description: 'tutorial' }), // not ours
+  ], [], withRoles);
+  assert.deepEqual(items.map(i => [i.identifier, i.krLabel, i.roleLabels]), [['P-70', 'KR:信頼', ['担当:DataKeeper']]]);
+});
