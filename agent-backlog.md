@@ -255,6 +255,19 @@
   3. `node scripts/sync_backlog_to_linear.js` の dry-run で、新規分の `missingFields` が空になる。
   4. 既存の未完了 Issue（37件）を Project に紐づける。セッションブリーフィングの「未設定: Project」が 0 になる。
 
+### [ISSUE-136] Cyrus を Linear に接続し、AI を委任先にできるようにする
+
+- **priority**: P3 → **status**: blocked
+- **detected**: 2026-10-06
+- **category**: ops
+- **owner**: 片桐（接続はオーナー本人の操作。接続後の設定は Orchestrator）
+- **source**: 2026-10-06 の会話。担当が全部オーナーになっている理由を聞かれ、案3「AI エージェントを担当にする」が選ばれた。Linear ではエージェントは担当者ではなく委任先になる。手順は `docs/linear-ai-native-playbook.md` §4-6
+- **acceptance**:
+  1. オーナーが Cyrus のアカウントを作り、Linear への接続を許可し、GitHub アプリを導入し、Claude の認証をつなぐ（Linear の Settings → AI & Agents に Cyrus が出る）
+  2. `data/linear_issue_defaults.json` に委任先の既定値を足し、`scripts/assign_linear_projects.js` が委任先も設定できるようにする（テスト付き）
+  3. 1件だけ委任して、作られた PR が QA ゲートを通ることを確かめる。マネタイズ・信頼系は委任しない（制約7・8）
+- **付記**: 空になった KR 別 Project 4つ（検索から見つけてもらう / 毎日の編集を止めない / 実在と信頼を守る / 運用を自動で回す）の削除も、オーナーが Linear の画面で行う（自動操作では削除が止められた）
+
 ### [ISSUE-135] Linear の放置・期限切れを、セッションが無い日もサーバ側で通知する
 
 - **priority**: P2 → **status**: done
