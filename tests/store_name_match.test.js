@@ -18,7 +18,7 @@
 
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { namesMatch } = require('../scripts/lib/store_name_match.js');
+const { namesMatch, latinSkeleton, kanaSkeleton, phoneticKey, bilingualVariants } = require('../scripts/lib/store_name_match.js');
 
 // ── 同一店として通すべき対（実データ）──
 const SAME = [
@@ -83,4 +83,56 @@ test('部分一致には下限があり、根拠として弱い一致は数え�
   assert.equal(namesMatch('あいうえ', 'あいうえおかきくけこさしす').ok, false);
   // 半分以上を占めるなら可
   assert.equal(namesMatch('あいうえ', 'あいうえおかき').ok, true);
+});
+
+// ── ローマ字表記 ↔ カタカナ表記（ISSUE-097・2026-10-05）──
+// 閾値（Dice 0.85）も包含の下限も動かさず、比較に使う「読み」（子音の骨格）を増やした。
+// 下の DIFFERENT 群は、実装途中にカタログ5,024店の総当たりで**実際に誤一致した**対。
+// 縛り（一方は英字だけ・他方はカナだけ／一般語を除いた骨格4文字以上／併記から切り出した形は
+// 末尾一致不可）を緩めるとここが落ちる。
+const PHONETIC_SAME = [
+  ['PASTA MANIA 大須店', 'パスタマニア大須店', 'VERIFIED_ALIASES に無い支店でもローマ字↔カナで一致'],
+  ['Reminiscence', 'レミニセンス', '英字だけ ↔ カナだけ'],
+  ['LA VAGABONDE', 'ラ・ヴァガボンド', '英字だけ ↔ カナだけ（ヴ/b・l/r の畳み込み）'],
+  ['Seoul Kitchen ソウルキッチン', 'ソウルキッチン', '併記の片方だけを名乗る相手'],
+  ['wakamaru ワカマル 栄店', 'ワカマル 栄店', '併記の片方＋支店名'],
+];
+const PHONETIC_DIFFERENT = [
+  ['PASTA MANIA 鶴舞店', 'パスタマニア 大須店', '読みは同じでも支店名（漢字部分）が違う'],
+  ['Cafe MARI カフェマリ', 'Cafe MARU（カフェ マル）', '併記名同士・母音だけ違う別店（実測）'],
+  ['AOI CAFE アオイカフェ', 'Yaya Cafe ヤヤカフェ', '一般語（cafe）の骨格だけで一致していた別店（実測）'],
+  ['UNO cafe ウノカフェ', 'nana cafe ナナ カフェ', '同上（実測）'],
+  ['BAR Ad\'E バー アデ', 'Bar DAY バーデイ', '同上（実測）'],
+  ['Alan. アラン 栄', 'Rin リン 栄', '短い屋号の骨格衝突（実測）'],
+  ['KITSUNE キツネ', '吉音 KITSUNE', '併記から切り出した「kitsune」が別店の末尾に刺さる（錦3 vs 栄4・実測）'],
+  ['hangout ハングアウト', '邦ロックバー Hangout', '同上（中村区 vs 中区・実測）'],
+  ['MARU', 'マル', '骨格が短すぎる（mr）'],
+  ['Cafe ABC ラシック', 'ラシック', 'カナが読みでなく施設名のときは併記扱いしない'],
+  ['Cafe Mari', 'カフェマル', '一般語を除くと骨格が4文字に満たない'],
+];
+
+test('ローマ字↔カタカナ: 同じ店の表記違いを拾う', () => {
+  for (const [a, b, note] of PHONETIC_SAME) {
+    assert.equal(namesMatch(a, b).ok, true, `${note}: 「${a}」と「${b}」が別店と判定された`);
+    assert.equal(namesMatch(b, a).ok, true, `${note}（逆向き）: 「${b}」と「${a}」が別店と判定された`);
+  }
+});
+
+test('ローマ字↔カタカナ: 読みの一致で別店を通さない', () => {
+  for (const [a, b, note] of PHONETIC_DIFFERENT) {
+    for (const [x, y] of [[a, b], [b, a]]) {
+      const r = namesMatch(x, y);
+      assert.equal(r.ok, false, `${note}: 「${x}」と「${y}」が同一店と判定された (sim ${r.sim})`);
+    }
+  }
+});
+
+test('ローマ字↔カタカナ: 骨格化の単体', () => {
+  assert.equal(latinSkeleton('PASTA MANIA'), kanaSkeleton('パスタマニア'));
+  assert.equal(latinSkeleton('Seoul Kitchen'), kanaSkeleton('ソウルキッチン'));
+  assert.equal(latinSkeleton('Reminiscence'), kanaSkeleton('レミニセンス'));
+  // 漢字・数字は骨格化しない（支店名の差を残す）
+  assert.notEqual(phoneticKey('PASTA MANIA 鶴舞店').key, phoneticKey('パスタマニア大須店').key);
+  // 施設名がカナで並んでいるだけの店名からは変種を作らない
+  assert.deepEqual(bilingualVariants('Cafe ABC ラシック'), []);
 });
