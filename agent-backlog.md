@@ -8,8 +8,9 @@
 
 ### [SEO-114] ジャーナル末尾の「エリア×ジャンル」導線が記事のエリアを無視している（栄の記事から名駅・緑区のラーメン一覧へ送っている）
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-04
+- **resolved**: 2026-10-05
 - **category**: SEO
 - **owner**: Builder
 - **source**: SEOアドバイス(LINE) 2026-10-03 原文「人気ページ1位は日次記事。👉 2026-09-29-sakae-tsukemen-tou-counter12 の記事下部に、関連性の高い『栄』や『つけ麺』の features/特集記事への導線をテキストリンクで3つ追記する」— 1記事への手書き追記ではなく、調査で判明した構造欠陥に振替採用
@@ -1330,6 +1331,17 @@
 - **review**: 本チケットのacceptanceは上記「検証できる事実」の5項目。人手レビューはPR作成後にDesigner役職（Orchestrator代行）が実施
 - **未完了**: PR作成・マージ。マージ後の翌日CI（node build.js）でHotPepper新規射影フィールド（定休日/最寄駅/席数等）が実データに反映されることを確認（ローカルはHOTPEPPER_API_KEY未設定のため射影ロジックのfixtureテストのみで検証済み）
 ## 実行ログ
+
+### 2026-10-05（自動ルーティン・クラウドセッション）
+
+**処理件数**: 1件（SEO-114）
+
+- **[SEO-114]** ジャーナル末尾エリア×ジャンルハブを記事エリアに合わせて最適化
+  - **実装**: `scripts/lib/hub_link_finder.js` に `detectArticleArea`（slug語一致→タイトルキーワード最長一致）/ `featureToGenreSlug`（特集→ジャンルslug逆引き）/ `findAreaHub`（エリア×ジャンルhub→エリア特集→フォールバックの3段優先）を追加。`scripts/refresh_journal_related.js` でPOLICY/MANIFESTを起動時1回読み込み、`buildRelatedHtml()` でエリア検出→最適ハブ選択→記事エリア外ハブを無言で並べないロジックに置き換え
+  - **検証**: before=47件（エリア不一致ハブ）→ after=10件（正当なフォールバック）。確認記事 `2026-09-29-sakae-tsukemen-tou-counter12.html` が `stores/area/meieki/ramen.html` + `stores/area/midori-tempaku/ramen.html` から `features/sakae.html`（栄・錦グルメ15選）に変更。`node scripts/refresh_journal_related.js` 151件中62件更新
+  - **QA**: `node --test tests/*.test.js` 228/228 pass / `node build.js` 正常終了（API未設定でabort・index.html未変更） / `data/stores.json` 4966件（変動なし）/ 変更はjournal HTML 62本+スクリプト2本のみ
+
+---
 
 ### 2026-10-03（自動ルーティン・クラウドセッション）
 
