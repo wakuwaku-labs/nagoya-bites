@@ -106,6 +106,9 @@ const VERIFIED_ALIASES = {
   // 屋号まるごとの表記を登録して拾い直す（scripts/lib/store_name_match.js の注記参照）。
   'PASTA MANIA 鶴舞店': ['パスタマニア鶴舞店'],
   'LIGNIN': ['リグニン'],
+  // 2026-10-06 ISSUE-140。Places が同一 place_id（ChIJfUAIRY53A2ARw60QOjxLAiY）・同一住所（西区那古野1-6-13）で
+  // 返す屋号「なごのや」と、HotPepper J001209497「貸切スペース カフェ なごのや」・公式 nagonoya.jp を突き合わせて同一店を確認済み
+  '喫茶、食堂、民宿。なごのや': ['なごのや'],
 };
 
 /**

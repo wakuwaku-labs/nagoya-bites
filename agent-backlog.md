@@ -299,9 +299,9 @@
   - **要相談**: fathers-day-2026 の「寿司・割烹」「名古屋名物 うなぎ」「カジュアル」セクションに載っている6軒が全て焼肉店で、見出しと中身が合っていない（本件以前からの構成。シーズン終了済みのため未対応）
 - **関連**: [[ISSUE-139]]・[[ISSUE-140]]・[[ISSUE-127]]
 
-### [ISSUE-140] 実在は確認できたのに掲載データ（stores.json）から落ちた店5軒の原因を調べ、必要なら正規の手順で戻す
+### [ISSUE-140] 実在は確認できたのに掲載データ（stores.json）から落ちた店5軒の原因を調べ、必要なら正規の手順で戻す ✅
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-06
 - **category**: データ / 実在検証
 - **owner**: DataKeeper
@@ -316,6 +316,14 @@
   2. 掲載し直す場合は `GOOGLE_MAPS_API_KEY` のある環境で `node scripts/fetch_manual_store_photos.js`（実在三重検証）を通した店だけ `manual_stores.json` へ追加する。通らなければ掲載しない（架空店ブロック）
   3. 同じ原因で他にも落ちている店がないか、旧 `stores.json` との差分（71件）を一覧にして確認する
   4. 特集へ戻す場合は `node scripts/audit_feature_stores.js` が 0 件のままであること
+- **結果（2026-10-06）**:
+  - **原因は2系統**。(A) 手動店（manual_stores.json）3軒: `build.js` の「写真取得を試みたが未取得なら非表示」（ISSUE-120・オーナー承認）で除外。いずれも `写真URL` 空＋`写真失敗理由` あり。(B) HotPepper由来2軒: `stores.json` は日次ビルドで HotPepper API の取得結果から作り直され、取得に出入りがある（ISSUE本文の71件は同じ性質。9/24〜10/5 の auto-update で 43件消え94件増えた実測。なごのやは 9/26 と 10/1〜10/4 に出入りしている）。閉店リスト・重複統合・EXCLUDED_HP_IDS・品質フィルタには該当なし（`data/closed_stores.json`・重複レポートに無し）。HotPepper側の出入りの根本原因は HOTPEPPER_API_KEY が無く再現できていない
+  - 餃子の王将 大須観音店: 原因A（写真 `no-cdn`＝Placesで写真CDNを取れず）。再検証で店名一致度1、客投稿の代替枠写真を採用（`data/photo_policy.json` の2026-08-30承認）。**manual_stores.json の写真URLを更新して再掲載候補に復帰**（編集部推薦・出典は既存）
+  - なごのや: 原因A（`name-mismatch`＝手動店名「喫茶、食堂、民宿。なごのや」とPlaces屋号「なごのや」の不一致）。Placesの place_id・住所（西区那古野1-6-13）がHotPepper J001209497「貸切スペース カフェ なごのや」と一致し公式 nagonoya.jp もあるため、`scripts/lib/photo_policy.js` の VERIFIED_ALIASES に登録して再検証→オーナー写真を採用。**再掲載候補に復帰**（Google評価4.0は4.2未満だが築90年古民家・SNS話題の差別化要素＋出典URLあり）
+  - 麺や 六三六 名駅店: 原因A（`name-mismatch`）。**戻さない**。手動レコードの住所（千種区池下・覚王山）と、出典のサカエ経済新聞（大須の新店）と、Placesの名駅4-4-38「六三六 名駅店」（評価3.5）が食い違い、同じ店と確認できない。Placesの候補は「六三六 大須本店」（一致度0.44）。基準（評価4.2以上または差別化要素・実在の裏付け）を満たさず、編集部推薦の根拠も検算できない
+  - 会席料理 ひつまぶし 雅MASA / しゃぶしゃぶいちばん 名駅南店: 原因B。手動キュレーション基準（メディア露出の裏付け）の根拠がリポジトリ内に無い（雅MASAは評価4.9だが出典なし、いちばんは4.1でチェーン）。**手動で追加せず戻さない**。HotPepperの取得に載れば自動で復帰する
+  - 反映は CI の `build.js` に任せる（HOTPEPPER_API_KEY が無くローカルでビルドしていない）。`npm test` 279件通過
+- **残る問題（要相談）**: HotPepper由来店の出入り自体（取得の取りこぼし）は未解決。HOTPEPPER_API_KEY のある環境で `fetchShopsByMiddleArea` の応答件数を日をまたいで比べる調査が必要
 - **関連**: [[ISSUE-139]]
 
 ### [ISSUE-139] 特集に載っているのに LOCAL_STORES で実在確認できない店11軒を片付け、検出ゼロに戻す ✅
