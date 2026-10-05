@@ -1,4 +1,4 @@
-status: done
+status: in_progress
 
 # 目的
 Nagoya Bitesの課題管理をNotionからLinearへ移行し、Linearを唯一の作業トラッカーにする。
@@ -27,7 +27,7 @@ Nagoya Bitesの課題管理をNotionからLinearへ移行し、Linearを唯一�
 - ユーザーがNotionからLinearへの全件移行を明示した。対象は会話文脈上、Notionの課題トラッカーとそれを維持する運用経路。
 
 # 次にやること
-- Linearで日常運用を開始する。GitHub ActionsなどOrca外の自動実行環境からLinearへ書き込む場合は、別途Linear認証を安全に設定する。
+- GitHub Actions secret `LINEAR_API_KEY` を利用者が安全に登録し、workflow_dispatchで一度実行して自動同期を確認する。
 
 # 試したが駄目だったこと
 - この実行環境にLinear専用MCPコネクタは見当たらない。Orca CLIの接続で移行・運用できる。
@@ -41,6 +41,8 @@ Nagoya Bitesの課題管理をNotionからLinearへ移行し、Linearを唯一�
 - 元課題IDはLinearのタイトル/説明に残す。Notion 48件には同一ID重複が確認されているため、Linear内で衝突を隠さずNotion URLも移行記録に含める。
 - LinearにBlocked状態はない。元Blockedの2件はTodoにマップし、blockerの詳細とNotion状態は説明文に保持した。
 - CIからLinearへの書き込み認証は設定していない。Linear同期はOrca CLIが使えるローカル環境で実行する。
+- 夜間QA→LinearのGitHub Actions同期スクリプトとworkflow接続を実装。未同期IDは `data/linear_sync_pending.json` に保持し、認証追加後の再試行に備える。secret登録と実workflow確認は未完了。
+- CIからLinearへ直接書き込む場合は、Linear APIキーをGitHub Actions secretとして利用者が登録する。認証情報を会話やログに出さない。
 - テストスイートは実行していない。Linear Dry-runは0差分、チーム一覧は60件で非truncated、移行元48件・新規8件・Duplicateの4関係を読み戻して確認した。
 - 既存backlogは選定器と詳細仕様の正本として使われる。Linearを唯一の進捗管理先にしつつ、双方向二重更新を避ける片方向連携を設計する。
 

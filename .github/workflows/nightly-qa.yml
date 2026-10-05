@@ -58,14 +58,20 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
-      - name: 発見事項の起票をコミット（agent-backlog.md → 既存sync経由でNotionへ）
-        # QA がハード失敗で exit 1 でも、その前に nightly_qa.js が backlog へ起票済みなので
-        # always() で必ずコミットする。[skip actions] でデプロイ(build.yml)は誘発しない。
+      - name: 新しいQA課題をLinearへ同期
+        if: always() && !cancelled()
+        env:
+          LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+        run: node scripts/sync_qa_findings_to_linear.js
+
+      - name: 発見事項の起票をコミット（backlogとLinear同期台帳）
+        # QA がハード失敗で exit 1 でも backlog へ起票済みなら同期・記録する。
+        # [skip actions] でデプロイ(build.yml)は誘発しない。
         if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add agent-backlog.md data/qa_findings.json docs/qa/ || true
+          git add agent-backlog.md data/qa_findings.json data/linear_sync_state.json data/linear_sync_pending.json docs/qa/ || true
           git diff --cached --quiet || git commit -m "chore(qa): 夜間QA発見事項を起票 [skip actions]"
           git pull --rebase origin main || true
           git push || (sleep 5 && git pull --rebase origin main && git push) || true
