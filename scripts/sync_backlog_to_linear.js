@@ -21,6 +21,20 @@ const stateFor = { ready: 'Todo', in_progress: 'In Progress', partial: 'In Progr
 const priorityFor = { P0: 'urgent', P1: 'high', P2: 'medium', P3: 'low' };
 const priorityNumber = { urgent: 1, high: 2, medium: 3, low: 4 };
 
+function isValidDueDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value || '')) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}
+
+function missingCreateFields(task) {
+  return [
+    !task.assignee && 'assignee',
+    !isValidDueDate(task.dueDate) && 'dueDate',
+    !task.project && 'project',
+  ].filter(Boolean);
+}
+
 function readState() {
   return JSON.parse(fs.readFileSync(STATE, 'utf8'));
 }
@@ -92,8 +106,17 @@ function main() {
   const pending = plan.filter(x => !skipped.has(x.identifier));
   const counts = pending.reduce((a, x) => (a[x.action]++, a), { create: 0, update: 0, 'mark-duplicate': 0 });
   console.log(JSON.stringify({ mode: apply ? 'apply' : 'dry-run', workspace: state.workspaceName, total: pending.length, ...counts,
-    tasks: pending.map(x => ({ action: x.action, id: x.task.id, title: x.task.title, linear: x.identifier || null, status: x.status, priority: x.priority })) }, null, 2));
+    tasks: pending.map(x => ({ action: x.action, id: x.task.id, title: x.task.title, linear: x.identifier || null, status: x.status, priority: x.priority,
+      missingFields: x.action === 'create' ? missingCreateFields(x.task) : [] })) }, null, 2));
   if (!apply) return;
+
+  const invalidCreates = pending.filter(x => x.action === 'create' && missingCreateFields(x.task).length);
+  if (invalidCreates.length) {
+    console.error(JSON.stringify({ error: 'Refusing to create incomplete Linear issues; add assignee, valid due date, and project to agent-backlog.md',
+      tasks: invalidCreates.map(x => ({ id: x.task.id, missingFields: missingCreateFields(x.task) })) }, null, 2));
+    process.exitCode = 1;
+    return;
+  }
 
   for (const item of pending) {
     if (item.action === 'mark-duplicate') {
@@ -136,6 +159,7 @@ function main() {
       '--workspace', WORKSPACE, '--json');
     if (item.priority) args.push('--priority', item.priority);
     if (item.description) args.push('--description', item.description);
+    if (item.action === 'create') args.push('--assignee', item.task.assignee, '--due-date', item.task.dueDate, '--project', item.task.project);
     const run = spawnSync('orca', args, { encoding: 'utf8', maxBuffer: 2 * 1024 * 1024 });
     let result;
     try { result = JSON.parse(run.stdout || '{}'); } catch (_) { result = {}; }
@@ -154,4 +178,6 @@ function main() {
   }
 }
 
-main();
+if (require.main === module) main();
+
+module.exports = { isValidDueDate, missingCreateFields };
