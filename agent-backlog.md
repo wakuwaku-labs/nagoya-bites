@@ -1004,7 +1004,7 @@
 
 ### [SEO-093] 日次アドバイス生成プロンプトに**失効した前提**（「docs/daily-posts/ にSNS原稿が毎日用意されている」「特集20本」）が固定文で埋め込まれており、停止済みのSNS原稿を使う助言が停止後9日間で5回出て助言枠を浪費している
 
-- **priority**: P2 → **status**: in_progress（コード修正完了・2026-09-28 18:53 JST に clasp push でGASへ反映済み。翌朝レポートでの反映確認待ち）
+- **priority**: P2 → **status**: done（2026-10-06 反映後レポートで効果判定済み）
 - **detected**: 2026-09-13
 - **2026-09-28 追記（GASデプロイ実施・SEOループより）**: オーナー指示「自動でやって」を受け、`.gas-deploy/` から `clasp push -f` を実行。事前に `clasp pull` でリモートを取得し、差分が SEO-092/093 の変更分のみ（リモート固有の変更なし・appsscript.json 同一・`node --check` 通過・`GSC_METRICS_URL` は HTTP 200）であることを確認してから上書き。push 後の再 pull でリモート＝リポジトリ版の一致を確認済み。**反映の確定判定は翌朝（2026-09-29）の日次レポートで `node scripts/check_gas_deploy_health.js` が `deployed` を返すこと**で行い、確認できたら `data/gas_deploy_policy.json` の `pending_fixes` を空にして本チケットを done にする（runbook「反映されたら」）。
 - **category**: SEO / 計測
@@ -1052,6 +1052,7 @@
   - **効果の実測（同日）**: 同じレポート本文で再記録すると判定が `deployed` → **`not_deployed`（missing_fixes: SEO-093）** に反転し、根拠行が `👉 docs/daily-posts/ にあるSNS投稿原稿を…` と刻まれた。`node scripts/check_gas_deploy_health.js` は「確定観測 2回連続・許容 2回」で **exit 1**＝`gas-deploy-watchdog.yml`（毎日14:00 JST）が GitHub Issue を起票し**オーナーにメールが届く**状態になった。副次的に `bounce_rate_divergence`（SEO-062）も参照日が一致して `deployed`（レポート25% vs GA4実測25.0%・差0.0pt）と確定した。
   - **残件は変わらず「GASへのデプロイ（オーナー本人の操作）」のみ**。acceptance⑤の「反映後7日間で0回」は依然として開始できていない。手順は `docs/gas-deploy-verification-runbook.md`。
 ---
+- **2026-10-06 効果判定（acceptance⑤・done）**: `clasp push`（09-28 18:53 JST）後の日次レポート6通（09-28〜10-04。10-01分はメール未着のため7日中6通）を Gmail で全文確認し、`docs/daily-posts` の出現は**0回**だった。10-04 のSNS提案は「features/ の『デート特集』記事の見出しと写真を使い…」と、新コードの文言（実在資産を使う）で出力された。`check_gas_deploy_health.js` も 09-28〜09-30 を deployed と判定。`data/gas_deploy_policy.json` の `pending_fixes` を `resolved_fixes` へ移し、反映待ちは0件になった。
 
 ### [SEO-090] 憲法が「勝つ領域」と定める接待・個室シーンで、既に6本ある特集が28日で計26表示・**0クリック**。7本目を作る前に、この乖離を診断して統合/差別化/撤退を決める
 
@@ -1149,7 +1150,7 @@
 
 ### [SEO-092] 日次アドバイス生成器が GSC の実クエリを一切参照しておらず、「一人ご飯」「接待」など**自社の実データで表示0のKW**を繰り返し提案している（3日で2回・助言枠の構造的浪費）
 
-- **priority**: P2 → **status**: in_progress（コード修正完了・2026-09-28 18:53 JST に clasp push でGASへ反映済み。翌朝レポートでの反映確認待ち）
+- **priority**: P2 → **status**: done（2026-10-06 反映後レポートで効果判定済み）
 - **detected**: 2026-09-12
 - **2026-09-28 追記（GASデプロイ実施・SEOループより）**: オーナー指示「自動でやって」を受け、`.gas-deploy/` から `clasp push -f` を実行。事前に `clasp pull` でリモートを取得し、差分が SEO-092/093 の変更分のみ（リモート固有の変更なし・appsscript.json 同一・`node --check` 通過・`GSC_METRICS_URL` は HTTP 200）であることを確認してから上書き。push 後の再 pull でリモート＝リポジトリ版の一致を確認済み。**反映の確定判定は翌朝（2026-09-29）の日次レポートで `node scripts/check_gas_deploy_health.js` が `deployed` を返すこと**で行い、確認できたら `data/gas_deploy_policy.json` の `pending_fixes` を空にして本チケットを done にする（runbook「反映されたら」）。
 - **category**: SEO / 計測
@@ -1200,6 +1201,7 @@
   - 助言の solo-dining 側の打ち手は従来どおり [[SEO-087]] に集約し、本チケットでは新規起票をしない（同じ欠陥で毎日チケットを増やさない）
 
 ---
+- **2026-10-06 効果判定（acceptance④⑤・done）**: `clasp push`（09-28 18:53 JST）後の日次レポート6通（09-28／09-29／09-30／10-02／10-03／10-04。10-01分はメール未着）を Gmail で全文確認した。助言が名指ししたKWは「名古屋駅 一人飲み」（5通）・「青ノ月」・「焼肉 三郎 原店 名古屋市 レビュー」・「六六堂 栄」・「名古屋 デート ディナー」の5語。すべて同日の `data/gsc_metrics.json` に実在した（**実在率100%**。例: 名古屋駅 一人飲み 72表示・10.2位／焼肉 三郎…は09-29版で506表示・9.7位）。旧コードの固定例示「名古屋 接待 個室」と、表示0のKW（一人ご飯・おひとりさま等）は0回だった。`check_gas_deploy_health.js` は 09-28〜09-30 を deployed と判定したため、`data/gas_deploy_policy.json` の `pending_fixes` から `resolved_fixes` へ移した。なお、店名の指名KW（青ノ月・六六堂 栄・焼肉 三郎）を推す助言は Strategic Skip に当たるため、従来どおり triage で却下する（本チケットのガードレールどおり）。
 
 ### [SEO-089] 「予約行動」の分子が狭すぎて日によって 0 に落ちる — SEO-072 の acceptance ② が求めた「予約ドメインへの `outbound_click`」が実装されないまま done になり、🔴枠がその 0 に持っていかれる
 
