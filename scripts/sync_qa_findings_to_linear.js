@@ -80,6 +80,25 @@ function taskBlock(markdown, id) {
   return lines.slice(start, end).join('\n').trim();
 }
 
+/** 毎晩、設定済みのラベル（KR・役割）が Linear に実在するかを確かめる。起票が無い夜もラベル照会の経路を実地で通す。 */
+async function preflightLabels() {
+  const defaults = JSON.parse(fs.readFileSync(defaultsPath, 'utf8'));
+  const role = defaults.roleLabels || {};
+  const names = [...(defaults.krLabelRules || []).map(r => r.label),
+    ...(role.roles || []).map(r => `${role.prefix}${r}`), role.ownerActionLabel].filter(Boolean);
+  if (!names.length) return;
+  try {
+    const data = await gql(`query Labels($names: [String!]) {
+      issueLabels(first: 50, filter: { name: { in: $names } }) { nodes { id name team { id } } }
+    }`, { names });
+    const { missing } = resolveLabelIds(names, data.issueLabels.nodes, TEAM_ID);
+    if (missing.length) console.warn(`::warning::Linear に無いラベル（自動起票で付けられない）: ${missing.join(', ')}`);
+    else console.log(`Linear labels OK: ${names.length}件すべて実在`);
+  } catch (error) {
+    console.warn(`::warning::ラベルの確認に失敗しました（${error.message}）`);
+  }
+}
+
 async function main() {
   const qa = JSON.parse(fs.readFileSync(findingsPath, 'utf8'));
   const pending = fs.existsSync(pendingPath) ? JSON.parse(fs.readFileSync(pendingPath, 'utf8')) : [];
@@ -92,6 +111,7 @@ async function main() {
 
   // Validate the configured secret even on runs with no findings, without logging it.
   await gql('query VerifyLinearAuth { viewer { id } }', {});
+  await preflightLabels();
   if (!ids.length) {
     console.log('Linear API authentication succeeded; no new QA findings to create.');
     return;
