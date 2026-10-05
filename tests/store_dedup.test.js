@@ -160,3 +160,16 @@ test('補助関数: 区の読み取りと店名の表記揺れ', () => {
   assert.equal(wardOf({ 'エリア': '中川区・港区' }), '');
   assert.equal(looseName('焼肉　SEJONG　錦店　（セジョン）'), looseName('焼肉 SEJONG 錦店 セジョン'));
 });
+
+test('冪等: 統合済みの結果にもう一度かけても何も統合されず件数が変わらない（再発防止の決定的チェック）', () => {
+  const list = [
+    { '店名': '串たつ 金山駅店', 'ホットペッパーID': 'J003763594', placeId: 'P', 'Instagram': 'x' },
+    { '店名': '串たつ 金山駅店', 'ホットペッパーID': 'J000029144', placeId: 'P' },
+    { '店名': '別の店', placeId: 'Q' },
+  ];
+  const once = dedupeStores(list);
+  assert.equal(once.stores.length, 2);
+  const twice = dedupeStores(once.stores);
+  assert.equal(twice.merged.length, 0);
+  assert.equal(twice.stores.length, once.stores.length);
+});

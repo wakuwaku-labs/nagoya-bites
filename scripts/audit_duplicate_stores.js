@@ -28,9 +28,10 @@
 const fs = require('fs');
 const path = require('path');
 const { namesMatch } = require('./lib/store_name_match');
+const { dedupeStores } = require('./lib/store_dedup');
 
 const ROOT = path.resolve(__dirname, '..');
-const STORES_PATH = path.join(ROOT, 'data', 'stores.json');
+const STORES_PATH = process.env.STORES_PATH || path.join(ROOT, 'data', 'stores.json');
 const BASELINE_PATH = path.join(ROOT, 'data', 'store_duplicate_baseline.json');
 const REPORT_PATH = path.join(ROOT, 'data', 'store_duplicate_report.json');
 
@@ -116,8 +117,21 @@ function main() {
   console.log(`  うち placeId一致＋名前ゲート通過: ${confirmed.filter(g => g.reason === 'placeid_match').length}件`);
   console.log(`不確定（placeId一致・名前が違う＝チェーン店等）: ${uncertain.length}件`);
 
+  // build.js と同じ統合器（store_dedup.js）を当てて内訳を出す。
+  //   mergeable … 統合器が「同一店」と確認して統合できる組。build 後の stores.json に残っていたら
+  //               統合漏れ（build.js の統合ステップが外れた・新しい重複経路ができた）＝ --check で失敗
+  //   skipped   … 同一と確認できず残した組（区・placeId・HotPepperID の食い違い等）。人の確認待ちで、
+  //               ベースラインより増えたら --check で失敗
+  const dd = dedupeStores(stores);
+  const mergeable = dd.merged.length;
+  const skipped = dd.skipped;
+  const skippedByReason = {};
+  for (const x of skipped) skippedByReason[x.reason] = (skippedByReason[x.reason] || 0) + 1;
+  console.log(`統合器が今すぐ統合できる組（build 後は 0 のはず）: ${mergeable}組`);
+  console.log(`同一と確認できず残している組: ${skipped.length}組 ${JSON.stringify(skippedByReason)}`);
+
   if (args.has('--report')) {
-    const report = { generated: new Date().toISOString(), confirmed, uncertain };
+    const report = { generated: new Date().toISOString(), mergeable, skipped, confirmed, uncertain };
     fs.writeFileSync(REPORT_PATH, JSON.stringify(report, null, 2), 'utf8');
     console.log(`\nレポートを保存: ${path.relative(ROOT, REPORT_PATH)}`);
   }
@@ -126,10 +140,11 @@ function main() {
     const baseline = {
       savedAt: new Date().toISOString(),
       confirmedCount: confirmed.length,
+      skippedCount: skipped.length,
       storeCount: stores.length,
     };
     fs.writeFileSync(BASELINE_PATH, JSON.stringify(baseline, null, 2), 'utf8');
-    console.log(`\nベースライン保存: 確定重複=${confirmed.length}件（${path.relative(ROOT, BASELINE_PATH)}）`);
+    console.log(`\nベースライン保存: 確定重複=${confirmed.length}件・未確認で残す組=${skipped.length}（${path.relative(ROOT, BASELINE_PATH)}）`);
     return;
   }
 
@@ -141,15 +156,21 @@ function main() {
       console.warn('ベースラインファイルが未生成です（初回は --save で作成してください）');
       process.exit(0);
     }
-    const prev = baseline.confirmedCount;
-    const curr = confirmed.length;
-    if (curr > prev) {
-      console.error(`\n⚠ 確定重複が増加しています: ${prev}件 → ${curr}件 (+${curr - prev}件)`);
-      console.error('新たに重複が追加された可能性があります。data/store_duplicate_report.json を確認してください。');
-      console.error('  node scripts/audit_duplicate_stores.js --report');
-      process.exit(1);
+    const prevSkipped = baseline.skippedCount;
+    let failed = false;
+    if (mergeable > 0) {
+      console.error(`\n⚠ 統合できる重複が ${mergeable}組 残っています（build の統合ステップ漏れ、または新しい重複経路）。`);
+      console.error('  node scripts/audit_duplicate_stores.js --report で data/store_duplicate_report.json の mergeable を確認してください。');
+      failed = true;
     }
-    console.log(`\n✅ 重複件数は前回比変化なし（${curr}件 / ベースライン ${prev}件）`);
+    if (typeof prevSkipped === 'number' && skipped.length > prevSkipped) {
+      console.error(`\n⚠ 同一と確認できず残している組が増加: ${prevSkipped} → ${skipped.length}（新しい重複の混入）`);
+      failed = true;
+    } else if (typeof prevSkipped !== 'number') {
+      console.warn('ベースラインに skippedCount がありません（--save で更新してください）');
+    }
+    if (failed) process.exit(1);
+    console.log(`\n✅ 統合漏れなし（mergeable 0）・未確認で残す組 ${skipped.length}組 / ベースライン ${prevSkipped}組`);
   }
 }
 

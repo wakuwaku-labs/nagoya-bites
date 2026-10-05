@@ -218,7 +218,7 @@ jobs:
       - name: 重複店舗レコードを監査（ISSUE-132・新たな重複の増加を検知）
         # data/stores.json で「店名完全一致」または「placeId一致＋namesMatch()」の
         # 確定重複グループ数がベースライン（data/store_duplicate_baseline.json）より
-        # 増えたら exit 1。既存の58件は受け入れ済みで、新規重複の混入だけを止める。
+        # 増えたら exit 1。build.js が統合器で統合した後に統合できる組が残っていたら（統合漏れ）、または同一と確認できず残す組がベースライン（23組）より増えたら exit 1。
         # placeId だけで判定しない（チェーン店が共有 placeId を持つ例があるため）。
         run: node scripts/audit_duplicate_stores.js --check
         continue-on-error: true
