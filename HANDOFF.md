@@ -31,7 +31,7 @@ Linear初心者が課題を選び、内容を理解し、作業を依頼・確�
 - `/solve-next` がLinear Issue ID・backlog IDを受け取り、その課題から始める手順を追加。引数なしの既存候補選定は維持。
 - `CLAUDE.md` と `docs/linear-task-workflow.md` から初心者ガイドへの導線を追加。
 - Orca CLIの接続を確認。チーム「片桐若登」、key `P`。assigned filterは0件。ガイドの例 `P-51` と `ISSUE-032` の対応台帳を照合。
-- 最終確認で `npm test` 249件成功、`git diff --check` 成功。変更コミットは `d3b79f84c9` と `01be4fd339`。
+- 最終確認で `npm test` 249件成功、`git diff --check` 成功。主な変更コミットは `d3b79f84c9`、引き継ぎ更新は `01be4fd339` と `19bd7d9548`。作業ブランチへ最新 `origin/main` をマージ済み。
 
 # 次にやること
 - Linearを唯一の進捗管理先として日常運用する。
