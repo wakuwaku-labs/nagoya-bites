@@ -257,7 +257,8 @@
 
 ### [ISSUE-135] Linear の放置・期限切れを、セッションが無い日もサーバ側で通知する
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
+- **2026-10-06 完了**: `scripts/linear_watchdog.js`（判定・`classify()` 共有）と `.github/workflows/linear-watchdog.yml`（毎朝8:00 JST・Issue起票/自動クローズ・月曜に週次振り返り Issue）を追加。Linear を読めない場合も原因つきで起票。テスト `tests/linear_watchdog.test.js`。注意: 移行した課題は 2026-10-05 以降更新が無いため、2026-10-19 前後に「14日以上放置」がまとめて出る見込み（実態どおりなので閾値は変えない）
 - **detected**: 2026-10-06
 - **category**: ops
 - **owner**: Builder
