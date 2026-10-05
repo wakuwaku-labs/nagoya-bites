@@ -1,8 +1,10 @@
 ---
-description: agent-backlog.md から優先度最高の未着手タスクを選び、対応するLinear Issueを更新しながら実装→QA→デプロイまで進める。
+description: Linear Issue IDを指定して課題を進めるか、指定がなければbacklogから次の1件を選び、Linear Issueと状態をそろえながら実装→QA→デプロイまで進める。
 ---
 
-# /solve-next — 次の1件を解く
+# /solve-next — 指定課題または次の1件を解く
+
+引数 `$ARGUMENTS` がLinear Issue ID（例: `P-51`）またはbacklog ID（例: `ISSUE-032`）なら、その課題を対象にする。引数がなければ、従来どおり次の候補を選ぶ。LinearのURLが渡された場合も、URL内のIssue IDを使う。
 
 NAGOYA BITES の組織として、滞留タスクを順次消化するためのコマンド。
 **1ターン1件の原則**：1回の実行で1課題のみ処理する（暴走防止）。次を解きたければ再度 `/solve-next` を実行。
@@ -13,18 +15,20 @@ NAGOYA BITES の組織として、滞留タスクを順次消化するための�
 
 ### Step 1: Linear Issueを確認
 
-`agent-backlog.md`の選定結果を取得し、対象IDでLinearを検索する:
+引数がLinear Issue IDならLinearから直接読み、タイトル内の `[BACKLOG-ID]` を対応IDとして特定する。引数がbacklog IDなら対応台帳 `data/linear_sync_state.json` からLinear Issue IDを引く。指定がなければ `agent-backlog.md` から次の候補を取得する。
+
+Linear Issueを読み、backlogとの対応を確認する:
 
 ```bash
-node scripts/next_task.js
-orca linear search "<選定したID>" --workspace all --limit 10 --json
+node scripts/next_task.js # 課題IDの指定がない場合のみ実行
+orca linear issue <Linear-ID> --full --comments --workspace <workspace-id> --json
 ```
 
-`[ID]`が一致し、Duplicate状態ではないLinear Issueを対応先にする。現在状態・優先度・担当者を読み込む。複数候補やID不一致があれば作業開始前に止めて照合する。Notion同期は行わない。
+Linear Issue IDまたはbacklog IDのどちらで渡されたかを問わず、両方のIDが対応台帳とLinear課題内で一致し、課題の内容が対象仕様と整合することを確認する。タイトルの表記差（状態絵文字など）は許容する。現在状態・優先度・担当者・コメントを読み込む。課題が見つからない、対応IDが食い違う、Duplicate/Done/Canceled状態、または複数候補なら作業開始前に止めて説明する。Notion同期は行わない。
 
-### Step 2: 次に解くタスクを選定
+### Step 2: 対象タスクを確認
 
-`agent-backlog.md` を読み、以下の優先順で1件選ぶ：
+引数に課題があればその課題だけを確認する。引数がなければ、`agent-backlog.md` を読み、以下の優先順で1件選ぶ：
 
 1. **優先度**: P0 → P1 → P2 → P3
 2. **ステータス**: `ready` を最優先 / `in_progress` (停滞中) / `partial` (続き) / `blocked` はスキップ

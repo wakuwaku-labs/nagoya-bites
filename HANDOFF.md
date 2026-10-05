@@ -1,13 +1,15 @@
 status: done
 
 # 目的
-Nagoya Bitesの課題管理をNotionからLinearへ移行し、Linearを唯一の作業トラッカーにする。
+Linear初心者が課題を選び、内容を理解し、作業を依頼・確認できる橋渡しを整える。移行時の記録と判断もこのメモに保持する。
 
 # 完了条件
 - Notionの課題トラッカー全件をLinearへ移し、課題本文・ID・状態・優先度・カテゴリ・担当部署・日付を保持する。
 - Linear上で件数・必須フィールド・課題本文を照合する。
 - 自動起票・同期ルールをLinearへ向け直し、Notionへの課題書き込みを通常運用から外す。
 - 元データは移行検証後も安全なアーカイブとして残す。
+- Linear初心者向けに、課題の開き方・IDを使った依頼・進捗と完了の確認方法を案内する。
+- 特定のLinear IDから作業に入れる方法と、backlog仕様との対応確認を記載する。
 
 # できていること
 - Linearワークスペース「片桐若登」、チーム「片桐若登」（key `P`）を確認。Orca CLI経由で接続・操作可能。
@@ -25,9 +27,15 @@ Nagoya Bitesの課題管理をNotionからLinearへ移行し、Linearを唯一�
 - `agent-backlog.md`は課題仕様・受け入れ条件・採番の正本として維持し、Linearを進捗・担当・コメントの作業画面とする。
 - Linearで全件照合・運用切替後、Notionの48ページを課題トラッカーのデータソースから親ページ`35826260-227a-81e5-95aa-f5d9fc4caa6c`へ移動。データソースは0件、元ページはNotion fetchで閲覧可能なことを確認。削除せずアーカイブとして保持。
 - ユーザーがNotionからLinearへの全件移行を明示した。対象は会話文脈上、Notionの課題トラッカーとそれを維持する運用経路。
+- `docs/linear-beginner-guide.md` を追加。Linearの課題選択、ID/URLでの依頼、状態・コメント・ブロック・完了の扱いと、Linear/`agent-backlog.md`の役割を説明。
+- `/solve-next` がLinear Issue ID・backlog IDを受け取り、その課題から始める手順を追加。引数なしの既存候補選定は維持。
+- `CLAUDE.md` と `docs/linear-task-workflow.md` から初心者ガイドへの導線を追加。
+- Orca CLIの接続を確認。チーム「片桐若登」、key `P`。assigned filterは0件。ガイドの例 `P-51` と `ISSUE-032` の対応台帳を照合。
+- 最終確認で `npm test` 249件成功、`git diff --check` 成功。主な変更コミットは `d3b79f84c9`、引き継ぎ更新は `01be4fd339` と `19bd7d9548`。作業ブランチへ最新 `origin/main` をマージ済み。
 
 # 次にやること
 - Linearを唯一の進捗管理先として日常運用する。
+- 初心者向けガイドを起点に、Linear課題IDを伝えて作業を依頼する。必要なら候補課題の担当をLinearで割り当てる。
 
 # 試したが駄目だったこと
 - この実行環境にLinear専用MCPコネクタは見当たらない。Orca CLIの接続で移行・運用できる。
@@ -50,6 +58,7 @@ Nagoya Bitesの課題管理をNotionからLinearへ移行し、Linearを唯一�
 - 既存backlogは選定器と詳細仕様の正本として使われる。Linearを唯一の進捗管理先にしつつ、双方向二重更新を避ける片方向連携を設計する。
 
 # 関連ファイル
+- `docs/linear-beginner-guide.md`
 - `agent-backlog.md`
 - `scripts/next_task.js`
 - `scripts/sync_backlog_to_notion.js`
