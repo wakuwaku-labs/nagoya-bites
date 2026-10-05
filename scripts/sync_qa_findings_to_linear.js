@@ -42,7 +42,7 @@ function taskBlock(markdown, id) {
   const start = lines.findIndex(line => line.startsWith(`### [${id}] `));
   if (start < 0) throw new Error(`New QA finding ${id} is missing from agent-backlog.md`);
   let end = start + 1;
-  while (end < lines.length && !/^###\s+\[[A-Z]+-[0-9]+\]/.test(lines[end]) && !/^##\s/.test(lines[end])) end++;
+  while (end < lines.length && !/^###\s+\[[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+\]/.test(lines[end]) && !/^##\s/.test(lines[end])) end++;
   return lines.slice(start, end).join('\n').trim();
 }
 
@@ -121,4 +121,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { mergePendingIds, remainingPendingIds };
+module.exports = { mergePendingIds, remainingPendingIds, taskBlock };
