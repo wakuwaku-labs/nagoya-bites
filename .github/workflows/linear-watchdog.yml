@@ -1,0 +1,131 @@
+name: NAGOYA BITES — Linear 放置・期限切れ監視
+
+# なぜこのワークフローが必要か（2026-10-06 / ISSUE-135）:
+#   セッション開始時の自動ブリーフィング（scripts/session_briefing.js）は、セッションを開かない日は
+#   誰にも届かない。人が見に行かないと分からないものは検知ではなく記録（CLAUDE.md 制約11・ISSUE-084）。
+#   そこで GitHub Actions が毎朝 Linear を読み、同じ判定（classify()）で
+#   期限切れ・緊急未着手・14日以上放置を検出して GitHub Issue（＝オーナーにメール）で知らせる。
+#   解消したら自動でクローズする（鳴りっぱなしにしない・原則6）。
+#   月曜は直近7日の振り返り（完了・中止・新規）を別 Issue で出し、前週分は閉じる。
+#
+#   判定は Linear の状態・優先度・期日・更新日時という検証できる事実だけ（制約10）。
+#   閾値の正本は data/session_briefing_policy.json。Linear を読めない（キー切れ等）ことも異常として知らせる。
+
+on:
+  schedule:
+    # 23:00 UTC = 08:00 JST
+    - cron: '0 23 * * *'
+  workflow_dispatch:
+    inputs:
+      retro:
+        description: '週次振り返りも出す'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: linear-watchdog
+  cancel-in-progress: false
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Linear を判定
+        env:
+          LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+        run: |
+          node scripts/linear_watchdog.js --json > /tmp/linear-watchdog.json
+          node -e "console.log(require('./scripts/linear_watchdog').render(require('/tmp/linear-watchdog.json')))"
+
+      - name: Issue を起票/更新、解消していればクローズ。月曜は振り返り
+        uses: actions/github-script@v7
+        env:
+          FORCE_RETRO: ${{ inputs.retro }}
+        with:
+          script: |
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/linear-watchdog.json', 'utf8'));
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const label = 'linear-watchdog';
+            const retroLabel = 'linear-retro';
+
+            const { data: open } = await github.rest.issues.listForRepo({ owner, repo, state: 'open', labels: label, per_page: 20 });
+            const existing = open.find(i => i.title.startsWith('🟡 Linear'));
+            const list = items => items.slice(0, 15).map(i => `- [${i.identifier}](${i.url}) ${i.title}`
+              + (i.daysLate ? `（期限から${i.daysLate}日超過）` : '') + (i.idleDays ? `（${i.idleDays}日更新なし）` : ''));
+
+            // ---- 週次振り返り（月曜 JST、または手動指定）----
+            const weekday = new Date(`${r.today}T00:00:00Z`).getUTCDay();
+            if (!r.error && (weekday === 1 || process.env.FORCE_RETRO === 'true')) {
+              const rt = r.retro;
+              const body = [
+                `直近${rt.days}日（〜JST ${r.today}）の Linear の動きです。`,
+                '',
+                `- 完了: **${rt.completed.length}件** / 中止: ${rt.canceled}件 / 新規: ${rt.created}件`,
+                `- 未完了: ${r.activeCount}件（進行中 ${r.inProgress}件）`,
+                `- 期限切れ・緊急未着手・放置: ${r.problems.reduce((n, p) => n + p.items.length, 0)}件`,
+                `- 未設定: Project ${r.missing.project} / 期限 ${r.missing.dueDate} / 担当 ${r.missing.assignee}`,
+                '',
+                '## 完了したもの',
+                ...(rt.completed.length ? rt.completed.slice(0, 30).map(i => `- ${i.identifier} ${i.title}`) : ['- なし']),
+                '',
+                '---',
+                '件数は目標ではなく、KR の進み具合を見る補助です（docs/linear-ai-native-playbook.md §5）。次の週次振り返りでこの Issue は自動で閉じます。',
+              ].join('\n');
+              const { data: prev } = await github.rest.issues.listForRepo({ owner, repo, state: 'open', labels: retroLabel, per_page: 20 });
+              for (const p of prev) await github.rest.issues.update({ owner, repo, issue_number: p.number, state: 'closed' });
+              await github.rest.issues.create({ owner, repo, title: `📊 Linear 週次振り返り（〜${r.today}）`, body, labels: [retroLabel] });
+            }
+
+            // ---- 問題なし: 開いている警報を閉じる ----
+            if (r.ok) {
+              if (existing) {
+                await github.rest.issues.createComment({ owner, repo, issue_number: existing.number,
+                  body: `✅ 期限切れ・緊急未着手・放置が解消しました（JST ${r.today}）。自動クローズします。` });
+                await github.rest.issues.update({ owner, repo, issue_number: existing.number, state: 'closed' });
+              }
+              return;
+            }
+
+            // ---- 問題あり: 起票 or 更新 ----
+            const kinds = r.problems.map(p => p.items.length ? `${p.label} ${p.items.length}件` : p.label).join('・');
+            const title = `🟡 Linear: ${kinds}`;
+            const lines = [`Linear の確認で、対応が必要な課題が見つかりました（JST ${r.today}）。`, ''];
+            if (r.error) {
+              lines.push('## Linear を読めませんでした', '', `- 理由: ${r.error}`, '',
+                '期限切れや放置を見張れない状態です。GitHub の Settings → Secrets の `LINEAR_API_KEY` が有効か確認してください（Linear の Settings → API で再発行できます）。');
+            }
+            for (const p of r.problems.filter(p => p.items.length)) lines.push(`## ${p.label}（${p.items.length}件）`, ...list(p.items), '');
+            if (!r.error) {
+              lines.push('## 対処',
+                '- 期限切れ: 終わらせるか、Linear で期限を引き直す（理由をコメントに残す）。',
+                '- 緊急・未着手: 着手する（In Progress にする）か、優先度を見直す。',
+                '- 放置: 続けるかやめるかを決める。Claude は勝手に Canceled にしません（CLAUDE.md「自動でやらないこと」）。',
+                '', 'Claude Code で `この警報の課題を片付けて` と頼めば、上から順に対応します。');
+            }
+            lines.push('', '---', 'すべて解消すると、この Issue は翌朝自動でクローズされます（linear-watchdog.yml）。');
+            const body = lines.join('\n');
+
+            if (existing) {
+              // 内容が同じ日は本文だけ更新し、コメントでメールを増やさない
+              const changed = existing.title !== title;
+              await github.rest.issues.update({ owner, repo, issue_number: existing.number, title, body });
+              if (changed) await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body: `状況が変わりました（JST ${r.today}）: ${kinds}` });
+            } else {
+              await github.rest.issues.create({ owner, repo, title, body, labels: [label] });
+            }

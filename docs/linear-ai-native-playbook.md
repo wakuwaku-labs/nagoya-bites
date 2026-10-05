@@ -98,7 +98,7 @@ Linear の構成は「Project＝Nagoya Bites（全課題）、KR＝ラベル」�
    - 毎日の編集を止めない … ジャーナル欠番0（`scripts/check_journal_health.js`）
    - 実在と信頼を守る … 架空店・リンク不一致・写真ポリシー違反0（各 audit スクリプト）
    - 運用基盤を自動で回す … watchdog Issue の未解決0・定期PRの滞留0
-2. **夜間の Linear 健康診断を作る**（動画の③）※セッション開始時の確認は `scripts/session_briefing.js` で実装済み。残りは、セッションが無い日も通知する夜間版
+2. ~~夜間の Linear 健康診断を作る~~ → 2026-10-06 実装（`.github/workflows/linear-watchdog.yml`・ISSUE-135）。以下は当時の計画。（動画の③）※セッション開始時の確認は `scripts/session_briefing.js` で実装済み。残りは、セッションが無い日も通知する夜間版
    14日放置／Urgent 未着手／期限切れ／Project 未紐づけを検知し、GitHub Issue（＝メール）で知らせ、解消したら自動で閉じる。判定は Linear の状態・日付という検証できる事実だけで行う（制約10・11）。週次で振り返りも出す。
 3. ~~`おはよう`・`振り返って` を手順化する~~ → 2026-10-06 実装済み（§3）
 4. ~~ADR の置き場を作る~~ → `docs/decisions/` を作成済み。残りは、`CLAUDE.md` に散っている教訓（ISSUE-077/084/090）を順に移すこと
