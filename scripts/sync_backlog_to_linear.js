@@ -14,6 +14,7 @@ const { parseBacklog } = require('./next_task');
 const ROOT = path.resolve(__dirname, '..');
 const BACKLOG = path.join(ROOT, 'agent-backlog.md');
 const STATE = path.join(ROOT, 'data/linear_sync_state.json');
+const DEFAULTS = path.join(ROOT, 'data/linear_issue_defaults.json');
 const WORKSPACE = '130a2f2b-aa8e-4db1-9250-4fcadebbba1f';
 const TEAM = 'P';
 const open = new Set(['ready', 'in_progress', 'partial', 'blocked']);
@@ -33,6 +34,35 @@ function missingCreateFields(task) {
     !isValidDueDate(task.dueDate) && 'dueDate',
     !task.project && 'project',
   ].filter(Boolean);
+}
+
+function addDays(isoDate, days) {
+  const date = new Date(`${isoDate}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
+}
+
+/**
+ * Fill missing create fields from data/linear_issue_defaults.json.
+ * Explicit backlog values always win. Project is never guessed: it comes only
+ * from the configured category map or the configured default project name.
+ */
+function withCreateDefaults(task, defaults = {}, today = new Date().toISOString().slice(0, 10)) {
+  const days = defaults.dueDateDaysByPriority?.[task.priority || 'P2'];
+  const project = task.project
+    || (task.category && defaults.projectByCategory?.[task.category])
+    || defaults.projectName
+    || null;
+  return {
+    ...task,
+    assignee: task.assignee || defaults.assigneeName || null,
+    dueDate: task.dueDate || (Number.isInteger(days) && days >= 0 ? addDays(today, days) : null),
+    project,
+  };
+}
+
+function readDefaults() {
+  try { return JSON.parse(fs.readFileSync(DEFAULTS, 'utf8')); } catch (_) { return {}; }
 }
 
 function readState() {
@@ -62,6 +92,7 @@ function main() {
   const md = fs.readFileSync(BACKLOG, 'utf8');
   const tasks = parseBacklog(md);
   const state = readState();
+  const defaults = readDefaults();
   let liveIssues;
   try {
     const listed = readJson(['linear', 'list-issues', '--team', TEAM, '--limit', '200', '--workspace', WORKSPACE, '--json']);
@@ -85,7 +116,7 @@ function main() {
         plan.push({ action: 'update', task, identifier: entry.identifier, status, priority, description: null });
       }
     } else if (open.has(task.status)) {
-      plan.push({ action: 'create', task, status, priority, description: descriptionFor(md, task) });
+      plan.push({ action: 'create', task: withCreateDefaults(task, defaults), status, priority, description: descriptionFor(md, task) });
     }
   }
   for (const duplicate of state.duplicateImports || []) {
@@ -112,7 +143,7 @@ function main() {
 
   const invalidCreates = pending.filter(x => x.action === 'create' && missingCreateFields(x.task).length);
   if (invalidCreates.length) {
-    console.error(JSON.stringify({ error: 'Refusing to create incomplete Linear issues; add assignee, valid due date, and project to agent-backlog.md',
+    console.error(JSON.stringify({ error: 'Refusing to create incomplete Linear issues; add assignee, valid due date, and project to agent-backlog.md or configure data/linear_issue_defaults.json',
       tasks: invalidCreates.map(x => ({ id: x.task.id, missingFields: missingCreateFields(x.task) })) }, null, 2));
     process.exitCode = 1;
     return;
@@ -180,4 +211,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { isValidDueDate, missingCreateFields };
+module.exports = { isValidDueDate, missingCreateFields, withCreateDefaults };

@@ -28,7 +28,30 @@ Linear課題を指定されたら、[初心者向けLinearガイド](docs/linear
 6. **ゴールと達成条件を書く** — 終了時に第三者が確認できる受け入れ条件を記載する。
 7. **30分以上の作業はsub-issueへ分割する** — 親Issueには全体ゴールを置き、独立して完了確認できる作業単位を子Issueにする。
 
-作成前に7項目を検査し、不明な担当者・期限・Projectを推測で埋めない。対話中は不足情報を確認してから作成する。質問できないCIでは不完全なIssueを作らず、課題IDを保留キューに残して不足項目をログへ出す。既存Issueを更新するだけの同期はこの新規作成ゲートの対象外。
+作成前に7項目を検査し、不明な担当者・期限・Projectを推測で埋めない。担当者と期限は `data/linear_issue_defaults.json` の既定値（担当＝オーナー、期限＝起票日＋優先度別日数）で補ってよい。これは設定済みの値であり推測ではない。Projectは同ファイルの `projectByCategory` / `projectName` に設定がある場合だけ使い、無ければbacklogに起票してLinearへの新規作成を保留する（オーナーに質問して作業を止めない）。質問できないCIでは不完全なIssueを作らず、課題IDを保留キューに残して不足項目をログへ出す。既存Issueを更新するだけの同期はこの新規作成ゲートの対象外。
+
+## 自動で回す運用（指示を待たない・2026-10-06）
+
+オーナーは「おはよう」「Linearにして」「分解して」「振り返って」「判断を残して」と毎回言わない。Claudeが自分で判断して、そのつど次を行う。根拠と既定値の経緯は `docs/decisions/0001-linear-autonomous-operation.md`、手本は `docs/linear-ai-native-playbook.md`。
+
+1. **始業（ブリーフィング）**: セッション開始時に `.claude/settings.json` のフックが `scripts/session_briefing.js` を実行し、「【自動ブリーフィング】」として文脈に入る。最初の返答では次のように扱う。
+   - 期限切れ・緊急未着手・GitHub警報Issueがあるときだけ、1〜2行で触れる。何も無ければ触れない。
+   - ブリーフィングが出ていなければ自分で実行する。
+   - ユーザーの依頼を差し置いて別の課題に着手しない。
+2. **起票**: 作業中に、このセッションで終えない作業が生じたら backlog に起票し、`node scripts/sync_backlog_to_linear.js --apply` でLinearへ送る。対象は、見つけたバグ、後回しにした改善、オーナー本人の操作待ち、会話で「いずれやる」となったもの。
+   - 7項目を満たして書く。背景は会話と調査の事実だけで書き、創作しない。
+   - 既に同じ課題があれば新規に作らず、その課題に追記する。
+3. **分解**: 30分を超えそうな作業は、着手前に親とsub-issue（各々に達成条件）へ分け、1つずつ進める。
+4. **振り返り（区切り・終了時）**: 最終チェックと同時に次を行う。
+   - 会話で決めたのに未実行のものを洗い出す。すぐできるものはやり、残りは2の手順で起票する。
+   - HANDOFF とメモリを更新する。
+   - 同じ手作業を3回目に行ったら、スクリプト化またはスキル化を backlog に起票する。
+5. **判断記録**: 複数案から選び、その選択が今後を縛るとき（閾値・既定値・構成・運用ルール・やらないと決めたこと）は `docs/decisions/` に記録する。書式は同ディレクトリの README に従う。
+6. **自動でやらないこと**:
+   - 放置課題を勝手に Canceled にしない（「続けますか」と聞いて判断はオーナー）。
+   - Project・KRを決めない。
+   - マネタイズ・信頼系の着手（制約7・8）。
+   - 取り消せない操作。
 
 ---
 
@@ -400,6 +423,8 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `data/feature_roster_health.json` | 特集ロスターの**心拍**（ISSUE-127）。`refresh_feature_rosters.js --if-stale` が実反映のたびに「対象月・反映日・更新件数・枠割れ件数」を書く。旧実装は build.yml の月初(1〜3日 JST)固定日ゲートだったため、その3日間に手前のステップが失敗すると月ごと欠落しても気づけなかった（実測: 2026-08/2026-09とも欠落）。日付ではなくこのファイルの「最終反映月」で要否を判定する自己修復方式に変更し、その鮮度を `feature-roster-watchdog.yml` が監視する |
 | `scripts/check_feature_roster_health.js` | 特集ロスターの**生存確認の唯一の情報源**。判定は検証できる事実だけ（`data/feature_roster_health.json` の実在と `last_run.date` の鮮度）で行い自己申告値を見ない（制約10）。月次カデンスのため数日の遅延は異常としない（許容既定40日・オオカミ少年化させない）。`node scripts/check_feature_roster_health.js`（`.github/workflows/feature-roster-watchdog.yml` が日次実行） |
 | `.github/workflows/feature-roster-watchdog.yml` | **特集ロスターのサーバ側生存監視**（毎日15:00 JST）。心拍が40日以上更新されていなければ GitHub Issue を起票（＝オーナーにメール）、復旧で自動クローズ。**ローカル故障モードから独立**（build.yml 自体の継続失敗を検知する側なので、build.yml 内のステップとしては置かない） |
+| `scripts/session_briefing.js` | **セッション開始時の自動ブリーフィング**（2026-10-06）。`.claude/settings.json` の SessionStart フックが毎回実行する。内容は、Linear の期限切れ・期限間近・緊急未着手・放置・進行中、HANDOFF の次の一手、未解決の GitHub 警報 Issue。判定は Linear の事実だけで行う（制約10）。取得失敗は理由つきで表示し、セッションは止めない。閾値の正本は `data/session_briefing_policy.json`（Orchestrator管轄） |
+| `docs/decisions/` | **判断の記録（ADR）**。今後を縛る選択（閾値・既定値・構成・運用ルール・やらないと決めたこと）を、Claude が指示を待たずに残す。書式は同ディレクトリの README |
 | `data/solve_next_policy.json` | `/solve-next` の**消化ポリシーの唯一の情報源**（1日の消化件数 `dailyQuota` / 滞留による優先度繰り上げ / クローズ扱いの status / オーナー本人待ちの除外）。`.claude/commands/*.md` は自己改変ブロックで編集できないため、挙動の変更はこのファイルで行う（`journal_gate_policy.json` と同じ設計）。判定器は `scripts/next_task.js`（Orchestrator管轄） |
 | `scripts/next_task.js` | **次に解く課題の決定的な選定器**。`agent-backlog.md` の priority / status / detected という**検証できる事実だけ**で順番を決める（制約10）。`node scripts/next_task.js` で本日の担当分、`--all` で列全体、`--check` で列の健全性（CI向け・警告あれば exit 1）。滞留日数で実効優先度を1段だけ繰り上げ（P0へは決して昇格させない）、**オーナー本人にしか進められない課題は選ばず別枠表示**する（Orchestrator管轄・2026-08-16） |
 | `.claude/commands/seo-triage.md` | `/seo-triage` 日次SEO/LINEアドバイス取り込み（Marketer管轄） |

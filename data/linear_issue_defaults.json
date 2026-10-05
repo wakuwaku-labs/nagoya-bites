@@ -1,6 +1,15 @@
 {
-  "version": 1,
+  "version": 2,
   "projectId": null,
+  "projectName": null,
+  "projectByCategory": {},
   "assigneeId": "114d348a-8955-4f45-8247-56e56a34fa34",
-  "dueDateDaysByPriority": {}
+  "assigneeName": "me",
+  "dueDateDaysByPriority": {
+    "P0": 1,
+    "P1": 7,
+    "P2": 14,
+    "P3": 30
+  },
+  "notes": "新規Issueの既定値。backlog項目に assignee/due/project が無いとき sync_backlog_to_linear.js がここから補う（due＝起票日＋優先度ごとの日数）。Projectは推測しない: projectByCategory（backlogのcategory→Project名）→ projectName の順に引き、どちらも未設定なら新規作成を保留する。夜間QAは projectId（UUID）を使う。判断の経緯は docs/decisions/0001-linear-autonomous-operation.md"
 }

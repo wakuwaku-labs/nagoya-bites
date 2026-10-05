@@ -30,7 +30,7 @@ orca linear search "SEO-114" --workspace all --limit 10 --json
 orca linear issue P-5 --full --json
 ```
 
-新しい課題は `agent-backlog.md` に必要な仕様を記録し、`/sync-backlog` または上記同期コマンドからLinearへ登録する。手動起票はbacklog項目に `**assignee**`、`**due**`、`**project**` を明記する。未設定なら同期スクリプトは新規Issueを作成せず、不足項目を表示する。夜間QAの自動起票は `data/linear_issue_defaults.json` にLinear Project ID・担当者ID・優先度ごとの期限日数を設定するまで新規Issueを保留し、IDを `data/linear_sync_pending.json` に保持する。設定後はLinearへ登録し、対応台帳をコミットする。Linear上の作業開始・完了時はIssueの状態とbacklogのstatusを揃える。同期スクリプトは既存の移行説明文を保持し、移行元の本文を上書きしない。
+新しい課題は `agent-backlog.md` に必要な仕様を記録し、`/sync-backlog` または上記同期コマンドからLinearへ登録する。backlog項目に `**assignee**`、`**due**`、`**project**` を書けばそれを使う。無い項目は `data/linear_issue_defaults.json` から補う（担当＝`assigneeName`、期限＝起票日＋`dueDateDaysByPriority`、Project＝`projectByCategory[category]` → `projectName`）。補ってもProjectが決まらない場合、同期スクリプトは新規Issueを作成せず不足項目を表示する。夜間QAの自動起票は `data/linear_issue_defaults.json` にLinear Project ID（`projectId`）を設定するまで新規Issueを保留し、IDを `data/linear_sync_pending.json` に保持する。設定後はLinearへ登録し、対応台帳をコミットする。Linear上の作業開始・完了時はIssueの状態とbacklogのstatusを揃える。同期スクリプトは既存の移行説明文を保持し、移行元の本文を上書きしない。
 
 ## 状態・優先度の対応
 

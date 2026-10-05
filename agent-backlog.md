@@ -230,6 +230,35 @@
   6. `tests/feature_store_match.test.js` を新設（8件）。`npm test` 219/219 pass
   - **未完了（acceptance⑥）**: 効果測定（ラベルのクリック数）は実装直後のため未計測。次回以降のイベント集計で確認する
 
+### [ISSUE-134] Linear の Project（KR）を作成して新規 Issue の自動作成を開通する
+
+- **priority**: P1 → **status**: ready（オーナー本人待ち）
+- **detected**: 2026-10-06
+- **category**: ops
+- **owner**: Orchestrator（実操作はオーナー本人）
+- **source**: 2026-10-06 オーナー依頼「Linearにして等を指示しなくても Claude が判断して逐次やってほしい」。`docs/decisions/0001-linear-autonomous-operation.md`
+- **背景**:
+  - 起票・分解・ブリーフィングは自動化済み（`CLAUDE.md`「自動で回す運用」・`scripts/session_briefing.js`）。
+  - ただし Linear の Project が0件のため、新規 Issue は backlog に起票されるだけで Linear へは作成されない。夜間QAの自動起票も同じ理由で保留中（`data/linear_sync_pending.json`）。
+  - Orca CLI には Project 作成コマンドが無く、ローカルに Linear API キーも無い。そのため作成はオーナーが Linear 画面で行う。
+- **acceptance**:
+  1. オーナーが Linear に KR を表す Project を作る。叩き台は `docs/linear-ai-native-playbook.md` §4-1 の4つ。
+  2. `data/linear_issue_defaults.json` に `projectByCategory`（backlog の category → Project名）、`projectName`（既定）、`projectId`（夜間QA用 UUID）を設定する。`orca linear project list --json` の読み戻しで実在を確認する。
+  3. `node scripts/sync_backlog_to_linear.js` の dry-run で、新規分の `missingFields` が空になる。
+  4. 既存の未完了 Issue（37件）を Project に紐づける。セッションブリーフィングの「未設定: Project」が 0 になる。
+
+### [ISSUE-135] Linear の放置・期限切れを、セッションが無い日もサーバ側で通知する
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-06
+- **category**: ops
+- **owner**: Builder
+- **source**: `docs/linear-ai-native-playbook.md` §4-2（動画の夜間スキャン）。セッション開始時の確認は `scripts/session_briefing.js` で実装済みだが、セッションを開かない日は誰にも届かない（CLAUDE.md 制約11）。
+- **acceptance**:
+  1. GitHub Actions が毎日 `LINEAR_API_KEY` で Linear を読み、`scripts/session_briefing.js` の `classify()` と同じ判定で、期限切れ・緊急未着手・14日放置を検出する。
+  2. 該当があれば GitHub Issue を原因つきで起票し（＝メール）、解消したら自動でクローズする。
+  3. 週1回、振り返り（完了数・新規数・滞留）を同じ Issue かコメントに出す。
+
 ### [ISSUE-133] 食べログが【閉店】と表示している店を22件掲載し続けている（Google Places は20件を OPERATIONAL と返しており、判定が割れている）
 
 - **priority**: P2 → **status**: ready
