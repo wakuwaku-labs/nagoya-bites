@@ -345,7 +345,7 @@ function renderShopCard(entry, num, featureSlug) {
   return `    <div class="shop-card">
       <img class="shop-card-photo" src="${photo}" alt="${name}" loading="lazy" decoding="async">
       <div class="shop-num">${nn}</div>
-      <div class="shop-name">${name}${isNew}</div>
+      <h3 class="shop-name">${name}${isNew}</h3>
       <div class="shop-area">${area}${genre ? ' / ' + genre : ''}</div>
       <p class="shop-desc">${descOf(s, 150)}</p>
       <div class="shop-tags">
