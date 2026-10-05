@@ -34,4 +34,29 @@ function isKrLabel(name) {
   return /^KR:/.test(String(name || ''));
 }
 
-module.exports = { krLabelForCategory, isKrLabel };
+/**
+ * backlog の owner（「Builder + DataKeeper」「片桐 ← Editor」等の自由記述）→ 役割ラベル（docs/decisions/0005）。
+ * Linear の担当者はLinearユーザーしかなれないため、AIエージェントの役割はラベルで表す。
+ * 役割名は語の境界で照合し、owner に現れた順に並べる。オーナー本人の操作が要る課題には
+ * ownerActionLabel を先頭に付ける。どれにも当たらなければ空配列（ラベルなし）。
+ */
+function roleLabelsForOwner(owner, defaults = {}) {
+  const cfg = defaults.roleLabels;
+  if (!cfg || !owner) return [];
+  const text = String(owner);
+  const labels = [];
+  if ((cfg.ownerActionKeywords || []).some(k => text.includes(k))) labels.push(cfg.ownerActionLabel);
+  const found = (cfg.roles || [])
+    .map(role => ({ role, at: text.search(new RegExp(`(^|[^A-Za-z])${role}($|[^A-Za-z])`)) }))
+    .filter(x => x.at >= 0)
+    .sort((a, b) => a.at - b.at);
+  for (const { role } of found) labels.push(`${cfg.prefix}${role}`);
+  return labels;
+}
+
+function isRoleLabel(name, defaults = {}) {
+  const prefix = defaults.roleLabels?.prefix;
+  return Boolean(prefix) && String(name || '').startsWith(prefix);
+}
+
+module.exports = { krLabelForCategory, isKrLabel, roleLabelsForOwner, isRoleLabel };

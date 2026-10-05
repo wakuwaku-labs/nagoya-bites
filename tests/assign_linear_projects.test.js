@@ -33,3 +33,17 @@ test('is idempotent and never overrides a human choice', () => {
   ], [{ id: 'SEO-2', category: 'SEO' }], defaults);
   assert.deepEqual(items.map(i => [i.identifier, i.project, i.krLabel]), [['P-2', null, 'KR:検索']]);
 });
+
+test('adds role labels from backlog owner or Notion department, but keeps existing role labels', () => {
+  const withRoles = { ...defaults, roleLabels: { prefix: '担当:', roles: ['Builder', 'Editor'], ownerActionLabel: '担当:オーナー作業', ownerActionKeywords: ['片桐'] } };
+  const done = { project: { name: 'Nagoya Bites' }, labels: [{ name: 'KR:信頼' }], assignee: { id: 'x' } };
+  const items = plan([
+    issue('P-1', '[SEO-1] a', done),
+    issue('P-2', '[ISSUE-9] b', { ...done, description: '**Notion担当部署:** Editor\n' }),
+    issue('P-3', '[SEO-3] c', { ...done, labels: [{ name: 'KR:信頼' }, { name: '担当:Editor' }] }),
+  ], [{ id: 'SEO-1', owner: '片桐 ← Builder' }, { id: 'SEO-3', owner: 'Builder' }], withRoles);
+  assert.deepEqual(items.map(i => [i.identifier, i.roleLabels]), [
+    ['P-1', ['担当:オーナー作業', '担当:Builder']],
+    ['P-2', ['担当:Editor']],
+  ]);
+});

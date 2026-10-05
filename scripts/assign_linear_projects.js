@@ -3,6 +3,7 @@
  * 未完了の Linear Issue を「Project = Nagoya Bites、KR = ラベル」の構成にそろえる（docs/decisions/0003）。
  *  - Project が未設定、または一時的に作った KR 別 Project（retiredProjects）にある Issue → Nagoya Bites へ
  *  - KR ラベル（"KR:" で始まる）が1つも無い Issue → category の規則（krLabelRules）で KR ラベルを追加
+ *  - 役割ラベル（"担当:" で始まる）が1つも無い Issue → backlog の owner から役割ラベルを追加（docs/decisions/0005）
  *  - 担当者が未設定の Issue → 既定の担当（assigneeId＝オーナー）を設定（期限は一斉に付けない: 起点が無く全件同時に期限が来るため）
  * 人が付けた別の Project・既存の KR ラベルは上書きしない。ラベルは追加のみ（既存ラベルを消さない）。
  *
@@ -16,7 +17,7 @@ const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { parseBacklog } = require('./next_task');
-const { krLabelForCategory, isKrLabel } = require('./lib/linear_project_map');
+const { krLabelForCategory, isKrLabel, roleLabelsForOwner, isRoleLabel } = require('./lib/linear_project_map');
 
 const ROOT = path.resolve(__dirname, '..');
 const WORKSPACE = '130a2f2b-aa8e-4db1-9250-4fcadebbba1f';
@@ -39,6 +40,14 @@ function categoryFor(issue, byId) {
   return null;
 }
 
+function ownerFor(issue, byId) {
+  const id = (issue.title.match(/^\[([A-Z]+(?:-[A-Z]+)*-\d+)\]/) || [])[1];
+  if (id && byId.get(id)?.owner) return byId.get(id).owner;
+  const notion = (issue.description || '').match(/\*\*Notion担当部署:\*\*\s*([^\n]+)/);
+  if (notion && notion[1].trim() !== '未設定') return notion[1].trim();
+  return null;
+}
+
 function plan(issues, tasks, defaults) {
   const byId = new Map(tasks.map(t => [t.id, t]));
   const retired = new Set(defaults.retiredProjects || []);
@@ -50,10 +59,12 @@ function plan(issues, tasks, defaults) {
     const hasKr = (issue.labels || []).some(l => isKrLabel(l.name || l));
     const category = categoryFor(issue, byId);
     const krLabel = hasKr ? null : krLabelForCategory(category, defaults);
+    const hasRole = (issue.labels || []).some(l => isRoleLabel(l.name || l, defaults));
+    const roleLabels = hasRole ? [] : roleLabelsForOwner(ownerFor(issue, byId), defaults);
     const assignee = !issue.assignee && defaults.assigneeId ? defaults.assigneeId : null;
-    if (!moveProject && !krLabel && !assignee) continue;
+    if (!moveProject && !krLabel && !roleLabels.length && !assignee) continue;
     items.push({ identifier: issue.identifier, title: issue.title, category,
-      project: moveProject ? defaults.projectName : null, from: current, krLabel, assignee });
+      project: moveProject ? defaults.projectName : null, from: current, krLabel, roleLabels, assignee });
   }
   return items;
 }
@@ -65,7 +76,10 @@ function main() {
   const listed = orca(['linear', 'list-issues', '--team', 'P', '--workspace', WORKSPACE, '--json']);
   if (listed.truncated) throw new Error('Linear issue listing was truncated; refusing to assign on a partial list');
   const items = plan(listed.issues || [], tasks, defaults);
-  const labels = items.reduce((a, x) => (x.krLabel && (a[x.krLabel] = (a[x.krLabel] || 0) + 1), a), {});
+  const labels = items.reduce((a, x) => {
+    for (const l of [x.krLabel, ...x.roleLabels].filter(Boolean)) a[l] = (a[l] || 0) + 1;
+    return a;
+  }, {});
   console.log(JSON.stringify({ mode: apply ? 'apply' : 'dry-run', total: items.length,
     moveToProject: items.filter(x => x.project).length, labels, items }, null, 2));
   if (!apply) return;
@@ -75,8 +89,9 @@ function main() {
     try {
       if (item.project) once(['linear', 'save-issue', item.identifier, '--project', item.project, '--workspace', WORKSPACE, '--json']);
       if (item.assignee) once(['linear', 'assignee', 'set', item.identifier, '--to-id', item.assignee, '--workspace', WORKSPACE, '--json']);
-      if (item.krLabel) once(['linear', 'label', 'add', item.identifier, '--label', item.krLabel, '--workspace', WORKSPACE, '--json']);
-      console.log(`updated: ${item.identifier}${item.project ? ` → ${item.project}` : ''}${item.krLabel ? ` + ${item.krLabel}` : ''}${item.assignee ? ' +担当' : ''}`);
+      const add = [item.krLabel, ...item.roleLabels].filter(Boolean);
+      if (add.length) once(['linear', 'label', 'add', item.identifier, ...add.flatMap(l => ['--label', l]), '--workspace', WORKSPACE, '--json']);
+      console.log(`updated: ${item.identifier}${item.project ? ` → ${item.project}` : ''}${add.length ? ` + ${add.join(', ')}` : ''}${item.assignee ? ' +担当' : ''}`);
     } catch (error) {
       failed.push(item.identifier);
       console.error(`failed: ${item.identifier} ${error.message.slice(0, 200)}`);
@@ -92,4 +107,4 @@ if (require.main === module) {
   try { main(); } catch (error) { console.error(error.message); process.exitCode = 1; }
 }
 
-module.exports = { plan, categoryFor };
+module.exports = { plan, categoryFor, ownerFor };

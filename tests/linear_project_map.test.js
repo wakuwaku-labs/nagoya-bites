@@ -34,3 +34,17 @@ test('config: one project for everything, KR labels are prefixed', () => {
   }
   assert.equal(isKrLabel('Bug'), false);
 });
+
+test('roleLabelsForOwner maps free-text owners to role labels in order of appearance', () => {
+  const { roleLabelsForOwner, isRoleLabel } = require('../scripts/lib/linear_project_map');
+  assert.deepEqual(roleLabelsForOwner('Builder', defaults), ['担当:Builder']);
+  assert.deepEqual(roleLabelsForOwner('DataKeeper / Builder', defaults), ['担当:DataKeeper', '担当:Builder']);
+  assert.deepEqual(roleLabelsForOwner('片桐 ← Editor + Marketer', defaults), ['担当:オーナー作業', '担当:Editor', '担当:Marketer']);
+  assert.deepEqual(roleLabelsForOwner('片桐', defaults), ['担当:オーナー作業']);
+  assert.deepEqual(roleLabelsForOwner('Editor 主導', defaults), ['担当:Editor']);
+  assert.deepEqual(roleLabelsForOwner('Builders guild', defaults), []); // word boundary
+  assert.deepEqual(roleLabelsForOwner(null, defaults), []);
+  assert.deepEqual(roleLabelsForOwner('Builder', {}), []); // no config → no labels
+  assert.ok(isRoleLabel('担当:Builder', defaults));
+  assert.ok(!isRoleLabel('KR:信頼', defaults));
+});
