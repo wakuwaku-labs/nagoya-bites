@@ -258,9 +258,9 @@
   3. `node scripts/sync_backlog_to_linear.js` の dry-run で、新規分の `missingFields` が空になる。
   4. 既存の未完了 Issue（37件）を Project に紐づける。セッションブリーフィングの「未設定: Project」が 0 になる。
 
-### [ISSUE-144] 配信終了した HotPepper 写真が残る3か所（過去ジャーナル4本のヒーロー・sitemap-images.xml・父の日カードの thumb）を直す
+### [ISSUE-144] 配信終了した HotPepper 写真が残る3か所（過去ジャーナル4本のヒーロー・sitemap-images.xml・父の日カードの thumb）を直す ✅
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-06
 - **category**: photo / SEO
 - **owner**: Editor
@@ -271,6 +271,11 @@
   3. 父の日カードの thumb を、特集の掲載店の実写に差し替える
   4. `node scripts/audit_journal_photos.js --check` と `npm test` を通す
 - **関連**: [[ISSUE-124]]（発見元）／[[ISSUE-116]]（og:image の到達不能）
+- **結果（2026-10-06・毎朝9時自動消化）**:
+  - (1) ジャーナル4本: 主役店の実写がstores.jsonにもmanual_stores.jsonにも残っておらず（clear_dead_photo_urls.jsで清除済み）、CLAUDE.md「最終手段」として記事専用のイメージ図（SVG）を`assets/journal-figures/`に新規作成。`data-hero-source="figure"`を付与。PNGをrender_og_figures.jsで生成し、og:imageをPNGのURLに更新。
+  - (2) sitemap-images.xml: imgfp.hotp.jpの84件を除去（4,692→4,608 image blocks）。
+  - (3) 父の日thumb: 特集掲載店全店がimgfp.hotp.jp画像のみ（ISSUE-124で清除済み）。実写が手配できないため、記事専用のイメージ図（`assets/journal-figures/fathers-day-2026-thumb.png`）を作成し差し替え。feature out of season（次の表示は2027-06）のため実写置換は2027年版更新時の課題として残す。
+  - 確認: `audit_journal_photos.js --check` 違反ゼロ（警告22件。4本分の`hotpepper_owner_unknown`は消えた）／`npm test` 287件通過／`audit_design_system.js --check` 違反ゼロ
 
 ### [ISSUE-143] HotPepper 由来の店が日次ビルドのたびに出入りする原因（取得の取りこぼし）を調べて止める
 
@@ -1116,7 +1121,7 @@
 - **priority**: P2 → **status**: ready
 - **detected**: 2026-09-14
 - **category**: SNS / 計測
-- **owner**: Marketer
+- **owner**: 片桐 ← Marketer（2026-10-06 自動消化でエスカレーション: acceptance 1〜2がInstagramの bio/ストーリーズ変更でオーナー本人操作が必須。コード実装（acceptance 3）はオーナー操作完了後に着手）
 - **source**: オーナーへのヒアリング（2026-09-14・9月上旬開始・累計再生1万未満・bioはトップURLのみでUTMなし）。`data/site_metrics.json` の `sourceBreakdown` に instagram 行が過去一度も出ておらず、リールの効果が構造的に計測不能
 - **brand-filter**: ✅ 適合 — 自社の流入を正しく数えるだけの計測施策。順位操作・広告・クーポンのいずれにも該当しない
 - **acceptance**:
@@ -4458,7 +4463,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **priority**: P1 → **status**: in_progress（Phase 0〜5完了・2026-08-18 Step2再開・v3.0コード完成/未活性化）
 - **detected**: 2026-08-14（ユーザー要望「サクラチェックの精度を上げたい」を受けて再調査）
 - **category**: trust / proof / differentiation
-- **owner**: DataKeeper + Builder
+- **owner**: 片桐 ← DataKeeper + Builder（2026-10-06 自動消化でエスカレーション: v3.0活性化は「重みの再校正が完了してから」保留中。重みの方針決定はオーナー判断が必要）
 
 - **背景（実測で判明した精度問題）**:
   1. **S7（時系列健全性・20点）が構造的に死んでいた**: `scripts/fetch_places.js` が
