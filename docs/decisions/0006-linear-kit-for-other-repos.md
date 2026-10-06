@@ -27,3 +27,9 @@
 - 今後の新しいリポジトリも、最初に複数ステップの作業を始めるときに Claude が指示を待たずに導入する（グローバル CLAUDE.md）
 - 作業ブランチの worktree では入れない。main に導入済みならその旨を表示して終わる（二重導入による競合を防ぐ）
 - 5つとも GitHub のリモートが無い。そのため毎朝の通知（GitHub Actions）は動かず、知らせる経路はセッション開始時のブリーフィングだけになる。GitHub に置いたら `LINEAR_API_KEY` を登録すれば通知も動く
+
+## 2026-10-07 追記2: 新しいアプリ・Codex にも自動で広げる
+- オーナーの依頼「今後 Claude Code や Codex で作るアプリ・フォルダも Linear と連携させ、Project の立ち上げから起票まで任せたい」
+- Project が無いときに毎回確認していたのをやめ、導入コマンド（`install.js`）が自分で作る。Orca CLI は Project を作れないため Linear API（`create_project.js`・同名があれば何もしない）を使う。API キー（`~/.config/linear/api_key`）が無い間は、Claude Code は Linear の画面で作り、Codex は利用者に頼む
+- git でないフォルダにも入れる（毎朝の GitHub 監視だけ省く）。ホーム直下・Desktop/Documents/Downloads 直下・一時ディレクトリは拒否する
+- Codex にも同じルールを `~/.codex/AGENTS.md` に置き、キットは `~/.codex/skills/linear-setup`（`~/.claude/skills/linear-setup` へのリンク）で共有する。ルールの本文は Claude Code と Codex で同じ
