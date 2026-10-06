@@ -1,21 +1,21 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-06T07:27:47.442Z",
+  "generatedAt": "2026-10-06T08:00:24.525Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1365,
+  "total_sessions": 1366,
   "engines": [
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 369,
-      "pct": 27,
+      "sessions": 370,
+      "pct": 27.1,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 369
+          "sessions": 370
         }
       ]
     },
@@ -227,19 +227,19 @@
     }
   ],
   "search_only": {
-    "total": 995,
+    "total": 996,
     "share": [
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 369,
+        "sessions": 370,
         "pct_of_search": 37.1
       },
       {
         "key": "google",
         "label": "Google",
         "sessions": 354,
-        "pct_of_search": 35.6
+        "pct_of_search": 35.5
       },
       {
         "key": "yahoo",
@@ -251,7 +251,7 @@
         "key": "ai_assistant",
         "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
         "sessions": 106,
-        "pct_of_search": 10.7
+        "pct_of_search": 10.6
       },
       {
         "key": "duckduckgo",
@@ -266,9 +266,9 @@
     "to": "2026-10-06",
     "delta": {
       "bing": 3,
-      "google": 5,
+      "google": 6,
       "direct": -1,
-      "yahoo": 1,
+      "yahoo": 2,
       "ai_assistant": 3,
       "other": 1,
       "duckduckgo": 0,
@@ -278,7 +278,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 354 セッションのみ。Bing(369) + 生成AI(106) の 475 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 354 セッションのみ。Bing(370) + 生成AI(106) の 476 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],

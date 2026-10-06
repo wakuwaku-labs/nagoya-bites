@@ -1,8 +1,8 @@
 {
   "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
-  "mergedCount": 65,
-  "absorbedCount": 67,
-  "skippedCount": 3,
+  "mergedCount": 68,
+  "absorbedCount": 70,
+  "skippedCount": 0,
   "merged": [
     {
       "reasons": [
@@ -850,6 +850,30 @@
     },
     {
       "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "カンジャンケジャン 渡 名古屋錦店",
+        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "ホットペッパーID": "J004699067",
+        "placeId": "ChIJO2kXZ4FxA2AREDn5GpgH4cE",
+        "slug": "J004699067"
+      },
+      "absorbed": [
+        {
+          "店名": "カンジャンケジャン 渡 名古屋店",
+          "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+          "ホットペッパーID": "J004421283",
+          "placeId": "ChIJO2kXZ4FxA2AREDn5GpgH4cE",
+          "slug": "J004421283"
+        }
+      ],
+      "filledFields": [
+        "おすすめポイント"
+      ]
+    },
+    {
+      "reasons": [
         "name_exact"
       ],
       "kept": {
@@ -1369,6 +1393,35 @@
         "owner_confirmed"
       ],
       "kept": {
+        "店名": "大久手山本屋 大曽根店",
+        "エリア": "大曽根･千種･今池･池下･守山区",
+        "ホットペッパーID": "J004698526",
+        "placeId": "ChIJTUACMY9wA2ARzH4vxDXKlh4",
+        "slug": "J004698526"
+      },
+      "absorbed": [
+        {
+          "店名": "大久手山本屋",
+          "エリア": "千種区大久手",
+          "ホットペッパーID": "",
+          "placeId": "ChIJTUACMY9wA2ARzH4vxDXKlh4",
+          "slug": "store-e5a4a7e4b985e689"
+        }
+      ],
+      "filledFields": [
+        "おすすめポイント",
+        "データソース",
+        "備考",
+        "営業状況",
+        "情報源URL",
+        "追加日"
+      ]
+    },
+    {
+      "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
         "店名": "YOHAKU COFFEE 今池1号店",
         "エリア": "大曽根･千種･今池･池下･守山区",
         "ホットペッパーID": "J003624657",
@@ -1600,6 +1653,34 @@
     },
     {
       "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "Pizzeria mimi (ピッツェリア ミミ)",
+        "エリア": "名古屋市東区筒井",
+        "ホットペッパーID": "",
+        "placeId": "ChIJOyeYKw9xA2ARKkD4HgaRa5U",
+        "slug": "pizzeria-mimi"
+      },
+      "absorbed": [
+        {
+          "店名": "Pizzeria mimi",
+          "エリア": "車道・千種",
+          "ホットペッパーID": "",
+          "placeId": "ChIJOyeYKw9xA2ARKkD4HgaRa5U",
+          "slug": "pizzeria-mimi"
+        }
+      ],
+      "filledFields": [
+        "データソース",
+        "価格帯",
+        "備考",
+        "営業状況",
+        "情報源URL"
+      ]
+    },
+    {
+      "reasons": [
         "placeid_match"
       ],
       "kept": {
@@ -1764,42 +1845,5 @@
       ]
     }
   ],
-  "skipped": [
-    {
-      "names": [
-        "カンジャンケジャン 渡 名古屋錦店",
-        "カンジャンケジャン 渡 名古屋店"
-      ],
-      "hpIds": [
-        "J004699067",
-        "J004421283"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "大久手山本屋 大曽根店",
-        "大久手山本屋"
-      ],
-      "hpIds": [
-        "J004698526",
-        ""
-      ],
-      "reason": "placeid_match",
-      "blocker": "ward_conflict"
-    },
-    {
-      "names": [
-        "Pizzeria mimi",
-        "Pizzeria mimi (ピッツェリア ミミ)"
-      ],
-      "hpIds": [
-        "",
-        ""
-      ],
-      "reason": "placeid_match",
-      "blocker": "no_corroboration"
-    }
-  ]
+  "skipped": []
 }
