@@ -24,8 +24,8 @@ const { classify, daysBetween } = require('./session_briefing');
 const ROOT = path.resolve(__dirname, '..');
 const POLICY = path.join(ROOT, 'data/session_briefing_policy.json');
 
-const QUERY = `query($team: String!, $after: String) {
-  issues(first: 100, after: $after, filter: { team: { key: { eq: $team } } }) {
+const QUERY = `query($filter: IssueFilter, $after: String) {
+  issues(first: 100, after: $after, filter: $filter) {
     nodes {
       identifier title url priority dueDate createdAt updatedAt completedAt canceledAt
       state { type name } project { name } assignee { name }
@@ -34,14 +34,21 @@ const QUERY = `query($team: String!, $after: String) {
   }
 }`;
 
-async function fetchIssues(team, apiKey, fetchImpl = fetch) {
+/** チーム＋（指定があれば）Project で絞る。他アプリの課題を混ぜない。 */
+function issueFilter(team, project) {
+  const filter = { team: { key: { eq: team } } };
+  if (project) filter.project = { name: { eq: project } };
+  return filter;
+}
+
+async function fetchIssues(team, apiKey, fetchImpl = fetch, project = null) {
   const issues = [];
   let after = null;
   for (let page = 0; page < 20; page++) {
     const response = await fetchImpl('https://api.linear.app/graphql', {
       method: 'POST',
       headers: { Authorization: apiKey, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: QUERY, variables: { team, after } }),
+      body: JSON.stringify({ query: QUERY, variables: { filter: issueFilter(team, project), after } }),
     });
     let result;
     try { result = await response.json(); } catch (_) { result = {}; }
@@ -110,7 +117,7 @@ async function main() {
     report = { ok: false, today, error: 'LINEAR_API_KEY が設定されていません（GitHub Actions の secret を確認）' };
   } else {
     try {
-      report = buildReport(await fetchIssues(policy.team, process.env.LINEAR_API_KEY), today, policy);
+      report = buildReport(await fetchIssues(policy.team, process.env.LINEAR_API_KEY, fetch, policy.project), today, policy);
     } catch (error) {
       report = { ok: false, today, error: error.message.slice(0, 300) };
     }
@@ -121,4 +128,4 @@ async function main() {
 
 if (require.main === module) main();
 
-module.exports = { buildReport, retro, fetchIssues, render };
+module.exports = { buildReport, retro, fetchIssues, render, issueFilter };

@@ -64,3 +64,9 @@ test('fetchIssues follows pagination and surfaces API errors', async () => {
 test('render reports unreachable Linear instead of looking healthy', () => {
   assert.match(render({ error: 'LINEAR_API_KEY が設定されていません' }), /読めませんでした/);
 });
+
+test('issueFilter scopes to the project when configured', () => {
+  const { issueFilter } = require('../scripts/linear_watchdog');
+  assert.deepEqual(issueFilter('P', null), { team: { key: { eq: 'P' } } });
+  assert.deepEqual(issueFilter('P', 'Nagoya Bites'), { team: { key: { eq: 'P' } }, project: { name: { eq: 'Nagoya Bites' } } });
+});

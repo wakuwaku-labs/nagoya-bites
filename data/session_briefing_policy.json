@@ -1,11 +1,12 @@
 {
   "version": 1,
-  "description": "セッション開始時の自動ブリーフィング（scripts/session_briefing.js）の判定基準。閾値の変更はこのJSONで行い、スクリプトは触らない。判定はLinearの状態・期日・更新日時という検証できる事実だけで行う（制約10）。",
+  "description": "セッション開始時の自動ブリーフィング（scripts/session_briefing.js）の判定基準。閾値の変更はこのJSONで行い、スクリプトは触らない。判定はLinearの状態・期日・更新日時という検証できる事実だけで行う（制約10）。 project を指定すると、そのLinear Projectの課題だけを見る（同じチームに他アプリの課題が入っても混ざらない）。",
   "team": "P",
   "staleDays": 14,
   "dueSoonDays": 3,
   "maxItemsPerSection": 5,
   "maxTodayPicks": 3,
   "linearTimeoutMs": 25000,
-  "githubTimeoutMs": 10000
+  "githubTimeoutMs": 10000,
+  "project": "Nagoya Bites"
 }
