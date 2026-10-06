@@ -18,6 +18,8 @@ status: done
 # 次にやること
 - なし。nagoya-bites-solve-next-daily は無効化中のため Notion 記述を残している（再有効化するときは Linear 前提に書き換える）
 
+- 2026-10-07 オーナー質問「Linear接続を他プロジェクトでも使いたい」。調査: Orca の Linear 接続はMac単位で全リポジトリ共通。スクリプトは workspace/team P/teamId を直書き、ブリーフィング・監視は team 単位で Project で絞っていない。提案: ①アプリごとに Linear Project を分ける（ADR 0003 見直し条件）②共通ルールを ~/.claude/CLAUDE.md へ ③スクリプトを `.linear.json` 設定で汎用化しユーザースキル `/linear-setup` で各リポジトリへ導入 ④LINEAR_API_KEY は org secret か各repoへ。どのプロジェクトから始めるかオーナー回答待ち。
+
 # 試したが駄目だったこと
 - 10/05 は git pull --rebase が HANDOFF.md の競合で停止 → abort して origin/main からのワークツリーで作業した
 

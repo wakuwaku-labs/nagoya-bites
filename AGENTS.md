@@ -1,0 +1,692 @@
+# NAGOYA BITES — エージェント憲法
+
+> **このファイルはプロジェクトのルールブック。**
+> エージェントとして動き始めたら、まず `agents/orchestrator.md` を読んで
+> CEO（Orchestrator）として振る舞ってください。
+
+---
+
+## 最初にやること（必須）
+
+```
+1. agents/orchestrator.md を読む   ← あなたの役職・権限・行動フローが書いてある
+2. agent-backlog.md を読む         ← 現在の課題状況を把握する
+3. ユーザーの意図を分類し、実行モードを選ぶ
+```
+
+Linear課題を指定されたら、[初心者向けLinearガイド](docs/linear-beginner-guide.md)に沿ってLinear Issueとbacklog仕様を照合してから進める。同期運用の詳細は `docs/linear-task-workflow.md` を参照。運用の型と今後の導入順は `docs/linear-ai-native-playbook.md` を参照。
+
+## Linear Issue品質ルール（全起票経路で必須）
+
+人にルールを覚えさせず、CodexはIssueを新規作成するたびに次の7項目を確認する。手動作成、backlog同期、日次・週次triage、CI自動起票のすべてに適用する。
+
+1. **タイトルは動詞で書く** — 「検索改善」のような名詞だけにせず、「検索結果から閉店店舗を除外する」のように完了する行為と結果を示す。
+2. **担当者と期限を入れる** — Linearユーザーとしての担当者と `YYYY-MM-DD` の期日を設定する。backlogの `owner`（役割）だけでは担当者の指定とみなさない。
+3. **初期状態を明示する** — 通常は `Todo`。作成時点で担当者がすぐ着手する場合だけ `In Progress` を選ぶ。
+4. **Projectに紐付ける** — 目的に合う既存Projectを選ぶ。適切なProjectが無ければIssueを作らず、Projectの選択・作成をユーザーに確認する。
+5. **背景とコンテキストを書く** — 発生状況、なぜ必要か、関連するURL・ファイル・データをIssue本文に残す。
+6. **ゴールと達成条件を書く** — 終了時に第三者が確認できる受け入れ条件を記載する。
+7. **30分以上の作業はsub-issueへ分割する** — 親Issueには全体ゴールを置き、独立して完了確認できる作業単位を子Issueにする。
+
+作成前に7項目を検査し、不明な担当者・期限・Projectを推測で埋めない。担当者と期限は `data/linear_issue_defaults.json` の既定値（担当＝オーナー、期限＝起票日＋優先度別日数）で補ってよい。これは設定済みの値であり推測ではない。Projectはすべて `projectName`（Nagoya Bites）。KRはラベルで表し、同ファイルの `krLabelRules`（category のキーワード規則・判定器 `scripts/lib/linear_project_map.js`）で付ける（オーナーに質問して作業を止めない・`docs/decisions/0003`）。AIエージェントの役割（Builder・Editor 等）は Linear の担当者ではなく `担当:<役割>` ラベルで表し、backlog の `owner` から同ファイルの `roleLabels` で付ける（オーナー本人の操作が要る課題は `担当:オーナー作業`・`docs/decisions/0005`）。質問できないCIでは不完全なIssueを作らず、課題IDを保留キューに残して不足項目をログへ出す。既存Issueを更新するだけの同期はこの新規作成ゲートの対象外。
+
+## 自動で回す運用（指示を待たない・2026-10-06）
+
+オーナーは「おはよう」「Linearにして」「分解して」「振り返って」「判断を残して」と毎回言わない。Codexが自分で判断して、そのつど次を行う。根拠と既定値の経緯は `docs/decisions/0001-linear-autonomous-operation.md`、手本は `docs/linear-ai-native-playbook.md`。
+
+1. **始業（ブリーフィング）**: セッション開始時に `.Codex/settings.json` のフックが `scripts/session_briefing.js` を実行し、「【自動ブリーフィング】」として文脈に入る。最初の返答では次のように扱う。
+   - 期限切れ・緊急未着手・GitHub警報Issueがあるときだけ、1〜2行で触れる。何も無ければ触れない。
+   - ブリーフィングが出ていなければ自分で実行する。
+   - ユーザーの依頼を差し置いて別の課題に着手しない。
+2. **起票**: 作業中に、このセッションで終えない作業が生じたら backlog に起票し、`node scripts/sync_backlog_to_linear.js --apply` でLinearへ送る。対象は、見つけたバグ、後回しにした改善、オーナー本人の操作待ち、会話で「いずれやる」となったもの。
+   - 7項目を満たして書く。背景は会話と調査の事実だけで書き、創作しない。
+   - 既に同じ課題があれば新規に作らず、その課題に追記する。
+3. **分解**: 30分を超えそうな作業は、着手前に親とsub-issue（各々に達成条件）へ分け、1つずつ進める。
+4. **振り返り（区切り・終了時）**: 最終チェックと同時に次を行う。
+   - 会話で決めたのに未実行のものを洗い出す。すぐできるものはやり、残りは2の手順で起票する。
+   - HANDOFF とメモリを更新する。
+   - 同じ手作業を3回目に行ったら、スクリプト化またはスキル化を backlog に起票する。
+5. **判断記録**: 複数案から選び、その選択が今後を縛るとき（閾値・既定値・構成・運用ルール・やらないと決めたこと）は `docs/decisions/` に記録する。書式は同ディレクトリの README に従う。
+6. **自動でやらないこと**:
+   - 放置課題を勝手に Canceled にしない（「続けますか」と聞いて判断はオーナー）。
+   - Project・KRを決めない。
+   - マネタイズ・信頼系の着手（制約7・8）。
+   - 取り消せない操作。
+
+---
+
+## プロジェクト概要
+
+| 項目 | 内容 |
+|------|------|
+| サービス名 | NAGOYA BITES |
+| URL | https://nagoya-bites.com/ |
+| 内容 | 名古屋の飲食店1100件以上を掲載する発見サイト |
+| 構成 | `index.html` 一枚（Vanilla JS/CSS）+ `features/` 特集記事 |
+| データ源 | Google Sheets → `build.js` → `index.html` 内 `var LOCAL_STORES = [...]` |
+| デプロイ | `git push origin main` → GitHub Pages 自動公開 |
+
+### 競争優位（全エージェントが共有する認識）
+
+> 出典: `docs/competitive-analysis-2026-05-06.md`（2026-05-06 競合ベンチマーク）
+> 消費者の選択経路を 6カテゴリで把握し、Moat / Strategic Skip を明示する。
+
+```
+【競合カテゴリ — 消費者の選択経路を網羅】
+  A. 大手ポータル・予約サイト
+     食べログ / ホットペッパー / Retty / ヒトサラ / 一休 / ぐるなび / OZmall / まとめ系
+  B. マップ・OS 系
+     Google Maps（最大の前提）/ Apple Maps / Yahoo!ロコ
+  C. 名古屋・地域専門メディア
+     ナゴレコ / WEB大人の名古屋 / 名古屋情報通 / 日刊KELLY / 個人インフルエンサー
+  D. SNS（プル型・プッシュ型）
+     Instagram / X / TikTok / YouTube — 発見導線の半分以上が SNS に移行
+  E. 個人ブログ・note・Vlog
+     はてな / WordPress / note / YouTube Vlog
+  F. 生成 AI 引用
+     Google AI Overviews / Perplexity / ChatGPT / Gemini / Codex
+
+【我々の Moat — 競合 30+ サイトを観察した中で唯一無二】
+  ・業界視点の構造化データ層（editorReason / mediaFeatures / insiderNote / visitStatus）
+  ・編集独立性（広告ゼロ・PR 記事ゼロ）
+  ・現役飲食人運営による解釈層（ミシュラン型の編集部匿名）
+  ・構造化 DB 4,584店 × 特集 20本 × 日次ジャーナルの三層編集
+  ・editorial-policy.html による編集規約の透明公開
+
+【我々が勝つ領域】
+  ・「名古屋 × シーン × 業界人の目利き」の組み合わせ
+  ・宴会・接待・デートなどシーン別の専門性
+  ・飲食店側の事情を知っているからこその推薦精度
+  ・大手ポータルが書けない独自 KW（「業界人 推薦」「予約困難 理由」等）
+
+【戦わない領域 — Strategic Skip（追わない判断）】
+  ・匿名口コミの大量集積（食べログ型）— 編集独立性と矛盾
+  ・クーポン・予約特典経済（ホットペッパー型）— 広告主依存に陥る
+  ・高級セグメント特化（一休型）— 全体発見サイトの立ち位置と矛盾
+  ・女性向け装飾演出（OZmall 型）— ターゲットを狭めすぎる
+  ・雑誌印刷連動（大人の名古屋型）— 鮮度と印刷コストのトレードオフ
+  ・月刊スピード — 我々はジャーナル日次でむしろ勝つ
+```
+
+---
+
+## 絶対に守る制約（エージェント全員共通）
+
+```
+1. index.html は単一ファイルで維持する（サイト用の新ファイル追加禁止 ※例外: features/配下の特集記事・
+   journal/配下の日次記事・stores/配下の店舗ページ（gen-store-pages.js が生成）・
+   stores/area/配下のエリア×ジャンル×条件一覧ページ（SEO-094・scripts/gen_area_genre_pages.js が
+   data/area_genre_pages_policy.json を正本に data/stores.json から決定的に生成する。手書き禁止・
+   閾値/マッピング変更はポリシーJSONのみで行う）、および共有スタイルシート assets/css/nb.css の
+   1ファイルのみ。これ以外の .css/.js 分離は引き続き禁止）
+2. var LOCAL_STORES = [...]; のパターンを壊さない
+3. テキストはすべて日本語
+4. サイト用の新npm依存関係を追加しない（CDNリンクはOK）
+5. フィルター・検索・モーダル・IGエンベッド・Google評価表示を壊さない
+6. QAゲートを通過するまでデプロイしない
+7. ユーザーの信頼を毀損する施策は実装しない
+8. マネタイズ施策はユーザーの承認を得てから実装する
+9. 写真は「実写優先」。汎用ストック写真（Unsplash / Pexels / loremflickr / Pixabay 等）の新規使用は原則禁止
+   ※既存の使用箇所は段階的に置き換える。新たに画像を差し込む全ての場面（特集 / 日次ジャーナル
+     / トップカード / OG画像 / SNS原稿用 / 店舗詳細 等）で本ルールが適用される
+10. 品質ゲート・スコア・監査の類は「検証できる事実」だけで判定する。
+    エージェントが自由に書ける自己申告値を合否の分かれ目にしない（下記）
+11. 自動処理の失敗は「検知して終わり」にしない。警報は必ず、壊れた当人とは別の場所へ届ける（下記）
+12. 全ページはデザインシステムを通す（DSN-001・2026-09）。正本は `data/design_system.json` →
+    `assets/css/nb.css` → `docs/design-system.md`。新規ページ・新規ページ種別・新規UI部品・
+    テンプレート変更（gen-store-pages.js / journal/_template.html / scripts/gen_industry_features.js）
+    は Designer（agents/designer.md）のレビューと `node scripts/audit_design_system.js --check`
+    の通過が公開条件。可視テキストの font-size 12px 未満は禁止、ユーザーが読むテキストは
+    13px 以上。`:root` の再定義と font-size リテラルの新規追加（トークン `var(--fs-*)` を使わない
+    直書き）は禁止
+```
+
+### 無人自動化の監視を設計するときの原則（ISSUE-084 の教訓・全エージェント共通）
+
+> 2026-08 に、日次ジャーナルが3日連続で止まっていたのにオーナーがサイトを見るまで
+> 誰も気づかなかった。検知は完璧に動いていた——HOLD メモを書き、翌朝も警告していた。
+> ただしその出力先は全部 `.local-logs/`＝`.gitignore` 対象で、**Mac から一歩も出なかった**。
+> **警報は鳴っていたが、防音室の中で鳴っていた。** 同じ発覚遅れは3回連続で起きている。
+
+```
+1. 監視は「監視される対象」と別の場所で動かす
+   ローカル実行の監視をローカルに置くと、ローカルごと死んだとき監視も死ぬ。
+   例: launchd の生成を GitHub Actions が監視する（Mac がスリープでも発火する）
+2. 通知は out-of-band（当人の外）に出す
+   ログファイル・gitignore 配下・同じ画面の中で完結させない。
+   届いた実績のある経路を使う（本プロジェクトでは GitHub Issue → メール）
+3. 「気づけるはず」を検知と数えない
+   人が能動的に見に行かないと分からないものは、検知ではなく記録。
+   検知とは、人が何もしなくても届くことを指す
+4. 復旧に人手が要る失敗（認証切れ等）ほど、通知が唯一の復旧経路になる
+   コードで直せない失敗こそ、真っ先に人へ届ける設計にする
+5. 通知は原因つきで出す（何が壊れたかまで運べば、人はログを読みに行かなくて済む）
+6. 復旧したら自動で静かにする（オオカミ少年化させない。鳴りっぱなしは無視される）
+```
+
+### 品質ゲートを設計するときの原則（ISSUE-077 の教訓・全エージェント共通）
+
+> 2026-07 に、日次ジャーナルの 95点ゲートが「正直に申告すると上限94点で1点届かず、
+> **出典のない数字（buzz_score）を大きく書くと通る**」構造になっていたことが判明した。
+> 過去にゲートを超えた候補は全てその数字を積んでおり、正直に申告した日だけが未達だった。
+> ゲート自体が、盛る動機を生む装置になっていた。
+
+```
+1. 合否を分ける入力は「後から第三者が確認できるもの」に限る
+   良い例: ソースのURL・日付・独立ドメイン数・一次情報源の有無・DBに実在するか
+   悪い例: 「話題度90」「言及50件」など、出典もなく誰も検算できない自己申告値
+2. 「主張させる」のではなく「証跡を出させる」
+   （例: 話題だと書かせるのではなく、話題の言及URLを sources に入れさせる）
+3. ゲートは、正直な最良の成果物が余裕を持って通る位置に置く
+   正直な上限がゲートを下回っていると、盛るか止まるかの二択になる
+4. 満点でない日の逃げ道を必ず用意する（段階ゲート）
+   「捏造」か「その日の成果ゼロ」かの二択を、自動化されたエージェントに迫らない
+5. 閾値をいじる前に、代表ケースで分布を実測する
+   数字を動かして全部通るようにするのは、ゲートを壊すのと同じ
+6. ヘッドレス実行のワークフローで、エージェントに人間の承認を求めさせない
+   応答できる人がいないため、質問＝その日の成果物が失われることを意味する
+```
+
+### 写真ソースの優先順（全エージェント共通・全領域適用）
+
+```
+優先1: 店舗公式 Instagram の embed（embed.js 経由・規約上明示的に許可）
+優先2: HotPepper 公式写真（LOCAL_STORES の 写真URL）
+優先3: プレスリリースの報道用写真（PR TIMES 等・報道目的の無償利用が規約で明示許諾）
+       根拠: PR TIMES 企業規約 第6条3項「ご利用企業は、パートナーメディアと報道関係者に対し、
+       報道目的で利用する限り、企業コンテンツを無償で非独占的に利用することを許諾する
+       （パートナーメディア以外において有償目的で利用する行為を除く）」。
+       当サイトは広告ゼロ・PR記事ゼロのため「有償目的」に当たらない。
+       新店・新メニューはほぼ必ずリリースが出るため、**開店直後で実写が存在しない店**
+       （HotPepper に写真が無く Places にも口コミ写真しか無い）を救える唯一の合法経路。
+       条件（1つでも欠けたら使わない）:
+         a. その記事が扱う店・企業のリリースであること
+         b. 記事の sources[] にそのリリースURLを入れる（＝報道目的である証跡。ゲートが照合）
+         c. クレジットに発行企業名とリリースURLを明記する
+         d. 加工しない・self-host しない（参照に留める＝複製保存を避ける）
+         e. CGパースは実写として扱わない（使うならキャプションに「イメージパース」と明記）
+       取得: `node scripts/fetch_press_release_photo.js <リリースURL>`
+       ⚠️ 規約を確認していない配信元（digitalpr.jp 等）の画像を「報道だから使える」と
+          推定して使わないこと。対応配信元は fetch_press_release_photo.js の SUPPORTED が正本。
+優先4: Google Maps Places API 写真（GOOGLE_MAPS_API_KEY 設定時）
+       ⚠️ 日次ジャーナルは launchd のローカル実行で生成されるため、GitHub Secrets の
+          キーは届かない。`~/.config/nagoya-bites/journal.env` に置く（docs/journal-photo-sources-setup.md）。
+          2026-08-17 まで未配線で、この優先順は**一度も発火したことがなかった**（ISSUE-091）。
+優先5: 店舗オーナーから許諾を得た独自URL / 編集部の取材写真
+─────────────────────────────────────────
+最終手段: 「記事固有のイメージ図」
+  実写がどうしても手配できない場合のみ、その記事専用に作成した
+  オリジナルの図解 / イラスト / インフォグラフィック / 構造図 / SVG 等は許容。
+  条件:
+    - リポジトリ内（/assets/journal-figures/ または記事HTML内インラインSVG）に self-host
+    - 汎用ストックの寄せ集めではなく、その記事のテーマを「説明する図」であること
+    - 第三者の権利を侵害しない（Unsplash等の写真をベースに加工したものは不可）
+
+記事の「顔」になる写真の絶対条件（ISSUE-090 の教訓・2026-08-17）:
+
+> 記事の主役2店がどちらも新店で写真を持たなかった日に、記事へ一行触れただけの別店の
+> 販促バナー（「ドリンク全品94円」の文字が全面）が記事のヒーロー写真になって公開された。
+> validator は「汎用ストック写真でないこと」は検証していたが、**「その記事の店の写真で
+> あること」は誰も検証していなかった**。ストック禁止だけを課したことが、
+> 「実写でありさえすれば何でもいい」＝他店の写真を借りる動機を生んでいた。
+
+```
+1. ヒーロー写真は、その記事が主役として扱う店に帰属していなければならない
+   記事に一行触れただけの店の写真を「顔」にしない。読者から見て記事と写真の対応が壊れる
+2. 主役店の実写が手配できないときの正解は「他店の写真を借りる」ではない
+   → 優先1〜4 を尽くしてなお無理なら、その記事専用のイメージ図に倒す（最終手段・下記）
+   → 取り繕わない。無関係な実写より、記事を説明する図の方が読者に対して誠実
+3. 文字が主役の販促バナー（「◯◯円」「グランドオープン」等の大きな文字入り画像）は顔にしない
+   実写ではあるが、料理でも店でもなく広告。消費者の目を引くのは料理と空間であって値札ではない
+   ※ 画素解析でバナーを自動判別することは試みて断念した（2026-08-17 に46枚で実測。
+     料理写真の方がバナーより高い値を出す例が複数あり分離不能）。分離できない指標を
+     合否ゲートにするのは制約10 違反なので、機械判定ではなく人の目と候補の多重化で担保する
+4. 同じ画像を複数の記事の顔に使い回さない（過去180日・data/journal_photo_policy.json）
+5. 出所を書けない写真は載せない
+   「出所不明（要確認）」と書いて公開するのは禁止。出典を確定させるか、図に倒す
+6. 帰属の証跡は成果物自身に刻む
+   figure タグに data-hero-source / data-hero-store を付ける。Places CDN の URL からは
+   店名を逆引きできないため、証跡が無いと第三者が後から検算できない（品質ゲート原則2）
+
+判定器は scripts/lib/hero_photo_gate.js の1本。生成時（generate_daily_draft.js）・
+公開前QA（validate_journal_draft.js 項目15b）・日次CI監査（audit_journal_photos.js）が
+同じ判定を共有する。基準の変更は data/journal_photo_policy.json で行いスクリプトは触らない。
+確認は `node scripts/audit_journal_photos.js`（Editor/Builder 共管）
+```
+
+記事の写真は1枚で終わらせない（本文にも散らす・2026-09-20）:
+
+> ジャーナルの写真はヒーロー1枚だけで、本文は最後まで文字が続いていた。読者の目が休まらず、
+> 店の様子も1枚でしか伝わらない。本文の途中にも写真を挿す。
+
+```
+1. 増やすのは「枚数」であって「基準」ではない
+   本文写真もヒーローと同じ帰属の判定（scripts/lib/hero_photo_gate.js の judgePhoto）を通す。
+   その記事が扱う店の写真であること・出所を書けない写真は載せないこと、はどちらも変わらない
+2. 候補が足りない日は増やさない（取り繕わない）
+   枚数は合否ゲートにしない。枚数で落とすと「他店の写真を借りる」「図で水増しする」動機が生まれる
+   （AGENTS.md 品質ゲート原則1・4）。validator は警告でしか言わない
+3. 写真を取りに行けなかったことを「候補なし」と同じ顔にしない
+   Places のクォータ切れ・認証エラーは理由つきで出す（写真が無い店と区別できないと後から分からない）
+4. 目安は data/journal_photo_policy.json の bodyPhotos（targetTotal=3）。閾値変更はJSONで行う
+5. 中身（販促バナー・ロゴ画像でないか）は機械で判定しない。目で見て差し替える（判定器を賢くしない）
+```
+
+品質ゲート（新規店・既存店を問わず、写真がサイトに入る全経路に適用）:
+  基準の正本は `data/photo_policy.json`、判定器は `scripts/lib/photo_policy.js` の1本。
+  - 優先3（Places）の写真は「クレジット名＝店名」＝オーナーがビジネスプロフィールから
+    上げた宣材だけを採用する。個人名クレジット（＝客が上げたスマホ写真）は載せない。
+    photos[0] だけを見ると客の写真になる店が半分あるため、上位N枚を走査して
+    最初に基準を通った1枚を採り、全部落ちたら「写真なし」に落とす（取り繕わない）。
+  - 検知は CI（build.yml）の `node scripts/audit_photo_policy.js --check` で毎日回る。
+
+プレスリリース写真も「販促バナー率」が高いので必ず中身を見る（2026-08-17 実測）:
+  ゆず庵 名古屋山王店のリリースは画像4枚中**3枚が販促バナー**（10%割引クーポン / アプリ広告 /
+  文字入り外観）で、使えるのは料理写真1枚だけだった。解像度順に機械で選ぶと当たることもあるが、
+  保証はない（より大きいバナーが入っていれば1位になる）。**必ず Editor が目で1枚選ぶこと。**
+
+禁止事項:
+  - AI超解像・生成AIによる解像度の水増し（2026-08-16 決定）
+    理由1: リクルートWEBサービス利用規約が「編集、加工、翻案その他の変更」「複製保存」
+           「再配信」を禁じており、HotPepper 写真の加工・自ホストは規約違反にあたる
+    理由2: AI超解像は実在しないディテールを生成する。実在保証を Moat とするサイトで
+           「無いものを作って載せる」のは 2026-05 の架空店事故と同じ失敗クラス
+    → 解像度が足りないときは「画素を発明する」のではなく「出典を替える」（優先1〜4）か、
+      引き伸ばさない見せ方にする。粗いまま伸ばすのも、水増しするのも、どちらも選ばない
+  - 他メディア（dressing / macaroni / retrip / 食べログ / ヒトサラ等）の記事内写真の転用
+  - 店舗公式サイトの写真の無許諾転載
+  - Instagram のスクリーンショット・画像ダウンロード（embed.js 経由のみ可）
+  - 汎用ストック写真の新規追加（規約違反でなくても、編集独立性・信頼担保のため避ける）
+
+例外: 規約違反になる選択肢しか残らない場合は実装前に Orchestrator/ユーザーへ相談する。
+```
+
+---
+
+## エージェント構成と役職（8名体制）
+
+```
+Orchestrator（CEO）← agents/orchestrator.md
+│  ビジョン設定・資源配分・KPI管理・QAゲート・最終意思決定
+│
+├── 技術部門（プロダクト品質）
+│   ├── Inspector           ← agents/inspector.md
+│   │   └── サイト全方位監査・競合ベンチマーク・CVR分析
+│   │
+│   ├── Builder             ← agents/builder.md
+│   │   └── 実装・UX最適化・成長ドリブン開発
+│   │
+│   ├── Designer            ← agents/designer.md
+│   │   └── 可読性・タイポグラフィ・デザインシステムの最終責任者（DSN-001で新設）
+│   │
+│   └── DataKeeper          ← agents/data-keeper.md
+│       └── データパイプライン・データ拡充戦略
+│
+├── 事業部門（成長・収益）
+│   ├── Marketer            ← agents/marketer.md
+│   │   └── SEO・SNS・トラフィック獲得・コンテンツ配信
+│   │
+│   └── Strategist          ← agents/strategist.md
+│       └── ブランド戦略・マネタイズ・KPI設計・パートナーシップ
+│
+└── 編集部門（独自価値の創出）
+    └── Editor              ← agents/editor.md
+        └── 特集記事・季節コンテンツ・レビュワー獲得・コミュニティ
+```
+
+### 優先度基準（全エージェント共通）
+
+| 優先度 | 内容 | 対応 |
+|--------|------|------|
+| P0 | バグ・クラッシュ・データ消失・ブランド毀損 | 即時修正 |
+| P1 | UX劣化・CVR低下・SEO順位下落・競合に明確に負けている領域 | 次の実装サイクルで必ず修正 |
+| P2 | SEO改善・パフォーマンス・A11y・コンテンツ拡充 | 計画的に改善 |
+| P3 | デザイン磨き・文言調整・nice-to-have | 時間があれば |
+
+---
+
+## 共有ファイル一覧
+
+| ファイル | 役割 |
+|---------|------|
+| `AGENTS.md` | この憲法（全エージェントが参照） |
+| `agent-backlog.md` | 課題トラッキング・実行ログ（全エージェントが読み書き） |
+| `agents/orchestrator.md` | CEO の行動フロー・QAゲート定義 |
+| `agents/inspector.md` | Inspector のチェックリスト |
+| `agents/builder.md` | Builder の実装ルール |
+| `agents/designer.md` | Designer の役割・QA-5チェックリスト・新規ページの作り方（DSN-001） |
+| `agents/data-keeper.md` | DataKeeper の実行手順 |
+| `agents/marketer.md` | Marketer のマーケティング戦略 |
+| `agents/strategist.md` | Strategist の事業戦略 |
+| `agents/editor.md` | Editor の編集方針・コンテンツ基準 |
+| `data/design_system.json` | **デザインシステムの判定基準の正本**（正本フォントURL・font-size床12px・許可フォントウェイト・共通トークン一覧・legacyRewrites）。閾値変更はここで行いスクリプトは触らない |
+| `assets/css/nb.css` | **デザインシステムの実装本体**（トークン・基本タイポ・共通クローム: header/nav/footer/breadcrumb・共通部品）。全ページがこの1ファイルを読み込む（制約1の例外） |
+| `docs/design-system.md` | デザインシステムの人向け仕様書（書体・トークン・部品解剖・新規ページ雛形） |
+| `scripts/audit_design_system.js` | デザインシステム準拠の決定的ゲート。`--check`でCI向けexit 1、`--report`で違反一覧JSON |
+| `scripts/apply_design_system.js` | 既存ページへのデザインシステム一括適用（冪等）。`--dry-run`/`--only <dir>`/`--check` |
+| `scripts/lib/site_chrome.js` | **サイト共通クローム（ヘッダー/ナビ/パンくず/フッター）の唯一の正本**（DSN-003・2026-09）。ナビ5項目・補助ナビ2項目・フッター3群のラベル/リンク先はここにのみ書く。`renderHeader`/`renderBreadcrumb`/`renderFooter`/`chromeScript` を生成器（gen-store-pages.js / gen_industry_features.js）と `scripts/apply_site_chrome.js` が共有する |
+| `data/area_genre_pages_policy.json` | **エリア×ジャンル×条件一覧ページ（stores/area/配下）の判定基準の唯一の情報源**（SEO-094・2026-09-14）。店舗ページの「もっと見る」（`../?area=…&genre=…`）が index.html の JS フィルタ（canonical は `/`）を指すだけの死にリンクで、Google からはエリア×ジャンルの検索面が1ページも存在しなかった問題への対応。エリア10群・ジャンル17・条件13軸（個室/深夜営業/日曜営業/喫煙可否/飲み放題/食べ放題/30名以上宴会可/駅徒歩3分以内/ランチ/予算帯/駐車場）を`data/stores.json`の実在フィールドだけから決定的に導出する（推測・自己申告値は使わない・制約10）。閾値変更はこのJSONで行いスクリプトは触らない。確認は`node scripts/gen_area_genre_pages.js --check`（Builder管轄） |
+| `data/area_genre_pages_manifest.json` | 上記ページの生成物台帳（path/type/count/contentHash/firstPublished/updated/status）。内容が変わった日だけ更新し、閾値割れは即noindex化＋90日後delete（取り繕わず`stub`にする）。`scripts/inject_store_links.js`（index.htmlの「エリア×ジャンルで探す」導線）と`scripts/indexnow_ping.js`（新規ハブの優先送信）が同じ台帳を読む |
+| `scripts/lib/area_genre_pages.js` | エリア×ジャンル×条件ページの決定的プランナー・正規化・条件13軸の述語。生成器（`gen_area_genre_pages.js`）・`gen-store-pages.js`（もっと見る/パンくず/JSON-LDのハブリンク化）・`scripts/inject_store_links.js`が共有する |
+| `scripts/gen_area_genre_pages.js` | 上記の生成器CLI。`node scripts/gen_area_genre_pages.js`（生成・sitemap.xml追記・manifest更新）/ `--dry-run` / `--check`（純粋な読み取り専用の差分検査・apply_site_chrome.jsと同じ意味）。gen-store-pages.js が sitemap.xml を丸ごと書き直すため、必ずその**直後**に実行する（build.yml参照） |
+| `scripts/apply_site_chrome.js` | 既存ページへサイト共通クロームを一括適用（冪等・`apply_design_system.js` と同じ運用モデル）。`--dry-run`/`--only <root\|features\|journal\|stores>`/`--check`/`--strip-legacy-css`。CI（build.yml）が日次で `--check --sample 200` を継続実行（当面 continue-on-error） |
+| `scripts/measure_typography.js` | 可読性の実測（12px以下の文字割合・1画面の文字数・タップ対象サイズ）。before/afterの証跡 |
+| `index.html` | サイト本体（編集対象） |
+| `features/` | 特集記事ディレクトリ（Editor管轄） |
+| `journal/` | 日次記事ディレクトリ（Editor管轄・毎日1本公開） |
+| `docs/daily-posts/` | 日次SNS原稿（Note/Instagram/X 3種、コピペ投稿用） |
+| `.Codex/commands/journal-today.md` | `/journal-today` スラッシュコマンド（日次起動） |
+| `data/journal_gate_policy.json` | 日次ジャーナルの公開ゲート方針（PASS / PASS_WITH_NOTE / HOLD の閾値）。**運用ルールの唯一の情報源**。`.Codex/commands/*.md` は自己改変ブロックで編集できないため、挙動の変更はこのファイルで行う。確認は `node scripts/score_journal_candidates.js --policy`（Editor/Orchestrator 共管） |
+| `data/journal_source_diversity_policy.json` | **日次ジャーナルの出典の偏りを抑える基準の唯一の情報源**（2026-09-28）。オーナーから「名古屋情報通を元にした記事が多すぎる」と指摘があり、実測で直近62本の55%が jouhou.nagoya を出典に含んでいた（取材手順で同媒体の新店一覧を毎日の起点にしていたため）。直近30日の公開記事の情報源欄（`<div class="source-note">`＝第三者が検算できる事実・制約10）から二次媒体ごとの使用率を測り、30%超を「飽和」とする。一次発表・一次報道・店舗ページ・SNSは対象外。飽和媒体は (1) `fetch_trending_articles.js suggest-queries` の汎用クエリから `-site:` で外し代替媒体クエリを足す (2) `score_journal_candidates.js` の「独立ドメイン数」に数えない。**使用自体は禁止しない・減点もしない**（品質ゲート原則4）。使用率が閾値を下回れば自動解除。判定器は `scripts/lib/journal_source_diversity.js`、確認は `node scripts/lib/journal_source_diversity.js`（Editor管轄） |
+| `data/journal_sns_draft_policy.json` | 日次ジャーナルのSNS原稿（`docs/daily-posts/*.md`: Note/Instagram/X用コピペ原稿）自動生成のオン/オフを切り替える唯一の情報源。`generate_sns_draft: false`（2026-09-05〜）で `scripts/generate_daily_draft.js` が md 生成をスキップする。SNS投稿原稿を別の仕組みで生成する運用に切り替えたための一時停止で、ジャーナル記事本体（HTML）の生成・公開フローには影響しない。`node scripts/validate_journal_draft.js` は md 不在時に該当項目を自動スキップする設計のためコード変更不要。再開は値を `true` に戻すだけ（Editor管轄） |
+| `data/journal_seo_keywords.json` | 日次ジャーナルの**入口（検索意図）**を担保するシーンKWマスタ。各KWは `features/` の実在記事に紐づく。採点器の `search_intent`（10点）がこれを使う。生成/検証は `node scripts/journal_seo_kw.js --build` / `--verify`、KW提案は `--suggest`（Marketer/Editor 共管・SEO-011） |
+| `scripts/journal_seo_kw.js` | シーンKWの単一の情報源。`--verify` で「特集ファイルが実在し、そのタイトルにその語が実際に使われている」ことを機械検証（自己申告値を使わないための担保）。`--check "<title>"` でタイトルの検索意図カバレッジを判定 |
+| `scripts/register_journal_entry.js` | 記事HTMLから published.json エントリを復元登録（冪等）。「記事はあるのに未登録」で止まった日の自動復旧に使う |
+| `scripts/check_journal_health.js` | 日次ジャーナルの**欠番検出の単一の情報源**。判定は検証できる事実だけ（published.json のエントリ実在＋記事HTMLの実在）で行い自己申告値を見ない（制約10）。`node scripts/check_journal_health.js --days 7`（欠番あり=exit 1）。CI とローカルで同じ判定器を共有（Orchestrator/Editor 共管・ISSUE-084） |
+| `.github/workflows/journal-watchdog.yml` | **日次ジャーナル欠番のサーバ側監視**。毎日12:00 JST に検査し、欠番があれば GitHub Issue を起票（＝オーナーにメール）、復旧で自動クローズ。**ローカルの全故障モードから独立**しており、「Mac がスリープで launchd が一度も動かなかった」というローカル警報では原理的に検出できない穴も塞ぐ（ISSUE-084） |
+| `data/journal_health.json` | ローカル実行（launchd）の最終状態（ok / hold ＋ 理由）。**Mac の外へ push される**ため、watchdog の Issue が「認証切れ／品質HOLD／接続断」のどれかを原因つきで表示できる。`.local-logs/` は gitignore 対象で外に出ないことへの対策（ISSUE-084） |
+| `build.js` | データ埋め込みスクリプト（DataKeeper管轄） |
+| `data/photo_policy.json` | **店舗写真の採用基準の唯一の情報源**。Google Places の写真には「オーナーが上げた宣材」と「客が上げたスマホ写真」が混在し、実測で半々（2026-08-16・132件中66件が客投稿）。判定根拠は `authorAttributions`（写真クレジット）＝後から第三者が検算できる事実だけを使う（制約10）。判定器は `scripts/lib/photo_policy.js` の1本に集約し、取得（`fetch_manual_store_photos.js`）と監査（`audit_photo_policy.js`）が同じ判定を共有する。閾値変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_photo_policy.js`（Builder/DataKeeper 共管） |
+| `data/journal_photo_policy.json` | **ジャーナルのヒーロー写真の採用基準の唯一の情報源**。`data/photo_policy.json` が「その写真を店舗データに載せてよいか」を見るのに対し、こちらは「その写真をその記事の顔に使ってよいか」を見る。2026-08-17、記事の主役2店に写真が無かったため記事に一行触れただけの別店の販促バナーが顔になった事故を受けて新設。判定は検証できる事実だけ（HotPepper画像URL→所有店の逆引き／記事HTMLに刻んだ `data-hero-store`／記事slugと図のファイル名の対応）で行う（制約10）。判定器は `scripts/lib/hero_photo_gate.js` の1本に集約し、生成・公開前QA・日次CI監査が同じ判定を共有する。閾値変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_journal_photos.js`（Editor/Builder 共管）。2026-09-20 に `bodyPhotos`（本文写真の目安枚数・配置）を追加 |
+| `scripts/audit_journal_photos.js` | 公開済み全記事のヒーロー写真を検査し、「記事と無関係な写真」「別記事との使い回し」「出所不明のまま公開」を検出。`--check` で違反あれば exit 1（build.yml が日次実行＝人がサイトを見に行かなくても検知が届く） |
+| `scripts/lib/journal_photos.js` | **ジャーナルの本文写真（ヒーロー以外の記事内写真）の収集・選定・配置の唯一の情報源**（2026-09-20）。記事の写真がヒーロー1枚だけで本文が最後まで文字だったため新設。候補は「その記事が扱う店」からだけ集め（HotPepper 公式写真＋Places のオーナー投稿）、採否は既存の判定器をそのまま使う（Places の写真は `scripts/lib/photo_policy.js`、記事との帰属は `scripts/lib/hero_photo_gate.js` の `judgePhoto`）＝ここで新しい基準を増やさない。配置は見出し（h2）の手前へ均等に散らし、見出しが足りない記事は段落の切れ目に落とす。Places がクォータ切れ・認証エラーで引けなかった場合は「候補なし」と区別して理由を返す（写真が無い店と取りに行けなかった店を同じ顔にしない）。生成（`generate_daily_draft.js`）と後追い（`add_journal_body_photos.js`）が同じこの1本を通る（Builder/Editor 共管） |
+| `scripts/add_journal_body_photos.js` | 公開済み記事へ本文写真を後から挿す（冪等）。`--dry-run` / `--days N` / `--only <slugの一部>` / `--limit N`。`GOOGLE_MAPS_API_KEY` があれば Places も候補に入る（1店1枚しか持たない HotPepper だけでは1店記事が増やせないため）。**CI では回さない** — 外部APIを叩くうえ、写真の中身（販促バナー・ロゴ画像でないか）は機械判定しないと決めてあるので、結果を人が見てからコミットする運用（Builder/Editor 共管） |
+| `scripts/fetch_press_release_photo.js` | プレスリリースの報道用写真を取得（写真ソース優先3）。開店直後で実写が存在しない新店を救う経路。対応配信元（規約で報道目的の無償利用が明示許諾されているもの）の正本は同ファイルの `SUPPORTED`。`node scripts/fetch_press_release_photo.js <リリースURL>`（Editor管轄） |
+| `docs/journal-photo-sources-setup.md` | 写真ソースの**配線手順の正本**。日次ジャーナルは launchd のローカル実行のため GitHub Secrets が届かず、Places のキーは `~/.config/nagoya-bites/journal.env` に置く必要がある。PR TIMES メディアユーザー登録の手順も含む（どちらもオーナー本人の操作） |
+| `scripts/lib/og_figure_png.js` | **図解SVG→OGP用PNG変換の唯一の情報源**。X / Facebook / LINE の OGP クローラは **SVG をレンダリングしない**ため、図解を `og:image` にした記事はSNS共有でサムネイルが出ず、日次ジャーナルの主要導線（SNS手動投稿）の CTR を丸ごと落とす。npm依存を足さず（制約4）、マシンに既にある Chrome/Chromium ヘッドレス（無ければ rsvg-convert）を呼ぶ。元図を等比縮小して 1200x630 のラッパーSVGに入れ子にし、背景は元図の全面rectの fill を流用する＝**画素を発明しない**（制約9のAI超解像禁止と同じ思想）。成功判定は出力PNGの IHDR 実寸のみ（制約10）。対象は `assets/journal-figures/` と `assets/feature-figures/`（Builder管轄・ISSUE-095） |
+| `scripts/render_og_figures.js` | 上記のバッチ実行。`node scripts/render_og_figures.js`（og:image が参照する図のうち未生成/古いものだけ）/ `--all` / `--force` / `--only <語>` / `--check`（生成せず不足を報告・CI向け）。**PNG生成には Chrome/Chromium が要る**ためローカルで実行して push する（Builder管轄） |
+| `scripts/normalize_og_images.js` | **OGPメタタグの正本**。① HotPepper `_238`→`_480` 格上げ ② 図解SVGの `og:image`/`twitter:image` を併置PNGの絶対URLに差し替え ③ 相対パス→絶対URL（クローラは記事URL基準で相対パスを解決しない）④ `og:image:width/height` 付与。`--check` で CI 検査、`--only <語>` で対象を絞る。**日次ジャーナルのラッパーからは必ず `--only` を使う**（過去記事まで書き換えると surgical な git add から漏れ、作業ツリーが汚れたまま翌日の git pull が死ぬ）（Builder/Marketer 共管・ISSUE-095） |
+| `data/manual_stores.json` | 手動キュレーション店舗マスター（Editor/DataKeeper 共管） |
+| `scripts/lib/store_link_identity.js` | **外部リンク（食べログURL/ホットペッパーID）が実際にその店を指しているかの唯一の判定器**。既存の `scripts/audit_manual_stores_links.js` はURLの「形式」（個別店舗ページの形をしているか）しか見ておらず、「形式は正しいが別の実在店（閉店店舗を含む）を指すURL」を検出できなかった（2026-09-03・ユーザー報告で「サラマンジェドゥカジノ」の食べログURLが無関係な閉店店舗のページを指していたと発覚。同種の事故は過去にも発生済み＝`scripts/clear_unverified_urls.js` のコメント参照）。実際にURLを fetch し、ページの `<title>` から取れる店名を `scripts/lib/store_name_match.js` の `namesMatch()`（架空店ブロックの名前ゲートと同一判定器）で我々の店名と突き合わせる。判定は検証できる事実だけで行う（制約10）。英語名+かな併記（例:「SALLE A MANGER DE KAJINO（サラマンジェ ドゥ カジノ）」）は丸括弧の中身も照合候補にする |
+| `scripts/audit_store_link_identity.js` | 上記判定器のCLI。`node scripts/audit_store_link_identity.js`（1日20件・キャッシュの古いものから）/ `--all`（全件）/ `--store "<部分一致>"`（特定店のみ）/ `--force`（キャッシュ無視）/ `--check`（不一致があれば exit 1・CI向け）。結果は `data/store_link_identity_checked.json`（60日キャッシュ・外部アクセス回数を抑制）と `data/store_link_identity_report.json`（不一致一覧）に保存。build.yml が日次で `--limit 20 --check`（continue-on-error、初導入のため非ブロッキング）を実行し、キャッシュを日々持ち越して全件をカバーする（Builder/DataKeeper 共管）。**初回導入時（2026-09-03）に手動キュレーション店舗167件を全件実地監査した結果、68件の食べログURLが完全に無関係な別店（マクドナルド/デニーズ/ファミリーマート等）や404を指していたことが判明・`scripts/clear_broken_tabelog_links.js` で空欄化済み**（うち40件は当時サイトに表示中だった）。sim>0（ふりがな併記/ローマ字表記差の疑い）の境界事例は自動処理せず人の確認に残す方針で、`data/store_link_identity_report.json` に残る少数件は個別確認が必要 |
+| `scripts/clear_broken_tabelog_links.js` | 上記監査で sim=0（=リンク先ページに我々の店名の痕跡が一切無い）または確認済み404と判定された食べログURLを、`data/manual_stores.json` / `data/stores.json` / `stores/*.html`（可視CTAボタン+JSON-LDのsameAs）の3層から一括で空欄化する後始末スクリプト。正しいURLへの差し替えは行わない（安全側に倒し「リンク非表示」へ落とす・`scripts/clear_unverified_urls.js` と同じ思想）。`--dry-run` で対象一覧のみ確認可 |
+| `data/trust_display_policy.json` | **「口コミ信頼度」の表示基準の唯一の情報源**。名称・段階（SS〜D／—・5段階）・助言語・色・検証項目ラベル・公開禁止語を定義する。crossCheckScore（内部合成点・8軸100点）のうち口コミ検証に関わる7項目（S1/S2/S4/S7a/S7b/S7c/S8）の「観測できた項目だけ」で0-100点を算出し、S3データ充実度/S5営業実態/S6 Instagramは信頼度に含めず「掲載データの充実度」として別枠表示する。段階の語は店への評価ではなく読者への助言（SS「文句なしに参考にできます」〜D「他の情報と合わせて判断を」）で、公開文言から結論語（疑い/サクラ/ガチャ/化粧/評価操作）を排除する（2026-08-20・旧「スコア信頼度」は%表記が「サクラ確率」に見え、90点以上が0店・内訳文言が44%の店に出る偽陽性を抱えていた）。判定器は `scripts/lib/trust_display.js` の1本に集約し、build.js（LOCAL_STORES/crosscheck.json生成・index.htmlへのTRUST_POLICY注入）・gen-store-pages.js（店舗ページ）・index.html（カード/モーダル/ソート）が同じ判定・語彙を共有する。閾値変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_trust_wording.js`（Builder/DataKeeper/Editor 共管） |
+| `scripts/lib/trust_display.js` | 上記ポリシーの実装1本。`evaluate()`が観測できた検証項目だけで段階・数字・助言文・検証カバー率・取得日を算出、`toSlim()`/`toCompact()`がLOCAL_STORES/crosscheck.json用の出力形を作る。`injectTrustPolicy()`がindex.htmlの`var TRUST_POLICY = {...};`へbuild時に注入する |
+| `scripts/audit_trust_wording.js` | 口コミ信頼度の**公開文言監査**。(A) 旧名称（整合度順/スコア信頼度/TRUST SCORE等）が残っていないか (B) 禁止語（疑い/サクラ/ガチャ/化粧/評価操作）が表示面（crosscheck.jsonのreason・index.htmlの表示区間・stores/*.htmlの内訳・features/review-trust.html）に出ていないか。`--check`でCI（build.yml）が日次実行 |
+| `data/ig_post_policy.json` | **店舗カードに埋め込む Instagram 投稿の採用基準の唯一の情報源**。埋め込むのは「その店の料理・内装・外観がわかる投稿」だけで、求人・休業案内・挨拶・御礼・店外イベント・他店まとめ・客室紹介は落とす。判定根拠は**公開 embed のキャプション本文だけ**＝誰でも同じURLを開いて検算できる事実（制約10）。**中核はハッシュタグを採点対象から外すこと**——飲食店の投稿はほぼ全てが `#焼肉 #名古屋グルメ` で終わるため、これを料理語として数えると「何の投稿でも通る」ゲートになる（ISSUE-092。実例: 焼肉店のカードに頂き物の苺のパック写真が出ていた）。判定器は `scripts/lib/ig_post_policy.js` の1本で、選定（`fetch_ig_posts_resolved.js`）・掲載（`build.js`）・監査（`audit_ig_post_relevance.js`）が同じ判定を共有する。語彙・閾値の変更はこのJSONで行いスクリプトは触らない。確認は `node scripts/audit_ig_post_relevance.js`（Builder/DataKeeper 共管） |
+| `scripts/select_ig_posts.js` | **埋め込み投稿の選び直し器**。基準（`data/ig_post_policy.json`）を通らない投稿しか無い店について、そのアカウントの最近の投稿を新しい順に判定し**最初に通った1件へ差し替える**。全部通らなければ埋め込みなしにする（取り繕わない＝写真選定と同じ思想）。**ログイン不要の公開エンドポイントだけを使う**ため Instagram の認証が切れていても回る（`fetch_ig_posts_resolved.js` は `.ig_cookies.json` 必須で、認証切れの間は選び直しが止まる）。投稿一覧が取れるアカウントは実測で約1/4のため、取れない分は既存投稿の判定に留まる。確認は `node scripts/select_ig_posts.js --dry-run`（Builder/DataKeeper 共管） |
+| `data/ig_post_evidence.json` | 埋め込み投稿の**証跡**（キャプション本文・投稿者・削除の有無）を shortcode をキーに保存する。これが無いと「なぜその投稿を選んだか」を後から検算できず、関連性の判定にかけることすらできない（旧データは postUrl/score/type しか持っていなかった）。回収は `node scripts/fetch_ig_post_evidence.js`（公開 embed からテキストのみ取得。ログイン不要・画像は一切ダウンロードしないため写真ポリシーに抵触しない）。**削除済み投稿の検出も兼ねる**（削除された投稿の埋め込みはサイト上で「リンクが壊れています」と表示されるため掲載から外す） |
+| `data/trending_stores.json` | 「今日の話題店」TOP5の**選定材料の唯一の情報源**（`stores[]`=話題フラグ付与済み・`candidates[]`=LOCAL_STORES未マッチの未登録店）。2026-09-11、オーナーから「今日の話題店がずっと同じラインナップ」と報告があり調査したところ、本ファイルが2026-04-21以来7店のまま・`manual_stores.json`の編集部推薦167店中121店が2026-08-21の一括登録から出典URLが一度も更新されていないことが判明（TOP5選定ロジック自体は毎朝正しく動いていたが、材料が3週間フリーズしていた）。新規発掘は[[話題店発掘ループ]]（下記）が継続的に供給する（DataKeeper/Editor 共管） |
+| `scripts/pick_daily_trending5.js` | 「今日の話題店」TOP5の**選定ロジックの唯一の情報源**。Google評価は使わず「鮮度（検出日からの経過）」＋「多媒体露出（トレンド情報源＋出典URLのdistinctホスト数）」＋編集部推薦ボーナスでスコアリングし、7日以内選出ペナルティと日替わりジッターで固定順位化を防ぐ。カード「顔」写真のための写真ゲート（実写を持つ店を優先選出）とジャンル多様性キャップ（同一粗ジャンル最大2件）も持つ。`node scripts/pick_daily_trending5.js dryrun`（書き出しなし）/ `run`（`data/daily_trending5.json`書き出し）。毎朝5:30 JST に `.github/workflows/daily-trending5.yml` が実行（DataKeeper管轄） |
+| `data/daily_trending5.json` | `pick_daily_trending5.js` の出力（当日TOP5＋直近7日分の履歴）。build.js が読み込みトップページに反映 |
+| `data/trending_url_history.json` | 出典URLの初回検出日を追跡する管理ファイル。`pick_daily_trending5.js`が新URLを検知すると該当店の`検出日`を自動で当日へ繰り上げる（Editorは出典URL追記だけでよい・手動更新不要） |
+| `scripts/fetch_trending_articles.js` | 新規話題店を`trending_stores.json`へ取り込む半自動パイプライン。`queries`＝検索クエリ一覧表示、`ingest-json <file>`＝店名＋出典URLのJSON配列を取り込み（LOCAL_STORES一致で`stores[]`へ・不一致で`candidates[]`へ）、`auto-promote`＝検出から3日以上＋出典URL2件以上貯まった`_auto:true`候補を話題フラグ=trueへ昇格。WebSearch/WebFetchはこのスクリプトの責務外（Codex Agent専用ツールのため）、定期実行は[[話題店発掘ループ]]（下記）が担う |
+| `scripts/lib/trending_queries.js` | 話題店発掘の**検索クエリ一覧の唯一の情報源**（`fetch_trending_articles.js`の手動表示・`trending_scout.js`の自動ローテーションが共有）。クエリの増減はここだけを編集する |
+| `data/trending_scout_policy.json` | **話題店発掘ループの運用ポリシーの唯一の情報源**（1回あたりのクエリ件数・自動昇格閾値・心拍の許容欠測日数）。`.Codex/commands/*.md`は自己改変ブロックで編集できないため、運用ルールの変更はこのファイルで行う（`feedback_policy.json`と同じ設計）。手順の正本は`docs/trending-scout-runbook.md` |
+| `scripts/trending_scout.js` | 話題店発掘ループの決定的ヘルパー。`--next-queries`＝年間通算日起点でクエリを決定的にローテーション（現行37クエリ・6件/回で実測7日で全クエリを巡回）、`--health-write`＝心拍書き込み、`--report`＝実績要約。WebSearch/WebFetch本体は実行しない（Agent専用ツールのため） |
+| `data/trending_scout_health.json` | 話題店発掘ループの**心拍**。ルーチンが毎回（新規リード0件の日も）書いてコミットする。0件の日は成果物が心拍しか無いため、これが無いと「動いて0件」と「動かなかった」が外から区別できない（ISSUE-084の再適用） |
+| `.github/workflows/trending-scout-watchdog.yml` | **話題店発掘ループのサーバ側生存監視**。毎日14:00 JSTに心拍の鮮度を見て、`max_silence_days`（既定3日）を超えたらGitHub Issue起票（＝オーナーにメール）、復旧で自動クローズ。判定器は`scripts/check_trending_scout_health.js`（鮮度は自己申告できない＝動いていないエージェントはファイルを更新できないため、制約10を満たす） |
+| `.github/workflows/routine-pr-automerge.yml` | **定期ルーチンのPRの自動マージ**（2026-10-04）。クラウドの定期ルーチン（話題店発掘・課題消化）は main へ直接 push できずPRに倒れるが、誰もマージせず31件溜まり、話題店の成果と心拍が9/24から main に届かず、課題消化は同じ課題の重複PRを毎日作っていた。PR作成時に QA（変更JSONの構文・`npm test`・`audit_design_system.js --check`）を通ればマージし、`build.yml` を workflow_dispatch で起動する（GITHUB_TOKEN のマージは push で他ワークフローを起動しないため）。競合・QA失敗・ワークフロー変更を含むPRはマージせず、24時間を超えて残れば Issue 起票（＝オーナーにメール）、解消で自動クローズ。対象ブランチ接頭辞・除外パス・滞留時間の正本は `data/routine_pr_automerge_policy.json`。対話セッションのPRは対象外 |
+| `docs/trending-scout-runbook.md` | **話題店発掘ループの手順の正本**（2026-09-11新設）。`fetch_trending_articles.js`のクエリをWebSearch→WebFetchで裏取り→`ingest-json`で取り込み→`auto-promote`で段階昇格、の一連をスケジュール済みCodexルーチンとして定期実行する（`.Codex/commands/*.md`が自己改変ブロックで作成できないため、docs直下に置きルーチンのプロンプトから直接参照する運用。`docs/feedback-triage-runbook.md`と同じ方式） |
+| `data/featured.json` | 特集鮮度設定。`monthlyScenes`=12ヶ月×需要シーンのカレンダー（月替わりでトップ特集面と見出しが自動更新）。`sceneLeads`=月×特集の季節リード（`build_featured.js` が当月シーンの記事本文冒頭に季節バナーを注入し、使い回し記事＝banquet等が「今月はこの用途」と本文で伴うようにする。当月外は自動削除・冪等）。検証は `node scripts/build_featured.js --check`（Editor/Builder 共管） |
+| `data/feature_rosters.json` | 特集の掲載店を月次で入れ替える選定基準（ハイブリッド＋バランス型スコア＋ハードゲート＋多様性補正）。ISSUE-126（2026-09-15）でシーン特集19本から、ジャンル/エリア別ガイド特集を加えた46本へ対象拡大（複数セクション構成5本・別テンプレ7本・visitStatus/編集部推薦バッジ持ち5本・非店舗一覧6本は script 改修待ちで未対応）。`seasonalBias`=月×特集の季節キーワード加点で、同じ banquet.html でも7月は「ビアガーデン/ビール/テラス」寄り・12月は「忘年会/鍋」寄りに掲載店を月替わりで組み替える（ゲートは維持・純加点なので枠割れなし）。`node scripts/refresh_feature_rosters.js`（build.yml が日次で `--if-stale` 実行＝今月まだ未反映の時だけ動く自己修復方式・ISSUE-127）で features/*.html の掲載店を再構成。検証は `--check`/内訳は `--dry-run`（☀=季節適合）（Builder/DataKeeper 共管・全掲載店は実在店のみ） |
+| `data/feature_roster_health.json` | 特集ロスターの**心拍**（ISSUE-127）。`refresh_feature_rosters.js --if-stale` が実反映のたびに「対象月・反映日・更新件数・枠割れ件数」を書く。旧実装は build.yml の月初(1〜3日 JST)固定日ゲートだったため、その3日間に手前のステップが失敗すると月ごと欠落しても気づけなかった（実測: 2026-08/2026-09とも欠落）。日付ではなくこのファイルの「最終反映月」で要否を判定する自己修復方式に変更し、その鮮度を `feature-roster-watchdog.yml` が監視する |
+| `scripts/check_feature_roster_health.js` | 特集ロスターの**生存確認の唯一の情報源**。判定は検証できる事実だけ（`data/feature_roster_health.json` の実在と `last_run.date` の鮮度）で行い自己申告値を見ない（制約10）。月次カデンスのため数日の遅延は異常としない（許容既定40日・オオカミ少年化させない）。`node scripts/check_feature_roster_health.js`（`.github/workflows/feature-roster-watchdog.yml` が日次実行） |
+| `.github/workflows/feature-roster-watchdog.yml` | **特集ロスターのサーバ側生存監視**（毎日15:00 JST）。心拍が40日以上更新されていなければ GitHub Issue を起票（＝オーナーにメール）、復旧で自動クローズ。**ローカル故障モードから独立**（build.yml 自体の継続失敗を検知する側なので、build.yml 内のステップとしては置かない） |
+| `scripts/session_briefing.js` | **セッション開始時の自動ブリーフィング**（2026-10-06）。`.Codex/settings.json` の SessionStart フックが毎回実行する。内容は、Linear の期限切れ・期限間近・緊急未着手・放置・進行中、HANDOFF の次の一手、未解決の GitHub 警報 Issue。判定は Linear の事実だけで行う（制約10）。取得失敗は理由つきで表示し、セッションは止めない。閾値の正本は `data/session_briefing_policy.json`（Orchestrator管轄） |
+| `.github/workflows/linear-watchdog.yml` | **Linear の放置・期限切れのサーバ側監視**（ISSUE-135・毎朝8:00 JST）。`scripts/linear_watchdog.js` が `LINEAR_API_KEY` で Linear を読み、セッションブリーフィングと同じ `classify()` で期限切れ・緊急未着手・14日以上放置を検出して GitHub Issue（＝オーナーにメール）を起票、解消で自動クローズ。Linear を読めない（キー切れ等）ことも原因つきで知らせる。月曜は直近7日の振り返り（完了・中止・新規）を別 Issue で出し、前週分を閉じる。閾値は `data/session_briefing_policy.json` を共有（Orchestrator管轄） |
+| `scripts/assign_linear_projects.js` | 未完了の Linear Issue を「Project＝Nagoya Bites・KR＝ラベル」にそろえる（Project 未設定→Nagoya Bites、KRラベルが無ければ category の規則で追加、担当未設定→オーナー。人が付けた値は上書きしない・冪等）。`--apply` で反映・既定 dry-run。セッションブリーフィングの「未設定: Project」が増えたら実行する（Orchestrator管轄） |
+| `docs/decisions/` | **判断の記録（ADR）**。今後を縛る選択（閾値・既定値・構成・運用ルール・やらないと決めたこと）を、Codex が指示を待たずに残す。書式は同ディレクトリの README |
+| `data/solve_next_policy.json` | `/solve-next` の**消化ポリシーの唯一の情報源**（1日の消化件数 `dailyQuota` / 滞留による優先度繰り上げ / クローズ扱いの status / オーナー本人待ちの除外）。`.Codex/commands/*.md` は自己改変ブロックで編集できないため、挙動の変更はこのファイルで行う（`journal_gate_policy.json` と同じ設計）。判定器は `scripts/next_task.js`（Orchestrator管轄） |
+| `scripts/next_task.js` | **次に解く課題の決定的な選定器**。`agent-backlog.md` の priority / status / detected という**検証できる事実だけ**で順番を決める（制約10）。`node scripts/next_task.js` で本日の担当分、`--all` で列全体、`--check` で列の健全性（CI向け・警告あれば exit 1）。滞留日数で実効優先度を1段だけ繰り上げ（P0へは決して昇格させない）、**オーナー本人にしか進められない課題は選ばず別枠表示**する（Orchestrator管轄・2026-08-16） |
+| `.Codex/commands/seo-triage.md` | `/seo-triage` 日次SEO/LINEアドバイス取り込み（Marketer管轄） |
+| `.Codex/commands/seo-triage-weekly.md` | `/seo-triage-weekly` 週次レポート（AI週次分析＋今週のアドバイス）取り込み（Marketer管轄） |
+| `docs/feedback-triage-runbook.md` | 消費者フィードバック triage の手順書（正本）。`.Codex/commands/*.md` は自己改変ブロックで作成できないためここに置く（Builder/DataKeeper 共管） |
+| `data/seo_advice_log.json` | SEO改善ループの記憶（採用/却下/重複の全履歴・append-only・`source`で日次/週次を区別） |
+| `data/gsc_metrics.json` | GSC 検索実データ（表示/クリック/CTR/掲載順位・トップクエリ/ページ）。日次 build.yml が更新（Marketer管轄） |
+| `data/gsc_opportunities.json` | GSC 改善機会の抽出結果（ctr_fix=1ページ目低CTR / rank_push=2-3ページ目高需要）。`node scripts/gsc_opportunities.js`（build.yml が日次実行）。GSC改善ループの配信レイヤー（Marketer/Builder 共管） |
+| `scripts/gsc_query_intent.js` | GSC クエリを **discovery（シーン語/エリア語×ジャンル語＝取りに行く面）/ navigational（店名＝Strategic Skip の面）/ brand / other** に分類。辞書は `data/journal_seo_keywords.json` と共通で、**SEO-011 の効果はここの `discovery` の表示・クリックで判定する**（総クリックは指名検索の増減と混ざるため使わない）。確認は `node scripts/gsc_query_intent.js`（Marketer管轄・SEO-043） |
+| `data/search_channel_metrics.json` | **検索・AI流入のエンジン別内訳**（Bing / Google / 生成AI / Yahoo / DDG / SNS / 直接）。`node scripts/search_channel_metrics.js --report`。**GSC は Google しか映さないが、実測では検索経由の 48.5% が Bing・33.3% が生成AI・Google は 13.8%** のため、GSCループだけでは流入の大半が観測外になる。その盲点を `blind_spots` として自動で明示する（Marketer管轄・SEO-039） |
+| `scripts/lib/traffic_source.js` | **流入元の SNS / 生成AI 判定の唯一の情報源**（ドメイン単位の一致）。`fetch_ga4_views.js`（site_metrics.json の channels）と `search_channel_metrics.js` が共有し、GAS（`.gas-deploy/Code.js`）は require できないため同語彙を複製して `tests/traffic_source.test.js` で一致を検査する。2026-09-14、旧実装の部分一致 `/t\.co/` が chatgp**t.co**m・copilo**t.co**m を SNS と数え、2026-07 中旬以降 `channels.social`（30日約90）がほぼ全量生成AI流入になっていたと判明（実際のSNS流入は1媒体30日6件未満で観測できていなかった）。**部分一致に戻さない**。`site_metrics.json` の `sourceBreakdown` も上位10行→取得した全行（最大50）保存に変更（Marketer/Builder 共管） |
+| `docs/ga4-internal-traffic-verification.md` | **GA4「内部トラフィック除外」の検証手順の正本**（2026-09-18新設）。オーナーが改修確認のためチャット上の `https://nagoya-bites.com/...` リンクをクリックすると、参照元が `Codex.ai` になり `scripts/lib/traffic_source.js`／`.gas-deploy/Code.js` の生成AI判定ドメインに一致し、LINE/週次レポートの「🤖 生成AI流入」にオーナー自身の確認行動が混入する（`sessionSource=Codex.ai` だけでは本物のAI経由流入と区別できないため、ドメイン単位で機械的に除外すると制約10違反になる）。`index.html` の既存の `?nb_owner=1`（→`traffic_type=internal`）機構をオーナー確認用リンクに載せる対策を実施済みだが、**GA4管理画面の「データフィルタ（内部トラフィック）」を有効化しない限り実際には除外されない**——これはオーナー本人のGoogleアカウント操作が必要でコード側から検証不能。手順はこのファイルに集約 |
+| `scripts/indexnow_ping.js` | IndexNow（Bing/Yandex 対応のプッシュ型インデックス通知）。**外部送信は既定 dry-run**で `--yes` を付けたときだけ送信する。`--init` でキー生成、`--status` で設定確認。Bing Webmaster Tools への登録はクレデンシャルを伴うため**オーナー本人の操作**が必要 |
+| `data/gas_deploy_policy.json` | **GAS レポートの反映状況を判定する基準の唯一の情報源**（SEO-069）。毎朝のレポートを作る GAS は**リポジトリの外**で動き `.gas-deploy/Code.js` はミラーにすぎないため、修正をマージしても GAS 側は旧コードのまま動き続け、**修正済みのバグが出した数値の上で毎朝のアドバイスが生成され続ける**（2026-08 に SEO-047 が24日滞留）。判定は「新コードでは原理的に出力できない文字列」＝旧 `sourceToName()` の最終行が出す生文字列 `(not set) / (not set)` の有無だけで行い、誰でも該当日のメールを開いて目視で検算できる（制約10）。判定は**3値**（`not_deployed` / `deployed` / `indeterminate`）で、痕跡が出なかった日は**絶対に鳴らさない**（オオカミ少年化させない・ISSUE-084 原則6）。**文字列を変えない修正は文字列痕跡では原理的に検出できない**ため（SEO-062 は数値だけを変える修正で、SEO-063 の文字列があるだけで「反映済み」と誤判定され、直帰率 94%＝GA4実測 32.5% を出し続けた）、`numeric_signals` で「レポートが主張した数値」と「独立パイプライン `fetch_ga4_views.js` が同じ日の GA4 から取った数値」の乖離も見る（SEO-074）。参照値が無い日・母数が小さい日は必ず indeterminate に倒す。判定器は `scripts/lib/gas_deploy_trace.js` の1本に集約し、記録・検査・CI が同じ判定を共有する。閾値・痕跡パターンの変更はこのJSONで行いスクリプトは触らない。手順の正本は `docs/gas-deploy-verification-runbook.md`（Marketer/Orchestrator 共管） |
+| `scripts/check_gas_deploy_health.js` | 上記の記録＆検査。`--record --report-file <本文> --date <日> --kind daily/weekly` で痕跡を `data/gas_deploy_health.json` に書き（レポートが無い日も `--no-report` で心拍を残す＝「来ていない」と「動かなかった」を区別する）、引数なしで健全性を判定（異常なら exit 1）。**日次SEO triage ルーチンが毎回呼び、必ずコミットする**（`data/` 配下＝gitignore されないので Mac の外へ出る） |
+| `.github/workflows/gas-deploy-watchdog.yml` | **GAS 未反映のサーバ側監視**（毎日14:00 JST）。旧コード確定が2回続いたら GitHub Issue を起票（＝オーナーにメール）、反映確認で自動クローズ。Issue には「どの SEO-0NN が未反映か」「判定根拠の行そのもの」「デプロイ手順」を載せる＝原因つきで人へ運ぶ（ISSUE-084 原則5）。**ローカルの全故障モードから独立** |
+| `data/feedback_policy.json` | 消費者フィードバック改善ループの運用ポリシー（唯一の情報源。3分類ルール・**Gmail取得規則**（`gmail_retrieval`＝クエリ/窓/0件時のsweep/時間差リトライ/台帳突合）・**生存確認規則**（`health`）・PII規則・起票上限）。手順の正本は `docs/feedback-triage-runbook.md`（Builder/DataKeeper 共管） |
+| `data/feedback_log.json` | 消費者フィードバック改善ループの記憶（採用/fact_check/却下/重複/エスカレーションの全履歴・append-only。書き込みは `scripts/feedback_triage.js --log-append` 経由のみ）。`msg_id` の集合が**処理済み台帳**を兼ね、広い検索窓での再取得を無害化する |
+| `scripts/feedback_triage.js` | 消費者フィードバック triage の決定的ヘルパー（ID採番/重複検知/**台帳突合 `--unseen-msg-ids`**/PIIマスク付きログ追記/**心拍書き込み `--health-write`**/健診レポート）。健診: `node scripts/feedback_triage.js --report --days 30` |
+| `data/feedback_health.json` | 消費者フィードバックループの**心拍**。triage ルーチンが毎日（**新着0件の日も**）書いてコミットする。0件の日は成果物が無いため、これが無いと「動いて0件」と「動かなかった／Gmailを引けなかった」が外から区別できない（ISSUE-089・ISSUE-084 の再適用） |
+| `.github/workflows/feedback-watchdog.yml` | 消費者フィードバックループの**サーバ側生存監視**。毎日13:00 JST に心拍の鮮度を見て、`max_silence_days`（既定3日）を超えたら GitHub Issue を起票（＝オーナーにメール）、復旧で自動クローズ。**「フィードバックが0件」では鳴らさない**（実績で月3件程度・空白は平常。鳴らすとオオカミ少年化する）。鳴らすのは「ルーチンが報告してこないこと」だけ。判定器は `scripts/check_feedback_health.js`（鮮度は自己申告できない＝動いていないエージェントはファイルを更新できないため、制約10 を満たす） |
+
+---
+
+## SEOアドバイス改善ループ（`/seo-triage` 日次 / `/seo-triage-weekly` 週次）
+
+SEO/アクセス解析のアドバイスを、**鵜呑みにせず**ブランドの総合フィルターに
+通して改善に回す仕組み。日次・週次の**2系統が同じスクリプト・同じLinear同期**を共有する。
+
+### 全自動の運用モデル（人の貼り付け不要）
+
+> 2026-06-01 から **完全自動**（ユーザーが「確認なしで即追記」を承認）。入力取得は
+> GAS のメール送信、判定は Codex（このAGENTS.md が唯一の根拠）、課題はLinearへ登録。
+> **判定ロジックは GAS に持たせない**（GAS は配信だけ・Linear認証情報も持たせない）。
+> 日次レポートの原理と週次は**完全に同一**。
+
+```
+[配信] GAS（正本 `.gas-deploy/Code.js`）が日次/週次レポートを Gmail 送信
+        ・日次 件名「📊 NAGOYA BITES 日次レポート <日付>」
+        ・週次 件名「📊 NAGOYA BITES 週次レポート <期間>」
+        ※ GASは単一ファイル Code.js で運用。重複ファイル（"Code 2.js"等）混入は
+          top-level二重宣言でコンパイル全体が落ちる → レポート不送信になるので厳禁。
+   ↓
+[起動] スケジュール済み Codex ルーティン（毎日 21:01・タスクID nagoya-bites-seo-triage-daily）
+        Gmail MCP でレポートメールを取得し /seo-triage と /seo-triage-weekly を引数なし実行
+        （各コマンドの Step 0 が自動取得を担う。週次メールが未着の日は週次をスキップ）
+   ↓
+[判定] AGENTS.md の Moat / Strategic Skip を根拠に採用/却下（次節）
+   ↓
+[同期] 採用分を agent-backlog.md に起票し、Orca CLI経由でLinearへcreate/update（人の確認を挟まず登録）
+```
+
+手動でも全く同じ: LINE 本文を `/seo-triage`（💡今日のアドバイス・source=line-daily）/
+`/seo-triage-weekly`（🤖AI週次分析＋💡今週のアドバイス・source=line-weekly）に貼り付ければよい。
+取得元が「人の貼り付け」か「Gmail自動取得」かだけの違いで、判定・起票・同期は同一。
+
+### 判定と記録
+
+```
+2. AGENTS.md の Moat / Strategic Skip を根拠にエージェントが採用/却下を判定
+   ・採用 → agent-backlog.md に [SEO-NNN] を status: ready で起票（owner=Marketer / category=SEO）
+   ・却下 → data/seo_advice_log.json に理由付きで記録（backlog/Linearには出さない）
+   ・重複 → 過去判定済みは再起票しない（日次/週次を横断して衝突検知。数値違いは正規化で同種扱い）
+           → 同じメールを再処理しても二重起票しない（冪等。スケジュール多重起動も安全）
+3. 採用分はLinearへ自動同期（backlogの詳細を保ちつつ、進捗はLinearで確認する）
+4. 実装は /solve-next の YES ゲート経由（マネタイズ・信頼系は制約7・8でさらに承認必須）
+   → このループが作るのは status:ready まで。コード実装・デプロイは別ゲート。
+5. ループ健診: node scripts/seo_triage.js --report --days 30           （全体）
+              node scripts/seo_triage.js --report --days 90 --source line-weekly （週次のみ）
+```
+
+**週次の肝**: 週次は「🤖 AI週次分析（前週比）」の総括も施策化対象。前週比で続く悪化/改善は
+単日のブレではなく**週トレンド**なので、落ちトレンドは原因調査を優先度高め（P1〜P2）に寄せる。
+
+却下は必ず理由を残す（後の監査・再評価のため）。「全部間に受けない」がこのループの根幹。
+
+---
+
+## GSC 検索実データ改善ループ（Google の生データを起点にした改善・ISSUE-072）
+
+上の「SEOアドバイス改善ループ」が**外部からのアドバイス**を triage するのに対し、こちらは
+**Google Search Console の自社の実測データ**（クエリ別・ページ別の 表示回数 / クリック / CTR / 掲載順位）を
+起点に「今どこを直せば一番効くか」を機械的に洗い出し、同じ Moat フィルタで施策化するループ。
+GSC 開通（ISSUE-068①）で初めて回せるようになった。
+
+### 全自動の配信レイヤー（人の集計不要）
+
+```
+[取得] build.yml が日次で scripts/fetch_gsc_metrics.js を実行 → data/gsc_metrics.json
+   ↓
+[抽出] 同ジョブが scripts/gsc_opportunities.js を実行 → data/gsc_opportunities.json
+        ・ctr_fix   … 1ページ目(pos≤10)なのに期待CTRを大きく下回るページ/クエリ
+                      → タイトル/メタ改善で拾える（低リスク・速効）
+        ・rank_push … 2〜3ページ目(pos 11〜30)で高表示のページ/クエリ
+                      → 順位を上げれば大きく伸びる（内容拡充・内部リンク）
+        ・優先度 = 取りこぼしクリック推定 =（期待CTR − 実CTR）× 表示回数
+   ↓
+[判定] エージェントが AGENTS.md の Moat / Strategic Skip を根拠に採否を triage
+        ・採用 → agent-backlog.md に起票（owner=Marketer/Builder・category=SEO）
+        ・却下 → data/seo_advice_log.json に理由付きで記録（例: 純ナビゲーショナルな
+                他店名クエリは Strategic Skip＝公式サイトに譲る）
+   ↓
+[実装] /solve-next の YES ゲート経由。効果は翌週以降の GSC の CTR/順位の前後比で測る
+        （このループ自身が効果測定器になる）
+```
+
+### 原則（既存ループと同じ思想）
+
+- **鵜呑みにしない**: 数値が示すのは「症状」。打ち手が Moat を強めるか（業界視点・実在保証・
+  シーン専門性）で採否を判断する。ナビゲーショナルな他店名の1位争いは追わない（Strategic Skip）。
+- **低リスクから**: まず ctr_fix（タイトル/メタ）で拾えるものを優先。順位改善は計画的に。
+- **効果は数字で閉じる**: 施策 → 翌週 GSC で CTR/順位を確認、のループを回す。
+  体感ではなく `gsc_metrics.json` の前後比で判断する。
+
+### 健診コマンド
+
+```
+node scripts/gsc_opportunities.js   # data/gsc_opportunities.json を再生成（CI が日次実行）
+```
+
+---
+
+## 消費者フィードバック改善ループ（サイト利用者の声を起点にした改善）
+
+上の2つのループが SEO 助言・自社検索実測データを起点にするのに対し、こちらは**サイト利用者本人の
+生の声**（「ここが使いづらい」「情報が違う」等）を起点に、同じ Moat フィルタで施策化するループ。
+
+### 全自動の配信レイヤー
+
+```
+[収集] index.html のフローティング「ご意見」ボタン → ミニフォーム
+        → Formspree（既存 https://formspree.io/f/xaqaygze、_subject: '[site-feedback] <種類>'）
+   ↓ Formspree 通知メールが Gmail（wakato1251999@gmail.com）に届く
+[起動] スケジュール済み Codex ルーチンが docs/feedback-triage-runbook.md の手順を引数なしで実行
+        （Step 0 が Gmail MCP でメールを取得。新着0件の日は正常終了）
+        ※ Gmail 検索は実在するメールに 0件を返すことがある（2026-08-17 実測・ISSUE-089）。
+          0件は「primary → sweep(in:anywhere) → 時間差リトライ」を消化して初めて確定させる。
+          窓は広く取り、再取得は msg_id 台帳との突合で無害化する（＝取りこぼしを翌日以降に自動回収）
+   ↓
+[生存] 実行のたびに（新着0件の日も）data/feedback_health.json に心拍を書いてコミット
+        → feedback-watchdog.yml がサーバ側で鮮度を監視し、滞れば Issue 起票＝オーナーにメール
+   ↓
+[判定] AGENTS.md の Moat / Strategic Skip / 制約7・8・10 + data/feedback_policy.json を根拠に3分類
+        ・UX/機能改善 → 採用なら agent-backlog.md に [FB-NNN] ready（owner=Builder）
+        ・店舗情報の誤り指摘 → fact_check として [FB-NNN] ready（owner=DataKeeper）。
+          **この場ではデータを直接修正しない**。acceptance に実在検証ゲート
+          （一次情報での確認 → 検証成立時のみ反映 → audit_store_liveness 等の監査通過）を必須で書く
+        ・スパム/誹謗/個人情報 → data/feedback_log.json に理由付きで記録のみ（起票しない）
+   ↓
+[同期] 採用・fact_check 分をLinearへ自動同期
+   ↓
+[実装] /solve-next の YES ゲート経由（マネタイズ・信頼系は制約7・8でさらに承認必須）
+```
+
+### 原則
+
+- **鵜呑みにしない**: SEOアドバイスループと同じく、Moat / Strategic Skip を根拠に採否を判断する。
+  「一利用者の好み」と「構造的な使いづらさ」を区別し、疑わしきは要検討メモ付きで採用に寄せる
+  （消費者の声は外部アドバイスより一次情報に近いため）。
+- **店舗事実は自動反映しない**: 閉店・電話番号等の指摘は`data/dispute_requests.json` の運用
+  （必ず編集部モデレーション経由）と同じ思想で、実在検証ゲートを通ったものだけデータに反映する。
+  虚偽の通報（例: 競合による妨害）で信頼を毀損しないための防波堤。
+- **個人情報を残さない**: ウィジェットにメール欄を置かない（匿名前提）＋ ログ追記時にメールアドレスを
+  機械的にマスクする二重防壁。フィードバック本文はサイト上に一切表示しない。
+- **判定ロジックはウィジェット側に持たせない**（配信だけ）。判定は Codex ルーチンが
+  `docs/feedback-triage-runbook.md` を根拠に行う。
+
+### 健診コマンド
+
+```
+node scripts/feedback_triage.js --report --days 30   # ループの中身（採用/却下/滞留）
+node scripts/check_feedback_health.js                # ループが動いているか（生存確認・CI と共有）
+```
+
+---
+
+## 話題店発掘ループ（「今日の話題店」の材料を枯らさない・2026-09-11新設）
+
+`scripts/pick_daily_trending5.js` によるTOP5の**選定ロジック**は毎朝正しく動いていても、
+その**材料**である `data/trending_stores.json` に新規の話題店が供給され続けなければ、
+候補プールが静的な母集団になり「日替わりで店名は変わるが同じような顔ぶれ」に戻る。
+2026-09-11、オーナーからの報告でこれが実際に発生していたと判明した（4月から新規0件・
+編集部推薦167店中121店が8月21日の一括登録から更新なし）。原因は「新規話題店を発掘して
+取り込む半自動パイプライン（`scripts/fetch_trending_articles.js`）が誰にも定期的に
+回されていなかった」こと。このループはその供給を構造的に保証する。
+
+```
+[実行] スケジュール済み Codex ルーチンが docs/trending-scout-runbook.md の手順を実行
+        （WebSearchで新規候補を探す → WebFetchで裏取り → ingest-jsonで取り込み）
+   ↓
+[段階ゲート] LOCAL_STORES に実在する店だけ自動反映対象（_auto:true・話題フラグ=false）。
+        検出から3日以上＋出典URL2件以上貯まったものだけ auto-promote で話題フラグ=true化。
+        LOCAL_STORES に無い店は candidates[] に留め置くだけで自動追加しない
+        （実在検証を経ずに manual_stores.json へは入れない・架空店ブロックと同じ規律）
+   ↓
+[生存] 実行のたびに（新規0件の日も）data/trending_scout_health.json に心拍を書いてコミット
+        → trending-scout-watchdog.yml がサーバ側で鮮度を監視し、滞れば Issue 起票＝オーナーにメール
+   ↓
+[消費] 翌朝5:30 JST の daily-trending5.yml（pick_daily_trending5.js）が、太った
+        trending_stores.json を材料にTOP5を選ぶ。このループは選定ロジックには触れない
+```
+
+### 原則
+
+- **鵜呑み禁止**: WebSearchのタイトル・スニペットだけで店名を確定させない。WebFetchによる
+  裏取りは省略可能な保険ではなく手順の一部（架空店ブロックと同じ規律）
+- **架空店を作らない**: LOCAL_STORES に無い新規店は `candidates[]` に留め置くだけ。
+  実在検証（`GOOGLE_MAPS_API_KEY`経由の三重検証）を経ずに自動で正式掲載しない
+- **選定ロジックには触れない**: このループは`trending_stores.json`を太らせる**供給側**。
+  TOP5の選び方（鮮度・多媒体露出のスコアリング）は`pick_daily_trending5.js`の責務のまま
+
+### 健診コマンド
+
+```
+node scripts/trending_scout.js --report              # ループの中身（心拍・候補数の要約）
+node scripts/check_trending_scout_health.js           # ループが動いているか（生存確認・CI と共有）
+node scripts/pick_daily_trending5.js dryrun            # 供給結果が明日のTOP5候補にどう効くか確認
+```
+
+---
+
+## 手動キュレーション店舗の追加運用（`data/manual_stores.json`）
+
+Hot Pepper / Google Sheets に載っていない高品質店（新店・隠れ家・インフル露出店・予約困難店）は、
+`data/manual_stores.json` の `stores` 配列に直接エントリを追加して `node build.js` を実行するだけで反映される。
+
+- **必須フィールド**: 店名 / エリア / 都道府県 / ジャンル / アクセス / キュレーター / 追加日 / おすすめポイント
+- **フラグ**: `話題フラグ`（既存の🔥話題沸騰に合流）/ `編集部推薦`（新バッジ「✦ 編集部推薦」を表示）。両方 true 可
+- **衝突解決**: ホットペッパーID または 店名+エリア 一致で既存店を上書き拡充、なければ新規追加
+- **追加条件**: メディア・インフル露出の裏付け / Google評価4.2以上 or 明確な差別化要素 / 業界人目利きの観点
+- `アクセス` には必ず「名古屋」または名古屋固有駅名を含める（品質フィルタ通過条件）
+
+### 🚫 架空店ブロック（実在検証ゲート・絶対遵守・全エージェント共通）
+
+> 2026-05 に「実在しない店」がAIにより大量生成され掲載される事故が発生した。再発を防ぐため、
+> **店舗を追加・記事に掲載する前に、必ず実在検証を通すこと。** 検証なしの掲載は禁止（P0違反）。
+
+```
+1. 手動店（manual_stores.json）を追加したら、必ず実在検証スクリプトを通す:
+     GOOGLE_MAPS_API_KEY=... node scripts/fetch_manual_store_photos.js
+   → 店名一致(Dice≥0.85) + 名古屋/愛知の住所 + 飲食店業態(types) の三重検証を満たした店だけ
+     実写が付く。検証に通らない店は「実在が確認できない」ため掲載しない（SVG止まりは要再検証）。
+
+2. 特集記事（features/*.html）に店を載せるときは、原則 LOCAL_STORES（実在データ）に
+   ある店だけを使う。LOCAL_STORES に無い店を載せたい場合は、先に manual_stores.json へ
+   追加して上記1の検証を通すこと。
+
+3. 監査: いつでも以下で「実在不明の掲載店」を検出できる:
+     node scripts/audit_feature_stores.js          # 特集の掲載店 vs LOCAL_STORES 照合
+   → 検出ゼロを維持する。CI でも実行して退行を防ぐ。
+
+【架空店の典型サイン（これらは即・実在検証する）】
+  ・説明的・テンプレ的な店名（「個室居酒屋 和の宴」「中国料理 個室コース」「和食 秋月」「Bar 夜更け」等）
+  ・同一日に同一キュレーターが大量追加（ジャンル網羅の不自然さ）
+  ・他都市の有名店名（京都/大阪/東京/横浜/福岡の店を名古屋として掲載）
+  ・Google/食べログ/ホットペッパー等の一次情報にヒットしない
+
+【禁止】
+  ・WebSearch / Places で実在確認できていない店を掲載すること
+  ・「もっともらしい店名」をAIが創作して掲載すること
+  ・実在確認できない店に写真（実写でもイメージ図でも）を付けて取り繕うこと
+    → 実在しないなら掲載しない。これがサイトの信頼（サクラ排除・実在保証）の根幹。
+```
