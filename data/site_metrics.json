@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-06T17:07:02.565Z",
+  "generatedAt": "2026-10-06T17:32:54.728Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1158,
-    "pageViews": 1786,
-    "sessions": 1354,
-    "avgSessionDuration": 143.9,
-    "bounceRate": 0.27,
+    "activeUsers": 1162,
+    "pageViews": 1791,
+    "sessions": 1359,
+    "avgSessionDuration": 144.8,
+    "bounceRate": 0.272,
     "pagesPerSession": 1.32
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 890,
-      "direct": 325,
+      "organic": 892,
+      "direct": 329,
       "social": 8,
       "ai_assistant": 104,
       "referral": 30,
@@ -26,10 +26,10 @@
       "other": 1
     },
     "pct": {
-      "organic": 65.5,
-      "direct": 23.9,
+      "organic": 65.4,
+      "direct": 24.1,
       "social": 0.6,
-      "ai_assistant": 7.7,
+      "ai_assistant": 7.6,
       "referral": 2.2,
       "paid": 0,
       "other": 0.1
@@ -44,12 +44,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 352
+      "sessions": 354
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 236
+      "sessions": 237
     },
     {
       "source": "yahoo",
@@ -69,7 +69,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 24
+      "sessions": 27
     },
     {
       "source": "duckduckgo",
@@ -195,8 +195,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 294,
-      "sessions": 272
+      "pageViews": 296,
+      "sessions": 275
     },
     {
       "path": "/",
@@ -220,8 +220,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 142,
-    "ctaClickRate": 10.5,
+    "outboundClicks": 146,
+    "ctaClickRate": 10.7,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -233,7 +233,7 @@
       },
       {
         "domain": "maps.google.com",
-        "clicks": 21
+        "clicks": 22
       },
       {
         "domain": "www.instagram.com",
@@ -241,7 +241,7 @@
       },
       {
         "domain": "prtimes.jp",
-        "clicks": 8
+        "clicks": 9
       },
       {
         "domain": "www.google.com",
@@ -272,22 +272,26 @@
         "clicks": 1
       },
       {
+        "domain": "nagoyato.com",
+        "clicks": 1
+      },
+      {
         "domain": "news.google.com",
         "clicks": 1
       },
       {
-        "domain": "www.atpress.ne.jp",
+        "domain": "summer.walkerplus.com",
         "clicks": 1
       },
       {
-        "domain": "zip-fm.co.jp",
-        "clicks": 1
+        "domain": "(unattributed)",
+        "clicks": 2
       }
     ],
     "note": null,
     "byChannel": {
       "organic": 49,
-      "direct": 67,
+      "direct": 71,
       "social": 0,
       "ai_assistant": 22,
       "referral": 4,
@@ -295,7 +299,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 5.5,
-    "ctaClickRate_direct": 20.6,
+    "ctaClickRate_direct": 21.6,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -355,6 +359,14 @@
         "clicks": 3
       },
       {
+        "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
+        "clicks": 3
+      },
+      {
+        "path": "/journal/2026-10-06-sakae-hilton-inplace33-autumn-buffet.html",
+        "clicks": 3
+      },
+      {
         "path": "/features/birthday.html",
         "clicks": 2
       },
@@ -372,10 +384,6 @@
       },
       {
         "path": "/journal/2026-10-04-sakae-brianza-nagoya-haera-lunch.html",
-        "clicks": 2
-      },
-      {
-        "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
         "clicks": 2
       },
       {
@@ -412,10 +420,6 @@
       },
       {
         "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-09-04-meieki-shokudo-tomoru-sanma-price.html",
         "clicks": 1
       }
     ],
@@ -691,6 +695,26 @@
         "clicks": 1
       },
       {
+        "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
+        "domain": "maps.google.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-10-06-sakae-hilton-inplace33-autumn-buffet.html",
+        "domain": "nagoyato.com",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-10-06-sakae-hilton-inplace33-autumn-buffet.html",
+        "domain": "prtimes.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/journal/2026-10-06-sakae-hilton-inplace33-autumn-buffet.html",
+        "domain": "summer.walkerplus.com",
+        "clicks": 1
+      },
+      {
         "path": "/stores/area/kanayama/izakaya.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -782,7 +806,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1158,
+    "value": 1162,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
