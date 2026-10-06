@@ -1,0 +1,357 @@
+{
+  "date": "2026-10-06",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c6",
+      "title_draft": "栄・伏見のホテルビュッフェで女子会｜ヒルトン名古屋の秋、平日昼5,800円と夜6,000円",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 96,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "女子会",
+          "feature": "features/girls-party.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 162字 +4",
+          "title 45字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「女子会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -10 / writability -2 / search_intent -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "新栄に移転した「多異集食堂 ナナイロ」｜会員制だった食堂がカウンター25席で開く",
+      "verdict": "HOLD",
+      "total": 81,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,デート,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 99字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「カウンター」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "大曽根に金沢の鮮魚「割烹大曽根 サカナノニカイ」｜駅前2階の44席を業界人が読む",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "千種・今池",
+          "feature": "stores/area/chikusa-imaike/index.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "海鮮",
+          "feature": "features/nagoya-seafood.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,コース,接待) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 90字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「大曽根」+4",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「割烹」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "名駅に「焼肉 三郎 椿町店」｜10月2日開店の焼肉を読む",
+      "verdict": "HOLD",
+      "total": 64,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 10,
+        "brand_fit": 8,
+        "writability": 6,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 2件 (価格帯,席) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 38字（短すぎ）→ +0",
+          "title 28字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c6",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "96点（自動公開ライン 100点）。主な不足: topicality -10 / writability -2 / search_intent -2",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c6",
+      "theme": "today_one",
+      "title_draft": "栄・伏見のホテルビュッフェで女子会｜ヒルトン名古屋の秋、平日昼5,800円と夜6,000円",
+      "lead_draft": "10月6日、ヒルトン名古屋1階の「インプレイス3-3」で秋のビュッフェが始まった。テーマは東海道五十三次、八丁味噌のスペアリブや桜海老のアヒージョなど70種類以上が並ぶ。平日はランチ5,800円・ディナー6,000円で差は200円だが、夜は90分制、土日の夜は3部制。女子会で長く話すならいつ行くべきか、時間と値段から読む。",
+      "angle": "ホテルビュッフェの価格帯（平日昼5,800円・夜6,000円・土日+1,000円、夏と同額）と時間制（夜90分・土日3部制で3部目は料理60分）、218席の回転設計、駐車場無料条件、スイーツが11月5日にクリスマス仕様へ替わる時期を業界人が読み、女子会・誕生日・家族のシーン適性と予約の取り方を示す",
+      "main_store": {
+        "name": "インプレイス3-3",
+        "id": "J001208244",
+        "area": "伏見",
+        "genre": "ビュッフェ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 名古屋ヒルトン株式会社 秋のランチ&ディナービュッフェ",
+          "url": "https://prtimes.jp/main/html/rd/p/000000147.000034342.html",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "名古屋トコトン ヒルトン名古屋 東海道五十三次ビュッフェ",
+          "url": "https://nagoyato.com/posts/19683",
+          "date": "2026-10-06"
+        },
+        {
+          "label": "リセマム（PR TIMES転載）ヒルトン名古屋 秋のビュッフェ",
+          "url": "https://resemom.jp/release/prtimes/20260827/207629.html",
+          "date": "2026-08-27"
+        },
+        {
+          "label": "ウォーカープラス ヒルトン名古屋 トロピカルサマーランチ&ディナービュッフェ",
+          "url": "https://summer.walkerplus.com/odekake/detail_e/ar0623e600030/data.html",
+          "date": "2026-05-15"
+        },
+        {
+          "label": "ホットペッパーグルメ インプレイス3-3",
+          "url": "https://www.hotpepper.jp/strJ001208244/",
+          "date": "2026-10-06"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "新栄に移転した「多異集食堂 ナナイロ」｜会員制だった食堂がカウンター25席で開く",
+      "lead_draft": "錦で会員制・紹介制だった食堂が、10月2日に新栄へ移って開いた。1階と2階がカウンターだけの25席、夜は5,000円台。紹介がなくても入れるようになったのかを含め、カウンター専業の店の使い方を読む。",
+      "angle": "会員制から移転した食堂のカウンター25席の運用、価格帯5,000円台、一人飲みとデート向きかを業界人が読む",
+      "main_store": {
+        "name": "多異集食堂 ナナイロ",
+        "id": "",
+        "area": "新栄",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "食べログ 多異集食堂 ナナイロ",
+          "url": "https://tabelog.com/aichi/A2301/A230103/23097849/",
+          "date": "2026-10-06"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "大曽根に金沢の鮮魚「割烹大曽根 サカナノニカイ」｜駅前2階の44席を業界人が読む",
+      "lead_draft": "10月1日、大曽根駅E5出口の目の前の2階に、金沢の鮮魚と香箱蟹を出す割烹が開いた。カウンター12席と個室、コースは8,000円と12,000円。15時から開く割烹の使い方を読む。",
+      "angle": "15時開店の割烹の価格帯（8,000円・12,000円コース）と個室、香箱蟹の季節、接待と宴会の適性",
+      "main_store": {
+        "name": "割烹大曽根 サカナノニカイ",
+        "id": "",
+        "area": "大曽根",
+        "genre": "日本料理"
+      },
+      "sources": [
+        {
+          "label": "食べログ 割烹大曽根 サカナノニカイ",
+          "url": "https://tabelog.com/aichi/A2301/A230110/23097585/",
+          "date": "2026-10-06"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "名駅に「焼肉 三郎 椿町店」｜10月2日開店の焼肉を読む",
+      "lead_draft": "10月2日、名古屋駅の椿町に焼肉店が開いた。夜4,000円台の価格帯を読む。",
+      "angle": "焼肉の価格帯と席",
+      "main_store": {
+        "name": "焼肉 三郎 椿町店",
+        "id": "",
+        "area": "名駅",
+        "genre": "焼肉"
+      },
+      "sources": [
+        {
+          "label": "食べログ 新規オープン一覧",
+          "url": "https://tabelog.com/aichi/C23100/rstLst/cond16-00-00/",
+          "date": "2026-10-06"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}
