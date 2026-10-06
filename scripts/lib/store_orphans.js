@@ -16,6 +16,7 @@
  *   hold     : data/manual_stores.json に同名エントリがある。写真の実在検証待ちで一時的に
  *              stores.json から外れているだけの可能性があり（ISSUE-140 で実際に復帰した例あり）、
  *              現役店を消さないために削除しない。復帰すれば生成器が通常ページで上書きする。
+ *            また features/journal 等の内部リンクが残る孤児も保留（削除すると死にリンクになる）
  *   delete   : 上のどれにも当たらない（HotPepper 側の掲載終了・名古屋圏外・旧スラグ重複など）。
  */
 
@@ -76,9 +77,10 @@ function renderRedirectStub(targetSlug, targetName) {
  * @param {Object<string,string>} p.mergedKeptBySlug  absorbed スラグ→kept スラグ
  * @param {string[]} p.manualNames        manual_stores.json の店名
  * @param {(slug:string)=>string} p.readName  孤児ページの店名を返す
+ * @param {Set<string>} [p.linkedSlugs]  features/journal/stores/area/index.html から href で参照されている店舗スラグ（削除すると404リンクが残るので保留）
  * @returns {{redirect:Object<string,{to:string,why:string,name:string}>, hold:string[], delete:string[]}}
  */
-function classifyOrphans({ orphans, activeNameBySlug, mergedKeptBySlug, manualNames, readName }) {
+function classifyOrphans({ orphans, activeNameBySlug, mergedKeptBySlug, manualNames, readName, linkedSlugs }) {
   const byNorm = new Map();
   for (const [slug, name] of activeNameBySlug) {
     const k = normName(name);
@@ -99,7 +101,7 @@ function classifyOrphans({ orphans, activeNameBySlug, mergedKeptBySlug, manualNa
     const c = k ? byNorm.get(k) : null;
     if (c && c.length === 1) {
       out.redirect[slug] = { to: c[0], why: 'samename', name: activeNameBySlug.get(c[0]) };
-    } else if (k && manual.has(k)) {
+    } else if ((k && manual.has(k)) || (linkedSlugs && linkedSlugs.has(slug))) {
       out.hold.push(slug);
     } else {
       out.delete.push(slug);
@@ -111,3 +113,26 @@ function classifyOrphans({ orphans, activeNameBySlug, mergedKeptBySlug, manualNa
 module.exports = {
   REDIRECT_MARK, normName, isRedirectStub, stubTarget, readH1, renderRedirectStub, classifyOrphans,
 };
+
+/** 内部リンク元の走査: 他ページが参照している stores/<slug>.html のスラグ集合 */
+function collectLinkedSlugs(root) {
+  const fs = require('fs');
+  const path = require('path');
+  const linked = new Set();
+  const dirs = ['features', 'journal', path.join('stores', 'area')];
+  const files = [path.join(root, 'index.html')];
+  for (const d of dirs) {
+    const dir = path.join(root, d);
+    if (!fs.existsSync(dir)) continue;
+    for (const f of fs.readdirSync(dir)) if (f.endsWith('.html')) files.push(path.join(dir, f));
+  }
+  const re = /stores\/([A-Za-z0-9_-]+)\.html/g;
+  for (const f of files) {
+    if (!fs.existsSync(f)) continue;
+    const t = fs.readFileSync(f, 'utf8');
+    let m;
+    while ((m = re.exec(t))) linked.add(m[1]);
+  }
+  return linked;
+}
+module.exports.collectLinkedSlugs = collectLinkedSlugs;

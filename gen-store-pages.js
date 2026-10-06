@@ -1295,6 +1295,7 @@ async function main() {
     const plan = SO.classifyOrphans({
       orphans, activeNameBySlug, mergedKeptBySlug, manualNames,
       readName: s => SO.readH1(readHtml(s)),
+      linkedSlugs: SO.collectLinkedSlugs(__dirname),
     });
     const redirectSlugs = Object.keys(plan.redirect);
     const canWrite = !DRY_RUN && !TEST_MODE;
