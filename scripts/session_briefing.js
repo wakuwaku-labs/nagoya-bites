@@ -87,7 +87,9 @@ function readHandoff() {
 }
 
 function fetchLinear(policy) {
-  const run = spawnSync('orca', ['linear', 'list-issues', '--team', policy.team, '--json'],
+  const args = ['linear', 'list-issues', '--team', policy.team, '--json'];
+  if (policy.project) args.push('--project', policy.project); // 他アプリの課題を混ぜない
+  const run = spawnSync('orca', args,
     { encoding: 'utf8', timeout: policy.linearTimeoutMs, maxBuffer: 16 * 1024 * 1024 });
   if (run.error) return { error: run.error.code === 'ETIMEDOUT' ? 'タイムアウト' : run.error.message };
   let parsed;
