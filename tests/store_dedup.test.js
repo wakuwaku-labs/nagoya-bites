@@ -173,3 +173,57 @@ test('冪等: 統合済みの結果にもう一度かけても何も統合され
   assert.equal(twice.merged.length, 0);
   assert.equal(twice.stores.length, once.stores.length);
 });
+
+// ── オーナー確認済みペア（data/store_merge_confirmed.json・ISSUE-132・2026-10-06）──
+const fs = require('node:fs');
+const path = require('node:path');
+const confirmedFile = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'store_merge_confirmed.json'), 'utf8'));
+
+test('確認済みペアは区の食い違いで見送られる組でも統合され、HP ID 持ちの側の ID は残る', () => {
+  const m = manual({ '店名': 'ルコネッサンス', 'エリア': '名古屋市東区', placeId: 'PX' });
+  const h = { '店名': 'Reconnaissance ルコネッサンス', 'エリア': '栄', '住所': '愛知県名古屋市中区大井町1-24', 'ホットペッパーID': 'J1', placeId: 'PX', '席数': '10' };
+  assert.equal(dedupeStores([m, h], { confirmedPairs: [] }).stores.length, 2, '確認なしなら区の食い違いで統合されない');
+  const cp = [{ sides: [{ '店名': 'ルコネッサンス', placeId: 'PX' }, { '店名': 'Reconnaissance ルコネッサンス', 'ホットペッパーID': 'J1' }] }];
+  const r = dedupeStores([m, h], { confirmedPairs: cp });
+  assert.equal(r.stores.length, 1);
+  assert.equal(r.stores[0]['ホットペッパーID'], 'J1');
+  assert.equal(r.stores[0]['編集部推薦'], true);
+  assert.deepEqual(r.merged[0].reasons, ['owner_confirmed']);
+  assert.equal(r.skipped.length, 0);
+  assert.equal(r.unresolved.length, 0);
+});
+
+test('確認済みペアが3件の推移（囲い屋型）でも1枚に統合され、skipped に残らない', () => {
+  const mk = (n, id) => ({ '店名': n, 'エリア': '金山', placeId: 'PP', 'ホットペッパーID': id });
+  const a = mk('居酒屋 囲い屋 金山店', 'A'), b = mk('隠れ家個室居酒屋 囲い屋 金山店', 'B'), c = mk('囲い屋 金山店', 'C');
+  const cp = [
+    { sides: [{ '店名': a['店名'], 'ホットペッパーID': 'A' }, { '店名': b['店名'], 'ホットペッパーID': 'B' }] },
+    { sides: [{ '店名': a['店名'], 'ホットペッパーID': 'A' }, { '店名': c['店名'], 'ホットペッパーID': 'C' }] },
+  ];
+  const r = dedupeStores([a, b, c], { confirmedPairs: cp });
+  assert.equal(r.stores.length, 1);
+  assert.equal(r.skipped.length, 0);
+});
+
+test('確認済みでない組は従来どおり見送る（リストにない別支店は統合しない）', () => {
+  const a = { '店名': '鳥正', 'エリア': '名古屋', placeId: 'Q', 'ホットペッパーID': 'X1' };
+  const b = { '店名': '鳥正 名古屋', 'エリア': '名古屋', placeId: 'Q', 'ホットペッパーID': 'X2' };
+  const r = dedupeStores([a, b], { confirmedPairs: [] });
+  assert.equal(r.stores.length, 2);
+  assert.equal(r.skipped.length, 1);
+});
+
+test('特定できない side（0件・複数件）は統合せず unresolved に報告する', () => {
+  const a = { '店名': 'X店', placeId: 'Z1' }, b = { '店名': 'X店', placeId: 'Z1' };
+  const r = dedupeStores([a, b], { confirmedPairs: [{ sides: [{ '店名': 'X店' }, { '店名': '存在しない' }] }] });
+  assert.equal(r.unresolved.length, 1);
+});
+
+test('確認済みペアの正本ファイルは23組・全組にオーナー確認日があり、side が空でない', () => {
+  assert.equal(confirmedFile.pairs.length, 23);
+  for (const p of confirmedFile.pairs) {
+    assert.equal(p.ownerConfirmedAt, '2026-10-06');
+    assert.equal(p.sides.length, 2);
+    for (const s of p.sides) assert.ok(s['店名'] && (s['ホットペッパーID'] || s.placeId));
+  }
+});

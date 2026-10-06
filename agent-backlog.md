@@ -455,6 +455,7 @@
 - **priority**: P2 → **status**: in_progress
 - **2026-10-05 追記（PR #337 マージ済み）**: acceptance②③を実装。`scripts/lib/store_dedup.js` を build.js の閉店除外直後に通し、同一と確認できた組だけ統合（店名完全一致 or placeId一致＋namesMatch()。区・placeId・HP ID・支店名/号数の食い違いや裏付けなしは統合しない）。情報の多い方を残し空欄だけ補完、編集部フィールドは手動店優先（真偽OR・配列和集合）。実測: 39組統合・40件吸収（4,968→4,928）、見送り22組（hp_distinct 18 / ward_conflict 2 / no_corroboration 2）。記録は `data/store_merge_pairs.json`（build.yml のコミット対象に追加）。吸収側 `stores/*.html` は削除せず孤児検出のみ。**残**: マージ後CIのログ確認・吸収側ページの canonical/リダイレクト要否判断
 - **2026-10-06 追記**: (1)重複検知を統合後の実態に合わせた。`scripts/audit_duplicate_stores.js` が build と同じ `store_dedup.js` を当て、「今すぐ統合できる組（mergeable）」が build 後の stores.json に残れば exit 1（統合漏れ）、「同一と確認できず残す組（skipped）」がベースライン（`data/store_duplicate_baseline.json`: 23組）より増えても exit 1。従来のベースライン58件（統合済みの重複を含む）は廃止。`STORES_PATH` 環境変数で検査対象を差し替え可。`tests/store_dedup.test.js` に冪等テスト追加。(2)**main の build が #337 以降落ちていた原因を修正**: `tests/search_relevance.test.js`「店名の部分一致が引き続き最上位に来る」が、統合で先頭40件に入れ替わった「那古野 しば福や 名駅店」で落ちた（店名に「名駅」を含むため、エリア語一致が店名一致より上に来て上位3件を外す＝検索エンジンの既知の弱点でデータの誤りではない）。サンプル40件の9割以上が上位3件に出ることを要求する形に変更。(3)実測（`data/stores.json` 4,968件に統合器を当てた結果）: 39組統合・40件吸収で **4,928件**（-40・大量消失なし）。見送り23組の一覧は `data/store_duplicate_report.json` の `skipped`（blocker 別: hp_distinct 18 / ward_conflict 3 / no_corroboration 2。HotPepper が別店として載せている・区が食い違う等で人の確認待ち）。**ローカルは HOTPEPPER_API_KEY が無く build を回せないため、コミット済み stores.json は統合前のまま**。次回の CI build で 4,928 件になり、audit が mergeable 0 を確認する（audit は continue-on-error）。**残**: 見送り23組の人の判断、吸収側 `stores/*.html` の canonical/リダイレクト要否（`data/store_merge_pairs.json` は build 初回実行で生成）、build 後の件数確認
+- **2026-10-06 追記（オーナー確認で残件23組を統合）**: オーナーが 2026-10-06 に「見送っていた23組は同じお店なので統合」と明示判断。確認済みペアを `data/store_merge_confirmed.json`（各組に `ownerConfirmedAt: 2026-10-06`・店名＋HP ID/placeId で片側ずつ特定）に正本化し、`scripts/lib/store_dedup.js` の `dedupeStores` が自動ブロッカー（区・HP ID食い違い等）より優先して統合する（理由 `owner_confirmed`。特定できない組は統合せず `unresolved` で報告）。残すレコードは既存ルール（情報量の多い方・編集部フィールドは手動店優先）。実測（data/stores.json 4,931件に統合器を適用）: **4,931 → 4,908（-23件）**・統合22グループ（囲い屋金山店は3→1）・大量消失なし。skipped は 27→4 に減少。残る4組（Pizzeria mimi・鳥正/鳥正 名古屋・カンジャンケジャン 渡 名古屋店/名古屋錦店・大久手山本屋 大曽根店）はオーナー確認の23組に含まれない後から混入した組で未統合のため、ベースラインは 0 ではなく **4**（この4組の可否はオーナー確認待ち・このため status は in_progress のまま）。`data/stores.json` は CI の build が再生成するため手編集せず、次回 build で反映される。吸収側の stores/*.html は孤児ページとして ISSUE-102 の手順で処理。注意: 「権兵衛 名駅店/名駅南店」「YOHAKU COFFEE 今池1号店/2号店」は住所が異なる（別支店の可能性）がオーナー判断に従い統合済み。誤りと分かれば `store_merge_confirmed.json` から該当組を外せば次回 build で分離される。テスト追加: `tests/store_dedup.test.js`（5件）。
 - **detected**: 2026-09-20
 - **category**: data-quality
 - **owner**: DataKeeper / Builder
@@ -1834,7 +1835,7 @@
 
 ### [SEO-083] SNS原稿の「NotebookLM画像生成用テキスト」欄が生成器のプレースホルダのまま放置され、直近30日で22日ぶんの Instagram 画像素材が存在しない
 
-- **priority**: P2 → **status**: ready（要オーナー確認: 中止候補）
+- **priority**: P2 → **status**: wont_fix（2026-10-06 オーナー判断で中止）
 - **detected**: 2026-09-05
 - **category**: SEO
 - **owner**: 片桐 ← Editor + Builder（前提の変化: generate_sns_draft が false になったためaccept①「方針を決める」がオーナー判断。着手前にスコープを縮小するか close するかをオーナーに確認が必要と明記）
@@ -1876,6 +1877,7 @@
   4. `features/nagoya-solo-dining.html` の **`<title>` と `<meta name="description">` は変更しない**（2026-08-30 の判定を維持。全ページ中クリック1位の面を触らない）
   5. 上記1〜4の実施後、`data/gsc_metrics.json` の次回更新（翌週）で discovery 表示シェアの前後比を記録する。**シェアの上昇は施策効果ではなく計測の是正**である旨を backlog に明記し、効果測定の基準日をリセットする（過去の discovery 数値と単純比較しない）
 - **files**: `data/journal_seo_keywords.json`, （必要なら）`scripts/gsc_query_intent.js`
+- **2026-10-06 中止（オーナー判断）**: オーナーが「この課題は中止」と明示した。SNS原稿の自動生成（`data/journal_sns_draft_policy.json` の `generate_sns_draft:false`）は 2026-09-05 から止まっており、SNS投稿はリポジトリ外で運用している。直す対象のプレースホルダ欄が今後生成されないため、対応しない。SNS原稿の自動生成を再開する場合は、その時点で改めて起票する。
 
 ---
 
@@ -3204,7 +3206,8 @@
 
 ### [ISSUE-099] editorReason 自動収集パイプライン（ISSUE-045）が3ヶ月間サイレント無稼働だった — 必要シークレット3件が未設定
 
-- **priority**: P1 → **status**: ready（パイプライン稼働中・draftの人手レビュー待ち）
+- **priority**: P1 → **status**: done（2026-10-06 オーナー採用判断により draft 48件を承認・反映済み）
+- **progress 2026-10-06 — オーナーが「業界人目線のコメント、使う」と採用を明示し、draft をレビュー・反映**: 対象50件（OK 49 / INSUFFICIENT 1）のうち **採用48件・却下2件**。却下の内訳は (1) `manual_鮨旬美西川`（鮨 旬美 西川）— data/stores.json の営業ステータスが `CLOSED_TEMPORARILY`（Google上で休業中）のため、休業中の店に推薦コメントを載せない（再開が確認できれば再採用可）(2) `J004067208`（de trente ans）— 生成時点で INSUFFICIENT_EVIDENCE（コメント本文なし）。それ以外は、全店が data/stores.json に実在し営業ステータス OPERATIONAL、店名・エリア・ジャンルとの矛盾なし、`data/trust_display_policy.json` の公開禁止語（疑い/サクラ/ガチャ/化粧/評価操作）の混入なし、他店・競合への中傷なしを確認して承認。confidence 0.6 の断定的表現（「名古屋で最も予約困難」等）は出典つき・迷うものは採用の方針で通した。`scripts/approve_editorreason_drafts.js` の store_id 抽出が `-` を含むID（`manual_中華そば雷杏-ryan-名駅店`）で途中切れして承認が空振りする不具合も修正（正規表現を `\S+?` に）。editor_picks 119→167件。
 - **detected**: 2026-08-19（事業化ロードマップ Phase 2 の進捗確認中に発覚）
 - **category**: automation / moat / trust-score-business
 - **owner**: 片桐 ← Editor（`docs/editorreason-drafts.md` のレビュー・承認・人手必須のためエスカレーション 2026-08-28）
@@ -4460,7 +4463,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 ### [ISSUE-086] スコア信頼度（サクラチェック）精度向上 — S7時系列蓄積の修理・S4のRSS復活・新シグナル3種を実装、v3.0は活性化保留
 
-- **priority**: P1 → **status**: in_progress（Phase 0〜5完了・2026-08-18 Step2再開・v3.0コード完成/未活性化）
+- **priority**: P1 → **status**: done（2026-10-06 オーナー委任のもと判断: v3.0 は活性化しない・本番は v2.2 を維持。docs/decisions/0006）
 - **detected**: 2026-08-14（ユーザー要望「サクラチェックの精度を上げたい」を受けて再調査）
 - **category**: trust / proof / differentiation
 - **owner**: 片桐 ← DataKeeper + Builder（2026-10-06 自動消化でエスカレーション: v3.0活性化は「重みの再校正が完了してから」保留中。重みの方針決定はオーナー判断が必要）
@@ -4616,6 +4619,12 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
   - 対象店舗数: 4,958件（前回比増はHotPepper追加分）
   - 4週間スナップショット蓄積ゼロ（PLACES_DETAILS_BUDGET=100 週次実行が動いていない可能性）。activate は引き続き保留
 
+- **2026-10-06 判断（オーナー委任・決着）**: v3.0 は**活性化しない**。詳細と分布表は [docs/decisions/0006-review-trust-v3-not-adopted.md](docs/decisions/0006-review-trust-v3-not-adopted.md)。
+  - 前提の訂正: 本番は既に v2.2（ISSUE-106・S7d/S9 加算済み）。以前の定点観測の「v2/v3比較」は v2.1 との比較で、現行との差ではなかった
+  - 実測（4,931店・v2.2→v3.0）: SS 199→4 / A 531→139 / B 2,076→1,809 / C 1,042→2,130 / D 733→598 / — 350→251。段階移動 2,020店（41.0%・目安10%の約4倍）
+  - 不採用の理由: (1) データの無い新設 S8-2/S8-3/S7d に中立点を入れて分母に載せ、満点の店が存在しなくなる（観測できた項目だけで採点する原則に反する）(2) 本番の S9（クロス店舗指紋照合）を持たない (3) C→D の約60店は新しい検出が何も発火しておらず配点縮小だけで動く（偽陽性）
+  - 条件つきの再検討: 本文長・誘導語判定を持つ店が50%以上（現在14.8%）／誤検知率を Inspector が確認／移動10%以内かつ全件に発火の根拠、が揃えば S8-2/S8-3 を v2.2 方式の加算軸で別課題として検討。配点の付け替えは再検討しない
+  - 定点観測ルーチン（`audit_crosscheck_v3.js` の週次記録）は不要になった。今後は止めてよい
 - **残タスク**: 週次実行（毎週月曜）を継続してsnapshots≥2の蓄積率を上げる → 十分な蓄積後に
   `node scripts/audit_crosscheck_v3.js` で分布影響を再確認（目標: 移動件数 ≤ 492件）→ 問題なければ activate 手順の
   Step3以降（build.js切替）を実施。無料トライアル失効後（2026-08-20以降）は純粋な従量課金と

@@ -45,7 +45,7 @@ const md = fs.readFileSync(DRAFTS_MD, 'utf8');
 //          <!-- review: pending    ... store_id: J000123 -->  ← 未レビュー
 const approvedIds = new Set();
 const rejectedIds = new Set();
-const re = /<!--\s*review:\s*(approved|reject|pending)\b[^>]*store_id:\s*([^\s-]+)\s*-->/g;
+const re = /<!--\s*review:\s*(approved|reject|pending)\b[^>]*store_id:\s*(\S+?)\s*-->/g;
 let m;
 while ((m = re.exec(md)) !== null) {
   const verdict = m[1];

@@ -1473,6 +1473,7 @@ async function main() {
     stores.push(...dd.stores);
     const absorbedCount = before - stores.length;
     console.log(`重複統合（ISSUE-132）: ${dd.merged.length}組を統合（${absorbedCount}件を吸収） / 同一と確認できず残した組: ${dd.skipped.length}`);
+    if (dd.unresolved && dd.unresolved.length) console.warn(`  ⚠ オーナー確認済みペア（data/store_merge_confirmed.json）のうち ${dd.unresolved.length}組は店舗を1件に特定できず未統合（掲載終了・店名変更の可能性）`);
     // キー無しビルド（Hot Pepper 未取得）では店舗集合が縮小しているため記録を上書きしない
     if (hpShops.length > 0) {
       const mergePairsPath = path.join(__dirname, 'data', 'store_merge_pairs.json');

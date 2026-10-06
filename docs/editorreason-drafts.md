@@ -38,7 +38,7 @@
      > Retty、ホットペッパーグルメ、エキテンなどのグルメサイトや、個人のグルメブログ、旅行ブログなどで「名古屋で最も予約が取れないフレンチビストロ」「超人気店」として頻繁に紹介されています。
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J000661748 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J000661748 -->
 
 ---
 
@@ -73,7 +73,7 @@
      > 高単価な接客や記念日・接待利用に対応できる一流の接客スキルが求められ、ワインの選定やペアリングの提案、英語を中心とした多言語対応で外国人ゲストへの対応も行われる、グローバルスタンダードのサービスが提供されます。ゼネラルマネージャーは、顧客の来店履歴やアレルギー情報などを確認し、スタッフの適性を見極めて最適なチームを編成するなど、お客様満足の最大化に努めています。
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_ウルフギャング・ステーキハウス名古屋店 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_ウルフギャング・ステーキハウス名古屋店 -->
 
 ---
 
@@ -95,7 +95,7 @@
   5. [松坂屋名古屋店本館10階に位置し、窓からの眺望が魅力であることを裏付けます。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFdo8Tii8zJC5LOl3p7c67iAYhPYAUcoGmKPFqy9vHeS0NMWTXqxPbslMnHUij_DGUXOxWi5sTwicQLpbZBSB4Qwe5TG0LjmY0H3eRz1FmOHaj2LINuVrzsszVlQQfq1vj6tECPlFOgEcUn89us9vZ9wWsd2Rs-Cc4yUA==)
      > 松坂屋名古屋店本館10階に位置する店舗情報。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_アロマフレスカ名古屋 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_アロマフレスカ名古屋 -->
 
 ---
 
@@ -112,7 +112,7 @@
      > 全くそんな隙もなく。しっかりと美味しい。トリパイタンラーメンに仕上がってましたね
 - **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鶏そば啜る丸の内本店 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鶏そば啜る丸の内本店 -->
 
 ---
 
@@ -147,7 +147,7 @@
      > お品書きは提供直前まで伏せられており、お客様にワクワク感を提供しています。
 - **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_賛否両論名古屋 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_賛否両論名古屋 -->
 
 ---
 
@@ -163,7 +163,7 @@
   2. [和食料理人が手掛ける欧風カレー専門店であること、築100年の古民家を改装した店舗であること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVRRqsJoM2pM2g9zKVw58LypuRKgZVJcLgclJtj59DHH3t_ALC0nJ2qLk9wUgct4F4UAPeJW_HX0bhwZJ58S8yFECSEsoJZ7tWasmOBBw23vzBPdXlhF5whgiQXy5os4ed-tc=)
      > 和食料理人による欧風カレー専門店『松軒亭』千種にオープン
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004576942 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004576942 -->
 
 ---
 
@@ -188,7 +188,7 @@
      > 「素朴で気取らない芋菓子」として幅広い客層に愛されています。
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_覚王山吉芋本店 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_覚王山吉芋本店 -->
 
 ---
 
@@ -211,7 +211,7 @@
      > オーナーシェフの小林誠氏は1978年名古屋市生まれで、1998年に調理師学校を卒業後、「レストラン シェ・コーベ」に入社しました。2008年には同店の料理長に就任し、2019年にはJAL新ジャパンプロジェクトで国内線ファーストクラス機内食を監修するとともに、ミシュラン東海版で1つ星を獲得しています。さらに2020年にはゴ・エ・ミヨで15点3トックを獲得する実績を持ちます。2023年に「シェ・コーベ
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_restaurant.m -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_restaurant.m -->
 
 ---
 
@@ -234,7 +234,7 @@
      > フィレンツェ本店はミシュランガイドで三ツ星を獲得している名門リストランテです。
 - **warnings**: 7件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_エノテーカピンキオーリ名古屋 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_エノテーカピンキオーリ名古屋 -->
 
 ---
 
@@ -251,7 +251,7 @@
      > 運営会社である株式会社Plan・Do・Seeは、ミシュラン一つ星店『鮨麻布』の姉妹店も展開しており、世界に通用する「本物」の技術や運営ノウハウを身につける機会を提供しています。
 - **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鮨うおのたな -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鮨うおのたな -->
 
 ---
 
@@ -267,7 +267,7 @@
   2. [複数の地元グルメメディアでの紹介、SNSでの話題性、Instagramフォロワー数の多さ](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQER6N2qrpkQYITdOTh9L8TPIcGitlt3Ngtvj5pzNgcjy1lsFYn0rp3fv4IFm3vAjE3avLH66_JPRhHDI5LLHifzoa0GNXbGjLMV6QeY_dPr99sRMZy1NPhlbZ7KK3mSQS05_XK9ZTYJ9601eEnl72N0JNGG_wD6BxCACA==)
      > 「ROCCA & FRIENDS CREPERIE to TEA 名古屋店」は、複数の地元グルメメディアで紹介されています。「おいしいなごや」、「ナゴレコ」、「Lemon8 App」、「KUTSULOG」、「愛知名古屋咲楽（さくら）SAKURA MediaJapan」、「名古屋情報通」などで取り上げられています。また、SNSでも話題のクレープ専門店として注目されており、Instagramのフォロワ
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_rocca&friendscreperietotea名古屋店 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_rocca&friendscreperietotea名古屋店 -->
 
 ---
 
@@ -291,7 +291,7 @@
   6. [地元メディア（名古屋情報通）での注目](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEUD8KZ04CEjKrtQMbIM_AS44r075_jRwr7avhJiePrrxN46BkAN6Nl3jPwW5lmPwjsZz_De1JmFg6EbM_56yuWo9eivVCjcPdeLFnbJqAlvbhHP5z0yASPxW_0m3rKZW-zkcU15D0=)
      > 系列の「廻転鮨 銀座おのでら 名古屋店」のオープンが「名古屋情報通」で報じられるなど、地元メディアでも注目されています。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鮨銀座おのでら名古屋店 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鮨銀座おのでら名古屋店 -->
 
 ---
 
@@ -316,7 +316,7 @@
      > 平日はサラリーマンを中心に賑わい、週末や祝日の夕方には、小さな子供連れのファミリーからカップル、友人同士まで幅広い層の客が訪れ、行列ができることもあります。
 - **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_カリットギョウザ黄金 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_カリットギョウザ黄金 -->
 
 ---
 
@@ -354,7 +354,7 @@
   13. [肩肘張らずにフレンチを楽しめるという評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHcPYV4Ux6Tl5HBzYLqNfr1iYnOR_qV8D5oyQS4-3z2-GmnaEmgV0llYLc32-aZQ0kT8hAkjGLZhtfpXtj5sGHJpZwaU3WsBQIqYgALTYLpyBGiXAAFNOmCaiQAaLlUANO_owN1)
      > 全体として「肩肘張らずにフレンチを楽しむことができる」お店として評価されています。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_ルコネッサンス -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_ルコネッサンス -->
 
 ---
 
@@ -375,7 +375,7 @@
 料理は、京料理の趣と愛知県の食材を融合させた名古屋限定のコースが提供されます。
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_尾張山荘くろぎ -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_尾張山荘くろぎ -->
 
 ---
 
@@ -400,7 +400,7 @@
      > 一人で店を切り盛りする「ワンオペ」でありながら、料理の提供は手際よく、接客も丁寧で優しさが感じられると評価されています。
 - **warnings**: 6件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_フランス惣菜と串カツmarbrade -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_フランス惣菜と串カツmarbrade -->
 
 ---
 
@@ -418,7 +418,7 @@
   3. [「舎鈴」が「六厘舎」の姉妹ブランドであること、名古屋駅メイチカに中部地方初の店舗としてオープンしたこと、メイチカ店限定商品「名古屋台湾つけめん」を提供していること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHnFTOXGxCNDG5H_wk9COxKIX97vWw7CJpWNRzYUgF0v6NwtbiRvQvPgdU3OTnIEQBGDHj_qCaXCpNKOn2c1PUSA3Owf9Vp5IkK7t77eMwytNDbeReW9B23b85suHq8Wd4q)
      > つけめんの名店『六厘舎』の姉妹ブランドとして誕生した『舎鈴』が、名古屋駅の地下街『メイチカ』にオープンした、中部地方初の店舗です。メイチカ店限定商品として『名古屋台湾つけめん』を数量限定で販売
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_舎鈴メイチカ店 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_舎鈴メイチカ店 -->
 
 ---
 
@@ -443,7 +443,7 @@
      > ぴよりん自体は、2010年から始まった新商品開発プロジェクトにおいて、2名のパティシエと2名の社員によって生み出されたとされています。
 - **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_ぴよりんvillage -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_ぴよりんvillage -->
 
 ---
 
@@ -461,7 +461,7 @@
   3. [「一番軒」から生まれた新ブランドであること、海老を贅沢に使った濃厚スープであること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGlI14-OMdN5k8vJVhB_hs0GP2fE5vMW9vNkWQSM2tdKqodi6cVi56Tek6JZagFypKfCBOTy11SIqjrJGZ8H22B3v_b1MUdiAsmXdRqO7vM0BWDHGtgHavqPzgtlkMXM8Q=)
      > 豚骨ラーメンの人気店「一番軒」から生まれた海老を贅沢に使った濃厚スープの新ブランドとして紹介されています。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_海老豚骨ラーメン一番軒メイチカ店 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_海老豚骨ラーメン一番軒メイチカ店 -->
 
 ---
 
@@ -486,7 +486,7 @@
      > 他のシェフからの口コミとして、宮里シェフの研究熱心さや地元の旬食材を用いた真摯な料理、店の雰囲気や居心地の良さが評価されています。「天才宮里シェフ」と称され、常識にとらわれない自由な発想で鉄板業界に新しい風を吹かせると期待されています。
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_l'atelierk -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_l'atelierk -->
 
 ---
 
@@ -508,7 +508,7 @@
   5. [博多本店のメディア露出と話題性](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHUt1a_bpJvSwYqrvCLm7Dk257yWy_dNMFL7DoEfulYULVnqLBC32-fbSOJLNvfzVNn0rCBV9ugpOIv99RZR_Z8GvM0yBAtdKMmH-QVfZRAguCxtRgpfRWeXyFJaoSXOXk=)
      > 博多の本店は「予約の取れない焼き鳥屋」としてテレビや雑誌などのメディアに多数取り上げられ、大きな話題となりました。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004537202 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004537202 -->
 
 ---
 
@@ -523,7 +523,7 @@
      > 「狐小屋 八事店」は、カラッと揚がったジューシーな「平成第七唐揚」を自慢としています。この唐揚げは秘伝のタレにじっくり漬け込んでから揚げられており、噛んだ瞬間に鶏肉の旨味と香味野菜の香りが口いっぱいに広がる点が特徴です。また、全国各地から厳選ルートで仕入れたこだわりの日本酒を提供しており、名物としてシャーベットやミントなど7種類のレモンサワーも用意し、好みや料理に合わせて選べるように工夫されていま
 - **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認） / sources_used が 2 件未満（人手レビュー必須）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J001275312 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J001275312 -->
 
 ---
 
@@ -543,7 +543,7 @@
   4. [多くの主要グルメサイトに掲載されていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETcqGSY9icppVE11WUWnXYI-XIBpTNlxrwKF4hBbKfkuB0MDVpoHcds-4VsZQJ5cWKr5B3nP-TaYanQDEVl22jNijwmWQ7dHupH-3Wo7SMVSrexgomrvIQqHkLAtfu5-Z2_A==)
      > 「しら河 今池店」は、ぐるなび、ホットペッパーグルメ、Uber Eats、NAVITIME、Retty、Trip.com、一休.comレストラン、じゃらんnet、フォートラベル、クックドアといった主要なグルメサイトや旅行情報サイトに掲載されています。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J000107880 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J000107880 -->
 
 ---
 
@@ -561,7 +561,7 @@
   3. [店主の山形での修行経験と、数々の受賞歴。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHu209C4euOGX8qbcifeuDpesT2xM2aCk5d0KSR1pEvudl5Um4FWlXedU_ekvOO2XKzEd0-LBLMChKEoGJLjvuBNrkzuFgDO_FWlLdc4btW2wbt07mNWgQ4ZprgzYM9)
      > 店主の佐藤智雄は、ラーメン消費量日本一の山形県で人気の「龍上海」のからみそラーメンに感銘を受け、同店で修行を積みました。「究極のラーメン2014 新店部門1位」、「ラーメンWalker2014 新人賞金賞」、「食べログ ベストラーメン2014受賞」、「究極のラーメン2015 みそラーメン部門1位」、「食べログ名古屋 ラーメン部門2016年1位獲得」、「食べログ愛知 ラーメン部門2017年1位獲得」
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J001283454 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J001283454 -->
 
 ---
 
@@ -582,7 +582,7 @@
      > 通販や持ち帰り専門の「想 TO GO（シャントゥーゴー）」では、全国のファンに本物の担担麺を知ってもらいたいという想いから、外部メーカーに委託せず自社製造にこだわり、店舗の味を再現しています。
 - **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J000028918 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J000028918 -->
 
 ---
 
@@ -607,7 +607,7 @@
      > 「かわ屋」ブランドは全国にフランチャイズ展開するほどの成功を収めており、錦店もその一つです。
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004510092 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004510092 -->
 
 ---
 
@@ -628,7 +628,7 @@
      > 社員が「あらゆるジャンルの料理に触れ、料理人として腕が磨ける」機会や、「将来、独立し、自分の店が持てるノウハウを学べる」環境を提供しており、料理人の育成にも力を入れていることが示唆されます。
 - **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004510095 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004510095 -->
 
 ---
 
@@ -655,7 +655,7 @@
      > 40名から最大45名までの貸切も可能で、各種宴会にも対応しています。
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004421573 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004421573 -->
 
 ---
 
@@ -677,7 +677,7 @@
   5. [Rettyに多数の口コミが掲載され、高い評価を得ていること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGqeQThEdbpRbwOWNN2fa0PLjoWg-N9lv4QkQLxp5DiDTR5ccSVSixuapGxVQZhmhDN3teeFaHyKsjWiIrzku5XkytgNa1F9PIEN4ji5BBHEDni_M9DClSRmrnrlANSA9tM21IZ5NSJM2m0ylCD1hiUgAFjgS3W92EzTA==)
      > グルメサイトRettyに多数の口コミが掲載されており、ユーザーから高い評価を得ています。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J000392943 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J000392943 -->
 
 ---
 
@@ -692,7 +692,7 @@
      > DAX DININGの店主は、厳選した食材を使った料理に自信を持っています。特に、店主の出身地である三重県尾鷲市から直送される新鮮な魚介類を仕入れており、長年取引のある地元の魚屋から送られる魚や貝類は、バーでありながらどこよりも美味しいと自負しています。中でもカツオは逸品として刺身での提供を推奨しています。また、自家製生パスタにもこだわりがあり、小麦粉や卵など厳選した素材を一つひとつ手作業で丁寧に
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認） / sources_used が 2 件未満（人手レビュー必須）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J003762579 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J003762579 -->
 
 ---
 
@@ -702,7 +702,7 @@
 - **confidence**: 0
 - **editorReason**: (なし)
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004067208 -->
+<!-- review: reject  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004067208 -->
 
 ---
 
@@ -730,7 +730,7 @@
   8. [多様な利用シーンに対応する店内（ボックス席、個室）があること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtQbuyBK19CbdTxoDNIA9bfsc8XhEySO0erTNOxZn9iEHcsZNCHYWhG5sHnO_018Xx2MTnQFPy-LzKvnFABOBR87o4BAQY0yT9s6MfIBGgX2Wg4NAxTPuXsL-emCkEOkCtsr0=)
      > 各席にロースターと排気ダクトが設けられたボックス席が中心で、仕切りがあり広めのテーブルやシートは家族連れなどの小グループが利用しやすい雰囲気です。引き戸のある個室席も用意されています。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004634164 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004634164 -->
 
 ---
 
@@ -749,7 +749,7 @@
      > 2024年12月には、三河一色産活うなぎを使用した熟成うなぎのお造りとしゃぶしゃぶ会席料理の予約受付を開始したことが報じられています。職人の技術は高く評価されており、活きたうなぎを丁寧に捌き、独自の技法「こなし焼き」で香ばしく、外はパリッと中はふっくらと焼き上げる技術が特徴です。特に、うなぎの生食と熟成に関する長年の研究を経て、職人の手によって「完全無血化」を実現し、5日間以上熟成させることで旨味
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004026266 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004026266 -->
 
 ---
 
@@ -771,7 +771,7 @@
   5. [葛原シェフが「余韻と記憶」をコンセプトに、現代フレンチの枠を超えた独自の世界観と繊細な技術を追求していること。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHC6bBe-3yXP1slje1Vi6YNMIrAESDQgGkOQqIlbSmCyL9VbMJz1RcbIpOX-3wOjSgq8velQNcueDTt3tHJpI1kPfcBeQIZefYKc1VkAYtNNWCxOS5y_tUHcS7MwTG4K-gVw8JA3H9wOgBYSPFV)
      > 葛原シェフの料理は、「余韻と記憶」というコンセプトに基づき、五感に深く刻まれる物語のような体験を提供すると評されています。0.1度単位で温度を見極める火入れや、素材の可能性を最大限に引き出す繊細な技術を駆使し、現代フレンチの枠に収まらない独自の世界観を追求しています。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_レミニセンス(reminiscence) -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_レミニセンス(reminiscence) -->
 
 ---
 
@@ -796,7 +796,7 @@
      > 「至福のパリふわ 那古野しば福や 名駅店」として、名古屋駅近くで洗練された空間と極上のうなぎを楽しめる店として紹介されました。
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J003671888 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J003671888 -->
 
 ---
 
@@ -823,7 +823,7 @@
      > 「緻密な仕事に惚れ込むファンも多い」と評されており、「独創的な鮨」を提供することで客を驚かせています。
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鮨旬美西川 -->
+<!-- review: reject  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鮨旬美西川 -->
 
 ---
 
@@ -864,7 +864,7 @@
      > シェフ須本氏は「美食の芸術家」 や自称「美食クリエイター」 と評されています。
 - **warnings**: 3件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_トゥ・ラ・ジョアイズム -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_トゥ・ラ・ジョアイズム -->
 
 ---
 
@@ -884,7 +884,7 @@
   4. [名古屋の賓客に愛される名店であること、ミシュラン1ツ星獲得](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGppwPKnIyIYh-x1FZNOin_jpvZY8j5ImiXxIpXYgN76Z71T9uuBLQvCGPsVMynoKC2QigGumEjL443nqh7LqPUsU-iJ-5G1oeriJ8V1vY1520OpTskb38tnkDiaRRbSkjU6cMYw8qk9zwW9g==)
      > 「壺中天」は、名古屋の賓客に愛されてきた名店として知られています。…「ミシュラン一つ星として認められた名古屋の有名フレンチ」として取り上げられています。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_壺中天 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_壺中天 -->
 
 ---
 
@@ -908,7 +908,7 @@
   6. [主人が茶道裏千家・武者小路千家を学び「室礼師」の号を持つこと](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHMzkQzSrIEQbChPZi-_88A9jQ03p_qQCiY7EdygCPxkpRQKJk9tZd715EghDq5kw0zJcLM1AFp4RTB2gXKuA6T8D6mPO6LG6_5o_ZABR5GRKBU0E4-IY7WvnHRzFP8fji2QSJPGCA=)
      > 「懐石 志ら玉」の主人である柴山宗平氏は、昭和34年生まれで、10代の頃より茶道裏千家と華道石田流を学んでいます。立正大学文学部国文学科卒業後、家業である料亭「志ら玉」に従事し、裏千家伊住宗晃宗匠より「室礼師（しつらえし）」の号を授かっています。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_懐石志ら玉 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_懐石志ら玉 -->
 
 ---
 
@@ -927,7 +927,7 @@
      > 「名古屋市で人気のラーメン」ランキングで上位にランクインしていることも確認できます。
 - **warnings**: 5件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_中華そば雷杏-ryan-名駅店 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_中華そば雷杏-ryan-名駅店 -->
 
 ---
 
@@ -946,7 +946,7 @@
      > 名古屋駅太閤口店が93%という高いオススメ度を獲得しており
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_炭焼うな富士 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_炭焼うな富士 -->
 
 ---
 
@@ -974,7 +974,7 @@
   8. [料理の質が「鮭の塩焼きの最上級」と高く評価されていること。](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHfcxxg1lsQEln3VK5E1WFZRL1a3Yk5q5JqMZa2NDv2WaTn-FzUCypzQA5wJjOOeahRDaXPuwGOLqekHdhfGl7c2i0FgGMu_paN-gNKeLLQ6V07srP530KM91A-JtgcZ6eNzouYhLY--yN5uh1AbBmjWfLwXrA=)
      > 「鮭の塩焼きの最上級と呼びたくなる仕上がり」
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004558213 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J004558213 -->
 
 ---
 
@@ -998,7 +998,7 @@
   6. [幅広い客層に対応していること](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHl7mBhRqu4RQGvzaYCQ3A4sQbqRUdX-wEsmFSISd3i0LKdoRrnQztjqrnzcUROtzuF0yf-irovkAdJgFZBLQmsIy6KNEhHHdusxBHWw2P7wZHFmJQrcI1NyluJnaqj-0JJNXOyPFav_6lRZ32gfcak4p8StEigg8KVSJ8Yf0FWjpgCzj6V83tyDo7GR9sondMK9z4=)
      > 接待や会合、家族連れなど幅広い客層に対応しており、個室やお座敷も完備されています。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J000107620 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: J000107620 -->
 
 ---
 
@@ -1019,7 +1019,7 @@
      > CBCテレビの「デララバ」という番組の「ラーメン数珠つなぎ」企画で取り上げられ、東海地方の人気ラーメン店の店主からもイチオシとして紹介されました。
 - **warnings**: 5件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_熱田味噌拉麺ぶりゆ -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_熱田味噌拉麺ぶりゆ -->
 
 ---
 
@@ -1035,7 +1035,7 @@
   2. [店名の由来、薪火へのこだわり、フレンチ・イタリアンのフュージョンスタイル、五感で楽しむ空間演出、匠の技による素材の旨味と燻香、柔軟な発想による料理の評価](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEsfiZjLqTdSsP_M_xgu3OQIL3Wxyx3MiPsH6hdoGBMYgtSoZji4uZK4LNsRUWSBNuHWvfvRHp1wy8-lWEk-e3OoMv6NLdhvyXLyN3ZnmyYtVlDPg==)
      > 「LIGNIN」という店名は、木を構成する成分である「リグニン」に由来しており、薪火料理への深いこだわりを示しています。店主は、薪火の穏やかな熱と立ち上る香りを最高の調味料と捉え、厳選された旬の食材が持つ旨味や甘みを最大限に引き出すことに注力しています。料理のベースにはフレンチの確かな技法がありながらも、イタリアンの軽やかさや自由な発想を取り入れた独創的なフュージョンスタイルを追求しています。単に
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_lignin -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_lignin -->
 
 ---
 
@@ -1060,7 +1060,7 @@
      > この哲学には、素材を尊重し、文化をつなぎ、未来を見据えるサステナブルな視座が息づいていると評されています。
 - **warnings**: 1件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_日本料理𡈽方 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_日本料理𡈽方 -->
 
 ---
 
@@ -1081,7 +1081,7 @@
      > 各種グルメサイトでの評価も高く、「一休.comレストラン」では総合評価4.05（5点満点中、10件の口コミに基づく）、サービス評価4.00を獲得しています。また、「macaroni」では4.3点（5点満点中、267件の口コミに基づく）、「ヒトサラ」と「ねとらぼ」のランキングでは愛知県のうなぎの名店で1位に選ばれています。利用客からは、鰻の「絶妙にパリッとして、身はふんわり脂がのってめっちゃ美味しい
 - **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_ひつまぶし登河那古野本店 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_ひつまぶし登河那古野本店 -->
 
 ---
 
@@ -1100,7 +1100,7 @@
      > Rettyの口コミでは、「焼き加減、出汁や塩などのこだわり」や「シェフの手仕事が引き立つ料理」が評価されており、A5ランクのフィレステーキが「絶品で今まで食べた事のない美味しさ」と称賛されています。
 - **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鉄板焼那古亭 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_鉄板焼那古亭 -->
 
 ---
 
@@ -1125,7 +1125,7 @@
      > 「炭焼うな富士」は、創業25年でミシュランガイド愛知・岐阜・三重2019特別版にて「ビブグルマン」を受賞し、食べログでは「THE TABELOG AWORD2020」のブロンズ、および「百名店2019」「百名店2018」に選出されるなど、うなぎ激戦区である愛知県で常に高い評価を得ています。
 - **warnings**: 2件のURLが実際の検索結果に無いため除外（要確認）
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_炭焼うな富士名古屋駅太閤口店 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_炭焼うな富士名古屋駅太閤口店 -->
 
 ---
 
@@ -1145,6 +1145,6 @@
   4. [複数のグルメサイトでの高い総合評価、料理の美味しさ、繊細な仕事、季節感、店主の細やかな気配りや丁寧な接客](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHoSdTB94BCPukx8SIRrMcFWl533UrmU-0YdBPrSy37YL7DJSMW4PW_XY5iFjbRTxyu3SlgaLLXT8T1PINq---JoekdTnL_cPXogj8UgqiV_FurZtljGuQstZAoMAvB3dOQhQ==)
      > 一休.comレストランやPayPayグルメのクチコミでは、総合評価が4.38/5.0と高く、料理の美味しさ、繊細な仕事、季節感、そして店主の細やかな気配りや丁寧な接客（見送りなど）が特に評価されています。
 
-<!-- review: pending  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_那古野みつ林 -->
+<!-- review: approved  ← "pending" を "approved" または "reject" に書き換えてください。store_id: manual_那古野みつ林 -->
 
 ---
