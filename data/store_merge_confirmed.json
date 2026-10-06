@@ -1,0 +1,375 @@
+{
+ "_note": "ISSUE-132: オーナーが「同じお店なので統合」と明示的に確認した重複ペア。scripts/lib/store_dedup.js の dedupeStores が自動判定(ブロッカー)より優先して統合する。各 side は店名＋ホットペッパーID/placeId(＋HP IDが無い側はエリア)の全一致で1件に特定する(0件・2件以上に当たる組は統合せず unresolved として報告する＝ビルドは止めない)。このリストにない組は従来どおりブロッカーで残す。",
+ "ownerConfirmedAt": "2026-10-06",
+ "source": "ISSUE-132 残件(同一と確認できず統合を見送った23組)",
+ "pairs": [
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "ward_conflict",
+   "sides": [
+    {
+     "店名": "レミニセンス (Reminiscence)",
+     "placeId": "ChIJEbARMC13A2ARd_ybO79h7-8",
+     "エリア": "名古屋市東区"
+    },
+    {
+     "店名": "レミニセンス",
+     "placeId": "ChIJEbARMC13A2ARd_ybO79h7-8",
+     "エリア": "名古屋市中区"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "ward_conflict",
+   "sides": [
+    {
+     "店名": "とんかつ朱寿",
+     "placeId": "ChIJQ1vQ28RvA2ARXGetB6Ym4cY",
+     "エリア": "名古屋市中村区"
+    },
+    {
+     "店名": "とんかつ朱寿",
+     "ホットペッパーID": "J004558109",
+     "placeId": "ChIJQ1vQ28RvA2ARXGetB6Ym4cY"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "no_corroboration",
+   "sides": [
+    {
+     "店名": "完全個室居酒屋 哉月",
+     "placeId": "ChIJrSdUlc9wA2ARw1KC6gTgjSw",
+     "エリア": "名古屋市中村区"
+    },
+    {
+     "店名": "居酒屋 哉月",
+     "ホットペッパーID": "J001143580",
+     "placeId": "ChIJrSdUlc9wA2ARw1KC6gTgjSw"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "no_corroboration",
+   "sides": [
+    {
+     "店名": "とりやき酒場 鶏ん家 名古屋新栄店",
+     "placeId": "ChIJnWXeRhB3A2ARAODBDPGSYP4",
+     "エリア": "名古屋市中区"
+    },
+    {
+     "店名": "鶏ん家 名古屋新栄店",
+     "ホットペッパーID": "J003985167",
+     "placeId": "ChIJnWXeRhB3A2ARAODBDPGSYP4"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "ward_conflict",
+   "sides": [
+    {
+     "店名": "ルコネッサンス",
+     "placeId": "ChIJbTpunbRwA2ARa1lPaqA2xGw",
+     "エリア": "名古屋市東区"
+    },
+    {
+     "店名": "Reconnaissance ルコネッサンス",
+     "ホットペッパーID": "J004402690",
+     "placeId": "ChIJbTpunbRwA2ARa1lPaqA2xGw"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "居酒屋 権兵衛 名駅店",
+     "ホットペッパーID": "J003649512",
+     "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8"
+    },
+    {
+     "店名": "権兵衛 名駅南店",
+     "ホットペッパーID": "J004403777",
+     "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "Cafe & Bar ゆきっち",
+     "ホットペッパーID": "J003850472",
+     "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk"
+    },
+    {
+     "店名": "Cafe & Bar ゆきっち はなれ",
+     "ホットペッパーID": "J003850482",
+     "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "大衆焼肉こたろう 金山駅店",
+     "ホットペッパーID": "J004403592",
+     "placeId": "ChIJgTDclbVxA2ARiaMmYFQUMMI"
+    },
+    {
+     "店名": "大衆焼肉こたろう 金山駅",
+     "ホットペッパーID": "J003851745",
+     "placeId": "ChIJgTDclbVxA2ARiaMmYFQUMMI"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "Sei Felice セイフェリーチェ",
+     "ホットペッパーID": "J003763458",
+     "placeId": "ChIJAW-TmB5xA2ARC35S7Lm0sK0"
+    },
+    {
+     "店名": "Seifelice セイフェリーチェ 栄",
+     "ホットペッパーID": "J003917091",
+     "placeId": "ChIJAW-TmB5xA2ARC35S7Lm0sK0"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "炉端焼き 燻銀 伏見店",
+     "ホットペッパーID": "J003942663",
+     "placeId": "ChIJnzvZLAB3A2ARBlyx3mImv3E"
+    },
+    {
+     "店名": "炉端焼き燻銀 伏見店にかい",
+     "ホットペッパーID": "J004634381",
+     "placeId": "ChIJnzvZLAB3A2ARBlyx3mImv3E"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "どて煮 やよい 大曽根 森下",
+     "ホットペッパーID": "J004469253",
+     "placeId": "ChIJudpS_1FxA2ARFRMw-i-h45c"
+    },
+    {
+     "店名": "どて煮　やよい",
+     "ホットペッパーID": "J004661256",
+     "placeId": "ChIJudpS_1FxA2ARFRMw-i-h45c"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "レストラン ロワール 鉄板焼",
+     "ホットペッパーID": "J003916520",
+     "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00"
+    },
+    {
+     "店名": "レストラン ロワール フレンチ 名古屋東急ホテル 栄",
+     "ホットペッパーID": "J003916519",
+     "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "ONE on ONE 栄店",
+     "ホットペッパーID": "J000726902",
+     "placeId": "ChIJve3rY9RwA2AReTPm31L8SJE"
+    },
+    {
+     "店名": "ONE on ONE 錦",
+     "ホットペッパーID": "J003560485",
+     "placeId": "ChIJve3rY9RwA2AReTPm31L8SJE"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "ハチ鶏 大曽根駅店",
+     "ホットペッパーID": "J001216971",
+     "placeId": "ChIJc8D7gfdxA2AROZRWioj_A-g"
+    },
+    {
+     "店名": "ハチ鶏 大曽根",
+     "ホットペッパーID": "J004026527",
+     "placeId": "ChIJc8D7gfdxA2AROZRWioj_A-g"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "喫茶River",
+     "ホットペッパーID": "J001264243",
+     "placeId": "ChIJ0YoK_YN3A2ARYxGb7HfJ8FY"
+    },
+    {
+     "店名": "喫茶River リバー",
+     "ホットペッパーID": "J004025267",
+     "placeId": "ChIJ0YoK_YN3A2ARYxGb7HfJ8FY"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "居酒屋 囲い屋 金山店",
+     "ホットペッパーID": "J004025513",
+     "placeId": "ChIJy2Ykty1xA2ARPS8XWVmzt3Y"
+    },
+    {
+     "店名": "隠れ家個室居酒屋 囲い屋 金山店",
+     "ホットペッパーID": "J001293029",
+     "placeId": "ChIJy2Ykty1xA2ARPS8XWVmzt3Y"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "居酒屋 囲い屋 金山店",
+     "ホットペッパーID": "J004025513",
+     "placeId": "ChIJy2Ykty1xA2ARPS8XWVmzt3Y"
+    },
+    {
+     "店名": "囲い屋 金山店",
+     "ホットペッパーID": "J004612496",
+     "placeId": "ChIJy2Ykty1xA2ARPS8XWVmzt3Y"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "居酒屋 傳DEN 金山駅前店",
+     "ホットペッパーID": "J003324868",
+     "placeId": "ChIJ8T0Mhh1xA2AR2FR2xX3h03o"
+    },
+    {
+     "店名": "傳DEN 金山駅前店",
+     "ホットペッパーID": "J003581252",
+     "placeId": "ChIJ8T0Mhh1xA2AR2FR2xX3h03o"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "結う ゆう 金山駅前店",
+     "ホットペッパーID": "J003581285",
+     "placeId": "ChIJ_yKqJdxxA2ARll0lpDJW0SI"
+    },
+    {
+     "店名": "居酒屋 結う ゆう 金山駅前店",
+     "ホットペッパーID": "J003324866",
+     "placeId": "ChIJ_yKqJdxxA2ARll0lpDJW0SI"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "肉ト魚 大衆酒場 ひとめぼれ 金山駅前店",
+     "ホットペッパーID": "J004445415",
+     "placeId": "ChIJqaeIppZ3A2AR2CF2Gi_o7mk"
+    },
+    {
+     "店名": "肉ト魚　大衆酒場　ひとめぼれ　金山駅南口店",
+     "ホットペッパーID": "J004445409",
+     "placeId": "ChIJqaeIppZ3A2AR2CF2Gi_o7mk"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "シャンタムール",
+     "ホットペッパーID": "J000015669",
+     "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU"
+    },
+    {
+     "店名": "シャンタムール サウス",
+     "ホットペッパーID": "J004591503",
+     "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "居酒屋 煙 金山店",
+     "ホットペッパーID": "J004005730",
+     "placeId": "ChIJBYb7iWxxA2ARbOmNT1Qh-lA"
+    },
+    {
+     "店名": "煙 金山店",
+     "ホットペッパーID": "J001293031",
+     "placeId": "ChIJBYb7iWxxA2ARbOmNT1Qh-lA"
+    }
+   ]
+  },
+  {
+   "ownerConfirmedAt": "2026-10-06",
+   "previousBlocker": "hp_distinct",
+   "sides": [
+    {
+     "店名": "YOHAKU COFFEE 今池1号店",
+     "ホットペッパーID": "J003624657",
+     "placeId": "ChIJB9lELnpxA2ARIozhq5qaAjw"
+    },
+    {
+     "店名": "YOHAKU COFFEE 今池2号店",
+     "ホットペッパーID": "J003624656",
+     "placeId": "ChIJB9lELnpxA2ARIozhq5qaAjw"
+    }
+   ]
+  }
+ ]
+}

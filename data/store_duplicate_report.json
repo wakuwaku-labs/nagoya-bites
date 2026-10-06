@@ -1,394 +1,83 @@
 {
-  "generated": "2026-10-05T19:22:22.827Z",
+  "generated": "2026-10-06T06:39:27.889Z",
   "mergeable": 0,
   "skipped": [
     {
       "names": [
-        "レミニセンス (Reminiscence)",
-        "レミニセンス"
+        "Pizzeria mimi (ピッツェリア ミミ)",
+        "Pizzeria mimi"
       ],
       "hpIds": [
         "",
         ""
       ],
       "reason": "placeid_match",
-      "blocker": "ward_conflict"
-    },
-    {
-      "names": [
-        "とんかつ朱寿",
-        "とんかつ朱寿"
-      ],
-      "hpIds": [
-        "",
-        "J004558109"
-      ],
-      "reason": "name_exact",
-      "blocker": "ward_conflict"
-    },
-    {
-      "names": [
-        "完全個室居酒屋 哉月",
-        "居酒屋 哉月"
-      ],
-      "hpIds": [
-        "",
-        "J001143580"
-      ],
-      "reason": "placeid_match",
       "blocker": "no_corroboration"
     },
     {
       "names": [
-        "とりやき酒場 鶏ん家 名古屋新栄店",
-        "鶏ん家 名古屋新栄店"
+        "鳥正",
+        "鳥正 名古屋"
       ],
       "hpIds": [
-        "",
-        "J003985167"
+        "J003624313",
+        "J001286820"
       ],
       "reason": "placeid_match",
-      "blocker": "no_corroboration"
+      "blocker": "hp_distinct"
     },
     {
       "names": [
-        "ルコネッサンス",
-        "Reconnaissance ルコネッサンス"
+        "カンジャンケジャン 渡 名古屋店",
+        "カンジャンケジャン 渡 名古屋錦店"
       ],
       "hpIds": [
-        "",
-        "J004402690"
+        "J004421283",
+        "J004699067"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
+        "大久手山本屋 大曽根店",
+        "大久手山本屋"
+      ],
+      "hpIds": [
+        "J004698526",
+        ""
       ],
       "reason": "placeid_match",
       "blocker": "ward_conflict"
-    },
-    {
-      "names": [
-        "居酒屋 権兵衛 名駅店",
-        "権兵衛 名駅南店"
-      ],
-      "hpIds": [
-        "J003649512",
-        "J004403777"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "Cafe & Bar ゆきっち はなれ",
-        "Cafe & Bar ゆきっち"
-      ],
-      "hpIds": [
-        "J003850482",
-        "J003850472"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "大衆焼肉こたろう 金山駅店",
-        "大衆焼肉こたろう 金山駅"
-      ],
-      "hpIds": [
-        "J004403592",
-        "J003851745"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "Sei Felice セイフェリーチェ",
-        "Seifelice セイフェリーチェ 栄"
-      ],
-      "hpIds": [
-        "J003763458",
-        "J003917091"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "炉端焼き 燻銀 伏見店",
-        "炉端焼き燻銀 伏見店にかい"
-      ],
-      "hpIds": [
-        "J003942663",
-        "J004634381"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "どて煮 やよい 大曽根 森下",
-        "どて煮　やよい"
-      ],
-      "hpIds": [
-        "J004469253",
-        "J004661256"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "レストラン ロワール 鉄板焼",
-        "レストラン ロワール フレンチ 名古屋東急ホテル 栄"
-      ],
-      "hpIds": [
-        "J003916520",
-        "J003916519"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "ONE on ONE 栄店",
-        "ONE on ONE 錦"
-      ],
-      "hpIds": [
-        "J000726902",
-        "J003560485"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "ハチ鶏 大曽根駅店",
-        "ハチ鶏 大曽根"
-      ],
-      "hpIds": [
-        "J001216971",
-        "J004026527"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "喫茶River",
-        "喫茶River リバー"
-      ],
-      "hpIds": [
-        "J001264243",
-        "J004025267"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "居酒屋 囲い屋 金山店",
-        "隠れ家個室居酒屋 囲い屋 金山店"
-      ],
-      "hpIds": [
-        "J004025513",
-        "J001293029"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "居酒屋 囲い屋 金山店",
-        "囲い屋 金山店"
-      ],
-      "hpIds": [
-        "J004025513",
-        "J004612496"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "居酒屋 傳DEN 金山駅前店",
-        "傳DEN 金山駅前店"
-      ],
-      "hpIds": [
-        "J003324868",
-        "J003581252"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "結う ゆう 金山駅前店",
-        "居酒屋 結う ゆう 金山駅前店"
-      ],
-      "hpIds": [
-        "J003581285",
-        "J003324866"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "肉ト魚 大衆酒場 ひとめぼれ 金山駅前店",
-        "肉ト魚　大衆酒場　ひとめぼれ　金山駅南口店"
-      ],
-      "hpIds": [
-        "J004445415",
-        "J004445409"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "シャンタムール サウス",
-        "シャンタムール"
-      ],
-      "hpIds": [
-        "J004591503",
-        "J000015669"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "居酒屋 煙 金山店",
-        "煙 金山店"
-      ],
-      "hpIds": [
-        "J004005730",
-        "J001293031"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
-    },
-    {
-      "names": [
-        "YOHAKU COFFEE 今池2号店",
-        "YOHAKU COFFEE 今池1号店"
-      ],
-      "hpIds": [
-        "J003624656",
-        "J003624657"
-      ],
-      "reason": "placeid_match",
-      "blocker": "hp_distinct"
     }
   ],
   "confirmed": [
     {
-      "reason": "name_exact",
-      "names": [
-        "とんかつ朱寿",
-        "とんかつ朱寿"
-      ],
-      "placeIds": [
-        "ChIJQ1vQ28RvA2ARXGetB6Ym4cY",
-        "ChIJQ1vQ28RvA2ARXGetB6Ym4cY"
-      ],
-      "hpIds": [
-        "",
-        "J004558109"
-      ],
-      "areas": [
-        "名古屋市中村区",
-        "本山・覚王山・藤が丘"
-      ]
-    },
-    {
       "reason": "placeid_match",
-      "placeId": "ChIJEbARMC13A2ARd_ybO79h7-8",
+      "placeId": "ChIJOyeYKw9xA2ARKkD4HgaRa5U",
       "names": [
-        "レミニセンス (Reminiscence)",
-        "レミニセンス"
+        "Pizzeria mimi (ピッツェリア ミミ)",
+        "Pizzeria mimi"
       ],
       "hpIds": [
         "",
         ""
       ],
       "areas": [
-        "名古屋市東区",
-        "名古屋市中区"
+        "名古屋市東区筒井",
+        "車道・千種"
       ]
     },
     {
       "reason": "placeid_match",
-      "placeId": "ChIJQ1vQ28RvA2ARXGetB6Ym4cY",
+      "placeId": "ChIJ1VXM9_t3A2ARmd1PEvRCRaw",
       "names": [
-        "とんかつ朱寿",
-        "とんかつ朱寿"
+        "鳥正",
+        "鳥正 名古屋"
       ],
       "hpIds": [
-        "",
-        "J004558109"
-      ],
-      "areas": [
-        "名古屋市中村区",
-        "本山・覚王山・藤が丘"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJrSdUlc9wA2ARw1KC6gTgjSw",
-      "names": [
-        "完全個室居酒屋 哉月",
-        "居酒屋 哉月"
-      ],
-      "hpIds": [
-        "",
-        "J001143580"
-      ],
-      "areas": [
-        "名古屋市中村区",
-        "栄"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJnWXeRhB3A2ARAODBDPGSYP4",
-      "names": [
-        "とりやき酒場 鶏ん家 名古屋新栄店",
-        "鶏ん家 名古屋新栄店"
-      ],
-      "hpIds": [
-        "",
-        "J003985167"
-      ],
-      "areas": [
-        "名古屋市中区",
-        "栄"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJbTpunbRwA2ARa1lPaqA2xGw",
-      "names": [
-        "ルコネッサンス",
-        "Reconnaissance ルコネッサンス"
-      ],
-      "hpIds": [
-        "",
-        "J004402690"
-      ],
-      "areas": [
-        "名古屋市東区",
-        "栄(ミナミ)/矢場町/大須/上前津"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJd90UPYB3A2AR-LjU9DzINC8",
-      "names": [
-        "居酒屋 権兵衛 名駅店",
-        "権兵衛 名駅南店"
-      ],
-      "hpIds": [
-        "J003649512",
-        "J004403777"
+        "J003624313",
+        "J001286820"
       ],
       "areas": [
         "名古屋（名古屋駅/西区/中村区）",
@@ -397,249 +86,54 @@
     },
     {
       "reason": "placeid_match",
-      "placeId": "ChIJf9FPHxV3A2ARQX26MRlyIhk",
+      "placeId": "ChIJO2kXZ4FxA2AREDn5GpgH4cE",
       "names": [
-        "Cafe & Bar ゆきっち はなれ",
-        "Cafe & Bar ゆきっち"
+        "カンジャンケジャン 渡 名古屋店",
+        "カンジャンケジャン 渡 名古屋錦店"
       ],
       "hpIds": [
-        "J003850482",
-        "J003850472"
+        "J004421283",
+        "J004699067"
       ],
       "areas": [
-        "名古屋（名古屋駅/西区/中村区）",
-        "名古屋（名古屋駅/西区/中村区）"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJgTDclbVxA2ARiaMmYFQUMMI",
-      "names": [
-        "大衆焼肉こたろう 金山駅店",
-        "大衆焼肉こたろう 金山駅"
-      ],
-      "hpIds": [
-        "J004403592",
-        "J003851745"
-      ],
-      "areas": [
-        "金山・神宮前・熱田区",
-        "金山・神宮前・熱田区"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJAW-TmB5xA2ARC35S7Lm0sK0",
-      "names": [
-        "Sei Felice セイフェリーチェ",
-        "Seifelice セイフェリーチェ 栄"
-      ],
-      "hpIds": [
-        "J003763458",
-        "J003917091"
-      ],
-      "areas": [
-        "栄(ミナミ)/矢場町/大須/上前津",
-        "栄(ミナミ)/矢場町/大須/上前津"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJnzvZLAB3A2ARBlyx3mImv3E",
-      "names": [
-        "炉端焼き 燻銀 伏見店",
-        "炉端焼き燻銀 伏見店にかい"
-      ],
-      "hpIds": [
-        "J003942663",
-        "J004634381"
-      ],
-      "areas": [
-        "栄",
-        "栄(ミナミ)/矢場町/大須/上前津"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJudpS_1FxA2ARFRMw-i-h45c",
-      "names": [
-        "どて煮 やよい 大曽根 森下",
-        "どて煮　やよい"
-      ],
-      "hpIds": [
-        "J004469253",
-        "J004661256"
-      ],
-      "areas": [
-        "栄",
-        "大曽根･千種･今池･池下･守山区"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJCec2uNpwA2ARICmhvTpL_00",
-      "names": [
-        "レストラン ロワール 鉄板焼",
-        "レストラン ロワール フレンチ 名古屋東急ホテル 栄"
-      ],
-      "hpIds": [
-        "J003916520",
-        "J003916519"
-      ],
-      "areas": [
-        "栄(ミナミ)/矢場町/大須/上前津",
-        "栄(ミナミ)/矢場町/大須/上前津"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJve3rY9RwA2AReTPm31L8SJE",
-      "names": [
-        "ONE on ONE 栄店",
-        "ONE on ONE 錦"
-      ],
-      "hpIds": [
-        "J000726902",
-        "J003560485"
-      ],
-      "areas": [
-        "栄(ミナミ)/矢場町/大須/上前津",
+        "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
         "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄"
       ]
     },
     {
       "reason": "placeid_match",
-      "placeId": "ChIJc8D7gfdxA2AROZRWioj_A-g",
+      "placeId": "ChIJTUACMY9wA2ARzH4vxDXKlh4",
       "names": [
-        "ハチ鶏 大曽根駅店",
-        "ハチ鶏 大曽根"
+        "大久手山本屋 大曽根店",
+        "大久手山本屋"
       ],
       "hpIds": [
-        "J001216971",
-        "J004026527"
+        "J004698526",
+        ""
       ],
       "areas": [
         "大曽根･千種･今池･池下･守山区",
-        "大曽根･千種･今池･池下･守山区"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJ0YoK_YN3A2ARYxGb7HfJ8FY",
-      "names": [
-        "喫茶River",
-        "喫茶River リバー"
-      ],
-      "hpIds": [
-        "J001264243",
-        "J004025267"
-      ],
-      "areas": [
-        "名古屋（名古屋駅/西区/中村区）",
-        "名古屋（名古屋駅/西区/中村区）"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJy2Ykty1xA2ARPS8XWVmzt3Y",
-      "names": [
-        "居酒屋 囲い屋 金山店",
-        "隠れ家個室居酒屋 囲い屋 金山店",
-        "囲い屋 金山店"
-      ],
-      "hpIds": [
-        "J004025513",
-        "J001293029",
-        "J004612496"
-      ],
-      "areas": [
-        "金山",
-        "金山",
-        "金山・神宮前・熱田区"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJ_yKqJdxxA2ARll0lpDJW0SI",
-      "names": [
-        "結う ゆう 金山駅前店",
-        "居酒屋 結う ゆう 金山駅前店"
-      ],
-      "hpIds": [
-        "J003581285",
-        "J003324866"
-      ],
-      "areas": [
-        "金山",
-        "金山"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJqaeIppZ3A2AR2CF2Gi_o7mk",
-      "names": [
-        "肉ト魚 大衆酒場 ひとめぼれ 金山駅前店",
-        "肉ト魚　大衆酒場　ひとめぼれ　金山駅南口店"
-      ],
-      "hpIds": [
-        "J004445415",
-        "J004445409"
-      ],
-      "areas": [
-        "金山・神宮前・熱田区",
-        "金山"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJnRXJZdBwA2ARAOIm4uhh9wU",
-      "names": [
-        "シャンタムール サウス",
-        "シャンタムール"
-      ],
-      "hpIds": [
-        "J004591503",
-        "J000015669"
-      ],
-      "areas": [
-        "栄(ミナミ)/矢場町/大須/上前津",
-        "栄(ミナミ)/矢場町/大須/上前津"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJBYb7iWxxA2ARbOmNT1Qh-lA",
-      "names": [
-        "居酒屋 煙 金山店",
-        "煙 金山店"
-      ],
-      "hpIds": [
-        "J004005730",
-        "J001293031"
-      ],
-      "areas": [
-        "金山",
-        "金山"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJB9lELnpxA2ARIozhq5qaAjw",
-      "names": [
-        "YOHAKU COFFEE 今池2号店",
-        "YOHAKU COFFEE 今池1号店"
-      ],
-      "hpIds": [
-        "J003624656",
-        "J003624657"
-      ],
-      "areas": [
-        "大曽根･千種･今池･池下･守山区",
-        "大曽根･千種･今池･池下･守山区"
+        "千種区大久手"
       ]
     }
   ],
   "uncertain": [
+    {
+      "reason": "placeid_match",
+      "placeId": "ChIJl2YP5NdwA2AR0skb--b6Cuw",
+      "names": [
+        "うなぎのしろむら 泉本店",
+        "うなぎのしろむら 丸の内店"
+      ],
+      "hpIds": [
+        "J004026266",
+        "J004026662"
+      ],
+      "areas": [
+        "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄"
+      ]
+    },
     {
       "reason": "placeid_match",
       "placeId": "ChIJH_g7Jt1wA2ARQHacuuF72ZU",
@@ -685,22 +179,6 @@
       ],
       "areas": [
         "名古屋市中区",
-        "栄"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJc55UTgBxA2ARznyqkiCRPXE",
-      "names": [
-        "焼肉ホタル 栄東店",
-        "焼肉ホタル 新栄店"
-      ],
-      "hpIds": [
-        "J004422261",
-        "J004493305"
-      ],
-      "areas": [
-        "栄",
         "栄"
       ]
     },
@@ -978,22 +456,6 @@
     },
     {
       "reason": "placeid_match",
-      "placeId": "ChIJbfGmfTpxA2ARrIEAyuJQ0dQ",
-      "names": [
-        "Gateway Siam ゲートウェイサイアム",
-        "Kanom Thai Cafe カノムタイカフェ"
-      ],
-      "hpIds": [
-        "J003648734",
-        "J004444371"
-      ],
-      "areas": [
-        "本山・覚王山・藤が丘",
-        "本山・覚王山・藤が丘"
-      ]
-    },
-    {
-      "reason": "placeid_match",
       "placeId": "ChIJITJ9ov5lA2ARlQovBXADE6A",
       "names": [
         "パティロティ",
@@ -1002,6 +464,22 @@
       "hpIds": [
         "J004469257",
         "J000702156"
+      ],
+      "areas": [
+        "本山・覚王山・藤が丘",
+        "本山・覚王山・藤が丘"
+      ]
+    },
+    {
+      "reason": "placeid_match",
+      "placeId": "ChIJbfGmfTpxA2ARrIEAyuJQ0dQ",
+      "names": [
+        "Gateway Siam ゲートウェイサイアム",
+        "Kanom Thai Cafe カノムタイカフェ"
+      ],
+      "hpIds": [
+        "J003648734",
+        "J004444371"
       ],
       "areas": [
         "本山・覚王山・藤が丘",
@@ -1106,32 +584,16 @@
     },
     {
       "reason": "placeid_match",
-      "placeId": "ChIJl2YP5NdwA2AR0skb--b6Cuw",
-      "names": [
-        "うなぎのしろむら 泉本店",
-        "うなぎのしろむら 丸の内店"
-      ],
-      "hpIds": [
-        "J004026266",
-        "J004026662"
-      ],
-      "areas": [
-        "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-        "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄"
-      ]
-    },
-    {
-      "reason": "placeid_match",
       "placeId": "ChIJ69GE08lxA2ARqvxCHIPfcUo",
       "names": [
         "焼き鳥 きんざん 住吉店",
-        "きんざん 新栄店",
-        "焼き鳥きんざん　東桜店"
+        "焼き鳥きんざん　東桜店",
+        "きんざん 新栄店"
       ],
       "hpIds": [
         "J001227241",
-        "J004612953",
-        "J004660332"
+        "J004660332",
+        "J004612953"
       ],
       "areas": [
         "栄(ミナミ)/矢場町/大須/上前津",
@@ -1306,12 +768,12 @@
       "reason": "placeid_match",
       "placeId": "ChIJFaMWXrd3A2ARKHCZ9Z8wpMU",
       "names": [
-        "大衆酒場 乾杯屋 名駅東口店",
-        "かんぱい屋 名駅4丁目店"
+        "かんぱい屋 名駅4丁目店",
+        "大衆酒場 乾杯屋 名駅東口店"
       ],
       "hpIds": [
-        "J003917518",
-        "J003917519"
+        "J003917519",
+        "J003917518"
       ],
       "areas": [
         "名古屋（名古屋駅/西区/中村区）",
@@ -1402,12 +864,12 @@
       "reason": "placeid_match",
       "placeId": "ChIJa26lXNpwA2ARjSrwbzccZw0",
       "names": [
-        "ホテルオークラレストラン名古屋 鉄板焼 さざんか",
-        "ホテルオークラ イベント スクエア名古屋"
+        "ホテルオークラ イベント スクエア名古屋",
+        "ホテルオークラレストラン名古屋 鉄板焼 さざんか"
       ],
       "hpIds": [
-        "J000743024",
-        "J001110435"
+        "J001110435",
+        "J000743024"
       ],
       "areas": [
         "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
@@ -1675,6 +1137,22 @@
     },
     {
       "reason": "placeid_match",
+      "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
+      "names": [
+        "ジガー バー シルクロード",
+        "JIGGER BAR CLASSIC ジガーバークラシック 栄 錦店"
+      ],
+      "hpIds": [
+        "J004493224",
+        "J004493223"
+      ],
+      "areas": [
+        "栄(ミナミ)/矢場町/大須/上前津",
+        "栄(ミナミ)/矢場町/大須/上前津"
+      ]
+    },
+    {
+      "reason": "placeid_match",
       "placeId": "ChIJhRMkRABxA2AR9wxyZxSGKXA",
       "names": [
         "出世魚 人情屋台金山店",
@@ -1719,22 +1197,6 @@
       "areas": [
         "大曽根･千種･今池･池下･守山区",
         "大曽根･千種･今池･池下･守山区"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJP1sZaj13A2AROQjdJ5f3idI",
-      "names": [
-        "納屋橋ビアガーデン RIVERSIDEフードテラス リバーサイドフードテラス",
-        "柳橋中央市場ビアガーデン"
-      ],
-      "hpIds": [
-        "J003763631",
-        "J004577121"
-      ],
-      "areas": [
-        "名古屋（名古屋駅/西区/中村区）",
-        "名古屋（名古屋駅/西区/中村区）"
       ]
     },
     {
@@ -1787,22 +1249,6 @@
     },
     {
       "reason": "placeid_match",
-      "placeId": "ChIJf9X5TtJwA2ARblTB407sg-8",
-      "names": [
-        "Cafe MACONDO",
-        "CAFE LE DOME カフェ ル ドーモ"
-      ],
-      "hpIds": [
-        "J000390054",
-        "J000390164"
-      ],
-      "areas": [
-        "栄(ミナミ)/矢場町/大須/上前津",
-        "栄(ミナミ)/矢場町/大須/上前津"
-      ]
-    },
-    {
-      "reason": "placeid_match",
       "placeId": "ChIJxb_nZLlwA2ARY1hAC56wUAk",
       "names": [
         "タイ料理専門店 サワデーすみ芳 栄店",
@@ -1815,6 +1261,22 @@
       "areas": [
         "栄(ミナミ)/矢場町/大須/上前津",
         "鶴舞・八事・御器所"
+      ]
+    },
+    {
+      "reason": "placeid_match",
+      "placeId": "ChIJf9X5TtJwA2ARblTB407sg-8",
+      "names": [
+        "Cafe MACONDO",
+        "CAFE LE DOME カフェ ル ドーモ"
+      ],
+      "hpIds": [
+        "J000390054",
+        "J000390164"
+      ],
+      "areas": [
+        "栄(ミナミ)/矢場町/大須/上前津",
+        "栄(ミナミ)/矢場町/大須/上前津"
       ]
     },
     {
@@ -2030,16 +1492,13 @@
       "placeId": "ChIJ8T0Mhh1xA2AR2FR2xX3h03o",
       "names": [
         "居酒屋 傳DEN 金山駅前店",
-        "傳DEN 金山駅前店",
         "傳DEN デンデン 金山駅前店"
       ],
       "hpIds": [
         "J003324868",
-        "J003581252",
         "J004612495"
       ],
       "areas": [
-        "金山",
         "金山",
         "金山・神宮前・熱田区"
       ]
@@ -2190,38 +1649,6 @@
     },
     {
       "reason": "placeid_match",
-      "placeId": "ChIJhTklKb93A2AR-hzlhwqIZho",
-      "names": [
-        "名古屋グリルハウス",
-        "名古屋グリルハウス NAGOYA Grill House"
-      ],
-      "hpIds": [
-        "J003828233",
-        "J004068282"
-      ],
-      "areas": [
-        "名古屋（名古屋駅/西区/中村区）",
-        "名古屋（名古屋駅/西区/中村区）"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJq6oWbNNwA2ARePyqEv-zWME",
-      "names": [
-        "ジガー バー シルクロード",
-        "JIGGER BAR CLASSIC ジガーバークラシック 栄 錦店"
-      ],
-      "hpIds": [
-        "J004493224",
-        "J004493223"
-      ],
-      "areas": [
-        "栄(ミナミ)/矢場町/大須/上前津",
-        "栄(ミナミ)/矢場町/大須/上前津"
-      ]
-    },
-    {
-      "reason": "placeid_match",
       "placeId": "ChIJ1e7iu9B3A2ARYSMDc6QKpv8",
       "names": [
         "天ぷらとおでん 天串 TENGUSHI 名駅三丁目店",
@@ -2240,12 +1667,12 @@
       "reason": "placeid_match",
       "placeId": "ChIJtw5bXNZ3A2ARbMc4EAiQ3uU",
       "names": [
-        "四川伝統火鍋 厨匠",
-        "四川料理 厨匠 ちゅうしょう 劉記"
+        "四川料理 厨匠 ちゅうしょう 劉記",
+        "四川伝統火鍋 厨匠"
       ],
       "hpIds": [
-        "J001262532",
-        "J001234199"
+        "J001234199",
+        "J001262532"
       ],
       "areas": [
         "名古屋（名古屋駅/西区/中村区）",
@@ -2414,6 +1841,22 @@
     },
     {
       "reason": "placeid_match",
+      "placeId": "ChIJRzcPTmF3A2ARX8kJnQgUB3I",
+      "names": [
+        "MICICA ミシカ",
+        "CCC シーシーシー"
+      ],
+      "hpIds": [
+        "J004025421",
+        "J004403718"
+      ],
+      "areas": [
+        "名古屋（名古屋駅/西区/中村区）",
+        "名古屋（名古屋駅/西区/中村区）"
+      ]
+    },
+    {
+      "reason": "placeid_match",
       "placeId": "ChIJy6nhCdVwA2ARgThjezLiH5s",
       "names": [
         "木村屋 栄",
@@ -2512,12 +1955,12 @@
       "reason": "placeid_match",
       "placeId": "ChIJoScbqtVwA2ARAzqmJlfZBgk",
       "names": [
-        "寿司 向月 名古屋本館",
-        "寿司 向月 名古屋別館 bekkan"
+        "寿司 向月 名古屋別館 bekkan",
+        "寿司 向月 名古屋本館"
       ],
       "hpIds": [
-        "J003411615",
-        "J003411616"
+        "J003411616",
+        "J003411615"
       ],
       "areas": [
         "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
@@ -2861,22 +2304,6 @@
       "areas": [
         "名古屋（名古屋駅/西区/中村区）",
         "栄"
-      ]
-    },
-    {
-      "reason": "placeid_match",
-      "placeId": "ChIJL1OLked2A2AROeXDp1i2XTM",
-      "names": [
-        "赤い鳥 JR名駅店",
-        "名古屋コーチンやきとり 赤い鳥 JR名駅店"
-      ],
-      "hpIds": [
-        "J004026561",
-        "J000661612"
-      ],
-      "areas": [
-        "名古屋（名古屋駅/西区/中村区）",
-        "名古屋（名古屋駅/西区/中村区）"
       ]
     }
   ]
