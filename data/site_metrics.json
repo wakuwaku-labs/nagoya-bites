@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-06T22:22:39.408Z",
+  "generatedAt": "2026-10-06T23:45:54.885Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1185,
-    "pageViews": 1818,
-    "sessions": 1385,
-    "avgSessionDuration": 142.6,
-    "bounceRate": 0.271,
+    "activeUsers": 1188,
+    "pageViews": 1821,
+    "sessions": 1388,
+    "avgSessionDuration": 142.3,
+    "bounceRate": 0.272,
     "pagesPerSession": 1.31
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 899,
-      "direct": 337,
+      "organic": 902,
+      "direct": 338,
       "social": 8,
       "ai_assistant": 105,
       "referral": 30,
@@ -26,11 +26,11 @@
       "other": 14
     },
     "pct": {
-      "organic": 64.5,
+      "organic": 64.6,
       "direct": 24.2,
       "social": 0.6,
       "ai_assistant": 7.5,
-      "referral": 2.2,
+      "referral": 2.1,
       "paid": 0,
       "other": 1
     }
@@ -44,7 +44,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 356
+      "sessions": 359
     },
     {
       "source": "(direct)",
@@ -69,7 +69,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 30
+      "sessions": 31
     },
     {
       "source": "duckduckgo",
@@ -200,8 +200,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 303,
-      "sessions": 282
+      "pageViews": 305,
+      "sessions": 284
     },
     {
       "path": "/",
@@ -220,8 +220,8 @@
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
-      "pageViews": 50,
-      "sessions": 52
+      "pageViews": 51,
+      "sessions": 53
     }
   ],
   "cta": {
@@ -303,8 +303,8 @@
       "paid": 0,
       "other": 2
     },
-    "ctaClickRate_organic": 5.5,
-    "ctaClickRate_direct": 21.1,
+    "ctaClickRate_organic": 5.4,
+    "ctaClickRate_direct": 21,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -811,7 +811,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1185,
+    "value": 1188,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
