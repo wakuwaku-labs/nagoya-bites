@@ -219,8 +219,8 @@ test('特定できない side（0件・複数件）は統合せず unresolved �
   assert.equal(r.unresolved.length, 1);
 });
 
-test('確認済みペアの正本ファイルは23組・全組にオーナー確認日があり、side が空でない', () => {
-  assert.equal(confirmedFile.pairs.length, 23);
+test('確認済みペアの正本ファイルは27組（2026-10-06 の23組＋追加4組）・全組にオーナー確認日があり、side が空でない', () => {
+  assert.equal(confirmedFile.pairs.length, 27);
   for (const p of confirmedFile.pairs) {
     assert.equal(p.ownerConfirmedAt, '2026-10-06');
     assert.equal(p.sides.length, 2);
