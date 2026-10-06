@@ -3205,7 +3205,8 @@
 
 ### [ISSUE-099] editorReason 自動収集パイプライン（ISSUE-045）が3ヶ月間サイレント無稼働だった — 必要シークレット3件が未設定
 
-- **priority**: P1 → **status**: ready（パイプライン稼働中・draftの人手レビュー待ち）
+- **priority**: P1 → **status**: done（2026-10-06 オーナー採用判断により draft 48件を承認・反映済み）
+- **progress 2026-10-06 — オーナーが「業界人目線のコメント、使う」と採用を明示し、draft をレビュー・反映**: 対象50件（OK 49 / INSUFFICIENT 1）のうち **採用48件・却下2件**。却下の内訳は (1) `manual_鮨旬美西川`（鮨 旬美 西川）— data/stores.json の営業ステータスが `CLOSED_TEMPORARILY`（Google上で休業中）のため、休業中の店に推薦コメントを載せない（再開が確認できれば再採用可）(2) `J004067208`（de trente ans）— 生成時点で INSUFFICIENT_EVIDENCE（コメント本文なし）。それ以外は、全店が data/stores.json に実在し営業ステータス OPERATIONAL、店名・エリア・ジャンルとの矛盾なし、`data/trust_display_policy.json` の公開禁止語（疑い/サクラ/ガチャ/化粧/評価操作）の混入なし、他店・競合への中傷なしを確認して承認。confidence 0.6 の断定的表現（「名古屋で最も予約困難」等）は出典つき・迷うものは採用の方針で通した。`scripts/approve_editorreason_drafts.js` の store_id 抽出が `-` を含むID（`manual_中華そば雷杏-ryan-名駅店`）で途中切れして承認が空振りする不具合も修正（正規表現を `\S+?` に）。editor_picks 119→167件。
 - **detected**: 2026-08-19（事業化ロードマップ Phase 2 の進捗確認中に発覚）
 - **category**: automation / moat / trust-score-business
 - **owner**: 片桐 ← Editor（`docs/editorreason-drafts.md` のレビュー・承認・人手必須のためエスカレーション 2026-08-28）
