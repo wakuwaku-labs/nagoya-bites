@@ -18,7 +18,7 @@ status: done
 # 次にやること
 - なし。nagoya-bites-solve-next-daily は無効化中のため Notion 記述を残している（再有効化するときは Linear 前提に書き換える）
 
-- 2026-10-07 「Linear接続を他プロジェクトでも使う」→ 実施済み。ブリーフィング・監視を Project 単位に絞った（誤報 #381 は自動クローズ確認）。汎用キット `~/.claude/skills/linear-setup/`（`/linear-setup`・`.linear.json` で設定・テスト4件）と、グローバル `~/.claude/CLAUDE.md` の「Linear 運用（全プロジェクト共通）」を追加。他リポジトリへの導入は、そのリポジトリで `/linear-setup` を実行する（未実施）。各リポジトリの `LINEAR_API_KEY` secret 登録はオーナー作業。ADR 0006
+- 2026-10-07 「Linear接続を他プロジェクトでも使う」→ 実施済み。ブリーフィング・監視を Project 単位に絞った（誤報 #381 は自動クローズ確認）。汎用キット `~/.claude/skills/linear-setup/`（`/linear-setup`・`.linear.json` で設定・テスト4件）と、グローバル `~/.claude/CLAUDE.md` の「Linear 運用（全プロジェクト共通）」を追加。2026-10-07 に5リポジトリ（自動トークン節約・自動スリープスイッチ・その日の予約まとめ・CPU節約ツール・AI動画作成）へ導入・各 main にコミット済み。空の KR 用 Project 4つは改名して再利用（ISSUE-137/P-64 解決）。今後の新規リポジトリは Claude が自動導入。ADR 0006
 
 # 試したが駄目だったこと
 - 10/05 は git pull --rebase が HANDOFF.md の競合で停止 → abort して origin/main からのワークツリーで作業した

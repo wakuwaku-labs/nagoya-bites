@@ -394,7 +394,8 @@
 
 ### [ISSUE-137] Linear の空になった KR 別 Project 4つを削除する
 
-- **priority**: P3 → **status**: blocked
+- **priority**: P3 → **status**: done
+- **2026-10-07 解決（削除せず再利用）**: 空の4つ（課題0件を確認）を、他のリポジトリ用の Project「自動トークン節約」「自動スリープスイッチ」「その日の予約まとめ」「CPU節約ツール」に改名した（オーナー承認済み・ADR 0006）。`orca linear project list` で4つとも新しい名前になったことを確認
 - **detected**: 2026-10-06
 - **category**: ops
 - **owner**: 片桐（Linear 画面での削除。自動操作では削除が止められた）
