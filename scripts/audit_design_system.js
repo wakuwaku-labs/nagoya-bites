@@ -92,7 +92,9 @@ function collectTargets() {
   const orphansPath = path.join(ROOT, 'data', 'store_page_orphans.json');
   if (fs.existsSync(orphansPath)) {
     try {
-      const orphanSlugs = new Set(JSON.parse(fs.readFileSync(orphansPath, 'utf8')).orphanSlugs || []);
+      const orphanJson = JSON.parse(fs.readFileSync(orphansPath, 'utf8'));
+      // ISSUE-102: 誘導ページ（canonical + meta refresh だけの軽量ページ）も監査対象外
+      const orphanSlugs = new Set([...(orphanJson.orphanSlugs || []), ...(orphanJson.redirectStubSlugs || [])]);
       storeFiles = storeFiles.filter(f => !orphanSlugs.has(path.basename(f, '.html')));
     } catch (e) {
       // マニフェストが壊れている場合は除外せず全件を監査する（安全側）

@@ -304,7 +304,10 @@ jobs:
         # ISSUE-102（2026-08-22・677→517件で発覚・サンプリングでいずれも通常の閉店churnと確認）
         # の再発監視。一括自動削除は sitemap/被リンク/GSCインデックスへの影響があるため見送り、
         # ISSUE-050 の前例に倣い Inspector の月次レビュー後に手動 --delete-orphans する運用とする。
-        run: node gen-store-pages.js --check-orphans
+        # ISSUE-102（2026-10-06 実削除済み）: --redirect-orphans は非破壊・冪等。ISSUE-132 の重複統合で
+        # 吸収された店や、スラグが変わった店の旧ページを、現役の店ページへ向ける軽量ページ
+        # （canonical + meta refresh）に置き換える。削除は行わない（削除は手動 --delete-orphans）。
+        run: node gen-store-pages.js --redirect-orphans --check-orphans
 
       - name: ジャーナル店舗カード→店舗ページ内部リンク張り替え（SEO-110）
         # gen-store-pages.js の直後に置く理由: stores/*.html が最新状態になってから

@@ -3138,7 +3138,7 @@
 - **関連**: [[ISSUE-048]] [[ISSUE-049]] [[ISSUE-086]]（v3活性化時の前提を本ISSUEが追加）
 ### [ISSUE-102] stores/*.html に677件の孤児ページが放置されている（CI障害の原因・data/stores.json 未掲載店の旧テンプレページ）
 
-- **priority**: P2 → **status**: in_progress（実削除はオーナー本人の手動実行待ち・孤児は737件に増加）
+- **priority**: P2 → **status**: done（2026-10-06 実削除完了・保留85件のみ意図的に残置）
 - **detected**: 2026-08-20（[[ISSUE-101]] マージ直後、build.yml の `audit_trust_wording.js --check` が本番で失敗し発覚。実測: `git diff --stat` https://github.com/wakuwaku-labs/nagoya-bites/actions/runs/32354313646）
 - **category**: cleanup / seo / ci
 - **owner**: Builder + DataKeeper
@@ -3159,7 +3159,13 @@
 - **オーナーへのアクション依頼**: 上記サンプリングで問題ケースが出なかったため、`node gen-store-pages.js --delete-orphans` を手動実行いただければ517件の孤児ページを安全に削除できます（このセッションでは破壊的ファイル削除としてauto-mode権限がブロックされたため未実施）
 - **関連**: [[ISSUE-050]]（孤児ページ削除の前例）/ [[ISSUE-101]]（本件の発覚元）
 - **2026-10-06 再計測**: `node gen-store-pages.js --check-orphans` で孤児 **737件**（8/22時点517件から増加。ISSUE-132 の重複統合で別IDページが孤児化した分を含む可能性が高く、削除前に統合先ページへの導線（sitemap/内部リンク）を確認すること）。
-- **オーナー操作**: ローカルMacのリポジトリで `node gen-store-pages.js --delete-orphans` を実行 → `git add stores/ sitemap.xml` → コミット → PR。サンプリング上、閉店・統合残骸のみで問題ケースは出ていない（8/22記録）。ただし統合由来が混ざるため、実行前に `--check-orphans` の一覧10件ほどを目視確認する
+- **2026-10-06 完了（オーナー依頼「不要な店舗ページはそちらで削除」）**: 孤児 787件（stores.json 4,931店に対する差分）を3分類して処理。
+  - **誘導 74件（削除せず誘導ページ化）**: ISSUE-132 の吸収側 33件（`store_merge_pairs.json` の kept が現役）＋店名一致で現役店がちょうど1件の41件。`canonical`＋`meta refresh`＋JS の軽量ページ（GitHub Pages は 301 不可のため）。sitemap には載せない。
+  - **削除 628件**: HotPepper 掲載終了・名古屋圏外（例: ミライザカ ルルサス防府店）・旧スラグ重複。無作為15件（シード固定）で全件が stores.json に現存しない店と確認。stores/ 5,719→5,081ファイル。
+  - **保留 85件（残置）**: (a) `manual_stores.json` に同名があるもの（写真の実在検証待ちで非表示なだけで現役店の可能性＝矢場とん 本店など。ISSUE-140 で実際に復帰した例あり）、(b) features/journal 等から内部リンクが残るもの（削除すると死にリンクになる・features 3＋journal 8ページ）。
+  - **現役店を消していない根拠**: 判定は生成器と同一の slug 規則で stores.json 全4,931店の期待スラグを算出し、削除対象は全て期待スラグ外。さらに、マージ時に origin/main 側で再生成されていた15ページ（復帰店）は削除から外した。sitemap.xml に孤児・誘導スラグは0件。sitemap-images.xml から削除/誘導分 527エントリを除去。
+  - **仕組み**: 判定器 `scripts/lib/store_orphans.js`（tests/store_orphans.test.js）。`gen-store-pages.js --redirect-orphans`（非破壊・冪等）を build.yml に常設し、今後の統合・スラグ変更の吸収側（ISSUE-132 残23組を含む）は自動で誘導ページ化される。削除は引き続き手動 `--delete-orphans`（保留判定つき）。監査は誘導ページを `store_page_orphans.json` の `redirectStubSlugs` で除外。
+  - **残り**: 保留85件は manual 店の復帰判断・features/journal の掲載店見直し（ISSUE-132 後続）と一緒に扱う。`page-names.json`／`data/gsc_metrics.json` の旧スラグ参照は日次再生成で自然に消える。
 
 ### [ISSUE-100] Search Console「サイトマップ内のページがインデックスに登録されない」通知への対応 — sitemap生存監査を新設
 
