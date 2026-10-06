@@ -1,20 +1,10 @@
 {
-  "generatedAt": "2026-10-05T23:47:17.907Z",
+  "generatedAt": "2026-10-06T00:28:01.009Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
   "byQuery": {
-    "ctrFix": [
-      {
-        "query": "名古屋 1人飲み 男",
-        "impressions": 67,
-        "clicks": 2,
-        "position": 5.7,
-        "ctr": 2.99,
-        "expectedCtr": 5.3,
-        "missedClicks": 1.5
-      }
-    ],
+    "ctrFix": [],
     "ctrFixGeoless": [
       {
         "query": "cm 伏見",
@@ -27,12 +17,12 @@
       },
       {
         "query": "一人飲み",
-        "impressions": 74,
+        "impressions": 72,
         "clicks": 4,
         "position": 3.9,
-        "ctr": 5.41,
+        "ctr": 5.56,
         "expectedCtr": 8.3,
-        "missedClicks": 2.1
+        "missedClicks": 2
       }
     ],
     "rankPush": [
@@ -50,56 +40,56 @@
     "ctrFix": [
       {
         "page": "/stores/J004660861.html",
-        "impressions": 1058,
+        "impressions": 1049,
         "clicks": 22,
         "position": 6.4,
-        "ctr": 2.08,
+        "ctr": 2.1,
         "expectedCtr": 4.6,
-        "missedClicks": 26.7
+        "missedClicks": 26.2
       },
       {
         "page": "/stores/J004660223.html",
-        "impressions": 711,
-        "clicks": 12,
+        "impressions": 700,
+        "clicks": 10,
         "position": 7.7,
-        "ctr": 1.69,
+        "ctr": 1.43,
         "expectedCtr": 3.4,
-        "missedClicks": 12.4
+        "missedClicks": 14.1
       },
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 592,
+        "impressions": 574,
         "clicks": 9,
         "position": 7.7,
-        "ctr": 1.52,
+        "ctr": 1.57,
         "expectedCtr": 3.4,
-        "missedClicks": 11.4
+        "missedClicks": 10.7
       },
       {
         "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
-        "impressions": 368,
+        "impressions": 356,
         "clicks": 6,
         "position": 8.8,
-        "ctr": 1.63,
+        "ctr": 1.69,
         "expectedCtr": 2.9,
-        "missedClicks": 4.6
+        "missedClicks": 4.2
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2636,
+        "impressions": 2554,
         "clicks": 13,
-        "position": 21.9,
-        "ctr": 0.49,
-        "upsideClicks": 60.9
+        "position": 22.1,
+        "ctr": 0.51,
+        "upsideClicks": 58.5
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
-    "queryCtrFix": 1,
+    "queryCtrFix": 0,
     "queryCtrFixGeoless": 2,
     "queryRankPush": 1,
     "pageCtrFix": 4,
