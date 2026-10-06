@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img" aria-label="父の日 名古屋 2026 — 焼肉・寿司・うなぎ 厳選19選">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0%" stop-color="#0c1a2e"/>
+      <stop offset="100%" stop-color="#1a2e1a"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#0c1a2e"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#c4a060" opacity="0.05"/>
+    </pattern>
+  </defs>
+  <rect width="480" height="320" fill="url(#bg)"/>
+  <rect width="480" height="320" fill="url(#grain)" opacity=".5"/>
+
+  <!-- decorative circle -->
+  <circle cx="380" cy="80" r="120" fill="none" stroke="#c4a060" stroke-opacity=".1" stroke-width="40"/>
+
+  <!-- accent bar -->
+  <rect x="32" y="32" width="3" height="100" fill="#c4a060" opacity=".85"/>
+
+  <!-- badge -->
+  <rect x="42" y="34" width="64" height="18" rx="3" fill="#c4a060" fill-opacity=".15" stroke="#c4a060" stroke-opacity=".4" stroke-width="1"/>
+  <text x="74" y="46" text-anchor="middle" fill="#c4a060" font-family="'Helvetica Neue', Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="0.2em">父の日</text>
+
+  <!-- title -->
+  <text x="42" y="88" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="28" font-weight="700" letter-spacing="0.05em">名古屋 父の日</text>
+  <text x="42" y="122" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="28" font-weight="700" letter-spacing="0.05em">厳選19選</text>
+
+  <!-- sub -->
+  <text x="42" y="155" fill="#c4a060" opacity=".75" font-family="'Helvetica Neue', Arial, sans-serif" font-size="11" letter-spacing="0.15em">2026年6月21日（父の日）</text>
+
+  <!-- genres -->
+  <line x1="32" y1="175" x2="448" y2="175" stroke="#c4a060" stroke-opacity=".2" stroke-width="1"/>
+
+  <text x="42" y="200" fill="#c4a060" opacity=".6" font-family="'Helvetica Neue', Arial, sans-serif" font-size="9" letter-spacing="0.2em">GENRE</text>
+  <text x="42" y="224" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="16" font-weight="600">焼肉 · 寿司 · うなぎ</text>
+  <text x="42" y="248" fill="#c4a060" opacity=".65" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="12">¥8,000〜¥35,000 / 業界人が厳選</text>
+
+  <!-- footer -->
+  <text x="42" y="298" fill="#c4a060" opacity=".5" font-family="'Helvetica Neue', Arial, sans-serif" font-size="9" letter-spacing="0.2em">NAGOYA BITES</text>
+</svg>

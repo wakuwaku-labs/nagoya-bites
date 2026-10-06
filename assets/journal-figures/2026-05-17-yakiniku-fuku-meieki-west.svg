@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 315" width="600" height="315" role="img" aria-label="焼肉 福 名駅西口 — 日曜夜の黒毛和牛と立地戦略">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1c1008"/>
+      <stop offset="100%" stop-color="#3a2010"/>
+    </linearGradient>
+    <pattern id="grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="3" fill="#1c1008"/>
+      <circle cx="0.5" cy="0.5" r="0.4" fill="#d4904a" opacity="0.04"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="315" fill="url(#bg)"/>
+  <rect width="600" height="315" fill="url(#grain)" opacity=".5"/>
+
+  <!-- accent bar -->
+  <rect x="36" y="28" width="3" height="60" fill="#d4904a" opacity=".9"/>
+
+  <!-- header -->
+  <text x="46" y="50" fill="#d4904a" opacity=".8" font-family="'Helvetica Neue', Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="0.3em">NAGOYA BITES / 今日の1軒</text>
+  <text x="46" y="80" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="22" font-weight="700" letter-spacing="0.04em">焼肉 福 名駅西口 — 立地戦略</text>
+  <text x="46" y="108" fill="#d4904a" opacity=".7" font-family="'Helvetica Neue', Arial, sans-serif" font-size="11" letter-spacing="0.15em">名古屋駅西口 徒歩3分 / Google ★4.6</text>
+
+  <!-- divider -->
+  <line x1="36" y1="125" x2="564" y2="125" stroke="#d4904a" stroke-opacity=".25" stroke-width="1"/>
+
+  <!-- location strategy diagram -->
+  <text x="36" y="152" fill="#d4904a" opacity=".6" font-family="'Helvetica Neue', Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="0.2em">立地と価格の設計</text>
+
+  <!-- Location box -->
+  <rect x="36" y="164" width="240" height="75" rx="4" fill="#fff" fill-opacity=".04" stroke="#d4904a" stroke-opacity=".3" stroke-width="1"/>
+  <text x="50" y="184" fill="#d4904a" opacity=".6" font-family="'Helvetica Neue', Arial, sans-serif" font-size="9" letter-spacing="0.15em">アクセス</text>
+  <text x="50" y="204" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="14" font-weight="700">名古屋駅西口 徒歩3分</text>
+  <text x="50" y="222" fill="#d4904a" opacity=".7" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="10">東口より競争率が低い西口に展開</text>
+  <text x="50" y="233" fill="#d4904a" opacity=".7" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="10">在来線・新幹線どちらの利用者も取れる</text>
+
+  <!-- Sunday dinner box -->
+  <rect x="300" y="164" width="260" height="75" rx="4" fill="#fff" fill-opacity=".04" stroke="#d4904a" stroke-opacity=".3" stroke-width="1"/>
+  <text x="314" y="184" fill="#d4904a" opacity=".6" font-family="'Helvetica Neue', Arial, sans-serif" font-size="9" letter-spacing="0.15em">日曜夜の需要</text>
+  <text x="314" y="204" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="14" font-weight="700">黒毛和牛コース ¥4,000〜5,000</text>
+  <text x="314" y="222" fill="#d4904a" opacity=".7" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="10">日曜・遅い時間でも予約が入る価格帯</text>
+  <text x="314" y="233" fill="#d4904a" opacity=".7" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="10">週末終わりの「ご褒美」需要を取り込む</text>
+
+  <!-- insight -->
+  <rect x="36" y="257" width="524" height="45" rx="4" fill="#fff" fill-opacity=".06" stroke="#d4904a" stroke-opacity=".35" stroke-width="1"/>
+  <text x="50" y="275" fill="#d4904a" opacity=".6" font-family="'Helvetica Neue', Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="0.2em">業界人の視点</text>
+  <text x="50" y="291" fill="#fff" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif" font-size="12" font-weight="600">駅徒歩3分 × 黒毛和牛コース × 日曜営業の三重構造が集客を安定させる</text>
+</svg>
