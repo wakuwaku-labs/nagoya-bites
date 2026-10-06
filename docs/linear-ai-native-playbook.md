@@ -109,6 +109,7 @@ Linear の構成は「Project＝Nagoya Bites（全課題）、KR＝ラベル」�
    - 2026-10-06 時点で接続済みのエージェントは0件。Anthropic 公式の Claude エージェントは Linear の一覧に無く、Claude Code を動かすのは第三者製の Cyrus（atcyrus.com）か Merlin。
    - Cyrus に必要なもの: Cyrus のアカウント作成、Linear ワークスペースへの接続の許可（OAuth）、GitHub アプリのインストール（organization の管理者権限）、Claude の認証（Pro/Max か API キー）、実行場所（Mac・Linux か有料ホスティング）。どれもオーナー本人の操作で、Claude は代行しない（アカウント作成・権限許可のため）。
    - 接続後に Claude 側でやること: 委任先の既定値を `data/linear_issue_defaults.json` に足し、`scripts/assign_linear_projects.js` を委任先も設定できるようにする。最初は1件だけ試し、PR が QA ゲート（制約6）を通る流れを確認してから広げる。マネタイズ・信頼系の課題は委任しない（制約7・8）。
+7. ~~他のリポジトリでも同じ運用を使う~~ → 2026-10-07 実施（ADR 0006）。キットは `~/.claude/skills/linear-setup/`。他のリポジトリで `/linear-setup` を実行すると、`.linear.json`・ブリーフィング・毎朝の監視・判断記録の置き場が入る。共通ルールはグローバル `~/.claude/CLAUDE.md`「Linear 運用（全プロジェクト共通）」に置いた。このリポジトリのスクリプト（`scripts/session_briefing.js` ほか）は手本として残し、キットへは移さない
 
 ---
 
