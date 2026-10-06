@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-06T17:32:54.728Z",
+  "generatedAt": "2026-10-06T18:58:49.463Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1162,
-    "pageViews": 1791,
-    "sessions": 1359,
-    "avgSessionDuration": 144.8,
-    "bounceRate": 0.272,
-    "pagesPerSession": 1.32
+    "activeUsers": 1176,
+    "pageViews": 1806,
+    "sessions": 1375,
+    "avgSessionDuration": 143.5,
+    "bounceRate": 0.271,
+    "pagesPerSession": 1.31
   },
   "dailyReference": {
     "date": "2026-10-05",
@@ -17,39 +17,39 @@
   },
   "channels": {
     "sessions": {
-      "organic": 892,
-      "direct": 329,
+      "organic": 897,
+      "direct": 333,
       "social": 8,
       "ai_assistant": 104,
       "referral": 30,
       "paid": 0,
-      "other": 1
+      "other": 8
     },
     "pct": {
-      "organic": 65.4,
+      "organic": 65,
       "direct": 24.1,
       "social": 0.6,
-      "ai_assistant": 7.6,
+      "ai_assistant": 7.5,
       "referral": 2.2,
       "paid": 0,
-      "other": 0.1
+      "other": 0.6
     }
   },
   "sourceBreakdown": [
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 373
+      "sessions": 375
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 354
+      "sessions": 355
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 237
+      "sessions": 240
     },
     {
       "source": "yahoo",
@@ -69,12 +69,12 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 27
+      "sessions": 28
     },
     {
       "source": "duckduckgo",
       "medium": "organic",
-      "sessions": 13
+      "sessions": 15
     },
     {
       "source": "openai",
@@ -90,6 +90,11 @@
       "source": "teams.public.onecdn.static.microsoft",
       "medium": "referral",
       "sessions": 9
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 6
     },
     {
       "source": "ig",
@@ -114,6 +119,11 @@
     {
       "source": "unknown",
       "medium": "(none)",
+      "sessions": 2
+    },
+    {
+      "source": "unknown",
+      "medium": "",
       "sessions": 2
     },
     {
@@ -177,11 +187,6 @@
       "sessions": 1
     },
     {
-      "source": "unknown",
-      "medium": "",
-      "sessions": 1
-    },
-    {
       "source": "us.search.yahoo.com",
       "medium": "referral",
       "sessions": 1
@@ -195,8 +200,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 296,
-      "sessions": 275
+      "pageViews": 301,
+      "sessions": 280
     },
     {
       "path": "/",
@@ -210,8 +215,8 @@
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 92,
-      "sessions": 88
+      "pageViews": 93,
+      "sessions": 89
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
@@ -220,8 +225,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 146,
-    "ctaClickRate": 10.7,
+    "outboundClicks": 148,
+    "ctaClickRate": 10.8,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -241,7 +246,7 @@
       },
       {
         "domain": "prtimes.jp",
-        "clicks": 9
+        "clicks": 10
       },
       {
         "domain": "www.google.com",
@@ -250,6 +255,10 @@
       {
         "domain": "jouhou.nagoya",
         "clicks": 3
+      },
+      {
+        "domain": "nagoyato.com",
+        "clicks": 2
       },
       {
         "domain": "www.jiji.com",
@@ -269,10 +278,6 @@
       },
       {
         "domain": "milkdo-doreiku.com",
-        "clicks": 1
-      },
-      {
-        "domain": "nagoyato.com",
         "clicks": 1
       },
       {
@@ -296,10 +301,10 @@
       "ai_assistant": 22,
       "referral": 4,
       "paid": 0,
-      "other": 0
+      "other": 2
     },
     "ctaClickRate_organic": 5.5,
-    "ctaClickRate_direct": 21.6,
+    "ctaClickRate_direct": 21.3,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -335,6 +340,10 @@
         "clicks": 5
       },
       {
+        "path": "/journal/2026-10-06-sakae-hilton-inplace33-autumn-buffet.html",
+        "clicks": 5
+      },
+      {
         "path": "/features/nagoya-miso-nikomi-udon.html",
         "clicks": 4
       },
@@ -360,10 +369,6 @@
       },
       {
         "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
-        "clicks": 3
-      },
-      {
-        "path": "/journal/2026-10-06-sakae-hilton-inplace33-autumn-buffet.html",
         "clicks": 3
       },
       {
@@ -535,6 +540,16 @@
         "clicks": 2
       },
       {
+        "path": "/journal/2026-10-06-sakae-hilton-inplace33-autumn-buffet.html",
+        "domain": "nagoyato.com",
+        "clicks": 2
+      },
+      {
+        "path": "/journal/2026-10-06-sakae-hilton-inplace33-autumn-buffet.html",
+        "domain": "prtimes.jp",
+        "clicks": 2
+      },
+      {
         "path": "/",
         "domain": "news.google.com",
         "clicks": 1
@@ -701,16 +716,6 @@
       },
       {
         "path": "/journal/2026-10-06-sakae-hilton-inplace33-autumn-buffet.html",
-        "domain": "nagoyato.com",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-10-06-sakae-hilton-inplace33-autumn-buffet.html",
-        "domain": "prtimes.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-10-06-sakae-hilton-inplace33-autumn-buffet.html",
         "domain": "summer.walkerplus.com",
         "clicks": 1
       },
@@ -806,7 +811,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1162,
+    "value": 1176,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
