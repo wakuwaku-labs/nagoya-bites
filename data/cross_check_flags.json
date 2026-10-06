@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-05T21:12:49.886Z",
+  "generatedAt": "2026-10-05T23:49:47.640Z",
   "version": "1.0",
-  "total": 419,
+  "total": 417,
   "flags": [
     {
       "店名": "薪火と肉と酒 コノハズク 名駅店",
@@ -17,10 +17,22 @@
       "食べログURL": ""
     },
     {
+      "店名": "さかえ酒房",
+      "エリア": "栄",
+      "ホットペッパーID": "J004470629",
+      "crossCheckScore": 67,
+      "flags": {
+        "sameReviewerAcrossStores": true
+      },
+      "rating": 4,
+      "reviewCount": 44,
+      "食べログURL": ""
+    },
+    {
       "店名": "焼肉ホタル 栄東店",
       "エリア": "栄",
       "ホットペッパーID": "J004422261",
-      "crossCheckScore": 55,
+      "crossCheckScore": 56,
       "flags": {
         "reviewBurstCluster": true,
         "duplicateReviewAcrossStores": true
@@ -45,26 +57,25 @@
       "店名": "四季と幸 粋旬 栄店",
       "エリア": "栄",
       "ホットペッパーID": "J004444758",
-      "crossCheckScore": 57,
+      "crossCheckScore": 63,
       "flags": {
-        "reviewBurstCluster": true,
-        "sameReviewerAcrossStores": true
+        "reviewBurstCluster": true
       },
-      "rating": 4.3,
-      "reviewCount": 49,
+      "rating": 4.5,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
       "店名": "焼肉ホタル 新栄店",
       "エリア": "栄",
       "ホットペッパーID": "J004493305",
-      "crossCheckScore": 52,
+      "crossCheckScore": 61,
       "flags": {
         "reviewBurstCluster": true,
         "duplicateReviewAcrossStores": true
       },
-      "rating": 4.1,
-      "reviewCount": 9,
+      "rating": 5,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
@@ -168,7 +179,7 @@
       "店名": "飛騨牛焼肉 岐牛",
       "エリア": "栄",
       "ホットペッパーID": "J004559437",
-      "crossCheckScore": 63,
+      "crossCheckScore": 64,
       "flags": {
         "reviewBurstCluster": true
       },
@@ -180,9 +191,10 @@
       "店名": "台所 宗や 金山",
       "エリア": "金山",
       "ホットペッパーID": "J004089781",
-      "crossCheckScore": 67,
+      "crossCheckScore": 64,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 5,
       "reviewCount": 12,
@@ -252,12 +264,26 @@
       "店名": "名古屋グリルハウス",
       "エリア": "名古屋（名古屋駅/西区/中村区）",
       "ホットペッパーID": "J003828233",
-      "crossCheckScore": 54,
+      "crossCheckScore": 64,
       "flags": {
-        "duplicateReviewAcrossStores": true
+        "duplicateReviewAcrossStores": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 4.2,
-      "reviewCount": 94,
+      "reviewCount": 100,
+      "食べログURL": ""
+    },
+    {
+      "店名": "げんかい 名古屋本邸",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "ホットペッパーID": "J004699003",
+      "crossCheckScore": 44,
+      "flags": {
+        "gachaReviewSuspicion": true,
+        "reviewBurstCluster": true
+      },
+      "rating": 5,
+      "reviewCount": 9,
       "食べログURL": ""
     },
     {
@@ -276,12 +302,12 @@
       "店名": "くろ凪 名古屋駅前店",
       "エリア": "名古屋（名古屋駅/西区/中村区）",
       "ホットペッパーID": "J004591763",
-      "crossCheckScore": 65,
+      "crossCheckScore": 50,
       "flags": {
         "sameReviewerAcrossStores": true
       },
-      "rating": 4.6,
-      "reviewCount": 138,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
@@ -313,25 +339,25 @@
       "店名": "豚匠 名古屋駅店",
       "エリア": "名古屋（名古屋駅/西区/中村区）",
       "ホットペッパーID": "J004577162",
-      "crossCheckScore": 69,
+      "crossCheckScore": 60,
       "flags": {
         "sameReviewerAcrossStores": true
       },
-      "rating": 4.4,
-      "reviewCount": 67,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
       "店名": "柳橋中央市場ビアガーデン",
       "エリア": "名古屋（名古屋駅/西区/中村区）",
       "ホットペッパーID": "J004577121",
-      "crossCheckScore": 71,
+      "crossCheckScore": 73,
       "flags": {
         "duplicateReviewAcrossStores": true,
         "sameReviewerAcrossStores": true
       },
-      "rating": 4,
-      "reviewCount": 75,
+      "rating": 4.1,
+      "reviewCount": 97,
       "食べログURL": ""
     },
     {
@@ -351,25 +377,25 @@
       "店名": "納屋橋ビアガーデン RIVERSIDEフードテラス リバーサイドフードテラス",
       "エリア": "名古屋（名古屋駅/西区/中村区）",
       "ホットペッパーID": "J003763631",
-      "crossCheckScore": 69,
+      "crossCheckScore": 60,
       "flags": {
         "duplicateReviewAcrossStores": true,
         "sameReviewerAcrossStores": true
       },
-      "rating": 4,
-      "reviewCount": 75,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
       "店名": "焼肉エース 岩塚店",
       "エリア": "名古屋（名古屋駅/西区/中村区）",
       "ホットペッパーID": "J004492721",
-      "crossCheckScore": 57,
+      "crossCheckScore": 61,
       "flags": {
         "reviewBurstCluster": true
       },
-      "rating": 4.5,
-      "reviewCount": 88,
+      "rating": 4.4,
+      "reviewCount": 98,
       "食べログURL": ""
     },
     {
@@ -385,15 +411,28 @@
       "食べログURL": ""
     },
     {
+      "店名": "ギャラリーアービー",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "ホットペッパーID": "J004698404",
+      "crossCheckScore": 44,
+      "flags": {
+        "gachaReviewSuspicion": true,
+        "reviewBurstCluster": true
+      },
+      "rating": 5,
+      "reviewCount": 8,
+      "食べログURL": ""
+    },
+    {
       "店名": "食堂　灯ル",
       "エリア": "名古屋（名古屋駅/西区/中村区）",
       "ホットペッパーID": "J004558213",
-      "crossCheckScore": 82,
+      "crossCheckScore": 80,
       "flags": {
         "sameReviewerAcrossStores": true
       },
       "rating": 4.3,
-      "reviewCount": 379,
+      "reviewCount": 453,
       "食べログURL": "https://tabelog.com/aichi/A2301/A230101/23095003/"
     },
     {
@@ -498,12 +537,13 @@
       "店名": "名古屋グリルハウス NAGOYA Grill House",
       "エリア": "名古屋（名古屋駅/西区/中村区）",
       "ホットペッパーID": "J004068282",
-      "crossCheckScore": 54,
+      "crossCheckScore": 47,
       "flags": {
-        "duplicateReviewAcrossStores": true
+        "duplicateReviewAcrossStores": true,
+        "sameReviewerAcrossStores": true
       },
-      "rating": 4.2,
-      "reviewCount": 94,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
@@ -741,13 +781,12 @@
       "店名": "生ひやむぎ専門店　穂の間",
       "エリア": "名古屋（名古屋駅/西区/中村区）",
       "ホットペッパーID": "J004677009",
-      "crossCheckScore": 46,
+      "crossCheckScore": 53,
       "flags": {
-        "gachaReviewSuspicion": true,
         "reviewBurstCluster": true
       },
       "rating": 4.8,
-      "reviewCount": 34,
+      "reviewCount": 63,
       "食べログURL": ""
     },
     {
@@ -779,12 +818,12 @@
       "店名": "パーティースペース KNIGHT ナイト 名古屋駅前店",
       "エリア": "名古屋（名古屋駅/西区/中村区）",
       "ホットペッパーID": "J001192130",
-      "crossCheckScore": 55,
+      "crossCheckScore": 53,
       "flags": {
         "uShapedDistribution": true
       },
-      "rating": 3.7,
-      "reviewCount": 46,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
@@ -875,6 +914,19 @@
       "食べログURL": ""
     },
     {
+      "店名": "久屋 江戸久",
+      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+      "ホットペッパーID": "J004698717",
+      "crossCheckScore": 42,
+      "flags": {
+        "gachaReviewSuspicion": true,
+        "duplicateReviewAcrossStores": true
+      },
+      "rating": 4.6,
+      "reviewCount": 11,
+      "食べログURL": ""
+    },
+    {
       "店名": "豚野郎",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004558905",
@@ -887,15 +939,16 @@
       "食べログURL": ""
     },
     {
-      "店名": "PATISSERIE NAJAC パティスリー ナジャック 新栄",
+      "店名": "is it イナフ",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J004067962",
-      "crossCheckScore": 63,
+      "ホットペッパーID": "J004678690",
+      "crossCheckScore": 44,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "reviewBurstCluster": true
       },
-      "rating": 4.6,
-      "reviewCount": 20,
+      "rating": 5,
+      "reviewCount": 10,
       "食べログURL": ""
     },
     {
@@ -950,24 +1003,25 @@
       "店名": "さんじゅうまる",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004591596",
-      "crossCheckScore": 48,
+      "crossCheckScore": 50,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "duplicateReviewAcrossStores": true
       },
       "rating": 4.8,
-      "reviewCount": 28,
+      "reviewCount": 35,
       "食べログURL": ""
     },
     {
-      "店名": "BAGUS バグース 名古屋栄店",
+      "店名": "鮨 よし希",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J003411809",
-      "crossCheckScore": 51,
+      "ホットペッパーID": "J004698844",
+      "crossCheckScore": 37,
       "flags": {
-        "reviewBurstCluster": true
+        "gachaReviewSuspicion": true
       },
-      "rating": 3.4,
-      "reviewCount": 29,
+      "rating": 5,
+      "reviewCount": 2,
       "食べログURL": ""
     },
     {
@@ -998,55 +1052,32 @@
       "店名": "泉二丁目和牛焼肉店",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004591469",
-      "crossCheckScore": 48,
+      "crossCheckScore": 51,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 4.6,
-      "reviewCount": 30,
+      "reviewCount": 39,
       "食べログURL": ""
     },
     {
       "店名": "toro restaurant",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003958759",
-      "crossCheckScore": 60,
+      "crossCheckScore": 73,
       "flags": {
-        "gachaReviewSuspicion": true
+        "sameReviewerAcrossStores": true
       },
       "rating": 4.9,
-      "reviewCount": 48,
-      "食べログURL": ""
-    },
-    {
-      "店名": "AUTHENTIC BAR Kreis クライス",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J001281821",
-      "crossCheckScore": 60,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.7,
-      "reviewCount": 43,
-      "食べログURL": ""
-    },
-    {
-      "店名": "魚 炉端 日本酒 Sakura サクラ",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J004090018",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.9,
-      "reviewCount": 22,
+      "reviewCount": 51,
       "食べログURL": ""
     },
     {
       "店名": "CHIKA TRAIN 地下トレイン",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004090733",
-      "crossCheckScore": 51,
+      "crossCheckScore": 54,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -1058,25 +1089,24 @@
       "店名": "居酒屋 Colore コロレ",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004576466",
-      "crossCheckScore": 55,
+      "crossCheckScore": 58,
       "flags": {
-        "gachaReviewSuspicion": true,
         "reviewBurstCluster": true
       },
-      "rating": 4.9,
-      "reviewCount": 15,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
       "店名": "ミクソロジーバー Cocktails＆Dreams",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004470544",
-      "crossCheckScore": 58,
+      "crossCheckScore": 64,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 5,
-      "reviewCount": 8,
+      "reviewCount": 9,
       "食べログURL": ""
     },
     {
@@ -1095,7 +1125,7 @@
       "店名": "おどりじ",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004510024",
-      "crossCheckScore": 56,
+      "crossCheckScore": 59,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -1140,97 +1170,84 @@
       "食べログURL": ""
     },
     {
-      "店名": "2nd酒場JAPAN セカンドサカバジャパン 新栄店",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J003851294",
-      "crossCheckScore": 53,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.7,
-      "reviewCount": 20,
-      "食べログURL": ""
-    },
-    {
       "店名": "和酒バル あず 栄錦店",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003917232",
-      "crossCheckScore": 55,
+      "crossCheckScore": 58,
       "flags": {
-        "gachaReviewSuspicion": true,
         "reviewBurstCluster": true
       },
-      "rating": 5,
-      "reviewCount": 23,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
       "店名": "新美家",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003958550",
-      "crossCheckScore": 55,
+      "crossCheckScore": 59,
       "flags": {
         "gachaReviewSuspicion": true,
         "reviewBurstCluster": true
       },
       "rating": 4.7,
-      "reviewCount": 28,
+      "reviewCount": 30,
       "食べログURL": ""
     },
     {
       "店名": "鮮魚とお晩菜　居酒家　くちこう",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004558903",
-      "crossCheckScore": 51,
+      "crossCheckScore": 57,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 5,
-      "reviewCount": 3,
+      "reviewCount": 4,
       "食べログURL": ""
     },
     {
       "店名": "韓国カジュアルバー",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J001273978",
-      "crossCheckScore": 47,
+      "crossCheckScore": 50,
       "flags": {
         "uShapedDistribution": true,
         "reviewBurstCluster": true
       },
-      "rating": 3.4,
-      "reviewCount": 25,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
       "店名": "炭火あみ焼 いとう 錦",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003984177",
-      "crossCheckScore": 48,
+      "crossCheckScore": 51,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.9,
-      "reviewCount": 27,
+      "reviewCount": 28,
       "食べログURL": ""
     },
     {
       "店名": "焼肉 喜久",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003941892",
-      "crossCheckScore": 58,
+      "crossCheckScore": 64,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.8,
-      "reviewCount": 23,
+      "reviewCount": 24,
       "食べログURL": ""
     },
     {
       "店名": "WINE SAKE KANPAI ワイン サケ カンパイ",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004536100",
-      "crossCheckScore": 61,
+      "crossCheckScore": 64,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -1244,53 +1261,42 @@
       "ホットペッパーID": "J001129123",
       "crossCheckScore": 60,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "reviewBurstCluster": true
       },
       "rating": 4.7,
       "reviewCount": 40,
       "食べログURL": ""
     },
     {
-      "店名": "花海棠 女子大小路 栄",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J004089859",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.8,
-      "reviewCount": 21,
-      "食べログURL": ""
-    },
-    {
       "店名": "鮨 柴山",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003872363",
-      "crossCheckScore": 58,
+      "crossCheckScore": 64,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.8,
-      "reviewCount": 23,
+      "reviewCount": 26,
       "食べログURL": ""
     },
     {
       "店名": "酒場おゆかい",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003872895",
-      "crossCheckScore": 55,
+      "crossCheckScore": 65,
       "flags": {
         "gachaReviewSuspicion": true
       },
-      "rating": 4.6,
-      "reviewCount": 18,
+      "rating": 4.7,
+      "reviewCount": 20,
       "食べログURL": ""
     },
     {
       "店名": "PALMO FELICINA パルモフェリチーナ",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004421913",
-      "crossCheckScore": 58,
+      "crossCheckScore": 61,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -1315,7 +1321,7 @@
       "店名": "焼肉ぱんだ",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004444223",
-      "crossCheckScore": 57,
+      "crossCheckScore": 58,
       "flags": {
         "reviewBurstCluster": true
       },
@@ -1324,34 +1330,10 @@
       "食べログURL": ""
     },
     {
-      "店名": "るりん家",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J004591075",
-      "crossCheckScore": 48,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.7,
-      "reviewCount": 21,
-      "食べログURL": ""
-    },
-    {
-      "店名": "PARADIA NAGOYA パラディアナゴヤ",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J004402791",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.8,
-      "reviewCount": 37,
-      "食べログURL": ""
-    },
-    {
       "店名": "BAR Gentle バージェントル",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004422247",
-      "crossCheckScore": 57,
+      "crossCheckScore": 60,
       "flags": {
         "gachaReviewSuspicion": true,
         "reviewBurstCluster": true
@@ -1376,7 +1358,7 @@
       "店名": "ちょっと変わったカフェヒトトキ",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004049754",
-      "crossCheckScore": 51,
+      "crossCheckScore": 54,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -1388,7 +1370,7 @@
       "店名": "鮮魚と煮込み にこにこ",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004602002",
-      "crossCheckScore": 45,
+      "crossCheckScore": 48,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -1402,46 +1384,11 @@
       "ホットペッパーID": "J003916447",
       "crossCheckScore": 61,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "duplicateReviewAcrossStores": true
       },
       "rating": 4.6,
       "reviewCount": 5,
-      "食べログURL": ""
-    },
-    {
-      "店名": "8Qoo ハチクー",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J003532050",
-      "crossCheckScore": 38,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 5,
-      "reviewCount": 2,
-      "食べログURL": ""
-    },
-    {
-      "店名": "東",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J003298474",
-      "crossCheckScore": 55,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.7,
-      "reviewCount": 6,
-      "食べログURL": ""
-    },
-    {
-      "店名": "おばんざい 玉ゆら",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J004004244",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 5,
-      "reviewCount": 6,
       "食べログURL": ""
     },
     {
@@ -1460,7 +1407,7 @@
       "店名": "TRIVENI",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004481006",
-      "crossCheckScore": 55,
+      "crossCheckScore": 58,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -1472,55 +1419,19 @@
       "店名": "元祖ぎょうざやさかい",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004536828",
-      "crossCheckScore": 60,
+      "crossCheckScore": 66,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 5,
-      "reviewCount": 37,
-      "食べログURL": ""
-    },
-    {
-      "店名": "Dining bar ベルタサロン belta salon",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J001223678",
-      "crossCheckScore": 60,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.7,
-      "reviewCount": 30,
-      "食べログURL": ""
-    },
-    {
-      "店名": "羊ノトリコ ジンギスカン専門店",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J003828201",
-      "crossCheckScore": 56,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.6,
-      "reviewCount": 15,
-      "食べログURL": ""
-    },
-    {
-      "店名": "Wine&Italian l ORTO ワインアンドイタリアン ロルト",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J003323786",
-      "crossCheckScore": 60,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.6,
-      "reviewCount": 32,
+      "reviewCount": 41,
       "食べログURL": ""
     },
     {
       "店名": "居酒屋 暁 名古屋",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003533016",
-      "crossCheckScore": 60,
+      "crossCheckScore": 63,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -1532,7 +1443,7 @@
       "店名": "BAR Ad'E バー アデ",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J000638255",
-      "crossCheckScore": 60,
+      "crossCheckScore": 61,
       "flags": {
         "reviewBurstCluster": true
       },
@@ -1544,7 +1455,7 @@
       "店名": "ササセカンド",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003672078",
-      "crossCheckScore": 58,
+      "crossCheckScore": 61,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -1553,34 +1464,10 @@
       "食べログURL": ""
     },
     {
-      "店名": "de trente ans ドゥ トランタン",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J004067208",
-      "crossCheckScore": 51,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 5,
-      "reviewCount": 3,
-      "食べログURL": ""
-    },
-    {
-      "店名": "凡人 人情屋台長者町店",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J003516908",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.7,
-      "reviewCount": 27,
-      "食べログURL": ""
-    },
-    {
       "店名": "Bar Stair",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J001287144",
-      "crossCheckScore": 55,
+      "crossCheckScore": 58,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -1592,31 +1479,19 @@
       "店名": "前田食堂",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003958947",
-      "crossCheckScore": 58,
+      "crossCheckScore": 64,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.9,
-      "reviewCount": 10,
-      "食べログURL": ""
-    },
-    {
-      "店名": "イチ晴ダイフク 本店",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J001285898",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.6,
-      "reviewCount": 22,
+      "reviewCount": 12,
       "食べログURL": ""
     },
     {
       "店名": "ラグジュアリー カラオケバー FAKE",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J001293147",
-      "crossCheckScore": 61,
+      "crossCheckScore": 64,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -1628,7 +1503,7 @@
       "店名": "牡蠣Barおいすた錦",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003969000",
-      "crossCheckScore": 58,
+      "crossCheckScore": 61,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -1640,7 +1515,7 @@
       "店名": "ポピー談話室",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004421114",
-      "crossCheckScore": 48,
+      "crossCheckScore": 50,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -1652,24 +1527,24 @@
       "店名": "Anplagd Cafe&Stand",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J001261531",
-      "crossCheckScore": 56,
+      "crossCheckScore": 57,
       "flags": {
         "reviewBurstCluster": true
       },
       "rating": 4.6,
-      "reviewCount": 72,
+      "reviewCount": 74,
       "食べログURL": ""
     },
     {
       "店名": "炭火焼き鳥 ひとり",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004591258",
-      "crossCheckScore": 48,
+      "crossCheckScore": 51,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.6,
-      "reviewCount": 26,
+      "reviewCount": 27,
       "食べログURL": ""
     },
     {
@@ -1678,17 +1553,18 @@
       "ホットペッパーID": "J004536211",
       "crossCheckScore": 58,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 4.7,
-      "reviewCount": 18,
+      "reviewCount": 19,
       "食べログURL": ""
     },
     {
       "店名": "青木ドリル",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003916725",
-      "crossCheckScore": 62,
+      "crossCheckScore": 65,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -1697,64 +1573,15 @@
       "食べログURL": ""
     },
     {
-      "店名": "エンタメ酒場BRIO 大人の秘密基地 栄 東新町店",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J003516577",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.8,
-      "reviewCount": 6,
-      "食べログURL": ""
-    },
-    {
-      "店名": "アングラーズダイニング 逢瀬",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J003324250",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.8,
-      "reviewCount": 16,
-      "食べログURL": ""
-    },
-    {
-      "店名": "韓国家庭料理オセヨ",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J004509376",
-      "crossCheckScore": 51,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.7,
-      "reviewCount": 3,
-      "食べログURL": ""
-    },
-    {
       "店名": "DAX DINING ダックスダイニング",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003762579",
-      "crossCheckScore": 55,
+      "crossCheckScore": 60,
       "flags": {
-        "gachaReviewSuspicion": true,
-        "reviewBurstCluster": true
+        "sameReviewerAcrossStores": true
       },
-      "rating": 5,
-      "reviewCount": 6,
-      "食べログURL": ""
-    },
-    {
-      "店名": "旬楽亭 はなれ",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J004004003",
-      "crossCheckScore": 55,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.7,
-      "reviewCount": 26,
+      "rating": 4.5,
+      "reviewCount": 13,
       "食べログURL": ""
     },
     {
@@ -1763,53 +1590,42 @@
       "ホットペッパーID": "J004067957",
       "crossCheckScore": 60,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 4.7,
-      "reviewCount": 33,
+      "reviewCount": 35,
       "食べログURL": ""
     },
     {
       "店名": "バーニーズ",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003851698",
-      "crossCheckScore": 58,
+      "crossCheckScore": 61,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.6,
-      "reviewCount": 37,
+      "reviewCount": 39,
       "食べログURL": ""
     },
     {
       "店名": "めいげつ",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J000402286",
-      "crossCheckScore": 41,
+      "crossCheckScore": 57,
       "flags": {
         "gachaReviewSuspicion": true
       },
-      "rating": 5,
-      "reviewCount": 4,
-      "食べログURL": ""
-    },
-    {
-      "店名": "花あかり 錦",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J000402168",
-      "crossCheckScore": 58,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.9,
-      "reviewCount": 24,
+      "rating": 4.6,
+      "reviewCount": 7,
       "食べログURL": ""
     },
     {
       "店名": "BeTogetherBeTogether 今夜Bar",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J001275181",
-      "crossCheckScore": 45,
+      "crossCheckScore": 48,
       "flags": {
         "gachaReviewSuspicion": true,
         "reviewBurstCluster": true
@@ -1819,170 +1635,82 @@
       "食べログURL": ""
     },
     {
-      "店名": "bar SWAG スワッグ 錦3丁目",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J003341394",
-      "crossCheckScore": 48,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 5,
-      "reviewCount": 1,
-      "食べログURL": ""
-    },
-    {
       "店名": "桃○",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J000713040",
-      "crossCheckScore": 60,
+      "crossCheckScore": 61,
       "flags": {
-        "gachaReviewSuspicion": true,
         "reviewBurstCluster": true
       },
-      "rating": 4.7,
-      "reviewCount": 41,
-      "食べログURL": ""
-    },
-    {
-      "店名": "casarin's BAR キャサリンズ バー",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J001110010",
-      "crossCheckScore": 55,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.6,
-      "reviewCount": 13,
-      "食べログURL": ""
-    },
-    {
-      "店名": "炭火割烹 魚炭 うおずみ",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J001201978",
-      "crossCheckScore": 48,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 5,
-      "reviewCount": 1,
-      "食べログURL": ""
-    },
-    {
-      "店名": "カラオケ レインボー 栄店",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J001110537",
-      "crossCheckScore": 48,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 5,
-      "reviewCount": 8,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
       "店名": "ルイーダ LUIDA",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J001110069",
-      "crossCheckScore": 65,
+      "crossCheckScore": 60,
       "flags": {
         "reviewBurstCluster": true
       },
-      "rating": 4.5,
-      "reviewCount": 36,
-      "食べログURL": ""
-    },
-    {
-      "店名": "元祖博多蒸し手羽 TEBASTA 錦店",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J003365826",
-      "crossCheckScore": 60,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.8,
-      "reviewCount": 31,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
       "店名": "韓流居酒屋 RED酒場",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J001146861",
-      "crossCheckScore": 65,
+      "crossCheckScore": 50,
       "flags": {
-        "sameReviewerAcrossStores": true
+        "reviewBurstCluster": true
       },
-      "rating": 4.9,
-      "reviewCount": 104,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
       "店名": "Sports Bar No.8 スポーツバー ナンバーエイト",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J001019013",
-      "crossCheckScore": 55,
+      "crossCheckScore": 58,
       "flags": {
-        "gachaReviewSuspicion": true,
         "reviewBurstCluster": true
       },
-      "rating": 5,
-      "reviewCount": 17,
-      "食べログURL": ""
-    },
-    {
-      "店名": "サザン’s カフェ フリフリ",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J000749119",
-      "crossCheckScore": 61,
-      "flags": {
-        "gachaReviewSuspicion": true
-      },
-      "rating": 4.6,
-      "reviewCount": 22,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
       "店名": "DINING BAR 転生",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J004559459",
-      "crossCheckScore": 55,
+      "crossCheckScore": 53,
       "flags": {
-        "gachaReviewSuspicion": true,
-        "reviewBurstCluster": true
+        "gachaReviewSuspicion": true
       },
       "rating": 4.8,
-      "reviewCount": 5,
+      "reviewCount": 4,
       "食べログURL": ""
     },
     {
       "店名": "手相占い無料　BAR　PINK×BLUE",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "ホットペッパーID": "J003625240",
-      "crossCheckScore": 55,
-      "flags": {
-        "gachaReviewSuspicion": true,
-        "reviewBurstCluster": true
-      },
-      "rating": 4.8,
-      "reviewCount": 19,
-      "食べログURL": ""
-    },
-    {
-      "店名": "soleil@home ソレイユアットホーム",
-      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
-      "ホットペッパーID": "J004444831",
       "crossCheckScore": 58,
       "flags": {
-        "gachaReviewSuspicion": true
+        "reviewBurstCluster": true
       },
-      "rating": 5,
-      "reviewCount": 7,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
       "店名": "番菜百薬 栄店",
       "エリア": "栄(ミナミ)/矢場町/大須/上前津",
       "ホットペッパーID": "J004559190",
-      "crossCheckScore": 65,
+      "crossCheckScore": 66,
       "flags": {
         "sameReviewerAcrossStores": true
       },
@@ -1994,13 +1722,12 @@
       "店名": "おばんざいとお酒 ゆあん",
       "エリア": "栄(ミナミ)/矢場町/大須/上前津",
       "ホットペッパーID": "J003829724",
-      "crossCheckScore": 58,
+      "crossCheckScore": 64,
       "flags": {
-        "gachaReviewSuspicion": true,
-        "reviewBurstCluster": true
+        "gachaReviewSuspicion": true
       },
-      "rating": 4.8,
-      "reviewCount": 19,
+      "rating": 4.7,
+      "reviewCount": 23,
       "食べログURL": ""
     },
     {
@@ -2019,12 +1746,12 @@
       "店名": "安逸",
       "エリア": "栄(ミナミ)/矢場町/大須/上前津",
       "ホットペッパーID": "J004493521",
-      "crossCheckScore": 60,
+      "crossCheckScore": 51,
       "flags": {
         "reviewBurstCluster": true
       },
-      "rating": 4.7,
-      "reviewCount": 77,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
@@ -2043,24 +1770,24 @@
       "店名": "Rob dining Vearth ロブダイニング バース 栄店",
       "エリア": "栄(ミナミ)/矢場町/大須/上前津",
       "ホットペッパーID": "J004470290",
-      "crossCheckScore": 50,
+      "crossCheckScore": 56,
       "flags": {
         "gachaReviewSuspicion": true
       },
       "rating": 4.9,
-      "reviewCount": 43,
+      "reviewCount": 47,
       "食べログURL": ""
     },
     {
       "店名": "カンナムスタイル 栄住吉店",
       "エリア": "栄(ミナミ)/矢場町/大須/上前津",
       "ホットペッパーID": "J001239006",
-      "crossCheckScore": 55,
+      "crossCheckScore": 51,
       "flags": {
         "uShapedDistribution": true
       },
-      "rating": 3.9,
-      "reviewCount": 59,
+      "rating": 0,
+      "reviewCount": 0,
       "食べログURL": ""
     },
     {
@@ -2079,12 +1806,13 @@
       "店名": "Bistro Rendez vous ビストロ ランデヴー",
       "エリア": "栄(ミナミ)/矢場町/大須/上前津",
       "ホットペッパーID": "J004509838",
-      "crossCheckScore": 58,
+      "crossCheckScore": 61,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 5,
-      "reviewCount": 12,
+      "reviewCount": 13,
       "食べログURL": ""
     },
     {
@@ -2115,7 +1843,7 @@
       "店名": "炭火焼鳥 とりこ 栄本店",
       "エリア": "栄(ミナミ)/矢場町/大須/上前津",
       "ホットペッパーID": "J004492107",
-      "crossCheckScore": 58,
+      "crossCheckScore": 61,
       "flags": {
         "gachaReviewSuspicion": true
       },
@@ -2148,6 +1876,18 @@
       "食べログURL": ""
     },
     {
+      "店名": "本格焼肉処 たかとら 伏見店",
+      "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+      "ホットペッパーID": "J004698027",
+      "crossCheckScore": 64,
+      "flags": {
+        "sameReviewerAcrossStores": true
+      },
+      "rating": 4.5,
+      "reviewCount": 217,
+      "食べログURL": ""
+    },
+    {
       "店名": "ひつまぶし一葉　別邸",
       "エリア": "栄(ミナミ)/矢場町/大須/上前津",
       "ホットペッパーID": "J004660199",
@@ -2169,6 +1909,18 @@
       },
       "rating": 4.8,
       "reviewCount": 27,
+      "食べログURL": ""
+    },
+    {
+      "店名": "おばんざいのばんざい 女子大店",
+      "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+      "ホットペッパーID": "J004698813",
+      "crossCheckScore": 43,
+      "flags": {
+        "reviewBurstCluster": true
+      },
+      "rating": 4.3,
+      "reviewCount": 8,
       "食べログURL": ""
     },
     {
@@ -2205,6 +1957,19 @@
       },
       "rating": 0,
       "reviewCount": 0,
+      "食べログURL": ""
+    },
+    {
+      "店名": "スポってJunction ジャンクション",
+      "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+      "ホットペッパーID": "J004698333",
+      "crossCheckScore": 44,
+      "flags": {
+        "gachaReviewSuspicion": true,
+        "reviewBurstCluster": true
+      },
+      "rating": 5,
+      "reviewCount": 6,
       "食べログURL": ""
     },
     {
@@ -2827,6 +2592,18 @@
       "食べログURL": ""
     },
     {
+      "店名": "餃子のひょっとこ",
+      "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+      "ホットペッパーID": "J004421851",
+      "crossCheckScore": 69,
+      "flags": {
+        "sameReviewerAcrossStores": true
+      },
+      "rating": 4.8,
+      "reviewCount": 60,
+      "食べログURL": ""
+    },
+    {
       "店名": "立ち飲み酒場 カレーうどん住吉",
       "エリア": "栄(ミナミ)/矢場町/大須/上前津",
       "ホットペッパーID": "J003851717",
@@ -2867,9 +2644,10 @@
       "店名": "もつ鍋dining もつとぶどう",
       "エリア": "栄(ミナミ)/矢場町/大須/上前津",
       "ホットペッパーID": "J004422252",
-      "crossCheckScore": 62,
+      "crossCheckScore": 59,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 4.9,
       "reviewCount": 36,
@@ -3033,6 +2811,18 @@
       "食べログURL": ""
     },
     {
+      "店名": "IRINAKA BASE イリナカベース",
+      "エリア": "鶴舞・八事・御器所",
+      "ホットペッパーID": "J004698111",
+      "crossCheckScore": 37,
+      "flags": {
+        "gachaReviewSuspicion": true
+      },
+      "rating": 5,
+      "reviewCount": 2,
+      "食べログURL": ""
+    },
+    {
       "店名": "鉄板ダイニング 向日葵 鶴舞",
       "エリア": "鶴舞・八事・御器所",
       "ホットペッパーID": "J000749078",
@@ -3190,6 +2980,18 @@
       "食べログURL": ""
     },
     {
+      "店名": "焚き火",
+      "エリア": "大曽根･千種･今池･池下･守山区",
+      "ホットペッパーID": "J004698934",
+      "crossCheckScore": 47,
+      "flags": {
+        "gachaReviewSuspicion": true
+      },
+      "rating": 4.7,
+      "reviewCount": 20,
+      "食べログURL": ""
+    },
+    {
       "店名": "おうちごはん 純情",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J003941548",
@@ -3259,6 +3061,18 @@
       },
       "rating": 5,
       "reviewCount": 4,
+      "食べログURL": ""
+    },
+    {
+      "店名": "大久手山本屋 大曽根店",
+      "エリア": "大曽根･千種･今池･池下･守山区",
+      "ホットペッパーID": "J004698526",
+      "crossCheckScore": 64,
+      "flags": {
+        "duplicateReviewAcrossStores": true
+      },
+      "rating": 4.3,
+      "reviewCount": 877,
       "食べログURL": ""
     },
     {
@@ -3590,9 +3404,10 @@
       "店名": "昭和歌謡バーエデン",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004536470",
-      "crossCheckScore": 63,
+      "crossCheckScore": 60,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "duplicateReviewAcrossStores": true
       },
       "rating": 4.6,
       "reviewCount": 5,
@@ -3674,9 +3489,10 @@
       "店名": "池下 Ponte ポンテ",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004444226",
-      "crossCheckScore": 60,
+      "crossCheckScore": 57,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 5,
       "reviewCount": 26,
@@ -3854,9 +3670,10 @@
       "店名": "La Tige ラティージュ",
       "エリア": "大曽根･千種･今池･池下･守山区",
       "ホットペッパーID": "J004067138",
-      "crossCheckScore": 60,
+      "crossCheckScore": 57,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 4.8,
       "reviewCount": 12,
@@ -3972,6 +3789,18 @@
       "食べログURL": ""
     },
     {
+      "店名": "晩庵",
+      "エリア": "緑区・南区・天白区・瑞穂区",
+      "ホットペッパーID": "J004698024",
+      "crossCheckScore": 47,
+      "flags": {
+        "reviewBurstCluster": true
+      },
+      "rating": 4,
+      "reviewCount": 11,
+      "食べログURL": ""
+    },
+    {
       "店名": "お番菜まるり",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J004558626",
@@ -4061,9 +3890,10 @@
       "店名": "お食事処　しんちゃん",
       "エリア": "緑区・南区・天白区・瑞穂区",
       "ホットペッパーID": "J003473491",
-      "crossCheckScore": 59,
+      "crossCheckScore": 56,
       "flags": {
-        "gachaReviewSuspicion": true
+        "gachaReviewSuspicion": true,
+        "sameReviewerAcrossStores": true
       },
       "rating": 4.6,
       "reviewCount": 37,
@@ -4103,6 +3933,18 @@
       },
       "rating": 4.6,
       "reviewCount": 33,
+      "食べログURL": ""
+    },
+    {
+      "店名": "食事処 みそなご",
+      "エリア": "緑区・南区・天白区・瑞穂区",
+      "ホットペッパーID": "J004509565",
+      "crossCheckScore": 56,
+      "flags": {
+        "sameReviewerAcrossStores": true
+      },
+      "rating": 4.5,
+      "reviewCount": 10,
       "食べログURL": ""
     },
     {
@@ -4177,6 +4019,19 @@
       },
       "rating": 5,
       "reviewCount": 1,
+      "食べログURL": ""
+    },
+    {
+      "店名": "矢場味仙 下坪店",
+      "エリア": "本山・覚王山・藤が丘",
+      "ホットペッパーID": "J004698397",
+      "crossCheckScore": 38,
+      "flags": {
+        "reviewBurstCluster": true,
+        "duplicateReviewAcrossStores": true
+      },
+      "rating": 2.9,
+      "reviewCount": 51,
       "食べログURL": ""
     },
     {
@@ -4468,6 +4323,18 @@
       },
       "rating": 4.6,
       "reviewCount": 11,
+      "食べログURL": ""
+    },
+    {
+      "店名": "中華そば 親孝行",
+      "エリア": "中川区・港区",
+      "ホットペッパーID": "J004025205",
+      "crossCheckScore": 64,
+      "flags": {
+        "sameReviewerAcrossStores": true
+      },
+      "rating": 4,
+      "reviewCount": 676,
       "食べログURL": ""
     },
     {
@@ -4897,6 +4764,18 @@
       "食べログURL": ""
     },
     {
+      "店名": "大久手山本屋",
+      "エリア": "千種区大久手",
+      "ホットペッパーID": "",
+      "crossCheckScore": 64,
+      "flags": {
+        "duplicateReviewAcrossStores": true
+      },
+      "rating": 4.3,
+      "reviewCount": 870,
+      "食べログURL": ""
+    },
+    {
       "店名": "立呑み どての大黒 椿町店",
       "エリア": "名古屋（名古屋駅/西区/中村区）",
       "ホットペッパーID": "",
@@ -4906,6 +4785,94 @@
       },
       "rating": 5,
       "reviewCount": 3,
+      "食べログURL": ""
+    },
+    {
+      "店名": "Pizzeria mimi",
+      "エリア": "車道・千種",
+      "ホットペッパーID": "",
+      "crossCheckScore": 41,
+      "flags": {
+        "reviewBurstCluster": true,
+        "duplicateReviewAcrossStores": true
+      },
+      "rating": 4.3,
+      "reviewCount": 10,
+      "食べログURL": ""
+    },
+    {
+      "店名": "とんかつ 仲由",
+      "エリア": "鶴舞・荒畑（昭和区）",
+      "ホットペッパーID": "",
+      "crossCheckScore": 43,
+      "flags": {
+        "reviewBurstCluster": true
+      },
+      "rating": 4.5,
+      "reviewCount": 12,
+      "食べログURL": ""
+    },
+    {
+      "店名": "SALT BAKERY（ソルトベーカリー）",
+      "エリア": "名古屋（昭和区・鶴舞）",
+      "ホットペッパーID": "",
+      "crossCheckScore": 37,
+      "flags": {
+        "reviewBurstCluster": true
+      },
+      "rating": 2.4,
+      "reviewCount": 12,
+      "食べログURL": ""
+    },
+    {
+      "店名": "TOOLCAFE 名古屋店",
+      "エリア": "名駅南",
+      "ホットペッパーID": "",
+      "crossCheckScore": 47,
+      "flags": {
+        "gachaReviewSuspicion": true
+      },
+      "rating": 4.9,
+      "reviewCount": 16,
+      "食べログURL": ""
+    },
+    {
+      "店名": "札幌らーめん 戸倉",
+      "エリア": "金山",
+      "ホットペッパーID": "",
+      "crossCheckScore": 44,
+      "flags": {
+        "uShapedDistribution": true,
+        "reviewBurstCluster": true
+      },
+      "rating": 4,
+      "reviewCount": 57,
+      "食べログURL": ""
+    },
+    {
+      "店名": "サッポロラーメン専門 荒畑 神宮前店",
+      "エリア": "神宮前",
+      "ホットペッパーID": "",
+      "crossCheckScore": 40,
+      "flags": {
+        "gachaReviewSuspicion": true
+      },
+      "rating": 4.7,
+      "reviewCount": 3,
+      "食べログURL": ""
+    },
+    {
+      "店名": "Fynd（ファインド）カフェ",
+      "エリア": "名古屋市名東区梅森坂",
+      "ホットペッパーID": "",
+      "crossCheckScore": 41,
+      "flags": {
+        "gachaReviewSuspicion": true,
+        "reviewBurstCluster": true,
+        "sameReviewerAcrossStores": true
+      },
+      "rating": 4.7,
+      "reviewCount": 15,
       "食べログURL": ""
     },
     {
@@ -5093,6 +5060,31 @@
       "rating": 4.8,
       "reviewCount": 20,
       "食べログURL": "https://tabelog.com/aichi/A2301/A230101/23096990/"
+    },
+    {
+      "店名": "橦木町 しみず",
+      "エリア": "名古屋市東区",
+      "ホットペッパーID": "",
+      "crossCheckScore": 52,
+      "flags": {
+        "gachaReviewSuspicion": true
+      },
+      "rating": 4.7,
+      "reviewCount": 35,
+      "食べログURL": "https://tabelog.com/aichi/A2301/A230104/23007948/"
+    },
+    {
+      "店名": "Pizzeria mimi (ピッツェリア ミミ)",
+      "エリア": "名古屋市東区筒井",
+      "ホットペッパーID": "",
+      "crossCheckScore": 51,
+      "flags": {
+        "reviewBurstCluster": true,
+        "duplicateReviewAcrossStores": true
+      },
+      "rating": 4.3,
+      "reviewCount": 10,
+      "食べログURL": ""
     }
   ]
 }

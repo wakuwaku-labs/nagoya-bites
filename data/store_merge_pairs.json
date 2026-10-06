@@ -1,8 +1,8 @@
 {
   "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
-  "mergedCount": 40,
-  "absorbedCount": 41,
-  "skippedCount": 24,
+  "mergedCount": 43,
+  "absorbedCount": 44,
+  "skippedCount": 27,
   "merged": [
     {
       "reasons": [
@@ -69,6 +69,36 @@
         }
       ],
       "filledFields": []
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "炭火焼肉flower フラワー 名古屋駅前店",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004699058",
+        "placeId": "ChIJX4H6RUF3A2ARMrue7oeTNZI",
+        "slug": "J004699058"
+      },
+      "absorbed": [
+        {
+          "店名": "炭火焼肉 flower フラワー 名古屋駅前店",
+          "エリア": "名古屋駅",
+          "ホットペッパーID": "J001258795",
+          "placeId": "ChIJX4H6RUF3A2ARMrue7oeTNZI",
+          "slug": "J001258795"
+        }
+      ],
+      "filledFields": [
+        "Instagram",
+        "Instagram投稿URL",
+        "editorReason",
+        "insiderNote",
+        "visitStatus",
+        "おすすめポイント",
+        "タグ"
+      ]
     },
     {
       "reasons": [
@@ -474,6 +504,40 @@
       ],
       "filledFields": [
         "サブジャンル"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
+        "店名": "勝手口河内屋",
+        "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+        "ホットペッパーID": "J004698880",
+        "placeId": "ChIJZfMX0n53A2ARh3ivtEQwJQw",
+        "slug": "J004698880"
+      },
+      "absorbed": [
+        {
+          "店名": "勝手口 河内屋",
+          "エリア": "丸の内",
+          "ホットペッパーID": "",
+          "placeId": "ChIJZfMX0n53A2ARh3ivtEQwJQw",
+          "slug": "store-e58b9de6898be58f"
+        }
+      ],
+      "filledFields": [
+        "editorReason",
+        "visitStatus",
+        "おすすめポイント",
+        "キュレーター",
+        "トレンド情報源",
+        "編集部推薦",
+        "話題コメント",
+        "話題スコア",
+        "話題フラグ",
+        "追加日",
+        "食べログURL"
       ]
     },
     {
@@ -1066,6 +1130,40 @@
         "placeid_match"
       ],
       "kept": {
+        "店名": "大衆酒場フレンチマン 名古屋",
+        "エリア": "名古屋市中村区",
+        "ホットペッパーID": "",
+        "placeId": "ChIJC75nTwB3A2ARXNwFmUm5dA4",
+        "slug": "store-e5a4a7e8a186e985"
+      },
+      "absorbed": [
+        {
+          "店名": "大衆酒場フレンチマン",
+          "エリア": "名古屋市中村区",
+          "ホットペッパーID": "",
+          "placeId": "ChIJC75nTwB3A2ARXNwFmUm5dA4",
+          "slug": "store-e5a4a7e8a186e985"
+        }
+      ],
+      "filledFields": [
+        "Instagram",
+        "editorReason",
+        "insiderNote",
+        "visitStatus",
+        "おすすめシーン",
+        "おすすめポイント",
+        "トレンド情報源",
+        "価格帯目安",
+        "話題スコア",
+        "追加日",
+        "選定理由"
+      ]
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
         "店名": "炭焼 うな富士",
         "エリア": "名古屋市昭和区",
         "ホットペッパーID": "",
@@ -1284,6 +1382,18 @@
     },
     {
       "names": [
+        "カンジャンケジャン 渡 名古屋錦店",
+        "カンジャンケジャン 渡 名古屋店"
+      ],
+      "hpIds": [
+        "J004699067",
+        "J004421283"
+      ],
+      "reason": "placeid_match",
+      "blocker": "hp_distinct"
+    },
+    {
+      "names": [
         "ONE on ONE 錦",
         "ONE on ONE 栄店"
       ],
@@ -1368,6 +1478,18 @@
     },
     {
       "names": [
+        "大久手山本屋 大曽根店",
+        "大久手山本屋"
+      ],
+      "hpIds": [
+        "J004698526",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "ward_conflict"
+    },
+    {
+      "names": [
         "YOHAKU COFFEE 今池1号店",
         "YOHAKU COFFEE 今池2号店"
       ],
@@ -1389,6 +1511,18 @@
       ],
       "reason": "name_exact",
       "blocker": "ward_conflict"
+    },
+    {
+      "names": [
+        "Pizzeria mimi",
+        "Pizzeria mimi (ピッツェリア ミミ)"
+      ],
+      "hpIds": [
+        "",
+        ""
+      ],
+      "reason": "placeid_match",
+      "blocker": "no_corroboration"
     },
     {
       "names": [
