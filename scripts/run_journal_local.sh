@@ -499,6 +499,15 @@ fi
 [ "$SKIP_CLAUDE" = "0" ] && [ "$RESUME_FROM_CANDIDATES" = "0" ] && log "[NEW] 中間成果物なし。通常フローで生成します。"
 
 PROMPT=$(tail -n +5 .claude/commands/journal-today.md)
+# 2026-10-06 事故: claude が起動ログと親プロセス（このスクリプト）を見て「別の自動実行が
+# 生成中なので待つ」と判断し、記事を書かずに終了した（自分自身を待っていた）。
+SELF_HEADER="【無人実行・launchd】あなたは run_journal_local.sh（launchd の日次自動実行）から起動された生成本体です。
+実行中の run_journal_local.sh・caffeinate・.local-logs の「生成を開始」ログはすべてあなた自身の実行です。
+別の実行の完了を待ったり、様子見で終了したりせず、本日 ${TODAY_JST} の記事生成を最後まで進めてください。
+応答できる人はいないため、質問や確認待ちで止まらないこと。"
+PROMPT="${SELF_HEADER}
+
+${PROMPT}"
 if [ "$RESUME_FROM_CANDIDATES" = "1" ]; then
   RESUME_HEADER="【前回実行の中間成果物から再開 — [RESUME from candidates: ${TODAY_JST}]】
 data/journal_candidates/${TODAY_JST}.json に採点済みの候補アングルが保存されています。
