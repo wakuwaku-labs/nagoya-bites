@@ -1834,7 +1834,7 @@
 
 ### [SEO-083] SNS原稿の「NotebookLM画像生成用テキスト」欄が生成器のプレースホルダのまま放置され、直近30日で22日ぶんの Instagram 画像素材が存在しない
 
-- **priority**: P2 → **status**: ready（要オーナー確認: 中止候補）
+- **priority**: P2 → **status**: wont_fix（2026-10-06 オーナー判断で中止）
 - **detected**: 2026-09-05
 - **category**: SEO
 - **owner**: 片桐 ← Editor + Builder（前提の変化: generate_sns_draft が false になったためaccept①「方針を決める」がオーナー判断。着手前にスコープを縮小するか close するかをオーナーに確認が必要と明記）
@@ -1876,6 +1876,7 @@
   4. `features/nagoya-solo-dining.html` の **`<title>` と `<meta name="description">` は変更しない**（2026-08-30 の判定を維持。全ページ中クリック1位の面を触らない）
   5. 上記1〜4の実施後、`data/gsc_metrics.json` の次回更新（翌週）で discovery 表示シェアの前後比を記録する。**シェアの上昇は施策効果ではなく計測の是正**である旨を backlog に明記し、効果測定の基準日をリセットする（過去の discovery 数値と単純比較しない）
 - **files**: `data/journal_seo_keywords.json`, （必要なら）`scripts/gsc_query_intent.js`
+- **2026-10-06 中止（オーナー判断）**: オーナーが「この課題は中止」と明示した。SNS原稿の自動生成（`data/journal_sns_draft_policy.json` の `generate_sns_draft:false`）は 2026-09-05 から止まっており、SNS投稿はリポジトリ外で運用している。直す対象のプレースホルダ欄が今後生成されないため、対応しない。SNS原稿の自動生成を再開する場合は、その時点で改めて起票する。
 
 ---
 
