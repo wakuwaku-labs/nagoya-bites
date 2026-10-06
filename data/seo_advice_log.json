@@ -3680,6 +3680,36 @@
       "brand_reason": "却下（08-21 と同旨＋恒常運用で増分なし）。日次ジャーナルの題材は検証可能な一次情報・出典（score_journal_candidates.js／journal_gate_policy.json）で毎日選ぶ設計で、アクセス解析から特定店を名指しして書かせるのは出典なき題材選定になり編集独立性と品質ゲート原則（制約10）に反する。「一人」系KWは data/journal_seo_keywords.json 登録済みで search_intent 採点に既に反映（SEO-011）。solo-dining と一人飲み系ジャーナルの相互リンクは backlog 既存課題で扱い中。",
       "category": null,
       "fingerprint": "294d6f9b691bbaed"
+    },
+    {
+      "id": null,
+      "date": "2026-10-07",
+      "source": "line-daily",
+      "advice": "🟡 予約クリック率1.4%が目安3%を下回る。👉 nagoya-solo-dining と 2026-10-05-atsuta-sapporo-miso-tokura-arahata の記事内に予約ボタン(cta_reserve)をさらに目立つ位置に追加",
+      "verdict": "rejected",
+      "brand_reason": "却下（単日ノイズ・制約10／信頼・制約7）。母数は72訪問中1クリックで、前日10.3%・前週6.4%・10-05の14.0%と日々大きく振れ判定に使えない。対象のジャーナル記事は本文に『予約も受け付けていない』店を扱っており、予約ボタンを目立たせるのは読者を誤誘導する。solo-dining は既に掲載店ごとにHotPepper導線を持つ。予約CTAの視認性は10-03・10-05（週次）に同旨を却下済み",
+      "category": null,
+      "fingerprint": "d6d2c975fa48c9b8"
+    },
+    {
+      "id": null,
+      "date": "2026-10-07",
+      "source": "line-daily",
+      "advice": "🟡 検索流入66%・2ページ目KWが停滞。👉「名古屋駅 一人飲み」狙いで index.html の検索フィルタに「一人飲み」タグを最優先で追加し関連店舗を明示",
+      "verdict": "duplicate",
+      "brand_reason": "重複（SEO-109 done でトップ常時表示「シーンで探す」に一人飲みチップ追加済み・index.html は一人飲み/ひとり飲み/1人飲み/サク飲みの同義語で絞り込み済み）。名駅×一人飲みの受け皿は features/meieki-hitori-nomi.html、特集強化は SEO-087 に集約済み（09-28〜10-06 に同主旨を判定済み）",
+      "category": null,
+      "fingerprint": "01b3c76cb6698367"
+    },
+    {
+      "id": null,
+      "date": "2026-10-07",
+      "source": "line-daily",
+      "advice": "🟢 訪問72人に店舗詳細11回。👉 index.html の全店舗リストで写真と短い紹介文を魅力的に更新し店舗詳細モーダルへの導線を強化",
+      "verdict": "rejected",
+      "brand_reason": "却下（具体的欠陥なしの汎用論）。4,500店超の写真・紹介文の一括『魅力的な更新』は対象も基準も無く、写真は photo_policy.json の実写ゲート、紹介文は実在データ由来で、盛った文言の量産は編集独立性・実在保証（Moat）に反する。モーダル導線の具体的不具合も示されていない",
+      "category": null,
+      "fingerprint": "af191a0018f1db37"
     }
   ]
 }
