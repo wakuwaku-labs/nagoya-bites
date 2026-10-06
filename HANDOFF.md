@@ -95,3 +95,5 @@ Linear Issue作成時に画像で示された7つの品質ルールをCLAUDE.md�
 - `scripts/sync_backlog_to_linear.js`
 - `data/linear_sync_state.json`
 - `docs/linear-task-workflow.md`
+
+- 2026-10-06 4周目（オーナー判断を受けて）: done=SEO-083 中止(#383・wont_fix)/ISSUE-099 業界人コメント48件採用・2件却下(#384)/ISSUE-086 v3.0不採用・ADR 0006(#385)/ISSUE-102 孤児ページ 誘導74・削除628・保留85(#387)。ISSUE-132 は23組統合(#386)で stores 4,931→4,908 見込みだが、未確認の別4組（Pizzeria mimi・鳥正・カンジャンケジャン渡・大久手山本屋）があるため in_progress。要確認: 権兵衛 名駅店/名駅南店・YOHAKU COFFEE 1号店/2号店は住所が違う（誤りなら data/store_merge_confirmed.json から外す）。後追い: audit_crosscheck_v3/v22.js の比較元表記を v2.2 に直す。
