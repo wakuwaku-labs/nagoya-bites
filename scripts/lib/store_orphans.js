@@ -1,0 +1,113 @@
+'use strict';
+
+/**
+ * scripts/lib/store_orphans.js
+ *
+ * ISSUE-102: stores/*.html の孤児ページ（data/stores.json から生成されなくなったページ）の
+ * 扱いを決める判定器。gen-store-pages.js（--check-orphans / --redirect-orphans /
+ * --delete-orphans）と tests が共有する。ネットワーク不要・決定的。
+ *
+ * 孤児は3つに分ける（判定は検証できる事実だけ・CLAUDE.md 制約10）。
+ *   redirect : 現役の店ページが別スラグで存在する（重複統合で吸収された／スラグが変わった）。
+ *              URL が検索インデックスや被リンクに残っているため、削除せず「軽量の誘導ページ」にする
+ *              （GitHub Pages は 301 を返せない → canonical + meta refresh + JS）。
+ *              根拠は (a) data/store_merge_pairs.json の absorbed→kept（kept が現役）
+ *                    (b) 店名の正規化一致が現役店でちょうど1件
+ *   hold     : data/manual_stores.json に同名エントリがある。写真の実在検証待ちで一時的に
+ *              stores.json から外れているだけの可能性があり（ISSUE-140 で実際に復帰した例あり）、
+ *              現役店を消さないために削除しない。復帰すれば生成器が通常ページで上書きする。
+ *   delete   : 上のどれにも当たらない（HotPepper 側の掲載終了・名古屋圏外・旧スラグ重複など）。
+ */
+
+const REDIRECT_MARK = 'nb-orphan-redirect';
+const BASE_URL = 'https://nagoya-bites.com';
+
+function normName(s) {
+  return String(s || '')
+    .normalize('NFKC')
+    .replace(/[\s・･\-－ー()（）【】\[\]'’"!！]/g, '')
+    .toLowerCase();
+}
+
+function isRedirectStub(html) {
+  return typeof html === 'string' && html.includes(`<!-- ${REDIRECT_MARK}:`);
+}
+
+function stubTarget(html) {
+  const m = typeof html === 'string' && html.match(new RegExp(`<!-- ${REDIRECT_MARK}:([^ ]+) -->`));
+  return m ? m[1] : null;
+}
+
+function readH1(html) {
+  const m = typeof html === 'string' && html.match(/<h1[^>]*>([^<]*)</);
+  return m ? m[1].trim() : '';
+}
+
+function escAttr(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+}
+
+/** 現役店ページへ誘導する軽量ページ（canonical + meta refresh + JS）。可視テキストは13px以上の既定サイズ。 */
+function renderRedirectStub(targetSlug, targetName) {
+  const url = `${BASE_URL}/stores/${targetSlug}.html`;
+  const name = escAttr(targetName || 'お店のページ');
+  return `<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ページを移動しました | NAGOYA BITES</title>
+<!-- ${REDIRECT_MARK}:${targetSlug} -->
+<link rel="canonical" href="${url}">
+<meta http-equiv="refresh" content="0; url=${targetSlug}.html">
+<script>location.replace(${JSON.stringify(targetSlug + '.html')});</script>
+</head>
+<body>
+<p>このページは移動しました。<a href="${targetSlug}.html">${name} のページへ</a></p>
+</body>
+</html>
+`;
+}
+
+/**
+ * @param {object} p
+ * @param {string[]} p.orphans            孤児スラグ（誘導ページ化済みで現役誘導先が生きているものは含めない）
+ * @param {Map<string,string>} p.activeNameBySlug  現役スラグ→店名
+ * @param {Object<string,string>} p.mergedKeptBySlug  absorbed スラグ→kept スラグ
+ * @param {string[]} p.manualNames        manual_stores.json の店名
+ * @param {(slug:string)=>string} p.readName  孤児ページの店名を返す
+ * @returns {{redirect:Object<string,{to:string,why:string,name:string}>, hold:string[], delete:string[]}}
+ */
+function classifyOrphans({ orphans, activeNameBySlug, mergedKeptBySlug, manualNames, readName }) {
+  const byNorm = new Map();
+  for (const [slug, name] of activeNameBySlug) {
+    const k = normName(name);
+    if (!k) continue;
+    if (!byNorm.has(k)) byNorm.set(k, []);
+    byNorm.get(k).push(slug);
+  }
+  const manual = new Set((manualNames || []).map(normName).filter(Boolean));
+  const out = { redirect: {}, hold: [], delete: [] };
+  for (const slug of orphans) {
+    const kept = mergedKeptBySlug && mergedKeptBySlug[slug];
+    if (kept && activeNameBySlug.has(kept)) {
+      out.redirect[slug] = { to: kept, why: 'merge', name: activeNameBySlug.get(kept) };
+      continue;
+    }
+    const name = readName(slug);
+    const k = normName(name);
+    const c = k ? byNorm.get(k) : null;
+    if (c && c.length === 1) {
+      out.redirect[slug] = { to: c[0], why: 'samename', name: activeNameBySlug.get(c[0]) };
+    } else if (k && manual.has(k)) {
+      out.hold.push(slug);
+    } else {
+      out.delete.push(slug);
+    }
+  }
+  return out;
+}
+
+module.exports = {
+  REDIRECT_MARK, normName, isRedirectStub, stubTarget, readH1, renderRedirectStub, classifyOrphans,
+};

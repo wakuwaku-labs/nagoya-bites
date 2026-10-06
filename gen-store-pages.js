@@ -1106,7 +1106,10 @@ async function main() {
   // --limit=N: 最初のN件だけページを生成（テスト用、sitemap.xmlは更新しない）
   // --dry-run: ファイル書き込みをせず件数だけ表示
   // --check-orphans: 生成終了後、シートに無い既存HTMLを一覧表示（削除はしない）
-  // --delete-orphans: シートに無い既存HTMLを実際に削除（破壊的、明示指定が必要）
+  // --redirect-orphans: 別スラグで現役の店ページがある孤児（重複統合の吸収側・スラグ変更）だけを
+  //   誘導ページへ置換（非破壊・冪等・CI向け）。ISSUE-102
+  // --delete-orphans: 上記の誘導化に加え、現役店と無関係な孤児を実際に削除（破壊的、明示指定が必要）。
+  //   manual_stores.json に同名がある孤児は写真再検証待ちの可能性があるため残す
   const args = process.argv.slice(2);
   const limitArg = args.find(a => a.startsWith('--limit='));
   const LIMIT = limitArg ? parseInt(limitArg.split('=')[1], 10) : null;
@@ -1114,6 +1117,7 @@ async function main() {
   const TEST_MODE = LIMIT !== null;
   const CHECK_ORPHANS = args.includes('--check-orphans');
   const DELETE_ORPHANS = args.includes('--delete-orphans');
+  const REDIRECT_ORPHANS = args.includes('--redirect-orphans');
 
   // ─── データソース戦略 ───
   // SOURCE OF TRUTH = index.html の LOCAL_STORES（build.js が生成、ライブサイトの表示と完全一致）
@@ -1267,27 +1271,59 @@ async function main() {
   // stores/index.html は店舗一覧ランディングページなので保護
   // _template.html も保護
   const PROTECTED_SLUGS = new Set(['index', '_template']);
-  if (CHECK_ORPHANS || DELETE_ORPHANS) {
+  if (CHECK_ORPHANS || DELETE_ORPHANS || REDIRECT_ORPHANS) {
+    const SO = require('./scripts/lib/store_orphans');
     const expected = new Set(slugs);
     const onDisk = fs.readdirSync(OUT_DIR).filter(f => /\.html$/.test(f)).map(f => f.replace(/\.html$/, ''));
-    const orphans = onDisk.filter(s => !expected.has(s) && !PROTECTED_SLUGS.has(s));
+    const readHtml = s => fs.readFileSync(path.join(OUT_DIR, `${s}.html`), 'utf8');
+    // 誘導ページ（ISSUE-102）: 誘導先が現役ならそのまま維持（孤児に数えない）。誘導先が消えたら孤児へ戻す
+    const redirectStubs = [];
+    const orphans = [];
+    for (const s of onDisk) {
+      if (expected.has(s) || PROTECTED_SLUGS.has(s)) continue;
+      const tgt = SO.stubTarget(readHtml(s));
+      if (tgt && expected.has(tgt)) redirectStubs.push(s); else orphans.push(s);
+    }
+    const activeNameBySlug = new Map(slugged.map(x => [x.slug, (x.store['店名'] || '').trim()]));
+    let mergedKeptBySlug = {};
+    try {
+      const mp = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'store_merge_pairs.json'), 'utf8'));
+      for (const p of mp.merged || []) for (const a of p.absorbed || []) if (a.slug && p.kept && p.kept.slug) mergedKeptBySlug[a.slug] = p.kept.slug;
+    } catch (e) { /* 統合記録が無ければ店名一致のみで判定 */ }
+    // 読めないときは例外で止める（hold 判定なしで削除側に倒さない＝現役店を消さない）
+    const manualNames = (JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'manual_stores.json'), 'utf8')).stores || []).map(m => m['店名']);
+    const plan = SO.classifyOrphans({
+      orphans, activeNameBySlug, mergedKeptBySlug, manualNames,
+      readName: s => SO.readH1(readHtml(s)),
+    });
+    const redirectSlugs = Object.keys(plan.redirect);
+    const canWrite = !DRY_RUN && !TEST_MODE;
+    let remaining = orphans.slice();  // 処理後も孤児として残るもの（監査の除外リストに載せる）
     if (orphans.length === 0) {
-      console.log(`\n孤児ページ: 0件 ✓`);
+      console.log(`\n孤児ページ: 0件 ✓（誘導ページ維持: ${redirectStubs.length}件）`);
     } else {
-      console.log(`\n孤児ページ: ${orphans.length}件（シートに無い既存HTML）`);
+      console.log(`\n孤児ページ: ${orphans.length}件（誘導 ${redirectSlugs.length} / 保留 ${plan.hold.length} / 削除対象 ${plan.delete.length}）・誘導ページ維持: ${redirectStubs.length}件`);
       orphans.slice(0, 10).forEach(s => console.log(`  - stores/${s}.html`));
       if (orphans.length > 10) console.log(`  ...ほか ${orphans.length - 10} 件`);
-      if (DELETE_ORPHANS && !DRY_RUN && !TEST_MODE) {
-        let deleted = 0;
-        for (const s of orphans) {
-          fs.unlinkSync(path.join(OUT_DIR, `${s}.html`));
-          deleted++;
+      if ((DELETE_ORPHANS || REDIRECT_ORPHANS) && canWrite) {
+        // 誘導（非破壊・冪等）: 別スラグで現役の店ページがある孤児は、削除せず誘導ページへ置換する
+        for (const s of redirectSlugs) {
+          fs.writeFileSync(path.join(OUT_DIR, `${s}.html`), SO.renderRedirectStub(plan.redirect[s].to, plan.redirect[s].name), 'utf8');
+          redirectStubs.push(s);
         }
-        console.log(`★ ${deleted}件の孤児ページを削除しました`);
-      } else if (DELETE_ORPHANS) {
-        console.log(`(--limit / --dry-run 中は削除をスキップしました)`);
+        remaining = remaining.filter(s => !plan.redirect[s]);
+        console.log(`★ ${redirectSlugs.length}件を現役店ページへの誘導ページに置換しました`);
+        if (DELETE_ORPHANS) {
+          let deleted = 0;
+          for (const s of plan.delete) { fs.unlinkSync(path.join(OUT_DIR, `${s}.html`)); deleted++; }
+          const delSet = new Set(plan.delete);
+          remaining = remaining.filter(s => !delSet.has(s));
+          console.log(`★ ${deleted}件の孤児ページを削除しました（保留 ${plan.hold.length}件は manual_stores 同名のため残置）`);
+        }
+      } else if (DELETE_ORPHANS || REDIRECT_ORPHANS) {
+        console.log(`(--limit / --dry-run 中は書き換え・削除をスキップしました)`);
       } else {
-        console.log(`削除する場合は --delete-orphans を付けて再実行（破壊的）`);
+        console.log(`誘導化は --redirect-orphans（非破壊）、削除は --delete-orphans（破壊的）を付けて再実行`);
       }
     }
     // DSN-001: 孤児スラグ一覧を永続化する。audit_design_system.js 等の監査スクリプトが
@@ -1298,8 +1334,9 @@ async function main() {
       fs.writeFileSync(ORPHANS_OUT, JSON.stringify({
         generatedAt: new Date().toISOString(),
         activeSlugCount: expected.size,
-        orphanCount: orphans.length,
-        orphanSlugs: orphans,
+        orphanCount: remaining.length,
+        orphanSlugs: remaining,
+        redirectStubSlugs: redirectStubs.slice().sort(),
       }, null, 2) + '\n', 'utf8');
     }
   }
