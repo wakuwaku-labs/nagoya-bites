@@ -33,7 +33,37 @@
  * data/store_merge_pairs.json に記録し、後日リダイレクト等を作る材料にする。
  */
 
+const fs = require('fs');
+const path = require('path');
 const { namesMatch, branchConflict } = require('./store_name_match');
+
+// オーナーが「同じ店」と明示確認したペアの正本（ISSUE-132・2026-10-06）。
+// 自動判定のブロッカー（区・HotPepperID・placeId の食い違い等）より優先して統合する。
+const CONFIRMED_PATH = path.join(__dirname, '..', '..', 'data', 'store_merge_confirmed.json');
+
+function loadConfirmedPairs() {
+  try {
+    const j = JSON.parse(fs.readFileSync(CONFIRMED_PATH, 'utf8'));
+    return Array.isArray(j.pairs) ? j.pairs : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+// side（店名・ホットペッパーID・placeId・エリアのうち書かれたものが全一致）に当たるレコードの index。
+// ちょうど1件に特定できたときだけ返す（0件・複数は -1）
+function resolveSide(stores, side) {
+  const keys = Object.keys(side || {}).filter((k) => side[k]);
+  if (!keys.length) return -1;
+  let found = -1;
+  for (let i = 0; i < stores.length; i++) {
+    if (keys.every((k) => stores[i][k] === side[k])) {
+      if (found >= 0) return -1;
+      found = i;
+    }
+  }
+  return found;
+}
 
 // 手動キュレーション側の値を優先する編集部フィールド
 const EDITORIAL_SCALAR_FIELDS = [
@@ -237,8 +267,9 @@ function mergeGroup(group) {
 /**
  * stores 配列の重複を統合する（非破壊: 新しい配列を返す。統合先レコードは更新される）。
  * @param {object[]} stores
- * @param {{slugOf?: (s:object)=>string}} [opts]
- * @returns {{stores: object[], merged: object[], skipped: object[]}}
+ * @param {{slugOf?: (s:object)=>string, confirmedPairs?: object[]}} [opts]
+ *   confirmedPairs: オーナー確認済みペア（既定は data/store_merge_confirmed.json）。[] で無効化
+ * @returns {{stores: object[], merged: object[], skipped: object[], unresolved: object[]}}
  */
 function dedupeStores(stores, opts = {}) {
   const slugOf = typeof opts.slugOf === 'function' ? opts.slugOf : () => '';
@@ -270,6 +301,20 @@ function dedupeStores(stores, opts = {}) {
   }
   pairs.sort((p, q) => (p[0] - q[0]) || (p[1] - q[1]));
 
+  // オーナー確認済みペア: 自動判定をバイパスして先に結合する
+  const confirmedList = Array.isArray(opts.confirmedPairs) ? opts.confirmedPairs : loadConfirmedPairs();
+  const confirmedKeys = new Set();
+  const confirmedIdx = [];
+  const unresolved = [];
+  for (const cp of confirmedList) {
+    const sides = cp.sides || [];
+    const i = resolveSide(stores, sides[0]), j = resolveSide(stores, sides[1]);
+    if (i < 0 || j < 0 || i === j) { unresolved.push(sides); continue; }
+    confirmedKeys.add(`${Math.min(i, j)}:${Math.max(i, j)}`);
+    confirmedIdx.push([Math.min(i, j), Math.max(i, j)]);
+  }
+  confirmedIdx.sort((p, q) => (p[0] - q[0]) || (p[1] - q[1]));
+
   // union-find。結合は「両クラスタの全メンバー同士でブロッカーが無い」ときだけ
   // （A=B・B=C でも A と C が区で食い違えば推移的に繋げない）
   const parent = Array.from({ length: n }, (_, i) => i);
@@ -278,7 +323,22 @@ function dedupeStores(stores, opts = {}) {
   const membersOf = (r) => members.get(r) || [r];
   const skipped = [];
   const reasonOf = new Map();
+  const union = (i, j, reason) => {
+    const ri = find(i), rj = find(j);
+    if (ri === rj) return;
+    const mi = membersOf(ri), mj = membersOf(rj);
+    parent[rj] = ri;
+    members.set(ri, mi.concat(mj));
+    members.delete(rj);
+    const rs = reasonOf.get(ri) || new Set();
+    for (const r of [reason, ...(reasonOf.get(rj) || [])]) rs.add(r);
+    reasonOf.set(ri, rs);
+    reasonOf.delete(rj);
+  };
+  for (const [i, j] of confirmedIdx) union(i, j, 'owner_confirmed');
   for (const [i, j] of pairs) {
+    if (find(i) === find(j)) continue; // 確認済みペア経由で既に同じ店
+    if (confirmedKeys.has(`${i}:${j}`)) continue;
     const v = judgePair(stores[i], stores[j]);
     if (!v.candidate) continue;
     if (!v.ok) {
@@ -334,7 +394,7 @@ function dedupeStores(stores, opts = {}) {
       filledFields: filled,
     });
   }
-  return { stores: stores.filter((_, i) => !drop.has(i)), merged, skipped };
+  return { stores: stores.filter((_, i) => !drop.has(i)), merged, skipped, unresolved };
 }
 
-module.exports = { dedupeStores, judgePair, mergeGroup, wardOf, looseName, pickBase };
+module.exports = { dedupeStores, loadConfirmedPairs, resolveSide, judgePair, mergeGroup, wardOf, looseName, pickBase };
