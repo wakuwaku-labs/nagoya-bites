@@ -1,0 +1,408 @@
+{
+  "date": "2026-10-07",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名駅の居酒屋で一人飲み、ひやおろしは10月中旬まで",
+      "verdict": "PASS",
+      "total": 100,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 6件 (原価,仕入れ,業界,構造,慣習,相場) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 151字 +4",
+          "title 25字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "10月の値上げ3,153品目、酒類が最多——名古屋の居酒屋が飲み放題を据え置ける理由",
+      "verdict": "HOLD",
+      "total": 74,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 10,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 3
+      },
+      "search_intent_links": [
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 2件 (原価,構造) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 93字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語がリードのみ「業界人」+1",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "忘年会の予約は10月から——名駅の大箱居酒屋で席を押さえる順番",
+      "verdict": "HOLD",
+      "total": 58,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 0,
+        "brand_fit": 8,
+        "writability": 6,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "居酒屋",
+          "feature": "features/nagoya-izakaya.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 29字（短すぎ）→ +0",
+          "title 31字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「忘年会」+4",
+          "タイトルにジャンル語「居酒屋」+2"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "金山で利き酒60分1,500円——吟醸マグロに学ぶ愛知の地酒の飲み比べ方",
+      "verdict": "HOLD",
+      "total": 47,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 8,
+        "uniqueness": 0,
+        "brand_fit": 8,
+        "writability": 4,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "金山",
+          "feature": "stores/area/kanayama/index.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 12日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 35字（短すぎ）→ +0",
+          "title 36字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「金山」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [
+    {
+      "id": "c4",
+      "title_draft": "一人飲み歓迎の店を見抜く5つのサイン",
+      "verdict": "DISQUALIFIED",
+      "total": 0,
+      "disqualified_reasons": [
+        "同一コラムの再掲 (COL-OPS-004, 2026-08-19)"
+      ],
+      "breakdown": null
+    }
+  ],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "industry_insider",
+      "title_draft": "名駅の居酒屋で一人飲み、ひやおろしは10月中旬まで",
+      "lead_draft": "10月3・4日、久屋大通公園で愛知の蔵元25社が集まる「秋酒祭」が開かれた。いま居酒屋の冷蔵庫にあるのは新酒ではなく、冬に仕込み夏を越した「ひやおろし」。数量限定で予約だけで完売する銘柄もあり、店の棚に並ぶ期間は短い。名駅の日本酒居酒屋おにたいじを手がかりに、秋酒の入荷時期と一杯の値段を業界人が読む。",
+      "angle": "ひやおろしの仕入れ構造（蔵ごとに9月初旬〜下旬の出荷・数量限定で酒販店の予約で決まる）と店の原価・相場（地酒3種飲み比べ1,480円・セルフ40種1時間1,870円）、10月の酒類値上げ1,399品目、冷蔵庫の棚替えの慣習を業界人視点で読み、一人飲みと宴会での頼み方・席の選び方を示す",
+      "main_store": {
+        "name": "酒と肴と男と女 日本酒天国 おにたいじ 名古屋駅店",
+        "id": "J001051301",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "column_id": "COL-SEASON-005",
+      "sources": [
+        {
+          "label": "愛知県 報道発表「秋酒祭 愛知〜AUTUMN SAKE FEST 2026〜」",
+          "url": "https://www.pref.aichi.jp/press-release/2026aichisake-2.html",
+          "date": "2026-09-25"
+        },
+        {
+          "label": "PR TIMES 株式会社ZIP-FM「東海地区最大級の日本酒試飲イベント『秋酒祭』今年も愛知・岐阜の2ヶ所で開催決定！」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000231.000048223.html",
+          "date": "2026-07-21"
+        },
+        {
+          "label": "nippon.com 10月の食品値上げ3153品目―帝国データバンク",
+          "url": "https://www.nippon.com/ja/japan-data/h02899/",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "Aichi Now 居酒屋に聞く!ひやおろしの味わい方",
+          "url": "https://www.aichinow.pref.aichi.jp/features/detail/257/"
+        },
+        {
+          "label": "Aichi Now 蔵元に聞く!ひやおろしの魅力",
+          "url": "https://www.aichinow.pref.aichi.jp/features/detail/256/"
+        },
+        {
+          "label": "Aichi Now 酒販店に聞く!ひやおろしの選び方",
+          "url": "https://www.aichinow.pref.aichi.jp/features/detail/258/"
+        },
+        {
+          "label": "ホットペッパーグルメ 日本酒天国 おにたいじ 名古屋駅店",
+          "url": "https://www.hotpepper.jp/strJ001051301/",
+          "date": "2026-10-07"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "title_draft": "10月の値上げ3,153品目、酒類が最多——名古屋の居酒屋が飲み放題を据え置ける理由",
+      "lead_draft": "帝国データバンクによると10月の値上げは3,153品目で、うち酒類・飲料が1,399品目と最多。それでも名古屋の居酒屋の飲み放題価格はすぐには動かない。仕入れと原価の構造を業界人が読む。",
+      "angle": "飲み放題の原価構造と値上げ吸収の工夫、価格帯の読み方",
+      "main_store": {
+        "name": "酒と肴と男と女 日本酒天国 おにたいじ 名古屋駅店",
+        "id": "J001051301",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "column_id": "COL-PRICE-007",
+      "sources": [
+        {
+          "label": "nippon.com 10月の食品値上げ3153品目",
+          "url": "https://www.nippon.com/ja/japan-data/h02899/",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "ホットペッパーグルメ おにたいじ",
+          "url": "https://www.hotpepper.jp/strJ001051301/",
+          "date": "2026-10-07"
+        },
+        {
+          "label": "愛知県 報道発表 秋酒祭",
+          "url": "https://www.pref.aichi.jp/press-release/2026aichisake-2.html",
+          "date": "2026-09-25"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c3",
+      "theme": "industry_insider",
+      "title_draft": "金山で利き酒60分1,500円——吟醸マグロに学ぶ愛知の地酒の飲み比べ方",
+      "lead_draft": "秋酒祭で愛知の蔵元25社が並んだ週末のあと、街で地酒を飲み比べるなら。",
+      "angle": "利き酒コースの価格と席",
+      "main_store": {
+        "name": "吟醸マグロ",
+        "id": "",
+        "area": "金山",
+        "genre": "居酒屋"
+      },
+      "sources": [
+        {
+          "label": "Aichi Now 居酒屋に聞く",
+          "url": "https://www.aichinow.pref.aichi.jp/features/detail/257/"
+        },
+        {
+          "label": "愛知県 報道発表 秋酒祭",
+          "url": "https://www.pref.aichi.jp/press-release/2026aichisake-2.html",
+          "date": "2026-09-25"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c4",
+      "theme": "industry_insider",
+      "title_draft": "一人飲み歓迎の店を見抜く5つのサイン",
+      "lead_draft": "メニュー構成と席配置から一人客への本気度を読む。",
+      "angle": "席配置とメニュー",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "栄",
+        "genre": "居酒屋"
+      },
+      "column_id": "COL-OPS-004",
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ おにたいじ",
+          "url": "https://www.hotpepper.jp/strJ001051301/",
+          "date": "2026-10-07"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c5",
+      "theme": "industry_insider",
+      "title_draft": "忘年会の予約は10月から——名駅の大箱居酒屋で席を押さえる順番",
+      "lead_draft": "10月に入り、名駅の居酒屋は忘年会の予約受付を始めている。",
+      "angle": "宴会予約のタイミングと席",
+      "main_store": {
+        "name": "酒と肴と男と女 日本酒天国 おにたいじ 名古屋駅店",
+        "id": "J001051301",
+        "area": "名駅",
+        "genre": "居酒屋"
+      },
+      "column_id": "COL-SEASON-006",
+      "sources": [
+        {
+          "label": "ホットペッパーグルメ おにたいじ",
+          "url": "https://www.hotpepper.jp/strJ001051301/",
+          "date": "2026-10-07"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}
