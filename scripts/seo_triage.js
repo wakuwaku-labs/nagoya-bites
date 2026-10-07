@@ -10,6 +10,7 @@
  * サブコマンド:
  *   --next-id                  次の SEO-NNN を返す（agent-backlog.md + ログを走査）
  *   --check-dup "<advice>"     正規化テキストを既存ログと照合。重複なら既存entryを返す
+ *                              併せて related[]（論点キーが一致する過去判定・新しい順）を返す
  *   --log-append '<json>'      entry(または配列)を seo_advice_log.json に追記
  *   --report [--days N] [--source line-weekly]
  *                              採用/却下サマリ＋ソース別内訳(by_source)＋「採用済み未done」一覧を出力
@@ -69,11 +70,53 @@ function nextId(offset = 0) {
 // 重複検知
 // ──────────────────────────────────────────────────────────
 
+/**
+ * 論点キー（言い換えに強い・誰でも原文から検算できる語）を抜き出す。
+ *   kw:<「」『』で括られた語>  page:<features/・journal/・stores/ のslug、nagoya-*、日付slug>
+ *
+ * 完全一致の fingerprint は、同じ提案の言い換え（毎日 AI が文面を変えて送ってくる）を
+ * 一切拾えなかった（2026-10-07 実測: 「名古屋駅 一人飲み」の5回目の同旨提案が新規扱い）。
+ * 一方、文字bigram類似度は本物の重複 0.26 と無関係 0.25 が分離できず、閾値で合否を
+ * 決めると制約10・品質ゲート原則5に反する。そこで「一致した論点キー」という
+ * 検算可能な事実だけで関連候補を並べ、重複かどうかの判断はエージェントに残す。
+ */
+function topicKeys(text) {
+  const t = String(text || '').normalize('NFKC');
+  const keys = new Set();
+  const slug = (v) => /^(?:nagoya-[a-z0-9-]+|\d{4}-\d{2}-\d{2}-[a-z0-9-]+)$/.test(v);
+  for (const m of t.matchAll(/[「『]([^」』]{2,30})[」』]/g)) {
+    const v = m[1].replace(/\s+/g, ' ').trim().toLowerCase();
+    keys.add((slug(v) ? 'page:' : 'kw:') + v);
+  }
+  for (const m of t.matchAll(/\b(?:features|journal|stores)\/([a-z0-9][a-z0-9-]*)(?:\.html)?/gi)) keys.add('page:' + m[1].toLowerCase());
+  for (const m of t.matchAll(/\b(nagoya-[a-z0-9-]+|\d{4}-\d{2}-\d{2}-[a-z0-9-]+)\b/gi)) keys.add('page:' + m[1].toLowerCase());
+  return [...keys];
+}
+
+const RELATED_LIMIT = 5;
+
+function relatedEntries(advice, entries) {
+  const q = topicKeys(advice);
+  if (!q.length) return { keys: q, related: [], related_total: 0 };
+  const hits = entries
+    .map((e) => ({ e, shared: topicKeys(e.advice).filter((k) => q.includes(k)) }))
+    .filter((h) => h.shared.length)
+    .sort((a, b) => b.shared.length - a.shared.length || String(b.e.date).localeCompare(String(a.e.date)));
+  return {
+    keys: q,
+    related_total: hits.length,
+    related: hits.slice(0, RELATED_LIMIT).map(({ e, shared }) => ({
+      shared_keys: shared, id: e.id || null, date: e.date, source: e.source || null,
+      verdict: e.verdict, advice: e.advice, brand_reason: e.brand_reason || null,
+    })),
+  };
+}
+
 function checkDup(advice) {
   const fp = fingerprint(advice);
   const log = loadLog();
   const hit = log.entries.find((e) => e.fingerprint === fp);
-  return { fingerprint: fp, duplicate: !!hit, existing: hit || null };
+  return { fingerprint: fp, duplicate: !!hit, existing: hit || null, ...relatedEntries(advice, log.entries) };
 }
 
 // ──────────────────────────────────────────────────────────
@@ -245,4 +288,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { normalize, fingerprint, nextId, checkDup, report };
+module.exports = { normalize, fingerprint, nextId, checkDup, report, topicKeys, relatedEntries };
