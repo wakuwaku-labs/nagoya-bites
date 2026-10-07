@@ -6,6 +6,32 @@
 
 ---
 
+### [DSN-007] 店舗ページ2件（J004026527 / J004403777）がデザインシステム未適用のまま公開されている（nb.css・フォント・ヘッダーロゴ・フッターが欠落）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-07
+- **category**: SEO（design/a11y）
+- **owner**: Builder
+- **source**: 話題店発掘ループ（trending-scout）のPR #400 で routine-pr-automerge.yml のQA（`node scripts/audit_design_system.js --check --sample 200`）が失敗し判明。PR #400 の差分は `data/trending_stores.json` 等のみで `stores/` 配下に触れていないため、PR作成時に `main`（`c17fcee2`）を直接チェックアウトして同じコマンドを再現し、PR起因ではなく main に既存の問題であることを確認した
+- **実測（2026-10-07・再現可能）**:
+  ```
+  node scripts/audit_design_system.js --check --sample 200
+  ```
+  が `stores/J004026527.html` / `stores/J004403777.html` の2件で以下を検出:
+  - `missing-nb-css-link`（`assets/css/nb.css` への href が無い）
+  - `missing-fonts-link`（`fonts.googleapis.com` のリンクが無い）
+  - `missing-header-logo`
+  - `missing-footer`
+  このため CLAUDE.md 制約12（全ページがデザインシステムを通す・DSN-001）に違反し、`routine-pr-automerge.yml` のQAゲートが無関係なPRまで赤くする（自動マージが止まる）副作用も出ている
+- **brand-filter**: ✅ 適合 — デザインシステム（DSN-001）はブランドの編集独立性・信頼性を支える表示基盤そのもので、順位操作やマネタイズとは無関係
+- **acceptance**:
+  1. 2ファイルがどの経路で生成されたか特定する（`gen-store-pages.js` の生成タイミング・`apply_design_system.js` 適用漏れか、手動編集か）
+  2. `node scripts/apply_design_system.js --only stores --dry-run` 等で2ファイルへの影響を確認のうえ適用し、`node scripts/audit_design_system.js --check` が違反ゼロで通ることを確認
+  3. 同種の漏れが他にないか `--sample` を広げて（または全件）再検査し、件数を記録する
+  4. 再発防止: この2件がなぜ `gen-store-pages.js` / 日次の `apply_site_chrome.js --check` の既存チェックをすり抜けたかを一言で記録する
+
+---
+
 ### [SEO-114] ジャーナル末尾の「エリア×ジャンル」導線が記事のエリアを無視している（栄の記事から名駅・緑区のラーメン一覧へ送っている）
 
 - **priority**: P2 → **status**: done
