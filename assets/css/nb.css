@@ -305,6 +305,21 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .nb-site-intro{font-size:var(--fs-xs);color:var(--dim);line-height:var(--lh-ui);}
 .nb-site-intro a{color:var(--gold);text-decoration:none;}
 
+/* ── 先に結論（特集の冒頭。scripts/apply_feature_conclusions.js が data/feature_conclusions.json から書く・SEO-122/134） ── */
+.nb-conclusion{background:var(--card);border:1px solid var(--card-border);border-left:3px solid var(--gold);border-radius:0 var(--r-md) var(--r-md) 0;padding:var(--sp-4) var(--sp-5);margin:0 0 var(--sp-5);}
+.nb-conclusion-title{font-family:var(--font-body);font-weight:700;font-size:var(--fs-md);line-height:var(--lh-heading);color:var(--ink);margin:0 0 var(--sp-2);}
+.nb-conclusion-list{list-style:none;padding:0;margin:0;}
+.nb-conclusion-list li{padding:var(--sp-3) 0;border-top:1px solid var(--border);line-height:var(--lh-ui);}
+.nb-conclusion-list li:first-child{border-top:0;padding-top:var(--sp-1);}
+.nb-conclusion-label{display:block;font-size:var(--fs-xs);font-weight:600;color:var(--gold);margin-bottom:var(--sp-1);}
+.nb-conclusion-list a{font-size:var(--fs-md);font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:3px;}
+.nb-conclusion-facts{display:block;font-size:var(--fs-sm);color:var(--muted);margin-top:var(--sp-1);}
+.nb-conclusion-note{font-size:var(--fs-xs);line-height:var(--lh-ui);color:var(--dim);margin:var(--sp-3) 0 0;}
+.nb-conclusion-hubs{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:var(--sp-3) 0 0;padding-top:var(--sp-3);border-top:1px solid var(--border);}
+.nb-conclusion-hubs-title{flex-basis:100%;font-size:var(--fs-xs);font-weight:600;color:var(--dim);}
+.nb-conclusion-hubs a{display:inline-flex;align-items:center;min-height:var(--tap-min);padding:0 var(--sp-3);font-size:var(--fs-sm);color:var(--gold);background:var(--bg);border:1px solid var(--card-border);border-radius:var(--r-md);text-decoration:none;}
+.nb-conclusion-hubs a:hover{border-color:var(--gold);}
+
 .store-list{display:flex;flex-direction:column;gap:var(--sp-4);margin:var(--sp-5) 0;}
 .store-card{display:flex;gap:var(--sp-4);align-items:flex-start;background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-md);padding:var(--sp-5);margin-bottom:0;}
 .store-num{font-family:var(--font-display);font-weight:500;font-size:var(--fs-2xl);color:var(--gold);opacity:.6;line-height:1;min-width:2rem;text-align:center;}

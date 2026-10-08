@@ -133,6 +133,15 @@ for (const target of ['stores', 'journal']) {
   });
 }
 
+checks.push({
+  id: 'feature-conclusions',
+  title: '特集の冒頭の「先に結論」がその日の掲載店と一致（SEO-122）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/apply_feature_conclusions.js', '--check']],
+});
+
 if (cat.buildCore.length) {
   checks.push({
     id: 'isnagoya-filter',

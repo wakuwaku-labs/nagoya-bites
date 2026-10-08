@@ -1061,7 +1061,9 @@ function nbCallStore(ev,placeId,storeName,btn){ev.stopPropagation();if(!placeId|
 //   特集・記事 … JSON-LD の dateModified → datePublished（記事はファイル名の日付も可）
 //   一覧ページ … 配下のページの lastmod の最大値。about.html など日付の取れないページは書かない
 function buildSitemap(slugs, storeLastmod = new Map()) {
-  const today = new Date().toISOString().slice(0, 10);
+  // 未来の日付を丸めるときの「今日」は JST。特集・記事の日付は JST で書くため、UTC だと日本時間 0〜9 時に
+  // その日に更新した特集の lastmod を前日に丸めてしまう（CI の 03:00 JST 実行も同じ）
+  const today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
   const L = sitemapLastmod;
   const storeDates = slugs.map(slug => L.clampToday(storeLastmod.get(slug), today) || today);
 

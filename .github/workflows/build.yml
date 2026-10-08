@@ -278,6 +278,12 @@ jobs:
         run: node scripts/add_feature_top_cta.js --all
         continue-on-error: true
 
+      - name: 特集の冒頭の「先に結論」を掲載店にそろえる（SEO-122・冪等・日次）
+        # data/feature_conclusions.json の行の条件（価格帯）で、その日の一覧（ItemList）から店を選んで書く。
+        # 掲載店の入れ替え（refresh_feature_rosters.js）の後に置くので、結論が載っていない店を勧めることはない
+        run: node scripts/apply_feature_conclusions.js
+        continue-on-error: true
+
       - name: 特集×ジャーナル内部リンク付与（SEO-108・冪等・日次）
         # 各 features/*.html に、同じ店を扱った journal 記事（store_id 一致 or KW 一致）へのリンクを
         # 最大3本挿入する。journal_published.json と journal_seo_keywords.json を根拠にする。

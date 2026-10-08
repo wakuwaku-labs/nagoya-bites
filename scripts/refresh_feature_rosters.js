@@ -104,8 +104,15 @@ function sceneMatch(s, scene) {
   const kwRe = scene.keyword ? new RegExp(scene.keyword, 'g') : null;
 
   if (genreRe && !genreRe.test(s['ジャンル'] || '')) return null;
+  // 店名かジャンルにこの語がある店は載せない（ジャンルが「ダイニングバー」でも中身が焼肉・BBQ の店を外す・SEO-122）
+  if (scene.exclude && new RegExp(scene.exclude).test(`${s['店名'] || ''} ${s['ジャンル'] || ''}`)) return null;
   if (scene.gateArea && areaRe && !areaRe.test(sceneHaystackArea(s))) return null;
+  // requirePrice: 価格帯の表示が無い店は載せない（「価格帯◯円以上だけ」と書いている特集で、確かめられない店を通さない・SEO-122）
+  if (scene.requirePrice && priceFloor(s['価格帯']) === null) return null;
   if (scene.minPrice) { const pf = priceFloor(s['価格帯']); if (pf !== null && pf < scene.minPrice) return null; }
+  // 特集ごとの Google 評価の下限（全体の minGoogle と違い、編集部推薦・editorReason でも免除しない）。
+  // 記事が「評価◯以上だけを載せる」と書いている特集で、その約束を掲載店の選定で守るため（SEO-122）
+  if (scene.minGoogle) { const g = toNum(s['Google評価']); if (g === null || g < scene.minGoogle) return null; }
 
   const kwHay = sceneHaystackKeyword(s);
   const kwHits = kwRe ? (kwHay.match(kwRe) || []).length : 0;
@@ -496,7 +503,8 @@ function main() {
     html = replaceItemList(replaced, final);
     html = injectBadgeCss(html);
     if (html !== orig) {
-      html = touchDateModified(html, new Date().toISOString().slice(0, 10));
+      // 日付は JST（特集の公開日・更新日はすべて JST の日付。UTC だと CI の 03:00 JST 実行で前日になる）
+      html = touchDateModified(html, todayJST());
       fs.writeFileSync(file, html);
     }
     const seasonalN = final.filter(e => e.seasonalHit).length;
