@@ -27,7 +27,9 @@
  *
  * 使い方:
  *   node scripts/indexnow_ping.js --init                 # キー生成 + キーファイル作成（送信しない）
- *   node scripts/indexnow_ping.js --recent 7             # 直近7日に更新された URL を dry-run 表示
+ *   node scripts/indexnow_ping.js --recent 7             # 送信対象（下記）を dry-run 表示
+ *     送信対象: トップ/索引 + 直近7日のジャーナル + 編集コメントが変わった店舗ページ + 内容が変わったハブ
+ *     （「変わった」は data/indexnow_state.json に記録した前回の送信値との比較・SEO-136）
  *   node scripts/indexnow_ping.js --recent 7 --yes       # 実際に送信する（外部通信が発生）
  *   node scripts/indexnow_ping.js --urls "https://..."   # URL を直接指定
  *   node scripts/indexnow_ping.js --status               # キーの設定状況を確認
@@ -45,6 +47,9 @@ const CONFIG_PATH = path.join(ROOT, 'data', 'indexnow.json');
 const JOURNAL_DIR = path.join(ROOT, 'journal');
 const PUBLISHED_PATH = path.join(ROOT, 'data', 'journal_published.json');
 const MAX_URLS = 200;
+const STATE_PATH = path.join(ROOT, 'data', 'indexnow_state.json');
+const MANIFEST_PATH = path.join(ROOT, 'data', 'area_genre_pages_manifest.json');
+const SITEMAP_PATH = path.join(ROOT, 'sitemap.xml');
 
 function out(o) { console.log(JSON.stringify(o, null, 2)); }
 
@@ -85,36 +90,146 @@ function cmdInit() {
 }
 
 // ── URL 収集 ────────────────────────────────────────────
-/** 直近 N 日に公開されたジャーナル記事 + 常時更新されるトップ/索引 */
-function recentUrls(days) {
-  const urls = new Set([`${ORIGIN}/`, `${ORIGIN}/journal/`, `${ORIGIN}/features/`]);
-  if (fs.existsSync(PUBLISHED_PATH)) {
-    const pub = JSON.parse(fs.readFileSync(PUBLISHED_PATH, 'utf8'));
-    const cutoff = Date.now() - days * 86400000;
-    (pub.entries || []).forEach(e => {
-      if (!e.date || !e.slug) return;
-      if (new Date(e.date + 'T00:00:00+09:00').getTime() < cutoff) return;
-      if (!fs.existsSync(path.join(JOURNAL_DIR, e.slug + '.html'))) return; // 実在する記事だけ
-      urls.add(`${ORIGIN}/journal/${e.slug}.html`);
-    });
+// 1回の送信は「トップ/索引 → 直近 N 日のジャーナル → 編集コメントが変わった店舗ページ →
+// 内容が変わったハブ」の順に MAX_URLS 件まで詰める（SEO-136）。
+// 「変わった」は前回送った時点の値との比較で決める。送った値は data/indexnow_state.json に
+// 実送信が成功したときだけ書く（dry-run や失敗では書かない＝送れなかった分は翌日に回る）。
+// ハブは日々 100〜500 本の内容ハッシュが変わる（掲載店の評価などが動くため・2026-09-25〜10-08 の
+// git 履歴で実測）。上限 200 件に収まらない分は、前回送った日が古いものから順に送る。
+// 店舗ページは日々 300〜700 本変わるため全部は送らず、編集コメント（editorReason / insiderNote）が
+// ページに出ていて、その文が前回送ったときから変わったものだけを送る。
+
+/** 直近 N 日に公開されたジャーナル記事（実在するものだけ） */
+function journalUrls(days, now = Date.now()) {
+  if (!fs.existsSync(PUBLISHED_PATH)) return [];
+  const pub = JSON.parse(fs.readFileSync(PUBLISHED_PATH, 'utf8'));
+  const cutoff = now - days * 86400000;
+  const urls = [];
+  (pub.entries || []).forEach(e => {
+    if (!e.date || !e.slug) return;
+    if (new Date(e.date + 'T00:00:00+09:00').getTime() < cutoff) return;
+    if (!fs.existsSync(path.join(JOURNAL_DIR, e.slug + '.html'))) return;
+    urls.push(`${ORIGIN}/journal/${e.slug}.html`);
+  });
+  return urls;
+}
+
+function loadState(p = STATE_PATH) {
+  try {
+    const s = JSON.parse(fs.readFileSync(p, 'utf8'));
+    return { hubs: s.hubs || {}, stores: s.stores || {} };
+  } catch (_) {
+    return { hubs: {}, stores: {} };
   }
-  // SEO-094: エリア×ジャンル一覧（stores/area/）の新規/更新ページ。初回公開直後は
-  // Bing に最優先で知らせたいため、manifest の updated が直近 N 日のものを混ぜる。
-  // MAX_URLS の枠を journal 側と食い合うため件数は限定的（数日かけて全件を送り切る設計）。
-  const manifestPath = path.join(ROOT, 'data', 'area_genre_pages_manifest.json');
-  if (fs.existsSync(manifestPath)) {
-    try {
-      const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-      const cutoff = Date.now() - days * 86400000;
-      (manifest.pages || [])
-        .filter(p => p.status === 'active' && p.updated && new Date(p.updated + 'T00:00:00+09:00').getTime() >= cutoff)
-        .filter(p => fs.existsSync(path.join(ROOT, p.path)))
-        .forEach(p => urls.add(`${ORIGIN}/${p.path}`));
-    } catch (e) {
-      // manifest 破損時は無視（IndexNow 送信自体は journal/トップだけでも成立させる）
-    }
+}
+
+const TYPE_ORDER = { root: 0, area: 1, genre: 2, condition: 3 };
+
+/** manifest の公開中ハブのうち、前回送ったときと contentHash が違うもの（前回送った日が古い順） */
+function hubTargets(manifest, state, exists) {
+  const pending = ((manifest && manifest.pages) || [])
+    .filter(p => p.status === 'active' && p.contentHash && exists(p.path))
+    .filter(p => (state.hubs[p.path] || {}).hash !== p.contentHash)
+    .map(p => ({ url: `${ORIGIN}/${p.path}`, key: p.path, hash: p.contentHash, type: p.type, updated: p.updated || '', last: (state.hubs[p.path] || {}).at || '' }));
+  pending.sort((a, b) =>
+    a.last.localeCompare(b.last) ||
+    (TYPE_ORDER[a.type] ?? 9) - (TYPE_ORDER[b.type] ?? 9) ||
+    b.updated.localeCompare(a.updated) ||
+    a.key.localeCompare(b.key));
+  return pending;
+}
+
+const ENTITIES = { '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&#x27;': "'", '&apos;': "'" };
+function normText(s) { return String(s || '').replace(/\s+/g, ' ').trim(); }
+function pageText(html) { return normText(String(html).replace(/&(?:amp|lt|gt|quot|apos|#39|#x27);/g, m => ENTITIES[m])); }
+
+/**
+ * 編集コメントがページに出ている店舗ページのうち、出ている文が前回送ったときと違うもの。
+ * 「出ている」はページの HTML に文がそのまま含まれること（第三者が検算できる事実・制約10）。
+ * データにコメントがあってもページに出ていなければ、ページは変わっていないので送らない。
+ */
+function storeTargets(stores, state, { sitemapLocs, readPage, toSlug }) {
+  const pending = [];
+  const seen = new Set();
+  let notOnPage = 0;
+  for (const s of stores || []) {
+    const comments = [s.editorReason, s.insiderNote].map(normText).filter(Boolean);
+    if (!comments.length) continue;
+    const key = `stores/${toSlug(s)}.html`;
+    const url = `${ORIGIN}/${key}`;
+    if (seen.has(key) || !sitemapLocs.has(url)) continue;
+    seen.add(key);
+    const html = readPage(key);
+    if (!html) continue;
+    const text = pageText(html);
+    const shown = comments.filter(c => text.includes(c));
+    if (!shown.length) { notOnPage++; continue; }
+    const sig = crypto.createHash('sha256').update(shown.join('\u0000')).digest('hex').slice(0, 16);
+    const prev = state.stores[key] || {};
+    if (prev.sig === sig) continue;
+    pending.push({ url, key, sig, last: prev.at || '' });
   }
-  return Array.from(urls).slice(0, MAX_URLS);
+  pending.sort((a, b) => a.last.localeCompare(b.last) || a.key.localeCompare(b.key));
+  return { pending, notOnPage };
+}
+
+function collectTargets({ days, now, state, manifest, stores, sitemapLocs, readPage, exists, toSlug }) {
+  const fixed = [`${ORIGIN}/`, `${ORIGIN}/journal/`, `${ORIGIN}/features/`];
+  const journal = journalUrls(days, now);
+  const st = storeTargets(stores, state, { sitemapLocs, readPage, toSlug });
+  const hubs = hubTargets(manifest, state, exists);
+  const urls = [];
+  const seen = new Set();
+  const take = (u) => {
+    if (urls.length >= MAX_URLS || seen.has(u)) return false;
+    seen.add(u);
+    urls.push(u);
+    return true;
+  };
+  fixed.forEach(take);
+  const journalTaken = journal.filter(take);
+  const storesSent = st.pending.filter(t => take(t.url));
+  const hubsSent = hubs.filter(t => take(t.url));
+  return {
+    urls,
+    breakdown: {
+      cap: MAX_URLS,
+      fixed: fixed.length,
+      journal: journalTaken.length,
+      stores: { selected: storesSent.length, pending: st.pending.length, comment_not_on_page: st.notOnPage },
+      hubs: { selected: hubsSent.length, pending: hubs.length },
+    },
+    sent: { stores: storesSent, hubs: hubsSent },
+  };
+}
+
+/** 実送信に成功した分を記録する（公開中でなくなったハブの記録は消す） */
+function recordSent(state, sent, today, activeHubPaths) {
+  const hubs = { ...state.hubs };
+  const stores = { ...state.stores };
+  for (const t of sent.hubs) hubs[t.key] = { hash: t.hash, at: today };
+  for (const t of sent.stores) stores[t.key] = { sig: t.sig, at: today };
+  if (activeHubPaths) for (const k of Object.keys(hubs)) if (!activeHubPaths.has(k)) delete hubs[k];
+  const sorted = (o) => Object.fromEntries(Object.keys(o).sort().map(k => [k, o[k]]));
+  return { hubs: sorted(hubs), stores: sorted(stores) };
+}
+
+function writeState(next, today, p = STATE_PATH) {
+  const body = {
+    note: 'IndexNow で実際に送った値の記録（scripts/indexnow_ping.js・SEO-136）。ハブは contentHash、店舗ページはページに出ている編集コメントの要約値。ここと違うものだけが次の送信対象になる。',
+    updated: today,
+    ...next,
+  };
+  fs.writeFileSync(p, JSON.stringify(body, null, 2) + '\n');
+}
+
+function readJson(p) {
+  try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (_) { return null; }
+}
+
+function sitemapLocSet(p = SITEMAP_PATH) {
+  if (!fs.existsSync(p)) return new Set();
+  return new Set([...fs.readFileSync(p, 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1].trim()));
 }
 
 // ── --status ────────────────────────────────────────────
@@ -164,10 +279,26 @@ async function main() {
   }
 
   let urls;
+  let collected = null;
+  let manifest = null;
   if (args.includes('--urls')) {
     urls = String(flag('--urls') || '').split(/[,\s]+/).filter(Boolean);
   } else {
-    urls = recentUrls(parseInt(flag('--recent') || '7', 10));
+    manifest = readJson(MANIFEST_PATH);
+    const { loadStores } = require('./lib/load_stores');
+    const { toSlug } = require('../gen-store-pages.js');
+    collected = collectTargets({
+      days: parseInt(flag('--recent') || '7', 10),
+      now: Date.now(),
+      state: loadState(),
+      manifest,
+      stores: loadStores(),
+      sitemapLocs: sitemapLocSet(),
+      readPage: (rel) => { try { return fs.readFileSync(path.join(ROOT, rel), 'utf8'); } catch (_) { return null; } },
+      exists: (rel) => fs.existsSync(path.join(ROOT, rel)),
+      toSlug,
+    });
+    urls = collected.urls;
   }
   if (urls.length === 0) { out({ ok: true, skipped: true, note: '送信対象の URL が無い' }); return; }
 
@@ -175,13 +306,23 @@ async function main() {
   if (bad.length) { out({ ok: false, error: 'foreign_host', bad }); process.exit(1); }
 
   const result = await submit(urls, cfg, args.includes('--yes'));
+  if (collected) result.breakdown = collected.breakdown;
   out(result);
+
+  // 実送信に成功した分だけ「送った値」を記録する（dry-run・失敗では記録しない＝翌日に回る）
+  if (collected && result.ok && !result.dry_run) {
+    const today = new Date().toISOString().slice(0, 10);
+    const active = manifest ? new Set((manifest.pages || []).filter(p => p.status === 'active').map(p => p.path)) : null;
+    writeState(recordSent(loadState(), collected.sent, today, active), today);
+  }
 
   const logFile = flag('--log-file');
   if (logFile) {
     const logPath = path.resolve(logFile);
-    fs.writeFileSync(logPath, JSON.stringify({ ...result, logged_at: new Date().toISOString() }, null, 2) + '\n');
+    fs.writeFileSync(logPath, JSON.stringify({ ...result, urls, logged_at: new Date().toISOString() }, null, 2) + '\n');
   }
 }
+
+module.exports = { journalUrls, loadState, hubTargets, storeTargets, collectTargets, recordSent, pageText, MAX_URLS };
 
 if (require.main === module) main().catch(e => { out({ ok: false, error: e.message }); process.exit(1); });

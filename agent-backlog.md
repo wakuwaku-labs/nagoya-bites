@@ -368,7 +368,7 @@
 
 ### [SEO-136] IndexNow の送信対象を、内容が変わったハブと店舗ページに広げる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / 技術
 - **owner**: Builder
@@ -379,6 +379,7 @@
   1. manifest の `contentHash` が前回から変わったハブと、編集コメントが付いて内容が変わった店舗ページを送信対象にする（1回 200 件の上限は維持）
   2. `data/indexnow_send_log.json` に対象の内訳が残る
   3. 外部送信は既存どおり設定（INDEXNOW_ENABLED と `--yes`）に従う
+- **結果（2026-10-09）**: `scripts/indexnow_ping.js` の送信対象を「トップ/索引 → 直近のジャーナル → 編集コメントが変わった店舗ページ → 前回送ってから `contentHash` が変わったハブ」の順に 200 件までにした。前回送った値は `data/indexnow_state.json` に実送信が成功したときだけ書く（送れなかった分は翌日に回る）。ハブは日々 100〜500 本の内容が変わる（2026-09-25〜10-08 の git 履歴で実測）ので、前回送った日が古いものから送る。旧実装は「直近2日に updated が動いたハブ」を manifest の並び順で詰めていたため、上限からあふれたハブは一度も送られないことがあった。店舗ページは日々 300〜700 本変わるため全部は送らず、編集コメントがページの HTML にそのまま出ていて、その文が前回から変わったものだけを送る。送信ログ `data/indexnow_send_log.json` に送った URL と内訳（`breakdown`）を残す。外部送信の条件（`INDEXNOW_ENABLED` と `--yes`）は変えていない。dry-run の内訳は固定3・ジャーナル1・店舗7・ハブ189（未送信のハブは685本）。テスト `tests/indexnow_targets.test.js`（5件）。調べる中で、編集コメントを持つ151店のうち店舗ページに文が出ているのは7店だけ（おすすめポイントと同じ文の店）と分かった。`gen-store-pages.js` が editorReason と insiderNote を出していないため。[[SEO-143]] に起票した
 
 ### [SEO-137] ジャーナルの title の前30字に検索語を寄せる
 
@@ -464,6 +465,21 @@
   1. オーナーが公式アカウント（Instagram など）の URL を示す
   2. 示された URL だけを `index.html` の Organization の `sameAs` に入れる
   3. `node scripts/audit_inline_js_syntax.js --check --only root` が exit 0（JSON-LD の構文）
+
+### [SEO-143] 店舗ページに編集コメント（editorReason）を表示する
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / コンテンツ
+- **owner**: Builder / Designer
+- **source**: [[SEO-136]] の実装中に発見（2026-10-09）。親は [[SEO-128]]
+- **brand-filter**: ✅ 適合 — 業界視点の解釈層（Moat）を検索に出るページに載せる
+- **背景**: `gen-store-pages.js` は `editorReason` と `insiderNote` を一切参照していない。`data/stores.json` で編集コメントを持つ151店のうち、店舗ページにその文が出ているのは7店だけで、どれも `おすすめポイント` が同じ文の店（2026-10-09 実測）。トップのモーダルには editorReason が出ている。[[SEO-129]] で上位300店に editorReason を足しても、このままでは店舗ページが変わらず、[[SEO-128]] の CTR の前後比も測れない
+- **acceptance**:
+  1. `gen-store-pages.js` が editorReason を持つ店の店舗ページ本文に、その文を出す（`おすすめポイント` と同じ文なら二重に出さない）
+  2. `insiderNote` は、オーナーが書いたか確認したと記録で確かめられるものだけを出す。確かめられない間は出さない（[[SEO-129]] 達成条件3と同じ扱い）
+  3. Designer の QA-5 を記録し、`node scripts/audit_design_system.js --check` と `node scripts/audit_inline_js_syntax.js --check --only stores --sample 200` を通す
+  4. 再生成の後、`node scripts/indexnow_ping.js --recent 2` の内訳で `stores.comment_not_on_page` が 141 から減る
 
 ### [ISSUE-145] Linear 同期が課題200件で止まる上限を外す
 
