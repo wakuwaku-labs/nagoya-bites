@@ -6,6 +6,76 @@
 
 ---
 
+### [ISSUE-149] 掲載店の予約送客を店舗別・経路別に計測し、自分たち側だけで予約申告を受ける出口を作る
+
+- **priority**: P1 → **status**: in_progress
+- **detected**: 2026-10-09
+- **due**: 2026-10-16
+- **category**: 計測
+- **owner**: Builder
+- **source**: オーナー依頼（2026-10-09）「名古屋バイツに載っている店が実際のお客様から予約された数を計測したい。食べログやホットペッパーは予約時に店へ通知が行く出口があるが、名古屋バイツには無い。店に導入してもらうのは手間なのでやめる。自分たち側だけで簡単な仕組みに。アフィリエイトは収益化しない方針に反する」
+- **brand-filter**: ✅ 適合 — 計測の追加。収益化・順位操作を含まない（制約7・8 非該当）。予約申告は自己申告値なので掲載順位・口コミ信頼度・品質ゲートに使わない（制約10）
+- **背景**: 予約導線の計測が面ごとにばらばらだった。index.html は `cta_click{store_name}`、店舗ページは `cta_click{link_url}`（店名なし）、特集は `cta_click{store,feature,target}`（`store` は GA4 未登録）、ジャーナルは `cta_reserve{store_name}`、食べログのリンクは全面で計測なし。店舗別の予約導線の集計ファイルも無かった。予約成立は自分たち側から観測できない（判断は `docs/decisions/0009-reservation-measurement-tiers.md`）
+- **実装（2026-10-09・PR）**: `scripts/lib/reservation_exits.js`（語彙・集計）／`scripts/lib/reservation_ask_snippet.js`（予約申告プロンプト）／全面の予約導線を `store_name`・`store_id`・`link_domain`・`location` つきに統一（index.html・gen-store-pages.js・refresh_feature_rosters.js・add_feature_tracking.js で特集56本・generate_daily_draft.js と既存ジャーナル51本）／`scripts/fetch_ga4_views.js` → `data/store_referrals.json`／GAS ミラーの週次に送客上位3店と申告件数／`docs/reservation-measurement.md`
+- **acceptance**:
+  1. `npm test` と `audit_inline_js_syntax.js --check`・`audit_design_system.js --check` が通る（PR 時点で確認済み）
+  2. 2026-10-16 に `data/store_referrals.json` の `stores` に店名つきの送客が入っていること、`totals.exits.tabelog` が 0 でないか、0 なら GA4 の `cta_click`（link_domain=tabelog.com）を直接見て原因を書く
+  3. 同日、`reserve_report_yes` / `reserve_report_no` が GA4 に1件以上届いているかを記録する（0 件でも失敗にしない。件数をそのまま残す）
+- **関連**: [[ISSUE-150]] [[ISSUE-151]] [[ISSUE-152]] [[ISSUE-153]]／[[SEO-089]]（予約ドメインの outbound_click）／[[SEO-105]]（電話CTA）
+
+### [ISSUE-150] 週次レポートの「予約送客 上位の店」を GAS 本体に反映する
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: 計測
+- **owner**: オーナー（GAS エディタで Code.js を貼り替える）
+- **source**: [[ISSUE-149]] の残り
+- **brand-filter**: ✅ 適合 — 計測の報告
+- **背景**: `.gas-deploy/Code.js` はミラーで、GAS 本体への反映はオーナーの操作でしかできない（`docs/gas-deploy-verification-runbook.md`）。ISSUE-149 で週次レポートに `fetchStoreReferrals` と「【予約送客 上位の店】」「🙋 予約申告」の行を足した
+- **acceptance**:
+  1. GAS エディタに `.gas-deploy/Code.js` の現行版を貼り、保存する
+  2. 次の月曜の週次レポートメールに「【予約送客 上位の店】」の見出しが出る（送客0件の週は出ないので、出ない場合は `data/store_referrals.json` の件数と照合する）
+
+### [ISSUE-151] 予約成立を数えるために「報酬を受け取らない計測専用アフィリエイト」を使うかを決める
+
+- **priority**: P3 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: 計測 / 事業
+- **owner**: オーナー（判断）→ Strategist
+- **source**: [[ISSUE-149]] の設計時のオーナー回答「計測専用なら検討する」
+- **brand-filter**: ⚠️ 要承認 — 予約導線の収益化に当たり得るため制約8でオーナーの承認が要る。承認まで着手しない
+- **背景**: 予約の成立を自分たち側で検証できる経路は、アフィリエイトの成果通知だけ。報酬を辞退・寄付し、編集規約に明記する形なら「収益化しない」方針と両立する可能性がある。HotPepper・食べログの ASP が報酬辞退や計測だけの利用を認めているかは未確認
+- **acceptance**:
+  1. HotPepper・食べログそれぞれの ASP の規約で、報酬を受け取らない利用ができるかを一次情報（規約の該当条文の URL）で確かめて本課題に書く
+  2. オーナーが使う／使わないを決め、`docs/decisions/` に記録する。使わない場合は本課題を閉じる
+
+### [ISSUE-152] 日次・週次レポートの「予約ボタン」がホットペッパーの1クリックを2回数えている
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: 計測
+- **owner**: Marketer
+- **source**: [[ISSUE-149]] の調査で判明
+- **brand-filter**: ✅ 適合 — 数え方の是正（数字を良く見せる方向の変更ではない）
+- **背景**: `.gas-deploy/Code.js` の `ctaCount` は `cta_click`+`cta_reserve` の件数に、予約ドメインへの `outbound_click` を足している（[[SEO-089]]）。サイトは外部リンクのクリックで `outbound_click` を自動で送るので、ホットペッパーのボタン1回が `cta_click` と `outbound_click` の両方に入り、2回数えられる。ISSUE-149 で食べログのリンクにも `cta_click` を付けたため、食べログも同じく2回になる
+- **acceptance**:
+  1. GA4 で直近7日の `cta_click`（link_domain 別）と `outbound_click`（link_domain 別）を並べ、重なりを件数で示す
+  2. `ctaCount` を「予約導線イベント＋（予約ドメインへの outbound_click のうち予約導線イベントの無いページから出たもの）」のように重ならない数え方に直し、テストで確かめる
+  3. 直した日を週次レポートに注記する（前週比が不連続になるため）
+
+### [ISSUE-153] 新しく作る特集にも予約申告プロンプトと予約送客の計測が自動で入るようにする
+
+- **priority**: P3 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: 計測
+- **owner**: Builder
+- **source**: [[ISSUE-149]] の残り
+- **brand-filter**: ✅ 適合 — 計測の漏れ防止
+- **背景**: 特集の予約導線を統一する `scripts/add_feature_tracking.js` は CI で回っておらず、手で実行したときだけ効く。月次の `refresh_feature_rosters.js` は新しい語彙で書くが、`scripts/gen_industry_features.js` や手書きの新しい特集には予約申告プロンプトが入らない（onclick は `(window.nbReserveExit||trackEvent)` で書いているので送客の計測は落ちない）
+- **acceptance**:
+  1. `node scripts/add_feature_tracking.js --check` を build.yml か夜間QA に入れ、漏れがあれば警告が出るようにする
+  2. 新しい特集を1本生成して、プロンプトのスクリプトと新しい語彙の onclick が入っていることを確かめる
+
 ### [SEO-116] SEO の90日計画（2026-10〜12）を進め、12-15 に北極星指標で次の計画を決める
 
 - **priority**: P1 → **status**: ready
