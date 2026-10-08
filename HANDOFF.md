@@ -18,6 +18,14 @@ status: done
 # 次にやること
 - なし。nagoya-bites-solve-next-daily は無効化中のため Notion 記述を残している（再有効化するときは Linear 前提に書き換える）
 
+- 2026-10-08 solve-next 実行: 0件実装（安全候補が全てブロック中）
+  - ISSUE-097 (P1↑): HOTPEPPER_API_KEY がクラウド環境に未配線
+  - ISSUE-143 (P2): 同上
+  - SEO-087 (P1↑): 次判断日 2026-10-27（GSC窓待ち）
+  - SEO-091 (P2): 次判断日 2026-10-13（現状 clicks=3 / pos=12.6・クローズ条件 clicks<3 AND pos>20 に未達）
+  - SEO-099 (P2): 実装完了済み・GSC/GA4効果測定待ち
+  - SEO-102 (P3): next_task.js の notePatterns 一致で「オーナー待ち」分類（status 注記「acceptance②③はEditorの角度確認待ち・オーナー操作は不要」）。安全候補が尽きたため 0 件で正常終了
+
 - 2026-10-07 「Linear接続を他プロジェクトでも使う」→ 実施済み。ブリーフィング・監視を Project 単位に絞った（誤報 #381 は自動クローズ確認）。汎用キット `~/.claude/skills/linear-setup/`（`/linear-setup`・`.linear.json` で設定・テスト4件）と、グローバル `~/.claude/CLAUDE.md` の「Linear 運用（全プロジェクト共通）」を追加。2026-10-07 に5リポジトリ（自動トークン節約・自動スリープスイッチ・その日の予約まとめ・CPU節約ツール・AI動画作成）へ導入・各 main にコミット済み。空の KR 用 Project 4つは改名して再利用（ISSUE-137/P-64 解決）。今後の新規リポジトリは Claude が自動導入。ADR 0006
 - 2026-10-07 追加: 新しいアプリ・フォルダ（git でなくても）と Codex にも拡張。install.js が Linear の Project を自動作成（API キー `~/.config/linear/api_key` は 2026-10-07 にオーナーが配置済み・疎通確認済み）。Codex 用ルールは `~/.codex/AGENTS.md`、キットは `~/.codex/skills/linear-setup`（リンク）。動画生成プロジェクトの汎用テンプレ39件はオーナー判断で全件 Canceled
 
