@@ -293,6 +293,15 @@ jobs:
         run: node scripts/apply_feature_byline.js
         continue-on-error: true
 
+      - name: 特集の掲載数の表記をそろえる（SEO-146・冪等・日次）
+        # 掲載数は各特集の ItemList の件数＝要素数＝店カード枚数が一致したときだけ使う。
+        # 上の refresh_feature_rosters.js が掲載店の入れ替えで件数を変えた日も、自ページの
+        # title・説明文・h1 と、他の特集からのリンク文の「N選」がこの実行の中で追いつく
+        # （npm test は blocking で、ずれたまま翌朝を迎えると build が止まるため、コミットの前に置く）。
+        # 判定と書き換えは scripts/lib/feature_counts.js の1本。ローカルの確認は --check。
+        run: node scripts/sync_feature_counts.js
+        continue-on-error: true
+
       - name: 店舗写真を原寸マスターへ昇格（画質改善・実測ベース・冪等）
         # Hot Pepper の _480.jpg は 480px しかなく、モーダル(約2000px相当)で 4倍に
         # 引き伸ばされてボケていた。サフィックスなしURLが投稿時の原寸(720〜1280px)を返すため、
