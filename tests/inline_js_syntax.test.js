@@ -146,3 +146,47 @@ test('audit_inline_js_syntax.js: --sample は決定的な等間隔抽出、引�
   assert.throws(() => audit.parseArgs(['--only', 'nope']));
   assert.deepEqual(audit.parseArgs(['--check', '--only', 'stores']), { check: true, sample: null, only: 'stores' });
 });
+
+test('inline_js: data-src / data-type には一致させず、type の引数（; charset=…）は外して判定する', () => {
+  const broken = "if(!/^https?:///i.test(h))return;";
+  // data-src は外部 script ではない → 本文を検査して壊れを見つける
+  let r = auditHtml(page(`<script data-src="x.js">${broken}</script>`));
+  assert.deepEqual(r.violations.map(v => v.rule), ['js-syntax']);
+  // data-type="module" は type ではない → 通常の JS として検査する
+  r = auditHtml(page(`<script data-type="module">${broken}</script>`));
+  assert.deepEqual(r.violations.map(v => v.rule), ['js-syntax']);
+  // MIME の引数付きでも JS として検査する
+  const blocks = extractInlineScripts(page(`<script type="text/javascript; charset=utf-8">var a=1;</script>`));
+  assert.equal(blocks.length, 1);
+  assert.equal(blocks[0].kind, 'js');
+  assert.equal(blocks[0].type, 'text/javascript');
+});
+
+test('inline_js: HTML コメント内の script は数えず、script 本文中の "<!--" はコメントにしない', () => {
+  // コメントアウトされた壊れた script と GA 読み込みは、ブラウザが実行しないので違反にしない
+  let r = auditHtml(page(`<!-- ${GA_LOADER}\n<script>if(!/^https?:///i.test(h))return;</script> -->\n<script>var ok=1;</script>`));
+  assert.equal(r.violations.length, 0);
+  assert.equal(r.blocks, 1);
+  // script 本文の文字列に "<!--" があっても、そのブロックは普通に検査される
+  r = auditHtml(page(`<script>var s='<!--';</script><script>var t=1;</script>`));
+  assert.equal(r.violations.length, 0);
+  assert.equal(r.blocks, 2);
+  // 閉じていないコメントは文書の終わりまでコメント（中の script は数えない）
+  r = auditHtml(`<p>a</p><!-- <script>if(</script>`);
+  assert.equal(r.blocks, 0);
+});
+
+test('audit_inline_js_syntax.js: ルート直下は *.html を全部見る（先頭 _ の補助ページは除く）', () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'inline-js-root-'));
+  try {
+    fs.writeFileSync(path.join(tmp, 'index.html'), FIXED);
+    fs.writeFileSync(path.join(tmp, 'manual_tagging.html'), BROKEN); // 固定リスト時代に取りこぼしていた形
+    fs.writeFileSync(path.join(tmp, '_extract.html'), BROKEN);       // 補助ページは対象外
+    const r = audit.run({ check: true, sample: null, only: 'root' }, tmp);
+    assert.equal(r.files_scanned, 2);
+    assert.equal(r.ok, false);
+    assert.deepEqual([...new Set(r.violations.map(v => path.basename(v.file)))], ['manual_tagging.html']);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
+});

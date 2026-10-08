@@ -14,6 +14,9 @@
  *   json-syntax       JSON-LD 等の JSON ブロックが JSON.parse できない
  *   ga-config-broken  gtag.js を読み込むページで gtag('config',…) を含む構文OKのJSが無い
  *
+ * 対象: ルート直下の *.html（先頭 _ の補助ページを除く）・features/・journal/（_template を除く）・
+ *       stores/ 直下・stores/area/ 配下。HTML コメントの中の <script> は数えない（ブラウザも実行しない）。
+ *
  * 使い方:
  *   node scripts/audit_inline_js_syntax.js                # 全ページを検査して JSON を出す（exit 0）
  *   node scripts/audit_inline_js_syntax.js --check        # 違反があれば exit 1（CI向け）
@@ -31,7 +34,6 @@ const path = require('path');
 const { auditHtml } = require('./lib/inline_js');
 
 const ROOT = path.join(__dirname, '..');
-const ROOT_PAGES = ['index.html', 'about.html', 'faq.html', 'contact.html', 'privacy-policy.html'];
 const SECTIONS = ['root', 'features', 'journal', 'stores', 'area'];
 const MAX_LISTED = 50;
 
@@ -85,7 +87,8 @@ function sampleEvenly(files, n) {
 function collectTargets(opts, root) {
   root = root || ROOT;
   const targets = {
-    root: ROOT_PAGES.map(f => path.join(root, f)).filter(f => fs.existsSync(f)),
+    // ルート直下は *.html を全部見る（先頭 _ の補助ページ・テンプレートは除く）。固定リストだと GA を読む新しいページを取りこぼす
+    root: listHtml(root, { excludeTemplate: true }),
     features: listHtml(path.join(root, 'features')),
     journal: listHtml(path.join(root, 'journal'), { excludeTemplate: true }),
     stores: sampleEvenly(listHtml(path.join(root, 'stores')), opts.sample),
