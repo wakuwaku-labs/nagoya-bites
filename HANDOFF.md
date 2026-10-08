@@ -27,7 +27,7 @@ status: in_progress
 
 # 次にやること
 1. 10-10 以降に確認: SEO-147（P-156）の達成条件3。main で `node scripts/sync_feature_counts.js --check --target stores` が exit 0 なら backlog done・P-156 Done＋コメント（店舗ページは CI の再生成で直る設計。ローカルで書き換えない）
-2. 実装中: SEO-124（ハブ本文・P-番号は backlog 参照）。設計（決定済み）:
+2. 実装中: SEO-124（ハブ本文・P-番号は backlog 参照）。2026-10-09 時点: 実装・ハブ685本の再生成・Designer QA-5（375/1280・puppeteer は executablePath に /Applications/Google Chrome.app を渡すと動く）まで済み。QA で見つけて同じ PR で直したもの: ハブに .container の幅指定が無く端まで詰まっていた（9/14 の新設時から）→ 900px・左右16px。最寄り駅がアクセス文の切れ端だった → station_names.js の firstAichiStation で県内の駅名だけ数える。残り: テスト追加・監査・CLAUDE.md・backlog・PR・Linear。横スクロール 750px は共通メニュー由来で DSN-007 の範囲（今回の前後で同じ）。設計（決定済み）:
    - 見分け方の短文: data/area_genre_pages_policy.json の genres[].guide（17）と conditions[].guide（13）に置く。条件ページは「ジャンル＋条件」の2文を合成。推測の数値は書かない（法律の20歳など確定事実のみ）
    - 編集部の選定理由: editorReason があり おすすめポイント と同文でない店（gen-store-pages の sameSentence と同じ規則）を、一覧の上に別枠で最大 N 件（policy.editorPicks）。一覧の機械的な並び順は動かさない（リードの「順位は動かしていない」を真に保つ）。visitStatus のラベルを添える
    - 表: 予算帯の分布（価格帯の下限順・全帯）と最寄り駅（上位 N・policy）を <table class="hub-table">（HUB_STYLE にトークンで追加・13px 以上）

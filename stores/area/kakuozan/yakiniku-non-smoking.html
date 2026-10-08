@@ -26,9 +26,10 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <link rel="stylesheet" href="../../../assets/css/nb.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"炭火焼肉 善と月","url":"https://nagoya-bites.com/stores/J001286615.html"},{"@type":"ListItem","position":2,"name":"焼肉 伸炎","url":"https://nagoya-bites.com/stores/J003715049.html"},{"@type":"ListItem","position":3,"name":"勝野焼肉","url":"https://nagoya-bites.com/stores/J003532611.html"},{"@type":"ListItem","position":4,"name":"焼肉ダイニング Beef Burn Best B B B","url":"https://nagoya-bites.com/stores/J003581277.html"},{"@type":"ListItem","position":5,"name":"焼肉 本山ホルモン 名古屋名物味噌とんちゃん屋","url":"https://nagoya-bites.com/stores/J003873019.html"},{"@type":"ListItem","position":6,"name":"飛騨牛焼肉 牛ざんまい 本山店","url":"https://nagoya-bites.com/stores/J001200967.html"},{"@type":"ListItem","position":7,"name":"飛騨牛焼肉 牛ざんまい 高針店","url":"https://nagoya-bites.com/stores/J001219212.html"},{"@type":"ListItem","position":8,"name":"焼肉の和民 本山駅前店","url":"https://nagoya-bites.com/stores/J000432359.html"},{"@type":"ListItem","position":9,"name":"川嶋屋 名東区店 焼肉 海鮮居酒屋","url":"https://nagoya-bites.com/stores/J003411805.html"},{"@type":"ListItem","position":10,"name":"飛騨牛焼肉 牛ざんまい 名東引山店","url":"https://nagoya-bites.com/stores/J003763628.html"},{"@type":"ListItem","position":11,"name":"熟成焼肉 マルニク","url":"https://nagoya-bites.com/stores/J001234304.html"},{"@type":"ListItem","position":12,"name":"大衆ホルモン やきにく 煙力 藤が丘店","url":"https://nagoya-bites.com/stores/J001165949.html"},{"@type":"ListItem","position":13,"name":"焼肉屋 はなれ 本店","url":"https://nagoya-bites.com/stores/J000766661.html"},{"@type":"ListItem","position":14,"name":"肉処 RODEO","url":"https://nagoya-bites.com/stores/J001114241.html"},{"@type":"ListItem","position":15,"name":"焼肉わきた","url":"https://nagoya-bites.com/stores/J003625173.html"},{"@type":"ListItem","position":16,"name":"SUNNY GARDEN","url":"https://nagoya-bites.com/stores/J001262369.html"},{"@type":"ListItem","position":17,"name":"焼肉テーブルオーダーバイキング　晴れごはん","url":"https://nagoya-bites.com/stores/J003474009.html"},{"@type":"ListItem","position":18,"name":"丸明 茶屋ヶ坂店","url":"https://nagoya-bites.com/stores/J001258549.html"},{"@type":"ListItem","position":19,"name":"炭火焼肉 瑠嗣亞","url":"https://nagoya-bites.com/stores/J003341169.html"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},{"@type":"ListItem","position":2,"name":"店舗一覧","item":"https://nagoya-bites.com/stores/index.html"},{"@type":"ListItem","position":3,"name":"エリア×ジャンルで探す","item":"https://nagoya-bites.com/stores/area/index.html"},{"@type":"ListItem","position":4,"name":"覚王山・本山・藤が丘","item":"https://nagoya-bites.com/stores/area/kakuozan/index.html"},{"@type":"ListItem","position":5,"name":"焼肉・ホルモン","item":"https://nagoya-bites.com/stores/area/kakuozan/yakiniku.html"},{"@type":"ListItem","position":6,"name":"全席禁煙","item":"https://nagoya-bites.com/stores/area/kakuozan/yakiniku-non-smoking.html"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"覚王山・本山・藤が丘の焼肉・ホルモンの予算相場は？","acceptedAnswer":{"@type":"Answer","text":"掲載19軒のうち最も多い価格帯は「3001～4000円」（9軒）です。店によって幅があるため、各店ページの価格帯表示も合わせてご確認ください。"}},{"@type":"Question","name":"個室のある店はありますか？","acceptedAnswer":{"@type":"Answer","text":"個室ありの店が4軒あります。人数や用途に応じて各店ページで詳細をご確認ください。"}}]}</script>
 
 <style>
+.container{max-width:var(--container-mid);margin:0 auto;padding:var(--sp-5) var(--sp-4) var(--sp-7);}
+.container > .breadcrumb,.container .nb-section-head{padding-left:0;padding-right:0;}
 .hub-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:var(--sp-3);margin:var(--sp-5) 0;padding:var(--sp-4);background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-md);}
 .hub-stats dt{font-size:var(--fs-xs);color:var(--dim);margin-bottom:.2rem;}
 .hub-stats dd{font-size:var(--fs-xl);font-family:var(--font-display);color:var(--ink);margin:0;}
@@ -51,6 +52,21 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .faq-a{font-size:var(--fs-md);line-height:1.85;margin:0;color:var(--muted);}
 .faq-a::before{content:"A. ";color:var(--gold);font-weight:500;}
 .hub-method{font-size:var(--fs-xs);color:var(--dim);margin-top:var(--sp-2);}
+.hub-guide-title,.hub-picks-note{font-size:var(--fs-xs);color:var(--dim);margin:0 0 .5rem;}
+.hub-guide p:not(.hub-guide-title){font-size:var(--fs-md);line-height:var(--lh-body);margin:0 0 .5rem;}
+.hub-picks{margin:var(--sp-5) 0;}
+.hub-picks ul{list-style:none;padding:0;margin:var(--sp-3) 0 0;}
+.hub-picks li{border-top:1px solid var(--border);padding:var(--sp-4) 0;}
+.hub-picks li:last-child{border-bottom:1px solid var(--border);}
+.hub-picks .store-name{margin:0 0 .3rem;}
+.hub-pick-reason{font-size:var(--fs-md);line-height:var(--lh-body);margin:0;}
+.hub-pick-meta{font-size:var(--fs-xs);color:var(--dim);margin:.3rem 0 0;}
+.hub-tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:start;gap:var(--sp-5);margin:var(--sp-3) 0 var(--sp-5);}
+.hub-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);}
+.hub-table caption{text-align:left;font-size:var(--fs-xs);color:var(--dim);padding-bottom:var(--sp-2);}
+.hub-table th,.hub-table td{padding:.5rem .25rem;border-bottom:1px solid var(--border);text-align:left;}
+.hub-table th{font-weight:600;color:var(--muted);}
+.hub-table th:last-child,.hub-table td:last-child{text-align:right;font-variant-numeric:tabular-nums;}
 </style>
 </head>
 <body>
@@ -92,8 +108,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <!-- NB-CHROME:BREADCRUMB:END -->
   <p class="art-eyebrow">Restaurant Database — 覚王山・本山・藤が丘 × 焼肉・ホルモン × 全席禁煙</p>
   <h1 class="art-title">覚王山・本山・藤が丘の焼肉・ホルモン — <em>全席禁煙</em></h1>
-  <div class="art-lead"><p>19軒。予算は「3001～4000円」が最多（9軒）。最寄り駅は地下鉄東山線・名城線本山駅（2軒）・地下鉄東山線一社駅（2軒）・一社駅（1軒）。Google★4.0以上・口コミ5件以上の店が16軒。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
+  <div class="art-lead"><p>19軒。予算は「3001～4000円」が最多（9軒）。最寄り駅は本郷駅（4軒）・一社駅（3軒）・覚王山駅（3軒）。Google★4.0以上・口コミ5件以上の店が16軒。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
   
+  <section class="insider-box hub-guide" aria-label="編集部の見分け方">
+    <p class="hub-guide-title">編集部の見分け方</p>
+    <p>部位ごとの説明があるか、タレと塩を部位で出し分けているかを見ます。ホルモンは鮮度で味が決まるため、当日の入荷を書いている店は手堅い選択です。排煙の方式で、服へのにおい移りも変わります。</p>
+    <p>全席禁煙でも、店先や別室で吸える店があります。においが気になるときは、喫煙場所が席から離れているかを確かめてください。</p>
+  </section>
+
   <ul class="store-list">
         <li class="store-card">
           <span class="store-num">1</span>
@@ -344,6 +366,32 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
         </li>
   </ul>
 
+  <section class="hub-data" aria-label="この一覧のデータ">
+    <h2 class="nb-section-head"><span>データで見る</span></h2>
+    <div class="hub-tables">
+      <table class="hub-table">
+        <caption>予算帯（価格帯の表示がある19軒）</caption>
+        <thead><tr><th scope="col">予算帯</th><th scope="col">軒数</th></tr></thead>
+        <tbody>
+          <tr><td>2001～3000円</td><td>1</td></tr>
+          <tr><td>3001～4000円</td><td>9</td></tr>
+          <tr><td>4001～5000円</td><td>6</td></tr>
+          <tr><td>5001～7000円</td><td>3</td></tr>
+        </tbody>
+      </table>
+      <table class="hub-table">
+        <caption>最寄り駅（上位5駅）</caption>
+        <thead><tr><th scope="col">最寄り駅</th><th scope="col">軒数</th></tr></thead>
+        <tbody>
+          <tr><td>本郷駅</td><td>4</td></tr>
+          <tr><td>一社駅</td><td>3</td></tr>
+          <tr><td>覚王山駅</td><td>3</td></tr>
+          <tr><td>本山駅</td><td>3</td></tr>
+          <tr><td>藤ヶ丘駅</td><td>2</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
   <section class="faq-section" aria-label="よくある質問">
     <h2 class="nb-section-head"><span>よくある質問</span></h2>
     <div class="faq-list">

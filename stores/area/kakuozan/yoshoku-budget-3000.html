@@ -26,9 +26,10 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <link rel="stylesheet" href="../../../assets/css/nb.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"TAMA CURRY","url":"https://nagoya-bites.com/stores/J003885000.html"},{"@type":"ListItem","position":2,"name":"GOOD LOSERS CLUB","url":"https://nagoya-bites.com/stores/J004660201.html"},{"@type":"ListItem","position":3,"name":"KITCHEN Tari Tari キッチンタリタリ 覚王山","url":"https://nagoya-bites.com/stores/J003942817.html"},{"@type":"ListItem","position":4,"name":"ハローエッグ 平和が丘店","url":"https://nagoya-bites.com/stores/J001037271.html"},{"@type":"ListItem","position":5,"name":"洋食 マ メゾン 星ヶ丘 本店","url":"https://nagoya-bites.com/stores/J001231133.html"},{"@type":"ListItem","position":6,"name":"ステーキのあさくま 藤ヶ丘ドイツ館","url":"https://nagoya-bites.com/stores/J000397535.html"},{"@type":"ListItem","position":7,"name":"フォーユー FOR YOU 本山店","url":"https://nagoya-bites.com/stores/J000107764.html"},{"@type":"ListItem","position":8,"name":"洋食 マ メゾン 星が丘分店","url":"https://nagoya-bites.com/stores/J001259377.html"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},{"@type":"ListItem","position":2,"name":"店舗一覧","item":"https://nagoya-bites.com/stores/index.html"},{"@type":"ListItem","position":3,"name":"エリア×ジャンルで探す","item":"https://nagoya-bites.com/stores/area/index.html"},{"@type":"ListItem","position":4,"name":"覚王山・本山・藤が丘","item":"https://nagoya-bites.com/stores/area/kakuozan/index.html"},{"@type":"ListItem","position":5,"name":"洋食","item":"https://nagoya-bites.com/stores/area/kakuozan/yoshoku.html"},{"@type":"ListItem","position":6,"name":"予算3,000円以下","item":"https://nagoya-bites.com/stores/area/kakuozan/yoshoku-budget-3000.html"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"覚王山・本山・藤が丘の洋食の予算相場は？","acceptedAnswer":{"@type":"Answer","text":"掲載8軒のうち最も多い価格帯は「1501～2000円」（5軒）です。店によって幅があるため、各店ページの価格帯表示も合わせてご確認ください。"}},{"@type":"Question","name":"日曜に営業している店はありますか？","acceptedAnswer":{"@type":"Answer","text":"日曜営業の店が5軒あります。定休日は店により異なるため各店ページでご確認ください。"}}]}</script>
 
 <style>
+.container{max-width:var(--container-mid);margin:0 auto;padding:var(--sp-5) var(--sp-4) var(--sp-7);}
+.container > .breadcrumb,.container .nb-section-head{padding-left:0;padding-right:0;}
 .hub-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:var(--sp-3);margin:var(--sp-5) 0;padding:var(--sp-4);background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-md);}
 .hub-stats dt{font-size:var(--fs-xs);color:var(--dim);margin-bottom:.2rem;}
 .hub-stats dd{font-size:var(--fs-xl);font-family:var(--font-display);color:var(--ink);margin:0;}
@@ -51,6 +52,21 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .faq-a{font-size:var(--fs-md);line-height:1.85;margin:0;color:var(--muted);}
 .faq-a::before{content:"A. ";color:var(--gold);font-weight:500;}
 .hub-method{font-size:var(--fs-xs);color:var(--dim);margin-top:var(--sp-2);}
+.hub-guide-title,.hub-picks-note{font-size:var(--fs-xs);color:var(--dim);margin:0 0 .5rem;}
+.hub-guide p:not(.hub-guide-title){font-size:var(--fs-md);line-height:var(--lh-body);margin:0 0 .5rem;}
+.hub-picks{margin:var(--sp-5) 0;}
+.hub-picks ul{list-style:none;padding:0;margin:var(--sp-3) 0 0;}
+.hub-picks li{border-top:1px solid var(--border);padding:var(--sp-4) 0;}
+.hub-picks li:last-child{border-bottom:1px solid var(--border);}
+.hub-picks .store-name{margin:0 0 .3rem;}
+.hub-pick-reason{font-size:var(--fs-md);line-height:var(--lh-body);margin:0;}
+.hub-pick-meta{font-size:var(--fs-xs);color:var(--dim);margin:.3rem 0 0;}
+.hub-tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:start;gap:var(--sp-5);margin:var(--sp-3) 0 var(--sp-5);}
+.hub-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);}
+.hub-table caption{text-align:left;font-size:var(--fs-xs);color:var(--dim);padding-bottom:var(--sp-2);}
+.hub-table th,.hub-table td{padding:.5rem .25rem;border-bottom:1px solid var(--border);text-align:left;}
+.hub-table th{font-weight:600;color:var(--muted);}
+.hub-table th:last-child,.hub-table td:last-child{text-align:right;font-variant-numeric:tabular-nums;}
 </style>
 </head>
 <body>
@@ -92,8 +108,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <!-- NB-CHROME:BREADCRUMB:END -->
   <p class="art-eyebrow">Restaurant Database — 覚王山・本山・藤が丘 × 洋食 × 予算3,000円以下</p>
   <h1 class="art-title">覚王山・本山・藤が丘の洋食 — <em>予算3,000円以下</em></h1>
-  <div class="art-lead"><p>8軒。予算は「1501～2000円」が最多（5軒）。最寄り駅は星が丘駅（2軒）・地下鉄東山線覚王山駅（1軒）・地下鉄東山線一社駅（1軒）。Google★4.0以上・口コミ5件以上の店が5軒。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
+  <div class="art-lead"><p>8軒。予算は「1501～2000円」が最多（5軒）。最寄り駅は星ヶ丘駅（2軒）・覚王山駅（1軒）・一社駅（1軒）。Google★4.0以上・口コミ5件以上の店が5軒。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
   
+  <section class="insider-box hub-guide" aria-label="編集部の見分け方">
+    <p class="hub-guide-title">編集部の見分け方</p>
+    <p>デミグラスソースを店で仕込んでいるか、揚げ物の衣が軽いかを見ます。昼と夜で量や内容が変わる店もあるので、品書きを見比べてください。</p>
+    <p>予算は店が示している目安で、飲み物の量で大きく変わります。お通しや席料の有無も合わせて見てください。</p>
+  </section>
+
   <ul class="store-list">
         <li class="store-card">
           <span class="store-num">1</span>
@@ -201,6 +223,30 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
         </li>
   </ul>
 
+  <section class="hub-data" aria-label="この一覧のデータ">
+    <h2 class="nb-section-head"><span>データで見る</span></h2>
+    <div class="hub-tables">
+      <table class="hub-table">
+        <caption>予算帯（価格帯の表示がある8軒）</caption>
+        <thead><tr><th scope="col">予算帯</th><th scope="col">軒数</th></tr></thead>
+        <tbody>
+          <tr><td>1501～2000円</td><td>5</td></tr>
+          <tr><td>2001～3000円</td><td>3</td></tr>
+        </tbody>
+      </table>
+      <table class="hub-table">
+        <caption>最寄り駅（上位5駅）</caption>
+        <thead><tr><th scope="col">最寄り駅</th><th scope="col">軒数</th></tr></thead>
+        <tbody>
+          <tr><td>星ヶ丘駅</td><td>2</td></tr>
+          <tr><td>覚王山駅</td><td>1</td></tr>
+          <tr><td>一社駅</td><td>1</td></tr>
+          <tr><td>上社駅</td><td>1</td></tr>
+          <tr><td>東山公園駅</td><td>1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
   <section class="faq-section" aria-label="よくある質問">
     <h2 class="nb-section-head"><span>よくある質問</span></h2>
     <div class="faq-list">

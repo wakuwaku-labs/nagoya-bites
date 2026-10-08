@@ -17,6 +17,7 @@ const siteChrome = require('./scripts/lib/site_chrome');
 const areaGenrePages = require('./scripts/lib/area_genre_pages');
 const { loadPolicy: loadIgPostPolicy } = require('./scripts/lib/ig_post_policy');
 const { relabelForSlug } = require('./scripts/lib/feature_counts');
+const { editorReasonOf, visitStatusLabel } = require('./scripts/lib/editor_reason');
 const IG_MAX_POSTS_PER_STORE = (loadIgPostPolicy().thresholds && loadIgPostPolicy().thresholds.maxPostsPerStore) || 1;
 
 // SEO-094: エリア×ジャンル一覧（stores/area/）のURL索引。「もっと見る」導線・パンくず・
@@ -538,23 +539,10 @@ function buildDescription(s) {
 // editorReason を持つ店の大半でこの文がどの URL の本文にも無かった（検索・AI から読めない）。
 // おすすめポイントと同じ文なら二重に出さない。選定の根拠（visitStatus）はモーダルと同じ語で添える。
 // insiderNote は、オーナーが書いたか確かめたという記録が無いため出さない（SEO-143 達成条件2）。
-const VISIT_STATUS_LABELS = {
-  visited: '訪問済',
-  interview: '店主取材済',
-  desk: '公開情報ベース',
-  industry_known: '業界内で評判',
-  desk_automated: '公開情報ベース（自動収集）',
-};
-
-function sameSentence(a, b) {
-  const norm = v => String(v || '').trim().replace(/[。．]+$/, '');
-  return norm(a) !== '' && norm(a) === norm(b);
-}
-
 function buildEditorReason(s) {
-  const reason = String(s.editorReason || '').trim();
-  if (!reason || sameSentence(reason, s['おすすめポイント'])) return '';
-  const label = VISIT_STATUS_LABELS[s.visitStatus || ''] || '';
+  const reason = editorReasonOf(s);
+  if (!reason) return '';
+  const label = visitStatusLabel(s);
   return `<section class="editor-reason">
     <h2>編集部の選定理由</h2>
     <p>${escapeHtml(reason)}</p>${label ? `

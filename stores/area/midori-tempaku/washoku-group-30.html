@@ -26,9 +26,10 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <link rel="stylesheet" href="../../../assets/css/nb.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"和食処 稲繁 本店","url":"https://nagoya-bites.com/stores/J000622335.html"},{"@type":"ListItem","position":2,"name":"かしわ料理 みふね","url":"https://nagoya-bites.com/stores/J000107807.html"},{"@type":"ListItem","position":3,"name":"おしょくじ處 今","url":"https://nagoya-bites.com/stores/J000395189.html"},{"@type":"ListItem","position":4,"name":"コーチン焼肉 べんがら亭 瑞穂店","url":"https://nagoya-bites.com/stores/J001269208.html"},{"@type":"ListItem","position":5,"name":"ふじ寿し","url":"https://nagoya-bites.com/stores/J000395038.html"},{"@type":"ListItem","position":6,"name":"みそかつの三河屋","url":"https://nagoya-bites.com/stores/J001039636.html"},{"@type":"ListItem","position":7,"name":"めん処すずき","url":"https://nagoya-bites.com/stores/J000395042.html"},{"@type":"ListItem","position":8,"name":"寿司 森島","url":"https://nagoya-bites.com/stores/J001230941.html"},{"@type":"ListItem","position":9,"name":"磯料理 志ヅ重","url":"https://nagoya-bites.com/stores/J000399118.html"},{"@type":"ListItem","position":10,"name":"旬彩酒場　enn...","url":"https://nagoya-bites.com/stores/J004558354.html"},{"@type":"ListItem","position":11,"name":"富士栄","url":"https://nagoya-bites.com/stores/J000398653.html"},{"@type":"ListItem","position":12,"name":"うなぎ茶屋 あんず","url":"https://nagoya-bites.com/stores/J001022487.html"},{"@type":"ListItem","position":13,"name":"自然薯料理 和食 華花 緑店","url":"https://nagoya-bites.com/stores/J001210698.html"},{"@type":"ListItem","position":14,"name":"日本料理すし哲","url":"https://nagoya-bites.com/stores/J000399397.html"},{"@type":"ListItem","position":15,"name":"にぎりの徳兵衛 植田店","url":"https://nagoya-bites.com/stores/J000702182.html"},{"@type":"ListItem","position":16,"name":"とんかつ かつ楽 徳重店","url":"https://nagoya-bites.com/stores/J001037833.html"},{"@type":"ListItem","position":17,"name":"にぎりの徳兵衛 鳴海店","url":"https://nagoya-bites.com/stores/J001209483.html"},{"@type":"ListItem","position":18,"name":"磯のがってん寿司 イオンモール大高店","url":"https://nagoya-bites.com/stores/J001114220.html"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},{"@type":"ListItem","position":2,"name":"店舗一覧","item":"https://nagoya-bites.com/stores/index.html"},{"@type":"ListItem","position":3,"name":"エリア×ジャンルで探す","item":"https://nagoya-bites.com/stores/area/index.html"},{"@type":"ListItem","position":4,"name":"緑区・南区・天白区・瑞穂区","item":"https://nagoya-bites.com/stores/area/midori-tempaku/index.html"},{"@type":"ListItem","position":5,"name":"和食","item":"https://nagoya-bites.com/stores/area/midori-tempaku/washoku.html"},{"@type":"ListItem","position":6,"name":"30名以上の宴会可","item":"https://nagoya-bites.com/stores/area/midori-tempaku/washoku-group-30.html"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"緑区・南区・天白区・瑞穂区の和食の予算相場は？","acceptedAnswer":{"@type":"Answer","text":"掲載18軒のうち最も多い価格帯は「1501～2000円」（7軒）です。店によって幅があるため、各店ページの価格帯表示も合わせてご確認ください。"}},{"@type":"Question","name":"個室のある店はありますか？","acceptedAnswer":{"@type":"Answer","text":"個室ありの店が3軒あります。人数や用途に応じて各店ページで詳細をご確認ください。"}}]}</script>
 
 <style>
+.container{max-width:var(--container-mid);margin:0 auto;padding:var(--sp-5) var(--sp-4) var(--sp-7);}
+.container > .breadcrumb,.container .nb-section-head{padding-left:0;padding-right:0;}
 .hub-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:var(--sp-3);margin:var(--sp-5) 0;padding:var(--sp-4);background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-md);}
 .hub-stats dt{font-size:var(--fs-xs);color:var(--dim);margin-bottom:.2rem;}
 .hub-stats dd{font-size:var(--fs-xl);font-family:var(--font-display);color:var(--ink);margin:0;}
@@ -51,6 +52,21 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .faq-a{font-size:var(--fs-md);line-height:1.85;margin:0;color:var(--muted);}
 .faq-a::before{content:"A. ";color:var(--gold);font-weight:500;}
 .hub-method{font-size:var(--fs-xs);color:var(--dim);margin-top:var(--sp-2);}
+.hub-guide-title,.hub-picks-note{font-size:var(--fs-xs);color:var(--dim);margin:0 0 .5rem;}
+.hub-guide p:not(.hub-guide-title){font-size:var(--fs-md);line-height:var(--lh-body);margin:0 0 .5rem;}
+.hub-picks{margin:var(--sp-5) 0;}
+.hub-picks ul{list-style:none;padding:0;margin:var(--sp-3) 0 0;}
+.hub-picks li{border-top:1px solid var(--border);padding:var(--sp-4) 0;}
+.hub-picks li:last-child{border-bottom:1px solid var(--border);}
+.hub-picks .store-name{margin:0 0 .3rem;}
+.hub-pick-reason{font-size:var(--fs-md);line-height:var(--lh-body);margin:0;}
+.hub-pick-meta{font-size:var(--fs-xs);color:var(--dim);margin:.3rem 0 0;}
+.hub-tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:start;gap:var(--sp-5);margin:var(--sp-3) 0 var(--sp-5);}
+.hub-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);}
+.hub-table caption{text-align:left;font-size:var(--fs-xs);color:var(--dim);padding-bottom:var(--sp-2);}
+.hub-table th,.hub-table td{padding:.5rem .25rem;border-bottom:1px solid var(--border);text-align:left;}
+.hub-table th{font-weight:600;color:var(--muted);}
+.hub-table th:last-child,.hub-table td:last-child{text-align:right;font-variant-numeric:tabular-nums;}
 </style>
 </head>
 <body>
@@ -92,8 +108,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <!-- NB-CHROME:BREADCRUMB:END -->
   <p class="art-eyebrow">Restaurant Database — 緑区・南区・天白区・瑞穂区 × 和食 × 30名以上の宴会可</p>
   <h1 class="art-title">緑区・南区・天白区・瑞穂区の和食 — <em>30名以上の宴会可</em></h1>
-  <div class="art-lead"><p>18軒。予算は「1501～2000円」が最多（7軒）。最寄り駅は有松駅（2軒）・名古屋市営地下鉄桜通線，名古屋市営地下鉄名城線新瑞橋駅（2軒）・地下鉄桜通線徳重駅（2軒）。Google★4.0以上・口コミ5件以上の店が12軒。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
+  <div class="art-lead"><p>18軒。予算は「1501～2000円」が最多（7軒）。最寄り駅は塩釜口駅（2軒）・有松駅（2軒）・新瑞橋駅（2軒）。Google★4.0以上・口コミ5件以上の店が12軒。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
   
+  <section class="insider-box hub-guide" aria-label="編集部の見分け方">
+    <p class="hub-guide-title">編集部の見分け方</p>
+    <p>品書きに産地や旬の素材が具体的に書かれているか、コースの中身が季節で変わるかを見ます。出汁の扱いは、椀物や炊き合わせに表れます。</p>
+    <p>大人数の会は、貸切か仕切った席か、料理が大皿か一人ずつの盛りかで進めやすさが変わります。マイクや音響を使えるかも、幹事が確かめておきたい点です。</p>
+  </section>
+
   <ul class="store-list">
         <li class="store-card">
           <span class="store-num">1</span>
@@ -331,6 +353,33 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
         </li>
   </ul>
 
+  <section class="hub-data" aria-label="この一覧のデータ">
+    <h2 class="nb-section-head"><span>データで見る</span></h2>
+    <div class="hub-tables">
+      <table class="hub-table">
+        <caption>予算帯（価格帯の表示がある17軒）</caption>
+        <thead><tr><th scope="col">予算帯</th><th scope="col">軒数</th></tr></thead>
+        <tbody>
+          <tr><td>1501～2000円</td><td>7</td></tr>
+          <tr><td>2001～3000円</td><td>3</td></tr>
+          <tr><td>3001～4000円</td><td>2</td></tr>
+          <tr><td>4001～5000円</td><td>2</td></tr>
+          <tr><td>5001～7000円</td><td>3</td></tr>
+        </tbody>
+      </table>
+      <table class="hub-table">
+        <caption>最寄り駅（上位5駅）</caption>
+        <thead><tr><th scope="col">最寄り駅</th><th scope="col">軒数</th></tr></thead>
+        <tbody>
+          <tr><td>塩釜口駅</td><td>2</td></tr>
+          <tr><td>有松駅</td><td>2</td></tr>
+          <tr><td>新瑞橋駅</td><td>2</td></tr>
+          <tr><td>堀田駅</td><td>2</td></tr>
+          <tr><td>鳴海駅</td><td>2</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
   <section class="faq-section" aria-label="よくある質問">
     <h2 class="nb-section-head"><span>よくある質問</span></h2>
     <div class="faq-list">
