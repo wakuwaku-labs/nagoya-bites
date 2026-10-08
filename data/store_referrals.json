@@ -1,5 +1,5 @@
 {
-  "generatedAt": null,
+  "generatedAt": "2026-10-08T21:22:21.273Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -8,19 +8,304 @@
   },
   "totals": {
     "exits": {
-      "hotpepper": 0,
+      "hotpepper": 50,
       "tabelog": 0,
-      "tel": 0,
+      "tel": 2,
       "other": 0,
-      "total": 0
+      "total": 52
     },
     "reports": {
       "yes": 0,
       "no": 0
     }
   },
-  "unattributedExits": 0,
-  "month": null,
-  "stores": [],
-  "note": "初回。CI（build.yml の fetch_ga4_views.js）が翌日から上書きする"
+  "unattributedExits": 26,
+  "month": {
+    "start": "2026-10-01",
+    "totals": {
+      "exits": {
+        "hotpepper": 16,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 16
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      }
+    }
+  },
+  "stores": [
+    {
+      "store_name": "旬菜家 楽",
+      "exits": {
+        "hotpepper": 5,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 5
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "日本料理 旬彩",
+      "exits": {
+        "hotpepper": 4,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 4
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "BRIANZA NAGOYA ブリアンツァナゴヤ",
+      "exits": {
+        "hotpepper": 2,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 2
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 2,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "旬彩倶楽部 鱗",
+      "exits": {
+        "hotpepper": 2,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 2
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "全室水槽個室 柳橋 AONO（アオノ）名古屋駅店",
+      "exits": {
+        "hotpepper": 2,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 2
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "鍋と和食 個室ダイニング ENISHI 金山店",
+      "exits": {
+        "hotpepper": 2,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 2
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "うなぎのしろむら 泉店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "エノテーカ ピンキオーリ 名古屋",
+      "exits": {
+        "hotpepper": 0,
+        "tabelog": 0,
+        "tel": 1,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "ちゃんこ九重",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "ヤムヤムビュッフェ Yum Yum Buffet 栄女子大店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "ルコネッサンス",
+      "exits": {
+        "hotpepper": 0,
+        "tabelog": 0,
+        "tel": 1,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "個室×夜カフェ  FYN フィン 栄店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "寿司処 昴 栄店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "焼肉酒房天禄　池下店",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 0,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "鮨赤酢かぶと",
+      "exits": {
+        "hotpepper": 1,
+        "tabelog": 0,
+        "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    }
+  ]
 }
