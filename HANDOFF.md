@@ -24,8 +24,9 @@ status: in_progress
 # 次にやること
 1. SEO-121 の本番確認: 次の build.yml の後に `node scripts/audit_sitemap_health.js --lastmod-only --check` が exit 0 → backlog done・P-117 Done
 2. SEO-115 の残り: 10-09 06:00 の夜間QA（inline-js）と `data/site_metrics.json` の topPages に /stores/ が出るか → done・P-112 Done
-3. 実装中: SEO-143（店舗ページに「編集部の選定理由」の節。141店に出る・insiderNote は出さない）→ PR。合流後、build.yml の再生成を待って `node scripts/indexnow_ping.js --recent 2` の stores.comment_not_on_page が 141 → 3 前後になれば done・P-145 Done
-   その後: SEO-139 aggregateRating・SearchAction → SEO-127 banquet 季節リード → SEO-131 特集の日付・署名 → SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
+3. 実装中: SEO-143（店舗ページに「編集部の選定理由」の節。141店に出る・insiderNote は出さない）→ PR。合流後、build.yml の再生成を待って `node scripts/indexnow_ping.js --recent 2` の stores.comment_not_on_page が 141 → 0 前後になれば done・P-145 Done（#416 合流済み。IndexNow の -2/-3 対応は別 PR）
+   SEO-139 は #418 で合流・P-135 Done。店舗ページの反映（AggregateRating が 0 件）は再生成後に確かめる
+   その後: SEO-127 banquet 季節リード → SEO-131 特集の日付・署名 → SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
 4. 夜間QA の station-names が緑で続いたら hard に上げる
 
 対象外（理由）:

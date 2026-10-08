@@ -144,6 +144,25 @@ function normText(s) { return String(s || '').replace(/\s+/g, ' ').trim(); }
 function pageText(html) { return normText(String(html).replace(/&(?:amp|lt|gt|quot|apos|#39|#x27);/g, m => ENTITIES[m])); }
 
 /**
+ * 店のページを探す。同じ slug になる店が複数あると、生成器は2店目以降に `-2`・`-3` を付ける
+ * （gen-store-pages.js の main）。どの店が何番目かはスプレッドシートとの突き合わせ後の順で決まり、
+ * ここでは再現できないため、ページの <h1> の店名で探す。どれにも当たらなければ基本の slug のページを返す。
+ */
+function storePageFor(s, { readPage, toSlug }) {
+  const base = toSlug(s);
+  const name = String(s['店名'] || '').trim();
+  let first = null;
+  for (let n = 1; n <= 20; n++) {
+    const key = `stores/${n === 1 ? base : `${base}-${n}`}.html`;
+    const html = readPage(key);
+    if (!html) break;
+    if (!first) first = { key, html };
+    if (name && html.includes(`<h1>${name}</h1>`)) return { key, html };
+  }
+  return first || { key: `stores/${base}.html`, html: null };
+}
+
+/**
  * 編集コメントがページに出ている店舗ページのうち、出ている文が前回送ったときと違うもの。
  * 「出ている」はページの HTML に文がそのまま含まれること（第三者が検算できる事実・制約10）。
  * データにコメントがあってもページに出ていなければ、ページは変わっていないので送らない。
@@ -155,11 +174,10 @@ function storeTargets(stores, state, { sitemapLocs, readPage, toSlug }) {
   for (const s of stores || []) {
     const comments = [s.editorReason, s.insiderNote].map(normText).filter(Boolean);
     if (!comments.length) continue;
-    const key = `stores/${toSlug(s)}.html`;
+    const { key, html } = storePageFor(s, { readPage, toSlug });
     const url = `${ORIGIN}/${key}`;
     if (seen.has(key) || !sitemapLocs.has(url)) continue;
     seen.add(key);
-    const html = readPage(key);
     if (!html) continue;
     const text = pageText(html);
     const shown = comments.filter(c => text.includes(c));
@@ -323,6 +341,6 @@ async function main() {
   }
 }
 
-module.exports = { journalUrls, loadState, hubTargets, storeTargets, collectTargets, recordSent, pageText, MAX_URLS };
+module.exports = { storePageFor, journalUrls, loadState, hubTargets, storeTargets, collectTargets, recordSent, pageText, MAX_URLS };
 
 if (require.main === module) main().catch(e => { out({ ok: false, error: e.message }); process.exit(1); });
