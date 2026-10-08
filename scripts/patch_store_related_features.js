@@ -13,6 +13,7 @@
 
 const fs   = require('fs');
 const path = require('path');
+const { relabelForSlug } = require('./lib/feature_counts');
 
 const ROOT       = path.join(__dirname, '..');
 const STORES_DIR = path.join(ROOT, 'stores');
@@ -59,7 +60,7 @@ function loadStores() {
 }
 
 function buildUlInner(features) {
-  return features.map(f => `      <li><a href="../features/${f.file}">${f.label}</a></li>`).join('\n');
+  return features.map(f => `      <li><a href="../features/${f.file}">${relabelForSlug(f.label, f.file.replace(/\.html$/, ''))}</a></li>`).join('\n');
 }
 
 function main() {

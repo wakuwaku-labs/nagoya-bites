@@ -19,15 +19,15 @@ status: in_progress
   - #414 SEO-136（IndexNow: 前回送った値を data/indexnow_state.json に記録し、変わったハブ・編集コメントが変わった店舗ページを送る）
   - #415 SEO-138（GA スニペットを scripts/lib/ga_snippet.js の1本に。localStorage を try/catch で囲む）
   - #422 SEO-145（特集の公開日・更新日・書き手の部品・P-153 Done）。SEO-131（P-127）も Done
+  - #424 SEO-146（特集の掲載件数の表記を実数に日次でそろえる・scripts/sync_feature_counts.js・P-154 Done）
   - #416 SEO-143（店舗ページに「編集部の選定理由」）・#418 SEO-139（aggregateRating と SearchAction を外す・docs/decisions/0009）・#419 IndexNow が -2/-3 の店舗ページを探す・#420 SEO-127（banquet の 11・12月リードと幹事チェックリスト）・#421 SEO-131 その1（掲載店の入れ替えで dateModified を進める）
 - Linear: P-115/P-116/P-138/P-113/P-140/P-131/P-132/P-134 は Done（結果コメントつき）。P-117（SEO-121）は In Progress で、本番確認待ち
 - 起票: ISSUE-147（P-142・Places の古い誤紐付け・オーナー承認が要る）／ISSUE-148（P-143・スプレッドシート経由の住所検査）／SEO-142（P-144・sameAs。公式アカウントの URL をオーナーが示すまで待ち）／SEO-143（P-145・店舗ページに editorReason が出ていない）／SEO-144（P-146・index.html と静的ページの localStorage 例外で GA が止まる）
 
 # 次にやること
-1. 実装中: SEO-146（P-154）。済: scripts/lib/feature_counts.js に verifiedCount・relabelAll/relabelStrong・syncPage・syncAll・relabelForSlug を追加し、features/ 22本に適用（未コミット）。手直し: reservation-difficult・settai-secret の本文、settai-secret の通し番号（2〜10→1〜8）と焼肉4軒→3軒（stores.json のジャンルで3店）。残り: scripts/sync_feature_counts.js（CLI・--check/--dry-run/--only）→ build.yml の byline の後に追加 → build_featured.js で描画時に relabelForSlug・data/featured.json の件数を直す → gen_industry_features.js（串っ子を外す・{N} で店数から入れる・--out）→ tests（ガード・fixture・本番の --check が0・通し番号）→ 監査（schema_alignment・design・inline js・npm test）→ PR → backlog done → P-154 Done → SEO-147（店舗ページ生成器とジャーナル側）を起票
-   （#423 は合流済み・P-117・P-145 は Done）
+1. 実装中: SEO-147（P-156）。ジャーナル17本・30リンク／店舗ページ839本・885リンクの特集リンク文の「N選」を relabelForSlug でそろえる。出どころ: gen-store-pages.js の関連特集の表・patch_store_related_features.js・inject_journal_feature_cta.js・refresh_journal_related.js・add_related_features.js。店舗ページはローカルで再生成しない（CI が再生成）→ 合流翌日に数えて0件なら Done（それまで In Progress）
 2. SEO-115 の残り（P-112）: 達成条件3（GA4 で /stores/ の page_view。topPages は上位5ページだけなので、オーナー確認か 10-10 以降の metrics_history の段差）と5（次の夜間QA の inline-js が緑）
-3. 次の実装: SEO-146（P-154・特集の掲載件数の表記・gen_industry_features.js の「焼鳥 串っ子」）→ SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
+3. 次の実装: SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
 4. 夜間QA の station-names が緑で続いたら hard に上げる
 5. 最後に: 「うなぎのしろむら 泉店」の起票、創業者の実名が index.html の Organization JSON-LD に出ている件をオーナーへ報告（変更しない）、http.server（8093・8094・8095）を止める
 

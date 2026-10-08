@@ -16,6 +16,7 @@ const { titleAreaLabel } = require('./scripts/lib/area_label');
 const siteChrome = require('./scripts/lib/site_chrome');
 const areaGenrePages = require('./scripts/lib/area_genre_pages');
 const { loadPolicy: loadIgPostPolicy } = require('./scripts/lib/ig_post_policy');
+const { relabelForSlug } = require('./scripts/lib/feature_counts');
 const IG_MAX_POSTS_PER_STORE = (loadIgPostPolicy().thresholds && loadIgPostPolicy().thresholds.maxPostsPerStore) || 1;
 
 // SEO-094: エリア×ジャンル一覧（stores/area/）のURL索引。「もっと見る」導線・パンくず・
@@ -320,7 +321,8 @@ function buildRelatedFeatures(store) {
   for (const entry of TAG_TO_FEATURES) {
     if (seen.has(entry.file)) continue;
     if (entry.match(store)) {
-      hits.push(entry);
+      // SEO-147: ラベルの「N選」はリンク先の特集の確かめられる掲載数に合わせる（数えられなければそのまま）
+      hits.push({ ...entry, label: relabelForSlug(entry.label, entry.file.replace(/\.html$/, '')) });
       seen.add(entry.file);
     }
     if (hits.length >= 3) break;
@@ -687,7 +689,7 @@ function renderStorePage(s, slug, relatedStores, listedFeatures) {
   <div class="related-features listed-features">
     <h2>掲載特集</h2>
     <ul>
-      ${listedFeatures.map(f => `<li><a href="../features/${escapeHtml(f.slug)}.html">${escapeHtml(f.title)}</a></li>`).join('\n      ')}
+      ${listedFeatures.map(f => `<li><a href="../features/${escapeHtml(f.slug)}.html">${escapeHtml(relabelForSlug(f.title, f.slug))}</a></li>`).join('\n      ')}
     </ul>
   </div>` : '';
 
@@ -1406,4 +1408,4 @@ if (require.main === module) {
   main().catch(err => { console.error('エラー:', err); process.exit(1); });
 }
 
-module.exports = { renderStorePage, buildEditorReason, toSlug, buildRelatedStores, buildSitemap };
+module.exports = { renderStorePage, buildEditorReason, toSlug, buildRelatedStores, buildRelatedFeatures, buildSitemap };

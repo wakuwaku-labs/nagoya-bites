@@ -14,6 +14,7 @@
 const fs = require('fs');
 const path = require('path');
 const { buildFeatureHubMap, detectArticleArea, findAreaHub } = require('./lib/hub_link_finder');
+const { relabelForSlug, syncAll } = require('./lib/feature_counts');
 
 const JOURNAL_DIR = path.join(__dirname, '..', 'journal');
 const HUB_MAP = buildFeatureHubMap({ maxLinks: 2 });
@@ -98,7 +99,8 @@ const TOPIC_FEATURES = [
 function matchTopicFeature(title) {
   if (!title) return null;
   for (const [re, slug, label] of TOPIC_FEATURES) {
-    if (re.test(title)) return { slug, label };
+    // SEO-147: 「N選」はリンク先の特集の確かめられる掲載数に合わせる
+    if (re.test(title)) return { slug, label: relabelForSlug(label, slug) };
   }
   return null;
 }
@@ -165,7 +167,7 @@ function buildRelatedHtml(currentFile, posts, postsMeta) {
           if (featureSlug !== topic.slug) {
             // エリア特集ラベルを TOPIC_FEATURES から引く（語彙を一箇所に集約）
             const entry = TOPIC_FEATURES.find(([, s]) => s === featureSlug);
-            const areaFeatureLabel = entry ? entry[2] : featureSlug;
+            const areaFeatureLabel = entry ? relabelForSlug(entry[2], featureSlug) : featureSlug;
             const href = `../${areaHub.url}`;
             lines.push(
               `    <a class="related-link" href="${href}" onclick="trackEvent('internal_link_click',{link_url:'${href}',block:'journal_hub'})">${escapeHtml(areaFeatureLabel)}</a>`
@@ -239,6 +241,14 @@ function main() {
     console.log(`SKIP（対象外）${skippedOld}件: 旧 related-wrap 形式。既存の手動キュレーション済みリンクを保持します。`);
   }
   console.log(`Updated ${changed}/${posts.length} files`);
+  // SEO-147: 本文の「合わせて読む」なども含め、特集へのリンク文の「N選」をリンク先の掲載数にそろえる。
+  // 掲載店の入れ替えで特集の件数が変わった日も、次の日次ジャーナルで追いつく（冪等・失敗しても関連リンクの更新は残す）
+  try {
+    const synced = syncAll({ target: 'journal', write: true });
+    console.log(`特集へのリンク文の件数をそろえた: ${synced.changed.length} 本`);
+  } catch (e) {
+    console.log(`⚠️ 特集へのリンク文の件数をそろえられなかった: ${e.message}`);
+  }
 }
 
 main();

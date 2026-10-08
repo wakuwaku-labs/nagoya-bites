@@ -122,3 +122,60 @@ test('公開中の特集: 店カードの通し番号が 1〜掲載数 をちょ
   }
   assert.deepStrictEqual(bad, []);
 });
+
+// ── ジャーナル・店舗ページから特集へのリンク文（SEO-147）────────────────
+// 公開中のジャーナルのずれは夜間QA（soft）が数える。ジャーナルはビルドの中では直さない（書き手は日次ジャーナル）ため、
+// blocking の npm test には入れない（日次ジャーナルが止まった日にビルドまで止めない）。
+const os = require('os');
+
+test('syncAll(target: journal): 特集へのリンク文と特集を指す JSON-LD の名前だけをそろえ、記事自身の表記には触らない（冪等）', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'fc147-'));
+  const feat = path.join(root, 'features');
+  const jour = path.join(root, 'journal');
+  fs.mkdirSync(feat);
+  fs.mkdirSync(jour);
+  fs.writeFileSync(path.join(feat, 'nagoya-ramen.html'), FIXTURE); // ItemList 2件＝要素2＝カード2枚 → 掲載数 2
+  fs.writeFileSync(path.join(jour, '2026-10-09-test.html'), [
+    '<html><head><title>ラーメン10選を歩く</title>',
+    '<script type="application/ld+json">{"@type":"Article","headline":"ラーメン10選を歩く","mentions":[{"@type":"Thing","name":"ラーメン12選","url":"https://nagoya-bites.com/features/nagoya-ramen.html"}]}</script>',
+    '</head><body>',
+    '<h1>ラーメン10選を歩く</h1>',
+    '<p>本記事の10軒は駅から近い。</p>',
+    '<a class="related-link is-primary" href="../features/nagoya-ramen.html">ラーメン12選</a>',
+    '<a href="../features/nagoya-ramen.html" onclick="trackEvent(\'x\',{label:\'ラーメン12選\'})">ラーメン12選 →</a>',
+    '<a href="../features/unknown.html">数えられない特集10選</a>',
+    '</body></html>',
+  ].join('\n'));
+  const r = syncAll({ dir: jour, target: 'journal', featuresDir: feat, write: true });
+  const out = fs.readFileSync(path.join(jour, '2026-10-09-test.html'), 'utf8');
+  assert.strictEqual(r.changed.length, 1);
+  assert.ok(out.includes('>ラーメン2選</a>'), 'リンク文');
+  assert.ok(out.includes('>ラーメン2選 →</a>'), '本文の「合わせて読む」');
+  assert.ok(out.includes('"name":"ラーメン2選"'), '特集を指す JSON-LD の名前');
+  for (const kept of ['<title>ラーメン10選を歩く</title>', '"headline":"ラーメン10選を歩く"', '<h1>ラーメン10選を歩く</h1>',
+    '本記事の10軒', "label:'ラーメン12選'", '数えられない特集10選']) {
+    assert.ok(out.includes(kept), `触らない: ${kept}`);
+  }
+  assert.deepStrictEqual(syncAll({ dir: jour, target: 'journal', featuresDir: feat, write: true }).changed, [], '冪等');
+  fs.rmSync(root, { recursive: true, force: true });
+});
+
+test('syncAll: target は features / journal / stores のどれか', () => {
+  assert.throws(() => syncAll({ target: 'nope' }), /target/);
+});
+
+test('gen-store-pages: 関連特集・掲載特集のラベルの「N選」はリンク先の特集の掲載数（SEO-147）', () => {
+  const { buildRelatedFeatures, renderStorePage } = require('../gen-store-pages.js');
+  const { featureCounts } = require('../scripts/lib/feature_counts');
+  const counts = featureCounts();
+  const store = { '店名': 'テスト', 'エリア': '大須', 'ジャンル': 'ラーメン', 'タグ': '個室 誕生日・記念日' };
+  const hits = buildRelatedFeatures(store);
+  assert.strictEqual(hits.length, 3);
+  for (const h of hits) {
+    const n = counts[h.file.replace(/\.html$/, '')];
+    const m = /(\d+)選/.exec(h.label);
+    if (n != null && m) assert.strictEqual(+m[1], n, h.label);
+  }
+  const html = renderStorePage(store, 'test', [], [{ slug: 'nagoya-ramen', title: '名古屋ラーメン おすすめ12選【2026年版】' }]);
+  assert.deepStrictEqual(syncPage(html, { counts, dir: 'stores' }).changes, [], '描画した店舗ページに古い数が残っていない');
+});

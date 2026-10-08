@@ -626,7 +626,7 @@
 
 ### [SEO-147] ジャーナルと店舗ページから特集へのリンク文の「N選」を、特集の実際の掲載数にそろえる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-10-09
 - **category**: data-quality / コンテンツ
 - **owner**: Builder / Editor
@@ -638,6 +638,12 @@
   2. 既存のジャーナル17本のリンク文をそろえる（`syncPage` を journal/ に当てるか、生成器の再実行で）
   3. 店舗ページは CI の再生成で直ることを、合流の翌日に `relabelAll` で数えて0件で確かめる（ローカルで約5,000本を再生成しない）
   4. ジャーナルと店舗ページのずれを数える検査を足す（初回は非ブロッキング）
+- **結果**（2026-10-09・途中。残りは達成条件3の本番確認だけ）:
+  - 達成条件1: `gen-store-pages.js`（関連特集と掲載特集）・`refresh_journal_related.js`（関連リンクとエリア特集）・`inject_journal_feature_cta.js`（本文の「合わせて読む」）・`patch_store_related_features.js`・`add_related_features.js` が、書き出すときに `relabelForSlug` でリンク先の掲載数に合わせる。gen-store-pages.js の変更はリンク文の数字だけで、マークアップ・CSS は変えていない（Designer QA-5・`audit_design_system.js --check` 通過）
+  - 達成条件2: `scripts/sync_feature_counts.js --target journal` で17本・30リンクをそろえた（ラーメン12選→11選、大須食べ歩き10選→8選、失敗しない接待10選→8選、誕生日・記念日10選→5選 など。差分はリンク文の数字だけ）。以後は `refresh_journal_related.js` が毎日同じ書き換えを呼ぶ（直す前の記事の写しで実行し、手でそろえた結果と1行も違わないことを確かめた）
+  - 達成条件3（未）: 店舗ページはローカルで書き換えていない。build.yml の再生成の後に `sync_feature_counts.js --target stores` を置いた（再生成されない孤児ページと stores/index.html の分）。店舗ページの写しで実行すると 839本・885リンクがそろい、2回目は0本だった。合流の翌日に main で `node scripts/sync_feature_counts.js --check --target stores` が exit 0 なら done
+  - 達成条件4: 夜間QA に `feature-link-counts-stores`・`feature-link-counts-journal`（soft）を足した。ジャーナルはビルドの中では直さないので、blocking の npm test には入れていない
+  - 確認: npm test 387件通過・`audit_design_system --check`・`audit_inline_js_syntax --check --only journal`・`apply_site_chrome --check --only journal` 通過
 
 ### [DSN-007] 閉じたモバイルメニューでページの横幅が画面の2倍になっていないか確かめ、なっていれば直す
 

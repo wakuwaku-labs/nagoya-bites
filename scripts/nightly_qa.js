@@ -118,6 +118,20 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_station_names.js', '--check']],
 });
+// 7. 特集へのリンク文の件数（SEO-147・SOFT で開始）。ジャーナル・店舗ページの「N選」が、リンク先の特集の
+//    確かめられる掲載数（ItemList＝要素数＝店カード枚数）とずれていないか。2026-10-09、店舗ページ839本・
+//    ジャーナル17本で古い数が残っていた（生成器の手書きラベルが出どころ）。店舗ページは3時のビルドが、
+//    ジャーナルは日次ジャーナルの refresh_journal_related.js が直すので、残っていれば直す流れが止まっている。
+for (const target of ['stores', 'journal']) {
+  checks.push({
+    id: `feature-link-counts-${target}`,
+    title: `${target}/ から特集へのリンク文の件数（SEO-147）`,
+    hard: false,
+    alwaysShow: true,
+    trigger: '常時',
+    cmd: ['node', ['scripts/sync_feature_counts.js', '--check', '--target', target]],
+  });
+}
 
 if (cat.buildCore.length) {
   checks.push({

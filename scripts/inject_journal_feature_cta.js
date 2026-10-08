@@ -17,6 +17,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { relabelForSlug } = require('./lib/feature_counts');
 
 const JOURNAL_DIR = path.join(__dirname, '..', 'journal');
 const FEATURES_DIR = path.join(__dirname, '..', 'features');
@@ -93,7 +94,7 @@ function buildBlock(topic) {
     START,
     '<div class="tips-box" role="complementary" aria-label="関連特集">',
     '  <p style="font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:var(--ls-caps);text-transform:uppercase;color:var(--gold);margin:0 0 .5rem;">合わせて読む</p>',
-    `  <a href="${href}" ${onclick}>${topic.label} →</a>`,
+    `  <a href="${href}" ${onclick}>${relabelForSlug(topic.label, topic.slug)} →</a>`,
     '</div>',
     END,
   ].join('\n');

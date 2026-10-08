@@ -335,6 +335,15 @@ jobs:
         run: node scripts/relink_journal_store_cards.js --check
         continue-on-error: true
 
+      - name: 店舗ページから特集へのリンク文の件数をそろえる（SEO-147・冪等・日次）
+        # 店舗ページの「この店舗が登場する特集」「掲載特集」の「N選」は、gen-store-pages.js が書き出すときに
+        # リンク先の特集の確かめられる掲載数（ItemList＝要素数＝店カード枚数）に合わせる。このステップは
+        # 再生成されない孤児ページ（data/store_page_orphans.json）と stores/index.html のずれを直し、直した本数を
+        # ログに出す（再生成したページは0本のはず）。判定は scripts/lib/feature_counts.js の1本。初回は非ブロッキング。
+        # journal/ は書き手を1つにするためここでは触らず、日次ジャーナルの refresh_journal_related.js が同じ書き換えを呼ぶ。
+        run: node scripts/sync_feature_counts.js --target stores
+        continue-on-error: true
+
       - name: エリア×ジャンル×条件ページ生成（stores/area/・SEO-094）
         # data/area_genre_pages_policy.json を唯一の情報源に、data/stores.json から
         # 決定的にエリア×ジャンル一覧ページ（stores/area/配下）を生成する。
