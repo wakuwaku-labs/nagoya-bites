@@ -9,13 +9,19 @@ status: in_progress
 - 日付待ち・オーナー待ちの課題は手を付けず、理由をここに残す
 
 # できていること
-- SEO-119/120（実装済み・PR 前）: 駅名監査 `scripts/audit_station_names.js`（判定器 `scripts/lib/station_names.js`・駅名リスト `data/station_names.json`＝HeartRails Express・取得 `scripts/fetch_station_names.js`）。夜間QA に soft で追加。全店照合で県外の店23店を HotPepper の所在地で確かめ `data/closed_stores.json` へ。名古屋の2店は例外（ふじなが）とアクセス訂正（和食さと・`data/access_corrections.json`・build.js で適用）。焼き鳥特集2本・hard-to-book・予約困難特集・editor_picks から串っ子/のんきを除去。npm test 321/321・監査 0 店
-- 後回しの起票: ISSUE-147（Places の古い誤紐付け・口コミ信頼度が変わるためオーナー承認が要る）／ISSUE-148（スプレッドシート経由の行を HotPepper の住所で検査）
+- 合流済み（2026-10-09）:
+  - #408 SEO-119/120（他都市23店の除外・駅名監査）
+  - #409 ISSUE-145（Linear 全件取得）
+  - #410 SEO-117（GSC を指標履歴へ・`track_metrics.js --north-star`）
+  - #411 SEO-121（lastmod を内容が変わった日に・build.js の sitemap 書き出し停止・robots→sitemap.xml・news 削除）
+  - #412 SEO-119 残り（孤児23本削除）＋ ISSUE-146（孤児一覧を CI のコミット対象へ）
+- Linear: P-115/P-116/P-138/P-113/P-140 は Done（結果コメントつき）。P-117（SEO-121）は In Progress で、本番確認待ち
+- 起票: ISSUE-147（P-142・Places の古い誤紐付け・オーナー承認が要る）／ISSUE-148（P-143・スプレッドシート経由の住所検査）
 
 # 次にやること
-1. SEO-119/120 を PR → squash merge → Linear 同期（SEO-120 Done・SEO-119 は CI 再生成後に `grep -rlE '釧路駅|神田\(東京\)' stores/*.html stores/area` が 0 件で Done）
-2. ISSUE-146 → ISSUE-145 → SEO-117 → SEO-121 → SEO-135/136/138/139/127/131/124/122/137/134
-3. SEO-115 の残り: 10-09 06:00 の夜間QA（inline-js）と `data/site_metrics.json` の topPages に /stores/ が出るかを見て閉じる
+1. SEO-121 の本番確認: 次の build.yml の後に `node scripts/audit_sitemap_health.js --lastmod-only --check` が exit 0 → backlog done・P-117 Done
+2. SEO-115 の残り: 10-09 06:00 の夜間QA（inline-js）と `data/site_metrics.json` の topPages に /stores/ が出るか → done・P-112 Done
+3. 順に実装: SEO-135 llms.txt・sameAs → SEO-136 IndexNow 対象拡大 → SEO-138 GA スニペット1本化 → SEO-139 aggregateRating・SearchAction → SEO-127 banquet 季節リード → SEO-131 特集の日付・署名 → SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック
 4. 夜間QA の station-names が緑で続いたら hard に上げる
 
 対象外（理由）:
@@ -24,6 +30,8 @@ status: in_progress
 - SEO-067/098（BWT・UTM）: オーナー本人の操作
 
 # 試したが駄目だったこと
+- `git merge origin/main` は、作業ツリーに未コミットの変更があると "Merge with strategy ort failed" で止まる。先にコミットしてから取り込む
+- CI は孤児ページを削除しない（`--redirect-orphans` のみ）。データから外した店のページは、判定器で「削除対象」と確かめてから手で消す
 - agent-backlog.md を python の heredoc で書き換えると Non-UTF-8 の SyntaxError。node で fs.readFileSync(…,'utf8') を使えば通る
 - `refresh_feature_rosters.js --only=…` は `data/feature_roster_health.json` を1本分で上書きする。実行後に git checkout で戻す
 
