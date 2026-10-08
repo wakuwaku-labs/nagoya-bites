@@ -47,6 +47,7 @@
   4. CI でこの監査が1回緑になったら、build.yml のステップから `continue-on-error` を外して blocking にする（ISSUE-121 の作法）
   5. 夜間QA の `inline-js` チェックが緑
 - **review（Designer・QA-5・2026-10-09）**: 承認。差分は `<script>` 内の正規表現1行（生成器1行・孤児99本の同じ1行）だけで、DOM と CSS は変わらない。動き出す処理は GA4 の設定、`trackEvent`、外部リンクのクリック計測だけで、画面を書き換える処理は無い。`audit_design_system.js --check` は CI と同じ条件（孤児一覧を作り直した状態）で exit 0。DOM と CSS が同一のため `measure_typography.js` とスクリーンショットは省略した
+- **合流後（2026-10-09 03:00 JST）**: PR #403 を 208f72697e で合流。build.yml（run 37818977796）が店舗ページ 4,907 本を再生成した。ただし build は店舗データを更新してから再生成するため、手元で現役と数えた 13 店が CI では孤児になり、壊れた形のまま残った（監査は ok:false・26 件。continue-on-error のため API のステップ結果は success と出る）。この 13 本を後続 PR で1行置換し、main 相当の全 6,050 ファイルで違反 0 を確認した。初回 CI が赤だったため、blocking 化（受け入れ条件4）は次の緑を確認してから行う
 - **補足**: 店舗ページの CTA ボタンは `onclick="trackEvent('cta_click',…)"` を持つ。`trackEvent` は壊れた script の中で定義されていたため、CTA クリックも 2026-05-08 から GA4 に届いていなかった（リンク自体は開く）。北極星の CTA 率も店舗ページ分を欠いている
 
 ### [SEO-117] GSC の意図別・ページ種別の値を日次の指標履歴に残す
