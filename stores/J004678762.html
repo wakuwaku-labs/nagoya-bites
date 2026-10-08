@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>本場ベトナム居酒屋 トロンドン 新栄店（栄・伏見・アジア・エスニック料理・予算3001～4000円）| NAGOYA BITES</title>
@@ -52,7 +52,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J004678762.html",
     "description": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄のアジア・エスニック料理。地下鉄新栄駅より徒歩約3分/新栄町駅から290m",
     "priceRange": "¥¥",
-    "openingHours": "月: 11:00～23:00火、木～日、祝日、祝前日: 11:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）",
+    "openingHours": "月～日: 11:00～22:00 （料理L.O. 21:00 ドリンクL.O. 21:30）祝日、祝前日: 11:00～23:00 （料理L.O. 22:00 ドリンクL.O. 22:00）",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.1721",
@@ -208,7 +208,7 @@ button.link-btn{font:inherit;cursor:pointer;}
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市東区東桜２-16-41 1F</span></div>
     <div class="info-cell"><label>価格帯</label><span>3001～4000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月: 11:00～23:00火、木～日、祝日、祝前日: 11:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月～日: 11:00～22:00 （料理L.O. 21:00 ドリンクL.O. 21:30）祝日、祝前日: 11:00～23:00 （料理L.O. 22:00 ドリンクL.O. 22:00）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>地下鉄新栄駅より徒歩約3分/新栄町駅から290m</span></div>
   </div>
