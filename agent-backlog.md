@@ -369,7 +369,7 @@
 
 ### [SEO-131] 特集に公開日・更新日・書き手を表示し、dateModified を掲載店の入れ替えと連動させる
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / コンテンツ
 - **owner**: Builder / Designer
@@ -381,6 +381,7 @@
   2. 掲載店の入れ替えで内容が変わった日を `dateModified` に書く
   3. デザイン監査・インラインJS監査を通す
 - **結果その1（2026-10-09・達成条件2）**: `scripts/refresh_feature_rosters.js` が掲載店を入れ替えて本文が変わった特集だけ、JSON-LD の `dateModified` をその日（UTC・`docs/decisions/0008` と同じ基準）に進める（`touchDateModified()`。JSON-LD の外は触らない・日付を戻さない・dateModified が無い特集には足さない）。本文が同じならファイルを書き直さない。`--only=date` の試し実行で、10 月の入れ替え後にデータが変わった分の差分が出て日付が進むことを確かめた（ファイルは戻した）。テスト `tests/feature_roster_date_modified.test.js`（2件）。達成条件1（画面の公開日・更新日・書き手）は 69 本の特集が6種類の作りで、日付の書き方も17通りあるため、子課題 [[SEO-145]] に分けた
+- **結果その2（2026-10-09・達成条件1・3）**: [[SEO-145]] で、JSON-LD を正本にした公開日・更新日・書き手の部品を日付のある特集 67 本に出し、build.yml で日次に当てるようにした。掲載店の入れ替えで dateModified が進んだ日は、画面の「更新」も同じ日に進む。デザイン監査・インラインJS監査は exit 0。Designer QA-5 の記録は [[SEO-145]] の結果に残した
 
 ### [SEO-132] about.html に運営者像を書く（匿名のまま経歴と編集方針）
 
@@ -574,7 +575,7 @@
 
 ### [SEO-145] 特集の画面に公開日・更新日・書き手を共通の部品で出す
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / コンテンツ / デザイン
 - **owner**: Builder / Designer
@@ -586,6 +587,42 @@
   2. 画面に残る古い日付（JSON-LD と食い違う日付）を部品にそろえる。「2026年版」のような版の表記は日付ではないので残す
   3. 冪等なスクリプトで全特集に当て、build.yml で日次に回す（`refresh_feature_rosters.js` が dateModified を進めた日に表示も追随する）
   4. Designer の QA-5（375/768/1280px）を記録し、`node scripts/audit_design_system.js --check` と `node scripts/audit_inline_js_syntax.js --check --only features` を通す
+- **結果（2026-10-09）**:
+  - 部品: `scripts/lib/feature_byline.js` が JSON-LD の datePublished（最も古い値）と dateModified（最も新しい値）から「公開 / 更新 / 執筆 NAGOYA BITES 編集部（現役の飲食店マネージャー）」を出す。更新は公開より後のときだけ出す。見た目は `assets/css/nb.css` の `.nb-byline`（13px・地色を継承・不透明度 .8・左揃え）。書き手は編集規約へリンクする（編集規約のページ自身はリンクなし）
+  - 適用: `scripts/apply_feature_byline.js`（冪等・`--dry-run`/`--check`/`--only`）で日付のある特集 67 本に当てた。2回目の実行で変更 0 本。日付の無い2本（特集一覧・接待コンシェルジュ）は触らない。meta 行から「公開・更新」付きの日付と書き手名を消した（編集規約は meta 行が空になり、行ごと除いた）。「2026年版」などの版表記と母の日特集の「2026年5月10日」は残した。build.yml の「特集×ジャーナル内部リンク付与」の後に日次ステップを足した（初回は continue-on-error）。`scripts/gen_industry_features.js` も同じ部品を通し、崩れた日付（「2026年05月08 公開」）を出さなくした
+  - JSON-LD の誤りを、確かめられる事実で直した: 8 本（banquet・birthday・date・girls-party・large-group・meieki・private-room・sakae）の datePublished 2025-04-15 → 2026-04-15（8 本の最初のコミット日。リポジトリの開始は 2026-03-28）。編集規約の dateModified 2026-05-08 → 2026-08-20（規約の本文を最後に変えた #161 の日。以降の 3 コミットはデザインと共通部品だけ）。判断は `docs/decisions/0010-feature-dates-single-source.md`
+  - Designer QA-5: 7 本（banquet・editorial-policy・nagoya-korean・nagoya-seafood・nagoya-yakitori-guide・nagoya-solo-dining・nagoya-yakiniku）を 375/768/1280px で撮影。部品は全幅で 13px、はみ出しなし。375px では「（現役の飲食店マネージャー）」が1つのかたまりで折り返す（`.nb-byline-note`）。見つけた問題: nagoya-korean・nagoya-seafood・nagoya-yakitori-guide の3本は旧来の暗い地のヒーロー（`.hero{background:#1A1A18}`）が残り、nb.css の見出し色（`--ink`）とぶつかって題名と導入文が暗い地に暗い文字で読めなかった。3本の暗い地と、それを前提にした `.hero-sub`・`.hero-meta`（12.48px）の上書きを外し、`.hero-label` を `var(--gold)` にした。部品の追加とは別に、ページの横幅が 375px で 750px になる既存の問題を見つけ、[[DSN-007]] に起票した
+  - 確認: `tests/feature_byline.test.js`（7件・全特集で部品が当たり済み・datePublished がサイト開始以降・dateModified が未来でない）、`npm test` 377 件すべて通過。`audit_design_system.js --check`・`audit_inline_js_syntax.js --check --only features`・`apply_site_chrome.js --check --only features` はいずれも exit 0、`migrate_feature_headings.js --check`・`audit_feature_schema_alignment.js` も OK
+  - 別に見つけたこと: 特集6本で画面の掲載件数が実際に並ぶ店の数より多い → [[SEO-146]]
+
+### [SEO-146] 特集の掲載件数の表記を、実際に並ぶ店の数にそろえる
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: data-quality / コンテンツ
+- **owner**: Builder / Editor
+- **source**: [[SEO-145]] の作業中に発見（2026-10-09）
+- **brand-filter**: ✅ 適合 — 実在保証（Moat）。画面の数と中身を一致させる
+- **背景**: 特集6本で、画面の掲載件数の表記が JSON-LD の `numberOfItems` より多い。nagoya-miso-nikomi-udon（表記5・JSON-LD 4）、nagoya-reservation-difficult（10・9）、nagoya-settai-lunch（10・9）、nagoya-settai-secret（10・8）、nagoya-steak（10・9）、nagoya-teppanyaki（10・9）。店を外す処理（他都市の店の除外 #408 など）が店の一覧と JSON-LD だけを直し、表記の数を直していない。`scripts/gen_industry_features.js` の掲載店一覧には #408 で外した「焼鳥 串っ子」が残っていて、実行すると `Store not found in editor_picks.json` で止まる
+- **acceptance**:
+  1. 6本それぞれで、店カードの数と JSON-LD の `numberOfItems` が一致することを確かめ、画面の件数表記をその数にそろえる
+  2. `features/index.html` の特集カードに出ている件数も、各特集の実数にそろえる
+  3. 件数表記と `numberOfItems` が食い違えば落ちる検査（テストか `--check`）を足し、日次で回す
+  4. `scripts/gen_industry_features.js` の一覧から「焼鳥 串っ子」を外し、実行できる状態に戻す
+
+### [DSN-007] 閉じたモバイルメニューでページの横幅が画面の2倍になっていないか確かめ、なっていれば直す
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: design / UX
+- **owner**: Designer / Builder
+- **source**: [[SEO-145]] の Designer QA-5 中に発見（2026-10-09）
+- **brand-filter**: ✅ 適合 — スマホでの読みやすさ
+- **背景**: puppeteer で幅 375px に描画すると、特集（features/banquet.html）・ジャーナル一覧・エリアハブ・トップで `document.documentElement.scrollWidth` が 750px になる。features/banquet.html で元をたどると、はみ出しているのは閉じた状態のモバイルメニュー `#main-nav`（`assets/css/nb.css:140` の `position:fixed;right:-100%;width:70vw;max-width:300px`）。[[SEO-145]] の変更の前後で同じ値で、前からある。実機（iOS Safari・Android Chrome）で横にずれるかは確かめていない
+- **acceptance**:
+  1. 実機か端末の表示で、375px のトップ・特集・ジャーナル・店舗・エリアハブを横にスワイプし、ずれるかを確かめて結果を残す
+  2. ずれる場合は、閉じたメニューを横幅に数えない形に直す（例: 閉じている間は `visibility:hidden`。または `transform` で動かし、`html` に `overflow-x:clip`）。375px で `scrollWidth` が 375 になることを確かめる
+  3. 開閉の動き・フォーカス移動・`aria-expanded` が変わらないことを確かめ、Designer の QA-5 と `node scripts/audit_design_system.js --check` を通す
 
 ### [ISSUE-145] Linear 同期が課題200件で止まる上限を外す
 
