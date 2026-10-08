@@ -25,8 +25,9 @@ status: in_progress
 1. SEO-121 の本番確認: 次の build.yml の後に `node scripts/audit_sitemap_health.js --lastmod-only --check` が exit 0 → backlog done・P-117 Done
 2. SEO-115 の残り: 10-09 06:00 の夜間QA（inline-js）と `data/site_metrics.json` の topPages に /stores/ が出るか → done・P-112 Done
 3. 実装中: SEO-143（店舗ページに「編集部の選定理由」の節。141店に出る・insiderNote は出さない）→ PR。合流後、build.yml の再生成を待って `node scripts/indexnow_ping.js --recent 2` の stores.comment_not_on_page が 141 → 0 前後になれば done・P-145 Done（#416 合流済み。IndexNow の -2/-3 対応は別 PR）
-   SEO-139 は #418 で合流・P-135 Done。店舗ページの反映（AggregateRating が 0 件）は再生成後に確かめる
-   その後: SEO-127 banquet 季節リード → SEO-131 特集の日付・署名 → SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
+   SEO-139 は #418 で合流・P-135 Done。店舗ページの反映（AggregateRating が 0 件）は再生成後に確かめる。#419 で IndexNow が -2/-3 のページを探せるようにした
+   SEO-127 は banquet の 11・12月リードと幹事チェックリストを実装（PR 作成中）
+   その後: SEO-131 特集の日付・署名 → SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
 4. 夜間QA の station-names が緑で続いたら hard に上げる
 
 対象外（理由）:
@@ -46,7 +47,8 @@ status: in_progress
 - 店舗ページ約5,000本はローカルで再生成しない（CI の build.yml が再生成する）
 - Linear の説明は同期で置き換わらない。訂正・結果はコメントで残す（`orca linear comment add` に --workspace を付けない）
 - 店舗データの変更は一次情報で確かめたものだけ。確かめられなければ空欄に倒す（推測で書かない）
-- 既存の不一致（特集の「うなぎのしろむら 泉店」→ stores.json は「泉本店」）は本作業の前から main にある。別途確認
+- 既存の不一致（特集の「うなぎのしろむら 泉店」→ stores.json は「泉本店」・fathers-day-2026 と nagoya-kaoawase-washoku）は本作業の前から main にある。最後に起票する
+- `git checkout -- features/` は手で直した特集まで戻す。build_featured.js の試し実行の後は、そのファイルだけを戻す
 
 # 関連ファイル
 - agent-backlog.md（SEO-116〜141・ISSUE-145〜148）
