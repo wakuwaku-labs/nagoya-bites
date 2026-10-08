@@ -17,14 +17,15 @@ status: in_progress
   - #412 SEO-119 残り（孤児23本削除）＋ ISSUE-146（孤児一覧を CI のコミット対象へ）
   - #413 SEO-135（llms.txt にハブの全階層・数値の出典と更新日・sitemap.xml）
   - #414 SEO-136（IndexNow: 前回送った値を data/indexnow_state.json に記録し、変わったハブ・編集コメントが変わった店舗ページを送る）
-- Linear: P-115/P-116/P-138/P-113/P-140/P-131/P-132 は Done（結果コメントつき）。P-117（SEO-121）は In Progress で、本番確認待ち
-- 起票: ISSUE-147（P-142・Places の古い誤紐付け・オーナー承認が要る）／ISSUE-148（P-143・スプレッドシート経由の住所検査）／SEO-142（P-144・sameAs。公式アカウントの URL をオーナーが示すまで待ち）／SEO-143（P-145・店舗ページに editorReason が出ていない＝151店中7店だけ。gen-store-pages.js が参照していない）
+  - #415 SEO-138（GA スニペットを scripts/lib/ga_snippet.js の1本に。localStorage を try/catch で囲む）
+- Linear: P-115/P-116/P-138/P-113/P-140/P-131/P-132/P-134 は Done（結果コメントつき）。P-117（SEO-121）は In Progress で、本番確認待ち
+- 起票: ISSUE-147（P-142・Places の古い誤紐付け・オーナー承認が要る）／ISSUE-148（P-143・スプレッドシート経由の住所検査）／SEO-142（P-144・sameAs。公式アカウントの URL をオーナーが示すまで待ち）／SEO-143（P-145・店舗ページに editorReason が出ていない）／SEO-144（P-146・index.html と静的ページの localStorage 例外で GA が止まる）
 
 # 次にやること
 1. SEO-121 の本番確認: 次の build.yml の後に `node scripts/audit_sitemap_health.js --lastmod-only --check` が exit 0 → backlog done・P-117 Done
 2. SEO-115 の残り: 10-09 06:00 の夜間QA（inline-js）と `data/site_metrics.json` の topPages に /stores/ が出るか → done・P-112 Done
-3. 実装中: SEO-138（`scripts/lib/ga_snippet.js` を新設し4か所が使う。統一版は nb_owner の内部除外つき＋localStorage を try/catch で囲む。店舗ページとジャーナルは除外が増え、ハブと業界特集は try/catch が増える。ジャーナルは _template.html の GA 部分を {{GA_SNIPPET}} にし generate_daily_draft.js の renderHtml で埋める）
-   その後: SEO-143 店舗ページに editorReason → SEO-139 aggregateRating・SearchAction → SEO-127 banquet 季節リード → SEO-131 特集の日付・署名 → SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック
+3. 実装中: SEO-143（店舗ページに「編集部の選定理由」の節。141店に出る・insiderNote は出さない）→ PR。合流後、build.yml の再生成を待って `node scripts/indexnow_ping.js --recent 2` の stores.comment_not_on_page が 141 → 3 前後になれば done・P-145 Done
+   その後: SEO-139 aggregateRating・SearchAction → SEO-127 banquet 季節リード → SEO-131 特集の日付・署名 → SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
 4. 夜間QA の station-names が緑で続いたら hard に上げる
 
 対象外（理由）:

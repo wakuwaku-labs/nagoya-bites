@@ -520,6 +520,35 @@ function buildDescription(s) {
 // ================================================================
 // HTML テンプレート
 // ================================================================
+// SEO-143: 編集部の選定理由（editorReason）を店舗ページの本文に出す。
+// トップのカードとモーダルでは出しているのに、店舗ページは「おすすめポイント」しか出しておらず、
+// editorReason を持つ店の大半でこの文がどの URL の本文にも無かった（検索・AI から読めない）。
+// おすすめポイントと同じ文なら二重に出さない。選定の根拠（visitStatus）はモーダルと同じ語で添える。
+// insiderNote は、オーナーが書いたか確かめたという記録が無いため出さない（SEO-143 達成条件2）。
+const VISIT_STATUS_LABELS = {
+  visited: '訪問済',
+  interview: '店主取材済',
+  desk: '公開情報ベース',
+  industry_known: '業界内で評判',
+  desk_automated: '公開情報ベース（自動収集）',
+};
+
+function sameSentence(a, b) {
+  const norm = v => String(v || '').trim().replace(/[。．]+$/, '');
+  return norm(a) !== '' && norm(a) === norm(b);
+}
+
+function buildEditorReason(s) {
+  const reason = String(s.editorReason || '').trim();
+  if (!reason || sameSentence(reason, s['おすすめポイント'])) return '';
+  const label = VISIT_STATUS_LABELS[s.visitStatus || ''] || '';
+  return `<section class="editor-reason">
+    <h2>編集部の選定理由</h2>
+    <p>${escapeHtml(reason)}</p>${label ? `
+    <p class="editor-reason-meta">選定の根拠：${escapeHtml(label)}</p>` : ''}
+  </section>`;
+}
+
 function renderStorePage(s, slug, relatedStores, listedFeatures) {
   const name     = s['店名'] || '';
   const genre    = s['ジャンル'] || '';
@@ -849,6 +878,10 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .cc-tier-SS{color:#1b5e20;}.cc-tier-A{color:#2e7d32;}.cc-tier-B{color:#46752a;}.cc-tier-C{color:#5f6b63;}.cc-tier-D{color:#767676;}.cc-tier-NA{color:#767676;font-style:italic;}
 .point-box{background:rgba(122,92,16,.07);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:.9rem 1.1rem;margin-bottom:1.6rem;}
 .point-box p{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--text);}
+.editor-reason{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:.9rem 1.1rem;margin-bottom:1.6rem;}
+.editor-reason h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.5rem;}
+.editor-reason p{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--text);}
+.editor-reason .editor-reason-meta{font-size:var(--fs-xs);line-height:var(--lh-ui);color:var(--muted);margin-top:.6rem;}
 .info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.6rem;padding:1.2rem;background:var(--bg2);border:1px solid var(--border);}
 @media(max-width:480px){.info-grid{grid-template-columns:1fr;}}
 .info-cell label{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:500;letter-spacing:0;color:var(--dim);display:block;margin-bottom:.3rem;}
@@ -925,6 +958,7 @@ ${siteChrome.renderHeader({ depth: 1, active: 'top' })}
   </div>
 
   ${point ? `<div class="point-box"><p>${point}</p></div>` : ''}
+  ${buildEditorReason(s)}
 ${igEmbedHtml}
   <div class="info-grid">
     ${area ? `<div class="info-cell"><label>エリア</label><span>${pref}${locality ? ' ' + locality : ''} ${area}</span></div>` : ''}
@@ -1368,4 +1402,4 @@ if (require.main === module) {
   main().catch(err => { console.error('エラー:', err); process.exit(1); });
 }
 
-module.exports = { renderStorePage, toSlug, buildRelatedStores, buildSitemap };
+module.exports = { renderStorePage, buildEditorReason, toSlug, buildRelatedStores, buildSitemap };
