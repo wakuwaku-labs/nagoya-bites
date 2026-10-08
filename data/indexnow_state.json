@@ -1,0 +1,792 @@
+{
+  "note": "IndexNow で実際に送った値の記録（scripts/indexnow_ping.js・SEO-136）。ハブは contentHash、店舗ページはページに出ている編集コメントの要約値。ここと違うものだけが次の送信対象になる。",
+  "updated": "2026-10-08",
+  "hubs": {
+    "stores/area/chikusa-imaike/bar-budget-3000.html": {
+      "hash": "ca3d5d3bb8f91e2f",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/bar-late-night.html": {
+      "hash": "66079ba5c85d71e4",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/bar-nomihodai.html": {
+      "hash": "3eb989e53eaa94a1",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/bar-smoking-ok.html": {
+      "hash": "2748759efb31f897",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/bar-sunday.html": {
+      "hash": "1a42ac0eaeb5dd33",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/bar.html": {
+      "hash": "d831e9f8837edcdb",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/cafe-budget-3000.html": {
+      "hash": "5c0233fd97c73720",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/cafe-lunch.html": {
+      "hash": "d601595e39352f15",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/cafe-non-smoking.html": {
+      "hash": "9252a33f23890d0d",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/cafe-parking.html": {
+      "hash": "150d5ac5f72d748e",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/cafe-sunday.html": {
+      "hash": "c0e17aabbaf8bbc7",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/cafe-walk-3.html": {
+      "hash": "5f3c5880b76b780a",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/cafe.html": {
+      "hash": "795d5641b3a1b860",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/chinese-budget-3000.html": {
+      "hash": "c6582788e2b98118",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/chinese-group-30.html": {
+      "hash": "caec96ce52249e42",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/chinese-lunch.html": {
+      "hash": "6c2ea2a85796adef",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/chinese-nomihodai.html": {
+      "hash": "eead72af77188d49",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/chinese-non-smoking.html": {
+      "hash": "55c33de23a103de6",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/chinese-parking.html": {
+      "hash": "79b027ef430b29cc",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/chinese-sunday.html": {
+      "hash": "ae63096e184393e2",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/chinese.html": {
+      "hash": "f6e61d6825e05234",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/dining-bar-group-30.html": {
+      "hash": "493f7fb1474c4860",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/dining-bar-lunch.html": {
+      "hash": "6f6bf26a91ed2a9e",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/dining-bar-nomihodai.html": {
+      "hash": "68138bdf4eb7b0d3",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/dining-bar-non-smoking.html": {
+      "hash": "a0676d421c565247",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/dining-bar-sunday.html": {
+      "hash": "56fb81fc99fa7447",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/dining-bar-walk-3.html": {
+      "hash": "600506f014326f7b",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/dining-bar.html": {
+      "hash": "1b0ca01d7df47612",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/index.html": {
+      "hash": "5de77c4302761246",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/italian-french-budget-5000-plus.html": {
+      "hash": "dbe7a782bd7eea04",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/italian-french-group-30.html": {
+      "hash": "5a0064c9c6b8dff0",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/italian-french-koshitsu.html": {
+      "hash": "fa7b925f15dc9136",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/italian-french-lunch.html": {
+      "hash": "b8a0c6fe4b3c8eee",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/italian-french-nomihodai.html": {
+      "hash": "52b2947f0c40e47f",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/italian-french-non-smoking.html": {
+      "hash": "a3972075185181df",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/italian-french-parking.html": {
+      "hash": "253b57cc7c5c62fa",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/italian-french-sunday.html": {
+      "hash": "cdbfd0d4aa3bcce5",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/italian-french-walk-3.html": {
+      "hash": "a92e55253cb3a6d6",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/italian-french.html": {
+      "hash": "afabccd19bcbbd43",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/izakaya-budget-3000.html": {
+      "hash": "c2104fe95e550e92",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/izakaya-group-30.html": {
+      "hash": "76e58e8eac21557b",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/izakaya-koshitsu.html": {
+      "hash": "ef9019efc7ebfe90",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/izakaya-late-night.html": {
+      "hash": "223152bb7ea571c6",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/izakaya-lunch.html": {
+      "hash": "fb05feb0d5937bb6",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/izakaya-nomihodai.html": {
+      "hash": "556a02458673b83b",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/izakaya-non-smoking.html": {
+      "hash": "d423853e8f953436",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/izakaya-parking.html": {
+      "hash": "f2d4fe07b020c863",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/izakaya-smoking-ok.html": {
+      "hash": "5a888acf58c29eef",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/izakaya-sunday.html": {
+      "hash": "3ee121e616c31385",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/izakaya-tabehodai.html": {
+      "hash": "6773867a590bc956",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/izakaya-walk-3.html": {
+      "hash": "7e9c9d837e726d5e",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/izakaya.html": {
+      "hash": "d1df107869d19d53",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/korean-non-smoking.html": {
+      "hash": "83e8f27acc48820a",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/korean.html": {
+      "hash": "2f9b3a88aa4eb9d6",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/other-non-smoking.html": {
+      "hash": "ffb6de4da14fa587",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/other.html": {
+      "hash": "2bc371c4f3dafd72",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/ramen-non-smoking.html": {
+      "hash": "5af5908d4072ee2b",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/ramen.html": {
+      "hash": "75a9d6bed50072ea",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/washoku-budget-3000.html": {
+      "hash": "ff5247873f906644",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/washoku-budget-5000-plus.html": {
+      "hash": "3a72ee345ea7b43f",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/washoku-group-30.html": {
+      "hash": "f8c38486e90583f3",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/washoku-koshitsu.html": {
+      "hash": "bbc08d9fe89b7e4c",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/washoku-lunch.html": {
+      "hash": "14bd945b4211c9d5",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/washoku-nomihodai.html": {
+      "hash": "9791bea7dde034e7",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/washoku-non-smoking.html": {
+      "hash": "844b60150c4358db",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/washoku-parking.html": {
+      "hash": "a6bbf799ca4f58ce",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/washoku-smoking-ok.html": {
+      "hash": "6860558d2b5fb062",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/washoku-sunday.html": {
+      "hash": "6c0a3ed6b552a888",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/washoku-walk-3.html": {
+      "hash": "7aafdb9917bfbe37",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/washoku.html": {
+      "hash": "f8d49812320b402a",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yakiniku-budget-3000.html": {
+      "hash": "ad1a46094a14a144",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yakiniku-budget-5000-plus.html": {
+      "hash": "2182d66b28a3bb21",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yakiniku-group-30.html": {
+      "hash": "b8f89bccbc039ae3",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yakiniku-koshitsu.html": {
+      "hash": "65a0bdba8e51f586",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yakiniku-lunch.html": {
+      "hash": "8c55287ec9cbcc3f",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yakiniku-nomihodai.html": {
+      "hash": "8d7a84e01d58d706",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yakiniku-non-smoking.html": {
+      "hash": "0b266964703e132e",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yakiniku-parking.html": {
+      "hash": "d3383627d26d2db5",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yakiniku-smoking-ok.html": {
+      "hash": "8a98a69b8b963f45",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yakiniku-sunday.html": {
+      "hash": "c663ab70b31de322",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yakiniku-tabehodai.html": {
+      "hash": "ba94fdc2782e7bf4",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yakiniku-walk-3.html": {
+      "hash": "b5f7e15aaf619498",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yakiniku.html": {
+      "hash": "ae9dd8992cfbe872",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yoshoku-budget-3000.html": {
+      "hash": "5d01fca17fdb561b",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yoshoku-lunch.html": {
+      "hash": "c6cd0414bf5de830",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yoshoku-non-smoking.html": {
+      "hash": "caa8d40e38d6ad7d",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yoshoku-walk-3.html": {
+      "hash": "7e793eae10989ca1",
+      "at": "2026-10-08"
+    },
+    "stores/area/chikusa-imaike/yoshoku.html": {
+      "hash": "55a4c27ed5771274",
+      "at": "2026-10-08"
+    },
+    "stores/area/index.html": {
+      "hash": "65823f9d9524f947",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/cafe-budget-3000.html": {
+      "hash": "206dc428c38ff722",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/cafe-lunch.html": {
+      "hash": "bb50b510d7480a68",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/cafe-non-smoking.html": {
+      "hash": "ec70f07ee4ff2e07",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/cafe-parking.html": {
+      "hash": "5257c638b72051f2",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/cafe-sunday.html": {
+      "hash": "52439be147e975fb",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/cafe-walk-3.html": {
+      "hash": "9f54550ebeb613db",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/cafe.html": {
+      "hash": "621cfc2dfff3d920",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/dining-bar-non-smoking.html": {
+      "hash": "2fc4d568dd800287",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/dining-bar-sunday.html": {
+      "hash": "4e64f7647b154fe8",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/dining-bar-walk-3.html": {
+      "hash": "a695b55942948e65",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/dining-bar.html": {
+      "hash": "61d82d4c1382810d",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/index.html": {
+      "hash": "2526754bf1e355b8",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/italian-french-budget-5000-plus.html": {
+      "hash": "6881323283e04efc",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/italian-french-group-30.html": {
+      "hash": "8da06b1ec0b35345",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/italian-french-lunch.html": {
+      "hash": "9dd6f9e74f7a55a6",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/italian-french-non-smoking.html": {
+      "hash": "cb135d12f495114f",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/italian-french.html": {
+      "hash": "56b1f3fb7baf40fb",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/izakaya.html": {
+      "hash": "c150af2ecc8e0e5b",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/washoku.html": {
+      "hash": "855308df67bf92c3",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/yakiniku.html": {
+      "hash": "3898038808401503",
+      "at": "2026-10-08"
+    },
+    "stores/area/kakuozan/yoshoku.html": {
+      "hash": "a0d179d646ee213a",
+      "at": "2026-10-08"
+    },
+    "stores/area/kanayama/chinese.html": {
+      "hash": "1d267bf90636d5b7",
+      "at": "2026-10-08"
+    },
+    "stores/area/kanayama/dining-bar.html": {
+      "hash": "f44af30df68d628b",
+      "at": "2026-10-08"
+    },
+    "stores/area/kanayama/index.html": {
+      "hash": "e01b3d43bfe4668c",
+      "at": "2026-10-08"
+    },
+    "stores/area/kanayama/italian-french.html": {
+      "hash": "4d0aad75697807fd",
+      "at": "2026-10-08"
+    },
+    "stores/area/kanayama/izakaya.html": {
+      "hash": "be80558f99bdfe1d",
+      "at": "2026-10-08"
+    },
+    "stores/area/kanayama/washoku.html": {
+      "hash": "f9f3fa5ed7730d31",
+      "at": "2026-10-08"
+    },
+    "stores/area/kanayama/yakiniku.html": {
+      "hash": "50aa6e4a9f502470",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/asian.html": {
+      "hash": "f20dbd7e3167a0fc",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/bar.html": {
+      "hash": "eb30ed8eb588793c",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/cafe.html": {
+      "hash": "0b4040edbbeee194",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/chinese.html": {
+      "hash": "a6994781d1989a11",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/dining-bar.html": {
+      "hash": "15b1a19e41351665",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/index.html": {
+      "hash": "5e17a129c016ca01",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/italian-french.html": {
+      "hash": "71be3801d1f968bd",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/izakaya.html": {
+      "hash": "04e4ee5fc214fc14",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/karaoke.html": {
+      "hash": "c16433e991a632b9",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/korean.html": {
+      "hash": "647f65156a987d17",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/ramen.html": {
+      "hash": "5db6649b2d93814f",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/sosaku.html": {
+      "hash": "270e3f4ddeaaf30e",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/washoku.html": {
+      "hash": "fb6d7784e9263fd2",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/yakiniku.html": {
+      "hash": "106d2b65fdb7a1db",
+      "at": "2026-10-08"
+    },
+    "stores/area/meieki/yoshoku.html": {
+      "hash": "add7008209ee570e",
+      "at": "2026-10-08"
+    },
+    "stores/area/midori-tempaku/asian.html": {
+      "hash": "bf18f6d153a556ab",
+      "at": "2026-10-08"
+    },
+    "stores/area/midori-tempaku/cafe.html": {
+      "hash": "39ef80d95f900ee8",
+      "at": "2026-10-08"
+    },
+    "stores/area/midori-tempaku/chinese.html": {
+      "hash": "34b9f234a8f36b94",
+      "at": "2026-10-08"
+    },
+    "stores/area/midori-tempaku/dining-bar.html": {
+      "hash": "93cb0ee17bceb4f8",
+      "at": "2026-10-08"
+    },
+    "stores/area/midori-tempaku/index.html": {
+      "hash": "0cf39e4bda3e1552",
+      "at": "2026-10-08"
+    },
+    "stores/area/midori-tempaku/italian-french.html": {
+      "hash": "c5d16c981d272701",
+      "at": "2026-10-08"
+    },
+    "stores/area/midori-tempaku/izakaya.html": {
+      "hash": "61f8bfbcdfcba1e0",
+      "at": "2026-10-08"
+    },
+    "stores/area/midori-tempaku/ramen.html": {
+      "hash": "002424726279a668",
+      "at": "2026-10-08"
+    },
+    "stores/area/midori-tempaku/washoku.html": {
+      "hash": "44658e61029033a1",
+      "at": "2026-10-08"
+    },
+    "stores/area/midori-tempaku/yakiniku.html": {
+      "hash": "7fa9a038141695d5",
+      "at": "2026-10-08"
+    },
+    "stores/area/midori-tempaku/yoshoku.html": {
+      "hash": "293cc770934f59f2",
+      "at": "2026-10-08"
+    },
+    "stores/area/nakagawa-minato/cafe.html": {
+      "hash": "e319274657a97d30",
+      "at": "2026-10-08"
+    },
+    "stores/area/nakagawa-minato/chinese.html": {
+      "hash": "bcd1c0793afc1107",
+      "at": "2026-10-08"
+    },
+    "stores/area/nakagawa-minato/index.html": {
+      "hash": "ea22902d0b05e453",
+      "at": "2026-10-08"
+    },
+    "stores/area/nakagawa-minato/izakaya.html": {
+      "hash": "66ca65ce8a4ab271",
+      "at": "2026-10-08"
+    },
+    "stores/area/nakagawa-minato/ramen.html": {
+      "hash": "187c50241e638b3a",
+      "at": "2026-10-08"
+    },
+    "stores/area/nakagawa-minato/washoku.html": {
+      "hash": "6bd354be3b78ca13",
+      "at": "2026-10-08"
+    },
+    "stores/area/nakagawa-minato/yakiniku.html": {
+      "hash": "1c88eb8361d2ae81",
+      "at": "2026-10-08"
+    },
+    "stores/area/nishiki-fushimi/asian.html": {
+      "hash": "e58fa7b68f044b11",
+      "at": "2026-10-08"
+    },
+    "stores/area/nishiki-fushimi/bar.html": {
+      "hash": "a60ab3b4d8d8cf6b",
+      "at": "2026-10-08"
+    },
+    "stores/area/nishiki-fushimi/cafe.html": {
+      "hash": "65ce90de5a66840c",
+      "at": "2026-10-08"
+    },
+    "stores/area/nishiki-fushimi/chinese.html": {
+      "hash": "c634cb12a76a4ea8",
+      "at": "2026-10-08"
+    },
+    "stores/area/nishiki-fushimi/dining-bar.html": {
+      "hash": "bc91f9a0b23c0806",
+      "at": "2026-10-08"
+    },
+    "stores/area/nishiki-fushimi/index.html": {
+      "hash": "33290b404db063f6",
+      "at": "2026-10-08"
+    },
+    "stores/area/nishiki-fushimi/italian-french.html": {
+      "hash": "888390d8dd8ab13e",
+      "at": "2026-10-08"
+    },
+    "stores/area/nishiki-fushimi/izakaya.html": {
+      "hash": "0ccd3145dbec9179",
+      "at": "2026-10-08"
+    },
+    "stores/area/nishiki-fushimi/karaoke.html": {
+      "hash": "f7114ac5dc0f4dc2",
+      "at": "2026-10-08"
+    },
+    "stores/area/nishiki-fushimi/korean.html": {
+      "hash": "d377b0bfba757800",
+      "at": "2026-10-08"
+    },
+    "stores/area/nishiki-fushimi/sosaku.html": {
+      "hash": "cceb6790d129813b",
+      "at": "2026-10-08"
+    },
+    "stores/area/nishiki-fushimi/washoku.html": {
+      "hash": "4e42407a9d3387a6",
+      "at": "2026-10-08"
+    },
+    "stores/area/nishiki-fushimi/yakiniku.html": {
+      "hash": "ba56a0989412ddcc",
+      "at": "2026-10-08"
+    },
+    "stores/area/nishiki-fushimi/yoshoku.html": {
+      "hash": "412a8a31d40245a7",
+      "at": "2026-10-08"
+    },
+    "stores/area/sakae/dining-bar.html": {
+      "hash": "92d00e85727aae68",
+      "at": "2026-10-08"
+    },
+    "stores/area/sakae/index.html": {
+      "hash": "18b1c815030ae62f",
+      "at": "2026-10-08"
+    },
+    "stores/area/sakae/izakaya.html": {
+      "hash": "621fd7cf1b3f8236",
+      "at": "2026-10-08"
+    },
+    "stores/area/sakae/korean.html": {
+      "hash": "9197730908b83c92",
+      "at": "2026-10-08"
+    },
+    "stores/area/sakae/washoku.html": {
+      "hash": "17da1152d3b60963",
+      "at": "2026-10-08"
+    },
+    "stores/area/sakae/yakiniku.html": {
+      "hash": "2701c878d615c48f",
+      "at": "2026-10-08"
+    },
+    "stores/area/tsurumai-yagoto/cafe.html": {
+      "hash": "f14f8063b8d63f38",
+      "at": "2026-10-08"
+    },
+    "stores/area/tsurumai-yagoto/index.html": {
+      "hash": "034497991fc4e2dc",
+      "at": "2026-10-08"
+    },
+    "stores/area/tsurumai-yagoto/izakaya.html": {
+      "hash": "21b4ff93ad12ea3e",
+      "at": "2026-10-08"
+    },
+    "stores/area/tsurumai-yagoto/washoku.html": {
+      "hash": "eb82cefd69bb8c8b",
+      "at": "2026-10-08"
+    },
+    "stores/area/tsurumai-yagoto/yakiniku.html": {
+      "hash": "edc1c71ef039b3e7",
+      "at": "2026-10-08"
+    },
+    "stores/area/yabacho-osu/asian.html": {
+      "hash": "7c6b1b070d86a3b3",
+      "at": "2026-10-08"
+    },
+    "stores/area/yabacho-osu/bar.html": {
+      "hash": "cacdaca2ad58f4c1",
+      "at": "2026-10-08"
+    },
+    "stores/area/yabacho-osu/cafe.html": {
+      "hash": "19b490a9d1e7a18e",
+      "at": "2026-10-08"
+    },
+    "stores/area/yabacho-osu/chinese.html": {
+      "hash": "2bfa44d3715da99b",
+      "at": "2026-10-08"
+    },
+    "stores/area/yabacho-osu/dining-bar.html": {
+      "hash": "5854a623d55cd9e2",
+      "at": "2026-10-08"
+    },
+    "stores/area/yabacho-osu/index.html": {
+      "hash": "a89ae68a6fde33b5",
+      "at": "2026-10-08"
+    },
+    "stores/area/yabacho-osu/italian-french.html": {
+      "hash": "5f30389e2ebdaab2",
+      "at": "2026-10-08"
+    },
+    "stores/area/yabacho-osu/izakaya.html": {
+      "hash": "57a0143b21b5629a",
+      "at": "2026-10-08"
+    },
+    "stores/area/yabacho-osu/karaoke.html": {
+      "hash": "175bacdbeb05cccf",
+      "at": "2026-10-08"
+    },
+    "stores/area/yabacho-osu/korean.html": {
+      "hash": "417208f244b0d578",
+      "at": "2026-10-08"
+    },
+    "stores/area/yabacho-osu/sosaku.html": {
+      "hash": "e8aa925c9ff05056",
+      "at": "2026-10-08"
+    },
+    "stores/area/yabacho-osu/washoku.html": {
+      "hash": "8b7150f7f0a66769",
+      "at": "2026-10-08"
+    },
+    "stores/area/yabacho-osu/yakiniku.html": {
+      "hash": "608b771fabd73833",
+      "at": "2026-10-08"
+    },
+    "stores/area/yabacho-osu/yoshoku.html": {
+      "hash": "63a86c412d141560",
+      "at": "2026-10-08"
+    }
+  },
+  "stores": {
+    "stores/J004698880.html": {
+      "sig": "b9bcb04a6009b219",
+      "at": "2026-10-08"
+    },
+    "stores/coffee-kajita.html": {
+      "sig": "c1701fc0963f124c",
+      "at": "2026-10-08"
+    },
+    "stores/store-e382b3e383a1e383.html": {
+      "sig": "0a29aab35c0f6824",
+      "at": "2026-10-08"
+    },
+    "stores/store-e383a9e383bce383.html": {
+      "sig": "86c876613e87a6ff",
+      "at": "2026-10-08"
+    },
+    "stores/store-e9a483e5ad90e381.html": {
+      "sig": "9896cbb6445aba6c",
+      "at": "2026-10-08"
+    },
+    "stores/store-e9babae5b18be381.html": {
+      "sig": "6b138e37baf37a9d",
+      "at": "2026-10-08"
+    },
+    "stores/trunk-coffee.html": {
+      "sig": "efd2de50daaa90e4",
+      "at": "2026-10-08"
+    }
+  }
+}
