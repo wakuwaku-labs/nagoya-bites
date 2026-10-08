@@ -1,0 +1,302 @@
+{
+  "_README": "SEO-137 の効果比較の台帳。ジャーナルの title の前30字に「エリア＋店名かジャンル＋シーン語」を置く規則（agents/editor.md・scripts/journal_seo_kw.js の checkTitleFront）を、過去記事では下の changed=true の記事だけに当てた。書き換えたのは <title> と og:title（twitter:title があればそれも）だけで、h1・本文・JSON-LD の headline・data/journal_published.json は変えていない（記事の中身は変えない）。比較は node scripts/journal_title_experiment.js --report",
+  "issue": "SEO-137",
+  "changedOn": "2026-10-09",
+  "compareOn": "2026-11-06",
+  "selection": "gsc_metrics.json の pages（2026-09-10〜10-07）でジャーナルの表示が多い上位20本のうち、前30字の規則を満たさない記事か、CTR がジャーナル全体（pageTypes.journal）未満の記事だけを書き換えた。残りは CTR が平均以上で規則も満たすため書き換えず、比較の参照にする。上位20本の外の過去記事は書き換えない",
+  "baseline": {
+    "dateRange": {
+      "startDate": "2026-09-10",
+      "endDate": "2026-10-07"
+    },
+    "journal": {
+      "pages": 96,
+      "clicks": 108,
+      "impressions": 3261,
+      "ctr": 0.0331,
+      "position": 8.3
+    }
+  },
+  "pages": [
+    {
+      "path": "journal/2026-08-04-sakae-leesar-coffee.html",
+      "changed": true,
+      "before": "栄『リサールコーヒー(Leesar)』日本初出店——業界人が読むカフェ400円のメニュー設計",
+      "after": "リサールコーヒー(Leesar)名古屋・栄のメニューと400円の設計を業界人が読む",
+      "baseline": {
+        "impressions": 447,
+        "clicks": 9,
+        "ctr": 0.0201,
+        "position": 8.6
+      },
+      "beforeFront": "ok",
+      "reason": "CTR 2.0% がジャーナル全体（3.31%）未満"
+    },
+    {
+      "path": "journal/2026-09-28-arahata-tonkatsu-nakayoshi-lunch1200.html",
+      "changed": true,
+      "before": "鶴舞・荒畑のとんかつ「仲由」ランチ1200円と定食1800円を業界人が読む",
+      "after": "とんかつ 仲由（鶴舞・荒畑）ランチ1,200円と定食1,800円を業界人が読む",
+      "baseline": {
+        "impressions": 256,
+        "clicks": 4,
+        "ctr": 0.0156,
+        "position": 8.1
+      },
+      "beforeFront": "ok",
+      "reason": "CTR 1.6% がジャーナル全体（3.31%）未満"
+    },
+    {
+      "path": "journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html",
+      "changed": false,
+      "before": "千種・車道のイタリアン「Pizzeria mimi」カウンター12席で1人1ピッツァ",
+      "after": "千種・車道のイタリアン「Pizzeria mimi」カウンター12席で1人1ピッツァ",
+      "baseline": {
+        "impressions": 253,
+        "clicks": 13,
+        "ctr": 0.0514,
+        "position": 6
+      },
+      "beforeFront": "ok",
+      "reason": "CTR がジャーナル全体の平均以上で、前30字の規則も満たすため書き換えない（比較の参照）"
+    },
+    {
+      "path": "journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
+      "changed": true,
+      "before": "熱田区に札幌味噌ラーメンの新店が2軒｜金山「札幌らーめん 戸倉」と神宮前「サッポロラーメン専門 荒畑」を業界人が読む",
+      "after": "札幌らーめん 戸倉（金山）とサッポロラーメン専門 荒畑（神宮前）、熱田区の新店2軒",
+      "baseline": {
+        "impressions": 220,
+        "clicks": 7,
+        "ctr": 0.0318,
+        "position": 8.5
+      },
+      "beforeFront": "ok",
+      "reason": "CTR 3.2% がジャーナル全体（3.31%）未満"
+    },
+    {
+      "path": "journal/2026-08-20-hirabari-doteni-counter.html",
+      "changed": true,
+      "before": "「どて煮の平針」29席の居酒屋、カウンター5席は誰のためか",
+      "after": "どて煮の平針（平針駅30秒）やぶやグループの居酒屋、29席と3,000円台の組み方",
+      "baseline": {
+        "impressions": 212,
+        "clicks": 0,
+        "ctr": 0,
+        "position": 9.3
+      },
+      "beforeFront": "ok",
+      "reason": "CTR 0.0% がジャーナル全体（3.31%）未満"
+    },
+    {
+      "path": "journal/2026-09-29-sakae-tsukemen-tou-counter12.html",
+      "changed": false,
+      "before": "栄の深夜ラーメン新店「燈 tou」つけ麺1100円と12席を業界人が読む",
+      "after": "栄の深夜ラーメン新店「燈 tou」つけ麺1100円と12席を業界人が読む",
+      "baseline": {
+        "impressions": 173,
+        "clicks": 22,
+        "ctr": 0.1272,
+        "position": 5.5
+      },
+      "beforeFront": "ok",
+      "reason": "CTR がジャーナル全体の平均以上で、前30字の規則も満たすため書き換えない（比較の参照）"
+    },
+    {
+      "path": "journal/2026-09-19-kiyosu-yabaton-boochan-house.html",
+      "changed": false,
+      "before": "矢場とん「ぶーちゃんハウス」が清須に開店、名古屋のとんかつ店が市内を選ばなかった理由を業界人が読む",
+      "after": "矢場とん「ぶーちゃんハウス」が清須に開店、名古屋のとんかつ店が市内を選ばなかった理由を業界人が読む",
+      "baseline": {
+        "impressions": 167,
+        "clicks": 6,
+        "ctr": 0.0359,
+        "position": 8.5
+      },
+      "beforeFront": "ok",
+      "reason": "CTR がジャーナル全体の平均以上で、前30字の規則も満たすため書き換えない（比較の参照）"
+    },
+    {
+      "path": "journal/2026-07-27-owarisanso-kurogi.html",
+      "changed": true,
+      "before": "尾張山荘 くろぎ｜予約困難な名店、名古屋初出店の使い方",
+      "after": "尾張山荘 くろぎ（名駅）予約困難な日本料理を接待で使う、コース3.8万円〜と個室8部屋",
+      "baseline": {
+        "impressions": 151,
+        "clicks": 4,
+        "ctr": 0.0265,
+        "position": 9.9
+      },
+      "beforeFront": "ok",
+      "reason": "CTR 2.6% がジャーナル全体（3.31%）未満"
+    },
+    {
+      "path": "journal/2026-10-01-sakae-yabamisen-matsuzakaya-solo.html",
+      "changed": true,
+      "before": "栄・矢場町に「矢場味仙 松坂屋名古屋店」今日開店、台湾ラーメン38席を一人飲みで読む",
+      "after": "矢場味仙 松坂屋名古屋店（栄・矢場町）台湾ラーメンを一人飲みで、38席と平日中抜き",
+      "baseline": {
+        "impressions": 114,
+        "clicks": 4,
+        "ctr": 0.0351,
+        "position": 8.9
+      },
+      "beforeFront": "シーン語（記事にある「一人飲み」）",
+      "reason": "前30字にシーン語（記事にある「一人飲み」）が無い"
+    },
+    {
+      "path": "journal/2026-08-24-sakae-korean-buffet-price-split.html",
+      "changed": true,
+      "before": "栄の韓国料理食べ放題2,500円と5,000円、差額を業界人が読む",
+      "after": "ヤムヤムビュッフェ（Yum Yum Buffet）栄、韓国料理食べ放題2,500円と5,000円",
+      "baseline": {
+        "impressions": 112,
+        "clicks": 1,
+        "ctr": 0.0089,
+        "position": 8.2
+      },
+      "beforeFront": "ok",
+      "reason": "CTR 0.9% がジャーナル全体（3.31%）未満"
+    },
+    {
+      "path": "journal/2026-08-09-nagoyadome-pekin-honten.html",
+      "changed": true,
+      "before": "ナゴヤドーム前の中華、980円の北京飯はコスパか",
+      "after": "北京本店（名古屋・ナゴヤドーム前）北京飯980円はコスパか、安城の行列中華を業界人が読む",
+      "baseline": {
+        "impressions": 93,
+        "clicks": 3,
+        "ctr": 0.0323,
+        "position": 10.7
+      },
+      "beforeFront": "エリア語",
+      "reason": "前30字にエリア語が無い"
+    },
+    {
+      "path": "journal/2026-05-31-grill-tsubaki-meiekimae.html",
+      "changed": false,
+      "before": "名駅前「グリルつばき」——雪月花が和牛洋食へ転換した理由を業界人目線で読む",
+      "after": "名駅前「グリルつばき」——雪月花が和牛洋食へ転換した理由を業界人目線で読む",
+      "baseline": {
+        "impressions": 92,
+        "clicks": 7,
+        "ctr": 0.0761,
+        "position": 6.7
+      },
+      "beforeFront": "ok",
+      "reason": "CTR がジャーナル全体の平均以上で、前30字の規則も満たすため書き換えない（比較の参照）"
+    },
+    {
+      "path": "journal/2026-09-12-sakae-sulbing-korean-bingsu.html",
+      "changed": true,
+      "before": "韓国かき氷が名古屋初上陸、栄の40席デザートカフェをコスパで読む",
+      "after": "ソルビン名古屋栄店、韓国かき氷1,350円はコスパか｜40席のデザートカフェを業界人が読む",
+      "baseline": {
+        "impressions": 80,
+        "clicks": 2,
+        "ctr": 0.025,
+        "position": 8.4
+      },
+      "beforeFront": "ok",
+      "reason": "CTR 2.5% がジャーナル全体（3.31%）未満"
+    },
+    {
+      "path": "journal/2026-09-22-sakae-sawee-nakgopsae.html",
+      "changed": true,
+      "before": "栄の韓国料理「サウィ食堂」ナッコプセ2180円を女子会で読み解く",
+      "after": "サウィ食堂 名古屋栄店、東海初上陸のナッコプセ専門店を女子会で使う｜2,180円は2人前から",
+      "baseline": {
+        "impressions": 80,
+        "clicks": 0,
+        "ctr": 0,
+        "position": 10
+      },
+      "beforeFront": "ok",
+      "reason": "CTR 0.0% がジャーナル全体（3.31%）未満"
+    },
+    {
+      "path": "journal/2026-05-23-yakisoba-stand-rafu-tsuruzato.html",
+      "changed": true,
+      "before": "鶴里『焼きそばスタンド らふ』を業界人視点で読む",
+      "after": "焼きそばスタンド らふ（鶴里駅1分）850円からの焼きそば、8席のランチ専業店",
+      "baseline": {
+        "impressions": 68,
+        "clicks": 0,
+        "ctr": 0,
+        "position": 9.6
+      },
+      "beforeFront": "ok",
+      "reason": "CTR 0.0% がジャーナル全体（3.31%）未満"
+    },
+    {
+      "path": "journal/2026-08-25-misen-five-lineages-osu-solo.html",
+      "changed": true,
+      "before": "同じ看板で経営が5つ、大須の矢場味仙で台湾ラーメンを一人飲みするなら知っておく話",
+      "after": "味仙は5つの別会社｜大須の矢場味仙で台湾ラーメンを一人飲み、深夜1時までの使い方",
+      "baseline": {
+        "impressions": 62,
+        "clicks": 1,
+        "ctr": 0.0161,
+        "position": 10.5
+      },
+      "beforeFront": "ok",
+      "reason": "CTR 1.6% がジャーナル全体（3.31%）未満"
+    },
+    {
+      "path": "journal/2026-08-31-nagoya-roadside-newstores-price.html",
+      "changed": true,
+      "before": "栄の味噌ラーメンが中川区へ、900円と1,300円を業界人が読む",
+      "after": "札幌ラーメン みそ吟 中川区高杉店、栄の味噌ラーメンが郊外で1,300円になる理由",
+      "baseline": {
+        "impressions": 36,
+        "clicks": 1,
+        "ctr": 0.0278,
+        "position": 9.4
+      },
+      "beforeFront": "ok",
+      "reason": "CTR 2.8% がジャーナル全体（3.31%）未満"
+    },
+    {
+      "path": "journal/2026-09-21-meieki-dote-daikoku-bel-butter-waffle.html",
+      "changed": false,
+      "before": "名駅の一人飲み、99円の居酒屋「どての大黒」とBEL BUTTER WAFFLE",
+      "after": "名駅の一人飲み、99円の居酒屋「どての大黒」とBEL BUTTER WAFFLE",
+      "baseline": {
+        "impressions": 35,
+        "clicks": 3,
+        "ctr": 0.0857,
+        "position": 6.8
+      },
+      "beforeFront": "ok",
+      "reason": "CTR がジャーナル全体の平均以上で、前30字の規則も満たすため書き換えない（比較の参照）"
+    },
+    {
+      "path": "journal/2026-08-27-sakae-mitsukoshi-kihachi-cafe.html",
+      "changed": true,
+      "before": "名鉄百貨店で消えたキハチ カフェが栄三越6階に、19時閉店・予約なしの設計を業界人が読む",
+      "after": "キハチ カフェ 名古屋三越（栄）6階に再出店、19時閉店・予約なしの設計を業界人が読む",
+      "baseline": {
+        "impressions": 35,
+        "clicks": 1,
+        "ctr": 0.0286,
+        "position": 8.6
+      },
+      "beforeFront": "ok",
+      "reason": "CTR 2.9% がジャーナル全体（3.31%）未満"
+    },
+    {
+      "path": "journal/2026-09-20-nishiki-maruhachi-fushimi-bettei-enkai.html",
+      "changed": true,
+      "before": "錦の名古屋めし食堂 丸八 伏見別邸、手羽先も味噌かつも一会計の宴会",
+      "after": "名古屋めし食堂 丸八 伏見別邸（錦）最大60名の貸切宴会、手羽先も味噌かつも一会計",
+      "baseline": {
+        "impressions": 35,
+        "clicks": 0,
+        "ctr": 0,
+        "position": 10.2
+      },
+      "beforeFront": "シーン語（記事にある「宴会」）",
+      "reason": "前30字にシーン語（記事にある「宴会」）が無い"
+    }
+  ]
+}

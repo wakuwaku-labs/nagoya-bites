@@ -473,7 +473,7 @@
 
 ### [SEO-137] ジャーナルの title の前30字に検索語を寄せる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / ジャーナル
 - **owner**: Editor / Builder
@@ -484,6 +484,35 @@
   1. 生成の規則で、title の前 30 字に「エリア＋店名かジャンル＋シーン語」を置く
   2. 過去記事は効果比較のため上位 20 本だけ書き換え、残りは書き換えない
   3. 4 週後に書き換えた 20 本と新規記事の CTR を、`pageTypes.journal` と比べる
+- **結果**（2026-10-09）:
+  1. 規則を3か所に置いた。`agents/editor.md` の日次運用の章に「title の前30字に『エリア＋店名かジャンル＋シーン語』を置く」の節、`data/journal_seo_keywords.json` の `rules.title_front`。判定器 `checkTitleFront` を `scripts/journal_seo_kw.js` に足し、`validate_journal_draft.js` の項目18が WARNING で出す（公開は止めない）。`node scripts/journal_seo_kw.js --check "<title>" --stores "<店名>"` でも確かめられる
+     - 地名として数えるもの: 名古屋・エリア語・愛知県内の駅名（`data/station_names.json`）・掲載店の住所の市区町村名
+     - シーン語: 記事の h1・description にあるときだけ求める。「業界人」「カウンター」は数えない
+     - 公開済み154本で規則を満たす title は 77本 → 80本（下の書き換え後）
+  2. GSC（09-10〜10-07）の表示上位20本のうち15本の `<title>` と og:title を書き換えた。対象は、規則を満たさない記事か、CTR がジャーナル全体（3.31%）未満の記事。
+     - h1・本文・JSON-LD の headline・`data/journal_published.json` は変えていない
+     - 新しい title は記事にある事実だけで書いた。本体は最長48字・平均42字
+     - CTR が平均以上で規則も満たす5本は、比較の参照として残した。上位20本の外は書き換えていない
+     - 台帳: `data/journal_title_experiment.json`（前後の title と基線。書き換えた15本は表示2,001・CTR 1.85%・平均8.97位）。比較: `node scripts/journal_title_experiment.js --report`
+  3. 未了: 4週後の比較は [[SEO-148]]（2026-11-06）で行う
+
+### [SEO-148] ジャーナルの title を書き換えた15本の CTR を 11-06 に比べる
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-11-06
+- **category**: SEO / ジャーナル
+- **owner**: Marketer
+- **source**: [[SEO-137]] の達成条件3（2026-10-09）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 施策の効果を数字で閉じる
+- **背景**: [[SEO-137]] で、GSC（2026-09-10〜10-07）の表示上位20本のうち15本の title を、前30字の規則どおりに書き換えた（2026-10-09・`data/journal_title_experiment.json`）。基線は次のとおり。比較は書き換えから4週後に行う。この時点で GSC の28日の窓が、ほぼ書き換え後の期間になる
+  - 書き換えた15本: 表示2,001・クリック37・CTR 1.85%・平均8.97位
+  - 書き換えなかった参照5本: CTR 7.08%
+  - ジャーナル全体: CTR 3.31%
+- **acceptance**:
+  1. 2026-11-06 以降に `node scripts/journal_title_experiment.js --report` を実行し、結果を基線と並べて `docs/kpi-weekly.md` に記録する。対象は、書き換えた15本・参照5本・10-09 より後の新規記事・ジャーナル全体の4つで、CTR と平均順位を並べる
+  2. 書き換えた15本の CTR の変化は、順位の変化と分けて書く。順位が大きく動いた記事は注記する
+  3. 規則を続けるか・やめるか・変えるかを判断し、本課題の結果に書く。title を元に戻すときは、台帳の before を使う
 
 ### [SEO-138] GA スニペットの4コピーを1つの部品にまとめる
 
