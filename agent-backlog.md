@@ -397,7 +397,7 @@
 
 ### [SEO-138] GA スニペットの4コピーを1つの部品にまとめる
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / 計測
 - **owner**: Builder / Designer
@@ -408,6 +408,8 @@
   1. テンプレートリテラルを使わない文字列の部品（例: `scripts/lib/ga_snippet.js`）を作り、4か所が使う
   2. 生成物が変わらないか、変わるなら差分を説明する
   3. インラインJS監査・デザイン監査・`npm test` を通し、Designer のレビューを受ける（制約12）
+- **結果（2026-10-09）**: テンプレートリテラルを使わない部品 `scripts/lib/ga_snippet.js` を作り、`gen-store-pages.js`・`scripts/gen_area_genre_pages.js`・`scripts/gen_industry_features.js`・`journal/_template.html`（`{{GA_SNIPPET}}` を `scripts/generate_daily_draft.js` が埋める）の4か所が使う。生成物の差分は2つ。(1) 店舗ページとジャーナルに、index.html と同じオーナー除外（`?nb_owner=1` で traffic_type=internal・独自イベントを送らない）が入る。一般の閲覧者の計測は変わらない。(2) localStorage の読み書きを try/catch で囲んだ。旧版（ハブ・業界特集・index.html）は、サイトデータを拒否した端末で localStorage が例外を投げると gtag('config') まで止まっていた（旧ハブのスニペットを例外を投げる代役で実行すると dataLayer が0件）。GA ブロック以外の出力は旧コードと一致（店舗ページ40件・ジャーナルのテンプレート）。再生成は CI が行うので、店舗ページとハブは次の再生成で GA ブロックが変わり、sitemap の lastmod もその日に動く。テスト `tests/ga_snippet.test.js`（5件: 構文・通常/オーナー/例外時の動き・4か所が部品を使うこと）。index.html と既存の静的ページの同じ問題は [[SEO-144]] に起票した
+- **review（Designer QA-5・2026-10-09）**: 承認。head 内の GA の script だけの変更で、見た目の差分は無い（旧コードと新コードの出力が GA ブロック以外で一致）。`node scripts/audit_design_system.js --check` は exit 0、`node scripts/audit_inline_js_syntax.js --check --sample 200` は1,130ファイルで違反0。`measure_typography.js` と 375/768/1280px の目視は、見た目の差分が無いため行っていない。index.html は変えていないので、制約5の機能に影響は無い
 
 ### [SEO-139] Google 口コミ由来の aggregateRating と SearchAction を Google の方針に照らして整理する
 
@@ -480,6 +482,20 @@
   2. `insiderNote` は、オーナーが書いたか確認したと記録で確かめられるものだけを出す。確かめられない間は出さない（[[SEO-129]] 達成条件3と同じ扱い）
   3. Designer の QA-5 を記録し、`node scripts/audit_design_system.js --check` と `node scripts/audit_inline_js_syntax.js --check --only stores --sample 200` を通す
   4. 再生成の後、`node scripts/indexnow_ping.js --recent 2` の内訳で `stores.comment_not_on_page` が 141 から減る
+
+### [SEO-144] index.html と既存の静的ページでも、localStorage の例外で GA が止まらないようにする
+
+- **priority**: P3 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / 計測
+- **owner**: Builder
+- **source**: [[SEO-138]] の実装中に発見（2026-10-09）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 計測の取りこぼしを防ぐ
+- **背景**: オーナー除外つきの GA スニペット（index.html・`nb_internal` を含む features 43本と journal 12本・2026-10-09 時点）は、localStorage の読み書きを try/catch で囲んでいない。サイトデータを拒否した端末では例外で gtag('config') まで止まる（旧ハブのスニペットで確認・dataLayer が0件）。生成器の4か所は [[SEO-138]] で直したが、既にある静的ページは再生成されない
+- **acceptance**:
+  1. index.html の GA 部分で localStorage の読み書きを try/catch で囲む（NB_ENGAGEMENT_EVENTS などほかの動きは変えない）
+  2. features/ と journal/ の既存ページの GA スニペットを `scripts/lib/ga_snippet.js` の出力に置き換える冪等なスクリプトを用意し、実行する
+  3. `node scripts/audit_inline_js_syntax.js --check` が exit 0。制約5の機能（フィルター・検索・モーダル・IG埋め込み・Google評価）が動くことを確かめる
 
 ### [ISSUE-145] Linear 同期が課題200件で止まる上限を外す
 
