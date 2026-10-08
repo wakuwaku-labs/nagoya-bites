@@ -107,6 +107,10 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .cc-tier-SS{color:#1b5e20;}.cc-tier-A{color:#2e7d32;}.cc-tier-B{color:#46752a;}.cc-tier-C{color:#5f6b63;}.cc-tier-D{color:#767676;}.cc-tier-NA{color:#767676;font-style:italic;}
 .point-box{background:rgba(122,92,16,.07);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:.9rem 1.1rem;margin-bottom:1.6rem;}
 .point-box p{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--text);}
+.editor-reason{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:.9rem 1.1rem;margin-bottom:1.6rem;}
+.editor-reason h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.5rem;}
+.editor-reason p{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--text);}
+.editor-reason .editor-reason-meta{font-size:var(--fs-xs);line-height:var(--lh-ui);color:var(--muted);margin-top:.6rem;}
 .info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.6rem;padding:1.2rem;background:var(--bg2);border:1px solid var(--border);}
 @media(max-width:480px){.info-grid{grid-template-columns:1fr;}}
 .info-cell label{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:500;letter-spacing:0;color:var(--dim);display:block;margin-bottom:.3rem;}
@@ -204,6 +208,7 @@ button.link-btn{font:inherit;cursor:pointer;}
   </div>
 
   <div class="point-box"><p>栄駅5分で4,500円、ダイニングバルとしてランチ→夜の転換効率</p></div>
+  
 
   <div class="ig-photos">
     <h2>公式Instagramの実際の写真</h2>
@@ -290,10 +295,10 @@ button.link-btn{font:inherit;cursor:pointer;}
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
-    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ003523015/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>
+    <a class="link-btn hp" href="https://www.hotpepper.jp/strJ003523015/" target="_blank" rel="noopener noreferrer" onclick="nbReserveExit('cta_click',{store_name:'dining bar Libertas',store_id:'J003523015',link_domain:'www.hotpepper.jp',location:'store_page'})">ホットペッパーで予約</a>
     <a class="link-btn gm" href="https://www.google.com/maps/search/dining%20bar%20Libertas%20%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>
     <a class="link-btn ig" href="https://www.instagram.com/libertas1510/" target="_blank" rel="noopener noreferrer">Instagram</a>
-    <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230103/23095257/" target="_blank" rel="noopener noreferrer">食べログ</a>
+    <a class="link-btn tb" href="https://tabelog.com/aichi/A2301/A230103/23095257/" target="_blank" rel="noopener noreferrer" onclick="nbReserveExit('cta_click',{store_name:'dining bar Libertas',store_id:'J003523015',link_domain:'tabelog.com',location:'store_page'})">食べログ</a>
   </div>
 
   
@@ -435,5 +440,84 @@ document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=
   });
 })();
 </script>
+<script class="nb-reserve-ask-js">(function nbReserveAskMain() {
+  var KEY = 'nb_reserve_pending';
+  var MIN_AWAY = 20 * 1000;        // これより早く戻った人にはまだ聞かない
+  var MAX_AWAY = 30 * 60 * 1000;   // これより後は予約導線との対応が薄いので聞かない
+  var SHOW_MS = 20 * 1000;
+  function internal() { try { return localStorage.getItem('nb_internal') === '1'; } catch (e) { return false; } }
+  function send(name, p) { try { if (typeof trackEvent === 'function') trackEvent(name, p); } catch (e) {} }
+  window.nbReserveExit = function (name, p) {
+    p = p || {};
+    send(name, p);
+    if (internal()) return;
+    try {
+      sessionStorage.setItem(KEY, JSON.stringify({
+        n: String(p.store_name || ''), i: String(p.store_id || ''),
+        d: String(p.link_domain || ''), l: String(p.location || ''), t: Date.now()
+      }));
+    } catch (e) {}
+  };
+  function today() { var d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+  function hide(el) { if (el && el.parentNode) el.parentNode.removeChild(el); }
+  function show(p) {
+    var el = document.createElement('div');
+    el.className = 'nb-reserve-ask';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-live', 'polite');
+    el.setAttribute('aria-label', '予約できたかの確認');
+    var q = document.createElement('p');
+    q.className = 'nb-reserve-ask-q';
+    q.textContent = (p.n ? '「' + p.n + '」の' : '') + '予約はできましたか？';
+    var note = document.createElement('p');
+    note.className = 'nb-reserve-ask-note';
+    note.textContent = '匿名で数えるだけです。掲載順位には使いません';
+    var row = document.createElement('div');
+    row.className = 'nb-reserve-ask-actions';
+    var params = { store_name: p.n, store_id: p.i, link_domain: p.d, location: p.l };
+    function btn(label, cls, ev) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'nb-reserve-ask-btn ' + cls;
+      b.textContent = label;
+      b.onclick = function () {
+        send(ev, params);
+        row.parentNode.removeChild(row);
+        note.parentNode.removeChild(note);
+        q.textContent = 'ありがとうございます';
+        setTimeout(function () { hide(el); }, 1800);
+      };
+      return b;
+    }
+    row.appendChild(btn('予約した', 'is-yes', 'reserve_report_yes'));
+    row.appendChild(btn('していない', 'is-no', 'reserve_report_no'));
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'nb-reserve-ask-close';
+    close.setAttribute('aria-label', '閉じる');
+    close.textContent = '×';
+    close.onclick = function () { hide(el); };
+    el.appendChild(close); el.appendChild(q); el.appendChild(note); el.appendChild(row);
+    document.body.appendChild(el);
+    setTimeout(function () { hide(el); }, SHOW_MS);
+  }
+  function check() {
+    if (document.visibilityState === 'hidden' || internal()) return;
+    var raw, p;
+    try { raw = sessionStorage.getItem(KEY); } catch (e) { return; }
+    if (!raw) return;
+    try { p = JSON.parse(raw); } catch (e) { p = null; }
+    var away = p ? Date.now() - (p.t || 0) : -1;
+    if (!p || away > MAX_AWAY || away < 0) { try { sessionStorage.removeItem(KEY); } catch (e) {} return; }
+    if (away < MIN_AWAY) return;
+    try { sessionStorage.removeItem(KEY); } catch (e) {}
+    var asked = 'nb_reserve_asked_' + (p.i || p.n) + '_' + today();
+    try { if (localStorage.getItem(asked)) return; localStorage.setItem(asked, '1'); } catch (e) {}
+    show(p);
+  }
+  document.addEventListener('visibilitychange', check);
+  window.addEventListener('pageshow', check);
+  window.addEventListener('focus', check);
+})();</script>
 </body>
 </html>
