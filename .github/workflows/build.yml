@@ -545,8 +545,10 @@ jobs:
         #
         # 安全設計（CLAUDE.md 制約 / ISSUE-084 / SEO-071 注記）:
         #   - 既定は dry-run（外部通信なし）。実送信は INDEXNOW_ENABLED が設定されている時のみ。
-        #   - 送信対象は「直近2日に公開されたジャーナル + トップ/索引」に限定（一括再送信しない）。
-        #   - 結果は data/indexnow_send_log.json に記録し次のステップで commit する（gitignore 外）。
+        #   - 送信対象は「トップ/索引 + 直近2日のジャーナル + 編集コメントが変わった店舗ページ +
+        #     前回送ってから内容が変わったハブ」で、1回 200 件まで（SEO-136）。
+        #     「前回送った値」は data/indexnow_state.json に実送信の成功時だけ記録する（送れなかった分は翌日に回る）。
+        #   - 結果（送った URL と内訳）は data/indexnow_send_log.json に記録し次のステップで commit する（gitignore 外）。
         #
         # 実送信を有効化するには:
         #   GitHub リポジトリの Settings → Secrets → Actions で
@@ -573,6 +575,8 @@ jobs:
           git config user.name  "github-actions[bot]" 2>/dev/null || true
           git config user.email "github-actions[bot]@users.noreply.github.com" 2>/dev/null || true
           git add data/indexnow_send_log.json 2>/dev/null || true
+          # 送信値の記録は実送信が一度成功するまで存在しない。1行にまとめると git add 全体が失敗するため分ける
+          git add data/indexnow_state.json 2>/dev/null || true
           git diff --staged --quiet || git commit -m "chore: IndexNow 送信ログ更新 [skip actions]" || true
           git push || true
         continue-on-error: true
