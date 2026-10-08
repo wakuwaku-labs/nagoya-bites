@@ -61,6 +61,7 @@ const path = require('path');
 const https = require('https');
 // ヒーロー写真の帰属判定は scripts/lib/hero_photo_gate.js に一元化（2026-08-17 の事故）
 const { judgeHero } = require('./lib/hero_photo_gate');
+const { gaSnippet } = require('./lib/ga_snippet');
 // 図解SVG→OGP用PNG変換は scripts/lib/og_figure_png.js に一元化（ISSUE-095）
 const OG = require('./lib/og_figure_png.js');
 // 本文写真（ヒーロー以外の記事内写真）の収集・選定・配置は scripts/lib/journal_photos.js に一元化
@@ -731,6 +732,7 @@ function renderHtml(input) {
     weekly_digest: '週次話題店', seasonal: '季節短信', flexible: '今日の1軒'
   })[input.theme] || '';
   const replacements = {
+    '{{GA_SNIPPET}}': gaSnippet(), // SEO-138: GA4 の正本は scripts/lib/ga_snippet.js
     '{{TITLE}}': esc(input.title),
     '{{TITLE_HTML}}': input.title_html || esc(input.title),
     '{{DESCRIPTION}}': esc(input.description),

@@ -11,6 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 const siteChrome = require('./lib/site_chrome');
+const { gaSnippet } = require('./lib/ga_snippet');
 const DS = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'design_system.json'), 'utf8'));
 
 const ROOT = path.join(__dirname, '..');
@@ -181,11 +182,8 @@ const features = [
 // 共通スタイル（nagoya-lunch-washoku.html と同一）
 const STYLE = `.store-badge{display:inline-block;font-family:var(--font-body);font-size:var(--fs-2xs);font-weight:700;letter-spacing:0;color:var(--bg);background:var(--gold);padding:.1rem .4rem;border-radius:var(--r-sm);margin-left:.4rem;vertical-align:middle;}.insider-quote{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);font-style:italic;border-left:2px solid var(--gold);padding:.2rem .8rem;margin:.4rem 0;background:rgba(122,92,16,.04);}.media-features{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-top:.4rem;}.store-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem;}.store-tag{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;padding:.18rem .5rem;border:1px solid rgba(122,92,16,.3);color:var(--gold);border-radius:var(--r-sm);}.column{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-md);padding:1.6rem;margin:2.5rem 0;}.column-title{font-family:var(--font-display);font-weight:500;font-size:var(--fs-xl);color:var(--ink);margin-bottom:1rem;}.column-body p{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);margin-bottom:.8rem;}.column-body strong{color:var(--gold);font-weight:500;}.faq-section{max-width:var(--container-mid);margin:0 auto;padding:0 1.5rem 3rem;}.faq-title{font-family:var(--font-display);font-weight:500;font-size:var(--fs-xl);color:var(--ink);margin-bottom:1.5rem;}.faq-item{border-bottom:1px solid var(--border);padding:1.2rem 0;}.faq-q{font-weight:500;font-size:var(--fs-md);color:var(--ink);margin-bottom:.6rem;}.faq-q::before{content:'Q. ';color:var(--gold);}.faq-a{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);}.faq-a::before{content:'A. ';color:var(--gold);font-weight:500;}@media(max-width:640px){.store-card{flex-direction:column;gap:.7rem;}}`;
 
-const GA_SCRIPT = `<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
-<script>
-window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}(function(){var p=new URLSearchParams(location.search);if(p.get('nb_owner')==='1'){localStorage.setItem('nb_internal','1');history.replaceState(null,'',location.pathname);}if(localStorage.getItem('nb_internal')==='1'){gtag('js',new Date());gtag('config','G-3LCZNGZPWJ',{traffic_type:'internal'});}else{gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');}})();function trackEvent(name,params){if(localStorage.getItem('nb_internal')==='1')return;if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\\/\\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
-</script>`;
+// GA4 のスニペットは scripts/lib/ga_snippet.js が正本（SEO-138）。見出しのコメントはテンプレート側にある
+const GA_SCRIPT = gaSnippet({ comment: false });
 
 const renderStoreCard = (idx, store) => {
   const media = (store.mediaFeatures || []).map(m => `${m.name}${m.year?'（'+m.year+'）':''}`).join(' / ');

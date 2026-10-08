@@ -23,6 +23,7 @@ const {
   loadPolicy, planPages, parsePriceBand, accessSummary,
 } = require('./lib/area_genre_pages');
 const trustDisplay = require('./lib/trust_display');
+const { gaSnippet } = require('./lib/ga_snippet');
 
 const ROOT = path.resolve(__dirname, '..');
 const BASE_URL = 'https://nagoya-bites.com';
@@ -254,12 +255,7 @@ function renderShell({ depth, active, breadcrumb, title, desc, canonicalPath, js
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
-<script>
-window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}(function(){var p=new URLSearchParams(location.search);if(p.get('nb_owner')==='1'){localStorage.setItem('nb_internal','1');history.replaceState(null,'',location.pathname);}if(localStorage.getItem('nb_internal')==='1'){gtag('js',new Date());gtag('config','G-3LCZNGZPWJ',{traffic_type:'internal'});}else{gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');}})();function trackEvent(name,params){if(localStorage.getItem('nb_internal')==='1')return;if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\\/\\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
-</script>
+${gaSnippet()}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
