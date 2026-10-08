@@ -1,49 +1,41 @@
-status: done
+status: in_progress
 
 # 目的
-オーナー依頼「SEOの分析と、今後より伸ばすための戦略戦術を用いた改善点」（2026-10-09）。実測で分析し、90日の戦略・戦術を文書化し、P0 の計測バグを直し、残りを backlog → Linear に起票する。
-（前のメモ「フィードバック triage の後始末」は status: done で完了済み。内容は git 履歴 20d03bd7a4 の HANDOFF.md を参照）
+オーナー指示「こちらの確認なしで進めれるものはガンガン進めて」（2026-10-09）。SEO-116 配下と同日起票の課題のうち、オーナーの確認・操作が要らないものを順に実装し、main に合流させ、Linear を Done にする。
+（前のメモ「SEO分析と90日の戦略・戦術」は status: done で完了済み。内容は git 履歴 ab273bc61d の HANDOFF.md を参照）
 
 # 完了条件
-- docs/seo-strategy-2026-10.md（分析・戦略・戦術・KPI）と docs/decisions/0007 がある
-- 店舗ページの GA4 構文エラーを生成器で直し、生成ページのインライン JS 構文ゲート（lib・監査CLI・テスト・qa_gate）が npm test を通る
-- 戦術 T2〜T15 が agent-backlog.md に起票され Linear に同期されている
-- PR が作成されている（main への合流はテスト・QA 通過時のみ）
+- 下の「対象」の各課題が、テストと QA を通って main に合流し、agent-backlog.md が done、Linear が Done（結果コメントつき）になっている
+- 日付待ち・オーナー待ちの課題は手を付けず、理由をここに残す
 
 # できていること
-- 分析完了（計画: ~/.claude/plans/seo-golden-dream.md）。要点:
-  - P0: gen-store-pages.js:786 のテンプレートリテラル内 `\/\/` が生成物で `//` になり、店舗ページ 5,008 本のインライン script（gtag config・outbound_click）が構文エラーで不実行。2026-05-08 生成分から
-  - 勝ち面は特集「一人飲み」1本（全クリックの25%）。デート特集が 11.5 位で1ページ目の手前。宴会・接待・忘年会は表示ほぼ0
-  - ハブ699本は表示86・クリック1（sitemap 安定掲載は 09-28 から）。栄の8店に「JR釧路駅」等の駅名汚染
-  - 検索流入は Bing 28% / Google 26.7% / Yahoo 11.3% / 生成AI 7.4%
+- SEO-119/120（実装済み・PR 前）: 駅名監査 `scripts/audit_station_names.js`（判定器 `scripts/lib/station_names.js`・駅名リスト `data/station_names.json`＝HeartRails Express・取得 `scripts/fetch_station_names.js`）。夜間QA に soft で追加。全店照合で県外の店23店を HotPepper の所在地で確かめ `data/closed_stores.json` へ。名古屋の2店は例外（ふじなが）とアクセス訂正（和食さと・`data/access_corrections.json`・build.js で適用）。焼き鳥特集2本・hard-to-book・予約困難特集・editor_picks から串っ子/のんきを除去。npm test 321/321・監査 0 店
+- 後回しの起票: ISSUE-147（Places の古い誤紐付け・口コミ信頼度が変わるためオーナー承認が要る）／ISSUE-148（スプレッドシート経由の行を HotPepper の住所で検査）
 
 # 次にやること
-1. ✅ T1 修正＋ゲート（commit b536405024）。npm test 309件通過。デザイン監査は CI と同じ条件で通過
-2. ✅ docs（seo-strategy-2026-10 / growth-plan 追記 / ADR 0007 / kpi-weekly）
-3. ✅ 起票: SEO-115〜141・ISSUE-145/146 を Linear P-111〜P-140 に作成（親子26件設定済み）。既存 P-24/P-32/P-57/P-58/P-59 にコメント。重複 P-139 は Duplicate 化。ISSUE-096（P-36）は Linear が Done・backlog が in_progress のため同期から外した
-4. ✅ 独立レビューの指摘対応（中3件・軽微5件）: 再生成されない孤児16本も1行修正（CI 相当の全件シミュレーションで現役4,909本も違反0）、59.8% の分母を「クエリが分かる表示（全体の45.9%）」に訂正、SEO-129 をオーナー承認経路に限定、検査器の data-src・コメント・type 引数・ルート全ページ対応。npm test 312件通過
-5. ✅ Linear P-111・P-125・P-112 にコメント。PR #403 を合流（208f72697e・03:00 JST 前）
-6. ✅ 合流後の build（run 37818977796）で孤児化した 13 本が壊れたまま残った → PR #404 で1行置換。次の run 37821594703 で監査が違反 0、main の壊れたページも 0 本
-7. ✅ build.yml の監査ステップから continue-on-error を外した（後続 PR）。残る確認は Linear P-112 で追う: GA4 で /stores/ の page_view（オーナー）・2日以内に data/site_metrics.json の topPages に /stores/・夜間QA の inline-js が緑
+1. SEO-119/120 を PR → squash merge → Linear 同期（SEO-120 Done・SEO-119 は CI 再生成後に `grep -rlE '釧路駅|神田\(東京\)' stores/*.html stores/area` が 0 件で Done）
+2. ISSUE-146 → ISSUE-145 → SEO-117 → SEO-121 → SEO-135/136/138/139/127/131/124/122/137/134
+3. SEO-115 の残り: 10-09 06:00 の夜間QA（inline-js）と `data/site_metrics.json` の topPages に /stores/ が出るかを見て閉じる
+4. 夜間QA の station-names が緑で続いたら hard に上げる
+
+対象外（理由）:
+- SEO-118（10-20 の GA4 再基線）・SEO-125（10-15 記録）・SEO-126/130/140（11-15 判定）・SEO-141（11-30 判定）: 日付待ち
+- SEO-129 の反映・SEO-132 about.html・ISSUE-147: オーナー承認が要る
+- SEO-067/098（BWT・UTM）: オーナー本人の操作
 
 # 試したが駄目だったこと
-- 合流前に手元の data/stores.json で孤児を数えて直しても足りなかった。CI の build は店舗データを更新してから再生成するため、手元で現役だった 13 店が CI では孤児になり、壊れた形で残った。孤児の手当ては合流後の main で数え直す
-- CI の監査ステップは continue-on-error のため、API のステップ結果が success でも監査は失敗していた。合否はログの ok と違反数で見る
+- agent-backlog.md を python の heredoc で書き換えると Non-UTF-8 の SyntaxError。node で fs.readFileSync(…,'utf8') を使えば通る
+- `refresh_feature_rosters.js --only=…` は `data/feature_roster_health.json` を1本分で上書きする。実行後に git checkout で戻す
 
 # 守るルール・判断メモ
-- 5,008 ファイルの店舗ページはローカルで再生成しない（日次 build.yml の自動コミットと衝突する）。main 合流後の build.yml が gen-store-pages.js → gen_area_genre_pages.js の順で再生成する
-- そのため、テストは「生成器の出力」と「テンプレート・既存の正常ページ」を検査し、コミット済みの stores/*.html は見ない（合流前は全件壊れているため）
-- .linear.json は入れない。本リポジトリは agent-backlog.md → scripts/sync_backlog_to_linear.js が Linear 運用の正本（グローバル規約の「リポジトリ固有の決まりを優先」）
-- SEO の判定指標は discovery 表示・クリック、被表示ハブ数、生成AI・Bing 経由セッション（総クリックと PV は GA4 再基線化まで比較しない）
-
-- 栄の駅名汚染は8店ではなく7店（鳥しげ 錦本店の「東京第一ホテル錦」は誤検出）。効果台帳に SEO-095/099/105 の行は無い（実際は SEO-003・ISSUE-067・SEO-060・DSN-003）。薄い店は定義どおりに数えると24店
-- 起票の構成（2026-10-09 決定）: 親 SEO-116（90日計画）の下に作業を並べる。中間の親は T7（ハブ）・T10（店舗）・T12（AI/Bing）だけ。T6 は SEO-087、T8 は SEO-067/098、T10c は SEO-095 に追記して新規にしない（同じ課題は追記の規則）
-- 「バー」「カフェ」を含む検索はほぼ店名指名（バー142表示中141）。ジャンル需要は未観測と書く（計画時の「ハブが取るべき面」は誤り）
-- 手元のデザイン監査が stores/J003560485.html 等で落ちるのは、CI がコミットしない data/store_page_orphans.json が古いため（CI では作り直されて通る）。ISSUE-146 で起票する
-- Linear 同期は一覧 200 件で打ち切ると止まる作り（現在109件）。ISSUE-145 で起票する
+- 1課題（または密接な組）ごとに PR → squash merge。対話セッションは main 直 push 不可
+- テンプレート・生成器の変更は Designer の QA-5 記録と `node scripts/audit_design_system.js --check` を通す（制約12）
+- 店舗ページ約5,000本はローカルで再生成しない（CI の build.yml が再生成する）
+- Linear の説明は同期で置き換わらない。訂正・結果はコメントで残す（`orca linear comment add` に --workspace を付けない）
+- 店舗データの変更は一次情報で確かめたものだけ。確かめられなければ空欄に倒す（推測で書かない）
+- 既存の不一致（特集の「うなぎのしろむら 泉店」→ stores.json は「泉本店」）は本作業の前から main にある。別途確認
 
 # 関連ファイル
-- ~/.claude/plans/seo-golden-dream.md（承認済み計画）
-- gen-store-pages.js / scripts/qa_gate.js / .github/workflows/build.yml
-- data/gsc_metrics.json / data/search_channel_metrics.json / data/site_metrics.json / data/area_genre_pages_manifest.json
-- docs/growth-plan-2026-q4.md
+- agent-backlog.md（SEO-116〜141・ISSUE-145〜148）
+- docs/seo-strategy-2026-10.md（戦術表 §3・KPI §4）
+- docs/decisions/0007-seo-north-star-metrics.md
