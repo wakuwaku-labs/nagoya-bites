@@ -353,7 +353,7 @@
 
 ### [SEO-135] llms.txt にハブの階層と数値の出典・更新日を載せ、Organization に sameAs を足す
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / 技術
 - **owner**: Builder
@@ -364,6 +364,7 @@
   1. llms.txt の生成でエリア→ジャンル→条件のハブ階層（manifest の active だけ）を出す
   2. 掲載店数などの数値に出典と更新日を添える
   3. Organization に `sameAs`（実在する公式アカウントだけ）を足す。インラインJS監査（JSON-LD の構文）を通す
+- **結果（2026-10-09）**: ①② `scripts/gen_llms_txt.js` が manifest の公開中ページ（685本）だけをエリア → ジャンル → 条件の全階層にまとめ、llms.txt 末尾に出す（エリアとジャンルは URL、条件は「記号(掲載店数)」と URL の作り方の実例。条件ページ約600本の URL を全部書くと前半の編集方針・特集一覧が読まれにくくなるため）。「サイトについて」に数値の出典（`data/stores.json`・`data/area_genre_pages_manifest.json`・`features/`）と更新日を足した。店舗数の日付は数値が変わった日だけ動く（毎日の再生成で日付だけの差分を出さない）。サイトマップの行は `sitemap.xml` に直した。テスト `tests/gen_llms_txt.test.js`（6件）。③ sameAs は足していない。リポジトリにもサイトにも公式アカウントの URL が無く（`docs/instagram-launch-kit.md` などに候補のハンドルがあるだけ）、確かめられない URL を書かないため。オーナーが URL を示してから足す作業を [[SEO-142]] に分けた
 
 ### [SEO-136] IndexNow の送信対象を、内容が変わったハブと店舗ページに広げる
 
@@ -449,6 +450,20 @@
 - **acceptance**:
   1. 11-30 の `gsc_metrics.json` の `queries[]` で「忘年会」「宴会」を含む検索の表示を合計する
   2. 50 以上なら継続、50 未満なら [[SEO-127]] の追加作業をやめる。結果を ADR 0007 に追記する
+
+### [SEO-142] Organization の構造化データに公式アカウントの sameAs を足す
+
+- **priority**: P3 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / 技術
+- **owner**: オーナー（公式アカウントの URL を示す）→ Builder
+- **source**: [[SEO-135]] の達成条件3を分けた。親は [[SEO-133]]
+- **brand-filter**: ✅ 適合 — 実在するアカウントだけを結びつける
+- **背景**: トップページ（`index.html`）の Organization の構造化データに `sameAs` が無い。リポジトリとサイトには公式アカウントの URL が無く、候補のハンドル（`docs/instagram-launch-kit.md` の `@nagoyabites`・`@nagoya_bites`・`@nagoyabites.jp`、`docs/sns-content-template.md` の「Instagram @nagoya_bites（要・ユーザー判断）」）があるだけで、どれが実在する公式アカウントかを確かめられない。推測で書くと別人のアカウントを公式として示すおそれがある
+- **acceptance**:
+  1. オーナーが公式アカウント（Instagram など）の URL を示す
+  2. 示された URL だけを `index.html` の Organization の `sameAs` に入れる
+  3. `node scripts/audit_inline_js_syntax.js --check --only root` が exit 0（JSON-LD の構文）
 
 ### [ISSUE-145] Linear 同期が課題200件で止まる上限を外す
 
