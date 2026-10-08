@@ -483,7 +483,7 @@
 
 ### [SEO-139] Google 口コミ由来の aggregateRating と SearchAction を Google の方針に照らして整理する
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / 技術
 - **owner**: Marketer
@@ -494,6 +494,7 @@
   1. Google のレビュー スニペットの方針で、自サイト外の評価を `aggregateRating` に使ってよいかを確かめ、出典 URL つきで `docs/decisions/` に記録する
   2. 方針違反なら店舗ページから `aggregateRating` を外す。SearchAction は外す
   3. 読めない URL（`store-<16進>` 177 本）は今回扱わず、理由を記録する
+- **結果（2026-10-09）**: Google のレビュー スニペットの方針（2026-09-08 更新）に "Don't aggregate reviews or ratings from other websites." とあり、Google の口コミの集計を `aggregateRating` に入れるのは方針違反と判断した。出典 URL つきで `docs/decisions/0009-structured-data-third-party-ratings.md` に記録。店舗ページ（`gen-store-pages.js`）とトップのモーダル（`index.html`）の JSON-LD から外した。画面の★と口コミ件数、口コミ信頼度（`additionalProperty`）は残す。トップの WebSite の `SearchAction` も外した（2024-11-21 に表示終了。name・url・publisher は残す）。店舗ページは旧コードとの比較（611 店の見本）で、変わるのは JSON-LD の aggregateRating だけ。読めない URL 177 本は、転送ページが要ることと、GSC で表示が出ているのが 7 本（表示 115・クリック 9）だけであることを理由に変えない。テスト `tests/structured_data_policy.test.js`（3件）。店舗ページは合流後の build.yml の再生成で反映される
 
 ### [SEO-140] 11-15 のチェックポイントで北極星指標を判定する
 

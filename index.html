@@ -1316,14 +1316,6 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
       "width": 512,
       "height": 512
     }
-  },
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": "https://nagoya-bites.com/#q={search_term_string}"
-    },
-    "query-input": "required name=search_term_string"
   }
 }
 </script>
@@ -10399,14 +10391,8 @@ function openM(i, source) {
       'url': r['ホットペッパーID'] ? 'https://www.hotpepper.jp/str' + r['ホットペッパーID'] + '/' : undefined,
       'image': r['写真URL'] || undefined,
       'openingHours': r['営業時間'] || undefined,
-      'description': r['おすすめポイント'] || r['editorReason'] || undefined,
-      'aggregateRating': (r['Google評価'] && parseInt(r['口コミ数']) > 0) ? {
-        '@type': 'AggregateRating',
-        'ratingValue': r['Google評価'],
-        'bestRating': '5',
-        'worstRating': '1',
-        'ratingCount': String(parseInt(r['口コミ数']))
-      } : undefined
+      'description': r['おすすめポイント'] || r['editorReason'] || undefined
+      // aggregateRating は出さない（Google の方針: 他のサイトの評価を集めて載せない・SEO-139）
     };
     // undefined を除去
     Object.keys(schema).forEach(function(k){ if (schema[k] === undefined) delete schema[k]; });
