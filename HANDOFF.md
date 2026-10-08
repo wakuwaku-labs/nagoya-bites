@@ -27,10 +27,17 @@ status: in_progress
 
 # 次にやること
 1. 10-10 以降に確認: SEO-147（P-156）の達成条件3。main で `node scripts/sync_feature_counts.js --check --target stores` が exit 0 なら backlog done・P-156 Done＋コメント（店舗ページは CI の再生成で直る設計。ローカルで書き換えない）
-2. SEO-115 の残り（P-112）: 達成条件3（GA4 で /stores/ の page_view。topPages は上位5ページだけなので、オーナー確認か 10-10 以降の metrics_history の段差）と5（次の夜間QA の inline-js が緑）
-3. 次の実装: SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
-4. 夜間QA の station-names が緑で続いたら hard に上げる
-5. 最後に: 「うなぎのしろむら 泉店」の起票、創業者の実名が index.html の Organization JSON-LD に出ている件をオーナーへ報告（変更しない）、http.server（8093・8094・8095）を止める
+2. 実装中: SEO-124（ハブ本文・P-番号は backlog 参照）。設計（決定済み）:
+   - 見分け方の短文: data/area_genre_pages_policy.json の genres[].guide（17）と conditions[].guide（13）に置く。条件ページは「ジャンル＋条件」の2文を合成。推測の数値は書かない（法律の20歳など確定事実のみ）
+   - 編集部の選定理由: editorReason があり おすすめポイント と同文でない店（gen-store-pages の sameSentence と同じ規則）を、一覧の上に別枠で最大 N 件（policy.editorPicks）。一覧の機械的な並び順は動かさない（リードの「順位は動かしていない」を真に保つ）。visitStatus のラベルを添える
+   - 表: 予算帯の分布（価格帯の下限順・全帯）と最寄り駅（上位 N・policy）を <table class="hub-table">（HUB_STYLE にトークンで追加・13px 以上）
+   - FAQPage の JSON-LD を外す（画面の FAQ は残す）
+   - データ更新日: ハッシュ計算の後に manifest の updated で入れる
+   - ハブはローカルで再生成して PR に含める（SEO-094 の前例・決定的）。Designer QA-5 を puppeteer の 375px/1280px で見る
+3. SEO-115 の残り（P-112）: 達成条件3（GA4 で /stores/ の page_view。topPages は上位5ページだけなので、オーナー確認か 10-10 以降の metrics_history の段差）と5（次の夜間QA の inline-js が緑）
+4. 次の実装: SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
+5. 夜間QA の station-names が緑で続いたら hard に上げる
+6. 最後に: 「うなぎのしろむら 泉店」の起票、創業者の実名が index.html の Organization JSON-LD に出ている件をオーナーへ報告（変更しない）、http.server（8093・8094・8095）を止める
 
 対象外（理由）:
 - SEO-118（10-20 の GA4 再基線）・SEO-125（10-15 記録）・SEO-126/130/140（11-15 判定）・SEO-141（11-30 判定）: 日付待ち
