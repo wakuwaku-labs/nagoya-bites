@@ -584,8 +584,6 @@ function renderStorePage(s, slug, relatedStores, listedFeatures) {
   } : null;
   const ccsPending  = !!(rt && rt.tier === TRUST_POLICY.na.id);
   const ccsLabel = rt ? `${TRUST_POLICY.name} ${rt.tier}` : '';
-  const reviewCountRaw = parseInt(s['口コミ数'] || '', 10);
-  const reviewCount    = Number.isFinite(reviewCountRaw) && reviewCountRaw > 0 ? reviewCountRaw : 0;
   const point    = s['おすすめポイント'] || '';
   const tags     = (s['タグ'] || '').split(',').map(t => t.trim()).filter(Boolean);
   // HP縮小サムネの残留に備えた防衛的正規化（正規経路は build.js の normalizePhotoUrl）
@@ -613,7 +611,9 @@ function renderStorePage(s, slug, relatedStores, listedFeatures) {
   const desc     = buildDescription(s);
   const priceRangeSym = mapPriceToSchemaRange(price);
 
-  // Restaurant JSON-LD — aggregateRating は実データ(口コミ数が正の整数)のみ出力
+  // Restaurant JSON-LD。aggregateRating は出さない（SEO-139・docs/decisions/0009）。
+  // Google 評価は Google の口コミの集計で、Google のレビュー スニペットの方針が禁じる
+  // 「他のサイトの評価を集めて載せる」に当たる。画面の★表示はそのまま残す
   const address = {
     '@type': 'PostalAddress',
     'addressRegion': pref,
@@ -647,14 +647,6 @@ function renderStorePage(s, slug, relatedStores, listedFeatures) {
   if (tbUrl) sameAs.push(tbUrl);
   if (hpUrl) sameAs.push(hpUrl);
   if (sameAs.length) jsonLd.sameAs = sameAs;
-  if (score) {
-    jsonLd.aggregateRating = {
-      '@type': 'AggregateRating',
-      'ratingValue': score,
-      'bestRating': '5',
-      ...(reviewCount > 0 ? { 'ratingCount': String(reviewCount) } : {})
-    };
-  }
   if (rt && typeof rt.score === 'number') {
     jsonLd.additionalProperty = [{
       '@type': 'PropertyValue',
