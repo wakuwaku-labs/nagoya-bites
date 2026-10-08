@@ -1,35 +1,39 @@
-status: done
+status: in_progress
 
 # 目的
-消費者フィードバック triage（2026-10-05 定期実行）の後始末として、残っていたリスク2件を解消する。
-（前のメモ「Linear初心者向けの橋渡し」は status: done で完了済み。内容は git 履歴 7688e39ce8 以前の HANDOFF.md を参照）
+オーナー依頼「SEOの分析と、今後より伸ばすための戦略戦術を用いた改善点」（2026-10-09）。実測で分析し、90日の戦略・戦術を文書化し、P0 の計測バグを直し、残りを backlog → Linear に起票する。
+（前のメモ「フィードバック triage の後始末」は status: done で完了済み。内容は git 履歴 20d03bd7a4 の HANDOFF.md を参照）
 
 # 完了条件
-- ローカルの main が origin/main と一致している
-- 稼働中の定期タスクの指示が Notion ではなく Linear 同期を指している
+- docs/seo-strategy-2026-10.md（分析・戦略・戦術・KPI）と docs/decisions/0007 がある
+- 店舗ページの GA4 構文エラーを生成器で直し、生成ページのインライン JS 構文ゲート（lib・監査CLI・テスト・qa_gate）が npm test を通る
+- 戦術 T2〜T15 が agent-backlog.md に起票され Linear に同期されている
+- PR が作成されている（main への合流はテスト・QA 通過時のみ）
 
 # できていること
-- 2026-10-05 フィードバック triage: 新着0件（3段階の検索すべて0件）。心拍を push 済み（5a0c92576a）
-- ローカル main の分岐を解消: 残っていた差分は HANDOFF.md の status 1行だけ。upstream は bot の自動コミットのみで重なりなし → rebase して push（7688e39ce8）。ahead/behind 0
-- 定期タスクの指示を Linear 前提に更新（~/.claude/scheduled-tasks/ 配下・リポジトリ外）
-  - nagoya-bites-feedback-triage-daily: Notion 同期 → sync_backlog_to_linear.js。古い Gmail クエリ記述（2d）を policy 参照に変更、心拍 Step 9 の明記、rebase 競合時は abort してワークツリーで作業する手順を追加
-  - nagoya-bites-seo-triage-daily: Notion MCP 同期 → sync_backlog_to_linear.js
+- 分析完了（計画: ~/.claude/plans/seo-golden-dream.md）。要点:
+  - P0: gen-store-pages.js:786 のテンプレートリテラル内 `\/\/` が生成物で `//` になり、店舗ページ 5,008 本のインライン script（gtag config・outbound_click）が構文エラーで不実行。2026-05-08 生成分から
+  - 勝ち面は特集「一人飲み」1本（全クリックの25%）。デート特集が 11.5 位で1ページ目の手前。宴会・接待・忘年会は表示ほぼ0
+  - ハブ699本は表示86・クリック1（sitemap 安定掲載は 09-28 から）。栄の8店に「JR釧路駅」等の駅名汚染
+  - 検索流入は Bing 28% / Google 26.7% / Yahoo 11.3% / 生成AI 7.4%
 
 # 次にやること
-- なし。nagoya-bites-solve-next-daily は無効化中のため Notion 記述を残している（再有効化するときは Linear 前提に書き換える）
-
-- 2026-10-07 「Linear接続を他プロジェクトでも使う」→ 実施済み。ブリーフィング・監視を Project 単位に絞った（誤報 #381 は自動クローズ確認）。汎用キット `~/.claude/skills/linear-setup/`（`/linear-setup`・`.linear.json` で設定・テスト4件）と、グローバル `~/.claude/CLAUDE.md` の「Linear 運用（全プロジェクト共通）」を追加。2026-10-07 に5リポジトリ（自動トークン節約・自動スリープスイッチ・その日の予約まとめ・CPU節約ツール・AI動画作成）へ導入・各 main にコミット済み。空の KR 用 Project 4つは改名して再利用（ISSUE-137/P-64 解決）。今後の新規リポジトリは Claude が自動導入。ADR 0006
-- 2026-10-07 追加: 新しいアプリ・フォルダ（git でなくても）と Codex にも拡張。install.js が Linear の Project を自動作成（API キー `~/.config/linear/api_key` は 2026-10-07 にオーナーが配置済み・疎通確認済み）。Codex 用ルールは `~/.codex/AGENTS.md`、キットは `~/.codex/skills/linear-setup`（リンク）。動画生成プロジェクトの汎用テンプレ39件はオーナー判断で全件 Canceled
-
-- 2026-10-07 SEO triage 後のリスク解消: ①未追跡の AGENTS.md / .agents/skills/* が origin 版と衝突し pull 不能 → 実測で origin と完全一致になっていたため scratchpad へ退避して pull、ahead/behind 0（10-07 ジャーナルも公開済みを確認）。.agents/skills/source-command-solve-next/ は origin に無く衝突しないので残置 ②`seo_triage.js --check-dup` が言い換えた同旨提案を拾えない → 論点キー（「」KW・特集/記事slug）一致の過去判定を `related[]` で返すよう拡張（tests/seo_triage.test.js 4件・npm test 299件通過）。重複の確定は従来どおり完全一致のみ
+1. T1 修正（gen-store-pages.js:786）＋ゲート実装 → npm test
+2. docs（seo-strategy-2026-10 / growth-plan 追記 / ADR 0007 / kpi-weekly）
+3. backlog 起票（SEO-115〜）→ sync_backlog_to_linear.js dry-run → --apply
+4. 独立レビュー → コミット → PR
 
 # 試したが駄目だったこと
-- 10/05 は git pull --rebase が HANDOFF.md の競合で停止 → abort して origin/main からのワークツリーで作業した
+- （なし）
 
 # 守るルール・判断メモ
-- SEO triage の言い換え検知に文字bigram類似度は使わない（2026-10-07 実測で本物の重複0.26・無関係0.25と分離不能）。論点キー一致は「候補を並べる」だけで合否は決めない（制約10・品質ゲート原則5）
-- ローカル main で rebase が競合したら、自動では解消しない。abort してワークツリーで作業する（定期タスクの指示にも明記済み）
+- 5,008 ファイルの店舗ページはローカルで再生成しない（日次 build.yml の自動コミットと衝突する）。main 合流後の build.yml が gen-store-pages.js → gen_area_genre_pages.js の順で再生成する
+- そのため、テストは「生成器の出力」と「テンプレート・既存の正常ページ」を検査し、コミット済みの stores/*.html は見ない（合流前は全件壊れているため）
+- .linear.json は入れない。本リポジトリは agent-backlog.md → scripts/sync_backlog_to_linear.js が Linear 運用の正本（グローバル規約の「リポジトリ固有の決まりを優先」）
+- SEO の判定指標は discovery 表示・クリック、被表示ハブ数、生成AI・Bing 経由セッション（総クリックと PV は GA4 再基線化まで比較しない）
 
 # 関連ファイル
-- docs/feedback-triage-runbook.md / data/feedback_policy.json / data/feedback_health.json
-- ~/.claude/scheduled-tasks/nagoya-bites-{feedback,seo}-triage-daily/SKILL.md
+- ~/.claude/plans/seo-golden-dream.md（承認済み計画）
+- gen-store-pages.js / scripts/qa_gate.js / .github/workflows/build.yml
+- data/gsc_metrics.json / data/search_channel_metrics.json / data/site_metrics.json / data/area_genre_pages_manifest.json
+- docs/growth-plan-2026-q4.md
