@@ -255,6 +255,14 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .art-title,.hero-title,.hero:not(.nb-cover) > h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.875rem,1.4rem + 2.2vw,2.75rem);line-height:var(--lh-display);color:var(--ink);margin-bottom:var(--sp-4);}
 .art-title em,.hero-title em,.hero:not(.nb-cover) > h1 em{font-style:italic;color:var(--gold);}
 .art-meta,.hero-meta{display:flex;flex-wrap:wrap;gap:var(--sp-4);font-size:var(--fs-xs);color:var(--dim);margin-bottom:var(--sp-5);}
+/* 特集の公開日・更新日・書き手（SEO-145）。中身は scripts/lib/feature_byline.js が JSON-LD から出す。
+   色は見出しの地色に合わせて継承する。見出しを中央に寄せた特集でも、隣の導入文・meta 行と同じく左に揃える */
+.nb-byline{font-size:var(--fs-xs);line-height:var(--lh-ui);color:inherit;opacity:.8;text-align:left;margin:0 0 var(--sp-2);}
+.nb-byline--end{margin-bottom:var(--sp-5);}
+.nb-byline > span{display:inline-block;margin-right:var(--sp-4);}
+.nb-byline > span:last-child{margin-right:0;}
+.nb-byline-note{display:inline-block;}
+.nb-byline a{color:inherit;text-decoration:underline;text-underline-offset:2px;}
 .art-lead,.hero-lead,.hero-sub{font-size:var(--fs-lg);line-height:var(--lh-body);color:var(--muted);border-left:2px solid var(--gold);padding-left:var(--sp-4);max-width:42em;}
 .art-lead p,.hero-lead p{margin-bottom:var(--sp-2);}
 .art-lead p:last-child,.hero-lead p:last-child{margin-bottom:0;}

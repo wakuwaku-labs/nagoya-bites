@@ -18,16 +18,16 @@ status: in_progress
   - #413 SEO-135（llms.txt にハブの全階層・数値の出典と更新日・sitemap.xml）
   - #414 SEO-136（IndexNow: 前回送った値を data/indexnow_state.json に記録し、変わったハブ・編集コメントが変わった店舗ページを送る）
   - #415 SEO-138（GA スニペットを scripts/lib/ga_snippet.js の1本に。localStorage を try/catch で囲む）
+  - #416 SEO-143（店舗ページに「編集部の選定理由」）・#418 SEO-139（aggregateRating と SearchAction を外す・docs/decisions/0009）・#419 IndexNow が -2/-3 の店舗ページを探す・#420 SEO-127（banquet の 11・12月リードと幹事チェックリスト）・#421 SEO-131 その1（掲載店の入れ替えで dateModified を進める）
 - Linear: P-115/P-116/P-138/P-113/P-140/P-131/P-132/P-134 は Done（結果コメントつき）。P-117（SEO-121）は In Progress で、本番確認待ち
 - 起票: ISSUE-147（P-142・Places の古い誤紐付け・オーナー承認が要る）／ISSUE-148（P-143・スプレッドシート経由の住所検査）／SEO-142（P-144・sameAs。公式アカウントの URL をオーナーが示すまで待ち）／SEO-143（P-145・店舗ページに editorReason が出ていない）／SEO-144（P-146・index.html と静的ページの localStorage 例外で GA が止まる）
 
 # 次にやること
 1. SEO-121 の本番確認: 次の build.yml の後に `node scripts/audit_sitemap_health.js --lastmod-only --check` が exit 0 → backlog done・P-117 Done
 2. SEO-115 の残り: 10-09 06:00 の夜間QA（inline-js）と `data/site_metrics.json` の topPages に /stores/ が出るか → done・P-112 Done
-3. 実装中: SEO-143（店舗ページに「編集部の選定理由」の節。141店に出る・insiderNote は出さない）→ PR。合流後、build.yml の再生成を待って `node scripts/indexnow_ping.js --recent 2` の stores.comment_not_on_page が 141 → 0 前後になれば done・P-145 Done（#416 合流済み。IndexNow の -2/-3 対応は別 PR）
-   SEO-139 は #418 で合流・P-135 Done。店舗ページの反映（AggregateRating が 0 件）は再生成後に確かめる。#419 で IndexNow が -2/-3 のページを探せるようにした
-   SEO-127 は banquet の 11・12月リードと幹事チェックリストを実装（PR 作成中）
-   その後: SEO-131 特集の日付・署名 → SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
+3. 実装中: SEO-145（特集の公開日・更新日・書き手の部品・P-153）→ PR → 合流後に sync --apply（SEO-145/131 Done・SEO-146/DSN-007 起票）→ P-153・P-127 に結果コメント
+   SEO-143 の本番確認: build.yml の再生成後に `node scripts/indexnow_ping.js --recent 2` の stores.comment_not_on_page が 0 前後 → done・P-145 Done（#416・#419 に触れる）。SEO-139 は `grep -l AggregateRating stores/*.html | wc -l` = 0 を確かめる
+   次: SEO-146（特集の掲載件数の表記・gen_industry_features.js の「焼鳥 串っ子」）→ SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
 4. 夜間QA の station-names が緑で続いたら hard に上げる
 
 対象外（理由）:
@@ -49,6 +49,8 @@ status: in_progress
 - 店舗データの変更は一次情報で確かめたものだけ。確かめられなければ空欄に倒す（推測で書かない）
 - 既存の不一致（特集の「うなぎのしろむら 泉店」→ stores.json は「泉本店」・fathers-day-2026 と nagoya-kaoawase-washoku）は本作業の前から main にある。最後に起票する
 - `git checkout -- features/` は手で直した特集まで戻す。build_featured.js の試し実行の後は、そのファイルだけを戻す
+- 特集の日付は JSON-LD だけが正本（docs/decisions/0010）。画面の日付は scripts/apply_feature_byline.js が出す。手で書かない
+- 8 本の datePublished 2025-04-15 は年の誤記だった（最初のコミットは 2026-04-15）。数日のずれは誤りと言い切れないので直さない
 
 # 関連ファイル
 - agent-backlog.md（SEO-116〜141・ISSUE-145〜148）

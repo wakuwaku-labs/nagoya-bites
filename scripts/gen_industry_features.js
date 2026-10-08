@@ -12,6 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const siteChrome = require('./lib/site_chrome');
 const { gaSnippet } = require('./lib/ga_snippet');
+const { applyByline } = require('./lib/feature_byline');
 const DS = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'design_system.json'), 'utf8'));
 
 const ROOT = path.join(__dirname, '..');
@@ -277,7 +278,6 @@ ${siteChrome.renderBreadcrumb([
     <p class="art-eyebrow">Feature — ${feature.eyebrow}</p>
     <h1 class="art-title">${feature.titleHtml}<br><small style="font-size:.55em;letter-spacing:.05em;">${feature.titleH1Suffix}</small></h1>
     <div class="art-meta">
-      <span>${today.replace(/-/g, '年').replace(/年(\d+)年/, '年$1月').replace(/年(\d+)$/, '日').replace('日日', '日')} 公開</span>
       <span>掲載${storeList.length}軒</span>
       <span>編集独立・広告ゼロ</span>
     </div>
@@ -335,7 +335,8 @@ ${siteChrome.chromeScript()}
 
 // 生成
 for (const f of features) {
-  const html = renderHTML(f);
+  // 公開日・更新日・書き手は JSON-LD から部品で出す（SEO-145・scripts/lib/feature_byline.js）
+  const html = applyByline(renderHTML(f), { selfFile: `${f.slug}.html` });
   const out = path.join(ROOT, 'features', `${f.slug}.html`);
   fs.writeFileSync(out, html);
   console.log(`✓ ${out}`);

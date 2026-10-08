@@ -371,6 +371,7 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `scripts/lib/area_genre_pages.js` | エリア×ジャンル×条件ページの決定的プランナー・正規化・条件13軸の述語。生成器（`gen_area_genre_pages.js`）・`gen-store-pages.js`（もっと見る/パンくず/JSON-LDのハブリンク化）・`scripts/inject_store_links.js`が共有する |
 | `scripts/gen_area_genre_pages.js` | 上記の生成器CLI。`node scripts/gen_area_genre_pages.js`（生成・sitemap.xml追記・manifest更新）/ `--dry-run` / `--check`（純粋な読み取り専用の差分検査・apply_site_chrome.jsと同じ意味）。gen-store-pages.js が sitemap.xml を丸ごと書き直すため、必ずその**直後**に実行する（build.yml参照） |
 | `scripts/apply_site_chrome.js` | 既存ページへサイト共通クロームを一括適用（冪等・`apply_design_system.js` と同じ運用モデル）。`--dry-run`/`--only <root\|features\|journal\|stores>`/`--check`/`--strip-legacy-css`。CI（build.yml）が日次で `--check --sample 200` を継続実行（当面 continue-on-error） |
+| `scripts/apply_feature_byline.js` | **特集の公開日・更新日・書き手の部品**（SEO-145・2026-10-09）。日付の正本は各特集の JSON-LD（datePublished・dateModified）だけで、画面には `scripts/lib/feature_byline.js` の部品（`.nb-byline`）1つで出す。meta 行に手で書かれた「公開・更新」付きの日付と書き手名は消し、「2026年版」などの版表記と催しの日付は残す（`docs/decisions/0010-feature-dates-single-source.md`）。build.yml が特集を書き換えるステップの最後に日次で実行。`--dry-run`/`--check`/`--only <語>`。`scripts/gen_industry_features.js` も同じ部品を通す（Builder/Editor 共管） |
 | `scripts/measure_typography.js` | 可読性の実測（12px以下の文字割合・1画面の文字数・タップ対象サイズ）。before/afterの証跡 |
 | `index.html` | サイト本体（編集対象） |
 | `features/` | 特集記事ディレクトリ（Editor管轄） |

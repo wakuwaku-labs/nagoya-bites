@@ -285,6 +285,14 @@ jobs:
         run: node scripts/add_feature_journal_links.js
         continue-on-error: true
 
+      - name: 特集の公開日・更新日・書き手の部品（SEO-145・冪等・日次）
+        # 日付の正本は各特集の JSON-LD（datePublished・dateModified）。上の
+        # refresh_feature_rosters.js が掲載店の入れ替えで dateModified を進めた日は、ここで
+        # 画面の「更新」も同じ日に進む。特集を書き換えるステップの最後に置く。
+        # 判定と部品は scripts/lib/feature_byline.js の1本。ローカルの確認は --check。
+        run: node scripts/apply_feature_byline.js
+        continue-on-error: true
+
       - name: 店舗写真を原寸マスターへ昇格（画質改善・実測ベース・冪等）
         # Hot Pepper の _480.jpg は 480px しかなく、モーダル(約2000px相当)で 4倍に
         # 引き伸ばされてボケていた。サフィックスなしURLが投稿時の原寸(720〜1280px)を返すため、

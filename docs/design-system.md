@@ -88,6 +88,20 @@ media行     アイコンのみ、aria-labelでラベル維持
 フラグの優先順位: 話題沸騰 > 注目上昇中/じわじわ人気 > 編集部推薦 > 業界人N名推薦 > プロの目利き。
 実装は `index.html` の `buildCardHtml` 関数を参照。
 
+### 特集の公開日・更新日・書き手（SEO-145・2026-10）
+
+```
+h1（題）
+導入文
+[部品] 公開 2026年4月15日   更新 2026年10月9日   執筆 NAGOYA BITES 編集部（現役の飲食店マネージャー）
+meta 行  2026年版 / 現役飲食店マネージャー監修 / 名駅・栄・金山エリア対応
+```
+
+- 見た目は `assets/css/nb.css` の `.nb-byline`。13px（`--fs-xs`）、色は見出しまわりの地色を継承し、不透明度 .8。見出しを中央に寄せた特集でも左に揃える（隣の導入文・meta 行と同じ）。
+- 中身は `scripts/lib/feature_byline.js` が JSON-LD の datePublished・dateModified から出す。画面に日付を手で書かない（`docs/decisions/0010-feature-dates-single-source.md`）。
+- 更新日は公開日より後のときだけ出す。meta 行が空になった特集では、部品が見出しまわりの最後の行になり、下の余白が meta 行と同じになる（`.nb-byline--end`）。
+- 狭い画面では「（現役の飲食店マネージャー）」が1つのかたまりで折り返す（`.nb-byline-note`）。
+
 ---
 
 ## 5. 新規ページの雛形
