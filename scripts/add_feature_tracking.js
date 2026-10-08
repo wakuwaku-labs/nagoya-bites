@@ -9,11 +9,15 @@
 //   - feature_store_click : stores/J*.html への内部リンク
 //   - internal_link_click : .related-links 内の特集リンク（block:'feature_related'）
 //   - scroll_depth   : 25/50/75/100% 到達（特集ページで未測定）
+//   - 予約送客の語彙統一（ISSUE-149）: 旧形式 cta_click{store,feature,target} を
+//     nbReserveExit 経由の cta_click{store_name,store_id,link_domain,location,feature} に書き換え、
+//     予約申告プロンプト（scripts/lib/reservation_ask_snippet.js）を </body> 直前に入れる
 //
 // 運用: --check で違反ゼロ確認（機械検査）、引数なしで修正適用（冪等）
 //   node scripts/add_feature_tracking.js [--check] [--only <slug>]
 
 'use strict';
+const { applyToHtml: applyReserveAsk } = require('./lib/reservation_ask_snippet');
 
 const fs = require('fs');
 const path = require('path');
@@ -44,6 +48,17 @@ const SCROLL_DEPTH_SCRIPT = `<script class="nb-engagement-tracking">
 })();
 </script>`;
 
+// ホットペッパーID ⇔ 店名（旧形式は store に ID か店名のどちらかを入れていた）
+const STORES = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'stores.json'), 'utf8')); } catch (e) { return []; } })();
+const NAME_BY_ID = new Map(STORES.filter(s => s['ホットペッパーID']).map(s => [s['ホットペッパーID'], s['店名'] || '']));
+const ID_BY_NAME = new Map(STORES.filter(s => s['ホットペッパーID']).map(s => [s['店名'], s['ホットペッパーID']]));
+function jsq(v) { return String(v || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/\\/g, '\\\\').replace(/'/g, "\\'"); }
+function reserveExitCall(name, id, slug) {
+  return `(window.nbReserveExit||trackEvent)('cta_click',{store_name:'${jsq(name)}',store_id:'${jsq(id)}',link_domain:'www.hotpepper.jp',location:'feature',feature:'${slug}'})`;
+}
+// 旧形式の store:'…' の中身（\' でエスケープ済み）を素の文字列に戻す
+function unq(v) { return String(v).replace(/\\'/g, "'").replace(/\\\\/g, '\\'); }
+
 // アンカーに onclick を追加（既存がなければ）
 function addOnclick(tag, eventCall) {
   // すでに onclick があれば変更しない
@@ -71,12 +86,20 @@ function processFile(fpath) {
   let html = fs.readFileSync(fpath, 'utf8');
   const original = html;
 
-  // ── 1. hotpepper.jp リンクに cta_click を付与 ──
+  // ── 1. hotpepper.jp リンクに予約送客の cta_click を付与 ──
   html = html.replace(/<a\s+([^>]*href=["']https?:\/\/(?:www\.)?hotpepper\.jp\/str(J\w+)[^"']*["'][^>]*)>/gi, (match, attrs, id) => {
-    if (/\bcta_click\b/.test(attrs)) return match; // 既存
-    const storeJs = id;
-    const eventCall = `trackEvent('cta_click',{store:'${storeJs}',feature:'${slug}',target:'hotpepper'})`;
-    return match.replace(/>$/, ` onclick="${eventCall}">`);
+    if (/\bcta_click\b/.test(attrs)) return match; // 既存（旧形式は 1b で書き換える）
+    if (/\bonclick=/i.test(attrs)) return match;
+    return match.replace(/>$/, ` onclick="${reserveExitCall(NAME_BY_ID.get(id) || '', id, slug)}">`);
+  });
+
+  // ── 1b. 旧形式 trackEvent('cta_click',{store:'…',feature:'…',target:'hotpepper'}) を書き換え（ISSUE-149） ──
+  html = html.replace(/trackEvent\('cta_click',\{store:'((?:\\'|[^'])*)',feature:'([^']*)',target:'hotpepper'\}\)/g, (m, store, feat) => {
+    const v = unq(store);
+    const isId = /^J\d+$/.test(v);
+    const name = isId ? (NAME_BY_ID.get(v) || '') : v.replace(/&amp;/g, '&').replace(/&quot;/g, '"');
+    const id = isId ? v : (ID_BY_NAME.get(name) || '');
+    return reserveExitCall(name, id, feat || slug);
   });
 
   // ── 2. stores/J*.html リンクに feature_store_click を付与 ──
@@ -99,6 +122,9 @@ function processFile(fpath) {
     });
     return open + newInner + close;
   });
+
+  // ── 4a. 予約申告プロンプト（予約導線を持つ特集だけ） ──
+  if (/hotpepper\.jp\/str|nbReserveExit/.test(html)) html = applyReserveAsk(html);
 
   // ── 4. scroll_depth がなければ </body> 直前に挿入 ──
   if (!html.includes('scroll_depth')) {

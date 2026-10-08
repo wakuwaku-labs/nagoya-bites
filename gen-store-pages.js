@@ -57,6 +57,7 @@ const trustDisplay = require('./scripts/lib/trust_display');
 const { placesKey } = require('./scripts/lib/places_key');
 const sitemapLastmod = require('./scripts/lib/sitemap_lastmod');
 const { gaSnippet } = require('./scripts/lib/ga_snippet');
+const { RESERVE_ASK_SCRIPT } = require('./scripts/lib/reservation_ask_snippet');
 const TRUST_POLICY = trustDisplay.loadPolicy();
 const CROSSCHECK = (() => {
   try {
@@ -68,6 +69,16 @@ const CROSSCHECK = (() => {
 
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+// onclick="f('…')" の JS 文字列に入れる値。属性の中では &#39; が ' に戻るため、先に JS 側で ' と \ を逃がす
+function jsAttr(str) {
+  return escapeHtml(String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'"));
+}
+
+// 予約送客の onclick（ISSUE-149・語彙は scripts/lib/reservation_exits.js）
+function reserveExitAttr(eventName, name, storeId, linkDomain) {
+  return `nbReserveExit('${eventName}',{store_name:'${jsAttr(name)}',store_id:'${jsAttr(storeId)}',link_domain:'${linkDomain}',location:'store_page'})`;
 }
 
 // 店舗ページに「なぜこの段階なのか」を検証項目ごとの観測事実付きで表示する。
@@ -796,13 +807,13 @@ ${igAllUrls.map((_, i) => `        <span class="ig-carousel-dot${i === 0 ? ' act
 
   const tagPills = tags.map(t => `<span class="tag">${t}</span>`).join('');
   const linksHtml = [
-    hpUrl && `<a class="link-btn hp" href="${hpUrl}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_click',{link_url:this.href})">ホットペッパーで予約</a>`,
+    hpUrl && `<a class="link-btn hp" href="${hpUrl}" target="_blank" rel="noopener noreferrer" onclick="${reserveExitAttr('cta_click', name, hpId, 'www.hotpepper.jp')}">ホットペッパーで予約</a>`,
     gmUrl && `<a class="link-btn gm" href="${gmUrl}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href})">Googleマップ</a>`,
     igUrl && `<a class="link-btn ig" href="${igUrl}" target="_blank" rel="noopener noreferrer">Instagram</a>`,
-    tbUrl && `<a class="link-btn tb" href="${tbUrl}" target="_blank" rel="noopener noreferrer">食べログ</a>`,
+    tbUrl && `<a class="link-btn tb" href="${tbUrl}" target="_blank" rel="noopener noreferrer" onclick="${reserveExitAttr('cta_click', name, hpId || placeId, 'tabelog.com')}">食べログ</a>`,
     tkUrl && tkUrl !== '#' && `<a class="link-btn tk" href="${tkUrl}" target="_blank" rel="noopener noreferrer">TikTok</a>`,
     xUrl  && xUrl  !== '#' && `<a class="link-btn xx" href="${xUrl}" target="_blank" rel="noopener noreferrer">X</a>`,
-    (!hpId && !tbUrl && placeId) && `<button type="button" class="link-btn tel" onclick="nbCallStore(event,'${escapeHtml(placeId)}','${escapeHtml(name)}',this)" aria-label="${escapeHtml(name)}に電話する"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;fill:currentColor;flex-shrink:0"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg><span>電話する</span></button>`,
+    (!hpId && !tbUrl && placeId) && `<button type="button" class="link-btn tel" onclick="nbCallStore(event,'${jsAttr(placeId)}','${jsAttr(name)}',this)" aria-label="${escapeHtml(name)}に電話する"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;fill:currentColor;flex-shrink:0"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg><span>電話する</span></button>`,
   ].filter(Boolean).join('\n    ');
 
   return `<!DOCTYPE html>
@@ -1053,9 +1064,10 @@ var NB_PHONE_MEM={};
 function nbCallTapAllowed(){try{var key='nb_call_taps_'+new Date().toISOString().slice(0,10);var n=parseInt(localStorage.getItem(key)||'0',10);if(n>=20)return false;localStorage.setItem(key,String(n+1));return true;}catch(e){return true;}}
 function nbCallBtnMsg(btn,msg){var span=btn.querySelector('span');if(span)span.textContent=msg;else btn.setAttribute('aria-label',msg);}
 function nbCallBtnReset(btn){btn.disabled=false;nbCallBtnMsg(btn,'電話する');btn.setAttribute('aria-label',(btn.getAttribute('data-store-name')||'')+'に電話する');}
-function nbCallStore(ev,placeId,storeName,btn){ev.stopPropagation();if(!placeId||!btn||btn.disabled)return;btn.setAttribute('data-store-name',storeName);if(typeof trackEvent==='function')trackEvent('cta_call_click',{store_name:storeName});if(NB_PHONE_MEM[placeId]){location.href='tel:'+NB_PHONE_MEM[placeId];return;}if(!nbCallTapAllowed()){nbCallBtnMsg(btn,'本日の上限です');setTimeout(function(){nbCallBtnReset(btn);},2500);return;}btn.disabled=true;nbCallBtnMsg(btn,'確認中…');nbLoadMapsJs().then(function(){var svc=new google.maps.places.PlacesService(document.createElement('div'));svc.getDetails({placeId:placeId,fields:['international_phone_number']},function(place,status){if(status===google.maps.places.PlacesServiceStatus.OK&&place&&place.international_phone_number){var tel=place.international_phone_number.replace(/[^\\d+]/g,'');NB_PHONE_MEM[placeId]=tel;nbCallBtnReset(btn);location.href='tel:'+tel;}else{nbCallBtnMsg(btn,'電話番号なし');btn.disabled=false;setTimeout(function(){nbCallBtnReset(btn);},2500);}});}).catch(function(){nbCallBtnMsg(btn,'通信エラー');btn.disabled=false;setTimeout(function(){nbCallBtnReset(btn);},2500);});}
+function nbCallStore(ev,placeId,storeName,btn){ev.stopPropagation();if(!placeId||!btn||btn.disabled)return;btn.setAttribute('data-store-name',storeName);if(typeof nbReserveExit==='function')nbReserveExit('cta_call_click',{store_name:storeName,store_id:placeId,link_domain:'tel',location:'store_page'});else if(typeof trackEvent==='function')trackEvent('cta_call_click',{store_name:storeName});if(NB_PHONE_MEM[placeId]){location.href='tel:'+NB_PHONE_MEM[placeId];return;}if(!nbCallTapAllowed()){nbCallBtnMsg(btn,'本日の上限です');setTimeout(function(){nbCallBtnReset(btn);},2500);return;}btn.disabled=true;nbCallBtnMsg(btn,'確認中…');nbLoadMapsJs().then(function(){var svc=new google.maps.places.PlacesService(document.createElement('div'));svc.getDetails({placeId:placeId,fields:['international_phone_number']},function(place,status){if(status===google.maps.places.PlacesServiceStatus.OK&&place&&place.international_phone_number){var tel=place.international_phone_number.replace(/[^\\d+]/g,'');NB_PHONE_MEM[placeId]=tel;nbCallBtnReset(btn);location.href='tel:'+tel;}else{nbCallBtnMsg(btn,'電話番号なし');btn.disabled=false;setTimeout(function(){nbCallBtnReset(btn);},2500);}});}).catch(function(){nbCallBtnMsg(btn,'通信エラー');btn.disabled=false;setTimeout(function(){nbCallBtnReset(btn);},2500);});}
 </script>
-` : ''}</body>
+` : ''}${RESERVE_ASK_SCRIPT}
+</body>
 </html>`;
 }
 

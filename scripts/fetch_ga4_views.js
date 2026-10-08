@@ -27,20 +27,9 @@ const LOOKBACK   = parseInt(process.env.GA4_LOOKBACK_DAYS || '30', 10);
 const OUT_PATH   = path.join(__dirname, '..', 'data', 'view_counts.json');
 const METRICS_OUT_PATH = path.join(__dirname, '..', 'data', 'site_metrics.json');
 
-// 「予約につながった」と数えるリンク先ドメイン。
-// 掲載店は Hot Pepper 未掲載の店も多く（手動キュレーション店は予約が食べログ/公式のみ）、
-// hotpepper.jp だけを数えると予約導線の実力を過小評価する。
-const RESERVATION_DOMAINS = [
-  'hotpepper.jp',
-  'tabelog.com',
-  'tablecheck.com',
-  'ebica.jp',
-  'toreta.in',
-  'opentable',
-  'ikyu.com',
-  'gurunavi.com',
-  'retty.me',
-];
+// 「予約につながった」と数えるリンク先ドメインは scripts/lib/reservation_exits.js が正本（ISSUE-149）。
+const { isReservationDomain, aggregateStoreReferrals, EXIT_EVENTS, REPORT_EVENTS, DEFINITIONS: REFERRAL_DEFINITIONS } = require('./lib/reservation_exits');
+const REFERRALS_OUT_PATH = path.join(__dirname, '..', 'data', 'store_referrals.json');
 
 // 良し悪しの目安（地域グルメメディアの素人判断用ベンチマーク）
 const BENCHMARKS = {
@@ -103,6 +92,13 @@ async function main() {
   fs.writeFileSync(OUT_PATH, JSON.stringify(out, null, 2));
   console.log(`view_counts.json 更新: ${Object.keys(counts).length} 店舗 / 合計 ${total} イベント`);
 
+  // 店舗別の予約送客（ISSUE-149）。失敗しても modal_open 集計は確定済みなので握りつぶす。
+  try {
+    await fetchStoreReferrals(analyticsdata);
+  } catch (e) {
+    console.error('store_referrals 集計エラー（既存ファイルは維持）:', e.message);
+  }
+
   // サイト全体メトリクス（PV/UU/セッション/流入元/トップページ）は別レポート。
   // ここで失敗しても modal_open 集計（上記）は確定済みなので握りつぶす。
   try {
@@ -120,6 +116,50 @@ async function main() {
       }, null, 2));
     }
   }
+}
+
+// 店舗別・経路別の予約送客と予約申告（ISSUE-149）→ data/store_referrals.json
+// 数え方の定義は scripts/lib/reservation_exits.js。予約成立は観測できないので持たない。
+async function fetchStoreReferrals(analyticsdata) {
+  const eventNames = [...EXIT_EVENTS, ...Object.keys(REPORT_EVENTS)];
+  const run = async (startDate) => {
+    const res = await analyticsdata.properties.runReport({
+      property: `properties/${PROPERTY}`,
+      requestBody: {
+        dimensions: [{ name: 'eventName' }, { name: 'customEvent:store_name' }, { name: 'customEvent:link_domain' }],
+        metrics: [{ name: 'eventCount' }],
+        dimensionFilter: { filter: { fieldName: 'eventName', inListFilter: { values: eventNames } } },
+        dateRanges: [{ startDate, endDate: 'today' }],
+        limit: '10000',
+      },
+    });
+    return (res.data.rows || []).map(row => ({
+      event: row.dimensionValues[0].value,
+      store: row.dimensionValues[1].value,
+      domain: row.dimensionValues[2].value,
+      count: row.metricValues[0].value,
+    }));
+  };
+  const last30 = aggregateStoreReferrals(await run(`${LOOKBACK}daysAgo`));
+  // 当月（JST）の累計。月初は 1 日分しか無いので、店へ見せる数字は月が閉じてから使う
+  const jst = new Date(Date.now() + 9 * 3600 * 1000);
+  const monthStart = `${jst.getUTCFullYear()}-${String(jst.getUTCMonth() + 1).padStart(2, '0')}-01`;
+  const month = aggregateStoreReferrals(await run(monthStart));
+  const monthByStore = new Map(month.stores.map(s => [s.store_name, s]));
+  const out = {
+    generatedAt: new Date().toISOString(),
+    lookbackDays: LOOKBACK,
+    definitions: REFERRAL_DEFINITIONS,
+    totals: last30.totals,
+    unattributedExits: last30.unattributedExits,
+    month: { start: monthStart, totals: month.totals },
+    stores: last30.stores.map(s => {
+      const m = monthByStore.get(s.store_name);
+      return { ...s, thisMonth: { exits: m ? m.exits.total : 0, reportsYes: m ? m.reports.yes : 0 } };
+    }),
+  };
+  fs.writeFileSync(REFERRALS_OUT_PATH, JSON.stringify(out, null, 2));
+  console.log(`store_referrals.json 更新: ${out.stores.length} 店舗 / 送客 ${out.totals.exits.total} / 予約申告 ${out.totals.reports.yes}`);
 }
 
 // 流入元を organic / direct / social / ai_assistant / referral / other に分類
@@ -409,7 +449,7 @@ async function fetchSiteMetrics(analyticsdata) {
       // 予約系ドメインだけを記事単位で合算（＝「予約につながった数」の本体）
       const byPathRes = {};
       for (const r of rows) {
-        if (!RESERVATION_DOMAINS.some(d => r.domain.includes(d))) continue;
+        if (!isReservationDomain(r.domain)) continue;
         byPathRes[r.path] = (byPathRes[r.path] || 0) + r.clicks;
       }
       cta.reservationClicksByPage = Object.entries(byPathRes)

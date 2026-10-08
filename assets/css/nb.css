@@ -348,3 +348,12 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 @media(max-width:640px){.nb-toc ol{columns:1;}}
 
 .nb-note{font-size:var(--fs-xs);line-height:var(--lh-ui);color:var(--dim);}
+
+/* ── 予約申告プロンプト（ISSUE-149・scripts/lib/reservation_ask_snippet.js が出す） ── */
+.nb-reserve-ask{position:fixed;left:var(--sp-4);right:var(--sp-4);bottom:calc(var(--sp-4) + env(safe-area-inset-bottom));z-index:10000;max-width:420px;margin:0 auto;padding:var(--sp-4) var(--sp-5);background:var(--surface);color:var(--text);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:var(--r-md);box-shadow:0 8px 24px rgba(0,0,0,.14);font-family:var(--font-body);}
+.nb-reserve-ask-q{margin:0 var(--sp-6) var(--sp-1) 0;font-size:var(--fs-sm);font-weight:600;line-height:var(--lh-ui);color:var(--ink);}
+.nb-reserve-ask-note{margin:0 0 var(--sp-3);font-size:var(--fs-xs);line-height:var(--lh-ui);color:var(--dim);}
+.nb-reserve-ask-actions{display:flex;gap:var(--sp-2);}
+.nb-reserve-ask-btn{flex:1;min-height:var(--tap-min);padding:0 var(--sp-4);font-family:var(--font-body);font-size:var(--fs-sm);font-weight:500;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;}
+.nb-reserve-ask-btn.is-yes{background:var(--gold);border-color:var(--gold);color:var(--bg);}
+.nb-reserve-ask-close{position:absolute;top:var(--sp-1);right:var(--sp-1);width:var(--tap-min);height:var(--tap-min);border:0;background:transparent;color:var(--dim);font-size:var(--fs-lg);line-height:1;cursor:pointer;}

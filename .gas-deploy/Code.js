@@ -120,7 +120,9 @@ function sendWeeklyReport() {
   const startDate = getDateStr(-SETTLED_LAG_DAYS - 6);
   const data = fetchGA4Report(startDate, endDate);
   const prevData = fetchGA4Report(getDateStr(-SETTLED_LAG_DAYS - 13), getDateStr(-SETTLED_LAG_DAYS - 7));
-  const report = formatWeeklyReport(data, prevData, startDate, endDate);
+  let referrals = null;
+  try { referrals = fetchStoreReferrals(startDate, endDate); } catch (e) { Logger.log('店舗別送客の取得に失敗: ' + e.message); }
+  const report = formatWeeklyReport(data, prevData, startDate, endDate, referrals);
 
   sendLineMessage(report);
   if (REPORT_EMAIL) {
@@ -1042,8 +1044,48 @@ function formatDailyReport(data, date) {
   return msg;
 }
 
+// ─── 店舗別の予約送客と予約申告（ISSUE-149） ───
+// 数え方の正本はリポジトリの scripts/lib/reservation_exits.js（GAS は require できないので複製）。
+// 送客 = cta_click / cta_reserve / cta_call_click（outbound_click は同じクリックが二重に届くので使わない）。
+// link_domain の無い旧送信はホットペッパー扱い。申告 = reserve_report_yes / no（自己申告・下限）。
+function fetchStoreReferrals(startDate, endDate) {
+  const res = AnalyticsData.Properties.runReport({
+    dateRanges: [{ startDate: startDate, endDate: endDate }],
+    metrics: [{ name: 'eventCount' }],
+    dimensions: [{ name: 'eventName' }, { name: 'customEvent:store_name' }, { name: 'customEvent:link_domain' }],
+    dimensionFilter: {
+      andGroup: {
+        expressions: [
+          HOST_FILTER,
+          { filter: { fieldName: 'eventName', inListFilter: { values: ['cta_click', 'cta_reserve', 'cta_call_click', 'reserve_report_yes', 'reserve_report_no'] } } },
+        ],
+      },
+    },
+    limit: 5000,
+  }, 'properties/' + GA4_PROPERTY_ID);
+  const byStore = {};
+  let yes = 0, no = 0;
+  (res.rows || []).forEach(function (row) {
+    const ev = row.dimensionValues[0].value;
+    const store = row.dimensionValues[1].value;
+    const dom = String(row.dimensionValues[2].value || '').toLowerCase();
+    const n = parseInt(row.metricValues[0].value, 10) || 0;
+    if (ev === 'reserve_report_yes') { yes += n; return; }
+    if (ev === 'reserve_report_no') { no += n; return; }
+    if (!store || store === '(not set)') return;
+    const ch = ev === 'cta_call_click' || dom === 'tel' ? 'tel'
+      : dom.indexOf('tabelog.com') >= 0 ? 'tb'
+      : (!dom || dom === '(not set)' || dom.indexOf('hotpepper.jp') >= 0) ? 'hp' : 'other';
+    const s = byStore[store] || (byStore[store] = { name: store, hp: 0, tb: 0, tel: 0, other: 0, total: 0 });
+    s[ch] += n; s.total += n;
+  });
+  const top = Object.keys(byStore).map(function (k) { return byStore[k]; })
+    .sort(function (a, b) { return b.total - a.total; }).slice(0, 3);
+  return { top: top, yes: yes, no: no };
+}
+
 // ─── 週次レポート フォーマット（素人向け） ───
-function formatWeeklyReport(data, prevData, startDate, endDate) {
+function formatWeeklyReport(data, prevData, startDate, endDate, referrals) {
   const t = data.totals;
   const pt = prevData.totals;
   const a = analyze(data);
@@ -1083,6 +1125,19 @@ function formatWeeklyReport(data, prevData, startDate, endDate) {
     if (a.callCount)  msg += '📞 電話ボタン: ' + a.callCount + '回\n';
     if (a.outboundInfoCount) msg += '🔗 情報到達（マップ・Instagram等）: ' + a.outboundInfoCount + '回\n';
     if (a.gmapCount)  msg += '🗺 マップ: ' + a.gmapCount + '回\n';
+  }
+
+  // ISSUE-149: 送客上位の店と予約申告（予約成立は計測できないので出さない）
+  if (referrals && (referrals.top.length || referrals.yes || referrals.no)) {
+    msg += '\n【予約送客 上位の店】\n';
+    referrals.top.forEach(function (s) {
+      const parts = [];
+      if (s.hp) parts.push('HP' + s.hp);
+      if (s.tb) parts.push('食べログ' + s.tb);
+      if (s.tel) parts.push('電話' + s.tel);
+      msg += '・' + s.name + ' ' + s.total + '回（' + parts.join('・') + '）\n';
+    });
+    msg += '🙋 予約申告: 予約した ' + referrals.yes + '件 ／ していない ' + referrals.no + '件（自己申告・下限）\n';
   }
 
   if (data.sources.length > 0) {
