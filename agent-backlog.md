@@ -83,7 +83,7 @@
 
 ### [SEO-119] 栄エリア7店のアクセス文から県外の駅名を除く
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data-quality / SEO
 - **owner**: DataKeeper
@@ -99,7 +99,7 @@
   - **次のビルドで戻らないように**: `data/closed_stores.json` の ID 一致で `build.js` が最終除外する。新たな混入は [[SEO-120]] の監査が夜間QAで検出する
   - **特集**: 串っ子が焼き鳥特集2本の1位・FAQ「名古屋で一番おすすめの焼き鳥店は？」の答え（評価4.8＝別店の値）・予約困難店特集に、のんきが hard-to-book に載っていた。`refresh_feature_rosters.js --only` と `add_feature_top_cta.js --slug` で3本を作り直し、手書き部分（meta description・FAQ・業態カード・価格表）と nagoya-reservation-difficult のカードを直した。`data/editor_picks.json` の串っ子も外した
   - **名古屋の店だった2店**: 焼肉ふじなが（北区上飯田西町・「飯田駅」は上飯田駅の誤記とみられる）は監査の例外 `data/station_audit_exceptions.json` へ。和食さと 猪子石店（千種区京命）はホットペッパー側のアクセス文「新羽島駅徒歩7分」が誤りのため `data/access_corrections.json` で空欄にする（`build.js` が適用・取り込み元が直れば自動で外れる）
-  - **残り**: 合流後の CI 再生成で `grep -rlE '釧路駅|神田\(東京\)' stores/*.html stores/area` が 0 件になることを確かめて done にする
+  - **CI 再生成後（2026-10-09）**: ハブ・index.html・特集・記事から23店への参照が消え、`data/stores.json` からも外れたことを確認。店舗ページ23本は孤児として残っていた（CI は `--redirect-orphans` だけで削除はしない）ため、`scripts/lib/store_orphans.js` の判定で23本すべてが「削除対象」（誘導先なし・保留条件なし）であることを確かめて削除した。`grep -rlE '釧路駅|神田\(東京\)' stores/*.html stores/area` は 0 件。ほかの削除対象28本は確かめていないので月次レビューに残す
 
 ### [SEO-120] アクセス文の駅名が愛知県内の駅かを検査する監査を足す
 
@@ -467,7 +467,7 @@
 
 ### [ISSUE-146] 孤児ページの一覧を CI のコミット対象に入れ、手元のデザイン監査の誤検知をなくす
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
 - **detected**: 2026-10-09
 - **category**: ci / qa
 - **owner**: Builder
@@ -477,6 +477,7 @@
 - **acceptance**:
   1. build.yml のコミット対象に `data/store_page_orphans.json` を足す
   2. 合流後、手元の main で `node scripts/audit_design_system.js --check --sample 200` が exit 0
+- **結果（2026-10-09）**: build.yml のコミット対象に `data/store_page_orphans.json` を足した。手元の一覧を `node gen-store-pages.js --dry-run --check-orphans` で作り直し（孤児113・誘導ページ99）、`node scripts/audit_design_system.js --check --sample 200` が exit 0 になることを確認
 
 ---
 
