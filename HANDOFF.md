@@ -15,13 +15,14 @@ status: in_progress
   - #410 SEO-117（GSC を指標履歴へ・`track_metrics.js --north-star`）
   - #411 SEO-121（lastmod を内容が変わった日に・build.js の sitemap 書き出し停止・robots→sitemap.xml・news 削除）
   - #412 SEO-119 残り（孤児23本削除）＋ ISSUE-146（孤児一覧を CI のコミット対象へ）
-- Linear: P-115/P-116/P-138/P-113/P-140 は Done（結果コメントつき）。P-117（SEO-121）は In Progress で、本番確認待ち
-- 起票: ISSUE-147（P-142・Places の古い誤紐付け・オーナー承認が要る）／ISSUE-148（P-143・スプレッドシート経由の住所検査）
+  - #413 SEO-135（llms.txt にハブの全階層・数値の出典と更新日・sitemap.xml）
+- Linear: P-115/P-116/P-138/P-113/P-140/P-131 は Done（結果コメントつき）。P-117（SEO-121）は In Progress で、本番確認待ち
+- 起票: ISSUE-147（P-142・Places の古い誤紐付け・オーナー承認が要る）／ISSUE-148（P-143・スプレッドシート経由の住所検査）／SEO-142（P-144・sameAs。公式アカウントの URL をオーナーが示すまで待ち）
 
 # 次にやること
 1. SEO-121 の本番確認: 次の build.yml の後に `node scripts/audit_sitemap_health.js --lastmod-only --check` が exit 0 → backlog done・P-117 Done
 2. SEO-115 の残り: 10-09 06:00 の夜間QA（inline-js）と `data/site_metrics.json` の topPages に /stores/ が出るか → done・P-112 Done
-3. 順に実装: SEO-135 llms.txt・sameAs → SEO-136 IndexNow 対象拡大 → SEO-138 GA スニペット1本化 → SEO-139 aggregateRating・SearchAction → SEO-127 banquet 季節リード → SEO-131 特集の日付・署名 → SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック
+3. 順に実装: SEO-136 IndexNow 対象拡大 → SEO-138 GA スニペット1本化 → SEO-139 aggregateRating・SearchAction → SEO-127 banquet 季節リード → SEO-131 特集の日付・署名 → SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック
 4. 夜間QA の station-names が緑で続いたら hard に上げる
 
 対象外（理由）:
