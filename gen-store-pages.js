@@ -55,6 +55,7 @@ function hubUrlFor(area, genre) {
 // score/max/reason/observed と reviewTrust（段階・見出し・検証カバー率）を持つ。
 const trustDisplay = require('./scripts/lib/trust_display');
 const { placesKey } = require('./scripts/lib/places_key');
+const sitemapLastmod = require('./scripts/lib/sitemap_lastmod');
 const TRUST_POLICY = trustDisplay.loadPolicy();
 const CROSSCHECK = (() => {
   try {
@@ -1032,65 +1033,74 @@ function nbCallStore(ev,placeId,storeName,btn){ev.stopPropagation();if(!placeId|
 // ================================================================
 // sitemap.xml 生成
 // ================================================================
-function buildSitemap(slugs) {
+// SEO-121: lastmod は実際に内容が変わった日（scripts/lib/sitemap_lastmod.js の方針）。
+//   店舗ページ … storeLastmod（生成した HTML が前回のファイルと違えば当日・同じなら前回の lastmod）
+//   特集・記事 … JSON-LD の dateModified → datePublished（記事はファイル名の日付も可）
+//   一覧ページ … 配下のページの lastmod の最大値。about.html など日付の取れないページは書かない
+function buildSitemap(slugs, storeLastmod = new Map()) {
   const today = new Date().toISOString().slice(0, 10);
+  const L = sitemapLastmod;
+  const storeDates = slugs.map(slug => L.clampToday(storeLastmod.get(slug), today) || today);
 
   // store pages
-  const storeUrls = slugs.map(slug =>
-    `  <url>\n    <loc>${BASE_URL}/stores/${slug}.html</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`
+  const storeUrls = slugs.map((slug, i) =>
+    `  <url>\n    <loc>${BASE_URL}/stores/${slug}.html</loc>${L.lastmodLine(storeDates[i])}\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>`
   ).join('\n');
+  const readDate = (dir, f, fallback) => {
+    try { return L.clampToday(L.articleLastmod(fs.readFileSync(path.join(dir, f), 'utf8'), fallback), today); } catch (_) { return null; }
+  };
 
   // features/ articles (exclude index.html)
   const featuresDir = path.join(__dirname, 'features');
-  const featureUrls = fs.existsSync(featuresDir)
-    ? fs.readdirSync(featuresDir)
-        .filter(f => /^[^_].*\.html$/.test(f) && f !== 'index.html')
-        .sort()
-        .map(f => `  <url>\n    <loc>${BASE_URL}/features/${f}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>\n  </url>`)
-        .join('\n')
-    : '';
+  const featureFiles = fs.existsSync(featuresDir)
+    ? fs.readdirSync(featuresDir).filter(f => /^[^_].*\.html$/.test(f) && f !== 'index.html').sort()
+    : [];
+  const featureDates = featureFiles.map(f => readDate(featuresDir, f, null));
+  const featureUrls = featureFiles
+    .map((f, i) => `  <url>\n    <loc>${BASE_URL}/features/${f}</loc>${L.lastmodLine(featureDates[i])}\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>\n  </url>`)
+    .join('\n');
 
   // journal/ articles (exclude index.html, _template.html, and feed files)
   const journalDir = path.join(__dirname, 'journal');
-  const journalUrls = fs.existsSync(journalDir)
-    ? fs.readdirSync(journalDir)
-        .filter(f => /^\d{4}-\d{2}-\d{2}.*\.html$/.test(f))
-        .sort().reverse()
-        .map(f => `  <url>\n    <loc>${BASE_URL}/journal/${f}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>`)
-        .join('\n')
-    : '';
+  const journalFiles = fs.existsSync(journalDir)
+    ? fs.readdirSync(journalDir).filter(f => /^\d{4}-\d{2}-\d{2}.*\.html$/.test(f)).sort().reverse()
+    : [];
+  const journalDates = journalFiles.map(f => readDate(journalDir, f, f.slice(0, 10)));
+  const journalUrls = journalFiles
+    .map((f, i) => `  <url>\n    <loc>${BASE_URL}/journal/${f}</loc>${L.lastmodLine(journalDates[i])}\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>`)
+    .join('\n');
+  const featuresIndexDate = L.maxDate(featureDates);
+  const journalIndexDate = L.maxDate(journalDates);
+  const storesIndexDate = L.maxDate(storeDates);
+  const homeDate = L.maxDate([featuresIndexDate, journalIndexDate, storesIndexDate]);
+  const aboutDate = readDate(__dirname, 'about.html', null);
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>${BASE_URL}/</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${BASE_URL}/</loc>${L.lastmodLine(homeDate)}
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>${BASE_URL}/about.html</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${BASE_URL}/about.html</loc>${L.lastmodLine(aboutDate)}
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>${BASE_URL}/features/</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${BASE_URL}/features/</loc>${L.lastmodLine(featuresIndexDate)}
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 ${featureUrls}
   <url>
-    <loc>${BASE_URL}/journal/</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${BASE_URL}/journal/</loc>${L.lastmodLine(journalIndexDate)}
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 ${journalUrls}
   <url>
-    <loc>${BASE_URL}/stores/</loc>
-    <lastmod>${today}</lastmod>
+    <loc>${BASE_URL}/stores/</loc>${L.lastmodLine(storesIndexDate)}
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -1248,20 +1258,33 @@ async function main() {
   // SEO-106: 掲載特集の逆引き（features/*.html の実在掲載のみ・index.html カードと同じ照合）
   const featureStoreMap = require('./scripts/lib/feature_store_match').buildFeatureStoreMap(slugged.map(x => x.store));
 
+  // SEO-121: 前回の sitemap の lastmod を引き継ぐ。生成した HTML が前回のファイルと同じ店は前回の日付のまま、
+  // 違う店（＝内容が変わった店）だけ当日にする。同じ内容のファイルは書き直さない
+  const runDate = new Date().toISOString().slice(0, 10);
+  let prevLastmod = new Map();
+  try { prevLastmod = sitemapLastmod.readSitemapLastmods(fs.readFileSync(SITEMAP_OUT, 'utf8')); } catch (_) { /* 初回は全件当日 */ }
+  const storeLastmod = new Map();
+  let unchangedPages = 0;
   for (const { store: s, slug } of slugged) {
     slugs.push(slug);
     const relatedStores = buildRelatedStores(s, slugged, slug);
     const html = renderStorePage(s, slug, relatedStores, featureStoreMap.get(s) || []);
-    if (!DRY_RUN) fs.writeFileSync(path.join(OUT_DIR, `${slug}.html`), html, 'utf8');
+    const outFile = path.join(OUT_DIR, `${slug}.html`);
+    let prevHtml = null;
+    try { prevHtml = fs.readFileSync(outFile, 'utf8'); } catch (_) { /* 新しい店 */ }
+    const changed = prevHtml !== html;
+    storeLastmod.set(slug, changed ? runDate : (prevLastmod.get(`${BASE_URL}/stores/${slug}.html`) || runDate));
+    if (changed && !DRY_RUN) fs.writeFileSync(outFile, html, 'utf8');
+    if (!changed) unchangedPages++;
     generated++;
     if (generated % 100 === 0) process.stdout.write(`\r  ${generated}件生成済み...`);
   }
 
-  console.log(`\n\n店舗ページ生成完了: ${generated}件 (スキップ: ${skipped}件)`);
+  console.log(`\n\n店舗ページ生成完了: ${generated}件 (スキップ: ${skipped}件・内容が変わらず書き換えなし: ${unchangedPages}件)`);
 
   // sitemap.xml 更新（テストモード/DRY-RUN ではスキップ）
   if (!TEST_MODE && !DRY_RUN) {
-    const sitemapXml = buildSitemap(slugs);
+    const sitemapXml = buildSitemap(slugs, storeLastmod);
     fs.writeFileSync(SITEMAP_OUT, sitemapXml, 'utf8');
     const sitemapUrlCount = (sitemapXml.match(/<url>/g) || []).length;
     console.log(`sitemap.xml 更新完了: ${sitemapUrlCount}件のURL（stores:${slugs.length} + features/journal/main含む）`);
@@ -1350,4 +1373,4 @@ if (require.main === module) {
   main().catch(err => { console.error('エラー:', err); process.exit(1); });
 }
 
-module.exports = { renderStorePage, toSlug, buildRelatedStores };
+module.exports = { renderStorePage, toSlug, buildRelatedStores, buildSitemap };
