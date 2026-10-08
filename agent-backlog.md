@@ -450,7 +450,7 @@
 
 ### [ISSUE-145] Linear 同期が課題200件で止まる上限を外す
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: ops / tooling
 - **owner**: Builder
@@ -461,6 +461,7 @@
   1. 一覧の取得を全件にする（`--limit` を省くか、ページングする）
   2. 不完全な一覧では同期しない安全装置は残す
   3. 200 件を超える一覧を模したテストを足し、既存テストを通す
+- **結果（2026-10-09）**: `scripts/sync_backlog_to_linear.js` の一覧取得を `listAllIssues()` にした。`--limit` を付けずに全件を取り（Orca CLI は省略で全件を返す・実測142件で約560KB を1回で取得）、それでも `hasMore` が返れば `meta.nextCursor` で続きを辿る。続きを辿れない一覧・`partial`／`workspaceErrors` のある一覧・50ページで終わらない一覧では同期しない（安全装置は維持して強化）。出力の上限を 4MB→64MB にした（4MB では約1,000件で溢れる）。テスト `tests/linear_sync_listing.test.js`（250件を1回で取得・430件を3ページで連結・cursor 無しの打ち切り・partial・ページ上限の5件）。実データの dry-run で差分が P-36（既知の除外）だけであることを確認
 
 ### [ISSUE-146] 孤児ページの一覧を CI のコミット対象に入れ、手元のデザイン監査の誤検知をなくす
 

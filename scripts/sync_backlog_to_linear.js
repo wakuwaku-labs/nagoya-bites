@@ -77,11 +77,35 @@ function descriptionFor(md, task) {
 }
 
 function readJson(args) {
-  const run = spawnSync('orca', args, { encoding: 'utf8', maxBuffer: 4 * 1024 * 1024 });
+  // 全件一覧は142件で約560KB。上限4MBでは約1,000件で溢れるため余裕を取る（ISSUE-145）
+  const run = spawnSync('orca', args, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   let result;
   try { result = JSON.parse(run.stdout || '{}'); } catch (_) { result = {}; }
   if (run.status !== 0 || !result.ok) throw new Error(JSON.stringify({ args, result, stderr: run.stderr }));
   return result.result;
+}
+
+// ISSUE-145: 一覧は全件を取る。旧実装は --limit 200 で取り、打ち切られたら同期を拒否していたため、
+// チームの課題が200件を超えると同期が毎回止まった。Orca CLI は --limit を省くと全件を返す。
+// それでも続きがある（hasMore）と返ったときは nextCursor で辿る。続きを辿れない一覧・一部の
+// ワークスペースが読めなかった一覧（partial）では同期しない（不完全な一覧で重複作成しないための安全装置）。
+function listAllIssues(read = readJson, maxPages = 50) {
+  const issues = [];
+  let cursor = null;
+  for (let page = 0; page < maxPages; page++) {
+    const args = ['linear', 'list-issues', '--team', TEAM, '--workspace', WORKSPACE, '--json'];
+    if (cursor) args.push('--cursor', cursor);
+    const listed = read(args) || {};
+    const meta = listed.meta || {};
+    if (meta.partial || (meta.workspaceErrors || []).length) {
+      throw new Error('Linear issue listing was partial; refusing to sync an incomplete list');
+    }
+    issues.push(...(listed.issues || []));
+    if (!listed.truncated && !meta.hasMore) return issues;
+    cursor = meta.nextCursor || null;
+    if (!cursor) throw new Error('Linear issue listing was truncated; refusing to sync an incomplete list');
+  }
+  throw new Error(`Linear issue listing did not finish within ${maxPages} pages; refusing to sync an incomplete list`);
 }
 
 function main() {
@@ -94,9 +118,7 @@ function main() {
   const defaults = readDefaults();
   let liveIssues;
   try {
-    const listed = readJson(['linear', 'list-issues', '--team', TEAM, '--limit', '200', '--workspace', WORKSPACE, '--json']);
-    if (listed.truncated || listed.meta?.hasMore) throw new Error('Linear issue listing was truncated; refusing to sync an incomplete list');
-    liveIssues = new Map((listed.issues || []).map(issue => [issue.identifier, issue]));
+    liveIssues = new Map(listAllIssues().map(issue => [issue.identifier, issue]));
   } catch (error) {
     console.error(`Could not read Linear issues: ${error.message}`);
     process.exitCode = 1;
@@ -213,4 +235,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { isValidDueDate, missingCreateFields, withCreateDefaults };
+module.exports = { isValidDueDate, missingCreateFields, withCreateDefaults, listAllIssues };
