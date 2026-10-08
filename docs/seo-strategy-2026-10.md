@@ -167,7 +167,11 @@ Linear の番号は、SEO-116 が P-111、SEO-115 が P-112、SEO-117〜SEO-141 
 
 ## 5. 数値の再現方法
 
+北極星4指標は日次の指標履歴（`data/metrics_history.json`）から1コマンドで出る（[[SEO-117]]・最新と N 日前の比較）。GSC 由来の値は 2026-10-09 から日次で記録し、それ以前は git に残る `data/gsc_metrics.json` の各日の版から埋め戻した（`backfilledFrom` にコミットを記録・版が無い日は空欄）。
+
 ```bash
+# 北極星4指標（発見型の表示とクリック・表示が出たハブ・生成AI・Bing）の最新と28日前
+node scripts/track_metrics.js --north-star --days 28
 # GSC の全体・ページ種別・意図別（28日）
 node -e 'const g=require("./data/gsc_metrics.json");console.log(g.dateRange,g.totals,g.pageTypes,g.intent.kpi,g.intent.summary)'
 # 検索エンジン別（30日）

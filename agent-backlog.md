@@ -52,7 +52,7 @@
 
 ### [SEO-117] GSC の意図別・ページ種別の値を日次の指標履歴に残す
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / 計測
 - **owner**: DataKeeper
@@ -63,6 +63,7 @@
   1. 日次の追記で、`metrics_history.json` の各行に GSC の `dateRange`・`totals`・`intent.kpi`・`pageTypes` を足す（既存の形は変えず追加だけ）
   2. 追記の形をテストで検査する
   3. 北極星4指標を履歴から1コマンドで出す方法を `docs/seo-strategy-2026-10.md` §5 に書く
+- **結果（2026-10-09）**: `scripts/track_metrics.js --snapshot` の各行に `gsc`（`generatedAt`・`dateRange`・`totals`・`intent_kpi`・`pageTypes`）を足した（既存の項目は変えない・GSC が読めない日は null で GA4 側は止めない）。北極星4指標は `node scripts/track_metrics.js --north-star --days 28` で最新と N 日前を比べて出る（`docs/seo-strategy-2026-10.md` §5）。過去の行は `scripts/backfill_gsc_history.js` で git に残る `data/gsc_metrics.json` の各日の最後の版から埋め戻した（74日分・`backfilledFrom` にコミット。版が無い46日は空欄のまま）。テスト `tests/track_metrics_gsc.test.js`（4件）
 
 ### [SEO-118] GA4 の計測復旧による段差を効果測定から切り離し、継続中の施策の基線を取り直す
 

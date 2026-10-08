@@ -16,9 +16,12 @@
  *                               現在のmetricsを effect_ledger.json に施策IDの baseline として記録
  *   --followup <ID> [--days N]  baseline から現在metricsを取得し delta 算出・記録
  *   --report [--days N]         metrics_history のトレンド要約をJSON出力（最新 vs N日前・既定7日）
+ *   --north-star [--days N]     SEO の北極星4指標（発見型の表示/クリック・表示が出たハブ・生成AI・Bing）を
+ *                               履歴から出す（最新 vs N日前・既定28日・docs/seo-strategy-2026-10.md §2）
  *
  * データ:
- *   data/metrics_history.json  { version, entries: [ { date, totals, channels, cta } ] }（直近120日リング）
+ *   data/metrics_history.json  { version, entries: [ { date, totals, channels_pct, search_channels, cta, gsc } ] }（直近120日リング）
+ *                              gsc は SEO-117（2026-10-09〜）。それより前の行には無い
  *   data/effect_ledger.json    { version, ledger: { "<ID>": { baseline, target_metric, target_value, followup } } }
  */
 
@@ -27,6 +30,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const SITE_METRICS = path.join(ROOT, 'data/site_metrics.json');
+const GSC_METRICS = path.join(ROOT, 'data/gsc_metrics.json');
 const HISTORY_PATH = path.join(ROOT, 'data/metrics_history.json');
 const LEDGER_PATH = path.join(ROOT, 'data/effect_ledger.json');
 
@@ -64,6 +68,7 @@ function readSiteMetrics() {
 
     return {
       totals: m.totals,
+      gsc: readGscMetrics(),
       channels_pct: m.channels && m.channels.pct ? m.channels.pct : null,
       search_channels: searchChannels,
       cta: m.cta ? {
@@ -75,6 +80,28 @@ function readSiteMetrics() {
       } : null,
     };
   } catch (e) { return null; }
+}
+
+/**
+ * SEO-117: data/gsc_metrics.json も build.yml が毎日上書きするため、発見型（intent.kpi）と
+ * ページ種別（pageTypes）の時系列が残らず、SEO-087 の効果判定では git 履歴から手で復元していた。
+ * 日次スナップショットに GSC の集計値だけを足す（クエリ表・ページ表は大きいので持たない）。
+ * 読めないときは null を返し、GA4 側のスナップショットは止めない。
+ */
+function extractGsc(g) {
+  if (!g || !g.totals) return null;
+  return {
+    generatedAt: g.generatedAt || null,
+    dateRange: g.dateRange || null,
+    totals: g.totals,
+    intent_kpi: (g.intent && g.intent.kpi) || null,
+    pageTypes: g.pageTypes || null,
+  };
+}
+
+function readGscMetrics(p = GSC_METRICS) {
+  if (!fs.existsSync(p)) return null;
+  try { return extractGsc(JSON.parse(fs.readFileSync(p, 'utf8'))); } catch (_) { return null; }
 }
 
 /** totals 同士の数値差分（after - before）を算出 */
@@ -162,6 +189,59 @@ function report(days) {
   };
 }
 
+// ── north-star（SEO-117）─────────────────────────────────
+/** 1行から北極星4指標を取り出す（無い値は null。GSC が入る前の行は GSC 由来が null になる） */
+function northStarRow(e) {
+  const g = e && e.gsc;
+  const kpi = g && g.intent_kpi;
+  const hub = g && g.pageTypes && g.pageTypes.area_hub;
+  const sc = e && e.search_channels;
+  const num = v => (typeof v === 'number' ? v : null);
+  return {
+    date: e ? e.date : null,
+    gsc_range: g && g.dateRange ? `${g.dateRange.startDate}〜${g.dateRange.endDate}` : null,
+    discovery_impressions: num(kpi && kpi.discovery_impressions),
+    discovery_clicks: num(kpi && kpi.discovery_clicks),
+    hub_pages: num(hub && hub.pages),
+    hub_impressions: num(hub && hub.impressions),
+    ai_sessions: num(sc && sc.ai_assistant),
+    bing_sessions: num(sc && sc.bing),
+  };
+}
+
+/** 履歴の最新行と N 日前（以前で最も近い行）を比べる。純関数（テスト用に entries を受け取る） */
+function northStarFrom(entries, days) {
+  const list = (Array.isArray(entries) ? entries : []).slice().sort((a, b) => (a.date < b.date ? -1 : 1));
+  if (list.length === 0) return { ok: true, note: 'metrics_history が空（まだ snapshot がない）', total_days: 0 };
+  const n = days && Number.isFinite(days) ? days : 28;
+  const latest = list[list.length - 1];
+  const targetDate = new Date(new Date(latest.date) - n * 86400000).toISOString().slice(0, 10);
+  let prior = null;
+  for (const e of list) { if (e.date <= targetDate) prior = e; }
+  const a = northStarRow(latest);
+  const b = prior ? northStarRow(prior) : null;
+  const delta = {};
+  if (b) for (const k of Object.keys(a)) {
+    if (typeof a[k] === 'number' && typeof b[k] === 'number') delta[k] = +(a[k] - b[k]).toFixed(4);
+  }
+  const firstWithGsc = list.find(e => e.gsc);
+  return {
+    ok: true,
+    window_days: n,
+    latest: a,
+    prior: b,
+    delta,
+    gsc_history_since: firstWithGsc ? firstWithGsc.date : null,
+    note: 'GSC 由来（discovery_*・hub_*）は28日窓、GA4 由来（ai_sessions・bing_sessions）は30日窓。窓が重なるため差は傾向として読む',
+    total_days: list.length,
+  };
+}
+
+function northStar(days) {
+  const hist = loadJSON(HISTORY_PATH, { version: 1, entries: [] });
+  return northStarFrom(hist.entries, days);
+}
+
 // ── CLI ─────────────────────────────────────────────────
 function argVal(args, flag) {
   const i = args.indexOf(flag);
@@ -187,10 +267,15 @@ function main() {
     out(report(days ? parseInt(days, 10) : null));
     return;
   }
-  out({ ok: false, error: 'no subcommand', usage: ['--snapshot', '--baseline <ID> [--metric K --target V]', '--followup <ID>', '--report [--days N]'] });
+  if (args.includes('--north-star')) {
+    const days = argVal(args, '--days');
+    out(northStar(days ? parseInt(days, 10) : null));
+    return;
+  }
+  out({ ok: false, error: 'no subcommand', usage: ['--snapshot', '--baseline <ID> [--metric K --target V]', '--followup <ID>', '--report [--days N]', '--north-star [--days N]'] });
   process.exit(1);
 }
 
 if (require.main === module) main();
 
-module.exports = { snapshot, baseline, followup, report, readSiteMetrics };
+module.exports = { snapshot, baseline, followup, report, readSiteMetrics, readGscMetrics, extractGsc, northStarRow, northStarFrom };
