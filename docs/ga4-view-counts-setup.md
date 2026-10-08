@@ -116,3 +116,9 @@ python3 -c "import json;print(json.load(open('data/site_metrics.json'))['cta'])"
 ```
 
 `byDomain` に `[{domain, clicks}, ...]` が入れば完了。
+
+## 追補: 予約送客の店舗別集計（ISSUE-149）
+
+`data/store_referrals.json`（店舗別・経路別の予約送客と予約申告）は、登録済みの `store_name` と `link_domain` だけで動く。**追加の登録は要らない**。
+
+サイトは `store_id`（ホットペッパーID か placeId）と `location`（card / modal / store_page / feature / journal 等）も送っている。どの面から送客したかを GA4 の画面で見たくなったら、上と同じ手順で `store_id` / `location` をイベントスコープで登録する（任意・非遡及）。定義の正本は `docs/reservation-measurement.md`。

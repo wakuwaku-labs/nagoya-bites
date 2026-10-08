@@ -62,6 +62,7 @@ const https = require('https');
 // ヒーロー写真の帰属判定は scripts/lib/hero_photo_gate.js に一元化（2026-08-17 の事故）
 const { judgeHero } = require('./lib/hero_photo_gate');
 const { gaSnippet } = require('./lib/ga_snippet');
+const { applyToHtml: applyReserveAsk } = require('./lib/reservation_ask_snippet');
 // 図解SVG→OGP用PNG変換は scripts/lib/og_figure_png.js に一元化（ISSUE-095）
 const OG = require('./lib/og_figure_png.js');
 // 本文写真（ヒーロー以外の記事内写真）の収集・選定・配置は scripts/lib/journal_photos.js に一元化
@@ -147,7 +148,7 @@ function buildStores(stores) {
     // （SEO-049 で判明したモーダルの排他分岐と同じ失敗を繰り返さない）
     const rec = s.id ? hpMap.get(s.id) : null;
     const reserveHtml = rec
-      ? `<a class="store-link store-link-reserve" href="https://www.hotpepper.jp/str${esc(rec['ホットペッパーID'])}/" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_reserve',{store_name:'${jsEsc(s.name)}'})">この店を予約する</a>`
+      ? `<a class="store-link store-link-reserve" href="https://www.hotpepper.jp/str${esc(rec['ホットペッパーID'])}/" target="_blank" rel="noopener noreferrer" onclick="(window.nbReserveExit||trackEvent)('cta_reserve',{store_name:'${jsEsc(s.name)}',store_id:'${esc(rec['ホットペッパーID'])}',link_domain:'www.hotpepper.jp',location:'journal'})">この店を予約する</a>`
       : '';
     const mapUrl = gmapSearchUrl(s.name, rec ? (rec['エリア'] || s.area) : s.area, rec ? rec['アクセス'] : '');
     const mapHtml = s.name
@@ -953,7 +954,9 @@ async function main() {
 
   const htmlPath = path.join(DRAFTS_DIR, input.slug + '.html');
   const mdPath = path.join(POSTS_DIR, input.date + '.md');
-  fs.writeFileSync(htmlPath, renderHtml(input));
+  // 予約導線を持つ記事にだけ予約申告プロンプトを入れる（ISSUE-149）
+  const html = renderHtml(input);
+  fs.writeFileSync(htmlPath, /cta_reserve/.test(html) ? applyReserveAsk(html) : html);
 
   const generateSns = shouldGenerateSnsDraft();
   if (generateSns) {

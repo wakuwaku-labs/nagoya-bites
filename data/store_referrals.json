@@ -1,0 +1,26 @@
+{
+  "generatedAt": null,
+  "lookbackDays": 30,
+  "definitions": {
+    "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
+    "reports": "予約申告: 予約導線から戻った人が「予約した／していない」を答えた数。自己申告なので下限としてだけ使う",
+    "completed": "予約成立: 計測しない。名古屋バイツは予約を受けず、店側の導入もアフィリエイトも使わないため観測経路が無い（docs/decisions/0009）"
+  },
+  "totals": {
+    "exits": {
+      "hotpepper": 0,
+      "tabelog": 0,
+      "tel": 0,
+      "other": 0,
+      "total": 0
+    },
+    "reports": {
+      "yes": 0,
+      "no": 0
+    }
+  },
+  "unattributedExits": 0,
+  "month": null,
+  "stores": [],
+  "note": "初回。CI（build.yml の fetch_ga4_views.js）が翌日から上書きする"
+}

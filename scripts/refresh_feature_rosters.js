@@ -310,7 +310,9 @@ function renderStoreCard(entry, num, featureSlug) {
   const meta = [area && `<span>${area}</span>`, genre && `<span>${genre}</span>`, sb && `<span class="score">${sb}</span>`, price && `<span>${price}</span>`].filter(Boolean).join('');
   const tags = tagsOf(s, 3).map(t => `<span class="store-tag">${esc(t)}</span>`).join('');
   const track = `onclick="trackEvent('feature_store_click',{store:'${nameForJs}',feature:'${featureSlug}'})"`;
-  const trackCta = `onclick="trackEvent('cta_click',{store:'${nameForJs}',feature:'${featureSlug}',target:'hotpepper'})"`;
+  // 予約送客（ISSUE-149）。nbReserveExit はページ末尾の申告スニペットが定義する。無いページでも trackEvent で送る
+  const nameAttr = esc(String(s['店名'] || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'"));
+  const trackCta = `onclick="(window.nbReserveExit||trackEvent)('cta_click',{store_name:'${nameAttr}',store_id:'${id}',link_domain:'www.hotpepper.jp',location:'feature',feature:'${featureSlug}'})"`;
   return `      <div class="store-card">
         <div class="store-num">${nn}</div>
         <div class="store-photo"><img src="${photo}" alt="${name}" loading="lazy" width="160" height="120" decoding="async"></div>

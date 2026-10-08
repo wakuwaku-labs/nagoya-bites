@@ -9630,8 +9630,9 @@ function buildCardHtml(r) {
     var genre = (r['ジャンル']||'').split('・')[0];
     var pref = r['都道府県'] || '';
     var area = r['エリア'] || '';
-    var mediaLinks = '<a class="ml hp" href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="Hotpepperで見る" title="Hotpepper">' + nbBrandImg('hotpepper',16) + '<span class="visually-hidden">Hotpepper</span></a>'
-      + '<a class="ml tb" href="' + tabelogSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="' + (hasTabelogStorePage(r) ? '食べログで見る' : '食べログで検索する') + '" title="' + (hasTabelogStorePage(r) ? '食べログ' : '食べログで検索') + '">' + nbBrandImg('tabelog',16) + '<span class="visually-hidden">食べログ</span></a>'
+    var nbExitArgs = function(dom){ return 'nbReserveExit(\'cta_click\',{store_name:\'' + (r['店名']||'').replace(/'/g,'') + '\',store_id:\'' + (r['ホットペッパーID']||'') + '\',link_domain:\'' + dom + '\',location:\'card_media\'});'; };
+    var mediaLinks = '<a class="ml hp" href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();' + (r['ホットペッパーID'] ? nbExitArgs('www.hotpepper.jp') : '') + '" rel="noopener noreferrer" aria-label="Hotpepperで見る" title="Hotpepper">' + nbBrandImg('hotpepper',16) + '<span class="visually-hidden">Hotpepper</span></a>'
+      + '<a class="ml tb" href="' + tabelogSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation();' + (hasTabelogStorePage(r) ? nbExitArgs('tabelog.com') : '') + '" rel="noopener noreferrer" aria-label="' + (hasTabelogStorePage(r) ? '食べログで見る' : '食べログで検索する') + '" title="' + (hasTabelogStorePage(r) ? '食べログ' : '食べログで検索') + '">' + nbBrandImg('tabelog',16) + '<span class="visually-hidden">食べログ</span></a>'
       + '<a class="ml ig" href="' + instagramSearchUrl(r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="Instagramで見る" title="Instagram">' + nbBrandImg('instagram',16) + '<span class="visually-hidden">Instagram</span></a>'
       + '<a class="ml gm" href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation()" rel="noopener noreferrer" aria-label="Googleマップで見る" title="Googleマップ">' + nbBrandImg('gmap',16) + '<span class="visually-hidden">Googleマップ</span></a>';
     var tags = (r['タグ']||'').split(',').map(function(t){return t.trim();}).filter(Boolean);
@@ -9716,7 +9717,7 @@ function buildCardHtml(r) {
       + featuredHtml
       + whyHtml
       + (r.editorReason ? '<div class="card-lead"><span class="card-lead-kicker">' + leadKicker + '</span>' + r.editorReason + '</div>' : r.insiderNote ? '<div class="card-lead"><span class="card-lead-kicker">' + leadKicker + '</span>' + r.insiderNote + '</div>' : r['おすすめポイント'] ? '<div class="card-lead"><span class="card-lead-kicker">' + leadKicker + '</span>' + r['おすすめポイント'] + '</div>' : '')
-      + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\'})" aria-label="' + r['店名'] + 'をホットペッパーで予約" rel="noopener noreferrer">ホットペッパーで予約</a><a class="card-cta-map" href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\'})" aria-label="' + r['店名'] + 'の場所をGoogleマップで確認" title="Googleマップで場所を確認" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\'})" aria-label="' + r['店名'] + 'をGoogleマップで確認" class="card-cta-map-only" rel="noopener noreferrer">Googleマップで確認</a></div>')
+      + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();nbReserveExit(\'cta_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',store_id:\'' + r['ホットペッパーID'] + '\',link_domain:\'www.hotpepper.jp\',location:\'card\'})" aria-label="' + r['店名'] + 'をホットペッパーで予約" rel="noopener noreferrer">ホットペッパーで予約</a><a class="card-cta-map" href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\'})" aria-label="' + r['店名'] + 'の場所をGoogleマップで確認" title="Googleマップで場所を確認" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\'})" aria-label="' + r['店名'] + 'をGoogleマップで確認" class="card-cta-map-only" rel="noopener noreferrer">Googleマップで確認</a></div>')
       + '<div class="mrow">' + mediaLinks + '</div>'
       + '</div>';
 }
@@ -9979,7 +9980,8 @@ function nbCallStore(ev, placeId, storeName, btn) {
   ev.stopPropagation();
   if (!placeId || !btn || btn.disabled) return;
   btn.setAttribute('data-store-name', storeName);
-  trackEvent('cta_call_click', {store_name: storeName});
+  if (typeof nbReserveExit === 'function') nbReserveExit('cta_call_click', {store_name: storeName, store_id: placeId, link_domain: 'tel', location: 'modal'});
+  else trackEvent('cta_call_click', {store_name: storeName});
   if (NB_PHONE_MEM[placeId]) { location.href = 'tel:' + NB_PHONE_MEM[placeId]; return; }
   if (!nbCallTapAllowed()) {
     nbCallBtnMsg(btn, '本日の上限です');
@@ -10266,7 +10268,7 @@ function openM(i, source) {
   var stickyEl = document.getElementById('m-sticky-cta');
   var hpId2 = r['ホットペッパーID'] || '';
   var mapBtnHtml = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_cta\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認">地図で場所を確認する</a>';
-  var hpBtnHtml = hpId2 ? '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="trackEvent(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>' : '';
+  var hpBtnHtml = hpId2 ? '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="nbReserveExit(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',store_id:\'' + ctaEsc(hpId2) + '\',link_domain:\'www.hotpepper.jp\',location:\'modal\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>' : '';
   var callBtnHtml = nbCallBtnHtml(r, ctaEsc, false);
   if (ctaRow) { ctaRow.innerHTML = hpBtnHtml + callBtnHtml + mapBtnHtml; ctaRow.style.display = ''; }
   if (stickyEl) {
@@ -10281,15 +10283,17 @@ function openM(i, source) {
   }
   // ── 媒体リンク（favicon＋名前の小チップ1行。Google マップは modal_media_row で計測を区別）──
   var items = [
-    {url:hpUrl, brand:'hotpepper', cls:'mb-hp', label:'HotPepper'},
-    {url:tabelogSearchUrl(r), brand:'tabelog', cls:'mb-tb', label:hasTabelogStorePage(r) ? '食べログ' : '食べログで検索'},
+    {url:hpUrl, brand:'hotpepper', cls:'mb-hp', label:'HotPepper', exit:hpId2 ? 'www.hotpepper.jp' : ''},
+    {url:tabelogSearchUrl(r), brand:'tabelog', cls:'mb-tb', label:hasTabelogStorePage(r) ? '食べログ' : '食べログで検索', exit:hasTabelogStorePage(r) ? 'tabelog.com' : ''},
     {url:instagramSearchUrl(r), brand:'instagram', cls:'mb-ig', label:'Instagram'},
     {url:gmap(r['店名'],r['エリア'],r), brand:'gmap', cls:'mb-gm', label:'Google マップ', track:'modal_media_row'},
     {url:tiktokSearchUrl(r), brand:'tiktok', cls:'mb-tk', label:'TikTok'},
     {url:xSearchUrl(r), brand:'x', cls:'mb-xx', label:'X'}
   ];
   document.getElementById('mmg').innerHTML = items.map(function(m){
-    var onclickAttr = m.track ? (' onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'' + m.track + '\'})"') : '';
+    // 予約送客（ISSUE-149）: その店の予約ページを指すリンクだけを数える（検索ページは数えない）
+    var onclickAttr = m.track ? (' onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'' + m.track + '\'})"')
+      : m.exit ? (' onclick="nbReserveExit(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',store_id:\'' + ctaEsc(hpId2) + '\',link_domain:\'' + m.exit + '\',location:\'modal_media\'})"') : '';
     return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '"' + onclickAttr + ' rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,18) + '</span><span class="mbl">' + m.label + '</span></a>';
   }).join('');
   setShareStore(r['店名'] || '', r['ホットペッパーID'] || '');
@@ -11670,5 +11674,84 @@ loadStores = function(stores) {
 // ================================================================
 init();
 </script>
+<script class="nb-reserve-ask-js">(function nbReserveAskMain() {
+  var KEY = 'nb_reserve_pending';
+  var MIN_AWAY = 20 * 1000;        // これより早く戻った人にはまだ聞かない
+  var MAX_AWAY = 30 * 60 * 1000;   // これより後は予約導線との対応が薄いので聞かない
+  var SHOW_MS = 20 * 1000;
+  function internal() { try { return localStorage.getItem('nb_internal') === '1'; } catch (e) { return false; } }
+  function send(name, p) { try { if (typeof trackEvent === 'function') trackEvent(name, p); } catch (e) {} }
+  window.nbReserveExit = function (name, p) {
+    p = p || {};
+    send(name, p);
+    if (internal()) return;
+    try {
+      sessionStorage.setItem(KEY, JSON.stringify({
+        n: String(p.store_name || ''), i: String(p.store_id || ''),
+        d: String(p.link_domain || ''), l: String(p.location || ''), t: Date.now()
+      }));
+    } catch (e) {}
+  };
+  function today() { var d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+  function hide(el) { if (el && el.parentNode) el.parentNode.removeChild(el); }
+  function show(p) {
+    var el = document.createElement('div');
+    el.className = 'nb-reserve-ask';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-live', 'polite');
+    el.setAttribute('aria-label', '予約できたかの確認');
+    var q = document.createElement('p');
+    q.className = 'nb-reserve-ask-q';
+    q.textContent = (p.n ? '「' + p.n + '」の' : '') + '予約はできましたか？';
+    var note = document.createElement('p');
+    note.className = 'nb-reserve-ask-note';
+    note.textContent = '匿名で数えるだけです。掲載順位には使いません';
+    var row = document.createElement('div');
+    row.className = 'nb-reserve-ask-actions';
+    var params = { store_name: p.n, store_id: p.i, link_domain: p.d, location: p.l };
+    function btn(label, cls, ev) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'nb-reserve-ask-btn ' + cls;
+      b.textContent = label;
+      b.onclick = function () {
+        send(ev, params);
+        row.parentNode.removeChild(row);
+        note.parentNode.removeChild(note);
+        q.textContent = 'ありがとうございます';
+        setTimeout(function () { hide(el); }, 1800);
+      };
+      return b;
+    }
+    row.appendChild(btn('予約した', 'is-yes', 'reserve_report_yes'));
+    row.appendChild(btn('していない', 'is-no', 'reserve_report_no'));
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'nb-reserve-ask-close';
+    close.setAttribute('aria-label', '閉じる');
+    close.textContent = '×';
+    close.onclick = function () { hide(el); };
+    el.appendChild(close); el.appendChild(q); el.appendChild(note); el.appendChild(row);
+    document.body.appendChild(el);
+    setTimeout(function () { hide(el); }, SHOW_MS);
+  }
+  function check() {
+    if (document.visibilityState === 'hidden' || internal()) return;
+    var raw, p;
+    try { raw = sessionStorage.getItem(KEY); } catch (e) { return; }
+    if (!raw) return;
+    try { p = JSON.parse(raw); } catch (e) { p = null; }
+    var away = p ? Date.now() - (p.t || 0) : -1;
+    if (!p || away > MAX_AWAY || away < 0) { try { sessionStorage.removeItem(KEY); } catch (e) {} return; }
+    if (away < MIN_AWAY) return;
+    try { sessionStorage.removeItem(KEY); } catch (e) {}
+    var asked = 'nb_reserve_asked_' + (p.i || p.n) + '_' + today();
+    try { if (localStorage.getItem(asked)) return; localStorage.setItem(asked, '1'); } catch (e) {}
+    show(p);
+  }
+  document.addEventListener('visibilitychange', check);
+  window.addEventListener('pageshow', check);
+  window.addEventListener('focus', check);
+})();</script>
 </body>
 </html>
