@@ -236,7 +236,7 @@
 
 ### [SEO-122] デート特集を「名古屋 デート ディナー」で1ページ目に上げる
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / コンテンツ
 - **owner**: Editor
@@ -248,6 +248,13 @@
   2. `features/nagoya-solo-dining.html` との相互リンクと、栄・名駅のハブへの導線を足す
   3. `dateModified` を入れる。デザイン監査・`node scripts/audit_feature_stores.js`・インラインJS監査を通す
   4. 4 週後に `gsc_metrics.json` の `pageQueries` で同クエリの順位と表示を比べる（目標 10 位以内）
+- **結果**（2026-10-09）:
+  1. 掲載店を FAQ の約束（価格帯4,000円以上・Google評価4.0以上・焼肉/ホルモン/ラーメン等は除外）にそろえた。それまでの10店には、焼肉・ホルモン4店、価格帯の下限が4,000円未満の3店、価格帯の表示が無い2店、シーシャカフェ1店が入っていた。`data/feature_rosters.json` の date に除外語・価格帯の表示必須・評価の下限を足し（`refresh_feature_rosters.js` に `exclude`/`requirePrice`/`minGoogle`）、再選定した10店はすべて条件を満たす実在店（店舗ページあり）。title を「名古屋 デートディナーおすすめ10選｜予算・エリア別【2026年版】」にした（h1 は元から「名古屋 デートディナー」）。冒頭に「先に結論：予算で選ぶなら」を置いた（〜5,000円 Cellarr・栄／5,001〜10,000円 GRILL DINING&WINE 金山テラス・金山・熱田・個室あり／10,001円〜 Reconnaissance・矢場町・大須・上前津）。結論は手で書かず、`scripts/apply_feature_conclusions.js` が `data/feature_conclusions.json` の価格帯の行ごとに一覧で上の店を選んで書く（エリアは重ねない・事実だけ・2行未満なら出さない）。build.yml が掲載店の入れ替えの直後に毎日当て、夜間QA が `--check` で見る
+  2. `nagoya-solo-dining.html` と `date.html` を相互にリンクした。結論の下に、名駅と錦・伏見のイタリアン・フレンチ（錦・伏見は個室ありも）と、栄・名駅のエリアのハブへのリンクを置いた（manifest で active のものだけ）
+  3. dateModified は 2026-10-09（画面の更新日も同じ）。デザイン監査 0件・インラインJS監査（features）0件・`audit_feature_stores.js` で date の不一致 0件（既存の「うなぎのしろむら 泉店」2件は別の特集）・`sync_feature_counts.js --check` 0件・npm test 405件が通過。Designer QA-5（puppeteer・375px/1280px）: 追加部分の文字はすべて13px以上、ハブのリンクの高さは44px以上、枠は本文の幅に収まる
+  4. 未了: 4週後の順位の比較は [[SEO-140]]（11-15・`date.html` が10位以内か）で記録する
+  - QA で見つけて同じ変更で直したもの: (a) `refresh_feature_rosters.js` が dateModified を UTC の日付で書いており、日本時間0〜9時の実行（CI の 03:00 を含む）で前日の日付になっていた → 日本時間に (b) sitemap の未来日の丸めも UTC の「今日」だったため、同じ時間帯に当日更新した特集の lastmod を前日に丸め、`tests/sitemap_lastmod.test.js` が落ちた → 日本時間に
+  - 判断の記録: `docs/decisions/0011-feature-conclusions-from-roster.md`
 
 ### [SEO-123] エリア×ジャンル×条件ページ699本を濃くし、11-15 にインデックス対象を実測で絞る
 
@@ -432,6 +439,7 @@
   1. 発見型の表示がある特集から順に、冒頭に「誰に・どの店・なぜ」を3行で書く。掲載店は実在店だけ、推測の数値は書かない
   2. デザインシステムの部品で出し、Designer のレビューを受ける
   3. 対象の特集と実施日を記録し、生成AI 経由の着地ページを前後比で見る
+- **メモ**（2026-10-09・[[SEO-122]]）: 冒頭の結論の部品と生成器はできている（`scripts/apply_feature_conclusions.js`・`data/feature_conclusions.json`・nb.css の `.nb-conclusion`・Designer QA-5 済み・デート特集に適用済み）。ほかの特集へは `data/feature_conclusions.json` に設定を足せば広がる。足す前に、その特集の選定条件が本文・FAQ の約束と合っているかを確かめる（`docs/decisions/0011-feature-conclusions-from-roster.md`）。価格帯以外の軸（エリア別・人数別）が要る特集は、行の型を足す
 
 ### [SEO-135] llms.txt にハブの階層と数値の出典・更新日を載せ、Organization に sameAs を足す
 

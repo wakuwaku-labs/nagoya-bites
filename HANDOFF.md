@@ -21,21 +21,16 @@ status: in_progress
   - #422 SEO-145（特集の公開日・更新日・書き手の部品・P-153 Done）。SEO-131（P-127）も Done
   - #424 SEO-146（特集の掲載件数の表記を実数に日次でそろえる・scripts/sync_feature_counts.js・P-154 Done）
   - #425 SEO-147（ジャーナル・店舗ページから特集へのリンク文の件数。生成器が relabelForSlug を通す・ジャーナル17本をそろえた・build.yml に --target stores・夜間QA soft。P-156 は In Progress）
+  - #426 SEO-124（ハブ685本に編集部の見分け方・選定理由の別枠・予算帯と最寄り駅の表。FAQPage の JSON-LD を外した。QA で本文の幅の未指定と最寄り駅の集計も直した・P-120 Done）
   - #416 SEO-143（店舗ページに「編集部の選定理由」）・#418 SEO-139（aggregateRating と SearchAction を外す・docs/decisions/0009）・#419 IndexNow が -2/-3 の店舗ページを探す・#420 SEO-127（banquet の 11・12月リードと幹事チェックリスト）・#421 SEO-131 その1（掲載店の入れ替えで dateModified を進める）
 - Linear: P-115/P-116/P-138/P-113/P-140/P-131/P-132/P-134 は Done（結果コメントつき）。P-117（SEO-121）は In Progress で、本番確認待ち
 - 起票: ISSUE-147（P-142・Places の古い誤紐付け・オーナー承認が要る）／ISSUE-148（P-143・スプレッドシート経由の住所検査）／SEO-142（P-144・sameAs。公式アカウントの URL をオーナーが示すまで待ち）／SEO-143（P-145・店舗ページに editorReason が出ていない）／SEO-144（P-146・index.html と静的ページの localStorage 例外で GA が止まる）
 
 # 次にやること
 1. 10-10 以降に確認: SEO-147（P-156）の達成条件3。main で `node scripts/sync_feature_counts.js --check --target stores` が exit 0 なら backlog done・P-156 Done＋コメント（店舗ページは CI の再生成で直る設計。ローカルで書き換えない）
-2. 実装中: SEO-124（ハブ本文・P-番号は backlog 参照）。2026-10-09 時点: 実装・ハブ685本の再生成・Designer QA-5（375/1280・puppeteer は executablePath に /Applications/Google Chrome.app を渡すと動く）まで済み。QA で見つけて同じ PR で直したもの: ハブに .container の幅指定が無く端まで詰まっていた（9/14 の新設時から）→ 900px・左右16px。最寄り駅がアクセス文の切れ端だった → station_names.js の firstAichiStation で県内の駅名だけ数える。残り: テスト追加・監査・CLAUDE.md・backlog・PR・Linear。横スクロール 750px は共通メニュー由来で DSN-007 の範囲（今回の前後で同じ）。設計（決定済み）:
-   - 見分け方の短文: data/area_genre_pages_policy.json の genres[].guide（17）と conditions[].guide（13）に置く。条件ページは「ジャンル＋条件」の2文を合成。推測の数値は書かない（法律の20歳など確定事実のみ）
-   - 編集部の選定理由: editorReason があり おすすめポイント と同文でない店（gen-store-pages の sameSentence と同じ規則）を、一覧の上に別枠で最大 N 件（policy.editorPicks）。一覧の機械的な並び順は動かさない（リードの「順位は動かしていない」を真に保つ）。visitStatus のラベルを添える
-   - 表: 予算帯の分布（価格帯の下限順・全帯）と最寄り駅（上位 N・policy）を <table class="hub-table">（HUB_STYLE にトークンで追加・13px 以上）
-   - FAQPage の JSON-LD を外す（画面の FAQ は残す）
-   - データ更新日: ハッシュ計算の後に manifest の updated で入れる
-   - ハブはローカルで再生成して PR に含める（SEO-094 の前例・決定的）。Designer QA-5 を puppeteer の 375px/1280px で見る
+2. SEO-122（P-118）: 実装・テスト・QA-5 済み。PR を出して合流 → Linear Done＋コメント。達成条件4（4週後の順位）は SEO-140（11-15）で記録する。冒頭の結論の仕組み（scripts/apply_feature_conclusions.js・data/feature_conclusions.json・nb.css .nb-conclusion）は SEO-134 で他の特集へ広げる（docs/decisions/0011）
 3. SEO-115 の残り（P-112）: 達成条件3（GA4 で /stores/ の page_view。topPages は上位5ページだけなので、オーナー確認か 10-10 以降の metrics_history の段差）と5（次の夜間QA の inline-js が緑）
-4. 次の実装: SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
+4. 次の実装: SEO-137 ジャーナル title → SEO-134 結論ブロック（仕組みは SEO-122 で作った）→ SEO-144
 5. 夜間QA の station-names が緑で続いたら hard に上げる
 6. 最後に: 「うなぎのしろむら 泉店」の起票、創業者の実名が index.html の Organization JSON-LD に出ている件をオーナーへ報告（変更しない）、http.server（8093・8094・8095）を止める
 

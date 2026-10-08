@@ -1,0 +1,23 @@
+{
+  "_README": "特集の冒頭に置く「先に結論」ブロックの設定（SEO-122 / SEO-134・2026-10-09）。scripts/apply_feature_conclusions.js が、特集にいま載っている店（ItemList JSON-LD の順＝一覧の順）から、行ごとの価格帯の条件に合う最初の店を1店ずつ選び、<!-- NB_CONCLUSION:START --> 〜 END の間に書く。掲載店が月次で入れ替わる日も、同じ日のビルド（build.yml）で追従する。店について書くのは data/stores.json の事実（エリア・ジャンル・価格帯・個室）だけで、推測の数値は書かない。条件に合う店が無い行は出さず、2行に満たなければ区画ごと出さない（取り繕わない）。distinctArea=true なら、エリアが重ならない店を優先する。hubs は data/area_genre_pages_manifest.json で status=active のページだけをリンクする。語・行・リンク先の変更はこのファイルで行い、スクリプトは触らない（Editor 管轄）",
+  "features": {
+    "date": {
+      "title": "先に結論：予算で選ぶなら",
+      "note": "下の掲載店から、価格帯（HotPepper の表示）ごとに、一覧で上にある店を1店ずつ選んでいます。エリアが重ならないようにしています。",
+      "lines": [
+        { "label": "まずは気軽に", "priceMax": 5000 },
+        { "label": "少し背伸びして", "priceMin": 5001, "priceMax": 10000 },
+        { "label": "記念日に", "priceMin": 10001 }
+      ],
+      "distinctArea": true,
+      "hubsTitle": "エリアとジャンルで探す",
+      "hubs": [
+        "stores/area/meieki/italian-french.html",
+        "stores/area/nishiki-fushimi/italian-french.html",
+        "stores/area/nishiki-fushimi/italian-french-koshitsu.html",
+        "stores/area/sakae/index.html",
+        "stores/area/meieki/index.html"
+      ]
+    }
+  }
+}
