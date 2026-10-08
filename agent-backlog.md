@@ -670,7 +670,7 @@
 
 ### [SEO-147] ジャーナルと店舗ページから特集へのリンク文の「N選」を、特集の実際の掲載数にそろえる
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data-quality / コンテンツ
 - **owner**: Builder / Editor
@@ -682,10 +682,10 @@
   2. 既存のジャーナル17本のリンク文をそろえる（`syncPage` を journal/ に当てるか、生成器の再実行で）
   3. 店舗ページは CI の再生成で直ることを、合流の翌日に `relabelAll` で数えて0件で確かめる（ローカルで約5,000本を再生成しない）
   4. ジャーナルと店舗ページのずれを数える検査を足す（初回は非ブロッキング）
-- **結果**（2026-10-09・途中。残りは達成条件3の本番確認だけ）:
+- **結果**（2026-10-09）:
   - 達成条件1: `gen-store-pages.js`（関連特集と掲載特集）・`refresh_journal_related.js`（関連リンクとエリア特集）・`inject_journal_feature_cta.js`（本文の「合わせて読む」）・`patch_store_related_features.js`・`add_related_features.js` が、書き出すときに `relabelForSlug` でリンク先の掲載数に合わせる。gen-store-pages.js の変更はリンク文の数字だけで、マークアップ・CSS は変えていない（Designer QA-5・`audit_design_system.js --check` 通過）
   - 達成条件2: `scripts/sync_feature_counts.js --target journal` で17本・30リンクをそろえた（ラーメン12選→11選、大須食べ歩き10選→8選、失敗しない接待10選→8選、誕生日・記念日10選→5選 など。差分はリンク文の数字だけ）。以後は `refresh_journal_related.js` が毎日同じ書き換えを呼ぶ（直す前の記事の写しで実行し、手でそろえた結果と1行も違わないことを確かめた）
-  - 達成条件3（未）: 店舗ページはローカルで書き換えていない。build.yml の再生成の後に `sync_feature_counts.js --target stores` を置いた（再生成されない孤児ページと stores/index.html の分）。店舗ページの写しで実行すると 839本・885リンクがそろい、2回目は0本だった。合流の翌日に main で `node scripts/sync_feature_counts.js --check --target stores` が exit 0 なら done
+  - 達成条件3: 店舗ページはローカルで書き換えていない。build.yml の再生成の後に `sync_feature_counts.js --target stores` を置いた（再生成されない孤児ページと stores/index.html の分）。#425 の合流（2026-10-08 22:38 UTC）の後の CI の再生成（22:42・22:57 UTC の auto-update）で店舗ページがそろい、main で `node scripts/sync_feature_counts.js --check --target stores` が exit 0（件数を確かめられた特集 61本・要更新 0本）。店舗ページのリンク文は 大須 食べ歩きおすすめ8選 410本・個室のある名古屋グルメ9選 184本・名古屋・誕生日/記念日ディナー5選 107本 になり、旧い「10選」は0本
   - 達成条件4: 夜間QA に `feature-link-counts-stores`・`feature-link-counts-journal`（soft）を足した。ジャーナルはビルドの中では直さないので、blocking の npm test には入れていない
   - 確認: npm test 387件通過・`audit_design_system --check`・`audit_inline_js_syntax --check --only journal`・`apply_site_chrome --check --only journal` 通過
 
@@ -703,6 +703,7 @@
   2. ずれる場合は、閉じたメニューを横幅に数えない形に直す（例: 閉じている間は `visibility:hidden`。または `transform` で動かし、`html` に `overflow-x:clip`）。375px で `scrollWidth` が 375 になることを確かめる
   3. 開閉の動き・フォーカス移動・`aria-expanded` が変わらないことを確かめ、Designer の QA-5 と `node scripts/audit_design_system.js --check` を通す
 
+- **調査（2026-10-09・途中・未合流）**: 375px のモバイル表示（puppeteer・isMobile）で再現した。本番の features/banquet.html でもレイアウト幅は 750px。原因は nb.css の `@media(max-width:900px)` にある `nav{position:fixed;right:-100%…}` が、素の `nav` すべてに効いていること。DSN-003（2026-09-08）でパンくず（`<nav aria-label="パンくずリスト">`）とフッターのリンク群（`nav.nb-footer-group`）も `<nav>` にしたため、**幅 900px 以下ではパンくずとフッターの3グループが画面外に置かれ、見えていない**（本番で確認）。試した結果: 規則を `#main-nav` に絞ると、パンくずとフッターは表示される。閉じたドロワーを画面外に置くだけ（right:-100%・transform・html の overflow-x hidden/clip）では、レイアウト幅は広がったまま。閉じている間を `display:none` にすると 375px に収まる。`display:none`＋`@starting-style`＋`transition-behavior:allow-discrete` の案は、headless の計測では開いた後もドロワーが画面外に残り、閉じた後も display が flex のままだった。headless でアニメーションが進んでいないだけの可能性もあり、未確定。作業中の差分は合流していない。次は、prefers-reduced-motion を emulate して開閉を確かめるか、即時開閉の案と比べ、Designer QA-5 で決める
 ### [ISSUE-145] Linear 同期が課題200件で止まる上限を外す
 
 - **priority**: P2 → **status**: done
