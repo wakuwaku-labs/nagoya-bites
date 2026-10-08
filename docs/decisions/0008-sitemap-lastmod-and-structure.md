@@ -25,6 +25,7 @@
 - `sitemap-index.xml` は固定ファイルとして残す。束ねるのは `sitemap.xml` と `sitemap-images.xml` だけで、`lastmod` は書かない。Search Console に登録済みの可能性があるため、ファイル自体は消さない。
 - `sitemap-news.xml` は廃止する。当サイトは Google ニュースの掲載媒体ではない。
 - `build_features.js` は、`sitemap.xml`・`sitemap-news.xml`・`sitemap-index.xml` を書かない。`sitemap-images.xml` は今も書く（それを書く唯一のスクリプトのため）。
+- `build.js` は `sitemap.xml` を書かない。CI では `gen-store-pages.js` より先に動き、全 URL の lastmod を当日にして書き直していた。そのため、直後の生成器が引き継ぐ「前回の lastmod」が毎回消えていた。sitemap.xml を書くのは `gen-store-pages.js` と `scripts/gen_area_genre_pages.js`（ハブを追記）だけにする。
 - 監査 `scripts/audit_sitemap_health.js` は、次の3つを異常とする: 全件が同じ日、形式不正、未来日。`--lastmod-only` を付けると通信せずに検査だけ行う。
 
 ## 選ばなかった案と理由
