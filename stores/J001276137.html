@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mega Kebab 住吉店（栄・矢場町・各国料理・予算1501～2000円・Google★3.9）| NAGOYA BITES</title>
@@ -332,7 +332,7 @@ button.link-btn{font:inherit;cursor:pointer;}
   <div class="related-stores">
     <h2>栄(ミナミ)/矢場町/大須/上前津の他の店</h2>
     <ul>
-      <li><a href="J001258473.html">Hot spice MUCHO chicken</a></li>
+      <li><a href="J001258473.html">ホットスパイス ムーチョチキン</a></li>
       <li><a href="J000912876.html">Mega Kebab 大須1号店</a></li>
       <li><a href="J001276145.html">Mega Kebab 大須2号店</a></li>
       <li><a href="J004064002.html">J&#39;s Vendor nagoya</a></li>

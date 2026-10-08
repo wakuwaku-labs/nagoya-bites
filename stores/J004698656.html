@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LIBERMENT リベルマン（名駅・イタリアン・フレンチ・予算7001～10000円）| NAGOYA BITES</title>
@@ -52,7 +52,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J004698656.html",
     "description": "名古屋（名古屋駅/西区/中村区）のイタリアン・フレンチ。市営地下鉄東山線　亀島駅より徒歩10分",
     "priceRange": "¥¥¥",
-    "openingHours": "水～日、祝日、祝前日: 11:30～15:00 （料理L.O. 13:30 ドリンクL.O. 13:30）18:00～23:00 （料理L.O. 22:00 ドリンクL.O. 22:30）",
+    "openingHours": "水～日、祝日: 11:30～15:00 （料理L.O. 13:30 ドリンクL.O. 13:30）18:00～23:00 （料理L.O. 22:00 ドリンクL.O. 22:30）",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.1709",
@@ -208,7 +208,7 @@ button.link-btn{font:inherit;cursor:pointer;}
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 名古屋（名古屋駅/西区/中村区）</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市西区則武新町２-７-2</span></div>
     <div class="info-cell"><label>価格帯</label><span>7001～10000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>水～日、祝日、祝前日: 11:30～15:00 （料理L.O. 13:30 ドリンクL.O. 13:30）18:00～23:00 （料理L.O. 22:00 ドリンクL.O. 22:30）</span></div>
+    <div class="info-cell"><label>営業時間</label><span>水～日、祝日: 11:30～15:00 （料理L.O. 13:30 ドリンクL.O. 13:30）18:00～23:00 （料理L.O. 22:00 ドリンクL.O. 22:30）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>市営地下鉄東山線　亀島駅より徒歩10分</span></div>
   </div>

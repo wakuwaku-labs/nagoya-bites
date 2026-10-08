@@ -7,7 +7,7 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3LCZNGZPWJ');
 function trackEvent(name,params){if(typeof gtag==='function')gtag('event',name,params||{});}
-document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:///i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>コスフ KOSF 大須（栄・矢場町・韓国料理・予算2001～3000円・Google★4.2）| NAGOYA BITES</title>
@@ -50,7 +50,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     "url": "https://nagoya-bites.com/stores/J001022402.html",
     "description": "栄(ミナミ)/矢場町/大須/上前津の韓国料理。地下鉄名城線【上前津駅】12番出口徒歩3分/【矢場町駅】4番出口徒歩6分/栄パルコから徒歩6分！",
     "priceRange": "¥",
-    "openingHours": "月～金: 11:00～14:30 （料理L.O. 14:00 ドリンクL.O. 14:00）17:00～22:00 （料理L.O. 21:00 ドリンクL.O. 21:00）土、日、祝日: 11:30～22:00 （料理L.O. 21:00 ドリンクL.O. 21:00）",
+    "openingHours": "月～水、金: 11:00～14:30 （料理L.O. 14:00 ドリンクL.O. 14:00）17:00～23:00 （料理L.O. 22:00 ドリンクL.O. 22:00）土、日、祝日: 11:30～23:00 （料理L.O. 22:00 ドリンクL.O. 22:00）",
     "geo": {
       "@type": "GeoCoordinates",
       "latitude": "35.161",
@@ -221,7 +221,7 @@ button.link-btn{font:inherit;cursor:pointer;}
     <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 栄(ミナミ)/矢場町/大須/上前津</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市中区大須４‐2‐４１-2F</span></div>
     <div class="info-cell"><label>価格帯</label><span>2001～3000円</span></div>
-    <div class="info-cell"><label>営業時間</label><span>月～金: 11:00～14:30 （料理L.O. 14:00 ドリンクL.O. 14:00）17:00～22:00 （料理L.O. 21:00 ドリンクL.O. 21:00）土、日、祝日: 11:30～22:00 （料理L.O. 21:00 ドリンクL.O. 21:00）</span></div>
+    <div class="info-cell"><label>営業時間</label><span>月～水、金: 11:00～14:30 （料理L.O. 14:00 ドリンクL.O. 14:00）17:00～23:00 （料理L.O. 22:00 ドリンクL.O. 22:00）土、日、祝日: 11:30～23:00 （料理L.O. 22:00 ドリンクL.O. 22:00）</span></div>
     
     <div class="info-cell"><label>アクセス・特徴</label><span>地下鉄名城線【上前津駅】12番出口徒歩3分/【矢場町駅】4番出口徒歩6分/栄パルコから徒歩6分！</span></div>
   </div>
