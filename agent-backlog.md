@@ -119,6 +119,7 @@
 - **review（Designer・QA-5・2026-10-09）**: 承認。差分は `<script>` 内の正規表現1行（生成器1行・孤児99本の同じ1行）だけで、DOM と CSS は変わらない。動き出す処理は GA4 の設定、`trackEvent`、外部リンクのクリック計測だけで、画面を書き換える処理は無い。`audit_design_system.js --check` は CI と同じ条件（孤児一覧を作り直した状態）で exit 0。DOM と CSS が同一のため `measure_typography.js` とスクリーンショットは省略した
 - **合流後（2026-10-09 03:00 JST）**: PR #403 を 208f72697e で合流。build.yml（run 37818977796）が店舗ページ 4,907 本を再生成した。ただし build は店舗データを更新してから再生成するため、手元で現役と数えた 13 店が CI では孤児になり、壊れた形のまま残った（監査は ok:false・26 件。continue-on-error のため API のステップ結果は success と出る）。この 13 本を後続 PR で1行置換し、main 相当の全 6,050 ファイルで違反 0 を確認した。初回 CI が赤だったため、blocking 化（受け入れ条件4）は次の緑を確認してから行う。PR #404 合流後の run 37821594703 で監査が違反 0（6,050 ファイル）になり、main の `grep -l 'https?:///i' stores/*.html` も 0 本（受け入れ条件2 ✅）。後続 PR で build.yml の continue-on-error を外した（受け入れ条件4 ✅）。残りは GA4 での確認（3）と夜間QA の緑（5）
 - **補足**: 店舗ページの CTA ボタンは `onclick="trackEvent('cta_click',…)"` を持つ。`trackEvent` は壊れた script の中で定義されていたため、CTA クリックも 2026-05-08 から GA4 に届いていなかった（リンク自体は開く）。北極星の CTA 率も店舗ページ分を欠いている
+- **合流後の確認（2026-10-09 07:00 JST）**: 達成条件2は満たした（build.yml の run 37847253405 で監査 6,027 本・違反0。main で `grep -l 'https?:///i' stores/*.html` は 0）。達成条件4は済み（ステップは blocking）。残りは3と5。3 の `topPages` は上位5ページしか持たないため、店舗ページが個別に入ることはまず無い。オーナーが GA4 のリアルタイムで `/stores/` を確かめるか、10-10 以降の `data/metrics_history.json` で店舗ページ分の段差を見る。5 は次の夜間QA（`data/qa_findings.json` は 10-08 分のまま）
 
 ### [SEO-117] GSC の意図別・ページ種別の値を日次の指標履歴に残す
 
@@ -219,7 +220,7 @@
 
 ### [SEO-121] sitemap の lastmod を実際の更新日にし、止まっている sitemap-index と sitemap-news を整理する
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / 技術
 - **owner**: Builder
@@ -231,6 +232,7 @@
   2. robots.txt の Sitemap を、毎日更新される sitemap に向ける。更新されない `sitemap-news.xml` は外す
   3. `scripts/audit_sitemap_health.js` に「lastmod が全件同じ日でない」検査を足す
 - **結果（2026-10-09）**: lastmod を内容が変わった日にした（判定器 `scripts/lib/sitemap_lastmod.js`・判断記録 `docs/decisions/0008-sitemap-lastmod-and-structure.md`）。店舗ページは生成した HTML が前回のファイルと違うときだけ当日（同じなら前回の lastmod を引き継ぎ、ファイルも書き直さない。手元の dry-run で 4,907 店中 4,895 店が同一＝出力は決定的）、ハブは manifest の `updated`、特集は JSON-LD の `dateModified`→`datePublished`、記事はそれに加えファイル名の日付、一覧ページは配下の最大値。日付の取れない `about.html` と `features/nagoya-settai-concierge.html` は lastmod を書かない。robots.txt は `sitemap.xml` を直接指す。`sitemap-index.xml` は sitemap.xml と sitemap-images.xml を束ねる固定ファイルにし、止まっていた `sitemap-news.xml` は削除。旧 `build_features.js` は sitemap.xml・news・index を書かない。CI で先に動く `build.js` も sitemap.xml を全件当日で書き直していた（直後の gen-store-pages.js が引き継ぐ前回の lastmod を消す）ため、書き出しを外した（正本は gen-store-pages.js ＋ gen_area_genre_pages.js）。`scripts/audit_sitemap_health.js` に lastmod の検査（全件同じ日・形式不正・未来日）と `--lastmod-only` を追加し、今の sitemap（全件 2026-10-08）が異常と出ることを確認。新しい生成器の出力は日付147種類で通過。テスト `tests/sitemap_lastmod.test.js`（6件）。合流後、CI の再生成で本番の sitemap.xml が `--lastmod-only --check` を通ることを確かめる
+- **本番確認（2026-10-09）**: 合流後の build.yml（run 37847253405）の後、main で `node scripts/audit_sitemap_health.js --lastmod-only --check` が exit 0。達成条件3まで満たした
 
 ### [SEO-122] デート特集を「名古屋 デート ディナー」で1ページ目に上げる
 
@@ -498,6 +500,7 @@
   2. 方針違反なら店舗ページから `aggregateRating` を外す。SearchAction は外す
   3. 読めない URL（`store-<16進>` 177 本）は今回扱わず、理由を記録する
 - **結果（2026-10-09）**: Google のレビュー スニペットの方針（2026-09-08 更新）に "Don't aggregate reviews or ratings from other websites." とあり、Google の口コミの集計を `aggregateRating` に入れるのは方針違反と判断した。出典 URL つきで `docs/decisions/0009-structured-data-third-party-ratings.md` に記録。店舗ページ（`gen-store-pages.js`）とトップのモーダル（`index.html`）の JSON-LD から外した。画面の★と口コミ件数、口コミ信頼度（`additionalProperty`）は残す。トップの WebSite の `SearchAction` も外した（2024-11-21 に表示終了。name・url・publisher は残す）。店舗ページは旧コードとの比較（611 店の見本）で、変わるのは JSON-LD の aggregateRating だけ。読めない URL 177 本は、転送ページが要ることと、GSC で表示が出ているのが 7 本（表示 115・クリック 9）だけであることを理由に変えない。テスト `tests/structured_data_policy.test.js`（3件）。店舗ページは合流後の build.yml の再生成で反映される
+- **後始末（2026-10-09）**: 合流後の再生成のあとも、店舗ページ 78 本に `AggregateRating` が残っていた。78 本はすべて `data/store_page_orphans.json` に載る孤児ページ（データから外れた店のページで、生成器が作り直さない）。JSON-LD を読み、`aggregateRating` だけを外して同じ形（2字下げ）で書き戻した（1回限り。これから生まれる孤児は新しい生成器の出力なので、もともと持たない）。main で `grep -l AggregateRating stores/*.html | wc -l` は 0、`node scripts/audit_inline_js_syntax.js --check --only stores` は 5,097 本で違反 0
 
 ### [SEO-140] 11-15 のチェックポイントで北極星指標を判定する
 
@@ -544,7 +547,7 @@
 
 ### [SEO-143] 店舗ページに編集コメント（editorReason）を表示する
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / コンテンツ
 - **owner**: Builder / Designer
@@ -558,6 +561,7 @@
   4. 再生成の後、`node scripts/indexnow_ping.js --recent 2` の内訳で `stores.comment_not_on_page` が 141 から減る
 - **結果（2026-10-09）**: `gen-store-pages.js` の `buildEditorReason()` が、おすすめポイントの直後に「編集部の選定理由」の節を出す。文は HTML エスケープし、選定の根拠（visitStatus）をトップのモーダルと同じ語で添える（例: 選定の根拠：公開情報ベース（自動収集））。おすすめポイントと同じ文（文末の句点の有無は無視）なら出さない。insiderNote は出さない（達成条件2の記録が無いため）。手元の比較で、editorReason を持つ151店のうち141店に節が出て、10店は同じ文のため出ない。それ以外の本文は旧コードと一致（editorReason を持つ店と、持たない店316件の見本）。再生成後の見込みは、`storeTargets` に新しい出力を渡した試算で comment_not_on_page が 141 → 0。試算の途中で、同じ slug になる店（5か所11店・例: 喫茶リヨン／喫茶ユキ／喫茶マウンテン）の2店目以降のページ（生成器が `-2`・`-3` を付ける）を、`indexnow_ping.js` が基本の slug で探していて見つけられないと分かった。h1 の店名でその店のページを探すように直した（`storePageFor()`・テスト1件）。テスト `tests/store_page_editor_reason.test.js`（5件）。達成条件4は main の再生成（build.yml）の後に確かめる
 - **review（Designer QA-5・2026-10-09）**: 承認。新しい節は既存の部品の型に合わせた（見出しは `.links-section h2` と同じ 13px・600・`--dim`、本文は `.point-box p` と同じ `--fs-md`・`--lh-body`、根拠の行は 13px・`--muted`）。font-size はすべてトークンで、`:root` は変えていない。141店のページを手元で生成して `audit_design_system.js --check` を当てて違反0、インライン JS の検査も違反0。375px で表示を確認し、見出し 13px・本文 15.15px・根拠 13px（実測）で、おすすめポイントの金色の枠と区別できる白い枠にした。`node scripts/audit_design_system.js --check`（既存ページ）と `node scripts/audit_inline_js_syntax.js --check --only stores --sample 200` も exit 0。index.html は変えていない（制約5に影響なし）
+- **本番確認（2026-10-09）**: 合流後の build.yml が店舗ページを再生成し、main で「編集部の選定理由」の節を持つ店舗ページは 141 本。`node scripts/indexnow_ping.js --recent 2`（送信しない確認）で `stores.comment_not_on_page` が 141 → 0。#419 で IndexNow が `-2`/`-3` のページを探せるようにした分を含む
 
 ### [SEO-144] index.html と既存の静的ページでも、localStorage の例外で GA が止まらないようにする
 
