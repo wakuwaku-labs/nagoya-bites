@@ -2065,79 +2065,12 @@ async function main() {
     console.warn('generate_page_names.js の実行に失敗しました:', e.message);
   }
 
-  // 4. sitemap.xml を更新
-  //    トップ + 静的ページ + features/ 全件 + stores/ 全件 を列挙
-  const storesDir = path.join(__dirname, 'stores');
-  const featuresDir = path.join(__dirname, 'features');
-  const journalDir = path.join(__dirname, 'journal');
-  const baseUrl = 'https://nagoya-bites.com';
-
-  const sitemapUrls = [
-    { loc: `${baseUrl}/`, priority: '1.0', changefreq: 'weekly' },
-    { loc: `${baseUrl}/about.html`, priority: '0.7', changefreq: 'monthly' },
-    { loc: `${baseUrl}/contact.html`, priority: '0.6', changefreq: 'monthly' },
-    { loc: `${baseUrl}/faq.html`, priority: '0.7', changefreq: 'monthly' },
-  ];
-
-  // features/ インデックス + 個別特集ページ
-  if (fs.existsSync(featuresDir)) {
-    sitemapUrls.push({ loc: `${baseUrl}/features/`, priority: '0.9', changefreq: 'weekly' });
-    const featureFiles = fs.readdirSync(featuresDir)
-      .filter(f => f.endsWith('.html') && f !== 'index.html')
-      .sort();
-    for (const f of featureFiles) {
-      sitemapUrls.push({
-        loc: `${baseUrl}/features/${f}`,
-        priority: '0.8',
-        changefreq: 'monthly'
-      });
-    }
-  }
-
-  // journal/ インデックス + 個別日次記事 (drafts/ と _template.html は除外)
-  if (fs.existsSync(journalDir)) {
-    sitemapUrls.push({ loc: `${baseUrl}/journal/`, priority: '0.9', changefreq: 'daily' });
-    const journalFiles = fs.readdirSync(journalDir)
-      .filter(f => f.endsWith('.html') && f !== 'index.html' && f !== '_template.html')
-      .sort();
-    for (const f of journalFiles) {
-      sitemapUrls.push({
-        loc: `${baseUrl}/journal/${f}`,
-        priority: '0.7',
-        changefreq: 'monthly'
-      });
-    }
-  }
-
-  // stores/*.html を全件登録（P0-B: 店舗ページをクロール対象に）
-  let storeCount = 0;
-  if (fs.existsSync(storesDir)) {
-    const storeFiles = fs.readdirSync(storesDir)
-      .filter(f => f.endsWith('.html') && f !== 'index.html')
-      .sort();
-    for (const f of storeFiles) {
-      sitemapUrls.push({
-        loc: `${baseUrl}/stores/${f}`,
-        priority: '0.6',
-        changefreq: 'monthly'
-      });
-    }
-    storeCount = storeFiles.length;
-  }
-
-  const sitemapEntries = sitemapUrls.map(u => `  <url>
-    <loc>${u.loc}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>
-  </url>`).join('\n');
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapEntries}
-</urlset>
-`;
-  fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemap, 'utf8');
-  console.log(`sitemap.xml 更新完了（URL数: ${sitemapUrls.length}、うち店舗: ${storeCount}）`);
+  // 4. sitemap.xml は書かない（SEO-121・2026-10-09）
+  //    正本は build.yml の gen-store-pages.js（＋ハブを追記する scripts/gen_area_genre_pages.js）。
+  //    以前はここで全 URL の lastmod を当日にして書き直しており、直後の gen-store-pages.js が
+  //    引き継ぐ「前回の lastmod」（内容が変わった日）を毎回消していた。daily-trending5.yml も
+  //    build.js の sitemap.xml はコミットしない（2026-09-28）。
+  console.log('sitemap.xml: build.js では書かない（正本は gen-store-pages.js・SEO-121）');
 
   // Daily Journal セクション（index.html トップの最新3件）と journal/index.html / feed を
   // 必ず同期する。これを抜くと chore: auto-update store data 系の自動更新で

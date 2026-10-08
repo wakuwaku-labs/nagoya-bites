@@ -9,8 +9,13 @@
 // 本スクリプトは自己申告ではなく実際のHTTPレスポンス（誰でも同じURLで検算できる事実）
 // で判定し、CI（build.yml）に組み込むことで退行を毎日自動検知する（同原則1・2・5）。
 //
-// 使い方: node scripts/audit_sitemap_health.js [--check] [--concurrency N]
+// 使い方: node scripts/audit_sitemap_health.js [--check] [--concurrency N] [--lastmod-only]
 // --check: 異常があれば exit 1（CI向け）。無指定でも検出結果は表示するが exit 0。
+// --lastmod-only: 通信せず lastmod の検査だけ行う（SEO-121）。
+//
+// SEO-121（2026-10-09）: lastmod の検査を足した（通信なし・scripts/lib/sitemap_lastmod.js）。
+// 旧生成器は全 URL に生成日を書いており、5,823 URL の lastmod が1値だった。Google は信頼できない
+// lastmod を無視するため、「全件同じ日」「形式不正」「未来日」を異常とする。
 
 'use strict';
 
@@ -21,6 +26,7 @@ const https = require('https');
 const SITEMAP = path.join(__dirname, '..', 'sitemap.xml');
 const args = process.argv.slice(2);
 const CHECK_MODE = args.includes('--check');
+const LASTMOD_ONLY = args.includes('--lastmod-only');
 const concurrencyArgIdx = args.indexOf('--concurrency');
 const CONCURRENCY = concurrencyArgIdx >= 0 ? parseInt(args[concurrencyArgIdx + 1], 10) : 20;
 const TIMEOUT_MS = 15000;
@@ -94,6 +100,13 @@ async function main() {
     process.exit(1);
   }
   const xml = fs.readFileSync(SITEMAP, 'utf8');
+  const lh = require('./lib/sitemap_lastmod').lastmodHealth(xml, new Date().toISOString().slice(0, 10));
+  const mc = lh.mostCommon;
+  console.log(`lastmod: ${lh.withLastmod}/${lh.urls} URL に記載・日付 ${lh.distinctDates} 種類${mc ? `・最多 ${mc.date}（${(mc.share * 100).toFixed(1)}%）` : ''}`);
+  if (lh.singleDate) console.log(`❌ lastmod が全件 ${lh.singleDate} の1値（内容が変わった日を書く・SEO-121）`);
+  if (lh.invalid.length) console.log(`❌ lastmod の形式が不正: ${lh.invalid.length}件（例: ${lh.invalid.slice(0, 3).join(' ')}）`);
+  if (lh.future.length) console.log(`❌ lastmod が未来の日付: ${lh.future.length}件（例: ${lh.future.slice(0, 3).join(' ')}）`);
+  if (LASTMOD_ONLY) process.exit(CHECK_MODE && !lh.ok ? 1 : 0);
   const urls = extractUrls(xml);
   console.log(`sitemap.xml: ${urls.length} URL を検査します（並列数: ${CONCURRENCY}）...`);
 
@@ -126,7 +139,7 @@ async function main() {
     networkErrors.slice(0, 20).forEach(r => console.log(`  ${r.url} (${r.error})`));
   }
 
-  const hardFailures = notFound.length + otherError.length + redirects.length;
+  const hardFailures = notFound.length + otherError.length + redirects.length + (lh.ok ? 0 : 1);
   if (hardFailures === 0) {
     console.log('\n✅ sitemap.xml 全URL 正常（200・リダイレクトなし・404なし）');
   }

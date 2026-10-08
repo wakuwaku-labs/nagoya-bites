@@ -531,17 +531,20 @@ function buildRegistry(pages) {
 // ================================================================
 // sitemap.xml 冪等書き換え（既存の /stores/area/ 区間だけ差し替える）
 // ================================================================
-function rewriteSitemap(pages, policy) {
+// SEO-121: lastmod は manifest の updated（内容ハッシュが変わった日）。旧実装は全ハブに当日を書いていた
+function rewriteSitemap(pages, policy, updatedByPath = new Map()) {
   if (!fs.existsSync(SITEMAP_PATH)) return { updated: false, reason: 'sitemap.xml not found' };
   let xml = fs.readFileSync(SITEMAP_PATH, 'utf8');
   const today = new Date().toISOString().slice(0, 10);
+  const { clampToday, lastmodLine } = require('./lib/sitemap_lastmod');
   const urlBlockRe = /<url>\s*<loc>[^<]*<\/loc>[\s\S]*?<\/url>\s*/g;
   xml = xml.replace(urlBlockRe, block => (/\/stores\/area\//.test(block) ? '' : block));
   const newBlocks = pages
     .filter(p => p.type !== 'root' || true)
     .map(p => {
       const priority = p.type === 'condition' ? policy.sitemap.conditionPriority : policy.sitemap.hubPriority;
-      return `  <url>\n    <loc>${BASE_URL}/${p.url}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${policy.sitemap.changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>\n`;
+      const lastmod = clampToday(updatedByPath.get(p.url), today) || today;
+      return `  <url>\n    <loc>${BASE_URL}/${p.url}</loc>${lastmodLine(lastmod)}\n    <changefreq>${policy.sitemap.changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>\n`;
     }).join('');
   xml = xml.replace(/<\/urlset>\s*$/, newBlocks + '</urlset>');
   fs.writeFileSync(SITEMAP_PATH, xml, 'utf8');
@@ -642,7 +645,10 @@ function main() {
   if (!DRY_RUN) fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 1) + '\n', 'utf8');
 
   let sitemapResult = { updated: false };
-  if (!DRY_RUN && !LIMIT) sitemapResult = rewriteSitemap(limited.filter(p => manifestPages.find(m => m.path === p.url && m.status === 'active')), policy);
+  if (!DRY_RUN && !LIMIT) {
+    const updatedByPath = new Map(manifestPages.map(m => [m.path, m.updated]));
+    sitemapResult = rewriteSitemap(limited.filter(p => manifestPages.find(m => m.path === p.url && m.status === 'active')), policy, updatedByPath);
+  }
 
   console.log(JSON.stringify({
     ok: true, dry_run: DRY_RUN, planned: pages.length, written, unchanged,

@@ -822,7 +822,9 @@ ${urls.map(u => `  <url>
   </url>`).join('\n')}
 </urlset>
 `;
-  fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), mainSitemap, 'utf8');
+  // SEO-121（2026-10-09）: sitemap.xml の正本は gen-store-pages.js（ハブは scripts/gen_area_genre_pages.js が追記）。
+  // ここで書くと全 URL の lastmod が当日に戻り、ハブ（stores/area/）も消えるため書かない。
+  void mainSitemap;
 
   // ──────────────────────────────────────────
   // 2. sitemap-images.xml — 店舗+特集の og:image を添付
@@ -895,7 +897,8 @@ ${newsEntries.map(e => `  <url>
   </url>`).join('\n')}
 </urlset>
 `;
-  fs.writeFileSync(path.join(__dirname, 'sitemap-news.xml'), newsSitemap, 'utf8');
+  // SEO-121: sitemap-news.xml は廃止した（Google ニュースの掲載媒体ではなく、2026-05-23 から更新が止まっていた）
+  void newsSitemap;
 
   // ──────────────────────────────────────────
   // 4. sitemap-index.xml — 3つのsitemapを束ねる
@@ -916,12 +919,12 @@ ${newsEntries.map(e => `  <url>
   </sitemap>
 </sitemapindex>
 `;
-  fs.writeFileSync(path.join(__dirname, 'sitemap-index.xml'), indexXml, 'utf8');
+  // SEO-121: sitemap-index.xml は固定ファイル（sitemap.xml と sitemap-images.xml を束ねるだけ）。robots.txt は sitemap.xml を直接指す
+  void indexXml;
 
-  console.log(`  ✅ sitemap.xml: 合計 ${urls.length}ページ(特集${featureFiles.length + 1}, journal${journalFiles.length}, 店舗${storeFiles.length})`);
+  console.log(`  - sitemap.xml: 書き出さない（正本は gen-store-pages.js・SEO-121）`);
   console.log(`  ✅ sitemap-images.xml: ${imageEntries.length}画像`);
-  console.log(`  ✅ sitemap-news.xml: ${newsEntries.length}件(直近48h)`);
-  console.log(`  ✅ sitemap-index.xml: 3 sub-sitemap`);
+  console.log(`  - sitemap-news.xml / sitemap-index.xml: 書き出さない（SEO-121）`);
 }
 
 // ─────────────────────────────────────────────
