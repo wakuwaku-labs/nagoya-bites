@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-08T22:08:43.568Z",
+  "generatedAt": "2026-10-08T22:43:46.658Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1221,
-    "pageViews": 1768,
-    "sessions": 1410,
-    "avgSessionDuration": 129.9,
-    "bounceRate": 0.274,
+    "activeUsers": 1223,
+    "pageViews": 1769,
+    "sessions": 1412,
+    "avgSessionDuration": 129.8,
+    "bounceRate": 0.275,
     "pagesPerSession": 1.25
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 961,
-      "direct": 312,
+      "organic": 962,
+      "direct": 313,
       "social": 6,
       "ai_assistant": 106,
       "referral": 28,
@@ -44,7 +44,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 388
+      "sessions": 389
     },
     {
       "source": "(direct)",
@@ -69,7 +69,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 25
+      "sessions": 26
     },
     {
       "source": "duckduckgo",
@@ -205,12 +205,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 141,
-    "ctaClickRate": 10,
+    "outboundClicks": 142,
+    "ctaClickRate": 10.1,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 43
+        "clicks": 44
       },
       {
         "domain": "tabelog.com",
@@ -276,7 +276,7 @@
     "note": null,
     "byChannel": {
       "organic": 49,
-      "direct": 70,
+      "direct": 71,
       "social": 0,
       "ai_assistant": 21,
       "referral": 1,
@@ -284,7 +284,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 5.1,
-    "ctaClickRate_direct": 22.4,
+    "ctaClickRate_direct": 22.7,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -693,6 +693,11 @@
         "path": "/stores/area/sakae/izakaya-budget-3000.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
+      },
+      {
+        "path": "/stores/area/sakae/yakiniku-budget-5000-plus.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
       }
     ],
     "reservationClicksByPage": [
@@ -771,13 +776,17 @@
       {
         "path": "/stores/area/sakae/izakaya-budget-3000.html",
         "clicks": 1
+      },
+      {
+        "path": "/stores/area/sakae/yakiniku-budget-5000-plus.html",
+        "clicks": 1
       }
     ],
-    "reservationClicks": 75
+    "reservationClicks": 76
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1221,
+    "value": 1223,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
