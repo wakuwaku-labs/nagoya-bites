@@ -21,6 +21,7 @@ status: in_progress
   - #422 SEO-145（特集の公開日・更新日・書き手の部品・P-153 Done）。SEO-131（P-127）も Done
   - #424 SEO-146（特集の掲載件数の表記を実数に日次でそろえる・scripts/sync_feature_counts.js・P-154 Done）
   - #425 SEO-147（ジャーナル・店舗ページから特集へのリンク文の件数。生成器が relabelForSlug を通す・ジャーナル17本をそろえた・build.yml に --target stores・夜間QA soft。P-156 は In Progress）
+  - #428 SEO-137（ジャーナルの title の前30字の規則・判定器・上位15本の書き換え・台帳・P-133 Done。比較は SEO-148＝P-157・11-06）
   - #427 SEO-122（デート特集の掲載店を FAQ の約束にそろえ、冒頭に予算別の結論を機械で置く・docs/decisions/0011・P-118 Done）
   - #426 SEO-124（ハブ685本に編集部の見分け方・選定理由の別枠・予算帯と最寄り駅の表。FAQPage の JSON-LD を外した。QA で本文の幅の未指定と最寄り駅の集計も直した・P-120 Done）
   - #416 SEO-143（店舗ページに「編集部の選定理由」）・#418 SEO-139（aggregateRating と SearchAction を外す・docs/decisions/0009）・#419 IndexNow が -2/-3 の店舗ページを探す・#420 SEO-127（banquet の 11・12月リードと幹事チェックリスト）・#421 SEO-131 その1（掲載店の入れ替えで dateModified を進める）
@@ -31,7 +32,7 @@ status: in_progress
 1. 10-10 以降に確認: SEO-147（P-156）の達成条件3。main で `node scripts/sync_feature_counts.js --check --target stores` が exit 0 なら backlog done・P-156 Done＋コメント（店舗ページは CI の再生成で直る設計。ローカルで書き換えない）
 2. SEO-122（P-118）: #427 で合流・P-118 Done＋コメント済み。達成条件4（4週後の順位）は SEO-140（11-15）で記録する。冒頭の結論の仕組み（scripts/apply_feature_conclusions.js・data/feature_conclusions.json・nb.css .nb-conclusion）は SEO-134 で他の特集へ広げる（docs/decisions/0011）
 3. SEO-115 の残り（P-112）: 達成条件3（GA4 で /stores/ の page_view。topPages は上位5ページだけなので、オーナー確認か 10-10 以降の metrics_history の段差）と5（次の夜間QA の inline-js が緑）
-4. SEO-137（P-133）: 実装・検証済み（npm test 413/413・design/inline/og の各 --check 0・台帳一致 20/20）。規則は agents/editor.md・scripts/journal_seo_kw.js（checkTitleFront）・validate_journal_draft.js 項目18（WARNING のみ）の3か所。GSC 上位20本のうち15本の <title> と og:title だけ書き換え（h1・本文・JSON-LD・journal_published.json は変えない。register_journal_entry.js は既存の日付を skip するので published.json は上書きされない）。台帳 data/journal_title_experiment.json、比較 scripts/journal_title_experiment.js --report。11-06 の比較は SEO-148 として起票済み（backlog）。残り: コミット → PR → squash merge → Linear 同期（SEO-148 作成・P-133 Done）→ P-133 に結果コメント
+4. SEO-137（P-133）: #428 で合流・P-133 Done＋結果コメント済み。11-06 の比較は SEO-148（P-157・Todo・期限 11-06）。`node scripts/journal_title_experiment.js --report` で比べる
 5. 夜間QA の station-names が緑で続いたら hard に上げる
 6. 最後に: 「うなぎのしろむら 泉店」の起票、創業者の実名が index.html の Organization JSON-LD に出ている件をオーナーへ報告（変更しない）、http.server（8093・8094・8095）を止める
 
