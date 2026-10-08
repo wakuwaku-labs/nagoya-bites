@@ -601,7 +601,7 @@
 
 ### [SEO-146] 特集の掲載件数の表記を、実際に並ぶ店の数にそろえる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data-quality / コンテンツ
 - **owner**: Builder / Editor
@@ -613,6 +613,31 @@
   2. `features/index.html` の特集カードに出ている件数も、各特集の実数にそろえる
   3. 件数表記と `numberOfItems` が食い違えば落ちる検査（テストか `--check`）を足し、日次で回す
   4. `scripts/gen_industry_features.js` の一覧から「焼鳥 串っ子」を外し、実行できる状態に戻す
+- **結果**（2026-10-09）:
+  - 掲載数は「ItemList の件数＝要素数＝店カード枚数」が一致したときだけ使う（`scripts/lib/feature_counts.js` の `verifiedCount`。ひつまぶし・味噌煮込み・手羽先の `store` カードも数える）。61本で確かめられた
+  - 自ページの表記: title・og・twitter・説明文・h1・meta 行・JSON-LD（Article・店の ItemList・パンくず末尾）と、本文・FAQ の「厳選N店」「本特集のN軒」「判断したN軒」「掲載N軒」「N店舗掲載」をそろえる。「N店」「N軒」だけの表記は、同じ文に掲載数とわかる言い回しがあればその数と同じとき、無ければ1種類の数だけのときに限って掲載数として読む（「上位に挙げた3軒」「備長3店舗」「1〜2店」「4,559軒」は触らない）
+  - 他の特集へのリンク文: features/ の22本で、リンク先の掲載数とずれた「N選」（失敗しない接待10選→8選、ラーメン12選→11選、餃子10選→9選、中華料理9選→10選 など）と features/index.html のカード・JSON-LD の名前をそろえた
+  - 達成条件1: 6本に加えて industry-insiders-pick（title が「業界人推薦10選」で実際は6店）・kospa-insider（説明文10選→5選）・settai-guide（説明文と ItemList の名前 8選→6選）も直した。settai-secret は通し番号が 2〜10 で欠けていたのを 1〜8 に振り直し、FAQ の「焼肉4軒」を stores.json のジャンルで数えた3軒に直した
+  - 達成条件2: features/index.html のカード（味噌煮込み 5店→4店、予約困難 10軒→9軒、業界人推薦 10選→6選 など）。トップと特集一覧の季節カードは `build_featured.js` が描画のときにリンク先の掲載数で書き換える（`data/featured.json` の 鉄板焼き・ステーキ・ひつまぶし・GW・父の日の件数も直した）
+  - 達成条件3: `scripts/sync_feature_counts.js`（`--check` で exit 1）を build.yml の特集を書き換えるステップの最後に日次で置いた。掲載店の入れ替えで件数が変わった日も、コミットの前に表記が追いつく。npm test（blocking）が「公開中の特集でずれ0件」「店カードの通し番号が1〜掲載数」を検査する
+  - 達成条件4: 「焼鳥 串っ子」を外し、件数の手書き20か所を店リストの長さから入れる `{N}` にした。関連リンクの件数もリンク先に合わせる。`--out <dir>` で別の場所に書けるようにし、実行して3本が書き出せることを確かめた（features/ には書いていない）
+  - 確認: npm test 全件通過・`audit_feature_schema_alignment`・`audit_design_system --check`・`audit_inline_js_syntax --check --only features`・`apply_site_chrome --check --only features`・`migrate_feature_headings --check`・`build_featured --check` すべて通過。数字だけの変更でマークアップ・CSS は変えていない
+  - 残り: ジャーナル17本（30リンク）と店舗ページ839本（885リンク・大須食べ歩き10選→8選、個室のある名古屋グルメ10選→9選、誕生日・記念日10選→5選 など）のリンク文は生成器の手書きラベルが出どころのため [[SEO-147]] に分けた
+
+### [SEO-147] ジャーナルと店舗ページから特集へのリンク文の「N選」を、特集の実際の掲載数にそろえる
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: data-quality / コンテンツ
+- **owner**: Builder / Editor
+- **source**: [[SEO-146]] の作業中に発見（2026-10-09）
+- **brand-filter**: ✅ 適合 — 実在保証（Moat）。リンク文の数と飛び先の中身を一致させる
+- **背景**: [[SEO-146]] で features/ の中はそろえたが、特集へのリンク文の件数は生成器の手書きラベルが出どころで、ジャーナルと店舗ページに古い数が残っている（2026-10-09 に `scripts/lib/feature_counts.js` の `relabelAll` で数えた）。店舗ページは 839本・885リンク（大須 食べ歩きおすすめ10選→実際8・個室のある名古屋グルメ10選→9・名古屋・誕生日/記念日ディナー10選→5・名古屋ラーメン おすすめ12選→11 など）。出どころは `gen-store-pages.js` の関連特集の表（237〜266行付近）と `scripts/patch_store_related_features.js`。ジャーナルは 17本・30リンク（ラーメン12選・大須食べ歩き10選・失敗しない接待10選・誕生日・記念日10選）。出どころは `scripts/inject_journal_feature_cta.js`・`scripts/refresh_journal_related.js`（daily-journal.yml と run_journal_local.sh が実行）・`scripts/add_related_features.js`
+- **acceptance**:
+  1. 上の生成器のラベルを、書き出すときに `relabelForSlug`（`scripts/lib/feature_counts.js`）でリンク先の掲載数に合わせる。gen-store-pages.js はテンプレートの変更として Designer の QA-5 と `audit_design_system.js --check` を通す
+  2. 既存のジャーナル17本のリンク文をそろえる（`syncPage` を journal/ に当てるか、生成器の再実行で）
+  3. 店舗ページは CI の再生成で直ることを、合流の翌日に `relabelAll` で数えて0件で確かめる（ローカルで約5,000本を再生成しない）
+  4. ジャーナルと店舗ページのずれを数える検査を足す（初回は非ブロッキング）
 
 ### [DSN-007] 閉じたモバイルメニューでページの横幅が画面の2倍になっていないか確かめ、なっていれば直す
 

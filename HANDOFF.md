@@ -24,7 +24,8 @@ status: in_progress
 - 起票: ISSUE-147（P-142・Places の古い誤紐付け・オーナー承認が要る）／ISSUE-148（P-143・スプレッドシート経由の住所検査）／SEO-142（P-144・sameAs。公式アカウントの URL をオーナーが示すまで待ち）／SEO-143（P-145・店舗ページに editorReason が出ていない）／SEO-144（P-146・index.html と静的ページの localStorage 例外で GA が止まる）
 
 # 次にやること
-1. 実装中: 孤児78本の aggregateRating 除去（SEO-139 の後始末）＋ backlog 確認結果（SEO-121・SEO-143 done）→ PR → 合流 → sync --apply（P-117・P-145 Done）→ P-117・P-145・P-135 に結果コメント
+1. 実装中: SEO-146（P-154）。済: scripts/lib/feature_counts.js に verifiedCount・relabelAll/relabelStrong・syncPage・syncAll・relabelForSlug を追加し、features/ 22本に適用（未コミット）。手直し: reservation-difficult・settai-secret の本文、settai-secret の通し番号（2〜10→1〜8）と焼肉4軒→3軒（stores.json のジャンルで3店）。残り: scripts/sync_feature_counts.js（CLI・--check/--dry-run/--only）→ build.yml の byline の後に追加 → build_featured.js で描画時に relabelForSlug・data/featured.json の件数を直す → gen_industry_features.js（串っ子を外す・{N} で店数から入れる・--out）→ tests（ガード・fixture・本番の --check が0・通し番号）→ 監査（schema_alignment・design・inline js・npm test）→ PR → backlog done → P-154 Done → SEO-147（店舗ページ生成器とジャーナル側）を起票
+   （#423 は合流済み・P-117・P-145 は Done）
 2. SEO-115 の残り（P-112）: 達成条件3（GA4 で /stores/ の page_view。topPages は上位5ページだけなので、オーナー確認か 10-10 以降の metrics_history の段差）と5（次の夜間QA の inline-js が緑）
 3. 次の実装: SEO-146（P-154・特集の掲載件数の表記・gen_industry_features.js の「焼鳥 串っ子」）→ SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
 4. 夜間QA の station-names が緑で続いたら hard に上げる

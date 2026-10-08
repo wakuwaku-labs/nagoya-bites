@@ -15,7 +15,13 @@ const { gaSnippet } = require('./lib/ga_snippet');
 const { applyByline } = require('./lib/feature_byline');
 const DS = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'design_system.json'), 'utf8'));
 
+const { featureSlugOf, relabelAll, relabelForSlug } = require('./lib/feature_counts');
+
 const ROOT = path.join(__dirname, '..');
+// 既定は features/ に直接書く。features/ の3本はその後ロスターの入れ替えや手直しが入っているため、
+// 試すときは --out <dir> で別の場所に書いて見比べる
+const outAt = process.argv.indexOf('--out');
+const OUT_DIR = outAt >= 0 ? path.resolve(process.argv[outAt + 1] || '.') : path.join(ROOT, 'features');
 const picks = require(path.join(ROOT, 'data', 'editor_picks.json')).stores;
 const findStore = (name) => {
   const s = picks.find(s => s.店名 === name);
@@ -23,19 +29,25 @@ const findStore = (name) => {
   return s;
 };
 
+// 掲載数は店リストの長さから入れる（{N}）。手書きの「10軒」が店の入れ替えで実数とずれないように（SEO-146）
+const fillCount = (v, n) => (typeof v === 'string' ? v.split('{N}').join(String(n))
+  : Array.isArray(v) ? v.map(x => fillCount(x, n))
+  : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, fillCount(x, n)]))
+  : v);
+
 // 各特集の構成
 const features = [
   {
     slug: 'nagoya-industry-pick-izakaya',
     eyebrow: '業界人コラム',
-    titleHtml: '業界人が推薦する<em>名古屋の居酒屋</em>10選',
-    titleText: '業界人が推薦する名古屋の居酒屋10選',
+    titleHtml: '業界人が推薦する<em>名古屋の居酒屋</em>{N}選',
+    titleText: '業界人が推薦する名古屋の居酒屋{N}選',
     titleH1Suffix: '【2026年版・現役飲食人の本音セレクト】',
-    metaDesc: '名古屋（栄・金山・名駅）の居酒屋を、現役の飲食店マネージャーが業界視点で厳選10軒。仕入れ・席数設計・原価管理まで踏み込んだ業界人ならではの解説付き。',
-    ogDesc: '現役飲食人が、仕入れ・席数・原価管理まで踏み込んで名古屋の居酒屋10軒を厳選。業界の中の人にしか書けない目利きセレクト。',
+    metaDesc: '名古屋（栄・金山・名駅）の居酒屋を、現役の飲食店マネージャーが業界視点で厳選{N}軒。仕入れ・席数設計・原価管理まで踏み込んだ業界人ならではの解説付き。',
+    ogDesc: '現役飲食人が、仕入れ・席数・原価管理まで踏み込んで名古屋の居酒屋{N}軒を厳選。業界の中の人にしか書けない目利きセレクト。',
     keywords: '名古屋 居酒屋 業界人,名古屋 居酒屋 おすすめ,名古屋 居酒屋 プロ,名古屋 居酒屋 飲食人,栄 居酒屋,名駅 居酒屋,金山 居酒屋',
-    leadText: 'タベログのランキングでもホットペッパーの予約数でも見えない、「業界の中の人が本当に行きたい居酒屋」を10軒だけ選びました。仕入れの構造・席数設計・原価管理——表からは見えない店の実力を、現役の飲食人視点で言語化しています。',
-    introText: '居酒屋という業態は、ジャンルが広いぶん「いい店」の定義が曖昧になりやすい。だからこそ業界の中の人は、料理の見栄えや口コミ件数よりも「仕入れの読み」「席数設計」「原価管理」といった見えない要素で店を評価します。今回は editor_picks に登録された100店から、業界目線で「正しい運営をしている」と判断できる10軒を選びました。',
+    leadText: 'タベログのランキングでもホットペッパーの予約数でも見えない、「業界の中の人が本当に行きたい居酒屋」を{N}軒だけ選びました。仕入れの構造・席数設計・原価管理——表からは見えない店の実力を、現役の飲食人視点で言語化しています。',
+    introText: '居酒屋という業態は、ジャンルが広いぶん「いい店」の定義が曖昧になりやすい。だからこそ業界の中の人は、料理の見栄えや口コミ件数よりも「仕入れの読み」「席数設計」「原価管理」といった見えない要素で店を評価します。今回は editor_picks に登録された100店から、業界目線で「正しい運営をしている」と判断できる{N}軒を選びました。',
     selectionCriteria: [
       'editor_picks に登録された100店からの抽出',
       '現役飲食店マネージャーの visited / desk リサーチに基づく評価',
@@ -64,7 +76,7 @@ const features = [
     },
     faqs: [
       { q: '名古屋の居酒屋で「業界人推薦」とはどういう意味ですか？', a: '広告掲載・タイアップなしで、現役の飲食店マネージャーが「自分も行きたい」「同業者に紹介できる」と判断した店を指します。Google評価や口コミ件数だけでなく、仕入れの読み・席数設計・原価管理など、業界の中の人にしかわからない要素で評価しています。' },
-      { q: 'editor_picks に登録された100店は全部「業界人推薦」ですか？', a: 'はい。editor_picks に登録するには、現役飲食店マネージャーによる editorReason（掲載判断の根拠）、mediaFeatures（他媒体掲載履歴）、insiderNote（業界人視点の解釈メモ）、visitStatus（visited / interview / desk）の4要素を満たす必要があります。本特集はそのうち居酒屋業態の10軒です。' },
+      { q: 'editor_picks に登録された100店は全部「業界人推薦」ですか？', a: 'はい。editor_picks に登録するには、現役飲食店マネージャーによる editorReason（掲載判断の根拠）、mediaFeatures（他媒体掲載履歴）、insiderNote（業界人視点の解釈メモ）、visitStatus（visited / interview / desk）の4要素を満たす必要があります。本特集はそのうち居酒屋業態の{N}軒です。' },
       { q: 'タベログ・ホットペッパーのランキングとは何が違いますか？', a: 'タベログは匿名口コミの集積、ホットペッパーは予約数とクーポン経済が中心です。NAGOYA BITES は広告ゼロで、業界の中の人による解釈層（editorReason / insiderNote）を全店に付与しています。「なぜこの店が良いのか」を業界視点で説明できる点が違いです。' },
     ],
     related: [
@@ -79,14 +91,14 @@ const features = [
   {
     slug: 'nagoya-settai-secret',
     eyebrow: '業界人コラム — 接待・会食',
-    titleHtml: '失敗しない<em>名古屋・接待</em>の店10選',
-    titleText: '失敗しない名古屋・接待の店10選',
+    titleHtml: '失敗しない<em>名古屋・接待</em>の店{N}選',
+    titleText: '失敗しない名古屋・接待の店{N}選',
     titleH1Suffix: '【2026年版・業界人が選ぶ会食の正解】',
-    metaDesc: '名古屋で接待・会食に失敗したくない人へ。現役飲食店マネージャーが「ここなら大丈夫」と判断した10軒を、個室の使い勝手・煙対策・接客トーンまで業界視点で解説。',
-    ogDesc: '名古屋で接待・会食に失敗しないための10軒。個室・煙対策・接客トーンを業界視点で解説。広告掲載なし、現役飲食人による本気のセレクト。',
+    metaDesc: '名古屋で接待・会食に失敗したくない人へ。現役飲食店マネージャーが「ここなら大丈夫」と判断した{N}軒を、個室の使い勝手・煙対策・接客トーンまで業界視点で解説。',
+    ogDesc: '名古屋で接待・会食に失敗しないための{N}軒。個室・煙対策・接客トーンを業界視点で解説。広告掲載なし、現役飲食人による本気のセレクト。',
     keywords: '名古屋 接待 失敗しない,名古屋 接待 個室,名古屋 会食 おすすめ,名駅 接待,栄 接待,名古屋 接待 焼肉,名古屋 接待 和食',
-    leadText: '接待で失敗する店には共通点があります。煙が籠る、隣の声が聞こえる、料理の出る速度が読めない——。逆に「失敗しない店」は、煙対策・防音設計・接客トーンの3点で必ず安心が担保されています。本特集は、それを業界の中の人視点で確認できた10軒です。',
-    introText: '接待・会食でこちらが緊張するのは、自分の好みではなく「相手にとっての快適さ」を読まなければならないから。料理の旨さは大前提として、空間と接客の安心感がなければ取引先には勧められません。今回は editor_picks から、接待利用者の高評価を持続できている10軒を選びました。',
+    leadText: '接待で失敗する店には共通点があります。煙が籠る、隣の声が聞こえる、料理の出る速度が読めない——。逆に「失敗しない店」は、煙対策・防音設計・接客トーンの3点で必ず安心が担保されています。本特集は、それを業界の中の人視点で確認できた{N}軒です。',
+    introText: '接待・会食でこちらが緊張するのは、自分の好みではなく「相手にとっての快適さ」を読まなければならないから。料理の旨さは大前提として、空間と接客の安心感がなければ取引先には勧められません。今回は editor_picks から、接待利用者の高評価を持続できている{N}軒を選びました。',
     selectionCriteria: [
       '完全個室または半個室を確実に予約できる業態',
       '煙対策（無煙ロースター・換気設備）が機能している',
@@ -115,7 +127,7 @@ const features = [
     },
     faqs: [
       { q: '名古屋で接待・会食におすすめのエリアは？', a: '栄・伏見エリアが最も選択肢が豊富です。名駅は出張対応がしやすく、金山は名古屋・中部空港の双方からアクセス可能で送迎にも便利です。取引先の宿泊先と移動距離を基準に選ぶのが基本です。' },
-      { q: '完全個室は予約時に必ず確保できますか？', a: '店によります。本特集の10軒は「完全個室を確実に予約できる」ことを掲載基準にしていますが、繁忙期は埋まりやすいため、接待利用なら2〜3週間前の予約が安全です。電話で「接待で使う」と伝えると、個室の確保や時間調整に協力してくれる店が多いです。' },
+      { q: '完全個室は予約時に必ず確保できますか？', a: '店によります。本特集の{N}軒は「完全個室を確実に予約できる」ことを掲載基準にしていますが、繁忙期は埋まりやすいため、接待利用なら2〜3週間前の予約が安全です。電話で「接待で使う」と伝えると、個室の確保や時間調整に協力してくれる店が多いです。' },
       { q: '接待で焼肉店は失礼ではないですか？', a: '取引先の年代と関係性によります。役員クラスや初回会食では和食・創作料理が無難ですが、フランクな関係の取引先や2回目以降なら焼肉も選択肢に入ります。本特集の焼肉4軒は無煙ロースター・完全個室・接客トーンの3点が揃っており、接待での失敗リスクが低い店です。' },
     ],
     related: [
@@ -133,11 +145,11 @@ const features = [
     titleHtml: '名古屋・<em>予約困難店</em>の見極め方ガイド',
     titleText: '名古屋・予約困難店の見極め方ガイド',
     titleH1Suffix: '【2026年版・業界人が語る人気店の構造】',
-    metaDesc: 'なぜこの店は予約困難なのか? 業界の中の人が、席数設計・回転率・SNS拡散の3要素で名古屋の予約困難店10軒を解剖。「行く価値のある店」と「単に話題な店」の見極め方つき。',
-    ogDesc: '名古屋の予約困難店、その理由を業界人が解剖。席数設計・回転率・SNS拡散の3要素で10軒を解説。「行く価値のある店」の見極め方。',
+    metaDesc: 'なぜこの店は予約困難なのか? 業界の中の人が、席数設計・回転率・SNS拡散の3要素で名古屋の予約困難店{N}軒を解剖。「行く価値のある店」と「単に話題な店」の見極め方つき。',
+    ogDesc: '名古屋の予約困難店、その理由を業界人が解剖。席数設計・回転率・SNS拡散の3要素で{N}軒を解説。「行く価値のある店」の見極め方。',
     keywords: '名古屋 予約困難,名古屋 予約困難 居酒屋,名古屋 人気店 予約,名古屋 取れない店,栄 予約困難,名駅 予約困難,名古屋 行列',
-    leadText: '「予約が取れない店」には3パターンあります。①席数が物理的に少ない、②SNSで話題化して一時的に集中、③固定客が回転を埋めている。①と③は本物、②は3ヶ月で落ち着くケースが多い——。本特集は、業界の中の人が「行く価値がある」と判断した予約困難店10軒の構造を解剖します。',
-    introText: '予約困難店は名古屋にも数多くありますが、その「困難さ」の中身を業界視点で見ると、行く価値があるかどうかが見極められます。席数20席のカウンター店、SNSで一気に拡散した新店、地元固定客が回し続ける名店——タイプ別に「何を期待して行くべきか」が変わるからです。今回は editor_picks から、業界人として「困難でも行く価値がある」と判断した10軒を解説します。',
+    leadText: '「予約が取れない店」には3パターンあります。①席数が物理的に少ない、②SNSで話題化して一時的に集中、③固定客が回転を埋めている。①と③は本物、②は3ヶ月で落ち着くケースが多い——。本特集は、業界の中の人が「行く価値がある」と判断した予約困難店{N}軒の構造を解剖します。',
+    introText: '予約困難店は名古屋にも数多くありますが、その「困難さ」の中身を業界視点で見ると、行く価値があるかどうかが見極められます。席数20席のカウンター店、SNSで一気に拡散した新店、地元固定客が回し続ける名店——タイプ別に「何を期待して行くべきか」が変わるからです。今回は editor_picks から、業界人として「困難でも行く価値がある」と判断した{N}軒を解説します。',
     selectionCriteria: [
       'Google評価4.7以上または食べログ4.8以上を継続維持',
       '席数・回転率・SNS拡散の3要素のうち少なくとも2つが希少性に寄与',
@@ -153,7 +165,6 @@ const features = [
       '焼肉酒場 番長',
       '隠れ家イタリアンDime ダイム',
       '居酒屋いくなら俺んち来い。　金山店',
-      '焼鳥 串っ子',
       '焼肉韓国キッチン 琉球庵',
     ],
     insiderColumn: {
@@ -161,11 +172,11 @@ const features = [
       body: [
         '1. <strong>席数 × 回転率の物理</strong> — カウンター10席の鮨店が1日2回転=20席しか売れないなら、月の取り扱い席数は600席が上限。そこに常連客と一見客が混在すれば、一見客に空きが出るのは月数席のみ。これは「物理的予約困難」で、いつ行っても価値は安定している。',
         '2. <strong>SNS拡散による一時的需要集中</strong> — TikTok・Instagram で1投稿が拡散すると、3ヶ月は予約困難になる店がある。これは「一時的予約困難」で、半年後には落ち着くことが多い。逆に拡散が落ち着いても評価が維持される店は、本物の実力店。',
-        '3. <strong>固定客の回転による埋まり</strong> — 地元の固定客が週1〜2回のペースで回している店は、新規客への席が常に少ない。これは店側にとって最も理想的な状態で、料理・接客の品質が長期的に担保されている証拠。本特集の10軒のうち、固定客型が最多。',
+        '3. <strong>固定客の回転による埋まり</strong> — 地元の固定客が週1〜2回のペースで回している店は、新規客への席が常に少ない。これは店側にとって最も理想的な状態で、料理・接客の品質が長期的に担保されている証拠。本特集の{N}軒のうち、固定客型が最多。',
       ],
     },
     faqs: [
-      { q: '名古屋の予約困難店、どのくらい前に予約すべきですか？', a: '店のタイプによります。物理的予約困難（カウンター10席以下）の店は1〜2ヶ月前、SNS拡散型は3週間前、固定客型は2週間前が目安です。本特集の10軒はそれぞれタイプが違うので、店ごとの個別記述を参考にしてください。' },
+      { q: '名古屋の予約困難店、どのくらい前に予約すべきですか？', a: '店のタイプによります。物理的予約困難（カウンター10席以下）の店は1〜2ヶ月前、SNS拡散型は3週間前、固定客型は2週間前が目安です。本特集の{N}軒はそれぞれタイプが違うので、店ごとの個別記述を参考にしてください。' },
       { q: '予約困難店に「行く価値があるか」を見極める方法は？', a: '①店の席数（少ないほど物理的予約困難=価値安定）、②高評価維持期間（6ヶ月以上なら本物）、③メディア掲載歴（業界メディアの掲載は信頼指標）の3点を確認します。NAGOYA BITES の editor_picks では mediaFeatures に他媒体掲載歴を記録しているので、参考になります。' },
       { q: 'SNSで話題の新店、行くべきタイミングは？', a: 'オープン直後の3ヶ月以内か、ブームが落ち着いた6ヶ月後の2択がおすすめです。オープン直後は「初動の本気」が見えるタイミング、6ヶ月後は「本物の実力」が残るタイミング。間の3〜6ヶ月は予約困難なうえに店側もオペレーションが追いつかず、体験品質が安定しない場合があります。' },
     ],
@@ -178,7 +189,15 @@ const features = [
       { href: '../index.html', text: '全店舗を検索' },
     ],
   },
-];
+].map(f => fillCount(f, f.stores.length));
+
+// 関連リンクの「N選」はリンク先の掲載数に合わせる（ここで生成する3本はその店の数、ほかは公開中のページ）
+const ownCount = Object.fromEntries(features.map(f => [f.slug, f.stores.length]));
+const linkText = (r) => {
+  const slug = featureSlugOf(r.href);
+  if (!slug) return r.text;
+  return ownCount[slug] != null ? relabelAll(r.text, ownCount[slug]) : relabelForSlug(r.text, slug);
+};
 
 // 共通スタイル（nagoya-lunch-washoku.html と同一）
 const STYLE = `.store-badge{display:inline-block;font-family:var(--font-body);font-size:var(--fs-2xs);font-weight:700;letter-spacing:0;color:var(--bg);background:var(--gold);padding:.1rem .4rem;border-radius:var(--r-sm);margin-left:.4rem;vertical-align:middle;}.insider-quote{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);font-style:italic;border-left:2px solid var(--gold);padding:.2rem .8rem;margin:.4rem 0;background:rgba(122,92,16,.04);}.media-features{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-top:.4rem;}.store-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.8rem;}.store-tag{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;padding:.18rem .5rem;border:1px solid rgba(122,92,16,.3);color:var(--gold);border-radius:var(--r-sm);}.column{background:var(--card);border:1px solid var(--card-border);border-radius:var(--r-md);padding:1.6rem;margin:2.5rem 0;}.column-title{font-family:var(--font-display);font-weight:500;font-size:var(--fs-xl);color:var(--ink);margin-bottom:1rem;}.column-body p{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);margin-bottom:.8rem;}.column-body strong{color:var(--gold);font-weight:500;}.faq-section{max-width:var(--container-mid);margin:0 auto;padding:0 1.5rem 3rem;}.faq-title{font-family:var(--font-display);font-weight:500;font-size:var(--fs-xl);color:var(--ink);margin-bottom:1.5rem;}.faq-item{border-bottom:1px solid var(--border);padding:1.2rem 0;}.faq-q{font-weight:500;font-size:var(--fs-md);color:var(--ink);margin-bottom:.6rem;}.faq-q::before{content:'Q. ';color:var(--gold);}.faq-a{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);}.faq-a::before{content:'A. ';color:var(--gold);font-weight:500;}@media(max-width:640px){.store-card{flex-direction:column;gap:.7rem;}}`;
@@ -322,7 +341,7 @@ ${feature.faqs.map(f => `  <div class="faq-item">
 <div class="related">
   <p class="related-title">関連する特集</p>
   <div class="related-links">
-${feature.related.map(r => `    <a class="related-link" href="${r.href}"${r.primary ? ' style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;"' : ''}>${r.text}</a>`).join('\n')}
+${feature.related.map(r => `    <a class="related-link" href="${r.href}"${r.primary ? ' style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;"' : ''}>${linkText(r)}</a>`).join('\n')}
   </div>
 </div>
 
@@ -337,7 +356,8 @@ ${siteChrome.chromeScript()}
 for (const f of features) {
   // 公開日・更新日・書き手は JSON-LD から部品で出す（SEO-145・scripts/lib/feature_byline.js）
   const html = applyByline(renderHTML(f), { selfFile: `${f.slug}.html` });
-  const out = path.join(ROOT, 'features', `${f.slug}.html`);
+  fs.mkdirSync(OUT_DIR, { recursive: true });
+  const out = path.join(OUT_DIR, `${f.slug}.html`);
   fs.writeFileSync(out, html);
   console.log(`✓ ${out}`);
 }

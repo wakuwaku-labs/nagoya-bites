@@ -28,6 +28,8 @@
  */
 const fs = require('fs');
 const path = require('path');
+// カードの「N選」「N店掲載」は data/featured.json の手書きではなく、特集ページの確かめられる掲載数に合わせる（SEO-146）
+const { relabelForSlug, featureSlugOf } = require('./lib/feature_counts');
 
 const ROOT = path.join(__dirname, '..');
 const CONFIG = path.join(ROOT, 'data', 'featured.json');
@@ -75,10 +77,13 @@ function renderStripCard(item, idx) {
   const w = item.thumbW || 900;
   const h = item.thumbH || 600;
   const t600 = item.thumb600 || item.thumb; // HotPepper 等 600w 版が無い場合は同一URLにフォールバック
+  const slug = featureSlugOf(item.href, '');
+  const title = slug ? relabelForSlug(item.title, slug) : item.title;
+  const alt = slug ? relabelForSlug(item.alt, slug) : item.alt;
   return `    <a class="feature-card" href="${item.href}">${badge}
-      <img class="feature-card-thumb" src="${item.thumb}" srcset="${t600} 600w, ${item.thumb} 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="${item.alt}" width="${w}" height="${h}" loading="${loading}" decoding="async"${fp}>
+      <img class="feature-card-thumb" src="${item.thumb}" srcset="${t600} 600w, ${item.thumb} 900w" sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw" alt="${alt}" width="${w}" height="${h}" loading="${loading}" decoding="async"${fp}>
       <div class="feature-card-body">
-        <div class="feature-card-title">${item.title}</div>
+        <div class="feature-card-title">${title}</div>
         <div class="feature-card-sub">${item.sub}</div>
         <span class="feature-card-cta">特集を読む</span>
       </div>
@@ -102,9 +107,9 @@ function parseFeatureCards(featSrc) {
   return map;
 }
 function renderShowcaseCard(entry, info) {
-  const title = (entry.title || info.title || '').trim();
+  const title = relabelForSlug((entry.title || info.title || '').trim(), entry.slug);
   const sub = entry.sub || '';
-  const alt = entry.alt || title;
+  const alt = relabelForSlug(entry.alt || title, entry.slug);
   // 画像は features/index.html 由来の絶対URL(HotPepper等)を想定。HotPepper 写真は写真ルール優先2で許可。
   return `    <a class="feature-card" href="features/${entry.slug}.html">
       <img class="feature-card-thumb" src="${info.img}" srcset="${info.img} 480w, ${info.img} 900w" sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, 25vw" alt="${alt}" width="480" height="600" loading="lazy" decoding="async">
@@ -137,8 +142,8 @@ function renderSeasonalCard(item) {
     ? item.season.badge
     : '季節限定';
   // 件数は元の article-card にあった文言を踏襲できないので汎用化
-  const desc = item.seasonDesc || item.sub || '';
-  const count = item.count || '';
+  const desc = relabelForSlug(item.seasonDesc || item.sub || '', item.id);
+  const count = relabelForSlug(item.count || '', item.id);
   return `  <a class="article-card is-season" href="${item.id}.html">
     <div class="card-badge">
       <span class="season-flag">${flag}</span>
@@ -146,7 +151,7 @@ function renderSeasonalCard(item) {
       <div class="card-category">${category}</div>
     </div>
     <div class="card-body">
-      <div class="card-title">${item.title.replace(/^GW 2026・/, '').replace(/おすすめ/, 'おすすめ')}</div>
+      <div class="card-title">${relabelForSlug(item.title, item.id).replace(/^GW 2026・/, '').replace(/おすすめ/, 'おすすめ')}</div>
       <p class="card-desc">${desc}</p>
       <div class="card-meta">
         <span class="card-count">${count}</span>
