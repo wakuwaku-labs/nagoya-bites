@@ -217,6 +217,7 @@ function cmdBuild() {
     },
     rules: {
       title: 'タイトルに「エリア語」と「シーン語（またはジャンル語）」を最低1組ずつ入れる。語の詰め込み・煽りは不可。',
+      title_front: 'タイトルの前30字（「｜NAGOYA BITES Journal」を除く）に、エリア語・店名（検索される表記）かジャンル語・シーン語（記事にシーンがあるとき）を置く。検索結果では後ろが切れるため。業界人の視点や数字の読み解きは後半でよい（SEO-137）。',
       internal_link: '使ったKWに紐づく特集へ本文から内部リンクを1本張る（KW利用がそのまま回遊導線になる）。',
       sns: 'docs/daily-posts/ の Note/Instagram/X 原稿の冒頭にも同じKW組を使い、入口の検索意図を揃える。',
       forbidden: '実在しない店・未検証店をKWに合わせて創作しない（架空店ブロック優先）。KWのためにタイトルの日本語を壊さない。'
@@ -224,7 +225,8 @@ function cmdBuild() {
     areas,
     scenes: SCENE_VOCAB.map(s => ({ kw: s.kw, aliases: s.aliases, feature: s.feature })),
     genres: GENRE_VOCAB.map(g => ({ kw: g.kw, aliases: g.aliases, feature: g.feature })),
-    monthly_scenes: MONTHLY_SCENES
+    monthly_scenes: MONTHLY_SCENES,
+    title_front: TITLE_FRONT
   };
 
   fs.writeFileSync(OUT_PATH, JSON.stringify(payload, null, 2) + '\n');
@@ -297,9 +299,100 @@ function scoreSearchIntent(title, lead) {
   return { score: Math.min(10, score), reasons, coverage: c };
 }
 
-function cmdCheck(title, lead) {
+// ============================================================
+// title の前30字（SEO-137・2026-10-09）
+// 検索結果では title の後ろが切れる。ジャーナルの検索流入はほとんどが店名の指名検索
+// （gsc_metrics.json の pageQueries: pizzeria mimi / リサールコーヒー 名古屋 / ラーメン戸倉 等）で、
+// 前半に店名・エリアが無いと、検索した人に何の記事かが見えない。
+// 判定に使うのは、この語彙と data/station_names.json（愛知県内の駅名）と data/stores.json の
+// 住所の市区町村名だけ（検証できる事実・制約10）。validate_journal_draft.js の項目18が WARNING で使う。
+// ============================================================
+
+const TITLE_FRONT = {
+  chars: 30,
+  // 前半の要件に数えないシーン語。「業界人」はサイトの視点（記事の切り口）で読者のシーンではない。
+  // 「カウンター」は席の種類で、「カウンターなし」「カウンター12席」のように説明文に普通に出る
+  sceneIgnore: ['業界人', '飲食人', 'カウンター']
+};
+
+const normKw = (t) => require('./lib/station_names').normalize(t).toLowerCase();
+
+/** title から「｜NAGOYA BITES Journal」などの末尾を外した本体 */
+function titleBody(title) {
+  return String(title || '').replace(/\s*[｜|]\s*NAGOYA BITES(?: Journal)?\s*$/i, '').trim();
+}
+
+let placeCache = null;
+/** エリア語として数える地名（長い順）。名古屋・エリア語・愛知県内の駅名・掲載店の住所の市区町村名 */
+function placeWords() {
+  if (placeCache) return placeCache;
+  const words = new Set(['名古屋']);
+  for (const e of AREA_VOCAB) for (const a of [e.kw].concat(e.aliases || [])) words.add(normKw(a));
+  for (const n of require('./lib/station_names').loadSets().aichi) if (n.length >= 2) words.add(n.toLowerCase());
+  for (const st of loadStores()) {
+    const m = String(st['住所'] || '').normalize('NFKC').match(/愛知県(?:名古屋市)?([^\d\s]{1,4}?[市区町村])/);
+    if (!m) continue;
+    const w = normKw(m[1]);
+    words.add(w);
+    if (w.length >= 3) words.add(w.slice(0, -1)); // 熱田区→熱田・清須市→清須（中区→中 のような1字は数えない）
+  }
+  placeCache = [...words].sort((a, b) => b.length - a.length);
+  return placeCache;
+}
+
+/**
+ * 店名から、title に出てくれば店名とみなす語。末尾の支店名（「名古屋栄店」のように「店」で終わる最後の語）は外す
+ * （「北京本店」のように屋号そのものが「店」で終わる語は残す）。英字は4字以上、それ以外は2字以上
+ */
+function storeTokens(names) {
+  const outSet = new Set();
+  for (const n of names || []) {
+    const all = normKw(n).split(/[\s・()（）]+/).filter(Boolean);
+    const toks = all.length > 1 && /店$/.test(all[all.length - 1]) ? all.slice(0, -1) : all;
+    const core = toks.join(' ');
+    if (core.length >= 2) outSet.add(core);
+    for (const t of toks) {
+      const ascii = /^[\x00-\x7f]+$/.test(t);
+      if ((ascii && t.length >= 4) || (!ascii && t.length >= 2)) outSet.add(t);
+    }
+  }
+  return [...outSet];
+}
+
+/**
+ * title の前30字に「エリア＋店名かジャンル＋シーン語」があるか（純関数に近い・テスト対象）。
+ *   storeNames … 記事が扱う店の名前（記事の data-hero-store / store-name）
+ *   context    … h1・meta description など。ここにシーン語があるのに前30字に無ければ不足とする
+ *                （シーンの無い題材にシーン語を足させない）
+ */
+function checkTitleFront(title, opts = {}) {
+  const body = titleBody(title);
+  const front = normKw(body).slice(0, TITLE_FRONT.chars);
+  const whole = normKw(body + '\n' + (opts.context || ''));
+  const area = placeWords().find(p => front.includes(p)) || null;
+  const store = storeTokens(opts.storeNames).find(t => front.includes(t)) || null;
+  const genreWords = GENRE_VOCAB.flatMap(g => [g.kw].concat(g.aliases || []));
+  const genre = genreWords.find(a => front.includes(normKw(a))) || null;
+  const sceneWords = SCENE_VOCAB
+    .filter(sc => !TITLE_FRONT.sceneIgnore.includes(sc.kw))
+    .flatMap(sc => [sc.kw].concat(sc.aliases || []))
+    .filter(a => !TITLE_FRONT.sceneIgnore.includes(a));
+  const scene = sceneWords.find(a => front.includes(normKw(a))) || null;
+  const sceneInArticle = sceneWords.find(a => whole.includes(normKw(a))) || null;
+  const missing = [];
+  if (!area) missing.push('エリア語');
+  if (!store && !genre) missing.push('店名かジャンル語');
+  if (sceneInArticle && !scene) missing.push(`シーン語（記事にある「${sceneInArticle}」）`);
+  return {
+    chars: TITLE_FRONT.chars, body_len: body.length, front: body.slice(0, TITLE_FRONT.chars),
+    area, store, genre, scene, scene_in_article: sceneInArticle, missing, ok: missing.length === 0
+  };
+}
+
+function cmdCheck(title, lead, storeNames) {
   const r = scoreSearchIntent(title, lead);
-  out({ ok: true, title, score: r.score, max: 10, reasons: r.reasons, coverage: r.coverage });
+  const front = checkTitleFront(title, { storeNames, context: lead });
+  out({ ok: true, title, score: r.score, max: 10, reasons: r.reasons, coverage: r.coverage, title_front: front });
 }
 
 // ============================================================
@@ -362,16 +455,17 @@ function main() {
   if (args.includes('--check')) {
     const title = flag('--check');
     if (title === undefined) { out({ ok: false, error: '--check requires a title' }); process.exit(1); }
-    return cmdCheck(title, flag('--lead') || '');
+    const storesArg = flag('--stores');
+    return cmdCheck(title, flag('--lead') || '', storesArg ? storesArg.split(/[,、]/).map(x => x.trim()).filter(Boolean) : []);
   }
   if (args.includes('--suggest')) {
     return cmdSuggest({ area: flag('--area'), genre: flag('--genre'), month: flag('--month') });
   }
 
-  out({ ok: false, error: 'no subcommand', usage: ['--build', '--verify', '--check "<title>" [--lead "<lead>"]', '--suggest [--area X] [--genre Y] [--month M]'] });
+  out({ ok: false, error: 'no subcommand', usage: ['--build', '--verify', '--check "<title>" [--lead "<lead>"] [--stores "店名,店名"]', '--suggest [--area X] [--genre Y] [--month M]'] });
   process.exit(1);
 }
 
 if (require.main === module) main();
 
-module.exports = { scoreSearchIntent, checkText };
+module.exports = { scoreSearchIntent, checkText, checkTitleFront, titleBody, TITLE_FRONT };

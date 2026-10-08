@@ -2,7 +2,7 @@
 /**
  * scripts/validate_journal_draft.js
  *
- * 日次ジャーナル記事のドラフトを10項目でQA。
+ * 日次ジャーナル記事のドラフトをQA（項目は下の番号。WARNING の項目は公開を止めない）。
  *
  * 使い方:
  *   node scripts/validate_journal_draft.js journal/drafts/2026-04-21-slug.html docs/daily-posts/2026-04-21.md
@@ -15,7 +15,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 検索意図（シーンKW）判定は scripts/journal_seo_kw.js に一元化（SEO-011）
-const { checkText } = require('./journal_seo_kw');
+const { checkText, checkTitleFront } = require('./journal_seo_kw');
 // ヒーロー写真の帰属判定は scripts/lib/hero_photo_gate.js に一元化（2026-08-17 の事故）
 const { judgeHero, judgePhoto, findReuse, extractHeroFromHtml, extractBodyPhotosFromHtml } = require('./lib/hero_photo_gate');
 const { bodyPolicy } = require('./lib/journal_photos');
@@ -344,6 +344,25 @@ function checkJournal(htmlPath, mdPath) {
     msg: storeLinkWarn
       ? `⚠️ WARNING: 本文で実在店舗（${mentionedRealStores.slice(0, 5).join('、')}等）に言及していますが、店舗ページ（stores/*.html）への内部リンクが見つかりません。input.json の stores[] に id（ホットペッパーID等）を設定してください。LOCAL_STORES に無い新規店舗は data/pending_stores.json へ追加してから掲載してください。`
       : (mentionedRealStores.length > 0 ? `店舗ページへの内部リンクあり OK（言及店: ${mentionedRealStores.slice(0, 5).join('、')}）` : '実在店舗の言及なし（スキップ）')
+  });
+
+  // 18. title の前30字に「エリア＋店名かジャンル＋シーン語」があるか（WARNING・SEO-137）
+  //     検索結果では title の後ろが切れ、ジャーナルの検索流入はほとんどが店名の指名検索。
+  //     判定は scripts/journal_seo_kw.js の checkTitleFront（語彙・駅名・住所の事実だけ）。
+  //     公開は止めない（無人実行で当日の成果物が消えることを避ける。CLAUDE.md 品質ゲート原則6）
+  const decode = (t) => String(t || '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+  const pageTitle = decode((html.match(/<title>([^<]*)<\/title>/) || [, ''])[1]);
+  const metaDesc = decode((html.match(/<meta name="description" content="([^"]*)"/) || [, ''])[1]);
+  const articleStoreNames = Array.from(new Set([
+    ...Array.from(html.matchAll(/data-hero-store="([^"]+)"/g)).map(m => decode(m[1])),
+    ...Array.from(html.matchAll(/class="store-name"[^>]*>([\s\S]*?)<\//g)).map(m => decode(m[1].replace(/<[^>]*>/g, '').trim())),
+  ].filter(Boolean)));
+  const front = checkTitleFront(pageTitle, { storeNames: articleStoreNames, context: `${h1}\n${metaDesc}` });
+  results.push({
+    id: '18_title_front_warn', ok: true, warn: !front.ok,
+    msg: front.ok
+      ? `title の前${front.chars}字 OK（${[front.area, front.store || front.genre, front.scene].filter(Boolean).join(' / ')}）`
+      : `⚠️ WARNING: title の前${front.chars}字「${front.front}」に${front.missing.join('・')}がありません。検索結果では後ろが切れるため、前${front.chars}字に置いてください（店名は検索される表記で・agents/editor.md・SEO-137）`
   });
 
   return results;
