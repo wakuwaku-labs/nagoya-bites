@@ -339,10 +339,11 @@ jobs:
         # 店舗ページ約5,000本の GA4 が 2026-05-08 から止まっていたのに、生成物の JS を見る検査が
         # どこにも無く5か月気づけなかった。店舗ページとエリア×ジャンルページの再生成の後に置き、
         # 当日作り直したページを検査する。全件でも約1秒のためサンプリングしない。
-        # ISSUE-121 の教訓どおり、CI が緑を1回確認してから blocking へ昇格する（当面は非ブロッキング）。
-        # 失敗の通知は夜間QA（nightly-qa.yml の hard チェック）が Issue で届ける（制約11）。
+        # ISSUE-121 の作法どおり、CI で緑を1回確認してから blocking に上げた（2026-10-09）。初回の run 37818977796 は
+        # build 中の店舗データ更新で孤児になった13本が残って赤、PR #404 で直した後の run 37821594703 で緑（違反0）。
+        # 壊れた JS を含むページはデプロイしない（制約6）。失敗の通知は夜間QA（nightly-qa.yml の hard チェック）が
+        # Issue で届ける（制約11）。
         run: node scripts/audit_inline_js_syntax.js --check
-        continue-on-error: true
 
       - name: llms.txt を再生成（LLM向けサイト要約・SEO-097）
         # data/stores.json（店舗数・エリア別/ジャンル別内訳）・data/area_genre_pages_manifest.json

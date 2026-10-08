@@ -1,4 +1,4 @@
-status: in_progress
+status: done
 
 # 目的
 オーナー依頼「SEOの分析と、今後より伸ばすための戦略戦術を用いた改善点」（2026-10-09）。実測で分析し、90日の戦略・戦術を文書化し、P0 の計測バグを直し、残りを backlog → Linear に起票する。
@@ -23,7 +23,8 @@ status: in_progress
 3. ✅ 起票: SEO-115〜141・ISSUE-145/146 を Linear P-111〜P-140 に作成（親子26件設定済み）。既存 P-24/P-32/P-57/P-58/P-59 にコメント。重複 P-139 は Duplicate 化。ISSUE-096（P-36）は Linear が Done・backlog が in_progress のため同期から外した
 4. ✅ 独立レビューの指摘対応（中3件・軽微5件）: 再生成されない孤児16本も1行修正（CI 相当の全件シミュレーションで現役4,909本も違反0）、59.8% の分母を「クエリが分かる表示（全体の45.9%）」に訂正、SEO-129 をオーナー承認経路に限定、検査器の data-src・コメント・type 引数・ルート全ページ対応。npm test 312件通過
 5. ✅ Linear P-111・P-125・P-112 にコメント。PR #403 を合流（208f72697e・03:00 JST 前）
-6. 合流後の build（run 37818977796）で 13 本が孤児化して壊れたまま残った → 後続 PR で1行置換 ← 今ここ。合流後の次の build のログで監査が ok:true なら、build.yml の continue-on-error を外す PR（用意した差分は scratchpad の build_blocking.yml）。GA4 で /stores/ の page_view 確認（オーナー）と夜間QA の緑は Linear P-112 で追う
+6. ✅ 合流後の build（run 37818977796）で孤児化した 13 本が壊れたまま残った → PR #404 で1行置換。次の run 37821594703 で監査が違反 0、main の壊れたページも 0 本
+7. ✅ build.yml の監査ステップから continue-on-error を外した（後続 PR）。残る確認は Linear P-112 で追う: GA4 で /stores/ の page_view（オーナー）・2日以内に data/site_metrics.json の topPages に /stores/・夜間QA の inline-js が緑
 
 # 試したが駄目だったこと
 - 合流前に手元の data/stores.json で孤児を数えて直しても足りなかった。CI の build は店舗データを更新してから再生成するため、手元で現役だった 13 店が CI では孤児になり、壊れた形で残った。孤児の手当ては合流後の main で数え直す
