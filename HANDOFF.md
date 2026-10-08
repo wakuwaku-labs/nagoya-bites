@@ -22,11 +22,12 @@ status: in_progress
 2. ✅ docs（seo-strategy-2026-10 / growth-plan 追記 / ADR 0007 / kpi-weekly）
 3. ✅ 起票: SEO-115〜141・ISSUE-145/146 を Linear P-111〜P-140 に作成（親子26件設定済み）。既存 P-24/P-32/P-57/P-58/P-59 にコメント。重複 P-139 は Duplicate 化。ISSUE-096（P-36）は Linear が Done・backlog が in_progress のため同期から外した
 4. ✅ 独立レビューの指摘対応（中3件・軽微5件）: 再生成されない孤児16本も1行修正（CI 相当の全件シミュレーションで現役4,909本も違反0）、59.8% の分母を「クエリが分かる表示（全体の45.9%）」に訂正、SEO-129 をオーナー承認経路に限定、検査器の data-src・コメント・type 引数・ルート全ページ対応。npm test 312件通過
-5. Linear の P-111・P-125 に訂正コメント → コミット → push → PR → チェック通過なら合流 ← 今ここ
-6. 合流後: build.yml の店舗ページ再生成を確認（main で `grep -l 'https?:///i' stores/*.html | wc -l` = 0）。CI で監査が緑になったら build.yml の continue-on-error を外す（SEO-115 受け入れ条件4）
+5. ✅ Linear P-111・P-125・P-112 にコメント。PR #403 を合流（208f72697e・03:00 JST 前）
+6. 合流後の build（run 37818977796）で 13 本が孤児化して壊れたまま残った → 後続 PR で1行置換 ← 今ここ。合流後の次の build のログで監査が ok:true なら、build.yml の continue-on-error を外す PR（用意した差分は scratchpad の build_blocking.yml）。GA4 で /stores/ の page_view 確認（オーナー）と夜間QA の緑は Linear P-112 で追う
 
 # 試したが駄目だったこと
-- （なし）
+- 合流前に手元の data/stores.json で孤児を数えて直しても足りなかった。CI の build は店舗データを更新してから再生成するため、手元で現役だった 13 店が CI では孤児になり、壊れた形で残った。孤児の手当ては合流後の main で数え直す
+- CI の監査ステップは continue-on-error のため、API のステップ結果が success でも監査は失敗していた。合否はログの ok と違反数で見る
 
 # 守るルール・判断メモ
 - 5,008 ファイルの店舗ページはローカルで再生成しない（日次 build.yml の自動コミットと衝突する）。main 合流後の build.yml が gen-store-pages.js → gen_area_genre_pages.js の順で再生成する
