@@ -5422,6 +5422,62 @@
         "bounceRate": 0.273,
         "pagesPerSession": 1.25
       },
+      "gsc": {
+        "generatedAt": "2026-10-08T20:21:02.199Z",
+        "dateRange": {
+          "startDate": "2026-09-10",
+          "endDate": "2026-10-07"
+        },
+        "totals": {
+          "clicks": 625,
+          "impressions": 39445,
+          "ctr": 0.0158,
+          "position": 12.4,
+          "impressionsPerDay": 1408.8
+        },
+        "intent_kpi": {
+          "discovery_impressions": 1708,
+          "discovery_clicks": 102,
+          "discovery_impressions_share": 9.5
+        },
+        "pageTypes": {
+          "feature": {
+            "pages": 40,
+            "clicks": 214,
+            "impressions": 3909,
+            "ctr": 0.0547,
+            "position": 8.5
+          },
+          "store": {
+            "pages": 3113,
+            "clicks": 290,
+            "impressions": 29886,
+            "ctr": 0.0097,
+            "position": 12.8
+          },
+          "journal": {
+            "pages": 96,
+            "clicks": 108,
+            "impressions": 3261,
+            "ctr": 0.0331,
+            "position": 8.3
+          },
+          "home": {
+            "pages": 1,
+            "clicks": 13,
+            "impressions": 2447,
+            "ctr": 0.0053,
+            "position": 20.9
+          },
+          "area_hub": {
+            "pages": 28,
+            "clicks": 1,
+            "impressions": 87,
+            "ctr": 0.0115,
+            "position": 14.9
+          }
+        }
+      },
       "channels_pct": {
         "organic": 67.9,
         "direct": 22.1,
@@ -5447,63 +5503,6 @@
         "ctaClickRate_organic": 5.1,
         "ctaClickRate_direct": 22.4,
         "ctaClickRate_social": 0
-      },
-      "gsc": {
-        "generatedAt": "2026-10-08T19:16:07.132Z",
-        "dateRange": {
-          "startDate": "2026-09-10",
-          "endDate": "2026-10-07"
-        },
-        "totals": {
-          "clicks": 601,
-          "impressions": 37983,
-          "ctr": 0.0158,
-          "position": 12.5,
-          "impressionsPerDay": 1356.5
-        },
-        "intent_kpi": {
-          "discovery_impressions": 1617,
-          "discovery_clicks": 98,
-          "discovery_impressions_share": 9.3
-        },
-        "pageTypes": {
-          "feature": {
-            "pages": 40,
-            "clicks": 206,
-            "impressions": 3704,
-            "ctr": 0.0556,
-            "position": 8.6
-          },
-          "journal": {
-            "pages": 96,
-            "clicks": 103,
-            "impressions": 3024,
-            "ctr": 0.0341,
-            "position": 8.3
-          },
-          "store": {
-            "pages": 3057,
-            "clicks": 279,
-            "impressions": 28946,
-            "ctr": 0.0096,
-            "position": 12.9
-          },
-          "home": {
-            "pages": 1,
-            "clicks": 13,
-            "impressions": 2367,
-            "ctr": 0.0055,
-            "position": 21.3
-          },
-          "area_hub": {
-            "pages": 28,
-            "clicks": 1,
-            "impressions": 87,
-            "ctr": 0.0115,
-            "position": 14.9
-          }
-        },
-        "backfilledFrom": "012eca7f1d"
       }
     }
   ]
