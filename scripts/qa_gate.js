@@ -8,6 +8,8 @@
  *
  * orchestrator.md の QA-1〜5 のうち、機械判定できる QA-2/3/4 を決定的に出力する:
  *   QA-2 店舗件数 5%減検知 / QA-3 diff範囲・LOCAL_STORES行変更 / QA-4 JS構文＋機能マーカー保全
+ *   （QA-4 の JS 構文は SEO-115 で「括弧数の近傍チェック」から実パースへ変更。index.html の
+ *    インライン <script> と、店舗ページ生成器の出力見本を scripts/lib/inline_js.js で検査する）
  * 範囲外（別途）:
  *   QA-1 build.js 正常終了 → `node build.js` を直接実行して確認（重い・環境依存なのでここでは扱わない）
  *   QA-5 UX 目視（モバイル/CTA）→ 人/AI が判断
@@ -24,6 +26,8 @@
 const fs = require('fs');
 const path = require('path');
 const cp = require('child_process');
+
+const { auditHtml } = require('./lib/inline_js');
 
 const ROOT = path.resolve(__dirname, '..');
 const INDEX = path.join(ROOT, 'index.html');
@@ -54,11 +58,23 @@ function markerCounts(html) {
   return m;
 }
 
-function jsSyntaxRough(html) {
-  // 完全な構文解析ではなく「大崩れ検知」。index.html を読めること＋括弧バランスの近傍チェック。
-  const open = (html.match(/[{(]/g) || []).length;
-  const close = (html.match(/[})]/g) || []).length;
-  return { readable: html.length > 0, brace_paren_diff: open - close, note: '0近傍が正常。大きくズレたら手動確認' };
+function jsSyntax(html) {
+  // SEO-115: 旧実装（括弧数の近傍チェック）は「正規表現の \/\/ が // に化けて行末がコメントになる」
+  // ような1文字の崩れを検知できず、店舗ページの GA4 が5か月止まっていた。実際に構文解析する。
+  const r = auditHtml(html, { filename: 'index.html' });
+  return { readable: html.length > 0, inline_blocks: r.checked, inline_js_errors: r.violations };
+}
+
+function storeTemplateSyntax() {
+  // 店舗ページ（約5,000本）の生成器の出力見本を同じ判定器で検査する。生成器はテンプレートリテラルの
+  // エスケープで壊れやすく、壊れると全店舗ページに一斉に波及するため QA-4 に含める。
+  try {
+    const { renderStorePage } = require(path.join(ROOT, 'gen-store-pages.js'));
+    const html = renderStorePage({ '店名': 'QAゲート見本', 'エリア': '栄', 'ジャンル': '居酒屋' }, 'J-qa-gate', [], []);
+    return auditHtml(html, { filename: 'gen-store-pages.js:renderStorePage' }).violations;
+  } catch (e) {
+    return [{ rule: 'render-error', detail: e.message }];
+  }
 }
 
 function before() {
@@ -93,8 +109,9 @@ function after() {
     qa3 = { pass: true, note: 'git diff取得不可: ' + e.message };
   }
 
-  // QA-4: JS構文（大崩れ検知）+ 機能マーカー保全（before比で半減以下を検知）
-  const syn = jsSyntaxRough(html);
+  // QA-4: JS構文（index.html と店舗ページ生成器の出力を実パース）+ 機能マーカー保全（before比で半減以下を検知）
+  const syn = jsSyntax(html);
+  const templateErrors = storeTemplateSyntax();
   const nowM = markerCounts(html);
   const regressions = [];
   if (prev && prev.markers) {
@@ -104,7 +121,12 @@ function after() {
       if (b >= 5 && a < b * 0.5) regressions.push({ marker: k, before: b, after: a });
     }
   }
-  const qa4 = { pass: syn.readable && regressions.length === 0, syntax: syn, marker_regressions: regressions };
+  const qa4 = {
+    pass: syn.readable && syn.inline_js_errors.length === 0 && templateErrors.length === 0 && regressions.length === 0,
+    syntax: syn,
+    store_template_errors: templateErrors,
+    marker_regressions: regressions,
+  };
 
   const result = {
     ok: qa2.pass && qa3.pass && qa4.pass,

@@ -96,6 +96,17 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_design_system.js', '--report', '--sample', '200']],
 });
+// 5. インラインJS構文監査（SEO-115・HARD）。店舗ページ約5,000本の GA4 が生成器のエスケープ誤りで
+//    5か月止まっていた事故（2026-10-09 発覚）の再発検知。夜間QAは3時のビルド後に走るため、
+//    再生成済みのページを見る。全件でも約1秒のためサンプリングしない。
+checks.push({
+  id: 'inline-js',
+  title: 'インラインJS構文監査（GA4計測が動くか・SEO-115）',
+  hard: true,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_inline_js_syntax.js', '--check']],
+});
 
 if (cat.buildCore.length) {
   checks.push({
