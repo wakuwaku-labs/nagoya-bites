@@ -369,7 +369,7 @@
 
 ### [SEO-131] 特集に公開日・更新日・書き手を表示し、dateModified を掲載店の入れ替えと連動させる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-10-09
 - **category**: SEO / コンテンツ
 - **owner**: Builder / Designer
@@ -380,6 +380,7 @@
   1. 特集の画面に公開日・更新日・書き手（編集部・現役の飲食人）をデザインシステムの部品で出す。Designer のレビューを受ける（制約12）
   2. 掲載店の入れ替えで内容が変わった日を `dateModified` に書く
   3. デザイン監査・インラインJS監査を通す
+- **結果その1（2026-10-09・達成条件2）**: `scripts/refresh_feature_rosters.js` が掲載店を入れ替えて本文が変わった特集だけ、JSON-LD の `dateModified` をその日（UTC・`docs/decisions/0008` と同じ基準）に進める（`touchDateModified()`。JSON-LD の外は触らない・日付を戻さない・dateModified が無い特集には足さない）。本文が同じならファイルを書き直さない。`--only=date` の試し実行で、10 月の入れ替え後にデータが変わった分の差分が出て日付が進むことを確かめた（ファイルは戻した）。テスト `tests/feature_roster_date_modified.test.js`（2件）。達成条件1（画面の公開日・更新日・書き手）は 69 本の特集が6種類の作りで、日付の書き方も17通りあるため、子課題 [[SEO-145]] に分けた
 
 ### [SEO-132] about.html に運営者像を書く（匿名のまま経歴と編集方針）
 
@@ -570,6 +571,21 @@
   1. index.html の GA 部分で localStorage の読み書きを try/catch で囲む（NB_ENGAGEMENT_EVENTS などほかの動きは変えない）
   2. features/ と journal/ の既存ページの GA スニペットを `scripts/lib/ga_snippet.js` の出力に置き換える冪等なスクリプトを用意し、実行する
   3. `node scripts/audit_inline_js_syntax.js --check` が exit 0。制約5の機能（フィルター・検索・モーダル・IG埋め込み・Google評価）が動くことを確かめる
+
+### [SEO-145] 特集の画面に公開日・更新日・書き手を共通の部品で出す
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / コンテンツ / デザイン
+- **owner**: Builder / Designer
+- **source**: [[SEO-131]] の達成条件1を分けた（2026-10-09）。親は [[SEO-131]]
+- **brand-filter**: ✅ 適合 — 編集規約の透明公開（Moat）を各特集に出す
+- **背景**: 特集 69 本は作りが6種類ある（`art-meta` を持つ 37 本・`hero-title` 26 本・h1 にクラスの無い 5 本など）。画面の日付は17通りの書き方が混在し（「2026年版」「2026.04.23公開」「2026年4月23日更新」「最終更新2026年8月」など）、JSON-LD の `datePublished`・`dateModified` と一致しているかを誰も確かめていない。書き手の表示も「現役飲食店マネージャー監修」「NAGOYA BITES編集部」などばらばら
+- **acceptance**:
+  1. JSON-LD の `datePublished`・`dateModified` を唯一の正本として、公開日・更新日・書き手（NAGOYA BITES 編集部・現役の飲食店マネージャー）を1つの部品で出す。部品の見た目は `assets/css/nb.css` に置く
+  2. 画面に残る古い日付（JSON-LD と食い違う日付）を部品にそろえる。「2026年版」のような版の表記は日付ではないので残す
+  3. 冪等なスクリプトで全特集に当て、build.yml で日次に回す（`refresh_feature_rosters.js` が dateModified を進めた日に表示も追随する）
+  4. Designer の QA-5（375/768/1280px）を記録し、`node scripts/audit_design_system.js --check` と `node scripts/audit_inline_js_syntax.js --check --only features` を通す
 
 ### [ISSUE-145] Linear 同期が課題200件で止まる上限を外す
 
