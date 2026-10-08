@@ -387,6 +387,13 @@ function injectBadgeCss(html) {
 }
 
 // ───────── JSON-LD ItemList の再生成 ─────────
+// SEO-131: 掲載店の入れ替えで本文が変わった日を JSON-LD の dateModified に書く。
+// 日付は UTC で数える（sitemap の lastmod と同じ基準・docs/decisions/0008）。前の日付より戻さない
+function touchDateModified(html, ymd) {
+  return html.replace(/(<script[^>]*application\/ld\+json[^>]*>)([\s\S]*?)(<\/script>)/g, (all, open, body, close) =>
+    open + body.replace(/("dateModified"\s*:\s*")(\d{4}-\d{2}-\d{2})(")/g, (m, a, d, b) => (d < ymd ? a + ymd + b : m)) + close);
+}
+
 function replaceItemList(html, list) {
   const re = /(\{"@context":"https:\/\/schema\.org","@type":"ItemList"[^]*?"itemListElement":)\[[^]*?\](\})/;
   if (!re.test(html)) return html;
@@ -481,13 +488,17 @@ function main() {
     }
 
     // HTML 書き換え
-    let html = fs.readFileSync(file, 'utf8');
+    const orig = fs.readFileSync(file, 'utf8');
+    let html = orig;
     const inner = final.map((e, i) => fc.format === 'shop-card' ? renderShopCard(e, i + 1, slug) : renderStoreCard(e, i + 1, slug)).join('\n\n');
     const replaced = replaceContainerInner(html, fc.container, inner);
     if (!replaced) { console.error(`  ✗ ${slug}: コンテナ .${fc.container} が特定できず未更新`); shortfalls++; continue; }
     html = replaceItemList(replaced, final);
     html = injectBadgeCss(html);
-    fs.writeFileSync(file, html);
+    if (html !== orig) {
+      html = touchDateModified(html, new Date().toISOString().slice(0, 10));
+      fs.writeFileSync(file, html);
+    }
     const seasonalN = final.filter(e => e.seasonalHit).length;
     console.log(`  ✓ ${slug}: ${final.length}店に更新（コア${final.filter(e => coreIds.has(String(e.store['ホットペッパーID']))).length}/新顔${final.filter(e => e.isNew).length}${biasKw ? `/季節適合${seasonalN}` : ''}）`);
     updated++;
@@ -523,4 +534,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { sceneMatch, balanceScore, buildPool, selectRoster, replaceContainerInner, replaceItemList, monthSeed };
+module.exports = { sceneMatch, balanceScore, buildPool, selectRoster, replaceContainerInner, replaceItemList, touchDateModified, monthSeed };
