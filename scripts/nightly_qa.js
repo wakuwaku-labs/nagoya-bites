@@ -107,6 +107,17 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_inline_js_syntax.js', '--check']],
 });
+// 6. アクセス文の駅名監査（SEO-120・SOFT で開始）。エリア「栄」の店23件が釧路市栄町・仙台の中野栄
+//    などの他都市の店だった事故（2026-10-09 発覚・SEO-119）の再発検知。県外の駅名と確定できた店だけを
+//    数える。初回は報告のみとし、緑を確認してから hard に上げる（ISSUE-121 と同じ段階導入）。
+checks.push({
+  id: 'station-names',
+  title: 'アクセス文の駅名監査（県外の店の混入・SEO-120）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_station_names.js', '--check']],
+});
 
 if (cat.buildCore.length) {
   checks.push({

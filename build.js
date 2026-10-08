@@ -1454,6 +1454,16 @@ async function main() {
     }
   }
 
+  // ─── アクセス文の訂正（data/access_corrections.json・SEO-119）─────
+  // ホットペッパー側のアクセス文が誤っている名古屋の店（一次情報で所在地を確認済み）を、
+  // 確かめた文か空欄に差し替える。取り込み元が直れば自動で当たらなくなる。
+  try {
+    const corrected = require('./scripts/lib/access_corrections').applyAccessCorrections(stores);
+    if (corrected) console.log(`アクセス文の訂正: ${corrected}件（data/access_corrections.json）`);
+  } catch (e) {
+    console.error(`data/access_corrections.json の適用失敗: ${e.message}`);
+  }
+
   // ─── ISSUE-132: 同じ店の重複レコードを1枚に統合 ─────
   // 手動キュレーション店（エリア＝名古屋市◯◯区）と Hot Pepper 由来店（エリア＝名駅 等）は
   // 上の突合キー（ホットペッパーID／店名＋エリア）では同一店と判定できず、同じ店が2枚の
