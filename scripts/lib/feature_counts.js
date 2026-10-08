@@ -10,6 +10,11 @@
  * 「本特集のN軒」などの自ページの表記と、他の特集へのリンク文の「N選」をその数に書き換える
  * （syncPage）。scripts/sync_feature_counts.js（build.yml が毎日実行）と build_featured.js・
  * gen_industry_features.js が同じ書き換えを使う。
+ *
+ * SEO-147 で、ジャーナル（journal/）と店舗ページ（stores/）から特集へのリンク文も同じ数にそろえる
+ * （syncAll の target）。これらのページは自分の掲載数を持たないので、特集へのリンク文と、特集を指す
+ * JSON-LD の名前だけを書き換える。生成器（gen-store-pages.js・refresh_journal_related.js・
+ * inject_journal_feature_cta.js）は書き出すときに relabelForSlug を通す。
  */
 const fs = require('fs');
 const path = require('path');
@@ -248,16 +253,21 @@ function syncPage(html, { self = null, counts = {}, dir = 'features' } = {}) {
 }
 
 // features/ の全ページ（features/index.html を含む）。write=false なら書き換えずに変わるページを返す
-function syncAll({ dir, write = false, only = null } = {}) {
-  const d = dir || FEATURES_DIR;
-  const counts = featureCounts(d);
+// target: 'features'（既定）| 'journal' | 'stores'。features 以外のページは自分の掲載数を持たないので、
+// 特集へのリンク文と特集を指す JSON-LD の名前だけをそろえる（SEO-147）。対象はそのディレクトリ直下の .html
+const TARGETS = new Set(['features', 'journal', 'stores']);
+function syncAll({ dir, target = 'features', featuresDir = null, write = false, only = null } = {}) {
+  if (!TARGETS.has(target)) throw new Error(`target は features / journal / stores のどれか: ${target}`);
+  const isFeatures = target === 'features';
+  const d = dir || path.join(FEATURES_DIR, '..', target);
+  const counts = featureCounts(featuresDir || (isFeatures ? d : FEATURES_DIR));
   const changed = [];
   for (const f of fs.readdirSync(d).filter(x => x.endsWith('.html')).sort()) {
     if (only && !f.includes(only)) continue;
     const file = path.join(d, f);
     const html = fs.readFileSync(file, 'utf8');
-    const self = f === 'index.html' ? null : f.replace(/\.html$/, '');
-    const r = syncPage(html, { self, counts });
+    const self = !isFeatures || f === 'index.html' ? null : f.replace(/\.html$/, '');
+    const r = syncPage(html, { self, counts, dir: target });
     if (r.html !== html) {
       changed.push({ file: f, changes: r.changes });
       if (write) fs.writeFileSync(file, r.html);

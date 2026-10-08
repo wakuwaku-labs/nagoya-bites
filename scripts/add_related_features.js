@@ -7,6 +7,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { relabelForSlug } = require('./lib/feature_counts');
 
 const FEAT = path.join(__dirname, '..', 'features');
 const HUB = 'nagoya-gourmet-guide';
@@ -115,7 +116,7 @@ function buildBlock(slug) {
     parts.push(`    <a class="related-link" href="${HUB}.html" style="background:rgba(122,92,16,.08);border-color:var(--gold);font-weight:500;">\u{1F4D6} ${LABEL[HUB]}</a>`);
   }
   for (const t of links) {
-    parts.push(`    <a class="related-link" href="${t}.html">${LABEL[t]}</a>`);
+    parts.push(`    <a class="related-link" href="${t}.html">${relabelForSlug(LABEL[t], t)}</a>`);
   }
   return `\n<div class="related">\n  <p class="related-title">関連する特集記事</p>\n  <div class="related-links">\n${parts.join('\n')}\n  </div>${JOURNAL_LINK}\n  <p style="margin-top:1.5rem;">\n    <a class="related-link" href="../index.html" style="background:rgba(122,92,16,.06);">トップページで全店舗を検索する →</a>\n  </p>\n</div>\n`;
 }
