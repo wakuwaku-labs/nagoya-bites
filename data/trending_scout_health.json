@@ -2,11 +2,12 @@
   "version": 1,
   "_comment": "話題店発掘ループの心拍。trending-scout ルーチンが毎回（新規リード0件の日も）書き、コミットで Mac／クラウドの外＝GitHub へ出す。.github/workflows/trending-scout-watchdog.yml が鮮度を見て、滞ったら Issue を起票する（＝オーナーにメール）。鮮度は自己申告できない（動いていないエージェントはファイルを更新できない）ため、これが本体の検知シグナル。",
   "last_run": {
-    "date": "2026-10-06",
-    "recorded_at": "2026-10-05T19:44:54.057Z",
+    "date": "2026-10-09",
+    "recorded_at": "2026-10-08T19:12:21.367Z",
     "status": "ok",
     "reason": null,
     "queries": [
+      "名古屋 dressing 特集",
       "名古屋 マカロニ グルメ",
       "名古屋 ヒトサラ おすすめ",
       "名古屋 OZmall 特集",
@@ -17,13 +18,12 @@
       "CBC 名古屋 紹介",
       "メ〜テレ 飲食店",
       "ケンミンショー 名古屋",
-      "名古屋 retrip 人気",
-      "名古屋 icotto おすすめ"
+      "名古屋 retrip 人気"
     ],
-    "leads_found": 4,
+    "leads_found": 0,
     "matched_existing": 0,
-    "new_candidates": 3,
-    "promoted": 0,
+    "new_candidates": 0,
+    "promoted": 4,
     "trending_stores_total": 49,
     "trending_candidates_total": 24
   }
