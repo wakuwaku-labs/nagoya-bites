@@ -18,17 +18,17 @@ status: in_progress
   - #413 SEO-135（llms.txt にハブの全階層・数値の出典と更新日・sitemap.xml）
   - #414 SEO-136（IndexNow: 前回送った値を data/indexnow_state.json に記録し、変わったハブ・編集コメントが変わった店舗ページを送る）
   - #415 SEO-138（GA スニペットを scripts/lib/ga_snippet.js の1本に。localStorage を try/catch で囲む）
+  - #422 SEO-145（特集の公開日・更新日・書き手の部品・P-153 Done）。SEO-131（P-127）も Done
   - #416 SEO-143（店舗ページに「編集部の選定理由」）・#418 SEO-139（aggregateRating と SearchAction を外す・docs/decisions/0009）・#419 IndexNow が -2/-3 の店舗ページを探す・#420 SEO-127（banquet の 11・12月リードと幹事チェックリスト）・#421 SEO-131 その1（掲載店の入れ替えで dateModified を進める）
 - Linear: P-115/P-116/P-138/P-113/P-140/P-131/P-132/P-134 は Done（結果コメントつき）。P-117（SEO-121）は In Progress で、本番確認待ち
 - 起票: ISSUE-147（P-142・Places の古い誤紐付け・オーナー承認が要る）／ISSUE-148（P-143・スプレッドシート経由の住所検査）／SEO-142（P-144・sameAs。公式アカウントの URL をオーナーが示すまで待ち）／SEO-143（P-145・店舗ページに editorReason が出ていない）／SEO-144（P-146・index.html と静的ページの localStorage 例外で GA が止まる）
 
 # 次にやること
-1. SEO-121 の本番確認: 次の build.yml の後に `node scripts/audit_sitemap_health.js --lastmod-only --check` が exit 0 → backlog done・P-117 Done
-2. SEO-115 の残り: 10-09 06:00 の夜間QA（inline-js）と `data/site_metrics.json` の topPages に /stores/ が出るか → done・P-112 Done
-3. 実装中: SEO-145（特集の公開日・更新日・書き手の部品・P-153）→ PR → 合流後に sync --apply（SEO-145/131 Done・SEO-146/DSN-007 起票）→ P-153・P-127 に結果コメント
-   SEO-143 の本番確認: build.yml の再生成後に `node scripts/indexnow_ping.js --recent 2` の stores.comment_not_on_page が 0 前後 → done・P-145 Done（#416・#419 に触れる）。SEO-139 は `grep -l AggregateRating stores/*.html | wc -l` = 0 を確かめる
-   次: SEO-146（特集の掲載件数の表記・gen_industry_features.js の「焼鳥 串っ子」）→ SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
+1. 実装中: 孤児78本の aggregateRating 除去（SEO-139 の後始末）＋ backlog 確認結果（SEO-121・SEO-143 done）→ PR → 合流 → sync --apply（P-117・P-145 Done）→ P-117・P-145・P-135 に結果コメント
+2. SEO-115 の残り（P-112）: 達成条件3（GA4 で /stores/ の page_view。topPages は上位5ページだけなので、オーナー確認か 10-10 以降の metrics_history の段差）と5（次の夜間QA の inline-js が緑）
+3. 次の実装: SEO-146（P-154・特集の掲載件数の表記・gen_industry_features.js の「焼鳥 串っ子」）→ SEO-124 ハブ本文 → SEO-122 date.html → SEO-137 ジャーナル title → SEO-134 結論ブロック → SEO-144
 4. 夜間QA の station-names が緑で続いたら hard に上げる
+5. 最後に: 「うなぎのしろむら 泉店」の起票、創業者の実名が index.html の Organization JSON-LD に出ている件をオーナーへ報告（変更しない）、http.server（8093・8094・8095）を止める
 
 対象外（理由）:
 - SEO-118（10-20 の GA4 再基線）・SEO-125（10-15 記録）・SEO-126/130/140（11-15 判定）・SEO-141（11-30 判定）: 日付待ち
