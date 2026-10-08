@@ -18,10 +18,12 @@ status: in_progress
   - 検索流入は Bing 28% / Google 26.7% / Yahoo 11.3% / 生成AI 7.4%
 
 # 次にやること
-1. T1 修正（gen-store-pages.js:786）＋ゲート実装 → npm test
-2. docs（seo-strategy-2026-10 / growth-plan 追記 / ADR 0007 / kpi-weekly）
-3. backlog 起票（SEO-115〜）→ sync_backlog_to_linear.js dry-run → --apply
-4. 独立レビュー → コミット → PR
+1. ✅ T1 修正＋ゲート（commit b536405024）。npm test 309件通過。デザイン監査は CI と同じ条件で通過
+2. ✅ docs（seo-strategy-2026-10 / growth-plan 追記 / ADR 0007 / kpi-weekly）
+3. ✅ 起票: SEO-115〜141・ISSUE-145/146 を Linear P-111〜P-140 に作成（親子26件設定済み）。既存 P-24/P-32/P-57/P-58/P-59 にコメント。重複 P-139 は Duplicate 化。ISSUE-096（P-36）は Linear が Done・backlog が in_progress のため同期から外した
+4. ✅ 独立レビューの指摘対応（中3件・軽微5件）: 再生成されない孤児16本も1行修正（CI 相当の全件シミュレーションで現役4,909本も違反0）、59.8% の分母を「クエリが分かる表示（全体の45.9%）」に訂正、SEO-129 をオーナー承認経路に限定、検査器の data-src・コメント・type 引数・ルート全ページ対応。npm test 312件通過
+5. Linear の P-111・P-125 に訂正コメント → コミット → push → PR → チェック通過なら合流 ← 今ここ
+6. 合流後: build.yml の店舗ページ再生成を確認（main で `grep -l 'https?:///i' stores/*.html | wc -l` = 0）。CI で監査が緑になったら build.yml の continue-on-error を外す（SEO-115 受け入れ条件4）
 
 # 試したが駄目だったこと
 - （なし）
@@ -31,6 +33,12 @@ status: in_progress
 - そのため、テストは「生成器の出力」と「テンプレート・既存の正常ページ」を検査し、コミット済みの stores/*.html は見ない（合流前は全件壊れているため）
 - .linear.json は入れない。本リポジトリは agent-backlog.md → scripts/sync_backlog_to_linear.js が Linear 運用の正本（グローバル規約の「リポジトリ固有の決まりを優先」）
 - SEO の判定指標は discovery 表示・クリック、被表示ハブ数、生成AI・Bing 経由セッション（総クリックと PV は GA4 再基線化まで比較しない）
+
+- 栄の駅名汚染は8店ではなく7店（鳥しげ 錦本店の「東京第一ホテル錦」は誤検出）。効果台帳に SEO-095/099/105 の行は無い（実際は SEO-003・ISSUE-067・SEO-060・DSN-003）。薄い店は定義どおりに数えると24店
+- 起票の構成（2026-10-09 決定）: 親 SEO-116（90日計画）の下に作業を並べる。中間の親は T7（ハブ）・T10（店舗）・T12（AI/Bing）だけ。T6 は SEO-087、T8 は SEO-067/098、T10c は SEO-095 に追記して新規にしない（同じ課題は追記の規則）
+- 「バー」「カフェ」を含む検索はほぼ店名指名（バー142表示中141）。ジャンル需要は未観測と書く（計画時の「ハブが取るべき面」は誤り）
+- 手元のデザイン監査が stores/J003560485.html 等で落ちるのは、CI がコミットしない data/store_page_orphans.json が古いため（CI では作り直されて通る）。ISSUE-146 で起票する
+- Linear 同期は一覧 200 件で打ち切ると止まる作り（現在109件）。ISSUE-145 で起票する
 
 # 関連ファイル
 - ~/.claude/plans/seo-golden-dream.md（承認済み計画）

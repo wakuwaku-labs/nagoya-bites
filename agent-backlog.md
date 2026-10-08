@@ -6,6 +6,436 @@
 
 ---
 
+### [SEO-116] SEO の90日計画（2026-10〜12）を進め、12-15 に北極星指標で次の計画を決める
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-12-15
+- **category**: SEO
+- **owner**: Marketer
+- **source**: オーナー依頼「SEOの分析と、今後より伸ばすための戦略戦術を用いた改善点」（2026-10-09）。分析・戦略・戦術の正本は `docs/seo-strategy-2026-10.md`、判断は `docs/decisions/0007-seo-north-star-metrics.md`
+- **brand-filter**: ✅ 適合 — Moat「名古屋×シーン×業界人の目利き」の検索面を実測で濃くする計画。順位操作・広告・PR記事・ストック写真を伴わない
+- **背景（2026-10-08 生成の data/*.json）**:
+  - 店舗ページ 5,008 本で GA4 が 2026-05-08 から動いていなかった（[[SEO-115]]）
+  - Google のクリック 568 の 25% を特集「一人飲み」1本が稼ぐ。宴会・接待・忘年会を含む検索の表示はほぼ0
+  - クエリが分かる表示（全体の 45.9%）の 59.8% が店名指名検索（CTR 0.61%）。発見型は表示 1,532・クリック 91。ハブ 699 本は表示 86・クリック 1
+  - 検索流入は Bing 28.0% / Google 26.7% / Yahoo! 11.3% / 生成AI 7.4%
+- **子課題**: [[SEO-115]] [[SEO-117]] [[SEO-118]] [[SEO-119]] [[SEO-120]] [[SEO-121]] [[SEO-122]] [[SEO-123]] [[SEO-127]] [[SEO-128]] [[SEO-131]] [[SEO-132]] [[SEO-133]] [[SEO-137]] [[SEO-138]] [[SEO-139]] [[SEO-140]] [[SEO-141]]。既存の [[SEO-087]]（名駅一人飲み）・[[SEO-067]] [[SEO-098]]（オーナー作業）・[[SEO-095]] [[SEO-099]] にも追記済み
+- **acceptance**:
+  1. 子課題が done か wont_fix で閉じている（判定日が来ていないものを除く）
+  2. 12-15 に北極星4指標（発見型の表示とクリック・表示が出たハブの数・生成AI経由セッション・Bing経由セッション）を `docs/kpi-weekly.md` に記録し、`docs/seo-strategy-2026-10.md` §4 の到達条件と照合した結果を書く
+  3. 2027-Q1 の計画（続行か作り直し）を `docs/` に書き、ADR 0007 の「見直す条件」に沿って必要なら判断を更新する
+
+### [SEO-115] 店舗ページの GA4 計測を直し、生成ページのインラインJS構文を CI で検査する
+
+- **priority**: P0 → **status**: in_progress
+- **detected**: 2026-10-09
+- **category**: SEO / 計測
+- **owner**: Builder
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §1-4 ①）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 計測の修復。表示内容は変えない
+- **背景（検証できる事実）**:
+  - `gen-store-pages.js` のテンプレートリテラル内の `/^https?:\/\//i` が、生成物では `/^https?:///i` になる（テンプレートリテラルでは `\/` が `/` になる）。行の後ろがコメント扱いになり SyntaxError で、`gtag('config','G-3LCZNGZPWJ')` と外部リンク計測を含む script が丸ごと動かない
+  - `git log -S` で 2026-05-08 の生成分から。稼働中の店舗ページ 4,909 本と孤児ページ 99 本の計 5,008 本（稼働中の数は当日の `data/stores.json` による）。特集・ジャーナル・ハブの同じスニペットは正しい
+  - GSC の Google クリック 568 に対し GA4 の Google セッションは 372 で、乖離と整合する
+  - 生成ページの JS を検査する仕組みがどこにも無く、5 か月気づけなかった（制約11）
+- **実装（2026-10-09・commit b536405024）**: 生成器のエスケープを修正。build.yml が作り直さない孤児ページ 99 本は該当1行だけ置換（83 本は b536405024、残り 16 本は独立レビューの指摘で追加）。稼働中のページは合流後の build.yml が再生成し、CI と同じ手順を書き込み無しで全件走らせて違反 0 を確認。判定器 `scripts/lib/inline_js.js`、監査 `scripts/audit_inline_js_syntax.js`、テスト `tests/inline_js_syntax.test.js`、`scripts/qa_gate.js` の実パース化、build.yml（非ブロッキング）と夜間QA（hard）への組み込み
+- **acceptance**:
+  1. `npm test` が通る。新テストは修正前の生成器で失敗する
+  2. 合流後の build.yml が店舗ページを再生成し、main で `grep -l 'https?:///i' stores/*.html | wc -l` が 0、`node scripts/audit_inline_js_syntax.js --check` が exit 0
+  3. GA4 のリアルタイムで `/stores/` の page_view が出る（オーナー確認）か、2日以内に `data/site_metrics.json` の `topPages` に `/stores/` が出る
+  4. CI でこの監査が1回緑になったら、build.yml のステップから `continue-on-error` を外して blocking にする（ISSUE-121 の作法）
+  5. 夜間QA の `inline-js` チェックが緑
+
+### [SEO-117] GSC の意図別・ページ種別の値を日次の指標履歴に残す
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / 計測
+- **owner**: DataKeeper
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` 柱A）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 計測の整備
+- **背景**: `data/gsc_metrics.json` は毎日上書きされ、`intent.kpi`（発見型の表示とクリック）と `pageTypes`（ページ種別）の時系列が残らない。`data/metrics_history.json`（`scripts/track_metrics.js --snapshot` が1日1行追記）は GA4 の値しか持たない。[[SEO-087]] の効果判定では git 履歴から手で復元していた
+- **acceptance**:
+  1. 日次の追記で、`metrics_history.json` の各行に GSC の `dateRange`・`totals`・`intent.kpi`・`pageTypes` を足す（既存の形は変えず追加だけ）
+  2. 追記の形をテストで検査する
+  3. 北極星4指標を履歴から1コマンドで出す方法を `docs/seo-strategy-2026-10.md` §5 に書く
+
+### [SEO-118] GA4 の計測復旧による段差を効果測定から切り離し、継続中の施策の基線を取り直す
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-10-20
+- **category**: SEO / 計測
+- **owner**: Marketer
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §4 の 10-20）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 計測の整備
+- **背景**: [[SEO-115]] の合流後、店舗ページ分が GA4 に入り PV とセッションが段差で増える。`data/effect_ledger.json` の4件（SEO-003・ISSUE-067・SEO-060・DSN-003）の基線は計測欠落の期間に取られている。継続中の [[SEO-095]]・[[SEO-099]] も GA4 側の判定が歪む
+- **acceptance**:
+  1. [[SEO-115]] の合流日を「計測変更日」として記録し、`scripts/track_metrics.js --followup` がこの日をまたぐ比較で注意を出す
+  2. 合流後 7 日以上のデータで、[[SEO-095]]・[[SEO-099]] の基線を `track_metrics.js --baseline` で取る
+  3. 既存4件は、`/stores/` を除いた値で比べるか、比較できないと台帳に記録する
+  4. 店舗ページ込みの GA4 の真値（PV・セッション）を `docs/kpi-weekly.md` に記録する
+
+### [SEO-119] 栄エリア7店のアクセス文から県外の駅名を除く
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: data-quality / SEO
+- **owner**: DataKeeper
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §1-4 ②）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 実在保証（Moat）の修復
+- **背景**: `data/stores.json` の `アクセス` に県外の駅名が入っている7店（いずれもエリア=栄）: 韓国居酒屋 テヤン（J004492043）・焼鳥 串っ子（J003942159）・炉ばた 浜っ子（J000958669）・七輪酒肴こいき（J003736032）・てんまや（J004469028）・居酒屋ダイニング あひる（J003473133）は「JR釧路駅出口より徒歩約14〜19分」、KANDA SHOTEN カンダショウテン（J004470632）は「JR神田(東京)駅東口より約1分」。店舗ページ・JSON-LD に加え、ハブ `stores/area/sakae/izakaya-budget-3000.html` の本文に「最寄り駅…釧路駅（2軒）」と出ている
+- **acceptance**:
+  1. 7店それぞれのアクセスを一次情報（HotPepper の店舗ページ・店舗公式・Google マップ）で確かめる。確かめられた店は正しい文に、確かめられない店は空欄にする（推測で書かない）
+  2. 取り込み元（HotPepper の取得か名寄せ）のどこで混入したかを特定し、次のビルドで戻らないようにする
+  3. 再生成後、`grep -l '釧路駅\|神田(東京)' stores/*.html stores/area -r` が 0 件
+
+### [SEO-120] アクセス文の駅名が愛知県内の駅かを検査する監査を足す
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: data-quality / QA
+- **owner**: Builder
+- **source**: SEO分析（2026-10-09）。[[SEO-119]] の再発防止。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 実在保証の検知
+- **背景**: 既存の `scripts/audit_other_prefecture_matches.js` は都道府県の一致しか見ず、アクセス文の駅名を見ていない。そのため [[SEO-119]] の7店が検出されなかった。単純な語の照合は誤検出する（例: 鳥しげ 錦本店の「東京第一ホテル錦」は名古屋のホテル名）
+- **acceptance**:
+  1. 出典を書いた愛知県内の駅名リスト（data のファイル）と、アクセス文の「〜駅」を照合し、県外の駅名を含む店を一覧する。ホテル名などの誤検出を避けるため「駅」の直前の語で照合する
+  2. `--check` で該当があれば exit 1。夜間QAか build.yml で日次に回す（初回は非ブロッキング）
+  3. [[SEO-119]] の修正前のデータで7店を検出し、鳥しげ 錦本店は検出しないことをテストで確かめる
+
+### [SEO-121] sitemap の lastmod を実際の更新日にし、止まっている sitemap-index と sitemap-news を整理する
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / 技術
+- **owner**: Builder
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §1-4 ③）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — クロールの正常化
+- **背景**: `sitemap.xml` の 5,823 URL の `lastmod` が全件生成日（2026-10-08 の1値）。`gen-store-pages.js` と `scripts/gen_area_genre_pages.js` がどちらも当日を書く（ハブは manifest に `updated` を持つのに使っていない）。robots.txt が指す `sitemap-index.xml` と `sitemap-news.xml`（2 URL）は 2026-05-23 から更新されていない
+- **acceptance**:
+  1. `lastmod` を実際の更新日にする（店舗はページ内容が変わった日、ハブは manifest の `updated`、特集は `dateModified`、ジャーナルは `datePublished` か更新日）
+  2. robots.txt の Sitemap を、毎日更新される sitemap に向ける。更新されない `sitemap-news.xml` は外す
+  3. `scripts/audit_sitemap_health.js` に「lastmod が全件同じ日でない」検査を足す
+
+### [SEO-122] デート特集を「名古屋 デート ディナー」で1ページ目に上げる
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / コンテンツ
+- **owner**: Editor
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §1-3・柱B）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — シーン別の専門性（勝つ領域）。新規ページは作らない
+- **背景**: GSC 28日（09-10〜10-07）で `features/date.html` は 329 表示・11 クリック・11.2 位。「名古屋 デート ディナー」が 51 表示・11.5 位で、1ページ目の手前。`dateModified` が無い
+- **acceptance**:
+  1. title・h1・冒頭に「名古屋 デート ディナー」の意図に答える結論（予算×エリア別の3店）を置く。掲載店はすべて LOCAL_STORES の実在店
+  2. `features/nagoya-solo-dining.html` との相互リンクと、栄・名駅のハブへの導線を足す
+  3. `dateModified` を入れる。デザイン監査・`node scripts/audit_feature_stores.js`・インラインJS監査を通す
+  4. 4 週後に `gsc_metrics.json` の `pageQueries` で同クエリの順位と表示を比べる（目標 10 位以内）
+
+### [SEO-123] エリア×ジャンル×条件ページ699本を濃くし、11-15 にインデックス対象を実測で絞る
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-11-15
+- **category**: SEO
+- **owner**: Builder / Editor
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §1-4 ⑥・柱C）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 量より質。削除はせず、薄いページを検索の対象から外す
+- **背景**: manifest は 699 本（root 1・area 10・genre 90・condition 598 うち stub 12）。本文は件数・予算帯・最寄駅の自動要約だけ。有効な条件ページ 586 本のうち掲載 10 軒未満が 89 本、10〜19 軒が 244 本。GSC 28日で表示が出たのは 27 本・86 表示・1 クリック。本番 sitemap に安定して載ったのは 09-28 から（[[SEO-111]]）。2026 年はスパムアップデートが 6 月と 9 月にあった
+- **子課題**: [[SEO-124]]（本文強化）・[[SEO-125]]（10-15 の基線）・[[SEO-126]]（11-15 の判定）
+- **acceptance**:
+  1. 子課題3件が閉じている
+  2. 11-15 の判定結果（インデックス対象と noindex の本数）を `docs/kpi-weekly.md` に記録する
+
+### [SEO-124] ハブの本文に編集辞書と選定理由を足し、FAQ の構造化データを外す
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-10-31
+- **category**: SEO / コンテンツ
+- **owner**: Builder / Editor / Designer
+- **source**: SEO分析（2026-10-09）。親は [[SEO-123]]
+- **brand-filter**: ✅ 適合 — 業界視点の解釈層（Moat）をハブに出す
+- **背景**: ハブ本文は自動要約だけで、店ごとの `editorReason` も出していない。FAQPage のリッチリザルトは 2026-05-07 以降 Google 検索に表示されない（Google 公式ドキュメント）
+- **acceptance**:
+  1. 条件13軸×ジャンル17 の「見分け方」の短文を Editor が書き、データファイルに置く。生成器が決定的に合成する。推測の数値は書かない
+  2. `editorReason` を持つ店を理由つきで先頭に出す。価格帯と駅別の表を出す。データ更新日（manifest の `updated`）を本文に出す
+  3. FAQPage の JSON-LD を外す（画面の FAQ は残す）
+  4. 閾値・語の変更は `data/area_genre_pages_policy.json` で行う。`node scripts/gen_area_genre_pages.js --check`・デザイン監査・インラインJS監査を通し、Designer のレビューを受ける（制約12）
+
+### [SEO-125] 10-15 時点の「表示が出たハブの数」を記録し、ハブ判定の基線にする
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-10-15
+- **category**: SEO / 計測
+- **owner**: Marketer
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §4 の 10-15）。親は [[SEO-123]]
+- **brand-filter**: ✅ 適合 — 計測
+- **背景**: 2026-10-08 時点は 27 本・86 表示・1 クリック（`gsc_metrics.json` `pageTypes.area_hub`）。11-15 の判定（[[SEO-126]]）に「公開 60 日で表示 0」の条件があり、ページごとの表示の有無が要る
+- **acceptance**:
+  1. 10-15 の `gsc_metrics.json` から `pageTypes.area_hub` と、ハブごとの表示・クリックを `docs/kpi-weekly.md` に記録する
+  2. 条件ページごとの公開日（manifest の `firstPublished`）と表示の有無の一覧を残す
+
+### [SEO-126] 11-15 に条件ページのインデックス対象を決め、外すものを noindex,follow にする
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-11-15
+- **category**: SEO / 技術
+- **owner**: Builder / Marketer
+- **source**: SEO分析（2026-10-09・`docs/decisions/0007-seo-north-star-metrics.md` 決めたこと4）。親は [[SEO-123]]
+- **brand-filter**: ✅ 適合 — 薄い自動生成ページを検索の対象から外す。削除しない
+- **背景**: 有効な条件ページ 586 本のうち掲載 15 軒未満が 239 本（2026-10-08 の manifest）。新設面の評価に 2〜3 か月かかる前提で、11-15 まで大量の noindex はしないと決めた
+- **acceptance**:
+  1. 条件ページのうち (i) 掲載 15 軒未満 (ii) 親ジャンルページの上位 60 店との重複 80% 以上 (iii) 公開 60 日で GSC 表示 0 のどれかに当たるものを決定的に判定する。閾値は policy JSON、結果は manifest の `indexable` に持つ
+  2. 当たるページを noindex,follow にし、sitemap から外す。削除せず、内部リンクは残す
+  3. 判定した本数（対象・除外）を記録する
+
+### [SEO-127] 忘年会シーズンに向けて banquet.html を幹事視点で強化する（新規特集は作らない）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / コンテンツ
+- **owner**: Editor
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` 柱B）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 宴会のシーン専門性。飲食店側の事情を知る編集部だから書ける幹事向けの実務情報
+- **背景**: GSC 上位 300 クエリに「忘年会」「宴会」を含むものは 0 件。`features/banquet.html`（title「名古屋 宴会・忘年会おすすめ居酒屋15選【2026年版】」）は 28 日で 1 表示・0 クリック。接待系特集 6 本で 26 表示・0 クリック（[[SEO-090]]・7本目は作らない判断）。季節リードは `data/featured.json` の `sceneLeads` で入れる仕組みがある
+- **acceptance**:
+  1. 11〜12 月の `sceneLeads` に幹事視点の内容（人数別の個室の事情・飲み放題の確認点・キャンセル規定の確認点）を書く。推測の数値・架空店を書かない
+  2. 掲載店はロスターの既存ゲートを通った実在店だけ
+  3. 継続か撤退かは [[SEO-141]] で 11-30 に判定する
+
+### [SEO-128] 店舗ページを GSC の表示上位から濃くする
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-11-20
+- **category**: SEO / コンテンツ
+- **owner**: Editor / DataKeeper
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §1-4 ⑤・柱C）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 業界視点の解釈層（Moat）を店舗ページに出す
+- **背景**: 店舗ページ 2,998 ページに 28 日で 27,907 表示・268 クリック・CTR 0.96%。`editorReason` か `insiderNote` を持つ店は 4,909 店中 152 店（3.1%）。価格帯・Google評価・写真URL のうち 2 つ以上が空で編集コメントも無い店は 24 店で、一括 noindex の根拠は無い
+- **子課題**: [[SEO-129]]（上位300店の editorReason 下書きとオーナー承認）・[[SEO-130]]（11-15 の noindex 候補判定）
+- **acceptance**:
+  1. 子課題2件が閉じている
+  2. 付与店の CTR の前後比を `docs/kpi-weekly.md` に記録する
+
+### [SEO-129] GSC 表示上位300店の editorReason 下書きを作り、オーナーが承認した分だけ反映する
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-11-20
+- **category**: SEO / コンテンツ
+- **owner**: Editor
+- **source**: SEO分析（2026-10-09）。親は [[SEO-128]]
+- **brand-filter**: ✅ 条件付き適合 — 業界視点のコメントは Moat の中心だが、AI が「現役飲食人の目利き」を名乗る文を書いて無確認で載せると信頼を損なう（制約7）。そのため既存の「引用付き下書き → オーナー承認」の経路だけを使い、insiderNote は AI に書かせない（`docs/editorreason-todo.md` の記入ルール）
+- **背景**: クエリが分かる表示（全体の 45.9%）の 59.8% が店名指名検索で、CTR は 0.61%。`.github/workflows/editorreason-batch.yml` が引用付きの下書きを `docs/editorreason-drafts.md` に作り、オーナーが `[approved]` を付けた分だけ `scripts/approve_editorreason_drafts.js` が `data/editor_picks.json` へ反映する経路が既にある
+- **acceptance**:
+  1. `gsc_metrics.json` の `pages[]` で表示上位 300 の店舗ページを下書きの対象に加える（週 50 店まで）。下書きは出典付きの事実だけで書く
+  2. 反映するのはオーナーが目で見て `[approved]` を付けた下書きだけ。`--auto-high-conf`（確信度での一括承認）は使わない。週の反映数は承認数で決まり、ノルマにしない
+  3. `insiderNote` は AI の下書きを反映しない。オーナー本人が書いた、または内容を確認したものだけを載せる
+  4. 反映した店と日付を記録し、反映 4 週後に反映店の CTR を前後比で見る
+
+### [SEO-130] 11-15 に薄い店舗ページを noindex,follow の候補として判定する
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-11-15
+- **category**: SEO / 技術
+- **owner**: DataKeeper / Marketer
+- **source**: SEO分析（2026-10-09）。親は [[SEO-128]]
+- **brand-filter**: ✅ 適合 — 店舗ページの一括 noindex はしない（ADR 0007）。条件に当たる少数だけを候補にする
+- **背景**: 価格帯・Google評価・写真URL のうち 2 つ以上が空で編集コメントも無い店は 24 店（2026-10-08）
+- **acceptance**:
+  1. 候補は上の 24 店の条件に当たる店と、公開 60 日で GSC 表示 0 の店。GSC のクリックが 1 以上の店は除く。判定は決定的なスクリプトで行う
+  2. 候補の一覧と件数を記録し、実施するかは [[SEO-140]] のチェックポイントで決める
+
+### [SEO-131] 特集に公開日・更新日・書き手を表示し、dateModified を掲載店の入れ替えと連動させる
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / コンテンツ
+- **owner**: Builder / Designer
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §1-4 ⑦・柱D）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 編集規約の透明公開（Moat）を各特集に出す
+- **背景**: `features/nagoya-solo-dining.html` の `dateModified` は 05-22 のまま、`features/date.html` には無い。掲載店は `scripts/refresh_feature_rosters.js` が月次で入れ替えるのに、更新日が連動しない。画面に公開日・更新日・書き手が無く、title の【2026年版】と合わない
+- **acceptance**:
+  1. 特集の画面に公開日・更新日・書き手（編集部・現役の飲食人）をデザインシステムの部品で出す。Designer のレビューを受ける（制約12）
+  2. 掲載店の入れ替えで内容が変わった日を `dateModified` に書く
+  3. デザイン監査・インラインJS監査を通す
+
+### [SEO-132] about.html に運営者像を書く（匿名のまま経歴と編集方針）
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / コンテンツ
+- **owner**: Editor ← オーナー確認
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §1-4 ⑦）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 現役飲食人運営・編集部匿名（Moat）を、誰が書いているかが伝わる形で示す
+- **背景**: `about.html` に運営者像の本文が無い。AI の概要では「誰が書いたか」が引用の材料になる
+- **acceptance**:
+  1. 匿名のまま、運営者の業界経験（事実の範囲）・編集方針・`editorial-policy.html` へのリンクを書く。経歴はオーナーに確かめて書く（創作しない）
+  2. Organization の構造化データと矛盾しない。デザイン監査を通す
+
+### [SEO-133] 生成AIに引用されやすくし、Bing の取り込みを早める
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO
+- **owner**: Marketer / Builder
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §1-5・柱D）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — Google 以外の検索面を取る。広告・順位操作は伴わない
+- **背景**: 30 日の生成AI 経由は 103 セッション（7.4%）、Bing 経由は 390（28.0%）。日本で AI の概要が出る検索では 1 位の CTR が半年で 62.7% 下がった（Ahrefs・2026-06）。llms.txt は [[SEO-097]] で CI 再生成になっている
+- **子課題**: [[SEO-134]]（特集冒頭の結論）・[[SEO-135]]（llms.txt と sameAs）・[[SEO-136]]（IndexNow の対象拡大）
+- **acceptance**:
+  1. 子課題3件が閉じている
+  2. 30 日の生成AI経由・Bing経由セッションを `docs/kpi-weekly.md` に記録する
+
+### [SEO-134] 特集の冒頭に3行の結論を置く
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / コンテンツ
+- **owner**: Editor / Designer
+- **source**: SEO分析（2026-10-09）。親は [[SEO-133]]
+- **brand-filter**: ✅ 適合 — 読者と AI の両方に、誰に・どの店・なぜを先に示す
+- **背景**: 特集は結論が本文の中ほどにあり、AI の概要や Bing Copilot が引用しにくい（推測）
+- **acceptance**:
+  1. 発見型の表示がある特集から順に、冒頭に「誰に・どの店・なぜ」を3行で書く。掲載店は実在店だけ、推測の数値は書かない
+  2. デザインシステムの部品で出し、Designer のレビューを受ける
+  3. 対象の特集と実施日を記録し、生成AI 経由の着地ページを前後比で見る
+
+### [SEO-135] llms.txt にハブの階層と数値の出典・更新日を載せ、Organization に sameAs を足す
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / 技術
+- **owner**: Builder
+- **source**: SEO分析（2026-10-09）。親は [[SEO-133]]
+- **brand-filter**: ✅ 適合 — 機械可読な一次情報の整備
+- **背景**: llms.txt にハブ（`stores/area/`）の階層が無い。トップの Organization の構造化データに `sameAs` が無い
+- **acceptance**:
+  1. llms.txt の生成でエリア→ジャンル→条件のハブ階層（manifest の active だけ）を出す
+  2. 掲載店数などの数値に出典と更新日を添える
+  3. Organization に `sameAs`（実在する公式アカウントだけ）を足す。インラインJS監査（JSON-LD の構文）を通す
+
+### [SEO-136] IndexNow の送信対象を、内容が変わったハブと店舗ページに広げる
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / 技術
+- **owner**: Builder
+- **source**: SEO分析（2026-10-09）。親は [[SEO-133]]
+- **brand-filter**: ✅ 適合 — Bing（最大の流入エンジン）への正確な更新通知
+- **背景**: Bing は検索経由の 28.0%。`scripts/indexnow_ping.js` は新規ハブを優先送信するが、内容が変わったハブや編集コメントが付いた店舗ページは送っていない。manifest は `contentHash` を持つ
+- **acceptance**:
+  1. manifest の `contentHash` が前回から変わったハブと、編集コメントが付いて内容が変わった店舗ページを送信対象にする（1回 200 件の上限は維持）
+  2. `data/indexnow_send_log.json` に対象の内訳が残る
+  3. 外部送信は既存どおり設定（INDEXNOW_ENABLED と `--yes`）に従う
+
+### [SEO-137] ジャーナルの title の前30字に検索語を寄せる
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / ジャーナル
+- **owner**: Editor / Builder
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §3 T13）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 記事の中身は変えず、検索結果で何の記事かを先に伝える
+- **背景**: ジャーナルは GSC 28 日で 95 ページ・2,848 表示・96 クリック・CTR 3.37%・平均 8.3 位。順位は1ページ目なのに CTR が低い。公開済み 154 本の title は平均 56 字で、検索結果では後ろが切れる
+- **acceptance**:
+  1. 生成の規則で、title の前 30 字に「エリア＋店名かジャンル＋シーン語」を置く
+  2. 過去記事は効果比較のため上位 20 本だけ書き換え、残りは書き換えない
+  3. 4 週後に書き換えた 20 本と新規記事の CTR を、`pageTypes.journal` と比べる
+
+### [SEO-138] GA スニペットの4コピーを1つの部品にまとめる
+
+- **priority**: P3 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / 計測
+- **owner**: Builder / Designer
+- **source**: SEO分析（2026-10-09）。[[SEO-115]] の再発防止。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 計測の構造的な再発防止
+- **背景**: 同じ GA スニペットが `gen-store-pages.js`・`scripts/gen_area_genre_pages.js`・`scripts/gen_industry_features.js`・`journal/_template.html` に別々にある。[[SEO-115]] の事故は1コピーだけのエスケープ誤りだった
+- **acceptance**:
+  1. テンプレートリテラルを使わない文字列の部品（例: `scripts/lib/ga_snippet.js`）を作り、4か所が使う
+  2. 生成物が変わらないか、変わるなら差分を説明する
+  3. インラインJS監査・デザイン監査・`npm test` を通し、Designer のレビューを受ける（制約12）
+
+### [SEO-139] Google 口コミ由来の aggregateRating と SearchAction を Google の方針に照らして整理する
+
+- **priority**: P3 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: SEO / 技術
+- **owner**: Marketer
+- **source**: SEO分析（2026-10-09・`docs/seo-strategy-2026-10.md` §1-4 ④⑧）。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 構造化データの方針違反リスクを除く
+- **背景**: 店舗ページの `aggregateRating` は Google 口コミ由来。サイトリンク検索ボックス（SearchAction）は 2024-11 に終了している（二次情報）
+- **acceptance**:
+  1. Google のレビュー スニペットの方針で、自サイト外の評価を `aggregateRating` に使ってよいかを確かめ、出典 URL つきで `docs/decisions/` に記録する
+  2. 方針違反なら店舗ページから `aggregateRating` を外す。SearchAction は外す
+  3. 読めない URL（`store-<16進>` 177 本）は今回扱わず、理由を記録する
+
+### [SEO-140] 11-15 のチェックポイントで北極星指標を判定する
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-11-15
+- **category**: SEO / 計測
+- **owner**: Marketer
+- **source**: `docs/seo-strategy-2026-10.md` §4。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 計測
+- **背景**: 11-15 の到達条件は、発見型 表示 2,500・クリック 150、表示が出たハブ 50 本以上、`date.html` が 10 位以内、ハブのインデックス対象の確定、PV（店舗込み）4,500（いずれも推測の目標）
+- **acceptance**:
+  1. 北極星4指標・`date.html` の順位・PV を `docs/kpi-weekly.md` に記録する
+  2. 到達条件と照合する。未達ならハブのインデックス状況を Bing と GSC で確かめ、[[SEO-124]] を優先する判断を記録する
+  3. [[SEO-130]] の候補を noindex にするかをここで決める
+
+### [SEO-141] 11-30 に忘年会面の継続か撤退かを判定する
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-11-30
+- **category**: SEO / コンテンツ
+- **owner**: Marketer
+- **source**: `docs/decisions/0007-seo-north-star-metrics.md` 決めたこと6。親は [[SEO-116]]
+- **brand-filter**: ✅ 適合 — 需要が観測されない面に資源を使い続けない
+- **背景**: 2026-10-08 時点で「忘年会」「宴会」を含む検索の表示は上位 300 クエリで 0。[[SEO-127]] で既存の `banquet.html` だけを強化する
+- **acceptance**:
+  1. 11-30 の `gsc_metrics.json` の `queries[]` で「忘年会」「宴会」を含む検索の表示を合計する
+  2. 50 以上なら継続、50 未満なら [[SEO-127]] の追加作業をやめる。結果を ADR 0007 に追記する
+
+### [ISSUE-145] Linear 同期が課題200件で止まる上限を外す
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: ops / tooling
+- **owner**: Builder
+- **source**: SEO分析の起票作業中に発見（2026-10-09）
+- **brand-filter**: ✅ 適合 — 運用の継続性
+- **背景**: `scripts/sync_backlog_to_linear.js` は `orca linear list-issues --limit 200` で一覧を取り、打ち切られていたら同期を拒否する。チーム P の課題は 2026-10-09 時点で 109 件（完了・中止を含む）で、同日の起票で約 140 件になる。Orca CLI は `--limit` を省くと全件を返す。200 件を超えると同期が毎回止まる
+- **acceptance**:
+  1. 一覧の取得を全件にする（`--limit` を省くか、ページングする）
+  2. 不完全な一覧では同期しない安全装置は残す
+  3. 200 件を超える一覧を模したテストを足し、既存テストを通す
+
+### [ISSUE-146] 孤児ページの一覧を CI のコミット対象に入れ、手元のデザイン監査の誤検知をなくす
+
+- **priority**: P3 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: ci / qa
+- **owner**: Builder
+- **source**: SEO分析の QA 中に発見（2026-10-09）
+- **brand-filter**: ✅ 適合 — 開発時の QA の正確さ
+- **背景**: build.yml の `gen-store-pages.js --check-orphans` が CI 上で `data/store_page_orphans.json` を作り直すが、コミット対象に入っていない。コミット済みの一覧は 2026-10-06 から古く、転送ページ 99 本のうち 25 本が載っていない。そのため手元で `node scripts/audit_design_system.js --check --sample 200` を回すと、転送ページ（例: `stores/J003560485.html`）を missing-footer などで誤検知して exit 1 になる。CI では作り直された一覧で通る
+- **acceptance**:
+  1. build.yml のコミット対象に `data/store_page_orphans.json` を足す
+  2. 合流後、手元の main で `node scripts/audit_design_system.js --check --sample 200` が exit 0
+
+---
+
 ### [SEO-114] ジャーナル末尾の「エリア×ジャンル」導線が記事のエリアを無視している（栄の記事から名駅・緑区のラーメン一覧へ送っている）
 
 - **priority**: P2 → **status**: done
@@ -1062,6 +1492,8 @@
   - CTR の上昇は**分母（表示）が 20,317 → 10,722（-47%）に縮んだことが主因**で、**クリックの絶対数は 70 → 61 と横ばい〜微減**。titleを変えて「同じ表示からより多くクリックされた」動きは観測されていない。表示縮小は、順位の低い店舗ページの表示が先に落ちる構成変化とも整合し、サイト全体の表示縮小（49,418 → 37,743）とも同方向。本施策由来かの切り分けはできない（なお当時のベースライン記録 19,963/69 は 09-14 朝の版で、上表は同日最終版）。
   - 最新版の窓（09-07〜10-04）は実装前の1週間を含み、title/description の再クロール反映にも数週間かかるため確定判定の時期ではない。status は `in_progress` 据え置き。**次回判定日 2026-10-27**: 窓（09-29〜10-26）が実装後だけで埋まった版で、navigational のクリック絶対数・CTR・表示を同表に追記し、**CTR 単独ではなくクリック絶対数と表示の両方**で比較する（分母縮小による見かけの CTR 上昇を効果と誤認しない）。clicks が 70 を超えず CTR も 0.4% 台に戻っていれば「title 情報型化は指名検索の CTR を動かさなかった」と書いて閉じる。
 
+- **2026-10-09 追記（SEO分析・効果判定の前提）**: 店舗ページの GA4 は 2026-05-08 から動いていなかった（[[SEO-115]]）。GA4 側の効果判定は [[SEO-118]] で基線を取り直してから2週後に行う。GSC 側（店舗ページ CTR 0.96%・店名指名の CTR 0.61%・28日 09-10〜10-07）は計測欠落の影響を受けないので、こちらを主に見る
+
 ---
 
 ### [SEO-096] ジャーナルの題材選定に「検索されうる固有名詞（店名・商品名）を1本に最低1つ」を明文化し、`data/gsc_opportunities.json` の ctrFix対象2本（leesar coffee / malachuan）のタイトルを改題する
@@ -1135,6 +1567,8 @@
 - **ブランドガードレール**: 実際の投稿・bio変更はオーナー本人操作（外部発信のため自動化しない・SEO-055 acceptance④と同じ扱い）
 - **関連**: [[SEO-055]]（SNS流入0件検知の仕組み）／[[SEO-094]]（着地先となるハブページ）
 
+- **2026-10-09 追記（SEO分析）**: 30 日の SNS 経由セッションは 6（0.4%・`data/site_metrics.json`）。UTM が無いため Instagram の効果は今も観測できない（オーナー作業）。計画全体は [[SEO-116]]
+
 ---
 
 ### [SEO-099] トップページ・特集・ジャーナルから新設ハブ（stores/area/）への内部リンクを増やし、pages/session を 1.5→2.0 へ引き上げる
@@ -1162,6 +1596,8 @@
 - **2026-09-21 追記（週次レポート 2026-09-13〜09-19 からの実測データ点・SEOループより）**: 本チケット acceptance ③ の測定対象そのものが動いたので記録する。週次で **訪問者 273人（前週231・+18%）／訪問回数 326（前週277・+18%）に対し、閲覧数 416（前週443・-6%）**＝週窓の pages/session は 1.60 → 1.28。ただし独立パイプライン `data/site_metrics.json`（GA4・30日窓）では **1.45（09-17）→ 1.42（09-20）** と微減にとどまり、週窓の -20% ほどの落ち込みは観測されない（窓の長さの違いによる振れ）。**判定は「回遊の悪化」ではなく「入口の構成変化」に寄せる**: GSC 上位ページで `stores/J004678178.html`（1,080表示・16クリック）等の**店舗ページが実クリックを獲得し始めており**（[[SEO-094]]/[[SEO-095]] の新設面）、1ページで用が足りる単ページ入口が増えれば分母（訪問回数）だけ伸びて pages/session は下がる。したがって本チケットの効果判定では **pages/session の絶対値だけでなく、`internal_link_click`（block:'feature_hub'/'journal_hub'）の発火数と、店舗ページ入口セッションを除いた pages/session** を併せて見ること。数字が下がったことだけを根拠に施策を失敗と判定しない（制約10）。なお店舗ページ側の回遊導線は実装済みを確認（`stores/J004678178.html` は エリアハブ1本＋関連店舗4本＋特集リンクを保有）。
 - **2026-09-28 追記（週次レポート 2026-09-20〜09-26 からの実測データ点・SEOループより）**: 訪問者 247人（前週273・-10%）／訪問回数 275（前週326・-16%）／閲覧数 337（前週416・-19%）＝週窓の pages/session は 1.28 → 1.23。3週系列は訪問者 231→273→247 で**連続した下落ではなく上下の振れ**。独立パイプライン `data/site_metrics.json`（GA4・30日窓）の pagesPerSession は **1.42（09-20）→ 1.43** で横ばい＝週窓の減少は長窓では観測されない。GASの「減速中（原因調査を）」判定を根拠に新規の原因調査チケットは起票しない（単週の振れで施策を動かさない・制約10）。効果判定は引き続き本チケット acceptance ③ の指標（`internal_link_click` 発火数・店舗ページ入口を除いた pages/session）で行う。
 - **2026-10-06 追記（再点検・Builder）**: ハブ増の導線は全て実装済みで、残りは acceptance ③ の効果測定のみ。再点検で、ハブ台帳の変動により掲載店数順位が入れ替わった特集3本（banquet / nagoya-korean / private-room）のリンクを `node scripts/inject_hub_links_into_features.js` で再同期（16特集・計33リンク、`--check` 差分ゼロ）。ジャーナルは `refresh_journal_related.js` で追加差分0/151。特集・ジャーナル内の stores/area リンク計119件を manifest（active）＋実ファイルで全件照合し不整合0件。`npm test` 274件pass、`audit_design_system.js --check` は違反0件（以前の stores 既存違反は解消済み）。基準値は pagesPerSession 1.5（09-14）、最新 `data/site_metrics.json`（2026-10-05・30日窓）は 1.35。**次の判定日: 2026-10-20**（`internal_link_click` の block:feature_hub / journal_hub 発火数と、店舗ページ入口を除いた pages/session で判定。done にするか追加施策を起票するかをその時点で決める）。
+
+- **2026-10-09 追記（SEO分析・効果判定の前提）**: pages/session（1.28）は店舗ページの GA4 欠落（[[SEO-115]]）で歪んでいる。合流後に GA4 の値が段差で動くため、効果判定は [[SEO-118]] の基線から行う。ハブの評価は [[SEO-123]] の 10-15 基線・11-15 判定と合わせて見る
 
 ---
 
@@ -1803,6 +2239,8 @@
   - **本命の指標（`名古屋駅 一人飲み` の順位）は 10.5 → 10.2 でほぼ不変＝1ページ目の境界を越えていない**。展開先ページは新規に 13表示/4クリック（15.5位）を獲得したが、母数が小さく「勝ち筋の横展開が成功した」と言える水準ではない。「交差ページが無いのが順位差の原因」という仮説は**否定も確認もできていない**（公開から3週間・順位は 18.3 → 15.5 と改善方向だがサンプル極小）。
   - 同期間にサイト全体の表示が 51,470 → 37,743（-27%）と縮んでおり（`totals`）、`名古屋駅 一人飲み` の表示 212 → 72 の減少は本施策の失敗というより全体の表示縮小と区別できない。solo-dining 本体のクリックは 144 → 150〜179 で維持（相互リンク追加による悪化は観測されない）。
   - **判定**: acceptance ①②③④は実装済み、⑤の「前後比」は効果が出たとも出なかったとも言えるだけのデータが無い（展開先ページの表示が2桁）。**status は `in_progress` 据え置き**。次回判定日は **2026-10-27**（展開先ページの 28日窓が公開日 09-14 以降だけで埋まる 10-12 版以降、かつ表示が最低30件貯まっていること）。その時点で `名古屋駅 一人飲み` が10位以内に入らず展開先ページの表示も30未満なら「勝てないと判明した」として率直にクローズする（ガードレール）。判定前に導線追加・位置変更をしない（2026-09-19/09-20 追記の順序どおり）。
+
+- **2026-10-09 追記（SEO分析・次の打ち手を固定）**: GSC 28日（09-10〜10-07）で「名古屋駅 一人飲み」は 56 表示・4 クリックで `nagoya-solo-dining` に 10.3 位で着地し、`meieki-hitori-nomi` はページ全体で 13 表示・4 クリック・15.5 位。名駅版が親の特集と同じ検索で食い合っている。次の打ち手は (1) solo-dining 本文の名駅の記述から名駅版へ「名古屋駅の一人飲み」の語でリンクする (2) 名駅版を solo-dining と同じ型（エリア節・見出し・選定理由）に厚くする。栄版の新設は GSC に「栄 一人飲み」の表示が出てから。計画全体は [[SEO-116]]・`docs/seo-strategy-2026-10.md`
 
 ### [SEO-084] 特集48本の店舗リンクがクリック計測を持たず、「店舗詳細クリック0回」という助言が毎日そこから再生産されている（SEO-072 の残り穴）
 
@@ -6055,6 +6493,8 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **why-not-agent**: Bing Webmaster Toolsへのサイト登録・所有権確認はGoogleアカウント/メールでの認証を伴うクレデンシャル操作のため、エージェントは代行できない（制約: パスワード/認証情報の代行操作は行わない）。`scripts/indexnow_ping.js`（IndexNow鍵生成・送信）は実装済みで登録後すぐ使える
 - **acceptance**: ① https://www.bing.com/webmasters にオーナー本人が `nagoya-bites.com` を登録・所有権確認（sitemap-index.xml も登録）→ ✅完了（2026-09-22） ／② 登録後、Marketerが Bing Webmaster Tools API または CSV エクスポートを使い `fetch_gsc_metrics.js` と対になる `fetch_bing_metrics.js` を新設しBing側のクエリ・ページ別実データを取得できるようにする → 未着手（次の作業） ／③ `scripts/indexnow_ping.js --init && --status` で鍵設定を確認し本稼働に切り替える → [[SEO-085]] で完了（2026-09-23・`dry_run:false`実送信96件を確認済み・done）
 - **ブランドガードレール**: Bing側データも他の検索ループと同じくMoat/Strategic Skipでtriageする。データが増えても採否判断の基準は変えない
+
+- **2026-10-09 追記（SEO分析）**: 30 日の検索経由セッションは Bing 390（28.0%）が Google 372（26.7%）を上回り、最大の流入エンジンのまま（`data/search_channel_metrics.json`）。GSC は Google の分しか映さないため、Bing 側のクエリと `stores/area/` のインデックス状況が見えない。11-15 のハブ判定（[[SEO-126]]）の材料になるため、それまでの登録を勧める（オーナー作業）。計画全体は [[SEO-116]]
 
 ### [SEO-068] discovery意図クエリ（シーン×エリア=Moat領域）の検索面を計画的に拡張する
 - **priority**: P1 → **status**: done
