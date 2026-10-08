@@ -1,0 +1,289 @@
+{
+  "date": "2026-10-08",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄三越9階に「宮きしめん伊兵衛 栄店」10月31日開店｜会席3,300円と味噌煮込1,800円を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,予約,シーン,接待) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 162字 +4",
+          "title 54字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: topicality -10 / writability -3 / search_intent -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄三越に「すしの美登利」10月31日、名古屋2店目は54席で予約可",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 92,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,予約,シーン) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 134字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「一人飲み」+1",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "92点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -5"
+    },
+    {
+      "id": "c3",
+      "title_draft": "緑区・有松「酒楽亭 空庵」庭を見るカウンターで昼はラーメン、夜は水餃子",
+      "verdict": "HOLD",
+      "total": 64,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "緑区・天白区",
+          "feature": "stores/area/midori-tempaku/index.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 385日前 → 0"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,予約,一人飲み) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 104字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「緑区」+4",
+          "タイトルにシーン語「カウンター」+4",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "95点（自動公開ライン 100点）。主な不足: topicality -10 / writability -3 / search_intent -2",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "栄三越9階に「宮きしめん伊兵衛 栄店」10月31日開店｜会席3,300円と味噌煮込1,800円を業界人が読む",
+      "lead_draft": "10月7日、名古屋栄三越が9階レストランフロアの秋の改装を発表した。10月31日に入るのは、熱田神宮発祥・大正12年創業の宮きしめんが熱田区沢上で営むきしめん会席の業態「伊兵衛」の栄店。限定の菫会席3,300円と、海老天入り親子みそ煮込きしめん1,800円。百貨店の食堂でこの値付けをどう読むか、昼と夜の使い分けから考える。",
+      "angle": "百貨店レストランフロアの価格帯（会席3,300円は前菜・天ぷら・茶碗蒸し・コーヒーまで込み、単品1,800円との差1,500円の読み方）、平日の中休み（14:30〜16:30）と土日通し営業のオペ、9階レストラン営業が21時まで延びる意味、買い物客・接待前の昼・一人の昼のシーン適性と予約の取り方を業界人が読む",
+      "main_store": {
+        "name": "宮きしめん伊兵衛 栄店",
+        "id": "",
+        "area": "栄",
+        "genre": "きしめん・うどん"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES 株式会社名古屋三越【名古屋栄三越】秋のリニューアル～9階レストランフロアに新たに2つのレストランがオープン～",
+          "url": "https://prtimes.jp/main/html/rd/p/000000017.000185183.html",
+          "date": "2026-10-07"
+        },
+        {
+          "label": "宮きしめん 公式サイト 新着情報「宮きしめん伊兵衛 栄店」オープン（10月31日）",
+          "url": "https://www.miyakishimen.co.jp/",
+          "date": "2026-10-06"
+        },
+        {
+          "label": "グルメプレス すしの美登利 名古屋栄三越9階に10/31オープン",
+          "url": "https://gourmetpress.net/1487105/",
+          "date": "2026-10-07"
+        },
+        {
+          "label": "財経新聞 名古屋三越プレスリリース転載",
+          "url": "https://www.zaikei.co.jp/releases/3651227/",
+          "date": "2026-10-07"
+        },
+        {
+          "label": "名古屋名物ガイド 宮きしめん 伊兵衛（熱田区沢上）",
+          "url": "https://nagoya.xtone.jp/archives/miyakishimen_ihyoe.html"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "栄三越に「すしの美登利」10月31日、名古屋2店目は54席で予約可",
+      "lead_draft": "梅丘発祥のすしの美登利が、JRゲートタワー店に続く名古屋2店目を栄三越9階に出す。限定の三つ星にぎりと海鮮ひつまぶしはどちらも3,630円。カウンター10席・テーブル44席、予約は10月中旬から。名駅で約10年行列が続く店が、栄では予約を受ける。その差を業界人が読む。",
+      "angle": "名駅の行列店が栄では予約を受ける運用の違い、54席の席構成、3,630円の価格帯、買い物客・家族のシーン",
+      "main_store": {
+        "name": "すしの美登利 名古屋栄三越店",
+        "id": "",
+        "area": "栄",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "グルメプレス すしの美登利 名古屋栄三越9階に10/31オープン",
+          "url": "https://gourmetpress.net/1487105/",
+          "date": "2026-10-07"
+        },
+        {
+          "label": "PR TIMES 名古屋三越 秋のリニューアル",
+          "url": "https://prtimes.jp/main/html/rd/p/000000017.000185183.html",
+          "date": "2026-10-07"
+        },
+        {
+          "label": "anemo すしの美登利 プレスリリース",
+          "url": "https://www.anemo.co.jp/pressrelease/440211-20261007/",
+          "date": "2026-10-07"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "緑区・有松「酒楽亭 空庵」庭を見るカウンターで昼はラーメン、夜は水餃子",
+      "lead_draft": "名鉄有松駅から歩いて10分ほど、庭を借景にしたカウンターで昼はラーメン、夜は自家製水餃子を出す空庵。予約不可で、昼は11時から15時まで。食前スープと前菜が付く一杯の値付けと、一人で行く時間帯を業界人が読む。",
+      "angle": "価格帯とカウンター席、予約不可のオペ、一人飲み向き",
+      "main_store": {
+        "name": "酒楽亭 空庵",
+        "id": "",
+        "area": "有松",
+        "genre": "ラーメン"
+      },
+      "sources": [
+        {
+          "label": "CBCマガジン ラーメン数珠つなぎ 酒楽亭 空庵",
+          "url": "https://hicbc.com/magazine/article/?id=delalover-column-25091801",
+          "date": "2025-09-18"
+        },
+        {
+          "label": "リビング名古屋 酒楽亭 空庵",
+          "url": "https://mrs.living.jp/nagoya/town_gourmet/reporter/4693158"
+        }
+      ]
+    }
+  ]
+}
