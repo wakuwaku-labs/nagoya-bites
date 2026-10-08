@@ -27,6 +27,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"エリア×ジャンルで探す | NAGOYA BITES","url":"https://nagoya-bites.com/stores/area/index.html"}</script>
 
 <style>
+.container{max-width:var(--container-mid);margin:0 auto;padding:var(--sp-5) var(--sp-4) var(--sp-7);}
+.container > .breadcrumb,.container .nb-section-head{padding-left:0;padding-right:0;}
 .hub-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:var(--sp-3);margin:var(--sp-5) 0;padding:var(--sp-4);background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-md);}
 .hub-stats dt{font-size:var(--fs-xs);color:var(--dim);margin-bottom:.2rem;}
 .hub-stats dd{font-size:var(--fs-xl);font-family:var(--font-display);color:var(--ink);margin:0;}
@@ -49,6 +51,21 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .faq-a{font-size:var(--fs-md);line-height:1.85;margin:0;color:var(--muted);}
 .faq-a::before{content:"A. ";color:var(--gold);font-weight:500;}
 .hub-method{font-size:var(--fs-xs);color:var(--dim);margin-top:var(--sp-2);}
+.hub-guide-title,.hub-picks-note{font-size:var(--fs-xs);color:var(--dim);margin:0 0 .5rem;}
+.hub-guide p:not(.hub-guide-title){font-size:var(--fs-md);line-height:var(--lh-body);margin:0 0 .5rem;}
+.hub-picks{margin:var(--sp-5) 0;}
+.hub-picks ul{list-style:none;padding:0;margin:var(--sp-3) 0 0;}
+.hub-picks li{border-top:1px solid var(--border);padding:var(--sp-4) 0;}
+.hub-picks li:last-child{border-bottom:1px solid var(--border);}
+.hub-picks .store-name{margin:0 0 .3rem;}
+.hub-pick-reason{font-size:var(--fs-md);line-height:var(--lh-body);margin:0;}
+.hub-pick-meta{font-size:var(--fs-xs);color:var(--dim);margin:.3rem 0 0;}
+.hub-tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:start;gap:var(--sp-5);margin:var(--sp-3) 0 var(--sp-5);}
+.hub-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);}
+.hub-table caption{text-align:left;font-size:var(--fs-xs);color:var(--dim);padding-bottom:var(--sp-2);}
+.hub-table th,.hub-table td{padding:.5rem .25rem;border-bottom:1px solid var(--border);text-align:left;}
+.hub-table th{font-weight:600;color:var(--muted);}
+.hub-table th:last-child,.hub-table td:last-child{text-align:right;font-variant-numeric:tabular-nums;}
 </style>
 </head>
 <body>

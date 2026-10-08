@@ -95,6 +95,36 @@ function classifyToken(token, sets = loadSets(), context = token) {
   return { kind: 'unknown', station: null };
 }
 
+// 表示用の駅名（旧駅名・通称・略称を今の駅名にそろえる。根拠は上の AICHI_ALIASES と同じ事実）。
+// 「地下鉄東山」はどの駅かを決められないため null（数えない・推測で当てはめない）
+const CANONICAL_STATION = {
+  '市役所': '名古屋城', '中村区役所': '太閤通', '伝馬町': '熱田神宮伝馬町', '神宮西': '熱田神宮西',
+  '名古屋競馬場前': '港北', '金山総合': '金山', '新栄': '新栄町', '名': '名古屋',
+};
+function canonicalStation(name) {
+  if (name === '地下鉄東山') return null;
+  return CANONICAL_STATION[name] || name;
+}
+
+/**
+ * アクセス文に最初に出てくる愛知県内の駅名（駅名リストに載っている駅だけ・表示用の名前）。
+ * 県外の駅名・バス停・書き損じは飛ばし、県内の駅が1つも無ければ null（SEO-124 のハブの表と最寄り駅）
+ */
+function firstAichiStation(access, sets = loadSets()) {
+  for (const t of extractStationTokens(access)) {
+    for (let i = 0; i < t.token.length; i++) {
+      const suffix = t.token.slice(i);
+      if (sets.aichi.has(suffix)) {
+        const name = canonicalStation(suffix);
+        if (name) return name;
+        break;
+      }
+      if (sets.outside.has(suffix)) break;
+    }
+  }
+  return null;
+}
+
 /** 1店のアクセス文を判定する。outside が1つでもあれば県外の疑い */
 function auditAccess(access, sets = loadSets()) {
   const tokens = extractStationTokens(access).map((t) => ({ ...t, ...classifyToken(t.token, sets, t.context) }));
@@ -105,4 +135,4 @@ function auditAccess(access, sets = loadSets()) {
   };
 }
 
-module.exports = { AICHI_ALIASES, AICHI_LINE_MARKERS, normalize, loadSets, extractStationTokens, classifyToken, auditAccess };
+module.exports = { AICHI_ALIASES, AICHI_LINE_MARKERS, normalize, loadSets, extractStationTokens, classifyToken, auditAccess, canonicalStation, firstAichiStation };

@@ -26,9 +26,10 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <link rel="stylesheet" href="../../../assets/css/nb.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"やさい家 咲くゑ","url":"https://nagoya-bites.com/stores/J001038319.html"},{"@type":"ListItem","position":2,"name":"間借りカレー スパイスボーイ","url":"https://nagoya-bites.com/stores/J001269305.html"},{"@type":"ListItem","position":3,"name":"ハンバーグ家 Shigezo","url":"https://nagoya-bites.com/stores/J001268256.html"},{"@type":"ListItem","position":4,"name":"あっとバーグ　イオン新瑞橋店","url":"https://nagoya-bites.com/stores/J004110002.html"},{"@type":"ListItem","position":5,"name":"街の農家レストラン verger ベルジェ","url":"https://nagoya-bites.com/stores/J001264419.html"},{"@type":"ListItem","position":6,"name":"洋食屋 Hibi","url":"https://nagoya-bites.com/stores/J001169140.html"},{"@type":"ListItem","position":7,"name":"ハチロク","url":"https://nagoya-bites.com/stores/J001233147.html"},{"@type":"ListItem","position":8,"name":"ステーキのあさくま 星崎店","url":"https://nagoya-bites.com/stores/J003693879.html"},{"@type":"ListItem","position":9,"name":"石焼&ワイン イワタ","url":"https://nagoya-bites.com/stores/J000107597.html"},{"@type":"ListItem","position":10,"name":"ステーキのあさくま 東浦通り店","url":"https://nagoya-bites.com/stores/J003693881.html"},{"@type":"ListItem","position":11,"name":"キッチンヒロシ 本店","url":"https://nagoya-bites.com/stores/J001260479.html"},{"@type":"ListItem","position":12,"name":"テキサスキングステーキ イオンモール大高店","url":"https://nagoya-bites.com/stores/J001028736.html"},{"@type":"ListItem","position":13,"name":"プレミアムバケット イオンモール大高店","url":"https://nagoya-bites.com/stores/J001279048.html"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},{"@type":"ListItem","position":2,"name":"店舗一覧","item":"https://nagoya-bites.com/stores/index.html"},{"@type":"ListItem","position":3,"name":"エリア×ジャンルで探す","item":"https://nagoya-bites.com/stores/area/index.html"},{"@type":"ListItem","position":4,"name":"緑区・南区・天白区・瑞穂区","item":"https://nagoya-bites.com/stores/area/midori-tempaku/index.html"},{"@type":"ListItem","position":5,"name":"洋食","item":"https://nagoya-bites.com/stores/area/midori-tempaku/yoshoku.html"},{"@type":"ListItem","position":6,"name":"ランチ営業あり","item":"https://nagoya-bites.com/stores/area/midori-tempaku/yoshoku-lunch.html"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"緑区・南区・天白区・瑞穂区の洋食の予算相場は？","acceptedAnswer":{"@type":"Answer","text":"掲載13軒のうち最も多い価格帯は「2001～3000円」（5軒）です。店によって幅があるため、各店ページの価格帯表示も合わせてご確認ください。"}},{"@type":"Question","name":"個室のある店はありますか？","acceptedAnswer":{"@type":"Answer","text":"個室ありの店が1軒あります。人数や用途に応じて各店ページで詳細をご確認ください。"}}]}</script>
 
 <style>
+.container{max-width:var(--container-mid);margin:0 auto;padding:var(--sp-5) var(--sp-4) var(--sp-7);}
+.container > .breadcrumb,.container .nb-section-head{padding-left:0;padding-right:0;}
 .hub-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:var(--sp-3);margin:var(--sp-5) 0;padding:var(--sp-4);background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-md);}
 .hub-stats dt{font-size:var(--fs-xs);color:var(--dim);margin-bottom:.2rem;}
 .hub-stats dd{font-size:var(--fs-xl);font-family:var(--font-display);color:var(--ink);margin:0;}
@@ -51,6 +52,21 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .faq-a{font-size:var(--fs-md);line-height:1.85;margin:0;color:var(--muted);}
 .faq-a::before{content:"A. ";color:var(--gold);font-weight:500;}
 .hub-method{font-size:var(--fs-xs);color:var(--dim);margin-top:var(--sp-2);}
+.hub-guide-title,.hub-picks-note{font-size:var(--fs-xs);color:var(--dim);margin:0 0 .5rem;}
+.hub-guide p:not(.hub-guide-title){font-size:var(--fs-md);line-height:var(--lh-body);margin:0 0 .5rem;}
+.hub-picks{margin:var(--sp-5) 0;}
+.hub-picks ul{list-style:none;padding:0;margin:var(--sp-3) 0 0;}
+.hub-picks li{border-top:1px solid var(--border);padding:var(--sp-4) 0;}
+.hub-picks li:last-child{border-bottom:1px solid var(--border);}
+.hub-picks .store-name{margin:0 0 .3rem;}
+.hub-pick-reason{font-size:var(--fs-md);line-height:var(--lh-body);margin:0;}
+.hub-pick-meta{font-size:var(--fs-xs);color:var(--dim);margin:.3rem 0 0;}
+.hub-tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:start;gap:var(--sp-5);margin:var(--sp-3) 0 var(--sp-5);}
+.hub-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);}
+.hub-table caption{text-align:left;font-size:var(--fs-xs);color:var(--dim);padding-bottom:var(--sp-2);}
+.hub-table th,.hub-table td{padding:.5rem .25rem;border-bottom:1px solid var(--border);text-align:left;}
+.hub-table th{font-weight:600;color:var(--muted);}
+.hub-table th:last-child,.hub-table td:last-child{text-align:right;font-variant-numeric:tabular-nums;}
 </style>
 </head>
 <body>
@@ -92,8 +108,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <!-- NB-CHROME:BREADCRUMB:END -->
   <p class="art-eyebrow">Restaurant Database — 緑区・南区・天白区・瑞穂区 × 洋食 × ランチ営業あり</p>
   <h1 class="art-title">緑区・南区・天白区・瑞穂区の洋食 — <em>ランチ営業あり</em></h1>
-  <div class="art-lead"><p>13軒。予算は「2001～3000円」が最多（5軒）。最寄り駅は徳重駅（1軒）・藤が丘駅（1軒）・名古屋市営地下鉄鶴舞線平針駅（1軒）。Google★4.0以上・口コミ5件以上の店が7軒。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
+  <div class="art-lead"><p>13軒。予算は「2001～3000円」が最多（5軒）。最寄り駅は南大高駅（2軒）・徳重駅（1軒）・藤ヶ丘駅（1軒）。Google★4.0以上・口コミ5件以上の店が7軒。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
   
+  <section class="insider-box hub-guide" aria-label="編集部の見分け方">
+    <p class="hub-guide-title">編集部の見分け方</p>
+    <p>デミグラスソースを店で仕込んでいるか、揚げ物の衣が軽いかを見ます。昼と夜で量や内容が変わる店もあるので、品書きを見比べてください。</p>
+    <p>昼は夜と同じ料理を手ごろに出す店と、昼だけの品書きの店があります。夜に使う前の下見としても使えます。</p>
+  </section>
+
   <ul class="store-list">
         <li class="store-card">
           <span class="store-num">1</span>
@@ -266,6 +288,33 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
         </li>
   </ul>
 
+  <section class="hub-data" aria-label="この一覧のデータ">
+    <h2 class="nb-section-head"><span>データで見る</span></h2>
+    <div class="hub-tables">
+      <table class="hub-table">
+        <caption>予算帯（価格帯の表示がある12軒）</caption>
+        <thead><tr><th scope="col">予算帯</th><th scope="col">軒数</th></tr></thead>
+        <tbody>
+          <tr><td>1001～1500円</td><td>2</td></tr>
+          <tr><td>1501～2000円</td><td>3</td></tr>
+          <tr><td>2001～3000円</td><td>5</td></tr>
+          <tr><td>3001～4000円</td><td>1</td></tr>
+          <tr><td>4001～5000円</td><td>1</td></tr>
+        </tbody>
+      </table>
+      <table class="hub-table">
+        <caption>最寄り駅（上位5駅）</caption>
+        <thead><tr><th scope="col">最寄り駅</th><th scope="col">軒数</th></tr></thead>
+        <tbody>
+          <tr><td>南大高駅</td><td>2</td></tr>
+          <tr><td>徳重駅</td><td>1</td></tr>
+          <tr><td>藤ヶ丘駅</td><td>1</td></tr>
+          <tr><td>平針駅</td><td>1</td></tr>
+          <tr><td>新瑞橋駅</td><td>1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
   <section class="faq-section" aria-label="よくある質問">
     <h2 class="nb-section-head"><span>よくある質問</span></h2>
     <div class="faq-list">

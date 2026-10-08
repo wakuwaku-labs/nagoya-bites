@@ -26,9 +26,10 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <link rel="stylesheet" href="../../../assets/css/nb.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"standbar-ZERO","url":"https://nagoya-bites.com/stores/J003561003.html"},{"@type":"ListItem","position":2,"name":"TGI FRIDAYS ティージーアイ フライデーズ 久屋大通り公園店","url":"https://nagoya-bites.com/stores/J001281434.html"},{"@type":"ListItem","position":3,"name":"メモリーレーン Memory Lane 栄","url":"https://nagoya-bites.com/stores/J000016103.html"},{"@type":"ListItem","position":4,"name":"BULAN BALI ブランバリ","url":"https://nagoya-bites.com/stores/J004402729.html"},{"@type":"ListItem","position":5,"name":"HUB GRAMPUS PUB MIRAI TOWER店","url":"https://nagoya-bites.com/stores/J001250828.html"},{"@type":"ListItem","position":6,"name":"ファニー","url":"https://nagoya-bites.com/stores/J004026706.html"},{"@type":"ListItem","position":7,"name":"Shusendo酒場 TALK2Uクラフトビール","url":"https://nagoya-bites.com/stores/J003559488.html"},{"@type":"ListItem","position":8,"name":"HUB ハブ 名古屋栄錦通り店","url":"https://nagoya-bites.com/stores/J000025925.html"},{"@type":"ListItem","position":9,"name":"saien サイエン 名古屋城 金シャチ横丁宗春ゾーン店","url":"https://nagoya-bites.com/stores/J001287373.html"},{"@type":"ListItem","position":10,"name":"Elephant s Nest エレファント ネスト","url":"https://nagoya-bites.com/stores/J000668576.html"},{"@type":"ListItem","position":11,"name":"K.branch ケーブランチ","url":"https://nagoya-bites.com/stores/J000428326.html"},{"@type":"ListItem","position":12,"name":"AOI CAFE アオイカフェ","url":"https://nagoya-bites.com/stores/J004493184.html"},{"@type":"ListItem","position":13,"name":"NINE CAFE ナインカフェ 伏見店","url":"https://nagoya-bites.com/stores/J004510120.html"},{"@type":"ListItem","position":14,"name":"POLLOカラ ポロカラ","url":"https://nagoya-bites.com/stores/J004403587.html"},{"@type":"ListItem","position":15,"name":"soleil@home ソレイユアットホーム","url":"https://nagoya-bites.com/stores/J004444831.html"},{"@type":"ListItem","position":16,"name":"元祖博多蒸し手羽 TEBASTA 錦店","url":"https://nagoya-bites.com/stores/J003365826.html"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},{"@type":"ListItem","position":2,"name":"店舗一覧","item":"https://nagoya-bites.com/stores/index.html"},{"@type":"ListItem","position":3,"name":"エリア×ジャンルで探す","item":"https://nagoya-bites.com/stores/area/index.html"},{"@type":"ListItem","position":4,"name":"錦・伏見・丸の内","item":"https://nagoya-bites.com/stores/area/nishiki-fushimi/index.html"},{"@type":"ListItem","position":5,"name":"ダイニングバー・バル","item":"https://nagoya-bites.com/stores/area/nishiki-fushimi/dining-bar.html"},{"@type":"ListItem","position":6,"name":"予算3,000円以下","item":"https://nagoya-bites.com/stores/area/nishiki-fushimi/dining-bar-budget-3000.html"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"錦・伏見・丸の内のダイニングバー・バルの予算相場は？","acceptedAnswer":{"@type":"Answer","text":"掲載16軒のうち最も多い価格帯は「2001～3000円」（13軒）です。店によって幅があるため、各店ページの価格帯表示も合わせてご確認ください。"}},{"@type":"Question","name":"深夜まで営業している店はありますか？","acceptedAnswer":{"@type":"Answer","text":"翌1時以降まで営業している店が6軒あります。詳しい営業時間は各店ページでご確認ください。"}},{"@type":"Question","name":"個室のある店はありますか？","acceptedAnswer":{"@type":"Answer","text":"個室ありの店が1軒あります。人数や用途に応じて各店ページで詳細をご確認ください。"}}]}</script>
 
 <style>
+.container{max-width:var(--container-mid);margin:0 auto;padding:var(--sp-5) var(--sp-4) var(--sp-7);}
+.container > .breadcrumb,.container .nb-section-head{padding-left:0;padding-right:0;}
 .hub-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:var(--sp-3);margin:var(--sp-5) 0;padding:var(--sp-4);background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-md);}
 .hub-stats dt{font-size:var(--fs-xs);color:var(--dim);margin-bottom:.2rem;}
 .hub-stats dd{font-size:var(--fs-xl);font-family:var(--font-display);color:var(--ink);margin:0;}
@@ -51,6 +52,21 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .faq-a{font-size:var(--fs-md);line-height:1.85;margin:0;color:var(--muted);}
 .faq-a::before{content:"A. ";color:var(--gold);font-weight:500;}
 .hub-method{font-size:var(--fs-xs);color:var(--dim);margin-top:var(--sp-2);}
+.hub-guide-title,.hub-picks-note{font-size:var(--fs-xs);color:var(--dim);margin:0 0 .5rem;}
+.hub-guide p:not(.hub-guide-title){font-size:var(--fs-md);line-height:var(--lh-body);margin:0 0 .5rem;}
+.hub-picks{margin:var(--sp-5) 0;}
+.hub-picks ul{list-style:none;padding:0;margin:var(--sp-3) 0 0;}
+.hub-picks li{border-top:1px solid var(--border);padding:var(--sp-4) 0;}
+.hub-picks li:last-child{border-bottom:1px solid var(--border);}
+.hub-picks .store-name{margin:0 0 .3rem;}
+.hub-pick-reason{font-size:var(--fs-md);line-height:var(--lh-body);margin:0;}
+.hub-pick-meta{font-size:var(--fs-xs);color:var(--dim);margin:.3rem 0 0;}
+.hub-tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:start;gap:var(--sp-5);margin:var(--sp-3) 0 var(--sp-5);}
+.hub-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);}
+.hub-table caption{text-align:left;font-size:var(--fs-xs);color:var(--dim);padding-bottom:var(--sp-2);}
+.hub-table th,.hub-table td{padding:.5rem .25rem;border-bottom:1px solid var(--border);text-align:left;}
+.hub-table th{font-weight:600;color:var(--muted);}
+.hub-table th:last-child,.hub-table td:last-child{text-align:right;font-variant-numeric:tabular-nums;}
 </style>
 </head>
 <body>
@@ -92,8 +108,14 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <!-- NB-CHROME:BREADCRUMB:END -->
   <p class="art-eyebrow">Restaurant Database — 錦・伏見・丸の内 × ダイニングバー・バル × 予算3,000円以下</p>
   <h1 class="art-title">錦・伏見・丸の内のダイニングバー・バル — <em>予算3,000円以下</em></h1>
-  <div class="art-lead"><p>16軒。予算は「2001～3000円」が最多（13軒）。最寄り駅は地下鉄栄駅（3軒）・伏見駅（2軒）・地下鉄伏見駅（2軒）。Google★4.0以上・口コミ5件以上の店が7軒。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
+  <div class="art-lead"><p>16軒。予算は「2001～3000円」が最多（13軒）。最寄り駅は伏見駅（5軒）・栄駅（4軒）・新栄町駅（2軒）。Google★4.0以上・口コミ5件以上の店が7軒。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
   
+  <section class="insider-box hub-guide" aria-label="編集部の見分け方">
+    <p class="hub-guide-title">編集部の見分け方</p>
+    <p>料理とお酒のどちらが主役かを、料理の品数と酒の種類から見分けます。グラスで頼めるワインやクラフトビールの種類が多い店は、お酒を楽しむ使い方に向きます。</p>
+    <p>予算は店が示している目安で、飲み物の量で大きく変わります。お通しや席料の有無も合わせて見てください。</p>
+  </section>
+
   <ul class="store-list">
         <li class="store-card">
           <span class="store-num">1</span>
@@ -305,6 +327,30 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
         </li>
   </ul>
 
+  <section class="hub-data" aria-label="この一覧のデータ">
+    <h2 class="nb-section-head"><span>データで見る</span></h2>
+    <div class="hub-tables">
+      <table class="hub-table">
+        <caption>予算帯（価格帯の表示がある16軒）</caption>
+        <thead><tr><th scope="col">予算帯</th><th scope="col">軒数</th></tr></thead>
+        <tbody>
+          <tr><td>1001～1500円</td><td>3</td></tr>
+          <tr><td>2001～3000円</td><td>13</td></tr>
+        </tbody>
+      </table>
+      <table class="hub-table">
+        <caption>最寄り駅（上位5駅）</caption>
+        <thead><tr><th scope="col">最寄り駅</th><th scope="col">軒数</th></tr></thead>
+        <tbody>
+          <tr><td>伏見駅</td><td>5</td></tr>
+          <tr><td>栄駅</td><td>4</td></tr>
+          <tr><td>新栄町駅</td><td>2</td></tr>
+          <tr><td>丸の内駅</td><td>1</td></tr>
+          <tr><td>栄町駅</td><td>1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
   <section class="faq-section" aria-label="よくある質問">
     <h2 class="nb-section-head"><span>よくある質問</span></h2>
     <div class="faq-list">

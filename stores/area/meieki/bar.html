@@ -26,9 +26,10 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <link rel="stylesheet" href="../../../assets/css/nb.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"シーシャカフェバー Red Magic 名古屋駅店","url":"https://nagoya-bites.com/stores/J003599374.html"},{"@type":"ListItem","position":2,"name":"Shisha cafe bubble シーシャカフェバブル","url":"https://nagoya-bites.com/stores/J003916410.html"},{"@type":"ListItem","position":3,"name":"The ANCESTOR Nagoya ジ アンセスター ナゴヤ","url":"https://nagoya-bites.com/stores/J003872208.html"},{"@type":"ListItem","position":4,"name":"お酒の美術館 名駅スパイラルタワーズ店","url":"https://nagoya-bites.com/stores/J004469213.html"},{"@type":"ListItem","position":5,"name":"Cafe & Bar ゆきっち","url":"https://nagoya-bites.com/stores/J003850472.html"},{"@type":"ListItem","position":6,"name":"純米生酒専門YATA 大名古屋ビルヂング店","url":"https://nagoya-bites.com/stores/J003784525.html"},{"@type":"ListItem","position":7,"name":"ark BAR 12 アークバートゥエルブ","url":"https://nagoya-bites.com/stores/J004402318.html"},{"@type":"ListItem","position":8,"name":"駄菓子屋バー ベネチ屋みうらん","url":"https://nagoya-bites.com/stores/J004402650.html"},{"@type":"ListItem","position":9,"name":"Darts Bar clan ダーツバークラン 名駅店","url":"https://nagoya-bites.com/stores/J001223876.html"},{"@type":"ListItem","position":10,"name":"THE ONE AND ONLY NAGOYA ザ ワンアンドオンリー ナゴヤ","url":"https://nagoya-bites.com/stores/J000636931.html"},{"@type":"ListItem","position":11,"name":"Music Bar カノン","url":"https://nagoya-bites.com/stores/J004695000.html"},{"@type":"ListItem","position":12,"name":"スターフィッシュ Starfish","url":"https://nagoya-bites.com/stores/J000016164.html"},{"@type":"ListItem","position":13,"name":"Bar EARTH バーアース 名古屋","url":"https://nagoya-bites.com/stores/J004612989.html"},{"@type":"ListItem","position":14,"name":"Bar 直心","url":"https://nagoya-bites.com/stores/J003648568.html"},{"@type":"ListItem","position":15,"name":"Golf Links Nagoya ゴルフリンクス ナゴヤ","url":"https://nagoya-bites.com/stores/J001201934.html"},{"@type":"ListItem","position":16,"name":"ナカモノウエ","url":"https://nagoya-bites.com/stores/J003648363.html"},{"@type":"ListItem","position":17,"name":"バー クライス2′nd","url":"https://nagoya-bites.com/stores/J003942771.html"},{"@type":"ListItem","position":18,"name":"平成レトロCafe&BAR かせっと","url":"https://nagoya-bites.com/stores/J004633189.html"},{"@type":"ListItem","position":19,"name":"國酒BAR 幸古士","url":"https://nagoya-bites.com/stores/J003736695.html"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"NAGOYA BITES","item":"https://nagoya-bites.com/"},{"@type":"ListItem","position":2,"name":"店舗一覧","item":"https://nagoya-bites.com/stores/index.html"},{"@type":"ListItem","position":3,"name":"エリア×ジャンルで探す","item":"https://nagoya-bites.com/stores/area/index.html"},{"@type":"ListItem","position":4,"name":"名駅（名古屋駅）","item":"https://nagoya-bites.com/stores/area/meieki/index.html"},{"@type":"ListItem","position":5,"name":"バー・カクテル","item":"https://nagoya-bites.com/stores/area/meieki/bar.html"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"名駅（名古屋駅）のバー・カクテルの予算相場は？","acceptedAnswer":{"@type":"Answer","text":"掲載19軒のうち最も多い価格帯は「2001～3000円」（7軒）です。店によって幅があるため、各店ページの価格帯表示も合わせてご確認ください。"}},{"@type":"Question","name":"深夜まで営業している店はありますか？","acceptedAnswer":{"@type":"Answer","text":"翌1時以降まで営業している店が7軒あります。詳しい営業時間は各店ページでご確認ください。"}},{"@type":"Question","name":"個室のある店はありますか？","acceptedAnswer":{"@type":"Answer","text":"個室ありの店が4軒あります。人数や用途に応じて各店ページで詳細をご確認ください。"}}]}</script>
 
 <style>
+.container{max-width:var(--container-mid);margin:0 auto;padding:var(--sp-5) var(--sp-4) var(--sp-7);}
+.container > .breadcrumb,.container .nb-section-head{padding-left:0;padding-right:0;}
 .hub-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:var(--sp-3);margin:var(--sp-5) 0;padding:var(--sp-4);background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-md);}
 .hub-stats dt{font-size:var(--fs-xs);color:var(--dim);margin-bottom:.2rem;}
 .hub-stats dd{font-size:var(--fs-xl);font-family:var(--font-display);color:var(--ink);margin:0;}
@@ -51,6 +52,21 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .faq-a{font-size:var(--fs-md);line-height:1.85;margin:0;color:var(--muted);}
 .faq-a::before{content:"A. ";color:var(--gold);font-weight:500;}
 .hub-method{font-size:var(--fs-xs);color:var(--dim);margin-top:var(--sp-2);}
+.hub-guide-title,.hub-picks-note{font-size:var(--fs-xs);color:var(--dim);margin:0 0 .5rem;}
+.hub-guide p:not(.hub-guide-title){font-size:var(--fs-md);line-height:var(--lh-body);margin:0 0 .5rem;}
+.hub-picks{margin:var(--sp-5) 0;}
+.hub-picks ul{list-style:none;padding:0;margin:var(--sp-3) 0 0;}
+.hub-picks li{border-top:1px solid var(--border);padding:var(--sp-4) 0;}
+.hub-picks li:last-child{border-bottom:1px solid var(--border);}
+.hub-picks .store-name{margin:0 0 .3rem;}
+.hub-pick-reason{font-size:var(--fs-md);line-height:var(--lh-body);margin:0;}
+.hub-pick-meta{font-size:var(--fs-xs);color:var(--dim);margin:.3rem 0 0;}
+.hub-tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:start;gap:var(--sp-5);margin:var(--sp-3) 0 var(--sp-5);}
+.hub-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);}
+.hub-table caption{text-align:left;font-size:var(--fs-xs);color:var(--dim);padding-bottom:var(--sp-2);}
+.hub-table th,.hub-table td{padding:.5rem .25rem;border-bottom:1px solid var(--border);text-align:left;}
+.hub-table th{font-weight:600;color:var(--muted);}
+.hub-table th:last-child,.hub-table td:last-child{text-align:right;font-variant-numeric:tabular-nums;}
 </style>
 </head>
 <body>
@@ -90,8 +106,13 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <!-- NB-CHROME:BREADCRUMB:END -->
   <p class="art-eyebrow">Restaurant Database — 名駅（名古屋駅） × バー・カクテル</p>
   <h1 class="art-title">名駅（名古屋駅）の<em>バー・カクテル</em></h1>
-  <div class="art-lead"><p>19軒。予算は「2001～3000円」が最多（7軒）。最寄り駅は名古屋駅（7軒）・近鉄名古屋線近鉄名古屋駅（2軒）・地下鉄桜通線，地下鉄東山線名古屋駅１０出口より徒歩約4分/名鉄名古屋駅（1軒）。Google★4.0以上・口コミ5件以上の店が11軒。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
+  <div class="art-lead"><p>19軒。予算は「2001～3000円」が最多（7軒）。最寄り駅は名古屋駅（13軒）・近鉄名古屋駅（2軒）・太閤通駅（2軒）。Google★4.0以上・口コミ5件以上の店が11軒。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
   <div class="hero-tags"><a class="hero-tag" href="bar-smoking-ok.html">喫煙できる店</a> <a class="hero-tag" href="bar-non-smoking.html">全席禁煙</a></div>
+  <section class="insider-box hub-guide" aria-label="編集部の見分け方">
+    <p class="hub-guide-title">編集部の見分け方</p>
+    <p>チャージ（席料）の有無を先に確かめます。カクテルは定番の一杯を頼むと、その店の考え方がよくわかります。</p>
+  </section>
+
   <ul class="store-list">
         <li class="store-card">
           <span class="store-num">1</span>
@@ -342,6 +363,33 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
         </li>
   </ul>
 
+  <section class="hub-data" aria-label="この一覧のデータ">
+    <h2 class="nb-section-head"><span>データで見る</span></h2>
+    <div class="hub-tables">
+      <table class="hub-table">
+        <caption>予算帯（価格帯の表示がある19軒）</caption>
+        <thead><tr><th scope="col">予算帯</th><th scope="col">軒数</th></tr></thead>
+        <tbody>
+          <tr><td>2001～3000円</td><td>7</td></tr>
+          <tr><td>3001～4000円</td><td>5</td></tr>
+          <tr><td>4001～5000円</td><td>3</td></tr>
+          <tr><td>5001～7000円</td><td>3</td></tr>
+          <tr><td>7001～10000円</td><td>1</td></tr>
+        </tbody>
+      </table>
+      <table class="hub-table">
+        <caption>最寄り駅（上位5駅）</caption>
+        <thead><tr><th scope="col">最寄り駅</th><th scope="col">軒数</th></tr></thead>
+        <tbody>
+          <tr><td>名古屋駅</td><td>13</td></tr>
+          <tr><td>近鉄名古屋駅</td><td>2</td></tr>
+          <tr><td>太閤通駅</td><td>2</td></tr>
+          <tr><td>国際センター駅</td><td>1</td></tr>
+          <tr><td>浄心駅</td><td>1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
   <section class="faq-section" aria-label="よくある質問">
     <h2 class="nb-section-head"><span>よくある質問</span></h2>
     <div class="faq-list">

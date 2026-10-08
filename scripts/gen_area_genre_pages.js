@@ -24,6 +24,8 @@ const {
 } = require('./lib/area_genre_pages');
 const trustDisplay = require('./lib/trust_display');
 const { gaSnippet } = require('./lib/ga_snippet');
+const { editorReasonOf, visitStatusLabel, visitStatusRank } = require('./lib/editor_reason');
+const { firstAichiStation } = require('./lib/station_names');
 
 const ROOT = path.resolve(__dirname, '..');
 const BASE_URL = 'https://nagoya-bites.com';
@@ -58,19 +60,42 @@ function priceModeStat(stores) {
   return best ? { band: best, count: bestN, coverage: withPrice } : null;
 }
 
+// 最寄り駅の集計。アクセス文の最初の「愛知県内の駅名」だけを数える（data/station_names.json・SEO-120 の判定器）。
+// 「JR名古屋駅」と「名古屋駅」は同じ駅として数え、県外の駅名・バス停・アクセス文の切れ端は数えない（SEO-124）
 function topStations(stores, n) {
   const counts = new Map();
-  let withAccess = 0;
+  let withStation = 0;
   for (const s of stores) {
-    const a = s['アクセス'];
-    if (typeof a !== 'string' || !a) continue;
-    const m = a.match(/([^\s、。]+駅)/);
-    if (!m) continue;
-    withAccess++;
-    counts.set(m[1], (counts.get(m[1]) || 0) + 1);
+    const st = typeof s['アクセス'] === 'string' ? firstAichiStation(s['アクセス']) : null;
+    if (!st) continue;
+    withStation++;
+    counts.set(`${st}駅`, (counts.get(`${st}駅`) || 0) + 1);
   }
-  if (withAccess < stores.length * 0.5) return [];
+  if (withStation < stores.length * 0.5) return [];
   return [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, n);
+}
+
+// 文字列の並び（ICU の照合順に依存させない。CI と手元で同じ順にして内容ハッシュを揺らさない）
+const byCodeUnit = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+
+// 予算帯の分布（実データの価格帯の表記のまま・下限の安い順。表記の無い店は数えない）
+function priceBandRows(stores) {
+  const counts = new Map();
+  for (const s of stores) {
+    const p = (s['価格帯'] || '').trim();
+    if (p) counts.set(p, (counts.get(p) || 0) + 1);
+  }
+  const lo = p => { const b = parsePriceBand(p); return b ? (b.lo == null ? 0 : b.lo) : Infinity; };
+  return [...counts.entries()].sort((a, b) => lo(a[0]) - lo(b[0]) || byCodeUnit(a[0], b[0]));
+}
+
+// 編集部の選定理由がある店（SEO-124）。判定は店舗ページと同じ scripts/lib/editor_reason.js。
+// 根拠の強い順（訪問済→店主取材済→業界内で評判→公開情報）、同じ根拠なら一覧と同じ機械的な順。一覧の順位は動かさない
+function editorPicks(stores, max) {
+  const order = new Map(sortForDisplay(stores).map((s, i) => [s, i]));
+  return stores.filter(s => editorReasonOf(s))
+    .sort((a, b) => visitStatusRank(a) - visitStatusRank(b) || order.get(a) - order.get(b))
+    .slice(0, max);
 }
 
 function countHighRating(stores) {
@@ -223,6 +248,8 @@ function storeCard(s, idx, depth, TRUST_POLICY, applicableConditions) {
 
 const HUB_STYLE = `
 <style>
+.container{max-width:var(--container-mid);margin:0 auto;padding:var(--sp-5) var(--sp-4) var(--sp-7);}
+.container > .breadcrumb,.container .nb-section-head{padding-left:0;padding-right:0;}
 .hub-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:var(--sp-3);margin:var(--sp-5) 0;padding:var(--sp-4);background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-md);}
 .hub-stats dt{font-size:var(--fs-xs);color:var(--dim);margin-bottom:.2rem;}
 .hub-stats dd{font-size:var(--fs-xl);font-family:var(--font-display);color:var(--ink);margin:0;}
@@ -245,6 +272,21 @@ const HUB_STYLE = `
 .faq-a{font-size:var(--fs-md);line-height:1.85;margin:0;color:var(--muted);}
 .faq-a::before{content:"A. ";color:var(--gold);font-weight:500;}
 .hub-method{font-size:var(--fs-xs);color:var(--dim);margin-top:var(--sp-2);}
+.hub-guide-title,.hub-picks-note{font-size:var(--fs-xs);color:var(--dim);margin:0 0 .5rem;}
+.hub-guide p:not(.hub-guide-title){font-size:var(--fs-md);line-height:var(--lh-body);margin:0 0 .5rem;}
+.hub-picks{margin:var(--sp-5) 0;}
+.hub-picks ul{list-style:none;padding:0;margin:var(--sp-3) 0 0;}
+.hub-picks li{border-top:1px solid var(--border);padding:var(--sp-4) 0;}
+.hub-picks li:last-child{border-bottom:1px solid var(--border);}
+.hub-picks .store-name{margin:0 0 .3rem;}
+.hub-pick-reason{font-size:var(--fs-md);line-height:var(--lh-body);margin:0;}
+.hub-pick-meta{font-size:var(--fs-xs);color:var(--dim);margin:.3rem 0 0;}
+.hub-tables{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:start;gap:var(--sp-5);margin:var(--sp-3) 0 var(--sp-5);}
+.hub-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);}
+.hub-table caption{text-align:left;font-size:var(--fs-xs);color:var(--dim);padding-bottom:var(--sp-2);}
+.hub-table th,.hub-table td{padding:.5rem .25rem;border-bottom:1px solid var(--border);text-align:left;}
+.hub-table th{font-weight:600;color:var(--muted);}
+.hub-table th:last-child,.hub-table td:last-child{text-align:right;font-variant-numeric:tabular-nums;}
 </style>`;
 
 function renderShell({ depth, active, breadcrumb, title, desc, canonicalPath, jsonLdList, bodyHtml, styleExtra }) {
@@ -437,16 +479,63 @@ ${faqs.map(f => `      <div class="faq-item"><p class="faq-q">${esc(f.q)}</p><p 
     highRating > 0 ? `Google★4.0以上・口コミ5件以上の店が${highRating}軒` : null,
   ].filter(Boolean);
 
+  // 編集部の見分け方（data/area_genre_pages_policy.json の guide を決定的に合成・SEO-124）
+  const guides = [page.genre.guide, isCondition && page.cond.guide].filter(Boolean);
+  const guideHtml = guides.length ? `  <section class="insider-box hub-guide" aria-label="編集部の見分け方">
+    <p class="hub-guide-title">編集部の見分け方</p>
+${guides.map(g => `    <p>${esc(g)}</p>`).join('\n')}
+  </section>` : '';
+
+  const picks = editorPicks(page.stores, (policy.editorPicks && policy.editorPicks.max) || 0);
+  const picksHtml = picks.length ? `  <section class="hub-picks" aria-label="編集部の選定理由がある店">
+    <h2 class="nb-section-head"><span>編集部の選定理由がある店</span></h2>
+    <p class="hub-picks-note">下の一覧の並び順とは別に、編集部の選定理由がある店を先に示します。選定の根拠は各店の下に書いています（一覧の順位は動かしていません）。</p>
+    <ul>
+${picks.map(s => {
+    const label = visitStatusLabel(s);
+    return `      <li>
+        <p class="store-name"><a href="${siteChrome.prefix(3)}stores/${esc(storeSlug(s))}.html">${esc(s['店名'])}</a></p>
+        <p class="hub-pick-reason">${esc(editorReasonOf(s))}</p>${label ? `
+        <p class="hub-pick-meta">選定の根拠：${esc(label)}</p>` : ''}
+      </li>`;
+  }).join('\n')}
+    </ul>
+  </section>` : '';
+
+  // 予算帯と最寄り駅の表（実データの集計だけ・推測は含まない）
+  const bandRows = priceBandRows(page.stores);
+  const bandTotal = bandRows.reduce((a, [, n]) => a + n, 0);
+  const stationRows = topStations(page.stores, (policy.tables && policy.tables.stationTop) || 5);
+  const table = (caption, head, rows) => `      <table class="hub-table">
+        <caption>${esc(caption)}</caption>
+        <thead><tr><th scope="col">${esc(head)}</th><th scope="col">軒数</th></tr></thead>
+        <tbody>
+${rows.map(([k, n]) => `          <tr><td>${esc(k)}</td><td>${n}</td></tr>`).join('\n')}
+        </tbody>
+      </table>`;
+  const tablesHtml = (bandRows.length || stationRows.length) ? `  <section class="hub-data" aria-label="この一覧のデータ">
+    <h2 class="nb-section-head"><span>データで見る</span></h2>
+    <div class="hub-tables">
+${[
+    bandRows.length ? table(`予算帯（価格帯の表示がある${bandTotal}軒）`, '予算帯', bandRows) : '',
+    stationRows.length ? table(`最寄り駅（上位${stationRows.length}駅）`, '最寄り駅', stationRows) : '',
+  ].filter(Boolean).join('\n')}
+    </div>
+  </section>` : '';
+
   const h1 = isCondition ? `${page.area.label}の${page.genre.label} — <em>${page.cond.label}</em>` : `${page.area.label}の<em>${page.genre.label}</em>`;
 
   const body = `  <p class="art-eyebrow">Restaurant Database — ${esc(page.area.label)} × ${esc(page.genre.label)}${isCondition ? ' × ' + esc(page.cond.label) : ''}</p>
   <h1 class="art-title">${h1}</h1>
   <div class="art-lead"><p>${leadFacts.map(esc).join('。')}。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
   ${condChips ? `<div class="hero-tags">${condChips}</div>` : ''}
+${guideHtml}
+${picksHtml}
   <ul class="store-list">
 ${cardsHtml}
   </ul>
 ${moreHtml}
+${tablesHtml}
 ${faqHtml}
   <div class="related-wrap">
     <p class="related-title">絞り込む・関連情報</p>
@@ -473,13 +562,8 @@ ${faqHtml}
     { name: page.genre.label, item: `${BASE_URL}/stores/area/${page.area.slug}/${page.genre.slug}.html` },
   ];
   if (isCondition) bcItems.push({ name: page.cond.label, item: `${BASE_URL}/${page.url}` });
+  // FAQPage の構造化データは出さない（Google は 2026-05-07 から FAQ のリッチリザルトを表示しない・SEO-124）。画面の FAQ は残す
   const jsonLdList = [itemListLd, breadcrumbLd(bcItems)];
-  if (faqs.length) {
-    jsonLdList.push({
-      '@context': 'https://schema.org', '@type': 'FAQPage',
-      mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-    });
-  }
 
   const breadcrumb = [
     { href: 'index.html', label: 'TOP' }, { href: 'stores/index.html', label: '店舗一覧' },
@@ -585,12 +669,15 @@ function main() {
     onDiskExpected.add(page.url);
     const hash = contentHashOf(page, html);
     const prev = prevBySlug.get(page.url);
+    // データ更新日は manifest の updated（内容が変わった日）にそろえる。ハッシュは日付を除いて計算するので影響しない
+    const pageUpdated = (prev && prev.contentHash === hash) ? prev.updated : new Date().toISOString().slice(0, 10);
+    html = html.replace(/データ更新日\s*\d{4}-\d{2}-\d{2}/, `データ更新日 ${pageUpdated}`);
     const entry = {
       path: page.url, type: page.type,
       count: page.stores ? page.stores.length : null,
       contentHash: hash,
       firstPublished: (prev && prev.firstPublished) || new Date().toISOString().slice(0, 10),
-      updated: (prev && prev.contentHash === hash) ? prev.updated : new Date().toISOString().slice(0, 10),
+      updated: pageUpdated,
       status: 'active',
     };
     manifestPages.push(entry);
@@ -660,4 +747,6 @@ function main() {
   }
 }
 
-main();
+if (require.main === module) main();
+
+module.exports = { priceBandRows, editorPicks, topStations, contentHashOf };
