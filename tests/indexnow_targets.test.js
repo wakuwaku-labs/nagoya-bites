@@ -65,6 +65,24 @@ test('店舗ページ: 編集コメントがページに出ていて、前回送
   assert.deepStrictEqual(again.pending.map((x) => x.key), ['stores/a.html']);
 });
 
+test('店舗ページ: 同じ slug の2店目以降（-2・-3）は、h1 の店名でその店のページを探す', () => {
+  const stores = [
+    { 店名: '喫茶リヨン', slug: 'kissa', editorReason: 'リヨンの理由' },
+    { 店名: '喫茶ユキ', slug: 'kissa', editorReason: 'ユキの理由' },
+    { 店名: '喫茶マウンテン', slug: 'kissa', editorReason: 'ページの無い店の理由' },
+  ];
+  const pages = {
+    'stores/kissa.html': '<h1>喫茶リヨン</h1><p>リヨンの理由</p>',
+    'stores/kissa-2.html': '<h1>喫茶ユキ</h1><p>ユキの理由</p>',
+  };
+  const sitemapLocs = new Set(['kissa', 'kissa-2'].map((s) => `${O}/stores/${s}.html`));
+  const opts = { sitemapLocs, readPage: (k) => pages[k] || null, toSlug: (s) => s.slug };
+  assert.strictEqual(I.storePageFor(stores[1], opts).key, 'stores/kissa-2.html');
+  const r = I.storeTargets(stores, { hubs: {}, stores: {} }, opts);
+  assert.deepStrictEqual(r.pending.map((x) => x.key), ['stores/kissa-2.html', 'stores/kissa.html']);
+  assert.strictEqual(r.notOnPage, 0); // マウンテンは h1 が当たらず基本のページ（リヨン）に落ち、二重に数えない
+});
+
 test('上限: トップ/索引 → ジャーナル → 店舗 → ハブの順に 200 件で止め、内訳を返す', () => {
   const many = { pages: Array.from({ length: 300 }, (_, i) => hub(`x/p${String(i).padStart(3, '0')}.html`, 'condition', `h${i}`)) };
   const stores = [{ 店名: 'A', slug: 'a', editorReason: '理由の文' }];
