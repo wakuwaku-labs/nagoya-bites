@@ -3740,6 +3740,36 @@
       "brand_reason": "重複（10-07 に「店舗リストの写真と紹介文を魅力的に更新しモーダル率向上」を却下済み）。前日は72訪問中11回で単日の振れ（制約10）。写真は data/photo_policy.json の実写基準で選定済みで「魅力的な画像に更新」は基準外の写真差し替え・ストック流入の動機になる（制約9）。キャッチコピーの一括書き換えは編集部の解釈層（editorReason）を汎用文で薄める",
       "category": null,
       "fingerprint": "18e98c8e1786a008"
+    },
+    {
+      "id": null,
+      "date": "2026-10-09",
+      "source": "line-daily",
+      "advice": "🟡 検索流入比率88%と高いが特定KWの順位改善に伸びしろ。👉「名古屋 デート ディナー」のKWで2ページ目の特集記事（features/）を新規作成し、nagoya-solo-dining のような良質な記事を増やす",
+      "verdict": "duplicate",
+      "brand_reason": "重複（10-05 週次で却下・10-06 に重複判定済み）。受け皿の features/date.html（名古屋 デートディナーおすすめ10選）が既存で GSC 上も同KWで11.5位前後。同KWの新規特集は自己カニバリで順位を割る。date.html の1ページ目押上げは SEO-122（P1・ready）で起票済みのため新規起票しない",
+      "category": null,
+      "fingerprint": "35c8f69cb78db5a8"
+    },
+    {
+      "id": null,
+      "date": "2026-10-09",
+      "source": "line-daily",
+      "advice": "🟡 訪問者数57人に対し予約ボタンクリック2回と少ない。👉 人気ページ1位の nagoya-solo-dining 特集記事の冒頭に、一人飲みに適した店舗の予約ボタンを設置する",
+      "verdict": "duplicate",
+      "brand_reason": "重複（10-02/10-03/10-05 週次/10-07/10-08 に同主旨を却下済み）。予約クリックは母数数十で日々大きく振れ（10-05 14.0%→10-07 1.4%→10-08 8.6%→今回3.5%）施策の根拠にならない（制約10）。solo-dining は既に掲載店ごとに HotPepper 導線を持ち、冒頭CTAは SEO-042 で統合済み。予約を受け付けない店を含む特集で予約ボタンを一律に目立たせるのは読者の誤誘導になりうる（制約7）",
+      "category": null,
+      "fingerprint": "abb202c55d8460b5"
+    },
+    {
+      "id": null,
+      "date": "2026-10-09",
+      "source": "line-daily",
+      "advice": "🟢 1訪問あたりのページ閲覧が1.1ページと低い。👉 人気ページ1位の nagoya-solo-dining 記事内に、関連する他の特集記事（features/）や日次記事（journal/）への内部リンクを増やす",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-26 週次に却下済み）。solo-dining は関連特集リンク群（meieki-hitori-nomi / hard-to-book / industry-insiders-pick 等）を既に保有し、特集→ジャーナルの導線欠落は SEO-108（done）で解消済み。回遊（pages/session）の計測と押上げは SEO-099・SEO-070 で継続中。1.1ページは単日値で制約10により施策の根拠にしない",
+      "category": null,
+      "fingerprint": "e0f06eb119940828"
     }
   ]
 }
