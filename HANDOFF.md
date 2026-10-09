@@ -1,8 +1,12 @@
-status: done
+status: in_progress
 
 # 目的
 オーナー指示「こちらの確認なしで進めれるものはガンガン進めて」（2026-10-09）。SEO-116 配下と同日起票の課題のうち、オーナーの確認・操作が要らないものを順に実装し、main に合流させ、Linear を Done にする。
 （前のメモ「SEO分析と90日の戦略・戦術」は status: done で完了済み。内容は git 履歴 ab273bc61d の HANDOFF.md を参照）
+
+## 2026-10-10 追加の依頼
+オーナー「Linear の一覧をガンガン解消して欲しい。確認なしに」。オーナー作業・日付待ち・信頼/マネタイズ・ISSUE-147/165/173 は飛ばす。
+- 4zi（進行中）: SEO-115 Done（cta.byPage に店舗ページ発の cta_click・夜間QA inline-js ✅）。SEO-118 達成条件1・3（data/measurement_changes.json・track_metrics の注意・台帳4件の注記）。SEO-087 (1) solo-dining→名駅版の本文リンク。ISSUE-154 は手動で回した夜間QA（run 37981361126）の架空店監査の結果で Done にする
 
 # 完了条件
 - 下の「対象」の各課題が、テストと QA を通って main に合流し、agent-backlog.md が done、Linear が Done（結果コメントつき）になっている

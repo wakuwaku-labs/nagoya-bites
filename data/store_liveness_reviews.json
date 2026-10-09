@@ -890,6 +890,146 @@
           }
         ]
       }
+    },
+    {
+      "id": "J003985266",
+      "storeName": "肉のよいち 大曽根駅前店",
+      "issue": "ISSUE-186",
+      "checkedAt": "2026-10-10",
+      "verdict": "決められない",
+      "why": "ホットペッパーの店舗ページが店名の上に【閉店】を表示している（住所は掲載と同じ大曽根3-14-46）。Google の店舗情報は同じ placeId・同じ住所で閉業（CLOSED_PERMANENTLY）だが、名前が「大衆ホルモン・やきにく 煙力 大曽根駅前店」に変わっていて掲載の店名と合わない（2026-05-22 の取得では「肉のよいち 大曽根駅前店」・営業中）。名前が合わない情報源は根拠に数えないため、閉店を示すのはホットペッパー1つだけ。Web 検索でも閉店・業態変更の告知は見つからなかった。推測で外さず掲載を続け、30日後に確かめ直す",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ003985266/",
+          "fetchedAt": "2026-10-09T19:45:00Z",
+          "status": 200,
+          "shopState": "【閉店】",
+          "address": "愛知県名古屋市北区大曽根３－１４－４６　大曽根９３ビル２，３Ｆ"
+        },
+        "places": {
+          "placeId": "ChIJyU5ke-VxA2ARo75cM5lTdpc",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJyU5ke-VxA2ARo75cM5lTdpc",
+          "fetchedAt": "2026-10-09T19:47:23Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "大衆ホルモン・やきにく 煙力 大曽根駅前店",
+          "address": "日本、〒462-0825 愛知県名古屋市北区大曽根３丁目１４−４６ 93ビル 2 階3階",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "same",
+          "usedAsEvidence": false
+        }
+      }
+    },
+    {
+      "id": "J003893954",
+      "storeName": "和酒処あま野なごみ",
+      "issue": "ISSUE-186",
+      "checkedAt": "2026-10-10",
+      "verdict": "決められない",
+      "why": "ホットペッパーの店舗ページが店名の上に【閉店】を表示している（住所は掲載と同じ錦3-20-14）。一方、Google の店舗情報は同じ名前・同じ住所で営業中（OPERATIONAL）。情報源が食い違うため推測で外さず掲載を続け、30日後に確かめ直す。Web 検索でも閉店の告知は見つからなかった",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ003893954/",
+          "fetchedAt": "2026-10-09T19:45:00Z",
+          "status": 200,
+          "shopState": "【閉店】",
+          "address": "愛知県名古屋市中区錦３丁目２０－１４　RayOne錦ビル１F"
+        },
+        "places": {
+          "placeId": "ChIJty6CPNVwA2ARyIp1w3-h1-U",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJty6CPNVwA2ARyIp1w3-h1-U",
+          "fetchedAt": "2026-10-09T19:47:23Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "和酒処あま野なごみ",
+          "address": "日本、〒460-0003 愛知県名古屋市中区錦３丁目２０−１４ ＲａｙＯｎｅ錦ビル １Ｆ",
+          "businessStatus": "OPERATIONAL",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        }
+      }
+    },
+    {
+      "id": "J003850724",
+      "storeName": "焼肉TARASHI 栄錦店",
+      "issue": "ISSUE-186",
+      "checkedAt": "2026-10-10",
+      "verdict": "決められない",
+      "why": "ホットペッパーのページが無い（HTTP 404「掲載情報なし」＝掲載終了）。Google の店舗情報は閉業だが、名前が「焼肉BAR タラシ 錦本店」で掲載の「栄錦店」と支店名が違い、別の支店の可能性がある。ただし掲載データに住所が残っておらず（data/stores.json の住所は空・git 履歴にも無い）、掲載の住所と比べられないため、Google の店舗情報を根拠に数えない。食べログは CI とこの環境から取得できない（HTTP 403）。推測で外さず掲載を続け、30日後に確かめ直す",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ003850724/",
+          "fetchedAt": "2026-10-09",
+          "status": 404,
+          "shopState": null,
+          "address": null
+        },
+        "places": {
+          "placeId": "ChIJM7DFnKlxA2AR2IJXVTHCa9I",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJM7DFnKlxA2AR2IJXVTHCa9I",
+          "fetchedAt": "2026-10-09T19:55:00Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "焼肉BAR タラシ 錦本店",
+          "address": "日本、〒460-0003 愛知県名古屋市中区錦３丁目４−２１ 2F",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "unknown",
+          "usedAsEvidence": false
+        }
+      }
+    },
+    {
+      "id": "J001223732",
+      "storeName": "夜桜OSU",
+      "issue": "ISSUE-186",
+      "checkedAt": "2026-10-10",
+      "verdict": "決められない",
+      "why": "ホットペッパーのページが無い（HTTP 404「掲載情報なし」＝掲載終了）。Google の店舗情報は名前が合い閉業（掲載のアクセス「上前津駅1番出口～徒歩1分」とも位置は矛盾しない）。ただし掲載データに住所が残っておらず（data/stores.json の住所は空・git 履歴にも無い）、掲載の住所と比べられないため、Google の店舗情報を根拠に数えない。食べログは CI とこの環境から取得できない（HTTP 403）。推測で外さず掲載を続け、30日後に確かめ直す",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ001223732/",
+          "fetchedAt": "2026-10-09",
+          "status": 404,
+          "shopState": null,
+          "address": null
+        },
+        "places": {
+          "placeId": "ChIJry3-HftxA2ARSFALpql-94k",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJry3-HftxA2ARSFALpql-94k",
+          "fetchedAt": "2026-10-09T19:55:00Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "焼肉 夜桜 OSU店",
+          "address": "日本、〒460-0011 愛知県名古屋市中区大須４丁目９−３",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "unknown",
+          "usedAsEvidence": false
+        }
+      }
+    },
+    {
+      "id": "J003582085",
+      "storeName": "焼肉 LAVA 29",
+      "issue": "ISSUE-186",
+      "checkedAt": "2026-10-10",
+      "verdict": "決められない",
+      "why": "ホットペッパーのページが無い（HTTP 404「掲載情報なし」＝掲載終了）。Google の店舗情報は臨時休業（閉業ではない）。ただし掲載データに住所が残っておらず（data/stores.json の住所は空・git 履歴にも無い）、掲載の住所と比べられないため、Google の店舗情報を根拠に数えない。食べログは CI とこの環境から取得できない（HTTP 403）。推測で外さず掲載を続け、30日後に確かめ直す",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ003582085/",
+          "fetchedAt": "2026-10-09",
+          "status": 404,
+          "shopState": null,
+          "address": null
+        },
+        "places": {
+          "placeId": "ChIJ-zD9jXN3A2AR6ib3LCPza5Y",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJ-zD9jXN3A2AR6ib3LCPza5Y",
+          "fetchedAt": "2026-10-09T19:55:00Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "焼肉LAVA29",
+          "address": "日本、〒460-0003 愛知県名古屋市中区錦２丁目１２−１６",
+          "businessStatus": "CLOSED_TEMPORARILY",
+          "addressVsListing": "unknown",
+          "usedAsEvidence": false
+        }
+      }
     }
   ]
 }

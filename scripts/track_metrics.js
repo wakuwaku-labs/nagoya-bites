@@ -33,6 +33,8 @@ const SITE_METRICS = path.join(ROOT, 'data/site_metrics.json');
 const GSC_METRICS = path.join(ROOT, 'data/gsc_metrics.json');
 const HISTORY_PATH = path.join(ROOT, 'data/metrics_history.json');
 const LEDGER_PATH = path.join(ROOT, 'data/effect_ledger.json');
+const CHANGES_PATH = path.join(ROOT, 'data/measurement_changes.json');
+const GA4_LOOKBACK_DAYS = 30; // site_metrics.json は30日窓（fetch_ga4_views.js の LOOKBACK）
 
 const MAX_HISTORY_DAYS = 120;
 
@@ -115,6 +117,23 @@ function deltaOf(beforeT, afterT) {
   return d;
 }
 
+/**
+ * SEO-118: 計測の仕組みが変わった日（data/measurement_changes.json）が、2つの日付の比較に入るかを返す。
+ * GA4 の値は30日窓の合計なので、変更日が「前の日の窓の始まり」より後で「後の日」以前なら、
+ * 片方または両方の窓に変更前後の計測が混ざり、差分に施策と関係ない段差が出る。
+ * source は 'ga4' か 'gsc'（affects に含む変更だけを返す）。台帳が無い・壊れているときは空配列。
+ */
+function measurementChangesBetween(fromDate, toDate, { source = 'ga4', lookbackDays = GA4_LOOKBACK_DAYS, changesPath = CHANGES_PATH } = {}) {
+  if (!fromDate || !toDate) return [];
+  const book = loadJSON(changesPath, { changes: [] });
+  const list = Array.isArray(book.changes) ? book.changes : [];
+  const start = new Date(new Date(fromDate) - lookbackDays * 86400000).toISOString().slice(0, 10);
+  return list
+    .filter((c) => c && c.date && (c.affects || []).includes(source) && c.date > start && c.date <= toDate)
+    .map((c) => ({ date: c.date, id: c.id || null, summary: c.summary || '',
+      note: `${c.date} に計測が変わった（${c.id || '記録なし'}）。この比較の差分には計測の段差が入るため、施策の効果としては読まない` }));
+}
+
 // ── snapshot ────────────────────────────────────────────
 function snapshot() {
   const metrics = readSiteMetrics();
@@ -165,6 +184,8 @@ function followup(id) {
     metrics,
     delta_totals: deltaOf(rec.baseline.metrics.totals, metrics.totals),
   };
+  const changes = measurementChangesBetween(rec.baseline.date, rec.followup.date);
+  if (changes.length) rec.followup.measurement_changes = changes;
   saveJSON(LEDGER_PATH, ledger);
   return { ok: true, id, baseline_date: rec.baseline.date, followup: rec.followup };
 }
@@ -185,6 +206,7 @@ function report(days) {
     latest: { date: latest.date, totals: latest.totals, cta: latest.cta },
     prior: { date: prior.date, totals: prior.totals, cta: prior.cta },
     delta_totals: deltaOf(prior.totals, latest.totals),
+    measurement_changes: measurementChangesBetween(prior.date, latest.date),
     total_days: entries.length,
   };
 }
@@ -232,6 +254,8 @@ function northStarFrom(entries, days) {
     prior: b,
     delta,
     gsc_history_since: firstWithGsc ? firstWithGsc.date : null,
+    // GA4 由来（ai_sessions・bing_sessions）だけに当たる。GSC 由来の値は GA4 の計測変更の影響を受けない
+    measurement_changes: b ? measurementChangesBetween(prior.date, latest.date) : [],
     note: 'GSC 由来（discovery_*・hub_*）は28日窓、GA4 由来（ai_sessions・bing_sessions）は30日窓。窓が重なるため差は傾向として読む',
     total_days: list.length,
   };
@@ -278,4 +302,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { snapshot, baseline, followup, report, readSiteMetrics, readGscMetrics, extractGsc, northStarRow, northStarFrom };
+module.exports = { measurementChangesBetween, snapshot, baseline, followup, report, readSiteMetrics, readGscMetrics, extractGsc, northStarRow, northStarFrom };

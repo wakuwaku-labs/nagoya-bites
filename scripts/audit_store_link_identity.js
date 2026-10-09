@@ -199,19 +199,37 @@ function judgeHealth(health, now, maxDays = HEALTH_MAX_DAYS) {
  * 掲載店の閉店の兆し（純関数・ISSUE-174）。外部へは問い合わせず、照合キャッシュの判定だけで数える。
  * hotpepper.closed   … ページが店名の上に【閉店】を出している（名前が合うページだけ。判定 closed）
  * hotpepper.notFound … ページが無い（HTTP 404/410「掲載情報なし」＝掲載終了）。閉店とは数えない
+ * hotpepper.reviewed … 【閉店】の表示を人が一次情報で確かめ、閉店と決められなかった店（data/store_liveness_reviews.json の
+ *                      verdict が「決められない」「営業中」で、確かめた日から REVIEW_HOLD_DAYS 以内）。closed に数えない
+ *                      （同じ店で夜間QA を毎日赤にしない・ISSUE-186）。日数を過ぎれば closed に戻り、確かめ直しを促す
  */
-function summarizeClosures(targets, cache) {
+const REVIEW_HOLD_DAYS = 30;
+function loadLivenessReviews() {
+  try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'data/store_liveness_reviews.json'), 'utf8')).reviews || []; }
+  catch (_) { return []; }
+}
+function summarizeClosures(targets, cache, reviews = [], now = Date.now()) {
   const closed = [];
   const notFound = [];
+  const reviewed = [];
+  const held = new Map();
+  for (const r of Array.isArray(reviews) ? reviews : []) {
+    if (!r || !r.id || r.verdict === '閉店' || !r.checkedAt) continue;
+    const age = (now - new Date(r.checkedAt).getTime()) / 86400000;
+    if (age > -1 && age <= REVIEW_HOLD_DAYS) held.set(r.id, r); // checkedAt は JST の日付。UTC との差で負になる分を許す
+  }
   for (const t of targets) {
     if (t.kind !== 'hotpepper') continue;
     const entry = cache[t.key];
     if (!entry || entry.ok !== false) continue;
     const row = { 店名: t.storeName, エリア: t.area, url: t.url, 検証日: entry.checkedAt };
-    if (entry.reason === 'closed') closed.push({ ...row, 表示: entry.shopState || null });
-    else if (NOT_FOUND.test(entry.error || '')) notFound.push({ ...row, エラー: entry.error });
+    if (entry.reason === 'closed') {
+      const r = t.id && held.get(t.id);
+      if (r) reviewed.push({ ...row, 表示: entry.shopState || null, 判定: r.verdict, 確かめた日: r.checkedAt, 課題: r.issue || null });
+      else closed.push({ ...row, 表示: entry.shopState || null });
+    } else if (NOT_FOUND.test(entry.error || '')) notFound.push({ ...row, エラー: entry.error });
   }
-  return { hotpepper: { closed, notFound } };
+  return { hotpepper: { closed, notFound, reviewed } };
 }
 
 const args = process.argv.slice(2);
@@ -296,7 +314,7 @@ async function main() {
   }
 
   if (opts.health) return reportHealth(summarizeHealth(targets, cache));
-  if (opts.closures) return reportClosures(summarizeClosures(targets, cache), { exitOnClosed: true });
+  if (opts.closures) return reportClosures(summarizeClosures(targets, cache, loadLivenessReviews()), { exitOnClosed: true });
 
   console.log(`=== 外部リンク実地検証 (scope=${opts.scope} / 対象候補 ${targets.length}件) ===`);
 
@@ -350,7 +368,7 @@ async function main() {
   // 取得できなかった組と、人が同じ店と確かめた組は不一致と分けて出す（ISSUE-163・ISSUE-176）
   const { mismatches, unfetched, reviewedKeep } = summarizeMismatches(targets, cache, loadKeptPairs());
   const health = summarizeHealth(targets, cache);
-  const closures = summarizeClosures(targets, cache);
+  const closures = summarizeClosures(targets, cache, loadLivenessReviews());
   fs.writeFileSync(REPORT_PATH, JSON.stringify({ generatedAt: new Date().toISOString(), run, health, closures, mismatches, unfetched, reviewedKeep }, null, 2));
 
   console.log('');
@@ -370,12 +388,13 @@ async function main() {
 
 // 閉店の兆しの件数を出す（ISSUE-174）。--closures のときは、閉店の表示が1件でもあれば exit 1（夜間QA の soft）
 function reportClosures(closures, { exitOnClosed }) {
-  const { closed, notFound } = closures.hotpepper;
+  const { closed, notFound, reviewed = [] } = closures.hotpepper;
   if (opts.json && exitOnClosed) {
     console.log(JSON.stringify({ ...closures, today: new Date().toISOString().slice(0, 10) }, null, 2));
   } else {
     console.log(`ホットペッパーの閉店の表示: ${closed.length}件・掲載終了（ページが無い）: ${notFound.length}件`);
     closed.forEach((c) => console.log(`  - 【閉店】 ${c.店名} (${c.エリア}) ${c.url}（${String(c.検証日 || '').slice(0, 10)} 確認）`));
+    reviewed.forEach((c) => console.log(`  - 【閉店】確かめ済み（${c.判定}・${c.確かめた日}・${c.課題 || ''}）${c.店名} (${c.エリア}) ${c.url}`));
     notFound.forEach((c) => console.log(`  - 掲載終了 ${c.店名} (${c.エリア}) ${c.url}（${c.エラー}・${String(c.検証日 || '').slice(0, 10)} 確認）`));
     if (closed.length) {
       console.log('  自動では外さない。ISSUE-170 と同じく一次情報2つ以上で確かめ、data/store_liveness_reviews.json に記録してから data/closed_stores.json へ入れる');
