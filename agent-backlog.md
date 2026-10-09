@@ -25,7 +25,7 @@
 
 ### [ISSUE-150] 週次レポートの「予約送客 上位の店」を GAS 本体に反映する
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-10-09
 - **category**: 計測
 - **owner**: オーナー（GAS エディタで Code.js を貼り替える）
@@ -35,6 +35,7 @@
 - **acceptance**:
   1. GAS エディタに `.gas-deploy/Code.js` の現行版を貼り、保存する
   2. 次の月曜の週次レポートメールに「【予約送客 上位の店】」の見出しが出る（送客0件の週は出ないので、出ない場合は `data/store_referrals.json` の件数と照合する）
+- **結果（2026-10-10）**: オーナー作業ではなく Claude が `./deploy-gas.sh`（clasp push）で反映した（オーナー指示「リスクを解消して」）。反映前に GAS の現行コードを clasp pull で取り、リポジトリの f2420fa221（#256）と完全一致＝GAS 上で直接の編集が無いことを確かめてから push。反映後にもう一度 pull し、main の `.gas-deploy/Code.js` と一致することを確認。残りは達成条件2（次の月曜の週次メールに「【予約送客 上位の店】」が出るか）を見て done にする
 
 ### [ISSUE-151] 予約成立を数えるために「報酬を受け取らない計測専用アフィリエイト」を使うかを決める
 
@@ -71,6 +72,7 @@
   - GAS の反映はオーナーの操作（[[ISSUE-150]] と同じ貼り替えで入る）。反映の確かめは `data/gas_deploy_policy.json` に痕跡を足した（新: 「同じクリックは1回」・旧: 「予約ドメインへの外部リンク含む」）。`pending_fixes` に ISSUE-149 と ISSUE-152 を入れたので、旧コードのレポートが2回続くと gas-deploy-watchdog が Issue（＝メール）で知らせ、反映されると閉じる。watchdog の対処手順の文面は特定の修正（SEO-063）に依らない形にした
   - 残り: 合流後のビルドの `cta.reservationOverlap7d` を読んで件数を Linear に残す（達成条件1）。GAS の反映後に、日次レポートで新しいラベルと注記を確かめ、`pending_fixes` を空にして done
 - **2026-10-09 追記（達成条件1・合流後のビルド 37904511486 の値）**: main の `data/site_metrics.json` の `cta.reservationOverlap7d`（7daysAgo〜yesterday）で、予約ボタンのイベント（cta_click・cta_reserve）9件と予約サイトへの外部リンク（outbound_click）13件を足すと22件、同じページ・同じ予約サイトで重なりを除くと17件（重なり5件）。内訳: hotpepper.jp はボタン9・外部リンク7→11件、tabelog.com はボタン0・外部リンク6→6件。食べログのボタンで cta_click を送るのは店舗ページだけで、店舗ページの計測は SEO-115 の再生成（10-09）まで動いていなかったため、この7日の食べログは外部リンクだけになる（index.html・特集・ジャーナルの食べログのリンクは outbound_click だけを送る）。達成条件1は満たした。残りは達成条件3（週次レポートの注記）で、GAS のデプロイ（オーナー作業・ISSUE-150 と一緒）の後に日次・週次レポートで「同じクリックは1回」と注記の行を確かめてから done にする
+- **2026-10-10 追記**: GAS へ反映済み（[[ISSUE-150]] と同じ push・反映後の pull で main と一致を確認）。残りは翌朝以降の日次レポートで「同じクリックは1回」の表記と注記を確かめ、`pending_fixes` を空にすること
 
 ### [ISSUE-161] ビルドの CI が main の最新から始まるようにし、続けて合流したときの push 失敗をなくす
 

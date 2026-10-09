@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-09T15:46:09.287Z",
+  "generatedAt": "2026-10-09T19:12:34.528Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1256,
-    "pageViews": 1792,
-    "sessions": 1444,
-    "avgSessionDuration": 129.7,
-    "bounceRate": 0.28,
-    "pagesPerSession": 1.24
+    "activeUsers": 1270,
+    "pageViews": 1817,
+    "sessions": 1459,
+    "avgSessionDuration": 129.2,
+    "bounceRate": 0.278,
+    "pagesPerSession": 1.25
   },
   "dailyReference": {
     "date": "2026-10-08",
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 992,
+      "organic": 1007,
       "direct": 315,
       "social": 6,
-      "ai_assistant": 107,
+      "ai_assistant": 108,
       "referral": 28,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 68.5,
-      "direct": 21.8,
+      "organic": 68.8,
+      "direct": 21.5,
       "social": 0.4,
       "ai_assistant": 7.4,
       "referral": 1.9,
@@ -39,12 +39,12 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 418
+      "sessions": 420
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 400
+      "sessions": 411
     },
     {
       "source": "(direct)",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 155
+      "sessions": 157
     },
     {
       "source": "chatgpt.com",
@@ -72,12 +72,12 @@
       "sessions": 27
     },
     {
-      "source": "duckduckgo",
+      "source": "openai",
       "medium": "organic",
-      "sessions": 16
+      "sessions": 17
     },
     {
-      "source": "openai",
+      "source": "duckduckgo",
       "medium": "organic",
       "sessions": 16
     },
@@ -180,8 +180,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 308,
-      "sessions": 292
+      "pageViews": 317,
+      "sessions": 300
     },
     {
       "path": "/",
@@ -200,13 +200,13 @@
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
-      "pageViews": 58,
-      "sessions": 60
+      "pageViews": 60,
+      "sessions": 61
     }
   ],
   "cta": {
     "outboundClicks": 143,
-    "ctaClickRate": 9.9,
+    "ctaClickRate": 9.8,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -845,7 +845,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1256,
+    "value": 1270,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
