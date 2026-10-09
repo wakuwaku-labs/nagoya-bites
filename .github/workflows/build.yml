@@ -484,6 +484,9 @@ jobs:
           # ISSUE-146: data/store_page_orphans.json（gen-store-pages.js --check-orphans の孤児一覧）も対象。
           # 漏れていると手元の一覧が古いまま残り、手元の audit_design_system.js が転送ページを誤検知する。
           git add index.html features/index.html sitemap.xml llms.txt data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/store_referrals.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/feature_roster_health.json data/store_link_identity_checked.json data/store_link_identity_report.json data/area_genre_pages_manifest.json data/photo_url_liveness_report.json data/dead_photo_urls.json data/store_merge_pairs.json data/store_page_orphans.json
+          # ISSUE-148: スプレッドシートの住所検査の記録。Hot Pepper を取れた回にだけ書かれ、まだ無い回に
+          # 上の git add 全体を落とさないよう分ける（data/indexnow_state.json と同じ扱い）
+          git add data/spreadsheet_address_gate.json 2>/dev/null || true
           # 特集本体(features/*.html)も commit 対象。月次ロスター更新の掲載店入替を反映する。
           git add features/ || true
           git add stores/ || true
