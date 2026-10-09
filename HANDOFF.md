@@ -33,7 +33,7 @@ status: in_progress
 2. SEO-122（P-118）: #427 で合流・P-118 Done＋コメント済み。達成条件4（4週後の順位）は SEO-140（11-15）で記録する。冒頭の結論の仕組み（scripts/apply_feature_conclusions.js・data/feature_conclusions.json・nb.css .nb-conclusion）は SEO-134 で他の特集へ広げる（docs/decisions/0011）
 3. SEO-115 の残り（P-112）: 達成条件3（GA4 で /stores/ の page_view。topPages は上位5ページだけなので、オーナー確認か 10-10 以降の metrics_history の段差）と5（次の夜間QA の inline-js が緑）
 4. SEO-137（P-133）: #428 で合流・P-133 Done＋結果コメント済み。11-06 の比較は SEO-148（P-157・Todo・期限 11-06）。`node scripts/journal_title_experiment.js --report` で比べる
-4b. 中断（2026-10-09・利用上限）: DSN-007 は調査が途中で、合流していない。分かったこと: 幅 900px 以下では素の `nav` にドロワーの規則が効き、パンくずとフッターのリンク群が本番でも画面外にある（重要・backlog の DSN-007 に記録）。作業中の差分は scratchpad/dsn007/nb_css_wip.patch に退避し、nb.css は元に戻した。QA スクリプトは scratchpad/dsn007/qa.js（開閉は prefers-reduced-motion を emulate して測り直す）。ISSUE-143 の調査エージェントは止めた（結果は受け取っていない。やり直す）。次の候補: DSN-007 → ISSUE-148 → SEO-134 → ISSUE-153 → SEO-144
+4b. DSN-007: 実装と QA を終えた（nb.css の nav の規則を #main-nav だけに・閉じたドロワーは display:none・スマホのパンくずのリンク 44px・.tips-box の長い語の折り返し。backlog に結果と Designer QA-5 を記録）。PR → 合流 → Linear Done＋コメントが残り。QA の道具は scratchpad/dsn007/（qa.js・tap.js・bc.js・footer_variants.js）。ISSUE-143 の調査はやり直す。次の候補: ISSUE-148 → SEO-134 → ISSUE-153 → SEO-144
 5. 夜間QA の station-names が緑で続いたら hard に上げる
 6. 最後に: 「うなぎのしろむら 泉店」の起票、創業者の実名が index.html の Organization JSON-LD に出ている件をオーナーへ報告（変更しない）、http.server（8093・8094・8095）を止める
 

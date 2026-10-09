@@ -119,7 +119,9 @@ header{
   letter-spacing:.2em;color:var(--ink);text-transform:uppercase;text-decoration:none;
 }
 .logo em{font-style:italic;color:var(--gold);}
-nav{display:flex;gap:1.75rem;align-items:center;}
+/* 横並びにするのはヘッダーの #main-nav だけ。素の nav に当てると、パンくず・フッターのリンク群・目次
+   （どれも <nav>）まで横並び・中央寄せ・広い間隔になる（DSN-007） */
+#main-nav{display:flex;gap:1.75rem;align-items:center;}
 nav a{
   font-family:var(--font-body);font-size:var(--fs-sm);font-weight:500;
   letter-spacing:.02em;color:var(--muted);text-decoration:none;transition:color .2s;
@@ -136,17 +138,26 @@ nav a:hover,nav a.active{color:var(--text);}
 
 @media(max-width:900px){
   .hamburger{display:flex;align-items:center;justify-content:center;}
-  nav{
-    position:fixed;top:0;right:-100%;width:70vw;max-width:300px;height:100vh;
+  /* ドロワーにするのはヘッダーの #main-nav だけ。素の nav に当てると、パンくずとフッターの
+     リンク群（どちらも <nav>）まで画面外へ飛ばし、スマホで見えなくなる（DSN-007） */
+  #main-nav{
+    position:fixed;top:0;right:0;width:70vw;max-width:300px;height:100vh;
     background:var(--bg);flex-direction:column;gap:0;padding:5rem 2rem 2rem;
     border-left:1px solid var(--border);box-shadow:-4px 0 24px rgba(0,0,0,.08);
-    transition:right .3s ease;z-index:200;align-items:flex-start;
+    transform:translateX(100%);
+    transition:transform .3s ease,display .3s;transition-behavior:allow-discrete;
+    z-index:200;align-items:flex-start;
   }
-  nav a{
+  /* 閉じている間は表示しない。画面の右外に置いておくだけだと（right:-100% でも transform でも）、
+     スマホのレイアウト幅がその分広がって横にずれる（DSN-007・375px で 750px）。見えないリンクへの
+     フォーカス移動と影の写り込みも防ぐ。スライドは @starting-style で出す（未対応のブラウザは即時に開閉） */
+  #main-nav:not(.open){display:none;}
+  #main-nav a{
     font-size:1rem;padding:.9rem 0;border-bottom:1px solid var(--border);
     width:100%;letter-spacing:0;min-height:var(--tap-min);display:flex;align-items:center;
   }
-  nav.open{right:0;}
+  #main-nav.open{transform:none;}
+  @starting-style{#main-nav.open{transform:translateX(100%);}}
   .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:199;}
   .nav-overlay.open{display:block;}
 }
@@ -157,6 +168,8 @@ nav a:hover,nav a.active{color:var(--text);}
 }
 .breadcrumb a{color:var(--dim);text-decoration:none;}
 .breadcrumb a:hover{color:var(--gold);}
+/* 幅 900px 以下では、パンくずのリンクも指で押せる高さにする（--tap-min・DSN-007） */
+@media(max-width:900px){.breadcrumb a{display:inline-flex;align-items:center;min-height:var(--tap-min);}}
 
 footer{
   padding:2rem 1.5rem;text-align:center;border-top:1px solid var(--border);
@@ -299,7 +312,7 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .tips-box,.insider-box,.source-note,.art-ig-cta,.nb-site-intro{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 var(--r-md) var(--r-md) 0;padding:var(--sp-4) var(--sp-5);margin:var(--sp-5) 0;}
 .tips-title,.insider-title{font-family:var(--font-body);font-weight:600;font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);text-transform:none;margin-bottom:var(--sp-2);}
 .tips-box ul,.insider-box ul{padding-left:var(--sp-4);}
-.tips-box li,.tips-box p,.insider-box li{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);margin-bottom:.3rem;}
+.tips-box li,.tips-box p,.insider-box li{font-size:var(--fs-sm);line-height:var(--lh-body);color:var(--muted);margin-bottom:.3rem;overflow-wrap:break-word;}
 .source-note{font-size:var(--fs-xs);line-height:var(--lh-ui);color:var(--dim);}
 .source-note a{color:var(--gold);text-decoration:none;}
 .nb-site-intro{font-size:var(--fs-xs);color:var(--dim);line-height:var(--lh-ui);}

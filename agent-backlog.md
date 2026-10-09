@@ -691,7 +691,7 @@
 
 ### [DSN-007] 閉じたモバイルメニューでページの横幅が画面の2倍になっていないか確かめ、なっていれば直す
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: design / UX
 - **owner**: Designer / Builder
@@ -703,7 +703,23 @@
   2. ずれる場合は、閉じたメニューを横幅に数えない形に直す（例: 閉じている間は `visibility:hidden`。または `transform` で動かし、`html` に `overflow-x:clip`）。375px で `scrollWidth` が 375 になることを確かめる
   3. 開閉の動き・フォーカス移動・`aria-expanded` が変わらないことを確かめ、Designer の QA-5 と `node scripts/audit_design_system.js --check` を通す
 
-- **調査（2026-10-09・途中・未合流）**: 375px のモバイル表示（puppeteer・isMobile）で再現した。本番の features/banquet.html でもレイアウト幅は 750px。原因は nb.css の `@media(max-width:900px)` にある `nav{position:fixed;right:-100%…}` が、素の `nav` すべてに効いていること。DSN-003（2026-09-08）でパンくず（`<nav aria-label="パンくずリスト">`）とフッターのリンク群（`nav.nb-footer-group`）も `<nav>` にしたため、**幅 900px 以下ではパンくずとフッターの3グループが画面外に置かれ、見えていない**（本番で確認）。試した結果: 規則を `#main-nav` に絞ると、パンくずとフッターは表示される。閉じたドロワーを画面外に置くだけ（right:-100%・transform・html の overflow-x hidden/clip）では、レイアウト幅は広がったまま。閉じている間を `display:none` にすると 375px に収まる。`display:none`＋`@starting-style`＋`transition-behavior:allow-discrete` の案は、headless の計測では開いた後もドロワーが画面外に残り、閉じた後も display が flex のままだった。headless でアニメーションが進んでいないだけの可能性もあり、未確定。作業中の差分は合流していない。次は、prefers-reduced-motion を emulate して開閉を確かめるか、即時開閉の案と比べ、Designer QA-5 で決める
+- **結果（2026-10-09）**: 原因は `assets/css/nb.css` の幅 900px 以下のドロワーの規則が、素の `nav` すべてに効いていたこと。DSN-003（2026-09-08）でパンくず（5,842ページ）とフッターのリンク群（全ページ）も `<nav>` にしたため、幅 900px 以下ではどちらも画面外に置かれて見えていなかった（本番の features/banquet.html で、パンくずとフッターが x=1238〜1500・レイアウト幅 750px）。直したこと:
+  1. ドロワーの規則を `#main-nav` だけに当て、閉じている間は `display:none` にした。画面外に置くだけ（`right:-100%`・`transform`・html の `overflow-x`）ではレイアウト幅が広がったままだった。開くときのスライドは `@starting-style` と `transition-behavior:allow-discrete` で出す（headless はアニメーションを進めないので、`document.getAnimations()` を終わらせて測った）
+  2. 横並び・間隔・中央寄せの規則（素の `nav{display:flex;gap:1.75rem;align-items:center}`）も `#main-nav` だけにした。フッターのリンク群・目次（`nav.nb-toc`）・パンくずにも効いていて、デスクトップでもフッターのリンクが中央寄せで広く空き、目次の「目次」が一覧の左に縦中央で置かれ、パンくずが中央寄せになっていた
+  3. 幅 900px 以下ではパンくずのリンクを 44px（`--tap-min`）にした（新しく見えるパンくずのリンクが 20〜25px だったため）
+  4. `.tips-box` の中の長いファイルパスを折り返すようにした（320px の features/editorial-policy.html で 14px はみ出していた。変更前からの問題）
+  - `docs/design-system.md` §7 に「`<nav>` の規則は `#main-nav` だけに当てる」「閉じたドロワーは `display:none`」を追記
+  - 達成条件1: 実機では確かめていない。端末のエミュレーション（puppeteer・isMobile）で確かめた。変更前は 375px でレイアウト幅 750px（本番・手元とも）
+  - 達成条件2: 変更後は 375px で scrollWidth 375、800px で 800（トップ・特集2本・ジャーナル2本・店舗・ハブ・運営についての8ページ）、320px で 320（6ページ）
+  - 達成条件3: 375px・800px × 8ページで、開くとドロワーが transform で右から出て（113〜375）、`aria-expanded` が true、Tab がメニューに入る。閉じている間は Tab が入らない。閉じると `display:none`・`aria-expanded` が false。1280px のナビは位置も含めて変更前と同じ。JS（`toggleNav`・`closeNav`）は変えていない
+- **review（Designer QA-5・2026-10-09）**: 承認。
+  - `node scripts/audit_design_system.js --check`: exit 0（違反 0）。`npm test`: 413 件すべて通過
+  - 44px 未満の操作要素（`measure_typography.js` と同じ数え方）: 375px・768px × 6ページで変更前と同数（例: 375px の店舗 11→11、ハブ 53→53、トップ 4,719→4,719）
+  - 文字の大きさは変えていない（font-size の追加・変更なし）
+  - 375px・768px・1280px で撮影し、横スクロール・重なりなし。スマホのフッターは 1 列（768px は 2 列）で左寄せ、高さは 375px で 1,059px（`gap` が残った案では 1,423px）。2 列にする案は 320px で3つのリンク名が折り返すので採らなかった
+  - デスクトップで見た目が変わるところ: フッターのリンクが左寄せで詰まる（フッターの高さ 545px→405px）、パンくずが本文の左端にそろう、目次の「目次」が一覧の上に来る。どれも `nb.css` の元の意図（`text-align:left` のサイトマップ型フッター、`max-width` と `margin:0 auto` で幅をそろえたパンくず）に戻る変更
+  - 許容したこと: 店舗ページとハブでは、パンくずの文字が本文より 24px 内側から始まる（`.breadcrumb` の左右の余白と外側の入れ物の余白が重なるため）。崩れではないので直さない
+  - 制約5の機能: index.html のフィルター・検索・モーダルの部品には触れていない（トップの 44px 未満の要素数・レイアウト幅は変更前と同じ）
 ### [ISSUE-145] Linear 同期が課題200件で止まる上限を外す
 
 - **priority**: P2 → **status**: done
