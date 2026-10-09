@@ -56,6 +56,8 @@ const path = require('path');
 const {
   fetchHtml, extractTitle, tabelogNameFromTitle, bestMatch, normalizeJpAddress,
   buildPlacesAddressIndex,
+  // 支店サフィックス（◯◯店 / 本店 / 別館 …）の判定は判定器と同じ1本を使う（読みがなの丸括弧は外して見る）
+  hasBranchSuffix, ourBranchOnly,
 } = require('./lib/store_link_identity');
 const { coreStoreName } = require('./lib/store_core_name');
 
@@ -166,13 +168,6 @@ function tabelogAddress(html) {
     if (a) return a;
   }
   return null;
-}
-
-// 支店サフィックス（◯◯店 / 本店 / 別館 …）を持つか
-function hasBranchSuffix(name) {
-  const tokens = String(name || '').split(/[\s　]+/).filter(Boolean);
-  const last = tokens[tokens.length - 1] || '';
-  return /店$/.test(last) || /^(本店|総本店|別館|新館|分店|別邸)$/.test(last) || /号店$/.test(last);
 }
 
 /**
@@ -333,6 +328,12 @@ async function resolveWithQuery(store, query) {
     // 掴んでいる可能性が残るので採らない（実測: 「ラーメン 山岡家 名古屋」は
     // エリア=港区＝宝神店のはずが、検索1位の太平通店（中川区）に当たっていた）。
     const branchRisk = hasBranchSuffix(only.matchedName) && !hasBranchSuffix(store['店名']);
+    // 逆向きの取り違え: 我々は支店を名乗っているのに、相手は支店名の無いページで、しかも区が違う。
+    // 実測: 「うなぎのしろむら 柳橋本店」（中村区）が、東区の「うなぎのしろむら」（泉本店のページ）に
+    // 当たっていた（ISSUE-157）。区の情報が無い店は従来どおり（何も主張しない）
+    if (!only.loc.ok && only.loc.basis === 'ward-mismatch' && ourBranchOnly(store['店名'], only.matchedName)) {
+      return { failed: true, reason: 'branch-locality-mismatch', query, tried };
+    }
     if (only.loc.ok) {
       return {
         url: only.url, matchedName: only.matchedName, title: only.title, sim: only.sim,

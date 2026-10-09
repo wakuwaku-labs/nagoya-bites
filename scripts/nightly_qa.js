@@ -152,6 +152,18 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_page_store_links.js', '--check']],
 });
+// 9. 店舗データの食べログリンクが、名前は合っていても別の支店・別の店を指していないか（ISSUE-159・SOFT）。
+//    題名に支店名が無い食べログのページは、どの支店の名前とも一致と判定されていた（ISSUE-157: 丸の内店に
+//    泉本店のページ）。照合キャッシュに残るページの住所と HotPepper の掲載住所を比べ直す（外部へは問い合わせない）。
+//    2026-10-09 時点で 45 件あり、ISSUE-160 で1件ずつ確かめて外す。0 件になってから hard に上げる。
+checks.push({
+  id: 'tabelog-branch',
+  title: '店舗データの食べログリンクが別の支店を指していない（ISSUE-159）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_tabelog_branch_mismatch.js', '--check']],
+});
 
 if (cat.buildCore.length) {
   checks.push({

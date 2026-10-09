@@ -27,6 +27,8 @@ test('判定がすべて「別の店」のときだけ数える', () => {
   const v = (o) => ({ url: TB, ...o });
   assert.strictEqual(isWrongStoreUrl([v({ ok: false, reason: 'name-mismatch', sim: 0 })]), true);
   assert.strictEqual(isWrongStoreUrl([v({ ok: false, reason: 'confirmed-404' })]), true);
+  // 名前は一致しても住所が別の場所（題名に支店名が無い別の支店のページ・ISSUE-159）
+  assert.strictEqual(isWrongStoreUrl([v({ ok: false, reason: 'branch-address-mismatch', sim: 1 })]), true);
   // sim>0 は同じ店のことが多い（ふりがな併記・題名の付け足し）。人の確認に残す
   assert.strictEqual(isWrongStoreUrl([v({ ok: false, reason: 'name-mismatch', sim: 0.33 })]), false);
   // 取得できなかった・同じ店が閉店・判定が無い は数えない
