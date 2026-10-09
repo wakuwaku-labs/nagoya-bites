@@ -376,7 +376,7 @@
 
 ### [ISSUE-174] 日次のリンク照合で、ホットペッパーのページが【閉店】と表示している掲載店と掲載終了の店を数える
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
 - **owner**: Builder
@@ -391,6 +391,15 @@
   2. HTTP 404 は今と同じく判定として扱い、報告では「掲載終了」として分けて数える
   3. 見つかった店は自動では外さない。[[ISSUE-170]] と同じ確認を経て外す
   4. 固定の HTML 断片で、【閉店】あり・なし・404 の判定を node のテストで確かめる
+- **分けなかった理由**: 判定器・集計・夜間QA・テストは1つの変更でまとまり、30分を超える独立した作業単位が無かった
+- **結果（2026-10-09）**:
+  - 判定: `scripts/lib/store_link_identity.js` に `judgeHotpepperHtml`（純関数）を足し、`checkHotpepperId` から使う。店名の上の `<p class="shopState">` に「閉店」があり、題名の店名が我々の店名と合えば `reason: 'closed'`（食べログの閉店と同じ語）。名前が合わないページの【閉店】は我々の店の閉店の証拠にしないので `name-mismatch` のまま、`closed: true` を事実として残す。保存してあった ISSUE-169 の16ページで、閉店と出たのは STEPS とあっとバーグ イオン新瑞橋店の2つだけ（ほかの14ページは一致のまま）
+  - 数え方: `scripts/audit_store_link_identity.js` の `summarizeClosures` が照合キャッシュの判定だけで、ホットペッパーの「閉店の表示」（closed）と「掲載終了」（HTTP 404/410）を分けて数える。日次の照合のレポート `data/store_link_identity_report.json` に `closures` として書き、ログにも件数と店を出す。404 は今までどおり判定（前の一致を置き換える）
+  - 夜間QA: soft `hotpepper-closures`（`--scope all --closures`。照合せず件数を出し、閉店の表示があれば exit 1）。掲載終了は件数を出すだけで赤にしない（契約が終わっただけで営業を続ける店もある）
+  - 自動では外さない。見つかった店は [[ISSUE-170]] と同じく一次情報2つ以上で確かめ、`data/store_liveness_reviews.json` に記録してから `data/closed_stores.json` へ入れる（ログと CLAUDE.md に書いた）
+  - テスト: `tests/store_link_identity.test.js`（【閉店】あり・なし・名前が合わないページの【閉店】・題名なし・class の読み方）、`tests/audit_store_link_identity.test.js`（取得を差し替えて HTTP 404 → 判定として残り掲載終了に数える・【閉店】→閉店に数える・403・一致・食べログは数えない）
+  - 2026-10-09 時点の件数は 閉店の表示 0・掲載終了 0。照合キャッシュのホットペッパーの判定は139件で、すべて今回より前の判定（shopState を見ていない）。判定が出た組は60日照合し直さないので、今ある139件に【閉店】が出ても数えるのは次の照合から
+  - 届く速さ（計算）: ホットペッパーのリンク 4,726件のうち照合済み139件。日次の照合は1日約55件なので、一巡するのに約83日かかる。早く知る手段は Places の営業状態の定期更新（[[ISSUE-173]]・オーナー確認が先）
 
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 

@@ -19,6 +19,7 @@
  *   node scripts/audit_store_link_identity.js --scope all --kind tabelog --all  # 食べログURLだけ全件検証
  *   node scripts/audit_store_link_identity.js --scope all --health  # 照合せず、種類ごとの照合の状況だけ（食べログを30日より長く取得できていなければ exit 1）
  *   node scripts/audit_store_link_identity.js --scope all --health --json  # 同じ判定を JSON で出す（link-audit-watchdog.yml が読む）
+ *   node scripts/audit_store_link_identity.js --scope all --closures  # 照合せず、ホットペッパーの閉店の表示と掲載終了の件数だけ（閉店の表示があれば exit 1・夜間QA）
  *
  * キャッシュ（data/store_link_identity_checked.json）:
  *   判定が出た組（一致・別の店・閉店・支店違い・ページが無い＝HTTP 404/410）は MAX_AGE_DAYS の間は照合し直さない
@@ -32,6 +33,12 @@
  *   同じ種類で取得の失敗が BREAK_AFTER 件続いたら、その回のその種類はやめる（ISSUE-164。
  *   食べログは遅くとも 2026-10-05 から CI の取得に HTTP 403 を返す。回避はしない）。
  *   --check が exit 1 にするのは判定の出ている不一致だけ。取得できなかった組は不一致と数えない。
+ *
+ * 閉店の兆し（ISSUE-174）:
+ *   ホットペッパーのページが店名の上に【閉店】を出していれば判定 closed（題名は変わらない）。ページが無い
+ *   （HTTP 404「掲載情報なし」）は今までどおり判定として扱い、レポートの closures で「掲載終了」として分けて数える。
+ *   掲載終了は掲載の契約が終わっただけで営業を続ける店もあるので、閉店とは数えない。見つかった店は自動では外さない。
+ *   ISSUE-170 と同じ確認（一次情報2つ以上・data/store_liveness_reviews.json）を経て data/closed_stores.json へ入れる。
  */
 'use strict';
 
@@ -144,8 +151,27 @@ function judgeHealth(health, now, maxDays = HEALTH_MAX_DAYS) {
   return { ok: stale.length === 0, maxDays, stale, kinds };
 }
 
+/**
+ * 掲載店の閉店の兆し（純関数・ISSUE-174）。外部へは問い合わせず、照合キャッシュの判定だけで数える。
+ * hotpepper.closed   … ページが店名の上に【閉店】を出している（名前が合うページだけ。判定 closed）
+ * hotpepper.notFound … ページが無い（HTTP 404/410「掲載情報なし」＝掲載終了）。閉店とは数えない
+ */
+function summarizeClosures(targets, cache) {
+  const closed = [];
+  const notFound = [];
+  for (const t of targets) {
+    if (t.kind !== 'hotpepper') continue;
+    const entry = cache[t.key];
+    if (!entry || entry.ok !== false) continue;
+    const row = { 店名: t.storeName, エリア: t.area, url: t.url, 検証日: entry.checkedAt };
+    if (entry.reason === 'closed') closed.push({ ...row, 表示: entry.shopState || null });
+    else if (NOT_FOUND.test(entry.error || '')) notFound.push({ ...row, エラー: entry.error });
+  }
+  return { hotpepper: { closed, notFound } };
+}
+
 const args = process.argv.slice(2);
-const opts = { limit: 40, force: false, store: null, delayMs: 4000, jitterMs: 2000, check: false, scope: 'manual', kind: 'all', health: false, json: false };
+const opts = { limit: 40, force: false, store: null, delayMs: 4000, jitterMs: 2000, check: false, scope: 'manual', kind: 'all', health: false, closures: false, json: false };
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
   if (a === '--limit') opts.limit = parseInt(args[++i], 10);
@@ -158,7 +184,8 @@ for (let i = 0; i < args.length; i++) {
   else if (a === '--kind') opts.kind = args[++i];   // tabelog / hotpepper / all
   else if (a === '--jitter') opts.jitterMs = parseInt(args[++i], 10);
   else if (a === '--health') opts.health = true;   // 照合せず、種類ごとの照合の状況だけを出す（ISSUE-164）
-  else if (a === '--json') opts.json = true;       // --health の判定を JSON で出す
+  else if (a === '--closures') opts.closures = true; // 照合せず、閉店の兆しの件数だけを出す（ISSUE-174）
+  else if (a === '--json') opts.json = true;       // --health・--closures の結果を JSON で出す
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -206,7 +233,7 @@ async function main() {
   // 名前が一致しても住所が違えば別の支店・別の店として落とす（ISSUE-159）。HotPepper の
   // 掲載住所（stores.json の「住所」）を優先し、無い店（手動キュレーション店）だけ Google Places
   // の住所を使う。Places は紐付け自体が別の支店を指す店がある（ISSUE-147）
-  const addressIndex = opts.health ? new Map() : buildPlacesAddressIndex(ROOT);
+  const addressIndex = (opts.health || opts.closures) ? new Map() : buildPlacesAddressIndex(ROOT);
 
   let targets = [];
   for (const s of stores) {
@@ -225,6 +252,7 @@ async function main() {
   }
 
   if (opts.health) return reportHealth(summarizeHealth(targets, cache));
+  if (opts.closures) return reportClosures(summarizeClosures(targets, cache), { exitOnClosed: true });
 
   console.log(`=== 外部リンク実地検証 (scope=${opts.scope} / 対象候補 ${targets.length}件) ===`);
 
@@ -294,9 +322,11 @@ async function main() {
     (isFetchFailure(cached) ? unfetched : mismatches).push(row);
   }
   const health = summarizeHealth(targets, cache);
-  fs.writeFileSync(REPORT_PATH, JSON.stringify({ generatedAt: new Date().toISOString(), run, health, mismatches, unfetched }, null, 2));
+  const closures = summarizeClosures(targets, cache);
+  fs.writeFileSync(REPORT_PATH, JSON.stringify({ generatedAt: new Date().toISOString(), run, health, closures, mismatches, unfetched }, null, 2));
 
   console.log('');
+  reportClosures(closures, { exitOnClosed: false });
   if (unfetched.length) console.log(`… 取得できたことが無いリンク ${unfetched.length}件（不一致とは数えない）`);
   if (mismatches.length) {
     console.log(`❌ 不一致 ${mismatches.length}件（別の店 or 閉店店舗を指している可能性・要手動修正）:`);
@@ -307,6 +337,22 @@ async function main() {
   } else {
     console.log('✅ 検証済みの範囲で不一致は見つかりませんでした');
   }
+}
+
+// 閉店の兆しの件数を出す（ISSUE-174）。--closures のときは、閉店の表示が1件でもあれば exit 1（夜間QA の soft）
+function reportClosures(closures, { exitOnClosed }) {
+  const { closed, notFound } = closures.hotpepper;
+  if (opts.json && exitOnClosed) {
+    console.log(JSON.stringify({ ...closures, today: new Date().toISOString().slice(0, 10) }, null, 2));
+  } else {
+    console.log(`ホットペッパーの閉店の表示: ${closed.length}件・掲載終了（ページが無い）: ${notFound.length}件`);
+    closed.forEach((c) => console.log(`  - 【閉店】 ${c.店名} (${c.エリア}) ${c.url}（${String(c.検証日 || '').slice(0, 10)} 確認）`));
+    notFound.forEach((c) => console.log(`  - 掲載終了 ${c.店名} (${c.エリア}) ${c.url}（${c.エラー}・${String(c.検証日 || '').slice(0, 10)} 確認）`));
+    if (closed.length) {
+      console.log('  自動では外さない。ISSUE-170 と同じく一次情報2つ以上で確かめ、data/store_liveness_reviews.json に記録してから data/closed_stores.json へ入れる');
+    }
+  }
+  if (exitOnClosed && closed.length) process.exit(1);
 }
 
 // --health: 種類ごとの照合の状況を出す。食べログを最後に取得できた日が HEALTH_MAX_DAYS より前なら exit 1（ISSUE-164）
@@ -333,4 +379,4 @@ if (require.main === module) {
     process.exit(1);
   });
 }
-module.exports = { planChecks, mergeCheckResult, summarizeHealth, judgeHealth, isFetchFailure };
+module.exports = { planChecks, mergeCheckResult, summarizeHealth, judgeHealth, summarizeClosures, isFetchFailure };

@@ -20,6 +20,9 @@
  *      食べログの題名に支店名が無い店は、どの支店の名前とも一致してしまう
  *      （実例: 「うなぎのしろむら 丸の内店」に東区の泉本店のページ）。住所の比較は
  *      same / different / unknown の3値で、表記ゆれで説明できる組は unknown（落とさない）。
+ *   4. ホットペッパーのページが店名の上に【閉店】を出していれば閉店と判定すること（ISSUE-174）。
+ *      題名は閉店しても変わらず「＜ネット予約可＞」が残ることもあるので、題名だけでは分からない。
+ *      名前が合わないページの【閉店】は、我々の店の閉店の証拠にしない。
  */
 
 const { test } = require('node:test');
@@ -32,6 +35,8 @@ const {
   parseJpAddress,
   compareJpAddress,
   judgeTabelogHtml,
+  hotpepperShopStateFromHtml,
+  judgeHotpepperHtml,
   hasBranchSuffix,
   ourBranchOnly,
   linkCacheKey,
@@ -187,6 +192,43 @@ test('judgeTabelogHtml: 住所が同じ店・住所を渡さない呼び出し�
   // 閉店は住所より先に閉店として扱う
   const closed = tabelogPage('【閉店】うなぎのしろむら - 高岳/うなぎ | 食べログ', '名古屋市東区', '泉1-18-41');
   assert.equal(judgeTabelogHtml(closed, 'うなぎのしろむら 泉本店', { address: '愛知県名古屋市東区泉1-18-41' }).reason, 'closed');
+});
+
+// ホットペッパーの店舗ページ（題名と店名の見出しだけを持つ最小の形）。閉店した店だけ、見出しの上に
+// <p class="shopState">【閉店】</p> が出る（2026-10-09 に STEPS・あっとバーグ イオン新瑞橋店の実物で確認・ISSUE-169）
+function hotpepperPage(title, shopName, shopState) {
+  const state = shopState ? `<p class="shopState">${shopState}</p>\n` : '';
+  return `<html><head><title>${title}</title></head><body><div class="shopNameBlock">\n${state}<h1 class="shopName">${shopName}</h1>\n</div></body></html>`;
+}
+const STEPS_TITLE = 'STEPS(栄/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ';
+
+test('judgeHotpepperHtml: 店名の上に【閉店】が出ていれば閉店（題名は変わらず、ネット予約可が残ることもある）', () => {
+  const closed = judgeHotpepperHtml(hotpepperPage(STEPS_TITLE, 'STEPS', '【閉店】'), 'STEPS');
+  assert.equal(closed.ok, false);
+  assert.equal(closed.reason, 'closed');
+  assert.equal(closed.closed, true);
+  assert.equal(closed.shopState, '【閉店】');
+  assert.equal(closed.matchedName, 'STEPS');
+  // 【閉店】が無ければ従来どおり名前で判定する
+  const open = judgeHotpepperHtml(hotpepperPage(STEPS_TITLE, 'STEPS', null), 'STEPS');
+  assert.equal(open.ok, true);
+  assert.equal(open.reason, null);
+  assert.equal(open.closed, false);
+  assert.equal(open.shopState, null);
+  // 実物の字下げと、class が複数ある形も読む
+  assert.equal(hotpepperShopStateFromHtml('\t\t\t\t\t\t\t<p class="shopState">【閉店】</p>\n'), '【閉店】');
+  assert.equal(hotpepperShopStateFromHtml('<p class="shopState jscState">【閉店】</p>'), '【閉店】');
+  assert.equal(hotpepperShopStateFromHtml('<p class="shopStateNote">【閉店】</p>'), null);
+});
+
+test('judgeHotpepperHtml: 名前が合わないページの【閉店】は name-mismatch のまま（我々の店の閉店の証拠にしない）', () => {
+  const page = hotpepperPage('あっとバーグ　イオン新瑞橋店(名古屋市南区/洋食) | ホットペッパーグルメ', 'あっとバーグ　イオン新瑞橋店', '【閉店】');
+  const r = judgeHotpepperHtml(page, 'STEPS');
+  assert.equal(r.ok, false);
+  assert.equal(r.reason, 'name-mismatch');
+  assert.equal(r.closed, true);
+  // 題名が無ければ判定しない（取得できなかったのと同じ扱い）
+  assert.equal(judgeHotpepperHtml('<html><body><p class="shopState">【閉店】</p></body></html>', 'STEPS').reason, 'no-title');
 });
 
 test('ourBranchOnly: 我々だけが支店名を持つ組（解決器の取り違え防止）', () => {
