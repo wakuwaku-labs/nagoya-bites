@@ -708,6 +708,27 @@
   - 10-09 の欠番の記事を作り直して公開するかはオーナーの判断（未実施）
   - 2026-10-09 追記（最終チェックで直した）: 待ち方を1回の長い sleep から「1分ずつ・壁時計で解除を過ぎたかを見る」に変えた。Mac のスリープ中は sleep が進まず、日付をまたいでから作り直すおそれがあったため。待っている間はロックの時刻を新しく保ち（`STALE_LOCK_SEC`＝90分でハング扱いされ、手動の実行に強制終了されないように）、日付が変わったら作り直さずに HOLD にする。`tests/claude_usage_limit.test.js` に、ラッパーの関数を時計とスリープを差し替えて動かすテストを足した
 
+### [ISSUE-185] 欠番のバックフィルが SNS原稿の停止設定で必ず止まり、Autopilot の自動コミットを見逃すのを直す
+
+- **priority**: P2 → **status**: done（2026-10-10）
+- **detected**: 2026-10-10
+- **due**: 2026-10-24
+- **category**: 運用・自動化
+- **owner**: Builder
+- **source**: 10-09 の欠番をオーナーの承認でバックフィルしたとき（2026-10-10）
+- **brand-filter**: ✅ 適合 — 欠番の復旧手順が壊れないようにする（記事の内容には触れない）
+- **背景**: `bash scripts/backfill_journal.sh 2026-10-09` で次の2つが起きた。
+  1. 記事は validator 全項目 PASS（86点 PASS_WITH_NOTE）で生成されたのに、スクリプトは「SNS原稿が生成されていません」で止まった。`data/journal_sns_draft_policy.json` の `generate_sns_draft=false`（2026-09-05〜）を `run_journal_local.sh` は読むが、バックフィルは読まずに md を必須としていた（9/6 の事故と同じ型）
+  2. 生成中にグローバルの Session Autopilot フックが autopilot/work-* ブランチを切って自動コミットした。さらに `~/nagoya-bites` の main へマージし、別の作業ブランチ（wakuwaku-labs/SEO分析）まで main にマージした。HANDOFF.md も上書きした。このスクリプトは commit / push を人に任せる設計なのに、HEAD が動いたことに気づかなかった
+  - 公開は、記事の差分だけ（HANDOFF.md を除く）を最新の main に当てて #456 で行った。ローカルの main は reset せず、`backup/main-before-backfill-20261010` に名前を変えて残し、origin/main から作り直した
+- **acceptance**:
+  1. `generate_sns_draft=false` のとき、SNS原稿が無くても止まらず、validator に md を渡さない
+  2. 生成の前後で HEAD かブランチが動いていたら、原因と直し方を書いて止まる（公開の手前で人に戻す）
+  3. `tests/backfill_journal.test.js` が上の2つの配線を見る
+- **files**: `scripts/backfill_journal.sh`, `tests/backfill_journal.test.js`
+- **関連**: [[ISSUE-184]]（10-09 が欠番になった原因）
+- **2026-10-10 結果（done）**: 達成条件1〜3を満たした（`bash -n` OK・テスト3件 pass）。Autopilot フックが無人実行の中で自動コミット・マージすること自体は `~/.claude/autopilot/`（リポジトリの外）の設定で、ここでは止めていない。`run_journal_local.sh` はブランチを main に戻す処理を持つが、main へのマージまでは想定していない
+
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 
 - **priority**: P1 → **status**: in_progress

@@ -80,7 +80,8 @@ status: done
   - 10-11: ISSUE-184 の新しい待ち方が入ったラッパーで動いたか（~/nagoya-bites/.local-logs の実行ログ。利用上限に当たらなければ何も出ない）
   - 期限順: SEO-091（10-13）／SEO-125（10-15）／ISSUE-149（10-16）／ISSUE-183（10-17）／SEO-118・SEO-099（10-20）／SEO-087（10-27）／SEO-148（11-06）／ISSUE-179（11-08）／ISSUE-172（11-09）／SEO-126・SEO-130・SEO-140（11-15）／SEO-141（11-30）
   - 夜間QA の soft を hard に上げる候補（緑が続いたら）: station-names・tabelog-branch・feature-tracking・stub-links・hotpepper-fetch・journal-feature-cta
-  - オーナーの判断・操作待ち: 10-09 の記事を作り直して公開するか（GitHub #437 は記事が出るか 10-16 に7日の窓から外れるまで開いたまま。#438 は 10-10 の watchdog が、その日の実行が hold・異常終了でなければ閉じる。#438 の「品質HOLD」は旧ラッパーの理由文のため）／ルーチンPR #398・#400・#402（4zf）／GAS のデプロイ（ISSUE-150・ISSUE-152 の達成条件3）／ISSUE-147・ISSUE-165・ISSUE-173
+  - 10-09 の記事はオーナー承認でバックフィルし #456 で公開済み（871db336f0）。#437 は次の watchdog で閉じる見込み。バックフィル中に Autopilot フックが ~/nagoya-bites の main へ自動コミット・マージしたため、旧 main は backup/main-before-backfill-20261010 に残し main を origin/main から作り直した（reset なし）。ISSUE-185（P-187 Done）で backfill_journal.sh を直した（SNS原稿の停止設定・HEAD が動いたら止まる）
+  - オーナーの判断・操作待ち: ルーチンPR #398・#400・#402（4zf）／GAS のデプロイ（ISSUE-150・ISSUE-152 の達成条件3）／ISSUE-147・ISSUE-165・ISSUE-173
 5. 夜間QA の station-names が緑で続いたら hard に上げる（10-09 が初めての ✅。10-10 も緑なら上げる）
 6. 最後に: 創業者の実名が index.html の Organization JSON-LD に出ている件をオーナーへ報告（変更しない）
 
