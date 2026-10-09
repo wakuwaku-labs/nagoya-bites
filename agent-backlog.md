@@ -63,6 +63,72 @@
   2. `ctaCount` を「予約導線イベント＋（予約ドメインへの outbound_click のうち予約導線イベントの無いページから出たもの）」のように重ならない数え方に直し、テストで確かめる
   3. 直した日を週次レポートに注記する（前週比が不連続になるため）
 
+### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
+
+- **priority**: P1 → **status**: in_progress
+- **detected**: 2026-10-09
+- **category**: data / trust
+- **owner**: Builder / Editor
+- **source**: [[DSN-007]] の後、夜間QA の架空店監査（soft）の赤を調べていて発見（2026-10-09）
+- **brand-filter**: ✅ 適合 — 実在保証と信頼（「食べログで確認」から読者を別の店へ送らない）
+- **背景**: 2026-09-03 に `scripts/audit_store_link_identity.js` で全件を照合し、別の店を指す食べログURL 68件を `scripts/clear_broken_tabelog_links.js` で空欄にした。後始末の対象は `data/manual_stores.json`・`data/stores.json`・`stores/*.html` の3つで、特集（`features/*.html`）とジャーナル（`journal/*.html`）に手で書かれたリンクは対象外だった。照合キャッシュ `data/store_link_identity_checked.json` で「別の店」（sim=0 の name-mismatch）と判定済みの食べログURLが、2026-10-09 時点で特集1本に3件、ジャーナル5本に5件残っていた。同日に食べログの題名を取り直し、8件とも別の店（閉店・移転・コンビニを含む）であることを確かめた。例: 顔合わせ特集の「うなぎのしろむら 泉店」のボタン → 栄の居酒屋「くらや」、ジャーナル 2026-06-01 の情報源「食べログ 日本料理 旬彩」→「ファミリーマート 千種今池一丁目店」
+- **acceptance**:
+  1. [[ISSUE-155]]（8件を外す・確かめられたものだけ差し替える）と [[ISSUE-156]]（特集とジャーナルの手書きリンクを監査に入れる）が done
+  2. 夜間QA の架空店監査が緑になる
+- **結果（2026-10-09・途中）**: 子課題 [[ISSUE-155]]・[[ISSUE-156]] は done。手元で `node scripts/audit_feature_stores.js` の実在不明は 0 件。達成条件2（夜間QA の架空店監査が緑）は 10-10 の夜間QA で確かめてから done にする。[[ISSUE-157]]（しろむら 丸の内店・柳橋本店の URL）は別に進める
+
+
+### [ISSUE-155] 特集とジャーナルの、別の店を指す食べログリンク8件を外し、「しろむら 泉店」を「泉本店」にそろえる
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-10-09
+- **category**: data / trust
+- **owner**: Editor / Builder
+- **source**: [[ISSUE-154]] の子課題
+- **brand-filter**: ✅ 適合 — 実在保証と信頼
+- **背景**: 対象は次の8件（食べログの題名は 2026-10-09 に取得）。特集 `nagoya-kaoawase-washoku.html` の3件: 「うなぎのしろむら 泉店」→ くらや（23067853）、「日本料理 旬彩」→ 磯料理 まるけい（23000003）、「鍋と和食 個室ダイニング ENISHI 金山店」→ 別邸 なかたけ 縁・車道（23078247）。ジャーナルの情報源など5件: 2026-06-01 → ファミリーマート 千種今池一丁目店（23089066）、2026-06-10 → みそのとら・尾張森岡（23046537）、2026-06-13 → 【移転】ジノビリ（23064523）、2026-07-23 → 名駅WINE明智商店（23069100）、2026-07-30 → 【閉店】得得 豊田若林店（23068842・2か所）。特集2本（`fathers-day-2026`・`nagoya-kaoawase-washoku`）の「うなぎのしろむら 泉店」は、`data/stores.json` の「うなぎのしろむら 泉本店」（J004026266・東区泉1-18-41 エスポア泉1F）と同じ店で、食べログ 23056889 の住所が一致する（2026-10-09 確認）。この表記のずれで夜間QA の架空店監査（`scripts/audit_feature_stores.js`）が毎日赤だった。「日本料理 旬彩」は `data/manual_stores.json` に住所も食べログも無い手動登録で、実在を一次情報で確かめていない（今回はリンクを外すだけ）
+- **acceptance**:
+  1. 8件のリンクを外す。正しい URL を一次情報（住所）で確かめられたもの（しろむら → 23056889）だけ差し替える。店舗ページがある店（ENISHI 金山店 → J001259546）はボタンを店舗ページへ向ける（`clear_broken_tabelog_links.js` と同じく、推測で別の URL に差し替えない）
+  2. 特集2本の「うなぎのしろむら 泉店」を「泉本店」にし、店舗ページ J004026266 へ向ける。`node scripts/audit_feature_stores.js` の実在不明が 0 件になる
+  3. `node scripts/audit_inline_js_syntax.js --check` と `npm test` が通る
+- **結果（2026-10-09）**:
+  - 顔合わせ特集: 「うなぎのしろむら」のボタンを食べログ 23056889（住所 東区泉1-18-41 エスポア泉1F が stores.json の泉本店と一致）に差し替えた。「日本料理 旬彩」のボタン（→ 磯料理 まるけい）は外した（店舗ページが無い）。「ENISHI 金山店」のボタン（→ 車道の 別邸 なかたけ 縁）は店舗ページ J001259546 へ向けた
+  - ジャーナル5本: 情報源の食べログリンク（→ ファミリーマート・みそのとら・ジノビリ・名駅WINE明智商店・得得 豊田若林店）を区切りの「、」ごと外した。2026-07-30 は店のボタン「公式・SNS」も同じ URL だったので外した。ほかの情報源は残っている
+  - 特集2本の「うなぎのしろむら 泉店」を「泉本店」にし、父の日特集の ItemList と詳細リンクを店舗ページ J004026266 に向けた（以前の `store-e38186e381aae381.html` は J004026266 への転送ページ）
+  - `node scripts/audit_feature_stores.js`: 実在不明 0 件（変更前は2件）。`audit_inline_js_syntax.js --check`（features・journal）exit 0。`sync_feature_counts.js --check`・`apply_feature_conclusions.js --check` は要更新 0。`npm test` 通過
+  - 残したこと: 「日本料理 旬彩」は manual_stores.json に住所も食べログも無く、実在を一次情報で確かめていない。顔合わせ特集の★の数（しろむら 4.3）と父の日特集（4.5）は手書きで食い違う（stores.json の Google評価は 4.5）
+
+
+### [ISSUE-156] 特集とジャーナルに手で書かれた食べログ・ホットペッパーのリンクも、別の店を指していないか毎日確かめる
+
+- **priority**: P2 → **status**: done
+- **detected**: 2026-10-09
+- **category**: qa / trust
+- **owner**: Builder
+- **source**: [[ISSUE-154]] の子課題
+- **brand-filter**: ✅ 適合 — 実在保証の再発防止（制約11）
+- **背景**: リンクの照合（`audit_store_link_identity.js`）は店舗データの URL だけを見ていて、特集とジャーナルの HTML に手で書かれたリンクは見ていない。9/3 に別の店と判定済みの URL が、特集とジャーナルでは 10/9 まで表示され続けた（[[ISSUE-155]]）
+- **acceptance**:
+  1. 特集とジャーナルの HTML から食べログ・ホットペッパーの店舗 URL を集め、照合キャッシュで「別の店」（sim=0 の name-mismatch・confirmed-404）と判定済みのものを一覧にする監査を作る。新しく外部へ問い合わせず、キャッシュの事実だけで判定する（制約10）
+  2. 夜間QA に soft で入れ、1件でもあれば赤にする
+  3. テストで境界を確かめる（sim=0 と confirmed-404 は数える。sim>0・fetch-error・キャッシュに無い URL は数えない）
+- **結果（2026-10-09）**: 判定器 `scripts/lib/page_store_links.js`・CLI `scripts/audit_page_store_links.js`（`--check`・`--json`・`--only`）・テスト `tests/page_store_links.test.js`（5件: URL のそろえ方・href の収集・数える/数えないの境界・ページ群の監査・対象ページ）を足し、夜間QA に soft で入れた（id: page-store-links）。直す前の main のページに当てると 7 件を検出した（ENISHI の1件は sim=0.24 で、既存の方針どおり人の確認に残す境界として数えない）。直した後は 0 件（224 ページ・照合済みの URL 3,379 件）。CLAUDE.md の共有ファイル一覧に追記
+
+
+### [ISSUE-157] 「うなぎのしろむら 丸の内店」と「柳橋本店」に付いている泉の店の食べログURLを外す
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: data / trust
+- **owner**: DataKeeper
+- **source**: [[ISSUE-154]] の調査中に発見
+- **brand-filter**: ✅ 適合 — 実在保証と信頼
+- **背景**: 食べログ 23056889 は「うなぎのしろむら」東区泉1-18-41 エスポア泉1F の店（2026-10-09 に題名と住所を取得）。この URL が `data/stores.json` の「うなぎのしろむら 丸の内店」（J004026662・中区丸の内2-8-27）と、`data/manual_stores.json` の「うなぎのしろむら 柳橋本店」にも付いている。照合器（`scripts/lib/store_link_identity.js`）は食べログの題名に支店名が無いため、どちらも一致と判定していた。stores.json は Google Sheets から作り直されるため、9/3 の後始末と同じ形で外したときに次のビルドで戻らないかを先に確かめる
+- **acceptance**:
+  1. 丸の内店と柳橋本店の食べログURLを空欄にし、次のビルドの後も空欄のままであることを確かめる
+  2. 店舗ページ（J004026662 ほか）の食べログのボタンと JSON-LD の sameAs から 23056889 が消える
+  3. 支店名の無い題名で一致と判定してしまう件を、照合器の既知の限界として `docs/` か照合器のコメントに残す
+
 ### [ISSUE-153] 新しく作る特集にも予約申告プロンプトと予約送客の計測が自動で入るようにする
 
 - **priority**: P3 → **status**: ready

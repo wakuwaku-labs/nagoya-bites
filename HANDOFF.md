@@ -25,16 +25,17 @@ status: in_progress
   - #427 SEO-122（デート特集の掲載店を FAQ の約束にそろえ、冒頭に予算別の結論を機械で置く・docs/decisions/0011・P-118 Done）
   - #426 SEO-124（ハブ685本に編集部の見分け方・選定理由の別枠・予算帯と最寄り駅の表。FAQPage の JSON-LD を外した。QA で本文の幅の未指定と最寄り駅の集計も直した・P-120 Done）
   - #416 SEO-143（店舗ページに「編集部の選定理由」）・#418 SEO-139（aggregateRating と SearchAction を外す・docs/decisions/0009）・#419 IndexNow が -2/-3 の店舗ページを探す・#420 SEO-127（banquet の 11・12月リードと幹事チェックリスト）・#421 SEO-131 その1（掲載店の入れ替えで dateModified を進める）
+  - #431 DSN-007（幅 900px 以下でパンくずとフッターのリンク群が画面外に消えていた・375px の横幅が 750px。nb.css の nav の規則を #main-nav だけに。P-155 Done＋コメント。本番で 375px の横幅 375・パンくずとフッター表示を確認）
 - Linear: P-115/P-116/P-138/P-113/P-140/P-131/P-132/P-134 は Done（結果コメントつき）。P-117（SEO-121）は In Progress で、本番確認待ち
 - 起票: ISSUE-147（P-142・Places の古い誤紐付け・オーナー承認が要る）／ISSUE-148（P-143・スプレッドシート経由の住所検査）／SEO-142（P-144・sameAs。公式アカウントの URL をオーナーが示すまで待ち）／SEO-143（P-145・店舗ページに editorReason が出ていない）／SEO-144（P-146・index.html と静的ページの localStorage 例外で GA が止まる）
 
 # 次にやること
 1. SEO-147（P-156）: 本番確認済み（CI の再生成で店舗ページがそろい、main で --check --target stores が exit 0）。backlog done・P-156 Done＋コメント済み
 2. SEO-122（P-118）: #427 で合流・P-118 Done＋コメント済み。達成条件4（4週後の順位）は SEO-140（11-15）で記録する。冒頭の結論の仕組み（scripts/apply_feature_conclusions.js・data/feature_conclusions.json・nb.css .nb-conclusion）は SEO-134 で他の特集へ広げる（docs/decisions/0011）
-3. SEO-115 の残り（P-112）: 達成条件3（GA4 で /stores/ の page_view。topPages は上位5ページだけなので、オーナー確認か 10-10 以降の metrics_history の段差）と5（次の夜間QA の inline-js が緑）
+3. SEO-115 の残り（P-112）: 達成条件5は満たした（10-09 の夜間QA で inline-js が ✅ hard）。残りは達成条件3（GA4 で /stores/ の page_view。10-10 以降の metrics_history の段差かオーナー確認）。満たしたら P-112 を Done にする
 4. SEO-137（P-133）: #428 で合流・P-133 Done＋結果コメント済み。11-06 の比較は SEO-148（P-157・Todo・期限 11-06）。`node scripts/journal_title_experiment.js --report` で比べる
-4b. DSN-007: 実装と QA を終えた（nb.css の nav の規則を #main-nav だけに・閉じたドロワーは display:none・スマホのパンくずのリンク 44px・.tips-box の長い語の折り返し。backlog に結果と Designer QA-5 を記録）。PR → 合流 → Linear Done＋コメントが残り。QA の道具は scratchpad/dsn007/（qa.js・tap.js・bc.js・footer_variants.js）。ISSUE-143 の調査はやり直す。次の候補: ISSUE-148 → SEO-134 → ISSUE-153 → SEO-144
-5. 夜間QA の station-names が緑で続いたら hard に上げる
+4b. 進行中（2026-10-09）: 特集・ジャーナルに手書きされた食べログリンクのうち、別の店を指すものが8件ある（9/3 のリンク照合で不一致と判定済みだが、照合と後始末は manual_stores・stores.json・stores/*.html だけが対象で、特集とジャーナルの HTML は対象外だった）。例: 顔合わせ特集の「うなぎのしろむら 泉店」→ 栄の居酒屋くらや、ジャーナル「鮨 結」→ ファミリーマート。ISSUE-154（親）・155（8件を外す/差し替える＋しろむら 泉店→泉本店）・156（特集とジャーナルの手書きリンクを照合の対象に入れる）として起票して進める。調べた道具: 照合キャッシュ data/store_link_identity_checked.json（URL ごとの ok/reason/sim）。その後の候補: ISSUE-148 → SEO-134 → ISSUE-153 → SEO-144。ISSUE-143 の調査はやり直す
+5. 夜間QA の station-names が緑で続いたら hard に上げる（10-09 が初めての ✅。10-10 も緑なら上げる）
 6. 最後に: 「うなぎのしろむら 泉店」の起票、創業者の実名が index.html の Organization JSON-LD に出ている件をオーナーへ報告（変更しない）、http.server（8093・8094・8095）を止める
 
 対象外（理由）:
