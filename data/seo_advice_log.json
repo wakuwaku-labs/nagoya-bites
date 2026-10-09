@@ -3770,6 +3770,36 @@
       "brand_reason": "重複（09-26 週次に却下済み）。solo-dining は関連特集リンク群（meieki-hitori-nomi / hard-to-book / industry-insiders-pick 等）を既に保有し、特集→ジャーナルの導線欠落は SEO-108（done）で解消済み。回遊（pages/session）の計測と押上げは SEO-099・SEO-070 で継続中。1.1ページは単日値で制約10により施策の根拠にしない",
       "category": null,
       "fingerprint": "e0f06eb119940828"
+    },
+    {
+      "id": null,
+      "date": "2026-10-10",
+      "source": "line-daily",
+      "advice": "🟢 予約クリック率が7.8%と良好。👉 サイト全体の予約ボタン(cta_click)を色やサイズで目立たせ、人気ページTOP5の特集記事(nagoya-solo-dining, nagoya-autumn-2026, nagoya-sushi-guide)内にも予約ボタンへの導線を追記",
+      "verdict": "duplicate",
+      "brand_reason": "重複（10-02/10-03/10-05 週次/10-07/10-08/10-09 に同主旨を却下済み）。予約クリック率は母数数十で日々大きく振れ（10-05 14.0%→10-07 1.4%→10-08 8.6%→今回7.8%）施策の根拠にならない（制約10）。今回のレポートは ISSUE-152 で予約ボタンの数え方を2重計上から1回に直した初日で、過去値と比べられない。各特集は掲載店ごとに予約導線を既に持ち、予約を受けない店を含む特集で予約ボタンを一律に目立たせるのは読者の誤誘導になりうる（制約7）",
+      "category": null,
+      "fingerprint": "26fdc5c31efd1271"
+    },
+    {
+      "id": null,
+      "date": "2026-10-10",
+      "source": "line-daily",
+      "advice": "🟡 検索流入比率78%。👉「六六堂 栄」「青ノ月」「リサールコーヒー 名古屋」など平均10位前後の店舗名KWで stores/ の静的店舗ページの内容を充実させ1ページ目を目指す",
+      "verdict": "duplicate",
+      "brand_reason": "重複（09-29/10-02 に同主旨を判定済み）。単一店名のナビゲーショナルクエリは公式サイト・Googleマップに譲る Strategic Skip の面。静的店舗ページは gen-store-pages.js が店名を title/h1 に既に出力し、Googleマップ導線も SEO-105 で整備済み。個別店の1位争いは追わない",
+      "category": null,
+      "fingerprint": "aabfa85092780765"
+    },
+    {
+      "id": null,
+      "date": "2026-10-10",
+      "source": "line-daily",
+      "advice": "🟡「名古屋駅 一人飲み」平均11.2位・「名古屋 デート ディナー」平均10.8位。👉 人気ページ1位 nagoya-solo-dining と2位デート特集の本文を充実させ関連KWを自然に盛り込む",
+      "verdict": "duplicate",
+      "brand_reason": "重複（一人飲みは 09-28〜10-08 に繰り返し判定済み、デートは 10-05 週次・10-06・10-09 に判定済み）。一人飲みは SEO-109(done) でトップ導線済み・特集強化は SEO-087 に集約、デート特集 features/date.html の1ページ目押上げは SEO-122(P1) で起票済み。両特集の本文強化は既存ワークストリームで進行中で、新規起票は二重管理になる。順位は単日の平均値で上下するため単日値を根拠にしない（制約10）",
+      "category": null,
+      "fingerprint": "3636d680ebd420c3"
     }
   ]
 }
