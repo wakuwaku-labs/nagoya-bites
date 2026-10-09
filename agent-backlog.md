@@ -248,7 +248,7 @@
 
 ### [ISSUE-168] 食べログが同じ店を閉店と表示している掲載店19件の営業を一次情報で確かめ、閉店なら掲載から外す
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: in_progress
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
 - **owner**: DataKeeper
@@ -265,7 +265,132 @@
   1. 19件を1件ずつ、第三者が確かめられる一次情報で確かめ、「営業中」「閉店」「決められない」に分けて根拠を記録する。一次情報は、Google Places の今の business_status と名前・住所、HotPepper の掲載ページ、店の公式サイトや公式SNS
   2. 閉店と確かめた店は、根拠つきで `data/closed_stores.json` に入れ、掲載から外す（`audit_store_liveness.js` の HARD で再掲載を止める）。推測で閉店にしない
   3. 同じ場所で別の店に入れ替わって営業しているものは、掲載が古い店のままになっていないかを確かめ、別の課題にする
-- **メモ**: 19件の確認は30分を超えるので、着手時に子課題に分ける
+- **メモ**: 19件の確認は30分を超えるので、子課題 [[ISSUE-169]]（確かめて記録する）と [[ISSUE-170]]（閉店と確かめた店を外す）に分けた
+
+### [ISSUE-169] ISSUE-168 の19店の営業を一次情報で確かめ、店ごとに根拠を記録する
+
+- **priority**: P1 → **status**: done
+- **detected**: 2026-10-09
+- **category**: data-quality / trust
+- **owner**: DataKeeper
+- **source**: [[ISSUE-168]] の子課題
+- **brand-filter**: ✅ 適合 — 実在保証
+- **背景**: [[ISSUE-168]] の19店（`data/tabelog_branch_reviewed.json` の issue: ISSUE-167・kind: closed-same）が対象。一次情報として次を使う。
+  - Google Places Details の今の business_status・名前・住所（Basic の項目だけ。19件は無料枠の内側）
+  - HotPepper の掲載ページ
+  - 店の公式サイト・公式SNS
+  - Places の紐付けが別の店を指すことがあるので（[[ISSUE-147]]）、Places の住所は HotPepper の掲載と比べる
+- **acceptance**:
+  1. 19店それぞれを「営業中」「閉店」「決められない」に分け、根拠を記録する。根拠は、取った日・URL・Places の状態と名前と住所で、第三者が確かめられる形にする
+  2. Places の住所が掲載と違う店では、Places を根拠にしない
+- **結果（2026-10-09）**: 19店を確かめ、`data/store_liveness_reviews.json`（新規）に1店1件で記録した。
+  - **判定**: 閉店12・営業中2・決められない5。
+    - 閉店: 本格江戸前寿司 女子大寿司 本店（鮨 Aoi に改名のあと閉店）・韓国酒場 パル 8 伏見店・かしわ料理 みふね・黒猫屋 錦・あっとバーグ イオン新瑞橋店・すし乾山 ホテルグランコート名古屋店・牡蠣 貝料理居酒屋 貝しぐれ 栄泉店・STEPS・炭焼き 羅針盤・上海湯包小館 BINO栄店・新京 名古屋伏見店・居酒屋 新九 しんく 栄本店
+    - 営業中: KollaBo コラボ 栄店（ホットペッパーに 09-25〜10-04 の口コミ）・お食事処 Hug（08-18〜08-30 の口コミ。六田1丁目204 へ移転したと見られ、掲載の住所が古い → [[ISSUE-171]]）
+    - 決められない: 博多もつ鍋屋 HANARE・金鯱うなぎ 伏見店・喰えるBAR shin・Cafe & Pizzeria Harbor・カラオケ レインボー 栄店（→ [[ISSUE-172]]）
+  - **閉店の基準**: 名前と住所が掲載と合う、独立した2つ以上の情報源が閉店を示し、それより後の営業の痕跡（口コミ・予約）が無いこと。情報源は次のとおり。
+    - ホットペッパー: 掲載終了（HTTP 404「掲載情報なし」）が3件、店名の上の【閉店】が2件
+    - Google の店舗情報: 閉業（CLOSED_PERMANENTLY）が10件。05-22 の記録ではこのうち2件が一時休業、8件が営業中だった
+    - 食べログ: 【閉店】（09-20 の記録）
+    - 公式サイト: ホテルのレストラン一覧から「すし 乾山」の行だけがコメントアウトされていた
+  - **Places の扱い（達成条件2）**: Basic の項目（name・formatted_address・business_status）だけを19件と店名検索6件で取った。住所が掲載と違う店と、同じ建物の別の店を指す店の5件は根拠にしていない（usedAsEvidence=false）。
+  - **わかったこと**: `data/places_resolved.json` の business_status は大半が 05-22 のままで、この19件のうち10件は今は閉業だった。掲載中のほかの店にも同じことが起きている見込みが高い（→ [[ISSUE-173]]・[[ISSUE-174]]）。
+
+### [ISSUE-170] ISSUE-169 で閉店と確かめた店を data/closed_stores.json に入れ、掲載から外す
+
+- **priority**: P1 → **status**: in_progress
+- **detected**: 2026-10-09
+- **category**: data-quality / trust
+- **owner**: DataKeeper
+- **source**: [[ISSUE-168]] の子課題
+- **brand-filter**: ✅ 適合 — 実在保証
+- **背景**: [[ISSUE-169]] の記録で閉店と確かめた店を、これまでと同じ経路（`data/closed_stores.json`・[[SEO-119]] と同じ）で外す。決められない店は外さない
+- **acceptance**:
+  1. 閉店と確かめた店だけを、根拠つきで `data/closed_stores.json` に入れる
+  2. 次のビルドの後、main でその店が店舗ページ・一覧・sitemap から外れていることを確かめる（`audit_store_liveness.js` が通る）
+  3. 同じ場所で別の店に入れ替わって営業しているものは、別の課題にする
+- **進捗（2026-10-09）**: 閉店12店を外した（PR で main へ）。
+  - 達成条件1: `data/closed_stores.json` に12件を根拠つきで足した（出典は掲載終了・【閉店】表示のホットペッパーのページ、ホテルの公式のレストラン一覧、Google の店舗情報の URL。理由に根拠の要約）。決められない5店は外していない。
+  - 外したもの: data/stores.json から12店、stores/<ID>.html を12本削除、sitemap.xml から12件。特集・ジャーナルからのリンクと店名の言及は無いことを確かめた。トップの導線とエリア×ジャンルのページは次のビルドが作り直す。
+  - 手元の確認: `audit_store_liveness.js`・`audit_closed_store_mentions.js --check`・`audit_page_store_links.js --check` が exit 0、`npm test` が通る。`gen-store-pages.js --check-orphans --dry-run` で孤児は113本のまま（増えていない）。
+  - 達成条件3: 同じ場所で別の飲食店に入れ替わったと確かめられたものは無かった。みふねは Google の店舗情報ではギャラリーとして営業。喰えるBAR shin の場所の「スタンダード」は、後に入った店か改名かを確かめられないので [[ISSUE-172]] で見る。
+  - 残り: 次のビルドの後、main で12店が stores.json・店舗ページ・sitemap・エリア×ジャンルのページから外れたままかを確かめる（達成条件2）。
+
+### [ISSUE-171] お食事処 Hug の掲載の住所を、移転先と見られる緑区六田1丁目204 に直すか確かめる
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: data-quality
+- **owner**: DataKeeper
+- **source**: [[ISSUE-169]] で発見
+- **brand-filter**: ✅ 適合 — 実在保証（行けない住所を載せない）
+- **背景**: お食事処 Hug（J004536441）は営業中で、[[ISSUE-169]] で確かめた。ただし掲載の住所は緑区浦里5丁目346-2 のままになっている。
+  - 食べログの【閉店】のページは浦里5丁目のもの。
+  - Google の店舗情報「お食事処 Hug」は緑区六田1丁目204 で営業中。
+  - ホットペッパーの地図の位置は、六田1丁目204 から約26m、浦里5丁目346 から約1.2km（国土地理院の住所検索で測った）。一方、ホットペッパーの住所欄は浦里5丁目346-2 のまま。
+  - 根拠は `data/store_liveness_reviews.json` に記録した。
+- **acceptance**:
+  1. 店の公式の発信かホットペッパーの住所欄など、一次情報で今の住所を確かめる。確かめられなければ直さない
+  2. 確かめられたら、取り込み元が直るまでの間だけ当たる訂正の仕組みで、掲載の住所と地図の位置を直す（`data/access_corrections.json` と同じ考え方）
+  3. 直した後、店舗ページとエリア×ジャンルのページで住所が新しいものになっていることを確かめる
+
+### [ISSUE-172] ISSUE-169 で決められなかった5店の営業を、30日後に一次情報で確かめ直す
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-11-09
+- **category**: data-quality / trust
+- **owner**: DataKeeper
+- **source**: [[ISSUE-169]]
+- **brand-filter**: ✅ 適合 — 実在保証
+- **背景**: [[ISSUE-169]] では、次の5店を「決められない」とした。食べログは【閉店】と表示しているが、閉店を示すほかの情報源が無いか、情報源が食い違う。推測で閉店にしないので、掲載は続けている。
+  - 博多もつ鍋屋 HANARE: ホットペッパーはコロナ禍の臨時休業の記載のまま。Google に店舗情報が無い
+  - 金鯱うなぎ 伏見店: Google の店舗情報は営業中
+  - 喰えるBAR shin: 同じ住所の Google の店舗情報は「スタンダード」
+  - Cafe & Pizzeria Harbor: Google に店舗情報が無い。公式の発信は Instagram だけ
+  - カラオケ レインボー 栄店: Google では錦3丁目10-13 の「レインボー 栄錦店」が営業中
+  - 記録は `data/store_liveness_reviews.json`（verdict: 決められない）
+- **acceptance**:
+  1. 2026-11-09 以降に、5店のホットペッパーの掲載ページ・Google の店舗情報（Basic の項目）・公式の発信を取り直し、同じ基準（`data/store_liveness_reviews.json` の _doc）で判定し直す
+  2. 閉店と確かめた店は [[ISSUE-170]] と同じ手順で外す。なお決められない店は、オーナーに電話での確認を頼むかを1行で聞く（勝手に外さない）
+- **メモ**: 期限まで待つ課題。[[ISSUE-174]] が入れば、ホットペッパーの閉店表示は日次で拾える
+
+### [ISSUE-173] 掲載店の Google の営業状態（business_status）を Basic の項目だけで定期的に取り直す
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: data-quality / trust
+- **owner**: DataKeeper
+- **source**: [[ISSUE-169]] で発見
+- **brand-filter**: ✅ 適合 — 実在保証（閉店した店を掲載し続けない）
+- **背景**: `scripts/audit_store_liveness.js` は `data/places_resolved.json` の CLOSED_PERMANENTLY を HARD で止める。しかしその記録は、大半の店が 2026-05-22 の取得のまま更新されていない。
+  - 更新が止まっている理由: `scripts/fetch_places.js` の取り直しは、口コミなど Atmosphere の項目を含むため、課金の確認待ちで止めてある。
+  - [[ISSUE-169]] では、19店のうち10店が今は閉業だった。05-22 の記録では、このうち8店が営業中、2店が一時休業だった。掲載中のほかの店でも、閉業が見えていない見込みが高い。
+  - Basic の項目（name・formatted_address・business_status）だけなら、Place Details の無料枠（月5,000件）の内側で取れる。手元では、Basic の項目だけの取得を19件と店名検索6件で確かめた。
+- **acceptance**:
+  1. 着手前に、定期的な API 利用（無料枠の内側・1日の上限つき）をオーナーに1行で確かめる
+  2. 既存の placeId に対して、Basic の項目だけを1日N件ずつ取り直す。N と1か月の上限は設定ファイルで持つ。取った日時は店ごとに残す
+  3. 名前と住所が掲載と合うものだけを営業状態の根拠にする（住所が違うものは [[ISSUE-147]] の誤紐付けとして別に数える）
+  4. 閉業に変わった店を、毎日の報告と夜間QA に出す（自動では外さない。外すのは [[ISSUE-170]] と同じ確認の後）
+- **メモ**: 30分を超えるので、着手時に子課題に分ける
+
+### [ISSUE-174] 日次のリンク照合で、ホットペッパーのページが【閉店】と表示している掲載店と掲載終了の店を数える
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: data-quality / trust
+- **owner**: Builder
+- **source**: [[ISSUE-169]] で発見
+- **brand-filter**: ✅ 適合 — 実在保証
+- **背景**: [[ISSUE-169]] で、ホットペッパーの店舗ページが閉店の店を次のように示すことを確かめた。
+  - 店名の上に `<p class="shopState">【閉店】</p>` を出す（あっとバーグ イオン新瑞橋店・STEPS）。ページの題名は変わらず、ネット予約可の表示が残っていることもある。
+  - 掲載をやめた店は HTTP 404「掲載情報なし」になる。
+  - 日次のリンク照合（`scripts/audit_store_link_identity.js`）は、ホットペッパーのページを毎日約55件取得している（対象 4,738件）。ただし今は題名の店名しか見ておらず、【閉店】の表示は数えていない。
+- **acceptance**:
+  1. 照合でホットペッパーのページの shopState が【閉店】なら、判定として記録する（例: reason: closed-listing）。報告と夜間QA で件数を出す
+  2. HTTP 404 は今と同じく判定として扱い、報告では「掲載終了」として分けて数える
+  3. 見つかった店は自動では外さない。[[ISSUE-170]] と同じ確認を経て外す
+  4. 固定の HTML 断片で、【閉店】あり・なし・404 の判定を node のテストで確かめる
 
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 
