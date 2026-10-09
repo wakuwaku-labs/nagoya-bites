@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T16:16:21.766Z",
+  "generatedAt": "2026-10-09T18:46:58.508Z",
   "run": {
     "tabelog": {
       "attempted": 5,
@@ -15,15 +15,15 @@
   "health": {
     "tabelog": {
       "links": 2690,
-      "neverChecked": 5,
-      "unfetched": 166,
+      "neverChecked": 0,
+      "unfetched": 171,
       "lastFetchedAt": "2026-09-20T15:34:53.838Z"
     },
     "hotpepper": {
       "links": 4854,
-      "neverChecked": 3837,
+      "neverChecked": 3782,
       "unfetched": 0,
-      "lastFetchedAt": "2026-10-09T16:16:21.740Z"
+      "lastFetchedAt": "2026-10-09T18:46:58.485Z"
     }
   },
   "closures": {
@@ -2005,6 +2005,16 @@
       "検証日": "2026-09-20T15:32:21.538Z"
     },
     {
+      "店名": "亜熱帯 名駅西椿店",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23050788/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T18:40:54.446Z"
+    },
+    {
       "店名": "ムンバデビ 名古屋駅店",
       "エリア": "名古屋（名古屋駅/西区/中村区）",
       "種別": "tabelog",
@@ -2023,6 +2033,46 @@
       "検出タイトル": null,
       "エラー": "HTTP 403",
       "検証日": "2026-10-09T06:06:49.906Z"
+    },
+    {
+      "店名": "dining & dessert restraunt Paff パフ",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23047660/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T18:41:00.047Z"
+    },
+    {
+      "店名": "CAFE&RESTAURANT steak TAKA ステーキ タカ",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230107/23082616/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T18:41:04.909Z"
+    },
+    {
+      "店名": "やきとり 龍星 名古屋納屋橋店",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230102/23060643/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T18:41:10.262Z"
+    },
+    {
+      "店名": "南翔饅頭店",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23044397/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T18:41:14.991Z"
     }
   ],
   "reviewedKeep": [
