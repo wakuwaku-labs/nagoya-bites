@@ -27,6 +27,7 @@ const fs = require('fs');
 const path = require('path');
 const { parsePriceBand, normalizeArea, loadPolicy } = require('./lib/area_genre_pages');
 const { loadStores } = require('./lib/load_stores');
+const { featureStoreOnclick } = require('./lib/feature_tracking');
 
 const ROOT = path.join(__dirname, '..');
 const CONFIG = path.join(ROOT, 'data', 'feature_conclusions.json');
@@ -98,11 +99,11 @@ function hubLabel(hubPath, policy) {
   return cond ? `${area.label}の${genre.label}（${cond.label}）` : null;
 }
 
-function renderBlock(cfg, picks, hubs) {
+function renderBlock(cfg, picks, hubs, slug) {
   const items = picks.map(({ line, entry, areaLabel }) => {
     const s = entry.store;
     const facts = [areaLabel, s['ジャンル'], s['価格帯'], /^あり/.test(s['個室'] || '') ? '個室あり' : ''].filter(Boolean).map(esc).join(' / ');
-    return `    <li><span class="nb-conclusion-label">${esc(line.label)}（${esc(rangeText(line))}）</span><a href="../stores/${entry.jcode}.html">${esc(s['店名'])}</a><span class="nb-conclusion-facts">${facts}</span></li>`;
+    return `    <li><span class="nb-conclusion-label">${esc(line.label)}（${esc(rangeText(line))}）</span><a href="../stores/${entry.jcode}.html" onclick="${featureStoreOnclick(entry.jcode, slug)}">${esc(s['店名'])}</a><span class="nb-conclusion-facts">${facts}</span></li>`;
   }).join('\n');
   const hubHtml = hubs.length
     ? `\n  <p class="nb-conclusion-hubs"><span class="nb-conclusion-hubs-title">${esc(cfg.hubsTitle || 'エリアとジャンルで探す')}</span>${hubs.map(h => `<a href="../${h.path}">${esc(h.label)}</a>`).join('')}</p>`
@@ -142,7 +143,7 @@ function buildFor(slug, cfg, ctx) {
     .filter(p => ctx.activeHubs.has(p) && fs.existsSync(path.join(ROOT, p)))
     .map(p => ({ path: p, label: hubLabel(p, ctx.policy) }))
     .filter(h => h.label);
-  const block = picks.length >= 2 ? renderBlock(cfg, picks, hubs) : '';
+  const block = picks.length >= 2 ? renderBlock(cfg, picks, hubs, slug) : '';
   const next = placeBlock(html, block);
   if (next == null) return { slug, error: '.art-body が無い' };
   return { slug, file, changed: next !== html, next, lines: picks.length };

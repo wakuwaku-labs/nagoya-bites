@@ -35,6 +35,7 @@
 const fs = require('fs');
 const path = require('path');
 const { loadStores } = require('./lib/load_stores');
+const { withReserveAsk } = require('./lib/feature_tracking');
 
 const ROOT = path.resolve(__dirname, '..');
 const CONFIG = path.join(ROOT, 'data', 'feature_rosters.json');
@@ -505,8 +506,10 @@ function main() {
     if (html !== orig) {
       // 日付は JST（特集の公開日・更新日はすべて JST の日付。UTC だと CI の 03:00 JST 実行で前日になる）
       html = touchDateModified(html, todayJST());
-      fs.writeFileSync(file, html);
     }
+    // 予約導線を書いたページに予約申告プロンプトを入れる（ISSUE-153・内容の変更ではないので dateModified は進めない）
+    html = withReserveAsk(html);
+    if (html !== orig) fs.writeFileSync(file, html);
     const seasonalN = final.filter(e => e.seasonalHit).length;
     console.log(`  ✓ ${slug}: ${final.length}店に更新（コア${final.filter(e => coreIds.has(String(e.store['ホットペッパーID']))).length}/新顔${final.filter(e => e.isNew).length}${biasKw ? `/季節適合${seasonalN}` : ''}）`);
     updated++;

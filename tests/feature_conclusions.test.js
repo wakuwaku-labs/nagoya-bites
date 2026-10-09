@@ -58,10 +58,12 @@ test('hubLabel: ハブの名前は area_genre_pages_policy.json の語から組�
 test('renderBlock: 事実だけを書き、店名をエスケープし、区切りは「 / 」', () => {
   const cfg = { title: '先に結論', note: '注記', lines: [] };
   const picks = [{ line: { label: '気軽に', priceMax: 5000 }, entry: store('J9', '栄', '4001～5000円', { '店名': 'A&B <bar>', '個室': 'あり：2名' }), areaLabel: '栄' }];
-  const html = renderBlock(cfg, picks, [{ path: 'stores/area/sakae/index.html', label: '栄で探す' }]);
+  const html = renderBlock(cfg, picks, [{ path: 'stores/area/sakae/index.html', label: '栄で探す' }], 'date');
   assert.match(html, /A&amp;B &lt;bar&gt;/);
   assert.match(html, /栄 \/ イタリアン \/ 4001～5000円 \/ 個室あり/);
   assert.match(html, /href="\.\.\/stores\/J9\.html"/);
+  // 計測は生成時に書く（ISSUE-153・後から足すと次の再生成で消える）
+  assert.match(html, /href="\.\.\/stores\/J9\.html" onclick="trackEvent\('feature_store_click',\{store:'J9',feature:'date'\}\)"/);
   assert.match(html, /href="\.\.\/stores\/area\/sakae\/index\.html">栄で探す</);
   assert.doesNotMatch(html, /[0-9]+(?:\.[0-9]+)?点|評価[0-9]/);
 });
