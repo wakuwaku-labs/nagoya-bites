@@ -2282,7 +2282,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 
 <!-- STORE-INDEX:START 2026-10-09 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（4874店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（4873店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（832店）</summary>
@@ -3870,7 +3870,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 </ul>
 </details>
 <details class="store-index-area" data-area="栄(ミナミ)/矢場町/大須/上前津">
-<summary>栄(ミナミ)/矢場町/大須/上前津（726店）</summary>
+<summary>栄(ミナミ)/矢場町/大須/上前津（725店）</summary>
 <ul class="store-index-list">
 <li><a href="stores/J004660957.html">【少人数貸切可！】　四川創作料理居酒屋・安光（栄(ミナミ)/矢場町/大須/上前津・中華）</a></li>
 <li><a href="stores/J003474680.html">【中華 餃子 食べ放題 】餃子王　栄女子大店（栄(ミナミ)/矢場町/大須/上前津・居酒屋）</a></li>
@@ -4468,7 +4468,6 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <li><a href="stores/J000020819.html">楚々 SOSO（栄(ミナミ)/矢場町/大須/上前津・居酒屋）</a></li>
 <li><a href="stores/J003388946.html">創作おばんざいと日本の酒 呑みの助（栄(ミナミ)/矢場町/大須/上前津・居酒屋）</a></li>
 <li><a href="stores/J004509120.html">創作中華 肇（栄(ミナミ)/矢場町/大須/上前津・中華）</a></li>
-<li><a href="stores/J003450558.html">創作料理まるゆ（栄(ミナミ)/矢場町/大須/上前津・居酒屋）</a></li>
 <li><a href="stores/J001276362.html">想吃担担面 栄店（栄(ミナミ)/矢場町/大須/上前津・居酒屋）</a></li>
 <li><a href="stores/J000389371.html">蔵人厨 ねのひ 本店（栄(ミナミ)/矢場町/大須/上前津・居酒屋）</a></li>
 <li><a href="stores/J003298764.html">貸切も可!! ゲル式グランピング居酒屋　シンキロー（栄(ミナミ)/矢場町/大須/上前津・居酒屋）</a></li>
@@ -7731,7 +7730,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = '28e65550641b';
+var STORES_JSON_VERSION = 'a2e68283a007';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
