@@ -265,7 +265,38 @@
   1. 19件を1件ずつ、第三者が確かめられる一次情報で確かめ、「営業中」「閉店」「決められない」に分けて根拠を記録する。一次情報は、Google Places の今の business_status と名前・住所、HotPepper の掲載ページ、店の公式サイトや公式SNS
   2. 閉店と確かめた店は、根拠つきで `data/closed_stores.json` に入れ、掲載から外す（`audit_store_liveness.js` の HARD で再掲載を止める）。推測で閉店にしない
   3. 同じ場所で別の店に入れ替わって営業しているものは、掲載が古い店のままになっていないかを確かめ、別の課題にする
-- **メモ**: 19件の確認は30分を超えるので、着手時に子課題に分ける
+- **メモ**: 19件の確認は30分を超えるので、子課題 [[ISSUE-169]]（確かめて記録する）と [[ISSUE-170]]（閉店と確かめた店を外す）に分けた
+
+### [ISSUE-169] ISSUE-168 の19店の営業を一次情報で確かめ、店ごとに根拠を記録する
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: data-quality / trust
+- **owner**: DataKeeper
+- **source**: [[ISSUE-168]] の子課題
+- **brand-filter**: ✅ 適合 — 実在保証
+- **背景**: [[ISSUE-168]] の19店（`data/tabelog_branch_reviewed.json` の issue: ISSUE-167・kind: closed-same）が対象。一次情報として次を使う。
+  - Google Places Details の今の business_status・名前・住所（Basic の項目だけ。19件は無料枠の内側）
+  - HotPepper の掲載ページ
+  - 店の公式サイト・公式SNS
+  - Places の紐付けが別の店を指すことがあるので（[[ISSUE-147]]）、Places の住所は HotPepper の掲載と比べる
+- **acceptance**:
+  1. 19店それぞれを「営業中」「閉店」「決められない」に分け、根拠を記録する。根拠は、取った日・URL・Places の状態と名前と住所で、第三者が確かめられる形にする
+  2. Places の住所が掲載と違う店では、Places を根拠にしない
+
+### [ISSUE-170] ISSUE-169 で閉店と確かめた店を data/closed_stores.json に入れ、掲載から外す
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: data-quality / trust
+- **owner**: DataKeeper
+- **source**: [[ISSUE-168]] の子課題
+- **brand-filter**: ✅ 適合 — 実在保証
+- **背景**: [[ISSUE-169]] の記録で閉店と確かめた店を、これまでと同じ経路（`data/closed_stores.json`・[[SEO-119]] と同じ）で外す。決められない店は外さない
+- **acceptance**:
+  1. 閉店と確かめた店だけを、根拠つきで `data/closed_stores.json` に入れる
+  2. 次のビルドの後、main でその店が店舗ページ・一覧・sitemap から外れていることを確かめる（`audit_store_liveness.js` が通る）
+  3. 同じ場所で別の店に入れ替わって営業しているものは、別の課題にする
 
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 
