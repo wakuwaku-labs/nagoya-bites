@@ -190,7 +190,13 @@ jobs:
                 }
               } else {
                 // die または hold → 起票 / 更新
-                const statusWord = r.local_run_died ? 'die（異常終了）' : 'hold（品質HOLD）';
+                // hold の理由で呼び分ける。validator の FAIL 以外を「品質HOLD」と書くと原因を取り違える（ISSUE-184）
+                const holdReason = (h && h.reason) || '';
+                const statusWord = r.local_run_died ? 'die（異常終了）'
+                  : holdReason.includes('利用上限') ? 'hold（Claude の利用上限）'
+                  : (holdReason.includes('OAuth') || holdReason.includes('認証')) ? 'hold（認証切れ）'
+                  : holdReason.includes('validator') ? 'hold（品質HOLD）'
+                  : 'hold（生成・公開の失敗）';
                 const title = `⚠️ 日次ジャーナル自動化が ${r.today_jst} に ${statusWord} で終了`;
 
                 const lines = [];
@@ -222,6 +228,9 @@ jobs:
                   lines.push('2. **SNS原稿が見つからない（generate_sns_draft が false のはずなのに参照している）** —');
                   lines.push('   `data/journal_sns_draft_policy.json` の `generate_sns_draft` が `false` になっているか確認してください。');
                   lines.push('   `scripts/run_journal_local.sh` が同ファイルを正しく参照しているか確認してください。');
+                } else if (h && h.reason && h.reason.includes('利用上限')) {
+                  lines.push('2. **Claude の利用上限** — 理由にある解除の時刻を過ぎてから、その日のうちに Mac で次の手順3を実行すると当日分を作り直せます。');
+                  lines.push('   利用上限は対話セッションと共有です。毎朝 9:00 の実行の前後に長い対話セッションを動かすと、生成の分が残りません。');
                 } else if (h && h.reason && (h.reason.includes('OAuth') || h.reason.includes('authenticate'))) {
                   lines.push('2. **認証切れの場合** — Mac で `claude` を対話起動してログインし直してください。');
                   lines.push('   復旧確認: `claude --print "ok"`');
