@@ -28,7 +28,7 @@ const OUT_PATH   = path.join(__dirname, '..', 'data', 'view_counts.json');
 const METRICS_OUT_PATH = path.join(__dirname, '..', 'data', 'site_metrics.json');
 
 // 「予約につながった」と数えるリンク先ドメインは scripts/lib/reservation_exits.js が正本（ISSUE-149）。
-const { isReservationDomain, aggregateStoreReferrals, EXIT_EVENTS, REPORT_EVENTS, DEFINITIONS: REFERRAL_DEFINITIONS } = require('./lib/reservation_exits');
+const { isReservationDomain, aggregateStoreReferrals, dedupeReservationClicks, EXIT_EVENTS, REPORT_EVENTS, DEFINITIONS: REFERRAL_DEFINITIONS } = require('./lib/reservation_exits');
 const REFERRALS_OUT_PATH = path.join(__dirname, '..', 'data', 'store_referrals.json');
 
 // 良し悪しの目安（地域グルメメディアの素人判断用ベンチマーク）
@@ -458,6 +458,35 @@ async function fetchSiteMetrics(analyticsdata) {
       cta.reservationClicks = cta.reservationClicksByPage.reduce((s, r) => s + r.clicks, 0);
     } catch (pdErr) {
       cta.note = (cta.note ? cta.note + ' / ' : '') + 'link_domain 未登録のためページ×ドメイン内訳はスキップ';
+    }
+
+    // ISSUE-152: 予約ボタンは outbound_click にも同じ1回が届く。直近7日（昨日まで）の予約導線イベントと
+    // 予約サイトへの outbound_click をページ×リンク先で並べ、足し算（GAS の旧 ctaCount）と重ならない数え方の差を残す
+    try {
+      const ovRes = await analyticsdata.properties.runReport({
+        property: `properties/${PROPERTY}`,
+        requestBody: {
+          dateRanges: [{ startDate: '7daysAgo', endDate: 'yesterday' }],
+          metrics: [{ name: 'eventCount' }],
+          dimensions: [{ name: 'pagePath' }, { name: 'eventName' }, { name: 'customEvent:link_domain' }],
+          dimensionFilter: {
+            filter: {
+              fieldName: 'eventName',
+              inListFilter: { values: ['cta_click', 'cta_reserve', 'outbound_click'] },
+            },
+          },
+          limit: '1000',
+        },
+      });
+      const ovRows = (ovRes.data.rows || []).map(row => ({
+        path: row.dimensionValues[0].value,
+        event: row.dimensionValues[1].value,
+        domain: row.dimensionValues[2].value,
+        count: row.metricValues[0].value,
+      }));
+      cta.reservationOverlap7d = Object.assign({ dateRange: '7daysAgo〜yesterday' }, dedupeReservationClicks(ovRows));
+    } catch (ovErr) {
+      cta.note = (cta.note ? cta.note + ' / ' : '') + `予約ボタンの重なりの集計エラー: ${ovErr.message}`;
     }
   } catch (ctaErr) {
     cta.note = `outbound_click 集計エラー: ${ctaErr.message}`;
