@@ -102,6 +102,74 @@ test('設定は data/journal_gate_policy.json の usage_limit_retry から読み
   fs.rmSync(dir, { recursive: true, force: true });
 });
 
+// ラッパーの関数そのものを、時計とスリープを差し替えて動かす（実際には待たない）
+function runWaitHarness({ msg, dayChangesAfter = 0 }) {
+  const sh = fs.readFileSync(path.join(ROOT, 'scripts', 'run_journal_local.sh'), 'utf8');
+  const s = sh.indexOf('USAGE_LIMIT_WAITS=0');
+  const e = sh.indexOf('\n}\n', sh.indexOf('usage_limit_wait() {')) + 3;
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'usage-wait-'));
+  fs.writeFileSync(path.join(dir, 'fn.sh'), sh.slice(s, e));
+  fs.writeFileSync(path.join(dir, 'msg.txt'), msg);
+  const lock = path.join(dir, 'run.lock');
+  fs.writeFileSync(lock, '1');
+  fs.utimesSync(lock, new Date('2000-01-01T00:00:00Z'), new Date('2000-01-01T00:00:00Z'));
+  const harness = [
+    'set -uo pipefail',
+    'cd "$H_ROOT"',
+    'LOG_DIR="$H_DIR"; LOG="$H_DIR/h.log"; : > "$LOG"; LOCKFILE="$H_LOCK"',
+    'TODAY_JST="$(TZ=Asia/Tokyo command date +%Y-%m-%d)"',
+    'FAKE_NOW=$(command date +%s); SLEPT=0; CALLS=0; FAKE_DAY=""',
+    'log() { echo "LOG: $*"; }',
+    'hold() { echo "HOLD: $1"; echo "calls=$CALLS slept=$SLEPT"; exit 3; }',
+    'caffeinate() { CALLS=$((CALLS + 1)); SLEPT=$((SLEPT + $4)); FAKE_NOW=$((FAKE_NOW + $4)); if [ "$H_DAY_AFTER" -gt 0 ] && [ "$CALLS" -ge "$H_DAY_AFTER" ]; then FAKE_DAY=2099-01-01; fi; return 0; }',
+    'date() { if [ "${1:-}" = "+%s" ]; then echo "$FAKE_NOW"; elif [ -n "$FAKE_DAY" ]; then echo "$FAKE_DAY"; else command date "$@"; fi; }',
+    'source "$H_DIR/fn.sh"',
+    'usage_limit_wait "$(cat "$H_DIR/msg.txt")" "生成の試行 1"; echo "rc=$? waits=$USAGE_LIMIT_WAITS calls=$CALLS slept=$SLEPT"',
+  ].join('\n');
+  const env = { ...process.env, H_ROOT: ROOT, H_DIR: dir, H_LOCK: lock, H_DAY_AFTER: String(dayChangesAfter) };
+  let out = '';
+  let status = 0;
+  try {
+    out = execFileSync('bash', ['-c', harness], { encoding: 'utf8', env });
+  } catch (err) {
+    out = String(err.stdout || '');
+    status = err.status;
+  }
+  const lockTouched = fs.statSync(lock).mtime.getUTCFullYear() > 2000;
+  fs.rmSync(dir, { recursive: true, force: true });
+  return { out, status, lockTouched };
+}
+
+test('ラッパーは1分ずつ壁時計で待ってロックを新しく保ち、待っている間に日付が変わったら作り直さない', () => {
+  // 解除は今から10分後（東京の時刻で書く）
+  const reset = new Date(Date.now() + 10 * 60 * 1000);
+  const label = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Tokyo', hour: 'numeric', minute: '2-digit', hour12: true })
+    .format(reset).replace(/\s/g, '').toLowerCase();
+  const msg = `You've hit your session limit · resets ${label} (Asia/Tokyo)`;
+  const expect = parseUsageLimit(msg, new Date(), loadPolicy());
+  if (!expect.wait) {
+    // 23:47 以降に走らせたときは待ち終わりが日付をまたぐので、待たずに HOLD になる
+    const r = runWaitHarness({ msg });
+    assert.strictEqual(r.status, 3, r.out);
+    assert.ok(r.out.includes('HOLD: Claude の利用上限（解除 '), r.out);
+    return;
+  }
+  const a = runWaitHarness({ msg });
+  assert.strictEqual(a.status, 0, a.out);
+  const m = a.out.match(/rc=0 waits=1 calls=(\d+) slept=(\d+)/);
+  assert.ok(m, a.out);
+  // 待った合計は解除までの秒数（判定器の値。±数秒は実行の間に進んだ時計の分）、1回は60秒まで
+  assert.ok(Math.abs(Number(m[2]) - expect.waitSeconds) <= 5, `${m[2]} vs ${expect.waitSeconds}`);
+  assert.strictEqual(Number(m[1]), Math.ceil(Number(m[2]) / 60));
+  assert.ok(a.lockTouched, '待っている間にロックの時刻を新しくする');
+  assert.ok(a.out.includes(`LOG: ⏳ Claude の利用上限に達しています（生成の試行 1・解除 ${expect.resetLabel}）`), a.out);
+  // 2回目の1分が終わった所で日付が変わる → 作り直さずに HOLD（理由に「利用上限」）
+  const b = runWaitHarness({ msg, dayChangesAfter: 2 });
+  assert.strictEqual(b.status, 3, b.out);
+  assert.ok(b.out.includes(`HOLD: Claude の利用上限（解除 ${expect.resetLabel}）を待っている間に日付が変わりました（生成の試行 1）`), b.out);
+  assert.ok(b.out.includes('calls=2 slept=120'), b.out);
+});
+
 test('ラッパーがプリフライトと生成の両方で利用上限を判定し、watchdog が理由で呼び分ける', () => {
   const sh = fs.readFileSync(path.join(ROOT, 'scripts', 'run_journal_local.sh'), 'utf8');
   execFileSync('bash', ['-n', path.join(ROOT, 'scripts', 'run_journal_local.sh')]);

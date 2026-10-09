@@ -211,10 +211,14 @@ hold() {
 # 待つ上限（data/journal_gate_policy.json の usage_limit_retry）を超えるとき・待ち終わりが日付をまたぐとき・
 # 解除時刻が読めないとき・待つ回数を使い切ったときは、待たずに HOLD にして理由に「利用上限（解除 HH:MM）」を書く
 # （data/journal_health.json の reason → watchdog の Issue に原因が出る）。判定器は scripts/lib/claude_usage_limit.js。
+# 待つのは1分ずつ、壁時計の時刻で解除を過ぎたかを見る。Mac のスリープ中は sleep が進まないため、
+# 1回の長い sleep だと解除を大きく過ぎてから（日付をまたいでから）作り直してしまう。待っている間は
+# ロックの時刻を新しく保ち（90分でハング扱いされて手動の実行に奪われないように）、日付が変わったら
+# 作り直さずに HOLD にする（起動時の日付の記事を翌日に作らない）。
 # 戻り値: 0=待った（作り直してよい）/ 1=利用上限ではない。待たないと決めたときは hold で終わる。
 USAGE_LIMIT_WAITS=0
 usage_limit_wait() {
-  local text="$1" where="$2" tmp line kind secs label max_waits why
+  local text="$1" where="$2" tmp line kind secs label max_waits why until_epoch left
   tmp=$(mktemp "${LOG_DIR}/usage-limit.XXXXXX") || return 1
   printf '%s\n' "$text" > "$tmp"
   line=$(node scripts/lib/claude_usage_limit.js "$tmp" 2>>"$LOG")
@@ -227,7 +231,16 @@ usage_limit_wait() {
   if [ "$kind" = "WAIT" ] && [ "$USAGE_LIMIT_WAITS" -lt "$max_waits" ]; then
     USAGE_LIMIT_WAITS=$((USAGE_LIMIT_WAITS + 1))
     log "⏳ Claude の利用上限に達しています（${where}・解除 ${label}）。$(( (secs + 59) / 60 ))分待ってから作り直します（${USAGE_LIMIT_WAITS}/${max_waits}回目）。"
-    caffeinate -i -s sleep "$secs"
+    until_epoch=$(( $(date +%s) + secs ))
+    while :; do
+      left=$(( until_epoch - $(date +%s) ))
+      [ "$left" -le 0 ] && break
+      caffeinate -i -s sleep $(( left < 60 ? left : 60 ))
+      touch "$LOCKFILE" 2>/dev/null || true
+      if [ "$(TZ=Asia/Tokyo date +%Y-%m-%d)" != "$TODAY_JST" ]; then
+        hold "Claude の利用上限（解除 ${label}）を待っている間に日付が変わりました（${where}）。Mac がスリープしていた可能性があります。${TODAY_JST} の分は自動では作り直しません（ISSUE-184）。"
+      fi
+    done
     log "⏳ 待ち終わりました。作り直します。"
     return 0
   fi
