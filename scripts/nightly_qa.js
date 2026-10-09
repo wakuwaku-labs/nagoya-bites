@@ -107,6 +107,17 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_inline_js_syntax.js', '--check']],
 });
+// 5b. 既にある静的ページの GA スニペットが正本（scripts/lib/ga_snippet.js）とそろっているか（SEO-144・SOFT）。
+//     旧スニペットは localStorage を囲んでおらず、サイトデータを拒否した端末で gtag('config') まで止まっていた。
+//     2026-10-09 に229本をそろえた。手で書いた新しいページに旧い形が戻っていないかを見る（直すのは apply_ga_snippet.js）
+checks.push({
+  id: 'ga-snippet',
+  title: '静的ページの GA スニペットが正本とそろっている（SEO-144）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/apply_ga_snippet.js', '--check']],
+});
 // 6. アクセス文の駅名監査（SEO-120・SOFT で開始）。エリア「栄」の店23件が釧路市栄町・仙台の中野栄
 //    などの他都市の店だった事故（2026-10-09 発覚・SEO-119）の再発検知。県外の駅名と確定できた店だけを
 //    数える。初回は報告のみとし、緑を確認してから hard に上げる（ISSUE-121 と同じ段階導入）。

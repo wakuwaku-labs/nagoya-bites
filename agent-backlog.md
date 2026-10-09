@@ -477,7 +477,7 @@
 
 ### [ISSUE-178] ホットペッパーが【閉店】と表示する「創作料理まるゆ」の営業を一次情報で確かめ、閉店なら掲載から外す
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-10-16
 - **category**: data-quality / trust
@@ -501,7 +501,7 @@
     - 扱いの決まりは `docs/decisions/0014-relocated-store-listing.md` と記録の _doc に書いた。取り込み元の掲載が閉店なら外し、生きていれば住所を直す（[[ISSUE-171]]）。
   - 外したもの: `data/stores.json`（4,874→4,873件）、`stores/J003450558.html`、`sitemap.xml` の1件。特集・ジャーナルでの言及とリンクは無い。トップの導線とエリア×ジャンルのページは次のビルドが作り直す。
   - 手元の確認: `audit_store_liveness.js`・`audit_closed_store_mentions.js --check`・`audit_page_store_links.js --check` が exit 0。孤児ページは122本のまま（増えていない）。
-  - 残り: 次のビルドの後、main でこの店が店舗データ・店舗ページ・sitemap・エリア×ジャンルのページから外れたままかを確かめる（達成条件3）。移転先の掲載は [[ISSUE-179]] で決める。
+  - 結果（2026-10-09・#445 合流後のビルド 37892873716 の後）: main で J003450558 は data/stores.json・stores/J003450558.html・sitemap.xml・index.html・stores/area/yabacho-osu の4本のどれにも無い（達成条件3）。`node scripts/audit_store_liveness.js` は掲載不可の閉店店なし。移転先の掲載は [[ISSUE-179]]（P-180・11-08）で決める。
 ### [ISSUE-179] 移転先（熱田区池内町4-1）の「創作料理まるゆ」を掲載するか決め、載せるなら実在検証を通して足す
 
 - **priority**: P3 → **status**: ready
