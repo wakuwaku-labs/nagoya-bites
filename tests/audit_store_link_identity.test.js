@@ -1,8 +1,9 @@
 'use strict';
-// ISSUE-163・164: 日次のリンク照合の順番、取得できなかった回の扱い、照合の状況の数え方
+// ISSUE-163・164・174: 日次のリンク照合の順番、取得できなかった回の扱い、照合の状況と閉店の兆しの数え方
 const test = require('node:test');
 const assert = require('node:assert');
-const { planChecks, mergeCheckResult, summarizeHealth, judgeHealth, isFetchFailure } = require('../scripts/audit_store_link_identity');
+const { planChecks, mergeCheckResult, summarizeHealth, judgeHealth, summarizeClosures, isFetchFailure } = require('../scripts/audit_store_link_identity');
+const { checkHotpepperId } = require('../scripts/lib/store_link_identity');
 
 const DAY = 24 * 60 * 60 * 1000;
 const NOW = Date.parse('2026-11-20T00:00:00Z');
@@ -89,4 +90,43 @@ test('照合の状況の判定: 食べログを30日より長く取得できて�
   assert.strictEqual(judgeHealth({ tabelog: { links: 0, neverChecked: 0, unfetched: 0, lastFetchedAt: null } }, NOW).ok, true);
   // ホットペッパーが取得できていなくても赤にしない
   assert.strictEqual(judgeHealth({ tabelog: tb(1), hotpepper: tb(null) }, NOW).ok, true);
+});
+
+test('閉店の兆し: ホットペッパーの【閉店】と掲載終了（HTTP 404）を分けて数え、ほかは数えない（ISSUE-174）', async () => {
+  // 掲載をやめた店のページは HTTP 404「掲載情報なし」。取得の失敗ではなく判定として前の一致を置き換える
+  const gone = await checkHotpepperId('J001144583', '牡蠣 貝料理居酒屋 貝しぐれ 栄泉店', { fetchHtml: async () => { throw new Error('HTTP 404'); } });
+  assert.strictEqual(gone.ok, false);
+  assert.strictEqual(gone.error, 'HTTP 404');
+  assert.strictEqual(gone.url, 'https://www.hotpepper.jp/strJ001144583/');
+  const prevOk = { ok: true, reason: null, sim: 1, matchedName: '牡蠣 貝料理居酒屋 貝しぐれ 栄泉店', kind: 'hotpepper', checkedAt: ago(70) };
+  const goneEntry = mergeCheckResult(prevOk, gone, { kind: 'hotpepper', area: '栄' }, ago(0));
+  assert.strictEqual(isFetchFailure(goneEntry), false);
+  assert.strictEqual(goneEntry.checkedAt, ago(0));
+  // 店名の上に【閉店】
+  const closedHtml = '<html><head><title>STEPS(栄/居酒屋)＜ネット予約可＞ | ホットペッパーグルメ</title></head><body><p class="shopState">【閉店】</p><h1 class="shopName">STEPS</h1></body></html>';
+  const closed = await checkHotpepperId('J003352001', 'STEPS', { fetchHtml: async () => closedHtml });
+  assert.strictEqual(closed.reason, 'closed');
+  const cache = {
+    hpGone: goneEntry,
+    hpClosed: mergeCheckResult(undefined, closed, { kind: 'hotpepper', area: '栄' }, ago(0)),
+    hpOk: { ok: true, kind: 'hotpepper', checkedAt: ago(1) },
+    hpOtherStoreClosed: { ok: false, reason: 'name-mismatch', closed: true, sim: 0, kind: 'hotpepper', checkedAt: ago(1) },
+    hp403: { ok: false, reason: 'fetch-error', error: 'HTTP 403', kind: 'hotpepper', checkedAt: ago(1) },
+    tbClosed: { ok: false, reason: 'closed', kind: 'tabelog', checkedAt: ago(1) },
+    tbGone: { ok: false, reason: 'fetch-error', error: 'HTTP 404', kind: 'tabelog', checkedAt: ago(1) },
+  };
+  const hp = (key, storeName) => ({ kind: 'hotpepper', key, storeName, area: '栄', url: `https://www.hotpepper.jp/${key}/` });
+  const targets = [
+    hp('hpGone', '牡蠣 貝料理居酒屋 貝しぐれ 栄泉店'), hp('hpClosed', 'STEPS'), hp('hpOk', 'A'), hp('hpOtherStoreClosed', 'B'), hp('hp403', 'C'), hp('never', 'D'),
+    { kind: 'tabelog', key: 'tbClosed', storeName: 'E', area: '栄', url: 'https://tabelog.com/aichi/A2301/A230102/1/' },
+    { kind: 'tabelog', key: 'tbGone', storeName: 'F', area: '栄', url: 'https://tabelog.com/aichi/A2301/A230102/2/' },
+  ];
+  const c = summarizeClosures(targets, cache);
+  assert.deepStrictEqual(c.hotpepper.closed.map((r) => r.店名), ['STEPS']);
+  assert.strictEqual(c.hotpepper.closed[0].表示, '【閉店】');
+  assert.strictEqual(c.hotpepper.closed[0].検証日, ago(0));
+  assert.deepStrictEqual(c.hotpepper.notFound.map((r) => r.店名), ['牡蠣 貝料理居酒屋 貝しぐれ 栄泉店']);
+  assert.strictEqual(c.hotpepper.notFound[0].エラー, 'HTTP 404');
+  // 何も無ければ空
+  assert.deepStrictEqual(summarizeClosures([hp('hpOk', 'A')], cache), { hotpepper: { closed: [], notFound: [] } });
 });

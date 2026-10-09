@@ -176,6 +176,19 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_store_link_identity.js', '--scope', 'all', '--health']],
 });
+// 11. 掲載店のホットペッパーのページが【閉店】を出していないか（ISSUE-174・SOFT）。2026-10-09 に、食べログが閉店と
+//     表示していた19店を確かめたところ12店が閉店で、うち2店はホットペッパーのページが店名の上に【閉店】を出していた
+//     （題名は変わらない）。日次のリンク照合が記録した判定だけで数え（外部へは問い合わせない）、閉店の表示があれば赤。
+//     掲載終了（HTTP 404）は件数だけ出す（掲載の契約が終わっただけで営業を続ける店もある）。見つかった店は自動では
+//     外さず、ISSUE-170 と同じ確認（data/store_liveness_reviews.json）を経て data/closed_stores.json へ入れる。
+checks.push({
+  id: 'hotpepper-closures',
+  title: '掲載店のホットペッパーのページが閉店を出していない（ISSUE-174）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_store_link_identity.js', '--scope', 'all', '--closures']],
+});
 
 if (cat.buildCore.length) {
   checks.push({

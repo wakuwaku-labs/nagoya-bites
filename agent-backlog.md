@@ -248,7 +248,7 @@
 
 ### [ISSUE-168] 食べログが同じ店を閉店と表示している掲載店19件の営業を一次情報で確かめ、閉店なら掲載から外す
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
 - **owner**: DataKeeper
@@ -266,6 +266,12 @@
   2. 閉店と確かめた店は、根拠つきで `data/closed_stores.json` に入れ、掲載から外す（`audit_store_liveness.js` の HARD で再掲載を止める）。推測で閉店にしない
   3. 同じ場所で別の店に入れ替わって営業しているものは、掲載が古い店のままになっていないかを確かめ、別の課題にする
 - **メモ**: 19件の確認は30分を超えるので、子課題 [[ISSUE-169]]（確かめて記録する）と [[ISSUE-170]]（閉店と確かめた店を外す）に分けた
+- **結果（2026-10-09）**: 子課題 [[ISSUE-169]]・[[ISSUE-170]] は done。
+  - 19件の判定: 閉店12・営業中2・決められない5。根拠は `data/store_liveness_reviews.json`。
+  - 閉店12店は `data/closed_stores.json` に入れて外し、main で外れたままと確かめた。
+  - 決められない5店は [[ISSUE-172]]（11-09 までに確かめ直す）で見る。
+  - Hug の住所は [[ISSUE-171]] で見る。
+  - 見つけたことから2つを起票した: Places の営業状態の定期更新（[[ISSUE-173]]・オーナーの確認が先）と、日次の照合でホットペッパーの【閉店】表示を数えること（[[ISSUE-174]]）。
 
 ### [ISSUE-169] ISSUE-168 の19店の営業を一次情報で確かめ、店ごとに根拠を記録する
 
@@ -298,7 +304,7 @@
 
 ### [ISSUE-170] ISSUE-169 で閉店と確かめた店を data/closed_stores.json に入れ、掲載から外す
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
 - **owner**: DataKeeper
@@ -315,6 +321,10 @@
   - 手元の確認: `audit_store_liveness.js`・`audit_closed_store_mentions.js --check`・`audit_page_store_links.js --check` が exit 0、`npm test` が通る。`gen-store-pages.js --check-orphans --dry-run` で孤児は113本のまま（増えていない）。
   - 達成条件3: 同じ場所で別の飲食店に入れ替わったと確かめられたものは無かった。みふねは Google の店舗情報ではギャラリーとして営業。喰えるBAR shin の場所の「スタンダード」は、後に入った店か改名かを確かめられないので [[ISSUE-172]] で見る。
   - 残り: 次のビルドの後、main で12店が stores.json・店舗ページ・sitemap・エリア×ジャンルのページから外れたままかを確かめる（達成条件2）。
+- **結果（2026-10-09）**: #442 の合流後のビルド（run 37886320956・success）の後、main（fd122630b2）で確かめた。
+  - 12店の ID は `data/stores.json`（4,874件）・`stores/<ID>.html`・`sitemap.xml`・`index.html`・`stores/area/` のページのどれにも無い。
+  - `node scripts/audit_store_liveness.js` は exit 0。
+  - 確かめて外した食べログリンク76件（[[ISSUE-160]] の42件と [[ISSUE-167]] の34件）は、どれも店舗データに戻っていない。
 
 ### [ISSUE-171] お食事処 Hug の掲載の住所を、移転先と見られる緑区六田1丁目204 に直すか確かめる
 
@@ -376,7 +386,7 @@
 
 ### [ISSUE-174] 日次のリンク照合で、ホットペッパーのページが【閉店】と表示している掲載店と掲載終了の店を数える
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
 - **owner**: Builder
@@ -391,6 +401,15 @@
   2. HTTP 404 は今と同じく判定として扱い、報告では「掲載終了」として分けて数える
   3. 見つかった店は自動では外さない。[[ISSUE-170]] と同じ確認を経て外す
   4. 固定の HTML 断片で、【閉店】あり・なし・404 の判定を node のテストで確かめる
+- **分けなかった理由**: 判定器・集計・夜間QA・テストは1つの変更でまとまり、30分を超える独立した作業単位が無かった
+- **結果（2026-10-09）**:
+  - 判定: `scripts/lib/store_link_identity.js` に `judgeHotpepperHtml`（純関数）を足し、`checkHotpepperId` から使う。店名の上の `<p class="shopState">` に「閉店」があり、題名の店名が我々の店名と合えば `reason: 'closed'`（食べログの閉店と同じ語）。名前が合わないページの【閉店】は我々の店の閉店の証拠にしないので `name-mismatch` のまま、`closed: true` を事実として残す。保存してあった ISSUE-169 の16ページで、閉店と出たのは STEPS とあっとバーグ イオン新瑞橋店の2つだけ（ほかの14ページは一致のまま）
+  - 数え方: `scripts/audit_store_link_identity.js` の `summarizeClosures` が照合キャッシュの判定だけで、ホットペッパーの「閉店の表示」（closed）と「掲載終了」（HTTP 404/410）を分けて数える。日次の照合のレポート `data/store_link_identity_report.json` に `closures` として書き、ログにも件数と店を出す。404 は今までどおり判定（前の一致を置き換える）
+  - 夜間QA: soft `hotpepper-closures`（`--scope all --closures`。照合せず件数を出し、閉店の表示があれば exit 1）。掲載終了は件数を出すだけで赤にしない（契約が終わっただけで営業を続ける店もある）
+  - 自動では外さない。見つかった店は [[ISSUE-170]] と同じく一次情報2つ以上で確かめ、`data/store_liveness_reviews.json` に記録してから `data/closed_stores.json` へ入れる（ログと CLAUDE.md に書いた）
+  - テスト: `tests/store_link_identity.test.js`（【閉店】あり・なし・名前が合わないページの【閉店】・題名なし・class の読み方）、`tests/audit_store_link_identity.test.js`（取得を差し替えて HTTP 404 → 判定として残り掲載終了に数える・【閉店】→閉店に数える・403・一致・食べログは数えない）
+  - 2026-10-09 時点の件数は 閉店の表示 0・掲載終了 0。照合キャッシュのホットペッパーの判定は139件で、すべて今回より前の判定（shopState を見ていない）。判定が出た組は60日照合し直さないので、今ある139件に【閉店】が出ても数えるのは次の照合から
+  - 届く速さ（計算）: ホットペッパーのリンク 4,726件のうち照合済み139件。日次の照合は1日約55件なので、一巡するのに約83日かかる。早く知る手段は Places の営業状態の定期更新（[[ISSUE-173]]・オーナー確認が先）
 
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 

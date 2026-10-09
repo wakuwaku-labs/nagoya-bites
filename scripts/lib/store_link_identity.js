@@ -342,27 +342,50 @@ async function checkTabelogUrl(url, storeName, opts) {
   return { ...judgeTabelogHtml(html, storeName, opts), url };
 }
 
-async function checkHotpepperId(id, storeName, opts) {
-  const url = `https://www.hotpepper.jp/str${id}/`;
-  let html;
-  try {
-    html = await fetchHtml(url, opts);
-  } catch (e) {
-    return { ok: false, reason: 'fetch-error', error: e.message, url, storeName };
-  }
+// ホットペッパーの店舗ページは、閉店した店でも題名を変えず、店名の上に <p class="shopState">【閉店】</p> を出す
+// （ISSUE-169 で あっとバーグ イオン新瑞橋店・STEPS を確認。題名に「＜ネット予約可＞」が残ることもある）。
+// 掲載をやめた店は HTTP 404「掲載情報なし」になり、fetchHtml が 'HTTP 404' で失敗する（ISSUE-174）
+function hotpepperShopStateFromHtml(html) {
+  const m = String(html || '').match(/<p\b[^>]*\bclass="[^"]*\bshopState\b[^"]*"[^>]*>([^<]*)<\/p>/i);
+  return m ? m[1].trim() : null;
+}
+
+/**
+ * 取得済みのホットペッパーのページから判定する（純関数・テスト対象・ISSUE-174）。
+ * 店名の上に【閉店】が出ていれば reason: 'closed'（食べログの閉店と同じ語）。ただし名前が合わないページの
+ * 【閉店】は、我々の店が閉店した証拠にならない（別の店のページ）ので name-mismatch のまま、closed は事実として残す
+ */
+function judgeHotpepperHtml(html, storeName) {
   const title = extractTitle(html);
-  if (!title) return { ok: false, reason: 'no-title', url, storeName };
+  if (!title) return { ok: false, reason: 'no-title', storeName };
   const { name: matchedName } = hotpepperNameFromTitle(title);
   const match = bestMatch(storeName, matchedName);
+  const shopState = hotpepperShopStateFromHtml(html);
+  const closed = !!shopState && shopState.includes('閉店');
+  const ok = match.ok && !closed;
   return {
-    ok: match.ok,
-    reason: !match.ok ? 'name-mismatch' : null,
+    ok,
+    reason: ok ? null : (match.ok ? 'closed' : 'name-mismatch'),
     sim: match.sim,
     matchedName,
-    url,
+    shopState,
+    closed,
     storeName,
     title,
   };
+}
+
+// opts.fetchHtml … テストで取得を差し替える（既定は fetchHtml）
+async function checkHotpepperId(id, storeName, opts) {
+  const url = `https://www.hotpepper.jp/str${id}/`;
+  const get = (opts && opts.fetchHtml) || fetchHtml;
+  let html;
+  try {
+    html = await get(url, opts);
+  } catch (e) {
+    return { ok: false, reason: 'fetch-error', error: e.message, url, storeName };
+  }
+  return { ...judgeHotpepperHtml(html, storeName), url };
 }
 
 // 店名 → Google Places 由来の住所（同一性の証明に使う）。
@@ -426,5 +449,7 @@ module.exports = {
   bestMatch,
   judgeTabelogHtml,
   checkTabelogUrl,
+  hotpepperShopStateFromHtml,
+  judgeHotpepperHtml,
   checkHotpepperId,
 };
