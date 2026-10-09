@@ -17,7 +17,7 @@
     "満点は WEIGHTS から自動算出される。max_total はドキュメント用の控えで、判定には使わない。"
   ],
   "usage_limit_retry": {
-    "_why": "claude --print が Claude の利用上限（サブスクのセッション上限など）で止まったとき、出力の「resets 11:10am (Asia/Tokyo)」から解除時刻を読み、解除を過ぎるまで待って作り直す（ISSUE-184）。2026-10-09 は 09:00 に上限で止まり、11:10 に解けていたのに作り直す経路が無く欠番になった。max_wait_minutes=330 はセッション上限の窓（5時間）に余裕を足した値で、これを超える解除（週の上限など）は待たない。待ち終わりが日付をまたぐとき（ラッパーは起動時の日付の記事を作る）・解除時刻が読めないとき・1回の実行で max_waits_per_run 回待っても上限のままのときも待たずに HOLD にし、理由に「利用上限（解除 HH:MM）」を書く（watchdog の Issue で品質HOLD と区別できる）。判定器は scripts/lib/claude_usage_limit.js",
+    "_why": "claude --print が Claude の利用上限（サブスクのセッション上限など）で止まったとき、出力の「resets 11:10am (Asia/Tokyo)」から解除時刻を読み、解除を過ぎるまで待って作り直す（ISSUE-184）。2026-10-09 は 09:00 に上限で止まり、11:10 に解けていたのに作り直す経路が無く欠番になった。max_wait_minutes=330 はセッション上限の窓（5時間）に余裕を足した値で、これを超える解除（週の上限など）は待たない。待ち終わりが日付をまたぐとき（ラッパーは起動時の日付の記事を作る）・解除時刻が読めないとき・1回の実行で max_waits_per_run 回待っても上限のままのときも待たずに HOLD にする。待つのは1分ずつで、待っている間（Mac のスリープなど）に日付が変わったときも作り直さずに HOLD にする。どの HOLD も理由に「利用上限（解除 HH:MM）」を書く（watchdog の Issue で品質HOLD と区別できる）。判定器は scripts/lib/claude_usage_limit.js",
     "max_wait_minutes": 330,
     "margin_minutes": 3,
     "max_waits_per_run": 2,
