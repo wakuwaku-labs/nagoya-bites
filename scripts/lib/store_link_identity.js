@@ -78,14 +78,25 @@ function fetchHtml(url, { timeoutMs = 20000, redirects = 0 } = {}) {
   });
 }
 
+// HTML の文字参照を戻す。&nbsp; と数値の参照（&#39;・&#x2019; 等）も戻す（ISSUE-177。ホットペッパーの
+// 「ＢＡＲ &nbsp;ＣＯＭ’Ｓ」が戻らずに照合され、正しいリンクが不一致になった）。&amp; は最後に戻す
+// （先に戻すと「&amp;lt;」が「<」まで二重に戻る）
+const NAMED_ENTITIES = { lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' };
+function codePointOr(n, raw) {
+  try { return String.fromCodePoint(n); } catch { return raw; }
+}
+function decodeEntities(s) {
+  return String(s)
+    .replace(/&#(\d+);/g, (raw, n) => codePointOr(Number(n), raw))
+    .replace(/&#x([0-9a-f]+);/gi, (raw, h) => codePointOr(parseInt(h, 16), raw))
+    .replace(/&(lt|gt|quot|apos|nbsp);/g, (_, k) => NAMED_ENTITIES[k])
+    .replace(/&amp;/g, '&');
+}
+
 function extractTitle(html) {
   const m = html.match(/<title[^>]*>([^<]*)<\/title>/i);
   if (!m) return '';
-  // HTML実体参照の主要なものだけ最低限デコード（&amp; 等）
-  return m[1]
-    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
-    .trim();
+  return decodeEntities(m[1]).trim();
 }
 
 // ─── サイトごとのタイトル → 店名 抽出 ───────────────────────────────
@@ -440,6 +451,7 @@ module.exports = {
   parseJpAddress,
   compareJpAddress,
   tabelogAddressFromHtml,
+  decodeEntities,
   extractTitle,
   tabelogNameFromTitle,
   hotpepperNameFromTitle,

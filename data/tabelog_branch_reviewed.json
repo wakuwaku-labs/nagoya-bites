@@ -1,5 +1,5 @@
 {
-  "_doc": "audit_tabelog_branch_mismatch.js が「名前は合っているが住所が別の場所」と数えた食べログリンクを、人が1件ずつ確かめた記録（ISSUE-160・2026-10-09）。decision=remove は scripts/clear_broken_tabelog_links.js --reviewed が店舗IDごとに外す（同じ URL を正しく使う別の店には触れない）。decision=keep は同じ店と確かめたもので、監査はこの店ID と URL の組を数えない（URL が変われば外れて再び数える）。食べログ側の題名と住所は照合キャッシュの記録（pageCheckedAt の日に取得）、HotPepper 側は確かめた日に掲載ページから取った住所と座標。ISSUE-167（2026-10-09）から、食べログが閉店と表示するページ（kind: closed-other＝別の場所・別の店の閉店ページ／closed-same＝名前か住所が掲載と同じ店の閉店ページ）と、存在しないページ（not-found）へのリンクも、issue に課題番号を書いて同じ記録で外す。placesName・placesStatus は data/places_resolved.json の記録（placesFetchedAt の日に取得）",
+  "_doc": "audit_tabelog_branch_mismatch.js が「名前は合っているが住所が別の場所」と数えた食べログリンクを、人が1件ずつ確かめた記録（ISSUE-160・2026-10-09）。decision=remove は scripts/clear_broken_tabelog_links.js --reviewed が店舗IDごとに外す（同じ URL を正しく使う別の店には触れない）。decision=keep は同じ店と確かめたもので、監査はこの店ID と URL の組を数えない（URL が変われば外れて再び数える）。食べログ側の題名と住所は照合キャッシュの記録（pageCheckedAt の日に取得）、HotPepper 側は確かめた日に掲載ページから取った住所と座標。ISSUE-167（2026-10-09）から、食べログが閉店と表示するページ（kind: closed-other＝別の場所・別の店の閉店ページ／closed-same＝名前か住所が掲載と同じ店の閉店ページ）と、存在しないページ（not-found）へのリンクも、issue に課題番号を書いて同じ記録で外す。placesName・placesStatus は data/places_resolved.json の記録（placesFetchedAt の日に取得）。ISSUE-166（2026-10-09）から、日次の照合（scripts/audit_store_link_identity.js）が店名の不一致（name-mismatch）と出した食べログリンクも、題名・題名の最寄り駅までの距離・Google Places の店名検索で確かめて同じ記録に書く（kind: name-other-store＝別の店／name-other-branch＝同じ店名の別の支店／name-same＝同じ店／name-undecided＝決められない）。decision=undecided は記録だけで、外しも数え外しもしない。pageStation は食べログの題名にある最寄り駅、stationDistanceM はその駅（HeartRails Express の愛知県内の駅の位置・路線が複数なら近い方）と HotPepper の座標の距離。places は確かめに使った Places の Text Search（query・取得日・候補の店名と住所と営業状態）。食べログの住所は手元からも取れない（HTTP 403）ので pageAddress は null。decision=keep の組は scripts/audit_store_link_identity.js のレポートも不一致に数えず reviewedKeep に分ける（ISSUE-176）",
   "reviews": [
     {
       "id": "J004049458",
@@ -1264,6 +1264,860 @@
       "placesName": null,
       "placesStatus": null,
       "placesFetchedAt": "2026-10-05"
+    },
+    {
+      "id": "J000804458",
+      "storeName": "ワイン&バー SALON",
+      "url": "https://tabelog.com/aichi/A2301/A230102/23071690/",
+      "decision": "remove",
+      "issue": "ISSUE-166",
+      "kind": "name-other-store",
+      "reason": "リンク先は「SALON 雪月花」（丸の内/ワインバー）で店名が違う。題名の最寄り駅の丸の内は掲載の場所から1,092m。同じページが別の掲載店「雪月花 たなかさとる」（栄3-9-2・焼肉）にも付いていた",
+      "pageTitle": "SALON 雪月花 - 丸の内/ワインバー | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "丸の内",
+      "stationDistanceM": 1092,
+      "hotpepperAddress": "愛知県名古屋市中区栄３－２２－２６",
+      "hotpepperCoords": [
+        35.16400631028389,
+        136.90264617393
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J001233748",
+      "storeName": "雪月花 たなかさとる",
+      "url": "https://tabelog.com/aichi/A2301/A230102/23071690/",
+      "decision": "remove",
+      "issue": "ISSUE-166",
+      "kind": "name-other-store",
+      "reason": "リンク先は「SALON 雪月花」で、ワインバーのページ（掲載は焼肉）。題名の最寄り駅の丸の内は掲載の場所から812m。同じページが別の掲載店「ワイン&バー SALON」（栄3-22-26）にも付いていた",
+      "pageTitle": "SALON 雪月花 - 丸の内/ワインバー | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "丸の内",
+      "stationDistanceM": 812,
+      "hotpepperAddress": "愛知県名古屋市中区栄３-9-2 GEMS栄 11F",
+      "hotpepperCoords": [
+        35.16747176108053,
+        136.90381497790986
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004090772",
+      "storeName": "楊國福 名古屋栄店",
+      "url": "https://tabelog.com/aichi/A2301/A230102/23091040/",
+      "decision": "remove",
+      "issue": "ISSUE-166",
+      "kind": "name-other-branch",
+      "reason": "リンク先は「楊國福 （ヤングオフー）」で、題名の最寄り駅は伏見（掲載の場所から1,366m）。Places では同じ店の伏見店が中区錦2-18-2 にあり、栄店は掲載と同じ栄4-5-5。別の支店（伏見店）のページ",
+      "pageTitle": "楊國福 （ヤングオフー） - 伏見/四川料理 | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "伏見",
+      "stationDistanceM": 1366,
+      "hotpepperAddress": "愛知県名古屋市中区栄４丁目5-5",
+      "hotpepperCoords": [
+        35.1690069,
+        136.9124544
+      ],
+      "hotpepperCheckedAt": "2026-10-09",
+      "places": [
+        {
+          "query": "楊國福 伏見 名古屋",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "楊国福マーラータン 伏見店",
+              "address": "〒460-0003 愛知県名古屋市中区錦２丁目１８−２",
+              "status": "OPERATIONAL"
+            }
+          ]
+        },
+        {
+          "query": "楊國福 名古屋",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "楊國福マーラータン 栄店",
+              "address": "1F, ４丁目-５-5 栄 中区 名古屋市 愛知県 460-0008",
+              "status": "OPERATIONAL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "J001231801",
+      "storeName": "ちりとり鍋 鉄板焼 GORU",
+      "url": "https://tabelog.com/aichi/A2301/A230113/23061856/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「GORU （ゴル）」（高畑/居酒屋）は店名の核（GORU）が同じで、違いは業態の言葉（ちりとり鍋 鉄板焼）と読み仮名だけ。題名の最寄り駅の高畑は掲載の場所から116m",
+      "pageTitle": "GORU （ゴル）のご予約 - 高畑/居酒屋 | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "高畑",
+      "stationDistanceM": 116,
+      "hotpepperAddress": "愛知県名古屋市中川区高畑３-138南ウイングビル2A",
+      "hotpepperCoords": [
+        35.1381326,
+        136.8532735
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J001177131",
+      "storeName": "金肉 名古屋駅店",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23066315/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「個室 肉寿司と牛タンしゃぶしゃぶ 金肉 名古屋駅前店」は、Places の「金肉 名古屋駅前店」の住所（西区名駅3-11-2 サン・タウン 5階）が掲載の住所と同じ。題名の最寄り駅の国際センターは掲載の場所から429m。この URL は元のスプレッドシートにも入っている",
+      "pageTitle": "個室 肉寿司と牛タンしゃぶしゃぶ 金肉 名古屋駅前店 （KIN-NIKU）のご予約 - 国際センター/居酒屋 | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "国際センター",
+      "stationDistanceM": 429,
+      "hotpepperAddress": "愛知県名古屋市西区名駅３-11-2　サンタウン5F",
+      "hotpepperCoords": [
+        35.1746025,
+        136.8857488
+      ],
+      "hotpepperCheckedAt": "2026-10-09",
+      "places": [
+        {
+          "query": "金肉 名古屋駅前店",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "金肉 名古屋駅前店",
+              "address": "〒451-0045 愛知県名古屋市西区名駅３丁目１１−２ サン・タウン 5階",
+              "status": "OPERATIONAL"
+            }
+          ]
+        },
+        {
+          "query": "金肉 名古屋駅店 名駅3-11-2",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "金肉 名古屋駅前店",
+              "address": "〒451-0045 愛知県名古屋市西区名駅３丁目１１−２ サン・タウン 5階",
+              "status": "OPERATIONAL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "J000739645",
+      "storeName": "MAVERICK HALL マーべリック ホール",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23084686/",
+      "decision": "remove",
+      "issue": "ISSUE-166",
+      "kind": "name-other-store",
+      "reason": "リンク先は「ELLE HALL Dining 名古屋駅西口店」（名古屋/ダイニングバー）で店名が違う。題名の最寄り駅の名古屋は掲載の場所から1,548m",
+      "pageTitle": "ELLE HALL Dining  名古屋駅西口店 （エル ホール ダイニング） - 名古屋/ダイニングバー | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "名古屋",
+      "stationDistanceM": 1548,
+      "hotpepperAddress": "愛知県名古屋市中区栄２-7-1東洋パーキングビルB1F",
+      "hotpepperCoords": [
+        35.16710867549435,
+        136.9001796098596
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004537020",
+      "storeName": "やきとん串焼き酒場 青二才 金山店",
+      "url": "https://tabelog.com/aichi/A2301/A230106/23081398/",
+      "decision": "remove",
+      "issue": "ISSUE-166",
+      "kind": "name-other-branch",
+      "reason": "リンク先は「やきとん串焼き酒場 青二才 今池本店」で支店が違う。題名の最寄り駅の今池は掲載の場所から4,349m",
+      "pageTitle": "やきとん串焼き酒場 青二才 今池本店 （【旧店名】新橋もつやきスタンド 青二才本店）のご予約 - 今池/居酒屋 | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "今池",
+      "stationDistanceM": 4349,
+      "hotpepperAddress": "愛知県名古屋市熱田区波寄町24-4金山ZOUビル1階",
+      "hotpepperCoords": [
+        35.1423657,
+        136.903387
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004559448",
+      "storeName": "プンミポチャ ポジャンマチャ金山ビアガーデン",
+      "url": "https://tabelog.com/aichi/A2301/A230105/23096176/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「プンミポチャ」（金山/韓国料理）は、Places の「プンミポチャ」の住所（熱田区金山町1-16-9 2）が掲載の住所と同じ。題名の最寄り駅の金山は掲載の場所から227m",
+      "pageTitle": "プンミポチャ - 金山/韓国料理 | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "金山",
+      "stationDistanceM": 227,
+      "hotpepperAddress": "愛知県名古屋市熱田区金山町１丁目１６-９-２",
+      "hotpepperCoords": [
+        35.1408901,
+        136.9003553
+      ],
+      "hotpepperCheckedAt": "2026-10-09",
+      "places": [
+        {
+          "query": "プンミポチャ 金山 名古屋",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "プンミポチャ",
+              "address": "〒456-0002 愛知県名古屋市熱田区金山町１丁目１６−９ 2",
+              "status": "OPERATIONAL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "J003985125",
+      "storeName": "COVO17 コーブォジュウナナ 金山店",
+      "url": "https://tabelog.com/aichi/A2301/A230105/23090820/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「COVO17 Bar＆Cafe」（金山/バー）は、Places の「COVO17」の住所（熱田区金山町1-4-4）が掲載と同じ。題名の最寄り駅の金山は掲載の場所から128m",
+      "pageTitle": "COVO17 Bar＆Cafeのご予約 - 金山/バー | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "金山",
+      "stationDistanceM": 128,
+      "hotpepperAddress": "愛知県名古屋市熱田区金山町１-4-4",
+      "hotpepperCoords": [
+        35.1417228,
+        136.9014
+      ],
+      "hotpepperCheckedAt": "2026-10-09",
+      "places": [
+        {
+          "query": "COVO17 名古屋",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "COVO17",
+              "address": "〒456-0002 愛知県名古屋市熱田区金山町１丁目４−４",
+              "status": "OPERATIONAL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "J000968433",
+      "storeName": "ゆめや 金山店",
+      "url": "https://tabelog.com/aichi/A2301/A230105/23038285/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先は「ゆめや」（金山/焼肉）。Places の「ゆめや」の住所（中区正木4-1-24 第2竹内ビル 1F）は掲載（正木4-1-24 タックビル1F）と番地が同じで（ビル名の表記は違う）、検索で出たのはこの1店だけ。題名の最寄り駅の金山は掲載の場所から425m",
+      "pageTitle": "ゆめやのご予約 - 金山/焼肉 | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "金山",
+      "stationDistanceM": 425,
+      "hotpepperAddress": "愛知県名古屋市中区正木４-1-24タックビル１F",
+      "hotpepperCoords": [
+        35.14281053002836,
+        136.89584722810503
+      ],
+      "hotpepperCheckedAt": "2026-10-09",
+      "places": [
+        {
+          "query": "ゆめや 金山 焼肉 名古屋",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "ゆめや",
+              "address": "〒460-0024 愛知県名古屋市中区正木４丁目１−２４ 第２竹内ビル １F",
+              "status": "OPERATIONAL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "J004469728",
+      "storeName": "梵8 ボンパチ",
+      "url": "https://tabelog.com/aichi/A2301/A230105/23094551/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「梵8」（金山/居酒屋）は、Places の「梵8」の住所（中区金山2-11-10 名豊第一ビル 1階）が掲載と同じ。題名の最寄り駅の金山は掲載の場所から340m",
+      "pageTitle": "梵8のご予約 - 金山/居酒屋 | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "金山",
+      "stationDistanceM": 340,
+      "hotpepperAddress": "愛知県名古屋市中区金山２丁目11-10名豊第一ビル1F",
+      "hotpepperCoords": [
+        35.1450685,
+        136.9048348
+      ],
+      "hotpepperCheckedAt": "2026-10-09",
+      "places": [
+        {
+          "query": "梵8 名古屋",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "梵8",
+              "address": "〒460-0022 愛知県名古屋市中区金山２丁目１１−１０ 名豊第一ビル 1階",
+              "status": "OPERATIONAL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "J003474357",
+      "storeName": "スイーツ カフェ 半熟王子 金山店",
+      "url": "https://tabelog.com/aichi/A2301/A230105/23084520/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「ステージ&カフェ 半熟王子」（金山/その他）は、Places の「ステージ＆カフェ 半熟王子」の住所（熱田区金山町1-2-1 金山スクウェアビル 4F）が掲載と同じ。題名の最寄り駅の金山は掲載の場所から71m",
+      "pageTitle": "ステージ&カフェ 半熟王子 - 金山/その他 | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "金山",
+      "stationDistanceM": 71,
+      "hotpepperAddress": "愛知県名古屋市熱田区金山町１-2-1",
+      "hotpepperCoords": [
+        35.1422357,
+        136.9012334
+      ],
+      "hotpepperCheckedAt": "2026-10-09",
+      "places": [
+        {
+          "query": "半熟王子 名古屋",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "ステージ＆カフェ 半熟王子",
+              "address": "〒456-0002 愛知県名古屋市熱田区金山町１丁目２−１ 金山スクウェアビル 4F",
+              "status": "OPERATIONAL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "J003762303",
+      "storeName": "ステーキ 海鮮 肉級",
+      "url": "https://tabelog.com/aichi/A2301/A230107/23086093/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「肉級 （nikukyu）」（名古屋大学/ステーキ）は店名の核（肉級）が同じで、違いは業態の言葉（ステーキ 海鮮）と読みの付け足しだけ。題名の最寄り駅の名古屋大学は掲載の場所から539m",
+      "pageTitle": "肉級 （nikukyu）のご予約 - 名古屋大学/ステーキ | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "名古屋大学",
+      "stationDistanceM": 539,
+      "hotpepperAddress": "愛知県名古屋市昭和区宮東町359growAB",
+      "hotpepperCoords": [
+        35.152303008810186,
+        136.9611623015518
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004469398",
+      "storeName": "D s cafe 853 ディーズカフェハチゴサン",
+      "url": "https://tabelog.com/aichi/A2301/A230108/23094242/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「D's cafe 853」（八事/カフェ）は店名が同じで、違いはアポストロフィの有無だけ。題名の最寄り駅の八事は掲載の場所から573m",
+      "pageTitle": "D's cafe 853のご予約 - 八事/カフェ | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "八事",
+      "stationDistanceM": 573,
+      "hotpepperAddress": "愛知県名古屋市天白区八事山440",
+      "hotpepperCoords": [
+        35.1352581,
+        136.9699891
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004421043",
+      "storeName": "ゲーマーズバー One Chance ワンチャンス",
+      "url": "https://tabelog.com/aichi/A2301/A230105/23093948/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「One Chance」（鶴舞/バー）は店名が同じで、違いは業態の言葉（ゲーマーズバー）と読み仮名だけ。題名の最寄り駅の鶴舞は掲載の場所から216m",
+      "pageTitle": "One Chance - 鶴舞/バー | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "鶴舞",
+      "stationDistanceM": 216,
+      "hotpepperAddress": "愛知県名古屋市中区千代田３‐8-10 万長ビルB1F",
+      "hotpepperCoords": [
+        35.1559431,
+        136.9143785
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004558557",
+      "storeName": "焼肉　a.n.b.　SECOND 大曽根店",
+      "url": "https://tabelog.com/aichi/A2301/A230109/23091014/",
+      "decision": "remove",
+      "issue": "ISSUE-166",
+      "kind": "name-other-store",
+      "reason": "リンク先は「HIRO SECOND」（浄心/焼肉）で店名が違う。題名の最寄り駅の浄心は掲載の場所から4,599m",
+      "pageTitle": "HIRO SECONDのご予約 - 浄心/焼肉 | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "浄心",
+      "stationDistanceM": 4599,
+      "hotpepperAddress": "愛知県名古屋市東区矢田５-1-3",
+      "hotpepperCoords": [
+        35.1917729,
+        136.9414267
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J002647159",
+      "storeName": "魚料理 佐世保　池下店",
+      "url": "https://tabelog.com/aichi/A2301/A230106/23024288/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「佐世保」（池下/海鮮）は、Places の「佐世保」の住所（千種区向陽1-12-20 池下アミティ I 1階）が掲載と同じ。題名の最寄り駅の池下は掲載の場所から170m",
+      "pageTitle": "佐世保 - 池下/海鮮 | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "池下",
+      "stationDistanceM": 170,
+      "hotpepperAddress": "愛知県名古屋市千種区向陽１-12-20",
+      "hotpepperCoords": [
+        35.169156406308936,
+        136.94601858555316
+      ],
+      "hotpepperCheckedAt": "2026-10-09",
+      "places": [
+        {
+          "query": "佐世保 魚料理 名古屋",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "佐世保",
+              "address": "〒464-0061 愛知県名古屋市千種区向陽１丁目１２−２０ 池下アミティ Ｉ １階",
+              "status": "OPERATIONAL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "J001268047",
+      "storeName": "魚市肉鮮 ICHIBARU どんぶらこ",
+      "url": "https://tabelog.com/aichi/A2301/A230110/23059981/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「魚市肉鮮 どんぶらこ」（上飯田/居酒屋）は店名が同じで、違いは「ICHIBARU」の有無だけ。題名の最寄り駅の上飯田は掲載の場所から110m",
+      "pageTitle": "魚市肉鮮 どんぶらこ - 上飯田/居酒屋 | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "上飯田",
+      "stationDistanceM": 110,
+      "hotpepperAddress": "愛知県名古屋市北区上飯田通１－１９",
+      "hotpepperCoords": [
+        35.2028704,
+        136.9298563
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004509235",
+      "storeName": "MOGU モグ 酒場",
+      "url": "https://tabelog.com/aichi/A2301/A230114/23075896/",
+      "decision": "remove",
+      "issue": "ISSUE-166",
+      "kind": "name-other-store",
+      "reason": "リンク先は「モグーテ （MOGU-te）」（新守山/サンドイッチ）で、店名と業態が違う（掲載は居酒屋）。題名の最寄り駅の新守山は掲載の場所から3,818m",
+      "pageTitle": "モグーテ （MOGU-te） - 新守山/サンドイッチ | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "新守山",
+      "stationDistanceM": 3818,
+      "hotpepperAddress": "愛知県名古屋市北区中切町４-62",
+      "hotpepperCoords": [
+        35.21491930000001,
+        136.9102307
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J001217107",
+      "storeName": "BAR E sa いーさー",
+      "url": "https://tabelog.com/aichi/A2301/A230103/23081514/",
+      "decision": "remove",
+      "issue": "ISSUE-166",
+      "kind": "name-other-store",
+      "reason": "リンク先は「Bar End. （バー エンド）」（矢場町/バー）で店名が違う。題名の最寄り駅の矢場町は掲載の場所から4,151m",
+      "pageTitle": "Bar End. （バー エンド） - 矢場町/バー | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "矢場町",
+      "stationDistanceM": 4151,
+      "hotpepperAddress": "愛知県名古屋市北区山田１－１０－５４ハートイン大曽根６F　B号",
+      "hotpepperCoords": [
+        35.1943859,
+        136.93515509999997
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004469269",
+      "storeName": "ボードゲームカフェ 星コーヒー店",
+      "url": "https://tabelog.com/aichi/A2301/A230106/23095076/",
+      "decision": "remove",
+      "issue": "ISSUE-166",
+      "kind": "name-other-store",
+      "reason": "リンク先は「ボードゲームカフェエルドラド」（池下/カフェ）で店名が違う。題名の最寄り駅の池下は掲載の場所から2,832m",
+      "pageTitle": "ボードゲームカフェエルドラド - 池下/カフェ | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "池下",
+      "stationDistanceM": 2832,
+      "hotpepperAddress": "愛知県名古屋市北区大曽根２丁目9-62 エクストラックス大曽根 1F",
+      "hotpepperCoords": [
+        35.1904319,
+        136.9324976
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J003581343",
+      "storeName": "Bar DAY バーデイ",
+      "url": "https://tabelog.com/aichi/A2301/A230110/23076044/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「Bar.DAY」（ナゴヤドーム前矢田/バー）は店名が同じ。題名の最寄り駅は掲載の場所から65m",
+      "pageTitle": "Bar.DAY - ナゴヤドーム前矢田/バー | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "ナゴヤドーム前矢田",
+      "stationDistanceM": 65,
+      "hotpepperAddress": "愛知県名古屋市東区矢田東１-21",
+      "hotpepperCoords": [
+        35.1909808,
+        136.9446363
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000767061",
+      "storeName": "カラオケ JOYJOY ジョイジョイ 今池店",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23064008/",
+      "decision": "remove",
+      "issue": "ISSUE-166",
+      "kind": "name-other-branch",
+      "reason": "リンク先は「カラオケジョイジョイ 名駅錦通店」で支店が違う。題名の最寄り駅の近鉄名古屋は掲載の場所から4,785m",
+      "pageTitle": "カラオケジョイジョイ 名駅錦通店 （カラオケJOYJOY） - 近鉄名古屋/カラオケ | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "近鉄名古屋",
+      "stationDistanceM": 4785,
+      "hotpepperAddress": "愛知県名古屋市千種区今池１‐11-6",
+      "hotpepperCoords": [
+        35.16779559401098,
+        136.93647086994824
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000805508",
+      "storeName": "ラ・フェット La Fete",
+      "url": "https://tabelog.com/aichi/A2301/A230104/23036805/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「ラフェット （Wine Bar La Fete）」（新栄町/ワインバー）は店名が同じ。題名の最寄り駅の新栄町は掲載の場所から54m",
+      "pageTitle": "ラフェット （Wine Bar La Fete） - 新栄町/ワインバー | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "新栄町",
+      "stationDistanceM": 54,
+      "hotpepperAddress": "愛知県名古屋市東区葵１-19-30　マザックアートプラザ　B1F",
+      "hotpepperCoords": [
+        35.17097871624827,
+        136.91987303296318
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J001190208",
+      "storeName": "Costilla",
+      "url": "https://tabelog.com/aichi/A2301/A230111/23061819/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「バル食堂 コスティーラ （バル食堂 Costilla）」（藤が丘/バル）は店名が同じ。題名の最寄り駅の藤が丘は掲載の場所から499m",
+      "pageTitle": "バル食堂 コスティーラ （バル食堂 Costilla） - 藤が丘/バル | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "藤が丘",
+      "stationDistanceM": 499,
+      "hotpepperAddress": "愛知県名古屋市名東区小池町436‐1",
+      "hotpepperCoords": [
+        35.1815357,
+        137.01597649999997
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000024933",
+      "storeName": "和牛ホルモン焼 三國 本店",
+      "url": "https://tabelog.com/aichi/A2301/A230103/23083349/",
+      "decision": "undecided",
+      "issue": "ISSUE-166",
+      "kind": "name-undecided",
+      "reason": "リンク先の「三國 （MIKUNI）」（矢場町/焼肉）は支店名が無い。Places では、掲載の本店と同じ住所の「焼肉 三国 本店」（大須3-8-24）のほかに、「和牛ホルモン焼 三國」（大須3-5-6 矢場町サンコービル）がある。どちらも矢場町に近く、題名と最寄り駅ではどちらのページか決められない。食べログの住所は手元からも取れない（HTTP 403）",
+      "pageTitle": "三國 （MIKUNI） - 矢場町/焼肉 | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "矢場町",
+      "stationDistanceM": 436,
+      "hotpepperAddress": "愛知県名古屋市中区大須３－８－２４",
+      "hotpepperCoords": [
+        35.16182327850202,
+        136.90484328378307
+      ],
+      "hotpepperCheckedAt": "2026-10-09",
+      "places": [
+        {
+          "query": "三國 焼肉 大須 名古屋",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "焼肉 三国 本店 プッチープロゴルファー",
+              "address": "〒460-0011 愛知県名古屋市中区大須３丁目８−２４",
+              "status": "OPERATIONAL"
+            },
+            {
+              "name": "和牛ホルモン焼 三國",
+              "address": "〒460-0011 愛知県名古屋市中区大須３丁目５−６ 矢場町サンコービル",
+              "status": "OPERATIONAL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "J001268699",
+      "storeName": "plants holic little monster リトル モンスター",
+      "url": "https://tabelog.com/aichi/A2301/A230112/23095941/",
+      "decision": "remove",
+      "issue": "ISSUE-166",
+      "kind": "name-other-store",
+      "reason": "リンク先は「CHEESECAKE MONSTER （チーズケーキモンスター）」（日比野/ケーキ）で店名が違う。題名の最寄り駅の日比野は掲載の場所から2,666m",
+      "pageTitle": "CHEESECAKE MONSTER （チーズケーキモンスター） - 日比野（名古屋市営）/ケーキ | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "日比野（名古屋市営）",
+      "stationDistanceM": 2666,
+      "hotpepperAddress": "愛知県名古屋市昭和区円上町4-16",
+      "hotpepperCoords": [
+        35.1433541,
+        136.9193976
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004591366",
+      "storeName": "NORTH VALLEY ノースバレー",
+      "url": "https://tabelog.com/aichi/A2301/A230111/23094601/",
+      "decision": "remove",
+      "issue": "ISSUE-166",
+      "kind": "name-other-store",
+      "reason": "リンク先は「TEA VALLEY （ティーバレー）」（神沢/カフェ）で、店名と業態が違う（掲載はバー）。題名の最寄り駅の神沢は掲載の場所から11,710m",
+      "pageTitle": "TEA VALLEY （ティーバレー） - 神沢/カフェ | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "神沢",
+      "stationDistanceM": 11710,
+      "hotpepperAddress": "愛知県名古屋市北区山田１丁目9-1　フォレスト大曽根3F",
+      "hotpepperCoords": [
+        35.1944098,
+        136.9363049
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004591632",
+      "storeName": "1Place cafe Fluffies ワンプレイスカフェ フラッフィーズ 名東店",
+      "url": "https://tabelog.com/aichi/A2301/A230111/23095155/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「1Place cafe 〜Fluffies〜 名東店」は店名も支店名も同じ。Places で同じ名前の店の住所（名東区高針原2-1708）が掲載と同じ",
+      "pageTitle": "1Place cafe 〜Fluffies〜 名東店 - 植田（名古屋市営）/カフェ | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "植田（名古屋市営）",
+      "stationDistanceM": 1979,
+      "hotpepperAddress": "愛知県名古屋市名東区高針原２丁目１７０８",
+      "hotpepperCoords": [
+        35.1456514,
+        136.9943001
+      ],
+      "hotpepperCheckedAt": "2026-10-09",
+      "places": [
+        {
+          "query": "1Place cafe Fluffies 名東店",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "1Place cafe 〜Fluffies〜名東店",
+              "address": "〒465-0073 愛知県名古屋市名東区高針原２丁目１７０８",
+              "status": "OPERATIONAL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "J003916879",
+      "storeName": "AUN アウン",
+      "url": "https://tabelog.com/aichi/A2301/A230111/23090173/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「AUN」（上社/ダイニングバー）は店名が同じ。題名の最寄り駅の上社は掲載の場所から79m",
+      "pageTitle": "AUNのご予約 - 上社/ダイニングバー | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "上社",
+      "stationDistanceM": 79,
+      "hotpepperAddress": "愛知県名古屋市名東区上社１-1305　真ハイツ103",
+      "hotpepperCoords": [
+        35.17307080452269,
+        137.00658741964344
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000428492",
+      "storeName": "居食屋 甚兵衛",
+      "url": "https://tabelog.com/aichi/A2301/A230112/23067002/",
+      "decision": "remove",
+      "issue": "ISSUE-166",
+      "kind": "name-other-store",
+      "reason": "リンク先は「お好み焼き 甚兵衛」（荒子川公園/お好み焼き）。題名の最寄り駅の荒子川公園は掲載の場所から4,852m。Places では同じ名前の店が港区油屋町2-41-2 と中川区柳森町2708（掲載と同じ）にあり、別の店（港区）のページ",
+      "pageTitle": "お好み焼き 甚兵衛 - 荒子川公園/お好み焼き | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "荒子川公園",
+      "stationDistanceM": 4852,
+      "hotpepperAddress": "愛知県名古屋市中川区柳森町２７０８",
+      "hotpepperCoords": [
+        35.14797365333411,
+        136.8556536229944
+      ],
+      "hotpepperCheckedAt": "2026-10-09",
+      "places": [
+        {
+          "query": "お好み焼き 甚兵衛 名古屋",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "甚兵衛",
+              "address": "〒455-0815 愛知県名古屋市港区油屋町２丁目41ｰ2",
+              "status": "OPERATIONAL"
+            }
+          ]
+        },
+        {
+          "query": "居食屋 甚兵衛 名古屋市中川区柳森町",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "甚兵衛",
+              "address": "〒454-0871 愛知県名古屋市中川区柳森町２７０８",
+              "status": "OPERATIONAL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "J003958538",
+      "storeName": "多門 たみん",
+      "url": "https://tabelog.com/aichi/A2301/A230113/23095026/",
+      "decision": "keep",
+      "issue": "ISSUE-166",
+      "kind": "name-same",
+      "reason": "リンク先の「多門」（春田/居酒屋）は店名が同じで、違いは読み仮名だけ。題名の最寄り駅の春田は掲載の場所から475m",
+      "pageTitle": "多門 - 春田/居酒屋 | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "春田",
+      "stationDistanceM": 475,
+      "hotpepperAddress": "愛知県名古屋市中川区東春田１丁目60",
+      "hotpepperCoords": [
+        35.14533026028788,
+        136.81802216558572
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004537262",
+      "storeName": "El Gordo エルゴルド",
+      "url": "https://tabelog.com/aichi/A2301/A230102/23029645/",
+      "decision": "remove",
+      "issue": "ISSUE-166",
+      "kind": "name-other-store",
+      "reason": "リンク先は「ゴルド カフェ （GORDO CAFE）」（伏見/喫茶店）で、店名と業態が違う（掲載はダイニングバー・バル）。題名の最寄り駅の伏見は掲載の場所から882m。Places では GORDO CAFE は中区錦2-13-24 先 伏見地下街 内で、HotPepper の掲載は錦3-4-17 シエルブルー7A",
+      "pageTitle": "ゴルド カフェ （GORDO CAFE） - 伏見/喫茶店 | 食べログ",
+      "pageAddress": null,
+      "pageCheckedAt": "2026-09-20",
+      "pageStation": "伏見",
+      "stationDistanceM": 882,
+      "hotpepperAddress": "愛知県名古屋市中区錦３丁目4-17 シエルブルー7A",
+      "hotpepperCoords": [
+        35.1727208,
+        136.906169
+      ],
+      "hotpepperCheckedAt": "2026-10-09",
+      "places": [
+        {
+          "query": "GORDO CAFE 名古屋",
+          "fetchedAt": "2026-10-09",
+          "results": [
+            {
+              "name": "GORDO CAFE",
+              "address": "〒460-0003 愛知県名古屋市中区錦２丁目１３−２４ 先 伏見地下街 内",
+              "status": "OPERATIONAL"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
