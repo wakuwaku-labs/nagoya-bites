@@ -26,22 +26,23 @@
  * 低く出て誤って「不一致」判定になるため（2026-09-03 実測: 素の比較だと sim=0.5
  * で閾値 0.85 を割るが、丸括弧の中身だけを使うと sim=1 で一致する）。
  *
- * 【既知の限界: 支店違いを見分けられない（ISSUE-157・2026-10-09）】
- *   食べログの題名に支店名が無い店（例: 題名が「うなぎのしろむら」だけ）は、我々の
- *   どの支店（「丸の内店」「柳橋本店」）とも一致と判定される。namesMatch() が支店名の
- *   食い違いを見るのは、双方に支店名が書かれているときだけだから。住所（opts.address）は
- *   名前が一致しなかったときの救済にしか使っておらず、名前が一致したリンクは住所が違っても
- *   ok になる。しかも opts.address は Google Places 由来なので、Places の紐付け自体が別の
- *   支店を指している店（丸の内店に泉本店の place_id が付いていた・ISSUE-147）では住所まで
- *   一致してしまう。実測（2026-10-09・照合キャッシュ）: 名前だけで一致とした食べログの
- *   リンクのうち、HotPepper の住所と町名＋丁目が違うものが 56件（表記ゆれを含む）。
- *   支店違いの検出は ISSUE-158 で扱う。それまでは「ok＝同じ店」と読まないこと。
+ * 【支店違いの見分け（ISSUE-157 で発覚・ISSUE-159 で対応・2026-10-09）】
+ *   食べログの題名に支店名が無い店（例: 題名が「うなぎのしろむら」だけ）は、名前だけでは
+ *   我々のどの支店（「丸の内店」「柳橋本店」）とも一致する。namesMatch() が支店名の食い違いを
+ *   見るのは、双方に支店名が書かれているときだけだから。そこで、住所（opts.address）を渡された
+ *   ときは compareJpAddress() でページの住所と比べ、名前が一致しても住所が different なら
+ *   ok にしない（reason: branch-address-mismatch）。住所は HotPepper の掲載住所を優先する。
+ *   Google Places の住所は、紐付け自体が別の支店を指す店（丸の内店に泉本店の place_id が
+ *   付いていた・ISSUE-147）では一緒に間違えるため。
+ *   残る限界: 住所を持たない店（手動キュレーション店で Places の紐付けも無い店）と、ページに
+ *   住所が無い場合は、従来どおり名前だけで判定する。
  */
 'use strict';
 
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const crypto = require('crypto');
 const { namesMatch } = require('./store_name_match');
 
 // ─── HTTP ────────────────────────────────────────────────────────────
@@ -129,6 +130,121 @@ function normalizeJpAddress(input) {
 }
 
 // 食べログ店舗ページの JSON-LD から住所（区＋番地）を取り出す
+
+// ─── 住所の比較（ISSUE-159） ─────────────────────────────────────────
+// 食べログの題名に支店名が無い店は、名前だけではどの支店のページか決められない（ISSUE-157）。
+// その見分けに住所を使う。比べるのは「市町村・区・町名・番地の数字」だけで、ビル名・階数は見ない。
+// 表記ゆれ（字・大字・漢数字の丁目・ヶ/ケ/が・の/ノ・町の有無・枝番）は畳み、畳んでも決められない組は
+// unknown にする。different と言うのは、市町村か区か町名か番地の頭の数字が、表記ゆれでは説明できない
+// ほど違うときだけ（推測で「違う」と言わない・制約10）。
+
+// 愛知県の市町村（郡の町村は郡名つき）。町名の途中にある「市」を市と取り違えないよう、名前で引く
+const AICHI_MUNICIPALITIES = [
+  '名古屋市', '豊橋市', '岡崎市', '一宮市', '瀬戸市', '半田市', '春日井市', '豊川市', '津島市', '碧南市',
+  '刈谷市', '豊田市', '安城市', '西尾市', '蒲郡市', '犬山市', '常滑市', '江南市', '小牧市', '稲沢市',
+  '新城市', '東海市', '大府市', '知多市', '知立市', '尾張旭市', '高浜市', '岩倉市', '豊明市', '日進市',
+  '田原市', '愛西市', '清須市', '北名古屋市', '弥富市', 'みよし市', 'あま市', '長久手市',
+  '愛知郡東郷町', '西春日井郡豊山町', '丹羽郡大口町', '丹羽郡扶桑町', '海部郡大治町', '海部郡蟹江町',
+  '海部郡飛島村', '知多郡阿久比町', '知多郡東浦町', '知多郡南知多町', '知多郡美浜町', '知多郡武豊町',
+  '額田郡幸田町', '北設楽郡設楽町', '北設楽郡東栄町', '北設楽郡豊根村',
+].sort((a, b) => b.length - a.length); // 「北名古屋市」を「名古屋市」より先に当てる
+const NAGOYA_WARD_RE = /^(千種|東|北|西|中村|中|昭和|瑞穂|熱田|中川|港|南|守山|緑|名東|天白)区/;
+const KANJI_DIGIT = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
+
+// 「三」→3・「十二」→12・「二十」→20（丁目に出る範囲）
+function kanjiToInt(k) {
+  if (!k) return NaN;
+  if (k === '十') return 10;
+  const i = k.indexOf('十');
+  if (i < 0) return k.length === 1 ? (KANJI_DIGIT[k] || NaN) : NaN;
+  const tens = i === 0 ? 1 : KANJI_DIGIT[k.slice(0, i)];
+  const ones = i === k.length - 1 ? 0 : KANJI_DIGIT[k.slice(i + 1)];
+  return tens && ones !== undefined ? tens * 10 + ones : NaN;
+}
+
+/**
+ * 住所を { pref, city, ward, town, nums } に分ける。生の住所（HotPepper・Places・食べログの JSON-LD）でも、
+ * normalizeJpAddress を通した後の形（キャッシュの matchedAddress）でも同じ結果に寄せる。
+ * 取れないものは空文字・空配列（何も主張しない）
+ */
+function parseJpAddress(input) {
+  if (!input) return null;
+  let s = String(input).normalize('NFKC');
+  s = s.replace(/^日本[、,]?\s*/, '').replace(/〒\s*\d{3}-?\d{4}\s*/g, '');
+  // 空白は番地の区切りとして残す（「錦２　5-34」を「錦25-34」にしない）。町名の中の空白は後で落とす
+  s = s.replace(/[ー−‐–—―ｰ]/g, '-').replace(/\s+/g, ' ').trim().replace(/^-+\s*/, '');
+  let pref = '';
+  const pm = s.match(/^(東京都|北海道|京都府|大阪府|[^0-9\s-]{2,3}県)/);
+  if (pm) { pref = pm[1]; s = s.slice(pm[1].length).trim(); }
+  let city = '';
+  const cm = AICHI_MUNICIPALITIES.find((c) => s.startsWith(c));
+  if (cm) { city = cm; s = s.slice(cm.length).trim(); }
+  let ward = '';
+  const wm = s.match(NAGOYA_WARD_RE);
+  if (wm && (!city || city === '名古屋市')) { ward = wm[0]; s = s.slice(wm[0].length).trim(); }
+  // 漢数字の丁目（「泉三丁目」）を数字に
+  s = s.replace(/([一二三四五六七八九十]+)丁目/g, (m, k) => { const n = kanjiToInt(k); return Number.isNaN(n) ? m : `${n}丁目`; });
+  s = s.replace(/丁目|番地|番|号/g, '-');
+  let town = (s.match(/^[^0-9]+/) || [''])[0];
+  const rest = s.slice(town.length);
+  town = town.replace(/[\s-]+/g, '').replace(/大字|字/g, '').replace(/[ヶケがガ]/g, 'ケ').replace(/[のノ之]/g, 'ノ');
+  const numPart = (rest.match(/^[0-9\s-]+/) || [''])[0];
+  const nums = numPart.split(/[^0-9]+/).filter(Boolean).map((n) => String(Number(n)));
+  // normalizeJpAddress を通した形では「泉三丁目24」が「泉三24」になっている。町名の末尾の漢数字は丁目として扱う
+  const km = town.match(/[一二三四五六七八九十]+$/);
+  if (km && km[0].length < town.length) {
+    const n = kanjiToInt(km[0]);
+    if (!Number.isNaN(n)) { town = town.slice(0, -km[0].length); nums.unshift(String(n)); }
+  }
+  return { pref, city, ward, town, nums };
+}
+
+function isSubsequence(short, long) {
+  let i = 0;
+  for (const ch of long) if (ch === short[i]) i++;
+  return i === short.length;
+}
+
+// 町名が表記ゆれの範囲で似ているか（「金山町」と「金山」・「藤見ケ丘」と「藤ケ丘」・「比々野町」と「日比野町」）
+function townsSimilar(a, b) {
+  if (!a || !b) return false;
+  if (a.includes(b) || b.includes(a)) return true;
+  if (isSubsequence(a, b) || isSubsequence(b, a)) return true;
+  const x = new Set(a), y = new Set(b);
+  let common = 0;
+  for (const ch of x) if (y.has(ch)) common++;
+  return common / Math.max(x.size, y.size) >= 0.6;
+}
+
+function numsPrefixEqual(a, b) {
+  const n = Math.min(a.length, b.length);
+  for (let i = 0; i < n; i++) if (a[i] !== b[i]) return false;
+  return true;
+}
+
+/**
+ * 2つの住所が同じ場所か。{ verdict: 'same' | 'different' | 'unknown', reason }
+ *   different … 都道府県・市町村・区のどれかが違う／町名が同じで番地の頭の数字が違う／
+ *               町名が似ても似つかず番地も違う
+ *   unknown   … 町名の表記ゆれ（似ている町名で番地が前方一致）や、町名は違うが番地が完全に同じ組。
+ *               どちらとも言えないので人の確認に残す
+ */
+function compareJpAddress(a, b) {
+  const x = typeof a === 'string' ? parseJpAddress(a) : a;
+  const y = typeof b === 'string' ? parseJpAddress(b) : b;
+  if (!x || !y || !x.town || !y.town || !x.nums.length || !y.nums.length) return { verdict: 'unknown', reason: 'unparsable' };
+  if (x.pref && y.pref && x.pref !== y.pref) return { verdict: 'different', reason: 'pref' };
+  if (x.city && y.city && x.city !== y.city) return { verdict: 'different', reason: 'city' };
+  if (x.ward && y.ward && x.ward !== y.ward) return { verdict: 'different', reason: 'ward' };
+  if (x.town === y.town) {
+    if (x.nums[0] === y.nums[0]) return { verdict: 'same', reason: 'town+block' };
+    return { verdict: 'different', reason: 'block' };
+  }
+  if (numsPrefixEqual(x.nums, y.nums) && townsSimilar(x.town, y.town)) return { verdict: 'unknown', reason: 'town-notation' };
+  if (x.nums.join('-') === y.nums.join('-') && x.nums.length >= 2) return { verdict: 'unknown', reason: 'same-number' };
+  return { verdict: 'different', reason: 'town' };
+}
+
 function tabelogAddressFromHtml(html) {
   const blocks = [...html.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi)].map((m) => m[1]);
   const find = (o) => {
@@ -174,8 +290,44 @@ function bestMatch(storeName, matchedName) {
 }
 
 // ─── 検証本体 ────────────────────────────────────────────────────────
-// opts.address … 我々が別経路（Google Places）で持っている住所。渡すと住所一致を
-//                 同一性の証明として使う（名前の表記ゆれで落とさないため）
+// opts.address … 我々が別経路で持っている住所（HotPepper の掲載住所を優先し、無ければ Google Places）。
+//                 渡すと、(1) 住所一致を同一性の証明として使い（名前の表記ゆれで落とさないため）、
+//                 (2) 名前が一致しても住所が違う（compareJpAddress が different）ページを
+//                 別の支店・別の店として落とす（ISSUE-159）
+
+/** 取得済みの食べログのページから判定する（純関数・テスト対象） */
+function judgeTabelogHtml(html, storeName, opts) {
+  const title = extractTitle(html);
+  if (!title) return { ok: false, reason: 'no-title', storeName };
+  const { name: matchedName, closed } = tabelogNameFromTitle(title);
+  const match = bestMatch(storeName, matchedName);
+  // 住所が渡されていれば、名前の表記ゆれより強い証拠として先に照合する
+  const ourRaw = (opts && opts.address) || '';
+  const wantAddress = normalizeJpAddress(ourRaw);
+  const pageAddress = ourRaw ? tabelogAddressFromHtml(html) : null;
+  const pageRaw = pageAddress ? `${pageAddress.locality}${pageAddress.street}` : '';
+  const gotAddress = pageRaw ? normalizeJpAddress(pageRaw) : '';
+  const addressMatch = !!(wantAddress && gotAddress && wantAddress === gotAddress);
+  const compared = ourRaw && pageRaw ? compareJpAddress(ourRaw, pageRaw) : null;
+  // 名前は一致しても、住所が別の場所を指していれば別の支店・別の店のページ（題名に支店名が無い店）
+  const branchMismatch = match.ok && !addressMatch && !!compared && compared.verdict === 'different';
+  const ok = (match.ok || addressMatch) && !closed && !branchMismatch;
+  return {
+    ok,
+    reason: ok ? null : (closed ? 'closed' : (branchMismatch ? 'branch-address-mismatch' : 'name-mismatch')),
+    via: addressMatch ? (match.ok ? 'name+address' : 'address') : (match.ok ? 'name' : null),
+    sim: match.sim,
+    matchedName,
+    matchedAddress: gotAddress || null,
+    matchedAddressRaw: pageRaw || null,
+    addressVerdict: compared ? compared.verdict : null,
+    addressReason: compared ? compared.reason : null,
+    closed,
+    storeName,
+    title,
+  };
+}
+
 async function checkTabelogUrl(url, storeName, opts) {
   let html;
   try {
@@ -183,28 +335,7 @@ async function checkTabelogUrl(url, storeName, opts) {
   } catch (e) {
     return { ok: false, reason: 'fetch-error', error: e.message, url, storeName };
   }
-  const title = extractTitle(html);
-  if (!title) return { ok: false, reason: 'no-title', url, storeName };
-  const { name: matchedName, closed } = tabelogNameFromTitle(title);
-  const match = bestMatch(storeName, matchedName);
-  // 住所が渡されていれば、名前の表記ゆれより強い証拠として先に照合する
-  const wantAddress = normalizeJpAddress((opts && opts.address) || '');
-  const pageAddress = wantAddress ? tabelogAddressFromHtml(html) : null;
-  const gotAddress = pageAddress ? normalizeJpAddress(`${pageAddress.locality}${pageAddress.street}`) : '';
-  const addressMatch = !!(wantAddress && gotAddress && wantAddress === gotAddress);
-  const ok = (match.ok || addressMatch) && !closed;
-  return {
-    ok,
-    reason: ok ? null : (closed ? 'closed' : 'name-mismatch'),
-    via: addressMatch ? (match.ok ? 'name+address' : 'address') : (match.ok ? 'name' : null),
-    sim: match.sim,
-    matchedName,
-    matchedAddress: gotAddress || null,
-    closed,
-    url,
-    storeName,
-    title,
-  };
+  return { ...judgeTabelogHtml(html, storeName, opts), url };
 }
 
 async function checkHotpepperId(id, storeName, opts) {
@@ -256,16 +387,40 @@ function buildPlacesAddressIndex(root) {
   return index;
 }
 
+// 支店サフィックス（◯◯店 / 本店 / 別館 …）を持つか。読み仮名の丸括弧
+// （「東京竹葉亭 名古屋店 （とうきょうちくようてい）」）は外して見る
+function hasBranchSuffix(name) {
+  const tokens = String(name || '').replace(/[（(][^）)]*[）)]/g, ' ').split(/[\s　]+/).filter(Boolean);
+  const last = tokens[tokens.length - 1] || '';
+  return /店$/.test(last) || /^(本店|総本店|別館|新館|分店|別邸)$/.test(last) || /号店$/.test(last);
+}
+// 我々は支店を名乗っているのに、相手は支店名の無い名前か（「うなぎのしろむら 柳橋本店」対「うなぎのしろむら」）
+function ourBranchOnly(ourName, theirName) {
+  return hasBranchSuffix(ourName) && !hasBranchSuffix(theirName);
+}
+
+// 照合キャッシュ（data/store_link_identity_checked.json）の鍵。照合する監査（audit_store_link_identity.js）と
+// キャッシュを読み直す監査（audit_tabelog_branch_mismatch.js）が同じ鍵を使う
+function linkCacheKey(kind, url, storeName) {
+  return crypto.createHash('md5').update(`${kind}|${url}|${storeName}`).digest('hex');
+}
+
 module.exports = {
   fetchHtml,
+  linkCacheKey,
   buildPlacesAddressIndex,
   normalizeJpAddress,
+  parseJpAddress,
+  compareJpAddress,
   tabelogAddressFromHtml,
   extractTitle,
   tabelogNameFromTitle,
   hotpepperNameFromTitle,
   candidateNames,
+  hasBranchSuffix,
+  ourBranchOnly,
   bestMatch,
+  judgeTabelogHtml,
   checkTabelogUrl,
   checkHotpepperId,
 };

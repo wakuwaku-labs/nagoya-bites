@@ -29,8 +29,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
-const { checkTabelogUrl, checkHotpepperId, buildPlacesAddressIndex } = require('./lib/store_link_identity');
+const { checkTabelogUrl, checkHotpepperId, buildPlacesAddressIndex, linkCacheKey: cacheKey } = require('./lib/store_link_identity');
 
 const ROOT = path.resolve(__dirname, '..');
 const MANUAL_PATH = path.join(ROOT, 'data', 'manual_stores.json');
@@ -72,10 +71,6 @@ function loadJson(p, fallback) {
   }
 }
 
-function cacheKey(kind, url, storeName) {
-  return crypto.createHash('md5').update(`${kind}|${url}|${storeName}`).digest('hex');
-}
-
 // 検証対象の母集団
 //   manual … data/manual_stores.json（手動キュレーション店・従来の既定）
 //   all    … data/stores.json（サイトに載る全店。手動店もここに含まれる）
@@ -100,9 +95,11 @@ async function main() {
   }
   const stores = loadTargetsSource(opts.scope);
   const cache = loadJson(CACHE_PATH, {});
-  // Google Places 由来の住所。食べログ側の住所と一致すれば同じ建物＝同じ店の証明に
-  // なるため、店名の表記ゆれ（「鉄板焼 那古亭」対「那古亭」）で誤って不一致に
-  // しないよう判定器へ渡す（解決器と同じ索引を共有）
+  // 我々の住所。食べログ側の住所と一致すれば同じ建物＝同じ店の証明になるため、店名の
+  // 表記ゆれ（「鉄板焼 那古亭」対「那古亭」）で誤って不一致にしないよう判定器へ渡す。
+  // 名前が一致しても住所が違えば別の支店・別の店として落とす（ISSUE-159）。HotPepper の
+  // 掲載住所（stores.json の「住所」）を優先し、無い店（手動キュレーション店）だけ Google Places
+  // の住所を使う。Places は紐付け自体が別の支店を指す店がある（ISSUE-147）
   const addressIndex = buildPlacesAddressIndex(ROOT);
 
   let targets = [];
@@ -111,7 +108,7 @@ async function main() {
     if (opts.store && !name.includes(opts.store)) continue;
     const area = s['エリア'] || '';
     if (opts.kind !== 'hotpepper' && classifyTabelogFormat(s['食べログURL']) === 'direct') {
-      targets.push({ kind: 'tabelog', url: s['食べログURL'], storeName: name, area });
+      targets.push({ kind: 'tabelog', url: s['食べログURL'], storeName: name, area, address: s['住所'] || '' });
     }
     if (opts.kind !== 'tabelog' && s['ホットペッパーID'] && s['ホットペッパーID'].trim()) {
       targets.push({ kind: 'hotpepper', id: s['ホットペッパーID'].trim(), storeName: name, area });
@@ -138,7 +135,7 @@ async function main() {
 
     let result;
     if (t.kind === 'tabelog') {
-      result = await checkTabelogUrl(t.url, t.storeName, { address: addressIndex.get(t.storeName) || '' });
+      result = await checkTabelogUrl(t.url, t.storeName, { address: t.address || addressIndex.get(t.storeName) || '' });
     } else {
       result = await checkHotpepperId(t.id, t.storeName);
     }

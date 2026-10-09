@@ -79,7 +79,7 @@
 
 ### [ISSUE-159] 照合器に住所の照合を足し、名前が合っても別の支店・別の店を指す食べログリンクを数える
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **category**: qa / trust
 - **owner**: Builder
@@ -91,6 +91,12 @@
   2. `checkTabelogUrl` が、名前が一致しても住所が「違う」ときは ok にしない（理由を新設する。例 `branch-address-mismatch`）。住所がどちらか取れないときは従来どおり（推測で落とさない）
   3. 照合キャッシュの事実だけで56件を判定し直した一覧を出す（外部へ問い合わせない）
   4. `resolve_manual_tabelog_links.js` の sole-name-match が、我々の店名に支店名があって区が食い違う候補を採らないようにする（柳橋本店の再発防止・[[ISSUE-157]]）
+- **結果（2026-10-09）**: 判定器 `scripts/lib/store_link_identity.js` に住所の構造比較 `parseJpAddress`・`compareJpAddress`（都道府県・市町村・区・町名・番地の頭の数字 → same / different / unknown）を足した。`checkTabelogUrl` は、名前が一致しても住所が different なら `branch-address-mismatch` で不一致にする。判定は取得済みのページを見る純関数 `judgeTabelogHtml` に分けた。
+  - **表記ゆれの扱い（達成条件1）**: 字・大字・漢数字の丁目・ヶ/が・の/ノ・全角空白の区切りは畳んで same にする。町名の文字が違う組（金山町/金山・四軒屋/四軒家・比々野町/日比野町）と、番地が同じで町名が違う組（中郷/新家）は、別の町と区別できないため unknown にして落とさない。達成条件1の「同じ」は、落とさない側（unknown）も含めて満たす形にした。表記ゆれの実例はテストに入れた。
+  - **数え直し（達成条件3）**: `scripts/audit_tabelog_branch_mismatch.js` が照合キャッシュの事実だけで比べ直す（`--check`・`--json`・`--show-unknown`）。食べログリンク 2,727 件のうち照合済み 2,707 件、住所を比べた 2,116 件で、same 2,055・unknown 16・**different 45**（町名 33・市町村 10・丁目 2）。起票時の56件は簡易比較の数で、全角空白を番地の区切りと読まずに数字をつないでいた4件（FUZZ・魚神・八百文・BIS-TRIA）などは same になった。移転前後の住所の組と見られるもの（サガミ 有松店・嘉文 徳重店・めんらんど）が残るので、外す前に [[ISSUE-160]] で1件ずつ確かめる。
+  - **日次の監査（ISSUE-158 の達成条件3）**: `audit_store_link_identity.js` は HotPepper の掲載住所（stores.json の「住所」）を Places より優先して判定器へ渡す。照合し直したリンクから支店違いを数える。夜間QA に soft で入れた（id: tabelog-branch・0件になってから hard）。特集・ジャーナルの監査（`page_store_links.js`）も `branch-address-mismatch` を別の店として数える。
+  - **解決器（達成条件4）**: `resolve_manual_tabelog_links.js` は「我々は支店名を持つ・相手は支店名が無い・区が違う」候補を採らない（`branch-locality-mismatch`）。支店名の判定は判定器の `hasBranchSuffix` の1本に寄せた。読み仮名の丸括弧を外して見る。手動店185件で判定が変わるのは「那古野 しば福や 名駅店 (なごの…)」の1件で、支店名ありに直る向き。
+  - テスト: `tests/store_link_identity.test.js` に8件（分解・same・different・unknown・支店違いの判定・従来どおりの3つの場合・支店名・キャッシュの数え直し）、`tests/page_store_links.test.js` に1件。判断は `docs/decisions/0012-tabelog-link-address-check.md`。CLAUDE.md の共有ファイル一覧に追記
 
 ### [ISSUE-160] 別の支店・別の店を指すと確かめた食べログリンクを、店舗データ・店舗ページ・解決キャッシュから外す
 

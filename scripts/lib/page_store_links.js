@@ -63,6 +63,8 @@ function buildVerdictIndex(checked) {
 function isWrongStoreVerdict(v) {
   if (!v || v.ok !== false) return false;
   if (v.reason === 'confirmed-404') return true;
+  // 名前は一致しても、住所が別の場所を指していた（ISSUE-159 の compareJpAddress が different）
+  if (v.reason === 'branch-address-mismatch') return true;
   return v.reason === 'name-mismatch' && v.sim === 0;
 }
 
