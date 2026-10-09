@@ -23,6 +23,8 @@
  *   4. ホットペッパーのページが店名の上に【閉店】を出していれば閉店と判定すること（ISSUE-174）。
  *      題名は閉店しても変わらず「＜ネット予約可＞」が残ることもあるので、題名だけでは分からない。
  *      名前が合わないページの【閉店】は、我々の店の閉店の証拠にしない。
+ *   5. 題名の文字参照（&nbsp;・数値の参照）を戻してから店名を読むこと（ISSUE-177）。
+ *      戻さないと「ＢＡＲ &nbsp;ＣＯＭ’Ｓ」のように、正しいリンクが不一致になる。
  */
 
 const { test } = require('node:test');
@@ -37,6 +39,8 @@ const {
   judgeTabelogHtml,
   hotpepperShopStateFromHtml,
   judgeHotpepperHtml,
+  decodeEntities,
+  extractTitle,
   hasBranchSuffix,
   ourBranchOnly,
   linkCacheKey,
@@ -229,6 +233,23 @@ test('judgeHotpepperHtml: 名前が合わないページの【閉店】は name-
   assert.equal(r.closed, true);
   // 題名が無ければ判定しない（取得できなかったのと同じ扱い）
   assert.equal(judgeHotpepperHtml('<html><body><p class="shopState">【閉店】</p></body></html>', 'STEPS').reason, 'no-title');
+});
+
+test('題名の文字参照を戻してから店名を読む（&nbsp;・数値の参照・二重に戻さない）（ISSUE-177）', () => {
+  // 2026-10-09 の日次監査の実物。&nbsp; が残ったまま照合され、正しいリンクが name-mismatch になった
+  const title = extractTitle('<title>ＢＡＲ &nbsp;ＣＯＭ’Ｓ(吹上/バー・カクテル)＜ネット予約可＞ | ホットペッパーグルメ</title>');
+  assert.equal(title.includes('&nbsp;'), false);
+  assert.equal(hotpepperNameFromTitle(title).name, 'ＢＡＲ  ＣＯＭ’Ｓ');
+  const r = judgeHotpepperHtml(hotpepperPage('ＢＡＲ &nbsp;ＣＯＭ’Ｓ(吹上/バー・カクテル)＜ネット予約可＞ | ホットペッパーグルメ', 'ＢＡＲ &nbsp;ＣＯＭ’Ｓ', null), 'ＢＡＲ  ＣＯＭ’Ｓ');
+  assert.equal(r.ok, true);
+  // 数値の参照（10進・16進）も戻す。戻せない値はそのまま残す
+  assert.equal(decodeEntities('D&#39;s cafe 853'), "D's cafe 853");
+  assert.equal(decodeEntities('COM&#x2019;S'), 'COM’S');
+  assert.equal(decodeEntities('&#99999999;'), '&#99999999;');
+  // &amp; は最後に戻す（「&amp;lt;」を「<」まで戻さない）
+  assert.equal(decodeEntities('A&amp;lt;B &amp;amp; C&amp;D'), 'A&lt;B &amp; C&D');
+  // 知らない名前の参照は触らない
+  assert.equal(decodeEntities('&foo;'), '&foo;');
 });
 
 test('ourBranchOnly: 我々だけが支店名を持つ組（解決器の取り違え防止）', () => {
