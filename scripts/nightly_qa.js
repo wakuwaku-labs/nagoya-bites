@@ -141,6 +141,17 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/apply_feature_conclusions.js', '--check']],
 });
+// 8. 特集・ジャーナルに手で書かれた店舗リンクが別の店を指していないか（ISSUE-156・SOFT で開始）。
+//    2026-09-03 に別の店と判定して店舗データから外した食べログURLが、特集とジャーナルの HTML では
+//    2026-10-09 まで残っていた（ISSUE-155）。判定は照合キャッシュの事実だけで、外部へは問い合わせない。
+checks.push({
+  id: 'page-store-links',
+  title: '特集・ジャーナルの店舗リンクが別の店を指していない（ISSUE-156）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_page_store_links.js', '--check']],
+});
 
 if (cat.buildCore.length) {
   checks.push({
