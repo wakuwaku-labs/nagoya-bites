@@ -477,7 +477,7 @@
 
 ### [ISSUE-178] ホットペッパーが【閉店】と表示する「創作料理まるゆ」の営業を一次情報で確かめ、閉店なら掲載から外す
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-10-16
 - **category**: data-quality / trust
@@ -501,7 +501,7 @@
     - 扱いの決まりは `docs/decisions/0014-relocated-store-listing.md` と記録の _doc に書いた。取り込み元の掲載が閉店なら外し、生きていれば住所を直す（[[ISSUE-171]]）。
   - 外したもの: `data/stores.json`（4,874→4,873件）、`stores/J003450558.html`、`sitemap.xml` の1件。特集・ジャーナルでの言及とリンクは無い。トップの導線とエリア×ジャンルのページは次のビルドが作り直す。
   - 手元の確認: `audit_store_liveness.js`・`audit_closed_store_mentions.js --check`・`audit_page_store_links.js --check` が exit 0。孤児ページは122本のまま（増えていない）。
-  - 残り: 次のビルドの後、main でこの店が店舗データ・店舗ページ・sitemap・エリア×ジャンルのページから外れたままかを確かめる（達成条件3）。移転先の掲載は [[ISSUE-179]] で決める。
+  - 結果（2026-10-09・#445 合流後のビルド 37892873716 の後）: main で J003450558 は data/stores.json・stores/J003450558.html・sitemap.xml・index.html・stores/area/yabacho-osu の4本のどれにも無い（達成条件3）。`node scripts/audit_store_liveness.js` は掲載不可の閉店店なし。移転先の掲載は [[ISSUE-179]]（P-180・11-08）で決める。
 ### [ISSUE-179] 移転先（熱田区池内町4-1）の「創作料理まるゆ」を掲載するか決め、載せるなら実在検証を通して足す
 
 - **priority**: P3 → **status**: ready
@@ -734,7 +734,7 @@
 
 ### [ISSUE-148] スプレッドシート経由の店を HotPepper の住所で検査し、名古屋市外の店を取り込まない
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data-pipeline
 - **owner**: DataKeeper
@@ -751,7 +751,11 @@
   - 住所を取れなかった行は外さない（API の失敗・応答なし・掲載終了で返らない）。エラー文の API キーは伏せる（達成条件2）。ただし前の回に県外と確かめた店は `data/spreadsheet_address_gate.json` の住所で外し続ける。取得に失敗した日だけ店が戻り、店舗ページとサイトマップに出て翌日また消える行き来を防ぐため（取得できなかった回は前の判定を消さない・ISSUE-163 と同じ考え方）。記録は HotPepper を取れた回だけ書き、build.yml が別の行の git add でコミットする
   - テスト `tests/spreadsheet_address_gate.test.js`（7件）: 県外の行が外れる・エリアの店は引き直さない・API の失敗とエラー応答で何も外さない・キーが無ければ引かない・20件ずつ引いて失敗した回の分だけ分からないままにする・前の回の記録で外し続ける・愛知県と取れた店とスプレッドシートから消えた行は記録から外れる（達成条件3）
   - 見込み（推測）: 手元の data/stores.json で住所が空でホットペッパーIDのある店が624件。閉店リストで後から外している行も引くため、id 指定は1回のビルドでおよそ35〜40回
-  - 残り: 合流後の最初のビルドのログ（または data/spreadsheet_address_gate.json）で外れた店を閉店リストと突き合わせ、新しく外れた店の一覧をここに残す（達成条件4）
+- **結果（2026-10-09・#446 合流後のビルド 37894359955）**:
+  - スプレッドシートの1,010行のうち、住所が取れた941行（エリアの店一覧571・id 指定370/439）で「愛知県」を含まない321行を取り込まなかった。API の失敗は0回、住所を取れずに残した行は69。県別は東京都47・沖縄県34・三重県33・千葉県30・神奈川県30・埼玉県26・福島県19・大阪府18・北海道15・兵庫県13・広島県13 ほか。記録は `data/spreadsheet_address_gate.json`（店名・ID・住所）
+  - 閉店リストとの突き合わせ（達成条件4）: 321行のうち `data/closed_stores.json` に登録済みは20行。残る301行のうち292行は、閉店リスト以外の理由でもともと `data/stores.json` に入っていなかった。掲載が変わったのは次の9店だけで、どれも「愛知県／栄」として載っていた（`data/stores.json` 4,873→4,864・ほかの増減なし）: つぼ八 栄町店（札幌市東区）・居酒屋 手羽熊 清田店（札幌市清田区）・半焼肉栄（高松市）・食堂ニカイノマテツ（那覇市）・炭火焼肉大（石垣市）・焼肉バル Rockys（いわき市）・やすらぎの家（鳥取県北栄町）・じゅうじゅうカルビ 草加松原店（草加市）・だるまホルモン（大牟田市）
+  - 9店はビルドの後にサイトマップ・index.html・エリア×ジャンルのページから消えたが、店舗ページは孤児として残っていた（noindex なし・題名は「栄・居酒屋」など）。`scripts/lib/store_orphans.js` の判定で9本とも削除対象（誘導先なし・手動キュレーション店と同名でない・ほかのページからのリンクなし）と確かめて削除し、`data/store_page_orphans.json`（131→122）と `sitemap-images.xml`（9件）から外した（[[SEO-119]] と同じ手順）。閉店ではないので閉店リストには入れない（取り込みの段階で外れる）
+  - 残る穴: 住所を取れなかった69行（掲載終了などで API が返さない）は外していない。県外の店が混ざっていてもこの検査では気づけず、駅名の監査（[[SEO-120]]）が補う
 
 
 ### [SEO-121] sitemap の lastmod を実際の更新日にし、止まっている sitemap-index と sitemap-news を整理する
@@ -1145,7 +1149,7 @@
 
 ### [SEO-144] index.html と既存の静的ページでも、localStorage の例外で GA が止まらないようにする
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / 計測
 - **owner**: Builder
@@ -1156,6 +1160,13 @@
   1. index.html の GA 部分で localStorage の読み書きを try/catch で囲む（NB_ENGAGEMENT_EVENTS などほかの動きは変えない）
   2. features/ と journal/ の既存ページの GA スニペットを `scripts/lib/ga_snippet.js` の出力に置き換える冪等なスクリプトを用意し、実行する
   3. `node scripts/audit_inline_js_syntax.js --check` が exit 0。制約5の機能（フィルター・検索・モーダル・IG埋め込み・Google評価）が動くことを確かめる
+- **結果（2026-10-09）**:
+  - index.html: GA の localStorage の読み書きを `nbInternal()`（try/catch）に寄せ、`trackEvent` も同じ判定を使う（`NB_ENGAGEMENT_EVENTS` などほかの動きは変えていない）。同じ端末で例外を投げていた残りの3か所（iOS の PWA バナーの判定＝読み込み時の getItem・バナーを閉じたときの setItem・お気に入りと閲覧履歴の保存）も囲んだ（達成条件1）
+  - 実測（puppeteer・localStorage と sessionStorage が例外を投げる代役）: 旧 index.html は PC・iPhone ともカード0枚で、`gtag('config')` も送られなかった（PC は SecurityError と `Cannot read properties of undefined (reading 'hotpepper')`、iPhone は SecurityError 2件）。サイトデータを拒否した端末では、計測だけでなく画面も出ていなかったことになる。新しい版はどちらもカード30枚・config あり・エラーなし。保存できる端末の動きも変わらない
+  - `scripts/apply_ga_snippet.js`（冪等）: GA の読み込みタグの直後の `<script>` が旧スニペット2種のどちらかと完全に一致するときだけ `scripts/lib/ga_snippet.js` の出力に置き換え、知らない形は触らずに報告する。229本をそろえた（オーナー除外つきで localStorage を囲んでいない56本・オーナー除外なし173本。173本でも `?nb_owner=1` の除外が効くようになった）。知らない形0本・GA なし4本（達成条件2）
+  - 確認: `node scripts/audit_inline_js_syntax.js --check`・`node scripts/apply_ga_snippet.js --check`・`node scripts/audit_design_system.js --check` はどれも exit 0、npm test 449件通過。制約5の機能（ジャンルの絞り込み 4,873→1,876・検索で「手羽先むつみ」が先頭に来る・モーダル・Instagram 埋め込みの iframe・カードの Google 評価30枚・お気に入り）を、保存できる端末と例外を投げる代役の両方で確かめた（達成条件3）
+  - テスト `tests/apply_ga_snippet.test.js`（4件）: 旧2種の置き換えと冪等・知らない形と GA なしは触らない・index.html の GA 部分を例外を投げる localStorage で実行して config とイベントが届く・`?nb_owner=1` で internal になる。夜間QA に `ga-snippet`（soft）を足した
+
 
 ### [SEO-145] 特集の画面に公開日・更新日・書き手を共通の部品で出す
 

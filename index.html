@@ -7,10 +7,15 @@
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
 // ─── オーナー除外: ?nb_owner=1 を付けてアクセスすると以降の閲覧がGA4から除外される ───
+// localStorage が使えない端末（サイトデータを拒否した端末など）では読み書きが例外を投げる。
+// 囲まないと gtag('config') まで止まるため、例外は通常の計測に倒す（SEO-144・scripts/lib/ga_snippet.js と同じ動き）
+function nbInternal(){try{return localStorage.getItem('nb_internal')==='1';}catch(e){return false;}}
 (function(){
-  var p=new URLSearchParams(location.search);
-  if(p.get('nb_owner')==='1'){localStorage.setItem('nb_internal','1');history.replaceState(null,'',location.pathname);}
-  if(localStorage.getItem('nb_internal')==='1'){
+  try{
+    var p=new URLSearchParams(location.search);
+    if(p.get('nb_owner')==='1'){localStorage.setItem('nb_internal','1');history.replaceState(null,'',location.pathname);}
+  }catch(e){}
+  if(nbInternal()){
     // traffic_type=internal にしておくとGA4側フィルタで除外できる
     gtag('js',new Date());gtag('config','G-3LCZNGZPWJ',{traffic_type:'internal'});
   } else {
@@ -22,7 +27,7 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 var NB_ENGAGEMENT_EVENTS={modal_open:1,cta_click:1,cta_gmap_click:1,search:1,share_x:1,share_line:1,share_copy:1,fav_add:1};
 var NB_LAST_EVT_TS=Date.now();
 function trackEvent(name,params){
-  if(localStorage.getItem('nb_internal')==='1')return;
+  if(nbInternal())return;
   if(typeof gtag!=='function')return;
   var p=params||{};
   if(NB_ENGAGEMENT_EVENTS[name]){
@@ -10783,14 +10788,17 @@ document.getElementById('pwa-install-btn').addEventListener('click', function() 
 document.getElementById('pwa-dismiss').addEventListener('click', function() {
   document.getElementById('pwa-banner').style.display = 'none';
   hidePwaInstallBackdrop();
-  localStorage.setItem('pwa-banner-dismissed', Date.now());
+  try { localStorage.setItem('pwa-banner-dismissed', Date.now()); } catch (e) {}
 });
 
 // iOS Safari 検出 & バナー表示
 var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 var isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
 if (isIOS && !isStandalone) {
-  var dismissed = localStorage.getItem('pwa-banner-dismissed');
+  // サイトデータを拒否した端末では localStorage が例外を投げる。囲まないとこのブロックの残り（init() を含む）が
+  // 動かずページが空になる。閉じたことを覚えられないので、その端末ではバナーを出さない（SEO-144）
+  var dismissed;
+  try { dismissed = localStorage.getItem('pwa-banner-dismissed'); } catch (e) { dismissed = String(Date.now()); }
   var showBanner = !dismissed || (Date.now() - Number(dismissed)) > 7 * 24 * 60 * 60 * 1000;
   if (showBanner) {
     setTimeout(function() {
@@ -10803,7 +10811,7 @@ if (isIOS && !isStandalone) {
 function hidePwaIosBanner() {
   document.getElementById('pwa-banner-ios').style.display = 'none';
   hidePwaInstallBackdrop();
-  localStorage.setItem('pwa-banner-dismissed', Date.now());
+  try { localStorage.setItem('pwa-banner-dismissed', Date.now()); } catch (e) {}
 }
 document.getElementById('pwa-dismiss-ios').addEventListener('click', hidePwaIosBanner);
 var pwaIosBackdropEl = document.getElementById('pwa-install-backdrop');
@@ -11317,7 +11325,7 @@ function getFavs() {
   try { return JSON.parse(localStorage.getItem('nb_favs') || '[]'); } catch(e) { return []; }
 }
 function saveFavs(arr) {
-  localStorage.setItem('nb_favs', JSON.stringify(arr));
+  try { localStorage.setItem('nb_favs', JSON.stringify(arr)); } catch (e) {}
   updateFavCount();
 }
 function toggleFav(name, e) {
@@ -11538,7 +11546,7 @@ function addHistory(storeName) {
   hist = hist.filter(function(h) { return h !== storeName; });
   hist.unshift(storeName);
   if (hist.length > 10) hist = hist.slice(0, 10);
-  localStorage.setItem('nb_history', JSON.stringify(hist));
+  try { localStorage.setItem('nb_history', JSON.stringify(hist)); } catch (e) {}
   renderHistory();
 }
 function renderHistory() {
