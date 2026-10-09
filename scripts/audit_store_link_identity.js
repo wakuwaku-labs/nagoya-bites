@@ -17,13 +17,21 @@
  *   node scripts/audit_store_link_identity.js --check          # 不一致があれば exit 1（CI向け）
  *   node scripts/audit_store_link_identity.js --scope all      # 手動店だけでなく掲載全店を対象にする
  *   node scripts/audit_store_link_identity.js --scope all --kind tabelog --all  # 食べログURLだけ全件検証
+ *   node scripts/audit_store_link_identity.js --scope all --health  # 照合せず、種類ごとの照合の状況だけ（食べログを30日より長く取得できていなければ exit 1）
+ *   node scripts/audit_store_link_identity.js --scope all --health --json  # 同じ判定を JSON で出す（link-audit-watchdog.yml が読む）
  *
  * キャッシュ（data/store_link_identity_checked.json）:
- *   一度 ok:true と確認できたURLは MAX_AGE_DAYS の間は再検証をスキップする
- *   （食べログ/ホットペッパーへの外部アクセス回数を抑えるため）。ok:false だった
- *   ものは毎回レポートに出す（キャッシュが「まだ直っていない不一致」を握りつぶさない）。
- *   店舗数が多いため既定では1回の実行で全件は検証しない（--limit の既定値）。
- *   複数回実行すれば「未検証のものから」順に消化され、いずれ全件をカバーする。
+ *   判定が出た組（一致・別の店・閉店・支店違い・ページが無い＝HTTP 404/410）は MAX_AGE_DAYS の間は照合し直さない
+ *   （食べログ/ホットペッパーへの外部アクセス回数を抑えるため）。不一致の組はキャッシュから
+ *   毎回レポートに出す（キャッシュが「まだ直っていない不一致」を握りつぶさない）。
+ *   ページを取得できなかった照合（404/410 以外の fetch-error・no-title）は、前に記録した判定を上書きしない。
+ *   試した日時と理由だけを足し、RETRY_DAYS あけてから試し直す（ISSUE-163。上書きすると題名と
+ *   住所の記録が消え、支店違い・別の店の監査がその組を数えなくなる＝偽の緑になる）。
+ *   照合する順番は、一度も照合していない組が先、その後は最後に試した日が古い順
+ *   （旧実装は店の並び順で、取得できない組が毎日の枠を使い、新しいリンクに回らなかった）。
+ *   同じ種類で取得の失敗が BREAK_AFTER 件続いたら、その回のその種類はやめる（ISSUE-164。
+ *   食べログは遅くとも 2026-10-05 から CI の取得に HTTP 403 を返す。回避はしない）。
+ *   --check が exit 1 にするのは判定の出ている不一致だけ。取得できなかった組は不一致と数えない。
  */
 'use strict';
 
@@ -39,9 +47,105 @@ const REPORT_PATH = path.join(ROOT, 'data', 'store_link_identity_report.json');
 
 const MAX_AGE_DAYS = 60;
 const MAX_AGE_MS = MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
+// 取得できなかった組を試し直すまでの日数。断られている間に毎日同じ組を取りに行かない（ISSUE-163）
+const RETRY_DAYS = 7;
+const RETRY_MS = RETRY_DAYS * 24 * 60 * 60 * 1000;
+// 同じ種類で取得の失敗がこの件数続いたら、その回のその種類の照合をやめる（ISSUE-164・403 を回避しない）
+const BREAK_AFTER = 5;
+// --health が赤にする、最後に取得できた日からの日数（ISSUE-164）
+const HEALTH_MAX_DAYS = 30;
+// 判定が出ていない（ページを取得できなかった）結果の理由
+const FETCH_FAILURES = new Set(['fetch-error', 'no-title']);
+// ページが無いと分かった応答は判定として扱う（取得を断られたのではない。旧実装と同じく不一致に数える）
+const NOT_FOUND = /^HTTP 4(04|10)$/;
+
+function isFetchFailure(entry) {
+  return !!entry && entry.ok === false && FETCH_FAILURES.has(entry.reason) && !NOT_FOUND.test(entry.error || '');
+}
+
+function timeOf(iso) {
+  const t = Date.parse(iso || '');
+  return Number.isFinite(t) ? t : 0;
+}
+
+// 最後に試した時刻（取得できなかった回も含む）
+function lastTriedAt(entry) {
+  return Math.max(timeOf(entry.checkedAt), timeOf(entry.lastAttemptAt));
+}
+
+/**
+ * 照合する組を、照合する順に返す（純関数・ISSUE-163）。
+ * - 判定が出ている組（一致も不一致も）は MAX_AGE_DAYS の間は照合し直さない
+ * - 取得できなかった組は、最後に試してから RETRY_DAYS あける（判定が古くなった組の試し直しも同じ）
+ * - 種類は opts.kindOrder の順（既定は食べログが先。別の店を指すリンクが実際に見つかってきたのは食べログ）
+ * - 同じ種類の中では、一度も照合していない組が先。その後は最後に試した時刻が古い順（同じなら元の並び順）
+ * targets: [{ key, kind, ... }]（key は照合キャッシュの鍵）
+ */
+function planChecks(targets, cache, now, opts = {}) {
+  const kindOrder = opts.kindOrder || ['tabelog', 'hotpepper'];
+  const rankOf = (kind) => (kindOrder.includes(kind) ? kindOrder.indexOf(kind) : kindOrder.length);
+  const rows = [];
+  targets.forEach((t, i) => {
+    const entry = cache[t.key];
+    if (!entry) { rows.push({ t, i, rank: rankOf(t.kind), tried: -Infinity }); return; }
+    const tried = lastTriedAt(entry);
+    if (!opts.force) {
+      if (!isFetchFailure(entry) && now - timeOf(entry.checkedAt) < MAX_AGE_MS) return;
+      if (now - tried < RETRY_MS) return;
+    }
+    rows.push({ t, i, rank: rankOf(t.kind), tried });
+  });
+  rows.sort((a, b) => a.rank - b.rank || a.tried - b.tried || a.i - b.i);
+  return rows.map((r) => r.t);
+}
+
+/**
+ * 照合の結果をキャッシュの組に書く形にする（純関数・ISSUE-163）。
+ * 取得できなかった結果は、前に記録した判定（一致・別の店・閉店・支店違い・404）を上書きしない。
+ * 上書きすると題名と住所の記録が消え、別の支店・別の店の監査がその組を数えなくなる
+ */
+function mergeCheckResult(prev, result, meta, nowIso) {
+  if (isFetchFailure(result) && prev && !isFetchFailure(prev)) {
+    return { ...prev, lastAttemptAt: nowIso, lastAttemptReason: result.reason, lastAttemptError: result.error || null };
+  }
+  return { ...result, ...meta, checkedAt: nowIso };
+}
+
+/**
+ * 種類ごとの照合の状況（純関数・ISSUE-164）。外部へは問い合わせず、キャッシュの記録だけで数える。
+ * links: リンクの数 / neverChecked: 一度も照合していない / unfetched: 取得できたことが無い /
+ * lastFetchedAt: 最後に取得できた時刻（判定が出た照合の時刻の最大）
+ */
+function summarizeHealth(targets, cache) {
+  const out = {};
+  for (const t of targets) {
+    const k = out[t.kind] || (out[t.kind] = { links: 0, neverChecked: 0, unfetched: 0, lastFetchedAt: null });
+    k.links++;
+    const entry = cache[t.key];
+    if (!entry) { k.neverChecked++; continue; }
+    if (isFetchFailure(entry)) { k.unfetched++; continue; }
+    if (!k.lastFetchedAt || timeOf(entry.checkedAt) > timeOf(k.lastFetchedAt)) k.lastFetchedAt = entry.checkedAt;
+  }
+  return out;
+}
+
+/**
+ * 照合の状況を判定する（純関数・ISSUE-164）。食べログを最後に取得できた日が maxDays より前
+ * （または一度も取得できていない）なら ok=false。ホットペッパーは CI から取得できているので見ない。
+ */
+function judgeHealth(health, now, maxDays = HEALTH_MAX_DAYS) {
+  const kinds = {};
+  const stale = [];
+  for (const [kind, h] of Object.entries(health)) {
+    const days = h.lastFetchedAt ? Math.floor((now - Date.parse(h.lastFetchedAt)) / (24 * 60 * 60 * 1000)) : null;
+    kinds[kind] = { ...h, daysSinceFetched: days };
+    if (kind === 'tabelog' && h.links > 0 && (days === null || days > maxDays)) stale.push(kind);
+  }
+  return { ok: stale.length === 0, maxDays, stale, kinds };
+}
 
 const args = process.argv.slice(2);
-const opts = { limit: 40, force: false, store: null, delayMs: 4000, jitterMs: 2000, check: false, scope: 'manual', kind: 'all' };
+const opts = { limit: 40, force: false, store: null, delayMs: 4000, jitterMs: 2000, check: false, scope: 'manual', kind: 'all', health: false, json: false };
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
   if (a === '--limit') opts.limit = parseInt(args[++i], 10);
@@ -53,6 +157,8 @@ for (let i = 0; i < args.length; i++) {
   else if (a === '--scope') opts.scope = args[++i];
   else if (a === '--kind') opts.kind = args[++i];   // tabelog / hotpepper / all
   else if (a === '--jitter') opts.jitterMs = parseInt(args[++i], 10);
+  else if (a === '--health') opts.health = true;   // 照合せず、種類ごとの照合の状況だけを出す（ISSUE-164）
+  else if (a === '--json') opts.json = true;       // --health の判定を JSON で出す
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -100,7 +206,7 @@ async function main() {
   // 名前が一致しても住所が違えば別の支店・別の店として落とす（ISSUE-159）。HotPepper の
   // 掲載住所（stores.json の「住所」）を優先し、無い店（手動キュレーション店）だけ Google Places
   // の住所を使う。Places は紐付け自体が別の支店を指す店がある（ISSUE-147）
-  const addressIndex = buildPlacesAddressIndex(ROOT);
+  const addressIndex = opts.health ? new Map() : buildPlacesAddressIndex(ROOT);
 
   let targets = [];
   for (const s of stores) {
@@ -108,30 +214,29 @@ async function main() {
     if (opts.store && !name.includes(opts.store)) continue;
     const area = s['エリア'] || '';
     if (opts.kind !== 'hotpepper' && classifyTabelogFormat(s['食べログURL']) === 'direct') {
-      targets.push({ kind: 'tabelog', url: s['食べログURL'], storeName: name, area, address: s['住所'] || '' });
+      const url = s['食べログURL'];
+      targets.push({ kind: 'tabelog', url, key: cacheKey('tabelog', url, name), storeName: name, area, address: s['住所'] || '' });
     }
     if (opts.kind !== 'tabelog' && s['ホットペッパーID'] && s['ホットペッパーID'].trim()) {
-      targets.push({ kind: 'hotpepper', id: s['ホットペッパーID'].trim(), storeName: name, area });
+      const id = s['ホットペッパーID'].trim();
+      const url = `https://www.hotpepper.jp/str${id}/`;
+      targets.push({ kind: 'hotpepper', id, url, key: cacheKey('hotpepper', url, name), storeName: name, area });
     }
   }
 
+  if (opts.health) return reportHealth(summarizeHealth(targets, cache));
+
   console.log(`=== 外部リンク実地検証 (scope=${opts.scope} / 対象候補 ${targets.length}件) ===`);
 
+  const plan = planChecks(targets, cache, Date.now(), { force: opts.force });
+  const run = {};
+  const streak = {};
   let checkedCount = 0;
-  let skippedFresh = 0;
-  const now = Date.now();
 
-  for (const t of targets) {
-    const url = t.kind === 'tabelog' ? t.url : `https://www.hotpepper.jp/str${t.id}/`;
-    const key = cacheKey(t.kind, url, t.storeName);
-    const cached = cache[key];
-    const fresh = cached && (now - new Date(cached.checkedAt).getTime()) < MAX_AGE_MS;
-
-    if (!opts.force && fresh && cached.ok) {
-      skippedFresh++;
-      continue;
-    }
-    if (checkedCount >= opts.limit) continue;
+  for (let i = 0; i < plan.length && checkedCount < opts.limit; i++) {
+    const t = plan[i];
+    const r = run[t.kind] || (run[t.kind] = { attempted: 0, fetched: 0, stopped: false });
+    if (r.stopped) continue;
 
     let result;
     if (t.kind === 'tabelog') {
@@ -139,45 +244,63 @@ async function main() {
     } else {
       result = await checkHotpepperId(t.id, t.storeName);
     }
-    cache[key] = { ...result, kind: t.kind, area: t.area, checkedAt: new Date().toISOString() };
+    cache[t.key] = mergeCheckResult(cache[t.key], result, { kind: t.kind, area: t.area }, new Date().toISOString());
     checkedCount++;
+    r.attempted++;
 
     const mark = result.ok ? '✅' : '❌';
     console.log(`${mark} [${t.kind}] ${t.storeName} (${t.area}) — ${result.ok ? `一致 (sim=${result.sim})` : `${result.reason}${result.matchedName ? ` 「${result.matchedName}」` : ''}${result.error ? `: ${result.error}` : ''}`}`);
 
+    if (isFetchFailure(result)) {
+      streak[t.kind] = (streak[t.kind] || 0) + 1;
+      if (streak[t.kind] >= BREAK_AFTER) {
+        r.stopped = true;
+        console.log(`⏸ [${t.kind}] 取得できない照合が ${BREAK_AFTER} 件続いた（${result.error || result.reason}）。今回の ${t.kind} の照合はここでやめる`);
+      }
+    } else {
+      streak[t.kind] = 0;
+      r.fetched++;
+    }
+
     fs.writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2));
-    if (checkedCount < opts.limit && targets.indexOf(t) < targets.length - 1) {
+    if (checkedCount < opts.limit && i < plan.length - 1) {
       await sleep(opts.delayMs + Math.floor(Math.random() * opts.jitterMs));
     }
   }
 
   console.log('');
-  console.log(`検証実行: ${checkedCount}件 / スキップ(直近${MAX_AGE_DAYS}日以内に一致確認済み): ${skippedFresh}件 / 未検証(次回持ち越し): ${Math.max(targets.length - checkedCount - skippedFresh, 0)}件`);
-
-  // レポート: キャッシュ全体から現時点の不一致を集計（今回検証していない過去の不一致も含む）
-  const mismatches = [];
-  for (const t of targets) {
-    const url = t.kind === 'tabelog' ? t.url : `https://www.hotpepper.jp/str${t.id}/`;
-    const key = cacheKey(t.kind, url, t.storeName);
-    const cached = cache[key];
-    if (cached && cached.ok === false) {
-      mismatches.push({
-        店名: t.storeName,
-        エリア: t.area,
-        種別: t.kind,
-        url,
-        理由: cached.reason,
-        検出タイトル: cached.matchedName || cached.title || null,
-        検証日: cached.checkedAt,
-      });
-    }
+  console.log(`照合: ${checkedCount}件 / 照合しない（判定が${MAX_AGE_DAYS}日以内・取得できなかった組は${RETRY_DAYS}日あける）: ${targets.length - plan.length}件 / 次回へ持ち越し: ${Math.max(plan.length - checkedCount, 0)}件`);
+  for (const [kind, r] of Object.entries(run)) {
+    console.log(`  ${kind}: 試した ${r.attempted}件・取得できた ${r.fetched}件${r.stopped ? '・取得できない照合が続いたので途中でやめた' : ''}`);
   }
-  fs.writeFileSync(REPORT_PATH, JSON.stringify({ generatedAt: new Date().toISOString(), mismatches }, null, 2));
+
+  // レポート: キャッシュ全体から現時点の不一致を集計（今回検証していない過去の不一致も含む）。
+  // 取得できなかった組は不一致と分けて出す（判定が出ていないものを不一致と数えない・ISSUE-163）
+  const mismatches = [];
+  const unfetched = [];
+  for (const t of targets) {
+    const cached = cache[t.key];
+    if (!cached || cached.ok !== false) continue;
+    const row = {
+      店名: t.storeName,
+      エリア: t.area,
+      種別: t.kind,
+      url: t.url,
+      理由: cached.reason,
+      検出タイトル: cached.matchedName || cached.title || null,
+      エラー: cached.error || null,
+      検証日: cached.checkedAt,
+    };
+    (isFetchFailure(cached) ? unfetched : mismatches).push(row);
+  }
+  const health = summarizeHealth(targets, cache);
+  fs.writeFileSync(REPORT_PATH, JSON.stringify({ generatedAt: new Date().toISOString(), run, health, mismatches, unfetched }, null, 2));
 
   console.log('');
+  if (unfetched.length) console.log(`… 取得できたことが無いリンク ${unfetched.length}件（不一致とは数えない）`);
   if (mismatches.length) {
     console.log(`❌ 不一致 ${mismatches.length}件（別の店 or 閉店店舗を指している可能性・要手動修正）:`);
-    mismatches.forEach((m) => console.log(`  - ${m.店名} (${m.エリア}) [${m.種別}] ${m.url} — ${m.理由}${m.検出タイトル ? ` 「${m.検出タイトル}」` : ''}`));
+    mismatches.forEach((m) => console.log(`  - ${m.店名} (${m.エリア}) [${m.種別}] ${m.url} — ${m.理由}${m.エラー ? `（${m.エラー}）` : ''}${m.検出タイトル ? ` 「${m.検出タイトル}」` : ''}`));
     console.log('');
     console.log(`詳細: ${path.relative(ROOT, REPORT_PATH)}`);
     if (opts.check) process.exit(1);
@@ -186,7 +309,28 @@ async function main() {
   }
 }
 
-main().catch((e) => {
-  console.error('致命的エラー:', e);
-  process.exit(1);
-});
+// --health: 種類ごとの照合の状況を出す。食べログを最後に取得できた日が HEALTH_MAX_DAYS より前なら exit 1（ISSUE-164）
+function reportHealth(health) {
+  const j = judgeHealth(health, Date.now());
+  if (opts.json) {
+    console.log(JSON.stringify({ ...j, today: new Date().toISOString().slice(0, 10) }, null, 2));
+  } else {
+    for (const [kind, h] of Object.entries(j.kinds)) {
+      console.log(`${kind}: リンク ${h.links}件・一度も照合していない ${h.neverChecked}件・取得できたことが無い ${h.unfetched}件・最後に取得できた日 ${h.lastFetchedAt ? `${h.lastFetchedAt.slice(0, 10)}（${h.daysSinceFetched}日前）` : 'なし'}`);
+    }
+    if (!j.ok) {
+      console.log(`❌ 食べログを ${HEALTH_MAX_DAYS}日より長く取得できていない（CI からは HTTP 403）。照合の記録が古くなり、新しいリンクも確かめられていない`);
+      console.log('   手元で照合し直す: node scripts/audit_store_link_identity.js --scope all --kind tabelog --limit 100');
+      console.log('   403 が返ったら回避せず、日を改める（5件続けて取得できなければ自動でやめる）');
+    }
+  }
+  if (!j.ok) process.exit(1);
+}
+
+if (require.main === module) {
+  main().catch((e) => {
+    console.error('致命的エラー:', e);
+    process.exit(1);
+  });
+}
+module.exports = { planChecks, mergeCheckResult, summarizeHealth, judgeHealth, isFetchFailure };

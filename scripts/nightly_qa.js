@@ -155,7 +155,7 @@ checks.push({
 // 9. 店舗データの食べログリンクが、名前は合っていても別の支店・別の店を指していないか（ISSUE-159・SOFT）。
 //    題名に支店名が無い食べログのページは、どの支店の名前とも一致と判定されていた（ISSUE-157: 丸の内店に
 //    泉本店のページ）。照合キャッシュに残るページの住所と HotPepper の掲載住所を比べ直す（外部へは問い合わせない）。
-//    2026-10-09 時点で 45 件あり、ISSUE-160 で1件ずつ確かめて外す。0 件になってから hard に上げる。
+//    2026-10-09 に ISSUE-160 で45件を1件ずつ確かめ、42件を外して0件。夜間QA で緑が続いたら hard に上げる。
 checks.push({
   id: 'tabelog-branch',
   title: '店舗データの食べログリンクが別の支店を指していない（ISSUE-159）',
@@ -163,6 +163,18 @@ checks.push({
   alwaysShow: true,
   trigger: '常時',
   cmd: ['node', ['scripts/audit_tabelog_branch_mismatch.js', '--check']],
+});
+// 10. 日次のリンク照合が食べログを取得できているか（ISSUE-164・SOFT）。食べログは遅くとも 2026-10-05 から CI の
+//     取得に HTTP 403 を返し、照合の記録は 09-20 から更新されていない。照合キャッシュの記録だけで、最後に取得
+//     できた日が30日より前なら赤（外部へは問い合わせない）。原因が外部でコードでは直せないため、hard にして
+//     夜間QA の Issue に混ぜない（他の hard の失敗が埋もれる）。判断は docs/decisions/0013。
+checks.push({
+  id: 'link-audit-health',
+  title: '日次のリンク照合が食べログを取得できている（ISSUE-164）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_store_link_identity.js', '--scope', 'all', '--health']],
 });
 
 if (cat.buildCore.length) {

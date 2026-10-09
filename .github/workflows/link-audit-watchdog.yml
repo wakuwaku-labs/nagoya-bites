@@ -1,0 +1,124 @@
+name: NAGOYA BITES — 食べログのリンク照合の生存監視
+
+# なぜこのワークフローが必要か（2026-10-09 / ISSUE-164・ISSUE-084 の再適用）:
+#   build.yml は毎日 audit_store_link_identity.js で店舗の食べログリンクが本当にその店の
+#   ページを指しているかを照合する。食べログは遅くとも 2026-10-05 から CI の取得に
+#   HTTP 403 を返し、照合は 09-20 を最後に1件も取得できていない。2026-10-09 には手元の
+#   Mac からも 403 だった。403 は回避しない（別の IP・別の取得手段・UA の偽装をしない）。
+#
+#   ISSUE-163 で、取得できなかった回に前の判定を消さないようにした（偽の緑は出ない）。
+#   それでも、新しく付いたリンクと、食べログ側の変化（閉店・移転・別の店への入れ替わり）は
+#   取得できるようになるまで確かめられない。夜間QA の soft の確認はレポートに残るだけで、
+#   人が見に行かないと分からない（CLAUDE.md 制約11・「気づけるはず」を検知と数えない）。
+#   夜間QA の hard にすると、原因が外部で長く続くため「🔴 夜間QA FAIL」の Issue が開いたままになり、
+#   他の hard の失敗が埋もれる。そのため専用の Issue で知らせる（docs/decisions/0013）。
+#
+#   オオカミ少年にしない:
+#     - 鳴らすのは、食べログを最後に取得できた日が30日より前のときだけ（照合キャッシュの記録で判定）
+#     - Issue は1件だけ開き、続いている間は本文を書き換えるだけでコメントしない（毎日メールを送らない）
+#     - 続いている間もジョブは失敗にしない（失敗の通知メールを毎日送らない）
+#     - 取得できたら自動で閉じる
+#
+#   判定は検証できる事実で行う（CLAUDE.md 制約10）:
+#     data/store_link_identity_checked.json の、判定が出た照合の時刻（checkedAt）の最大。
+#     取得できなかった回は判定を書かないので、この時刻を進められない。
+
+on:
+  schedule:
+    # 07:30 UTC = 16:30 JST（他の監視と時刻をずらす）
+    - cron: '30 7 * * *'
+  workflow_dispatch: # 手動確認・復旧後の即時クローズ用
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 照合の状況を判定（外部へは問い合わせない）
+        run: |
+          set +e
+          node scripts/audit_store_link_identity.js --scope all --health --json > /tmp/link-audit-health.json
+          set -e
+          echo "----- 判定結果 -----"
+          node scripts/audit_store_link_identity.js --scope all --health || true
+
+      - name: 止まっていれば Issue を起票/更新、取得できていればクローズ
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const r = JSON.parse(fs.readFileSync('/tmp/link-audit-health.json', 'utf8'));
+            const label = 'link-audit-watchdog';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'open', labels: label, per_page: 20,
+            });
+            const existing = issues.find(i => i.title.startsWith('🔴 食べログのリンク照合'));
+            const tb = r.kinds.tabelog || { links: 0, neverChecked: 0, unfetched: 0, lastFetchedAt: null, daysSinceFetched: null };
+            const last = tb.lastFetchedAt ? `${tb.lastFetchedAt.slice(0, 10)}（${tb.daysSinceFetched}日前）` : '一度も取得できていない';
+
+            // ---- 取得できている: 開いている Issue を閉じる ----
+            if (r.ok) {
+              if (existing) {
+                await github.rest.issues.createComment({
+                  owner, repo, issue_number: existing.number,
+                  body: `✅ 食べログを取得できたことを確認しました（${r.today}）。最後に取得できた日: ${last}。自動で閉じます。`,
+                });
+                await github.rest.issues.update({ owner, repo, issue_number: existing.number, state: 'closed' });
+                core.info(`Issue #${existing.number} を閉じました。`);
+              } else {
+                core.info(`食べログの照合は動いています（最後に取得できた日: ${last}）。`);
+              }
+              return;
+            }
+
+            // ---- 止まっている: 起票 or 本文の更新（コメントはしない＝毎日メールを送らない）----
+            const title = `🔴 食べログのリンク照合が${r.maxDays}日より長く止まっています（最後に取得できた日 ${tb.lastFetchedAt ? tb.lastFetchedAt.slice(0, 10) : 'なし'}）`;
+            const lines = [];
+            lines.push(`日次のリンク照合（build.yml の \`audit_store_link_identity.js\`）が、食べログのページを **${r.maxDays}日より長く取得できていません**（${r.today} 時点）。`);
+            lines.push('');
+            lines.push('## 状況（照合キャッシュの記録）');
+            lines.push(`- 食べログのリンク: ${tb.links}件`);
+            lines.push(`- 最後に取得できた日: ${last}`);
+            lines.push(`- 一度も照合していないリンク: ${tb.neverChecked}件（店舗ページに表示中で、その店のページか確かめられていない）`);
+            lines.push(`- 取得できたことが無いリンク: ${tb.unfetched}件`);
+            lines.push('- 原因: 食べログが CI の取得に HTTP 403 を返している（遅くとも 2026-10-05 から。10-09 は手元の Mac からも 403）');
+            lines.push('');
+            lines.push('## 何が起きないか・何が起きるか');
+            lines.push('- 照合の記録は消えません。取得できなかった回は前の判定を残します（ISSUE-163）。別の支店・別の店を指すリンクの監査は、最後に取得できた時点の事実で数え続けます。');
+            lines.push('- 新しく付いたリンクと、食べログ側の変化（閉店・移転・別の店への入れ替わり）は、取得できるようになるまで確かめられません。');
+            lines.push('');
+            lines.push('## 対処');
+            lines.push('1. 手元で照合し直す:');
+            lines.push('   ```bash');
+            lines.push('   node scripts/audit_store_link_identity.js --scope all --kind tabelog --limit 100');
+            lines.push('   ```');
+            lines.push('2. 403 が返ったら回避しない（別の IP・別の取得手段・UA の偽装をしない）。日を改めて試す。5件続けて取得できなければスクリプトが自動でやめる。');
+            lines.push('3. 取得できたら `data/store_link_identity_checked.json` と `data/store_link_identity_report.json` をコミットして PR にする。main に入った後の次の監視でこの Issue は自動で閉じる。');
+            lines.push('');
+            lines.push('---');
+            lines.push('判断の記録: `docs/decisions/0013-link-audit-keeps-verdicts.md`。続いている間はこの本文を書き換えるだけで、コメントは付けません（link-audit-watchdog.yml）。');
+            const body = lines.join('\n');
+
+            if (existing) {
+              await github.rest.issues.update({ owner, repo, issue_number: existing.number, title, body });
+              core.warning(`食べログのリンク照合が止まったままです（Issue #${existing.number}・最後に取得できた日 ${last}）`);
+            } else {
+              const { data: created } = await github.rest.issues.create({ owner, repo, title, body, labels: [label] });
+              core.warning(`食べログのリンク照合が止まっています。Issue #${created.number} を起票しました（最後に取得できた日 ${last}）`);
+            }

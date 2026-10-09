@@ -264,6 +264,9 @@ function tabelogAddressFromHtml(html) {
 
 function hotpepperNameFromTitle(title) {
   let t = title.replace(/\s*\|\s*ホットペッパーグルメ\s*$/, '');
+  // ネット予約ができる店は「店名(エリア/ジャンル)＜ネット予約可＞」。末尾の「＜…＞」を先に外さないと
+  // 丸括弧が末尾にならず、店名が短い店ほど正しいリンクを不一致にする（ISSUE-162）
+  t = t.replace(/\s*＜[^＞]*＞\s*$/, '');
   t = t.replace(/\([^)]*\)\s*$/, '').replace(/（[^）]*）\s*$/, '');
   return { name: t.trim() };
 }
