@@ -173,6 +173,16 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_stub_links.js', '--check']],
 });
+// HotPepper の取得に取りこぼしが無いか（ISSUE-143・SOFT で開始）。1,000件の上限を超える中エリアは小エリアごとに
+//    取り直し、API のエラーはやり直す。それでも取れなかった回は build.js が data/hotpepper_fetch_log.json に残す
+checks.push({
+  id: 'hotpepper-fetch',
+  title: 'HotPepper の取得に取りこぼし（エラー・件数との差）が無い（ISSUE-143）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/hotpepper_fetch_report.js', '--check']],
+});
 // 8. 特集・ジャーナルに手で書かれた店舗リンクが別の店を指していないか（ISSUE-156・SOFT で開始）。
 //    2026-09-03 に別の店と判定して店舗データから外した食べログURLが、特集とジャーナルの HTML では
 //    2026-10-09 まで残っていた（ISSUE-155）。判定は照合キャッシュの事実だけで、外部へは問い合わせない。
