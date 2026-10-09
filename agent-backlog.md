@@ -65,7 +65,7 @@
 
 ### [ISSUE-161] ビルドの CI が main の最新から始まるようにし、続けて合流したときの push 失敗をなくす
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: ci / reliability
 - **owner**: Builder
@@ -76,6 +76,7 @@
   1. build.yml の checkout が main の最新を取る（`ref: main`）。concurrency の説明を実際の動きに合わせる
   2. 合流後の最初のビルドのログで、checkout が `+refs/heads/main` を取っている（起点の SHA ではない）ことを確かめる
   3. 続けて2本合流したとき、後の回が前の回の生成物のコミットの上から始まり、push まで通る（次にそうなった日に確かめる）
+- **結果（2026-10-09）**: #436 で build.yml の checkout に `ref: main` を付けた。合流後の最初のビルド（run 37878933280・起点は #436 の合流 e69a6ab178）は、checkout で全ブランチを取り（`fetch ... +refs/heads/*:refs/remotes/origin/*`）、`git checkout -B main refs/remotes/origin/main` で main の最新 e92dc86ab9 から始まった（起点の SHA ではない・達成条件2）。この回は #435 と #436 を続けて合流したときの後の回で、e92dc86ab9 は前の回（run 37878602349）の生成物のコミット a4a9a84e91 を含む。push の前の取り込みは「Current branch main is up to date」で衝突なく、`e92dc86ab9..5c8203aa6b main -> main` と通った（達成条件3）
 
 ### [ISSUE-158] 店舗ページの食べログリンクのうち、名前は合っているが別の支店・別の店を指すものを見つけて外す
 
@@ -114,7 +115,7 @@
 
 ### [ISSUE-160] 別の支店・別の店を指すと確かめた食べログリンクを、店舗データ・店舗ページ・解決キャッシュから外す
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: in_progress
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
 - **owner**: DataKeeper
@@ -125,6 +126,13 @@
   1. 一覧の各件を、食べログのページの住所と HotPepper の掲載の住所で1件ずつ確かめ、別の店と確かめたものだけを外す（表記ゆれで同じ店のものは残し、証跡を結果に書く）
   2. 次のビルドの後も外したままになっていることを main で確かめる
   3. 特集・ジャーナルに同じ URL が手で書かれていないかを `node scripts/audit_page_store_links.js` で確かめる
+- **結果（2026-10-09）**: [[ISSUE-159]] の一覧45件を1件ずつ確かめ、42件を外し、3件を同じ店として残した。根拠は `data/tabelog_branch_reviewed.json`（店舗ID と URL の組ごとに decision・理由・食べログ側の題名と住所・HotPepper の掲載住所と座標）。
+  - **確かめ方**: 食べログはこの日、手元からも HTTP 403 を返した（回避はしない）。食べログ側の事実は照合キャッシュに 2026-09-20 に記録した題名と住所を使い、HotPepper の掲載ページは 10-09 に取り直した（住所と座標）。距離は国土地理院の住所検索で食べログ側の住所を座標にして測った。
+  - **残した3件**: めんらんど（J000400091・食べログ側の住所は HotPepper の座標から19m・区画整理の前後の住所）、和食麺処 サガミ 有松店（J000395215・同じ支店名・字名が同じ 境松）、嘉文 徳重店（J000994381・同じ支店名・字の代表点で291m）。監査はこの3組を数えない。
+  - **外した42件**: 市町村が違う10件（碧亭 → みよし市・平和食堂 → 豊橋市・大徳 → 南知多町 など）、町名か丁目が違う32件（ELLE HALL Dining → 名古屋駅西口店のページ・食彩館ねぎぼーず 本店 → 港店のページ など）。`clear_broken_tabelog_links.js --reviewed` が店舗IDごとに外した（data/stores.json 42件・stores/*.html 42本のボタンと JSON-LD の sameAs・data/tabelog_resolved.json の42件を failed にして埋め戻しを防ぐ・手動キュレーション店は0件）。同じ URL を正しい支店も使っている組は残した（焼肉神宮 金山本店・じゃけん 名古屋店・ELLE HALL Dining 名古屋駅西口店 など11店）。
+  - **確認**: `audit_tabelog_branch_mismatch.js` は different 0件（食べログリンク 2,685件・確かめ済み3件・unknown 16件は表記ゆれ）。`audit_page_store_links.js --check` は exit 0（特集・ジャーナルに同じ URL は無い）。data/stores.json で変わったのは42店の「食べログURL」だけ。書き換えた42本の script 180個に構文エラーは無い。
+  - **達成条件2**: 合流後のビルドの後に main で確かめる。
+  - 見つけたこと: 外した42件のうち13件は、Instagram のアカウントを外した食べログのページから取っていた（[[ISSUE-165]]）。同じ URL を使う MAVERICK HALL（J000739645）は名前が一致しない組で、この課題の対象外（[[ISSUE-166]]）。
 
 ### [ISSUE-162] ホットペッパーの題名の「＜ネット予約可＞」を外して店名を読み、正しいリンクを不一致と数えないようにする
 
@@ -169,6 +177,34 @@
   2. 報告 `data/store_link_identity_report.json` に、その回に試した件数・取得できた件数と、種類ごとの最後に取得できた日・一度も照合していない件数を出す
   3. 夜間QA に、食べログを最後に取得できた日が30日より前なら赤になる確認を soft で入れる。赤のときは、手元で照合し直すコマンドを表示する
   4. 外へ知らせる（hard にして Issue を起票する）かどうかを、手元から照合できるか確かめてから決め、判断を `docs/decisions/` に残す
+
+### [ISSUE-165] 外した食べログのページから取った Instagram のアカウントを確かめ、別の店・別の支店のものを外す
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: data-quality / trust
+- **owner**: DataKeeper
+- **source**: [[ISSUE-160]] の作業中に発見（外した42件のうち13件の Instagram が、外した食べログのページから取ったものだった）
+- **brand-filter**: ✅ 適合 — 実在保証（店舗ページの Instagram と埋め込み投稿が別の店のものになっている可能性）
+- **背景**: `data/instagram_resolved.json` のうち974件は、店の食べログのページに載っている Instagram を取ったもの（method が TBG-Q1-core 947件・TBG-Q2-clean 27件。`tabelogUrl` に使ったページを記録している）。その食べログのリンクは、9/3・9/20（[[ISSUE-131]]）・10/9（[[ISSUE-160]]）に別の店・別の支店を指すとして外したものを含む。2026-10-09 に data/stores.json と突き合わせると、使った食べログのページが今は店のリンクでない（すべて食べログのリンクが無くなった店）のに、その Instagram を表示している店が350件あった。うち226件は複数の店が同じアカウントを表示している（ブランドの公式や、別の支店のアカウント）。124件はその店だけが表示している。227件は Instagram の投稿をカードに埋め込んでいる。例: 碧亭（栄1）→ midori_tei_miyoshi（みよし市の碧亭）、餃子のかっちゃん 名古屋駅南口2号店 → kacchan_sakae、鶏ん家 栄住吉店 → tori_n_chi_shinsakae、肉のよいち 新栄葵店 → nikunoyoichi_oozone
+- **acceptance**:
+  1. 350件を「その店のアカウント」「ブランド共通の公式アカウント」「別の支店のアカウント」「別の店のアカウント」「決められない」に分ける基準を決める（ブランド共通の公式を残すかはオーナーの判断を仰ぐ）。判定は第三者が確かめられる事実（Instagram のプロフィール名・プロフィールの住所や支店名・店の公式サイトのリンク）だけで行う
+  2. 別の店・別の支店と確かめたアカウントを、店舗データ・店舗ページ・埋め込み投稿から外す。正しいアカウントへの差し替えは、一次情報で確かめられたものだけ
+  3. 食べログのリンクを外すとき、そのページから取った Instagram も確かめ直す対象に入るようにする（`clear_broken_tabelog_links.js` が一覧を出す等）
+
+### [ISSUE-166] 照合で名前が一致しなかった食べログリンク33件を1件ずつ確かめ、別の店のものを外す
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: data-quality / trust
+- **owner**: DataKeeper
+- **source**: [[ISSUE-160]] の作業中に発見
+- **brand-filter**: ✅ 適合 — 実在保証
+- **背景**: 照合キャッシュで名前が一致しなかった食べログリンクのうち、9/20 の後始末（`clear_broken_tabelog_links.js`）は「店名の痕跡が無い（sim 0）」「住所が違う」「404」だけを外し、名前が少し似ているもの（sim>0）は人の確認に残した。2026-10-09 の照合の報告 `data/store_link_identity_report.json` にはこの組が33件あり、店舗ページに表示されている。読み仮名の付け足しで同じ店のもの（楊國福 名古屋栄店 → 「楊國福 （ヤングオフー）」・ちりとり鍋 鉄板焼 GORU → 「GORU （ゴル）」）と、別の店のもの（MAVERICK HALL（栄2）→ ELLE HALL Dining 名古屋駅西口店のページ（椿町））が混ざる
+- **acceptance**:
+  1. 33件を1件ずつ、食べログ側の題名と住所（照合キャッシュの記録）と HotPepper の掲載で確かめ、結果を `data/tabelog_branch_reviewed.json` と同じ形で記録する
+  2. 別の店と確かめたものだけを店舗IDごとに外す（`clear_broken_tabelog_links.js --reviewed`）。同じ店と確かめたものは照合キャッシュを一致にするか、監査が数えないようにする
+  3. 報告の食べログの name-mismatch が、確かめていない組だけになる
 
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 
