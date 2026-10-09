@@ -25,6 +25,7 @@ status: in_progress
   - #427 SEO-122（デート特集の掲載店を FAQ の約束にそろえ、冒頭に予算別の結論を機械で置く・docs/decisions/0011・P-118 Done）
   - #426 SEO-124（ハブ685本に編集部の見分け方・選定理由の別枠・予算帯と最寄り駅の表。FAQPage の JSON-LD を外した。QA で本文の幅の未指定と最寄り駅の集計も直した・P-120 Done）
   - #416 SEO-143（店舗ページに「編集部の選定理由」）・#418 SEO-139（aggregateRating と SearchAction を外す・docs/decisions/0009）・#419 IndexNow が -2/-3 の店舗ページを探す・#420 SEO-127（banquet の 11・12月リードと幹事チェックリスト）・#421 SEO-131 その1（掲載店の入れ替えで dateModified を進める）
+  - #433 ISSUE-157（丸の内店・柳橋本店の泉本店の食べログリンク・ISSUE-158〜160 起票）
   - #432 ISSUE-155/156（特集・ジャーナルの別の店を指す食べログリンク8件・毎日数える監査）
   - #431 DSN-007（幅 900px 以下でパンくずとフッターのリンク群が画面外に消えていた・375px の横幅が 750px。nb.css の nav の規則を #main-nav だけに。P-155 Done＋コメント。本番で 375px の横幅 375・パンくずとフッター表示を確認）
 - Linear: P-115/P-116/P-138/P-113/P-140/P-131/P-132/P-134 は Done（結果コメントつき）。P-117（SEO-121）は In Progress で、本番確認待ち
@@ -36,7 +37,7 @@ status: in_progress
 3. SEO-115 の残り（P-112）: 達成条件5は満たした（10-09 の夜間QA で inline-js が ✅ hard）。残りは達成条件3（GA4 で /stores/ の page_view。10-10 以降の metrics_history の段差かオーナー確認）。満たしたら P-112 を Done にする
 4. SEO-137（P-133）: #428 で合流・P-133 Done＋結果コメント済み。11-06 の比較は SEO-148（P-157・Todo・期限 11-06）。`node scripts/journal_title_experiment.js --report` で比べる
 4b. #432 で合流（ISSUE-155/156・P-159/P-160 Done＋コメント）: 特集・ジャーナルの別の店を指す食べログリンク8件を外し・差し替え、しろむら 泉店→泉本店をそろえ、照合キャッシュで数える監査（scripts/audit_page_store_links.js）を夜間QA に soft で追加。親 ISSUE-154（P-158）は 10-10 の夜間QA で架空店監査と page-store-links が緑なら Done。次は ISSUE-157（P-161・丸の内店と柳橋本店に付いた泉本店の食べログ 23056889 を外す）→ ISSUE-148 → SEO-134 → ISSUE-153 → SEO-144。ISSUE-143 の調査はやり直す
-4c. ISSUE-157 進行中: 丸の内店（J004026662）の食べログ 23056889 は tabelog_resolved.json（build.js が毎回ここから埋め戻す）を failed にしないと戻る。柳橋本店は manual_tabelog_resolved.json の url を残すと resolve_manual_tabelog_links.js が再反映する（sole-name-match で中村区≠東区を通していた）。journal/2026-09-17-marunouchi-unashiromura-koshitsu-ryo.html の情報源「食べログ 丸の内店」も 23056889（泉）。記事の数字は HotPepper 丸の内店の掲載と一致＝情報源の差し替えで済む。丸の内店の placeId・Google評価・口コミ数・Instagram も泉本店のもの（ISSUE-147 の範囲・オーナー承認待ち・触らない）
+4c. #433 で合流（ISSUE-157・P-161 は In Progress）: 丸の内店と柳橋本店から泉本店の食べログ 23056889 を外し、tabelog_resolved.json と manual_tabelog_resolved.json を failed にした。次のビルドの後に main の data/stores.json で J004026662 の食べログURLが空のままなら backlog done・P-161 Done。9/17 のジャーナルの情報源を HotPepper 丸の内店に差し替え・泉本店の本文写真2枚を外した。名前は合っても別の支店を指す食べログリンク56件を ISSUE-158（P-162・親）・159（P-163・判定器）・160（P-164・外す）として起票し、Linear で親子をつないだ（同期スクリプトは親子を作らないので orca linear save-issue --parent-id で）。次の候補の先頭は ISSUE-159
 5. 夜間QA の station-names が緑で続いたら hard に上げる（10-09 が初めての ✅。10-10 も緑なら上げる）
 6. 最後に: 「うなぎのしろむら 泉店」の起票、創業者の実名が index.html の Organization JSON-LD に出ている件をオーナーへ報告（変更しない）、http.server（8093・8094・8095）を止める
 
