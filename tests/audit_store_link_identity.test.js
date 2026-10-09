@@ -128,7 +128,23 @@ test('閉店の兆し: ホットペッパーの【閉店】と掲載終了（HTT
   assert.deepStrictEqual(c.hotpepper.notFound.map((r) => r.店名), ['牡蠣 貝料理居酒屋 貝しぐれ 栄泉店']);
   assert.strictEqual(c.hotpepper.notFound[0].エラー, 'HTTP 404');
   // 何も無ければ空
-  assert.deepStrictEqual(summarizeClosures([hp('hpOk', 'A')], cache), { hotpepper: { closed: [], notFound: [] } });
+  assert.deepStrictEqual(summarizeClosures([hp('hpOk', 'A')], cache), { hotpepper: { closed: [], notFound: [], reviewed: [] } });
+  // 人が確かめて「決められない」とした店は、30日の間は closed に数えず reviewed に分ける（ISSUE-186）
+  const withId = { ...hp('hpClosed', 'STEPS'), id: 'J1' };
+  const now = new Date('2026-10-10T00:00:00Z').getTime();
+  const rv = (verdict, checkedAt) => [{ id: 'J1', verdict, checkedAt, issue: 'ISSUE-186' }];
+  let r = summarizeClosures([withId], cache, rv('決められない', '2026-10-10'), now);
+  assert.deepStrictEqual([r.hotpepper.closed.length, r.hotpepper.reviewed.length], [0, 1]);
+  assert.strictEqual(r.hotpepper.reviewed[0].判定, '決められない');
+  // 30日を過ぎれば closed に戻る
+  r = summarizeClosures([withId], cache, rv('決められない', '2026-09-01'), now);
+  assert.deepStrictEqual([r.hotpepper.closed.length, r.hotpepper.reviewed.length], [1, 0]);
+  // 閉店と判定した記録は保留にしない（closed_stores.json へ入れる手順に進む）
+  r = summarizeClosures([withId], cache, rv('閉店', '2026-10-10'), now);
+  assert.strictEqual(r.hotpepper.closed.length, 1);
+  // 別の店の記録は当たらない
+  r = summarizeClosures([{ ...withId, id: 'J2' }], cache, rv('決められない', '2026-10-10'), now);
+  assert.strictEqual(r.hotpepper.closed.length, 1);
 });
 
 test('人が同じ店と確かめた組は不一致に数えず分けて出す。閉店・別の URL・別の店は数える（ISSUE-176）', () => {

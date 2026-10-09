@@ -1,0 +1,12 @@
+{
+  "_README": "計測の仕組みが変わった日の台帳（SEO-118・2026-10-10）。この日をまたいで GA4 の値を前後で比べると、施策の効果ではなく計測の段差が出る。scripts/track_metrics.js の --followup と --report が、比べる2日の間にここの日付が入るとき measurement_changes に注意を出す。affects は段差が出る指標の出典（ga4 / gsc）。GSC は GA4 の計測と関係しないので、ga4 だけの変更では GSC の比較に注意を出さない。足すのは、計測コードの修正・GA4 の設定変更など、第三者が commit や PR で確かめられる変更だけ",
+  "changes": [
+    {
+      "date": "2026-10-09",
+      "id": "SEO-115",
+      "affects": ["ga4"],
+      "summary": "店舗ページ（stores/*.html）の GA4 が 2026-05-08 から構文エラーで動いていなかったのを直した（PR #403・#404 合流、build.yml が再生成）。この日から GA4 の PV・セッション・CTA に店舗ページの分が入る",
+      "evidence": "PR #403（208f72697e）・data/site_metrics.json の cta.byPage に店舗ページ発の cta_click が初めて出た"
+    }
+  ]
+}
