@@ -248,7 +248,7 @@
 
 ### [ISSUE-168] 食べログが同じ店を閉店と表示している掲載店19件の営業を一次情報で確かめ、閉店なら掲載から外す
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
 - **owner**: DataKeeper
@@ -266,6 +266,12 @@
   2. 閉店と確かめた店は、根拠つきで `data/closed_stores.json` に入れ、掲載から外す（`audit_store_liveness.js` の HARD で再掲載を止める）。推測で閉店にしない
   3. 同じ場所で別の店に入れ替わって営業しているものは、掲載が古い店のままになっていないかを確かめ、別の課題にする
 - **メモ**: 19件の確認は30分を超えるので、子課題 [[ISSUE-169]]（確かめて記録する）と [[ISSUE-170]]（閉店と確かめた店を外す）に分けた
+- **結果（2026-10-09）**: 子課題 [[ISSUE-169]]・[[ISSUE-170]] は done。
+  - 19件の判定: 閉店12・営業中2・決められない5。根拠は `data/store_liveness_reviews.json`。
+  - 閉店12店は `data/closed_stores.json` に入れて外し、main で外れたままと確かめた。
+  - 決められない5店は [[ISSUE-172]]（11-09 までに確かめ直す）で見る。
+  - Hug の住所は [[ISSUE-171]] で見る。
+  - 見つけたことから2つを起票した: Places の営業状態の定期更新（[[ISSUE-173]]・オーナーの確認が先）と、日次の照合でホットペッパーの【閉店】表示を数えること（[[ISSUE-174]]）。
 
 ### [ISSUE-169] ISSUE-168 の19店の営業を一次情報で確かめ、店ごとに根拠を記録する
 
@@ -298,7 +304,7 @@
 
 ### [ISSUE-170] ISSUE-169 で閉店と確かめた店を data/closed_stores.json に入れ、掲載から外す
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
 - **owner**: DataKeeper
@@ -315,6 +321,10 @@
   - 手元の確認: `audit_store_liveness.js`・`audit_closed_store_mentions.js --check`・`audit_page_store_links.js --check` が exit 0、`npm test` が通る。`gen-store-pages.js --check-orphans --dry-run` で孤児は113本のまま（増えていない）。
   - 達成条件3: 同じ場所で別の飲食店に入れ替わったと確かめられたものは無かった。みふねは Google の店舗情報ではギャラリーとして営業。喰えるBAR shin の場所の「スタンダード」は、後に入った店か改名かを確かめられないので [[ISSUE-172]] で見る。
   - 残り: 次のビルドの後、main で12店が stores.json・店舗ページ・sitemap・エリア×ジャンルのページから外れたままかを確かめる（達成条件2）。
+- **結果（2026-10-09）**: #442 の合流後のビルド（run 37886320956・success）の後、main（fd122630b2）で確かめた。
+  - 12店の ID は `data/stores.json`（4,874件）・`stores/<ID>.html`・`sitemap.xml`・`index.html`・`stores/area/` のページのどれにも無い。
+  - `node scripts/audit_store_liveness.js` は exit 0。
+  - 確かめて外した食べログリンク76件（[[ISSUE-160]] の42件と [[ISSUE-167]] の34件）は、どれも店舗データに戻っていない。
 
 ### [ISSUE-171] お食事処 Hug の掲載の住所を、移転先と見られる緑区六田1丁目204 に直すか確かめる
 
