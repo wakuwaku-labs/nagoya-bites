@@ -1981,17 +1981,12 @@
   "うなぎのしろむら 柳橋本店::名古屋市中村区": {
     "store": "うなぎのしろむら 柳橋本店",
     "エリア": "名古屋市中村区",
-    "url": "https://tabelog.com/aichi/A2301/A230103/23056889/",
-    "matchedName": "うなぎのしろむら",
-    "title": "うなぎのしろむらのご予約 - 久屋大通/うなぎ | 食べログ",
-    "sim": 1,
-    "locality": {
-      "basis": "sole-name-match",
-      "our": "名古屋市中村区",
-      "theirs": "名古屋市東区"
-    },
+    "failed": true,
+    "reason": "branch-locality-mismatch",
+    "note": "候補は「うなぎのしろむら」東区泉1-18-41（泉本店）だけで、我々の区（中村区）と食い違う。旧判定は名前の一致が1件だけのため所在地を見ずに採っていた（sole-name-match）。ISSUE-157 で取り消し",
+    "previousUrl": "https://tabelog.com/aichi/A2301/A230103/23056889/",
     "query": "うなぎのしろむら 柳橋本店",
-    "checkedAt": "2026-09-20T08:35:27.087Z"
+    "checkedAt": "2026-10-09T02:51:07.196Z"
   },
   "鮨 旬楽::名古屋市中区錦": {
     "store": "鮨 旬楽",

@@ -18501,10 +18501,12 @@
   },
   "J004026662": {
     "store": "うなぎのしろむら 丸の内店",
-    "tabelog": "https://tabelog.com/aichi/A2301/A230103/23056889/",
-    "method": "TBG-Q1-core",
-    "score": 2,
-    "resolvedAt": "2026-04-22T13:56:10.747Z"
+    "failed": true,
+    "failedBy": "tabelog",
+    "clearedBy": "branch-mismatch-review",
+    "clearedReason": "リンク先は「うなぎのしろむら」東区泉1-18-41（泉本店）の食べログ。丸の内店（中区丸の内2-8-27）と住所が違う。題名に支店名が無いため照合器が一致と判定していた（ISSUE-157）",
+    "previousUrl": "https://tabelog.com/aichi/A2301/A230103/23056889/",
+    "resolvedAt": "2026-10-09T02:51:07.196Z"
   },
   "J003893052": {
     "store": "ゲイリキ",

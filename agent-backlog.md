@@ -63,6 +63,49 @@
   2. `ctaCount` を「予約導線イベント＋（予約ドメインへの outbound_click のうち予約導線イベントの無いページから出たもの）」のように重ならない数え方に直し、テストで確かめる
   3. 直した日を週次レポートに注記する（前週比が不連続になるため）
 
+### [ISSUE-158] 店舗ページの食べログリンクのうち、名前は合っているが別の支店・別の店を指すものを見つけて外す
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: data-quality / trust
+- **owner**: DataKeeper
+- **source**: [[ISSUE-157]] の調査中に発見
+- **brand-filter**: ✅ 適合 — 実在保証（店舗ページの食べログのボタンが別の店へ送っている）
+- **背景**: 照合器（`scripts/lib/store_link_identity.js`）は、食べログの題名に支店名が無いとどの支店とも一致と判定し、名前が一致したリンクは住所を見ない。照合キャッシュ `data/store_link_identity_checked.json` のうち名前だけで一致としたリンク 469件で、ページの住所が取れている 315件を HotPepper の住所（`data/stores.json` の「住所」）と町名＋丁目で比べると 56件が違う（2026-10-09 実測）。表記ゆれ（「字」の有無・漢数字・「金山町」と「金山」・「上ノ宮町」と「上の宮」）も含むが、市が違うもの（碧亭 栄1 → みよし市・タイレストラン バンコク 栄4 → 一宮市・平和食堂 → 豊橋市）と、同じ屋号の別の支店（SILK NAGOYA 栄店 → 名駅2・うまい魚が食べたくて 新栄店 → 名駅南）がある。HotPepper 由来店の食べログURLは `resolve_tabelog.js` の旧スコアリングで埋めたもので、店舗ページの食べログのボタンと JSON-LD の sameAs に出ている
+- **acceptance**:
+  1. 子課題 [[ISSUE-159]]（判定器と監査）と [[ISSUE-160]]（確かめた誤リンクを外す）が done
+  2. 照合キャッシュで名前だけで一致としたリンクのうち、住所の違いが表記ゆれだけでは説明できないものが 0件
+  3. 日次の監査（`audit_store_link_identity.js`）が、新しく入った支店違いを不一致として数える
+
+### [ISSUE-159] 照合器に住所の照合を足し、名前が合っても別の支店・別の店を指す食べログリンクを数える
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: qa / trust
+- **owner**: Builder
+- **source**: [[ISSUE-158]] の子課題
+- **brand-filter**: ✅ 適合 — 実在保証の再発防止（制約10・11）
+- **背景**: [[ISSUE-158]] の56件は、表記ゆれ（「字」・漢数字・ヶ/ケ・町の有無・枝番）を正規化しないと誤検出が混ざる。比べる住所は、HotPepper 由来店は `data/stores.json` の「住所」を使う（Google Places は紐付け自体が別の支店を指す店があるため使わない・[[ISSUE-147]]）
+- **acceptance**:
+  1. 住所を比べる関数（市区町村・町名・丁目を取り出して比べる）を作り、今回の56件に含まれる表記ゆれの実例をテストに入れる。表記ゆれだけの組は「同じ」、市区町村・町名・丁目のどれかが違う組は「違う」と判定する
+  2. `checkTabelogUrl` が、名前が一致しても住所が「違う」ときは ok にしない（理由を新設する。例 `branch-address-mismatch`）。住所がどちらか取れないときは従来どおり（推測で落とさない）
+  3. 照合キャッシュの事実だけで56件を判定し直した一覧を出す（外部へ問い合わせない）
+  4. `resolve_manual_tabelog_links.js` の sole-name-match が、我々の店名に支店名があって区が食い違う候補を採らないようにする（柳橋本店の再発防止・[[ISSUE-157]]）
+
+### [ISSUE-160] 別の支店・別の店を指すと確かめた食べログリンクを、店舗データ・店舗ページ・解決キャッシュから外す
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **category**: data-quality / trust
+- **owner**: DataKeeper
+- **source**: [[ISSUE-158]] の子課題
+- **brand-filter**: ✅ 適合 — 実在保証
+- **背景**: [[ISSUE-159]] の一覧のうち、別の店と確かめたものを外す。外し方は 9/3・9/20 の後始末（`scripts/clear_broken_tabelog_links.js`）と同じ4層（manual_stores・stores.json・stores/*.html・`data/tabelog_resolved.json` を failed に）。正しい URL への差し替えはしない
+- **acceptance**:
+  1. 一覧の各件を、食べログのページの住所と HotPepper の掲載の住所で1件ずつ確かめ、別の店と確かめたものだけを外す（表記ゆれで同じ店のものは残し、証跡を結果に書く）
+  2. 次のビルドの後も外したままになっていることを main で確かめる
+  3. 特集・ジャーナルに同じ URL が手で書かれていないかを `node scripts/audit_page_store_links.js` で確かめる
+
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 
 - **priority**: P1 → **status**: in_progress
@@ -117,7 +160,7 @@
 
 ### [ISSUE-157] 「うなぎのしろむら 丸の内店」と「柳橋本店」に付いている泉の店の食べログURLを外す
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-10-09
 - **category**: data / trust
 - **owner**: DataKeeper
@@ -128,6 +171,9 @@
   1. 丸の内店と柳橋本店の食べログURLを空欄にし、次のビルドの後も空欄のままであることを確かめる
   2. 店舗ページ（J004026662 ほか）の食べログのボタンと JSON-LD の sameAs から 23056889 が消える
   3. 支店名の無い題名で一致と判定してしまう件を、照合器の既知の限界として `docs/` か照合器のコメントに残す
+- **結果（2026-10-09・途中）**: 丸の内店（J004026662）は `data/stores.json` の食べログURLを空にし、`data/tabelog_resolved.json` の同店を failed（`clearedBy: branch-mismatch-review`・消した URL と理由つき）にした。build.js は HotPepper 由来店の食べログURLを毎回このキャッシュから埋め戻すため、こちらを failed にしないと次のビルドで戻る（`resolve_tabelog.js` は failed の店を解決し直さない）。店舗ページ `stores/J004026662.html` の食べログのボタンと JSON-LD の sameAs からも外した。柳橋本店は `data/manual_stores.json` を空にし、`data/manual_tabelog_resolved.json` を failed（`branch-locality-mismatch`）にした。旧判定は名前の一致が1件だけのため区の食い違い（中村区／東区）を見ずに採っており（sole-name-match）、url を残すと `resolve_manual_tabelog_links.js` が再反映する。照合器の限界（題名に支店名が無いとどの支店とも一致・名前が一致すると住所を見ない・比べる住所が Places 由来）は `scripts/lib/store_link_identity.js` の冒頭に書いた。達成条件1の「次のビルドの後も空欄」は合流後の main で確かめる
+  - 調べる途中で、ジャーナル `journal/2026-09-17-marunouchi-unashiromura-koshitsu-ryo.html`（丸の内店の記事）も情報源を「食べログ「うなぎのしろむら 丸の内店」」として 23056889（泉）にリンクしていた。記事の数字（席数56・宴会30名・個室利用料10%/15%・営業時間・予約は泉本店 052-971-3122）は HotPepper の丸の内店の掲載（strJ004026662・10-09 に取得して確認）と一致したため、情報源をその掲載に差し替えた。同じ記事の本文写真2枚は泉本店の Google の写真（クレジット「うなぎのしろむら 泉本店」）だったので外した（ヒーローは丸の内店の HotPepper 写真のまま）。原因は丸の内店の Places の紐付けが泉本店を指していること（[[ISSUE-147]] の支店名の食い違いの1件。オーナー承認待ちのため触っていない）
+  - 実測: 照合キャッシュで名前だけで一致としたリンクのうち、HotPepper の住所と町名＋丁目が違うものが 56件（表記ゆれを含む）→ [[ISSUE-158]] で扱う
 
 ### [ISSUE-153] 新しく作る特集にも予約申告プロンプトと予約送客の計測が自動で入るようにする
 
@@ -268,6 +314,7 @@
   2. 別店と確かめた紐付けは `rejected: true`（`rejectReason: 'name-mismatch-audit'`）にして `build.js` が適用しないようにする。表記違いで同じ店と確かめたものは証跡を残す
   3. 適用前に、口コミ信頼度の段階（SS〜D／—）の分布を変更前後で実測し、オーナーの承認を得てから反映する（メモリの方針「信頼スコア変更は分布実測→承認」）
   4. `fetch_places.js --refresh` が古い紐付けを順に再照合しているかを確かめる（1,537件が5月から更新されていない理由を特定する）
+- **追記（2026-10-09）**: 丸の内店（J004026662）の紐付け（2026-05-22 取得）が「うなぎのしろむら 泉本店」を指している（`branchConflict` が true＝支店名の食い違い49件の1件）。このため丸の内店の Google評価4.5・口コミ1648件・口コミ信頼度・Instagram（unashiro_izumi）・座標は泉本店のもの。ジャーナル 9/17 の本文写真2枚もこの紐付けから入っていた（[[ISSUE-157]] で外した）
 
 ### [ISSUE-148] スプレッドシート経由の店を HotPepper の住所で検査し、名古屋市外の店を取り込まない
 
