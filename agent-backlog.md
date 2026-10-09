@@ -198,7 +198,7 @@
 
 ### [ISSUE-166] 照合で名前が一致しなかった食べログリンク33件を1件ずつ確かめ、別の店のものを外す
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
 - **owner**: DataKeeper
@@ -209,6 +209,7 @@
   1. 33件を1件ずつ、食べログ側の題名と住所（照合キャッシュの記録）と HotPepper の掲載で確かめ、結果を `data/tabelog_branch_reviewed.json` と同じ形で記録する
   2. 別の店と確かめたものだけを店舗IDごとに外す（`clear_broken_tabelog_links.js --reviewed`）。同じ店と確かめたものは照合キャッシュを一致にするか、監査が数えないようにする
   3. 報告の食べログの name-mismatch が、確かめていない組だけになる
+- **メモ**: 33件の確認は30分を超えるので、子課題 [[ISSUE-175]]（確かめて記録する）と [[ISSUE-176]]（別の店のリンクを外し、同じ店の組を報告で数えない）に分けた。食べログは手元からも HTTP 403 のまま（回避しない）なので、食べログ側の事実は照合キャッシュの題名（9/20 取得）だけを使う
 
 ### [ISSUE-167] 食べログが閉店と表示しているページと、存在しないページを指す食べログリンク34件を確かめて外す
 
@@ -410,6 +411,37 @@
   - テスト: `tests/store_link_identity.test.js`（【閉店】あり・なし・名前が合わないページの【閉店】・題名なし・class の読み方）、`tests/audit_store_link_identity.test.js`（取得を差し替えて HTTP 404 → 判定として残り掲載終了に数える・【閉店】→閉店に数える・403・一致・食べログは数えない）
   - 2026-10-09 時点の件数は 閉店の表示 0・掲載終了 0。照合キャッシュのホットペッパーの判定は139件で、すべて今回より前の判定（shopState を見ていない）。判定が出た組は60日照合し直さないので、今ある139件に【閉店】が出ても数えるのは次の照合から
   - 届く速さ（計算）: ホットペッパーのリンク 4,726件のうち照合済み139件。日次の照合は1日約55件なので、一巡するのに約83日かかる。早く知る手段は Places の営業状態の定期更新（[[ISSUE-173]]・オーナー確認が先）
+
+### [ISSUE-175] ISSUE-166 の食べログリンク33件を、題名・最寄り駅との距離・Places の住所で1件ずつ確かめて記録する
+
+- **priority**: P2 → **status**: in_progress
+- **detected**: 2026-10-09
+- **due**: 2026-10-16
+- **category**: data-quality / trust
+- **owner**: DataKeeper
+- **source**: [[ISSUE-166]] の子課題
+- **brand-filter**: ✅ 適合 — 実在保証
+- **背景**: [[ISSUE-166]] の33件（照合の報告 `data/store_link_identity_report.json` の食べログの name-mismatch・名前が少し似ている sim>0）が対象。食べログは CI からも手元からも HTTP 403 を返すため（回避しない）、照合キャッシュに9/20に残った題名しか使えない。この題名は店名・最寄り駅・業態を持つが、住所を持たない。そこで次の事実を合わせて判断する。
+  - 題名の最寄り駅と、HotPepper の掲載ページの位置（2026-10-09 取得）との距離。駅の座標は HeartRails Express から取る
+  - Google Places の Text Search で店名を検索したときの名前と住所（同じ名前の別の支店・別の店があるか）
+- **acceptance**:
+  1. 33件を「別の店（外す）」「同じ店（残す）」「決められない」に分け、`data/tabelog_branch_reviewed.json` に issue: ISSUE-166 で記録する。記録には根拠（題名・最寄り駅と距離・HotPepper の住所・Places の検索結果と取った日）を入れる
+  2. 推測で外さない。「別の店」とするのは、店名か支店名が違い、場所も合わないものだけ。決められないものは記録だけにする
+
+### [ISSUE-176] ISSUE-175 で別の店と確かめた食べログリンクを外し、同じ店と確かめた組を照合の報告で数えない
+
+- **priority**: P2 → **status**: in_progress
+- **detected**: 2026-10-09
+- **due**: 2026-10-16
+- **category**: data-quality / trust
+- **owner**: DataKeeper / Builder
+- **source**: [[ISSUE-166]] の子課題
+- **brand-filter**: ✅ 適合 — 実在保証
+- **背景**: [[ISSUE-175]] の記録で別の店と確かめたリンクを、[[ISSUE-160]]・[[ISSUE-167]] と同じく `scripts/clear_broken_tabelog_links.js --reviewed` で店舗IDごとに外す。外す層は店舗データ・店舗ページ・解決キャッシュの3つ。日次の照合の報告（`scripts/audit_store_link_identity.js`）は確かめた記録を読んでいない。このため同じ店と確かめた組も、毎日 name-mismatch として出続ける
+- **acceptance**:
+  1. 別の店と確かめたリンクを店舗IDごとに外し、`data/tabelog_resolved.json` を failed にする（翌日の埋め戻しを防ぐ）。元のスプレッドシートにその URL が無いことも確かめる
+  2. 照合の報告は、確かめた記録の decision=keep（店舗ID と URL の組）を不一致に数えない。URL が変われば数え直す
+  3. 報告の食べログの name-mismatch が、確かめていない組と決められない組だけになる。`npm test` が通る
 
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 

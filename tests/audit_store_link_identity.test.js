@@ -1,8 +1,8 @@
 'use strict';
-// ISSUE-163・164・174: 日次のリンク照合の順番、取得できなかった回の扱い、照合の状況と閉店の兆しの数え方
+// ISSUE-163・164・174・176: 日次のリンク照合の順番、取得できなかった回の扱い、照合の状況と閉店の兆しの数え方、人が確かめた組の分け方
 const test = require('node:test');
 const assert = require('node:assert');
-const { planChecks, mergeCheckResult, summarizeHealth, judgeHealth, summarizeClosures, isFetchFailure } = require('../scripts/audit_store_link_identity');
+const { planChecks, mergeCheckResult, summarizeHealth, judgeHealth, summarizeClosures, summarizeMismatches, isFetchFailure } = require('../scripts/audit_store_link_identity');
 const { checkHotpepperId } = require('../scripts/lib/store_link_identity');
 
 const DAY = 24 * 60 * 60 * 1000;
@@ -129,4 +129,45 @@ test('閉店の兆し: ホットペッパーの【閉店】と掲載終了（HTT
   assert.strictEqual(c.hotpepper.notFound[0].エラー, 'HTTP 404');
   // 何も無ければ空
   assert.deepStrictEqual(summarizeClosures([hp('hpOk', 'A')], cache), { hotpepper: { closed: [], notFound: [] } });
+});
+
+test('人が同じ店と確かめた組は不一致に数えず分けて出す。閉店・別の URL・別の店は数える（ISSUE-176）', () => {
+  const URL_A = 'https://tabelog.com/aichi/A2301/A230108/23078054/';
+  const URL_B = 'https://tabelog.com/aichi/A2301/A230102/23071690/';
+  const cache = {
+    keptName: { ok: false, reason: 'name-mismatch', sim: 0.29, matchedName: '個室 肉寿司と牛タンしゃぶしゃぶ 金肉 名古屋駅前店', kind: 'tabelog', checkedAt: ago(5) },
+    keptBranch: { ok: false, reason: 'branch-address-mismatch', sim: 1, kind: 'tabelog', checkedAt: ago(5) },
+    keptButClosed: { ok: false, reason: 'closed', sim: 1, kind: 'tabelog', checkedAt: ago(5) },
+    keptUnfetched: { ok: false, reason: 'fetch-error', error: 'HTTP 403', kind: 'tabelog', checkedAt: ago(5) },
+    otherStore: { ok: false, reason: 'name-mismatch', sim: 0.53, matchedName: 'SALON 雪月花', kind: 'tabelog', checkedAt: ago(5) },
+    hpMismatch: { ok: false, reason: 'name-mismatch', sim: 0.2, kind: 'hotpepper', checkedAt: ago(5) },
+    ok: { ok: true, reason: null, sim: 1, kind: 'tabelog', checkedAt: ago(5) },
+  };
+  const tb = (key, storeId, url) => ({ kind: 'tabelog', key, storeId, url, storeName: key, area: '名駅' });
+  const targets = [
+    tb('keptName', 'J001177131', URL_A),
+    tb('keptBranch', 'J000400091', URL_A),
+    tb('keptButClosed', 'J003916879', URL_A),
+    tb('keptUnfetched', 'J003958538', URL_A),
+    // 同じ URL でも確かめていない店（店ID が違う）は数える
+    tb('otherStore', 'J000804458', URL_A),
+    { kind: 'hotpepper', key: 'hpMismatch', storeName: 'hpMismatch', area: '名駅', url: 'https://www.hotpepper.jp/strJ001177131/' },
+    tb('ok', 'J000000001', URL_A),
+  ];
+  const kept = new Set(['J001177131', 'J000400091', 'J003916879', 'J003958538'].map((id) => `${id}|${URL_A}`));
+  // ホットペッパーの組は店ID が同じでも確かめた組に入らない（記録は食べログの組だけ）
+  kept.add(`J001177131|https://www.hotpepper.jp/strJ001177131/`);
+  const r = summarizeMismatches(targets, cache, kept);
+  assert.deepStrictEqual(r.reviewedKeep.map((x) => x.店名), ['keptName', 'keptBranch']);
+  assert.deepStrictEqual(r.mismatches.map((x) => x.店名), ['keptButClosed', 'otherStore', 'hpMismatch']);
+  assert.deepStrictEqual(r.unfetched.map((x) => x.店名), ['keptUnfetched']);
+  assert.strictEqual(r.reviewedKeep[0].検出タイトル, '個室 肉寿司と牛タンしゃぶしゃぶ 金肉 名古屋駅前店');
+  // URL が変われば確かめた組から外れて、再び数える
+  const moved = summarizeMismatches([tb('keptName', 'J001177131', URL_B)], cache, kept);
+  assert.deepStrictEqual(moved.mismatches.map((x) => x.店名), ['keptName']);
+  assert.strictEqual(moved.reviewedKeep.length, 0);
+  // 記録が無ければ今までどおり全部数える
+  const none = summarizeMismatches(targets, cache, new Set());
+  assert.strictEqual(none.reviewedKeep.length, 0);
+  assert.strictEqual(none.mismatches.length, 5);
 });

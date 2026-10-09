@@ -34,6 +34,13 @@
  *   食べログは遅くとも 2026-10-05 から CI の取得に HTTP 403 を返す。回避はしない）。
  *   --check が exit 1 にするのは判定の出ている不一致だけ。取得できなかった組は不一致と数えない。
  *
+ * 人が確かめた組（ISSUE-176）:
+ *   data/tabelog_branch_reviewed.json の decision=keep（同じ店と確かめた店ID と食べログ URL の組）は、
+ *   店名・支店の不一致（name-mismatch・branch-address-mismatch）を不一致に数えず、レポートの reviewedKeep に
+ *   分けて出す（確かめ終えた組を毎日「要手動修正」と出し続けない）。閉店・ページが無いは確かめた後でも起きうるので
+ *   keep の組でも不一致に数える。URL が変われば組が外れて再び数える。decision=remove は
+ *   scripts/clear_broken_tabelog_links.js --reviewed が外し、decision=undecided は記録だけで何もしない。
+ *
  * 閉店の兆し（ISSUE-174）:
  *   ホットペッパーのページが店名の上に【閉店】を出していれば判定 closed（題名は変わらない）。ページが無い
  *   （HTTP 404「掲載情報なし」）は今までどおり判定として扱い、レポートの closures で「掲載終了」として分けて数える。
@@ -51,6 +58,7 @@ const MANUAL_PATH = path.join(ROOT, 'data', 'manual_stores.json');
 const STORES_PATH = path.join(ROOT, 'data', 'stores.json');
 const CACHE_PATH = path.join(ROOT, 'data', 'store_link_identity_checked.json');
 const REPORT_PATH = path.join(ROOT, 'data', 'store_link_identity_report.json');
+const REVIEWED_PATH = path.join(ROOT, 'data', 'tabelog_branch_reviewed.json');
 
 const MAX_AGE_DAYS = 60;
 const MAX_AGE_MS = MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
@@ -65,6 +73,8 @@ const HEALTH_MAX_DAYS = 30;
 const FETCH_FAILURES = new Set(['fetch-error', 'no-title']);
 // ページが無いと分かった応答は判定として扱う（取得を断られたのではない。旧実装と同じく不一致に数える）
 const NOT_FOUND = /^HTTP 4(04|10)$/;
+// 人が同じ店と確かめた組（decision=keep）で数えない理由。閉店・ページが無いは数える（ISSUE-176）
+const KEEP_REASONS = new Set(['name-mismatch', 'branch-address-mismatch']);
 
 function isFetchFailure(entry) {
   return !!entry && entry.ok === false && FETCH_FAILURES.has(entry.reason) && !NOT_FOUND.test(entry.error || '');
@@ -116,6 +126,40 @@ function mergeCheckResult(prev, result, meta, nowIso) {
     return { ...prev, lastAttemptAt: nowIso, lastAttemptReason: result.reason, lastAttemptError: result.error || null };
   }
   return { ...result, ...meta, checkedAt: nowIso };
+}
+
+/**
+ * キャッシュから現時点の不一致を集める（純関数・ISSUE-163/176）。今回照合していない過去の不一致も含む。
+ * - 取得できなかった組は unfetched に分ける（判定が出ていないものを不一致と数えない）
+ * - 人が同じ店と確かめた組（keptPairs に「店ID|URL」がある食べログ）の店名・支店の不一致は reviewedKeep に分ける
+ * targets: [{ kind, key, url, storeName, area, storeId? }]
+ */
+function summarizeMismatches(targets, cache, keptPairs) {
+  const out = { mismatches: [], unfetched: [], reviewedKeep: [] };
+  for (const t of targets) {
+    const cached = cache[t.key];
+    if (!cached || cached.ok !== false) continue;
+    const row = {
+      店名: t.storeName,
+      エリア: t.area,
+      種別: t.kind,
+      url: t.url,
+      理由: cached.reason,
+      検出タイトル: cached.matchedName || cached.title || null,
+      エラー: cached.error || null,
+      検証日: cached.checkedAt,
+    };
+    if (isFetchFailure(cached)) out.unfetched.push(row);
+    else if (t.kind === 'tabelog' && KEEP_REASONS.has(cached.reason) && keptPairs && keptPairs.has(`${t.storeId || ''}|${t.url}`)) out.reviewedKeep.push(row);
+    else out.mismatches.push(row);
+  }
+  return out;
+}
+
+// 人が同じ店と確かめた組（data/tabelog_branch_reviewed.json の decision=keep）。店ID と URL の組で持つ
+function loadKeptPairs() {
+  const raw = loadJson(REVIEWED_PATH, { reviews: [] });
+  return new Set((raw.reviews || []).filter((r) => r.decision === 'keep').map((r) => `${r.id}|${r.url}`));
 }
 
 /**
@@ -242,7 +286,7 @@ async function main() {
     const area = s['エリア'] || '';
     if (opts.kind !== 'hotpepper' && classifyTabelogFormat(s['食べログURL']) === 'direct') {
       const url = s['食べログURL'];
-      targets.push({ kind: 'tabelog', url, key: cacheKey('tabelog', url, name), storeName: name, area, address: s['住所'] || '' });
+      targets.push({ kind: 'tabelog', url, key: cacheKey('tabelog', url, name), storeName: name, area, address: s['住所'] || '', storeId: s['ホットペッパーID'] || '' });
     }
     if (opts.kind !== 'tabelog' && s['ホットペッパーID'] && s['ホットペッパーID'].trim()) {
       const id = s['ホットペッパーID'].trim();
@@ -303,31 +347,16 @@ async function main() {
   }
 
   // レポート: キャッシュ全体から現時点の不一致を集計（今回検証していない過去の不一致も含む）。
-  // 取得できなかった組は不一致と分けて出す（判定が出ていないものを不一致と数えない・ISSUE-163）
-  const mismatches = [];
-  const unfetched = [];
-  for (const t of targets) {
-    const cached = cache[t.key];
-    if (!cached || cached.ok !== false) continue;
-    const row = {
-      店名: t.storeName,
-      エリア: t.area,
-      種別: t.kind,
-      url: t.url,
-      理由: cached.reason,
-      検出タイトル: cached.matchedName || cached.title || null,
-      エラー: cached.error || null,
-      検証日: cached.checkedAt,
-    };
-    (isFetchFailure(cached) ? unfetched : mismatches).push(row);
-  }
+  // 取得できなかった組と、人が同じ店と確かめた組は不一致と分けて出す（ISSUE-163・ISSUE-176）
+  const { mismatches, unfetched, reviewedKeep } = summarizeMismatches(targets, cache, loadKeptPairs());
   const health = summarizeHealth(targets, cache);
   const closures = summarizeClosures(targets, cache);
-  fs.writeFileSync(REPORT_PATH, JSON.stringify({ generatedAt: new Date().toISOString(), run, health, closures, mismatches, unfetched }, null, 2));
+  fs.writeFileSync(REPORT_PATH, JSON.stringify({ generatedAt: new Date().toISOString(), run, health, closures, mismatches, unfetched, reviewedKeep }, null, 2));
 
   console.log('');
   reportClosures(closures, { exitOnClosed: false });
   if (unfetched.length) console.log(`… 取得できたことが無いリンク ${unfetched.length}件（不一致とは数えない）`);
+  if (reviewedKeep.length) console.log(`… 人が同じ店と確かめた組 ${reviewedKeep.length}件（data/tabelog_branch_reviewed.json の keep・不一致とは数えない）`);
   if (mismatches.length) {
     console.log(`❌ 不一致 ${mismatches.length}件（別の店 or 閉店店舗を指している可能性・要手動修正）:`);
     mismatches.forEach((m) => console.log(`  - ${m.店名} (${m.エリア}) [${m.種別}] ${m.url} — ${m.理由}${m.エラー ? `（${m.エラー}）` : ''}${m.検出タイトル ? ` 「${m.検出タイトル}」` : ''}`));
@@ -379,4 +408,4 @@ if (require.main === module) {
     process.exit(1);
   });
 }
-module.exports = { planChecks, mergeCheckResult, summarizeHealth, judgeHealth, summarizeClosures, isFetchFailure };
+module.exports = { planChecks, mergeCheckResult, summarizeHealth, judgeHealth, summarizeClosures, summarizeMismatches, isFetchFailure };
