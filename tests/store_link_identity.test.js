@@ -27,6 +27,8 @@ const assert = require('node:assert/strict');
 const {
   normalizeJpAddress,
   tabelogNameFromTitle,
+  hotpepperNameFromTitle,
+  bestMatch,
   parseJpAddress,
   compareJpAddress,
   judgeTabelogHtml,
@@ -86,6 +88,15 @@ test('tabelogNameFromTitle: 【閉店】は閉店として扱う', () => {
   const r = tabelogNameFromTitle('【閉店】餃子歩兵 名古屋泉店 | 食べログ');
   assert.equal(r.closed, true);
   assert.equal(r.name, '餃子歩兵 名古屋泉店');
+});
+
+// ── ホットペッパーの題名（ISSUE-162）──────────────────────────────────
+test('hotpepperNameFromTitle: 末尾の「＜ネット予約可＞」と（エリア/ジャンル）を外す', () => {
+  assert.equal(hotpepperNameFromTitle('とんかつ朱寿(名東区/和食)＜ネット予約可＞ | ホットペッパーグルメ').name, 'とんかつ朱寿');
+  assert.equal(hotpepperNameFromTitle('矢場味仙 松坂屋名古屋店(矢場町/居酒屋) | ホットペッパーグルメ').name, '矢場味仙 松坂屋名古屋店');
+  // 2026-10-09 の日次監査で不一致になった店名の短い店。外せば一致する
+  assert.equal(bestMatch('松軒亭', hotpepperNameFromTitle('松軒亭(新栄/洋食)＜ネット予約可＞ | ホットペッパーグルメ').name).ok, true);
+  assert.equal(bestMatch('食堂　灯ル', hotpepperNameFromTitle('食堂　灯ル(名古屋駅/和食)＜ネット予約可＞ | ホットペッパーグルメ').name).ok, true);
 });
 
 // ── 住所の構造比較（ISSUE-159）──────────────────────────────────────
