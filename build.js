@@ -924,6 +924,7 @@ const { buildFingerprintIndex, evaluateStoreFingerprint } = require('./scripts/l
 const trustDisplay = require('./scripts/lib/trust_display');
 const { placesKey } = require('./scripts/lib/places_key');
 const { buildFeatureStoreMap } = require('./scripts/lib/feature_store_match');
+const spreadsheetAddressGate = require('./scripts/lib/spreadsheet_address_gate');
 
 async function fetchHotPepperNagoyaStores() {
   if (!HP_API_KEY) {
@@ -1059,7 +1060,35 @@ async function main() {
     console.error(`Hot Pepper取得エラー: ${e.message}`);
   }
 
+  // スプレッドシート経由の行を HotPepper の住所で検査し、県外の店を取り込まない（ISSUE-148）。
+  // スプレッドシートには住所の列が無く、「栄」の語で拾った他都市の店（釧路市栄町 等）が入っていた。
+  // 住所が取れて「愛知県」を含まない店だけを外す。取れなかった店は外さないが、前の回に県外と確かめた店は
+  // data/spreadsheet_address_gate.json の住所で外し続ける（取得に失敗した日だけ店が戻る行き来を防ぐ）
+  const gsGateFile = path.join(__dirname, 'data', 'spreadsheet_address_gate.json');
+  const gsGateMemory = spreadsheetAddressGate.loadRecord(gsGateFile);
+  if (gsGateMemory.error) console.warn(`  ⚠ data/spreadsheet_address_gate.json の読み込み失敗（前の回の記録なしで続行）: ${gsGateMemory.error}`);
+  const gsGate = await spreadsheetAddressGate.gateSpreadsheetRows(gsStores, hpShops, {
+    fetchJson, apiKey: HP_API_KEY, base: HP_BASE, remembered: gsGateMemory.remembered,
+  });
+  {
+    const g = gsGate.stats;
+    console.log(`スプレッドシートの住所検査（ISSUE-148）: ${g.rows}件中 県外 ${gsGate.excluded.length}件を取り込まない（住所の出どころ: エリアの店一覧 ${g.fromArea} / id 指定 ${g.found}/${g.lookedUp} / 前の回の記録 ${g.fromMemory} / 不明のため残す ${g.unknown}${g.released ? ` / 愛知県と取れて戻す ${g.released}` : ''}）`);
+    if (g.failedBatches) console.warn(`  ⚠ id 指定の取得に ${g.failedBatches}/${g.batches}回失敗（その回の店は外していない）: ${g.errors.slice(0, 3).join(' | ')}`);
+    let closedIds = new Set();
+    try {
+      const closedRaw = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'closed_stores.json'), 'utf8'));
+      closedIds = new Set((closedRaw.stores || []).map((c) => c && c['ホットペッパーID']).filter(Boolean));
+    } catch (_) { /* 閉店リストが読めなくても検査の結果は変わらない（突き合わせの表示だけ） */ }
+    for (const x of gsGate.excluded) {
+      console.log(`  [県外] ${x.店名}（${x.id}）: ${x.住所}${closedIds.has(x.id) ? '・閉店リストに登録済み' : '・新しく外した'}${x.fromMemory ? '・前の回の記録' : ''}`);
+    }
+    // キー無しビルド（Hot Pepper 未取得）では住所を取れていないため記録を上書きしない
+    if (hpShops.length > 0) spreadsheetAddressGate.writeRecord(gsGateFile, gsGate);
+    else console.log('  Hot Pepper 未取得のため data/spreadsheet_address_gate.json は更新しません');
+  }
+
   // 重複排除（Google Sheets優先、ホットペッパーIDで照合）
+  // existingHpIds・seen は住所の検査で外した行も含めた元の行から作る（外した店を Hot Pepper 新規として拾い直さない）
   const existingHpIds = new Set(
     gsStores.map(s => s['ホットペッパーID']).filter(Boolean)
   );
@@ -1079,7 +1108,7 @@ async function main() {
   console.log(`Hot Pepper 新規: ${newStores.length}件（重複除外:${dupCount} / 名古屋市外除外:${outsideCount}）`);
 
   // 結合（Google Sheets → Hot Pepper新規の順）
-  let mergedStores = gsStores.concat(newStores);
+  let mergedStores = gsGate.kept.concat(newStores);
   console.log(`結合後: ${mergedStores.length}件`);
 
   // pending_stores.json (journal 経由で追加された外部媒体由来の話題店) をマージ
