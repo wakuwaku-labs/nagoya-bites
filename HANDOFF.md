@@ -41,6 +41,11 @@ status: in_progress
 4d. #435 で合流（ISSUE-159・P-163）: 照合器に住所の3値比較（same/different/unknown）。名前一致でも住所が different なら branch-address-mismatch。キャッシュを読み直す CLI scripts/audit_tabelog_branch_mismatch.js（45件・unknown 16件・一覧は scratchpad の branch45.json）・夜間QA soft（tabelog-branch）・docs/decisions/0012。ISSUE-157（P-161）は合流後のビルドで J004026662 の食べログURLが空のままと確かめ done。次は ISSUE-161（下）→ ISSUE-160（45件を1件ずつ確かめて外す。clear_broken_tabelog_links.js は対象外なので ID 指定で。サガミ 有松店・嘉文 徳重店・めんらんどは移転前後の住所の可能性）
 4e. #436 で合流（ISSUE-161・P-165 In Progress）: build.yml の checkout に ref: main。合流後の最初のビルド（37878933280・#435 のビルドの後ろで待ち）のログで +refs/heads/main を取っていれば backlog done・P-165 Done＋コメント
 4f. ISSUE-160（P-164）作業中: 食べログは手元から 403（レート制限と見て回避しない）。照合キャッシュの食べログ側の事実（9/20 取得の題名・住所）と、今日取った HotPepper 掲載45件（scratchpad の hp45.json・座標つき）で判定。国土地理院の住所検索で距離を測り、めんらんど（19m）・嘉文 徳重店（同じ支店名・字で291m）・サガミ 有松店（同じ支店名・字名 境松）は同じ店として残す。残り42件を外す（4層: stores.json・tabelog_resolved.json を failed・stores/*.html・manual_stores）。残す3件は確認済みとして記録し、監査が数えないようにする（data/tabelog_branch_reviewed.json を作る予定）
+4g. 10-09 03:40 時点: 記録と ID 指定で外す仕組みは 9daef2a1e9（未 push）。データを外す実行（clear_broken_tabelog_links.js --reviewed）は main のビルド 37878933280 の完了後に origin/main を取り込んでから。外した後は監査 0件・audit_page_store_links --check・npm test を確かめて PR
+4h. 次に起票して直すもの（ISSUE-160 の後）:
+  - ISSUE-162: ホットペッパーの題名の末尾「＜ネット予約可＞」で hotpepperNameFromTitle が丸括弧を外せず、短い店名の正しいリンク7件が name-mismatch（10-09 の日次監査）。末尾の「＜…＞」を外せば7件とも一致・ほかの22件は変わらない（scratchpad で確認）
+  - ISSUE-163（P1・ISSUE-158 の子）: 日次の照合（build.yml の audit_store_link_identity.js --limit 60）が食べログから 10-05 以降すべて HTTP 403（10-09 は53件中53件）。対象を店の並び順に取り、失敗中の組を毎日先に照合するので、新しいリンク20件は一度も照合されていない。食べログの一致2,540件は 09-03（23件）・09-20（2,517件）のもので、11-02 から古くなり、403 で照合し直すと fetch-error で上書きされて事実が消える（支店違い・別の店の監査が数えなくなる＝偽の緑）。直し方: 取得失敗では前の判定を残す・連続403で止める・最後に試した日で間隔をあける・古い順に照合・成功しなかったことを報告と夜間QA に出す。403 は回避しない
+  - ISSUE-158 は達成条件3（日次の監査が新しい支店違いを数える）が実際には動いていないため、ISSUE-163 が済むまで閉じない
 5. 夜間QA の station-names が緑で続いたら hard に上げる（10-09 が初めての ✅。10-10 も緑なら上げる）
 6. 最後に: 「うなぎのしろむら 泉店」の起票、創業者の実名が index.html の Organization JSON-LD に出ている件をオーナーへ報告（変更しない）、http.server（8093・8094・8095）を止める
 
