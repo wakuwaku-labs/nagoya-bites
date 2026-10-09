@@ -1,0 +1,836 @@
+{
+  "_doc": [
+    "店の営業を一次情報で確かめた記録（ISSUE-169・2026-10-09 から）。1店1件で、判定（閉店／営業中／決められない）と、第三者が同じURLを開いて確かめられる根拠（取った日時・URL・状態・名前・住所）を残す。",
+    "閉店: 名前と住所が掲載と合う、独立した2つ以上の情報源が閉店を示し、それより後の営業の痕跡（口コミ・予約）が無い。情報源は、ホットペッパーの掲載終了（HTTP 404）か店名の上の【閉店】・Google の店舗情報の閉業（CLOSED_PERMANENTLY）や「元〜」への改名・食べログの【閉店】・公式サイトからの削除。閉店と判定した店は data/closed_stores.json に入れて掲載から外す（ISSUE-170）。",
+    "営業中: 食べログの【閉店】より後の営業の痕跡（ホットペッパーの口コミの日付・ネット予約）があり、Google の店舗情報も営業中。",
+    "決められない: 上のどちらでもない（閉店を示すのが1つだけ・情報源が食い違う）。推測で閉店にせず掲載は続ける。",
+    "Google の店舗情報は住所が掲載と違うとき・同じ建物の別の店を指すときは根拠にしない（places.usedAsEvidence=false・ISSUE-147）。Places は Basic の項目（name・formatted_address・business_status）だけを取る（無料枠の内側）。",
+    "places.addressVsListing は scripts/lib/store_link_identity.js の compareJpAddress（same/different/unknown）でホットペッパーの掲載住所（404 の店は食べログの住所）と比べた結果。"
+  ],
+  "reviews": [
+    {
+      "id": "J003649109",
+      "storeName": "本格江戸前寿司 女子大寿司 本店",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "閉店",
+      "why": "食べログは「【閉店】鮨-sushi-Aoi（【旧店名】本格江戸前寿司 女子大寿司 本店）」、Google の店舗情報も同じ住所の「鮨~sushi~ Aoi」が閉業。店名を Aoi に変えたあと閉店したと読める。ホットペッパーのページは旧店名のまま残っている（口コミなし）",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ003649109/",
+          "fetchedAt": "2026-10-09T04:34:47.361Z",
+          "status": 200,
+          "shopState": null,
+          "address": "愛知県名古屋市中区栄４丁目20-2第二和光ビル105",
+          "latestReviewDate": null,
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJ6WMJ7V5xA2ARen_Zpv2THwE",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJ6WMJ7V5xA2ARen_Zpv2THwE",
+          "fetchedAt": "2026-10-09T04:33:26.447Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "鮨~sushi~ Aoi",
+          "address": "日本、〒460-0008 愛知県名古屋市中区栄４丁目２０−２ 第二和光ビル 105",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230103/23087066/",
+          "title": "【閉店】鮨-sushi-Aoi （【旧店名】本格江戸前寿司 女子大寿司 本店） - 矢場町/寿司 | 食べログ",
+          "address": "栄4-20-2",
+          "checkedAt": "2026-09-20"
+        }
+      }
+    },
+    {
+      "id": "J004403699",
+      "storeName": "韓国酒場 パル 8 伏見店",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "閉店",
+      "why": "Google の店舗情報（同じ名前と住所）が閉業、食べログも【閉店】。ホットペッパーの口コミは 2026-06-07 が最後",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ004403699/",
+          "fetchedAt": "2026-10-09T04:34:49.703Z",
+          "status": 200,
+          "shopState": null,
+          "address": "愛知県名古屋市中区栄１丁目6－5",
+          "latestReviewDate": "2026-06-07",
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJsRWA4hB3A2AR0W-ng8fIEc8",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJsRWA4hB3A2AR0W-ng8fIEc8",
+          "fetchedAt": "2026-10-09T04:33:26.957Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "韓国酒場 パル/8 伏見店",
+          "address": "日本、〒460-0008 愛知県名古屋市中区栄１丁目６−５",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230105/23094364/",
+          "title": "【閉店】韓国酒場 パル/8 伏見店 - 伏見/韓国料理 | 食べログ",
+          "address": "栄1-6-5",
+          "checkedAt": "2026-09-20"
+        }
+      }
+    },
+    {
+      "id": "J000972095",
+      "storeName": "博多もつ鍋屋 HANARE",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "決められない",
+      "why": "閉店を示すのは食べログの【閉店】だけ。ホットペッパーのページはコロナ禍の「臨時休業しております」の記載のまま（口コミなし）。Places の紐付けは栄3丁目の別の店（天火 はなれ）を指していて根拠にできず、店名と住所で探しても葵3-21-17 に該当する Google の店舗情報は無い。営業を示す情報源も無い",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ000972095/",
+          "fetchedAt": "2026-10-09T04:34:51.979Z",
+          "status": 200,
+          "shopState": null,
+          "address": "愛知県名古屋市中区葵３-21-17 ウエストコート千種1階",
+          "latestReviewDate": null,
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJLWUuuNNwA2ARANb5Wme8eKQ",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJLWUuuNNwA2ARANb5Wme8eKQ",
+          "fetchedAt": "2026-10-09T04:33:27.368Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "もつ鍋もつ焼き 天火 名古屋栄店はなれ",
+          "address": "日本、〒460-0008 愛知県名古屋市中区栄３丁目７−１０２",
+          "businessStatus": "OPERATIONAL",
+          "addressVsListing": "different",
+          "searchByName": {
+            "fetchedAt": "2026-10-09T04:37:50.296Z",
+            "query": "博多もつ鍋屋 HANARE 名古屋市中区葵3-21-17",
+            "candidates": [
+              {
+                "name": "もつ鍋もつ焼き 天火 名古屋栄店はなれ",
+                "address": "〒460-0008 愛知県名古屋市中区栄３丁目７−１０２",
+                "businessStatus": "OPERATIONAL"
+              },
+              {
+                "name": "博多もつ鍋おおやま 栄HAERA店",
+                "address": "〒460-0003 愛知県名古屋市北区中区錦三丁目２５−１ B2",
+                "businessStatus": "OPERATIONAL"
+              },
+              {
+                "name": "小鍋ランチ 鍋屋はなれ",
+                "address": "〒460-0008 愛知県名古屋市中区栄３丁目１３−２３ 寺島ビル 2F",
+                "businessStatus": "OPERATIONAL"
+              },
+              {
+                "name": "やきとり ながれ",
+                "address": "〒460-0003 愛知県名古屋市中区錦３丁目１５−４ 1F",
+                "businessStatus": "OPERATIONAL"
+              }
+            ]
+          },
+          "usedAsEvidence": false
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230104/23036333/",
+          "title": "【閉店】博多もつ鍋屋 HANARE （ハナレ） - 千種/もつ鍋 | 食べログ",
+          "address": "葵3-21-17",
+          "checkedAt": "2026-09-20"
+        },
+        "other": [
+          {
+            "url": "https://www.hotpepper.jp/strJ000972095/",
+            "fetchedAt": "2026-10-09T04:34:51.979Z",
+            "fact": "ホットペッパーの営業時間欄に「※現在、新型コロナウイルス感染拡大防止に伴い、臨時休業しております。」"
+          }
+        ]
+      }
+    },
+    {
+      "id": "J004445210",
+      "storeName": "鰻 ひつまぶし 金鯱うなぎ 伏見店",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "決められない",
+      "why": "食べログは【閉店】だが、Google の店舗情報（同じ名前と住所）は営業中。ホットペッパーはネット予約不可で口コミは 2026-04-21 が最後。情報源が食い違う",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ004445210/",
+          "fetchedAt": "2026-10-09T04:34:54.185Z",
+          "status": 200,
+          "shopState": null,
+          "address": "愛知県名古屋市中区栄１-5-21ダイワロイヤルホテル名古屋伏見1F",
+          "latestReviewDate": "2026-04-21",
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJ2y7c4lV3A2ARuj-o4ml3xX4",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJ2y7c4lV3A2ARuj-o4ml3xX4",
+          "fetchedAt": "2026-10-09T04:33:27.771Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "金鯱うなぎ",
+          "address": "日本、〒460-0008 愛知県名古屋市中区栄１丁目５−２１ ダイワロイヤルホテル名古屋伏見 1F",
+          "businessStatus": "OPERATIONAL",
+          "addressVsListing": "same",
+          "searchByName": {
+            "fetchedAt": "2026-10-09T04:37:53.739Z",
+            "query": "金鯱うなぎ 伏見店 名古屋市中区栄1-5-21",
+            "candidates": [
+              {
+                "name": "金鯱うなぎ",
+                "address": "〒460-0008 愛知県名古屋市中区栄１丁目５−２１ ダイワロイヤルホテル名古屋伏見 1F",
+                "businessStatus": "OPERATIONAL"
+              }
+            ]
+          },
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230102/23093285/",
+          "title": "【閉店】金鯱うなぎ 伏見店 - 伏見/うなぎ | 食べログ",
+          "address": "栄1-5-21",
+          "checkedAt": "2026-09-20"
+        }
+      }
+    },
+    {
+      "id": "J004536441",
+      "storeName": "お食事処 Hug ハグ",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "営業中",
+      "why": "ホットペッパーに 2026-08-18〜08-30 の口コミがあり、ネット予約を受け付けている。Google の店舗情報「お食事処 Hug」は緑区六田1丁目204で営業中。ホットペッパーの地図の位置は六田1丁目204から約26m（国土地理院の住所検索）で、掲載の住所（浦里5丁目346-2）からは約1.2km 離れている。食べログの【閉店】のページは浦里5丁目の旧所在地。移転して営業を続けていると見られるため、掲載の住所の確認は別の課題にする",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ004536441/",
+          "fetchedAt": "2026-10-09T04:34:56.523Z",
+          "status": 200,
+          "shopState": null,
+          "address": "愛知県名古屋市緑区浦里５-346-2",
+          "latestReviewDate": "2026-08-30",
+          "netReservation": true
+        },
+        "places": {
+          "placeId": "ChIJ07Zg1bN9A2ARN3uvUHDpffU",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJ07Zg1bN9A2ARN3uvUHDpffU",
+          "fetchedAt": "2026-10-09T04:33:28.168Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "お食事処 Hug",
+          "address": "日本、〒458-0036 愛知県名古屋市緑区六田１丁目２０４",
+          "businessStatus": "OPERATIONAL",
+          "addressVsListing": "different",
+          "usedAsEvidence": false
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230112/23094580/",
+          "title": "【閉店】お食事処 Hug - 鳴海/洋食 | 食べログ",
+          "address": "浦里5-346-2",
+          "checkedAt": "2026-09-20"
+        },
+        "other": [
+          {
+            "url": "https://msearch.gsi.go.jp/address-search/AddressSearch",
+            "fetchedAt": "2026-10-09",
+            "fact": "ホットペッパーの地図の位置 35.077170,136.958311 は「緑区六田一丁目204番地」（35.076939,136.958282）から約26m、掲載の住所「緑区浦里五丁目346番地」（35.082466,136.947495）から約1.2km"
+          }
+        ]
+      },
+      "followUp": "住所（浦里5丁目346-2 のまま）を移転先と見られる六田1丁目204 に直すか確かめる"
+    },
+    {
+      "id": "J000107807",
+      "storeName": "かしわ料理 みふね",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "閉店",
+      "why": "同じ住所の Google の店舗情報の名前が「ギャラリーみふね・風の音（元かしわ料理みふね）」に変わっており、店自身が「元かしわ料理みふね」と示している。食べログも【閉店】。飲食店としては閉店（今はギャラリーとして営業）",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ000107807/",
+          "fetchedAt": "2026-10-09T04:34:58.756Z",
+          "status": 200,
+          "shopState": null,
+          "address": "愛知県名古屋市緑区浦里３－３１２",
+          "latestReviewDate": null,
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJE9rEq317A2AR8MvOcrsgSYk",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJE9rEq317A2AR8MvOcrsgSYk",
+          "fetchedAt": "2026-10-09T04:33:28.568Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "ギャラリーみふね・風の音（元かしわ料理みふね）",
+          "address": "日本、〒458-0847 愛知県名古屋市緑区浦里３丁目３１２",
+          "businessStatus": "OPERATIONAL",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230112/23007601/",
+          "title": "【閉店】みふね - 鳴海/鳥料理 | 食べログ",
+          "address": "浦里3-312",
+          "checkedAt": "2026-09-20"
+        }
+      }
+    },
+    {
+      "id": "J001022451",
+      "storeName": "黒猫屋 錦",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "閉店",
+      "why": "Google の店舗情報（同じ名前と住所）が閉業、食べログも【閉店】",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ001022451/",
+          "fetchedAt": "2026-10-09T04:35:01.247Z",
+          "status": 200,
+          "shopState": null,
+          "address": "愛知県名古屋市中区錦３－１３－５中央マンションビル１F",
+          "latestReviewDate": null,
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJo76c_9BwA2ARJHbU-NbPvHI",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJo76c_9BwA2ARJHbU-NbPvHI",
+          "fetchedAt": "2026-10-09T04:33:28.962Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "黒猫屋",
+          "address": "日本、〒460-0003 愛知県名古屋市中区錦３丁目１３−５ 1F",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230103/23044755/",
+          "title": "【閉店】黒猫屋 - 栄町/ダイニングバー | 食べログ",
+          "address": "錦3-13-5",
+          "checkedAt": "2026-09-20"
+        }
+      }
+    },
+    {
+      "id": "J004110002",
+      "storeName": "あっとバーグ　イオン新瑞橋店",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "閉店",
+      "why": "ホットペッパーの店舗ページの店名の上に【閉店】の表示、Google の店舗情報（同じ名前と住所）も閉業、食べログも【閉店】。ホットペッパーの口コミは 2026-08-31 が最後",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ004110002/",
+          "fetchedAt": "2026-10-09T04:35:03.706Z",
+          "status": 200,
+          "shopState": "【閉店】",
+          "address": "愛知県名古屋市南区菊住１-7-10 イオンモール新瑞橋３F",
+          "latestReviewDate": "2026-08-31",
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJ17PXCwB7A2ARgYDu6HSrDOQ",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJ17PXCwB7A2ARgYDu6HSrDOQ",
+          "fetchedAt": "2026-10-09T04:33:29.341Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "あっとバーグ イオン新瑞橋店",
+          "address": "日本、〒457-0012 愛知県名古屋市南区菊住１丁目７−１０ イオンモール新瑞橋 ３F",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230112/23089886/",
+          "title": "【閉店】あっとバーグ 新瑞橋店 - 新瑞橋/ハンバーグ | 食べログ",
+          "address": "菊住1-7-10",
+          "checkedAt": "2026-09-20"
+        }
+      }
+    },
+    {
+      "id": "J003410000",
+      "storeName": "喰えるBAR shin",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "決められない",
+      "why": "食べログは【閉店】。同じ住所の Google の店舗情報は「スタンダード」という別の名前で営業中（2026-05-22 の時点ですでにこの名前）で、喰えるBAR shin の店舗情報は見つからない。スタンダードが後に入った店か、名前を変えた同じ店かは確かめられない。ホットペッパーのページは残っている（口コミなし）",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ003410000/",
+          "fetchedAt": "2026-10-09T04:35:06.004Z",
+          "status": 200,
+          "shopState": null,
+          "address": "愛知県名古屋市中村区中村町８-60-2",
+          "latestReviewDate": null,
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJYb45rMF3A2ARQVPXeRt9MXc",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJYb45rMF3A2ARQVPXeRt9MXc",
+          "fetchedAt": "2026-10-09T04:33:29.709Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "スタンダード",
+          "address": "日本、〒453-0053 愛知県名古屋市中村区中村町８丁目６０−２",
+          "businessStatus": "OPERATIONAL",
+          "addressVsListing": "same",
+          "searchByName": {
+            "fetchedAt": "2026-10-09T04:37:52.352Z",
+            "query": "喰えるBAR shin 名古屋市中村区中村町8-60-2",
+            "candidates": [
+              {
+                "name": "スタンダード",
+                "address": "〒453-0053 愛知県名古屋市中村区中村町８丁目６０−２",
+                "businessStatus": "OPERATIONAL"
+              },
+              {
+                "name": "ビアワン 中村公園店",
+                "address": "〒453-0056 愛知県名古屋市中村区砂田町１丁目４８",
+                "businessStatus": "OPERATIONAL"
+              }
+            ]
+          },
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230113/23024387/",
+          "title": "【閉店】喰えるBAR Shin （シン） - 中村公園/バー | 食べログ",
+          "address": "中村町8-60-2",
+          "checkedAt": "2026-09-20"
+        }
+      }
+    },
+    {
+      "id": "J001262745",
+      "storeName": "すし乾山 ホテルグランコート名古屋店",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "閉店",
+      "why": "ホテルの公式のレストラン一覧で「すし 乾山」の行だけがコメントアウトされて表示されていない（ほかの8店は表示）。食べログも【閉店】。Places の紐付けは同じホテルの中国料理「花梨」を指していて根拠にしない",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ001262745/",
+          "fetchedAt": "2026-10-09T04:35:08.238Z",
+          "status": 200,
+          "shopState": null,
+          "address": "愛知県名古屋市中区金山町１-1-1ホテルグランコート名古屋29階",
+          "latestReviewDate": null,
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJK6iqQlJ3A2ARGS0A8BkzsIY",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJK6iqQlJ3A2ARGS0A8BkzsIY",
+          "fetchedAt": "2026-10-09T04:33:30.087Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "花梨",
+          "address": "日本、〒460-0023 愛知県名古屋市中区中区金山町１丁目１−１",
+          "businessStatus": "OPERATIONAL",
+          "addressVsListing": "unknown",
+          "searchByName": {
+            "fetchedAt": "2026-10-09T04:37:53.069Z",
+            "query": "すし乾山 ホテルグランコート名古屋",
+            "candidates": [
+              {
+                "name": "花梨",
+                "address": "〒460-0023 愛知県名古屋市中区中区金山町１丁目１−１",
+                "businessStatus": "OPERATIONAL"
+              },
+              {
+                "name": "ANAクラウンプラザホテルグランコート名古屋",
+                "address": "〒460-0023 愛知県名古屋市中区金山町１丁目１−１",
+                "businessStatus": "OPERATIONAL"
+              },
+              {
+                "name": "鮨柴山",
+                "address": "〒460-0003 愛知県名古屋市中区錦３丁目１５−１０ タワービル 5階",
+                "businessStatus": "OPERATIONAL"
+              },
+              {
+                "name": "ガーデンコート",
+                "address": "〒460-0023 愛知県名古屋市中区金山町１丁目１−１",
+                "businessStatus": "OPERATIONAL"
+              }
+            ]
+          },
+          "usedAsEvidence": false
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230105/23001337/",
+          "title": "【閉店】すし乾山 ホテルグランコート名古屋店 （すし けんざん） - 金山/寿司 | 食べログ",
+          "address": "金山町1-1-1",
+          "checkedAt": "2026-09-20"
+        },
+        "other": [
+          {
+            "url": "https://www.anacrowneplaza-nagoya.jp/pages/restaurant",
+            "fetchedAt": "2026-10-09",
+            "fact": "ホテルのレストラン一覧の「すし 乾山」の行（食べログ 23001337 へのリンク）が HTML コメントになっていて表示されない。表示されているのはスカイレストラン スターゲイト・バー スターゲイト・ウイングラウンジ・中国料理 花梨（29F）・京料理 たん熊 北店・ガーデンコート・ロビーラウンジ・ペストリーコーナー"
+          }
+        ]
+      }
+    },
+    {
+      "id": "J001231989",
+      "storeName": "KollaBo コラボ 栄店",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "営業中",
+      "why": "ホットペッパーに 2026-09-25〜10-04 の口コミがあり、ネット予約を受け付けている。Google の店舗情報（同じ住所・コラボ店名を併記）も営業中。食べログの【閉店】は以前の店名のページと見られる",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ001231989/",
+          "fetchedAt": "2026-10-09T04:35:10.475Z",
+          "status": 200,
+          "shopState": null,
+          "address": "愛知県名古屋市中区栄３－９－２ ＧＥＭＳ栄 ５Ｆ",
+          "latestReviewDate": "2026-10-04",
+          "netReservation": true
+        },
+        "places": {
+          "placeId": "ChIJRzSgQ9NwA2ARfBQ3ZlmQnaM",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJRzSgQ9NwA2ARfBQ3ZlmQnaM",
+          "fetchedAt": "2026-10-09T04:33:30.466Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "焼肉・韓国料理KollaBo（コラボ）×マンジョッオヒャンジョッパル＆ソベッチャカンジャンケジャン 栄店",
+          "address": "日本、〒460-0008 愛知県名古屋市中区栄３丁目９−２ Gems栄 5F",
+          "businessStatus": "OPERATIONAL",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230103/23072412/",
+          "title": "【閉店】焼肉・韓国料理 KollaBo 栄店 （コラボ） - 栄（名古屋）/焼肉 | 食べログ",
+          "address": "栄3-9-2",
+          "checkedAt": "2026-09-20"
+        }
+      }
+    },
+    {
+      "id": "J001144583",
+      "storeName": "牡蠣 貝料理居酒屋 貝しぐれ 栄泉店",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "閉店",
+      "why": "ホットペッパーの店舗ページが掲載終了（HTTP 404「掲載情報なし」）、Google の店舗情報（同じ名前・東区泉1丁目1-17）が閉業、食べログも【閉店】",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ001144583/",
+          "fetchedAt": "2026-10-09T04:35:12.506Z",
+          "status": 404,
+          "shopState": null,
+          "address": null,
+          "latestReviewDate": null,
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJY3GZBSlxA2AROpgyWrtj9RY",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJY3GZBSlxA2AROpgyWrtj9RY",
+          "fetchedAt": "2026-10-09T04:33:30.857Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "牡蠣・貝料理居酒屋 貝しぐれ 栄泉店",
+          "address": "日本、〒461-0001 愛知県名古屋市東区泉１丁目１−１７ リバーパークヴィレッジ 1Ｆ",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230103/23059589/",
+          "title": "【閉店】牡蠣・貝料理居酒屋 貝しぐれ 栄泉店 （【旧店名】貝料理専門店 貝しぐれ 栄 泉1丁目店） - 久屋大通/居酒屋 | 食べログ",
+          "address": "泉1-1-17",
+          "checkedAt": "2026-09-20"
+        }
+      }
+    },
+    {
+      "id": "J003352001",
+      "storeName": "STEPS",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "閉店",
+      "why": "ホットペッパーの店舗ページの店名の上に【閉店】の表示（口コミ0件）、食べログも【閉店】。Google の店舗情報「ステップス」（同じ住所）は営業中のままで、閉店の報告が反映されていないと見られる",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ003352001/",
+          "fetchedAt": "2026-10-09T04:35:14.744Z",
+          "status": 200,
+          "shopState": "【閉店】",
+          "address": "愛知県名古屋市中区栄３-２ー２９ 長谷川ビル2階",
+          "latestReviewDate": null,
+          "netReservation": true
+        },
+        "places": {
+          "placeId": "ChIJExfvW9NwA2ARr7P-F732QOA",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJExfvW9NwA2ARr7P-F732QOA",
+          "fetchedAt": "2026-10-09T04:33:31.232Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "ステップス",
+          "address": "日本、〒460-0008 愛知県名古屋市中区栄３丁目２−２９ 長谷川ビル 2F",
+          "businessStatus": "OPERATIONAL",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230103/23008449/",
+          "title": "【閉店】NightBar STEPS （ナイトバー ステップス） - 栄（名古屋）/バー | 食べログ",
+          "address": "栄3-2-29",
+          "checkedAt": "2026-09-20"
+        }
+      }
+    },
+    {
+      "id": "J000981492",
+      "storeName": "炭焼き 羅針盤",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "閉店",
+      "why": "Google の店舗情報（同じ名前と住所）が閉業、食べログも【閉店】。ホットペッパーの口コミは 2014-05-25 が最後",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ000981492/",
+          "fetchedAt": "2026-10-09T04:35:16.925Z",
+          "status": 200,
+          "shopState": null,
+          "address": "愛知県名古屋市北区山田１‐３‐２３ 第１下林ビル",
+          "latestReviewDate": "2014-05-25",
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJTS4vzQVxA2ARG1p8QM5qN4c",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJTS4vzQVxA2ARG1p8QM5qN4c",
+          "fetchedAt": "2026-10-09T04:33:31.609Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "羅針盤",
+          "address": "日本、〒462-0810 愛知県名古屋市北区山田１丁目３−２３ 第一下林ビル",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230110/23043122/",
+          "title": "【閉店】炭焼き 羅針盤 - 大曽根/焼き鳥 | 食べログ",
+          "address": "山田1-3-23",
+          "checkedAt": "2026-09-20"
+        }
+      }
+    },
+    {
+      "id": "J003559980",
+      "storeName": "上海湯包小館 BINO栄店",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "閉店",
+      "why": "Google の店舗情報（同じ名前と住所）が閉業、食べログも【閉店】。ホットペッパーの口コミ（2026-06-04）に「6/14で閉店」との記載があり、口コミは 2026-06-12 が最後",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ003559980/",
+          "fetchedAt": "2026-10-09T04:35:19.292Z",
+          "status": 200,
+          "shopState": null,
+          "address": "愛知県名古屋市中区錦３丁目２４番地17号 BINO栄 B1",
+          "latestReviewDate": "2026-06-12",
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJofhV9m9xA2ARSEEYVFCAHCI",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJofhV9m9xA2ARSEEYVFCAHCI",
+          "fetchedAt": "2026-10-09T04:33:32.004Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "上海湯包小館 BINO栄店",
+          "address": "日本、〒460-0003 愛知県名古屋市中区錦３丁目２４−１７ BINO栄 B1 BINO栄",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230103/23085197/",
+          "title": "【閉店】上海湯包小館 BINO栄店 （シャンハイタンパオショウカン） - 栄（名古屋）/小籠包 | 食べログ",
+          "address": "錦3-24-17",
+          "checkedAt": "2026-09-20"
+        },
+        "other": [
+          {
+            "url": "https://www.hotpepper.jp/strJ003559980/",
+            "fetchedAt": "2026-10-09T04:35:19.292Z",
+            "fact": "ホットペッパーの口コミ（2026-06-04 投稿）に「ビーノ栄の上海湯包小館が6/14で閉店と知って」との記載"
+          }
+        ]
+      }
+    },
+    {
+      "id": "J001099181",
+      "storeName": "新京 名古屋伏見店",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "閉店",
+      "why": "ホットペッパーの店舗ページが掲載終了（HTTP 404「掲載情報なし」）、Google の店舗情報（同じ名前・栄2丁目9-5）が閉業、食べログも【閉店】",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ001099181/",
+          "fetchedAt": "2026-10-09T04:35:21.324Z",
+          "status": 404,
+          "shopState": null,
+          "address": null,
+          "latestReviewDate": null,
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJdX3g3Ct3A2ARdWhnV9YVwYU",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJdX3g3Ct3A2ARdWhnV9YVwYU",
+          "fetchedAt": "2026-10-09T04:33:32.382Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "【旗艦店】ベトコンラーメン新京 名古屋伏見店",
+          "address": "日本、〒460-0008 愛知県名古屋市中区栄２丁目９−５ アーク栄東海ビル B１F",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230102/23052691/",
+          "title": "【閉店】新京 名古屋伏見店 - 伏見/ラーメン | 食べログ",
+          "address": "栄2-9-5",
+          "checkedAt": "2026-09-20"
+        }
+      }
+    },
+    {
+      "id": "J000773251",
+      "storeName": "居酒屋 新九 しんく 栄本店",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "閉店",
+      "why": "ホットペッパーの店舗ページが掲載終了（HTTP 404「掲載情報なし」）、Google の店舗情報「新九」（栄3丁目4-28）が閉業、食べログも【閉店】",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ000773251/",
+          "fetchedAt": "2026-10-09T04:35:23.353Z",
+          "status": 404,
+          "shopState": null,
+          "address": null,
+          "latestReviewDate": null,
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJHWuol9NwA2ARx3dvnDFkyew",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJHWuol9NwA2ARx3dvnDFkyew",
+          "fetchedAt": "2026-10-09T04:33:32.760Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "新九",
+          "address": "日本、〒460-0008 愛知県名古屋市中区栄３丁目４−２８",
+          "businessStatus": "CLOSED_PERMANENTLY",
+          "addressVsListing": "same",
+          "usedAsEvidence": true
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230103/23036577/",
+          "title": "【閉店】新九 栄本店 - 栄（名古屋）/居酒屋 | 食べログ",
+          "address": "栄3-4-28",
+          "checkedAt": "2026-09-20"
+        }
+      }
+    },
+    {
+      "id": "J004090514",
+      "storeName": "Cafe & Pizzeria Harbor ハーバー",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "決められない",
+      "why": "閉店を示すのは食べログの【閉店】だけ（旧店名ザ カップス ハーバー カフェ・2025-06-20 に改装オープンとのプレスリリースあり）。Places の紐付けは港区の別の会社を指していて根拠にできず、店名と住所で探しても千年1-8-20 に該当する Google の店舗情報は無い。ホットペッパーのページは残っている（口コミなし）。公式の発信は Instagram だけでログインなしでは読めない",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ004090514/",
+          "fetchedAt": "2026-10-09T04:35:25.615Z",
+          "status": 200,
+          "shopState": null,
+          "address": "愛知県名古屋市熱田区千年１丁目８－２０",
+          "latestReviewDate": null,
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJLdv-3Z95A2ARaVr2YNoLDN8",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJLdv-3Z95A2ARaVr2YNoLDN8",
+          "fetchedAt": "2026-10-09T04:33:33.140Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "(有)ハーバー",
+          "address": "日本、〒455-0032 愛知県名古屋市港区入船１丁目３−３８",
+          "businessStatus": "OPERATIONAL",
+          "addressVsListing": "different",
+          "searchByName": {
+            "fetchedAt": "2026-10-09T04:37:51.016Z",
+            "query": "Cafe & Pizzeria Harbor 名古屋市熱田区千年1-8-20",
+            "candidates": [
+              {
+                "name": "Beer&Restaurant シャーロック・ホームズ",
+                "address": "〒456-0016 愛知県名古屋市熱田区五本松町１２−２０",
+                "businessStatus": "OPERATIONAL"
+              }
+            ]
+          },
+          "usedAsEvidence": false
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230112/23064621/",
+          "title": "【閉店】CAFE & PIZZERIA HARBOR （【旧店名】ザ カップス ハーバー カフェ） - 豊田本町/ピザ | 食べログ",
+          "address": "千年1-8-20",
+          "checkedAt": "2026-09-20"
+        },
+        "other": [
+          {
+            "url": "https://san-tatsu.jp/pressrelease/472262/",
+            "fetchedAt": "2026-10-09",
+            "fact": "カフェ&ピッツェリア ハーバーが 2025-06-20 に熱田区千年1-8-20 で営業を始めたとのプレスリリース（THE CUPS HARBOR CAFE の改装）"
+          }
+        ]
+      }
+    },
+    {
+      "id": "J001110537",
+      "storeName": "カラオケ レインボー 栄店",
+      "issue": "ISSUE-169",
+      "checkedAt": "2026-10-09",
+      "verdict": "決められない",
+      "why": "閉店を示すのは食べログの【閉店】だけ。錦3-17-15（栄ナナイロビル）に該当する Google の店舗情報は無く、「レインボー 栄錦店」（錦3丁目10-13）が営業中だが、移転か別の店かは確かめられない。ホットペッパーのページは残っている（口コミなし）",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ001110537/",
+          "fetchedAt": "2026-10-09T04:35:27.794Z",
+          "status": 200,
+          "shopState": null,
+          "address": "愛知県名古屋市中区錦３-１７-１５ 栄ナナイロビル７F",
+          "latestReviewDate": null,
+          "netReservation": false
+        },
+        "places": {
+          "fetchedAt": "2026-10-09T04:33:33.521Z",
+          "via": "Text Search",
+          "query": "カラオケ レインボー 栄店 愛知県名古屋市中区錦３-１７-１５  栄ナナイロビル７F",
+          "candidates": [
+            {
+              "name": "レインボー 栄錦店",
+              "address": "〒460-0003 愛知県名古屋市中区錦３丁目１０−１３ フラワー錦ビル 6F",
+              "business_status": "OPERATIONAL",
+              "placeId": "ChIJjykJR7N3A2ARaXxyMh_ZB6A"
+            }
+          ],
+          "searchByName": {
+            "fetchedAt": "2026-10-09T04:37:51.647Z",
+            "query": "カラオケレインボー 栄ナナイロビル 名古屋市中区錦3-17-15",
+            "candidates": [
+              {
+                "name": "レインボー 栄錦店",
+                "address": "〒460-0003 愛知県名古屋市中区錦３丁目１０−１３ フラワー錦ビル 6F",
+                "businessStatus": "OPERATIONAL"
+              }
+            ]
+          },
+          "usedAsEvidence": false
+        },
+        "tabelog": {
+          "url": "https://tabelog.com/aichi/A2301/A230103/23055454/",
+          "title": "【閉店】カラオケレインボー 栄店 - 栄（名古屋）/その他 | 食べログ",
+          "address": "錦3-17-15",
+          "checkedAt": "2026-09-20"
+        }
+      }
+    }
+  ]
+}
