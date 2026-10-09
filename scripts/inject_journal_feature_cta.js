@@ -25,42 +25,9 @@ const FEATURES_DIR = path.join(__dirname, '..', 'features');
 const START = '<!-- SEO-070:FEATURE-CTA:START -->';
 const END   = '<!-- SEO-070:FEATURE-CTA:END -->';
 
-// refresh_journal_related.js と同じリスト（ジャンル・シーン → 特集スラッグのマッピング）
-const TOPIC_FEATURES = [
-  [/ひつまぶし|うなぎ|鰻/, 'nagoya-unaju', 'うなぎ・ひつまぶし10選'],
-  [/手羽先/, 'nagoya-tebasaki', '手羽先完全ガイド'],
-  [/味噌煮込み/, 'nagoya-miso-nikomi-udon', '味噌煮込みうどんガイド'],
-  [/味噌かつ|とんかつ|トンカツ/, 'nagoya-tonkatsu', 'とんかつ・味噌かつ10選'],
-  [/焼肉|焼き肉|ホルモン|肉割烹|和牛|松阪牛/, 'nagoya-yakiniku', '焼肉おすすめ10選'],
-  [/ステーキ/, 'nagoya-steak', 'ステーキ10選'],
-  [/鉄板焼/, 'nagoya-teppanyaki', '鉄板焼き10選'],
-  [/すき焼き|しゃぶしゃぶ/, 'nagoya-sukiyaki', 'すき焼き・しゃぶしゃぶ10選'],
-  [/焼鳥|焼き鳥|やきとり|串焼|コーチン/, 'nagoya-yakitori', '焼き鳥10選'],
-  [/寿司|鮨|すし/, 'nagoya-sushi-guide', '鮨8選'],
-  [/ラーメン|まぜそば|つけ麺/, 'nagoya-ramen', 'ラーメン12選'],
-  [/餃子/, 'nagoya-gyoza', '餃子10選'],
-  [/海鮮|魚介|刺身|鮮魚/, 'nagoya-seafood', '海鮮・魚介10選'],
-  [/イタリアン|パスタ/, 'nagoya-italian-guide', 'イタリアン10選'],
-  [/フレンチ|フランス料理/, 'nagoya-french-guide', 'フレンチ8選'],
-  [/中華|中国料理/, 'nagoya-chinese-guide', '中華料理10選'],
-  [/韓国/, 'nagoya-korean', '韓国料理10選'],
-  [/モーニング|喫茶/, 'nagoya-morning', 'モーニング・喫茶10選'],
-  [/カフェ/, 'nagoya-cafe', 'カフェ10選'],
-  [/スイーツ|デザート|パフェ|ケーキ/, 'nagoya-sweets', 'スイーツ10選'],
-  [/バー|カクテル|ウイスキー|ワイン/, 'nagoya-bar-guide', 'バー・ワインバー10選'],
-  [/居酒屋/, 'nagoya-izakaya', '居酒屋10選'],
-  [/一人飲み|ひとり飲み|独り/, 'nagoya-solo-dining', '一人飲み完全ガイド'],
-  [/接待|会食/, 'nagoya-settai-secret', '失敗しない接待10選'],
-  [/デート/, 'date', 'デートディナー10選'],
-  [/誕生日|記念日/, 'birthday', '誕生日・記念日10選'],
-  [/女子会/, 'girls-party', '女子会10選'],
-  [/宴会|忘年会|新年会/, 'banquet', '宴会・忘年会15選'],
-  [/個室/, 'private-room', '個室グルメ10選'],
-  [/大須/, 'osu-food-walk', '大須食べ歩き10選'],
-  [/名駅|名古屋駅/, 'meieki', '名駅グルメ15選'],
-  [/栄|錦/, 'sakae', '栄・錦グルメ15選'],
-  [/夏|ビアガーデン|納涼/, 'nagoya-summer-2026', '夏グルメ10選'],
-];
+// 振り分け表は refresh_journal_related.js と共有する（scripts/lib/journal_topics.js・SEO-102）。
+// 既に入っている区画は、この表で再実行したときだけ置き換わる
+const { TOPIC_FEATURES } = require('./lib/journal_topics');
 
 function listPosts() {
   return fs.readdirSync(JOURNAL_DIR)
