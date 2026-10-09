@@ -53,54 +53,13 @@ function shortLabel(title) {
 
 // 回遊強化: journal タイトルから関連特集(features/)を1本マッチさせる。
 // 先頭から順に最初に一致したものを採用。確信が持てない場合は付けない（汎用ハブのみ）。
-const TOPIC_FEATURES = [
-  // SEO-091: 「ひつまぶし」を含むタイトルは、より専門性の高い単独ガイド
-  // （名古屋ひつまぶし完全ガイド・9店・FAQ付き）へ。「うなぎ/鰻」のみで
-  // 「ひつまぶし」を含まないタイトルは、うなぎ全般の10選ガイドへ。
-  // 旧: 1本の正規表現で両方とも nagoya-unaju に流しており、ひつまぶし単体の
-  // ジャーナル記事（例: 2026-06-09-hitsumabushi-touga-nagono.html）からも
-  // nagoya-hitsumabushi.html への内部リンクが一度も生成されていなかった。
-  [/ひつまぶし/, 'nagoya-hitsumabushi', '名古屋ひつまぶし完全ガイド'],
-  [/うなぎ|鰻/, 'nagoya-unaju', 'うなぎ・ひつまぶし10選'],
-  [/手羽先/, 'nagoya-tebasaki', '手羽先完全ガイド'],
-  [/味噌煮込み/, 'nagoya-miso-nikomi-udon', '味噌煮込みうどんガイド'],
-  [/味噌かつ|とんかつ|トンカツ/, 'nagoya-tonkatsu', 'とんかつ・味噌かつ10選'],
-  [/焼肉|焼き肉|ホルモン|肉割烹|和牛|松阪牛/, 'nagoya-yakiniku', '焼肉おすすめ10選'],
-  [/ステーキ/, 'nagoya-steak', 'ステーキ10選'],
-  [/鉄板焼/, 'nagoya-teppanyaki', '鉄板焼き10選'],
-  [/すき焼き|しゃぶしゃぶ/, 'nagoya-sukiyaki', 'すき焼き・しゃぶしゃぶ10選'],
-  [/焼鳥|焼き鳥|やきとり|串焼|コーチン/, 'nagoya-yakitori', '焼き鳥10選'],
-  [/寿司|鮨|すし/, 'nagoya-sushi-guide', '鮨8選'],
-  [/ラーメン|まぜそば|つけ麺/, 'nagoya-ramen', 'ラーメン12選'],
-  [/餃子/, 'nagoya-gyoza', '餃子10選'],
-  [/海鮮|魚介|刺身|鮮魚/, 'nagoya-seafood', '海鮮・魚介10選'],
-  [/イタリアン|パスタ/, 'nagoya-italian-guide', 'イタリアン10選'],
-  [/フレンチ|フランス料理/, 'nagoya-french-guide', 'フレンチ8選'],
-  [/中華|中国料理/, 'nagoya-chinese-guide', '中華料理10選'],
-  [/韓国/, 'nagoya-korean', '韓国料理10選'],
-  [/モーニング|喫茶/, 'nagoya-morning', 'モーニング・喫茶10選'],
-  [/カフェ/, 'nagoya-cafe', 'カフェ10選'],
-  [/スイーツ|デザート|パフェ|ケーキ/, 'nagoya-sweets', 'スイーツ10選'],
-  [/バー|カクテル|ウイスキー|ワイン/, 'nagoya-bar-guide', 'バー・ワインバー10選'],
-  [/居酒屋/, 'nagoya-izakaya', '居酒屋10選'],
-  [/一人飲み|ひとり飲み|独り/, 'nagoya-solo-dining', '一人飲み完全ガイド'],
-  [/接待|会食/, 'nagoya-settai-secret', '失敗しない接待10選'],
-  [/デート/, 'date', 'デートディナー10選'],
-  [/誕生日|記念日/, 'birthday', '誕生日・記念日10選'],
-  [/女子会/, 'girls-party', '女子会10選'],
-  [/宴会|忘年会|新年会/, 'banquet', '宴会・忘年会15選'],
-  [/個室/, 'private-room', '個室グルメ10選'],
-  [/大須/, 'osu-food-walk', '大須食べ歩き10選'],
-  [/名駅|名古屋駅/, 'meieki', '名駅グルメ15選'],
-  [/栄|錦/, 'sakae', '栄・錦グルメ15選'],
-  [/夏|ビアガーデン|納涼/, 'nagoya-summer-2026', '夏グルメ10選'],
-];
+const { TOPIC_FEATURES } = require('./lib/journal_topics');
 
 function matchTopicFeature(title) {
   if (!title) return null;
-  for (const [re, slug, label] of TOPIC_FEATURES) {
+  for (const [re, slug, label, group] of TOPIC_FEATURES) {
     // SEO-147: 「N選」はリンク先の特集の確かめられる掲載数に合わせる
-    if (re.test(title)) return { slug, label: relabelForSlug(label, slug) };
+    if (re.test(title)) return { slug, label: relabelForSlug(label, slug), group: group || slug };
   }
   return null;
 }
@@ -109,10 +68,19 @@ function matchTopicFeature(title) {
 function matchAllTopicSlugs(title) {
   if (!title) return new Set();
   const slugs = new Set();
-  for (const [re, slug] of TOPIC_FEATURES) {
-    if (re.test(title)) slugs.add(slug);
+  for (const [re, slug, , group] of TOPIC_FEATURES) {
+    if (re.test(title)) slugs.add(group || slug);
   }
   return slugs;
+}
+
+function hasOwnHubs(slug) {
+  const feature = `features/${slug}.html`;
+  return HUB_MAP.has(feature) || POLICY.genres.some(g => g.feature === feature);
+}
+
+function hubSlugFor(topic) {
+  return hasOwnHubs(topic.slug) ? topic.slug : (topic.group || topic.slug);
 }
 
 function buildRelatedHtml(currentFile, posts, postsMeta) {
@@ -152,9 +120,11 @@ function buildRelatedHtml(currentFile, posts, postsMeta) {
     // エリアが特定できたがハブが無い場合も含め「エリア外のハブを無言で並べない」原則に従う。
     const articleTitle = postsMeta[currentFile] && postsMeta[currentFile].title;
     const areaSlug = detectArticleArea(currentFile, articleTitle, POLICY);
+    // SEO-102: 特集にジャンルのハブが無ければ、話題のまとまりの代表の特集のハブを使う
+    const hubSlug = hubSlugFor(topic);
     let hubsAdded = false;
     if (areaSlug) {
-      const areaHub = findAreaHub(areaSlug, topic.slug, POLICY, MANIFEST);
+      const areaHub = findAreaHub(areaSlug, hubSlug, POLICY, MANIFEST);
       if (areaHub) {
         if (areaHub.type === 'area_genre') {
           const href = `../${areaHub.url}`;
@@ -180,7 +150,7 @@ function buildRelatedHtml(currentFile, posts, postsMeta) {
     }
     if (!hubsAdded) {
       // SEO-099: エリア不明 or エリア対応ハブ無しの場合のみ従来の特集単位ハブを使う
-      const hubLinks = HUB_MAP.get(`features/${topic.slug}.html`) || [];
+      const hubLinks = HUB_MAP.get(`features/${hubSlug}.html`) || [];
       for (const h of hubLinks) {
         const href = `../${h.url}`;
         lines.push(
@@ -251,4 +221,5 @@ function main() {
   }
 }
 
-main();
+if (require.main === module) main();
+module.exports = { TOPIC_FEATURES, matchTopicFeature, matchAllTopicSlugs, hasOwnHubs, hubSlugFor, buildRelatedHtml };

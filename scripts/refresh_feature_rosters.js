@@ -107,6 +107,9 @@ function sceneMatch(s, scene) {
   if (genreRe && !genreRe.test(s['ジャンル'] || '')) return null;
   // 店名かジャンルにこの語がある店は載せない（ジャンルが「ダイニングバー」でも中身が焼肉・BBQ の店を外す・SEO-122）
   if (scene.exclude && new RegExp(scene.exclude).test(`${s['店名'] || ''} ${s['ジャンル'] || ''}`)) return null;
+  // excludeText: 紹介文（キーワードと同じ範囲＝店名・ジャンル・タグ・おすすめポイント・編集コメント）にこの語がある店は載せない。
+  // 店名に出ない業態（紹介文に「シーシャバー」とある店など）を、カクテル・ワイン・ダイニングバーを約束する特集から外す（SEO-102）
+  if (scene.excludeText && new RegExp(scene.excludeText).test(sceneHaystackKeyword(s))) return null;
   if (scene.gateArea && areaRe && !areaRe.test(sceneHaystackArea(s))) return null;
   // requirePrice: 価格帯の表示が無い店は載せない（「価格帯◯円以上だけ」と書いている特集で、確かめられない店を通さない・SEO-122）
   if (scene.requirePrice && priceFloor(s['価格帯']) === null) return null;

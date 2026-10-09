@@ -188,12 +188,14 @@
     },
     "nagoya-bar-guide": {
       "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
-      "scene": { "genre": "バー", "keyword": "ワイン|ワインバー", "gateKeyword": false },
+      "_why": "記事の題名とFAQが『ワインバー』『ワインバーを選ぶときのポイント』を約束しているので、店の紹介文にワインの語がある店だけを載せる。紹介文にシーシャ・ポーカー・ダーツ・カラオケとある店は載せない。ジャンルはホットペッパーのジャンル名で書く（『バー』だけだとハンバーグ・ハンバーガーの店にも当たる）。それまではキーワードが加点だけで、ポーカーバー・タコス・シーシャの店が載り、ダイニングバー特集と掲載店の9割が同じだった（SEO-102・2026-10-09）",
+      "scene": { "genre": "バー・カクテル|ダイニングバー・バル", "keyword": "ワイン|ソムリエ|ナチュール", "gateKeyword": true, "excludeText": "シーシャ|[Ss]hisha|水たばこ|水タバコ|ポーカー|[Pp][Oo][Kk][Ee][Rr]|ダーツ|[Dd][Aa][Rr][Tt][Ss]|カラオケ" },
       "fixed": []
     },
     "nagoya-bar": {
       "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
-      "scene": { "genre": "バー", "keyword": "カクテル|カクテルバー", "gateKeyword": false },
+      "_why": "記事のFAQがカクテルバー・ウイスキー・バーボンを約束しているので、店の紹介文にカクテルかウイスキーの語がある店だけを載せる（ジャンル名『バー・カクテル』のカクテルは数えない。数えると同じジャンルの店が全部通る）。紹介文にシーシャ・ポーカー・ダーツ・カラオケとある店は載せない（SEO-102・2026-10-09。それまではキーワードが加点だけで、シーシャとポーカーの店が載っていた）",
+      "scene": { "genre": "バー・カクテル|ダイニングバー・バル", "keyword": "(?<!バー・)カクテル|ウイスキー|ウィスキー|モルト|バーボン|バーテンダー", "gateKeyword": true, "excludeText": "シーシャ|[Ss]hisha|水たばこ|水タバコ|ポーカー|[Pp][Oo][Kk][Ee][Rr]|ダーツ|[Dd][Aa][Rr][Tt][Ss]|カラオケ" },
       "fixed": []
     },
     "nagoya-chinese-guide": {
@@ -203,7 +205,8 @@
     },
     "nagoya-dining-bar": {
       "format": "shop-card", "container": "shop-grid", "slots": 10, "coreCount": 5,
-      "scene": { "genre": "ダイニングバー|バー", "keyword": "", "gateKeyword": false },
+      "_why": "記事の題名とFAQが『ダイニングバー・バル』『食事と飲みを楽しむ』を約束しているので、ホットペッパーのジャンルがダイニングバー・バルの店だけを載せ、紹介文にシーシャ・ポーカー・ダーツ・カラオケとある店は載せない。料理の語がある店を前に寄せる（加点だけ）（SEO-102・2026-10-09。それまではバー全般から選び、ワインバー特集と掲載店の9割が同じだった）",
+      "scene": { "genre": "ダイニングバー・バル", "keyword": "(?<!ダイニングバー・)バル|タパス|アヒージョ|パエリア|生ハム|チーズ|料理|フード", "gateKeyword": false, "excludeText": "シーシャ|[Ss]hisha|水たばこ|水タバコ|ポーカー|[Pp][Oo][Kk][Ee][Rr]|ダーツ|[Dd][Aa][Rr][Tt][Ss]|カラオケ" },
       "fixed": []
     },
     "nagoya-french-guide": {

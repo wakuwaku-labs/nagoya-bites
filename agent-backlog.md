@@ -70,6 +70,7 @@
   - 達成条件3: 新コードが初めてレポートを作った日を Script Property（CTA_DEDUP_SINCE）に書き、その日から35日、日次・週次の予約ボタンの行の下に「※ その日から1回を2回数えていたのを1回に直した。それより前のレポートの回数とは比べられない」と出す（デプロイの日はコードから分からないため）
   - GAS の反映はオーナーの操作（[[ISSUE-150]] と同じ貼り替えで入る）。反映の確かめは `data/gas_deploy_policy.json` に痕跡を足した（新: 「同じクリックは1回」・旧: 「予約ドメインへの外部リンク含む」）。`pending_fixes` に ISSUE-149 と ISSUE-152 を入れたので、旧コードのレポートが2回続くと gas-deploy-watchdog が Issue（＝メール）で知らせ、反映されると閉じる。watchdog の対処手順の文面は特定の修正（SEO-063）に依らない形にした
   - 残り: 合流後のビルドの `cta.reservationOverlap7d` を読んで件数を Linear に残す（達成条件1）。GAS の反映後に、日次レポートで新しいラベルと注記を確かめ、`pending_fixes` を空にして done
+- **2026-10-09 追記（達成条件1・合流後のビルド 37904511486 の値）**: main の `data/site_metrics.json` の `cta.reservationOverlap7d`（7daysAgo〜yesterday）で、予約ボタンのイベント（cta_click・cta_reserve）9件と予約サイトへの外部リンク（outbound_click）13件を足すと22件、同じページ・同じ予約サイトで重なりを除くと17件（重なり5件）。内訳: hotpepper.jp はボタン9・外部リンク7→11件、tabelog.com はボタン0・外部リンク6→6件。食べログのボタンで cta_click を送るのは店舗ページだけで、店舗ページの計測は SEO-115 の再生成（10-09）まで動いていなかったため、この7日の食べログは外部リンクだけになる（index.html・特集・ジャーナルの食べログのリンクは outbound_click だけを送る）。達成条件1は満たした。残りは達成条件3（週次レポートの注記）で、GAS のデプロイ（オーナー作業・ISSUE-150 と一緒）の後に日次・週次レポートで「同じクリックは1回」と注記の行を確かめてから done にする
 
 ### [ISSUE-161] ビルドの CI が main の最新から始まるようにし、続けて合流したときの push 失敗をなくす
 
@@ -682,6 +683,24 @@
   - 気づいたこと: 取得の対象に県外の中エリア Y271（草津市・守山市）と Y437（京都の伏見）が入っている（中エリア名の語「守山」「伏見」で選んでいるため）。店は「名古屋市外除外」で外れ、stores.json に滋賀・京都の住所は0件。無駄な API 呼び出しだけなので、直すなら中エリアを語ではなく large_area で選ぶ（API の応答で large_area を確かめてから）
   - 残りは達成条件2（2026-10-17 以降の `--churn --days 8`）
 
+### [ISSUE-184] 日次ジャーナルが Claude の利用上限で止まったとき、解除を待って作り直し、通知に原因を書く
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-10-16
+- **category**: ops
+- **owner**: Builder
+- **source**: 2026-10-09 の日次ジャーナルの欠番（GitHub Issue #437・#438）の原因調査
+- **brand-filter**: ✅ 適合 — 毎日1本の公開を守る（日次ジャーナルは三層編集の1層）
+- **背景**: 10-09 09:00 の launchd 実行で、認証プリフライトと本番生成の両方が「You've hit your session limit · resets 11:10am (Asia/Tokyo)」で終了コード1になった（`~/nagoya-bites/.local-logs/journal-2026-10-09.log` の 47〜55行目）。`scripts/run_journal_local.sh` は、認証エラーでも既知のネットワーク一時エラーでもないとしてリトライせず、記事HTMLが無いので HOLD にした。`data/journal_health.json` の reason は「記事HTMLが存在しない。生成そのものが失敗しています」で、watchdog の Issue #438 は「hold（品質HOLD）」と出ており、利用上限という原因が通知に出ていない（CLAUDE.md 無人自動化の原則5）。利用上限はサブスクを共有する対話セッションの使用でも尽きる（10-09 は同じ朝に長い対話セッションが動いていた）。上限は 11:10 に解除されたが作り直す経路が無く、10-09 の記事は出ていない。利用上限での停止はローカルログで初めて（`grep -l "session limit" .local-logs/journal-*.log` が 10-09 の1件だけ）
+- **acceptance**:
+  1. 生成の出力から利用上限の文言と解除時刻を読み取り、解除までが閾値（データJSONで持つ・例: 4時間）以内なら、解除時刻を数分過ぎるまで待って作り直す。解除時刻が読めない・閾値を超えるときは待たずに HOLD にする
+  2. HOLD のときは `data/journal_health.json` の reason に「利用上限（解除 HH:MM）」と書き、watchdog の Issue で品質HOLD と区別できる
+  3. 解除時刻の読み取り（`resets 11:10am (Asia/Tokyo)` などの形）と待つかどうかの判定をテストで確かめる
+- **オーナーに確かめること**: 10-09 の欠番の記事を作り直して公開するか（公開はオーナーの判断）
+- **files**: `scripts/run_journal_local.sh`, `data/journal_gate_policy.json`（または新しいポリシーJSON）, `tests/`
+- **関連**: [[ISSUE-084]]（無人自動化の監視の原則）
+
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 
 - **priority**: P1 → **status**: in_progress
@@ -1247,6 +1266,23 @@
   1. 2026-11-06 以降に `node scripts/journal_title_experiment.js --report` を実行し、結果を基線と並べて `docs/kpi-weekly.md` に記録する。対象は、書き換えた15本・参照5本・10-09 より後の新規記事・ジャーナル全体の4つで、CTR と平均順位を並べる
   2. 書き換えた15本の CTR の変化は、順位の変化と分けて書く。順位が大きく動いた記事は注記する
   3. 規則を続けるか・やめるか・変えるかを判断し、本課題の結果に書く。title を元に戻すときは、台帳の before を使う
+
+### [SEO-149] ジャーナル本文冒頭の「合わせて読む」（SEO-070）を新しい記事にも入れる
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-10-23
+- **category**: SEO
+- **owner**: Builder / Editor
+- **source**: [[SEO-102]] の作業中に見つけた（2026-10-09）
+- **brand-filter**: ✅ 適合 — 自社の実在する特集への回遊（SEO-070 と同じ）
+- **背景**: SEO-070 で入れた本文冒頭の関連特集リンク（`scripts/inject_journal_feature_cta.js`・マーカー `SEO-070:FEATURE-CTA`）は、日次ジャーナル（`scripts/run_journal_local.sh`・`.github/workflows/daily-journal.yml`）から呼ばれていない（`grep` で呼び出し0件）。区画がある最新の記事は 2026-09-18 で、09-19 以降の記事のうち振り分け表に当たる27本に区画が無い（`node scripts/inject_journal_feature_cta.js --check` の would_add 27・2026-10-09）。SEO-070 の達成条件2は「マーカー方式で再生成可能に」で、新しい記事に入れる経路が抜けていた
+- **acceptance**:
+  1. 日次ジャーナルが当日の記事に区画を入れる（関連記事の更新と同じ所で `--file` で当日分だけ、または `refresh_journal_related.js` から同じ処理を呼ぶ）。既に入っている区画を書き換えるかは `docs/decisions/0015` の5を見て決める
+  2. 09-19 以降の27本に区画を入れる
+  3. `node scripts/inject_journal_feature_cta.js --check` が 0 件になり、夜間QA が soft で数える
+- **files**: `scripts/run_journal_local.sh`, `.github/workflows/daily-journal.yml`, `scripts/inject_journal_feature_cta.js`, `scripts/nightly_qa.js`
+- **関連**: [[SEO-070]]（元の実装）／[[SEO-102]]
 
 ### [SEO-138] GA スニペットの4コピーを1つの部品にまとめる
 
@@ -2189,7 +2225,7 @@
 
 ### [SEO-102] `scripts/refresh_journal_related.js` の TOPIC_FEATURES にジャンル重複特集（焼肉2本・バー3本）が未整理で、journal からの内部リンクが片方にしか流れない
 
-- **priority**: P3 → **status**: in_progress（acceptance②③はEditorの角度確認待ち・オーナー操作は不要）
+- **priority**: P3 → **status**: done（2026-10-09）
 - **detected**: 2026-09-18
 - **category**: SEO / コンテンツ整理
 - **owner**: Editor / Builder
@@ -2224,6 +2260,12 @@
 
 ---
 - **2026-10-06 点検**: 待ち条件（Editor＝AIの角度確認）は未実施のまま。前提のコード（TOPIC_FEATURES の1カテゴリ1特集構造）も変化なし。次の一手: Editor が `nagoya-yakiniku-guide` / `nagoya-dining-bar` の `<title>`・h1 を読んで振り分け語を決め、`scripts/refresh_journal_related.js` のリンク上限を「最大2本」に拡張する設計と同時に実装する（SEO-046 の自動実行と衝突しないよう冪等性を確認）。`nagoya-bar-guide`/`nagoya-dining-bar`（掲載店90%一致）は統合候補（既存URLは残し内部リンク集約）。30分超のため本スイープでは未着手
+- **2026-10-09 結果（done）**: 達成条件をすべて満たした（判断は `docs/decisions/0015-same-genre-features-split-by-promise.md`）。
+  1. 掲載店の重なりを測り直した（焼肉 1/10・焼き鳥 5/10・カクテル×ワイン 2・カクテル×ダイニング 2・ワイン×ダイニング 9/10）。ワイン×ダイニングの重なりは、3本ともジャンル「バー」から選び、キーワードが加点だけだったため。3本ともポーカー・シーシャ・ダーツの店を載せていた（FAQ はカクテルバー・ワインバー・ダイニングバーを約束）
+  2. 振り分け表を `scripts/lib/journal_topics.js` の1本にし、`refresh_journal_related.js` と `inject_journal_feature_cta.js` が読む（後者は SEO-091 の振り分けが入っていない古い写しだった）。焼肉: 和牛・松阪牛・肉割烹→焼肉10選、焼肉・ホルモン→業界人が通う焼肉8選。焼き鳥: コーチン・地鶏→炭火・地鶏の焼き鳥10選、焼鳥・串焼→焼き鳥10選。バー: ダイニングバー・バル→ダイニングバー特集、カクテル・ウイスキー・オーセンティックバー→カクテル特集、ワイン・バー→ワインバー特集（バーガー・メンバー・ライバル等は拾わない）。分けた特集にハブが無いときは代表の特集のハブを引く。ジャーナル7本（焼肉5・コーチン2）の関連特集が新しい振り分けになった（もう1本はイタリアン特集のハブの選び直しで、翌朝の日次で入る差分）
+  3. 統合はしない。各ページの約束を選定条件にした: ジャンルはホットペッパーのジャンル名（「バー」だけだとハンバーグ・ハンバーガーにも当たる）、カクテル・ワインは紹介文に語がある店だけ（カクテルのゲートはジャンル名「バー・カクテル」のカクテルを数えていて全店が通っていた）、紹介文にシーシャ・ポーカー・ダーツ・カラオケとある店は載せない（新しい条件 `excludeText`）。重なりはカクテル×ワイン 0・カクテル×ダイニング 0・ワイン×ダイニング 1 になり、3本の掲載店を入れ替えた（`refresh_feature_rosters.js --check` はプール充足）
+  4. `npm test`（新しい `tests/journal_topics.test.js` 6件を含む）・デザインシステム監査・インラインJS・掲載数の表記・実在不明掲載店・byline・サイト共通クロームの検査がすべて exit 0
+  - 別に見つけたこと: 本文冒頭の「合わせて読む」（SEO-070）が日次に組み込まれておらず、09-19 以降の27本に入っていない → [[SEO-149]] に起票
 
 ### [ISSUE-128] Instagram公式埋め込みウィジェット（blockquote.instagram-media + 公式embed.js）が店舗ページで機能しない ✅ 直接iframe方式への切替で解決
 
