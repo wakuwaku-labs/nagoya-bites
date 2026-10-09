@@ -115,7 +115,7 @@
 
 ### [ISSUE-160] 別の支店・別の店を指すと確かめた食べログリンクを、店舗データ・店舗ページ・解決キャッシュから外す
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
 - **owner**: DataKeeper
@@ -131,7 +131,7 @@
   - **残した3件**: めんらんど（J000400091・食べログ側の住所は HotPepper の座標から19m・区画整理の前後の住所）、和食麺処 サガミ 有松店（J000395215・同じ支店名・字名が同じ 境松）、嘉文 徳重店（J000994381・同じ支店名・字の代表点で291m）。監査はこの3組を数えない。
   - **外した42件**: 市町村が違う10件（碧亭 → みよし市・平和食堂 → 豊橋市・大徳 → 南知多町 など）、町名か丁目が違う32件（ELLE HALL Dining → 名古屋駅西口店のページ・食彩館ねぎぼーず 本店 → 港店のページ など）。`clear_broken_tabelog_links.js --reviewed` が店舗IDごとに外した（data/stores.json 42件・stores/*.html 42本のボタンと JSON-LD の sameAs・data/tabelog_resolved.json の42件を failed にして埋め戻しを防ぐ・手動キュレーション店は0件）。同じ URL を正しい支店も使っている組は残した（焼肉神宮 金山本店・じゃけん 名古屋店・ELLE HALL Dining 名古屋駅西口店 など11店）。
   - **確認**: `audit_tabelog_branch_mismatch.js` は different 0件（食べログリンク 2,685件・確かめ済み3件・unknown 16件は表記ゆれ）。`audit_page_store_links.js --check` は exit 0（特集・ジャーナルに同じ URL は無い）。data/stores.json で変わったのは42店の「食べログURL」だけ。書き換えた42本の script 180個に構文エラーは無い。
-  - **達成条件2**: 合流後のビルドの後に main で確かめる。
+  - **達成条件2**: #439 の合流後のビルド（run 37881266812・success）の後、main（86865a9dcb）で確かめた。data/stores.json で外した42店の「食べログURL」は空のまま、店舗ページ42本にもその URL は無い。残した3件はリンクが付いたまま。
   - 見つけたこと: 外した42件のうち13件は、Instagram のアカウントを外した食べログのページから取っていた（[[ISSUE-165]]）。同じ URL を使う MAVERICK HALL（J000739645）は名前が一致しない組で、この課題の対象外（[[ISSUE-166]]）。
 
 ### [ISSUE-162] ホットペッパーの題名の「＜ネット予約可＞」を外して店名を読み、正しいリンクを不一致と数えないようにする
