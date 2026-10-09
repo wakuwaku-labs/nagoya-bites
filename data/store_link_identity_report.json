@@ -1,21 +1,42 @@
 {
-  "generatedAt": "2026-10-09T04:26:26.646Z",
-  "run": {},
+  "generatedAt": "2026-10-09T04:42:32.763Z",
+  "run": {
+    "tabelog": {
+      "attempted": 5,
+      "fetched": 0,
+      "stopped": true
+    },
+    "hotpepper": {
+      "attempted": 55,
+      "fetched": 55,
+      "stopped": false
+    }
+  },
   "health": {
     "tabelog": {
       "links": 2651,
-      "neverChecked": 15,
-      "unfetched": 105,
+      "neverChecked": 10,
+      "unfetched": 110,
       "lastFetchedAt": "2026-09-20T15:34:57.680Z"
     },
     "hotpepper": {
       "links": 4738,
-      "neverChecked": 4655,
+      "neverChecked": 4600,
       "unfetched": 0,
-      "lastFetchedAt": "2026-10-09T04:24:26.258Z"
+      "lastFetchedAt": "2026-10-09T04:42:32.744Z"
     }
   },
   "mismatches": [
+    {
+      "店名": "ＢＡＲ  ＣＯＭ’Ｓ",
+      "エリア": "大曽根･千種･今池･池下･守山区",
+      "種別": "hotpepper",
+      "url": "https://www.hotpepper.jp/strJ003967005/",
+      "理由": "name-mismatch",
+      "検出タイトル": "ＢＡＲ &nbsp;ＣＯＭ’Ｓ",
+      "エラー": null,
+      "検証日": "2026-10-09T04:40:41.896Z"
+    },
     {
       "店名": "ワイン&バー SALON",
       "エリア": "栄(ミナミ)/矢場町/大須/上前津",
@@ -947,6 +968,56 @@
       "検出タイトル": null,
       "エラー": "HTTP 403",
       "検証日": "2026-10-09T04:18:41.914Z"
+    },
+    {
+      "店名": "餃子の王将 大須観音店",
+      "エリア": "大須",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230105/23044193/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T04:36:19.139Z"
+    },
+    {
+      "店名": "覚王山フルーツ大福 弁才天",
+      "エリア": "覚王山",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23074397/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T04:36:23.548Z"
+    },
+    {
+      "店名": "Pomo ポモ",
+      "エリア": "栄(ミナミ)/矢場町/大須/上前津",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230105/23091659/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T04:36:28.628Z"
+    },
+    {
+      "店名": "縁食堂",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230113/23083323/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T04:36:33.836Z"
+    },
+    {
+      "店名": "発酵喫茶とお食事処 まんまる村",
+      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230103/23088286/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T04:36:38.037Z"
     },
     {
       "店名": "とりとり亭 星ヶ丘店",
