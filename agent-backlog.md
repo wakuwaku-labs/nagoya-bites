@@ -685,7 +685,7 @@
 
 ### [ISSUE-184] 日次ジャーナルが Claude の利用上限で止まったとき、解除を待って作り直し、通知に原因を書く
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: done（2026-10-09）
 - **detected**: 2026-10-09
 - **due**: 2026-10-16
 - **category**: ops
@@ -700,6 +700,12 @@
 - **オーナーに確かめること**: 10-09 の欠番の記事を作り直して公開するか（公開はオーナーの判断）
 - **files**: `scripts/run_journal_local.sh`, `data/journal_gate_policy.json`（または新しいポリシーJSON）, `tests/`
 - **関連**: [[ISSUE-084]]（無人自動化の監視の原則）
+- **2026-10-09 結果（done）**: 達成条件をすべて満たした。
+  1. 判定器 `scripts/lib/claude_usage_limit.js` が claude の出力から利用上限の文と解除時刻を読む（`resets 11:10am (Asia/Tokyo)`・`will reset at 5pm`・`resets Oct 13, 9am`・24時間・古い `usage limit reached|<UNIX時刻>`）。レート制限（429）は利用上限として扱わない。`run_journal_local.sh` はプリフライトと生成の両方で使い、解除まで（余裕3分）待って作り直す。待つ上限は `data/journal_gate_policy.json` の `usage_limit_retry`（330分＝5時間の窓に余裕・1回の実行で2回まで）。上限を超える・待ち終わりが日付をまたぐ・解除時刻が読めないときは待たずに HOLD
+  2. HOLD の理由は「Claude の利用上限（解除 HH:MM）で生成できませんでした（どこで）。〜のため…」で `data/journal_health.json` に入る。journal-watchdog の Issue の題は理由で呼び分ける（利用上限／認証切れ／品質HOLD＝validator の FAIL だけ／生成・公開の失敗）。利用上限のときは対処に「解除の後、当日中に作り直す」「9:00 の前後に長い対話セッションを動かさない」を出す
+  3. `tests/claude_usage_limit.test.js`（7件）: 10-09 の実際の文で `WAIT 7964 11:10`、ほかの形・タイムゾーン、待たない4通り、利用上限ではない失敗が NONE、CLI、設定、ラッパーと watchdog の配線。ラッパーの関数は stub で5通り（待つ2回→使い切りで HOLD・NONE・時刻なし・週の上限）を確かめた
+  - 効き始め: ラッパーは起動時に `git pull` するが、走っている bash は古い内容のまま続くため、`~/nagoya-bites` に取り込まれた次の実行から（10-10 の実行で取り込み、10-11 から。10-10 の 9:00 より前に取り込まれていれば 10-10 から）
+  - 10-09 の欠番の記事を作り直して公開するかはオーナーの判断（未実施）
 
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 

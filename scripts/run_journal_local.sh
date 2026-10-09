@@ -204,6 +204,42 @@ hold() {
   die "本日は公開を見送りました（HOLD）。${holdfile} を確認してください。"
 }
 
+# ---- Claude の利用上限（ISSUE-184）----
+# claude の出力に利用上限（"You've hit your session limit · resets 11:10am (Asia/Tokyo)" など）があれば、
+# 解除を過ぎるまで待ってから作り直す。2026-10-09 は 09:00 に上限で止まり、11:10 に解けていたのに
+# 作り直す経路が無く欠番になった（理由も「記事HTMLが存在しない」としか出なかった）。
+# 待つ上限（data/journal_gate_policy.json の usage_limit_retry）を超えるとき・待ち終わりが日付をまたぐとき・
+# 解除時刻が読めないとき・待つ回数を使い切ったときは、待たずに HOLD にして理由に「利用上限（解除 HH:MM）」を書く
+# （data/journal_health.json の reason → watchdog の Issue に原因が出る）。判定器は scripts/lib/claude_usage_limit.js。
+# 戻り値: 0=待った（作り直してよい）/ 1=利用上限ではない。待たないと決めたときは hold で終わる。
+USAGE_LIMIT_WAITS=0
+usage_limit_wait() {
+  local text="$1" where="$2" tmp line kind secs label max_waits why
+  tmp=$(mktemp "${LOG_DIR}/usage-limit.XXXXXX") || return 1
+  printf '%s\n' "$text" > "$tmp"
+  line=$(node scripts/lib/claude_usage_limit.js "$tmp" 2>>"$LOG")
+  rm -f "$tmp"
+  read -r kind secs label <<<"$line"
+  [ "$kind" = "WAIT" ] || [ "$kind" = "NOWAIT" ] || return 1
+  label="${label//_/ }"
+  [ -z "$label" ] || [ "$label" = "-" ] && label="不明"
+  max_waits=$(node -e 'try{process.stdout.write(String((require("./data/journal_gate_policy.json").usage_limit_retry||{}).max_waits_per_run||2))}catch(e){process.stdout.write("2")}')
+  if [ "$kind" = "WAIT" ] && [ "$USAGE_LIMIT_WAITS" -lt "$max_waits" ]; then
+    USAGE_LIMIT_WAITS=$((USAGE_LIMIT_WAITS + 1))
+    log "⏳ Claude の利用上限に達しています（${where}・解除 ${label}）。$(( (secs + 59) / 60 ))分待ってから作り直します（${USAGE_LIMIT_WAITS}/${max_waits}回目）。"
+    caffeinate -i -s sleep "$secs"
+    log "⏳ 待ち終わりました。作り直します。"
+    return 0
+  fi
+  case "$kind:$secs" in
+    WAIT:*) why="1回の実行で待つのは ${max_waits} 回までで、使い切ったため" ;;
+    NOWAIT:too-long) why="解除まで待つ上限（data/journal_gate_policy.json の usage_limit_retry）を超えるため" ;;
+    NOWAIT:next-day) why="待ち終わりが日付をまたぐため" ;;
+    *) why="解除時刻が読めないため" ;;
+  esac
+  hold "Claude の利用上限（解除 ${label}）で生成できませんでした（${where}）。${why}、自動では作り直しません。解除の後、当日中なら bash scripts/run_journal_local.sh で作り直せます（ISSUE-184）。"
+}
+
 cd "$REPO" || die "repo not found: $REPO"
 
 # ---- 0. 同時実行ロック（macOSにはflock無し → PIDfile方式）----
@@ -440,6 +476,15 @@ PREFLIGHT_OUT=$(caffeinate -s -i -d -u "$CLAUDE_BIN" --print "ok" --dangerously-
 PREFLIGHT_RC=$?
 if [ "$PREFLIGHT_RC" != "0" ]; then
   echo "$PREFLIGHT_OUT" >>"$LOG"
+  # 利用上限なら解除まで待って、プリフライトからやり直す（ISSUE-184）
+  if usage_limit_wait "$PREFLIGHT_OUT" "プリフライト"; then
+    log "claude 認証プリフライトをやり直します"
+    PREFLIGHT_OUT=$(caffeinate -s -i -d -u "$CLAUDE_BIN" --print "ok" --dangerously-skip-permissions 2>&1)
+    PREFLIGHT_RC=$?
+    [ "$PREFLIGHT_RC" != "0" ] && echo "$PREFLIGHT_OUT" >>"$LOG"
+  fi
+fi
+if [ "$PREFLIGHT_RC" != "0" ]; then
   # 認証切れだけを特別扱いする。ネットワーク瞬断ならリトライ機構のある本番ループに委ねる。
   if echo "$PREFLIGHT_OUT" | grep -qE "Invalid authentication credentials|Failed to authenticate|OAuth session expired"; then
     hold "claude の認証が切れています（OAuth session expired）。コードでは復旧できません。Mac で 'claude' を対話起動してログインし直してください。確認: claude --print \"ok\" が応答すればOK。"
@@ -525,6 +570,8 @@ if [ "$SKIP_CLAUDE" = "0" ]; then
   CLAUDE_ATTEMPT=1
   while :; do
     log "claude 生成を開始（サブスク認証・--dangerously-skip-permissions・試行 ${CLAUDE_ATTEMPT}/${MAX_CLAUDE_ATTEMPTS}）"
+    # この試行の出力だけを見て利用上限を判定するため、ログの位置を覚えておく（ISSUE-184）
+    ATTEMPT_LOG_START=$(wc -c < "$LOG" | tr -d ' ')
     # caffeinate -s -i -d -u で生成中のスリープ（アイドル・蓋閉じ[AC時]・ディスプレイ）を防ぐ。
     # AC電源でなければ -s は無効化される（man caffeinate）ため、上で記録した電源状態の
     # 警告と併せて運用すること。
@@ -547,6 +594,10 @@ if [ "$SKIP_CLAUDE" = "0" ]; then
       log "応答なしのため 30秒待機してリトライします。"
       sleep 30
       CLAUDE_ATTEMPT=$((CLAUDE_ATTEMPT + 1))
+      continue
+    fi
+    # 利用上限なら解除まで待って作り直す（試行の回数には数えない。待つ回数は usage_limit_wait が数える・ISSUE-184）
+    if usage_limit_wait "$(tail -c +$((ATTEMPT_LOG_START + 1)) "$LOG")" "生成の試行 ${CLAUDE_ATTEMPT}"; then
       continue
     fi
     if grep -qE "Invalid authentication credentials|Failed to authenticate" "$LOG"; then
