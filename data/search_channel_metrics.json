@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-09T19:28:12.117Z",
+  "generatedAt": "2026-10-09T19:56:42.751Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1464,
+  "total_sessions": 1465,
   "engines": [
     {
       "key": "bing",
@@ -22,13 +22,13 @@
     {
       "key": "google",
       "label": "Google",
-      "sessions": 411,
+      "sessions": 412,
       "pct": 28.1,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 411
+          "sessions": 412
         }
       ]
     },
@@ -212,7 +212,7 @@
     }
   ],
   "search_only": {
-    "total": 1114,
+    "total": 1115,
     "share": [
       {
         "key": "bing",
@@ -223,8 +223,8 @@
       {
         "key": "google",
         "label": "Google",
-        "sessions": 411,
-        "pct_of_search": 36.9
+        "sessions": 412,
+        "pct_of_search": 37
       },
       {
         "key": "yahoo",
@@ -263,7 +263,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 411 セッションのみ。Bing(420) + 生成AI(108) の 528 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 412 セッションのみ。Bing(420) + 生成AI(108) の 528 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
