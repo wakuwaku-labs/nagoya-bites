@@ -63,6 +63,20 @@
   2. `ctaCount` を「予約導線イベント＋（予約ドメインへの outbound_click のうち予約導線イベントの無いページから出たもの）」のように重ならない数え方に直し、テストで確かめる
   3. 直した日を週次レポートに注記する（前週比が不連続になるため）
 
+### [ISSUE-161] ビルドの CI が main の最新から始まるようにし、続けて合流したときの push 失敗をなくす
+
+- **priority**: P2 → **status**: in_progress
+- **detected**: 2026-10-09
+- **category**: ci / reliability
+- **owner**: Builder
+- **source**: [[ISSUE-159]] の合流前に main のビルドを確かめていて発見
+- **brand-filter**: ✅ 適合 — 自動処理の失敗をなくす（制約11）
+- **背景**: 2026-10-09 02:46 UTC に始まった build.yml（run 37876069983・#432 の合流 6034739641 が起点）が、最後の「Commit & push if changed」で失敗した。原因は push の取り込みでの衝突で、data/ の生成物と index.html がぶつかり、5回試しても push できなかった。直前のビルド（run 37874922752・#431 が起点）が 02:45:58 に生成物のコミット 3c10adba51 を main へ push し、その4秒後に始まったこの回は、checkout で起点の 6034739641 を取り直していた（ログ: `fetch ... origin +60347396417b...:refs/remotes/origin/main`）。build.yml の concurrency の説明は「各実行は開始時に main の最新HEADを checkout する」としているが、`actions/checkout@v4` は ref を指定しないと push の起点のコミットを取る。そのため、待たされた回は古い main から生成し直し、前の回の生成物と衝突する。この回の生成物は捨てられた（次の回が作り直したので、店舗データの損失は無い）。続けて PR を合流すると起きる
+- **acceptance**:
+  1. build.yml の checkout が main の最新を取る（`ref: main`）。concurrency の説明を実際の動きに合わせる
+  2. 合流後の最初のビルドのログで、checkout が `+refs/heads/main` を取っている（起点の SHA ではない）ことを確かめる
+  3. 続けて2本合流したとき、後の回が前の回の生成物のコミットの上から始まり、push まで通る（次にそうなった日に確かめる）
+
 ### [ISSUE-158] 店舗ページの食べログリンクのうち、名前は合っているが別の支店・別の店を指すものを見つけて外す
 
 - **priority**: P1 → **status**: ready
@@ -166,7 +180,7 @@
 
 ### [ISSUE-157] 「うなぎのしろむら 丸の内店」と「柳橋本店」に付いている泉の店の食べログURLを外す
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data / trust
 - **owner**: DataKeeper
@@ -177,7 +191,7 @@
   1. 丸の内店と柳橋本店の食べログURLを空欄にし、次のビルドの後も空欄のままであることを確かめる
   2. 店舗ページ（J004026662 ほか）の食べログのボタンと JSON-LD の sameAs から 23056889 が消える
   3. 支店名の無い題名で一致と判定してしまう件を、照合器の既知の限界として `docs/` か照合器のコメントに残す
-- **結果（2026-10-09・途中）**: 丸の内店（J004026662）は `data/stores.json` の食べログURLを空にし、`data/tabelog_resolved.json` の同店を failed（`clearedBy: branch-mismatch-review`・消した URL と理由つき）にした。build.js は HotPepper 由来店の食べログURLを毎回このキャッシュから埋め戻すため、こちらを failed にしないと次のビルドで戻る（`resolve_tabelog.js` は failed の店を解決し直さない）。店舗ページ `stores/J004026662.html` の食べログのボタンと JSON-LD の sameAs からも外した。柳橋本店は `data/manual_stores.json` を空にし、`data/manual_tabelog_resolved.json` を failed（`branch-locality-mismatch`）にした。旧判定は名前の一致が1件だけのため区の食い違い（中村区／東区）を見ずに採っており（sole-name-match）、url を残すと `resolve_manual_tabelog_links.js` が再反映する。照合器の限界（題名に支店名が無いとどの支店とも一致・名前が一致すると住所を見ない・比べる住所が Places 由来）は `scripts/lib/store_link_identity.js` の冒頭に書いた。達成条件1の「次のビルドの後も空欄」は合流後の main で確かめる
+- **結果（2026-10-09）**: 丸の内店（J004026662）は `data/stores.json` の食べログURLを空にし、`data/tabelog_resolved.json` の同店を failed（`clearedBy: branch-mismatch-review`・消した URL と理由つき）にした。build.js は HotPepper 由来店の食べログURLを毎回このキャッシュから埋め戻すため、こちらを failed にしないと次のビルドで戻る（`resolve_tabelog.js` は failed の店を解決し直さない）。店舗ページ `stores/J004026662.html` の食べログのボタンと JSON-LD の sameAs からも外した。柳橋本店は `data/manual_stores.json` を空にし、`data/manual_tabelog_resolved.json` を failed（`branch-locality-mismatch`）にした。旧判定は名前の一致が1件だけのため区の食い違い（中村区／東区）を見ずに採っており（sole-name-match）、url を残すと `resolve_manual_tabelog_links.js` が再反映する。照合器の限界（題名に支店名が無いとどの支店とも一致・名前が一致すると住所を見ない・比べる住所が Places 由来）は `scripts/lib/store_link_identity.js` の冒頭に書いた。達成条件1の「次のビルドの後も空欄」は、合流後の main のビルド（run 37877124917・d9755403c0 → 40a1447ea4）の後に確かめた: `data/stores.json` の丸の内店に食べログURLが無く（空欄の項目は書き出されない）、`data/manual_stores.json` の柳橋本店も空のまま。main で 23056889 を含むページは、泉本店の店舗ページ（J004026266）・index.html の泉本店の行・顔合わせ特集の「泉店」のカード（久屋大通駅から徒歩5分＝泉本店の説明）の3つだけ。照合器が同じ取り違えを数える仕組みは [[ISSUE-159]] で入れた
   - 調べる途中で、ジャーナル `journal/2026-09-17-marunouchi-unashiromura-koshitsu-ryo.html`（丸の内店の記事）も情報源を「食べログ「うなぎのしろむら 丸の内店」」として 23056889（泉）にリンクしていた。記事の数字（席数56・宴会30名・個室利用料10%/15%・営業時間・予約は泉本店 052-971-3122）は HotPepper の丸の内店の掲載（strJ004026662・10-09 に取得して確認）と一致したため、情報源をその掲載に差し替えた。同じ記事の本文写真2枚は泉本店の Google の写真（クレジット「うなぎのしろむら 泉本店」）だったので外した（ヒーローは丸の内店の HotPepper 写真のまま）。原因は丸の内店の Places の紐付けが泉本店を指していること（[[ISSUE-147]] の支店名の食い違いの1件。オーナー承認待ちのため触っていない）
   - 実測: 照合キャッシュで名前だけで一致としたリンクのうち、HotPepper の住所と町名＋丁目が違うものが 56件（表記ゆれを含む）→ [[ISSUE-158]] で扱う
 
