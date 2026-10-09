@@ -1,0 +1,14 @@
+{
+  "_doc": "ISSUE-182: 誘導ページ（古い ID の stores/<slug>.html）へのリンクのうち、人が確かめて残すと決めた組。page と slug と target（誘導先）の組で数えない。誘導先が変わったら数え直す。scripts/audit_stub_links.js が読む",
+  "reviewed": [
+    {
+      "page": "journal/2026-09-15-imaike-okute-yamamotoya-misonikomi-export.html",
+      "slug": "store-e5a4a7e4b985e689",
+      "target": "J004698526",
+      "decision": "keep",
+      "reviewedAt": "2026-10-09",
+      "issue": "ISSUE-181",
+      "reason": "記事は大久手山本屋（千種区大久手町5-9-2・Google の店舗情報）を扱う。誘導先の 大久手山本屋 大曽根店（ホットペッパーの掲載住所は北区大曽根3-13-25）は住所が別の店で、2026-10-06 にオーナー確認で統合した組（data/store_merge_confirmed.json）。同じ店と確かめられないので差し替えない。統合を戻すかはオーナーの判断（ISSUE-147 に追記）"
+    }
+  ]
+}

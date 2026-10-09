@@ -136,3 +136,71 @@ function collectLinkedSlugs(root) {
   return linked;
 }
 module.exports.collectLinkedSlugs = collectLinkedSlugs;
+
+/**
+ * ISSUE-182: 特集・ジャーナル・エリア×ジャンルのページ・トップから、誘導ページ（古い ID）への
+ * リンクを数える。誘導ページへのリンクは店舗ページには着くが、予約リンクと計測は古い ID のまま残る。
+ * 誘導ページかどうかはリンク先のファイルそのもので確かめる（isRedirectStub・検証できる事実だけ）。
+ * reviewed は人が確かめて残すと決めた組（page・slug・target）。誘導先が変わった組は数え直す。
+ * 外部の URL（例: https://jouhou.nagoya/lychi-coffee/）は数えない。
+ * @returns {{ pages: number, found: object[], kept: object[] }}
+ */
+function findStubLinks(root, { reviewed = [] } = {}) {
+  const fs = require('fs');
+  const path = require('path');
+  const files = [];
+  const rootIndex = path.join(root, 'index.html');
+  if (fs.existsSync(rootIndex)) files.push(rootIndex);
+  const walk = (dir) => {
+    if (!fs.existsSync(dir)) return;
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      const p = path.join(dir, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.html')) files.push(p);
+    }
+  };
+  for (const d of ['features', 'journal', path.join('stores', 'area')]) walk(path.join(root, d));
+
+  const stubCache = new Map();
+  const stubOf = (slug) => {
+    if (!stubCache.has(slug)) {
+      const f = path.join(root, 'stores', `${slug}.html`);
+      let t = null;
+      if (fs.existsSync(f)) {
+        const h = fs.readFileSync(f, 'utf8');
+        if (isRedirectStub(h)) t = stubTarget(h) || '';
+      }
+      stubCache.set(slug, t);
+    }
+    return stubCache.get(slug);
+  };
+  const keep = new Map(reviewed.filter((r) => r && r.decision === 'keep').map((r) => [`${r.page}|${r.slug}`, r]));
+  const found = [];
+  const kept = [];
+  for (const file of files) {
+    const rel = path.relative(root, file).split(path.sep).join('/');
+    const dir = path.posix.dirname(rel);
+    const html = fs.readFileSync(file, 'utf8');
+    const counts = new Map();
+    const add = (slug) => counts.set(slug, (counts.get(slug) || 0) + 1);
+    let m;
+    const abs = /https?:\/\/nagoya-bites\.com\/stores\/([A-Za-z0-9_-]+)\.html/g;
+    while ((m = abs.exec(html))) add(m[1]);
+    const href = /href="([^"#?:]+\.html)"/g;
+    while ((m = href.exec(html))) {
+      const p = path.posix.normalize(path.posix.join(dir, m[1]));
+      const s = p.match(/^stores\/([A-Za-z0-9_-]+)\.html$/);
+      if (s) add(s[1]);
+    }
+    for (const [slug, count] of counts) {
+      const target = stubOf(slug);
+      if (target === null) continue;
+      const row = { page: rel, slug, target, count };
+      const r = keep.get(`${rel}|${slug}`);
+      if (r && (!r.target || r.target === target)) kept.push(Object.assign(row, { reason: r.reason || '', issue: r.issue || '' }));
+      else found.push(row);
+    }
+  }
+  return { pages: files.length, found, kept };
+}
+module.exports.findStubLinks = findStubLinks;
