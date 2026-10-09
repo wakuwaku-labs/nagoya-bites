@@ -560,27 +560,16 @@ const NAGOYA_KEYWORDS = [
 
 async function fetchNagoyaMiddleAreas() {
   const url = `${HP_BASE}/middle_area/v1/?key=${HP_API_KEY}&service_area=SA22&format=json`;
-  const data = await fetchJson(url);
-  const areas = (data.results && data.results.middle_area) || [];
+  // API はエラーでも HTTP 200 を返す。results.error を「中エリア0件」と読まずにエラーにする（ISSUE-143）
+  const results = hotpepperFetch.resultsOf(await fetchJson(url));
+  const areas = results.middle_area || [];
   return areas.filter(ma => NAGOYA_KEYWORDS.some(k => (ma.name || '').includes(k)));
 }
 
+// 中エリアの店を取りこぼさずに取る（ISSUE-143）。1,000件の上限を超える中エリアは小エリアごとに取り直し、
+// API がエラーを返した回（HTTP 200 の results.error）を「0件」と読まない。判定器は scripts/lib/hotpepper_fetch.js
 async function fetchShopsByMiddleArea(middleAreaCode, middleAreaName) {
-  const shops = [];
-  // Hot Pepper APIは1リクエスト最大100件、startで最大1000件までページング可能
-  for (let start = 1; start <= 901; start += 100) {
-    const url = `${HP_BASE}/gourmet/v1/?key=${HP_API_KEY}&middle_area=${middleAreaCode}&format=json&count=100&start=${start}`;
-    try {
-      const data = await fetchJson(url);
-      const arr = (data.results && data.results.shop) || [];
-      shops.push(...arr);
-      if (arr.length < 100) break;
-    } catch (e) {
-      console.error(`  ${middleAreaName} start=${start} エラー: ${e.message}`);
-      break;
-    }
-  }
-  return shops;
+  return hotpepperFetch.fetchMiddleArea({ code: middleAreaCode, name: middleAreaName }, { fetchJson, base: HP_BASE, apiKey: HP_API_KEY });
 }
 
 // HotPepper API の photo.pc.l は 238px サムネイルのため、同一パスで配信されている
@@ -925,6 +914,7 @@ const trustDisplay = require('./scripts/lib/trust_display');
 const { placesKey } = require('./scripts/lib/places_key');
 const { buildFeatureStoreMap } = require('./scripts/lib/feature_store_match');
 const spreadsheetAddressGate = require('./scripts/lib/spreadsheet_address_gate');
+const hotpepperFetch = require('./scripts/lib/hotpepper_fetch');
 
 async function fetchHotPepperNagoyaStores() {
   if (!HP_API_KEY) {
@@ -935,12 +925,29 @@ async function fetchHotPepperNagoyaStores() {
   const middleAreas = await fetchNagoyaMiddleAreas();
   console.log(`  対象middle_area: ${middleAreas.length}件`);
   const allShops = [];
+  const areas = [];
   for (const ma of middleAreas) {
-    const shops = await fetchShopsByMiddleArea(ma.code, ma.name);
-    console.log(`  ${ma.name} (${ma.code}): ${shops.length}件`);
+    const { shops, record } = await fetchShopsByMiddleArea(ma.code, ma.name);
+    const extra = record.smallAreas ? ` ／ 小エリア ${record.smallAreas} 件で取り直し（中エリアだけでは ${record.viaMiddleArea}件）` : '';
+    console.log(`  ${ma.name} (${ma.code}): ${shops.length}件（件数 ${record.available == null ? '不明' : record.available}${extra}）`);
+    for (const e of record.errors) console.error(`    ⚠ ${e}`);
     allShops.push(...shops);
+    areas.push(record);
   }
   console.log(`Hot Pepper 合計: ${allShops.length}件取得`);
+  // 取得の記録（ISSUE-143）。エリアごとの件数・取れた数・エラーを回ごとに残し、取りこぼしを後から数えられるようにする
+  try {
+    const logPath = path.join(__dirname, 'data', 'hotpepper_fetch_log.json');
+    let log = {};
+    try { log = JSON.parse(fs.readFileSync(logPath, 'utf8')); } catch (_) { log = {}; }
+    log._doc = 'HotPepper グルメサーチの取得の記録（ISSUE-143）。build.js が回ごとに足す（直近30回）。available は API の件数（results_available）、fetched は取れた店の数、smallAreas は上限（1,000件）を超えたため小エリアごとに取り直した数。確認は node scripts/hotpepper_fetch_report.js';
+    const run = { at: new Date().toISOString(), total: allShops.length, areas };
+    fs.writeFileSync(logPath, JSON.stringify(hotpepperFetch.appendRun(log, run), null, 2) + '\n', 'utf8');
+    const short = hotpepperFetch.shortfalls(run);
+    if (short.length) console.warn(`  ⚠ 取りこぼしのあるエリア: ${short.map(x => `${x.name}（${x.reasons.join('・')}）`).join(' / ')}`);
+  } catch (e) {
+    console.error(`  data/hotpepper_fetch_log.json の書き込み失敗: ${e.message}`);
+  }
   return allShops;
 }
 
