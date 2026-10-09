@@ -163,6 +163,16 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/add_feature_tracking.js', '--check']],
 });
+// 特集・ジャーナル・ハブ・トップのリンクが誘導ページ（古い ID）を指していないか（ISSUE-182・SOFT で開始）。
+// 誘導ページは今の店舗ページへ送るが、予約リンクと計測は古い ID のまま残る。0件が続いたら hard に上げる
+checks.push({
+  id: 'stub-links',
+  title: '特集・ジャーナル・ハブ・トップのリンクが誘導ページ（古い ID）を指していない（ISSUE-182）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_stub_links.js', '--check']],
+});
 // 8. 特集・ジャーナルに手で書かれた店舗リンクが別の店を指していないか（ISSUE-156・SOFT で開始）。
 //    2026-09-03 に別の店と判定して店舗データから外した食べログURLが、特集とジャーナルの HTML では
 //    2026-10-09 まで残っていた（ISSUE-155）。判定は照合キャッシュの事実だけで、外部へは問い合わせない。
