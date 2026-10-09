@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-09T18:33:09.791Z",
+  "generatedAt": "2026-10-09T19:12:34.528Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1269,
-    "pageViews": 1815,
-    "sessions": 1458,
+    "activeUsers": 1270,
+    "pageViews": 1817,
+    "sessions": 1459,
     "avgSessionDuration": 129.2,
     "bounceRate": 0.278,
-    "pagesPerSession": 1.24
+    "pagesPerSession": 1.25
   },
   "dailyReference": {
     "date": "2026-10-08",
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1005,
+      "organic": 1007,
       "direct": 315,
       "social": 6,
       "ai_assistant": 108,
@@ -26,7 +26,7 @@
       "other": 0
     },
     "pct": {
-      "organic": 68.7,
+      "organic": 68.8,
       "direct": 21.5,
       "social": 0.4,
       "ai_assistant": 7.4,
@@ -39,12 +39,12 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 419
+      "sessions": 420
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 410
+      "sessions": 411
     },
     {
       "source": "(direct)",
@@ -200,8 +200,8 @@
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
-      "pageViews": 58,
-      "sessions": 60
+      "pageViews": 60,
+      "sessions": 61
     }
   ],
   "cta": {
@@ -845,7 +845,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1269,
+    "value": 1270,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
