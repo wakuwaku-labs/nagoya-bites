@@ -1,7 +1,7 @@
 {
   "_note": "ISSUE-132: build.js が統合した重複レコードの記録（scripts/lib/store_dedup.js）。absorbed 側の stores/<slug>.html は削除していない",
-  "mergedCount": 67,
-  "absorbedCount": 69,
+  "mergedCount": 69,
+  "absorbedCount": 71,
   "skippedCount": 0,
   "merged": [
     {
@@ -555,6 +555,28 @@
         "placeid_match"
       ],
       "kept": {
+        "店名": "炭火焼 鰻籠",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J004493228",
+        "placeId": "ChIJX4-hv7lvA2ARg1EOQ5XbI58",
+        "slug": "J004493228"
+      },
+      "absorbed": [
+        {
+          "店名": "炭火焼　鰻籠",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J003603009",
+          "placeId": "ChIJX4-hv7lvA2ARg1EOQ5XbI58",
+          "slug": "J003603009"
+        }
+      ],
+      "filledFields": []
+    },
+    {
+      "reasons": [
+        "placeid_match"
+      ],
+      "kept": {
         "店名": "那古野 しば福や 名駅店",
         "エリア": "名古屋（名古屋駅/西区/中村区）",
         "ホットペッパーID": "J003671888",
@@ -686,6 +708,30 @@
       "filledFields": [
         "Instagram",
         "おすすめポイント"
+      ]
+    },
+    {
+      "reasons": [
+        "owner_confirmed"
+      ],
+      "kept": {
+        "店名": "鳥正",
+        "エリア": "名古屋（名古屋駅/西区/中村区）",
+        "ホットペッパーID": "J003624313",
+        "placeId": "ChIJ1VXM9_t3A2ARmd1PEvRCRaw",
+        "slug": "J003624313"
+      },
+      "absorbed": [
+        {
+          "店名": "鳥正 名古屋",
+          "エリア": "名古屋（名古屋駅/西区/中村区）",
+          "ホットペッパーID": "J001286820",
+          "placeId": "ChIJ1VXM9_t3A2ARmd1PEvRCRaw",
+          "slug": "J001286820"
+        }
+      ],
+      "filledFields": [
+        "キャッチ"
       ]
     },
     {

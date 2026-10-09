@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-09T07:45:25.671Z",
+  "generatedAt": "2026-10-09T08:02:08.766Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1236,
-    "pageViews": 1784,
-    "sessions": 1426,
-    "avgSessionDuration": 128.7,
+    "activeUsers": 1240,
+    "pageViews": 1795,
+    "sessions": 1430,
+    "avgSessionDuration": 129.7,
     "bounceRate": 0.276,
-    "pagesPerSession": 1.25
+    "pagesPerSession": 1.26
   },
   "dailyReference": {
     "date": "2026-10-07",
@@ -17,16 +17,16 @@
   },
   "channels": {
     "sessions": {
-      "organic": 971,
-      "direct": 319,
+      "organic": 973,
+      "direct": 320,
       "social": 6,
-      "ai_assistant": 107,
+      "ai_assistant": 108,
       "referral": 28,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 67.9,
+      "organic": 67.8,
       "direct": 22.3,
       "social": 0.4,
       "ai_assistant": 7.5,
@@ -39,7 +39,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 406
+      "sessions": 407
     },
     {
       "source": "google",
@@ -49,12 +49,12 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 219
+      "sessions": 220
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 152
+      "sessions": 153
     },
     {
       "source": "chatgpt.com",
@@ -79,7 +79,7 @@
     {
       "source": "openai",
       "medium": "organic",
-      "sessions": 15
+      "sessions": 16
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -206,7 +206,7 @@
   ],
   "cta": {
     "outboundClicks": 142,
-    "ctaClickRate": 10,
+    "ctaClickRate": 9.9,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -284,7 +284,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 5,
-    "ctaClickRate_direct": 22.3,
+    "ctaClickRate_direct": 22.2,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -786,7 +786,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1236,
+    "value": 1240,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
