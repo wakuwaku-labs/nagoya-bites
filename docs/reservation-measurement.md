@@ -38,6 +38,8 @@ GA4 に登録済みのカスタムディメンションは `store_name` と `lin
 
 - `scripts/fetch_ga4_views.js` が毎日（build.yml）`data/store_referrals.json` を書く。直近30日の店舗別・経路別の送客と申告、当月累計を持つ。店名が取れない送客（ISSUE-149 以前の店舗ページ）は `unattributedExits` に分ける。
 - 週次レポート（GAS・`.gas-deploy/Code.js`）に「予約送客 上位の店」3店と予約申告の件数を出す。GAS 本体への反映はオーナーの操作（`docs/gas-deploy-verification-runbook.md`）。
+- 日次・週次レポートの「🔘 予約ボタン」（GAS の `ctaCount`）は、予約導線イベント（`cta_click`・`cta_reserve`）と予約サイトへの `outbound_click` を**ページ×リンク先ごとに大きい方**で数える（ISSUE-152）。予約ボタンは `<a href="https://…">` なので、押した1回は `outbound_click` にも同じ1回として届く。足すと2回になる。大きい方を取ると、ボタン（両方に届く）とボタン以外の予約サイトへのリンク（特集の店名リンクなど・`outbound_click` だけに届く）を1回ずつ数えられる。数え方は `scripts/lib/reservation_exits.js` の `dedupeReservationClicks` が正本で、GAS は同じものの複製（`tests/reservation_exits.test.js` が文面と結果の一致を検査）。直した日から35日、レポートに注記が出る。
+- `data/site_metrics.json` の `cta.reservationOverlap7d` に、直近7日の足し算（`naiveSum`）・重ならない数え方（`deduped`）・重なり（`overlap`）を毎日残す。
 
 ## 選ばなかった出口
 

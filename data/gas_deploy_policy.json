@@ -117,6 +117,22 @@
       "scope": "body",
       "pattern": "名古屋 接待 個室|名古屋 一人ご飯 おすすめ",
       "reason": "旧コードのハードコードKW（SEO_KEYWORDS定数・プロンプト固定例示）由来のKW名指し。data/gsc_metrics.json の実測でどちらも直近28日間表示0件であり、新コード（fetchGscCandidateKeywords()が返す実測クエリのみを使う）がこれらを提案することは原理的にない。KWを名指しする助言が出た日にのみ出る条件付きシグナル（片側）。"
+    },
+    {
+      "key": "reserve_cta_dedup_label",
+      "fix_id": "ISSUE-152",
+      "verdict": "deployed",
+      "scope": "body",
+      "pattern": "同じクリックは1回",
+      "reason": "ISSUE-152 で予約ボタンの回数を、同じクリック（cta_click と outbound_click の両方に届く1回）を1回として数える形に直した新コードだけが出す文言。日次・週次の「🔘 予約ボタン」の行に付く。予約ボタンが0回の日は行ごと出ない（indeterminate）。"
+    },
+    {
+      "key": "reserve_cta_double_count_label",
+      "fix_id": "ISSUE-152",
+      "verdict": "not_deployed",
+      "scope": "body",
+      "pattern": "予約ドメインへの外部リンク含む",
+      "reason": "旧コードの日次・週次の「🔘 予約ボタン」の行のラベル。旧コードは予約導線イベント（cta_click＋cta_reserve）と予約サイトへの outbound_click を足しており、ボタン1回を2回数えていた。新コードはラベルを『予約サイトへのリンクを含む・同じクリックは1回』に変えたので、この文字列は出ない。誰でも当日のメールを開いて Ctrl+F で検算できる（制約10）。"
     }
   ],
   "_signals": "scope=source_lines は『【どこから来た？】/【流入元】セクションの各行』だけを見る（本文の他の場所に同じ語が出ても誤検出しないため）。scope=body は本文全体。verdict=not_deployed の痕跡が1つでも出れば旧コード確定（新コードでは原理的に出力できない文字列だから）。verdict=deployed の痕跡が出れば新コード確定。どちらも出なければ indeterminate（その日のデータが分岐を通らなかっただけ）で、これは異常ではない。",
@@ -190,6 +206,19 @@
       "evidence": "2026-09-28 clasp push 後の日次レポート6通（09-28〜10-04・10-01分は未着）で『docs/daily-posts』の出現0回。10-04 のSNS提案は『特集の見出しと写真を使う』新文言で出力。check_gas_deploy_health.js は 09-28〜09-30 を deployed と判定"
     }
   ],
-  "pending_fixes": [],
+  "pending_fixes": [
+    {
+      "id": "ISSUE-149",
+      "commit": "9350c1c04c",
+      "detected": "2026-10-09",
+      "summary": "週次レポートに「予約送客 上位の店」と予約申告の行を足した（反映の確認は ISSUE-150）"
+    },
+    {
+      "id": "ISSUE-152",
+      "commit": "ISSUE-152 の合流コミット",
+      "detected": "2026-10-09",
+      "summary": "予約ボタンの回数（ctaCount）が、同じクリックを cta_click と outbound_click で2回数えていたのを1回に直した。直した日から35日、日次・週次に注記を出す"
+    }
+  ],
   "_resolved_fixes": "2026-08-25 に clasp pull で本番プロジェクトを直接取得し、.gas-deploy/Code.js とバイト一致・ファイルは Code.js と appsscript.json の2本のみ（余分な旧ファイルなし）であることを確認したため、4件とも反映済みへ移した。以後の未反映検知は文字列痕跡（signals）と数値乖離（numeric_signals）が担う。"
 }

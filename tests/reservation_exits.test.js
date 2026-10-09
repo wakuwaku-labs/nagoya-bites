@@ -1,7 +1,11 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { channelOf, aggregateStoreReferrals, isReservationDomain } = require('../scripts/lib/reservation_exits');
+const fs = require('fs');
+const path = require('path');
+const vm = require('vm');
+const lib = require('../scripts/lib/reservation_exits');
+const { channelOf, aggregateStoreReferrals, isReservationDomain, dedupeReservationClicks } = lib;
 
 test('channelOf: link_domain から経路を決める', () => {
   assert.equal(channelOf('cta_click', 'www.hotpepper.jp'), 'hotpepper');
@@ -101,4 +105,84 @@ test('予約申告プロンプト: 戻ってきた人にだけ1回聞き、答�
   ctx.nbReserveExit('cta_click', { store_name: 'B店', store_id: 'J2' });
   now += 60000; listeners.visibilitychange();
   assert.equal(appended.length, 1, 'オーナーの確認（内部）では聞かない');
+});
+
+// ISSUE-152: 予約ボタンは cta_click と outbound_click の両方に同じ1回が届く
+const DEDUPE_FIXTURES = [
+  // トップのホットペッパーのボタン3回（両方に届く）＋ 同じページのマップ（情報ドメインは数えない）
+  [
+    { event: 'cta_click', path: '/', domain: 'www.hotpepper.jp', count: '3' },
+    { event: 'outbound_click', path: '/', domain: 'www.hotpepper.jp', count: '3' },
+    { event: 'outbound_click', path: '/', domain: 'maps.google.com', count: '9' },
+  ],
+  // 特集の食べログの店名リンク（cta_click の無いリンク）は outbound_click だけで数える
+  [
+    { event: 'cta_click', path: '/features/a.html', domain: 'www.hotpepper.jp', count: '2' },
+    { event: 'outbound_click', path: '/features/a.html', domain: 'www.hotpepper.jp', count: '2' },
+    { event: 'outbound_click', path: '/features/a.html', domain: 'tabelog.com', count: '4' },
+  ],
+  // link_domain の無い旧送信（ジャーナルの cta_reserve）はホットペッパーとして組にする
+  [
+    { event: 'cta_reserve', path: '/journal/b.html', domain: '(not set)', count: '2' },
+    { event: 'outbound_click', path: '/journal/b.html', domain: 'www.hotpepper.jp', count: '2' },
+  ],
+  // ページが違えば組にしない・0件と壊れた件数は飛ばす・予約サイト以外への cta_click はそのまま1回
+  [
+    { event: 'cta_click', path: '/x.html', domain: 'tabelog.com', count: '1' },
+    { event: 'outbound_click', path: '/y.html', domain: 'tabelog.com', count: '1' },
+    { event: 'outbound_click', path: '/y.html', domain: 'www.hotpepper.jp', count: '0' },
+    { event: 'cta_click', path: '/y.html', domain: 'www.hotpepper.jp', count: 'abc' },
+    { event: 'cta_click', path: '/z.html', domain: 'www.instagram.com', count: '1' },
+    { event: 'cta_call_click', path: '/z.html', domain: 'tel', count: '5' },
+    { event: 'page_view', path: '/z.html', domain: '(not set)', count: '50' },
+  ],
+];
+
+test('dedupeReservationClicks: 予約ボタンの1回を1回として数え、足し算との差を重なりとして返す', () => {
+  const top = dedupeReservationClicks(DEDUPE_FIXTURES[0]);
+  assert.deepEqual(
+    { cta: top.ctaEvents, out: top.reservationOutbound, naive: top.naiveSum, deduped: top.deduped, overlap: top.overlap },
+    { cta: 3, out: 3, naive: 6, deduped: 3, overlap: 3 });
+
+  const feature = dedupeReservationClicks(DEDUPE_FIXTURES[1]);
+  assert.equal(feature.deduped, 6);
+  assert.equal(feature.overlap, 2);
+  assert.deepEqual(feature.bySite, [
+    { site: 'tabelog.com', cta: 0, outbound: 4, deduped: 4 },
+    { site: 'hotpepper.jp', cta: 2, outbound: 2, deduped: 2 },
+  ]);
+
+  const legacy = dedupeReservationClicks(DEDUPE_FIXTURES[2]);
+  assert.equal(legacy.deduped, 2);
+  assert.equal(legacy.overlap, 2);
+
+  const mixed = dedupeReservationClicks(DEDUPE_FIXTURES[3]);
+  assert.equal(mixed.ctaEvents, 2);
+  assert.equal(mixed.reservationOutbound, 1);
+  assert.equal(mixed.deduped, 3);
+  assert.equal(mixed.overlap, 0);
+  assert.deepEqual(mixed.bySite.map((b) => b.site), ['tabelog.com', 'www.instagram.com']);
+
+  assert.deepEqual(dedupeReservationClicks([]), { ctaEvents: 0, reservationOutbound: 0, naiveSum: 0, deduped: 0, overlap: 0, bySite: [] });
+  assert.equal(dedupeReservationClicks(undefined).deduped, 0);
+});
+
+test('GAS の複製（予約ボタンの数え方）が lib と同じ文面・同じ予約サイト・同じ結果になる', () => {
+  const marker = (t) => t.slice(t.indexOf('// ── 予約ボタンの回数（ISSUE-152）──'), t.indexOf('// ── ここまで（.gas-deploy/Code.js に複製）──'));
+  const gas = fs.readFileSync(path.join(__dirname, '..', '.gas-deploy', 'Code.js'), 'utf8');
+  const libSrc = fs.readFileSync(path.join(__dirname, '..', 'scripts', 'lib', 'reservation_exits.js'), 'utf8');
+  assert.ok(marker(gas).length > 100, 'GAS に複製が無い');
+  assert.equal(marker(gas), marker(libSrc));
+  const start = gas.indexOf('const RESERVATION_DOMAINS = [');
+  const end = gas.indexOf('// ── ここまで（.gas-deploy/Code.js に複製）──');
+  assert.ok(start !== -1 && end > start);
+  const ctx = {};
+  vm.runInNewContext(gas.slice(start, end) + '\nthis.domains = RESERVATION_DOMAINS; this.dedupe = dedupeReservationClicks;', ctx);
+  assert.deepEqual(Array.from(ctx.domains), lib.RESERVATION_DOMAINS);
+  for (const rows of DEDUPE_FIXTURES) {
+    assert.deepEqual(JSON.parse(JSON.stringify(ctx.dedupe(rows))), dedupeReservationClicks(rows));
+  }
+  // GAS の予約ボタンの回数は足し算をやめている（旧: sumEvt(RESERVE_EVENTS) + reserveOutboundCount）
+  assert.ok(!/reserveOutboundCount|RESERVE_DOMAINS/.test(gas));
+  assert.match(gas, /const ctaCount\s*=\s*reserveClicks\.deduped;/);
 });

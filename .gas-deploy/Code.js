@@ -140,14 +140,95 @@ const HOST_FILTER = {
   },
 };
 
-// 予約行動として数えるドメイン（SEO-089）。outbound_click がこのドメインに向いた
-// クリックだけを RESERVE_EVENTS と合算し、情報ドメイン（マップ・Instagram等）は別枠で表示する。
-const RESERVE_DOMAINS = new Set([
-  'www.hotpepper.jp', 'hotpepper.jp',
-  'tabelog.com', 'www.tabelog.com',
-  'ikyu.com', 'www.ikyu.com',
-  'ozmall.co.jp', 'www.ozmall.co.jp',
-]);
+// 予約行動として数えるリンク先（SEO-089・ISSUE-152）。正本は scripts/lib/reservation_exits.js の
+// RESERVATION_DOMAINS。GAS は require できないので複製し、tests/reservation_exits.test.js が同じ中身かを検査する。
+// 情報ドメイン（マップ・Instagram等）は別枠で表示する。
+const RESERVATION_DOMAINS = [
+  'hotpepper.jp',
+  'tabelog.com',
+  'tablecheck.com',
+  'ebica.jp',
+  'toreta.in',
+  'opentable',
+  'ikyu.com',
+  'gurunavi.com',
+  'retty.me',
+];
+
+// ── 予約ボタンの回数（ISSUE-152）── .gas-deploy/Code.js に同じものを複製している。
+// 変えるときは両方を直す（tests/reservation_exits.test.js が同じ結果になることを検査する）。
+//
+// 予約ボタンは <a href="https://…"> で、サイト共通の外部リンク計測（document の click を捕捉段階で拾う
+// outbound_click・scripts/lib/ga_snippet.js）にも同じ1回が届く。「予約導線イベント＋予約サイトへの
+// outbound_click」と足すと、ボタン1回を2回数える。ページ×リンク先ごとに大きい方を取ると、予約ボタン
+// （両方に届く）と、ボタン以外の予約サイトへのリンク（outbound_click だけに届く。特集の店名リンクなど）を
+// 1回ずつ数えられる。電話（cta_call_click）は外部リンクではないので入れない。
+const RESERVE_LINK_EVENTS = ['cta_click', 'cta_reserve'];
+
+// リンク先のホスト名 → 予約サイト（RESERVATION_DOMAINS の要素）。予約サイトでなければ null
+function reservationSite(domain) {
+  const d = String(domain || '').toLowerCase();
+  for (let i = 0; i < RESERVATION_DOMAINS.length; i++) {
+    if (d.indexOf(RESERVATION_DOMAINS[i]) !== -1) return RESERVATION_DOMAINS[i];
+  }
+  return null;
+}
+
+/**
+ * @param {Array<{event:string, path:string, domain?:string, count:number|string}>} rows
+ *   GA4 の pagePath × eventName × customEvent:link_domain（eventCount）の行
+ * @returns {{ctaEvents:number, reservationOutbound:number, naiveSum:number, deduped:number, overlap:number,
+ *   bySite:Array<{site:string, cta:number, outbound:number, deduped:number}>}}
+ *   naiveSum は足し算（ISSUE-152 以前の数え方）、overlap は同じクリックを2回数えていた分（naiveSum − deduped）
+ */
+function dedupeReservationClicks(rows) {
+  const pairs = {};
+  let ctaEvents = 0;
+  let reservationOutbound = 0;
+  (rows || []).forEach(function (r) {
+    const n = parseInt(r.count, 10) || 0;
+    if (n <= 0) return;
+    let site;
+    const isOutbound = r.event === 'outbound_click';
+    if (isOutbound) {
+      site = reservationSite(r.domain);
+      if (!site) return; // 予約サイト以外（マップ・Instagram 等）は数えない
+      reservationOutbound += n;
+    } else if (RESERVE_LINK_EVENTS.indexOf(r.event) !== -1) {
+      const raw = String(r.domain || '').trim().toLowerCase();
+      // link_domain の無い送信は ISSUE-149 以前のホットペッパーのボタン（channelOf と同じ扱い）
+      site = (!raw || raw === '(not set)') ? 'hotpepper.jp' : (reservationSite(raw) || raw);
+      ctaEvents += n;
+    } else {
+      return;
+    }
+    const key = String(r.path || '') + '\t' + site;
+    if (!pairs[key]) pairs[key] = { site: site, cta: 0, outbound: 0 };
+    if (isOutbound) pairs[key].outbound += n; else pairs[key].cta += n;
+  });
+  const bySite = {};
+  let deduped = 0;
+  Object.keys(pairs).forEach(function (k) {
+    const p = pairs[k];
+    const d = Math.max(p.cta, p.outbound);
+    deduped += d;
+    if (!bySite[p.site]) bySite[p.site] = { site: p.site, cta: 0, outbound: 0, deduped: 0 };
+    bySite[p.site].cta += p.cta;
+    bySite[p.site].outbound += p.outbound;
+    bySite[p.site].deduped += d;
+  });
+  const naiveSum = ctaEvents + reservationOutbound;
+  return {
+    ctaEvents: ctaEvents,
+    reservationOutbound: reservationOutbound,
+    naiveSum: naiveSum,
+    deduped: deduped,
+    overlap: naiveSum - deduped,
+    bySite: Object.keys(bySite).map(function (k) { return bySite[k]; })
+      .sort(function (a, b) { return (b.deduped - a.deduped) || (a.site < b.site ? -1 : a.site > b.site ? 1 : 0); }),
+  };
+}
+// ── ここまで（.gas-deploy/Code.js に複製）──
 
 // ─── GA4 の確定待ちラグ（SEO-076） ───
 // GA4 のセッションスコープ指標（直帰率・エンゲージメント率・平均滞在・流入元）は、その日が
@@ -308,6 +389,23 @@ function fetchGA4Report(startDate, endDate) {
     limit: 20,
   }, 'properties/' + GA4_PROPERTY_ID);
 
+  // ISSUE-152: 予約ボタンは outbound_click にも同じ1回が届くため、予約導線イベントと outbound_click を
+  // ページ×リンク先で並べて、同じクリックを1回として数える（dedupeReservationClicks）
+  const reserveClicksRequest = AnalyticsData.Properties.runReport({
+    dateRanges: [{ startDate: startDate, endDate: endDate }],
+    metrics: [{ name: 'eventCount' }],
+    dimensions: [{ name: 'pagePath' }, { name: 'eventName' }, { name: 'customEvent:link_domain' }],
+    dimensionFilter: {
+      andGroup: {
+        expressions: [
+          HOST_FILTER,
+          { filter: { fieldName: 'eventName', inListFilter: { values: ['cta_click', 'cta_reserve', 'outbound_click'] } } },
+        ],
+      },
+    },
+    limit: 1000,
+  }, 'properties/' + GA4_PROPERTY_ID);
+
   return {
     pages: parseReport(request),
     events: parseReport(eventRequest),
@@ -315,6 +413,7 @@ function fetchGA4Report(startDate, endDate) {
     devices: parseReport(deviceRequest),
     totals: parseTotals(totalsRequest),
     outboundByDomain: parseReport(outboundByDomainRequest),
+    reserveClicks: parseReport(reserveClicksRequest),
   };
 }
 
@@ -468,8 +567,6 @@ function analyze(data) {
   const nonBaseEvents = data.events.filter(e =>
     !['page_view','session_start','first_visit','user_engagement','scroll'].includes(e.dimensions[0])
   );
-  // 予約行動: index.html の cta_click + ジャーナル記事の cta_reserve（SEO-072）
-  const RESERVE_EVENTS = ['cta_click', 'cta_reserve'];
   // 詳細到達: モーダル modal_open + 特集からの feature_store_click（SEO-072）
   const DETAIL_EVENTS  = ['modal_open', 'feature_store_click'];
   const sumEvt = (names) => names.reduce((s, n) => {
@@ -483,13 +580,15 @@ function analyze(data) {
   const callCount = sumEvt(['cta_call_click']);
   // SEO-089: outbound_click を予約ドメイン（hotpepper/tabelog等）と情報ドメインに分離して集計
   const outboundByDomain = data.outboundByDomain || [];
-  const reserveOutboundCount = outboundByDomain
-    .filter(r => RESERVE_DOMAINS.has(r.dimensions[0]))
-    .reduce((sum, r) => sum + (parseInt(r.metrics[0]) || 0), 0);
   const outboundInfoCount = outboundByDomain
-    .filter(r => !RESERVE_DOMAINS.has(r.dimensions[0]))
+    .filter(r => !reservationSite(r.dimensions[0]))
     .reduce((sum, r) => sum + (parseInt(r.metrics[0]) || 0), 0);
-  const ctaCount   = sumEvt(RESERVE_EVENTS) + reserveOutboundCount;
+  // 予約行動: cta_click（トップ・店舗ページ・特集）＋ cta_reserve（ジャーナル）＋ 予約サイトへの outbound_click。
+  // 予約ボタンは outbound_click にも同じ1回が届くので足さず、ページ×リンク先ごとに大きい方を取る（ISSUE-152）
+  const reserveClicks = dedupeReservationClicks((data.reserveClicks || []).map(r => ({
+    path: r.dimensions[0], event: r.dimensions[1], domain: r.dimensions[2], count: r.metrics[0],
+  })));
+  const ctaCount   = reserveClicks.deduped;
   // 予約クリック率はイベント側と同じ日で割らないと意味が合わない（分子は data.events＝当日）
   const ctaRate = et.users > 0 ? ctaCount / et.users : 0;
 
@@ -588,6 +687,21 @@ function fetchGscCandidateKeywords() {
 function pickGscKeyword(list, seed) {
   if (!list || !list.length) return null;
   return list[((seed % list.length) + list.length) % list.length];
+}
+
+// ISSUE-152: 予約ボタンの回数の数え方を直した日（この版のコードが初めてレポートを作った日）から35日、
+// レポートに注記する（前週・前日と比べると数字が不連続になるため）。デプロイの日はコードからは分からないので、
+// 初めて動いた日を Script Property に1回だけ書く
+function ctaDedupNote() {
+  const KEY = 'CTA_DEDUP_SINCE';
+  let since = getProp(KEY, '');
+  if (!since) {
+    since = getDateStr(0);
+    try { PropertiesService.getScriptProperties().setProperty(KEY, since); } catch (e) { Logger.log('CTA_DEDUP_SINCE を書けない: ' + e); }
+  }
+  const days = Math.round((new Date(getDateStr(0)) - new Date(since)) / 86400000);
+  if (!(days >= 0 && days <= 35)) return '';
+  return '　※ ' + since + ' から、予約ボタンの1回を2回数えていたのを1回に直した（ISSUE-152）。それより前のレポートの回数とは比べられない\n';
 }
 
 // Script Property を安全に読む
@@ -775,7 +889,7 @@ kwLines,
 '- 1訪問あたり閲覧: ' + a.pagesPerSession.toFixed(1) + 'ページ（目安2以上が良好）',
 '- 平均滞在: ' + secToText(t.avgDuration) + '（目安60秒以上）',
 '- 直帰率: ' + Math.round(t.bounceRate * 100) + '%（目安50%未満が良好・70%超は要注意）',
-'- 予約ボタンクリック（予約ドメイン外部リンク含む）: ' + a.ctaCount + '回 ／ 電話ボタン: ' + (a.callCount || 0) + '回 ／ 情報到達（マップ・Instagram等）: ' + (a.outboundInfoCount || 0) + '回 ／ マップ: ' + a.gmapCount + '回 ／ 店舗詳細を開いた: ' + a.modalCount + '回',
+'- 予約ボタンクリック（予約サイトへのリンクを含む・同じクリックは1回）: ' + a.ctaCount + '回 ／ 電話ボタン: ' + (a.callCount || 0) + '回 ／ 情報到達（マップ・Instagram等）: ' + (a.outboundInfoCount || 0) + '回 ／ マップ: ' + a.gmapCount + '回 ／ 店舗詳細を開いた: ' + a.modalCount + '回',
 '- 予約クリック率（予約÷訪問者）: ' + (a.ctaRate * 100).toFixed(1) + '%（目安3%）',
 '- 検索流入比率: ' + Math.round(a.organicPct * 100) + '%（判別できた' + a.identifiableSessions + '件中）' +
   ' ／ SNS流入比率: ' + Math.round(a.socialPct * 100) + '%' +
@@ -1005,7 +1119,7 @@ function formatDailyReport(data, date) {
   if (a.nonBaseEvents.length > 0) {
     msg += '\n【ユーザーの行動】\n';
     if (a.modalCount) msg += '👀 店舗詳細を開いた: ' + a.modalCount + '回\n';
-    if (a.ctaCount)   msg += '🔘 予約ボタン押した: ' + a.ctaCount + '回（予約ドメインへの外部リンク含む）\n';
+    if (a.ctaCount)   msg += '🔘 予約ボタン押した: ' + a.ctaCount + '回（予約サイトへのリンクを含む・同じクリックは1回）\n' + ctaDedupNote();
     if (a.callCount)  msg += '📞 電話ボタン押した: ' + a.callCount + '回\n';
     if (a.outboundInfoCount) msg += '🔗 情報到達（マップ・Instagram等）: ' + a.outboundInfoCount + '回\n';
     if (a.gmapCount)  msg += '🗺 マップ開いた: ' + a.gmapCount + '回\n';
@@ -1121,7 +1235,7 @@ function formatWeeklyReport(data, prevData, startDate, endDate, referrals) {
   if (a.nonBaseEvents.length > 0) {
     msg += '\n【ユーザーの行動】\n';
     if (a.modalCount) msg += '👀 店舗詳細: ' + a.modalCount + '回\n';
-    if (a.ctaCount)   msg += '🔘 予約ボタン: ' + a.ctaCount + '回（予約ドメインへの外部リンク含む）\n';
+    if (a.ctaCount)   msg += '🔘 予約ボタン: ' + a.ctaCount + '回（予約サイトへのリンクを含む・同じクリックは1回）\n' + ctaDedupNote();
     if (a.callCount)  msg += '📞 電話ボタン: ' + a.callCount + '回\n';
     if (a.outboundInfoCount) msg += '🔗 情報到達（マップ・Instagram等）: ' + a.outboundInfoCount + '回\n';
     if (a.gmapCount)  msg += '🗺 マップ: ' + a.gmapCount + '回\n';

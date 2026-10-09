@@ -156,10 +156,9 @@ jobs:
             L.push('   - または `clasp push`（`.gas-deploy/.clasp.json` あり。要 `clasp login`）');
             L.push('2. **重複ファイルを作らないこと**（`Code 2.js` 等が混ざると top-level 二重宣言で');
             L.push('   コンパイル全体が落ち、レポートが届かなくなります。CLAUDE.md に明記の禁止事項）');
-            L.push('3. 翌朝のレポートで、流入元 TOP3 に `(not set)` が出ず');
-            L.push('   `⚠️ 判別不能（GA4しきい値）` に変わっていることを確認する');
+            L.push('3. 翌朝のレポートで、上の「判定根拠」の行（旧コードだけが出す文字列）が出なくなったことを確認する');
             L.push('4. 確認できたら `data/gas_deploy_policy.json` の `pending_fixes` を空にし、');
-            L.push('   SEO-047 / SEO-057 / SEO-062 / SEO-063 の効果測定を1回で閉じる（SEO-069 acceptance 6）');
+            L.push('   反映待ちの修正の各課題を閉じる（`agent-backlog.md` の status と Linear）');
             L.push('');
             L.push('手元での確認:');
             L.push('```bash');

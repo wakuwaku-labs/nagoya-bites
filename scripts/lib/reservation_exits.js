@@ -54,6 +54,81 @@ function channelOf(eventName, linkDomain) {
   return 'other';
 }
 
+// ── 予約ボタンの回数（ISSUE-152）── .gas-deploy/Code.js に同じものを複製している。
+// 変えるときは両方を直す（tests/reservation_exits.test.js が同じ結果になることを検査する）。
+//
+// 予約ボタンは <a href="https://…"> で、サイト共通の外部リンク計測（document の click を捕捉段階で拾う
+// outbound_click・scripts/lib/ga_snippet.js）にも同じ1回が届く。「予約導線イベント＋予約サイトへの
+// outbound_click」と足すと、ボタン1回を2回数える。ページ×リンク先ごとに大きい方を取ると、予約ボタン
+// （両方に届く）と、ボタン以外の予約サイトへのリンク（outbound_click だけに届く。特集の店名リンクなど）を
+// 1回ずつ数えられる。電話（cta_call_click）は外部リンクではないので入れない。
+const RESERVE_LINK_EVENTS = ['cta_click', 'cta_reserve'];
+
+// リンク先のホスト名 → 予約サイト（RESERVATION_DOMAINS の要素）。予約サイトでなければ null
+function reservationSite(domain) {
+  const d = String(domain || '').toLowerCase();
+  for (let i = 0; i < RESERVATION_DOMAINS.length; i++) {
+    if (d.indexOf(RESERVATION_DOMAINS[i]) !== -1) return RESERVATION_DOMAINS[i];
+  }
+  return null;
+}
+
+/**
+ * @param {Array<{event:string, path:string, domain?:string, count:number|string}>} rows
+ *   GA4 の pagePath × eventName × customEvent:link_domain（eventCount）の行
+ * @returns {{ctaEvents:number, reservationOutbound:number, naiveSum:number, deduped:number, overlap:number,
+ *   bySite:Array<{site:string, cta:number, outbound:number, deduped:number}>}}
+ *   naiveSum は足し算（ISSUE-152 以前の数え方）、overlap は同じクリックを2回数えていた分（naiveSum − deduped）
+ */
+function dedupeReservationClicks(rows) {
+  const pairs = {};
+  let ctaEvents = 0;
+  let reservationOutbound = 0;
+  (rows || []).forEach(function (r) {
+    const n = parseInt(r.count, 10) || 0;
+    if (n <= 0) return;
+    let site;
+    const isOutbound = r.event === 'outbound_click';
+    if (isOutbound) {
+      site = reservationSite(r.domain);
+      if (!site) return; // 予約サイト以外（マップ・Instagram 等）は数えない
+      reservationOutbound += n;
+    } else if (RESERVE_LINK_EVENTS.indexOf(r.event) !== -1) {
+      const raw = String(r.domain || '').trim().toLowerCase();
+      // link_domain の無い送信は ISSUE-149 以前のホットペッパーのボタン（channelOf と同じ扱い）
+      site = (!raw || raw === '(not set)') ? 'hotpepper.jp' : (reservationSite(raw) || raw);
+      ctaEvents += n;
+    } else {
+      return;
+    }
+    const key = String(r.path || '') + '\t' + site;
+    if (!pairs[key]) pairs[key] = { site: site, cta: 0, outbound: 0 };
+    if (isOutbound) pairs[key].outbound += n; else pairs[key].cta += n;
+  });
+  const bySite = {};
+  let deduped = 0;
+  Object.keys(pairs).forEach(function (k) {
+    const p = pairs[k];
+    const d = Math.max(p.cta, p.outbound);
+    deduped += d;
+    if (!bySite[p.site]) bySite[p.site] = { site: p.site, cta: 0, outbound: 0, deduped: 0 };
+    bySite[p.site].cta += p.cta;
+    bySite[p.site].outbound += p.outbound;
+    bySite[p.site].deduped += d;
+  });
+  const naiveSum = ctaEvents + reservationOutbound;
+  return {
+    ctaEvents: ctaEvents,
+    reservationOutbound: reservationOutbound,
+    naiveSum: naiveSum,
+    deduped: deduped,
+    overlap: naiveSum - deduped,
+    bySite: Object.keys(bySite).map(function (k) { return bySite[k]; })
+      .sort(function (a, b) { return (b.deduped - a.deduped) || (a.site < b.site ? -1 : a.site > b.site ? 1 : 0); }),
+  };
+}
+// ── ここまで（.gas-deploy/Code.js に複製）──
+
 function emptyExits() {
   return { hotpepper: 0, tabelog: 0, tel: 0, other: 0, total: 0 };
 }
@@ -105,4 +180,5 @@ const DEFINITIONS = {
 module.exports = {
   EXIT_EVENTS, REPORT_EVENTS, CHANNELS, RESERVATION_DOMAINS, DEFINITIONS,
   isReservationDomain, channelOf, aggregateStoreReferrals,
+  RESERVE_LINK_EVENTS, reservationSite, dedupeReservationClicks,
 };
