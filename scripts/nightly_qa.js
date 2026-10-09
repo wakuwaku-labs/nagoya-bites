@@ -144,6 +144,18 @@ for (const target of ['stores', 'journal']) {
   });
 }
 
+// 8. ジャーナル本文冒頭の「合わせて読む」（SEO-149・SOFT で開始）。振り分け表に当たる記事に区画が入っているか。
+//    新しい記事に入れる経路が無く、09-19 以降の27本に無かった。日次ジャーナルの refresh_journal_related.js が
+//    入れるので、残っていれば入れる流れが止まっている。
+checks.push({
+  id: 'journal-feature-cta',
+  title: 'ジャーナル本文冒頭の「合わせて読む」（SEO-149）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/inject_journal_feature_cta.js', '--check']],
+});
+
 checks.push({
   id: 'feature-conclusions',
   title: '特集の冒頭の「先に結論」がその日の掲載店と一致（SEO-122）',
