@@ -522,6 +522,31 @@
   3. 載せる場合は、`fetch_manual_store_photos.js` の三重検証を通す（店名・名古屋の住所・飲食店の業態）
   4. 載せる場合は、`data/closed_stores.json` の錦3丁目の記録に移転先の掲載が引っかからないことを、ビルドのログで確かめる
 
+### [ISSUE-180] 特集の本文が誘導ページ（古い ID）を指す10件を、今の店舗ページと予約導線へそろえる
+
+- **priority**: P3 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-11-08
+- **category**: data-quality / content
+- **owner**: Editor / Builder
+- **source**: [[ISSUE-153]] の実装中に発見（2026-10-09）
+- **brand-filter**: ✅ 適合 — 実在保証（読者を今の店のページと予約導線へ送る）
+- **背景**:
+  - [[ISSUE-102]] で、新しいホットペッパーIDで載り直した店の古い店舗ページを、新しいページへの誘導ページにした（`data/store_page_orphans.json` の `redirectStubSlugs`・100本）
+  - 特集9本の本文（掲載店の一覧と ItemList）は、まだ誘導ページの古い ID を指している（10件）。2026-10-09 に `features/*.html` の `stores/J….html` を誘導ページの一覧と突き合わせて数えた
+    - J001258795（誘導先 J004699058）: birthday-surprise・birthday・fathers-day-2026・gw-2026・nagoya-yakiniku-guide
+    - J003942663: large-group
+    - J004025513・J001293029: nagoya-autumn-2026
+    - J003323657: nagoya-kaiseki-guide
+    - J004634502: nagoya-sweets
+  - 店舗ページへのリンクは誘導ページを経て今のページに着く。ただし同じ店の「予約」リンクは古い ID の HotPepper の店舗ページを指し、予約送客（cta_click）も古い ID で数えられる
+  - 冒頭の EDITORS' PICK は [[ISSUE-153]] で誘導ページを数えないようにした（3本で別の店に入れ替わった）。本文はまだ直していない
+- **acceptance**:
+  1. 10件それぞれについて、誘導先の店が同じ店であることを `data/stores.json` の店名・住所で確かめる
+  2. 同じ店と確かめた組は、本文の店舗ページへのリンク・HotPepper の予約リンク・ItemList の URL・計測の store_id を新しい ID にそろえる。確かめられない組は差し替えず、一覧から外すかを Editor が決める
+  3. 特集の本文のリンクが誘導ページを指す件数を数える監査（`--check`）を作り、夜間QA に soft で載せる。0件が続いたら hard に上げる
+  4. 掲載店の入れ替え（`refresh_feature_rosters.js`）が管理する特集（nagoya-autumn-2026 など）は、次の入れ替えで消えるかを確かめ、消えるなら手で直さない
+
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 
 - **priority**: P1 → **status**: in_progress
@@ -593,7 +618,7 @@
 
 ### [ISSUE-153] 新しく作る特集にも予約申告プロンプトと予約送客の計測が自動で入るようにする
 
-- **priority**: P3 → **status**: ready
+- **priority**: P3 → **status**: done
 - **detected**: 2026-10-09
 - **category**: 計測
 - **owner**: Builder
@@ -603,6 +628,19 @@
 - **acceptance**:
   1. `node scripts/add_feature_tracking.js --check` を build.yml か夜間QA に入れ、漏れがあれば警告が出るようにする
   2. 新しい特集を1本生成して、プロンプトのスクリプトと新しい語彙の onclick が入っていることを確かめる
+- **結果（2026-10-09）**:
+  - 冒頭の EDITORS' PICK（`scripts/add_feature_top_cta.js`・build.yml が毎日 `--all` で作り直す）と「先に結論」（`scripts/apply_feature_conclusions.js`）が、計測なしでリンクを書いていた。#417 で `add_feature_tracking.js` が足した予約送客（cta_click）の計測は、同じ朝の CI の再生成で消えていた（9350c1c04c が足し、4ee54f2bae が消した）。#417 より前は、この区画のリンクに計測が付いたことは無い。特集で最初に目に入る予約ボタンが、店別の予約送客（`data/store_referrals.json`）に数えられていなかったことになる
+  - 計測の文字列を `scripts/lib/feature_tracking.js` の1本にした。EDITORS' PICK・先に結論・掲載店の入れ替え（`refresh_feature_rosters.js`）が生成時に書く。掲載店の入れ替えは予約申告プロンプトも入れるが、プロンプトだけの変更では dateModified を進めない。`add_feature_tracking.js` も同じ部品を使う（旧版と出力が同じことを特集69本で確認）
+  - build.yml の特集を書き換えるステップの最後に `node scripts/add_feature_tracking.js`（適用・冪等）を足し、生成器を通らないリンク（手書きの新しい特集など）を毎日補う。夜間QA に `feature-tracking`（soft・`--check`）を足した（達成条件1）
+  - 新しい特集の確認（達成条件2）: `tests/feature_tracking.test.js` は、計測もプロンプトも無い新しい特集（ItemList と本文だけ）を EDITORS' PICK の生成に通す。予約リンク3本に新しい語彙の cta_click、店舗リンク3本に feature_store_click、`</body>` の前に予約申告プロンプトが入ることを確かめる。あわせて、`add_feature_tracking.js` が足すものが無いこと、もう一度生成しても変わらないことも確かめる。業界特集の生成器（`gen_industry_features.js --out`）の出力には予約導線が無く、足りないのはスクロールと関連リンクの計測だけで、これは build.yml の補いで入る
+  - EDITORS' PICK の生成器は、店舗ページのファイルがあるだけで実在の店と数え、誘導ページ（[[ISSUE-102]]・古い ID）を出していた（誕生日・誕生日サプライズ・父の日の3本で J001258795）。誘導ページを数えないようにし、3本は別の店に入れ替わった。本文の誘導ページへのリンク（特集9本・10件）は [[ISSUE-180]] に起票した
+  - ローカルで生成器を当てた結果、特集48本が変わった。45本は計測の追加だけで、3本が上の入れ替え。次の6つはどれも exit 0。npm test は452件通過した
+    - `add_feature_tracking.js --check`
+    - `apply_feature_conclusions.js --check`
+    - `audit_design_system.js --check`
+    - `audit_inline_js_syntax.js --check --only features`
+    - `sync_feature_counts.js --check`
+    - `apply_feature_byline.js --check`
 
 ### [SEO-116] SEO の90日計画（2026-10〜12）を進め、12-15 に北極星指標で次の計画を決める
 

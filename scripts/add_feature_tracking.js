@@ -13,11 +13,14 @@
 //     nbReserveExit 経由の cta_click{store_name,store_id,link_domain,location,feature} に書き換え、
 //     予約申告プロンプト（scripts/lib/reservation_ask_snippet.js）を </body> 直前に入れる
 //
-// 運用: --check で違反ゼロ確認（機械検査）、引数なしで修正適用（冪等）
+// 運用: --check で違反ゼロ確認（機械検査）、引数なしで修正適用（冪等）。build.yml が特集を書き換えるステップの
+//       最後に日次で適用し、夜間QA が --check を soft で回す（ISSUE-153）
+// 計測の文字列は scripts/lib/feature_tracking.js の1本。区画を作り直す生成器（add_feature_top_cta.js・
+// apply_feature_conclusions.js・refresh_feature_rosters.js）も同じ部品で書くので、ここで足した計測が消えない
 //   node scripts/add_feature_tracking.js [--check] [--only <slug>]
 
 'use strict';
-const { applyToHtml: applyReserveAsk } = require('./lib/reservation_ask_snippet');
+const { reserveExitOnclick, featureStoreOnclick, withReserveAsk } = require('./lib/feature_tracking');
 
 const fs = require('fs');
 const path = require('path');
@@ -52,10 +55,6 @@ const SCROLL_DEPTH_SCRIPT = `<script class="nb-engagement-tracking">
 const STORES = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'stores.json'), 'utf8')); } catch (e) { return []; } })();
 const NAME_BY_ID = new Map(STORES.filter(s => s['ホットペッパーID']).map(s => [s['ホットペッパーID'], s['店名'] || '']));
 const ID_BY_NAME = new Map(STORES.filter(s => s['ホットペッパーID']).map(s => [s['店名'], s['ホットペッパーID']]));
-function jsq(v) { return String(v || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/\\/g, '\\\\').replace(/'/g, "\\'"); }
-function reserveExitCall(name, id, slug) {
-  return `(window.nbReserveExit||trackEvent)('cta_click',{store_name:'${jsq(name)}',store_id:'${jsq(id)}',link_domain:'www.hotpepper.jp',location:'feature',feature:'${slug}'})`;
-}
 // 旧形式の store:'…' の中身（\' でエスケープ済み）を素の文字列に戻す
 function unq(v) { return String(v).replace(/\\'/g, "'").replace(/\\\\/g, '\\'); }
 
@@ -81,16 +80,14 @@ function slugOf(fname) {
 let issues = 0;
 let fixed = 0;
 
-function processFile(fpath) {
-  const slug = slugOf(fpath);
-  let html = fs.readFileSync(fpath, 'utf8');
-  const original = html;
+/** 1本の特集の HTML に足りない計測と予約申告プロンプトを足して返す（純関数・冪等） */
+function processHtml(html, slug) {
 
   // ── 1. hotpepper.jp リンクに予約送客の cta_click を付与 ──
   html = html.replace(/<a\s+([^>]*href=["']https?:\/\/(?:www\.)?hotpepper\.jp\/str(J\w+)[^"']*["'][^>]*)>/gi, (match, attrs, id) => {
     if (/\bcta_click\b/.test(attrs)) return match; // 既存（旧形式は 1b で書き換える）
     if (/\bonclick=/i.test(attrs)) return match;
-    return match.replace(/>$/, ` onclick="${reserveExitCall(NAME_BY_ID.get(id) || '', id, slug)}">`);
+    return match.replace(/>$/, ` onclick="${reserveExitOnclick(NAME_BY_ID.get(id) || '', id, slug)}">`);
   });
 
   // ── 1b. 旧形式 trackEvent('cta_click',{store:'…',feature:'…',target:'hotpepper'}) を書き換え（ISSUE-149） ──
@@ -99,13 +96,13 @@ function processFile(fpath) {
     const isId = /^J\d+$/.test(v);
     const name = isId ? (NAME_BY_ID.get(v) || '') : v.replace(/&amp;/g, '&').replace(/&quot;/g, '"');
     const id = isId ? v : (ID_BY_NAME.get(name) || '');
-    return reserveExitCall(name, id, feat || slug);
+    return reserveExitOnclick(name, id, feat || slug);
   });
 
   // ── 2. stores/J*.html リンクに feature_store_click を付与 ──
   html = html.replace(/<a\s+([^>]*href=["'][^"']*\/stores\/(J\w+)\.html[^"']*["'][^>]*)>/gi, (match, attrs, id) => {
     if (/\bfeature_store_click\b/.test(attrs)) return match; // 既存
-    const eventCall = `trackEvent('feature_store_click',{store:'${id}',feature:'${slug}'})`;
+    const eventCall = featureStoreOnclick(id, slug);
     return match.replace(/>$/, ` onclick="${eventCall}">`);
   });
 
@@ -124,13 +121,20 @@ function processFile(fpath) {
   });
 
   // ── 4a. 予約申告プロンプト（予約導線を持つ特集だけ） ──
-  if (/hotpepper\.jp\/str|nbReserveExit/.test(html)) html = applyReserveAsk(html);
+  html = withReserveAsk(html);
 
   // ── 4. scroll_depth がなければ </body> 直前に挿入 ──
   if (!html.includes('scroll_depth')) {
     html = html.replace(/<\/body>/, `${SCROLL_DEPTH_SCRIPT}\n</body>`);
   }
 
+  return html;
+}
+
+function processFile(fpath) {
+  const slug = slugOf(fpath);
+  const original = fs.readFileSync(fpath, 'utf8');
+  const html = processHtml(original, slug);
   if (html !== original) {
     if (CHECK_ONLY) {
       console.log(`[NEEDS UPDATE] ${path.relative(ROOT, fpath)}`);
@@ -159,7 +163,7 @@ function checkMachineCheck() {
   return failing;
 }
 
-// メイン
+function main() {
 const files = fs.readdirSync(FEATURES_DIR)
   .filter(f => f.endsWith('.html') && (!ONLY || f.startsWith(ONLY)))
   .map(f => path.join(FEATURES_DIR, f));
@@ -183,3 +187,8 @@ if (CHECK_ONLY) {
 } else {
   console.log(`\n更新: ${fixed}件`);
 }
+}
+
+if (require.main === module) main();
+
+module.exports = { processHtml, SCROLL_DEPTH_SCRIPT };

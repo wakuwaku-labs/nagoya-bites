@@ -152,6 +152,17 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/apply_feature_conclusions.js', '--check']],
 });
+// 特集の予約導線と店舗リンクに計測が付き、予約申告プロンプトが入っているか（ISSUE-153・SOFT）。
+// 冒頭の EDITORS' PICK が計測なしで毎日作り直され、#417 で足した予約送客の計測が同じ朝に消えていた。
+// 生成器は scripts/lib/feature_tracking.js で書き、build.yml が add_feature_tracking.js で残りを補う。ここでは漏れを数える
+checks.push({
+  id: 'feature-tracking',
+  title: '特集の予約導線と店舗リンクに計測と予約申告プロンプトがある（ISSUE-153）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/add_feature_tracking.js', '--check']],
+});
 // 8. 特集・ジャーナルに手で書かれた店舗リンクが別の店を指していないか（ISSUE-156・SOFT で開始）。
 //    2026-09-03 に別の店と判定して店舗データから外した食べログURLが、特集とジャーナルの HTML では
 //    2026-10-09 まで残っていた（ISSUE-155）。判定は照合キャッシュの事実だけで、外部へは問い合わせない。

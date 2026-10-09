@@ -316,6 +316,14 @@ jobs:
         run: node scripts/sync_feature_counts.js
         continue-on-error: true
 
+      - name: 特集の予約送客の計測と予約申告プロンプトを補う（ISSUE-153・冪等・日次）
+        # 区画を作り直す生成器（上の add_feature_top_cta.js・apply_feature_conclusions.js・refresh_feature_rosters.js）は
+        # scripts/lib/feature_tracking.js の文字列で計測を書くので、ここで足すのは手書きの新しい特集など、
+        # 生成器を通らないリンクと予約申告プロンプトだけ（足りていれば何も書かない）。特集を書き換えるステップの最後に置く。
+        # 夜間QA が --check（soft・feature-tracking）で漏れを数える。
+        run: node scripts/add_feature_tracking.js
+        continue-on-error: true
+
       - name: 店舗写真を原寸マスターへ昇格（画質改善・実測ベース・冪等）
         # Hot Pepper の _480.jpg は 480px しかなく、モーダル(約2000px相当)で 4倍に
         # 引き伸ばされてボケていた。サフィックスなしURLが投稿時の原寸(720〜1280px)を返すため、

@@ -43,6 +43,8 @@
 
 const fs = require('fs');
 const path = require('path');
+const { reserveExitOnclick, featureStoreOnclick, withReserveAsk, storeNameById } = require('./lib/feature_tracking');
+const { isRedirectStub } = require('./lib/store_orphans');
 
 const ROOT = path.join(__dirname, '..');
 const FEATURES_DIR = path.join(ROOT, 'features');
@@ -62,8 +64,12 @@ function esc(s) {
 }
 
 function isLinkable(jcode) {
-  if (!fs.existsSync(path.join(STORES_DIR, jcode + '.html'))) return false;
+  const file = path.join(STORES_DIR, jcode + '.html');
+  if (!fs.existsSync(file)) return false;
   if (closedRaw.includes(jcode)) return false;
+  // 誘導ページ（ISSUE-102・同じ店の新しいページへ移した古い ID）は店のページとして数えない。
+  // 数えると冒頭の「店舗詳細」が誘導ページを、「今すぐ予約」が古い ID の HotPepper を指す（ISSUE-153 で発見）
+  if (isRedirectStub(fs.readFileSync(file, 'utf8'))) return false;
   return true;
 }
 
@@ -225,13 +231,15 @@ function insertionIndex(html) {
   return html.indexOf('<h2', from);
 }
 
-function buildCta(stores) {
+function buildCta(stores, slug) {
+  // 計測は生成時に書く（ISSUE-153）。後から add_feature_tracking.js で足すと、この区画を作り直す
+  // 次の実行で消える。文字列は scripts/lib/feature_tracking.js の1本
   const items = stores.map(s => `
     <li class="topcta-item">
       <span class="topcta-name">${esc(s.name)}</span>
       <span class="topcta-actions">
-        <a class="store-link" href="../stores/${s.jcode}.html">店舗詳細</a>
-        <a class="store-link" href="https://www.hotpepper.jp/str${s.jcode}/" target="_blank" rel="noopener">今すぐ予約</a>
+        <a class="store-link" href="../stores/${s.jcode}.html" onclick="${featureStoreOnclick(s.jcode, slug)}">店舗詳細</a>
+        <a class="store-link" href="https://www.hotpepper.jp/str${s.jcode}/" target="_blank" rel="noopener" onclick="${reserveExitOnclick(storeNameById(s.jcode) || s.name, s.jcode, slug)}">今すぐ予約</a>
       </span>
     </li>`).join('');
 
@@ -247,24 +255,21 @@ function buildCta(stores) {
 ${END}`;
 }
 
-function applyTo(slug, opts) {
-  const file = path.join(FEATURES_DIR, slug + '.html');
-  if (!fs.existsSync(file)) return { slug, status: 'missing_file' };
-  let html = fs.readFileSync(file, 'utf8');
-
+/** 1本の特集の HTML に区画を入れた結果を返す（純関数）。next が無いときは書き換えない */
+function applyToHtml(html, slug, opts = {}) {
   let all = storesFromItemList(html);
   const source = all.length > 0 ? 'itemlist' : 'html_links';
   if (all.length === 0) all = storesFromHtmlLinks(html);
-  if (all.length === 0) return { slug, status: 'no_itemlist' };
+  if (all.length === 0) return { status: 'no_itemlist' };
 
   const real = all.filter(s => isLinkable(s.jcode));
   if (real.length < CTA_STORE_COUNT) {
     // 実在確認できる店が3件に満たない場合は付けない（水増しも架空店も出さない）
-    return { slug, status: 'insufficient_real_stores', found: real.length, listed: all.length };
+    return { status: 'insufficient_real_stores', found: real.length, listed: all.length };
   }
   const usable = pickDiverse(real, CTA_STORE_COUNT);
 
-  const block = buildCta(usable);
+  const block = buildCta(usable, slug);
   const hasBlock = html.includes(START) && html.includes(END);
   let next;
   if (hasBlock) {
@@ -272,18 +277,28 @@ function applyTo(slug, opts) {
     next = html.replace(re, block);
   } else {
     const at = insertionIndex(html);
-    if (at < 0) return { slug, status: 'no_anchor' };
+    if (at < 0) return { status: 'no_anchor' };
     next = html.slice(0, at) + block + '\n\n' + html.slice(at);
   }
+  // 予約導線を入れたページには予約申告プロンプトも入れる（冪等・ISSUE-153）
+  next = withReserveAsk(next);
 
   const changed = next !== html;
-  if (changed && !opts.check) fs.writeFileSync(file, next);
   return {
-    slug,
     status: hasBlock ? (changed ? 'updated' : 'unchanged') : (opts.check ? 'would_add' : 'added'),
     source,
-    stores: usable.map(s => `${s.jcode}:${s.name}`)
+    stores: usable.map(s => `${s.jcode}:${s.name}`),
+    next,
   };
+}
+
+function applyTo(slug, opts) {
+  const file = path.join(FEATURES_DIR, slug + '.html');
+  if (!fs.existsSync(file)) return { slug, status: 'missing_file' };
+  const html = fs.readFileSync(file, 'utf8');
+  const { next, ...r } = applyToHtml(html, slug, opts);
+  if (next !== undefined && next !== html && !opts.check) fs.writeFileSync(file, next);
+  return { slug, ...r };
 }
 
 function main() {
@@ -314,4 +329,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { storesFromItemList, storesFromHtmlLinks, buildCta, sameBrand, pickDiverse };
+module.exports = { storesFromItemList, storesFromHtmlLinks, buildCta, applyToHtml, sameBrand, pickDiverse, START, END };
