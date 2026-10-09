@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T06:12:41.257Z",
+  "generatedAt": "2026-10-09T06:32:36.964Z",
   "run": {
     "tabelog": {
       "attempted": 5,
@@ -20,37 +20,19 @@
       "lastFetchedAt": "2026-09-20T15:34:53.838Z"
     },
     "hotpepper": {
-      "links": 4728,
-      "neverChecked": 4425,
+      "links": 4727,
+      "neverChecked": 4370,
       "unfetched": 0,
-      "lastFetchedAt": "2026-10-09T06:12:41.237Z"
+      "lastFetchedAt": "2026-10-09T06:32:36.911Z"
     }
   },
   "closures": {
     "hotpepper": {
-      "closed": [
-        {
-          "店名": "創作料理まるゆ",
-          "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-          "url": "https://www.hotpepper.jp/strJ003450558/",
-          "検証日": "2026-10-09T05:27:44.793Z",
-          "表示": "【閉店】"
-        }
-      ],
+      "closed": [],
       "notFound": []
     }
   },
   "mismatches": [
-    {
-      "店名": "創作料理まるゆ",
-      "エリア": "栄(ミナミ)/矢場町/大須/上前津",
-      "種別": "hotpepper",
-      "url": "https://www.hotpepper.jp/strJ003450558/",
-      "理由": "closed",
-      "検出タイトル": "創作料理まるゆ",
-      "エラー": null,
-      "検証日": "2026-10-09T05:27:44.793Z"
-    },
     {
       "店名": "和牛ホルモン焼 三國 本店",
       "エリア": "栄(ミナミ)/矢場町/大須/上前津",
@@ -840,8 +822,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230111/23015139/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "read ETIMEDOUT",
-      "検証日": "2026-09-20T15:31:06.981Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T06:26:54.269Z"
     },
     {
       "店名": "串家物語 イオンモール名古屋茶屋店",
@@ -850,8 +832,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230113/23053267/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:31:08.532Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T06:26:58.584Z"
     },
     {
       "店名": "焼鳥屋 鳥貴族 港北店",
@@ -860,8 +842,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23030307/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:31:10.294Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T06:27:04.248Z"
     },
     {
       "店名": "上海湯包小館 則武新町店",
@@ -870,8 +852,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230113/23079263/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:31:11.779Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T06:27:08.542Z"
     },
     {
       "店名": "嘉文 大曽根店",
@@ -880,8 +862,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230110/23074550/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:31:16.381Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T06:27:12.981Z"
     },
     {
       "店名": "瑞穂飯店 新瑞橋店",
