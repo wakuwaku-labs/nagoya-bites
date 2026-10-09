@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-09T04:28:57.962Z",
+  "generatedAt": "2026-10-09T04:59:01.896Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1422,
+  "total_sessions": 1423,
   "engines": [
     {
       "key": "bing",
@@ -22,13 +22,13 @@
     {
       "key": "google",
       "label": "Google",
-      "sessions": 390,
-      "pct": 27.4,
+      "sessions": 391,
+      "pct": 27.5,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 390
+          "sessions": 391
         }
       ]
     },
@@ -212,19 +212,19 @@
     }
   ],
   "search_only": {
-    "total": 1070,
+    "total": 1071,
     "share": [
       {
         "key": "bing",
         "label": "Bing",
         "sessions": 403,
-        "pct_of_search": 37.7
+        "pct_of_search": 37.6
       },
       {
         "key": "google",
         "label": "Google",
-        "sessions": 390,
-        "pct_of_search": 36.4
+        "sessions": 391,
+        "pct_of_search": 36.5
       },
       {
         "key": "yahoo",
@@ -263,7 +263,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 390 セッションのみ。Bing(403) + 生成AI(107) の 510 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 391 セッションのみ。Bing(403) + 生成AI(107) の 510 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
