@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-09T20:12:24.822Z",
+  "generatedAt": "2026-10-09T22:19:06.257Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1272,
-    "pageViews": 1819,
-    "sessions": 1461,
-    "avgSessionDuration": 129.1,
+    "activeUsers": 1277,
+    "pageViews": 1824,
+    "sessions": 1466,
+    "avgSessionDuration": 128.7,
     "bounceRate": 0.278,
-    "pagesPerSession": 1.25
+    "pagesPerSession": 1.24
   },
   "dailyReference": {
     "date": "2026-10-08",
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1008,
+      "organic": 1013,
       "direct": 315,
       "social": 6,
       "ai_assistant": 108,
@@ -26,10 +26,10 @@
       "other": 0
     },
     "pct": {
-      "organic": 68.8,
-      "direct": 21.5,
+      "organic": 68.9,
+      "direct": 21.4,
       "social": 0.4,
-      "ai_assistant": 7.4,
+      "ai_assistant": 7.3,
       "referral": 1.9,
       "paid": 0,
       "other": 0
@@ -39,12 +39,12 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 420
+      "sessions": 421
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 412
+      "sessions": 414
     },
     {
       "source": "(direct)",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 157
+      "sessions": 159
     },
     {
       "source": "chatgpt.com",
@@ -180,8 +180,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 317,
-      "sessions": 300
+      "pageViews": 318,
+      "sessions": 301
     },
     {
       "path": "/",
@@ -283,7 +283,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 5.6,
+    "ctaClickRate_organic": 5.5,
     "ctaClickRate_direct": 20.6,
     "ctaClickRate_social": 0,
     "byPage": [
@@ -845,7 +845,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1272,
+    "value": 1277,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
