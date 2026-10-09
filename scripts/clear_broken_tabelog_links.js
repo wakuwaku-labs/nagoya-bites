@@ -28,6 +28,8 @@
  * この種のリンクは、同じ URL を正しい支店も使っていることが多い（例:「焼肉神宮 別邸」に付いた本店の
  * ページは「焼肉神宮 金山本店」の正しいリンク）。そのため URL ではなく店舗ID で対象を絞り、店舗ページも
  * 解決キャッシュも、その店の分だけを書き換える。
+ * ISSUE-167 から、食べログが閉店と表示するページ・存在しないページへのリンクも同じ記録で外す
+ * （記録の issue に課題番号を書く。無ければ ISSUE-160）。
  *
  * 使い方:
  *   node scripts/clear_broken_tabelog_links.js --dry-run   # 対象一覧のみ表示
@@ -86,7 +88,7 @@ function loadReviewedTargets() {
   const reviews = JSON.parse(fs.readFileSync(REVIEWED_PATH, 'utf8')).reviews || [];
   return reviews
     .filter((r) => r.decision === 'remove')
-    .map((r) => ({ id: r.id, storeName: r.storeName, url: r.url, why: r.reason }));
+    .map((r) => ({ id: r.id, storeName: r.storeName, url: r.url, why: r.reason, issue: r.issue || 'ISSUE-160' }));
 }
 
 // 店舗ID がある対象はその店だけ、無い対象は店名で照合する
@@ -236,7 +238,7 @@ function patchTabelogResolvedCache(targets) {
       failed: true,
       failedBy: 'tabelog',
       clearedBy: reviewed ? 'branch-mismatch-review' : 'identity-audit',
-      clearedReason: reviewed ? `${reviewed.why}（ISSUE-160・data/tabelog_branch_reviewed.json）` : '実地検証でリンク先が別店（sim=0）または404だったため空欄化',
+      clearedReason: reviewed ? `${reviewed.why}（${reviewed.issue}・data/tabelog_branch_reviewed.json）` : '実地検証でリンク先が別店（sim=0）または404だったため空欄化',
       previousUrl: entry.tabelog,
       resolvedAt: new Date().toISOString(),
     };

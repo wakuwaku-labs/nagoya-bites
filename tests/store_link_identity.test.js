@@ -97,6 +97,9 @@ test('hotpepperNameFromTitle: 末尾の「＜ネット予約可＞」と（エ�
   // 2026-10-09 の日次監査で不一致になった店名の短い店。外せば一致する
   assert.equal(bestMatch('松軒亭', hotpepperNameFromTitle('松軒亭(新栄/洋食)＜ネット予約可＞ | ホットペッパーグルメ').name).ok, true);
   assert.equal(bestMatch('食堂　灯ル', hotpepperNameFromTitle('食堂　灯ル(名古屋駅/和食)＜ネット予約可＞ | ホットペッパーグルメ').name).ok, true);
+  // エリア名が丸括弧を1段含む（2026-10-09 の日次監査で不一致になった）
+  assert.equal(hotpepperNameFromTitle('ソラリウム(藤が丘(名古屋)/バー・カクテル) | ホットペッパーグルメ').name, 'ソラリウム');
+  assert.equal(hotpepperNameFromTitle('店（栄（名古屋）/和食） | ホットペッパーグルメ').name, '店');
 });
 
 // ── 住所の構造比較（ISSUE-159）──────────────────────────────────────
