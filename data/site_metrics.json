@@ -1,35 +1,35 @@
 {
-  "generatedAt": "2026-10-09T09:22:27.045Z",
+  "generatedAt": "2026-10-09T15:21:02.770Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1248,
-    "pageViews": 1804,
-    "sessions": 1438,
-    "avgSessionDuration": 129.2,
-    "bounceRate": 0.277,
-    "pagesPerSession": 1.25
+    "activeUsers": 1255,
+    "pageViews": 1791,
+    "sessions": 1443,
+    "avgSessionDuration": 129.8,
+    "bounceRate": 0.28,
+    "pagesPerSession": 1.24
   },
   "dailyReference": {
-    "date": "2026-10-07",
-    "sessions": 68,
-    "bounceRate": 0.368,
-    "pageViews": 72
+    "date": "2026-10-08",
+    "sessions": 63,
+    "bounceRate": 0.254,
+    "pageViews": 82
   },
   "channels": {
     "sessions": {
-      "organic": 979,
-      "direct": 322,
+      "organic": 991,
+      "direct": 315,
       "social": 6,
-      "ai_assistant": 108,
+      "ai_assistant": 107,
       "referral": 28,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 67.8,
-      "direct": 22.3,
+      "organic": 68.5,
+      "direct": 21.8,
       "social": 0.4,
-      "ai_assistant": 7.5,
+      "ai_assistant": 7.4,
       "referral": 1.9,
       "paid": 0,
       "other": 0
@@ -39,22 +39,22 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 411
+      "sessions": 417
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 396
+      "sessions": 400
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 222
+      "sessions": 216
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 153
+      "sessions": 155
     },
     {
       "source": "chatgpt.com",
@@ -69,7 +69,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 28
+      "sessions": 27
     },
     {
       "source": "duckduckgo",
@@ -92,13 +92,13 @@
       "sessions": 7
     },
     {
-      "source": "copilot.com",
-      "medium": "ai-assistant",
-      "sessions": 5
-    },
-    {
       "source": "ig",
       "medium": "social",
+      "sessions": 4
+    },
+    {
+      "source": "copilot.com",
+      "medium": "ai-assistant",
       "sessions": 4
     },
     {
@@ -180,32 +180,32 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 310,
+      "pageViews": 308,
       "sessions": 292
     },
     {
       "path": "/",
-      "pageViews": 114,
-      "sessions": 100
+      "pageViews": 111,
+      "sessions": 97
     },
     {
       "path": "/index.html",
-      "pageViews": 101,
-      "sessions": 80
+      "pageViews": 95,
+      "sessions": 76
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 91,
-      "sessions": 89
+      "pageViews": 90,
+      "sessions": 88
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
-      "pageViews": 56,
-      "sessions": 59
+      "pageViews": 58,
+      "sessions": 60
     }
   ],
   "cta": {
-    "outboundClicks": 142,
+    "outboundClicks": 143,
     "ctaClickRate": 9.9,
     "byDomain": [
       {
@@ -230,7 +230,7 @@
       },
       {
         "domain": "www.google.com",
-        "clicks": 5
+        "clicks": 7
       },
       {
         "domain": "jouhou.nagoya",
@@ -238,10 +238,6 @@
       },
       {
         "domain": "nagoyato.com",
-        "clicks": 2
-      },
-      {
-        "domain": "www.jiji.com",
         "clicks": 2
       },
       {
@@ -269,22 +265,26 @@
         "clicks": 1
       },
       {
+        "domain": "www.atpress.ne.jp",
+        "clicks": 1
+      },
+      {
         "domain": "(unattributed)",
         "clicks": 2
       }
     ],
     "note": null,
     "byChannel": {
-      "organic": 49,
-      "direct": 71,
+      "organic": 56,
+      "direct": 65,
       "social": 0,
       "ai_assistant": 21,
       "referral": 1,
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 5,
-    "ctaClickRate_direct": 22,
+    "ctaClickRate_organic": 5.7,
+    "ctaClickRate_direct": 20.6,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -300,10 +300,6 @@
         "clicks": 10
       },
       {
-        "path": "/index.html",
-        "clicks": 8
-      },
-      {
         "path": "/features/nagoya-solo-dining.html",
         "clicks": 7
       },
@@ -317,6 +313,10 @@
       },
       {
         "path": "/features/nagoya-seafood.html",
+        "clicks": 5
+      },
+      {
+        "path": "/index.html",
         "clicks": 5
       },
       {
@@ -348,10 +348,6 @@
         "clicks": 4
       },
       {
-        "path": "/journal/2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html",
-        "clicks": 3
-      },
-      {
         "path": "/journal/2026-09-18-sakae-akizake-fes-2026-coin-price.html",
         "clicks": 3
       },
@@ -368,11 +364,19 @@
         "clicks": 2
       },
       {
+        "path": "/journal/2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html",
+        "clicks": 2
+      },
+      {
         "path": "/journal/2026-09-19-kiyosu-yabaton-boochan-house.html",
         "clicks": 2
       },
       {
         "path": "/journal/2026-09-26-sakae-chanko-kokonoe-bonenkai.html",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/J004402690.html",
         "clicks": 2
       },
       {
@@ -392,19 +396,15 @@
         "clicks": 1
       },
       {
-        "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-09-04-meieki-shokudo-tomoru-sanma-price.html",
-        "clicks": 1
-      },
-      {
         "path": "/journal/2026-09-27-marunouchi-masuhan-matcha-price.html",
         "clicks": 1
       },
       {
         "path": "/journal/2026-10-02-meieki-shanghai-crab-rinka-ouchou-price.html",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J000431352.html",
         "clicks": 1
       }
     ],
@@ -435,11 +435,6 @@
         "clicks": 6
       },
       {
-        "path": "/index.html",
-        "domain": "tabelog.com",
-        "clicks": 6
-      },
-      {
         "path": "/",
         "domain": "www.google.com",
         "clicks": 5
@@ -475,6 +470,11 @@
         "clicks": 3
       },
       {
+        "path": "/index.html",
+        "domain": "tabelog.com",
+        "clicks": 3
+      },
+      {
         "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
         "domain": "maps.google.com",
         "clicks": 3
@@ -497,11 +497,6 @@
       {
         "path": "/index.html",
         "domain": "maps.google.com",
-        "clicks": 2
-      },
-      {
-        "path": "/journal/2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html",
-        "domain": "www.hotpepper.jp",
         "clicks": 2
       },
       {
@@ -580,18 +575,13 @@
         "clicks": 1
       },
       {
-        "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
-        "domain": "www.hotpepper.jp",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-09-04-meieki-shokudo-tomoru-sanma-price.html",
-        "domain": "www.jiji.com",
+        "path": "/journal/2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html",
+        "domain": "maps.google.com",
         "clicks": 1
       },
       {
         "path": "/journal/2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html",
-        "domain": "maps.google.com",
+        "domain": "www.hotpepper.jp",
         "clicks": 1
       },
       {
@@ -685,6 +675,41 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J000431352.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J001258285.html",
+        "domain": "www.google.com",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J003582119.html",
+        "domain": "www.google.com",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J003624222.html",
+        "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J004004985.html",
+        "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J004402690.html",
+        "domain": "tabelog.com",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J004402690.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
         "path": "/stores/area/kanayama/izakaya.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -718,16 +743,16 @@
         "clicks": 6
       },
       {
-        "path": "/index.html",
-        "clicks": 6
-      },
-      {
         "path": "/features/nagoya-seafood.html",
         "clicks": 5
       },
       {
         "path": "/features/nagoya-miso-nikomi-udon.html",
         "clicks": 4
+      },
+      {
+        "path": "/index.html",
+        "clicks": 3
       },
       {
         "path": "/features/birthday.html",
@@ -738,15 +763,15 @@
         "clicks": 2
       },
       {
-        "path": "/journal/2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html",
-        "clicks": 2
-      },
-      {
         "path": "/journal/2026-10-04-sakae-brianza-nagoya-haera-lunch.html",
         "clicks": 2
       },
       {
         "path": "/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
+        "clicks": 2
+      },
+      {
+        "path": "/stores/J004402690.html",
         "clicks": 2
       },
       {
@@ -762,11 +787,23 @@
         "clicks": 1
       },
       {
-        "path": "/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
+        "path": "/journal/2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html",
         "clicks": 1
       },
       {
         "path": "/journal/2026-09-26-sakae-chanko-kokonoe-bonenkai.html",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J000431352.html",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J003624222.html",
+        "clicks": 1
+      },
+      {
+        "path": "/stores/J004004985.html",
         "clicks": 1
       },
       {
@@ -785,30 +822,30 @@
     "reservationClicks": 76,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 9,
-      "reservationOutbound": 13,
-      "naiveSum": 22,
-      "deduped": 17,
-      "overlap": 5,
+      "ctaEvents": 14,
+      "reservationOutbound": 19,
+      "naiveSum": 33,
+      "deduped": 23,
+      "overlap": 10,
       "bySite": [
         {
           "site": "hotpepper.jp",
-          "cta": 9,
-          "outbound": 7,
-          "deduped": 11
+          "cta": 11,
+          "outbound": 10,
+          "deduped": 14
         },
         {
           "site": "tabelog.com",
-          "cta": 0,
-          "outbound": 6,
-          "deduped": 6
+          "cta": 3,
+          "outbound": 9,
+          "deduped": 9
         }
       ]
     }
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1248,
+    "value": 1255,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
