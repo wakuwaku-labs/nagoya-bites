@@ -14,6 +14,8 @@
  * 数えるのは verdict が different のものだけ（市町村・区・町名・番地の頭の数字が表記ゆれでは説明
  * できないほど違う）。unknown（町名の表記ゆれ・番地が同じで町名が違う）は人の確認に残す。
  * 住所を持たない店（手動キュレーション店）・ページの住所が記録されていないものは数えない。
+ * 人が確かめて同じ店と分かった組（data/tabelog_branch_reviewed.json の decision=keep・店ID と URL の組）も
+ * 数えない（ISSUE-160。例: 区画整理の前後の住所）。URL が変われば外れて再び数える。
  *
  * 使い方:
  *   node scripts/audit_tabelog_branch_mismatch.js                 # 一覧を表示
@@ -30,17 +32,21 @@ const { loadStores } = require('./lib/load_stores');
 
 const ROOT = path.join(__dirname, '..');
 const CACHE_PATH = path.join(ROOT, 'data', 'store_link_identity_checked.json');
+const REVIEWED_PATH = path.join(ROOT, 'data', 'tabelog_branch_reviewed.json');
 
 /**
  * 店ごとに判定する（純関数・テスト対象）。
- * 戻り値: { different: [...], unknown: [...], counts: { linked, checked, compared, same, unknown, different } }
+ * reviewed: data/tabelog_branch_reviewed.json の reviews（decision=keep の店ID と URL の組は数えない）
+ * 戻り値: { different: [...], unknown: [...], counts: { linked, checked, reviewed, compared, same, unknown, different } }
  */
-function collect(cache, stores) {
-  const out = { different: [], unknown: [], counts: { linked: 0, checked: 0, compared: 0, same: 0, unknown: 0, different: 0 } };
+function collect(cache, stores, reviewed) {
+  const kept = new Set((reviewed || []).filter((r) => r.decision === 'keep').map((r) => `${r.id}|${r.url}`));
+  const out = { different: [], unknown: [], counts: { linked: 0, checked: 0, reviewed: 0, compared: 0, same: 0, unknown: 0, different: 0 } };
   for (const s of stores) {
     const url = String(s['食べログURL'] || '').trim();
     if (!/tabelog\.com\/[a-z]+\/A\d+\/A\d+\/\d+\/?$/i.test(url)) continue;
     out.counts.linked++;
+    if (kept.has(`${s['ホットペッパーID'] || ''}|${url}`)) { out.counts.reviewed++; continue; }
     const name = s['店名'] || '';
     const entry = cache[linkCacheKey('tabelog', url, name)];
     if (!entry) continue;
@@ -71,7 +77,8 @@ function main() {
     process.exit(2);
   }
   const cache = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8'));
-  const r = collect(cache, loadStores());
+  const reviewed = fs.existsSync(REVIEWED_PATH) ? JSON.parse(fs.readFileSync(REVIEWED_PATH, 'utf8')).reviews : [];
+  const r = collect(cache, loadStores(), reviewed);
   if (args.includes('--json')) {
     console.log(JSON.stringify(r, null, 2));
   } else {
@@ -83,7 +90,7 @@ function main() {
       for (const u of r.unknown) console.log(`  ? ${u.id} ${u.storeName}（${u.reason}）: ${u.ourAddress} ↔ ${u.pageAddress}`);
     }
     const c = r.counts;
-    console.log(`名前は合っているが別の場所を指す食べログリンク: ${c.different} 件（食べログリンク ${c.linked} 件・照合済み ${c.checked} 件・住所を比べた ${c.compared} 件・同じ ${c.same} 件・決められない ${c.unknown} 件）`);
+    console.log(`名前は合っているが別の場所を指す食べログリンク: ${c.different} 件（食べログリンク ${c.linked} 件・照合済み ${c.checked} 件・同じ店と確かめ済み ${c.reviewed} 件・住所を比べた ${c.compared} 件・同じ ${c.same} 件・決められない ${c.unknown} 件）`);
   }
   if (args.includes('--check') && r.counts.different > 0) process.exit(1);
 }

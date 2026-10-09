@@ -207,7 +207,28 @@ test('audit_tabelog_branch_mismatch: キャッシュに残る「一致」も住�
     [linkCacheKey('tabelog', URL_NOADDR, '手動の店')]: { ok: true, matchedAddress: '栄3-1-1' },
   };
   const r = collect(cache, stores);
-  assert.deepEqual(r.counts, { linked: 6, checked: 5, compared: 4, same: 1, unknown: 1, different: 2 });
+  assert.deepEqual(r.counts, { linked: 6, checked: 5, reviewed: 0, compared: 4, same: 1, unknown: 1, different: 2 });
   assert.deepEqual(r.different.map((d) => [d.id, d.reason]), [['J1', 'town'], ['J4', 'ward']]);
   assert.deepEqual(r.unknown.map((u) => u.id), ['J3']);
+});
+
+test('audit_tabelog_branch_mismatch: 人が同じ店と確かめた組は数えず、URL が変われば数え直す（ISSUE-160）', () => {
+  const OLD = 'https://tabelog.com/aichi/A2301/A230110/23000010/';
+  const NEW = 'https://tabelog.com/aichi/A2301/A230110/23000011/';
+  const store = (url) => ({ 'ホットペッパーID': 'J9', '店名': '和食麺処 サガミ 有松店', '住所': '愛知県名古屋市緑区境松２-419', '食べログURL': url });
+  const cache = {
+    [linkCacheKey('tabelog', OLD, '和食麺処 サガミ 有松店')]: { ok: true, matchedAddress: '鳴海町境松72-1' },
+    [linkCacheKey('tabelog', NEW, '和食麺処 サガミ 有松店')]: { ok: true, matchedAddress: '鳴海町境松72-1' },
+  };
+  const reviewed = [
+    { id: 'J9', url: OLD, decision: 'keep' },
+    { id: 'J9', url: NEW, decision: 'remove' },
+  ];
+  // 区画整理の前後の住所は different に見えるが、確かめて残すと決めた組は数えない
+  assert.equal(collect(cache, [store(OLD)]).counts.different, 1);
+  const kept = collect(cache, [store(OLD)], reviewed);
+  assert.equal(kept.counts.different, 0);
+  assert.equal(kept.counts.reviewed, 1);
+  // 確かめたのは店ID と URL の組。別の URL に変われば（remove と決めた URL でも）また数える
+  assert.equal(collect(cache, [store(NEW)], reviewed).counts.different, 1);
 });

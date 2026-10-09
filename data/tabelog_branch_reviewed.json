@@ -1,0 +1,725 @@
+{
+  "_doc": "audit_tabelog_branch_mismatch.js が「名前は合っているが住所が別の場所」と数えた食べログリンクを、人が1件ずつ確かめた記録（ISSUE-160・2026-10-09）。decision=remove は scripts/clear_broken_tabelog_links.js --reviewed が店舗IDごとに外す（同じ URL を正しく使う別の店には触れない）。decision=keep は同じ店と確かめたもので、監査はこの店ID と URL の組を数えない（URL が変われば外れて再び数える）。食べログ側の題名と住所は照合キャッシュの記録（pageCheckedAt の日に取得）、HotPepper 側は確かめた日に掲載ページから取った住所と座標",
+  "reviews": [
+    {
+      "id": "J004049458",
+      "storeName": "SILK NAGOYA シルク ナゴヤ 栄店",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23082939/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「SILK NAGOYA （シルク ナゴヤ）」名駅2-41-2。HotPepper の掲載は 愛知県名古屋市中区栄３-１９-４ 市岡ビル 4階（町名が違う）",
+      "pageTitle": "SILK NAGOYA （シルク ナゴヤ）のご予約 - 国際センター/その他 | 食べログ",
+      "pageAddress": "名駅2-41-2",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中区栄３-１９-４ 市岡ビル 4階",
+      "hotpepperCoords": [
+        35.16559,
+        136.90405
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004510037",
+      "storeName": "ネパール インド料理ゴルカ 本陣店",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23048750/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「ネパール・インド料理 ゴルカ （GORKHA）」竹橋町16-13。HotPepper の掲載は 愛知県名古屋市中村区上ノ宮町２-30-1 リエス上ノ宮1B（町名が違う）",
+      "pageTitle": "ネパール・インド料理 ゴルカ （GORKHA）のご予約 - 太閤通/インドカレー | 食べログ",
+      "pageAddress": "竹橋町16-13",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中村区上ノ宮町２-30-1 リエス上ノ宮1B",
+      "hotpepperCoords": [
+        35.17546,
+        136.86375
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000981715",
+      "storeName": "炭いぶし極上サムギョプサル テジワン",
+      "url": "https://tabelog.com/aichi/A2301/A230103/23090713/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「炭いぶし極上サムギョプサル テジワン」栄3-9-12。HotPepper の掲載は 愛知県名古屋市中村区名駅３丁目１２-１５　ＯＭＧＡＲＤＥＮビル　5Ｆ（町名が違う）",
+      "pageTitle": "炭いぶし極上サムギョプサル テジワン - 栄（名古屋）/韓国料理 | 食べログ",
+      "pageAddress": "栄3-9-12",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中村区名駅３丁目１２-１５　ＯＭＧＡＲＤＥＮビル　5Ｆ",
+      "hotpepperCoords": [
+        35.17422,
+        136.88505
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J003324972",
+      "storeName": "明日のためのしじみばか 本店",
+      "url": "https://tabelog.com/aichi/A2301/A230103/23084951/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「明日のためのしじみばか 泉店」泉1-17-3。HotPepper の掲載は 愛知県名古屋市中区錦３丁目17-3　サンプラザビル１階（町名が違う）",
+      "pageTitle": "明日のためのしじみばか 泉店のご予約 - 久屋大通/居酒屋 | 食べログ",
+      "pageAddress": "泉1-17-3",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中区錦３丁目17-3　サンプラザビル１階",
+      "hotpepperCoords": [
+        35.1705,
+        136.906
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J001231882",
+      "storeName": "大衆炭火ほるもんひとすじ もくもく。 六番町店",
+      "url": "https://tabelog.com/aichi/A2302/A230202/23073981/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「大衆炭火ほるもんひとすじ もくもく。 本店」清須市西枇杷島町古城2-10-7。HotPepper の掲載は 愛知県名古屋市熱田区四番２丁目2番26号-1 イツフジハイツ1階（市町村が違う）",
+      "pageTitle": "大衆炭火ほるもんひとすじ もくもく。 本店のご予約 - 下小田井/焼肉 | 食べログ",
+      "pageAddress": "清須市西枇杷島町古城2-10-7",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市熱田区四番２丁目2番26号-1 イツフジハイツ1階",
+      "hotpepperCoords": [
+        35.12347,
+        136.89043
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J001276818",
+      "storeName": "やいてん家",
+      "url": "https://tabelog.com/aichi/A2301/A230104/23091314/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「やいてん家 代官町店」代官町19-1。HotPepper の掲載は 愛知県名古屋市千種区内山３丁目22-9（町名が違う）",
+      "pageTitle": "やいてん家 代官町店のご予約 - 高岳/お好み焼き | 食べログ",
+      "pageAddress": "代官町19-1",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市千種区内山３丁目22-9",
+      "hotpepperCoords": [
+        35.17107,
+        136.93235
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004591596",
+      "storeName": "さんじゅうまる",
+      "url": "https://tabelog.com/aichi/A2301/A230105/23065376/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「さんじゅうまる」大須2-15-31。HotPepper の掲載は 愛知県名古屋市中区錦３-２０-１２　第八錦ビル本館　１Fの奥（町名が違う）",
+      "pageTitle": "さんじゅうまる - 大須観音/たこ焼き | 食べログ",
+      "pageAddress": "大須2-15-31",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中区錦３-２０-１２　第八錦ビル本館　１Fの奥",
+      "hotpepperCoords": [
+        35.17025,
+        136.90302
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J003560334",
+      "storeName": "焼肉神宮 別邸",
+      "url": "https://tabelog.com/aichi/A2301/A230105/23076335/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「焼肉 神宮」金山町1-16-16。HotPepper の掲載は 愛知県名古屋市熱田区金山町２丁目１－６（丁目が違う）",
+      "pageTitle": "焼肉 神宮のご予約 - 金山/焼肉 | 食べログ",
+      "pageAddress": "金山町1-16-16",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市熱田区金山町２丁目１－６",
+      "hotpepperCoords": [
+        35.14126,
+        136.9027
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J003298130",
+      "storeName": "じゃけん　名古屋2号店",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23035482/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「じゃけん 名古屋店」名駅3-3-4。HotPepper の掲載は 愛知県名古屋市西区那古野１-14-18那古野ビル北館1階（町名が違う）",
+      "pageTitle": "じゃけん 名古屋店のご予約 - 国際センター/お好み焼き | 食べログ",
+      "pageAddress": "名駅3-3-4",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市西区那古野１-14-18那古野ビル北館1階",
+      "hotpepperCoords": [
+        35.17538,
+        136.89022
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000107856",
+      "storeName": "碧亭",
+      "url": "https://tabelog.com/aichi/A2305/A230501/23006464/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「碧亭」みよし市三好町折坂73-1。HotPepper の掲載は 愛知県名古屋市中区栄１－１０－１１鏡園ビル1F（市町村が違う）",
+      "pageTitle": "碧亭 - 日進/中華料理 | 食べログ",
+      "pageAddress": "みよし市三好町折坂73-1",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中区栄１－１０－１１鏡園ビル1F",
+      "hotpepperCoords": [
+        35.16671,
+        136.89634
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J003389316",
+      "storeName": "沖縄居酒屋 パイパティローマ",
+      "url": "https://tabelog.com/aichi/A2301/A230106/23090496/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「沖縄居酒屋 パイパティローマ 今池店」内山3-10-22。HotPepper の掲載は 愛知県名古屋市名東区上社１丁目６１１　サンシスカビル２Ｆ（町名が違う）",
+      "pageTitle": "沖縄居酒屋 パイパティローマ 今池店 - 今池/居酒屋 | 食べログ",
+      "pageAddress": "内山3-10-22",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市名東区上社１丁目６１１　サンシスカビル２Ｆ",
+      "hotpepperCoords": [
+        35.1745,
+        137.00668
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J003599302",
+      "storeName": "Pecori ペコリ",
+      "url": "https://tabelog.com/aichi/A2301/A230111/23006155/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「ペコリ （PECORI）」藤森2-285-1。HotPepper の掲載は 愛知県名古屋市熱田区四番１‐9‐16（町名が違う）",
+      "pageTitle": "ペコリ （PECORI） - 本郷/食堂 | 食べログ",
+      "pageAddress": "藤森2-285-1",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市熱田区四番１‐9‐16",
+      "hotpepperCoords": [
+        35.1252,
+        136.88974
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000728808",
+      "storeName": "CLOVERS cafe",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23095116/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「CLOVERS CAFE 名駅南店 （クローバーズカフェ）」名駅南4-11-40。HotPepper の掲載は 愛知県名古屋市天白区鴻の巣１－２１５　REAL　Style　HOME内（町名が違う）",
+      "pageTitle": "CLOVERS CAFE 名駅南店 （クローバーズカフェ） - ささしまライブ/カフェ | 食べログ",
+      "pageAddress": "名駅南4-11-40",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市天白区鴻の巣１－２１５　REAL　Style　HOME内",
+      "hotpepperCoords": [
+        35.14429,
+        136.99566
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004005483",
+      "storeName": "味噌とんちゃん屋",
+      "url": "https://tabelog.com/aichi/A2301/A230103/23037098/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「味噌とんちゃん屋 栄ホルモン」栄3-2-25。HotPepper の掲載は 愛知県名古屋市西区城西４丁目３１ー８（町名が違う）",
+      "pageTitle": "味噌とんちゃん屋 栄ホルモンのご予約 - 栄（名古屋）/ホルモン | 食べログ",
+      "pageAddress": "栄3-2-25",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市西区城西４丁目３１ー８",
+      "hotpepperCoords": [
+        35.19207,
+        136.89144
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000954776",
+      "storeName": "CAFE GALLERY 寸心",
+      "url": "https://tabelog.com/aichi/A2301/A230106/23016349/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「CAFE GALLERY 寸心 今池店 （カフェギャラリースンシン）」今池5-19-12。HotPepper の掲載は 愛知県名古屋市昭和区御器所通２-17-1（町名が違う）",
+      "pageTitle": "CAFE GALLERY 寸心 今池店 （カフェギャラリースンシン） - 今池/カフェ | 食べログ",
+      "pageAddress": "今池5-19-12",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市昭和区御器所通２-17-1",
+      "hotpepperCoords": [
+        35.14985,
+        136.93189
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J001017657",
+      "storeName": "アロハダイニング ルアーズ ラナ Aloha Dining Lure's Lana",
+      "url": "https://tabelog.com/aichi/A2301/A230105/23046353/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「Aloha Dining Lure's Lana （アロハダイニング ルアーズラナ）」千代田5-11-34。HotPepper の掲載は 愛知県名古屋市中区新栄２-47-50（町名が違う）",
+      "pageTitle": "Aloha Dining Lure's Lana （アロハダイニング ルアーズラナ） - 鶴舞/ハンバーガー | 食べログ",
+      "pageAddress": "千代田5-11-34",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中区新栄２-47-50",
+      "hotpepperCoords": [
+        35.16011,
+        136.92019
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000399971",
+      "storeName": "ボアヴェールテール",
+      "url": "https://tabelog.com/aichi/A2301/A230105/23091357/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「Bois Vert Terre （ボアヴェールテール）」大須3-9-41。HotPepper の掲載は 愛知県名古屋市瑞穂区瑞穂通１丁目32（町名が違う）",
+      "pageTitle": "Bois Vert Terre （ボアヴェールテール） - 上前津/かき氷 | 食べログ",
+      "pageAddress": "大須3-9-41",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市瑞穂区瑞穂通１丁目32",
+      "hotpepperCoords": [
+        35.13746,
+        136.93378
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J003625138",
+      "storeName": "うまい魚が食べたくて　新栄店",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23076131/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「うまい魚が食べたくて」名駅南1-5-22。HotPepper の掲載は 愛知県名古屋市中区東桜２丁目２２－２２　曙ビル 1F（町名が違う）",
+      "pageTitle": "うまい魚が食べたくてのご予約 - 国際センター/食堂 | 食べログ",
+      "pageAddress": "名駅南1-5-22",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中区東桜２丁目２２－２２　曙ビル 1F",
+      "hotpepperCoords": [
+        35.16971,
+        136.91637
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J003323588",
+      "storeName": "星が丘製麺所 久屋大通店",
+      "url": "https://tabelog.com/aichi/A2301/A230111/23077584/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「星が丘製麺所」星が丘元町15-5。HotPepper の掲載は 愛知県名古屋市東区東桜１丁目1‐1 ブロッサ１F（町名が違う）",
+      "pageTitle": "星が丘製麺所 - 星ケ丘/うどん | 食べログ",
+      "pageAddress": "星が丘元町15-5",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市東区東桜１丁目1‐1 ブロッサ１F",
+      "hotpepperCoords": [
+        35.17296,
+        136.90907
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J001258974",
+      "storeName": "タイレストラン バンコク",
+      "url": "https://tabelog.com/aichi/A2302/A230201/23028518/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「レストランバンコク」一宮市千秋町浅野羽根下流15-1。HotPepper の掲載は 愛知県名古屋市中区栄４丁目20番10号　第3オーシャンビル1F（市町村が違う）",
+      "pageTitle": "レストランバンコク - 石仏/食堂 | 食べログ",
+      "pageAddress": "一宮市千秋町浅野羽根下流15-1",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中区栄４丁目20番10号　第3オーシャンビル1F",
+      "hotpepperCoords": [
+        35.16653,
+        136.91381
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J001282809",
+      "storeName": "HOKI COFFEE TERRACE 緑区店 帆季珈琲テラス",
+      "url": "https://tabelog.com/aichi/A2304/A230401/23074980/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「帆季珈琲テラス 太田川店 （HOKI COFFEE TERRACE）」東海市大田町東畑32。HotPepper の掲載は 愛知県名古屋市緑区水広３丁目307（市町村が違う）",
+      "pageTitle": "帆季珈琲テラス 太田川店 （HOKI COFFEE TERRACE） - 太田川/カフェ | 食べログ",
+      "pageAddress": "東海市大田町東畑32",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市緑区水広３丁目307",
+      "hotpepperCoords": [
+        35.07931,
+        136.99522
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000392253",
+      "storeName": "スタミナとん",
+      "url": "https://tabelog.com/aichi/A2302/A230202/23025744/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「スタミナとん 七宝店」あま市七宝町桂北海道2066-1。HotPepper の掲載は 愛知県名古屋市中村区並木２-261（市町村が違う）",
+      "pageTitle": "スタミナとん 七宝店 - 七宝/ホルモン | 食べログ",
+      "pageAddress": "あま市七宝町桂北海道2066-1",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中村区並木２-261",
+      "hotpepperCoords": [
+        35.14994,
+        136.85274
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000432430",
+      "storeName": "季節料理 年魚市 あゆち",
+      "url": "https://tabelog.com/aichi/A2301/A230102/23029401/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「季節料理 年魚市 （あゆち）」栄1-7-4。HotPepper の掲載は 愛知県名古屋市中区栄５-3-4 オクダビル5Ｆ(4Fより入り口)（丁目が違う）",
+      "pageTitle": "季節料理 年魚市 （あゆち） - 伏見/日本料理 | 食べログ",
+      "pageAddress": "栄1-7-4",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中区栄５-3-4 オクダビル5Ｆ(4Fより入り口)",
+      "hotpepperCoords": [
+        35.16575,
+        136.91135
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000702083",
+      "storeName": "インド料理 ドルーガ",
+      "url": "https://tabelog.com/aichi/A2301/A230112/23054548/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「インド料理ドルーガバァワニ」三条1-4-8。HotPepper の掲載は 愛知県名古屋市港区港栄３－２－２８（町名が違う）",
+      "pageTitle": "インド料理ドルーガバァワニ - 道徳/インド料理 | 食べログ",
+      "pageAddress": "三条1-4-8",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市港区港栄３－２－２８",
+      "hotpepperCoords": [
+        35.10202,
+        136.88335
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J003406002",
+      "storeName": "たこ一",
+      "url": "https://tabelog.com/aichi/A2301/A230110/23012832/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「たこ一」東長田町2-20。HotPepper の掲載は 愛知県名古屋市中川区江松５丁目114番地（町名が違う）",
+      "pageTitle": "たこ一 - 森下/そば | 食べログ",
+      "pageAddress": "東長田町2-20",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中川区江松５丁目114番地",
+      "hotpepperCoords": [
+        35.12601,
+        136.82197
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J001213396",
+      "storeName": "元祖台湾もつ鍋 仁 栄店",
+      "url": "https://tabelog.com/aichi/A2301/A230108/23047239/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「元祖台湾もつ鍋仁 本店」御器所3-5-3。HotPepper の掲載は 愛知県名古屋市中区栄３－８－１２５（町名が違う）",
+      "pageTitle": "元祖台湾もつ鍋仁 本店のご予約 - 荒畑/もつ鍋 | 食べログ",
+      "pageAddress": "御器所3-5-3",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中区栄３－８－１２５",
+      "hotpepperCoords": [
+        35.16722,
+        136.90502
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J003737164",
+      "storeName": "うまい魚が食べたくて 中日ビル店",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23076131/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「うまい魚が食べたくて」名駅南1-5-22。HotPepper の掲載は 愛知県名古屋市中区栄４－１－１　中日ビル３階（町名が違う）",
+      "pageTitle": "うまい魚が食べたくてのご予約 - 国際センター/食堂 | 食べログ",
+      "pageAddress": "名駅南1-5-22",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中区栄４－１－１　中日ビル３階",
+      "hotpepperCoords": [
+        35.16873,
+        136.9094
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000399600",
+      "storeName": "焼肉大門",
+      "url": "https://tabelog.com/aichi/A2301/A230113/23012319/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「焼肉大門」服部5-304-2。HotPepper の掲載は 愛知県名古屋市瑞穂区妙音通３-10-2（町名が違う）",
+      "pageTitle": "焼肉大門 - 春田/焼肉 | 食べログ",
+      "pageAddress": "服部5-304-2",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市瑞穂区妙音通３-10-2",
+      "hotpepperCoords": [
+        35.11741,
+        136.93
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000400091",
+      "storeName": "めんらんど",
+      "url": "https://tabelog.com/aichi/A2301/A230112/23011981/",
+      "decision": "keep",
+      "reason": "国土地理院の住所検索で、食べログ側の住所（緑区熊の前二丁目305番地）は HotPepper の座標から19m。HotPepper の住所（鳴海町熊ノ前36-1）は区画整理の前の表記で、検索では「緑区鳴海町」までしか引けない。同じ場所の新旧の住所",
+      "pageTitle": "めんらんど - 徳重/ラーメン | 食べログ",
+      "pageAddress": "熊の前2-305",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市緑区鳴海町熊ノ前３６－１",
+      "hotpepperCoords": [
+        35.0974,
+        137.00792
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J003850457",
+      "storeName": "丸八寿司 本店",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23002544/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「丸八寿司 駅前店」名駅4-21-5。HotPepper の掲載は 愛知県名古屋市瑞穂区竹田町４丁目１１（町名が違う）",
+      "pageTitle": "丸八寿司 駅前店 - 国際センター/寿司 | 食べログ",
+      "pageAddress": "名駅4-21-5",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市瑞穂区竹田町４丁目１１",
+      "hotpepperCoords": [
+        35.13888,
+        136.92497
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000868702",
+      "storeName": "銀河",
+      "url": "https://tabelog.com/aichi/A2301/A230110/23041688/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「らーめん 銀河」大曽根1-30-10。HotPepper の掲載は 愛知県名古屋市中区丸の内２－５－１０ アイリス愛知（町名が違う）",
+      "pageTitle": "らーめん 銀河 - 平安通/ラーメン | 食べログ",
+      "pageAddress": "大曽根1-30-10",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中区丸の内２－５－１０ アイリス愛知",
+      "hotpepperCoords": [
+        35.17685,
+        136.90106
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J001258070",
+      "storeName": "Bali CAFE 42 浄心店",
+      "url": "https://tabelog.com/aichi/A2306/A230604/23074284/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「Bali CAFE 42 （バリカフェ 42）」田原市若見町社宮司40-1。HotPepper の掲載は 愛知県名古屋市西区上名古屋２-21-3 マースプラザビル1F（市町村が違う）",
+      "pageTitle": "Bali CAFE 42 （バリカフェ 42） - 三河田原/カフェ | 食べログ",
+      "pageAddress": "田原市若見町社宮司40-1",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市西区上名古屋２-21-3 マースプラザビル1F",
+      "hotpepperCoords": [
+        35.19252,
+        136.89103
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004492059",
+      "storeName": "さくら亭",
+      "url": "https://tabelog.com/aichi/A2305/A230501/23002681/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「さくら亭 豊龍閣 （さくらてい ほうりゅうかく）」豊田市水源町7-13。HotPepper の掲載は 愛知県名古屋市中村区名駅４丁目７-２５（市町村が違う）",
+      "pageTitle": "さくら亭 豊龍閣 （さくらてい ほうりゅうかく） - 三河豊田/日本料理 | 食べログ",
+      "pageAddress": "豊田市水源町7-13",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中村区名駅４丁目７-２５",
+      "hotpepperCoords": [
+        35.1694,
+        136.88494
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000834374",
+      "storeName": "中国上海料理 豫園金山店",
+      "url": "https://tabelog.com/aichi/A2301/A230112/23003564/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「中国上海料理　豫園 （ヨエン）」港楽3-4-8。HotPepper の掲載は 愛知県名古屋市中区正木４丁目9番10号（町名が違う）",
+      "pageTitle": "中国上海料理　豫園 （ヨエン）のご予約 - 築地口/中華料理 | 食べログ",
+      "pageAddress": "港楽3-4-8",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中区正木４丁目9番10号",
+      "hotpepperCoords": [
+        35.14265,
+        136.89818
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000395215",
+      "storeName": "和食麺処 サガミ 有松店",
+      "url": "https://tabelog.com/aichi/A2301/A230112/23016000/",
+      "decision": "keep",
+      "reason": "食べログの題名が同じ支店名（和食麺処 サガミ 有松店）で、字名も同じ（鳴海町境松→境松）。食べログ側の旧住所（鳴海町境松72-1）は国土地理院の住所検索で「緑区鳴海町」までしか引けず距離は測れないが、チェーンに有松店は1つ。同じ店の新旧の住所",
+      "pageTitle": "和食麺処 サガミ 有松店 （わしょくめんどころさがみ）のご予約 - 中京競馬場前/ファミレス | 食べログ",
+      "pageAddress": "鳴海町境松72-1",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市緑区境松２-419",
+      "hotpepperCoords": [
+        35.06104,
+        136.9856
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J001293986",
+      "storeName": "Cafe Roissy カフェロイシー",
+      "url": "https://tabelog.com/aichi/A2301/A230104/23083855/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「【移転】カフェロイシー （Cafe Roissy）」新栄1-14-3-1。HotPepper の掲載は 愛知県名古屋市中区大須２丁目１１－１７ 大須黒川ビル1F（町名が違う）",
+      "pageTitle": "【移転】カフェロイシー （Cafe Roissy） - 新栄町/カフェ | 食べログ",
+      "pageAddress": "新栄1-14-3-1",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中区大須２丁目１１－１７ 大須黒川ビル1F",
+      "hotpepperCoords": [
+        35.16052,
+        136.89916
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J001265027",
+      "storeName": "ふるーつ果ふぇ",
+      "url": "https://tabelog.com/aichi/A2305/A230503/23077851/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「ふるーつ果ふぇ」碧南市作塚町3-83。HotPepper の掲載は 愛知県名古屋市港区名港１町目18番地12（市町村が違う）",
+      "pageTitle": "ふるーつ果ふぇ - 碧南/スイーツ | 食べログ",
+      "pageAddress": "碧南市作塚町3-83",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市港区名港１町目18番地12",
+      "hotpepperCoords": [
+        35.09763,
+        136.88306
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000390535",
+      "storeName": "大徳",
+      "url": "https://tabelog.com/aichi/A2304/A230403/23002936/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「大徳」-知多郡南知多町大字内海字小桝70。HotPepper の掲載は 愛知県名古屋市中川区一色新町３-１４１５（市町村が違う）",
+      "pageTitle": "大徳 - 内海/海鮮 | 食べログ",
+      "pageAddress": "-知多郡南知多町大字内海字小桝70",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中川区一色新町３-１４１５",
+      "hotpepperCoords": [
+        35.12608,
+        136.82867
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000391133",
+      "storeName": "食彩館ねぎぼーず 本店",
+      "url": "https://tabelog.com/aichi/A2301/A230112/23082398/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「食彩館ねぎぼーず 港店」甚兵衛通1-15-4。HotPepper の掲載は 愛知県名古屋市中川区大塩町１－22（町名が違う）",
+      "pageTitle": "食彩館ねぎぼーず 港店のご予約 - 荒子川公園/お好み焼き | 食べログ",
+      "pageAddress": "甚兵衛通1-15-4",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中川区大塩町１－22",
+      "hotpepperCoords": [
+        35.13125,
+        136.85913
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000994381",
+      "storeName": "嘉文 徳重店",
+      "url": "https://tabelog.com/aichi/A2301/A230112/23039150/",
+      "decision": "keep",
+      "reason": "食べログの題名が同じ支店名（嘉文 徳重店）。食べログ側の旧住所（鳴海町字徳重18-44）は国土地理院の住所検索で「緑区鳴海町徳重」まで引け、その代表点は HotPepper の座標から291m（HotPepper の住所 元徳重一丁目505番地は41m）。同じ店の新旧の住所",
+      "pageTitle": "嘉文 徳重店 - 徳重/海鮮 | 食べログ",
+      "pageAddress": "鳴海町字徳重18-44",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市緑区元徳重１丁目505番地ヒルズウォーク徳重ガーデンズ2F",
+      "hotpepperCoords": [
+        35.0947,
+        136.99919
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J000392959",
+      "storeName": "平和食堂",
+      "url": "https://tabelog.com/aichi/A2306/A230601/23008403/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「平和食堂」豊橋市駅前大通2-1。HotPepper の掲載は 愛知県名古屋市中村区太閤通４-45（市町村が違う）",
+      "pageTitle": "平和食堂 - 駅前大通/かつ丼 | 食べログ",
+      "pageAddress": "豊橋市駅前大通2-1",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中村区太閤通４-45",
+      "hotpepperCoords": [
+        35.16761,
+        136.86988
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J001116933",
+      "storeName": "ELLE HALL Dining エルホールダイニング",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23084686/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「ELLE HALL Dining  名古屋駅西口店 （エル ホール ダイニング）」椿町10-5。HotPepper の掲載は 愛知県名古屋市中村区名駅４-3-16　山本ビル4階（町名が違う）",
+      "pageTitle": "ELLE HALL Dining  名古屋駅西口店 （エル ホール ダイニング） - 名古屋/ダイニングバー | 食べログ",
+      "pageAddress": "椿町10-5",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中村区名駅４-3-16　山本ビル4階",
+      "hotpepperCoords": [
+        35.17079,
+        136.88717
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004509602",
+      "storeName": "居酒屋なっちゃん",
+      "url": "https://tabelog.com/aichi/A2301/A230112/23024475/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「居酒屋なっちゃん」千年1-21-7。HotPepper の掲載は 愛知県名古屋市天白区野並３-511（町名が違う）",
+      "pageTitle": "居酒屋なっちゃん - 熱田神宮伝馬町/居酒屋 | 食べログ",
+      "pageAddress": "千年1-21-7",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市天白区野並３-511",
+      "hotpepperCoords": [
+        35.10133,
+        136.96127
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004558991",
+      "storeName": "とんちゃん酒場 みつ",
+      "url": "https://tabelog.com/aichi/A2301/A230103/23082760/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「とんちゃん酒場 みつ」錦3-20-13。HotPepper の掲載は 愛知県名古屋市西区新道１-20-17 MG押切 1F（町名が違う）",
+      "pageTitle": "とんちゃん酒場 みつ - 栄（名古屋）/焼肉 | 食べログ",
+      "pageAddress": "錦3-20-13",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市西区新道１-20-17 MG押切 1F",
+      "hotpepperCoords": [
+        35.1843,
+        136.88634
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    },
+    {
+      "id": "J004004689",
+      "storeName": "TAHARAYA タハラヤ",
+      "url": "https://tabelog.com/aichi/A2301/A230113/23053279/",
+      "decision": "remove",
+      "reason": "リンク先の食べログは「TAHARAYA （タハラヤ）」道下町3-27-4。HotPepper の掲載は 愛知県名古屋市中村区中村町４丁目５１　清正ビル2F（町名が違う）",
+      "pageTitle": "TAHARAYA （タハラヤ） - 中村日赤/沖縄料理 | 食べログ",
+      "pageAddress": "道下町3-27-4",
+      "pageCheckedAt": "2026-09-20",
+      "hotpepperAddress": "愛知県名古屋市中村区中村町４丁目５１　清正ビル2F",
+      "hotpepperCoords": [
+        35.17319,
+        136.85768
+      ],
+      "hotpepperCheckedAt": "2026-10-09"
+    }
+  ]
+}
