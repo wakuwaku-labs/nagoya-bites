@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-09T08:02:08.766Z",
+  "generatedAt": "2026-10-09T08:23:06.559Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1240,
-    "pageViews": 1795,
-    "sessions": 1430,
-    "avgSessionDuration": 129.7,
-    "bounceRate": 0.276,
-    "pagesPerSession": 1.26
+    "activeUsers": 1243,
+    "pageViews": 1798,
+    "sessions": 1433,
+    "avgSessionDuration": 129.5,
+    "bounceRate": 0.277,
+    "pagesPerSession": 1.25
   },
   "dailyReference": {
     "date": "2026-10-07",
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 973,
-      "direct": 320,
+      "organic": 974,
+      "direct": 322,
       "social": 6,
       "ai_assistant": 108,
       "referral": 28,
@@ -26,11 +26,11 @@
       "other": 0
     },
     "pct": {
-      "organic": 67.8,
-      "direct": 22.3,
+      "organic": 67.7,
+      "direct": 22.4,
       "social": 0.4,
       "ai_assistant": 7.5,
-      "referral": 2,
+      "referral": 1.9,
       "paid": 0,
       "other": 0
     }
@@ -39,7 +39,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 407
+      "sessions": 408
     },
     {
       "source": "google",
@@ -49,7 +49,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 220
+      "sessions": 222
     },
     {
       "source": "yahoo",
@@ -195,8 +195,8 @@
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
-      "pageViews": 90,
-      "sessions": 88
+      "pageViews": 91,
+      "sessions": 89
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
@@ -284,7 +284,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 5,
-    "ctaClickRate_direct": 22.2,
+    "ctaClickRate_direct": 22,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -782,11 +782,33 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 76
+    "reservationClicks": 76,
+    "reservationOverlap7d": {
+      "dateRange": "7daysAgo〜yesterday",
+      "ctaEvents": 9,
+      "reservationOutbound": 13,
+      "naiveSum": 22,
+      "deduped": 17,
+      "overlap": 5,
+      "bySite": [
+        {
+          "site": "hotpepper.jp",
+          "cta": 9,
+          "outbound": 7,
+          "deduped": 11
+        },
+        {
+          "site": "tabelog.com",
+          "cta": 0,
+          "outbound": 6,
+          "deduped": 6
+        }
+      ]
+    }
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1240,
+    "value": 1243,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
