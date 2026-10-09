@@ -2,15 +2,19 @@
 /**
  * journal/ 記事の本文冒頭（導入段落の直後）に、関連特集への文脈リンクを冪等付与する（SEO-070）。
  *
- * 挿入位置: <div class="art-body"> 直下の最初の </p> の直後
+ * 挿入位置: <div class="art-body"> の中の最初の段落（サイト紹介の1行 nb-site-intro は数えない）の </p> の直後
+ *           （SEO-149: サイト紹介の1行が先頭に入ってから、区画が記事の導入より前に入っていた）
  * 条件:     記事タイトルが TOPIC_FEATURES にマッチし、かつ features/SLUG.html が実在する場合のみ。
  *           一致なしはスキップ（汎用リンクを差し込まない）
  * 冪等:     SEO-070:FEATURE-CTA:START/END マーカーで囲む。再実行時は置き換え
+ *           --add-only は区画の無い記事にだけ入れ、既にある区画は書き換えも削除もしない（docs/decisions/0015 の5）。
+ *           日次ジャーナルの refresh_journal_related.js がこの形で全記事に呼ぶ（SEO-149・新しい記事に入れる経路）
  * 実在保証: features/SLUG.html が存在するものだけ参照（リンク切れゼロ維持・架空店ブロックと同じ思想）
  *
  * 使い方:
  *   node scripts/inject_journal_feature_cta.js           # 全記事に適用
- *   node scripts/inject_journal_feature_cta.js --check   # 差分を出さず現状を報告（CI向け）
+ *   node scripts/inject_journal_feature_cta.js --add-only  # 区画の無い記事にだけ入れる（日次）
+ *   node scripts/inject_journal_feature_cta.js --check   # 書かずに、区画が入っていない記事があれば exit 1（夜間QA）
  *   node scripts/inject_journal_feature_cta.js --file 2026-09-08-ikeshita-kakuozan-yakiniku-smoke-free.html
  */
 'use strict';
@@ -29,8 +33,8 @@ const END   = '<!-- SEO-070:FEATURE-CTA:END -->';
 // 既に入っている区画は、この表で再実行したときだけ置き換わる
 const { TOPIC_FEATURES } = require('./lib/journal_topics');
 
-function listPosts() {
-  return fs.readdirSync(JOURNAL_DIR)
+function listPosts(dir = JOURNAL_DIR) {
+  return fs.readdirSync(dir)
     .filter(f => /^2\d{3}-\d{2}-\d{2}-.+\.html$/.test(f))
     .sort()
     .reverse();
@@ -74,20 +78,26 @@ function escapeRegex(s) {
 function findInsertionAfterIntroPara(html) {
   const artBodyIdx = html.indexOf('<div class="art-body">');
   if (artBodyIdx < 0) return -1;
-  const firstParaEnd = html.indexOf('</p>', artBodyIdx);
-  if (firstParaEnd < 0) return -1;
-  return firstParaEnd + 4; // 直後の </p> の閉じタグの後
+  const re = /<p(?:\s[^>]*)?>/g;
+  re.lastIndex = artBodyIdx;
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    if (/nb-site-intro/.test(m[0])) continue; // サイト紹介の1行は導入段落ではない
+    const end = html.indexOf('</p>', m.index);
+    return end < 0 ? -1 : end + 4; // 導入段落の閉じタグの後
+  }
+  return -1;
 }
 
 function processFile(file, opts) {
-  const fp = path.join(JOURNAL_DIR, file);
+  const fp = path.join(opts.dir || JOURNAL_DIR, file);
   const html = fs.readFileSync(fp, 'utf8');
   const title = extractTitle(html);
   const topic = matchTopicFeature(title);
   const hasBlock = html.includes(START) && html.includes(END);
 
   if (!topic) {
-    if (hasBlock && !opts.check) {
+    if (hasBlock && !opts.check && !opts.addOnly) {
       // タイトル変更等でマッチしなくなった → マーカーブロックを削除
       const re = new RegExp(escapeRegex(START) + '[\\s\\S]*?' + escapeRegex(END) + '\\n?');
       const updated = html.replace(re, '');
@@ -101,6 +111,9 @@ function processFile(file, opts) {
 
   const block = buildBlock(topic);
   let next;
+
+  // --add-only: 既にある区画はそのまま（旧い振り分けの区画も残す・docs/decisions/0015 の5）
+  if (hasBlock && opts.addOnly) return { file, changed: false, status: 'kept', topic: topic.slug };
 
   if (hasBlock) {
     const re = new RegExp(escapeRegex(START) + '[\\s\\S]*?' + escapeRegex(END));
@@ -121,15 +134,20 @@ function processFile(file, opts) {
   };
 }
 
+/** 全記事（または files）に適用する。refresh_journal_related.js から呼ぶ */
+function run(opts = {}, files = null) {
+  return (files || listPosts(opts.dir)).map(f => processFile(f, opts));
+}
+
 function main() {
   const args = process.argv.slice(2);
-  const opts = { check: args.includes('--check') };
+  const opts = { check: args.includes('--check'), addOnly: args.includes('--add-only') };
   const fileArg = args.indexOf('--file') >= 0 ? args[args.indexOf('--file') + 1] : null;
 
   const posts = fileArg ? [fileArg] : listPosts();
   console.log(`Found ${posts.length} post(s)`);
 
-  const results = posts.map(f => processFile(f, opts));
+  const results = run(opts, posts);
   const byStatus = {};
   results.forEach(r => { byStatus[r.status] = (byStatus[r.status] || 0) + 1; });
 
@@ -146,3 +164,4 @@ function main() {
 }
 
 if (require.main === module) main();
+module.exports = { run, processFile, findInsertionAfterIntroPara, buildBlock, matchTopicFeature, START, END };

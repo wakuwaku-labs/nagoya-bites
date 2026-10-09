@@ -1275,7 +1275,7 @@
 
 ### [SEO-149] ジャーナル本文冒頭の「合わせて読む」（SEO-070）を新しい記事にも入れる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-10-09）
 - **detected**: 2026-10-09
 - **due**: 2026-10-23
 - **category**: SEO
@@ -1289,6 +1289,10 @@
   3. `node scripts/inject_journal_feature_cta.js --check` が 0 件になり、夜間QA が soft で数える
 - **files**: `scripts/run_journal_local.sh`, `.github/workflows/daily-journal.yml`, `scripts/inject_journal_feature_cta.js`, `scripts/nightly_qa.js`
 - **関連**: [[SEO-070]]（元の実装）／[[SEO-102]]
+- **2026-10-09 結果（done）**: 達成条件をすべて満たした。
+  1. `refresh_journal_related.js`（日次ジャーナル・daily-journal.yml・backfill_journal.sh の3経路が呼ぶ）が、`inject_journal_feature_cta.js` の `--add-only` で全記事に区画を入れる。区画の無い記事にだけ入れ、既にある区画は書き換えも削除もしない（`docs/decisions/0015` の5。旧い振り分けの区画10本はそのまま）。件数をそろえる処理より前に置いた。入れる位置は記事の導入段落の後にした（サイト紹介の1行 nb-site-intro が先頭に入ってから、区画が導入より前に入っていたため。既にある81本の位置は動かさない）
+  2. 区画の無かった27本（09-11〜10-08。09-18 だけは区画があった）に入れた（`--add-only` の実行で added 27・kept 81・no_topic_match 46）
+  3. `node scripts/inject_journal_feature_cta.js --check` は would_add 0（exit 0）。夜間QA に soft（journal-feature-cta）で追加。`tests/journal_feature_cta.test.js`（3件）が入れる位置・--add-only・冪等・配線を見る
 
 ### [SEO-138] GA スニペットの4コピーを1つの部品にまとめる
 

@@ -211,6 +211,15 @@ function main() {
     console.log(`SKIP（対象外）${skippedOld}件: 旧 related-wrap 形式。既存の手動キュレーション済みリンクを保持します。`);
   }
   console.log(`Updated ${changed}/${posts.length} files`);
+  // SEO-149: 本文冒頭の「合わせて読む」（SEO-070 の区画）を、区画の無い記事にだけ入れる。新しい記事に入れる経路が
+  // 無く、09-19 以降の記事に入っていなかった。既にある区画は書き換えない（docs/decisions/0015 の5）。
+  // 件数をそろえる下の処理より前に置く（入れた区画のリンク文も同じ実行でそろう）
+  try {
+    const added = require('./inject_journal_feature_cta').run({ addOnly: true }).filter(r => r.status === 'added');
+    console.log(`本文冒頭の「合わせて読む」を入れた: ${added.length} 本${added.length ? `（${added.map(r => r.file).join(', ')}）` : ''}`);
+  } catch (e) {
+    console.log(`⚠️ 本文冒頭の「合わせて読む」を入れられなかった: ${e.message}`);
+  }
   // SEO-147: 本文の「合わせて読む」なども含め、特集へのリンク文の「N選」をリンク先の掲載数にそろえる。
   // 掲載店の入れ替えで特集の件数が変わった日も、次の日次ジャーナルで追いつく（冪等・失敗しても関連リンクの更新は残す）
   try {
