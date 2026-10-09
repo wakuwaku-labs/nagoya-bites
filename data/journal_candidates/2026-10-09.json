@@ -1,0 +1,455 @@
+{
+  "date": "2026-10-09",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "名古屋城・金シャチ横丁の秋限定21品を食べ歩き、寿司コース8,800円までの値付けを業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 86,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "食べ歩き",
+          "feature": "features/osu-food-walk.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 9件 (旬,時期,繁忙,予約,シーン,相場,仕入れ,価格帯,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 143字 +4",
+          "title 48字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「食べ歩き」+4",
+          "タイトルにジャンル語「寿司」+2"
+        ]
+      },
+      "gate_note": "86点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4 / search_intent -4"
+    },
+    {
+      "id": "c3",
+      "title_draft": "名古屋まつり前の栄・久屋大通、なごやめしブースと周辺の店で予約が動く週を業界人が読む",
+      "verdict": "HOLD",
+      "total": 80,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 3,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 10日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (需要,繁忙,予約,相場,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 100字 +4",
+          "title 42字 +1"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "名古屋城の秋まつり、入城料1,000円と無料の横丁——10月の行楽で店が混む時間を業界人が読む",
+      "verdict": "HOLD",
+      "total": 77,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 10日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (需要,予約,シーン,相場,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 134字 +4",
+          "title 47字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c5",
+      "title_draft": "やっとかめ文化祭と名古屋の和菓子、10月17日からの30日間を業界人が読む",
+      "verdict": "HOLD",
+      "total": 72,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 3,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 10日前 → 18"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 4件 (旬,時期,需要,相場) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 106字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "名古屋城・金シャチ横丁の和栗モンブラン1,958円、賞味期限5分の秋スイーツを業界人が読む",
+      "verdict": "HOLD",
+      "total": 70,
+      "breakdown": {
+        "recency": 12,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 6
+      },
+      "search_intent_links": [
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        },
+        {
+          "kw": "スイーツ",
+          "feature": "features/nagoya-sweets.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 20日前 → 12"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 5件 (旬,シーン,相場,仕入れ,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 129字 +4",
+          "title 45字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「業界人」+4",
+          "タイトルにジャンル語「スイーツ」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "86点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4 / search_intent -4",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "seasonal",
+      "title_draft": "名古屋城・金シャチ横丁の秋限定21品を食べ歩き、寿司コース8,800円までの値付けを業界人が読む",
+      "lead_draft": "名古屋城の金シャチ横丁で秋の限定メニュー21品が出ている（9月19日〜11月29日）。入城料が10月1日から1,000円に上がった一方、横丁は無料エリア。明日からの3連休、17・18日の名古屋まつり（名古屋城は無料開放）と、行楽の需要が最も厚くなる時期の値付けと席の回転を業界人が読む。",
+      "angle": "観光地立地の秋の価格帯を3段（1,925円の旬のキノコ煮込うどん／1,958円の和栗モンブラン／8,800円の寿司コース）で読む。繁忙の時期は土日昼と名古屋まつり週末、義直ゾーンは17:30閉店で夜は宗春ゾーンだけ、予約の要否とシーン（家族の行楽・観光・一人）と回転・仕入れ・相場を業界人の視点で",
+      "main_store": {
+        "name": "山本屋総本家 金シャチ横丁店",
+        "id": "J001221057",
+        "area": "名古屋城（丸の内）",
+        "genre": "味噌煮込みうどん"
+      },
+      "sources": [
+        {
+          "label": "金シャチ横丁公式「秋の特集2026」",
+          "url": "https://kinshachi-yokocho.com/news-topics/autumn-special-2026/",
+          "date": "2026-09-19"
+        },
+        {
+          "label": "Aichi Now「名古屋城・金シャチ横丁 秋の名古屋めし 限定メニュー」",
+          "url": "https://aichinow.pref.aichi.jp/events/detail/4165/",
+          "date": "2026-09-19"
+        },
+        {
+          "label": "名古屋市 報道発表「名古屋城秋まつり」の開催について",
+          "url": "https://www.city.nagoya.jp/houdou/3003942/3003947/3005447.html",
+          "date": "2026-08-26"
+        },
+        {
+          "label": "名古屋コンシェルジュ「名古屋秋のイベント・お祭り特集2026」",
+          "url": "https://www.nagoya-info.jp/news/detail/1431/",
+          "date": "2026-09-29"
+        },
+        {
+          "label": "PR TIMES「キャッスル写真館＋ラボ」（SOCIAL CASTLE MARKET 2026・10/10-11）",
+          "url": "https://www.inside-games.jp/release/prtimes/20261002/310560.html",
+          "date": "2026-10-02"
+        },
+        {
+          "label": "金シャチ横丁公式「SOCIAL CASTLE MARKET 2026 ご来場者様限定クーポン」",
+          "url": "https://kinshachi-yokocho.com/news-topics/social-castle-market-2026/",
+          "date": "2026-10-02"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "seasonal",
+      "title_draft": "名古屋城の秋まつり、入城料1,000円と無料の横丁——10月の行楽で店が混む時間を業界人が読む",
+      "lead_draft": "名古屋城秋まつりは11月23日まで。10月1日に入城料が500円から1,000円に上がり、17・18日は名古屋まつりで無料開放、18〜24日は夜間開園とライトアップ。行楽の需要が時期ごとに動くなか、金シャチ横丁の秋限定メニューと繁忙の時間帯、予約の要否を業界人が読む。",
+      "angle": "入城料の改定と無料開放日・夜間開園が飲食の需要の山をどう動かすか。相場・回転・予約・シーンの視点",
+      "main_store": {
+        "name": "saien サイエン 名古屋城 金シャチ横丁宗春ゾーン店",
+        "id": "J001287373",
+        "area": "名古屋城（丸の内）",
+        "genre": "ダイニングバー"
+      },
+      "sources": [
+        {
+          "label": "名古屋市 報道発表「名古屋城秋まつり」の開催について",
+          "url": "https://www.city.nagoya.jp/houdou/3003942/3003947/3005447.html",
+          "date": "2026-08-26"
+        },
+        {
+          "label": "名古屋コンシェルジュ「名古屋秋のイベント・お祭り特集2026」",
+          "url": "https://www.nagoya-info.jp/news/detail/1431/",
+          "date": "2026-09-29"
+        },
+        {
+          "label": "金シャチ横丁公式「秋の特集2026」",
+          "url": "https://kinshachi-yokocho.com/news-topics/autumn-special-2026/",
+          "date": "2026-09-19"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "seasonal",
+      "title_draft": "名古屋まつり前の栄・久屋大通、なごやめしブースと周辺の店で予約が動く週を業界人が読む",
+      "lead_draft": "10月17・18日の名古屋まつりは今年は行列がなく、久屋大通公園にステージとなごやめしブースが集まる。栄の飲食店にとっては昼の需要が屋台へ流れ、夜に戻る二層の週末。予約が動く時期と相場を業界人が読む。",
+      "angle": "祭りの週末に栄の店の需要がどう動くか。繁忙・予約・相場・回転の視点",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "栄",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "名古屋市 報道発表「第72回名古屋まつりの開催方針」",
+          "url": "https://www.city.nagoya.jp/houdou/pressr7/3002889/3003980.html",
+          "date": "2026-02-16"
+        },
+        {
+          "label": "kinoka「名古屋まつり2026屋台はどこ？」",
+          "url": "https://www.kinoka.jp/nagoya-matsuri/",
+          "date": "2026-09-16"
+        },
+        {
+          "label": "名古屋コンシェルジュ「名古屋秋のイベント・お祭り特集2026」",
+          "url": "https://www.nagoya-info.jp/news/detail/1431/",
+          "date": "2026-09-29"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "名古屋城・金シャチ横丁の和栗モンブラン1,958円、賞味期限5分の秋スイーツを業界人が読む",
+      "lead_draft": "金シャチ横丁 宗春ゾーンの saien が秋限定で出す「賞味期限5分 搾りたて和栗モンブラン 焼和栗添え」1,958円。席で仕上げる一皿は回転を落とす代わりに単価を取る設計で、2年目の定番化。旬の栗の仕入れと観光地の相場、食べ歩きのシーン適性を業界人が読む。",
+      "angle": "席で仕上げるスイーツの回転と単価、旬の仕入れ、観光地の相場、食べ歩きのシーン",
+      "main_store": {
+        "name": "saien サイエン 名古屋城 金シャチ横丁宗春ゾーン店",
+        "id": "J001287373",
+        "area": "名古屋城（丸の内）",
+        "genre": "スイーツ"
+      },
+      "sources": [
+        {
+          "label": "金シャチ横丁公式「秋の特集2026」",
+          "url": "https://kinshachi-yokocho.com/news-topics/autumn-special-2026/",
+          "date": "2026-09-19"
+        },
+        {
+          "label": "金シャチ横丁公式「秋の限定メニュー2025」",
+          "url": "https://kinshachi-yokocho.com/news-topics/autumn-limited-menu-2025/",
+          "date": "2025-09-19"
+        },
+        {
+          "label": "Aichi Now「名古屋城・金シャチ横丁 秋の名古屋めし 限定メニュー」",
+          "url": "https://aichinow.pref.aichi.jp/events/detail/4165/",
+          "date": "2026-09-19"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "seasonal",
+      "title_draft": "やっとかめ文化祭と名古屋の和菓子、10月17日からの30日間を業界人が読む",
+      "lead_draft": "やっとかめ文化祭 DOORS が10月17日から11月15日まで市内一円で開かれ、「なごや和菓子」のプログラムが並ぶ。秋の栗や芋の旬と重なる時期、和菓子店と喫茶の需要がどう動くか、相場と予約の視点で業界人が読む。",
+      "angle": "和菓子の旬・時期・需要・相場",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "名古屋",
+        "genre": "和菓子"
+      },
+      "sources": [
+        {
+          "label": "名古屋コンシェルジュ「名古屋秋のイベント・お祭り特集2026」",
+          "url": "https://www.nagoya-info.jp/news/detail/1431/",
+          "date": "2026-09-29"
+        },
+        {
+          "label": "名古屋市 報道発表（やっとかめ文化祭）",
+          "url": "https://www.city.nagoya.jp/houdou/3003942/3003948/3005421.html",
+          "date": "2026-09-01"
+        }
+      ]
+    }
+  ]
+}
