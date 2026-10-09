@@ -2,6 +2,14 @@
   "_note": "ジャーナル起動時に他ルーチンの未コミット差分が検出された記録（SEO-104）",
   "entries": [
     {
+      "detected_at": "2026-10-09T09:00:08.292+09:00",
+      "files": [
+        ".agents/skills/source-command-solve-next/"
+      ],
+      "action": "skipped_stash",
+      "message": "ジャーナルは退避せず続行。`git stash pop` 等の手動操作は不要。他ルーチンが書いたとみられる差分。"
+    },
+    {
       "detected_at": "2026-10-08T09:00:08.074+09:00",
       "files": [
         ".agents/skills/source-command-solve-next/"
