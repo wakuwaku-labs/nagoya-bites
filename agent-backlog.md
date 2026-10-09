@@ -477,7 +477,7 @@
 
 ### [ISSUE-178] ホットペッパーが【閉店】と表示する「創作料理まるゆ」の営業を一次情報で確かめ、閉店なら掲載から外す
 
-- **priority**: P1 → **status**: ready
+- **priority**: P1 → **status**: in_progress
 - **detected**: 2026-10-09
 - **due**: 2026-10-16
 - **category**: data-quality / trust
@@ -490,6 +490,37 @@
   2. 独立した2つ以上の情報源が閉店を示し、それより後の営業の痕跡が無いときだけ `data/closed_stores.json` に根拠つきで入れる。決められなければ掲載を続け、記録だけにする
   3. 外した場合は、次のビルドの後に main で店舗データ・店舗ページ・sitemap から外れていることを確かめる（`audit_store_liveness.js` が通る）。特集・ジャーナルからのリンクと言及が無いことも確かめる
 - **分けなかった理由**: 1店の確認で、記録と外す作業は30分に収まる
+- **進捗（2026-10-09）**: 錦3丁目の掲載を「移転閉店」として外した（PR で main へ）。
+  - 達成条件1: `data/store_liveness_reviews.json` に判定「閉店」を根拠つきで記録した。
+    - ホットペッパーの店舗ページ（錦3-18-16・地図の位置も同じ場所）は、店名の上に【閉店】を表示し、口コミの日付・ネット予約は無い。
+    - 店の公式 Instagram（掲載データと同じアカウント）の自己紹介の住所は「愛知県名古屋市熱田区池内町4-1」で、錦・栄の記載は無い。錦3-18-16 から約3.6km 南。
+    - Google の店舗情報（掲載に紐付いていた placeId）は「まるゆ」で、熱田区池内町4-1 で営業中。掲載の住所で検索しても錦3丁目の店は出ない。住所が掲載と違うので、根拠には数えていない（usedAsEvidence=false）。
+    - 移転の告知・閉店の告知は、検索では見つからなかった。
+  - 達成条件2: ホットペッパーの【閉店】と公式の住所の2つが、錦3丁目で営業していないことを示す。このため、前例（世界の山ちゃん 葵店）と同じ「移転閉店」として `data/closed_stores.json` に入れた。
+    - エリアと HP ID を書いたので、移転先を後から同じ名前で足しても外れない。
+    - 扱いの決まりは `docs/decisions/0014-relocated-store-listing.md` と記録の _doc に書いた。取り込み元の掲載が閉店なら外し、生きていれば住所を直す（[[ISSUE-171]]）。
+  - 外したもの: `data/stores.json`（4,874→4,873件）、`stores/J003450558.html`、`sitemap.xml` の1件。特集・ジャーナルでの言及とリンクは無い。トップの導線とエリア×ジャンルのページは次のビルドが作り直す。
+  - 手元の確認: `audit_store_liveness.js`・`audit_closed_store_mentions.js --check`・`audit_page_store_links.js --check` が exit 0。孤児ページは122本のまま（増えていない）。
+  - 残り: 次のビルドの後、main でこの店が店舗データ・店舗ページ・sitemap・エリア×ジャンルのページから外れたままかを確かめる（達成条件3）。移転先の掲載は [[ISSUE-179]] で決める。
+### [ISSUE-179] 移転先（熱田区池内町4-1）の「創作料理まるゆ」を掲載するか決め、載せるなら実在検証を通して足す
+
+- **priority**: P3 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-11-08
+- **category**: content / data-quality
+- **owner**: Editor / DataKeeper
+- **source**: [[ISSUE-178]]
+- **brand-filter**: ✅ 適合 — 実在保証（営業している場所で載せ直す）
+- **背景**: [[ISSUE-178]] で、錦3丁目の掲載（J003450558）を移転閉店として外した。店は今も営業していると見られる。
+  - 店の公式 Instagram（https://www.instagram.com/nagoyamaruyu/）の自己紹介の住所は、熱田区池内町4-1。
+  - Google の店舗情報「まるゆ」（placeId ChIJFdLudm5xA2AR4uyAeokGUK4）も、熱田区池内町4-1 で営業中。外す前の掲載データでは Google 評価 4.8・口コミ94件だった。
+  - `data/stores.json`（ホットペッパーから取り込んだ店を含む）に、移転先の掲載は無い。今のままでは build.js の取り込みで戻らない。
+  - 根拠は `data/store_liveness_reviews.json`。扱いの決まりは `docs/decisions/0014-relocated-store-listing.md`。
+- **acceptance**:
+  1. CLAUDE.md の手動キュレーションの追加条件に照らして、載せるかを決め、理由を残す。追加条件は、メディア露出の裏付け・Google 評価 4.2 以上か明確な差別化・業界人の目利き
+  2. 載せる場合は、`data/manual_stores.json` に必須フィールドを一次情報だけで入れる。一次情報は、公式の発信と Google の店舗情報。おすすめポイントに推測を書かない
+  3. 載せる場合は、`fetch_manual_store_photos.js` の三重検証を通す（店名・名古屋の住所・飲食店の業態）
+  4. 載せる場合は、`data/closed_stores.json` の錦3丁目の記録に移転先の掲載が引っかからないことを、ビルドのログで確かめる
 
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 

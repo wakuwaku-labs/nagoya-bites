@@ -5,7 +5,8 @@
     "営業中: 食べログの【閉店】より後の営業の痕跡（ホットペッパーの口コミの日付・ネット予約）があり、Google の店舗情報も営業中。",
     "決められない: 上のどちらでもない（閉店を示すのが1つだけ・情報源が食い違う）。推測で閉店にせず掲載は続ける。",
     "Google の店舗情報は住所が掲載と違うとき・同じ建物の別の店を指すときは根拠にしない（places.usedAsEvidence=false・ISSUE-147）。Places は Basic の項目（name・formatted_address・business_status）だけを取る（無料枠の内側）。",
-    "places.addressVsListing は scripts/lib/store_link_identity.js の compareJpAddress（same/different/unknown）でホットペッパーの掲載住所（404 の店は食べログの住所）と比べた結果。"
+    "places.addressVsListing は scripts/lib/store_link_identity.js の compareJpAddress（same/different/unknown）でホットペッパーの掲載住所（404 の店は食べログの住所）と比べた結果。",
+    "移転: 公式の発信（店のサイト・SNS）が掲載の住所を載せず別の住所を店の所在地としているときは、掲載の場所で営業していないことの情報源に数える（「公式サイトからの削除」と同じ扱い）。取り込み元（ホットペッパー）の掲載が閉店なら、元の掲載を移転閉店として外し、移転先は別の掲載として実在検証を通して足す。取り込み元の掲載が生きていれば住所を直す（ISSUE-171・ISSUE-178・docs/decisions/0014）。"
   ],
   "reviews": [
     {
@@ -830,6 +831,64 @@
           "address": "錦3-17-15",
           "checkedAt": "2026-09-20"
         }
+      }
+    },
+    {
+      "id": "J003450558",
+      "storeName": "創作料理まるゆ",
+      "issue": "ISSUE-178",
+      "checkedAt": "2026-10-09",
+      "verdict": "閉店",
+      "why": "掲載の錦3丁目の店は閉店（移転）と判断した。ホットペッパーの店舗ページ（錦3-18-16・地図の位置も同じ場所）が店名の上に【閉店】を表示している。店の公式 Instagram の自己紹介の住所は熱田区池内町4-1（錦3-18-16 から約3.6km 南）で、錦・栄・移転・閉店の記載は無い。Google の店舗情報「まるゆ」も熱田区池内町4-1 で営業中で、掲載の住所で検索しても錦3丁目の店は出ない（住所が掲載と違うので根拠には数えない）。錦3丁目の店の後の営業の痕跡（口コミの日付・ネット予約）は無い。店は熱田区へ移ったと見られ、移転先の掲載は別の課題にする",
+      "evidence": {
+        "hotpepper": {
+          "url": "https://www.hotpepper.jp/strJ003450558/",
+          "fetchedAt": "2026-10-09T06:00:18.006Z",
+          "status": 200,
+          "shopState": "【閉店】",
+          "address": "愛知県名古屋市中区錦３-18-16 アマノビル２F",
+          "latestReviewDate": null,
+          "netReservation": false
+        },
+        "places": {
+          "placeId": "ChIJFdLudm5xA2AR4uyAeokGUK4",
+          "url": "https://www.google.com/maps/place/?q=place_id:ChIJFdLudm5xA2AR4uyAeokGUK4",
+          "fetchedAt": "2026-10-09T06:00:23.192Z",
+          "via": "Place Details（name・formatted_address・business_status のみ）",
+          "name": "まるゆ",
+          "address": "日本、〒456-0005 愛知県名古屋市熱田区池内町４−１",
+          "businessStatus": "OPERATIONAL",
+          "addressVsListing": "different",
+          "searchByName": {
+            "fetchedAt": "2026-10-09T06:00:57.475Z",
+            "query": "創作料理まるゆ 名古屋市中区錦3-18-16",
+            "candidates": [
+              {
+                "name": "まるゆ",
+                "address": "〒456-0005 愛知県名古屋市熱田区池内町４−１",
+                "businessStatus": "OPERATIONAL"
+              },
+              {
+                "name": "名古屋大酒場だるま",
+                "address": "〒460-0003 愛知県名古屋市中区錦３丁目１８−１８",
+                "businessStatus": "OPERATIONAL"
+              }
+            ]
+          },
+          "usedAsEvidence": false
+        },
+        "other": [
+          {
+            "url": "https://www.instagram.com/nagoyamaruyu/",
+            "fetchedAt": "2026-10-09",
+            "fact": "店の公式 Instagram（表示名「創作料理　まるゆ　(元祖骨無し手羽先)」・掲載データの Instagram と同じアカウント）の自己紹介の住所は「愛知県名古屋市熱田区池内町4-1」。錦・栄・移転・閉店の語を含む行は無い"
+          },
+          {
+            "url": "https://msearch.gsi.go.jp/address-search/AddressSearch",
+            "fetchedAt": "2026-10-09",
+            "fact": "ホットペッパーの地図の位置 35.170073,136.905358 は掲載の住所「中区錦三丁目18-16」（35.170036,136.905548）から約18m。熱田区池内町4-1（35.138283,136.914078）は錦三丁目18-16 から約3.6km"
+          }
+        ]
       }
     }
   ]
