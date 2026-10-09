@@ -22,9 +22,17 @@
  * `tbUrl && ...` 分岐 / index.html の同等ロジック）ため、安全に「リンク非表示」へ落ちる
  * （clear_unverified_urls.js と同じ思想）。
  *
+ * --reviewed（ISSUE-160・2026-10-09）: 名前は合っているが別の支店・別の店を指すリンク（照合器の
+ * branch-address-mismatch・audit_tabelog_branch_mismatch.js の一覧）は自動では外さず、人が1件ずつ
+ * 確かめて data/tabelog_branch_reviewed.json に decision=remove と根拠を書いたものだけを外す。
+ * この種のリンクは、同じ URL を正しい支店も使っていることが多い（例:「焼肉神宮 別邸」に付いた本店の
+ * ページは「焼肉神宮 金山本店」の正しいリンク）。そのため URL ではなく店舗ID で対象を絞り、店舗ページも
+ * 解決キャッシュも、その店の分だけを書き換える。
+ *
  * 使い方:
  *   node scripts/clear_broken_tabelog_links.js --dry-run   # 対象一覧のみ表示
  *   node scripts/clear_broken_tabelog_links.js             # 実際に書き換え
+ *   node scripts/clear_broken_tabelog_links.js --reviewed [--dry-run]  # 確かめた記録の decision=remove を外す
  */
 'use strict';
 
@@ -38,8 +46,10 @@ const MANUAL_PATH = path.join(ROOT, 'data', 'manual_stores.json');
 const STORES_JSON_PATH = path.join(ROOT, 'data', 'stores.json');
 const STORES_DIR = path.join(ROOT, 'stores');
 const TABELOG_CACHE_PATH = path.join(ROOT, 'data', 'tabelog_resolved.json');
+const REVIEWED_PATH = path.join(ROOT, 'data', 'tabelog_branch_reviewed.json');
 
 const dryRun = process.argv.includes('--dry-run');
+const reviewedMode = process.argv.includes('--reviewed');
 
 function loadTargets() {
   const cache = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8'));
@@ -71,13 +81,26 @@ function loadTargets() {
   return targets;
 }
 
+// 人が確かめた記録の decision=remove（店舗ID つき）
+function loadReviewedTargets() {
+  const reviews = JSON.parse(fs.readFileSync(REVIEWED_PATH, 'utf8')).reviews || [];
+  return reviews
+    .filter((r) => r.decision === 'remove')
+    .map((r) => ({ id: r.id, storeName: r.storeName, url: r.url, why: r.reason }));
+}
+
+// 店舗ID がある対象はその店だけ、無い対象は店名で照合する
+function isTargetStore(s, t) {
+  return t.id ? s['ホットペッパーID'] === t.id : s['店名'] === t.storeName;
+}
+
 function patchManualStores(targets) {
   const raw = JSON.parse(fs.readFileSync(MANUAL_PATH, 'utf8'));
   const stores = raw.stores || [];
   let n = 0;
   for (const t of targets) {
     for (const s of stores) {
-      if (s['店名'] !== t.storeName) continue;
+      if (!isTargetStore(s, t)) continue;
       if (s['食べログURL'] !== t.url) continue;
       s['食べログURL'] = '';
       delete s['食べログ評価'];
@@ -96,7 +119,7 @@ function patchStoresJson(targets) {
   let n = 0;
   for (const t of targets) {
     for (const s of stores) {
-      if (s['店名'] !== t.storeName) continue;
+      if (!isTargetStore(s, t)) continue;
       if (s['食べログURL'] !== t.url) continue;
       s['食べログURL'] = '';
       n++;
@@ -128,14 +151,15 @@ function findLdJsonRange(html) {
 function patchStoreHtmlFiles(targets) {
   const files = fs.readdirSync(STORES_DIR).filter((f) => f.endsWith('.html'));
   let filesTouched = 0;
-  const urlSet = new Map(targets.map((t) => [t.url, t.storeName]));
+  // 店舗ID がある対象は、その店のページ（stores/<ID>.html）だけを書き換える
+  const urlsFor = (f) => targets.filter((t) => !t.id || f === `${t.id}.html`).map((t) => t.url);
 
   for (const f of files) {
     const p = path.join(STORES_DIR, f);
     let html = fs.readFileSync(p, 'utf8');
     let touched = false;
 
-    for (const [url] of urlSet) {
+    for (const url of new Set(urlsFor(f))) {
       if (!html.includes(url)) continue;
 
       // 1) 可視CTAボタンの行を削除
@@ -199,16 +223,20 @@ function patchStoreHtmlFiles(targets) {
 function patchTabelogResolvedCache(targets) {
   if (!fs.existsSync(TABELOG_CACHE_PATH)) return 0;
   const cache = JSON.parse(fs.readFileSync(TABELOG_CACHE_PATH, 'utf8'));
-  const byUrl = new Set(targets.map((t) => t.url));
+  // 店舗ID がある対象はその店のエントリだけ（同じ URL を正しく使う別の店のエントリは残す）
+  const byUrl = new Set(targets.filter((t) => !t.id).map((t) => t.url));
+  const byId = new Map(targets.filter((t) => t.id).map((t) => [t.id, t]));
   let n = 0;
   for (const [id, entry] of Object.entries(cache)) {
-    if (!entry || !entry.tabelog || !byUrl.has(entry.tabelog)) continue;
+    if (!entry || !entry.tabelog) continue;
+    const reviewed = byId.get(id);
+    if (reviewed ? entry.tabelog !== reviewed.url : !byUrl.has(entry.tabelog)) continue;
     cache[id] = {
       store: entry.store,
       failed: true,
       failedBy: 'tabelog',
-      clearedBy: 'identity-audit',
-      clearedReason: '実地検証でリンク先が別店（sim=0）または404だったため空欄化',
+      clearedBy: reviewed ? 'branch-mismatch-review' : 'identity-audit',
+      clearedReason: reviewed ? `${reviewed.why}（ISSUE-160・data/tabelog_branch_reviewed.json）` : '実地検証でリンク先が別店（sim=0）または404だったため空欄化',
       previousUrl: entry.tabelog,
       resolvedAt: new Date().toISOString(),
     };
@@ -219,7 +247,7 @@ function patchTabelogResolvedCache(targets) {
 }
 
 function main() {
-  const targets = loadTargets();
+  const targets = reviewedMode ? loadReviewedTargets() : loadTargets();
   console.log(`対象URL: ${targets.length}件${dryRun ? ' (--dry-run)' : ''}`);
   targets.forEach((t) => console.log(`  - ${t.storeName}: ${t.url}${t.why ? ` — ${t.why}` : ''}`));
   console.log('');
