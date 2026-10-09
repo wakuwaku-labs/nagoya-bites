@@ -198,7 +198,7 @@
 
 ### [ISSUE-166] 照合で名前が一致しなかった食べログリンク33件を1件ずつ確かめ、別の店のものを外す
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
 - **owner**: DataKeeper
@@ -210,6 +210,10 @@
   2. 別の店と確かめたものだけを店舗IDごとに外す（`clear_broken_tabelog_links.js --reviewed`）。同じ店と確かめたものは照合キャッシュを一致にするか、監査が数えないようにする
   3. 報告の食べログの name-mismatch が、確かめていない組だけになる
 - **メモ**: 33件の確認は30分を超えるので、子課題 [[ISSUE-175]]（確かめて記録する）と [[ISSUE-176]]（別の店のリンクを外し、同じ店の組を報告で数えない）に分けた。食べログは手元からも HTTP 403 のまま（回避しない）なので、食べログ側の事実は照合キャッシュの題名（9/20 取得）だけを使う
+- **結果（2026-10-09）**: 子課題 [[ISSUE-175]]・[[ISSUE-176]] と、作業中に見つけた [[ISSUE-177]] で達成条件をすべて満たした。
+  - 達成条件1: 33件を `data/tabelog_branch_reviewed.json` に issue: ISSUE-166 で記録した。別の店 11件・別の支店 3件（外す）、同じ店 18件（残す）、決められない 1件（和牛ホルモン焼 三國 本店）。
+  - 達成条件2: 別の店・別の支店と確かめた14件を `clear_broken_tabelog_links.js --reviewed` で店舗IDごとに外した。同じ店と確かめた18件は、照合の報告が `reviewedKeep` に分けて数えない。
+  - 達成条件3: 照合の報告の食べログの name-mismatch は、決められない三國の1件だけになった。三國は、食べログの住所が取れるようになったら（403 が解けたら・[[ISSUE-158]]）確かめ直す。
 
 ### [ISSUE-167] 食べログが閉店と表示しているページと、存在しないページを指す食べログリンク34件を確かめて外す
 
@@ -414,7 +418,7 @@
 
 ### [ISSUE-175] ISSUE-166 の食べログリンク33件を、題名・最寄り駅との距離・Places の住所で1件ずつ確かめて記録する
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-10-16
 - **category**: data-quality / trust
@@ -427,10 +431,14 @@
 - **acceptance**:
   1. 33件を「別の店（外す）」「同じ店（残す）」「決められない」に分け、`data/tabelog_branch_reviewed.json` に issue: ISSUE-166 で記録する。記録には根拠（題名・最寄り駅と距離・HotPepper の住所・Places の検索結果と取った日）を入れる
   2. 推測で外さない。「別の店」とするのは、店名か支店名が違い、場所も合わないものだけ。決められないものは記録だけにする
+- **結果（2026-10-09）**: 33件を `data/tabelog_branch_reviewed.json` に記録した（issue: ISSUE-166・合計112件）。
+  - 内訳: 別の店（name-other-store）11件・別の支店（name-other-branch）3件・同じ店（name-same）18件・決められない（name-undecided）1件。
+  - 記録の中身: 題名（9/20 取得）、題名の最寄り駅と HotPepper の掲載の位置との距離（HeartRails Express の駅の座標）、HotPepper の掲載住所と座標（10-09 取得）、Places の Text Search の結果（名前・住所・営業状態・取った日）。食べログの住所は 403 で取れないので pageAddress は null にした。
+  - 「別の店」は、店名か支店名が違い、場所も合わないものだけにした（推測で外していない）。決められない三國は記録だけにした（undecided は何も変えない）。
 
 ### [ISSUE-176] ISSUE-175 で別の店と確かめた食べログリンクを外し、同じ店と確かめた組を照合の報告で数えない
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-10-16
 - **category**: data-quality / trust
@@ -442,10 +450,14 @@
   1. 別の店と確かめたリンクを店舗IDごとに外し、`data/tabelog_resolved.json` を failed にする（翌日の埋め戻しを防ぐ）。元のスプレッドシートにその URL が無いことも確かめる
   2. 照合の報告は、確かめた記録の decision=keep（店舗ID と URL の組）を不一致に数えない。URL が変われば数え直す
   3. 報告の食べログの name-mismatch が、確かめていない組と決められない組だけになる。`npm test` が通る
+- **結果（2026-10-09）**: 達成条件をすべて満たした。
+  - 達成条件1: 別の店・別の支店と確かめた14件を店舗IDごとに外した。`data/stores.json` 14件、`stores/*.html` 14本（ボタンと JSON-LD の sameAs）、`data/tabelog_resolved.json` 14件を failed にした（manual_stores.json は該当なし）。14件の URL は元のスプレッドシートに無い（翌日に戻らない）。
+  - 達成条件2: `scripts/audit_store_link_identity.js` が `data/tabelog_branch_reviewed.json` の decision=keep（店ID と URL の組）を読み、店名・支店の不一致を `reviewedKeep` に分けて数える。閉店・ページが無い（404）は数える。URL が変われば数え直す。テストは `tests/audit_store_link_identity.test.js`。
+  - 達成条件3: 報告（照合なし `--limit 0` で作り直して確かめた）の食べログの不一致は三國の1件だけ、確かめた組 18件。`audit_tabelog_branch_mismatch.js --check`（同じ店と確かめ済み 21件）・`audit_page_store_links.js --check`・`audit_store_liveness.js`・`audit_inline_js_syntax.js --check --only stores` が exit 0、`npm test` が 442件すべて通る。
 
 ### [ISSUE-177] ホットペッパーの題名の文字参照（&nbsp; など）を戻してから店名を読み、正しいリンクを不一致と数えないようにする
 
-- **priority**: P3 → **status**: in_progress
+- **priority**: P3 → **status**: done
 - **detected**: 2026-10-09
 - **due**: 2026-10-16
 - **category**: qa / trust
@@ -457,6 +469,27 @@
   1. `extractTitle` が `&nbsp;` と数値の参照（10進・16進）も戻し、`&amp;` は最後に戻す（二重に戻さない）。今回の題名の実物をテストに入れる
   2. 照合キャッシュに残るこの1件を、保存してある題名から判定し直す（外部へ問い合わせない。`rejudgedAt`・`rejudgedBy: ISSUE-177` を足し、照合の時刻は変えない）。報告のホットペッパーの不一致が0件になる
   3. `npm test` が通る
+- **結果（2026-10-09）**: 達成条件をすべて満たした。
+  - 達成条件1: `extractTitle` が `&nbsp;` と10進・16進の数値の参照も戻し、`&amp;` を最後に戻す（`decodeEntities`）。範囲外の数値の参照と知らない名前の参照はそのまま残す。テストに今回の題名の実物を入れた（`tests/store_link_identity.test.js`）。
+  - 達成条件2: 照合キャッシュのこの1件（ＢＡＲ  ＣＯＭ’Ｓ・J003967005）を保存してある題名から判定し直した（外部へ問い合わせていない）。一致（sim 1）になり、`rejudgedAt` と `rejudgedBy: ISSUE-177` を足した。照合の時刻は変えていない。報告のホットペッパーの name-mismatch は0件になった。
+  - 達成条件3: `npm test` が通る。
+  - 残る不一致: 報告のホットペッパーには「創作料理まるゆ」の閉店の表示（closed）が1件ある。これは名前の読み違いではなく、[[ISSUE-174]] の判定が 10-09 の日次照合で初めて見つけたもの。[[ISSUE-178]] で営業を確かめる。
+
+### [ISSUE-178] ホットペッパーが【閉店】と表示する「創作料理まるゆ」の営業を一次情報で確かめ、閉店なら掲載から外す
+
+- **priority**: P1 → **status**: ready
+- **detected**: 2026-10-09
+- **due**: 2026-10-16
+- **category**: data-quality / trust
+- **owner**: DataKeeper
+- **source**: [[ISSUE-174]] の判定が 2026-10-09 の日次の照合で初めて見つけた（[[ISSUE-177]] の確認中に照合の報告で発見）
+- **brand-filter**: ✅ 適合 — 実在保証（閉店した店を載せ続けない）
+- **背景**: 2026-10-09 05:27（UTC）の日次の照合（build.yml の `audit_store_link_identity.js`）で、「創作料理まるゆ」（J003450558・掲載住所 愛知県名古屋市中区錦３-18-16 アマノビル２F・居酒屋）のホットペッパーのページ https://www.hotpepper.jp/strJ003450558/ が店名の上に【閉店】を出していた（照合キャッシュの reason: closed・sim 1）。`data/closed_stores.json` と `data/store_liveness_reviews.json` にはまだ無く、店は掲載中。CLAUDE.md の決まりで、見つかった店は自動では外さず、[[ISSUE-170]] と同じく一次情報2つ以上で確かめてから外す
+- **acceptance**:
+  1. ホットペッパーのページと Google の店舗情報（Basic の項目＝name・formatted_address・business_status のみ）を取り、名前と住所が掲載と合うかを確かめ、`data/store_liveness_reviews.json` に根拠つきで記録する（取った日時・URL・状態・名前・住所）
+  2. 独立した2つ以上の情報源が閉店を示し、それより後の営業の痕跡が無いときだけ `data/closed_stores.json` に根拠つきで入れる。決められなければ掲載を続け、記録だけにする
+  3. 外した場合は、次のビルドの後に main で店舗データ・店舗ページ・sitemap から外れていることを確かめる（`audit_store_liveness.js` が通る）。特集・ジャーナルからのリンクと言及が無いことも確かめる
+- **分けなかった理由**: 1店の確認で、記録と外す作業は30分に収まる
 
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 
