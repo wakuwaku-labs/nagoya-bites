@@ -74,6 +74,11 @@ else
   SKIP_GENERATION=0
 fi
 
+# 生成の前の main の位置。claude 実行中にグローバルの Session Autopilot フックが
+# autopilot/work-* ブランチを切って自動コミットし、main へマージまですることがある
+# （2026-10-10 の 10-09 分: 作業ツリーの別ブランチまで main に入った）。このスクリプトは
+# commit / push を人に任せる設計なので、HEAD が動いていたら止めて人に知らせる。
+HEAD_BEFORE=$(git rev-parse HEAD)
 if [ "$SKIP_GENERATION" = "0" ]; then
 # journal-today の本文をそのまま使い、前置きで「基準日」だけ差し替える。
 # プロンプトを複製せず正本を参照することで、通常運用と編集方針がズレないようにする。
@@ -126,12 +131,23 @@ for f in journal/"${TARGET}"-*.html; do
   [ -e "$f" ] && ART="$f" && break
 done
 [ -z "$ART" ] && die "記事HTMLが生成されていません: journal/${TARGET}-*.html"
+# claude が勝手にコミット・ブランチ移動していないか（上の HEAD_BEFORE を参照）
+if [ "$(git branch --show-current)" != "main" ] || [ "$(git rev-parse HEAD)" != "$HEAD_BEFORE" ]; then
+  die "生成の間に HEAD が動きました（ブランチ $(git branch --show-current 2>/dev/null || echo detached)・$(git rev-parse --short HEAD)）。Autopilot フックの自動コミットの可能性があります。main を origin/main とそろえてから、成果物の差分だけを公開してください（ISSUE-185）。"
+fi
+# SNS原稿は data/journal_sns_draft_policy.json の generate_sns_draft=false なら作られない
+# （run_journal_local.sh と同じ情報源。validator は md が無ければ該当項目をスキップする）
 MD="docs/daily-posts/${TARGET}.md"
-[ -f "$MD" ] || die "SNS原稿が生成されていません: ${MD}"
-log "成果物: ${ART} / ${MD}"
+if node -e "try{process.exit(require('./data/journal_sns_draft_policy.json').generate_sns_draft===false?1:0)}catch(e){process.exit(0)}" 2>/dev/null; then
+  [ -f "$MD" ] || die "SNS原稿が生成されていません: ${MD}"
+  log "成果物: ${ART} / ${MD}"
+else
+  log "成果物: ${ART}（SNS原稿は generate_sns_draft=false のため作らない）"
+  MD=""
+fi
 
 # ---- 4. 品質ゲート（通常運用と同一・迂回しない）----
-if ! node scripts/validate_journal_draft.js "$ART" "$MD" >>"$LOG" 2>&1; then
+if ! node scripts/validate_journal_draft.js "$ART" ${MD:+"$MD"} >>"$LOG" 2>&1; then
   log "   よくある原因: 記事の掲載店が data/pending_stores.json に未登録"
   log "   （その場合は実在を一次情報で確認してから追記し、このスクリプトを再実行してください。"
   log "    成果物は残っているので生成はスキップされ、検証から再開します）"
