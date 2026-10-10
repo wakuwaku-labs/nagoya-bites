@@ -1272,6 +1272,7 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 .scene-tile .ic{width:24px;height:24px;color:var(--gold);}
 .scene-tile:hover{border-color:var(--gold);}
 .scene-tile:active{transform:scale(.97);}
+@media(min-width:769px){.scene-tiles{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));overflow:visible;}.scene-tile{width:auto;}}
 .area-pills-ic{color:var(--gold);width:20px;height:20px;}
 .scene-chip{min-height:var(--tap-min);border-radius:var(--r-pill);box-shadow:none;letter-spacing:0;font-size:var(--fs-sm);}
 .scene-chip:hover{box-shadow:none;}
@@ -1324,6 +1325,10 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 .card-cta a:hover{box-shadow:none;transform:none;}
 .card-actions .mrow{border:0;padding:0;flex-wrap:nowrap;}
 .card-actions .ml{min-height:var(--tap-min);border-radius:var(--r-md);}
+.card-actions{container-type:inline-size;}
+.card-cta a{white-space:nowrap;}
+@container (max-width:300px){.card-cta .cta-long{display:none;}}
+.card .card-lead{flex-grow:0;max-height:none;padding-top:0;padding-bottom:0;border-top:.55rem solid rgba(122,92,16,.04);border-bottom:.55rem solid rgba(122,92,16,.04);background-clip:padding-box;}
 #fb-fab{box-shadow:none;}
 .feature-strip-label-note{letter-spacing:0;}
 .card .card-flag{right:calc(.6rem + 44px);}
@@ -9902,7 +9907,7 @@ function buildCardHtml(r) {
       + tagHtml
       + featuredHtml
       + (r.editorReason ? '<div class="card-lead"><span class="card-lead-kicker">' + leadKicker + '</span>' + r.editorReason + '</div>' : r.insiderNote ? '<div class="card-lead"><span class="card-lead-kicker">' + leadKicker + '</span>' + r.insiderNote + '</div>' : r['おすすめポイント'] ? '<div class="card-lead"><span class="card-lead-kicker">' + leadKicker + '</span>' + r['おすすめポイント'] + '</div>' : '')
-      + '<div class="card-actions">' + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();nbReserveExit(\'cta_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',store_id:\'' + r['ホットペッパーID'] + '\',link_domain:\'www.hotpepper.jp\',location:\'card\'})" aria-label="' + r['店名'] + 'をホットペッパーで予約" rel="noopener noreferrer">ホットペッパーで予約</a><a class="card-cta-map" href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\'})" aria-label="' + r['店名'] + 'の場所をGoogleマップで確認" title="Googleマップで場所を確認" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\'})" aria-label="' + r['店名'] + 'をGoogleマップで確認" class="card-cta-map-only" rel="noopener noreferrer"><svg class="ic" aria-hidden="true"><use href="#i-map-pin"/></svg>地図</a></div>')
+      + '<div class="card-actions">' + (r['ホットペッパーID'] ? '<div class="card-cta"><a href="' + hpUrl + '" target="_blank" onclick="event.stopPropagation();nbReserveExit(\'cta_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',store_id:\'' + r['ホットペッパーID'] + '\',link_domain:\'www.hotpepper.jp\',location:\'card\'})" aria-label="' + r['店名'] + 'をホットペッパーで予約" rel="noopener noreferrer"><span class="cta-long">ホットペッパーで</span>予約</a><a class="card-cta-map" href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\'})" aria-label="' + r['店名'] + 'の場所をGoogleマップで確認" title="Googleマップで場所を確認" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a></div>' : '<div class="card-cta"><a href="' + gmap(r['店名'], area, r) + '" target="_blank" onclick="event.stopPropagation();trackEvent(\'cta_gmap_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',location:\'card\'})" aria-label="' + r['店名'] + 'をGoogleマップで確認" class="card-cta-map-only" rel="noopener noreferrer"><svg class="ic" aria-hidden="true"><use href="#i-map-pin"/></svg>地図</a></div>')
       + '<div class="mrow">' + mediaLinks + '</div></div>'
       + '</div>';
 }
