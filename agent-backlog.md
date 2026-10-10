@@ -732,6 +732,31 @@
 - **関連**: [[ISSUE-184]]（10-09 が欠番になった原因）
 - **2026-10-10 結果（done）**: 達成条件1〜3を満たした（`bash -n` OK・テスト3件 pass）。Autopilot フックが無人実行の中で自動コミット・マージすること自体は `~/.claude/autopilot/`（リポジトリの外）の設定で、ここでは止めていない。`run_journal_local.sh` はブランチを main に戻す処理を持つが、main へのマージまでは想定していない
 
+### [ISSUE-187] 日次ジャーナルが、ローカル main と origin の履歴の形が違うだけで衝突して止まり、rebase 途中のまま残るのを直す
+
+- **priority**: P1 → **status**: done（2026-10-10）
+- **detected**: 2026-10-10
+- **due**: 2026-10-24
+- **category**: 運用・自動化
+- **owner**: Builder
+- **source**: オーナー「今日のジャーナルが更新されてない。ここ最近毎日更新されてないので原因を特定して修正して」（2026-10-10）
+- **brand-filter**: ✅ 適合 — 記事の内容には触れない。公開の経路が壊れないようにする
+- **背景**: 10-09 と 10-10 の2日続けて記事が出なかった。原因は日ごとに別。
+  1. **10-09**: 09:00 の生成が Claude の利用上限（11:10 解除）で失敗。[[ISSUE-184]] で修正済み（待って作り直す）
+  2. **10-10**: 09:00 の `git pull --rebase --autostash origin main` が衝突。`~/nagoya-bites`（launchd が動くチェックアウト）の main に、01:02 に Autopilot が作業ブランチ `wakuwaku-labs/SEO分析` を自動マージしており、174 コミット（origin に無いのは3つだけ）が載っていた。origin 側には同じ内容が squash マージで入っているため、rebase は97コミットを再適用して `scripts/audit_inline_js_syntax.js` などの add/add で衝突した。ラッパーは rebase を abort して HOLD にしたが、続く `push_health()` の push 再同期が `pull --rebase` を再実行し、今度は abort せずに終わった。結果、リポジトリは rebase 途中（UU 9件）のまま夜まで残り、翌朝の事前チェック（rebase 進行中は即 fail）も止める状態だった
+  - 公開の手前で止まっていたのは `git pull` だけで、記事の生成・検証・公開の経路そのものは壊れていない
+- **対応（2026-10-10 夜）**:
+  - 手元の復旧: rebase を abort → `git merge origin/main`（衝突なし）→ 非 force で push。履歴は消さず reset もしていない。ローカル main と origin/main が一致してから、手動で今日分を生成した
+  - 再発防止: origin/main の取り込みを `scripts/lib/journal_git_sync.sh` の `journal_sync_origin_main` 1本にまとめ、`run_journal_local.sh` の4箇所（起動時・health の push・push リトライ2か所）から呼ぶ。rebase が衝突したら必ず畳み、merge で取り込み直す（merge は木を3者比較するので、同じ内容が別の履歴の形で入っていても通る）。どちらも駄目でも rebase / merge の進行中状態を残さない
+- **acceptance**:
+  1. ローカル main が squash 済みの内容を別の履歴で持っていても、`journal_sync_origin_main` が取り込めて、続けて push できる
+  2. 衝突が本物のときは失敗を返し、`rebase-merge` / `rebase-apply` / `MERGE_HEAD` を残さず、未解決ファイルが無い
+  3. 衝突の無い通常ケースは今までどおり rebase で、履歴は直線のまま
+  4. `tests/journal_git_sync.test.js` が上の3つを見る
+- **files**: `scripts/lib/journal_git_sync.sh`, `scripts/run_journal_local.sh`, `tests/journal_git_sync.test.js`
+- **関連**: [[ISSUE-184]]（10-09 の原因）・[[ISSUE-185]]（Autopilot が main へ自動マージする件。リポジトリの外の設定で、ここでは止めていない）
+- **残るリスク**: Autopilot が `~/nagoya-bites` の main に作業ブランチを自動マージする挙動そのものは止まっていない。今回の修正で衝突しても止まらなくなるが、マージされた履歴は次の公開の push で origin の main に載る（内容は squash 済みと同じ）。止めるなら `~/.claude/autopilot/` 側の設定（オーナー作業）
+
 ### [ISSUE-186] ホットペッパーが閉店・掲載終了を示す掲載店の営業を一次情報で確かめ、30日後に確かめ直す
 
 - **priority**: P2 → **status**: ready
