@@ -1,11 +1,11 @@
 {
   "description": "日次ジャーナル ローカル実行(launchd)の最終状態。journal-watchdog.yml が原因表示に使う。",
   "date": "2026-10-10",
-  "status": "hold",
-  "reason": "origin/main の取り込みに失敗（衝突）。rebase は abort 済みなのでリポジトリは操作可能な状態です。未 push のローカルコミットが origin と衝突していないか確認してください。",
+  "status": "ok",
+  "reason": "正常に公開",
   "photo_sources": {
     "google_places_api_key": "present",
     "_note": "優先3（Google Places）が利用可能"
   },
-  "recorded_at": "2026-10-10T09:00:10.281+09:00"
+  "recorded_at": "2026-10-10T23:08:45.648+09:00"
 }
