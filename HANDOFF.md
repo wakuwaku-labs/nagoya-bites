@@ -14,11 +14,13 @@ status: in_progress
 - DSN-009 の原因特定: `.grid{grid-template-columns:1fr}`（index.html:828）で列が中身の最小幅に引っ張られ、カード 642px・scrollWidth 658px
 - backlog 起票・Linear 同期済み（P-212〜216）
 
-# 次にやること
-1. DSN-009 を直す（minmax(0,1fr)・.card min-width:0）
-2. アイコンのスプライト（Lucide の線画 SVG・ISC）を index.html に置く
-3. DSN-010 トップ → DSN-011 検索結果・カード → DSN-012 モーダル
-4. QA → PR（合流は公開＝オーナー確認の後）
+# 次にやること（2026-10-11 利用上限で中断・WIP コミット済み・未確認）
+1. 実装済み（未目視）: アイコンスプライト（body 直後）／ヒーロー（説明文削除・検索アイコン・シーンのタイル・エリアのピン）／信頼の帯をアイコン4項目に／見出しの添え書き削除／ジャーナル見出し・カードの装飾／桜ゼロ宣言をアイコンの3項目に／話題店カードの重複行削除／カード（メタにアイコン・特集を1リンク・一致行なし・予約＋地図＋媒体を1行 .card-actions）／HP クレジットを結果の下 #hpc-foot へ／「この検索の解釈」見出しと2つ目のリセット削除／末尾に DSN-008 の CSS 上書きブロック（.grid の minmax(0,1fr) で DSN-009 修正）
+2. scratchpad の 390px iframe（port 8765/8766 のサーバは要再起動）で目視: 検索結果上部の空白・カードの .card-actions の左右余白・タイルのはみ出し・no-sakura の配色
+3. 「この条件で通知」をアイコンのみに（文言を span で包む）・#fb-fab をアイコンの丸に
+4. DSN-012 モーダル（予約は主ボタン・電話/地図を横並び・基本情報の行にアイコン）未着手
+5. npm test（ベースラインは scratchpad/test_before.log）・measure_typography・制約5の操作確認 → PR（前後スクショ）→ オーナー確認後に合流
+6. 済んだら backlog の DSN-008〜012 を done・Linear 同期・HANDOFF を done
 
 # 試したが駄目だったこと
 - Chrome の resize_window は効かない（最大化）。scratchpad/m/index.html の 390px iframe（同一オリジンにするため repo を site/ に symlink・port 8766）で見る
