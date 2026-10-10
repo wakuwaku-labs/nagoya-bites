@@ -11,7 +11,7 @@
 #   4. claude --print --dangerously-skip-permissions で生成
 #   5. published.json 登録を検証（未登録なら fail）
 #   6. ラッパー側で journal 関連を surgical に add → commit → push（claude の承認待ちに依存しない）
-#   7. push が rejected なら 1 度だけ pull --rebase --autostash → retry
+#   7. push が rejected なら 1 度だけ origin/main を取り込み直して retry（rebase→衝突なら merge・ISSUE-187）
 #
 # 過去の事故メモ:
 #   - 2026-05-23 朝: data/cross_check_flags.json の UU 残置で git pull が silent fail し、
@@ -66,6 +66,10 @@ CLAUDE_TIMEOUT_SEC="${CLAUDE_TIMEOUT_SEC:-1800}"   # 生成1回あたりの上�
 STALE_LOCK_SEC="${STALE_LOCK_SEC:-5400}"           # これを超えたロックはハングとみなす（90分）
 
 log() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" | tee -a "$LOG"; }
+
+# origin/main の取り込み（rebase → 衝突したら畳んで merge）の唯一の実装。ISSUE-187。
+# shellcheck source=lib/journal_git_sync.sh
+. "$(dirname "${BASH_SOURCE[0]}")/lib/journal_git_sync.sh"
 
 # ---- 電源状態の把握（2026-08-18 の教訓）----
 # 08-05/07/08/09/13/16/18 と "Connection closed mid-response" による欠番が繰り返し発生していた。
@@ -153,7 +157,7 @@ push_health() {
       commit -m "chore(journal): ローカル実行状態を記録 ${TODAY_JST:-unknown} [skip actions]" \
       >>"$LOG" 2>&1 || return 0
   if ! git push origin main >>"$LOG" 2>&1; then
-    git pull --rebase --autostash origin main >>"$LOG" 2>&1 \
+    journal_sync_origin_main \
       && git push origin main >>"$LOG" 2>&1 \
       || log "⚠️ journal_health.json の push に失敗（監視は published.json 側で継続します）"
   fi
@@ -419,8 +423,8 @@ if [ ${#JOURNAL_DEBRIS[@]} -gt 0 ]; then
     || log "⚠️ stash 退避に失敗しましたが続行します（pull 側の --autostash に委ねます）。"
 fi
 
-if ! git pull --rebase --autostash origin main >>"$LOG" 2>&1; then
-  log "git pull --rebase が失敗。状態:"
+if ! journal_sync_origin_main; then
+  log "origin/main の取り込みに失敗。状態:"
   git status -sb | tee -a "$LOG"
   git diff --name-only --diff-filter=U | tee -a "$LOG"
 
@@ -437,7 +441,7 @@ if ! git pull --rebase --autostash origin main >>"$LOG" 2>&1; then
       && log "rebase --abort 完了。リポジトリはクリーンです。" \
       || log "⚠️ rebase --abort に失敗。手動で解消してください。"
   fi
-  hold "origin/main の取り込みに失敗（衝突）。rebase は abort 済みなのでリポジトリは操作可能な状態です。未 push のローカルコミットが origin と衝突していないか確認してください。"
+  hold "origin/main の取り込みに失敗（rebase も merge も衝突）。rebase / merge は abort 済みなのでリポジトリは操作可能な状態です。未 push のローカルコミットが origin と衝突していないか確認してください。"
 fi
 
 # pull 後の UU 再チェック（autostash 再適用で衝突した可能性）。発生したら die して以降の偽成功を防ぐ。
@@ -851,8 +855,8 @@ if git diff --staged --quiet; then
   if [ "$AHEAD" -gt 0 ]; then
     log "ローカル HEAD が origin/main より ${AHEAD} コミット進んでいます（claude が commit 済み）。push します。"
     if ! git push origin main >>"$LOG" 2>&1; then
-      log "push 拒否。pull --rebase --autostash で再同期して再 push します。"
-      git pull --rebase --autostash origin main >>"$LOG" 2>&1 || die "再同期に失敗"
+      log "push 拒否。origin/main を取り込み直して再 push します。"
+      journal_sync_origin_main || die "再同期に失敗"
       git push origin main >>"$LOG" 2>&1 || die "再 push に失敗"
     fi
     log "🚀 既存ローカルコミットを main へ push 完了。"
@@ -888,10 +892,10 @@ if ! git diff --name-only "origin/main..HEAD" | grep -q "^${ARTICLE_HTML}$"; the
   die "記事HTMLが未コミット。site でリンク切れになるため push しません。"
 fi
 
-# push: rejected なら 1回だけ pull --rebase --autostash して retry
+# push: rejected なら 1回だけ origin/main を取り込み直して retry
 if ! git push origin main >>"$LOG" 2>&1; then
-  log "push 拒否。pull --rebase --autostash で再同期して再 push します。"
-  git pull --rebase --autostash origin main >>"$LOG" 2>&1 || die "再同期に失敗"
+  log "push 拒否。origin/main を取り込み直して再 push します。"
+  journal_sync_origin_main || die "再同期に失敗"
   # 再同期後も UU が出ていないか確認
   UU_RETRY=$(git ls-files --unmerged | wc -l | tr -d ' ')
   [ "$UU_RETRY" != "0" ] && die "再同期で UU 発生。手動解消してください。"

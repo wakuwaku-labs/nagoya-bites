@@ -116,3 +116,11 @@ status: done
 - agent-backlog.md（SEO-116〜141・ISSUE-145〜148）
 - docs/seo-strategy-2026-10.md（戦術表 §3・KPI §4）
 - docs/decisions/0007-seo-north-star-metrics.md
+
+## 2026-10-10 夜 追加の依頼（ジャーナル欠番の原因特定と修正）
+オーナー「今日のジャーナルが更新されてない。ここ最近毎日更新されてないので原因を特定して修正して」。
+- 原因: 10-09 は Claude の利用上限（[[ISSUE-184]] で修正済み）。10-10 は `~/nagoya-bites` の main が Autopilot の自動マージで origin と履歴分岐し、`git pull --rebase` が衝突 → 続く push 再同期が rebase を abort せず途中のまま残った。詳細は agent-backlog.md の ISSUE-187
+- 手元の復旧（済み）: rebase abort → `git merge origin/main`（衝突なし）→ 非 force で push。reset はしていない。ローカル main = origin/main
+- 再発防止（PR）: `scripts/lib/journal_git_sync.sh`（rebase→衝突なら畳んで merge）＋ `tests/journal_git_sync.test.js`。ラッパーの4箇所から呼ぶ
+- 今日分の記事: `bash scripts/run_journal_local.sh` を 23:03 に手動起動（結果は `~/nagoya-bites/.local-logs/journal-2026-10-10.log`）
+- 未解決: Autopilot が launchd のチェックアウトの main へ作業ブランチを自動マージする挙動は `~/.claude/autopilot/`（リポジトリの外）の設定。止めるかはオーナー判断
