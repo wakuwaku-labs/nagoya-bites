@@ -23,6 +23,7 @@
   3. `npm test`・`node scripts/audit_design_system.js --check`・`node scripts/audit_inline_js_syntax.js --check` が通る
   4. 制約5の機能がすべて操作できることを実際に操作して確かめる
 - **関連**: [[DSN-001]]（デザインシステム）／[[DSN-002]]（カード・モーダルの再設計）／[[DSN-007]]
+- **進捗（2026-10-11）**: 子課題 DSN-009〜012 を実装し、PR #465 を作成（前後比較 https://claude.ai/artifact/EwB9RuwsgSpFd1eNPLus5t ）。オーナーの確認後に合流＝本番公開
 
 ### [DSN-009] スマホの検索結果で店舗カードが画面からはみ出すのを直す
 
