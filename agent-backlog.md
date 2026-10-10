@@ -198,9 +198,10 @@
 - **priority**: P1 → **status**: ready
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
-- **owner**: DataKeeper
+- **owner**: オーナー確認 ← DataKeeper
 - **source**: [[ISSUE-160]] の作業中に発見（外した42件のうち13件の Instagram が、外した食べログのページから取ったものだった）
 - **brand-filter**: ✅ 適合 — 実在保証（店舗ページの Instagram と埋め込み投稿が別の店のものになっている可能性）
+- **エスカレーション（2026-10-10）**: 達成条件1に「ブランド共通の公式を残すかはオーナーの判断を仰ぐ」とあり、350件のうち226件がブランド共通・別支店アカウントの可能性がある。自動処理を始める前にオーナーが「ブランド共通アカウントをどう扱うか」の方針を決める必要がある。`data/instagram_resolved.json` の `tabelogUrl` フィールドから対象350件は `node -e "const d=require('./data/instagram_resolved.json');const s=new Set(require('./data/stores.json').map(x=>x.食べログURL||''));console.log(d.filter(r=>r.tabelogUrl&&!s.has(r.tabelogUrl)).length)" ` で確認できる。オーナーが方針を決めたら DataKeeper が着手する
 - **背景**: `data/instagram_resolved.json` のうち974件は、店の食べログのページに載っている Instagram を取ったもの（method が TBG-Q1-core 947件・TBG-Q2-clean 27件。`tabelogUrl` に使ったページを記録している）。その食べログのリンクは、9/3・9/20（[[ISSUE-131]]）・10/9（[[ISSUE-160]]）に別の店・別の支店を指すとして外したものを含む。2026-10-09 に data/stores.json と突き合わせると、使った食べログのページが今は店のリンクでない（すべて食べログのリンクが無くなった店）のに、その Instagram を表示している店が350件あった。うち226件は複数の店が同じアカウントを表示している（ブランドの公式や、別の支店のアカウント）。124件はその店だけが表示している。227件は Instagram の投稿をカードに埋め込んでいる。例: 碧亭（栄1）→ midori_tei_miyoshi（みよし市の碧亭）、餃子のかっちゃん 名古屋駅南口2号店 → kacchan_sakae、鶏ん家 栄住吉店 → tori_n_chi_shinsakae、肉のよいち 新栄葵店 → nikunoyoichi_oozone
 - **acceptance**:
   1. 350件を「その店のアカウント」「ブランド共通の公式アカウント」「別の支店のアカウント」「別の店のアカウント」「決められない」に分ける基準を決める（ブランド共通の公式を残すかはオーナーの判断を仰ぐ）。判定は第三者が確かめられる事実（Instagram のプロフィール名・プロフィールの住所や支店名・店の公式サイトのリンク）だけで行う
@@ -1212,7 +1213,7 @@
 
 ### [SEO-133] 生成AIに引用されやすくし、Bing の取り込みを早める
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO
 - **owner**: Marketer / Builder
@@ -1223,10 +1224,11 @@
 - **acceptance**:
   1. 子課題3件が閉じている
   2. 30 日の生成AI経由・Bing経由セッションを `docs/kpi-weekly.md` に記録する
+- **結果（2026-10-10）**: 子課題3件（SEO-134・SEO-135・SEO-136）が完了。生成AI経由108セッション・Bing経由421セッション（30日・`data/search_channel_metrics.json` 2026-10-09）を `docs/kpi-weekly.md` の2026-10-09スナップショットに追記
 
 ### [SEO-134] 特集の冒頭に3行の結論を置く
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / コンテンツ
 - **owner**: Editor / Designer
@@ -1244,7 +1246,7 @@
   - 手羽先の検索は「風来坊と山ちゃんの違い」が中心で、価格帯の結論は答えにならない
   - 表示の多い特集（一人飲み・手羽先・秋・ひつまぶし・うな重・味噌煮込み）は .art-body の無い別のテンプレートで、冒頭に EDITORS' PICK（上位3店・[[SEO-042]]）が既にある。結論を足すと店名の区画が2つ並ぶ
   - 次に進めるなら、EDITORS' PICK と結論を1つの区画にまとめる設計から（Designer のレビューが要る）
-
+- **結果（2026-10-10）**: デート特集（`features/nagoya-date-dinner.html`）は [[SEO-122]] で適用済み・Designer QA-5 通過。発見型の表示がある残りの特集（一人飲み 914表示・手羽先 1表示）は2026-10-09 の調査（上記メモ）で構造上の理由から追加しない判断を確認した。EDITORS' PICK との統合設計は別課題として残す。達成条件1〜3の対象となる特集で追加作業なし
 
 ### [SEO-135] llms.txt にハブの階層と数値の出典・更新日を載せ、Organization に sameAs を足す
 
