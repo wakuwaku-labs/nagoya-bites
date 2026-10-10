@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-09T22:19:06.257Z",
+  "generatedAt": "2026-10-10T00:19:22.927Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1277,
-    "pageViews": 1824,
-    "sessions": 1466,
-    "avgSessionDuration": 128.7,
-    "bounceRate": 0.278,
-    "pagesPerSession": 1.24
+    "activeUsers": 1283,
+    "pageViews": 1834,
+    "sessions": 1473,
+    "avgSessionDuration": 128.6,
+    "bounceRate": 0.279,
+    "pagesPerSession": 1.25
   },
   "dailyReference": {
     "date": "2026-10-08",
@@ -17,22 +17,22 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1013,
-      "direct": 315,
+      "organic": 1015,
+      "direct": 321,
       "social": 6,
       "ai_assistant": 108,
       "referral": 28,
       "paid": 0,
-      "other": 0
+      "other": 2
     },
     "pct": {
-      "organic": 68.9,
-      "direct": 21.4,
+      "organic": 68.6,
+      "direct": 21.7,
       "social": 0.4,
       "ai_assistant": 7.3,
       "referral": 1.9,
       "paid": 0,
-      "other": 0
+      "other": 0.1
     }
   },
   "sourceBreakdown": [
@@ -44,12 +44,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 414
+      "sessions": 416
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 216
+      "sessions": 219
     },
     {
       "source": "yahoo",
@@ -69,7 +69,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 27
+      "sessions": 30
     },
     {
       "source": "openai",
@@ -122,6 +122,11 @@
       "sessions": 2
     },
     {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 1
+    },
+    {
       "source": "2881.com",
       "medium": "referral",
       "sessions": 1
@@ -172,6 +177,11 @@
       "sessions": 1
     },
     {
+      "source": "unknown",
+      "medium": "",
+      "sessions": 1
+    },
+    {
       "source": "us.search.yahoo.com",
       "medium": "referral",
       "sessions": 1
@@ -180,13 +190,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 318,
-      "sessions": 301
+      "pageViews": 320,
+      "sessions": 303
     },
     {
       "path": "/",
-      "pageViews": 111,
-      "sessions": 97
+      "pageViews": 112,
+      "sessions": 98
     },
     {
       "path": "/index.html",
@@ -205,12 +215,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 143,
+    "outboundClicks": 144,
     "ctaClickRate": 9.8,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 44
+        "clicks": 45
       },
       {
         "domain": "tabelog.com",
@@ -281,10 +291,10 @@
       "ai_assistant": 21,
       "referral": 1,
       "paid": 0,
-      "other": 0
+      "other": 1
     },
     "ctaClickRate_organic": 5.5,
-    "ctaClickRate_direct": 20.6,
+    "ctaClickRate_direct": 20.2,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -404,7 +414,7 @@
         "clicks": 1
       },
       {
-        "path": "/stores/J000431352.html",
+        "path": "/journal/2026-10-09-nagoyajo-kinshachi-yokocho-autumn-menu.html",
         "clicks": 1
       }
     ],
@@ -675,6 +685,11 @@
         "clicks": 1
       },
       {
+        "path": "/journal/2026-10-09-nagoyajo-kinshachi-yokocho-autumn-menu.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J000431352.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -795,6 +810,10 @@
         "clicks": 1
       },
       {
+        "path": "/journal/2026-10-09-nagoyajo-kinshachi-yokocho-autumn-menu.html",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J000431352.html",
         "clicks": 1
       },
@@ -819,7 +838,7 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 76,
+    "reservationClicks": 77,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 14,
@@ -845,7 +864,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1277,
+    "value": 1283,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
