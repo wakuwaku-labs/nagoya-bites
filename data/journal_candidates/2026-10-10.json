@@ -1,0 +1,208 @@
+{
+  "date": "2026-10-10",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "新栄町の「ちひろ菓子店 新栄葵店」名古屋初上陸｜フィナンシェ330円を手土産に買う前に",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 94,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 1件 → 5",
+          "※ trending_signals は採点に使用しない（自己申告値のため・ISSUE-077）"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,予約,シーン,接待,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 3件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 138字 +4",
+          "title 43字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「一人飲み」+1",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -5 / search_intent -5 / brand_fit -4"
+    },
+    {
+      "id": "c2",
+      "title_draft": "伏見駅の「ひものや 官兵衛」干物定食1,298円から、選べる2品の組み方を業界人が読む",
+      "verdict": "HOLD",
+      "total": 78,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 6,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 1日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (価格帯,席,シーン) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 3件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 77字 +2",
+          "title 43字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -5 / search_intent -5 / brand_fit -4",
+  "saturated_sources": [],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "新栄町の「ちひろ菓子店 新栄葵店」名古屋初上陸｜フィナンシェ330円を手土産に買う前に",
+      "lead_draft": "大阪・新町発のフィナンシェ専門店「ちひろ菓子店」が、10月9日に新栄町駅すぐの東区葵1丁目へ名古屋初出店した。極上プレーン330円からの単価、店内で焼く工房一体型の設計、カウンター5席のイートインが未開始という状況を、手土産・自分へのご褒美の買い方とあわせて業界人の目で読む。",
+      "angle": "価格帯の読み方：1個330円とBOX買いの1個あたり単価（5個420円・10個388円・15個352円）の差。オペの裏側：店内焼成の工房一体型、プレオープン中の営業時間変更、予約不可・席数5席・回転とテイクアウト比率。シーン適性：手土産・ギフト・一人のご褒美、接待の手土産の相場。名古屋初出店で業態設計を読む",
+      "main_store": {
+        "name": "ちひろ菓子店 新栄葵店",
+        "id": "",
+        "area": "新栄",
+        "genre": "洋菓子・フィナンシェ"
+      },
+      "sources": [
+        {
+          "label": "ちひろ菓子店 新栄葵店 公式Instagram（プレオープンの営業時間）",
+          "url": "https://www.instagram.com/p/DeSoUu-kxxS/",
+          "date": "2026-10-09"
+        },
+        {
+          "label": "名古屋情報通「ちひろ菓子店 新栄に名古屋初上陸」",
+          "url": "https://jouhou.nagoya/chihiro-kashiten/",
+          "date": "2026-10-08"
+        },
+        {
+          "label": "Aichispot「ちひろ菓子店 新栄葵店」",
+          "url": "https://www.aichispot.com/chihirosweetsshop-nagoya-open/",
+          "date": "2026-10-10"
+        },
+        {
+          "label": "ちひろ菓子店 公式オンラインショップ",
+          "url": "https://chihirosweets.myshopify.com/",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "食べログ ちひろ菓子店 新栄葵店",
+          "url": "https://tabelog.com/aichi/A2301/A230104/23097967/",
+          "date": "2026-10-09"
+        }
+      ],
+      "trending_signals": {
+        "x_mentions": 0,
+        "media_count": 3
+      }
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "伏見駅の「ひものや 官兵衛」干物定食1,298円から、選べる2品の組み方を業界人が読む",
+      "lead_draft": "10月1日に伏見駅のエレベーター前へ2店舗目を出した干物定食店。基本1,298円で2品選べる『わたしの定食』の設計と、ご飯味噌汁おかわり自由の回転を読む。",
+      "angle": "価格帯の読み方：基本1,298円と追加220円の組み方。オペの裏側：約30席、平日中抜き営業、定休日なし。シーン適性：一人ランチ、ビジネス街の昼",
+      "main_store": {
+        "name": "ひものや 官兵衛",
+        "id": "",
+        "area": "伏見",
+        "genre": "干物定食"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通「ひものや 官兵衛」",
+          "url": "https://jouhou.nagoya/himono-kanbee/",
+          "date": "2026-10-06"
+        },
+        {
+          "label": "食べログ ひものや官兵衛（新栄町本店）",
+          "url": "https://ssl.tabelog.com/en/aichi/A2301/A230103/23083569/",
+          "date": "2026-10-09"
+        },
+        {
+          "label": "ホットペッパー 伏見エリア",
+          "url": "https://www.hotpepper.jp/SA33/Y205/MT00090/",
+          "date": "2026-10-09"
+        }
+      ],
+      "trending_signals": {
+        "media_count": 1
+      }
+    }
+  ]
+}
