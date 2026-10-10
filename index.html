@@ -1325,6 +1325,25 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 .card-actions .mrow{border:0;padding:0;flex-wrap:nowrap;}
 .card-actions .ml{min-height:var(--tap-min);border-radius:var(--r-md);}
 #fb-fab{box-shadow:none;}
+.feature-strip-label-note{letter-spacing:0;}
+.card .card-flag{right:calc(.6rem + 44px);}
+.results-summary{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem .8rem;}
+.results-summary .search-interpret{margin:0;}
+.results-summary-foot{flex:0 0 auto;}
+#fb-fab{display:inline-flex;align-items:center;gap:.35rem;min-height:var(--tap-min);padding:0 .95rem;}
+#fb-fab .ic{width:18px;height:18px;}
+@media(max-width:768px){#fb-fab{width:var(--tap-min);padding:0;justify-content:center;}.fb-fab-txt,.notify-txt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}.notify-btn{min-width:var(--tap-min);min-height:var(--tap-min);justify-content:center;}}
+#modal-cta-row{display:grid;grid-template-columns:1fr 1fr;}
+#modal-cta-row .modal-cta-hp,#modal-cta-row .modal-cta-btn:only-child{grid-column:1/-1;}
+.modal-cta-btn{gap:.4rem;}
+.modal-cta-hp{background:var(--ember);box-shadow:none;}
+.modal-cta-hp:hover{transform:none;box-shadow:none;}
+.modal-cta-gm,.modal-cta-call{box-shadow:none;}
+.m-info-row .l{display:inline-flex;align-items:flex-start;gap:.3rem;}
+.m-info-row .l .ic{color:var(--gold);margin-top:.1em;}
+.m-section-title::before,.mml::before{display:none;}
+.m-section-title,.mml{font-size:var(--fs-sm);color:var(--text);}
+@media(max-width:420px){#modal-cta-row .modal-cta-btn{flex:none;}}
 @media(max-width:768px){.grid{grid-template-columns:minmax(0,1fr);}}
 @media(min-width:769px) and (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:720px){.no-sakura-pillars{grid-template-columns:1fr;border:0;}.no-sakura-pillar{border:0;padding:0;}}
@@ -1732,7 +1751,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
     <label for="si" class="visually-hidden">レストランを検索</label>
     <span class="search-field">
       <svg class="ic search-field-ic" aria-hidden="true"><use href="#i-search"/></svg>
-      <input id="si" type="text" placeholder="店名・エリア・ジャンルで探す" aria-label="レストランを検索">
+      <input id="si" type="text" placeholder="店名・エリア・ジャンル" aria-label="レストランを検索">
       <button type="button" class="search-clear-btn" aria-label="検索語をクリア" onclick="clearSearchQuery()">×</button>
     </span>
     <button onclick="doSearch()" aria-label="検索">検索</button>
@@ -2068,7 +2087,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
     </select>
   </div>
   <div class="sort-meta-bar" id="sort-meta-bar">
-    <button class="notify-btn" id="notify-btn" onclick="showNotifyToast()" aria-label="この絞り込み条件に合致する新店舗を通知設定する"><span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>この条件で通知</button>
+    <button class="notify-btn" id="notify-btn" onclick="showNotifyToast()" aria-label="この絞り込み条件に合致する新店舗を通知設定する"><span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span><span class="notify-txt">この条件で通知</span></button>
     <div class="view-toggle" id="view-toggle">
       <button id="vt-grid" class="active" onclick="setViewMode('grid')" aria-label="グリッド表示" title="グリッド表示"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="6" height="6" rx="1"/><rect x="8" y="0" width="6" height="6" rx="1"/><rect x="0" y="8" width="6" height="6" rx="1"/><rect x="8" y="8" width="6" height="6" rx="1"/></svg></button>
       <button id="vt-list" onclick="setViewMode('list')" aria-label="リスト表示" title="リスト表示"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="14" height="3" rx="1"/><rect x="0" y="5.5" width="14" height="3" rx="1"/><rect x="0" y="11" width="14" height="3" rx="1"/></svg></button>
@@ -7750,7 +7769,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <!-- STORE-INDEX:END -->
 
 <!-- FEEDBACK-WIDGET:START -->
-<button type="button" id="fb-fab" aria-haspopup="true" aria-expanded="false" aria-controls="fb-panel">ご意見を送る</button>
+<button type="button" id="fb-fab" aria-haspopup="true" aria-expanded="false" aria-controls="fb-panel" aria-label="ご意見を送る" title="ご意見を送る"><svg class="ic" aria-hidden="true"><use href="#i-message-square"/></svg><span class="fb-fab-txt">ご意見</span></button>
 <div id="fb-panel" role="dialog" aria-label="サイトへのご意見" aria-hidden="true">
   <div class="fb-panel-head">
     <span class="fb-panel-title">FEEDBACK — サイトへのご意見</span>
@@ -10024,7 +10043,9 @@ function renderPagination(totalPages) {
 // ── 店舗モーダル（2026-09 再設計）のヘルパー ─────────────────────────────
 function mEsc(t){ return String(t == null ? '' : t).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 function mCtaEsc(t){ return String(t||'').replace(/'/g,'').replace(/</g,'').replace(/>/g,''); }
-function mInfoRow(label, valueHtml){ return valueHtml ? '<div class="m-info-row"><span class="l">' + label + '</span><span class="v">' + valueHtml + '</span></div>' : ''; }
+// DSN-008: 行の見出しにアイコンを添える（語の見出しは残す）
+var M_INFO_ICONS = {'住所':'map-pin','アクセス':'train-front','営業時間':'clock','定休日':'calendar-check','席・個室':'users','価格帯':'japanese-yen'};
+function mInfoRow(label, valueHtml){ return valueHtml ? '<div class="m-info-row"><span class="l">' + (M_INFO_ICONS[label] ? '<svg class="ic" aria-hidden="true"><use href="#i-' + M_INFO_ICONS[label] + '"/></svg>' : '') + label + '</span><span class="v">' + valueHtml + '</span></div>' : ''; }
 // 「◯◯駅 … 徒歩N分」をアクセス文から取り出す（取れない時は null＝表示しない）
 function mWalkFromAccess(access){
   var m = String(access || '').match(/([^\s、。／\/・,，（）()]{1,16}?駅)[^\d]{0,14}?徒歩\D{0,3}(\d{1,2})\s*分/);
@@ -10433,7 +10454,7 @@ function openM(i, source) {
   var ctaRow = document.getElementById('modal-cta-row');
   var stickyEl = document.getElementById('m-sticky-cta');
   var hpId2 = r['ホットペッパーID'] || '';
-  var mapBtnHtml = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_cta\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認">地図で場所を確認する</a>';
+  var mapBtnHtml = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_cta\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認"><svg class="ic" aria-hidden="true"><use href="#i-map"/></svg>地図</a>';
   var hpBtnHtml = hpId2 ? '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="nbReserveExit(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',store_id:\'' + ctaEsc(hpId2) + '\',link_domain:\'www.hotpepper.jp\',location:\'modal\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>' : '';
   var callBtnHtml = nbCallBtnHtml(r, ctaEsc, false);
   if (ctaRow) { ctaRow.innerHTML = hpBtnHtml + callBtnHtml + mapBtnHtml; ctaRow.style.display = ''; }
