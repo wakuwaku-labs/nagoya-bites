@@ -25,7 +25,7 @@
 
 ### [ISSUE-150] 週次レポートの「予約送客 上位の店」を GAS 本体に反映する
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: in_progress
 - **detected**: 2026-10-09
 - **category**: 計測
 - **owner**: オーナー（GAS エディタで Code.js を貼り替える）
@@ -35,6 +35,7 @@
 - **acceptance**:
   1. GAS エディタに `.gas-deploy/Code.js` の現行版を貼り、保存する
   2. 次の月曜の週次レポートメールに「【予約送客 上位の店】」の見出しが出る（送客0件の週は出ないので、出ない場合は `data/store_referrals.json` の件数と照合する）
+- **結果（2026-10-10）**: オーナー作業ではなく Claude が `./deploy-gas.sh`（clasp push）で反映した（オーナー指示「リスクを解消して」）。反映前に GAS の現行コードを clasp pull で取り、リポジトリの f2420fa221（#256）と完全一致＝GAS 上で直接の編集が無いことを確かめてから push。反映後にもう一度 pull し、main の `.gas-deploy/Code.js` と一致することを確認。残りは達成条件2（次の月曜の週次メールに「【予約送客 上位の店】」が出るか）を見て done にする
 
 ### [ISSUE-151] 予約成立を数えるために「報酬を受け取らない計測専用アフィリエイト」を使うかを決める
 
@@ -71,6 +72,7 @@
   - GAS の反映はオーナーの操作（[[ISSUE-150]] と同じ貼り替えで入る）。反映の確かめは `data/gas_deploy_policy.json` に痕跡を足した（新: 「同じクリックは1回」・旧: 「予約ドメインへの外部リンク含む」）。`pending_fixes` に ISSUE-149 と ISSUE-152 を入れたので、旧コードのレポートが2回続くと gas-deploy-watchdog が Issue（＝メール）で知らせ、反映されると閉じる。watchdog の対処手順の文面は特定の修正（SEO-063）に依らない形にした
   - 残り: 合流後のビルドの `cta.reservationOverlap7d` を読んで件数を Linear に残す（達成条件1）。GAS の反映後に、日次レポートで新しいラベルと注記を確かめ、`pending_fixes` を空にして done
 - **2026-10-09 追記（達成条件1・合流後のビルド 37904511486 の値）**: main の `data/site_metrics.json` の `cta.reservationOverlap7d`（7daysAgo〜yesterday）で、予約ボタンのイベント（cta_click・cta_reserve）9件と予約サイトへの外部リンク（outbound_click）13件を足すと22件、同じページ・同じ予約サイトで重なりを除くと17件（重なり5件）。内訳: hotpepper.jp はボタン9・外部リンク7→11件、tabelog.com はボタン0・外部リンク6→6件。食べログのボタンで cta_click を送るのは店舗ページだけで、店舗ページの計測は SEO-115 の再生成（10-09）まで動いていなかったため、この7日の食べログは外部リンクだけになる（index.html・特集・ジャーナルの食べログのリンクは outbound_click だけを送る）。達成条件1は満たした。残りは達成条件3（週次レポートの注記）で、GAS のデプロイ（オーナー作業・ISSUE-150 と一緒）の後に日次・週次レポートで「同じクリックは1回」と注記の行を確かめてから done にする
+- **2026-10-10 追記**: GAS へ反映済み（[[ISSUE-150]] と同じ push・反映後の pull で main と一致を確認）。残りは翌朝以降の日次レポートで「同じクリックは1回」の表記と注記を確かめ、`pending_fixes` を空にすること
 
 ### [ISSUE-161] ビルドの CI が main の最新から始まるようにし、続けて合流したときの push 失敗をなくす
 
@@ -196,9 +198,10 @@
 - **priority**: P1 → **status**: ready
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
-- **owner**: DataKeeper
+- **owner**: オーナー確認 ← DataKeeper
 - **source**: [[ISSUE-160]] の作業中に発見（外した42件のうち13件の Instagram が、外した食べログのページから取ったものだった）
 - **brand-filter**: ✅ 適合 — 実在保証（店舗ページの Instagram と埋め込み投稿が別の店のものになっている可能性）
+- **エスカレーション（2026-10-10）**: 達成条件1に「ブランド共通の公式を残すかはオーナーの判断を仰ぐ」とあり、350件のうち226件がブランド共通・別支店アカウントの可能性がある。自動処理を始める前にオーナーが「ブランド共通アカウントをどう扱うか」の方針を決める必要がある。`data/instagram_resolved.json` の `tabelogUrl` フィールドから対象350件は `node -e "const d=require('./data/instagram_resolved.json');const s=new Set(require('./data/stores.json').map(x=>x.食べログURL||''));console.log(d.filter(r=>r.tabelogUrl&&!s.has(r.tabelogUrl)).length)" ` で確認できる。オーナーが方針を決めたら DataKeeper が着手する
 - **背景**: `data/instagram_resolved.json` のうち974件は、店の食べログのページに載っている Instagram を取ったもの（method が TBG-Q1-core 947件・TBG-Q2-clean 27件。`tabelogUrl` に使ったページを記録している）。その食べログのリンクは、9/3・9/20（[[ISSUE-131]]）・10/9（[[ISSUE-160]]）に別の店・別の支店を指すとして外したものを含む。2026-10-09 に data/stores.json と突き合わせると、使った食べログのページが今は店のリンクでない（すべて食べログのリンクが無くなった店）のに、その Instagram を表示している店が350件あった。うち226件は複数の店が同じアカウントを表示している（ブランドの公式や、別の支店のアカウント）。124件はその店だけが表示している。227件は Instagram の投稿をカードに埋め込んでいる。例: 碧亭（栄1）→ midori_tei_miyoshi（みよし市の碧亭）、餃子のかっちゃん 名古屋駅南口2号店 → kacchan_sakae、鶏ん家 栄住吉店 → tori_n_chi_shinsakae、肉のよいち 新栄葵店 → nikunoyoichi_oozone
 - **acceptance**:
   1. 350件を「その店のアカウント」「ブランド共通の公式アカウント」「別の支店のアカウント」「別の店のアカウント」「決められない」に分ける基準を決める（ブランド共通の公式を残すかはオーナーの判断を仰ぐ）。判定は第三者が確かめられる事実（Instagram のプロフィール名・プロフィールの住所や支店名・店の公式サイトのリンク）だけで行う
@@ -729,9 +732,26 @@
 - **関連**: [[ISSUE-184]]（10-09 が欠番になった原因）
 - **2026-10-10 結果（done）**: 達成条件1〜3を満たした（`bash -n` OK・テスト3件 pass）。Autopilot フックが無人実行の中で自動コミット・マージすること自体は `~/.claude/autopilot/`（リポジトリの外）の設定で、ここでは止めていない。`run_journal_local.sh` はブランチを main に戻す処理を持つが、main へのマージまでは想定していない
 
+### [ISSUE-186] ホットペッパーが閉店・掲載終了を示す掲載店の営業を一次情報で確かめ、30日後に確かめ直す
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-10
+- **due**: 2026-11-09
+- **category**: data / trust
+- **owner**: DataKeeper
+- **source**: 2026-10-10 に手動で回した夜間QA（run 37981361126）の soft `hotpepper-closures`（[[ISSUE-174]]）が赤
+- **brand-filter**: ✅ 適合 — 実在保証。推測で閉店にしない
+- **背景**: 日次のリンク照合が、ホットペッパーの店舗ページが店名の上に【閉店】を出している掲載店2件（肉のよいち 大曽根駅前店・和酒処あま野なごみ）と、ページが無い（HTTP 404）掲載店9件を数えた。2026-10-10 に Google の店舗情報（Basic の項目だけ・1回）と Web 検索で確かめたが、どの店も「名前と住所が掲載と合う独立した2つの情報源」がそろわなかった。肉のよいちは同じ placeId の店舗情報が「大衆ホルモン・やきにく 煙力 大曽根駅前店」に名前を変えて閉業、あま野なごみは Google では営業中。404 の9件のうち、Google で閉業・臨時休業なのは3件（焼肉TARASHI 栄錦店＝支店名が違う「錦本店」・夜桜OSU・焼肉 LAVA 29＝臨時休業）で、掲載データに住所が残っておらず比べられない。残る6件は Google で営業中
+- **実施（2026-10-10）**: 5件を `data/store_liveness_reviews.json` に「決められない」として根拠つきで記録した（掲載は続ける）。同じ店で夜間QA を毎日赤にしないよう、`scripts/audit_store_link_identity.js` の `summarizeClosures` は、確かめて閉店と決められなかった店（verdict が閉店以外・確かめた日から30日以内）を `closed` ではなく `reviewed` に分けて出す。30日を過ぎれば `closed` に戻り、確かめ直しを促す（`tests/audit_store_link_identity.test.js`）
+- **acceptance**:
+  1. 2026-11-09 以降に、5件のホットペッパーのページと Google の店舗情報（Basic の項目だけ）を取り直し、店の公式の発信も探す。名前と住所が合う情報源が2つ以上閉店を示した店だけを `data/closed_stores.json` へ入れ、記録を更新する
+  2. 404 の店は、掲載の住所が分からない限り Google の店舗情報を根拠に数えない（[[ISSUE-147]]）。食べログが取得できるようになっていれば、食べログの住所と比べる
+  3. 夜間QA の `hotpepper-closures` が、確かめていない【閉店】で赤にならない
+- **関連**: [[ISSUE-172]]（同じく30日後に確かめ直す5店）・[[ISSUE-173]]（Places の定期更新・オーナー確認待ち）
+
 ### [ISSUE-154] 特集とジャーナルに残る、別の店を指す食べログリンクをなくし、再発を検知する
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **detected**: 2026-10-09
 - **category**: data / trust
 - **owner**: Builder / Editor
@@ -742,6 +762,7 @@
   1. [[ISSUE-155]]（8件を外す・確かめられたものだけ差し替える）と [[ISSUE-156]]（特集とジャーナルの手書きリンクを監査に入れる）が done
   2. 夜間QA の架空店監査が緑になる
 - **結果（2026-10-09・途中）**: 子課題 [[ISSUE-155]]・[[ISSUE-156]] は done。手元で `node scripts/audit_feature_stores.js` の実在不明は 0 件。達成条件2（夜間QA の架空店監査が緑）は 10-10 の夜間QA で確かめてから done にする。[[ISSUE-157]]（しろむら 丸の内店・柳橋本店の URL）は別に進める
+- **2026-10-10 結果（done）**: 達成条件2を満たした。手動で回した夜間QA（run 37981361126・main）で `[soft] 架空店監査（特集の掲載店 vs LOCAL_STORES）` が ✅（10-09 の run 37868332495 では ❌ だった）
 
 
 ### [ISSUE-155] 特集とジャーナルの、別の店を指す食べログリンク8件を外し、「しろむら 泉店」を「泉本店」にそろえる
@@ -846,7 +867,7 @@
 
 ### [SEO-115] 店舗ページの GA4 計測を直し、生成ページのインラインJS構文を CI で検査する
 
-- **priority**: P0 → **status**: in_progress
+- **priority**: P0 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / 計測
 - **owner**: Builder
@@ -868,6 +889,8 @@
 - **合流後（2026-10-09 03:00 JST）**: PR #403 を 208f72697e で合流。build.yml（run 37818977796）が店舗ページ 4,907 本を再生成した。ただし build は店舗データを更新してから再生成するため、手元で現役と数えた 13 店が CI では孤児になり、壊れた形のまま残った（監査は ok:false・26 件。continue-on-error のため API のステップ結果は success と出る）。この 13 本を後続 PR で1行置換し、main 相当の全 6,050 ファイルで違反 0 を確認した。初回 CI が赤だったため、blocking 化（受け入れ条件4）は次の緑を確認してから行う。PR #404 合流後の run 37821594703 で監査が違反 0（6,050 ファイル）になり、main の `grep -l 'https?:///i' stores/*.html` も 0 本（受け入れ条件2 ✅）。後続 PR で build.yml の continue-on-error を外した（受け入れ条件4 ✅）。残りは GA4 での確認（3）と夜間QA の緑（5）
 - **補足**: 店舗ページの CTA ボタンは `onclick="trackEvent('cta_click',…)"` を持つ。`trackEvent` は壊れた script の中で定義されていたため、CTA クリックも 2026-05-08 から GA4 に届いていなかった（リンク自体は開く）。北極星の CTA 率も店舗ページ分を欠いている
 - **合流後の確認（2026-10-09 07:00 JST）**: 達成条件2は満たした（build.yml の run 37847253405 で監査 6,027 本・違反0。main で `grep -l 'https?:///i' stores/*.html` は 0）。達成条件4は済み（ステップは blocking）。残りは3と5。3 の `topPages` は上位5ページしか持たないため、店舗ページが個別に入ることはまず無い。オーナーが GA4 のリアルタイムで `/stores/` を確かめるか、10-10 以降の `data/metrics_history.json` で店舗ページ分の段差を見る。5 は次の夜間QA（`data/qa_findings.json` は 10-08 分のまま）
+- **2026-10-10 結果（done）**: 達成条件3と5を満たした。3: `data/site_metrics.json` の `cta.byPage` に店舗ページ発の `cta_click`（`/stores/J004402690.html` ほか・`reservationClicksByPage` にも5件）が出た。10-04〜10-08 の各版では店舗ページ発は0件で、`trackEvent` と gtag が店舗ページで動き出したことを示す（`topPages` は上位5ページしか持たないため、こちらで確かめた）。5: 夜間QA（run 37868332495・head 8f4fc79）で `[hard] インラインJS構文監査` が ✅
+
 
 ### [SEO-117] GSC の意図別・ページ種別の値を日次の指標履歴に残す
 
@@ -899,6 +922,8 @@
   2. 合流後 7 日以上のデータで、[[SEO-095]]・[[SEO-099]] の基線を `track_metrics.js --baseline` で取る
   3. 既存4件は、`/stores/` を除いた値で比べるか、比較できないと台帳に記録する
   4. 店舗ページ込みの GA4 の真値（PV・セッション）を `docs/kpi-weekly.md` に記録する
+- **2026-10-10 途中経過（達成条件1・3）**: 1: 計測が変わった日の台帳 `data/measurement_changes.json` に SEO-115（2026-10-09・ga4）を記録し、`scripts/track_metrics.js` の `--followup`・`--report`・`--north-star` が、比べる2日の間（前の日の30日窓の始まりより後〜後の日）にこの日が入ると `measurement_changes` に注意を出すようにした（GSC だけの比較には出さない・`tests/measurement_changes.test.js`）。3: 台帳の既存4件（SEO-003・ISSUE-067・SEO-060・DSN-003）に `measurement_note` を付け、GA4 での比較は 10-09 をまたがない（`/stores/` を除いた合計は site_metrics.json に無く、除いた比較もできない）と記録した。2（10-16 以降に SEO-095・SEO-099 の基線）と4（GA4 の真値を kpi-weekly へ）は日付待ち
+
 
 ### [SEO-119] 栄エリア7店のアクセス文から県外の駅名を除く
 
@@ -1188,7 +1213,7 @@
 
 ### [SEO-133] 生成AIに引用されやすくし、Bing の取り込みを早める
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO
 - **owner**: Marketer / Builder
@@ -1199,10 +1224,11 @@
 - **acceptance**:
   1. 子課題3件が閉じている
   2. 30 日の生成AI経由・Bing経由セッションを `docs/kpi-weekly.md` に記録する
+- **結果（2026-10-10）**: 子課題3件（SEO-134・SEO-135・SEO-136）が完了。生成AI経由108セッション・Bing経由421セッション（30日・`data/search_channel_metrics.json` 2026-10-09）を `docs/kpi-weekly.md` の2026-10-09スナップショットに追記
 
 ### [SEO-134] 特集の冒頭に3行の結論を置く
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
 - **category**: SEO / コンテンツ
 - **owner**: Editor / Designer
@@ -1220,7 +1246,7 @@
   - 手羽先の検索は「風来坊と山ちゃんの違い」が中心で、価格帯の結論は答えにならない
   - 表示の多い特集（一人飲み・手羽先・秋・ひつまぶし・うな重・味噌煮込み）は .art-body の無い別のテンプレートで、冒頭に EDITORS' PICK（上位3店・[[SEO-042]]）が既にある。結論を足すと店名の区画が2つ並ぶ
   - 次に進めるなら、EDITORS' PICK と結論を1つの区画にまとめる設計から（Designer のレビューが要る）
-
+- **結果（2026-10-10）**: デート特集（`features/nagoya-date-dinner.html`）は [[SEO-122]] で適用済み・Designer QA-5 通過。発見型の表示がある残りの特集（一人飲み 914表示・手羽先 1表示）は2026-10-09 の調査（上記メモ）で構造上の理由から追加しない判断を確認した。EDITORS' PICK との統合設計は別課題として残す。達成条件1〜3の対象となる特集で追加作業なし
 
 ### [SEO-135] llms.txt にハブの階層と数値の出典・更新日を載せ、Organization に sameAs を足す
 
@@ -3386,6 +3412,8 @@
   - **判定**: acceptance ①②③④は実装済み、⑤の「前後比」は効果が出たとも出なかったとも言えるだけのデータが無い（展開先ページの表示が2桁）。**status は `in_progress` 据え置き**。次回判定日は **2026-10-27**（展開先ページの 28日窓が公開日 09-14 以降だけで埋まる 10-12 版以降、かつ表示が最低30件貯まっていること）。その時点で `名古屋駅 一人飲み` が10位以内に入らず展開先ページの表示も30未満なら「勝てないと判明した」として率直にクローズする（ガードレール）。判定前に導線追加・位置変更をしない（2026-09-19/09-20 追記の順序どおり）。
 
 - **2026-10-09 追記（SEO分析・次の打ち手を固定）**: GSC 28日（09-10〜10-07）で「名古屋駅 一人飲み」は 56 表示・4 クリックで `nagoya-solo-dining` に 10.3 位で着地し、`meieki-hitori-nomi` はページ全体で 13 表示・4 クリック・15.5 位。名駅版が親の特集と同じ検索で食い合っている。次の打ち手は (1) solo-dining 本文の名駅の記述から名駅版へ「名古屋駅の一人飲み」の語でリンクする (2) 名駅版を solo-dining と同じ型（エリア節・見出し・選定理由）に厚くする。栄版の新設は GSC に「栄 一人飲み」の表示が出てから。計画全体は [[SEO-116]]・`docs/seo-strategy-2026-10.md`
+- **2026-10-10 実施（次の打ち手 (1)）**: `features/nagoya-solo-dining.html` の「業界人が一人で通う10店」のリード（名古屋駅エリアを中心に選んだと書いている段落）から、`features/meieki-hitori-nomi.html` へ「名古屋駅の一人飲み（出口別ガイド）」の語でリンクした（`internal_link_click`・block=feature_body で計測）。名駅版は既に6店・出口別ミニマップ・業界人の視点・FAQ を持つため (2) の厚くする作業は効果を見てから。効果は GSC の「名古屋駅 一人飲み」の着地ページと両ページの順位で 4 週後（11-07 ごろ）に見る
+
 
 ### [SEO-084] 特集48本の店舗リンクがクリック計測を持たず、「店舗詳細クリック0回」という助言が毎日そこから再生産されている（SEO-072 の残り穴）
 

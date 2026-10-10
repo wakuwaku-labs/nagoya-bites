@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T15:46:12.510Z",
+  "generatedAt": "2026-10-10T00:19:28.164Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -17,21 +17,12 @@
       },
       {
         "query": "一人飲み",
-        "impressions": 79,
+        "impressions": 75,
         "clicks": 4,
         "position": 3.9,
-        "ctr": 5.06,
+        "ctr": 5.33,
         "expectedCtr": 8.3,
-        "missedClicks": 2.6
-      },
-      {
-        "query": "青ノ月",
-        "impressions": 150,
-        "clicks": 3,
-        "position": 8.4,
-        "ctr": 2,
-        "expectedCtr": 3,
-        "missedClicks": 1.6
+        "missedClicks": 2.2
       }
     ],
     "rankPush": [
@@ -49,48 +40,48 @@
     "ctrFix": [
       {
         "page": "/stores/J004660861.html",
-        "impressions": 1156,
+        "impressions": 1154,
         "clicks": 23,
         "position": 6.6,
         "ctr": 1.99,
         "expectedCtr": 4.4,
-        "missedClicks": 27.9
+        "missedClicks": 27.8
       },
       {
         "page": "/stores/J004660223.html",
-        "impressions": 747,
+        "impressions": 740,
         "clicks": 11,
         "position": 7.7,
-        "ctr": 1.47,
+        "ctr": 1.49,
         "expectedCtr": 3.4,
-        "missedClicks": 14.7
+        "missedClicks": 14.4
       },
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 644,
+        "impressions": 632,
         "clicks": 9,
         "position": 7.7,
-        "ctr": 1.4,
+        "ctr": 1.42,
         "expectedCtr": 3.4,
-        "missedClicks": 13.1
+        "missedClicks": 12.8
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2204,
-        "clicks": 12,
-        "position": 19.7,
-        "ctr": 0.54,
-        "upsideClicks": 49.8
+        "impressions": 2107,
+        "clicks": 11,
+        "position": 20,
+        "ctr": 0.52,
+        "upsideClicks": 48
       }
     ]
   },
   "howto": "ctrFix=1ページ目・低CTR→タイトル/メタ改善 / ctrFixGeoless=地名なし全国クエリ(SEO-061)→検索者の大半が名古屋在住とは限らず低CTRが正常。追うなら要検証 / rankPush=2〜3ページ目・高需要→順位改善（内容/内部リンク）。採否は CLAUDE.md の Moat/Strategic Skip で triage。",
   "summary": {
     "queryCtrFix": 0,
-    "queryCtrFixGeoless": 3,
+    "queryCtrFixGeoless": 2,
     "queryRankPush": 1,
     "pageCtrFix": 3,
     "pageRankPush": 1,

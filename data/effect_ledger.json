@@ -29,7 +29,13 @@
       },
       "target_metric": "ctaClickRate",
       "target_value": 3,
-      "followup": null
+      "followup": null,
+      "measurement_note": {
+        "date": "2026-10-10",
+        "change": "SEO-115（2026-10-09・GA4 の店舗ページ計測の復旧）",
+        "comparable_after_change": false,
+        "note": "この施策の基線（2026-06-01）は店舗ページの GA4 が動いていなかった期間に取った。2026-10-09 以降の GA4 の値と比べると計測の段差が入る。site_metrics.json は /stores/ を除いた合計を持たないため、店舗ページを除いた値での比較もできない。GA4 での比較は 2026-10-09 より前の followup までで止め、以後は GSC（計測変更の影響を受けない）で見る（SEO-118）"
+      }
     },
     "ISSUE-067": {
       "baseline": {
@@ -59,7 +65,13 @@
       },
       "target_metric": "ctaClickRate",
       "target_value": 8,
-      "followup": null
+      "followup": null,
+      "measurement_note": {
+        "date": "2026-10-10",
+        "change": "SEO-115（2026-10-09・GA4 の店舗ページ計測の復旧）",
+        "comparable_after_change": false,
+        "note": "この施策の基線（2026-07-16）は店舗ページの GA4 が動いていなかった期間に取った。2026-10-09 以降の GA4 の値と比べると計測の段差が入る。site_metrics.json は /stores/ を除いた合計を持たないため、店舗ページを除いた値での比較もできない。GA4 での比較は 2026-10-09 より前の followup までで止め、以後は GSC（計測変更の影響を受けない）で見る（SEO-118）"
+      }
     },
     "SEO-060": {
       "baseline": {
@@ -153,6 +165,12 @@
           }
         },
         "verdict": "目標 discovery share 10% を 29.7% で大幅達成。h3見出し適用（2026-08-17〜2026-10-02）＋monthlyScenes banquet追加（2026-09-23）の複合効果。banquet 単体の順位改善は未確認（2026-10-30まで受動観測）"
+      },
+      "measurement_note": {
+        "date": "2026-10-10",
+        "change": "SEO-115（2026-10-09・GA4 の店舗ページ計測の復旧）",
+        "comparable_after_change": false,
+        "note": "この施策の基線（2026-08-17）は店舗ページの GA4 が動いていなかった期間に取った。2026-10-09 以降の GA4 の値と比べると計測の段差が入る。site_metrics.json は /stores/ を除いた合計を持たないため、店舗ページを除いた値での比較もできない。GA4 での比較は 2026-10-09 より前の followup までで止め、以後は GSC（計測変更の影響を受けない）で見る（SEO-118）"
       }
     },
     "DSN-003": {
@@ -196,7 +214,13 @@
       },
       "target_metric": "bounce_rate",
       "target_value": null,
-      "followup": null
+      "followup": null,
+      "measurement_note": {
+        "date": "2026-10-10",
+        "change": "SEO-115（2026-10-09・GA4 の店舗ページ計測の復旧）",
+        "comparable_after_change": false,
+        "note": "この施策の基線（2026-09-07）は店舗ページの GA4 が動いていなかった期間に取った。2026-10-09 以降の GA4 の値と比べると計測の段差が入る。site_metrics.json は /stores/ を除いた合計を持たないため、店舗ページを除いた値での比較もできない。GA4 での比較は 2026-10-09 より前の followup までで止め、以後は GSC（計測変更の影響を受けない）で見る（SEO-118）"
+      }
     }
   }
 }

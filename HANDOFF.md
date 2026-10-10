@@ -4,6 +4,11 @@ status: done
 オーナー指示「こちらの確認なしで進めれるものはガンガン進めて」（2026-10-09）。SEO-116 配下と同日起票の課題のうち、オーナーの確認・操作が要らないものを順に実装し、main に合流させ、Linear を Done にする。
 （前のメモ「SEO分析と90日の戦略・戦術」は status: done で完了済み。内容は git 履歴 ab273bc61d の HANDOFF.md を参照）
 
+## 2026-10-10 追加の依頼
+オーナー「Linear の一覧をガンガン解消して欲しい。確認なしに」。オーナー作業・日付待ち・信頼/マネタイズ・ISSUE-147/165/173 は飛ばす。
+- 4zi（済み・PR #460 = 33bfb772d7）: SEO-115（P-112）Done・ISSUE-154（P-158）Done＋結果コメント。SEO-118（P-114）達成条件1・3（data/measurement_changes.json・track_metrics の measurement_changes 注意・台帳4件に measurement_note）。SEO-087（P-24）solo-dining→名駅版の本文リンク。ISSUE-186（P-188・新規・due 11-09）: HP【閉店】2件と404のうち Google 閉業/休業3件を「決められない」で記録、hotpepper-closures は確かめ済みを30日 reviewed に分ける
+- 4zj 見送り理由: 残りは日付待ち（SEO-125 10-15・ISSUE-149 10-16・ISSUE-183 10-17・SEO-118 条件2 10-16〜・ISSUE-171/172 11-09 など）、オーナー作業（P-36/32/58/53/48/30/29/110/149/144・ISSUE-150/152 の GAS）、食べログ 403 待ち（ISSUE-158）、オーナー判断（EDT-003・ISSUE-147/165/173・SEO-132/142）、効果測定待ち（SEO-087/091/095/099）。SEO-134 は広げる先が無いと 10-09 に判断済み（EDITORS' PICK との統合設計からやり直す）。P-109 は別 Project（仕込みまとめツール）で触らない。soft→hard 昇格は緑が1〜2回のため次の週に
+
 # 完了条件
 - 下の「対象」の各課題が、テストと QA を通って main に合流し、agent-backlog.md が done、Linear が Done（結果コメントつき）になっている
 - 日付待ち・オーナー待ちの課題は手を付けず、理由をここに残す

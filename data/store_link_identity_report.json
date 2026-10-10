@@ -1,49 +1,29 @@
 {
-  "generatedAt": "2026-10-09T15:59:35.526Z",
+  "generatedAt": "2026-10-10T00:33:25.304Z",
   "run": {
-    "tabelog": {
-      "attempted": 5,
-      "fetched": 0,
-      "stopped": true
-    },
     "hotpepper": {
-      "attempted": 55,
-      "fetched": 55,
+      "attempted": 60,
+      "fetched": 60,
       "stopped": false
     }
   },
   "health": {
     "tabelog": {
       "links": 2690,
-      "neverChecked": 10,
-      "unfetched": 161,
+      "neverChecked": 0,
+      "unfetched": 171,
       "lastFetchedAt": "2026-09-20T15:34:53.838Z"
     },
     "hotpepper": {
       "links": 4854,
-      "neverChecked": 3892,
+      "neverChecked": 3443,
       "unfetched": 0,
-      "lastFetchedAt": "2026-10-09T15:59:35.502Z"
+      "lastFetchedAt": "2026-10-10T00:33:25.281Z"
     }
   },
   "closures": {
     "hotpepper": {
-      "closed": [
-        {
-          "店名": "肉のよいち 大曽根駅前店",
-          "エリア": "大曽根･千種･今池･池下･守山区",
-          "url": "https://www.hotpepper.jp/strJ003985266/",
-          "検証日": "2026-10-09T08:12:51.874Z",
-          "表示": "【閉店】"
-        },
-        {
-          "店名": "和酒処あま野なごみ",
-          "エリア": "栄",
-          "url": "https://www.hotpepper.jp/strJ003893954/",
-          "検証日": "2026-10-09T09:17:39.667Z",
-          "表示": "【閉店】"
-        }
-      ],
+      "closed": [],
       "notFound": [
         {
           "店名": "産直鮮魚の海鮮酒場をかし",
@@ -107,6 +87,28 @@
           "url": "https://www.hotpepper.jp/strJ001223732/",
           "検証日": "2026-10-09T15:54:50.080Z",
           "エラー": "HTTP 404"
+        }
+      ],
+      "reviewed": [
+        {
+          "店名": "肉のよいち 大曽根駅前店",
+          "エリア": "大曽根･千種･今池･池下･守山区",
+          "url": "https://www.hotpepper.jp/strJ003985266/",
+          "検証日": "2026-10-09T08:12:51.874Z",
+          "表示": "【閉店】",
+          "判定": "決められない",
+          "確かめた日": "2026-10-10",
+          "課題": "ISSUE-186"
+        },
+        {
+          "店名": "和酒処あま野なごみ",
+          "エリア": "栄",
+          "url": "https://www.hotpepper.jp/strJ003893954/",
+          "検証日": "2026-10-09T09:17:39.667Z",
+          "表示": "【閉店】",
+          "判定": "決められない",
+          "確かめた日": "2026-10-10",
+          "課題": "ISSUE-186"
         }
       ]
     }
@@ -1485,6 +1487,36 @@
       "検証日": "2026-10-09T15:54:07.323Z"
     },
     {
+      "店名": "和食さと 則武本通店",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23033790/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T16:10:24.522Z"
+    },
+    {
+      "店名": "鳥貴族 浄心店",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230109/23044821/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T16:10:30.007Z"
+    },
+    {
+      "店名": "鳥貴族 中村公園店",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230113/23067245/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T16:10:35.207Z"
+    },
+    {
       "店名": "とりとり亭 星ヶ丘店",
       "エリア": "本山・覚王山・藤が丘",
       "種別": "tabelog",
@@ -1641,8 +1673,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230101/23075957/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:31:33.240Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T19:19:49.394Z"
     },
     {
       "店名": "クワン 栄",
@@ -1745,14 +1777,34 @@
       "検証日": "2026-10-09T07:53:03.333Z"
     },
     {
+      "店名": "おばんざい処 恩",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230106/23086138/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T16:10:40.622Z"
+    },
+    {
+      "店名": "青と紺",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23093283/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T16:10:45.470Z"
+    },
+    {
       "店名": "勘太郎 栄",
       "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
       "種別": "tabelog",
       "url": "https://tabelog.com/aichi/A2301/A230103/23002551/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:31:52.884Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T19:19:58.973Z"
     },
     {
       "店名": "REVO2 レボツー",
@@ -1761,8 +1813,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23090973/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:31:51.310Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T19:19:53.625Z"
     },
     {
       "店名": "マチュレーション",
@@ -1781,8 +1833,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230102/23078783/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:31:54.419Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T19:20:04.482Z"
     },
     {
       "店名": "MAX CAFE 名古屋丸の内店",
@@ -1791,8 +1843,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23077872/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:31:59.184Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T19:35:48.190Z"
     },
     {
       "店名": "4サンカタンソ",
@@ -1801,8 +1853,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230104/23081148/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:31:56.029Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T19:20:09.859Z"
     },
     {
       "店名": "かっぱ園菜館",
@@ -1811,8 +1863,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23000561/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:31:57.437Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T19:35:43.450Z"
     },
     {
       "店名": "POLLOカラ ポロカラ",
@@ -1821,8 +1873,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23093683/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:32:00.767Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T19:35:52.706Z"
     },
     {
       "店名": "イタリアンBBQ CARVINO 栄",
@@ -1831,8 +1883,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23095090/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:32:02.217Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T19:35:57.615Z"
     },
     {
       "店名": "串カツ田中 大須観音店",
@@ -1841,8 +1893,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230105/23065161/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:32:05.276Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T20:04:04.583Z"
     },
     {
       "店名": "うなぎのうな泰 矢場町店",
@@ -1851,8 +1903,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23079412/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:32:03.812Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T19:36:01.838Z"
     },
     {
       "店名": "TEPPAN&WINE MASA マサ",
@@ -1861,8 +1913,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23036208/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:32:07.978Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T20:04:15.870Z"
     },
     {
       "店名": "BAR CorON",
@@ -1871,8 +1923,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23095096/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:32:06.651Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T20:04:09.994Z"
     },
     {
       "店名": "LAG NAGOYA ラグナゴヤ",
@@ -1881,8 +1933,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23032880/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:32:09.352Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T20:04:20.403Z"
     },
     {
       "店名": "旬菜 泉",
@@ -1891,8 +1943,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23091006/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:32:11.008Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T20:04:25.367Z"
     },
     {
       "店名": "BAR夜美国",
@@ -1901,8 +1953,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23094348/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:32:12.653Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T20:19:39.443Z"
     },
     {
       "店名": "dining bar Libertas",
@@ -1911,8 +1963,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23095257/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:32:15.522Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T20:19:43.577Z"
     },
     {
       "店名": "BALI SEKARASIKA 栄 バリセカラシカ",
@@ -1921,8 +1973,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23082463/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:32:22.851Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T22:27:03.112Z"
     },
     {
       "店名": "マーベリック MAVERICK 名古屋",
@@ -1931,8 +1983,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23007755/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:32:18.509Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T20:19:53.931Z"
     },
     {
       "店名": "おばんざいBAR 遊心",
@@ -1941,8 +1993,8 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23093302/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:32:16.763Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T20:19:48.224Z"
     },
     {
       "店名": "明石焼き たこ焼き 虎っき 栄",
@@ -1951,8 +2003,18 @@
       "url": "https://tabelog.com/aichi/A2301/A230103/23070204/",
       "理由": "fetch-error",
       "検出タイトル": null,
-      "エラー": "getaddrinfo ENOTFOUND tabelog.com",
-      "検証日": "2026-09-20T15:32:21.538Z"
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T20:19:59.345Z"
+    },
+    {
+      "店名": "亜熱帯 名駅西椿店",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23050788/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T18:40:54.446Z"
     },
     {
       "店名": "ムンバデビ 名古屋駅店",
@@ -1973,6 +2035,46 @@
       "検出タイトル": null,
       "エラー": "HTTP 403",
       "検証日": "2026-10-09T06:06:49.906Z"
+    },
+    {
+      "店名": "dining & dessert restraunt Paff パフ",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23047660/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T18:41:00.047Z"
+    },
+    {
+      "店名": "CAFE&RESTAURANT steak TAKA ステーキ タカ",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230107/23082616/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T18:41:04.909Z"
+    },
+    {
+      "店名": "やきとり 龍星 名古屋納屋橋店",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230102/23060643/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T18:41:10.262Z"
+    },
+    {
+      "店名": "南翔饅頭店",
+      "エリア": "名古屋（名古屋駅/西区/中村区）",
+      "種別": "tabelog",
+      "url": "https://tabelog.com/aichi/A2301/A230101/23044397/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 403",
+      "検証日": "2026-10-09T18:41:14.991Z"
     }
   ],
   "reviewedKeep": [

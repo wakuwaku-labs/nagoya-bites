@@ -93,8 +93,8 @@
 |------|----|------|
 | 発見型の表示 / クリック | 1,532 / 91 | `data/gsc_metrics.json` `intent.kpi` |
 | 表示が出たハブの数 / ハブの表示 | 27 本 / 86 | `data/gsc_metrics.json` `pageTypes.area_hub` |
-| 生成AI 経由セッション | 103 | `data/search_channel_metrics.json` |
-| Bing 経由セッション | 390 | `data/search_channel_metrics.json` |
+| 生成AI 経由セッション | 108 | `data/search_channel_metrics.json`（2026-10-09T22:19 生成） |
+| Bing 経由セッション | 421 | `data/search_channel_metrics.json`（2026-10-09T22:19 生成） |
 
 ### 参考値（判定には使わない）
 | 指標 | 値 | 補足 |
