@@ -251,7 +251,7 @@ U-01 の主な場所と、言い方を作っている元（直すのは元）:
 
 - 設計のときの値（1回測り）との違い: トップの LCP は 10.1s（設計のときは 10.4〜10.5s）。ハブの CLS は 0.65 の周と 0.01 の周に割れた（電源では割れない）。設計のときの TBT（トップ 0.7〜1.9s・ハブ 2.8〜2.9s など）は、バッテリー駆動のときの値だった（測定は 15:38〜15:41 JST で、`pmset -g log` の記録は 15:01:48 から 17:56:47 まで Using Batt）。店舗ページの LCP 6.1s は、同じ店を10周した中央値（1.7〜1.8s）では再現しなかったが、店を替えると再現した（2026-10-11 の10店で中央値 7.0s・2026-10-12 の別の10店で 7.3s）。
 - LCP が1回だけ大きく外れた周があった（2026-10-12: 特集 4.1s。2026-10-11: ジャーナル 7.3s・特集一覧 15.6s。どれも10周のうち1回）。中央値は外れ値に引かれないが、目標超の回数には数える。
-- 記録: `docs/qa/uiux-2026-10/baseline/`（`perf-2026-10-12-battery.json`＝CLS はセッション窓の最大・店を替えた店舗ページ `store-sample` を含む／`perf-2026-10-11-battery.json`・`perf-2026-10-11-ac.json`・`perf-2026-10-11-store-sample.json`＝CLS は全部のずれの合計の値／1回ごとの生の行 `*.runs.jsonl`）。文字の大きさは `typography-2026-10-11.json`（既定の表示）・`typography-2026-10-11-search.json`（「焼肉」検索中）。CLS のずれの原因を調べる診断は `docs/qa/uiux-2026-10/cls_diag.js`（U-53・U-85）。
+- 記録: `docs/qa/uiux-2026-10/baseline/`（`perf-2026-10-12-battery.json`＝CLS はセッション窓の最大・店を替えた店舗ページ `store-sample` を含む／`perf-2026-10-11-battery.json`・`perf-2026-10-11-ac.json`・`perf-2026-10-11-store-sample.json`＝CLS は全部のずれの合計の値／1回ごとの生の行 `*.runs.jsonl`）。文字の大きさは `typography-2026-10-11.json`（既定の表示）・`typography-2026-10-11-search.json`（「焼肉」検索中）。CLS のずれの原因を調べる診断は `docs/qa/uiux-2026-10/cls_diag.js`（U-53・U-85）。エリア名が長い店の割合は、無作為の40店を1店1周ずつ測った `cls-store-sample-2026-10-12.json`（`docs/qa/uiux-2026-10/cls_stores.js` で測り直せる。0.1 を超えた店が7店・U-85）。
 
 | ID | 問題 | 根拠 | 確かさ |
 |---|---|---|---|
@@ -1806,6 +1806,7 @@ U-01 の主な場所と、言い方を作っている元（直すのは元）:
 | 画面を撮る | `node docs/qa/uiux-2026-10/capture.js <出力先> [topMobile topDesktop searchAndModal filterPanel pages]` | 2.1 節・第3章 |
 | 表示の速さを測る | `node docs/qa/uiux-2026-10/perf.js 10 > runs.jsonl` → `node docs/qa/uiux-2026-10/perf_summary.js runs.jsonl --label … --date … --note … --out …`（10周。`ONLY=top,hub` で絞れる。バッテリー駆動なら警告） | 2.2 節・3.6 節・第10章 |
 | CLS のずれの原因を調べる（どの要素が、いつ、なぜずれたか） | `node docs/qa/uiux-2026-10/cls_diag.js <URL> [周回数] [--no-fonts または --breadcrumb-nowrap]`（`--no-fonts`＝Web フォントを読まない／`--breadcrumb-nowrap`＝パンくずを折り返さない1行にする。条件は perf.js と同じ） | U-53・U-85・I-37 |
+| 店舗ページの CLS を、店ごとに1周ずつ測る（エリア名が長い店の割合） | `node docs/qa/uiux-2026-10/cls_stores.js <店IDの一覧 JSON または前の結果の JSON> [--out 結果の JSON] [--no-fonts または --breadcrumb-nowrap]`（1店1周。0.1 を超えた店の数と、入力の直後と判定されて数えなかったずれのある店の数を出す。店の一覧は店舗ページ 4,855 本から seed 固定の乱数で選んだ40店） | U-85・I-37 |
 | 日本語の文字に DM Mono を使っている所を数える | `node docs/qa/uiux-2026-10/dmmono.js [リポジトリの直下]`（手元のファイルを静的サーバで配り、トップの3つの状態を 390px と 1280px で見る） | U-86・I-26 |
 | 主な数字を数え直す | `node docs/qa/uiux-2026-10/counts.js` | U-01・U-31・U-32・U-33・U-35・U-36・U-71・U-73・U-83・5.6 節・7.3 節 |
 

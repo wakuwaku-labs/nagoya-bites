@@ -1,8 +1,11 @@
 // 表示速度の実測（本番・スマホ相当: 412x823・CPU 4倍遅く・150ms/1.6Mbps）。GA4 などの計測は遮断。
 // 使い方: node perf.js [回数] > runs.jsonl   （ONLY=top,hub のように絞れる。集計は perf_summary.js）
 // 測る順は「ページ種別を一周 × 回数」。同じページを続けて測ると、その間の端末の負荷の変化が1ページに偏るため。
+// CLS は web.dev の定義（いちばん大きいセッション窓の値）で計算する（cls.js）。ずれの生の値 shifts を1回ごとの行に残すので、後から同じ値を作り直せる。全部のずれの合計は clsSum（旧定義・比べない）。
 // 描画されなかった回（FCP が 0）は最大2回やり直す。画面が消えている間などは、ページが「見えない」扱いになって FCP・LCP・CLS が全部 0 で返り、
 // そのまま中央値に入れると「速くなった」ように見えるため。やり直しても描画されなかった行は、summary 側が無効として数える。
+// ページを開けなかった回（goto の失敗＝net::ERR_NETWORK_CHANGED など、または最終の URL が Chrome のエラーページ）も同じく最大2回やり直す。エラーページにも FCP・LCP は付くので、
+// 描画されたかだけでは見分けられない（2026-10-12: 店舗ページの1回が DOM 33 要素・LCP 500ms の行になった）。行に navError・finalUrl を残し、summary 側は無効として数える（判定は perf_summary.js の1本）。
 // 1回ごとに電源（power: ac か battery・macOS のみ）と、描画側の速さの目安（rendererBenchMs＝測定が終わった後、同じページの中で決まった量の計算に
 // かかった ms。CPU 4倍遅くの下）、Node 側の負荷（loadAvg1・cpus）を残す。**TBT は同じページ・同じ内容でも、電源で数十 ms と数秒に割れた**（2026-10-11:
 // 20:57 JST に充電器を抜いた時刻で、TBT が一段階上がった。pmset のログと一致）。前後の比較は、電源が同じ回どうしで見る。バッテリー駆動のときは警告を出す。
@@ -15,6 +18,8 @@ const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
 const puppeteer = require('puppeteer');
+const { installLayoutShiftCollector, clsFields } = require('./cls');
+const { isMeasured, notOpened } = require('./perf_summary');
 const BASE = process.env.BASE || 'https://nagoya-bites.com';
 const RUNS = Number(process.argv[2] || 1);
 const BLOCKED = ['*googletagmanager.com*', '*google-analytics.com*', '*analytics.google.com*', '*doubleclick.net*'];
@@ -80,16 +85,18 @@ async function measure(browser, url) {
   const byType = {}, idType = {}, kbType = {}, hosts = {}, big = [];
   client.on('Network.responseReceived', e => { const t = e.type || 'Other'; byType[t] = (byType[t] || 0) + 1; idType[e.requestId] = [t, e.response.url]; try { const h = new URL(e.response.url).host; hosts[h] = (hosts[h] || 0) + 1; } catch (x) {} });
   client.on('Network.loadingFinished', e => { bytes += e.encodedDataLength; reqs++; const [t, u] = idType[e.requestId] || ['?', '']; kbType[t] = (kbType[t] || 0) + e.encodedDataLength / 1024; if (e.encodedDataLength > 150000) big.push([Math.round(e.encodedDataLength / 1024), u.slice(0, 110)]); });
+  await page.evaluateOnNewDocument(installLayoutShiftCollector); // CLS はずれの生の値を集め、Node 側でセッション窓の最大を計算する（cls.js）
   await page.evaluateOnNewDocument(() => {
-    window.__p = { lcp: 0, lcpEl: '', lcpUrl: '', cls: 0, lt: [] };
+    window.__p = { lcp: 0, lcpEl: '', lcpUrl: '', lt: [] };
     try { localStorage.setItem('pwa-banner-dismissed', String(Date.now())); } catch (e) {}
     window.addEventListener('beforeinstallprompt', e => { e.stopImmediatePropagation(); e.preventDefault(); }, true);
     new PerformanceObserver(l => { for (const e of l.getEntries()) { window.__p.lcp = e.startTime; window.__p.lcpUrl = e.url || ''; window.__p.lcpEl = (e.element && (e.element.tagName + '.' + String(e.element.className).slice(0, 40))) || e.url || ''; } }).observe({ type: 'largest-contentful-paint', buffered: true });
-    new PerformanceObserver(l => { for (const e of l.getEntries()) if (!e.hadRecentInput) window.__p.cls += e.value; }).observe({ type: 'layout-shift', buffered: true });
     new PerformanceObserver(l => { for (const e of l.getEntries()) window.__p.lt.push([e.startTime, e.duration]); }).observe({ type: 'longtask', buffered: true });
   });
   const t0 = Date.now();
-  await page.goto(BASE + url, { waitUntil: 'load', timeout: 120000 }).catch(e => console.error('goto', url, e.message));
+  let navError = null;
+  await page.goto(BASE + url, { waitUntil: 'load', timeout: 120000 }).catch(e => { navError = e.message; console.error('goto', url, e.message); });
+  const finalUrl = page.url(); // ページを開けなかったときは chrome-error://chromewebdata/（Chrome のエラーページ）
   const loadWall = Date.now() - t0;
   await sleep(5000);
   const r = await page.evaluate(() => {
@@ -99,7 +106,7 @@ async function measure(browser, url) {
     return {
       ttfb: Math.round(nav.responseStart || 0), fcp: Math.round(fcp), lcp: Math.round(window.__p.lcp), lcpEl: window.__p.lcpEl, lcpUrl: window.__p.lcpUrl,
       dcl: Math.round(nav.domContentLoadedEventEnd || 0), load: Math.round(nav.loadEventEnd || 0),
-      cls: Number(window.__p.cls.toFixed(3)), tbt: Math.round(tbt), longTasks: window.__p.lt.length,
+      ls: { list: window.__ls || [], supported: !!window.__lsSupported }, tbt: Math.round(tbt), longTasks: window.__p.lt.length,
       htmlBytes: nav.encodedBodySize || 0, dom: document.getElementsByTagName('*').length,
       heapMB: performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1048576) : null,
       visibility: document.visibilityState,
@@ -109,7 +116,8 @@ async function measure(browser, url) {
   const rendererBenchMs = await page.evaluate(() => { const t = performance.now(); let x = 0; for (let i = 1; i <= 3000000; i++) x += Math.sqrt(i) % 7; return x >= 0 ? Math.round(performance.now() - t) : -1; }).catch(() => null);
   await ctx.close();
   for (const k in kbType) kbType[k] = Math.round(kbType[k]);
-  return { ...r, rendererBenchMs, totalKB: Math.round(bytes / 1024), reqs, byType, kbType, hosts, big, loadWall };
+  const { ls, ...rest } = r;
+  return { ...rest, ...clsFields(ls), rendererBenchMs, navError, finalUrl, totalKB: Math.round(bytes / 1024), reqs, byType, kbType, hosts, big, loadWall };
 }
 
 /** 電源が変わった・バッテリー駆動のときに知らせる。バッテリー駆動の TBT は、充電器につないだときより大きく出る（2026-10-11 の実測） */
@@ -139,8 +147,8 @@ function warnPower(power, run, lpm) {
             warnPower(host.power, i, host.lowPowerMode);
             r = await measure(browser, url);
             attempt++;
-            if (!(r.fcp > 0 && r.lcp > 0)) console.error(`unpainted ${name} run ${i} attempt ${attempt} visibility=${r.visibility}`);
-          } while (!(r.fcp > 0 && r.lcp > 0) && attempt < MAX_ATTEMPTS);
+            if (!isMeasured(r)) console.error(`${notOpened(r) ? 'not-opened' : 'unpainted'} ${name} run ${i} attempt ${attempt} ${notOpened(r) ? (r.navError || r.finalUrl) : `visibility=${r.visibility}`}`);
+          } while (!isMeasured(r) && attempt < MAX_ATTEMPTS);
           console.log(JSON.stringify({ name, run: i, url, attempts: attempt, ...host, ...r }));
         } catch (e) { console.error('fail', name, e.message); }
       }
