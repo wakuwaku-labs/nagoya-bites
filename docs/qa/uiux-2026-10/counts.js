@@ -127,4 +127,70 @@ const PHRASES = ['現役の飲食店マネージャー', '現役飲食店マネ�
   out['データ'] = { stores: stores.length, fields, closedTemp, halfKanaArea: halfKana, pctHalfKana: pct(halfKana, stores.length), googlePhotoStores: places.length, googlePhotoOrigin: origin };
 }
 
+// 5.6 節・7.3 節 設計の部品が使うデータの埋まり具合と、電話のボタンが出る店
+{
+  const has = (s, k) => {
+    const v = s[k];
+    if (v === undefined || v === null) return false;
+    if (Array.isArray(v)) return v.length > 0;
+    return String(typeof v === 'object' ? JSON.stringify(v) : v).trim() !== '';
+  };
+  const z2h = t => String(t || '').replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0));
+  const n = f => stores.filter(f).length;
+  const row = f => { const c = n(f); return c + '（' + pct(c, stores.length) + '）'; };
+  const reserve = s => has(s, 'ホットペッパーID') || has(s, '食べログURL');
+  const pid = s => has(s, 'placeId');
+  const ari = k => s => typeof s[k] === 'string' && /^あり/.test(s[k].trim()); // ハブの条件と同じ判定（scripts/lib/area_genre_pages.js）
+  // Google の紐付け（placeId）が掲載の店と合うか（7.3 節）。住所を先に比べる（食べログの照合と同じ判定）。
+  // 店名の判定（架空店の確認と同じ）は厳しく、同じ住所の同じ店でも表記の違いで落ちるため、住所が比べられない店にだけ使う
+  const { namesMatch } = require(path.join(ROOT, 'scripts/lib/store_name_match.js'));
+  const { compareJpAddress } = require(path.join(ROOT, 'scripts/lib/store_link_identity.js'));
+  const { editorReasonOf } = require(path.join(ROOT, 'scripts/lib/editor_reason.js'));
+  const resolved = JSON.parse(rd('data/places_resolved.json'));
+  const byPlaceId = {};
+  for (const v of Object.values(resolved)) if (v && v.placeId) byPlaceId[v.placeId] = v;
+  const link = s => {
+    const r = byPlaceId[s.placeId];
+    if (!r || !r.name) return 'no-record';
+    const a = (s['住所'] && r.formatted_address) ? compareJpAddress(s['住所'], r.formatted_address).verdict : 'unknown';
+    if (a === 'same') return 'address-same';
+    if (a === 'different') return 'address-different';
+    return namesMatch(s['店名'], r.name).ok ? 'address-unknown-name-ok' : 'address-unknown-name-ng';
+  };
+  const linkCount = f => { const c = {}; for (const s of stores.filter(f)) { const k = link(s); c[k] = (c[k] || 0) + 1; } return c; };
+  out['設計が使うデータ'] = {
+    stores: stores.length,
+    // 電話番号はデータに持たない（Google の規約で保存できない）。押したときに placeId で Google から取る
+    phone: {
+      placeId: n(pid),
+      reserveAndPlaceId: n(s => reserve(s) && pid(s)),
+      noReserveWithPlaceId: n(s => !reserve(s) && pid(s)),
+      reserveNoPlaceId: n(s => reserve(s) && !pid(s)),
+      neither: n(s => !reserve(s) && !pid(s)),
+      // 紐付けの確かさ。電話を出すのは address-same と address-unknown-name-ok（7.3 節）
+      linkAll: linkCount(pid),
+      linkNoReserve: linkCount(s => !reserve(s) && pid(s)),
+    },
+    fields: {
+      '写真URL': row(s => has(s, '写真URL')),
+      'Google評価と口コミ数': row(s => has(s, 'Google評価') && has(s, '口コミ数')),
+      '予算（価格帯か価格帯目安）': row(s => has(s, '価格帯') || has(s, '価格帯目安')),
+      '最寄駅': row(s => has(s, '最寄駅')),
+      '徒歩N分（アクセスの文から読める）': row(s => /徒歩約?\s*\d+\s*分/.test(z2h(s['アクセス']))),
+      '営業時間': row(s => has(s, '営業時間')),
+      '営業時間に時刻の形がある': row(s => /\d{1,2}[:：]\d{2}/.test(z2h(s['営業時間']))),
+      '定休日': row(s => has(s, '定休日')),
+      '個室（あり）': row(ari('個室')),
+      '飲み放題（あり）': row(ari('飲み放題')),
+      '宴会収容30名以上': row(s => Number(z2h(s['宴会収容'])) >= 30),
+      'おすすめポイント': row(s => has(s, 'おすすめポイント')),
+      'おすすめシーン': row(s => has(s, 'おすすめシーン')),
+      '選定理由（表示に使う editorReasonOf）': row(s => { const r = editorReasonOf(s); return !!r && String(r).trim() !== ''; }),
+      '掲載特集': row(s => has(s, '掲載特集')),
+      'Instagram': row(s => has(s, 'Instagram')),
+      '店の正確な位置（座標精度が area 以外）': row(s => has(s, '緯度') && has(s, '座標精度') && s['座標精度'] !== 'area'),
+    },
+  };
+}
+
 console.log(JSON.stringify(out, null, 1));
