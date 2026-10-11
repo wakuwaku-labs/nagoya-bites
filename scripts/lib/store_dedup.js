@@ -22,7 +22,11 @@
  *                        （placeId だけで統合しない＝「うなぎのしろむら」型の Places 誤りを取り込まない）
  *
  * 統合のしかた（acceptance②）:
- *   - 非空フィールド数が最も多いレコードを残す（同数なら編集部レコード → HotPepperID持ち → 元の順）
+ *   - 前回の統合で残したレコード（data/store_merge_pairs.json の kept）が今回も組にいれば、それを残す（P-265）。
+ *     残す側が日ごとに入れ替わると、現役の店舗ページと誘導ページが入れ替わって URL が揺れ、
+ *     owner_confirmed の組では店名まで入れ替わるため（2026-10-11 に4組が一度に入れ替わった）
+ *   - 前回の記録が無い組（新しい組・初回）は、非空フィールド数が最も多いレコードを残す
+ *     （同数なら編集部レコード → HotPepperID持ち → 元の順）
  *   - 残すレコードに欠けているフィールドを、他のレコードから補う（上書きはしない）
  *   - 写真・Instagram・Places はフィールド束ごとに補う（別出典の値を混ぜない）
  *   - 編集部フィールド（編集部推薦・話題フラグ・キュレーター・おすすめポイント・editorReason 等）は
@@ -45,6 +49,20 @@ function loadConfirmedPairs() {
   try {
     const j = JSON.parse(fs.readFileSync(CONFIRMED_PATH, 'utf8'));
     return Array.isArray(j.pairs) ? j.pairs : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+// 前回の統合の記録（build.js が書く data/store_merge_pairs.json）。残す側を入れ替えないための控え（P-265）。
+// build.js は統合のあとでこのファイルを書き換えるので、統合の前に読むこと。
+// 無い・壊れている・形が違うときは空（＝従来どおりの決め方）。ビルドは止めない。
+const MERGE_PAIRS_PATH = path.join(__dirname, '..', '..', 'data', 'store_merge_pairs.json');
+
+function loadPrevKept(file = MERGE_PAIRS_PATH) {
+  try {
+    const j = JSON.parse(fs.readFileSync(file, 'utf8'));
+    return (Array.isArray(j.merged) ? j.merged : []).map((m) => m && m.kept).filter((k) => k && typeof k === 'object');
   } catch (_) {
     return [];
   }
@@ -173,9 +191,17 @@ function judgePair(a, b) {
   return { candidate: true, ok: true, reason };
 }
 
-function pickBase(group) {
-  const ranked = group.map((s, i) => ({ s, i, n: filledCount(s) }));
+/**
+ * 組から、残すレコードを1件選ぶ。
+ * @param {object[]} group
+ * @param {(s:object)=>boolean} [wasKept] 前回の統合で残したレコードか。true のレコードを最優先にする
+ *   （P-265。項目数や並び順が日によって逆転しても、残す側が入れ替わらないようにする）
+ */
+function pickBase(group, wasKept) {
+  const prefer = typeof wasKept === 'function' ? wasKept : () => false;
+  const ranked = group.map((s, i) => ({ s, i, n: filledCount(s), k: prefer(s) ? 1 : 0 }));
   ranked.sort((x, y) =>
+    (y.k - x.k) ||
     (y.n - x.n) ||
     ((isEditorial(y.s) ? 1 : 0) - (isEditorial(x.s) ? 1 : 0)) ||
     ((y.s['ホットペッパーID'] ? 1 : 0) - (x.s['ホットペッパーID'] ? 1 : 0)) ||
@@ -204,10 +230,12 @@ function unionArrays(arrs) {
 
 /**
  * group（同一店と確認済みのレコード群）を base 1件に統合する。base を破壊的に更新して返す。
+ * @param {object[]} group
+ * @param {(s:object)=>boolean} [wasKept] 前回の統合で残したレコードか（pickBase を参照）
  * @returns {{base: object, filled: string[]}}
  */
-function mergeGroup(group) {
-  const base = pickBase(group);
+function mergeGroup(group, wasKept) {
+  const base = pickBase(group, wasKept);
   const others = group.filter((s) => s !== base);
   // 優先順: 手動キュレーション（編集部）レコード → 残すレコード → その他（元の順）
   const rank = (s) => (isEditorial(s) ? 0 : s === base ? 1 : 2);
@@ -265,15 +293,41 @@ function mergeGroup(group) {
 }
 
 /**
+ * 前回の統合で残したレコードの控え（ホットペッパーID・slug）から、「前回残したレコードか」を答える関数を作る。
+ * ID も slug も空のレコードは、どれにも一致しない（空文字どうしを一致とみなさない）。
+ * @param {object[]|undefined} prevKept
+ * @param {(s:object)=>string} slugOf
+ * @returns {(s:object)=>boolean}
+ */
+function keptMatcher(prevKept, slugOf) {
+  const hp = new Set(), slugs = new Set();
+  for (const k of Array.isArray(prevKept) ? prevKept : []) {
+    if (!k || typeof k !== 'object') continue;
+    if (k['ホットペッパーID']) hp.add(String(k['ホットペッパーID']));
+    if (k.slug) slugs.add(String(k.slug));
+  }
+  if (!hp.size && !slugs.size) return () => false;
+  return (s) => {
+    const id = s && s['ホットペッパーID'];
+    if (id && hp.has(String(id))) return true;
+    const sl = slugOf(s);
+    return !!(sl && slugs.has(String(sl)));
+  };
+}
+
+/**
  * stores 配列の重複を統合する（非破壊: 新しい配列を返す。統合先レコードは更新される）。
  * @param {object[]} stores
- * @param {{slugOf?: (s:object)=>string, confirmedPairs?: object[]}} [opts]
+ * @param {{slugOf?: (s:object)=>string, confirmedPairs?: object[], prevKept?: object[]}} [opts]
  *   confirmedPairs: オーナー確認済みペア（既定は data/store_merge_confirmed.json）。[] で無効化
+ *   prevKept: 前回の統合で残したレコードの控え（data/store_merge_pairs.json の merged[].kept と同じ形:
+ *     ホットペッパーID・slug）。組にそのレコードがいれば最優先で残す（P-265）。省略・空なら従来どおり
  * @returns {{stores: object[], merged: object[], skipped: object[], unresolved: object[]}}
  */
 function dedupeStores(stores, opts = {}) {
   const slugOf = typeof opts.slugOf === 'function' ? opts.slugOf : () => '';
   const n = stores.length;
+  const wasKept = keptMatcher(opts.prevKept, slugOf);
 
   // 候補ペア（店名完全一致 / placeId 一致）だけを列挙する（全ペア比較はしない）
   const buckets = new Map();
@@ -384,7 +438,7 @@ function dedupeStores(stores, opts = {}) {
     const idx = membersOf(r).slice().sort((a, b) => a - b);
     const group = idx.map((i) => stores[i]);
     const snap = group.map((s) => ({ 店名: s['店名'] || '', エリア: s['エリア'] || '', ホットペッパーID: s['ホットペッパーID'] || '', placeId: s.placeId || '', slug: slugOf(s) }));
-    const { base, filled } = mergeGroup(group);
+    const { base, filled } = mergeGroup(group, wasKept);
     const baseIdx = idx[group.indexOf(base)];
     for (const i of idx) if (i !== baseIdx) drop.add(i);
     merged.push({
@@ -397,4 +451,4 @@ function dedupeStores(stores, opts = {}) {
   return { stores: stores.filter((_, i) => !drop.has(i)), merged, skipped, unresolved };
 }
 
-module.exports = { dedupeStores, loadConfirmedPairs, resolveSide, judgePair, mergeGroup, wardOf, looseName, pickBase };
+module.exports = { dedupeStores, loadConfirmedPairs, resolveSide, judgePair, mergeGroup, wardOf, looseName, pickBase, keptMatcher, loadPrevKept };
