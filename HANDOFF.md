@@ -13,7 +13,7 @@ status: done
 
 # できていること
 - 必須の読み込み（orchestrator.md・backlog の未完了課題一覧）
-- 実画面の確認（2026-10-11・390px／1280px・GA4 遮断）。スクショは scratchpad/capture/shots/、撮影スクリプトは scratchpad/capture/capture.js（puppeteer は repo の node_modules・本番 or `BASE=http://127.0.0.1:8766`）
+- 実画面の確認（2026-10-11・390px／1280px・GA4 遮断）。撮影スクリプトは docs/qa/uiux-2026-10/capture.js（スクショはセッションの一時領域に置いたので残っていない。撮り直せる・puppeteer は repo の node_modules・本番 or `BASE=http://127.0.0.1:8766`）
 - 実画面で分かったこと（設計書の「問題点」の材料）:
   1. 「人が全店を選んだ」と読める文言が全ページ種別にある: トップ見出し「飲食のプロが、名古屋だけを深く選んだ。」・実績帯「現役の店長が編集」・フッター「現役の飲食店マネージャーが編集する」・モーダル「編集部の視点 — 現役飲食店マネージャーが編集」「業界人メモ」・特集「業界人が厳選」・ジャーナル題「〜を業界人が読む」・特集一覧「現役飲食店マネージャーが厳選」・ジャーナル一覧「飲食業界の中の人が」
   2. アプリ追加の案内: beforeinstallprompt（index.html:10981 付近）が「後で」の記録を見ずに全面の暗幕＋案内を出す。headless の初回表示で 390px・1280px とも出た。iOS は初回3秒後に出る
@@ -23,10 +23,10 @@ status: done
   6. モーダルは下から出るシート。予約が最初の画面と下部固定にある。店舗ページ（stores/J004660861.html＝GSC 表示1位の店）は予約ボタンが約2,500px 下で、その前に「口コミ信頼度の内訳」（未取得の行が9つ）が続く。モーダルと店舗ページは別実装で見た目も違う
   7. 長さ: 特集 15,460px・ハブ 25,510px・特集一覧 29,451px・ジャーナル一覧 42,740px（ページ送りなし・サムネイルなし）
   8. 特集（一人飲み）のヒーローはイラスト。ジャーナルは見出しが先で写真は導入文の後。「みんなが見ている店 TOP10」は「12 views」など小さい数字をそのまま出す
-  9. 表示速度（本番・412px・CPU 4倍遅く・150ms/1.6Mbps・GA4 遮断・初回・1回測定。scratchpad/capture/perf.js・結果 perf-run1/2.jsonl）: トップ FCP 3.9s・LCP 10.5s・読み込み完了 28.7s・6,240KB/90件（写真 2,905KB・stores.json 1,537KB・フォント 1,341KB/68件・HTML 290KB）・DOM 12,785要素。店舗 LCP 6.1s。ハブ CLS 0.652・TBT 2.9s（中身 18KB に対しフォント 1,675KB/73件）。ジャーナル一覧 TBT 3.7s。全ページでフォント（Cormorant Garamond＋Shippori Mincho＋Noto Sans JP＋DM Mono・CSS だけで 149KB）が最大の重さ
+  9. 表示速度（本番・412px・CPU 4倍遅く・150ms/1.6Mbps・GA4 遮断・初回・1回測定。docs/qa/uiux-2026-10/perf.js。生の結果は一時領域で残っていない・数字は設計書の第3章）: トップ FCP 3.9s・LCP 10.5s・読み込み完了 28.7s・6,240KB/90件（写真 2,905KB・stores.json 1,537KB・フォント 1,341KB/68件・HTML 290KB）・DOM 12,785要素。店舗 LCP 6.1s。ハブ CLS 0.652・TBT 2.9s（中身 18KB に対しフォント 1,675KB/73件）。ジャーナル一覧 TBT 3.7s。全ページでフォント（Cormorant Garamond＋Shippori Mincho＋Noto Sans JP＋DM Mono・CSS だけで 149KB）が最大の重さ
   10. 写真の配信: index.html:160-187 の nbImage() が HotPepper の写真を wsrv.nl（外部の画像変換）で縮小＋シャープ＋WebP にしている。CLAUDE.md の 2026-08-16 の決定（HotPepper 写真の加工・再配信は規約違反）と食い違う疑い。トップでは原寸の HotPepper 写真（最大 1,151KB）も直接読む
 - 調査の並行: 5本とも完了（4本は API の接続断で止まり、2026-10-11 15:35 に同じ内容で立て直した）
-- 設計書の下書き（scratchpad/plan/）: 00-02.md（読み方・前提・調べ方）／03b.md（問題点 3.1 文言・3.5〜3.10・基線表）／05.md（設計方針＋5.5 文言）／06.md（W1〜W13）／07.md（遷移・URL・操作・似た店・a11y・GA4・引き継ぎ表）／08.md（SEO）／10.md（検証と指標）
+- 設計書の下書きは結合済み（正本は docs/uiux-overhaul-plan-2026-10.md。下書きは一時領域に置いたので残っていない）
 - 調査の結果: データ基線・特集とジャーナル・デザインと SEO と文言・トップの4本が完了（店舗ページとハブの1本だけ実行中）。引用する行は自分で開いて確かめた
 - 要点: 文言は HTML 6,129本中 6,013本（98%）・元は site_chrome.js:170 ほか約10か所＋採点 score_journal_candidates.js:136,396／写真は 97% の店にある（148店なし）・HotPepper は全店 `_480`、原寸への差し替えが daily-trending5.yml で戻る／緯度経度は38通り（エリアの中心）／検索から来る人は店舗ページに着く（GSC 表示 27,004）・モーダルは30日で63回 → 改修の順は店舗ページが先／モーダルは履歴を積まず店舗ページへのリンクも無い・保存の画面は雑誌面で見えない疑い・stores/index.html はトップへ転送
 - 計画とは別に Linear へ直接起票した課題が2件ある（P-225・P-234）。中身は Linear だけに書く。公開のファイル（HANDOFF・docs・agent-backlog.md）には書かない。オーナーには会話で報告する
@@ -41,7 +41,7 @@ status: done
   - 判断の記録 docs/decisions/0016-store-selection-wording.md（店の選び方の書き方）
   - backlog DSN-013〜015 → Linear P-235（親）・P-236（Codex のレビュー）・P-237（オーナーが 4.4 節の11項目を決める）。期限はどれも 2026-10-18
   - 作業ブランチ wakuwaku-labs/mooneye にコミット（push・PR はまだ。公開に当たるのでオーナーの一言を待つ）
-  - 読みやすい版（非公開ページ）https://claude.ai/artifact/E8kRtmcAeNE7VKxznopMDt 。作り方は scratchpad/artifact/（template.html＋build.js で設計書を埋め込む）。リンクは P-235 にコメント済み
+  - 読みやすい版（非公開ページ）https://claude.ai/artifact/E8kRtmcAeNE7VKxznopMDt 。更新は Artifact の read で今の版を取り、埋め込んだ設計書（`const MD = …`）を差し替えて同じ URL に publish する。リンクは P-235 にコメント済み
 - 次は人の番: Codex のレビュー（P-236）→ 指摘の反映 → オーナーの判断（P-237）→ 承認された段階を backlog に起票して実装（P-235）
 - 実装はオーナーの承認後。それまでサイトのコードを変えない
 
