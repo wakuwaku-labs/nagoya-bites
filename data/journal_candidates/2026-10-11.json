@@ -1,0 +1,439 @@
+{
+  "date": "2026-10-11",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "星ヶ丘「Afro's BBQ」アメリカンBBQで宴会、飲み放題3,500円とバックリブ2,849円を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 97,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 4件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 8件 (価格帯,コース,席,予約,シーン,デート,アラカルト,繁忙) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 209字 +4",
+          "title 56字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「栄」+1",
+          "タイトルにシーン語「宴会」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "97点（自動公開ライン 100点）。主な不足: topicality -5 / search_intent -5 / writability -3"
+    },
+    {
+      "id": "c2",
+      "title_draft": "名駅ミヤコ地下街「立喰い寿司 魚椿」で一人飲み、11時半から通し営業の立ち寿司を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 95,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 17,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "名駅",
+          "feature": "features/meieki.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "寿司",
+          "feature": "features/nagoya-sushi-guide.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 2日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (価格帯,席,シーン,一人飲み,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 141字 +4",
+          "title 46字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「名駅」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「寿司」+2"
+        ]
+      },
+      "gate_note": "95点（自動公開ライン 100点）。主な不足: topicality -8 / brand_fit -4 / writability -3"
+    },
+    {
+      "id": "c5",
+      "title_draft": "東山公園のアメリカンダイナー「GOOD LOSERS CLUB」、昼から通しで2,000円台を業界人が読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 85,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "業界人",
+          "feature": "features/industry-insiders-pick.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 5件 (価格帯,席,シーン,繁忙,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 160字 +4",
+          "title 53字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「栄」+1",
+          "タイトルにシーン語「業界人」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "85点（自動公開ライン 100点）。主な不足: topicality -17 / search_intent -5 / writability -3"
+    },
+    {
+      "id": "c3",
+      "title_draft": "ささしま・グローバルゲートに「沖縄琉球しゃぶしゃぶ くろ凪」10月26日開店、100席の宴会を業界人が読む",
+      "verdict": "HOLD",
+      "total": 84,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 7,
+        "novelty": 5,
+        "search_intent": 7
+      },
+      "search_intent_links": [
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "すき焼き",
+          "feature": "features/nagoya-sukiyaki.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 7日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (席,予約,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 129字 +4",
+          "title 53字（SERP切れ/短すぎ）→ +0"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「名駅」+1",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「しゃぶしゃぶ」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "栄・久屋大通の3連休、PORKTOBER FESTと芋フェスを食べ歩く前に",
+      "verdict": "HOLD",
+      "total": 69,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 4,
+        "uniqueness": 10,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 5日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(seasonal) 2件 (シーン,価格帯) → 10"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 141字 +4",
+          "title 37字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "97点（自動公開ライン 100点）。主な不足: topicality -5 / search_intent -5 / writability -3",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "星ヶ丘「Afro's BBQ」アメリカンBBQで宴会、飲み放題3,500円とバックリブ2,849円を業界人が読む",
+      "lead_draft": "星ヶ丘駅から徒歩1分のアメリカンBBQ「Afro's BBQ」は、2026年5月のJAPAN BBQ CHAMPIONSHIPで0.5ポイント差の準優勝。10月10〜12日は栄のPORKTOBER FESTにも出店している。3時間低温調理のバックリブ2,849円と、120分飲み放題付き3,500円・4,500円のコースをどう使い分けるか、34席の席配置と予約の取り方から宴会・デートの向き不向きまで業界人の目で読む。",
+      "angle": "低温調理と燻製は仕込み量で売上の上限が決まる料理。アラカルトのリブ価格とコース飲み放題の価格帯、カウンター5席とテラス席の席配置、予約と繁忙時間帯、宴会30名とデートのシーン適性を業界人視点で読む",
+      "main_store": {
+        "name": "Afro s BBQ アフロズバーベキュー",
+        "id": "J003581960",
+        "area": "星ヶ丘",
+        "genre": "アメリカンBBQ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社ZIP-FM）「PORKTOBER FEST in NAGOYA 2026」",
+          "url": "https://prtimes.jp/main/html/rd/p/000000246.000048223.html",
+          "date": "2026-10-05"
+        },
+        {
+          "label": "Afro's BBQ 公式Instagram",
+          "url": "https://www.instagram.com/afros_bbq/reel/DeQ6eYwxYcC/",
+          "date": "2026-10-08"
+        },
+        {
+          "label": "グルメプレス「バーベキュー日本一決定戦 名古屋『Yumaboy's BBQ』が優勝」（JAPAN BBQ CHAMPIONSHIP 2026 結果）",
+          "url": "https://gourmetpress.net/1454199/",
+          "date": "2026-06-30"
+        },
+        {
+          "label": "ホットペッパーグルメ Afro's BBQ 店舗ページ（席数・営業時間・メニュー）",
+          "url": "https://www.hotpepper.jp/strJ003581960/",
+          "date": "2026-10-11"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "名駅ミヤコ地下街「立喰い寿司 魚椿」で一人飲み、11時半から通し営業の立ち寿司を業界人が読む",
+      "lead_draft": "2026年9月8日、名駅のミヤコ地下街に立ち食い寿司「立喰い寿司 魚椿 ミヤコ地下街店」が開いた。運営は名古屋で立ち呑みを展開する会社で、地下街は初挑戦。11時半から21時までの通し営業、お通し代なし、雨に濡れない3番出入口すぐの立地を、一人飲みと新幹線前の一杯という視点から読む。",
+      "angle": "立ち席の回転と滞在時間、通し営業で昼飲みと仕事帰りの二つの繁忙時間帯をどう取るか、1貫単位の価格帯とお通し代なしの設計、一人飲みのシーン適性を業界人視点で読む",
+      "main_store": {
+        "name": "立喰い寿司 魚椿 ミヤコ地下街店",
+        "id": "",
+        "area": "名駅",
+        "genre": "立ち食い寿司"
+      },
+      "sources": [
+        {
+          "label": "光フードサービス 新店舗のお知らせ",
+          "url": "https://hikari-food-service.jp/archives/628",
+          "date": "2026-09-07"
+        },
+        {
+          "label": "名古屋グルメ探偵 X",
+          "url": "https://x.com/gourmet_nagoya/status/2096908768064016682",
+          "date": "2026-09-05"
+        },
+        {
+          "label": "光フードサービス 店舗ページ",
+          "url": "https://shop.hikari-food-service.jp/stores/71",
+          "date": "2026-10-09"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "ささしま・グローバルゲートに「沖縄琉球しゃぶしゃぶ くろ凪」10月26日開店、100席の宴会を業界人が読む",
+      "lead_draft": "ささしまライブ駅直結のグローバルゲート3階に、10月26日「沖縄琉球しゃぶしゃぶ くろ凪」が開く。100席超、最大50名の宴会に対応し、平日はランチから23時まで通しで営業する。名駅の繁華街から一駅外れた立地で忘年会をどう取りにいくのかを業界人の視点で読む。",
+      "angle": "100席超の大箱で最大50名宴会、平日ランチから通し営業の席回転と予約の取り方、忘年会シーズンのシーン適性を業界人視点で読む",
+      "main_store": {
+        "name": "沖縄琉球しゃぶしゃぶ くろ凪",
+        "id": "",
+        "area": "ささしま",
+        "genre": "しゃぶしゃぶ"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES くろ凪 グローバルゲート出店",
+          "url": "https://prtimes.jp/main/html/rd/p/000000002.000190931.html",
+          "date": "2026-10-04"
+        },
+        {
+          "label": "グルメプレス くろ凪",
+          "url": "https://gourmetpress.net/1486386/",
+          "date": "2026-10-04"
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "theme": "seasonal",
+      "title_draft": "栄・久屋大通の3連休、PORKTOBER FESTと芋フェスを食べ歩く前に",
+      "lead_draft": "10月10日から12日の3連休、栄では久屋大通公園のSAKAE HIROBASでPORKTOBER FEST、オアシス21で第7回芋フェスが同時に開かれている。どちらも入場無料で、名古屋の常設店も多く出店する。会場で気に入った店を後日店舗で食べ直すための見方を業界人の目でまとめる。",
+      "angle": "屋外イベントの出店の価格帯と常設店の価格帯の違い、混雑する時間帯と回り方、家族連れ・デートのシーン適性を業界人視点で読む",
+      "main_store": {
+        "name": "GOOD LOSERS CLUB",
+        "id": "J004660201",
+        "area": "東山公園",
+        "genre": "アメリカンダイナー"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES PORKTOBER FEST",
+          "url": "https://prtimes.jp/main/html/rd/p/000000246.000048223.html",
+          "date": "2026-10-05"
+        },
+        {
+          "label": "PR TIMES 芋フェス",
+          "url": "https://prtimes.jp/main/html/rd/p/000000130.000117850.html",
+          "date": "2026-10-06"
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "theme": "today_one",
+      "title_draft": "東山公園のアメリカンダイナー「GOOD LOSERS CLUB」、昼から通しで2,000円台を業界人が読む",
+      "lead_draft": "東山公園駅から徒歩5分のアメリカンダイナー「GOOD LOSERS CLUB」は、10月10〜12日に栄のPORKTOBER FESTへ出店している。土日祝は11時から21時までの通し営業、30席で40名の貸切にも対応する。平均予算1,500〜2,500円の価格帯と、動物園帰りの家族連れという立地を業界人の視点で読む。",
+      "angle": "通し営業の席回転と繁忙時間帯、2,000円台の価格帯、家族連れと一人ランチのシーン適性を業界人視点で読む",
+      "main_store": {
+        "name": "GOOD LOSERS CLUB",
+        "id": "J004660201",
+        "area": "東山公園",
+        "genre": "アメリカンダイナー"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES PORKTOBER FEST",
+          "url": "https://prtimes.jp/main/html/rd/p/000000246.000048223.html",
+          "date": "2026-10-05"
+        },
+        {
+          "label": "ホットペッパーグルメ GOOD LOSERS CLUB",
+          "url": "https://www.hotpepper.jp/strJ004660201/",
+          "date": "2026-10-11"
+        }
+      ]
+    }
+  ]
+}
