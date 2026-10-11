@@ -97,6 +97,45 @@ test('summarize: 全部が無効なページは、中央値を null にして無
   assert.strictEqual(s.hub.lcpElement, null);
 });
 
+test('summarize: ページを開けなかった回（goto の失敗・Chrome のエラーページ）は、FCP・LCP が付いていても無効として数える', () => {
+  // 2026-10-12: ERR_NETWORK_CHANGED の回が、DOM 33 要素・LCP 500ms の「正常な行」として残った（エラーページにも FCP・LCP は付く）
+  const rows = [1000, 1200, 1400].map(l => run('store', l)).concat([
+    run('store', 500, { navError: 'net::ERR_NETWORK_CHANGED at https://nagoya-bites.com/stores/J1.html', dom: 33 }),
+    run('store', 500, { finalUrl: 'chrome-error://chromewebdata/', dom: 33 }),
+  ]);
+  const s = P.summarize(rows);
+  assert.strictEqual(s.store.runs, 3);
+  assert.strictEqual(s.store.invalid, 2);
+  assert.strictEqual(s.store.median.lcp, 1200);
+  assert.strictEqual(s.store.min.lcp, 1000, 'エラーページの 500ms が最小に入らない');
+  assert.strictEqual(s.store.min.dom, 1000, 'エラーページの DOM 33 が最小に入らない');
+});
+
+test('notOpened / isMeasured: 開けている回（navError が null・普通の URL）と、古い行（どちらの項目も無い）は有効', () => {
+  const ok = run('store', 1500, { navError: null, finalUrl: 'https://nagoya-bites.com/stores/J1.html' });
+  assert.strictEqual(P.notOpened(ok), false);
+  assert.strictEqual(P.isMeasured(ok), true);
+  assert.strictEqual(P.notOpened(run('store', 1500)), false, 'navError・finalUrl が無い古い行は開けた扱い（判定できないものを無効にしない）');
+  assert.strictEqual(P.isMeasured(run('store', 1500)), true);
+  assert.strictEqual(P.notOpened(run('store', 1500, { navError: 'net::ERR_ABORTED' })), true);
+  assert.strictEqual(P.notOpened(run('store', 1500, { finalUrl: 'chrome-error://chromewebdata/' })), true);
+  // 開けても描画されなかった回は、これまでどおり無効
+  assert.strictEqual(P.isMeasured(run('store', 1500, { fcp: 0 })), false);
+  const s = P.summarize([ok]);
+  assert.strictEqual(s.store.runs, 1);
+  assert.strictEqual(s.store.invalid, 0);
+});
+
+test('perf.js: ページを開けなかった回も、描画されなかった回と同じく最大回数までやり直す（判定は perf_summary.js の1本を使う）', () => {
+  // perf.js は puppeteer で実ブラウザを動かすため単体では回せない。やり直しの条件が summary の判定を使っていることだけを、ソースで確かめる
+  const src = require('fs').readFileSync(require('path').join(__dirname, '..', 'docs', 'qa', 'uiux-2026-10', 'perf.js'), 'utf8');
+  assert.match(src, /const \{ isMeasured, notOpened \} = require\('\.\/perf_summary'\)/);
+  assert.match(src, /while \(!isMeasured\(r\) && attempt < MAX_ATTEMPTS\)/);
+  assert.match(src, /navError = e\.message/, 'goto の失敗を行に残す');
+  assert.match(src, /finalUrl = page\.url\(\)/, '最終の URL を行に残す');
+  assert.match(src, /rendererBenchMs, navError, finalUrl,/, '行に navError・finalUrl が入る');
+});
+
 test('tableOf: 無効の回があれば、回数の欄に出す', () => {
   const t = P.tableOf(P.summarize([run('top', 1000), run('top', 1200), run('top', 0, { fcp: 0 })]));
   assert.ok(t.includes('| top | 2 (無効 1) |'), t);

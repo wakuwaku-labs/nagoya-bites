@@ -7,7 +7,7 @@
 // 出力: { schema, label, date, base, conditions, host, notes, target, invalidRuns, pages: { top: { runs, invalid, median, min, max, over, samples, lcpElement, lcpUrl }, ... } }
 //   clsDefinition = CLS の定義。session-window（いちばん大きいセッション窓・web.dev）／sum-of-shifts（旧定義: 全部のずれの合計。ずれの生の値 shifts が無い古い行）／mixed。clsSum = 全部のずれの合計（参考）
 //   excludedRuns = 「直前の入力あり」と判定されて CLS に数えなかったずれがあった回の数（perf.js は入力を出さないので、あれば測定環境の影響。モバイル相当の表示にした直後の約 0.6 秒に起きる）。古い行（除外の記録が無い）だけなら null。clsExcluded = 数えなかったずれの合計
-//   invalid = 描画されなかった回（FCP か LCP が 0）。中央値・最小・最大・over・samples には入れない（画面が消えている間などに全部 0 で返り、入れると「速くなった」ように見える）
+//   invalid = 描画されなかった回（FCP か LCP が 0）か、ページを開けなかった回（navError がある・finalUrl が chrome-error://）。中央値・最小・最大・over・samples には入れない（画面が消えている間などに全部 0 で返り、入れると「速くなった」ように見える）
 //   over = 目標を超えた回数。中央値は割れる指標（ハブの CLS は 0.013 と 0.652 に割れた）を平らにするので、回数も並べる
 //   samples = 1回ごとの要点（測った URL・LCP・CLS・TBT と、そのときの電源 power・低電力モード lowPowerMode[1 入／0 切]・描画側の速さの目安 rendererBenchMs）。TBT は同じページ・同じ内容でも、
 //             電源で数十 ms と数秒に割れた（2026-10-11 に充電器を抜いた時刻から）。中央値だけでは割れたことが見えない。前後を比べるときは、電源が同じ回どうしで見る
@@ -46,6 +46,13 @@ function mostCommon(values) {
 /** 描画された回か。FCP も LCP も 0 より大きい回だけを測定として使う */
 const isPainted = r => r.fcp > 0 && r.lcp > 0;
 
+/** ページを開けなかった回か。goto が失敗した（net::ERR_NETWORK_CHANGED など）か、最終の URL が Chrome のエラーページ（chrome-error://）。
+ *  エラーページにも FCP・LCP は付くので、isPainted だけでは見分けられない（2026-10-12: 店舗ページの1回が DOM 33 要素・LCP 500ms の行になった）。perf.js もこの判定でやり直す */
+const notOpened = r => !!r.navError || /^chrome-error:/.test(r.finalUrl || '');
+
+/** 測定として使える回か。描画され、ページを開けている */
+const isMeasured = r => isPainted(r) && !notOpened(r);
+
 /** perf.js の種類別の内訳から、Web フォントの通信量とファイル数を取り出す。内訳が無い古い行は null（0 にしない） */
 const withFontTotals = r => ({ ...r, fontKB: r.kbType ? (r.kbType.Font || 0) : null, fontFiles: r.byType ? (r.byType.Font || 0) : null });
 
@@ -55,7 +62,7 @@ function summarize(rows) {
   rows.forEach(r => { (by[r.name] = by[r.name] || []).push(r); });
   const pages = {};
   Object.keys(by).forEach(name => {
-    const rs = by[name].filter(isPainted).map(withFontTotals);
+    const rs = by[name].filter(isMeasured).map(withFontTotals);
     const invalid = by[name].length - rs.length;
     const med = {}, min = {}, max = {};
     FIELDS.forEach(f => {
@@ -124,7 +131,7 @@ function main(argv) {
   if (legacyCls.length) console.error(`CLS が旧定義（全部のずれの合計）の行を含む: ${legacyCls.join('・')}。セッション窓の最大とは比べない`);
   const excludedPages = Object.entries(pages).filter(([, p]) => p.excludedRuns > 0);
   if (excludedPages.length) console.error(`入力を出していない測定で、「直前の入力あり」と判定されて数えなかったずれがある: ${excludedPages.map(([n, p]) => `${n} ${p.excludedRuns}/${p.runs}回（除外分の最大 ${p.max.clsExcluded}）`).join('・')}。測定環境の影響の疑い`);
-  if (invalidRuns) console.error(`無効（描画されなかった）回が ${invalidRuns} 回ある。中央値には入れていない。ページ別: ${Object.entries(pages).filter(([, p]) => p.invalid).map(([n, p]) => `${n} ${p.invalid}`).join('・')}`);
+  if (invalidRuns) console.error(`無効（描画されなかった・ページを開けなかった）回が ${invalidRuns} 回ある。中央値には入れていない。ページ別: ${Object.entries(pages).filter(([, p]) => p.invalid).map(([n, p]) => `${n} ${p.invalid}`).join('・')}`);
   const cpus = mostCommon(rows.map(r => r.cpus));
   const power = {};
   rows.forEach(r => { if (r.power) power[r.power] = (power[r.power] || 0) + 1; });
@@ -137,4 +144,4 @@ function main(argv) {
 }
 
 if (require.main === module) process.exit(main(process.argv.slice(2)));
-module.exports = { median, mostCommon, isPainted, summarize, parseJsonl, tableOf, CONDITIONS, FIELDS, TARGET };
+module.exports = { median, mostCommon, isPainted, notOpened, isMeasured, summarize, parseJsonl, tableOf, CONDITIONS, FIELDS, TARGET };

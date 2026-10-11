@@ -4,6 +4,8 @@
 // CLS は web.dev の定義（いちばん大きいセッション窓の値）で計算する（cls.js）。ずれの生の値 shifts を1回ごとの行に残すので、後から同じ値を作り直せる。全部のずれの合計は clsSum（旧定義・比べない）。
 // 描画されなかった回（FCP が 0）は最大2回やり直す。画面が消えている間などは、ページが「見えない」扱いになって FCP・LCP・CLS が全部 0 で返り、
 // そのまま中央値に入れると「速くなった」ように見えるため。やり直しても描画されなかった行は、summary 側が無効として数える。
+// ページを開けなかった回（goto の失敗＝net::ERR_NETWORK_CHANGED など、または最終の URL が Chrome のエラーページ）も同じく最大2回やり直す。エラーページにも FCP・LCP は付くので、
+// 描画されたかだけでは見分けられない（2026-10-12: 店舗ページの1回が DOM 33 要素・LCP 500ms の行になった）。行に navError・finalUrl を残し、summary 側は無効として数える（判定は perf_summary.js の1本）。
 // 1回ごとに電源（power: ac か battery・macOS のみ）と、描画側の速さの目安（rendererBenchMs＝測定が終わった後、同じページの中で決まった量の計算に
 // かかった ms。CPU 4倍遅くの下）、Node 側の負荷（loadAvg1・cpus）を残す。**TBT は同じページ・同じ内容でも、電源で数十 ms と数秒に割れた**（2026-10-11:
 // 20:57 JST に充電器を抜いた時刻で、TBT が一段階上がった。pmset のログと一致）。前後の比較は、電源が同じ回どうしで見る。バッテリー駆動のときは警告を出す。
@@ -17,6 +19,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 const puppeteer = require('puppeteer');
 const { installLayoutShiftCollector, clsFields } = require('./cls');
+const { isMeasured, notOpened } = require('./perf_summary');
 const BASE = process.env.BASE || 'https://nagoya-bites.com';
 const RUNS = Number(process.argv[2] || 1);
 const BLOCKED = ['*googletagmanager.com*', '*google-analytics.com*', '*analytics.google.com*', '*doubleclick.net*'];
@@ -91,7 +94,9 @@ async function measure(browser, url) {
     new PerformanceObserver(l => { for (const e of l.getEntries()) window.__p.lt.push([e.startTime, e.duration]); }).observe({ type: 'longtask', buffered: true });
   });
   const t0 = Date.now();
-  await page.goto(BASE + url, { waitUntil: 'load', timeout: 120000 }).catch(e => console.error('goto', url, e.message));
+  let navError = null;
+  await page.goto(BASE + url, { waitUntil: 'load', timeout: 120000 }).catch(e => { navError = e.message; console.error('goto', url, e.message); });
+  const finalUrl = page.url(); // ページを開けなかったときは chrome-error://chromewebdata/（Chrome のエラーページ）
   const loadWall = Date.now() - t0;
   await sleep(5000);
   const r = await page.evaluate(() => {
@@ -112,7 +117,7 @@ async function measure(browser, url) {
   await ctx.close();
   for (const k in kbType) kbType[k] = Math.round(kbType[k]);
   const { ls, ...rest } = r;
-  return { ...rest, ...clsFields(ls), rendererBenchMs, totalKB: Math.round(bytes / 1024), reqs, byType, kbType, hosts, big, loadWall };
+  return { ...rest, ...clsFields(ls), rendererBenchMs, navError, finalUrl, totalKB: Math.round(bytes / 1024), reqs, byType, kbType, hosts, big, loadWall };
 }
 
 /** 電源が変わった・バッテリー駆動のときに知らせる。バッテリー駆動の TBT は、充電器につないだときより大きく出る（2026-10-11 の実測） */
@@ -142,8 +147,8 @@ function warnPower(power, run, lpm) {
             warnPower(host.power, i, host.lowPowerMode);
             r = await measure(browser, url);
             attempt++;
-            if (!(r.fcp > 0 && r.lcp > 0)) console.error(`unpainted ${name} run ${i} attempt ${attempt} visibility=${r.visibility}`);
-          } while (!(r.fcp > 0 && r.lcp > 0) && attempt < MAX_ATTEMPTS);
+            if (!isMeasured(r)) console.error(`${notOpened(r) ? 'not-opened' : 'unpainted'} ${name} run ${i} attempt ${attempt} ${notOpened(r) ? (r.navError || r.finalUrl) : `visibility=${r.visibility}`}`);
+          } while (!isMeasured(r) && attempt < MAX_ATTEMPTS);
           console.log(JSON.stringify({ name, run: i, url, attempts: attempt, ...host, ...r }));
         } catch (e) { console.error('fail', name, e.message); }
       }
