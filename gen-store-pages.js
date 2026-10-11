@@ -19,6 +19,7 @@ const { loadPolicy: loadIgPostPolicy } = require('./scripts/lib/ig_post_policy')
 const { relabelForSlug } = require('./scripts/lib/feature_counts');
 const { editorReasonOf, visitStatusLabel } = require('./scripts/lib/editor_reason');
 const { renderPhotoCredit, PHOTO_CREDIT_CSS } = require('./scripts/lib/photo_credit');
+const { isDeadPhotoUrl } = require('./scripts/lib/dead_photo_urls');
 const IG_MAX_POSTS_PER_STORE = (loadIgPostPolicy().thresholds && loadIgPostPolicy().thresholds.maxPostsPerStore) || 1;
 
 // SEO-094: エリア×ジャンル一覧（stores/area/）のURL索引。「もっと見る」導線・パンくず・
@@ -1142,6 +1143,27 @@ ${storeUrls}
 // ================================================================
 // メイン
 // ================================================================
+/**
+ * LOCAL_STORE（data/stores.json の1店）にスプレッドシートの行（CSV）を重ねて、店舗ページの元データにする。
+ * LOCAL_STORE の値があれば優先し、無いものだけ CSV から借用する（リッチフィールドは CSV を優先）。
+ *
+ * P-270（I-10b）: 配信が終わった写真（data/dead_photo_urls.json の台帳）は CSV から引き継がない。
+ * data/stores.json では台帳で 写真URL が空になっているのに、スプレッドシートの行には古い URL が残っており、
+ * LOCAL_STORE が 写真URL を持たないので { ...csvMatch, ...ls } でそのまま戻ってきていた
+ * （2026-10-12 の実測: 写真の無い147店のうち143店）。ヒーロー・JSON-LD の image・OG 画像が
+ * 配信終了のURLを指す。引き継がなければ、トップのカードと同じ「写真なし」の表示になる。
+ */
+function mergeStoreWithCsv(ls, csvMatch) {
+  const merged = { ...csvMatch, ...ls };
+  // ただしリッチフィールドは CSV を優先（LOCAL_STORE には無いことが多い）
+  ['住所','緯度','経度','電話','口コミ数','英語名','市区町村','タグ','おすすめポイント'].forEach(k => {
+    if (csvMatch[k] && !ls[k]) merged[k] = csvMatch[k];
+  });
+  merged['公開フラグ'] = '公開';
+  if (merged['写真URL'] && isDeadPhotoUrl(merged['写真URL'])) delete merged['写真URL'];
+  return merged;
+}
+
 async function main() {
   // ─── CLI args ───
   // --limit=N: 最初のN件だけページを生成（テスト用、sitemap.xmlは更新しない）
@@ -1240,18 +1262,13 @@ async function main() {
     let csvMatch = (hpId && csvByHpId.get(hpId)) || csvByName.get(name) || null;
     if (csvMatch) {
       // CSV のリッチデータ（住所/緯度経度/電話/口コミ数/英語名/市区町村）を LOCAL_STORE に補完
-      // LOCAL_STORE の値があれば優先、無いものだけ CSV から借用
-      const merged = { ...csvMatch, ...ls };
-      // ただしリッチフィールドは CSV を優先（LOCAL_STORE には無いことが多い）
-      ['住所','緯度','経度','電話','口コミ数','英語名','市区町村','タグ','おすすめポイント'].forEach(k => {
-        if (csvMatch[k] && !ls[k]) merged[k] = csvMatch[k];
-      });
-      merged['公開フラグ'] = '公開';
-      visible.push(merged);
+      // LOCAL_STORE の値があれば優先、無いものだけ CSV から借用（mergeStoreWithCsv）
+      visible.push(mergeStoreWithCsv(ls, csvMatch));
       csvEnrichedCount++;
     } else {
       // CSV に無い → LOCAL_STORE のデータのみで生成
       ls['公開フラグ'] = '公開';
+      if (ls['写真URL'] && isDeadPhotoUrl(ls['写真URL'])) delete ls['写真URL']; // build.js が通した後なので通常は空振り
       visible.push(ls);
     }
   }
@@ -1404,4 +1421,4 @@ if (require.main === module) {
   main().catch(err => { console.error('エラー:', err); process.exit(1); });
 }
 
-module.exports = { renderStorePage, buildEditorReason, toSlug, buildRelatedStores, buildRelatedFeatures, buildSitemap };
+module.exports = { renderStorePage, mergeStoreWithCsv, buildEditorReason, toSlug, buildRelatedStores, buildRelatedFeatures, buildSitemap };
