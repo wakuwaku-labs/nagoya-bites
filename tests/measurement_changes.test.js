@@ -48,3 +48,26 @@ test('本番の台帳に SEO-115 の計測変更（2026-10-09・ga4）が載っ�
   const c = b.changes.find((x) => x.id === 'SEO-115');
   assert.ok(c && c.date === '2026-10-09' && c.affects.includes('ga4'));
 });
+
+test('本番の台帳に I-08・I-21 の計測変更（2026-10-12・ga4）が載っている', () => {
+  const b = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/measurement_changes.json'), 'utf8'));
+  for (const id of ['I-08', 'I-21']) {
+    const c = b.changes.find((x) => x.id === id);
+    assert.ok(c && c.date === '2026-10-12' && c.affects.includes('ga4'), `${id} が台帳に無い（計測の段差が効果として読まれてしまう）`);
+  }
+});
+
+test('台帳のどの項目も、日付・id・affects・summary・evidence を持つ（後から第三者が確かめられる）', () => {
+  const b = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/measurement_changes.json'), 'utf8'));
+  assert.ok(Array.isArray(b.changes) && b.changes.length > 0);
+  const ids = new Set();
+  for (const c of b.changes) {
+    assert.match(c.date, /^\d{4}-\d{2}-\d{2}$/, `${c.id}: date の形式`);
+    assert.ok(typeof c.id === 'string' && c.id, 'id が空');
+    assert.ok(!ids.has(c.id), `${c.id}: id が重複`);
+    ids.add(c.id);
+    assert.ok(Array.isArray(c.affects) && c.affects.length > 0 && c.affects.every((a) => a === 'ga4' || a === 'gsc'), `${c.id}: affects は ga4 / gsc`);
+    assert.ok(typeof c.summary === 'string' && c.summary.trim(), `${c.id}: summary が空`);
+    assert.ok(typeof c.evidence === 'string' && c.evidence.trim(), `${c.id}: evidence が空（証跡の無い計測変更は書かない）`);
+  }
+});

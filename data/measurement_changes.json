@@ -7,6 +7,20 @@
       "affects": ["ga4"],
       "summary": "店舗ページ（stores/*.html）の GA4 が 2026-05-08 から構文エラーで動いていなかったのを直した（PR #403・#404 合流、build.yml が再生成）。この日から GA4 の PV・セッション・CTA に店舗ページの分が入る",
       "evidence": "PR #403（208f72697e）・data/site_metrics.json の cta.byPage に店舗ページ発の cta_click が初めて出た"
+    },
+    {
+      "date": "2026-10-12",
+      "id": "I-08",
+      "affects": ["ga4"],
+      "summary": "ハブ（stores/area/）の予約リンクを hub_store_click から cta_click（location=hub・store_id・hub つき）に替えた。この日から予約送客（cta_click）にハブ発の分が入る（合計はハブの分だけ増えて見える。それまでハブの予約リンクは cta_click に入っていなかった）。あわせて、トップの modal_open に store_id を足し、特集の feature_store_click の店の値を ID に統一し、ジャーナルから店舗ページへのクリック journal_store_click を新設した。特集・ジャーナルの分は、build.yml が各ページを書き換えた日（2026-10-12）から",
+      "evidence": "PR #471（87a5bf4bb6）・build.yml の自動コミット fc07d3d15c・ハブ683本の予約リンクが cta_click（location=hub）になり hub_store_click は0本になったこと・本番のハブで予約リンクを押すと dataLayer に cta_click（location=hub）が積まれ hub_store_click は積まれないこと（2026-10-12 に確認）"
+    },
+    {
+      "date": "2026-10-12",
+      "id": "I-21",
+      "affects": ["ga4"],
+      "summary": "トップの modal_open の source が、これまで全部 unknown だった（閲覧履歴のために openM を包む処理が2つ目の引数を捨てていた）のを直した。この日から grid / trend_today / ranking / history / modal_reco / deeplink に分かれる。ブラウザの「戻る」「進む」で開いた分（popstate）は modal_open に数えない。共有リンク（#store=ID）で開く店が、最初の50店から全店に広がったので、deeplink の modal_open は使われ方の変化ではなく計測の段差として増える",
+      "evidence": "PR #473（7e099194d3）・tests/index_history.test.js・docs/qa/uiux-2026-10/e2e_history.js・本番で modal_open が source=grid / deeplink と store_id つきで出て、「戻る」「進む」「×」では page_view も modal_open も出ないこと（2026-10-12 に確認）"
     }
   ]
 }
