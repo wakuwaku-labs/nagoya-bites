@@ -1,14 +1,9 @@
 {
-  "generatedAt": "2026-10-11T21:43:34.197Z",
+  "generatedAt": "2026-10-11T22:21:30.400Z",
   "run": {
-    "tabelog": {
-      "attempted": 1,
-      "fetched": 0,
-      "stopped": false
-    },
     "hotpepper": {
-      "attempted": 59,
-      "fetched": 59,
+      "attempted": 60,
+      "fetched": 60,
       "stopped": false
     }
   },
@@ -21,9 +16,9 @@
     },
     "hotpepper": {
       "links": 4854,
-      "neverChecked": 3386,
+      "neverChecked": 3266,
       "unfetched": 0,
-      "lastFetchedAt": "2026-10-11T21:43:34.170Z"
+      "lastFetchedAt": "2026-10-11T22:21:30.374Z"
     }
   },
   "closures": {
@@ -34,6 +29,13 @@
           "エリア": "名古屋（名古屋駅/西区/中村区）",
           "url": "https://www.hotpepper.jp/strJ004576397/",
           "検証日": "2026-10-11T21:42:18.514Z",
+          "表示": "【閉店】"
+        },
+        {
+          "店名": "チーズビストロブーズアップ Cheese Bistro BOOZE UP 伏見店",
+          "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+          "url": "https://www.hotpepper.jp/strJ001193502/",
+          "検証日": "2026-10-11T22:00:10.634Z",
           "表示": "【閉店】"
         }
       ],
@@ -376,6 +378,26 @@
       "検出タイトル": "かふぇばるNIJI ニジ",
       "エラー": null,
       "検証日": "2026-10-11T21:42:18.514Z"
+    },
+    {
+      "店名": "六迷館",
+      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+      "種別": "hotpepper",
+      "url": "https://www.hotpepper.jp/strJ000107378/",
+      "理由": "name-mismatch",
+      "検出タイトル": "六迷館のご予約 - 東桜/居酒屋",
+      "エラー": null,
+      "検証日": "2026-10-11T21:59:55.681Z"
+    },
+    {
+      "店名": "チーズビストロブーズアップ Cheese Bistro BOOZE UP 伏見店",
+      "エリア": "栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄",
+      "種別": "hotpepper",
+      "url": "https://www.hotpepper.jp/strJ001193502/",
+      "理由": "closed",
+      "検出タイトル": "チーズビストロブーズアップ Cheese Bistro BOOZE UP 伏見店",
+      "エラー": null,
+      "検証日": "2026-10-11T22:00:10.634Z"
     },
     {
       "店名": "和牛ホルモン焼 三國 本店",
