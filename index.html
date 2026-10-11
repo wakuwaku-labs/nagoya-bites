@@ -9097,7 +9097,48 @@ function applyFilters() {
 // ================================================================
 // URL Hash State — bookmarkable & shareable filter state
 // ================================================================
-function pushHash() {
+// NB-HISTORY:START
+// この区画（NB-HISTORY の開始の印から終了の印まで）は tests/index_history.test.js が取り出して単体で検査する。
+// 区画の外に頼るのは、ALL_STORES・ACTIVE_WARD・ACTIVE_TAGS・FULL_CATALOG_LOADED・normalizeGenre・openM・closeM と DOM だけ。
+//
+// 履歴の決まり（設計書 7.2 節・判断の記録 0017）:
+// - 絞り込み・並び替えは今までどおり履歴を足さず置き換える（replaceState）
+// - 店のモーダルを開くと履歴を1つ足し、URL に store=ID を載せる。足した履歴には印 {nbM:1} を付ける
+// - ×・背景・Esc・下スワイプのどれで閉じても、足した履歴を1つ戻して消す（「戻る」と同じ結果になる）
+// - 共有リンク・再読み込み・「進む」で開いたときは、URL にすでに store= があるので足さない
+// - ハッシュの名前（q・genre・tag・ward・pref・cap・store）は変えない（すでに共有されたリンクが動き続ける）
+var NB_PENDING_STORE = '';   // #store= で指定され、まだモーダルを開けていない店の ID
+var NB_PENDING_SOURCE = '';  // 待っている店を開くときの source。待ち始めた理由（共有リンクなら deeplink・「戻る」「進む」・アドレス欄の変更なら popstate）で、同じ店を待っているあいだは変えない
+var NB_OPEN_STORE_ID = '';   // いまモーダルで開いている店の ID（ID が無い店は ''）
+var NB_SWAP = 0;             // 「似たお店」へ切り替える間だけ、その時刻（履歴を足さず置き換える）
+
+// decodeURIComponent は壊れた % で例外を投げる（#q=%E0%A4%A など）。例外にせず、読めなかった値はそのまま返す
+function nbSafeDecode(s) {
+  try { return decodeURIComponent(s); } catch (e) { return String(s); }
+}
+// ハッシュの文字列 → { 名前: 値 }。名前=値 の形でないものは読まない
+function nbParseHash(hash) {
+  var out = {};
+  String(hash || '').replace(/^#/, '').split('&').forEach(function(p) {
+    var i = p.indexOf('=');
+    if (i < 1) return;
+    var k = p.slice(0, i);
+    if (k === '__proto__') return;
+    out[k] = nbSafeDecode(p.slice(i + 1));
+  });
+  return out;
+}
+// data 属性が一致する要素を探す。値を CSS セレクタに埋め込まない（" を含むハッシュで SyntaxError にならない）
+function nbFindByData(selector, attr, value) {
+  var list = document.querySelectorAll(selector);
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].getAttribute(attr) === value) return list[i];
+  }
+  return null;
+}
+
+// いまの絞り込みの状態 → ハッシュ。storeId を渡すと store= を末尾に足す
+function nbBuildHash(storeId) {
   var prefEl  = document.querySelector('.pt.on');
   var genreEl = document.querySelector('.ft.on');
   var capEl   = document.getElementById('cap-input');
@@ -9113,89 +9154,151 @@ function pushHash() {
   if (ACTIVE_TAGS.length > 0)   params.push('tag='   + ACTIVE_TAGS.map(encodeURIComponent).join(','));
   if (cap)                       params.push('cap='   + encodeURIComponent(cap));
   if (q)                         params.push('q='     + encodeURIComponent(q));
-  var hash = params.length ? '#' + params.join('&') : '#';
-  // Use replaceState to avoid polluting browser history on every filter change
+  if (storeId)                   params.push('store=' + encodeURIComponent(storeId));
+  return params.length ? '#' + params.join('&') : '#';
+}
+
+function pushHash() {
+  var hash = nbBuildHash(NB_OPEN_STORE_ID || NB_PENDING_STORE);
+  // Use replaceState to avoid polluting browser history on every filter change.
+  // モーダルのために足した履歴の印（state）は残す（null で上書きすると「戻る」で閉じられなくなる）
   if (typeof history !== 'undefined' && history.replaceState) {
-    history.replaceState(null, '', hash || location.pathname);
+    history.replaceState(history.state, '', hash || location.pathname);
   }
 }
 
 function readHash() {
-  var hash = location.hash.replace(/^#/, '');
-  if (!hash) return;
-  var params = {};
-  hash.split('&').forEach(function(p) {
-    var kv = p.split('=');
-    if (kv.length >= 2) params[kv[0]] = decodeURIComponent(kv.slice(1).join('='));
-  });
-  // pref
-  if (params.pref) {
-    var prefEl = document.querySelector('.pt[data-pref="' + params.pref + '"]');
-    if (prefEl) {
-      document.querySelectorAll('.pt').forEach(function(x){ x.classList.remove('on'); });
-      prefEl.classList.add('on');
-    }
-  }
-  // genre（#genre=焼肉 等の旧ハッシュも代表ジャンルへ解決）
-  if (params.genre) {
-    var genreEl = document.querySelector('.ft[data-f="' + normalizeGenre(params.genre) + '"]');
-    if (genreEl) {
-      document.querySelectorAll('.ft').forEach(function(x){ x.classList.remove('on'); });
-      genreEl.classList.add('on');
-    }
-  }
-  // ward (area filter)
-  if (params.ward) {
-    var wardEl = document.querySelector('.at[data-ward="' + params.ward + '"]');
-    if (wardEl) {
-      document.querySelectorAll('.at').forEach(function(x){ x.classList.remove('on'); });
-      wardEl.classList.add('on');
-      ACTIVE_WARD = params.ward;
-    }
-  }
-  // tags (comma-separated)
-  if (params.tag) {
-    var tags = params.tag.split(',').map(function(t){ return decodeURIComponent(t); });
-    ACTIVE_TAGS = [];
-    tags.forEach(function(tag) {
-      var el = document.querySelector('.tg[data-tag="' + tag + '"]');
-      if (el) { el.classList.add('on'); ACTIVE_TAGS.push(tag); }
-    });
-  }
-  // capacity
-  if (params.cap) {
-    var capEl = document.getElementById('cap-input');
-    if (capEl) capEl.value = params.cap;
-  }
-  // search query
-  if (params.q) {
-    var siEl = document.getElementById('si');
-    if (siEl) siEl.value = params.q;
-  }
-  // 店舗ページ → モーダルカード表示（#store=HOTPEPPER_ID）
-  if (params.store) {
-    var hpId = params.store;
-    var openStoreModal = function() {
-      var idx = -1;
-      for (var k = 0; k < ALL_STORES.length; k++) {
-        if (ALL_STORES[k]['ホットペッパーID'] === hpId) { idx = k; break; }
+  var params = nbParseHash(location.hash);
+  // 1つの値が壊れていても、ほかの条件の復元と初期化（loadStores の続き）を止めない
+  try {
+    // pref
+    if (params.pref) {
+      var prefEl = nbFindByData('.pt', 'data-pref', params.pref);
+      if (prefEl) {
+        document.querySelectorAll('.pt').forEach(function(x){ x.classList.remove('on'); });
+        prefEl.classList.add('on');
       }
-      if (idx >= 0) {
-        try { openM(idx, 'deeplink'); } catch(e) { console.error('openM failed', e); }
-      }
-    };
-    if (typeof ALL_STORES !== 'undefined' && ALL_STORES.length > 0) {
-      setTimeout(openStoreModal, 50);
-    } else {
-      var waitInterval = setInterval(function(){
-        if (typeof ALL_STORES !== 'undefined' && ALL_STORES.length > 0) {
-          clearInterval(waitInterval);
-          setTimeout(openStoreModal, 50);
-        }
-      }, 100);
     }
+    // genre（#genre=焼肉 等の旧ハッシュも代表ジャンルへ解決）
+    if (params.genre) {
+      var genreEl = nbFindByData('.ft', 'data-f', normalizeGenre(params.genre));
+      if (genreEl) {
+        document.querySelectorAll('.ft').forEach(function(x){ x.classList.remove('on'); });
+        genreEl.classList.add('on');
+      }
+    }
+    // ward (area filter)
+    if (params.ward) {
+      var wardEl = nbFindByData('.at', 'data-ward', params.ward);
+      if (wardEl) {
+        document.querySelectorAll('.at').forEach(function(x){ x.classList.remove('on'); });
+        wardEl.classList.add('on');
+        ACTIVE_WARD = params.ward;
+      }
+    }
+    // tags (comma-separated)
+    if (params.tag) {
+      var tags = params.tag.split(',').map(function(t){ return nbSafeDecode(t); });
+      ACTIVE_TAGS = [];
+      tags.forEach(function(tag) {
+        var el = nbFindByData('.tg', 'data-tag', tag);
+        if (el) { el.classList.add('on'); ACTIVE_TAGS.push(tag); }
+      });
+    }
+    // capacity
+    if (params.cap) {
+      var capEl = document.getElementById('cap-input');
+      if (capEl) capEl.value = params.cap;
+    }
+    // search query
+    if (params.q) {
+      var siEl = document.getElementById('si');
+      if (siEl) siEl.value = params.q;
+    }
+  } catch (e) { console.error('readHash failed', e); }
+  // 店舗ページ・共有リンク → モーダルカード表示（#store=HOTPEPPER_ID）。
+  // 最初に載っている50店の中に無い店は、全店のデータを読み終えてから探す（nbOpenPendingStore が再度呼ばれる）
+  if (params.store && params.store !== NB_OPEN_STORE_ID) {
+    // 同じ店をすでに待っているなら、待ち始めた理由（popstate など）を保つ。全店のデータが届いたあとの再試行（loadStores が読み直す）を、
+    // 新しい共有リンクの訪問＝deeplink と数えないため
+    var pendingSource = (NB_PENDING_STORE === params.store && NB_PENDING_SOURCE) ? NB_PENDING_SOURCE : 'deeplink';
+    NB_PENDING_STORE = params.store;
+    NB_PENDING_SOURCE = pendingSource;
+    setTimeout(function() { nbOpenPendingStore(pendingSource); }, 50);
   }
 }
+
+// 待っている店（NB_PENDING_STORE）を探してモーダルで開く。まだ全店のデータが無ければ待ち続ける
+function nbOpenPendingStore(source) {
+  var id = NB_PENDING_STORE;
+  if (!id) return;
+  var idx = -1;
+  for (var k = 0; k < ALL_STORES.length; k++) {
+    if (ALL_STORES[k]['ホットペッパーID'] === id) { idx = k; break; }
+  }
+  if (idx >= 0) {
+    NB_PENDING_STORE = '';
+    NB_PENDING_SOURCE = '';
+    try { openM(idx, source || 'deeplink'); } catch (e) { console.error('openM failed', e); }
+    return;
+  }
+  // 全店のデータを読み終えても無い ID（存在しない・古い ID）は、URL から外して終える
+  if (FULL_CATALOG_LOADED) {
+    NB_PENDING_STORE = '';
+    NB_PENDING_SOURCE = '';
+    try {
+      if (nbParseHash(location.hash).store) history.replaceState(history.state, '', nbBuildHash(''));
+    } catch (e) { /* 履歴を触れない環境では URL を直さない */ }
+  }
+}
+
+function nbModalIsOpen() {
+  var ov = document.getElementById('ov');
+  return !!(ov && ov.classList.contains('open'));
+}
+
+// モーダルを開いたとき: 履歴を1つ足し、URL に store=ID を載せる。
+// 共有リンク・再読み込み・「進む」で開いたとき（source が deeplink / popstate）は URL にすでにあるので足さない。
+// 開いたまま別の店へ切り替えるとき（似たお店）は、履歴を増やさず今の履歴を置き換える
+function nbModalHistoryOpen(storeId, source) {
+  NB_OPEN_STORE_ID = storeId || '';
+  if (source === 'deeplink' || source === 'popstate') return;
+  try {
+    var hash = nbBuildHash(NB_OPEN_STORE_ID);
+    var swapping = NB_SWAP && (Date.now() - NB_SWAP) < 1000;
+    NB_SWAP = 0;
+    if (swapping || (history.state && history.state.nbM)) history.replaceState(history.state, '', hash);
+    else history.pushState({ nbM: 1 }, '', hash);
+  } catch (e) { /* 履歴を触れない環境でもモーダルは開く */ }
+}
+
+// モーダルを閉じたとき: 足した履歴は1つ戻して消す（popstate が来ても、閉じ済みなので何もしない）。
+// 履歴を足していなければ（共有リンクや再読み込みで開いた）、URL から store= だけを外す
+function nbModalHistoryClose() {
+  NB_OPEN_STORE_ID = '';
+  try {
+    if (history.state && history.state.nbM) { history.back(); return; }
+    if (nbParseHash(location.hash).store) history.replaceState(history.state, '', nbBuildHash(''));
+  } catch (e) { /* 履歴を触れない環境では URL を直さない */ }
+}
+
+// 「戻る」「進む」・アドレス欄の変更でハッシュが変わったとき、モーダルを URL に合わせる
+function nbSyncModalWithUrl() {
+  var want = nbParseHash(location.hash).store || '';
+  var isModalEntry = !!(history.state && history.state.nbM);
+  if (nbModalIsOpen() && (want ? want !== NB_OPEN_STORE_ID : !isModalEntry)) {
+    closeM({ fromPop: true });
+  }
+  if (want && want !== NB_OPEN_STORE_ID) {
+    // 共有リンクで待っている店と同じ店なら、待ち始めた理由（deeplink）を保つ。新しく待つ店は popstate
+    var pendingSource = (NB_PENDING_STORE === want && NB_PENDING_SOURCE) ? NB_PENDING_SOURCE : 'popstate';
+    NB_PENDING_STORE = want;
+    NB_PENDING_SOURCE = pendingSource;
+    nbOpenPendingStore(pendingSource);
+  }
+}
+window.addEventListener('popstate', nbSyncModalWithUrl);
+// NB-HISTORY:END
 
 // Share current URL button helper (copy to clipboard)
 function shareURL() {
@@ -10228,7 +10331,8 @@ function openM(i, source) {
   if (window.event && window.event.target && window.event.target.closest && window.event.target.closest('.fav-btn')) return;
   var r = ALL_STORES[i];
   // store_id はほかの cta_click と同じ決まり（ホットペッパーID。無い店は空）。店ごとの集計に使う（I-08）
-  trackEvent('modal_open', {store_name: r['店名'], store_id: r['ホットペッパーID'] || '', genre: r['ジャンル'], area: r['エリア'], source: source || 'unknown'});
+  // 「進む」で開き直したとき（source=popstate）は、利用者が新しく開いたわけではないので数えない
+  if (source !== 'popstate') trackEvent('modal_open', {store_name: r['店名'], store_id: r['ホットペッパーID'] || '', genre: r['ジャンル'], area: r['エリア'], source: source || 'unknown'});
   var photo = r['写真URL'] || nbStoreFigure(r);
   var hpUrl = hotpepperUrl(r);
   renderMhi(r, photo);
@@ -10575,7 +10679,7 @@ function openM(i, source) {
             var rst=rs3.s, rsn=rst['店名']||'';
             var rsAlt=rsn.replace(/"/g,'&quot;');
             var rsPhoto=rst['写真URL']||nbStoreFigure(rst);
-            return '<button class="modal-rsc" onclick="closeM();setTimeout(function(){openM('+rs3.i+',\'modal_reco\');},50)" aria-label="'+rsAlt+'の詳細を見る">'
+            return '<button class="modal-rsc" onclick="closeM({swap:true});setTimeout(function(){openM('+rs3.i+',\'modal_reco\');},50)" aria-label="'+rsAlt+'の詳細を見る">'
               +'<img class="modal-rsc-img" src="'+nbImage(rsPhoto,480)+'" srcset="'+nbSrcset(rsPhoto,[240,480])+'" sizes="160px" alt="'+rsAlt+'" loading="lazy" decoding="async" width="160" height="120" onerror="nbImgFallback(this)">'
               +'<span class="modal-rsc-body"><span class="modal-rsc-name">'+rsn+'</span>'
               +'<span class="modal-rsc-meta">'+((rst['ジャンル']||'').split('・')[0])+((rst['エリア'])?' · '+rst['エリア']:'')+'</span></span>'
@@ -10620,6 +10724,7 @@ function openM(i, source) {
   if (r.reviewTrust && r.reviewTrust.d) fnParts.push('口コミ最終確認 ' + mEsc(r.reviewTrust.d));
   document.getElementById('m-footnote').innerHTML = fnParts.join(' · ') + ' · <a href="mailto:editor@nagoya-bites.com?subject=' + encodeURIComponent('掲載情報の修正依頼: ' + (r['店名'] || '')) + '">修正を依頼する</a>';
   document.getElementById('ov').classList.add('open');
+  nbModalHistoryOpen(r['ホットペッパーID'] || '', source);
   document.body.style.overflow = 'hidden';
   document.getElementById('mobile-cta-bar').style.display='none';
   var modalEl0 = document.querySelector('.modal'); if (modalEl0) modalEl0.scrollTop = 0;
@@ -10740,8 +10845,10 @@ function mhiGoTo(idx) {
   }, {passive: true});
 })();
 
-function closeM() {
-  document.getElementById('ov').classList.remove('open');
+function closeM(opts) {
+  var ovEl = document.getElementById('ov');
+  var wasOpen = ovEl.classList.contains('open');
+  ovEl.classList.remove('open');
   document.body.style.overflow = '';
   document.getElementById('mobile-cta-bar').style.display='';
   document.getElementById('mig-container').innerHTML = '';
@@ -10749,6 +10856,11 @@ function closeM() {
   var stickyC = document.getElementById('m-sticky-cta'); if (stickyC) { stickyC.classList.remove('show'); stickyC.innerHTML = ''; }
   if (M_STICKY_OBS) { M_STICKY_OBS.disconnect(); M_STICKY_OBS = null; }
   var ldPrev = document.getElementById('modal-store-jsonld'); if (ldPrev && ldPrev.parentNode) ldPrev.parentNode.removeChild(ldPrev);
+  // 履歴の後始末。閉じ済みのモーダルをもう一度閉じても（背景を続けて押すなど）履歴は戻さない。
+  // 「戻る」で閉じるとき（fromPop）と、似たお店へ切り替えるとき（swap）は、履歴に触れない
+  if (opts && opts.swap) NB_SWAP = Date.now();
+  NB_OPEN_STORE_ID = '';
+  if (wasOpen && !(opts && (opts.fromPop || opts.swap))) nbModalHistoryClose();
 }
 document.getElementById('ov').addEventListener('click', function(e){ if(e.target===this) closeM(); });
 
@@ -11809,9 +11921,10 @@ function renderHistory() {
 }
 
 // Patch openM to record history
+// 2つ目の引数（source）も渡す。渡さないと modal_open の source が常に unknown になり、共有リンク（deeplink）・「戻る」「進む」（popstate）の区別もつかない
 var _origOpenM = openM;
-openM = function(i) {
-  _origOpenM(i);
+openM = function(i, source) {
+  _origOpenM(i, source);
   var r = ALL_STORES[i];
   if (r && r['店名']) addHistory(r['店名']);
 };
