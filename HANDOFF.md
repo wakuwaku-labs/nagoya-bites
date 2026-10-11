@@ -40,7 +40,7 @@ status: done
   - 再現用スクリプト docs/qa/uiux-2026-10/（counts.js は通信なし。capture.js・perf.js は GA4 を遮断）
   - 判断の記録 docs/decisions/0016-store-selection-wording.md（店の選び方の書き方）
   - backlog DSN-013〜015 → Linear P-235（親）・P-236（Codex のレビュー）・P-237（オーナーが 4.4 節の11項目を決める）。期限はどれも 2026-10-18
-  - 作業ブランチ wakuwaku-labs/mooneye にコミット（push・PR はまだ。公開に当たるのでオーナーの一言を待つ）
+  - 作業ブランチ wakuwaku-labs/mooneye にコミット。autopilot の設定（push: branch_only）で GitHub にも push 済み。PR は無く、main には合流していない（サイトは変わらない）
   - 読みやすい版（非公開ページ）https://claude.ai/artifact/E8kRtmcAeNE7VKxznopMDt 。更新は Artifact の read で今の版を取り、埋め込んだ設計書（`const MD = …`）を差し替えて同じ URL に publish する。リンクは P-235 にコメント済み
 - 次は人の番: Codex のレビュー（P-236）→ 指摘の反映 → オーナーの判断（P-237）→ 承認された段階を backlog に起票して実装（P-235）
 - 実装はオーナーの承認後。それまでサイトのコードを変えない
