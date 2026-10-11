@@ -16,9 +16,10 @@ Linear P-236（DSN-014）の Codex レビューの結果をもとに、UI・UX�
   - 10.2 節に「数字の取り方」（期間・区切り・自分の閲覧・件数が少ないときの保留）、10.4 節に始める所と T6、10.6 節に Claude の応答を書いた
 - 電話を出す規則: 住所を先に比べ（`compareJpAddress`）、住所が比べられない店だけ店名（`namesMatch`）。出せる店は4,274（予約先あり4,215・なし59）、出せない店は730（placeId 無し327・住所が別120・住所不明で店名も不一致283）。最後に `counts.js` を回し直して設計書の数字と一致した
 - 予約先の無い4店（鮨 結・かき氷 うと・中国料理 旬彩・旬彩）の店舗ページの電話は、今も別の店の番号を取る。ISSUE-147 に追記し、Linear P-142 にコメントした（コードは直していない）
-- `agent-backlog.md` の DSN-014 を done にした。Linear P-236 にコメントした
-- 読みやすい版を作り直した（同じ URL）: https://claude.ai/artifact/E8kRtmcAeNE7VKxznopMDt
-- 確認: `npm test` 通過・`node scripts/next_task.js --check` 通過・構造の検査（I-ブロックの4項目・U 番号の抜けと重複・言い方・鍵の値が無いこと）通過
+- `agent-backlog.md` の DSN-014 を done にした。Linear P-236（Done）にコメントした
+- 最終チェックで、10.6 節に Codex の残る懸念（操作の数だけでは迷いが分からない）への対応が無かったので足した（commit 81eeb6a1ec）。設計の外のコミットの判断のお願いを P-235 にコメントした
+- 読みやすい版を作り直した（同じ URL・第3版）: https://claude.ai/artifact/E8kRtmcAeNE7VKxznopMDt
+- 確認（81eeb6a1ec で実行）: `npm test`・`node scripts/next_task.js --check` は exit 0。構造の検査（I-ブロック36の4項目・U-01〜U-83 の抜けと重複・どの U もいずれかの I が受ける・参照の範囲）は問題なし。言い方と鍵の値も問題なし
 
 # 次にやること（オーナーが決めること）
 1. P-237: 4.4 節の11項目を決める（実装を始める条件）
