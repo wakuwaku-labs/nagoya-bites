@@ -25,6 +25,7 @@ const L = require('./lib/ga4_baseline');
 const { dedupeReservationClicks } = require('./lib/reservation_exits');
 
 const INTERNAL_FILTER_STATES = ['active', 'testing', 'inactive', 'unknown'];
+const MAX_DAYS = 365; // 前後それぞれの日数の上限（GA4 のデータの保持期間より短い）
 
 // ── 引数 ──
 function parseArgs(argv) {
@@ -34,7 +35,12 @@ function parseArgs(argv) {
     const next = () => { if (i + 1 >= argv.length) throw new Error(`${k} に値が要る`); return argv[++i]; };
     if (k === '--window') { a.mode = 'window'; a.start = next(); a.end = next(); }
     else if (k === '--pair') { a.mode = 'pair'; a.D = next(); }
-    else if (k === '--days') { a.days = parseInt(next(), 10); if (!(a.days >= 1)) throw new Error('--days は 1 以上の整数'); }
+    else if (k === '--days') {
+      // parseInt だと 1.5 → 1、7oops → 7 と読んでしまう。数字だけの文字列に限る
+      const v = next();
+      a.days = /^[0-9]+$/.test(v) ? Number(v) : NaN;
+      if (!(a.days >= 1 && a.days <= MAX_DAYS)) throw new Error(`--days は 1 以上 ${MAX_DAYS} 以下の整数にする（${JSON.stringify(v)}）`);
+    }
     else if (k === '--label') a.label = next();
     else if (k === '--out') a.out = next();
     else if (k === '--internal-filter') {
@@ -184,8 +190,10 @@ async function runBaseline(runReport, args, now = Date.now()) {
   }
   const pair = L.windowPair(args.D, args.days, { today });
   const out = { ...base, mode: 'pair', D: pair.D, days: pair.days, requestedDays: pair.requestedDays, pairNotes: pair.notes };
+  // 前の期間も、window と同じく確定前の日を含むなら止める（確定前の数字を基線にしない）
+  if (!pair.before.settled && !args.allowUnsettled) throw new Error(`前の期間（${pair.before.start}〜${pair.before.end}）: ${pair.before.warnings[0]}（確定前の日を含めるなら --allow-unsettled）`);
   out.before = await reportWindow(runReport, pair.before);
-  if (pair.after.settled) out.after = await reportWindow(runReport, pair.after);
+  if (pair.after.settled || args.allowUnsettled) out.after = await reportWindow(runReport, pair.after);
   else { out.after = null; out.pairNotes.push(`後の期間（${pair.after.start}〜${pair.after.end}）はまだ確定していないので取っていない`); }
   return out;
 }
@@ -268,4 +276,4 @@ async function main(argv = process.argv.slice(2), env = process.env) {
 
 if (require.main === module) main().then(c => process.exit(c));
 
-module.exports = { parseArgs, buildRequests, fetchAll, fetchLanding, reportWindow, runBaseline, conditionsOf, withRatios, summaryOfFile, main, INTERNAL_FILTER_STATES };
+module.exports = { MAX_DAYS, parseArgs, buildRequests, fetchAll, fetchLanding, reportWindow, runBaseline, conditionsOf, withRatios, summaryOfFile, main, INTERNAL_FILTER_STATES };

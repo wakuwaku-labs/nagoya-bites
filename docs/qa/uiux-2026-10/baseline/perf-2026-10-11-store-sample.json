@@ -24,7 +24,8 @@
   "店舗ページを、店を替えて測った（1周ごとに別の店。sitemap.xml の店舗ページから無作為に10店。測った URL は samples の url）。同じ店を測り続ける store は perf-2026-10-11-battery.json にある",
   "同じ店を測り続けると、画像変換サービス wsrv.nl の側にキャッシュができて速く出る（直接取ったとき、初めて見られる店の写真は 2.9〜4.4s・2回目以降は 0.07〜0.4s）。前と後で別の店になるよう、標本は毎回無作為に選び直す（判断の記録 0019）",
   "測定機: MacBook（Apple M5・10コア）。電源はバッテリー駆動・低電力モード入（1回ごとの power・lowPowerMode で確認）。測った時刻: 2026-10-11 22:07〜22:10 JST。測る間は caffeinate -u -d -i で画面を起こした",
-  "電源による LCP の違いはこの標本では測っていない（同じ店を繰り返した store では、充電器とバッテリーの LCP の差は 0.1s ほどだった）。TBT はどの店も 0"
+  "電源による LCP の違いはこの標本では測っていない（同じ店を繰り返した store では、充電器とバッテリーの LCP の差は 0.1s ほどだった）。TBT はどの店も 0",
+  "CLS は全部のずれの合計（旧定義）。2026-10-12 に、CLS をいちばん大きいセッション窓の値（web.dev）に直した。この値は新しい定義の値とは比べない（再測定する）"
  ],
  "target": {
   "lcp": 2500,
@@ -36,11 +37,15 @@
   "store-sample": {
    "runs": 10,
    "invalid": 0,
+   "clsDefinition": "sum-of-shifts",
+   "excludedRuns": null,
    "median": {
     "ttfb": 270.5,
     "fcp": 1542,
     "lcp": 6964,
     "cls": 0.001,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 0,
     "dcl": 1525.5,
     "load": 7002.5,
@@ -60,6 +65,8 @@
     "fcp": 1364,
     "lcp": 2080,
     "cls": 0.001,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 0,
     "dcl": 1353,
     "load": 6189,
@@ -79,6 +86,8 @@
     "fcp": 2080,
     "lcp": 7496,
     "cls": 0.128,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 0,
     "dcl": 2061,
     "load": 7462,

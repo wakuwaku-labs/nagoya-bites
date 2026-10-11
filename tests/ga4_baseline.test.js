@@ -269,14 +269,17 @@ test('runBaseline --window: 期間・区切り・条件・取った日を残し�
   JSON.parse(JSON.stringify(out)); // JSON として書ける
 });
 
-test('runBaseline --pair: 前後を別々に取り、後が確定前なら取らずに理由を書く', async () => {
-  // D=2026-12-10。後は 12-11〜 で、NOW(12-01) より先
-  const future = await B.runBaseline(fakeGa4(), B.parseArgs(['--pair', '2026-12-10', '--days', '7']), NOW);
-  assert.strictEqual(future.mode, 'pair');
-  assert.strictEqual(future.days, 7);
-  assert.deepStrictEqual([future.before.window.start, future.before.window.end], ['2026-12-03', '2026-12-09']);
-  assert.strictEqual(future.after, null);
-  assert.ok(future.pairNotes.some(n => n.includes('確定していない')));
+test('runBaseline --pair: 前後を別々に取り、後が確定前なら取らずに理由を書く。前が確定前（未来の D など）なら取らずに止まる', async () => {
+  // D=2026-12-10。前は 12-03〜12-09 で、NOW(12-01) より先＝まだ存在しない日。確定前の数字を基線にしない
+  await assert.rejects(() => B.runBaseline(fakeGa4(), B.parseArgs(['--pair', '2026-12-10', '--days', '7']), NOW), /前の期間.*確定前/);
+
+  // D=2026-11-25 で 7 日。前は 11-18〜11-24 で確定済み。後は 11-26〜12-02 で確定前なので取らない
+  const past = await B.runBaseline(fakeGa4(), B.parseArgs(['--pair', '2026-11-25', '--days', '7']), NOW);
+  assert.strictEqual(past.mode, 'pair');
+  assert.strictEqual(past.days, 7);
+  assert.deepStrictEqual([past.before.window.start, past.before.window.end], ['2026-11-18', '2026-11-24']);
+  assert.strictEqual(past.after, null);
+  assert.ok(past.pairNotes.some(n => n.includes('確定していない')));
 
   // D=2026-11-10 で 7 日。後は 11-11〜11-17 で確定済み
   const both = await B.runBaseline(fakeGa4(), B.parseArgs(['--pair', '2026-11-10', '--days', '7']), NOW);
@@ -292,8 +295,34 @@ test('parseArgs: 期間の指定の仕方と、書き間違いを弾く', () => 
   assert.throws(() => B.parseArgs([]), /どれか/);
   assert.throws(() => B.parseArgs(['--window', '2026-10-09']), /値が要る/);
   assert.throws(() => B.parseArgs(['--pair', '2026-11-10', '--days', '0']), /1 以上/);
+  assert.strictEqual(B.parseArgs(['--pair', '2026-11-10', '--days', '1']).days, 1);
+  assert.strictEqual(B.parseArgs(['--pair', '2026-11-10', '--days', String(B.MAX_DAYS)]).days, B.MAX_DAYS);
   assert.throws(() => B.parseArgs(['--pair', '2026-11-10', '--internal-filter', 'maybe']), /active/);
   assert.throws(() => B.parseArgs(['--bogus']), /知らない引数/);
+});
+
+test('parseArgs: --days は数字だけの整数。1.5・7oops・負数・空・空白入り・指数・上限超えは弾く（parseInt のように丸めて読まない）', () => {
+  ['1.5', '7oops', '-1', '', ' 7', '7 ', '1e2', '0x10', '+7', 'abc', String(B.MAX_DAYS + 1), '99999'].forEach(v => {
+    assert.throws(() => B.parseArgs(['--pair', '2026-11-10', '--days', v]), /--days は 1 以上/, `--days ${JSON.stringify(v)} は弾く`);
+  });
+  assert.strictEqual(B.parseArgs(['--pair', '2026-11-10', '--days', '007']).days, 7);
+});
+
+test('runBaseline --pair: 前の期間に確定前の日を含むと止まる（--allow-unsettled で通す）', async () => {
+  // NOW=2026-12-01。D=2026-12-02 の前（11-25〜12-01）は 11-29 までしか確定していない
+  const args = B.parseArgs(['--pair', '2026-12-02', '--days', '7']);
+  await assert.rejects(() => B.runBaseline(fakeGa4(), args, NOW), /前の期間.*確定前/);
+  const ok = await B.runBaseline(fakeGa4(), B.parseArgs(['--pair', '2026-12-02', '--days', '7', '--allow-unsettled']), NOW);
+  assert.strictEqual(ok.before.window.settled, false);
+  assert.ok(ok.before.window.warnings.length > 0);
+  assert.ok(ok.after && ok.after.window.settled === false, '--allow-unsettled なら後の期間も取る（確定前と印を付けて）');
+});
+
+test('runBaseline --pair: 前が確定済みで後だけ確定前なら、従来どおり前だけ取って後は理由を書く', async () => {
+  const out = await B.runBaseline(fakeGa4(), B.parseArgs(['--pair', '2026-11-25', '--days', '7']), NOW);
+  assert.strictEqual(out.before.window.settled, true);
+  assert.strictEqual(out.after, null);
+  assert.ok(out.pairNotes.some(n => n.includes('確定していない')));
 });
 
 function capture(fn) {

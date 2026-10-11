@@ -211,3 +211,99 @@ test('CLI: 端末の CPU 数と、電源（バッテリーか充電器か）の�
     assert.deepStrictEqual(JSON.parse(fs.readFileSync(out, 'utf8')).host, { cpus: null, power: {}, lowPowerMode: {} });
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
+
+// ── CLS の定義（2026-10-12・Codex のレビュー）─────────────────────────────
+test('summarize: ずれの生の値（shifts）がある行はセッション窓の CLS、無い古い行は旧定義（全部の合計）と分けて残す', () => {
+  const withShifts = (name, cls, sum) => run(name, 1500, { cls, clsSum: sum, shifts: [[600, cls]] });
+  const s = P.summarize([
+    withShifts('journal', 0.06, 0.13), withShifts('journal', 0.07, 0.12),
+    run('hub', 1500, { cls: 0.652 }), run('hub', 1500, { cls: 0.013 }),
+    withShifts('top', 0.01, 0.01), run('top', 1500, { cls: 0.05 }),
+  ]);
+  assert.strictEqual(s.journal.clsDefinition, 'session-window');
+  assert.strictEqual(s.hub.clsDefinition, 'sum-of-shifts');
+  assert.strictEqual(s.top.clsDefinition, 'mixed');
+});
+
+test('summarize: 全部のずれの合計（clsSum）も中央値に出す。CLS との差が見える', () => {
+  const s = P.summarize([0.05, 0.07, 0.09].map((c, i) => run('journal', 1500, { run: i, cls: c, clsSum: c * 2, shifts: [[1, c]] })));
+  assert.strictEqual(s.journal.median.cls, 0.07);
+  assert.strictEqual(s.journal.median.clsSum, 0.14);
+});
+
+test('summarize: 描画されなかった回だけのページは clsDefinition を null にする（定義を言えない）', () => {
+  const s = P.summarize([run('hub', 0, { fcp: 0, cls: 0 })]);
+  assert.strictEqual(s.hub.clsDefinition, null);
+});
+
+test('tableOf: 旧定義の行を含むときは、その旨を表の下に出す。全部がセッション窓なら出さない', () => {
+  const legacy = P.tableOf(P.summarize([run('hub', 1500, { cls: 0.652 })]));
+  assert.ok(legacy.includes('旧定義'), legacy);
+  assert.ok(legacy.includes('hub'), legacy);
+  const now = P.tableOf(P.summarize([run('hub', 1500, { cls: 0.05, shifts: [[1, 0.05]] })]));
+  assert.ok(!now.includes('旧定義'), now);
+});
+
+test('CLI: 旧定義の行を含むと stderr で知らせ、出力のページに clsDefinition を残す', () => {
+  const fs = require('fs'), os = require('os'), path = require('path'), cp = require('child_process');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'perfsum-cls-'));
+  const f = path.join(dir, 'runs.jsonl');
+  fs.writeFileSync(f, [run('hub', 1500, { cls: 0.652 }), run('top', 1500, { cls: 0.01, shifts: [[1, 0.01]] })].map(r => JSON.stringify(r)).join('\n') + '\n');
+  const r = cp.spawnSync('node', [path.join(__dirname, '..', 'docs', 'qa', 'uiux-2026-10', 'perf_summary.js'), f], { encoding: 'utf8' });
+  assert.strictEqual(r.status, 0, r.stderr);
+  assert.ok(/旧定義/.test(r.stderr) && /hub/.test(r.stderr), r.stderr);
+  const out = JSON.parse(r.stdout);
+  assert.strictEqual(out.pages.hub.clsDefinition, 'sum-of-shifts');
+  assert.strictEqual(out.pages.top.clsDefinition, 'session-window');
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+// ── 入力の直後と判定されて CLS に数えなかったずれ（2026-10-12 の診断）─────────────
+test('summarize: 数えなかったずれがあった回の数（excludedRuns）と、その合計の最大を出す', () => {
+  const s = P.summarize([
+    run('journal', 1500, { run: 0, cls: 0.06, shifts: [[1, 0.06]], excludedCount: 0, clsExcluded: 0 }),
+    run('journal', 1500, { run: 1, cls: 0.06, shifts: [[1, 0.06]], excludedCount: 2, clsExcluded: 0.101 }),
+    run('journal', 1500, { run: 2, cls: 0.06, shifts: [[1, 0.06]], excludedCount: 1, clsExcluded: 0.02 }),
+  ]);
+  assert.strictEqual(s.journal.excludedRuns, 2);
+  assert.strictEqual(s.journal.max.clsExcluded, 0.101);
+  assert.strictEqual(s.journal.median.clsExcluded, 0.02);
+});
+
+test('summarize: 除外の記録が無い古い行だけのページは excludedRuns を null にする（0 にしない）', () => {
+  const s = P.summarize([run('hub', 1500, { cls: 0.652 })]);
+  assert.strictEqual(s.hub.excludedRuns, null);
+  assert.strictEqual(s.hub.median.clsExcluded, null);
+});
+
+test('summarize: 除外が0回なら excludedRuns は 0（記録があって無かった）', () => {
+  const s = P.summarize([run('top', 1500, { cls: 0.01, shifts: [], excludedCount: 0, clsExcluded: 0 })]);
+  assert.strictEqual(s.top.excludedRuns, 0);
+});
+
+test('tableOf: 数えなかったずれがあるときだけ、その旨を表の下に出す', () => {
+  const some = P.tableOf(P.summarize([run('journal', 1500, { cls: 0.06, shifts: [[1, 0.06]], excludedCount: 1, clsExcluded: 0.05 })]));
+  assert.ok(some.includes('直前の入力あり'), some);
+  assert.ok(some.includes('journal 1/1回'), some);
+  const none = P.tableOf(P.summarize([run('journal', 1500, { cls: 0.06, shifts: [[1, 0.06]], excludedCount: 0, clsExcluded: 0 })]));
+  assert.ok(!none.includes('直前の入力あり'), none);
+  const legacy = P.tableOf(P.summarize([run('journal', 1500, { cls: 0.06 })]));
+  assert.ok(!legacy.includes('直前の入力あり'), legacy);
+});
+
+test('CLI: 数えなかったずれがあると stderr で知らせる。無ければ黙る', () => {
+  const fs = require('fs'), os = require('os'), path = require('path'), cp = require('child_process');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'perfsum-excl-'));
+  const f = path.join(dir, 'runs.jsonl');
+  const cli = path.join(__dirname, '..', 'docs', 'qa', 'uiux-2026-10', 'perf_summary.js');
+  try {
+    fs.writeFileSync(f, [run('journal', 1500, { cls: 0.06, shifts: [[1, 0.06]], excludedCount: 2, clsExcluded: 0.101 })].map(r => JSON.stringify(r)).join('\n') + '\n');
+    const a = cp.spawnSync('node', [cli, f], { encoding: 'utf8' });
+    assert.strictEqual(a.status, 0, a.stderr);
+    assert.ok(/直前の入力あり/.test(a.stderr) && /journal/.test(a.stderr) && /0\.101/.test(a.stderr), a.stderr);
+    fs.writeFileSync(f, [run('journal', 1500, { cls: 0.06, shifts: [[1, 0.06]], excludedCount: 0, clsExcluded: 0 })].map(r => JSON.stringify(r)).join('\n') + '\n');
+    const b = cp.spawnSync('node', [cli, f], { encoding: 'utf8' });
+    assert.strictEqual(b.status, 0, b.stderr);
+    assert.ok(!/直前の入力あり/.test(b.stderr), b.stderr);
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});

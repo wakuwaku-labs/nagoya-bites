@@ -23,7 +23,8 @@
   "低電力モードは「バッテリー駆動のときだけ入る」設定（pmset -g custom）。この回の各行には lowPowerMode を記録していない（記録を足す前に測った）ので、入っていたと見込むが未確認",
   "測った時刻: 2026-10-11 21:31〜21:52 JST。測る間は caffeinate -u -d -i で画面を起こした。同じ Mac の別のワークスペースのジョブなど、ほかの作業は止めていない",
   "10周×7ページ種別。ページ種別を一周する順。描画されなかった回は最大2回やり直した",
-  "同じ日の充電器の測定は perf-2026-10-11-ac.json（暫定）。TBT とハブの CLS は電源で割れたので、2つの値は比べない（判断の記録 0018）"
+  "同じ日の充電器の測定は perf-2026-10-11-ac.json（暫定）。TBT とハブの CLS は電源で割れたので、2つの値は比べない（判断の記録 0018）",
+  "CLS は全部のずれの合計（旧定義）。2026-10-12 に、CLS をいちばん大きいセッション窓の値（web.dev）に直した。この値は新しい定義の値とは比べない（再測定する）"
  ],
  "target": {
   "lcp": 2500,
@@ -35,11 +36,15 @@
   "top": {
    "runs": 10,
    "invalid": 0,
+   "clsDefinition": "sum-of-shifts",
+   "excludedRuns": null,
    "median": {
     "ttfb": 256.5,
     "fcp": 3966,
     "lcp": 10134,
     "cls": 0.027,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 860.5,
     "dcl": 11611.5,
     "load": 28679,
@@ -59,6 +64,8 @@
     "fcp": 3776,
     "lcp": 9688,
     "cls": 0.027,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 841,
     "dcl": 11459,
     "load": 28569,
@@ -78,6 +85,8 @@
     "fcp": 4240,
     "lcp": 10360,
     "cls": 0.027,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 888,
     "dcl": 11810,
     "load": 36709,
@@ -99,6 +108,7 @@
    "samples": [
     {
      "run": 0,
+     "url": null,
      "lcp": 10360,
      "cls": 0.027,
      "tbt": 888,
@@ -109,6 +119,7 @@
     },
     {
      "run": 1,
+     "url": null,
      "lcp": 10196,
      "cls": 0.027,
      "tbt": 841,
@@ -119,6 +130,7 @@
     },
     {
      "run": 2,
+     "url": null,
      "lcp": 10320,
      "cls": 0.027,
      "tbt": 858,
@@ -129,6 +141,7 @@
     },
     {
      "run": 3,
+     "url": null,
      "lcp": 9888,
      "cls": 0.027,
      "tbt": 870,
@@ -139,6 +152,7 @@
     },
     {
      "run": 4,
+     "url": null,
      "lcp": 9688,
      "cls": 0.027,
      "tbt": 843,
@@ -149,6 +163,7 @@
     },
     {
      "run": 5,
+     "url": null,
      "lcp": 10248,
      "cls": 0.027,
      "tbt": 846,
@@ -159,6 +174,7 @@
     },
     {
      "run": 6,
+     "url": null,
      "lcp": 10092,
      "cls": 0.027,
      "tbt": 857,
@@ -169,6 +185,7 @@
     },
     {
      "run": 7,
+     "url": null,
      "lcp": 9968,
      "cls": 0.027,
      "tbt": 882,
@@ -179,6 +196,7 @@
     },
     {
      "run": 8,
+     "url": null,
      "lcp": 10176,
      "cls": 0.027,
      "tbt": 863,
@@ -189,6 +207,7 @@
     },
     {
      "run": 9,
+     "url": null,
      "lcp": 10072,
      "cls": 0.027,
      "tbt": 873,
@@ -210,11 +229,15 @@
   "store": {
    "runs": 10,
    "invalid": 0,
+   "clsDefinition": "sum-of-shifts",
+   "excludedRuns": null,
    "median": {
     "ttfb": 119.5,
     "fcp": 1774,
     "lcp": 1774,
     "cls": 0.001,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 0,
     "dcl": 1747,
     "load": 6039,
@@ -234,6 +257,8 @@
     "fcp": 1668,
     "lcp": 1668,
     "cls": 0.001,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 0,
     "dcl": 1645,
     "load": 5896,
@@ -253,6 +278,8 @@
     "fcp": 1852,
     "lcp": 1852,
     "cls": 0.001,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 0,
     "dcl": 1837,
     "load": 6144,
@@ -274,6 +301,7 @@
    "samples": [
     {
      "run": 0,
+     "url": null,
      "lcp": 1728,
      "cls": 0.001,
      "tbt": 0,
@@ -284,6 +312,7 @@
     },
     {
      "run": 1,
+     "url": null,
      "lcp": 1668,
      "cls": 0.001,
      "tbt": 0,
@@ -294,6 +323,7 @@
     },
     {
      "run": 2,
+     "url": null,
      "lcp": 1792,
      "cls": 0.001,
      "tbt": 0,
@@ -304,6 +334,7 @@
     },
     {
      "run": 3,
+     "url": null,
      "lcp": 1852,
      "cls": 0.001,
      "tbt": 0,
@@ -314,6 +345,7 @@
     },
     {
      "run": 4,
+     "url": null,
      "lcp": 1812,
      "cls": 0.001,
      "tbt": 0,
@@ -324,6 +356,7 @@
     },
     {
      "run": 5,
+     "url": null,
      "lcp": 1840,
      "cls": 0.001,
      "tbt": 0,
@@ -334,6 +367,7 @@
     },
     {
      "run": 6,
+     "url": null,
      "lcp": 1756,
      "cls": 0.001,
      "tbt": 0,
@@ -344,6 +378,7 @@
     },
     {
      "run": 7,
+     "url": null,
      "lcp": 1792,
      "cls": 0.001,
      "tbt": 0,
@@ -354,6 +389,7 @@
     },
     {
      "run": 8,
+     "url": null,
      "lcp": 1668,
      "cls": 0.001,
      "tbt": 0,
@@ -364,6 +400,7 @@
     },
     {
      "run": 9,
+     "url": null,
      "lcp": 1704,
      "cls": 0.001,
      "tbt": 0,
@@ -385,11 +422,15 @@
   "feature": {
    "runs": 10,
    "invalid": 0,
+   "clsDefinition": "sum-of-shifts",
+   "excludedRuns": null,
    "median": {
     "ttfb": 62,
     "fcp": 1508,
     "lcp": 1508,
     "cls": 0.009,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 1003.5,
     "dcl": 1515.5,
     "load": 7456,
@@ -409,6 +450,8 @@
     "fcp": 1480,
     "lcp": 1480,
     "cls": 0.008,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 795,
     "dcl": 1490,
     "load": 7422,
@@ -428,6 +471,8 @@
     "fcp": 1712,
     "lcp": 1712,
     "cls": 0.01,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 1083,
     "dcl": 1723,
     "load": 7657,
@@ -449,6 +494,7 @@
    "samples": [
     {
      "run": 0,
+     "url": null,
      "lcp": 1508,
      "cls": 0.009,
      "tbt": 990,
@@ -459,6 +505,7 @@
     },
     {
      "run": 1,
+     "url": null,
      "lcp": 1696,
      "cls": 0.009,
      "tbt": 1005,
@@ -469,6 +516,7 @@
     },
     {
      "run": 2,
+     "url": null,
      "lcp": 1480,
      "cls": 0.01,
      "tbt": 1046,
@@ -479,6 +527,7 @@
     },
     {
      "run": 3,
+     "url": null,
      "lcp": 1712,
      "cls": 0.009,
      "tbt": 1083,
@@ -489,6 +538,7 @@
     },
     {
      "run": 4,
+     "url": null,
      "lcp": 1548,
      "cls": 0.009,
      "tbt": 1059,
@@ -499,6 +549,7 @@
     },
     {
      "run": 5,
+     "url": null,
      "lcp": 1536,
      "cls": 0.008,
      "tbt": 795,
@@ -509,6 +560,7 @@
     },
     {
      "run": 6,
+     "url": null,
      "lcp": 1504,
      "cls": 0.009,
      "tbt": 1002,
@@ -519,6 +571,7 @@
     },
     {
      "run": 7,
+     "url": null,
      "lcp": 1492,
      "cls": 0.008,
      "tbt": 949,
@@ -529,6 +582,7 @@
     },
     {
      "run": 8,
+     "url": null,
      "lcp": 1508,
      "cls": 0.008,
      "tbt": 955,
@@ -539,6 +593,7 @@
     },
     {
      "run": 9,
+     "url": null,
      "lcp": 1500,
      "cls": 0.008,
      "tbt": 1015,
@@ -560,11 +615,15 @@
   "journal": {
    "runs": 10,
    "invalid": 0,
+   "clsDefinition": "sum-of-shifts",
+   "excludedRuns": null,
    "median": {
     "ttfb": 65.5,
     "fcp": 1398,
     "lcp": 1398,
     "cls": 0.129,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 51,
     "dcl": 1392,
     "load": 8292,
@@ -584,6 +643,8 @@
     "fcp": 1376,
     "lcp": 1376,
     "cls": 0.127,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 36,
     "dcl": 1379,
     "load": 8269,
@@ -603,6 +664,8 @@
     "fcp": 7316,
     "lcp": 7316,
     "cls": 0.141,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 81,
     "dcl": 7304,
     "load": 15106,
@@ -624,6 +687,7 @@
    "samples": [
     {
      "run": 0,
+     "url": null,
      "lcp": 1396,
      "cls": 0.128,
      "tbt": 81,
@@ -634,6 +698,7 @@
     },
     {
      "run": 1,
+     "url": null,
      "lcp": 1380,
      "cls": 0.129,
      "tbt": 41,
@@ -644,6 +709,7 @@
     },
     {
      "run": 2,
+     "url": null,
      "lcp": 1576,
      "cls": 0.127,
      "tbt": 36,
@@ -654,6 +720,7 @@
     },
     {
      "run": 3,
+     "url": null,
      "lcp": 1632,
      "cls": 0.129,
      "tbt": 46,
@@ -664,6 +731,7 @@
     },
     {
      "run": 4,
+     "url": null,
      "lcp": 1752,
      "cls": 0.129,
      "tbt": 71,
@@ -674,6 +742,7 @@
     },
     {
      "run": 5,
+     "url": null,
      "lcp": 7316,
      "cls": 0.128,
      "tbt": 46,
@@ -684,6 +753,7 @@
     },
     {
      "run": 6,
+     "url": null,
      "lcp": 1400,
      "cls": 0.141,
      "tbt": 65,
@@ -694,6 +764,7 @@
     },
     {
      "run": 7,
+     "url": null,
      "lcp": 1388,
      "cls": 0.129,
      "tbt": 51,
@@ -704,6 +775,7 @@
     },
     {
      "run": 8,
+     "url": null,
      "lcp": 1392,
      "cls": 0.129,
      "tbt": 52,
@@ -714,6 +786,7 @@
     },
     {
      "run": 9,
+     "url": null,
      "lcp": 1376,
      "cls": 0.128,
      "tbt": 51,
@@ -732,11 +805,15 @@
   "hub": {
    "runs": 10,
    "invalid": 0,
+   "clsDefinition": "sum-of-shifts",
+   "excludedRuns": null,
    "median": {
     "ttfb": 102.5,
     "fcp": 1568,
     "lcp": 1568,
     "cls": 0.652,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 2136.5,
     "dcl": 1563.5,
     "load": 9970.5,
@@ -756,6 +833,8 @@
     "fcp": 1472,
     "lcp": 1472,
     "cls": 0.013,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 1965,
     "dcl": 1474,
     "load": 9899,
@@ -775,6 +854,8 @@
     "fcp": 1716,
     "lcp": 1716,
     "cls": 0.652,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 2466,
     "dcl": 1722,
     "load": 10138,
@@ -796,6 +877,7 @@
    "samples": [
     {
      "run": 0,
+     "url": null,
      "lcp": 1632,
      "cls": 0.652,
      "tbt": 2212,
@@ -806,6 +888,7 @@
     },
     {
      "run": 1,
+     "url": null,
      "lcp": 1528,
      "cls": 0.652,
      "tbt": 2152,
@@ -816,6 +899,7 @@
     },
     {
      "run": 2,
+     "url": null,
      "lcp": 1472,
      "cls": 0.013,
      "tbt": 2121,
@@ -826,6 +910,7 @@
     },
     {
      "run": 3,
+     "url": null,
      "lcp": 1596,
      "cls": 0.652,
      "tbt": 2000,
@@ -836,6 +921,7 @@
     },
     {
      "run": 4,
+     "url": null,
      "lcp": 1644,
      "cls": 0.652,
      "tbt": 2119,
@@ -846,6 +932,7 @@
     },
     {
      "run": 5,
+     "url": null,
      "lcp": 1716,
      "cls": 0.652,
      "tbt": 2194,
@@ -856,6 +943,7 @@
     },
     {
      "run": 6,
+     "url": null,
      "lcp": 1496,
      "cls": 0.013,
      "tbt": 2466,
@@ -866,6 +954,7 @@
     },
     {
      "run": 7,
+     "url": null,
      "lcp": 1528,
      "cls": 0.652,
      "tbt": 2347,
@@ -876,6 +965,7 @@
     },
     {
      "run": 8,
+     "url": null,
      "lcp": 1588,
      "cls": 0.652,
      "tbt": 1965,
@@ -886,6 +976,7 @@
     },
     {
      "run": 9,
+     "url": null,
      "lcp": 1548,
      "cls": 0.013,
      "tbt": 2080,
@@ -904,11 +995,15 @@
   "features-index": {
    "runs": 10,
    "invalid": 0,
+   "clsDefinition": "sum-of-shifts",
+   "excludedRuns": null,
    "median": {
     "ttfb": 105,
     "fcp": 1556,
     "lcp": 1556,
     "cls": 0.016,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 1406,
     "dcl": 1542.5,
     "load": 10412,
@@ -928,6 +1023,8 @@
     "fcp": 1456,
     "lcp": 1456,
     "cls": 0.016,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 1358,
     "dcl": 1445,
     "load": 10263,
@@ -947,6 +1044,8 @@
     "fcp": 15552,
     "lcp": 15552,
     "cls": 0.016,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 1562,
     "dcl": 15523,
     "load": 42061,
@@ -968,6 +1067,7 @@
    "samples": [
     {
      "run": 0,
+     "url": null,
      "lcp": 2292,
      "cls": 0.016,
      "tbt": 1392,
@@ -978,6 +1078,7 @@
     },
     {
      "run": 1,
+     "url": null,
      "lcp": 1484,
      "cls": 0.016,
      "tbt": 1422,
@@ -988,6 +1089,7 @@
     },
     {
      "run": 2,
+     "url": null,
      "lcp": 1548,
      "cls": 0.016,
      "tbt": 1374,
@@ -998,6 +1100,7 @@
     },
     {
      "run": 3,
+     "url": null,
      "lcp": 1600,
      "cls": 0.016,
      "tbt": 1467,
@@ -1008,6 +1111,7 @@
     },
     {
      "run": 4,
+     "url": null,
      "lcp": 1648,
      "cls": 0.016,
      "tbt": 1377,
@@ -1018,6 +1122,7 @@
     },
     {
      "run": 5,
+     "url": null,
      "lcp": 15552,
      "cls": 0.016,
      "tbt": 1395,
@@ -1028,6 +1133,7 @@
     },
     {
      "run": 6,
+     "url": null,
      "lcp": 1456,
      "cls": 0.016,
      "tbt": 1562,
@@ -1038,6 +1144,7 @@
     },
     {
      "run": 7,
+     "url": null,
      "lcp": 1460,
      "cls": 0.016,
      "tbt": 1456,
@@ -1048,6 +1155,7 @@
     },
     {
      "run": 8,
+     "url": null,
      "lcp": 1512,
      "cls": 0.016,
      "tbt": 1417,
@@ -1058,6 +1166,7 @@
     },
     {
      "run": 9,
+     "url": null,
      "lcp": 1564,
      "cls": 0.016,
      "tbt": 1358,
@@ -1076,11 +1185,15 @@
   "journal-index": {
    "runs": 10,
    "invalid": 0,
+   "clsDefinition": "sum-of-shifts",
+   "excludedRuns": null,
    "median": {
     "ttfb": 136.5,
     "fcp": 1684,
     "lcp": 1684,
     "cls": 0.002,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 3508.5,
     "dcl": 1665.5,
     "load": 11646,
@@ -1100,6 +1213,8 @@
     "fcp": 1632,
     "lcp": 1632,
     "cls": 0.002,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 3131,
     "dcl": 1609,
     "load": 11586,
@@ -1119,6 +1234,8 @@
     "fcp": 1912,
     "lcp": 1912,
     "cls": 0.002,
+    "clsSum": null,
+    "clsExcluded": null,
     "tbt": 3988,
     "dcl": 1884,
     "load": 11804,
@@ -1140,6 +1257,7 @@
    "samples": [
     {
      "run": 0,
+     "url": null,
      "lcp": 1652,
      "cls": 0.002,
      "tbt": 3741,
@@ -1150,6 +1268,7 @@
     },
     {
      "run": 1,
+     "url": null,
      "lcp": 1640,
      "cls": 0.002,
      "tbt": 3689,
@@ -1160,6 +1279,7 @@
     },
     {
      "run": 2,
+     "url": null,
      "lcp": 1736,
      "cls": 0.002,
      "tbt": 3527,
@@ -1170,6 +1290,7 @@
     },
     {
      "run": 3,
+     "url": null,
      "lcp": 1752,
      "cls": 0.002,
      "tbt": 3490,
@@ -1180,6 +1301,7 @@
     },
     {
      "run": 4,
+     "url": null,
      "lcp": 1716,
      "cls": 0.002,
      "tbt": 3131,
@@ -1190,6 +1312,7 @@
     },
     {
      "run": 5,
+     "url": null,
      "lcp": 1912,
      "cls": 0.002,
      "tbt": 3988,
@@ -1200,6 +1323,7 @@
     },
     {
      "run": 6,
+     "url": null,
      "lcp": 1648,
      "cls": 0.002,
      "tbt": 3778,
@@ -1210,6 +1334,7 @@
     },
     {
      "run": 7,
+     "url": null,
      "lcp": 1632,
      "cls": 0.002,
      "tbt": 3336,
@@ -1220,6 +1345,7 @@
     },
     {
      "run": 8,
+     "url": null,
      "lcp": 1844,
      "cls": 0.002,
      "tbt": 3147,
@@ -1230,6 +1356,7 @@
     },
     {
      "run": 9,
+     "url": null,
      "lcp": 1648,
      "cls": 0.002,
      "tbt": 3424,

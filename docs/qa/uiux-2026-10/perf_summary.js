@@ -5,6 +5,8 @@
 //   node perf.js 10 > runs.jsonl                        … 10周測る（本番。BASE=http://localhost:8082 で手元の配信も測れる）
 //   node perf_summary.js runs.jsonl [--label 名前] [--date YYYY-MM-DD] [--base URL] [--note 測った時の事情]... [--out ファイル] [--table]
 // 出力: { schema, label, date, base, conditions, host, notes, target, invalidRuns, pages: { top: { runs, invalid, median, min, max, over, samples, lcpElement, lcpUrl }, ... } }
+//   clsDefinition = CLS の定義。session-window（いちばん大きいセッション窓・web.dev）／sum-of-shifts（旧定義: 全部のずれの合計。ずれの生の値 shifts が無い古い行）／mixed。clsSum = 全部のずれの合計（参考）
+//   excludedRuns = 「直前の入力あり」と判定されて CLS に数えなかったずれがあった回の数（perf.js は入力を出さないので、あれば測定環境の影響。モバイル相当の表示にした直後の約 0.6 秒に起きる）。古い行（除外の記録が無い）だけなら null。clsExcluded = 数えなかったずれの合計
 //   invalid = 描画されなかった回（FCP か LCP が 0）。中央値・最小・最大・over・samples には入れない（画面が消えている間などに全部 0 で返り、入れると「速くなった」ように見える）
 //   over = 目標を超えた回数。中央値は割れる指標（ハブの CLS は 0.013 と 0.652 に割れた）を平らにするので、回数も並べる
 //   samples = 1回ごとの要点（測った URL・LCP・CLS・TBT と、そのときの電源 power・低電力モード lowPowerMode[1 入／0 切]・描画側の速さの目安 rendererBenchMs）。TBT は同じページ・同じ内容でも、
@@ -25,7 +27,7 @@ const CONDITIONS = {
 // 目標（計画 10.2 節の「速さ」の行。LCP は 2.5s 以下・CLS は 0.1 以下）。ちょうどは超えていない
 const TARGET = { lcp: 2500, cls: 0.1 };
 // 中央値を出す項目
-const FIELDS = ['ttfb', 'fcp', 'lcp', 'cls', 'tbt', 'dcl', 'load', 'totalKB', 'reqs', 'dom', 'htmlBytes', 'longTasks', 'heapMB', 'fontKB', 'fontFiles', 'rendererBenchMs', 'loadAvg1'];
+const FIELDS = ['ttfb', 'fcp', 'lcp', 'cls', 'clsSum', 'clsExcluded', 'tbt', 'dcl', 'load', 'totalKB', 'reqs', 'dom', 'htmlBytes', 'longTasks', 'heapMB', 'fontKB', 'fontFiles', 'rendererBenchMs', 'loadAvg1'];
 
 function median(values) {
   const v = values.filter(x => typeof x === 'number' && Number.isFinite(x)).sort((a, b) => a - b);
@@ -65,7 +67,13 @@ function summarize(rows) {
     const overCount = f => rs.filter(r => typeof r[f] === 'number' && r[f] > TARGET[f]).length;
     const num = v => (typeof v === 'number' && Number.isFinite(v) ? v : null);
     const samples = rs.slice().sort((a, b) => (a.run || 0) - (b.run || 0)).map(r => ({ run: r.run == null ? null : r.run, url: r.url || null, lcp: num(r.lcp), cls: num(r.cls), tbt: num(r.tbt), rendererBenchMs: num(r.rendererBenchMs), loadAvg1: num(r.loadAvg1), power: r.power || null, lowPowerMode: num(r.lowPowerMode) }));
-    pages[name] = { runs: rs.length, invalid, median: med, min, max, over: { lcp: overCount('lcp'), cls: overCount('cls') }, samples, lcpElement: mostCommon(rs.map(r => r.lcpEl)), lcpUrl: mostCommon(rs.map(r => r.lcpUrl)) };
+    // CLS の定義。ずれの生の値（shifts）がある行は、いちばん大きいセッション窓（cls.js）。無い古い行の cls は、全部のずれの合計（旧定義）で、比べられない
+    const withShifts = rs.filter(r => Array.isArray(r.shifts)).length;
+    const clsDefinition = !rs.length ? null : withShifts === rs.length ? 'session-window' : withShifts === 0 ? 'sum-of-shifts' : 'mixed';
+    // 入力を出していない測定で、直前の入力ありと判定されて数えなかったずれがあった回（除外の記録 excludedCount が無い古い行しか無いときは null）
+    const withExcluded = rs.filter(r => typeof r.excludedCount === 'number');
+    const excludedRuns = withExcluded.length ? withExcluded.filter(r => r.excludedCount > 0).length : null;
+    pages[name] = { runs: rs.length, invalid, clsDefinition, excludedRuns, median: med, min, max, over: { lcp: overCount('lcp'), cls: overCount('cls') }, samples, lcpElement: mostCommon(rs.map(r => r.lcpEl)), lcpUrl: mostCommon(rs.map(r => r.lcpUrl)) };
   });
   return pages;
 }
@@ -85,7 +93,15 @@ function tableOf(pages) {
     const runs = pages[n].invalid ? `${pages[n].runs} (無効 ${pages[n].invalid})` : pages[n].runs;
     return `| ${n} | ${runs} | ${f(m.lcp)} | ${f(m.fcp)} | ${f(m.cls)} | ${f(m.tbt)} | ${f(m.load)} | ${f(m.totalKB)} | ${f(m.reqs)} | ${f(m.dom)} | LCP ${pages[n].over.lcp}/${pages[n].runs} · CLS ${pages[n].over.cls}/${pages[n].runs} |`;
   });
-  return [head, sep, ...lines].join('\n');
+  const legacy = Object.keys(pages).filter(n => pages[n].clsDefinition && pages[n].clsDefinition !== 'session-window');
+  const note = legacy.length
+    ? ['', `※ CLS の定義: ${legacy.join('・')} の CLS は、全部のずれの合計（旧定義）の行を含む。CLS はいちばん大きいセッション窓の値（web.dev）で、旧定義の値とは比べない`]
+    : [];
+  const excluded = Object.keys(pages).filter(n => pages[n].excludedRuns > 0);
+  const note2 = excluded.length
+    ? ['', `※ 入力を出していない測定で、「直前の入力あり」と判定されて CLS に数えなかったずれがある: ${excluded.map(n => `${n} ${pages[n].excludedRuns}/${pages[n].runs}回`).join('・')}。測定環境の影響（モバイル相当の表示にした直後の約 0.6 秒）の疑い。除外分の合計は clsExcluded`]
+    : [];
+  return [head, sep, ...lines, ...note, ...note2].join('\n');
 }
 
 function main(argv) {
@@ -104,6 +120,10 @@ function main(argv) {
   const pages = summarize(rows);
   if (opt.table) { console.log(tableOf(pages)); return 0; }
   const invalidRuns = Object.values(pages).reduce((a, p) => a + p.invalid, 0);
+  const legacyCls = Object.entries(pages).filter(([, p]) => p.clsDefinition && p.clsDefinition !== 'session-window').map(([n]) => n);
+  if (legacyCls.length) console.error(`CLS が旧定義（全部のずれの合計）の行を含む: ${legacyCls.join('・')}。セッション窓の最大とは比べない`);
+  const excludedPages = Object.entries(pages).filter(([, p]) => p.excludedRuns > 0);
+  if (excludedPages.length) console.error(`入力を出していない測定で、「直前の入力あり」と判定されて数えなかったずれがある: ${excludedPages.map(([n, p]) => `${n} ${p.excludedRuns}/${p.runs}回（除外分の最大 ${p.max.clsExcluded}）`).join('・')}。測定環境の影響の疑い`);
   if (invalidRuns) console.error(`無効（描画されなかった）回が ${invalidRuns} 回ある。中央値には入れていない。ページ別: ${Object.entries(pages).filter(([, p]) => p.invalid).map(([n, p]) => `${n} ${p.invalid}`).join('・')}`);
   const cpus = mostCommon(rows.map(r => r.cpus));
   const power = {};
