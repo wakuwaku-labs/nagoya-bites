@@ -8,7 +8,7 @@
  * 冪等。丸めた値が変わった日に、同じ実行で追いつく。判断の記録: docs/decisions/0021-store-count-notation.md
  *
  * 対象（scope）:
- *   index         index.html                      本文・メタ・構造化データの「N軒」と numberOfItems
+ *   index         index.html                      本文・メタ・構造化データの「N軒」と numberOfItems、権威性バーの静的な数字
  *   stores-index  stores/index.html               同上
  *   faq           faq.html
  *   features      features/*.html                 「N軒」と、トップページへの導線の「全N店舗」（数字を外す）
