@@ -12,20 +12,17 @@ UI・UX全面改修計画（`docs/uiux-overhaul-plan-2026-10.md`）の実装を�
 - 設計書の再設計は済み（commit 0c9200e52d・81eeb6a1ec。読みやすい版: https://claude.ai/artifact/E8kRtmcAeNE7VKxznopMDt）
 - **I-01（ISSUE-188・P-223）: PR #470**（claude/uiux-i01-stub-links）。このブランチの 336d4b569c・ec6c4672ab が I-01 そのものの修正だった（前に「設計の外」と書いたのは誤り。P-235 に訂正を書いた）。`npm test` 495件通過・誘導ページへのリンク0件。バックログの ISSUE-188 は done。マージされたら P-223 を Done にする
 - 作業は main から切った別ブランチ＋別 worktree で行う（設計のブランチ wakuwaku-labs/mooneye には混ぜない）。worktree は作業用の一時領域の `wt/i01`・`wt/i08`（node_modules は設計のブランチの worktree へのシンボリックリンク）。消えたら `git worktree prune` し、ブランチ名から作り直す
-- **I-08（計測をそろえる）: 調べ終わり、実装はこれから**（claude/uiux-i08-measurement・origin/main から切った）。分かったこと:
-  - ハブの予約リンクは `scripts/gen_area_genre_pages.js:239` の `storeCard()` が `hub_store_click` を送っている → `(window.nbReserveExit||trackEvent)('cta_click',{store_name,store_id=HotPepper ID,link_domain:'www.hotpepper.jp',location:'hub',hub:location.pathname})` に替える。`jsq` は `scripts/lib/feature_tracking.js` から使える。`storeCard` は exports に無いので足す。ハブのページ（683本）は build.yml が毎日作り直すので、PR には入れない（生成器の出力を単体テストで見る）
-  - `modal_open` は `index.html:10218` の `openM(i, source)`。source は既に入っている（grid・ranking・trend_today・history・modal_reco・deeplink・unknown）。足りないのは `store_id`（`r['ホットペッパーID'] || ''`。ほかの cta_click と同じ決まり）だけ
-  - `feature_store_click` の store が店名（725件）になるのは `scripts/refresh_feature_rosters.js:323,357`。ID（222件）は `scripts/lib/feature_tracking.js` の `featureStoreOnclick`。生成器を後者に替え、`scripts/add_feature_tracking.js`（build.yml が毎日回す）に「店名の旧形式を、同じ <a> の href の stores/<slug>.html に書き換える」手順を足す。特集 features/*.html は書き換えた結果をコミットし、不変条件のテストを足す
-  - ジャーナル→店舗ページは未計測（167本）。新しい `journal_store_click`（store・journal）を、別の `<script class="nb-journal-store-link">` として足す（`journal/_template.html` に入れ、既存の記事には `scripts/add_journal_store_link_tracking.js` で後追い。`add_journal_engagement_tracking.js` と同じ冪等の作り）。既存のスクリプトは書き換えない
-  - `data/measurement_changes.json` への追記は、マージした日が決まってから（台帳は「commit や PR で確かめられる変更だけ」。書式は date・id・affects・summary・evidence）。PR の本文に下書きを書き、マージ後に追記のコミットを出す
-  - 7.7 節（計測）と `docs/reservation-measurement.md` の記述も合わせて直す
+- **I-08（計測をそろえる）: PR #471**（claude/uiux-i08-measurement・origin/main から）。Linear P-239（P-235 の子）。GA4 のカスタムディメンション登録（オーナーの操作）は P-240。実装・テスト・監査まで済み、**Codex のレビュー待ち**
+  - 変えたこと: ハブの予約リンクを cta_click（location=hub）へ／modal_open に store_id／特集の feature_store_click の店の値をスラグ（ID）へ（947件すべてリンク先と一致・features/ 54本）／ジャーナルに journal_store_click を新設（別 script・テンプレート＋157本に追加のみ）。テスト tests/measurement_unify.test.js 12件。npm test は506件中505件（失敗1件は main の ISSUE-188 で #470 が直す）。4つの監査は終了コード0
+  - ハブ約685本は PR に入れない（build.yml が毎日作り直す）。作り直した日に「データ更新日」・sitemap lastmod・IndexNow の対象が一度だけ進む（テンプレート変更時と同じ動き）。PR 本文に書いた
+  - マージ後にやること: `data/measurement_changes.json` に I-08 を追記（PR 本文に下書き。日付はハブを build.yml が作り直して push した日）。計画 7.7 節に journal_store_click・ハブの cta_click・modal_open の store_id・GA4 未登録ディメンションの注を足す（設計のブランチで）
 - 検証済みの事実: `gen_area_genre_pages.js --check` はテストでは回らない（CI の生成だけ）。`tests/area_genre_pages.test.js` は stores/area の存在を見る
 
 # 次にやること
-1. I-08 を実装 → テスト（hub の storeCard・refresh_feature_rosters のカード・add_feature_tracking の書き換え・index.html の modal_open・ジャーナルの後追いの冪等）→ `npm test`・`audit_design_system.js --check`・`audit_inline_js_syntax.js --check` → PR → Linear に起票とコメント
+1. （済）I-08 は PR #471・Linear P-239。P-240（GA4 のカスタムディメンション登録・オーナー作業・期限 2026-10-18）を起票済み。Codex のレビューを待つ（レビューの依頼先・方法はオーナーに確かめる）
 2. I-02（基線）: GA4 の決まった期間を取り直すスクリプト（認証は CI の Secrets のみの可能性。取れないときはスクリプトとテストまで作り、実行は CI）。速さの基線は `docs/qa/uiux-2026-10/perf.js`（この環境の puppeteer は時間切れになることがある）
 3. 段階1a: I-21（URL と戻る）・I-23・I-07（英語の表示）・I-13（スプラッシュ）。トップだけ。画面は 390px と 1280px で見る
-4. Linear: 実装の課題を起票（7項目: 動詞のタイトル・担当と期限・Todo・Project=Nagoya Bites・背景・達成条件・30分超は sub-issue）。ISSUE-188 は P-223 に結果をコメント済み
+4. Linear: 次の改善案に着手するときに、P-235 の子として起票（7項目: 動詞のタイトル・担当と期限・状態・Project=Nagoya Bites・背景・達成条件・30分超は sub-issue。ラベルは KR:検索から見つけてもらう＋担当:Builder）。起票済み: P-239（I-08）・P-240（GA4 登録）。ISSUE-188 は P-223 に結果をコメント済み
 5. 判断の記録: docs/decisions/ に「実装は改善案ごとの PR。main への合流は Codex のレビューの後、『要』はオーナーの承認の後」を残す
 6. Codex の 4ab7ea556a（Linear 導入ファイル4つ）の扱いは、オーナーの判断待ち（P-235 に記録済み）
 
