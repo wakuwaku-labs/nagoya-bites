@@ -100,6 +100,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 body{min-height:100vh;}
 .hero-img{width:100%;height:260px;object-fit:cover;filter:brightness(.88) saturate(.85);display:block;}
 @media(min-width:768px){.hero-img{height:380px;}}
+.hero-wrap{position:relative;}
+.photo-credit{position:absolute;right:12px;bottom:12px;z-index:1;max-width:calc(100% - 24px);padding:3px 8px;border-radius:3px;background:rgba(10,10,8,.62);color:rgba(255,255,255,.92);font-family:var(--font-body);font-size:var(--fs-xs);line-height:1.4;letter-spacing:.02em;overflow-wrap:anywhere;pointer-events:none;}
 .container{max-width:720px;margin:0 auto;padding:2rem 1.5rem 4rem;}
 .breadcrumb{margin-bottom:1.6rem;display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;}
 .breadcrumb a:hover{color:var(--gold);}
@@ -192,7 +194,7 @@ button.link-btn{font:inherit;cursor:pointer;}
 </header>
 <!-- NB-CHROME:HEADER:END -->
 
-<img class="hero-img" src="https://lh3.googleusercontent.com/place-photos/AG9NLjAXE-FMpW-tqbF7cfydKOYFohylQJW_PBfog44ge-HMN5gCbKNG-6kCYV1bggepy-NOIpLAF_nVZA4x-fZMqmvI-KYsswt42s4I2gUJT1bgikYOqBbwRTGDRWmHDB-2txhQ8XpuJNMlr5Mx6Zw=s1600-w1200" alt="鉄板焼 那古亭" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="this.onerror=null;this.src='/assets/store-figures/_fallback.svg'">
+<div class="hero-wrap"><img class="hero-img" src="https://lh3.googleusercontent.com/place-photos/AG9NLjAXE-FMpW-tqbF7cfydKOYFohylQJW_PBfog44ge-HMN5gCbKNG-6kCYV1bggepy-NOIpLAF_nVZA4x-fZMqmvI-KYsswt42s4I2gUJT1bgikYOqBbwRTGDRWmHDB-2txhQ8XpuJNMlr5Mx6Zw=s1600-w1200" alt="鉄板焼 那古亭" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="this.onerror=null;this.src='/assets/store-figures/_fallback.svg'"><span class="photo-credit" title="Google マップに掲載されている写真です">📷 鉄板焼 那古亭</span></div>
 
 <div class="container">
   <!-- NB-CHROME:BREADCRUMB:START -->
