@@ -8,7 +8,7 @@
 
 ### [DSN-008] トップ・検索結果・店舗詳細を、アイコンと短い言葉で直感的に操作できる見た目に整える
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **due**: 2026-10-18
 - **detected**: 2026-10-11
 - **category**: design / UX
@@ -24,10 +24,11 @@
   4. 制約5の機能がすべて操作できることを実際に操作して確かめる
 - **関連**: [[DSN-001]]（デザインシステム）／[[DSN-002]]（カード・モーダルの再設計）／[[DSN-007]]
 - **進捗（2026-10-11）**: 子課題 DSN-009〜012 を実装し、PR #465 を作成（前後比較 https://claude.ai/artifact/EwB9RuwsgSpFd1eNPLus5t ）。オーナーの確認後に合流＝本番公開
+- **結果（2026-10-11）**: オーナーの OK で PR #465 をマージ（f1e28f393c）。375px の実測でカード高さ 808→506px・文字 231→183・44px 未満のタップ対象 250→92・ページ幅 658→390px。女子会のアイコン（ワイングラス）と「現役の店長が編集」の文言もこのまま公開
 
 ### [DSN-009] スマホの検索結果で店舗カードが画面からはみ出すのを直す
 
-- **priority**: P1 → **status**: in_progress
+- **priority**: P1 → **status**: done
 - **due**: 2026-10-18
 - **detected**: 2026-10-11
 - **category**: design / UX
@@ -42,7 +43,7 @@
 
 ### [DSN-010] アイコンの部品を用意し、トップのシーン・エリアの選択と信頼の帯をアイコンと短い語にする
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **due**: 2026-10-25
 - **detected**: 2026-10-11
 - **category**: design / UX
@@ -58,7 +59,7 @@
 
 ### [DSN-011] 検索結果の上部の重複表示をまとめ、店舗カードの文字を減らしてアイコンの行にする
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **due**: 2026-10-25
 - **detected**: 2026-10-11
 - **category**: design / UX
@@ -74,7 +75,7 @@
 
 ### [DSN-012] 店舗詳細の予約・電話・地図をアイコンの横並びにし、基本情報の見出しをアイコンにする
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **due**: 2026-10-25
 - **detected**: 2026-10-11
 - **category**: design / UX
@@ -812,6 +813,22 @@
 - **files**: `scripts/backfill_journal.sh`, `tests/backfill_journal.test.js`
 - **関連**: [[ISSUE-184]]（10-09 が欠番になった原因）
 - **2026-10-10 結果（done）**: 達成条件1〜3を満たした（`bash -n` OK・テスト3件 pass）。Autopilot フックが無人実行の中で自動コミット・マージすること自体は `~/.claude/autopilot/`（リポジトリの外）の設定で、ここでは止めていない。`run_journal_local.sh` はブランチを main に戻す処理を持つが、main へのマージまでは想定していない
+
+### [ISSUE-188] トップの店舗一覧から誘導ページ（古い ID）への2件のリンクを今の店舗ページに直し、npm test を通す
+
+- **priority**: P2 → **status**: ready
+- **detected**: 2026-10-11
+- **due**: 2026-10-25
+- **category**: QA / data-quality
+- **owner**: Builder
+- **source**: PR #465 のマージ前に origin/main で npm test を実行して発見
+- **brand-filter**: ✅ 適合 — 内部リンクの整合（制約10・信頼の担保）
+- **背景**: origin/main（5cb3184903 時点）で `tests/stub_links.test.js` の「公開中のページに、確かめていない誘導ページへのリンクが無い」が失敗する。index.html の店舗一覧の `<li><a href="stores/J004026741.html">肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店…`（誘導先 J004026739）と `stores/J003624656.html`（誘導先 J003624657）の2件。どちらも 799ccb52c5（今日の話題店TOP5: 2026-10-11）で入った。UI 整理の PR #465 の変更とは無関係（PR の前から main で失敗）。どのスクリプトがこの一覧に誘導ページの ID を書くかは未調査
+- **acceptance**:
+  1. 2件のリンク先が同じ店か（店名・住所・`data/store_merge_pairs.json`）を確かめ、同じ店なら今の店舗ページへ、違えば外す
+  2. 一覧を書くスクリプトが誘導ページの ID を選ばないようにし、翌日の自動更新後も `node scripts/audit_stub_links.js --check` が 0 件
+  3. `npm test` がすべて通る
+- **関連**: [[ISSUE-182]]（誘導ページへのリンクの監査）／[[ISSUE-102]]
 
 ### [ISSUE-187] 日次ジャーナルが、ローカル main と origin の履歴の形が違うだけで衝突して止まり、rebase 途中のまま残るのを直す
 
