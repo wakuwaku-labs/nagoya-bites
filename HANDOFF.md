@@ -1,126 +1,37 @@
-status: done
+status: in_progress
 
 # 目的
-オーナー指示「こちらの確認なしで進めれるものはガンガン進めて」（2026-10-09）。SEO-116 配下と同日起票の課題のうち、オーナーの確認・操作が要らないものを順に実装し、main に合流させ、Linear を Done にする。
-（前のメモ「SEO分析と90日の戦略・戦術」は status: done で完了済み。内容は git 履歴 ab273bc61d の HANDOFF.md を参照）
-
-## 2026-10-10 追加の依頼
-オーナー「Linear の一覧をガンガン解消して欲しい。確認なしに」。オーナー作業・日付待ち・信頼/マネタイズ・ISSUE-147/165/173 は飛ばす。
-- 4zi（済み・PR #460 = 33bfb772d7）: SEO-115（P-112）Done・ISSUE-154（P-158）Done＋結果コメント。SEO-118（P-114）達成条件1・3（data/measurement_changes.json・track_metrics の measurement_changes 注意・台帳4件に measurement_note）。SEO-087（P-24）solo-dining→名駅版の本文リンク。ISSUE-186（P-188・新規・due 11-09）: HP【閉店】2件と404のうち Google 閉業/休業3件を「決められない」で記録、hotpepper-closures は確かめ済みを30日 reviewed に分ける
-- 4zj 見送り理由: 残りは日付待ち（SEO-125 10-15・ISSUE-149 10-16・ISSUE-183 10-17・SEO-118 条件2 10-16〜・ISSUE-171/172 11-09 など）、オーナー作業（P-36/32/58/53/48/30/29/110/149/144・ISSUE-150/152 の GAS）、食べログ 403 待ち（ISSUE-158）、オーナー判断（EDT-003・ISSUE-147/165/173・SEO-132/142）、効果測定待ち（SEO-087/091/095/099）。SEO-134 は広げる先が無いと 10-09 に判断済み（EDITORS' PICK との統合設計からやり直す）。P-109 は別 Project（仕込みまとめツール）で触らない。soft→hard 昇格は緑が1〜2回のため次の週に
+オーナー依頼（2026-10-11）「実際の見た目を判断して、より感覚的で能動的に操作できる見た目に。細かい部分・文字が多すぎるのでアイコンや記号を使う。AIっぽさは絶対になくす。他サイト参考可」。
+（前のメモ「確認なしで進められる課題の消化」は status: done。内容は git 履歴 6e7cec6945 の HANDOFF.md）
 
 # 完了条件
-- 下の「対象」の各課題が、テストと QA を通って main に合流し、agent-backlog.md が done、Linear が Done（結果コメントつき）になっている
-- 日付待ち・オーナー待ちの課題は手を付けず、理由をここに残す
+- DSN-008（P-212）配下の DSN-009〜012（P-213〜216）の acceptance を満たし、PR に 390px / 1280px の前後スクショ
+- `npm test`・`audit_design_system.js --check`・`audit_inline_js_syntax.js --check` が通る
+- 制約5の機能（フィルター・検索・モーダル・IG・Google評価・媒体リンク）を実際に操作して確認
 
 # できていること
-- 合流済み（2026-10-09）:
-  - #408 SEO-119/120（他都市23店の除外・駅名監査）
-  - #409 ISSUE-145（Linear 全件取得）
-  - #410 SEO-117（GSC を指標履歴へ・`track_metrics.js --north-star`）
-  - #411 SEO-121（lastmod を内容が変わった日に・build.js の sitemap 書き出し停止・robots→sitemap.xml・news 削除）
-  - #412 SEO-119 残り（孤児23本削除）＋ ISSUE-146（孤児一覧を CI のコミット対象へ）
-  - #413 SEO-135（llms.txt にハブの全階層・数値の出典と更新日・sitemap.xml）
-  - #414 SEO-136（IndexNow: 前回送った値を data/indexnow_state.json に記録し、変わったハブ・編集コメントが変わった店舗ページを送る）
-  - #415 SEO-138（GA スニペットを scripts/lib/ga_snippet.js の1本に。localStorage を try/catch で囲む）
-  - #422 SEO-145（特集の公開日・更新日・書き手の部品・P-153 Done）。SEO-131（P-127）も Done
-  - #424 SEO-146（特集の掲載件数の表記を実数に日次でそろえる・scripts/sync_feature_counts.js・P-154 Done）
-  - #425 SEO-147（ジャーナル・店舗ページから特集へのリンク文の件数。生成器が relabelForSlug を通す・ジャーナル17本をそろえた・build.yml に --target stores・夜間QA soft。P-156 は In Progress）
-  - #428 SEO-137（ジャーナルの title の前30字の規則・判定器・上位15本の書き換え・台帳・P-133 Done。比較は SEO-148＝P-157・11-06）
-  - #427 SEO-122（デート特集の掲載店を FAQ の約束にそろえ、冒頭に予算別の結論を機械で置く・docs/decisions/0011・P-118 Done）
-  - #426 SEO-124（ハブ685本に編集部の見分け方・選定理由の別枠・予算帯と最寄り駅の表。FAQPage の JSON-LD を外した。QA で本文の幅の未指定と最寄り駅の集計も直した・P-120 Done）
-  - #416 SEO-143（店舗ページに「編集部の選定理由」）・#418 SEO-139（aggregateRating と SearchAction を外す・docs/decisions/0009）・#419 IndexNow が -2/-3 の店舗ページを探す・#420 SEO-127（banquet の 11・12月リードと幹事チェックリスト）・#421 SEO-131 その1（掲載店の入れ替えで dateModified を進める）
-  - #433 ISSUE-157（丸の内店・柳橋本店の泉本店の食べログリンク・ISSUE-158〜160 起票）
-  - #432 ISSUE-155/156（特集・ジャーナルの別の店を指す食べログリンク8件・毎日数える監査）
-  - #431 DSN-007（幅 900px 以下でパンくずとフッターのリンク群が画面外に消えていた・375px の横幅が 750px。nb.css の nav の規則を #main-nav だけに。P-155 Done＋コメント。本番で 375px の横幅 375・パンくずとフッター表示を確認）
-- Linear: P-115/P-116/P-138/P-113/P-140/P-131/P-132/P-134 は Done（結果コメントつき）。P-117（SEO-121）は In Progress で、本番確認待ち
-- 起票: ISSUE-147（P-142・Places の古い誤紐付け・オーナー承認が要る）／ISSUE-148（P-143・スプレッドシート経由の住所検査）／SEO-142（P-144・sameAs。公式アカウントの URL をオーナーが示すまで待ち）／SEO-143（P-145・店舗ページに editorReason が出ていない）／SEO-144（P-146・index.html と静的ページの localStorage 例外で GA が止まる）
+- 現状確認（390px・1280px）。見つけた問題は agent-backlog.md の DSN-008 背景に記録
+- DSN-009 の原因特定: `.grid{grid-template-columns:1fr}`（index.html:828）で列が中身の最小幅に引っ張られ、カード 642px・scrollWidth 658px
+- backlog 起票・Linear 同期済み（P-212〜216）
 
-# 次にやること
-1. SEO-147（P-156）: 本番確認済み（CI の再生成で店舗ページがそろい、main で --check --target stores が exit 0）。backlog done・P-156 Done＋コメント済み
-2. SEO-122（P-118）: #427 で合流・P-118 Done＋コメント済み。達成条件4（4週後の順位）は SEO-140（11-15）で記録する。冒頭の結論の仕組み（scripts/apply_feature_conclusions.js・data/feature_conclusions.json・nb.css .nb-conclusion）は SEO-134 で他の特集へ広げる（docs/decisions/0011）
-3. SEO-115 の残り（P-112）: 達成条件5は満たした（10-09 の夜間QA で inline-js が ✅ hard）。残りは達成条件3（GA4 で /stores/ の page_view。10-10 以降の metrics_history の段差かオーナー確認）。満たしたら P-112 を Done にする
-4. SEO-137（P-133）: #428 で合流・P-133 Done＋結果コメント済み。11-06 の比較は SEO-148（P-157・Todo・期限 11-06）。`node scripts/journal_title_experiment.js --report` で比べる
-4b. #432 で合流（ISSUE-155/156・P-159/P-160 Done＋コメント）: 特集・ジャーナルの別の店を指す食べログリンク8件を外し・差し替え、しろむら 泉店→泉本店をそろえ、照合キャッシュで数える監査（scripts/audit_page_store_links.js）を夜間QA に soft で追加。親 ISSUE-154（P-158）は 10-10 の夜間QA で架空店監査と page-store-links が緑なら Done。次は ISSUE-157（P-161・丸の内店と柳橋本店に付いた泉本店の食べログ 23056889 を外す）→ ISSUE-148 → SEO-134 → ISSUE-153 → SEO-144。ISSUE-143 の調査はやり直す
-4c. #433 で合流（ISSUE-157・P-161 は In Progress）: 丸の内店と柳橋本店から泉本店の食べログ 23056889 を外し、tabelog_resolved.json と manual_tabelog_resolved.json を failed にした。次のビルドの後に main の data/stores.json で J004026662 の食べログURLが空のままなら backlog done・P-161 Done。9/17 のジャーナルの情報源を HotPepper 丸の内店に差し替え・泉本店の本文写真2枚を外した。名前は合っても別の支店を指す食べログリンク56件を ISSUE-158（P-162・親）・159（P-163・判定器）・160（P-164・外す）として起票し、Linear で親子をつないだ（同期スクリプトは親子を作らないので orca linear save-issue --parent-id で）。次の候補の先頭は ISSUE-159
-4d. #435 で合流（ISSUE-159・P-163）: 照合器に住所の3値比較（same/different/unknown）。名前一致でも住所が different なら branch-address-mismatch。キャッシュを読み直す CLI scripts/audit_tabelog_branch_mismatch.js（45件・unknown 16件・一覧は scratchpad の branch45.json）・夜間QA soft（tabelog-branch）・docs/decisions/0012。ISSUE-157（P-161）は合流後のビルドで J004026662 の食べログURLが空のままと確かめ done。次は ISSUE-161（下）→ ISSUE-160（45件を1件ずつ確かめて外す。clear_broken_tabelog_links.js は対象外なので ID 指定で。サガミ 有松店・嘉文 徳重店・めんらんどは移転前後の住所の可能性）
-4e. #436 で合流（ISSUE-161・P-165 In Progress）: build.yml の checkout に ref: main。合流後の最初のビルド（37878933280・#435 のビルドの後ろで待ち）のログで +refs/heads/main を取っていれば backlog done・P-165 Done＋コメント
-4f. ISSUE-160（P-164）作業中: 食べログは手元から 403（レート制限と見て回避しない）。照合キャッシュの食べログ側の事実（9/20 取得の題名・住所）と、今日取った HotPepper 掲載45件（scratchpad の hp45.json・座標つき）で判定。国土地理院の住所検索で距離を測り、めんらんど（19m）・嘉文 徳重店（同じ支店名・字で291m）・サガミ 有松店（同じ支店名・字名 境松）は同じ店として残す。残り42件を外す（4層: stores.json・tabelog_resolved.json を failed・stores/*.html・manual_stores）。残す3件は確認済みとして記録し、監査が数えないようにする（data/tabelog_branch_reviewed.json を作る予定）
-4g. 10-09 03:40 時点: 記録と ID 指定で外す仕組みは 9daef2a1e9（未 push）。データを外す実行（clear_broken_tabelog_links.js --reviewed）は main のビルド 37878933280 の完了後に origin/main を取り込んでから。外した後は監査 0件・audit_page_store_links --check・npm test を確かめて PR
-4h. 次に起票して直すもの（ISSUE-160 の後）:
-  - ISSUE-162: ホットペッパーの題名の末尾「＜ネット予約可＞」で hotpepperNameFromTitle が丸括弧を外せず、短い店名の正しいリンク7件が name-mismatch（10-09 の日次監査）。末尾の「＜…＞」を外せば7件とも一致・ほかの22件は変わらない（scratchpad で確認）
-  - ISSUE-163（P1・ISSUE-158 の子）: 日次の照合（build.yml の audit_store_link_identity.js --limit 60）が食べログから 10-05 以降すべて HTTP 403（10-09 は53件中53件）。対象を店の並び順に取り、失敗中の組を毎日先に照合するので、新しいリンク20件は一度も照合されていない。食べログの一致2,540件は 09-03（23件）・09-20（2,517件）のもので、11-02 から古くなり、403 で照合し直すと fetch-error で上書きされて事実が消える（支店違い・別の店の監査が数えなくなる＝偽の緑）。直し方: 取得失敗では前の判定を残す・連続403で止める・最後に試した日で間隔をあける・古い順に照合・成功しなかったことを報告と夜間QA に出す。403 は回避しない
-  - ISSUE-158 は達成条件3（日次の監査が新しい支店違いを数える）が実際には動いていないため、ISSUE-163 が済むまで閉じない
-4i. 10-09 03:55: ISSUE-161 は確認済み（run 37878933280 は起点 e69a6ab178 ではなく main の最新 e92dc86ab9＝前の回の生成物の上から始まり、push は rebase 不要で通った）→ backlog done・P-165 Done にする。ISSUE-160 は外す実行済み（未コミット・stores.json 42件・stores/*.html 42本・tabelog_resolved 42件 failed）。確認: 監査 different 0（確かめ済み3）・page-store-links exit 0・変わった店は42件の食べログURLだけ・42本の script 180個に構文エラー0・残す3件と正しい支店11件はリンクのまま
-4j. 新しく見つけた（起票する）: (1) ISSUE-165: 食べログのページ経由で解決した Instagram（data/instagram_resolved.json の method TBG-*・974件）のうち、店の食べログURLが今は別（外した等）なのに、その Instagram を表示している店が320件。ブランド共通の公式（磯丸水産）は問題が小さいが、別の支店のアカウント（餃子のかっちゃん 名古屋駅南口2号店→kacchan_sakae）や別の店（碧亭 栄→midori_tei_miyoshi）がある。どこまで許すかの基準が要る (2) ISSUE-166: 照合で名前が一致しなかった食べログリンク33件（sim>0 で 9/20 の後始末の対象外・人の確認待ち）。例 MAVERICK HALL J000739645 → ELLE HALL Dining 名古屋駅西口店のページ
-4k. 10-09 #440 で合流（fba87a6e56）: ISSUE-162/163/164 done（P-166/167/168 Done＋コメント）。ISSUE-160 は main で42件が外れたままと確かめ done（P-164 Done＋コメント）。取得できなかった回は判定を残す・HTTP 404/410 は判定扱い・食べログ先→未照合→古い順・7日あけ・5件で止める・--health [--json]・夜間QA soft link-audit-health・専用の監視 link-audit-watchdog.yml（30日超で Issue 1件・毎日は知らせない・復旧で閉じる）・docs/decisions/0013。ISSUE-158（P-162）は達成条件3（日次の照合で実際に数える）が食べログの 403 で確かめられず in_progress のまま（コメント済み）。ISSUE-167（P-171・Todo）を起票。linear_sync_state の P-171 はブランチにコミット済み（d832f8ec40・未 push）
-4l. 10-09 #441 で合流（31de0bc0ef）: ISSUE-167 done（P-171 Done＋コメント）。34件を店舗IDごとに外した（tabelog_branch_reviewed.json に issue: ISSUE-167・kind closed-other 14/closed-same 19/not-found 1）。報告の不一致は33件（食べログの名前違いだけ・ISSUE-166）。ISSUE-162 の追記（エリア名の入れ子の丸括弧・ソラリウム）も同じPR（P-166 にコメント）。#440 のコードは CI で狙いどおり動いた（食べログ5件で403→やめる・ホットペッパー55件取得）。ISSUE-168（P-172・Todo・同じ店の閉店19件の営業を一次情報で確かめる）を起票。次のビルドの後に main で34件が外れたままか確かめる。linear_sync_state の P-172 はブランチにコミット済み（4bf96ab405・未 push）
-4m. 10-09 ISSUE-168 を ISSUE-169（P-173）と ISSUE-170（P-174）に分け P-172 の子にした（c8ea939298・未 push）。ISSUE-169 の確認を終えた: data/store_liveness_reviews.json（新規・19件の判定と根拠・取った日時/URL/状態/名前/住所）。閉店12（女子大寿司→Aoi・パル8・みふね・黒猫屋・あっとバーグ・すし乾山・貝しぐれ・STEPS・羅針盤・上海湯包小館・新京・新九）／営業中2（KollaBo・Hug＝六田1丁目204へ移転と見られ住所が古い）／決められない5（HANARE・金鯱うなぎ・shin・Harbor・カラオケレインボー）。閉店の基準は「名前と住所が合う独立した2つ以上の情報源が閉店を示し、それより後の営業の痕跡が無い」（_doc に記載）。ISSUE-170: data/closed_stores.json に12件を追加済み（未コミット）。次: data/stores.json から12件を外す・stores/<id>.html 12本を削除（features/journal からのリンクは無いと確認済み・hub と index.html の導線は CI が作り直す）→ audit_store_liveness・audit_closed_store_mentions・npm test → PR。後で起票: ①Hug の住所 ②決められない5店を30日後に確かめ直す ③places_resolved.json の business_status が 05-22 から古いまま（19件中10件が閉業に変わっていた・Basic だけの定期更新・オーナー確認） ④日次のリンク照合で HotPepper の shopState【閉店】を数える（オーナー確認不要・次に実装）
-4n. 10-09 #442 で合流（5e509a3bbf）: ISSUE-169 done（P-173 Done＋コメント）・ISSUE-170 は main のビルド 37886320956 の後に「12件が data/stores.json・stores/*.html・sitemap に無い」「audit_store_liveness exit 0」「ISSUE-167 の34件も外れたまま」を確かめて done（P-174 Done）→ 親 ISSUE-168（P-172）も Done。起票: ISSUE-171（P-175・Hug の住所）・172（P-176・決められない5店を 11-09 までに確かめ直す）・173（P-177・Places の営業状態の定期更新・オーナー確認が先）・174（P-178・下）
-4o. ISSUE-174（P-178）作業中（未コミット）: scripts/lib/store_link_identity.js に hotpepperShopStateFromHtml・judgeHotpepperHtml（名前が合うページの【閉店】→ reason closed／合わなければ name-mismatch のまま closed は事実で残す）・checkHotpepperId は opts.fetchHtml で差し替え可。scripts/audit_store_link_identity.js に summarizeClosures（hotpepper.closed／notFound＝HTTP 404/410 の掲載終了）・レポートの closures・--closures（照合せず件数・閉店があれば exit 1）。残り: テスト（store_link_identity.test.js に判定、audit_store_link_identity.test.js に 404 と集計）・夜間QA soft（hotpepper-closures）・CLAUDE.md の行・backlog・PR・P-178 Done
-4p. ISSUE-174 は #443 で合流（5a9f9807a7）・backlog done・P-178 Done＋コメント済み。ISSUE-170/168 も main で確かめて done（P-174・P-172 Done）
-4q. #444 で合流（10-09 06:10）: ISSUE-166（P-170 Done＋コメント）・子の ISSUE-175/176/177 は done（完了済みの子は同期スクリプトが Linear に作らない設計なので、親のコメントにまとめた）。食べログ14件を店舗IDごとに外し（stores.json・stores/*.html・tabelog_resolved failed）、照合の報告は keep の組を reviewedKeep に分ける。照合キャッシュの ＢＡＲ  ＣＯＭ’Ｓ を保存済みの題名から判定し直した。残りの食べログ不一致は三國（決められない・403 が解けたら ISSUE-158 で）。次のビルドの後に main で14件が戻っていないこと・報告に reviewedKeep が出ることを確かめる
-4r. ISSUE-178（P-179 In Progress・P1）: #445 で合流（10-09 06:18・競合は main の stores.json・孤児一覧を取ってまるゆを外し直した）。ISSUE-179 を P-180（Todo・11-08）で作成。まるゆ（J003450558）は移転閉店として closed_stores.json に入れ、stores.json・stores/J003450558.html・sitemap から外した（扱いは docs/decisions/0014）。index.html・stores/area/yabacho-osu の4本・sitemap-images.xml などの生成物にはまだ残る＝CI の再生成で消える。次: main のビルド 37892873716（#445 の後）が終わったら、main で J003450558 が stores.json・stores/・sitemap・stores/area・index.html から消えたか、#444 の14件の食べログURLが戻っていないか、報告に reviewedKeep が出るかを確かめ、ISSUE-178 done・P-179 Done＋コメント
-4s. ISSUE-148（P-143 Done＋コメント）: #447 で合流。1,010行中321行を県外として取り込まず、掲載が変わったのは「愛知県／栄」で載っていた9店だけ（stores.json 4,873→4,864）。9店の孤児ページを消し、孤児一覧と sitemap-images.xml から外した。合流後のビルド 37896538202 で9本が戻らないことを確かめる（ビルド 37896538202 は success。main で9本が無いことを取り込み後に確かめる）
-4t. SEO-144（P-146 Done＋コメント）: #447 で合流。
-4u. ISSUE-153: #448 で合流・P-151 Done＋結果コメント済み。合流後のビルド 37898414399（success）の後、main の特集69本で計測の補い0・EDITORS' PICK 56本すべてに feature_store_click と cta_click を確かめた。#447 も main で9本が無い・stores.json 4,864・apply_ga_snippet --check 0 を確かめた
-4v. ISSUE-180（P-181 In Progress・親）を ISSUE-181（P-182・差し替え）と ISSUE-182（P-183・監査）に分けた（Linear の親子は orca linear save-issue P-182 --parent-id P-181。--parent-id は UUID ではなく P-番号）。数え直すと誘導ページへのリンクは特集12本の19件＋ジャーナル4本
-   - 差し替え済み（未コミット・scratchpad の fix_stub_links.js）: 同じ店と確かめた組だけ。flower（同じ Google の場所・住所一致）×5、燻銀 伏見店→にかい（10-06 オーナー確認の統合）、囲い屋 金山店（オーナー確認・古い2つの ID は HP 404。autumn の2枚目を外して9選に）、豆家のりのり（店名・住所・電話が同じ）、手動の店の M0000xx 8件（同じ店名の新しいスラグ）、勝手口河内屋・LYCHI（同じ Google の場所）。かき氷 うと（sweets）は HP 404 の予約リンクを外し、建物（マルエイガレリア）の Google の数字だった「口コミ858件」の一文と★3.8 を外した。autumn・sweets の dateModified を 10-09 に。sync_feature_counts で autumn が9選（features/index・summer のリンク文も）、top_cta --all で3本が更新
-   - 差し替えなかった: journal/2026-09-15-imaike-okute-yamamotoya（大久手山本屋＝千種区大久手町5-9-2 を、10-06 にオーナー確認で 大曽根店＝北区大曽根3-13-25 に統合済み。住所が別なので差し替えない・監査の確認済みの記録に残す）
-   - #449 で合流（7a11987b76）。P-181/182/183 Done＋結果コメント、P-142・P-176 に追記コメント。合流後のビルド 37900749357（success）の後、main で audit_stub_links 0件（確認済み1組）・audit_feature_stores 0・秋の特集 9選・sync_feature_counts --check 0 を確かめた（完了）
-   - 手元の注意: zsh は `node $c` の $c を分割しない。/tmp への書き出しは避け scratchpad を使う。macOS に timeout コマンドは無い。ポート 8765 は別のアプリが使っている（確認用のサーバーは 18766）。python3 の heredoc は日本語で文字コードエラーになることがあるので node で書く
-4w. SEO-134（P-130）は保留して記録だけ: 結論の生成器は .art-body の特集にしか置けず、表示の多い特集（一人飲み・手羽先・秋・ひつまぶし・うな重・味噌煮込み）は別のテンプレートで、冒頭に EDITORS' PICK（3店）が既にある＝結論を足すと店名の区画が2つ並ぶ。一人飲みの掲載10店はすべて名駅の居酒屋（価格帯2つ）でデータだけの結論では差が出ず、手羽先の検索は「風来坊と山ちゃんの違い」で価格帯の結論は答えにならない。→ backlog の SEO-134 にメモ（次に進めるなら EDITORS' PICK と結論を1つの区画にまとめる設計から）
-4x. ISSUE-143（P-108）#450 で合流（P-108 In Progress＋途中経過コメント・子課題 ISSUE-183＝P-184・期限 10-17 を P-108 の下に作成）: 原因は取得処理。Y200（名古屋駅/西区/中村区）が毎回ちょうど1,000件で打ち切られ、おススメ順の並べ替えで境目の店が日ごとに出入りしていた（直近16日の出入りは中村区136・西区36に集中・消えた後に戻った54件）。API のエラー（HTTP 200 の results.error）を0件と読んで黙って打ち切っていた。scripts/lib/hotpepper_fetch.js（上限超えは小エリアで取り直し・エラーは2回やり直し・記録）・build.js の配線・data/hotpepper_fetch_log.json（CI がコミット）・scripts/hotpepper_fetch_report.js（--check / --churn）・tests/hotpepper_fetch.test.js 8件・夜間QA soft hotpepper-fetch。確認済み（10-09 run 37902363502）: Y200 件数 1,177＝取れた 1,177（小エリア6件）・取りこぼし0・掲載店 4,864→5,000（ちょうどは偶然）。P-184 にコメント済み。県外の中エリア Y271/Y437 を語の一致で取っている（掲載には混ざらない）ことも記録。残りは 10-17 以降の --churn（ISSUE-183）
-4y. ISSUE-171（P-175）: 一次情報で今の住所を確かめられなかった（ホットペッパーの住所欄は浦里5丁目346-2 のまま・公式の発信なし）→ 直さない。backlog に追記・P-175 にコメント（Todo のまま・ISSUE-172 の 11-09 の取り直しで再確認）
-4z. ISSUE-152（P-150 In Progress＋コメント済み）: #451 で合流（c946f1af29）。ページ×リンク先ごとに予約導線イベントと予約サイトへの outbound_click の大きい方を取る（lib の dedupeReservationClicks・GAS は複製でテストが一致を検査・旧17→新11回）。fetch_ga4_views.js が直近7日の重なりを site_metrics.json の cta.reservationOverlap7d に出す。gas_deploy_policy.json に痕跡と pending_fixes（ISSUE-149・152）。残り: 合流後のビルド 37904511486（待ち・b4ukjh29f）の後、main の data/site_metrics.json の cta.reservationOverlap7d（naiveSum・deduped・overlap）を読んで P-150 に件数を追記（達成条件1）。GAS の反映（オーナー・ISSUE-150 と一緒）後に新ラベルと注記を確かめて pending_fixes を空にし done
-4za. ISSUE-152: 合流後のビルド 37904511486 は success。7日の重なりは ボタン9＋外部リンク13＝22 → 重なりを除いて17（重なり5・hotpepper 9/7→11・tabelog 0/6→6）。backlog と P-150 にコメント済み。達成条件1・2は済み、3（週次の注記）は GAS のデプロイ（オーナー作業・ISSUE-150 と一緒）の後に確かめて done
-4zb. SEO-102（P-55）: 実装・テスト済み、未コミット→コミットして PR（このメモの直後）。振り分け表を scripts/lib/journal_topics.js に1本化（inject_journal_feature_cta.js も読む）、焼肉・焼き鳥・バーを語で振り分け、ハブは代表の特集に倒す。バー3特集の選定条件を約束どおりに（ジャンル名・紹介文のゲート・excludeText・ジャンル名の語を数えない）して掲載店を入れ替え（重なり 9/10→1/10）。ADR 0015。ジャーナル8本の関連リンクが変わる。合流後に P-55 Done＋コメント
-4zc. 10-09 の日次ジャーナルは欠番: 09:00 に Claude の利用上限（resets 11:10am）で生成できず HOLD。watchdog が #437/#438 を起票済み（#438 は「品質HOLD」と出て原因が違う）。ISSUE-184（P1・期限10-16）に起票。作り直して公開するかはオーナーの判断（公開＝外部への送信なので勝手にしない）。次の候補: ISSUE-184 の実装（ラッパーで解除時刻まで待って作り直す・reason に原因）→ SEO-149（本文冒頭の「合わせて読む」が 09-19 以降の27本に無い）
-4zd. ISSUE-184 は #453 で合流（c5eeb80b1c）・P-185 Done＋コメント済み。最終チェックで待ち方を直した（1分ずつ壁時計で待つ・ロックを毎分 touch して90分のハング扱いを避ける・待っている間に JST の日付が変わったら作り直さず HOLD・時計とスリープを差し替えたテスト）＝ #455 で合流（ba27be107b）・P-185 に追記コメント済み。効き始めは ~/nagoya-bites に取り込まれた次の実行から（10-11 見込み。10-10 の実行は実行中に pull しても古いスクリプトのまま）
-4ze. SEO-149 は #454 で合流（663d0d9845）・P-186 Done＋結果コメント済み。10-10 の日次ジャーナルの後に `node scripts/inject_journal_feature_cta.js --check` が exit 0（would_add 0）のままで、当日の記事に区画が入っていることを確かめる
-4zf. GitHub #401（ルーチンPR 3件の滞留）: 10-06〜10-08 の QA 失敗は main の店舗ページ2本（J004026527・J004403777）のデザインシステム違反（今の main は違反0）。流れは自然に戻っている（10-09 の話題店発掘 #407 は合流）。残る3件はどれも main と競合: #398 は心拍ファイルだけ競合だが ADR の番号 0007 が既存の 0007 と重なる文書を含む／#400 は pending_stores.json など3ファイル競合／#402 は HANDOFF.md だけ（0件実装）。ルーチンが作った中身の取り込みと閉じる判断はオーナーへ報告に回す（触らない）
-4zg. SEO-087（T6・名駅一人飲みの食い合い）は 09-20 の決めごと「10-27 の判定前に導線追加・位置変更をしない」を守り、10-27 まで待つ。SEO-134 は 10-09 のメモどおり今は広げない
-4zh. 次のセッションでやること（どれも日付待ち・オーナー待ち。このセッションで手を付けられるものは残っていない）:
-  - 10-10: ISSUE-154（P-158）は夜間QA の架空店監査と page-store-links が緑なら Done／SEO-115（P-112）の達成条件3（metrics_history で /stores/ の page_view の段差）／SEO-149 の当日分（上の 4ze）
-  - 10-11: ISSUE-184 の新しい待ち方が入ったラッパーで動いたか（~/nagoya-bites/.local-logs の実行ログ。利用上限に当たらなければ何も出ない）
-  - 期限順: SEO-091（10-13）／SEO-125（10-15）／ISSUE-149（10-16）／ISSUE-183（10-17）／SEO-118・SEO-099（10-20）／SEO-087（10-27）／SEO-148（11-06）／ISSUE-179（11-08）／ISSUE-172（11-09）／SEO-126・SEO-130・SEO-140（11-15）／SEO-141（11-30）
-  - 夜間QA の soft を hard に上げる候補（緑が続いたら）: station-names・tabelog-branch・feature-tracking・stub-links・hotpepper-fetch・journal-feature-cta
-  - 10-09 の記事はオーナー承認でバックフィルし #456 で公開済み（871db336f0）。#437 は次の watchdog で閉じる見込み。バックフィル中に Autopilot フックが ~/nagoya-bites の main へ自動コミット・マージしたため、旧 main は backup/main-before-backfill-20261010 に残し main を origin/main から作り直した（reset なし）。ISSUE-185（P-187 Done）で backfill_journal.sh を直した（SNS原稿の停止設定・HEAD が動いたら止まる）
-  - オーナーの判断・操作待ち: ルーチンPR #398・#400・#402（4zf）／GAS のデプロイ（ISSUE-150・ISSUE-152 の達成条件3）／ISSUE-147・ISSUE-165・ISSUE-173
-5. 夜間QA の station-names が緑で続いたら hard に上げる（10-09 が初めての ✅。10-10 も緑なら上げる）
-6. 最後に: 創業者の実名が index.html の Organization JSON-LD に出ている件をオーナーへ報告（変更しない）
-
-対象外（理由）:
-- SEO-118（10-20 の GA4 再基線）・SEO-125（10-15 記録）・SEO-126/130/140（11-15 判定）・SEO-141（11-30 判定）: 日付待ち
-- SEO-129 の反映・SEO-132 about.html・ISSUE-147: オーナー承認が要る
-- SEO-067/098（BWT・UTM）: オーナー本人の操作
+# 次にやること（2026-10-11 実装・確認済み・オーナーの確認待ち）
+1. 実装済み・目視確認済み（390px/1280px）: DSN-009〜012 すべて。コミット d379224b39・e05a1db04f まで
+2. 検査: npm test 494/0・audit_design_system --check・audit_inline_js_syntax --check（全ページ）すべて通過。制約5（シーン/検索/絞り込み/カードの媒体リンクとGoogle評価/詳細の6媒体/IG）を操作して確認・JSエラー0
+3. 実測（375px・焼肉）: カード高さ 808→506px、文字 231→183、44px未満のタップ対象 250→92、12px以下の文字 5%→2%、ページ幅 658→390（DSN-009）
+4. 前後比較ページ: https://claude.ai/artifact/EwB9RuwsgSpFd1eNPLus5t（非公開）。スクショは scratchpad/shots.js（headless Chrome を CDP で操作）で再生成できる
+5. PR を作成済み → オーナーが見て OK なら main に合流（＝本番公開）。合流後に backlog の DSN-008〜012 を done・Linear 同期（P-212〜216 Done）・HANDOFF を done
+6. オーナーに確かめたいこと: 女子会のアイコン（ワイングラス）・信頼の帯の文言「現役の店長が編集」
 
 # 試したが駄目だったこと
-- `git merge origin/main` は、作業ツリーに未コミットの変更があると "Merge with strategy ort failed" で止まる。先にコミットしてから取り込む
-- CI は孤児ページを削除しない（`--redirect-orphans` のみ）。データから外した店のページは、判定器で「削除対象」と確かめてから手で消す
-- agent-backlog.md を python の heredoc で書き換えると Non-UTF-8 の SyntaxError。node で fs.readFileSync(…,'utf8') を使えば通る
-- `refresh_feature_rosters.js --only=…` は `data/feature_roster_health.json` を1本分で上書きする。実行後に git checkout で戻す
+- Chrome の resize_window は効かない（最大化）。headless の画面はインストール案内の背景（#pwa-install-backdrop）が全面を暗くするので消してから撮る。scratchpad/m/index.html の 390px iframe（同一オリジンにするため repo を site/ に symlink・port 8766）で見る
 
 # 守るルール・判断メモ
-- 1課題（または密接な組）ごとに PR → squash merge。対話セッションは main 直 push 不可
-- テンプレート・生成器の変更は Designer の QA-5 記録と `node scripts/audit_design_system.js --check` を通す（制約12）
-- 店舗ページ約5,000本はローカルで再生成しない（CI の build.yml が再生成する）
-- Linear の説明は同期で置き換わらない。訂正・結果はコメントで残す（`orca linear comment add` に --workspace を付けない）
-- 店舗データの変更は一次情報で確かめたものだけ。確かめられなければ空欄に倒す（推測で書かない）
-- 既存の不一致（特集の「うなぎのしろむら 泉店」→ stores.json は「泉本店」・fathers-day-2026 と nagoya-kaoawase-washoku）は本作業の前から main にある。最後に起票する
-- `git checkout -- features/` は手で直した特集まで戻す。build_featured.js の試し実行の後は、そのファイルだけを戻す
-- 特集の日付は JSON-LD だけが正本（docs/decisions/0010）。画面の日付は scripts/apply_feature_byline.js が出す。手で書かない
-- 8 本の datePublished 2025-04-15 は年の誤記だった（最初のコミットは 2026-04-15）。数日のずれは誤りと言い切れないので直さない
+- 「AI菩薩」は音声入力の誤変換で「AIっぽさ」と解釈
+- AIっぽさの具体: グラデーション＋光彩のボタン、字間を空けた小見出し＋罫線、見出しごとの説明の添え書き、宣言調の黒帯、イタリックの英字飾り（Daily 等）、絵文字
+- アイコンは絵文字を使わず線画 SVG（Lucide・ISC）を index.html 内スプライトに（制約1・4）。font-size は var(--fs-*) のみ、可視文字 13px 以上、タップ 44px 以上（制約12）
+- ホットペッパーのクレジットは規約で必須なので消さない
+- 店のデータ・信頼度の判定は変えない
+- main への合流＝本番公開なので、PR を作ってオーナーの確認を待つ
 
 # 関連ファイル
-- agent-backlog.md（SEO-116〜141・ISSUE-145〜148）
-- docs/seo-strategy-2026-10.md（戦術表 §3・KPI §4）
-- docs/decisions/0007-seo-north-star-metrics.md
-
-## 2026-10-10 夜 追加の依頼（ジャーナル欠番の原因特定と修正）
-オーナー「今日のジャーナルが更新されてない。ここ最近毎日更新されてないので原因を特定して修正して」。
-- 原因: 10-09 は Claude の利用上限（[[ISSUE-184]] で修正済み）。10-10 は `~/nagoya-bites` の main が Autopilot の自動マージで origin と履歴分岐し、`git pull --rebase` が衝突 → 続く push 再同期が rebase を abort せず途中のまま残った。詳細は agent-backlog.md の ISSUE-187
-- 手元の復旧（済み）: rebase abort → `git merge origin/main`（衝突なし）→ 非 force で push。reset はしていない。ローカル main = origin/main
-- 再発防止（PR）: `scripts/lib/journal_git_sync.sh`（rebase→衝突なら畳んで merge）＋ `tests/journal_git_sync.test.js`。ラッパーの4箇所から呼ぶ
-- 今日分の記事: `bash scripts/run_journal_local.sh` を 23:03 に手動起動（結果は `~/nagoya-bites/.local-logs/journal-2026-10-10.log`）
-- 未解決: Autopilot が launchd のチェックアウトの main へ作業ブランチを自動マージする挙動は `~/.claude/autopilot/`（リポジトリの外）の設定。止めるかはオーナー判断
+- index.html（CSS 〜1300行・buildCardHtml 9746行付近）／assets/css/nb.css／data/design_system.json／agents/designer.md
