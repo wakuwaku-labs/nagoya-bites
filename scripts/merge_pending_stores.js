@@ -49,6 +49,9 @@ function toLocalStoreShape(p) {
     // （ISSUE-076。ここを空固定にしていたため pending 由来店は恒久的に写真ゼロだった）
     '写真URL': p['写真URL'] || '',
     '写真クレジット': p['写真クレジット'] || '',
+    // 写真の出所（places-user / places-owner）。落とすと、利用者の投稿が「記録の無い客投稿」に見え
+    // （audit_photo_policy.js の違反）、トップのカードに撮影者も出なかった（I-11b・P-268）。
+    '写真出所': p['写真出所'] || '',
     'Instagram': p.instagram_handle ? `https://www.instagram.com/${p.instagram_handle}/` : '',
     '食べログURL': '',
     'TikTok検索': `https://www.tiktok.com/search?q=${q}`,
