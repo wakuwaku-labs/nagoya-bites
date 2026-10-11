@@ -9521,23 +9521,24 @@ function updateFilterUI() {
   if (!chips) return;
   var html = '';
   if (pref !== '全国' && pref !== 'all') {
-    html += '<span class="chip" data-clear="pref">' + pref + ' <span class="chip-x">×</span></span>';
+    html += '<span class="chip" data-clear="pref">' + nbEscHtml(pref) + ' <span class="chip-x">×</span></span>';
   }
   if (typeof ACTIVE_WARD !== 'undefined' && ACTIVE_WARD && ACTIVE_WARD !== 'all') {
-    html += '<span class="chip" data-clear="ward">' + ACTIVE_WARD + ' <span class="chip-x">×</span></span>';
+    html += '<span class="chip" data-clear="ward">' + nbEscHtml(ACTIVE_WARD) + ' <span class="chip-x">×</span></span>';
   }
   if (genre !== 'All' && genre !== 'all') {
-    html += '<span class="chip" data-clear="genre">' + genre + ' <span class="chip-x">×</span></span>';
+    html += '<span class="chip" data-clear="genre">' + nbEscHtml(genre) + ' <span class="chip-x">×</span></span>';
   }
   ACTIVE_TAGS.forEach(function(tag) {
-    html += '<span class="chip" data-clear="tag" data-tag="' + tag + '">' + tag + ' <span class="chip-x">×</span></span>';
+    html += '<span class="chip" data-clear="tag" data-tag="' + nbEscHtml(tag) + '">' + nbEscHtml(tag) + ' <span class="chip-x">×</span></span>';
   });
   if (cap) {
-    html += '<span class="chip" data-clear="cap">' + cap + '名以上 <span class="chip-x">×</span></span>';
+    html += '<span class="chip" data-clear="cap">' + nbEscHtml(cap) + '名以上 <span class="chip-x">×</span></span>';
   }
   if (q) {
-    html += '<span class="chip" data-clear="q">&ldquo;' + q + '&rdquo; <span class="chip-x">×</span></span>';
+    html += '<span class="chip" data-clear="q">&ldquo;' + nbEscHtml(q) + '&rdquo; <span class="chip-x">×</span></span>';
   }
+  // 入力由来の値は、HTML に連結する前にエスケープする
   chips.innerHTML = html;
 
   // 結果ブロック上端の「絞り込み結果サマリー帯」を更新
@@ -9556,7 +9557,7 @@ function updateFilterUI() {
       var pillHtml = '';
       parts.forEach(function(p, i) {
         if (i > 0) pillHtml += '<span class="rs-sep">×</span>';
-        pillHtml += '<span class="rs-pill">' + p + '</span>';
+        pillHtml += '<span class="rs-pill">' + nbEscHtml(p) + '</span>';
       });
       condEl.innerHTML = pillHtml;
     }
