@@ -816,7 +816,7 @@
 
 ### [ISSUE-188] トップの店舗一覧から誘導ページ（古い ID）への2件のリンクを今の店舗ページに直し、npm test を通す
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done（2026-10-11）
 - **detected**: 2026-10-11
 - **due**: 2026-10-25
 - **category**: QA / data-quality
@@ -828,6 +828,7 @@
   1. 2件のリンク先が同じ店か（店名・住所・`data/store_merge_pairs.json`）を確かめ、同じ店なら今の店舗ページへ、違えば外す
   2. 一覧を書くスクリプトが誘導ページの ID を選ばないようにし、翌日の自動更新後も `node scripts/audit_stub_links.js --check` が 0 件
   3. `npm test` がすべて通る
+- **結果（2026-10-11）**: 2件のリンクを、誘導先の今の店舗ページに直した（J004026741 → J004026739、J003624656 → J003624657）。一覧を書く `scripts/inject_store_links.js` は、誘導ページの ID を選ばず、誘導先が現役の店舗ページのときだけそこへ直接リンクし、どちらも無ければ検索のリンクにする。`node scripts/audit_stub_links.js --check` は 0 件、`npm test` は通る。UI・UX改修計画（`docs/uiux-overhaul-plan-2026-10.md`）の I-01 に当たる
 - **関連**: [[ISSUE-182]]（誘導ページへのリンクの監査）／[[ISSUE-102]]
 
 ### [ISSUE-187] 日次ジャーナルが、ローカル main と origin の履歴の形が違うだけで衝突して止まり、rebase 途中のまま残るのを直す

@@ -2360,7 +2360,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 </section>
 <!-- SCENE-INDEX:END -->
 
-<!-- STORE-INDEX:START 2026-10-10 -->
+<!-- STORE-INDEX:START 2026-10-11 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
 <h2 class="store-index-title">エリア別 全店舗一覧（5004店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
@@ -3185,7 +3185,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <li><a href="stores/J004633160.html">鍋や 湯気ト煙（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
 <li><a href="stores/J000657394.html">南翔饅頭店（名古屋（名古屋駅/西区/中村区）・中華）</a></li>
 <li><a href="stores/J001218309.html">肉ときどきレモンサワー 名駅店（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
-<li><a href="stores/J004026741.html">肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
+<li><a href="stores/J004026739.html">肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
 <li><a href="stores/J004026742.html">肉ト魚 大衆酒場 ひとめぼれ 名駅東口本店（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
 <li><a href="stores/J004403768.html">肉ト魚 大衆酒場 ひとめぼれ 名駅南店（名古屋（名古屋駅/西区/中村区）・居酒屋）</a></li>
 <li><a href="stores/J001203646.html">肉のよいち 名駅本店（名古屋（名古屋駅/西区/中村区）・焼肉・ホルモン）</a></li>
@@ -4897,7 +4897,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <li><a href="stores/J003497936.html">Wine Bar Kuroda ワインバークロダ（大曽根･千種･今池･池下･守山区・バー・カクテル）</a></li>
 <li><a href="stores/J000622371.html">WINE VILLAGE ワインビレッジ（大曽根･千種･今池･池下･守山区・イタリアン・フレンチ）</a></li>
 <li><a href="stores/J004025450.html">YAKINIKU RESTAURANT燃火（大曽根･千種･今池･池下･守山区・焼肉・ホルモン）</a></li>
-<li><a href="stores/J003624656.html">YOHAKU COFFEE 今池2号店（大曽根･千種･今池･池下･守山区・カフェ・スイーツ）</a></li>
+<li><a href="stores/J003624657.html">YOHAKU COFFEE 今池2号店（大曽根･千種･今池･池下･守山区・カフェ・スイーツ）</a></li>
 <li><a href="stores/J004403356.html">ZHOLD EM ゼットホールデム（大曽根･千種･今池･池下･守山区・カラオケ・パーティ）</a></li>
 <li><a href="stores/J000401098.html">ア・ガルトン・クラブ（大曽根･千種･今池･池下･守山区・洋食）</a></li>
 <li><a href="stores/J000398262.html">ああ．あんかけスパのVIVA（大曽根･千種･今池･池下･守山区・イタリアン・フレンチ）</a></li>
@@ -9556,23 +9556,24 @@ function updateFilterUI() {
     html += '<span class="chip" data-clear="favs">保存済み <span class="chip-x">×</span></span>';
   }
   if (pref !== '全国' && pref !== 'all') {
-    html += '<span class="chip" data-clear="pref">' + pref + ' <span class="chip-x">×</span></span>';
+    html += '<span class="chip" data-clear="pref">' + nbEscHtml(pref) + ' <span class="chip-x">×</span></span>';
   }
   if (typeof ACTIVE_WARD !== 'undefined' && ACTIVE_WARD && ACTIVE_WARD !== 'all') {
-    html += '<span class="chip" data-clear="ward">' + ACTIVE_WARD + ' <span class="chip-x">×</span></span>';
+    html += '<span class="chip" data-clear="ward">' + nbEscHtml(ACTIVE_WARD) + ' <span class="chip-x">×</span></span>';
   }
   if (genre !== 'All' && genre !== 'all') {
-    html += '<span class="chip" data-clear="genre">' + genre + ' <span class="chip-x">×</span></span>';
+    html += '<span class="chip" data-clear="genre">' + nbEscHtml(genre) + ' <span class="chip-x">×</span></span>';
   }
   ACTIVE_TAGS.forEach(function(tag) {
-    html += '<span class="chip" data-clear="tag" data-tag="' + tag + '">' + tag + ' <span class="chip-x">×</span></span>';
+    html += '<span class="chip" data-clear="tag" data-tag="' + nbEscHtml(tag) + '">' + nbEscHtml(tag) + ' <span class="chip-x">×</span></span>';
   });
   if (cap) {
-    html += '<span class="chip" data-clear="cap">' + cap + '名以上 <span class="chip-x">×</span></span>';
+    html += '<span class="chip" data-clear="cap">' + nbEscHtml(cap) + '名以上 <span class="chip-x">×</span></span>';
   }
   if (q) {
-    html += '<span class="chip" data-clear="q">&ldquo;' + q + '&rdquo; <span class="chip-x">×</span></span>';
+    html += '<span class="chip" data-clear="q">&ldquo;' + nbEscHtml(q) + '&rdquo; <span class="chip-x">×</span></span>';
   }
+  // 入力由来の値は、HTML に連結する前にエスケープする
   chips.innerHTML = html;
 
   // 結果ブロック上端の「絞り込み結果サマリー帯」を更新
@@ -9592,7 +9593,7 @@ function updateFilterUI() {
       var pillHtml = '';
       parts.forEach(function(p, i) {
         if (i > 0) pillHtml += '<span class="rs-sep">×</span>';
-        pillHtml += '<span class="rs-pill">' + p + '</span>';
+        pillHtml += '<span class="rs-pill">' + nbEscHtml(p) + '</span>';
       });
       condEl.innerHTML = pillHtml;
     }
