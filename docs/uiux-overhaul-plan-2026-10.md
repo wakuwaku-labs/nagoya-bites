@@ -385,9 +385,10 @@ U-01 の主な場所と、言い方を作っている元（直すのは元）:
 - 難易度: 小。
 - 既存機能への影響:
   - ハブの予約のリンクを `cta_click`（location=hub）に変える（`scripts/gen_area_genre_pages.js:239`）。変えた日を `data/measurement_changes.json` に書く。
-  - `modal_open` に store_id と、開いた場所（source）を足す。名前は変えない。
-  - `feature_store_click` の店の値を ID にそろえる。ジャーナルから店舗ページへのリンクに計測を付ける。
+  - `modal_open` に store_id を足す。開いた場所（source）は既にあった（実装時に確かめた）。名前は変えない。
+  - `feature_store_click` の店の値を ID にそろえる。ジャーナルから店舗ページへのリンクに計測（`journal_store_click`）を付ける。
   - 予約送客の語彙（`scripts/lib/reservation_exits.js`）と GAS の複製は変えない。`cta_click` と `cta_reserve` はもう数えている。
+- 実装: PR #471（2026-10-11・Linear P-239）。ハブは build.yml が作り直した日から変わり、そのとき「データ更新日」・sitemap の lastmod・IndexNow の対象が一度だけ進む（テンプレートを変えたときと同じ）。GA4 のカスタムディメンション登録はオーナーの操作（P-240）。
 
 #### I-03 選び方の説明を実態に合わせる
 
@@ -1382,14 +1383,16 @@ U-01 の主な場所と、言い方を作っている元（直すのは元）:
 - 今あるイベント名は変えない。名前を変えると、前後の比較ができなくなる。今の名前は次のとおり。
   - トップ: `search`・`sort_change`・`modal_open`（店名・ジャンル・エリア・source）・`fav_add`・`fav_remove`・`share_x`・`share_line`・`share_copy`・`outbound_click`・`cta_click`（`nbReserveExit` 経由）・`cta_call_click`・`cta_gmap_click`・`reel_play`・`feedback_open`・`feedback_submit`
   - 店舗ページ: `cta_click`（location=store_page）・`cta_call_click`・`cta_gmap_click`・`outbound_click`・`reserve_report_yes`/`no`
-  - 特集: `feature_store_click`・`cta_click`（location=feature）・`internal_link_click`
-  - ジャーナル: `cta_reserve`（location=journal）。名前は違うが、予約送客の集計（`scripts/lib/reservation_exits.js` の `EXIT_EVENTS`）には入っている。名前はそろえない
-  - ハブ: `hub_store_click`
+  - 特集: `feature_store_click`（店の値はリンク先のスラグ。I-08 で店名をやめた）・`cta_click`（location=feature）・`internal_link_click`
+  - ジャーナル: `cta_reserve`（location=journal）。名前は違うが、予約送客の集計（`scripts/lib/reservation_exits.js` の `EXIT_EVENTS`）には入っている。名前はそろえない。店舗ページへのクリックは `journal_store_click`（store・journal。I-08 で新設。予約送客には混ぜない）
+  - ハブ: `cta_click`（location=hub）。I-08 で `hub_store_click` から替えた
 - 今のまま使うもの（足す値だけ決める）:
-  - クイックビュー → `modal_open`。`source` に開いた場所（一覧・話題店・TOP10・似た店・共有リンク）を入れ、`store_id` を足す。今は店名だけで、店ごとの集計がしにくい。
+  - クイックビュー → `modal_open`。`source`（grid・ranking・trend_today・history・modal_reco・deeplink・unknown）は既にある。I-08 で `store_id` を足した（2026-10-11 に調べて確かめた。今までは店名だけで、店ごとの集計がしにくかった）。
   - 保存 → `fav_add`・`fav_remove`。`location` を足す。
-- 直すもの:
-  - ハブの「ホットペッパーで予約」は `hub_store_click` を送っている（`scripts/gen_area_genre_pages.js:239`）。これは予約送客の集計に入らない。ほかのページと同じ `cta_click`（location=hub）に変え、変えた日を `data/measurement_changes.json` に書く。
+- 直したもの（I-08・PR #471）:
+  - ハブの「ホットペッパーで予約」は `hub_store_click` を送っていた。予約送客の集計に入らなかったため、ほかのページと同じ `cta_click`（location=hub）に変えた。ハブは build.yml が作り直した日から変わる。変えた日は、マージ後に `data/measurement_changes.json` へ書く。
+  - 特集の `feature_store_click` は、947件のうち720件で店の値が店名だった。リンク先のスラグにそろえた。
+- GA4 のカスタムディメンションは `store_name` と `link_domain` だけ登録済みで、`store_id`・`location`・`source`・`feature`・`hub`・`journal` は未登録。登録しないと GA4 の通常のレポートでは切り口にできず、登録した日からしか集まらない（P-240・オーナーの操作）。
 - 足すのは、成功指標（第10章）を測るのに足りないものだけ。今ある名前と重ならないことは確かめた（2026-10-11）。
 
 | 足す名前 | いつ送るか | 何に使うか |
