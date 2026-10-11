@@ -16,19 +16,31 @@
 
 'use strict';
 const fs = require('fs');
+const { siteStoreCount } = require('./lib/store_count');
 
 const MARKER = 'nb-site-intro';
 const ANCHOR = '<div class="art-body">';
 // DSN-003: 見た目は assets/css/nb.css の .nb-site-intro が所有する（inline style は書かない）
-const INTRO_HTML =
-  `<p class="${MARKER}">` +
-  `この記事は<a href="../index.html">NAGOYA BITES</a>` +
-  ` — 名古屋の厳選1,100店超を業界視点で紹介するグルメガイドの一部です。</p>`;
+// I-06: 店数はサイト全体で同じ表記（約5,000・scripts/lib/store_count.js）。固定の数字を書かない
+function buildIntroHtml(countLabel) {
+  return `<p class="${MARKER}">` +
+    `この記事は<a href="../index.html">NAGOYA BITES</a>` +
+    ` — 名古屋の厳選${countLabel}店を業界視点で紹介するグルメガイドの一部です。</p>`;
+}
 
 const files = process.argv.slice(2).filter(f => f && f.endsWith('.html'));
 
 if (files.length === 0) {
   console.log('add_journal_site_intro: 対象ファイルなし（引数なし）');
+  process.exit(0);
+}
+
+// 店数を取れないときは書かずに終える（失敗しても exit 1 にしない契約。数字を決め打ちで書くよりよい）
+let INTRO_HTML;
+try {
+  INTRO_HTML = buildIntroHtml(siteStoreCount().label);
+} catch (e) {
+  console.error(`add_journal_site_intro: 店数を取得できないため、紹介文を挿入しません: ${e.message}`);
   process.exit(0);
 }
 

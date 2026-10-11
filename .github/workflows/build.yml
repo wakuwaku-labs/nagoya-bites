@@ -417,6 +417,15 @@ jobs:
         run: node scripts/gen_llms_txt.js
         continue-on-error: true
 
+      - name: 掲載店数の表記をそろえる（I-06・冪等・日次）
+        # 掲載店数は、文章では営業中の店を 500 件単位に丸めた「約5,000」だけを書く（scripts/lib/store_count.js・
+        # docs/decisions/0021）。トップ・stores/index.html・faq.html・特集の数字の部分だけを、その日の値にそろえる。
+        # 丸めた値が変わらない日は何も書き換えない（正確な数は ±数件動くが、表記は動かない）。llms.txt は直前のステップが
+        # 同じ値を入れる。journal/ は書き手を1つにするためここでは触らない（冒頭の紹介文は add_journal_site_intro.js が
+        # 同じ値を入れ、丸めた値が変わった日だけ手元で --only journal を回す）。ずれは夜間QA が soft（store-count）で数える。
+        run: node scripts/sync_store_count.js --only index,stores-index,faq,features
+        continue-on-error: true
+
       - name: デザインシステム準拠監査（DSN-001・可読性ゲート）
         # 全ページが assets/css/nb.css・正本フォントURL・font-size床(12px)・許可フォントウェイトに
         # 準拠しているかを検査する（scripts/audit_design_system.js --check）。stores/ の「孤児」
@@ -504,7 +513,7 @@ jobs:
           # CI で毎ビルド生成されても捨てられ、フロントが古い内訳（一部店舗のみ）を出し続ける。
           # ISSUE-146: data/store_page_orphans.json（gen-store-pages.js --check-orphans の孤児一覧）も対象。
           # 漏れていると手元の一覧が古いまま残り、手元の audit_design_system.js が転送ページを誤検知する。
-          git add index.html features/index.html sitemap.xml llms.txt data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/store_referrals.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/feature_roster_health.json data/store_link_identity_checked.json data/store_link_identity_report.json data/area_genre_pages_manifest.json data/photo_url_liveness_report.json data/dead_photo_urls.json data/store_merge_pairs.json data/store_page_orphans.json
+          git add index.html features/index.html sitemap.xml llms.txt faq.html data/stores.json data/ig_post_evidence.json data/instagram_posts.json data/manual_stores.json data/pending_stores.json data/photo_pipeline_health.json data/view_counts.json data/store_referrals.json data/site_metrics.json data/gsc_metrics.json data/gsc_opportunities.json data/search_channel_metrics.json data/cross_check_flags.json data/crosscheck.json data/metrics_history.json data/effect_ledger.json data/feature_rosters.json data/feature_roster_health.json data/store_link_identity_checked.json data/store_link_identity_report.json data/area_genre_pages_manifest.json data/photo_url_liveness_report.json data/dead_photo_urls.json data/store_merge_pairs.json data/store_page_orphans.json
           # ISSUE-148: スプレッドシートの住所検査の記録。Hot Pepper を取れた回にだけ書かれ、まだ無い回に
           # 上の git add 全体を落とさないよう分ける（data/indexnow_state.json と同じ扱い）
           git add data/spreadsheet_address_gate.json 2>/dev/null || true
