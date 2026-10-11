@@ -1,4 +1,4 @@
-status: in_progress
+status: done
 
 # 目的
 Linear P-236（DSN-014）の Codex レビューの結果をもとに、UI・UX全面改修計画（`docs/uiux-overhaul-plan-2026-10.md`）を設計し直す。設計書だけを直す。サイトのコードは変えない（実装は承認後）。
@@ -9,29 +9,30 @@ Linear P-236（DSN-014）の Codex レビューの結果をもとに、UI・UX�
 - 10.6 節に Claude の応答（指摘ごとの処置と理由）を残す
 - `node docs/qa/uiux-2026-10/counts.js` と構造の検査が通る。アーティファクトを同じパスで作り直す。コミットし、Linear にコメントする
 
-# できていること（2026-10-11 に調べた事実）
-- 電話の仕組み: 番号はデータに持たない（Google の規約で保存できない）。押したときだけ Places Details（`international_phone_number`）を取り、`tel:` を開く。取った番号はページを閉じると消える一時記憶（`NB_PHONE_MEM`）にだけ置く。場所は `index.html:10129-10210` と `gen-store-pages.js:1041-1052`
-- 電話のボタンが出る条件:
-  - モーダル: placeId のある店すべて（4,677/5,004店。うち予約リンクもある店は4,614）。`nbCallBtnHtml`（`index.html:10138`）。HotPepper がある店では、下の固定の帯にもアイコンで出る（:10476-10480）。導入は #224（2026-09-07）
-  - 店舗ページ: 予約リンク（HotPepper・食べログ）が無く placeId がある店だけ（63店）。`gen-store-pages.js:798`。導入は SEO-105（#289・2026-09-22）
-  - 予約リンクも placeId も無い店は14店で、地図だけになる。地図のリンクは店名とエリアから常に作れる
-- 上限: 端末ごとに1日20回（localStorage）。GCP のプロジェクト全体の1日の上限は、写真の取得などと共有する。上限の値はコードの注記が300件、メモリ（places-api-quota-and-budget）が250件で食い違うため要確認。枠が戻るのは JST 16:00
-- 新しく見つけた問題（U-83 として書く）: Places が上限切れや拒否で答えなくても「電話番号なし」と出す（OK 以外の状態をすべて同じ表示にしている）。写真で決めている「取りに行けなかった」と「候補なし」を分ける原則と同じ考え方で直す
-- 計測: `cta_call_click` は番号を取りに行く前に送るので、押した回数を数えており、発信できた回数ではない。`EXIT_EVENTS` に入っている（`scripts/lib/reservation_exits.js:20`）。10.2 節の予約送客の行は `cta_call_click` を書き漏らしている
-- 使われ方（`data/store_referrals.json`）: 直近30日（〜10-10）の予約送客55回のうち、電話は2回（HotPepper 50・食べログ3）。10月1〜10日の電話は0回
-- 自分の閲覧: `?nb_owner=1` の端末は独自のイベント（`cta_click` など）を送らないが、セッションは `traffic_type=internal` を付けて送る。GA4 のデータフィルタが「有効」でないと除外されないため、率の分母に混ざる（`docs/ga4-internal-traffic-verification.md`）
+# できていること（2026-10-11）
+- 設計書を直した（commit 0c9200e52d）。改善案 I-01〜I-36、問題 U-01〜U-83、操作のタスク T1〜T6
+  - 電話: U-32 を直し、U-83（別の店の番号を取る・取れなかった理由を分けない・押した回数しか数えない）と I-36 を足した。7.3 節に、行動バーに出すボタンを店の種類ごとに決める表、紐付けの確かめ方、取れなかったときの表示を書いた
+  - 5.6 節（データが欠けた店での出し方）を新設した
+  - 10.2 節に「数字の取り方」（期間・区切り・自分の閲覧・件数が少ないときの保留）、10.4 節に始める所と T6、10.6 節に Claude の応答を書いた
+- 電話を出す規則: 住所を先に比べ（`compareJpAddress`）、住所が比べられない店だけ店名（`namesMatch`）。出せる店は4,274（予約先あり4,215・なし59）、出せない店は730（placeId 無し327・住所が別120・住所不明で店名も不一致283）。最後に `counts.js` を回し直して設計書の数字と一致した
+- 予約先の無い4店（鮨 結・かき氷 うと・中国料理 旬彩・旬彩）の店舗ページの電話は、今も別の店の番号を取る。ISSUE-147 に追記し、Linear P-142 にコメントした（コードは直していない）
+- `agent-backlog.md` の DSN-014 を done にした。Linear P-236 にコメントした
+- 読みやすい版を作り直した（同じ URL）: https://claude.ai/artifact/E8kRtmcAeNE7VKxznopMDt
+- 確認: `npm test` 通過・`node scripts/next_task.js --check` 通過・構造の検査（I-ブロックの4項目・U 番号の抜けと重複・言い方・鍵の値が無いこと）通過
 
-# 次にやること
-- 済み（2026-10-11）: 設計書の電話の箇所・U-32・U-83・I-36・5.6 節（データが欠けた店での出し方）・7.3 節の表・10.2 節「数字の取り方」・10.4 節（始める所・T6）・10.6 節の Claude の応答。`counts.js` に「設計が使うデータ」を追加
-- 電話を出す規則: 住所を先に比べ（`compareJpAddress`）、住所が無い店だけ店名（`namesMatch`）。出せる店は4,274（予約先あり4,215・なし59）、出せない店は730
-- 残り:
-  1. ISSUE-147 に「予約先の無い4店（鮨 結・かき氷 うと・中国料理 旬彩・旬彩）の電話のボタンが別の店の番号を取る」を追記し、Linear P-142 にコメントする
-  2. 構造の検査（I-ブロックの4項目・U-01〜U-83・言い方・鍵の値が無いこと）と counts.js の再実行
-  3. アーティファクトを同じパスで作り直す → コミット → Linear P-236 にコメント → 最終チェック
+# 次にやること（オーナーが決めること）
+1. P-237: 4.4 節の11項目を決める（実装を始める条件）
+2. 4店の電話のボタン（ISSUE-147・P-142）を、改修を待たずに今直すか
+3. このブランチに入った設計の外のコミットを、分けるか残すか
+   - Codex の 4ab7ea556a: `.claude/settings.json`・`.linear.json`・`scripts/linear/briefing.js`・`scripts/linear/watchdog.js`（既存の `scripts/session_briefing.js`・`linear-watchdog.yml` と重なる）
+   - 336d4b569c・ec6c4672ab（10-11 17:47・17:53、このセッションの Claude ではない）: トップの全店舗一覧のリンクを誘導ページから現役ページへ直す（`index.html`・`scripts/inject_store_links.js`・`tests/stub_links.test.js`）。リモートの作業ブランチには push 済み
+4. 確かめること: Places の1日の上限（コードの注記300件・メモリ250件）、GA4 の内部トラフィックのデータフィルタが「有効」か
 
 # 試したが駄目だったこと
 - `.linear.json` が未設定だったため初期導入を行った（Codex）。初回生成は slug `nagoya-bites` の新規 Project を作った。既存の正しい Project 名が `Nagoya Bites` と確認できたため、`.linear.json` は既存 Project を指す名称に直した。空の重複 Project は削除していない
 - puppeteer の画面の書き出しは、この環境では白紙のページでも時間切れになる。DOM の確認で代えた
+- 電話の紐付けを店名だけで確かめると、同じ住所の同じ店でも表記の違いで1,578店が落ちた。住所を先に比べる規則に変えた
+- 同期スクリプト（`sync_backlog_to_linear.js`）は説明文の追記を送らないため、ISSUE-147 の追記は P-142 へのコメントで伝えた
 
 # 守るルール・判断メモ
 - 設計書のみ。サイトのコードの編集・デプロイはしない
@@ -41,13 +42,13 @@ Linear P-236（DSN-014）の Codex レビューの結果をもとに、UI・UX�
   - 食べログや HotPepper のスマホ版も、固定の帯に電話と予約を並べている【一般知識・未確認】
   - 今の利用は少ない（30日で2回）ので、上限への影響は小さい
   - 予約リンクのある店で電話を基本情報へ下げる案は、電話で予約したい人の操作を増やすので採らなかった
-- Codex が 4ab7ea556a に入れた範囲外のファイル（`.claude/settings.json`・`.linear.json`・`scripts/linear/briefing.js`・`scripts/linear/watchdog.js`）はオーナーに報告する。勝手には戻さない。理由: 作業ブランチの worktree では入れない決まりがあり、既存の `scripts/session_briefing.js` と `linear-watchdog.yml` とも重なる
+- 設計の外のコミットは勝手には戻さず、オーナーに報告する
 - force push・reset はしない
 
 # 関連ファイル
-- `docs/uiux-overhaul-plan-2026-10.md`（第10章は 1528 行から）
-- `docs/qa/uiux-2026-10/counts.js`
+- `docs/uiux-overhaul-plan-2026-10.md`（5.6 節・7.3 節・第10章・10.6 節）
+- `docs/qa/uiux-2026-10/counts.js`（「設計が使うデータ」）
 - `index.html:10129-10210`・`gen-store-pages.js:798,961,1041-1052`（読むだけ）
-- `scripts/lib/reservation_exits.js`・`data/store_referrals.json`
+- `scripts/lib/reservation_exits.js`・`data/store_referrals.json`・`data/places_resolved.json`
 - `docs/ga4-internal-traffic-verification.md`
-- Linear P-235（DSN-013）・P-236（DSN-014）・P-237（DSN-015）
+- Linear P-235（DSN-013）・P-236（DSN-014）・P-237（DSN-015）・P-142（ISSUE-147）
