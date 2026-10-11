@@ -1510,10 +1510,16 @@ async function main() {
   // 消えるカードの stores/<slug>.html は削除しない（gen-store-pages.js の孤児検出に乗るだけ）。
   // 統合ペアは data/store_merge_pairs.json に記録する（後日のリダイレクト等の材料）。
   {
-    const { dedupeStores } = require('./scripts/lib/store_dedup');
+    const { dedupeStores, loadPrevKept } = require('./scripts/lib/store_dedup');
     let slugOf = () => '';
     try { slugOf = require('./gen-store-pages.js').toSlug; } catch (_) { /* slug 記録なしで継続 */ }
-    const dd = dedupeStores(stores, { slugOf: (s) => { try { return slugOf(s) || ''; } catch (_) { return ''; } } });
+    // P-265: 前回の統合で残したレコードを今回も残す。残す側が日ごとに入れ替わると、現役の店舗ページと
+    // 誘導ページが入れ替わって URL が揺れる（2026-10-11 に4組が一度に入れ替わった）。この下で
+    // data/store_merge_pairs.json を書き換えるので、読むのは統合の前。
+    const dd = dedupeStores(stores, {
+      slugOf: (s) => { try { return slugOf(s) || ''; } catch (_) { return ''; } },
+      prevKept: loadPrevKept(),
+    });
     const before = stores.length;
     stores.length = 0;
     stores.push(...dd.stores);

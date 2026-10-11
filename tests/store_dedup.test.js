@@ -227,3 +227,144 @@ test('確認済みペアの正本ファイルは27組（2026-10-06 の23組＋�
     for (const s of p.sides) assert.ok(s['店名'] && (s['ホットペッパーID'] || s.placeId));
   }
 });
+
+// ── P-265: 統合で残す側を、前回の記録どおりに固定する ──
+// 2026-10-11 の自動ビルドで、統合済みの4組の残す側が前回と逆になり、現役の店舗ページと誘導ページが入れ替わった。
+// 項目数などが並ぶと、最後の決め手が元の配列の順（ホットペッパーの並び順に左右される）だったため。
+const { keptMatcher, loadPrevKept } = require('../scripts/lib/store_dedup.js');
+
+test('P-265: 前回残したレコードがいれば、元の並びが逆でも、そのレコードを残す', () => {
+  const mk = (id) => ({ '店名': '肉ト魚 大衆酒場 ひとめぼれ 名駅3丁目店', 'エリア': '名古屋駅/西区/中村区', 'ホットペッパーID': id, placeId: 'PL' });
+  // 従来: 項目数が同じなら元の並びで決まる＝並びが逆になると残る側も逆になる（これが入れ替わりの原因）
+  assert.equal(dedupeStores([mk('J004026739'), mk('J004026741')]).stores[0]['ホットペッパーID'], 'J004026739');
+  assert.equal(dedupeStores([mk('J004026741'), mk('J004026739')]).stores[0]['ホットペッパーID'], 'J004026741');
+  // 前回 J004026741 を残していたら、並びがどちらでも J004026741
+  const prevKept = [{ 'ホットペッパーID': 'J004026741', slug: 'J004026741' }];
+  for (const list of [[mk('J004026739'), mk('J004026741')], [mk('J004026741'), mk('J004026739')]]) {
+    const r = dedupeStores(list, { prevKept });
+    assert.equal(r.stores.length, 1);
+    assert.equal(r.stores[0]['ホットペッパーID'], 'J004026741');
+    assert.equal(r.merged[0].kept['ホットペッパーID'], 'J004026741');
+    assert.deepEqual(r.merged[0].absorbed.map((x) => x['ホットペッパーID']), ['J004026739']);
+  }
+});
+
+test('P-265: 前回残した側の項目が相手より少なくなっても入れ替わらず、足りない項目は相手から補う', () => {
+  const kept = () => ({ '店名': 'X食堂', 'エリア': '栄', 'ホットペッパーID': 'J1', placeId: 'P' });
+  const richer = () => ({ '店名': 'X食堂', 'エリア': '栄', 'ホットペッパーID': 'J2', placeId: 'P', '席数': '20', '定休日': '月', '価格帯': '3000円' });
+  assert.equal(dedupeStores([kept(), richer()]).stores[0]['ホットペッパーID'], 'J2', '従来は項目数の多い側');
+  const r = dedupeStores([kept(), richer()], { prevKept: [{ 'ホットペッパーID': 'J1' }] });
+  assert.equal(r.stores[0]['ホットペッパーID'], 'J1');
+  assert.equal(r.stores[0]['席数'], '20', '足りない項目は相手から補う');
+  assert.ok(r.merged[0].filledFields.includes('席数'));
+});
+
+test('P-265: オーナー確認済みの組（店名が違う）でも、前回残した側を残す', () => {
+  const one = () => ({ '店名': 'YOHAKU COFFEE 今池1号店', 'エリア': '大曽根･千種･今池･池下･守山区', 'ホットペッパーID': 'J003624657', placeId: 'PY' });
+  const two = () => ({ '店名': 'YOHAKU COFFEE 今池2号店', 'エリア': '大曽根･千種･今池･池下･守山区', 'ホットペッパーID': 'J003624656', placeId: 'PY' });
+  const cp = [{ sides: [{ '店名': 'YOHAKU COFFEE 今池1号店', 'ホットペッパーID': 'J003624657' }, { '店名': 'YOHAKU COFFEE 今池2号店', 'ホットペッパーID': 'J003624656' }] }];
+  for (const [list, prev, want] of [
+    [[one(), two()], 'J003624656', '今池2号店'],
+    [[two(), one()], 'J003624656', '今池2号店'],
+    [[one(), two()], 'J003624657', '今池1号店'],
+    [[two(), one()], 'J003624657', '今池1号店'],
+  ]) {
+    const r = dedupeStores(list, { confirmedPairs: cp, prevKept: [{ 'ホットペッパーID': prev }] });
+    assert.equal(r.stores.length, 1);
+    assert.ok(r.stores[0]['店名'].endsWith(want), `${prev} を残す: ${r.stores[0]['店名']}`);
+  }
+});
+
+test('P-265: 前回の記録が無い・他の店のものだけのときは、従来どおりの決め方', () => {
+  const mk = (id, extra) => Object.assign({ '店名': 'Y亭', 'エリア': '栄', 'ホットペッパーID': id, placeId: 'PQ' }, extra || {});
+  const want = (opts) => dedupeStores([mk('A1'), mk('B2', { '席数': '8' })], opts).stores[0]['ホットペッパーID'];
+  assert.equal(want(undefined), 'B2', '項目数の多い側');
+  assert.equal(want({ prevKept: [] }), 'B2');
+  assert.equal(want({ prevKept: [{ 'ホットペッパーID': 'ZZ9', slug: 'ZZ9' }] }), 'B2', '別の店の記録は影響しない');
+  assert.equal(want({ prevKept: null }), 'B2');
+});
+
+test('P-265: 前回残した側が両方に当たる（別々の組が1つにつながった）ときは、従来どおりの決め方に戻る', () => {
+  const mk = (id, extra) => Object.assign({ '店名': 'Z庵', 'エリア': '栄', 'ホットペッパーID': id, placeId: 'PZ' }, extra || {});
+  const r = dedupeStores([mk('A1'), mk('B2', { '席数': '8' })], { prevKept: [{ 'ホットペッパーID': 'A1' }, { 'ホットペッパーID': 'B2' }] });
+  assert.equal(r.stores[0]['ホットペッパーID'], 'B2');
+});
+
+test('P-265: 毎日の入力の並びと項目数が揺れても、残す側は動かない（30日分の模擬）。記録を使わないと動く', () => {
+  // 決定的な疑似乱数（実行ごとに結果が変わらない）
+  let seed = 20261011;
+  const rnd = () => { seed = (seed * 1664525 + 1013904223) % 4294967296; return seed / 4294967296; };
+  const groups = [
+    ['G1', ['H11', 'H12']],
+    ['G2', ['H21', 'H22', 'H23']],
+    ['G3', ['H31', 'H32']],
+  ];
+  const day = () => {
+    const list = [];
+    for (const [g, ids] of groups) {
+      for (const id of ids) {
+        const rec = { '店名': `店${g}`, 'エリア': '名古屋駅', 'ホットペッパーID': id, placeId: `P${g}` };
+        // 日によって取れている項目数が揺れる（写真・評価の取得できた/できなかった）
+        for (const f of ['席数', '定休日', '価格帯', 'Google評価']) if (rnd() < 0.5) rec[f] = '1';
+        list.push(rec);
+      }
+    }
+    // 並びも毎日変わる（ホットペッパーの並び順）
+    for (let i = list.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [list[i], list[j]] = [list[j], list[i]]; }
+    return list;
+  };
+  const keptBy = (r) => Object.fromEntries(r.merged.map((m) => [m.kept['店名'], m.kept['ホットペッパーID']]));
+  const withRecord = new Map(), withoutRecord = new Map();
+  let prev = [];
+  for (let d = 0; d < 30; d++) {
+    const input = day();
+    const a = dedupeStores(input.map((x) => ({ ...x })), { confirmedPairs: [], prevKept: prev });
+    prev = a.merged.map((m) => m.kept);
+    for (const [k, v] of Object.entries(keptBy(a))) withRecord.set(k, (withRecord.get(k) || new Set()).add(v));
+    const b = dedupeStores(input.map((x) => ({ ...x })), { confirmedPairs: [] });
+    for (const [k, v] of Object.entries(keptBy(b))) withoutRecord.set(k, (withoutRecord.get(k) || new Set()).add(v));
+  }
+  for (const [k, ids] of withRecord) assert.equal(ids.size, 1, `${k}: 記録を使うと残す側は1つに固定される（${[...ids].join(',')}）`);
+  assert.ok([...withoutRecord.values()].some((ids) => ids.size > 1), '記録を使わないと残す側が日ごとに入れ替わる（この模擬が空振りでないことの確認）');
+});
+
+test('P-265: keptMatcher は ID か slug で一致し、空どうしは一致とみなさない', () => {
+  const m = keptMatcher([{ 'ホットペッパーID': 'J1', slug: 'J1' }, { 'ホットペッパーID': '', slug: 'store-abc' }, null, 'x'], (s) => s.__slug || '');
+  assert.equal(m({ 'ホットペッパーID': 'J1' }), true);
+  assert.equal(m({ __slug: 'store-abc' }), true);
+  assert.equal(m({ 'ホットペッパーID': '', __slug: '' }), false, '空どうしは一致しない');
+  assert.equal(m({ 'ホットペッパーID': 'J2', __slug: 'zzz' }), false);
+  assert.equal(keptMatcher([], () => '')({ 'ホットペッパーID': 'J1' }), false);
+  assert.equal(keptMatcher(undefined, () => '')({ 'ホットペッパーID': 'J1' }), false);
+});
+
+test('P-265: ホットペッパーID を持たないレコードは slug で前回残した側と照合する', () => {
+  const a = () => ({ '店名': 'Bar 月', 'エリア': '名古屋市中区', placeId: 'PM', __slug: 'store-aaa' });
+  const b = () => ({ '店名': 'Bar 月', 'エリア': '名古屋市中区', placeId: 'PM', __slug: 'store-bbb' });
+  const slugOf = (s) => s.__slug || '';
+  for (const list of [[a(), b()], [b(), a()]]) {
+    const r = dedupeStores(list, { slugOf, prevKept: [{ 'ホットペッパーID': '', slug: 'store-bbb' }] });
+    assert.equal(r.stores.length, 1);
+    assert.equal(r.stores[0].__slug, 'store-bbb');
+    assert.equal(r.merged[0].kept.slug, 'store-bbb');
+  }
+});
+
+test('P-265: loadPrevKept は記録の kept を返し、無い・壊れている・形が違うときは空を返す（ビルドを止めない）', () => {
+  const dir = fs.mkdtempSync(path.join(require('node:os').tmpdir(), 'prevkept-'));
+  const f = path.join(dir, 'pairs.json');
+  assert.deepEqual(loadPrevKept(f), [], 'ファイルが無い');
+  fs.writeFileSync(f, '{ not json');
+  assert.deepEqual(loadPrevKept(f), [], '壊れている');
+  fs.writeFileSync(f, JSON.stringify({ merged: 'x' }));
+  assert.deepEqual(loadPrevKept(f), [], '形が違う');
+  fs.writeFileSync(f, JSON.stringify({ merged: [{ kept: { 'ホットペッパーID': 'J1', slug: 'J1' } }, null, { kept: null }, {}] }));
+  assert.deepEqual(loadPrevKept(f), [{ 'ホットペッパーID': 'J1', slug: 'J1' }]);
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+test('P-265: リポジトリの統合の記録を読めて、全件に ID か slug がある（残す側の照合に使える）', () => {
+  const kept = loadPrevKept();
+  assert.ok(kept.length > 0, 'data/store_merge_pairs.json の kept が読めない');
+  for (const k of kept) assert.ok(k['ホットペッパーID'] || k.slug, `ID も slug も無い: ${JSON.stringify(k)}`);
+});
