@@ -196,6 +196,17 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/sync_store_count.js', '--check']],
 });
+// 電話のボタンを出す店（data/stores.json の「電話確認」）が、紐付け先の Google の住所・店名との照合と合っているか
+// （I-36・SOFT で開始）。欄が残っているのに照合は通らない店は、別の店の番号にかかりうるので重い。
+// 判定は build.js が日次で作り直す。0件が続いたら hard に上げる
+checks.push({
+  id: 'phone-links',
+  title: '電話のボタンを出す店が、紐付け先の住所・店名の照合と合っている（I-36）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_phone_links.js', '--check']],
+});
 // HotPepper の取得に取りこぼしが無いか（ISSUE-143・SOFT で開始）。1,000件の上限を超える中エリアは小エリアごとに
 //    取り直し、API のエラーはやり直す。それでも取れなかった回は build.js が data/hotpepper_fetch_log.json に残す
 checks.push({
