@@ -127,6 +127,29 @@ test('構造化データ: numberOfItems（1,000 以上）をそろえるのは i
   assert.equal(twice.changes.length, 0);
 });
 
+test('トップの権威性バー: id="auth-total" の静的な数字を、丸めた数字（約なし）にそろえる。他の要素は触らない', () => {
+  // 表示のときは index.html の loadStores() が実データの件数で上書きする。ここは JS を実行しないクローラ・初回描画が見る値
+  const bar = '<span><span class="num-serif" id="auth-total">4,559</span>店</span>';
+  const r = sync(bar, 'index');
+  assert.equal(r.text, '<span><span class="num-serif" id="auth-total">5,000</span>店</span>');
+  assert.equal(r.changes.length, 1);
+  assert.equal(sync(r.text, 'index').changes.length, 0, '冪等');
+  // 丸めた値が変わった日は追いつく
+  assert.equal(sync(r.text, 'index', countOf(5500)).text, bar.replace('4,559', '5,500'));
+  // 上書きされる前後で表示の幅が動かない（約を付けない・桁数が同じ）
+  assert.equal(r.text.match(/id="auth-total">([^<]*)</)[1].length, '4,559'.length);
+  // 他の id・class・data-id・1,000 未満の仮置き（TOP50 の「50」）・ほかの scope は触らない
+  const other = '<span id="auth-other">4,559</span><span id="auth-total">50</span><span class="auth-total">4,559</span><i data-id="auth-total">4,559</i>';
+  assert.equal(sync(other, 'index').text, other);
+  assert.equal(sync(bar, 'faq').text, bar);
+  assert.equal(sync(bar, 'features').text, bar);
+  assert.equal(sync(bar, 'stores-index').text, bar);
+  // 実際のトップが、実行時に上書きする口を持っていること（口が無くなれば静的な値が見えたままになる）
+  const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  assert.equal((index.match(/id="auth-total"/g) || []).length, 1);
+  assert.match(index, /\['auth-total'\]\.forEach\(function\(id\)/);
+});
+
 test('トップへの導線: 特集では「全N店舗を検索する」を雛形（scripts/add_related_features.js）の数字なしにそろえる', () => {
   const a = sync('トップページで全4,559店舗を検索する →', 'features');
   assert.equal(a.text, 'トップページで全店舗を検索する →');

@@ -53,6 +53,7 @@ function siteStoreCount(stores) {
 //   (1) 過去にサイト全体の掲載数として書かれた値（scope.legacy）に、店・店舗・軒が続くもの
 //   (2) このスクリプト自身が入れた「約N」（N は 500 の倍数）。丸めた値が変わった日に追随するため
 //   (3) 構造化データの "numberOfItems"（scope.itemCount が真のファイルだけ・1,000 以上のとき）
+//   (4) トップの権威性バー <span id="auth-total"> の静的な数字（scope.authTotal が真のファイルだけ。実行時は JS が上書きする）
 //   触らないもの: 「2026年5月時点で4,584店」のような日付つきの数（当時の事実）、ジャンル・エリアごとの件数、
 //   記事が実測した母数（「掲載4,768店の営業時間を実測」）、legacy に無い値。
 // ================================================================
@@ -63,6 +64,10 @@ const NUM = '(?<![\\d,.])(\\d{1,3}(?:,\\d{3})+|\\d{4,5})';
 // 約 + 数字 + 空白（半角1つまで）+ 単位 + 以上/超
 const TOKEN_SOURCE = `(約)?${NUM}(\\s?)(${COUNTER})(以上|超)?`;
 const ITEM_COUNT_RE = /("numberOfItems"\s*:\s*)(\d{4,5})(?=\s*(?:[,}]|$))/g;
+// トップの権威性バーの数字（<span id="auth-total">4,559</span>店）。表示のときは index.html の loadStores() が
+// 実データの件数で上書きするので、ここに書かれているのは JS を実行しないクローラ・初回描画が見る値。
+// 丸めた数字（約なし）にそろえる。表示される桁数が変わらないので、上書きされても幅は動かない
+const AUTH_TOTAL_RE = /((?<![\w-])id="auth-total"[^>]*>)(\d{1,3}(?:,\d{3})+|\d{4,5})(?=<)/g;
 
 // トップページへの導線の文。生成側の雛形（scripts/add_related_features.js）は数字を持たない言い方に直してあるので、
 // 既存のページもそれにそろえる（数字を外せば、店数が変わっても直す必要が無い）
@@ -78,13 +83,14 @@ const DATED_BEFORE = /(?:時点で|現在で|現在、)$/;
  * @property {string} id
  * @property {Set<number>} legacy  過去にサイト全体の掲載数として書かれた値
  * @property {boolean} [itemCount]  構造化データの numberOfItems もそろえる
+ * @property {boolean} [authTotal]  権威性バー（id="auth-total"）の静的な数字もそろえる
  * @property {boolean} [align]      ALIGN_RULES も適用する
  * @property {RegExp} [region]      この範囲の中だけを対象にする（g フラグ）。省略時はファイル全体
  */
 
 /** @type {Record<string, Scope & {files:string[]|{dir:string, ext:string}}>} */
 const SCOPES = {
-  index: { id: 'index', files: ['index.html'], legacy: new Set([4500, 4559, 4584, 5000]), itemCount: true },
+  index: { id: 'index', files: ['index.html'], legacy: new Set([4500, 4559, 4584, 5000]), itemCount: true, authTotal: true },
   'stores-index': { id: 'stores-index', files: ['stores/index.html'], legacy: new Set([4500, 4559, 4584, 5000]), itemCount: true },
   faq: { id: 'faq', files: ['faq.html'], legacy: new Set([1000]) },
   features: { id: 'features', files: { dir: 'features', ext: '.html' }, legacy: new Set([4500, 4559, 4584, 4664, 4910, 5000]), align: true },
@@ -142,6 +148,12 @@ function syncStoreCountText(text, scope, count) {
     out = applyLines(out, (line) => line.replace(ITEM_COUNT_RE, (m, head, num) => {
       if (String(count.rounded) !== num) changes.push({ kind: 'itemCount', from: `numberOfItems ${num}`, to: `numberOfItems ${count.rounded}` });
       return `${head}${count.rounded}`;
+    }));
+  }
+  if (scope.authTotal) {
+    out = applyLines(out, (line) => line.replace(AUTH_TOTAL_RE, (m, head, num) => {
+      if (count.number !== num) changes.push({ kind: 'authTotal', from: `auth-total ${num}`, to: `auth-total ${count.number}` });
+      return `${head}${count.number}`;
     }));
   }
   return { text: out, changes };
