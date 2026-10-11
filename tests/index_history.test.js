@@ -335,6 +335,57 @@ test('#store= : すでに開いている店は、読み直しても開き直さ�
   assert.strictEqual(env.opened.length, 1, '開き直さない');
 });
 
+test('#store= : 「進む」で開こうとして店のデータを待っていたとき、データが届いたあとの再試行も popstate のまま（deeplink と数えない）', () => {
+  // 履歴: 今の1つ先に、店のモーダルの履歴（#store=J777）がある。まだ最初の50店しか無い（J777 は無い）
+  const env = makeEnv({ entries: [{ hash: '', state: null }, { hash: '#store=J777', state: { nbM: 1 } }], index: 0 });
+  setupFilters(env);
+  env.setStores(50);
+  env.br.go(1); // 「進む」→ popstate
+  env.fire();
+  assert.strictEqual(env.isOpen(), false, 'まだ開かない');
+  assert.strictEqual(env.ctx.NB_PENDING_STORE, 'J777', '待っている');
+  assert.strictEqual(env.ctx.NB_PENDING_SOURCE, 'popstate', '待っている間の source は popstate');
+  // 全店のデータが届く（J777 を含む）。loadStores が readHash を読み直し、50ms 後に再試行する
+  const ids = []; for (let i = 1; i <= 50; i++) ids.push('J' + String(i).padStart(3, '0')); ids.push('J777');
+  env.setStores(ids.length, ids);
+  env.ctx.FULL_CATALOG_LOADED = true;
+  env.run('readHash()');
+  env.run('pushHash()');
+  env.fire();
+  assert.strictEqual(env.isOpen(), true, '開く');
+  assert.deepStrictEqual(env.json(env.opened), [{ id: 'J777', source: 'popstate' }], 'source は popstate（modal_open は数えない）');
+  assert.strictEqual(env.ctx.NB_PENDING_STORE, '');
+  assert.strictEqual(env.ctx.NB_PENDING_SOURCE, '', '開いたら待ちの印を消す');
+  assert.strictEqual(env.br.calls.push, 0, '履歴を足さない');
+});
+
+test('#store= : 共有リンクで開いたときの再試行は、これまでどおり deeplink（popstate の印を引きずらない）', () => {
+  const env = makeEnv({ entries: [{ hash: '#store=J777', state: null }] });
+  setupFilters(env);
+  env.setStores(50);
+  env.run('readHash()');
+  env.fire();
+  assert.strictEqual(env.ctx.NB_PENDING_SOURCE, 'deeplink');
+  const ids = []; for (let i = 1; i <= 50; i++) ids.push('J' + String(i).padStart(3, '0')); ids.push('J777');
+  env.setStores(ids.length, ids);
+  env.ctx.FULL_CATALOG_LOADED = true;
+  env.run('readHash()');
+  env.fire();
+  assert.deepStrictEqual(env.json(env.opened), [{ id: 'J777', source: 'deeplink' }]);
+  assert.strictEqual(env.ctx.NB_PENDING_SOURCE, '');
+});
+
+test('#store= : 「戻る」「進む」で待っていた店とは別の店の共有リンクは、deeplink のまま', () => {
+  // popstate で J777 を待っている間に、別の店 J888 のハッシュを読み直した（待ちの印は J777 のもの）
+  const env = makeEnv({ entries: [{ hash: '#store=J888', state: null }] });
+  setupFilters(env);
+  env.setStores(50);
+  env.run("NB_PENDING_STORE = 'J777'; NB_PENDING_SOURCE = 'popstate';");
+  env.run('readHash()');
+  assert.strictEqual(env.ctx.NB_PENDING_STORE, 'J888');
+  assert.strictEqual(env.ctx.NB_PENDING_SOURCE, 'deeplink', '別の店の待ちに popstate の印を持ち越さない');
+});
+
 // ── 4. モーダルと履歴 ─────────────────────────────────────────────────
 test('一覧から開く: 履歴が1つ増え、URL に store=ID が載る。閉じる（×・背景・Esc・下スワイプ）と1回で戻る', () => {
   const env = makeEnv();

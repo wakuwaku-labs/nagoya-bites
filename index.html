@@ -9138,6 +9138,7 @@ function applyFilters() {
 // - 共有リンク・再読み込み・「進む」で開いたときは、URL にすでに store= があるので足さない
 // - ハッシュの名前（q・genre・tag・ward・pref・cap・store）は変えない（すでに共有されたリンクが動き続ける）
 var NB_PENDING_STORE = '';   // #store= で指定され、まだモーダルを開けていない店の ID
+var NB_PENDING_SOURCE = '';  // 待っている店を開くときの source（「戻る」「進む」で待っているなら popstate。空なら deeplink）
 var NB_OPEN_STORE_ID = '';   // いまモーダルで開いている店の ID（ID が無い店は ''）
 var NB_SWAP = 0;             // 「似たお店」へ切り替える間だけ、その時刻（履歴を足さず置き換える）
 
@@ -9248,8 +9249,12 @@ function readHash() {
   // 店舗ページ・共有リンク → モーダルカード表示（#store=HOTPEPPER_ID）。
   // 最初に載っている50店の中に無い店は、全店のデータを読み終えてから探す（nbOpenPendingStore が再度呼ばれる）
   if (params.store && params.store !== NB_OPEN_STORE_ID) {
+    // 「戻る」「進む」で開こうとして、店のデータが届くのを待っているだけなら source は popstate のまま
+    // （全店のデータが届いたあとの再試行を、新しい共有リンクの訪問＝deeplink と数えない）
+    var pendingSource = (NB_PENDING_STORE === params.store && NB_PENDING_SOURCE) ? NB_PENDING_SOURCE : 'deeplink';
     NB_PENDING_STORE = params.store;
-    setTimeout(function() { nbOpenPendingStore('deeplink'); }, 50);
+    NB_PENDING_SOURCE = pendingSource;
+    setTimeout(function() { nbOpenPendingStore(pendingSource); }, 50);
   }
 }
 
@@ -9263,12 +9268,14 @@ function nbOpenPendingStore(source) {
   }
   if (idx >= 0) {
     NB_PENDING_STORE = '';
+    NB_PENDING_SOURCE = '';
     try { openM(idx, source || 'deeplink'); } catch (e) { console.error('openM failed', e); }
     return;
   }
   // 全店のデータを読み終えても無い ID（存在しない・古い ID）は、URL から外して終える
   if (FULL_CATALOG_LOADED) {
     NB_PENDING_STORE = '';
+    NB_PENDING_SOURCE = '';
     try {
       if (nbParseHash(location.hash).store) history.replaceState(history.state, '', nbBuildHash(''));
     } catch (e) { /* 履歴を触れない環境では URL を直さない */ }
@@ -9314,6 +9321,7 @@ function nbSyncModalWithUrl() {
   }
   if (want && want !== NB_OPEN_STORE_ID) {
     NB_PENDING_STORE = want;
+    NB_PENDING_SOURCE = 'popstate';
     nbOpenPendingStore('popstate');
   }
 }
