@@ -1172,8 +1172,8 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .rank-num{position:absolute;top:6px;left:6px;background:var(--gold);color:var(--bg);font-family:'DM Mono',monospace;font-size:var(--fs-xs);font-weight:700;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:2px;z-index:2;}
 .rank-card .rank-img{width:100%;height:100px;object-fit:cover;border-radius:4px;display:block;background:var(--surface);}
 .rank-name{font-size:.78rem;font-weight:600;color:var(--text);margin-top:6px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.rank-meta{font-size:var(--fs-xs);color:var(--muted);margin-top:2px;display:flex;gap:.5rem;align-items:center;}
-.rank-score{color:#d4a017;font-weight:600;}
+.rank-meta{font-size:var(--fs-xs);color:var(--muted);margin-top:2px;display:flex;flex-wrap:wrap;gap:.1rem .5rem;align-items:center;}
+.rank-score{color:#d4a017;font-weight:600;white-space:nowrap;}
 @media(max-width:768px){.ranking-section{padding:1rem;}.rank-card{flex:0 0 155px;}}
 /* ── RECENTLY VIEWED ── */
 .history-section{padding:1.2rem 1.5rem 1rem;border-top:1px solid var(--border);background:var(--bg2);}
@@ -1916,8 +1916,8 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <div class="cap-tabs" id="cap-tabs"></div>
 
 <div class="filter-bar" id="genre-filter-bar">
-  <span class="fl">Genre</span>
-  <div class="ft on" data-f="all">All</div>
+  <span class="fl">ジャンル</span>
+  <div class="ft on" data-f="all">すべて</div>
 </div>
 <button type="button" class="fold-toggle" id="genre-fold-toggle" style="display:none" aria-expanded="false" aria-controls="genre-filter-bar"></button>
 
@@ -7785,7 +7785,7 @@ html.nb-splash-on,html.nb-splash-on body{overflow:hidden;}
 <button type="button" id="fb-fab" aria-haspopup="true" aria-expanded="false" aria-controls="fb-panel" aria-label="ご意見を送る" title="ご意見を送る"><svg class="ic" aria-hidden="true"><use href="#i-message-square"/></svg><span class="fb-fab-txt">ご意見</span></button>
 <div id="fb-panel" role="dialog" aria-label="サイトへのご意見" aria-hidden="true">
   <div class="fb-panel-head">
-    <span class="fb-panel-title">FEEDBACK — サイトへのご意見</span>
+    <span class="fb-panel-title">サイトへのご意見</span>
     <button type="button" class="fb-close" id="fb-close" aria-label="閉じる">×</button>
   </div>
   <p class="ir-form-intro">「ここが使いづらい」「情報が違う」など、お気づきの点を編集部に直接お寄せください。いただいた内容は今後の改善に活用します。</p>
@@ -8151,7 +8151,7 @@ function injectDynamicJsonLd(stores) {
 
 function buildCapTabs() {
   var container = document.getElementById('cap-tabs');
-  container.innerHTML = '<span class="cap-label">Capacity</span>'
+  container.innerHTML = '<span class="cap-label">収容人数</span>'
     + '<input class="cap-input" id="cap-input" type="number" min="1" max="999" placeholder="例:35">'
     + '<span class="cap-unit">名以上収容できるお店</span>'
     + '<span class="cap-hint">（空欄=すべて）</span>';
@@ -8237,8 +8237,9 @@ function buildGenreTabs() {
   });
   var genres = ['All'].concat(GENRE_ORDER.filter(function(g){ return present[g]; }));
   var bar = document.querySelector('.filter-bar');
-  bar.innerHTML = '<span class="fl">Genre</span>'
-    + genres.map(function(g, i){ return '<div class="ft' + (i===0?' on':'') + '" data-f="' + g + '">' + g + '</div>'; }).join('');
+  // 先頭の「All」は絞り込みの内部の値（data-f・dataset.f で比べる）。画面に出す文字だけ「すべて」にする
+  bar.innerHTML = '<span class="fl">ジャンル</span>'
+    + genres.map(function(g, i){ return '<div class="ft' + (i===0?' on':'') + '" data-f="' + g + '">' + (g === 'All' ? 'すべて' : g) + '</div>'; }).join('');
   bar.onclick = function(e) {
     var t = e.target;
     if (!t.classList.contains('ft')) return;
@@ -9904,7 +9905,7 @@ function buildCardHtml(r) {
     }
     return '<div class="card" onclick="openM(' + idx + ',\'grid\')" role="button" tabindex="0" aria-label="' + r['店名'] + 'の詳細を見る">'
       + '<div class="ci">' + distBadge + nbPhotoCredit(r) + '<img src="' + nbImage(photo, 600) + '" srcset="' + nbSrcset(photo, [400, 600, 800]) + '" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)">'
-      + (reel ? '<button class="reel-play" onclick="nbPlayReel(event,this,\'' + reel.code + '\')" aria-label="' + nbEscHtml(r['店名']) + 'のリール動画を再生"><i aria-hidden="true"></i></button><span class="reel-tag">Reel</span>' : '')
+      + (reel ? '<button class="reel-play" onclick="nbPlayReel(event,this,\'' + reel.code + '\')" aria-label="' + nbEscHtml(r['店名']) + 'のリール動画を再生"><i aria-hidden="true"></i></button><span class="reel-tag">リール</span>' : '')
       + '</div>'
       + '<span class="badge">' + genre + '</span>'
       + flagHtml
@@ -11690,7 +11691,7 @@ function buildRanking() {
       + '<span class="rank-num">' + (i+1) + '</span>'
       + '<img class="rank-img" src="' + nbImage(photo, 560) + '" srcset="' + nbSrcset(photo, [280, 560]) + '" sizes="280px" alt="' + (r['店名']||'') + '" loading="lazy" decoding="async" width="280" height="160" onerror="nbImgFallback(this)">'
       + '<div class="rank-name">' + (r['店名']||'') + '</div>'
-      + '<div class="rank-meta"><span class="rank-score">' + item.count + ' views</span><span>' + genre + '</span><span>' + (r['エリア']||'') + '</span></div>'
+      + '<div class="rank-meta"><span class="rank-score">' + item.count + '回閲覧</span><span>' + genre + '</span><span>' + (r['エリア']||'') + '</span></div>'
       + '</div>';
   }).join('');
   sectionEl.style.display = '';
@@ -11831,7 +11832,7 @@ function showToast(msg) {
   setTimeout(function() { t.classList.remove('show'); }, 3000);
 }
 function showNotifyToast() {
-  showToast('Coming Soon — SNSをフォローして最新情報をチェック！');
+  showToast('準備中です — SNSをフォローして最新情報をチェック！');
 }
 
 // ================================================================
