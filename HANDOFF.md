@@ -9,44 +9,50 @@ UI・UX全面改修計画（`docs/uiux-overhaul-plan-2026-10.md`）の実装を�
 - 各プルリクエストに Linear の課題があり、結果がコメントに残っている
 
 # できていること
-- 設計書の再設計は済み（commit 0c9200e52d・81eeb6a1ec。読みやすい版: https://claude.ai/artifact/E8kRtmcAeNE7VKxznopMDt）
-- **I-01（ISSUE-188・P-223）: PR #470**（claude/uiux-i01-stub-links）。このブランチの 336d4b569c・ec6c4672ab が I-01 そのものの修正だった（前に「設計の外」と書いたのは誤り。P-235 に訂正を書いた）。`npm test` 495件通過・誘導ページへのリンク0件。バックログの ISSUE-188 は done。マージされたら P-223 を Done にする
-- 作業は main から切った別ブランチ＋別 worktree で行う（設計のブランチ wakuwaku-labs/mooneye には混ぜない）。worktree は作業用の一時領域の `wt/i01`・`wt/i08`（node_modules は設計のブランチの worktree へのシンボリックリンク）。消えたら `git worktree prune` し、ブランチ名から作り直す
-- **I-08（計測をそろえる）: PR #471**（claude/uiux-i08-measurement・origin/main から）。Linear P-239（P-235 の子）。GA4 のカスタムディメンション登録（オーナーの操作）は P-240。実装・テスト・監査まで済み、**Codex のレビュー待ち**
-  - 変えたこと: ハブの予約リンクを cta_click（location=hub）へ／modal_open に store_id／特集の feature_store_click の店の値をスラグ（ID）へ（947件すべてリンク先と一致・features/ 54本）／ジャーナルに journal_store_click を新設（別 script・テンプレート＋157本に追加のみ）。テスト tests/measurement_unify.test.js 12件。npm test は506件中505件（失敗1件は main の ISSUE-188 で #470 が直す）。4つの監査は終了コード0
-  - ハブ約685本は PR に入れない（build.yml が毎日作り直す）。作り直した日に「データ更新日」・sitemap lastmod・IndexNow の対象が一度だけ進む（テンプレート変更時と同じ動き）。PR 本文に書いた
-  - マージ後にやること: `data/measurement_changes.json` に I-08 を追記（PR 本文に下書き。日付はハブを build.yml が作り直して push した日）。計画 7.7 節に journal_store_click・ハブの cta_click・modal_open の store_id・GA4 未登録ディメンションの注を足す（設計のブランチで）
-- **I-02（基線）: あと少し**（claude/uiux-i02-baseline・origin/main から・worktree は一時領域の `wt/i02`・**まだコミット前**）。Linear: **P-241**（親・In Progress・P-235 の子）／**P-242**（子: ワークフローが main に入ってから GA4 を実測・Todo・期限 10-20）。P-235 は In Progress にした
-  - 作った物（すべて wt/i02 の未コミット）: `scripts/ga4_baseline.js`＋`scripts/lib/ga4_baseline.js`（GA4 の期間指定の取り直し。テスト25件。15通りに壊して確かめ、生き残った2つ＝30件ちょうどと0件のセルは境界のテストを足した）／`.github/workflows/ga4-baseline.yml`（手動・読み取りのみ・Chromium は落とさない）／`docs/qa/uiux-2026-10/perf.js`（ページ種別を一周×回数の順・描画されなかった回は最大2回やり直し・`visibility`／`lcpUrl` を記録・画面が消えても止まらない起動オプション）と `perf_summary.js`（**描画されなかった回＝FCP か LCP が 0 を無効として中央値に入れない**・目標超の回数・LCP の画像 URL。テスト12件）／`CLAUDE.md` に2行
-  - **速さの測定で分かったこと**: ①画面が消えると描画されない回が出る（2回目は35回中22回が FCP・LCP・CLS=0）＝無効として扱い、測る間は `(caffeinate -u -d -i -t 秒 &)` で画面を起こす。②**TBT は電源で割れる**: `pmset -g log` の電源の記録（20:57:31 JST に `Using AC` → `Using Batt`）と、各行の測定時刻の推定が一致した。AC のとき（20:33〜20:57）は TBT が低く（トップ約60・特集約20・ハブ130〜180・特集一覧0〜9・ジャーナル一覧約1,100）、バッテリー駆動（20:58〜）は高い（トップ約850・特集約950・ハブ約2,100・特集一覧約1,250・ジャーナル一覧約3,300）。LCP・通信量などはほぼ同じ。計画 3.6 節の TBT は『バッテリー駆動の値』。ハブの CLS は電源だけでは決まらない（AC でも 0.013 が4/7、0.652 が3/7。バッテリー駆動では 0.652 が大半）。**因果は未確認（時刻の一致のみ）。充電器をつないで測り直すと確かめられる（オーナーの操作）**。③**有力な説明（未確認）: この Mac は低電力モードが「バッテリー駆動のときだけ」入る設定**（`pmset -g custom`: Battery Power は `lowpowermode 1`・AC Power は 0。Apple M5・性能コア4＋効率コア6）。電源が変わると低電力モードも一緒に変わるので、電源と低電力モードは今のデータでは区別できない（区別するには、充電器をつないだまま低電力モードを入れる、またはバッテリー駆動のまま切って測る。システム設定の変更なのでオーナーの判断）。④Node の計算時間（hostBench≒245ms）は一定で説明できなかったので廃止。Chrome の描画側ベンチ `rendererBenchMs`（≒145ms）も、バッテリー駆動の間はほぼ一定＝今のところ区別の役に立っていない。perf.js は1回ごとに `power`（ac / battery）を残し、バッテリー駆動なら警告を出す。⑤再現した事実: トップの LCP 約10s・通信 6.2MB・DOM 12,785・フォント 1.3〜1.7MB/ページ、ジャーナルの CLS 0.128。店舗ページの LCP は 1.7s 前後（計画の 6.1s は写真が原寸のときの値の可能性。U-58）
-  - 測定の記録（一時領域 `baseline/`）: **AC 側の材料** = `perf_runs.jsonl`（35行・20:29〜20:40 JST・旧 perf.js）＋`perf_runs3.jsonl` の run 0〜1（14行・20:53〜20:57）。電源は測定後に pmset のログで付ける（行ごとの記録ではない）ので、そう注記して `perf-2026-10-11-ac.json` にする。**バッテリー側の基線** = `perf_runs6.jsonl`（10周×7=70行・power と rendererBench つき・12:31Z 開始・約21分・12:52Z ごろ終了の見込み。12:41Z 時点で35行）→ `perf-2026-10-11-battery.json`。`perf_runs4.jsonl`・`perf_runs5.jsonl`・`perf_runs3.jsonl` の run 2〜7 は使わない（バッテリー側の旧形式・中止分）。**計画 2.2・3.6・U-52〜U-56・4.3 I-02/I-14 の期待効果・1119 行・1494 行・10.2 #6/#7 を、電源ごとの中央値・最小〜最大・目標超の回数に直し、『TBT・CLS は電源で割れる。前後は同じ日に、同じ電源で、できれば交互に測る（A/B）』を書く**（設計のブランチで・I-02 の PR を出した後）
-  - 残り（一時領域の下書き: `adr_0018_draft.md`・`pr_i02_v3.md`・`linear_charger.md`・`claude_md_perf_row_v2.txt`。**CLAUDE.md の2行は wt/i02 で更新済み**）: ①バッテリー側10周が終わったら `node docs/qa/uiux-2026-10/perf_summary.js $SCR/baseline/perf_runs6.jsonl --label before-uiux-overhaul-battery --date 2026-10-11 --note '…' --out docs/qa/uiux-2026-10/baseline/perf-2026-10-11-battery.json` と、AC 側（上の材料を `power: ac` を付け、run を振り直して1つにした jsonl）の `perf-2026-10-11-ac.json`（`$SCR` は一時領域のパス。`--note` に測った時の事情）②速さが終わってから `node scripts/measure_typography.js --url https://nagoya-bites.com/ --viewports 375x812,768x1024,1280x900 --out docs/qa/uiux-2026-10/baseline/typography-2026-10-11.json` ③`pr_i02_v3.md`（一時領域）の `__…__` を埋める（電源の話と『充電器をつないで AC の基線を取り直す』を書く）④`npm test`・`audit_design_system.js --check`・`audit_inline_js_syntax.js --check`（tests/ga4_baseline.test.js は『鍵が JSON でないとき中身を出さない』を足したので 26件・perf_summary は17件）⑤コミット（末尾 Co-Authored-By・`git add` はパスを指定。`-A` は node_modules のシンボリックリンクを拾う）・push・`gh pr create`→P-241 に PR 番号をコメント ⑥設計のブランチで計画を直し、設計のブランチの `perf.js` を I-02 の最終版に合わせる ⑦記憶（uiux-overhaul-plan-2026-10.md）を更新 ⑧充電器の測り直しの課題（`linear_charger.md`）を P-241 の子として起票（ラベル `KR:検索から見つけてもらう`＋`担当:オーナー作業`・期限 10-18）⑨設計のブランチに判断の記録 0018（`adr_0018_draft.md`・PR 番号と Linear 番号を埋める）を出す ⑩（済・**未テスト**）perf.js・perf_summary.js・tests/perf_summary.test.js に `lowPowerMode`（`pmset -g` の lowpowermode）を足した。測定が終わったらテストを走らせる（ga4_baseline 26件・perf_summary 17件）。あわせて『鍵が JSON でないとき中身を出さない』テストを、try/catch を外して落ちることで確かめる ⑪設計のブランチの書き換え: 一時領域の `edit_plan_a.js <PR番号> <Linear番号>`（数字に依らない11箇所。乾燥実行済み）。数字を使う箇所（3.6 の表・U-52〜U-54・I-12 の期待効果・8.6 の行2・1119 行）は測定が終わってから直す。表は `node $SCR/build_tables.js <baseline ディレクトリ> main|power|samples|ac` ⑫記憶は `perf-measurement-power-low-power-mode.md` を作成済み（MEMORY.md に追記済み）。`uiux-overhaul-plan-2026-10.md` は PR 番号が決まってから更新
-- 判断の記録 0017（実装の進め方）は設計のブランチに追加済み（1175f4ec1f）
+- 設計書の再設計は済み（commit 0c9200e52d・81eeb6a1ec。読みやすい版: https://claude.ai/artifact/E8kRtmcAeNE7VKxznopMDt）。判断の記録 0017（実装の進め方）は追加済み（1175f4ec1f）
+- 作業は main から切った別ブランチ＋別 worktree で行う（設計のブランチ wakuwaku-labs/mooneye には混ぜない）。worktree は作業用の一時領域の `wt/i01`・`wt/i08`・`wt/i02`（node_modules は設計のブランチの worktree へのシンボリックリンクなので `git add -A` は使わない）。消えたら `git worktree prune` し、ブランチ名から作り直す
+- **三つのプルリクエストはすべて OPEN・競合なし（2026-10-11 夜に確認）。Codex のレビュー待ち**（依頼先・方法はオーナーに確かめる）
+- **I-01（ISSUE-188・P-223）: PR #470**（claude/uiux-i01-stub-links）。`npm test` 495件通過・誘導ページへのリンク0件。バックログの ISSUE-188 は done。マージされたら P-223 を Done にする
+- **I-08（計測をそろえる）: PR #471**（claude/uiux-i08-measurement）。Linear P-239（P-235 の子）。GA4 のカスタムディメンション登録（オーナーの操作）は P-240。ハブ約685本は PR に入れない（build.yml が毎日作り直す）。マージ後にやること: `data/measurement_changes.json` に I-08 を追記（PR 本文に下書き。日付はハブを build.yml が作り直して push した日）。計画 7.7 節に journal_store_click・ハブの cta_click・modal_open の store_id・GA4 未登録ディメンションの注を足す（設計のブランチで）
+- **I-02（基線）: PR #472**（claude/uiux-i02-baseline・2コミット bab2ddb864・3b4cfa49d3・push 済み）。Linear: **P-241**（親・In Progress・P-235 の子）／**P-242**（子: ワークフローが main に入ってから GA4 を実測・Todo・期限 10-20）／**P-243**（子: 充電器をつないで速さを測り直す・`担当:オーナー作業`・期限 10-18）
+  - 入れた物: `scripts/ga4_baseline.js`＋`scripts/lib/ga4_baseline.js`（GA4 の期間指定の取り直し。鍵が JSON でないとき中身を出さない）／`.github/workflows/ga4-baseline.yml`（手動・読み取りのみ）／`docs/qa/uiux-2026-10/perf.js`・`perf_summary.js`（電源・低電力モード・測った URL を1回ごとに残す。描画されなかった回は無効。店舗ページは `store`（同じ店）と `store-sample`（1周ごとに別の店）を測る）／`scripts/measure_typography.js` の `--block-analytics`／基線 `docs/qa/uiux-2026-10/baseline/`（`perf-2026-10-11-battery.json`・`-ac.json`（暫定・7回）・`-store-sample.json`・`typography-2026-10-11.json`・`-search.json`）／テスト `tests/ga4_baseline.test.js` 26件・`tests/perf_summary.test.js` 18件（計44件通過）／`CLAUDE.md` の共有ファイル表3行
+  - **速さの測定で分かったこと（二つ）**:
+    - ①**TBT は測定機の電源で割れる**。`pmset -g log` で 20:57:31 JST に `Using AC` → `Using Batt`、各行の測定時刻と一致。バッテリー駆動（10周の中央値）はトップ 861ms・特集 1,004ms・ハブ 2,137ms・特集一覧 1,406ms・ジャーナル一覧 3,509ms、充電器（暫定7回）は 53・13・159・6・1,169ms。LCP・通信量・DOM は 0.1s 前後の差。この Mac は低電力モードが「バッテリー駆動のときだけ」入る設定（`pmset -g custom`: Battery `lowpowermode 1`・AC `0`）なので、電源と低電力モードは区別できない。**因果は未確認（時刻の一致と設定のみ）**。設計のときの測定（15:38〜15:41 JST）はバッテリー駆動だったことを確認済み。ハブの CLS（0.013 / 0.652）は電源だけでは決まらない
+    - ②**店舗ページの LCP は、同じ店を測り続けると速く出る**。同じ店 10周で中央値 1.8s（設計の 6.1s は再現せず）、店を替えて10店で中央値 7.0s（2.1〜7.5s・9店が目標 2.5s 超・LCP の要素は10店とも `IMG.hero-img`）。写真を直接取ると、変換サービス wsrv.nl 経由は初回 2.9〜4.4s・2回目以降 0.07〜0.4s、HotPepper の配信元を直接は初回 0.2〜0.9s で初回の遅さなし【確認済み・3店／4枚】。設計の 6.1s はキャッシュが無い店の値だった【推測】。実際の訪問の大半が初めて見られる店かは未確認【推測】（GA4 の店舗ページ別の表示数で確かめる）
+  - 再現した事実: トップの LCP 約10s・通信 6.2MB・DOM 12,785・フォント 1.3MB/68ファイル、ジャーナルの CLS 0.129（10/10 が目標超）。文字: 12px 以下の割合は既定の表示で 4/3/2 %（375/768/1280）、タップ対象 44px 未満は 4,823/4,856/4,496（うち `#store-index` が 4,775/4,821）
+  - **設計のブランチ（このブランチ）で直した物**: 判断の記録 `docs/decisions/0018-speed-comparison-same-day-same-power.md`（同じ日・同じ電源で比べる・基線は電源ごと・標準は充電器・低電力モードを記録）と `0019-store-page-speed-measured-across-stores.md`（店舗ページの LCP の基線は店を替えた値・標本は毎回選び直す）／`docs/uiux-overhaul-plan-2026-10.md`（2.2・3.6 の表を8行に・U-52〜U-54・新 U-84「初めて見られる店の店舗ページの LCP」・I-09 の期待効果・I-12・10.2 #8・8.6 の行1〜2・問題の件数 84）／`docs/qa/uiux-2026-10/perf.js`・`perf_summary.js` を I-02 の最終版に同期
+  - 記憶: `perf-measurement-power-low-power-mode.md` は作成済み（MEMORY.md に追記済み）。`uiux-overhaul-plan-2026-10.md` は I-02 の結果を反映して更新する
 - 検証済みの事実: `gen_area_genre_pages.js --check` はテストでは回らない（CI の生成だけ）。`tests/area_genre_pages.test.js` は stores/area の存在を見る
 
 # 次にやること
-1. （済）I-08 は PR #471・Linear P-239。P-240（GA4 のカスタムディメンション登録・オーナー作業・期限 2026-10-18）を起票済み。Codex のレビューを待つ（レビューの依頼先・方法はオーナーに確かめる）
-2. I-02（基線）: スクリプト・ワークフロー・テスト・速さの道具は済み。上の「残り」①〜⑦を順に（速さの3回目の測定が終わるのを待つ。測定中は puppeteer を使う作業・重いテストを走らせない）。PR を出したら P-241 にコメント。P-242（GA4 の実測）は、PR が main に入り、ワークフローが dispatch できるようになってから
-3. 段階1a: I-21（URL と戻る）・I-23・I-07（英語の表示）・I-13（スプラッシュ）。トップだけ。画面は 390px と 1280px で見る
-4. Linear: 次の改善案に着手するときに、P-235 の子として起票（7項目: 動詞のタイトル・担当と期限・状態・Project=Nagoya Bites・背景・達成条件・30分超は sub-issue。ラベルは KR:検索から見つけてもらう＋担当:Builder）。起票済み: P-239（I-08）・P-240（GA4 登録）。ISSUE-188 は P-223 に結果をコメント済み
-5. 判断の記録: docs/decisions/ に「実装は改善案ごとの PR。main への合流は Codex のレビューの後、『要』はオーナーの承認の後」を残す
-6. Codex の 4ab7ea556a（Linear 導入ファイル4つ）の扱いは、オーナーの判断待ち（P-235 に記録済み）
+1. P-241 に、店を替えて測った結果（`store-sample`・判断の記録 0019）のコメントを足す（前のコメントは PR #472 の1回目の push の時点で、この発見の前）
+2. Codex のレビュー（#470・#471・#472）を待つ。レビューの依頼先・方法はオーナーに確かめる。マージされたら: P-223 を Done／I-08 の `data/measurement_changes.json`／#472 は P-242（GA4 の実測。ワークフローを dispatch できるようになってから・内部トラフィックの除外の状態をオーナーに確かめる）／店舗ページの 28日窓は 2026-11-06 以降
+3. オーナーの操作（報告し続ける）: P-240（GA4 のカスタムディメンション登録）・P-243（充電器をつないで測り直す。バッテリー駆動のまま低電力モードを切って測るのは、システム設定の変更なのでオーナーの判断）・P-237（#2〜#11 の決定）
+4. 段階1a（1つ1PR・1つ1Linear・画面は 390px と 1280px で見る・Codex のレビューの後に main）: I-21（URL と戻る。`pushHash`/`readHash`）→ I-23（保存した店が見えない。`showFavs` index.html:11578〜11593）→ I-07（英語の表示を日本語に）→ I-13（スプラッシュ・アプリ追加の案内）。トップだけ
+5. Linear: 次の改善案に着手するときに、P-235 の子として起票（7項目: 動詞のタイトル・担当と期限・状態・Project=Nagoya Bites・背景・達成条件・30分超は sub-issue。ラベルは KR:検索から見つけてもらう＋担当:Builder）
+6. Codex の 4ab7ea556a（Linear 導入ファイル4つ: `.claude/settings.json`・`.linear.json`・`scripts/linear/briefing.js`・`scripts/linear/watchdog.js`）の扱いは、オーナーの判断待ち（P-235 に記録済み）
 
 # 試したが駄目だったこと
 - `.linear.json` が未設定だったため初期導入を行った（Codex）。初回生成は slug `nagoya-bites` の新規 Project を作った。既存の正しい Project 名が `Nagoya Bites` と確認できたため、`.linear.json` は既存 Project を指す名称に直した。空の重複 Project は削除していない
 - puppeteer の画面の書き出しは、この環境では白紙のページでも時間切れになる。DOM の確認で代えた（実際の画面は Chrome 拡張のツールで見られるかもしれない）
 - 電話の紐付けを店名だけで確かめると、同じ住所の同じ店でも表記の違いで1,578店が落ちた。住所を先に比べる規則に変えた
+- 速さの測定: Mac の画面が消えると描画されない回（FCP・LCP・CLS=0）が出る＝測る間は `(caffeinate -u -d -i -t 秒 &)`。Node の計算時間（hostBench≒245ms）は電源の違いを説明できず廃止。Chrome の描画側ベンチ `rendererBenchMs`（≒145ms）もバッテリー駆動の間はほぼ一定で区別の役に立たない。店舗ページを同じ店で10周する測り方は、wsrv.nl のキャッシュで実態より速く出る（判断の記録 0019）
+- `( コマンド ) &` を run_in_background の中に書くと、すぐ「完了」と返る＝出力ファイルの `exit=` の行を待つ
 
 # 守るルール・判断メモ
-- 改善案ごとに別のプルリクエスト。1つずつ出し、効果と副作用を見てから次へ（9.1 節）。main へは Codex のレビューの後。4.4 節の「要」の改善案はオーナーの承認の後。自分では main に入れない
+- 改善案ごとに別のプルリクエスト。1つずつ出し、効果と副作用を見てから次へ（9.1 節）。main へは Codex のレビューの後。4.4 節の「要」の改善案はオーナーの承認の後。自分では main に入れない・デプロイしない
+- 速さ・TBT・CLS の前後は、同じ日・同じ電源（標準は充電器）で比べる。店舗ページの LCP は `store-sample`（店を替えて測る）で比べ、標本は毎回選び直す（判断の記録 0018・0019）
 - 電話番号はデータに持たない。電話を出す店の規則・番号を取れなかったときの表示は 7.3 節と I-36
-- リポジトリは公開なので、鍵の値やセキュリティの詳細を公開のファイルに書かない
+- リポジトリは公開なので、鍵の値やセキュリティの詳細（GA4 のプロパティ ID など）を公開のファイルに書かない
 - 店の選び方は、人間が全店を選んだように書かない（オーナーの指示）
+- クリック数や滞在時間を増やすための不要な操作、回遊だけのための無関係な推薦は入れない。画面遷移を減らすことだけを目的にしない（オーナーの指示）
 - コミットの末尾: `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>`。force push・reset はしない
 - 共有の stash（`git stash list`）には触らない
 
 # 関連ファイル
-- `docs/uiux-overhaul-plan-2026-10.md`（4.2 一覧・4.3 改善案・4.4 決めてもらうこと・7.7 計測・第9章 順序・10.4 タスク）
+- `docs/uiux-overhaul-plan-2026-10.md`（3.6 速さの基線・4.2 一覧・4.3 改善案・4.4 決めてもらうこと・7.7 計測・第9章 順序・10.2 比較の規則・10.4 タスク）
+- `docs/decisions/0017`（実装の進め方）・`0018`（速さの比較は同じ日・同じ電源）・`0019`（店舗ページの速さは店を替えて測る）
+- `docs/qa/uiux-2026-10/perf.js`・`perf_summary.js`（本番の速さ。基線は I-02 のブランチの `docs/qa/uiux-2026-10/baseline/`）
 - `scripts/gen_area_genre_pages.js`・`scripts/refresh_feature_rosters.js`・`scripts/add_feature_tracking.js`・`scripts/lib/feature_tracking.js`・`scripts/add_journal_engagement_tracking.js`・`journal/_template.html`・`index.html`
 - `data/measurement_changes.json`・`scripts/lib/reservation_exits.js`・`docs/reservation-measurement.md`
-- Linear P-235（親）・P-236（Codexレビュー・Done）・P-237（オーナーの決定）・P-223（ISSUE-188）
+- Linear P-235（親）・P-236（Codexレビュー・Done）・P-237（オーナーの決定）・P-223（ISSUE-188）・P-239/P-240（I-08・GA4 登録）・P-241/P-242/P-243（I-02・GA4 実測・充電器で測り直し）
