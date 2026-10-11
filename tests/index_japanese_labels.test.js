@@ -121,8 +121,11 @@ test('絞り込みの内部の値は変えていない: 絞り込み・URL・ハ
   assert.ok(!/\.ft\b[^;\n]{0,80}(textContent|innerText)/.test(INDEX), 'ft の文字を読んでいる処理がある');
   assert.ok(!/(textContent|innerText)[^;\n]{0,80}\.ft\b/.test(INDEX), 'ft の文字を読んでいる処理がある');
   assert.ok(/genre === 'All' \|\| normalizeGenre/.test(fnSource('applyFilters')), 'applyFilters は data-f の「All」で全ジャンルを判定する');
-  assert.ok(/genre && genre !== 'All'/.test(fnSource('pushHash')), 'URL に載せるかの判定は data-f の「All」');
-  assert.ok(INDEX.includes('.ft[data-f="All"]'), 'ハッシュの復元・条件を外すときは data-f の値で選択肢を探す');
+  // URL（ハッシュ）を作る関数は、全ジャンル（All）のとき genre を載せない。別の改善案がこの関数を作り替えても通るよう、どちらの名前でも見る
+  const hashFn = INDEX.includes('\nfunction nbBuildHash(') ? 'nbBuildHash' : 'pushHash';
+  assert.ok(/genre !== 'All'/.test(fnSource(hashFn)), `URL に載せるかの判定は data-f の「All」（${hashFn}）`);
+  // ハッシュの復元・条件を外すときは、選択肢を data-f の値で探す（文字では探さない）
+  assert.ok(INDEX.includes('.ft[data-f="All"]') || INDEX.includes("'.ft', 'data-f'"), 'ハッシュの復元・条件を外すときは data-f の値で選択肢を探す');
 });
 
 // ── 2. 収容人数の絞り込み ───────────────────────────────────────────────
