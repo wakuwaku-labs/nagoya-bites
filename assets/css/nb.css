@@ -393,3 +393,11 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .nb-reserve-ask-btn{flex:1;min-height:var(--tap-min);padding:0 var(--sp-4);font-family:var(--font-body);font-size:var(--fs-sm);font-weight:500;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;}
 .nb-reserve-ask-btn.is-yes{background:var(--gold);border-color:var(--gold);color:var(--bg);}
 .nb-reserve-ask-close{position:absolute;top:var(--sp-1);right:var(--sp-1);width:var(--tap-min);height:var(--tap-min);border:0;background:transparent;color:var(--dim);font-size:var(--fs-lg);line-height:1;cursor:pointer;}
+
+/* ── 電話するボタンの結果の行（I-36・scripts/lib/call_button_snippet.js が文を入れる） ──
+   押したあとに、確かめている間の表示と、番号を取れなかったときの理由・次の手（地図）を出す。
+   空のときは画面に場所を取らない（読み上げのため、先に空の行を置いておく）。文が入ると1行を取る
+   （モーダルのグリッド・追従バーのフレックス・店舗ページの通常の流れのどれでも） */
+.nb-call-status{margin:0;padding:0;font-size:var(--fs-xs);line-height:var(--lh-ui);color:var(--ink);}
+.nb-call-status:empty{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
+.nb-call-status:not(:empty){flex:1 0 100%;grid-column:1/-1;padding-top:var(--sp-1);}

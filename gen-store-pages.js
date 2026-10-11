@@ -20,6 +20,8 @@ const { relabelForSlug } = require('./scripts/lib/feature_counts');
 const { editorReasonOf, visitStatusLabel } = require('./scripts/lib/editor_reason');
 const { renderPhotoCredit, PHOTO_CREDIT_CSS } = require('./scripts/lib/photo_credit');
 const { isDeadPhotoUrl } = require('./scripts/lib/dead_photo_urls');
+const { canShowCallButton } = require('./scripts/lib/phone_link');
+const { CALL_SCRIPT } = require('./scripts/lib/call_button_snippet');
 const IG_MAX_POSTS_PER_STORE = (loadIgPostPolicy().thresholds && loadIgPostPolicy().thresholds.maxPostsPerStore) || 1;
 
 // SEO-094: エリア×ジャンル一覧（stores/area/）のURL索引。「もっと見る」導線・パンくず・
@@ -603,6 +605,9 @@ function renderStorePage(s, slug, relatedStores, listedFeatures) {
   const xUrl     = s['X検索'] || '';
   const gmUrl    = `https://www.google.com/maps/search/${encodeURIComponent(name + ' ' + area)}`;
   const placeId  = s.placeId || '';
+  // 電話のボタン: 予約先（HotPepper・食べログ）の無い店だけ。さらに、紐付け先の Google の住所・店名が掲載の店と
+  // 合うと build.js が確かめた店（「電話確認」の欄）だけに出す。別の店の番号にかからないようにする（I-36）
+  const callOk   = !hpId && !tbUrl && !!placeId && canShowCallButton(s);
   const pageUrl  = `${BASE_URL}/stores/${slug}.html`;
   // タイトルのエリアは検索結果で切れないよう簡潔ラベルに正規化（ISSUE-072・データは不変）
   // SEO-095: エリア・ジャンルに加えて予算・Google評価・深夜営業の有無を事実ベースで添える。
@@ -802,7 +807,9 @@ ${igAllUrls.map((_, i) => `        <span class="ig-carousel-dot${i === 0 ? ' act
     tbUrl && `<a class="link-btn tb" href="${tbUrl}" target="_blank" rel="noopener noreferrer" onclick="${reserveExitAttr('cta_click', name, hpId || placeId, 'tabelog.com')}">食べログ</a>`,
     tkUrl && tkUrl !== '#' && `<a class="link-btn tk" href="${tkUrl}" target="_blank" rel="noopener noreferrer">TikTok</a>`,
     xUrl  && xUrl  !== '#' && `<a class="link-btn xx" href="${xUrl}" target="_blank" rel="noopener noreferrer">X</a>`,
-    (!hpId && !tbUrl && placeId) && `<button type="button" class="link-btn tel" onclick="nbCallStore(event,'${jsAttr(placeId)}','${jsAttr(name)}',this)" aria-label="${escapeHtml(name)}に電話する"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;fill:currentColor;flex-shrink:0"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg><span>電話する</span></button>`,
+    callOk && `<button type="button" class="link-btn tel" data-call-loc="store_page" onclick="nbCallStore(event,'${jsAttr(placeId)}','${jsAttr(name)}',this)" aria-label="${escapeHtml(name)}に電話する"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;fill:currentColor;flex-shrink:0"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg><span>電話する</span></button>`,
+    // 押した結果（番号が無い・閉業・上限など）を出す行。読み上げのため、先に空の行を置いておく
+    callOk && `<p class="nb-call-status" role="status"></p>`,
   ].filter(Boolean).join('\n    ');
 
   return `<!DOCTYPE html>
@@ -1045,16 +1052,8 @@ ${hasIgEmbed ? `<script>
   });
 })();
 </script>
-` : ''}${(!hpId && !tbUrl && placeId) ? `<script>
-var NB_CALL_MAPS_KEY='AIzaSyBKD3MCHPdIPxHt-hZlh8EIv_8zMYDbgos';
-var NB_MAPS_JS_PROMISE=null;
-function nbLoadMapsJs(){if(NB_MAPS_JS_PROMISE)return NB_MAPS_JS_PROMISE;NB_MAPS_JS_PROMISE=new Promise(function(resolve,reject){if(window.google&&window.google.maps&&window.google.maps.places){resolve();return;}window.__nbMapsReady=resolve;var s=document.createElement('script');s.src='https://maps.googleapis.com/maps/api/js?key='+NB_CALL_MAPS_KEY+'&libraries=places&callback=__nbMapsReady&loading=async';s.async=true;s.onerror=function(){NB_MAPS_JS_PROMISE=null;reject(new Error('maps-js-load-failed'));};document.head.appendChild(s);});return NB_MAPS_JS_PROMISE;}
-var NB_PHONE_MEM={};
-function nbCallTapAllowed(){try{var key='nb_call_taps_'+new Date().toISOString().slice(0,10);var n=parseInt(localStorage.getItem(key)||'0',10);if(n>=20)return false;localStorage.setItem(key,String(n+1));return true;}catch(e){return true;}}
-function nbCallBtnMsg(btn,msg){var span=btn.querySelector('span');if(span)span.textContent=msg;else btn.setAttribute('aria-label',msg);}
-function nbCallBtnReset(btn){btn.disabled=false;nbCallBtnMsg(btn,'電話する');btn.setAttribute('aria-label',(btn.getAttribute('data-store-name')||'')+'に電話する');}
-function nbCallStore(ev,placeId,storeName,btn){ev.stopPropagation();if(!placeId||!btn||btn.disabled)return;btn.setAttribute('data-store-name',storeName);if(typeof nbReserveExit==='function')nbReserveExit('cta_call_click',{store_name:storeName,store_id:placeId,link_domain:'tel',location:'store_page'});else if(typeof trackEvent==='function')trackEvent('cta_call_click',{store_name:storeName});if(NB_PHONE_MEM[placeId]){location.href='tel:'+NB_PHONE_MEM[placeId];return;}if(!nbCallTapAllowed()){nbCallBtnMsg(btn,'本日の上限です');setTimeout(function(){nbCallBtnReset(btn);},2500);return;}btn.disabled=true;nbCallBtnMsg(btn,'確認中…');nbLoadMapsJs().then(function(){var svc=new google.maps.places.PlacesService(document.createElement('div'));svc.getDetails({placeId:placeId,fields:['international_phone_number']},function(place,status){if(status===google.maps.places.PlacesServiceStatus.OK&&place&&place.international_phone_number){var tel=place.international_phone_number.replace(/[^\\d+]/g,'');NB_PHONE_MEM[placeId]=tel;nbCallBtnReset(btn);location.href='tel:'+tel;}else{nbCallBtnMsg(btn,'電話番号なし');btn.disabled=false;setTimeout(function(){nbCallBtnReset(btn);},2500);}});}).catch(function(){nbCallBtnMsg(btn,'通信エラー');btn.disabled=false;setTimeout(function(){nbCallBtnReset(btn);},2500);});}
-</script>
+` : ''}${callOk ? `<script>var NB_CALL_MAPS_KEY='AIzaSyBKD3MCHPdIPxHt-hZlh8EIv_8zMYDbgos';</script>
+${CALL_SCRIPT}
 ` : ''}${RESERVE_ASK_SCRIPT}
 </body>
 </html>`;
