@@ -52,8 +52,9 @@
 
 ### [ISSUE-152] 日次・週次レポートの「予約ボタン」がホットペッパーの1クリックを2回数えている
 
-- **priority**: P2 → **status**: in_progress
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
+- **resolved**: 2026-10-11
 - **category**: 計測
 - **owner**: Marketer
 - **source**: [[ISSUE-149]] の調査で判明
@@ -345,8 +346,9 @@
 
 ### [ISSUE-171] お食事処 Hug の掲載の住所を、移転先と見られる緑区六田1丁目204 に直すか確かめる
 
-- **priority**: P2 → **status**: ready
+- **priority**: P2 → **status**: done
 - **detected**: 2026-10-09
+- **resolved**: 2026-10-11
 - **category**: data-quality
 - **owner**: DataKeeper
 - **source**: [[ISSUE-169]] で発見
@@ -396,7 +398,7 @@
 - **priority**: P1 → **status**: ready
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
-- **owner**: DataKeeper
+- **owner**: 片桐 ← DataKeeper
 - **source**: [[ISSUE-169]] で発見
 - **brand-filter**: ✅ 適合 — 実在保証（閉店した店を掲載し続けない）
 - **背景**: `scripts/audit_store_liveness.js` は `data/places_resolved.json` の CLOSED_PERMANENTLY を HARD で止める。しかしその記録は、大半の店が 2026-05-22 の取得のまま更新されていない。
@@ -991,7 +993,7 @@
 - **priority**: P1 → **status**: ready
 - **detected**: 2026-10-09
 - **category**: data-quality / trust
-- **owner**: DataKeeper
+- **owner**: 片桐 ← DataKeeper
 - **source**: [[SEO-119]] の調査中に発見（2026-10-09）
 - **brand-filter**: ✅ 適合 — 実在保証と口コミ信頼度の正確さ（制約7。口コミ信頼度の表示が変わるためオーナー承認が要る）
 - **背景**: `data/places_resolved.json` の紐付けのうち、`build.js` が適用している 4,454件の 1,537件は 2026-08-30 より前の取得で、同日入った店名ゲート（`scripts/lib/store_name_match.js` の `namesMatch`・`branchConflict`）を通っていない。今のゲートで照合すると 1,544件が不一致（一致率0 が149件・0.3未満が223件・0.3〜0.6 が724件・0.6以上が399件・支店名の食い違い49件）。不一致には表記違い（アクロアーマ／Restaurant Acroama、KARAOKEBAR M／カラオケバーM）も多いが、明らかな別店（ハンバーグジョー→みちのり亭 名古屋駅店、台北館→古式蕎麦 玄水、本格江戸前寿司 女子大寿司 本店→鮨~sushi~ Aoi）も含まれ、その店の Google 評価・口コミ数・口コミ信頼度を表示している。[[SEO-119]] の23店も同じ原因で別店の評価4.8などを出していた
@@ -8465,6 +8467,10 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 
 | 日付 | エージェント | 実行内容 | 結果 |
 |------|------------|---------|------|
+| 2026-10-11 | Orchestrator(routine) | ISSUE-152 done化: GAS反映 2026-10-10 確認（gas_deploy_health.json verdict=deployed・missing_fixes=[]）。pending_fixes から除去 | ✅ backlog+gas_deploy_policy更新 |
+| 2026-10-11 | Orchestrator(routine) | ISSUE-171 done化: 一次情報で住所を確かめられなかったため直さない（2026-10-09 追記のとおり）。ホットペッパーが直れば日次取り込みで自動更新 | ✅ backlog更新 |
+| 2026-10-11 | Orchestrator(routine) | ISSUE-147 escalate to 片桐: acceptance③ 口コミ信頼度の分布変更はオーナー承認が必要（制約7）。ルーチンでは判断できないためエスカレーション | ⏸ owner→片桐 |
+| 2026-10-11 | Orchestrator(routine) | ISSUE-173 escalate to 片桐: acceptance① 定期 API 利用（Places Basic・月5,000件無料枠）の着手前確認がオーナー本人操作が必要 | ⏸ owner→片桐 |
 | 2026-10-04 | Orchestrator(routine) | SEO-112 done化: pagesFetched=3156・pageTypes/homeQueries実在確認（2026-10-03 GSC）。homeQueriesは指名検索→Strategic Skip | ✅ backlog更新 |
 | 2026-10-04 | Orchestrator(routine) | SEO-107 done化: ①CTR 0.89%→0.37%（改善なし・acceptance③記録して追わない）。⑤sampling 32/34件評価データなし・仮説否定（acceptance⑤記録して取り繕わない） | ✅ backlog更新 |
 | 2026-10-04 | Orchestrator(routine) | SEO-060 done化: discovery_share 2.2%→29.7%（目標10%大幅超過）・effect_ledger followup2追記。banquet.html=2026-10-30受動観測継続 | ✅ backlog+ledger更新 |
