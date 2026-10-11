@@ -8,7 +8,8 @@
  *
  * 使い方:
  *   node scripts/measure_typography.js --url http://localhost:8082/ \
- *     --viewports 375x812,768x1024,1280x900 [--search <語>] [--out docs/qa/design-<date>.json]
+ *     --viewports 375x812,768x1024,1280x900 [--search <語>] [--block-analytics] [--out docs/qa/design-<date>.json]
+ *   --block-analytics: GA4 などの計測への通信を止める（本番を測るとき、測定の訪問を GA4 に送らない。既定はオフ）
  *
  * 出力: { url, viewports: [{ width, height, pctLe12, pctLe10_5, firstViewportChars,
  *          secondViewportChars, tapTargetsUnder44, card: {avgHeight, avgChars, avgElements, avgBadges} }] }
@@ -25,6 +26,7 @@ function parseArgs(argv) {
     if (argv[i] === '--url') args.url = argv[++i];
     else if (argv[i] === '--viewports') args.viewports = argv[++i];
     else if (argv[i] === '--search') args.search = argv[++i];
+    else if (argv[i] === '--block-analytics') args.blockAnalytics = true;
     else if (argv[i] === '--out') args.out = argv[++i];
   }
   return args;
@@ -139,6 +141,10 @@ async function main() {
   for (const vp of viewports) {
     const page = await browser.newPage();
     await page.setViewport(vp);
+    if (args.blockAnalytics) {
+      await page.setRequestInterception(true);
+      page.on('request', (req) => (/googletagmanager\.com|google-analytics\.com|analytics\.google\.com|doubleclick\.net/.test(req.url()) ? req.abort() : req.continue()));
+    }
     try {
       await page.goto(args.url, { waitUntil: 'networkidle2', timeout: 30000 });
       await new Promise((r) => setTimeout(r, 800));

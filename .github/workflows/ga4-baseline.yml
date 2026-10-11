@@ -1,0 +1,106 @@
+name: GA4 基線の取得（手動・読み取りのみ）
+
+# UI・UX全面改修計画 I-02。改修の前後（D-28〜D-1 と D+1〜D+28）を同じ条件で比べるため、
+# GA4 の数字を「決まった期間・決まった区切り」で取り直す。data/site_metrics.json などは
+# 直近30日を毎日書き直すので、決まった期間の数字は取れない。
+#
+# GA4 の鍵は GitHub Secrets にあり、この端末や作業者の手元には無い。だからここから実行する。
+#   - 読み取りのみ。リポジトリには何も書かない・push しない・サイトに触れない
+#   - 結果は artifact（ga4-baseline）と、ジョブの要約に出す。基線として残すときは、
+#     artifact をダウンロードして docs/qa/uiux-2026-10/baseline/ に入れる PR を出す
+#   - 判定の決まりは docs/uiux-overhaul-plan-2026-10.md の 10.2 節。スクリプトは scripts/ga4_baseline.js
+#   - build.yml の concurrency グループには入れない（データを書かないので、デプロイを待たせない）
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'window=開始日と終了日を指定 / pair=変更を入れた日 D の前後（D は数えない）'
+        type: choice
+        required: true
+        default: window
+        options: [window, pair]
+      start:
+        description: 'window の開始日 YYYY-MM-DD（店舗ページの GA4 は 2026-10-09 以降だけ使える）'
+        type: string
+        required: false
+      end:
+        description: 'window の終了日 YYYY-MM-DD（確定済みの日まで。今日の2日前が上限）'
+        type: string
+        required: false
+      date:
+        description: 'pair の D（変更を main に入れた日）YYYY-MM-DD'
+        type: string
+        required: false
+      days:
+        description: 'pair の前後の日数（既定 28。前が 2026-10-09 より前にかかるときは取れる日数にそろえる）'
+        type: string
+        required: false
+        default: '28'
+      label:
+        description: '結果に付ける名前（例: before-I14）'
+        type: string
+        required: false
+      internal_filter:
+        description: 'GA4 のデータフィルタ「内部トラフィック」の状態（管理画面で確かめて記録する）'
+        type: choice
+        required: true
+        default: unknown
+        options: [unknown, inactive, testing, active]
+
+permissions:
+  contents: read
+
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 依存パッケージインストール（GA4 SDK）
+        # 要るのは googleapis だけ。puppeteer の Chromium は落とさない
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: 'true'
+        run: npm install --no-audit --no-fund --silent
+
+      - name: GA4 の数字を取る
+        # 入力は env 経由で渡す（run のシェルに直接埋め込まない）
+        env:
+          GA4_SERVICE_ACCOUNT_KEY: ${{ secrets.GA4_SERVICE_ACCOUNT_KEY }}
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          IN_MODE: ${{ inputs.mode }}
+          IN_START: ${{ inputs.start }}
+          IN_END: ${{ inputs.end }}
+          IN_DATE: ${{ inputs.date }}
+          IN_DAYS: ${{ inputs.days }}
+          IN_LABEL: ${{ inputs.label }}
+          IN_FILTER: ${{ inputs.internal_filter }}
+        run: |
+          set -euo pipefail
+          args=(--label "${IN_LABEL}" --internal-filter "${IN_FILTER}" --out "${RUNNER_TEMP}/ga4-baseline.json")
+          if [ "${IN_MODE}" = "pair" ]; then
+            [ -n "${IN_DATE}" ] || { echo "::error::pair には date（D）が要る"; exit 1; }
+            args=(--pair "${IN_DATE}" --days "${IN_DAYS:-28}" "${args[@]}")
+          else
+            [ -n "${IN_START}" ] && [ -n "${IN_END}" ] || { echo "::error::window には start と end が要る"; exit 1; }
+            args=(--window "${IN_START}" "${IN_END}" "${args[@]}")
+          fi
+          node scripts/ga4_baseline.js "${args[@]}"
+
+      - name: 要約をジョブに出す
+        run: node scripts/ga4_baseline.js --summary "${RUNNER_TEMP}/ga4-baseline.json" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 結果を artifact に保存
+        uses: actions/upload-artifact@v4
+        with:
+          name: ga4-baseline
+          path: ${{ runner.temp }}/ga4-baseline.json
+          if-no-files-found: error
+          retention-days: 30
