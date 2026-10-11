@@ -1,4 +1,4 @@
-status: in_progress
+status: done
 
 # 目的
 オーナー依頼（2026-10-11）「実際の見た目を判断して、より感覚的で能動的に操作できる見た目に。細かい部分・文字が多すぎるのでアイコンや記号を使う。AIっぽさは絶対になくす。他サイト参考可」。
@@ -14,13 +14,9 @@ status: in_progress
 - DSN-009 の原因特定: `.grid{grid-template-columns:1fr}`（index.html:828）で列が中身の最小幅に引っ張られ、カード 642px・scrollWidth 658px
 - backlog 起票・Linear 同期済み（P-212〜216）
 
-# 次にやること（2026-10-11 実装・確認済み・オーナーの確認待ち）
-1. 実装済み・目視確認済み（390px/1280px）: DSN-009〜012 すべて。コミット d379224b39・e05a1db04f まで
-2. 検査: npm test 494/0・audit_design_system --check・audit_inline_js_syntax --check（全ページ）すべて通過。制約5（シーン/検索/絞り込み/カードの媒体リンクとGoogle評価/詳細の6媒体/IG）を操作して確認・JSエラー0
-3. 実測（375px・焼肉）: カード高さ 808→506px、文字 231→183、44px未満のタップ対象 250→92、12px以下の文字 5%→2%、ページ幅 658→390（DSN-009）
-4. 前後比較ページ: https://claude.ai/artifact/EwB9RuwsgSpFd1eNPLus5t（非公開）。スクショは scratchpad/shots.js（headless Chrome を CDP で操作）で再生成できる
-5. PR を作成済み → オーナーが見て OK なら main に合流（＝本番公開）。合流後に backlog の DSN-008〜012 を done・Linear 同期（P-212〜216 Done）・HANDOFF を done
-6. オーナーに確かめたいこと: 女子会のアイコン（ワイングラス）・信頼の帯の文言「現役の店長が編集」
+# 次にやること
+- なし（2026-10-11 オーナーの OK で PR #465 をマージ・f1e28f393c。DSN-008〜012＝P-212〜216 は Done）
+- 別件: main で tests/stub_links.test.js が失敗（トップの店舗一覧に誘導ページへのリンク2件・PR 前から）→ ISSUE-188（P-223）に起票
 
 # 試したが駄目だったこと
 - Chrome の resize_window は効かない（最大化）。headless の画面はインストール案内の背景（#pwa-install-backdrop）が全面を暗くするので消してから撮る。scratchpad/m/index.html の 390px iframe（同一オリジンにするため repo を site/ に symlink・port 8766）で見る
