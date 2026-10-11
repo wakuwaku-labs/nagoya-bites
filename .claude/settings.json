@@ -10,6 +10,16 @@
             "timeout": 40
           }
         ]
+      },
+      {
+        "matcher": "startup|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=\"$CLAUDE_PROJECT_DIR/scripts/linear/briefing.js\"; [ -f \"$f\" ] && node \"$f\" || true",
+            "timeout": 40
+          }
+        ]
       }
     ]
   }
