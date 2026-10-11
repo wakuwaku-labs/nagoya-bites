@@ -35,6 +35,7 @@
 const fs = require('fs');
 const path = require('path');
 const { loadStores } = require('./lib/load_stores');
+const { siteStoreCount } = require('./lib/store_count');
 const { loadPolicy, normalizeArea, normalizeGenre, openStores } = require('./lib/area_genre_pages');
 const { normDate } = require('./lib/sitemap_lastmod');
 
@@ -341,7 +342,10 @@ function buildMarkerContent(original, today) {
   const features = collectFeatures();
   const hubs = collectHubs(policy, loadManifest());
 
+  // 文章に出す店数は、サイト全体で同じ丸めた表記（約5,000・scripts/lib/store_count.js・I-06）。
+  // 正確な数（営業中の店）は、下のエリア別内訳の見出しなど「統計」にだけ出す
   const storeCountStr = fmtNum(stats.total);
+  const storeCountLabel = siteStoreCount(stores).label;
   const featureCountStr = `${features.length}本`;
 
   const areasBlock = [
@@ -365,7 +369,7 @@ function buildMarkerContent(original, today) {
   const missing = '\n（data/area_genre_pages_manifest.json が見つからないため、このセクションは次回ビルドまで前回値のまま）\n';
 
   const content = {
-    store_count: storeCountStr,
+    store_count: storeCountLabel,
     feature_count: featureCountStr,
     areas: areasBlock,
     genres: genresBlock,

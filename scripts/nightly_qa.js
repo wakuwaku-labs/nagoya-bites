@@ -185,6 +185,17 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_stub_links.js', '--check']],
 });
+// サイト全体の掲載店数の表記が、1つの値（営業中の店を 500 件単位に丸めた「約5,000」）にそろっているか（I-06・SOFT で開始）。
+// トップ・stores/index.html・faq.html・特集は build.yml が日次でそろえる。journal/ の冒頭の紹介文だけは CI が触らない
+// （書き手を1つにするため）ので、丸めた値が変わった日にここで知らせる。0件が続いたら hard に上げる
+checks.push({
+  id: 'store-count',
+  title: 'サイト全体の掲載店数の表記が1つの値にそろっている（I-06）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/sync_store_count.js', '--check']],
+});
 // HotPepper の取得に取りこぼしが無いか（ISSUE-143・SOFT で開始）。1,000件の上限を超える中エリアは小エリアごとに
 //    取り直し、API のエラーはやり直す。それでも取れなかった回は build.js が data/hotpepper_fetch_log.json に残す
 checks.push({
