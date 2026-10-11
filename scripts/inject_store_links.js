@@ -7,8 +7,9 @@
  * シーン/エリア/ジャンル特集への発見導線（section#scene-index）を生成・差し込む。
  *
  * リンク先の決定：
- *   - stores/{ホットペッパーID}.html が存在 → そのページへ
- *   - 存在しない                            → index.html#q={店名} の検索ディープリンクへ
+ *   - 現役の stores/{ホットペッパーID}.html が存在 → そのページへ
+ *   - 誘導ページなら、その誘導先が現役ページのときだけ直接リンク
+ *   - どちらも無い                            → index.html#q={店名} の検索ディープリンクへ
  *     （index.html 側の readHash() が #q=... を拾って検索を実行する）
  *
  * 冪等: マーカー <!-- STORE-INDEX:START --> / <!-- STORE-INDEX:END --> で囲まれたブロックを置換。
@@ -28,10 +29,10 @@
 
 const fs   = require('fs');
 const path = require('path');
+const { isRedirectStub, stubTarget } = require('./lib/store_orphans');
 
 const ROOT       = path.join(__dirname, '..');
 const HTML_PATH  = path.join(ROOT, 'index.html');
-const STORES_DIR = path.join(ROOT, 'stores');
 
 function escapeHtml(s) {
   return String(s == null ? '' : s)
@@ -48,21 +49,32 @@ function loadLocalStores(_html) {
   return _loadStoresShared();
 }
 
-function loadDetailPageSet() {
-  const set = new Set();
-  if (!fs.existsSync(STORES_DIR)) return set;
-  for (const f of fs.readdirSync(STORES_DIR)) {
+function loadDetailPageSet(root = ROOT) {
+  const dir = path.join(root, 'stores');
+  const active = new Set();
+  const redirects = new Map();
+  if (!fs.existsSync(dir)) return { active, redirects };
+  for (const f of fs.readdirSync(dir)) {
     if (f.endsWith('.html') && f !== 'index.html') {
-      set.add(f.slice(0, -5)); // strip .html
+      const slug = f.slice(0, -5); // strip .html
+      const html = fs.readFileSync(path.join(dir, f), 'utf8');
+      if (isRedirectStub(html)) redirects.set(slug, stubTarget(html));
+      else active.add(slug);
     }
   }
-  return set;
+  return { active, redirects };
 }
 
-function buildHrefFor(store, detailSet) {
+function buildHrefFor(store, detailPages) {
   const id = store['ホットペッパーID'];
-  if (id && detailSet.has(id)) {
+  if (id && detailPages.active.has(id)) {
     return `stores/${encodeURIComponent(id)}.html`;
+  }
+  if (id && detailPages.redirects.has(id)) {
+    const target = detailPages.redirects.get(id);
+    if (target && detailPages.active.has(target)) {
+      return `stores/${encodeURIComponent(target)}.html`;
+    }
   }
   // 検索ディープリンク：index.html 側の readHash() が #q=... を拾って applyFilters() する
   const name = store['店名'] || '';
@@ -83,14 +95,14 @@ function groupByArea(stores) {
 
 function renderIndexBlock(grouped, total) {
   const today = new Date().toISOString().slice(0, 10);
-  const detailSet = loadDetailPageSet();
+  const detailPages = loadDetailPageSet();
   const sections = grouped.map(([area, list]) => {
     // エリア内は店名昇順（ロケール）
     const sorted = list.slice().sort((a, b) =>
       String(a['店名'] || '').localeCompare(String(b['店名'] || ''), 'ja')
     );
     const items = sorted.map(s => {
-      const href  = buildHrefFor(s, detailSet);
+      const href  = buildHrefFor(s, detailPages);
       const name  = escapeHtml(s['店名'] || '(無名店)');
       const genre = s['ジャンル'] ? `・${escapeHtml(s['ジャンル'])}` : '';
       return `<li><a href="${href}">${name}（${escapeHtml(area)}${genre}）</a></li>`;
@@ -195,9 +207,9 @@ function main() {
   const visibleStores = stores.filter(s => s['公開フラグ'] !== 'FALSE');
   console.log(`LOCAL_STORES から ${stores.length} 件読込（公開 ${visibleStores.length} 件）`);
 
-  const detailSet = loadDetailPageSet();
-  const detailHits = visibleStores.filter(s => s['ホットペッパーID'] && detailSet.has(s['ホットペッパーID'])).length;
-  console.log(`詳細ページ stores/*.html: ${detailSet.size} 件（うち LOCAL_STORES 一致 ${detailHits} 件）`);
+  const detailPages = loadDetailPageSet();
+  const detailHits = visibleStores.filter(s => s['ホットペッパーID'] && detailPages.active.has(s['ホットペッパーID'])).length;
+  console.log(`詳細ページ stores/*.html: ${detailPages.active.size} 件（うち LOCAL_STORES 一致 ${detailHits} 件）`);
 
   const grouped    = groupByArea(visibleStores);
   const storeIndex = renderIndexBlock(grouped, visibleStores.length);
@@ -242,4 +254,5 @@ function main() {
   console.log(`index.html を更新完了（合計 ${visibleStores.length} 件の内部リンクを埋め込み）`);
 }
 
-main();
+if (require.main === module) main();
+module.exports = { loadDetailPageSet, buildHrefFor };

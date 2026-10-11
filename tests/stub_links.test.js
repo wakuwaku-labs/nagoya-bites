@@ -6,6 +6,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { findStubLinks, renderRedirectStub } = require('../scripts/lib/store_orphans');
+const { buildHrefFor, loadDetailPageSet } = require('../scripts/inject_store_links');
 
 function site() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'stub-links-'));
@@ -58,4 +59,16 @@ test('公開中のページに、確かめていない誘導ページへのリ�
   const { loadReviewed } = require('../scripts/audit_stub_links');
   const r = findStubLinks(root, { reviewed: loadReviewed(path.join(root, 'data', 'stub_link_reviewed.json')) });
   assert.deepStrictEqual(r.found, []);
+});
+
+test('全店舗一覧は誘導ページではなく現役の店舗ページへリンクする', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'store-index-links-'));
+  fs.mkdirSync(path.join(root, 'stores'), { recursive: true });
+  fs.writeFileSync(path.join(root, 'stores', 'J000000001.html'), renderRedirectStub('J000000002', '現役店'));
+  fs.writeFileSync(path.join(root, 'stores', 'J000000002.html'), '<!doctype html><h1>現役店</h1>');
+  const pages = loadDetailPageSet(root);
+  assert.strictEqual(buildHrefFor({ 'ホットペッパーID': 'J000000001', '店名': '旧スラグ店' }, pages), 'stores/J000000002.html');
+  assert.strictEqual(buildHrefFor({ 'ホットペッパーID': 'J000000002', '店名': '現役店' }, pages), 'stores/J000000002.html');
+  assert.strictEqual(buildHrefFor({ 'ホットペッパーID': 'J000000003', '店名': '検索対象店' }, pages), 'index.html#q=%E6%A4%9C%E7%B4%A2%E5%AF%BE%E8%B1%A1%E5%BA%97');
+  fs.rmSync(root, { recursive: true, force: true });
 });
