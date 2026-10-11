@@ -386,6 +386,43 @@ test('#store= : 「戻る」「進む」で待っていた店とは別の店の�
   assert.strictEqual(env.ctx.NB_PENDING_SOURCE, 'deeplink', '別の店の待ちに popstate の印を持ち越さない');
 });
 
+test('#store= : 共有リンクで店のデータを待っている間に、同じ店のハッシュで popstate が来ても、source は deeplink のまま（共有リンクの訪問を数え落とさない）', () => {
+  const env = makeEnv({ entries: [{ hash: '#store=J777', state: null }] });
+  setupFilters(env);
+  env.setStores(50);
+  env.run('readHash()');
+  env.fire();
+  assert.strictEqual(env.ctx.NB_PENDING_SOURCE, 'deeplink');
+  env.run('nbSyncModalWithUrl()'); // 同じ店のハッシュで popstate が来た（待ち始めた理由は変えない）
+  assert.strictEqual(env.ctx.NB_PENDING_STORE, 'J777');
+  assert.strictEqual(env.ctx.NB_PENDING_SOURCE, 'deeplink', '待ち始めた理由を保つ');
+  const ids = []; for (let i = 1; i <= 50; i++) ids.push('J' + String(i).padStart(3, '0')); ids.push('J777');
+  env.setStores(ids.length, ids);
+  env.ctx.FULL_CATALOG_LOADED = true;
+  env.run('readHash()');
+  env.fire();
+  assert.deepStrictEqual(env.json(env.opened), [{ id: 'J777', source: 'deeplink' }], '共有リンクの訪問は1回、deeplink と数える');
+});
+
+test('#store= : 待っている店と別の店のハッシュへ着いたら、待つ店が替わり、source は popstate（前の店の理由を持ち越さない）', () => {
+  const env = makeEnv({ entries: [{ hash: '#store=J777', state: null }, { hash: '#store=J888', state: { nbM: 1 } }], index: 0 });
+  setupFilters(env);
+  env.setStores(50);
+  env.run('readHash()');
+  env.fire();
+  assert.strictEqual(env.ctx.NB_PENDING_SOURCE, 'deeplink');
+  env.br.go(1); // 「進む」→ popstate（別の店 J888 のハッシュ。これも最初の50店に無い）
+  env.fire();
+  assert.strictEqual(env.ctx.NB_PENDING_STORE, 'J888');
+  assert.strictEqual(env.ctx.NB_PENDING_SOURCE, 'popstate', '新しく待つ店の理由は popstate');
+  const ids = []; for (let i = 1; i <= 50; i++) ids.push('J' + String(i).padStart(3, '0')); ids.push('J888');
+  env.setStores(ids.length, ids);
+  env.ctx.FULL_CATALOG_LOADED = true;
+  env.run('readHash()');
+  env.fire();
+  assert.deepStrictEqual(env.json(env.opened), [{ id: 'J888', source: 'popstate' }]);
+});
+
 // ── 4. モーダルと履歴 ─────────────────────────────────────────────────
 test('一覧から開く: 履歴が1つ増え、URL に store=ID が載る。閉じる（×・背景・Esc・下スワイプ）と1回で戻る', () => {
   const env = makeEnv();

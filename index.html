@@ -9138,7 +9138,7 @@ function applyFilters() {
 // - 共有リンク・再読み込み・「進む」で開いたときは、URL にすでに store= があるので足さない
 // - ハッシュの名前（q・genre・tag・ward・pref・cap・store）は変えない（すでに共有されたリンクが動き続ける）
 var NB_PENDING_STORE = '';   // #store= で指定され、まだモーダルを開けていない店の ID
-var NB_PENDING_SOURCE = '';  // 待っている店を開くときの source（「戻る」「進む」で待っているなら popstate。空なら deeplink）
+var NB_PENDING_SOURCE = '';  // 待っている店を開くときの source。待ち始めた理由（共有リンクなら deeplink・「戻る」「進む」・アドレス欄の変更なら popstate）で、同じ店を待っているあいだは変えない
 var NB_OPEN_STORE_ID = '';   // いまモーダルで開いている店の ID（ID が無い店は ''）
 var NB_SWAP = 0;             // 「似たお店」へ切り替える間だけ、その時刻（履歴を足さず置き換える）
 
@@ -9249,8 +9249,8 @@ function readHash() {
   // 店舗ページ・共有リンク → モーダルカード表示（#store=HOTPEPPER_ID）。
   // 最初に載っている50店の中に無い店は、全店のデータを読み終えてから探す（nbOpenPendingStore が再度呼ばれる）
   if (params.store && params.store !== NB_OPEN_STORE_ID) {
-    // 「戻る」「進む」で開こうとして、店のデータが届くのを待っているだけなら source は popstate のまま
-    // （全店のデータが届いたあとの再試行を、新しい共有リンクの訪問＝deeplink と数えない）
+    // 同じ店をすでに待っているなら、待ち始めた理由（popstate など）を保つ。全店のデータが届いたあとの再試行（loadStores が読み直す）を、
+    // 新しい共有リンクの訪問＝deeplink と数えないため
     var pendingSource = (NB_PENDING_STORE === params.store && NB_PENDING_SOURCE) ? NB_PENDING_SOURCE : 'deeplink';
     NB_PENDING_STORE = params.store;
     NB_PENDING_SOURCE = pendingSource;
@@ -9320,9 +9320,11 @@ function nbSyncModalWithUrl() {
     closeM({ fromPop: true });
   }
   if (want && want !== NB_OPEN_STORE_ID) {
+    // 共有リンクで待っている店と同じ店なら、待ち始めた理由（deeplink）を保つ。新しく待つ店は popstate
+    var pendingSource = (NB_PENDING_STORE === want && NB_PENDING_SOURCE) ? NB_PENDING_SOURCE : 'popstate';
     NB_PENDING_STORE = want;
-    NB_PENDING_SOURCE = 'popstate';
-    nbOpenPendingStore('popstate');
+    NB_PENDING_SOURCE = pendingSource;
+    nbOpenPendingStore(pendingSource);
   }
 }
 window.addEventListener('popstate', nbSyncModalWithUrl);
