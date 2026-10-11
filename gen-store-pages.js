@@ -18,6 +18,7 @@ const areaGenrePages = require('./scripts/lib/area_genre_pages');
 const { loadPolicy: loadIgPostPolicy } = require('./scripts/lib/ig_post_policy');
 const { relabelForSlug } = require('./scripts/lib/feature_counts');
 const { editorReasonOf, visitStatusLabel } = require('./scripts/lib/editor_reason');
+const { renderPhotoCredit, PHOTO_CREDIT_CSS } = require('./scripts/lib/photo_credit');
 const IG_MAX_POSTS_PER_STORE = (loadIgPostPolicy().thresholds && loadIgPostPolicy().thresholds.maxPostsPerStore) || 1;
 
 // SEO-094: エリア×ジャンル一覧（stores/area/）のURL索引。「もっと見る」導線・パンくず・
@@ -731,6 +732,11 @@ function renderStorePage(s, slug, relatedStores, listedFeatures) {
   const heroOnerror = hpHeroMatch
     ? `if(!this.dataset.f){this.dataset.f=1;this.src='${photo}';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}`
     : `this.onerror=null;this.src='/assets/store-figures/_fallback.svg'`;
+  const heroImgTag = `<img class="hero-img" src="${heroSrc}"${heroSrcset ? ` srcset="${heroSrcset}" sizes="100vw"` : ''} alt="${name}" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="${heroOnerror}">`;
+  // I-11（P-267）: Google マップの写真は撮影者を写真の右下に出す。クレジットのあるページだけ、
+  // 写真を .hero-wrap で包み、CSS も足す（それ以外のページは1バイトも変えない）。
+  const heroCreditHtml = renderPhotoCredit(s, photo);
+  const heroHtml = heroCreditHtml ? `<div class="hero-wrap">${heroImgTag}${heroCreditHtml}</div>` : heroImgTag;
 
   // ── 公式Instagram投稿の埋め込み（写真ソース優先1・embed.js 経由で規約上明示的に許可）──
   // 実写を店舗ページで「しっかり見せる」ための本命セクション。埋め込みスクリプトは
@@ -856,7 +862,7 @@ ${/imgfp\.hotp\.jp\/.+_480\.jpg/.test(photo) ? '<meta property="og:image:width" 
 <style>
 body{min-height:100vh;}
 .hero-img{width:100%;height:260px;object-fit:cover;filter:brightness(.88) saturate(.85);display:block;}
-@media(min-width:768px){.hero-img{height:380px;}}
+@media(min-width:768px){.hero-img{height:380px;}}${heroCreditHtml ? '\n' + PHOTO_CREDIT_CSS.trimEnd() : ''}
 .container{max-width:720px;margin:0 auto;padding:2rem 1.5rem 4rem;}
 .breadcrumb{margin-bottom:1.6rem;display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;}
 .breadcrumb a:hover{color:var(--gold);}
@@ -932,7 +938,7 @@ button.link-btn{font:inherit;cursor:pointer;}
 <body>
 ${siteChrome.renderHeader({ depth: 1, active: 'top' })}
 
-<img class="hero-img" src="${heroSrc}"${heroSrcset ? ` srcset="${heroSrcset}" sizes="100vw"` : ''} alt="${name}" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="${heroOnerror}">
+${heroHtml}
 
 <div class="container">
   ${siteChrome.renderBreadcrumb([
