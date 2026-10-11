@@ -163,8 +163,8 @@ test('summarize: 1回ごとの要点（samples）を回の順に残す。中央�
   const s = P.summarize(rows).hub;
   // 無効な回は入れない。回の順に並べる。要点だけ（通信の内訳などは入れない）
   assert.deepStrictEqual(s.samples, [
-    { run: 0, lcp: 1500, cls: 0.013, tbt: 178, rendererBenchMs: 180, loadAvg1: 2.5, power: 'ac', lowPowerMode: 0 },
-    { run: 1, lcp: 1500, cls: 0.652, tbt: 2015, rendererBenchMs: 400, loadAvg1: 9, power: 'battery', lowPowerMode: 1 },
+    { run: 0, url: null, lcp: 1500, cls: 0.013, tbt: 178, rendererBenchMs: 180, loadAvg1: 2.5, power: 'ac', lowPowerMode: 0 },
+    { run: 1, url: null, lcp: 1500, cls: 0.652, tbt: 2015, rendererBenchMs: 400, loadAvg1: 9, power: 'battery', lowPowerMode: 1 },
   ]);
   // 目安を持たない古い行は null
   assert.strictEqual(P.summarize([run('top', 1000)]).top.samples[0].rendererBenchMs, null);
@@ -172,6 +172,22 @@ test('summarize: 1回ごとの要点（samples）を回の順に残す。中央�
   // 低電力モードの 0（切）は null にしない（取れなかった null と区別する）
   assert.strictEqual(P.summarize([run('top', 1000, { lowPowerMode: 0 })]).top.samples[0].lowPowerMode, 0);
   assert.strictEqual(P.summarize([run('top', 1000)]).top.samples[0].lowPowerMode, null);
+});
+
+test('summarize: store-sample は 1周ごとに別の店。samples に測った URL を残す（どの店の LCP が遅かったかを後から辿れる）', () => {
+  // 初めて見られる店の写真は、画像変換サービス（wsrv.nl）の側にキャッシュが無く 3〜4s かかる。同じ店を測り続けると、この遅さが消える（2026-10-11 の実測）
+  const rows = [
+    run('store-sample', 8004, { run: 0, url: '/stores/J001186933.html' }),
+    run('store-sample', 1900, { run: 1, url: '/stores/J000400974.html' }),
+    run('store-sample', 6200, { run: 2, url: '/stores/J001147513.html' }),
+  ];
+  const s = P.summarize(rows)['store-sample'];
+  assert.strictEqual(s.runs, 3);
+  assert.strictEqual(s.median.lcp, 6200);
+  assert.deepStrictEqual(s.over, { lcp: 2, cls: 0 });
+  assert.deepStrictEqual(s.samples.map(x => x.url), ['/stores/J001186933.html', '/stores/J000400974.html', '/stores/J001147513.html']);
+  // URL を持たない古い行は null
+  assert.strictEqual(P.summarize([run('store', 1700)]).store.samples[0].url, null);
 });
 
 test('CLI: 端末の CPU 数と、電源（バッテリーか充電器か）の回数を出力の host に残す', () => {

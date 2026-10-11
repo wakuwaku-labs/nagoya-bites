@@ -7,7 +7,12 @@
 // かかった ms。CPU 4倍遅くの下）、Node 側の負荷（loadAvg1・cpus）を残す。**TBT は同じページ・同じ内容でも、電源で数十 ms と数秒に割れた**（2026-10-11:
 // 20:57 JST に充電器を抜いた時刻で、TBT が一段階上がった。pmset のログと一致）。前後の比較は、電源が同じ回どうしで見る。バッテリー駆動のときは警告を出す。
 // この Mac は低電力モードが「バッテリー駆動のときだけ」入る設定（pmset -g custom）だったので、電源と一緒に低電力モード（lowPowerMode: 1 入／0 切）も動く。1回ごとに残す。
+// store は同じ店を測り続ける（前後で同じ条件にできるが、画像変換サービス wsrv.nl の側にキャッシュができて速く出る）。store-sample は 1周ごとに別の店（sitemap.xml の店舗ページから無作為に選ぶ）
+// を測る。実際の訪問はほとんどが初めて見られる店なので、店舗ページの LCP の基線は store-sample で見る（2026-10-11 の実測: 初めて見られる店の写真は 2.9〜4.4s、2回目以降は 0.07〜0.4s）。
+// 前と後で別の店になるよう、標本は毎回無作為に選び直し、測った URL は 1行ごとの url に残す。
+const fs = require('fs');
 const os = require('os');
+const path = require('path');
 const { execFileSync } = require('child_process');
 const puppeteer = require('puppeteer');
 const BASE = process.env.BASE || 'https://nagoya-bites.com';
@@ -16,6 +21,7 @@ const BLOCKED = ['*googletagmanager.com*', '*google-analytics.com*', '*analytics
 const URLS_ALL = [
   ['top', '/'],
   ['store', '/stores/J004660861.html'],
+  ['store-sample', null], // 1周ごとに別の店（pickStoreSample）
   ['feature', '/features/nagoya-solo-dining.html'],
   ['journal', '/journal/2026-10-11-hoshigaoka-afros-bbq-enkai.html'],
   ['hub', '/stores/area/sakae/izakaya.html'],
@@ -25,6 +31,19 @@ const URLS_ALL = [
 const URLS = process.env.ONLY ? URLS_ALL.filter(([n]) => process.env.ONLY.split(',').includes(n)) : URLS_ALL;
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const MAX_ATTEMPTS = 3;
+
+/** 店舗ページの標本。sitemap.xml の店舗ページから無作為に並べ、本番で 200 を返すものを先頭から n 件。測れない店（404 など）は飛ばす */
+async function pickStoreSample(n) {
+  const xml = fs.readFileSync(path.join(__dirname, '..', '..', '..', 'sitemap.xml'), 'utf8');
+  const pool = [...xml.matchAll(/<loc>https?:\/\/[^<\/]+(\/stores\/J\d+\.html)<\/loc>/g)].map(m => m[1]);
+  for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+  const picked = [];
+  for (const p of pool) {
+    if (picked.length >= n) break;
+    try { const res = await fetch(BASE + p, { method: 'HEAD' }); if (res.status === 200) picked.push(p); } catch (e) { /* 取れない店は飛ばす */ }
+  }
+  return picked;
+}
 
 /** 電源。macOS の pmset だけ（他は null）。バッテリー駆動かどうかで描画側の速さが変わるかを、後から見られるように残す */
 function powerSource() {
@@ -107,8 +126,12 @@ function warnPower(power, run, lpm) {
 (async () => {
   const browser = await puppeteer.launch({ headless: true, protocolTimeout: 300000, args: ['--lang=ja-JP', '--disable-features=CalculateNativeWinOcclusion', '--disable-backgrounding-occluded-windows', '--disable-renderer-backgrounding', '--disable-background-timer-throttling'] });
   try {
+    const sample = URLS.some(([n]) => n === 'store-sample') ? await pickStoreSample(RUNS) : [];
+    if (sample.length) console.error(`店舗ページの標本 ${sample.length} 件: ${sample.join(' ')}`);
     for (let i = 0; i < RUNS; i++) {
-      for (const [name, url] of URLS) {
+      for (const [name, fixedUrl] of URLS) {
+        const url = name === 'store-sample' ? sample[i] : fixedUrl;
+        if (!url) { console.error(`skip ${name} run ${i}: 標本が足りない`); continue; }
         try {
           let r, attempt = 0, host;
           do {
@@ -118,7 +141,7 @@ function warnPower(power, run, lpm) {
             attempt++;
             if (!(r.fcp > 0 && r.lcp > 0)) console.error(`unpainted ${name} run ${i} attempt ${attempt} visibility=${r.visibility}`);
           } while (!(r.fcp > 0 && r.lcp > 0) && attempt < MAX_ATTEMPTS);
-          console.log(JSON.stringify({ name, run: i, attempts: attempt, ...host, ...r }));
+          console.log(JSON.stringify({ name, run: i, url, attempts: attempt, ...host, ...r }));
         } catch (e) { console.error('fail', name, e.message); }
       }
     }

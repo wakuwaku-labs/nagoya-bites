@@ -7,7 +7,7 @@
 // 出力: { schema, label, date, base, conditions, host, notes, target, invalidRuns, pages: { top: { runs, invalid, median, min, max, over, samples, lcpElement, lcpUrl }, ... } }
 //   invalid = 描画されなかった回（FCP か LCP が 0）。中央値・最小・最大・over・samples には入れない（画面が消えている間などに全部 0 で返り、入れると「速くなった」ように見える）
 //   over = 目標を超えた回数。中央値は割れる指標（ハブの CLS は 0.013 と 0.652 に割れた）を平らにするので、回数も並べる
-//   samples = 1回ごとの要点（LCP・CLS・TBT と、そのときの電源 power・低電力モード lowPowerMode[1 入／0 切]・描画側の速さの目安 rendererBenchMs）。TBT は同じページ・同じ内容でも、
+//   samples = 1回ごとの要点（測った URL・LCP・CLS・TBT と、そのときの電源 power・低電力モード lowPowerMode[1 入／0 切]・描画側の速さの目安 rendererBenchMs）。TBT は同じページ・同じ内容でも、
 //             電源で数十 ms と数秒に割れた（2026-10-11 に充電器を抜いた時刻から）。中央値だけでは割れたことが見えない。前後を比べるときは、電源が同じ回どうしで見る
 //   host = 測った端末の CPU 数と、電源ごとの回数（バッテリー駆動か充電器か）・低電力モードの入り切りごとの回数（on / off）。notes = --note で渡した、測った時の事情（他の作業を止めたか など）
 'use strict';
@@ -64,7 +64,7 @@ function summarize(rows) {
     });
     const overCount = f => rs.filter(r => typeof r[f] === 'number' && r[f] > TARGET[f]).length;
     const num = v => (typeof v === 'number' && Number.isFinite(v) ? v : null);
-    const samples = rs.slice().sort((a, b) => (a.run || 0) - (b.run || 0)).map(r => ({ run: r.run == null ? null : r.run, lcp: num(r.lcp), cls: num(r.cls), tbt: num(r.tbt), rendererBenchMs: num(r.rendererBenchMs), loadAvg1: num(r.loadAvg1), power: r.power || null, lowPowerMode: num(r.lowPowerMode) }));
+    const samples = rs.slice().sort((a, b) => (a.run || 0) - (b.run || 0)).map(r => ({ run: r.run == null ? null : r.run, url: r.url || null, lcp: num(r.lcp), cls: num(r.cls), tbt: num(r.tbt), rendererBenchMs: num(r.rendererBenchMs), loadAvg1: num(r.loadAvg1), power: r.power || null, lowPowerMode: num(r.lowPowerMode) }));
     pages[name] = { runs: rs.length, invalid, median: med, min, max, over: { lcp: overCount('lcp'), cls: overCount('cls') }, samples, lcpElement: mostCommon(rs.map(r => r.lcpEl)), lcpUrl: mostCommon(rs.map(r => r.lcpUrl)) };
   });
   return pages;
