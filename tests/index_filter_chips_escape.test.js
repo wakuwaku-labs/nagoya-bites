@@ -60,6 +60,8 @@ function render(cond) {
     document, console,
     ACTIVE_WARD: cond.ward || 'all', ACTIVE_TAGS: (cond.tags || []).slice(), FILTERED: [],
     nbUpdateSearchClearVisibility() {},
+    // 保存した店だけを見る絞り込み（I-23）。入力由来の値ではなく、ここでは使わない（false）。
+    SHOW_FAVS_ONLY: false, nbSyncFavNav() {},
   };
   vm.createContext(ctx);
   vm.runInContext(SOURCE, ctx);

@@ -7871,6 +7871,9 @@ var ALL_STORES = [];
 var FILTERED = [];
 var ACTIVE_TAGS = [];
 var ACTIVE_WARD = 'all';
+// 保存済み（お気に入り）だけを表示するか。エリア・ジャンルなどと同じ「絞り込み条件」の1つとして
+// applyFilters が見る（I-23）。保存した店はこの端末だけの情報なので URL のハッシュには載せない。
+var SHOW_FAVS_ONLY = false;
 // ── ISSUE-015-P2: crossCheckBreakdown 遅延ロード（data/crosscheck.json）──
 // 口コミ信頼度の内訳（8軸の観測事実＋reviewTrust）は index.html から外部化済み。モーダルを
 // 初めて開いた時に一度だけ fetch して CROSSCHECK_MAP に保持する。失敗時は内訳非表示で劣化運用。
@@ -9041,7 +9044,10 @@ function applyFilters() {
   var capNum = capInputEl ? parseInt(capInputEl.value, 10) : NaN;
   var siEl = document.getElementById('si');
   var q = siEl ? siEl.value.trim() : '';
+  // 保存済みだけ表示（I-23）。ほかの条件と同じく AND で絞る。保存した店名は絞り込みの前に1回だけ読む
+  var favNames = SHOW_FAVS_ONLY ? getFavs() : null;
   FILTERED = ALL_STORES.filter(function(s){
+    var okFav = !favNames || favNames.indexOf(s['店名']) !== -1;
     var okPref = (pref === '全国' || pref === 'all') || (s['都道府県'] || '') === pref;
     var okWard = ACTIVE_WARD === 'all' || (AREA_TO_WARD[s['エリア']] === ACTIVE_WARD);
     var okGenre = genre === 'All' || normalizeGenre(s['ジャンル'] || '') === genre;
@@ -9086,7 +9092,7 @@ function applyFilters() {
       // その他のタグはアクセス・備考列も確認
       return access.includes(tag) || notes.includes(tag);
     });
-    return okPref && okWard && okGenre && okCap && okTags;
+    return okFav && okPref && okWard && okGenre && okCap && okTags;
   });
   // セマンティック検索: 語がそのまま含まれていなくても意図に合う店を拾い、関連度順に並べる
   FILTERED = nbRunSearch(FILTERED, q);
@@ -9098,6 +9104,7 @@ function applyFilters() {
   nbRenderSearchMeta();
   // MAGAZINE MODE — 検索/フィルターのいずれかが有効ならグリッド系を表示
   var hasActiveFilter = (q !== '')
+    || SHOW_FAVS_ONLY
     || (pref !== '全国' && pref !== 'all')
     || (ACTIVE_WARD !== 'all')
     || (genre !== 'All')
@@ -9436,6 +9443,16 @@ function scrollToResults() {
   window.scrollTo({ top: top, behavior: 'smooth' });
 }
 
+// 条件のチップの行（「保存済み ×」など）が、ヘッダと追従の検索バーの下に見える位置へスクロールする。
+// ナビから条件を入れたときは、何を表示しているか・どう外すかがチップに出るので、結果の先頭ではなくこちらへ置く
+// （チップの行は結果の少し上にあり、結果の先頭へ合わせると画面の上に隠れる）
+function scrollToActiveConditions() {
+  var target = document.getElementById('active-chips');
+  if (!target || !target.offsetHeight) { scrollToResults(); return; }
+  var top = target.getBoundingClientRect().top + window.pageYOffset - 130;
+  window.scrollTo({ top: top < 0 ? 0 : top, behavior: 'smooth' });
+}
+
 // パネル下部CTAから呼ばれる：パネルを閉じて結果へジャンプ
 function applyAndShowResults() {
   closeFilterPanel();
@@ -9443,13 +9460,18 @@ function applyAndShowResults() {
   setTimeout(scrollToResults, 60);
 }
 
-// 検索モードを抜けて雑誌面（特集・ランキング）に戻る
-function exitSearchMode() {
-  clearAllFilters();               // ここで body.search-active が外れ、回遊面が戻る
+// 雑誌面（特集・ランキング）の先頭へスクロールする
+function scrollToMagazine() {
   var target = document.querySelector('.feature-strip') || document.getElementById('main-content');
   if (!target) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
   var top = target.getBoundingClientRect().top + window.pageYOffset - 70;
   window.scrollTo({ top: top < 0 ? 0 : top, behavior: 'smooth' });
+}
+
+// 検索モードを抜けて雑誌面（特集・ランキング）に戻る
+function exitSearchMode() {
+  clearAllFilters();               // ここで body.search-active が外れ、回遊面が戻る
+  scrollToMagazine();
 }
 
 function clearAllFilters() {
@@ -9475,7 +9497,15 @@ function clearAllFilters() {
   // Clear search
   var si = document.getElementById('si'); if (si) si.value = '';
   var si2 = document.getElementById('si2'); if (si2) si2.value = '';
+  // Clear saved-only（画面に出ている条件はすべて外す。ナビの強調は updateFilterUI が戻す）
+  SHOW_FAVS_ONLY = false;
   applyFilters();
+}
+
+// ナビの「保存済み」リンクの強調を、保存済み表示の状態に合わせる
+function nbSyncFavNav() {
+  var link = document.getElementById('nav-fav');
+  if (link) link.style.borderBottom = SHOW_FAVS_ONLY ? '2px solid var(--gold)' : '';
 }
 
 function updateFilterUI() {
@@ -9499,6 +9529,8 @@ function updateFilterUI() {
   if (ACTIVE_TAGS.length > 0) count += ACTIVE_TAGS.length;
   if (cap) count++;
   if (q) count++;
+  if (SHOW_FAVS_ONLY) count++;
+  nbSyncFavNav();
 
   // Update filter badge
   var badge = document.getElementById('filter-badge');
@@ -9520,6 +9552,9 @@ function updateFilterUI() {
   var chips = document.getElementById('active-chips');
   if (!chips) return;
   var html = '';
+  if (SHOW_FAVS_ONLY) {
+    html += '<span class="chip" data-clear="favs">保存済み <span class="chip-x">×</span></span>';
+  }
   if (pref !== '全国' && pref !== 'all') {
     html += '<span class="chip" data-clear="pref">' + nbEscHtml(pref) + ' <span class="chip-x">×</span></span>';
   }
@@ -9545,6 +9580,7 @@ function updateFilterUI() {
   var condEl = document.getElementById('results-summary-cond');
   if (condEl) {
     var parts = [];
+    if (SHOW_FAVS_ONLY) parts.push('保存済み');
     if (pref !== '全国' && pref !== 'all') parts.push(pref);
     if (typeof ACTIVE_WARD !== 'undefined' && ACTIVE_WARD && ACTIVE_WARD !== 'all') parts.push(ACTIVE_WARD);
     if (genre !== 'All' && genre !== 'all') parts.push(genre);
@@ -9578,7 +9614,9 @@ document.addEventListener('click', function(e) {
   var chip = e.target.closest ? e.target.closest('.chip') : null;
   if (!chip) return;
   var clearType = chip.dataset.clear;
-  if (clearType === 'pref') {
+  if (clearType === 'favs') {
+    SHOW_FAVS_ONLY = false;
+  } else if (clearType === 'pref') {
     document.querySelectorAll('.pt').forEach(function(x){ x.classList.remove('on'); });
     var allPref = document.querySelector('.pt[data-pref="全国"]') || document.querySelector('.pt');
     if (allPref) allPref.classList.add('on');
@@ -9975,11 +10013,21 @@ function renderGrid(data) {
       missHint = '<p>「' + NB_SEARCH_META.unmatched.map(nbEscHtml).join('」「')
         + '」に一致する情報が掲載データにありませんでした。<br>店名の一部だけ、またはシーン（誕生日・接待・女子会）やエリア（栄・名駅・大須）でお試しください。</p>';
     }
+    var emptyTitle = '該当するお店が見つかりませんでした';
+    var emptyBody = missHint || '<p>検索条件を変えるか、フィルターをリセットしてお試しください。</p>';
+    var emptyBtn = '<button class="empty-state-reset" onclick="clearAllFilters()" aria-label="すべてのフィルターをリセットして全店舗を表示する">フィルターをリセット</button>';
+    if (SHOW_FAVS_ONLY && getFavs().length === 0) {
+      // 保存した店がまだ1件も無いときに「該当なし」と出すと、検索がうまくいかなかったように読める。
+      // 何をすれば保存した店が並ぶのかを伝える（I-23）
+      emptyTitle = '保存したお店はまだありません';
+      emptyBody = '<p>お店のカードのハートを押すと、この端末に保存されます。</p>';
+      emptyBtn = '<button class="empty-state-reset" onclick="showFavs()" aria-label="保存済みの表示をやめる">保存済みの表示をやめる</button>';
+    }
     gridEl.innerHTML = '<div class="empty-state">'
       + '<div class="empty-state-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="24"/><circle cx="32" cy="32" r="14"/></svg></div>'
-      + '<h3>該当するお店が見つかりませんでした</h3>'
-      + (missHint || '<p>検索条件を変えるか、フィルターをリセットしてお試しください。</p>')
-      + '<button class="empty-state-reset" onclick="clearAllFilters()" aria-label="すべてのフィルターをリセットして全店舗を表示する">フィルターをリセット</button>'
+      + '<h3>' + emptyTitle + '</h3>'
+      + emptyBody
+      + emptyBtn
       + '</div>';
     if (pagEl) pagEl.innerHTML = '';
     return;
@@ -11538,7 +11586,11 @@ renderGrid = function(data) {
 // [2] お気に入り / 保存機能
 // ================================================================
 function getFavs() {
-  try { return JSON.parse(localStorage.getItem('nb_favs') || '[]'); } catch(e) { return []; }
+  // 保存した店名の配列。壊れた値（配列でない JSON）でも例外にせず空として扱う
+  try {
+    var v = JSON.parse(localStorage.getItem('nb_favs') || '[]');
+    return Array.isArray(v) ? v : [];
+  } catch(e) { return []; }
 }
 function saveFavs(arr) {
   try { localStorage.setItem('nb_favs', JSON.stringify(arr)); } catch (e) {}
@@ -11575,22 +11627,23 @@ function toggleModalFav() {
   btn.classList.toggle('faved', isFav);
   btn.innerHTML = '<svg viewBox="0 0 24 24" fill="' + (isFav ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7.5-4.5-10-9.5C.5 7 3.5 3 8 3c2.5 0 3.5 1.5 4 2 .5-.5 1.5-2 4-2 4.5 0 7.5 4 6 8.5C19.5 16.5 12 21 12 21z"/></svg>';
 }
-var SHOW_FAVS_ONLY = false;
+// ナビの「保存済み」: 保存した店だけの表示を入り切りする（I-23）。
+// 以前は保存した店だけを描画していたが、トップは検索・絞り込みが無いと一覧（#grid）を隠す作りのため
+// 何も起きないように見えていた。今は絞り込み条件の1つとして applyFilters に任せ、
+// 一覧・件数・並び替え・条件のチップが同じ状態を指すようにしている。
 function showFavs() {
   SHOW_FAVS_ONLY = !SHOW_FAVS_ONLY;
-  var link = document.getElementById('nav-fav');
+  applyFilters();      // 一覧の表示切り替え・件数・チップ・ナビの強調はここで揃う
   if (SHOW_FAVS_ONLY) {
-    var favs = getFavs();
-    var favStores = ALL_STORES.filter(function(s) { return favs.indexOf(s['店名']) !== -1; });
-    _origRenderGrid(favStores);
-    var cntEl = document.getElementById('cnt');
-    if (cntEl) { cntEl.textContent = String(favStores.length).padStart(2,'0') + ' 保存済み'; }
-    if (link) link.style.borderBottom = '2px solid var(--gold)';
-  } else {
-    applyFilters();
-    if (link) link.style.borderBottom = '';
+    // 入れたら「保存済み ×」のチップが見える位置へ。applyFilters は結果より上にいるときだけ、結果の先頭へ
+    // スクロールする予約を入れる（チップが画面の上に隠れる）ので取り消し、下の方（店舗索引など）から押した場合も
+    // 特集などが畳まれて短くなった一覧の末尾に取り残されないよう、ここで必ず動かす
+    clearTimeout(window.__scrollToResultsTimer);
+    scrollToActiveConditions();
+  } else if (!document.body.classList.contains('search-active')) {
+    // 切ったあとに他の条件が残っていなければ雑誌面へ戻る（一覧は隠れて、見る場所が無くなるため）
+    scrollToMagazine();
   }
-  window.scrollTo({top: document.getElementById('grid').offsetTop - 120, behavior:'smooth'});
 }
 
 // Patch buildCardHtml to include fav button
