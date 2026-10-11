@@ -46,6 +46,17 @@ jobs:
         env:
           HOTPEPPER_API_KEY: ${{ secrets.HOTPEPPER_API_KEY }}
 
+      - name: 店舗写真を原寸マスターへ昇格（build.yml と同じ手順・P-269）
+        # build.js は HotPepper の写真を _480 に揃えるだけで、原寸への昇格は promote_store_photos.js が
+        # 1件ずつの実測に基づいて行う。ここで昇格しないと、このワークフローは約3,400店の写真を
+        # 毎朝 _480 に戻した data/stores.json と index.html をコミットする（直近3回の実測: 3,349〜3,421店）。
+        # GITHUB_TOKEN の push は build.yml を起動しないので、次の push か 03:00 JST の定期実行まで戻ったまま
+        # 本番に出る。build.yml と同じ冪等な手順で、実測が大きい店だけを昇格する（推測では昇格しない）。
+        # 通信に失敗した回は昇格が空振りするだけ（build.yml と同じ continue-on-error）。順は
+        # tests/daily_trending5_workflow.test.js が固定している。
+        run: node scripts/promote_store_photos.js
+        continue-on-error: true
+
       - name: 変更をコミット & プッシュ
         run: |
           git config user.name  "NAGOYA BITES Daily"
