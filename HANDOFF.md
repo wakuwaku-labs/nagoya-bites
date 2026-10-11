@@ -16,6 +16,8 @@ UI・UX全面改修計画（`docs/uiux-overhaul-plan-2026-10.md`）の実装を�
   - 変えたこと: ハブの予約リンクを cta_click（location=hub）へ／modal_open に store_id／特集の feature_store_click の店の値をスラグ（ID）へ（947件すべてリンク先と一致・features/ 54本）／ジャーナルに journal_store_click を新設（別 script・テンプレート＋157本に追加のみ）。テスト tests/measurement_unify.test.js 12件。npm test は506件中505件（失敗1件は main の ISSUE-188 で #470 が直す）。4つの監査は終了コード0
   - ハブ約685本は PR に入れない（build.yml が毎日作り直す）。作り直した日に「データ更新日」・sitemap lastmod・IndexNow の対象が一度だけ進む（テンプレート変更時と同じ動き）。PR 本文に書いた
   - マージ後にやること: `data/measurement_changes.json` に I-08 を追記（PR 本文に下書き。日付はハブを build.yml が作り直して push した日）。計画 7.7 節に journal_store_click・ハブの cta_click・modal_open の store_id・GA4 未登録ディメンションの注を足す（設計のブランチで）
+- **I-02（基線）: 作業中**（claude/uiux-i02-baseline・origin/main から・worktree は一時領域の `wt/i02`）。まだコミット前。作った物: `scripts/lib/ga4_baseline.js`（期間・ページ種別・端末・集計の部品。通信しない）と `scripts/ga4_baseline.js`（CLI。`--window START END` / `--pair D [--days 28]` / `--dry-run` / `--summary FILE`。鍵は GA4_SERVICE_ACCOUNT_KEY・GA4_PROPERTY_ID で CI の Secrets のみ。未設定は終了コード2）。**残り**: ①tests/ga4_baseline.test.js（偽の runReport で問い合わせの形・ページ送り・入口次元の代替・期間の組み方・集計を確かめる）②.github/workflows/ga4-baseline.yml（workflow_dispatch・読み取りのみ・入力は env 経由・結果は artifact）③CLAUDE.md の表に行を足す ④速さの基線: `docs/qa/uiux-2026-10/perf.js 5` を裏で実行中（出力はスクラッチパッドの baseline/perf_runs.jsonl）→ 中央値を出す `perf_summary.js` を足して `docs/qa/uiux-2026-10/baseline/perf-2026-10-11.json` に記録（perf.js と perf_summary.js も I-02 の PR に入れる）⑤`node scripts/measure_typography.js` の値を記録 ⑥PR → Linear 起票（P-235 の子・KR:検索から見つけてもらう＋担当:Builder）。GA4 の実測はワークフローが main に入ってから dispatch（鍵がこの端末に無いため）
+- 判断の記録 0017（実装の進め方）は設計のブランチに追加済み（1175f4ec1f）
 - 検証済みの事実: `gen_area_genre_pages.js --check` はテストでは回らない（CI の生成だけ）。`tests/area_genre_pages.test.js` は stores/area の存在を見る
 
 # 次にやること
