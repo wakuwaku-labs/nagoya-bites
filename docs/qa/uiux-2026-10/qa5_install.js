@@ -288,7 +288,7 @@ async function measure(browser, base, vp, kind) {
   const results = [];
   try {
     for (const vp of VIEWPORTS) {
-      const kinds = ['android'].concat(vp.name === '1280' ? [] : ['ios']).filter(k => !ONLY || k === ONLY);
+      const kinds = ['android', 'ios'].filter(k => !ONLY || k === ONLY); // iOS のカードは iPad の横向きなど広い画面にも出る（PC の Chrome・Safari には出ない）ので、3つの幅とも測る
       for (const kind of kinds) {
         let rows;
         try { rows = await measure(browser, base, vp, kind); } catch (e) { rows = [{ kind, viewport: vp.name, id: 'EXC', name: '測定で例外', ok: false, cell: '例外', detail: String((e && e.stack) || e).slice(0, 400) }]; }
