@@ -48,6 +48,12 @@ UI・UX全面改修計画（`docs/uiux-overhaul-plan-2026-10.md`）の実装を�
   - 道具（作業用の一時領域）: `patch_i13.py`（適用済み）・`mutate_i13.py`（変異テスト）・`timeline_i13.js`（初回表示の時刻の計測）・`shots_i13.js`・`replace_line.py`（HANDOFF の行の置き換え）。**Python 3.9 は、長い日本語の行をソースに書くと「Non-UTF-8 code」で失敗することがある**（読み込みの境界で多バイト文字が割れる）＝長い本文は別ファイルに書いて読む
 - 検証済みの事実: `gen_area_genre_pages.js --check` はテストでは回らない（CI の生成だけ）。`tests/area_genre_pages.test.js` は stores/area の存在を見る
 
+- **2026-10-12 の続き（作業中・push 前のコミットあり。push したら下の「未 push」を消す）**:
+  - **#473（I-21）popstate の指摘は実際に起きると確認して直した**: ローカルの a1b3251d34（`wt/i21`）。popstate で店のデータを待っているあいだの再試行が `deeplink` と数えられていた。`NB_PENDING_SOURCE` を足し、同じ店を待つ間は保つ。単体3件追加（`tests/index_history.test.js` 44/44）・変異3種が落ちる。**未 push**（重い検査〈`npm test`・監査・E2E〉を速さの再測定が終わってから回すため）
+  - **#475（I-07）Designer 観点の直し**: ローカルの b2845b38ea（`wt/i07`）。日本語になった4つのクラス（`.fl`・`.cap-label`・`.reel-tag`・`.fb-panel-title`）を DM Mono から `var(--font-body)` へ。`.reel-tag` は 12px → 13px。`tests/index_japanese_labels.test.js` 14/14。**未 push**（同上の検査の後）
+  - **#472（I-02）測定の欠陥を直した**: ローカルの c340533c24（`wt/i02`）。再測定の途中、店舗ページの1回で `goto` が `net::ERR_NETWORK_CHANGED` で失敗し、Chrome のエラーページ（DOM 33・LCP 500ms）が「描画された有効な回」として行に残った。`perf.js` は `navError`・`finalUrl` を行に残して開けなかった回をやり直し、`perf_summary.js` の `notOpened`/`isMeasured` は開けなかった回を無効として数える（判定は1本）。テスト 31 件通過・変異3種が落ちる。**未 push**
+  - **速さの再測定（バッテリー駆動・低電力モード・本番・10周）は実行中**: 出力 `$SCR/perf/battery-2026-10-12.runs.jsonl`（`$SCR` はセッションの作業用の一時領域）、終わると `battery.done`。見込み 04:25 JST。古いコードで走っているので、`name=store-sample` の run 1（`/stores/J000394454.html`・`dom` 33）は無効の行として除き、直した `perf.js` で `ONLY=store-sample` を1周足して補う。終わったら `perf_summary.js` で `baseline/perf-2026-10-12-battery.json` を作り、#472 のブランチに足して push、計画 2.2・3.6 の表と U-xx の CLS（旧定義の値）を直し、#472 と P-241 にコメントする。これまでの1周目の印象: トップ LCP 9〜10s・TBT 700〜900ms、ハブの CLS は 0.649 と 0.010 に割れる（旧定義でも同じ値＝窓が1つ）、ジャーナルの CLS 0.12〜0.14
+
 # 次にやること
 0. **最優先: PR #477（P-225）をオーナーがマージ**（期限 2026-10-12）。Claude は合流できない。マージ・デプロイの後に本番で一度確かめる。内容と、この PR で直していない残りの項目は Linear の P-225 だけに書いた（公開のファイルには書かない）。残りの項目は #473 のマージ後に別の PR にする
 1. P-241 に、①店を替えて測った結果（`store-sample`・判断の記録 0019）②Codex の指摘（CLS の定義・`--days`・前の期間）を直したこと、のコメントを足す（push 後）。#472 の PR にも同じ内容をコメントする。再測定は機械の負荷が下がってから
