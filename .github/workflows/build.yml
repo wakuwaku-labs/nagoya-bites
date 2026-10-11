@@ -372,12 +372,25 @@ jobs:
         # gen-store-pages.js の直後に置く理由: gen-store-pages.js 自身が sitemap.xml を
         # 丸ごと書き直すため（buildSitemap()）、先に置くと本ステップの追記が消える。
         # 本ステップは既存の /stores/area/ 区間だけを冪等に差し替えるので順序が重要。
-        # index.html の「エリア×ジャンルで探す」導線（scripts/inject_store_links.js、
-        # build.js 内で実行済み）は本ステップより前に走るため、当日の新規/消滅ハブが
-        # 反映されるのは翌日のビルドから（1日ラグ）。ハブの増減はヒステリシスで緩やかなため
-        # 実害は小さい。ISSUE-121 の教訓により新設ゲートは非ブロッキングで開始し、
-        # CI が緑を確認してから blocking 化する。
+        # index.html の「エリア×ジャンルで探す」導線（scripts/inject_store_links.js）は build.js の
+        # 中で本ステップより前に一度走るが、当日の新規/消滅ハブはその導線に載らない。次のステップ
+        # （P-264）が本ステップの後にもう一度同じ導線を作り直すので、反映は当日になる（旧: 翌日・1日ラグ）。
+        # ISSUE-121 の教訓により新設ゲートは非ブロッキングで開始し、CI が緑を確認してから blocking 化する。
         run: node scripts/gen_area_genre_pages.js
+        continue-on-error: true
+
+      - name: トップの全店舗一覧・発見導線を作り直す（店舗ページとハブの再生成の後・P-264）
+        # トップページの全店舗一覧（section#store-index）と発見導線（section#scene-index）は、build.js の
+        # 途中（scripts/inject_store_links.js）で一度作られる。そのとき stores/*.html はまだ前日の状態で、
+        # この後の gen-store-pages.js --redirect-orphans が、同じ店として統合した ID の「残す側」が
+        # 入れ替わった日に、現役ページと誘導ページを入れ替える。2026-10-11 の4組では、一覧が誘導ページになる
+        # ID を指したまま main に入り、先頭の npm test（tests/stub_links.test.js）が赤になった
+        # （夜間QA #466 と同じ型。build.yml の npm test は build.js の直後に走るので CI は緑のままだった）。
+        # 再生成がすべて終わった後にもう一度作ると、一覧は必ず最終の店舗ページの状態を指す。
+        # 冪等（マーカーで囲んだ区画だけを置き換える）。失敗しても build.js が作った一覧が残るので止めない。
+        # 順（gen-store-pages.js → gen_area_genre_pages.js → 本ステップ → コミット）は
+        # tests/build_workflow_reindex.test.js が見ている。
+        run: node scripts/inject_store_links.js
         continue-on-error: true
 
       - name: インラインJS構文監査（GA4計測が全ページで動くか・SEO-115）
