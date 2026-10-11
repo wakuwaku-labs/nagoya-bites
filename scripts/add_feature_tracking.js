@@ -7,6 +7,7 @@
 // 付与するイベント:
 //   - cta_click      : hotpepper.jp へのリンク（GASが予約行動として集計）
 //   - feature_store_click : stores/J*.html への内部リンク
+//     店の値（store）は店名ではなく ID（リンク先の stores/<ID>.html のスラグ）。店名の旧形式は書き換える（I-08）
 //   - internal_link_click : .related-links 内の特集リンク（block:'feature_related'）
 //   - scroll_depth   : 25/50/75/100% 到達（特集ページで未測定）
 //   - 予約送客の語彙統一（ISSUE-149）: 旧形式 cta_click{store,feature,target} を
@@ -104,6 +105,15 @@ function processHtml(html, slug) {
     if (/\bfeature_store_click\b/.test(attrs)) return match; // 既存
     const eventCall = featureStoreOnclick(id, slug);
     return match.replace(/>$/, ` onclick="${eventCall}">`);
+  });
+
+  // ── 2b. feature_store_click の store が店名の旧形式を、リンク先の店舗ページの ID（スラグ）に書き換える（I-08） ──
+  // 店名のままだと、集計で表記ゆれと重複（同じ店が ID と店名の両方で出る）が起きる。ID は href から決まるので推測しない。
+  html = html.replace(/<a\s+([^>]*)>/gi, (match, attrs) => {
+    if (!/feature_store_click/.test(attrs)) return match;
+    const h = attrs.match(/href=["'][^"']*\/stores\/([A-Za-z0-9_-]+)\.html[^"']*["']/);
+    if (!h) return match;
+    return match.replace(/(feature_store_click',\s*\{store:\s*)'((?:\\'|[^'])*)'/, (m, pre, v) => (/^J\d+$/.test(v) ? m : `${pre}'${h[1]}'`));
   });
 
   // ── 3. .related-links a に internal_link_click を付与 ──

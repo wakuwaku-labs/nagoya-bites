@@ -26,6 +26,7 @@ const trustDisplay = require('./lib/trust_display');
 const { gaSnippet } = require('./lib/ga_snippet');
 const { editorReasonOf, visitStatusLabel, visitStatusRank } = require('./lib/editor_reason');
 const { firstAichiStation } = require('./lib/station_names');
+const { jsq } = require('./lib/feature_tracking');
 
 const ROOT = path.resolve(__dirname, '..');
 const BASE_URL = 'https://nagoya-bites.com';
@@ -210,6 +211,16 @@ function trustBadge(s, TRUST_POLICY) {
   return `<span class="ccs-badge" title="${esc(TRUST_POLICY.name)} ${esc(rt.t)}：${esc(tierDef.label)}">${esc(TRUST_POLICY.name)}<span class="ccs-tier ${esc(tierDef.cssClass)}">${esc(rt.t)}</span></span>`;
 }
 
+/**
+ * ハブの「ホットペッパーで予約」の計測（I-08）。ほかのページと同じ予約送客の cta_click
+ * （語彙は scripts/lib/reservation_exits.js）で、location=hub。以前は hub_store_click を送っており、
+ * 予約送客の集計（EXIT_EVENTS）に入らなかった。hub は押したハブのパス（元の hub_store_click と同じ値）。
+ * nbReserveExit は予約申告プロンプトのあるページだけが定義するので、無いページは trackEvent で送る。
+ */
+function hubReserveOnclick(name, hpId) {
+  return `(window.nbReserveExit||trackEvent)('cta_click',{store_name:'${jsq(name)}',store_id:'${jsq(hpId)}',link_domain:'www.hotpepper.jp',location:'hub',hub:location.pathname})`;
+}
+
 function storeCard(s, idx, depth, TRUST_POLICY, applicableConditions) {
   const name = s['店名'] || '';
   const slug = storeSlug(s);
@@ -236,7 +247,7 @@ function storeCard(s, idx, depth, TRUST_POLICY, applicableConditions) {
             ${summary ? `<p class="store-desc">${esc(summary)}</p>` : ''}
             <div class="store-cta-row">
               <a class="store-link" href="${prefix}stores/${esc(slug)}.html">詳細を見る</a>
-              ${hpUrl ? `<a class="store-link store-link-reserve" href="${hpUrl}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('hub_store_click',{store:'${esc(slug)}',hub:location.pathname})">ホットペッパーで予約</a>` : ''}
+              ${hpUrl ? `<a class="store-link store-link-reserve" href="${hpUrl}" target="_blank" rel="noopener noreferrer" onclick="${hubReserveOnclick(name, hpId)}">ホットペッパーで予約</a>` : ''}
             </div>
           </div>
         </li>`;
@@ -749,4 +760,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { priceBandRows, editorPicks, topStations, contentHashOf };
+module.exports = { priceBandRows, editorPicks, topStations, contentHashOf, storeCard, hubReserveOnclick };

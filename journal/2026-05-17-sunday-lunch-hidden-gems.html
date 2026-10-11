@@ -332,6 +332,10 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   check();
 })();
 </script>
+<!-- I-08: 記事から店舗ページへのクリックを計測（journal_store_click）。店は ID、記事はファイル名で送る -->
+<script class="nb-journal-store-link">
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var m=(a.getAttribute('href')||'').match(/(?:^|\/)stores\/([A-Za-z0-9_-]+)\.html(?:[?#]|$)/);if(!m||m[1]==='index')return;try{trackEvent('journal_store_click',{store:m[1],journal:location.pathname.replace(/^.*\//,'').replace(/\.html$/,'')});}catch(err){}});
+</script>
 <!-- NB-CHROME:SCRIPT:START -->
 <script>
 window.toggleNav = window.toggleNav || function(){
