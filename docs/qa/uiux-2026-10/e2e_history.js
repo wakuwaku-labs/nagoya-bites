@@ -2,7 +2,7 @@
 // 使い方: node docs/qa/uiux-2026-10/e2e_history.js [--root <フォルダ>] [--viewport mobile|desktop|both] [--label <名前>] [--json <出力先>] [--ga4-history] [--headless auto|shell|new]
 // - --root: 配信するフォルダ（既定: このリポジトリの直下）。改修前の index.html を置いたフォルダを渡すと、同じ確認が「前」でどうなるかを比べられる
 // - --viewport: mobile = 390x844（タッチ）／desktop = 1280x900（既定は両方）
-// - --only <名前>: 場面の名前（deeplink・backforward・idless・scroll・close・swap・filters・bad）に含まれる語で絞る
+// - --only <名前>: 場面の名前（deeplink・backforward・idless・scroll・close・swap・filters・bad・latedata）に含まれる語で絞る
 // - --headless: auto（既定）= chrome-headless-shell があればそれを使い、無ければ新しいヘッドレス（フル版 Chrome）／shell／new。
 //   新しいヘッドレスは、画面が眠っている・ロックされているときなどに、タッチ操作（Input.dispatchTouchEvent）が応答しなくなることがある（2026-10-11 夜、単純なページでも起きた）。
 //   画面に依存しない chrome-headless-shell なら起きない
@@ -114,6 +114,8 @@ async function newPage(browser, base, vp, opts) {
   page.on('request', req => {
     const u = req.url();
     if (u.startsWith(base) && /\/(sw\.js|manifest\.(json|webmanifest))(\?|$)/.test(u)) return req.respond({ status: 404, contentType: 'text/plain', body: 'not found' });
+    // 全店のデータ（data/stores.json）を遅らせる確認用（page.__delayStoresMs ミリ秒。S9）
+    if (page.__delayStoresMs && u.startsWith(base) && /\/data\/stores\.json(\?|$)/.test(u)) { setTimeout(() => { Promise.resolve(req.continue()).catch(() => null); }, page.__delayStoresMs); return; }
     if (u.startsWith(base) || u.startsWith('data:') || u.startsWith('blob:') || u === 'about:blank') return req.continue();
     if (opts && opts.ga4 && req.method() === 'GET' && GTAG_ALLOW.some(re => re.test(u))) return req.continue();
     // GA4 を読み込む実行では、計測の送信は通信の層（下の Network.setBlockedURLs）で先に遮断され、ここには届かない。記録はそちらで取る。ここに届いた分は中断する
@@ -530,6 +532,47 @@ async function scenarioBadHashes(browser, base, vp) {
   await page2.close();
 }
 
+// 全店のデータ（data/stores.json）を ms ミリ秒遅らせたページを開く。前の場面で読み込んだ data/stores.json が HTTP キャッシュに残っていると（force-cache）、
+// 通信が起きず（リクエストの横取りにも届かず）遅らせられない（2回目の表示サイズで、データが一瞬で届いてしまった）。
+// このページは、キャッシュを共有しない新しいブラウザの文脈で開く（閉じるときは page.__ctx も閉じる）
+async function delayedStoresPage(browser, base, vp, ms) {
+  const ctx = await browser.createBrowserContext();
+  const page = await newPage(ctx, base, vp);
+  page.__delayStoresMs = ms;
+  page.__ctx = ctx;
+  return page;
+}
+
+// 全店のデータ（data/stores.json）が届く前に、URL のハッシュが変わったとき（「戻る」「進む」・アドレス欄の変更。Codex のレビュー・#473）。
+// 届いたあとで店を開くのは、履歴の移動（popstate）の続きなので、modal_open を数えない（新しい共有リンクの訪問＝deeplink と数えない）。
+// 対照として、共有リンクで開いたときは、データが遅れても deeplink と1回数える
+async function scenarioLateData(browser, base, vp) {
+  const page = await delayedStoresPage(browser, base, vp, 6000); // 全店のデータを6秒遅らせる
+  await page.goto(base + '/', { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await page.evaluate(id => { location.hash = '#store=' + id; }, FAR_STORE); // アドレス欄でハッシュを変えた（popstate が来る）
+  await sleep(700);
+  const waiting = await page.evaluate(() => ({ full: window.FULL_CATALOG_LOADED === true, pending: window.NB_PENDING_STORE || '', open: !!document.getElementById('ov') && document.getElementById('ov').classList.contains('open') }));
+  check(vp, 'S9-wait', '全店のデータが届く前は、50店の外の店のモーダルを開けずに待つ', !waiting.full && waiting.pending === FAR_STORE && !waiting.open, JSON.stringify(waiting));
+  const opened = await waitModal(page, true, 40000);
+  const st = await navState(page);
+  const info = await page.evaluate(sid => { const s = (window.ALL_STORES || []).find(x => x['ホットペッパーID'] === sid); return s ? s['店名'] : ''; }, FAR_STORE);
+  check(vp, 'S9-open', '全店のデータが届いたあと、待っていた店のモーダルが開く', opened && info && st.title.indexOf(info.split(' ')[0]) >= 0, `モーダル「${st.title}」/ データ「${info}」`);
+  check(vp, 'S9-hist', '開いても履歴を足さず、URL は #store=ID のまま', st.hash === '#store=' + FAR_STORE && st.length === 2, `hash=${st.hash} length=${st.length}`);
+  const evs = modalOpens(await events(page));
+  check(vp, 'S9-ga', '履歴の移動（popstate）のあとで開いた店は、データが遅れても modal_open を数えない', evs.length === 0, JSON.stringify(evs));
+  check(vp, 'S9-errors', '操作の間に例外が出ない', page.__log.pageErrors.length === 0, page.__log.pageErrors.join(' | '));
+  await page.close();
+  await page.__ctx.close();
+
+  const page2 = await delayedStoresPage(browser, base, vp, 3000);
+  await page2.goto(base + '/#store=' + FAR_STORE, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  const opened2 = await waitModal(page2, true, 40000);
+  const evs2 = modalOpens(await events(page2));
+  check(vp, 'S9-deeplink', '対照: 共有リンクで開いたときは、データが遅れても modal_open を deeplink で1回数える', opened2 && evs2.length === 1 && evs2[0].source === 'deeplink', JSON.stringify(evs2));
+  await page2.close();
+  await page2.__ctx.close();
+}
+
 // GA4: 履歴の変更で page_view が出るか。gtag.js だけ読み込み、計測の送信は記録して中断する（本番には何も送らない）
 async function scenarioGa4(browser, base, vp) {
   const page = await freshTop(browser, base, vp, '', { ga4: true });
@@ -575,7 +618,7 @@ async function scenarioGa4(browser, base, vp) {
       if (GA4_HISTORY) {
         await scenarioGa4(browser, base, vp);
       } else {
-        const scenarios = [scenarioDeepLink, scenarioBackForward, scenarioIdLess, scenarioScroll, scenarioCloseMethods, scenarioSwap, scenarioFilters, scenarioBadHashes]
+        const scenarios = [scenarioDeepLink, scenarioBackForward, scenarioIdLess, scenarioScroll, scenarioCloseMethods, scenarioSwap, scenarioFilters, scenarioBadHashes, scenarioLateData]
           .filter(fn => !ONLY || fn.name.toLowerCase().includes(ONLY));
         for (const fn of scenarios) {
           try { await fn(browser, base, vp); } catch (e) { check(vp, fn.name, `${fn.name} が最後まで動いた`, false, String(e && e.stack || e).split('\n').slice(0, 3).join(' / ')); }
