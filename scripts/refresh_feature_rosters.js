@@ -35,7 +35,7 @@
 const fs = require('fs');
 const path = require('path');
 const { loadStores } = require('./lib/load_stores');
-const { withReserveAsk } = require('./lib/feature_tracking');
+const { withReserveAsk, featureStoreOnclick } = require('./lib/feature_tracking');
 
 const ROOT = path.resolve(__dirname, '..');
 const CONFIG = path.join(ROOT, 'data', 'feature_rosters.json');
@@ -310,7 +310,6 @@ function renderStoreCard(entry, num, featureSlug) {
   const s = entry.store;
   const id = esc(s['ホットペッパーID']);
   const name = esc(s['店名']);
-  const nameForJs = String(s['店名'] || '').replace(/'/g, "\\'");
   const photo = esc(s['写真URL']);
   const area = esc(s['エリア'] || '');
   const genre = genreShort(s);
@@ -320,7 +319,8 @@ function renderStoreCard(entry, num, featureSlug) {
   const isNew = entry.isNew ? '<span class="store-new">今月の新顔</span>' : '';
   const meta = [area && `<span>${area}</span>`, genre && `<span>${genre}</span>`, sb && `<span class="score">${sb}</span>`, price && `<span>${price}</span>`].filter(Boolean).join('');
   const tags = tagsOf(s, 3).map(t => `<span class="store-tag">${esc(t)}</span>`).join('');
-  const track = `onclick="trackEvent('feature_store_click',{store:'${nameForJs}',feature:'${featureSlug}'})"`;
+  // 店の値は店名ではなく ID（I-08。集計で店名の表記ゆれと重複が出ないように、ほかの特集の部品と同じ featureStoreOnclick を使う）
+  const track = `onclick="${featureStoreOnclick(s['ホットペッパーID'], featureSlug)}"`;
   // 予約送客（ISSUE-149）。nbReserveExit はページ末尾の申告スニペットが定義する。無いページでも trackEvent で送る
   const nameAttr = esc(String(s['店名'] || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'"));
   const trackCta = `onclick="(window.nbReserveExit||trackEvent)('cta_click',{store_name:'${nameAttr}',store_id:'${id}',link_domain:'www.hotpepper.jp',location:'feature',feature:'${featureSlug}'})"`;
@@ -344,7 +344,6 @@ function renderShopCard(entry, num, featureSlug) {
   const s = entry.store;
   const id = esc(s['ホットペッパーID']);
   const name = esc(s['店名']);
-  const nameForJs = String(s['店名'] || '').replace(/'/g, "\\'");
   const photo = esc(s['写真URL']);
   const area = esc(s['エリア'] || '');
   const genre = genreShort(s);
@@ -354,7 +353,8 @@ function renderShopCard(entry, num, featureSlug) {
   const tagList = tagsOf(s, 2);
   if (sb) tagList.push(sb);
   const tags = tagList.map(t => `        <span class="tag">${esc(t)}</span>`).join('\n');
-  const track = `onclick="trackEvent('feature_store_click',{store:'${nameForJs}',feature:'${featureSlug}'})"`;
+  // 店の値は店名ではなく ID（I-08。集計で店名の表記ゆれと重複が出ないように、ほかの特集の部品と同じ featureStoreOnclick を使う）
+  const track = `onclick="${featureStoreOnclick(s['ホットペッパーID'], featureSlug)}"`;
   return `    <div class="shop-card">
       <img class="shop-card-photo" src="${photo}" alt="${name}" loading="lazy" decoding="async">
       <div class="shop-num">${nn}</div>
@@ -548,4 +548,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { sceneMatch, balanceScore, buildPool, selectRoster, replaceContainerInner, replaceItemList, touchDateModified, monthSeed };
+module.exports = { sceneMatch, balanceScore, buildPool, selectRoster, replaceContainerInner, replaceItemList, touchDateModified, monthSeed, renderStoreCard, renderShopCard };

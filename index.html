@@ -10227,7 +10227,8 @@ function openM(i, source) {
   // ハートボタン経由のクリックならモーダルを開かない
   if (window.event && window.event.target && window.event.target.closest && window.event.target.closest('.fav-btn')) return;
   var r = ALL_STORES[i];
-  trackEvent('modal_open', {store_name: r['店名'], genre: r['ジャンル'], area: r['エリア'], source: source || 'unknown'});
+  // store_id はほかの cta_click と同じ決まり（ホットペッパーID。無い店は空）。店ごとの集計に使う（I-08）
+  trackEvent('modal_open', {store_name: r['店名'], store_id: r['ホットペッパーID'] || '', genre: r['ジャンル'], area: r['エリア'], source: source || 'unknown'});
   var photo = r['写真URL'] || nbStoreFigure(r);
   var hpUrl = hotpepperUrl(r);
   renderMhi(r, photo);
