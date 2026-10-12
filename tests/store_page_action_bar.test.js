@@ -138,6 +138,21 @@ test('読み上げ: region に店名つきの名前。アイコンは隠す。�
   }
 });
 
+test('読み上げ: region の名前は、実際に出すボタンだけを並べる（電話が出ない店に「電話」を名乗らせない・P-313）', () => {
+  const nameOf = (html) => (html.match(/^<div class="nb-action-bar" role="region" aria-label="([^"]*)"/) || [])[1];
+  assert.equal(nameOf(bar({ ...HP, callOk: true })), 'テスト酒場の予約・電話・地図');
+  assert.equal(nameOf(bar({ ...HP })), 'テスト酒場の予約・地図');
+  assert.equal(nameOf(bar({ ...TB })), 'テスト酒場の予約・地図', '食べログだけの店も予約を出す');
+  assert.equal(nameOf(bar({ callOk: true })), 'テスト酒場の電話・地図');
+  assert.equal(nameOf(bar({})), 'テスト酒場の地図');
+  for (const over of [{ ...HP, callOk: true }, { ...HP }, { callOk: true }, {}]) {
+    const html = bar(over);
+    const named = nameOf(html);
+    assert.equal(/電話/.test(named), /nb-bar-tel/.test(html), `電話の名乗りとボタンの有無が合う: ${named}`);
+    assert.equal(/予約/.test(named), /nb-bar-reserve/.test(html), `予約の名乗りとボタンの有無が合う: ${named}`);
+  }
+});
+
 test('結果の行は、電話のボタンと同じ親の中に1つ（nbCallStore がそこへ書く）。電話が無い帯には置かない', () => {
   const withCall = bar({ ...HP, callOk: true });
   assert.equal((withCall.match(/<p class="nb-call-status" role="status"><\/p>/g) || []).length, 1);

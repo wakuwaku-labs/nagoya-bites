@@ -160,7 +160,9 @@ function buildActionBar({ name, hpId, hpUrl, tbUrl, placeId, callOk, gmUrl }) {
   }
   // 電話の結果（番号が無い・閉業・上限など）を出す行。ボタンと同じ親の中に置く（nbCallStore がそこへ書く）。読み上げのため先に空で置く
   if (callOk) parts.push('<p class="nb-call-status" role="status"></p>');
-  return `<div class="nb-action-bar" role="region" aria-label="${nameAttr}の予約・電話・地図">\n  ${parts.join('\n  ')}\n</div>`;
+  // 読み上げの名前は、実際に出すボタンだけを並べる（電話が出ない店に「電話」を名乗らせない）
+  const barNames = [reserve ? '予約' : '', callOk ? '電話' : '', '地図'].filter(Boolean).join('・');
+  return `<div class="nb-action-bar" role="region" aria-label="${nameAttr}の${barNames}">\n  ${parts.join('\n  ')}\n</div>`;
 }
 
 // 店舗ページに「なぜこの段階なのか」を検証項目ごとの観測事実付きで表示する。
