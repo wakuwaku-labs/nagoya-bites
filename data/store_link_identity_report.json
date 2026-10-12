@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T01:28:43.147Z",
+  "generatedAt": "2026-10-12T01:52:54.788Z",
   "run": {
     "hotpepper": {
       "attempted": 60,
@@ -16,9 +16,9 @@
     },
     "hotpepper": {
       "links": 4854,
-      "neverChecked": 2666,
+      "neverChecked": 2606,
       "unfetched": 0,
-      "lastFetchedAt": "2026-10-12T01:28:43.122Z"
+      "lastFetchedAt": "2026-10-12T01:52:54.759Z"
     }
   },
   "closures": {
@@ -150,6 +150,13 @@
           "エリア": "栄",
           "url": "https://www.hotpepper.jp/strJ001162002/",
           "検証日": "2026-10-12T01:28:37.702Z",
+          "エラー": "HTTP 404"
+        },
+        {
+          "店名": "焼肉&手打ち冷麺 二郎 椿町店",
+          "エリア": "名古屋駅",
+          "url": "https://www.hotpepper.jp/strJ001147414/",
+          "検証日": "2026-10-12T01:48:40.720Z",
           "エラー": "HTTP 404"
         }
       ],
@@ -617,6 +624,56 @@
       "検出タイトル": null,
       "エラー": "HTTP 404",
       "検証日": "2026-10-12T01:28:37.702Z"
+    },
+    {
+      "店名": "備長炭焼肉 竹千代",
+      "エリア": "栄",
+      "種別": "hotpepper",
+      "url": "https://www.hotpepper.jp/strJ000429016/",
+      "理由": "name-mismatch",
+      "検出タイトル": "竹千代",
+      "エラー": null,
+      "検証日": "2026-10-12T01:46:49.944Z"
+    },
+    {
+      "店名": "焼肉Garden MISAWA 久屋大通",
+      "エリア": "栄",
+      "種別": "hotpepper",
+      "url": "https://www.hotpepper.jp/strJ003851743/",
+      "理由": "name-mismatch",
+      "検出タイトル": "焼肉Garden MISAWA ミサワ 栄店",
+      "エラー": null,
+      "検証日": "2026-10-12T01:47:22.547Z"
+    },
+    {
+      "店名": "焼肉&手打ち冷麺 二郎 椿町店",
+      "エリア": "名古屋駅",
+      "種別": "hotpepper",
+      "url": "https://www.hotpepper.jp/strJ001147414/",
+      "理由": "fetch-error",
+      "検出タイトル": null,
+      "エラー": "HTTP 404",
+      "検証日": "2026-10-12T01:48:40.720Z"
+    },
+    {
+      "店名": "肉と地酒 元 gen 栄店",
+      "エリア": "栄",
+      "種別": "hotpepper",
+      "url": "https://www.hotpepper.jp/strJ001218368/",
+      "理由": "name-mismatch",
+      "検出タイトル": "元 名古屋栄店",
+      "エラー": null,
+      "検証日": "2026-10-12T01:49:08.457Z"
+    },
+    {
+      "店名": "一八 栄錦店",
+      "エリア": "栄",
+      "種別": "hotpepper",
+      "url": "https://www.hotpepper.jp/strJ003829329/",
+      "理由": "name-mismatch",
+      "検出タイトル": "らーめん居酒屋 一八",
+      "エラー": null,
+      "検証日": "2026-10-12T01:49:26.704Z"
     },
     {
       "店名": "和牛ホルモン焼 三國 本店",
