@@ -15,6 +15,7 @@ const path  = require('path');
 const { titleAreaLabel } = require('./scripts/lib/area_label');
 const siteChrome = require('./scripts/lib/site_chrome');
 const areaGenrePages = require('./scripts/lib/area_genre_pages');
+const stationNames = require('./scripts/lib/station_names');
 const { buildRelatedStores } = require('./scripts/lib/related_stores');
 const { loadPolicy: loadIgPostPolicy } = require('./scripts/lib/ig_post_policy');
 const { relabelForSlug } = require('./scripts/lib/feature_counts');
@@ -552,6 +553,58 @@ function buildEditorReason(s) {
   </section>`;
 }
 
+// I-14a（計画書 W6）: 最初の画面で「どんな店か・行けるか」が分かる要約。★に出典と口コミ件数を添え、駅からの距離と予算を 1 行に、
+// データのある条件を最大 4 つのラベルにする。どれも data/stores.json の項目から決める事実だけで、推測しない（制約10）。
+// 条件の判定と語はハブ（stores/area/）と同じ（scripts/lib/area_genre_pages.js の述語と data/area_genre_pages_policy.json の label）なので、
+// ハブの絞り込みと食い違わない。並びは「その店を選ぶ決め手になりやすい順」（計画書の例は 個室・飲み放題・30名以上）。
+// 戻り値: { note: '（Google・39件）' | '', facts: ['清水駅から徒歩3分', '予算3001～4000円'], chips: ['個室あり', …] }（無いものは空）
+const GLANCE_CHIP_ORDER = ['koshitsu', 'nomihodai', 'group30', 'lateNight', 'lunch', 'sunday', 'parking', 'nonSmoking', 'tabehodai', 'smokingOk'];
+const GLANCE_CHIP_MAX = 4;
+let __glanceLabels = null;
+function glanceConditionLabels() {
+  if (__glanceLabels) return __glanceLabels;
+  __glanceLabels = new Map();
+  try {
+    for (const c of areaGenrePages.loadPolicy().conditions || []) __glanceLabels.set(c.rule, c.label);
+  } catch (e) {
+    // ポリシーが読めない環境ではラベルを出さない（条件のラベルを推測で作らない）
+  }
+  return __glanceLabels;
+}
+// 駅からの距離。accessSummary の「○○駅から徒歩N分」のうち、○○が愛知県内の駅名リスト（data/station_names.json）にそのまま載っているものだけを出す。
+// 8 文字で切れた「ゴヤドーム前矢田」、「｢栄」のような記号つき、地名が混ざった抽出結果は出さない（間違った駅名を最初の画面に出さない）。
+// 旧駅名・通称は今の駅名にそろえる（ハブの最寄り駅の表と同じ scripts/lib/station_names.js）。
+function glanceWalk(access) {
+  const m = accessSummary(access).match(/^(.+)駅から徒歩(\d+)分$/);
+  if (!m) return '';
+  const token = stationNames.normalize(m[1].replace(/[〔〕\[\]【】「」『』]/g, ''));
+  if (!stationNames.loadSets().aichi.has(token)) return '';
+  const station = stationNames.canonicalStation(token);
+  return station ? `${station}駅から徒歩${m[2]}分` : '';
+}
+function buildStoreGlance(s) {
+  const score = String(s['Google評価'] || '').trim();
+  const reviews = parseInt(s['口コミ数'] || '', 10);
+  const note = score
+    ? `（Google${Number.isFinite(reviews) && reviews > 0 ? `・${reviews.toLocaleString('ja-JP')}件` : ''}）`
+    : '';
+
+  const facts = [];
+  const walk = glanceWalk(s['アクセス']);
+  if (walk) facts.push(walk);
+  const price = String(s['価格帯'] || '').trim();
+  if (price) facts.push(`予算${price}`);
+
+  const chips = [];
+  const labels = glanceConditionLabels();
+  for (const rule of GLANCE_CHIP_ORDER) {
+    if (chips.length >= GLANCE_CHIP_MAX) break;
+    const label = labels.get(rule);
+    if (label && areaGenrePages.storeMatchesCondition(s, rule)) chips.push(label);
+  }
+  return { note, facts, chips };
+}
+
 function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals) {
   const name     = s['店名'] || '';
   const genre    = s['ジャンル'] || '';
@@ -589,6 +642,13 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
   } : null;
   const ccsPending  = !!(rt && rt.tier === TRUST_POLICY.na.id);
   const ccsLabel = rt ? `${TRUST_POLICY.name} ${rt.tier}` : '';
+  // 最初の画面の要約（I-14a）: ★と出典・件数と口コミ信頼度の札を 1 行に、その下に距離と予算の 1 行、条件のラベル。中身の無い行は出さない
+  const glance = buildStoreGlance(s);
+  const glanceScoreHtml = score ? `<div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>${score}</div>${glance.note ? `<span class="score-note">${escapeHtml(glance.note)}</span>` : ''}` : '';
+  const glanceBadgeHtml = ccsLabel ? `<span class="ccs-badge${ccsPending ? ' ccs-badge-pending' : ''}" title="${escapeHtml(TRUST_POLICY.name)} ${escapeHtml(rt.tier)}：${escapeHtml(rtTierDef.label)}${ccsPending ? '（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）' : ''}">${escapeHtml(TRUST_POLICY.name)}<span class="ccs-tier ${rtTierDef.cssClass}">${escapeHtml(rt.tier)}</span></span>` : '';
+  const glanceRowHtml = (glanceScoreHtml || glanceBadgeHtml) ? `\n  <div class="store-glance-row">\n    ${[glanceScoreHtml, glanceBadgeHtml].filter(Boolean).join('\n    ')}\n  </div>` : '';
+  const glanceFactsHtml = glance.facts.length ? `\n    <p class="store-facts">${glance.facts.map(escapeHtml).join('・')}</p>` : '';
+  const glanceChipsHtml = glance.chips.length ? `\n    <ul class="store-chips" aria-label="この店の条件">${glance.chips.map(c => `<li>${escapeHtml(c)}</li>`).join('')}</ul>` : '';
   const point    = s['おすすめポイント'] || '';
   const tags     = (s['タグ'] || '').split(',').map(t => t.trim()).filter(Boolean);
   // HP縮小サムネの残留に備えた防衛的正規化（正規経路は build.js の normalizePhotoUrl）
@@ -901,6 +961,12 @@ body{min-height:100vh;}
 h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.8rem);line-height:var(--lh-display);color:var(--ink);margin-bottom:.6rem;}
 .score{display:inline-flex;align-items:center;gap:.3rem;font-size:var(--fs-sm);font-weight:600;color:#d4a017;margin-bottom:1.2rem;}
 .score svg{width:14px;height:14px;fill:#d4a017;}
+.store-glance{margin-bottom:1.2rem;}
+.store-glance-row{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;}
+.score-note{font-size:var(--fs-xs);color:var(--muted);}
+.store-facts{margin:.6rem 0 0;font-size:var(--fs-sm);line-height:var(--lh-ui);color:var(--text);}
+.store-chips{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;}
+.store-chips li{font-size:var(--fs-xs);letter-spacing:0;color:var(--muted);border:1px solid var(--border);padding:.3rem .7rem;border-radius:2px;background:var(--surface);}
 .ccs-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.25rem .7rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
 .ccs-badge.ccs-badge-pending{color:#767676;border-color:rgba(120,120,120,.35);background:rgba(120,120,120,.06);}
 .ccs-badge .ccs-tier{font-weight:700;font-size:var(--fs-xs);margin-left:.25rem;letter-spacing:0;}
@@ -985,9 +1051,7 @@ ${heroHtml}
 
   <div class="genre-badge">${genre}</div>
   <h1>${nameHtml}</h1>
-  <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
-    ${score ? `<div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>${score}</div>` : ''}
-    ${ccsLabel ? `<span class="ccs-badge${ccsPending ? ' ccs-badge-pending' : ''}" title="${escapeHtml(TRUST_POLICY.name)} ${escapeHtml(rt.tier)}：${escapeHtml(rtTierDef.label)}${ccsPending ? '（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）' : ''}">${escapeHtml(TRUST_POLICY.name)}<span class="ccs-tier ${rtTierDef.cssClass}">${escapeHtml(rt.tier)}</span></span>` : ''}
+  <div class="store-glance">${glanceRowHtml}${glanceFactsHtml}${glanceChipsHtml}
   </div>
 ${igLead ? igEmbedHtml + '\n' : ''}
   ${point ? `<div class="point-box"><p>${point}</p></div>` : ''}
@@ -1452,4 +1516,4 @@ if (require.main === module) {
   main().catch(err => { console.error('エラー:', err); process.exit(1); });
 }
 
-module.exports = { renderStorePage, buildGeo, mergeStoreWithCsv, buildEditorReason, toSlug, buildRelatedStores, buildRelatedFeatures, buildSitemap };
+module.exports = { renderStorePage, buildGeo, mergeStoreWithCsv, buildEditorReason, buildStoreGlance, toSlug, buildRelatedStores, buildRelatedFeatures, buildSitemap };
