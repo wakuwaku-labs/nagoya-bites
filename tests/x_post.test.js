@@ -205,3 +205,42 @@ test('失敗の行は同じ記事の最新1行だけ残す', async () => {
   assert.strictEqual(log.posts.length, 1);
   assert.strictEqual(log.posts[0].error_class, 'server');
 });
+
+// ── 見張り役（scripts/check_x_post_health.js）──────────────────────────
+const { check } = require('../scripts/check_x_post_health');
+
+function watchFixture({ mode = 'live', posts = [], health = null, liveSince = null }) {
+  const root = fixture({ mode });
+  const pol = JSON.parse(fs.readFileSync(path.join(root, 'data/x_post_policy.json'), 'utf8'));
+  fs.writeFileSync(path.join(root, 'data/x_post_policy.json'), JSON.stringify({ ...pol, liveSince }));
+  fs.writeFileSync(path.join(root, 'data/x_post_log.json'), JSON.stringify({ posts }));
+  if (health) fs.writeFileSync(path.join(root, 'data/x_post_health.json'), JSON.stringify({ last_run: health }));
+  return root;
+}
+
+test('見張り役: live でないときは鳴らさない', () => {
+  const r = check({ root: watchFixture({ mode: 'dry-run' }), now: new Date('2026-10-12T12:00:00Z') });
+  assert.strictEqual(r.ok, true);
+  assert.strictEqual(r.status, 'not_live');
+});
+
+test('見張り役: 猶予の間は鳴らさず、過ぎても投稿が無ければ鳴らす。投稿済みなら鳴らさない', () => {
+  const early = check({ root: watchFixture({}), now: new Date('2026-10-12T01:00:00Z') }); // 公開から2時間
+  assert.strictEqual(early.ok, true);
+  const late = check({ root: watchFixture({}), now: new Date('2026-10-12T12:00:00Z') }); // 公開から13時間
+  assert.strictEqual(late.ok, false);
+  assert.strictEqual(late.problems[0].kind, 'missing_post');
+  const posted = check({ root: watchFixture({ posts: [{ slug: entry.slug, status: 'posted' }] }), now: new Date('2026-10-12T12:00:00Z') });
+  assert.strictEqual(posted.ok, true);
+});
+
+test('見張り役: 鍵の失効などは猶予を待たずに鳴らし、直し方を本文に書く。試運転中の記事は数えない', () => {
+  const r = check({
+    root: watchFixture({ posts: [{ slug: entry.slug, status: 'failed', error_class: 'auth', reason: 'http_401' }] }),
+    now: new Date('2026-10-11T23:30:00Z'),
+  });
+  assert.strictEqual(r.problems[0].kind, 'human_action');
+  assert.match(require('../scripts/check_x_post_health').issueBody(r), /Access Token を作り直し/);
+  const before = check({ root: watchFixture({ liveSince: '2026-10-13' }), now: new Date('2026-10-12T12:00:00Z') });
+  assert.strictEqual(before.ok, true);
+});

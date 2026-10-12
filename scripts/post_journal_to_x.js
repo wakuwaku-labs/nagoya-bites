@@ -18,7 +18,7 @@
  *
  * 鍵（GitHub Secrets）: X_API_KEY / X_API_SECRET / X_ACCESS_TOKEN / X_ACCESS_TOKEN_SECRET
  *
- * 終了コード: 0 = 送った・送る必要が無かった・試運転 / 1 = 送れなかった（理由は出力と心拍に書く）
+ * 終了コード: 0 = 送った・送る必要が無かった・試運転（試運転は検査に落ちても 0）/ 1 = live で送れなかった（理由は出力と心拍に書く）
  *
  * 二重投稿を防ぐ仕組み:
  *   1. 台帳に posted / duplicate があれば送らない
@@ -272,6 +272,8 @@ function summaryMarkdown(r) {
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   const r = await run(args);
+  // 試運転では検査に落ちても終了コードは 0（結果は要約に出す。試運転の間に毎日ジョブの失敗メールを出さない）
+  if (r.mode !== 'live') r.exitCode = 0;
   if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summaryMarkdown(r));
   if (args.json) console.log(JSON.stringify(r, null, 2));
   else process.stdout.write(summaryMarkdown(r));
