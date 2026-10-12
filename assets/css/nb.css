@@ -119,8 +119,12 @@ header{
 .logo{
   font-family:var(--font-display);font-weight:400;font-size:1.25rem;
   letter-spacing:.2em;color:var(--ink);text-transform:uppercase;text-decoration:none;
+  position:relative;
 }
 .logo em{font-style:italic;color:var(--gold);}
+/* 押す所の高さを --tap-min にそろえる。見た目と文字の位置は変えず、透明な当たり判定だけを上下に足す
+   （display:inline-flex にすると「Nagoya」と「Bites」の間の空白が消えるので使わない）（I-26e） */
+.logo::after{content:"";position:absolute;left:0;right:0;top:50%;height:var(--tap-min);transform:translateY(-50%);}
 /* 横並びにするのはヘッダーの #main-nav だけ。素の nav に当てると、パンくず・フッターのリンク群・目次
    （どれも <nav>）まで横並び・中央寄せ・広い間隔になる（DSN-007） */
 #main-nav{display:flex;gap:1.75rem;align-items:center;}
@@ -129,6 +133,9 @@ nav a{
   letter-spacing:.02em;color:var(--muted);text-decoration:none;transition:color .2s;
 }
 nav a:hover,nav a.active{color:var(--text);}
+/* ヘッダーのナビは、押す所の高さを --tap-min にそろえる。透明な当たり判定を上下に足すだけで、字の位置も
+   現在地の下線（::after）の位置も変えない。幅 900px 以下のドロワーは、下の規則が高さを決める（I-26e） */
+@media(min-width:901px){#main-nav a::before{content:"";position:absolute;left:0;right:0;top:50%;height:var(--tap-min);transform:translateY(-50%);}}
 /* デスクトップでは主要5項目のみ表示。運営について・よくある質問・お問い合わせは
    モバイルドロワーにのみ表示する（ナビの視認性優先・情報はフッターにも常設） */
 .nav-secondary{display:none;}
