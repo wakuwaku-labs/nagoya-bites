@@ -115,8 +115,8 @@ function groupOf(rel) {
 // HEADER
 // ---------------------------------------------------------------------------
 
-function replaceHeader(html, { depth, active, withFav }) {
-  const rendered = chrome.renderHeader({ depth, active, withFav });
+function replaceHeader(html, { depth, active, withFav, skipLink, main }) {
+  const rendered = chrome.renderHeader({ depth, active, withFav, skipLink, main });
   const startMark = chrome.MARK('HEADER', 'START');
   const endMark = chrome.MARK('HEADER', 'END');
   if (html.includes(startMark) && html.includes(endMark)) {
@@ -232,8 +232,8 @@ function applyBreadcrumb(html, { depth, group }) {
 // FOOTER
 // ---------------------------------------------------------------------------
 
-function replaceFooter(html, { depth }) {
-  const rendered = chrome.renderFooter({ depth });
+function replaceFooter(html, { depth, main }) {
+  const rendered = chrome.renderFooter({ depth, main });
   const startMark = chrome.MARK('FOOTER', 'START');
   const endMark = chrome.MARK('FOOTER', 'END');
   if (html.includes(startMark) && html.includes(endMark)) {
@@ -250,6 +250,42 @@ function replaceFooter(html, { depth }) {
   next = next.replace(/\s*<script>\s*document\.getElementById\('yr'\)\.textContent\s*=\s*new Date\(\)\.getFullYear\(\);\s*<\/script>/, '');
   next = next.replace(/\s*<script>\s*\(function\(\)\s*\{\s*var fc\s*=\s*document\.getElementById\('fc-year'\);[\s\S]*?\}\)\(\);\s*<\/script>/, '');
   return { html: next, changed: next !== html };
+}
+
+// ---------------------------------------------------------------------------
+// MAIN（本文へスキップの飛び先）
+//
+// <main id="main-content"> の開きはヘッダーのブロックの最後、閉じはフッターのブロックの最初
+// （scripts/lib/site_chrome.js）。ページ自身が <main> を持つ所（contact・privacy-policy など）は
+// 2つ目を足さず、自前の <main> に同じ id を付ける。
+// ---------------------------------------------------------------------------
+
+function stripInert(html) {
+  return html.replace(/<script\b[\s\S]*?<\/script>/gi, '').replace(/<!--[\s\S]*?-->/g, '');
+}
+
+// ページ自身が <main> を持つか。ヘッダーのブロックが出す <main id="main-content"> は数えない
+function hasOwnMain(html) {
+  const s = html.indexOf(chrome.MARK('HEADER', 'START'));
+  const e = html.indexOf(chrome.MARK('HEADER', 'END'));
+  const rest = (s >= 0 && e > s) ? html.slice(0, s) + html.slice(e) : html;
+  return /<main[\s>]/.test(stripInert(rest));
+}
+
+// 自前の <main> に、本文へスキップの飛び先の id を足す。別の id が付いていれば触らず知らせる
+function ensureMainId(html) {
+  const m = /<main(\s[^>]*)?>/.exec(html);
+  if (!m) return { html, changed: false, error: 'own_main_not_found' };
+  const attrs = m[1] || '';
+  const idm = /\sid="([^"]*)"/.exec(attrs);
+  if (idm) return idm[1] === 'main-content' ? { html, changed: false } : { html, changed: false, error: 'main_id_conflict' };
+  const next = html.slice(0, m.index) + `<main${attrs} id="main-content">` + html.slice(m.index + m[0].length);
+  return { html: next, changed: true };
+}
+
+// 飛び先の id がページに1つだけあるか（0 だと「本文へスキップ」が空振りし、2 つ以上は重複 id になる）
+function countMainContentIds(html) {
+  return (stripInert(html).match(/\sid="main-content"/g) || []).length;
 }
 
 // ---------------------------------------------------------------------------
@@ -351,24 +387,19 @@ function stripLegacyChromeCss(html) {
 // main
 // ---------------------------------------------------------------------------
 
-function processFile(file) {
-  const rel = relPath(file);
+// ページ1枚分の変換（読み書きはしない）。processFile と tests/skip_link_main.test.js が使う
+function transform(original, rel) {
   const group = groupOf(rel);
   const depth = chrome.depthFor(rel);
   const active = chrome.activeKeyFor(rel);
   const withFav = rel === 'index.html';
 
-  const original = fs.readFileSync(file, 'utf8');
   let html = original;
   const errors = [];
 
-  if (group === 'stores' && path.basename(file) !== 'index.html') {
-    // 店舗詳細ページは gen-store-pages.js のテンプレート側で site_chrome を呼ぶ
-    // （このスクリプトでは header/footer 差し替えを行わず、legacy-css strip のみ対象外にする）
-    return { file: rel, changed: false, skipped: 'store_detail_handled_by_generator' };
-  }
-
-  const h = replaceHeader(html, { depth, active, withFav });
+  // トップは body の先頭（ほかの操作より前）に自前の「本文へスキップ」を持つ。自前の <main> を持つページは足さない
+  const own = hasOwnMain(html);
+  const h = replaceHeader(html, { depth, active, withFav, skipLink: rel !== 'index.html', main: !own });
   html = h.html;
   if (h.error) errors.push(h.error);
 
@@ -376,9 +407,17 @@ function processFile(file) {
   html = b.html;
   if (b.error) errors.push(b.error);
 
-  const f = replaceFooter(html, { depth });
+  const f = replaceFooter(html, { depth, main: !own });
   html = f.html;
   if (f.error) errors.push(f.error);
+
+  if (own) {
+    const mi = ensureMainId(html);
+    html = mi.html;
+    if (mi.error) errors.push(mi.error);
+  }
+  const idCount = countMainContentIds(html);
+  if (idCount !== 1) errors.push(`main_content_id_${idCount}`);
 
   const s = applyScript(html, rel);
   html = s.html;
@@ -388,12 +427,26 @@ function processFile(file) {
     const c = stripLegacyChromeCss(html);
     html = c.html;
   }
+  return { html, errors };
+}
 
-  const changed = html !== original;
-  if (changed && !dryRun && !checkMode) {
-    fs.writeFileSync(file, html);
+function processFile(file) {
+  const rel = relPath(file);
+  const group = groupOf(rel);
+
+  if (group === 'stores' && path.basename(file) !== 'index.html') {
+    // 店舗詳細ページは gen-store-pages.js のテンプレート側で site_chrome を呼ぶ
+    // （このスクリプトでは header/footer 差し替えを行わず、legacy-css strip のみ対象外にする）
+    return { file: rel, changed: false, skipped: 'store_detail_handled_by_generator' };
   }
-  return { file: rel, changed, errors: errors.length ? errors : undefined };
+
+  const original = fs.readFileSync(file, 'utf8');
+  const t = transform(original, rel);
+  const changed = t.html !== original;
+  if (changed && !dryRun && !checkMode) {
+    fs.writeFileSync(file, t.html);
+  }
+  return { file: rel, changed, errors: t.errors.length ? t.errors : undefined };
 }
 
 function main() {
@@ -426,4 +479,4 @@ function main() {
 if (require.main === module) main();
 
 // tests/site_chrome_entities.test.js が使う（パンくずの作り直しの単体テスト）
-module.exports = { extractBreadcrumbFromJsonLd, extractH1Text, buildBreadcrumbItems, applyBreadcrumb };
+module.exports = { extractBreadcrumbFromJsonLd, extractH1Text, buildBreadcrumbItems, applyBreadcrumb, hasOwnMain, ensureMainId, countMainContentIds, transform };
