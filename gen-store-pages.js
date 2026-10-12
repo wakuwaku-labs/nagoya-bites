@@ -437,6 +437,18 @@ function reviewTrustTier(s) {
   return rtSlim.t;
 }
 
+// I-18（U-73）: 構造化データの geo は、店の本当の座標だけを出す。
+// data/stores.json の 緯度・経度 は、build.js がエリアの中心点（座標精度=area）で埋めた値で、
+// 同じエリアの店が全部同じ点になる（4,939ページで39通り）。検索エンジンと生成AIに事実と違う位置を伝えるので出さない。
+// 個別の座標（座標精度=exact）か、緯度・経度が数として読めるときだけ出す。記録の無い店は出さない（推測しない）。
+function buildGeo(s) {
+  if (s['座標精度'] !== 'exact') return null;
+  const lat = parseFloat(s['緯度']);
+  const lng = parseFloat(s['経度']);
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+  return { '@type': 'GeoCoordinates', 'latitude': s['緯度'], 'longitude': s['経度'] };
+}
+
 // SEO-095: <title> に添える情報型サフィックス（予算・Google評価・深夜営業）。
 // 優先度順に積み、文字数上限で打ち切る（店名の長さがまちまちなため、短い店名の店ほど
 // 多くの事実が乗り、長い店名の店は自然に絞られる＝店名を削ってまで詰め込まない）。
@@ -564,8 +576,6 @@ function renderStorePage(s, slug, relatedStores, listedFeatures) {
   const pref     = s['都道府県'] || '愛知県';
   const locality = s['市区町村'] || '';
   const street   = s['住所'] || '';
-  const lat      = s['緯度'] || '';
-  const lng      = s['経度'] || '';
   const tel      = s['電話'] || '';
   const price    = s['価格帯'] || '';
   const hours    = s['営業時間'] || '';
@@ -617,6 +627,10 @@ function renderStorePage(s, slug, relatedStores, listedFeatures) {
     ? `${name}（${titleAreaLabel(area)}・${genre}・${titleFacts}）| NAGOYA BITES`
     : `${name}（${titleAreaLabel(area)}・${genre}）| NAGOYA BITES`;
   const desc     = buildDescription(s);
+  // U-72: 属性（"で囲む）と本文に入れる値。店名に " & < > ' があっても属性が途中で切れない
+  const nameHtml  = escapeHtml(name);
+  const titleHtml = escapeHtml(title);
+  const descHtml  = escapeHtml(desc);
   const priceRangeSym = mapPriceToSchemaRange(price);
 
   // Restaurant JSON-LD。aggregateRating は出さない（SEO-139・docs/decisions/0009）。
@@ -646,9 +660,8 @@ function renderStorePage(s, slug, relatedStores, listedFeatures) {
   else if (price) jsonLd.priceRange = price;
   if (hours) jsonLd.openingHours = hours;
   if (tel) jsonLd.telephone = tel;
-  if (lat && lng) {
-    jsonLd.geo = { '@type': 'GeoCoordinates', 'latitude': lat, 'longitude': lng };
-  }
+  const geo = buildGeo(s);
+  if (geo) jsonLd.geo = geo;
   if (hpUrl) jsonLd.acceptsReservations = true;
   const sameAs = [];
   if (igUrl) sameAs.push(igUrl);
@@ -738,7 +751,7 @@ function renderStorePage(s, slug, relatedStores, listedFeatures) {
   const heroOnerror = hpHeroMatch
     ? `if(!this.dataset.f){this.dataset.f=1;this.src='${photo}';}else{this.onerror=null;this.src='/assets/store-figures/_fallback.svg';}`
     : `this.onerror=null;this.src='/assets/store-figures/_fallback.svg'`;
-  const heroImgTag = `<img class="hero-img" src="${heroSrc}"${heroSrcset ? ` srcset="${heroSrcset}" sizes="100vw"` : ''} alt="${name}" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="${heroOnerror}">`;
+  const heroImgTag = `<img class="hero-img" src="${heroSrc}"${heroSrcset ? ` srcset="${heroSrcset}" sizes="100vw"` : ''} alt="${nameHtml}" loading="eager" decoding="async" fetchpriority="high" width="800" height="380" onerror="${heroOnerror}">`;
   // I-11（P-267）: Google マップの写真は撮影者を写真の右下に出す。クレジットのあるページだけ、
   // 写真を .hero-wrap で包み、CSS も足す（それ以外のページは1バイトも変えない）。
   const heroCreditHtml = renderPhotoCredit(s, photo);
@@ -788,7 +801,7 @@ ${igAllUrls.map(url => {
     const postM = url.match(/\/p\/([A-Za-z0-9_-]+)/);
     const code = reelM ? reelM[1] : (postM ? postM[1] : '');
     const embedSrc = reelM ? `https://www.instagram.com/reel/${code}/embed/` : `https://www.instagram.com/p/${code}/embed/`;
-    return `        <div class="ig-embed-box" data-ig-src="${embedSrc}"><a href="${url}" target="_blank" rel="noopener noreferrer">${name} の公式Instagram投稿を見る</a></div>`;
+    return `        <div class="ig-embed-box" data-ig-src="${embedSrc}"><a href="${url}" target="_blank" rel="noopener noreferrer">${nameHtml} の公式Instagram投稿を見る</a></div>`;
   }).join('\n')}
       </div>
 ${igAllUrls.length > 1 ? `      <button type="button" class="ig-carousel-nav ig-carousel-prev" aria-label="前の写真">‹</button>
@@ -818,11 +831,11 @@ ${igAllUrls.map((_, i) => `        <span class="ig-carousel-dot${i === 0 ? ' act
 <meta charset="UTF-8">
 ${gaSnippet()}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${title}</title>
-<meta name="description" content="${desc.replace(/"/g, '&quot;')}">
+<title>${titleHtml}</title>
+<meta name="description" content="${descHtml}">
 <link rel="canonical" href="${pageUrl}">
-<meta property="og:title" content="${title}">
-<meta property="og:description" content="${desc.replace(/"/g, '&quot;')}">
+<meta property="og:title" content="${titleHtml}">
+<meta property="og:description" content="${descHtml}">
 <meta property="og:type" content="restaurant">
 <meta property="og:url" content="${pageUrl}">
 ${(() => {
@@ -833,16 +846,16 @@ ${(() => {
   if (hasCustomOg) {
     const ogPng = `https://wsrv.nl/?url=${encodeURIComponent('https://nagoya-bites.com/assets/og/' + slug + '.svg')}&output=png&w=1200&h=630`;
     return `<meta property="og:image" content="${ogPng}">
-<meta property="og:image:alt" content="${name.replace(/"/g, '&quot;')} | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
-<meta name="twitter:image:alt" content="${name.replace(/"/g, '&quot;')} | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
+<meta property="og:image:alt" content="${nameHtml} | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
+<meta name="twitter:image:alt" content="${nameHtml} | NAGOYA BITES（業界人運営の名古屋グルメガイド）">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 `;
   }
   // フォールバック（自家製 SVG 未生成の店舗）
   return `<meta property="og:image" content="${photo}">
-<meta property="og:image:alt" content="${name.replace(/"/g, '&quot;')} の店舗写真">
-<meta name="twitter:image:alt" content="${name.replace(/"/g, '&quot;')} の店舗写真">
+<meta property="og:image:alt" content="${nameHtml} の店舗写真">
+<meta name="twitter:image:alt" content="${nameHtml} の店舗写真">
 ${/imgfp\.hotp\.jp\/.+_480\.jpg/.test(photo) ? '<meta property="og:image:width" content="480">\n<meta property="og:image:height" content="320">\n' :
   /imgfp\.hotp\.jp\/.+_238\.jpg/.test(photo) ? '<meta property="og:image:width" content="238">\n<meta property="og:image:height" content="158">\n' :
   /[?&]w=(\d+)&h=(\d+)/.test(photo) ? (m=>`<meta property="og:image:width" content="${m[1]}">\n<meta property="og:image:height" content="${m[2]}">\n`)(photo.match(/[?&]w=(\d+)&h=(\d+)/)) :
@@ -851,8 +864,8 @@ ${/imgfp\.hotp\.jp\/.+_480\.jpg/.test(photo) ? '<meta property="og:image:width" 
 })()}<meta property="og:site_name" content="NAGOYA BITES">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="${title}">
-<meta name="twitter:description" content="${desc.replace(/"/g, '&quot;')}">
+<meta name="twitter:title" content="${titleHtml}">
+<meta name="twitter:description" content="${descHtml}">
 <meta name="twitter:image" content="${(() => {
   const ogSvgPath = path.join(__dirname, 'assets', 'og', `${slug}.svg`);
   if (fs.existsSync(ogSvgPath)) {
@@ -958,7 +971,7 @@ ${heroHtml}
   ].filter(Boolean), { depth: 1 })}
 
   <div class="genre-badge">${genre}</div>
-  <h1>${name}</h1>
+  <h1>${nameHtml}</h1>
   <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
     ${score ? `<div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>${score}</div>` : ''}
     ${ccsLabel ? `<span class="ccs-badge${ccsPending ? ' ccs-badge-pending' : ''}" title="${escapeHtml(TRUST_POLICY.name)} ${escapeHtml(rt.tier)}：${escapeHtml(rtTierDef.label)}${ccsPending ? '（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）' : ''}">${escapeHtml(TRUST_POLICY.name)}<span class="ccs-tier ${rtTierDef.cssClass}">${escapeHtml(rt.tier)}</span></span>` : ''}
@@ -1420,4 +1433,4 @@ if (require.main === module) {
   main().catch(err => { console.error('エラー:', err); process.exit(1); });
 }
 
-module.exports = { renderStorePage, mergeStoreWithCsv, buildEditorReason, toSlug, buildRelatedStores, buildRelatedFeatures, buildSitemap };
+module.exports = { renderStorePage, buildGeo, mergeStoreWithCsv, buildEditorReason, toSlug, buildRelatedStores, buildRelatedFeatures, buildSitemap };
