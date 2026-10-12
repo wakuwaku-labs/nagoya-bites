@@ -30,3 +30,20 @@ test('誘導ページは判別でき、誘導先を取り出せる', () => {
   assert.ok(h.includes('http-equiv="refresh"'));
   assert.ok(!SO.isRedirectStub('<html></html>'));
 });
+
+test('readH1: 逃がして書かれた店名を元に戻して読み、& を含む店名でも孤児の誘導先に結べる', () => {
+  assert.strictEqual(SO.readH1('<h1>ROCCA &amp; FRIENDS</h1>'), 'ROCCA & FRIENDS');
+  assert.strictEqual(SO.readH1('<h1 class="x">TT&quot; a &lt;Store&gt; it&#39;s</h1>'), 'TT" a <Store> it\'s');
+  // 二重に戻さない（&amp;lt; は &lt; のまま）
+  assert.strictEqual(SO.readH1('<h1>A &amp;lt; B</h1>'), 'A &lt; B');
+  assert.strictEqual(SO.readH1('<p>no h1</p>'), '');
+  const r = SO.classifyOrphans({
+    orphans: ['OLD'],
+    activeNameBySlug: new Map([['NEW', 'Cafe & Bar ゆきっち']]),
+    mergedKeptBySlug: {},
+    manualNames: [],
+    readName: () => SO.readH1('<h1>Cafe &amp; Bar ゆきっち</h1>'),
+    linkedSlugs: new Set(),
+  });
+  assert.deepStrictEqual(r.redirect.OLD, { to: 'NEW', why: 'samename', name: 'Cafe & Bar ゆきっち' });
+});
