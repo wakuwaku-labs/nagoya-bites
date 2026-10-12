@@ -1,0 +1,280 @@
+{
+  "date": "2026-10-12",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "中川区「なかがわ 街仲食堂」開店、シニアが握るおむすび550円と3時間営業を読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 98,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 5
+      },
+      "search_intent_links": [
+        {
+          "kw": "中川区・港区",
+          "feature": "stores/area/nakagawa-minato/index.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,予約,シーン,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 2件 → +3",
+          "一次情報源（公式発表/一次報道） 2件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 147字 +4",
+          "title 40字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「中川区」+4",
+          "シーン語がリードのみ「業界人」+1",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -5 / search_intent -5 / writability -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "介護事業者が名古屋で食堂を開く理由、売上を分け合う組合方式の人件費構造",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 86,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 3,
+        "search_intent": 1
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 7件 (オペ,人件費,仕込み,業界,構造,慣習,相場) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 121字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "主役店・コラムIDなし → 3"
+        ],
+        "search_intent": [
+          "エリア語がリードのみ「中川区・港区」+1",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "86点（自動公開ライン 100点）。主な不足: topicality -13 / search_intent -9 / novelty -2"
+    },
+    {
+      "id": "c3",
+      "title_draft": "丸の内「すし昇」カウンター9席、予約が取れない理由を業界人が読む",
+      "verdict": "HOLD",
+      "total": 60,
+      "breakdown": {
+        "recency": 0,
+        "topicality": 8,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "sources に date が無い（日付のない出典は最新性を主張できない）"
+        ],
+        "topicality": [
+          "独立ドメイン 2件 → 8",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 6件 (席,予約,シーン,接待,デート,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 78字 +2",
+          "title 32字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「丸の内」+4",
+          "タイトルにシーン語「カウンター」+4",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "98点（自動公開ライン 100点）。主な不足: topicality -5 / search_intent -5 / writability -2",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "中川区「なかがわ 街仲食堂」開店、シニアが握るおむすび550円と3時間営業を読む",
+      "lead_draft": "名古屋市中川区吉津に10月10日、地域のシニア19人がおむすびを握る「なかがわ 街仲食堂 by ジーバーFOOD」が開店しました。おむすび1個セット550円・2個セット880円、営業は11時〜14時の3時間だけ。売上をメンバーで分け合う組合方式の食堂を、価格帯とオペの設計から業界人が読みます。",
+      "angle": "価格帯（1個セット550円と2個セット880円の差額）、注文後に握るオペと3時間営業の回転、一人ランチ・子連れのシーン適性、予約不要の使い方を業界人視点で読む",
+      "main_store": {
+        "name": "なかがわ 街仲食堂 by ジーバーFOOD",
+        "id": "",
+        "area": "中川区",
+        "genre": "おむすび・定食"
+      },
+      "sources": [
+        {
+          "label": "PR TIMES（株式会社ジーバー）10月10日オープン",
+          "url": "https://prtimes.jp/main/html/rd/p/000000030.000138955.html",
+          "date": "2026-10-09"
+        },
+        {
+          "label": "PR TIMES（株式会社ジーバー）オープン決定",
+          "url": "https://prtimes.jp/main/html/rd/p/000000028.000138955.html",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "ナゴヤドット 新店情報",
+          "url": "https://nagoyadot.jp/new/107404/",
+          "date": "2026-10-12"
+        },
+        {
+          "label": "スムタビ",
+          "url": "https://sumutabi.net/27928",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "CAMPFIRE",
+          "url": "https://camp-fire.jp/projects/980659/view",
+          "date": "2026-10-12"
+        },
+        {
+          "label": "公式Instagram",
+          "url": "https://www.instagram.com/gbfood_nakagawa/"
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "title_draft": "介護事業者が名古屋で食堂を開く理由、売上を分け合う組合方式の人件費構造",
+      "lead_draft": "中川区で10月10日に開店した「なかがわ 街仲食堂」は、デイサービスを運営する会社が主体の食堂です。時給ではなく売上をメンバーで分け合う組合方式は、飲食店の人件費の常識とどこが違うのか。営業3時間・メニュー3種の設計を業界の構造から読みます。",
+      "angle": "人件費を固定費でなく売上連動にする構造、仕込みとオペを絞った3時間営業の相場観、業界の慣習との違い",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "中川区",
+        "genre": ""
+      },
+      "sources": [
+        {
+          "label": "PR TIMES",
+          "url": "https://prtimes.jp/main/html/rd/p/000000030.000138955.html",
+          "date": "2026-10-09"
+        },
+        {
+          "label": "CAMPFIRE",
+          "url": "https://camp-fire.jp/projects/980659/view",
+          "date": "2026-10-12"
+        },
+        {
+          "label": "スムタビ",
+          "url": "https://sumutabi.net/27928",
+          "date": "2026-10-01"
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "丸の内「すし昇」カウンター9席、予約が取れない理由を業界人が読む",
+      "lead_draft": "丸の内ヒルズ3階のカウンター9席の寿司店「すし昇」。夜は二部制の曜日があり、キャンセルは当日100%。席数と予約規定から、予約困難の構造を業界人が読みます。",
+      "angle": "席数9とカウンター二部制の回転、予約規定、接待とデートのシーン適性",
+      "main_store": {
+        "name": "すし昇",
+        "id": "",
+        "area": "丸の内",
+        "genre": "寿司"
+      },
+      "sources": [
+        {
+          "label": "一休",
+          "url": "https://restaurant.ikyu.com/115063/highlights"
+        },
+        {
+          "label": "hamoni",
+          "url": "https://hamoni.jp/shop/XpqiEdfYIDSgwXBSHbrx"
+        }
+      ]
+    }
+  ]
+}
