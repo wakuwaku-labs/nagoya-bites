@@ -111,7 +111,7 @@ function buildRelatedHtml(currentFile, posts, postsMeta) {
     if (!meta) continue;
     lines.push(`    <a class="related-link" href="${f}">${shortLabel(meta.title)}</a>`);
   }
-  lines.push('    <a class="related-link is-primary" href="index.html">Journal 一覧</a>');
+  lines.push('    <a class="related-link is-primary" href="index.html">ジャーナル一覧</a>');
   // タイトルにジャン/シーンが含まれれば、対応する特集へのトピックリンクを1本追加（回遊強化）
   const topic = matchTopicFeature(postsMeta[currentFile] && postsMeta[currentFile].title);
   if (topic) {

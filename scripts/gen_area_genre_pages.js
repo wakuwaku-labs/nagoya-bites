@@ -374,7 +374,7 @@ ${genreList}
 
   return renderShell({
     depth: 2, active: 'top',
-    breadcrumb: [{ href: 'index.html', label: 'TOP' }, { label: 'エリア×ジャンルで探す' }],
+    breadcrumb: [{ href: 'index.html', label: 'トップ' }, { label: 'エリア×ジャンルで探す' }],
     title: titleFor({ type: 'root' }),
     desc: `名古屋の飲食店をエリア×ジャンルで絞り込めるページ一覧。${areaPages.length}エリア・実データのみで構成。`,
     canonicalPath: 'stores/area/index.html',
@@ -426,7 +426,7 @@ ${grid}
 
   return renderShell({
     depth: 3, active: 'top',
-    breadcrumb: [{ href: 'index.html', label: 'TOP' }, { href: 'stores/area/index.html', label: 'エリア×ジャンルで探す' }, { label: page.area.label }],
+    breadcrumb: [{ href: 'index.html', label: 'トップ' }, { href: 'stores/area/index.html', label: 'エリア×ジャンルで探す' }, { label: page.area.label }],
     title: titleFor(page), desc: descriptionFor(page), canonicalPath: page.url,
     jsonLdList: jsonLd, bodyHtml: body, styleExtra: HUB_STYLE,
   });
@@ -576,7 +576,7 @@ ${faqHtml}
   const jsonLdList = [itemListLd, breadcrumbLd(bcItems)];
 
   const breadcrumb = [
-    { href: 'index.html', label: 'TOP' },
+    { href: 'index.html', label: 'トップ' },
     { href: 'stores/area/index.html', label: 'エリア×ジャンルで探す' },
     { href: `stores/area/${page.area.slug}/index.html`, label: page.area.label },
   ];

@@ -13,8 +13,8 @@
  *
  * index.html から実物の関数（buildGenreTabs・buildCapTabs・buildRanking・showNotifyToast）を取り出し、偽の DOM の上で動かす。
  * 実ブラウザでの確認は docs/qa/uiux-2026-10/e2e_labels.js。
- * 範囲の外（別の課題 I-07b）: フッターの「Daily Journal」は共通クローム（scripts/lib/site_chrome.js）の表記で、
- * 直すと約6,000ページが変わるため、ここでは直さない。
+ * 範囲の外: フッターの「Daily Journal」・パンくず先頭の「TOP」など、全ページ共通の表記は共通クローム
+ * （scripts/lib/site_chrome.js）が持つので、別の課題 I-07b で直した（tests/chrome_japanese_labels.test.js）。
  */
 
 const test = require('node:test');

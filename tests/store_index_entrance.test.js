@@ -114,15 +114,15 @@ function breadcrumbLd(html) {
 const pageUrlOf = (page) => `${BASE}/${page.url}`;
 const norm = (u) => u.replace(/^https:\/\/nagoya-bites\.com\/index\.html$/, `${BASE}/`);
 
-test('ハブ: 種類ごとのパンくずの形（TOP › エリア×ジャンルで探す › エリア › ジャンル › 条件）', () => {
+test('ハブ: 種類ごとのパンくずの形（トップ › エリア×ジャンルで探す › エリア › ジャンル › 条件）', () => {
   const byType = (t) => ctx.pages.find((p) => p.type === t);
   const root = byType('root'), area = byType('area'), genre = byType('genre'), cond = byType('condition');
   assert.ok(root && area && genre && cond, '4種類のページが計画に含まれる');
 
-  assert.deepEqual(visibleCrumbs(render(root)).map((c) => c.label), ['TOP', 'エリア×ジャンルで探す']);
-  assert.deepEqual(visibleCrumbs(render(area)).map((c) => c.label), ['TOP', 'エリア×ジャンルで探す', area.area.label]);
-  assert.deepEqual(visibleCrumbs(render(genre)).map((c) => c.label), ['TOP', 'エリア×ジャンルで探す', genre.area.label, genre.genre.label]);
-  assert.deepEqual(visibleCrumbs(render(cond)).map((c) => c.label), ['TOP', 'エリア×ジャンルで探す', cond.area.label, cond.genre.label, cond.cond.label]);
+  assert.deepEqual(visibleCrumbs(render(root)).map((c) => c.label), ['トップ', 'エリア×ジャンルで探す']);
+  assert.deepEqual(visibleCrumbs(render(area)).map((c) => c.label), ['トップ', 'エリア×ジャンルで探す', area.area.label]);
+  assert.deepEqual(visibleCrumbs(render(genre)).map((c) => c.label), ['トップ', 'エリア×ジャンルで探す', genre.area.label, genre.genre.label]);
+  assert.deepEqual(visibleCrumbs(render(cond)).map((c) => c.label), ['トップ', 'エリア×ジャンルで探す', cond.area.label, cond.genre.label, cond.cond.label]);
 
   assert.deepEqual(breadcrumbLd(render(area)).map((i) => i.name), ['NAGOYA BITES', 'エリア×ジャンルで探す', area.area.label]);
   assert.deepEqual(breadcrumbLd(render(genre)).map((i) => i.name), ['NAGOYA BITES', 'エリア×ジャンルで探す', genre.area.label, genre.genre.label]);

@@ -969,7 +969,7 @@ ${heroHtml}
 
 <div class="container">
   ${siteChrome.renderBreadcrumb([
-    { href: 'index.html', label: 'TOP' },
+    { href: 'index.html', label: 'トップ' },
     hubUrl ? { href: `${siteChrome.prefix(1)}${hubUrl}`, label: `${area}の${genre}` }
       : areaHub ? { href: `${siteChrome.prefix(1)}${areaHub.url}`, label: areaHubLabel }
       : genre ? { href: `../#genre=${encodeURIComponent(genre)}`, label: genre } : null,

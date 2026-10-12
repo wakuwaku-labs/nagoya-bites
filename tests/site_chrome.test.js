@@ -59,7 +59,7 @@ test('site_chrome.js: renderFooter includes all 3 groups and the feedback-nudge 
 });
 
 test('site_chrome.js: renderBreadcrumb escapes HTML-special characters in labels', () => {
-  const html = chrome.renderBreadcrumb([{ href: 'index.html', label: 'TOP' }, { label: 'A & B <script>' }], { depth: 0 });
+  const html = chrome.renderBreadcrumb([{ href: 'index.html', label: 'トップ' }, { label: 'A & B <script>' }], { depth: 0 });
   assert.match(html, /A &amp; B &lt;script&gt;/);
   assert.doesNotMatch(html, /<script>/);
 });

@@ -110,7 +110,7 @@ test('エリアがハブの区分に当たらない店: 死んだ #area= の項�
   assert.deepEqual(moreLink(html), { href: `../index.html#genre=${encodeURIComponent('居酒屋')}`, text: '← どこの区分にも当たらない町の居酒屋をもっと見る' });
 });
 
-test('エリアもジャンルもハブに当たらず、ジャンルが空の店: パンくずは TOP › 店名 だけで、位置は連番', () => {
+test('エリアもジャンルもハブに当たらず、ジャンルが空の店: パンくずは トップ › 店名 だけで、位置は連番', () => {
   const html = render({ 'エリア': 'どこの区分にも当たらない町', 'ジャンル': '' });
   const items = crumbs(html);
   assert.deepEqual(items.map((x) => x.name), ['NAGOYA BITES', 'テスト酒場']);
