@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3LCZNGZPWJ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}function nbInternal(){try{return localStorage.getItem('nb_internal')==='1';}catch(e){return false;}}(function(){try{var p=new URLSearchParams(location.search);if(p.get('nb_owner')==='1'){localStorage.setItem('nb_internal','1');history.replaceState(null,'',location.pathname);}}catch(e){}gtag('js',new Date());if(nbInternal()){gtag('config','G-3LCZNGZPWJ',{traffic_type:'internal'});}else{gtag('config','G-3LCZNGZPWJ');}})();function trackEvent(name,params){if(nbInternal())return;if(typeof gtag==='function')gtag('event',name,params||{});}
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ページが見つかりません | NAGOYA BITES</title>
+<meta name="description" content="お探しのページは見つかりませんでした。店舗検索かエリア別の一覧から、お探しの店をたどれます。">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/nb.css">
+<style>
+.nb-notfound{max-width:var(--container-prose);margin:0 auto;padding:calc(var(--header-h) + var(--rhythm-md)) 1.5rem var(--rhythm-md);}
+.nb-notfound h1{font-size:var(--fs-2xl);margin:var(--sp-2) 0 var(--sp-4);}
+.nb-notfound-lead{font-size:var(--fs-md);color:var(--muted);line-height:1.9;margin:0 0 var(--sp-6);}
+.nb-notfound-actions{display:flex;flex-wrap:wrap;gap:var(--sp-3);margin:0 0 var(--sp-5);}
+</style>
+</head>
+<body>
+
+<!-- NB-CHROME:HEADER:START -->
+<a href="#main-content" class="skip-link">本文へスキップ</a>
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+<header>
+  <a class="logo" href="/index.html">Nagoya <em>Bites</em></a>
+  <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav id="main-nav" aria-label="サイト内ナビゲーション">
+    <a href="/index.html">店舗を探す</a>
+    <a href="/features/index.html">特集</a>
+    <a href="/journal/index.html">ジャーナル</a>
+    <a href="/features/editorial-policy.html">編集規約</a>
+    <a href="/about.html">運営について</a>
+    <a href="/faq.html" class="nav-secondary">よくある質問</a>
+    <a href="/contact.html" class="nav-secondary">お問い合わせ</a>
+  </nav>
+</header>
+<!-- NB-CHROME:HEADER:END -->
+
+<main class="nb-notfound" id="main-content">
+  <p class="nb-kicker">404</p>
+  <h1>ページが見つかりません</h1>
+  <p class="nb-notfound-lead">アドレスが違うか、ページが移動・削除された可能性があります。お探しの店は、次のどちらかからたどれます。</p>
+  <div class="nb-notfound-actions">
+    <a class="nb-btn nb-btn--primary" href="/index.html" onclick="trackEvent('internal_link_click',{link_url:'/index.html',block:'not_found',to:'search'})">店舗を検索する</a>
+    <a class="nb-btn nb-btn--secondary" href="/stores/area/index.html" onclick="trackEvent('internal_link_click',{link_url:'/stores/area/index.html',block:'not_found',to:'area'})">エリアから探す</a>
+  </div>
+  <a class="nb-more" href="/features/index.html" onclick="trackEvent('internal_link_click',{link_url:'/features/index.html',block:'not_found',to:'features'})">特集記事を読む</a>
+</main>
+
+<!-- NB-CHROME:FOOTER:START -->
+<footer class="nb-footer">
+  <div class="nb-footer-inner">
+    <div class="nb-footer-brand">
+      <a class="logo" href="/index.html">Nagoya <em>Bites</em></a>
+      <p class="nb-footer-tagline">現役の飲食店マネージャーが編集する、広告ゼロ・PR記事ゼロの名古屋・愛知専門グルメガイド。</p>
+    </div>
+    <nav class="nb-footer-group" aria-label="探す">
+      <p class="nb-footer-title">探す</p>
+      <a href="/index.html">店舗を探す</a>
+      <a href="/stores/area/index.html">エリア別 店舗一覧</a>
+      <a href="/index.html#scene-index">目的から探す</a>
+      <a href="/features/nagoya-gourmet-guide.html">名古屋グルメ完全ガイド</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="読む">
+      <p class="nb-footer-title">読む</p>
+      <a href="/features/index.html">特集記事</a>
+      <a href="/journal/index.html">ジャーナル</a>
+      <a href="/features/review-trust.html">口コミ信頼度の読み方</a>
+      <a href="/features/no-fake-reviews.html">桜ゼロ宣言</a>
+    </nav>
+    <nav class="nb-footer-group" aria-label="編集部">
+      <p class="nb-footer-title">編集部</p>
+      <a href="/features/editorial-policy.html">編集規約</a>
+      <a href="/about.html">運営について</a>
+      <a href="/faq.html">よくある質問</a>
+      <a href="/contact.html">お問い合わせ</a>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+  <div class="nb-footer-bottom">
+    <p class="nb-footer-copy">© <span data-nb-year>2026</span> NAGOYA BITES</p>
+    <p class="nb-footer-policy">掲載料ゼロ・PR記事ゼロ</p>
+    <p class="feedback-nudge">情報の誤りやご意見は <a href="/index.html#feedback">こちら</a> からお寄せください。</p>
+  </div>
+</footer>
+<!-- NB-CHROME:FOOTER:END -->
+
+<!-- NB-CHROME:SCRIPT:START -->
+<script>
+window.toggleNav = window.toggleNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(!nav)return;
+  var open=nav.classList.toggle('open');
+  if(ov)ov.classList.toggle('open',open);
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+};
+window.closeNav = window.closeNav || function(){
+  var nav=document.getElementById('main-nav'),ov=document.getElementById('nav-overlay'),btn=document.getElementById('hamburger-btn');
+  if(nav)nav.classList.remove('open');
+  if(ov)ov.classList.remove('open');
+  if(btn)btn.setAttribute('aria-expanded','false');
+};
+document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=new Date().getFullYear();});
+</script>
+<!-- NB-CHROME:SCRIPT:END -->
+</body>
+</html>

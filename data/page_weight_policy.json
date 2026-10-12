@@ -18,15 +18,15 @@
       "note": "トップは全店の索引（約717KB）を HTML に持つ。I-25 で索引を軽くしたら、この上限を実測に合わせて下げる"
     },
     "static": {
-      "maxBytes": 32000,
+      "maxBytes": 28000,
       "measured": {
         "n": 6,
-        "p50": 17891,
-        "p99": 24688,
-        "max": 24688,
-        "maxPage": "manual_tagging.html"
+        "p50": 16640,
+        "p99": 19231,
+        "max": 19231,
+        "maxPage": "faq.html"
       },
-      "note": "about・faq・contact・privacy-policy など"
+      "note": "about・faq・contact・privacy-policy・404 など。2026-10-13（P-316）に、作業用ページ（手動タグ付け管理画面ほか）を公開の外へ出して 404.html を足したので、この種別だけ測り直した（旧: 最大 24,688 バイトは作業用ページ）"
     },
     "feature": {
       "maxBytes": 85000,

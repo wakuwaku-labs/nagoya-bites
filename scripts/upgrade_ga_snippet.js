@@ -6,7 +6,7 @@
  *   - index.html（既に手動更新済みの場合はスキップ）
  *   - features/*.html
  *   - stores/*.html
- *   - about.html, contact.html, faq.html, manual_tagging.html
+ *   - about.html, contact.html, faq.html
  *
  * 置換条件: 既に outbound_click のリスナーを含むファイルはスキップ（冪等）。
  */
@@ -28,7 +28,7 @@ const ROOT = path.resolve(__dirname, '..');
 function collectTargets() {
   const targets = [];
   // index.html + 直下の静的ページ
-  ['index.html', 'about.html', 'contact.html', 'faq.html', 'manual_tagging.html'].forEach(f => {
+  ['index.html', 'about.html', 'contact.html', 'faq.html'].forEach(f => {
     const p = path.join(ROOT, f);
     if (fs.existsSync(p)) targets.push(p);
   });

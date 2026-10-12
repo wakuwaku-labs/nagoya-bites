@@ -75,7 +75,7 @@ function listHtmlFilesRecursive(dir) {
 }
 
 function collectTargets() {
-  const rootFiles = ['index.html', 'about.html', 'faq.html', 'contact.html', 'privacy-policy.html']
+  const rootFiles = ['index.html', 'about.html', 'faq.html', 'contact.html', 'privacy-policy.html', '404.html']
     .map(f => path.join(ROOT, f))
     .filter(f => fs.existsSync(f));
   const featureFiles = listHtmlFiles(path.join(ROOT, 'features'));
