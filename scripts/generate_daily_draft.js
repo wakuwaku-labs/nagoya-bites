@@ -595,7 +595,7 @@ function buildHeroImageSection(input) {
 
   return `<figure class="art-hero-img"${attrs}>
   <img src="${esc(imgUrl)}" alt="${esc(input.title)}" loading="lazy" decoding="async">
-  <figcaption class="art-img-credit">Photo: ${creditHtml}</figcaption>
+  <figcaption class="art-img-credit">写真: ${creditHtml}</figcaption>
 </figure>`;
 }
 

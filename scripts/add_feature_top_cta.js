@@ -247,7 +247,7 @@ function buildCta(stores, slug) {
   // ここではマークアップのみを返す（ページごとの <style> 埋め込みはしない）。
   return `${START}
 <aside class="topcta" aria-label="この特集の注目店">
-  <div class="topcta-head">EDITORS' PICK</div>
+  <div class="topcta-head">この特集の注目店</div>
   <div class="topcta-sub">本文を読む前に動きたい方へ。編集部が上位に挙げた${stores.length}軒の詳細と予約はこちらから。</div>
   <ul class="topcta-list">${items}
   </ul>

@@ -207,6 +207,45 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_phone_links.js', '--check']],
 });
+// ── UI・UX 改修の後戻りを止める検査 4 本（I-35・SOFT で開始）──────────────────────────
+// 直したものが、後の変更で戻らないように見張る。直す前は赤のままで、夜間QA の報告に件数が出る
+// （hard にしない＝毎晩 Issue を起票しない）。対応する直しが入って 0 件になった検査から hard に上げる。
+//   selection-wording      … オーナーの指示（2026-10-11）。直すのは P-237 #2 の決定のあと
+//   inline-style-font-size … 直すのは I-26b（特集の style 属性の小さな文字）
+//   image-sources          … 直すのは I-09（wsrv.nl をやめるか・P-237 #5）
+//   page-weight            … 今は緑。ページが気づかないうちに重くなるのを止める
+checks.push({
+  id: 'selection-wording',
+  title: '店の選び方に、人が全店を選んだと読める言い方が無い（I-35 ①・オーナーの指示）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_selection_wording.js', '--check']],
+});
+checks.push({
+  id: 'inline-style-font-size',
+  title: 'style 属性の文字の大きさが床（12px）を割っていない（I-35 ②・制約12）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_design_system.js', '--inline-style', '--check']],
+});
+checks.push({
+  id: 'image-sources',
+  title: '画像を外部の変換サービス（wsrv.nl）経由で配っていない（I-35 ③・I-09）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_image_sources.js', '--check']],
+});
+checks.push({
+  id: 'page-weight',
+  title: 'ページ種別ごとの HTML の重さが上限を超えていない（I-35 ④）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_page_weight.js', '--check']],
+});
 // HotPepper の取得に取りこぼしが無いか（ISSUE-143・SOFT で開始）。1,000件の上限を超える中エリアは小エリアごとに
 //    取り直し、API のエラーはやり直す。それでも取れなかった回は build.js が data/hotpepper_fetch_log.json に残す
 checks.push({
