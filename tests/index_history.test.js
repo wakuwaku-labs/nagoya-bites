@@ -622,7 +622,9 @@ test('静的: openM は開いた直後に nbModalHistoryOpen を呼び、source=
   const iHook = src.indexOf("nbModalHistoryOpen(r['ホットペッパーID'] || '', source);");
   const iLock = src.indexOf("document.body.style.overflow = 'hidden';");
   assert.ok(iOpen >= 0 && iHook > iOpen && iLock > iHook, '開く → 履歴 → スクロール固定 の順');
-  assert.ok(src.indexOf("closeM({swap:true});setTimeout(function(){openM('+rs3.i+',\\'modal_reco\\');},50)") > 0, '似たお店は swap で切り替える');
+  // 似たお店のカードの描画は NB-MODAL-RELATED の nbRelatedHtml（I-16b）。openM はそれを呼び、カードは swap で切り替える
+  assert.ok(/nbRelatedHtml\(r\)/.test(src), 'openM は似た店の区画を nbRelatedHtml で作る');
+  assert.ok(INDEX.indexOf("closeM({swap:true});setTimeout(function(){openM(' + it.pos + ',\\'modal_reco\\');},50)") > 0, '似たお店は swap で切り替える');
 });
 
 test('静的: closeM は開いていたときだけ履歴を戻し、fromPop / swap では触れない', () => {

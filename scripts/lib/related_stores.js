@@ -8,6 +8,10 @@
  * 同じ判定を使えるように、判定の中身（NB-RELATED-CORE の区画）は ES5・require 無しの純粋な関数だけで書く。
  * 区画の外（このファイルの下半分）は Node 側の道具（ポリシーの読み込み・店舗ページのスラグへの対応づけ）。
  *
+ * クイックビューへの埋め込み（I-16b）: 区画の中身とエリア・ジャンルの対応表（ポリシーの match）を index.html の
+ * `NB-RELATED-EMBED` に書き写す。直接直さず `node scripts/lib/related_stores.js --apply index.html` を実行する
+ * （`--check` はずれがあれば exit 1。tests/modal_related.test.js も同じ検査をする）。
+ *
  * 選び方（理由を1行で言える店だけを出す。回遊を増やすためだけの関係の薄いおすすめはしない）:
  *   前提: 同じエリア群・同じジャンル（scripts/lib/area_genre_pages.js のハブと同じ判定。新しい基準は作らない）
  *   1段目: 予算帯が同じか隣（HotPepper の価格帯の段）  → 「予算が近い」
@@ -88,6 +92,7 @@ function nbRelBuildIndex(stores, ctx) {
     if (!s || !s['店名'] || !nbRelIsOpen(s)) continue;
     var f = nbRelFeatures(s, ctx);
     if (!f.area || !f.genre) continue;
+    f.pos = i; // 入力の並びの中の位置（クイックビューは ALL_STORES の番号で店を開く）
     var k = f.area.slug + '::' + f.genre.slug;
     if (!cells[k]) cells[k] = [];
     cells[k].push(f);
@@ -132,7 +137,7 @@ function nbRelPick(store, cells, ctx, max) {
     var x = cand[j], reasons = [];
     if (x.st === 0) reasons.push('同じ' + nbRelStationLabel(me.station));
     if (x.tier === 1) reasons.push('予算が近い');
-    items.push({ store: x.c.store, tier: x.tier, sameStation: x.st === 0, reasons: reasons });
+    items.push({ store: x.c.store, pos: x.c.pos, tier: x.tier, sameStation: x.st === 0, reasons: reasons });
   }
   if (!items.length) return null;
   return { area: me.area, genre: me.genre, basis: nbRelBasis(me.area, me.genre), items: items };
@@ -198,6 +203,56 @@ function buildRelatedStores(store, slugged, ownSlug, policy) {
 }
 let _defaultCtx = null;
 
+// ================================================================
+// index.html（クイックビュー）への埋め込み
+// ================================================================
+const fs = require('fs');
+
+const CORE_START = '// NB-RELATED-CORE:START';
+const CORE_END = '// NB-RELATED-CORE:END';
+const EMBED_START = '// NB-RELATED-EMBED:START';
+const EMBED_END = '// NB-RELATED-EMBED:END';
+const EMBED_ANCHOR = '// NB-MODAL-FEATURES:START'; // 初めて書くときは、この印の手前に入れる
+
+function coreSource() {
+  const src = fs.readFileSync(__filename, 'utf8');
+  const a = src.indexOf(CORE_START);
+  const b = src.indexOf(CORE_END);
+  if (a < 0 || b < a) throw new Error('NB-RELATED-CORE の区画が見つからない');
+  return src.slice(a, b + CORE_END.length);
+}
+
+// ポリシーの match（原文 → 群）を、クイックビューの areaOf / genreOf が引く表にする（normalizeArea / normalizeGenre と同じ: 後に書いた方が勝つ）
+function tablesOf(policy) {
+  const table = (entries) => {
+    const t = {};
+    for (const e of entries) for (const raw of e.match || []) t[raw] = [e.slug, e.label];
+    return t;
+  };
+  return { areas: table(policy.areas), genres: table(policy.genres) };
+}
+
+function renderEmbed(policy) {
+  const p = policy || policyOf();
+  return [
+    EMBED_START + '（scripts/lib/related_stores.js が書く。ここを直接直さない: node scripts/lib/related_stores.js --apply index.html）',
+    coreSource(),
+    'var NB_REL_TABLES = ' + JSON.stringify(tablesOf(p)) + ';',
+    EMBED_END,
+  ].join('\n');
+}
+
+const EMBED_RE = /\/\/ NB-RELATED-EMBED:START[\s\S]*?\/\/ NB-RELATED-EMBED:END/;
+
+/** html の埋め込みを今の内容にそろえる。印が無ければ NB-MODAL-FEATURES の手前に入れる。 */
+function applyToHtml(html, policy) {
+  const block = renderEmbed(policy);
+  if (EMBED_RE.test(html)) return html.replace(EMBED_RE, () => block);
+  const i = html.indexOf(EMBED_ANCHOR);
+  if (i < 0) throw new Error('埋め込み先（NB-MODAL-FEATURES の印）が見つからない');
+  return html.slice(0, i) + block + '\n' + html.slice(i);
+}
+
 module.exports = {
   NB_REL_MAX,
   NB_REL_HEADING,
@@ -211,4 +266,29 @@ module.exports = {
   nbRelBasis,
   makeCtx,
   buildRelatedStores,
+  coreSource,
+  tablesOf,
+  renderEmbed,
+  applyToHtml,
+  EMBED_RE,
 };
+
+if (require.main === module) {
+  const args = process.argv.slice(2);
+  const check = args.includes('--check');
+  const files = args.filter((a) => !a.startsWith('--'));
+  if ((!check && !args.includes('--apply')) || !files.length) {
+    console.error('使い方: node scripts/lib/related_stores.js --apply|--check <html...>');
+    process.exit(2);
+  }
+  let stale = 0;
+  for (const f of files) {
+    const html = fs.readFileSync(f, 'utf8');
+    const next = applyToHtml(html);
+    if (next === html) { console.log('変更なし: ' + f); continue; }
+    if (check) { console.log('要更新: ' + f); stale++; continue; }
+    fs.writeFileSync(f, next);
+    console.log('更新: ' + f);
+  }
+  process.exit(stale ? 1 : 0);
+}

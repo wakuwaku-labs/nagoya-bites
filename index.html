@@ -644,7 +644,7 @@ body.search-query-active .card-why{display:flex;}
 .mb-gm .mbi img.brand-fav{transform:scale(1.3);}
 .mbl{font-family:var(--font-body);font-size:var(--fs-sm);font-weight:500;letter-spacing:0;color:var(--text);line-height:1;}
 /* ── SEO-004 モーダル内 関連特集・関連店舗 ── */
-/* 関連: 「この店が載っている特集」は編集の厚みとして本文寄り、「似た雰囲気のお店」は末尾 */
+/* 関連: 「この店が載っている特集」は編集の厚みとして本文寄り、「似た条件のお店」は末尾 */
 .modal-related-features{display:flex;flex-direction:column;}
 .modal-related-features a{font-size:var(--fs-md);color:var(--text);text-decoration:none;padding:.65rem 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:1rem;line-height:1.5;min-height:var(--tap-min);}
 .modal-related-features a:first-child{border-top:0;}
@@ -657,6 +657,8 @@ body.search-query-active .card-why{display:flex;}
 .modal-rsc-body{display:block;padding:.55rem .7rem .7rem;}
 .modal-rsc-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:var(--fs-sm);font-weight:600;line-height:1.4;overflow:hidden;}
 .modal-rsc-meta{display:block;margin-top:.2rem;font-size:var(--fs-xs);color:var(--dim);line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.modal-rsc-reason{display:block;margin-top:.2rem;font-size:var(--fs-xs);color:var(--dim);line-height:1.4;}
+.modal-related-note{margin:0 0 .6rem;font-size:var(--fs-xs);color:var(--dim);line-height:1.5;}
 .modal-rsc:hover{border-color:var(--gold);box-shadow:0 6px 16px rgba(122,92,16,.12);}
 @media(max-width:640px){.modal-rsc{flex:0 0 148px;}}
 /* ── モーダル内 CTA（主: 予約＝塗り1系統 / 副: 地図＝アウトライン）。at-a-glance 直下に置き、
@@ -10275,6 +10277,166 @@ function nbCallBtnHtml(r, ctaEsc, iconOnly) {
 // 押した結果（番号が無い・閉業・上限など）を出す行。読み上げのため、先に空の行を置いておく
 function nbCallStatusHtml(r) { return nbCanCall(r) ? '<p class="nb-call-status" role="status"></p>' : ''; }
 
+// NB-RELATED-EMBED:START（scripts/lib/related_stores.js が書く。ここを直接直さない: node scripts/lib/related_stores.js --apply index.html）
+// NB-RELATED-CORE:START
+var NB_REL_MAX = 6;
+// HotPepper の価格帯（「2001～3000円」など13区分）の上限の値。上限がこれより大きい区分ほど高い段になる
+var NB_REL_BUDGET_EDGES = [500, 1000, 1500, 2000, 3000, 4000, 5000, 7000, 10000, 15000, 20000, 30000];
+
+// 価格帯の文字列 → 段（0〜12）。読めなければ null。area_genre_pages.js の parsePriceBand と同じ読み方
+function nbRelBudgetRank(price) {
+  if (typeof price !== 'string' || !price) return null;
+  var nums = price.match(/\d[\d,]*/g);
+  if (!nums || nums.length === 0) return null;
+  var vals = [];
+  for (var i = 0; i < nums.length; i++) vals.push(parseInt(nums[i].replace(/,/g, ''), 10));
+  var hi;
+  if (vals.length === 1 && (/^[～〜]/.test(price) || /以下/.test(price))) hi = vals[0];
+  else if (vals.length === 1 && (/[～〜]$/.test(price) || /以上/.test(price))) hi = null;
+  else hi = vals[vals.length - 1];
+  if (hi === null) return NB_REL_BUDGET_EDGES.length;
+  var k = 0;
+  while (k < NB_REL_BUDGET_EDGES.length && hi > NB_REL_BUDGET_EDGES[k]) k++;
+  return k;
+}
+
+// FNV-1a（32bit）。乱数ではなく文字列から決まる値なので、同じデータからは同じ順になる
+function nbRelHash(str) {
+  var h = 0x811c9dc5;
+  for (var i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
+  }
+  return h >>> 0;
+}
+
+// ctx = { areaOf(store) → {slug,label}|null, genreOf(store) → {slug,label}|null }
+function nbRelKey(store) {
+  return store['ホットペッパーID'] || ('N:' + (store['店名'] || ''));
+}
+
+function nbRelIsOpen(store) {
+  var st = store['営業ステータス'];
+  return st !== 'CLOSED_TEMPORARILY' && st !== 'CLOSED_PERMANENTLY';
+}
+
+function nbRelFeatures(store, ctx) {
+  return {
+    store: store,
+    area: ctx.areaOf(store),
+    genre: ctx.genreOf(store),
+    rank: nbRelBudgetRank(store['価格帯']),
+    station: store['最寄駅'] || '',
+    key: nbRelKey(store),
+    name: store['店名'] || ''
+  };
+}
+
+// 候補の索引（エリア群×ジャンルごと）。閉店・一時休業の店と、エリア群かジャンルが決まらない店は入れない
+function nbRelBuildIndex(stores, ctx) {
+  var cells = {};
+  for (var i = 0; i < stores.length; i++) {
+    var s = stores[i];
+    if (!s || !s['店名'] || !nbRelIsOpen(s)) continue;
+    var f = nbRelFeatures(s, ctx);
+    if (!f.area || !f.genre) continue;
+    f.pos = i; // 入力の並びの中の位置（クイックビューは ALL_STORES の番号で店を開く）
+    var k = f.area.slug + '::' + f.genre.slug;
+    if (!cells[k]) cells[k] = [];
+    cells[k].push(f);
+  }
+  return cells;
+}
+
+function nbRelBasis(area, genre) {
+  return '同じ' + area.label + 'の' + genre.label;
+}
+
+function nbRelStationLabel(station) {
+  return /駅$/.test(station) ? station : station + '駅';
+}
+
+// store に似た店を最大 max 軒選ぶ。選べなければ null。
+// 戻り値: { area, genre, basis, items: [{ store, tier, sameStation, reasons[] }] }
+function nbRelPick(store, cells, ctx, max) {
+  var me = nbRelFeatures(store, ctx);
+  if (!me.area || !me.genre) return null;
+  var pool = cells[me.area.slug + '::' + me.genre.slug];
+  if (!pool) return null;
+  var cand = [];
+  for (var i = 0; i < pool.length; i++) {
+    var c = pool[i];
+    if (c.store === store || c.key === me.key || c.name === me.name) continue;
+    var dist = (me.rank !== null && c.rank !== null) ? Math.abs(me.rank - c.rank) : 99;
+    cand.push({
+      c: c,
+      tier: dist <= 1 ? 1 : 2,
+      st: (me.station && c.station === me.station) ? 0 : 1,
+      dist: dist,
+      h: nbRelHash(me.key + '|' + c.key)
+    });
+  }
+  cand.sort(function (a, b) {
+    return (a.tier - b.tier) || (a.st - b.st) || (a.dist - b.dist) || (a.h - b.h) ||
+      (a.c.key < b.c.key ? -1 : a.c.key > b.c.key ? 1 : 0);
+  });
+  var items = [];
+  for (var j = 0; j < cand.length && items.length < (max || NB_REL_MAX); j++) {
+    var x = cand[j], reasons = [];
+    if (x.st === 0) reasons.push('同じ' + nbRelStationLabel(me.station));
+    if (x.tier === 1) reasons.push('予算が近い');
+    items.push({ store: x.c.store, pos: x.c.pos, tier: x.tier, sameStation: x.st === 0, reasons: reasons });
+  }
+  if (!items.length) return null;
+  return { area: me.area, genre: me.genre, basis: nbRelBasis(me.area, me.genre), items: items };
+}
+
+// 区画の見出しと注記（店舗ページとクイックビューで同じ文言にする）
+var NB_REL_HEADING = '似た条件のお店';
+function nbRelNote(pick) {
+  var anyClose = false;
+  for (var i = 0; i < pick.items.length; i++) if (pick.items[i].tier === 1) anyClose = true;
+  return 'この店と' + pick.basis + (anyClose ? 'のうち、予算が近い店を先に並べています。' : 'です。');
+}
+// NB-RELATED-CORE:END
+var NB_REL_TABLES = {"areas":{"名古屋（名古屋駅/西区/中村区）":["meieki","名駅（名古屋駅）"],"名古屋駅":["meieki","名駅（名古屋駅）"],"名駅":["meieki","名駅（名古屋駅）"],"名古屋市中村区":["meieki","名駅（名古屋駅）"],"名古屋市西区":["meieki","名駅（名古屋駅）"],"名古屋市中村区名駅":["meieki","名駅（名古屋駅）"],"名古屋（中村区・名駅）":["meieki","名駅（名古屋駅）"],"西区":["meieki","名駅（名古屋駅）"],"栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄":["nishiki-fushimi","錦・伏見・丸の内"],"丸の内":["nishiki-fushimi","錦・伏見・丸の内"],"名古屋市中区錦":["nishiki-fushimi","錦・伏見・丸の内"],"錦":["nishiki-fushimi","錦・伏見・丸の内"],"東桜":["nishiki-fushimi","錦・伏見・丸の内"],"栄(ミナミ)/矢場町/大須/上前津":["yabacho-osu","矢場町・大須・上前津"],"大須":["yabacho-osu","矢場町・大須・上前津"],"栄":["sakae","栄"],"名古屋市中区":["sakae","栄"],"名古屋市中区栄":["sakae","栄"],"大曽根･千種･今池･池下･守山区":["chikusa-imaike","千種・今池・大曽根"],"名古屋市千種区":["chikusa-imaike","千種・今池・大曽根"],"名古屋市千種区覚王山":["chikusa-imaike","千種・今池・大曽根"],"名古屋市東区":["chikusa-imaike","千種・今池・大曽根"],"東区":["chikusa-imaike","千種・今池・大曽根"],"名古屋市東区筒井":["chikusa-imaike","千種・今池・大曽根"],"緑区・南区・天白区・瑞穂区":["midori-tempaku","緑区・南区・天白区・瑞穂区"],"名古屋市南区":["midori-tempaku","緑区・南区・天白区・瑞穂区"],"金山・神宮前・熱田区":["kanayama","金山・熱田"],"金山":["kanayama","金山・熱田"],"熱田":["kanayama","金山・熱田"],"本山・覚王山・藤が丘":["kakuozan","覚王山・本山・藤が丘"],"覚王山":["kakuozan","覚王山・本山・藤が丘"],"中川区・港区":["nakagawa-minato","中川区・港区"],"名古屋（中川区）":["nakagawa-minato","中川区・港区"],"中川区":["nakagawa-minato","中川区・港区"],"鶴舞・八事・御器所":["tsurumai-yagoto","鶴舞・八事・御器所"],"鶴舞":["tsurumai-yagoto","鶴舞・八事・御器所"],"名古屋市昭和区":["tsurumai-yagoto","鶴舞・八事・御器所"],"昭和区":["tsurumai-yagoto","鶴舞・八事・御器所"]},"genres":{"居酒屋":["izakaya","居酒屋"],"和食":["washoku","和食"],"日本料理":["washoku","和食"],"焼肉・ホルモン":["yakiniku","焼肉・ホルモン"],"焼肉":["yakiniku","焼肉・ホルモン"],"ダイニングバー・バル":["dining-bar","ダイニングバー・バル"],"カフェ・スイーツ":["cafe","カフェ・スイーツ"],"カフェ":["cafe","カフェ・スイーツ"],"イタリアン・フレンチ":["italian-french","イタリアン・フレンチ"],"フレンチ":["italian-french","イタリアン・フレンチ"],"フランス料理":["italian-french","イタリアン・フレンチ"],"イタリアン":["italian-french","イタリアン・フレンチ"],"バー・カクテル":["bar","バー・カクテル"],"中華":["chinese","中華"],"洋食":["yoshoku","洋食"],"アジア・エスニック料理":["asian","アジア・エスニック料理"],"韓国料理":["korean","韓国料理"],"ラーメン":["ramen","ラーメン"],"カラオケ・パーティ":["karaoke","カラオケ・パーティ"],"創作料理":["sosaku","創作料理"],"お好み焼き・もんじゃ":["okonomiyaki","お好み焼き・もんじゃ"],"その他グルメ":["other","その他グルメ"],"寿司":["other","その他グルメ"],"うなぎ":["other","その他グルメ"],"各国料理":["world","各国料理"]}};
+// NB-RELATED-EMBED:END
+// NB-MODAL-RELATED:START
+// 似た店の区画（I-16b）。店の選び方は店舗ページと同じ（上の NB-RELATED-EMBED＝scripts/lib/related_stores.js）。ここは表の引き方と描画だけ
+function nbRelLookup(table, raw) {
+  var k = String(raw == null ? '' : raw).replace(/^\s+|\s+$/g, '');
+  return Object.prototype.hasOwnProperty.call(table, k) ? { slug: table[k][0], label: table[k][1] } : null;
+}
+var NB_REL_CTX = {
+  areaOf: function (s) { return nbRelLookup(NB_REL_TABLES.areas, s['エリア']); },
+  genreOf: function (s) { return nbRelLookup(NB_REL_TABLES.genres, s['ジャンル']); }
+};
+var nbRelCache = null;
+// 全店の索引。ALL_STORES が入れ替わったとき（TOP50 → 全件）だけ作り直し、モーダルを開くたびには作らない
+function nbRelCells() {
+  if (!nbRelCache || nbRelCache.src !== ALL_STORES || nbRelCache.n !== ALL_STORES.length) {
+    nbRelCache = { src: ALL_STORES, n: ALL_STORES.length, cells: nbRelBuildIndex(ALL_STORES, NB_REL_CTX) };
+  }
+  return nbRelCache.cells;
+}
+function nbRelatedHtml(r) {
+  var pick = nbRelPick(r, nbRelCells(), NB_REL_CTX, NB_REL_MAX);
+  if (!pick) return '';
+  var cards = pick.items.map(function (it) {
+    var rst = it.store, name = nbEscHtml(rst['店名'] || '');
+    var photo = rst['写真URL'] || nbStoreFigure(rst);
+    return '<button class="modal-rsc" onclick="closeM({swap:true});setTimeout(function(){openM(' + it.pos + ',\'modal_reco\');},50)" aria-label="' + name + 'の詳細を見る">'
+      + '<img class="modal-rsc-img" src="' + nbImage(photo, 480) + '" srcset="' + nbSrcset(photo, [240, 480]) + '" sizes="160px" alt="' + name + '" loading="lazy" decoding="async" width="160" height="120" onerror="nbImgFallback(this)">'
+      + '<span class="modal-rsc-body"><span class="modal-rsc-name">' + name + '</span>'
+      + (rst['価格帯'] ? '<span class="modal-rsc-meta">' + nbEscHtml(rst['価格帯']) + '</span>' : '')
+      + (it.reasons.length ? '<span class="modal-rsc-reason">' + nbEscHtml(it.reasons.join('・')) + '</span>' : '')
+      + '</span></button>';
+  }).join('');
+  return '<div class="m-section-title">' + NB_REL_HEADING + '</div>'
+    + '<p class="modal-related-note">' + nbEscHtml(nbRelNote(pick)) + '</p>'
+    + '<div class="modal-related-stores">' + cards + '</div>';
+}
+// NB-MODAL-RELATED:END
 // NB-MODAL-FEATURES:START
 // I-15b: クイックビューの特集の区画。
 //  ・「この店が載っている特集」は、実際に載っている特集だけ（LOCAL_STORES の 掲載特集 ＝ 特集の掲載店からの逆引き。
@@ -10638,35 +10800,14 @@ function openM(i, source) {
   var isMFav = getFavs().indexOf(storeName) !== -1;
   mfavBtn.classList.toggle('faved', isMFav);
   mfavBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="' + (isMFav ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7.5-4.5-10-9.5C.5 7 3.5 3 8 3c2.5 0 3.5 1.5 4 2 .5-.5 1.5-2 4-2 4.5 0 7.5 4 6 8.5C19.5 16.5 12 21 12 21z"/></svg>';
-  // ── SEO-004 関連店舗（ジャンルから自動マッチ）。特集の区画は I-15b の nbRenderModalFeatures ──
+  // ── 似た店（I-16b）。選び方は店舗ページと同じ（nbRelatedHtml）。特集の区画は I-15b の nbRenderModalFeatures ──
   (function(){
-    var relStores=[];
-    if(ALL_STORES&&ALL_STORES.length>1){
-      var rg=(r['ジャンル']||'').split(/[・\/]/)[0].trim();
-      for(var si2=0;si2<ALL_STORES.length&&relStores.length<12;si2++){
-        var rs2=ALL_STORES[si2];
-        if(!rs2||rs2['店名']===r['店名'])continue;
-        if(rg&&(rs2['ジャンル']||'').includes(rg))relStores.push({i:si2,s:rs2});
-      }
-    }
     var relEl=document.getElementById('modal-related');
     nbRenderModalFeatures(r);
-    if(relEl){
-      if(relStores.length>0){
-        relEl.innerHTML='<div class="m-section-title">似た雰囲気のお店</div>'
-          +'<div class="modal-related-stores">'+relStores.map(function(rs3){
-            var rst=rs3.s, rsn=rst['店名']||'';
-            var rsAlt=rsn.replace(/"/g,'&quot;');
-            var rsPhoto=rst['写真URL']||nbStoreFigure(rst);
-            return '<button class="modal-rsc" onclick="closeM({swap:true});setTimeout(function(){openM('+rs3.i+',\'modal_reco\');},50)" aria-label="'+rsAlt+'の詳細を見る">'
-              +'<img class="modal-rsc-img" src="'+nbImage(rsPhoto,480)+'" srcset="'+nbSrcset(rsPhoto,[240,480])+'" sizes="160px" alt="'+rsAlt+'" loading="lazy" decoding="async" width="160" height="120" onerror="nbImgFallback(this)">'
-              +'<span class="modal-rsc-body"><span class="modal-rsc-name">'+rsn+'</span>'
-              +'<span class="modal-rsc-meta">'+((rst['ジャンル']||'').split('・')[0])+((rst['エリア'])?' · '+rst['エリア']:'')+'</span></span>'
-              +'</button>';
-          }).join('')+'</div>';
-        relEl.style.display='';
-      } else { relEl.innerHTML=''; relEl.style.display='none'; }
-    }
+    if(!relEl)return;
+    var relHtml=nbRelatedHtml(r);
+    relEl.innerHTML=relHtml;
+    relEl.style.display=relHtml?'':'none';
   })();
   // ── Restaurant JSON-LD（モーダル開時に動的注入 / LLMO・AI検索最適化）──
   (function() {
