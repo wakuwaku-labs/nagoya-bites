@@ -2103,6 +2103,10 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
         <div class="m-section-title">この店が載っている特集</div>
         <div class="modal-related-features" id="m-related-features"></div>
       </section>
+      <section class="m-section" id="m-readmore-section" style="display:none">
+        <div class="m-section-title">あわせて読みたい特集</div>
+        <div class="modal-related-features" id="m-readmore-features"></div>
+      </section>
       <!-- REVIEW_TRUST_BOX_START -->
       <div class="cross-check-box" id="m-cross-check" style="display:none">
         <span class="mpoint-label">口コミ信頼度</span>
@@ -10271,6 +10275,74 @@ function nbCallBtnHtml(r, ctaEsc, iconOnly) {
 // 押した結果（番号が無い・閉業・上限など）を出す行。読み上げのため、先に空の行を置いておく
 function nbCallStatusHtml(r) { return nbCanCall(r) ? '<p class="nb-call-status" role="status"></p>' : ''; }
 
+// NB-MODAL-FEATURES:START
+// I-15b: クイックビューの特集の区画。
+//  ・「この店が載っている特集」は、実際に載っている特集だけ（LOCAL_STORES の 掲載特集 ＝ 特集の掲載店からの逆引き。
+//    店舗カードのバッジ、店舗ページの区画と同じ根拠）。無ければ区画ごと出さない。
+//  ・タグ・ジャンル・エリアから推定した特集は、別の区画「あわせて読みたい特集」に出す（載っている特集は繰り返さない）。
+//    推定の規則は SEO-004 のまま（全店に出る末尾の「名古屋グルメ完全ガイド」を含む）。
+var NB_MODAL_FEATURE_RULES = [
+  {t:function(s){return /接待/.test(s['タグ']||'');},u:'features/settai-guide.html',l:'接待で失敗しない名古屋の店選び'},
+  {t:function(s){return /個室/.test(s['タグ']||'');},u:'features/private-room.html',l:'個室のある名古屋グルメ9選'},
+  {t:function(s){return /宴会|忘年会|飲み放題/.test(s['タグ']||'');},u:'features/banquet.html',l:'名古屋の宴会・忘年会15選'},
+  {t:function(s){return /女子会/.test(s['タグ']||'');},u:'features/girls-party.html',l:'名古屋・女子会ランチ&ディナー10選'},
+  {t:function(s){return /誕生日/.test(s['タグ']||'');},u:'features/birthday.html',l:'名古屋・誕生日ディナー5選'},
+  {t:function(s){return /ひつまぶし|鰻|うなぎ/.test((s['タグ']||'')+(s['ジャンル']||''));},u:'features/nagoya-hitsumabushi.html',l:'名古屋ひつまぶし完全ガイド'},
+  {t:function(s){return /手羽先/.test((s['タグ']||'')+(s['ジャンル']||''));},u:'features/nagoya-tebasaki.html',l:'名古屋手羽先完全ガイド'},
+  {t:function(s){return /味噌煮込み/.test((s['タグ']||'')+(s['ジャンル']||''));},u:'features/nagoya-miso-nikomi-udon.html',l:'名古屋味噌煮込みうどん完全ガイド'},
+  {t:function(s){return /ラーメン|つけ麺|台湾まぜそば/.test(s['ジャンル']||'');},u:'features/nagoya-ramen.html',l:'名古屋ラーメンおすすめ11選'},
+  {t:function(s){return /とんかつ|味噌かつ/.test(s['ジャンル']||'');},u:'features/nagoya-tonkatsu.html',l:'名古屋とんかつ・味噌かつ10選'},
+  {t:function(s){return /焼き鳥|焼鳥/.test(s['ジャンル']||'');},u:'features/nagoya-yakitori-guide.html',l:'名古屋 焼き鳥おすすめ'},
+  {t:function(s){return /カフェ|珈琲|喫茶/.test(s['ジャンル']||'');},u:'features/nagoya-cafe.html',l:'名古屋カフェ おすすめ10選'},
+  {t:function(s){return /イタリアン|パスタ/.test(s['ジャンル']||'');},u:'features/nagoya-italian-guide.html',l:'名古屋のイタリアン10選'},
+  {t:function(s){return /フレンチ|フランス料理/.test(s['ジャンル']||'');},u:'features/nagoya-french-guide.html',l:'名古屋のフレンチ8選'},
+  {t:function(s){return /バー|ワインバー/.test(s['ジャンル']||'');},u:'features/nagoya-bar-guide.html',l:'名古屋のバー・ワインバー10選'},
+  {t:function(s){return /海鮮|魚介/.test(s['ジャンル']||'');},u:'features/nagoya-seafood.html',l:'名古屋 海鮮・魚介おすすめ'},
+  {t:function(s){return /韓国料理/.test(s['ジャンル']||'');},u:'features/nagoya-korean.html',l:'名古屋 韓国料理おすすめ'},
+  {t:function(s){return /中華|餃子|台湾料理/.test(s['ジャンル']||'');},u:'features/nagoya-chinese-guide.html',l:'名古屋 中華料理おすすめ'},
+  {t:function(s){return /焼肉|ホルモン/.test(s['ジャンル']||'');},u:'features/nagoya-yakiniku-guide.html',l:'名古屋 焼肉おすすめ'},
+  {t:function(s){return /和食|割烹|日本料理/.test(s['ジャンル']||'');},u:'features/nagoya-lunch-washoku.html',l:'名古屋ランチ 和食おすすめ10選'},
+  {t:function(s){return /寿司|鮨/.test(s['ジャンル']||'');},u:'features/nagoya-sushi-guide.html',l:'名古屋で本当に美味しい鮨8選'},
+  {t:function(s){return /名古屋駅|名駅/.test(s['エリア']||'');},u:'features/meieki.html',l:'名駅グルメ15選'},
+  {t:function(s){return /大須|上前津/.test(s['エリア']||'');},u:'features/osu-food-walk.html',l:'大須 食べ歩きおすすめ8選'},
+  {t:function(){return true;},u:'features/nagoya-gourmet-guide.html',l:'名古屋グルメ完全ガイド'}
+];
+function nbModalFeatureLinks(r) {
+  var listed = [], seen = {}, i;
+  var lf = r && r['掲載特集'];
+  if (lf && lf.length) {
+    for (i = 0; i < lf.length; i++) {
+      var slug = lf[i] && lf[i].slug, title = lf[i] && lf[i].title;
+      if (!slug || !title) continue;
+      var u = 'features/' + slug + '.html';
+      if (seen[u]) continue;
+      seen[u] = true;
+      listed.push({ u: u, l: title });
+    }
+  }
+  var more = [];
+  for (i = 0; i < NB_MODAL_FEATURE_RULES.length && more.length < 3; i++) {
+    var rule = NB_MODAL_FEATURE_RULES[i];
+    if (seen[rule.u]) continue;
+    if (rule.t(r)) { more.push({ u: rule.u, l: rule.l }); seen[rule.u] = true; }
+  }
+  return { listed: listed, more: more };
+}
+function nbFillFeatureLinks(secId, listId, links) {
+  var sec = document.getElementById(secId), list = document.getElementById(listId);
+  if (!sec || !list) return;
+  if (links.length > 0) {
+    list.innerHTML = links.map(function (fe) { return '<a href="' + nbEscHtml(fe.u) + '" target="_blank" rel="noopener noreferrer">' + nbEscHtml(fe.l) + '</a>'; }).join('');
+    sec.style.display = '';
+  } else { list.innerHTML = ''; sec.style.display = 'none'; }
+}
+function nbRenderModalFeatures(r) {
+  var links = nbModalFeatureLinks(r);
+  nbFillFeatureLinks('m-features-section', 'm-related-features', links.listed);
+  nbFillFeatureLinks('m-readmore-section', 'm-readmore-features', links.more);
+}
+// NB-MODAL-FEATURES:END
+
 function openM(i, source) {
   // ハートボタン経由のクリックならモーダルを開かない
   if (window.event && window.event.target && window.event.target.closest && window.event.target.closest('.fav-btn')) return;
@@ -10566,40 +10638,8 @@ function openM(i, source) {
   var isMFav = getFavs().indexOf(storeName) !== -1;
   mfavBtn.classList.toggle('faved', isMFav);
   mfavBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="' + (isMFav ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7.5-4.5-10-9.5C.5 7 3.5 3 8 3c2.5 0 3.5 1.5 4 2 .5-.5 1.5-2 4-2 4.5 0 7.5 4 6 8.5C19.5 16.5 12 21 12 21z"/></svg>';
-  // ── SEO-004 関連特集・関連店舗（ジャンル/タグ/エリアから自動マッチ） ──
+  // ── SEO-004 関連店舗（ジャンルから自動マッチ）。特集の区画は I-15b の nbRenderModalFeatures ──
   (function(){
-    var MF=[
-      {t:function(s){return /接待/.test(s['タグ']||'');},u:'features/settai-guide.html',l:'接待で失敗しない名古屋の店選び'},
-      {t:function(s){return /個室/.test(s['タグ']||'');},u:'features/private-room.html',l:'個室のある名古屋グルメ9選'},
-      {t:function(s){return /宴会|忘年会|飲み放題/.test(s['タグ']||'');},u:'features/banquet.html',l:'名古屋の宴会・忘年会15選'},
-      {t:function(s){return /女子会/.test(s['タグ']||'');},u:'features/girls-party.html',l:'名古屋・女子会ランチ&ディナー10選'},
-      {t:function(s){return /誕生日/.test(s['タグ']||'');},u:'features/birthday.html',l:'名古屋・誕生日ディナー5選'},
-      {t:function(s){return /ひつまぶし|鰻|うなぎ/.test((s['タグ']||'')+(s['ジャンル']||''));},u:'features/nagoya-hitsumabushi.html',l:'名古屋ひつまぶし完全ガイド'},
-      {t:function(s){return /手羽先/.test((s['タグ']||'')+(s['ジャンル']||''));},u:'features/nagoya-tebasaki.html',l:'名古屋手羽先完全ガイド'},
-      {t:function(s){return /味噌煮込み/.test((s['タグ']||'')+(s['ジャンル']||''));},u:'features/nagoya-miso-nikomi-udon.html',l:'名古屋味噌煮込みうどん完全ガイド'},
-      {t:function(s){return /ラーメン|つけ麺|台湾まぜそば/.test(s['ジャンル']||'');},u:'features/nagoya-ramen.html',l:'名古屋ラーメンおすすめ11選'},
-      {t:function(s){return /とんかつ|味噌かつ/.test(s['ジャンル']||'');},u:'features/nagoya-tonkatsu.html',l:'名古屋とんかつ・味噌かつ10選'},
-      {t:function(s){return /焼き鳥|焼鳥/.test(s['ジャンル']||'');},u:'features/nagoya-yakitori-guide.html',l:'名古屋 焼き鳥おすすめ'},
-      {t:function(s){return /カフェ|珈琲|喫茶/.test(s['ジャンル']||'');},u:'features/nagoya-cafe.html',l:'名古屋カフェ おすすめ10選'},
-      {t:function(s){return /イタリアン|パスタ/.test(s['ジャンル']||'');},u:'features/nagoya-italian-guide.html',l:'名古屋のイタリアン10選'},
-      {t:function(s){return /フレンチ|フランス料理/.test(s['ジャンル']||'');},u:'features/nagoya-french-guide.html',l:'名古屋のフレンチ8選'},
-      {t:function(s){return /バー|ワインバー/.test(s['ジャンル']||'');},u:'features/nagoya-bar-guide.html',l:'名古屋のバー・ワインバー10選'},
-      {t:function(s){return /海鮮|魚介/.test(s['ジャンル']||'');},u:'features/nagoya-seafood.html',l:'名古屋 海鮮・魚介おすすめ'},
-      {t:function(s){return /韓国料理/.test(s['ジャンル']||'');},u:'features/nagoya-korean.html',l:'名古屋 韓国料理おすすめ'},
-      {t:function(s){return /中華|餃子|台湾料理/.test(s['ジャンル']||'');},u:'features/nagoya-chinese-guide.html',l:'名古屋 中華料理おすすめ'},
-      {t:function(s){return /焼肉|ホルモン/.test(s['ジャンル']||'');},u:'features/nagoya-yakiniku-guide.html',l:'名古屋 焼肉おすすめ'},
-      {t:function(s){return /和食|割烹|日本料理/.test(s['ジャンル']||'');},u:'features/nagoya-lunch-washoku.html',l:'名古屋ランチ 和食おすすめ10選'},
-      {t:function(s){return /寿司|鮨/.test(s['ジャンル']||'');},u:'features/nagoya-sushi-guide.html',l:'名古屋で本当に美味しい鮨8選'},
-      {t:function(s){return /名古屋駅|名駅/.test(s['エリア']||'');},u:'features/meieki.html',l:'名駅グルメ15選'},
-      {t:function(s){return /大須|上前津/.test(s['エリア']||'');},u:'features/osu-food-walk.html',l:'大須 食べ歩きおすすめ8選'},
-      {t:function(){return true;},u:'features/nagoya-gourmet-guide.html',l:'名古屋グルメ完全ガイド'}
-    ];
-    var hits=[],seen={};
-    for(var fi=0;fi<MF.length;fi++){
-      if(seen[MF[fi].u])continue;
-      if(MF[fi].t(r)){hits.push(MF[fi]);seen[MF[fi].u]=true;}
-      if(hits.length>=3)break;
-    }
     var relStores=[];
     if(ALL_STORES&&ALL_STORES.length>1){
       var rg=(r['ジャンル']||'').split(/[・\/]/)[0].trim();
@@ -10610,14 +10650,7 @@ function openM(i, source) {
       }
     }
     var relEl=document.getElementById('modal-related');
-    var featEl=document.getElementById('m-related-features');
-    var featSec=document.getElementById('m-features-section');
-    if(featEl&&featSec){
-      if(hits.length>0){
-        featEl.innerHTML=hits.map(function(fe){ return '<a href="'+fe.u+'" target="_blank" rel="noopener noreferrer">'+fe.l+'</a>'; }).join('');
-        featSec.style.display='';
-      } else { featEl.innerHTML=''; featSec.style.display='none'; }
-    }
+    nbRenderModalFeatures(r);
     if(relEl){
       if(relStores.length>0){
         relEl.innerHTML='<div class="m-section-title">似た雰囲気のお店</div>'
