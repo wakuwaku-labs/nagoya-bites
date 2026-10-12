@@ -45,7 +45,7 @@ Cormorant Garamond と Shippori Mincho を組み合わせているのは、両�
 **don't**
 - font-size のリテラル値を新規に書かない（`12px` や `.8rem` を直接書かない）
 - `:root` を再定義しない（nb.css の値を上書きしたい場合は `--page-` 接頭辞の新トークンを足す）
-- 日本語に等幅フォントや `text-transform:uppercase` を使わない
+- 日本語に等幅フォントや `text-transform:uppercase` を使わない（トップの CSS は `tests/index_mono_font.test.js` が、等幅の規則は数字・記号・欧文だけを出す表のセレクターに限ることを静的に見る。実ブラウザでは `node docs/qa/uiux-2026-10/dmmono.js` が状態ごとに数える）
 - 英語と日本語で同じ意味の見出しを二重に出さない
 - 読み込んでいないフォントウェイトを指定しない（許可: 400/500/600/700）
 
