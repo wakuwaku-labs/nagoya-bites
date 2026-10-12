@@ -1,0 +1,109 @@
+{
+  "_comment": "ページ種別ごとの HTML の重さの上限の正本。scripts/audit_page_weight.js が読む。閾値の変更はこのファイルで行いスクリプトは触らない（CLAUDE.md 制約10）。",
+  "version": 1,
+  "measuredAt": "2026-10-12",
+  "unit": "公開ページの HTML ファイルのバイト数（UTF-8・圧縮前）",
+  "rule": "maxBytes は、測った最大（measured.max）に余裕（約25〜50%）を足した切りのよい数。正直な最大が必ず余裕を持って通る位置に置く（CLAUDE.md 品質ゲート原則3）。置き直すときは node scripts/audit_page_weight.js --measure で分布を測ってから決める（原則5）。",
+  "scope": "HTML だけ。画像・フォント・JS の転送量は静的には測れないので、ブラウザの計測（docs/qa/uiux-2026-10/perf.js）の上限は I-12（フォント）・I-25（トップの索引）の後に別に決める。",
+  "types": {
+    "top": {
+      "maxBytes": 1500000,
+      "measured": {
+        "n": 1,
+        "p50": 1324096,
+        "p99": 1324096,
+        "max": 1324096,
+        "maxPage": "index.html"
+      },
+      "note": "トップは全店の索引（約717KB）を HTML に持つ。I-25 で索引を軽くしたら、この上限を実測に合わせて下げる"
+    },
+    "static": {
+      "maxBytes": 32000,
+      "measured": {
+        "n": 6,
+        "p50": 17891,
+        "p99": 24688,
+        "max": 24688,
+        "maxPage": "manual_tagging.html"
+      },
+      "note": "about・faq・contact・privacy-policy など"
+    },
+    "feature": {
+      "maxBytes": 85000,
+      "measured": {
+        "n": 68,
+        "p50": 45957,
+        "p99": 66887,
+        "max": 66887,
+        "maxPage": "features/nagoya-seafood.html"
+      },
+      "note": "特集。掲載店のカードの数が増える月次の入れ替えでも収まる幅"
+    },
+    "feature-index": {
+      "maxBytes": 100000,
+      "measured": {
+        "n": 1,
+        "p50": 75406,
+        "p99": 75406,
+        "max": 75406,
+        "maxPage": "features/index.html"
+      },
+      "note": "特集一覧。特集が増えるとカードが増える"
+    },
+    "journal": {
+      "maxBytes": 52000,
+      "measured": {
+        "n": 158,
+        "p50": 24963,
+        "p99": 39826,
+        "max": 40354,
+        "maxPage": "journal/2026-09-06-mizuho-asian-games-venue-yakiniku.html"
+      },
+      "note": "日次ジャーナルの記事。1本が極端に長くなったら気づく"
+    },
+    "journal-index": {
+      "maxBytes": 160000,
+      "measured": {
+        "n": 1,
+        "p50": 106214,
+        "p99": 106214,
+        "max": 106214,
+        "maxPage": "journal/index.html"
+      },
+      "note": "ジャーナル一覧は記事の数だけ行が増える（1日あたり約0.7KB）。ページ送りを入れたら（計画 U-44）実測に合わせて下げる"
+    },
+    "store": {
+      "maxBytes": 48000,
+      "measured": {
+        "n": 5190,
+        "p50": 32146,
+        "p99": 37285,
+        "max": 38487,
+        "maxPage": "stores/J004445332.html"
+      },
+      "note": "店舗ページ（誘導ページ・孤児ページを含む）。インラインの JS や JSON が全店に足されたら気づく"
+    },
+    "stores-index": {
+      "maxBytes": 30000,
+      "measured": {
+        "n": 1,
+        "p50": 22059,
+        "p99": 22059,
+        "max": 22059,
+        "maxPage": "stores/index.html"
+      },
+      "note": "店舗の入口ページ（転送だけのページ）"
+    },
+    "hub": {
+      "maxBytes": 200000,
+      "measured": {
+        "n": 707,
+        "p50": 40824,
+        "p99": 118219,
+        "max": 154291,
+        "maxPage": "stores/area/meieki/izakaya.html"
+      },
+      "note": "エリア×ジャンルのハブ。最大は店数の多い組（stores/area/meieki/izakaya.html）"
+    }
+  }
+}

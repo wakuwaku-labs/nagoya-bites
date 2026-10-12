@@ -32,6 +32,10 @@ const JOURNAL_SEO_KW_PATH = path.join(ROOT, 'data', 'journal_seo_keywords.json')
 
 const MARKER = 'related-journal-articles';
 const MAX_LINKS = 3;
+// 見出しの上の小さなラベル。文字の大きさはトークン（--fs-xs＝13px）で持つ。直書きの rem だと
+// デザインの監査（<style> の中だけを見る）を通ってしまい、特集の 49 ページが 11.2px になっていた（I-26b・U-47）。
+// 色も --muted（6:1）。日本語には text-transform:uppercase は効かないので付けない。
+const LABEL_STYLE = 'margin-top:1.2rem;font-size:var(--fs-xs);letter-spacing:.08em;color:var(--muted);';
 
 function esc(s) { return String(s || '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
 function jsEsc(s) { return String(s || '').replace(/'/g, '').replace(/</g, '').replace(/>/g, ''); }
@@ -83,7 +87,7 @@ function buildBlockHtml(entries) {
     return `    <a class="related-link" href="${esc(href)}" onclick="trackEvent('internal_link_click',{link_url:'${jsEsc(href)}',link_text:'${jsEsc(shortLabel(e.title))}',block:'feature_journal'})">${esc(shortLabel(e.title))}</a>`;
   }).join('\n');
   return (
-    `  <p class="related-journal-title ${MARKER}" style="margin-top:1.2rem;font-size:.7rem;letter-spacing:.08em;color:rgba(28,28,26,.5);text-transform:uppercase;">この特集の店の最新ジャーナル記事</p>\n` +
+    `  <p class="related-journal-title ${MARKER}" style="${LABEL_STYLE}">この特集の店の最新ジャーナル記事</p>\n` +
     `  <div class="related-links">\n${links}\n  </div>\n`
   );
 }
@@ -213,4 +217,6 @@ function main() {
   }
 }
 
-main();
+module.exports = { LABEL_STYLE, buildBlockHtml, inject, EXISTING_BLOCK_RE, shortLabel };
+
+if (require.main === module) main();
