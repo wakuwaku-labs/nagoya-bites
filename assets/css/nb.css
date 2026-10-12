@@ -167,7 +167,12 @@ nav a:hover,nav a.active{color:var(--text);}
 .breadcrumb{
   padding:.6rem 1.5rem;font-family:var(--font-body);font-size:var(--fs-xs);
   letter-spacing:0;color:var(--dim);max-width:var(--container-mid);margin:0 auto;
+  /* 1 行に収める（I-37）。Web フォントが届くたびに折り返しが変わると、下の部分が動く（CLS）。長いときは折り返さず横にスクロールし、右端は薄く消して続きがあることを示す */
+  white-space:nowrap;overflow-x:auto;scrollbar-width:none;scroll-padding-inline:1.5rem;
+  -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 1.5rem),transparent);
+  mask-image:linear-gradient(to right,#000 calc(100% - 1.5rem),transparent);
 }
+.breadcrumb::-webkit-scrollbar{display:none;}
 .breadcrumb a{color:var(--dim);text-decoration:none;}
 .breadcrumb a:hover{color:var(--gold);}
 /* 幅 900px 以下では、パンくずのリンクも指で押せる高さにする（--tap-min・DSN-007） */
