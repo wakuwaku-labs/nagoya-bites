@@ -44,12 +44,8 @@ function extractTitle(html) {
   return m[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 }
 
-function shortLabel(title) {
-  // 表示用ラベル: 「— 」以降を落として頭の主張だけ残す（長すぎる時の保険）
-  const dash = title.indexOf(' — ');
-  const base = dash > 0 ? title.slice(0, dash) : title;
-  return base.length > 38 ? base.slice(0, 36) + '…' : base;
-}
+// 表示用ラベル: 「 — 」以降の副題を落として見出しだけ残す。文字数では切らない（I-26g・scripts/lib/related_label.js）
+const { relatedLabel: shortLabel } = require('./lib/related_label');
 
 // 回遊強化: journal タイトルから関連特集(features/)を1本マッチさせる。
 // 先頭から順に最初に一致したものを採用。確信が持てない場合は付けない（汎用ハブのみ）。
