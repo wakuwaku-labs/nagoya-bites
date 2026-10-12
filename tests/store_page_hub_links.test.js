@@ -4,6 +4,7 @@
 // - ハブが無くエリアのハブだけある店は、エリアのハブへ送る。トップは #area= を読まないので、
 //   「../#area=…」は押してもエリアの条件が消える死にリンクだった
 // - どちらも無い店は、死んだ #area= の項目を出さない（生きている #genre= のフィルタだけ残す）
+// リンクの文字は、行き先のハブの見出しにそろえる（I-14e・tests/store_page_area_label.test.js）。
 // テストの店は data/stores.json の実際の計画（stores/area/ の生成元と同じ）から選ぶ。店数が増減しても組み合わせは変わらない。
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
@@ -56,7 +57,8 @@ test('エリア×ジャンルのハブがある店: 今までどおりそのハ�
   const area = rawArea(genrePage.area.slug);
   const genre = rawGenre(genrePage.genre.slug);
   const html = render({ 'エリア': area, 'ジャンル': genre });
-  const label = `${area}の${genre}`;
+  assert.ok(area && genre);
+  const label = `${genrePage.area.label}の${genrePage.genre.label}`; // 行き先のハブの見出し（店のデータの表記ではない）
   assert.ok(html.includes(`<a href="../${genrePage.url}">${label}</a>`), 'パンくずがハブへ');
   const more = moreLink(html);
   assert.equal(more.href, `../${genrePage.url}`);
@@ -106,8 +108,8 @@ test('エリアがハブの区分に当たらない店: 死んだ #area= の項�
   assert.equal(items[1].item, `${BASE_URL}/#genre=${encodeURIComponent('居酒屋')}`);
   assert.ok(positionsAreSequential(items));
   assert.ok(html.includes(`<a href="../#genre=${encodeURIComponent('居酒屋')}">居酒屋</a>`), 'パンくずにジャンルのフィルタ');
-  // 「もっと見る」はこれまでどおり（出力を変えない）
-  assert.deepEqual(moreLink(html), { href: `../index.html#genre=${encodeURIComponent('居酒屋')}`, text: '← どこの区分にも当たらない町の居酒屋をもっと見る' });
+  // 「もっと見る」の行き先はこれまでどおり。文字は行き先と同じ（トップのジャンル絞り込みはエリアの条件が付かないので、エリア名を入れない）
+  assert.deepEqual(moreLink(html), { href: `../index.html#genre=${encodeURIComponent('居酒屋')}`, text: '← 居酒屋をもっと見る' });
 });
 
 test('エリアもジャンルもハブに当たらず、ジャンルが空の店: パンくずは トップ › 店名 だけで、位置は連番', () => {
