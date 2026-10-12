@@ -258,22 +258,50 @@ function inlineReport(files) {
   } finally { cleanup(dir); }
 }
 
-test('② 床（12px）を割る style 属性の font-size を数える。rem / em / px / %・xx-small / x-small・単一引用符も', () => {
+test('② 床（12px）を割る style 属性の font-size を数える。rem / px・xx-small / x-small・単一引用符・!important も', () => {
   const r = inlineReport({
     'features/a.html': page(
-      '<p style="font-size:.7rem">a</p><small style="font-size:.55em">b</small><span style="color:red;font-size: 11px !important">c</span>' +
-      '<i style=\'font-size:50%\'>d</i><b style="font-size:x-small">e</b><u style="font-size:xx-small">f</u>'),
+      '<p style="font-size:.7rem">a</p><span style="color:red;font-size: 11px !important">c</span>' +
+      '<i style=\'font-size:.5rem\'>d</i><b style="font-size:x-small">e</b><u style="font-size:xx-small">f</u>'),
   });
   assert.equal(r.json.ok, false);
   assert.equal(r.json.pages, 1);
-  assert.equal(r.json.occurrences, 6);
-  assert.equal(r.json.by_section.features.occurrences, 6);
+  assert.equal(r.json.occurrences, 5);
+  assert.equal(r.json.by_section.features.occurrences, 5);
   assert.equal(r.check.code, 1);
-  assert.match(r.check.out, /❌ 床を割る style 属性の font-size: 1 ページ・6 か所/);
+  assert.match(r.check.out, /❌ 床を割る style 属性の font-size: 1 ページ・5 か所/);
   const details = r.json.violations.map((v) => v.detail).join('\n');
   assert.match(details, /11\.2px/);
-  assert.match(details, /8\.8px/);
+  assert.match(details, /= 11px/);
+  assert.match(details, /= 8px/);
   assert.match(details, /= 9px/);
+  assert.match(details, /= 10px/);
+});
+
+test('② em・% の指定は親の大きさで決まるので違反に数えず、件数だけ別の行で出す（h1 の中の .55em は 20px を超える）', () => {
+  const r = inlineReport({
+    'features/a.html': page(
+      '<h1>題<small style="font-size:.55em;letter-spacing:.05em">副題</small></h1>' +
+      '<i style=\'font-size:50%\'>d</i><p style="font-size:1.2em">大きい指定は数えない</p><p style="font-size:.7em !important">e</p>'),
+    'features/b.html': page('<small style="font-size:.6em">f</small>'),
+  });
+  assert.equal(r.json.ok, true, JSON.stringify(r.json.violations));
+  assert.equal(r.json.occurrences, 0);
+  assert.deepEqual(r.json.relative_unchecked, { pages: 2, occurrences: 4 });
+  assert.equal(r.check.code, 0);
+  assert.match(r.check.out, /ℹ️ em・% の小さな指定（親の大きさで決まるため数えない）: 2 ページ・4 か所/);
+  // 夜間QA の報告は最後の 30 行を載せる。判定の行がいちばん最後に来る
+  const lines = r.check.out.trim().split('\n');
+  assert.match(lines[lines.length - 1], /✅ 床を割る style 属性の font-size: 0 ページ・0 か所/);
+});
+
+test('② em・% と rem が同じページにあっても、rem の違反だけを数える', () => {
+  const r = inlineReport({
+    'features/a.html': page('<small style="font-size:.55em">a</small><p style="font-size:.7rem">b</p>'),
+  });
+  assert.equal(r.json.occurrences, 1);
+  assert.deepEqual(r.json.relative_unchecked, { pages: 1, occurrences: 1 });
+  assert.match(r.json.violations[0].detail, /font-size:\.7rem = 11\.2px/);
 });
 
 test('② 数えないもの: 12px 以上・トークン参照・<style> の中・コメントの中・許可した class・font-size ではない指定', () => {

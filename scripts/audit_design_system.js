@@ -34,6 +34,9 @@
  * font-size を (d) と同じ床（data/design_system.json の floorPx）・同じ許可（allowlist.selectors を
  * 要素の class で照らす）で数える。(a)〜(f) の判定と出力は変えない。夜間QA が soft で回し、
  * 直して 0 件になってから hard に上げる。
+ * em・% の指定（例: <small style="font-size:.55em"> ）は親の大きさで実際の大きさが決まり、静的には
+ * 分からない（見出しの中の .55em は 20px を超える）。違反には数えず、件数だけ別の行で出す
+ * （制約10: 検証できる事実だけで判定する。実際に描かれた大きさは scripts/measure_typography.js が見る）。
  */
 
 'use strict';
@@ -281,8 +284,14 @@ function inlineFontSizePx(raw) {
   return pxFromFontSize(raw);
 }
 
-/** @returns {{px:number, size:string, tag:string}[]} 床を割る style 属性の font-size（allowlist の class は除く） */
-function inlineStyleHits(html, file) {
+/** em・% は親の大きさで決まる（静的には分からない）。*/
+const RELATIVE_UNIT_RE = /^[\d.]+\s*(?:em|%)$/i;
+
+/**
+ * @param {string[]} [relative] 渡すと、床を割りそうな em・% の指定（数えない）をここへ入れる
+ * @returns {{px:number, size:string, tag:string}[]} 床を割る style 属性の font-size（allowlist の class は除く）
+ */
+function inlineStyleHits(html, file, relative) {
   const body = html.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ').replace(/<!--[\s\S]*?-->/g, ' ');
   const hits = [];
   for (const m of body.matchAll(/\bstyle\s*=\s*(["'])([\s\S]*?)\1/gi)) {
@@ -294,7 +303,12 @@ function inlineStyleHits(html, file) {
       const px = inlineFontSizePx(fm[1]);
       if (px === null || px >= DS.floorPx) continue;
       if (cls && isAllowlisted(cls, file)) continue;
-      hits.push({ px, size: fm[1].trim(), tag: tagText.replace(/\s+/g, ' ').slice(0, 90) });
+      const size = fm[1].trim();
+      if (RELATIVE_UNIT_RE.test(size.replace(/\s*!important\s*$/i, ''))) {
+        if (relative) relative.push({ px, size, tag: tagText.replace(/\s+/g, ' ').slice(0, 90) });
+        continue;
+      }
+      hits.push({ px, size, tag: tagText.replace(/\s+/g, ' ').slice(0, 90) });
     }
   }
   return hits;
@@ -308,11 +322,15 @@ function inlineStyleMain() {
   let pages = 0;
   let occurrences = 0;
   let scanned = 0;
+  let relativePages = 0;
+  let relativeOccurrences = 0;
   for (const [name, files] of Object.entries(groups)) {
     bySection[name] = { pages: 0, occurrences: 0 };
     for (const f of files) {
       scanned++;
-      const hits = inlineStyleHits(fs.readFileSync(f, 'utf8'), f);
+      const relative = [];
+      const hits = inlineStyleHits(fs.readFileSync(f, 'utf8'), f, relative);
+      if (relative.length) { relativePages++; relativeOccurrences += relative.length; }
       if (!hits.length) continue;
       pages++;
       occurrences += hits.length;
@@ -328,6 +346,8 @@ function inlineStyleMain() {
     pages,
     occurrences,
     by_section: bySection,
+    // em・% で床を割りそうな指定。親の大きさ次第なので違反には数えない（件数だけ残す）
+    relative_unchecked: { pages: relativePages, occurrences: relativeOccurrences },
     violations: violations.slice(0, MAX_LISTED),
     violations_truncated: Math.max(0, violations.length - MAX_LISTED),
   };
@@ -338,6 +358,7 @@ function inlineStyleMain() {
     console.log(`style 属性の文字の大きさの検査（I-35 ②）: 公開ページ ${result.files_scanned} 本（床 ${DS.floorPx}px）`);
     for (const v of result.violations.slice(0, 8)) console.log(`     例: ${v.file}  ${v.detail}`);
     console.log('     セクション別（ページ数）: ' + Object.entries(bySection).map(([k, v]) => `${k} ${v.pages}`).join(' / '));
+    if (relativeOccurrences) console.log(`  ℹ️ em・% の小さな指定（親の大きさで決まるため数えない）: ${relativePages} ページ・${relativeOccurrences} か所`);
     console.log(`  ${result.ok ? '✅' : '❌'} 床を割る style 属性の font-size: ${pages} ページ・${occurrences} か所`);
   }
   if (mode === 'check' && !result.ok) process.exit(1);
