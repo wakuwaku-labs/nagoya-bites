@@ -2331,7 +2331,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 
 <!-- STORE-INDEX:START 2026-10-12 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（5006店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（5007店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（968店）</summary>
@@ -7412,6 +7412,13 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 <li><a href="index.html#q=%E3%82%B9%E3%83%91%E3%82%B2%E3%83%83%E3%83%86%E3%82%A3%E3%83%8F%E3%82%A6%E3%82%B9%20%E3%83%A8%E3%82%B3%E3%82%A4%20%E9%8C%A6%E5%BA%97">スパゲッティハウス ヨコイ 錦店（錦・あんかけスパゲッティ）</a></li>
 </ul>
 </details>
+<details class="store-index-area" data-area="中川区">
+<summary>中川区（2店）</summary>
+<ul class="store-index-list">
+<li><a href="index.html#q=%E3%82%AB%E3%83%AA%E3%83%83%E3%83%88%E3%82%AE%E3%83%A7%E3%82%A6%E3%82%B6%E9%BB%84%E9%87%91">カリットギョウザ黄金（中川区・餃子専門店）</a></li>
+<li><a href="index.html#q=%E3%81%AA%E3%81%8B%E3%81%8C%E3%82%8F%20%E8%A1%97%E4%BB%B2%E9%A3%9F%E5%A0%82%20by%20%E3%82%B8%E3%83%BC%E3%83%90%E3%83%BCFOOD">なかがわ 街仲食堂 by ジーバーFOOD（中川区・おむすび・定食）</a></li>
+</ul>
+</details>
 <details class="store-index-area" data-area="名古屋市中村区名駅">
 <summary>名古屋市中村区名駅（2店）</summary>
 <ul class="store-index-list">
@@ -7494,12 +7501,6 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 <summary>名古屋市東区筒井（1店）</summary>
 <ul class="store-index-list">
 <li><a href="index.html#q=Pizzeria%20mimi%20(%E3%83%94%E3%83%83%E3%83%84%E3%82%A7%E3%83%AA%E3%82%A2%20%E3%83%9F%E3%83%9F)">Pizzeria mimi (ピッツェリア ミミ)（名古屋市東区筒井・ピッツェリア / イタリアン）</a></li>
-</ul>
-</details>
-<details class="store-index-area" data-area="中川区">
-<summary>中川区（1店）</summary>
-<ul class="store-index-list">
-<li><a href="index.html#q=%E3%82%AB%E3%83%AA%E3%83%83%E3%83%88%E3%82%AE%E3%83%A7%E3%82%A6%E3%82%B6%E9%BB%84%E9%87%91">カリットギョウザ黄金（中川区・餃子専門店）</a></li>
 </ul>
 </details>
 <details class="store-index-area" data-area="中区 栄">
@@ -7925,7 +7926,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = 'b68112f58c74';
+var STORES_JSON_VERSION = 'ab2ee1130ad0';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
