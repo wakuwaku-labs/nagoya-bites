@@ -105,6 +105,12 @@ body{min-height:100vh;}
 h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.8rem);line-height:var(--lh-display);color:var(--ink);margin-bottom:.6rem;}
 .score{display:inline-flex;align-items:center;gap:.3rem;font-size:var(--fs-sm);font-weight:600;color:#d4a017;margin-bottom:1.2rem;}
 .score svg{width:14px;height:14px;fill:#d4a017;}
+.store-glance{margin-bottom:1.2rem;}
+.store-glance-row{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;}
+.score-note{font-size:var(--fs-xs);color:var(--muted);}
+.store-facts{margin:.6rem 0 0;font-size:var(--fs-sm);line-height:var(--lh-ui);color:var(--text);}
+.store-chips{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;}
+.store-chips li{font-size:var(--fs-xs);letter-spacing:0;color:var(--muted);border:1px solid var(--border);padding:.3rem .7rem;border-radius:2px;background:var(--surface);}
 .ccs-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.25rem .7rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
 .ccs-badge.ccs-badge-pending{color:#767676;border-color:rgba(120,120,120,.35);background:rgba(120,120,120,.06);}
 .ccs-badge .ccs-tier{font-weight:700;font-size:var(--fs-xs);margin-left:.25rem;letter-spacing:0;}
@@ -217,9 +223,13 @@ button.link-btn{font:inherit;cursor:pointer;}
 
   <div class="genre-badge">中華</div>
   <h1>上海湯包小館 星が丘テラス店</h1>
-  <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
-    <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>3.3</div>
+  <div class="store-glance">
+  <div class="store-glance-row">
+    <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>3.3</div><span class="score-note">（Google・145件）</span>
     <span class="ccs-badge" title="口コミ信頼度 B：おおむね参考にできます">口コミ信頼度<span class="ccs-tier cc-tier-B">B</span></span>
+  </div>
+    <p class="store-facts">星ヶ丘駅から徒歩3分・予算1501～2000円</p>
+    <ul class="store-chips" aria-label="この店の条件"><li>30名以上の宴会可</li><li>ランチ営業あり</li><li>駐車場あり</li><li>全席禁煙</li></ul>
   </div>
 
   <div class="point-box"><p>星が丘駅徒歩3分、1500円中華でランチ営業、駅前立地で流動客確保</p></div>
