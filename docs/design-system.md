@@ -39,6 +39,7 @@ Cormorant Garamond と Shippori Mincho を組み合わせているのは、両�
 - 意味を持つラベルは日本語（サイト全体の方針）で 13px 以上
 - 操作要素（ボタン・リンク・チップ）は 44px 以上
 - font-size はすべてトークン（`var(--fs-*)`）を参照する
+- 見出しの段を飛ばさない（h1 → h2 → h3。h1 の次に h3、h2 の次に h4 を置かない）。見出しを持たない節（日次ジャーナルの店の一覧など）は、見えない h2（`class="visually-hidden"`）で節にする。確認は `node scripts/audit_heading_levels.js --check`（I-26f・夜間QA の soft）
 
 **don't**
 - font-size のリテラル値を新規に書かない（`12px` や `.8rem` を直接書かない）

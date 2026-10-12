@@ -89,7 +89,7 @@ for (const [rel, cards] of Object.entries(MAPPING)) {
     const img = heroPhoto(jcode);
     // アイコン div（<div class="icon">絵文字</div> or type-icon）＋直後のカード見出し
     const re = new RegExp(
-      '<div class="(?:type-)?icon">[^<]*<\\/div>(\\s*)((?:<h4>|<div class="type-name">)' + esc(label) + ')'
+      '<div class="(?:type-)?icon">[^<]*<\\/div>(\\s*)((?:<h[34]>|<div class="type-name">)' + esc(label) + ')'
     );
     if (!re.test(t)) continue; // 置換済み or カードなし
     if (img) {
