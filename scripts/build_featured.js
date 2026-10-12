@@ -129,11 +129,11 @@ function seasonalIcon(_id) {
   return '';
 }
 function seasonalCategory(id) {
-  if (id === 'gw-2026' || id.startsWith('gw-')) return 'Seasonal · GW特集';
-  if (id === 'mothers-day') return 'Seasonal · 母の日';
-  if (id === 'fathers-day' || id.startsWith('fathers-day')) return 'Seasonal · 父の日';
-  if (id === 'spring-terrace') return 'Seasonal · 春テラス';
-  return 'Seasonal · 季節特集';
+  if (id === 'gw-2026' || id.startsWith('gw-')) return 'GW特集';
+  if (id === 'mothers-day') return '母の日';
+  if (id === 'fathers-day' || id.startsWith('fathers-day')) return '父の日';
+  if (id === 'spring-terrace') return '春テラス';
+  return '季節特集';
 }
 function renderSeasonalCard(item) {
   const icon = seasonalIcon(item.id);
