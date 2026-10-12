@@ -22,6 +22,13 @@ const NAV_SECONDARY = [
   { key: 'contact', href: 'contact.html', label: 'お問い合わせ' },
 ];
 
+// 本文へ飛ぶリンク（キーボード・スクリーンリーダーの利用者が、ヘッダーのナビを飛ばして本文へ行く）と、
+// その飛び先。<main> の開きはヘッダーのブロックの最後、閉じはフッターのブロックの最初に置く
+// （ヘッダーとフッターは <body> の直下で隣り合うので、間にある本文のページ固有の部分がそのまま <main> に入る）。
+const SKIP_LINK = '<a href="#main-content" class="skip-link">本文へスキップ</a>';
+const MAIN_OPEN = '<main id="main-content">';
+const MAIN_CLOSE = '</main>';
+
 const FOOTER_GROUPS = [
   {
     title: '探す',
@@ -115,8 +122,11 @@ function activeKeyFor(relPath) {
  * @param {number} opts.depth - root からの深さ（0 = index.html と同階層）
  * @param {string|null} opts.active - activeKeyFor() の戻り値
  * @param {boolean} [opts.withFav] - true なら index.html 用の保存済み(N) リンクを先頭に挿入
+ * @param {boolean} [opts.skipLink=true] - 先頭に「本文へスキップ」を出す。トップは body の先頭（ほかの操作より前）に自前を持つので false
+ * @param {boolean} [opts.main=true] - ヘッダーの後ろで <main id="main-content"> を開く（閉じるのは renderFooter の main）。
+ *   ページ自身が <main> を持つときは false（<main> は1ページに1つだけ）
  */
-function renderHeader({ depth, active, withFav = false }) {
+function renderHeader({ depth, active, withFav = false, skipLink = true, main = true }) {
   const p = prefix(depth);
   const favLink = withFav
     ? `    <a href="#" class="nav-fav" id="nav-fav" onclick="event.preventDefault();showFavs();closeNav()"><span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.5-10-9.5C.5 7 3.5 3 8 3c2.5 0 3.5 1.5 4 2 .5-.5 1.5-2 4-2 4.5 0 7.5 4 6 8.5C19.5 16.5 12 21 12 21z"/></svg></span>保存済み(<span id="fav-count">0</span>)</a>\n`
@@ -131,7 +141,7 @@ function renderHeader({ depth, active, withFav = false }) {
   }).join('\n');
 
   return `${MARK('HEADER', 'START')}
-<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+${skipLink ? `${SKIP_LINK}\n` : ''}<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="${p}index.html">Nagoya <em>Bites</em></a>
   <button class="hamburger" id="hamburger-btn" type="button" onclick="toggleNav()" aria-label="メニューを開く" aria-expanded="false" aria-controls="main-nav">
@@ -142,7 +152,7 @@ ${favLink}${primaryLinks}
 ${secondaryLinks}
   </nav>
 </header>
-${MARK('HEADER', 'END')}`;
+${main ? `${MAIN_OPEN}\n` : ''}${MARK('HEADER', 'END')}`;
 }
 
 /**
@@ -170,7 +180,12 @@ function resolveHref(href, p) {
   return p + href;
 }
 
-function renderFooter({ depth }) {
+/**
+ * @param {object} opts
+ * @param {number} opts.depth
+ * @param {boolean} [opts.main=true] - フッターの前で </main> を閉じる（renderHeader の main と対）
+ */
+function renderFooter({ depth, main = true }) {
   const p = prefix(depth);
   const groups = FOOTER_GROUPS.map(g => {
     const links = g.links.map(([href, label]) => `      <a href="${p}${href}">${esc(label)}</a>`).join('\n');
@@ -181,7 +196,7 @@ ${links}
   }).join('\n');
 
   return `${MARK('FOOTER', 'START')}
-<footer class="nb-footer">
+${main ? `${MAIN_CLOSE}\n` : ''}<footer class="nb-footer">
   <div class="nb-footer-inner">
     <div class="nb-footer-brand">
       <a class="logo" href="${p}index.html">Nagoya <em>Bites</em></a>
@@ -223,6 +238,9 @@ module.exports = {
   NAV_PRIMARY,
   NAV_SECONDARY,
   FOOTER_GROUPS,
+  SKIP_LINK,
+  MAIN_OPEN,
+  MAIN_CLOSE,
   MARK,
   prefix,
   depthFor,
