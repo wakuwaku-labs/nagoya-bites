@@ -359,7 +359,7 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `agents/marketer.md` | Marketer のマーケティング戦略 |
 | `agents/strategist.md` | Strategist の事業戦略 |
 | `agents/editor.md` | Editor の編集方針・コンテンツ基準 |
-| `data/design_system.json` | **デザインシステムの判定基準の正本**（正本フォントURL・font-size床12px・許可フォントウェイト・共通トークン一覧・legacyRewrites）。閾値変更はここで行いスクリプトは触らない |
+| `data/design_system.json` | **デザインシステムの判定基準の正本**（Web フォントを使わない方針 `webFonts`＝禁止する配信元と退役した書体名・font-size床12px・許可フォントウェイト・共通トークン一覧・legacyRewrites）。閾値変更はここで行いスクリプトは触らない |
 | `assets/css/nb.css` | **デザインシステムの実装本体**（トークン・基本タイポ・共通クローム: header/nav/footer/breadcrumb・共通部品）。全ページがこの1ファイルを読み込む（制約1の例外） |
 | `docs/design-system.md` | デザインシステムの人向け仕様書（書体・トークン・部品解剖・新規ページ雛形） |
 | `scripts/audit_design_system.js` | デザインシステム準拠の決定的ゲート。`--check`でCI向けexit 1、`--report`で違反一覧JSON |

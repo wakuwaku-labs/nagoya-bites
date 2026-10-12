@@ -3,7 +3,7 @@
  * audit_design_system.js
  *
  * DSN-001: 全ページ（root / features / journal / stores）がデザインシステム
- * （assets/css/nb.css・正本フォントURL・トークン重複禁止・font-size床）に
+ * （assets/css/nb.css・Web フォントを使わない・トークン重複禁止・font-size床）に
  * 準拠しているかを検証する決定的ゲート。
  *
  * 正本は data/design_system.json。閾値・許可リストの変更はそちらで行い、

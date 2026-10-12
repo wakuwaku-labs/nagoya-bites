@@ -36,14 +36,6 @@
 - ヒラギノ明朝は W3（標準）と W6（太字）の 2 本だけ。500 以下は標準、600 以上は太字に寄る（CSS の書体の選び方）。端末に無い太さを指定しても壊れないが、見え方は 2 段になる
 - 並びを変えるときは `assets/css/nb.css` のトークンと `scripts/lib/web_fonts.js` の `DEVICE_STACKS` の両方（`tests/design_system_fonts.test.js` が一致を見る）。書体を自分で配る（`@font-face`）なら、判断の記録を先に書く
 
----|---|---|---|
-| 見出し（display） | `'Cormorant Garamond','Shippori Mincho','Hiragino Mincho ProN','Yu Mincho',serif` | Cormorant 400/500/600＋italic 400、Shippori 500/600 | hero h1・セクション h2・モーダル店名・記事タイトル |
-| 本文・UI | `'Noto Sans JP','Hiragino Kaku Gothic ProN','Hiragino Sans','Yu Gothic',sans-serif` | 400/500/700 | それ以外すべて |
-| 等幅 | `'DM Mono',ui-monospace,Menlo,monospace` | 400/500 | 順位・件数・日付など数字と3語以内の欧文のみ。**日本語には使わない** |
-
-Cormorant Garamond と Shippori Mincho を組み合わせているのは、両方とも線のコントラストが高い
-オールドスタイル系の書体で、同じ行に混在しても「一つの声」に聞こえるため。
-
 ---
 
 ## 3. do / don't

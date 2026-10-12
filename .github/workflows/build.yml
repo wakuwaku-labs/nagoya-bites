@@ -427,7 +427,7 @@ jobs:
         continue-on-error: true
 
       - name: デザインシステム準拠監査（DSN-001・可読性ゲート）
-        # 全ページが assets/css/nb.css・正本フォントURL・font-size床(12px)・許可フォントウェイトに
+        # 全ページが assets/css/nb.css・Web フォントを使わない方針（P-318）・font-size床(12px)・許可フォントウェイトに
         # 準拠しているかを検査する（scripts/audit_design_system.js --check）。stores/ の「孤児」
         # ページ（data/stores.json 未掲載の旧テンプレ残骸・ISSUE-102・削除はオーナー承認待ちで
         # 停止中）と stores/area/ の stub 化ハブページ（SEO-094）は、直前の
