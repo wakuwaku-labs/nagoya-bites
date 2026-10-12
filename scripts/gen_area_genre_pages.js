@@ -374,7 +374,7 @@ ${genreList}
 
   return renderShell({
     depth: 2, active: 'top',
-    breadcrumb: [{ href: 'index.html', label: 'TOP' }, { href: 'stores/index.html', label: '店舗一覧' }, { label: 'エリア×ジャンルで探す' }],
+    breadcrumb: [{ href: 'index.html', label: 'TOP' }, { label: 'エリア×ジャンルで探す' }],
     title: titleFor({ type: 'root' }),
     desc: `名古屋の飲食店をエリア×ジャンルで絞り込めるページ一覧。${areaPages.length}エリア・実データのみで構成。`,
     canonicalPath: 'stores/area/index.html',
@@ -421,12 +421,12 @@ ${grid}
 
   const jsonLd = [
     { '@context': 'https://schema.org', '@type': 'CollectionPage', name: titleFor(page), url: `${BASE_URL}/${page.url}` },
-    breadcrumbLd([{ name: 'NAGOYA BITES', item: `${BASE_URL}/` }, { name: '店舗一覧', item: `${BASE_URL}/stores/index.html` }, { name: 'エリア×ジャンルで探す', item: `${BASE_URL}/stores/area/index.html` }, { name: page.area.label, item: `${BASE_URL}/${page.url}` }]),
+    breadcrumbLd([{ name: 'NAGOYA BITES', item: `${BASE_URL}/` }, { name: 'エリア×ジャンルで探す', item: `${BASE_URL}/stores/area/index.html` }, { name: page.area.label, item: `${BASE_URL}/${page.url}` }]),
   ];
 
   return renderShell({
     depth: 3, active: 'top',
-    breadcrumb: [{ href: 'index.html', label: 'TOP' }, { href: 'stores/index.html', label: '店舗一覧' }, { href: 'stores/area/index.html', label: 'エリア×ジャンルで探す' }, { label: page.area.label }],
+    breadcrumb: [{ href: 'index.html', label: 'TOP' }, { href: 'stores/area/index.html', label: 'エリア×ジャンルで探す' }, { label: page.area.label }],
     title: titleFor(page), desc: descriptionFor(page), canonicalPath: page.url,
     jsonLdList: jsonLd, bodyHtml: body, styleExtra: HUB_STYLE,
   });
@@ -567,7 +567,6 @@ ${faqHtml}
   };
   const bcItems = [
     { name: 'NAGOYA BITES', item: `${BASE_URL}/` },
-    { name: '店舗一覧', item: `${BASE_URL}/stores/index.html` },
     { name: 'エリア×ジャンルで探す', item: `${BASE_URL}/stores/area/index.html` },
     { name: page.area.label, item: `${BASE_URL}/stores/area/${page.area.slug}/index.html` },
     { name: page.genre.label, item: `${BASE_URL}/stores/area/${page.area.slug}/${page.genre.slug}.html` },
@@ -577,7 +576,7 @@ ${faqHtml}
   const jsonLdList = [itemListLd, breadcrumbLd(bcItems)];
 
   const breadcrumb = [
-    { href: 'index.html', label: 'TOP' }, { href: 'stores/index.html', label: '店舗一覧' },
+    { href: 'index.html', label: 'TOP' },
     { href: 'stores/area/index.html', label: 'エリア×ジャンルで探す' },
     { href: `stores/area/${page.area.slug}/index.html`, label: page.area.label },
   ];
@@ -653,15 +652,26 @@ function contentHashOf(page, html) {
   return crypto.createHash('sha256').update(stripped).digest('hex').slice(0, 16);
 }
 
-function main() {
+/** 生成の前提（方針・全店・ページの計画・ページ間の索引）をそろえる。main とテストが共有する */
+function prepare() {
   const policy = loadPolicy();
   GLOBAL_POLICY = policy;
   const stores = loadStores();
   const { pages } = planPages(stores, policy);
-  const limited = LIMIT ? pages.slice(0, LIMIT) : pages;
   REGISTRY = buildRegistry(pages);
+  return { policy, stores, pages, TRUST_POLICY: trustDisplay.loadPolicy() };
+}
 
-  const TRUST_POLICY = trustDisplay.loadPolicy();
+/** 1ページ分の HTML（種類で書き分ける）。prepare() の後に呼ぶ */
+function renderHubPage(page, pages, policy, TRUST_POLICY) {
+  if (page.type === 'root') return renderRootPage({ pages }, policy);
+  if (page.type === 'area') return renderAreaPage(page, pages, policy);
+  return renderListingPage(page, policy.conditions, policy, TRUST_POLICY);
+}
+
+function main() {
+  const { policy, pages, TRUST_POLICY } = prepare();
+  const limited = LIMIT ? pages.slice(0, LIMIT) : pages;
 
   const prevManifest = fs.existsSync(MANIFEST_PATH) ? JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8')) : { pages: [] };
   const prevBySlug = new Map((prevManifest.pages || []).map(p => [p.path, p]));
@@ -671,10 +681,7 @@ function main() {
   const onDiskExpected = new Set();
 
   for (const page of limited) {
-    let html;
-    if (page.type === 'root') html = renderRootPage({ pages }, policy);
-    else if (page.type === 'area') html = renderAreaPage(page, pages, policy);
-    else html = renderListingPage(page, policy.conditions, policy, TRUST_POLICY);
+    let html = renderHubPage(page, pages, policy, TRUST_POLICY);
 
     const absPath = path.join(ROOT, page.url);
     onDiskExpected.add(page.url);
@@ -760,4 +767,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { priceBandRows, editorPicks, topStations, contentHashOf, storeCard, hubReserveOnclick };
+module.exports = { priceBandRows, editorPicks, topStations, contentHashOf, storeCard, hubReserveOnclick, prepare, renderHubPage };
