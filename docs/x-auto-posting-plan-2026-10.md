@@ -1,14 +1,14 @@
 # X 自動投稿 計画書（2026-10）
 
 - 作成: 2026-10-12（オーナー依頼「日次ジャーナルをもとに、X への毎日の発信を投稿まで全部自動で」）
-- 状態: **計画（オーナーの確認待ち）**。実装は 11 章の確認事項が決まってから始める
+- 状態: **段階1の実装済み・試運転中（2026-10-13）**。X には送らない設定（`mode: dry-run`）で動いている。本番は 11 章の確認と鍵の登録（`docs/x-api-setup.md`）の後。実装の状況は 14 章
 - 担当: Builder（実装）／Marketer（文面・効果測定）／Editor（文面の言い方）
 
 ---
 
 ## 0. 要約
 
-1. 毎朝のジャーナル記事が公開されたら、**GitHub Actions（Mac の外）が昼に1回、X へ「記事の紹介＋リンク」を投稿**する。Mac がスリープしていても動く。
+1. 毎朝のジャーナル記事が公開されたら、**GitHub Actions（Mac の外）がその直後（数分〜10分後）に1回、X へ「記事の紹介＋リンク」を投稿**する。取りこぼしは 12 時・17 時にやり直す。Mac がスリープしていても動く。
 2. 文面は最初は**記事の題名とリンクの定型**で始め（AI に作文させない＝事実と違う文が出ない）、慣れたら AI の一言を足す。どちらも同じ検査（文字数・数字が記事と合うか・使わない言い方）を通ったものだけ投稿する。
 3. 費用は **X API の従量課金で月 約6ドル（約900円）**。リンク付きの投稿は1回 0.20 ドル。上限を X 側で月10ドルに設定して使いすぎを防ぐ。
 4. 投稿できなかった日は、原因つきで GitHub Issue（＝オーナーにメール）が届き、直れば自動で閉じる。
@@ -88,15 +88,14 @@
 [毎朝 9:00 Mac] run_journal_local.sh が記事を作って push（今のまま。変えない）
         │   data/journal_published.json に今日のエントリ
         ▼
-[12:00 JST GitHub Actions] x-post.yml（新規）
+[公開の push の直後 GitHub Actions] x-post.yml（やり直し: 12:00・17:00 JST の定時実行）
    1. 停止スイッチを見る（data/x_post_policy.json の enabled / mode）
    2. 今日のエントリがあるか          → 無ければ「ジャーナル無し」と心拍に書いて終了
    3. 投稿台帳に今日の分があるか      → あれば何もしない（二重投稿を防ぐ）
-   4. 本番の記事 URL が 200 か        → まだなら終了し、18:00 の回でやり直す
+   4. 本番の記事 URL が 200 か        → 最大10分待つ。まだなら終了し、次の回でやり直す
    5. og:image が画像として取れるか   → 取れなくても投稿はする（カードの画像が無いだけ）。理由を記録
    6. 文面を作る（定型 or AI の一言）→ 検査（5.3）→ 落ちたら定型に下げる
-   7. 投稿の直前に台帳へ「送信中」と書いて commit（失敗して二重に送るのを防ぐ）
-   8. POST /2/tweets → 投稿ID を台帳に書き、心拍を更新して commit
+   7. POST /2/tweets → 投稿ID を台帳に書き、心拍を更新して commit
         │
         ▼
 [21:00 JST GitHub Actions] x-post-watchdog.yml（新規）
@@ -104,10 +103,11 @@
    直ったら自動で閉じる
 ```
 
-- 2回目の起動（18:00）は「12:00 にページがまだ無かった」「X が一時的に落ちていた」ときのやり直し専用。台帳を見るので、12:00 に投稿済みなら何もしない。
+- 定時の起動（12:00・17:00）は「公開直後にページがまだ無かった」「X が一時的に落ちていた」ときのやり直し専用。台帳を見るので、投稿済みなら何もしない。
+- 起点を定時実行ではなく公開の push にしたのは、GitHub の定時実行が混雑で数時間遅れるため（journal-watchdog.yml の実測 4〜6 時間）。
 - 台帳の commit は、日次ビルド（build.yml）の bot コミットと同時に起きることがある。ワークフローは同時に1つだけ動かし（concurrency）、push は取り込み直してやり直す（ISSUE-161 と同じ型）。
 - 急いで止めたいときは、GitHub の Actions 画面でワークフローを「Disable」にする（コミット不要）か、停止スイッチを `false` にする。
-- 「送信中」のまま終わった回（通信が途中で切れた等）は、**勝手に送り直さない**。X 側に届いたか分からないため、Issue で人に確かめてもらう（二重投稿より1日の欠けを選ぶ）。
+- 送った直後に落ちて台帳が残らなかった場合も二重にはならない。同じ記事からは同じ文面が作られ、次の回は X が「重複」として拒むので、それを届いた印として台帳に `duplicate` と書き、もう送らない（当初は投稿の直前に「送信中」をコミットする案だったが、仕組みが重くなるのでこちらにした・判断の記録 0027）。
 
 ---
 
@@ -125,6 +125,7 @@ https://nagoya-bites.com/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.h
 
 - 題名は記事の `title` をそのまま使う（記事と同じ文なので事実の食い違いが起きない）
 - description は使わない（長すぎる＋「業界人が読む」が残っているため）
+- 題名の「〜を業界人が読む」は X の文面に限って「〜を読む」に置き換える（`data/x_post_policy.json` の `titleRewrites`。直近60本の題名のうち17本がこの形で、そのままだと言い方の検査で毎回止まる。2026-10-13 実測。記事の題名は変えない）
 - ハッシュタグは最大2個: `#名古屋グルメ` ＋ 記事のエリア名（取れるときだけ）
 - 280 を超えるときは、ハッシュタグ → 見出しの順に削る。題名は途中で切らない
 
@@ -151,7 +152,7 @@ https://nagoya-bites.com/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.h
 | 項目 | 推奨 | 理由 |
 |---|---|---|
 | 場所 | GitHub Actions | Mac のスリープ・認証切れと切り離す。鍵は GitHub Secrets に置ける |
-| 時刻 | 12:00 JST（やり直し 18:00） | 9:00 の生成と GitHub Pages の公開が終わった後。昼の店探しの時間帯。※GitHub の定時実行は混雑で数十分遅れることがある |
+| 時刻 | 公開の直後（だいたい 9:30〜10:30）。やり直しは 12:00・17:00 | GitHub の定時実行は数時間遅れることがあり（実測 4〜6 時間）、時刻を約束できない。公開の push を起点にすれば数分で動ける。昼の店探しの前に届く |
 | 鍵 | OAuth 1.0a（API Key/Secret＋Access Token/Secret の4つ） | 一般に取り消すまで有効で、更新の保存が要らない。OAuth 2.0 はトークンが2時間で切れ、更新のたびに新しい鍵を保存し直す必要があり、Actions では扱いにくい |
 | 鍵の名前 | `X_API_KEY` / `X_API_SECRET` / `X_ACCESS_TOKEN` / `X_ACCESS_TOKEN_SECRET` | ログ・コミットに出さない（公開リポジトリ） |
 
@@ -163,7 +164,7 @@ https://nagoya-bites.com/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.h
 - 警報: `x-post-watchdog.yml` が 21:00 JST に見て、次のときだけ Issue を1件出す（続く間は本文を書き換えるだけ）
   - 今日ジャーナルが公開されたのに投稿が無い
   - 401（鍵が無効）・403（権限が無い）・残高切れ・上限額への到達など、人が直すしかない失敗 → **原因と直し方を本文に書く**（残高・上限のときに X が返すエラーの形は段階1で実物を確かめて判定に入れる）
-  - 「送信中」のまま終わった投稿がある
+  - 文面の検査に落ちて送っていない（題名に使わない言い方が残っている等）
 - 鳴らさないとき: ジャーナルが休み（HOLD）の日。それは `journal-watchdog.yml` の役目で、二重に鳴らさない
 - 直ったら自動で閉じる（オオカミ少年にしない）
 - 夜間 QA に soft で「直近7日の投稿の欠け」を載せる
@@ -202,10 +203,10 @@ https://nagoya-bites.com/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.h
 | 0 | X の開発者アカウント作成・アプリ作成・権限を「Read and write」・カード登録・上限10ドル・鍵4つの発行・GitHub Secrets への登録・自動化ラベルの設定 | オーナー（手順書は Builder が用意） | 30分 |
 | 1 | 文面づくりと検査の部品 `scripts/lib/x_post.js`（文字数の数え方・数字の照合・言い方の検査・UTM）と単体テスト | Builder | 1〜2時間 |
 | 1 | 投稿スクリプト `scripts/post_journal_to_x.js`（既定は送らない。`--yes` のときだけ送る）・台帳 `data/x_post_log.json`・停止スイッチ `data/x_post_policy.json` | Builder | 1〜2時間 |
-| 1 | `x-post.yml`（12:00/18:00・手動実行あり）を「試運転」で動かし、送る予定の文面を Actions の要約に出す | Builder | 30分 |
+| 1 | `x-post.yml`（公開の push の直後・やり直し 12:00/17:00・手動実行あり）を「試運転」で動かし、送る予定の文面を Actions の要約に出す | Builder | 30分 |
 | 2 | 試運転3日 → オーナーが文面を見て OK → 手動実行で初回投稿 → 定時の本番へ | オーナー確認 → Builder | 3日 |
 | 3 | `x-post-watchdog.yml`・心拍・夜間 QA の soft | Builder | 1時間 |
-| 3 | 判断の記録 `docs/decisions/0023-x-auto-posting.md`（「外部発信は自動化しない」を X に限って覆す理由と条件）、SEO-055・SEO-098・`social-watchdog.yml` の文言の更新 | Builder / Marketer | 30分 |
+| 3 | 判断の記録 `docs/decisions/0027-x-auto-posting.md`（「外部発信は自動化しない」を X に限って覆す理由と条件）、SEO-055・SEO-098・`social-watchdog.yml` の文言の更新 | Builder / Marketer | 30分 |
 | 4（任意） | AI の一言（5.2）、リンクの置き場所の比較（9章）、4週後の効果のまとめ | Marketer / Editor | — |
 
 ---
@@ -217,7 +218,7 @@ https://nagoya-bites.com/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.h
 | 1 | 今「サイトの外の別の仕組み」で X に投稿しているか | X はこの新しい仕組みに一本化し、外の仕組みは X への投稿を止める | 両方動くと同じ記事が2回出る（X の重複禁止にも当たる） |
 | 2 | 使う X アカウント（@名前）と、そのアカウントに「自動化アカウント」のラベルを付けてよいか | NAGOYA BITES の公式アカウントで、ラベルを付ける | X のルールで自動投稿には表示が求められる。付けないと凍結の恐れ |
 | 3 | 費用（月 約6ドル・上限10ドル）の承認 | 承認する（最初の約3か月は特典の20ドルでまかなえる） | 課金はオーナーのカードでしか始められない |
-| 4 | 投稿する時刻 | 12:00（やり直し 18:00） | 店探しの時間に合わせる。夜（18〜20時）が良ければ変える |
+| 4 | 投稿する時刻 | 公開の直後（だいたい 9:30〜10:30） | GitHub の定時実行は数時間遅れることがあり、12時ちょうどは約束できない。昼・夜にそろえたい場合は、Actions の中で待つ形にできる |
 | 5 | 文面は定型（題名＋リンク）から始めてよいか | 定型から始め、安定してから AI の一言を足す | AI の文は事実と違う数字を書く危険がある。定型は記事と同じ文なので安全 |
 | 6 | 試運転（投稿せず文面だけ見せる）の日数 | 3日 | 本番の前に文面の見え方を確かめるため |
 | 7 | ジャーナルが休みの日 | 投稿しない | 代わりの投稿を自動で作ると、記事のない投稿や同じ特集の繰り返しになる |
@@ -241,4 +242,23 @@ https://nagoya-bites.com/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.h
 ## 13. 関連ファイル
 
 - 既存: `scripts/run_journal_local.sh` / `data/journal_published.json` / `data/journal_health.json` / `docs/sns-utm-convention.md` / `data/selection_wording_policy.json` / `scripts/lib/traffic_source.js` / `.github/workflows/journal-watchdog.yml` / `.github/workflows/social-watchdog.yml` / `data/journal_sns_draft_policy.json`
-- 新規（予定）: `scripts/lib/x_post.js` / `scripts/post_journal_to_x.js` / `data/x_post_policy.json` / `data/x_post_log.json` / `data/x_post_health.json` / `.github/workflows/x-post.yml` / `.github/workflows/x-post-watchdog.yml` / `docs/x-api-setup.md`（オーナー向けの手順書）/ `docs/decisions/0023-x-auto-posting.md`
+- 新規（予定）: `scripts/lib/x_post.js` / `scripts/post_journal_to_x.js` / `data/x_post_policy.json` / `data/x_post_log.json` / `data/x_post_health.json` / `.github/workflows/x-post.yml` / `.github/workflows/x-post-watchdog.yml` / `docs/x-api-setup.md`（オーナー向けの手順書）/ `docs/decisions/0027-x-auto-posting.md`
+
+---
+
+## 14. 実装の状況（2026-10-13）
+
+オーナーの「進められる分は進めて」（2026-10-12 夜）を受けて、X に送らない形で段階1と段階3の一部を作った。
+
+| もの | 状態 | 確かめ方 |
+|---|---|---|
+| 運用ルール `data/x_post_policy.json` | ✅ `mode: dry-run`（X に送らない） | ファイルを見る |
+| 文面づくりと検査 `scripts/lib/x_post.js` | ✅ | `node --test tests/x_post.test.js`（OAuth 署名は X の公式の例と一致） |
+| 投稿 `scripts/post_journal_to_x.js` | ✅ 直近60本の記事で試運転し、60本とも検査を通過（最長 179／280） | `node scripts/post_journal_to_x.js --date 2026-10-12` |
+| ワークフロー `.github/workflows/x-post.yml` | ✅ 試運転で動く（鍵が無くても動く） | Actions の「NAGOYA BITES — X 自動投稿」の Summary に、送る予定の文面が出る |
+| 見張り役 `scripts/check_x_post_health.js` と `.github/workflows/x-post-watchdog.yml` | ✅ `live` のときだけ鳴る | `node scripts/check_x_post_health.js` |
+| オーナー向けの手順書 `docs/x-api-setup.md` | ✅ | — |
+| 判断の記録 `docs/decisions/0027-x-auto-posting.md` | ✅ | — |
+| 鍵の登録・課金・自動化ラベル（P-294） | ⏳ オーナーの操作待ち | — |
+| 初回の投稿と本番への切り替え（P-296） | ⏳ 鍵の登録と試運転の確認の後 | — |
+| `social-watchdog.yml` の「自動投稿はスコープ外」の文言（P-297） | ⏳ 本番に切り替えるときに直す | — |

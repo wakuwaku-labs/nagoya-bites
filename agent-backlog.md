@@ -8,7 +8,7 @@
 
 ### [SNS-001] 日次ジャーナルの公開後に、X へ記事の紹介を毎日自動で投稿する
 
-- **priority**: P2 → **status**: blocked
+- **priority**: P2 → **status**: in_progress
 - **due**: 2026-10-31
 - **detected**: 2026-10-12
 - **category**: SNS / 自動化
@@ -16,7 +16,7 @@
 - **source**: オーナー依頼（2026-10-12）「Xへの発信を自動で行いたい。アカウントはあるので、毎日のジャーナルをもとに投稿まで全て自動で。まず計画書を、確認事項と現状調査をしっかり行ったうえで作って」
 - **brand-filter**: ✅ 適合 — 自社記事の紹介のみ。広告・PR ではない。写真は X にアップロードせずリンクカードで見せる（HotPepper 規約）。「業界人」などの言い方は出さない（2026-10-11 の指示）。過去の方針「外部発信は自動化しない」（SEO-055 ④・SEO-098）をオーナーの指示で X に限って覆すため、判断の記録を残す
 - **背景**: リポジトリに X 投稿のコード・鍵・ワークフローは無い。SNS 原稿の自動生成は 2026-09-05 から停止（サイト外の仕組みで運用）。X API は 2026-02 頃に月額枠が無くなり従量課金（リンク付き投稿 1回 0.20 ドル＝月約6ドル）。調査の全体と設計は `docs/x-auto-posting-plan-2026-10.md`
-- **方針**: GitHub Actions が 12:00 JST（やり直し 18:00）に `data/journal_published.json` の今日の記事を確かめ、定型の文面（題名＋UTM 付きリンク＋ハッシュタグ2個まで）を検査してから投稿。台帳で二重投稿を防ぎ、失敗は原因つき Issue。子課題: [[SNS-002]] [[SNS-003]] [[SNS-004]] [[SNS-005]]
+- **方針**: GitHub Actions がジャーナルの公開の push の直後（やり直し 12:00・17:00 JST）に `data/journal_published.json` の今日の記事を確かめ、定型の文面（題名＋UTM 付きリンク＋ハッシュタグ2個まで）を検査してから投稿。台帳で二重投稿を防ぎ、失敗は原因つき Issue。子課題: [[SNS-002]] [[SNS-003]] [[SNS-004]] [[SNS-005]]
 - **blocked-by**: 計画書 11 章の確認事項（特に #1 既存の外部の仕組みと二重にならないか・#3 費用）
 - **acceptance**:
   1. 子課題がすべて done
@@ -24,10 +24,12 @@
   3. 投稿のリンクに `utm_source=x&utm_medium=social&utm_campaign=<記事ID>` が付いている
   4. 投稿できなかった日に原因つきの GitHub Issue が届き、復旧で自動クローズされる
 - **関連**: [[SEO-055]]／[[SEO-098]]／`docs/sns-utm-convention.md`
+- **進捗（2026-10-13）**: オーナーの「進められる分は進めて」で、X に送らない試運転（`mode: dry-run`）の形で SNS-003 と SNS-005 の大半を実装。残りは鍵の登録（SNS-002）→ 試運転の確認 → 初回投稿 → 本番（SNS-004）
+
 
 ### [SNS-002] X の開発者アプリを作り、投稿用の鍵を GitHub Secrets に登録する（オーナー作業）
 
-- **priority**: P2 → **status**: blocked
+- **priority**: P2 → **status**: ready
 - **due**: 2026-10-24
 - **detected**: 2026-10-12
 - **category**: SNS / 自動化
@@ -39,11 +41,11 @@
   2. 支払いカードが登録され、請求期間の上限が 10 ドルに設定されている
   3. GitHub Secrets に `X_API_KEY` / `X_API_SECRET` / `X_ACCESS_TOKEN` / `X_ACCESS_TOKEN_SECRET` がある（値はどこにも書かない）
   4. 投稿するアカウントに X の「自動化アカウント」のラベルが付いている
-- **関連**: [[SNS-001]]（手順書 `docs/x-api-setup.md` は [[SNS-003]] で用意する）
+- **関連**: [[SNS-001]]（手順書 `docs/x-api-setup.md`・2026-10-13 作成済み）
 
 ### [SNS-003] X 投稿の文面づくり・検査・投稿のスクリプトと台帳を作る
 
-- **priority**: P2 → **status**: blocked
+- **priority**: P2 → **status**: done
 - **due**: 2026-10-24
 - **detected**: 2026-10-12
 - **category**: SNS / 自動化
@@ -52,15 +54,17 @@
 - **背景**: 計画書 `docs/x-auto-posting-plan-2026-10.md` の 5章・6章。npm 依存を足さず、OAuth 1.0a の署名は Node 標準の crypto で書く
 - **acceptance**:
   1. `scripts/lib/x_post.js` が、X の数え方の文字数（日本語=2・URL=23）・文面の数字が記事本文にあるか・`data/selection_wording_policy.json` の error 語が無いか・UTM を判定し、`tests/` の単体テストが通る
-  2. `scripts/post_journal_to_x.js` は既定で送らず、`--yes` のときだけ送る。同じ記事を2回送らない（台帳 `data/x_post_log.json`）。ジャーナルが無い日は送らない
+  2. `scripts/post_journal_to_x.js` は `data/x_post_policy.json` の mode が live のとき（または手動の `--force-live`）だけ送る。同じ記事を2回送らない（台帳 `data/x_post_log.json`）。ジャーナルが無い日は送らない
   3. 停止スイッチ `data/x_post_policy.json`（enabled / mode=dry-run|live）がある
   4. オーナー向けの手順書 `docs/x-api-setup.md` がある
   5. `npm test` が通る
 - **関連**: [[SNS-001]]
+- **結果（2026-10-13）**: `scripts/lib/x_post.js`・`scripts/post_journal_to_x.js`・`data/x_post_policy.json`・`tests/x_post.test.js`（18件・OAuth 署名は X の公式の例と一致）・`docs/x-api-setup.md`。直近60本の記事で試運転し60本とも検査を通過（最長 179／280）。題名の「〜を業界人が読む」（60本中17本）は X の文面に限って「〜を読む」に置き換える（`titleRewrites`）
+
 
 ### [SNS-004] X 投稿のワークフローを試運転3日のあと本番にする
 
-- **priority**: P2 → **status**: blocked
+- **priority**: P2 → **status**: in_progress
 - **due**: 2026-10-31
 - **detected**: 2026-10-12
 - **category**: SNS / 自動化
@@ -68,15 +72,17 @@
 - **source**: オーナー依頼（2026-10-12）「Xへの発信を自動で行いたい。アカウントはあるので、毎日のジャーナルをもとに投稿まで全て自動で。まず計画書を、確認事項と現状調査をしっかり行ったうえで作って」
 - **背景**: 計画書 `docs/x-auto-posting-plan-2026-10.md` の 4章・10章 段階1〜2。本番の前に送る予定の文面をオーナーが見る
 - **acceptance**:
-  1. `.github/workflows/x-post.yml` が 12:00 / 18:00 JST と手動で動き、同時に1つだけ走る
+  1. `.github/workflows/x-post.yml` がジャーナルの公開の push・12:00 / 17:00 JST・手動で動き、同時に1つだけ走る
   2. 試運転の3日分、送る予定の文面が Actions の要約に出ている
   3. オーナーの OK の後、手動実行で初回投稿が成功し、X 上で投稿とリンクカードが見える
   4. 定時の本番に切り替えた後、7日続けて1日1件投稿されている
 - **関連**: [[SNS-001]]・[[SNS-002]]・[[SNS-003]]
+- **進捗（2026-10-13）**: `x-post.yml` を試運転（dry-run）で合流。鍵が無くても動き、Summary に送る予定の文面が出る。残りは試運転の確認・初回投稿・本番切り替え
+
 
 ### [SNS-005] X 投稿の心拍と見張り役を作り、判断の記録と古い方針の文言を直す
 
-- **priority**: P2 → **status**: blocked
+- **priority**: P2 → **status**: partial
 - **due**: 2026-10-31
 - **detected**: 2026-10-12
 - **category**: SNS / 自動化
@@ -86,9 +92,11 @@
 - **acceptance**:
   1. `data/x_post_health.json` に毎回（投稿しなかった日も）結果が書かれる
   2. `.github/workflows/x-post-watchdog.yml` が、ジャーナルがあるのに投稿が無い日・鍵の失効・残高切れで原因つき Issue を1件出し、復旧で自動クローズする
-  3. `docs/decisions/0023-x-auto-posting.md` がある
+  3. `docs/decisions/0027-x-auto-posting.md` がある
   4. `social-watchdog.yml` の「自動投稿はスコープ外」の文言が今の運用に合っている
 - **関連**: [[SNS-001]]
+- **進捗（2026-10-13）**: 1〜3 は済み（`scripts/check_x_post_health.js`・`x-post-watchdog.yml`・判断の記録 0027。見張り役は mode=live のときだけ鳴る）。4（`social-watchdog.yml` の文言）は本番に切り替えるときに直す
+
 
 ### [DSN-008] トップ・検索結果・店舗詳細を、アイコンと短い言葉で直感的に操作できる見た目に整える
 

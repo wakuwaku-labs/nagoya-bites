@@ -1,0 +1,97 @@
+name: NAGOYA BITES — X 自動投稿
+
+# SNS-001（計画書 docs/x-auto-posting-plan-2026-10.md）
+#   日次ジャーナルの公開の後、X に記事の紹介を1件投稿する。
+#   動き方は data/x_post_policy.json の mode で決まる（off / dry-run / live）。
+#   dry-run の間は X に送らず、送る予定の文面をこの実行の要約（Summary）に出すだけ。
+#
+# なぜ push を起点にするか:
+#   GitHub の定時実行は混雑で数時間遅れる（journal-watchdog.yml の実測 4〜6 時間）。
+#   ジャーナルの公開（launchd が data/journal_published.json を push）を起点にすると数分で動ける。
+#   定時実行はその取りこぼし（Pages の反映待ちで送れなかった等）のやり直し用。
+#
+# 二重投稿を防ぐ仕組みは scripts/post_journal_to_x.js の先頭に書いてある（台帳・同時に1つ・X の重複拒否）。
+
+on:
+  push:
+    branches: [main]
+    paths: ['data/journal_published.json']
+  schedule:
+    - cron: '0 3 * * *'   # 12:00 JST 意図（やり直し）
+    - cron: '0 8 * * *'   # 17:00 JST 意図（やり直し）
+  workflow_dispatch:
+    inputs:
+      date:
+        description: '対象の日（YYYY-MM-DD・空なら今日）'
+        required: false
+        default: ''
+      force_live:
+        description: 'ポリシーが dry-run でも X に送る（初回の手動投稿用。mode=off のときは送らない）'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: x-post
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 投稿（または試運転）
+        id: post
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+          INPUT_DATE: ${{ github.event.inputs.date }}
+          INPUT_FORCE_LIVE: ${{ github.event.inputs.force_live }}
+        run: |
+          ARGS=""
+          if [ -n "$INPUT_DATE" ]; then ARGS="$ARGS --date $INPUT_DATE"; fi
+          if [ "$INPUT_FORCE_LIVE" = "true" ]; then ARGS="$ARGS --force-live"; fi
+          set +e
+          node scripts/post_journal_to_x.js $ARGS
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+          set -e
+
+      - name: 台帳と心拍をコミット（live のときだけ変わる）
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/x_post_log.json data/x_post_health.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "台帳と心拍に変更なし（試運転・投稿済み・ジャーナル無し）"
+            exit 0
+          fi
+          git commit -m "chore: X 自動投稿の台帳を更新 [skip actions]"
+          # 日次ビルド（build.yml）の bot コミットと重なることがあるので、取り込み直して最大5回やり直す
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            echo "push 失敗（試行 ${i}/5）。$((i * 5))秒待って再試行します"
+            sleep $((i * 5))
+          done
+          echo "::error::台帳を push できませんでした。投稿が済んでいる場合、次の回は X の重複拒否で止まります（二重投稿にはなりません）"
+          exit 1
+
+      - name: 送れなかったときはジョブを失敗にする
+        if: steps.post.outputs.exit != '0'
+        run: |
+          echo "::error::X に送れませんでした。理由はこの実行の Summary と data/x_post_health.json を見てください"
+          exit 1
