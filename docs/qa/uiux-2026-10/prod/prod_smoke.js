@@ -1,5 +1,5 @@
 // 本番（https://nagoya-bites.com/）の確認。分析（GA4 など）への通信は止め、入力は自分のブラウザの中だけで完結する（サーバーに何も書かない）。
-// 確かめること: P-225（記号の入力が要素にならない）・I-13（スプラッシュが無い）・I-07（英語が無い）・I-23（保存した店が見える）・I-21（共有リンクで店が開く・戻るで閉じる）・ページのエラー
+// 確かめること: 検索語の記号の扱い（回帰確認。`tests/index_filter_chips_escape.test.js` と同じ入力）・I-13（スプラッシュが無い）・I-07（英語が無い）・I-23（保存した店が見える）・I-21（共有リンクで店が開く・戻るで閉じる）・ページのエラー
 const puppeteer = require('puppeteer');
 const BASE = 'https://nagoya-bites.com/';
 const BLOCK = /googletagmanager\.com|google-analytics\.com|analytics\.google\.com|doubleclick\.net|formspree\.io/;
@@ -20,7 +20,7 @@ async function newPage(browser, mobile) {
 (async () => {
   const browser = await puppeteer.launch({ headless: 'shell' });
   try {
-    // ── P-225: 記号を含む検索語 ──
+    // ── 記号を含む検索語（回帰確認）──
     {
       const page = await newPage(browser, false);
       await page.goto(BASE + '?cb=' + Date.now(), { waitUntil: 'domcontentloaded', timeout: 60000 });
@@ -42,9 +42,9 @@ async function newPage(browser, mobile) {
           condText: cond ? cond.textContent : null,
         };
       }, payload);
-      check('P-225 本番: 検索語の <b id="nb-test"> が要素にならない', !res.injected && !res.chipsHasB && !res.condHasB, JSON.stringify({ injected: res.injected, chipsHasB: res.chipsHasB, condHasB: res.condHasB }));
-      check('P-225 本番: 検索語が文字としてチップに出る', res.chipsText && res.chipsText.indexOf('<b id="nb-test">x</b>') >= 0, (res.chipsText || '').slice(0, 60));
-      check('P-225 本番: ページのエラーが出ていない', page._nbErrors.length === 0, page._nbErrors.slice(0, 2).join(' | '));
+      check('本番: 検索語に含めた記号が要素にならない', !res.injected && !res.chipsHasB && !res.condHasB, JSON.stringify({ injected: res.injected, chipsHasB: res.chipsHasB, condHasB: res.condHasB }));
+      check('本番: 検索語が文字としてチップに出る', res.chipsText && res.chipsText.indexOf('<b id="nb-test">x</b>') >= 0, (res.chipsText || '').slice(0, 60));
+      check('本番: 検索語の確認でページのエラーが出ていない', page._nbErrors.length === 0, page._nbErrors.slice(0, 2).join(' | '));
       await page.close();
     }
     // ── I-13・I-07: スプラッシュと英語（スマホ幅） ──
