@@ -91,16 +91,18 @@ test('buildJournalStoreMap: 新しい順・同じ日はファイル名順・同�
     put('2026-10-01-a.html', '<a href="../stores/J1.html">1</a><a href="../stores/J1.html">1b</a><a href="../stores/J2.html">2</a>');
     put('2026-10-05-b.html', '<a href="../stores/OLD.html">旧ID</a>');
     put('2026-09-01-c.html', '<a href="../stores/J2.html">2</a>');
+    put('2026-10-06-d.html', '<a href="../stores/OLD.html">旧ID</a><a href="../stores/J1.html">今のID</a>');
     put('2026-10-05-a2.html', '<a href="../stores/J2.html">2</a>');
+    put('2026-10-05-a3.html', '<a href="../stores/J2.html">2</a>');
     fs.writeFileSync(path.join(root, 'journal', '2026-10-02-notitle.html'), '<html><body><article><a href="../stores/J1.html">1</a></article></body></html>');
     fs.writeFileSync(path.join(root, 'journal', 'index.html'), article('<a href="../stores/J3.html">3</a>'));
     fs.writeFileSync(path.join(root, 'journal', '_template.html'), article('<a href="../stores/J3.html">3</a>'));
     fs.writeFileSync(path.join(root, 'stores', 'OLD.html'), SO.renderRedirectStub('J1', 'とん八 栄店'));
     const map = L.buildJournalStoreMap({ root, resolveSlug: L.makeSlugResolver({ root, liveSlugs: new Set(['J1', 'J2', 'J3']) }) });
-    assert.deepEqual(map.get('J1').map(e => e.slug), ['2026-10-05-b', '2026-10-01-a'], '旧IDへのリンクは今の店に結び、題の無い記事は出さない');
-    assert.deepEqual(map.get('J2').map(e => e.slug), ['2026-10-05-a2', '2026-10-01-a', '2026-09-01-c'], '同じ日はファイル名順');
+    assert.deepEqual(map.get('J1').map(e => e.slug), ['2026-10-06-d', '2026-10-05-b', '2026-10-01-a'], '旧IDへのリンクは今の店に結び、題の無い記事は出さない・旧IDと今のIDの両方を載せた記事も1件');
+    assert.deepEqual(map.get('J2').map(e => e.slug), ['2026-10-05-a2', '2026-10-05-a3', '2026-10-01-a', '2026-09-01-c'], '同じ日はファイル名順');
     assert.equal(map.has('J3'), false, 'index.html・_template.html は記事ではない');
-    assert.deepEqual(map.get('J1')[0], { slug: '2026-10-05-b', title: '2026-10-05-bの題', date: '2026-10-05' });
+    assert.deepEqual(map.get('J1')[1], { slug: '2026-10-05-b', title: '2026-10-05-bの題', date: '2026-10-05' });
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
 

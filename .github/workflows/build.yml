@@ -358,7 +358,7 @@ jobs:
         continue-on-error: true
 
       - name: 店舗ページから特集へのリンク文の件数をそろえる（SEO-147・冪等・日次）
-        # 店舗ページの「この店舗が登場する特集」「掲載特集」の「N選」は、gen-store-pages.js が書き出すときに
+        # 店舗ページの「あわせて読みたい特集」「この店が載っている特集・記事」の「N選」は、gen-store-pages.js が書き出すときに
         # リンク先の特集の確かめられる掲載数（ItemList＝要素数＝店カード枚数）に合わせる。このステップは
         # 再生成されない孤児ページ（data/store_page_orphans.json）と stores/index.html のずれを直し、直した本数を
         # ログに出す（再生成したページは0本のはず）。判定は scripts/lib/feature_counts.js の1本。初回は非ブロッキング。
