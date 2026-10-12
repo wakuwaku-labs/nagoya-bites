@@ -29,7 +29,7 @@
 
   --r-sm:3px;--r-md:6px;--r-lg:10px;--r-pill:999px;
   --container-prose:720px;--container-mid:900px;--container-wide:1200px;
-  --header-h:56px;--tap-min:44px;
+  --header-h:56px;--tap-min:44px;--action-bar-h:72px;
 
   /* ── 色（パレット不変・命名/対比を修正） ── */
   --bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--card:#fff;--card-border:#d3d1c7;
@@ -405,3 +405,22 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .nb-call-status{margin:0;padding:0;font-size:var(--fs-xs);line-height:var(--lh-ui);color:var(--ink);}
 .nb-call-status:empty{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
 .nb-call-status:not(:empty){flex:1 0 100%;grid-column:1/-1;padding-top:var(--sp-1);}
+
+/* ── 店舗ページの行動バー（I-14b・スマホの画面の下に固定する予約・電話・地図） ──
+   幅 768px 以下だけ出す。PC では出さず、本文のリンク欄の操作も変えない。ボタンの出し分けは gen-store-pages.js の
+   buildActionBar()（計画 7.3 節の表・店の種類で4通り）。一番手（塗り）は予約、無ければ電話、どちらも無ければ地図。
+   position:sticky で、<body> の直下のフッターの後ろに置く。画面の下に貼り付き、ページの終わりでは自分の場所（フッターの
+   下）に収まるので、フッターが隠れない。キーボードの焦点が帯の下に隠れないよう scroll-padding も足す。
+   予約申告プロンプト（fixed）は帯の上に持ち上げる。ヘッダーのドロワー（z-index 199〜201）は帯（90）より上に重なる。 */
+.nb-action-bar{display:none;}
+@media(max-width:768px){
+  .nb-action-bar{position:sticky;bottom:0;z-index:90;display:flex;flex-wrap:wrap;align-items:stretch;gap:var(--sp-2);padding:var(--sp-2) max(var(--sp-3),env(safe-area-inset-right)) calc(var(--sp-2) + env(safe-area-inset-bottom)) max(var(--sp-3),env(safe-area-inset-left));background:var(--bg);border-top:1px solid var(--border);box-shadow:0 -2px 12px rgba(0,0,0,.08);}
+  html:has(.nb-action-bar){scroll-padding-bottom:calc(var(--action-bar-h) + env(safe-area-inset-bottom));}
+  .nb-action-bar ~ .nb-reserve-ask{bottom:calc(var(--action-bar-h) + var(--sp-2) + env(safe-area-inset-bottom));}
+  .nb-bar-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--sp-2);min-height:52px;padding:0 var(--sp-3);border:1px solid var(--border-h);border-radius:var(--r-md);background:var(--card);color:var(--text);font-family:var(--font-body);font-size:var(--fs-sm);font-weight:600;line-height:var(--lh-ui);text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .nb-bar-btn svg{width:20px;height:20px;flex:0 0 auto;fill:currentColor;}
+  .nb-bar-btn:disabled{opacity:.6;cursor:progress;}
+  .nb-bar-primary{flex:1 1 0;min-width:0;background:var(--gold);border-color:var(--gold);color:var(--bg);font-size:var(--fs-md);font-weight:700;}
+  .nb-bar-sub{flex:0 0 4.25rem;flex-direction:column;gap:2px;padding:var(--sp-1);font-size:var(--fs-xs);}
+  .nb-action-bar .nb-call-status{order:-1;}
+}
