@@ -39,9 +39,16 @@ function stubTarget(html) {
   return m ? m[1] : null;
 }
 
+// 店舗ページの店名は gen-store-pages.js が escapeHtml（& < > " '）で逃がして入れる（I-18）。
+// 店名の照合（normName）は元の店名と比べるので、読み取るときに戻す（戻さないと「A &amp; B」が「A & B」と合わず、孤児ページを誘導先に結べない）
+const ENTITY_CHAR = { amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'" };
+function decodeEntities(s) {
+  return String(s).replace(/&(amp|lt|gt|quot|#39);/g, (m, k) => ENTITY_CHAR[k]);
+}
+
 function readH1(html) {
   const m = typeof html === 'string' && html.match(/<h1[^>]*>([^<]*)</);
-  return m ? m[1].trim() : '';
+  return m ? decodeEntities(m[1]).trim() : '';
 }
 
 function escAttr(s) {
