@@ -15,6 +15,7 @@ const ROOT = path.resolve(__dirname, '..');
 const JP = require(path.join(ROOT, 'scripts/lib/journal_photos.js'));
 const { judgePhoto, extractBodyPhotosFromHtml, loadPolicy } = require(path.join(ROOT, 'scripts/lib/hero_photo_gate.js'));
 const { loadStores } = require(path.join(ROOT, 'scripts/lib/load_stores.js'));
+const { extractStores } = require(path.join(ROOT, 'scripts/add_journal_body_photos.js'));
 
 const ARTICLE = { slug: '2026-09-21-test', date: '2026-09-21' };
 
@@ -75,6 +76,68 @@ test('figure は帰属の証跡を刻み、監査側がそれを読み戻せる'
   assert.strictEqual(read.heroSource, 'hotpepper');
   assert.strictEqual(read.heroStore, a['店名']);
   assert.strictEqual(judgePhoto(read).ok, true);
+});
+
+// 後追いスクリプトは、記事の h3（エスケープ済みの文字）から店名を取り出して figureHtml（esc 1回）へ渡す。
+// 取り出した店名のエスケープを戻さないと二重になり（Chef&amp;#39;s）、画面にそのまま出る（2026-08-28 の記事）。
+const ENTITY_ARTICLE = `<div class="art-body"><p>本文</p></div>
+<div class="store-list">
+  <div class="store-card" data-store-id="J000000001">
+    <div class="store-num">01</div>
+    <div class="store-info">
+      <h3 class="store-name">ホテル Chef&#39;s Kitchen &amp; Bar &quot;A&quot;</h3>
+      <div class="store-meta"><span>各国料理</span><span>名古屋 &amp; 栄</span><span class="score">★3.9</span></div>
+    </div>
+  </div>
+  <div class="store-card" data-store-id="J000000002">
+    <div class="store-info">
+      <h3 class="store-name">普通の店</h3>
+      <div class="store-meta"><span>居酒屋</span><span>名古屋駅</span></div>
+    </div>
+  </div>
+</div>`;
+const DOUBLE_ESCAPED = /&amp;(?:amp|lt|gt|quot|apos|#\d+|#[xX][0-9a-fA-F]+);/;
+
+test('後追いスクリプト: 記事の店名は素の文字に戻して取り出す', () => {
+  assert.deepStrictEqual(extractStores(ENTITY_ARTICLE).map(({ name, id }) => ({ name, id })), [
+    { name: `ホテル Chef's Kitchen & Bar "A"`, id: 'J000000001' },
+    { name: '普通の店', id: 'J000000002' },
+  ]);
+});
+
+test('後追いスクリプト: エリアも素の文字に戻す（メタが見出しの前にある並びで読めたとき）', () => {
+  // 今のテンプレートはメタが h3 の後ろにあり、エリアはデータ側（エリア列）から引く。
+  // メタが見出しの前にある並びを読めたときの値も、店名と同じく素の文字にそろえておく。
+  const html = `<div class="store-card" data-store-id="J000000003"><span>各国料理</span><span>名古屋 &amp; 栄</span>
+    <h3 class="store-name">店</h3></div>`;
+  assert.deepStrictEqual(extractStores(html), [{ name: '店', id: 'J000000003', area: '名古屋 & 栄' }]);
+});
+
+test('後追いスクリプト: 取り出した店名で作った figure は、エスケープが1回だけ（二重にならない）', () => {
+  const [s] = extractStores(ENTITY_ARTICLE);
+  const fig = JP.figureHtml({
+    url: 'https://imgfp.hotp.jp/IMGH/00/00/P000000000/P000000000.jpg', source: 'hotpepper',
+    storeName: s.name, area: '名古屋 & 栄', creditName: '店舗公式写真', creditUrl: 'https://www.hotpepper.jp',
+  });
+  assert.doesNotMatch(fig, DOUBLE_ESCAPED);
+  assert.match(fig, /data-photo-store="ホテル Chef&#39;s Kitchen &amp; Bar &quot;A&quot;"/);
+  assert.match(fig, /alt="ホテル Chef&#39;s Kitchen &amp; Bar &quot;A&quot;（名古屋 &amp; 栄）の店舗写真"/);
+  // 監査側（記事の h3 は同じエスケープ済みの文字）から読み戻すと、店名が記事の店と一致する
+  const html = `<div class="art-body">${fig}</div>${ENTITY_ARTICLE}`;
+  const [read] = extractBodyPhotosFromHtml(html, ARTICLE.slug, ARTICLE.date);
+  assert.strictEqual(read.heroStore, 'ホテル Chef&#39;s Kitchen &amp; Bar &quot;A&quot;');
+  assert.ok(read.storeNames.includes(read.heroStore), '図の店名の証跡が、記事の h3 の書き方と同じ');
+  assert.strictEqual(judgePhoto(read).ok, true);
+});
+
+test('2026-08-28 の記事: 本文写真の店名の証跡・代替テキスト・出所の表示が二重エスケープされていない', () => {
+  // 後追いスクリプトで挿した記事。全記事を走査するテストにはしない（日次で増える記事に引きずられて
+  // build の npm test を止めないため）。直した1本だけを固定して見る。
+  const html = fs.readFileSync(path.join(ROOT, 'journal', '2026-08-28-meieki-autumn-sweets-weekday.html'), 'utf8');
+  const figs = [...html.matchAll(/<figure class="art-body-img"[\s\S]*?<\/figure>/g)].map(m => m[0]);
+  assert.ok(figs.length >= 1, '本文写真が残っている');
+  for (const fig of figs) assert.doesNotMatch(fig, DOUBLE_ESCAPED);
+  assert.ok(figs.some(f => f.includes("Chef&#39;s Live Kitchen")), '店名に \' を含む店の写真が 1 枚はある（確認の前提）');
 });
 
 test('記事に出てこない店の写真は本文写真でも FAIL（ヒーローと同じ基準）', () => {
