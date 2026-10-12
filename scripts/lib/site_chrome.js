@@ -53,12 +53,30 @@ const FOOTER_GROUPS = [
   },
 ];
 
+// 表示用の素の文字を HTML に入れるときのエスケープ。' も &#39; にする
+// （日次ジャーナルの生成器 generate_daily_draft.js の esc と同じ。違うと、生成器が書いた
+//  &#39; をここが ' に作り直し、apply_site_chrome.js --check が不一致を出す）。
 function esc(s) {
   return String(s == null ? '' : s)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// esc() の逆（1回だけ戻す。&amp;lt; は &lt; になる）。h1 の中身（HTML）や、生成器が JSON-LD の
+// name に HTML のまま入れた文字（&#39; &quot; など）から、表示用の素の文字を取り出すときに使う。
+// 戻した文字は renderBreadcrumb が esc() で1回だけエスケープする（そのまま渡すと &amp;#39; に
+// 二重エスケープされ、画面に &#39; の文字がそのまま出る）。
+const NAMED_ENTITIES = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'" };
+function unesc(s) {
+  return String(s == null ? '' : s).replace(/&(#[xX][0-9a-fA-F]+|#[0-9]+|amp|lt|gt|quot|apos);/g, (m, e) => {
+    if (e[0] !== '#') return NAMED_ENTITIES[e];
+    const cp = (e[1] === 'x' || e[1] === 'X') ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10);
+    if (!(cp > 0 && cp <= 0x10ffff) || (cp >= 0xd800 && cp <= 0xdfff)) return m;
+    return String.fromCodePoint(cp);
+  });
 }
 
 function prefix(depth) {
@@ -214,6 +232,7 @@ module.exports = {
   renderFooter,
   chromeScript,
   esc,
+  unesc,
 };
 
 if (require.main === module) {
