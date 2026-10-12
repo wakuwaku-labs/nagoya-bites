@@ -140,7 +140,7 @@ function buildBody(cfg, slug, picks, manualMap) {
 </div>
 
 <div class="content">
-  <p class="section-label">Selection — 実在確認済み</p>
+  <p class="section-label">掲載店 — 実在確認済み</p>
   <h2>名古屋の${esc(cfg.jp)} 厳選${picks.length}店</h2>
   <div class="shop-grid">
 ${cards}

@@ -351,7 +351,7 @@ function renderRootPage(rootResult, policy) {
     </a>`).join('\n');
   const genreList = genrePages.map(p => `      <li><a href="${p.area.slug}/${p.genre.slug}.html">${esc(p.area.label)}の${esc(p.genre.label)}（${p.stores.length}軒）</a></li>`).join('\n');
 
-  const body = `  <p class="art-eyebrow">Restaurant Database — エリア×ジャンルで探す</p>
+  const body = `  <p class="art-eyebrow">店舗データベース — エリア×ジャンルで探す</p>
   <h1 class="art-title">名古屋の飲食店を、<em>エリア×ジャンル</em>で絞り込む</h1>
   <div class="art-lead"><p>NAGOYA BITES 掲載店を、主要${areaPages.length}エリア×代表ジャンルの一覧に整理しました。各ページはGoogle評価・予算・営業時間などの実データだけで構成し、広告や掲載料による順位操作は一切行っていません。</p></div>
   <h2 class="nb-section-head"><span>エリアから探す</span></h2>
@@ -400,7 +400,7 @@ function renderAreaPage(page, allPages, policy) {
     stations.length ? ['最寄り駅', stations.map(([st]) => st).join('・')] : null,
   ].filter(Boolean);
 
-  const body = `  <p class="art-eyebrow">Restaurant Database — ${esc(page.area.label)}</p>
+  const body = `  <p class="art-eyebrow">店舗データベース — ${esc(page.area.label)}</p>
   <h1 class="art-title">${esc(page.area.label)}の<em>飲食店</em></h1>
   <div class="art-lead"><p>${esc(page.area.label)}に掲載中の飲食店${page.stores.length}軒をジャンル別に整理。並び順は各ジャンルページで Google評価×口コミ件数の機械的な順に統一しています。編集部推薦や広告で順位は動かしていません。</p></div>
   <dl class="hub-stats">
@@ -536,7 +536,7 @@ ${[
 
   const h1 = isCondition ? `${page.area.label}の${page.genre.label} — <em>${page.cond.label}</em>` : `${page.area.label}の<em>${page.genre.label}</em>`;
 
-  const body = `  <p class="art-eyebrow">Restaurant Database — ${esc(page.area.label)} × ${esc(page.genre.label)}${isCondition ? ' × ' + esc(page.cond.label) : ''}</p>
+  const body = `  <p class="art-eyebrow">店舗データベース — ${esc(page.area.label)} × ${esc(page.genre.label)}${isCondition ? ' × ' + esc(page.cond.label) : ''}</p>
   <h1 class="art-title">${h1}</h1>
   <div class="art-lead"><p>${leadFacts.map(esc).join('。')}。並び順はGoogle評価×口コミ件数の機械的な順（口コミ5件未満の店は評価を出さず末尾）。編集部推薦や広告で順位は動かしていません。</p></div>
   ${condChips ? `<div class="hero-tags">${condChips}</div>` : ''}

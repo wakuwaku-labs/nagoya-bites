@@ -411,7 +411,7 @@ function figureHtml(photo) {
   const label = (store && !creditNamesStore) ? `${esc(store)} — ` : '';
   return `<figure class="art-body-img" data-photo-source="${esc(source)}"${store ? ` data-photo-store="${esc(store)}"` : ''}>
   <img src="${esc(photo.url)}" alt="${esc(alt)}" loading="lazy" decoding="async">
-  <figcaption class="art-img-credit">Photo: ${label}${credit}</figcaption>
+  <figcaption class="art-img-credit">写真: ${label}${credit}</figcaption>
 </figure>`;
 }
 

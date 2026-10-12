@@ -12,8 +12,9 @@
  * （build.yml は npm test を再生成の前に回す。生成済みのページを読むテストは書かない）。
  * 生成器が返す形は、store_index_entrance.test.js（ハブのパンくず）と site_chrome.test.js が見ている。
  *
- * 範囲の外: 特集・FAQ・運営ページなどの見出しの上の小さな英語（Restaurant Database・Feature Articles・
- *   Frequently Asked Questions・Get in Touch・Legal など）、「EDITORS' PICK」、「Photo:」。別の課題で扱う。
+ * 範囲の外: 特集・FAQ・運営ページなどの見出しの上の小さな英語（Restaurant Database・Feature Article・
+ *   Frequently Asked Questions・Get in Touch・Legal など）、「EDITORS' PICK」、「Photo:」は、I-07c の
+ *   tests/english_labels.test.js が見る（運営者の経歴・選び方の文案と一緒に直すページは P-237 #2 待ちで除外）。
  */
 
 const test = require('node:test');
