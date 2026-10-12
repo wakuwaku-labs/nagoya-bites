@@ -22,9 +22,6 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/nb.css">
 <script type="application/ld+json">
 {
@@ -90,7 +87,7 @@ p{font-size:var(--fs-md);line-height:2;color:var(--muted);margin-bottom:1.1rem;}
 .shop-area{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);margin-bottom:.7rem;}
 .shop-desc{font-size:var(--fs-md);line-height:1.9;color:var(--muted);}
 .shop-insider{font-size:.78rem;line-height:1.8;color:var(--dim);border-top:1px solid var(--border);margin-top:.8rem;padding-top:.7rem;font-style:italic;}
-.shop-insider::before{content:'Insider — ';font-family:'DM Mono',monospace;font-style:normal;color:var(--gold);font-size:var(--fs-xs);letter-spacing:.1em;}
+.shop-insider::before{content:'Insider — ';font-family:var(--font-mono);font-style:normal;color:var(--gold);font-size:var(--fs-xs);letter-spacing:.1em;}
 .shop-tags{margin-top:.8rem;display:flex;flex-wrap:wrap;gap:.4rem;}
 .tag{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;padding:.2rem .55rem;border:1px solid var(--border);border-radius:2px;color:var(--dim);}
 .tag.highlight{border-color:var(--gold);color:var(--gold);}
@@ -100,20 +97,20 @@ p{font-size:var(--fs-md);line-height:2;color:var(--muted);margin-bottom:1.1rem;}
 .axes-list li{font-size:var(--fs-md);line-height:1.9;color:var(--muted);padding:.2rem 0;padding-left:1rem;position:relative;}
 .axes-list li::before{content:'—';position:absolute;left:0;color:var(--gold);}
 .tips-box{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.4rem 1.6rem;margin:1.5rem 0 2rem;}
-.tips-title{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
+.tips-title{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
 .tips-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.2rem;}
 .tips-item{padding:.8rem 1rem;background:var(--surface);border-radius:4px;}
-.tips-item-title{font-family:'Noto Sans JP',sans-serif;font-weight:500;font-size:.8rem;color:var(--white);margin-bottom:.4rem;}
+.tips-item-title{font-family:var(--font-body);font-weight:500;font-size:.8rem;color:var(--white);margin-bottom:.4rem;}
 .tips-item-desc{font-size:.76rem;line-height:1.8;color:var(--muted);}
 .column-box{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.6rem 1.8rem;margin:2rem 0;}
-.column-label{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:.8rem;}
-.column-title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.15rem;color:var(--white);margin-bottom:1rem;}
+.column-label{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:.8rem;}
+.column-title{font-family:var(--font-display);font-weight:400;font-size:1.15rem;color:var(--white);margin-bottom:1rem;}
 .column-text{font-size:.84rem;line-height:2;color:var(--muted);}
 .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin:1.5rem 0;}
 .related-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1rem 1.1rem;text-decoration:none;transition:border-color .2s;display:block;}
 .related-card:hover{border-color:var(--border-h);}
-.related-card-label{font-family:'DM Mono',monospace;font-size:var(--fs-2xs);letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin-bottom:.35rem;}
-.related-card-title{font-family:'Noto Sans JP',sans-serif;font-size:.78rem;color:var(--text);line-height:1.6;}
+.related-card-label{font-family:var(--font-mono);font-size:var(--fs-2xs);letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin-bottom:.35rem;}
+.related-card-title{font-family:var(--font-body);font-size:.78rem;color:var(--text);line-height:1.6;}
 .faq-item{margin:1.5rem 0;}
 .faq-q{font-family:var(--font-body);font-weight:500;font-size:var(--fs-md);color:var(--white);margin-bottom:.5rem;}
 .faq-a{font-size:var(--fs-md);line-height:1.9;color:var(--muted);}

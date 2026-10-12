@@ -63,9 +63,6 @@ ${gaSnippet()}
 <title>ページが見つかりません | NAGOYA BITES</title>
 <meta name="description" content="お探しのページは見つかりませんでした。店舗検索かエリア別の一覧から、お探しの店をたどれます。">
 <meta name="robots" content="noindex">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="${DS.fontsUrl}" rel="stylesheet">
 <link rel="stylesheet" href="/${DS.cssPath.replace(/^\/+/, '')}">
 <style>
 .nb-notfound{max-width:var(--container-prose);margin:0 auto;padding:calc(var(--header-h) + var(--rhythm-md)) 1.5rem var(--rhythm-md);}

@@ -13,7 +13,7 @@
 - トップページの可視文字の **76%が12px以下**
 - モバイル1画面目に **888文字**（新聞の見出し欄より情報が多い）
 - 検索結果の店舗カード1枚に **22個のテキスト要素**
-- 見出し書体（Cormorant Garamond）に日本語フォールバックがなく、日本語部分はOS任せの明朝に落ちていた
+- 見出し書体（Cormorant Garamond）に日本語フォールバックがなく、日本語部分はOS任せの明朝に落ちていた（2026-10-13 に Web フォントそのものをやめた。§2・判断の記録 0026）
 
 刷新の目標は「読める・静か・揃う」の3つ。
 
@@ -21,8 +21,22 @@
 
 ## 2. 書体
 
-| 役割 | スタック | 読み込みウェイト | 用途 |
+**Web フォントは使わない**（P-318・2026-10-13・判断の記録 `docs/decisions/0026-device-fonts-no-webfonts.md`）。端末にある書体だけを、nb.css のトークンで指す。読み込みの待ちと、読み込み後の文字の入れ替わり（CLS）が無く、書体の転送（約 1.3〜1.7 MB）も Google Fonts への接続もいらない。
+
+| 役割 | トークン | 並び（端末にある書体・先頭から探す） | 用途 |
 |---|---|---|---|
+| 見出し（display） | `var(--font-display)` | `'Hiragino Mincho ProN','Hiragino Mincho Pro','Yu Mincho','YuMincho','Noto Serif CJK JP','MS PMincho',serif` | hero h1・セクション h2・モーダル店名・記事タイトル・ロゴ |
+| 本文・UI | `var(--font-body)` | `'Hiragino Kaku Gothic ProN','Hiragino Sans','Noto Sans CJK JP','Yu Gothic','YuGothic','Meiryo',sans-serif` | それ以外すべて |
+| 等幅 | `var(--font-mono)` | `ui-monospace,'SF Mono',Menlo,Consolas,'Courier New',monospace` | 順位・件数・日付など数字と3語以内の欧文のみ。**日本語には使わない** |
+
+端末によって書体が違う（Apple＝ヒラギノ、Windows＝游書体・メイリオ、Android＝Noto CJK）。明朝が入っていない端末（一部の Android）では、見出しも総称ファミリー（serif）が選ぶ書体になる。見た目を同じにすることを目標にせず、どの端末でも読めて、動かないことを目標にする。
+
+- 書体名はトークンだけで指す。ページの CSS に `'Cormorant Garamond'`・`'Noto Sans JP'`・`'DM Mono'` などの名前を直書きしない（`data/design_system.json` の `webFonts.retiredFamilies`）
+- `<link>` や `@import` で外部の書体（Google Fonts など）を読み込まない（`webFonts.forbiddenHosts`）。`audit_design_system.js --check` が、Web フォントの `<link>`・`@import`・退役した書体名の直書きを違反として数える。判定は `scripts/lib/web_fonts.js` の 1 本
+- ヒラギノ明朝は W3（標準）と W6（太字）の 2 本だけ。500 以下は標準、600 以上は太字に寄る（CSS の書体の選び方）。端末に無い太さを指定しても壊れないが、見え方は 2 段になる
+- 並びを変えるときは `assets/css/nb.css` のトークンと `scripts/lib/web_fonts.js` の `DEVICE_STACKS` の両方（`tests/design_system_fonts.test.js` が一致を見る）。書体を自分で配る（`@font-face`）なら、判断の記録を先に書く
+
+---|---|---|---|
 | 見出し（display） | `'Cormorant Garamond','Shippori Mincho','Hiragino Mincho ProN','Yu Mincho',serif` | Cormorant 400/500/600＋italic 400、Shippori 500/600 | hero h1・セクション h2・モーダル店名・記事タイトル |
 | 本文・UI | `'Noto Sans JP','Hiragino Kaku Gothic ProN','Hiragino Sans','Yu Gothic',sans-serif` | 400/500/700 | それ以外すべて |
 | 等幅 | `'DM Mono',ui-monospace,Menlo,monospace` | 400/500 | 順位・件数・日付など数字と3語以内の欧文のみ。**日本語には使わない** |
@@ -35,7 +49,7 @@ Cormorant Garamond と Shippori Mincho を組み合わせているのは、両�
 ## 3. do / don't
 
 **do**
-- 日本語は Noto Sans JP、`letter-spacing:0`
+- 日本語は本文の書体（`var(--font-body)`）、`letter-spacing:0`
 - 意味を持つラベルは日本語（サイト全体の方針）で 13px 以上
 - 操作要素（ボタン・リンク・チップ）は 44px 以上。高さは `min-height:var(--tap-min)` で指定する。`div` に委譲クリックを付けた部品（タグ・ジャンルのチップなど）も同じ（`button` / `a` だけを数えると見落とす）。見た目を変えたくない丸ボタン・ロゴ・ヘッダーのナビは、`::after` / `::before` で透明な当たり判定だけを広げる（`display:inline-flex` にすると、ロゴの語の間の空白が消える）。文中のリンクは対象外（WCAG 2.5.8）。確認は `node --test tests/index_tap_and_size.test.js`（トップの CSS・I-26e）
 - 読む文字は 13px 以上（`var(--fs-xs)` 以上）。`var(--fs-2xs)`（12px）は写真クレジット・法的表示だけ。トップの CSS に 13px 未満の指定は置かない（同じテストが見る）
@@ -48,7 +62,8 @@ Cormorant Garamond と Shippori Mincho を組み合わせているのは、両�
 - `:root` を再定義しない（nb.css の値を上書きしたい場合は `--page-` 接頭辞の新トークンを足す）
 - 日本語に等幅フォントや `text-transform:uppercase` を使わない（トップの CSS は `tests/index_mono_font.test.js` が、等幅の規則は数字・記号・欧文だけを出す表のセレクターに限ることを静的に見る。実ブラウザでは `node docs/qa/uiux-2026-10/dmmono.js` が状態ごとに数える）
 - 英語と日本語で同じ意味の見出しを二重に出さない
-- 読み込んでいないフォントウェイトを指定しない（許可: 400/500/600/700）
+- 許可していないフォントウェイトを指定しない（許可: 400/500/600/700。端末の書体に無い太さは近い太さに寄る）
+- 書体名を直書きしない・Web フォントを読み込まない（§2。`var(--font-display)` などのトークンだけ）
 
 ### 本文中の強調（DSN-004・2026-09）
 
@@ -60,7 +75,7 @@ journal / features の本文（`.art-body` / `.content`）が地の文だけで�
 | 事実・数字を強く見せる | `<strong>` | `var(--ink)` の黒 + font-weight 700 |
 | その段落の結論を読み飛ばされないようにする | `<mark>` | gold のうっすらしたハイライト背景 |
 | 判断軸・キーワードを地の文の色で目立たせる | `<span class="art-accent">` | `var(--gold2)` の文字色 + 600 |
-| 価格・数量など見出し級に見せたい数字 | `<span class="art-num">` | 表示体（Cormorant Garamond）+ `var(--fs-lg)` + `var(--gold2)` |
+| 価格・数量など見出し級に見せたい数字 | `<span class="art-num">` | 表示体（`var(--font-display)`）+ `var(--fs-lg)` + `var(--gold2)` |
 
 **do**
 - 1段落につき強調は1〜2箇所まで。効かせたい要点（数字・判断・結論）だけに絞る
@@ -243,9 +258,6 @@ B 80 / 100 — Google★4.3（39件）は、おおむね参考にできます。
 <link rel="canonical" href="https://nagoya-bites.com/....html">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#7a5c10">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/nb.css">
 <style>
 /* ページ固有のCSSのみ。トークンはnb.cssのものを参照する。font-sizeのリテラル値は書かない */
@@ -326,7 +338,7 @@ node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 
 
 **`<nav>` の規則はヘッダーの `#main-nav` だけに当てる（DSN-007・2026-10-09）。** パンくず・フッターのリンク群（`nav.nb-footer-group`）・目次（`nav.nb-toc`）も `<nav>` 要素なので、素の `nav{…}` にレイアウト（横並び・間隔・中央寄せ）やドロワー（`position:fixed`）を書くと、それらまで同じ形になる。DSN-003 から 2026-10-09 まで、幅 900px 以下ではパンくずとフッターのリンク群が画面外に置かれて見えず、スマホのレイアウト幅も 375px で 750px に広がっていた。素の `nav a` に残してよいのは文字の見た目（書体・太さ・色）だけ。
 
-**パンくずは折り返さず 1 行にする（I-37・2026-10-12）。** `.breadcrumb` は `white-space:nowrap`・`overflow-x:auto` で、入りきらないときは横にスクロールする（右端は `mask-image` で薄く消し、続きがあることを示す。フォーカスの移動で薄い所に隠れないよう `scroll-padding-inline` をフェードと同じ幅にする）。折り返すと、Web フォントが届くたびに行数が変わって下の部分が動く（CLS。ハブで 0.65、エリア名が長い店の店舗ページで 0.13）。ページ側の CSS で `.breadcrumb` に `flex-wrap:wrap` や `white-space:normal` を戻さない（`tests/breadcrumb_oneline.test.js`）。今いるページの名前（右端）は、すぐ下の h1 と同じ言葉なので、隠れても迷わない。押す範囲（幅 900px 以下で 44px）と構造化データ（BreadcrumbList）は変えない。
+**パンくずは折り返さず 1 行にする（I-37・2026-10-12）。** `.breadcrumb` は `white-space:nowrap`・`overflow-x:auto` で、入りきらないときは横にスクロールする（右端は `mask-image` で薄く消し、続きがあることを示す。フォーカスの移動で薄い所に隠れないよう `scroll-padding-inline` をフェードと同じ幅にする）。折り返すと、書体が切り替わるたびに行数が変わって下の部分が動く（CLS。Web フォントを使っていた 2026-10-12 の時点で、ハブで 0.65、エリア名が長い店の店舗ページで 0.13。Web フォントをやめた今は切り替わりが無いが、端末の書体の幅は端末ごとに違うので、折り返さない決まりは変えない）。ページ側の CSS で `.breadcrumb` に `flex-wrap:wrap` や `white-space:normal` を戻さない（`tests/breadcrumb_oneline.test.js`）。今いるページの名前（右端）は、すぐ下の h1 と同じ言葉なので、隠れても迷わない。押す範囲（幅 900px 以下で 44px）と構造化データ（BreadcrumbList）は変えない。
 
 閉じたドロワーは `display:none` にする。画面の外に置いておくだけ（`right:-100%` でも `transform` でも）だと、スマホのレイアウト幅がその分広がる。開くときのスライドは `@starting-style` と `transition-behavior:allow-discrete` で出す（未対応のブラウザでは即時に開閉する）。確かめるときは、幅 375px の `isMobile` 表示で `document.documentElement.scrollWidth` が 375 であることを見る。
 

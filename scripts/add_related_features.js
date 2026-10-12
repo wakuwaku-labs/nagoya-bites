@@ -106,7 +106,7 @@ const MAP = {
 // .related-link スタイルは全特集が保持しているので追加CSS不要。
 const JOURNAL_LINK = '\n  <p class="related-journal" style="margin-top:1.2rem;font-size:.82rem;color:rgba(28,28,26,.62);line-height:1.7;">\n    名古屋の最新グルメは <a class="related-link" href="../journal/index.html">\u{1F4F0} デイリージャーナル</a> で毎朝更新中。\n  </p>';
 
-const CSS = ".related{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center;}.related-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.3rem;color:var(--white);margin-bottom:1.2rem;}.related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}.related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}.related-link:hover{background:rgba(122,92,16,.08);}";
+const CSS = ".related{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center;}.related-title{font-family:var(--font-display);font-weight:300;font-size:1.3rem;color:var(--white);margin-bottom:1.2rem;}.related-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}.related-link{font-size:.78rem;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.5rem 1.1rem;border-radius:2px;transition:background .2s;}.related-link:hover{background:rgba(122,92,16,.08);}";
 
 function buildBlock(slug) {
   const links = MAP[slug];

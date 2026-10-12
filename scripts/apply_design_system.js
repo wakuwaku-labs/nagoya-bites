@@ -8,14 +8,18 @@
  * REVIEW_TRUST_BOX/SEO-042 TOP-CTA/SEASONAL_NOTE）や本文構造には触れない。
  *
  * 処理内容:
- *   1. fonts.googleapis.com の href を正本URL（data/design_system.json）に正規化
- *   2. fonts link の直後に assets/css/nb.css への <link> を挿入（未挿入時のみ）
+ *   1. Web フォント（fonts.googleapis.com / fonts.gstatic.com）の <link> を外し、<style> に直書きされた
+ *      書体名（'Cormorant Garamond'・'Noto Sans JP'・'DM Mono'）をトークン（var(--font-*)）へ書き換える
+ *      （P-318・判断の記録 0026。判定と書き換えは scripts/lib/web_fonts.js の1本）
+ *   2. <style> の手前（無ければ </head> の直前）に assets/css/nb.css への <link> を挿入（未挿入時のみ）
  *   3. 最初の <style> 内の先頭 :root{...} が coreTokens のみで構成されるとき削除
  *      （chrome/base をnb.cssへ委譲するため）
  *   4. legacyRewrites に載る既知セレクタをトークン値へ書き換え
+ *   孤児ページ（旧テンプレートの単独ページ・data/store_page_orphans.json）には 1 だけを行う。nb.css を読み込まない
+ *   ページは、トークンの代わりに端末の書体の並びを直接書く（トークンが定義されていないため）。
  *
  * 使い方:
- *   node scripts/apply_design_system.js --dry-run [--only <features|journal|stores|root>]
+ *   node scripts/apply_design_system.js --dry-run [--only <features|journal|stores|root|orphans>]
  *   node scripts/apply_design_system.js [--only <dir>]
  *   node scripts/apply_design_system.js --check   # 2回目実行で差分0なら冪等性OK（exit 0）
  */
@@ -27,6 +31,7 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const DS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/design_system.json'), 'utf8'));
+const webFonts = require('./lib/web_fonts');
 
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
@@ -51,9 +56,24 @@ function collectTargets() {
     journal: listHtmlFiles(path.join(ROOT, 'journal'), { excludeTemplate: true })
       .concat(path.join(ROOT, 'journal/_template.html')).filter(f => fs.existsSync(f)),
     stores: [path.join(ROOT, 'stores/index.html')].filter(f => fs.existsSync(f)),
+    orphans: orphanStorePages(),
   };
   if (only) return groups[only] || [];
-  return [...groups.root, ...groups.features, ...groups.journal, ...groups.stores];
+  return [...groups.root, ...groups.features, ...groups.journal, ...groups.stores, ...groups.orphans];
+}
+
+// gen-store-pages.js が作り直さない店舗ページ（data/stores.json に無い旧テンプレートの「孤児」と、誘導ページ）。
+// 台帳 data/store_page_orphans.json（gen-store-pages.js --check-orphans が書く）が唯一の情報源。
+function orphanStorePages() {
+  const p = path.join(ROOT, 'data', 'store_page_orphans.json');
+  if (!fs.existsSync(p)) return [];
+  try {
+    const j = JSON.parse(fs.readFileSync(p, 'utf8'));
+    const slugs = new Set([...(j.orphanSlugs || []), ...(j.redirectStubSlugs || [])]);
+    return [...slugs].sort().map(s => path.join(ROOT, 'stores', s + '.html')).filter(f => fs.existsSync(f));
+  } catch (e) {
+    return [];
+  }
 }
 
 function relDepth(filePath) {
@@ -65,13 +85,12 @@ function cssLinkPrefix(depth) {
   return depth === 0 ? '' : '../'.repeat(depth);
 }
 
-function normalizeFontsUrl(html) {
-  const re = /<link[^>]+href=["\'](https:\/\/fonts\.googleapis\.com\/[^"\']+)["\'][^>]*>/i;
-  const m = html.match(re);
-  if (!m) return { html, changed: false };
-  if (m[1].replace(/&amp;/g, '&') === DS.fontsUrl) return { html, changed: false };
-  const newTag = `<link href="${DS.fontsUrl}" rel="stylesheet">`;
-  return { html: html.replace(m[0], newTag), changed: true };
+// Web フォントの <link> を外し、直書きの書体名を書き換える（P-318）。
+// nb.css を読み込まないページ（孤児ページ）はトークンが無いので、端末の書体の並びを直接書く。
+function removeWebFonts(html) {
+  const r1 = webFonts.removeWebFontLinks(html);
+  const r2 = webFonts.rewriteFamilyLiterals(r1.html, { useTokens: webFonts.loadsNbCss(r1.html) });
+  return { html: r2.html, changed: r1.changed || r2.changed };
 }
 
 function insertNbCssLink(html, depth) {
@@ -79,16 +98,15 @@ function insertNbCssLink(html, depth) {
   const alreadyPresent = new RegExp(DS.cssPath.replace(/\//g, '\\/')).test(html);
   if (alreadyPresent) return { html, changed: false };
 
-  const fontsLinkRe = /<link[^>]+href=["\']https:\/\/fonts\.googleapis\.com\/[^"\']+["\'][^>]*>/i;
-  const m = html.match(fontsLinkRe);
-  const tag = `\n<link rel="stylesheet" href="${href}">`;
-  if (m) {
-    const idx = html.indexOf(m[0]) + m[0].length;
-    return { html: html.slice(0, idx) + tag + html.slice(idx), changed: true };
+  // ページ固有の <style> より前に置く（ページ側が nb.css を上書きできる読み込み順にする）。無ければ </head> の直前
+  const tag = `<link rel="stylesheet" href="${href}">\n`;
+  const styleIdx = html.search(/<style\b/i);
+  const headEnd = html.indexOf('</head>');
+  if (styleIdx >= 0 && (headEnd < 0 || styleIdx < headEnd)) {
+    return { html: html.slice(0, styleIdx) + tag + html.slice(styleIdx), changed: true };
   }
-  // フォールバック: </head> の直前に挿入
-  if (html.includes('</head>')) {
-    return { html: html.replace('</head>', tag + '\n</head>'), changed: true };
+  if (headEnd >= 0) {
+    return { html: html.slice(0, headEnd) + tag + html.slice(headEnd), changed: true };
   }
   return { html, changed: false };
 }
@@ -168,15 +186,18 @@ function applyLegacyRewrites(html) {
   return { html: out, changed };
 }
 
-function processFile(file) {
+function processFile(file, opts) {
+  opts = opts || {};
   const original = fs.readFileSync(file, 'utf8');
   let html = original;
   let anyChanged = false;
 
-  const r1 = normalizeFontsUrl(html); html = r1.html; anyChanged = anyChanged || r1.changed;
-  const r2 = insertNbCssLink(html, relDepth(file)); html = r2.html; anyChanged = anyChanged || r2.changed;
-  const r3 = stripChromeAndRoot(html); html = r3.html; anyChanged = anyChanged || r3.changed;
-  const r4 = applyLegacyRewrites(html); html = r4.html; anyChanged = anyChanged || r4.changed;
+  const r1 = removeWebFonts(html); html = r1.html; anyChanged = anyChanged || r1.changed;
+  if (!opts.fontsOnly) {
+    const r2 = insertNbCssLink(html, relDepth(file)); html = r2.html; anyChanged = anyChanged || r2.changed;
+    const r3 = stripChromeAndRoot(html); html = r3.html; anyChanged = anyChanged || r3.changed;
+    const r4 = applyLegacyRewrites(html); html = r4.html; anyChanged = anyChanged || r4.changed;
+  }
 
   if (anyChanged && !dryRun && !checkMode) {
     fs.writeFileSync(file, html);
@@ -186,7 +207,8 @@ function processFile(file) {
 
 function main() {
   const targets = collectTargets();
-  const results = targets.map(processFile);
+  const orphanSet = new Set(orphanStorePages());
+  const results = targets.map(f => processFile(f, { fontsOnly: orphanSet.has(f) }));
   const changedFiles = results.filter(r => r.changed);
 
   console.log(JSON.stringify({

@@ -22,9 +22,6 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/nb.css">
 <script type="application/ld+json">
 {
@@ -60,8 +57,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .art-lead p{margin-bottom:.8rem;}
 .art-lead p:last-child{margin-bottom:0;}
 .art-body{max-width:800px;margin:0 auto;padding:0 1.5rem 4rem;}
-.section-label{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2.8rem 0 .8rem;font-weight:400;}
-.section-h{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-weight:400;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.45;color:var(--white);margin-bottom:1rem;}
+.section-label{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.26em;color:var(--dim);text-transform:uppercase;margin:2.8rem 0 .8rem;font-weight:400;}
+.section-h{font-family:var(--font-body);font-weight:400;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.45;color:var(--white);margin-bottom:1rem;}
 .art-intro{font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:1.4rem;}
 .art-intro strong{color:var(--text);font-weight:500;}
 .tips-box{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);padding:1.2rem 1.4rem;border-radius:0 4px 4px 0;margin:1.5rem 0;}
@@ -76,12 +73,12 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .body-para strong{color:var(--text);font-weight:500;}
 .flow-list{counter-reset:flow;list-style:none;padding:0;margin:1.2rem 0 1.6rem;}
 .flow-list li{counter-increment:flow;position:relative;padding:.95rem 1.1rem .95rem 3.2rem;background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;margin-bottom:.6rem;font-size:.82rem;line-height:1.9;color:var(--muted);}
-.flow-list li::before{content:counter(flow);position:absolute;left:1rem;top:.95rem;width:1.7rem;height:1.7rem;background:#fdfaf3;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.1rem;border:1px solid rgba(122,92,16,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.flow-list li::before{content:counter(flow);position:absolute;left:1rem;top:.95rem;width:1.7rem;height:1.7rem;background:#fdfaf3;color:var(--gold);font-family:var(--font-display);font-size:1.1rem;border:1px solid rgba(122,92,16,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;}
 .flow-list li strong{color:var(--text);font-weight:500;display:block;margin-bottom:.15rem;font-size:.86rem;}
 .cta-block{background:#fdfaf3;border:1px solid rgba(122,92,16,.25);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:1.5rem 1.4rem;margin:2rem 0 1rem;text-align:center;}
-.cta-block .cta-eyebrow{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;}
-.cta-block .cta-headline{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-weight:400;font-size:1.15rem;color:var(--text);margin-bottom:1rem;}
-.cta-block .cta-link{display:inline-block;font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.16em;color:#fff;background:var(--gold);text-decoration:none;padding:.7rem 1.4rem;border-radius:2px;text-transform:uppercase;transition:background .2s;}
+.cta-block .cta-eyebrow{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;}
+.cta-block .cta-headline{font-family:var(--font-body);font-weight:400;font-size:1.15rem;color:var(--text);margin-bottom:1rem;}
+.cta-block .cta-link{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.16em;color:#fff;background:var(--gold);text-decoration:none;padding:.7rem 1.4rem;border-radius:2px;text-transform:uppercase;transition:background .2s;}
 .cta-block .cta-link:hover{background:var(--gold2);}
 .cta-block .cta-note{font-size:var(--fs-xs);color:var(--dim);margin-top:.8rem;line-height:1.7;}
 .related{background:var(--bg2);border-top:1px solid var(--border);padding:2.5rem 1.5rem;text-align:center;}

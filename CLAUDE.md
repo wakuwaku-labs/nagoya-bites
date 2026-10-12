@@ -148,7 +148,9 @@ Linear課題を指定されたら、[初心者向けLinearガイド](docs/linear
     は Designer（agents/designer.md）のレビューと `node scripts/audit_design_system.js --check`
     の通過が公開条件。可視テキストの font-size 12px 未満は禁止、ユーザーが読むテキストは
     13px 以上。`:root` の再定義と font-size リテラルの新規追加（トークン `var(--fs-*)` を使わない
-    直書き）は禁止
+    直書き）は禁止。Web フォント（Google Fonts など）は読み込まない。書体は端末にあるものだけを、
+    トークン（`var(--font-display)`・`var(--font-body)`・`var(--font-mono)`）で指し、書体名を
+    直書きしない（P-318・`docs/decisions/0026-device-fonts-no-webfonts.md`）
 ```
 
 ### 無人自動化の監視を設計するときの原則（ISSUE-084 の教訓・全エージェント共通）
@@ -369,10 +371,11 @@ Orchestrator（CEO）← agents/orchestrator.md
 | `agents/marketer.md` | Marketer のマーケティング戦略 |
 | `agents/strategist.md` | Strategist の事業戦略 |
 | `agents/editor.md` | Editor の編集方針・コンテンツ基準 |
-| `data/design_system.json` | **デザインシステムの判定基準の正本**（正本フォントURL・font-size床12px・許可フォントウェイト・共通トークン一覧・legacyRewrites）。閾値変更はここで行いスクリプトは触らない |
+| `data/design_system.json` | **デザインシステムの判定基準の正本**（Web フォントを使わない方針 `webFonts`＝禁止する配信元と退役した書体名・font-size床12px・許可フォントウェイト・共通トークン一覧・legacyRewrites）。閾値変更はここで行いスクリプトは触らない |
 | `assets/css/nb.css` | **デザインシステムの実装本体**（トークン・基本タイポ・共通クローム: header/nav/footer/breadcrumb・共通部品）。全ページがこの1ファイルを読み込む（制約1の例外） |
 | `docs/design-system.md` | デザインシステムの人向け仕様書（書体・トークン・部品解剖・新規ページ雛形） |
-| `scripts/audit_design_system.js` | デザインシステム準拠の決定的ゲート。`--check`でCI向けexit 1、`--report`で違反一覧JSON |
+| `scripts/audit_design_system.js` | デザインシステム準拠の決定的ゲート。`--check`でCI向けexit 1、`--report`で違反一覧JSON。Web フォントの `<link>`・`@import`・退役した書体名の直書きも違反として数える（判定は `scripts/lib/web_fonts.js`） |
+| `scripts/lib/web_fonts.js` | **Web フォントを使わないことの判定と書き換えの唯一の情報源**（P-318・2026-10-13・`docs/decisions/0026-device-fonts-no-webfonts.md`）。書体は `assets/css/nb.css` のトークンが端末にある書体（ヒラギノ・游書体・メイリオ・Noto CJK）だけを指し、Google Fonts は読み込まない（転送 1.3〜1.7 MB と書体の切り替わりによる CLS が無くなる）。`apply_design_system.js`（既存ページの `<link>` 除去・直書きの書体名のトークン化）・`audit_design_system.js`（`webfont-link`／`webfont-import`／`retired-family`）・`tests/design_system_fonts.test.js` が同じ判定を共有する。**生成器・テンプレートに書体の `<link>` を戻さない**。店舗ページとハブは `gen-store-pages.js`／`gen_area_genre_pages.js` の再生成で消え、再生成の後の `audit_design_system.js --check` が書き戻しを止める。旧テンプレートの孤児・誘導ページ（nb.css を読み込まない）は、トークンの代わりに端末の書体の並びを直書きする（`DEVICE_STACKS`・nb.css と同じ値）（Builder/Designer 共管） |
 | `scripts/audit_inline_js_syntax.js` | **生成ページのインラインJS構文ゲート**（SEO-115・2026-10-09）。判定器は `scripts/lib/inline_js.js` の1本。公開ページの `src` 無し `<script>` を `vm.Script` で構文解析し（実行しない）、JSON-LD は `JSON.parse` で検査し、gtag.js を読むページでは `gtag('config',…)` を含む JS が構文として生きていることを求める。`gen-store-pages.js` のテンプレートリテラルで `\/` が `/` に化け、店舗ページ約5,000本の GA4 が 2026-05-08 から5か月止まっていたのに、生成物の JS を見る検査が無く誰も気づけなかった事故の再発防止。`--check`（違反で exit 1）/ `--sample N` / `--only root\|features\|journal\|stores\|area`。build.yml（ページ再生成の直後・blocking。2026-10-09 に CI の緑を確認して昇格）と夜間QA（hard）が日次で回す。**テンプレートリテラルの中で正規表現やバックスラッシュを書くときは二重にエスケープする**（Builder管轄） |
 | `scripts/apply_ga_snippet.js` | **既存の静的ページの GA4 スニペットを正本にそろえる**（SEO-144・2026-10-09）。正本は `scripts/lib/ga_snippet.js`（SEO-138・生成器4か所も同じ部品を使う）。features/・journal/・ルート直下の静的ページ・stores/index.html で、GA の読み込みタグの直後の `<script>` が旧スニペット2種のどちらかと完全に一致するときだけ置き換え、知らない形は触らずに報告する。旧スニペットは localStorage の読み書きを try/catch で囲んでおらず、サイトデータを拒否した端末では例外で `gtag('config')` まで止まっていた。index.html は独自のイベント処理を同じ `<script>` に持つため対象外で、手で同じ動きにそろえてある（`tests/apply_ga_snippet.test.js` が例外を投げる localStorage で確かめる）。`--dry-run` / `--check`（旧スニペットか知らない形が残っていれば exit 1）。夜間QA が soft（ga-snippet）で回す。**GA スニペットを手で書かない**（Builder管轄） |
 | `scripts/apply_design_system.js` | 既存ページへのデザインシステム一括適用（冪等）。`--dry-run`/`--only <dir>`/`--check` |

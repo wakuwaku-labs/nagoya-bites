@@ -2,7 +2,12 @@
   "_comment": "NAGOYA BITES デザインシステムの正本。scripts/audit_design_system.js と scripts/apply_design_system.js が参照する。閾値・許可リストの変更はこのファイルで行い、スクリプトは触らない。",
   "version": "1.0.0",
   "cssPath": "assets/css/nb.css",
-  "fontsUrl": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap",
+  "webFonts": {
+    "comment": "Web フォントは使わない（P-318・判断の記録 0026）。書体は端末にあるものだけを assets/css/nb.css のトークン（--font-display=端末の明朝／--font-body=端末のゴシック／--font-mono=端末の等幅）で指す。ページの <link> に配信元を書かず、<style> や style 属性にフォント名を直書きしない。audit_design_system.js が下の 2 つで検査する。",
+    "allowed": false,
+    "forbiddenHosts": ["fonts.googleapis.com", "fonts.gstatic.com"],
+    "retiredFamilies": ["Cormorant Garamond", "Shippori Mincho", "Noto Sans JP", "DM Mono"]
+  },
   "floorPx": 12,
   "readablePx": 13,
   "allowedFontWeights": [

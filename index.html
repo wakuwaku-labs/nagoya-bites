@@ -40,7 +40,7 @@ function trackEvent(name,params){
 // outbound_click: 外部リンククリックを自動計測（全ページ共通）
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 // 画像404時のプレースホルダ（透明化ではなく on-brand なSVGに差し替え。絵文字を排除し NB モノグラムを使用）
-var NB_IMG_FALLBACK="data:image/svg+xml;utf8,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#eeebe5"/><stop offset="100%" stop-color="#d9d4c5"/></linearGradient></defs><rect width="120" height="90" fill="url(%23g)"/><text x="60" y="56" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="26" font-style="italic" fill="%237a5c10" letter-spacing="2">NB</text></svg>');
+var NB_IMG_FALLBACK="data:image/svg+xml;utf8,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 90" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#eeebe5"/><stop offset="100%" stop-color="#d9d4c5"/></linearGradient></defs><rect width="120" height="90" fill="url(%23g)"/><text x="60" y="56" text-anchor="middle" font-family="Georgia, serif" font-size="26" font-style="italic" fill="%237a5c10" letter-spacing="2">NB</text></svg>');
 // インライン SVG アイコン辞書 — 旧絵文字（pin/fire/star/sparkle/newspaper/bell/link/plate 等）の代替。currentColor を尊重し既存配色トークンと整合
 var NB_ICONS={
   pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="2.8"/></svg>',
@@ -140,8 +140,8 @@ function nbStoreFigure(r){
     +'<text x="88" y="186" fill="#c4a060" opacity=".8" font-family="\'Helvetica Neue\',Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="0.3em">NAGOYA BITES</text>'
     +'<text x="88" y="'+(l2?258:272)+'" fill="#fff" font-family="\'Hiragino Mincho ProN\',\'Yu Mincho\',\'Noto Serif JP\',serif" font-size="'+fs+'" font-weight="700">'+nbSvgEsc(l1)+'</text>'
     +(l2?'<text x="88" y="'+(258+fs+10)+'" fill="#fff" font-family="\'Hiragino Mincho ProN\',\'Yu Mincho\',\'Noto Serif JP\',serif" font-size="'+fs+'" font-weight="700">'+nbSvgEsc(l2)+'</text>':'')
-    +(sub?'<text x="88" y="'+(l2?258+fs+56:336)+'" fill="#c4a060" opacity=".85" font-family="\'Hiragino Sans\',\'Noto Sans JP\',sans-serif" font-size="22">'+nbSvgEsc(sub)+'</text>':'')
-    +'<text x="88" y="530" fill="#c4a060" opacity=".55" font-family="\'Hiragino Sans\',\'Noto Sans JP\',sans-serif" font-size="19">写真準備中</text>'
+    +(sub?'<text x="88" y="'+(l2?258+fs+56:336)+'" fill="#c4a060" opacity=".85" font-family="\'Hiragino Sans\',\'Noto Sans CJK JP\',sans-serif" font-size="22">'+nbSvgEsc(sub)+'</text>':'')
+    +'<text x="88" y="530" fill="#c4a060" opacity=".55" font-family="\'Hiragino Sans\',\'Noto Sans CJK JP\',sans-serif" font-size="19">写真準備中</text>'
     +'</svg>';
   var uri="data:image/svg+xml;utf8,"+encodeURIComponent(svg);
   NB_FIGURE_CACHE[key]=uri;
@@ -260,13 +260,10 @@ document.addEventListener('keydown',function(e){
 <!-- ======================================================= -->
 <!-- Performance — preconnect & font loading                  -->
 <!-- ======================================================= -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://imgfp.hotp.jp">
 <link rel="preconnect" href="https://wsrv.nl" crossorigin>
 <link rel="preconnect" href="https://docs.google.com">
 <link rel="preconnect" href="https://www.google.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/nb.css">
 <style>/* ── REUSABLE EYEBROW & ICON UTILITIES (絵文字廃止に伴うラベル統一) ── */
 .eyebrow{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:500;letter-spacing:0;color:var(--gold);display:inline-block;}
@@ -276,7 +273,7 @@ document.addEventListener('keydown',function(e){
 .nb-icon svg{width:100%;height:100%;display:block;}
 .nb-icon-sm{width:.85em;height:.85em;}
 .txt-badge{display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-body);font-size:var(--fs-xs);font-weight:700;letter-spacing:0;padding:.18rem .5rem;border-radius:2px;line-height:1;}
-.num-serif{font-family:'Cormorant Garamond',serif;font-weight:500;font-style:normal;letter-spacing:.01em;}
+.num-serif{font-family:var(--font-display);font-weight:500;font-style:normal;letter-spacing:.01em;}
 ::selection{background:var(--gold);color:var(--bg);}
 /* ── HERO ── */
 .hero{padding:clamp(1.8rem,3.5vw,2.8rem) 1.5rem clamp(2.4rem,4vw,3.2rem);position:relative;}
@@ -351,7 +348,7 @@ body.search-active #results-block > .sec-head{position:absolute!important;width:
 .back-to-magazine{display:none;}
 body.search-active .back-to-magazine{display:flex;align-items:center;gap:.4rem;margin:0 auto;background:transparent;border:none;color:var(--dim);font-family:inherit;font-size:var(--fs-xs);letter-spacing:.04em;padding:.9rem 1rem 1.1rem;cursor:pointer;transition:color .2s;}
 .back-to-magazine:hover{color:var(--text);}
-.back-to-magazine .btm-arrow{font-family:'DM Mono',monospace;opacity:.8;}
+.back-to-magazine .btm-arrow{font-family:var(--font-mono);opacity:.8;}
 .chip{display:inline-flex;align-items:center;gap:.3rem;background:rgba(122,92,16,.12);border:1px solid rgba(122,92,16,.35);color:var(--gold);font-size:var(--fs-xs);letter-spacing:.06em;padding:.22rem .6rem;border-radius:2px;cursor:pointer;transition:all .15s;}
 .chip:hover{background:rgba(122,92,16,.22);}
 .chip-x{font-size:var(--fs-xs);opacity:.7;line-height:1;}
@@ -391,7 +388,7 @@ body.search-active .back-to-magazine{display:flex;align-items:center;gap:.4rem;m
 .sec-head{padding:clamp(2.2rem,4vw,3rem) 1.5rem 1.2rem;display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--border);}
 .sec-head-titleblock{display:flex;flex-direction:column;gap:.35rem;}
 .sec-head-eyebrow{color:var(--gold);letter-spacing:.32em;}
-.sec-head h2{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-weight:400;font-size:clamp(1.7rem,3.6vw,2.1rem);letter-spacing:.01em;color:var(--text);line-height:1.1;}
+.sec-head h2{font-family:var(--font-body);font-weight:400;font-size:clamp(1.7rem,3.6vw,2.1rem);letter-spacing:.01em;color:var(--text);line-height:1.1;}
 .sec-head h2 em{font-style:italic;color:var(--gold);font-weight:400;}
 .cnt{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--text);font-weight:600;}
 /* ── RESULTS SUMMARY BAR (filter active landing area) ── */
@@ -402,7 +399,7 @@ body.search-active .results-summary{display:block;}
 .results-summary-cond .rs-pill{display:inline-flex;align-items:center;background:#fff;border:1px solid var(--border);color:var(--text);padding:.3rem .7rem;border-radius:3px;font-size:var(--fs-xs);font-weight:600;}
 .results-summary-cond .rs-sep{color:var(--dim);font-size:var(--fs-xs);}
 .results-summary-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
-.results-summary-count{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.6rem;color:var(--text);letter-spacing:.02em;}
+.results-summary-count{font-family:var(--font-display);font-weight:400;font-size:1.6rem;color:var(--text);letter-spacing:.02em;}
 .results-summary-count em{font-style:normal;font-weight:700;color:var(--ember-deep,var(--gold));font-size:1.9rem;margin-right:.15rem;}
 .results-summary-reset{background:transparent;border:1px solid var(--border);color:var(--dim);font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;padding:.55rem 1rem;border-radius:3px;cursor:pointer;transition:all .2s;min-height:var(--tap-min);}
 .results-summary-reset:hover{color:var(--text);border-color:var(--border-h);}
@@ -708,7 +705,7 @@ body.search-query-active .card-why{display:flex;}
 /* ── TREND BADGE ── */
 .trend-badge{position:absolute;top:.9rem;right:.9rem;font-size:var(--fs-xs);font-weight:700;padding:.2rem .55rem;border-radius:2px;z-index:3;backdrop-filter:blur(6px);letter-spacing:.06em;animation:trendPulse 2s ease-in-out infinite;}
 /* ── 口コミ信頼度（カードの cmeta セル + モーダル内訳）。段階の色は data/trust_display_policy.json と同値・白地で 4.5:1 以上（FB-003） ── */
-.cmeta .cc-cell{font-weight:700;padding:0 .15rem;font-family:'DM Mono',monospace;}
+.cmeta .cc-cell{font-weight:700;padding:0 .15rem;font-family:var(--font-mono);}
 .cc-tier-SS{color:#1b5e20;}
 .cc-tier-A{color:#2e7d32;}
 .cc-tier-B{color:#46752a;}
@@ -758,15 +755,15 @@ body.search-query-active .card-why{display:flex;}
 .trend-ranking-section{margin:clamp(2rem,4vw,3rem) auto 0;max-width:1200px;padding:0 1.5rem;}
 .trend-ranking-header{display:flex;flex-direction:column;align-items:flex-start;gap:.3rem;margin-bottom:1rem;padding-bottom:.9rem;border-bottom:1px solid var(--border);}
 .trend-eyebrow{color:#c5341a;letter-spacing:.32em;}
-.trend-ranking-header h2{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-weight:400;font-size:clamp(1.4rem,3vw,1.8rem);letter-spacing:.01em;color:var(--text);text-transform:none;margin:0;line-height:1.15;}
-.trend-ranking-header h2 em{color:var(--ember);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1em;letter-spacing:.02em;margin-left:.5rem;font-weight:400;}
+.trend-ranking-header h2{font-family:var(--font-body);font-weight:400;font-size:clamp(1.4rem,3vw,1.8rem);letter-spacing:.01em;color:var(--text);text-transform:none;margin:0;line-height:1.15;}
+.trend-ranking-header h2 em{color:var(--ember);font-style:italic;font-family:var(--font-display);font-size:1em;letter-spacing:.02em;margin-left:.5rem;font-weight:400;}
 .trend-ranking-sub{font-family:var(--font-body);font-size:var(--fs-sm);color:var(--muted);margin:.3rem 0 0;letter-spacing:0;text-transform:none;}
 .trend-ranking-scroll{display:flex;gap:1rem;overflow-x:auto;padding-bottom:.5rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
 .trend-ranking-scroll::-webkit-scrollbar{height:3px;}
 .trend-ranking-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px;}
 .trend-rank-card{flex:0 0 220px;background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:6px;overflow:hidden;cursor:pointer;scroll-snap-align:start;transition:transform .2s,border-color .2s;}
 .trend-rank-card:hover{transform:translateY(-2px);border-color:rgba(239,68,68,.3);}
-.trend-rank-card .rank-num{position:absolute;top:.4rem;left:.5rem;font-family:'DM Mono',monospace;font-size:1.4rem;font-weight:700;color:rgba(239,68,68,.7);text-shadow:0 1px 4px rgba(0,0,0,.5);}
+.trend-rank-card .rank-num{position:absolute;top:.4rem;left:.5rem;font-family:var(--font-mono);font-size:1.4rem;font-weight:700;color:rgba(239,68,68,.7);text-shadow:0 1px 4px rgba(0,0,0,.5);}
 .trend-rank-card .rank-img{width:100%;height:130px;object-fit:cover;}
 .trend-rank-card .rank-name{padding:.5rem .6rem .1rem;font-size:var(--fs-xs);font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .trend-rank-card .rank-meta{padding:0 .6rem .5rem;display:flex;align-items:center;gap:.5rem;font-size:var(--fs-xs);color:var(--muted);flex-wrap:wrap;}
@@ -891,7 +888,7 @@ footer{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));}
 .feature-card-thumb{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center;display:block;background:#f0ede4;transition:transform .7s ease,filter .35s ease;image-rendering:-webkit-optimize-contrast;filter:saturate(1.06) contrast(1.02);}
 .feature-card:hover .feature-card-thumb{transform:scale(1.04);filter:saturate(1.14) contrast(1.05);}
 .feature-card-body{padding:1.15rem 1.25rem 1.3rem;display:flex;flex-direction:column;gap:.5rem;flex:1;}
-.feature-card-title{font-family:'Noto Sans JP',sans-serif;font-size:1.05rem;font-weight:500;color:var(--text);line-height:1.5;letter-spacing:.005em;position:relative;display:inline-block;}
+.feature-card-title{font-family:var(--font-body);font-size:1.05rem;font-weight:500;color:var(--text);line-height:1.5;letter-spacing:.005em;position:relative;display:inline-block;}
 .feature-card-title::after{content:"";display:block;height:1px;background:var(--ember);width:0;transition:width .35s ease;margin-top:.25rem;}
 .feature-card:hover .feature-card-title::after{width:32px;}
 .feature-card-sub{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);}
@@ -904,9 +901,9 @@ footer{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));}
 /* ── VISUALLY HIDDEN (A11y form labels) ── */
 .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 /* ── h3 reset for store card title ── */
-h3.cn{margin:0 0 6px;font-family:'Noto Sans JP',sans-serif;}
+h3.cn{margin:0 0 6px;font-family:var(--font-body);}
 /* ── Google rating source label ── */
-.card-rating .gs-src{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.1em;color:var(--dim);text-transform:uppercase;font-weight:500;margin-right:.15rem;}
+.card-rating .gs-src{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.1em;color:var(--dim);text-transform:uppercase;font-weight:500;margin-right:.15rem;}
 /* ── ジャンル特集ショーケース（写真付き特集グリッドの足回り） ── */
 .feature-showcase-foot{display:flex;justify-content:center;padding-top:.4rem;}
 .feature-showcase-all{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);text-decoration:none;border:1px solid rgba(122,92,16,.35);padding:.7rem 1.6rem;border-radius:3px;transition:background .2s,color .2s,border-color .2s;}
@@ -973,15 +970,15 @@ h3.cn{margin:0 0 6px;font-family:'Noto Sans JP',sans-serif;}
 /* ── LATEST JOURNAL (最新の日次ジャーナル3件) ── */
 .latest-journal-section{padding:clamp(1.8rem,3.5vw,2.8rem) 1.5rem;background:var(--bg);border-bottom:1px solid var(--border);}
 .latest-journal-header{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;margin-bottom:1.2rem;max-width:1100px;margin-left:auto;margin-right:auto;padding-bottom:.9rem;border-bottom:1px solid var(--border);}
-.latest-journal-headline h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(1.4rem,3vw,1.8rem);color:var(--text);letter-spacing:.01em;line-height:1.1;}
+.latest-journal-headline h2{font-family:var(--font-display);font-weight:400;font-size:clamp(1.4rem,3vw,1.8rem);color:var(--text);letter-spacing:.01em;line-height:1.1;}
 .latest-journal-headline h2 em{font-style:italic;color:var(--gold);}
 .latest-journal-lead{font-size:var(--fs-sm);color:var(--muted);margin-top:.3rem;}
 .latest-journal-header .nb-more{flex-shrink:0;}
 .latest-journal-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;max-width:1100px;margin:0 auto;}
 .latest-journal-card{display:flex;flex-direction:column;gap:.55rem;padding:1.2rem 1.25rem 1.3rem;background:#fff;border:0.5px solid #D3D1C7;border-radius:4px;text-decoration:none;color:inherit;transition:transform .3s ease,box-shadow .3s ease,border-color .3s;position:relative;}
 .latest-journal-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(122,92,16,.14);border-color:rgba(184,84,31,.45);}
-.ljc-date{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:1.15rem;color:var(--gold);letter-spacing:.02em;line-height:1;margin-bottom:.2rem;}
-.ljc-title{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-weight:500;font-size:1rem;color:var(--text);line-height:1.5;letter-spacing:.005em;transition:color .25s;}
+.ljc-date{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:1.15rem;color:var(--gold);letter-spacing:.02em;line-height:1;margin-bottom:.2rem;}
+.ljc-title{font-family:var(--font-body);font-weight:500;font-size:1rem;color:var(--text);line-height:1.5;letter-spacing:.005em;transition:color .25s;}
 .latest-journal-card:hover .ljc-title{color:var(--ember);}
 .ljc-desc{font-size:var(--fs-xs);line-height:1.85;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
 .ljc-theme{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);display:inline-flex;align-items:center;gap:.5rem;margin-top:auto;font-weight:700;}
@@ -1021,7 +1018,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 /* ── EMPTY STATE ── */
 .empty-state{padding:4rem 1.5rem;text-align:center;color:var(--dim);}
 .empty-state-icon{font-size:2.5rem;margin-bottom:1rem;opacity:.5;}
-.empty-state h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--muted);margin-bottom:.5rem;}
+.empty-state h3{font-family:var(--font-display);font-size:1.4rem;font-weight:400;color:var(--muted);margin-bottom:.5rem;}
 .empty-state p{font-size:var(--fs-xs);letter-spacing:.05em;color:var(--dim);margin-bottom:1.5rem;line-height:1.8;}
 .empty-state-reset{background:var(--warm-grad);border:none;color:#fff;font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;padding:.75rem 1.7rem;border-radius:3px;cursor:pointer;font-weight:600;transition:transform .2s,box-shadow .25s,filter .2s;box-shadow:0 1px 3px rgba(140,58,20,.25);}
 .empty-state-reset:hover{transform:translateY(-1px);box-shadow:var(--warm-glow);filter:brightness(1.05);}
@@ -1095,7 +1092,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .sort-bar.sticky-sort{position:sticky;top:56px;z-index:140;background:rgba(247,245,241,.97);backdrop-filter:saturate(1.1) blur(6px);-webkit-backdrop-filter:saturate(1.1) blur(6px);}
 .sort-bar-label{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);white-space:nowrap;flex-shrink:0;}
 .sort-chips{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;}
-.sort-chip{background:#fff;border:1px solid var(--border);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:var(--fs-xs);letter-spacing:.02em;padding:.42rem .85rem;border-radius:999px;cursor:pointer;transition:all .15s ease;white-space:nowrap;line-height:1.1;font-weight:500;}
+.sort-chip{background:#fff;border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:.02em;padding:.42rem .85rem;border-radius:999px;cursor:pointer;transition:all .15s ease;white-space:nowrap;line-height:1.1;font-weight:500;}
 .sort-chip:hover:not(.on):not([disabled]){border-color:var(--gold);color:var(--gold);}
 .sort-chip.on{background:var(--gold);border-color:var(--gold);color:#fff;font-weight:600;box-shadow:0 1px 4px rgba(122,92,16,.18);}
 .sort-chip.loading{opacity:.6;cursor:wait;}
@@ -1104,7 +1101,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .sort-meta-bar .notify-btn{order:1;}
 .sort-meta-bar .view-toggle{order:2;margin-left:auto;}
 .sort-meta-bar .hpc{order:3;margin-left:.6rem;}
-.dist-badge{position:absolute;top:.55rem;right:.55rem;background:rgba(10,10,8,.78);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);color:#fff;font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.06em;padding:.26rem .55rem;border-radius:2px;z-index:3;font-weight:600;pointer-events:none;}
+.dist-badge{position:absolute;top:.55rem;right:.55rem;background:rgba(10,10,8,.78);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);color:#fff;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;padding:.26rem .55rem;border-radius:2px;z-index:3;font-weight:600;pointer-events:none;}
 .dist-badge.approx{opacity:.85;}
 .card.has-fav .dist-badge{right:48px;}
 @media(max-width:768px){
@@ -1153,7 +1150,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 /* ── PAGINATION ── */
 .pagination{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;align-items:center;padding:1.5rem 1.5rem 2.5rem;}
 .pagination:empty{display:none;}
-.pg-btn{background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:var(--fs-xs);min-width:var(--tap-min);height:var(--tap-min);padding:0 .8rem;border-radius:2px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;justify-content:center;line-height:1;}
+.pg-btn{background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:var(--fs-xs);min-width:var(--tap-min);height:var(--tap-min);padding:0 .8rem;border-radius:2px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;justify-content:center;line-height:1;}
 .pg-btn:hover:not(:disabled):not(.active){border-color:var(--gold);color:var(--gold);}
 .pg-btn.active{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:600;cursor:default;}
 .pg-btn:disabled{opacity:.35;cursor:not-allowed;}
@@ -1166,21 +1163,21 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 }
 .nav-fav{color:var(--gold) !important;font-size:var(--fs-xs) !important;letter-spacing:.08em !important;}
 /* ── GEOLOCATION BUTTON ── */
-.geo-btn{display:inline-flex;align-items:center;gap:.4rem;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:'Noto Sans JP',sans-serif;font-size:var(--fs-xs);padding:.42rem .9rem;border-radius:2px;cursor:pointer;transition:all .2s;white-space:nowrap;min-height:var(--tap-min);}
+.geo-btn{display:inline-flex;align-items:center;gap:.4rem;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:var(--font-body);font-size:var(--fs-xs);padding:.42rem .9rem;border-radius:2px;cursor:pointer;transition:all .2s;white-space:nowrap;min-height:var(--tap-min);}
 .geo-btn:hover{color:var(--text);border-color:var(--border-h);}
 .geo-btn.loading{opacity:.6;pointer-events:none;}
 /* ── RANKING SECTION ── */
 .ranking-section{padding:clamp(1.8rem,3.5vw,2.8rem) 1.5rem clamp(1.4rem,3vw,2rem);border-bottom:1px solid var(--border);background:var(--bg);}
 .ranking-header{display:flex;flex-direction:column;align-items:flex-start;gap:.3rem;margin-bottom:1.1rem;padding-bottom:.9rem;border-bottom:1px solid var(--border);}
 .ranking-eyebrow{color:var(--gold);letter-spacing:.32em;}
-.ranking-header h2{font-family:'Cormorant Garamond','Noto Sans JP',serif;font-weight:400;font-size:clamp(1.4rem,3vw,1.85rem);color:var(--text);display:flex;align-items:baseline;gap:.55rem;letter-spacing:.01em;line-height:1.15;}
+.ranking-header h2{font-family:var(--font-body);font-weight:400;font-size:clamp(1.4rem,3vw,1.85rem);color:var(--text);display:flex;align-items:baseline;gap:.55rem;letter-spacing:.01em;line-height:1.15;}
 .ranking-header h2 em{font-style:italic;color:var(--gold);font-size:1em;font-weight:400;letter-spacing:.02em;}
 .ranking-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:.5rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
 .ranking-scroll::-webkit-scrollbar{height:3px;}
 .ranking-scroll::-webkit-scrollbar-thumb{background:var(--border-h);border-radius:2px;}
 .rank-card{flex:0 0 180px;scroll-snap-align:start;background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;padding:10px;cursor:pointer;transition:all .2s;position:relative;}
 .rank-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.1);border-color:rgba(122,92,16,.3);}
-.rank-num{position:absolute;top:6px;left:6px;background:var(--gold);color:var(--bg);font-family:'DM Mono',monospace;font-size:var(--fs-xs);font-weight:700;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:2px;z-index:2;}
+.rank-num{position:absolute;top:6px;left:6px;background:var(--gold);color:var(--bg);font-family:var(--font-mono);font-size:var(--fs-xs);font-weight:700;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:2px;z-index:2;}
 .rank-card .rank-img{width:100%;height:100px;object-fit:cover;border-radius:4px;display:block;background:var(--surface);}
 .rank-name{font-size:var(--fs-xs);font-weight:600;color:var(--text);margin-top:6px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .rank-meta{font-size:var(--fs-xs);color:var(--muted);margin-top:2px;display:flex;flex-wrap:wrap;gap:.1rem .5rem;align-items:center;}
@@ -1199,7 +1196,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .hist-area{font-size:var(--fs-xs);color:var(--muted);}
 @media(max-width:768px){.history-section{padding:1rem;}.hist-card{flex:0 0 120px;}}
 /* ── NOTIFICATION TOAST ── */
-.notify-btn{display:none;align-items:center;gap:.4rem;background:rgba(122,92,16,.08);border:1px solid rgba(122,92,16,.3);color:var(--gold);font-family:'Noto Sans JP',sans-serif;font-size:var(--fs-xs);padding:.4rem .9rem;border-radius:2px;cursor:pointer;transition:all .2s;white-space:nowrap;min-height:var(--tap-min);}
+.notify-btn{display:none;align-items:center;gap:.4rem;background:rgba(122,92,16,.08);border:1px solid rgba(122,92,16,.3);color:var(--gold);font-family:var(--font-body);font-size:var(--fs-xs);padding:.4rem .9rem;border-radius:2px;cursor:pointer;transition:all .2s;white-space:nowrap;min-height:var(--tap-min);}
 .notify-btn:hover{background:rgba(122,92,16,.15);}
 .notify-btn.show{display:inline-flex;}
 .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);z-index:600;background:var(--text);color:var(--bg);padding:.9rem 1.6rem;border-radius:4px;font-size:var(--fs-xs);letter-spacing:.04em;box-shadow:0 4px 24px rgba(0,0,0,.3);opacity:0;transition:all .35s ease;pointer-events:none;white-space:nowrap;}

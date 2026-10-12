@@ -22,9 +22,11 @@ const AUDIT = path.join(ROOT, 'scripts', 'audit_design_system.js');
 const APPLY = path.join(ROOT, 'scripts', 'apply_design_system.js');
 const DS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'design_system.json'), 'utf8'));
 
-test('design_system.json: floorPx is 12 and fontsUrl is a single https URL', () => {
+test('design_system.json: floorPx is 12 and Web fonts are not allowed (P-318)', () => {
   assert.equal(DS.floorPx, 12);
-  assert.match(DS.fontsUrl, /^https:\/\/fonts\.googleapis\.com\//);
+  assert.equal(DS.webFonts.allowed, false);
+  assert.ok(!('fontsUrl' in DS), 'fontsUrl was retired with the Web fonts (decision 0026)');
+  assert.deepEqual(DS.webFonts.forbiddenHosts, ['fonts.googleapis.com', 'fonts.gstatic.com']);
 });
 
 test('design_system.json: coreTokens has no duplicates', () => {
@@ -63,7 +65,6 @@ test('regression: font-size below floor with !important suffix is still detected
   try {
     const fixture = `<!DOCTYPE html><html lang="ja"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="${DS.fontsUrl}" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/nb.css">
 <style>.x{font-size:.5rem !important;}</style>
 </head><body><header><a class="logo">L</a></header><footer>f</footer></body></html>`;
