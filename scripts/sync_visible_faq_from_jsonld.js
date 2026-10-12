@@ -15,6 +15,9 @@
  *   - 挿入位置は </footer> 直前 or </body> 直前のいずれか先に見つかった方
  *   - CSS が未定義なら最小限のインラインスタイルブロックを 1 度だけ挿入
  *
+ * 2026-10-13（判断の記録 0025・P-317）以降、特集には FAQPage の JSON-LD を出さない。
+ * このスクリプトの対象（JSON-LD はあるが可視 FAQ が無いページ）は特集には無く、何も変更しない。
+ *
  * 使い方:
  *   node scripts/sync_visible_faq_from_jsonld.js --dry-run
  *   node scripts/sync_visible_faq_from_jsonld.js

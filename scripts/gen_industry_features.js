@@ -230,7 +230,6 @@ const renderHTML = (feature) => {
   const url = `https://nagoya-bites.com/features/${feature.slug}.html`;
   const storeList = feature.stores.map(name => findStore(name));
   const itemList = storeList.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.店名 }));
-  const faqList = feature.faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } }));
 
   const articleJson = JSON.stringify({
     '@context': 'https://schema.org', '@type': 'Article',
@@ -252,7 +251,7 @@ const renderHTML = (feature) => {
       { '@type': 'ListItem', position: 3, name: feature.titleText },
     ],
   });
-  const faqJson = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqList });
+  // FAQPage の構造化データは出さない（判断の記録 0025・P-317）。画面の FAQ（下の faq-section）は残す
 
   return `<!DOCTYPE html>
 <html lang="ja">
@@ -281,7 +280,6 @@ ${GA_SCRIPT}
 <script type="application/ld+json">${articleJson}</script>
 <script type="application/ld+json">${itemListJson}</script>
 <script type="application/ld+json">${breadcrumbJson}</script>
-<script type="application/ld+json">${faqJson}</script>
 <style>${STYLE}</style>
 </head>
 <body>

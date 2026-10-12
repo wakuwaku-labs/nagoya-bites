@@ -543,9 +543,10 @@ function generateItemListJsonLd(stores, config) {
 // FAQ 読み込み・差し込み処理
 //   data/feature_faqs.json に特集ファイル名をキーとして Q&A 配列を定義すると、
 //   各特集HTMLに以下を自動差し込み:
-//     1. <!-- FAQ-LD:START/END --> マーカー (<head>内) に FAQPage JSON-LD
-//     2. <!-- FAQ-HTML:START/END --> マーカーがあればそこに可視 Q&A セクション
-//        マーカーがなければ最初に見つかる </article> または </main> 直前に挿入
+//     <!-- FAQ-HTML:START/END --> マーカーがあればそこに可視 Q&A セクション
+//     マーカーがなければ最初に見つかる </article> または </main> 直前に挿入
+//   FAQPage の構造化データ（JSON-LD）は特集には出さない（判断の記録 0025・P-317）。
+//   画面の Q&A だけを持つ。過去に差し込んだ <!-- FAQ-LD:START/END --> の区画が残っていれば消す。
 // ─────────────────────────────────────────────
 const FAQ_JSON_PATH = path.join(__dirname, 'data', 'feature_faqs.json');
 
@@ -557,19 +558,6 @@ function loadFeatureFAQs() {
     console.warn(`  ⚠ feature_faqs.json 読み込み失敗: ${e.message}`);
     return {};
   }
-}
-
-function generateFAQPageJsonLd(items) {
-  if (!items || !items.length) return '';
-  return JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: items.map(({ q, a }) => ({
-      '@type': 'Question',
-      name: q,
-      acceptedAnswer: { '@type': 'Answer', text: a }
-    }))
-  });
 }
 
 function generateFAQHtmlBlock(items) {
@@ -586,20 +574,13 @@ ${itemsHtml}
   </section>`;
 }
 
-/** 特集HTMLに FAQ JSON-LD と可視セクションを差し込む */
+/** 特集HTMLに可視 FAQ セクションを差し込む（FAQPage の JSON-LD は出さない・0025） */
 function injectFAQ(html, featureFile, faqMap) {
   const items = faqMap[featureFile];
   if (!items || !items.length) return html;
 
-  // 1. JSON-LD（<head>内）
-  const ldRe = /<!--\s*FAQ-LD:START\s*-->[\s\S]*?<!--\s*FAQ-LD:END\s*-->/;
-  const jsonLd = generateFAQPageJsonLd(items);
-  const ldReplacement = `<!-- FAQ-LD:START -->\n<script type="application/ld+json">\n${jsonLd}\n</script>\n<!-- FAQ-LD:END -->`;
-  if (html.match(ldRe)) {
-    html = html.replace(ldRe, ldReplacement);
-  } else {
-    html = html.replace('</head>', ldReplacement + '\n</head>');
-  }
+  // 1. 過去に差し込んだ FAQPage JSON-LD の区画（<head>内）は消す
+  html = html.replace(/<!--\s*FAQ-LD:START\s*-->[\s\S]*?<!--\s*FAQ-LD:END\s*-->\n?/, '');
 
   // 2. 可視 FAQ セクション
   const htmlRe = /<!--\s*FAQ-HTML:START\s*-->[\s\S]*?<!--\s*FAQ-HTML:END\s*-->/;
@@ -969,4 +950,6 @@ function main() {
   console.log('完了!');
 }
 
-main();
+// 試験から injectFAQ を呼べるように、直接実行したときだけ main() を走らせる
+module.exports = { injectFAQ };
+if (require.main === module) main();

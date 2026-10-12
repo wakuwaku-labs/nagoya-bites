@@ -22,6 +22,12 @@
 
 'use strict';
 
+// このバッチは使わない（2026-10-13・判断の記録 0025・P-317）。
+// 特集には FAQPage の構造化データ（JSON-LD）を出さないと決めたが、このバッチは JSON-LD を足す。
+// 画面の FAQ だけを足したいときは、data/feature_faqs.json に Q&A を書いて build_features.js を使う。
+console.error('apply_faq_per_topic.js は使いません: 特集に FAQPage の JSON-LD を足すためです（docs/decisions/0025-features-no-faqpage.md）。');
+process.exit(1);
+
 const fs = require('fs');
 const path = require('path');
 
