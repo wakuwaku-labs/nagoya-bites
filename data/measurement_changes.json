@@ -21,6 +21,13 @@
       "affects": ["ga4"],
       "summary": "トップの modal_open の source が、これまで全部 unknown だった（閲覧履歴のために openM を包む処理が2つ目の引数を捨てていた）のを直した。この日から grid / trend_today / ranking / history / modal_reco / deeplink に分かれる。ブラウザの「戻る」「進む」で開いた分（popstate）は modal_open に数えない。共有リンク（#store=ID）で開く店が、最初の50店から全店に広がったので、deeplink の modal_open は使われ方の変化ではなく計測の段差として増える",
       "evidence": "PR #473（7e099194d3）・tests/index_history.test.js・docs/qa/uiux-2026-10/e2e_history.js・本番で modal_open が source=grid / deeplink と store_id つきで出て、「戻る」「進む」「×」では page_view も modal_open も出ないこと（2026-10-12 に確認）"
+    },
+    {
+      "date": "2026-10-12",
+      "id": "I-14b",
+      "affects": ["ga4"],
+      "summary": "スマホ（幅 768px 以下）の店舗ページに、画面の下に貼り付く行動バー（予約・電話・地図）を足した。バーの中のクリックは location=store_page_bar で送られ（予約は cta_click、電話は cta_call_click と call_lookup、地図は cta_gmap_click）、本文のリンク欄（store_page）と分けて数える。バーの電話は予約先のある店にも出る（本文の電話ボタンは従来どおり予約先の無い店だけ）ので、電話の送客 cta_call_click と電話番号の確認 call_lookup は、この日から使われ方の変化ではなく計測の段差として増える。PC のクリックは従来どおり store_page。location の値が1つ増えたので、GA4 のカスタムディメンション location を登録するときは store_page_bar も含める",
+      "evidence": "PR #519（2014a4e1b5）・build.yml の自動コミット 75da709e80・docs/reservation-measurement.md・本番の店舗ページ80ページの抜き取りで帯が全ページに1つずつ（電話ボタン付きは68ページ）・本番で帯の電話ボタンを押すと cta_call_click と call_lookup が location=store_page_bar で dataLayer に積まれること（2026-10-12 に確認）"
     }
   ]
 }
