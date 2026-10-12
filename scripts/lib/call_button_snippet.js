@@ -12,7 +12,7 @@
  * ここは「押された後」だけを受け持つ。
  *
  * ページ側の約束:
- *   - ボタン: onclick="nbCallStore(event,'<placeId>','<店名>',this)" と data-call-loc="modal|store_page"。
+ *   - ボタン: onclick="nbCallStore(event,'<placeId>','<店名>',this)" と data-call-loc="modal|store_page|store_page_bar"。
  *     文字つきのボタンは <span>電話する</span> を持つ（確認中は「確認中…」に変わる）。アイコンだけのボタンは span なし
  *   - 結果の行: ボタンと同じ親の中の <p class="nb-call-status" role="status"></p>（無ければここで作る。
  *     読み上げのため、先に空の行を置いておくほうがよい）

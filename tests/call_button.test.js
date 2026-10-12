@@ -442,11 +442,13 @@ test('店舗ページ: 電話確認が無い店（placeId だけ）には電話�
   assert.ok(!html.includes('nb-call-js'));
 });
 
-test('店舗ページ: 予約先（ホットペッパー・食べログ）のある店は、電話確認があっても電話を出さない（これまでの規則のまま）', () => {
+test('店舗ページ: 予約先（ホットペッパー・食べログ）のある店は、本文のリンク欄には電話を出さない（これまでの規則のまま）。電話は行動バーに並ぶ（I-14b）', () => {
   for (const over of [{ 'ホットペッパーID': 'J000000001' }, { '食べログURL': 'https://tabelog.com/aichi/A2301/A230101/23000001/' }]) {
     const html = render({ '電話確認': '住所', ...over });
     assert.ok(!html.includes('link-btn tel'), JSON.stringify(over));
-    assert.ok(!html.includes('nbCallStore'), JSON.stringify(over));
+    assert.match(html, /<button type="button" class="nb-bar-btn nb-bar-sub nb-bar-tel" data-call-loc="store_page_bar" onclick="nbCallStore\(event,'ChIJtestPlace','テスト酒場',this\)"/, JSON.stringify(over));
+    assert.equal(html.split(CALL_SCRIPT).length - 1, 1, '帯に電話を出す店には共有の実装が1回入る');
+    assert.match(html, /<script>var NB_CALL_MAPS_KEY='[^']+';<\/script>/);
   }
 });
 
