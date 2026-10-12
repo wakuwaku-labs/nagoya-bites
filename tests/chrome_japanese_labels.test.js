@@ -116,6 +116,24 @@ test('ジャーナルの記事のひな形と、日次の関連記事の区画�
   assert.ok(!html.includes('Journal 一覧'));
 });
 
+test('再生成の対象外の古い店舗ページ（data/store_page_orphans.json）にも、直した英語が残っていない', () => {
+  // 生成器は孤児の店舗ページを作り直さない。ここが漏れると、CI が全部の店舗ページを作り直しても英語が残る
+  const orphans = JSON.parse(read('data/store_page_orphans.json')).orphanSlugs;
+  assert.ok(Array.isArray(orphans) && orphans.length > 0, '孤児の一覧を読めた');
+  const bad = [];
+  let seen = 0;
+  for (const slug of orphans) {
+    const rel = `stores/${slug}.html`;
+    if (!fs.existsSync(path.join(ROOT, rel))) continue;
+    seen++;
+    const html = read(rel);
+    if (/<a [^>]*>Daily Journal<\/a>/.test(html)) bad.push(`${rel}: フッターが Daily Journal`);
+    if (/<a [^>]*>TOP<\/a>/.test(html)) bad.push(`${rel}: パンくずが TOP`);
+  }
+  assert.ok(seen > 0, '孤児の店舗ページを1本以上読めた');
+  assert.deepStrictEqual(bad, []);
+});
+
 test('特集の一覧とひな形のパンくずの先頭が「トップ」', () => {
   assert.ok(read('features/index.html').includes('<a href="../index.html">トップ</a>'));
   // 特集の生成器（業界人特集）の戻り値は gen_industry_features.js のソースで確かめる（上のソース検査）。ここは実物の1本
