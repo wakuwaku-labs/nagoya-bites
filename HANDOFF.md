@@ -1,29 +1,28 @@
-status: done
+status: in_progress
 
 # 目的
-オーナーの質問（2026-10-12）「最近訪問者が増えているが本当に合っているか、合っているなら原因は」への回答。その後、GA4 の内部トラフィック除外の設定を確認した。
-（前のメモ「見た目の改修 DSN-008〜012」は status: done。内容は git 履歴 84d5f75d56 の HANDOFF.md）
+オーナーの依頼（2026-10-12）「日次ジャーナルをもとに X へ毎日の発信を投稿まで全自動にしたい。まず計画書を、確認事項と現状調査をしっかり行ったうえで作って」への対応。
+（前のメモ「GA4 訪問者増の検証」は status: done。内容は git 履歴 c49bf60faf の HANDOFF.md）
 
 # 完了条件
-- 増加の真偽と原因を、GA4 とは別の数字（Search Console）で確かめて答える
-- 内部トラフィック除外の有効化を、共有の手順書に記録する
+- 現状調査（ジャーナルの公開フロー・既存のSNS資産・写真ルール・X API の最新条件）を終える
+- 計画書 `docs/x-auto-posting-plan-2026-10.md` を書き、確認事項を番号つきでまとめる
+- 実装はオーナーの確認後（費用・アカウント認証が絡むため）
 
 # できていること
-- 30日の訪問者数: 661（8/11）→ 約1,100（9月中旬〜10/5）→ 1,334（10/12）。Search Console のクリック数も 417 → 576 → 648〜669 で伸びているので、増加は本物
-- 原因: ①「名古屋 一人飲み」特集の順位上昇（約12位→約5位・クリック28→約160）②ジャーナルへの検索流入（71→116）③Bing（366→約410）
-- 見かけの増加: 10/9 の店舗ページの GA4 修正（SEO-115）。改修前の基準では、店舗ページから入った訪問が48件で、ほぼ 10/9〜10/10 の分。30日合計は 11/8 ごろまで見かけ上増え続ける
-- 2026-10-12 オーナーが GA4 のデータフィルタ「内部トラフィック」を有効にし、各端末で `?nb_owner=1` を開いた。docs/ga4-internal-traffic-verification.md に「現在の状態」を追記
+- 調査を2本並行で開始（リポジトリ / X API の Web 調査）
 
 # 次にやること
-- なし。GA4 の基準の取り直しは SEO-118（期限 10/20）で進める
+- 調査結果で計画書を書く → コミット → Linear に起票
 
 # 試したが駄目だったこと
 - なし
 
 # 守るルール・判断メモ
-- 除外は過去にさかのぼらない。10/12 をまたぐ比較では、オーナーの閲覧の分だけ「後」が小さく出る
-- ga4-baseline.yml の internal_filter の既定値（unknown）は変えない（10/12 より前を含む期間が多いため）
+- SNS投稿はオーナーがリポジトリ外の別の仕組みで運用中（2026-09-14 確認・memory sns-posting-outside-repo-utm）。重複投稿にならないよう、既存の仕組みとの関係を確認事項の筆頭に置く
+- 写真: HotPepper 写真の複製保存・再配信は規約で禁止 → X への画像アップロードは使わず、リンクカード（og:image）で見せる方向
+- 課金（X API）とオーナーのアカウント認証は本人にしかできない
 
 # 関連ファイル
-- data/metrics_history.json・data/gsc_metrics.json・docs/qa/uiux-2026-10/baseline/ga4-2026-10-12-before-28d.json
-- docs/ga4-internal-traffic-verification.md
+- docs/x-auto-posting-plan-2026-10.md（計画書・作成予定）
+- scripts/run_journal_local.sh / scripts/generate_daily_draft.js / data/journal_sns_draft_policy.json / docs/sns-utm-convention.md
