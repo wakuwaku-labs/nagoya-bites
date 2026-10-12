@@ -238,11 +238,12 @@ function summaryOfFile(json) {
 
 // ── 実行 ──
 async function makeRunReport(env = process.env) {
-  const { google } = require('googleapis');
   let credentials;
   // JSON.parse の失敗メッセージは入力の一部を含む。鍵の断片が公開リポジトリの Actions のログに残らないよう、固定の文言にする
+  // require('googleapis') より先に検査する（googleapis が無い環境でも鍵のエラーが先に出るように）
   try { credentials = JSON.parse(env.GA4_SERVICE_ACCOUNT_KEY); }
   catch (e) { throw new Error('GA4_SERVICE_ACCOUNT_KEY が JSON として読めない（中身は表示しない）'); }
+  const { google } = require('googleapis');
   const auth = new google.auth.JWT({ email: credentials.client_email, key: credentials.private_key, scopes: ['https://www.googleapis.com/auth/analytics.readonly'] });
   await auth.authorize();
   const data = google.analyticsdata({ version: 'v1beta', auth });
