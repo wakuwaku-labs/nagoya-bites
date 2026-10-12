@@ -66,7 +66,7 @@ const MAPPING = {
 const CSS_BLOCK = `/* type-photo: 分類カードの絵文字アイコンを実在店舗写真へ置換（2026-07 絵文字全面撤去） */
 .type-photo{display:block;margin-bottom:.75rem;text-decoration:none;}
 .type-photo img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:4px;display:block;}
-.type-photo-credit{display:block;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.06em;color:#8b8578;margin-top:.35rem;}
+.type-photo-credit{display:block;font-family:var(--font-mono);font-size:.58rem;letter-spacing:.06em;color:#8b8578;margin-top:.35rem;}
 `;
 
 function heroPhoto(jcode) {

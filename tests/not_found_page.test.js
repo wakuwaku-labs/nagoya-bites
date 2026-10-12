@@ -55,9 +55,9 @@ test('404.html: 「/」始まりのリンク先は、リポジトリに実在す
   assert.deepEqual(missing, [], `リンク先が存在しません: ${missing.join(' , ')}`);
 });
 
-test('404.html: 正本の CSS（data/design_system.json の cssPath）とフォントの URL を、同じ形で読み込む', () => {
+test('404.html: 正本の CSS（data/design_system.json の cssPath）を絶対パスで読み込み、Web フォントは読み込まない', () => {
   assert.ok(html.includes(`href="/${DS.cssPath.replace(/^\/+/, '')}"`), 'nb.css を絶対パスで読み込んでいません');
-  assert.ok(html.includes(`href="${DS.fontsUrl}"`), 'フォントの URL が data/design_system.json の fontsUrl と違います');
+  assert.doesNotMatch(html, /fonts\.(googleapis|gstatic)\.com/, 'Web フォントを読み込んでいます（端末の書体だけを使う・判断の記録 0026）');
 });
 
 test('404.html: 検索に出さない（noindex・sitemap.xml / llms.txt に入れない）', () => {

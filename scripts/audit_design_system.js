@@ -11,7 +11,10 @@
  *
  * 検査項目:
  *   (a) assets/css/nb.css への <link rel="stylesheet"> が正しい相対深さで存在する
- *   (b) fonts.googleapis.com の <link> が1本だけあり、正本URLと一致する
+ *   (b) Web フォントを使っていない（P-318・判断の記録 0026）: 配信元（fonts.googleapis.com / fonts.gstatic.com）を指す
+ *       <link>・@import が無く、<style> と style 属性に退役した書体名（Cormorant Garamond / Shippori Mincho /
+ *       Noto Sans JP / DM Mono）の直書きが無い。書体は nb.css のトークン（var(--font-*)）で指す
+ *       配信元と退役した書体名の正本は data/design_system.json の webFonts、判定は scripts/lib/web_fonts.js の1本
  *   (c) インライン<style>内に coreTokens を再定義する :root{...} がない
  *   (d) インライン<style>内の font-size（px/rem/em/clamp）が床(12px)未満でない
  *       （allowlist.selectors に載るセレクタは除外）
@@ -49,6 +52,8 @@ const args = process.argv.slice(2);
 const rootIdx = args.indexOf('--root');
 const ROOT = rootIdx >= 0 ? path.resolve(args[rootIdx + 1]) : path.join(__dirname, '..');
 const DS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/design_system.json'), 'utf8'));
+const webFonts = require('./lib/web_fonts');
+const WEB_FONTS_POLICY = webFonts.loadWebFontsPolicy(ROOT);
 
 const mode = args.includes('--check') ? 'check' : 'report';
 const sampleIdx = args.indexOf('--sample');
@@ -217,15 +222,9 @@ function auditFile(file, violations) {
     violations.push({ file: rel, rule: 'missing-nb-css-link', detail: `expected href containing ${DS.cssPath}` });
   }
 
-  // (b) fonts.googleapis link — 正本URLと一致するか
-  const fontLinks = [...html.matchAll(/<link[^>]+href=["\'](https:\/\/fonts\.googleapis\.com\/[^"\']+)["\']/gi)]
-    .map(m => m[1].replace(/&amp;/g, '&'));
-  if (fontLinks.length === 0) {
-    violations.push({ file: rel, rule: 'missing-fonts-link', detail: 'no fonts.googleapis.com link found' });
-  } else if (fontLinks.length > 1) {
-    violations.push({ file: rel, rule: 'multiple-fonts-links', detail: `${fontLinks.length} links found` });
-  } else if (fontLinks[0] !== DS.fontsUrl) {
-    violations.push({ file: rel, rule: 'stale-fonts-url', detail: fontLinks[0] });
+  // (b) Web フォントを使っていない（<link>・@import・書体名の直書き）
+  for (const v of webFonts.findViolations(html, WEB_FONTS_POLICY)) {
+    violations.push({ file: rel, rule: v.rule, detail: v.detail });
   }
 
   // (e) chrome markers
@@ -361,8 +360,9 @@ function inlineStyleMain() {
     if (relativeOccurrences) console.log(`  ℹ️ em・% の小さな指定（親の大きさで決まるため数えない）: ${relativePages} ページ・${relativeOccurrences} か所`);
     console.log(`  ${result.ok ? '✅' : '❌'} 床を割る style 属性の font-size: ${pages} ページ・${occurrences} か所`);
   }
-  if (mode === 'check' && !result.ok) process.exit(1);
-  process.exit(0);
+  // process.exit() は、標準出力がパイプのとき 64KB を超えた分を書き出す前にプロセスを終えてしまい、JSON が途中で切れる。
+  // 違反が多い日（生成物が古いまま検査したとき）に壊れないよう、終了コードだけ決めて自然に終わらせる。
+  process.exitCode = (mode === 'check' && !result.ok) ? 1 : 0;
 }
 
 function main() {
@@ -388,8 +388,9 @@ function main() {
 
   console.log(JSON.stringify(result, null, 2));
 
-  if (mode === 'check' && !result.ok) process.exit(1);
-  process.exit(0);
+  // process.exit() は、標準出力がパイプのとき 64KB を超えた分を書き出す前にプロセスを終えてしまい、JSON が途中で切れる。
+  // 違反が多い日（生成物が古いまま検査したとき）に壊れないよう、終了コードだけ決めて自然に終わらせる。
+  process.exitCode = (mode === 'check' && !result.ok) ? 1 : 0;
 }
 
 main();

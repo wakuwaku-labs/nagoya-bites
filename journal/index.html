@@ -43,24 +43,21 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   ]
 }
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Shippori+Mincho:wght@500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/nb.css">
 <style>.page-hero{padding:3rem 1.5rem 2rem;max-width:900px;margin:0 auto;}
-.eyebrow{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;}
-.page-title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(2rem,4vw,3rem);line-height:1.15;color:var(--white);margin-bottom:.8rem;}
+.eyebrow{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;}
+.page-title{font-family:var(--font-display);font-weight:400;font-size:clamp(2rem,4vw,3rem);line-height:1.15;color:var(--white);margin-bottom:.8rem;}
 .page-title em{font-style:italic;color:var(--gold);}
 .page-desc{font-size:.82rem;line-height:2;color:var(--muted);max-width:640px;}
 .theme-legend{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.2rem;}
-.theme-legend span{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.12em;padding:.25rem .6rem;border:1px solid rgba(122,92,16,.3);color:var(--gold);border-radius:2px;}
+.theme-legend span{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.12em;padding:.25rem .6rem;border:1px solid rgba(122,92,16,.3);color:var(--gold);border-radius:2px;}
 .journal-list{max-width:900px;margin:0 auto;padding:1rem 1.5rem 3rem;}
 .journal-entry{border-bottom:1px solid var(--border);padding:1.4rem 0;display:grid;grid-template-columns:90px 1fr;gap:1.2rem;text-decoration:none;color:inherit;transition:background .15s;}
 .journal-entry:hover{background:rgba(122,92,16,.03);}
-.entry-date{font-family:'DM Mono',monospace;font-size:var(--fs-xs);letter-spacing:.12em;color:var(--dim);padding-top:.2rem;}
-.entry-body h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.15rem;color:var(--white);line-height:1.35;margin-bottom:.4rem;}
+.entry-date{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.12em;color:var(--dim);padding-top:.2rem;}
+.entry-body h2{font-family:var(--font-display);font-weight:400;font-size:1.15rem;color:var(--white);line-height:1.35;margin-bottom:.4rem;}
 .entry-body p{font-size:.78rem;line-height:1.9;color:var(--muted);margin-bottom:.5rem;}
-.entry-theme{font-family:'DM Mono',monospace;font-size:var(--fs-2xs);letter-spacing:.14em;padding:.18rem .5rem;border:1px solid rgba(122,92,16,.3);color:var(--gold);border-radius:2px;display:inline-block;}
+.entry-theme{font-family:var(--font-mono);font-size:var(--fs-2xs);letter-spacing:.14em;padding:.18rem .5rem;border:1px solid rgba(122,92,16,.3);color:var(--gold);border-radius:2px;display:inline-block;}
 .empty-state{padding:3rem 1.5rem;text-align:center;color:var(--dim);max-width:620px;margin:0 auto;}
 .empty-state p{font-size:.84rem;line-height:2;margin-bottom:1rem;}
 .cta-box{max-width:900px;margin:0 auto;padding:0 1.5rem 3rem;text-align:center;}

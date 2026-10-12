@@ -23,7 +23,7 @@ DSN-001（2026-09）でオーナー本人の直接指摘（「サイトが見に
 
 | ファイル | 役割 |
 |---|---|
-| `data/design_system.json` | 機械判定の閾値・トークン一覧・許可リスト・正本フォントURL |
+| `data/design_system.json` | 機械判定の閾値・トークン一覧・許可リスト・Web フォントを使わない方針（`webFonts`） |
 | `assets/css/nb.css` | 実装（トークン・基本タイポ・共通クローム・共通部品） |
 | `docs/design-system.md` | 人向け仕様書（理由・do/don't・部品解剖・新規ページ雛形） |
 
@@ -66,7 +66,7 @@ DSN-001（2026-09）でオーナー本人の直接指摘（「サイトが見に
 ## 新規ページの作り方（Editor / Builder 向け）
 
 1. `docs/design-system.md` に載っている雛形 HTML をコピーする
-2. `<head>` で Google Fonts（正本 URL）→ `assets/css/nb.css`（相対パスの深さに注意）の順で読み込む
+2. `<head>` で `assets/css/nb.css`（相対パスの深さに注意）を読み込む。Web フォント（Google Fonts など）は読み込まない（書体はトークンが端末の書体を指す・判断の記録 0026）
 3. ページ固有の見た目は `--page-` 接頭辞のトークンを追加するか、既存トークンを参照するだけにする。
    font-size のリテラル値（`12px` や `.8rem` など）を新規に書かない
 4. `node scripts/audit_design_system.js --check` を通す
@@ -80,9 +80,9 @@ DSN-001（2026-09）でオーナー本人の直接指摘（「サイトが見に
 - 監査対象マーカー（FEATURED / SHOWCASE / LATEST_JOURNAL / SCENE-INDEX / STORE-INDEX /
   REVIEW_TRUST_BOX / SEO-042 TOP-CTA / SEASONAL_NOTE）**内部の文言・HTML構造**を変更すること
   （CSS は変えてよい。文言は各監査スクリプトの検証対象）
-- 新しいフォント・npm 依存を追加すること（制約4・CDNリンクのみ可）
+- Web フォント（Google Fonts を含む）を読み込むこと、新しい npm 依存を追加すること（制約4・判断の記録 0026。書体を自分で配るなら判断の記録を先に書く）
 - `agent-backlog.md` に理由を残さず `data/design_system.json` の `allowlist` で床（12px）を緩めること
-- 日本語テキストに DM Mono（等幅フォント）を使うこと
+- 日本語テキストに等幅フォント（`var(--font-mono)`）を使うこと
 - 英語と日本語の二重見出し（同じ意味の kicker を英日両方で出す）
 - ヘッダーナビを10項目超に増やすこと
 

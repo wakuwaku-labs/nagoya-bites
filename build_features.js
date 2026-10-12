@@ -613,7 +613,7 @@ const PHOTO_CSS = `
 .store-name a{color:inherit;text-decoration:none;}
 .store-name a:hover{color:var(--gold,#7a5c10);}
 .faq-section{margin:2.4rem 0;padding:1.6rem;background:rgba(122,92,16,.04);border-left:3px solid var(--gold,#7a5c10);border-radius:0 4px 4px 0;}
-.faq-section h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.4rem;margin-bottom:1.2rem;color:var(--text,#1c1c1a);}
+.faq-section h2{font-family:var(--font-display);font-weight:400;font-size:1.4rem;margin-bottom:1.2rem;color:var(--text,#1c1c1a);}
 .faq-section .faq-item{margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid rgba(0,0,0,.08);}
 .faq-section .faq-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
 .faq-section .faq-q{font-weight:500;margin-bottom:.5rem;color:var(--text,#1c1c1a);}

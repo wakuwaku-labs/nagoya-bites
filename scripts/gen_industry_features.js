@@ -13,7 +13,6 @@ const path = require('path');
 const siteChrome = require('./lib/site_chrome');
 const { gaSnippet } = require('./lib/ga_snippet');
 const { applyByline } = require('./lib/feature_byline');
-const DS = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'design_system.json'), 'utf8'));
 
 const { featureSlugOf, relabelAll, relabelForSlug } = require('./lib/feature_counts');
 
@@ -273,9 +272,6 @@ ${GA_SCRIPT}
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="${DS.fontsUrl}" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/nb.css">
 <script type="application/ld+json">${articleJson}</script>
 <script type="application/ld+json">${itemListJson}</script>
