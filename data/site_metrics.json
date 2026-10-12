@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-12T20:56:27.863Z",
+  "generatedAt": "2026-10-12T21:13:44.081Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1324,
-    "pageViews": 1880,
-    "sessions": 1512,
-    "avgSessionDuration": 128.2,
+    "activeUsers": 1325,
+    "pageViews": 1881,
+    "sessions": 1513,
+    "avgSessionDuration": 128.1,
     "bounceRate": 0.284,
     "pagesPerSession": 1.24
   },
@@ -21,7 +21,7 @@
       "direct": 337,
       "social": 5,
       "ai_assistant": 106,
-      "referral": 28,
+      "referral": 29,
       "paid": 0,
       "other": 2
     },
@@ -30,7 +30,7 @@
       "direct": 22.2,
       "social": 0.3,
       "ai_assistant": 7,
-      "referral": 1.8,
+      "referral": 1.9,
       "paid": 0,
       "other": 0.1
     }
@@ -133,6 +133,11 @@
     },
     {
       "source": "alleba.com",
+      "medium": "referral",
+      "sessions": 1
+    },
+    {
+      "source": "cn.bing.com",
       "medium": "referral",
       "sessions": 1
     },
@@ -901,7 +906,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1324,
+    "value": 1325,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
