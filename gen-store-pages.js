@@ -186,13 +186,16 @@ function buildTrustBreakdown(cc, rt) {
   const metaLine = `${P.coverageLabel.replace('{observed}', rt.coverage.observed).replace('{total}', rt.coverage.total)}${rt.lastChecked ? ' ・ ' + P.lastCheckedLabel.replace('{date}', rt.lastChecked) : ''}`;
   return `
   <div class="trust-breakdown">
-    <h2>${escapeHtml(P.name)}の内訳</h2>
+    <h2>${escapeHtml(P.name)}</h2>
     <p class="trust-headline"><span class="trust-tier ${tierDef.cssClass}">${escapeHtml(rt.tier)}</span><span class="trust-score">${scoreTxt} / 100</span> — ${escapeHtml(rt.headline || '')}</p>
     <p class="trust-meta-line">${escapeHtml(metaLine)}</p>
-    <p class="trust-breakdown-intro">${escapeHtml(P.name)}は「${escapeHtml(P.question)}」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
+    <details class="trust-details">
+      <summary>内訳を見る（${P.checks.length}つの検証項目）</summary>
+      <p class="trust-breakdown-intro">${escapeHtml(P.name)}は「${escapeHtml(P.question)}」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
 ${rows}
-    <p class="trust-meta-heading">${escapeHtml(P.metaHeading)}</p>
+      <p class="trust-meta-heading">${escapeHtml(P.metaHeading)}</p>
 ${metaRows}
+    </details>
   </div>`;
 }
 
@@ -993,6 +996,11 @@ button.link-btn{font:inherit;cursor:pointer;}
 .trust-headline .trust-score{font-family:var(--font-mono);font-size:var(--fs-sm);color:var(--muted);margin-right:.2rem;}
 .trust-meta-line{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin:0 0 .6rem;}
 .trust-meta-heading{font-size:var(--fs-xs);font-weight:600;color:var(--dim);margin:.9rem 0 .1rem;}
+.trust-details{margin-top:.6rem;border-top:1px solid var(--border);}
+.trust-details summary{cursor:pointer;display:flex;align-items:center;gap:.5rem;min-height:var(--tap-min);padding:.4rem 0;font-size:var(--fs-sm);font-weight:600;color:var(--text);list-style:none;}
+.trust-details summary::-webkit-details-marker{display:none;}
+.trust-details summary::before{content:'＋';color:var(--gold);font-weight:600;}
+.trust-details[open] summary::before{content:'－';}
 .related-features,.related-stores{margin:2rem 0 1.8rem;padding:1.3rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
 .related-features h2,.related-stores h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .related-features ul,.related-stores ul{list-style:none;padding:0;margin:0;}
@@ -1492,4 +1500,4 @@ if (require.main === module) {
   main().catch(err => { console.error('エラー:', err); process.exit(1); });
 }
 
-module.exports = { renderStorePage, buildActionBar, buildGeo, mergeStoreWithCsv, buildEditorReason, toSlug, buildRelatedStores, buildRelatedFeatures, buildSitemap };
+module.exports = { renderStorePage, buildActionBar, buildGeo, mergeStoreWithCsv, buildEditorReason, buildTrustBreakdown, toSlug, buildRelatedStores, buildRelatedFeatures, buildSitemap };

@@ -99,6 +99,9 @@ function listFilesRecursive(dir) {
 }
 
 const { managed: MANAGED_STORE_FILES_BASE, orphanCount: ORPHAN_STORE_COUNT } = managedStoreFiles();
+// 店舗ページが新形式（口コミ信頼度の再設計後）か。CI の再生成前の旧形式のページは検査を skip する。
+// 内訳を畳む前（〜I-14d）の見出しは「口コミ信頼度の内訳」、畳んだ後は <h2>口コミ信頼度</h2>（内訳は <details> の中）。
+const isNewFormatStorePage = (t) => t.includes(`${P.name}の内訳`) || t.includes(`<h2>${P.name}</h2>`);
 // SEO-094: stores/area/（エリア×ジャンル×条件ページ）は常に生成器管理下なので無条件で含める
 const MANAGED_STORE_FILES = MANAGED_STORE_FILES_BASE.concat(listFilesRecursive('stores/area'));
 if (ORPHAN_STORE_COUNT > 0) {
@@ -118,7 +121,7 @@ for (const f of legacyTargets) scanWords(read(f), P.legacyNames, `[旧名称] ${
     const t = read(f); if (t == null) continue; scanned++;
     for (const w of P.legacyNames) if (t.includes(w)) counts[w] = (counts[w] || 0) + 1;
   }
-  const anyNew = files.some(f => (read(f) || '').includes(`${P.name}の内訳`));
+  const anyNew = files.some(f => isNewFormatStorePage(read(f) || ''));
   if (scanned > 0 && !anyNew) warnings.push(`stores/*.html は旧形式（CI 再生成前）のため旧名称検査を skip（${scanned}件）`);
   else for (const [w, n] of Object.entries(counts)) violations.push(`[旧名称] stores/*.html 「${w}」 ${n}/${scanned} ファイル`);
 }
@@ -201,7 +204,7 @@ for (const f of legacyTargets) scanWords(read(f), P.legacyNames, `[旧名称] ${
   const counts = {}; const samples = {}; let scanned = 0; let newFormat = 0;
   for (const f of files) {
     const t = read(f); if (t == null) continue; scanned++;
-    if (t.includes(`${P.name}の内訳`)) newFormat++;
+    if (isNewFormatStorePage(t)) newFormat++;
     const parts = [];
     const a = t.indexOf('<div class="trust-breakdown">');
     if (a >= 0) { const b = t.indexOf('<div class="links-section">', a); parts.push(t.slice(a, b > a ? b : a + 6000)); }
