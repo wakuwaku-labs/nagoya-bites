@@ -130,7 +130,8 @@ test('title のテキストには、& < > が逃がされずに残らない', ()
 });
 
 test('ヒーロー画像の alt と h1 も逃がし、h1 から店名を読み戻せる（誘導ページ化の照合用）', () => {
-  const html = renderStorePage({ ...BASE, '店名': TRICKY }, 'J-test', [], []);
+  // 写真のある店（写真の無い店はヒーローを出さない・I-10c）
+  const html = renderStorePage({ ...BASE, '店名': TRICKY, '写真URL': 'https://imgfp.hotp.jp/IMGH/00/00/P000000000/P000000000_480.jpg' }, 'J-test', [], []);
   const hero = html.match(/<img class="hero-img"[^>]*>/)[0];
   assert.match(hero, /alt="[^"]*&quot;[^"]*"/);
   assert.ok(!/alt="TT"/.test(hero), 'alt が " で切れている');
@@ -146,7 +147,8 @@ test('Instagram の埋め込みへのリンク文も、店名を逃がして入�
 });
 
 test('普通の店名のページは、記号の処理で 1 文字も変わらない', () => {
-  const html = renderStorePage(BASE, 'J-test', [], []);
+  // 写真のある店（写真の無い店はヒーローを出さない・I-10c）
+  const html = renderStorePage({ ...BASE, '写真URL': 'https://imgfp.hotp.jp/IMGH/00/00/P000000000/P000000000_480.jpg' }, 'J-test', [], []);
   assert.ok(html.includes('<title>テスト酒場（栄・居酒屋'));
   assert.ok(html.includes('<h1>テスト酒場</h1>'));
   assert.ok(html.includes('alt="テスト酒場"'));
