@@ -37,6 +37,15 @@ test('丸め: 500 件単位で最も近い値。ちょうど真ん中は上へ',
   assert.equal(roundStoreCount(0), 0);
 });
 
+test('ログ: 丸めの単位は ROUND_UNIT（丸めた値ではない）。「5,000 件単位」と出さない', () => {
+  // --only に実在しない scope を渡さず、書き換えない --dry-run で先頭の1行だけを見る
+  const out = execFileSync('node', [path.join(ROOT, 'scripts', 'sync_store_count.js'), '--dry-run', '--only', 'faq'], { encoding: 'utf8' });
+  const line = out.split('\n').find((l) => l.startsWith('掲載店数:'));
+  assert.ok(line, '掲載店数の行が無い');
+  assert.match(line, new RegExp(`（${ROUND_UNIT.toLocaleString('en-US')} 件単位に丸め）`));
+  assert.doesNotMatch(line, /（5,000 件単位/);
+});
+
 test('丸め: 件数が不正なら止まる（NaN や負の数を文面に書かない）', () => {
   for (const bad of [NaN, -1, Infinity, undefined]) assert.throws(() => roundStoreCount(bad), /不正/);
 });

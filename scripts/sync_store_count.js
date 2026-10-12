@@ -27,7 +27,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { siteStoreCount, SCOPES, syncStoreCountText, findUnmanagedTokens } = require('./lib/store_count');
+const { siteStoreCount, ROUND_UNIT, SCOPES, syncStoreCountText, findUnmanagedTokens } = require('./lib/store_count');
 
 const ROOT = path.resolve(__dirname, '..');
 
@@ -69,7 +69,7 @@ function main() {
   }
 
   const count = siteStoreCount();
-  console.log(`掲載店数: 営業中 ${count.exact.toLocaleString('en-US')}店 → 表記は「${count.label}」（${count.rounded.toLocaleString('en-US')} 件単位に丸め）`);
+  console.log(`掲載店数: 営業中 ${count.exact.toLocaleString('en-US')}店 → 表記は「${count.label}」（${ROUND_UNIT.toLocaleString('en-US')} 件単位に丸め）`);
 
   if (opts.report) {
     let total = 0;
