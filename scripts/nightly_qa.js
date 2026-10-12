@@ -246,6 +246,17 @@ checks.push({
   trigger: '常時',
   cmd: ['node', ['scripts/audit_page_weight.js', '--check']],
 });
+// 公開ページの見出しの階層が飛んでいないか（I-26f・U-78・SOFT で開始）。h1 の次に h3、h2 の次に h4 のように段が飛ぶと、
+// 画面の読み上げの見出し一覧で「親の無い見出し」になる。日次ジャーナルの生成器は店の一覧の先頭に見えない h2 を置くので、
+// 新しい記事は飛ばない（本文に h2 が無い回でも）。手で書いたページが崩したときの検知。0 件が続いたら hard に上げる
+checks.push({
+  id: 'heading-levels',
+  title: '公開ページの見出しの階層が飛んでいない（I-26f・U-78）',
+  hard: false,
+  alwaysShow: true,
+  trigger: '常時',
+  cmd: ['node', ['scripts/audit_heading_levels.js', '--check']],
+});
 // HotPepper の取得に取りこぼしが無いか（ISSUE-143・SOFT で開始）。1,000件の上限を超える中エリアは小エリアごとに
 //    取り直し、API のエラーはやり直す。それでも取れなかった回は build.js が data/hotpepper_fetch_log.json に残す
 checks.push({
