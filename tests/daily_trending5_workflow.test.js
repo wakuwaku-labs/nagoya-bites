@@ -59,3 +59,35 @@ test('build.yml の昇格のステップと同じスクリプトを、引数な�
   const build = fs.readFileSync(path.join(__dirname, '..', '.github', 'workflows', 'build.yml'), 'utf8');
   assert.match(build, /run:\s*node scripts\/promote_store_photos\.js\s*$/m, 'build.yml の昇格が変わっているなら、ここも見直す');
 });
+
+// P-274: build.yml と同じ並行グループ（build-deploy）で待たされた回が、起動した時点の古い main を取って
+// 生成物を作り直すと、待っている間に build.yml が push した data/stores.json・index.html と衝突して
+// push できなくなる（2026-10-08・2026-10-12 の2回、5回リトライしても同じ競合）。build.yml は ISSUE-161 で
+// checkout に ref: main を指定して直した。こちらも、ジョブの開始時点の main の最新を取る。
+function checkoutRef(src) {
+  const lines = src.split('\n');
+  const start = lines.findIndex((l) => !/^\s*#/.test(l) && /uses:\s*actions\/checkout@/.test(l));
+  if (start < 0) return { found: false, ref: null };
+  let ref = null;
+  for (let i = start + 1; i < lines.length && !/^ {6}- /.test(lines[i]); i++) {
+    if (/^\s*#/.test(lines[i])) continue;
+    const m = lines[i].match(/^\s+ref:\s*(\S+)\s*$/);
+    if (m) { ref = m[1]; break; }
+  }
+  return { found: true, ref };
+}
+
+test('checkout は ref: main で、ジョブの開始時点の main の最新を取る', () => {
+  const c = checkoutRef(SRC);
+  assert.ok(c.found, 'actions/checkout のステップが見つからない');
+  assert.strictEqual(c.ref, 'main', 'checkout に ref: main が無い（待たされた回が古い main から作り直し、push が競合する）');
+});
+
+test('build.yml の checkout と同じ ref を使い、並行グループも build.yml と同じ', () => {
+  const build = fs.readFileSync(path.join(__dirname, '..', '.github', 'workflows', 'build.yml'), 'utf8');
+  assert.strictEqual(checkoutRef(build).ref, 'main', 'build.yml の checkout が変わっているなら、ここも見直す');
+  // 同じグループで直列に走るから「待たされる」。グループが分かれたなら、この前提ごと見直す
+  const group = (t) => (t.match(/^\s+group:\s*(\S+)\s*$/m) || [])[1];
+  assert.strictEqual(group(SRC), 'build-deploy');
+  assert.strictEqual(group(build), 'build-deploy');
+});
