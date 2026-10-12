@@ -7,7 +7,7 @@
 //   Q5 文字のコントラスト 4.5:1 以上（背景の透け・半透明の文字色は合成してから計算。装飾を除く）／Q6 押せるものが 44px 以上（幅・高さ）
 //   Q7 下の固定検索バー・ご意見ボタン・上へ戻るに重ならない／Q8 重なり順（モーダル・ご意見・上へ戻る・トースト・ナビの暗幕より下）
 //   Q9 押せるものに名前がある／Q10 キーボードの Tab で届き、フォーカスの輪が見える／Q11（参考）フォーカスの輪と周りの色の差／Q12 出てもフォーカスを奪わない
-//   Q13 動き（animation）が無い／Q14 日本語の文字に DM Mono（等幅）を使っていない（agents/designer.md の「やってはいけないこと」）
+//   Q13 動き（animation）が無い／Q14 日本語の文字に等幅書体を使っていない（agents/designer.md の「やってはいけないこと」。P-318 で Web フォントをやめてからは端末の等幅書体を見る）
 // 外部への通信はすべて中断する（ローカルの配信だけで動く。GA4 にも送らない）。ページのエラー（pageerror）も数える。
 // 終了コード: 失敗した確認があれば 1、なければ 0（puppeteer が無いときは 2）。
 'use strict';
@@ -35,6 +35,9 @@ const VIEWPORTS = [
 const IOS_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1';
 // 基準（data/design_system.json の floorPx・readablePx・agents/designer.md の 44px・WCAG の通常の文字 4.5:1）
 const FLOOR_PX = 12, READABLE_PX = 13, TAP_MIN = 44, CONTRAST_MIN = 4.5, RING_CONTRAST_REF = 3;
+// 等幅書体（先頭に使われている書体名）。端末の等幅は nb.css の --font-mono（assets/css/nb.css・scripts/lib/web_fonts.js の DEVICE_STACKS）。
+// DM Mono は P-318 で退役したが、改修前の木（--root）を同じ道具で測るときのために残す
+const MONO_FAMILY = /^(ui-monospace|SF Mono|SFMono-Regular|Menlo|Consolas|Courier New|monospace|DM Mono)$/i;
 
 const MIME = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8',
@@ -272,8 +275,8 @@ async function measure(browser, base, vp, kind) {
   add('Q11', `（参考）フォーカスの輪と周りの色の差が ${RING_CONTRAST_REF}:1 以上`, ringLow.length === 0 ? true : null, rings.map(r => r.ringContrast).join('/'), JSON.stringify(rings.map(r => ({ sel: r.sel, ringContrast: r.ringContrast, outlineColor: r.outlineColor }))));
   add('Q12', '出てもフォーカスを奪わない', before.active === after.active, `${before.active}→${after.active}`, JSON.stringify({ before: before.active, after: after.active }));
   add('Q13', '動き（animation）が無い', p.animationName === 'none', p.animationName, JSON.stringify({ animationName: p.animationName, transitionDuration: p.transitionDuration }));
-  const monoJa = p.texts.filter(t => t.ja && /^DM Mono$/i.test(t.family));
-  add('Q14', '日本語の文字に DM Mono（等幅）を使っていない', monoJa.length === 0, monoJa.length ? `${monoJa.length}件` : p.texts.filter(t => t.ja)[0] ? p.texts.filter(t => t.ja)[0].family : '-', JSON.stringify(monoJa));
+  const monoJa = p.texts.filter(t => t.ja && MONO_FAMILY.test(t.family));
+  add('Q14', '日本語の文字に等幅書体を使っていない', monoJa.length === 0, monoJa.length ? `${monoJa.length}件` : p.texts.filter(t => t.ja)[0] ? p.texts.filter(t => t.ja)[0].family : '-', JSON.stringify(monoJa));
   add('Q15', 'ページのエラーが出ていない', errors.length === 0, `${errors.length}件`, errors.join(' / '));
   void key;
   return out;
