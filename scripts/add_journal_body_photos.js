@@ -32,6 +32,7 @@ const ROOT = path.resolve(__dirname, '..');
 const JOURNAL_DIR = path.join(ROOT, 'journal');
 const JP = require('./lib/journal_photos');
 const { extractHeroFromHtml, extractBodyPhotosFromHtml } = require('./lib/hero_photo_gate');
+const { unesc } = require('./lib/site_chrome');
 
 function parseArgs() {
   const a = process.argv.slice(2);
@@ -44,14 +45,21 @@ function parseArgs() {
   };
 }
 
-/** 記事HTMLから、その記事が扱う店（store-card）を取り出す */
+/**
+ * 記事HTMLから、その記事が扱う店（store-card）を取り出す。
+ *
+ * 返す name / area は素の文字（Chef's）で、HTML のエスケープ（Chef&#39;s）は戻してある。
+ * 記事の h3 は「エスケープ済みの文字」なので、そのまま figureHtml に渡すと esc() が
+ * もう一度かけて Chef&amp;#39;s になり、画面にそのまま出る（2026-08-28 の記事で起きた）。
+ * データ側の店名（data/stores.json）との突き合わせも、素の文字どうしのほうが一致する。
+ */
 function extractStores(html) {
   const out = [];
   for (const m of html.matchAll(/<div class="store-card"([^>]*)>([\s\S]*?)<h3 class="store-name">([^<]+)</g)) {
     const id = (m[1].match(/data-store-id="([^"]+)"/) || [])[1] || '';
-    const name = m[3].trim();
+    const name = unesc(m[3]).trim();
     const area = (m[2].match(/<span>([^<]*)<\/span>\s*<span>([^<]*)<\/span>/) || [])[2] || '';
-    if (name) out.push({ name, id, area: area.trim() });
+    if (name) out.push({ name, id, area: unesc(area).trim() });
   }
   return out;
 }
@@ -174,5 +182,7 @@ async function main() {
     console.log('※ 写真の中身（販促バナーが混じっていないか）は機械で判定しない。目で見てからコミットすること。');
   }
 }
+
+module.exports = { extractStores };
 
 if (require.main === module) main().catch(e => { console.error(e); process.exit(1); });
