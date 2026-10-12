@@ -49,9 +49,9 @@ test('本番の台帳に SEO-115 の計測変更（2026-10-09・ga4）が載っ�
   assert.ok(c && c.date === '2026-10-09' && c.affects.includes('ga4'));
 });
 
-test('本番の台帳に I-08・I-21 の計測変更（2026-10-12・ga4）が載っている', () => {
+test('本番の台帳に I-08・I-21・I-14b の計測変更（2026-10-12・ga4）が載っている', () => {
   const b = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/measurement_changes.json'), 'utf8'));
-  for (const id of ['I-08', 'I-21']) {
+  for (const id of ['I-08', 'I-21', 'I-14b']) {
     const c = b.changes.find((x) => x.id === id);
     assert.ok(c && c.date === '2026-10-12' && c.affects.includes('ga4'), `${id} が台帳に無い（計測の段差が効果として読まれてしまう）`);
   }
