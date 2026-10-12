@@ -95,7 +95,12 @@ test('renderStorePage: HotPepper の写真・写真なしの店は、包みも C
     const html = renderStorePage(s, 'J-test', [], []);
     assert.ok(!html.includes('hero-wrap'), `photo=${photo}`);
     assert.ok(!html.includes('photo-credit'), `photo=${photo}`);
-    assert.ok(/<body>\n[\s\S]*?\n\n<img class="hero-img"/.test(html), 'ヒーローはこれまでどおり本文の直下');
+    if (photo) {
+      assert.ok(/<body>\n[\s\S]*?\n\n<img class="hero-img"/.test(html), 'ヒーローはこれまでどおり本文の直下');
+    } else {
+      // I-10c: 写真の無い店はヒーローを出さない（汎用の画像も出さない）
+      assert.ok(!/<img class="hero-img"/.test(html), '写真の無い店はヒーローを出さない');
+    }
   }
 });
 
