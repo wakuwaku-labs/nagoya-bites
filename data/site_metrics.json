@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-12T19:02:47.245Z",
+  "generatedAt": "2026-10-12T19:19:14.186Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1318,
-    "pageViews": 1873,
-    "sessions": 1505,
-    "avgSessionDuration": 128.6,
-    "bounceRate": 0.283,
+    "activeUsers": 1320,
+    "pageViews": 1875,
+    "sessions": 1507,
+    "avgSessionDuration": 128.4,
+    "bounceRate": 0.284,
     "pagesPerSession": 1.24
   },
   "dailyReference": {
@@ -18,7 +18,7 @@
   "channels": {
     "sessions": {
       "organic": 1037,
-      "direct": 334,
+      "direct": 336,
       "social": 5,
       "ai_assistant": 105,
       "referral": 28,
@@ -26,8 +26,8 @@
       "other": 2
     },
     "pct": {
-      "organic": 68.6,
-      "direct": 22.1,
+      "organic": 68.5,
+      "direct": 22.2,
       "social": 0.3,
       "ai_assistant": 6.9,
       "referral": 1.9,
@@ -49,7 +49,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 238
+      "sessions": 240
     },
     {
       "source": "yahoo",
@@ -284,7 +284,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 5.8,
-    "ctaClickRate_direct": 19.2,
+    "ctaClickRate_direct": 19,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -901,7 +901,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1318,
+    "value": 1320,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
