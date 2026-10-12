@@ -87,6 +87,12 @@ body{min-height:100vh;}
 h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.8rem);line-height:var(--lh-display);color:var(--ink);margin-bottom:.6rem;}
 .score{display:inline-flex;align-items:center;gap:.3rem;font-size:var(--fs-sm);font-weight:600;color:#d4a017;margin-bottom:1.2rem;}
 .score svg{width:14px;height:14px;fill:#d4a017;}
+.store-glance{margin-bottom:1.2rem;}
+.store-glance-row{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;}
+.score-note{font-size:var(--fs-xs);color:var(--muted);}
+.store-facts{margin:.6rem 0 0;font-size:var(--fs-sm);line-height:var(--lh-ui);color:var(--text);}
+.store-chips{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;}
+.store-chips li{font-size:var(--fs-xs);letter-spacing:0;color:var(--muted);border:1px solid var(--border);padding:.3rem .7rem;border-radius:2px;background:var(--surface);}
 .ccs-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.25rem .7rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
 .ccs-badge.ccs-badge-pending{color:#767676;border-color:rgba(120,120,120,.35);background:rgba(120,120,120,.06);}
 .ccs-badge .ccs-tier{font-weight:700;font-size:var(--fs-xs);margin-left:.25rem;letter-spacing:0;}
@@ -199,16 +205,18 @@ button.link-btn{font:inherit;cursor:pointer;}
 
   <div class="genre-badge">カフェ / 中国茶</div>
   <h1>BEUTEA メイチカ店</h1>
-  <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
-    
+  <div class="store-glance">
+  <div class="store-glance-row">
     <span class="ccs-badge ccs-badge-pending" title="口コミ信頼度 —：判定材料不足（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）">口コミ信頼度<span class="ccs-tier cc-tier-NA">—</span></span>
+  </div>
+    <p class="store-facts">予算501～1000円</p>
   </div>
 
   <div class="point-box"><p>2026年9月4日オープン。マレーシア発のプレミアム中国茶ブランドで、2025年12月に開いた矢場町の日本1号店は初日最大1時間待ちの行列をつくった。メイチカ店は日本2号店。ジャスミンミルクティー(L)728円、ジャスミングレープティー(M)888円、白桃烏龍茶658円。約30席で全席にコンセントとWi-Fiを備え、7:00〜22:00営業。通過導線の地下街では珍しい滞在型の一軒で、朝の待ち合わせや新幹線待ちの作業に向く。</p></div>
   
 
   <div class="info-grid">
-    <div class="info-cell"><label>エリア</label><span>愛知県 名古屋（中村区・名駅）</span></div>
+    <div class="info-cell"><label>エリア</label><span>愛知県 名駅（名古屋駅）</span></div>
     
     <div class="info-cell"><label>価格帯</label><span>501～1000円</span></div>
     

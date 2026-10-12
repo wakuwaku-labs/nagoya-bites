@@ -96,6 +96,12 @@ body{min-height:100vh;}
 h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.8rem);line-height:var(--lh-display);color:var(--ink);margin-bottom:.6rem;}
 .score{display:inline-flex;align-items:center;gap:.3rem;font-size:var(--fs-sm);font-weight:600;color:#d4a017;margin-bottom:1.2rem;}
 .score svg{width:14px;height:14px;fill:#d4a017;}
+.store-glance{margin-bottom:1.2rem;}
+.store-glance-row{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;}
+.score-note{font-size:var(--fs-xs);color:var(--muted);}
+.store-facts{margin:.6rem 0 0;font-size:var(--fs-sm);line-height:var(--lh-ui);color:var(--text);}
+.store-chips{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;}
+.store-chips li{font-size:var(--fs-xs);letter-spacing:0;color:var(--muted);border:1px solid var(--border);padding:.3rem .7rem;border-radius:2px;background:var(--surface);}
 .ccs-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.25rem .7rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
 .ccs-badge.ccs-badge-pending{color:#767676;border-color:rgba(120,120,120,.35);background:rgba(120,120,120,.06);}
 .ccs-badge .ccs-tier{font-weight:700;font-size:var(--fs-xs);margin-left:.25rem;letter-spacing:0;}
@@ -208,9 +214,12 @@ button.link-btn{font:inherit;cursor:pointer;}
 
   <div class="genre-badge">和食</div>
   <h1>久良</h1>
-  <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
-    
+  <div class="store-glance">
+  <div class="store-glance-row">
     <span class="ccs-badge ccs-badge-pending" title="口コミ信頼度 —：判定材料不足（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）">口コミ信頼度<span class="ccs-tier cc-tier-NA">—</span></span>
+  </div>
+    <p class="store-facts">中京競馬場前駅から徒歩1分・予算3001～4000円</p>
+    <ul class="store-chips" aria-label="この店の条件"><li>飲み放題あり</li><li>日曜営業</li><li>喫煙できる店</li></ul>
   </div>
 
   <div class="point-box"><p>中京競馬場前駅直結、3,500円で競馬客層と宴会客掴む</p></div>
@@ -240,7 +249,11 @@ button.link-btn{font:inherit;cursor:pointer;}
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市緑区大将ケ根２-１２５１</span></div>
     <div class="info-cell"><label>価格帯</label><span>3001～4000円</span></div>
     <div class="info-cell"><label>営業時間</label><span>月～水: 17:00～23:00 （料理L.O. 22:00 ドリンクL.O. 22:00）金: 17:00～翌0:00 （料理L.O. 22:00 ドリンクL.O. 22:00）土: 17:00～翌0:00 （料理L.O. 23:00 ドリンクL.O. 23:00）日: 17:00～23:00 （料理L.O. 23:00 ドリンクL.O. 23:00）</span></div>
+    <div class="info-cell"><label>定休日</label><span>木曜日</span></div>
     
+    <div class="info-cell"><label>席数</label><span>30席</span></div>
+    <div class="info-cell"><label>宴会の収容人数</label><span>18名</span></div>
+    <div class="info-cell"><label>禁煙・喫煙</label><span>一部禁煙</span></div>
     <div class="info-cell"><label>アクセス・特徴</label><span>名鉄名古屋本線中京競馬場前駅出口(北側)より徒歩約1分</span></div>
   </div>
 

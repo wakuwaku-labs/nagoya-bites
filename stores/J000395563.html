@@ -103,6 +103,12 @@ body{min-height:100vh;}
 h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.8rem);line-height:var(--lh-display);color:var(--ink);margin-bottom:.6rem;}
 .score{display:inline-flex;align-items:center;gap:.3rem;font-size:var(--fs-sm);font-weight:600;color:#d4a017;margin-bottom:1.2rem;}
 .score svg{width:14px;height:14px;fill:#d4a017;}
+.store-glance{margin-bottom:1.2rem;}
+.store-glance-row{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;}
+.score-note{font-size:var(--fs-xs);color:var(--muted);}
+.store-facts{margin:.6rem 0 0;font-size:var(--fs-sm);line-height:var(--lh-ui);color:var(--text);}
+.store-chips{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;}
+.store-chips li{font-size:var(--fs-xs);letter-spacing:0;color:var(--muted);border:1px solid var(--border);padding:.3rem .7rem;border-radius:2px;background:var(--surface);}
 .ccs-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.25rem .7rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
 .ccs-badge.ccs-badge-pending{color:#767676;border-color:rgba(120,120,120,.35);background:rgba(120,120,120,.06);}
 .ccs-badge .ccs-tier{font-weight:700;font-size:var(--fs-xs);margin-left:.25rem;letter-spacing:0;}
@@ -215,9 +221,13 @@ button.link-btn{font:inherit;cursor:pointer;}
 
   <div class="genre-badge">居酒屋</div>
   <h1>元祖やきとり家 美濃路 築地口店</h1>
-  <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
-    <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>3.6</div>
+  <div class="store-glance">
+  <div class="store-glance-row">
+    <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>3.6</div><span class="score-note">（Google・176件）</span>
     <span class="ccs-badge" title="口コミ信頼度 B：おおむね参考にできます">口コミ信頼度<span class="ccs-tier cc-tier-B">B</span></span>
+  </div>
+    <p class="store-facts">築地口駅から徒歩1分・予算2001～3000円</p>
+    <ul class="store-chips" aria-label="この店の条件"><li>飲み放題あり</li><li>30名以上の宴会可</li><li>日曜営業</li><li>駐車場あり</li></ul>
   </div>
 
   <div class="point-box"><p>築地口駅徒歩1分で2,500円。国道154号線渡った場所、駅チカながら静かな居酒屋環境。</p></div>
@@ -228,7 +238,13 @@ button.link-btn{font:inherit;cursor:pointer;}
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市港区名港１－１２１６－１</span></div>
     <div class="info-cell"><label>価格帯</label><span>2001～3000円</span></div>
     <div class="info-cell"><label>営業時間</label><span>月～土: 17:00～翌0:00 （料理L.O. 23:30 ドリンクL.O. 23:30）日、祝日: 16:00～23:00 （料理L.O. 22:30 ドリンクL.O. 22:30）</span></div>
+    <div class="info-cell"><label>定休日</label><span>なし</span></div>
     
+    <div class="info-cell"><label>席数</label><span>106席</span></div>
+    <div class="info-cell"><label>宴会の収容人数</label><span>60名</span></div>
+    <div class="info-cell"><label>禁煙・喫煙</label><span>全面禁煙</span></div>
+    <div class="info-cell"><label>カード</label><span>利用可</span></div>
+    <div class="info-cell"><label>駐車場</label><span>あり：25台まで駐車可能！週末は乗合にてご来店ください！</span></div>
     <div class="info-cell"><label>アクセス・特徴</label><span>築地口駅から徒歩1分。国道154号線を渡ってすぐです。</span></div>
   </div>
 

@@ -79,7 +79,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "栄(ミナミ)/矢場町/大須/上前津の居酒屋",
+        "name": "矢場町・大須・上前津の居酒屋",
         "item": "https://nagoya-bites.com/stores/area/yabacho-osu/izakaya.html"
       },
       {
@@ -103,6 +103,12 @@ body{min-height:100vh;}
 h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.8rem);line-height:var(--lh-display);color:var(--ink);margin-bottom:.6rem;}
 .score{display:inline-flex;align-items:center;gap:.3rem;font-size:var(--fs-sm);font-weight:600;color:#d4a017;margin-bottom:1.2rem;}
 .score svg{width:14px;height:14px;fill:#d4a017;}
+.store-glance{margin-bottom:1.2rem;}
+.store-glance-row{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;}
+.score-note{font-size:var(--fs-xs);color:var(--muted);}
+.store-facts{margin:.6rem 0 0;font-size:var(--fs-sm);line-height:var(--lh-ui);color:var(--text);}
+.store-chips{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0;padding:0;}
+.store-chips li{font-size:var(--fs-xs);letter-spacing:0;color:var(--muted);border:1px solid var(--border);padding:.3rem .7rem;border-radius:2px;background:var(--surface);}
 .ccs-badge{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;color:var(--gold);border:1px solid rgba(122,92,16,.35);padding:.25rem .7rem;border-radius:2px;background:rgba(122,92,16,.07);vertical-align:middle;margin-left:.6rem;}
 .ccs-badge.ccs-badge-pending{color:#767676;border-color:rgba(120,120,120,.35);background:rgba(120,120,120,.06);}
 .ccs-badge .ccs-tier{font-weight:700;font-size:var(--fs-xs);margin-left:.25rem;letter-spacing:0;}
@@ -206,7 +212,7 @@ button.link-btn{font:inherit;cursor:pointer;}
   <div class="breadcrumb">
     <a href="../index.html">トップ</a>
     <span>›</span>
-    <a href="../stores/area/yabacho-osu/izakaya.html">栄(ミナミ)/矢場町/大須/上前津の居酒屋</a>
+    <a href="../stores/area/yabacho-osu/izakaya.html">矢場町・大須・上前津の居酒屋</a>
     <span>›</span>
     【中華 餃子 食べ放題 】餃子王　栄女子大店
   </div>
@@ -215,20 +221,29 @@ button.link-btn{font:inherit;cursor:pointer;}
 
   <div class="genre-badge">居酒屋</div>
   <h1>【中華 餃子 食べ放題 】餃子王　栄女子大店</h1>
-  <div style="margin-bottom:1.2rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;">
-    <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>3.6</div>
+  <div class="store-glance">
+  <div class="store-glance-row">
+    <div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>3.6</div><span class="score-note">（Google・190件）</span>
     <span class="ccs-badge" title="口コミ信頼度 B：おおむね参考にできます">口コミ信頼度<span class="ccs-tier cc-tier-B">B</span></span>
+  </div>
+    <p class="store-facts">予算3001～4000円</p>
+    <ul class="store-chips" aria-label="この店の条件"><li>個室あり</li><li>飲み放題あり</li><li>30名以上の宴会可</li><li>深夜営業（翌1時以降）</li></ul>
   </div>
 
   <div class="point-box"><p>栄駅5分で3,500円ランチ営業、時間帯別の多層化が成功</p></div>
   
 
   <div class="info-grid">
-    <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 栄(ミナミ)/矢場町/大須/上前津</span></div>
+    <div class="info-cell"><label>エリア</label><span>愛知県 名古屋市 矢場町・大須・上前津</span></div>
     <div class="info-cell"><label>住所</label><span>愛知県名古屋市中区栄４-4-9</span></div>
     <div class="info-cell"><label>価格帯</label><span>3001～4000円</span></div>
     <div class="info-cell"><label>営業時間</label><span>月～土、祝日、祝前日: 11:30～14:00 （料理L.O. 13:30 ドリンクL.O. 13:30）17:00～翌1:00 （料理L.O. 翌0:30 ドリンクL.O. 翌0:30）</span></div>
+    <div class="info-cell"><label>定休日</label><span>日曜日</span></div>
     
+    <div class="info-cell"><label>席数</label><span>50席</span></div>
+    <div class="info-cell"><label>宴会の収容人数</label><span>50名</span></div>
+    <div class="info-cell"><label>禁煙・喫煙</label><span>一部禁煙</span></div>
+    <div class="info-cell"><label>カード</label><span>利用可</span></div>
     <div class="info-cell"><label>アクセス・特徴</label><span>栄駅スグ★栄12番出口・中日ビルより徒歩５分|女子大店！【各種ご宴会・お仕事帰り・女子会・誕生日】</span></div>
   </div>
 
@@ -325,7 +340,7 @@ button.link-btn{font:inherit;cursor:pointer;}
   </div>
 
   <div class="back-section">
-    <a href="../stores/area/yabacho-osu/izakaya.html">← 栄(ミナミ)/矢場町/大須/上前津の居酒屋をもっと見る</a>
+    <a href="../stores/area/yabacho-osu/izakaya.html">← 矢場町・大須・上前津の居酒屋をもっと見る</a>
   </div>
 </div>
 
