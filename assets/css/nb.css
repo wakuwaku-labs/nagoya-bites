@@ -99,6 +99,8 @@ img{max-width:100%;display:block;}
   padding:.75rem 1.25rem;font-size:var(--fs-sm);border-radius:0 0 var(--r-sm) 0;
 }
 .skip-link:focus{left:0;}
+/* 「本文へスキップ」で飛んだとき、本文の先頭が固定のヘッダーの下に隠れないようにする（I-26a） */
+#main-content{scroll-margin-top:var(--header-h);}
 
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 

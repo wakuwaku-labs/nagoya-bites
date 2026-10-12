@@ -387,22 +387,15 @@ function stripLegacyChromeCss(html) {
 // main
 // ---------------------------------------------------------------------------
 
-function processFile(file) {
-  const rel = relPath(file);
+// ページ1枚分の変換（読み書きはしない）。processFile と tests/skip_link_main.test.js が使う
+function transform(original, rel) {
   const group = groupOf(rel);
   const depth = chrome.depthFor(rel);
   const active = chrome.activeKeyFor(rel);
   const withFav = rel === 'index.html';
 
-  const original = fs.readFileSync(file, 'utf8');
   let html = original;
   const errors = [];
-
-  if (group === 'stores' && path.basename(file) !== 'index.html') {
-    // 店舗詳細ページは gen-store-pages.js のテンプレート側で site_chrome を呼ぶ
-    // （このスクリプトでは header/footer 差し替えを行わず、legacy-css strip のみ対象外にする）
-    return { file: rel, changed: false, skipped: 'store_detail_handled_by_generator' };
-  }
 
   // トップは body の先頭（ほかの操作より前）に自前の「本文へスキップ」を持つ。自前の <main> を持つページは足さない
   const own = hasOwnMain(html);
@@ -434,12 +427,26 @@ function processFile(file) {
     const c = stripLegacyChromeCss(html);
     html = c.html;
   }
+  return { html, errors };
+}
 
-  const changed = html !== original;
-  if (changed && !dryRun && !checkMode) {
-    fs.writeFileSync(file, html);
+function processFile(file) {
+  const rel = relPath(file);
+  const group = groupOf(rel);
+
+  if (group === 'stores' && path.basename(file) !== 'index.html') {
+    // 店舗詳細ページは gen-store-pages.js のテンプレート側で site_chrome を呼ぶ
+    // （このスクリプトでは header/footer 差し替えを行わず、legacy-css strip のみ対象外にする）
+    return { file: rel, changed: false, skipped: 'store_detail_handled_by_generator' };
   }
-  return { file: rel, changed, errors: errors.length ? errors : undefined };
+
+  const original = fs.readFileSync(file, 'utf8');
+  const t = transform(original, rel);
+  const changed = t.html !== original;
+  if (changed && !dryRun && !checkMode) {
+    fs.writeFileSync(file, t.html);
+  }
+  return { file: rel, changed, errors: t.errors.length ? t.errors : undefined };
 }
 
 function main() {
@@ -472,4 +479,4 @@ function main() {
 if (require.main === module) main();
 
 // tests/site_chrome_entities.test.js が使う（パンくずの作り直しの単体テスト）
-module.exports = { extractBreadcrumbFromJsonLd, extractH1Text, buildBreadcrumbItems, applyBreadcrumb, hasOwnMain, ensureMainId, countMainContentIds };
+module.exports = { extractBreadcrumbFromJsonLd, extractH1Text, buildBreadcrumbItems, applyBreadcrumb, hasOwnMain, ensureMainId, countMainContentIds, transform };

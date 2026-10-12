@@ -136,6 +136,41 @@ test('countMainContentIds: スクリプトの中の文字は数えない', () =>
   assert.equal(apply.countMainContentIds('<main></main>'), 0);
 });
 
+test('transform: 自前の <main> に id が無いページは、2つ目を足さずに id を付ける（エラー無し・冪等）', () => {
+  const html = read('contact.html').replace(' id="main-content"', '');
+  assert.equal(count(html, /\sid="main-content"/g), 0, '前提: id を外した');
+  const t = apply.transform(html, 'contact.html');
+  assert.deepEqual(t.errors, []);
+  assert.equal(count(t.html, /<main[\s>]/g), 1, '<main> は1つだけ');
+  assert.equal(count(t.html, /\sid="main-content"/g), 1);
+  assert.match(t.html, /<main(?:\s[^>]*)? id="main-content"/);
+  assert.equal(apply.transform(t.html, 'contact.html').html, t.html, '2回かけても同じ');
+});
+
+test('transform: 自前の <main> が別の id を持つページは main_id_conflict で知らせ、<main> は増やさない', () => {
+  const html = read('contact.html').replace(' id="main-content"', ' id="content"');
+  const t = apply.transform(html, 'contact.html');
+  assert.ok(t.errors.includes('main_id_conflict'), t.errors.join(','));
+  assert.equal(count(t.html, /<main[\s>]/g), 1);
+});
+
+test('transform: <main> を持たないページ（faq）は、<main> と飛び先の id を足して外す前の形に戻る', () => {
+  const html = read('faq.html');
+  const bare = html.replace('<main id="main-content">\n', '').replace('<!-- NB-CHROME:FOOTER:START -->\n</main>\n', '<!-- NB-CHROME:FOOTER:START -->\n');
+  assert.equal(count(bare, /<main[\s>]/g), 0, '前提: <main> を外した');
+  const t = apply.transform(bare, 'faq.html');
+  assert.deepEqual(t.errors, []);
+  assert.equal(t.html, html, '外す前の形に戻る');
+});
+
+test('transform: トップ（index.html）は、ヘッダーのブロックでは skip-link を足さない（自前の1つだけ）', () => {
+  const html = read('index.html');
+  const t = apply.transform(html, 'index.html');
+  assert.deepEqual(t.errors, []);
+  assert.equal(count(t.html, /class="skip-link"/g), 1);
+  assert.equal(t.html, html, '冪等');
+});
+
 // ── 手で保守している静的ページ ───────────────────────────────────────────────
 
 function staticPages() {
@@ -161,6 +196,13 @@ test('自前の <main> を持つページ（contact・privacy-policy・特集2�
     assert.match(html, /<main(?:\s[^>]*)? id="main-content"/, `${rel}: 自前の <main> に id`);
     assert.doesNotMatch(html, /<main id="main-content">\s*<!-- NB-CHROME:HEADER:END -->/, `${rel}: ヘッダーのブロックが <main> を足していない`);
   }
+});
+
+test('nb.css: 飛び先（#main-content）は固定のヘッダーの高さ分だけ余白を持ち、本文の先頭が隠れない', () => {
+  const css = read('assets/css/nb.css');
+  assert.match(css, /#main-content\{scroll-margin-top:var\(--header-h\);\}/);
+  assert.match(css, /--header-h:56px/);
+  assert.match(css, /\.skip-link:focus\{left:0;\}/);
 });
 
 test('トップ: 自前の「本文へスキップ」は body の先頭近くにあり、ヘッダーのブロックでは足さず、飛び先は <main> だけ', () => {
