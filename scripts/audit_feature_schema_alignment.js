@@ -164,6 +164,11 @@ function audit(filename, dir, opts) {
         }
       }
     } else if (b['@type'] === 'FAQPage') {
+      // 特集には FAQPage の構造化データを出さない（判断の記録 0025・P-317）。journal（faqOnly）は対象外
+      if (!opts.faqOnly) {
+        issues.push({ kind: 'faqpage_not_allowed_in_feature', title });
+        continue;
+      }
       // ISSUE-063: FAQ設問は title 単独だと語彙ズレで偽陽性になるため、ページ実態コーパス（title＋h1＋本文）と照合。
       // 別テーマのテンプレ汚染（例: 接待ページにラーメンFAQ）は corpus 類似度も低い（~0.25）ため引き続き検出。
       const questions = (b.mainEntity || []).map(q => q.name || '').join(' ');
@@ -208,7 +213,7 @@ function main() {
   const files = featureFiles.length + journalFiles.length;
 
   if (failed.length === 0) {
-    console.log(`✅ features/*.html ${featureFiles.length} 件: スキーマ整合性 OK（全件で title/h1/Article/ItemList/Breadcrumb/FAQPage が一致）／journal FAQPage保有 ${journalFiles.length} 件: FAQ整合性 OK`);
+    console.log(`✅ features/*.html ${featureFiles.length} 件: スキーマ整合性 OK（全件で title/h1/Article/ItemList/Breadcrumb が一致。特集に FAQPage は出さない＝0025）／journal FAQPage保有 ${journalFiles.length} 件: FAQ整合性 OK`);
     process.exit(0);
   }
 

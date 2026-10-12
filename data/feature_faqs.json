@@ -1,5 +1,5 @@
 {
-  "_note": "特集記事ごとのQ&A。build_features.js が FAQPage JSON-LD と可視セクションを自動生成する。People Also Ask 対策。",
+  "_note": "特集記事ごとのQ&A。build_features.js が画面のよくある質問（可視セクション）を自動生成する。FAQPage の構造化データ（JSON-LD）は特集には出さない（docs/decisions/0025-features-no-faqpage.md）。",
   "_rules": "1) 店名を明示せず傾向で回答 2) 捏造しない 3) 回答は50〜180字",
 
   "banquet.html": [
