@@ -1,0 +1,85 @@
+{
+  "_comment": "X 自動投稿（SNS-001）の運用ルールの正本。scripts/post_journal_to_x.js と scripts/check_x_post_health.js が読む。挙動の変更はこのファイルで行い、スクリプトは触らない。計画書は docs/x-auto-posting-plan-2026-10.md",
+  "version": 1,
+  "mode": "dry-run",
+  "modeHelp": "off = 何もしない / dry-run = 送る予定の文面を作って検査し、Actions の要約に出すだけ（X には送らない・台帳も書かない）/ live = X に送り、台帳と心拍を書く。live に変えるのは SNS-002（鍵の登録）と試運転のあと、オーナーの OK を得てから",
+  "liveSince": null,
+  "liveSinceHelp": "mode を live に変えた日（YYYY-MM-DD）。見張り役はこの日より前の記事を数えない（試運転の間の記事を「投稿が無い」と鳴らさないため）。live に変えるときに一緒に書く。空なら今日から数える",
+  "siteBase": "https://nagoya-bites.com",
+  "utm": {
+    "source": "x",
+    "medium": "social"
+  },
+  "header": "【今日の名古屋ジャーナル】",
+  "baseHashtags": [
+    "#名古屋グルメ"
+  ],
+  "maxHashtags": 2,
+  "titleRewrites": [
+    {
+      "pattern": "を業界人が読む",
+      "replace": "を読む"
+    },
+    {
+      "pattern": "業界人が読む",
+      "replace": "読み解く"
+    }
+  ],
+  "titleRewritesHelp": "X の文面に限って、題名の言い方を置き換える（記事の題名は変えない）。2026-10-11 のオーナー指示「人が全店を選んだと読める言い方を使わない」に合わせる。直近60本の題名のうち17本が「〜を業界人が読む」で、そのままだと言い方の検査で毎回止まるため（2026-10-13 実測）。置き換えた後も言い方の検査は通す。上から順に1回ずつ当てる",
+  "areaHashtagWords": [
+    "千種区",
+    "東区",
+    "北区",
+    "西区",
+    "中村区",
+    "中区",
+    "昭和区",
+    "瑞穂区",
+    "熱田区",
+    "中川区",
+    "港区",
+    "南区",
+    "守山区",
+    "緑区",
+    "名東区",
+    "天白区",
+    "名駅",
+    "栄",
+    "錦",
+    "伏見",
+    "丸の内",
+    "大須",
+    "金山",
+    "今池",
+    "覚王山",
+    "新栄",
+    "久屋大通",
+    "矢場町",
+    "上前津",
+    "鶴舞",
+    "千種",
+    "本山",
+    "星ヶ丘",
+    "藤が丘",
+    "八事",
+    "御器所",
+    "桜山",
+    "池下",
+    "黒川",
+    "大曽根",
+    "名古屋港",
+    "円頓寺"
+  ],
+  "areaHashtagWordsHelp": "記事の題名に出てくる語だけをハッシュタグにする（題名に無い地名は付けない）。長い語から先に照合する（「中村区」を「中区」と取り違えない）",
+  "maxWeightedLength": 280,
+  "duplicateWindowDays": 30,
+  "livePage": {
+    "attempts": 20,
+    "intervalSeconds": 30
+  },
+  "livePageHelp": "公開直後は GitHub Pages の反映が数分遅れる。本番の記事 URL が 200 を返すまで、attempts × intervalSeconds（既定 10 分）待つ。それでも出なければ今回は送らず、次の起動でやり直す",
+  "watchdog": {
+    "graceHours": 6
+  },
+  "watchdogHelp": "ジャーナルの公開（published_at）から graceHours を過ぎても投稿が台帳に無ければ警報。GitHub の定時実行は数時間遅れることがある（journal-watchdog.yml の実測 4〜6 時間）ため短くしない"
+}
