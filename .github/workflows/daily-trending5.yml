@@ -29,6 +29,12 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
+          # ref を指定しないと、定期実行の起点のコミット（起動した時点の main）を取る。build.yml と同じ
+          # 並行グループ（build-deploy）で待たされた回が、古い main から build.js を回して生成物を作り直し、
+          # 待っている間に build.yml が push した生成物（data/stores.json・index.html 等）と衝突して
+          # push できなくなる（2026-10-08 run 37707057712・2026-10-12 run 38185730757。build.yml は
+          # ISSUE-161 で同じ症状を ref: main で直した）。ジョブの開始時点の main の最新を取る。
+          ref: main
 
       - name: Node.js セットアップ
         uses: actions/setup-node@v4
