@@ -354,6 +354,10 @@ button.link-btn{font:inherit;cursor:pointer;}
   </div>
 </footer>
 <!-- NB-CHROME:FOOTER:END -->
+<div class="nb-action-bar" role="region" aria-label="梵8 ボンパチの予約・電話・地図">
+  <a class="nb-bar-btn nb-bar-primary nb-bar-reserve" href="https://www.hotpepper.jp/strJ004469728/" target="_blank" rel="noopener noreferrer" onclick="nbReserveExit('cta_click',{store_name:'梵8 ボンパチ',store_id:'J004469728',link_domain:'www.hotpepper.jp',location:'store_page_bar'})">ホットペッパーで予約</a>
+  <a class="nb-bar-btn nb-bar-sub nb-bar-map" href="https://www.google.com/maps/search/%E6%A2%B58%20%E3%83%9C%E3%83%B3%E3%83%91%E3%83%81%20%E9%87%91%E5%B1%B1%E3%83%BB%E7%A5%9E%E5%AE%AE%E5%89%8D%E3%83%BB%E7%86%B1%E7%94%B0%E5%8C%BA" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href,store_name:'梵8 ボンパチ',location:'store_page_bar'})" aria-label="梵8 ボンパチの地図をGoogleマップで開く"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span>地図</span></a>
+</div>
 <!-- NB-CHROME:SCRIPT:START -->
 <script>
 window.toggleNav = window.toggleNav || function(){
