@@ -17,6 +17,7 @@ const siteChrome = require('./scripts/lib/site_chrome');
 const areaGenrePages = require('./scripts/lib/area_genre_pages');
 const { loadPolicy: loadIgPostPolicy } = require('./scripts/lib/ig_post_policy');
 const { relabelForSlug } = require('./scripts/lib/feature_counts');
+const storeListings = require('./scripts/lib/store_listings');
 const { editorReasonOf, visitStatusLabel } = require('./scripts/lib/editor_reason');
 const { renderPhotoCredit, PHOTO_CREDIT_CSS } = require('./scripts/lib/photo_credit');
 const { isDeadPhotoUrl } = require('./scripts/lib/dead_photo_urls');
@@ -89,6 +90,12 @@ const CROSSCHECK = (() => {
 
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+// 2026-10-11 → 2026年10月11日（日付として読めなければ空文字）
+function jaDate(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ''));
+  return m ? `${m[1]}年${Number(m[2])}月${Number(m[3])}日` : '';
 }
 
 // onclick="f('…')" の JS 文字列に入れる値。属性の中では &#39; が ' に戻るため、先に JS 側で ' と \ を逃がす
@@ -251,6 +258,9 @@ function mapPriceToSchemaRange(price) {
 // ISSUE-047: related-features 充足率を 68% → 95% に引き上げ。
 // 既存のタグベース照合に加え、エリア・ジャンルのフォールバックを追加し、
 // HP API 由来でタグが薄い店舗でも 1本以上の関連特集が引き当たるようにする。
+// I-15: これは「店のタグ・ジャンル・エリアに近い特集」を案内する推定で、その店がその特集に載っているわけではない。
+// ページでは「あわせて読みたい特集」と呼び、「この店が載っている特集・記事」（実際の掲載・store_listings.js と
+// feature_store_match.js）とは別の区画に分ける。見出しで載っていると言わない。
 const TAG_TO_FEATURES = [
   // ─── 1. タグ直接マッチ（最優先） ───────────────────────────────
   { match: s => (s['タグ']||'').includes('個室'),
@@ -334,9 +344,10 @@ const TAG_TO_FEATURES = [
     file: 'nagoya-gourmet-guide.html', label: '名古屋グルメ完全ガイド' },
 ];
 
-function buildRelatedFeatures(store) {
+// excludeFiles: すでに「載っている特集」として出す特集（'banquet.html' の形）。繰り返さず、残りの規則で埋める
+function buildRelatedFeatures(store, excludeFiles) {
   const hits = [];
-  const seen = new Set();
+  const seen = new Set(excludeFiles || []);
   for (const entry of TAG_TO_FEATURES) {
     if (seen.has(entry.file)) continue;
     if (entry.match(store)) {
@@ -580,7 +591,7 @@ function buildEditorReason(s) {
   </section>`;
 }
 
-function renderStorePage(s, slug, relatedStores, listedFeatures) {
+function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals) {
   const name     = s['店名'] || '';
   const genre    = s['ジャンル'] || '';
   const area     = s['エリア'] || '';
@@ -709,21 +720,32 @@ function renderStorePage(s, slug, relatedStores, listedFeatures) {
     ].map((c, i) => ({ '@type': 'ListItem', 'position': i + 1, 'name': c.name, 'item': c.item }))
   };
 
-  // 掲載特集（SEO-106）: features/*.html に実在掲載されている特集だけ（feature_store_match.js の照合結果）。
-  // タグ推定の「関連特集」と違い、編集部が実際にこの店を載せた特集のみ。対応が無い店は出さない。
-  const listedHtml = (listedFeatures && listedFeatures.length) ? `
+  // この店が載っている特集・記事（SEO-106・I-15）: 実際に載っているものだけ。
+  //   特集 = features/*.html の掲載店に実在する（feature_store_match.js の照合結果）
+  //   記事 = ジャーナルの本文にこの店の店舗ページへのリンクがある（store_listings.js・新しい順に最大 MAX_JOURNAL_PER_STORE 本）
+  // タグ・ジャンル・エリアからの推定は混ぜない（下の「あわせて読みたい特集」に分ける）。1本も無い店は見出しごと出さない。
+  const listedF = listedFeatures || [];
+  const listedJ = (listedJournals || []).slice(0, storeListings.MAX_JOURNAL_PER_STORE);
+  const listedHeading = listedF.length && listedJ.length ? 'この店が載っている特集・記事'
+    : listedJ.length ? 'この店が載っている記事' : 'この店が載っている特集';
+  const listedItems = [
+    ...listedF.map(f => `<li><a href="../features/${escapeHtml(f.slug)}.html">${escapeHtml(relabelForSlug(f.title, f.slug))}</a></li>`),
+    ...listedJ.map(j => `<li><a href="../journal/${escapeHtml(j.slug)}.html">${escapeHtml(j.title)}</a>${jaDate(j.date) ? `<span class="listed-kind">ジャーナル ${escapeHtml(jaDate(j.date))}</span>` : ''}</li>`),
+  ];
+  const listedHtml = listedItems.length ? `
   <div class="related-features listed-features">
-    <h2>掲載特集</h2>
+    <h2>${listedHeading}</h2>
     <ul>
-      ${listedFeatures.map(f => `<li><a href="../features/${escapeHtml(f.slug)}.html">${escapeHtml(relabelForSlug(f.title, f.slug))}</a></li>`).join('\n      ')}
+      ${listedItems.join('\n      ')}
     </ul>
   </div>` : '';
 
-  // 関連特集(最大3本)
-  const relatedFeatures = buildRelatedFeatures(s);
+  // あわせて読みたい特集(最大3本): 店のタグ・ジャンル・エリアに近い特集の案内（推定）。この店が載っているとは言わない。
+  // 上の「載っている特集」と同じ特集は繰り返さない（残りの規則で埋める）
+  const relatedFeatures = buildRelatedFeatures(s, listedF.map(f => `${f.slug}.html`));
   const relatedHtml = relatedFeatures.length ? `
   <div class="related-features">
-    <h2>この店舗が登場する特集</h2>
+    <h2>あわせて読みたい特集</h2>
     <ul>
       ${relatedFeatures.map(f => `<li><a href="../features/${f.file}">${f.label}</a></li>`).join('\n      ')}
     </ul>
@@ -969,6 +991,7 @@ button.link-btn{font:inherit;cursor:pointer;}
 .related-features li,.related-stores li{margin:.5rem 0;}
 .related-features a,.related-stores a{font-size:var(--fs-sm);color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.25);padding-bottom:2px;transition:color .2s;}
 .related-features a:hover,.related-stores a:hover{color:var(--gold2);border-bottom-color:var(--gold2);}
+.related-features .listed-kind{font-size:var(--fs-xs);color:var(--dim);margin-left:.6em;}
 .back-section{border-top:1px solid var(--border);padding-top:1.8rem;text-align:center;}
 .back-section a{font-family:var(--font-body);font-size:var(--fs-sm);font-weight:500;letter-spacing:0;color:var(--muted);text-decoration:none;transition:color .2s;min-height:var(--tap-min);display:inline-flex;align-items:center;}
 .back-section a:hover{color:var(--gold);}
@@ -1335,6 +1358,12 @@ async function main() {
 
   // SEO-106: 掲載特集の逆引き（features/*.html の実在掲載のみ・index.html カードと同じ照合）
   const featureStoreMap = require('./scripts/lib/feature_store_match').buildFeatureStoreMap(slugged.map(x => x.store));
+  // I-15: 店 → 載っているジャーナル記事（記事の本文に店舗ページへのリンクがあるか・store_listings.js）。
+  // リンク先が誘導ページ（古い ID）なら今の店舗ページに結ぶ
+  const journalStoreMap = storeListings.buildJournalStoreMap({
+    root: __dirname,
+    resolveSlug: storeListings.makeSlugResolver({ root: __dirname, liveSlugs: new Set(slugged.map(x => x.slug)) }),
+  });
 
   // SEO-121: 前回の sitemap の lastmod を引き継ぐ。生成した HTML が前回のファイルと同じ店は前回の日付のまま、
   // 違う店（＝内容が変わった店）だけ当日にする。同じ内容のファイルは書き直さない
@@ -1346,7 +1375,7 @@ async function main() {
   for (const { store: s, slug } of slugged) {
     slugs.push(slug);
     const relatedStores = buildRelatedStores(s, slugged, slug);
-    const html = renderStorePage(s, slug, relatedStores, featureStoreMap.get(s) || []);
+    const html = renderStorePage(s, slug, relatedStores, featureStoreMap.get(s) || [], journalStoreMap.get(slug) || []);
     const outFile = path.join(OUT_DIR, `${slug}.html`);
     let prevHtml = null;
     try { prevHtml = fs.readFileSync(outFile, 'utf8'); } catch (_) { /* 新しい店 */ }

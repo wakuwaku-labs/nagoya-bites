@@ -9,6 +9,11 @@
  * gen-store-pages.js の完全再実行を回避し、関連特集の充足率を 68% → 95%+ に引き上げる。
  *
  * 実行: node scripts/patch_store_related_features.js [--limit=N] [--dryrun]
+ *
+ * I-15（2026-10）: 一回限りの旧スクリプト。規則の正本は gen-store-pages.js の TAG_TO_FEATURES で、
+ * ここの規則は古い（現行と食い違う）。ページの区画を新しく挿すときの見出しは、推定の特集を指す
+ * 「あわせて読みたい特集」にそろえた（「この店舗が登場する特集」は、その店が載っていない特集にも
+ * 付いていて事実と違うため使わない）。通常は使わず、gen-store-pages.js で作り直す。
  */
 
 const fs   = require('fs');
@@ -124,7 +129,7 @@ function main() {
 
       const newDiv =
 `  <div class="related-features">
-    <h2>この店舗が登場する特集</h2>
+    <h2>あわせて読みたい特集</h2>
     <ul>
 ${newInner}
     </ul>
