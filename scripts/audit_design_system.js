@@ -22,8 +22,18 @@
  *   node scripts/audit_design_system.js --check    # 違反があれば exit 1（CI向け）
  *   node scripts/audit_design_system.js --report    # 違反一覧をJSONで出力するのみ（exit 0）
  *   node scripts/audit_design_system.js --sample 200  # stores/ をサンプリング（--check/--reportと併用）
+ *   node scripts/audit_design_system.js --inline-style          # style 属性の font-size だけを数える（I-35 ②・上の (a)〜(f) は回さない）
+ *   node scripts/audit_design_system.js --inline-style --check  # 1 件でもあれば exit 1
+ *   node scripts/audit_design_system.js --inline-style --json   # 結果を JSON で出す（既定は短い文章。夜間QA の報告向け）
+ *   --root <dir>  別のリポジトリ（テスト用の小さな fixture）を見る。data/design_system.json がそこに要る
  *
  * 出力: { ok, files_scanned, violations: [{file, rule, detail}] }
+ *
+ * --inline-style（I-35 ②）: 上の (d) は <style> の中しか見ない。style="font-size:.7rem" のような
+ * インラインの指定（特集の約 60 か所など）は床を割っても見つからなかった。ここでは style 属性の
+ * font-size を (d) と同じ床（data/design_system.json の floorPx）・同じ許可（allowlist.selectors を
+ * 要素の class で照らす）で数える。(a)〜(f) の判定と出力は変えない。夜間QA が soft で回し、
+ * 直して 0 件になってから hard に上げる。
  */
 
 'use strict';
@@ -31,10 +41,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = path.join(__dirname, '..');
+const args = process.argv.slice(2);
+// --root <dir>: 別のリポジトリ（テスト用の小さな fixture）を見る。指定が無ければ、このスクリプトのあるリポジトリ
+const rootIdx = args.indexOf('--root');
+const ROOT = rootIdx >= 0 ? path.resolve(args[rootIdx + 1]) : path.join(__dirname, '..');
 const DS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/design_system.json'), 'utf8'));
 
-const args = process.argv.slice(2);
 const mode = args.includes('--check') ? 'check' : 'report';
 const sampleIdx = args.indexOf('--sample');
 const sampleN = sampleIdx >= 0 ? parseInt(args[sampleIdx + 1], 10) : null;
@@ -258,7 +270,82 @@ function auditFile(file, violations) {
   });
 }
 
+// ── I-35 ②: style 属性の font-size ────────────────────────────────────────
+// キーワードの大きさ（xx-small = 9px・x-small = 10px）も床を割る。pxFromFontSize は
+// <style> 用に var(...) などと同じ「解釈できない」として null を返すので、ここだけ足す。
+const FONT_SIZE_KEYWORD_PX = { 'xx-small': 9, 'x-small': 10 };
+
+function inlineFontSizePx(raw) {
+  const kw = raw.trim().replace(/\s*!important\s*$/, '').toLowerCase();
+  if (Object.prototype.hasOwnProperty.call(FONT_SIZE_KEYWORD_PX, kw)) return FONT_SIZE_KEYWORD_PX[kw];
+  return pxFromFontSize(raw);
+}
+
+/** @returns {{px:number, size:string, tag:string}[]} 床を割る style 属性の font-size（allowlist の class は除く） */
+function inlineStyleHits(html, file) {
+  const body = html.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ').replace(/<!--[\s\S]*?-->/g, ' ');
+  const hits = [];
+  for (const m of body.matchAll(/\bstyle\s*=\s*(["'])([\s\S]*?)\1/gi)) {
+    if (!/font-size/i.test(m[2])) continue;
+    const tagStart = body.lastIndexOf('<', m.index);
+    const tagText = tagStart >= 0 ? body.slice(tagStart, m.index + m[0].length) : m[0];
+    const cls = (tagText.match(/\bclass\s*=\s*(?:"([^"]*)"|'([^']*)')/i) || []).slice(1).find(Boolean) || '';
+    for (const fm of m[2].matchAll(/font-size\s*:\s*([^;]+)/gi)) {
+      const px = inlineFontSizePx(fm[1]);
+      if (px === null || px >= DS.floorPx) continue;
+      if (cls && isAllowlisted(cls, file)) continue;
+      hits.push({ px, size: fm[1].trim(), tag: tagText.replace(/\s+/g, ' ').slice(0, 90) });
+    }
+  }
+  return hits;
+}
+
+function inlineStyleMain() {
+  const t = collectTargets();
+  const groups = { root: t.rootFiles, features: t.featureFiles, journal: t.journalFiles, stores: t.storeFiles, hubs: t.hubFiles };
+  const bySection = {};
+  const violations = [];
+  let pages = 0;
+  let occurrences = 0;
+  let scanned = 0;
+  for (const [name, files] of Object.entries(groups)) {
+    bySection[name] = { pages: 0, occurrences: 0 };
+    for (const f of files) {
+      scanned++;
+      const hits = inlineStyleHits(fs.readFileSync(f, 'utf8'), f);
+      if (!hits.length) continue;
+      pages++;
+      occurrences += hits.length;
+      bySection[name].pages++;
+      bySection[name].occurrences += hits.length;
+      for (const h of hits) violations.push({ file: path.relative(ROOT, f), rule: 'inline-font-size-below-floor', detail: `font-size:${h.size} = ${h.px}px  ${h.tag}` });
+    }
+  }
+  const MAX_LISTED = 50;
+  const result = {
+    ok: occurrences === 0,
+    files_scanned: scanned,
+    pages,
+    occurrences,
+    by_section: bySection,
+    violations: violations.slice(0, MAX_LISTED),
+    violations_truncated: Math.max(0, violations.length - MAX_LISTED),
+  };
+  if (args.includes('--json')) {
+    console.log(JSON.stringify(result, null, 2));
+  } else {
+    // 夜間QA の報告は出力の最後の 30 行だけを載せる。件数の行を最後にそろえて、見落とさないようにする
+    console.log(`style 属性の文字の大きさの検査（I-35 ②）: 公開ページ ${result.files_scanned} 本（床 ${DS.floorPx}px）`);
+    for (const v of result.violations.slice(0, 8)) console.log(`     例: ${v.file}  ${v.detail}`);
+    console.log('     セクション別（ページ数）: ' + Object.entries(bySection).map(([k, v]) => `${k} ${v.pages}`).join(' / '));
+    console.log(`  ${result.ok ? '✅' : '❌'} 床を割る style 属性の font-size: ${pages} ページ・${occurrences} か所`);
+  }
+  if (mode === 'check' && !result.ok) process.exit(1);
+  process.exit(0);
+}
+
 function main() {
+  if (args.includes('--inline-style')) return inlineStyleMain();
   const { rootFiles, featureFiles, journalFiles, storeFiles, hubFiles } = collectTargets();
   const allFiles = [...rootFiles, ...featureFiles, ...journalFiles, ...storeFiles, ...hubFiles];
   const violations = [];
