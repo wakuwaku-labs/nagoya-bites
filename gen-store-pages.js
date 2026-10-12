@@ -106,8 +106,45 @@ function jsAttr(str) {
 }
 
 // 予約送客の onclick（ISSUE-149・語彙は scripts/lib/reservation_exits.js）
-function reserveExitAttr(eventName, name, storeId, linkDomain) {
-  return `nbReserveExit('${eventName}',{store_name:'${jsAttr(name)}',store_id:'${jsAttr(storeId)}',link_domain:'${linkDomain}',location:'store_page'})`;
+function reserveExitAttr(eventName, name, storeId, linkDomain, location = 'store_page') {
+  return `nbReserveExit('${eventName}',{store_name:'${jsAttr(name)}',store_id:'${jsAttr(storeId)}',link_domain:'${linkDomain}',location:'${location}'})`;
+}
+
+// ── 行動バー（I-14b・スマホの画面の下に固定する予約・電話・地図）──
+// 出すボタンは計画 7.3 節の表のとおり、店の種類で4通り。一番手（塗り）は、予約先があれば予約、無ければ電話
+// （出せる店だけ）、どちらも無ければ地図。予約先はホットペッパーを先に、無ければ食べログ。行き先をボタンに書く。
+// 押しても何も起きないボタンは作らない: 電話は callOk（紐付けを確かめられた店・scripts/lib/phone_link.js）の店だけ。
+// 本文のリンク欄（.links-section）にも同じリンクを残すので、帯を出さない画面（PC）の操作は変わらない。
+// 置く場所は <body> の直下のフッターの後（position:sticky の帯は、自分を含む箱の中でしか貼り付かない。<main> の中に置くと
+// 本文の終わりで貼り付きが切れる）。ランドマークの外に出る内容を作らないよう role="region" と名前を付ける。
+// 計測は本文と同じ語彙で、location だけを store_page_bar にして帯から押された分を分ける（docs/reservation-measurement.md）。
+const BAR_LOCATION = 'store_page_bar';
+const BAR_PHONE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg>';
+const BAR_MAP_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';
+
+function buildActionBar({ name, hpId, hpUrl, tbUrl, placeId, callOk, gmUrl }) {
+  const nameAttr = escapeHtml(name);
+  const reserve = hpUrl
+    ? { href: hpUrl, label: 'ホットペッパーで予約', domain: 'www.hotpepper.jp', storeId: hpId }
+    : tbUrl
+      ? { href: tbUrl, label: '食べログで予約・確認', domain: 'tabelog.com', storeId: hpId || placeId }
+      : null;
+  const cls = (primary) => `nb-bar-btn ${primary ? 'nb-bar-primary' : 'nb-bar-sub'}`;
+  const tel = (primary) => `<button type="button" class="${cls(primary)} nb-bar-tel" data-call-loc="${BAR_LOCATION}" onclick="nbCallStore(event,'${jsAttr(placeId)}','${jsAttr(name)}',this)" aria-label="${nameAttr}に電話する">${BAR_PHONE_ICON}<span>電話する</span></button>`;
+  const map = (primary) => `<a class="${cls(primary)} nb-bar-map" href="${escapeHtml(gmUrl)}" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href,store_name:'${jsAttr(name)}',location:'${BAR_LOCATION}'})" aria-label="${nameAttr}の地図をGoogleマップで開く">${BAR_MAP_ICON}<span>${primary ? '地図を開く' : '地図'}</span></a>`;
+  const parts = [];
+  if (reserve) {
+    parts.push(`<a class="${cls(true)} nb-bar-reserve" href="${escapeHtml(reserve.href)}" target="_blank" rel="noopener noreferrer" onclick="${reserveExitAttr('cta_click', name, reserve.storeId, reserve.domain, BAR_LOCATION)}">${reserve.label}</a>`);
+    if (callOk) parts.push(tel(false));
+    parts.push(map(false));
+  } else if (callOk) {
+    parts.push(tel(true), map(false));
+  } else {
+    parts.push(map(true));
+  }
+  // 電話の結果（番号が無い・閉業・上限など）を出す行。ボタンと同じ親の中に置く（nbCallStore がそこへ書く）。読み上げのため先に空で置く
+  if (callOk) parts.push('<p class="nb-call-status" role="status"></p>');
+  return `<div class="nb-action-bar" role="region" aria-label="${nameAttr}の予約・電話・地図">\n  ${parts.join('\n  ')}\n</div>`;
 }
 
 // 店舗ページに「なぜこの段階なのか」を検証項目ごとの観測事実付きで表示する。
@@ -150,13 +187,16 @@ function buildTrustBreakdown(cc, rt) {
   const metaLine = `${P.coverageLabel.replace('{observed}', rt.coverage.observed).replace('{total}', rt.coverage.total)}${rt.lastChecked ? ' ・ ' + P.lastCheckedLabel.replace('{date}', rt.lastChecked) : ''}`;
   return `
   <div class="trust-breakdown">
-    <h2>${escapeHtml(P.name)}の内訳</h2>
+    <h2>${escapeHtml(P.name)}</h2>
     <p class="trust-headline"><span class="trust-tier ${tierDef.cssClass}">${escapeHtml(rt.tier)}</span><span class="trust-score">${scoreTxt} / 100</span> — ${escapeHtml(rt.headline || '')}</p>
     <p class="trust-meta-line">${escapeHtml(metaLine)}</p>
-    <p class="trust-breakdown-intro">${escapeHtml(P.name)}は「${escapeHtml(P.question)}」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
+    <details class="trust-details">
+      <summary>内訳を見る（${P.checks.length}つの検証項目）</summary>
+      <p class="trust-breakdown-intro">${escapeHtml(P.name)}は「${escapeHtml(P.question)}」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
 ${rows}
-    <p class="trust-meta-heading">${escapeHtml(P.metaHeading)}</p>
+      <p class="trust-meta-heading">${escapeHtml(P.metaHeading)}</p>
 ${metaRows}
+    </details>
   </div>`;
 }
 
@@ -665,9 +705,11 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
   const xUrl     = s['X検索'] || '';
   const gmUrl    = `https://www.google.com/maps/search/${encodeURIComponent(name + ' ' + area)}`;
   const placeId  = s.placeId || '';
-  // 電話のボタン: 予約先（HotPepper・食べログ）の無い店だけ。さらに、紐付け先の Google の住所・店名が掲載の店と
-  // 合うと build.js が確かめた店（「電話確認」の欄）だけに出す。別の店の番号にかからないようにする（I-36）
-  const callOk   = !hpId && !tbUrl && !!placeId && canShowCallButton(s);
+  // 電話を出せる店: Google の紐付け先の住所・店名が掲載の店と合うと build.js が確かめた店（「電話確認」の欄）だけ。
+  // 別の店の番号にかからないようにする（I-36）。行動バー（I-14b）は予約先のある店にも電話を並べる（計画 7.3 節）
+  const callOk   = !!placeId && canShowCallButton(s);
+  // 本文のリンク欄に電話を出すのは、これまでどおり予約先（ホットペッパー・食べログ）の無い店だけ
+  const bodyCallOk = callOk && !hpId && !tbUrl;
   const pageUrl  = `${BASE_URL}/stores/${slug}.html`;
   // タイトルのエリアは検索結果で切れないよう簡潔ラベルに正規化（ISSUE-072・データは不変）
   // SEO-095: エリア・ジャンルに加えて予算・Google評価・深夜営業の有無を事実ベースで添える。
@@ -889,9 +931,9 @@ ${igAllUrls.map((_, i) => `        <span class="ig-carousel-dot${i === 0 ? ' act
     tbUrl && `<a class="link-btn tb" href="${tbUrl}" target="_blank" rel="noopener noreferrer" onclick="${reserveExitAttr('cta_click', name, hpId || placeId, 'tabelog.com')}">食べログ</a>`,
     tkUrl && tkUrl !== '#' && `<a class="link-btn tk" href="${tkUrl}" target="_blank" rel="noopener noreferrer">TikTok</a>`,
     xUrl  && xUrl  !== '#' && `<a class="link-btn xx" href="${xUrl}" target="_blank" rel="noopener noreferrer">X</a>`,
-    callOk && `<button type="button" class="link-btn tel" data-call-loc="store_page" onclick="nbCallStore(event,'${jsAttr(placeId)}','${jsAttr(name)}',this)" aria-label="${escapeHtml(name)}に電話する"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;fill:currentColor;flex-shrink:0"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg><span>電話する</span></button>`,
+    bodyCallOk && `<button type="button" class="link-btn tel" data-call-loc="store_page" onclick="nbCallStore(event,'${jsAttr(placeId)}','${jsAttr(name)}',this)" aria-label="${escapeHtml(name)}に電話する"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:1em;height:1em;fill:currentColor;flex-shrink:0"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg><span>電話する</span></button>`,
     // 押した結果（番号が無い・閉業・上限など）を出す行。読み上げのため、先に空の行を置いておく
-    callOk && `<p class="nb-call-status" role="status"></p>`,
+    bodyCallOk && `<p class="nb-call-status" role="status"></p>`,
   ].filter(Boolean).join('\n    ');
 
   return `<!DOCTYPE html>
@@ -954,7 +996,7 @@ body{min-height:100vh;}
 .hero-img{width:100%;height:260px;object-fit:cover;filter:brightness(.88) saturate(.85);display:block;}
 @media(min-width:768px){.hero-img{height:380px;}}${heroCreditHtml ? '\n' + PHOTO_CREDIT_CSS.trimEnd() : ''}
 .container{max-width:720px;margin:0 auto;padding:2rem 1.5rem 4rem;}
-.breadcrumb{margin-bottom:1.6rem;display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;}
+.breadcrumb{margin-bottom:1.6rem;display:flex;gap:.4rem;align-items:center;flex-wrap:nowrap;}
 .breadcrumb a:hover{color:var(--gold);}
 .breadcrumb span{color:var(--dim);opacity:.5;}
 .genre-badge{display:inline-block;font-family:var(--font-body);font-size:var(--fs-xs);font-weight:500;letter-spacing:0;color:var(--gold);border:1px solid rgba(201,169,110,.4);padding:.3rem .7rem;background:rgba(122,92,16,.06);margin-bottom:.9rem;}
@@ -1020,6 +1062,11 @@ button.link-btn{font:inherit;cursor:pointer;}
 .trust-headline .trust-score{font-family:var(--font-mono);font-size:var(--fs-sm);color:var(--muted);margin-right:.2rem;}
 .trust-meta-line{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin:0 0 .6rem;}
 .trust-meta-heading{font-size:var(--fs-xs);font-weight:600;color:var(--dim);margin:.9rem 0 .1rem;}
+.trust-details{margin-top:.6rem;border-top:1px solid var(--border);}
+.trust-details summary{cursor:pointer;display:flex;align-items:center;gap:.5rem;min-height:var(--tap-min);padding:.4rem 0;font-size:var(--fs-sm);font-weight:600;color:var(--text);list-style:none;}
+.trust-details summary::-webkit-details-marker{display:none;}
+.trust-details summary::before{content:'＋';color:var(--gold);font-weight:600;}
+.trust-details[open] summary::before{content:'－';}
 .related-features,.related-stores{margin:2rem 0 1.8rem;padding:1.3rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
 .related-features h2,.related-stores h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .related-features ul,.related-stores ul{list-style:none;padding:0;margin:0;}
@@ -1083,6 +1130,7 @@ ${trustBreakdownHtml}
 </div>
 
 ${siteChrome.renderFooter({ depth: 1 })}
+${buildActionBar({ name, hpId, hpUrl, tbUrl, placeId, callOk, gmUrl })}
 ${siteChrome.chromeScript()}
 ${hasIgEmbed ? `<script>
 (function(){
@@ -1516,4 +1564,4 @@ if (require.main === module) {
   main().catch(err => { console.error('エラー:', err); process.exit(1); });
 }
 
-module.exports = { renderStorePage, buildGeo, mergeStoreWithCsv, buildEditorReason, buildStoreGlance, toSlug, buildRelatedStores, buildRelatedFeatures, buildSitemap };
+module.exports = { renderStorePage, buildActionBar, buildGeo, mergeStoreWithCsv, buildEditorReason, buildTrustBreakdown, buildStoreGlance, toSlug, buildRelatedStores, buildRelatedFeatures, buildSitemap };

@@ -29,14 +29,14 @@
 
   --r-sm:3px;--r-md:6px;--r-lg:10px;--r-pill:999px;
   --container-prose:720px;--container-mid:900px;--container-wide:1200px;
-  --header-h:56px;--tap-min:44px;
+  --header-h:56px;--tap-min:44px;--action-bar-h:72px;
 
   /* ── 色（パレット不変・命名/対比を修正） ── */
   --bg:#f7f5f1;--bg2:#eeebe5;--surface:#e5e2db;--card:#fff;--card-border:#d3d1c7;
   --border:rgba(0,0,0,.1);--border-h:rgba(0,0,0,.28);
   --text:#1c1c1a;--ink:#0a0a08;--white:var(--ink);
-  --muted:rgba(28,28,26,.72);--dim:rgba(28,28,26,.55);
-  --gold:#7a5c10;--gold2:#96720f;
+  --muted:rgba(28,28,26,.72);--dim:rgba(28,28,26,.64);
+  --gold:#7a5c10;--gold2:#866510;
   --ember:#b8541f;--ember-deep:#8c3a14;--ember-soft:#d97a3a;
   --warm-grad:linear-gradient(135deg,#d97a3a 0%,#b8541f 55%,#8c3a14 100%);
   --warm-glow:0 6px 20px rgba(184,84,31,.28),0 1px 3px rgba(140,58,20,.4);
@@ -119,8 +119,12 @@ header{
 .logo{
   font-family:var(--font-display);font-weight:400;font-size:1.25rem;
   letter-spacing:.2em;color:var(--ink);text-transform:uppercase;text-decoration:none;
+  position:relative;
 }
 .logo em{font-style:italic;color:var(--gold);}
+/* 押す所の高さを --tap-min にそろえる。見た目と文字の位置は変えず、透明な当たり判定だけを上下に足す
+   （display:inline-flex にすると「Nagoya」と「Bites」の間の空白が消えるので使わない）（I-26e） */
+.logo::after{content:"";position:absolute;left:0;right:0;top:50%;height:var(--tap-min);transform:translateY(-50%);}
 /* 横並びにするのはヘッダーの #main-nav だけ。素の nav に当てると、パンくず・フッターのリンク群・目次
    （どれも <nav>）まで横並び・中央寄せ・広い間隔になる（DSN-007） */
 #main-nav{display:flex;gap:1.75rem;align-items:center;}
@@ -129,6 +133,9 @@ nav a{
   letter-spacing:.02em;color:var(--muted);text-decoration:none;transition:color .2s;
 }
 nav a:hover,nav a.active{color:var(--text);}
+/* ヘッダーのナビは、押す所の高さを --tap-min にそろえる。透明な当たり判定を上下に足すだけで、字の位置も
+   現在地の下線（::after）の位置も変えない。幅 900px 以下のドロワーは、下の規則が高さを決める（I-26e） */
+@media(min-width:901px){#main-nav a::before{content:"";position:absolute;left:0;right:0;top:50%;height:var(--tap-min);transform:translateY(-50%);}}
 /* デスクトップでは主要5項目のみ表示。運営について・よくある質問・お問い合わせは
    モバイルドロワーにのみ表示する（ナビの視認性優先・情報はフッターにも常設） */
 .nav-secondary{display:none;}
@@ -167,7 +174,12 @@ nav a:hover,nav a.active{color:var(--text);}
 .breadcrumb{
   padding:.6rem 1.5rem;font-family:var(--font-body);font-size:var(--fs-xs);
   letter-spacing:0;color:var(--dim);max-width:var(--container-mid);margin:0 auto;
+  /* 1 行に収める（I-37）。Web フォントが届くたびに折り返しが変わると、下の部分が動く（CLS）。長いときは折り返さず横にスクロールし、右端は薄く消して続きがあることを示す */
+  white-space:nowrap;overflow-x:auto;scrollbar-width:none;scroll-padding-inline:1.5rem;
+  -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 1.5rem),transparent);
+  mask-image:linear-gradient(to right,#000 calc(100% - 1.5rem),transparent);
 }
+.breadcrumb::-webkit-scrollbar{display:none;}
 .breadcrumb a{color:var(--dim);text-decoration:none;}
 .breadcrumb a:hover{color:var(--gold);}
 /* 幅 900px 以下では、パンくずのリンクも指で押せる高さにする（--tap-min・DSN-007） */
@@ -405,3 +417,22 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .nb-call-status{margin:0;padding:0;font-size:var(--fs-xs);line-height:var(--lh-ui);color:var(--ink);}
 .nb-call-status:empty{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
 .nb-call-status:not(:empty){flex:1 0 100%;grid-column:1/-1;padding-top:var(--sp-1);}
+
+/* ── 店舗ページの行動バー（I-14b・スマホの画面の下に固定する予約・電話・地図） ──
+   幅 768px 以下だけ出す。PC では出さず、本文のリンク欄の操作も変えない。ボタンの出し分けは gen-store-pages.js の
+   buildActionBar()（計画 7.3 節の表・店の種類で4通り）。一番手（塗り）は予約、無ければ電話、どちらも無ければ地図。
+   position:sticky で、<body> の直下のフッターの後ろに置く。画面の下に貼り付き、ページの終わりでは自分の場所（フッターの
+   下）に収まるので、フッターが隠れない。キーボードの焦点が帯の下に隠れないよう scroll-padding も足す。
+   予約申告プロンプト（fixed）は帯の上に持ち上げる。ヘッダーのドロワー（z-index 199〜201）は帯（90）より上に重なる。 */
+.nb-action-bar{display:none;}
+@media(max-width:768px){
+  .nb-action-bar{position:sticky;bottom:0;z-index:90;display:flex;flex-wrap:wrap;align-items:stretch;gap:var(--sp-2);padding:var(--sp-2) max(var(--sp-3),env(safe-area-inset-right)) calc(var(--sp-2) + env(safe-area-inset-bottom)) max(var(--sp-3),env(safe-area-inset-left));background:var(--bg);border-top:1px solid var(--border);box-shadow:0 -2px 12px rgba(0,0,0,.08);}
+  html:has(.nb-action-bar){scroll-padding-bottom:calc(var(--action-bar-h) + env(safe-area-inset-bottom));}
+  .nb-action-bar ~ .nb-reserve-ask{bottom:calc(var(--action-bar-h) + var(--sp-2) + env(safe-area-inset-bottom));}
+  .nb-bar-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--sp-2);min-height:52px;padding:0 var(--sp-3);border:1px solid var(--border-h);border-radius:var(--r-md);background:var(--card);color:var(--text);font-family:var(--font-body);font-size:var(--fs-sm);font-weight:600;line-height:var(--lh-ui);text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .nb-bar-btn svg{width:20px;height:20px;flex:0 0 auto;fill:currentColor;}
+  .nb-bar-btn:disabled{opacity:.6;cursor:progress;}
+  .nb-bar-primary{flex:1 1 0;min-width:0;background:var(--gold);border-color:var(--gold);color:var(--bg);font-size:var(--fs-md);font-weight:700;}
+  .nb-bar-sub{flex:0 0 4.25rem;flex-direction:column;gap:2px;padding:var(--sp-1);font-size:var(--fs-xs);}
+  .nb-action-bar .nb-call-status{order:-1;}
+}

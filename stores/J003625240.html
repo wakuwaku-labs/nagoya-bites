@@ -89,7 +89,7 @@ body{min-height:100vh;}
 .hero-img{width:100%;height:260px;object-fit:cover;filter:brightness(.88) saturate(.85);display:block;}
 @media(min-width:768px){.hero-img{height:380px;}}
 .container{max-width:720px;margin:0 auto;padding:2rem 1.5rem 4rem;}
-.breadcrumb{margin-bottom:1.6rem;display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;}
+.breadcrumb{margin-bottom:1.6rem;display:flex;gap:.4rem;align-items:center;flex-wrap:nowrap;}
 .breadcrumb a:hover{color:var(--gold);}
 .breadcrumb span{color:var(--dim);opacity:.5;}
 .genre-badge{display:inline-block;font-family:var(--font-body);font-size:var(--fs-xs);font-weight:500;letter-spacing:0;color:var(--gold);border:1px solid rgba(201,169,110,.4);padding:.3rem .7rem;background:rgba(122,92,16,.06);margin-bottom:.9rem;}
@@ -354,6 +354,10 @@ button.link-btn{font:inherit;cursor:pointer;}
   </div>
 </footer>
 <!-- NB-CHROME:FOOTER:END -->
+<div class="nb-action-bar" role="region" aria-label="手相占い無料　BAR　PINK×BLUEの予約・電話・地図">
+  <a class="nb-bar-btn nb-bar-primary nb-bar-reserve" href="https://www.hotpepper.jp/strJ003625240/" target="_blank" rel="noopener noreferrer" onclick="nbReserveExit('cta_click',{store_name:'手相占い無料　BAR　PINK×BLUE',store_id:'J003625240',link_domain:'www.hotpepper.jp',location:'store_page_bar'})">ホットペッパーで予約</a>
+  <a class="nb-bar-btn nb-bar-sub nb-bar-map" href="https://www.google.com/maps/search/%E6%89%8B%E7%9B%B8%E5%8D%A0%E3%81%84%E7%84%A1%E6%96%99%E3%80%80BAR%E3%80%80PINK%C3%97BLUE%20%E6%A0%84%EF%BD%B7%EF%BE%80%E9%8C%A6%2F%E4%BC%8F%E8%A6%8B%E4%B8%B8%E3%81%AE%E5%86%85%2F%E6%B3%89%2F%E6%9D%B1%E6%A1%9C%2F%E6%96%B0%E6%A0%84" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href,store_name:'手相占い無料　BAR　PINK×BLUE',location:'store_page_bar'})" aria-label="手相占い無料　BAR　PINK×BLUEの地図をGoogleマップで開く"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span>地図</span></a>
+</div>
 <!-- NB-CHROME:SCRIPT:START -->
 <script>
 window.toggleNav = window.toggleNav || function(){

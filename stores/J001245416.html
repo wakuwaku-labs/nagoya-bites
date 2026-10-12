@@ -97,7 +97,7 @@ body{min-height:100vh;}
 .hero-img{width:100%;height:260px;object-fit:cover;filter:brightness(.88) saturate(.85);display:block;}
 @media(min-width:768px){.hero-img{height:380px;}}
 .container{max-width:720px;margin:0 auto;padding:2rem 1.5rem 4rem;}
-.breadcrumb{margin-bottom:1.6rem;display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;}
+.breadcrumb{margin-bottom:1.6rem;display:flex;gap:.4rem;align-items:center;flex-wrap:nowrap;}
 .breadcrumb a:hover{color:var(--gold);}
 .breadcrumb span{color:var(--dim);opacity:.5;}
 .genre-badge{display:inline-block;font-family:var(--font-body);font-size:var(--fs-xs);font-weight:500;letter-spacing:0;color:var(--gold);border:1px solid rgba(201,169,110,.4);padding:.3rem .7rem;background:rgba(122,92,16,.06);margin-bottom:.9rem;}
@@ -387,6 +387,12 @@ button.link-btn{font:inherit;cursor:pointer;}
   </div>
 </footer>
 <!-- NB-CHROME:FOOTER:END -->
+<div class="nb-action-bar" role="region" aria-label="Espoir エスポワ 栄駅前店の予約・電話・地図">
+  <a class="nb-bar-btn nb-bar-primary nb-bar-reserve" href="https://www.hotpepper.jp/strJ001245416/" target="_blank" rel="noopener noreferrer" onclick="nbReserveExit('cta_click',{store_name:'Espoir エスポワ 栄駅前店',store_id:'J001245416',link_domain:'www.hotpepper.jp',location:'store_page_bar'})">ホットペッパーで予約</a>
+  <button type="button" class="nb-bar-btn nb-bar-sub nb-bar-tel" data-call-loc="store_page_bar" onclick="nbCallStore(event,'ChIJEyibP3d3A2ARvPSFSgVL7wM','Espoir エスポワ 栄駅前店',this)" aria-label="Espoir エスポワ 栄駅前店に電話する"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg><span>電話する</span></button>
+  <a class="nb-bar-btn nb-bar-sub nb-bar-map" href="https://www.google.com/maps/search/Espoir%20%E3%82%A8%E3%82%B9%E3%83%9D%E3%83%AF%20%E6%A0%84%E9%A7%85%E5%89%8D%E5%BA%97%20%E6%A0%84(%E3%83%9F%E3%83%8A%E3%83%9F)%2F%E7%9F%A2%E5%A0%B4%E7%94%BA%2F%E5%A4%A7%E9%A0%88%2F%E4%B8%8A%E5%89%8D%E6%B4%A5" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href,store_name:'Espoir エスポワ 栄駅前店',location:'store_page_bar'})" aria-label="Espoir エスポワ 栄駅前店の地図をGoogleマップで開く"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span>地図</span></a>
+  <p class="nb-call-status" role="status"></p>
+</div>
 <!-- NB-CHROME:SCRIPT:START -->
 <script>
 window.toggleNav = window.toggleNav || function(){
@@ -463,6 +469,134 @@ document.querySelectorAll('[data-nb-year]').forEach(function(el){el.textContent=
   });
 })();
 </script>
+<script>var NB_CALL_MAPS_KEY='AIzaSyBKD3MCHPdIPxHt-hZlh8EIv_8zMYDbgos';</script>
+<script class="nb-call-js">(function nbCallMain() {
+  var TAP_LIMIT = 20;               // この端末で、1日に番号を確かめられる回数
+  var LOOKUP_TIMEOUT_MS = 12000;    // Google から返事が無いまま、これを過ぎたら通信の失敗として扱う
+  var MAP_HINT = 'Googleマップで確かめられます';
+  var CHECKING = '電話番号を確かめています…';
+  var UNAVAILABLE = 'いまは電話番号を確かめられません';
+  var REASON_TEXT = {
+    no_number: 'この店の電話番号は Google に登録がありません',
+    closed: 'Google の店舗情報では閉業となっています',
+    device_limit: '本日はこれ以上確かめられません',
+    quota: UNAVAILABLE,
+    denied: UNAVAILABLE,
+    not_found: UNAVAILABLE,
+    error: UNAVAILABLE
+  };
+  var mapsPromise = null;
+  // 同一ページを表示している間だけの一時記憶（保存しない。閉じれば消える。二重タップの無駄打ち防止）
+  var phoneMem = {};
+
+  function send(name, params) {
+    try { if (typeof trackEvent === 'function') trackEvent(name, params); } catch (e) {}
+  }
+
+  function loadMaps() {
+    if (mapsPromise) return mapsPromise;
+    mapsPromise = new Promise(function (resolve, reject) {
+      if (window.google && window.google.maps && window.google.maps.places) { resolve(); return; }
+      window.__nbMapsReady = resolve;
+      var s = document.createElement('script');
+      s.src = 'https://maps.googleapis.com/maps/api/js?key=' + NB_CALL_MAPS_KEY + '&libraries=places&callback=__nbMapsReady&loading=async';
+      s.async = true;
+      s.onerror = function () { mapsPromise = null; reject(new Error('maps-js-load-failed')); };
+      document.head.appendChild(s);
+    });
+    return mapsPromise;
+  }
+
+  // ブラウザ単位の簡易レート制限（暴発・誤連打での枠消費を防ぐ。1日 TAP_LIMIT 回まで）
+  function tapAllowed() {
+    try {
+      var key = 'nb_call_taps_' + new Date().toISOString().slice(0, 10);
+      var n = parseInt(localStorage.getItem(key) || '0', 10);
+      if (n >= TAP_LIMIT) return false;
+      localStorage.setItem(key, String(n + 1));
+      return true;
+    } catch (e) { return true; }
+  }
+
+  function statusLine(btn) {
+    var host = btn.parentNode;
+    if (!host) return null;
+    var el = host.querySelector('.nb-call-status');
+    if (!el) {
+      el = document.createElement('p');
+      el.className = 'nb-call-status';
+      el.setAttribute('role', 'status');
+      host.appendChild(el);
+    }
+    return el;
+  }
+  function say(btn, text) {
+    var el = statusLine(btn);
+    if (el) el.textContent = text;
+  }
+  function setLabel(btn, text) {
+    var span = btn.querySelector('span');
+    if (span) span.textContent = text;
+  }
+
+  // Google の応答を、計測の result と発信先に分ける
+  function classify(place, status) {
+    var S = google.maps.places.PlacesServiceStatus;
+    if (status === S.OK) {
+      if (place && place.business_status === 'CLOSED_PERMANENTLY') return { result: 'closed' };
+      var tel = place && place.international_phone_number ? String(place.international_phone_number).replace(/[^\d+]/g, '') : '';
+      return tel ? { result: 'ok', tel: tel } : { result: 'no_number' };
+    }
+    if (status === S.OVER_QUERY_LIMIT) return { result: 'quota' };
+    if (status === S.REQUEST_DENIED) return { result: 'denied' };
+    if (status === S.NOT_FOUND || status === S.ZERO_RESULTS) return { result: 'not_found' };
+    return { result: 'error' };
+  }
+
+  function finish(btn, ctx, out) {
+    btn.disabled = false;
+    btn.removeAttribute('aria-busy');
+    setLabel(btn, '電話する');
+    send('call_lookup', { store_name: ctx.name, store_id: ctx.placeId, location: ctx.loc, result: out.result });
+    if (out.result === 'ok') {
+      phoneMem[ctx.placeId] = out.tel;
+      say(btn, '');
+      location.href = 'tel:' + out.tel;
+      return;
+    }
+    say(btn, (REASON_TEXT[out.result] || UNAVAILABLE) + '。' + MAP_HINT + '。');
+  }
+
+  window.nbCallStore = function (ev, placeId, storeName, btn) {
+    if (ev && ev.stopPropagation) ev.stopPropagation();
+    if (!placeId || !btn || btn.disabled) return;
+    var ctx = { placeId: placeId, name: storeName || '', loc: btn.getAttribute('data-call-loc') || '' };
+    var exit = { store_name: ctx.name, store_id: placeId, link_domain: 'tel', location: ctx.loc };
+    if (typeof nbReserveExit === 'function') nbReserveExit('cta_call_click', exit);
+    else send('cta_call_click', { store_name: ctx.name });
+    say(btn, '');
+    if (phoneMem[placeId]) { finish(btn, ctx, { result: 'ok', tel: phoneMem[placeId] }); return; }
+    if (!tapAllowed()) { finish(btn, ctx, { result: 'device_limit' }); return; }
+    btn.disabled = true;
+    btn.setAttribute('aria-busy', 'true');
+    setLabel(btn, '確認中…');
+    say(btn, CHECKING);
+    var done = false;
+    function settle(out) {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      finish(btn, ctx, out);
+    }
+    var timer = setTimeout(function () { settle({ result: 'error' }); }, LOOKUP_TIMEOUT_MS);
+    loadMaps().then(function () {
+      var svc = new google.maps.places.PlacesService(document.createElement('div'));
+      svc.getDetails({ placeId: placeId, fields: ['international_phone_number', 'business_status'] }, function (place, status) {
+        settle(classify(place, status));
+      });
+    }).catch(function () { settle({ result: 'error' }); });
+  };
+})();</script>
 <script class="nb-reserve-ask-js">(function nbReserveAskMain() {
   var KEY = 'nb_reserve_pending';
   var MIN_AWAY = 20 * 1000;        // これより早く戻った人にはまだ聞かない

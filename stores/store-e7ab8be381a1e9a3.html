@@ -89,7 +89,7 @@ body{min-height:100vh;}
 .hero-wrap{position:relative;}
 .photo-credit{position:absolute;right:12px;bottom:12px;z-index:1;max-width:calc(100% - 24px);padding:3px 8px;border-radius:3px;background:rgba(10,10,8,.62);color:rgba(255,255,255,.92);font-family:var(--font-body);font-size:var(--fs-xs);line-height:1.4;letter-spacing:.02em;overflow-wrap:anywhere;pointer-events:none;}
 .container{max-width:720px;margin:0 auto;padding:2rem 1.5rem 4rem;}
-.breadcrumb{margin-bottom:1.6rem;display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;}
+.breadcrumb{margin-bottom:1.6rem;display:flex;gap:.4rem;align-items:center;flex-wrap:nowrap;}
 .breadcrumb a:hover{color:var(--gold);}
 .breadcrumb span{color:var(--dim);opacity:.5;}
 .genre-badge{display:inline-block;font-family:var(--font-body);font-size:var(--fs-xs);font-weight:500;letter-spacing:0;color:var(--gold);border:1px solid rgba(201,169,110,.4);padding:.3rem .7rem;background:rgba(122,92,16,.06);margin-bottom:.9rem;}
@@ -356,6 +356,11 @@ button.link-btn{font:inherit;cursor:pointer;}
   </div>
 </footer>
 <!-- NB-CHROME:FOOTER:END -->
+<div class="nb-action-bar" role="region" aria-label="立ち食い寿司 極の予約・電話・地図">
+  <button type="button" class="nb-bar-btn nb-bar-primary nb-bar-tel" data-call-loc="store_page_bar" onclick="nbCallStore(event,'ChIJszNigjd3A2ARGCkrdIw4hIY','立ち食い寿司 極',this)" aria-label="立ち食い寿司 極に電話する"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/></svg><span>電話する</span></button>
+  <a class="nb-bar-btn nb-bar-sub nb-bar-map" href="https://www.google.com/maps/search/%E7%AB%8B%E3%81%A1%E9%A3%9F%E3%81%84%E5%AF%BF%E5%8F%B8%20%E6%A5%B5%20%E5%90%8D%E9%A7%85" target="_blank" rel="noopener noreferrer" onclick="trackEvent('cta_gmap_click',{link_url:this.href,store_name:'立ち食い寿司 極',location:'store_page_bar'})" aria-label="立ち食い寿司 極の地図をGoogleマップで開く"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span>地図</span></a>
+  <p class="nb-call-status" role="status"></p>
+</div>
 <!-- NB-CHROME:SCRIPT:START -->
 <script>
 window.toggleNav = window.toggleNav || function(){
