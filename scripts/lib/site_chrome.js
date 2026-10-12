@@ -27,7 +27,7 @@ const FOOTER_GROUPS = [
     title: '探す',
     links: [
       ['index.html', '店舗を探す'],
-      ['stores/index.html', 'エリア別 店舗一覧'],
+      ['stores/area/index.html', 'エリア別 店舗一覧'],
       ['index.html#scene-index', '目的から探す'],
       ['features/nagoya-gourmet-guide.html', '名古屋グルメ完全ガイド'],
     ],
