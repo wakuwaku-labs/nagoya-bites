@@ -4,8 +4,9 @@
  * audit_image_sources.js — 画像の配信元の検査（I-35 ③・夜間QA の soft）
  *
  * 公開ページが、外部の画像変換サービス（wsrv.nl など）を使っていないかを数える。
- * 一覧の正本は data/image_source_policy.json（blockedHosts を 0 件にするのが I-09 のゴール）。
- * 使うかどうかはオーナーの決定待ち（P-237 #5）なので、いまは数えるだけ。決まって直したら hard に上げる。
+ * 一覧の正本は data/image_source_policy.json（blockedHosts＝使っている件数を見張る一覧）。
+ * オーナーは 2026-10-13 に「続ける」と決めた（P-237 #5・docs/decisions/0027-image-resizer-kept.md）ので、
+ * 0 件にするのが目標ではない。赤のまま件数を見張る（夜間QA の soft・hard には上げない）。wsrv.nl を外す直し（I-09）は実装しない。
  *
  * 数え方（検証できる事実だけ・CLAUDE.md 制約10）:
  *   1. blockedHosts の文字列が、ページのどこかに（属性・インラインの JS・JSON-LD）出てくる箇所の数

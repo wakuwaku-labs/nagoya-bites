@@ -12,7 +12,8 @@
  * scripts/ だけ（どちらも手で保守しているもの）。
  *
  * 4本とも夜間QA の soft で回す（今は赤のものがある）。ここで守るのは「検査自体が正しく数えること」と
- * 「夜間QA に載っていること」。数える対象が 0 件になる日（P-237 #2・I-26b・I-09）に hard へ上げる。
+ * 「夜間QA に載っていること」。数える対象が 0 件になる日（P-237 #2・I-26b）に hard へ上げる。
+ * ③ の wsrv.nl はオーナーが「続ける」と決めた（2026-10-13・判断の記録 0027）ので 0 件にならず、hard に上げない。
  */
 
 const { test } = require('node:test');
@@ -344,7 +345,7 @@ test('② 上限の表示: 50 件を超える違反は先頭だけ出し、残�
 // ══ ③ 画像の配信元 ═════════════════════════════════════════════════════════════
 const imgPolicy = images.loadPolicy(ROOT);
 
-test('③ 方針の JSON: wsrv.nl と旧ドメインをやめる対象にし、許す配信元と重ならない', () => {
+test('③ 方針の JSON: wsrv.nl と旧ドメインを見張る対象（blockedHosts）にし、許す配信元と重ならない', () => {
   const blocked = imgPolicy.blockedHosts.map((b) => b.host);
   assert.ok(blocked.includes('wsrv.nl'));
   assert.ok(blocked.includes('images.weserv.nl'));
