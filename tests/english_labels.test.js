@@ -10,11 +10,13 @@
  *   3. ジャーナルの写真の出所: 「Photo:」→「写真:」（図は「図:」）
  *   4. 特集・FAQ・お問い合わせ・プライバシーの見出しの上の小さな英語、特集一覧のカードの区分（「Area Guide · 名駅」など）、
  *      食べ歩きガイドの節の見出し（「02 — Specialty Coffee」など）
+ *   5. 「English — 日本語」「ROMAJI · 日本語」の形の区分（「Top Picks — …」「Selection — 実在確認済み」「Feature — …」など）の英語の前置き
  *
  * 店舗ページ・ハブは CI が作り直すので、生成器を直接動かして確かめる（生成済みのページは読まない。
  * build.yml は npm test を再生成の前に回す）。手で保守している静的ページ（特集・ジャーナル・運営系）は直接読む。
  *
  * 範囲の外（運営者の経歴・選び方の文案を決める P-237 #2 と一緒に直す。決まるまで英語のまま）:
+ *   特集の「Editor's Note — この特集の選定基準」（選び方の文面そのもの）。
  *   about.html・特集の編集規約／レビュワー募集／口コミ信頼度の3ページ（editorial-policy・become-reviewer・no-fake-reviews・
  *   review-trust・integrity-method）、編集規約へのカード（nagoya-gourmet-guide の EDITORIAL／DAILY JOURNAL）、
  *   stores/index.html（転送だけのページ）。サービス名（Instagram・Google Maps・HotPepper）は英語のまま。
@@ -157,6 +159,39 @@ test('静的ページ: 見出しの上の小さな英語・区分・節の見出
   }
   assert.ok(scanned > 200, `静的ページを集められた: ${scanned}`);
   assert.deepStrictEqual(bad, []);
+});
+
+// 選び方の文面そのもの。運営者の経歴・選び方の文案（P-237 #2）と一緒に直すまで、英語の前置きのまま
+const KEEP_PREFIXES = new Set(["Editor's Note"]);
+
+test('静的ページ: 「English — 日本語」「ROMAJI · 日本語」の形の区分が残っていない（Editor\'s Note を除く）', () => {
+  const bad = [];
+  let scanned = 0;
+  for (const rel of staticPages()) {
+    if (EXEMPT_PAGES.has(rel)) continue;
+    for (const { cls, text } of labelsOf(read(rel))) {
+      scanned++;
+      const m = /^([A-Za-z][A-Za-z'’&.\- ]*[A-Za-z]) (?:—|·) /.exec(text);
+      if (m && !KEEP_PREFIXES.has(m[1])) bad.push(`${rel}: ${cls} 「${text}」`);
+    }
+  }
+  assert.ok(scanned > 500, `見出しの上の区分を集められた: ${scanned}`);
+  assert.deepStrictEqual(bad, []);
+});
+
+test('英語の前置きを外した区分: 生成器の出力と、実物の1本ずつ', () => {
+  const rf = read('scripts/recreate_fabricated_features.js');
+  assert.ok(rf.includes('<p class="section-label">掲載店 — 実在確認済み</p>'));
+  assert.ok(!rf.includes('Selection — '));
+  const gi = read('scripts/gen_industry_features.js');
+  assert.ok(gi.includes('<p class="art-eyebrow">${feature.eyebrow}</p>'));
+  assert.ok(!/Feature — \$\{feature\.eyebrow\}/.test(gi));
+  assert.ok(read('features/nagoya-autumn-2026.html').includes('<h2 class="section-label">掲載店 — 実在確認済み</h2>'));
+  assert.ok(read('features/banquet.html').includes('<h2 class="section-label">宴会・忘年会におすすめの'));
+  assert.ok(read('features/birthday-surprise.html').includes('<p class="art-eyebrow">シーン別特集</p>'));
+  assert.ok(read('features/nagoya-tebasaki.html').includes('<div class="art-eyebrow">名古屋手羽先完全ガイド</div>'));
+  // 選び方の文面は P-237 #2 と一緒に直すので、まだ英語の前置きのまま（外れたらこのテストを直す）
+  assert.ok(read('features/birthday-surprise.html').includes("Editor's Note — この特集の選定基準"));
 });
 
 test('静的ページ: 見出しの上の英語は、特集記事・エリアガイド・ご利用ガイド・ご連絡はこちら・個人情報の取り扱いに置き換わっている', () => {

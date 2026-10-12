@@ -294,7 +294,7 @@ ${siteChrome.renderBreadcrumb([
 
 <article>
   <div class="art-hero">
-    <p class="art-eyebrow">Feature — ${feature.eyebrow}</p>
+    <p class="art-eyebrow">${feature.eyebrow}</p>
     <h1 class="art-title">${feature.titleHtml}<br><small style="font-size:.55em;letter-spacing:.05em;">${feature.titleH1Suffix}</small></h1>
     <div class="art-meta">
       <span>掲載${storeList.length}軒</span>
