@@ -12,6 +12,17 @@ docs/qa/uiux-2026-10/prod/run_all.sh [--base=https://nagoya-bites.com]
 
 変更ごとの確認 7 つ・トップのスモーク・計測イベントを順にまわします（約 1.5 分）。最後に `exit=0` が出ます。2026-10-13 に実行して、すべて通りました。
 
+## マージの流れ（P-323）
+
+```
+zsh docs/qa/uiux-2026-10/prod/merge_pr.sh <PR番号> --dry-run      # 確認だけ（✗ があれば先に直す）
+zsh docs/qa/uiux-2026-10/prod/merge_pr.sh <PR番号>                # 確認 → マージ → build: <run id>
+perl -e 'alarm 285; exec @ARGV' zsh docs/qa/uiux-2026-10/prod/wait_main.sh <run id>   # exit=0 が出るまで繰り返す
+zsh docs/qa/uiux-2026-10/prod/post_merge_checks.sh --tests --smoke # 最新の main で監査・テスト・本番のスモーク
+```
+
+2026-10-13 の朝、別のセッションの PR（#537）が自分のビルドの合間にマージされ、`wait_main.sh` が終わらなくなり、判断の記録の番号（0027）も重なった。`merge_pr.sh` は、ビルドが走っているときと番号が重なるときにマージしない（試験: 重なる版・直した版・PR の中の重複・ビルド実行中・Pages が追いついていない状態を、それぞれ確かめた）。
+
 ## 個別の道具
 
 | 道具 | 確かめること |
@@ -20,6 +31,8 @@ docs/qa/uiux-2026-10/prod/run_all.sh [--base=https://nagoya-bites.com]
 | `prod_smoke.js` | トップの 12 件: 記号を含む検索語が文字として表示される（回帰確認）・スプラッシュが出ない（I-13）・英語のラベルが無い（I-07）・保存した店が見える（I-23）・共有リンクで店が開く（I-21）・ページのエラーが出ない |
 | `prod_events.js` | 操作したときに GA4 へ送られようとする内容を記録する（15 件。送信そのものは遮断するので、GA4 には何も届かない） |
 | `wait_main.sh <run id>` | main へマージしたあと、ビルドが終わり、bot のコミット 2 件が入り、GitHub Pages が先頭の版になるまで待つ。次の PR は `exit=0` を見てからマージする（ビルドは走行 1 本＋待ち 1 本のため） |
+| `merge_pr.sh <PR番号> [--dry-run]` | main へマージする前の確認 5 つ（PR が OPEN・Build & Deploy が走っていない・bot のコミットと Pages が先頭に追いついている・衝突しない・判断の記録の番号が重ならない）が通ったときだけマージし、新しいビルドの run id を出す。`--dry-run` は確認だけ。`--check-adr <基準の ref> <PR の先頭の ref>` は番号だけ調べる（P-323） |
+| `post_merge_checks.sh [--tests] [--smoke]` | 最新の origin/main を一時の worktree に出して、監査 5 本（デザインシステム・生成ページのインライン JS・共通クローム・デザインシステムの適用・404 ページ）を流し、片付ける。`--tests` で `npm test`、`--smoke` で本番のスモーク（P-323） |
 | `sample80/check_5xx.py`（`check_519.py` ほか下の一覧） | 店舗ページ 80 本の固定の標本（`sample80/urls.txt`）を `curl` で読んで HTML を検査する |
 
 `prod_held.js` の名前と、対応する PR・Linear 課題:
