@@ -23,9 +23,10 @@
 | `cta_call_click` | 電話 | 同上（`link_domain: tel`、`store_id` は placeId） |
 | `reserve_report_yes` / `reserve_report_no` | 予約申告 | 同上（申告のきっかけになった導線の値） |
 
-`location`: `card` / `card_media` / `modal` / `modal_media` / `store_page` / `feature` / `journal` / `hub`。
+`location`: `card` / `card_media` / `modal` / `modal_media` / `store_page` / `store_page_bar` / `feature` / `journal` / `hub`。
 
 - `hub`（I-08・UI・UX改修計画）: エリア×ジャンルのハブ（`stores/area/…`）の「ホットペッパーで予約」。以前は `hub_store_click` を送っており、予約送客の集計に入らなかった。`scripts/gen_area_genre_pages.js` の `hubReserveOnclick()` が、ほかのページと同じ `cta_click` を送る（押したハブのパスは `hub` パラメータ）。変えた日は `data/measurement_changes.json` に書く。
+- `store_page_bar`（I-14b・UI・UX改修計画）: スマホの店舗ページで画面の下に貼り付く行動バー（予約・電話・地図）。本文のリンク欄（`store_page`）と分けて数える。予約の `cta_click`・電話の `cta_call_click`（`call_lookup` も）・地図の `cta_gmap_click` に同じ値が付く。バーは幅 768px 以下だけ出るので、PC のクリックは従来どおり `store_page` のまま。バーの電話は予約先のある店にも出る（本文の電話ボタンは従来どおり予約先の無い店だけ）ため、電話の送客は変えた日から増える見込み。変えた日は `data/measurement_changes.json` に書く（マージ・日次ビルドの後に、実際の日付と証跡で）。
 - 予約ではない内部リンクのクリックは別の名前で送る（予約送客に混ぜない）: 特集 → 店舗ページ `feature_store_click {store, feature}`、ジャーナル → 店舗ページ `journal_store_click {store, journal}`（I-08）。`store` はどちらもリンク先のスラグ（ホットペッパーID。無い店は `stores/<スラグ>.html` のスラグ）で、店名では送らない。
 
 GA4 に登録済みのカスタムディメンションは `store_name` と `link_domain` だけで、店舗×経路はこの2つで取れる。`store_id`・`location` は未登録でも送っておき、必要になったら登録する（登録は非遡及・`docs/ga4-view-counts-setup.md`）。
