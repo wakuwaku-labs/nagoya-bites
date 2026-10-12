@@ -31,16 +31,19 @@ const IG_MAX_POSTS_PER_STORE = (loadIgPostPolicy().thresholds && loadIgPostPolic
 // プランナー・同一の閾値）で行う。 CSV 補完前の生データではなく stores.json を使うのは、
 // stores/area/ の生成元と完全に同じ集合で判定するため（食い違いによる死にリンクを防ぐ）。
 let __hubIndex = null;
+let __areaHubIndex = null;
 let __hubPolicy = null;
 function hubIndex() {
   if (__hubIndex) return __hubIndex;
   __hubIndex = new Map();
+  __areaHubIndex = new Map();
   try {
     const { loadStores } = require('./scripts/lib/load_stores');
     __hubPolicy = areaGenrePages.loadPolicy();
     const { pages } = areaGenrePages.planPages(loadStores(), __hubPolicy);
     for (const p of pages) {
       if (p.type === 'genre') __hubIndex.set(`${p.area.slug}::${p.genre.slug}`, p.url);
+      else if (p.type === 'area') __areaHubIndex.set(p.area.slug, { url: p.url, label: p.area.label });
     }
   } catch (e) {
     // ポリシー/プランナー未整備の環境（テスト等）では索引を空のまま返す（フォールバックのみ使う）
@@ -55,6 +58,17 @@ function hubUrlFor(area, genre) {
   if (!a || !g) return null;
   const url = __hubIndex.get(`${a.slug}::${g.slug}`);
   return url || null;
+}
+
+// I-17（U-34）: エリア×ジャンルのハブが無い店（そのジャンルの店数が閾値に満たない・ジャンル名がハブの区分に当たらない）は、
+// パンくずと「もっと見る」が ../#area=…（トップは area を読まないのでエリアの条件が消える）へ行っていた。
+// エリアのハブ（stores/area/<slug>/index.html）が実在するなら、そこへ送る。実在判定は hubUrlFor と同じ plan。
+function areaHubFor(area) {
+  hubIndex(); // __hubPolicy・__areaHubIndex を確実に埋める
+  if (!__hubPolicy) return null;
+  const a = areaGenrePages.normalizeArea(area, __hubPolicy);
+  if (!a) return null;
+  return __areaHubIndex.get(a.slug) || null;
 }
 
 // 口コミ信頼度の内訳。語彙・段階は data/trust_display_policy.json（唯一の情報源）、判定は
@@ -584,6 +598,10 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
   // SEO-094: このセルにエリア×ジャンル一覧ページが実在するときだけそこへリンクする
   const hubUrl   = hubUrlFor(area, genre);
   const hubAbsUrl = hubUrl ? `${BASE_URL}/${hubUrl}` : null;
+  // I-17: エリア×ジャンルのハブが無いときだけ、エリアのハブを使う
+  const areaHub  = hubUrl ? null : areaHubFor(area);
+  const areaHubAbsUrl = areaHub ? `${BASE_URL}/${areaHub.url}` : null;
+  const areaHubLabel  = areaHub ? `${areaHub.label}の飲食店` : '';
   const pref     = s['都道府県'] || '愛知県';
   const locality = s['市区町村'] || '';
   const street   = s['住所'] || '';
@@ -694,12 +712,12 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     'itemListElement': [
-      { '@type': 'ListItem', 'position': 1, 'name': 'NAGOYA BITES', 'item': BASE_URL + '/' },
-      ...(hubAbsUrl ? [{ '@type': 'ListItem', 'position': 2, 'name': `${area}の${genre}`, 'item': hubAbsUrl }]
-        : genre ? [{ '@type': 'ListItem', 'position': 2, 'name': genre, 'item': `${BASE_URL}/#genre=${encodeURIComponent(genre)}` }] : []),
-      ...(!hubAbsUrl && area ? [{ '@type': 'ListItem', 'position': genre ? 3 : 2, 'name': area + 'エリア', 'item': `${BASE_URL}/#area=${encodeURIComponent(area)}` }] : []),
-      { '@type': 'ListItem', 'position': (hubAbsUrl ? 1 : (genre ? 1 : 0) + (area ? 1 : 0)) + 2, 'name': name, 'item': pageUrl }
-    ]
+      { name: 'NAGOYA BITES', item: BASE_URL + '/' },
+      ...(hubAbsUrl ? [{ name: `${area}の${genre}`, item: hubAbsUrl }]
+        : areaHubAbsUrl ? [{ name: areaHubLabel, item: areaHubAbsUrl }]
+        : genre ? [{ name: genre, item: `${BASE_URL}/#genre=${encodeURIComponent(genre)}` }] : []),
+      { name, item: pageUrl }
+    ].map((c, i) => ({ '@type': 'ListItem', 'position': i + 1, 'name': c.name, 'item': c.item }))
   };
 
   // この店が載っている特集・記事（SEO-106・I-15）: 実際に載っているものだけ。
@@ -988,8 +1006,8 @@ ${heroHtml}
   ${siteChrome.renderBreadcrumb([
     { href: 'index.html', label: 'TOP' },
     hubUrl ? { href: `${siteChrome.prefix(1)}${hubUrl}`, label: `${area}の${genre}` }
+      : areaHub ? { href: `${siteChrome.prefix(1)}${areaHub.url}`, label: areaHubLabel }
       : genre ? { href: `../#genre=${encodeURIComponent(genre)}`, label: genre } : null,
-    !hubUrl && area ? { href: `../#area=${encodeURIComponent(area)}`, label: area } : null,
     { label: name },
   ].filter(Boolean), { depth: 1 })}
 
@@ -1024,7 +1042,7 @@ ${trustBreakdownHtml}
   ${relatedStoresHtml}
 
   <div class="back-section">
-    <a href="${hubUrl ? siteChrome.prefix(1) + hubUrl : '../index.html#genre=' + encodeURIComponent(genre)}">← ${area}の${genre}をもっと見る</a>
+    <a href="${hubUrl ? siteChrome.prefix(1) + hubUrl : areaHub ? siteChrome.prefix(1) + areaHub.url : '../index.html#genre=' + encodeURIComponent(genre)}">← ${areaHub ? areaHubLabel : `${area}の${genre}`}をもっと見る</a>
   </div>
 </div>
 
