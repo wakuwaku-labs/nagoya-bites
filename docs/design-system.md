@@ -37,7 +37,8 @@ Cormorant Garamond と Shippori Mincho を組み合わせているのは、両�
 **do**
 - 日本語は Noto Sans JP、`letter-spacing:0`
 - 意味を持つラベルは日本語（サイト全体の方針）で 13px 以上
-- 操作要素（ボタン・リンク・チップ）は 44px 以上
+- 操作要素（ボタン・リンク・チップ）は 44px 以上。高さは `min-height:var(--tap-min)` で指定する。`div` に委譲クリックを付けた部品（タグ・ジャンルのチップなど）も同じ（`button` / `a` だけを数えると見落とす）。見た目を変えたくない丸ボタン・ロゴ・ヘッダーのナビは、`::after` / `::before` で透明な当たり判定だけを広げる（`display:inline-flex` にすると、ロゴの語の間の空白が消える）。文中のリンクは対象外（WCAG 2.5.8）。確認は `node --test tests/index_tap_and_size.test.js`（トップの CSS・I-26e）
+- 読む文字は 13px 以上（`var(--fs-xs)` 以上）。`var(--fs-2xs)`（12px）は写真クレジット・法的表示だけ。トップの CSS に 13px 未満の指定は置かない（同じテストが見る）
 - font-size はすべてトークン（`var(--fs-*)`）を参照する
 - 文字色のトークン（`--text`・`--ink`・`--muted`・`--dim`・`--gold`・`--gold2`）は、小さい文字に必要な 4.5:1 を、載る背景（`--bg`・`--bg2`・`--surface`・`--card`）のどれの上でも満たす（`--gold2` は `--surface` の上に置かない）。値を変える日は `node --test tests/design_tokens_contrast.test.js` が通ることを確かめる（I-26c・WCAG 2.1 AA 1.4.3）
 - 見出しの段を飛ばさない（h1 → h2 → h3。h1 の次に h3、h2 の次に h4 を置かない）。見出しを持たない節（日次ジャーナルの店の一覧など）は、見えない h2（`class="visually-hidden"`）で節にする。確認は `node scripts/audit_heading_levels.js --check`（I-26f・夜間QA の soft）
