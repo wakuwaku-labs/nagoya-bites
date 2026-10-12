@@ -757,7 +757,12 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
   // I-11（P-267）: Google マップの写真は撮影者を写真の右下に出す。クレジットのあるページだけ、
   // 写真を .hero-wrap で包み、CSS も足す（それ以外のページは1バイトも変えない）。
   const heroCreditHtml = renderPhotoCredit(s, photo);
-  const heroHtml = heroCreditHtml ? `<div class="hero-wrap">${heroImgTag}${heroCreditHtml}</div>` : heroImgTag;
+  // I-10c（計画 9.1 の 1c・U-60）: 写真の無い店（写真URL が空。配信が終わった写真は I-10b で空にしてある）は、
+  // ヒーローの位置に汎用の大きな画像（_fallback.svg）を出さない。どの店でも同じ茶色の板で、店の情報ではないため。
+  // ページは店名から始まる。確かめた Instagram の投稿がある店だけ、その埋め込みを写真の代わりに上に出す（下の igLead）。
+  // 写真のある店のページは1バイトも変わらない。ヒーローの onerror が使う _fallback.svg（写真が読めなかったときの保険）は残す。
+  const noPhoto = !String(s['写真URL'] || '').trim();
+  const heroHtml = noPhoto ? '' : (heroCreditHtml ? `<div class="hero-wrap">${heroImgTag}${heroCreditHtml}</div>` : heroImgTag);
 
   // ── 公式Instagram投稿の埋め込み（写真ソース優先1・embed.js 経由で規約上明示的に許可）──
   // 実写を店舗ページで「しっかり見せる」ための本命セクション。埋め込みスクリプトは
@@ -793,8 +798,10 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
   //   狭くカードの内容量（写真の実高さ）が投稿ごとに違うため、チラ見えの出方が投稿ごとにバラバラで
   //   統一した見た目にできなかった。1画面1枚のスワイプ式カルーセルに変更（オーナー要望・2026-09-16）。
   //   1枚ずつ広く見せられるため、写真の視認性とチラ見え対策を両立しやすい。
+  // I-10c: 写真の無い店は、確かめた投稿を写真の代わりに店名の直下へ出す。ほかの店は今までの位置（おすすめポイントの後）
+  const igLead = hasIgEmbed && noPhoto;
   const igEmbedHtml = hasIgEmbed ? `
-  <div class="ig-photos">
+  <div class="ig-photos${igLead ? ' ig-photos-lead' : ''}">
     <h2>公式Instagramの実際の写真</h2>
     <div class="ig-carousel">
       <div class="ig-carousel-track">
@@ -913,7 +920,7 @@ h1{font-family:var(--font-display);font-weight:500;font-size:clamp(1.8rem,5vw,2.
 .links-section{margin-bottom:2rem;}
 .links-section h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .ig-photos{margin:0 0 2rem;}
-.ig-photos h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
+.ig-photos h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}${igLead ? '\n.ig-photos-lead{margin-bottom:1.6rem;}\n.ig-photos-lead .ig-embed-box{min-height:562px;}' : ''}
 .ig-carousel{position:relative;max-width:420px;margin:0 auto;}
 .ig-carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .ig-carousel-track::-webkit-scrollbar{display:none;}
@@ -982,10 +989,10 @@ ${heroHtml}
     ${score ? `<div class="score" style="margin-bottom:0;"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>${score}</div>` : ''}
     ${ccsLabel ? `<span class="ccs-badge${ccsPending ? ' ccs-badge-pending' : ''}" title="${escapeHtml(TRUST_POLICY.name)} ${escapeHtml(rt.tier)}：${escapeHtml(rtTierDef.label)}${ccsPending ? '（Googleの口コミデータが十分に取得できていない状態・低評価を示すものではありません）' : ''}">${escapeHtml(TRUST_POLICY.name)}<span class="ccs-tier ${rtTierDef.cssClass}">${escapeHtml(rt.tier)}</span></span>` : ''}
   </div>
-
+${igLead ? igEmbedHtml + '\n' : ''}
   ${point ? `<div class="point-box"><p>${point}</p></div>` : ''}
   ${buildEditorReason(s)}
-${igEmbedHtml}
+${igLead ? '' : igEmbedHtml}
   <div class="info-grid">
     ${area ? `<div class="info-cell"><label>エリア</label><span>${pref}${locality ? ' ' + locality : ''} ${area}</span></div>` : ''}
     ${street ? `<div class="info-cell"><label>住所</label><span>${street}</span></div>` : ''}

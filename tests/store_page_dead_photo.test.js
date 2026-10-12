@@ -72,7 +72,8 @@ test('描画: 台帳の写真を持つ CSV の店でも、ヒーロー・JSON-LD
   const merged = mergeStoreWithCsv({ ...STORE }, { ...CSV_ROW, '写真URL': DEAD_URL });
   const html = renderStorePage(merged, 'J-test', [], []);
   assert.ok(!html.includes(DEAD_ID), '配信終了の写真のIDがページに残っている');
-  assert.match(html, /<img class="hero-img" src="\/assets\/store-figures\/_fallback\.svg"/, '写真の無い店と同じヒーロー');
+  // I-10c: 写真の無い店は、ヒーローの位置に汎用の画像を出さない（写真の無い店と同じ表示）
+  assert.ok(!/<img class="hero-img"/.test(html), '写真の無い店と同じ表示（ヒーローを出さない）');
 });
 
 test('描画: 台帳に無い写真の店は、これまでどおりヒーローに写真が出る', () => {
