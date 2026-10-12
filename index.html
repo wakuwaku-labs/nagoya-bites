@@ -677,8 +677,9 @@ body.search-query-active .card-why{display:flex;}
 .m-sticky-cta{position:sticky;bottom:0;z-index:5;display:none;flex-wrap:wrap;gap:var(--sp-2);padding:var(--sp-2) var(--sp-4) calc(var(--sp-2) + env(safe-area-inset-bottom,0px));background:rgba(247,245,241,.94);backdrop-filter:blur(12px);border-top:1px solid var(--border);}
 .m-sticky-cta.show{display:flex;}
 .m-sticky-cta .modal-cta-btn{min-height:var(--tap-min);padding:.55rem 1rem;font-size:var(--fs-sm);}
-.m-sticky-cta .modal-cta-gm,.m-sticky-cta .modal-cta-call{flex:0 0 auto;width:52px;padding:0;}
-.m-sticky-cta .modal-cta-gm svg,.m-sticky-cta .modal-cta-call svg{width:20px;height:20px;fill:currentColor;}
+/* 幅 52px はアイコンだけのボタン（.modal-cta-icon）にだけ掛ける。文字つきの「電話する」「地図」に掛けると、文字が縦に割れる（I-36c） */
+.m-sticky-cta .modal-cta-icon{flex:0 0 auto;width:52px;padding:0;}
+.m-sticky-cta .modal-cta-icon svg{width:20px;height:20px;fill:currentColor;}
 @media(min-width:769px){.m-sticky-cta{display:none!important;}}
 /* 基本情報: 上層（最大6行・値がある行だけ）＋ 折りたたみ「設備・支払い」 */
 .m-info-rows{display:flex;flex-direction:column;}
@@ -10258,7 +10259,7 @@ function nbCanCall(r) { return !!(r && r.placeId && r['電話確認']); }
 function nbCallBtnHtml(r, ctaEsc, iconOnly) {
   if (!nbCanCall(r)) return '';
   var label = iconOnly ? '' : '<span>電話する</span>';
-  return '<button type="button" class="modal-cta-btn modal-cta-call" data-call-loc="modal" onclick="nbCallStore(event,\'' + ctaEsc(r.placeId) + '\',\'' + ctaEsc(r['店名']) + '\',this)" aria-label="' + ctaEsc(r['店名']) + 'に電話する">' + NB_CALL_ICON_SVG + label + '</button>';
+  return '<button type="button" class="modal-cta-btn modal-cta-call' + (iconOnly ? ' modal-cta-icon' : '') + '" data-call-loc="modal" onclick="nbCallStore(event,\'' + ctaEsc(r.placeId) + '\',\'' + ctaEsc(r['店名']) + '\',this)" aria-label="' + ctaEsc(r['店名']) + 'に電話する">' + NB_CALL_ICON_SVG + label + '</button>';
 }
 // 押した結果（番号が無い・閉業・上限など）を出す行。読み上げのため、先に空の行を置いておく
 function nbCallStatusHtml(r) { return nbCanCall(r) ? '<p class="nb-call-status" role="status"></p>' : ''; }
@@ -10527,7 +10528,7 @@ function openM(i, source) {
   var callStatusHtml = nbCallStatusHtml(r);
   if (ctaRow) { ctaRow.innerHTML = hpBtnHtml + callBtnHtml + mapBtnHtml + callStatusHtml; ctaRow.style.display = ''; }
   if (stickyEl) {
-    var mapIconBtn = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_sticky\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a>';
+    var mapIconBtn = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm modal-cta-icon" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_sticky\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a>';
     var callIconBtn = nbCallBtnHtml(r, ctaEsc, true);
     // HPありは3導線を「主(帯)＋アイコン2つ」で圧縮、HPなしで電話ありは2導線とも文字ボタンのまま
     // 並べる（アイコンだけの塊が浮かないように）。どちらも無ければ従来通り地図単独の帯ボタン。
