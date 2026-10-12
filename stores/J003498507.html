@@ -158,6 +158,11 @@ button.link-btn{font:inherit;cursor:pointer;}
 .trust-headline .trust-score{font-family:var(--font-mono);font-size:var(--fs-sm);color:var(--muted);margin-right:.2rem;}
 .trust-meta-line{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin:0 0 .6rem;}
 .trust-meta-heading{font-size:var(--fs-xs);font-weight:600;color:var(--dim);margin:.9rem 0 .1rem;}
+.trust-details{margin-top:.6rem;border-top:1px solid var(--border);}
+.trust-details summary{cursor:pointer;display:flex;align-items:center;gap:.5rem;min-height:var(--tap-min);padding:.4rem 0;font-size:var(--fs-sm);font-weight:600;color:var(--text);list-style:none;}
+.trust-details summary::-webkit-details-marker{display:none;}
+.trust-details summary::before{content:'＋';color:var(--gold);font-weight:600;}
+.trust-details[open] summary::before{content:'－';}
 .related-features,.related-stores{margin:2rem 0 1.8rem;padding:1.3rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:3px;}
 .related-features h2,.related-stores h2{font-family:var(--font-body);font-size:var(--fs-xs);font-weight:600;letter-spacing:0;color:var(--dim);margin-bottom:.9rem;}
 .related-features ul,.related-stores ul{list-style:none;padding:0;margin:0;}
@@ -252,10 +257,12 @@ button.link-btn{font:inherit;cursor:pointer;}
   <div class="tags"><span class="tag">60〜70名</span><span class="tag">5000円以上</span><span class="tag">個室</span><span class="tag">居酒屋</span></div>
 
   <div class="trust-breakdown">
-    <h2>口コミ信頼度の内訳</h2>
+    <h2>口コミ信頼度</h2>
     <p class="trust-headline"><span class="trust-tier cc-tier-A">A</span><span class="trust-score">96 / 100</span> — Google★4.1（110件）は、そのまま参考にできます。</p>
     <p class="trust-meta-line">検証 6/9項目 ・ Google口コミ取得日 2026-05-22</p>
-    <p class="trust-breakdown-intro">口コミ信頼度は「この店のGoogle★と件数は、そのまま信じてよいか」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
+    <details class="trust-details">
+      <summary>内訳を見る（9つの検証項目）</summary>
+      <p class="trust-breakdown-intro">口コミ信頼度は「この店のGoogle★と件数は、そのまま信じてよいか」を、観測できた検証項目だけで機械的に採点した参考指標です。店の良し悪しを評価するものではなく、広告料による順位操作はありません。<a href="../features/review-trust.html">読み方 →</a> <a href="../features/integrity-method.html">算定方法の詳細 →</a></p>
       <div class="trust-axis-row">
         <span class="trust-axis-name">件数は十分か</span>
         <span class="trust-axis-score">8/10点</span>
@@ -291,7 +298,7 @@ button.link-btn{font:inherit;cursor:pointer;}
         <span class="trust-axis-score">—</span>
         <span class="trust-axis-reason">メディア掲載情報なし（多くの正当な店舗も同様）（判定保留・採点に含めません）</span>
       </div>
-    <p class="trust-meta-heading">掲載データの充実度（口コミ信頼度には含めません）</p>
+      <p class="trust-meta-heading">掲載データの充実度（口コミ信頼度には含めません）</p>
       <div class="trust-axis-row trust-axis-meta">
         <span class="trust-axis-name">掲載情報の充実</span>
         <span class="trust-axis-score">9/15点</span>
@@ -307,6 +314,7 @@ button.link-btn{font:inherit;cursor:pointer;}
         <span class="trust-axis-score">10/10点</span>
         <span class="trust-axis-reason">公式アカウント・最新投稿 あり</span>
       </div>
+    </details>
   </div>
   <div class="links-section">
     <h2>予約・情報を確認</h2>
