@@ -40,12 +40,8 @@ const LABEL_STYLE = 'margin-top:1.2rem;font-size:var(--fs-xs);letter-spacing:.08
 function esc(s) { return String(s || '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
 function jsEsc(s) { return String(s || '').replace(/'/g, '').replace(/</g, '').replace(/>/g, ''); }
 
-function shortLabel(title) {
-  if (!title) return '';
-  const dash = title.indexOf(' — ');
-  const base = dash > 0 ? title.slice(0, dash) : title;
-  return base.length > 38 ? base.slice(0, 36) + '…' : base;
-}
+// 表示用ラベル: 「 — 」以降の副題を落として見出しだけ残す。文字数では切らない（I-26g・scripts/lib/related_label.js）
+const { relatedLabel: shortLabel } = require('./lib/related_label');
 
 function loadAllEntries() {
   const data = JSON.parse(fs.readFileSync(PUBLISHED, 'utf8'));
