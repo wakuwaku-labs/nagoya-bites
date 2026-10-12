@@ -20,7 +20,7 @@ docs/qa/uiux-2026-10/prod/run_all.sh [--base=https://nagoya-bites.com]
 | `prod_smoke.js` | トップの 12 件: 記号を含む検索語が文字として表示される（回帰確認）・スプラッシュが出ない（I-13）・英語のラベルが無い（I-07）・保存した店が見える（I-23）・共有リンクで店が開く（I-21）・ページのエラーが出ない |
 | `prod_events.js` | 操作したときに GA4 へ送られようとする内容を記録する（15 件。送信そのものは遮断するので、GA4 には何も届かない） |
 | `wait_main.sh <run id>` | main へマージしたあと、ビルドが終わり、bot のコミット 2 件が入り、GitHub Pages が先頭の版になるまで待つ。次の PR は `exit=0` を見てからマージする（ビルドは走行 1 本＋待ち 1 本のため） |
-| `sample80/check_5xx.py` | 店舗ページ 80 本の固定の標本（`sample80/urls.txt`）を `curl` で読んで HTML を検査する |
+| `sample80/check_5xx.py`（`check_519.py` ほか下の一覧） | 店舗ページ 80 本の固定の標本（`sample80/urls.txt`）を `curl` で読んで HTML を検査する |
 
 `prod_held.js` の名前と、対応する PR・Linear 課題:
 
@@ -34,7 +34,7 @@ docs/qa/uiux-2026-10/prod/run_all.sh [--base=https://nagoya-bites.com]
 | `i14e` | #522 | P-308 | エリア名の表記（パンくず・構造化データ・「もっと見る」がハブの見出しと一致） |
 | `i14c` | #523 | P-309 | 基本情報の行（順・空の行が無い・文字の大きさ・横はみ出しなし） |
 
-標本の検査と PR: `check_519.py`（#519・行動バー）・`check_520.py`（#520）・`check_521.py`（#521）・`check_522.py`（#522）・`check_523.py`（#523）。
+標本の検査と PR: `check_519.py`（#519・行動バー）・`check_520.py`（#520）・`check_521.py`（#521）・`check_522.py`（#522）・`check_523.py`（#523）・`check_528.py`（#528・帯の読み上げ名が実際のボタンと一致するか）。
 
 ## 本番を直接は測らない道具（1 つ上のディレクトリ）
 
