@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-12T01:55:31.320Z",
+  "generatedAt": "2026-10-12T02:14:07.926Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1532,
+  "total_sessions": 1530,
   "engines": [
     {
       "key": "google",
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 408,
-      "pct": 26.6,
+      "pct": 26.7,
       "sources": [
         {
           "source": "bing",
@@ -35,8 +35,8 @@
     {
       "key": "direct",
       "label": "直接/不明",
-      "sessions": 264,
-      "pct": 17.2,
+      "sessions": 262,
+      "pct": 17.1,
       "sources": [
         {
           "source": "(direct)",
@@ -46,7 +46,7 @@
         {
           "source": "(not set)",
           "medium": "(not set)",
-          "sessions": 26
+          "sessions": 24
         }
       ]
     },
@@ -115,7 +115,7 @@
         {
           "source": "unknown",
           "medium": "(not set)",
-          "sessions": 70
+          "sessions": 72
         },
         {
           "source": "service.smt.docomo.ne.jp",
@@ -140,11 +140,6 @@
         {
           "source": "websearch.rakuten.co.jp",
           "medium": "referral",
-          "sessions": 2
-        },
-        {
-          "source": "unknown",
-          "medium": "",
           "sessions": 2
         },
         {
