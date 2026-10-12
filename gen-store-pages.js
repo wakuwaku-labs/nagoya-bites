@@ -96,6 +96,7 @@ const { placesKey } = require('./scripts/lib/places_key');
 const sitemapLastmod = require('./scripts/lib/sitemap_lastmod');
 const { gaSnippet } = require('./scripts/lib/ga_snippet');
 const { RESERVE_ASK_SCRIPT } = require('./scripts/lib/reservation_ask_snippet');
+const { basicFacts } = require('./scripts/lib/store_facts');
 const TRUST_POLICY = trustDisplay.loadPolicy();
 const CROSSCHECK = (() => {
   try {
@@ -722,6 +723,10 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
   const glanceFactsHtml = glance.facts.length ? `\n    <p class="store-facts">${glance.facts.map(escapeHtml).join('・')}</p>` : '';
   const glanceChipsHtml = glance.chips.length ? `\n    <ul class="store-chips" aria-label="この店の条件">${glance.chips.map(c => `<li>${escapeHtml(c)}</li>`).join('')}</ul>` : '';
   const point    = s['おすすめポイント'] || '';
+  // I-14c: 基本情報に足す行。定休日は営業時間の後、席数・宴会の収容人数・禁煙・カード・駐車場は電話の後に並べる。
+  // データがある項目だけ（scripts/lib/store_facts.js）。行が無いときは何も出さない＝従来のページと同じ出力。
+  const facts = basicFacts(s);
+  const factCells = (rows) => rows.map(r => `\n    <div class="info-cell"><label>${r.label}</label><span>${escapeHtml(r.value)}</span></div>`).join('');
   const tags     = (s['タグ'] || '').split(',').map(t => t.trim()).filter(Boolean);
   // HP縮小サムネの残留に備えた防衛的正規化（正規経路は build.js の normalizePhotoUrl）
   const photo    = (s['写真URL'] || '/assets/store-figures/_fallback.svg')
@@ -1140,8 +1145,8 @@ ${igLead ? '' : igEmbedHtml}
     ${area ? `<div class="info-cell"><label>エリア</label><span>${pref}${locality ? ' ' + locality : ''} ${escapeHtml(areaShown)}</span></div>` : ''}
     ${street ? `<div class="info-cell"><label>住所</label><span>${street}</span></div>` : ''}
     ${price ? `<div class="info-cell"><label>価格帯</label><span>${price}</span></div>` : ''}
-    ${hours ? `<div class="info-cell"><label>営業時間</label><span>${hours}</span></div>` : ''}
-    ${tel ? `<div class="info-cell"><label>電話</label><span><a href="tel:${tel.replace(/[^0-9+]/g,'')}" style="color:var(--gold);text-decoration:none;">${tel}</a></span></div>` : ''}
+    ${hours ? `<div class="info-cell"><label>営業時間</label><span>${hours}</span></div>` : ''}${factCells(facts.schedule)}
+    ${tel ? `<div class="info-cell"><label>電話</label><span><a href="tel:${tel.replace(/[^0-9+]/g,'')}" style="color:var(--gold);text-decoration:none;">${tel}</a></span></div>` : ''}${factCells(facts.facilities)}
     ${access ? `<div class="info-cell"><label>アクセス・特徴</label><span>${access}</span></div>` : ''}
   </div>
 
