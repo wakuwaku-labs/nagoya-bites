@@ -73,6 +73,21 @@ function areaHubFor(area) {
   return __areaHubIndex.get(a.slug) || null;
 }
 
+// I-14e（U-33）: 店舗ページに見えるエリア名・ジャンル名を、行き先のハブ（stores/area/）の見出しと同じ名前にそろえる。
+// 元のエリア名はホットペッパーの表記のまま出ていて（「栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄」「大曽根･千種･今池･池下･守山区」など、
+// 半角カナや長い並びが全体の約 26%）、パンくず・「もっと見る」・基本情報の 3 か所が、行き先のハブの見出しと違う名前だった。
+// 名前の表はハブの生成器と同じ areaGenrePages.normalizeArea / normalizeGenre の 1 本（ここに別の表を持たない）。
+// ハブの区分に当たらない店（約 1%）は null を返し、呼ぶ側が元の表記のまま出す。
+// <title>・説明文のエリア名（scripts/lib/area_label.js）は検索結果での見え方のために別に整えてあるので、ここでは触らない。
+const WARD_LEVEL_AREA = /^名古屋市|^[^・･\/／()（）]+区$/;
+function hubLabelsFor(area, genre) {
+  hubIndex(); // __hubPolicy を確実に埋める
+  if (!__hubPolicy) return { area: null, genre: null };
+  const a = areaGenrePages.normalizeArea(area, __hubPolicy);
+  const g = areaGenrePages.normalizeGenre(genre, __hubPolicy);
+  return { area: a ? a.label : null, genre: g ? g.label : null };
+}
+
 // 口コミ信頼度の内訳。語彙・段階は data/trust_display_policy.json（唯一の情報源）、判定は
 // scripts/lib/trust_display.js。crosscheck.json はホットペッパーID をキーに 8 軸の
 // score/max/reason/observed と reviewTrust（段階・見出し・検証カバー率）を持つ。
@@ -656,6 +671,23 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
   const areaHub  = hubUrl ? null : areaHubFor(area);
   const areaHubAbsUrl = areaHub ? `${BASE_URL}/${areaHub.url}` : null;
   const areaHubLabel  = areaHub ? `${areaHub.label}の飲食店` : '';
+  // I-14e: 見えるエリア名・ジャンル名は、行き先のハブの見出し（「エリアのジャンル」）と同じ名前にする。
+  // hubUrl があるときは normalizeArea / normalizeGenre が両方とも当たっている（hubUrlFor と同じ正規化）。
+  const hubNames = hubLabelsFor(area, genre);
+  const hubLabel = hubUrl ? `${hubNames.area}の${hubNames.genre}` : '';
+  // 基本情報の「エリア」。ハブの区分に当たる店はハブと同じ名前にする。ただし行政区の名前（「名古屋市中区」「西区」）は、
+  // 元の表記がそのまま読めて、ハブの名前（「栄」など）より細かいので、そのまま出す（ハブの区分に当たらない店も元の表記のまま）。
+  const areaShown = hubNames.area && !WARD_LEVEL_AREA.test(area) ? hubNames.area : area;
+  // 「もっと見る」: 行き先と文字を一致させる。どちらのハブにも当たらない店の行き先は、トップのジャンル絞り込みだけ
+  // （エリアの条件は付かない）なので、文字にもエリア名を入れない（以前は「○○町の居酒屋をもっと見る」と書いて全域の居酒屋へ送っていた）。
+  const backHref = hubUrl ? siteChrome.prefix(1) + hubUrl
+    : areaHub ? siteChrome.prefix(1) + areaHub.url
+    : genre ? '../index.html#genre=' + encodeURIComponent(genre)
+    : '../index.html';
+  const backText = hubUrl ? `${hubLabel}をもっと見る`
+    : areaHub ? `${areaHubLabel}をもっと見る`
+    : genre ? `${genre}をもっと見る`
+    : 'トップに戻る';
   const pref     = s['都道府県'] || '愛知県';
   const locality = s['市区町村'] || '';
   const street   = s['住所'] || '';
@@ -776,7 +808,7 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
     '@type': 'BreadcrumbList',
     'itemListElement': [
       { name: 'NAGOYA BITES', item: BASE_URL + '/' },
-      ...(hubAbsUrl ? [{ name: `${area}の${genre}`, item: hubAbsUrl }]
+      ...(hubAbsUrl ? [{ name: hubLabel, item: hubAbsUrl }]
         : areaHubAbsUrl ? [{ name: areaHubLabel, item: areaHubAbsUrl }]
         : genre ? [{ name: genre, item: `${BASE_URL}/#genre=${encodeURIComponent(genre)}` }] : []),
       { name, item: pageUrl }
@@ -1090,7 +1122,7 @@ ${heroHtml}
 <div class="container">
   ${siteChrome.renderBreadcrumb([
     { href: 'index.html', label: 'トップ' },
-    hubUrl ? { href: `${siteChrome.prefix(1)}${hubUrl}`, label: `${area}の${genre}` }
+    hubUrl ? { href: `${siteChrome.prefix(1)}${hubUrl}`, label: hubLabel }
       : areaHub ? { href: `${siteChrome.prefix(1)}${areaHub.url}`, label: areaHubLabel }
       : genre ? { href: `../#genre=${encodeURIComponent(genre)}`, label: genre } : null,
     { label: name },
@@ -1105,7 +1137,7 @@ ${igLead ? igEmbedHtml + '\n' : ''}
   ${buildEditorReason(s)}
 ${igLead ? '' : igEmbedHtml}
   <div class="info-grid">
-    ${area ? `<div class="info-cell"><label>エリア</label><span>${pref}${locality ? ' ' + locality : ''} ${area}</span></div>` : ''}
+    ${area ? `<div class="info-cell"><label>エリア</label><span>${pref}${locality ? ' ' + locality : ''} ${escapeHtml(areaShown)}</span></div>` : ''}
     ${street ? `<div class="info-cell"><label>住所</label><span>${street}</span></div>` : ''}
     ${price ? `<div class="info-cell"><label>価格帯</label><span>${price}</span></div>` : ''}
     ${hours ? `<div class="info-cell"><label>営業時間</label><span>${hours}</span></div>` : ''}
@@ -1125,7 +1157,7 @@ ${trustBreakdownHtml}
   ${relatedStoresHtml}
 
   <div class="back-section">
-    <a href="${hubUrl ? siteChrome.prefix(1) + hubUrl : areaHub ? siteChrome.prefix(1) + areaHub.url : '../index.html#genre=' + encodeURIComponent(genre)}">← ${areaHub ? areaHubLabel : `${area}の${genre}`}をもっと見る</a>
+    <a href="${backHref}">← ${escapeHtml(backText)}</a>
   </div>
 </div>
 
