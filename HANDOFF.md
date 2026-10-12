@@ -30,5 +30,5 @@ status: blocked
 - 過去の方針「外部発信は自動化しない」（SEO-055 ④・SEO-098）を覆すので、実装時に docs/decisions/0023 を書く（P-297）
 
 # 関連ファイル
-- docs/x-auto-posting-plan-2026-10.md（計画書・作成予定）
+- docs/x-auto-posting-plan-2026-10.md（計画書）
 - scripts/run_journal_local.sh / scripts/generate_daily_draft.js / data/journal_sns_draft_policy.json / docs/sns-utm-convention.md
