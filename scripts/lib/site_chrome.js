@@ -125,9 +125,11 @@ function activeKeyFor(relPath) {
  * @param {boolean} [opts.skipLink=true] - 先頭に「本文へスキップ」を出す。トップは body の先頭（ほかの操作より前）に自前を持つので false
  * @param {boolean} [opts.main=true] - ヘッダーの後ろで <main id="main-content"> を開く（閉じるのは renderFooter の main）。
  *   ページ自身が <main> を持つときは false（<main> は1ページに1つだけ）
+ * @param {string} [opts.base] - リンクの先頭に付ける文字。指定すると depth の相対パス（"../" の繰り返し）の代わりに使う。
+ *   どの深さの URL でも同じ文書が返る 404.html は、"/" を渡して根からの絶対パスにする（I-33）
  */
-function renderHeader({ depth, active, withFav = false, skipLink = true, main = true }) {
-  const p = prefix(depth);
+function renderHeader({ depth, active, withFav = false, skipLink = true, main = true, base }) {
+  const p = base != null ? base : prefix(depth);
   const favLink = withFav
     ? `    <a href="#" class="nav-fav" id="nav-fav" onclick="event.preventDefault();showFavs();closeNav()"><span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.5-10-9.5C.5 7 3.5 3 8 3c2.5 0 3.5 1.5 4 2 .5-.5 1.5-2 4-2 4.5 0 7.5 4 6 8.5C19.5 16.5 12 21 12 21z"/></svg></span>保存済み(<span id="fav-count">0</span>)</a>\n`
     : '';
@@ -184,9 +186,10 @@ function resolveHref(href, p) {
  * @param {object} opts
  * @param {number} opts.depth
  * @param {boolean} [opts.main=true] - フッターの前で </main> を閉じる（renderHeader の main と対）
+ * @param {string} [opts.base] - renderHeader の base と同じ（404.html は "/"）
  */
-function renderFooter({ depth, main = true }) {
-  const p = prefix(depth);
+function renderFooter({ depth, main = true, base }) {
+  const p = base != null ? base : prefix(depth);
   const groups = FOOTER_GROUPS.map(g => {
     const links = g.links.map(([href, label]) => `      <a href="${p}${href}">${esc(label)}</a>`).join('\n');
     return `    <nav class="nb-footer-group" aria-label="${esc(g.title)}">

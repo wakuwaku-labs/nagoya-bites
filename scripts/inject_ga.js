@@ -5,7 +5,7 @@
  * 対象:
  *   - stores/*.html
  *   - features/*.html
- *   - about.html, contact.html, faq.html, manual_tagging.html
+ *   - about.html, contact.html, faq.html
  *
  * index.html には既に設置済みのためスキップ。
  * 既にGA IDが含まれているファイルもスキップ（冪等）。
@@ -29,7 +29,7 @@ const ROOT = path.resolve(__dirname, '..');
 function collectTargets() {
   const targets = [];
   // 直下の特定HTML
-  ['about.html', 'contact.html', 'faq.html', 'manual_tagging.html'].forEach(f => {
+  ['about.html', 'contact.html', 'faq.html'].forEach(f => {
     const p = path.join(ROOT, f);
     if (fs.existsSync(p)) targets.push(p);
   });
