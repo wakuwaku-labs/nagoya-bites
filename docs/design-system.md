@@ -39,6 +39,7 @@ Cormorant Garamond と Shippori Mincho を組み合わせているのは、両�
 - 意味を持つラベルは日本語（サイト全体の方針）で 13px 以上
 - 操作要素（ボタン・リンク・チップ）は 44px 以上
 - font-size はすべてトークン（`var(--fs-*)`）を参照する
+- 見出しの段を飛ばさない（h1 → h2 → h3。h1 の次に h3、h2 の次に h4 を置かない）。見出しを持たない節（日次ジャーナルの店の一覧など）は、見えない h2（`class="visually-hidden"`）で節にする。確認は `node scripts/audit_heading_levels.js --check`（I-26f・夜間QA の soft）
 
 **don't**
 - font-size のリテラル値を新規に書かない（`12px` や `.8rem` を直接書かない）
@@ -222,6 +223,13 @@ node scripts/lib/site_chrome.js --render header --depth 1 --active features   # 
 ```
 
 ヘッダー/パンくず/フッターは `<!-- NB-CHROME:HEADER|BREADCRUMB|FOOTER|SCRIPT:START/END -->` マーカーで囲む。新規ページ・新規生成器はこのマーカーを維持し、`renderHeader`/`renderBreadcrumb`/`renderFooter`/`chromeScript` を呼ぶこと。ナビの該当項目には `aria-current="page"` を付け、`class="active"` は使わない。
+
+**「本文へスキップ」と `<main>` もクロームが出す（I-26a・2026-10-12）。** `renderHeader` は先頭に `<a href="#main-content" class="skip-link">本文へスキップ</a>`、最後（`</header>` の直後）に `<main id="main-content">` の開きを出し、`renderFooter` は最初に `</main>` を出す。ヘッダーとフッターは `<body>` の直下で隣り合うので、その間の本文がそのまま `<main>` の中に入る。ページ側で `<main>` を書かない。例外が2つある。
+
+* **ページ自身が `<main>` を持つ**（`contact.html`・`privacy-policy.html` など）: `renderHeader({ main: false })`・`renderFooter({ main: false })` にして、自前の `<main>` に `id="main-content"` を付ける。`apply_site_chrome.js` はこれを自動で判定して揃える（`id` が別の値なら `main_id_conflict` で知らせる）。
+* **トップ（`index.html`）**: `<body>` の先頭に自前の「本文へスキップ」を持つので、ヘッダーのブロックでは出さない（`renderHeader({ skipLink: false })`）。
+
+`<main>` で包むために、ヘッダーの終わりとフッターの始まりで**開いている要素の並びが同じ**でなければならない（`<article>` を開けたまま閉じ忘れると、フッターが article の中に入って `<main>` と交差する）。`tests/skip_link_main.test.js` が静的ページ（トップ・運営系・特集）と、生成器の出力（店舗ページ・ハブ・日次ジャーナル）でこれを検査する。スキップリンクは `nb.css` の `.skip-link`（画面の外に置き、フォーカスが当たると左上に出る）が持つ。
 
 **`<nav>` の規則はヘッダーの `#main-nav` だけに当てる（DSN-007・2026-10-09）。** パンくず・フッターのリンク群（`nav.nb-footer-group`）・目次（`nav.nb-toc`）も `<nav>` 要素なので、素の `nav{…}` にレイアウト（横並び・間隔・中央寄せ）やドロワー（`position:fixed`）を書くと、それらまで同じ形になる。DSN-003 から 2026-10-09 まで、幅 900px 以下ではパンくずとフッターのリンク群が画面外に置かれて見えず、スマホのレイアウト幅も 375px で 750px に広がっていた。素の `nav a` に残してよいのは文字の見た目（書体・太さ・色）だけ。
 

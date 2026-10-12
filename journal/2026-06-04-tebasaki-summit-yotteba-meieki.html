@@ -79,6 +79,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 </head>
 <body>
 <!-- NB-CHROME:HEADER:START -->
+<a href="#main-content" class="skip-link">本文へスキップ</a>
 <div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
@@ -95,6 +96,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
+<main id="main-content">
 <!-- NB-CHROME:HEADER:END -->
 <!-- NB-CHROME:BREADCRUMB:START -->
 <nav aria-label="パンくずリスト">
@@ -153,6 +155,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 
     <div class="store-list">
       
+      <h2 class="visually-hidden">紹介した店</h2>
       <div class="store-card" data-store-id="J003737309">
         <div class="store-num">01</div>
         <div class="store-info">
@@ -190,6 +193,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 </div>
 
 <!-- NB-CHROME:FOOTER:START -->
+</main>
 <footer class="nb-footer">
   <div class="nb-footer-inner">
     <div class="nb-footer-brand">

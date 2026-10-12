@@ -99,6 +99,8 @@ img{max-width:100%;display:block;}
   padding:.75rem 1.25rem;font-size:var(--fs-sm);border-radius:0 0 var(--r-sm) 0;
 }
 .skip-link:focus{left:0;}
+/* 「本文へスキップ」で飛んだとき、本文の先頭が固定のヘッダーの下に隠れないようにする（I-26a） */
+#main-content{scroll-margin-top:var(--header-h);}
 
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 
@@ -300,6 +302,8 @@ footer.nb-footer{text-align:left;padding:var(--rhythm-sm) 1.5rem var(--sp-6);bac
 .art-body p,.content p{color:var(--muted);margin-bottom:var(--sp-5);}
 .art-body h2,.content h2,.section-label{font-family:var(--font-display);font-weight:500;font-size:var(--fs-xl);color:var(--ink);margin:var(--sp-7) 0 var(--sp-3);padding-top:var(--sp-4);border-top:2px solid var(--gold);}
 .art-body h3,.content h3{font-family:var(--font-body);font-weight:600;font-size:var(--fs-lg);color:var(--ink);margin:var(--sp-6) 0 var(--sp-2);}
+/* 見えない見出し（日次ジャーナルの店の一覧の先頭・I-26f）。上の .art-body h2 の余白・上線に負けて見えないよう、.visually-hidden の指定をここで取り戻す */
+.art-body h2.visually-hidden,.content h2.visually-hidden{margin:-1px;padding:0;border:0;}
 .art-body a,.content a{color:var(--gold);}
 .art-intro,.body-para{font-size:var(--fs-md);line-height:var(--lh-body);color:var(--muted);margin-bottom:var(--sp-4);}
 /* DSN-004: 本文可読性の強調ルール(太字/マーカー/色/文字サイズ)。段落1つに1箇所を目安に、

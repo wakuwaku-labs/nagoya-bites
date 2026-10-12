@@ -136,10 +136,16 @@ function storeDetailLink(s) {
   return null;
 }
 
+// 店の一覧の先頭に置く、見えない見出し（I-26f・U-78）。本文が段落だけで h2 が1つも無い回があり、
+// そのとき h1 のすぐ後に店名の h3 が来て見出しの階層が飛んでいた（2026-04〜09 に15本）。店の一覧を自分の節にして、
+// 画面の読み上げの見出し一覧で辿れるようにする。見た目は変えない（nb.css の .visually-hidden）。
+// 本文に h2 がある回でも置く（店名の h3 が本文の最後の節の子に見えるのを避ける）。
+const STORE_LIST_HEADING = '<h2 class="visually-hidden">紹介した店</h2>';
+
 function buildStores(stores) {
   if (!stores || stores.length === 0) return '';
   const hpMap = loadHpMap();
-  return stores.map((s, i) => {
+  const cards = stores.map((s, i) => {
     const dl = storeDetailLink(s);
     const linkHtml = dl
       ? `<a class="store-link" href="${esc(dl.href)}"${dl.internal ? '' : ' target="_blank" rel="noopener"'}>${dl.internal ? '店舗ページを見る' : '詳細を見る'} →</a>`
@@ -172,6 +178,7 @@ function buildStores(stores) {
         </div>
       </div>`;
   }).join('\n');
+  return `\n      ${STORE_LIST_HEADING}${cards}`;
 }
 
 function buildInsiderPoints(points) {
@@ -973,4 +980,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch(e => { console.error(e); process.exit(1); });
-module.exports = { renderHtml, renderMd };
+module.exports = { renderHtml, renderMd, buildStores, STORE_LIST_HEADING };

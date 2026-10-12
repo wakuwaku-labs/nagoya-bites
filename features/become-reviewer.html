@@ -70,7 +70,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .tips-box li{font-size:.8rem;line-height:1.9;color:var(--muted);margin-bottom:.4rem;}
 .tips-box li strong{color:var(--text);font-weight:500;}
 .sub-principle{background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;padding:1rem 1.2rem;margin:.8rem 0;}
-.sub-principle h4{font-size:.84rem;font-weight:500;color:var(--text);margin-bottom:.35rem;}
+.sub-principle h3{font-size:.84rem;font-weight:500;color:var(--text);margin:0 0 .35rem;}
 .sub-principle p{font-size:.78rem;line-height:1.9;color:var(--muted);}
 .body-para{font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:1rem;}
 .body-para strong{color:var(--text);font-weight:500;}
@@ -100,6 +100,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 </head>
 <body>
 <!-- NB-CHROME:HEADER:START -->
+<a href="#main-content" class="skip-link">本文へスキップ</a>
 <div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <header>
   <a class="logo" href="../index.html">Nagoya <em>Bites</em></a>
@@ -116,6 +117,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     <a href="../contact.html" class="nav-secondary">お問い合わせ</a>
   </nav>
 </header>
+<main id="main-content">
 <!-- NB-CHROME:HEADER:END -->
 <!-- NB-CHROME:BREADCRUMB:START -->
 <nav aria-label="パンくずリスト">
@@ -207,19 +209,19 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       レビュワーとして登録された場合、以下の情報がサイト上で公開されます。<strong>本名や所属店舗の公開は求めませんが、検証可能な経歴と一貫したハンドル運用が必須です。</strong>
     </p>
     <div class="sub-principle">
-      <h4>a) ハンドル名（必須）</h4>
+      <h3>a) ハンドル名（必須）</h3>
       <p>編集部内では本人確認しますが、サイト上ではハンドル名で運用していただきます。一度登録したハンドル名は、原則として変更できません（投稿履歴を辿れなくする操作を防ぐため）。</p>
     </div>
     <div class="sub-principle">
-      <h4>b) 経歴サマリー（必須）</h4>
+      <h3>b) 経歴サマリー（必須）</h3>
       <p>「飲食店経営 12 年 / 名古屋市内で 3 業態運営」のような業務経験の概要。具体的な店舗名・社名は伏せていただいて構いません。</p>
     </div>
     <div class="sub-principle">
-      <h4>c) 投稿履歴（自動公開）</h4>
+      <h3>c) 投稿履歴（自動公開）</h3>
       <p>レビュワーごとに、これまで書いた記事・店舗・関係性の選択肢の一覧を全件公開します。<strong>1 店舗だけ高評価をつけ続ける典型的な桜パターンを読者から検証可能にする</strong>ためです。</p>
     </div>
     <div class="sub-principle">
-      <h4>d) 編集部による経歴認証（内部）</h4>
+      <h3>d) 編集部による経歴認証（内部）</h3>
       <p>応募時に編集部内で経歴の真正性を確認します。本名・所属店舗・連絡先は編集部のみが保持し、外部には公開しません。</p>
     </div>
 
@@ -304,6 +306,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 </div>
 
 <!-- NB-CHROME:FOOTER:START -->
+</main>
 <footer class="nb-footer">
   <div class="nb-footer-inner">
     <div class="nb-footer-brand">
