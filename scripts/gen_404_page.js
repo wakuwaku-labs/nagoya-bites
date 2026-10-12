@@ -14,7 +14,7 @@
  *   - ヘッダー・フッター・開閉スクリプトは scripts/lib/site_chrome.js（唯一の正本）
  *   - GA4 は scripts/lib/ga_snippet.js（唯一の正本）。壊れた内部リンクのアドレスが
  *     page_view に残るので、GA4 の「ページタイトル」で探せる
- *   - フォントの読み込みは data/design_system.json の fontsUrl（唯一の正本）
+ *   - Web フォントは読み込まない（P-318・判断の記録 0026）。書体は nb.css のトークン（var(--font-*)）で指す
  *   - 文字サイズ・間隔・色は nb.css のトークンだけを使う
  * 検索には出さない（noindex）。sitemap.xml・llms.txt には入れない。
  *
@@ -22,7 +22,7 @@
  *   node scripts/gen_404_page.js            404.html を書く
  *   node scripts/gen_404_page.js --check    404.html が生成物と一致するか（違えば exit 1・CI 向け）
  *
- * 共通クロームや GA4 の部品、フォントの正本を変えたら、このスクリプトを実行して 404.html を作り直す
+ * 共通クロームや GA4 の部品、nb.css のトークンを変えたら、このスクリプトを実行して 404.html を作り直す
  * （tests/not_found_page.test.js が、生成物とのずれを npm test で止める）。
  */
 
