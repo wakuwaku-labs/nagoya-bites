@@ -98,6 +98,15 @@ test('旧実装（ジャンル名を含む店をデータ順に12軒・見出し
   assert.ok(INDEX.includes('nbRelatedHtml(r)'), 'openM は nbRelatedHtml を呼ぶ');
 });
 
+test('呼び出し側: openM は似た店の区画を nbRelatedHtml で作り、選べなければ区画ごと隠す', () => {
+  const a = INDEX.indexOf('function openM(i, source) {');
+  const b = INDEX.indexOf('// モーダル ヒーロー写真カルーセル', a);
+  assert.ok(a >= 0 && b > a, 'openM の範囲');
+  const src = INDEX.slice(a, b);
+  assert.match(src, /nbRenderModalFeatures\(r\);/, '特集の区画（I-15b）も同じ場所で更新する');
+  assert.match(src, /var relHtml=nbRelatedHtml\(r\);\s*relEl\.innerHTML=relHtml;\s*relEl\.style\.display=relHtml\?'':'none';/);
+});
+
 // ---------------------------------------------------------------- 全店で Node 側と同じ
 
 test('実データ: 全店で、index.html の関数と Node 側が同じ店を同じ順・同じ理由で選ぶ（pos は ALL_STORES の番号）', { skip: !HAVE_DATA }, () => {
