@@ -120,7 +120,7 @@ function buildBody(cfg, slug, picks, manualMap) {
 </header>
 
 <div class="breadcrumb">
-  <a href="https://nagoya-bites.com/">TOP</a><span>›</span>
+  <a href="https://nagoya-bites.com/">トップ</a><span>›</span>
   <a href="https://nagoya-bites.com/features/">特集</a><span>›</span>
   名古屋の${esc(cfg.jp)}おすすめ${picks.length}選【2026年版】
 </div>

@@ -287,7 +287,7 @@ ${GA_SCRIPT}
 <body>
 ${siteChrome.renderHeader({ depth: 1, active: 'features' })}
 ${siteChrome.renderBreadcrumb([
-  { href: '../index.html', label: 'TOP' },
+  { href: '../index.html', label: 'トップ' },
   { href: 'index.html', label: '特集' },
   { label: feature.titleText },
 ], { depth: 1 })}

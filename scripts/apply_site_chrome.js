@@ -158,7 +158,7 @@ function stripExistingBreadcrumb(html) {
 function normalizeCrumbTarget(url) {
   if (!url) return null;
   const u = String(url).replace(/^https:\/\/nagoya-bites\.com\//, '');
-  if (u === '' || u === 'index.html') return { href: 'index.html', label: 'TOP' };
+  if (u === '' || u === 'index.html') return { href: 'index.html', label: 'トップ' };
   if (u === 'features/' || u === 'features/index.html') return { href: 'features/index.html', label: '特集' };
   if (u === 'journal/' || u === 'journal/index.html') return { href: 'journal/index.html', label: 'ジャーナル' };
   if (u === 'stores/' || u === 'stores/index.html') return { href: 'stores/index.html', label: '店舗' };
@@ -178,7 +178,7 @@ function extractBreadcrumbFromJsonLd(html) {
   return items
     .sort((a, b) => (a.position || 0) - (b.position || 0))
     .map((it, i) => {
-      if (i === 0) return { href: 'index.html', label: 'TOP' };
+      if (i === 0) return { href: 'index.html', label: 'トップ' };
       if (!it.item) return { label: it.name };
       const norm = normalizeCrumbTarget(it.item);
       return { href: norm.href, label: norm.label || it.name };
@@ -198,7 +198,7 @@ function buildBreadcrumbItems(html, group) {
   const sectionHref = group === 'features' ? 'features/index.html' : group === 'journal' ? 'journal/index.html' : 'stores/index.html';
   const h1 = extractH1Text(html) || '';
   return [
-    { href: 'index.html', label: 'TOP' },
+    { href: 'index.html', label: 'トップ' },
     { href: sectionHref, label: section },
     { label: h1 },
   ];
