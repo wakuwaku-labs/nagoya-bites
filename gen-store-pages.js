@@ -15,6 +15,7 @@ const path  = require('path');
 const { titleAreaLabel } = require('./scripts/lib/area_label');
 const siteChrome = require('./scripts/lib/site_chrome');
 const areaGenrePages = require('./scripts/lib/area_genre_pages');
+const { buildRelatedStores } = require('./scripts/lib/related_stores');
 const { loadPolicy: loadIgPostPolicy } = require('./scripts/lib/ig_post_policy');
 const { relabelForSlug } = require('./scripts/lib/feature_counts');
 const storeListings = require('./scripts/lib/store_listings');
@@ -361,52 +362,12 @@ function buildRelatedFeatures(store, excludeFiles) {
 }
 
 // ================================================================
-// 関連店舗（同エリア優先）— SEO-065
+// 関連店舗（似た店）— SEO-065 → I-16
 // ================================================================
-// 店舗ページ間に内部リンクが無く、5,500件超の深いページがサイトマップと
-// トップページ50件のカードだけを発見経路にしていた（内部リンクの権威伝播が薄い）。
-// 実在する店（slugged=生成対象の全店舗）だけを機械的な一致条件で選ぶ。
-// 手動キュレーションや順位操作は行わない（架空店ブロック・制約10と整合）。
-//
-// 見出しは選定条件と必ず一致させる（「同ジャンル」と謳って別ジャンルが混ざる、
-// といった見出しと中身の不一致を避ける）。エリアがあれば同エリア内で
-// ジャンル一致を優先しつつ埋める＝結果は常に「同エリア」を満たす。
-// エリアが無い店だけジャンル一致（エリア問わず）にフォールバックする。
-function buildRelatedStores(store, slugged, ownSlug) {
-  const area  = store['エリア']  || '';
-  const genre = store['ジャンル'] || '';
-  if (!area && !genre) return { label: '', items: [] };
-
-  const score = (cand) => {
-    const rating = parseFloat(cand['Google評価']) || 0;
-    const count  = parseInt(cand['口コミ数'] || '', 10) || 0;
-    return rating * 1000 + count; // 評価優先・同点は口コミ数で決定的に順序付け
-  };
-  const byScore = (a, b) => score(b.store) - score(a.store);
-  const toItem = (cand) => ({ name: cand.store['店名'] || '', slug: cand.slug });
-
-  if (area) {
-    const sameAreaGenre = [];
-    const sameAreaOther = [];
-    for (const cand of slugged) {
-      if (cand.slug === ownSlug) continue;
-      if ((cand.store['エリア'] || '') !== area) continue;
-      if (genre && (cand.store['ジャンル'] || '') === genre) sameAreaGenre.push(cand);
-      else sameAreaOther.push(cand);
-    }
-    sameAreaGenre.sort(byScore);
-    sameAreaOther.sort(byScore);
-    const items = [...sameAreaGenre, ...sameAreaOther].slice(0, 4).map(toItem);
-    return { label: `${area}の他の店`, items };
-  }
-
-  const sameGenre = slugged
-    .filter((cand) => cand.slug !== ownSlug && (cand.store['ジャンル'] || '') === genre)
-    .sort(byScore)
-    .slice(0, 4)
-    .map(toItem);
-  return { label: `${genre}の店`, items: sameGenre };
-}
+// 選び方の本体は scripts/lib/related_stores.js の1本（トップのクイックビューも同じ判定を使う）。
+// 同じエリア群・同じジャンル（ハブと同じ判定）の店だけを、予算帯が近い順・最寄り駅が同じ順に並べ、最大6軒。
+// 評価の高い順にはしない（どのページも同じ人気店を指して一部の店にリンクが集まるため）。足りなければ数を減らし、埋めない。
+// 戻り値: { label, note, basis, items: [{ name, slug, reasons[] }] }（items が空なら区画ごと出さない）
 
 // ================================================================
 // メタ説明文生成
@@ -751,12 +712,13 @@ function renderStorePage(s, slug, relatedStores, listedFeatures, listedJournals)
     </ul>
   </div>` : '';
 
-  // 関連店舗（同エリア優先、最大4件）— SEO-065
+  // 似た店（I-16・最大6軒）: 同じエリア群・同じジャンルの店を、予算が近い順・最寄り駅が同じ順に並べる。理由は店ごとに付ける
   const relatedStoresHtml = (relatedStores && relatedStores.items && relatedStores.items.length) ? `
   <div class="related-stores">
     <h2>${escapeHtml(relatedStores.label)}</h2>
+    <p class="related-note">${escapeHtml(relatedStores.note)}</p>
     <ul>
-      ${relatedStores.items.map(r => `<li><a href="${r.slug}.html">${escapeHtml(r.name)}</a></li>`).join('\n      ')}
+      ${relatedStores.items.map(r => `<li><a href="${r.slug}.html">${escapeHtml(r.name)}</a>${r.reasons && r.reasons.length ? `<span class="related-reason">${escapeHtml(r.reasons.join('・'))}</span>` : ''}</li>`).join('\n      ')}
     </ul>
   </div>` : '';
 
@@ -992,6 +954,9 @@ button.link-btn{font:inherit;cursor:pointer;}
 .related-features a,.related-stores a{font-size:var(--fs-sm);color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(122,92,16,.25);padding-bottom:2px;transition:color .2s;}
 .related-features a:hover,.related-stores a:hover{color:var(--gold2);border-bottom-color:var(--gold2);}
 .related-features .listed-kind{font-size:var(--fs-xs);color:var(--dim);margin-left:.6em;}
+.related-stores h2{margin-bottom:.35rem;}
+.related-stores .related-note{font-size:var(--fs-xs);color:var(--dim);margin:0 0 .9rem;}
+.related-stores .related-reason{font-size:var(--fs-xs);color:var(--dim);margin-left:.6em;}
 .back-section{border-top:1px solid var(--border);padding-top:1.8rem;text-align:center;}
 .back-section a{font-family:var(--font-body);font-size:var(--fs-sm);font-weight:500;letter-spacing:0;color:var(--muted);text-decoration:none;transition:color .2s;min-height:var(--tap-min);display:inline-flex;align-items:center;}
 .back-section a:hover{color:var(--gold);}
