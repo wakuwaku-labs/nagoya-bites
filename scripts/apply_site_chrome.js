@@ -175,20 +175,24 @@ function extractBreadcrumbFromJsonLd(html) {
     return null;
   }
   if (!Array.isArray(items) || items.length === 0) return null;
+  // name は素の文字にそろえる。日次ジャーナルの生成器は JSON-LD の name にも HTML のままの
+  // 文字（&#39; &quot; など）を入れるため、そのまま renderBreadcrumb（esc）に渡すと二重に
+  // エスケープされる（&amp;#39;）。
   return items
     .sort((a, b) => (a.position || 0) - (b.position || 0))
     .map((it, i) => {
       if (i === 0) return { href: 'index.html', label: 'トップ' };
-      if (!it.item) return { label: it.name };
+      if (!it.item) return { label: chrome.unesc(it.name) };
       const norm = normalizeCrumbTarget(it.item);
-      return { href: norm.href, label: norm.label || it.name };
+      return { href: norm.href, label: norm.label || chrome.unesc(it.name) };
     });
 }
 
 function extractH1Text(html) {
   const m = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/);
   if (!m) return null;
-  return m[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  // h1 の中身は HTML。タグを外してから実体参照を素の文字に戻す（表示側で esc が1回だけかかる）
+  return chrome.unesc(m[1].replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim();
 }
 
 function buildBreadcrumbItems(html, group) {
@@ -419,4 +423,7 @@ function main() {
   process.exit(0);
 }
 
-main();
+if (require.main === module) main();
+
+// tests/site_chrome_entities.test.js が使う（パンくずの作り直しの単体テスト）
+module.exports = { extractBreadcrumbFromJsonLd, extractH1Text, buildBreadcrumbItems, applyBreadcrumb };
