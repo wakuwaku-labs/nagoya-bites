@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-12T18:40:16.853Z",
+  "generatedAt": "2026-10-12T19:02:47.245Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1317,
-    "pageViews": 1869,
-    "sessions": 1502,
-    "avgSessionDuration": 128.8,
+    "activeUsers": 1318,
+    "pageViews": 1873,
+    "sessions": 1505,
+    "avgSessionDuration": 128.6,
     "bounceRate": 0.283,
     "pagesPerSession": 1.24
   },
@@ -18,21 +18,21 @@
   "channels": {
     "sessions": {
       "organic": 1037,
-      "direct": 333,
+      "direct": 334,
       "social": 5,
       "ai_assistant": 105,
       "referral": 28,
       "paid": 0,
-      "other": 0
+      "other": 2
     },
     "pct": {
-      "organic": 68.8,
+      "organic": 68.6,
       "direct": 22.1,
       "social": 0.3,
-      "ai_assistant": 7,
+      "ai_assistant": 6.9,
       "referral": 1.9,
       "paid": 0,
-      "other": 0
+      "other": 0.1
     }
   },
   "sourceBreakdown": [
@@ -49,7 +49,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 237
+      "sessions": 238
     },
     {
       "source": "yahoo",
@@ -122,6 +122,11 @@
       "sessions": 2
     },
     {
+      "source": "unknown",
+      "medium": "",
+      "sessions": 2
+    },
+    {
       "source": "2881.com",
       "medium": "referral",
       "sessions": 1
@@ -180,8 +185,8 @@
     },
     {
       "path": "/",
-      "pageViews": 100,
-      "sessions": 90
+      "pageViews": 102,
+      "sessions": 92
     },
     {
       "path": "/index.html",
@@ -896,7 +901,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1317,
+    "value": 1318,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
