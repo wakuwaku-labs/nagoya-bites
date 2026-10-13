@@ -18,6 +18,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const { execFileSync } = require('node:child_process');
 
 const ROOT = path.join(__dirname, '..');
 const policy = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'selection_wording_policy.json'), 'utf8'));
@@ -122,4 +123,18 @@ test('llms.txt: 手で書く部分（自動生成の区間の外）に、人が�
   assert.deepEqual(hits(stat), [], 'llms.txt の手で書く部分に、人が選んだ・書いたと読める言い方が戻っている');
   assert.ok(stat.includes('店舗の選定にはAIによる情報収集・分析を活用している。'));
   assert.ok(!/`insiderNote`|`visitStatus`/.test(txt), '画面に出していない項目（insiderNote）の説明を、店舗ページの項目として書かない');
+});
+
+test('日次ジャーナルの生成ラッパーは、書き手への指示に「言葉の決まり」を入れている（P-335）', () => {
+  // journal-today.md（.claude/ の自己改変ブロックで、Claude は編集できない）には「業界人視点」「『業界人』『編集部』で統一」が
+  // 残っているので、その反映（P-335・オーナーの操作）までは、ラッパーが渡す指示で読み替えさせる。
+  const sh = fs.readFileSync(path.join(ROOT, 'scripts', 'run_journal_local.sh'), 'utf8');
+  const m = sh.match(/^SELF_HEADER=".*?"\n(?=PROMPT=)/ms);
+  assert.ok(m, 'SELF_HEADER の代入が見つからない');
+  // 実際に渡る文面を bash で評価する（$ やバッククォートが紛れると、文が欠けても構文は通ってしまう）
+  const out = execFileSync('bash', ['-c', `TODAY_JST=2026-10-14\n${m[0]}printf '%s' "$SELF_HEADER"`], { encoding: 'utf8' });
+  assert.ok(out.includes('【言葉の決まり'), out);
+  assert.ok(out.includes('店舗の選定にはAIによる情報収集・分析を活用しています。'), out);
+  assert.ok(out.includes('署名は『編集部』で統一'), out);
+  assert.ok(out.includes('質問や確認待ちで止まらないこと'), '従来の無人実行の指示が残っている');
 });
