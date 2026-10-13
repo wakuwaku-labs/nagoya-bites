@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-13T07:51:35.984Z",
+  "generatedAt": "2026-10-13T08:38:34.192Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1413,
-    "pageViews": 2007,
-    "sessions": 1605,
-    "avgSessionDuration": 127,
-    "bounceRate": 0.279,
+    "activeUsers": 1415,
+    "pageViews": 2009,
+    "sessions": 1607,
+    "avgSessionDuration": 127.1,
+    "bounceRate": 0.278,
     "pagesPerSession": 1.25
   },
   "dailyReference": {
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1120,
+      "organic": 1122,
       "direct": 348,
       "social": 5,
       "ai_assistant": 106,
@@ -26,7 +26,7 @@
       "other": 1
     },
     "pct": {
-      "organic": 69.5,
+      "organic": 69.6,
       "direct": 21.6,
       "social": 0.3,
       "ai_assistant": 6.6,
@@ -39,7 +39,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 492
+      "sessions": 493
     },
     {
       "source": "bing",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 177
+      "sessions": 178
     },
     {
       "source": "chatgpt.com",
@@ -210,7 +210,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 154,
+    "outboundClicks": 155,
     "ctaClickRate": 9.6,
     "byDomain": [
       {
@@ -223,7 +223,7 @@
       },
       {
         "domain": "maps.google.com",
-        "clicks": 26
+        "clicks": 27
       },
       {
         "domain": "www.instagram.com",
@@ -280,7 +280,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 70,
+      "organic": 71,
       "direct": 64,
       "social": 0,
       "ai_assistant": 19,
@@ -329,6 +329,10 @@
         "clicks": 5
       },
       {
+        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
+        "clicks": 5
+      },
+      {
         "path": "/features/nagoya-miso-nikomi-udon.html",
         "clicks": 4
       },
@@ -346,10 +350,6 @@
       },
       {
         "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
-        "clicks": 4
-      },
-      {
-        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
         "clicks": 4
       },
       {
@@ -485,6 +485,11 @@
         "clicks": 3
       },
       {
+        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
+        "domain": "maps.google.com",
+        "clicks": 3
+      },
+      {
         "path": "/features/birthday.html",
         "domain": "www.hotpepper.jp",
         "clicks": 2
@@ -547,11 +552,6 @@
       {
         "path": "/journal/2026-10-08-sakae-mitsukoshi-miyakishimen-ihyoe.html",
         "domain": "www.miyakishimen.co.jp",
-        "clicks": 2
-      },
-      {
-        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
-        "domain": "maps.google.com",
         "clicks": 2
       },
       {
@@ -934,7 +934,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1413,
+    "value": 1415,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

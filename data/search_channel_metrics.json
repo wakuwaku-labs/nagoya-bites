@@ -1,21 +1,21 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-13T07:51:39.778Z",
+  "generatedAt": "2026-10-13T08:38:38.145Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1611,
+  "total_sessions": 1613,
   "engines": [
     {
       "key": "google",
       "label": "Google",
-      "sessions": 492,
-      "pct": 30.5,
+      "sessions": 493,
+      "pct": 30.6,
       "sources": [
         {
           "source": "google",
           "medium": "organic",
-          "sessions": 492
+          "sessions": 493
         }
       ]
     },
@@ -23,7 +23,7 @@
       "key": "bing",
       "label": "Bing",
       "sessions": 433,
-      "pct": 26.9,
+      "pct": 26.8,
       "sources": [
         {
           "source": "bing",
@@ -58,13 +58,13 @@
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 179,
-      "pct": 11.1,
+      "sessions": 180,
+      "pct": 11.2,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 177
+          "sessions": 178
         },
         {
           "source": "hk.search.yahoo.com",
@@ -217,12 +217,12 @@
     }
   ],
   "search_only": {
-    "total": 1226,
+    "total": 1228,
     "share": [
       {
         "key": "google",
         "label": "Google",
-        "sessions": 492,
+        "sessions": 493,
         "pct_of_search": 40.1
       },
       {
@@ -234,8 +234,8 @@
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 179,
-        "pct_of_search": 14.6
+        "sessions": 180,
+        "pct_of_search": 14.7
       },
       {
         "key": "ai_assistant",
@@ -268,7 +268,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 492 セッションのみ。Bing(433) + 生成AI(106) の 539 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 493 セッションのみ。Bing(433) + 生成AI(106) の 539 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],
