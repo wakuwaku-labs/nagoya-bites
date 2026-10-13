@@ -53,7 +53,11 @@ function namesMatch(a, b, threshold) {
   // そのときは正規化した全体名で、同じ閾値のまま比べる。
   if (!ca || !cb) return dice(na, nb) >= threshold;
   if (ca === cb) return true;
-  if (ca.includes(cb) || cb.includes(ca)) return true;
+  // 包含で同一店と見なすのは、短い方のコアが3文字以上のときだけ。
+  // core() が「天ぷらの浜金ハエラ栄店」を「の」1文字にまで削ると、「ひものや 官兵衛」のように
+  // 「の」を含む無関係な店名すべてに包含で一致してしまう（2026-10-13 実測: 別店のHotPepper写真が
+  // 記事のヒーローになりかけた）。短いコアは dice() の閾値で判定する。
+  if (Math.min(ca.length, cb.length) >= 3 && (ca.includes(cb) || cb.includes(ca))) return true;
   return dice(ca, cb) >= threshold;
 }
 
