@@ -2075,20 +2075,7 @@ async function main() {
   html = trustDisplay.injectTrustPolicy(html);
   console.log('TRUST_POLICY 注入: data/trust_display_policy.json → index.html');
 
-  // 「今日の話題店」更新日付を埋め込む（YYYY/M/D 形式。JS依存なしの静的置換）
-  if (dailyTrendingDate) {
-    const m = dailyTrendingDate.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-    const labelDate = m ? `${m[1]}/${parseInt(m[2],10)}/${parseInt(m[3],10)}` : dailyTrendingDate;
-    html = html.replace(
-      /(<em id="trend-ranking-date">)[^<]*(<\/em>)/,
-      `$1${labelDate}$2`
-    );
-  } else {
-    html = html.replace(
-      /(<em id="trend-ranking-date">)[^<]*(<\/em>)/,
-      `$1$2`
-    );
-  }
+  // 「今日の話題店」の行と更新日は、書き込みの後に scripts/build_top_picks.js が index.html の TREND_PICKS 区画へ作る（I-24）
 
   // 2. SEOクロール用の内部リンク集は scripts/inject_store_links.js が
   //    stores/*.html を元に正規リンク（stores/{slug}.html）で生成・挿入する。
@@ -2137,6 +2124,15 @@ async function main() {
     buildJournalIndex();
   } catch (e) {
     console.warn(`⚠️ build_journal_index 失敗: ${e.message} — トップ Daily Journal が古いまま残る可能性があります`);
+  }
+
+  // 「今日の話題店」と「よく見られている店」（トップの最初の画面と下のほうの行）を index.html の目印の間へ書く（I-24・ADR 0035）。
+  // daily-trending5.yml（5:30 JST）も build.js を回して index.html をコミットするため、ここで呼べば両方のワークフローで効く。
+  // 失敗しても build は止めない（行が古いまま残るだけ）。決められなかった店は警告に出る。
+  try {
+    require('./scripts/build_top_picks.js').main();
+  } catch (e) {
+    console.warn(`⚠️ build_top_picks 失敗: ${e.message} — トップの今日の話題店が古いまま残る可能性があります`);
   }
 }
 

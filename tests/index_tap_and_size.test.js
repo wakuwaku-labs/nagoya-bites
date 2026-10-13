@@ -113,7 +113,7 @@ const ALLOWED_SMALL_FONT = new Map();
 // 押す所の規則（height / min-height が 44px 以上でなければならないセレクター）
 const REQUIRED_TAP = [
   '.search-clear-btn', '.sticky-search input', '.sticky-search-btn', '.mobile-cta-bar .cta-search', '.mobile-cta-bar .cta-filter',
-  '.view-toggle button', '.cap-input', '.pg-btn', '.fold-toggle', '.tag-reset', '.share-btn', '.clear-all-btn', '.notify-btn',
+  '.view-toggle button', '.cap-input', '.pg-btn', '.fold-toggle', '.tag-reset', '.share-btn', '.clear-all-btn',
   '.geo-btn', '.filter-panel-cta-reset', '.results-summary-reset', '.store-index-area>summary', '.scene-chip', '.scene-index-list a',
   '.hpc a', '.ft', '.pt', '.at', '.tg', '.ml',
 ];
