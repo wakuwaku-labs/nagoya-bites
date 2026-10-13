@@ -18,6 +18,9 @@
  *   - 例外: policy の scanScripts に載るファイル（index.html）だけは <script> の中の文字も数える
  *     （店のモーダルなどの画面の文字が JS の文字列として持たれているため）
  *   - 例外（exempt）は path・term・reason が揃っているときだけ許す。理由の無い例外は検査自体が落ちる
+ *   - 強調・リンク・改行などのインラインのタグで割れた言い回し（例: 飲食の<em>プロ</em>が）も数える（P-389）。
+ *     タグを外した文字列にも同じ語の一覧を当て、元の文字列でタグをまたぐ一致だけを足す（タグをまたがない一致は二重に数えない）。
+ *     段落・見出し・リスト項目などの境目（ブロックのタグ）は外さないので、別の文どうしをつないで数えることはない
  *
  * 使い方:
  *   node scripts/audit_selection_wording.js            # 集計を出す（exit 0）
@@ -97,12 +100,38 @@ function isExempt(rel, termId, phrase, exempt) {
     && (e.phrase === undefined || phrase.includes(e.phrase)));
 }
 
+// 文の途中に入るタグ。これで割れた語（飲食の<em>プロ</em>が・業界人<br>の目利き）は、タグつきの文字列では当たらない（P-389）
+const INLINE_TAG = /<\/?(?:em|strong|b|i|u|s|span|a|mark|small|sub|sup|abbr|cite|code|del|ins|font|ruby|rt|rb|br|wbr)\b[^>]*>/gi;
+
+/** インラインのタグを外した文字列と、外した後の位置 → 元の位置の対応。外すタグが無ければ null。 */
+function flattenInline(markup) {
+  const segs = []; // { flat: 外した後の開始位置, orig: 元の開始位置 }
+  let flat = '';
+  let last = 0;
+  let m;
+  INLINE_TAG.lastIndex = 0;
+  while ((m = INLINE_TAG.exec(markup)) !== null) {
+    if (m.index > last) { segs.push({ flat: flat.length, orig: last }); flat += markup.slice(last, m.index); }
+    last = m.index + m[0].length;
+  }
+  if (!segs.length && last === 0) return null;
+  if (last < markup.length) { segs.push({ flat: flat.length, orig: last }); flat += markup.slice(last); }
+  const toOrig = (i) => {
+    let lo = 0;
+    let hi = segs.length - 1;
+    while (lo < hi) { const mid = (lo + hi + 1) >> 1; if (segs[mid].flat <= i) lo = mid; else hi = mid - 1; }
+    return segs[lo].orig + (i - segs[lo].flat);
+  };
+  return { flat, toOrig };
+}
+
 /**
  * 1 ページを数える（純粋な関数）。
  * @returns {{counts: Record<string,number>, phrases: {term:string, phrase:string}[], exempted: number}}
  */
 function scanHtml(html, compiled, { rel = '', keepScripts = false } = {}) {
   const markup = visibleMarkup(html, keepScripts);
+  const flatInfo = flattenInline(markup);
   const counts = {};
   const phrases = [];
   let exempted = 0;
@@ -116,6 +145,20 @@ function scanHtml(html, compiled, { rel = '', keepScripts = false } = {}) {
       if (isExempt(rel, t.id, phrase, compiled.exempt)) { exempted++; continue; }
       n++;
       phrases.push({ term: t.id, phrase });
+    }
+    // タグをまたぐ一致だけを足す（タグをまたがない一致は上で数えたので、二重に数えない）
+    if (flatInfo) {
+      t.re.lastIndex = 0;
+      while ((m = t.re.exec(flatInfo.flat)) !== null) {
+        if (m[0].length === 0) { t.re.lastIndex++; continue; }
+        const from = flatInfo.toOrig(m.index);
+        const to = flatInfo.toOrig(m.index + m[0].length - 1) + 1;
+        if (!markup.slice(from, to).includes('<')) continue;
+        const phrase = contextOf(markup, from, to - from);
+        if (isExempt(rel, t.id, phrase, compiled.exempt)) { exempted++; continue; }
+        n++;
+        phrases.push({ term: t.id, phrase });
+      }
     }
     if (n) counts[t.id] = n;
   }
@@ -246,4 +289,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { audit, compilePolicy, contextOf, isExempt, listPhrases, loadPolicy, scanHtml, visibleMarkup };
+module.exports = { audit, compilePolicy, contextOf, flattenInline, isExempt, listPhrases, loadPolicy, scanHtml, visibleMarkup };

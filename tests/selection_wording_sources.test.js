@@ -313,6 +313,19 @@ test('トップ: 実績の帯から「現役の店長が編集」を外し、残
   assert.ok(html.includes('.auth-item:last-child:nth-child(odd){grid-column:1/-1;justify-content:center;}'), '3 項目目が 2 列の左に寄らない');
 });
 
+test('トップ: 最初の画面の見出し（h1）は、確かめられる情報で選ぶと書く。3 行・各行 7 字以内で、人が選んだと読める言い方を（タグで割れていても）戻さない（P-389）', () => {
+  const html = readRel('index.html');
+  const h1 = (html.match(/<h1>([\s\S]*?)<\/h1>/) || [])[1];
+  assert.ok(h1, 'トップに h1 がある');
+  const lines = h1.split(/<br\s*\/?>/i).map((l) => stripTags(l).trim());
+  assert.equal(lines.length, 3, '見出しは 3 行');
+  for (const l of lines) assert.ok([...l].length <= 7, `1 行は 7 字まで（スマホの 320px で折り返さない・0034）: 「${l}」`);
+  assert.ok(stripTags(h1).includes('確かめられる'), '確かめられる情報で選ぶ（運営についてと同じ意味・0034）');
+  for (const s of ['プロ', '深く選んだ', '現役', '店長', '業界人', '厳選']) assert.ok(!stripTags(h1).includes(s), `見出しに戻っている: ${s}`);
+  const compiled = audit.compilePolicy(audit.loadPolicy(ROOT));
+  assert.deepEqual(audit.scanHtml(h1, compiled, { rel: 'index.html' }).phrases, [], '強調・改行のタグで割れた言い回しも数えて 0 件');
+});
+
 test('トップ: 店のモーダルとカードの言い方（区画名・署名・見出し・札）は新しい言い方（P-330）', () => {
   const html = indexWithoutGeneratedRegions();
   const must = [
