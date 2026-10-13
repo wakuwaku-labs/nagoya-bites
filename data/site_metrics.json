@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-13T09:59:52.902Z",
+  "generatedAt": "2026-10-13T10:51:23.797Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1423,
-    "pageViews": 2020,
-    "sessions": 1615,
-    "avgSessionDuration": 126.6,
+    "activeUsers": 1424,
+    "pageViews": 2021,
+    "sessions": 1617,
+    "avgSessionDuration": 126.9,
     "bounceRate": 0.279,
     "pagesPerSession": 1.25
   },
@@ -17,20 +17,20 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1128,
-      "direct": 350,
+      "organic": 1129,
+      "direct": 351,
       "social": 5,
       "ai_assistant": 106,
-      "referral": 31,
+      "referral": 32,
       "paid": 0,
       "other": 1
     },
     "pct": {
-      "organic": 69.6,
+      "organic": 69.5,
       "direct": 21.6,
       "social": 0.3,
       "ai_assistant": 6.5,
-      "referral": 1.9,
+      "referral": 2,
       "paid": 0,
       "other": 0.1
     }
@@ -44,7 +44,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 432
+      "sessions": 433
     },
     {
       "source": "(direct)",
@@ -69,7 +69,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 24
+      "sessions": 25
     },
     {
       "source": "openai",
@@ -122,17 +122,17 @@
       "sessions": 2
     },
     {
+      "source": "cn.bing.com",
+      "medium": "referral",
+      "sessions": 2
+    },
+    {
       "source": "2881.com",
       "medium": "referral",
       "sessions": 1
     },
     {
       "source": "alleba.com",
-      "medium": "referral",
-      "sessions": 1
-    },
-    {
-      "source": "cn.bing.com",
       "medium": "referral",
       "sessions": 1
     },
@@ -289,7 +289,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 6.3,
-    "ctaClickRate_direct": 18.3,
+    "ctaClickRate_direct": 18.2,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -934,7 +934,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1423,
+    "value": 1424,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
