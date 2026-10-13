@@ -22,6 +22,14 @@
  *                3 つの写し（meta・og・JSON-LD）と published.json がそろう。一覧（journal/index.html）と
  *                フィード（feed.atom・feed.xml）は published.json から作るので、この後に
  *                node scripts/build_journal_index.js を回して作り直す（トップの最新 3 件は CI が作り直す）。
+ *   body         本文（P-371）: 記事の本文の「文」（<p>・<li>・見出し・箱の見出し・表の見出し）、画像の alt、
+ *                HTML コメントの撮影メモ。scripts/lib/journal_wording_overrides.js の `body`（旧 → 新の対応表）で直す。
+ *                文は `。！？` で割り（「」『』（）の中の句点では割らない）、**文全体が表の旧と一致したものだけ**を置き換える
+ *                （部分一致はしない。別の長い文の頭を壊さないため）。題の系統の行・説明文の系統の行（meta・JSON-LD）・パンくず・<style> は見ない。
+ *                冒頭リード（art-lead）は本文と同じに見る（description 段階は検査の語がある文しか直さないので、語の無い経歴の主張はここで直す）。
+ *                数字は変えない。「」『』の中身が変わる対だけ表に { q: true } をつける。旧に検査の語が無い対（出典・経歴の主張など）は { ctx: true }。
+ *                文を消した結果、段落や項目が空になる行は書き換えない。
+ *                表の新しい文が「業界人が〜」の主語を落とすだけで足りるものも、意味がぼやけるものも、人が読んで 1 文ずつ書いた。
  *
  * 触らないもの: 記事の題の系統（<title>・og/twitter:title・<h1>・JSON-LD の headline と name・パンくず・
  *   関連リンクの題）。題を変えると検索の見え方が変わるので、前後の数字を決めてから P-334（I-03h）で変える。
@@ -233,7 +241,128 @@ function rewriteLanding(text, terms) {
   return { text: t, stats, violations, changes };
 }
 
-const PHASES = ['heading', 'description'];
+// ── 段階 body ──
+
+// 題の系統と説明文の系統の行（meta・JSON-LD の description）。本文の段階では見ない（題は P-334、説明文は description 段階）。
+// 冒頭リード（<p class="art-lead">）は本文の行として見る: description 段階は検査の語がある文しか直さないので、語の無い出典・経歴の主張（「業界で働く人間として」など）はこの表で直す。
+// 表の旧と文全体が一致する文だけが動くので、description 段階が直した文を二重に直すことはない
+function isTitleFamilyLine(l) {
+  return /<title>/.test(l) || /property="og:title"|name="twitter:title"/.test(l) || /<h1[ >]/.test(l) || /"headline"/.test(l)
+    || /"@type":\s*"ListItem"|^\s*"name":/.test(l) || /class="related-link/.test(l)
+    || /name="description"|property="og:description"|name="twitter:description"/.test(l) || /^\s*"description"/.test(l);
+}
+
+// 文に割る。「」『』（）の中の 。！？ では割らない
+function splitSentences(raw) {
+  const out = [];
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < raw.length; i++) {
+    const c = raw[i];
+    if (c === '「' || c === '『' || c === '（') depth++;
+    else if ((c === '」' || c === '』' || c === '）') && depth > 0) depth--;
+    else if (depth === 0 && (c === '。' || c === '！' || c === '？')) {
+      let j = i + 1;
+      while (j < raw.length && /[。！？」』）)]/.test(raw[j])) j++;
+      out.push(raw.slice(start, j));
+      start = j;
+      i = j - 1;
+    }
+  }
+  if (start < raw.length) out.push(raw.slice(start));
+  return out;
+}
+
+const digitsOf = (s) => (s.match(/[0-9０-９][0-9０-９,.]*/g) || []).join('|');
+const quotesOf = (s) => (s.match(/[「『][^」』]*[」』]/g) || []).join('|');
+
+// 表の旧 → { 新, q }。q が真の対だけ、「」『』の中身が変わってよい（数字は常に同じ）。ctx の印（旧に検査の語が無い文脈の直し）は表の整合テストが見るだけで、書き換えには関係しない
+function bodyPairMap(pairs) {
+  const m = new Map();
+  for (const [before, after, flags] of pairs) m.set(before, { after, q: Boolean(flags && flags.q) });
+  return m;
+}
+
+function checkedBodyRewrite(core, pair, terms) {
+  const next = pair.after;
+  if (next === core) return { text: core };
+  if (digitsOf(core) !== digitsOf(next)) return { text: core, problem: '数字が変わる' };
+  if (!pair.q && quotesOf(core) !== quotesOf(next)) return { text: core, problem: '「」『』の中身が変わる（変えてよい対には印 { q: true } をつける）' };
+  if (hasHit(terms, next)) return { text: core, problem: '書き換えた後にも検査の語が残る' };
+  if (looksBroken(core, next)) return { text: core, problem: '文が崩れて見える' };
+  return { text: next };
+}
+
+// テキスト節（タグの外の文字）を文に割り、文全体が表の旧と一致する文を置き換える。前後の空白は残す
+function rewriteBodyNode(raw, pairs, terms, report) {
+  return splitSentences(raw).map((s) => {
+    const core = s.trim();
+    const pair = pairs.get(core);
+    if (!core || !pair) return s;
+    const r = checkedBodyRewrite(core, pair, terms);
+    if (r.problem) { report.violation(core, r.problem); return s; }
+    if (r.text === core) return s;
+    report.change(core, r.text);
+    if (r.text === '') return '';   // 文を外すときは、その前の空白も外す（次の文が自分の空白を持っている）
+    const lead = s.slice(0, s.indexOf(core));
+    return lead + r.text + s.slice(lead.length + core.length);
+  }).join('');
+}
+
+function rewriteBody(text, terms, stats, violations, changes, pairList) {
+  const pairs = bodyPairMap(pairList);
+  const lines = text.split('\n');
+  let inStyle = false;
+  let inBreadcrumb = false;
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i];
+    if (/<style/.test(l)) inStyle = true;
+    const skipStyle = inStyle;
+    if (/<\/style>/.test(l)) inStyle = false;
+    if (/class="breadcrumb"/.test(l)) inBreadcrumb = true;
+    const skipBreadcrumb = inBreadcrumb;
+    if (inBreadcrumb && /<\/div>/.test(l)) inBreadcrumb = false;
+    if (skipStyle || skipBreadcrumb || isTitleFamilyLine(l)) continue;
+    // 1 行ぶんをためてから、安全の検査を通ったものだけを数える
+    const found = { violations: [], changes: [] };
+    const report = {
+      violation: (before, problem) => found.violations.push([before, problem]),
+      change: (before, after) => found.changes.push([before, after]),
+    };
+    // 行を「タグ」と「テキスト節」に分ける。タグの中では alt の値だけを見る（値の全体が表の旧と一致するときだけ）
+    const next = l.replace(/<[^>]*>|[^<]+/g, (node) => {
+      if (node[0] !== '<') return rewriteBodyNode(node, pairs, terms, report);
+      return node.replace(/( alt=")([^"]*)(")/, (m, a, value, c) => {
+        const pair = pairs.get(value);
+        if (!pair) return m;
+        const r = checkedBodyRewrite(value, pair, terms);
+        if (r.problem) { report.violation(value, r.problem); return m; }
+        if (r.text === value) return m;
+        report.change(value, r.text);
+        return a + r.text + c;
+      });
+    });
+    for (const [before, problem] of found.violations) violations.push({ n: i + 1, key: 'body', before, after: problem });
+    // 文を消した結果、段落や項目が空になるなら書き換えない（段落ごと外すのは、この表では扱わない）
+    if (next !== l && emptyElements(next) > emptyElements(l)) {
+      violations.push({ n: i + 1, key: 'body', before: found.changes[0] ? found.changes[0][0] : l.trim().slice(0, 60), after: '段落や項目が空になる' });
+      continue;
+    }
+    for (const [before, after] of found.changes) {
+      stats.body = (stats.body || 0) + 1;
+      changes.push({ n: i + 1, key: 'body', before, after });
+    }
+    lines[i] = next;
+  }
+  return lines.join('\n');
+}
+
+// 中身が空白だけの要素（<p></p>・<li> </li>…）の数
+function emptyElements(line) {
+  return (line.match(/<(p|li|h[1-6]|td|th|span|strong|em|b|i|a|div)(?: [^>]*)?>\s*<\/\1>/g) || []).length;
+}
+
+const PHASES = ['heading', 'description', 'body'];
 
 // 行ごとに規則を当てる。前後の署名が違う行は書き換えず、violations に残す
 function applyLineRules(text, rules, stats, violations, changes) {
@@ -255,7 +384,7 @@ function applyLineRules(text, rules, stats, violations, changes) {
   return lines.join('\n');
 }
 
-function rewriteText(text, phases, terms = null) {
+function rewriteText(text, phases, terms = null, opts = {}) {
   const stats = {};
   const violations = [];
   const changes = [];
@@ -268,6 +397,10 @@ function rewriteText(text, phases, terms = null) {
   if (phases.includes('description')) {
     if (!terms) throw new Error('description 段階には検査の語（terms）が要る');
     t = rewriteDescriptions(t, terms, stats, violations, changes);
+  }
+  if (phases.includes('body')) {
+    if (!terms) throw new Error('body 段階には検査の語（terms）が要る');
+    t = rewriteBody(t, terms, stats, violations, changes, opts.bodyPairs || OVERRIDES.body || []);
   }
   return { text: t, stats, violations, changes };
 }
@@ -317,7 +450,7 @@ function parseArgs(argv) {
 
 function main(argv, out = console.log) {
   const args = parseArgs(argv);
-  const terms = args.phases.includes('description') ? loadTargetTerms(args.root) : null;
+  const terms = args.phases.some((p) => p === 'description' || p === 'body') ? loadTargetTerms(args.root) : null;
   const files = listArticles(args.root, args.only);
   const total = {};
   let changedFiles = 0;
@@ -382,4 +515,5 @@ if (require.main === module) {
 module.exports = {
   rewriteText, rewriteHeadingLine, rewriteIntroLine, rewriteKeywordsLine, applyLineRules, signature, main, PHASES, PLACEHOLDER_BOX,
   dropPersona, dropAdverbs, looksBroken, checkedRewrite, rewriteDescriptionText, rewritePublished, rewriteLanding, loadTargetTerms, hasHit, unesc, escLike,
+  splitSentences, isTitleFamilyLine, checkedBodyRewrite, digitsOf, quotesOf, emptyElements,
 };
