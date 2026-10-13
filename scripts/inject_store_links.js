@@ -130,6 +130,13 @@ ${sections}
 // その語が実際に使われている」ことを機械検証済み（自己申告値を使わない担保）。
 // ここで生成するのは、トップページから discovery 意図（シーン語×エリア語）の
 // 特集へ渡す静的な内部リンク。指名検索ではなく取りに行く面を厚くするのが目的。
+// リンク文。既定は「名古屋の<kw>」。kw は検索語の対応づけ（採点・GSC の分類）に使う語なので変えない。
+// 画面に出す文だけ替えたい語は、語彙表（scripts/journal_seo_kw.js）の label で指定する。
+// 例: 人が選んだと読めるリンク文を、ページの実態に合う言い方に替える（P-330・判断の記録 0032）。
+function sceneLinkText(x) {
+  return x.label ? x.label : `名古屋の${x.kw}`;
+}
+
 function renderSceneIndexBlock() {
   const kwPath = path.join(ROOT, 'data', 'journal_seo_keywords.json');
   if (!fs.existsSync(kwPath)) return null;
@@ -145,7 +152,7 @@ function renderSceneIndexBlock() {
     const items = list
       // 実在する特集ファイルにしかリンクしない（リンク切れをビルド時に防ぐ）
       .filter(x => x.feature && fs.existsSync(path.join(ROOT, x.feature)))
-      .map(x => `<li><a href="${escapeHtml(x.feature)}">名古屋の${escapeHtml(x.kw)}</a></li>`);
+      .map(x => `<li><a href="${escapeHtml(x.feature)}">${escapeHtml(sceneLinkText(x))}</a></li>`);
     if (!items.length) return '';
     return `<div class="scene-index-group">
 <h3 class="scene-index-group-title">${escapeHtml(label)}</h3>
@@ -255,4 +262,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { loadDetailPageSet, buildHrefFor };
+module.exports = { loadDetailPageSet, buildHrefFor, sceneLinkText, renderSceneIndexBlock };

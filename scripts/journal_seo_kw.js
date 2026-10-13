@@ -68,7 +68,9 @@ const SCENE_VOCAB = [
   { kw: 'コスパ',   aliases: ['コスパ'],                         feature: 'features/kospa-insider.html' },
   { kw: 'モーニング', aliases: ['モーニング', '喫茶'],            feature: 'features/nagoya-morning.html' },
   { kw: '食べ歩き', aliases: ['食べ歩き'],                       feature: 'features/osu-food-walk.html' },
-  { kw: '業界人',   aliases: ['業界人', '飲食人'],               feature: 'features/industry-insiders-pick.html' }
+  // label: トップ「目的から探す」のリンク文（省くと「名古屋の<kw>」）。kw は検索語の対応づけに使うので変えない（P-330）
+  { kw: '業界人',   aliases: ['業界人', '飲食人'],               feature: 'features/industry-insiders-pick.html',
+    label: '飲食業界の人が通う店' }
 ];
 
 // エリア語 → 実在するエリア特集。store_count は --build が data/stores.json から埋める。
@@ -223,7 +225,7 @@ function cmdBuild() {
       forbidden: '実在しない店・未検証店をKWに合わせて創作しない（架空店ブロック優先）。KWのためにタイトルの日本語を壊さない。'
     },
     areas,
-    scenes: SCENE_VOCAB.map(s => ({ kw: s.kw, aliases: s.aliases, feature: s.feature })),
+    scenes: SCENE_VOCAB.map(s => ({ kw: s.kw, aliases: s.aliases, feature: s.feature, ...(s.label ? { label: s.label } : {}) })),
     genres: GENRE_VOCAB.map(g => ({ kw: g.kw, aliases: g.aliases, feature: g.feature })),
     monthly_scenes: MONTHLY_SCENES,
     title_front: TITLE_FRONT
