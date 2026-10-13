@@ -76,7 +76,7 @@ function shopCard(s, num, pageId) {
 
 function buildHead(tmplHead, cfg, slug, picks) {
   const title = `名古屋の${cfg.jp}おすすめ${picks.length}選【2026年版】｜NAGOYA BITES`;
-  const desc = `名古屋の${cfg.jp}を現役飲食人が実在店から厳選${picks.length}店。掲載店はすべて実在を確認（食べログ・ホットペッパー等で照合）。エリア・予算・特徴を業界視点で解説。`;
+  const desc = `名古屋の${cfg.jp}を実在店から条件で選んだ${picks.length}店。掲載店はすべて実在を確認（食べログ・ホットペッパー等で照合）。エリア・予算・特徴を解説。`;
   const url = `https://nagoya-bites.com/features/${slug}.html`;
   const ogimg = `https://nagoya-bites.com/assets/feature-figures/${slug}.svg`;
   let h = tmplHead;
@@ -136,7 +136,7 @@ function buildBody(cfg, slug, picks, manualMap) {
     <span>NAGOYA BITES 編集部</span>
     <span>${picks.length}店舗掲載</span>
   </div>
-  <p class="hero-lead">名古屋の${esc(cfg.jp)}を、現役飲食人の視点で実在店から厳選しました。掲載店はすべて実在を確認しています（食べログ・ホットペッパー・Google マップ等で照合）。各店のエリア・特徴を簡潔に紹介します。</p>
+  <p class="hero-lead">名古屋の${esc(cfg.jp)}を、実在店から条件で選びました。掲載店はすべて実在を確認しています（食べログ・ホットペッパー・Google マップ等で照合）。各店のエリア・特徴を簡潔に紹介します。</p>
 </div>
 
 <div class="content">
