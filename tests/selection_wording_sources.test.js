@@ -41,6 +41,8 @@ const CLEAN_SOURCES = [
   'scripts/inject_store_links.js',
   // 機械が読む説明（アプリの説明）の元（P-328）
   'manifest.json',
+  // 日次ジャーナルの採点器（P-333）: 語を入れると点が上がる加点をやめた。語を報酬にする定数を戻さない
+  'scripts/score_journal_candidates.js',
 ];
 
 function hits(text) {
