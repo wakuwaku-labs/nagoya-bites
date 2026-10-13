@@ -39,6 +39,8 @@ const CLEAN_SOURCES = [
   'scripts/gen_store_og_svg.js',
   'scripts/patch_store_og_images.js',
   'scripts/inject_store_links.js',
+  // 機械が読む説明（アプリの説明）の元（P-328）
+  'manifest.json',
 ];
 
 function hits(text) {
@@ -84,4 +86,38 @@ test('共通のフッター・特集の署名・OG の代替文・ハブの見�
   assert.ok(hub.includes('<span>選定理由がある店</span>'));
   const svg = fs.readFileSync(path.join(ROOT, 'scripts', 'gen_store_og_svg.js'), 'utf8');
   assert.ok(svg.includes('名古屋グルメガイド ・ 広告ゼロ ・ nagoya-bites.com'));
+});
+
+// ---------------------------------------------------------------- 構造化データ・llms.txt（P-328・設計書 4.3 節 I-04）
+
+function jsonLdBlocks(html) {
+  const out = [];
+  const re = /<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g;
+  let m;
+  while ((m = re.exec(html))) out.push(JSON.parse(m[1]));
+  return out;
+}
+
+test('トップの構造化データ: 人が選んだと読める言い方が無く、FAQPage と運営者の個人情報（founder・Person）を出さない（P-328）', () => {
+  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const blocks = jsonLdBlocks(html);
+  const types = blocks.map((b) => b['@type']).sort();
+  assert.deepEqual(types, ['Organization', 'WebPage', 'WebSite'], '構造化データの型');
+  const text = JSON.stringify(blocks);
+  assert.deepEqual(hits(text), [], 'トップの JSON-LD に、人が選んだ・書いたと読める言い方が戻っている');
+  assert.ok(!/FAQPage|"Question"/.test(text), 'トップに画面の FAQ は無い。画面に無い質問と答えを構造化データだけに書かない（判断の記録 0029）');
+  assert.ok(!/"founder"|"jobTitle"|"Person"/.test(text), '運営者の氏名・肩書・経歴は構造化データに載せない（判断の記録 0029）');
+  const org = blocks.find((b) => b['@type'] === 'Organization');
+  assert.match(org.description, /店舗の選定にはAIによる情報収集・分析を活用しています。/);
+  const site = blocks.find((b) => b['@type'] === 'WebSite');
+  assert.match(site.description, /店舗の選定にはAIによる情報収集・分析を活用しています。/);
+});
+
+test('llms.txt: 手で書く部分（自動生成の区間の外）に、人が選んだと読める言い方が無い（P-328）', () => {
+  const txt = fs.readFileSync(path.join(ROOT, 'llms.txt'), 'utf8');
+  // 自動生成の区間は、店数の欄の写し以外を外す（特集の一覧は各特集の説明文から作るので、特集を直す課題 P-331 で変わる）
+  const stat = txt.replace(/<!-- AUTO-GENERATED:(\w+):start -->[\s\S]*?<!-- AUTO-GENERATED:\1:end -->/g, '');
+  assert.deepEqual(hits(stat), [], 'llms.txt の手で書く部分に、人が選んだ・書いたと読める言い方が戻っている');
+  assert.ok(stat.includes('店舗の選定にはAIによる情報収集・分析を活用している。'));
+  assert.ok(!/`insiderNote`|`visitStatus`/.test(txt), '画面に出していない項目（insiderNote）の説明を、店舗ページの項目として書かない');
 });
