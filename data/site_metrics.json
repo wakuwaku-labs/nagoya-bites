@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-13T12:35:46.531Z",
+  "generatedAt": "2026-10-13T13:01:35.832Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1435,
-    "pageViews": 2034,
-    "sessions": 1628,
-    "avgSessionDuration": 127.1,
-    "bounceRate": 0.279,
+    "activeUsers": 1445,
+    "pageViews": 2049,
+    "sessions": 1638,
+    "avgSessionDuration": 127.7,
+    "bounceRate": 0.278,
     "pagesPerSession": 1.25
   },
   "dailyReference": {
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1140,
-      "direct": 351,
+      "organic": 1150,
+      "direct": 352,
       "social": 5,
       "ai_assistant": 106,
       "referral": 32,
@@ -26,11 +26,11 @@
       "other": 1
     },
     "pct": {
-      "organic": 69.7,
-      "direct": 21.5,
+      "organic": 69.9,
+      "direct": 21.4,
       "social": 0.3,
-      "ai_assistant": 6.5,
-      "referral": 2,
+      "ai_assistant": 6.4,
+      "referral": 1.9,
       "paid": 0,
       "other": 0.1
     }
@@ -39,12 +39,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 504
+      "sessions": 507
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 435
+      "sessions": 437
     },
     {
       "source": "(direct)",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 182
+      "sessions": 187
     },
     {
       "source": "chatgpt.com",
@@ -69,7 +69,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 25
+      "sessions": 26
     },
     {
       "source": "openai",
@@ -185,8 +185,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 322,
-      "sessions": 309
+      "pageViews": 324,
+      "sessions": 311
     },
     {
       "path": "/",
@@ -288,7 +288,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 6.4,
+    "ctaClickRate_organic": 6.3,
     "ctaClickRate_direct": 18.2,
     "ctaClickRate_social": 0,
     "byPage": [
@@ -934,7 +934,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1435,
+    "value": 1445,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
