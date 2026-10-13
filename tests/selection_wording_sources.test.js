@@ -218,8 +218,17 @@ test('運営者の識別情報（確認者の名前・ハンドル）を、こ�
 // ── トップ（P-330・判断の記録 0032）──
 const audit = require('../scripts/audit_selection_wording');
 
-// ビルドのたびに元（店のデータ・特集・ジャーナル）から書き直される 3 区画。手で直しても次のビルドで戻るので、元を直す（P-331・P-332）。
-// ここを除いた「手書きの部分」だけを、この検査で見る。
+// CI は npm test の直前に node build.js を回し、index.html の次の区画を元（店のデータ・特集・ジャーナル）から書き直す。
+// 手で直しても次のビルドで戻る（2026-10-13: 「目的から探す」を手で直してマージし、CI で戻ってこの検査が落ちた）。
+// だから index.html を読む検査は、手元のファイルではなく「ビルド後」の姿で通ることを確かめる
+// （手元の再現: scripts/inject_store_links.js と scripts/build_journal_index.js を回してから npm test）。
+//   除く（元は店のデータ・特集・ジャーナル。P-331・P-332 で直す）:
+//     ・var LOCAL_STORES の行 … 店の紹介文と特集の題
+//     ・FEATURED … 特集の題
+//     ・LATEST_JOURNAL … ジャーナルの題と説明
+//     ・STORE-INDEX … 掲載店の名前の一覧（店名はそのまま出す）
+//   除かない（元を直したので、ビルド後も語が出ないことを見る）:
+//     ・SCENE-INDEX（目的から探す）… scripts/inject_store_links.js が data/journal_seo_keywords.json から作る
 function indexWithoutGeneratedRegions() {
   let s = readRel('index.html').split('\n').filter((l) => !l.startsWith('var LOCAL_STORES')).join('\n');
   const cut = (from, to) => {
@@ -230,10 +239,11 @@ function indexWithoutGeneratedRegions() {
   };
   cut('<!-- FEATURED_START -->', '<!-- FEATURED_END -->');
   cut('<!-- LATEST_JOURNAL_START -->', '<!-- LATEST_JOURNAL_END -->');
+  cut('<!-- STORE-INDEX:START', '<!-- STORE-INDEX:END -->'); // 始まりの印には日付が付く
   return s;
 }
 
-test('トップ: 再生成される 3 区画を除いた手書きの部分に、人が選んだと読める言い方が無い。例外は検索の辞書の 1 件だけ（P-330）', () => {
+test('トップ: 店のデータ・特集・ジャーナル・全店一覧の区画を除いた部分（手書きと「目的から探す」）に、人が選んだと読める言い方が無い。例外は検索の辞書の 1 件だけ（P-330）', () => {
   const html = indexWithoutGeneratedRegions();
   const compiled = audit.compilePolicy(audit.loadPolicy(ROOT));
   const r = audit.scanHtml(html, compiled, { rel: 'index.html', keepScripts: true });
@@ -243,6 +253,25 @@ test('トップ: 再生成される 3 区画を除いた手書きの部分に、
   const ex = policy.exempt.filter((e) => e.path === 'index.html');
   assert.equal(ex.length, 1);
   assert.ok(/検索/.test(ex[0].reason) && /画面には出ない/.test(ex[0].reason), '例外の理由は「画面に出ない検索の辞書」');
+});
+
+test('トップ: 「目的から探す」のリンク文は、生成器が語彙表から作る。業界人の導線は label の文で、語が出ない（P-330）', () => {
+  const gen = require('../scripts/inject_store_links');
+  const block = gen.renderSceneIndexBlock();
+  assert.ok(block, '語彙表（data/journal_seo_keywords.json）が読める');
+  const compiled = audit.compilePolicy(audit.loadPolicy(ROOT));
+  const r = audit.scanHtml(block, compiled, { rel: 'index.html' });
+  const errorIds = new Set(policy.terms.filter((t) => t.severity === 'error').map((t) => t.id));
+  assert.deepEqual(r.phrases.filter((p) => errorIds.has(p.term)), [], '生成器が作るリンク文に、人が選んだと読める言い方が出ている');
+  assert.ok(block.includes('<a href="features/industry-insiders-pick.html">飲食業界の人が通う店</a>'), '業界人の導線は label の文');
+  assert.ok(!block.includes('名古屋の業界人'));
+  // kw（検索語の対応づけ・採点・GSC の分類が使う）は変えず、画面に出す文だけを label で替える
+  const master = JSON.parse(readRel('data/journal_seo_keywords.json'));
+  const ins = master.scenes.find((x) => x.kw === '業界人');
+  assert.ok(ins, '語彙表に kw=業界人 が残っている');
+  assert.equal(ins.label, '飲食業界の人が通う店');
+  assert.equal(gen.sceneLinkText({ kw: '接待' }), '名古屋の接待', 'label が無い語は従来どおり');
+  assert.equal(gen.sceneLinkText({ kw: '業界人', label: '別の文' }), '別の文');
 });
 
 test('トップ: 題・OGP・Twitter・説明は、広告ゼロとシーンとエリアで探せることで書く（P-330）', () => {
