@@ -201,6 +201,13 @@ test('ジャーナルのカード: タイトルのリンクがカード全体を
   assert.ok(/\.ljc-link:focus-visible::after\{outline:/.test(INDEX), 'キーボードの焦点がカード全体に見える');
 });
 
+test('横に並べる行は、キーボードの焦点の枠（外側 4px）が上下で切れないだけの余白を持つ。縦の一覧に切り替わる幅では余白を戻す', () => {
+  // overflow-x:auto の行は縦方向も切り取られるので、枠を出す分の余白を足し、同じ分だけ上の余白を引いて位置は変えない
+  assert.ok(/\.trend-picks-list\{[^}]*margin:calc\(-1 \* var\(--sp-1\)\) 0 0;padding:var\(--sp-1\) 0 var\(--sp-2\);/.test(INDEX), '行の上に枠の分の余白');
+  assert.ok(/\.nb-cover-featured \.trend-picks-list\{flex-direction:column;overflow:visible;gap:0;margin:0;padding:0;\}/.test(INDEX), '縦の一覧では余白を戻す（上の余白を引いたままにしない）');
+  assert.ok(/(^|\n)\s*:focus-visible\{outline:2px solid var\(--gold\);outline-offset:2px;\}/.test(INDEX), '全体の焦点の枠は 2px＋離れ 2px＝外側 4px（行の余白 var(--sp-1)=4px はこれを受ける）');
+});
+
 test('話題店の行の CSS: 横に並べる行（狭い画面）と縦の一覧（1024px 以上）、写真の読み込み前に高さが決まる', () => {
   assert.ok(/\.trend-picks-list\{[^}]*overflow-x:auto/.test(INDEX), '狭い画面は横にスクロールする行');
   assert.ok(/@media\(min-width:1024px\)\{[\s\S]*?\.nb-cover-featured \.trend-picks-list\{flex-direction:column/.test(INDEX), '1024px 以上は縦の一覧');
