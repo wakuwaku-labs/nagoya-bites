@@ -8053,13 +8053,13 @@ var SCENE_ALIAS = {
 };
 
 // NB-FILTER:START
-// この区画（NB-FILTER の開始の印から終了の印まで）は tests/index_filter_sheet.test.js が取り出して単体で検査する。DOM を触らない。
+// この区画（NB-FILTER の開始の印から終了の印まで）は tests/index_filter_core.test.js が取り出して単体で検査する。DOM を触らない。
 // 区画の外に頼るのは、NB_FILTER_POLICY（ビルドで埋め込む）・normalizeGenre・GENRE_ORDER・priceToNum・SCENE_ALIAS・nbRunSearch・NB_SEARCH_META・nbSafeDecode だけ。
 //
 // 絞り込みの条件は NB_FILTER（{ genre, areas[], conds[], tags[], cap }）の 1 つのオブジェクトだけが持つ。画面の見た目（押されているボタン）を状態にしない。
 // 検索語は #si が、保存済みだけは SHOW_FAVS_ONLY が別に持つ（判断の記録 0037）。
 // エリアと条件の意味は、ハブ（stores/area/）と同じ表（NB_FILTER_POLICY）と、同じ判定（scripts/lib/area_genre_pages.js の写し）で決める。
-// 写した判定がハブと店ごとに一致することは tests/index_filter_sheet.test.js が全店で確かめる。
+// 写した判定がハブと店ごとに一致することは tests/index_filter_core.test.js が全店で確かめる。
 
 // シートにだけある条件（ハブには無い）。「3,001〜5,000円」は、3,000円以下と5,001円以上のあいだを埋める。
 var NB_COND_EXTRA = [{ slug: 'budget-3001-5000', label: '予算3,001〜5,000円', rule: 'budget3001to5000' }];
