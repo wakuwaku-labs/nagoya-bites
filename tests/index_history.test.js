@@ -840,10 +840,10 @@ test('静的: closeM は開いていたときだけ履歴を戻し、fromPop / s
 });
 
 test('静的: ×・背景・Esc・下スワイプはすべて closeM() を呼ぶ（どれも同じ結果になる）', () => {
-  assert.ok(/class="mcl mcl-close" onclick="closeM\(\)"/.test(INDEX), '×');
+  assert.ok(/class="mcl mcl-close" type="button" onclick="closeM\(\)"/.test(INDEX), '×');
   assert.ok(/addEventListener\('click', function\(e\)\{ if\(e\.target===this\) closeM\(\); \}\)/.test(INDEX), '背景');
   assert.ok(/if \(ov && ov\.classList\.contains\('open'\)\) closeM\(\);/.test(INDEX), 'Esc');
-  assert.ok(/if \(dy > 80 && startScrollTop <= 0\) \{\s*closeM\(\);/.test(INDEX), '下スワイプ');
+  assert.ok(/if \(dy > 80 && startScrollTop <= 0\) closeM\(\);/.test(INDEX), '下スワイプ');
 });
 
 test('静的: ハッシュの名前は、書く側が genre・area・cond・tag・cap・q・store の順、読む側は以前の共有リンクの ward（pref は読んで捨てる）まで変えていない', () => {

@@ -81,5 +81,5 @@ test('地図のボタン: 追従バーのアイコン版にだけ modal-cta-icon
 test('追従バーの出し分け: ホットペッパーありはアイコン2つ、なしは文字ボタン（電話ありは電話＋地図、無ければ地図だけ）', () => {
   assert.match(OPEN_M, /var callIconBtn = nbCallBtnHtml\(r, ctaEsc, true\);/);
   assert.match(OPEN_M, /var callBtnHtml = nbCallBtnHtml\(r, ctaEsc, false\);/);
-  assert.match(OPEN_M, /stickyEl\.innerHTML = \(hpId2 \? \(hpBtnHtml \+ callIconBtn \+ mapIconBtn\)\n\s+: nbCanCall\(r\) \? \(callBtnHtml \+ mapBtnHtml\)\n\s+: mapBtnHtml\) \+ callStatusHtml;/);
+  assert.match(OPEN_M, /stickyEl\.innerHTML = \(hpId2 \? \(hpBtnHtml \+ callIconBtn \+ mapIconBtn\)\n\s+: nbCanCall\(r\) \? \(callBtnHtml \+ mapBtnHtml\)\n\s+: mapOnlyBtnHtml\) \+ callStatusHtml;/);
 });
