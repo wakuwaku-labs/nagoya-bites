@@ -435,9 +435,6 @@ body.search-active .results-summary{display:block;}
 .si-pill .si-k{font-size:var(--fs-xs);font-weight:500;color:var(--dim);letter-spacing:.06em;}
 .si-note{margin-top:.45rem;font-size:var(--fs-xs);line-height:1.6;color:var(--dim);}
 .si-note strong{color:var(--ember-deep,var(--gold));font-weight:700;}
-/* 関連度順チップは検索語があるときだけ出す */
-.sort-chip-rel{display:none;}
-body.search-query-active .sort-chip-rel{display:inline-block;}
 /* カードの一致理由（関連度順のときだけ表示）*/
 .card-why{display:none;padding:0 1.1rem .55rem;gap:.3rem;flex-wrap:wrap;align-items:center;}
 body.search-query-active .card-why{display:flex;}
@@ -483,7 +480,7 @@ body.search-query-active .card-why{display:flex;}
 .card.reel-open .ci{height:auto;aspect-ratio:auto;overflow:hidden;}
 .card.reel-open .ci::after{display:none;}
 /* 再生中はカード上のバッジ類を退避（Instagram側のヘッダーと重なるため）*/
-.card.reel-open .badge,.card.reel-open .card-flag,.card.reel-open .dist-badge{display:none;}
+.card.reel-open .badge,.card.reel-open .card-flag{display:none;}
 .card.reel-open .ci iframe{width:100%;display:block;border:0;background:#000;}
 .reel-close{position:absolute;top:.5rem;right:.5rem;z-index:6;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(10,10,8,.72);color:#fff;font-size:1rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .grid.list-mode .reel-play,.grid.list-mode .reel-tag{display:none;}
@@ -1131,6 +1128,8 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 /* ── SCROLL TO TOP ── */
 #scroll-top{display:none;position:fixed;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));right:1.5rem;z-index:300;width:44px;height:44px;background:var(--gold);border:none;color:var(--bg);border-radius:2px;cursor:pointer;font-size:1.1rem;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.25);transition:opacity .3s;}
 #scroll-top.visible{display:flex;}
+/* スマホ（〜768px）は下の固定バー（.mobile-cta-bar）の「絞り込み」に重なるので、バーの上に出す（#fb-fab と同じ高さ） */
+@media(max-width:768px){#scroll-top{bottom:calc(4.5rem + env(safe-area-inset-bottom,0px));}}
 @media(max-width:768px){
 .card-tags{padding:.35rem 0 .5rem;}
 .card-cta{padding:0;margin-bottom:12px;}
@@ -1151,36 +1150,28 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 /* ── SORT BAR (chip version) ── */
 .sort-bar{display:flex;align-items:center;gap:.7rem;padding:.65rem 1.5rem;background:var(--bg);border-bottom:1px solid var(--border);}
 .sort-bar.sticky-sort{position:sticky;top:56px;z-index:140;background:rgba(247,245,241,.97);backdrop-filter:saturate(1.1) blur(6px);-webkit-backdrop-filter:saturate(1.1) blur(6px);}
-.sort-bar-label{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);white-space:nowrap;flex-shrink:0;}
-.sort-chips{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;}
-.sort-chip{background:#fff;border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:.02em;padding:.42rem .85rem;border-radius:999px;cursor:pointer;transition:all .15s ease;white-space:nowrap;line-height:1.1;font-weight:500;}
-.sort-chip:hover:not(.on):not([disabled]){border-color:var(--gold);color:var(--gold);}
-.sort-chip.on{background:var(--gold);border-color:var(--gold);color:#fff;font-weight:600;box-shadow:0 1px 4px rgba(122,92,16,.18);}
-.sort-chip.loading{opacity:.6;cursor:wait;}
-.sort-chip[disabled]{opacity:.45;cursor:not-allowed;}
-.sort-meta-bar{display:flex;align-items:center;gap:.5rem;padding:.4rem 1.5rem;background:var(--bg);border-bottom:1px solid var(--border);flex-wrap:wrap;}
-.sort-meta-bar .view-toggle{order:2;margin-left:auto;}
-.sort-meta-bar .hpc{order:3;margin-left:.6rem;}
-.dist-badge{position:absolute;top:.55rem;right:.55rem;background:rgba(10,10,8,.78);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);color:#fff;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;padding:.26rem .55rem;border-radius:2px;z-index:3;font-weight:600;pointer-events:none;}
-.dist-badge.approx{opacity:.85;}
-.card.has-fav .dist-badge{right:48px;}
 @media(max-width:768px){
 .sort-bar.sticky-sort{top:56px;padding:.55rem .9rem;}
-.sort-bar-label{display:none;}
-.sort-chips{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:.25rem;margin:-.25rem 0;width:100%;}
-.sort-chip{scroll-snap-align:start;flex-shrink:0;font-size:var(--fs-xs);padding:.4rem .75rem;}
-.sort-meta-bar{padding:.4rem .9rem;}
 }
 @media(max-width:480px){
 .sort-bar.sticky-sort{padding:.5rem .7rem;}
-.sort-chip{font-size:var(--fs-xs);padding:.38rem .7rem;}
-.dist-badge{font-size:var(--fs-xs);padding:.22rem .45rem;}
 }
 /* ── VIEW TOGGLE ── */
 .view-toggle{display:flex;gap:.25rem;margin-left:auto;}
 .view-toggle button{background:transparent;border:1px solid var(--border);color:var(--dim);width:var(--tap-min);height:var(--tap-min);display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:2px;transition:all .2s;padding:0;}
 .view-toggle button:hover{color:var(--text);border-color:var(--border-h);}
 .view-toggle button.active{color:var(--gold);border-color:var(--gold);background:rgba(122,92,16,.06);}
+/* ── 並べ替えのツールバー（I-20）: 「絞り込み」＋見える並べ替え 1 つ（ふつうの select）＋表示の切り替え。1 行 ── */
+.tb-filter{display:inline-flex;align-items:center;gap:.45rem;flex:none;min-height:var(--tap-min);padding:0 .9rem;background:#fff;border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:inherit;font-size:var(--fs-sm);letter-spacing:.04em;cursor:pointer;transition:border-color .2s;}
+.tb-filter:hover{border-color:var(--border-h);}
+.tb-filter .filter-badge{background:var(--ember-deep);color:#fff;}
+.tb-filter .filter-badge[hidden]{display:none;}
+.sort-select-wrap{display:block;flex:1 1 auto;min-width:0;max-width:20rem;}
+.sort-select{display:block;width:100%;min-height:var(--tap-min);padding:0 .7rem;background:#fff;border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:inherit;font-size:var(--fs-md);cursor:pointer;}
+.sort-select:hover{border-color:var(--border-h);}
+/* スマホは 16px 未満だと iOS の Safari が選ぶたびに拡大するので、16px にする */
+@media(max-width:768px){.sort-select{font-size:16px;}}
+@media(max-width:480px){.sort-bar{gap:.5rem;}.tb-filter{padding:0 .7rem;}}
 /* ── LIST MODE（コンパクトなカード・I-19）──
    96px の四角の写真＋名前／最寄駅・ジャンル／価格帯と Google ★／口コミ信頼度。♡ は右上。
    予約ボタン・媒体リンク・紹介文・札は出さない（PC の写真カードとクイックビューに残す） */
@@ -1375,9 +1366,6 @@ body:not(.search-active) #hpc-foot{display:none!important;}
 .search-interpret{border:0;background:none;padding:0;margin:0 0 .5rem;}
 .results-summary-count{font-family:var(--font-body);font-size:var(--fs-md);font-weight:500;}
 .results-summary-count em{font-size:var(--fs-xl);}
-.sort-bar-label{display:none;}
-.sort-chips{scrollbar-width:none;}
-.sort-chips::-webkit-scrollbar{display:none;}
 .filter-toggle-btn.has-filters{background:var(--ember);box-shadow:none;}
 .card{min-width:0;}
 .card-flag.trend-hot{background:var(--ember);}
@@ -1605,7 +1593,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
       <input id="si" type="text" placeholder="店名・エリア・ジャンル" aria-label="レストランを検索">
       <button type="button" class="search-clear-btn" aria-label="検索語をクリア" onclick="clearSearchQuery()">×</button>
     </span>
-    <button onclick="doSearch()" aria-label="検索">検索</button>
+    <button onclick="nbSubmitSearch()" aria-label="検索">検索</button>
     <div class="search-suggest" id="hero-suggest">
       <span class="suggest-label">人気:</span>
       <span class="suggest-pill" onclick="suggestSearch('個室')">個室</span>
@@ -1905,7 +1893,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
     <button type="button" class="search-clear-btn" aria-label="検索語をクリア" onclick="clearSearchQuery()">×</button>
   </span>
   <button class="geo-btn" id="geo-btn" onclick="geoSearch()" aria-label="現在地から探す"><span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="2.8"/></svg></span>現在地</button>
-  <button class="sticky-search-btn" onclick="doSearch()" aria-label="検索">検索</button>
+  <button class="sticky-search-btn" onclick="nbSubmitSearch()" aria-label="検索">検索</button>
 </div>
 
 <div class="results-block" id="results-block">
@@ -1927,34 +1915,23 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
     </div>
   </div>
 
-  <div class="sort-bar sticky-sort" id="sort-bar" role="tablist" aria-label="並び替え">
-    <span class="sort-bar-label">並び替え</span>
-    <div class="sort-chips" id="sort-chips">
-      <button class="sort-chip sort-chip-rel" type="button" role="tab" aria-selected="false" data-sort="relevance">関連度順</button>
-      <button class="sort-chip on" type="button" role="tab" aria-selected="true" data-sort="recommend">おすすめ順</button>
-      <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="distance" data-needs-geo="1">近い順</button>
-      <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="view-desc">人気順</button>
-      <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="trend-desc">話題沸騰順</button>
-      <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="new-desc">新着順</button>
-
-      <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="price-asc">予算が安い順</button>
-      <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="price-desc">予算が高い順</button>
-      <button class="sort-chip" type="button" role="tab" aria-selected="false" data-sort="cc-desc">口コミ信頼度順</button>
-    </div>
-    <select class="sort-select" id="sort-select" hidden onchange="applySort()" aria-hidden="true">
-      <option value="relevance">関連度順</option>
-      <option value="recommend">おすすめ順</option>
-      <option value="distance">近い順</option>
-      <option value="view-desc">人気順</option>
-      <option value="trend-desc">話題沸騰順</option>
-      <option value="new-desc">新着順</option>
-
-      <option value="price-asc">価格帯順(安い順)</option>
-      <option value="price-desc">価格帯順（高い順）</option>
-      <option value="cc-desc">口コミ信頼度順（高い順）</option>
-    </select>
-  </div>
-  <div class="sort-meta-bar" id="sort-meta-bar">
+  <div class="sort-bar sticky-sort" id="sort-bar" aria-label="絞り込みと並べ替え">
+    <button type="button" id="tb-filter-btn" class="tb-filter" onclick="nbOpenFilterSheet(this)" aria-haspopup="dialog" aria-controls="filter-sheet">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 3h12M3 7h8M5 11h4"/></svg>
+      絞り込み
+      <span class="filter-badge" id="tb-filter-badge" hidden>0</span>
+    </button>
+    <label class="sort-select-wrap"><span class="visually-hidden">並べ替え</span>
+      <select class="sort-select" id="sort-select" onchange="applySort()">
+        <option value="recommend" selected>おすすめ順</option>
+        <option value="view-desc">人気順</option>
+        <option value="trend-desc">話題沸騰順</option>
+        <option value="new-desc">新着順</option>
+        <option value="price-asc">予算が安い順</option>
+        <option value="price-desc">予算が高い順</option>
+        <option value="cc-desc">口コミ信頼度順</option>
+      </select>
+    </label>
     <div class="view-toggle" id="view-toggle">
       <button id="vt-grid" class="active" onclick="setViewMode('grid')" aria-label="グリッド表示" title="グリッド表示"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="6" height="6" rx="1"/><rect x="8" y="0" width="6" height="6" rx="1"/><rect x="0" y="8" width="6" height="6" rx="1"/><rect x="8" y="8" width="6" height="6" rx="1"/></svg></button>
       <button id="vt-list" onclick="setViewMode('list')" aria-label="リスト表示" title="リスト表示"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="14" height="3" rx="1"/><rect x="0" y="5.5" width="14" height="3" rx="1"/><rect x="0" y="11" width="14" height="3" rx="1"/></svg></button>
@@ -8863,28 +8840,33 @@ function nbRunSearch(list, rawQuery) {
 // ── 検索UI連携（並び替えの自動切替 / 解釈の可視化）──
 var SORT_USER_PINNED = false; // ユーザーが並び替えを明示的に選んだか
 
+// 並べ替えの select の値を合わせる（選択肢に無い値は無視する）
 function nbSetSortMode(mode) {
   SORT_MODE = mode;
   var sel = document.getElementById('sort-select');
-  if (sel) {
-    var has = false;
-    for (var i = 0; i < sel.options.length; i++) if (sel.options[i].value === mode) has = true;
-    if (has) sel.value = mode;
-  }
-  var chips = document.querySelectorAll('.sort-chip');
-  for (var j = 0; j < chips.length; j++) {
-    var on = chips[j].dataset.sort === mode;
-    chips[j].classList.toggle('on', on);
-    chips[j].setAttribute('aria-selected', on ? 'true' : 'false');
+  if (!sel) return;
+  for (var i = 0; i < sel.options.length; i++) {
+    if (sel.options[i].value === mode) { sel.value = mode; return; }
   }
 }
 
+// 「関連度順」は検索語があるときだけ選択肢に現れる（iOS の Safari は option[hidden] を無視するので、DOM から外す）
 function nbSyncRelevanceSort(hasQuery) {
   if (document.body) document.body.classList.toggle('search-query-active', !!hasQuery);
+  var sel = document.getElementById('sort-select');
+  var rel = null;
+  if (sel) for (var i = 0; i < sel.options.length; i++) if (sel.options[i].value === 'relevance') rel = sel.options[i];
   if (hasQuery) {
+    if (sel && !rel) {
+      rel = document.createElement('option');
+      rel.value = 'relevance';
+      rel.textContent = '関連度順';
+      sel.insertBefore(rel, sel.firstChild);
+    }
     if (!SORT_USER_PINNED && SORT_MODE !== 'relevance') nbSetSortMode('relevance');
-  } else if (SORT_MODE === 'relevance') {
-    nbSetSortMode('recommend');
+  } else {
+    if (SORT_MODE === 'relevance') nbSetSortMode('recommend');
+    if (rel && sel) sel.removeChild(rel);
   }
 }
 
@@ -9223,32 +9205,23 @@ function shareURL() {
     navigator.share({ title: document.title, url: url });
   } else if (navigator.clipboard) {
     navigator.clipboard.writeText(url).then(function(){
-      alert('URLをコピーしました');
+      showToast('URLをコピーしました');
     });
   }
 }
 
-function selectPref(pref) {
-  var el = document.querySelector('.pt[data-pref="' + pref + '"]');
-  if (el) { document.querySelectorAll('.pt').forEach(function(x){ x.classList.remove('on'); }); el.classList.add('on'); applyFilters(); }
-  el && el.scrollIntoView({behavior:'smooth', block:'nearest'});
+// 検索の送信は 1 つ（「検索」ボタン・Enter・suggestSearch）。溜まっている入力のデバウンスを取り消し、2 つの入力欄をそろえ、
+// 絞り込みを 1 回・search の計測を 1 回だけ送る
+function nbSubmitSearch() {
+  if (NB_SEARCH_DEBOUNCE) { clearTimeout(NB_SEARCH_DEBOUNCE); NB_SEARCH_DEBOUNCE = null; }
+  var si = document.getElementById('si');
+  var si2 = document.getElementById('si2');
+  var q = (si2 && si2.value) || (si && si.value) || '';
+  if (si && si.value !== q) si.value = q;
+  if (si2 && si2.value !== q) si2.value = q;
+  if (q) trackEvent('search', { search_term: q });
+  applyFilters();
 }
-function selectGenre(genre) {
-  genre = normalizeGenre(genre); // 旧・細粒度ジャンル名や別表記でも代表ジャンルに解決
-  var el = document.querySelector('.ft[data-f="' + genre + '"]');
-  if (el) { document.querySelectorAll('.ft').forEach(function(x){ x.classList.remove('on'); }); el.classList.add('on'); applyFilters(); }
-  el && el.scrollIntoView({behavior:'smooth', block:'nearest'});
-}
-function selectTag(tag) {
-  var el = document.querySelector('.tg[data-tag="' + tag + '"]');
-  if (el && !el.classList.contains('on')) {
-    el.classList.add('on');
-    if (ACTIVE_TAGS.indexOf(tag) < 0) ACTIVE_TAGS.push(tag);
-    applyFilters();
-  }
-  el && el.scrollIntoView({behavior:'smooth', block:'nearest'});
-}
-function doSearch(){ var q=document.getElementById('si2').value||document.getElementById('si').value||''; if(q)trackEvent('search',{search_term:q}); applyFilters(); }
 // 検索入力のクリア（×）ボタン（FB-001）。入力の有無で .search-field に has-value を付け外しする。
 function nbUpdateSearchClearVisibility(el) {
   var field = el && el.closest ? el.closest('.search-field') : null;
@@ -9260,7 +9233,7 @@ function clearSearchQuery() {
   applyFilters();
   if (si) si.focus();
 }
-document.getElementById('si').addEventListener('keydown', function(e){ if(e.key==='Enter') applyFilters(); });
+document.getElementById('si').addEventListener('keydown', function(e){ if(e.key==='Enter') nbSubmitSearch(); });
 document.getElementById('si').addEventListener('input', function(){
   var si2 = document.getElementById('si2');
   if (si2 && document.activeElement !== si2) si2.value = this.value;
@@ -9275,7 +9248,7 @@ document.getElementById('si2').addEventListener('input', function(){
   if (NB_SEARCH_DEBOUNCE) clearTimeout(NB_SEARCH_DEBOUNCE);
   NB_SEARCH_DEBOUNCE = setTimeout(applyFilters, 140);
 });
-document.getElementById('si2').addEventListener('keydown', function(e){ if(e.key==='Enter') applyFilters(); });
+document.getElementById('si2').addEventListener('keydown', function(e){ if(e.key==='Enter') nbSubmitSearch(); });
 
 // ── 特集カルーセル（トップ最上部）──
 // タッチ端末は指で払えるが、マウスだと横スクロールできることに気づけないので左右送りを出す。
@@ -9970,14 +9943,6 @@ function buildCardHtml(r, ctx) {
         + r.__why.map(function(w){ return '<span class="cw-t">' + nbEscHtml(w) + '</span>'; }).join('')
         + '</div>';
     }
-    var distBadge = '';
-    if (typeof SORT_MODE !== 'undefined' && SORT_MODE === 'distance' && typeof r.__dist === 'number' && isFinite(r.__dist)) {
-      var distText = r.__dist < 1
-        ? Math.max(1, Math.round(r.__dist * 1000)) + 'm'
-        : r.__dist.toFixed(1) + 'km';
-      var approx = r.__distApprox !== false;
-      distBadge = '<span class="dist-badge' + (approx ? ' approx' : '') + '" title="' + (approx ? '現在地からの概算距離（エリア中心点）' : '現在地からの直線距離') + '">' + (approx ? '~' : '') + distText + '</span>';
-    }
     // ── I-19: コンパクトなカード（判断の記録 0036）──
     //    ・題名は店舗ページへの本物のリンク（新しいタブ・中クリック・長押しで開ける）。ふつうのクリックはこれまでどおり詳細（クイックビュー）を開く。
     //      店舗ページが無い店は、リンクを付けず従来どおりのボタン（role="button"）にする
@@ -9990,7 +9955,7 @@ function buildCardHtml(r, ctx) {
       ? '<img src="' + nbImage(photo, 400) + '" srcset="' + nbSrcset(photo, [192, 288, 400, 600, 800]) + '" sizes="' + nbCardSizes(ctx) + '" alt="' + ename + '" data-genre="' + nbEscHtml(genre) + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)">'
       : '<span class="ci-mark" aria-hidden="true">' + nbEscHtml(genre) + '</span>';
     return '<div class="card' + (photo ? '' : ' is-nophoto') + (href ? ' has-link' : '') + '" onclick="nbCardClick(event,' + idx + ')"' + (href ? '' : ' role="button" tabindex="0" aria-label="' + ename + 'の詳細を見る"') + '>'
-      + '<div class="ci">' + distBadge + (photo ? nbPhotoCredit(r) : '') + photoHtml
+      + '<div class="ci">' + (photo ? nbPhotoCredit(r) : '') + photoHtml
       + (reel ?'<button class="reel-play" onclick="nbPlayReel(event,this,\'' + reel.code + '\')" aria-label="' + nbEscHtml(r['店名']) + 'のリール動画を再生"><i aria-hidden="true"></i></button><span class="reel-tag">リール</span>' : '')
       + '</div>'
       + '<span class="badge">' + genre + '</span>'
@@ -11401,145 +11366,10 @@ function closeNav(){
 // [1] ソート機能
 // ================================================================
 var SORT_MODE = 'recommend';
-var USER_GEO = null;
-
-// エリア重心座標（build.js マージ漏れ・新規エリア対応の runtime fallback）
-// 正本は data/area_centroids.json。build.js が緯度/経度を焼き込めなかった
-// 店舗に対して、これを使って距離ソート可能にする。
-var AREA_CENTROIDS = {
-  '名古屋（名古屋駅/西区/中村区）': [35.1709, 136.8815],
-  '栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄': [35.1721, 136.9050],
-  '栄(ミナミ)/矢場町/大須/上前津': [35.1610, 136.9060],
-  '大曽根･千種･今池･池下･守山区': [35.1820, 136.9420],
-  '栄': [35.1681, 136.9083],
-  '緑区・南区・天白区・瑞穂区': [35.1050, 136.9550],
-  '本山・覚王山・藤が丘': [35.1620, 136.9700],
-  '中川区・港区': [35.1080, 136.8650],
-  '金山・神宮前・熱田区': [35.1318, 136.9050],
-  '名古屋駅': [35.1709, 136.8815],
-  '鶴舞・八事・御器所': [35.1440, 136.9380],
-  '金山': [35.1432, 136.9006],
-  '大須': [35.1597, 136.9032],
-  '名駅': [35.1709, 136.8815],
-  '丸の内': [35.1764, 136.8987],
-  '東区': [35.1830, 136.9220],
-  '錦': [35.1720, 136.9050],
-  '覚王山': [35.1599, 136.9527],
-  '昭和区': [35.1380, 136.9300],
-  '名古屋市その他': [35.1815, 136.9066],
-  '新栄': [35.1707, 136.9213],
-  '熱田': [35.1280, 136.9023],
-  '西区': [35.1950, 136.8820],
-  '天白区': [35.1240, 136.9750],
-  '東桜': [35.1760, 136.9110],
-  '中川区': [35.1300, 136.8540],
-  '高畑': [35.1530, 136.8470],
-  '港区': [35.0830, 136.8800],
-  '名東区': [35.1750, 137.0020],
-  '千種区 吹上': [35.1530, 136.9410],
-  '中区 栄': [35.1681, 136.9083],
-  '南区 鶴里': [35.1100, 136.9320],
-  '千種区 今池': [35.1700, 136.9341],
-  '東区 大曽根': [35.1933, 136.9281],
-  '名古屋駅西': [35.1719, 136.8760],
-  '北区 志賀町': [35.2040, 136.9170],
-  '昭和区 川名': [35.1430, 136.9450],
-  '伏見': [35.1689, 136.8989],
-  '矢場町': [35.1635, 136.9099],
-  '今池': [35.1700, 136.9341],
-  '千種': [35.1707, 136.9304],
-  '鶴舞': [35.1573, 136.9252],
-  '本山': [35.1555, 136.9633],
-  '東山公園': [35.1546, 136.9743],
-  '星ヶ丘': [35.1559, 136.9931],
-  '藤が丘': [35.1843, 137.0179],
-  '八事': [35.1335, 136.9551],
-  '御器所': [35.1432, 136.9337],
-  '桜山': [35.1306, 136.9305],
-  '上前津': [35.1568, 136.9069],
-  '久屋大通': [35.1739, 136.9081],
-  '池下': [35.1700, 136.9442],
-  '国際センター': [35.1740, 136.8902],
-  '神宮前': [35.1240, 136.9080]
-};
-
-// 店舗の lat/lng を取得。緯度経度フィールドを優先、無ければ AREA_CENTROIDS にフォールバック
-function getStoreCoords(s) {
-  var lat = parseFloat(s['緯度']);
-  var lng = parseFloat(s['経度']);
-  if (isFinite(lat) && isFinite(lng)) {
-    return { lat: lat, lng: lng, approx: s['座標精度'] !== 'exact' };
-  }
-  var c = AREA_CENTROIDS[s['エリア']];
-  if (c) return { lat: c[0], lng: c[1], approx: true };
-  return null;
-}
-try {
-  var _cachedGeo = sessionStorage.getItem('nb_user_geo');
-  if (_cachedGeo) {
-    var _g = JSON.parse(_cachedGeo);
-    if (_g && Date.now() - (_g.timestamp || 0) < 30 * 60 * 1000) USER_GEO = _g;
-  }
-} catch(e) {}
-
 function priceToNum(p) {
   if (!p) return 99999;
   var m = (p + '').replace(/[,，]/g,'').match(/(\d+)/);
   return m ? parseInt(m[1], 10) : 99999;
-}
-
-// 地球上 2点間の直線距離 (Haversine, km)
-function calculateDistance(lat1, lng1, lat2, lng2) {
-  var R = 6371;
-  var dLat = (lat2 - lat1) * Math.PI / 180;
-  var dLng = (lng2 - lng1) * Math.PI / 180;
-  var a = Math.sin(dLat/2) * Math.sin(dLat/2)
-        + Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180)
-        * Math.sin(dLng/2) * Math.sin(dLng/2);
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-}
-
-// 現在地を取得し SORT_MODE='distance' で再描画。許可拒否時はおすすめ順に戻す
-function ensureGeoAndSort() {
-  if (USER_GEO) { SORT_MODE = 'distance'; sortAndRender(); scrollToResultsIfAbove(); return; }
-  if (!navigator.geolocation) {
-    if (window.showToast) showToast('お使いの環境では位置情報が利用できません');
-    revertSort('recommend');
-    return;
-  }
-  var distChip = document.querySelector('.sort-chip[data-sort="distance"]');
-  if (distChip) distChip.classList.add('loading');
-  if (window.showToast) showToast('現在地を取得中...');
-  navigator.geolocation.getCurrentPosition(function(pos){
-    USER_GEO = { lat: pos.coords.latitude, lng: pos.coords.longitude, timestamp: Date.now() };
-    try { sessionStorage.setItem('nb_user_geo', JSON.stringify(USER_GEO)); } catch(e){}
-    if (distChip) distChip.classList.remove('loading');
-    SORT_MODE = 'distance';
-    sortAndRender();
-    scrollToResultsIfAbove();
-    if (window.trackEvent) trackEvent('sort_distance_granted', {});
-  }, function(err){
-    if (distChip) distChip.classList.remove('loading');
-    var msg = err && err.code === 1
-      ? '位置情報の利用が許可されていません'
-      : '現在地の取得に失敗しました';
-    if (window.showToast) showToast(msg);
-    revertSort('recommend');
-    if (window.trackEvent) trackEvent('sort_distance_denied', { code: err && err.code });
-  }, { timeout: 8000, maximumAge: 5 * 60 * 1000, enableHighAccuracy: false });
-}
-
-// chip と select、SORT_MODE を同期しつつ別のモードへ戻す
-function revertSort(mode) {
-  SORT_MODE = mode;
-  var sel = document.getElementById('sort-select');
-  if (sel) sel.value = mode;
-  document.querySelectorAll('.sort-chip').forEach(function(c){
-    var on = c.dataset.sort === mode;
-    c.classList.toggle('on', on);
-    c.setAttribute('aria-selected', on ? 'true' : 'false');
-  });
-  sortAndRender();
 }
 
 function scrollToResultsIfAbove() {
@@ -11549,13 +11379,14 @@ function scrollToResultsIfAbove() {
   if (window.pageYOffset < rbTop - 200 && typeof scrollToResults === 'function') scrollToResults();
 }
 
+// 並べ替えの select が変わったとき（計測は 1 回だけ。形は旧チップと同じ { mode }）
 function applySort() {
   var sel = document.getElementById('sort-select');
   SORT_MODE = sel ? sel.value : 'recommend';
   SORT_USER_PINNED = SORT_MODE !== 'relevance';
-  if (SORT_MODE === 'distance' && !USER_GEO) { ensureGeoAndSort(); return; }
   sortAndRender();
   scrollToResultsIfAbove();
+  if (window.trackEvent) trackEvent('sort_change', { mode: SORT_MODE });
 }
 
 function sortStores(arr) {
@@ -11613,25 +11444,6 @@ function sortStores(arr) {
         return be - ae;
       });
       break;
-    case 'distance':
-      if (USER_GEO) {
-        arr.forEach(function(s){
-          var c = getStoreCoords(s);
-          if (c) {
-            s.__dist = calculateDistance(USER_GEO.lat, USER_GEO.lng, c.lat, c.lng);
-            s.__distApprox = c.approx;
-          } else {
-            s.__dist = Infinity;
-            s.__distApprox = true;
-          }
-        });
-        arr.sort(function(a,b){
-          var da = (a.__dist == null || !isFinite(a.__dist)) ? Infinity : a.__dist;
-          var db = (b.__dist == null || !isFinite(b.__dist)) ? Infinity : b.__dist;
-          return da - db;
-        });
-      }
-      break;
     default: // recommend: 話題フラグ/編集部推薦 → トレンドスコア → おすすめ文有無 → Google評価
       arr.sort(function(a,b){
         var af = (a['話題フラグ'] === true || a['編集部推薦'] === true) ? 1 : 0;
@@ -11664,40 +11476,6 @@ renderGrid = function(data) {
   var arr = (data === FILTERED) ? sortStores(data.slice()) : data;
   _origRenderGrid(arr);
 };
-
-// chip ボタンに click ハンドラを設定（初回マウント時）
-(function bindSortChips(){
-  function bind(){
-    var chips = document.querySelectorAll('.sort-chip');
-    if (!chips.length) return;
-    chips.forEach(function(btn){
-      if (btn.__bound) return;
-      btn.__bound = true;
-      btn.addEventListener('click', function(){
-        if (btn.hasAttribute('disabled')) return;
-        var mode = btn.dataset.sort;
-        if (!mode) return;
-        document.querySelectorAll('.sort-chip').forEach(function(c){
-          var on = c === btn;
-          c.classList.toggle('on', on);
-          c.setAttribute('aria-selected', on ? 'true' : 'false');
-        });
-        var sel = document.getElementById('sort-select');
-        if (sel) sel.value = mode;
-        SORT_MODE = mode;
-        SORT_USER_PINNED = mode !== 'relevance';
-        if (mode === 'distance') { ensureGeoAndSort(); }
-        else { sortAndRender(); scrollToResultsIfAbove(); }
-        if (window.trackEvent) trackEvent('sort_change', { mode: mode });
-      });
-    });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bind);
-  } else {
-    bind();
-  }
-})();
 
 // 「目的から探す」のピル一覧が多い場合に折りたたむ（各グループ先頭8件＋もっと見る）
 (function foldSceneIndex(){
@@ -12015,7 +11793,7 @@ function suggestSearch(keyword) {
   var si2 = document.getElementById('si2');
   if (si) si.value = keyword;
   if (si2) si2.value = keyword;
-  doSearch();
+  nbSubmitSearch();
 }
 
 // ================================================================
@@ -12027,7 +11805,6 @@ function suggestSearch(keyword) {
   if (si && si2) {
     si.addEventListener('input', function() { si2.value = si.value; });
     si2.addEventListener('input', function() { si.value = si2.value; });
-    si2.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSearch(); });
   }
 })();
 

@@ -115,7 +115,7 @@ const REQUIRED_TAP = [
   '.search-clear-btn', '.sticky-search input', '.sticky-search-btn', '.mobile-cta-bar .cta-search', '.mobile-cta-bar .cta-filter',
   '.view-toggle button', '.cap-input', '.pg-btn', '.fold-toggle', '.tag-reset', '.share-btn', '.clear-all-btn',
   '.geo-btn', '.filter-panel-cta-reset', '.results-summary-reset', '.store-index-area>summary', '.scene-chip', '.scene-index-list a',
-  '.hpc a', '.ft', '.pt', '.at', '.tg', '.ml',
+  '.hpc a', '.ft', '.pt', '.at', '.tg', '.ml', '.tb-filter', '.sort-select',
 ];
 
 test('トークンを nb.css から読めている（読めなければこのテストが空振りする）', () => {
