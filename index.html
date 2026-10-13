@@ -558,12 +558,13 @@ body.search-query-active .card-why{display:flex;}
    角丸などページ固有トークンは :root を触らず .ov スコープに --page- 接頭辞で定義（DSN-001）。 */
 .ov{display:none;position:fixed;inset:0;z-index:500;background:rgba(5,5,4,.78);backdrop-filter:blur(14px);align-items:flex-end;justify-content:center;padding:0;--page-r-sheet:20px;--page-r-card:12px;--page-r-chip:999px;}
 .ov.open{display:flex;}
-.modal{position:relative;background:var(--bg);border:0;max-width:760px;width:100%;max-height:92vh;max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;border-radius:var(--page-r-sheet) var(--page-r-sheet) 0 0;box-shadow:0 -8px 40px rgba(0,0,0,.35);animation:min .32s cubic-bezier(.22,.61,.36,1);}
+.modal{position:relative;background:var(--bg);border:0;max-width:640px;width:100%;max-height:92vh;max-height:92dvh;overflow-y:auto;overscroll-behavior:contain;border-radius:var(--page-r-sheet) var(--page-r-sheet) 0 0;box-shadow:0 -8px 40px rgba(0,0,0,.35);animation:min .2s cubic-bezier(.22,.61,.36,1);outline:none;}
 @keyframes min{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:none;}}
-@media(min-width:769px){.ov{align-items:center;padding:1.5rem;}.modal{max-height:88vh;border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.4);}}
-/* ヒーロー: 全幅・比率固定・文字を重ねない（♡ と × だけ）。読み込み中は店舗固有SVGが下地に出る */
-.mhi{position:relative;overflow:hidden;aspect-ratio:4/3;background:var(--bg2);background-size:cover;background-position:center;}
-@media(min-width:769px){.mhi{aspect-ratio:16/10;}}
+@media(min-width:769px){.ov{align-items:center;padding:1.5rem;}.modal{max-height:88vh;border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.4);}.m-handle{display:none;}}
+/* ヒーロー: 写真は 1:1（スマホは幅いっぱい・高さは画面の 46% まで）。文字を重ねない。読み込み中は店舗固有SVGが下地に出る。実写が無い店は枠ごと出さない（.is-nophoto） */
+.mhi{position:relative;overflow:hidden;aspect-ratio:1/1;width:100%;max-width:480px;max-height:46vh;max-height:46dvh;margin:0 auto;background:var(--bg2);background-size:cover;background-position:center;}
+@media(min-width:769px){.mhi{max-width:360px;max-height:none;border-radius:var(--page-r-card);}}
+.modal.is-nophoto .mhi{display:none;}
 .mhi img{width:100%;height:100%;object-fit:cover;display:block;}
 .mhi-track{display:flex;height:100%;transition:transform .32s cubic-bezier(.22,.61,.36,1);touch-action:pan-y;}
 .mhi-track.dragging{transition:none;}
@@ -579,8 +580,14 @@ body.search-query-active .card-why{display:flex;}
 .mhi-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.45);transition:all .2s;cursor:pointer;padding:0;border:none;}
 .mhi-dot.active{background:#fff;width:18px;border-radius:4px;}
 .mhi .photo-credit{left:auto;right:10px;bottom:10px;}
-.mbody{padding:var(--sp-5) var(--sp-4) var(--sp-6);}
-@media(min-width:769px){.mbody{padding:var(--sp-6) var(--sp-6) var(--sp-6);}}
+.mbody{padding:var(--sp-4) var(--sp-4) var(--sp-5);}
+/* 上の帯: 取っ手（スマホ）と ×。スクロールしても × が見える */
+.m-topbar{position:sticky;top:0;z-index:6;display:flex;align-items:center;justify-content:center;height:var(--tap-min);background:var(--bg);}
+.m-handle{width:40px;height:4px;border-radius:2px;background:var(--border-h);}
+.mcl{position:absolute;top:0;right:var(--sp-2);width:var(--tap-min);height:var(--tap-min);display:flex;align-items:center;justify-content:center;background:transparent;border:0;color:var(--text);cursor:pointer;border-radius:50%;padding:0;transition:background .2s;}
+.mcl svg{width:20px;height:20px;display:block;}
+.mcl:hover{background:var(--bg2);}
+@media(min-width:769px){.mbody{padding:var(--sp-4) var(--sp-6) var(--sp-6);}}
 /* 識別ブロック: ジャンル（日本語キッカー）→ 店名（セリフ・最大）→ エリア·最寄駅 */
 .m-head{display:flex;flex-direction:column;gap:var(--sp-2);}
 .m-kicker{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3);min-height:1.6em;}
@@ -592,24 +599,48 @@ body.search-query-active .card-why{display:flex;}
 .m-flag.flag-editor{color:#fff;background:linear-gradient(135deg,#2d6a4f,#1b4332);border-color:transparent;}
 .m-flag.flag-insider{color:#fff;background:rgba(42,106,90,.94);border-color:transparent;}
 .min2{font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:500;color:var(--ink);line-height:var(--lh-display);letter-spacing:var(--ls-display);overflow-wrap:anywhere;}
-.m-sub{font-size:var(--fs-sm);color:var(--muted);line-height:var(--lh-ui);display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .7rem;}
-.m-sub .m-dot::before{content:'·';color:var(--dim);margin-right:.7rem;}
-/* at-a-glance: 口コミ信頼度 / Google★（件数）/ 価格帯 / 本日 の最大4セル（値がある時だけ）。ヘアラインの表 */
-.m-glance{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:var(--sp-4);}
-.m-glance:empty{display:none;}
-.m-gcell{background:var(--bg);padding:var(--sp-3) var(--sp-3) var(--sp-3) 0;display:flex;flex-direction:column;gap:.15rem;min-width:0;}
-.m-gcell+.m-gcell{padding-left:var(--sp-3);}
-.m-gcell.is-link{cursor:pointer;}
-.m-gcell.is-link:hover .m-glabel{color:var(--gold);}
-.m-glabel{font-size:var(--fs-xs);color:var(--dim);font-weight:500;letter-spacing:0;line-height:1.4;white-space:nowrap;}
-.m-gval{font-size:var(--fs-md);color:var(--text);font-weight:600;line-height:var(--lh-ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:baseline;gap:.3rem;}
-.m-gval .num{font-family:var(--font-mono);font-weight:500;}
-.m-gval .cc-tier{font-family:var(--font-mono);font-weight:700;font-size:var(--fs-xl);line-height:1;}
-.m-gval .m-star{color:#d4a017;}
-.m-gval .m-star svg{width:.9em;height:.9em;fill:currentColor;vertical-align:-.08em;}
-.m-gval .m-count{font-size:var(--fs-xs);color:var(--dim);font-weight:500;}
-.m-gval .m-open{color:var(--green);}
-.m-gval .m-closed{color:var(--ember-deep);}
+/* 名前の行（店名＋♡）。♡ は押せる範囲 44px */
+.m-titlerow{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--sp-3);}
+.m-titlerow .min2{flex:1 1 auto;min-width:0;outline:none;}
+.m-fav{flex:0 0 auto;width:var(--tap-min);height:var(--tap-min);display:flex;align-items:center;justify-content:center;background:var(--card);border:1px solid var(--border-h);border-radius:50%;color:var(--muted);cursor:pointer;padding:0;transition:color .2s,border-color .2s;}
+.m-fav svg{width:20px;height:20px;display:block;}
+.m-fav:hover{color:var(--text);}
+.m-fav.faved{color:#e74c3c;border-color:rgba(231,76,60,.5);}
+/* 要点: ★Google 評価（件数）・口コミ信頼度 ›／最寄駅 徒歩N分・価格帯／本日の営業時間。値がある行だけを出す（I-22・判断の記録 0038） */
+.m-facts{display:flex;flex-direction:column;gap:var(--sp-1);margin-top:var(--sp-2);}
+.m-facts:empty{display:none;}
+.m-fact{display:flex;flex-wrap:wrap;align-items:baseline;gap:.1rem .7rem;min-width:0;font-size:var(--fs-md);line-height:var(--lh-ui);color:var(--text);}
+.m-rate{display:inline-flex;align-items:baseline;gap:.3rem;font-weight:600;}
+.m-rate .m-star{color:#d4a017;}
+.m-rate .m-star svg{width:.9em;height:.9em;fill:currentColor;vertical-align:-.08em;}
+.m-rate .num{font-family:var(--font-mono);font-weight:500;}
+.m-rate .m-count{font-size:var(--fs-sm);color:var(--muted);font-weight:500;}
+.m-trust-link{position:relative;display:inline-flex;align-items:baseline;gap:.3rem;padding:0;margin:0;background:none;border:0;color:var(--text);font:inherit;font-weight:600;cursor:pointer;}
+.m-trust-link::after{content:"";position:absolute;inset:-12px -8px;}
+.m-trust-link .cc-tier{font-family:var(--font-mono);font-weight:700;}
+.m-trust-link:hover{color:var(--gold);}
+.m-fact-sub{font-size:var(--fs-sm);color:var(--muted);}
+.m-today{font-size:var(--fs-sm);font-weight:600;}
+.m-today.m-open{color:var(--green);}
+.m-today.m-closed{color:var(--ember-deep);}
+.m-today .m-note-sm{font-weight:400;color:var(--dim);}
+/* 店舗ページへのリンクと、一覧の隣の店へ移る前・次 */
+.m-store-link{display:flex;align-items:center;justify-content:center;gap:.35rem;min-height:var(--tap-min);margin-top:var(--sp-4);padding:0 var(--sp-4);background:var(--card);border:1px solid var(--border-h);border-radius:var(--page-r-chip);color:var(--text);font-size:var(--fs-md);font-weight:600;text-decoration:none;}
+.m-store-link:hover{border-color:var(--gold);color:var(--gold);}
+.m-pager{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);margin-top:var(--sp-3);}
+.m-pg-btn{min-height:var(--tap-min);padding:0 var(--sp-4);background:var(--card);border:1px solid var(--border);border-radius:var(--page-r-chip);color:var(--text);font-family:var(--font-body);font-size:var(--fs-sm);font-weight:600;cursor:pointer;}
+.m-pg-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold);}
+.m-pg-btn:disabled{opacity:.4;cursor:default;}
+.m-pg-pos{font-family:var(--font-mono);font-size:var(--fs-sm);color:var(--muted);}
+/* ほかの情報（特集・経験者のレビュー・各媒体・似た店・共有）は折りたたむ。口コミ信頼度・基本情報・Instagram は折りたたまない */
+.m-more{margin-top:var(--sp-6);border-top:1px solid var(--border);}
+.m-more>summary{font-size:var(--fs-sm);color:var(--muted);cursor:pointer;padding:.6rem 0;min-height:var(--tap-min);display:flex;align-items:center;flex-wrap:wrap;gap:.2rem .4rem;list-style:none;}
+.m-more>summary::-webkit-details-marker{display:none;}
+.m-more>summary::before{content:'＋';color:var(--gold);font-weight:600;}
+.m-more[open]>summary::before{content:'－';}
+.m-more-sub{font-size:var(--fs-xs);color:var(--dim);}
+.m-more>.m-section:first-of-type{margin-top:var(--sp-3);}
+#m-cross-check,#m-info,#mig-wrap{scroll-margin-top:calc(var(--tap-min) + var(--sp-2));}
 /* 節見出し: 金の短い罫 + 日本語ラベル（英日二重見出しは使わない） */
 .m-section{margin-top:var(--sp-6);}
 .m-section-title{font-size:var(--fs-xs);font-weight:600;color:var(--dim);letter-spacing:0;margin-bottom:var(--sp-3);display:flex;align-items:center;gap:.55rem;line-height:1.4;}
@@ -718,11 +749,9 @@ body.search-query-active .card-why{display:flex;}
 .modal-related-note{margin:0 0 .6rem;font-size:var(--fs-xs);color:var(--dim);line-height:1.5;}
 .modal-rsc:hover{border-color:var(--gold);box-shadow:0 6px 16px rgba(122,92,16,.12);}
 @media(max-width:640px){.modal-rsc{flex:0 0 148px;}}
-/* ── モーダル内 CTA（主: 予約＝塗り1系統 / 副: 地図＝アウトライン）。at-a-glance 直下に置き、
-   スマホでは画面外に出た時だけ追従バー（.m-sticky-cta）に同じ2導線を出す ── */
-#modal-cta-row{display:flex;gap:var(--sp-2);margin-top:var(--sp-4);}
+/* ── モーダルの行動バー（.m-sticky-cta）。主: 予約＝塗り1系統 / 副: 電話・地図。シートの下に常に固定する（I-22・計画 7.3 節）。
+   ボタンの並びは店の種類で4通り（予約先あり＋電話／予約先あり／予約先なし＋電話／地図だけ）で、出し分けは openM ── */
 .modal-cta-btn{display:inline-flex;align-items:center;justify-content:center;flex:1 1 0;min-width:0;min-height:52px;padding:.8rem 1rem;text-align:center;text-decoration:none;font-size:var(--fs-sm);font-weight:600;letter-spacing:0;border-radius:var(--page-r-chip);transition:background .2s,transform .2s,box-shadow .2s,filter .2s;cursor:pointer;border:none;line-height:1.3;}
-@media(max-width:420px){#modal-cta-row{flex-wrap:wrap;}#modal-cta-row .modal-cta-btn{flex:1 1 100%;}}
 .modal-cta-hp{background:var(--warm-grad);color:#fff!important;font-weight:700;font-size:var(--fs-lg);box-shadow:0 2px 10px rgba(184,84,31,.32);}
 .modal-cta-hp:hover{filter:brightness(1.06);transform:translateY(-1px);box-shadow:var(--warm-glow);}
 .modal-cta-gm{background:var(--surface);color:var(--text)!important;font-weight:600;border:1px solid var(--border-h);box-shadow:0 1px 4px rgba(0,0,0,.08);}
@@ -733,13 +762,13 @@ body.search-query-active .card-why{display:flex;}
 .modal-cta-call:hover{background:var(--bg2);border-color:var(--green-dim);box-shadow:0 3px 8px rgba(0,0,0,.12);}
 .modal-cta-call:disabled{opacity:.6;cursor:progress;}
 .modal-cta-call svg{width:16px;height:16px;flex:0 0 auto;fill:currentColor;}
-.m-sticky-cta{position:sticky;bottom:0;z-index:5;display:none;flex-wrap:wrap;gap:var(--sp-2);padding:var(--sp-2) var(--sp-4) calc(var(--sp-2) + env(safe-area-inset-bottom,0px));background:rgba(247,245,241,.94);backdrop-filter:blur(12px);border-top:1px solid var(--border);}
-.m-sticky-cta.show{display:flex;}
+.m-sticky-cta{position:sticky;bottom:0;z-index:5;display:flex;flex-wrap:wrap;gap:var(--sp-2);padding:var(--sp-2) var(--sp-4) calc(var(--sp-2) + env(safe-area-inset-bottom,0px));background:rgba(247,245,241,.94);backdrop-filter:blur(12px);border-top:1px solid var(--border);}
 .m-sticky-cta .modal-cta-btn{min-height:var(--tap-min);padding:.55rem 1rem;font-size:var(--fs-sm);}
 /* 幅 52px はアイコンだけのボタン（.modal-cta-icon）にだけ掛ける。文字つきの「電話する」「地図」に掛けると、文字が縦に割れる（I-36c） */
 .m-sticky-cta .modal-cta-icon{flex:0 0 auto;width:52px;padding:0;}
 .m-sticky-cta .modal-cta-icon svg{width:20px;height:20px;fill:currentColor;}
-@media(min-width:769px){.m-sticky-cta{display:none!important;}}
+.m-sticky-cta[data-primary="call"] .modal-cta-call,.m-sticky-cta[data-primary="map"] .modal-cta-gm{background:var(--ember);color:#fff!important;border-color:transparent;font-weight:700;box-shadow:none;}
+.m-sticky-cta[data-primary="call"] .modal-cta-call:hover,.m-sticky-cta[data-primary="map"] .modal-cta-gm:hover{filter:brightness(1.06);}
 /* 基本情報: 上層（最大6行・値がある行だけ）＋ 折りたたみ「設備・支払い」 */
 .m-info-rows{display:flex;flex-direction:column;}
 .m-info-row{display:grid;grid-template-columns:5.5em 1fr;gap:var(--sp-3);padding:.7rem 0;border-top:1px solid var(--border);font-size:var(--fs-md);line-height:1.6;}
@@ -1096,12 +1125,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible{outline:2px solid var(-
 /* ── CARD ACTIVE STATE ── */
 .card:active{transform:scale(.99);background:#F1EFE8;}
 /* ── MODAL IMPROVEMENTS ── */
-.mcl{position:absolute;top:.9rem;background:rgba(10,10,8,.62);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.92);width:var(--tap-min);height:var(--tap-min);display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:50%;z-index:3;transition:all .2s;padding:0;}
-.mcl svg{width:18px;height:18px;display:block;}
-.mcl:hover{background:rgba(10,10,8,.92);color:#fff;transform:scale(1.06);}
-.mcl-fav{right:3.6rem;}
-.mcl-fav.faved{color:#e74c3c;}
-.mcl-close{right:.9rem;}
 .pwa-banner-icon{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-right:.45rem;vertical-align:-.15em;color:currentColor;}
 .pwa-banner-icon svg{width:100%;height:100%;}
 .mtrend-label{display:inline-block;font-family:var(--font-body);font-size:var(--fs-xs);font-weight:700;letter-spacing:0;padding:.2rem .55rem;border-radius:2px;margin-right:.6rem;}
@@ -1109,8 +1132,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible{outline:2px solid var(-
 .mtrend-label.trend-rising{background:rgba(234,128,28,.12);color:#a16207;}
 .mtrend-label.trend-warm{background:rgba(202,168,62,.16);color:#8a7320;}
 .mgscore-star{color:#f5a623;margin-right:.25rem;}
-#modal-fav-btn{right:auto;left:.9rem;}
-#modal-fav-btn.faved{color:#e74c3c;border-color:rgba(231,76,60,.5);}
 /* ── SCROLL TO TOP ── */
 #scroll-top{display:none;position:fixed;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));right:1.5rem;z-index:300;width:44px;height:44px;background:var(--gold);border:none;color:var(--bg);border-radius:2px;cursor:pointer;font-size:1.1rem;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.25);transition:opacity .3s;}
 #scroll-top.visible{display:flex;}
@@ -1382,8 +1403,6 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 #fb-fab{display:inline-flex;align-items:center;gap:.35rem;min-height:var(--tap-min);padding:0 .95rem;}
 #fb-fab .ic{width:18px;height:18px;}
 @media(max-width:768px){#fb-fab{width:var(--tap-min);padding:0;justify-content:center;}.fb-fab-txt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}}
-#modal-cta-row{display:grid;grid-template-columns:1fr 1fr;}
-#modal-cta-row .modal-cta-hp,#modal-cta-row .modal-cta-btn:only-child{grid-column:1/-1;}
 .modal-cta-btn{gap:.4rem;}
 .modal-cta-hp{background:var(--ember);box-shadow:none;}
 .modal-cta-hp:hover{transform:none;box-shadow:none;}
@@ -1392,7 +1411,6 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 .m-info-row .l .ic{color:var(--gold);margin-top:.1em;}
 .m-section-title::before,.mml::before{display:none;}
 .m-section-title,.mml{font-size:var(--fs-sm);color:var(--text);}
-@media(max-width:420px){#modal-cta-row .modal-cta-btn{flex:none;}}
 /* スマホの一覧は 2 列の写真タイル。リスト表示は .grid.list-mode の !important で 1 列（I-19） */
 @media(max-width:768px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(min-width:769px) and (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
@@ -1904,24 +1922,28 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 <button class="back-to-magazine" type="button" onclick="exitSearchMode()" aria-label="絞り込みを解除して特集・ランキングに戻る"><span class="btm-arrow" aria-hidden="true">←</span>絞り込みを解除して特集・ランキングに戻る</button>
 
 <!-- モーダル -->
-<div class="ov" id="ov" role="dialog" aria-modal="true" aria-label="店舗詳細">
-  <div class="modal">
-    <div class="mhi">
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="mn">
+  <div class="modal" id="modal">
+    <div class="m-topbar">
+      <span class="m-handle" aria-hidden="true"></span>
+      <button class="mcl mcl-close" type="button" onclick="closeM()" aria-label="閉じる"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg></button>
+    </div>
+    <div class="mhi" id="mhi">
       <div class="mhi-track" id="mhi-track"><img id="mi" src="" alt=""></div>
       <button type="button" class="mhi-nav mhi-prev" id="mhi-prev" onclick="mhiGo(-1)" aria-label="前の写真" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></button>
       <button type="button" class="mhi-nav mhi-next" id="mhi-next" onclick="mhiGo(1)" aria-label="次の写真" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg></button>
       <div class="mhi-dots" id="mhi-dots" style="display:none"></div>
-      <button id="modal-fav-btn" class="mcl mcl-fav" onclick="toggleModalFav()" aria-label="保存"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7.5-4.5-10-9.5C.5 7 3.5 3 8 3c2.5 0 3.5 1.5 4 2 .5-.5 1.5-2 4-2 4.5 0 7.5 4 6 8.5C19.5 16.5 12 21 12 21z"/></svg></button>
-      <button class="mcl mcl-close" onclick="closeM()" aria-label="閉じる"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg></button>
     </div>
     <div class="mbody">
       <div class="m-head">
         <div class="m-kicker"><div class="mig" id="mg"></div><span class="m-flag" id="m-flag" style="display:none"></span></div>
-        <h2 class="min2" id="mn"></h2>
-        <div class="m-sub" id="m-sub"></div>
+        <div class="m-titlerow">
+          <h2 class="min2" id="mn" tabindex="-1"></h2>
+          <button id="modal-fav-btn" class="m-fav" type="button" onclick="toggleModalFav()" aria-label="保存" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7.5-4.5-10-9.5C.5 7 3.5 3 8 3c2.5 0 3.5 1.5 4 2 .5-.5 1.5-2 4-2 4.5 0 7.5 4 6 8.5C19.5 16.5 12 21 12 21z"/></svg></button>
+        </div>
       </div>
-      <div class="m-glance" id="m-glance"></div>
-      <div id="modal-cta-row" style="display:none"></div>
+      <!-- 要点（評価・口コミ信頼度／最寄駅・価格帯／本日の営業時間）。値がある行だけを openM が作る -->
+      <div class="m-facts" id="m-facts"></div>
       <!-- この店のポイント（署名 → リード → 知っておきたいこと → おすすめシーン → 掲載媒体 → 載っている特集） -->
       <section class="m-editorial" id="m-editorial" style="display:none">
         <div class="m-section-title">この店のポイント</div>
@@ -1931,14 +1953,12 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
         <div class="m-chips" id="m-scenes" style="display:none"></div>
         <div class="m-media-line" id="m-media-features" style="display:none">掲載媒体: <span id="m-media-features-list"></span></div>
       </section>
-      <section class="m-section" id="m-features-section" style="display:none">
-        <div class="m-section-title">この店が載っている特集</div>
-        <div class="modal-related-features" id="m-related-features"></div>
-      </section>
-      <section class="m-section" id="m-readmore-section" style="display:none">
-        <div class="m-section-title">あわせて読みたい特集</div>
-        <div class="modal-related-features" id="m-readmore-features"></div>
-      </section>
+      <a class="m-store-link" id="m-store-link" href="#" style="display:none" onclick="nbQvStoreLinkClick(this)">この店のページを見る<span aria-hidden="true"> ›</span></a>
+      <nav class="m-pager" id="m-pager" aria-label="一覧の隣の店へ" style="display:none">
+        <button type="button" class="m-pg-btn" id="m-pg-prev" onclick="nbQvStep(-1)"><span aria-hidden="true">‹ </span>前の店</button>
+        <span class="m-pg-pos" id="m-pg-pos" role="status"></span>
+        <button type="button" class="m-pg-btn" id="m-pg-next" onclick="nbQvStep(1)">次の店<span aria-hidden="true"> ›</span></button>
+      </nav>
       <!-- REVIEW_TRUST_BOX_START -->
       <div class="cross-check-box" id="m-cross-check" style="display:none">
         <span class="mpoint-label">口コミ信頼度</span>
@@ -1976,6 +1996,16 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
         <div class="mml">Instagram の投稿</div>
         <div class="mig-embed-box" id="mig-container"></div>
       </div>
+      <details class="m-more" id="m-more">
+        <summary>ほかの情報<span class="m-more-sub">（特集・経験者のレビュー・各媒体・似た店・共有）</span></summary>
+      <section class="m-section" id="m-features-section" style="display:none">
+        <div class="m-section-title">この店が載っている特集</div>
+        <div class="modal-related-features" id="m-related-features"></div>
+      </section>
+      <section class="m-section" id="m-readmore-section" style="display:none">
+        <div class="m-section-title">あわせて読みたい特集</div>
+        <div class="modal-related-features" id="m-readmore-features"></div>
+      </section>
       <!-- 飲食業界の経験者のレビュー（1件以上ある時だけ表示。0件は末尾の投稿リンクから同じフォームを開く） -->
       <section class="insider-reviews-box" id="m-insider-reviews" style="display:none">
         <div class="m-section-title">飲食業界の経験者のレビュー</div>
@@ -2054,8 +2084,9 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
         <button class="sbtn sbtn-line" id="share-line" onclick="shareToLINE()" aria-label="この店舗を LINE でシェアする">LINE で送る</button>
         <button class="sbtn sbtn-copy" id="share-copy" onclick="copyShareLink()" aria-label="この店舗ページのリンクをコピーする"><span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>リンクをコピー</button>
       </div>
-      <p class="m-footnote" id="m-footnote"></p>
       <p class="m-footnote" id="m-ir-linkwrap" style="display:none"><button type="button" class="m-ir-link" onclick="nbOpenInsiderForm()">この店のレビューを書く（飲食業界の経験者向け）</button></p>
+      </details>
+      <p class="m-footnote" id="m-footnote"></p>
     </div>
     <div class="m-sticky-cta" id="m-sticky-cta"></div>
   </div>
@@ -10190,7 +10221,8 @@ function nbNearText(r) {
   if (st) return st + '駅' + (walk && nbStationKey(walk.station) === nbStationKey(st) ? ' 徒歩' + walk.min + '分' : '');
   if (walk) {
     var wk = nbStationKey(walk.station);
-    if (/^[぀-ヿ㐀-鿿A-Za-z0-9ー々]{1,10}$/.test(wk)) return wk + '駅 徒歩' + walk.min + '分';
+    // 住所の頭（「名古屋市中村区名駅」のように市・区の名前がつながったもの）は駅名と読まない
+    if (/^[぀-ヿ㐀-鿿A-Za-z0-9ー々]{1,10}$/.test(wk) && !/名古屋市|愛知県|[区郡]/.test(wk)) return wk + '駅 徒歩' + walk.min + '分';
   }
   return '';
 }
@@ -10393,6 +10425,7 @@ function renderGrid(data) {
   RENDER_DATA = data;
   CURRENT_PAGE = 1;
   renderPage(1);
+  if (typeof nbQvRefreshPager === 'function') nbQvRefreshPager();   // 開いている店の「前の店・次の店」を新しい並びに合わせる
 }
 
 function renderPage(pageNum) {
@@ -10472,25 +10505,123 @@ function mWalkFromAccess(access){
   if (!m) return null;
   return {station: m[1].replace(/^(地下鉄|JR|名鉄|近鉄|あおなみ線|市営地下鉄)/, ''), min: parseInt(m[2], 10)};
 }
-// 本日の営業/定休を「一意に判定できる時だけ」返す（曜日の単純列挙以外は null）。誤った「営業中」は出さない（制約7・10）
-function mTodayStatus(r){
+// 定休日の文から「今日が休みか」を読む。true=休み / false=今日は休みでない / null=一意に読めない。
+// 括弧つき（第1・第3 など）・不定休・範囲指定は読めないので null（誤った「営業中」「定休日」は出さない・制約7・10）
+function nbTodayClosedState(r, dayName) {
   var close = String(r['定休日'] || '').trim();
   if (!close) return null;
   if (/不定休/.test(close)) return null;
-  if (/年中無休|無休/.test(close)) return {kind:'open', text:'年中無休'};
-  var body = close.replace(/[（(].*?[）)]/g, '');
-  if (/[〜～\-－]/.test(body)) return null;
-  var esc = body.replace(/祝日/g, '祝').replace(/曜日?/g, '').replace(/\s+/g, '');
+  if (/年中無休|無休/.test(close)) return false;
+  if (/[（(]/.test(close)) return null;
+  if (/[〜～\-－]/.test(close)) return null;
+  var esc = close.replace(/祝日/g, '祝').replace(/曜日?/g, '').replace(/\s+/g, '');
   if (!/^[日月火水木金土・、,祝]+$/.test(esc)) return null;
   var listed = esc.match(/[日月火水木金土]/g) || [];
   if (!listed.length) return null;
-  var todayJ = ['日','月','火','水','木','金','土'][new Date().getDay()];
-  if (listed.indexOf(todayJ) !== -1) return {kind:'closed', text:'本日 定休日'};
-  var open = String(r['営業時間'] || '');
-  var ranges = open.match(/\d{1,2}:\d{2}\s*[〜～\-－]\s*(?:翌)?\d{1,2}:\d{2}/g) || [];
-  var t = '本日 営業日';
-  if (ranges.length === 1 && !/[日月火水木金土祝]/.test(open)) t += ' · ' + ranges[0].replace(/\s+/g, '');
-  return {kind:'open', text:t};
+  return listed.indexOf(dayName) !== -1;
+}
+// クイックビューの「本日」の行（I-22）。営業時間の文字列から機械的に読めたときだけ返す（読めなければ null＝出さない）。
+// 返す形: {kind: 'open'|'closed', text}。now を渡せる（テスト用）。
+//   ・定休日が今日と分かれば「本日 定休日」
+//   ・営業時間は、曜日つきの群（月～金: … 土、日、祝日: …）のうち今日を含む群がちょうど 1 つのときだけ採る。
+//     読み残した文字（L.O. の括弧は除く）が 1 字でもあれば採らない
+//   ・今日が休みでないと分かる店（定休日が読めて今日を含まない）だけ「本日」、読めない店は「営業時間」と書く
+//   ・祝日だけ別の時間の群があれば「（祝日は別）」と添える
+function nbTodayHours(r, now) {
+  now = now || new Date();
+  var DAYS = ['日','月','火','水','木','金','土'];
+  var ORDER = ['月','火','水','木','金','土','日'];
+  var day = DAYS[now.getDay()];
+  var closed = nbTodayClosedState(r, day);
+  if (closed === true) return {kind: 'closed', text: '本日 定休日'};
+  var raw = String(r['営業時間'] || '').replace(/[（(][^）)]*[）)]/g, ' ').replace(/曜日?/g, '').replace(/[\s　]+/g, ' ').trim();
+  if (!raw) return null;
+  var BAND = /(\d{1,2}):(\d{2})\s*[～〜~－–—-]\s*(翌)?(\d{1,2}):(\d{2})/g;
+  var TOK = '(?:祝前日|祝日|[月火水木金土日])';
+  var ONE = TOK + '(?:[～〜~]' + TOK + ')?';
+  var LABEL = new RegExp('(' + ONE + '(?:[、,・]' + ONE + ')*)\\s*[:：]', 'g');
+  var marks = [], m;
+  while ((m = LABEL.exec(raw))) marks.push({label: m[1], start: m.index, end: LABEL.lastIndex});
+  var groups = [];
+  function pad(n) { return (n.length < 2 ? '0' : '') + n; }
+  function bandsOf(body) {
+    var out = [], b;
+    BAND.lastIndex = 0;
+    while ((b = BAND.exec(body))) out.push(pad(b[1]) + ':' + b[2] + '〜' + (b[3] || '') + pad(b[4]) + ':' + b[5]);
+    var left = body.replace(BAND, '').replace(/[\s、,・\/／※～〜~]/g, '');
+    if (left || !out.length || out.length > 3) return null;
+    return out;
+  }
+  if (!marks.length) {
+    var only = bandsOf(raw);
+    if (!only) return null;
+    groups.push({days: null, hol: false, bands: only});
+  } else {
+    if (raw.slice(0, marks[0].start).replace(/[\s　]/g, '')) return null;
+    for (var i = 0; i < marks.length; i++) {
+      var body = raw.slice(marks[i].end, i + 1 < marks.length ? marks[i + 1].start : raw.length);
+      var bands = bandsOf(body);
+      if (!bands) return null;
+      var days = {}, hol = false, parts = marks[i].label.split(/[、,・]/);
+      for (var j = 0; j < parts.length; j++) {
+        var p = parts[j];
+        var rng = p.split(/[～〜~]/);
+        if (rng.length === 2) {
+          var ia = ORDER.indexOf(rng[0]), ib = ORDER.indexOf(rng[1]);
+          if (ia < 0 || ib < 0) return null;
+          for (var k = ia, guard = 0; guard < 8; guard++, k = (k + 1) % 7) { days[ORDER[k]] = true; if (k === ib) break; }
+        } else if (ORDER.indexOf(p) >= 0) days[p] = true;
+        else if (p === '祝日' || p === '祝前日') hol = true;
+        else return null;
+      }
+      groups.push({days: days, hol: hol, bands: bands});
+    }
+  }
+  var chosen = null;
+  if (groups.length === 1 && !groups[0].days) chosen = groups[0];
+  else {
+    var hit = groups.filter(function(g) { return g.days && g.days[day]; });
+    if (hit.length !== 1) return null;
+    chosen = hit[0];
+  }
+  var text = chosen.bands.join(' / ');
+  var diffHol = groups.some(function(g) { return g !== chosen && g.hol && !chosen.hol && g.bands.join('/') !== chosen.bands.join('/'); });
+  return {kind: 'open', text: (closed === false ? '本日 ' : '営業時間 ') + text + (diffHol ? '（祝日は別）' : '')};
+}
+// クイックビューの「要点」: 評価と口コミ信頼度 / 最寄駅・価格帯 / 本日（値がある行だけ作る）。
+// 最寄駅の徒歩の分数は一覧のカードと同じ nbNearText（同じ駅だと確かめられたときだけ分数・P-404）
+function nbQvFactsHtml(r, now) {
+  var out = [];
+  var cells = [];
+  var gscoreN = parseFloat(r['Google評価']) || 0, gcountN = parseInt(r['口コミ数']) || 0;
+  if (gscoreN > 0) {
+    cells.push('<span class="m-rate"><span class="visually-hidden">Google 評価 </span><span class="m-star" aria-hidden="true"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/></svg></span><span class="num">' + gscoreN + '</span>'
+      + '<span class="m-count">（Google' + (gcountN ? ' ' + gcountN.toLocaleString('ja-JP') + '件' : '') + '）</span></span>');
+  }
+  var TPg = (typeof TRUST_POLICY === 'object' && TRUST_POLICY && TRUST_POLICY.tiers && TRUST_POLICY.na) ? TRUST_POLICY : null;
+  var gRt = r.reviewTrust || null;
+  if (TPg && gRt && gRt.t) {
+    var isNa = (gRt.t === TPg.na.id);
+    var gDef = isNa ? TPg.na : null;
+    if (!gDef) for (var gi = 0; gi < TPg.tiers.length; gi++) if (TPg.tiers[gi].id === gRt.t) { gDef = TPg.tiers[gi]; break; }
+    if (gDef) {
+      cells.push('<button type="button" class="m-trust-link" onclick="mScrollTo(\'m-cross-check\')" aria-label="' + mEsc(TPg.name) + ' ' + (isNa ? '' : mEsc(gRt.t) + '、') + mEsc(gDef.label) + '。内訳を見る">'
+        + mEsc(TPg.name) + ' ' + (isNa ? '<span class="m-count">' + mEsc(gDef.label) + '</span>' : '<span class="cc-tier ' + gDef.cssClass + '">' + mEsc(gRt.t) + '</span>') + '<span aria-hidden="true"> ›</span></button>');
+    }
+  }
+  if (cells.length) out.push('<div class="m-fact">' + cells.join('') + '</div>');
+  var sub = [];
+  var prefTxt = (r['都道府県'] && r['都道府県'] !== '愛知県') ? r['都道府県'] + ' ' : '';
+  if (r['エリア']) sub.push(prefTxt + r['エリア']);
+  var near = nbNearText(r);
+  if (near) sub.push(near);
+  else if (r['アクセス']) sub.push(String(r['アクセス']).slice(0, 40));
+  var priceTxt = r['価格帯'] || r['価格帯目安'] || '';
+  if (priceTxt) sub.push(priceTxt);
+  if (sub.length) out.push('<div class="m-fact m-fact-sub">' + sub.map(function(t) { return '<span>' + mEsc(t) + '</span>'; }).join('') + '</div>');
+  var today = nbTodayHours(r, now);
+  if (today) out.push('<div class="m-fact"><span class="m-today ' + (today.kind === 'closed' ? 'm-closed' : 'm-open') + '">' + mEsc(today.text) + '</span></div>');
+  return out.join('');
 }
 function mScrollTo(id){
   var el = document.getElementById(id);
@@ -10507,25 +10638,110 @@ function nbStoreFlag(r){
   if (r.insiderReviewCount) return {label: '経験者レビュー' + r.insiderReviewCount + '件', cls: 'flag-insider'};
   return null;
 }
-// スマホの追従CTA: 本文上部の CTA 行が上に消えた時だけ表示する
-var M_STICKY_OBS = null;
-function mSetupStickyCta(){
-  var sticky = document.getElementById('m-sticky-cta');
-  var row = document.getElementById('modal-cta-row');
-  var modal = document.querySelector('.modal');
-  if (M_STICKY_OBS) { M_STICKY_OBS.disconnect(); M_STICKY_OBS = null; }
-  if (!sticky || !row || !modal) return;
-  sticky.classList.remove('show');
-  if (!sticky.innerHTML || !('IntersectionObserver' in window)) return;
-  M_STICKY_OBS = new IntersectionObserver(function(entries){
-    var e = entries[0];
-    var rootTop = e.rootBounds ? e.rootBounds.top : 0;
-    sticky.classList.toggle('show', !e.isIntersecting && e.boundingClientRect.top < rootTop);
-  }, {root: modal, threshold: 0});
-  M_STICKY_OBS.observe(row);
+// ── クイックビュー（I-22・判断の記録 0038）の部品 ──────────────────────────────
+// 開く前に焦点があった要素（閉じたら戻す）／開いている店／一覧の中から開いたか／後ろの要素に付けた inert
+var NB_QV_OPENER = null;
+var NB_QV_KEEP = false;        // 「似たお店」へ切り替える間だけ true（開いた元の要素と inert を保つ）
+var NB_QV_STORE = null;
+var NB_QV_FROM_LIST = false;
+var NB_QV_PAGER_ON = false;
+var NB_QV_INERT = [];
+function nbQvRememberOpener() {
+  var ov = document.getElementById('ov');
+  if (ov && ov.classList.contains('open')) return;            // 開いたまま別の店へ（前の店・次の店）
+  if (NB_QV_KEEP) { NB_QV_KEEP = false; return; }              // 似たお店への切り替え中
+  var a = document.activeElement;
+  NB_QV_OPENER = (a && a !== document.body && a !== document.documentElement) ? a : null;
+}
+// シートが開いている間は、後ろのページを操作できなくする（焦点・読み上げ・クリックとも）。#toast は除く
+function nbQvSetInert(on) {
+  if (!on) {
+    NB_QV_INERT.forEach(function(el) { el.removeAttribute('inert'); });
+    NB_QV_INERT = [];
+    return;
+  }
+  if (NB_QV_INERT.length) return;
+  var node = document.getElementById('ov');
+  while (node && node !== document.body && node.parentNode) {
+    var sibs = node.parentNode.children;
+    for (var i = 0; i < sibs.length; i++) {
+      var el = sibs[i];
+      if (el === node || el.id === 'toast' || /^(SCRIPT|STYLE|LINK|NOSCRIPT)$/.test(el.tagName) || el.hasAttribute('inert')) continue;
+      el.setAttribute('inert', '');
+      NB_QV_INERT.push(el);
+    }
+    node = node.parentNode;
+  }
+}
+// 閉じたとき: swap（似たお店へ切り替え）なら何も戻さない。そうでなければ inert を外し、開いたボタンへ焦点を戻す
+function nbQvRelease(swap, wasOpen) {
+  if (swap) { NB_QV_KEEP = true; return; }
+  NB_QV_KEEP = false;
+  nbQvSetInert(false);
+  var op = NB_QV_OPENER;
+  NB_QV_OPENER = null;
+  NB_QV_STORE = null;
+  if (wasOpen && op && typeof op.focus === 'function' && document.documentElement.contains(op)) {
+    try { op.focus({preventScroll: true}); } catch (e) { /* 焦点を戻せなくても閉じる */ }
+  }
+}
+function nbQvFocusTitle() {
+  var mn = document.getElementById('mn');
+  if (!mn) return;
+  try { mn.focus({preventScroll: true}); } catch (e) { mn.focus(); }
+}
+// 「この店のページを見る ›」。店舗ページが分かる店（nbStoreHref）にだけ出す
+function nbQvStoreLinkRefresh(r) {
+  var a = document.getElementById('m-store-link');
+  if (!a) return;
+  var href = r ? nbStoreHref(r) : '';
+  if (href) { a.setAttribute('href', href); a.style.display = ''; }
+  else { a.removeAttribute('href'); a.style.display = 'none'; }
+}
+function nbQvStoreLinkClick(a) {
+  var r = NB_QV_STORE;
+  trackEvent('internal_link_click', {store_name: r ? (r['店名'] || '') : '', link_url: (a && a.getAttribute('href')) || '', block: 'quick_view'});
+}
+// 「‹ 前の店  2 / 件数  次の店 ›」。一覧（いま見えている並び = RENDER_DATA）から開いたときだけ出す。最初・最後は押せない
+function nbQvRefreshPager() {
+  var pager = document.getElementById('m-pager');
+  if (!pager) return;
+  var list = (typeof RENDER_DATA !== 'undefined' && RENDER_DATA) ? RENDER_DATA : [];
+  var pos = NB_QV_STORE ? list.indexOf(NB_QV_STORE) : -1;
+  var on = nbModalIsOpen() && NB_QV_FROM_LIST && pos >= 0 && list.length > 1;
+  NB_QV_PAGER_ON = on;
+  pager.style.display = on ? '' : 'none';
+  if (!on) return;
+  var prev = document.getElementById('m-pg-prev'), next = document.getElementById('m-pg-next'), posEl = document.getElementById('m-pg-pos');
+  prev.disabled = pos <= 0;
+  next.disabled = pos >= list.length - 1;
+  posEl.innerHTML = (pos + 1).toLocaleString('ja-JP') + ' / ' + list.length.toLocaleString('ja-JP') + '<span class="visually-hidden">件</span>';
+  var act = document.activeElement;
+  if (act && act.disabled && pager.contains(act)) nbQvFocusTitle();   // 端まで来て押せなくなったボタンから焦点を逃がす
+}
+function nbQvStep(d) {
+  if (!NB_QV_PAGER_ON || !NB_QV_STORE) return;
+  var list = RENDER_DATA || [];
+  var pos = list.indexOf(NB_QV_STORE);
+  var nx = pos >= 0 ? list[pos + d] : null;
+  if (!nx) return;
+  var idx = ALL_STORES.indexOf(nx);
+  if (idx < 0) return;
+  openM(idx, 'modal_nav');
+}
+// openM の最後に呼ぶ: 開いている店を覚え、後ろを inert にし、店舗ページへのリンクと前後の店を整える
+function nbQvOpened(r, source) {
+  NB_QV_STORE = r;
+  if (source === 'grid' || source === 'modal_nav') NB_QV_FROM_LIST = true;
+  else if (source !== 'popstate') NB_QV_FROM_LIST = false;
+  nbQvStoreLinkRefresh(r);
+  nbQvSetInert(true);
+  nbQvRefreshPager();
+  if (source !== 'modal_nav') nbQvFocusTitle();                // 前の店・次の店では押したボタンに焦点を残す
 }
 // レビュー0件の店: 末尾のリンクから飲食業界の経験者のレビュー節を出して投稿フォームを開く
 function nbOpenInsiderForm(){
+  var moreD = document.getElementById('m-more'); if (moreD) moreD.open = true;
   var box = document.getElementById('m-insider-reviews');
   var cta = document.getElementById('m-insider-cta');
   var wrap = document.getElementById('m-insider-form');
@@ -10787,6 +11003,7 @@ function openM(i, source) {
   // ハートボタン経由のクリックならモーダルを開かない
   if (window.event && window.event.target && window.event.target.closest && window.event.target.closest('.fav-btn')) return;
   var r = ALL_STORES[i];
+  nbQvRememberOpener();
   // store_id はほかの cta_click と同じ決まり（ホットペッパーID。無い店は空）。店ごとの集計に使う（I-08）
   // 「進む」で開き直したとき（source=popstate）は、利用者が新しく開いたわけではないので数えない
   if (source !== 'popstate') trackEvent('modal_open', {store_name: r['店名'], store_id: r['ホットペッパーID'] || '', genre: r['ジャンル'], area: r['エリア'], source: source || 'unknown'});
@@ -10800,31 +11017,9 @@ function openM(i, source) {
   var mFlag = nbStoreFlag(r);
   if (mFlag) { mFlagEl.textContent = mFlag.label; mFlagEl.className = 'm-flag ' + mFlag.cls; mFlagEl.style.display = ''; }
   else { mFlagEl.textContent = ''; mFlagEl.className = 'm-flag'; mFlagEl.style.display = 'none'; }
-  var subParts = [];
-  var prefTxt = (r['都道府県'] && r['都道府県'] !== '愛知県') ? r['都道府県'] + ' ' : '';
-  if (r['エリア']) subParts.push(prefTxt + r['エリア']);
-  var walk = mWalkFromAccess(r['アクセス']);
-  var stationTxt = r['最寄駅'] ? (String(r['最寄駅']).replace(/駅$/, '') + '駅') : (walk ? walk.station : '');
-  if (stationTxt && walk) subParts.push(stationTxt + ' 徒歩' + walk.min + '分');
-  else if (stationTxt) subParts.push(stationTxt);
-  else if (r['アクセス']) subParts.push(String(r['アクセス']).slice(0, 40));
-  document.getElementById('m-sub').innerHTML = subParts.map(function(t, i2){ return '<span' + (i2 ? ' class="m-dot"' : '') + '>' + mEsc(t) + '</span>'; }).join('');
-  // ── at-a-glance（値がある時だけセルを作る: 口コミ信頼度 / Google★（件数）/ 価格帯 / 本日）──
-  var glance = [];
-  var TPg = (typeof TRUST_POLICY === 'object' && TRUST_POLICY && TRUST_POLICY.tiers && TRUST_POLICY.na) ? TRUST_POLICY : null;
-  var gRt = r.reviewTrust || null;
-  if (TPg && gRt && gRt.t) {
-    var gDef = (gRt.t === TPg.na.id) ? TPg.na : null;
-    if (!gDef) for (var gi = 0; gi < TPg.tiers.length; gi++) if (TPg.tiers[gi].id === gRt.t) { gDef = TPg.tiers[gi]; break; }
-    if (gDef) glance.push('<div class="m-gcell is-link" role="button" tabindex="0" onclick="mScrollTo(\'m-cross-check\')" onkeydown="if(event.key===\'Enter\')mScrollTo(\'m-cross-check\')" title="' + mEsc(TPg.name) + ' ' + mEsc(gRt.t) + '：' + mEsc(gDef.label) + '（タップで内訳）"><span class="m-glabel">' + mEsc(TPg.name) + '</span><span class="m-gval"><span class="cc-tier ' + gDef.cssClass + '">' + mEsc(gRt.t) + '</span><span class="m-count">' + mEsc(gDef.label) + '</span></span></div>');
-  }
-  var gscoreN = parseFloat(r['Google評価']) || 0, gcountN = parseInt(r['口コミ数']) || 0;
-  if (gscoreN > 0) glance.push('<div class="m-gcell"><span class="m-glabel">Google 評価</span><span class="m-gval"><span class="m-star"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/></svg></span><span class="num">' + gscoreN + '</span>' + (gcountN ? '<span class="m-count">（' + gcountN.toLocaleString('ja-JP') + '件）</span>' : '') + '</span></div>');
+  // ── 要点（Google 評価・口コミ信頼度 / 最寄駅 徒歩N分・価格帯 / 本日の営業時間）。値がある行だけ ──
   var priceTxt = r['価格帯'] || r['価格帯目安'] || '';
-  if (priceTxt) glance.push('<div class="m-gcell"><span class="m-glabel">' + (r['価格帯'] ? '価格帯' : '価格帯の目安') + '</span><span class="m-gval">' + mEsc(priceTxt) + '</span></div>');
-  var todayS = mTodayStatus(r);
-  if (todayS) glance.push('<div class="m-gcell"><span class="m-glabel">本日</span><span class="m-gval"><span class="' + (todayS.kind === 'closed' ? 'm-closed' : 'm-open') + '">' + mEsc(todayS.text) + '</span></span></div>');
-  document.getElementById('m-glance').innerHTML = glance.join('');
+  document.getElementById('m-facts').innerHTML = nbQvFactsHtml(r, new Date());
   // ── この店のポイント（署名 → リード → 知っておきたいこと → おすすめシーン → 掲載媒体）──
   var point = (r['おすすめポイント'] || '').trim();
   // 宣伝・価格訴求系の文はおすすめポイントとして不適切なので非表示
@@ -11038,25 +11233,25 @@ function openM(i, source) {
     igWrap.style.display = 'none';
     if (igWrap._pendingSrc !== undefined) igWrap._pendingSrc = null;
   }
-  // ── モーダル内 CTA（主: 予約＝塗り / 副: 電話・地図＝アウトライン）。同じ導線をスマホの追従バーにも出す ──
+  // ── 行動バー（シートの下に常に固定）。7.3 節の規則:
+  //    予約先あり＋電話可＝[予約(塗り)][電話][地図] / 予約先あり・電話不可＝[予約][地図] /
+  //    予約先なし・電話可＝[電話する(塗り)][地図] / どちらも無し＝[地図を開く(塗り)] ──
   var ctaEsc = mCtaEsc;
-  var ctaRow = document.getElementById('modal-cta-row');
   var stickyEl = document.getElementById('m-sticky-cta');
   var hpId2 = r['ホットペッパーID'] || '';
   var mapBtnHtml = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_cta\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認"><svg class="ic" aria-hidden="true"><use href="#i-map"/></svg>地図</a>';
-  var hpBtnHtml = hpId2 ? '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="nbReserveExit(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',store_id:\'' + ctaEsc(hpId2) + '\',link_domain:\'www.hotpepper.jp\',location:\'modal\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">この店を予約する</a>' : '';
+  var mapOnlyBtnHtml = mapBtnHtml.replace('</svg>地図</a>', '</svg>地図を開く</a>');
+  var hpBtnHtml = hpId2 ? '<a href="' + hpUrl + '" target="_blank" class="modal-cta-btn modal-cta-hp" onclick="nbReserveExit(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',store_id:\'' + ctaEsc(hpId2) + '\',link_domain:\'www.hotpepper.jp\',location:\'modal\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'をホットペッパーで予約する">HotPepperで予約</a>' : '';
   var callBtnHtml = nbCallBtnHtml(r, ctaEsc, false);
   var callStatusHtml = nbCallStatusHtml(r);
-  if (ctaRow) { ctaRow.innerHTML = hpBtnHtml + callBtnHtml + mapBtnHtml + callStatusHtml; ctaRow.style.display = ''; }
   if (stickyEl) {
     var mapIconBtn = '<a href="' + gmap(r['店名'],r['エリア'],r) + '" target="_blank" class="modal-cta-btn modal-cta-gm modal-cta-icon" onclick="trackEvent(\'cta_gmap_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',location:\'modal_sticky\'})" rel="noopener noreferrer" aria-label="' + ctaEsc(r['店名']) + 'の場所をGoogleマップで確認"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a>';
     var callIconBtn = nbCallBtnHtml(r, ctaEsc, true);
-    // HPありは3導線を「主(帯)＋アイコン2つ」で圧縮、HPなしで電話ありは2導線とも文字ボタンのまま
-    // 並べる（アイコンだけの塊が浮かないように）。どちらも無ければ従来通り地図単独の帯ボタン。
+    // 予約先ありは「主(帯)＋アイコン」で圧縮、予約先なしで電話ありは2導線とも文字ボタン、どちらも無ければ地図単独の帯ボタン
     stickyEl.innerHTML = (hpId2 ? (hpBtnHtml + callIconBtn + mapIconBtn)
       : nbCanCall(r) ? (callBtnHtml + mapBtnHtml)
-      : mapBtnHtml) + callStatusHtml;
-    stickyEl.classList.remove('show');
+      : mapOnlyBtnHtml) + callStatusHtml;
+    stickyEl.setAttribute('data-primary', hpId2 ? 'hp' : nbCanCall(r) ? 'call' : 'map');
   }
   // ── 媒体リンク（favicon＋名前の小チップ1行。Google マップは modal_media_row で計測を区別）──
   var items = [
@@ -11079,6 +11274,7 @@ function openM(i, source) {
   mfavBtn.setAttribute('data-name', storeName);
   var isMFav = getFavs().indexOf(storeName) !== -1;
   mfavBtn.classList.toggle('faved', isMFav);
+  mfavBtn.setAttribute('aria-pressed', isMFav ? 'true' : 'false');
   mfavBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="' + (isMFav ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7.5-4.5-10-9.5C.5 7 3.5 3 8 3c2.5 0 3.5 1.5 4 2 .5-.5 1.5-2 4-2 4.5 0 7.5 4 6 8.5C19.5 16.5 12 21 12 21z"/></svg>';
   // ── 似た店（I-16b）。選び方は店舗ページと同じ（nbRelatedHtml）。特集の区画は I-15b の nbRenderModalFeatures ──
   (function(){
@@ -11127,8 +11323,9 @@ function openM(i, source) {
   nbModalHistoryOpen(r['ホットペッパーID'] || '', source);
   document.body.style.overflow = 'hidden';
   document.getElementById('mobile-cta-bar').style.display='none';
-  var modalEl0 = document.querySelector('.modal'); if (modalEl0) modalEl0.scrollTop = 0;
-  mSetupStickyCta();
+  var modalEl0 = document.getElementById('modal'); if (modalEl0) modalEl0.scrollTop = 0;
+  var moreEl0 = document.getElementById('m-more'); if (moreEl0) moreEl0.open = false;
+  nbQvOpened(r, source);
 }
 
 // ================================================================
@@ -11153,6 +11350,10 @@ function renderMhi(r, primaryPhoto) {
     if (url && !seen[url]) { photos.push({url: url, label: f.label}); seen[url] = true; }
   });
   if (photos.length === 0) photos.push({url: nbStoreFigure(r), label: ''});
+  // 実写が1枚も無い店（店ごとの図だけ）は、写真の枠ごと出さず店名から始める（計画 W5）
+  var hasRealPhoto = !!(r['写真URL'] || '').trim() || photos.some(function(p) { return p.label; });
+  var modalForPhoto = document.getElementById('modal');
+  if (modalForPhoto) modalForPhoto.classList.toggle('is-nophoto', !hasRealPhoto);
   MHI_PHOTOS = photos;
   MHI_INDEX = 0;
   var mhiEl = document.querySelector('.mhi');
@@ -11253,14 +11454,15 @@ function closeM(opts) {
   document.getElementById('mobile-cta-bar').style.display='';
   document.getElementById('mig-container').innerHTML = '';
   document.getElementById('mig-wrap').style.display = 'none';
-  var stickyC = document.getElementById('m-sticky-cta'); if (stickyC) { stickyC.classList.remove('show'); stickyC.innerHTML = ''; }
-  if (M_STICKY_OBS) { M_STICKY_OBS.disconnect(); M_STICKY_OBS = null; }
+  var stickyC = document.getElementById('m-sticky-cta'); if (stickyC) stickyC.innerHTML = '';
   var ldPrev = document.getElementById('modal-store-jsonld'); if (ldPrev && ldPrev.parentNode) ldPrev.parentNode.removeChild(ldPrev);
   // 履歴の後始末。閉じ済みのモーダルをもう一度閉じても（背景を続けて押すなど）履歴は戻さない。
   // 「戻る」で閉じるとき（fromPop）と、似たお店へ切り替えるとき（swap）は、履歴に触れない
   if (opts && opts.swap) NB_SWAP = Date.now();
   NB_OPEN_STORE_ID = '';
   if (wasOpen && !(opts && (opts.fromPop || opts.swap))) nbModalHistoryClose();
+  // 後ろのページを元に戻し、開いたボタンへ焦点を返す（似たお店への切り替え中は戻さない）
+  if (typeof nbQvRelease === 'function') nbQvRelease(!!(opts && opts.swap), wasOpen);
 }
 document.getElementById('ov').addEventListener('click', function(e){ if(e.target===this) closeM(); });
 
@@ -11597,16 +11799,19 @@ document.addEventListener('keydown', function(e) {
 // Modal focus trap
 // ================================================================
 document.getElementById('ov').addEventListener('keydown', function(e) {
-  if (!this.classList.contains('open')) return;
-  var focusable = this.querySelectorAll('a[href], button, input, [tabindex]:not([tabindex="-1"])');
+  if (!this.classList.contains('open') || e.key !== 'Tab') return;
+  // 見えていて押せるものだけで一周する（閉じた折りたたみの中・押せない前後の店ボタンは除く）
+  var focusable = [].filter.call(this.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])'), function(el) {
+    return el.getClientRects().length > 0;
+  });
+  if (!focusable.length) { e.preventDefault(); return; }
   var first = focusable[0];
   var last = focusable[focusable.length - 1];
-  if (e.key === 'Tab') {
-    if (e.shiftKey) {
-      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-    } else {
-      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
-    }
+  var act = document.activeElement;
+  if (e.shiftKey) {
+    if (act === first || !this.contains(act) || act.id === 'mn') { e.preventDefault(); last.focus(); }
+  } else {
+    if (act === last || !this.contains(act)) { e.preventDefault(); first.focus(); }
   }
 });
 
@@ -11614,18 +11819,30 @@ document.getElementById('ov').addEventListener('keydown', function(e) {
 // Swipe-to-close modal (vertical swipe down)
 // ================================================================
 (function() {
-  var modal = document.querySelector('.modal');
-  var startY = 0, startScrollTop = 0;
+  var modal = document.getElementById('modal');
+  var startX = 0, startY = 0, startScrollTop = 0, tracking = false, blocked = false;
   modal.addEventListener('touchstart', function(e) {
+    if (e.touches.length !== 1) { tracking = false; return; }
+    startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
     startScrollTop = modal.scrollTop;
+    tracking = true;
+    var t = e.target;
+    // 横スワイプで店を替えない場所: 複数枚の写真・横に動く一覧・入力欄・埋め込み
+    blocked = !!(t && t.closest && ((MHI_PHOTOS.length > 1 && t.closest('.mhi')) || t.closest('.mmg, .modal-related-stores, .modal-related-features, form, iframe, input, textarea, select, .mig-embed-box')));
   }, {passive: true});
   modal.addEventListener('touchend', function(e) {
+    if (!tracking) return;
+    tracking = false;
+    var dx = e.changedTouches[0].clientX - startX;
     var dy = e.changedTouches[0].clientY - startY;
-    // Only swipe-close if at top of modal scroll and swiped down >= 80px
-    if (dy > 80 && startScrollTop <= 0) {
-      closeM();
+    if (Math.abs(dx) < Math.abs(dy)) {
+      // 一番上で下へ 80px 以上: 閉じる
+      if (dy > 80 && startScrollTop <= 0) closeM();
+      return;
     }
+    // 横へ 72px 以上（縦の1.5倍より大きく）: 前の店・次の店（ボタンと同じ動き）
+    if (!blocked && Math.abs(dx) >= 72 && Math.abs(dx) > Math.abs(dy) * 1.5) nbQvStep(dx < 0 ? 1 : -1);
   }, {passive: true});
 })();
 
@@ -11906,6 +12123,7 @@ function toggleModalFav() {
   toggleFav(name);
   var isFav = getFavs().indexOf(name) !== -1;
   btn.classList.toggle('faved', isFav);
+  btn.setAttribute('aria-pressed', isFav ? 'true' : 'false');
   btn.innerHTML = '<svg viewBox="0 0 24 24" fill="' + (isFav ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7.5-4.5-10-9.5C.5 7 3.5 3 8 3c2.5 0 3.5 1.5 4 2 .5-.5 1.5-2 4-2 4.5 0 7.5 4 6 8.5C19.5 16.5 12 21 12 21z"/></svg>';
 }
 // ナビの「保存済み」: 保存した店だけの表示を入り切りする（I-23）。

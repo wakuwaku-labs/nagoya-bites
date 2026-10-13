@@ -397,6 +397,7 @@ test('最寄駅 徒歩N分: 同じ駅だと確かめられたときだけ分数�
   assert.strictEqual(near('久屋大通', '桜通線〔久屋大通〕駅 徒歩2分'), '久屋大通駅', '括弧つきの表記は同じ駅と決められないので、分数は付けない');
   assert.strictEqual(near('', '桜通線〔久屋大通〕駅 徒歩2分'), '', '最寄駅が無く、駅名がきれいに読めないときは出さない');
   assert.strictEqual(near('', 'あいうえおかきくけこさ駅 徒歩5分'), '', '駅名が 11 字以上なら読み間違いの疑いがあるので出さない');
+  assert.strictEqual(near('', '名古屋市中村区名駅 徒歩3分'), '', '最寄駅が無く、住所の頭（市・区の名前）が駅名のように読めるときは出さない（I-22）');
   assert.strictEqual(near('', 'バス停から徒歩3分'), '');
   assert.strictEqual(near('', ''), '');
   assert.strictEqual(c.nbNearText({}), '');
