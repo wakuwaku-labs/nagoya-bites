@@ -214,3 +214,83 @@ test('運営者の識別情報（確認者の名前・ハンドル）を、こ�
     for (const h of handles) assert.ok(!html.includes(h), `${rel} に運営者の識別情報が出ている`);
   }
 });
+
+// ── トップ（P-330・判断の記録 0032）──
+const audit = require('../scripts/audit_selection_wording');
+
+// ビルドのたびに元（店のデータ・特集・ジャーナル）から書き直される 3 区画。手で直しても次のビルドで戻るので、元を直す（P-331・P-332）。
+// ここを除いた「手書きの部分」だけを、この検査で見る。
+function indexWithoutGeneratedRegions() {
+  let s = readRel('index.html').split('\n').filter((l) => !l.startsWith('var LOCAL_STORES')).join('\n');
+  const cut = (from, to) => {
+    const i = s.indexOf(from);
+    const j = s.indexOf(to);
+    assert.ok(i > 0 && j > i, `${from} 〜 ${to} が見つからない（区画の印を消さない）`);
+    s = s.slice(0, i) + ' ' + s.slice(j + to.length);
+  };
+  cut('<!-- FEATURED_START -->', '<!-- FEATURED_END -->');
+  cut('<!-- LATEST_JOURNAL_START -->', '<!-- LATEST_JOURNAL_END -->');
+  return s;
+}
+
+test('トップ: 再生成される 3 区画を除いた手書きの部分に、人が選んだと読める言い方が無い。例外は検索の辞書の 1 件だけ（P-330）', () => {
+  const html = indexWithoutGeneratedRegions();
+  const compiled = audit.compilePolicy(audit.loadPolicy(ROOT));
+  const r = audit.scanHtml(html, compiled, { rel: 'index.html', keepScripts: true });
+  const errorIds = new Set(policy.terms.filter((t) => t.severity === 'error').map((t) => t.id));
+  assert.deepEqual(r.phrases.filter((p) => errorIds.has(p.term)), [], 'トップの手書きの部分に、人が選んだと読める言い方が戻っている');
+  assert.equal(r.exempted, 1, '例外は検索の言い換え辞書（nbC の words）の 1 件だけ');
+  const ex = policy.exempt.filter((e) => e.path === 'index.html');
+  assert.equal(ex.length, 1);
+  assert.ok(/検索/.test(ex[0].reason) && /画面には出ない/.test(ex[0].reason), '例外の理由は「画面に出ない検索の辞書」');
+});
+
+test('トップ: 題・OGP・Twitter・説明は、広告ゼロとシーンとエリアで探せることで書く（P-330）', () => {
+  const html = readRel('index.html');
+  const TITLE = /^名古屋グルメ約[\d,]+軒｜広告ゼロ、シーンとエリアで探せるガイド｜NAGOYA BITES$/;
+  assert.match((html.match(/<title>([^<]*)<\/title>/) || [])[1] || '', TITLE);
+  for (const key of ['og:title', 'twitter:title']) {
+    const m = html.match(new RegExp(`<meta (?:property|name)="${key}" content="([^"]*)"`));
+    assert.ok(m, key);
+    assert.match(m[1].replace(/【NAGOYA BITES】$/, '｜NAGOYA BITES'), TITLE, key);
+  }
+  for (const key of ['description', 'og:description', 'twitter:description']) {
+    const m = html.match(new RegExp(`<meta (?:property|name)="${key}" content="([^"]*)"`));
+    assert.ok(m, key);
+    assert.ok(!/現役|選び直し|厳選|マネージャー|店長|業界人/.test(m[1]), `${key} に人が選んだと読める言い方が戻っている`);
+    assert.ok(/約[\d,]+軒/.test(m[1]), `${key} に、件数の自動そろえ（sync_store_count.js）が見る「約N軒」がある`);
+  }
+  assert.ok(html.includes('店舗の選定にはAIによる情報収集・分析を活用しています。'), 'オーナーの文（構造化データの説明）');
+});
+
+test('トップ: 実績の帯から「現役の店長が編集」を外し、残りの 3 項目の最後をスマホの 2 列で中央に置く（P-330）', () => {
+  const html = readRel('index.html');
+  const bar = (html.match(/<div class="authority-bar">([\s\S]*?)<\/div>\s*\n/) || [])[1] || '';
+  assert.equal((bar.match(/class="auth-item"/g) || []).length, 3, '実績の帯は 3 項目');
+  assert.ok(!/店長|マネージャー|編集/.test(stripTags(bar)), stripTags(bar));
+  assert.ok(stripTags(bar).includes('広告・サクラなし'), '残す項目');
+  assert.ok(html.includes('.auth-item:last-child:nth-child(odd){grid-column:1/-1;justify-content:center;}'), '3 項目目が 2 列の左に寄らない');
+});
+
+test('トップ: 店のモーダルとカードの言い方（区画名・署名・見出し・札）は新しい言い方（P-330）', () => {
+  const html = indexWithoutGeneratedRegions();
+  const must = [
+    '<div class="m-section-title">この店のポイント</div>',
+    '<div class="m-note-h">知っておきたいこと</div>',
+    '<div class="m-section-title">飲食業界の経験者のレビュー</div>',
+    "leadKicker = '知っておきたいこと：'",
+    "leadKicker = 'ポイント：'",
+    '<span class="card-flag flag-pro">ポイント紹介</span>',
+    "'経験者レビュー' + r.insiderReviewCount + '件'",
+    "var sigParts = [];",
+    "sigParts.push('<strong>' + mEsc(visitLabel) + '</strong>')",
+    "sigEl.style.display = sigParts.length ? '' : 'none'",
+    "'匿名の飲食業界経験者'",
+    "editorial','signal','編集部推薦・選定理由'",
+  ];
+  for (const s of must) assert.ok(html.includes(s), `新しい言い方が無い: ${s}`);
+  const gone = ['現役飲食店マネージャーが編集', '編集部の視点', '業界人メモ', 'プロの目利き', '匿名の業界人', '名古屋の業界人', '編集部・業界人の推薦'];
+  for (const s of gone) assert.ok(!html.includes(s), `古い言い方が戻っている: ${s}`);
+  // クラス名と id は変えない（外から参照されている・0031 の 4）
+  for (const s of ['id="m-insider-note"', 'id="m-insider-reviews"', 'class="card-flag flag-insider"', 'insider-cta']) assert.ok(readRel('index.html').includes(s), `名前を変えていない: ${s}`);
+});
