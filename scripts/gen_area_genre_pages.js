@@ -90,7 +90,7 @@ function priceBandRows(stores) {
   return [...counts.entries()].sort((a, b) => lo(a[0]) - lo(b[0]) || byCodeUnit(a[0], b[0]));
 }
 
-// 編集部の選定理由がある店（SEO-124）。判定は店舗ページと同じ scripts/lib/editor_reason.js。
+// 選定理由がある店（SEO-124）。判定は店舗ページと同じ scripts/lib/editor_reason.js。
 // 根拠の強い順（訪問済→店主取材済→業界内で評判→公開情報）、同じ根拠なら一覧と同じ機械的な順。一覧の順位は動かさない
 function editorPicks(stores, max) {
   const order = new Map(sortForDisplay(stores).map((s, i) => [s, i]));
@@ -162,7 +162,7 @@ function descriptionFor(page) {
   const priceStat = priceModeStat(page.stores);
   const priceStr = priceStat ? `予算は${priceStat.band}が最多（${priceStat.count}軒）。` : '';
   if (page.type === 'area') {
-    return `${page.area.label}の飲食店${n}軒。${priceStr}現役の飲食店マネージャーがGoogle評価と口コミ信頼度を並べて整理。予約・地図は各店ページへ。`;
+    return `${page.area.label}の飲食店${n}軒。${priceStr}Google評価と口コミ信頼度を並べて整理。予約・地図は各店ページへ。`;
   }
   const condStr = page.type === 'condition' ? `${page.cond.label}の店だけを${n}軒に絞りました。` : `${n}軒を掲載。`;
   return `${page.area.label}の${page.genre.label}${condStr}${priceStr}広告掲載料ゼロ・PR記事ゼロの独立編集で選定順位を操作していません。`;
@@ -495,9 +495,9 @@ ${guides.map(g => `    <p>${esc(g)}</p>`).join('\n')}
   </section>` : '';
 
   const picks = editorPicks(page.stores, (policy.editorPicks && policy.editorPicks.max) || 0);
-  const picksHtml = picks.length ? `  <section class="hub-picks" aria-label="編集部の選定理由がある店">
-    <h2 class="nb-section-head"><span>編集部の選定理由がある店</span></h2>
-    <p class="hub-picks-note">下の一覧の並び順とは別に、編集部の選定理由がある店を先に示します。選定の根拠は各店の下に書いています（一覧の順位は動かしていません）。</p>
+  const picksHtml = picks.length ? `  <section class="hub-picks" aria-label="選定理由がある店">
+    <h2 class="nb-section-head"><span>選定理由がある店</span></h2>
+    <p class="hub-picks-note">下の一覧の並び順とは別に、選定理由がある店を先に示します。選定の根拠は各店の下に書いています（一覧の順位は動かしていません）。</p>
     <ul>
 ${picks.map(s => {
     const label = visitStatusLabel(s);

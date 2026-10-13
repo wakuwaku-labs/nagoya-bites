@@ -31,6 +31,15 @@ test('span の meta 行: 部品を meta 行の前に置き、重なる区切り�
   assert.equal(B.applyByline(out, { selfFile: 'banquet.html' }), out);
 });
 
+test('書き手は編集部の名前だけ。運営者の経歴・個人名の注記は出さない（P-327・オーナーの決定 #2）', () => {
+  const out = B.applyByline(page(LD('2026-04-15', '2026-10-09'), ''), { selfFile: 'banquet.html' });
+  assert.match(out, /<span>執筆 <a href="editorial-policy.html">NAGOYA BITES 編集部<\/a><\/span><\/p>/);
+  assert.ok(!out.includes('nb-byline-note'));
+  assert.ok(!out.includes('現役'));
+  const self = B.applyByline(page(LD('2026-04-15', '2026-04-15'), ''), { selfFile: 'editorial-policy.html' });
+  assert.match(self, /<span>執筆 NAGOYA BITES 編集部<\/span>/);
+});
+
 test('文字だけの meta 行: 区切りごとに判定し、先頭の「日付 更新 —」も外す', () => {
   assert.equal(B.cleanMetaInner('NAGOYA BITES編集部 ｜ 2026年5月更新 ｜ 10店掲載'), '10店掲載');
   assert.equal(B.cleanMetaInner('2026.05.14 更新 — 名駅・栄・伏見・大須エリア対応'), '名駅・栄・伏見・大須エリア対応');

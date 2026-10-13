@@ -50,14 +50,14 @@ function patchHtml(html, slug) {
     /<meta property="og:image:height" content="[^"]+">/,
     '<meta property="og:image:height" content="630">'
   );
-  // og:image:alt — 「{店名} の店舗写真」→「{店名} | NAGOYA BITES（業界人推薦）」
+  // og:image:alt — 「{店名} の店舗写真」→「{店名} | NAGOYA BITES（名古屋グルメガイド）」
   out = out.replace(
     /(<meta property="og:image:alt" content=")([^"]+?) の店舗写真(">)/,
-    '$1$2 | NAGOYA BITES（業界人運営の名古屋グルメガイド）$3'
+    '$1$2 | NAGOYA BITES（名古屋グルメガイド）$3'
   );
   out = out.replace(
     /(<meta name="twitter:image:alt" content=")([^"]+?) の店舗写真(">)/,
-    '$1$2 | NAGOYA BITES（業界人運営の名古屋グルメガイド）$3'
+    '$1$2 | NAGOYA BITES（名古屋グルメガイド）$3'
   );
 
   return { html: out, modified };

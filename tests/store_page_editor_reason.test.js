@@ -1,5 +1,5 @@
 'use strict';
-// SEO-143: 店舗ページの本文に「編集部の選定理由」（editorReason）を出す。
+// SEO-143: 店舗ページの本文に「選定理由」（editorReason）を出す。
 // - おすすめポイントと同じ文なら二重に出さない
 // - insiderNote は出さない（オーナーが書いたか確かめた記録が無いため）
 // - 選定の根拠（visitStatus）はトップのモーダルと同じ語で添える
@@ -13,10 +13,10 @@ const { auditHtml } = require(path.join(ROOT, 'scripts', 'lib', 'inline_js.js'))
 
 const BASE = { '店名': 'テスト酒場', 'エリア': '栄', 'ジャンル': '居酒屋', 'おすすめポイント': '炭火の焼き鳥が看板。' };
 
-test('editorReason を持つ店は「編集部の選定理由」を本文に出し、HTML をエスケープする', () => {
+test('editorReason を持つ店は「選定理由」を本文に出し、HTML をエスケープする', () => {
   const html = buildEditorReason({ ...BASE, editorReason: '<b>串打ち</b>を毎朝店で行う一軒。', visitStatus: 'visited' });
   assert.match(html, /<section class="editor-reason">/);
-  assert.match(html, /<h2>編集部の選定理由<\/h2>/);
+  assert.match(html, /<h2>選定理由<\/h2>/);
   assert.ok(html.includes('&lt;b&gt;串打ち&lt;/b&gt;を毎朝店で行う一軒。'));
   assert.ok(!html.includes('<b>'));
   assert.ok(html.includes('選定の根拠：訪問済'));
