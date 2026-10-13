@@ -7747,8 +7747,13 @@ var LOCAL_STORES = [{"店名":"とんかつ朱寿","ジャンル":"和食","エ�
 var TRUST_POLICY = {"name":"口コミ信頼度","shortName":"信頼度","enLabel":"REVIEW TRUST","question":"この店のGoogle★と件数は、そのまま信じてよいか","sortLabel":"口コミ信頼度順","minObserved":3,"scoreVersion":"2.2","tiers":[{"id":"SS","min":97,"label":"文句なしに参考にできます","advice":"文句なしに参考にできます。","color":"#1b5e20","cssClass":"cc-tier-SS"},{"id":"A","min":90,"label":"そのまま参考にできます","advice":"そのまま参考にできます。","color":"#2e7d32","cssClass":"cc-tier-A"},{"id":"B","min":75,"label":"おおむね参考にできます","advice":"おおむね参考にできます。","color":"#46752a","cssClass":"cc-tier-B"},{"id":"C","min":60,"label":"参考程度に","advice":"参考程度にしてください。","color":"#5f6b63","cssClass":"cc-tier-C"},{"id":"D","min":0,"label":"他の情報と合わせて判断を","advice":"他の情報と合わせて判断してください。","color":"#767676","cssClass":"cc-tier-D"}],"na":{"id":"—","label":"判定材料不足","advice":"判定材料が足りません。","color":"#767676","cssClass":"cc-tier-NA"},"headline":"Google★{rating}（{count}件）は、{advice}","headlineNoRating":"Googleの★と件数が取得できていないため、{advice}","coverageLabel":"検証 {observed}/{total}項目","lastCheckedLabel":"Google口コミ取得日 {date}","pendingLabel":"— 蓄積中","notObservedLabel":"判定保留","checks":[{"id":"s2","axis":"s2_reviewCountAbs","label":"件数は十分か"},{"id":"s1","axis":"s1_googleRatingVsCount","label":"★と件数のバランス"},{"id":"s7b","axis":"s7_reviewTimeseries","part":"s7b","label":"直近の評価は全体と一致するか"},{"id":"s7c","axis":"s7_reviewTimeseries","part":"s7c","label":"直近の評価のばらつき"},{"id":"s8","axis":"s8_reviewDistribution","label":"評価の分布（両極に割れていないか）"},{"id":"s7a","axis":"s7_reviewTimeseries","part":"s7a","label":"口コミの増え方"},{"id":"s4","axis":"s4_mediaCrossCheck","label":"第三者メディアの掲載"},{"id":"s7d","axis":"s7d_reviewBurstCluster","label":"口コミの投稿タイミング"},{"id":"s9","axis":"s9_crossStoreFingerprint","label":"他店舗との重複"}],"metaHeading":"掲載データの充実度（口コミ信頼度には含めません）","meta":[{"axis":"s3_dataCompleteness","label":"掲載情報の充実"},{"axis":"s5_operationContinuity","label":"営業確認"},{"axis":"s6_instagramPresence","label":"公式Instagram"}],"pages":{"guide":"features/review-trust.html","method":"features/integrity-method.html","disputeMail":"editor@nagoya-bites.com"}};
 var ALL_STORES = [];
 var FILTERED = [];
-var ACTIVE_TAGS = [];
-var ACTIVE_WARD = 'all';
+// 一覧に効いている絞り込みの条件（I-20）。押されているボタンの見た目ではなく、この 1 つのオブジェクトを状態の正本にする。
+// 形と判定は NB-FILTER 区画（下）。検索語は #si が、保存済みだけは SHOW_FAVS_ONLY が別に持つ
+var NB_FILTER = { genre: 'All', areas: [], conds: [], tags: [], cap: 0 };
+// ハブ（stores/area/）と同じ、エリア 10 群と条件 13 軸の表。ビルドが data/area_genre_pages_policy.json から書く（scripts/build_filter_policy.js）。手で編集しない
+/* NB-FILTER-POLICY:START */
+var NB_FILTER_POLICY = {"areas":[{"slug":"meieki","label":"名駅（名古屋駅）","ward":"中村区","match":["名古屋（名古屋駅/西区/中村区）","名古屋駅","名駅","名古屋市中村区","名古屋市西区","名古屋市中村区名駅","名古屋（中村区・名駅）","西区"]},{"slug":"nishiki-fushimi","label":"錦・伏見・丸の内","ward":"中区","match":["栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄","丸の内","名古屋市中区錦","錦","東桜"]},{"slug":"yabacho-osu","label":"矢場町・大須・上前津","ward":"中区","match":["栄(ミナミ)/矢場町/大須/上前津","大須"]},{"slug":"sakae","label":"栄","ward":"中区","match":["栄","名古屋市中区","名古屋市中区栄"]},{"slug":"chikusa-imaike","label":"千種・今池・大曽根","ward":"千種区","match":["大曽根･千種･今池･池下･守山区","名古屋市千種区","名古屋市千種区覚王山","名古屋市東区","東区","名古屋市東区筒井"]},{"slug":"midori-tempaku","label":"緑区・南区・天白区・瑞穂区","ward":"","match":["緑区・南区・天白区・瑞穂区","名古屋市南区"]},{"slug":"kanayama","label":"金山・熱田","ward":"熱田区","match":["金山・神宮前・熱田区","金山","熱田"]},{"slug":"kakuozan","label":"覚王山・本山・藤が丘","ward":"","match":["本山・覚王山・藤が丘","覚王山"]},{"slug":"nakagawa-minato","label":"中川区・港区","ward":"中川区","match":["中川区・港区","名古屋（中川区）","中川区"]},{"slug":"tsurumai-yagoto","label":"鶴舞・八事・御器所","ward":"","match":["鶴舞・八事・御器所","鶴舞","名古屋市昭和区","昭和区"]}],"conds":[{"slug":"koshitsu","label":"個室あり","rule":"koshitsu"},{"slug":"late-night","label":"深夜営業（翌1時以降）","rule":"lateNight"},{"slug":"sunday","label":"日曜営業","rule":"sunday"},{"slug":"smoking-ok","label":"喫煙できる店","rule":"smokingOk"},{"slug":"non-smoking","label":"全席禁煙","rule":"nonSmoking"},{"slug":"nomihodai","label":"飲み放題あり","rule":"nomihodai"},{"slug":"tabehodai","label":"食べ放題あり","rule":"tabehodai"},{"slug":"group-30","label":"30名以上の宴会可","rule":"group30"},{"slug":"walk-3","label":"駅徒歩3分以内","rule":"walk3"},{"slug":"lunch","label":"ランチ営業あり","rule":"lunch"},{"slug":"budget-3000","label":"予算3,000円以下","rule":"budget3000"},{"slug":"budget-5000-plus","label":"予算5,001円以上","rule":"budget5000plus"},{"slug":"parking","label":"駐車場あり","rule":"parking"}]};
+/* NB-FILTER-POLICY:END */
 // 保存済み（お気に入り）だけを表示するか。エリア・ジャンルなどと同じ「絞り込み条件」の1つとして
 // applyFilters が見る（I-23）。保存した店はこの端末だけの情報なので URL のハッシュには載せない。
 var SHOW_FAVS_ONLY = false;
@@ -7779,14 +7784,6 @@ function loadCrossCheck() {
 var PAGE_SIZE = 30;
 var CURRENT_PAGE = 1;
 var RENDER_DATA = [];
-var AREA_TO_WARD = {'栄':'中区','大須':'中区','名古屋駅':'中村区','金山':'熱田区'};
-var WARD_AREAS = {
-  'all': null,
-  '中区': ['栄','大須'],
-  '中村区': ['名古屋駅'],
-  '熱田区': ['金山']
-};
-var FILTER_PANEL_OPEN = false;
 
 var CSV_URL = 'https://docs.google.com/spreadsheets/d/1VUk4bRTPoIc7pHywzIJTwZr9WyUX7ioxlZzbxQHsjCQ/export?format=csv&gid=415662614';
 
@@ -7849,13 +7846,9 @@ function loadStores(stores) {
     var el = document.getElementById(id);
     if (el) el.textContent = totalTxt;
   });
-  buildPrefTabs();
-  buildGenreTabs();
-  buildAreaFilter();
-  buildTagFilter();
-  buildCapTabs();
   readHash();       // restore filter state from URL hash
   applyFilters();   // apply restored state (replaces the initial renderGrid call)
+  nbRefreshFilterSheet();   // 絞り込みシートが開いている間に全店のデータが届いたら、件数とジャンルの並びを更新する
   injectDynamicJsonLd(ALL_STORES);
   enhanceStoreIndex();
 }
@@ -8030,31 +8023,6 @@ function injectDynamicJsonLd(stores) {
   document.head.appendChild(script);
 }
 
-function buildCapTabs() {
-  var container = document.getElementById('cap-tabs');
-  container.innerHTML = '<span class="cap-label">収容人数</span>'
-    + '<input class="cap-input" id="cap-input" type="number" min="1" max="999" placeholder="例:35">'
-    + '<span class="cap-unit">名以上収容できるお店</span>'
-    + '<span class="cap-hint">（空欄=すべて）</span>';
-  document.getElementById('cap-input').addEventListener('input', applyFilters);
-}
-
-function buildPrefTabs() {
-  var prefs = ['全国'];
-  ALL_STORES.forEach(function(s){ var p = s['都道府県']; if (p && prefs.indexOf(p) < 0) prefs.push(p); });
-  var container = document.getElementById('pref-tabs');
-  container.innerHTML = prefs.map(function(p, i){
-    return '<div class="pt' + (i===0?' on':'') + '" data-pref="' + p + '">' + p + '</div>';
-  }).join('');
-  container.onclick = function(e) {
-    var t = e.target;
-    if (!t.classList.contains('pt')) return;
-    container.querySelectorAll('.pt').forEach(function(x){ x.classList.remove('on'); });
-    t.classList.add('on');
-    applyFilters();
-  };
-}
-
 // ── ジャンルの常識的な正規化 ──
 // 生データ（特にmanual_stores由来）は「クラシック × モダンフレンチ」「さつまいも菓子」等の
 // 細粒度ジャンルが乱立し、フィルタチップが100件超に膨張していた。そこで生ジャンル文字列を
@@ -8111,88 +8079,6 @@ function initPillFold(container, toggleBtn, total, threshold) {
   };
 }
 
-function buildGenreTabs() {
-  var present = {};
-  ALL_STORES.forEach(function(s){
-    if (s['ジャンル']) present[normalizeGenre(s['ジャンル'])] = true;
-  });
-  var genres = ['All'].concat(GENRE_ORDER.filter(function(g){ return present[g]; }));
-  var bar = document.querySelector('.filter-bar');
-  // 先頭の「All」は絞り込みの内部の値（data-f・dataset.f で比べる）。画面に出す文字だけ「すべて」にする
-  bar.innerHTML = '<span class="fl">ジャンル</span>'
-    + genres.map(function(g, i){ return '<div class="ft' + (i===0?' on':'') + '" data-f="' + g + '">' + (g === 'All' ? 'すべて' : g) + '</div>'; }).join('');
-  bar.onclick = function(e) {
-    var t = e.target;
-    if (!t.classList.contains('ft')) return;
-    bar.querySelectorAll('.ft').forEach(function(x){ x.classList.remove('on'); });
-    t.classList.add('on');
-    applyFilters();
-  };
-  initPillFold(bar, document.getElementById('genre-fold-toggle'), genres.length, 8);
-}
-
-function buildAreaFilter() {
-  var wardDefs = [
-    {ward:'all', label:'エリアすべて', sub:''},
-    {ward:'中区', label:'中区', sub:'栄・大須'},
-    {ward:'中村区', label:'中村区', sub:'名古屋駅'},
-    {ward:'熱田区', label:'熱田区', sub:'金山'}
-  ];
-  var counts = {};
-  ALL_STORES.forEach(function(s){
-    var w = AREA_TO_WARD[s['エリア']];
-    if (w) counts[w] = (counts[w]||0) + 1;
-  });
-  var bar = document.getElementById('area-filter-bar');
-  bar.innerHTML = '<span class="area-fl">エリア（区）</span>'
-    + wardDefs.map(function(d,i){
-        var cnt = d.ward === 'all' ? ALL_STORES.length : (counts[d.ward]||0);
-        var sub = d.sub ? '<span class="at-sub">' + d.sub + '</span>' : '<span class="at-sub">' + cnt + '件</span>';
-        return '<div class="at' + (i===0?' on':'') + '" data-ward="' + d.ward + '">' + d.label + sub + '</div>';
-      }).join('');
-  bar.onclick = function(e) {
-    var t = e.target.closest('.at');
-    if (!t) return;
-    bar.querySelectorAll('.at').forEach(function(x){ x.classList.remove('on'); });
-    t.classList.add('on');
-    ACTIVE_WARD = t.dataset.ward;
-    applyFilters();
-  };
-}
-
-// ISSUE-035: 細粒度シーンタグ — 既存の基本シーンに加え、名古屋の生活シーンに合う新タグを 6 個追加。
-// 新タグは store-side の「タグ」フィールドに直接付与されない代わりに、
-// SCENE_ALIAS（applyFilters 内）で関連する既存タグの OR マッチで解決する。
-function buildTagFilter() {
-  var cats = [
-    {label:'シーン（基本）', tags:['デート','女子会','接待','誕生日・記念日','歓送迎会','忘年会・新年会','家族・子連れ']},
-    {label:'シーン（細）',   tags:['推し活','ママ会','オフ会','同窓会','両家顔合わせ','壮行会']},
-    {label:'席・空間',       tags:['個室','半個室','カウンター','テラス席','座敷','貸切可','隠れ家']},
-    {label:'予算',           tags:['〜1000円','1001〜2000円','2001〜3000円','3001〜5000円','5001〜7000円','7001〜10000円','10001円以上']}
-  ];
-  var html = cats.map(function(c){
-    return '<div class="tag-group"><span class="tag-label">' + c.label + '</span>'
-      + c.tags.map(function(t){ return '<div class="tg" data-tag="' + t + '">' + t + '</div>'; }).join('') + '</div>';
-  }).join('') + '<div class="tag-reset-wrap"><button class="tag-reset" onclick="resetTags()" aria-label="選択中のタグをすべて解除する">タグをリセット</button><button class="share-btn" onclick="shareURL()" aria-label="現在の絞り込み条件をシェアする">この条件をシェア</button></div>';
-  var el = document.getElementById('tag-filter');
-  el.innerHTML = html;
-  el.addEventListener('click', function(e){
-    var t = e.target;
-    if (!t.classList.contains('tg')) return;
-    t.classList.toggle('on');
-    var tag = t.dataset.tag;
-    var idx = ACTIVE_TAGS.indexOf(tag);
-    if (idx >= 0) ACTIVE_TAGS.splice(idx, 1); else ACTIVE_TAGS.push(tag);
-    applyFilters();
-  });
-}
-
-function resetTags() {
-  ACTIVE_TAGS = [];
-  document.querySelectorAll('.tg.on').forEach(function(el){ el.classList.remove('on'); });
-  applyFilters();
-}
-
 // ISSUE-035: 細粒度シーンタグ → 既存タグへのエイリアス
 // 新タグを選んだ際、関連する既存タグのいずれかが付いている店を「該当あり」とみなす（OR 一致）。
 // 同時に access / 備考 / 店舗側「タグ」のテキスト一致も拾うため、店舗データ側の変更は不要。
@@ -8204,6 +8090,353 @@ var SCENE_ALIAS = {
   '両家顔合わせ': ['接待', '個室', '誕生日・記念日'],
   '壮行会':       ['歓送迎会', '忘年会・新年会']
 };
+
+// NB-FILTER:START
+// この区画（NB-FILTER の開始の印から終了の印まで）は tests/index_filter_sheet.test.js が取り出して単体で検査する。DOM を触らない。
+// 区画の外に頼るのは、NB_FILTER_POLICY（ビルドで埋め込む）・normalizeGenre・GENRE_ORDER・priceToNum・SCENE_ALIAS・nbRunSearch・NB_SEARCH_META・nbSafeDecode だけ。
+//
+// 絞り込みの条件は NB_FILTER（{ genre, areas[], conds[], tags[], cap }）の 1 つのオブジェクトだけが持つ。画面の見た目（押されているボタン）を状態にしない。
+// 検索語は #si が、保存済みだけは SHOW_FAVS_ONLY が別に持つ（判断の記録 0037）。
+// エリアと条件の意味は、ハブ（stores/area/）と同じ表（NB_FILTER_POLICY）と、同じ判定（scripts/lib/area_genre_pages.js の写し）で決める。
+// 写した判定がハブと店ごとに一致することは tests/index_filter_sheet.test.js が全店で確かめる。
+
+// シートにだけある条件（ハブには無い）。「3,001〜5,000円」は、3,000円以下と5,001円以上のあいだを埋める。
+var NB_COND_EXTRA = [{ slug: 'budget-3001-5000', label: '予算3,001〜5,000円', rule: 'budget3001to5000' }];
+// 同時に選ぶと必ず 0 軒になる組。片方を選ぶと、もう片方は外れる（シートの操作だけ。ハッシュは読んだとおりに保つ）。
+var NB_COND_EXCLUSIVE = [['budget-3000', 'budget-3001-5000', 'budget-5000-plus'], ['smoking-ok', 'non-smoking']];
+// シーン・席のタグ（店のデータの「タグ」欄との一致で決める）。古いリンクの tag=… は今までどおり読む
+var NB_TAGS_SCENE = ['デート', '女子会', '接待', '誕生日・記念日', '歓送迎会', '忘年会・新年会', '家族・子連れ'];
+var NB_TAGS_SCENE2 = ['推し活', 'ママ会', 'オフ会', '同窓会', '両家顔合わせ', '壮行会'];
+var NB_TAGS_SEAT = ['半個室', 'カウンター', 'テラス席', '座敷', '貸切可', '隠れ家'];
+// シートにボタンの無いタグ。古いリンクから来たときだけ「そのほかの条件」に出る（「個室」はハブの「個室あり」とは別の判定のまま動かす）
+var NB_TAGS_LEGACY = ['個室', '〜1000円', '1001〜2000円', '2001〜3000円', '3001〜5000円', '5001〜7000円', '7001〜10000円', '10001円以上'];
+var NB_TAG_ORDER = NB_TAGS_SCENE.concat(NB_TAGS_SCENE2, NB_TAGS_SEAT, NB_TAGS_LEGACY);
+// 人数のボタン（cap=N。N 名以上入れる店）。ほかの値（cap=35 など）は、押された状態で追加で出す
+var NB_CAP_CHOICES = [10, 20, 30, 50];
+
+function nbStartsAri(v) {
+  return typeof v === 'string' && /^あり/.test(v.trim());
+}
+// 「2001～3000円」のような価格帯 → { lo, hi }（片側が開いている表記は null）
+function nbPriceBand(price) {
+  if (typeof price !== 'string' || !price) return null;
+  var nums = price.match(/\d[\d,]*/g);
+  if (!nums || nums.length === 0) return null;
+  var vals = nums.map(function(n) { return parseInt(n.replace(/,/g, ''), 10); });
+  var openLow = vals.length === 1 && (/^[～〜]/.test(price) || /以下/.test(price));
+  var openHigh = vals.length === 1 && (/[～〜]$/.test(price) || /以上/.test(price));
+  if (openLow) return { lo: null, hi: vals[0] };
+  if (openHigh) return { lo: vals[0], hi: null };
+  if (vals.length >= 2) return { lo: vals[0], hi: vals[vals.length - 1] };
+  return { lo: vals[0], hi: vals[0] };
+}
+var NB_COND_RULES = {
+  koshitsu: function(s) { return nbStartsAri(s['個室']); },
+  nomihodai: function(s) { return nbStartsAri(s['飲み放題']); },
+  tabehodai: function(s) { return nbStartsAri(s['食べ放題']); },
+  parking: function(s) { return nbStartsAri(s['駐車場']); },
+  lunch: function(s) { return nbStartsAri(s['ランチ']); },
+  // 深夜営業（翌1時以降）: 「翌0:xx」は除外し、翌1時〜翌12時のみ
+  lateNight: function(s) {
+    var h = s['営業時間'];
+    if (typeof h !== 'string') return false;
+    var m = h.match(/翌\s*([0-9]{1,2})\s*[:：時]/);
+    if (!m) return false;
+    var hour = parseInt(m[1], 10);
+    return hour >= 1 && hour <= 12;
+  },
+  // 日曜営業: 定休日に「日」を含まない。年中無休・なし・無休は真。不定休などの自由記述は判定できないので偽（載せすぎない）
+  sunday: function(s) {
+    var t = (s['定休日'] || '').trim();
+    if (!t) return false;
+    if (/不定休|現在|変更|ご予約の状況/.test(t)) return false;
+    if (/^(なし|年中無休|無休)$/.test(t)) return true;
+    if (t.indexOf('日') !== -1) return false;
+    if (/^[月火水木金土日、,\s]+$/.test(t)) return true;
+    return false;
+  },
+  smokingOk: function(s) { var v = s['禁煙']; return v === '禁煙席なし' || v === '一部禁煙'; },
+  nonSmoking: function(s) { return s['禁煙'] === '全面禁煙'; },
+  group30: function(s) { var n = parseInt(s['宴会収容'], 10); return isFinite(n) && n >= 30; },
+  // 駅徒歩3分以内（アクセスの文の最初の「徒歩N分」）
+  walk3: function(s) {
+    var a = s['アクセス'];
+    if (typeof a !== 'string') return false;
+    var m = a.match(/徒歩\s*(?:約)?\s*(\d+)\s*分/);
+    if (!m) return false;
+    return parseInt(m[1], 10) <= 3;
+  },
+  budget3000: function(s) { var b = nbPriceBand(s['価格帯']); return !!b && b.hi !== null && b.hi <= 3000; },
+  budget5000plus: function(s) { var b = nbPriceBand(s['価格帯']); return !!b && b.lo !== null && b.lo >= 5001; },
+  // シートだけの条件: 価格帯が 3,001〜5,000円の中に収まる
+  budget3001to5000: function(s) { var b = nbPriceBand(s['価格帯']); return !!b && b.lo !== null && b.hi !== null && b.lo >= 3001 && b.hi <= 5000; }
+};
+
+var NB_COND_DEFS = null;
+function nbCondDefs() {
+  if (!NB_COND_DEFS) {
+    NB_COND_DEFS = { list: NB_FILTER_POLICY.conds.concat(NB_COND_EXTRA), bySlug: Object.create(null) };
+    NB_COND_DEFS.list.forEach(function(c) { NB_COND_DEFS.bySlug[c.slug] = c; });
+  }
+  return NB_COND_DEFS;
+}
+function nbCondLabel(slug) { var d = nbCondDefs().bySlug[slug]; return d ? d.label : String(slug); }
+// 条件のスラッグ → 店を受ける判定。知らない条件・データが読めない店は偽（載せすぎない）
+function nbCondFn(slug) {
+  var d = nbCondDefs().bySlug[slug];
+  var rule = d && NB_COND_RULES[d.rule];
+  if (!rule) return function() { return false; };
+  return function(s) { try { return !!rule(s); } catch (e) { return false; } };
+}
+
+var NB_AREA_INDEX = null;
+// 店の「エリア」の原文 → エリアの群のスラッグ（群に入らなければ ''）。ハブの normalizeArea と同じ（前後の空白を除いた完全一致）
+function nbAreaSlug(raw) {
+  if (!NB_AREA_INDEX) {
+    NB_AREA_INDEX = Object.create(null);
+    NB_FILTER_POLICY.areas.forEach(function(a) { a.match.forEach(function(m) { NB_AREA_INDEX[m] = a.slug; }); });
+  }
+  return NB_AREA_INDEX[String(raw == null ? '' : raw).trim()] || '';
+}
+function nbAreaLabel(slug) {
+  var list = NB_FILTER_POLICY.areas;
+  for (var i = 0; i < list.length; i++) if (list[i].slug === slug) return list[i].label;
+  return String(slug);
+}
+
+var NB_GENRE_MEMO = Object.create(null);
+function nbGenreOf(s) {
+  var raw = s['ジャンル'] || '';
+  var g = NB_GENRE_MEMO[raw];
+  if (g === undefined) { g = normalizeGenre(raw); NB_GENRE_MEMO[raw] = g; }
+  return g;
+}
+// 店が載せているジャンル（代表ジャンルの並びで）
+function nbPresentGenres(list) {
+  var present = Object.create(null);
+  list.forEach(function(s) { if (s['ジャンル']) present[nbGenreOf(s)] = 1; });
+  return GENRE_ORDER.filter(function(g) { return present[g]; });
+}
+
+// タグの判定に使う店の側の値（1 店につき 1 回だけ作る）
+function nbTagCtx(s) {
+  return {
+    storeTags: (s['タグ'] || '').split(',').map(function(t) { return t.trim(); }),
+    access: s['アクセス'] || '',
+    notes: s['備考'] || '',
+    priceNum: priceToNum(s['価格帯'])
+  };
+}
+// 1 つのタグを店が満たすか（これまでの判定をそのまま移したもの）
+function nbTagOk(c, tag) {
+  // 予算タグは正規化済みの価格帯で判定
+  if (tag === '〜1000円') return c.priceNum >= 1 && c.priceNum <= 1000;
+  if (tag === '1001〜2000円') return c.priceNum >= 1001 && c.priceNum <= 2000;
+  if (tag === '2001〜3000円') return c.priceNum >= 2001 && c.priceNum <= 3000;
+  if (tag === '3001〜5000円') return c.priceNum >= 3001 && c.priceNum <= 5000;
+  if (tag === '5001〜7000円') return c.priceNum >= 5001 && c.priceNum <= 7000;
+  if (tag === '7001〜10000円') return c.priceNum >= 7001 && c.priceNum <= 10000;
+  if (tag === '10001円以上') return c.priceNum >= 10001 && c.priceNum < 99999;
+  // ISSUE-035: 細粒度シーンタグは関連既存タグの OR 一致で解決
+  if (SCENE_ALIAS[tag]) {
+    var aliases = SCENE_ALIAS[tag];
+    for (var ai = 0; ai < aliases.length; ai++) {
+      var at = aliases[ai];
+      if (c.storeTags.indexOf(at) !== -1) return true;
+      if (c.access.indexOf(at) !== -1 || c.notes.indexOf(at) !== -1) return true;
+    }
+    // 店舗データ側で明示的に新タグが書かれている場合もカバー
+    if (c.access.indexOf(tag) !== -1 || c.notes.indexOf(tag) !== -1) return true;
+    return false;
+  }
+  if (c.storeTags.indexOf(tag) !== -1) return true;
+  // 「個室」はアクセス・備考列にある場合も一致、半個室もカバー
+  if (tag === '個室') return c.storeTags.indexOf('半個室') !== -1 || c.access.indexOf('個室') !== -1 || c.notes.indexOf('個室') !== -1;
+  // 「半個室」選択時は個室も含む
+  if (tag === '半個室') return c.storeTags.indexOf('個室') !== -1 || c.access.indexOf('半個室') !== -1 || c.notes.indexOf('半個室') !== -1;
+  // その他のタグはアクセス・備考列も確認
+  return c.access.indexOf(tag) !== -1 || c.notes.indexOf(tag) !== -1;
+}
+// 人数: N 名以上入れる店。宴会収容の数に加え、タグの「NN〜MM名」（上限が N 以上）と「NN名以上」（NN が N 以上）も根拠にする。
+// 宴会収容だけにすると、編集の手入れで容量をタグに書いた店が消える（実測: 容量タグを持つ 597 店のうち、宴会収容もあるのは 11 店）
+function nbCapOk(s, n) {
+  if (!(n > 0)) return true;
+  var banq = parseInt(s['宴会収容'], 10);
+  if (isFinite(banq) && banq >= n) return true;
+  var tags = (s['タグ'] || '').split(/[,、，\/]/);
+  for (var i = 0; i < tags.length; i++) {
+    var t = tags[i].trim();
+    var m1 = t.match(/^(\d+)[〜～](\d+)名$/);
+    if (m1 && parseInt(m1[2], 10) >= n) return true;
+    var m2 = t.match(/^(\d+)名以上$/);
+    if (m2 && parseInt(m2[1], 10) >= n) return true;
+  }
+  return false;
+}
+
+function nbEmptyFilter() { return { genre: 'All', areas: [], conds: [], tags: [], cap: 0 }; }
+function nbCloneFilter(f) { return { genre: f.genre, areas: f.areas.slice(), conds: f.conds.slice(), tags: f.tags.slice(), cap: f.cap }; }
+// 知らない値を捨て、重複を除き、決まった順に並べる（ハッシュの文字列を安定させる）
+function nbNormalizeFilter(f) {
+  var out = nbEmptyFilter();
+  f = f || {};
+  var g = f.genre;
+  if (g && g !== 'All' && GENRE_ORDER.indexOf(g) !== -1) out.genre = g;
+  var inA = Object.create(null), inC = Object.create(null), inT = Object.create(null);
+  (f.areas || []).forEach(function(a) { inA[a] = 1; });
+  NB_FILTER_POLICY.areas.forEach(function(a) { if (inA[a.slug]) out.areas.push(a.slug); });
+  (f.conds || []).forEach(function(c) { inC[c] = 1; });
+  nbCondDefs().list.forEach(function(c) { if (inC[c.slug]) out.conds.push(c.slug); });
+  (f.tags || []).forEach(function(t) { inT[t] = 1; });
+  NB_TAG_ORDER.forEach(function(t) { if (inT[t]) out.tags.push(t); });
+  var cap = parseInt(f.cap, 10);
+  out.cap = (isFinite(cap) && cap > 0) ? Math.min(cap, 999) : 0;
+  return out;
+}
+// 効いている条件の数（エリア・条件・タグは 1 つずつ数える）。検索語と保存済みは含まない
+function nbFilterCount(f) {
+  return (f.genre !== 'All' ? 1 : 0) + f.areas.length + f.conds.length + f.tags.length + (f.cap > 0 ? 1 : 0);
+}
+
+// 絞り込みの条件 → 店を受ける判定（条件の中身は AND。エリアの群の中は OR）
+function nbCompileFilter(f) {
+  var areaSet = null;
+  if (f.areas.length) { areaSet = Object.create(null); f.areas.forEach(function(a) { areaSet[a] = 1; }); }
+  var condFns = f.conds.map(nbCondFn);
+  var tags = f.tags, cap = f.cap, genre = f.genre;
+  return function(s) {
+    if (genre !== 'All' && nbGenreOf(s) !== genre) return false;
+    if (areaSet && !areaSet[nbAreaSlug(s['エリア'])]) return false;
+    for (var i = 0; i < condFns.length; i++) if (!condFns[i](s)) return false;
+    if (cap > 0 && !nbCapOk(s, cap)) return false;
+    if (tags.length) {
+      var c = nbTagCtx(s);
+      for (var j = 0; j < tags.length; j++) if (!nbTagOk(c, tags[j])) return false;
+    }
+    return true;
+  };
+}
+// 条件（と保存済み）で絞る。検索語はここでは見ない（絞ったあとに nbRunSearch が掛かる）
+function nbFilterStores(f, list, favNames) {
+  var ok = nbCompileFilter(f), out = [];
+  for (var i = 0; i < list.length; i++) {
+    var s = list[i];
+    if (favNames && favNames.indexOf(s['店名']) === -1) continue;
+    if (ok(s)) out.push(s);
+  }
+  return out;
+}
+// 検索語を掛けたときの件数。nbRunSearch は店の __score・__why・__hitCount と NB_SEARCH_META を書き換えるので、
+// 数えたあとで必ず元に戻す（画面に出ている一覧の関連度順・「一致した語」の表示を壊さない）
+function nbSearchCount(list, q) {
+  if (!q) return list.length;
+  var keys = ['__score', '__why', '__hitCount'], has = [], vals = [], i, k, s;
+  for (i = 0; i < list.length; i++) {
+    s = list[i];
+    for (k = 0; k < 3; k++) {
+      if (Object.prototype.hasOwnProperty.call(s, keys[k])) { has.push(i * 3 + k); vals.push(s[keys[k]]); }
+    }
+  }
+  var savedMeta = NB_SEARCH_META, n = 0;
+  try {
+    n = nbRunSearch(list, q).length;
+  } finally {
+    var hasSet = Object.create(null), hi;
+    for (hi = 0; hi < has.length; hi++) hasSet[has[hi]] = vals[hi];
+    for (i = 0; i < list.length; i++) {
+      s = list[i];
+      for (k = 0; k < 3; k++) {
+        if (Object.prototype.hasOwnProperty.call(hasSet, i * 3 + k)) s[keys[k]] = hasSet[i * 3 + k];
+        else delete s[keys[k]];
+      }
+    }
+    NB_SEARCH_META = savedMeta;
+  }
+  return n;
+}
+function nbCountStores(f, list, q, favNames) {
+  return nbSearchCount(nbFilterStores(f, list, favNames), q);
+}
+
+// ハッシュ: genre / area / cond / tag / cap（q と store は呼び出し側が足す）。名前は変えない。area と cond は新しい名前
+function nbFilterParams(f) {
+  var p = [];
+  if (f.genre && f.genre !== 'All') p.push('genre=' + encodeURIComponent(f.genre));
+  if (f.areas.length) p.push('area=' + f.areas.join(','));
+  if (f.conds.length) p.push('cond=' + f.conds.join(','));
+  if (f.tags.length) p.push('tag=' + f.tags.map(encodeURIComponent).join(','));
+  if (f.cap > 0) p.push('cap=' + f.cap);
+  return p;
+}
+// ハッシュ（nbParseHash の結果）→ 条件。pref は読むが使わない（全店が愛知県）。ward は、その区に属するエリアの群すべてに広げる。
+// 知らない値は捨てる
+function nbFilterFromParams(p) {
+  var f = nbEmptyFilter();
+  if (p.genre) f.genre = normalizeGenre(p.genre);
+  var areas = [];
+  if (p.area) String(p.area).split(',').forEach(function(x) { areas.push(x.trim()); });
+  if (p.ward) NB_FILTER_POLICY.areas.forEach(function(a) { if (a.ward && a.ward === p.ward) areas.push(a.slug); });
+  f.areas = areas;
+  if (p.cond) f.conds = String(p.cond).split(',').map(function(x) { return x.trim(); });
+  if (p.tag) f.tags = String(p.tag).split(',').map(function(t) { return nbSafeDecode(t); });
+  if (p.cap) f.cap = p.cap;
+  return nbNormalizeFilter(f);
+}
+
+// 1 つの条件を押した結果（押されていれば外す）。新しい条件を返し、元は変えない
+function nbToggleFilter(f, kind, v) {
+  var g = nbCloneFilter(f);
+  function flip(arr, x) { var i = arr.indexOf(x); if (i >= 0) arr.splice(i, 1); else arr.push(x); return i < 0; }
+  if (kind === 'genre') g.genre = (g.genre === v ? 'All' : v);
+  else if (kind === 'area') flip(g.areas, v);
+  else if (kind === 'cond') {
+    if (flip(g.conds, v)) {
+      NB_COND_EXCLUSIVE.forEach(function(grp) {
+        if (grp.indexOf(v) === -1) return;
+        g.conds = g.conds.filter(function(c) { return c === v || grp.indexOf(c) === -1; });
+      });
+    }
+  }
+  else if (kind === 'tag') flip(g.tags, v);
+  else if (kind === 'cap') { var n = parseInt(v, 10); g.cap = (g.cap === n ? 0 : n); }
+  return nbNormalizeFilter(g);
+}
+// 条件が押されているか（シートのボタンの aria-pressed）
+function nbFilterHas(f, kind, v) {
+  if (kind === 'genre') return f.genre === v;
+  if (kind === 'area') return f.areas.indexOf(v) !== -1;
+  if (kind === 'cond') return f.conds.indexOf(v) !== -1;
+  if (kind === 'tag') return f.tags.indexOf(v) !== -1;
+  if (kind === 'cap') return f.cap === parseInt(v, 10);
+  return false;
+}
+// 条件を 1 つ外した結果
+function nbDropFilter(f, kind, v) {
+  return nbFilterHas(f, kind, v) ? nbToggleFilter(f, kind, v) : nbCloneFilter(f);
+}
+// 0 軒のとき、条件を 1 つ外すと何軒になるか。0 軒より多くなるものだけ、多い順に上位 3 つ。
+// 検索語を外す案は withQuery のときだけ入れる（シートは検索語を持たないので入れない）
+function nbDropSuggestions(f, list, q, favNames, withQuery) {
+  var cands = [];
+  if (f.genre !== 'All') cands.push({ kind: 'genre', v: f.genre, label: f.genre });
+  f.areas.forEach(function(a) { cands.push({ kind: 'area', v: a, label: nbAreaLabel(a) }); });
+  f.conds.forEach(function(c) { cands.push({ kind: 'cond', v: c, label: nbCondLabel(c) }); });
+  f.tags.forEach(function(t) { cands.push({ kind: 'tag', v: t, label: t }); });
+  if (f.cap > 0) cands.push({ kind: 'cap', v: String(f.cap), label: f.cap + '名以上' });
+  var out = [];
+  cands.forEach(function(c) {
+    var g = nbDropFilter(f, c.kind, c.v);
+    var n = nbCountStores(g, list, q, favNames);
+    if (n > 0) out.push({ kind: c.kind, v: c.v, label: c.label, count: n });
+  });
+  if (withQuery && q) {
+    var n0 = nbCountStores(f, list, '', favNames);
+    if (n0 > 0) out.push({ kind: 'q', v: q, label: '「' + q + '」', count: n0 });
+  }
+  out.sort(function(a, b) { return b.count - a.count; });
+  return out.slice(0, 3);
+}
+// NB-FILTER:END
 
 // ==NB_SEARCH_ENGINE_START==
 // ================================================================
