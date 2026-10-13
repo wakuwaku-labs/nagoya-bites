@@ -49,6 +49,18 @@ const CLEAN_SOURCES = [
   'faq.html',
   'features/editorial-policy.html',
   'stores/index.html',
+  // 特集の冒頭の導線・特集を作る生成器・店のカードの説明文の元データ（P-363）。
+  //   scripts/gen_industry_features.js と data/featured.json は、特集の題の系統（title・h1 の副題・リンク名）に語が残るので、
+  //   題を直す P-334 まで足さない（本文・見出し・FAQ・説明文は P-363 で直した）。
+  'scripts/add_feature_top_cta.js',
+  'scripts/apply_faq_per_topic.js',
+  'scripts/recreate_fabricated_features.js',
+  'scripts/fix_ramen_schema_pollution.js',
+  'scripts/list_editorreason_candidates.js',
+  'docs/editorreason-todo.md',
+  'data/editor_picks.json',
+  'data/manual_stores.json',
+  'data/recommendations.json',
 ];
 
 function hits(text) {
@@ -322,4 +334,54 @@ test('トップ: 店のモーダルとカードの言い方（区画名・署名
   for (const s of gone) assert.ok(!html.includes(s), `古い言い方が戻っている: ${s}`);
   // クラス名と id は変えない（外から参照されている・0031 の 4）
   for (const s of ['id="m-insider-note"', 'id="m-insider-reviews"', 'class="card-flag flag-insider"', 'insider-cta']) assert.ok(readRel('index.html').includes(s), `名前を変えていない: ${s}`);
+});
+
+// ── 特集の元（P-363・特集本体は P-364、特集一覧は P-365）──
+// 特集のページは、生成器・店のデータ・月替わりの設定から作られる。ページだけ直しても、次の再生成で元の言い方が戻る。
+// 先に元を直し、その後でページを直す。題（title・h1 の副題・リンク名）は検索の見え方が変わるので P-334 で扱い、ここでは直さない。
+
+test('特集の冒頭の導線: 「編集部が上位に挙げた」と言わず、並び順どおり「この特集の先頭の N 軒」と書く（P-363）', () => {
+  const { buildCta } = require('../scripts/add_feature_top_cta.js');
+  const stores = [
+    { jcode: 'J000000001', name: 'テスト店A' },
+    { jcode: 'J000000002', name: 'テスト店B' },
+    { jcode: 'J000000003', name: 'テスト店C' },
+  ];
+  const html = buildCta(stores, 'banquet');
+  assert.ok(html.includes('本文を読む前に動きたい方へ。この特集の先頭の3軒の詳細と予約はこちらから。'), html);
+  assert.ok(!/編集部|上位に挙げた/.test(stripTags(html)), '誰が挙げたかを言わない');
+  assert.equal(hits(html).length, 0);
+});
+
+test('特集の設定（data/featured.json）: 季節の文に人が選んだと読める言い方が無い。残る語は題の写し 1 件だけ（P-363）', () => {
+  const featured = JSON.parse(readRel('data/featured.json'));
+  const found = hits(JSON.stringify(featured));
+  assert.equal(found.length, 1, `題の写し（業界人が通う名古屋の焼肉8選）以外に語が戻っている: ${found.join(' / ')}`);
+  assert.ok(found[0].startsWith('gyokai-jin:'), found[0]);
+  // build_featured.js が、この文を特集一覧と FEATURED に出す。ページ側の写し（P-364・P-365）はこの文にそろえる
+  assert.equal(featured.sceneLeads['10']['nagoya-yakiniku-guide'], '食欲の秋は肉で。和牛・炭火の焼肉店を紹介します。');
+  const desc = (featured.items || []).map((x) => x.seasonDesc || '').join('\n');
+  assert.ok(desc.includes('2026年夏（6〜9月）の名古屋グルメを紹介。ビアガーデン'), '夏の seasonDesc は「紹介」');
+  assert.ok(desc.includes('秋（9〜11月）の名古屋グルメを紹介。松茸'), '秋の seasonDesc は「紹介」');
+  assert.ok(desc.includes('予算¥8,000〜¥35,000の店を紹介。'), '父の日の seasonDesc は「紹介」');
+});
+
+test('特集の生成器（gen_industry_features.js）: 語が残るのは題の系統（titleHtml・titleText・titleH1Suffix・他の特集へのリンク名）の 7 行だけ。本文・見出し・FAQ・札には戻さない（P-363）', () => {
+  const allowed = /^\s*(titleHtml|titleText|titleH1Suffix):|href: 'nagoya-industry-pick-izakaya\.html', text: /;
+  const lines = readRel('scripts/gen_industry_features.js').split('\n');
+  const bad = [];
+  let titleFamily = 0;
+  lines.forEach((l, i) => {
+    if (hits(l).length === 0) return;
+    if (allowed.test(l)) titleFamily++;
+    else bad.push(`${i + 1}: ${l.trim().slice(0, 80)}`);
+  });
+  assert.deepEqual(bad, [], '題の系統以外に、人が選んだと読める言い方が戻っている');
+  assert.equal(titleFamily, 7, '題の系統の行数（増えていたら題でない場所に語が入っている。減ったら P-334 で CLEAN_SOURCES に足す）');
+});
+
+test('特集の店カードの説明文の元データ（editor_picks・manual_stores・recommendations）は CLEAN_SOURCES に入っている（P-363）', () => {
+  for (const rel of ['data/editor_picks.json', 'data/manual_stores.json', 'data/recommendations.json', 'scripts/apply_faq_per_topic.js', 'scripts/recreate_fabricated_features.js']) {
+    assert.ok(CLEAN_SOURCES.includes(rel), rel);
+  }
 });

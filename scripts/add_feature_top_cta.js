@@ -162,7 +162,7 @@ function storesFromHtmlLinks(html) {
  *
  * ItemList の上位はしばしば同じ看板の支店で埋まる（実例: ひつまぶし特集の1〜3位が
  * 「備長」3店舗、手羽先特集の1〜3位が「むつみ」3店舗）。記事を開いて最初に見える
- * 「EDITORS' PICK 3軒」がチェーン1社の支店一覧では、業界人の目利きという Moat に反する。
+ * 「注目店 3軒」がチェーン1社の支店一覧では、読者が店を選ぶ助けにならない。
  * 正規化した店名の先頭 BRAND_KEY_LEN 文字を看板とみなし、重複を飛ばして次点を繰り上げる。
  * 重複除外の結果 3 軒に届かない場合のみ、除外した店を順位順に戻す（欠番にしない）。
  */
@@ -248,7 +248,7 @@ function buildCta(stores, slug) {
   return `${START}
 <aside class="topcta" aria-label="この特集の注目店">
   <div class="topcta-head">この特集の注目店</div>
-  <div class="topcta-sub">本文を読む前に動きたい方へ。編集部が上位に挙げた${stores.length}軒の詳細と予約はこちらから。</div>
+  <div class="topcta-sub">本文を読む前に動きたい方へ。この特集の先頭の${stores.length}軒の詳細と予約はこちらから。</div>
   <ul class="topcta-list">${items}
   </ul>
 </aside>

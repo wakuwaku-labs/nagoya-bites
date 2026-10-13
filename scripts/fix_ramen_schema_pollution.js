@@ -42,7 +42,7 @@ function buildArticleBlock(filename, title, h1, image) {
   // headline は h1 を優先、無ければ title から接尾辞「｜NAGOYA BITES」と「【2026年版】」等を取り除いたもの
   const headline = h1 || title.replace(/\s*｜.*$/, '').trim();
   // description は title 由来の簡潔版
-  const description = `${headline} — NAGOYA BITES編集部による業界視点の厳選。実在検証済みの店舗のみ掲載しています。`;
+  const description = `${headline} — 実在検証済みの店舗のみ掲載しています。`;
   // 既存の OG 画像を尊重（feature-figures パス）
   const imageUrl = image || `https://nagoya-bites.com/assets/feature-figures/${filename.replace(/\.html$/, '.svg')}`;
 
