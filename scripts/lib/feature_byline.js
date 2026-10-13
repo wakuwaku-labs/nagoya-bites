@@ -16,7 +16,6 @@ const START = '<!-- NB_BYLINE_START -->';
 const END = '<!-- NB_BYLINE_END -->';
 const AUTHOR_PAGE = 'editorial-policy.html';
 const AUTHOR_NAME = 'NAGOYA BITES 編集部';
-const AUTHOR_NOTE = '（現役の飲食店マネージャー）';
 // h1 の後ろでこの文字数以内にある meta 行だけを、その記事の meta 行として扱う
 const META_SEARCH_WINDOW = 1500;
 
@@ -64,7 +63,7 @@ function renderByline(dates, { selfFile = '', end = false } = {}) {
     parts.push(`<span>更新 <time datetime="${dates.modified}">${formatJa(dates.modified)}</time></span>`);
   }
   const name = selfFile === AUTHOR_PAGE ? AUTHOR_NAME : `<a href="${AUTHOR_PAGE}">${AUTHOR_NAME}</a>`;
-  parts.push(`<span>執筆 ${name}<span class="nb-byline-note">${AUTHOR_NOTE}</span></span>`);
+  parts.push(`<span>執筆 ${name}</span>`);
   return `${START}<p class="nb-byline${end ? ' nb-byline--end' : ''}">${parts.join('')}</p>${END}`;
 }
 

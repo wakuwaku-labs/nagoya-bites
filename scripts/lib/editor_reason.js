@@ -1,6 +1,6 @@
 'use strict';
 /**
- * 店の「編集部の選定理由」（editorReason）を画面に出すかどうかの唯一の判定（SEO-143・SEO-124）。
+ * 店の「選定理由」（editorReason）を画面に出すかどうかの唯一の判定（SEO-143・SEO-124）。
  * 店舗ページ（gen-store-pages.js）とエリア×ジャンルのハブ（scripts/gen_area_genre_pages.js）が共有する。
  * おすすめポイントと同じ文なら出さない（同じ文を2度並べない）。選定の根拠は visitStatus をそのまま語にする。
  */

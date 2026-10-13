@@ -195,7 +195,7 @@ ${moreLink}
   return `<!-- SCENE-INDEX:START -->
 <section id="scene-index" class="scene-index" aria-label="目的から探す">
 <h2 class="scene-index-title">目的から探す</h2>
-<p class="scene-index-lead">シーン・エリア・ジャンルごとに、現役の飲食店マネージャーが選び直した特集をまとめています。</p>
+<p class="scene-index-lead">シーン・エリア・ジャンルごとの特集をまとめています。</p>
 ${rendered2}
 </section>
 <!-- SCENE-INDEX:END -->`;
