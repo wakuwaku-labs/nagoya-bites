@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-12T21:13:44.081Z",
+  "generatedAt": "2026-10-13T00:10:27.311Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1325,
-    "pageViews": 1881,
-    "sessions": 1513,
-    "avgSessionDuration": 128.1,
-    "bounceRate": 0.284,
+    "activeUsers": 1349,
+    "pageViews": 1909,
+    "sessions": 1537,
+    "avgSessionDuration": 126.8,
+    "bounceRate": 0.283,
     "pagesPerSession": 1.24
   },
   "dailyReference": {
@@ -17,19 +17,19 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1040,
-      "direct": 337,
+      "organic": 1060,
+      "direct": 340,
       "social": 5,
       "ai_assistant": 106,
-      "referral": 29,
+      "referral": 30,
       "paid": 0,
       "other": 2
     },
     "pct": {
-      "organic": 68.5,
-      "direct": 22.2,
+      "organic": 68.7,
+      "direct": 22,
       "social": 0.3,
-      "ai_assistant": 7,
+      "ai_assistant": 6.9,
       "referral": 1.9,
       "paid": 0,
       "other": 0.1
@@ -39,22 +39,22 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 451
+      "sessions": 461
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 407
+      "sessions": 414
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 241
+      "sessions": 244
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 164
+      "sessions": 167
     },
     {
       "source": "chatgpt.com",
@@ -84,7 +84,7 @@
     {
       "source": "service.smt.docomo.ne.jp",
       "medium": "referral",
-      "sessions": 11
+      "sessions": 12
     },
     {
       "source": "teams.public.onecdn.static.microsoft",
@@ -185,13 +185,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 311,
-      "sessions": 298
+      "pageViews": 314,
+      "sessions": 301
     },
     {
       "path": "/",
-      "pageViews": 102,
-      "sessions": 92
+      "pageViews": 103,
+      "sessions": 93
     },
     {
       "path": "/index.html",
@@ -210,8 +210,8 @@
     }
   ],
   "cta": {
-    "outboundClicks": 144,
-    "ctaClickRate": 9.5,
+    "outboundClicks": 145,
+    "ctaClickRate": 9.4,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -223,7 +223,7 @@
       },
       {
         "domain": "maps.google.com",
-        "clicks": 22
+        "clicks": 23
       },
       {
         "domain": "www.instagram.com",
@@ -280,7 +280,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 60,
+      "organic": 61,
       "direct": 64,
       "social": 0,
       "ai_assistant": 19,
@@ -289,7 +289,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 5.8,
-    "ctaClickRate_direct": 19,
+    "ctaClickRate_direct": 18.8,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -353,6 +353,10 @@
         "clicks": 3
       },
       {
+        "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
+        "clicks": 3
+      },
+      {
         "path": "/features/birthday.html",
         "clicks": 2
       },
@@ -378,10 +382,6 @@
       },
       {
         "path": "/journal/2026-09-26-sakae-chanko-kokonoe-bonenkai.html",
-        "clicks": 2
-      },
-      {
-        "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
         "clicks": 2
       },
       {
@@ -537,6 +537,11 @@
       {
         "path": "/journal/2026-10-06-sakae-hilton-inplace33-autumn-buffet.html",
         "domain": "prtimes.jp",
+        "clicks": 2
+      },
+      {
+        "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
+        "domain": "maps.google.com",
         "clicks": 2
       },
       {
@@ -697,11 +702,6 @@
       {
         "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
         "domain": "chihirosweets.myshopify.com",
-        "clicks": 1
-      },
-      {
-        "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
-        "domain": "maps.google.com",
         "clicks": 1
       },
       {
@@ -906,7 +906,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1325,
+    "value": 1349,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,

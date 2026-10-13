@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T21:13:47.859Z",
+  "generatedAt": "2026-10-13T00:10:30.842Z",
   "source": "data/gsc_metrics.json",
   "ready": true,
   "note": null,
@@ -8,39 +8,39 @@
     "ctrFixGeoless": [
       {
         "query": "イルタッソ",
-        "impressions": 180,
+        "impressions": 176,
         "clicks": 2,
-        "position": 6.9,
-        "ctr": 1.11,
-        "expectedCtr": 4.1,
+        "position": 6.8,
+        "ctr": 1.14,
+        "expectedCtr": 4.2,
         "missedClicks": 5.4
       },
       {
         "query": "cm 伏見",
-        "impressions": 222,
-        "clicks": 5,
+        "impressions": 214,
+        "clicks": 4,
         "position": 7,
-        "ctr": 2.25,
+        "ctr": 1.87,
         "expectedCtr": 4,
-        "missedClicks": 3.9
-      },
-      {
-        "query": "青ノ月",
-        "impressions": 168,
-        "clicks": 3,
-        "position": 8.4,
-        "ctr": 1.79,
-        "expectedCtr": 3,
-        "missedClicks": 2.1
+        "missedClicks": 4.6
       },
       {
         "query": "一人飲み",
-        "impressions": 83,
+        "impressions": 81,
         "clicks": 5,
-        "position": 3.9,
-        "ctr": 6.02,
-        "expectedCtr": 8.3,
-        "missedClicks": 1.9
+        "position": 3.8,
+        "ctr": 6.17,
+        "expectedCtr": 8.6,
+        "missedClicks": 2
+      },
+      {
+        "query": "青ノ月",
+        "impressions": 163,
+        "clicks": 3,
+        "position": 8.4,
+        "ctr": 1.84,
+        "expectedCtr": 3,
+        "missedClicks": 2
       }
     ],
     "rankPush": [
@@ -58,41 +58,50 @@
     "ctrFix": [
       {
         "page": "/stores/J004660861.html",
-        "impressions": 1292,
-        "clicks": 25,
-        "position": 6.9,
+        "impressions": 1243,
+        "clicks": 24,
+        "position": 7,
         "ctr": 1.93,
-        "expectedCtr": 4.1,
-        "missedClicks": 28
+        "expectedCtr": 4,
+        "missedClicks": 25.7
       },
       {
         "page": "/features/nagoya-tebasaki.html",
-        "impressions": 782,
+        "impressions": 773,
         "clicks": 9,
         "position": 7.5,
-        "ctr": 1.15,
+        "ctr": 1.16,
         "expectedCtr": 3.6,
-        "missedClicks": 19.2
+        "missedClicks": 18.9
       },
       {
         "page": "/stores/J004660223.html",
-        "impressions": 845,
-        "clicks": 13,
+        "impressions": 835,
+        "clicks": 12,
         "position": 7.7,
-        "ctr": 1.54,
+        "ctr": 1.44,
         "expectedCtr": 3.4,
-        "missedClicks": 16.1
+        "missedClicks": 16.7
+      },
+      {
+        "page": "/journal/2026-08-04-sakae-leesar-coffee.html",
+        "impressions": 418,
+        "clicks": 8,
+        "position": 8.6,
+        "ctr": 1.91,
+        "expectedCtr": 3,
+        "missedClicks": 4.4
       }
     ],
     "ctrFixGeoless": [],
     "rankPush": [
       {
         "page": "/",
-        "impressions": 2202,
-        "clicks": 17,
+        "impressions": 2096,
+        "clicks": 16,
         "position": 19.5,
-        "ctr": 0.77,
-        "upsideClicks": 44.7
+        "ctr": 0.76,
+        "upsideClicks": 42.8
       }
     ]
   },
@@ -101,7 +110,7 @@
     "queryCtrFix": 0,
     "queryCtrFixGeoless": 4,
     "queryRankPush": 1,
-    "pageCtrFix": 3,
+    "pageCtrFix": 4,
     "pageRankPush": 1,
     "topPageCtrFix": [
       "/stores/J004660861.html",
