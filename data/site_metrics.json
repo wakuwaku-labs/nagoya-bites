@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-13T12:17:30.460Z",
+  "generatedAt": "2026-10-13T12:35:46.531Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1433,
-    "pageViews": 2032,
-    "sessions": 1626,
-    "avgSessionDuration": 127.2,
+    "activeUsers": 1435,
+    "pageViews": 2034,
+    "sessions": 1628,
+    "avgSessionDuration": 127.1,
     "bounceRate": 0.279,
     "pagesPerSession": 1.25
   },
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1138,
+      "organic": 1140,
       "direct": 351,
       "social": 5,
       "ai_assistant": 106,
@@ -39,7 +39,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 503
+      "sessions": 504
     },
     {
       "source": "bing",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 181
+      "sessions": 182
     },
     {
       "source": "chatgpt.com",
@@ -210,7 +210,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 156,
+    "outboundClicks": 157,
     "ctaClickRate": 9.6,
     "byDomain": [
       {
@@ -219,7 +219,7 @@
       },
       {
         "domain": "maps.google.com",
-        "clicks": 28
+        "clicks": 29
       },
       {
         "domain": "tabelog.com",
@@ -280,7 +280,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 72,
+      "organic": 73,
       "direct": 64,
       "social": 0,
       "ai_assistant": 19,
@@ -288,7 +288,7 @@
       "paid": 0,
       "other": 0
     },
-    "ctaClickRate_organic": 6.3,
+    "ctaClickRate_organic": 6.4,
     "ctaClickRate_direct": 18.2,
     "ctaClickRate_social": 0,
     "byPage": [
@@ -317,6 +317,10 @@
         "clicks": 6
       },
       {
+        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
+        "clicks": 6
+      },
+      {
         "path": "/features/nagoya-seafood.html",
         "clicks": 5
       },
@@ -330,10 +334,6 @@
       },
       {
         "path": "/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
-        "clicks": 5
-      },
-      {
-        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
         "clicks": 5
       },
       {
@@ -475,17 +475,17 @@
         "clicks": 4
       },
       {
+        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
+        "domain": "maps.google.com",
+        "clicks": 4
+      },
+      {
         "path": "/",
         "domain": "www.instagram.com",
         "clicks": 3
       },
       {
         "path": "/journal/2026-08-24-sakae-korean-buffet-price-split.html",
-        "domain": "maps.google.com",
-        "clicks": 3
-      },
-      {
-        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
         "domain": "maps.google.com",
         "clicks": 3
       },
@@ -934,7 +934,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1433,
+    "value": 1435,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
