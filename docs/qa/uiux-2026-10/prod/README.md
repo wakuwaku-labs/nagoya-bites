@@ -33,6 +33,7 @@ zsh docs/qa/uiux-2026-10/prod/post_merge_checks.sh --tests --smoke # 最新の m
 | `wait_main.sh <run id>` | main へマージしたあと、ビルドが終わり、bot のコミット 2 件が入り、GitHub Pages が先頭の版になるまで待つ。次の PR は `exit=0` を見てからマージする（ビルドは走行 1 本＋待ち 1 本のため） |
 | `merge_pr.sh <PR番号> [--dry-run]` | main へマージする前の確認 5 つ（PR が OPEN・Build & Deploy が走っていない・bot のコミットと Pages が先頭に追いついている・衝突しない・判断の記録の番号が重ならない）が通ったときだけマージし、新しいビルドの run id を出す。`--dry-run` は確認だけ。`--check-adr <基準の ref> <PR の先頭の ref>` は番号だけ調べる（P-323） |
 | `post_merge_checks.sh [--tests] [--smoke]` | 最新の origin/main を一時の worktree に出して、監査 5 本（デザインシステム・生成ページのインライン JS・共通クローム・デザインシステムの適用・404 ページ）を流し、片付ける。`--tests` で `npm test`、`--smoke` で本番のスモーク（P-323） |
+| `apply_journal_today_wording.sh [--dry-run]`／`p335_replace.py` | **オーナーが 1 回だけ実行する**（`.claude/` は Claude の自己改変ブロックで編集できないため。Claude は実行しない）。origin/main から一時の worktree を作り、`.claude/commands/journal-today.md` と Codex 用の写しの言い方 3 か所ずつを直して、ブランチ `wakuwaku-labs/p335-journal-today-wording` を push し、PR を出す（P-335）。文がちょうど 1 回ずつ見つからなければ、どちらも書き換えずに止まる。`--dry-run` は差分を見せて片付ける。`P335_TARGETS` で対象を替えられるのは、流れだけを試すとき（写しだけを対象に試験済み） |
 | `sample80/check_5xx.py`（`check_519.py` ほか下の一覧） | 店舗ページ 80 本の固定の標本（`sample80/urls.txt`）を `curl` で読んで HTML を検査する |
 
 `prod_held.js` の名前と、対応する PR・Linear 課題:
