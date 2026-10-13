@@ -385,3 +385,34 @@ test('特集の店カードの説明文の元データ（editor_picks・manual_s
     assert.ok(CLEAN_SOURCES.includes(rel), rel);
   }
 });
+
+// ── 特集一覧（P-365・判断の記録 0033）──
+// 特集一覧（features/index.html）のカードの題（card-title）と JSON-LD の ItemList の名前は、各特集の題を写したもの。
+// 題は P-334 で、特集の題と一緒に（写しもそろえて）変える。それ以外の本文（一覧の説明・カードの説明・札・画像の代替文）は P-365 で直した。
+// 例外は、特集名そのものを写したカードの札（category）「業界人推薦」の 1 行だけ（industry-insiders-pick の名前。P-334 で題と一緒に変える）。
+test('特集一覧: 題の写し（card-title・ItemList の名前）を除いた本文に、人が選んだと読める言い方が無い。例外は特集名の札 1 行だけ（P-365）', () => {
+  const titleCopy = (l) => /class="card-title"/.test(l) || /"@type":"ListItem"/.test(l);
+  const bad = [];
+  const nameLabel = [];
+  readRel('features/index.html').split('\n').forEach((l, i) => {
+    if (hits(l).length === 0 || titleCopy(l)) return;
+    if (l.trim() === '<div class="card-category">業界人推薦</div>') { nameLabel.push(i + 1); return; }
+    bad.push(`${i + 1}: ${l.trim().slice(0, 90)}`);
+  });
+  assert.deepEqual(bad, [], '特集一覧の本文に、人が選んだと読める言い方が戻っている（題の写しは P-334）');
+  assert.ok(nameLabel.length <= 1, '特集名の札の例外は 1 行だけ');
+});
+
+test('監査の語: 「業界人」の言い換え（業界視点・基準・標準・水準・的）と「経営者が厳選」は info で数える。違反には数えず作業の一覧に出す（P-365）', () => {
+  const info = new Map(policy.terms.filter((t) => t.severity === 'info').map((t) => [t.id, new RegExp(t.pattern)]));
+  const kijun = info.get('gyokai-no-kijun');
+  assert.ok(kijun, 'gyokai-no-kijun');
+  for (const s of ['業界視点で解説', '業界目線で比較', '業界基準を超える', '業界標準', '業界水準でも高い', '業界的に見ると', '業界内評価', '業界の鉄則', '業界のマナー', '業界の作法']) assert.ok(kijun.test(s), s);
+  for (const s of ['業界最大級', '飲食業界の経験者', '業界で働く人']) assert.ok(!kijun.test(s), s);
+  const keieisha = info.get('keieisha-sentei');
+  assert.ok(keieisha, 'keieisha-sentei');
+  assert.ok(keieisha.test('飲食店経営者が厳選'));
+  assert.ok(keieisha.test('経営者による選定'));
+  assert.ok(!keieisha.test('飲食店経営者・店長・シェフなど'), '役職の名前だけでは数えない');
+  assert.ok(!errorTerms.some((t) => t.id === 'gyokai-no-kijun' || t.id === 'keieisha-sentei'), 'info は error（違反）の一覧に入れない');
+});
