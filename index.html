@@ -377,36 +377,56 @@ body.search-active .back-to-magazine{display:flex;align-items:center;gap:.4rem;m
 .chip-x{font-size:var(--fs-xs);opacity:.7;line-height:1;}
 /* ── FILTER TOGGLE BUTTON ── */
 .filter-toggle-wrap{position:sticky;top:56px;z-index:149;background:var(--bg2);border-bottom:1px solid var(--border);padding:.85rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
-.filter-toggle-btn{display:flex;align-items:center;gap:.55rem;background:#fff;border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:.85rem;letter-spacing:.04em;padding:.7rem 1.4rem;border-radius:6px;cursor:pointer;transition:all .25s;min-height:46px;font-weight:600;}
+.filter-toggle-btn{display:flex;align-items:center;gap:.55rem;white-space:nowrap;background:#fff;border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:.85rem;letter-spacing:.04em;padding:.7rem 1.4rem;border-radius:6px;cursor:pointer;transition:all .25s;min-height:46px;font-weight:600;}
 .filter-toggle-btn:hover{color:var(--text);border-color:var(--border-h);}
 .filter-toggle-btn.has-filters{color:#fff;background:var(--warm-grad);border-color:transparent;box-shadow:0 2px 8px rgba(184,84,31,.25);font-weight:600;}
 .filter-toggle-btn.has-filters:hover{filter:brightness(1.06);box-shadow:var(--warm-glow);}
 .filter-badge{background:rgba(255,255,255,.92);color:var(--ember-deep);font-size:var(--fs-xs);border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;}
 .clear-all-btn{background:transparent;border:1px solid var(--border);color:var(--dim);font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;padding:.35rem .75rem;border-radius:2px;cursor:pointer;transition:all .2s;min-height:var(--tap-min);}
 .clear-all-btn:hover{color:var(--text);border-color:var(--border-h);}
-/* ── COLLAPSIBLE FILTER PANEL ── */
-.filter-panel{overflow:hidden;max-height:0;transition:max-height .35s ease;background:var(--bg2);}
-.filter-panel.open{max-height:1400px;}
-/* ── FILTER PANEL CTA (sticky bottom) ── */
-.filter-panel-cta{display:none;position:sticky;bottom:0;z-index:50;background:rgba(247,245,241,.97);backdrop-filter:saturate(1.1) blur(6px);border-top:1px solid var(--border);padding:.75rem 1.5rem;gap:.6rem;align-items:center;justify-content:space-between;box-shadow:0 -2px 12px rgba(0,0,0,.06);}
-.filter-panel.open .filter-panel-cta{display:flex;}
-.filter-panel-cta-main{flex:1;background:var(--warm-grad);border:none;color:#fff;font-family:inherit;font-size:.92rem;letter-spacing:.04em;padding:.85rem 1.2rem;border-radius:6px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;gap:.4rem;box-shadow:0 2px 8px rgba(184,84,31,.28);transition:transform .15s,filter .2s,box-shadow .25s;min-height:48px;}
-.filter-panel-cta-main:hover{filter:brightness(1.06);box-shadow:var(--warm-glow);}
-.filter-panel-cta-main:active{transform:translateY(1px);}
-.filter-panel-cta-main .cnt-num{font-weight:700;font-size:1.05rem;}
-.filter-panel-cta-reset{background:transparent;border:1px solid var(--border);color:var(--dim);font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;padding:.55rem .9rem;border-radius:3px;cursor:pointer;transition:all .2s;min-height:var(--tap-min);white-space:nowrap;}
-.filter-panel-cta-reset:hover{color:var(--text);border-color:var(--border-h);}
-@media(max-width:480px){.filter-panel-cta{padding:.6rem 1rem;}.filter-panel-cta-main{font-size:.85rem;padding:.7rem 1rem;}}
+/* ── 絞り込みシート（I-20）── 下から出る画面（広い画面では中央）。モーダル（.ov:500）より下、↑ボタン（300）・ご意見（290〜295）より上 */
+.filter-sheet-wrap{display:none;position:fixed;top:0;right:0;bottom:0;left:0;z-index:450;}
+.filter-sheet-wrap.open{display:flex;align-items:flex-end;justify-content:center;}
+.fs-backdrop{position:absolute;top:0;right:0;bottom:0;left:0;background:rgba(10,10,8,.5);}
+.filter-sheet{position:relative;width:100%;max-width:640px;max-height:90vh;max-height:90dvh;display:flex;flex-direction:column;background:var(--bg);border-radius:14px 14px 0 0;box-shadow:0 -6px 28px rgba(0,0,0,.22);outline:none;}
+@media (prefers-reduced-motion:no-preference){.filter-sheet-wrap.open .filter-sheet{animation:up .22s ease-out;}}
+.fs-head{flex:none;display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.35rem .5rem .35rem 1.1rem;border-bottom:1px solid var(--border);}
+.fs-title{margin:0;font-family:var(--font-display);font-size:var(--fs-xl);font-weight:500;color:var(--ink);}
+.fs-close{flex:none;width:var(--tap-min);height:var(--tap-min);display:inline-flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:50%;color:var(--muted);font-family:inherit;font-size:var(--fs-xl);line-height:1;cursor:pointer;}
+.fs-close:hover{color:var(--text);background:rgba(0,0,0,.05);}
+.fs-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:.3rem 1.1rem 1rem;}
+.fs-sec{padding:.85rem 0 .4rem;border-bottom:1px solid var(--border);}
+.fs-sec:last-child{border-bottom:0;}
+.fs-h{margin:0 0 .55rem;display:flex;align-items:baseline;flex-wrap:wrap;gap:.2rem .6rem;font-family:var(--font-body);font-size:var(--fs-sm);font-weight:700;letter-spacing:0;color:var(--text);}
+.fs-hint{font-size:var(--fs-xs);font-weight:400;color:var(--dim);}
+.fs-chips{display:flex;flex-wrap:wrap;gap:.45rem;}
+.fs-chip{display:inline-flex;align-items:center;min-height:var(--tap-min);padding:.35rem .9rem;font-family:inherit;font-size:var(--fs-sm);letter-spacing:.02em;color:var(--muted);background:#fff;border:1px solid var(--border-h);border-radius:6px;cursor:pointer;user-select:none;transition:background .15s,border-color .15s,color .15s;}
+.fs-chip:hover{color:var(--text);border-color:var(--gold);}
+.fs-chip[aria-pressed="true"]{color:#fff;background:var(--gold);border-color:var(--gold);font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);}
+.fs-chip[aria-pressed="true"]::before{content:"\2713 ";font-weight:700;margin-right:.3rem;}
+.fs-chips.is-folded .fs-extra{display:none;}
+.fs-foot{flex:none;display:flex;flex-direction:column;gap:.55rem;padding:.7rem 1.1rem calc(.8rem + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--border);box-shadow:0 -2px 12px rgba(0,0,0,.06);}
+.fs-suggest{display:flex;flex-wrap:wrap;gap:.45rem;}
+.fs-suggest:empty{display:none;}
+.fs-suggest-btn{min-height:var(--tap-min);padding:.3rem .85rem;font-family:inherit;font-size:var(--fs-sm);color:var(--ember-deep);background:#fff;border:1px solid var(--ember);border-radius:6px;cursor:pointer;}
+.fs-suggest-btn:hover{background:rgba(184,84,31,.08);}
+.fs-actions{display:flex;align-items:stretch;gap:.6rem;}
+.fs-reset{flex:none;min-height:var(--tap-min);padding:.55rem .9rem;font-family:var(--font-body);font-size:var(--fs-sm);color:var(--muted);background:transparent;border:1px solid var(--border-h);border-radius:6px;cursor:pointer;white-space:nowrap;}
+.fs-reset:hover:not(:disabled){color:var(--text);border-color:var(--gold);}
+.fs-reset:disabled{opacity:.45;cursor:default;}
+.fs-go{flex:1;min-height:48px;padding:.8rem 1.2rem;font-family:inherit;font-size:var(--fs-md);font-weight:700;letter-spacing:.04em;color:#fff;background:var(--warm-grad);border:0;border-radius:6px;cursor:pointer;box-shadow:0 2px 8px rgba(184,84,31,.28);transition:transform .1s,box-shadow .2s;}
+.fs-go:hover:not(:disabled){filter:brightness(1.06);box-shadow:var(--warm-glow);}
+.fs-go:active:not(:disabled){transform:translateY(1px);}
+.fs-go:disabled{opacity:.45;cursor:default;box-shadow:none;}
+@media(min-width:769px){.filter-sheet-wrap.open{align-items:center;}.filter-sheet{border-radius:12px;max-height:86vh;max-height:86dvh;box-shadow:0 12px 48px rgba(0,0,0,.28);}}
+/* 検索欄の下の帯の右側（この条件をシェア・すべてリセット） */
+/* 0 軒の表示の「外すと増える条件」 */
+.empty-state .empty-suggest{margin:0 auto 1.5rem;max-width:560px;}
+.empty-state .empty-suggest-lead{margin:0 0 .6rem;font-size:var(--fs-sm);color:var(--muted);}
+.empty-suggest-list{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;}
 @keyframes up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 /* A11y: 動きを減らす設定の利用者には全アニメーション/トランジションを無効化 */
 @media (prefers-reduced-motion:reduce){*,::before,::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}}
-/* ── FILTER BAR ── */
-.filter-bar{padding:.75rem 1.5rem;display:flex;gap:.45rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--border);background:var(--bg2);}
-.fl{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:.2em;color:var(--dim);margin-right:.4rem;text-transform:uppercase;}
-.ft{font-size:var(--fs-xs);letter-spacing:.09em;color:var(--muted);border:1px solid var(--border);padding:.42rem .9rem;border-radius:2px;cursor:pointer;transition:all .2s;user-select:none;min-height:var(--tap-min);display:inline-flex;align-items:center;}
-.ft:hover{color:var(--text);border-color:var(--border-h);}
-.ft.on{color:#fff;border-color:var(--gold);background:var(--gold);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),0 1px 3px rgba(122,92,16,.25);font-weight:600;}
-.ft.on::before{content:"\2713 ";font-weight:700;letter-spacing:0;margin-right:.25rem;}
 /* ── SECTION HEAD ── */
 .sec-head{padding:clamp(2.2rem,4vw,3rem) 1.5rem 1.2rem;display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--border);}
 .sec-head-titleblock{display:flex;flex-direction:column;gap:.35rem;}
@@ -426,6 +446,7 @@ body.search-active .results-summary{display:block;}
 .results-summary-count em{font-style:normal;font-weight:700;color:var(--ember-deep,var(--gold));font-size:1.9rem;margin-right:.15rem;}
 .results-summary-reset{background:transparent;border:1px solid var(--border);color:var(--dim);font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;padding:.55rem 1rem;border-radius:3px;cursor:pointer;transition:all .2s;min-height:var(--tap-min);}
 .results-summary-reset:hover{color:var(--text);border-color:var(--border-h);}
+.results-summary-foot .share-btn{margin-left:0;}
 @media(max-width:640px){.results-summary{padding:.9rem 1rem 1rem;}.results-summary-count{font-size:1.35rem;}.results-summary-count em{font-size:1.65rem;}}
 /* ── 検索の解釈表示（何をどう読み取ったかを明示する）── */
 .search-interpret{margin:.1rem 0 .8rem;padding:.6rem .75rem;background:rgba(255,255,255,.6);border:1px dashed var(--border);border-radius:3px;}
@@ -832,39 +853,12 @@ body.search-query-active .card-why{display:flex;}
 /* mobile-cta-bar が下部に固定表示されるため、フィードバックFABをその上に逃がす（重なり対策） */
 #fb-fab{bottom:calc(4.5rem + env(safe-area-inset-bottom,0px));}
 }
-/* ── 都道府県タブ ── */
-.pref-tabs{padding:.6rem 1.5rem;display:flex;gap:.35rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--border);background:var(--bg);overflow-x:auto;}
-.pt{font-size:var(--fs-xs);letter-spacing:.08em;color:var(--dim);border:1px solid var(--border);padding:.38rem .75rem;border-radius:2px;cursor:pointer;transition:all .2s;white-space:nowrap;min-height:var(--tap-min);display:inline-flex;align-items:center;}
-.pt:hover{color:var(--muted);border-color:var(--border-h);}
-.pt.on{color:var(--gold);border-color:var(--gold);background:rgba(201,169,110,.07);}
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--border-h);border-radius:2px;}
-/* ── AREA (区) FILTER ── */
-.area-filter-bar{padding:.65rem 1.5rem;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--border);background:var(--bg2);}
-.area-fl{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-right:.4rem;white-space:nowrap;}
-.at{font-size:var(--fs-xs);letter-spacing:.09em;color:var(--muted);border:1px solid var(--border);padding:.42rem .9rem;border-radius:2px;cursor:pointer;transition:all .2s;user-select:none;min-height:var(--tap-min);display:inline-flex;align-items:center;flex-direction:column;gap:.1rem;}
-.at:hover{color:var(--text);border-color:var(--border-h);}
-.at.on{color:var(--gold);border-color:var(--gold);background:rgba(201,169,110,.07);}
-.at-sub{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);line-height:1;}
-.at.on .at-sub{color:rgba(122,92,16,.7);}
-/* ── TAG FILTER ── */
-.tag-filter{padding:.75rem 1.5rem;display:flex;flex-direction:column;gap:.5rem;border-bottom:1px solid var(--border);background:var(--bg2);}
-.tag-group{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;}
-.tag-label{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);width:70px;flex-shrink:0;}
-.tg{font-size:var(--fs-xs);letter-spacing:.05em;color:var(--muted);border:1px solid var(--border);padding:.38rem .9rem;border-radius:2px;cursor:pointer;transition:all .2s;user-select:none;min-height:var(--tap-min);display:inline-flex;align-items:center;}
-.tg:hover{color:var(--text);border-color:var(--border-h);}
-.tg.on{color:var(--gold);border-color:var(--gold);background:rgba(201,169,110,.1);}
-.tag-reset-wrap{padding-top:.2rem;}
-.tag-reset{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);border:1px solid var(--border);padding:.32rem .85rem;border-radius:1px;cursor:pointer;transition:all .2s;background:transparent;min-height:var(--tap-min);}
-.tag-reset:hover{color:var(--text);border-color:var(--border-h);}
 .share-btn{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);border:1px solid rgba(201,169,110,.4);padding:.32rem .85rem;border-radius:1px;cursor:pointer;transition:all .2s;background:transparent;margin-left:.5rem;min-height:var(--tap-min);}
 .share-btn:hover{background:rgba(201,169,110,.1);}
 @media(max-width:768px){
-.tag-filter{padding:.65rem .9rem;}
-.filter-bar{padding:.65rem .9rem;}
-.tag-label{width:52px;font-size:var(--fs-xs);}
-.tg{font-size:var(--fs-xs);padding:.42rem .72rem;min-height:var(--tap-min);}
 header{height:52px;}
 .logo{font-size:1rem;white-space:nowrap;}
 .hero{--hero-gutter:1.2rem;padding:20px 1.2rem 28px;min-height:auto;}
@@ -879,8 +873,6 @@ header{height:52px;}
 .hpc{padding:.5rem 1rem;}
 .grid{gap:10px;padding:1rem;}
 footer{padding:1.5rem 1rem;}
-.pref-tabs{padding:.5rem .9rem;}
-.cap-tabs{padding:.5rem .9rem;}
 }
 @media(min-width:769px) and (max-width:900px){
 .grid{grid-template-columns:repeat(2,1fr);}
@@ -895,13 +887,6 @@ footer{padding:1.5rem 1rem;}
 @supports(padding-bottom: env(safe-area-inset-bottom)){
 footer{padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));}
 }
-/* 人数入力 */
-.cap-tabs{padding:.65rem 1.5rem;display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--border);background:var(--bg2);overflow-x:auto;}
-.cap-label{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:.2em;color:var(--dim);margin-right:.2rem;text-transform:uppercase;}
-.cap-input{font-size:var(--fs-sm);min-height:var(--tap-min);padding:.28rem .65rem;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:2px;width:70px;outline:none;font-family:inherit;transition:border-color .2s;}
-.cap-input:focus{border-color:var(--gold);}
-.cap-unit{font-size:var(--fs-xs);color:var(--muted);letter-spacing:.05em;}
-.cap-hint{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);}
 /* ── ホーム画面への追加の案内（I-13） ──
    全面の暗幕は使わず、画面下の小さな帯で出す。操作をふさがないよう、モーダル（.ov:500）・ご意見（290〜295）・トップへ戻る（300）・通知（600）より下、
    ナビの暗幕（.nav-overlay:199）より下の層に置く。スマホ（〜768px）は、下の固定検索バー（.mobile-cta-bar）とご意見ボタンの上に出す。 */
@@ -1072,7 +1057,7 @@ h3.cn{margin:0 0 6px;font-family:var(--font-body);}
 .skip-link:focus{position:fixed;left:1rem;top:1rem;width:auto;height:auto;z-index:9999;background:var(--gold);color:#fff;padding:.7rem 1.2rem;border-radius:4px;font-weight:600;font-size:.9rem;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25);}
 /* ── FOCUS RING ── */
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
-button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:focus-visible,.tg:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+button:focus-visible,a:focus-visible,.card:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 /* ── EMPTY STATE ── */
 .empty-state{padding:4rem 1.5rem;text-align:center;color:var(--dim);}
 .empty-state-icon{font-size:2.5rem;margin-bottom:1rem;opacity:.5;}
@@ -1166,6 +1151,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .tb-filter:hover{border-color:var(--border-h);}
 .tb-filter .filter-badge{background:var(--ember-deep);color:#fff;}
 .tb-filter .filter-badge[hidden]{display:none;}
+.tb-filter.has-filters{border-color:var(--ember);color:var(--ember-deep);font-weight:600;}
 .sort-select-wrap{display:block;flex:1 1 auto;min-width:0;max-width:20rem;}
 .sort-select{display:block;width:100%;min-height:var(--tap-min);padding:0 .7rem;background:#fff;border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:inherit;font-size:var(--fs-md);cursor:pointer;}
 .sort-select:hover{border-color:var(--border-h);}
@@ -1279,9 +1265,8 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .scene-index-list a{display:inline-flex;align-items:center;min-height:var(--tap-min);padding:0 .6rem;color:var(--muted);text-decoration:none;border:1px solid var(--border);border-radius:999px;}
 .scene-index-list a:hover{color:var(--gold);border-color:var(--gold);background:rgba(122,92,16,.06);}
 @media(max-width:640px){.scene-index{padding:1.2rem .8rem 0;}}
-/* ── PILL FOLD ── 選択肢が多いピル一覧を折りたたむ共通パターン（目的から探す / 絞り込みGENRE） */
+/* ── PILL FOLD ── 選択肢が多いピル一覧を折りたたむ共通パターン（目的から探す / 絞り込みシート） */
 .scene-index-list.is-folded li:nth-child(n+9){display:none;}
-.filter-bar.is-folded .ft:nth-of-type(n+9){display:none;}
 .fold-toggle{display:inline-flex;align-items:center;gap:.3rem;margin-top:.5rem;font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);background:none;border:1px dashed var(--border);border-radius:999px;padding:.32rem .8rem;cursor:pointer;transition:border-color .2s;min-height:var(--tap-min);}
 .fold-toggle:hover{border-color:var(--gold);}
 .fold-toggle .fa{display:inline-block;transition:transform .2s;}
@@ -1321,9 +1306,8 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
    （見た目の高さは padding / min-height / height 側で従来どおり維持される） */
 @media(max-width:768px){
 input[type=text],input[type=search],input[type=email],input[type=tel],input[type=number],input[type=url],input[type=password],select,textarea{font-size:16px;}
-.search-wrap input,.sticky-search input,.mobile-cta-bar .cta-search,.cap-input,
+.search-wrap input,.sticky-search input,.mobile-cta-bar .cta-search,
 .ir-field input[type=text],.ir-field input[type=email],.ir-field select,.ir-field textarea{font-size:16px;}
-.cap-input{width:88px;}
 }
 /* ===== DSN-008（2026-10-11）: アイコンと短い語で操作できる見た目へ。前の規則を上書きする ===== */
 .ic{width:1.15em;height:1.15em;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.2em;}
@@ -1747,42 +1731,13 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 
 <!-- フィルター折りたたみ（検索欄直下のエントリポイント） -->
 <div class="filter-toggle-wrap" id="filter-toggle-wrap">
-  <button class="filter-toggle-btn" id="filter-toggle-btn" onclick="toggleFilterPanel()" aria-expanded="false" aria-controls="filter-panel" aria-label="絞り込みパネルを開閉する">
+  <button class="filter-toggle-btn" id="filter-toggle-btn" type="button" onclick="nbOpenFilterSheet(this)" aria-haspopup="dialog" aria-controls="filter-sheet" aria-label="絞り込みを開く">
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 3h12M3 7h8M5 11h4"/></svg>
     絞り込み
     <span class="filter-badge" id="filter-badge" style="display:none">0</span>
   </button>
   <button class="clear-all-btn" id="clear-all-btn" onclick="exitSearchMode()" style="display:none" aria-label="すべてのフィルターをクリア">すべてリセット</button>
 </div>
-
-<!-- 折りたたみ式フィルターパネル -->
-<div class="filter-panel" id="filter-panel">
-<div class="pref-tabs" id="pref-tabs">
-  <div class="pt on" data-pref="all">全国</div>
-</div>
-
-<div class="area-filter-bar" id="area-filter-bar"></div>
-
-<div class="cap-tabs" id="cap-tabs"></div>
-
-<div class="filter-bar" id="genre-filter-bar">
-  <span class="fl">ジャンル</span>
-  <div class="ft on" data-f="all">すべて</div>
-</div>
-<button type="button" class="fold-toggle" id="genre-fold-toggle" style="display:none" aria-expanded="false" aria-controls="genre-filter-bar"></button>
-
-<div class="tag-filter" id="tag-filter"></div>
-
-<!-- パネル下部のスティッキーCTA：操作後すぐ「結果を見る」動線を提供 -->
-<div class="filter-panel-cta" id="filter-panel-cta">
-  <button class="filter-panel-cta-reset" type="button" onclick="clearAllFilters()" aria-label="絞り込み条件をリセット">リセット</button>
-  <button class="filter-panel-cta-main" type="button" id="filter-panel-cta-main" onclick="applyAndShowResults()" aria-label="絞り込み結果を見る">
-    <span class="cnt-num" id="filter-panel-cta-count">--</span>件のお店を見る →
-  </button>
-</div>
-
-</div><!-- /filter-panel -->
-
 
 <!-- 最新ジャーナル（毎朝配信の日次記事 最新3件。build_journal_index.js が静的挿入） -->
 <section class="latest-journal-section" id="latest-journal-section">
@@ -1911,7 +1866,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
     <div class="search-interpret" id="search-interpret" style="display:none"></div>
     <div class="results-summary-foot">
       <div class="results-summary-count"><em id="results-summary-count">--</em>件 のお店</div>
-      
+      <button class="share-btn" id="share-filter-btn" type="button" onclick="shareURL()" style="display:none" aria-label="現在の絞り込み条件をシェアする">この条件をシェア</button>
     </div>
   </div>
 
@@ -2107,7 +2062,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 
 <div class="mobile-cta-bar" id="mobile-cta-bar">
   <input class="cta-search" type="text" placeholder="店名・エリア・ジャンルで検索…" onfocus="window.scrollTo({top:0,behavior:'smooth'});var t=document.body.classList.contains('search-active')?document.getElementById('si2'):document.getElementById('si');if(t)t.focus();">
-  <button class="cta-filter" onclick="toggleFilterPanel();window.scrollTo({top:document.getElementById('filter-toggle-wrap').offsetTop-60,behavior:'smooth'});" aria-label="絞り込みパネルを開いて条件を変更する">絞り込み</button>
+  <button class="cta-filter" type="button" onclick="nbOpenFilterSheet(this)" aria-haspopup="dialog" aria-controls="filter-sheet" aria-label="絞り込みを開く">絞り込み</button>
 </div>
 
 <!-- 最近チェックしたお店 -->
@@ -2118,6 +2073,26 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 
 <!-- トースト通知 -->
 <div class="toast" id="toast"></div>
+
+<!-- 絞り込みシート（I-20・判断の記録 0037）。開くたびに nbRenderFilterSheet が中身を作る。押した結果は下書きにだけ入り、「N軒を見る」で一覧に反映される -->
+<div class="filter-sheet-wrap" id="filter-sheet-wrap">
+  <div class="fs-backdrop" id="fs-backdrop"></div>
+  <div class="filter-sheet" id="filter-sheet" role="dialog" aria-modal="true" aria-labelledby="fs-title" tabindex="-1">
+    <div class="fs-head">
+      <h2 class="fs-title" id="fs-title">絞り込み</h2>
+      <button type="button" class="fs-close" id="fs-close" aria-label="閉じる（変更は反映されません）">×</button>
+    </div>
+    <div class="fs-body" id="fs-body"></div>
+    <div class="fs-foot">
+      <div class="fs-suggest" id="fs-suggest"></div>
+      <div class="fs-actions">
+        <button type="button" class="fs-reset" id="fs-reset">条件を外す</button>
+        <button type="button" class="fs-go" id="fs-go">条件を選んでください</button>
+      </div>
+      <div class="visually-hidden" id="fs-live" role="status" aria-live="polite"></div>
+    </div>
+  </div>
+</div>
 
 <!-- SCENE-INDEX:START -->
 <section id="scene-index" class="scene-index" aria-label="目的から探す">
@@ -7797,6 +7772,9 @@ function init() {
 // TOP50 と data/stores.json の先頭50件は build.js で同一順序にしているため、
 // openM(i) は両モードで同じ店舗を指す（HPID 整合）。
 var FULL_CATALOG_LOADED = false;
+// 全店のデータの取得が終わり、これ以上は届かない（取得に失敗した・先頭の 50 店より増えなかった）。
+// 先頭の 50 店だけで 0 軒になったとき、読み込み中の表示を出し続けず、本当の 0 軒の表示に切り替えるための印
+var FULL_CATALOG_FAILED = false;
 // ISSUE-059: build.js が data/stores.json の sha1(先頭12桁) を埋め込む cache buster。
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
@@ -7804,14 +7782,19 @@ var FULL_CATALOG_LOADED = false;
 var STORES_JSON_VERSION = '54626853d6ae';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
+  function settle() {
+    if (FULL_CATALOG_LOADED || FULL_CATALOG_FAILED) return;
+    FULL_CATALOG_FAILED = true;
+    applyFilters();   // 読み込み中の表示を、いまの一覧の表示（0 軒なら 0 軒の表示）に直す
+  }
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
     .then(function(r){ return r.ok ? r.json() : null; })
     .then(function(full){
-      if (!full || !Array.isArray(full) || full.length <= LOCAL_STORES.length) return;
+      if (!full || !Array.isArray(full) || full.length <= LOCAL_STORES.length) { settle(); return; }
       FULL_CATALOG_LOADED = true;
       loadStores(full); // フィルタ・JSON-LD・カードを全件で再初期化
     })
-    .catch(function(){ /* 失敗時は TOP50 のままで劣化運用 */ });
+    .catch(function(){ settle(); /* 失敗時は TOP50 のままで劣化運用 */ });
 }
 
 function loadStores(stores) {
@@ -9130,64 +9113,13 @@ function nbRenderSearchMeta() {
 
 function applyFilters() {
   if (!ALL_STORES || ALL_STORES.length === 0) return;
-  var prefEl = document.querySelector('.pt.on');
-  var genreEl = document.querySelector('.ft.on');
-  var capInputEl = document.getElementById('cap-input');
-  var pref = prefEl ? prefEl.dataset.pref : '全国';
-  var genre = genreEl ? genreEl.dataset.f : 'All';
-  var capNum = capInputEl ? parseInt(capInputEl.value, 10) : NaN;
   var siEl = document.getElementById('si');
   var q = siEl ? siEl.value.trim() : '';
   // 保存済みだけ表示（I-23）。ほかの条件と同じく AND で絞る。保存した店名は絞り込みの前に1回だけ読む
   var favNames = SHOW_FAVS_ONLY ? getFavs() : null;
-  FILTERED = ALL_STORES.filter(function(s){
-    var okFav = !favNames || favNames.indexOf(s['店名']) !== -1;
-    var okPref = (pref === '全国' || pref === 'all') || (s['都道府県'] || '') === pref;
-    var okWard = ACTIVE_WARD === 'all' || (AREA_TO_WARD[s['エリア']] === ACTIVE_WARD);
-    var okGenre = genre === 'All' || normalizeGenre(s['ジャンル'] || '') === genre;
-    var okCap = (isNaN(capNum) || capNum <= 0) ? true : (s['タグ'] || '').split(/[,、，\/]/).some(function(t) {
-      t = t.trim();
-      var m1 = t.match(/^(\d+)[〜～](\d+)名$/); if (m1) return parseInt(m1[2], 10) >= capNum;
-      var m2 = t.match(/^(\d+)名以上$/); if (m2) return true;
-      return false;
-    });
-    // 検索語（q）はここでは絞らない。フィルター通過後にセマンティック検索で
-    // スコアリング＆並べ替えする（nbRunSearch）。
-    var storeTags = (s['タグ']||'').split(',').map(function(t){ return t.trim(); });
-    var access = s['アクセス'] || '';
-    var notes  = s['備考'] || '';
-    var priceNum = priceToNum(s['価格帯']);
-    var okTags = ACTIVE_TAGS.length === 0 || ACTIVE_TAGS.every(function(tag){
-      // 予算タグは正規化済みの価格帯フィールドで判定
-      if (tag === '〜1000円')        return priceNum >= 1 && priceNum <= 1000;
-      if (tag === '1001〜2000円')    return priceNum >= 1001 && priceNum <= 2000;
-      if (tag === '2001〜3000円')    return priceNum >= 2001 && priceNum <= 3000;
-      if (tag === '3001〜5000円')    return priceNum >= 3001 && priceNum <= 5000;
-      if (tag === '5001〜7000円')    return priceNum >= 5001 && priceNum <= 7000;
-      if (tag === '7001〜10000円')   return priceNum >= 7001 && priceNum <= 10000;
-      if (tag === '10001円以上')     return priceNum >= 10001 && priceNum < 99999;
-      // ISSUE-035: 細粒度シーンタグは関連既存タグの OR 一致で解決
-      if (SCENE_ALIAS[tag]) {
-        var aliases = SCENE_ALIAS[tag];
-        for (var ai = 0; ai < aliases.length; ai++) {
-          var at = aliases[ai];
-          if (storeTags.indexOf(at) !== -1) return true;
-          if (access.includes(at) || notes.includes(at)) return true;
-        }
-        // 店舗データ側で明示的に新タグが書かれている場合もカバー
-        if (access.includes(tag) || notes.includes(tag)) return true;
-        return false;
-      }
-      if (storeTags.indexOf(tag) !== -1) return true;
-      // 「個室」はアクセス・備考列にある場合も一致、半個室もカバー
-      if (tag === '個室') return storeTags.indexOf('半個室') !== -1 || access.includes('個室') || notes.includes('個室');
-      // 「半個室」選択時は個室も含む
-      if (tag === '半個室') return storeTags.indexOf('個室') !== -1 || access.includes('半個室') || notes.includes('半個室');
-      // その他のタグはアクセス・備考列も確認
-      return access.includes(tag) || notes.includes(tag);
-    });
-    return okFav && okPref && okWard && okGenre && okCap && okTags;
-  });
+  // 条件の判定は NB-FILTER 区画の 1 本（絞り込みシートの「N軒を見る」の件数も同じ関数で数える）。
+  // 検索語（q）はここでは絞らない。条件を通ったあとにセマンティック検索でスコアリング＆並べ替えする（nbRunSearch）
+  FILTERED = nbFilterStores(NB_FILTER, ALL_STORES, favNames);
   // セマンティック検索: 語がそのまま含まれていなくても意図に合う店を拾い、関連度順に並べる
   FILTERED = nbRunSearch(FILTERED, q);
   // 検索語がある間は「関連度順」を既定にする（ユーザーが明示的に別の順を選んだ場合は尊重）
@@ -9196,24 +9128,17 @@ function applyFilters() {
   pushHash();
   updateFilterUI();
   nbRenderSearchMeta();
+  nbTrackZeroResult(q);
   // MAGAZINE MODE — 検索/フィルターのいずれかが有効ならグリッド系を表示
-  var hasActiveFilter = (q !== '')
-    || SHOW_FAVS_ONLY
-    || (pref !== '全国' && pref !== 'all')
-    || (ACTIVE_WARD !== 'all')
-    || (genre !== 'All')
-    || (ACTIVE_TAGS.length > 0)
-    || (!isNaN(capNum) && capNum > 0);
+  var hasActiveFilter = (q !== '') || SHOW_FAVS_ONLY || nbFilterCount(NB_FILTER) > 0;
   document.body.classList.toggle('search-active', hasActiveFilter);
 
-  // パネル外からのフィルター変更時は結果まで自動スクロール（操作の手応えを出す）
-  // - パネル open 中は連続操作の邪魔にならないようスクロールしない（CTA経由で誘導）
+  // シートの外からの条件の変更は結果まで自動スクロール（操作の手応えを出す）
+  // - シートを開いている間は動かさない（「N軒を見る」で閉じたあとに 1 回だけ移る）
   // - 既に結果ブロックより十分下にいる場合（ページネーション操作中など）も省略
-  if (hasActiveFilter) {
-    var panel = document.getElementById('filter-panel');
-    var panelOpen = panel && panel.classList.contains('open');
+  if (hasActiveFilter && !NB_SHEET.open) {
     var resultsBlock = document.getElementById('results-block');
-    if (!panelOpen && resultsBlock) {
+    if (resultsBlock) {
       var blockTop = resultsBlock.getBoundingClientRect().top + window.pageYOffset;
       // 結果より上にいるとき or 結果直前にいるときのみスクロール（既に深く下にいるなら邪魔しない）
       if (window.pageYOffset < blockTop - 60) {
@@ -9225,19 +9150,44 @@ function applyFilters() {
   }
 }
 
+// 0 軒になったときの計測（zero_result）。条件の種類と値だけを送る（検索語・店名・保存した店は送らない）。
+// - 先頭の 50 店だけで動いている間の 0 軒は、本当に 0 軒か分からないので数えない
+// - 保存した店がまだ 1 件も無いだけの 0 軒は、条件のせいではないので数えない
+// - 同じ条件の並びが続く間（再描画・全店のデータの到着）は 1 回だけ
+var NB_ZERO_SENT = '';
+function nbTrackZeroResult(q) {
+  if (FILTERED.length > 0) { NB_ZERO_SENT = ''; return; }
+  if (!FULL_CATALOG_LOADED && !FULL_CATALOG_FAILED) return;
+  if (SHOW_FAVS_ONLY && getFavs().length === 0) return;
+  var kinds = [];
+  if (NB_FILTER.genre !== 'All') kinds.push('genre');
+  if (NB_FILTER.areas.length) kinds.push('area');
+  if (NB_FILTER.conds.length) kinds.push('cond');
+  if (NB_FILTER.tags.length) kinds.push('tag');
+  if (NB_FILTER.cap > 0) kinds.push('cap');
+  if (SHOW_FAVS_ONLY) kinds.push('favs');
+  if (q) kinds.push('q');
+  var params = nbFilterParams(NB_FILTER).join('&');
+  var sig = params + '|' + (SHOW_FAVS_ONLY ? 1 : 0) + '|' + q;
+  if (sig === NB_ZERO_SENT) return;
+  NB_ZERO_SENT = sig;
+  trackEvent('zero_result', { condition_kinds: kinds.join(','), condition_count: kinds.length, conditions: params.slice(0, 100) });
+}
+
 // ================================================================
 // URL Hash State — bookmarkable & shareable filter state
 // ================================================================
 // NB-HISTORY:START
 // この区画（NB-HISTORY の開始の印から終了の印まで）は tests/index_history.test.js が取り出して単体で検査する。
-// 区画の外に頼るのは、ALL_STORES・ACTIVE_WARD・ACTIVE_TAGS・FULL_CATALOG_LOADED・normalizeGenre・openM・closeM と DOM だけ。
+// 区画の外に頼るのは、ALL_STORES・NB_FILTER・FULL_CATALOG_LOADED・normalizeGenre・openM・closeM と、NB-FILTER 区画の nbFilterParams・nbFilterFromParams・nbEmptyFilter と DOM だけ。
 //
 // 履歴の決まり（設計書 7.2 節・判断の記録 0017）:
 // - 絞り込み・並び替えは今までどおり履歴を足さず置き換える（replaceState）
 // - 店のモーダルを開くと履歴を1つ足し、URL に store=ID を載せる。足した履歴には印 {nbM:1} を付ける
 // - ×・背景・Esc・下スワイプのどれで閉じても、足した履歴を1つ戻して消す（「戻る」と同じ結果になる）
 // - 共有リンク・再読み込み・「進む」で開いたときは、URL にすでに store= があるので足さない
-// - ハッシュの名前（q・genre・tag・ward・pref・cap・store）は変えない（すでに共有されたリンクが動き続ける）
+// - ハッシュの名前（q・genre・tag・ward・pref・cap・store）は変えず、読み続ける（すでに共有されたリンクが動き続ける）。I-20 で area・cond を足した。
+//   ward は、その区に属するエリアの群すべてに広げて読む（判断の記録 0037）。pref は読むが使わない（掲載の店はすべて愛知県）
 var NB_PENDING_STORE = '';   // #store= で指定され、まだモーダルを開けていない店の ID
 var NB_PENDING_SOURCE = '';  // 待っている店を開くときの source。待ち始めた理由（共有リンクなら deeplink・「戻る」「進む」・アドレス欄の変更なら popstate）で、同じ店を待っているあいだは変えない
 var NB_OPEN_STORE_ID = '';   // いまモーダルで開いている店の ID（ID が無い店は ''）
@@ -9269,23 +9219,13 @@ function nbFindByData(selector, attr, value) {
 }
 
 // いまの絞り込みの状態 → ハッシュ。storeId を渡すと store= を末尾に足す
+// 並びは genre・area・cond・tag・cap（NB-FILTER 区画の nbFilterParams）→ q → store
 function nbBuildHash(storeId) {
-  var prefEl  = document.querySelector('.pt.on');
-  var genreEl = document.querySelector('.ft.on');
-  var capEl   = document.getElementById('cap-input');
-  var siEl    = document.getElementById('si');
-  var pref  = prefEl  ? prefEl.dataset.pref  : '全国';
-  var genre = genreEl ? genreEl.dataset.f    : 'All';
-  var cap   = capEl   ? capEl.value.trim()   : '';
-  var q     = siEl    ? siEl.value.trim()    : '';
-  var params = [];
-  if (pref  && pref  !== '全国') params.push('pref='  + encodeURIComponent(pref));
-  if (genre && genre !== 'All')  params.push('genre=' + encodeURIComponent(genre));
-  if (ACTIVE_WARD && ACTIVE_WARD !== 'all') params.push('ward=' + encodeURIComponent(ACTIVE_WARD));
-  if (ACTIVE_TAGS.length > 0)   params.push('tag='   + ACTIVE_TAGS.map(encodeURIComponent).join(','));
-  if (cap)                       params.push('cap='   + encodeURIComponent(cap));
-  if (q)                         params.push('q='     + encodeURIComponent(q));
-  if (storeId)                   params.push('store=' + encodeURIComponent(storeId));
+  var siEl = document.getElementById('si');
+  var q = siEl ? siEl.value.trim() : '';
+  var params = nbFilterParams(NB_FILTER);
+  if (q)       params.push('q='     + encodeURIComponent(q));
+  if (storeId) params.push('store=' + encodeURIComponent(storeId));
   return params.length ? '#' + params.join('&') : '#';
 }
 
@@ -9302,51 +9242,14 @@ function readHash() {
   var params = nbParseHash(location.hash);
   // 1つの値が壊れていても、ほかの条件の復元と初期化（loadStores の続き）を止めない
   try {
-    // pref
-    if (params.pref) {
-      var prefEl = nbFindByData('.pt', 'data-pref', params.pref);
-      if (prefEl) {
-        document.querySelectorAll('.pt').forEach(function(x){ x.classList.remove('on'); });
-        prefEl.classList.add('on');
-      }
-    }
-    // genre（#genre=焼肉 等の旧ハッシュも代表ジャンルへ解決）
-    if (params.genre) {
-      var genreEl = nbFindByData('.ft', 'data-f', normalizeGenre(params.genre));
-      if (genreEl) {
-        document.querySelectorAll('.ft').forEach(function(x){ x.classList.remove('on'); });
-        genreEl.classList.add('on');
-      }
-    }
-    // ward (area filter)
-    if (params.ward) {
-      var wardEl = nbFindByData('.at', 'data-ward', params.ward);
-      if (wardEl) {
-        document.querySelectorAll('.at').forEach(function(x){ x.classList.remove('on'); });
-        wardEl.classList.add('on');
-        ACTIVE_WARD = params.ward;
-      }
-    }
-    // tags (comma-separated)
-    if (params.tag) {
-      var tags = params.tag.split(',').map(function(t){ return nbSafeDecode(t); });
-      ACTIVE_TAGS = [];
-      tags.forEach(function(tag) {
-        var el = nbFindByData('.tg', 'data-tag', tag);
-        if (el) { el.classList.add('on'); ACTIVE_TAGS.push(tag); }
-      });
-    }
-    // capacity
-    if (params.cap) {
-      var capEl = document.getElementById('cap-input');
-      if (capEl) capEl.value = params.cap;
-    }
+    // genre・area・cond・tag・cap と、古いリンクの ward・pref → 条件。知らない値は NB-FILTER 区画が捨てる
+    NB_FILTER = nbFilterFromParams(params);
     // search query
     if (params.q) {
       var siEl = document.getElementById('si');
       if (siEl) siEl.value = params.q;
     }
-  } catch (e) { console.error('readHash failed', e); }
+  } catch (e) { NB_FILTER = nbEmptyFilter(); console.error('readHash failed', e); }
   // 店舗ページ・共有リンク → モーダルカード表示（#store=HOTPEPPER_ID）。
   // 最初に載っている50店の中に無い店は、全店のデータを読み終えてから探す（nbOpenPendingStore が再度呼ばれる）
   if (params.store && params.store !== NB_OPEN_STORE_ID) {
@@ -9598,27 +9501,244 @@ function scrollFeatureTop(dir) {
   else if (NB_FT_RAIL_MQ.addListener) NB_FT_RAIL_MQ.addListener(apply);
 })();
 
-function toggleFilterPanel() {
-  FILTER_PANEL_OPEN = !FILTER_PANEL_OPEN;
-  var panel = document.getElementById('filter-panel');
-  var btn = document.getElementById('filter-toggle-btn');
-  if (FILTER_PANEL_OPEN) {
-    panel.classList.add('open');
-    btn.setAttribute('aria-expanded', 'true');
-  } else {
-    panel.classList.remove('open');
-    btn.setAttribute('aria-expanded', 'false');
-  }
+// ================================================================
+// 絞り込みシート（I-20・判断の記録 0037）
+// ================================================================
+// 開くたびに NB_FILTER の写し（下書き）を作り、押した結果は下書きにだけ入れる。「N軒を見る」で NB_FILTER に反映して一覧を切り替え、
+// ×・背景・Esc は下書きを捨てる。件数は NB-FILTER 区画の nbCountStores で、一覧と同じ判定・同じ検索語・同じ保存済みで数える。
+// シートを開いている間は履歴を足さない（「戻る」は店のモーダルと URL のためだけに使う）
+var NB_SHEET = { open: false, draft: null, opener: null, prevOverflow: '' };
+// 折りたたみの閾値（これより後ろは「もっと見る」の後ろに隠す）
+var NB_SHEET_FOLD_GENRE = 8;
+var NB_SHEET_FOLD_SCENE = 7;
+var NB_SHEET_FOLD_PICK = 8;
+var NB_SHEET_BUDGET = [['budget-3000', '3,000円以下'], ['budget-3001-5000', '3,001〜5,000円'], ['budget-5000-plus', '5,001円以上']];
+// こだわり: ハブの条件軸（cond）と、席・空間のタグ（tag）。先頭から NB_SHEET_FOLD_PICK 個を先に見せる
+var NB_SHEET_PICKS = [
+  ['cond', 'koshitsu'], ['cond', 'nomihodai'], ['cond', 'tabehodai'], ['cond', 'lunch'],
+  ['cond', 'non-smoking'], ['cond', 'walk-3'], ['cond', 'late-night'], ['cond', 'sunday'],
+  ['cond', 'smoking-ok'], ['cond', 'parking'],
+  ['tag', '半個室'], ['tag', 'カウンター'], ['tag', 'テラス席'], ['tag', '座敷'], ['tag', '貸切可'], ['tag', '隠れ家']
+];
+
+function nbSheetChip(kind, v, label, extra) {
+  return '<button type="button" class="fs-chip' + (extra ? ' fs-extra' : '') + '" data-k="' + kind + '" data-v="' + nbEscHtml(v)
+    + '" aria-pressed="false">' + nbEscHtml(label) + '</button>';
+}
+// 見出し 1 つ + チップの並び。foldAt を超える分は fs-extra（「もっと見る」の後ろ）
+function nbSheetSection(id, title, hint, chips, foldAt) {
+  var inner = chips.map(function(c, i) { return nbSheetChip(c.k, c.v, c.label, !!foldAt && i >= foldAt); }).join('');
+  return '<section class="fs-sec" id="fs-sec-' + id + '"><h3 class="fs-h">' + nbEscHtml(title)
+    + (hint ? '<span class="fs-hint">' + nbEscHtml(hint) + '</span>' : '') + '</h3>'
+    + '<div class="fs-chips" id="fs-row-' + id + '"' + (foldAt ? ' data-fold="' + foldAt + '"' : '') + '>' + inner + '</div>'
+    + (foldAt ? '<button type="button" class="fold-toggle" id="fs-fold-' + id + '" aria-expanded="false" aria-controls="fs-row-' + id + '" style="display:none"></button>' : '')
+    + '</section>';
 }
 
-// パネルを閉じるユーティリティ（CTAクリック時など）
-function closeFilterPanel() {
-  FILTER_PANEL_OPEN = false;
-  var panel = document.getElementById('filter-panel');
-  var btn = document.getElementById('filter-toggle-btn');
-  if (panel) panel.classList.remove('open');
-  if (btn) btn.setAttribute('aria-expanded', 'false');
+// シートの中身を下書きから作る。開くたびと、全店のデータが届いたときに呼ぶ（押したときは作り直さず、aria-pressed だけ更新する）
+function nbRenderFilterSheet() {
+  var body = document.getElementById('fs-body');
+  if (!body) return;
+  var d = NB_SHEET.draft || nbCloneFilter(NB_FILTER);
+  var secs = [], seen = Object.create(null);
+  function chip(k, v, label) { seen[k + ':' + v] = 1; return { k: k, v: v, label: label }; }
+  // エリア: ハブ（stores/area/）と同じ 10 群。いくつでも選べる（どれかに当てはまる店）
+  secs.push(nbSheetSection('area', 'エリア', '複数選べます', NB_FILTER_POLICY.areas.map(function(a) { return chip('area', a.slug, a.label); })));
+  // ジャンル: 1 つ。載っているものだけ（いま選んでいるジャンルは、まだ載っていなくても出す）
+  var have = Object.create(null);
+  nbPresentGenres(ALL_STORES).forEach(function(g) { have[g] = 1; });
+  var genres = GENRE_ORDER.filter(function(g) { return have[g] || d.genre === g; });
+  secs.push(nbSheetSection('genre', 'ジャンル', '', genres.map(function(g) { return chip('genre', g, g); }), NB_SHEET_FOLD_GENRE));
+  // 予算: 3 つのうち 1 つ
+  secs.push(nbSheetSection('budget', '予算', '', NB_SHEET_BUDGET.map(function(b) { return chip('cond', b[0], b[1]); })));
+  // シーン: 当てはまるものすべて
+  secs.push(nbSheetSection('scene', 'シーン', '', NB_TAGS_SCENE.concat(NB_TAGS_SCENE2).map(function(t) { return chip('tag', t, t); }), NB_SHEET_FOLD_SCENE));
+  // こだわり
+  secs.push(nbSheetSection('pick', 'こだわり', '', NB_SHEET_PICKS.map(function(p) {
+    return chip(p[0], p[1], p[0] === 'cond' ? nbCondLabel(p[1]) : p[1]);
+  }), NB_SHEET_FOLD_PICK));
+  // 人数: N 名以上入れる店。ボタンに無い人数（古いリンクの cap=35 など）は、押された状態で足す
+  var caps = NB_CAP_CHOICES.slice();
+  if (d.cap > 0 && caps.indexOf(d.cap) < 0) { caps.push(d.cap); caps.sort(function(a, b) { return a - b; }); }
+  secs.push(nbSheetSection('cap', '人数', '宴会で入れる人数', caps.map(function(n) { return chip('cap', String(n), n + '名以上'); })));
+  // そのほか: シートにボタンの無い条件（古いリンクのタグなど）を、押された状態で出して外せるようにする
+  var other = [];
+  d.tags.forEach(function(t) { if (!seen['tag:' + t]) other.push(chip('tag', t, t)); });
+  d.conds.forEach(function(c) { if (!seen['cond:' + c]) other.push(chip('cond', c, nbCondLabel(c))); });
+  if (other.length) secs.push(nbSheetSection('other', 'そのほかの条件', '', other));
+  body.innerHTML = secs.join('');
+  // 折りたたみ: 隠れる側に押された条件があるときは、最初から開いておく
+  ['genre', 'scene', 'pick'].forEach(function(id) {
+    var row = document.getElementById('fs-row-' + id);
+    var btn = document.getElementById('fs-fold-' + id);
+    if (!row || !btn) return;
+    initPillFold(row, btn, row.children.length, parseInt(row.getAttribute('data-fold'), 10));
+    var extras = row.querySelectorAll('.fs-extra');
+    for (var i = 0; i < extras.length; i++) {
+      if (nbFilterHas(d, extras[i].getAttribute('data-k'), extras[i].getAttribute('data-v'))) { btn.click(); break; }
+    }
+  });
 }
+
+function nbSheetQuery() {
+  var si = document.getElementById('si');
+  return si ? si.value.trim() : '';
+}
+// 下の主ボタンの文言・押せるか・件数・0 軒のときの「外すと増える条件」
+function nbSheetFooterState() {
+  var d = NB_SHEET.draft || nbEmptyFilter();
+  var q = nbSheetQuery();
+  var favNames = SHOW_FAVS_ONLY ? getFavs() : null;
+  var res = { count: 0, label: '', disabled: false, suggestions: [] };
+  // 全店のデータがまだ届いていない間は、先頭の 50 店だけの件数になってしまうので、数えずに待つ（届けば nbRefreshFilterSheet が数え直す）
+  if (!FULL_CATALOG_LOADED && !FULL_CATALOG_FAILED) { res.label = '読み込み中…'; res.disabled = true; return res; }
+  var others = !!q || SHOW_FAVS_ONLY;
+  if (nbFilterCount(d) === 0 && !others) {
+    // 何も選んでいない。いまの条件がある間だけ「外して閉じる」を出す（なければ押せない）
+    res.count = ALL_STORES.length;
+    if (nbFilterCount(NB_FILTER) > 0) res.label = '条件を外して閉じる';
+    else { res.label = '条件を選んでください'; res.disabled = true; }
+    return res;
+  }
+  res.count = nbCountStores(d, ALL_STORES, q, favNames);
+  if (res.count === 0) {
+    res.label = '該当するお店がありません';
+    res.disabled = true;
+    res.suggestions = nbDropSuggestions(d, ALL_STORES, q, favNames, false);
+  } else {
+    res.label = res.count.toLocaleString('ja-JP') + '軒を見る';
+  }
+  return res;
+}
+function nbSheetUpdateFooter() {
+  var go = document.getElementById('fs-go');
+  if (!go || !NB_SHEET.draft) return;
+  var st = nbSheetFooterState();
+  go.textContent = st.label;
+  go.disabled = st.disabled;
+  var reset = document.getElementById('fs-reset');
+  if (reset) reset.disabled = nbFilterCount(NB_SHEET.draft) === 0;
+  var sug = document.getElementById('fs-suggest');
+  if (sug) {
+    sug.innerHTML = st.suggestions.map(function(s) {
+      return '<button type="button" class="fs-suggest-btn" data-k="' + s.kind + '" data-v="' + nbEscHtml(s.v) + '">'
+        + nbEscHtml(s.label) + 'を外す（+' + s.count.toLocaleString('ja-JP') + '軒）</button>';
+    }).join('');
+  }
+  var live = document.getElementById('fs-live');
+  if (live) live.textContent = st.disabled ? st.label : st.count.toLocaleString('ja-JP') + '軒が当てはまります';
+}
+// 押されている状態（aria-pressed）を下書きに合わせ、下の件数を更新する
+function nbSheetSync() {
+  var d = NB_SHEET.draft;
+  if (!d) return;
+  var chips = document.querySelectorAll('#fs-body .fs-chip');
+  for (var i = 0; i < chips.length; i++) {
+    var c = chips[i];
+    c.setAttribute('aria-pressed', nbFilterHas(d, c.getAttribute('data-k'), c.getAttribute('data-v')) ? 'true' : 'false');
+  }
+  nbSheetUpdateFooter();
+}
+
+function nbFilterSheetIsOpen() { return !!NB_SHEET.open; }
+function nbOpenFilterSheet(opener) {
+  var wrap = document.getElementById('filter-sheet-wrap');
+  if (!wrap || NB_SHEET.open) return;
+  NB_SHEET.open = true;
+  NB_SHEET.opener = opener || document.activeElement;
+  NB_SHEET.draft = nbCloneFilter(NB_FILTER);
+  nbRenderFilterSheet();
+  wrap.classList.add('open');
+  NB_SHEET.prevOverflow = document.body.style.overflow;
+  document.body.style.overflow = 'hidden';
+  var body = document.getElementById('fs-body');
+  if (body) body.scrollTop = 0;
+  nbSheetSync();
+  var sheet = document.getElementById('filter-sheet');
+  if (sheet) { try { sheet.focus({ preventScroll: true }); } catch (e) { sheet.focus(); } }
+}
+// 閉じる。×・背景・Esc から呼ぶと下書きは捨てる。反映は nbCommitFilterSheet が先に NB_FILTER へ入れてから閉じる
+function nbCloseFilterSheet() {
+  if (!NB_SHEET.open) return;
+  NB_SHEET.open = false;
+  NB_SHEET.draft = null;
+  var wrap = document.getElementById('filter-sheet-wrap');
+  if (wrap) wrap.classList.remove('open');
+  document.body.style.overflow = NB_SHEET.prevOverflow;
+  var op = NB_SHEET.opener;
+  NB_SHEET.opener = null;
+  if (op && op.focus && document.body.contains(op)) {
+    try { op.focus({ preventScroll: true }); } catch (e) { op.focus(); }
+  }
+}
+// 「N軒を見る」: 下書きを条件にして閉じ、一覧を切り替える
+function nbCommitFilterSheet() {
+  if (!NB_SHEET.open || !NB_SHEET.draft) return;
+  var st = nbSheetFooterState();
+  if (st.disabled) return;
+  NB_FILTER = nbNormalizeFilter(NB_SHEET.draft);
+  nbCloseFilterSheet();
+  applyFilters();
+  trackEvent('filter_apply', { condition_count: nbFilterCount(NB_FILTER), result_count: FILTERED.length });
+  // 条件が残っていれば結果の先頭へ（シートが閉じたあとに 1 回だけ）。全部外したときは雑誌面へ戻る
+  if (document.body.classList.contains('search-active')) {
+    if (window.__scrollToResultsTimer) clearTimeout(window.__scrollToResultsTimer);
+    window.__scrollToResultsTimer = setTimeout(scrollToResults, 80);
+  } else {
+    scrollToMagazine();
+  }
+}
+// 全店のデータが届いたとき、開いているシートのジャンルの並びと件数を更新する（下書きは保つ）
+function nbRefreshFilterSheet() {
+  if (!NB_SHEET.open) return;
+  var body = document.getElementById('fs-body');
+  var top = body ? body.scrollTop : 0;
+  nbRenderFilterSheet();
+  nbSheetSync();
+  if (body) body.scrollTop = top;
+}
+(function() {
+  var wrap = document.getElementById('filter-sheet-wrap');
+  if (!wrap) return;
+  wrap.addEventListener('click', function(e) {
+    if (!NB_SHEET.open || !NB_SHEET.draft) return;
+    var t = e.target;
+    if (!t || !t.closest) return;
+    if (t.id === 'fs-backdrop' || t.closest('#fs-close')) { nbCloseFilterSheet(); return; }
+    var chip = t.closest('.fs-chip');
+    if (chip) {
+      NB_SHEET.draft = nbToggleFilter(NB_SHEET.draft, chip.getAttribute('data-k'), chip.getAttribute('data-v'));
+      nbSheetSync();
+      return;
+    }
+    var sug = t.closest('.fs-suggest-btn');
+    if (sug) {
+      NB_SHEET.draft = nbDropFilter(NB_SHEET.draft, sug.getAttribute('data-k'), sug.getAttribute('data-v'));
+      nbSheetSync();
+      // 押したボタンは消えるので、焦点を主ボタンへ移す（キーボードの利用者が迷わない）
+      var go = document.getElementById('fs-go');
+      if (go && !go.disabled) go.focus();
+      return;
+    }
+    if (t.closest('#fs-reset')) { NB_SHEET.draft = nbEmptyFilter(); nbSheetSync(); return; }
+    if (t.closest('#fs-go')) { nbCommitFilterSheet(); }
+  });
+  wrap.addEventListener('keydown', function(e) {
+    if (!NB_SHEET.open) return;
+    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); nbCloseFilterSheet(); return; }
+    if (e.key !== 'Tab') return;
+    // 焦点をシートの中に閉じ込める（見えていて押せるボタンだけで一周する）
+    var sheet = document.getElementById('filter-sheet');
+    var vis = [].filter.call(sheet.querySelectorAll('button:not([disabled])'), function(b) { return b.offsetParent !== null; });
+    if (!vis.length) { e.preventDefault(); sheet.focus(); return; }
+    var first = vis[0], last = vis[vis.length - 1], a = document.activeElement;
+    if (e.shiftKey) {
+      if (a === first || a === sheet) { e.preventDefault(); last.focus(); }
+    } else if (a === last) {
+      e.preventDefault(); first.focus();
+    }
+  });
+})();
 
 // 結果ブロック先頭へスムーズスクロール（既存パターンを踏襲：ヘッダ＆stickyバー -110px オフセット）
 function scrollToResults() {
@@ -9641,13 +9761,6 @@ function scrollToActiveConditions() {
   window.scrollTo({ top: top < 0 ? 0 : top, behavior: 'smooth' });
 }
 
-// パネル下部CTAから呼ばれる：パネルを閉じて結果へジャンプ
-function applyAndShowResults() {
-  closeFilterPanel();
-  // パネル閉じアニメ後にスクロール（max-heightトランジションは .35s）
-  setTimeout(scrollToResults, 60);
-}
-
 // 雑誌面（特集・ランキング）の先頭へスクロールする
 function scrollToMagazine() {
   var target = document.querySelector('.feature-strip') || document.getElementById('main-content');
@@ -9663,25 +9776,7 @@ function exitSearchMode() {
 }
 
 function clearAllFilters() {
-  // Clear pref
-  document.querySelectorAll('.pt').forEach(function(x){ x.classList.remove('on'); });
-  var allPref = document.querySelector('.pt[data-pref="全国"]') || document.querySelector('.pt');
-  if (allPref) allPref.classList.add('on');
-  // Clear ward
-  ACTIVE_WARD = 'all';
-  document.querySelectorAll('.at').forEach(function(x){ x.classList.remove('on'); });
-  var allWard = document.querySelector('.at[data-ward="all"]');
-  if (allWard) allWard.classList.add('on');
-  // Clear genre
-  document.querySelectorAll('.ft').forEach(function(x){ x.classList.remove('on'); });
-  var allGenre = document.querySelector('.ft[data-f="all"]') || document.querySelector('.ft[data-f="All"]');
-  if (allGenre) allGenre.classList.add('on');
-  // Clear tags
-  ACTIVE_TAGS = [];
-  document.querySelectorAll('.tg.on').forEach(function(el){ el.classList.remove('on'); });
-  // Clear capacity
-  var capEl = document.getElementById('cap-input');
-  if (capEl) capEl.value = '';
+  NB_FILTER = nbEmptyFilter();
   // Clear search
   var si = document.getElementById('si'); if (si) si.value = '';
   var si2 = document.getElementById('si2'); if (si2) si2.value = '';
@@ -9696,85 +9791,74 @@ function nbSyncFavNav() {
   if (link) link.style.borderBottom = SHOW_FAVS_ONLY ? '2px solid var(--gold)' : '';
 }
 
+// 効いている条件の一覧（条件の札・件数のバッジ・サマリー帯に使う）。保存済み・エリア・ジャンル・条件・タグ・人数・検索語の順。
+// エリアは群ごとに 1 つ、条件・タグも 1 つずつ数える。kind が favs・q の項目は v を持たない
+function nbActiveConditions(q) {
+  var list = [];
+  if (SHOW_FAVS_ONLY) list.push({ kind: 'favs', v: '', label: '保存済み' });
+  NB_FILTER.areas.forEach(function(a) { list.push({ kind: 'area', v: a, label: nbAreaLabel(a) }); });
+  if (NB_FILTER.genre !== 'All') list.push({ kind: 'genre', v: NB_FILTER.genre, label: NB_FILTER.genre });
+  NB_FILTER.conds.forEach(function(c) { list.push({ kind: 'cond', v: c, label: nbCondLabel(c) }); });
+  NB_FILTER.tags.forEach(function(t) { list.push({ kind: 'tag', v: t, label: t }); });
+  if (NB_FILTER.cap > 0) list.push({ kind: 'cap', v: String(NB_FILTER.cap), label: NB_FILTER.cap + '名以上' });
+  if (q) list.push({ kind: 'q', v: '', label: q });
+  return list;
+}
+// 絞り込みボタンの件数バッジ（0 のときは隠す）。hidden 属性と style の両方で隠す（ストリップとツールバーで隠し方が違うため）
+function nbSetBadge(id, n) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = String(n);
+  el.hidden = !(n > 0);
+  el.style.display = n > 0 ? 'inline-flex' : 'none';
+}
+
 function updateFilterUI() {
-  // Count active filters
-  var count = 0;
-  var prefEl = document.querySelector('.pt.on');
-  var genreEl = document.querySelector('.ft.on');
-  var capEl = document.getElementById('cap-input');
   var siEl = document.getElementById('si');
-  var pref = prefEl ? prefEl.dataset.pref : '全国';
-  var genre = genreEl ? (genreEl.dataset.f || 'All') : 'All';
-  var cap = capEl ? capEl.value.trim() : '';
   var q = siEl ? siEl.value.trim() : '';
   // 検索クリアボタンの表示状態をここでも同期する（URLハッシュ復元・suggestSearch等の
   // プログラム的な値変更は input イベントを発火しないため、input側のリスナーだけでは追えない）
   nbUpdateSearchClearVisibility(siEl);
   nbUpdateSearchClearVisibility(document.getElementById('si2'));
-  if (pref !== '全国' && pref !== 'all') count++;
-  if (typeof ACTIVE_WARD !== 'undefined' && ACTIVE_WARD && ACTIVE_WARD !== 'all') count++;
-  if (genre !== 'All' && genre !== 'all') count++;
-  if (ACTIVE_TAGS.length > 0) count += ACTIVE_TAGS.length;
-  if (cap) count++;
-  if (q) count++;
-  if (SHOW_FAVS_ONLY) count++;
+  var conds = nbActiveConditions(q);
+  var count = conds.length;
   nbSyncFavNav();
 
-  // Update filter badge
-  var badge = document.getElementById('filter-badge');
-  var toggleBtn = document.getElementById('filter-toggle-btn');
+  // 絞り込みボタン（検索欄の下とツールバーの 2 つ）の件数バッジ
+  nbSetBadge('filter-badge', count);
+  nbSetBadge('tb-filter-badge', count);
+  ['filter-toggle-btn', 'tb-filter-btn'].forEach(function(id) {
+    var b = document.getElementById(id);
+    if (b) b.classList.toggle('has-filters', count > 0);
+  });
   var clearBtn = document.getElementById('clear-all-btn');
-  if (badge) {
-    if (count > 0) {
-      badge.textContent = count;
-      badge.style.display = 'inline-flex';
-      if (toggleBtn) toggleBtn.classList.add('has-filters');
-    } else {
-      badge.style.display = 'none';
-      if (toggleBtn) toggleBtn.classList.remove('has-filters');
-    }
-  }
   if (clearBtn) clearBtn.style.display = count > 0 ? '' : 'none';
+  // 「この条件をシェア」は、URL に載る条件（絞り込み・検索語）があるときだけ。保存済みだけは URL に載らない
+  var shareBtn = document.getElementById('share-filter-btn');
+  if (shareBtn) shareBtn.style.display = (count - (SHOW_FAVS_ONLY ? 1 : 0)) > 0 ? '' : 'none';
 
   // Build active chips
   var chips = document.getElementById('active-chips');
   if (!chips) return;
   var html = '';
-  if (SHOW_FAVS_ONLY) {
-    html += '<span class="chip" data-clear="favs">保存済み <span class="chip-x">×</span></span>';
-  }
-  if (pref !== '全国' && pref !== 'all') {
-    html += '<span class="chip" data-clear="pref">' + nbEscHtml(pref) + ' <span class="chip-x">×</span></span>';
-  }
-  if (typeof ACTIVE_WARD !== 'undefined' && ACTIVE_WARD && ACTIVE_WARD !== 'all') {
-    html += '<span class="chip" data-clear="ward">' + nbEscHtml(ACTIVE_WARD) + ' <span class="chip-x">×</span></span>';
-  }
-  if (genre !== 'All' && genre !== 'all') {
-    html += '<span class="chip" data-clear="genre">' + nbEscHtml(genre) + ' <span class="chip-x">×</span></span>';
-  }
-  ACTIVE_TAGS.forEach(function(tag) {
-    html += '<span class="chip" data-clear="tag" data-tag="' + nbEscHtml(tag) + '">' + nbEscHtml(tag) + ' <span class="chip-x">×</span></span>';
+  conds.forEach(function(c) {
+    var text = c.kind === 'q' ? '&ldquo;' + nbEscHtml(c.label) + '&rdquo;' : nbEscHtml(c.label);
+    html += '<span class="chip" data-clear="' + c.kind + '"' + (c.v ? ' data-v="' + nbEscHtml(c.v) + '"' : '') + '>' + text + ' <span class="chip-x">×</span></span>';
   });
-  if (cap) {
-    html += '<span class="chip" data-clear="cap">' + nbEscHtml(cap) + '名以上 <span class="chip-x">×</span></span>';
-  }
-  if (q) {
-    html += '<span class="chip" data-clear="q">&ldquo;' + nbEscHtml(q) + '&rdquo; <span class="chip-x">×</span></span>';
-  }
   // 入力由来の値は、HTML に連結する前にエスケープする
   chips.innerHTML = html;
 
-  // 結果ブロック上端の「絞り込み結果サマリー帯」を更新
+  // 結果ブロック上端の「絞り込み結果サマリー帯」を更新。エリアは「どれかに当てはまる」ので 1 つの札にまとめ、条件・タグは「すべて満たす」ので 1 つずつ
   var condEl = document.getElementById('results-summary-cond');
   if (condEl) {
-    var parts = [];
-    if (SHOW_FAVS_ONLY) parts.push('保存済み');
-    if (pref !== '全国' && pref !== 'all') parts.push(pref);
-    if (typeof ACTIVE_WARD !== 'undefined' && ACTIVE_WARD && ACTIVE_WARD !== 'all') parts.push(ACTIVE_WARD);
-    if (genre !== 'All' && genre !== 'all') parts.push(genre);
-    ACTIVE_TAGS.forEach(function(tag) { parts.push(tag); });
-    if (cap) parts.push(cap + '名以上');
-    if (q) parts.push('「' + q + '」');
+    var parts = [], areaLabels = [];
+    var flushAreas = function() { if (areaLabels.length) { parts.push(areaLabels.join('／')); areaLabels = []; } };
+    conds.forEach(function(c) {
+      if (c.kind === 'area') { areaLabels.push(c.label); return; }
+      flushAreas();
+      parts.push(c.kind === 'q' ? '「' + c.label + '」' : c.label);
+    });
+    flushAreas();
     if (parts.length === 0) {
       condEl.innerHTML = '<span class="rs-pill">条件なし</span>';
     } else {
@@ -9787,48 +9871,61 @@ function updateFilterUI() {
     }
   }
 
-  // 件数（サマリー帯 + パネル下部CTA）をリアルタイム反映
+  // 件数（サマリー帯）。先頭の 50 店だけで動いている間の 0 軒は「--」にする
   var summaryCount = document.getElementById('results-summary-count');
-  var ctaCount = document.getElementById('filter-panel-cta-count');
-  var ctaBtn = document.getElementById('filter-panel-cta-main');
   var n = (typeof FILTERED !== 'undefined' && FILTERED) ? FILTERED.length : 0;
-  if (summaryCount) summaryCount.textContent = n.toLocaleString('ja-JP');
-  if (ctaCount) ctaCount.textContent = n.toLocaleString('ja-JP');
-  if (ctaBtn) ctaBtn.disabled = (n === 0);
+  if (summaryCount) summaryCount.textContent = nbZeroIsProvisional(FILTERED) ? '--' : n.toLocaleString('ja-JP');
 }
+
+// 全店のデータがまだ届かず、先頭の 50 店だけで動いている間の 0 軒は、本当に 0 軒か分からない（共有リンクの条件が先頭の 50 店に当てはまらないだけのことが多い）。
+// 保存した店がまだ 1 件も無いときは、全店が届いても 0 軒なので、読み込み中とは言わない
+function nbZeroIsProvisional(data) {
+  return !!data && data.length === 0 && !FULL_CATALOG_LOADED && !FULL_CATALOG_FAILED && !(SHOW_FAVS_ONLY && getFavs().length === 0);
+}
+
+// 0 軒のとき、「外すと増える条件」をボタンで出す（条件を 1 つ外した件数を実際に数えた上位 3 つ）
+function nbEmptySuggestHtml() {
+  var siEl = document.getElementById('si');
+  var q = siEl ? siEl.value.trim() : '';
+  var favNames = SHOW_FAVS_ONLY ? getFavs() : null;
+  var sug = nbDropSuggestions(NB_FILTER, ALL_STORES, q, favNames, true);
+  if (!sug.length) return '';
+  return '<div class="empty-suggest"><p class="empty-suggest-lead">次の条件を外すと、お店が見つかります。</p><div class="empty-suggest-list">'
+    + sug.map(function(x) {
+      return '<button type="button" class="fs-suggest-btn" data-k="' + x.kind + '" data-v="' + nbEscHtml(x.v) + '">'
+        + nbEscHtml(x.label) + 'を外す（+' + x.count.toLocaleString('ja-JP') + '軒）</button>';
+    }).join('') + '</div></div>';
+}
+// 条件を 1 つ外して一覧を作り直す（kind が q のときは検索語を空にする）
+function nbDropCondition(kind, v) {
+  if (kind === 'q') {
+    var si = document.getElementById('si'); if (si) si.value = '';
+    var si2 = document.getElementById('si2'); if (si2) si2.value = '';
+  } else {
+    NB_FILTER = nbDropFilter(NB_FILTER, kind, v);
+  }
+  applyFilters();
+}
+// 0 軒の表示の「◯◯を外す（+N軒）」
+document.addEventListener('click', function(e) {
+  var b = e.target.closest ? e.target.closest('#grid .fs-suggest-btn') : null;
+  if (!b) return;
+  nbDropCondition(b.getAttribute('data-k'), b.getAttribute('data-v'));
+});
 
 // Chip click handler (delegated)
 document.addEventListener('click', function(e) {
   var chip = e.target.closest ? e.target.closest('.chip') : null;
   if (!chip) return;
   var clearType = chip.dataset.clear;
+  if (!clearType) return;
   if (clearType === 'favs') {
     SHOW_FAVS_ONLY = false;
-  } else if (clearType === 'pref') {
-    document.querySelectorAll('.pt').forEach(function(x){ x.classList.remove('on'); });
-    var allPref = document.querySelector('.pt[data-pref="全国"]') || document.querySelector('.pt');
-    if (allPref) allPref.classList.add('on');
-  } else if (clearType === 'ward') {
-    ACTIVE_WARD = 'all';
-    document.querySelectorAll('.at').forEach(function(x){ x.classList.remove('on'); });
-    var allWardChip = document.querySelector('.at[data-ward="all"]');
-    if (allWardChip) allWardChip.classList.add('on');
-  } else if (clearType === 'genre') {
-    document.querySelectorAll('.ft').forEach(function(x){ x.classList.remove('on'); });
-    var allGenre = document.querySelector('.ft[data-f="all"]') || document.querySelector('.ft[data-f="All"]');
-    if (allGenre) allGenre.classList.add('on');
-  } else if (clearType === 'tag') {
-    var tag = chip.dataset.tag;
-    var idx = ACTIVE_TAGS.indexOf(tag);
-    if (idx >= 0) ACTIVE_TAGS.splice(idx, 1);
-    var tagEl = document.querySelector('.tg[data-tag="' + tag + '"]');
-    if (tagEl) tagEl.classList.remove('on');
-  } else if (clearType === 'cap') {
-    var capEl2 = document.getElementById('cap-input');
-    if (capEl2) capEl2.value = '';
   } else if (clearType === 'q') {
     var si3 = document.getElementById('si'); if (si3) si3.value = '';
     var si4 = document.getElementById('si2'); if (si4) si4.value = '';
+  } else {
+    NB_FILTER = nbDropFilter(NB_FILTER, clearType, chip.dataset.v);
   }
   applyFilters();
 });
@@ -10242,10 +10339,11 @@ function nbPlayReel(ev, btn, code) {
 
 function renderGrid(data) {
   var cntEl = document.getElementById('cnt');
+  var provisional = nbZeroIsProvisional(data);
   if (cntEl) {
     cntEl.classList.add('fading');
     setTimeout(function() {
-      cntEl.textContent = data.length.toLocaleString('ja-JP') + ' 件';
+      cntEl.textContent = (provisional ? '--' : data.length.toLocaleString('ja-JP')) + ' 件';
       cntEl.classList.remove('fading');
     }, 120);
   }
@@ -10253,6 +10351,12 @@ function renderGrid(data) {
   var pagEl = document.getElementById('pagination');
   NB_OPEN_REEL = null;   // 再描画で開いていたカードのDOMは失われる
   if (!data.length) {
+    // 先頭の 50 店だけで動いている間の 0 軒は、「見つかりません」と出さず、読み込み中の表示にする（全店が届くと描き直される）
+    if (provisional) {
+      renderSkeletons();
+      if (pagEl) pagEl.innerHTML = '';
+      return;
+    }
     // 検索語のうち掲載データに存在しなかった語が分かっていれば具体的に伝える
     var missHint = '';
     if (typeof NB_SEARCH_META !== 'undefined' && NB_SEARCH_META && NB_SEARCH_META.unmatched && NB_SEARCH_META.unmatched.length) {
@@ -10268,6 +10372,9 @@ function renderGrid(data) {
       emptyTitle = '保存したお店はまだありません';
       emptyBody = '<p>お店のカードのハートを押すと、この端末に保存されます。</p>';
       emptyBtn = '<button class="empty-state-reset" onclick="showFavs()" aria-label="保存済みの表示をやめる">保存済みの表示をやめる</button>';
+    } else {
+      // 外すと見つかる条件を、実際に数えてボタンで出す（保存した店がまだ無いときは条件のせいではないので出さない）
+      emptyBody += nbEmptySuggestHtml();
     }
     gridEl.innerHTML = '<div class="empty-state">'
       + '<div class="empty-state-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="32" r="24"/><circle cx="32" cy="32" r="14"/></svg></div>'
