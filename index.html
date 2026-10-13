@@ -277,7 +277,7 @@ document.addEventListener('keydown',function(e){
 .num-serif{font-family:var(--font-display);font-weight:500;font-style:normal;letter-spacing:.01em;}
 ::selection{background:var(--gold);color:var(--bg);}
 /* ── HERO ── */
-.hero{padding:clamp(1.8rem,3.5vw,2.8rem) 1.5rem clamp(2.4rem,4vw,3.2rem);position:relative;}
+.hero{--hero-gutter:1.5rem;padding:clamp(1.8rem,3.5vw,2.8rem) 1.5rem clamp(2.4rem,4vw,3.2rem);position:relative;}
 .nb-cover-copy{display:flex;flex-direction:column;justify-content:flex-end;}
 .hero .eyebrow{font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);margin-bottom:1.2rem;opacity:0;animation:up .8s .2s forwards;}
 .hero h1{font-family:var(--font-display);font-weight:500;font-size:var(--fs-3xl);line-height:var(--lh-display);letter-spacing:.005em;color:var(--ink);opacity:0;animation:up .9s .35s forwards;}
@@ -337,8 +337,7 @@ body:not(.search-active) #pagination{display:none !important;}
 /* SEARCH MODE — 検索/フィルター中は特集・ランキング等の回遊面を畳み、結果を最上部に出す
    （結果が特集や人気店の下に埋もれて見つけられない問題への対処。リセットで元に戻る） */
 body.search-active .feature-strip,
-body.search-active #trend-ranking-section,
-body.search-active #ranking-section,
+body.search-active #ranking-picks,
 body.search-active #latest-journal-section,
 body.search-active .no-sakura-banner,
 body.search-active #store-index{display:none !important;}
@@ -752,26 +751,40 @@ body.search-query-active .card-why{display:flex;}
 .trend-score-fill.warm{background:linear-gradient(90deg,#eab308,#a3e635);}
 .trend-score-fill.low{background:rgba(255,255,255,.2);}
 .trend-score-num{font-size:var(--fs-xs);font-weight:600;color:var(--muted);min-width:2rem;text-align:right;}
-/* ── TREND RANKING SECTION ── */
-.trend-ranking-section{margin:clamp(2rem,4vw,3rem) auto 0;max-width:1200px;padding:0 1.5rem;}
-.trend-ranking-header{display:flex;flex-direction:column;align-items:flex-start;gap:.3rem;margin-bottom:1rem;padding-bottom:.9rem;border-bottom:1px solid var(--border);}
-.trend-eyebrow{color:#c5341a;letter-spacing:.32em;}
-.trend-ranking-header h2{font-family:var(--font-body);font-weight:400;font-size:clamp(1.4rem,3vw,1.8rem);letter-spacing:.01em;color:var(--text);text-transform:none;margin:0;line-height:1.15;}
-.trend-ranking-header h2 em{color:var(--ember);font-style:italic;font-family:var(--font-display);font-size:1em;letter-spacing:.02em;margin-left:.5rem;font-weight:400;}
-.trend-ranking-sub{font-family:var(--font-body);font-size:var(--fs-sm);color:var(--muted);margin:.3rem 0 0;letter-spacing:0;text-transform:none;}
-.trend-ranking-scroll{display:flex;gap:1rem;overflow-x:auto;padding-bottom:.5rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
-.trend-ranking-scroll::-webkit-scrollbar{height:3px;}
-.trend-ranking-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px;}
-.trend-rank-card{flex:0 0 220px;background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:6px;overflow:hidden;cursor:pointer;scroll-snap-align:start;transition:transform .2s,border-color .2s;}
-.trend-rank-card:hover{transform:translateY(-2px);border-color:rgba(239,68,68,.3);}
-.trend-rank-card .rank-num{position:absolute;top:.4rem;left:.5rem;font-family:var(--font-mono);font-size:1.4rem;font-weight:700;color:rgba(239,68,68,.7);text-shadow:0 1px 4px rgba(0,0,0,.5);}
-.trend-rank-card .rank-img{width:100%;height:130px;object-fit:cover;}
-.trend-rank-card .rank-name{padding:.5rem .6rem .1rem;font-size:var(--fs-xs);font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.trend-rank-card .rank-meta{padding:0 .6rem .5rem;display:flex;align-items:center;gap:.5rem;font-size:var(--fs-xs);color:var(--muted);flex-wrap:wrap;}
-.trend-rank-card .rank-score{color:#ef4444;font-weight:700;}
-.trend-rank-card .rank-fresh{display:inline-flex;align-items:center;gap:.18rem;background:rgba(239,68,68,.12);color:#ef4444;font-weight:700;padding:.05rem .35rem;border-radius:2px;font-size:var(--fs-xs);letter-spacing:.02em;}
-.trend-rank-card .rank-media{display:inline-flex;align-items:center;gap:.18rem;background:rgba(234,179,8,.12);color:#a16207;font-weight:700;padding:.05rem .35rem;border-radius:2px;font-size:var(--fs-xs);letter-spacing:.02em;}
-.trend-rank-card .rank-highlight{padding:0 .6rem .55rem;font-size:var(--fs-xs);color:var(--muted);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+/* ── 今日の話題店・よく見られている店（I-24・scripts/build_top_picks.js が作る写真の行）──
+   スマホ: 横に並べて次の店が少し見える。1024px 以上の最初の画面は右の列に縦の一覧（写真は左・字は右）。 */
+.trend-picks,.ranking-picks{min-width:0;}
+.trend-picks-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--sp-3);margin:0 0 var(--sp-3);}
+.trend-picks-head h2{font-family:var(--font-body);font-weight:600;font-size:var(--fs-lg);letter-spacing:0;line-height:1.3;color:var(--text);text-transform:none;margin:0;}
+.trend-picks-date{font-size:var(--fs-xs);color:var(--dim);white-space:nowrap;}
+.trend-picks-list{list-style:none;margin:calc(-1 * var(--sp-1)) 0 0;padding:var(--sp-1) 0 var(--sp-2);display:flex;gap:var(--sp-3);overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.trend-picks-list::-webkit-scrollbar{display:none;}
+.tp-item{flex:0 0 min(40vw,176px);min-width:0;scroll-snap-align:start;}
+.tp-card{display:flex;flex-direction:column;gap:var(--sp-2);height:100%;color:inherit;text-decoration:none;}
+.tp-photo{position:relative;display:block;aspect-ratio:4/3;border-radius:var(--r-md);overflow:hidden;background:var(--surface);}
+.tp-img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.tp-card:hover .tp-img{transform:scale(1.04);}
+.tp-none{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:var(--fs-xs);color:var(--dim);}
+.tp-body{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.tp-name{font-size:var(--fs-sm);font-weight:600;line-height:1.4;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.tp-card:hover .tp-name{text-decoration:underline;text-underline-offset:3px;}
+.tp-meta{display:flex;flex-wrap:wrap;gap:0 .6em;font-size:var(--fs-xs);color:var(--muted);line-height:1.5;}
+.tp-meta span+span::before{content:"/";margin-right:.6em;opacity:.5;}
+.tp-reason{font-size:var(--fs-xs);color:var(--gold);line-height:1.5;}
+.tp-reason span{white-space:nowrap;}
+.nb-cover-featured{margin-top:var(--sp-5);}
+.nb-cover-featured .trend-picks-list{margin-inline:calc(-1 * var(--hero-gutter,1.5rem));padding-inline:var(--hero-gutter,1.5rem);scroll-padding-inline:var(--hero-gutter,1.5rem);}
+.ranking-picks{margin:clamp(2rem,4vw,3rem) auto 0;max-width:var(--container-wide);padding:0 1.5rem;}
+.ranking-picks .tp-item{flex-basis:min(44vw,200px);}
+@media(min-width:1024px){
+  .nb-cover-featured{margin-top:0;}
+  .nb-cover-featured .trend-picks-list{flex-direction:column;overflow:visible;gap:0;margin:0;padding:0;}
+  .nb-cover-featured .tp-item{flex:none;}
+  .nb-cover-featured .tp-card{flex-direction:row;align-items:center;gap:var(--sp-4);padding:var(--sp-3) 0;border-top:1px solid var(--border);}
+  .nb-cover-featured .tp-photo{flex:0 0 132px;}
+  .nb-cover-featured .tp-name{font-size:var(--fs-md);}
+}
+@media(max-width:768px){.ranking-picks{padding:0 1.2rem;}}
 /* ── MOBILE CTA BAR ── */
 .mobile-cta-bar{display:none;}
 @media(max-width:768px){
@@ -816,7 +829,7 @@ body.search-query-active .card-why{display:flex;}
 .tg{font-size:var(--fs-xs);padding:.42rem .72rem;min-height:var(--tap-min);}
 header{height:52px;}
 .logo{font-size:1rem;white-space:nowrap;}
-.hero{padding:20px 1.2rem 28px;min-height:auto;}
+.hero{--hero-gutter:1.2rem;padding:20px 1.2rem 28px;min-height:auto;}
 .hero h1{font-size:clamp(2.4rem,9vw,4rem);}
 .hero .eyebrow{margin-bottom:.9rem;}
 .hero-sub{font-size:var(--fs-xs);max-width:100%;margin-top:1.1rem;line-height:1.85;}
@@ -941,23 +954,12 @@ h3.cn{margin:0 0 6px;font-family:var(--font-body);}
 }
 .feature-top-foot{display:flex;justify-content:flex-end;padding:0 1.5rem;}
 .feature-top-all{font-size:var(--fs-sm);letter-spacing:0;color:var(--gold);text-decoration:none;padding:.3rem .6rem;min-height:var(--tap-min);display:inline-flex;align-items:center;}
-/* ── デスクトップ（≥1024px）: カバー右カラムの静的グリッド（1本大＋2本小・矢印/レール無し） ── */
+/* ── デスクトップ（≥1024px）: 今月の特集は hero の下の横並び（I-24）。ラベルと最初のカードを hero の文字の左端にそろえ、3 枚が見える幅にする ── */
 @media(min-width:1024px){
-  .nb-cover-featured .feature-top{padding:0;}
-  .nb-cover-featured .feature-top .feature-strip-label{padding:0;}
-  .nb-cover-featured .feature-top-foot{padding:0;}
-  .nb-cover-featured .feature-top .feature-strip-cards{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;overflow:visible;padding:0;max-width:none;scroll-snap-type:none;}
-  .nb-cover-featured .feature-top .feature-card{scroll-snap-align:none;}
-  .nb-cover-featured .feature-top .feature-card:nth-child(1){grid-column:1 / -1;}
-  .nb-cover-featured .feature-top .feature-card:nth-child(n+2){display:grid;grid-template-columns:104px 1fr;gap:.75rem;align-items:center;background:transparent;border:0;border-top:1px solid var(--border);border-radius:0;padding:.75rem 0 0;}
-  .nb-cover-featured .feature-top .feature-card:nth-child(n+2) .feature-card-thumb{aspect-ratio:4/3;border-radius:var(--r-sm);}
-  .nb-cover-featured .feature-top .feature-card:nth-child(n+2) .feature-card-body{position:static;padding:0;background:none;gap:.2rem;}
-  .nb-cover-featured .feature-top .feature-card:nth-child(n+2) .feature-card-title{color:var(--text);text-shadow:none;font-size:var(--fs-md);font-weight:500;}
-  .nb-cover-featured .feature-top .feature-card:nth-child(n+2) .feature-card-sub{color:var(--dim);text-shadow:none;font-size:var(--fs-xs);}
-  .nb-cover-featured .feature-top .feature-card:nth-child(n+2) .feature-card-season{display:none;}
-  .nb-cover-featured .feature-top .feature-card:nth-child(n+4){display:none;}
-  .nb-cover-featured .feature-top .feature-card-clone{display:none;}
-  .nb-cover-featured .feature-top-nav{display:none!important;}
+  .feature-top{--feature-gutter:max(1.5rem,calc((100% - var(--container-wide)) / 2 + 1.5rem));}
+  .feature-top .feature-strip-label,.feature-top-foot{padding-left:var(--feature-gutter);padding-right:var(--feature-gutter);}
+  .feature-top .feature-strip-cards{padding-left:var(--feature-gutter);padding-right:var(--feature-gutter);scroll-padding-left:var(--feature-gutter);}
+  .feature-top .feature-card{flex-basis:min(420px,31vw);}
 }
 .feature-top-all:hover{color:var(--ember-deep);text-decoration:underline;}
 @media(max-width:640px){
@@ -985,6 +987,23 @@ h3.cn{margin:0 0 6px;font-family:var(--font-body);}
 .ljc-theme{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--gold);display:inline-flex;align-items:center;gap:.5rem;margin-top:auto;font-weight:700;}
 .ljc-theme::before{content:"";display:inline-block;width:14px;height:1px;background:var(--gold);opacity:.55;}
 @media(max-width:640px){.latest-journal-cards{grid-template-columns:1fr;gap:.8rem;}.ljc-date{font-size:1.05rem;}}
+/* ジャーナルのカード（I-24）: 記事の顔の写真がある記事は写真と出所を添える（scripts/build_journal_index.js）。リンクはタイトルに張り、カード全体を覆う */
+.ljc-link{color:inherit;text-decoration:none;}
+.ljc-link::after{content:"";position:absolute;inset:0;}
+.ljc-link:focus-visible{outline:none;}
+.ljc-link:focus-visible::after{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px;}
+.ljc-photo{margin:0;display:flex;flex-direction:column;gap:var(--sp-1);}
+.ljc-img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:var(--r-md);background:var(--surface);}
+.ljc-credit{position:relative;z-index:1;font-size:var(--fs-xs);line-height:1.5;color:var(--dim);}
+.ljc-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px;}
+@media(max-width:640px){
+  .latest-journal-card.has-photo{display:grid;grid-template-columns:112px minmax(0,1fr);column-gap:var(--sp-3);row-gap:var(--sp-1);align-items:start;padding:var(--sp-3);}
+  .latest-journal-card.has-photo .ljc-photo{grid-column:1;grid-row:1 / span 4;}
+  .latest-journal-card.has-photo .ljc-date,.latest-journal-card.has-photo .ljc-title,.latest-journal-card.has-photo .ljc-desc,.latest-journal-card.has-photo .ljc-theme{grid-column:2;}
+  .latest-journal-card.has-photo .ljc-img{aspect-ratio:4/3;}
+  .latest-journal-card.has-photo .ljc-title{font-size:var(--fs-sm);}
+  .latest-journal-card.has-photo .ljc-theme{margin-top:0;}
+}
 /* ── AUTHORITY BAR ── */
 .authority-bar{background:var(--text);color:var(--bg);padding:.65rem 1.5rem;display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;align-items:center;justify-content:center;font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;}
 .auth-item{display:flex;align-items:center;gap:.4rem;white-space:nowrap;}
@@ -1099,7 +1118,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .sort-chip.loading{opacity:.6;cursor:wait;}
 .sort-chip[disabled]{opacity:.45;cursor:not-allowed;}
 .sort-meta-bar{display:flex;align-items:center;gap:.5rem;padding:.4rem 1.5rem;background:var(--bg);border-bottom:1px solid var(--border);flex-wrap:wrap;}
-.sort-meta-bar .notify-btn{order:1;}
 .sort-meta-bar .view-toggle{order:2;margin-left:auto;}
 .sort-meta-bar .hpc{order:3;margin-left:.6rem;}
 .dist-badge{position:absolute;top:.55rem;right:.55rem;background:rgba(10,10,8,.78);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);color:#fff;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;padding:.26rem .55rem;border-radius:2px;z-index:3;font-weight:600;pointer-events:none;}
@@ -1167,23 +1185,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .geo-btn{display:inline-flex;align-items:center;gap:.4rem;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:var(--font-body);font-size:var(--fs-xs);padding:.42rem .9rem;border-radius:2px;cursor:pointer;transition:all .2s;white-space:nowrap;min-height:var(--tap-min);}
 .geo-btn:hover{color:var(--text);border-color:var(--border-h);}
 .geo-btn.loading{opacity:.6;pointer-events:none;}
-/* ── RANKING SECTION ── */
-.ranking-section{padding:clamp(1.8rem,3.5vw,2.8rem) 1.5rem clamp(1.4rem,3vw,2rem);border-bottom:1px solid var(--border);background:var(--bg);}
-.ranking-header{display:flex;flex-direction:column;align-items:flex-start;gap:.3rem;margin-bottom:1.1rem;padding-bottom:.9rem;border-bottom:1px solid var(--border);}
-.ranking-eyebrow{color:var(--gold);letter-spacing:.32em;}
-.ranking-header h2{font-family:var(--font-body);font-weight:400;font-size:clamp(1.4rem,3vw,1.85rem);color:var(--text);display:flex;align-items:baseline;gap:.55rem;letter-spacing:.01em;line-height:1.15;}
-.ranking-header h2 em{font-style:italic;color:var(--gold);font-size:1em;font-weight:400;letter-spacing:.02em;}
-.ranking-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:.5rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
-.ranking-scroll::-webkit-scrollbar{height:3px;}
-.ranking-scroll::-webkit-scrollbar-thumb{background:var(--border-h);border-radius:2px;}
-.rank-card{flex:0 0 180px;scroll-snap-align:start;background:#fff;border:0.5px solid #D3D1C7;border-radius:6px;padding:10px;cursor:pointer;transition:all .2s;position:relative;}
-.rank-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.1);border-color:rgba(122,92,16,.3);}
-.rank-num{position:absolute;top:6px;left:6px;background:var(--gold);color:var(--bg);font-family:var(--font-mono);font-size:var(--fs-xs);font-weight:700;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:2px;z-index:2;}
-.rank-card .rank-img{width:100%;height:100px;object-fit:cover;border-radius:4px;display:block;background:var(--surface);}
-.rank-name{font-size:var(--fs-xs);font-weight:600;color:var(--text);margin-top:6px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.rank-meta{font-size:var(--fs-xs);color:var(--muted);margin-top:2px;display:flex;flex-wrap:wrap;gap:.1rem .5rem;align-items:center;}
-.rank-score{color:#d4a017;font-weight:600;white-space:nowrap;}
-@media(max-width:768px){.ranking-section{padding:1rem;}.rank-card{flex:0 0 155px;}}
 /* ── RECENTLY VIEWED ── */
 .history-section{padding:1.2rem 1.5rem 1rem;border-top:1px solid var(--border);background:var(--bg2);}
 .history-header{font-family:var(--font-body);font-size:var(--fs-xs);letter-spacing:0;color:var(--dim);margin-bottom:.7rem;}
@@ -1197,9 +1198,6 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .hist-area{font-size:var(--fs-xs);color:var(--muted);}
 @media(max-width:768px){.history-section{padding:1rem;}.hist-card{flex:0 0 120px;}}
 /* ── NOTIFICATION TOAST ── */
-.notify-btn{display:none;align-items:center;gap:.4rem;background:rgba(122,92,16,.08);border:1px solid rgba(122,92,16,.3);color:var(--gold);font-family:var(--font-body);font-size:var(--fs-xs);padding:.4rem .9rem;border-radius:2px;cursor:pointer;transition:all .2s;white-space:nowrap;min-height:var(--tap-min);}
-.notify-btn:hover{background:rgba(122,92,16,.15);}
-.notify-btn.show{display:inline-flex;}
 .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);z-index:600;background:var(--text);color:var(--bg);padding:.9rem 1.6rem;border-radius:4px;font-size:var(--fs-xs);letter-spacing:.04em;box-shadow:0 4px 24px rgba(0,0,0,.3);opacity:0;transition:all .35s ease;pointer-events:none;white-space:nowrap;}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 /* ── SEARCH SUGGEST ── */
@@ -1289,7 +1287,6 @@ input[type=text],input[type=search],input[type=email],input[type=tel],input[type
 .auth-item{display:inline-flex;align-items:center;gap:.45rem;font-size:var(--fs-sm);font-weight:500;white-space:nowrap;}
 .auth-item .ic{color:var(--gold);width:20px;height:20px;}
 .authority-bar .num-serif{font-family:var(--font-body);font-weight:700;}
-.trend-ranking-header h2 em{font-family:var(--font-body);font-style:normal;font-size:var(--fs-sm);color:var(--dim);}
 .nb-more-lite{display:inline-flex;align-items:center;gap:.15rem;min-height:var(--tap-min);font-size:var(--fs-sm);font-weight:600;color:var(--gold);text-decoration:none;}
 .ljc-date{font-family:var(--font-body);font-style:normal;font-size:var(--fs-xs);color:var(--dim);letter-spacing:0;}
 .ljc-title{font-family:var(--font-body);font-weight:700;line-height:1.5;}
@@ -1346,7 +1343,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 .results-summary-foot{flex:0 0 auto;}
 #fb-fab{display:inline-flex;align-items:center;gap:.35rem;min-height:var(--tap-min);padding:0 .95rem;}
 #fb-fab .ic{width:18px;height:18px;}
-@media(max-width:768px){#fb-fab{width:var(--tap-min);padding:0;justify-content:center;}.fb-fab-txt,.notify-txt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}.notify-btn{min-width:var(--tap-min);min-height:var(--tap-min);justify-content:center;}}
+@media(max-width:768px){#fb-fab{width:var(--tap-min);padding:0;justify-content:center;}.fb-fab-txt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}}
 #modal-cta-row{display:grid;grid-template-columns:1fr 1fr;}
 #modal-cta-row .modal-cta-hp,#modal-cta-row .modal-cta-btn:only-child{grid-column:1/-1;}
 .modal-cta-btn{gap:.4rem;}
@@ -1574,6 +1571,25 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
   </div>
   </div>
   <div class="nb-cover-featured">
+<!-- 今日の話題店（最初の画面の写真の行）。↓ この区画は scripts/build_top_picks.js が data/daily_trending5.json から自動生成。手で編集しない。 -->
+<!-- TREND_PICKS_START -->
+<section class="trend-picks" id="trend-picks" aria-labelledby="trend-picks-title">
+  <div class="trend-picks-head">
+    <h2 id="trend-picks-title">今日の話題店</h2>
+    <span class="trend-picks-date">10/13更新</span>
+  </div>
+  <ul class="trend-picks-list">
+    <li class="tp-item"><a class="tp-card" href="stores/store-e5b08fe88f9ce4b8.html" data-store="小菜一碟" data-area="東区・相生町" data-source="trend_today"><span class="tp-photo"><img class="tp-img" src="https://lh3.googleusercontent.com/place-photos/AO7kbWFn0NA4BoS2fVTvVFLbpLYQd31oHsYxmEPtkJ238Jd8cNmHzdJZD6OXt1yYu2QSH1dAYVZwC8rnK-fAP87TjiM1mNL5aiASaW0hbY8waYn1MgTDRkbyfV1B3mKccaH-Ss7LfDNBBkZWUy0m5w=w480" srcset="https://lh3.googleusercontent.com/place-photos/AO7kbWFn0NA4BoS2fVTvVFLbpLYQd31oHsYxmEPtkJ238Jd8cNmHzdJZD6OXt1yYu2QSH1dAYVZwC8rnK-fAP87TjiM1mNL5aiASaW0hbY8waYn1MgTDRkbyfV1B3mKccaH-Ss7LfDNBBkZWUy0m5w=w320 320w, https://lh3.googleusercontent.com/place-photos/AO7kbWFn0NA4BoS2fVTvVFLbpLYQd31oHsYxmEPtkJ238Jd8cNmHzdJZD6OXt1yYu2QSH1dAYVZwC8rnK-fAP87TjiM1mNL5aiASaW0hbY8waYn1MgTDRkbyfV1B3mKccaH-Ss7LfDNBBkZWUy0m5w=w480 480w" sizes="(min-width:1024px) 132px, (min-width:440px) 176px, 40vw" alt="小菜一碟" width="280" height="210" decoding="async" onerror="nbImgFallback(this)"></span><span class="tp-body"><span class="tp-name">小菜一碟</span><span class="tp-meta"><span>東区・相生町</span><span>四川料理</span></span><span class="tp-reason"><span>2サイトで紹介</span>・<span>10/5に確認</span></span></span></a></li>
+    <li class="tp-item"><a class="tp-card" href="stores/store-e38199e38197e698.html" data-store="すし昇" data-area="名古屋市中区丸の内" data-source="trend_today"><span class="tp-photo"><img class="tp-img" src="https://lh3.googleusercontent.com/grass-cs/AABkmLd81Mk1rOFDVuOQMLBwHIeONJO1LSB3qLE5lKVVBK7JpsbQGHPyP8x7DiaHfYySR7QB5Tc11yVGiFkQdVr43D_p9DD4Zpbk3wOuZ2U1thN95y68a3yNSlWNujhYljL0hgvO5mjrtw=w480" srcset="https://lh3.googleusercontent.com/grass-cs/AABkmLd81Mk1rOFDVuOQMLBwHIeONJO1LSB3qLE5lKVVBK7JpsbQGHPyP8x7DiaHfYySR7QB5Tc11yVGiFkQdVr43D_p9DD4Zpbk3wOuZ2U1thN95y68a3yNSlWNujhYljL0hgvO5mjrtw=w320 320w, https://lh3.googleusercontent.com/grass-cs/AABkmLd81Mk1rOFDVuOQMLBwHIeONJO1LSB3qLE5lKVVBK7JpsbQGHPyP8x7DiaHfYySR7QB5Tc11yVGiFkQdVr43D_p9DD4Zpbk3wOuZ2U1thN95y68a3yNSlWNujhYljL0hgvO5mjrtw=w480 480w" sizes="(min-width:1024px) 132px, (min-width:440px) 176px, 40vw" alt="すし昇" width="280" height="210" decoding="async" onerror="nbImgFallback(this)"></span><span class="tp-body"><span class="tp-name">すし昇</span><span class="tp-meta"><span>中区丸の内</span><span>寿司</span></span><span class="tp-reason"><span>2サイトで紹介</span>・<span>10/11に確認</span></span></span></a></li>
+    <li class="tp-item"><a class="tp-card" href="stores/toolcafe.html" data-store="TOOLCAFE 名古屋店" data-area="名駅南" data-source="trend_today"><span class="tp-photo"><img class="tp-img" src="https://lh3.googleusercontent.com/place-photos/AG9NLjAbVZMurjOCcFedcxMrNDxD-cLUAdVMKkF1AtTePUtQi-8geIJZOr9rULzgaO5TL_pGriB0pIPscDGtTfK3psGu-mb27rzG7vVqUc1nk6JWmem4cRHP9Jo9Zq8J7e3tHDz0peMVMUbw_2VADnQ8NNauYg=w480" srcset="https://lh3.googleusercontent.com/place-photos/AG9NLjAbVZMurjOCcFedcxMrNDxD-cLUAdVMKkF1AtTePUtQi-8geIJZOr9rULzgaO5TL_pGriB0pIPscDGtTfK3psGu-mb27rzG7vVqUc1nk6JWmem4cRHP9Jo9Zq8J7e3tHDz0peMVMUbw_2VADnQ8NNauYg=w320 320w, https://lh3.googleusercontent.com/place-photos/AG9NLjAbVZMurjOCcFedcxMrNDxD-cLUAdVMKkF1AtTePUtQi-8geIJZOr9rULzgaO5TL_pGriB0pIPscDGtTfK3psGu-mb27rzG7vVqUc1nk6JWmem4cRHP9Jo9Zq8J7e3tHDz0peMVMUbw_2VADnQ8NNauYg=w480 480w" sizes="(min-width:1024px) 132px, (min-width:440px) 176px, 40vw" alt="TOOLCAFE 名古屋店" width="280" height="210" decoding="async" onerror="nbImgFallback(this)"><span class="photo-credit" title="写真: ゆみち（Google マップの利用者が投稿した写真）">📷 ゆみち</span></span><span class="tp-body"><span class="tp-name">TOOLCAFE 名古屋店</span><span class="tp-meta"><span>名駅南</span><span>カフェ（ベーカリー）</span></span><span class="tp-reason"><span>2サイトで紹介</span>・<span>10/4に確認</span></span></span></a></li>
+    <li class="tp-item"><a class="tp-card" href="stores/store-e5a4a7e8a186e985.html" data-store="大衆酒場フレンチマン 名古屋" data-area="名古屋市中村区" data-source="trend_today"><span class="tp-photo"><img class="tp-img" src="https://lh3.googleusercontent.com/place-photos/AG9NLjDtpFg--w_odFPGm2E-BPyO7vhuQaCDgiJcF-CCnKWXl4IFouxRUzwLUPTKvuYaRJ2qxeh4pf713e_lunRCv3x-79w6RADs9yKGi13h4R7BT2ZBqLWheGD2mBPTX_DJm7qu-Kr_2DdyL9RfxQEe-yqgQw=w480" srcset="https://lh3.googleusercontent.com/place-photos/AG9NLjDtpFg--w_odFPGm2E-BPyO7vhuQaCDgiJcF-CCnKWXl4IFouxRUzwLUPTKvuYaRJ2qxeh4pf713e_lunRCv3x-79w6RADs9yKGi13h4R7BT2ZBqLWheGD2mBPTX_DJm7qu-Kr_2DdyL9RfxQEe-yqgQw=w320 320w, https://lh3.googleusercontent.com/place-photos/AG9NLjDtpFg--w_odFPGm2E-BPyO7vhuQaCDgiJcF-CCnKWXl4IFouxRUzwLUPTKvuYaRJ2qxeh4pf713e_lunRCv3x-79w6RADs9yKGi13h4R7BT2ZBqLWheGD2mBPTX_DJm7qu-Kr_2DdyL9RfxQEe-yqgQw=w480 480w" sizes="(min-width:1024px) 132px, (min-width:440px) 176px, 40vw" alt="大衆酒場フレンチマン 名古屋" width="280" height="210" loading="lazy" decoding="async" onerror="nbImgFallback(this)"><span class="photo-credit" title="写真: yuki a（Google マップの利用者が投稿した写真）">📷 yuki a</span></span><span class="tp-body"><span class="tp-name">大衆酒場フレンチマン 名古屋</span><span class="tp-meta"><span>中村区</span><span>フレンチビストロ</span></span><span class="tp-reason"><span>1サイトで紹介</span>・<span>10/4に確認</span></span></span></a></li>
+    <li class="tp-item"><a class="tp-card" href="stores/store-e382b9e38386e383.html" data-store="ステーキハウス キッチンリボン" data-area="名古屋市瑞穂区" data-source="trend_today"><span class="tp-photo"><img class="tp-img" src="https://lh3.googleusercontent.com/place-photos/AG9NLjApL72w1HfAhxM9cxRbpjKAq8SgcxIyWdnbBA_e_hkqMuj19m3y9iylb_GoaX1aCWvZkWc3jKlSXoAjJKATSCoY1dhqRzu6MbePYuvT_DaRUaBaIxixypkZsgZMTPzFm1Rypd6y_m8ecggdFVso3QNUUg=w480" srcset="https://lh3.googleusercontent.com/place-photos/AG9NLjApL72w1HfAhxM9cxRbpjKAq8SgcxIyWdnbBA_e_hkqMuj19m3y9iylb_GoaX1aCWvZkWc3jKlSXoAjJKATSCoY1dhqRzu6MbePYuvT_DaRUaBaIxixypkZsgZMTPzFm1Rypd6y_m8ecggdFVso3QNUUg=w320 320w, https://lh3.googleusercontent.com/place-photos/AG9NLjApL72w1HfAhxM9cxRbpjKAq8SgcxIyWdnbBA_e_hkqMuj19m3y9iylb_GoaX1aCWvZkWc3jKlSXoAjJKATSCoY1dhqRzu6MbePYuvT_DaRUaBaIxixypkZsgZMTPzFm1Rypd6y_m8ecggdFVso3QNUUg=w480 480w" sizes="(min-width:1024px) 132px, (min-width:440px) 176px, 40vw" alt="ステーキハウス キッチンリボン" width="280" height="210" loading="lazy" decoding="async" onerror="nbImgFallback(this)"><span class="photo-credit" title="写真: 世界のユウイチロウ&amp;co（Google マップの利用者が投稿した写真）">📷 世界のユウイチロウ&amp;co</span></span><span class="tp-body"><span class="tp-name">ステーキハウス キッチンリボン</span><span class="tp-meta"><span>瑞穂区</span><span>ステーキ</span></span><span class="tp-reason"><span>3サイトで紹介</span>・<span>10/4に確認</span></span></span></a></li>
+  </ul>
+</section>
+<!-- TREND_PICKS_END -->
+  </div>
+</section>
+
 <!-- 今月の特集（トップ最上部・横スクロールカルーセル：ファーストビューで特集に触れられる入り口） -->
 <!-- ↓ このストリップは data/featured.json + scripts/build_featured.js が自動生成。手で編集しない。 -->
 <section class="feature-strip feature-top" aria-label="今月の特集">
@@ -1664,8 +1680,6 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
   </div><!-- /feature-top-rail -->
   <div class="feature-top-foot"><a class="feature-top-all" href="features/index.html">特集をすべて見る ›</a></div>
 </section>
-  </div>
-</section>
 
 <!-- 権威性バー -->
 <div class="authority-bar">
@@ -1715,13 +1729,6 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 
 </div><!-- /filter-panel -->
 
-<!-- 今日の話題店（毎朝5:30 JST更新。鮮度＋多媒体露出のみで5店ピック。Google評価は不問。） -->
-<section class="trend-ranking-section" id="trend-ranking-section" style="display:none">
-  <div class="trend-ranking-header">
-    <h2>今日の話題店 <em id="trend-ranking-date">2026/10/13</em></h2>
-  </div>
-  <div class="trend-ranking-scroll" id="trend-ranking-scroll"></div>
-</section>
 
 <!-- 最新ジャーナル（毎朝配信の日次記事 最新3件。build_journal_index.js が静的挿入） -->
 <section class="latest-journal-section" id="latest-journal-section">
@@ -1733,26 +1740,38 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
   </div>
   <div class="latest-journal-cards">
     <!-- LATEST_JOURNAL_START -->
-        <a class="latest-journal-card" href="journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html">
+        <article class="latest-journal-card has-photo">
+          <figure class="ljc-photo">
+            <img class="ljc-img" src="https://lh3.googleusercontent.com/grass-cs/AABkmLd3tPGUtJdHE5p4cH-w7XeGHlAgaoDWwofUqulmjq5rPINyvAwzMlshfxABqEWSNW_2b8YeE89DrdZTqvQqUmNsXgXWdi2znf3bukARnbu3MtKZAJrJ_Cz6jVQeEFZB9Ts0M2VEyUblb7kM=s1600-w1200" alt="ひものや 官兵衛 伏見駅店" width="480" height="320" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'">
+            <figcaption class="ljc-credit">写真: <a href="https://www.google.com/maps/place/?q=place_id:ChIJFbXRgLx3A2ARa5S-tgY5dO0" target="_blank" rel="noopener">Mr,あゆきー</a> / <a href="https://maps.google.com" target="_blank" rel="noopener">Google Maps</a></figcaption>
+          </figure>
           <div class="ljc-date">2026-10-13</div>
-          <h3 class="ljc-title">栄・伏見の干物定食「ひものや 官兵衛」、おかわり自由のコスパを読む</h3>
+          <h3 class="ljc-title"><a class="ljc-link" href="journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html">栄・伏見の干物定食「ひものや 官兵衛」、おかわり自由のコスパを読む</a></h3>
           <p class="ljc-desc">10月1日に伏見駅前に開店した干物定食「ひものや 官兵衛 伏見駅店」。基本1,298円でご飯と味噌汁おかわり自由、平日15時台の中抜け営業、席数の表記差、PayPayのみの支払いまで、ひとりランチの使い方から読む。</p>
           <span class="ljc-theme">今日の1軒</span>
-        </a>
+        </article>
 
-        <a class="latest-journal-card" href="journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html">
+        <article class="latest-journal-card has-photo">
+          <figure class="ljc-photo">
+            <img class="ljc-img" src="https://prcdn.freetls.fastly.net/release_image/138955/30/138955-30-2df91f7fa8b8c153b9a50042f2a38130-639x427.png" alt="なかがわ 街仲食堂 by ジーバーFOOD" width="480" height="320" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'">
+            <figcaption class="ljc-credit">写真: 提供 株式会社ジーバー（<a href="https://prtimes.jp/main/html/rd/p/000000030.000138955.html" target="_blank" rel="noopener">プレスリリース</a>より）</figcaption>
+          </figure>
           <div class="ljc-date">2026-10-12</div>
-          <h3 class="ljc-title">中川区「なかがわ 街仲食堂」開店、シニアが握るおむすび550円と3時間営業を読む</h3>
+          <h3 class="ljc-title"><a class="ljc-link" href="journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html">中川区「なかがわ 街仲食堂」開店、シニアが握るおむすび550円と3時間営業を読む</a></h3>
           <p class="ljc-desc">名古屋市中川区吉津に10月10日開店の「なかがわ 街仲食堂 by ジーバーFOOD」。地域のシニア19人が注文後に握るおむすびの1個セット550円・2個セット880円の頼み方、11時〜14時の3時間営業と待ち、売上を分け合う組合方式を読む。</p>
           <span class="ljc-theme">今日の1軒</span>
-        </a>
+        </article>
 
-        <a class="latest-journal-card" href="journal/2026-10-11-hoshigaoka-afros-bbq-enkai.html">
+        <article class="latest-journal-card has-photo">
+          <figure class="ljc-photo">
+            <img class="ljc-img" src="https://lh3.googleusercontent.com/grass-cs/AABkmLdVzTJHZkFHo_lSExFyN5tOogukfLeX_BlM1Qx3I7e1dZfXZBjPbnjZjIprH-9d--hyBMXw03eHWgwGqY-cU8okA6GjIHidz2GgERZa8dA_25B-lU6kjxJvStiBfy_oo4a8-2yERGC2O_E=s1600-w1200" alt="Afro s BBQ アフロズバーベキュー" width="480" height="320" loading="lazy" decoding="async" onerror="this.parentNode.style.display='none'">
+            <figcaption class="ljc-credit">写真: <a href="https://www.google.com/maps/place/?q=place_id:ChIJf6v1jIJlA2ARUHzANojTq78" target="_blank" rel="noopener">アフロズバーベキュー</a> / <a href="https://maps.google.com" target="_blank" rel="noopener">Google Maps</a></figcaption>
+          </figure>
           <div class="ljc-date">2026-10-11</div>
-          <h3 class="ljc-title">星ヶ丘「Afro&#39;s BBQ」アメリカンBBQで宴会、飲み放題3,500円とバックリブ2,849円を業界人が読む</h3>
+          <h3 class="ljc-title"><a class="ljc-link" href="journal/2026-10-11-hoshigaoka-afros-bbq-enkai.html">星ヶ丘「Afro&#39;s BBQ」アメリカンBBQで宴会、飲み放題3,500円とバックリブ2,849円を業界人が読む</a></h3>
           <p class="ljc-desc">星ヶ丘駅徒歩1分のアメリカンBBQ「Afro&#39;s BBQ（アフロズバーベキュー）」。BBQ日本一決定戦2026で準優勝。バックリブ2,849円と120分飲み放題付きコース3,500円・4,500円の使い分け、34席の席配置、宴会30名と一人飲みの向き不向きを読む。</p>
           <span class="ljc-theme">今日の1軒</span>
-        </a>
+        </article>
       <!-- LATEST_JOURNAL_END -->
   </div>
 </section>
@@ -1789,13 +1808,9 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 
 <!-- フィルターブロックは検索欄直下に移動済み（hero直後） -->
 
-<!-- ランキングセクション（GA4 集計の全ユーザー閲覧数。Google評価は使わない） -->
-<section class="ranking-section" id="ranking-section" style="display:none">
-  <div class="ranking-header">
-    <h2>みんなが見ている店 <em>TOP 10</em></h2>
-  </div>
-  <div class="ranking-scroll" id="ranking-scroll"></div>
-</section>
+<!-- よく見られている店（直近30日の閲覧数が下限に届く日だけ出る）。↓ この区画は scripts/build_top_picks.js が data/view_counts.json と data/ranking_display_policy.json から自動生成。手で編集しない。 -->
+<!-- VIEW_RANKING_START -->
+<!-- VIEW_RANKING_END -->
 
 <!-- 桜ゼロ宣言バナー：飲食業界の桜（やらせ口コミ）を排除する仕組みの可視化（編集独立性の訴求。回遊コンテンツの下に配置） -->
 <section class="no-sakura-banner" aria-labelledby="no-sakura-title">
@@ -1874,7 +1889,6 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
     </select>
   </div>
   <div class="sort-meta-bar" id="sort-meta-bar">
-    <button class="notify-btn" id="notify-btn" onclick="showNotifyToast()" aria-label="この絞り込み条件に合致する新店舗を通知設定する"><span class="nb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span><span class="notify-txt">この条件で通知</span></button>
     <div class="view-toggle" id="view-toggle">
       <button id="vt-grid" class="active" onclick="setViewMode('grid')" aria-label="グリッド表示" title="グリッド表示"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="6" height="6" rx="1"/><rect x="8" y="0" width="6" height="6" rx="1"/><rect x="0" y="8" width="6" height="6" rx="1"/><rect x="8" y="8" width="6" height="6" rx="1"/></svg></button>
       <button id="vt-list" onclick="setViewMode('list')" aria-label="リスト表示" title="リスト表示"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="0" y="0" width="14" height="3" rx="1"/><rect x="0" y="5.5" width="14" height="3" rx="1"/><rect x="0" y="11" width="14" height="3" rx="1"/></svg></button>
@@ -11520,15 +11534,6 @@ var _origRenderGrid = renderGrid;
 renderGrid = function(data) {
   var arr = (data === FILTERED) ? sortStores(data.slice()) : data;
   _origRenderGrid(arr);
-  // 通知ボタン表示
-  var nb = document.getElementById('notify-btn');
-  if (nb) {
-    var hasFilters = ACTIVE_TAGS.length > 0 || ACTIVE_WARD !== 'all' ||
-      (document.querySelector('.pt.on') && document.querySelector('.pt.on').dataset.pref !== '全国' && document.querySelector('.pt.on').dataset.pref !== 'all') ||
-      (document.querySelector('.ft.on') && document.querySelector('.ft.on').dataset.f !== 'All') ||
-      (document.getElementById('si') && document.getElementById('si').value.trim());
-    nb.classList.toggle('show', hasFilters);
-  }
 };
 
 // chip ボタンに click ハンドラを設定（初回マウント時）
@@ -11744,87 +11749,33 @@ function geoSearch() {
 }
 
 // ================================================================
-// [4] 閲覧数ランキング TOP10（GA4 集計のグローバル閲覧数。Google評価は使わない）
-// データ: build.js が data/view_counts.json を読み込み「閲覧数」フィールドを焼き込む
+// [4] 今日の話題店・よく見られている店（I-24）
+// 行そのものは scripts/build_top_picks.js が index.html に書き込む（店舗ページへの本物のリンク＝JS が動かなくても・検索エンジンにも読める）。
+// ここで足すのは「ふつうのクリックなら店の詳細（クイックビュー）を開く」ことだけ。
+// 新しいタブで開く・修飾キー付き・店がまだ読み込めていない・同名の店を決められないときは、リンク本来の動き（店舗ページへの移動）に任せる。
+// 計測: modal_open の source は行ごとの data-source（trend_today / ranking）をそのまま使う。
 // ================================================================
-function buildRanking() {
-  if (!ALL_STORES || ALL_STORES.length === 0) return;
-  var scrollEl = document.getElementById('ranking-scroll');
-  var sectionEl = document.getElementById('ranking-section');
-  if (!scrollEl || !sectionEl) return;
-  var ranked = ALL_STORES
-    .map(function(s) { return { store: s, count: parseInt(s['閲覧数']) || 0 }; })
-    .filter(function(x) { return x.count > 0; })
-    .sort(function(a, b) { return b.count - a.count; })
-    .slice(0, 10);
-  // 集計データが未到着 / 空ならセクションを出さない
-  if (ranked.length < 1) { sectionEl.style.display = 'none'; return; }
-  scrollEl.innerHTML = ranked.map(function(item, i) {
-    var r = item.store;
-    var idx = ALL_STORES.indexOf(r);
-    var photo = r['写真URL'] || nbStoreFigure(r);
-    var genre = (r['ジャンル']||'').split('・')[0];
-    return '<div class="rank-card" onclick="openM(' + idx + ',\'ranking\')" role="button" tabindex="0">'
-      + '<span class="rank-num">' + (i+1) + '</span>'
-      + '<img class="rank-img" src="' + nbImage(photo, 560) + '" srcset="' + nbSrcset(photo, [280, 560]) + '" sizes="280px" alt="' + (r['店名']||'') + '" loading="lazy" decoding="async" width="280" height="160" onerror="nbImgFallback(this)">'
-      + '<div class="rank-name">' + (r['店名']||'') + '</div>'
-      + '<div class="rank-meta"><span class="rank-score">' + item.count + '回閲覧</span><span>' + genre + '</span><span>' + (r['エリア']||'') + '</span></div>'
-      + '</div>';
-  }).join('');
-  sectionEl.style.display = '';
-}
-
-// ================================================================
-// [4.5] 今日の話題店 TOP5（鮮度＋多媒体露出のみで選定。Google評価は使わない）
-// データ生成元: scripts/pick_daily_trending5.js → data/daily_trending5.json
-// build.js が LOCAL_STORES の各店に「今日の話題」「今日の話題順位」「今日の話題鮮度」「今日の話題媒体数」「話題ハイライト」を焼き込む
-// ================================================================
-function buildTrendRanking() {
-  if (!ALL_STORES || ALL_STORES.length === 0) return;
-  var picks = ALL_STORES.filter(function(s) { return s['今日の話題'] === true; })
-    .sort(function(a, b) {
-      return (parseInt(a['今日の話題順位'])||99) - (parseInt(b['今日の話題順位'])||99);
-    })
-    .slice(0, 5);
-  var scrollEl = document.getElementById('trend-ranking-scroll');
-  var sectionEl = document.getElementById('trend-ranking-section');
-  if (!scrollEl || !sectionEl) return;
-  if (picks.length === 0) { sectionEl.style.display = 'none'; return; }
-  function freshLabel(d) {
-    var n = parseInt(d);
-    if (isNaN(n)) return '';
-    if (n <= 0) return '今日';
-    if (n === 1) return '昨日';
-    return n + '日前';
+function nbFindStoreIndex(name, area) {
+  if (!name || typeof ALL_STORES === 'undefined' || !ALL_STORES) return -1;
+  var first = -1, byArea = -1, same = 0;
+  for (var i = 0; i < ALL_STORES.length; i++) {
+    var s = ALL_STORES[i];
+    if (!s || s['店名'] !== name) continue;
+    same++;
+    if (first < 0) first = i;
+    if (area && s['エリア'] === area && byArea < 0) byArea = i;
   }
-  scrollEl.innerHTML = picks.map(function(r, i) {
-    var idx = ALL_STORES.indexOf(r);
-    var photo = r['写真URL'] || nbStoreFigure(r);
-    var genre = (r['ジャンル']||'').split('・')[0];
-    var fresh = freshLabel(r['今日の話題鮮度']);
-    var media = parseInt(r['今日の話題媒体数']) || 0;
-    var sources = r['トレンド情報源'] || [];
-    var labelHtml = '';
-    if (sources.indexOf('メディア記事') >= 0) labelHtml = '<span class="rank-fresh">メディア掲載</span>';
-    else if (sources.indexOf('Instagram話題') >= 0) labelHtml = '<span class="rank-fresh">SNS話題</span>';
-    else if (sources.indexOf('食べログ高順位') >= 0) labelHtml = '<span class="rank-fresh">高評価店</span>';
-    else if (sources.indexOf('Hot Pepper人気') >= 0) labelHtml = '<span class="rank-media">人気上昇</span>';
-    else if (r['編集部推薦'] === true) labelHtml = '<span class="rank-media">編集部推薦</span>';
-    var meta = '';
-    if (fresh) meta += '<span class="rank-fresh">' + fresh + '</span>';
-    if (media > 0) meta += '<span class="rank-media">' + media + '媒体</span>';
-    if (labelHtml) meta += labelHtml;
-    meta += '<span>' + genre + '</span><span>' + (r['エリア']||'') + '</span>';
-    return '<div class="trend-rank-card" onclick="openM(' + idx + ',\'trend_today\')" role="button" tabindex="0" style="position:relative">'
-      + '<span class="rank-num">' + (i+1) + '</span>'
-      + '<img class="rank-img" src="' + nbImage(photo, 560) + '" srcset="' + nbSrcset(photo, [280, 560]) + '" sizes="280px" alt="' + (r['店名']||'') + '" loading="lazy" decoding="async" width="280" height="160" onerror="nbImgFallback(this)">'
-      + '<div class="rank-name">' + (r['店名']||'') + '</div>'
-      + '<div class="rank-meta">' + meta + '</div>'
-      // DSN-008: 話題ハイライト（「4媒体掲載・今日掲載」）は上のバッジと同じ内容の繰り返しなのでカードには出さない
-      + '</div>';
-  }).join('');
-  sectionEl.style.display = '';
+  return same === 1 ? first : byArea;   // 同名が複数あってエリアでも決められなければ -1（移動に任せる）
 }
+document.addEventListener('click', function(e) {
+  if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  var a = e.target && e.target.closest ? e.target.closest('a.tp-card') : null;
+  if (!a) return;
+  var idx = nbFindStoreIndex(a.getAttribute('data-store'), a.getAttribute('data-area'));
+  if (idx < 0) return;
+  e.preventDefault();
+  openM(idx, a.getAttribute('data-source') || 'unknown');
+});
 
 // ================================================================
 // [5] 最近見た店舗（閲覧履歴）
@@ -11909,9 +11860,6 @@ function showToast(msg) {
   t.classList.add('show');
   setTimeout(function() { t.classList.remove('show'); }, 3000);
 }
-function showNotifyToast() {
-  showToast('準備中です — SNSをフォローして最新情報をチェック！');
-}
 
 // ================================================================
 // [8] スマートフィルターサジェスト
@@ -11938,13 +11886,11 @@ function suggestSearch(keyword) {
 })();
 
 // ================================================================
-// 起動時にランキング・履歴・お気に入り数・表示モードを初期化
+// 起動時に履歴・お気に入り数・表示モードを初期化
 // ================================================================
 var _origLoadStores = loadStores;
 loadStores = function(stores) {
   _origLoadStores(stores);
-  buildRanking();
-  buildTrendRanking();
   renderHistory();
   updateFavCount();
   restoreViewMode();

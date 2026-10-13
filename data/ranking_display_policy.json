@@ -1,0 +1,6 @@
+{
+  "_README": "トップの「よく見られている店」を出すかどうかの基準（I-24・P-399）。閾値の変更はこのファイルで行い、スクリプトは触らない。閲覧数は GA4 の modal_open（data/view_counts.json・集計期間は同ファイルの lookbackDays）。2026-10-13 の実測は、30 日で 64 件・閲覧のあった店 37 店・うち 10 回以上は 1 店だけで、下限なしでは「1回閲覧」の店が並んでいた。1 店あたりの下限を満たす店が minStoresToShow 店そろわない日は、区画ごと出さない（件数が少ない日に数字を盛らない・CLAUDE.md 品質ゲート原則3）。",
+  "minViewsPerStore": 10,
+  "minStoresToShow": 5,
+  "maxStores": 10
+}
