@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-13T20:04:56.210Z",
+  "generatedAt": "2026-10-13T20:34:24.602Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1476,
-    "pageViews": 2096,
-    "sessions": 1675,
-    "avgSessionDuration": 125.7,
+    "activeUsers": 1480,
+    "pageViews": 2100,
+    "sessions": 1679,
+    "avgSessionDuration": 125.6,
     "bounceRate": 0.282,
     "pagesPerSession": 1.25
   },
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1190,
-      "direct": 351,
+      "organic": 1193,
+      "direct": 352,
       "social": 5,
       "ai_assistant": 105,
       "referral": 33,
@@ -39,7 +39,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 527
+      "sessions": 530
     },
     {
       "source": "bing",
@@ -69,7 +69,7 @@
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 31
+      "sessions": 32
     },
     {
       "source": "openai",
@@ -935,17 +935,17 @@
     "reservationClicks": 79,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
-      "ctaEvents": 16,
+      "ctaEvents": 17,
       "reservationOutbound": 19,
-      "naiveSum": 35,
-      "deduped": 21,
+      "naiveSum": 36,
+      "deduped": 22,
       "overlap": 14,
       "bySite": [
         {
           "site": "hotpepper.jp",
-          "cta": 13,
+          "cta": 14,
           "outbound": 14,
-          "deduped": 16
+          "deduped": 17
         },
         {
           "site": "tabelog.com",
@@ -958,7 +958,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1476,
+    "value": 1480,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
