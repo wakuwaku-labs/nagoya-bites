@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-13T09:38:16.576Z",
+  "generatedAt": "2026-10-13T09:59:52.902Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1417,
-    "pageViews": 2011,
-    "sessions": 1609,
-    "avgSessionDuration": 126.9,
-    "bounceRate": 0.278,
+    "activeUsers": 1423,
+    "pageViews": 2020,
+    "sessions": 1615,
+    "avgSessionDuration": 126.6,
+    "bounceRate": 0.279,
     "pagesPerSession": 1.25
   },
   "dailyReference": {
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1122,
+      "organic": 1128,
       "direct": 350,
       "social": 5,
       "ai_assistant": 106,
@@ -26,10 +26,10 @@
       "other": 1
     },
     "pct": {
-      "organic": 69.5,
-      "direct": 21.7,
+      "organic": 69.6,
+      "direct": 21.6,
       "social": 0.3,
-      "ai_assistant": 6.6,
+      "ai_assistant": 6.5,
       "referral": 1.9,
       "paid": 0,
       "other": 0.1
@@ -39,7 +39,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 493
+      "sessions": 499
     },
     {
       "source": "bing",
@@ -185,8 +185,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 319,
-      "sessions": 306
+      "pageViews": 321,
+      "sessions": 308
     },
     {
       "path": "/",
@@ -195,8 +195,8 @@
     },
     {
       "path": "/index.html",
-      "pageViews": 89,
-      "sessions": 74
+      "pageViews": 90,
+      "sessions": 75
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -934,7 +934,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1417,
+    "value": 1423,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
