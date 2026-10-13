@@ -1,0 +1,298 @@
+{
+  "date": "2026-10-13",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "栄・伏見の干物定食「ひものや 官兵衛」、おかわり自由のコスパを読む",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 94,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 15,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 8
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "コスパ",
+          "feature": "features/kospa-insider.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "出典が偏っている媒体 jouhou.nagoya は独立ドメインに数えない（別媒体・一次発表で裏を取ると加点）",
+          "独立ドメイン 5件 → 15",
+          "話題の証跡URL 0件 → 0",
+          "※ trending_signals は採点に使用しない（自己申告値のため・ISSUE-077）"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 4件 (価格帯,席,予約,回転) → 20"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "業界人視点キーワード 1件 → +3",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 147字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「コスパ」+4",
+          "ジャンル語なし → +0"
+        ]
+      },
+      "gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4 / search_intent -2"
+    },
+    {
+      "id": "c2",
+      "title_draft": "伏見「ひものや 官兵衛」2店目、干物定食の新店を一人ランチで使うコツ",
+      "verdict": "HOLD",
+      "total": 65,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 4,
+        "uniqueness": 15,
+        "brand_fit": 8,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 0
+      },
+      "search_intent_links": [],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "出典が偏っている媒体 jouhou.nagoya は独立ドメインに数えない（別媒体・一次発表で裏を取ると加点）",
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 3件 (席,予約,回転) → 15"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 48字 +2",
+          "title 34字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "title_draft": "鶴舞公園「SALT BAKERY」塩パン専門店、300円台の価格帯と売り切れ営業を読む",
+      "verdict": "HOLD",
+      "total": 55,
+      "breakdown": {
+        "recency": 18,
+        "topicality": 9,
+        "uniqueness": 5,
+        "brand_fit": 8,
+        "writability": 6,
+        "novelty": 5,
+        "search_intent": 4
+      },
+      "search_intent_links": [
+        {
+          "kw": "鶴舞・八事",
+          "feature": "stores/area/tsurumai-yagoto/index.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 11日前 → 18"
+        ],
+        "topicality": [
+          "出典が偏っている媒体 jouhou.nagoya は独立ドメインに数えない（別媒体・一次発表で裏を取ると加点）",
+          "独立ドメイン 1件 → 4",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(today_one) 1件 (価格帯) → 5"
+        ],
+        "brand_fit": [
+          "ベース8",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 61字 +2",
+          "title 43字 +1"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「鶴舞」+4",
+          "シーン語なし → +0",
+          "ジャンル語なし → +0"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS_WITH_NOTE",
+  "selected_gate_note": "94点（自動公開ライン 100点）。主な不足: topicality -10 / brand_fit -4 / search_intent -2",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "today_one",
+      "title_draft": "栄・伏見の干物定食「ひものや 官兵衛」、おかわり自由のコスパを読む",
+      "lead_draft": "10月1日、御園座そばの伏見駅エレベーター前に干物定食の「ひものや 官兵衛 伏見駅店」が開店しました。新栄の本店に続く2店目で、運営は名古屋市西区のプライムサービス。基本1,298円の定食はご飯と味噌汁がおかわり自由。席数や平日15時台の中抜け、決済手段まで、ひとりランチの使い方から読みます。",
+      "angle": "価格帯（基本1,298円とサーモンレアかつ+220円の差、おかわり自由の原価設計）、席数の表記差と回転、平日15時台の中抜けというオペ、ひとりランチと夜の使い分け、ランチは予約不可・夜は予約可、PayPayのみで現金・カード不可の決済",
+      "main_store": {
+        "name": "ひものや 官兵衛 伏見駅店",
+        "id": "",
+        "area": "伏見・栄",
+        "genre": "干物定食・和食"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 干物定食専門店『ひものや 官兵衛』伏見駅前にオープン",
+          "url": "https://jouhou.nagoya/himono-kanbee/",
+          "date": "2026-10-06"
+        },
+        {
+          "label": "食べログ ひものや 官兵衛 伏見駅",
+          "url": "https://tabelog.com/aichi/A2301/A230102/23097986/",
+          "date": "2026-10-13"
+        },
+        {
+          "label": "食べログ ひものや 官兵衛（栄本店）",
+          "url": "https://tabelog.com/en/aichi/A2301/A230103/23083569/",
+          "date": "2026-10-13"
+        },
+        {
+          "label": "Threads nagoya.mj 伏見で魚をガッツリ食べるなら",
+          "url": "https://www.threads.com/@nagoya.mj/post/DeERZ31jMwu/",
+          "date": "2026-10-04"
+        },
+        {
+          "label": "Yahoo!マップ ひものや 官兵衛 伏見駅",
+          "url": "https://map.yahoo.co.jp/v3/place/CjXY9gzA7WE",
+          "date": "2026-10-13"
+        },
+        {
+          "label": "楽天ぐるなび ひものや 官兵衛（栄本店）",
+          "url": "https://r.gnavi.co.jp/79h7jxtf0000/",
+          "date": "2026-10-13"
+        },
+        {
+          "label": "株式会社プライムサービス（運営会社）",
+          "url": "http://www.primeservice.co.jp/",
+          "date": "2026-10-13"
+        }
+      ],
+      "trending_signals": {
+        "x_mentions": 1,
+        "media_count": 3
+      }
+    },
+    {
+      "id": "c2",
+      "theme": "today_one",
+      "title_draft": "伏見「ひものや 官兵衛」2店目、干物定食の新店を一人ランチで使うコツ",
+      "lead_draft": "本店に続く2店目が伏見駅前に。一人客が多い干物定食店の席数と回転、ランチの使い分けを解説します。",
+      "angle": "一人ランチ向けの席と回転、ランチは予約不可・夜は予約可の使い分け、本店との違い",
+      "main_store": {
+        "name": "ひものや 官兵衛 伏見駅店",
+        "id": "",
+        "area": "伏見・栄",
+        "genre": "干物定食・和食"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通",
+          "url": "https://jouhou.nagoya/himono-kanbee/",
+          "date": "2026-10-06"
+        },
+        {
+          "label": "食べログ 伏見駅店",
+          "url": "https://tabelog.com/aichi/A2301/A230102/23097986/",
+          "date": "2026-10-13"
+        },
+        {
+          "label": "食べログ 栄本店",
+          "url": "https://tabelog.com/en/aichi/A2301/A230103/23083569/",
+          "date": "2026-10-13"
+        }
+      ],
+      "trending_signals": {
+        "media_count": 2
+      }
+    },
+    {
+      "id": "c3",
+      "theme": "today_one",
+      "title_draft": "鶴舞公園「SALT BAKERY」塩パン専門店、300円台の価格帯と売り切れ営業を読む",
+      "lead_draft": "鶴舞公園の塩パン専門店SALT BAKERYは9月3日開店。300円〜780円の価格帯と無くなり次第終了の営業を読みます。",
+      "angle": "価格帯（プレーン300円〜ジャンボンバター780円）、売り切れ次第終了の仕込み量設計、系列店との関係",
+      "main_store": {
+        "name": "SALT BAKERY",
+        "id": "",
+        "area": "鶴舞",
+        "genre": "パン・塩パン"
+      },
+      "sources": [
+        {
+          "label": "名古屋情報通 SALT BAKERY",
+          "url": "https://jouhou.nagoya/salt-bakery/",
+          "date": "2026-10-02"
+        },
+        {
+          "label": "公式Instagram",
+          "url": "https://www.instagram.com/salt_bakery2026/"
+        }
+      ],
+      "trending_signals": {
+        "media_count": 1
+      }
+    }
+  ]
+}
