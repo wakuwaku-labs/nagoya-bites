@@ -333,6 +333,29 @@ test('焦点: 開いた要素が消えていた（一覧が描き直された）
   assert.strictEqual(opener.focused, 0, 'ページから消えた要素へは戻さない');
 });
 
+test('開いた直後: 後ろを inert にし、店舗ページのリンクと前後の行を整え、題へ焦点を送る（前の店・次の店では焦点を動かさない）', () => {
+  const calls = [];
+  const ctx = { nbQvStoreLinkRefresh: (r) => calls.push('link'), nbQvSetInert: (on) => calls.push('inert:' + on), nbQvRefreshPager: () => calls.push('pager'), nbQvFocusTitle: () => calls.push('focus') };
+  vm.createContext(ctx);
+  vm.runInContext('var NB_QV_STORE = null; var NB_QV_FROM_LIST = false;\n' + fn('nbQvOpened'), ctx);
+  const r = { n: 1 };
+  ctx.nbQvOpened(r, 'grid');
+  assert.deepStrictEqual(calls, ['link', 'inert:true', 'pager', 'focus']);
+  assert.strictEqual(ctx.NB_QV_STORE, r);
+  assert.strictEqual(ctx.NB_QV_FROM_LIST, true, '一覧のカードから開いた');
+  calls.length = 0;
+  ctx.nbQvOpened(r, 'modal_nav');
+  assert.deepStrictEqual(calls, ['link', 'inert:true', 'pager'], '焦点は押したボタンに残す');
+  assert.strictEqual(ctx.NB_QV_FROM_LIST, true);
+  ctx.nbQvOpened(r, 'popstate');
+  assert.strictEqual(ctx.NB_QV_FROM_LIST, true, '戻る・進むは直前の開き方を引き継ぐ');
+  ['deeplink', 'modal_reco', 'trending', 'history'].forEach((src) => {
+    ctx.NB_QV_FROM_LIST = true;
+    ctx.nbQvOpened(r, src);
+    assert.strictEqual(ctx.NB_QV_FROM_LIST, false, src + ' から開いたときは前後の行を出さない');
+  });
+});
+
 // ───────── 5. 配線 ─────────
 const OPEN_M = INDEX.slice(INDEX.indexOf('function openM(i, source) {'), INDEX.indexOf('function renderMhi('));
 const CLOSE_M = fn('closeM');
