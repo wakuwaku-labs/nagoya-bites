@@ -1,0 +1,125 @@
+{
+  "status": "OK",
+  "editorReason": "名古屋の喫茶文化を牽引する老舗として、創業以来「変わらない味と心地よい時間」を提供。コーヒーは社長監修の秘伝ブレンドを熟練スタッフが淹れ、サンドイッチも専門シェフをスカウトするなど、徹底した品質へのこだわりが光る。",
+  "insiderNote": "コーヒーは社長が毎日味を確認し、企業秘密のブレンドを「かえし」二度ドリップで淹れる。サンドイッチも専門シェフをスカウトし、注文ごとに手作り。品質維持への徹底した姿勢が伺える。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.9,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFMj_lWSXFTs_-NB8yECKJxsWhX59gN_IBXv2tbTSgVtaugBCa5g-GTiLJclERYV1tUOVfDzfR5yL2x6NNuN7Hlkg296Ot1lRAimQAaFqj510K1bnMMWXEdCoGTyD5wiE15CaCizRnERCA=",
+      "snippet_quote": "名古屋では知らない人のいない絶品",
+      "supports": "名古屋の喫茶文化を牽引する老舗という評価"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGxrkVHhev33fIs-ArNWjrdwoqA5aCYOWfl4qnVp3T14man2KuH-XuH1VlKQuat1gC46NmNNepLPo9bWgty9Ws5vkwRbL6Sc8sTr5u-PkOr1Y4XWEIPmdpZB5Om7ePMC-TBsEIN1pJ7Alb2lKgQ46bWcrOpOdhv03BFoY2M",
+      "snippet_quote": "名古屋の喫茶文化を築き上げてきたとも言うべき、地元では誰もが知っている名店",
+      "supports": "名古屋の喫茶文化を牽引する老舗という評価"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFnRfUDYmlmRBM90JEx_J7S4BiMkowjfgI0mkXT69cjyIOTDsSlxZRLgaKeF2nnZDEJ9kOR1Xofc9GQ04Hl-d5JS_HrHadtXITzfJz6mMOdxKPYbMVzwXugjNqrzu7yIOeW",
+      "snippet_quote": "創業以来、『変わらない味と心地よい時間を提供すること』を心がけており、コーヒーの味は毎日社長が確認し、ブレンドや焙煎を調整するなど、創業社長から受け継がれるこだわりを継承しています。…長年レストランで勤務していたシェフをスカウトし、昭和35年（1960年）から本格的なメニュー展開を始めました。…『かえし』と呼ばれる二度ドリップする独自の手法でコーヒーを淹れており、この手法で最適な味わいになるよう豆を焙煎しています。コーヒーは店の『顔』であるため、各店で限られた技術を持ったスタッフのみが淹れることを許されています。",
+      "supports": "創業以来変わらない味と心地よい時間を提供し、コーヒーは社長監修の秘伝ブレンドを熟練スタッフが淹れ、サンドイッチも専門シェフをスカウトするなど、徹底した品質へのこだわりがあること"
+    }
+  ],
+  "warnings": [],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「コンパル 大須本店」に関する業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「コンパル」の店名は、創業者の若田積蔵氏が戦時中に中国で見た繁盛店「金春」にあやかり、「そのように繁盛する店にしたい」という願いを込めて名付けられました。創業以来、「変わらない味と心地よい時間を提供すること」を心がけており、コーヒーの味は毎日社長が確認し、ブレンドや焙煎を調整するなど、創業社長から受け継がれるこだわりを継承しています。店舗は名古屋市内にのみ展開し、市外に店を出さないのはセントラルキッチンの配送範囲を考慮した地元ファーストの方針であり、地域に根ざした営業を大切にしています。\n\nコーヒーについては、創業当時から変わらないオリジナルブレンドコーヒーを提供しており、濃厚な深みとまるみのあるコクが特徴です。特に、深煎りコーヒーに上質なフレッシュミルクと砂糖を入れることで完成する「コンパルの味」を推奨しています。豆の配合は企業秘密で、社長や一部の限られた幹部のみが知る独自のブレンドを使用し、ネルドリップで丁寧に淹れています。また、「かえし」と呼ばれる二度ドリップする独自の手法でコーヒーを淹れており、この手法で最適な味わいになるよう豆を焙煎しています。コーヒーは店の「顔」であるため、各店で限られた技術を持ったスタッフのみが淹れることを許されています。\n\nサンドイッチは、長年レストランで勤務していたシェフをスカウトし、昭和35年（1960年）から本格的なメニュー展開を始めました。名物のエビフライサンドは、焼き目を付けた香ばしい食パンに歯応えの良いエビフライ3本、ふわふわの卵焼き、千切りキャベツ、自家製ソースを挟んだボリューム満点の一品で、具材とソースのバランスが絶妙と評価されています。パンは耳をカットすることを前提に、やや大きめのサイズを特別に作ってもらっており、味付けのソースも独自のレシピで自社工場で製造しています。注文を受けてから手作りすることで、できたて熱々のサンドイッチを提供しています。\n\n**提供スタイルの特徴**\nアイスコーヒーは、氷の入ったグラスとデミタスカップに入った濃い目のホットコーヒー、ミルクが別々に運ばれ、客自身がホットコーヒーをグラスに注いで完成させる「コンパルスタイル」が特徴です。これは、瞬時に冷却することで味と香りを逃がさないための工夫です。モーニングサービスでは、ドリンクにプラス料金でハムエッグトーストなどが提供されます。サンドイッチはすべてテイクアウトが可能です。店内は、アンティーク調のランプ、板張りの壁の油絵、ビロード生地を張り替えて使い続けているソファなど、昭和の雰囲気を色濃く残すレトロな空間が保たれています。スタッフは蝶ネクタイスタイルで接客にあたっています。現在、全店舗で完全禁煙となっています。\n\n**地元グルメメディアでの紹介**\n「コンパル 大須本店」は、「Think LOCAL」、「名古屋コンシェルジュ」、「たびよみ」、「メシ通 | ホットペッパーグルメ」、「CBCテレビ」、「家庭画報」、「おいしいなごや」、「テレビ愛知 大須探検隊」、「NAGOYA.（ナゴヤドット）」、「ナゴレコ」、「ホットペッパーグルメ」など、複数の地元グルメメディアで紹介されています。\n\n**料理人としての評価**\n直接的な「料理人としての評価」という記述は見当たりませんが、サンドイッチメニューの本格的な展開のために長年レストランで勤務していたシェフをスカウトしたという経緯があります。また、コーヒーを淹れるのは「確かな技術を持ったスタッフのみ」であり、「各店で限られたスタッフしか淹れることを許されていない」とされており、コーヒーの品質維持における専門性の高さがうかがえます。サンドイッチは「具材とソースのバランスが最高にいい」と評価されており、「名古屋の喫茶文化を築き上げてきたとも言うべき、地元では誰もが知っている名店」、「名古屋の豊かな喫茶店文化の礎を戦後すぐから築き上げた老舗」、「名古屋では知らない人のいない絶品」と評されています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHc_xTTOFarKN33nho_Tp5hjVnP3Roc93Fhb5xb8JsDWpxdtAVVtIsaiz_YcIZ3EYWxMa_OVs0aToCX1buJ8IuRxejfN73xNvrAz-Ntma5fe8Ja5W6IzfidOzNBXLCTpI-KONwrzqm4QUDA791hNSY=",
+        "title": "dmdepart.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFnRfUDYmlmRBM90JEx_J7S4BiMkowjfgI0mkXT69cjyIOTDsSlxZRLgaKeF2nnZDEJ9kOR1Xofc9GQ04Hl-d5JS_HrHadtXITzfJz6mMOdxKPYbMVzwXugjNqrzu7yIOeW",
+        "title": "konparu.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETD0ihgvJ0MdJ0j-bc97q3gWDCmfxshtEdQP8Pynq-xycivEU7sendmzu4mxFWsEMYzZKhlTqe8PXx_B3_SpMMlZohYu-dmuEfOOEAhR5J0KvepeT7aU_GyOD5gimRyECIVNnUE3aN",
+        "title": "life-designs.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGceEsViRHykjOSQ6i8pGI9ZlpMdgmqBLsuolCZ4q10oS-fm7wJcVIQCO_5y0gM5ZNGUi14qPCseXRwcx0Ka8rX_Sa6jI8EVBZz9Jun8YllIuvatpa7IzD9aCljZRbGVmnbzIFr-WsHFMlBftCTzmNsoQwgxNo=",
+        "title": "navitime.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGzwA5_tZxBZVnqrJ3ZRwM-n8nbVOBuA6S798SokCtiFTHjdYp5fseC45zRr0nwgVryf1h83PV9PeYJ15QUxRWTMBvfsM0sDhQ89nBATBS63cjLgS-GGA==",
+        "title": "tabi-mag.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEkCuu43UQYbMaeTzem6GDTOigDIEN9AYsQx4e9vDlEmIbLjcEU0XxKJnTmwe2CNZRYLcYvJCzF6AZMZsLQpJHvCE8FN3yYUceBaLDja_qniiObwUDBkuEd8Kw=",
+        "title": "onimaga.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHV1cDzQ9bcJbHdJMXjH31Wyr14PHomM0OJrr3aopqTmG7PEAxPUc495Nc8xfkH-h6srSsPAwK7ZzZkjBIsLb6RiPxZ5LI2EOmREUThYozW93L7A_AZWaMvuqTgP8tWTp1GLollDHksWIcxLj4x",
+        "title": "city.nagoya.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGWLJhytsd1bSNZ86lCWaxymID0KbZnO5SwqULMhmAGIwFeczyTg6kaKvAq5glnY93mreupB31SPcUT48DNyvep_tKVMW2edU_qooKesAM-dgPWKFBbeGdeiFhAC7hL9pht15KsNVX6WTM8QzXFd_q-gXAqUcGOur1RIpE=",
+        "title": "hicbc.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHTieypxfw6887AlAjF-y3Z0yLC9H-3HCOg1bUMRCF5DfWlNSURxR8S07Mnk5TgNbBDfL3lAJSbzAquLmCetD6HzweWcZS-A3mVGtiC9xEA5WMUuCMJwrjJYRrLmsILNivh_tbi7Drev4lf23aRXPYi0rQuFQ==",
+        "title": "yomiuri-ryokou.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHqnvD7cxqwsV1fbEkXsTRXgKnGFIm96diuKOtlwJxWqk-KasaUAU4_QnlY0cMz3QCKwHRsFjKs069IE3_uE96Qo2EGGPBDHWnc2Is8hG78hdV0EqB-o0Of-5Rv69AJxKROblGBSASdyCwUClWvUUwsYdo=",
+        "title": "walkerplus.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFU-aUCJajuoGZRXQiR_OaQGSbuePCgWVzTidzZigKkI3eCnKrunaBX4J1Sr7g5NbHNG57r8o-gq80HBKau-XN0uvDUhec5VszdNJ0wk0lbTYuL-CO2WjvRCOG1lYbqvm1zAkCsIy9chg==",
+        "title": "nagoya-info.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFRAxVkJlH39VorvgVDnAhWUiiSp8zZEzLN0gqpJoEFHqKPId_hqusH8-YGI3PYne-SaCtmwCxFS7k_DzSF7zSV5P3t6clrI56aAianx14ON3X0kQ34-zfhq4O2dgCP",
+        "title": "nagoyadot.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHQWkOzUMMCpxwLbKoyTDxc3dAOwGk0EQuKyftFICrxedqfcSILjjfjNwIeD8lMAFsZtLReEkKzhEL4s7iTeLj3D8TjT_NVVoewXoKmPnPriFD9pSOTn53_LWsevxYjibg3N3_Q",
+        "title": "konparu.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHNlIoMFD392nr70pfOy7dQGdNKovANnbVQGqyu5w4abj_OqeF10eT0jKNweu25GNwbu-5DyetHtMzjkqNDxm7Ku6H0Jny-PTjCFPuLly-aYjM_DXM37-Ki-qtaYC7ar0XYqHgp",
+        "title": "madameokami.net"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFZ2TOohOMK5xRJKNNKa2K1-AQbU6kfodWMY2SB0crhfE2xjpqb9qJHqlUU0-nKZUThQ30d3EZlGvXMM8DNXxWuexYBPg2yjNCLoOjwvDWs_ALMqjPTpunFalc3RDokmIePvgUzsur_GofcHgHa8FmwZrQX8h2rFaM=",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGxrkVHhev33fIs-ArNWjrdwoqA5aCYOWfl4qnVp3T14man2KuH-XuH1VlKQuat1gC46NmNNepLPo9bWgty9Ws5vkwRbL6Sc8sTr5u-PkOr1Y4XWEIPmdpZB5Om7ePMC-TBsEIN1pJ7Alb2lKgQ46bWcrOpOdhv03BFoY2M",
+        "title": "masaemon.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHJsZASSmqjE0-v02qMVDwxwvoywtpQTdtfVwYOfXpZnifQkZXkJQqb7ioK9qTwbYhm1Uc6opbvXtYrNswLcnKE5EdLkAvqyKyf7nvH6rNQ_eewzt0am84yRi9vxDl55hVqzTs=",
+        "title": "1goten.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGCvGOBT_-_Nll89lCc54722WWLW0Gk5NLi2-JjBtnjkLU1vX8TDOAQS1C_4i1f2tzZndtCCqsiBUVkXiZFm0MAGRK-HJvtDF25dAWyy5a02MgeuH2z5JB2LkwegHXDRUXZhfV_K7zMe7_ivSJFQg4GHLVEprCvVds=",
+        "title": "tv-aichi.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFakpwsCYFOB2bTqhUBJVaiNenvyoXUVFLbXQAWdFMf8ROF57rl8wVPdsmnguCyGlvHGWUnuJHPlMgRg2M05rYER3cS4FqOw3Cxqyn95YHftg6fMPohAQeoNR6xR9JwMatC",
+        "title": "juno.nagoya"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQERe4FoyKhRr2kI4gBMSyLXws-_08plz5BHTEkXTwCrkitv-ihr-Y5T1VyZqwIoJCF6F1G4L8lE-rIQO4mUC1XkBajZLiUwLVcT5R5uuqHiiKGb0ADmFcdbpVq-c0doz3Y-M_SzAVOntNQ=",
+        "title": "kateigaho.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFjVwgco-CLhiNBf5tsxsXtJ9pA6uwo7nGrmYvEOC1qGVZtSJ1jerDx5yCVkGtlaqASNZoXCMlHfRmlOQ1epHOLPrHNSl3zaMj4FrfBokgFyJnk5tl9mM_3sfOe4KbFeIsj6Tq6O0OM1pa6",
+        "title": "nagoya-meshi.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFMj_lWSXFTs_-NB8yECKJxsWhX59gN_IBXv2tbTSgVtaugBCa5g-GTiLJclERYV1tUOVfDzfR5yL2x6NNuN7Hlkg296Ot1lRAimQAaFqj510K1bnMMWXEdCoGTyD5wiE15CaCizRnERCA=",
+        "title": "hotpepper.jp"
+      }
+    ]
+  },
+  "store_id": "J000430215",
+  "store_name": "コンパル 大須本店",
+  "area": "名古屋市中区大須",
+  "genre": "喫茶店、カフェ、サンドイッチ",
+  "rating": "4.2",
+  "generated_at": "2026-10-13T00:35:24.907Z"
+}

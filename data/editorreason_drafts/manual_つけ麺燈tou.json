@@ -1,0 +1,89 @@
+{
+  "status": "OK",
+  "editorReason": "割烹を思わせる洗練された空間で、自家製麺と豚骨魚介ベースの濃厚スープ、締めには割りスープや追いチーズリゾットまで楽しめる。名古屋の地元メディアでも注目される、食体験全体にこだわったつけ麺専門店です。",
+  "insiderNote": "名古屋のラーメン店を多数プロデュースする株式会社エフリードが手掛けており、麺やスープの素材、空間演出、食体験全体へのこだわりから、高い専門性と顧客満足への追求がうかがえます。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH6j3GtIQmxPClmScjQpsBeqiVRAx91E6Q2k1Nal4RbdVF5lT7vkhhg0Y2ZlDyUU3QexX8HU1Qh9-aduOYqBUPoRItKintzuzrZOfL93t79DPG8B02vXUvZ_B9TRqXS",
+      "snippet_quote": "割烹のような空間で濃厚つけ麺を楽しめる",
+      "supports": "割烹を思わせる空間演出"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH6j3GtIQmxPClmScjQpsBeqiVRAx91E6Q2k1Nal4RbdVF5lT7vkhhg0Y2ZlDyUU3QexX8HU1Qh9-aduOYqBUPoRItKintzuzrZOfL93t79DPG8B02vXUvZ_B9TRqXS",
+      "snippet_quote": "麺には岩手県産・滋賀県産の小麦に、もち小麦「もち姫」と国産全粒粉を配合し、もちもちとした弾力、噛むほどに広がる小麦の香り、のど越しまでバランスよく仕上げた自家製麺を使用しています。",
+      "supports": "自家製麺へのこだわり"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH6j3GtIQmxPClmScjQpsBeqiVRAx91E6Q2k1Nal4RbdVF5lT7vkhhg0Y2ZlDyUU3QexX8HU1Qh9-aduOYqBUPoRItKintzuzrZOfL93t79DPG8B02vXUvZ_B9TRqXS",
+      "snippet_quote": "スープは豚骨と魚介の旨みをじっくり炊き上げた濃厚なもので、ほのかな柚子の香りが後味を軽くし、小麦の風味を引き立てるように工夫されています。",
+      "supports": "濃厚スープへのこだわり"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH6j3GtIQmxPClmScjQpsBeqiVRAx91E6Q2k1Nal4RbdVF5lT7vkhhg0Y2ZlDyUU3QexX8HU1Qh9-aduOYqBUPoRItKintzuzrZOfL93t79DPG8B02vXUvZ_B9TRqXS",
+      "snippet_quote": "「名古屋情報通」では、選べる濃厚スープのつけめん専門店としてオープンを報じました。",
+      "supports": "地元メディアでの紹介"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzEW_Enhy8xOv8T4441xNdhFA60xltINf2C7WxDPbM_ls7vhLzPrXmuzjW0utJx4_fJMeNr3cf7MIzsFLUWP4gt64MWViM6MzSbr2YI6Dv1GaVWzmA9ZybkQ8=",
+      "snippet_quote": "「Dellows News」や「食べトピ」、「ベストカレンダー」も同様に開店情報を掲載しています。",
+      "supports": "地元メディアでの紹介"
+    }
+  ],
+  "warnings": [
+    "4件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「つけ麺 燈 tou」について、Google検索で得られた業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「つけ麺 燈 tou」は、「記憶に残る一杯を燈す」をコンセプトに、買い物途中や仕事帰り、大切な人との食事にも選ばれる特別な一杯を目指しています。割烹を思わせる和のしつらえにこだわり、墨色の壁と一枚板のカウンター、美濃焼の器、八寸仕立てのトッピングなどで、洗練された空間を演出しています。麺には岩手県産・滋賀県産の小麦に、もち小麦「もち姫」と国産全粒粉を配合し、もちもちとした弾力、噛むほどに広がる小麦の香り、のど越しまでバランスよく仕上げた自家製麺を使用しています。スープは豚骨と魚介の旨みをじっくり炊き上げた濃厚なもので、ほのかな柚子の香りが後味を軽くし、小麦の風味を引き立てるように工夫されています。また、同じ濃厚さの中にも柚子、焦がしにんにくの黒マー油、特製の赤ラー油、海老といった4つの香りを掛け合わせることで、異なる味わいを提供しています。締めには鉄瓶で味わう割りスープや追いチーズリゾットを用意し、一杯のつけ麺を通して割烹のような体験を提供することにこだわっています。贅沢なメニューとしてA5等級黒毛和牛を使用したつけ麺も提供しています。\n\n**提供スタイルの特徴**\n店内は墨色の壁と一枚板のカウンターを備え、美濃焼の器や八寸仕立てのトッピングなど、割烹を思わせる和のしつらえで濃厚つけ麺を楽しめる空間です。入店時に券売機で食券を購入するシステムを採用しており、客席はカウンターのみ12席です。麺は、茹でたてを冷水で締めた「冷」つけ麺と、茹でたての麺を温かい鰹出汁に浸して提供する「釜揚げだしつけ麺」の2種類の食べ方があります。麺の量は小（240g）、中（320g）、大（400g）から選べ、増量無料です（いずれも茹でた後の量）。トッピングには、しっとり柔らかい低温調理チャーシューや鶏チャーシュー、自家製黒メンマが別添えで提供されます。食後には、鉄瓶で提供される割りスープや、残ったスープで楽しむ追いチーズリゾットが用意されています。\n\n**地元グルメメディアでの紹介**\n「つけ麺 燈 tou」は、2026年10月6日のオープンに際し、複数の地元グルメメディアで紹介されています。「名古屋情報通」では、選べる濃厚スープのつけめん専門店としてオープンを報じました。「Dellows News」や「食べトピ」、「ベストカレンダー」も同様に開店情報を掲載しています。「PR TIMES」では、株式会社エフリードによるプレスリリースとして、割烹のしつらえで濃厚つけ麺を提供する新店舗として紹介されました。また、「nagotosha 名古屋情報局」では、つけ麺の冷・温の違いや締めの追加料金について比較する記事が公開されています。公式Instagramアカウント（@tsukemen.tou）も情報発信に活用されており、フォロワー限定のキャンペーンなども実施されています。\n\n**料理人としての評価**\n「つけ麺 燈 tou」は、名古屋を中心に数々のラーメン店をプロデュースする「株式会社エフリード」が携わっています。麺の素材（岩手県産・滋賀県産の小麦、もち小麦「もち姫」、国産全粒粉）や配合へのこだわり、豚骨と魚介をベースに柚子、黒マー油、赤ラー油、海老といった4つの香りを掛け合わせた濃厚スープの開発など、専門的な知識と技術がうかがえます。割烹のような空間演出や美濃焼の器、八寸仕立てのトッピング、そして割りスープや追いチーズリゾットといった食体験全体への配慮は、料理人としての高い美意識と顧客満足への追求を示唆しています。直接的な料理人個人の評価に関する記述は検索結果には見当たりませんが、提供されるつけ麺の品質や店舗全体のコンセプトから、その背景にある料理人たちの高い専門性とこだわりがうかがえます。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFiQsVouQEbxaIyJigPvIUGDFbUbWnoduFFzt_LE6k1N7Qn7B-yQoa9UedE1qrLo8NK4P0-0p0V2iyJeZ_MREfsAfHSxmP-BQbsLHnX3Xs9okMrRbGHklibwsY4kgk5uFrjYQ==",
+        "title": "instagram.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzEW_Enhy8xOv8T4441xNdhFA60xltINf2C7WxDPbM_ls7vhLzPrXmuzjW0utJx4_fJMeNr3cf7MIzsFLUWP4gt64MWViM6MzSbr2YI6Dv1GaVWzmA9ZybkQ8=",
+        "title": "dellows.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHKw0gVJjuRIZgqoKmvapRhjIFICesuCg0lg2dZoEX0H_8BjGY0KrEMvtDq7-Wa1uusuCa02oJ_DVLeOW0iqbPXYs98jaGybV7ejTXf_HqiuaBh9b06K12V59r5aegmh6boalsxmjHvfNg5asixe8TeR1-HcL8=",
+        "title": "prtimes.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE7bTYu1COXBleTYT8wjveWK0YHyrJij4F1UTHuF0nIx9ELyMmucpajo2RFEN5D8Y87UOt9I5w7p4i0vkZ2RgUiaWzXVeN9xvUPcMj6Eo6q877GXYBA-N4xoU1t9BpRkA==",
+        "title": "bestcalendar.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE91Wpi0x-Ew8aLx4C2yhdRD3GUVjZDKJliaFtafZbtEb6ZlHhdfaz3BcHzYt4fgr7GvWzElmv1UZSt4NaHdQRyx1qilgvsTA_IN_rGYnCkmM5N4bS3eYXfklPJUIE-veZv3ghuRmR7KtIVQ17FwyQXUduLzjprsXp3NsbM6sLwB5j9xKWxgBe4uwfc65LJijsJgFoAJHlvUCJtggX2zKJ1E0I5Hf_djaOemPHtmOMe4R3gXqSNeAp4-UFLc0pDVM1H5GFwz4_9wUfnOz3t6xPOJ85DR6t3-fKxSDQN0wvX7g1lheaNAZSceeVQ69LZz_KJLeHSAYE6TkjRdfSD4kNwbyPrWx909C_IsWN3eZSqG6-XvMawIKoJGez5wdU5ib4=",
+        "title": "love-spo.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH6j3GtIQmxPClmScjQpsBeqiVRAx91E6Q2k1Nal4RbdVF5lT7vkhhg0Y2ZlDyUU3QexX8HU1Qh9-aduOYqBUPoRItKintzuzrZOfL93t79DPG8B02vXUvZ_B9TRqXS",
+        "title": "jouhou.nagoya"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJW8lsUKskrOm2q2sbm9kqVGiXHLLKb1Wxwti-Y669dVxpx3pARHgIH7e6GKJKgX5byKJzwSTLwSCHqqvgG5pb4enIjzZZtniLHlymVRvMKHyHH2znOjQ9G7TJgn4-2YghF_E=",
+        "title": "instagram.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGOPXyw5GjAVj6Dvb6qSMxTL-dtrzq3k2yQQX2CJbqoGH4PhVrOu6Tubtxl-nFaeWi3KUZArQ5CbmqFeOuYXxEaat-W_gWTkb-t-ztjwUHZ0IHeeRlqJ17z8uay_w3LZ86-8pA=",
+        "title": "nagotosha.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF2Htic0uR0fGgdPgcUmTztGMajB0I-sewIKbSoW01KEJ27DllLerx63hJS0kDaKJ85HqFowOLWfx7HHtgjWe_T1ryf0F1x1aMpVAJlj-mkEER4dPK0lXvAwag=",
+        "title": "tabetopi.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFr_XJ4v-xlaKahy3WXhJsTS_lx3PhnDS7DeGDEiu2MyxkBj13VmADNwuAL76F7xLQ-v7Hq1Z4yGRytWZ7Oqdpx2FFklM3zrpZrvsRmgxxlj__RwtHtxtWeLjzBiHG4TiNKcawNEGB7ClPkaUaRddIyYjzaW6j67ukwAe8kpAq1XQH6RArqfjEr3RQ-dAEsOBBcMHo2AHvOynU3Rzh7ADrUBLfJRov3lkgBm92fZZYc9GDA-6wefgQ1RwTJ6rpZozRtwEcI1ToOLr4ywWly6tT_zQJnnPZ9Kh2mmP9GF2OU6HP15F-nTKIEn3YhHp5cG1pOeArljEq73s4uqHJPz4haq_gND2Kb3rL8rKwOhtguYFViFMTQr9hP1FyFIsHWLzVE87gXawvuoosjwhz6e7PNwCyRFCtELip6-oUUZraov5T6jbtn_6eOf196LPLuYpfX7KqSSijDGTEHz4VVEpmoNYnhDcOuniPL2iC48D6N",
+        "title": "apple.com"
+      }
+    ]
+  },
+  "store_id": "manual_つけ麺燈tou",
+  "store_name": "つけ麺 燈 tou",
+  "area": "名古屋市中区",
+  "genre": "つけ麺、ラーメン",
+  "rating": "",
+  "generated_at": "2026-10-13T00:30:31.280Z"
+}

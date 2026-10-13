@@ -1,0 +1,121 @@
+{
+  "status": "OK",
+  "editorReason": "1928年創業の老舗料亭。広大な敷地と庭園を望む完全個室で、極上のプライベート空間を提供。三代目主人が「おもてなし」を重視し、空間全体で客をもてなす。高い評価を得る料理長が伝統に新風を吹き込む、名古屋を代表する格式ある一軒。",
+  "insiderNote": "三代目主人は代々店を維持する厳しさを感じつつ、この店ならではの「おもてなし」を大切にしています。料理だけでなく、空間全体で客をもてなすこだわりが、人生の節目に帰ってこられる場所でありたいという願いに繋がっています。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEGBGRGyhCyBkncJvG6_g20utUEoK-8iPMz8i5WbpqUNkbI5_RuHDCCyipuIw-g1tuu7ZhhC5fLRDHyMtY57_gff_NiZhHW_KNwhWBqihcQPvdnIvNAPJo4",
+      "snippet_quote": "三代目主人である船橋識光氏は、代々店を維持していく厳しさを痛感しつつも、この店だからこそ感じられる価値ある「おもてなし」を一層大切にしたいというこだわりを持っています。",
+      "supports": "1928年創業の老舗料亭であること、三代目主人がおもてなしを重視し、店を維持する厳しさを感じていること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGM6Es0Q_5MAuRDUbUGUkc74UB9btKhpLPZcYsP4IlEPztPD9dD9fJTHXMfYMVfjQX-PahvjxcXznvP4BeJetWiGAjGjKNKUwNJodr60ms0AmFcexrb2toZzBuSTRAPajAkq5bEn7dzEBTK9PrvR5JHlR5p8LhD3FJ-xMDTnVf54Btkw5wrkmxT4IyLZXdjOJw9YkVjWfoC1VQHxg0HSfoZp-c-05M8gmcWHiL0j3dQkd55OLpiRhMMUvcUmD9Qt7ds-lsKjVnFzHfuVcDK5HmFTkUi9I1AaZE9BCJciw6Ph2bywyB-uxr22Jf49W1J9RFGH5_rg4hCIMMDlloPAoSKkpt_wP7zPld0WqN5OsWnKZZM3HMGvKHPF02J",
+      "snippet_quote": "現在の料理長は猪口真弥氏です。彼は、長い伝統を持つか茂免に新しい風を吹き込み、「温故知新」の精神でお客様により魅力ある料亭だと思ってもらえるよう精進していると述べています。",
+      "supports": "高い評価を得る料理長が伝統に新風を吹き込んでいること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHum2f0M8kdID2bhhhs0gKH1Oq8mBmx8I1O5uUUaZglGc9cNTdKSVJqBTEqUkqa2TIKmqSMYGPge0E9Wx9SgXAbYzE9X_cLEXgMP4qXcZDUIiiFH4AR9IR1t9R43TMZw0Yk-wZJ",
+      "snippet_quote": "料理の味に対する評価も高く、一休.comレストランのクチコミでは「料理・味」の項目で5点満点中4.93点を獲得しています。",
+      "supports": "高い評価を得る料理長がいること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFCVApbvgduGjmNqpzoHtvpLLEYFqcmqOVb_DMSlSv3LWozAS7gONF2lKSMQkicWzkAGbIwtf-m2wQGCnZGm9UUARAYXlIiH5xRMKIloS13bSaMBpHqLauRRjo8NYVE8rGadgrwQz6R10VKkEX5LsHhdSPD",
+      "snippet_quote": "料亭 か茂免（りょうてい かもめ）は、愛知県名古屋市東区白壁にある料亭。",
+      "supports": "名古屋市東区白壁にある料亭であること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXna3KLmrH00E10IsRQ_t1WRJXJq6W-O4xdh-5opAxqkPFHzgk2nvS52lz-MIT48-CauxGBUc-6sAvCwbpO8E7anzHzqgfmfAAuc1lQySdxcaYjaxAZAP5K9X1cu8Lip6idD8WEFQFyiho",
+      "snippet_quote": "名古屋市東区白壁に位置する料亭か茂免は、昭和3年（1928年）創業の老舗料亭です。",
+      "supports": "1928年創業の老舗料亭であること、三代目主人がおもてなしを重視していること"
+    }
+  ],
+  "warnings": [
+    "3件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「料亭 か茂免 (かもめ)」に関する業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n料亭か茂免は1928年（昭和3年）に創業し、名古屋の街並み保存地区である白壁に1000坪の敷地を構える老舗料亭です。三代目主人である船橋識光氏は、代々店を維持していく厳しさを痛感しつつも、この店だからこそ感じられる価値ある「おもてなし」を一層大切にしたいというこだわりを持っています。料理だけでなく、四季折々の風情を添える庭園、座敷の設え、和の器など、空間全体でお客様をもてなすことを重視しています。また、結婚式後も人生の節目に帰ってこられるようなアットホームな場所であり続けたいという願いも持っています。\n\n**提供スタイルの特徴**\nか茂免は、全室が庭園を望む「完全個室」の料亭であり、他のお客様と顔を合わせることなく食事を楽しめるプライベートな空間を提供しています。都心とは思えない閑静で風雅な趣を持ち、回廊、庭、茶室、そして大小10室の座敷は昔ながらの数寄屋造りの趣を今に伝えています。特に、母屋の庭は近代を代表する作庭家「七代目小川治兵衛（植治）」によって作庭された名古屋唯一の庭園とされています。料理は、伊勢湾、三河湾、濃尾平野の地元食材に加え、全国各地から厳選された山海の幸を取り寄せ、日本料理本来の美しさと醍醐味を堪能できるとされています。近年では、将棋の「叡王戦」や「王位戦」の対局会場としても利用されており、その際に提供された「ぽんきし」（すっぽんスープで仕立てたきしめん）は、か茂免の名物料理として知られています。掘りごたつ席や椅子席も用意されており、多様なニーズに対応しています。\n\n**地元グルメメディアでの紹介**\nか茂免は、一休.comレストラン、楽天ぐるなび、Retty などのグルメサイトで紹介されています。また、KENZO ESTATEのウェブサイトでは、同社のワインが楽しめるレストランとして掲載されています。地元メディアでは、メ～テレの『ドデスカ＋』で、料理長が「極シェフ」として紹介され、そのこだわりや行きつけの店が取り上げられました。SNUG CITY NAGOYAやreallocalといった地域情報サイトでは、若主人や三代目主人へのインタビュー記事が掲載され、料亭の歴史や文化、おもてなしへの思いが紹介されています。結婚式場情報サイトのゼクシィやウェディングニュースでも、料亭ウェディングの会場として高い評価とともに紹介されています。\n\n**料理人としての評価**\n現在の料理長は猪口真弥氏です。猪口氏は、2003年から京都の俵屋旅館で13年間修行し、その後、三重県の伊勢汀渚ばさら邸で料理長を務めました。2020年にか茂免に移り、2022年度からは料理長を任されています。2023年には「CHEF-1グランプリ」の日本料理部門でトップを獲得した「超スゴ腕」の料理人として評価されています。彼は、長い伝統を持つか茂免に新しい風を吹き込み、「温故知新」の精神でお客様により魅力ある料亭だと思ってもらえるよう精進していると述べています。料理の味に対する評価も高く、一休.comレストランのクチコミでは「料理・味」の項目で5点満点中4.93点を獲得しています。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFCVApbvgduGjmNqpzoHtvpLLEYFqcmqOVb_DMSlSv3LWozAS7gONF2lKSMQkicWzkAGbIwtf-m2wQGCnZGm9UUARAYXlIiH5xRMKIloS13bSaMBpHqLauRRjo8NYVE8rGadgrwQz6R10VKkEX5LsHhdSPD",
+        "title": "wikipedia.org"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFLaDC-S9UZ7g5mk0bG3PHx-1SV95kMU29jYQZULMd4GA2-r3pbJZ_6ZYZ2pPXrvnUsq9hcxivHftEoqUWylCx9Q0RurejI0jlOtn3PUlvezwA50sG7C6YypkLVtA==",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGxycGPd96diyS_S1RHTfLyPxDynzSU02g6A6yK6juy205WT5g_swL0Pl3Vmhzr5HOGICF5-4j6Wg3tRKr4INgEOk08wSoFr4r-TPRHBIRLK_wsW1Y-cq9Q",
+        "title": "gnavi.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFSw5s_XanUYWTxSihbCyz06Ruqba1QM4N4vz6PighCVc_0v-pFQSZXgsJNJZ4gnQBjNFz0eO0QO4Q3cPY_ySOBNu8kASHkQBKAq1HHR0uYmu4uoTvFfCj_oMR2",
+        "title": "ka-mo-me.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEGBGRGyhCyBkncJvG6_g20utUEoK-8iPMz8i5WbpqUNkbI5_RuHDCCyipuIw-g1tuu7ZhhC5fLRDHyMtY57_gff_NiZhHW_KNwhWBqihcQPvdnIvNAPJo4",
+        "title": "reallocal.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHd8PzzBNHlV4v8UO_CDwgGoPSJfpMSvnVAQanzr1lS3EN_LWsTi-i50EstNPB7Fjpe98OqNmCI4srVH9PqIYqcrPtO_B-Es2VXe4m__0Ys0xPX8Q==",
+        "title": "ka-mo-me.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFkc5WZJPSNjlh1277ywVZyTlH-PMohOeTn2KCGPUB076ocK92y8AWYgmCFw-k7ddaYUtX_uqO22g7VBqgbkKLb1bzMdwz2Ank7vtZQbjjqyoaMWXzzipMuk6PfLGCt8XtShQ==",
+        "title": "gnavi.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYNW_zTEK58kSdsy8If2RqGZ3DthTtRTYwE7I998rHWJl-FA6yzuflwXO7d_bkRMDYEZLG9p2UW37i85tduwIe_l9LLZaYFpTwTqvMqDndy4iY0Grv9oiw6CY1yNs6Lv2GIau1Ji1vo7vcZDQS7a-RjeBIEvyt0DA=",
+        "title": "kenzoestate.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEiQi9hG5dKn8qQN9PYQtC1OH-opDBkv9TkkJD-hybhNvbwIYNcKIColLL7JueRlIkaeOTxpHSSfzUR_AGPdRXRmMw8cfNC8ToTvjGfOlrzUFJqbIfdKZxBou0CFf0=",
+        "title": "oniwa.garden"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGM6Es0Q_5MAuRDUbUGUkc74UB9btKhpLPZcYsP4IlEPztPD9dD9fJTHXMfYMVfjQX-PahvjxcXznvP4BeJetWiGAjGjKNKUwNJodr60ms0AmFcexrb2toZzBuSTRAPajAkq5bEn7dzEBTK9PrvR5JHlR5p8LhD3FJ-xMDTnVf54Btkw5wrkmxT4IyLZXdjOJw9YkVjWfoC1VQHxg0HSfoZp-c-05M8gmcWHiL0j3dQkd55OLpiRhMMUvcUmD9Qt7ds-lsKjVnFzHfuVcDK5HmFTkUi9I1AaZE9BCJciw6Ph2bywyB-uxr22Jf49W1J9RFGH5_rg4hCIMMDlloPAoSKkpt_wP7zPld0WqN5OsWnKZZM3HMGvKHPF02J",
+        "title": "ka-mo-me.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGI42-3gGeZJfLgYSOcdnFzMLjDx1IqGWmnpaQV8I1TIcSGP3bhtFWM4AUeXVoz-7Q1MgfvKML073Ks8itZrBAjwQzV02fEl8lE-8XFHzoZZT1xz-7yxZbwTywaHybLbm2KzJbkWfXfqoCKVQqOsVuSJtZOZZ68sJ1ljjxkJReL",
+        "title": "nagoyantour.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHum2f0M8kdID2bhhhs0gKH1Oq8mBmx8I1O5uUUaZglGc9cNTdKSVJqBTEqUkqa2TIKmqSMYGPge0E9Wx9SgXAbYzE9X_cLEXgMP4qXcZDUIiiFH4AR9IR1t9R43TMZw0Yk-wZJ",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFMVrL2txSqVFUHGrIzfkew3W3sl26XLo4nEa64n3KysNsMUxKUUYOnyyJ6pH4NpU4FEvVaMrNNdEl9QH7F_8T6TmyE4jliWomssHLpIpLa3O1JwCc_GF1gNA8RSZW4G7A6JrFk2rGnDj0kmVWQpwP_jSZbicpYygB34A==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGOFGnNa02T_kZ8AhfoncXrUoeRpwnfRkyHHUVLb0MAnqLZvLfYyI-deG35OhLZ1AXAJDR6Rku7a4G6evE18WwygBY5sozdtWEtePf-T8U0yHOOGSmsBMK7jxEGMpPleKbhBW63Wg==",
+        "title": "youtube.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXna3KLmrH00E10IsRQ_t1WRJXJq6W-O4xdh-5opAxqkPFHzgk2nvS52lz-MIT48-CauxGBUc-6sAvCwbpO8E7anzHzqgfmfAAuc1lQySdxcaYjaxAZAP5K9X1cu8Lip6idD8WEFQFyiho",
+        "title": "snug-city-nagoya.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEU_HHX7wknHNVXZqm65-1yGsUojYGNQex56SSowGSZyxSAFtjE3X4x1NF34TURbAYb8hBRGieBt4RQXrAfLPr2avKBAN0OueDL754dQ-nd_ewH17YaYgyxJMLnS7qskc4=",
+        "title": "zexy.net"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF8FS0CqbGeCFVKadJwQj9OmQWHXcxXde3o9gs0hcasoXmBOH8Oj2jrain1XVTFRfVcLyd7UVMYJCP-QG2eyvAH9FeBypfDgWhCRox03q5I2ety93saX3Qs3W5GTy8qIA==",
+        "title": "weddingnews.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGKxUYqdqo5HoiSZI8eNP1_8amC2G3vyY7-wPaWWqyROe4VZzz-olbMrBywI0p8jK4Uf_tvnFnF6t2BZooy7Qx-ksD6mpYWZ3uvmTbLrMl0wuqz6rflD4uMzyyMSHfJRUisZbEkc4zeMb4_9JPwibYtMVRx8P9KPh1qkd5QMBGjQc0c9OQS4Os2wUKGKTHNY3AfynNmWOO56_iftnORoQR_S4w3MLp1khaLRb20IsWc",
+        "title": "chef-1gp.com"
+      }
+    ]
+  },
+  "store_id": "manual_料亭か茂免(かもめ)",
+  "store_name": "料亭 か茂免 (かもめ)",
+  "area": "名古屋市東区白壁",
+  "genre": "日本料理、料亭",
+  "rating": "4.6",
+  "generated_at": "2026-10-13T00:32:26.631Z"
+}

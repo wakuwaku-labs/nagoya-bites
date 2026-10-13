@@ -1,0 +1,59 @@
+{
+  "status": "WARN_RISK",
+  "editorReason": "",
+  "insiderNote": "",
+  "visitStatus": "desk_automated",
+  "confidence": 1,
+  "sources_used": [],
+  "warnings": [
+    "対象店舗は2026年9月12日をもって閉店しています。"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「鮨屋 とんぼ 住吉店」は、2026年9月12日をもって閉店しました。\n\n閉店以前にGoogle検索で確認できた業界視点の情報は以下の通りです。\n\n**店主のこだわり・とんぼ全体の想い**\n「鮨屋 とんぼ」グループ全体として、「上質な寿司を気軽に愉しむ」という想いを持ち、「お客様に自由に寿司を満喫していただきたい」という信条を掲げていました。食べ方や順番を気にせず、客が好きなネタを自由に楽しむことを大切にしています。 修行時代に師匠から教わった「質は高く、敷居は低く」という心構えをモットーとし、店内のスタッフルームにもこの言葉を掲げていました。 ネタの仕入れにおいては「信頼」を最も重視しており、15年以上付き合いのある漁師からの鮮魚、10年ものの熟成赤酢を扱う業者、農家から仕入れる宮城県産ササニシキを使用するなど、長年の信頼関係に基づいた上質な素材を厳選していました。\n\n**提供スタイルの特徴**\n職人が一貫ずつ握り、握りたての寿司を提供するスタイルでした。 醤油は職人が適量を塗って提供するため、客が自分で醤油をつける必要はありませんでした。 注文は、札を提示して行う方式が特徴的でした。 店内は全席カウンター席で、全て椅子が用意されており、落ち着いて食事を楽しめる空間でした。 ランチタイムには「にぎりすし」と「ばらちらしすし」の2種類のメニューが提供されていました。\n\n**地元グルメメディアでの紹介・料理人としての評価**\n「鮨屋 とんぼ」の新栄本店は、「ミシュランガイド 愛知・岐阜・三重 2019特別版」でビブグルマンとして紹介されるほどの評価を得ていました。 また、食べログ百名店にも選出されています。 全体的に「鮨屋 とんぼ」は、本格的な寿司を手頃な価格で楽しめる「ハイコスパ」な寿司屋として、多くのメディアや口コミで高い評価を受けていました。 特にランチはコストパフォーマンスが非常に高いと評判でした。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEyLHfbrAUe77Jrvqf-HXHVKfkwW-Uc7EQfxPLtPZ0oVFcG5NMYCxxx0BAeEZQH_iTlbFcOI_xwJLvc52pWZ9s4UiLosxlANDM30PnSpyNA0VNdTLRB89emjDA6jauU_A==",
+        "title": "sushiya-tonbo.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE4WijDzzpW6pYH5iOk-0w0uXaxnhMf5BleUbdwkEu8ctTlPlB2_pCivoNm6-OBm2IIuLAqZN0diCrz7PSmnDWe0hxEarECvWX37U1XroOUhfCNC0PYTlZO",
+        "title": "sushiya-tonbo.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGHf1QSpCrodn8ud0CdEdtRc0wGr7bvRgIihfd4bpJm3FH6AOa1x50FXsUwcJdDcb9pmQk7GuDNgNfs6XdTVuuy8TckViQ5Zp0kJDWey7_po66cmuRG9ecCIaaXPurTxoEqiW6sTFdfpRLepbkByvoijeqaUuhRe5zd_g==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQElWJV7RG7SgZvuDxfzpT_NHmCUitZ2R5z2NVUlahQC55X0wzCaNYbWrOJqkv9P0nogqlbO0KN4VNksVkkAhf5uKB0Ilm-m0TnzCGtpuiZX8GPOWmqeek8osSCnSg==",
+        "title": "jouhou.nagoya"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG1w8Op20rAm5XozXK9o4X9s_3imv6oeHxILLkOLEZFif1JD8wom5lnLgoEqYmqJBFuO0LKhsKulT_YODmoJF5KFQBUDF7HYZMSjJxcl2wUDQyDt4_htv9GInD8ITvaaXKQoCIsI63KychNd4RF1oWvgYQRbVZtu2DL",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFGJpsOJ2e5AjB3QQX88l4yP35cmByr4Qv4Wp9P8EqeAoTefQrUeh2fPkCFC7DXSECmSM6TnHJbjS4bEdXeTMUP04lYjg4eLjz4q9JnIslmH-x462rIl0gFaRqXHiTPCa3bK0yk",
+        "title": "cruise-net.co.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHWZ0COgwSgdP2Z-TPKWnDJXozdq-wSETrHV2oIAoEi3HBcU5QILiOg0Jtp9pBm9QUXU7WPAXh8IQxH3i7JyH2FUa-Fw0n1MMOVQXzKuPaYL0bNgNyd2HxN68lRhx2k5ZDrCpkS-m_t3-kNhRXEyIZVAQ==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEx7E_DI3ltiyeVLTuWisw3JUgYVnk28Wj2l21EvO5ThEXRXC75leWY39CBVFKW9qaDv3UYl5Pq_dxUAdWlRXEcDa5gCDubhVvxmbc37EESdIIcRaGv9KOpeL5tlWRL-vo=",
+        "title": "umaimono-blog.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPK9xxKbA1BS5WZoC9czSExbjUUZ1HNELjywYxhcNGzDwkCsL7vbyTaKRsG1HEsYaYZNA_PuI8mnRA0pAtgSbb3_G0RFKDPf9tUNcOjHF8xJrIdur2xc3tkcJBgdpP_e0XSKEL9zIdqw==",
+        "title": "note.com"
+      }
+    ]
+  },
+  "store_id": "manual_鮨屋とんぼ住吉店",
+  "store_name": "鮨屋 とんぼ 住吉店",
+  "area": "名古屋市中区",
+  "genre": "寿司",
+  "rating": "4",
+  "generated_at": "2026-10-13T00:38:19.160Z"
+}

@@ -1,0 +1,84 @@
+{
+  "status": "OK",
+  "editorReason": "食べログ百名店に最多4度選出、HOTレストラン2025も受賞する実力店。名物生ハンバーグが話題を呼び、金山で予約困難な人気を誇ります。その確かな実績と話題性が、業界からの高い評価を裏付けています。",
+  "insiderNote": "品質第一主義を掲げ、厳選素材と徹底した品質管理を徹底。オーナーの食べ歩きがメニュー進化に影響を与え、地域社会との調和も重視する経営姿勢が伺えます。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGfPhVPWn0HCsjtngwjfuAGPMUd_uxzySxFM-q85nX4GotHZ7XGQmqi065o3Gs-bl8gSzm7ya27JeYUHJiqFnrk5zdIalZ8WLsjieDKZcwcEYZK1oMMtyi1tNACDEigyaNx1an4kA==",
+      "snippet_quote": "「食べログ百名店」には2025年に最多4度目の選出を果たしており、「HOTレストラン2025」も受賞しています。特に、4個500円の「名物生ハンバーグ」が話題となっており、食べログ百名店に選ばれる理由の一つとして挙げられています。",
+      "supports": "食べログ百名店とHOTレストラン受賞、名物生ハンバーグが話題である事実"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEu4QWq17RM0ZieoHx8IQOyN2Vd9a5-JXthJb-hmRTXk-NYD1_E9l4T2SIKoAR9nIQuaUBGTTJpmdZ9FXXL0iqdZrQu7VjwILyMqoxSuRQOIThEH4MQtYOKTT6xoOpvwZXev_fMSA==",
+      "snippet_quote": "Instagramのグルメアカウント「ナゴグル」でも紹介されており、金山で予約が取りづらいほどの超人気店であることが伝えられています。",
+      "supports": "金山で予約困難な人気店である事実"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGuckaJWLTLLv5Y52C7_bR_xSgMjUV-g09tMR-YLRcZMWeivDCQHpaTxTqKzvvev2yMCeM03sKA4flRkqu1HDJpFA_4mpMUvAd9gDQ14bJD30l0L1qzX2A0DazoOz63vGaUL5z9r9O6zlhj",
+      "snippet_quote": "Instagramのグルメアカウント「ナゴグル」でも紹介されており、金山で予約が取りづらいほどの超人気店であることが伝えられています。",
+      "supports": "金山で予約困難な人気店である事実"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGAkatCYr62_aEdvvWjx0SjcHfpWQcJkFEs6GzMsGu0MaM8TRhcj-HJhuv6k5Fhn6tD7xpmFPUa6g8IC2MqQdWTMuZkirtK5f1hopC6uxCz80IxxWU=",
+      "snippet_quote": "同店は「品質第一主義」を掲げ、厳選された素材と徹底した品質管理により、最高の食体験を提供することを目指しています。オーナーは食べ歩きが好きであるとされており、これがメニューの進化にも影響を与えている可能性があります。地域社会との調和を大切にし、地元の食材を積極的に取り入れ、地域に愛される店作りを目指すとともに、地域経済の発展にも貢献しています。",
+      "supports": "品質第一主義、厳選素材と品質管理、オーナーの食べ歩き、地域社会との調和と地域貢献への姿勢"
+    }
+  ],
+  "warnings": [
+    "1件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋の飲食店「焼肉神宮 金山本店」に関して、Google検索で得られた業界視点の情報は以下の通りです。\n\n**店主のこだわり**\n「焼肉神宮 金山本店」は、素材と品質にこだわった極上の焼肉を提供しています。新鮮な肉を毎日入荷し、その日のベストな状態で提供することに尽力しており、黒タンをはじめとする希少部位も取り揃えています。\n同店は「品質第一主義」を掲げ、厳選された素材と徹底した品質管理により、最高の食体験を提供することを目指しています。新鮮で上質な食材を使用し、一切の妥協を許さず美味しさを追求しています。\nまた、「お客様中心のサービス」として、一人ひとりの顧客満足を最優先に考え、細やかな気配りと心のこもったサービスで笑顔と感動を届けることを重視しています。\n衛生管理を徹底し、安全で安心してお食事を楽しめる環境作りにも力を入れています。\n地域社会との調和を大切にし、地元の食材を積極的に取り入れ、地域に愛される店作りを目指すとともに、地域経済の発展にも貢献しています。\nオーナーは食べ歩きが好きであるとされており、これがメニューの進化にも影響を与えている可能性があります。\n\n**提供スタイルの特徴**\n「焼肉神宮 金山本店」は、和モダンなプライベート個室を3部屋完備しており、喫煙も可能です（個室利用料1,100円）。2階席は全て完全個室となっており、プライベートな空間で食事が楽しめます。 落ち着いた雰囲気の個室やカウンター席で、ゆったりと焼肉を堪能できるとされています。\nワインの種類も豊富に取り揃えており、焼肉との相性を考慮したセレクションを提供しています。ワイン選びに不慣れな顧客にはスタッフがアドバイスを行うサービスも提供しています。\nまた、一部の料理では、スタッフが目の前で調理を行う「炙りロースご飯」や「至福の小鉢丼」といった提供スタイルも見られます。 食べきれなかった料理を「おにぎり」にして提供するといった、顧客への細やかな配慮も行われています。\n\n**地元グルメメディアでの紹介**\n「焼肉神宮 金山本店」は、地元グルメメディアやレビューサイトで高く評価されています。\n「食べログ百名店」には2025年に最多4度目の選出を果たしており、「HOTレストラン2025」も受賞しています。\n特に、4個500円の「名物生ハンバーグ」が話題となっており、食べログ百名店に選ばれる理由の一つとして挙げられています。\n「Lemon8」では、「安くてうまい焼肉」として紹介され、全メニュー500円級のコストパフォーマンスの高さと本格的な味、雰囲気が人気の理由とされています。\nInstagramのグルメアカウント「ナゴグル」でも紹介されており、金山で予約が取りづらいほどの超人気店であることが伝えられています。\n\n**料理人としての評価**\n検索結果からは、特定の料理人の名前や個人の評価に直接言及した情報は見つかりませんでした。しかし、「焼肉神宮 金山本店」が「食べログ百名店」に複数回選出され、「HOTレストラン2025」を受賞していること、また、提供される料理の品質やコストパフォーマンスの高さが多くのメディアや口コミで評価されていることは、料理を提供するチーム全体の高い技術と品質へのこだわりが評価されていることを示唆しています。オーナーが食べ歩きを好むという情報も、料理の質やメニュー開発に良い影響を与えていると考えられます。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGAkatCYr62_aEdvvWjx0SjcHfpWQcJkFEs6GzMsGu0MaM8TRhcj-HJhuv6k5Fhn6tD7xpmFPUa6g8IC2MqQdWTMuZkirtK5f1hopC6uxCz80IxxWU=",
+        "title": "yakinikujingu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF9_4AvMW20dKLkyRyeZOsoPsHRJ8w_ydceyKz88EHHSqspA3vg-ekDBWvxODfLAVlYewUeoyNAACH_6-d6TqVFWgAr4GhQzSh_FhqinKjf4lDB0YLQom_I03mcOA==",
+        "title": "yakinikujingu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFE_dS_B8Kj49zPrdFwqVPlCkJHuYH8VbmfHftEcDewUoyEwH9V_ECXgWzo7iESqffYExhlpyFwhUElXmUUZaISUgYSJAQ9s5qCjJmxdRRj_GdDdgqS0Uz1H4tanHlDkcwfK-SAbjvAbweRozWg2qRUTw==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGWxx1bQ0NrejoZkNYVJTPpbGGBoh6CfHp2URwo9OW-Py7g6TSh-0ZndnN5i3aLhznQOxeRaw8KXiHPUbjD6Ef2nvKA5X4d-FX8-wPwDkRlf82NPpYaFXIVJWnFfs0uXuGJxGw188g6ZiA-RA==",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEnUS3lCCuAs2-4EdNVk2ZqrnaGXMGKchxg87AGjWzccp-ZVwM1zkV4VCYMBdggU2qSqGFYelXRdvwFpUeXJoLPldaDkHDrJ9pM9DiRQrgRXdykiA5x6muybZXzdNOL0Wri",
+        "title": "hotpepper.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGjioPBchfmjJNaPAktRBIxcvLnqSKvK7d02LMlZDxRm9IY2zwStk-ab0BPEx1vT5tOJdZuNxW011pxuj8y9TZ3PFygYKJn3kthdyjM96ubx1UJfGI7z3qVhV0__-LUnvSDDof8",
+        "title": "ikyu.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEu4QWq17RM0ZieoHx8IQOyN2Vd9a5-JXthJb-hmRTXk-NYD1_E9l4T2SIKoAR9nIQuaUBGTTJpmdZ9FXXL0iqdZrQu7VjwILyMqoxSuRQOIThEH4MQtYOKTT6xoOpvwZXev_fMSA==",
+        "title": "instagram.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGuckaJWLTLLv5Y52C7_bR_xSgMjUV-g09tMR-YLRcZMWeivDCQHpaTxTqKzvvev2yMCeM03sKA4flRkqu1HDJpFA_4mpMUvAd9gDQ14bJD30l0L1qzX2A0DazoOz63vGaUL5z9r9O6zlhj",
+        "title": "instagram.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGfPhVPWn0HCsjtngwjfuAGPMUd_uxzySxFM-q85nX4GotHZ7XGQmqi065o3Gs-bl8gSzm7ya27JeYUHJiqFnrk5zdIalZ8WLsjieDKZcwcEYZK1oMMtyi1tNACDEigyaNx1an4kA==",
+        "title": "hamoni.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGxJ3reancej1jCB3kl6vp1AMwWeZcNLMO81aX5Xs_yuswmvHTnH7QSRdEpQfi2by6oDRJzjJTTa6OzBKsItpQ1GGZ4-9vzEccdRdDwkFKnTeRJxmWHmD1EJag5HCXb8pHWiv-tWtRozlHhfg2LeW8ywCT0v3GwdpGK31wOj2fxof4=",
+        "title": "lemon8-app.com"
+      }
+    ]
+  },
+  "store_id": "J001265259",
+  "store_name": "焼肉神宮 金山本店",
+  "area": "金山・神宮前・熱田区",
+  "genre": "焼肉・ホルモン",
+  "rating": "4.1",
+  "generated_at": "2026-10-13T00:17:46.043Z"
+}

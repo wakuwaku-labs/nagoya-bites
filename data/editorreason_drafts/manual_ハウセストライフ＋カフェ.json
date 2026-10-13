@@ -1,0 +1,88 @@
+{
+  "status": "OK",
+  "editorReason": "賃貸住宅会社が運営するカフェとして、良質なインテリア空間で過ごす「スペシャルなひととき」を提供。厳選されたコーヒー豆や地元有名店のパン、見た目も楽しい「トーストトリオ」など、細部までこだわり、顧客の暮らしに心地よさをプラスする複合的な価値創造が光ります。",
+  "insiderNote": "賃貸住宅会社が手掛けるカフェとして、単なる飲食提供に留まらず、インテリアや暮らしの相談もできる複合業態。顧客のライフスタイルに寄り添う提案力が強みです。",
+  "visitStatus": "desk_automated",
+  "confidence": 0.6,
+  "sources_used": [
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYhml6Fbn_QaKUDQi0CI2xuJiwMckoCIfNA3SPFjW7r0FDvE38viQ-pO9oD8vFCY2TMxm7Yty7ZD-iNvMh-cAgX1MdgISpmXb49lGO9-DQwyQGljMbdQP0lMqtvf7S7EVHnQ==",
+      "snippet_quote": "名古屋市南区にある「ハウセスト ライフ＋カフェ」は、賃貸住宅運営やインテリアコーディネートを手がける会社が運営しており、コーヒーなどを味わいながら良質なインテリア空間を楽しむことをコンセプトにしたカフェです。",
+      "supports": "賃貸住宅運営会社が手掛ける、インテリア空間を楽しむカフェであること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYhml6Fbn_QaKUDQi0CI2xuJiwMckoCIfNA3SPFjW7r0FDvE38viQ-pO9oD8vFCY2TMxm7Yty7ZD-iNvMh-cAgX1MdgISpmXb49lGO9-DQwyQGljMbdQP0lMqtvf7S7EVHnQ==",
+      "snippet_quote": "提供されるコーヒーは、高浜市の「スギコーヒーロースティング」の豆を使用し、ハンドドリップかフレンチプレスの抽出方法を選べるブレンドや、キャラメルマキアートなどの甘いドリンクも人気です。パンは瑞穂区の「シャルムベーカリー・ポンシェ」の食パンを使用しており、モチモチの食感が特徴です。モーニングサービスでは、ドリンクにバタートーストかシュガートーストが付き、追加料金で小倉トーストやチーズトーストに変更も可能です。特に「トーストトリオ」という小倉・シュガー・チーズの3種類のトーストを食べ比べできるセットは、見た目も可愛らしいと評されています。",
+      "supports": "厳選されたコーヒー豆やパンの使用、および「トーストトリオ」などの工夫されたモーニングメニュー"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHWF2kZVibQDN-NGkT5ibHhifcKyjMvDRiklPaoooeqMTUWW0aPvJuC-nW_0UPG8NHJ1rdhw03hBuk46xb1L2EL7uxktmlA42e9V8-0E9LHyiXiwftv12RgEeZaxRlgKVD0X54VMWwK1bUjb3wM4QXbyg==",
+      "snippet_quote": "特に、モーニングの「トーストトリオ」や野菜たっぷりのオープンサンド、季節のフルーツを使ったデザートなどが注目されています。",
+      "supports": "モーニングの「トーストトリオ」が地元グルメメディアで注目されていること"
+    },
+    {
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYhml6Fbn_QaKUDQi0CI2xuJiwMckoCIfNA3SPFjW7r0FDvE38viQ-pO9oD8vFCY2TMxm7Yty7ZD-iNvMh-cAgX1MdgISpmXb49lGO9-DQwyQGljMbdQP0lMqtvf7S7EVHnQ==",
+      "snippet_quote": "店内は木の温もりを感じる明るい空間で、2名席中心の10席ほどの小さな店内は、おしゃれな雰囲気です。席の間隔や空気感が柔らかく、急いで食べて出る感じになりにくいため、一人でも居やすく、友人との会話も自然にゆっくりになるといった、心が整うような「スペシャルなひととき」を過ごせる空間が提供されています。コーヒーの器にもこだわりが見られ、毎回異なるカップで提供されることを楽しみにしている利用客もいます。",
+      "supports": "おしゃれな空間デザイン、ゆっくり過ごせる雰囲気、器へのこだわり"
+    }
+  ],
+  "warnings": [
+    "2件のURLが実際の検索結果に無いため除外（要確認）"
+  ],
+  "extractor": "gemini_search_grounding_v1",
+  "_debug": {
+    "researchText": "名古屋市南区にある「ハウセスト ライフ＋カフェ」は、賃貸住宅運営やインテリアコーディネートを手がける会社が運営しており、コーヒーなどを味わいながら良質なインテリア空間を楽しむことをコンセプトにしたカフェです。\n\n**店主のこだわり・提供スタイルの特徴:**\n「HOUSest」という賃貸住宅の一室でカフェを営んでおり、「ご自宅のもう一部屋のように寛ぎながら美味しい珈琲はいかがですか？」というコンセプトを掲げています。 暮らしのご相談やインテリア、収納のアイデアも提案しており、カフェとインテリアの集合体として、暮らしと住まいに心地よさと楽しみをプラスし、最上に変えていくことを目指しています。\n提供されるコーヒーは、高浜市の「スギコーヒーロースティング」の豆を使用し、ハンドドリップかフレンチプレスの抽出方法を選べるブレンドや、キャラメルマキアートなどの甘いドリンクも人気です。 パンは瑞穂区の「シャルムベーカリー・ポンシェ」の食パンを使用しており、モチモチの食感が特徴です。 モーニングサービスでは、ドリンクにバタートーストかシュガートーストが付き、追加料金で小倉トーストやチーズトーストに変更も可能です。 特に「トーストトリオ」という小倉・シュガー・チーズの3種類のトーストを食べ比べできるセットは、見た目も可愛らしいと評されています。\n店内は木の温もりを感じる明るい空間で、2名席中心の10席ほどの小さな店内は、おしゃれな雰囲気です。 席の間隔や空気感が柔らかく、急いで食べて出る感じになりにくいため、一人でも居やすく、友人との会話も自然にゆっくりになるといった、心が整うような「スペシャルなひととき」を過ごせる空間が提供されています。 コーヒーの器にもこだわりが見られ、毎回異なるカップで提供されることを楽しみにしている利用客もいます。\n\n**地元グルメメディアでの紹介:**\nRetty、CafeSnap、HAMONI、名古屋情報通、Lemon8、ことりっぷなどの地元グルメメディアやブログで紹介されています。これらのメディアでは、隠れ家のような立地、おしゃれな空間、モーニングメニューの魅力、そしてコーヒーやスイーツの美味しさなどが評価されています。特に、モーニングの「トーストトリオ」や野菜たっぷりのオープンサンド、季節のフルーツを使ったデザートなどが注目されています。\n\n**料理人としての評価:**\n検索結果からは、店主が「料理人」として個別に評価されているという直接的な情報は見つかりませんでした。しかし、提供されるコーヒー豆やパンの選定、モーニングメニューの工夫、そして季節のデザートなど、提供される飲食物へのこだわりや質の高さは、各グルメメディアのレビューからうかがえます。",
+    "groundingUrls": [
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYhml6Fbn_QaKUDQi0CI2xuJiwMckoCIfNA3SPFjW7r0FDvE38viQ-pO9oD8vFCY2TMxm7Yty7ZD-iNvMh-cAgX1MdgISpmXb49lGO9-DQwyQGljMbdQP0lMqtvf7S7EVHnQ==",
+        "title": "jouhou.nagoya"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFCI27gxaCfHQErnjL3l-JJ7eC8ALXqqNToRFWDCOeEYrDDfSjM60C85QVt6udrfyAbTwrvnqrwJ3zvQUS3CnII1ISogrIk9HbvvTObsGx8yNis",
+        "title": "housestlife.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHWF2kZVibQDN-NGkT5ibHhifcKyjMvDRiklPaoooeqMTUWW0aPvJuC-nW_0UPG8NHJ1rdhw03hBuk46xb1L2EL7uxktmlA42e9V8-0E9LHyiXiwftv12RgEeZaxRlgKVD0X54VMWwK1bUjb3wM4QXbyg==",
+        "title": "retty.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFyhY82pqg5ztE0Nio6j02VxC1PJKcnHmmayInwPgVltg5iuvxAwSIO8IHO95FCfQGEjdYcXzw_Tqe6ua8yW6XiGVySjwux7he_OX8RrCH7U5akYxwGojXtaA==",
+        "title": "cafesnap.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGyMPbWUQBsWlFOQlQTUHIf1pcIaApRPjyDBZZRh8hKUdSwwlDULgKg6OhiGOpNjfx44IvHGAbZIaP-E-E7GoWN2zrT7gRkdwre-wJpjpODxBITxTccLlzORqF9_R3KQZkEaljHhNzZ5ozAxPrMNShEYhGO-htXZoX2qYfr",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHBwUfsR6cKKPwzcLfA-zVFtt7H_VXp8_WbAx3I1O0zaoB0egMd0YoMdTi2ggQuxH1JauqRBKhkyvPn9EkazQ9_4Qfw6K8IKVVyOKpKyZHeGm6ycO0ONeSP",
+        "title": "co-trip.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHyiMBgfCaZd3r6Mq6QuY1JRJuLJx-Ac3y_YOcebHXAnEr6aUKWY3gQYUbvXjYV7YekVGguonXwlYWXY1hGpac6o_kvvKS-h1YXn4jGyq3QrwTcduIgYKMOzLdURa0X",
+        "title": "cafesnap.me"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEk-BIBHnOQlBAY_3nGk_29J3d9vvsRGF8ok-LrohCQ0qlioF6uptF5kNUltLzkTkZAsuvtM6Jw5ZzZHDaN_qWTe1V16jUC2WWsn8smganc6UAobBl_uieQKlW0xuQh68UDUkMzkQ==",
+        "title": "hamoni.jp"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF0ZdtATbUjP46IHfGyjQwcfiLI-fBrnnFSom6Lv0nOWftt5agoRzQJABfQr4UVXffaX3ZigfnM1iLHCaNQFgzFMSmKfOhM5JznzUjbk6ccabUY2fhoo3b3tGScBrzrDr27VHiyjtW6YWREjzsAMhgSsUrHc5YqDzflxh4=",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEw7l9PSloXKQ_QFlGSXeCrRj1VRTErmoggoiHkaBzlTVE8arCb7RBKUG9eZorFv9YNaAbnFtqdTfQW3fz_HSM4RYmW5wU01O0f_w3Obg7pYlWgGnCpecxs6s4WqLBRmbUd4AkUzWcrBVwJO3SpP9jRges5eFHXRkxlzCQ=",
+        "title": "lemon8-app.com"
+      },
+      {
+        "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGCIqNEuqmaADso-NYXi7qqr2cpR8y1QrMd_-WqrPOKMv1xG7Iy1_dcefXXVls4iiQCMp9CQRrv8euMbib45yVw3mEgu5B1Ra4bUW6MgL9UsC16h3hrU0Ruc5mlBh6J5_RuRQ==",
+        "title": "starrrrr.com"
+      }
+    ]
+  },
+  "store_id": "manual_ハウセストライフ＋カフェ",
+  "store_name": "ハウセスト ライフ＋カフェ",
+  "area": "名古屋市南区",
+  "genre": "カフェ、喫茶",
+  "rating": "4",
+  "generated_at": "2026-10-13T00:25:33.608Z"
+}
