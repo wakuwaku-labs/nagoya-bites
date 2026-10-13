@@ -377,6 +377,7 @@ body.search-active .back-to-magazine{display:flex;align-items:center;gap:.4rem;m
 .chip-x{font-size:var(--fs-xs);opacity:.7;line-height:1;}
 /* ── FILTER TOGGLE BUTTON ── */
 .filter-toggle-wrap{position:sticky;top:56px;z-index:149;background:var(--bg2);border-bottom:1px solid var(--border);padding:.85rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+body.search-active .filter-toggle-wrap{position:static;}
 .filter-toggle-btn{display:flex;align-items:center;gap:.55rem;white-space:nowrap;background:#fff;border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:.85rem;letter-spacing:.04em;padding:.7rem 1.4rem;border-radius:6px;cursor:pointer;transition:all .25s;min-height:46px;font-weight:600;}
 .filter-toggle-btn:hover{color:var(--text);border-color:var(--border-h);}
 .filter-toggle-btn.has-filters{color:#fff;background:var(--warm-grad);border-color:transparent;box-shadow:0 2px 8px rgba(184,84,31,.25);font-weight:600;}
@@ -9357,6 +9358,10 @@ function nbSubmitSearch() {
   if (si2 && si2.value !== q) si2.value = q;
   if (q) trackEvent('search', { search_term: q });
   applyFilters();
+  // 送信したら検索欄のフォーカスを外す。フォーカスが残ると、あとでどこかを押した瞬間に検索欄の候補（「人気:」の行）が閉じて、
+  // 結果の上にある行が縮み、押そうとしたボタンが動いて最初のクリックが空振りする（スマホでは入力用のキーボードも閉じる）
+  var ae = document.activeElement;
+  if (ae && (ae === si || ae === si2) && typeof ae.blur === 'function') ae.blur();
 }
 // 検索入力のクリア（×）ボタン（FB-001）。入力の有無で .search-field に has-value を付け外しする。
 function nbUpdateSearchClearVisibility(el) {
