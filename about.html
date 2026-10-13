@@ -9,11 +9,11 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NAGOYA BITESについて｜現役飲食店マネージャーが監修する名古屋グルメガイド</title>
-<meta name="description" content="NAGOYA BITESは、食べログスコア3.2→3.5以上の改善実績を持つ現役飲食店マネージャーが監修する名古屋グルメメディア。広告掲載型ではなく、プロの視点で選んだ本当に価値ある店だけを掲載しています。">
-<meta name="keywords" content="NAGOYA BITES,名古屋グルメ,飲食店マネージャー,食べログ,グルメメディア,名古屋 居酒屋,名古屋 宴会">
-<meta property="og:title" content="NAGOYA BITESについて｜現役飲食店マネージャーが監修する名古屋グルメガイド">
-<meta property="og:description" content="食べログスコア3.2→3.5以上の改善実績を持つ現役飲食店マネージャーが監修。広告掲載型ではなく、プロが認めた店だけを掲載する名古屋グルメメディア。">
+<title>NAGOYA BITESについて｜広告ゼロ・PR記事ゼロの名古屋専門グルメガイド</title>
+<meta name="description" content="NAGOYA BITESは、名古屋・愛知の飲食店を探せるグルメガイド。店舗の選定にはAIによる情報収集・分析を活用しています。広告掲載型ではなく、データの出どころと店の選び方をすべて公開しています。">
+<meta name="keywords" content="NAGOYA BITES,名古屋グルメ,グルメガイド,口コミ信頼度,食べログ,名古屋 居酒屋,名古屋 宴会">
+<meta property="og:title" content="NAGOYA BITESについて｜広告ゼロ・PR記事ゼロの名古屋専門グルメガイド">
+<meta property="og:description" content="店舗の選定にはAIによる情報収集・分析を活用しています。広告掲載型ではなく、データの出どころと店の選び方を公開している、名古屋・愛知専門のグルメガイド。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nagoya-bites.com/about.html">
 <meta property="og:site_name" content="NAGOYA BITES">
@@ -33,7 +33,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   "@type": "AboutPage",
   "name": "NAGOYA BITESについて",
   "url": "https://nagoya-bites.com/about.html",
-  "description": "食べログスコア改善実績を持つ現役飲食店マネージャーが監修する名古屋グルメメディア。広告掲載型ではなく、プロの視点で選んだ本当に価値ある店だけを掲載。",
+  "description": "広告掲載型ではない、名古屋・愛知専門のグルメガイド。店舗の選定にはAIによる情報収集・分析を活用しています。データの出どころと店の選び方を公開。",
   "isPartOf": {
     "@type": "WebSite",
     "name": "NAGOYA BITES",
@@ -55,6 +55,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .eyebrow{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:1.8rem;opacity:0;animation:up .8s .2s forwards;}
 .hero h1{font-family:var(--font-display);font-weight:400;font-size:clamp(2.4rem,5.5vw,4.5rem);line-height:1.15;color:var(--white);opacity:0;animation:up .9s .35s forwards;}
 .hero h1 em{font-style:italic;color:var(--gold);}
+.hero h1 .nw{white-space:nowrap;}
 .hero-sub{margin-top:1.6rem;font-size:.78rem;letter-spacing:.05em;color:var(--muted);line-height:2.1;max-width:480px;opacity:0;animation:up .9s .5s forwards;}
 @keyframes up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 .section{padding:4rem 3rem;border-bottom:1px solid var(--border);}
@@ -64,14 +65,6 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 .sec-title em{font-style:italic;color:var(--gold);}
 .sec-body{font-size:.82rem;color:var(--muted);line-height:2.2;max-width:640px;}
 .sec-body p{margin-bottom:1.2rem;}
-.achievement{background:var(--bg2);padding:3.5rem 3rem;border-bottom:1px solid var(--border);}
-.ach-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-top:2rem;max-width:640px;}
-.ach-item{text-align:center;padding:1.8rem 1rem;border:1px solid var(--border);background:var(--bg);transition:border-color .3s;}
-.ach-item:hover{border-color:var(--gold);}
-.ach-num{font-family:var(--font-display);font-size:2.8rem;font-weight:400;color:var(--gold);line-height:1;}
-.ach-num .unit{font-size:1rem;color:var(--dim);margin-left:.15rem;}
-.ach-label{font-family:var(--font-mono);font-size:var(--fs-2xs);letter-spacing:.16em;color:var(--dim);text-transform:uppercase;margin-top:.65rem;}
-.ach-detail{font-size:var(--fs-xs);color:var(--muted);margin-top:.5rem;line-height:1.7;}
 .quote-block{padding:3rem 3rem;background:var(--white);color:var(--bg);border-bottom:1px solid rgba(255,255,255,.06);}
 .quote-text{font-family:var(--font-display);font-size:clamp(1.3rem,3vw,2rem);font-weight:400;font-style:italic;line-height:1.6;max-width:640px;color:rgba(247,245,241,.85);}
 .quote-text em{color:var(--gold);font-style:italic;}
@@ -97,11 +90,9 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 header{padding:0 1.2rem;height:56px;}
 .hero{padding:120px 1.5rem 50px;min-height:40vh;}
 .section{padding:2.8rem 1.5rem;}
-.achievement{padding:2.8rem 1.5rem;}
 .quote-block{padding:2.5rem 1.5rem;}
 .cta-section{padding:3rem 1.5rem;}
 footer{padding:1.8rem 1.5rem;flex-direction:column;gap:.6rem;}
-.ach-grid{grid-template-columns:1fr 1fr;}
 }</style>
 </head>
 <body>
@@ -127,8 +118,8 @@ footer{padding:1.8rem 1.5rem;flex-direction:column;gap:.6rem;}
 <!-- NB-CHROME:HEADER:END -->
 <section class="hero">
   <div class="eyebrow">About — NAGOYA BITES</div>
-  <h1>飲食店を<em>"つくる側"</em>が<br>選んだ、本当のナゴヤ。</h1>
-  <p class="hero-sub">このサイトが扱うのは名古屋のお店だけです。<br>そして選んでいるのは、名古屋の飲食店で店長として現場に立つ現役の飲食店マネージャー。<br>この2つが、NAGOYA BITESの全てです。</p>
+  <h1>名古屋の飲食店を、<br><em>確かめられる情報</em><span class="nw">で選ぶ。</span></h1>
+  <p class="hero-sub">このサイトが扱うのは、名古屋・愛知のお店だけです。<br>店舗の選定にはAIによる情報収集・分析を活用しています。<br>データの出どころと選び方は、すべて公開しています。</p>
 </section>
 <section class="section">
   <div class="sec-label">01 — Mission</div>
@@ -136,25 +127,19 @@ footer{padding:1.8rem 1.5rem;flex-direction:column;gap:.6rem;}
   <div class="sec-body">
     <p>食べログ、ホットペッパー、Instagram、TikTok、Google マップ——<br>今の飲食店選びは、複数の媒体を行き来しなければ全体像が掴めません。</p>
     <p>NAGOYA BITESは、これらの情報をワンストップで確認できるメディアです。<br>ジャンル・エリア・シーン・人数で絞り込み、気になったお店の各媒体ページへ直接アクセスできます。</p>
-    <p>扱うのは名古屋のみです。広く浅くではなく、名古屋を深く知っているから見抜けるものがある——それがこのサイトの根拠です。</p>
+    <p>扱うのは名古屋・愛知のみです。範囲を絞ることで、エリア・ジャンル・シーンごとの一覧を、同じ基準で比べられる形に整えています。</p>
   </div>
 </section>
 <div class="quote-block">
-  <div class="quote-text">「名古屋のお店しか載せない。<br>なぜなら、<em>名古屋のことしか</em>わからないから。<br>それで十分だと思っています。」</div>
-  <div class="quote-attr">— NAGOYA BITES 監修者・飲食店マネージャー</div>
+  <div class="quote-text">「名古屋のお店だけを載せる。<br>数字には出どころを添え、<br><em>わからないことは、<br>わからないと</em>書く。」</div>
+  <div class="quote-attr">— NAGOYA BITES の方針</div>
 </div>
-<section class="achievement">
-  <div class="sec-label">02 — Track Record</div>
-  <h2 class="sec-title">選んでいるのは、<em>結果を出してきた</em>人間。</h2>
+<section class="section">
+  <div class="sec-label">02 — How We Choose</div>
+  <h2 class="sec-title">店の<em>選び方</em></h2>
   <div class="sec-body">
-    <p>名古屋の飲食店で店長・マネージャーとして現場に立つ現役の飲食人が、このサイトを監修しています。</p>
-  </div>
-  <div class="ach-grid">
-    <div class="ach-item">
-      <div class="ach-num">3.2<span class="unit">→</span>3.5<span class="unit">+</span></div>
-      <div class="ach-label">食べログスコア改善</div>
-      <div class="ach-detail">担当2店舗のスコアを<br>3.2台から3.5以上へ</div>
-    </div>
+    <p>店舗の選定にはAIによる情報収集・分析を活用しています。AIが集めた情報は、出どころのわかるデータ（ホットペッパーグルメ・Google の店舗情報・報道やメディアの記事）と突き合わせてから載せます。</p>
+    <p>決めた条件とデータにもとづいて選び、その手順は<a href="features/editorial-policy.html">編集規約</a>にすべて公開しています。</p>
   </div>
 </section>
 <section class="section">
@@ -166,15 +151,15 @@ footer{padding:1.8rem 1.5rem;flex-direction:column;gap:.6rem;}
   <div class="criteria-list">
     <div class="crit">
       <div class="crit-icon">I</div>
-      <div class="crit-text"><strong>飲食業界の内側を知る人間</strong>が選定しています。客としての印象だけではなく、オペレーション・食材・サービス設計の質を見ています。</div>
+      <div class="crit-text"><strong>名古屋・愛知の飲食店だけ</strong>を載せています。閉店や営業実態が確認できない店は載せません。</div>
     </div>
     <div class="crit">
       <div class="crit-icon">II</div>
-      <div class="crit-text"><strong>料理・接客・空間・コスパの総合バランス</strong>を重視。どれか一つだけが突出していても、全体として良い体験でなければ掲載しません。</div>
+      <div class="crit-text"><strong>掲載料・広告費は受け取りません。</strong>お金を払った店が載ったり、上位に出たりすることはありません。</div>
     </div>
     <div class="crit">
       <div class="crit-icon">III</div>
-      <div class="crit-text"><strong>口コミスコアだけでは見えない店</strong>を発掘。スコアを自分の手で改善してきた経験があるからこそ、数字の裏にある本質を見抜けます。</div>
+      <div class="crit-text"><strong>Google の評価は、そのまま載せます。</strong>★と件数は Google の店舗情報の値で、こちらで手を加えません。</div>
     </div>
     <div class="crit">
       <div class="crit-icon">IV</div>
@@ -183,6 +168,10 @@ footer{padding:1.8rem 1.5rem;flex-direction:column;gap:.6rem;}
     <div class="crit">
       <div class="crit-icon">V</div>
       <div class="crit-text"><strong>各店の「口コミ信頼度」（SS〜Dの5段階）を機械的に併記。</strong>Googleの★と件数がそのまま信じてよいかを、観測できた検証項目だけで採点した参考指標です。詳しくは<a href="features/review-trust.html">口コミ信頼度の読み方</a>をご覧ください。</div>
+    </div>
+    <div class="crit">
+      <div class="crit-icon">VI</div>
+      <div class="crit-text"><strong>運営は個人で行っています。</strong>氏名・経歴・所属は公開していません。判断の根拠は運営者ではなく、確かめられる情報に置いています。理由は<a href="features/editorial-policy.html#anonymous">編集規約</a>に書いています。</div>
     </div>
   </div>
 </section>

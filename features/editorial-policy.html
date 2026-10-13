@@ -9,12 +9,12 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.getAttribute('href')||'';if(!/^https?:\/\//i.test(href))return;try{var h=new URL(href,location.href).hostname;if(h===location.hostname)return;trackEvent('outbound_click',{link_url:href,link_domain:h,link_text:(a.innerText||a.textContent||'').trim().slice(0,80)});}catch(err){}},true);
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>編集規約｜NAGOYA BITES — 飲食業界の内側から書くために守っていること</title>
-<meta name="description" content="名古屋の飲食店を編集部が選ぶ基準、金銭関係の扱い、匿名性を守る理由を公開。広告や忖度に左右されない独立したグルメメディアとしての編集倫理。">
-<meta name="keywords" content="NAGOYA BITES,編集規約,編集方針,名古屋グルメ,編集倫理,グルメメディア,飲食業界,匿名">
+<title>編集規約｜NAGOYA BITES — 店の選び方と、守っていること</title>
+<meta name="description" content="名古屋の飲食店をどう選び、どう載せているか。データの出どころ、AIの使い方、金銭関係の扱い、口コミ信頼度の仕組みを公開。広告や忖度に左右されない、独立したグルメガイドの編集規約。">
+<meta name="keywords" content="NAGOYA BITES,編集規約,編集方針,名古屋グルメ,店の選び方,AI,広告ゼロ,口コミ信頼度">
 <link rel="canonical" href="https://nagoya-bites.com/features/editorial-policy.html">
-<meta property="og:title" content="編集規約｜NAGOYA BITES — 飲食業界の内側から書くために守っていること">
-<meta property="og:description" content="どう選び、何を載せないか。広告・忖度に左右されない独立したグルメメディアとして編集部が守っていることを公開します。">
+<meta property="og:title" content="編集規約｜NAGOYA BITES — 店の選び方と、守っていること">
+<meta property="og:description" content="どう選び、何を載せないか。店舗の選定にはAIによる情報収集・分析を活用しています。広告・忖度に左右されないために守っていることを公開します。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://nagoya-bites.com/features/editorial-policy.html">
 <meta property="og:site_name" content="NAGOYA BITES">
@@ -28,7 +28,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "編集規約｜NAGOYA BITES",
-  "description": "名古屋の飲食店を編集部が選ぶ基準、金銭関係の扱い、匿名性を守る理由を公開。広告や忖度に左右されない独立したグルメメディアとしての編集倫理。",
+  "description": "名古屋の飲食店をどう選び、どう載せているか。データの出どころ、AIの使い方、金銭関係の扱い、口コミ信頼度の仕組みを公開。広告や忖度に左右されない、独立したグルメガイドの編集規約。",
   "author": {"@type": "Organization", "name": "NAGOYA BITES"},
   "publisher": {"@type": "Organization", "name": "NAGOYA BITES", "url": "https://nagoya-bites.com/"},
   "url": "https://nagoya-bites.com/features/editorial-policy.html",
@@ -113,8 +113,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     <!-- NB_BYLINE_START --><p class="nb-byline nb-byline--end"><span>公開 <time datetime="2026-04-20">2026年4月20日</time></span><span>更新 <time datetime="2026-10-13">2026年10月13日</time></span><span>執筆 NAGOYA BITES 編集部</span></p><!-- NB_BYLINE_END -->
     <div class="art-lead">
       <p>このページは、私たち編集部が NAGOYA BITES を運営するにあたって守っていることを、読者のみなさんに公開するためのものです。</p>
-      <p>個人名や肩書きを前面に出していないのは、書き手が目立つためではなく、編集の独立性を守るためです。ミシュランガイドの調査員が身分を明かさないのと同じ理由で、私たちも編集部として匿名を選んでいます。</p>
-      <p>代わりに、<strong>どう選び、どう書いているか</strong>をこのページですべて開示します。</p>
+      <p>運営は個人で、AIを使いながら行っています。氏名・経歴・所属は公開していません（理由は<a href="#anonymous">05</a>に書きました）。</p>
+      <p>代わりに、<strong>どう選び、どう書いているか</strong>を、実際の手順のとおりに書きます。</p>
     </div>
   </div>
 
@@ -127,8 +127,8 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
       <li><a href="#revenue-separation"><span class="num">03-B</span>収益と編集の分離</a></li>
       <li><a href="#trust-mechanisms"><span class="num">04</span>信頼の仕組み</a></li>
       <li><a href="#cross-check-integrity"><span class="num">04-D</span>機械統計レイヤー</a></li>
-      <li><a href="#anonymous"><span class="num">05</span>匿名である理由</a></li>
-      <li><a href="#inside-perspective"><span class="num">06</span>業界内部からの視点</a></li>
+      <li><a href="#anonymous"><span class="num">05</span>運営者を公開しない理由</a></li>
+      <li><a href="#inside-perspective"><span class="num">06</span>情報の読み方</a></li>
       <li><a href="#decline"><span class="num">07</span>断る勇気</a></li>
       <li><a href="#never"><span class="num">08</span>絶対にしないこと</a></li>
       <li><a href="#amendments"><span class="num">09</span>改定について</a></li>
@@ -150,9 +150,9 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
         <div class="pillar-title">何を載せるか</div>
         <div class="pillar-body">
           <ul>
-            <li>名古屋に限定する</li>
-            <li>業界人の目利きで選定する</li>
-            <li>複数の情報源（他のグルメメディア掲載・Google 評価・業界内の評判・編集部の実地視察）を総合して判断する</li>
+            <li>名古屋・愛知に限定する</li>
+            <li>決めた条件とデータで選ぶ（手順は 02 に公開）</li>
+            <li>複数の情報源（ホットペッパーグルメの掲載情報・Google の評価と口コミ件数・他のメディアでの掲載・報道）をAIで集め、突き合わせて判断する</li>
           </ul>
         </div>
       </div>
@@ -163,7 +163,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
         <div class="pillar-body">
           <ul>
             <li>掲載料を受け取った店は載せない</li>
-            <li>目利きとして納得できない店は載せない</li>
+            <li>広告費や好みで、載せる店や順位を変えることはしない</li>
             <li>閉店や営業実態が確認できない店は載せない</li>
           </ul>
         </div>
@@ -174,7 +174,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
         <div class="pillar-title">どう書くか</div>
         <div class="pillar-body">
           <ul>
-            <li>客として見える表面だけでなく、業界人の視点でオペレーション・食材・動線・設計を読む</li>
+            <li>客として見える表面だけでなく、席数・回転・価格設計・オペレーションなど、公開されている情報から読み取れることまで書く</li>
             <li>シーン別の使い方まで踏み込む</li>
             <li>必要に応じて「選ばなかった理由」も書く</li>
           </ul>
@@ -184,17 +184,18 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
 
     <h2 class="section-label" id="selection">02 — Selection Criteria</h2>
     <p class="art-intro">
-      一つの指標だけで判断せず、複数の信頼シグナルをクロスチェックしています。
-      数字の裏側にある体験の厚みを、業界知識で読み解くのが編集部の仕事です。
+      店舗の選定にはAIによる情報収集・分析を活用しています。
+      一つの指標だけで判断せず、複数の情報をつき合わせています。実際の手順は次のとおりです。
     </p>
     <div class="tips-box">
-      <p class="tips-title">掲載基準</p>
+      <p class="tips-title">掲載基準と選び方の手順</p>
       <ul>
-        <li><strong>飲食業界の実務経験者が選定に関与している</strong>こと。客目線だけではなく、オペレーション・食材・サービス設計の質を見ています。</li>
-        <li><strong>料理・接客・空間・コスパの総合バランス</strong>で評価すること。どれか一つだけが突出していても、全体として良い体験でなければ掲載しません。</li>
-        <li><strong>他のグルメメディアで紹介された実績</strong>があること。複数メディアでの言及を信頼シグナルの一つとしてクロスチェックに使います。</li>
-        <li><strong>口コミスコアだけでは判断しない</strong>こと。スコアを自分の手で改善してきた経験があるからこそ、数字の裏にある本質を見抜けます。</li>
-        <li><strong>店舗基本情報はホットペッパーグルメ Web サービスで毎日自動更新</strong>。休業・移転など営業実態の変化を速やかに反映します。</li>
+        <li><strong>名古屋・愛知の飲食店だけを載せる。</strong>愛知県外の店は取り込みません。</li>
+        <li><strong>情報はAIで集め、出どころのわかるデータと突き合わせる。</strong>店舗の基本情報はホットペッパーグルメ Web サービスから毎日自動で更新し、休業・移転などの変化を速やかに反映します。★と口コミ件数は Google の店舗情報から取ります。新しい店や話題の店は、報道やメディアの記事をAIが探し、出典の URL とともに候補に入れます。</li>
+        <li><strong>実在を確かめる。</strong>手動で加える店は、Google の店舗情報で店名・住所・業態を照らし、確認できない店は載せません。載せたあとも、ホットペッパーの掲載終了や閉店の表示などを照らし、閉店と確かめた店は外します。</li>
+        <li><strong>Google の評価はそのまま載せ、参考度を併記する。</strong>★と件数に手を加えず、直近の口コミの傾向などから「口コミ信頼度」を機械的に出します（04-D）。</li>
+        <li><strong>特集に載せる店は、条件と点数で決める。</strong>テーマごとの条件（例: 価格の表示がある・Google の評価が一定以上）で絞り、点数をつけて選びます。多くの特集は毎月、掲載店を組み替えています。点数の中身と、特集の番号の意味は 07 に書きました。</li>
+        <li><strong>選定理由を添える店には、根拠の語を付ける。</strong>「訪問済」は編集部が実際に訪れた店、「公開情報ベース」は公開されている情報をもとに書いた店、「公開情報ベース（自動収集）」はAIが集めた公開情報を運営者が確認して載せた店です。</li>
       </ul>
     </div>
 
@@ -266,7 +267,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
         <div class="pillar-title">嘘がバレる仕組み</div>
         <div class="pillar-body">
           <ul>
-            <li>業界人レビュワー認証（経歴・ハンドル公開）</li>
+            <li>飲食業界の経験者によるレビュワー認証（経歴・ハンドル公開）</li>
             <li>店舗側からの異議申立て窓口</li>
             <li>読者からの通報窓口</li>
             <li>編集部によるファクトチェック</li>
@@ -336,57 +337,56 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
 
     <p class="body-para" style="margin-top:1.4rem;">
-      業界人レビュワーの認証制度に応募したい方は、
-      <a href="become-reviewer.html">業界人レビュワー募集ページ</a>から募集要項・必須義務・認証フローをご確認ください。
+      飲食業界の経験者向けのレビュワー認証制度に応募したい方は、
+      <a href="become-reviewer.html">レビュワー募集ページ</a>から募集要項・必須義務・認証フローをご確認ください。
     </p>
 
     <h2 class="section-label" id="anonymous">05 — Why Anonymous</h2>
     <p class="art-intro">
-      「業界人が運営している」と名乗るなら、なぜ名前を出さないのか——
+      「運営しているのは誰なのか」——
       よく聞かれる問いに、きちんと答えます。
     </p>
     <p class="body-para">
-      名古屋の飲食業界は、狭い世界です。編集者や監修者が個人として顔を出すと、
-      <strong>店主との個人的関係や今後のビジネス関係が、記事の判断に無意識に影響してしまいます。</strong>
+      NAGOYA BITES は個人で運営しています。氏名・経歴・所属は公開していません。
+      <strong>特定の店との個人的な関係や利害が、掲載や評価に影響しないようにするため</strong>です。
       「あの店の悪口は書きにくい」「お世話になった方のお店は持ち上げてしまう」——
-      そうした偏りを排除するために、編集部は匿名で運営しています。
+      そうした偏りが入り込む余地を、最初から作らないことを選びました。
     </p>
     <p class="body-para">
       匿名にしているのは、隠したいからではなく、<strong>書きにくい店もきちんと書ける状態を維持するため</strong>です。
-      これはミシュランガイドの調査員が身分を伏せる理由と同じです。
-      身元を出せば、店側の対応が変わり、読者に届けるべき本来の体験が見えなくなります。
+      そのかわり、判断の根拠は運営者の肩書きではなく、<strong>確かめられる情報</strong>に置いています。
+      選び方（02）・お金の流れ（03）・口コミ信頼度の計算（04-D）は、このページとリンク先ですべて公開しています。
     </p>
     <div class="tips-box">
       <p class="tips-title">編集部の構成（役割のみ開示）</p>
       <ul class="role-list">
-        <li><strong>現役飲食店マネージャー</strong>（監修・個人運営）<span class="role-note">名古屋の飲食店で店長として現場に立つ立場から選定方針・掲載基準を最終判断</span></li>
-        <li><strong>AIエージェント</strong>（データ収集・下書き作成）<span class="role-note">店舗データの収集・整合性チェック・記事下書きの生成を担当。公開判断は監修者が行う</span></li>
+        <li><strong>運営者</strong>（個人）<span class="role-note">選び方の基準を決め、問い合わせや指摘に対応する。AIが集めた情報の一部（選定理由など）は、確認してから載せる</span></li>
+        <li><strong>AIエージェント</strong>（データ収集・突き合わせ・下書き作成）<span class="role-note">店舗データの収集・整合性チェック・記事下書きの生成を担当。公開前は、実在・出典・写真の出どころなど、決めた検査を通ったものだけを公開する</span></li>
       </ul>
-      <p class="nb-note" style="margin-top:.8rem;">※ 「編集部」と表記していますが、運営は監修者1名＋AIエージェントによる個人運営です。氏名・所属店舗は非開示です。</p>
+      <p class="nb-note" style="margin-top:.8rem;">※ 「編集部」は、運営者とAIエージェントを合わせた呼び名です。氏名・経歴・所属は公開していません。</p>
     </div>
 
-    <h2 class="section-label" id="inside-perspective">06 — Inside Perspective</h2>
+    <h2 class="section-label" id="inside-perspective">06 — How We Read</h2>
     <p class="art-intro">
-      編集部の強みは、<strong>現場に立つ取材量ではなく、業界知識を使って情報を正しく読み解く解釈力</strong>です。
-      他のグルメメディア・Google 評価・店舗写真・SNS 投稿など、
-      誰もが見られる情報を見ても、業界人だからこそ気づくことがあります。
+      集めた情報は、そのまま並べるだけでなく、<strong>飲食店の仕組み（席数・回転・価格設計・営業時間・仕入れなど）の面から読み解いて</strong>書くことがあります。
+      他のメディア・Google の評価・店舗写真・SNS の投稿など、誰でも見られる情報をもとにするので、書いた内容は出典から確かめられます。
     </p>
     <p class="body-para">
-      たとえば一枚の店内写真からカウンターの深さや厨房動線を読み、
-      店主が何を大事にしているかを推察する。
-      営業時間と混み具合から「狙い目の時間帯」を割り出す。
-      複数メディアで評価が割れている店について、
-      「なぜ割れているのか」を業界の力学から解き明かす——
-      そうした<strong>解釈の厚み</strong>を、これから記事に積み上げていきます。
+      たとえば一枚の店内写真からカウンターの深さや厨房の動線を読み、店のつくりを考える。
+      営業時間と席数から「狙い目の時間帯」を割り出す。
+      複数のメディアで評価が割れている店について、
+      「なぜ割れているのか」を営業のしかたの違いから説明する——
+      そうした<strong>読み解きの厚み</strong>を、これから記事に積み上げていきます。
+      推察は推察とわかるように書き、事実とは混ぜません。
     </p>
     <div class="tips-box">
       <p class="tips-title">今後の記事で扱うトピック例</p>
       <ul>
-        <li>店舗写真から厨房構造・カウンター深さ・動線を読み、店の哲学を推察する</li>
+        <li>店舗写真から厨房構造・カウンター深さ・動線を読み、店のつくりを考える</li>
         <li>業態転換の履歴とその意味（なぜその時期に方向転換したのか）</li>
         <li>シフト帯と時間帯別の狙い目（店内写真と営業時間から推定する）</li>
-        <li>同業態での細部比較（味噌煮込みうどんの麺加水率、味噌配合など、業界知識で違いを解説）</li>
-        <li>複数メディアの評価が割れる店の「なぜ割れているか」を業界視点で解き明かす</li>
+        <li>同業態での細部比較（味噌煮込みうどんの麺加水率、味噌配合などの違いを解説）</li>
+        <li>複数メディアの評価が割れる店の「なぜ割れているか」を、営業のしかたの違いから説明する</li>
         <li>シーン別の使い分けで押さえるべき運用の実態</li>
       </ul>
     </div>
@@ -394,7 +394,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     <h2 class="section-label" id="decline">07 — The Courage to Decline</h2>
     <p class="art-intro">
       <strong>「選ばない勇気」も編集の仕事</strong>です。
-      1100 件を超えるデータベースを持っているからこそ、
+      約5,000軒のデータベースを持っているからこそ、
       「どの店を外すか」の判断に編集部の姿勢が表れると考えています。
     </p>
 
@@ -406,17 +406,17 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
     </div>
     <div class="sub-principle">
       <h3>b) あえて外した店の理由を残す</h3>
-      <p>業界的に有名な店を特集から外す場合、店名を伏せた類型（例:「個室の壁が薄いため接待向けには推さない」）として、外した理由を可能な範囲で記事内に書き残します。読者が自分のシーンに当てはめて判断できるようにするためです。</p>
+      <p>名の知れた店を特集から外す場合、店名を伏せた類型（例:「個室の壁が薄いため接待向けには推さない」）として、外した理由を可能な範囲で記事内に書き残します。読者が自分のシーンに当てはめて判断できるようにするためです。</p>
     </div>
     <div class="sub-principle">
-      <h3>c) 実感指標を優先する</h3>
-      <p>将来的に「編集部が今月最も通った店」「編集部員が自腹で友人を連れて行く店」など、使用実績ベースの指標を公開していきます。広告も点数もない、純粋な使用頻度こそが最も雄弁な推薦だと考えています。</p>
+      <h3>c) 数字の出どころを書く</h3>
+      <p>順位・点数・「話題」などの数字を出すときは、何を数えたものかをその場に書きます。広告費の有無や運営の好みで、数字を動かすことはしません。数字は選ぶ手がかりの 1 つで、決め手にはならないと考えています。</p>
     </div>
 
     <h2 class="section-label" id="never">08 — What We Never Do</h2>
     <p class="art-intro">
-      編集部内部のルールのうち、読者のみなさんにも関わる項目を公開します。
-      これらは編集会議で確認し合っている「絶対にやらないこと」のリストです。
+      運営のルールのうち、読者のみなさんにも関わる項目を公開します。
+      これらは「絶対にやらないこと」のリストです。
     </p>
     <div class="tips-box">
       <p class="tips-title">やらないこと</p>
@@ -448,7 +448,7 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&
   <div class="related-links">
     <a class="related-link is-primary" href="nagoya-gourmet-guide.html" onclick="trackEvent('internal_link_click',{feature:'editorial-policy',link_url:'nagoya-gourmet-guide.html',block:'feature_related'})">名古屋グルメ完全ガイド</a>
     <a class="related-link" href="no-fake-reviews.html" onclick="trackEvent('internal_link_click',{feature:'editorial-policy',link_url:'no-fake-reviews.html',block:'feature_related'})">桜の実態を読む</a>
-    <a class="related-link" href="become-reviewer.html" onclick="trackEvent('internal_link_click',{feature:'editorial-policy',link_url:'become-reviewer.html',block:'feature_related'})">業界人レビュワー募集</a>
+    <a class="related-link" href="become-reviewer.html" onclick="trackEvent('internal_link_click',{feature:'editorial-policy',link_url:'become-reviewer.html',block:'feature_related'})">レビュワー募集</a>
     <a class="related-link" href="../journal/index.html" onclick="trackEvent('internal_link_click',{feature:'editorial-policy',link_url:'../journal/index.html',block:'feature_related'})">Journal（毎日1本）</a>
     <a class="related-link" href="index.html" onclick="trackEvent('internal_link_click',{feature:'editorial-policy',link_url:'index.html',block:'feature_related'})">特集記事一覧</a>
     <a class="related-link" href="../about.html" onclick="trackEvent('internal_link_click',{feature:'editorial-policy',link_url:'../about.html',block:'feature_related'})">About NAGOYA BITES</a>
