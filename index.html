@@ -89,6 +89,22 @@ function nbImgFallback(img){
   img.setAttribute("data-nb-fallback","1");
   img.removeAttribute("onerror");
   img.removeAttribute("srcset");
+  // 一覧のカードは、読み込めなかった写真を暗い代替図にせず、写真が無い店と同じ「ジャンルの印」に替える（I-19）。
+  // 写真に付けていた撮影者の表示も、写真ごと外す（写真が無いのに撮影者だけ残さない）
+  var ci=img.parentNode;
+  if(ci&&ci.classList&&ci.classList.contains("ci")&&ci.closest&&ci.closest(".card")){
+    var mark=document.createElement("span");
+    mark.className="ci-mark";
+    mark.setAttribute("aria-hidden","true");
+    mark.textContent=img.getAttribute("data-genre")||"";
+    ci.replaceChild(mark,img);
+    var credit=ci.querySelector(".photo-credit");
+    if(credit)credit.parentNode.removeChild(credit);
+    var creditLine=ci.closest(".card").querySelector(".cm-credit");
+    if(creditLine)creditLine.parentNode.removeChild(creditLine);
+    ci.closest(".card").classList.add("is-nophoto");
+    return;
+  }
   var s=nbStoreByName(img.getAttribute("alt")||"");
   img.src=s?nbStoreFigure(s):NB_IMG_FALLBACK;
   img.style.objectFit="cover";
@@ -156,6 +172,13 @@ function nbPhotoCredit(r) {
   var c = String(r['写真クレジット'] || '').trim();
   if (!c) return '';
   return '<span class="photo-credit" title="Google マップの利用者が投稿した写真です">📷 ' + nbEscHtml(c) + '</span>';
+}
+// 一覧のリスト表示は写真が 96px の四角で、写真の上の帯では撮影者が 2 文字しか読めない。
+// 文字の行（cm-credit）にも同じ撮影者を載せ、リスト表示ではこちらだけを見せる（I-19）。帯と同じ条件・同じ文字
+function nbPhotoCreditLine(r) {
+  var band = nbPhotoCredit(r);
+  if (!band) return '';
+  return band.replace('<span class="photo-credit"', '<span class="cm-credit"');
 }
 // 画像 CDN プロキシ — wsrv.nl 経由でリサイズ + シャープニング + WebP 配信。
 // Hot Pepper API は店舗によって L サイズが _238.jpg / _480.jpg と分かれるため、
@@ -474,11 +497,29 @@ body.search-query-active .card-why{display:flex;}
 .card-flag.trend-warm{background:linear-gradient(135deg,#a8895a,#7a5c10);}
 .card-flag.flag-editor{background:linear-gradient(135deg,#2d6a4f,#1b4332);}
 .card-flag.flag-insider{background:rgba(42,106,90,.94);}
-.card-flag.flag-pro{background:var(--gold);}
 .cb{padding:0;}
 .cn{font-family:var(--font-body);font-weight:600;font-size:var(--fs-lg);color:#2C2C2A;margin-bottom:6px;line-height:1.35;max-height:44px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
 .cmeta{display:flex;gap:.25rem .7rem;font-size:var(--fs-xs);color:var(--muted);margin-bottom:8px;flex-wrap:wrap;align-items:center;line-height:1.5;}
 .cmeta .cc-cell .cc-l{font-family:var(--font-body);font-weight:500;color:var(--dim);margin-right:.25rem;}
+/* ── I-19: コンパクトなカード（判断の記録 0036）── */
+/* 題名のリンクはカード全体を覆う（新しいタブ・中クリック・長押しで店舗ページを開ける）。ふつうのクリックは JS が詳細を開く */
+.cn-link{color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent;}
+.cn-link::after{content:"";position:absolute;inset:0;z-index:1;}
+.cn-link:focus-visible{outline:none;}
+.cn-link:focus-visible::after{outline:2px solid var(--gold);outline-offset:2px;border-radius:12px;}
+.card.reel-open .cn-link::after{display:none;}
+/* リンクの上に出す、押せるもの（予約・地図・媒体・特集へのリンク） */
+.card .card-cta a,.card .mrow a,.card a.card-featured{position:relative;z-index:2;}
+/* 札は飾りなので、下のリンクへクリックを通す */
+.badge,.card-flag{pointer-events:none;}
+/* 写真が無い店・読み込めなかった店: ジャンルの印（「写真準備中」の暗い図は出さない） */
+.ci-mark{display:flex;align-items:center;justify-content:center;width:100%;height:100%;padding:.5rem;background:var(--bg2);color:var(--dim);font-family:var(--font-body);font-size:var(--fs-lg);font-weight:600;line-height:1.35;text-align:center;overflow:hidden;}
+.card.is-nophoto .ci::after{display:none;}
+/* 2 行目「最寄駅 徒歩N分・ジャンル」はリストとスマホのタイルで見せる（PC のカードは従来の地域名の行） */
+.cm-near{display:none;}
+.card-rating-n{font-weight:400;color:var(--dim);white-space:nowrap;}
+.card-rating{flex-wrap:wrap;}
+.cm-credit{display:none;}
 .gscore{color:#f5a623;font-weight:500;}
 .mig-embed-box{width:100%;max-width:400px;margin:0 auto 1.5rem;}
 .mig-embed-box iframe{width:100%;height:560px;border-radius:12px;}
@@ -826,7 +867,7 @@ header{height:52px;}
 .filter-toggle-wrap{padding:.5rem 1rem;}
 .sec-head{padding:1.4rem 1rem 1rem;}
 .hpc{padding:.5rem 1rem;}
-.grid{grid-template-columns:1fr;gap:16px;padding:1rem;}
+.grid{gap:10px;padding:1rem;}
 footer{padding:1.5rem 1rem;}
 .pref-tabs{padding:.5rem .9rem;}
 .cap-tabs{padding:.5rem .9rem;}
@@ -1122,21 +1163,47 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .view-toggle button{background:transparent;border:1px solid var(--border);color:var(--dim);width:var(--tap-min);height:var(--tap-min);display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:2px;transition:all .2s;padding:0;}
 .view-toggle button:hover{color:var(--text);border-color:var(--border-h);}
 .view-toggle button.active{color:var(--gold);border-color:var(--gold);background:rgba(122,92,16,.06);}
-/* ── LIST MODE ── */
+/* ── LIST MODE（コンパクトなカード・I-19）──
+   96px の四角の写真＋名前／最寄駅・ジャンル／価格帯と Google ★／口コミ信頼度。♡ は右上。
+   予約ボタン・媒体リンク・紹介文・札は出さない（PC の写真カードとクイックビューに残す） */
 .grid.list-mode{grid-template-columns:1fr !important;gap:10px;}
-.grid.list-mode .card{flex-direction:row;padding:8px;align-items:stretch;}
-.grid.list-mode .ci{width:120px;min-width:120px;height:90px;aspect-ratio:auto;margin:0;border-radius:8px;flex-shrink:0;}
+.grid.list-mode .card{flex-direction:row;align-items:flex-start;gap:12px;padding:8px;}
+.grid.list-mode .ci{flex:0 0 96px;width:96px;height:96px;aspect-ratio:1/1;margin:0;border-radius:8px;}
 .grid.list-mode .ci::after{display:none;}
-.grid.list-mode .cb{flex:1;padding:0 10px;display:flex;flex-direction:column;justify-content:center;}
-.grid.list-mode .cn{font-size:.85rem;margin-bottom:2px;}
+.grid.list-mode .ci-mark{font-size:var(--fs-sm);}
+.grid.list-mode .cb{flex:1 1 auto;min-width:0;min-height:96px;padding:0;display:flex;flex-direction:column;justify-content:center;}
+.grid.list-mode .cn{font-size:var(--fs-md);margin-bottom:4px;padding-right:38px;}
+.grid.list-mode .cmeta{margin-bottom:0;row-gap:2px;}
+.grid.list-mode .cm-area{display:none;}
+.grid.list-mode .cm-near{display:block;flex-basis:100%;}
+/* 並べ方: 評価（件数つき）→ 価格帯 → 口コミ信頼度。スマホの幅では 評価 / 価格帯＋信頼度 の 2 行に収まる */
+.grid.list-mode .card-rating{order:1;}
+.grid.list-mode .cm-price{order:2;}
+.grid.list-mode .cc-cell{order:3;}
+/* 客が投稿した写真の撮影者: 96px の写真の上の帯では読めないので、リスト表示では文字の行に出す（帯は隠す） */
+.grid.list-mode .photo-credit{display:none;}
+.grid.list-mode .cm-credit{display:block;order:4;flex-basis:100%;min-width:0;font-size:var(--fs-xs);color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .grid.list-mode .badge,.grid.list-mode .card-flag{display:none;}
 .grid.list-mode .card-lead{display:none;}
 .grid.list-mode .card-tags{display:none;}
 .grid.list-mode .card-featured{display:none;}
-.grid.list-mode .card-cta{display:none;}
-.grid.list-mode .mrow{display:none;}
+.grid.list-mode .card-actions{display:none;}
+/* スマホの「グリッド表示」: 2 列の写真タイル（1:1 の写真・名前・最寄駅・Google ★・口コミ信頼度） */
 @media(max-width:768px){
-.grid.list-mode .ci{width:90px;min-width:90px;height:70px;}
+.grid:not(.list-mode) .card{padding:8px;}
+.grid:not(.list-mode) .ci{aspect-ratio:1/1;margin:-8px -8px 8px;width:calc(100% + 16px);}
+.grid:not(.list-mode) .ci-mark{font-size:var(--fs-md);}
+.grid:not(.list-mode) .cn{font-size:var(--fs-md);margin-bottom:4px;}
+.grid:not(.list-mode) .cmeta{margin-bottom:0;}
+.grid:not(.list-mode) .cm-area{display:none;}
+.grid:not(.list-mode) .cm-near{display:block;flex-basis:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.grid:not(.list-mode) .cm-price,.grid:not(.list-mode) .card-rating-n{display:none;}
+.grid:not(.list-mode) .badge,.grid:not(.list-mode) .card-flag{display:none;}
+.grid:not(.list-mode) .card-lead{display:none;}
+.grid:not(.list-mode) .card-tags{display:none;}
+.grid:not(.list-mode) .card-featured{display:none;}
+.grid:not(.list-mode) .card-actions{display:none;}
+.grid:not(.list-mode) .reel-play,.grid:not(.list-mode) .reel-tag{display:none;}
 }
 /* ── FAV BUTTON ── */
 .fav-btn{position:absolute;top:.6rem;right:.6rem;z-index:3;background:rgba(10,10,8,.55);backdrop-filter:blur(4px);border:none;color:#fff;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;padding:0;}
@@ -1144,9 +1211,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.ft:focus-visible,.pt:f
 .fav-btn::after{content:"";position:absolute;inset:-5px;}
 .fav-btn:hover{background:rgba(10,10,8,.75);transform:scale(1.08);}
 .fav-btn.faved{color:#e74c3c;}
-.grid.list-mode .fav-btn{position:relative;top:0;right:0;width:28px;height:28px;flex-shrink:0;align-self:center;background:var(--surface);color:var(--dim);}
-.grid.list-mode .fav-btn svg{width:14px;height:14px;}
-.grid.list-mode .fav-btn::after{inset:-8px;}
+.grid.list-mode .fav-btn{top:8px;right:8px;background:var(--surface);color:var(--dim);}
 .grid.list-mode .fav-btn.faved{color:#e74c3c;background:rgba(231,76,60,.08);}
 /* ── PAGINATION ── */
 .pagination{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;align-items:center;padding:1.5rem 1.5rem 2.5rem;}
@@ -1358,7 +1423,8 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 .m-section-title::before,.mml::before{display:none;}
 .m-section-title,.mml{font-size:var(--fs-sm);color:var(--text);}
 @media(max-width:420px){#modal-cta-row .modal-cta-btn{flex:none;}}
-@media(max-width:768px){.grid{grid-template-columns:minmax(0,1fr);}}
+/* スマホの一覧は 2 列の写真タイル。リスト表示は .grid.list-mode の !important で 1 列（I-19） */
+@media(max-width:768px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(min-width:769px) and (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:720px){.no-sakura-pillars{grid-template-columns:1fr;border:0;}.no-sakura-pillar{border:0;padding:0;}}
 @media(max-width:640px){.authority-bar{display:grid;grid-template-columns:1fr 1fr;gap:.6rem 1rem;}.auth-item{font-size:var(--fs-xs);}.auth-item:last-child:nth-child(odd){grid-column:1/-1;justify-content:center;}}
@@ -7860,7 +7926,7 @@ function enhanceStoreIndex() {
       }
       function renderMore(){
         var next = current.slice(shown, shown + SI_PAGE);
-        cardWrap.insertAdjacentHTML('beforeend', next.map(buildCardHtml).join(''));
+        cardWrap.insertAdjacentHTML('beforeend', next.map(function(s){ return buildCardHtml(s, 'index'); }).join(''));
         shown += next.length;
         if (shown >= current.length) moreBtn.style.display = 'none';
         else { moreBtn.style.display = ''; moreBtn.textContent = 'もっと見る（残り ' + (current.length - shown) + '店）'; }
@@ -9767,11 +9833,66 @@ function nbVerifiedReel(r) {
   return null;                                  // 第三者アカ＝証跡が付くまで保留
 }
 
-function buildCardHtml(r) {
+// ── 一覧のカードの部品（I-19・判断の記録 0036）──────────────────────────────
+// 店舗ページへのリンクは、トップに埋め込んである「エリア別 全店舗一覧」（section#store-index）の
+// <a href="stores/….html">店名（エリア・ジャンル）</a> から引く（店舗ページが現役かどうかは、その一覧を作る
+// scripts/inject_store_links.js が確かめている）。同じ表記が 2 件以上ある店・店舗ページが無く検索への
+// ディープリンクだけの店は、リンクを付けない（カードは従来どおりボタンとして詳細を開く）。
+var NB_STORE_HREFS = null;
+function nbStoreHref(r) {
+  if (!NB_STORE_HREFS) {
+    NB_STORE_HREFS = Object.create(null);
+    var links = document.querySelectorAll('#store-index .store-index-list a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var k = links[i].textContent;
+      NB_STORE_HREFS[k] = (k in NB_STORE_HREFS) ? '' : (links[i].getAttribute('href') || '');
+    }
+  }
+  var key = (r['店名'] || '(無名店)') + '（' + (String(r['エリア'] || '').trim() || 'その他') + (r['ジャンル'] ? '・' + r['ジャンル'] : '') + '）';
+  var href = NB_STORE_HREFS[key] || '';
+  return /^stores\/[^#?\s"'<>]+\.html$/.test(href) ? href : '';
+}
+// 駅名の比べ方。路線名・事業者名の頭と「駅」を落とし、ヶ/ケ のゆれをそろえる
+function nbStationKey(s) {
+  return String(s || '').replace(/駅$/, '')
+    .replace(/^(?:名古屋市営地下鉄|名古屋市営|市営地下鉄|地下鉄|名古屋臨海高速鉄道|JR|名鉄|近鉄|あおなみ線|リニモ)/, '')
+    .replace(/^[^\s駅]{1,6}線/, '')
+    .replace(/[ヶケ]/g, 'ケ');
+}
+// カードの 2 行目「最寄駅 徒歩N分」。徒歩の分数は、最寄駅と同じ駅の分数だと確かめられたときだけ付ける
+// （アクセスの文は複数の駅を並べるので、最寄駅と別の駅の分数を付けると誤りになる）。
+// 最寄駅が無い店は、アクセスの文から読めた駅と分数（同じ一致の組なので食い違わない）だけを、駅名がきれいに読めたときに出す
+function nbNearText(r) {
+  var walk = mWalkFromAccess(r['アクセス']);
+  var st = r['最寄駅'] ? String(r['最寄駅']).replace(/駅$/, '') : '';
+  if (st) return st + '駅' + (walk && nbStationKey(walk.station) === nbStationKey(st) ? ' 徒歩' + walk.min + '分' : '');
+  if (walk) {
+    var wk = nbStationKey(walk.station);
+    if (/^[぀-ヿ㐀-鿿A-Za-z0-9ー々]{1,10}$/.test(wk)) return wk + '駅 徒歩' + walk.min + '分';
+  }
+  return '';
+}
+// 写真が表示される幅の目安（srcset から合う大きさを選ばせる）。リストは 96px の四角、グリッドは列の幅
+function nbCardSizes(ctx) {
+  if (ctx === 'index') return '(max-width:640px) 100vw, (max-width:900px) 50vw, 25vw';
+  var g = document.getElementById('grid');
+  return (g && g.classList.contains('list-mode')) ? '96px' : '(max-width:900px) 50vw, (max-width:1024px) 33vw, 25vw';
+}
+// カードのクリック。ふつうのクリックは詳細（クイックビュー）を開く。新しいタブで開く操作（修飾キー・中クリック）と、
+// ♡ は、それぞれ本来の動きに任せる。中クリックは click ではなく auxclick なので、ここには来ない
+function nbCardClick(ev, i) {
+  var t = ev.target;
+  if (t && t.closest && t.closest('.fav-btn')) return;
+  if (ev.button || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+  ev.preventDefault();
+  openM(i, 'grid');
+}
+
+function buildCardHtml(r, ctx) {
     var idx = ALL_STORES.indexOf(r);
     var verified = nbVerifiedReel(r);
     var reel = (verified && verified.kind === 'reel') ? verified : null;  // カードに出すのは動画のみ
-    var photo = r['写真URL'] || nbStoreFigure(r);
+    var photo = r['写真URL'] || '';   // 実写がある店だけ <img> を出す。無い店はジャンルの印（「写真準備中」の暗い図は出さない）
     var hpUrl = hotpepperUrl(r);
     var genre = (r['ジャンル']||'').split('・')[0];
     var pref = r['都道府県'] || '';
@@ -9798,11 +9919,13 @@ function buildCardHtml(r) {
       var fUrl = 'features/' + shown[0].slug + '.html';
       featuredHtml = '<a class="card-featured" href="' + fUrl + '" onclick="event.stopPropagation();trackEvent(\'internal_link_click\',{store_name:\'' + r['店名'].replace(/'/g,'') + '\',link_url:\'' + fUrl + '\',block:\'card_featured_in\'})" title="' + nbEscHtml(feats.map(function(fz){ return fz.title; }).join(' / ')) + '"><svg class="ic" aria-hidden="true"><use href="#i-book-open"/></svg>' + (feats.length > 1 ? '特集' + feats.length + '本に掲載' : '特集に掲載') + '</a>';
     }
-    var ratingHtml = r['Google評価'] ? '<span class="card-rating" title="Googleマップ評価"><span class="gs-src">Google</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' + r['Google評価'] + '</span>' : '';
+    var gCount = parseInt(r['口コミ数'], 10) || 0;   // Google の口コミ件数（モーダルの「Google 評価」と同じ値）。評価の確からしさを件数で添える
+    var ratingHtml = r['Google評価'] ? '<span class="card-rating" title="Googleマップ評価"><span class="gs-src">Google</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' + r['Google評価'] + (gCount > 0 ? '<span class="card-rating-n">（' + gCount.toLocaleString('ja-JP') + '件）</span>' : '') + '</span>' : '';
     var trendLabel = r['トレンドラベル'] || '';
     var trendCls = trendLabel === '話題沸騰' ? 'trend-hot' : trendLabel === '注目上昇中' ? 'trend-rising' : trendLabel === 'じわじわ人気' ? 'trend-warm' : '';
     // ── 優先バッジは写真の上に1つだけ出す（複数バッジの重なりを解消・DSN-001）。
-    //    優先順: 話題フラグ ＞ 編集部推薦 ＞ 経験者レビュー ＞ 紹介文あり ──
+    //    優先順: 話題フラグ ＞ 編集部推薦 ＞ 経験者レビュー。
+    //    「ポイント紹介」の札は外した（紹介文が付いている店の大半に付き、店の違いを伝えない・0032 の 5・0036）──
     var flagHtml = '';
     var leadKicker = '';
     if (trendLabel && trendCls) {
@@ -9811,8 +9934,6 @@ function buildCardHtml(r) {
       flagHtml = '<span class="card-flag flag-editor">編集部推薦</span>';
     } else if (r.insiderReviewCount) {
       flagHtml = '<span class="card-flag flag-insider">経験者レビュー' + r.insiderReviewCount + '件</span>';
-    } else if (r['おすすめポイント']) {
-      flagHtml = '<span class="card-flag flag-pro">ポイント紹介</span>';
     }
     if (r.editorReason) leadKicker = '編集部：';
     else if (r.insiderNote) leadKicker = '知っておきたいこと：';
@@ -9843,15 +9964,26 @@ function buildCardHtml(r) {
       var approx = r.__distApprox !== false;
       distBadge = '<span class="dist-badge' + (approx ? ' approx' : '') + '" title="' + (approx ? '現在地からの概算距離（エリア中心点）' : '現在地からの直線距離') + '">' + (approx ? '~' : '') + distText + '</span>';
     }
-    return '<div class="card" onclick="openM(' + idx + ',\'grid\')" role="button" tabindex="0" aria-label="' + r['店名'] + 'の詳細を見る">'
-      + '<div class="ci">' + distBadge + nbPhotoCredit(r) + '<img src="' + nbImage(photo, 600) + '" srcset="' + nbSrcset(photo, [400, 600, 800]) + '" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" alt="' + r['店名'] + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)">'
-      + (reel ? '<button class="reel-play" onclick="nbPlayReel(event,this,\'' + reel.code + '\')" aria-label="' + nbEscHtml(r['店名']) + 'のリール動画を再生"><i aria-hidden="true"></i></button><span class="reel-tag">リール</span>' : '')
+    // ── I-19: コンパクトなカード（判断の記録 0036）──
+    //    ・題名は店舗ページへの本物のリンク（新しいタブ・中クリック・長押しで開ける）。ふつうのクリックはこれまでどおり詳細（クイックビュー）を開く。
+    //      店舗ページが無い店は、リンクを付けず従来どおりのボタン（role="button"）にする
+    //    ・写真は実写がある店だけ。無い店（読み込めなかった店も）はジャンルの印を置く
+    //    ・2 行目（cm-near）は「最寄駅 徒歩N分」。リスト表示とスマホのタイルで見せ、地域名の行（cm-area）は PC のカードで見せる
+    var ename = nbEscHtml(r['店名']);
+    var href = nbStoreHref(r);
+    var nearLine = [nbNearText(r) || ((pref && pref !== '愛知県' ? pref + ' ' : '') + area), genre].filter(Boolean).join('・');
+    var photoHtml = photo
+      ? '<img src="' + nbImage(photo, 400) + '" srcset="' + nbSrcset(photo, [192, 288, 400, 600, 800]) + '" sizes="' + nbCardSizes(ctx) + '" alt="' + ename + '" data-genre="' + nbEscHtml(genre) + '" loading="lazy" decoding="async" width="400" height="300" onerror="nbImgFallback(this)">'
+      : '<span class="ci-mark" aria-hidden="true">' + nbEscHtml(genre) + '</span>';
+    return '<div class="card' + (photo ? '' : ' is-nophoto') + (href ? ' has-link' : '') + '" onclick="nbCardClick(event,' + idx + ')"' + (href ? '' : ' role="button" tabindex="0" aria-label="' + ename + 'の詳細を見る"') + '>'
+      + '<div class="ci">' + distBadge + (photo ? nbPhotoCredit(r) : '') + photoHtml
+      + (reel ?'<button class="reel-play" onclick="nbPlayReel(event,this,\'' + reel.code + '\')" aria-label="' + nbEscHtml(r['店名']) + 'のリール動画を再生"><i aria-hidden="true"></i></button><span class="reel-tag">リール</span>' : '')
       + '</div>'
       + '<span class="badge">' + genre + '</span>'
       + flagHtml
       + '<div class="cb">'
-      + '<h3 class="cn">' + r['店名'] + '</h3>'
-      + '<div class="cmeta"><span class="cm-area"><svg class="ic" aria-hidden="true"><use href="#i-map-pin"/></svg>' + (pref && pref !== '愛知県' ? pref + ' ' : '') + area + '</span>' + (r['価格帯'] ? '<span>' + r['価格帯'] + '</span>' : '') + ratingHtml + ccMetaHtml + '</div>'
+      + '<h3 class="cn">' + (href ? '<a class="cn-link" href="' + nbEscHtml(href) + '">' + ename + '</a>' : ename) + '</h3>'
+      + '<div class="cmeta"><span class="cm-area"><svg class="ic" aria-hidden="true"><use href="#i-map-pin"/></svg>' + (pref && pref !== '愛知県' ? pref + ' ' : '') + area + '</span><span class="cm-near">' + nbEscHtml(nearLine) + '</span>' + (r['価格帯'] ? '<span class="cm-price">' + r['価格帯'] + '</span>' : '') + ratingHtml + ccMetaHtml + (photo ? nbPhotoCreditLine(r) : '') + '</div>'
       + '</div>'
       + tagHtml
       + featuredHtml
@@ -11114,11 +11246,8 @@ window.addEventListener('appinstalled', function() {
 // ================================================================
 // Keyboard support for cards (Enter key)
 // ================================================================
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && document.activeElement && document.activeElement.classList.contains('card')) {
-    document.activeElement.click();
-  }
-});
+// カードの Enter / Space は、冒頭の keydown（role="button" の要素を click にする）が受け持つ。
+// ここでも click すると、1 回の Enter で modal_open が 2 回数えられていた（I-19・判断の記録 0036）
 
 // ================================================================
 // Escape key closes modal
@@ -11672,8 +11801,8 @@ function showFavs() {
 
 // Patch buildCardHtml to include fav button
 var _origBuildCardHtml = buildCardHtml;
-buildCardHtml = function(r) {
-  var html = _origBuildCardHtml(r);
+buildCardHtml = function(r, ctx) {
+  var html = _origBuildCardHtml(r, ctx);
   var favs = getFavs();
   var isFav = favs.indexOf(r['店名']) !== -1;
   var safeName = (r['店名']||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -11876,28 +12005,45 @@ openM = function(i, source) {
 // ================================================================
 // [6] グリッド / リスト表示切り替え
 // ================================================================
-function setViewMode(mode) {
+// 表示の既定（I-19・0036）: 利用者が選んだ表示が保存されていればそれ。無ければ、スマホ（幅 768px 以下）は
+// 4〜5 枚が一度に見えるリスト、それ以外（PC・タブレット）は写真のグリッド。既定は保存しない
+// （保存すると、あとで画面の幅が変わっても追従しない）
+function nbSavedView() {
+  try { var v = localStorage.getItem('nb_view'); if (v === 'list' || v === 'grid') return v; } catch(e) {}
+  return '';
+}
+function nbDefaultView() {
+  return (window.matchMedia && window.matchMedia('(max-width:768px)').matches) ? 'list' : 'grid';
+}
+function applyViewMode(mode) {
   var grid = document.getElementById('grid');
   var btnGrid = document.getElementById('vt-grid');
   var btnList = document.getElementById('vt-list');
   if (!grid) return;
-  if (mode === 'list') {
-    grid.classList.add('list-mode');
-    if (btnGrid) btnGrid.classList.remove('active');
-    if (btnList) btnList.classList.add('active');
-  } else {
-    grid.classList.remove('list-mode');
-    if (btnGrid) btnGrid.classList.add('active');
-    if (btnList) btnList.classList.remove('active');
-  }
+  var isList = mode === 'list';
+  grid.classList.toggle('list-mode', isList);
+  if (btnGrid) { btnGrid.classList.toggle('active', !isList); btnGrid.setAttribute('aria-pressed', isList ? 'false' : 'true'); }
+  if (btnList) { btnList.classList.toggle('active', isList); btnList.setAttribute('aria-pressed', isList ? 'true' : 'false'); }
+  // 写真の「表示される幅」の目安もそろえる（リストは 96px、グリッドは列の幅）。描き直さずに最適な大きさが選ばれる
+  var imgs = grid.querySelectorAll('.card .ci img');
+  var sizes = nbCardSizes();
+  for (var i = 0; i < imgs.length; i++) imgs[i].setAttribute('sizes', sizes);
+}
+function setViewMode(mode) {
+  applyViewMode(mode);
   try { localStorage.setItem('nb_view', mode); } catch(e) {}
 }
 function restoreViewMode() {
-  try {
-    var mode = localStorage.getItem('nb_view');
-    if (mode === 'list') setViewMode('list');
-  } catch(e) {}
+  applyViewMode(nbSavedView() || nbDefaultView());
 }
+// 保存された選択が無いときは、画面の幅が 768px をまたいだら既定に追従する（端末を横にしたときなど）
+(function() {
+  if (!window.matchMedia) return;
+  var mq = window.matchMedia('(max-width:768px)');
+  var follow = function() { if (!nbSavedView()) restoreViewMode(); };
+  if (mq.addEventListener) mq.addEventListener('change', follow);
+  else if (mq.addListener) mq.addListener(follow);
+})();
 
 // ================================================================
 // [7] 通知トースト
@@ -11942,12 +12088,12 @@ function suggestSearch(keyword) {
 // ================================================================
 var _origLoadStores = loadStores;
 loadStores = function(stores) {
+  restoreViewMode();   // 描画の前に表示（リスト／グリッド）を決める。あとから切り替えると一覧の並びがずれる
   _origLoadStores(stores);
   buildRanking();
   buildTrendRanking();
   renderHistory();
   updateFavCount();
-  restoreViewMode();
 };
 
 // ================================================================

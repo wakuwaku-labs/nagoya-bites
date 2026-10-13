@@ -334,7 +334,6 @@ test('トップ: 店のモーダルとカードの言い方（区画名・署名
     '<div class="m-section-title">飲食業界の経験者のレビュー</div>',
     "leadKicker = '知っておきたいこと：'",
     "leadKicker = 'ポイント：'",
-    '<span class="card-flag flag-pro">ポイント紹介</span>',
     "'経験者レビュー' + r.insiderReviewCount + '件'",
     "var sigParts = [];",
     "sigParts.push('<strong>' + mEsc(visitLabel) + '</strong>')",
@@ -345,6 +344,8 @@ test('トップ: 店のモーダルとカードの言い方（区画名・署名
   for (const s of must) assert.ok(html.includes(s), `新しい言い方が無い: ${s}`);
   const gone = ['現役飲食店マネージャーが編集', '編集部の視点', '業界人メモ', 'プロの目利き', '匿名の業界人', '名古屋の業界人', '編集部・業界人の推薦'];
   for (const s of gone) assert.ok(!html.includes(s), `古い言い方が戻っている: ${s}`);
+  // 「ポイント紹介」の札は外した（紹介文が付く店の大半に付き、店の違いを伝えない・0032 の 5・0036）。紹介文の見出し「ポイント：」は残す
+  assert.ok(!html.includes('flag-pro">ポイント紹介'), '「ポイント紹介」の札が戻っている');
   // クラス名と id は変えない（外から参照されている・0031 の 4）
   for (const s of ['id="m-insider-note"', 'id="m-insider-reviews"', 'class="card-flag flag-insider"', 'insider-cta']) assert.ok(readRel('index.html').includes(s), `名前を変えていない: ${s}`);
 });
