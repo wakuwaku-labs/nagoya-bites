@@ -1,14 +1,9 @@
 {
-  "generatedAt": "2026-10-13T00:24:33.193Z",
+  "generatedAt": "2026-10-13T00:41:24.771Z",
   "run": {
-    "tabelog": {
-      "attempted": 2,
-      "fetched": 0,
-      "stopped": false
-    },
     "hotpepper": {
-      "attempted": 58,
-      "fetched": 58,
+      "attempted": 60,
+      "fetched": 60,
       "stopped": false
     }
   },
@@ -21,9 +16,9 @@
     },
     "hotpepper": {
       "links": 4848,
-      "neverChecked": 203,
+      "neverChecked": 143,
       "unfetched": 0,
-      "lastFetchedAt": "2026-10-13T00:24:33.159Z"
+      "lastFetchedAt": "2026-10-13T00:41:24.739Z"
     }
   },
   "closures": {
@@ -1463,6 +1458,16 @@
       "検出タイトル": null,
       "エラー": "HTTP 404",
       "検証日": "2026-10-12T21:04:53.357Z"
+    },
+    {
+      "店名": "日本酒と干物と燻製　居酒屋かけはし",
+      "エリア": "栄",
+      "種別": "hotpepper",
+      "url": "https://www.hotpepper.jp/strJ004559158/",
+      "理由": "name-mismatch",
+      "検出タイトル": "居酒屋かけはし",
+      "エラー": null,
+      "検証日": "2026-10-13T00:37:31.252Z"
     },
     {
       "店名": "和牛ホルモン焼 三國 本店",

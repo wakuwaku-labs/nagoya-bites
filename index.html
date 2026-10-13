@@ -2331,7 +2331,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 
 <!-- STORE-INDEX:START 2026-10-13 -->
 <section id="store-index" class="store-index" aria-label="エリア別 全店舗一覧">
-<h2 class="store-index-title">エリア別 全店舗一覧（5004店）</h2>
+<h2 class="store-index-title">エリア別 全店舗一覧（5005店）</h2>
 <p class="store-index-lead">各エリアをタップで展開。掲載全店舗のページへリンクします。</p>
 <details class="store-index-area" data-area="名古屋（名古屋駅/西区/中村区）">
 <summary>名古屋（名古屋駅/西区/中村区）（962店）</summary>
@@ -5748,7 +5748,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 </ul>
 </details>
 <details class="store-index-area" data-area="栄">
-<summary>栄（337店）</summary>
+<summary>栄（338店）</summary>
 <ul class="store-index-list">
 <li><a href="stores/J003474639.html">【栄限定】食べ飲み放題2500円 ひねり蛇口ハイ×食べ飲み放題 大衆酒泉テルマエ（栄・居酒屋）</a></li>
 <li><a href="stores/J004026554.html">0秒レモンサワー ときわ亭 名古屋栄店（栄・焼肉・ホルモン）</a></li>
@@ -6032,6 +6032,7 @@ a.card-featured{display:inline-flex;align-items:center;gap:.35rem;min-height:var
 <li><a href="stores/J001225840.html">天ぷら酒場 KITSUNE 藤が丘店（栄・居酒屋）</a></li>
 <li><a href="stores/J000729169.html">店長のひとりごと（栄・居酒屋）</a></li>
 <li><a href="stores/J004067788.html">兎二角 とにかく 栄駅店（栄・居酒屋）</a></li>
+<li><a href="index.html#q=%E7%87%88%20tou">燈 tou（栄・つけ麺）</a></li>
 <li><a href="stores/J000716958.html">豆家のりのり 和食 栄（栄・居酒屋）</a></li>
 <li><a href="stores/J001179822.html">豆鳥 栄 住吉店（栄・居酒屋）</a></li>
 <li><a href="stores/J001126882.html">豚しゃぶ 一力 錦店（栄・和食）</a></li>
@@ -7929,7 +7930,7 @@ var FULL_CATALOG_LOADED = false;
 // 中身が変わると URL ?v=... が変わり、force-cache でも自動で再取得される。
 // 中身が同じならブラウザは前回キャッシュを使うので帯域は無駄にならない。
 // このプレースホルダ値は build.js が上書きする。初期値は dev/local 起動時の fallback。
-var STORES_JSON_VERSION = 'a259e5f0dbe1';
+var STORES_JSON_VERSION = '797905cc2111';
 function fetchFullCatalog() {
   if (FULL_CATALOG_LOADED) return;
   fetch('data/stores.json?v=' + STORES_JSON_VERSION, { cache: 'force-cache' })
