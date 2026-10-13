@@ -217,7 +217,7 @@ function cmdBuild() {
     },
     rules: {
       title: 'タイトルに「エリア語」と「シーン語（またはジャンル語）」を最低1組ずつ入れる。語の詰め込み・煽りは不可。',
-      title_front: 'タイトルの前30字（「｜NAGOYA BITES Journal」を除く）に、エリア語・店名（検索される表記）かジャンル語・シーン語（記事にシーンがあるとき）を置く。検索結果では後ろが切れるため。業界人の視点や数字の読み解きは後半でよい（SEO-137）。',
+      title_front: 'タイトルの前30字（「｜NAGOYA BITES Journal」を除く）に、エリア語・店名（検索される表記）かジャンル語・シーン語（記事にシーンがあるとき）を置く。検索結果では後ろが切れるため。運営の面からの読み解きや数字の読み解きは後半でよい（SEO-137）。',
       internal_link: '使ったKWに紐づく特集へ本文から内部リンクを1本張る（KW利用がそのまま回遊導線になる）。',
       sns: 'docs/daily-posts/ の Note/Instagram/X 原稿の冒頭にも同じKW組を使い、入口の検索意図を揃える。',
       forbidden: '実在しない店・未検証店をKWに合わせて創作しない（架空店ブロック優先）。KWのためにタイトルの日本語を壊さない。'
@@ -426,7 +426,7 @@ function cmdSuggest(opts) {
 
   const combos = sceneOrder.slice(0, 4).map(s => ({
     title_kw: [pickedArea.kw, s.kw].concat(genre ? [genre.kw] : []),
-    example_title_shape: `${pickedArea.kw}の${genre ? genre.kw : '店'}、${s.kw}で使うなら——<業界人視点の切り口>`,
+    example_title_shape: `${pickedArea.kw}の${genre ? genre.kw : '店'}、${s.kw}で使うなら——<運営の面から読み解く切り口>`,
     internal_links: [{ kw: pickedArea.kw, feature: pickedArea.feature }, { kw: s.kw, feature: s.feature }]
       .concat(genre ? [{ kw: genre.kw, feature: genre.feature }] : []),
     in_season: monthScenes.some(x => [s.kw].concat(s.aliases || []).includes(x))
