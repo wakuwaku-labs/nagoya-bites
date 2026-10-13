@@ -28,7 +28,7 @@
  *     "eyebrow": "今日の1軒",
  *     "lead": "リード文",
  *     "body_html": "<p>本文HTML</p>",
- *     "insider_points": ["業界人視点1", "業界人視点2", "業界人視点3"],
+ *     "insider_points": ["読み解きのポイント1", "読み解きのポイント2", "読み解きのポイント3"],
  *     "stores": [{ "name": "店名", "id": "", "genre": "", "area": "", "score": "★4.3", "desc": "", "link": "https://..." }],
  *     "sources": [{ "label": "情報源名", "url": "https://...", "date": "2026-05-15 (任意 — 掲載日。表示時に併記される)" }],
  *     "photo_suggestions": [
@@ -182,7 +182,7 @@ function buildStores(stores) {
 }
 
 function buildInsiderPoints(points) {
-  if (!points || points.length === 0) return '<li>(業界人視点を記述)</li>';
+  if (!points || points.length === 0) return '<li>(読み解きのポイントを記述)</li>';
   return points.map(p => `        <li>${esc(p)}</li>`).join('\n');
 }
 

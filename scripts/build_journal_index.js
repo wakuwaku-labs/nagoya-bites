@@ -67,7 +67,7 @@ function buildFeed(entries) {
 <channel>
   <title>NAGOYA BITES Journal</title>
   <link>${SITE_URL}/journal/</link>
-  <description>名古屋の飲食業界の中の人が毎日配信する目利きジャーナル</description>
+  <description>名古屋の新店と話題を、毎日まとめています</description>
   <language>ja</language>
   <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
 ${items}
@@ -97,7 +97,7 @@ function buildAtomFeed(entries) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ja">
   <title>NAGOYA BITES Journal</title>
-  <subtitle>名古屋の飲食業界の中の人が毎日配信する目利きジャーナル</subtitle>
+  <subtitle>名古屋の新店と話題を、毎日まとめています</subtitle>
   <link href="${SITE_URL}/journal/" rel="alternate"/>
   <link href="${SITE_URL}/journal/feed.atom" rel="self"/>
   <id>${SITE_URL}/journal/</id>
