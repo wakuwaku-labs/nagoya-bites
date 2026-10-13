@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-13T13:59:07.989Z",
+  "generatedAt": "2026-10-13T14:54:38.460Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1446,
-    "pageViews": 2050,
-    "sessions": 1639,
-    "avgSessionDuration": 127.6,
+    "activeUsers": 1450,
+    "pageViews": 2056,
+    "sessions": 1644,
+    "avgSessionDuration": 127.3,
     "bounceRate": 0.279,
     "pagesPerSession": 1.25
   },
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1151,
+      "organic": 1155,
       "direct": 352,
       "social": 5,
       "ai_assistant": 106,
       "referral": 32,
       "paid": 0,
-      "other": 1
+      "other": 2
     },
     "pct": {
       "organic": 69.9,
-      "direct": 21.4,
+      "direct": 21.3,
       "social": 0.3,
       "ai_assistant": 6.4,
       "referral": 1.9,
@@ -39,12 +39,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 507
+      "sessions": 509
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 438
+      "sessions": 439
     },
     {
       "source": "(direct)",
@@ -54,7 +54,7 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 187
+      "sessions": 188
     },
     {
       "source": "chatgpt.com",
@@ -167,6 +167,11 @@
       "sessions": 1
     },
     {
+      "source": "ranking",
+      "medium": "",
+      "sessions": 1
+    },
+    {
       "source": "search.portal.auone.jp",
       "medium": "referral",
       "sessions": 1
@@ -190,8 +195,8 @@
     },
     {
       "path": "/",
-      "pageViews": 108,
-      "sessions": 96
+      "pageViews": 109,
+      "sessions": 97
     },
     {
       "path": "/index.html",
@@ -211,7 +216,7 @@
   ],
   "cta": {
     "outboundClicks": 157,
-    "ctaClickRate": 9.6,
+    "ctaClickRate": 9.5,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -934,7 +939,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1446,
+    "value": 1450,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
