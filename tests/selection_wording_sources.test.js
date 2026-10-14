@@ -61,6 +61,11 @@ const CLEAN_SOURCES = [
   'data/editor_picks.json',
   'data/manual_stores.json',
   'data/recommendations.json',
+  // エージェントの手引き（P-320・判断の記録 0041）: 語が 1 件も無い手引きだけ足す。
+  //   editor.md・orchestrator.md・marketer.md・strategist.md は、検索で狙う語（業界人 推薦 など）の台帳や、
+  //   「語を使わない」と書くための引用が残るので足さない（理由は 0041）。
+  'agents/builder.md',
+  'agents/inspector.md',
 ];
 
 function hits(text) {
