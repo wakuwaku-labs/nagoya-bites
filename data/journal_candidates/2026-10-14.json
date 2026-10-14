@@ -1,0 +1,479 @@
+{
+  "date": "2026-10-14",
+  "weights": {
+    "recency": 25,
+    "topicality": 25,
+    "uniqueness": 20,
+    "brand_fit": 15,
+    "writability": 10,
+    "novelty": 5,
+    "search_intent": 10
+  },
+  "gate_policy": {
+    "auto_publish_min": 100,
+    "review_publish_min": 85
+  },
+  "pass_threshold": 100,
+  "ranked": [
+    {
+      "id": "c1",
+      "title_draft": "知多牛焼肉と馬肉 虹（栄）で一人飲み、ツラミ1,078円の部位の話",
+      "verdict": "PASS",
+      "total": 105,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 20,
+        "uniqueness": 20,
+        "brand_fit": 15,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 6件 → 15",
+          "話題の証跡URL 1件 → 5"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 4件 (原価,仕入れ,構造,相場) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源（公式発表/一次報道） 1件 → +4"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 165字 +4",
+          "title 33字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      }
+    },
+    {
+      "id": "c2",
+      "title_draft": "栄の焼肉で一人飲み、値上げしない店の部位の選び方｜知多牛焼肉と馬肉 虹",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 93,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "一人飲み",
+          "feature": "features/nagoya-solo-dining.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 5件 (原価,仕入れ,構造,慣習,相場) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 157字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「一人飲み」+4",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      },
+      "gate_note": "93点（自動公開ライン 100点）。主な不足: topicality -13 / brand_fit -4"
+    },
+    {
+      "id": "c3",
+      "title_draft": "栄の焼肉で宴会、原価タン550円が品書きにある理由｜焼肉酒場 牛岡牛介",
+      "verdict": "PASS_WITH_NOTE",
+      "total": 93,
+      "breakdown": {
+        "recency": 25,
+        "topicality": 12,
+        "uniqueness": 20,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 10
+      },
+      "search_intent_links": [
+        {
+          "kw": "栄",
+          "feature": "features/sakae.html"
+        },
+        {
+          "kw": "宴会",
+          "feature": "features/banquet.html"
+        },
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 0日前 → 25"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 4件 (原価,仕入れ,慣習,相場) → 20"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "main_store あり +3",
+          "lead 131字 +4",
+          "title 35字 +3"
+        ],
+        "novelty": [
+          "初掲載の店 → 5"
+        ],
+        "search_intent": [
+          "タイトルにエリア語「栄」+4",
+          "タイトルにシーン語「宴会」+4",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      },
+      "gate_note": "93点（自動公開ライン 100点）。主な不足: topicality -13 / brand_fit -4"
+    },
+    {
+      "id": "c5",
+      "title_draft": "ラーメン店の倒産46%増、名古屋で一杯の値段を守る店の仕入れ",
+      "verdict": "HOLD",
+      "total": 77,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 15,
+        "brand_fit": 11,
+        "writability": 10,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "ラーメン",
+          "feature": "features/nagoya-ramen.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 3件 (原価,構造,慣習) → 15"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 89字 +4",
+          "title 30字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-PRICE-007) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「ラーメン」+2"
+        ]
+      }
+    },
+    {
+      "id": "c4",
+      "title_draft": "名古屋の焼肉、値上げせず質を保つ見えない工夫",
+      "verdict": "HOLD",
+      "total": 60,
+      "breakdown": {
+        "recency": 22,
+        "topicality": 12,
+        "uniqueness": 0,
+        "brand_fit": 11,
+        "writability": 8,
+        "novelty": 5,
+        "search_intent": 2
+      },
+      "search_intent_links": [
+        {
+          "kw": "焼肉",
+          "feature": "features/nagoya-yakiniku.html"
+        }
+      ],
+      "explain": {
+        "recency": [
+          "最新ソース 6日前 → 22"
+        ],
+        "topicality": [
+          "独立ドメイン 3件 → 12",
+          "話題の証跡URL 0件 → 0"
+        ],
+        "uniqueness": [
+          "独自性キーワード(industry_insider) 0件 → 0"
+        ],
+        "brand_fit": [
+          "ベース11",
+          "一次情報源なし → +0（公式発表・一次報道を1件でも押さえると +4）"
+        ],
+        "writability": [
+          "店なしテーマ +3",
+          "lead 70字 +2",
+          "title 22字 +3"
+        ],
+        "novelty": [
+          "初出コラム (COL-PRICE-007) → 5"
+        ],
+        "search_intent": [
+          "エリア語なし → +0",
+          "シーン語なし → +0",
+          "タイトルにジャンル語「焼肉」+2"
+        ]
+      }
+    }
+  ],
+  "disqualified": [],
+  "selected_id": "c1",
+  "selected_verdict": "PASS",
+  "selected_gate_note": "",
+  "saturated_sources": [
+    "jouhou.nagoya"
+  ],
+  "fallback_needed": false,
+  "inputs": [
+    {
+      "id": "c1",
+      "theme": "industry_insider",
+      "title_draft": "知多牛焼肉と馬肉 虹（栄）で一人飲み、ツラミ1,078円の部位の話",
+      "lead_draft": "東京商工リサーチは10月8日、2026年度上半期の飲食業の倒産が514件と30年で最多になったと発表した。値上げが客離れにつながり、価格転嫁が難しいことが理由に挙がる。では値上げせずに質を保つ店は何をしているのか。栄・矢場町の焼肉店「知多牛焼肉と馬肉 虹」の一番人気、知多牛ツラミのすき焼き風1,078円から、部位の選び方を読む。",
+      "angle": "値上げせず質を維持する見えない工夫のうち部位の選び方を、原価と仕入れの構造（枝肉に入らずホルモン扱いになるツラミは精肉の相場と別に動く・1頭1kg前後）から読み、10月の値上げ3,153品目のうち酒類1,399品目の相場の中で、カウンター6席・翌4時までの深夜営業の店を一人飲みでどう使うかを示す",
+      "main_store": {
+        "name": "知多牛焼肉と馬肉 虹",
+        "id": "J004025571",
+        "area": "栄",
+        "genre": "焼肉"
+      },
+      "column_id": "COL-PRICE-007",
+      "sources": [
+        {
+          "label": "東京商工リサーチ「ラーメン店」の倒産 飲食業界ワーストの46.4%増 年度上半期の「飲食業」倒産514件、初の500件超",
+          "url": "https://tsr-net.co.jp/data/detail/1203322_1527.html",
+          "date": "2026-10-08"
+        },
+        {
+          "label": "nippon.com 10月の食品値上げ3153品目―帝国データバンク",
+          "url": "https://www.nippon.com/ja/japan-data/h02899/",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "中日新聞 10月値上げ3千品目超え 飲食料品、家計に負担",
+          "url": "https://www.chunichi.co.jp/article/1318472",
+          "date": "2026-09-30"
+        },
+        {
+          "label": "macaroni 牛の「つらみ」ってどの部位？",
+          "url": "https://macaro-ni.jp/89073",
+          "date": "2023-03-27"
+        },
+        {
+          "label": "ホットペッパーグルメ 知多牛焼肉と馬肉 虹",
+          "url": "https://www.hotpepper.jp/strJ004025571/",
+          "date": "2026-10-14"
+        },
+        {
+          "label": "Instagram 知多牛焼肉と馬肉 虹 公式（牛ハツ ¥780 の紹介）",
+          "url": "https://www.instagram.com/p/DR_0GnxE2Uo/"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c2",
+      "theme": "industry_insider",
+      "title_draft": "栄の焼肉で一人飲み、値上げしない店の部位の選び方｜知多牛焼肉と馬肉 虹",
+      "lead_draft": "10月の値上げは3,153品目、うち酒類・飲料が1,399品目。東京商工リサーチは10月8日、飲食業の倒産が年度上半期で初めて500件を超えたと発表した。価格を上げにくい焼肉店が質を落とさずに出すには、どの部位をどう使うかが効く。栄・矢場町の知多牛焼肉と馬肉 虹の品書きを手がかりに、値札の裏の部位の選び方を読む。",
+      "angle": "部位の原価構造（精肉の相場とホルモンの相場の違い）と仕入れ、メニュー入れ替えの慣習を読み、一人飲みと少人数の宴会の頼み方を示す",
+      "main_store": {
+        "name": "知多牛焼肉と馬肉 虹",
+        "id": "J004025571",
+        "area": "栄",
+        "genre": "焼肉"
+      },
+      "column_id": "COL-PRICE-007",
+      "sources": [
+        {
+          "label": "東京商工リサーチ 年度上半期の「飲食業」倒産514件",
+          "url": "https://tsr-net.co.jp/data/detail/1203322_1527.html",
+          "date": "2026-10-08"
+        },
+        {
+          "label": "nippon.com 10月の食品値上げ3153品目",
+          "url": "https://www.nippon.com/ja/japan-data/h02899/",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "ホットペッパーグルメ 知多牛焼肉と馬肉 虹",
+          "url": "https://www.hotpepper.jp/strJ004025571/",
+          "date": "2026-10-14"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c3",
+      "theme": "industry_insider",
+      "title_draft": "栄の焼肉で宴会、原価タン550円が品書きにある理由｜焼肉酒場 牛岡牛介",
+      "lead_draft": "東京商工リサーチによると、2026年度上半期の飲食業倒産は514件。値上げが客離れを招くため価格転嫁が難しい。栄駅1分の焼肉酒場 牛岡牛介には原価タン550円と牛上タン1,298円が並ぶ。同じタンを2つの値段で出す品書きから、値上げせずに客単価を保つ設計を読む。",
+      "angle": "原価をうたう看板メニューと上位メニューの組み合わせの価格設計、仕入れの相場と時季で替える仕入れの慣習を読む",
+      "main_store": {
+        "name": "焼肉酒場 牛岡牛介",
+        "id": "J004493412",
+        "area": "栄",
+        "genre": "焼肉"
+      },
+      "column_id": "COL-PRICE-007",
+      "sources": [
+        {
+          "label": "東京商工リサーチ 年度上半期の「飲食業」倒産514件",
+          "url": "https://tsr-net.co.jp/data/detail/1203322_1527.html",
+          "date": "2026-10-08"
+        },
+        {
+          "label": "nippon.com 10月の食品値上げ3153品目",
+          "url": "https://www.nippon.com/ja/japan-data/h02899/",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "ホットペッパーグルメ 焼肉酒場 牛岡牛介",
+          "url": "https://www.hotpepper.jp/strJ004493412/",
+          "date": "2026-10-14"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c4",
+      "theme": "industry_insider",
+      "title_draft": "名古屋の焼肉、値上げせず質を保つ見えない工夫",
+      "lead_draft": "飲食業の倒産が年度上半期で初めて500件を超えた。値上げしにくい焼肉店は、部位の入れ替えや品書きの組み替えで質を保っている。その工夫を読む。",
+      "angle": "部位変更・メニュー入れ替え・器の工夫を一般論で読む",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "",
+        "genre": "焼肉"
+      },
+      "column_id": "COL-PRICE-007",
+      "sources": [
+        {
+          "label": "東京商工リサーチ 年度上半期の「飲食業」倒産514件",
+          "url": "https://tsr-net.co.jp/data/detail/1203322_1527.html",
+          "date": "2026-10-08"
+        },
+        {
+          "label": "nippon.com 10月の食品値上げ3153品目",
+          "url": "https://www.nippon.com/ja/japan-data/h02899/",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "macaroni 牛の「つらみ」ってどの部位？",
+          "url": "https://macaro-ni.jp/89073",
+          "date": "2023-03-27"
+        }
+      ],
+      "trending_signals": {}
+    },
+    {
+      "id": "c5",
+      "theme": "industry_insider",
+      "title_draft": "ラーメン店の倒産46%増、名古屋で一杯の値段を守る店の仕入れ",
+      "lead_draft": "東京商工リサーチの集計で、2026年度上半期のラーメン店の倒産は41件、前年同期比46.4%増と飲食業で最も伸びた。1,000円の壁を越えにくい一杯で、店は何を削り何を残すのか。",
+      "angle": "ラーメンの原価構造と値付けの慣習を読む",
+      "main_store": {
+        "name": "",
+        "id": "",
+        "area": "",
+        "genre": "ラーメン"
+      },
+      "column_id": "COL-PRICE-007",
+      "sources": [
+        {
+          "label": "東京商工リサーチ 年度上半期の「飲食業」倒産514件",
+          "url": "https://tsr-net.co.jp/data/detail/1203322_1527.html",
+          "date": "2026-10-08"
+        },
+        {
+          "label": "nippon.com 10月の食品値上げ3153品目",
+          "url": "https://www.nippon.com/ja/japan-data/h02899/",
+          "date": "2026-10-01"
+        },
+        {
+          "label": "kanaloco 10月値上げ",
+          "url": "https://www.kanaloco.jp/news/economy/article-1308435.html",
+          "date": "2026-09-30"
+        }
+      ],
+      "trending_signals": {}
+    }
+  ]
+}
