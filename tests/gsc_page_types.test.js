@@ -7,7 +7,7 @@
 
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { classifyPageType, summarizePageTypes, groupPageQueries } = require('../scripts/fetch_gsc_metrics.js');
+const { classifyPageType, summarizePageTypes, groupPageQueries, pagesOfType } = require('../scripts/fetch_gsc_metrics.js');
 
 const U = p => `https://nagoya-bites.com${p}`;
 
@@ -46,4 +46,16 @@ test('groupPageQueries: 既存の挙動（トップページは常に観測対�
   ];
   const out = groupPageQueries(rows, [{ page: U('/features/a.html') }]);
   assert.deepEqual(out.map(o => o.page), [U('/')]);
+});
+
+test('pagesOfType: area_hub の行だけを全件返す（上位500行の制約を受けない・SEO-125）', () => {
+  const rows = [
+    { page: U('/features/nagoya-solo-dining.html'), clicks: 9, impressions: 900, position: 6 },
+    { page: U('/stores/area/sakae/yakiniku.html'), clicks: 0, impressions: 3, position: 14 },
+    { page: U('/stores/J1.html'), clicks: 1, impressions: 50, position: 8 },
+    { page: U('/stores/area/meieki/index.html'), clicks: 1, impressions: 2, position: 9 },
+  ];
+  const hubs = pagesOfType(rows, 'area_hub');
+  assert.deepEqual(hubs.map(r => r.page), [U('/stores/area/sakae/yakiniku.html'), U('/stores/area/meieki/index.html')]);
+  assert.deepEqual(pagesOfType(null, 'area_hub'), []);
 });
