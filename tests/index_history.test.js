@@ -933,3 +933,48 @@ test('openM を包む処理（閲覧履歴の記録）は source を元の openM
   assert.deepStrictEqual(calls, [{ i: 1, source: 'deeplink' }, { i: 0, source: undefined }], '2つ目の引数をそのまま渡す');
   assert.deepStrictEqual(added, ['B店', 'A店'], '閲覧履歴の記録は今までどおり');
 });
+
+// ── P-245（I-21b）検索の実行で履歴を1つ足し、「戻る」「進む」で画面を読み直す ──────────────
+test('検索の履歴: 実行で1つ足し、足す前の履歴は「検索前の条件＋前の検索語」に直す。同じ語・モーダル中は足さない', () => {
+  const env = makeEnv({ entries: [{ hash: '#genre=' + enc(GENRE), state: null }] });
+  env.run('readHash()');
+  env.registry.si.value = '個室';
+  env.run("nbSearchHistoryCommit('個室')");
+  assert.strictEqual(env.br.entries.length, 2, '履歴は1つ足される');
+  assert.deepStrictEqual(env.json(env.br.entries[1].state), { nbQ: 1 });
+  assert.strictEqual(env.br.entries[0].hash, '#genre=' + enc(GENRE), '足す前の履歴に検索語は載らない（入力の途中の語で汚れない）');
+  env.run("nbSearchHistoryCommit('個室')");
+  assert.strictEqual(env.br.entries.length, 2, '同じ語では足さない');
+  env.registry.ov = makeEl();
+  env.registry.ov.classList.add('open');
+  env.run("nbSearchHistoryCommit('焼肉')");
+  assert.strictEqual(env.br.entries.length, 2, 'モーダルを開いている間は足さない');
+});
+
+test('検索の履歴: 「戻る」で条件と検索欄を読み直し、履歴は足さず、「進む」で検索結果に戻る', () => {
+  const env = makeEnv({ entries: [{ hash: '#genre=' + enc(GENRE), state: null }] });
+  let applied = 0;
+  env.ctx.applyFilters = () => { applied++; assert.strictEqual(env.ctx.NB_RESTORING, 1, '読み直し中の印が立っている'); };
+  env.run('readHash()');
+  env.registry.si.value = '個室';
+  env.run("nbSearchHistoryCommit('個室')");
+  env.br.entries[1].hash = '#genre=' + enc(GENRE) + '&q=' + enc('個室');
+  const pushes = env.br.calls.push;
+  env.br.go(-1);
+  assert.strictEqual(applied, 1);
+  assert.strictEqual(env.registry.si.value, '', '検索欄は検索前の内容に戻る');
+  assert.strictEqual(env.filter().genre, GENRE);
+  env.br.go(1);
+  assert.strictEqual(applied, 2);
+  assert.strictEqual(env.registry.si.value, '個室');
+  assert.strictEqual(env.br.calls.push, pushes, '読み直しで履歴を足さない');
+  assert.strictEqual(env.ctx.NB_RESTORING, 0);
+});
+
+test('検索の履歴: 読み直しは計測を送らない（search は nbSubmitSearch だけ・zero_result は読み直し中は送らない）', () => {
+  const m = /function nbSyncFilterWithUrl\(\) \{[\s\S]*?\n\}\n/.exec(BLOCK);
+  assert.ok(m, 'nbSyncFilterWithUrl が見つからない');
+  assert.ok(!/trackEvent|gtag|page_view/.test(m[0]));
+  assert.ok(/NB_RESTORING = 1/.test(m[0]) && /NB_RESTORING = 0/.test(m[0]));
+  assert.ok(/if \(NB_RESTORING\) return;/.test(topFunction(INDEX, 'nbTrackZeroResult')), '読み直しでは zero_result を送らない');
+});

@@ -211,7 +211,7 @@ async function clickSel(page, selector) {
 // 入口が開く店のホットペッパーID（編集部の店など、持たない店は ''・入口から店が分からないときは null）
 async function openerStoreId(h) {
   return h.evaluate(el => {
-    const m = /openM\((\d+)/.exec(el.getAttribute('onclick') || '');
+    const m = /(?:openM|nbCardClick)\((?:event,\s*)?(\d+)/.exec(el.getAttribute('onclick') || '');
     if (!m) return null;
     const s = window.ALL_STORES[Number(m[1])];
     return s ? (s['ホットペッパーID'] || '') : null;
@@ -477,13 +477,13 @@ async function scenarioFilters(browser, base, vp) {
   await sleep(500);
   const st = await navState(page);
   check(vp, 'S5-filter', '絞り込みは履歴を足さず、URL に genre= を載せる', !!genre && st.length === before.length && st.hash.indexOf('genre=') >= 0, `genre=${genre} length ${before.length}→${st.length} hash=${st.hash}`);
-  // 検索語: 履歴は足さず、URL に q= を載せる。結果の一覧から店を開く
+  // 検索語: 実行（nbSubmitSearch）で履歴を1つ足し、URL に q= を載せる。結果の一覧から店を開く
   await page.evaluate(g => { const si = document.getElementById('si'); si.value = g; }, genre);
-  await page.evaluate(() => doSearch());
+  await page.evaluate(() => nbSubmitSearch());
   await sleep(800);
   const st2 = await navState(page);
-  check(vp, 'S5-search', '検索も履歴を足さず、URL に q= を載せる', st2.length === before.length && st2.hash.indexOf('q=') >= 0, `length=${st2.length} hash=${st2.hash}`);
-  const opened = await openByClick(page, '#grid [onclick*="openM("], #grid .card');
+  check(vp, 'S5-search', '検索の実行は履歴を1つだけ足し、URL に q= を載せる（P-245）', st2.length === before.length + 1 && st2.hash.indexOf('q=') >= 0, `length=${st2.length} hash=${st2.hash}`);
+  const opened = await openByClick(page, '#grid .card[onclick*="nbCardClick("]');
   const st3 = await navState(page);
   check(vp, 'S5-open', '検索結果のカードからモーダルを開くと、絞り込みの URL の末尾に store= が付く', opened && /q=/.test(st3.hash) && /store=/.test(st3.hash) && st3.hash.indexOf('genre=') >= 0, `opened=${opened} hash=${st3.hash}`);
   await goBack(page);
@@ -573,6 +573,67 @@ async function scenarioLateData(browser, base, vp) {
   await page2.__ctx.close();
 }
 
+
+// P-245（I-21b）: 検索の実行で履歴を1つ足し、「戻る」で検索前の一覧・条件・検索欄に戻る
+async function scenarioSearchHistory(browser, base, vp) {
+  const page = await freshTop(browser, base, vp, '#genre=' + encodeURIComponent('居酒屋'));
+  const snap = () => page.evaluate(() => ({ q: document.getElementById('si').value, hash: location.hash, cards: document.querySelectorAll('#grid .card').length, active: document.body.classList.contains('search-active') }));
+  const evsCount = async name => (await events(page)).filter(e => e.name === name).length;
+  // 条件を1つ足してから検索する（検索前の条件＝genre）
+  const genre = '居酒屋';
+  await sleep(500);
+  const s0 = await navState(page);
+  const pre = await snap();
+  // 検索欄へ1文字ずつ打つ（履歴は増えない）
+  await page.click('#si');
+  await page.keyboard.type('焼', { delay: 30 });
+  await page.keyboard.type('肉', { delay: 30 });
+  await sleep(500);
+  const sTyped = await navState(page);
+  check(vp, 'S10-typing', '1文字ごとの入力は履歴を足さない', sTyped.length === s0.length, `length ${s0.length}→${sTyped.length}`);
+  await page.keyboard.press('Enter');
+  await sleep(700);
+  const s1 = await navState(page);
+  const post = await snap();
+  check(vp, 'S10-push', 'Enter で履歴が1つ増え、URL に q= が付く（genre は残る）', s1.length === s0.length + 1 && /q=/.test(s1.hash) && s1.hash.indexOf('genre=') >= 0, `length ${s0.length}→${s1.length} hash=${s1.hash}`);
+  check(vp, 'S10-chip', '検索のあとにチップを切り替えても履歴は増えない', await (async () => {
+    await page.evaluate(() => { const c = Array.from(document.querySelectorAll('.ft')).filter(x => x.dataset.f && x.dataset.f !== 'All'); if (c[0]) c[0].click(); });
+    await sleep(500);
+    const s = await navState(page);
+    return s.length === s1.length;
+  })(), '');
+  // 条件を元に戻してから、「戻る」の確認に入る（検索直後の状態に揃える）
+  await page.evaluate(g => { const c = Array.from(document.querySelectorAll('.ft')).find(x => x.dataset.f === g); if (c) c.click(); }, genre);
+  await sleep(400);
+  const post2 = await snap();
+  const searchEvsBefore = await evsCount('search');
+  const zeroBefore = await evsCount('zero_result');
+  await goBack(page);
+  await sleep(700);
+  const b1 = await snap();
+  check(vp, 'S10-back', '「戻る」で検索前の一覧・条件・検索欄の内容に戻る', b1.q === pre.q && b1.hash === pre.hash && b1.cards === pre.cards, `q="${b1.q}"(期待 "${pre.q}") hash=${b1.hash}(期待 ${pre.hash}) cards=${b1.cards}(期待 ${pre.cards})`);
+  await goForward(page);
+  await sleep(700);
+  const f1 = await snap();
+  check(vp, 'S10-forward', '「進む」で検索結果に戻る', f1.q === post.q && f1.hash.indexOf('q=') >= 0 && f1.cards === post.cards, `q="${f1.q}" hash=${f1.hash} cards=${f1.cards}(期待 ${post.cards})`);
+  check(vp, 'S10-nodup', '「戻る」「進む」で search の計測を増やさない', (await evsCount('search')) === searchEvsBefore && (await evsCount('zero_result')) === zeroBefore, `search ${searchEvsBefore}→${await evsCount('search')}`);
+  // 検索 → 店を開く → ×で閉じる → 「戻る」で検索前
+  const opened = await openByClick(page, '#grid .card[onclick*="nbCardClick("]');
+  const sOpen = await navState(page);
+  check(vp, 'S10-open', '検索結果から店を開くと、履歴は検索の上に1つ増える', opened && /store=/.test(sOpen.hash) && /q=/.test(sOpen.hash), `opened=${opened} hash=${sOpen.hash}`);
+  await clickSel(page, '.mcl-close');
+  await waitModal(page, false);
+  await sleep(500);
+  const afterClose = await snap();
+  check(vp, 'S10-close', '×で閉じると検索結果に戻る（検索語・一覧が残る）', afterClose.q === post.q && afterClose.cards === post.cards, `q="${afterClose.q}" cards=${afterClose.cards}`);
+  await goBack(page);
+  await sleep(700);
+  const b2 = await snap();
+  check(vp, 'S10-back2', '検索 → 店 → × → 「戻る」で検索前の一覧・条件・検索欄', b2.q === pre.q && b2.hash === pre.hash && b2.cards === pre.cards, `q="${b2.q}" hash=${b2.hash} cards=${b2.cards}`);
+  check(vp, 'S10-errors', '操作の間に例外が出ない', page.__log.pageErrors.length === 0, page.__log.pageErrors.join(' | '));
+  await page.close();
+}
+
 // GA4: 履歴の変更で page_view が出るか。gtag.js だけ読み込み、計測の送信は記録して中断する（本番には何も送らない）
 async function scenarioGa4(browser, base, vp) {
   const page = await freshTop(browser, base, vp, '', { ga4: true });
@@ -594,6 +655,8 @@ async function scenarioGa4(browser, base, vp) {
   const report = [];
   report.push(snapshot('読み込み直後'));
   report.push(await phase('絞り込み（replaceState）', async () => { await page.evaluate(() => { const c = Array.from(document.querySelectorAll('.ft')).filter(x => x.dataset.f && x.dataset.f !== 'All'); if (c[0]) c[0].click(); }); }));
+  report.push(await phase('検索の実行（pushState）', async () => { await page.evaluate(() => { document.getElementById('si').value = '焼肉'; nbSubmitSearch(); }); }));
+  report.push(await phase('検索から「戻る」（popstate）', async () => { await goBack(page); }));
   report.push(await phase('モーダルを開く（pushState）', async () => { await openByClick(page); }));
   report.push(await phase('「戻る」（popstate）', async () => { await goBack(page); }));
   report.push(await phase('「進む」（popstate）', async () => { await goForward(page); }));
@@ -618,7 +681,7 @@ async function scenarioGa4(browser, base, vp) {
       if (GA4_HISTORY) {
         await scenarioGa4(browser, base, vp);
       } else {
-        const scenarios = [scenarioDeepLink, scenarioBackForward, scenarioIdLess, scenarioScroll, scenarioCloseMethods, scenarioSwap, scenarioFilters, scenarioBadHashes, scenarioLateData]
+        const scenarios = [scenarioDeepLink, scenarioBackForward, scenarioIdLess, scenarioScroll, scenarioCloseMethods, scenarioSwap, scenarioFilters, scenarioBadHashes, scenarioLateData, scenarioSearchHistory]
           .filter(fn => !ONLY || fn.name.toLowerCase().includes(ONLY));
         for (const fn of scenarios) {
           try { await fn(browser, base, vp); } catch (e) { check(vp, fn.name, `${fn.name} が最後まで動いた`, false, String(e && e.stack || e).split('\n').slice(0, 3).join(' / ')); }
