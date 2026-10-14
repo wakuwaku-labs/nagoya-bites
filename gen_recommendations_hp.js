@@ -12,7 +12,11 @@ const fs    = require('fs');
 const path  = require('path');
 const os    = require('os');
 
-const HOTPEPPER_KEY = 'c4b06501b849309a';
+const HOTPEPPER_KEY = process.env.HOTPEPPER_API_KEY || '';
+if (!HOTPEPPER_KEY) {
+  console.error('HOTPEPPER_API_KEY 環境変数が未設定です（build.js と同じ名前。~/.config/nagoya-bites/ の env を読み込んでから実行してください）');
+  process.exit(1);
+}
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/1VUk4bRTPoIc7pHywzIJTwZr9WyUX7ioxlZzbxQHsjCQ/export?format=csv&gid=415662614';
 const OUT = path.join(os.homedir(), 'Desktop', 'おすすめポイント_一覧.txt');
 
