@@ -45,14 +45,17 @@ X API は月額なしの前払い（クレジット）です。クレジット�
 ## 5. GitHub に鍵を登録する
 どちらかの方法で。値は画面に出さず、コミットやチャットにも書かないでください。
 
-- **方法A（推奨・ターミナル）**: この Claude Code のセッションで、次を1行ずつ入力し、聞かれたら値を貼り付ける（`!` から始めるとこのセッションで実行される。値は画面に残らない）
+- **方法A（推奨・ブラウザ）**: https://github.com/wakuwaku-labs/nagoya-bites/settings/secrets/actions → **New repository secret** で、名前と値を4回登録する（同じ名前がもうあるときは、その行の鉛筆の印から値を入れ直す）
+- **方法B（Mac の「ターミナル」アプリ）**: 次を1行ずつ入力し、`? Paste your secret` と聞かれたら値を貼り付けて Enter（値は画面に出ない）
   ```
-  ! gh secret set X_API_KEY
-  ! gh secret set X_API_SECRET
-  ! gh secret set X_ACCESS_TOKEN
-  ! gh secret set X_ACCESS_TOKEN_SECRET
+  gh secret set X_API_KEY -R wakuwaku-labs/nagoya-bites
+  gh secret set X_API_SECRET -R wakuwaku-labs/nagoya-bites
+  gh secret set X_ACCESS_TOKEN -R wakuwaku-labs/nagoya-bites
+  gh secret set X_ACCESS_TOKEN_SECRET -R wakuwaku-labs/nagoya-bites
   ```
-- **方法B（ブラウザ）**: https://github.com/wakuwaku-labs/nagoya-bites/settings/secrets/actions → **New repository secret** で、名前と値を4回登録する
+  - ⚠️ Claude Code の画面で `! gh secret set …` と打つのは**使わない**。値を聞く画面が出ず、そのまま空の値が登録される（2026-10-14 に実際に起きた）
+
+**登録できたかの確かめ方**（値は誰にも見えないまま確かめられる）: Claude に「鍵を確かめて」と伝えるか、Actions の「NAGOYA BITES — X 自動投稿」を **Run workflow**（force_live のチェックは入れない）で動かし、Summary の「鍵（値は出さない）」の行が4つとも「登録済み」になっているかを見る。「空」「形が違う」があれば、その名前の値を入れ直す。
 
 ## 6. 「自動化アカウント」のラベルを付ける
 X のルールで、自動で投稿するアカウントには表示が求められます。

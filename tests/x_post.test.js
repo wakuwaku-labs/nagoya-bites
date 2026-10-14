@@ -244,3 +244,13 @@ test('見張り役: 鍵の失効などは猶予を待たずに鳴らし、直し
   const before = check({ root: watchFixture({ liveSince: '2026-10-13' }), now: new Date('2026-10-12T12:00:00Z') });
   assert.strictEqual(before.ok, true);
 });
+
+test('鍵の登録状況は値を出さずに「登録済み・空・形が違う」だけを返す', () => {
+  const { credentialStatus, summaryMarkdown } = require('../scripts/post_journal_to_x.js');
+  const st = credentialStatus({ X_API_KEY: 'abcDEF123', X_API_SECRET: '  ', X_ACCESS_TOKEN: 'not-a-token!', X_ACCESS_TOKEN_SECRET: 'zzz' });
+  assert.deepStrictEqual(st, { X_API_KEY: 'set', X_API_SECRET: 'empty', X_ACCESS_TOKEN: 'bad_format', X_ACCESS_TOKEN_SECRET: 'set' });
+  assert.strictEqual(credentialStatus({ X_ACCESS_TOKEN: '1234567890-AbCdEf123' }).X_ACCESS_TOKEN, 'set');
+  const md = summaryMarkdown({ mode: 'dry-run', result: 'dry_run_ok', credentials: st });
+  assert.ok(md.includes('X_API_SECRET=空（未登録）'));
+  assert.ok(!md.includes('abcDEF123') && !md.includes('zzz'));
+});

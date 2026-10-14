@@ -113,6 +113,24 @@ function credentials(env) {
   return Object.values(c).every((v) => v && String(v).trim()) ? c : null;
 }
 
+const CREDENTIAL_NAMES = ['X_API_KEY', 'X_API_SECRET', 'X_ACCESS_TOKEN', 'X_ACCESS_TOKEN_SECRET'];
+
+/**
+ * 鍵が入っているかだけを返す（値は返さない・出さない）。
+ * 試運転の要約に出して、送らずに登録を確かめるため。
+ * Access Token は「数字-英数字」の形（X のユーザー ID で始まる）なので、形が違えば別の欄の値を貼った疑い。
+ */
+function credentialStatus(env) {
+  const st = {};
+  for (const name of CREDENTIAL_NAMES) {
+    const v = env[name] == null ? '' : String(env[name]).trim();
+    if (!v) st[name] = 'empty';
+    else if (name === 'X_ACCESS_TOKEN' && !/^\d+-[A-Za-z0-9]+$/.test(v)) st[name] = 'bad_format';
+    else st[name] = 'set';
+  }
+  return st;
+}
+
 async function sendTweet(text, cred, fetchImpl = fetch) {
   const auth = X.oauthHeader({ method: 'POST', url: TWEET_URL, ...cred });
   const res = await fetchImpl(TWEET_URL, {
@@ -161,6 +179,7 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   const mode = effectiveMode(policy.mode, args);
   const date = args.date || todayJst(now);
   const out = { date, mode, policyMode: policy.mode };
+  out.credentials = credentialStatus(env);
 
   if (mode === 'off') return { ...out, result: 'off', exitCode: 0 };
   if (mode === 'live' && args.skipLiveCheck) throw new Error('--skip-live-check は live では使えません');
@@ -265,6 +284,10 @@ function summaryMarkdown(r) {
   if (r.livePage) lines.push(`- 本番の記事: HTTP ${r.livePage.status}（${r.livePage.attempts} 回目）`);
   if (r.ogImage) lines.push(`- リンクカードの画像: ${r.ogImage.ok ? 'OK' : `出ない見込み（${r.ogImage.reason}）`}`);
   if (r.tweetUrl) lines.push(`- 投稿: ${r.tweetUrl}`);
+  if (r.credentials) {
+    const ja = { set: '登録済み', empty: '空（未登録）', bad_format: '形が違う（別の欄の値の疑い）' };
+    lines.push(`- 鍵（値は出さない）: ${CREDENTIAL_NAMES.map((n) => `${n}=${ja[r.credentials[n]]}`).join('・')}`);
+  }
   if (r.text) lines.push('', '### 文面', '', '```', r.text, '```');
   return lines.join('\n') + '\n';
 }
@@ -284,4 +307,4 @@ if (require.main === module) {
   main().catch((e) => { console.error(e.stack || String(e)); process.exitCode = 1; });
 }
 
-module.exports = { run, parseArgs, effectiveMode, findEntry, todayJst, waitForLivePage, checkOgImage, credentials, summaryMarkdown };
+module.exports = { run, parseArgs, effectiveMode, findEntry, todayJst, waitForLivePage, checkOgImage, credentials, credentialStatus, summaryMarkdown };
