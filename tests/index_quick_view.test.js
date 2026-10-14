@@ -459,3 +459,22 @@ test('文字の大きさ: クイックビューで足した規則は 13px 未満
   const lits = css.match(/font-size:\s*[\d.]+(px|rem|em)/g) || [];
   assert.deepStrictEqual(lits, [], 'font-size の直書きなし');
 });
+
+// ───────── P-439: 予約確認プロンプトは後ろの inert の対象外 ─────────
+test('P-439: nbQvSetInert は body 直下の予約確認プロンプト（.nb-reserve-ask）に inert を付けず、他の兄弟には付ける', () => {
+  const mk = (o) => Object.assign({ hasAttribute(n) { return !!this.attrs[n]; }, setAttribute(n) { this.attrs[n] = true; }, removeAttribute(n) { delete this.attrs[n]; }, attrs: {}, classList: { contains: () => false } }, o);
+  const ask = mk({ tagName: 'DIV', id: '', attrs: {}, classList: { contains: (c) => c === 'nb-reserve-ask' } });
+  const main = mk({ tagName: 'DIV', id: 'main', attrs: {} });
+  const ov = mk({ tagName: 'DIV', id: 'ov', attrs: {} });
+  const body = { children: [main, ov, ask] };
+  ov.parentNode = body; main.parentNode = body; ask.parentNode = body;
+  const bodyEl = { parentNode: {} };
+  body.parentNode = bodyEl;
+  const ctx = { document: { body, getElementById: (id) => (id === 'ov' ? ov : null) } };
+  vm.createContext(ctx);
+  vm.runInContext('var NB_QV_INERT = [];\n' + fn('nbQvSetInert') + '\nnbQvSetInert(true);', ctx);
+  assert.ok(main.attrs.inert, '後ろのページには inert を付ける');
+  assert.ok(!ask.attrs.inert, '予約確認プロンプトには付けない');
+  vm.runInContext('nbQvSetInert(false);', ctx);
+  assert.ok(!main.attrs.inert);
+});
