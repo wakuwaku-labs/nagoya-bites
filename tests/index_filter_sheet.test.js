@@ -300,12 +300,25 @@ const sel = (pred) => SPEC.filter((r) => pred(Object.assign({ n: r[0], g: r[1], 
 function env(opts) {
   opts = opts || {};
   const dom = makeDom();
-  const log = { apply: [], events: [], timers: [], cleared: [], scrolls: [] };
+  const log = { apply: [], events: [], timers: [], cleared: [], scrolls: [], hash: [] };
+  const pop = {};
+  const setImmediateLike = () => (pop.popstate || []).forEach((f) => f());
+  // 偽の履歴: back() は印（state）を戻すだけで、popstate は firePop() で届ける（実ブラウザでは非同期のため）
+  const fakeHistory = {
+    stack: [{ state: null, url: '#start' }], i: 0,
+    get state() { return this.stack[this.i].state; },
+    pushState(st, t, url) { this.stack.length = this.i + 1; this.stack.push({ state: st, url }); this.i++; },
+    replaceState(st, t, url) { this.stack[this.i] = { state: st, url }; },
+    // 実ブラウザの popstate は非同期。opts.manualPop のとき以外は、戻ったらすぐ届けて既存のテストを同期のまま動かす
+    back() { this.i--; if (!opts.manualPop) setImmediateLike(); },
+  };
   const ctx = {
     console,
     NB_FILTER_POLICY: FP.buildFilterPolicy(POLICY),
     document: dom.doc,
-    window: {},
+    window: { addEventListener(t, f) { (pop[t] = pop[t] || []).push(f); } },
+    history: fakeHistory,
+    location: { href: '#start' },
     __log: log,
     __favs: opts.favs || ['S01', 'S04'],
   };
@@ -318,6 +331,7 @@ function env(opts) {
     'var FULL_CATALOG_LOADED = true;',
     'var FULL_CATALOG_FAILED = false;',
     'function getFavs() { return __favs; }',
+    "function pushHash() { history.replaceState(history.state, '', 'H:' + JSON.stringify(NB_FILTER)); __log.hash.push(1); }",
     // 一覧の描画は見ない。呼ばれた順・その時点の条件・シートの開閉・body の状態だけ残す
     'function applyFilters() {',
     '  __log.apply.push({ open: NB_SHEET.open, filter: nbCloneFilter(NB_FILTER), overflow: document.body.style.overflow });',
@@ -332,7 +346,7 @@ function env(opts) {
   ].join('\n');
   vm.runInContext([glue, DEPS, opts.engine || ENGINE, CORE, SHEET].join('\n'), ctx, { filename: 'index.html#filter-sheet' });
   vm.runInContext('ALL_STORES = ' + JSON.stringify(mkStores()) + ';', ctx);
-  return { ctx, dom, log, run: (src) => vm.runInContext(src, ctx) };
+  return { ctx, dom, log, history: fakeHistory, firePop: () => (pop.popstate || []).forEach((f) => f()), run: (src) => vm.runInContext(src, ctx) };
 }
 // vm の中で作った配列・オブジェクトは別の realm のもの。deepStrictEqual の前に素の形にする
 const plain = (x) => JSON.parse(JSON.stringify(x));
@@ -1092,4 +1106,80 @@ test('背景 inert: 開いている間はシートの外の兄弟に inert を�
     assert.strictEqual(e.ctx.NB_SHEET.inert.length, 0);
     e.run('NB_FILTER = ' + JSON.stringify(EMPTY) + ';');
   });
+});
+
+// ── P-428: 「戻る」でシートを閉じる ──────────────────────────────────────
+const sheetEntries = (e) => e.history.stack.filter((x) => x.state && x.state.nbS).length;
+
+test('⑨戻る: 開くと履歴を1つ足し（URL は同じ）、戻ると下書きを捨てて閉じる（足した履歴は残らず、戻る処理は二重に走らない）', () => {
+  const e = env({ manualPop: true });
+  const cur = F({ areas: ['sakae'] });
+  setFilter(e, cur);
+  e.run('nbOpenFilterSheet')(null);
+  assert.strictEqual(e.history.stack.length, 2);
+  assert.strictEqual(e.history.stack[1].url, e.history.stack[0].url, 'URL（ハッシュ）は変えない');
+  press(e, 'genre', '居酒屋');
+  e.history.back(); e.firePop();   // ブラウザの「戻る」
+  assert.strictEqual(e.ctx.NB_SHEET.open, false);
+  assert.strictEqual(e.ctx.NB_SHEET.draft, null);
+  assert.strictEqual(e.ctx.NB_SHEET.leaving, false);
+  assert.deepStrictEqual(filterOf(e), cur, '変更は反映しない');
+  assert.strictEqual(e.history.i, 0, 'ページから離れず、開く前の履歴に戻る');
+  assert.strictEqual(e.log.apply.length + e.log.events.length, 0);
+  assert.ok(!e.dom.wrap.classList.contains('open'));
+});
+
+test('⑨×・背景・Esc: 足した履歴を1つ戻して消し（履歴が増えない）、戻り終えたらいまの条件のハッシュを書き直す', () => {
+  ['×', '背景', 'Esc'].forEach((name) => {
+    const e = env({ manualPop: true });
+    e.run('nbOpenFilterSheet')(null);
+    if (name === '×') e.dom.click(e.dom.close); else if (name === '背景') e.dom.click(e.dom.backdrop); else e.dom.key('Escape');
+    assert.strictEqual(e.ctx.NB_SHEET.open, false, name);
+    assert.strictEqual(e.ctx.NB_SHEET.leaving, true, name + ': 戻り待ち');
+    assert.strictEqual(e.history.i, 0, name + ': 1つ戻した');
+    e.firePop();
+    assert.strictEqual(e.ctx.NB_SHEET.leaving, false, name);
+    assert.strictEqual(e.log.hash.length, 1, name + ': ハッシュを書き直す（1回）');
+  });
+});
+
+test('⑨「N軒を見る」: 条件を反映して閉じ、履歴を1つ戻したあとにその条件のハッシュが残る（戻るで再びシートは開かない・履歴は増えない）', () => {
+  const e = env({ manualPop: true });
+  e.run('nbOpenFilterSheet')(null);
+  press(e, 'genre', '居酒屋');
+  e.dom.click(e.dom.go);
+  assert.deepStrictEqual(filterOf(e), F({ genre: '居酒屋' }));
+  assert.strictEqual(e.log.apply.length, 1);
+  assert.strictEqual(e.ctx.NB_SHEET.leaving, true);
+  e.firePop();
+  assert.strictEqual(e.history.i, 0);
+  assert.strictEqual(e.history.stack[0].url, 'H:' + JSON.stringify(F({ genre: '居酒屋' })), '絞り込みのハッシュが残る');
+  assert.strictEqual(sheetEntries(e) <= 1, true);
+  assert.strictEqual(e.ctx.NB_SHEET.open, false, '戻り終えてもシートは開かない');
+  // 戻る処理は1回きり: 続けて popstate が来ても書き直しは増えない
+  e.firePop();
+  assert.strictEqual(e.log.hash.length, 1);
+});
+
+test('⑨戻り待ちの間は開き直さない（履歴が重ならない）・閉じ済みのシートに popstate が来ても何もしない', () => {
+  const e = env({ manualPop: true });
+  e.run('nbOpenFilterSheet')(null);
+  e.dom.click(e.dom.close);
+  e.run('nbOpenFilterSheet')(null);
+  assert.strictEqual(e.ctx.NB_SHEET.open, false);
+  assert.strictEqual(e.history.stack.length, 2);
+  e.firePop();
+  e.firePop();
+  assert.strictEqual(e.ctx.NB_SHEET.open, false);
+  assert.strictEqual(e.log.hash.length, 1);
+});
+
+test('⑨履歴を触れない環境（history が無い・例外）でも、開く・閉じるは動く', () => {
+  const e = env({ manualPop: true });
+  e.ctx.history = { get state() { throw new Error('x'); }, pushState() { throw new Error('x'); }, back() { throw new Error('x'); }, replaceState() {} };
+  e.run('nbOpenFilterSheet')(null);
+  assert.strictEqual(e.ctx.NB_SHEET.open, true);
+  e.dom.click(e.dom.close);
+  assert.strictEqual(e.ctx.NB_SHEET.open, false);
+  assert.strictEqual(e.ctx.NB_SHEET.leaving, false);
 });

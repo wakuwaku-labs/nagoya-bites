@@ -4069,7 +4069,7 @@ function scrollFeatureTop(dir) {
 // 開くたびに NB_FILTER の写し（下書き）を作り、押した結果は下書きにだけ入れる。「N軒を見る」で NB_FILTER に反映して一覧を切り替え、
 // ×・背景・Esc は下書きを捨てる。件数は NB-FILTER 区画の nbCountStores で、一覧と同じ判定・同じ検索語・同じ保存済みで数える。
 // シートを開いている間は履歴を足さない（「戻る」は店のモーダルと URL のためだけに使う）
-var NB_SHEET = { open: false, draft: null, opener: null, prevOverflow: '', inert: [] };
+var NB_SHEET = { open: false, draft: null, opener: null, prevOverflow: '', inert: [], leaving: false };
 // 折りたたみの閾値（これより後ろは「もっと見る」の後ろに隠す）
 var NB_SHEET_FOLD_GENRE = 8;
 var NB_SHEET_FOLD_SCENE = 7;
@@ -4227,8 +4227,10 @@ function nbSheetSetInert(on) {
 }
 function nbOpenFilterSheet(opener) {
   var wrap = document.getElementById('filter-sheet-wrap');
-  if (!wrap || NB_SHEET.open) return;
+  if (!wrap || NB_SHEET.open || NB_SHEET.leaving) return;
   NB_SHEET.open = true;
+  // 「戻る」で閉じられるよう、履歴を1つ足す（URL は変えない・P-428）。モーダルと同じく state の印で見分ける
+  try { history.pushState({ nbS: 1 }, '', location.href); } catch (e) { /* 履歴を触れない環境でもシートは開く */ }
   NB_SHEET.opener = opener || document.activeElement;
   NB_SHEET.draft = nbCloneFilter(NB_FILTER);
   nbRenderFilterSheet();
@@ -4243,7 +4245,7 @@ function nbOpenFilterSheet(opener) {
   if (sheet) { try { sheet.focus({ preventScroll: true }); } catch (e) { sheet.focus(); } }
 }
 // 閉じる。×・背景・Esc から呼ぶと下書きは捨てる。反映は nbCommitFilterSheet が先に NB_FILTER へ入れてから閉じる
-function nbCloseFilterSheet() {
+function nbCloseFilterSheet(fromPop) {
   if (!NB_SHEET.open) return;
   NB_SHEET.open = false;
   NB_SHEET.draft = null;
@@ -4256,7 +4258,21 @@ function nbCloseFilterSheet() {
   if (op && op.focus && document.body.contains(op)) {
     try { op.focus({ preventScroll: true }); } catch (e) { op.focus(); }
   }
+  // 足した履歴を1つ戻して消す。「戻る」で閉じたとき（fromPop）はもう戻っているので何もしない。
+  // 戻り終えたら popstate で、いまの条件のハッシュを書き直す（「N軒を見る」は戻る前に条件を書くため）
+  try {
+    if (!fromPop && history.state && history.state.nbS) { NB_SHEET.leaving = true; history.back(); }
+  } catch (e) { NB_SHEET.leaving = false; }
 }
+// 「戻る」でシートを閉じる（下書きは捨てる）。自分で戻した直後は、条件のハッシュを書き直す
+window.addEventListener('popstate', function() {
+  if (NB_SHEET.leaving) {
+    NB_SHEET.leaving = false;
+    try { pushHash(); } catch (e) { /* 履歴を触れない環境では URL を直さない */ }
+    return;
+  }
+  if (NB_SHEET.open && !(history.state && history.state.nbS)) nbCloseFilterSheet(true);
+});
 // 「N軒を見る」: 下書きを条件にして閉じ、一覧を切り替える
 function nbCommitFilterSheet() {
   if (!NB_SHEET.open || !NB_SHEET.draft) return;

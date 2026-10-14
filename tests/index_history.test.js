@@ -798,9 +798,16 @@ test('アドレス欄で #store= を書き換えた（popstate）: 別の店の�
 
 // ── 5. openM / closeM の約束事を静的に確かめる ─────────────────────────
 test('静的: 区画は1つ。履歴の書き換えは区画の中だけ（GA の ?nb_owner を消す1行を除く）', () => {
-  const outside = INDEX.replace(BLOCK, '');
+  // 絞り込みシート（P-428）は、自分の履歴の印（nbS）を足す・戻すために pushState を1回使う。それ以外は区画の外で使わない
+  const sa = INDEX.indexOf('\nvar NB_SHEET = ');
+  const sb = INDEX.indexOf('\n// 結果ブロック先頭へスムーズスクロール', sa);
+  assert.ok(sa > 0 && sb > sa, '絞り込みシートの区画が見つかる');
+  const sheet = INDEX.slice(sa, sb);
+  assert.strictEqual((sheet.match(/history\.pushState\(\{ nbS: 1 \}/g) || []).length, 1, 'シートは nbS の印を付けて1か所だけ足す');
+  assert.ok(!/history\.replaceState\(/.test(sheet), 'シートは replaceState を直接使わない（pushHash を通す）');
+  const outside = INDEX.replace(BLOCK, '').replace(sheet, '');
   const pushes = outside.match(/history\.pushState\(/g) || [];
-  assert.strictEqual(pushes.length, 0, '区画の外で pushState しない');
+  assert.strictEqual(pushes.length, 0, '区画とシートの外で pushState しない');
   const replaces = (outside.match(/history\.replaceState\(/g) || []).length;
   assert.strictEqual(replaces, 1, '区画の外の replaceState は GA の ?nb_owner を消す1行だけ');
   assert.ok(!/replaceState\(null/.test(BLOCK), '区画の中で state を null で上書きしない（印が消える）');
