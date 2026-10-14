@@ -261,4 +261,4 @@ https://nagoya-bites.com/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.h
 | 判断の記録 `docs/decisions/0027-x-auto-posting.md` | ✅ | — |
 | 鍵の登録・課金・自動化ラベル（P-294） | ⏳ オーナーの操作待ち | — |
 | 初回の投稿と本番への切り替え（P-296） | ⏳ 鍵の登録と試運転の確認の後 | — |
-| `social-watchdog.yml` の「自動投稿はスコープ外」の文言（P-297） | ⏳ 本番に切り替えるときに直す | — |
+| `social-watchdog.yml` の「自動投稿はスコープ外」の文言（P-297） | ✅ 2026-10-15 に本番へ切り替えるのと同時に直した | — |

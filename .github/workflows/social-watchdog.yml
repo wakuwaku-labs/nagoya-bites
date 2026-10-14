@@ -3,6 +3,8 @@ name: NAGOYA BITES — SNS配信断絶 監視
 # なぜこのワークフローが必要か（2026-08-19 / SEO-055・ISSUE-084 の再適用）:
 #   日次ジャーナルの SNS 投稿原稿（docs/daily-posts/<date>.md）は自動生成されているが、
 #   実際の SNS 投稿はオーナー本人の手作業であり、投稿されなかったことが誰にも届かない。
+#   ※ 2026-10-15 から X だけは日次ジャーナルの公開の後に自動で投稿する（x-post.yml・SNS-001・
+#     docs/decisions/0027-x-auto-posting.md）。X の投稿の欠けは x-post-watchdog.yml が見る。
 #   実測（2026-08-14）: 直近30日の SNS 由来セッションは 0/759。原稿は毎日できているのに
 #   「配信されなかったこと」自体が検知されず、同種の SEO アドバイスが duplicate として
 #   捨てられ続けていた（制約11「検知して終わりにしない／警報は当人の外へ」に該当する穴）。
@@ -93,14 +95,14 @@ jobs:
             lines.push(`**${r.consecutive_zero_days}日連続で0**でした（閾値 ${r.threshold}日・JST ${r.today_jst} 時点）。`);
             lines.push('');
             lines.push('> 原稿はできているのに投稿自体がされていない可能性が高いです。');
-            lines.push('> 実投稿はオーナー本人の手作業のため、自動化では直せません（このIssueが唯一の気づく手段）。');
+            lines.push('> X は日次ジャーナルの公開の後に自動で投稿されます（x-post.yml）。X の投稿の欠けは x-post-watchdog.yml の Issue で別に届きます。Note・Instagram の投稿は手作業です。');
             lines.push('');
             lines.push('## 直近の観測（原稿ありの日のみ）');
             for (const d of r.recent) lines.push(`- ${d.date}: social=${d.social}`);
             lines.push('');
             lines.push('## 対処');
             lines.push('1. `docs/daily-posts/<今日の日付>.md` を開き、Note/Instagram/X の原稿を確認する');
-            lines.push('2. 各SNSに実際に投稿する（自動投稿はスコープ外・手動運用）');
+            lines.push('2. X の自動投稿が動いているかを Actions の「NAGOYA BITES — X 自動投稿」で確かめる。Note・Instagram は手作業で投稿する');
             lines.push('3. 投稿を継続すると、翌日以降のGA4実測で social セッションが増え、次回チェックで自動復旧・自動クローズされます');
             lines.push('4. 手元で健全性を再確認する場合:');
             lines.push('   ```bash');
