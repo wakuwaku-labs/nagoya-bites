@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-14T08:49:51.205Z",
+  "generatedAt": "2026-10-14T09:06:55.775Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1536,
-    "pageViews": 2175,
-    "sessions": 1737,
-    "avgSessionDuration": 125.9,
+    "activeUsers": 1538,
+    "pageViews": 2178,
+    "sessions": 1739,
+    "avgSessionDuration": 125.8,
     "bounceRate": 0.285,
     "pagesPerSession": 1.25
   },
@@ -17,8 +17,8 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1247,
-      "direct": 354,
+      "organic": 1248,
+      "direct": 355,
       "social": 5,
       "ai_assistant": 106,
       "referral": 33,
@@ -26,7 +26,7 @@
       "other": 0
     },
     "pct": {
-      "organic": 71.5,
+      "organic": 71.4,
       "direct": 20.3,
       "social": 0.3,
       "ai_assistant": 6.1,
@@ -39,7 +39,7 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 554
+      "sessions": 555
     },
     {
       "source": "bing",
@@ -49,7 +49,7 @@
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 255
+      "sessions": 256
     },
     {
       "source": "yahoo",
@@ -190,8 +190,8 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 329,
-      "sessions": 314
+      "pageViews": 330,
+      "sessions": 315
     },
     {
       "path": "/",
@@ -215,7 +215,7 @@
     }
   ],
   "cta": {
-    "outboundClicks": 166,
+    "outboundClicks": 167,
     "ctaClickRate": 9.6,
     "byDomain": [
       {
@@ -240,7 +240,7 @@
       },
       {
         "domain": "www.google.com",
-        "clicks": 9
+        "clicks": 10
       },
       {
         "domain": "jouhou.nagoya",
@@ -285,7 +285,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 83,
+      "organic": 84,
       "direct": 63,
       "social": 0,
       "ai_assistant": 19,
@@ -294,7 +294,7 @@
       "other": 0
     },
     "ctaClickRate_organic": 6.7,
-    "ctaClickRate_direct": 17.8,
+    "ctaClickRate_direct": 17.7,
     "ctaClickRate_social": 0,
     "byPage": [
       {
@@ -785,6 +785,11 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J004559388.html",
+        "domain": "www.google.com",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J004613182.html",
         "domain": "www.hotpepper.jp",
         "clicks": 1
@@ -967,7 +972,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1536,
+    "value": 1538,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
