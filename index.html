@@ -3776,6 +3776,11 @@ var NB_PENDING_SOURCE = '';  // 待っている店を開くときの source。�
 var NB_OPEN_STORE_ID = '';   // いまモーダルで開いている店の ID（ID が無い店は ''）
 var NB_SWAP = 0;             // 「似たお店」へ切り替える間だけ、その時刻（履歴を足さず置き換える）
 
+// URL の store= と計測の store_id に使う店の ID。ホットペッパーIDがあればそれ、無い店（編集部の手動キュレーション店）は build.js が付ける 店舗ID（判断の記録 0043）
+function nbStoreKey(r) {
+  return String((r && (r['ホットペッパーID'] || r['店舗ID'])) || '');
+}
+
 // decodeURIComponent は壊れた % で例外を投げる（#q=%E0%A4%A など）。例外にせず、読めなかった値はそのまま返す
 function nbSafeDecode(s) {
   try { return decodeURIComponent(s); } catch (e) { return String(s); }
@@ -3851,7 +3856,7 @@ function nbOpenPendingStore(source) {
   if (!id) return;
   var idx = -1;
   for (var k = 0; k < ALL_STORES.length; k++) {
-    if (ALL_STORES[k]['ホットペッパーID'] === id) { idx = k; break; }
+    if (nbStoreKey(ALL_STORES[k]) === id) { idx = k; break; }
   }
   if (idx >= 0) {
     NB_PENDING_STORE = '';
@@ -5597,9 +5602,9 @@ function openM(i, source) {
   if (window.event && window.event.target && window.event.target.closest && window.event.target.closest('.fav-btn')) return;
   var r = ALL_STORES[i];
   nbQvRememberOpener();
-  // store_id はほかの cta_click と同じ決まり（ホットペッパーID。無い店は空）。店ごとの集計に使う（I-08）
+  // store_id はほかの cta_click と同じ決まり（ホットペッパーID。無い店は 店舗ID）。店ごとの集計に使う（I-08）
   // 「進む」で開き直したとき（source=popstate）は、利用者が新しく開いたわけではないので数えない
-  if (source !== 'popstate') trackEvent('modal_open', {store_name: r['店名'], store_id: r['ホットペッパーID'] || '', genre: r['ジャンル'], area: r['エリア'], source: source || 'unknown'});
+  if (source !== 'popstate') trackEvent('modal_open', {store_name: r['店名'], store_id: nbStoreKey(r), genre: r['ジャンル'], area: r['エリア'], source: source || 'unknown'});
   var photo = r['写真URL'] || nbStoreFigure(r);
   var hpUrl = hotpepperUrl(r);
   renderMhi(r, photo);
@@ -5861,7 +5866,7 @@ function openM(i, source) {
       : m.exit ? (' onclick="nbReserveExit(\'cta_click\',{store_name:\'' + ctaEsc(r['店名']) + '\',store_id:\'' + ctaEsc(hpId2) + '\',link_domain:\'' + m.exit + '\',location:\'modal_media\'})"') : '';
     return '<a href="' + (m.url||'#') + '" target="_blank" class="mb ' + m.cls + '"' + onclickAttr + ' rel="noopener noreferrer"><span class="mbi" aria-hidden="true">' + nbBrandImg(m.brand,18) + '</span><span class="mbl">' + m.label + '</span></a>';
   }).join('');
-  setShareStore(r['店名'] || '', r['ホットペッパーID'] || '');
+  setShareStore(r['店名'] || '', nbStoreKey(r));
   var mfavBtn = document.getElementById('modal-fav-btn');
   var storeName = r['店名'] || '';
   mfavBtn.setAttribute('data-name', storeName);
@@ -5913,7 +5918,7 @@ function openM(i, source) {
   if (r.reviewTrust && r.reviewTrust.d) fnParts.push('口コミ最終確認 ' + mEsc(r.reviewTrust.d));
   document.getElementById('m-footnote').innerHTML = fnParts.join(' · ') + ' · <a href="mailto:editor@nagoya-bites.com?subject=' + encodeURIComponent('掲載情報の修正依頼: ' + (r['店名'] || '')) + '">修正を依頼する</a>';
   document.getElementById('ov').classList.add('open');
-  nbModalHistoryOpen(r['ホットペッパーID'] || '', source);
+  nbModalHistoryOpen(nbStoreKey(r), source);
   document.body.style.overflow = 'hidden';
   document.getElementById('mobile-cta-bar').style.display='none';
   var modalEl0 = document.getElementById('modal'); if (modalEl0) modalEl0.scrollTop = 0;

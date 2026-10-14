@@ -419,7 +419,7 @@ test('行動バー: 予約先あり＋電話可＝予約(塗り)・電話・地�
 });
 
 test('計測: modal_open の名前と source・cta_click・cta_gmap_click の location・♡ は従来のまま。前後は source=modal_nav', () => {
-  assert.match(OPEN_M, /if \(source !== 'popstate'\) trackEvent\('modal_open', \{store_name: r\['店名'\], store_id: r\['ホットペッパーID'\] \|\| '', genre: r\['ジャンル'\], area: r\['エリア'\], source: source \|\| 'unknown'\}\);/);
+  assert.match(OPEN_M, /if \(source !== 'popstate'\) trackEvent\('modal_open', \{store_name: r\['店名'\], store_id: nbStoreKey\(r\), genre: r\['ジャンル'\], area: r\['エリア'\], source: source \|\| 'unknown'\}\);/);
   assert.match(OPEN_M, /nbReserveExit\(\\'cta_click\\',\{store_name:\\'' \+ ctaEsc\(r\['店名'\]\) \+ '\\',store_id:\\'' \+ ctaEsc\(hpId2\) \+ '\\',link_domain:\\'www\.hotpepper\.jp\\',location:\\'modal\\'\}\)/);
   ['modal_cta', 'modal_sticky', 'modal_address', 'modal_media_row'].forEach((loc) => assert.ok(OPEN_M.includes(loc), 'cta_gmap_click の location ' + loc));
   assert.match(fn('nbQvStep'), /openM\(idx, 'modal_nav'\)/);
@@ -431,7 +431,7 @@ test('履歴: 前の店・次の店は履歴を足さない（開いたまま別
   assert.match(hist, /if \(swapping \|\| \(history\.state && history\.state\.nbM\)\) history\.replaceState/, '印があるときは置き換え');
   assert.match(CLOSE_M, /if \(typeof nbQvRelease === 'function'\) nbQvRelease\(!!\(opts && opts\.swap\), wasOpen\);/, '閉じたら inert を外して焦点を戻す');
   assert.ok(/nbQvOpened\(r, source\);\n\}/.test(OPEN_M), 'openM は最後に nbQvOpened を呼ぶ');
-  assert.match(OPEN_M, /nbModalHistoryOpen\(r\['ホットペッパーID'\] \|\| '', source\);/);
+  assert.match(OPEN_M, /nbModalHistoryOpen\(nbStoreKey\(r\), source\);/);
   assert.match(OPEN_M, /nbQvRememberOpener\(\);/);
 });
 
