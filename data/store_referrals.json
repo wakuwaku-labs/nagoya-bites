@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-14T08:30:52.154Z",
+  "generatedAt": "2026-10-14T08:49:45.486Z",
   "lookbackDays": 30,
   "definitions": {
     "exits": "予約送客: その店の予約導線（HotPepper・食べログの店舗ページ、電話）を押した回数。GA4 で検算できる事実",
@@ -10,9 +10,9 @@
     "exits": {
       "hotpepper": 56,
       "tabelog": 3,
-      "tel": 3,
+      "tel": 4,
       "other": 0,
-      "total": 62
+      "total": 63
     },
     "reports": {
       "yes": 0,
@@ -26,9 +26,9 @@
       "exits": {
         "hotpepper": 28,
         "tabelog": 3,
-        "tel": 1,
+        "tel": 2,
         "other": 0,
-        "total": 32
+        "total": 33
       },
       "reports": {
         "yes": 0,
@@ -151,6 +151,24 @@
         "hotpepper": 0,
         "tabelog": 1,
         "tel": 0,
+        "other": 0,
+        "total": 1
+      },
+      "reports": {
+        "yes": 0,
+        "no": 0
+      },
+      "thisMonth": {
+        "exits": 1,
+        "reportsYes": 0
+      }
+    },
+    {
+      "store_name": "GURU 神宮前駅前店",
+      "exits": {
+        "hotpepper": 0,
+        "tabelog": 0,
+        "tel": 1,
         "other": 0,
         "total": 1
       },
