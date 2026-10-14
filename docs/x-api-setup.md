@@ -32,6 +32,8 @@ X のアカウントと支払いカードを使うので、オーナー本人の
 | Access Token Secret | `X_ACCESS_TOKEN_SECRET` |
 
 - Access Token の横に **Read and Write** と出ていることを確かめる。**Read only** と出ていたら、2 の権限を直してから Access Token を作り直す
+- 作る順番は **API Key（コンシューマーキー）が先、Access Token が後**。API Key を作り直すと、それより前の Access Token は使えなくなる
+- 鍵の値が画面に出ている間は、Claude に画面を撮らせない（値を Claude に渡さない）
 - Client ID / Client Secret / Bearer Token は使わない（この仕組みは OAuth 1.0a で自分のアカウントから投稿するため）
 
 ## 4. 支払いと上限
