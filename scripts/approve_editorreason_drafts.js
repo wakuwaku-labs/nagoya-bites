@@ -28,7 +28,8 @@ const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
 const autoHighConf = args.includes('--auto-high-conf');
 const AUTO_THRESHOLD = 0.85;
-const REVIEWER = process.env.USER || 'unknown';
+// 確認者は個人を特定しない表記にする（公開リポジトリに運営者のアカウント名を残さない・P-368）
+const REVIEWER = 'owner';
 
 const norm = s => String(s || '').replace(/\s|　/g, '').replace(/&amp;/g, '&').toLowerCase();
 
