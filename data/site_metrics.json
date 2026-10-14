@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-14T00:09:25.752Z",
+  "generatedAt": "2026-10-14T07:07:32.793Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1491,
-    "pageViews": 2118,
-    "sessions": 1691,
-    "avgSessionDuration": 125.6,
-    "bounceRate": 0.282,
+    "activeUsers": 1528,
+    "pageViews": 2164,
+    "sessions": 1728,
+    "avgSessionDuration": 126.4,
+    "bounceRate": 0.285,
     "pagesPerSession": 1.25
   },
   "dailyReference": {
@@ -17,44 +17,44 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1205,
+      "organic": 1238,
       "direct": 354,
       "social": 5,
-      "ai_assistant": 105,
+      "ai_assistant": 106,
       "referral": 33,
       "paid": 0,
-      "other": 2
+      "other": 0
     },
     "pct": {
-      "organic": 70.7,
-      "direct": 20.8,
+      "organic": 71.3,
+      "direct": 20.4,
       "social": 0.3,
-      "ai_assistant": 6.2,
+      "ai_assistant": 6.1,
       "referral": 1.9,
       "paid": 0,
-      "other": 0.1
+      "other": 0
     }
   },
   "sourceBreakdown": [
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 535
+      "sessions": 551
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 452
+      "sessions": 466
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 250
+      "sessions": 255
     },
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 199
+      "sessions": 201
     },
     {
       "source": "chatgpt.com",
@@ -64,12 +64,12 @@
     {
       "source": "unknown",
       "medium": "(not set)",
-      "sessions": 69
+      "sessions": 70
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 33
+      "sessions": 26
     },
     {
       "source": "openai",
@@ -79,7 +79,7 @@
     {
       "source": "duckduckgo",
       "medium": "organic",
-      "sessions": 16
+      "sessions": 17
     },
     {
       "source": "service.smt.docomo.ne.jp",
@@ -142,6 +142,11 @@
       "sessions": 1
     },
     {
+      "source": "copilot.com",
+      "medium": "",
+      "sessions": 1
+    },
+    {
       "source": "cosmoage.com",
       "medium": "referral",
       "sessions": 1
@@ -173,12 +178,7 @@
     },
     {
       "source": "ranking",
-      "medium": "",
-      "sessions": 1
-    },
-    {
-      "source": "unknown",
-      "medium": "",
+      "medium": "(not set)",
       "sessions": 1
     },
     {
@@ -190,18 +190,18 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 323,
-      "sessions": 308
+      "pageViews": 327,
+      "sessions": 312
     },
     {
       "path": "/",
-      "pageViews": 113,
-      "sessions": 99
+      "pageViews": 121,
+      "sessions": 107
     },
     {
       "path": "/index.html",
-      "pageViews": 88,
-      "sessions": 73
+      "pageViews": 89,
+      "sessions": 74
     },
     {
       "path": "/features/nagoya-hitsumabushi.html",
@@ -210,21 +210,21 @@
     },
     {
       "path": "/features/nagoya-autumn-2026.html",
-      "pageViews": 71,
-      "sessions": 70
+      "pageViews": 73,
+      "sessions": 72
     }
   ],
   "cta": {
-    "outboundClicks": 164,
-    "ctaClickRate": 9.7,
+    "outboundClicks": 166,
+    "ctaClickRate": 9.6,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 51
+        "clicks": 52
       },
       {
         "domain": "maps.google.com",
-        "clicks": 29
+        "clicks": 30
       },
       {
         "domain": "tabelog.com",
@@ -285,7 +285,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 81,
+      "organic": 83,
       "direct": 63,
       "social": 0,
       "ai_assistant": 19,
@@ -311,7 +311,7 @@
       },
       {
         "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
-        "clicks": 9
+        "clicks": 10
       },
       {
         "path": "/features/nagoya-solo-dining.html",
@@ -470,6 +470,11 @@
         "clicks": 5
       },
       {
+        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
+        "domain": "maps.google.com",
+        "clicks": 5
+      },
+      {
         "path": "/",
         "domain": "maps.google.com",
         "clicks": 4
@@ -477,11 +482,6 @@
       {
         "path": "/features/nagoya-miso-nikomi-udon.html",
         "domain": "www.hotpepper.jp",
-        "clicks": 4
-      },
-      {
-        "path": "/journal/2026-10-12-nakagawa-machinaka-shokudo-omusubi.html",
-        "domain": "maps.google.com",
         "clicks": 4
       },
       {
@@ -745,6 +745,11 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J001266833.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J003582119.html",
         "domain": "www.google.com",
         "clicks": 1
@@ -900,6 +905,10 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J001266833.html",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J003624222.html",
         "clicks": 1
       },
@@ -932,7 +941,7 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 80,
+    "reservationClicks": 81,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 17,
@@ -958,7 +967,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1491,
+    "value": 1528,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
