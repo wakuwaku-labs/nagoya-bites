@@ -47,8 +47,8 @@ const H = (hours, closed) => ({ '営業時間': hours, '定休日': closed === u
 test('本日の営業時間: 曜日つきの群のうち今日を含む群がちょうど 1 つのときだけ採り、L.O. の括弧は除く', () => {
   const c = loadToday();
   const lunchDinner = '月～金: 11:00～14:0017:30～21:00 （料理L.O. 20:30 ドリンクL.O. 20:30）土、日、祝日: 11:00～21:00 （料理L.O. 20:30）';
-  assert.deepStrictEqual({ ...c.nbTodayHours(H(lunchDinner, '不定休'), WED) }, { kind: 'open', text: '営業時間 11:00〜14:00 / 17:30〜21:00（祝日は別）' }, '定休日が読めない店は「本日」と言い切らない');
-  assert.strictEqual(c.nbTodayHours(H(lunchDinner, '月'), WED).text.startsWith('本日 '), true, '定休日が読めて今日を含まなければ「本日」');
+  assert.deepStrictEqual({ ...c.nbTodayHours(H(lunchDinner, '不定休'), WED) }, { kind: 'open', text: '営業時間 水曜 11:00〜14:00 / 17:30〜21:00（祝日は別）' }, '定休日が読めない店は「本日」と言い切らない');
+  assert.strictEqual(c.nbTodayHours(H(lunchDinner, '月'), WED).text, '営業時間 水曜 11:00〜14:00 / 17:30〜21:00（祝日は別）', '祝日の別時間がある店は「本日」と断定しない');
   assert.strictEqual(c.nbTodayHours(H(lunchDinner, '月'), SUN).text, '本日 11:00〜21:00', '日曜は 土、日、祝日 の群');
   assert.strictEqual(c.nbTodayHours(H(lunchDinner, '月'), SAT).text, '本日 11:00〜21:00');
 });
@@ -89,10 +89,31 @@ test('本日の営業時間: 翌日にまたぐ時刻・1 桁の時・別の区�
   assert.strictEqual(c.nbTodayHours(H('月～日: 18:00～翌5:00 （料理L.O. 翌4:00）', '月'), WED).text, '本日 18:00〜翌05:00');
   assert.strictEqual(c.nbTodayHours(H('9:30－18:00', '月'), WED).text, '本日 09:30〜18:00');
   assert.strictEqual(c.nbTodayHours(H('17:00–22:00', '月'), WED).text, '本日 17:00〜22:00', 'エヌダッシュ');
-  assert.strictEqual(c.nbTodayHours(H('月～金: 11:00～21:00 祝日: 11:00～17:00', '日'), WED).text, '本日 11:00〜21:00（祝日は別）');
+  assert.strictEqual(c.nbTodayHours(H('月～金: 11:00～21:00 祝日: 11:00～17:00', '日'), WED).text, '営業時間 水曜 11:00〜21:00（祝日は別）');
   assert.strictEqual(c.nbTodayHours(H('月～金、祝日: 11:00～21:00', '日'), WED).text, '本日 11:00〜21:00', '祝日が同じ群なら添えない');
   assert.strictEqual(c.nbTodayHours(H('月～金: 11:00～21:00 祝日: 11:00～21:00', '日'), WED).text, '本日 11:00〜21:00', '祝日の時間が同じなら添えない');
   assert.strictEqual(c.nbTodayHours(H('水曜日: 11:00～15:00', '日'), WED).text, '本日 11:00〜15:00', '曜日の「曜日」は読み飛ばす');
+});
+
+test('本日の営業時間（P-442）: 祝日の別時間がある店は、祝日（2026-10-12 月・祝）に平日の時刻を「本日」と断定しない', () => {
+  const c = loadToday();
+  const MON_HOLIDAY = new Date(2026, 9, 12);   // 2026-10-12 月曜・スポーツの日
+  const r = H('月～金: 11:00～21:00 祝日: 11:00～17:00', '日');
+  const t = c.nbTodayHours(r, MON_HOLIDAY).text;
+  assert.strictEqual(t, '営業時間 月曜 11:00〜21:00（祝日は別）');
+  assert.ok(!t.startsWith('本日'), '祝日かどうか確かめられない店は「本日」と書かない');
+  // 実データ: 祝日の別時間を持つ店は、どの曜日でも「本日」を出さない
+  const stores = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'stores.json'), 'utf8'));
+  const list = Array.isArray(stores) ? stores : (stores.stores || []);
+  let withHol = 0;
+  for (const s of list) {
+    if (!/祝日?\s*[:：]/.test(String(s['営業時間'] || ''))) continue;
+    const res = c.nbTodayHours(s, MON_HOLIDAY);
+    if (!res || res.kind !== 'open' || !/祝日は別/.test(res.text)) continue;
+    withHol++;
+    assert.ok(!res.text.startsWith('本日'), s['店名'] + ': ' + res.text);
+  }
+  if (list.length) assert.ok(withHol > 0, '実データに祝日の別時間を持つ店が見つからない（検査が空振り）');
 });
 
 // ───────── 2. 要点 ─────────
