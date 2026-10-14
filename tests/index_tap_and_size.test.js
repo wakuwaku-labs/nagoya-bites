@@ -154,14 +154,19 @@ test('見た目を変えない丸ボタン（.fav-btn）は、::after で当た�
   const w = sizeOf(base, 'width'), h = sizeOf(base, 'height'), ins = insetOf(after);
   assert.ok(w !== null && h !== null && ins !== null && ins < 0, '.fav-btn の大きさか ::after の inset が読めない');
   assert.ok(Math.min(w, h) + 2 * -ins >= TAP_MIN_PX, `.fav-btn の当たり判定が ${Math.min(w, h) + 2 * -ins}px しかない`);
-  // リスト表示（.grid.list-mode）: ボタンが 28px に縮むので、::after の inset も広げてある
+  // リスト表示（.grid.list-mode）: 位置と色だけを変える規則で、ボタンの大きさは通常のまま（I-19・0036）。
+  // 当たり判定は通常の規則（34px ＋ ::after の inset）がそのまま効く。大きさや ::after を上書きするなら、44px 以上を保つこと
   const listBase = RULES.find((r) => r.selectors.includes('.grid.list-mode .fav-btn'));
   const listAfter = RULES.find((r) => r.selectors.includes('.grid.list-mode .fav-btn::after'));
-  assert.ok(listBase && listAfter, 'リスト表示の .fav-btn と ::after の規則が見つからない');
-  const lw = sizeOf(listBase, 'width'), lh = sizeOf(listBase, 'height'), lins = insetOf(listAfter);
-  assert.ok(lw !== null && lh !== null && lins !== null && lins < 0, 'リスト表示の .fav-btn の大きさか ::after の inset が読めない');
+  assert.ok(listBase, 'リスト表示の .fav-btn の規則が見つからない');
+  const own = (r, p) => (r ? sizeOf(r, p) : null);
+  const lw = own(listBase, 'width') ?? w, lh = own(listBase, 'height') ?? h;
+  const lins = listAfter && insetOf(listAfter) !== null ? insetOf(listAfter) : ins;
+  assert.ok(lins < 0, 'リスト表示の ::after の inset が負の値ではない');
   assert.ok(Math.min(lw, lh) + 2 * -lins >= TAP_MIN_PX, `リスト表示の .fav-btn の当たり判定が ${Math.min(lw, lh) + 2 * -lins}px しかない`);
-  assert.ok(listBase.decls.some((d) => d[0] === 'position' && d[1] === 'relative'), 'リスト表示の .fav-btn に position:relative が無い（::after の基準になる）');
+  // ::after（position:absolute）の基準は、ボタン自身が位置を持つこと（absolute か relative）
+  const pos = (listBase.decls.find((d) => d[0] === 'position') || base.decls.find((d) => d[0] === 'position') || [])[1];
+  assert.ok(pos === 'absolute' || pos === 'relative', `リスト表示の .fav-btn が position を持たない（${pos}）。::after の基準にならない`);
 });
 
 test('ロゴとヘッダーのナビは、::after / ::before で当たり判定だけを 44px に広げている（共通 CSS・見た目は変えない）', () => {
