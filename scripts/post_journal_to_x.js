@@ -141,6 +141,24 @@ function credentialStatus(env) {
   return st;
 }
 
+/**
+ * 形が合わない鍵の「形」だけを言葉にする（値は出さない）。長さ・ハイフンの位置・先頭の数字の桁数・英数字以外の記号の種類だけ。
+ * 例: 「長さ 50・ハイフン 1 個（11 文字目）・先頭の数字 10 桁・英数字以外: なし」
+ */
+function credentialShape(value) {
+  const v = value == null ? '' : String(value);
+  const t = v.trim();
+  const hy = [];
+  for (let i = 0; i < t.length; i++) if (t[i] === '-') hy.push(i + 1);
+  const lead = (t.match(/^\d*/) || [''])[0].length;
+  const names = { ' ': '空白', '\t': 'タブ', '\n': '改行', '\r': '改行', '\u3000': '全角の空白' };
+  const others = [...new Set([...t].filter((c) => !/[A-Za-z0-9-]/.test(c)))]
+    .map((c) => names[c] || (/[\x21-\x7e]/.test(c) ? `「${c}」` : '全角などの文字'));
+  const parts = [`長さ ${t.length}`, hy.length ? `ハイフン ${hy.length} 個（${hy.join('・')} 文字目）` : 'ハイフンなし', `先頭の数字 ${lead} 桁`, `英数字以外: ${others.length ? [...new Set(others)].join('') : 'なし'}`];
+  if (v.length !== t.length) parts.push('前後に空白・改行あり（読むときに外している）');
+  return parts.join('・');
+}
+
 async function sendTweet(text, cred, fetchImpl = fetch) {
   const auth = X.oauthHeader({ method: 'POST', url: TWEET_URL, ...cred });
   const res = await fetchImpl(TWEET_URL, {
@@ -190,6 +208,8 @@ async function run(args, { root = X.ROOT, env = process.env, fetchImpl = fetch, 
   const date = args.date || todayJst(now);
   const out = { date, mode, policyMode: policy.mode };
   out.credentials = credentialStatus(env);
+  out.credentialShapes = {};
+  for (const n of CREDENTIAL_NAMES) if (!['set', 'empty'].includes(out.credentials[n])) out.credentialShapes[n] = credentialShape(env[n]);
 
   if (mode === 'off') return { ...out, result: 'off', exitCode: 0 };
   if (mode === 'live' && args.skipLiveCheck) throw new Error('--skip-live-check は live では使えません');
@@ -297,6 +317,7 @@ function summaryMarkdown(r) {
   if (r.credentials) {
     const ja = { set: '登録済み', empty: '空（未登録）', bad_format: '形が違う（別の欄の値の疑い）', looks_access_token: 'Access Token の値が入っている疑い', duplicate: 'ほかの名前と同じ値' };
     lines.push(`- 鍵（値は出さない）: ${CREDENTIAL_NAMES.map((n) => `${n}=${ja[r.credentials[n]]}`).join('・')}`);
+    for (const [n, shape] of Object.entries(r.credentialShapes || {})) lines.push(`  - ${n} の形: ${shape}`);
   }
   if (r.text) lines.push('', '### 文面', '', '```', r.text, '```');
   return lines.join('\n') + '\n';
@@ -317,4 +338,4 @@ if (require.main === module) {
   main().catch((e) => { console.error(e.stack || String(e)); process.exitCode = 1; });
 }
 
-module.exports = { run, parseArgs, effectiveMode, findEntry, todayJst, waitForLivePage, checkOgImage, credentials, credentialStatus, summaryMarkdown };
+module.exports = { run, parseArgs, effectiveMode, findEntry, todayJst, waitForLivePage, checkOgImage, credentials, credentialStatus, credentialShape, summaryMarkdown };

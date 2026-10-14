@@ -268,3 +268,12 @@ test('Access Token を別の名前に貼った・同じ値を2つに貼った・
   assert.ok(md.includes('X_API_KEY=Access Token の値が入っている疑い'));
   assert.ok(!md.includes('1234567890') && !md.includes('abc_def'));
 });
+
+test('形が合わない鍵は、値を出さずに長さ・ハイフン・記号の種類だけを Summary に出す', () => {
+  const { credentialShape, summaryMarkdown } = require('../scripts/post_journal_to_x.js');
+  assert.strictEqual(credentialShape('1234567890-AbCd'), '長さ 15・ハイフン 1 個（11 文字目）・先頭の数字 10 桁・英数字以外: なし');
+  assert.strictEqual(credentialShape(' abc_d e\n'), '長さ 7・ハイフンなし・先頭の数字 0 桁・英数字以外: 「_」空白・前後に空白・改行あり（読むときに外している）');
+  const md = summaryMarkdown({ mode: 'dry-run', result: 'dry_run_ok', credentials: { X_API_KEY: 'set', X_API_SECRET: 'set', X_ACCESS_TOKEN: 'bad_format', X_ACCESS_TOKEN_SECRET: 'set' }, credentialShapes: { X_ACCESS_TOKEN: credentialShape('secretValue_1') } });
+  assert.ok(md.includes('X_ACCESS_TOKEN の形: 長さ 13'));
+  assert.ok(!md.includes('secretValue'));
+});
