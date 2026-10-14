@@ -72,3 +72,11 @@ test('見本の一覧（data/index_probe_urls.json）は、面ごとに重複が
   const un = new Set(d.groups.unreachable_after_i25);
   assert.ok(d.groups.control_store.every((u) => !un.has(u)), 'control に unreachable が混ざっている');
 });
+
+test('interleave: 面を順番に 1 件ずつ回し、途中で打ち切っても全部の面から引ける', () => {
+  const q = lib.interleave({ a: ['a1', 'a2', 'a3'], b: ['b1'], c: ['c1', 'c2'] });
+  assert.deepStrictEqual(q.map((x) => x.url), ['a1', 'b1', 'c1', 'a2', 'c2', 'a3']);
+  assert.deepStrictEqual(q.slice(0, 3).map((x) => x.group), ['a', 'b', 'c']);
+  assert.deepStrictEqual(lib.interleave({}), []);
+  assert.deepStrictEqual(lib.interleave(null), []);
+});

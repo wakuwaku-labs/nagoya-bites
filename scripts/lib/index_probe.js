@@ -85,4 +85,20 @@ function updateHistory(history, date, groups) {
   return h.filter((x) => x.date >= cutoff);
 }
 
-module.exports = { HISTORY_DAYS, CRAWL_RECENT_DAYS, stableOrder, pickSample, summarizeInspection, isIndexed, isCrawledRecently, summarizeGroups, updateHistory };
+/**
+ * 面（group）を順番に 1 件ずつ回す順にする。時間切れで途中までしか引けなくても、
+ * 全部の面から同じ割合で引けているようにする（先頭の面だけが引かれて他が空になるのを防ぐ）。
+ * @param {Object} groups { group: [url...] }
+ * @returns {Array} [{ group, url }]
+ */
+function interleave(groups) {
+  const names = Object.keys(groups || {});
+  const out = [];
+  const max = Math.max(0, ...names.map((g) => (groups[g] || []).length));
+  for (let i = 0; i < max; i++) {
+    for (const g of names) if (groups[g] && i < groups[g].length) out.push({ group: g, url: groups[g][i] });
+  }
+  return out;
+}
+
+module.exports = { interleave, HISTORY_DAYS, CRAWL_RECENT_DAYS, stableOrder, pickSample, summarizeInspection, isIndexed, isCrawledRecently, summarizeGroups, updateHistory };
