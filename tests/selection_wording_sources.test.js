@@ -151,8 +151,7 @@ test('llms.txt: 手で書く部分（自動生成の区間の外）に、人が�
 
 
 test('日次ジャーナルの生成ラッパーは、書き手への指示に「言葉の決まり」を入れている（P-335）', () => {
-  // journal-today.md（.claude/ の自己改変ブロックで、Claude は編集できない）には「業界人視点」「『業界人』『編集部』で統一」が
-  // 残っているので、その反映（P-335・オーナーの操作）までは、ラッパーが渡す指示で読み替えさせる。
+  // journal-today.md の言い方は P-335（オーナーの操作・2026-10-14）で直した。ラッパーは表現の決まりそのものを渡し、読み替えは持たない。
   const sh = fs.readFileSync(path.join(ROOT, 'scripts', 'run_journal_local.sh'), 'utf8');
   const m = sh.match(/^SELF_HEADER=".*?"\n(?=PROMPT=)/ms);
   assert.ok(m, 'SELF_HEADER の代入が見つからない');
@@ -160,8 +159,17 @@ test('日次ジャーナルの生成ラッパーは、書き手への指示に�
   const out = execFileSync('bash', ['-c', `TODAY_JST=2026-10-14\n${m[0]}printf '%s' "$SELF_HEADER"`], { encoding: 'utf8' });
   assert.ok(out.includes('【言葉の決まり'), out);
   assert.ok(out.includes('店舗の選定にはAIによる情報収集・分析を活用しています。'), out);
-  assert.ok(out.includes('署名は『編集部』で統一'), out);
+  assert.ok(!out.includes('読み替える'), '直した後は、journal-today.md の読み替えを渡さない');
   assert.ok(out.includes('質問や確認待ちで止まらないこと'), '従来の無人実行の指示が残っている');
+});
+
+test('journal-today.md（Claude 用・Codex 用の写し）は、業界人視点・個人署名の言い方を持たない（P-335）', () => {
+  for (const rel of ['.claude/commands/journal-today.md', '.agents/skills/source-command-journal-today/SKILL.md']) {
+    const t = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    assert.ok(!t.includes('業界人視点'), rel + ': 業界人視点');
+    assert.ok(!t.includes('「業界人」「編集部」で統一'), rel + ': 業界人で統一');
+    assert.ok(t.includes('署名は「編集部」で統一'), rel + ': 署名は編集部');
+  }
 });
 
 // ---------------------------------------------------------------- 運営について・FAQ・編集規約・店舗一覧（P-329・設計書 5.5 節・判断の記録 0031）
