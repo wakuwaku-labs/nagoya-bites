@@ -1,6 +1,6 @@
 'use strict';
 /**
- * ローカル実行（日次ジャーナル）で使った Places の月次消費の台帳（P-436・docs/decisions/0041）。
+ * ローカル実行（日次ジャーナル）で使った Places の月次消費の台帳（P-436・docs/decisions/0042）。
  *
  * 書き手を分ける: data/photo_pipeline_health.json は CI（build.yml）が毎日書き換えるため、
  * ローカルのジャーナルが同じファイルを書くと、ラッパーがコミットできず作業ツリーが汚れ、

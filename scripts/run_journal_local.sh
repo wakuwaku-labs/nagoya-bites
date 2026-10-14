@@ -147,7 +147,7 @@ record_health() {
 }
 
 # ローカル実行で使った Places の月次回数。書き手はこのジャーナルの実行だけ（CI が書く
-# data/photo_pipeline_health.json とは別ファイル＝pull で衝突しない・P-436 / docs/decisions/0041）。
+# data/photo_pipeline_health.json とは別ファイル＝pull で衝突しない・P-436 / docs/decisions/0042）。
 PLACES_LOCAL_USAGE_FILE="data/photo_pipeline_health_local.json"
 
 # 状態ファイルだけを surgical に push する。記事本体の commit/push とは独立させ、
