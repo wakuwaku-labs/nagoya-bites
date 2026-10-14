@@ -49,3 +49,4 @@ status: in_progress
 - #580 本番確認済み（FAQ 9/9 一致・1:05）。P-29 #592: 再発防止の案1（生成時に Places 写真URLを書かずHotPepper優先）はオーナー判断
 - e2e_history.js の古い前提（S4〜S7・main でも失敗）を起票
 - 作業ツリーは wakuwaku-labs/stingaree（PR なし）に置く。PR のブランチで HANDOFF を書くと autopilot の自動コミットが PR に入る（#581 で2回起きた・1:20 に直した）
+- 1:35 オーナーの返事:「#590 は承認」→ ready にしてマージ待ちの列へ（#594 の後）。P-29 は「案1（HotPepper 優先・取り直さない面に Places の URL を書かない）」→ 担当 af1d999 が別 PR で実装中（判断の記録 0046 の予定。0045 は未使用なのでマージ時に詰める）
