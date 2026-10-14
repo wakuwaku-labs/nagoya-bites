@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-14T11:59:36.812Z",
+  "generatedAt": "2026-10-14T12:15:33.560Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1774,
+  "total_sessions": 1775,
   "engines": [
     {
       "key": "google",
@@ -58,13 +58,13 @@
     {
       "key": "yahoo",
       "label": "Yahoo!",
-      "sessions": 209,
+      "sessions": 210,
       "pct": 11.8,
       "sources": [
         {
           "source": "yahoo",
           "medium": "organic",
-          "sessions": 207
+          "sessions": 208
         },
         {
           "source": "hk.search.yahoo.com",
@@ -222,7 +222,7 @@
     }
   ],
   "search_only": {
-    "total": 1380,
+    "total": 1381,
     "share": [
       {
         "key": "google",
@@ -239,14 +239,14 @@
       {
         "key": "yahoo",
         "label": "Yahoo!",
-        "sessions": 209,
-        "pct_of_search": 15.1
+        "sessions": 210,
+        "pct_of_search": 15.2
       },
       {
         "key": "ai_assistant",
         "label": "生成AI（ChatGPT/Perplexity/Claude/Gemini/Copilot）",
         "sessions": 107,
-        "pct_of_search": 7.8
+        "pct_of_search": 7.7
       },
       {
         "key": "duckduckgo",
@@ -260,10 +260,10 @@
     "from": "2026-10-13",
     "to": "2026-10-14",
     "delta": {
-      "google": 28,
-      "bing": 30,
+      "google": 29,
+      "bing": 32,
       "direct": 3,
-      "yahoo": 10,
+      "yahoo": 11,
       "ai_assistant": 2,
       "other": 0,
       "duckduckgo": 1,
