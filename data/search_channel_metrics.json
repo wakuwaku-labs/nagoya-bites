@@ -1,10 +1,10 @@
 {
   "ok": true,
   "ready": true,
-  "generatedAt": "2026-10-14T10:52:09.643Z",
+  "generatedAt": "2026-10-14T11:07:56.911Z",
   "source": "data/site_metrics.json",
   "lookbackDays": 30,
-  "total_sessions": 1761,
+  "total_sessions": 1763,
   "engines": [
     {
       "key": "google",
@@ -22,13 +22,13 @@
     {
       "key": "bing",
       "label": "Bing",
-      "sessions": 478,
-      "pct": 27.1,
+      "sessions": 480,
+      "pct": 27.2,
       "sources": [
         {
           "source": "bing",
           "medium": "organic",
-          "sessions": 476
+          "sessions": 478
         },
         {
           "source": "cn.bing.com",
@@ -59,7 +59,7 @@
       "key": "yahoo",
       "label": "Yahoo!",
       "sessions": 207,
-      "pct": 11.8,
+      "pct": 11.7,
       "sources": [
         {
           "source": "yahoo",
@@ -222,19 +222,19 @@
     }
   ],
   "search_only": {
-    "total": 1369,
+    "total": 1371,
     "share": [
       {
         "key": "google",
         "label": "Google",
         "sessions": 560,
-        "pct_of_search": 40.9
+        "pct_of_search": 40.8
       },
       {
         "key": "bing",
         "label": "Bing",
-        "sessions": 478,
-        "pct_of_search": 34.9
+        "sessions": 480,
+        "pct_of_search": 35
       },
       {
         "key": "yahoo",
@@ -260,11 +260,11 @@
     "from": "2026-10-13",
     "to": "2026-10-14",
     "delta": {
-      "google": 22,
-      "bing": 19,
+      "google": 27,
+      "bing": 25,
       "direct": 1,
-      "yahoo": 7,
-      "ai_assistant": 1,
+      "yahoo": 9,
+      "ai_assistant": 2,
       "other": 0,
       "duckduckgo": 1,
       "social": 0
@@ -273,7 +273,7 @@
   "blind_spots": [
     {
       "issue": "gsc_only_covers_google",
-      "detail": "GSC が見えるのは Google の 560 セッションのみ。Bing(478) + 生成AI(107) の 585 セッションは既存の改善ループの外側にある。",
+      "detail": "GSC が見えるのは Google の 560 セッションのみ。Bing(480) + 生成AI(107) の 587 セッションは既存の改善ループの外側にある。",
       "action": "Bing Webmaster Tools の登録（要オーナー操作）と IndexNow 送信の有効化、AI引用面は llms.txt の維持で対応する"
     }
   ],

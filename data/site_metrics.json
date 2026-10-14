@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-14T10:47:30.706Z",
+  "generatedAt": "2026-10-14T11:03:12.244Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1549,
-    "pageViews": 2190,
-    "sessions": 1754,
+    "activeUsers": 1551,
+    "pageViews": 2193,
+    "sessions": 1755,
     "avgSessionDuration": 124.9,
-    "bounceRate": 0.286,
+    "bounceRate": 0.285,
     "pagesPerSession": 1.25
   },
   "dailyReference": {
@@ -17,7 +17,7 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1261,
+      "organic": 1263,
       "direct": 355,
       "social": 5,
       "ai_assistant": 107,
@@ -27,7 +27,7 @@
     },
     "pct": {
       "organic": 71.6,
-      "direct": 20.2,
+      "direct": 20.1,
       "social": 0.3,
       "ai_assistant": 6.1,
       "referral": 1.9,
@@ -44,7 +44,7 @@
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 476
+      "sessions": 478
     },
     {
       "source": "(direct)",
@@ -215,12 +215,12 @@
     }
   ],
   "cta": {
-    "outboundClicks": 167,
-    "ctaClickRate": 9.5,
+    "outboundClicks": 168,
+    "ctaClickRate": 9.6,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
-        "clicks": 52
+        "clicks": 53
       },
       {
         "domain": "maps.google.com",
@@ -285,7 +285,7 @@
     ],
     "note": null,
     "byChannel": {
-      "organic": 84,
+      "organic": 85,
       "direct": 63,
       "social": 0,
       "ai_assistant": 19,
@@ -785,6 +785,11 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J004492723.html",
+        "domain": "www.hotpepper.jp",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J004559388.html",
         "domain": "www.google.com",
         "clicks": 1
@@ -926,6 +931,10 @@
         "clicks": 1
       },
       {
+        "path": "/stores/J004492723.html",
+        "clicks": 1
+      },
+      {
         "path": "/stores/J004613182.html",
         "clicks": 1
       },
@@ -946,7 +955,7 @@
         "clicks": 1
       }
     ],
-    "reservationClicks": 81,
+    "reservationClicks": 82,
     "reservationOverlap7d": {
       "dateRange": "7daysAgo〜yesterday",
       "ctaEvents": 17,
@@ -972,7 +981,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1549,
+    "value": 1551,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
