@@ -61,6 +61,9 @@ const CLEAN_SOURCES = [
   'data/editor_picks.json',
   'data/manual_stores.json',
   'data/recommendations.json',
+  // データの文の「業界基準・標準・水準・評価・的」（P-367）。stores.json は build.js が作る（題に P-334 の語が残る）ので足さない
+  'data/pending_stores.json',
+  'data/editorreason_drafts/manual_麺屋まつり名古屋店.json',
   // エージェントの手引き（P-320・判断の記録 0041）: 語が 1 件も無い手引きだけ足す。
   //   editor.md・orchestrator.md・marketer.md・strategist.md は、検索で狙う語（業界人 推薦 など）の台帳や、
   //   「語を使わない」と書くための引用が残るので足さない（理由は 0041）。
