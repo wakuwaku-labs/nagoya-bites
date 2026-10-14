@@ -4069,7 +4069,7 @@ function scrollFeatureTop(dir) {
 // 開くたびに NB_FILTER の写し（下書き）を作り、押した結果は下書きにだけ入れる。「N軒を見る」で NB_FILTER に反映して一覧を切り替え、
 // ×・背景・Esc は下書きを捨てる。件数は NB-FILTER 区画の nbCountStores で、一覧と同じ判定・同じ検索語・同じ保存済みで数える。
 // シートを開いている間は履歴を足さない（「戻る」は店のモーダルと URL のためだけに使う）
-var NB_SHEET = { open: false, draft: null, opener: null, prevOverflow: '' };
+var NB_SHEET = { open: false, draft: null, opener: null, prevOverflow: '', inert: [] };
 // 折りたたみの閾値（これより後ろは「もっと見る」の後ろに隠す）
 var NB_SHEET_FOLD_GENRE = 8;
 var NB_SHEET_FOLD_SCENE = 7;
@@ -4203,6 +4203,28 @@ function nbSheetSync() {
 }
 
 function nbFilterSheetIsOpen() { return !!NB_SHEET.open; }
+// シートが開いている間は、シートの外（背景）を inert にして、焦点・読み上げ・クリックを止める（P-441）。
+// クイックビュー（nbQvSetInert）と同じ流儀: シートを含む枝の兄弟だけに付け、#toast・script 等は除き、もともと inert の要素は触らない。
+// 付けたものだけを覚えて閉じたら外す（シートとクイックビューが同時に開くことは無いが、互いの印は外さない）
+function nbSheetSetInert(on) {
+  if (!on) {
+    NB_SHEET.inert.forEach(function(el) { el.removeAttribute('inert'); });
+    NB_SHEET.inert = [];
+    return;
+  }
+  if (NB_SHEET.inert.length) return;
+  var node = document.getElementById('filter-sheet-wrap');
+  while (node && node !== document.body && node.parentNode) {
+    var sibs = node.parentNode.children;
+    for (var i = 0; i < sibs.length; i++) {
+      var el = sibs[i];
+      if (el === node || el.id === 'toast' || /^(SCRIPT|STYLE|LINK|NOSCRIPT)$/.test(el.tagName) || el.hasAttribute('inert')) continue;
+      el.setAttribute('inert', '');
+      NB_SHEET.inert.push(el);
+    }
+    node = node.parentNode;
+  }
+}
 function nbOpenFilterSheet(opener) {
   var wrap = document.getElementById('filter-sheet-wrap');
   if (!wrap || NB_SHEET.open) return;
@@ -4211,6 +4233,7 @@ function nbOpenFilterSheet(opener) {
   NB_SHEET.draft = nbCloneFilter(NB_FILTER);
   nbRenderFilterSheet();
   wrap.classList.add('open');
+  nbSheetSetInert(true);
   NB_SHEET.prevOverflow = document.body.style.overflow;
   document.body.style.overflow = 'hidden';
   var body = document.getElementById('fs-body');
@@ -4226,6 +4249,7 @@ function nbCloseFilterSheet() {
   NB_SHEET.draft = null;
   var wrap = document.getElementById('filter-sheet-wrap');
   if (wrap) wrap.classList.remove('open');
+  nbSheetSetInert(false);
   document.body.style.overflow = NB_SHEET.prevOverflow;
   var op = NB_SHEET.opener;
   NB_SHEET.opener = null;

@@ -146,6 +146,7 @@ function makeDom() {
     setAttribute(k, v) { this.attrs[k] = String(v); }
     getAttribute(k) { return k in this.attrs ? this.attrs[k] : null; }
     removeAttribute(k) { delete this.attrs[k]; }
+    hasAttribute(k) { return k in this.attrs; }
     addEventListener(t, fn) { (this.listeners[t] = this.listeners[t] || []).push(fn); }
     focus() { doc.activeElement = this; }
     click() { if (this.onclick) this.onclick(); }
@@ -1059,4 +1060,36 @@ test('HTML の逃がし: 古いリンクの値に記号があっても、ボタ�
   const html = e.run('nbSheetChip("tag", \'a"><b>&\', \'x<y>"\')');
   assert.strictEqual(html, '<button type="button" class="fs-chip" data-k="tag" data-v="a&quot;&gt;&lt;b&gt;&amp;" aria-pressed="false">x&lt;y&gt;&quot;</button>');
   assert.ok(/class="fs-chip fs-extra"/.test(e.run('nbSheetChip("tag", "a", "b", true)')));
+});
+
+// ── P-441: シートの外（背景）を inert にする ───────────────────────────
+test('背景 inert: 開いている間はシートの外の兄弟に inert を付け（#toast・script・もとから inert は除く）、閉じる・反映・Esc のどれでも外れる。繰り返しても残らない', () => {
+  const e = env();
+  const page = e.dom.pageBody;
+  const mkKid = (id, tag) => { const k = new e.dom.El(id); k.tagName = tag; k.parentNode = page; return k; };
+  const main = mkKid('main', 'MAIN'), toast = mkKid('toast', 'DIV'), scr = mkKid('', 'SCRIPT'), pre = mkKid('pre', 'DIV');
+  pre.setAttribute('inert', '');
+  e.dom.wrap.tagName = 'DIV'; e.dom.wrap.parentNode = page;
+  page.children = [main, toast, scr, e.dom.wrap, pre];
+  page.parentNode = null;
+  const flagged = () => page.children.filter((k) => k.hasAttribute('inert')).map((k) => k.id || k.tagName);
+  const open = () => e.run('nbOpenFilterSheet').call(null, new e.dom.El('op'));
+  const closers = [
+    () => e.dom.click(e.dom.close),
+    () => e.dom.click(e.dom.backdrop),
+    () => e.dom.key('Escape'),
+    () => { press(e, 'area', 'sakae'); e.dom.click(e.dom.go); },
+  ];
+  for (let round = 0; round < 2; round++) closers.forEach((close, i) => {
+    open();
+    assert.deepStrictEqual(flagged().sort(), ['main', 'pre'].sort(), '開いている間: 背景だけ止まる（' + i + '）');
+    assert.ok(!e.dom.wrap.hasAttribute('inert'), 'シート自身は止めない');
+    open(); // 二重に開いても付け直さない
+    assert.strictEqual(e.ctx.NB_SHEET.inert.length, 1);
+    close();
+    assert.strictEqual(e.ctx.NB_SHEET.open, false);
+    assert.deepStrictEqual(flagged(), ['pre'], '閉じたら自分が付けた分だけ外れる。もとからのものは残す（' + i + '）');
+    assert.strictEqual(e.ctx.NB_SHEET.inert.length, 0);
+    e.run('NB_FILTER = ' + JSON.stringify(EMPTY) + ';');
+  });
 });
