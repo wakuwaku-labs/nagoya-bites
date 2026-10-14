@@ -276,46 +276,10 @@ async function collectStoreCandidates(store, opts = {}) {
     }
   }
 
-  // 2. Google Places（オーナー投稿を優先。判定は data/photo_policy.json が持つ）
-  const key = process.env.GOOGLE_MAPS_API_KEY;
-  // 一度クォータ切れ・認証エラーを踏んだら、その実行では叩き続けない（無駄打ちを増やさない）
-  if (key && opts.places !== false && !_placesError) {
-    let placeId = (rec && (rec['placeId'] || rec['GooglePlaceID'])) || '';
-    if (!placeId) {
-      if (!skuAllow('textsearch')) return out;
-      noteSku('textsearch');
-      const q = encodeURIComponent(`${name} ${store.area || rec?.['エリア'] || ''} 名古屋`);
-      const find = await getJson(
-        `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${q}&inputtype=textquery&fields=place_id&key=${key}`
-      );
-      if (!notePlacesStatus(find)) return out;
-      placeId = find?.candidates?.[0]?.place_id || '';
-    }
-    if (placeId) {
-      if (!skuAllow('details')) return out;
-      noteSku('details');
-      const detail = await getJson(
-        `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=photos,name&language=ja&key=${key}`
-      );
-      if (!notePlacesStatus(detail)) return out;
-      const photos = (detail?.result?.photos || []).slice(0, pol.placesCandidatesPerStore);
-      const cands = photos.map(ph => ({ photo: ph, attribution: attributionName(ph) || 'Google Maps' }));
-      const { picked } = pickPhotos(cands, { '店名': name }, opts.limit || pol.maxPerStore + 1);
-      const mapsUrl = `https://www.google.com/maps/place/?q=place_id:${placeId}`;
-      for (const p of picked) {
-        if (!skuAllow('photo')) break;
-        noteSku('photo');
-        const cdn = await resolveCdnUrl(
-          `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=${p.photo.photo_reference}&key=${key}`
-        );
-        if (!cdn) continue;
-        out.push({
-          url: cdn, source: 'places', storeName: name, area,
-          creditName: p.attribution || 'Google Maps', creditUrl: mapsUrl, tier: p.tier,
-        });
-      }
-    }
-  }
+  // 2. Google Places は使わない（P-29・docs/decisions/0046）。
+  //    日次ジャーナルは書いた後に取り直さない面で、Places の写真 URL は期限切れになる
+  //    （photo name は失効しうる・キャッシュ不可）。HotPepper しか候補が無い店は、その1枚か写真なしにする。
+  //    他店の写真は借りない・取り繕わない。
 
   return out;
 }

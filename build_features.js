@@ -11,6 +11,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { isPlacesPhotoUrl } = require('./scripts/lib/places_photo_url');
 
 const HTML = path.join(__dirname, 'index.html');
 const FEATURES_DIR = path.join(__dirname, 'features');
@@ -482,7 +483,8 @@ function getPhotoUrl(store) {
   if (hp && hp.startsWith('/assets/')) return hp;
   // 汎用ストック写真（Unsplash/Pexels等）は使わない（CLAUDE.md 制約 #9）
   if (hp && /unsplash|pexels|loremflickr|pixabay/i.test(hp)) return '/assets/store-figures/_fallback.svg';
-  if (hp && hp.startsWith('http')) return hp;
+  // Places の写真 URL は書いた後に取り直さず失効するので書かない（P-29・docs/decisions/0046）
+  if (hp && hp.startsWith('http') && !isPlacesPhotoUrl(hp)) return hp;
   return '';
 }
 
@@ -815,7 +817,7 @@ ${urls.map(u => `  <url>
     try {
       const html = fs.readFileSync(path.join(storesDir, f), 'utf8');
       const img = extractOgImage(html);
-      if (img && /^https?:\/\//.test(img)) {
+      if (img && /^https?:\/\//.test(img) && !isPlacesPhotoUrl(img)) {
         imageEntries.push({ loc: `${baseUrl}/stores/${f}`, image: img });
       }
     } catch (e) { /* skip */ }
@@ -824,7 +826,7 @@ ${urls.map(u => `  <url>
     try {
       const html = fs.readFileSync(path.join(FEATURES_DIR, f), 'utf8');
       const img = extractOgImage(html);
-      if (img && /^https?:\/\//.test(img)) {
+      if (img && /^https?:\/\//.test(img) && !isPlacesPhotoUrl(img)) {
         imageEntries.push({ loc: `${baseUrl}/features/${f}`, image: img });
       }
     } catch (e) { /* skip */ }

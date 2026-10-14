@@ -66,6 +66,7 @@ const { applyToHtml: applyReserveAsk } = require('./lib/reservation_ask_snippet'
 // 図解SVG→OGP用PNG変換は scripts/lib/og_figure_png.js に一元化（ISSUE-095）
 const OG = require('./lib/og_figure_png.js');
 // 本文写真（ヒーロー以外の記事内写真）の収集・選定・配置は scripts/lib/journal_photos.js に一元化
+const { isPlacesPhotoUrl } = require('./lib/places_photo_url');
 const JP = require('./lib/journal_photos.js');
 
 const ROOT = path.join(__dirname, '..');
@@ -379,76 +380,6 @@ async function tryStorePhoto(photoUrl) {
 }
 
 /**
- * Google Places API で店舗写真を取得。
- * 要 GOOGLE_MAPS_API_KEY 環境変数。
- * 優先度: HotPepper写真なし → Google Maps写真 → Unsplash curated
- *
- * 流れ: findplacefromtext → place/details (photos) → place/photo (redirect) → CDN URL
- */
-async function tryGoogleMapsPhoto(storeName, area) {
-  const key = process.env.GOOGLE_MAPS_API_KEY;
-  if (!key) return null;
-
-  function getJson(url) {
-    return new Promise((resolve) => {
-      let body = '';
-      const req = https.get(url, { timeout: 8000 }, (res) => {
-        res.on('data', d => { body += d; });
-        res.on('end', () => { try { resolve(JSON.parse(body)); } catch { resolve(null); } });
-      });
-      req.on('error', () => resolve(null));
-      req.on('timeout', () => { req.destroy(); resolve(null); });
-    });
-  }
-
-  // Step 1: 店名+エリアで Place ID を取得
-  const query = encodeURIComponent(`${storeName} ${area} 名古屋`);
-  const findRes = await getJson(
-    `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${query}&inputtype=textquery&fields=place_id&key=${key}`
-  );
-  const placeId = findRes?.candidates?.[0]?.place_id;
-  if (!placeId) return null;
-
-  // Step 2: Place Details → photos[0].photo_reference と html_attributions
-  const detailRes = await getJson(
-    `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=photos,name&key=${key}`
-  );
-  const photo = detailRes?.result?.photos?.[0];
-  if (!photo?.photo_reference) return null;
-  const attribution = photo.html_attributions?.[0]
-    ? photo.html_attributions[0].replace(/<[^>]+>/g, '') // HTMLタグ除去
-    : 'Google Maps';
-
-  // Step 3: place/photo → リダイレクト先の CDN URL を取得（APIキーをHTMLに埋め込まない）
-  const photoApiUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photo_reference=${photo.photo_reference}&key=${key}`;
-  const cdnUrl = await new Promise((resolve) => {
-    const req = https.get(photoApiUrl, { timeout: 8000 }, (res) => {
-      res.resume();
-      // Places Photo APIは302でGoogleusercontent CDNへリダイレクト
-      if ((res.statusCode === 301 || res.statusCode === 302) && res.headers.location) {
-        resolve(res.headers.location);
-      } else if (res.statusCode === 200) {
-        resolve(photoApiUrl); // 直接返る場合はAPIキー含むURLになるが稀
-      } else {
-        resolve(null);
-      }
-    });
-    req.on('error', () => resolve(null));
-    req.on('timeout', () => { req.destroy(); resolve(null); });
-  });
-  if (!cdnUrl) return null;
-
-  const mapsUrl = `https://www.google.com/maps/place/?q=place_id:${placeId}`;
-  return {
-    url: cdnUrl,
-    credit_name: attribution,
-    credit_url: mapsUrl,
-    is_store_photo: true,
-    credit_source: 'Google Maps',
-  };
-}
-
-/**
  * Instagram 公式 embed HTML を生成（API不要・完全無料）。
  * Instagram の利用規約上、embed.js を使った埋め込みは明示的に許可されている。
  * 参照: https://help.instagram.com/1521786464576692
@@ -513,14 +444,9 @@ async function fetchPhotoForArticle(input) {
     };
   }
 
-  // 2. Google Maps写真（GOOGLE_MAPS_API_KEY 設定時）
-  if (store.name) {
-    const googlePhoto = await tryGoogleMapsPhoto(store.name, store.area || '');
-    if (googlePhoto) {
-      process.stdout.write(` 📷 Googleマップ写真: ${googlePhoto.credit_name}\n`);
-      return { ...googlePhoto, store_name: store.name };
-    }
-  }
+  // 2. Google Maps（Places）写真は使わない（P-29・docs/decisions/0046）。
+  //    ジャーナルは書いた後に取り直さない面で、Places の写真 URL は期限切れになる。
+  //    HotPepper → プレスリリース（手動指定）→ 記事固有の図、の順に倒す。
 
   // 3〜4. かつてはここで Unsplash API / ジャンル別 curated Unsplash に落ちていたが、
   //       汎用ストック写真は CLAUDE.md 制約9 で全面禁止（validator 項目15 も FAIL にする）。
@@ -820,8 +746,8 @@ function assertHeroBelongsToArticle(input) {
     `\n\n  対処（CLAUDE.md「写真ソースの優先順」）:\n` +
     `    1. 主役店の公式Instagram投稿URL → stores[0].instagram_post_url\n` +
     `    2. 主役店の HotPepper 写真URL     → stores[0].photo_url\n` +
-    `    3. GOOGLE_MAPS_API_KEY を設定して Places のオーナー投稿写真を自動取得\n` +
-    `    4. どれも無理なら、その記事専用のイメージ図を作る\n` +
+    `    3. 開店直後の新店ならプレスリリースの報道用写真 → hero_image_url（Editor が目で1枚選ぶ）\n` +
+    `    4. どれも無理なら、その記事専用のイメージ図を作る（Places の写真は使わない・P-29）\n` +
     `       → /assets/journal-figures/${input.slug}.svg を作成し hero_image_url に指定\n` +
     `\n  他店の写真を借りるのは禁止です（読者から見て記事と写真の対応が壊れます）。`
   );
@@ -907,8 +833,7 @@ async function main() {
   // 旧実装は GOOGLE_MAPS_API_KEY があるだけで無条件に自動取得へ入り、Editor が目で選んだ
   // リリースの料理写真を Places の写真で潰していた（2026-10-02 実測）。
   const isPressHero = /prcdn\.freetls\.fastly\.net|prtimes\.jp\/i\//.test(input.hero_image_url || '');
-  const hasRealPhotoSource = store0.instagram_post_url || store0.photo_url
-    || (process.env.GOOGLE_MAPS_API_KEY && !isPressHero);
+  const hasRealPhotoSource = store0.instagram_post_url || store0.photo_url;
 
   if (store0.instagram_post_url) {
     // 実投稿の embed を最優先（手動 hero_image_url があっても上書き）
@@ -938,6 +863,17 @@ async function main() {
     }
   } else {
     input.og_image = input.og_image || input.hero_image_url;
+  }
+
+  // --- Places の写真 URL は記事に書かない（P-29・docs/decisions/0046）---
+  // 書いた後に取り直さない面なので、URL が失効して写真が出なくなる。手書きの hero_image_url / og_image に
+  // 入っていても外し、写真なし（または記事固有の図）に倒す。他店の写真で埋めない。
+  for (const k of ['hero_image_url', 'og_image']) {
+    if (isPlacesPhotoUrl(input[k])) {
+      console.warn(`  ⚠️  ${k} が Google Places の写真のため外しました（失効する URL は書かない・P-29）`);
+      input[k] = '';
+      if (k === 'hero_image_url') { input.hero_image_credit_source = null; input.hero_image_is_store_photo = false; }
+    }
   }
 
   // --- ヒーロー写真の帰属チェック（2026-08-17 の事故の再発防止）---

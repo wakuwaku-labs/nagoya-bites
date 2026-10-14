@@ -18,7 +18,7 @@
  *   node scripts/add_journal_body_photos.js --days 30          # 直近N日の記事
  *   node scripts/add_journal_body_photos.js --only <slugの一部>
  *   node scripts/add_journal_body_photos.js --limit 5
- *   GOOGLE_MAPS_API_KEY=... node scripts/add_journal_body_photos.js   # Places も候補に入る
+ *   （Places は候補に入れない・P-29。書いた後に取り直さない面なので URL が失効する。HotPepper の公式写真だけ）
  *
  * ⚠️ CI では回さない。外部APIを叩くうえ、写真の中身（販促バナーでないか等）は
  *    機械で判定しないと決めてあるため（data/journal_photo_policy.json の textOverlayAdvisory）、
@@ -150,7 +150,7 @@ async function main() {
 
   console.log('═'.repeat(78));
   console.log(`ジャーナル 本文写真の追加${args.dryRun ? '（dry-run — 書き込みません）' : ''} — 対象 ${files.length} 本`);
-  console.log(`Places: ${process.env.GOOGLE_MAPS_API_KEY ? '有効' : '無効（HotPepper 写真のみ）'}`);
+  console.log('Places: 使わない（P-29・HotPepper 写真のみ）');
   console.log('═'.repeat(78));
 
   let added = 0, touched = 0;
