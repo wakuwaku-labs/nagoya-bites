@@ -1,60 +1,60 @@
 {
- "generatedAt": "2026-10-14T16:55:05.320Z",
- "siteUrl": "https://nagoya-bites.com/",
+ "generatedAt": "2026-10-14T17:06:13.675Z",
+ "siteUrl": "sc-domain:nagoya-bites.com",
  "urls": {
   "https://nagoya-bites.com/stores/J003737164.html": {
    "group": "control_store",
-   "error": "Quota exceeded for https://nagoya-bites.com/.",
-   "inspectedAt": "2026-10-14T16:55:05.322Z"
-  },
-  "https://nagoya-bites.com/stores/J004612278.html": {
-   "group": "unreachable_after_i25",
-   "error": "Quota exceeded for https://nagoya-bites.com/.",
-   "inspectedAt": "2026-10-14T16:55:05.322Z"
-  },
-  "https://nagoya-bites.com/journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html": {
-   "group": "journal",
-   "error": "Quota exceeded for https://nagoya-bites.com/.",
-   "inspectedAt": "2026-10-14T16:55:05.322Z"
-  },
-  "https://nagoya-bites.com/stores/J001140500.html": {
-   "group": "unreachable_after_i25",
-   "error": "Quota exceeded for https://nagoya-bites.com/.",
-   "inspectedAt": "2026-10-14T16:55:05.320Z"
+   "error": "Quota exceeded for sc-domain:nagoya-bites.com.",
+   "inspectedAt": "2026-10-14T17:06:13.677Z"
   },
   "https://nagoya-bites.com/": {
    "group": "home",
-   "error": "Quota exceeded for https://nagoya-bites.com/.",
-   "inspectedAt": "2026-10-14T16:55:05.322Z"
+   "error": "Quota exceeded for sc-domain:nagoya-bites.com.",
+   "inspectedAt": "2026-10-14T17:06:13.677Z"
   },
-  "https://nagoya-bites.com/stores/J000884605.html": {
+  "https://nagoya-bites.com/stores/J001140500.html": {
    "group": "unreachable_after_i25",
-   "error": "Quota exceeded for https://nagoya-bites.com/.",
-   "inspectedAt": "2026-10-14T16:55:05.634Z"
+   "error": "Quota exceeded for sc-domain:nagoya-bites.com.",
+   "inspectedAt": "2026-10-14T17:06:13.675Z"
   },
-  "https://nagoya-bites.com/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html": {
-   "group": "journal",
-   "error": "Quota exceeded for https://nagoya-bites.com/.",
-   "inspectedAt": "2026-10-14T16:55:05.634Z"
-  },
-  "https://nagoya-bites.com/stores/area/meieki/dining-bar-walk-3.html": {
-   "group": "area_hub",
-   "error": "Quota exceeded for https://nagoya-bites.com/.",
-   "inspectedAt": "2026-10-14T16:55:05.631Z"
-  },
-  "https://nagoya-bites.com/stores/J000023262.html": {
-   "group": "control_store",
-   "error": "Quota exceeded for https://nagoya-bites.com/.",
-   "inspectedAt": "2026-10-14T16:55:05.629Z"
+  "https://nagoya-bites.com/stores/J004612278.html": {
+   "group": "unreachable_after_i25",
+   "error": "Quota exceeded for sc-domain:nagoya-bites.com.",
+   "inspectedAt": "2026-10-14T17:06:13.677Z"
   },
   "https://nagoya-bites.com/stores/area/yabacho-osu/chinese.html": {
    "group": "area_hub",
+   "error": "Quota exceeded for sc-domain:nagoya-bites.com.",
+   "inspectedAt": "2026-10-14T17:06:13.677Z"
+  },
+  "https://nagoya-bites.com/stores/J000023262.html": {
+   "group": "control_store",
+   "error": "Quota exceeded for sc-domain:nagoya-bites.com.",
+   "inspectedAt": "2026-10-14T17:06:14.006Z"
+  },
+  "https://nagoya-bites.com/stores/area/meieki/dining-bar-walk-3.html": {
+   "group": "area_hub",
+   "error": "Quota exceeded for sc-domain:nagoya-bites.com.",
+   "inspectedAt": "2026-10-14T17:06:14.008Z"
+  },
+  "https://nagoya-bites.com/stores/J000884605.html": {
+   "group": "unreachable_after_i25",
+   "error": "Quota exceeded for sc-domain:nagoya-bites.com.",
+   "inspectedAt": "2026-10-14T17:06:14.036Z"
+  },
+  "https://nagoya-bites.com/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html": {
+   "group": "journal",
+   "error": "Quota exceeded for sc-domain:nagoya-bites.com.",
+   "inspectedAt": "2026-10-14T17:06:14.009Z"
+  },
+  "https://nagoya-bites.com/journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html": {
+   "group": "journal",
    "verdict": "PASS",
    "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-10-14T14:02:18Z",
+   "lastCrawlTime": "2026-09-24T01:07:55Z",
    "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/area/yabacho-osu/chinese.html",
-   "inspectedAt": "2026-10-14T16:55:05.322Z"
+   "googleCanonical": "https://nagoya-bites.com/journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html",
+   "inspectedAt": "2026-10-14T17:06:13.677Z"
   }
  },
  "history": [
@@ -68,20 +68,6 @@
      "crawledRecently": 0,
      "byState": {}
     },
-    "unreachable_after_i25": {
-     "inspected": 0,
-     "errors": 3,
-     "indexed": 0,
-     "crawledRecently": 0,
-     "byState": {}
-    },
-    "journal": {
-     "inspected": 0,
-     "errors": 2,
-     "indexed": 0,
-     "crawledRecently": 0,
-     "byState": {}
-    },
     "home": {
      "inspected": 0,
      "errors": 1,
@@ -89,11 +75,25 @@
      "crawledRecently": 0,
      "byState": {}
     },
+    "unreachable_after_i25": {
+     "inspected": 0,
+     "errors": 3,
+     "indexed": 0,
+     "crawledRecently": 0,
+     "byState": {}
+    },
     "area_hub": {
+     "inspected": 0,
+     "errors": 2,
+     "indexed": 0,
+     "crawledRecently": 0,
+     "byState": {}
+    },
+    "journal": {
      "inspected": 1,
      "errors": 1,
      "indexed": 1,
-     "crawledRecently": 1,
+     "crawledRecently": 0,
      "byState": {
       "送信して登録されました": 1
      }
