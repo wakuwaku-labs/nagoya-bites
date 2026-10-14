@@ -16,6 +16,7 @@ function buildFilterPolicy(policy) {
     label: String(a.label),
     ward: a.ward ? String(a.ward) : '',
     match: (a.match || []).map(String),
+    addressMatch: (a.addressMatch || []).map(String),
   }));
   const conds = (policy.conditions || []).map((c) => ({
     slug: String(c.slug),

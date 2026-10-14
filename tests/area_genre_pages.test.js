@@ -12,7 +12,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const {
-  loadPolicy, normalizeArea, normalizeGenre, storeMatchesCondition,
+  loadPolicy, normalizeArea, areaSlugsOf, normalizeGenre, storeMatchesCondition,
   parsePriceBand, planPages,
 } = require('../scripts/lib/area_genre_pages.js');
 
@@ -186,4 +186,41 @@ test('sitemap.xml をコミットするワークフローは build.yml だけ（
       return src.split('\n').some(line => !/^\s*#/.test(line) && /git add\b.*\bsitemap\.xml\b/.test(line));
     });
   assert.deepEqual(offenders, [], `build.yml 以外が sitemap.xml を git add している: ${offenders.join(', ')}`);
+});
+
+// ── 住所で所属する群（P-430）──────────────────────────────────────────────
+test('areaSlugsOf: 原文の群に加えて、住所に addressMatch の語を含む群にも入る（群「栄」は住所の「中区栄」でも決まる）', () => {
+  const policy = loadPolicy();
+  const sakae = policy.areas.find(a => a.slug === 'sakae');
+  assert.ok(sakae && sakae.addressMatch.includes('中区栄'), '群「栄」は住所の「中区栄」でも決める');
+  // HotPepper の栄（ミナミ）の店: 原文は別の群・住所は中区栄 → 両方
+  assert.deepEqual(areaSlugsOf({ 'エリア': '栄(ミナミ)/矢場町/大須/上前津', '住所': '愛知県名古屋市中区栄３-１-１' }, policy), ['yabacho-osu', 'sakae']);
+  // 原文が「栄」の手動登録店: 住所が無くても栄（重複して 2 回入れない）
+  assert.deepEqual(areaSlugsOf({ 'エリア': '栄' }, policy), ['sakae']);
+  assert.deepEqual(areaSlugsOf({ 'エリア': '栄', '住所': '愛知県名古屋市中区栄３-１-１' }, policy), ['sakae']);
+  // 「中区新栄」「東区新栄」は中区栄ではない・錦は栄ではない
+  assert.deepEqual(areaSlugsOf({ 'エリア': '名古屋市中区錦', '住所': '愛知県名古屋市中区錦３-１' }, policy), ['nishiki-fushimi']);
+  assert.deepEqual(areaSlugsOf({ 'エリア': '栄ｷﾀ錦/伏見丸の内/泉/東桜/新栄', '住所': '愛知県名古屋市東区新栄１-１' }, policy), ['nishiki-fushimi']);
+  assert.deepEqual(areaSlugsOf({ 'エリア': '存在しない', '住所': '愛知県名古屋市中区栄１-１' }, policy), ['sakae'], '原文が群に入らなくても、住所で入る');
+  // 住所が無い・文字列でない・空は、原文だけで決まる。どこにも入らなければ空
+  [undefined, null, '', 123, {}].forEach(a => assert.deepEqual(areaSlugsOf({ 'エリア': '名古屋駅', '住所': a }, policy), ['meieki']));
+  assert.deepEqual(areaSlugsOf({ 'エリア': '存在しない' }, policy), []);
+  assert.deepEqual(areaSlugsOf({}, policy), []);
+});
+
+test('areaSlugsOf: 店ごとの単一の群の名前（normalizeArea）は住所では変わらない（店舗ページのエリア表示などはこちら）', () => {
+  const policy = loadPolicy();
+  const s = { 'エリア': '栄(ミナミ)/矢場町/大須/上前津', '住所': '愛知県名古屋市中区栄３-１-１' };
+  assert.equal(normalizeArea(s['エリア'], policy).slug, 'yabacho-osu');
+});
+
+test('planPages: 住所が中区栄の店は、栄のハブにも数えられる（原文が別の群でも。両方のハブに載る）', () => {
+  const policy = loadPolicy();
+  const mk = (i, area, addr) => ({ '店名': 'テスト店' + i, 'エリア': area, '住所': addr, 'ジャンル': '居酒屋', '公開フラグ': 'TRUE', '個室': 'あり' });
+  const stores = [];
+  for (let i = 0; i < 12; i++) stores.push(mk(i, '栄(ミナミ)/矢場町/大須/上前津', '愛知県名古屋市中区栄３-' + (i + 1)));
+  const { byArea, byCell } = planPages(stores, policy);
+  assert.equal((byArea.get('yabacho-osu') || []).length, 12);
+  assert.equal((byArea.get('sakae') || []).length, 12, '栄の群にも数える');
+  assert.equal((byCell.get('sakae::izakaya') || []).length, 12);
 });
