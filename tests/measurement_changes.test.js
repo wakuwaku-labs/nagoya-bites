@@ -79,6 +79,14 @@ test('本番の台帳に I-20 の計測変更（絞り込みシート・ga4）�
   assert.match(c.summary, /zero_result/);
 });
 
+test('本番の台帳に I-22 の計測変更（クイックビュー・ga4）が載っている', () => {
+  const b = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/measurement_changes.json'), 'utf8'));
+  const c = b.changes.find((x) => x.id === 'I-22');
+  assert.ok(c && c.affects.includes('ga4'), 'I-22 が台帳に無い（cta_click の増えと modal_nav の新設が効果として読まれてしまう）');
+  assert.match(c.summary, /modal_nav/);
+  assert.match(c.summary, /quick_view/);
+});
+
 test('台帳のどの項目も、日付・id・affects・summary・evidence を持つ（後から第三者が確かめられる）', () => {
   const b = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data/measurement_changes.json'), 'utf8'));
   assert.ok(Array.isArray(b.changes) && b.changes.length > 0);
