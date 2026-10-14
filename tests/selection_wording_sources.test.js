@@ -204,6 +204,13 @@ test('FAQ: 選び方・サイトの説明・掲載料の答えは、構造化デ
     assert.ok(v.a.startsWith(stripTags(q.acceptedAnswer.text)), `「${name}」の答えが、構造化データと画面で食い違う`);
     assert.deepEqual(hits(q.acceptedAnswer.text), []);
   }
+  // FAQPage の答えは画面と同じ文（タグを除いた文字列が完全一致）。全問を見る（P-336・判断の記録 0029）
+  assert.equal(faq.mainEntity.length, 9, 'FAQPage の問数');
+  for (const q of faq.mainEntity) {
+    const v = visible.find((x) => x.q === q.name);
+    assert.ok(v, `画面に「${q.name}」がある`);
+    assert.equal(stripTags(q.acceptedAnswer.text), v.a, `「${q.name}」の答えが、構造化データと画面で食い違う`);
+  }
   const how = visible.find((x) => x.q === '掲載店舗の選定基準は？').a;
   assert.ok(how.startsWith(OWNER_SENTENCE), '選定基準の答えはオーナーの文から始める');
   assert.ok(!/業界で培|独自のネットワーク|実務経験|プロ/.test(how), '経歴・人脈・プロを選ぶ根拠にしない');

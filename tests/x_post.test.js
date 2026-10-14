@@ -254,3 +254,17 @@ test('鍵の登録状況は値を出さずに「登録済み・空・形が違�
   assert.ok(md.includes('X_API_SECRET=空（未登録）'));
   assert.ok(!md.includes('abcDEF123') && !md.includes('zzz'));
 });
+
+test('Access Token を別の名前に貼った・同じ値を2つに貼った・記号まじりの値を、値を出さずに見分ける', () => {
+  const { credentialStatus, summaryMarkdown } = require('../scripts/post_journal_to_x.js');
+  const st = credentialStatus({ X_API_KEY: '1234567890-AbCdEf123', X_API_SECRET: 'abc_def-ghi', X_ACCESS_TOKEN: 'abcDEF123', X_ACCESS_TOKEN_SECRET: 'zzz' });
+  assert.deepStrictEqual(st, { X_API_KEY: 'looks_access_token', X_API_SECRET: 'bad_format', X_ACCESS_TOKEN: 'bad_format', X_ACCESS_TOKEN_SECRET: 'set' });
+  const dup = credentialStatus({ X_API_KEY: 'sameValue1', X_API_SECRET: 'other2', X_ACCESS_TOKEN: '1-Abc', X_ACCESS_TOKEN_SECRET: ' sameValue1 ' });
+  assert.strictEqual(dup.X_API_KEY, 'duplicate');
+  assert.strictEqual(dup.X_ACCESS_TOKEN_SECRET, 'duplicate');
+  assert.strictEqual(dup.X_API_SECRET, 'set');
+  assert.strictEqual(dup.X_ACCESS_TOKEN, 'set');
+  const md = summaryMarkdown({ mode: 'dry-run', result: 'dry_run_ok', credentials: st });
+  assert.ok(md.includes('X_API_KEY=Access Token の値が入っている疑い'));
+  assert.ok(!md.includes('1234567890') && !md.includes('abc_def'));
+});
