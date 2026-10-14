@@ -1417,6 +1417,8 @@ async function main() {
   // placesKey()（店名+エリア）でキャッシュを引けるようにした（fetch_places.js と同じキー）。
   const placesPath = path.join(__dirname, 'data', 'places_resolved.json');
   let placesApplied = 0, placesClosed = 0, placesNoMatch = 0, placesRejected = 0;
+  // 紐付けを却下した店のキー。口コミの時系列・指紋（places_history）も別の店のものなので使わない（P-142）
+  const placesRejectedKeys = new Set();
   if (fs.existsSync(placesPath)) {
     try {
       const placesCache = JSON.parse(fs.readFileSync(placesPath, 'utf8'));
@@ -1428,7 +1430,7 @@ async function main() {
         const entry = placesCache[id];
         if (!entry) { placesNoMatch++; continue; }
         if (entry.notFound || entry.error) { placesNoMatch++; continue; }
-        if (entry.rejected) { placesRejected++; continue; }
+        if (entry.rejected) { placesRejected++; placesRejectedKeys.add(id); continue; }
         // 閉店確定店は LOCAL_STORES から除外
         if (entry.business_status === 'CLOSED_PERMANENTLY') {
           console.log(`  [Places] ${s['店名']}（${id}）: business_status=CLOSED_PERMANENTLY のため除外`);
@@ -1608,7 +1610,7 @@ async function main() {
   for (const s of stores) {
     // 2026-08-20（ISSUE-104）: ホットペッパーID非保有店も placesKey() で履歴を引く
     const key = s['店名'] ? placesKey(s) : '';
-    const historyEntry = key && placesHistory[key] ? placesHistory[key] : null;
+    const historyEntry = key && !placesRejectedKeys.has(key) && placesHistory[key] ? placesHistory[key] : null;
     const fingerprintResult = key ? evaluateStoreFingerprint(key, historyEntry, fingerprintIndex) : null;
     const result = computeCrossCheckScore(s, historyEntry, fingerprintResult);
     s['crossCheckScore'] = result.crossCheckScore;

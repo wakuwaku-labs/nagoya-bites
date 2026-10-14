@@ -1,0 +1,222 @@
+{
+  "_doc": "Google Places の紐付けのうち、住所は同じ建物だが屋号が重ならない候補（scripts/audit_places_binding.js が挙げる）を 1 件ずつ確かめた記録。decision=reject は rejected にする（rejectReason=name-mismatch-audit）。undecided は読み・字体の違いで同じ店かもしれず、外さない。根拠は掲載住所・Google 側の名前と住所（data/places_resolved.json）。",
+  "reviewedAt": "2026-10-15",
+  "entries": [
+    {
+      "key": "J001276851",
+      "store": "ハンバーグジョー",
+      "storeAddress": "愛知県名古屋市中村区椿町8-7 2F",
+      "googleName": "みちのり亭 名古屋駅店",
+      "googleAddress": "日本、〒453-0015 愛知県名古屋市中村区椿町８−７ 2F",
+      "decision": "reject",
+      "reason": "同じ建物（椿町8-7 2F）だが、屋号が全く別（みちのり亭）。入れ替わり"
+    },
+    {
+      "key": "J004536412",
+      "store": "台北館",
+      "storeAddress": "愛知県名古屋市中区錦３-11-15 錦101ビル4階",
+      "googleName": "古式蕎麦 玄水",
+      "googleAddress": "日本、〒460-0003 愛知県名古屋市中区錦３丁目１１−１５ 錦101ビル 1階",
+      "decision": "reject",
+      "reason": "同じ建物（錦3-11-15）だが、屋号が全く別（古式蕎麦 玄水）。ジャンルも別"
+    },
+    {
+      "key": "J000702156",
+      "store": "起承転結 一社",
+      "storeAddress": "愛知県名古屋市名東区一社１丁目112　近藤ビル1Ｆ",
+      "googleName": "patty rôti -パティロティ-",
+      "googleAddress": "日本、〒465-0093 愛知県名古屋市名東区一社１丁目１６３ フィープル一社",
+      "decision": "reject",
+      "reason": "屋号が別（patty rôti。洋食）で共通部分なし"
+    },
+    {
+      "key": "J001009234",
+      "store": "わ家 錦店",
+      "storeAddress": "愛知県名古屋市中区錦３－１２－１２ ハードワンビル　B1F",
+      "googleName": "くぎ",
+      "googleAddress": "日本、〒460-0003 愛知県名古屋市中区錦３丁目１２−１２",
+      "decision": "reject",
+      "reason": "屋号が別（くぎ）で共通部分なし"
+    },
+    {
+      "key": "J001250672",
+      "store": "串焼き きしょう kishou",
+      "storeAddress": "愛知県名古屋市中区古渡町14-24",
+      "googleName": "㐂笑",
+      "googleAddress": "日本、〒460-0025 愛知県名古屋市中区古渡町１４−２４ マルフクビル 1階",
+      "decision": "undecided",
+      "reason": "㐂笑（きしょう）の読みの可能性。決められない"
+    },
+    {
+      "key": "J004492555",
+      "store": "和文化 さくら",
+      "storeAddress": "愛知県名古屋市瑞穂区初日町２-3",
+      "googleName": "東山荘",
+      "googleAddress": "日本、〒467-0028 愛知県名古屋市瑞穂区初日町２丁目３ 名古屋市東山荘",
+      "decision": "reject",
+      "reason": "屋号が別（東山荘）で共通部分なし"
+    },
+    {
+      "key": "J003599692",
+      "store": "酒悦悶着",
+      "storeAddress": "愛知県名古屋市東区東桜２-12-26",
+      "googleName": "勝手屋 東桜店",
+      "googleAddress": "日本、〒461-0005 愛知県名古屋市東区東桜２丁目１２−３４",
+      "decision": "reject",
+      "reason": "屋号が別（勝手屋 東桜店）で共通部分なし"
+    },
+    {
+      "key": "J001226444",
+      "store": "マルサン 鉄板ワイン酒場 丸の内",
+      "storeAddress": "愛知県名古屋市中区丸の内３-9-19 正起ビル1F",
+      "googleName": "③",
+      "googleAddress": "日本、〒460-0002 愛知県名古屋市中区丸の内３丁目９−１９ 正起ビル 1F",
+      "decision": "reject",
+      "reason": "Google 側の名前が「③」だけで、同じ店と言える根拠がない"
+    },
+    {
+      "key": "J003984324",
+      "store": "四川料理 川味居",
+      "storeAddress": "愛知県名古屋市中区千代田４－２３－８　満ビル１F",
+      "googleName": "Senmikyo",
+      "googleAddress": "日本、〒460-0012 愛知県名古屋市中区千代田４丁目２３−８ 満ビル",
+      "decision": "undecided",
+      "reason": "川味居のローマ字表記（Senmikyo）の可能性。決められない"
+    },
+    {
+      "key": "J003473761",
+      "store": "スイクウカントニーズキュイジーヌ　1977",
+      "storeAddress": "愛知県名古屋市中区栄２-１５-１０　esse栄ビル２F",
+      "googleName": "翠宮",
+      "googleAddress": "日本、〒460-0008 愛知県名古屋市中区栄２丁目１５−１０ ＥＳＳＥ栄",
+      "decision": "undecided",
+      "reason": "翠宮（すいきゅう）の読みの可能性。決められない"
+    },
+    {
+      "key": "J000393931",
+      "store": "清平",
+      "storeAddress": "愛知県名古屋市西区上名古屋３－１３－３０",
+      "googleName": "きよひら",
+      "googleAddress": "日本、〒451-0025 愛知県名古屋市西区上名古屋３丁目１３−３０",
+      "decision": "undecided",
+      "reason": "清平（きよひら）の読み表記の可能性。決められない"
+    },
+    {
+      "key": "J000015669",
+      "store": "シャンタムール",
+      "storeAddress": "愛知県名古屋市中区栄４－２－１３　園部ビルＢ１Ｆ",
+      "googleName": "Ｒｅｓｔａｕｒａｎｔ Ｂａｒ Ｃｈａｎｔａ Ｍｏｕｒ",
+      "googleAddress": "日本、〒460-0008 愛知県名古屋市中区栄４丁目２−１３",
+      "decision": "undecided",
+      "reason": "全角英字の同名（Chanta Mour）の可能性。決められない"
+    },
+    {
+      "key": "J000107646",
+      "store": "そーれ",
+      "storeAddress": "愛知県名古屋市中区栄４-９-１０　愛信プラザビル１Ｆ",
+      "googleName": "韓国居酒屋 ダンバム",
+      "googleAddress": "日本、〒460-0008 愛知県名古屋市中区栄４丁目９−１０ 愛信プラザビル 1階",
+      "decision": "reject",
+      "reason": "屋号が別（韓国居酒屋 ダンバム）で共通部分なし"
+    },
+    {
+      "key": "J000968365",
+      "store": "中国料理来来",
+      "storeAddress": "愛知県名古屋市中村区寿町10番地",
+      "googleName": "來來 大門店",
+      "googleAddress": "日本、〒453-0028 愛知県名古屋市中村区寿町１０−１０",
+      "decision": "undecided",
+      "reason": "來來（旧字体）の同名の可能性。決められない"
+    },
+    {
+      "key": "J000806306",
+      "store": "はっすん 伏見",
+      "storeAddress": "愛知県名古屋市中区錦２－９－６　明和丸の内ビルB1F",
+      "googleName": "名和丸の内ビル",
+      "googleAddress": "日本、〒460-0003 愛知県名古屋市中区錦２丁目９−６",
+      "decision": "reject",
+      "reason": "Google 側がビル名（名和丸の内ビル）で、店ではない"
+    },
+    {
+      "key": "J000861345",
+      "store": "SAISHOKUKENBI",
+      "storeAddress": "愛知県名古屋市昭和区広路町石坂37-6",
+      "googleName": "菜食健美 名古屋店",
+      "googleAddress": "日本、〒466-0834 愛知県名古屋市昭和区広路町石坂３７−６ 八事石坂ビル １F",
+      "decision": "undecided",
+      "reason": "菜食健美のローマ字表記の可能性。決められない"
+    },
+    {
+      "key": "J003851626",
+      "store": "鍋屋はなれ",
+      "storeAddress": "愛知県名古屋市中区栄３-13-23",
+      "googleName": "甘味や ほろ酔い",
+      "googleAddress": "日本、〒460-0008 愛知県名古屋市中区栄３丁目１３−２３ 寺島ビル 2F",
+      "decision": "reject",
+      "reason": "屋号が別（甘味や ほろ酔い）。ジャンルも別"
+    },
+    {
+      "key": "J000429044",
+      "store": "すし処 木田",
+      "storeAddress": "愛知県名古屋市中区錦３丁目17-3サンプラザビルB1",
+      "googleName": "いけだ",
+      "googleAddress": "日本、〒460-0003 愛知県名古屋市中区錦３丁目４−２６",
+      "decision": "undecided",
+      "reason": "木田の読みの違いの可能性。決められない"
+    },
+    {
+      "key": "J004660132",
+      "store": "四季ハノイ",
+      "storeAddress": "愛知県名古屋市昭和区山手通１丁目１７番地１シャンボール山手Ｂ棟A棟",
+      "googleName": "シャンボール山手Ａ棟",
+      "googleAddress": "日本、〒466-0815 愛知県名古屋市昭和区山手通１丁目１７−１",
+      "decision": "reject",
+      "reason": "Google 側がビル名（シャンボール山手Ａ棟）で、店ではない"
+    },
+    {
+      "key": "J001108875",
+      "store": "さんすぱろう 栄店",
+      "storeAddress": "愛知県名古屋市中区錦３-20-10 スター錦ビル４Ｆ",
+      "googleName": "サンスパロウ",
+      "googleAddress": "日本、〒460-0003 愛知県名古屋市中区錦３丁目２０−１０ スター錦ビル ４F",
+      "decision": "undecided",
+      "reason": "サンスパロウ（かな⇔カナ）の可能性。決められない"
+    },
+    {
+      "key": "J004510165",
+      "store": "美味かもん 名古屋駅前店",
+      "storeAddress": "愛知県名古屋市中村区名駅３-22-8　大東海ビルＢ102",
+      "googleName": "大東海ビル",
+      "googleAddress": "日本、〒450-0002 愛知県名古屋市中村区名駅３丁目２２−８ 大東海ビル",
+      "decision": "reject",
+      "reason": "Google 側がビル名（大東海ビル）で、店ではない"
+    },
+    {
+      "key": "J000627755",
+      "store": "笠置",
+      "storeAddress": "愛知県名古屋市昭和区川原通２-11",
+      "googleName": "かさぎ",
+      "googleAddress": "日本、〒466-0853 愛知県名古屋市昭和区川原通２丁目１１ 亜らま",
+      "decision": "undecided",
+      "reason": "笠置（かさぎ）の読み表記の可能性。決められない"
+    },
+    {
+      "key": "J004510164",
+      "store": "うまかもん 名古屋駅前店",
+      "storeAddress": "愛知県名古屋市中村区名駅３-22-8　大東海ビルＢ102",
+      "googleName": "大東海ビル",
+      "googleAddress": "日本、〒450-0002 愛知県名古屋市中村区名駅３丁目２２−８ 大東海ビル",
+      "decision": "reject",
+      "reason": "Google 側がビル名（大東海ビル）で、店ではない"
+    },
+    {
+      "key": "J000808243",
+      "store": "ライブスペース ピアチェーレ",
+      "storeAddress": "愛知県名古屋市名東区牧の原３－１００２",
+      "googleName": "Ｐｉａｃｅｒｅ",
+      "googleAddress": "日本、〒465-0072 愛知県名古屋市名東区牧の原３丁目１００２ Ｐｉａｃｅｒｅ コンステクノ株式会社",
+      "decision": "undecided",
+      "reason": "全角英字の同名（Piacere）の可能性。決められない"
+    }
+  ]
+}
