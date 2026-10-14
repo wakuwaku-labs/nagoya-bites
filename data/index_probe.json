@@ -1,25 +1,7 @@
 {
- "generatedAt": "2026-10-14T11:39:36.347Z",
- "siteUrl": "sc-domain:nagoya-bites.com",
+ "generatedAt": "2026-10-14T11:54:42.822Z",
+ "siteUrl": "https://nagoya-bites.com/",
  "urls": {
-  "https://nagoya-bites.com/journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html": {
-   "group": "journal",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-09-24T01:07:55Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html",
-   "inspectedAt": "2026-10-14T11:39:36.348Z"
-  },
-  "https://nagoya-bites.com/stores/area/yabacho-osu/chinese.html": {
-   "group": "area_hub",
-   "verdict": "NEUTRAL",
-   "coverageState": "URL が Google に認識されていません",
-   "lastCrawlTime": null,
-   "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
-   "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:39:36.348Z"
-  },
   "https://nagoya-bites.com/stores/J001140500.html": {
    "group": "unreachable_after_i25",
    "verdict": "PASS",
@@ -27,16 +9,12 @@
    "lastCrawlTime": "2026-06-14T05:25:01Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001140500.html",
-   "inspectedAt": "2026-10-14T11:39:36.347Z"
+   "inspectedAt": "2026-10-14T11:54:42.822Z"
   },
-  "https://nagoya-bites.com/stores/J003737164.html": {
-   "group": "control_store",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-07-31T03:46:25Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J003737164.html",
-   "inspectedAt": "2026-10-14T11:39:36.348Z"
+  "https://nagoya-bites.com/stores/area/yabacho-osu/chinese.html": {
+   "group": "area_hub",
+   "error": "Internal error encountered.",
+   "inspectedAt": "2026-10-14T11:54:42.824Z"
   },
   "https://nagoya-bites.com/stores/J004612278.html": {
    "group": "unreachable_after_i25",
@@ -45,7 +23,7 @@
    "lastCrawlTime": "2026-06-10T05:03:57Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004612278.html",
-   "inspectedAt": "2026-10-14T11:39:36.348Z"
+   "inspectedAt": "2026-10-14T11:54:42.824Z"
   },
   "https://nagoya-bites.com/": {
    "group": "home",
@@ -54,7 +32,25 @@
    "lastCrawlTime": "2026-10-10T05:57:43Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/",
-   "inspectedAt": "2026-10-14T11:39:36.348Z"
+   "inspectedAt": "2026-10-14T11:54:42.824Z"
+  },
+  "https://nagoya-bites.com/journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html": {
+   "group": "journal",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-09-24T01:07:55Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/journal/2026-09-24-kurumamichi-pizzeria-mimi-counter12.html",
+   "inspectedAt": "2026-10-14T11:54:42.824Z"
+  },
+  "https://nagoya-bites.com/stores/J003737164.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-07-31T03:46:25Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J003737164.html",
+   "inspectedAt": "2026-10-14T11:54:42.824Z"
   },
   "https://nagoya-bites.com/stores/area/meieki/dining-bar-walk-3.html": {
    "group": "area_hub",
@@ -63,7 +59,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:39:42.955Z"
+   "inspectedAt": "2026-10-14T11:54:49.148Z"
   },
   "https://nagoya-bites.com/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html": {
    "group": "journal",
@@ -72,34 +68,7 @@
    "lastCrawlTime": "2026-10-10T21:03:40Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/journal/2026-10-10-shinsakae-chihiro-kashiten-nagoya-first.html",
-   "inspectedAt": "2026-10-14T11:39:42.962Z"
-  },
-  "https://nagoya-bites.com/stores/J000884605.html": {
-   "group": "unreachable_after_i25",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-10T13:04:20Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J000884605.html",
-   "inspectedAt": "2026-10-14T11:39:43.020Z"
-  },
-  "https://nagoya-bites.com/stores/area/chikusa-imaike/washoku-smoking-ok.html": {
-   "group": "area_hub",
-   "verdict": "NEUTRAL",
-   "coverageState": "URL が Google に認識されていません",
-   "lastCrawlTime": null,
-   "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
-   "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:39:43.042Z"
-  },
-  "https://nagoya-bites.com/stores/J001140598.html": {
-   "group": "control_store",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-10-03T23:39:25Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J001140598.html",
-   "inspectedAt": "2026-10-14T11:39:43.032Z"
+   "inspectedAt": "2026-10-14T11:54:49.262Z"
   },
   "https://nagoya-bites.com/stores/J000023262.html": {
    "group": "control_store",
@@ -108,16 +77,34 @@
    "lastCrawlTime": "2026-06-10T21:07:05Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000023262.html",
-   "inspectedAt": "2026-10-14T11:39:42.926Z"
+   "inspectedAt": "2026-10-14T11:54:49.135Z"
   },
-  "https://nagoya-bites.com/journal/2026-05-14-yakiniku-fuku-nagoya-insider.html": {
-   "group": "journal",
+  "https://nagoya-bites.com/stores/area/chikusa-imaike/washoku-smoking-ok.html": {
+   "group": "area_hub",
    "verdict": "NEUTRAL",
-   "coverageState": "クロール済み - インデックス未登録",
-   "lastCrawlTime": "2026-09-22T22:28:07Z",
+   "coverageState": "URL が Google に認識されていません",
+   "lastCrawlTime": null,
+   "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+   "googleCanonical": null,
+   "inspectedAt": "2026-10-14T11:54:49.607Z"
+  },
+  "https://nagoya-bites.com/stores/J000884605.html": {
+   "group": "unreachable_after_i25",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-10T13:04:20Z",
    "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/journal/2026-05-14-yakiniku-fuku-nagoya-insider.html",
-   "inspectedAt": "2026-10-14T11:39:49.482Z"
+   "googleCanonical": "https://nagoya-bites.com/stores/J000884605.html",
+   "inspectedAt": "2026-10-14T11:54:49.383Z"
+  },
+  "https://nagoya-bites.com/stores/J001140598.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-10-03T23:39:25Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J001140598.html",
+   "inspectedAt": "2026-10-14T11:54:49.398Z"
   },
   "https://nagoya-bites.com/stores/J001285937.html": {
    "group": "unreachable_after_i25",
@@ -126,16 +113,7 @@
    "lastCrawlTime": "2026-06-10T13:04:20Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001285937.html",
-   "inspectedAt": "2026-10-14T11:39:49.486Z"
-  },
-  "https://nagoya-bites.com/stores/area/chikusa-imaike/washoku-sunday.html": {
-   "group": "area_hub",
-   "verdict": "NEUTRAL",
-   "coverageState": "URL が Google に認識されていません",
-   "lastCrawlTime": null,
-   "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
-   "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:39:49.552Z"
+   "inspectedAt": "2026-10-14T11:54:55.561Z"
   },
   "https://nagoya-bites.com/stores/J001195119.html": {
    "group": "control_store",
@@ -144,16 +122,25 @@
    "lastCrawlTime": "2026-10-04T12:24:08Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001195119.html",
-   "inspectedAt": "2026-10-14T11:39:49.534Z"
+   "inspectedAt": "2026-10-14T11:54:55.640Z"
   },
-  "https://nagoya-bites.com/journal/2026-09-10-marunouchi-italian-sunday-closed-settai.html": {
+  "https://nagoya-bites.com/journal/2026-05-14-yakiniku-fuku-nagoya-insider.html": {
    "group": "journal",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-10-09T07:17:10Z",
+   "verdict": "NEUTRAL",
+   "coverageState": "クロール済み - インデックス未登録",
+   "lastCrawlTime": "2026-09-22T22:28:07Z",
    "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/journal/2026-09-10-marunouchi-italian-sunday-closed-settai.html",
-   "inspectedAt": "2026-10-14T11:39:49.610Z"
+   "googleCanonical": "https://nagoya-bites.com/journal/2026-05-14-yakiniku-fuku-nagoya-insider.html",
+   "inspectedAt": "2026-10-14T11:54:55.428Z"
+  },
+  "https://nagoya-bites.com/stores/area/chikusa-imaike/washoku-sunday.html": {
+   "group": "area_hub",
+   "verdict": "NEUTRAL",
+   "coverageState": "URL が Google に認識されていません",
+   "lastCrawlTime": null,
+   "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+   "googleCanonical": null,
+   "inspectedAt": "2026-10-14T11:54:55.882Z"
   },
   "https://nagoya-bites.com/stores/J001270240.html": {
    "group": "unreachable_after_i25",
@@ -162,7 +149,16 @@
    "lastCrawlTime": "2026-08-17T07:05:51Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001270240.html",
-   "inspectedAt": "2026-10-14T11:39:52.407Z"
+   "inspectedAt": "2026-10-14T11:54:55.931Z"
+  },
+  "https://nagoya-bites.com/journal/2026-09-10-marunouchi-italian-sunday-closed-settai.html": {
+   "group": "journal",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-10-09T07:17:10Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/journal/2026-09-10-marunouchi-italian-sunday-closed-settai.html",
+   "inspectedAt": "2026-10-14T11:54:55.899Z"
   },
   "https://nagoya-bites.com/stores/J000399600.html": {
    "group": "control_store",
@@ -171,25 +167,7 @@
    "lastCrawlTime": "2026-06-14T21:28:52Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000399600.html",
-   "inspectedAt": "2026-10-14T11:39:56.005Z"
-  },
-  "https://nagoya-bites.com/stores/area/yabacho-osu/izakaya-sunday.html": {
-   "group": "area_hub",
-   "verdict": "NEUTRAL",
-   "coverageState": "URL が Google に認識されていません",
-   "lastCrawlTime": null,
-   "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
-   "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:39:56.031Z"
-  },
-  "https://nagoya-bites.com/stores/J000747401.html": {
-   "group": "unreachable_after_i25",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-10T13:46:48Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J000747401.html",
-   "inspectedAt": "2026-10-14T11:39:56.120Z"
+   "inspectedAt": "2026-10-14T11:55:01.841Z"
   },
   "https://nagoya-bites.com/journal/2026-04-28-gw-nagoya-lunch-pivot.html": {
    "group": "journal",
@@ -198,16 +176,25 @@
    "lastCrawlTime": "2026-04-28T16:57:49Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:39:56.108Z"
+   "inspectedAt": "2026-10-14T11:55:01.923Z"
   },
-  "https://nagoya-bites.com/stores/J000398637.html": {
-   "group": "control_store",
+  "https://nagoya-bites.com/stores/J000747401.html": {
+   "group": "unreachable_after_i25",
    "verdict": "PASS",
    "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-07-19T02:01:41Z",
+   "lastCrawlTime": "2026-06-10T13:46:48Z",
    "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J000398637.html",
-   "inspectedAt": "2026-10-14T11:39:56.283Z"
+   "googleCanonical": "https://nagoya-bites.com/stores/J000747401.html",
+   "inspectedAt": "2026-10-14T11:55:02.136Z"
+  },
+  "https://nagoya-bites.com/stores/area/yabacho-osu/izakaya-sunday.html": {
+   "group": "area_hub",
+   "verdict": "NEUTRAL",
+   "coverageState": "URL が Google に認識されていません",
+   "lastCrawlTime": null,
+   "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
+   "googleCanonical": null,
+   "inspectedAt": "2026-10-14T11:55:01.918Z"
   },
   "https://nagoya-bites.com/stores/area/tsurumai-yagoto/cafe-lunch.html": {
    "group": "area_hub",
@@ -216,16 +203,16 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:39:58.956Z"
+   "inspectedAt": "2026-10-14T11:55:02.563Z"
   },
-  "https://nagoya-bites.com/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html": {
-   "group": "journal",
+  "https://nagoya-bites.com/stores/J000398637.html": {
+   "group": "control_store",
    "verdict": "PASS",
    "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-09-02T06:40:57Z",
+   "lastCrawlTime": "2026-07-19T02:01:41Z",
    "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
-   "inspectedAt": "2026-10-14T11:40:02.541Z"
+   "googleCanonical": "https://nagoya-bites.com/stores/J000398637.html",
+   "inspectedAt": "2026-10-14T11:55:02.420Z"
   },
   "https://nagoya-bites.com/stores/J004536139.html": {
    "group": "unreachable_after_i25",
@@ -234,25 +221,16 @@
    "lastCrawlTime": "2026-06-19T18:59:55Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004536139.html",
-   "inspectedAt": "2026-10-14T11:40:02.546Z"
+   "inspectedAt": "2026-10-14T11:55:08.451Z"
   },
-  "https://nagoya-bites.com/stores/J001114242.html": {
-   "group": "control_store",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-10T05:03:57Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J001114242.html",
-   "inspectedAt": "2026-10-14T11:40:02.664Z"
-  },
-  "https://nagoya-bites.com/journal/2026-05-10-mikan-sakae-nishiki-fushimi.html": {
+  "https://nagoya-bites.com/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html": {
    "group": "journal",
    "verdict": "PASS",
    "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-09-27T18:57:16Z",
+   "lastCrawlTime": "2026-09-02T06:40:57Z",
    "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/journal/2026-05-10-mikan-sakae-nishiki-fushimi.html",
-   "inspectedAt": "2026-10-14T11:40:02.816Z"
+   "googleCanonical": "https://nagoya-bites.com/journal/2026-09-02-sakae-counter-sushi-nakaoroshi.html",
+   "inspectedAt": "2026-10-14T11:55:08.096Z"
   },
   "https://nagoya-bites.com/stores/area/chikusa-imaike/dining-bar.html": {
    "group": "area_hub",
@@ -261,7 +239,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:40:02.764Z"
+   "inspectedAt": "2026-10-14T11:55:08.650Z"
   },
   "https://nagoya-bites.com/stores/J003958309.html": {
    "group": "unreachable_after_i25",
@@ -270,7 +248,25 @@
    "lastCrawlTime": "2026-09-22T22:36:42Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003958309.html",
-   "inspectedAt": "2026-10-14T11:40:05.497Z"
+   "inspectedAt": "2026-10-14T11:55:08.913Z"
+  },
+  "https://nagoya-bites.com/stores/J001114242.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-10T05:03:57Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J001114242.html",
+   "inspectedAt": "2026-10-14T11:55:08.628Z"
+  },
+  "https://nagoya-bites.com/journal/2026-05-10-mikan-sakae-nishiki-fushimi.html": {
+   "group": "journal",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-09-27T18:57:16Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/journal/2026-05-10-mikan-sakae-nishiki-fushimi.html",
+   "inspectedAt": "2026-10-14T11:55:08.858Z"
   },
   "https://nagoya-bites.com/stores/area/yabacho-osu/cafe-group-30.html": {
    "group": "area_hub",
@@ -279,7 +275,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:40:09.108Z"
+   "inspectedAt": "2026-10-14T11:55:14.803Z"
   },
   "https://nagoya-bites.com/stores/J001209243.html": {
    "group": "control_store",
@@ -288,16 +284,7 @@
    "lastCrawlTime": "2026-06-12T05:10:51Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001209243.html",
-   "inspectedAt": "2026-10-14T11:40:09.078Z"
-  },
-  "https://nagoya-bites.com/journal/2026-05-19-uto-kakigori-sakae.html": {
-   "group": "journal",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-09-15T09:21:47Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/journal/2026-05-19-uto-kakigori-sakae.html",
-   "inspectedAt": "2026-10-14T11:40:09.248Z"
+   "inspectedAt": "2026-10-14T11:55:14.715Z"
   },
   "https://nagoya-bites.com/stores/J001294438.html": {
    "group": "unreachable_after_i25",
@@ -306,16 +293,16 @@
    "lastCrawlTime": "2026-09-14T23:06:56Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001294438.html",
-   "inspectedAt": "2026-10-14T11:40:09.329Z"
+   "inspectedAt": "2026-10-14T11:55:15.176Z"
   },
-  "https://nagoya-bites.com/stores/J001201916.html": {
-   "group": "control_store",
+  "https://nagoya-bites.com/journal/2026-05-19-uto-kakigori-sakae.html": {
+   "group": "journal",
    "verdict": "PASS",
    "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-10-04T17:09:21Z",
+   "lastCrawlTime": "2026-09-15T09:21:47Z",
    "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J001201916.html",
-   "inspectedAt": "2026-10-14T11:40:09.440Z"
+   "googleCanonical": "https://nagoya-bites.com/journal/2026-05-19-uto-kakigori-sakae.html",
+   "inspectedAt": "2026-10-14T11:55:15.151Z"
   },
   "https://nagoya-bites.com/stores/area/midori-tempaku/izakaya-sunday.html": {
    "group": "area_hub",
@@ -324,7 +311,16 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:40:12.022Z"
+   "inspectedAt": "2026-10-14T11:55:15.612Z"
+  },
+  "https://nagoya-bites.com/stores/J001201916.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-10-04T17:09:21Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J001201916.html",
+   "inspectedAt": "2026-10-14T11:55:15.336Z"
   },
   "https://nagoya-bites.com/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html": {
    "group": "journal",
@@ -333,7 +329,7 @@
    "lastCrawlTime": "2026-10-05T04:05:36Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/journal/2026-10-05-atsuta-sapporo-miso-tokura-arahata.html",
-   "inspectedAt": "2026-10-14T11:40:15.622Z"
+   "inspectedAt": "2026-10-14T11:55:21.070Z"
   },
   "https://nagoya-bites.com/stores/J004509508.html": {
    "group": "unreachable_after_i25",
@@ -342,7 +338,7 @@
    "lastCrawlTime": "2026-08-22T18:01:40Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004509508.html",
-   "inspectedAt": "2026-10-14T11:40:15.623Z"
+   "inspectedAt": "2026-10-14T11:55:21.201Z"
   },
   "https://nagoya-bites.com/stores/J000825363.html": {
    "group": "control_store",
@@ -351,7 +347,7 @@
    "lastCrawlTime": "2026-08-24T09:04:14Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000825363.html",
-   "inspectedAt": "2026-10-14T11:40:15.766Z"
+   "inspectedAt": "2026-10-14T11:55:21.471Z"
   },
   "https://nagoya-bites.com/stores/area/yabacho-osu/izakaya-koshitsu.html": {
    "group": "area_hub",
@@ -360,7 +356,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:40:15.920Z"
+   "inspectedAt": "2026-10-14T11:55:21.658Z"
   },
   "https://nagoya-bites.com/journal/2026-09-20-nishiki-maruhachi-fushimi-bettei-enkai.html": {
    "group": "journal",
@@ -369,7 +365,7 @@
    "lastCrawlTime": "2026-10-09T02:21:52Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/journal/2026-09-20-nishiki-maruhachi-fushimi-bettei-enkai.html",
-   "inspectedAt": "2026-10-14T11:40:15.982Z"
+   "inspectedAt": "2026-10-14T11:55:22.100Z"
   },
   "https://nagoya-bites.com/stores/J001109896.html": {
    "group": "unreachable_after_i25",
@@ -378,7 +374,7 @@
    "lastCrawlTime": "2026-06-11T10:50:33Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001109896.html",
-   "inspectedAt": "2026-10-14T11:40:18.454Z"
+   "inspectedAt": "2026-10-14T11:55:22.123Z"
   },
   "https://nagoya-bites.com/stores/J004049710.html": {
    "group": "control_store",
@@ -387,7 +383,7 @@
    "lastCrawlTime": "2026-06-11T10:38:22Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004049710.html",
-   "inspectedAt": "2026-10-14T11:40:22.121Z"
+   "inspectedAt": "2026-10-14T11:55:27.601Z"
   },
   "https://nagoya-bites.com/stores/area/chikusa-imaike/bar-nomihodai.html": {
    "group": "area_hub",
@@ -396,7 +392,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:40:22.200Z"
+   "inspectedAt": "2026-10-14T11:55:27.888Z"
   },
   "https://nagoya-bites.com/journal/2026-06-02-sumiyaki-unafuji-nagoya-station.html": {
    "group": "journal",
@@ -405,7 +401,7 @@
    "lastCrawlTime": "2026-08-19T11:04:47Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/journal/2026-06-02-sumiyaki-unafuji-nagoya-station.html",
-   "inspectedAt": "2026-10-14T11:40:22.276Z"
+   "inspectedAt": "2026-10-14T11:55:27.967Z"
   },
   "https://nagoya-bites.com/stores/J001266903.html": {
    "group": "unreachable_after_i25",
@@ -414,7 +410,7 @@
    "lastCrawlTime": "2026-09-04T22:01:20Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001266903.html",
-   "inspectedAt": "2026-10-14T11:40:22.413Z"
+   "inspectedAt": "2026-10-14T11:55:28.218Z"
   },
   "https://nagoya-bites.com/stores/J000390619.html": {
    "group": "control_store",
@@ -423,7 +419,7 @@
    "lastCrawlTime": "2026-09-08T07:55:41Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000390619.html",
-   "inspectedAt": "2026-10-14T11:40:22.538Z"
+   "inspectedAt": "2026-10-14T11:55:28.615Z"
   },
   "https://nagoya-bites.com/stores/area/yabacho-osu/italian-french-group-30.html": {
    "group": "area_hub",
@@ -432,16 +428,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:40:25.017Z"
-  },
-  "https://nagoya-bites.com/journal/2026-06-04-tebasaki-summit-yotteba-meieki.html": {
-   "group": "journal",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-09-18T03:15:42Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/journal/2026-06-04-tebasaki-summit-yotteba-meieki.html",
-   "inspectedAt": "2026-10-14T11:40:28.629Z"
+   "inspectedAt": "2026-10-14T11:55:29.080Z"
   },
   "https://nagoya-bites.com/stores/J004089065.html": {
    "group": "unreachable_after_i25",
@@ -450,7 +437,16 @@
    "lastCrawlTime": "2026-06-11T21:11:54Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004089065.html",
-   "inspectedAt": "2026-10-14T11:40:28.737Z"
+   "inspectedAt": "2026-10-14T11:55:34.148Z"
+  },
+  "https://nagoya-bites.com/journal/2026-06-04-tebasaki-summit-yotteba-meieki.html": {
+   "group": "journal",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-09-18T03:15:42Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/journal/2026-06-04-tebasaki-summit-yotteba-meieki.html",
+   "inspectedAt": "2026-10-14T11:55:34.092Z"
   },
   "https://nagoya-bites.com/stores/J001217210.html": {
    "group": "control_store",
@@ -459,7 +455,7 @@
    "lastCrawlTime": "2026-06-10T13:04:20Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001217210.html",
-   "inspectedAt": "2026-10-14T11:40:28.804Z"
+   "inspectedAt": "2026-10-14T11:55:34.220Z"
   },
   "https://nagoya-bites.com/stores/area/meieki/washoku-nomihodai.html": {
    "group": "area_hub",
@@ -468,7 +464,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:40:28.986Z"
+   "inspectedAt": "2026-10-14T11:55:34.703Z"
   },
   "https://nagoya-bites.com/journal/2026-06-26-portama-haera-nimousaku.html": {
    "group": "journal",
@@ -477,7 +473,7 @@
    "lastCrawlTime": "2026-09-14T17:45:58Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/journal/2026-06-26-portama-haera-nimousaku.html",
-   "inspectedAt": "2026-10-14T11:40:29.083Z"
+   "inspectedAt": "2026-10-14T11:55:35.277Z"
   },
   "https://nagoya-bites.com/stores/J003341278.html": {
    "group": "unreachable_after_i25",
@@ -486,16 +482,7 @@
    "lastCrawlTime": "2026-10-06T13:27:25Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003341278.html",
-   "inspectedAt": "2026-10-14T11:40:31.609Z"
-  },
-  "https://nagoya-bites.com/stores/J003917022.html": {
-   "group": "control_store",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-11T05:08:17Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J003917022.html",
-   "inspectedAt": "2026-10-14T11:40:35.138Z"
+   "inspectedAt": "2026-10-14T11:55:35.577Z"
   },
   "https://nagoya-bites.com/stores/area/nishiki-fushimi/yakiniku-sunday.html": {
    "group": "area_hub",
@@ -504,7 +491,16 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:40:35.299Z"
+   "inspectedAt": "2026-10-14T11:55:40.573Z"
+  },
+  "https://nagoya-bites.com/stores/J003917022.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-11T05:08:17Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J003917022.html",
+   "inspectedAt": "2026-10-14T11:55:40.463Z"
   },
   "https://nagoya-bites.com/journal/2026-08-18-noritake-garden-pasta.html": {
    "group": "journal",
@@ -513,7 +509,7 @@
    "lastCrawlTime": "2026-08-19T17:48:49Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/journal/2026-08-18-noritake-garden-pasta.html",
-   "inspectedAt": "2026-10-14T11:40:35.319Z"
+   "inspectedAt": "2026-10-14T11:55:40.926Z"
   },
   "https://nagoya-bites.com/stores/J000678753.html": {
    "group": "unreachable_after_i25",
@@ -522,7 +518,7 @@
    "lastCrawlTime": "2026-06-11T13:11:35Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000678753.html",
-   "inspectedAt": "2026-10-14T11:40:35.505Z"
+   "inspectedAt": "2026-10-14T11:55:40.977Z"
   },
   "https://nagoya-bites.com/stores/J001052666.html": {
    "group": "control_store",
@@ -531,7 +527,7 @@
    "lastCrawlTime": "2026-06-11T05:09:20Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001052666.html",
-   "inspectedAt": "2026-10-14T11:40:35.642Z"
+   "inspectedAt": "2026-10-14T11:55:41.992Z"
   },
   "https://nagoya-bites.com/stores/area/meieki/dining-bar-budget-5000-plus.html": {
    "group": "area_hub",
@@ -540,25 +536,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:40:38.122Z"
-  },
-  "https://nagoya-bites.com/journal/2026-05-01-gw-second-half-nagoya-strategy.html": {
-   "group": "journal",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-09-28T19:38:55Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/journal/2026-05-01-gw-second-half-nagoya-strategy.html",
-   "inspectedAt": "2026-10-14T11:40:41.666Z"
-  },
-  "https://nagoya-bites.com/stores/J004403365.html": {
-   "group": "control_store",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-10T05:07:06Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J004403365.html",
-   "inspectedAt": "2026-10-14T11:40:41.840Z"
+   "inspectedAt": "2026-10-14T11:55:42.065Z"
   },
   "https://nagoya-bites.com/stores/J003985110.html": {
    "group": "unreachable_after_i25",
@@ -567,7 +545,16 @@
    "lastCrawlTime": "2026-10-12T11:56:46Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003985110.html",
-   "inspectedAt": "2026-10-14T11:40:41.817Z"
+   "inspectedAt": "2026-10-14T11:55:47.102Z"
+  },
+  "https://nagoya-bites.com/stores/J004403365.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-10T05:07:06Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J004403365.html",
+   "inspectedAt": "2026-10-14T11:55:47.401Z"
   },
   "https://nagoya-bites.com/stores/area/midori-tempaku/cafe-non-smoking.html": {
    "group": "area_hub",
@@ -576,7 +563,16 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:40:42.054Z"
+   "inspectedAt": "2026-10-14T11:55:47.510Z"
+  },
+  "https://nagoya-bites.com/journal/2026-05-01-gw-second-half-nagoya-strategy.html": {
+   "group": "journal",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-09-28T19:38:55Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/journal/2026-05-01-gw-second-half-nagoya-strategy.html",
+   "inspectedAt": "2026-10-14T11:55:47.056Z"
   },
   "https://nagoya-bites.com/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html": {
    "group": "journal",
@@ -585,7 +581,7 @@
    "lastCrawlTime": "2026-10-13T06:48:17Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/journal/2026-10-13-fushimi-himonoya-kanbee-teishoku.html",
-   "inspectedAt": "2026-10-14T11:40:42.187Z"
+   "inspectedAt": "2026-10-14T11:55:48.425Z"
   },
   "https://nagoya-bites.com/stores/J003388341.html": {
    "group": "unreachable_after_i25",
@@ -594,7 +590,7 @@
    "lastCrawlTime": "2026-09-18T15:05:02Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003388341.html",
-   "inspectedAt": "2026-10-14T11:40:44.640Z"
+   "inspectedAt": "2026-10-14T11:55:48.550Z"
   },
   "https://nagoya-bites.com/stores/J001259377.html": {
    "group": "control_store",
@@ -603,7 +599,7 @@
    "lastCrawlTime": "2026-10-12T22:43:05Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001259377.html",
-   "inspectedAt": "2026-10-14T11:40:48.308Z"
+   "inspectedAt": "2026-10-14T11:55:53.598Z"
   },
   "https://nagoya-bites.com/stores/area/kanayama/izakaya-walk-3.html": {
    "group": "area_hub",
@@ -612,7 +608,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:40:48.369Z"
+   "inspectedAt": "2026-10-14T11:55:53.934Z"
   },
   "https://nagoya-bites.com/journal/2026-09-25-sakae-unafuji-autumn-course.html": {
    "group": "journal",
@@ -621,7 +617,7 @@
    "lastCrawlTime": "2026-09-25T19:28:37Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/journal/2026-09-25-sakae-unafuji-autumn-course.html",
-   "inspectedAt": "2026-10-14T11:40:48.438Z"
+   "inspectedAt": "2026-10-14T11:55:54.005Z"
   },
   "https://nagoya-bites.com/stores/J004402985.html": {
    "group": "unreachable_after_i25",
@@ -630,16 +626,7 @@
    "lastCrawlTime": "2026-07-04T02:17:15Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004402985.html",
-   "inspectedAt": "2026-10-14T11:40:48.610Z"
-  },
-  "https://nagoya-bites.com/stores/J004698892.html": {
-   "group": "control_store",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-09-26T01:41:57Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J004698892.html",
-   "inspectedAt": "2026-10-14T11:40:48.843Z"
+   "inspectedAt": "2026-10-14T11:55:54.014Z"
   },
   "https://nagoya-bites.com/stores/area/meieki/yakiniku-sunday.html": {
    "group": "area_hub",
@@ -648,16 +635,16 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:40:51.160Z"
+   "inspectedAt": "2026-10-14T11:55:55.040Z"
   },
-  "https://nagoya-bites.com/stores/J004004568.html": {
-   "group": "unreachable_after_i25",
+  "https://nagoya-bites.com/stores/J004698892.html": {
+   "group": "control_store",
    "verdict": "PASS",
    "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-10-04T23:53:57Z",
+   "lastCrawlTime": "2026-09-26T01:41:57Z",
    "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J004004568.html",
-   "inspectedAt": "2026-10-14T11:40:54.841Z"
+   "googleCanonical": "https://nagoya-bites.com/stores/J004698892.html",
+   "inspectedAt": "2026-10-14T11:55:54.929Z"
   },
   "https://nagoya-bites.com/journal/2026-08-08-osu-wakasa-cafe-blueberry.html": {
    "group": "journal",
@@ -666,16 +653,7 @@
    "lastCrawlTime": "2026-08-09T23:46:42Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/journal/2026-08-08-osu-wakasa-cafe-blueberry.html",
-   "inspectedAt": "2026-10-14T11:40:54.808Z"
-  },
-  "https://nagoya-bites.com/stores/J001268360.html": {
-   "group": "control_store",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-11T09:29:08Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J001268360.html",
-   "inspectedAt": "2026-10-14T11:40:54.957Z"
+   "inspectedAt": "2026-10-14T11:56:00.266Z"
   },
   "https://nagoya-bites.com/stores/area/nishiki-fushimi/dining-bar-lunch.html": {
    "group": "area_hub",
@@ -684,16 +662,25 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:40:55.129Z"
+   "inspectedAt": "2026-10-14T11:56:00.775Z"
   },
-  "https://nagoya-bites.com/journal/2026-05-03-gw-holiday-open-spots-nagoya.html": {
-   "group": "journal",
+  "https://nagoya-bites.com/stores/J004004568.html": {
+   "group": "unreachable_after_i25",
    "verdict": "PASS",
    "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-09-23T00:17:16Z",
+   "lastCrawlTime": "2026-10-04T23:53:57Z",
    "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/journal/2026-05-03-gw-holiday-open-spots-nagoya.html",
-   "inspectedAt": "2026-10-14T11:40:55.374Z"
+   "googleCanonical": "https://nagoya-bites.com/stores/J004004568.html",
+   "inspectedAt": "2026-10-14T11:56:00.673Z"
+  },
+  "https://nagoya-bites.com/stores/J001268360.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-11T09:29:08Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J001268360.html",
+   "inspectedAt": "2026-10-14T11:56:00.728Z"
   },
   "https://nagoya-bites.com/stores/J003406002.html": {
    "group": "unreachable_after_i25",
@@ -702,7 +689,16 @@
    "lastCrawlTime": "2026-06-11T18:39:15Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003406002.html",
-   "inspectedAt": "2026-10-14T11:40:57.653Z"
+   "inspectedAt": "2026-10-14T11:56:01.430Z"
+  },
+  "https://nagoya-bites.com/journal/2026-05-03-gw-holiday-open-spots-nagoya.html": {
+   "group": "journal",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-09-23T00:17:16Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/journal/2026-05-03-gw-holiday-open-spots-nagoya.html",
+   "inspectedAt": "2026-10-14T11:56:01.315Z"
   },
   "https://nagoya-bites.com/stores/J003624879.html": {
    "group": "control_store",
@@ -711,7 +707,7 @@
    "lastCrawlTime": "2026-06-11T05:08:18Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003624879.html",
-   "inspectedAt": "2026-10-14T11:41:01.347Z"
+   "inspectedAt": "2026-10-14T11:56:06.778Z"
   },
   "https://nagoya-bites.com/stores/area/yabacho-osu/chinese-budget-3000.html": {
    "group": "area_hub",
@@ -720,7 +716,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:41:01.449Z"
+   "inspectedAt": "2026-10-14T11:56:07.282Z"
   },
   "https://nagoya-bites.com/journal/2026-06-05-daiginkyo-yakitori-sakae.html": {
    "group": "journal",
@@ -729,7 +725,7 @@
    "lastCrawlTime": "2026-09-28T00:28:49Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/journal/2026-06-05-daiginkyo-yakitori-sakae.html",
-   "inspectedAt": "2026-10-14T11:41:01.575Z"
+   "inspectedAt": "2026-10-14T11:56:07.378Z"
   },
   "https://nagoya-bites.com/stores/J000767061.html": {
    "group": "unreachable_after_i25",
@@ -738,7 +734,7 @@
    "lastCrawlTime": "2026-09-19T10:53:43Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000767061.html",
-   "inspectedAt": "2026-10-14T11:41:01.793Z"
+   "inspectedAt": "2026-10-14T11:56:07.475Z"
   },
   "https://nagoya-bites.com/stores/J004661353.html": {
    "group": "control_store",
@@ -747,7 +743,7 @@
    "lastCrawlTime": "2026-07-31T03:46:25Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004661353.html",
-   "inspectedAt": "2026-10-14T11:41:01.861Z"
+   "inspectedAt": "2026-10-14T11:56:07.899Z"
   },
   "https://nagoya-bites.com/stores/area/midori-tempaku/izakaya-walk-3.html": {
    "group": "area_hub",
@@ -756,7 +752,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:41:04.219Z"
+   "inspectedAt": "2026-10-14T11:56:07.985Z"
   },
   "https://nagoya-bites.com/stores/J001267546.html": {
    "group": "unreachable_after_i25",
@@ -765,7 +761,7 @@
    "lastCrawlTime": "2026-08-30T23:11:40Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001267546.html",
-   "inspectedAt": "2026-10-14T11:41:07.834Z"
+   "inspectedAt": "2026-10-14T11:56:13.296Z"
   },
   "https://nagoya-bites.com/stores/J000107764.html": {
    "group": "control_store",
@@ -774,7 +770,7 @@
    "lastCrawlTime": "2026-07-29T19:41:24Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000107764.html",
-   "inspectedAt": "2026-10-14T11:41:07.951Z"
+   "inspectedAt": "2026-10-14T11:56:13.808Z"
   },
   "https://nagoya-bites.com/stores/area/kakuozan/yakiniku-lunch.html": {
    "group": "area_hub",
@@ -783,16 +779,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:41:08.073Z"
-  },
-  "https://nagoya-bites.com/stores/J001286893.html": {
-   "group": "control_store",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-12T05:10:52Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J001286893.html",
-   "inspectedAt": "2026-10-14T11:41:08.377Z"
+   "inspectedAt": "2026-10-14T11:56:13.871Z"
   },
   "https://nagoya-bites.com/stores/J001190130.html": {
    "group": "unreachable_after_i25",
@@ -801,7 +788,16 @@
    "lastCrawlTime": "2026-10-06T07:04:33Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001190130.html",
-   "inspectedAt": "2026-10-14T11:41:08.297Z"
+   "inspectedAt": "2026-10-14T11:56:13.961Z"
+  },
+  "https://nagoya-bites.com/stores/J001286893.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-12T05:10:52Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J001286893.html",
+   "inspectedAt": "2026-10-14T11:56:14.448Z"
   },
   "https://nagoya-bites.com/stores/area/meieki/washoku-walk-3.html": {
    "group": "area_hub",
@@ -810,7 +806,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:41:10.873Z"
+   "inspectedAt": "2026-10-14T11:56:14.466Z"
   },
   "https://nagoya-bites.com/stores/J003516856.html": {
    "group": "unreachable_after_i25",
@@ -819,7 +815,7 @@
    "lastCrawlTime": "2026-06-11T10:48:04Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003516856.html",
-   "inspectedAt": "2026-10-14T11:41:14.424Z"
+   "inspectedAt": "2026-10-14T11:56:19.759Z"
   },
   "https://nagoya-bites.com/stores/J004558568.html": {
    "group": "control_store",
@@ -828,7 +824,7 @@
    "lastCrawlTime": "2026-06-11T05:08:18Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004558568.html",
-   "inspectedAt": "2026-10-14T11:41:14.550Z"
+   "inspectedAt": "2026-10-14T11:56:20.059Z"
   },
   "https://nagoya-bites.com/stores/area/kanayama/izakaya-group-30.html": {
    "group": "area_hub",
@@ -837,7 +833,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:41:14.601Z"
+   "inspectedAt": "2026-10-14T11:56:20.353Z"
   },
   "https://nagoya-bites.com/stores/J000024476.html": {
    "group": "control_store",
@@ -846,7 +842,7 @@
    "lastCrawlTime": "2026-09-15T15:26:22Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000024476.html",
-   "inspectedAt": "2026-10-14T11:41:14.892Z"
+   "inspectedAt": "2026-10-14T11:56:20.938Z"
   },
   "https://nagoya-bites.com/stores/J001276115.html": {
    "group": "unreachable_after_i25",
@@ -855,7 +851,7 @@
    "lastCrawlTime": "2026-09-27T22:47:12Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001276115.html",
-   "inspectedAt": "2026-10-14T11:41:14.886Z"
+   "inspectedAt": "2026-10-14T11:56:20.741Z"
   },
   "https://nagoya-bites.com/stores/area/yabacho-osu/bar-late-night.html": {
    "group": "area_hub",
@@ -864,16 +860,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:41:17.418Z"
-  },
-  "https://nagoya-bites.com/stores/J000862416.html": {
-   "group": "unreachable_after_i25",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-11T13:11:35Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J000862416.html",
-   "inspectedAt": "2026-10-14T11:41:20.977Z"
+   "inspectedAt": "2026-10-14T11:56:20.950Z"
   },
   "https://nagoya-bites.com/stores/J001225577.html": {
    "group": "control_store",
@@ -882,7 +869,16 @@
    "lastCrawlTime": "2026-06-10T13:04:20Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001225577.html",
-   "inspectedAt": "2026-10-14T11:41:21.047Z"
+   "inspectedAt": "2026-10-14T11:56:26.557Z"
+  },
+  "https://nagoya-bites.com/stores/J000862416.html": {
+   "group": "unreachable_after_i25",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-11T13:11:35Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J000862416.html",
+   "inspectedAt": "2026-10-14T11:56:26.252Z"
   },
   "https://nagoya-bites.com/stores/area/yabacho-osu/yakiniku-sunday.html": {
    "group": "area_hub",
@@ -891,7 +887,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:41:21.109Z"
+   "inspectedAt": "2026-10-14T11:56:26.852Z"
   },
   "https://nagoya-bites.com/stores/J001282665.html": {
    "group": "unreachable_after_i25",
@@ -900,16 +896,7 @@
    "lastCrawlTime": "2026-07-18T22:50:14Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001282665.html",
-   "inspectedAt": "2026-10-14T11:41:21.399Z"
-  },
-  "https://nagoya-bites.com/stores/J001295001.html": {
-   "group": "control_store",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-08-14T13:35:56Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J001295001.html",
-   "inspectedAt": "2026-10-14T11:41:21.418Z"
+   "inspectedAt": "2026-10-14T11:56:27.213Z"
   },
   "https://nagoya-bites.com/stores/area/midori-tempaku/yakiniku-sunday.html": {
    "group": "area_hub",
@@ -918,7 +905,16 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:41:23.953Z"
+   "inspectedAt": "2026-10-14T11:56:27.442Z"
+  },
+  "https://nagoya-bites.com/stores/J001295001.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-08-14T13:35:56Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J001295001.html",
+   "inspectedAt": "2026-10-14T11:56:27.430Z"
   },
   "https://nagoya-bites.com/stores/J001037774.html": {
    "group": "unreachable_after_i25",
@@ -927,7 +923,7 @@
    "lastCrawlTime": "2026-06-11T05:08:18Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001037774.html",
-   "inspectedAt": "2026-10-14T11:41:27.479Z"
+   "inspectedAt": "2026-10-14T11:56:32.831Z"
   },
   "https://nagoya-bites.com/stores/J001250858.html": {
    "group": "control_store",
@@ -936,7 +932,7 @@
    "lastCrawlTime": "2026-09-04T11:34:09Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001250858.html",
-   "inspectedAt": "2026-10-14T11:41:27.562Z"
+   "inspectedAt": "2026-10-14T11:56:32.966Z"
   },
   "https://nagoya-bites.com/stores/area/nishiki-fushimi/italian-french-non-smoking.html": {
    "group": "area_hub",
@@ -945,25 +941,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:41:27.621Z"
-  },
-  "https://nagoya-bites.com/stores/J001213243.html": {
-   "group": "unreachable_after_i25",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-08-29T04:42:14Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J001213243.html",
-   "inspectedAt": "2026-10-14T11:41:27.940Z"
-  },
-  "https://nagoya-bites.com/stores/J004090346.html": {
-   "group": "control_store",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-11T05:08:17Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J004090346.html",
-   "inspectedAt": "2026-10-14T11:41:27.943Z"
+   "inspectedAt": "2026-10-14T11:56:33.326Z"
   },
   "https://nagoya-bites.com/stores/area/meieki/asian-tabehodai.html": {
    "group": "area_hub",
@@ -972,7 +950,25 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:41:30.460Z"
+   "inspectedAt": "2026-10-14T11:56:34.157Z"
+  },
+  "https://nagoya-bites.com/stores/J004090346.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-11T05:08:17Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J004090346.html",
+   "inspectedAt": "2026-10-14T11:56:33.920Z"
+  },
+  "https://nagoya-bites.com/stores/J001213243.html": {
+   "group": "unreachable_after_i25",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-08-29T04:42:14Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J001213243.html",
+   "inspectedAt": "2026-10-14T11:56:33.735Z"
   },
   "https://nagoya-bites.com/stores/J001276134.html": {
    "group": "unreachable_after_i25",
@@ -981,7 +977,7 @@
    "lastCrawlTime": "2026-06-10T05:03:58Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001276134.html",
-   "inspectedAt": "2026-10-14T11:41:33.983Z"
+   "inspectedAt": "2026-10-14T11:56:39.309Z"
   },
   "https://nagoya-bites.com/stores/J004444831.html": {
    "group": "control_store",
@@ -990,7 +986,7 @@
    "lastCrawlTime": "2026-06-12T13:10:09Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004444831.html",
-   "inspectedAt": "2026-10-14T11:41:34.075Z"
+   "inspectedAt": "2026-10-14T11:56:39.456Z"
   },
   "https://nagoya-bites.com/stores/area/midori-tempaku/chinese-parking.html": {
    "group": "area_hub",
@@ -999,7 +995,7 @@
    "lastCrawlTime": null,
    "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
    "googleCanonical": null,
-   "inspectedAt": "2026-10-14T11:41:34.265Z"
+   "inspectedAt": "2026-10-14T11:56:39.744Z"
   },
   "https://nagoya-bites.com/stores/J000957468.html": {
    "group": "unreachable_after_i25",
@@ -1008,16 +1004,7 @@
    "lastCrawlTime": "2026-07-09T10:53:51Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000957468.html",
-   "inspectedAt": "2026-10-14T11:41:34.463Z"
-  },
-  "https://nagoya-bites.com/stores/J001136418.html": {
-   "group": "control_store",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-09-05T16:05:02Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J001136418.html",
-   "inspectedAt": "2026-10-14T11:41:34.543Z"
+   "inspectedAt": "2026-10-14T11:56:40.420Z"
   },
   "https://nagoya-bites.com/stores/J000804446.html": {
    "group": "unreachable_after_i25",
@@ -1026,7 +1013,16 @@
    "lastCrawlTime": "2026-06-11T21:11:54Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000804446.html",
-   "inspectedAt": "2026-10-14T11:41:37.002Z"
+   "inspectedAt": "2026-10-14T11:56:40.707Z"
+  },
+  "https://nagoya-bites.com/stores/J001136418.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-09-05T16:05:02Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J001136418.html",
+   "inspectedAt": "2026-10-14T11:56:40.435Z"
   },
   "https://nagoya-bites.com/stores/J000015729.html": {
    "group": "control_store",
@@ -1035,7 +1031,7 @@
    "lastCrawlTime": "2026-10-04T00:17:41Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000015729.html",
-   "inspectedAt": "2026-10-14T11:41:40.507Z"
+   "inspectedAt": "2026-10-14T11:56:45.787Z"
   },
   "https://nagoya-bites.com/stores/J004634124.html": {
    "group": "unreachable_after_i25",
@@ -1044,7 +1040,7 @@
    "lastCrawlTime": "2026-06-26T06:57:53Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004634124.html",
-   "inspectedAt": "2026-10-14T11:41:40.610Z"
+   "inspectedAt": "2026-10-14T11:56:45.971Z"
   },
   "https://nagoya-bites.com/stores/J001129370.html": {
    "group": "control_store",
@@ -1053,16 +1049,7 @@
    "lastCrawlTime": "2026-07-22T00:27:52Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001129370.html",
-   "inspectedAt": "2026-10-14T11:41:40.792Z"
-  },
-  "https://nagoya-bites.com/stores/J001234412.html": {
-   "group": "control_store",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-19T19:45:57Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J001234412.html",
-   "inspectedAt": "2026-10-14T11:41:41.068Z"
+   "inspectedAt": "2026-10-14T11:56:46.232Z"
   },
   "https://nagoya-bites.com/stores/J004025254.html": {
    "group": "unreachable_after_i25",
@@ -1071,7 +1058,16 @@
    "lastCrawlTime": "2026-06-13T05:17:56Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004025254.html",
-   "inspectedAt": "2026-10-14T11:41:41.017Z"
+   "inspectedAt": "2026-10-14T11:56:46.923Z"
+  },
+  "https://nagoya-bites.com/stores/J001234412.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-19T19:45:57Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J001234412.html",
+   "inspectedAt": "2026-10-14T11:56:47.336Z"
   },
   "https://nagoya-bites.com/stores/J001266106.html": {
    "group": "unreachable_after_i25",
@@ -1080,7 +1076,7 @@
    "lastCrawlTime": "2026-06-11T18:28:44Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001266106.html",
-   "inspectedAt": "2026-10-14T11:41:43.667Z"
+   "inspectedAt": "2026-10-14T11:56:47.664Z"
   },
   "https://nagoya-bites.com/stores/J001259825.html": {
    "group": "control_store",
@@ -1089,7 +1085,7 @@
    "lastCrawlTime": "2026-06-10T21:07:05Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001259825.html",
-   "inspectedAt": "2026-10-14T11:41:47.045Z"
+   "inspectedAt": "2026-10-14T11:56:52.496Z"
   },
   "https://nagoya-bites.com/stores/J001276145.html": {
    "group": "unreachable_after_i25",
@@ -1098,7 +1094,7 @@
    "lastCrawlTime": "2026-06-10T13:04:20Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001276145.html",
-   "inspectedAt": "2026-10-14T11:41:47.108Z"
+   "inspectedAt": "2026-10-14T11:56:52.526Z"
   },
   "https://nagoya-bites.com/stores/J004469718.html": {
    "group": "control_store",
@@ -1107,7 +1103,7 @@
    "lastCrawlTime": "2026-10-04T12:31:05Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004469718.html",
-   "inspectedAt": "2026-10-14T11:41:47.377Z"
+   "inspectedAt": "2026-10-14T11:56:52.718Z"
   },
   "https://nagoya-bites.com/stores/J003693876.html": {
    "group": "unreachable_after_i25",
@@ -1116,16 +1112,7 @@
    "lastCrawlTime": "2026-06-10T13:04:20Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003693876.html",
-   "inspectedAt": "2026-10-14T11:41:47.584Z"
-  },
-  "https://nagoya-bites.com/stores/J001165655.html": {
-   "group": "control_store",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-12T21:14:18Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J001165655.html",
-   "inspectedAt": "2026-10-14T11:41:47.646Z"
+   "inspectedAt": "2026-10-14T11:56:53.576Z"
   },
   "https://nagoya-bites.com/stores/J003649032.html": {
    "group": "unreachable_after_i25",
@@ -1134,7 +1121,16 @@
    "lastCrawlTime": "2026-06-11T10:51:06Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003649032.html",
-   "inspectedAt": "2026-10-14T11:41:50.194Z"
+   "inspectedAt": "2026-10-14T11:56:53.967Z"
+  },
+  "https://nagoya-bites.com/stores/J001165655.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-12T21:14:18Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J001165655.html",
+   "inspectedAt": "2026-10-14T11:56:53.801Z"
   },
   "https://nagoya-bites.com/stores/J000398993.html": {
    "group": "unreachable_after_i25",
@@ -1143,7 +1139,7 @@
    "lastCrawlTime": "2026-08-16T03:38:38Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000398993.html",
-   "inspectedAt": "2026-10-14T11:41:53.635Z"
+   "inspectedAt": "2026-10-14T11:56:58.953Z"
   },
   "https://nagoya-bites.com/stores/J000743011.html": {
    "group": "control_store",
@@ -1152,7 +1148,7 @@
    "lastCrawlTime": "2026-06-10T13:04:20Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000743011.html",
-   "inspectedAt": "2026-10-14T11:41:53.633Z"
+   "inspectedAt": "2026-10-14T11:56:58.937Z"
   },
   "https://nagoya-bites.com/stores/J003763714.html": {
    "group": "control_store",
@@ -1161,7 +1157,7 @@
    "lastCrawlTime": "2026-06-11T08:50:15Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003763714.html",
-   "inspectedAt": "2026-10-14T11:41:53.886Z"
+   "inspectedAt": "2026-10-14T11:56:59.168Z"
   },
   "https://nagoya-bites.com/stores/J000769232.html": {
    "group": "unreachable_after_i25",
@@ -1170,7 +1166,7 @@
    "lastCrawlTime": "2026-07-09T19:44:33Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000769232.html",
-   "inspectedAt": "2026-10-14T11:41:54.037Z"
+   "inspectedAt": "2026-10-14T11:57:00.170Z"
   },
   "https://nagoya-bites.com/stores/J001165935.html": {
    "group": "control_store",
@@ -1179,7 +1175,7 @@
    "lastCrawlTime": "2026-07-08T22:53:48Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001165935.html",
-   "inspectedAt": "2026-10-14T11:41:54.191Z"
+   "inspectedAt": "2026-10-14T11:57:00.216Z"
   },
   "https://nagoya-bites.com/stores/J000714491.html": {
    "group": "unreachable_after_i25",
@@ -1188,16 +1184,7 @@
    "lastCrawlTime": "2026-10-12T22:51:16Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000714491.html",
-   "inspectedAt": "2026-10-14T11:41:56.702Z"
-  },
-  "https://nagoya-bites.com/stores/J003640000.html": {
-   "group": "control_store",
-   "verdict": "NEUTRAL",
-   "coverageState": "クロール済み - インデックス未登録",
-   "lastCrawlTime": "2026-06-10T05:03:58Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J003640000.html",
-   "inspectedAt": "2026-10-14T11:42:00.176Z"
+   "inspectedAt": "2026-10-14T11:57:00.466Z"
   },
   "https://nagoya-bites.com/stores/J000395845.html": {
    "group": "unreachable_after_i25",
@@ -1206,7 +1193,7 @@
    "lastCrawlTime": "2026-08-22T21:17:48Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000395845.html",
-   "inspectedAt": "2026-10-14T11:42:00.186Z"
+   "inspectedAt": "2026-10-14T11:57:05.564Z"
   },
   "https://nagoya-bites.com/stores/J001246798.html": {
    "group": "control_store",
@@ -1215,7 +1202,16 @@
    "lastCrawlTime": "2026-06-10T21:07:04Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001246798.html",
-   "inspectedAt": "2026-10-14T11:42:00.441Z"
+   "inspectedAt": "2026-10-14T11:57:05.654Z"
+  },
+  "https://nagoya-bites.com/stores/J003640000.html": {
+   "group": "control_store",
+   "verdict": "NEUTRAL",
+   "coverageState": "クロール済み - インデックス未登録",
+   "lastCrawlTime": "2026-06-10T05:03:58Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J003640000.html",
+   "inspectedAt": "2026-10-14T11:57:05.224Z"
   },
   "https://nagoya-bites.com/stores/J003942334.html": {
    "group": "unreachable_after_i25",
@@ -1224,7 +1220,7 @@
    "lastCrawlTime": "2026-08-06T20:16:16Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003942334.html",
-   "inspectedAt": "2026-10-14T11:42:00.698Z"
+   "inspectedAt": "2026-10-14T11:57:06.668Z"
   },
   "https://nagoya-bites.com/stores/J000681392.html": {
    "group": "control_store",
@@ -1233,7 +1229,7 @@
    "lastCrawlTime": "2026-06-10T13:04:20Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000681392.html",
-   "inspectedAt": "2026-10-14T11:42:00.760Z"
+   "inspectedAt": "2026-10-14T11:57:06.703Z"
   },
   "https://nagoya-bites.com/stores/J004469244.html": {
    "group": "unreachable_after_i25",
@@ -1242,7 +1238,7 @@
    "lastCrawlTime": "2026-08-23T09:53:05Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004469244.html",
-   "inspectedAt": "2026-10-14T11:42:03.224Z"
+   "inspectedAt": "2026-10-14T11:57:06.948Z"
   },
   "https://nagoya-bites.com/stores/J001147414.html": {
    "group": "control_store",
@@ -1251,7 +1247,7 @@
    "lastCrawlTime": "2026-06-10T05:03:58Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001147414.html",
-   "inspectedAt": "2026-10-14T11:42:06.664Z"
+   "inspectedAt": "2026-10-14T11:57:11.992Z"
   },
   "https://nagoya-bites.com/stores/J004591011.html": {
    "group": "unreachable_after_i25",
@@ -1260,7 +1256,7 @@
    "lastCrawlTime": "2026-06-11T07:17:26Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004591011.html",
-   "inspectedAt": "2026-10-14T11:42:06.785Z"
+   "inspectedAt": "2026-10-14T11:57:12.131Z"
   },
   "https://nagoya-bites.com/stores/J001027534.html": {
    "group": "control_store",
@@ -1269,7 +1265,7 @@
    "lastCrawlTime": "2026-08-11T17:20:19Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001027534.html",
-   "inspectedAt": "2026-10-14T11:42:07.072Z"
+   "inspectedAt": "2026-10-14T11:57:12.168Z"
   },
   "https://nagoya-bites.com/stores/J001269818.html": {
    "group": "unreachable_after_i25",
@@ -1278,7 +1274,7 @@
    "lastCrawlTime": "2026-06-10T15:15:45Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001269818.html",
-   "inspectedAt": "2026-10-14T11:42:07.188Z"
+   "inspectedAt": "2026-10-14T11:57:12.923Z"
   },
   "https://nagoya-bites.com/stores/J000019011.html": {
    "group": "control_store",
@@ -1287,7 +1283,7 @@
    "lastCrawlTime": "2026-06-11T13:11:35Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000019011.html",
-   "inspectedAt": "2026-10-14T11:42:07.371Z"
+   "inspectedAt": "2026-10-14T11:57:13.212Z"
   },
   "https://nagoya-bites.com/stores/J000399541.html": {
    "group": "unreachable_after_i25",
@@ -1296,7 +1292,7 @@
    "lastCrawlTime": "2026-09-08T04:55:57Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000399541.html",
-   "inspectedAt": "2026-10-14T11:42:09.740Z"
+   "inspectedAt": "2026-10-14T11:57:13.637Z"
   },
   "https://nagoya-bites.com/stores/J000393368.html": {
    "group": "control_store",
@@ -1305,7 +1301,7 @@
    "lastCrawlTime": "2026-06-10T05:03:58Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000393368.html",
-   "inspectedAt": "2026-10-14T11:42:13.182Z"
+   "inspectedAt": "2026-10-14T11:57:18.412Z"
   },
   "https://nagoya-bites.com/stores/J003474003.html": {
    "group": "unreachable_after_i25",
@@ -1314,7 +1310,7 @@
    "lastCrawlTime": "2026-07-22T16:14:35Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003474003.html",
-   "inspectedAt": "2026-10-14T11:42:13.253Z"
+   "inspectedAt": "2026-10-14T11:57:18.608Z"
   },
   "https://nagoya-bites.com/stores/J001140170.html": {
    "group": "control_store",
@@ -1323,16 +1319,7 @@
    "lastCrawlTime": "2026-06-11T05:08:17Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001140170.html",
-   "inspectedAt": "2026-10-14T11:42:13.561Z"
-  },
-  "https://nagoya-bites.com/stores/J001037970.html": {
-   "group": "unreachable_after_i25",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-10T21:07:04Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J001037970.html",
-   "inspectedAt": "2026-10-14T11:42:13.701Z"
+   "inspectedAt": "2026-10-14T11:57:18.937Z"
   },
   "https://nagoya-bites.com/stores/J001275141.html": {
    "group": "control_store",
@@ -1341,7 +1328,16 @@
    "lastCrawlTime": "2026-06-10T21:07:05Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001275141.html",
-   "inspectedAt": "2026-10-14T11:42:13.891Z"
+   "inspectedAt": "2026-10-14T11:57:19.932Z"
+  },
+  "https://nagoya-bites.com/stores/J001037970.html": {
+   "group": "unreachable_after_i25",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-10T21:07:04Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J001037970.html",
+   "inspectedAt": "2026-10-14T11:57:19.861Z"
   },
   "https://nagoya-bites.com/stores/J001277914.html": {
    "group": "unreachable_after_i25",
@@ -1350,7 +1346,7 @@
    "lastCrawlTime": "2026-07-16T05:39:19Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001277914.html",
-   "inspectedAt": "2026-10-14T11:42:16.236Z"
+   "inspectedAt": "2026-10-14T11:57:20.149Z"
   },
   "https://nagoya-bites.com/stores/J000389093.html": {
    "group": "control_store",
@@ -1359,7 +1355,7 @@
    "lastCrawlTime": "2026-06-12T13:10:09Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000389093.html",
-   "inspectedAt": "2026-10-14T11:42:19.674Z"
+   "inspectedAt": "2026-10-14T11:57:24.941Z"
   },
   "https://nagoya-bites.com/stores/J004661023.html": {
    "group": "unreachable_after_i25",
@@ -1368,7 +1364,7 @@
    "lastCrawlTime": "2026-10-11T15:26:09Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004661023.html",
-   "inspectedAt": "2026-10-14T11:42:19.783Z"
+   "inspectedAt": "2026-10-14T11:57:25.108Z"
   },
   "https://nagoya-bites.com/stores/J001222412.html": {
    "group": "control_store",
@@ -1377,25 +1373,7 @@
    "lastCrawlTime": "2026-08-23T21:49:17Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001222412.html",
-   "inspectedAt": "2026-10-14T11:42:20.099Z"
-  },
-  "https://nagoya-bites.com/stores/J001283804.html": {
-   "group": "unreachable_after_i25",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-11T13:11:35Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J001283804.html",
-   "inspectedAt": "2026-10-14T11:42:20.225Z"
-  },
-  "https://nagoya-bites.com/stores/J004049818.html": {
-   "group": "control_store",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-10-08T01:01:42Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J004049818.html",
-   "inspectedAt": "2026-10-14T11:42:20.410Z"
+   "inspectedAt": "2026-10-14T11:57:25.473Z"
   },
   "https://nagoya-bites.com/stores/J004492240.html": {
    "group": "unreachable_after_i25",
@@ -1404,7 +1382,25 @@
    "lastCrawlTime": "2026-09-06T16:50:11Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004492240.html",
-   "inspectedAt": "2026-10-14T11:42:22.736Z"
+   "inspectedAt": "2026-10-14T11:57:26.640Z"
+  },
+  "https://nagoya-bites.com/stores/J004049818.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-10-08T01:01:42Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J004049818.html",
+   "inspectedAt": "2026-10-14T11:57:26.573Z"
+  },
+  "https://nagoya-bites.com/stores/J001283804.html": {
+   "group": "unreachable_after_i25",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-11T13:11:35Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J001283804.html",
+   "inspectedAt": "2026-10-14T11:57:26.418Z"
   },
   "https://nagoya-bites.com/stores/J001022251.html": {
    "group": "control_store",
@@ -1413,7 +1409,7 @@
    "lastCrawlTime": "2026-09-14T19:53:15Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001022251.html",
-   "inspectedAt": "2026-10-14T11:42:26.212Z"
+   "inspectedAt": "2026-10-14T11:57:31.431Z"
   },
   "https://nagoya-bites.com/stores/J000428826.html": {
    "group": "unreachable_after_i25",
@@ -1422,16 +1418,7 @@
    "lastCrawlTime": "2026-08-01T03:56:29Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000428826.html",
-   "inspectedAt": "2026-10-14T11:42:26.290Z"
-  },
-  "https://nagoya-bites.com/stores/J000728930.html": {
-   "group": "unreachable_after_i25",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-11T10:13:59Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J000728930.html",
-   "inspectedAt": "2026-10-14T11:42:26.856Z"
+   "inspectedAt": "2026-10-14T11:57:31.613Z"
   },
   "https://nagoya-bites.com/stores/J000399522.html": {
    "group": "control_store",
@@ -1440,7 +1427,16 @@
    "lastCrawlTime": "2026-06-11T17:10:54Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000399522.html",
-   "inspectedAt": "2026-10-14T11:42:26.731Z"
+   "inspectedAt": "2026-10-14T11:57:32.209Z"
+  },
+  "https://nagoya-bites.com/stores/J000728930.html": {
+   "group": "unreachable_after_i25",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-11T10:13:59Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J000728930.html",
+   "inspectedAt": "2026-10-14T11:57:32.931Z"
   },
   "https://nagoya-bites.com/stores/J000734816.html": {
    "group": "control_store",
@@ -1449,7 +1445,7 @@
    "lastCrawlTime": "2026-07-31T03:46:25Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000734816.html",
-   "inspectedAt": "2026-10-14T11:42:26.962Z"
+   "inspectedAt": "2026-10-14T11:57:33.037Z"
   },
   "https://nagoya-bites.com/stores/J000868630.html": {
    "group": "unreachable_after_i25",
@@ -1458,7 +1454,7 @@
    "lastCrawlTime": "2026-06-10T05:07:07Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000868630.html",
-   "inspectedAt": "2026-10-14T11:42:29.226Z"
+   "inspectedAt": "2026-10-14T11:57:33.225Z"
   },
   "https://nagoya-bites.com/stores/J000015490.html": {
    "group": "control_store",
@@ -1467,7 +1463,7 @@
    "lastCrawlTime": "2026-09-16T12:57:07Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000015490.html",
-   "inspectedAt": "2026-10-14T11:42:32.731Z"
+   "inspectedAt": "2026-10-14T11:57:37.692Z"
   },
   "https://nagoya-bites.com/stores/J004403356.html": {
    "group": "unreachable_after_i25",
@@ -1476,16 +1472,7 @@
    "lastCrawlTime": "2026-06-11T08:46:01Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004403356.html",
-   "inspectedAt": "2026-10-14T11:42:32.892Z"
-  },
-  "https://nagoya-bites.com/stores/J001264086.html": {
-   "group": "unreachable_after_i25",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-09-01T01:00:55Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J001264086.html",
-   "inspectedAt": "2026-10-14T11:42:33.394Z"
+   "inspectedAt": "2026-10-14T11:57:38.103Z"
   },
   "https://nagoya-bites.com/stores/J004049211.html": {
    "group": "control_store",
@@ -1494,16 +1481,16 @@
    "lastCrawlTime": "2026-09-11T19:50:56Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004049211.html",
-   "inspectedAt": "2026-10-14T11:42:33.393Z"
+   "inspectedAt": "2026-10-14T11:57:38.918Z"
   },
-  "https://nagoya-bites.com/stores/J003324481.html": {
-   "group": "control_store",
+  "https://nagoya-bites.com/stores/J001264086.html": {
+   "group": "unreachable_after_i25",
    "verdict": "PASS",
    "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-08-02T12:01:59Z",
+   "lastCrawlTime": "2026-09-01T01:00:55Z",
    "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J003324481.html",
-   "inspectedAt": "2026-10-14T11:42:33.500Z"
+   "googleCanonical": "https://nagoya-bites.com/stores/J001264086.html",
+   "inspectedAt": "2026-10-14T11:57:39.429Z"
   },
   "https://nagoya-bites.com/stores/J004612831.html": {
    "group": "unreachable_after_i25",
@@ -1512,7 +1499,16 @@
    "lastCrawlTime": "2026-09-11T12:25:09Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004612831.html",
-   "inspectedAt": "2026-10-14T11:42:35.882Z"
+   "inspectedAt": "2026-10-14T11:57:39.555Z"
+  },
+  "https://nagoya-bites.com/stores/J003324481.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-08-02T12:01:59Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J003324481.html",
+   "inspectedAt": "2026-10-14T11:57:39.525Z"
   },
   "https://nagoya-bites.com/stores/J004591787.html": {
    "group": "control_store",
@@ -1521,7 +1517,7 @@
    "lastCrawlTime": "2026-09-09T04:10:34Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004591787.html",
-   "inspectedAt": "2026-10-14T11:42:39.261Z"
+   "inspectedAt": "2026-10-14T11:57:44.115Z"
   },
   "https://nagoya-bites.com/stores/J000107548.html": {
    "group": "unreachable_after_i25",
@@ -1530,7 +1526,7 @@
    "lastCrawlTime": "2026-06-10T21:07:05Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000107548.html",
-   "inspectedAt": "2026-10-14T11:42:39.441Z"
+   "inspectedAt": "2026-10-14T11:57:44.945Z"
   },
   "https://nagoya-bites.com/stores/J004661133.html": {
    "group": "control_store",
@@ -1539,25 +1535,7 @@
    "lastCrawlTime": "2026-08-22T23:18:40Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004661133.html",
-   "inspectedAt": "2026-10-14T11:42:39.920Z"
-  },
-  "https://nagoya-bites.com/stores/J003366291.html": {
-   "group": "unreachable_after_i25",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-11T13:11:35Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J003366291.html",
-   "inspectedAt": "2026-10-14T11:42:39.939Z"
-  },
-  "https://nagoya-bites.com/stores/J003737287.html": {
-   "group": "control_store",
-   "verdict": "NEUTRAL",
-   "coverageState": "クロール済み - インデックス未登録",
-   "lastCrawlTime": "2026-06-10T05:03:58Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J003737287.html",
-   "inspectedAt": "2026-10-14T11:42:40.023Z"
+   "inspectedAt": "2026-10-14T11:57:45.420Z"
   },
   "https://nagoya-bites.com/stores/J001267843.html": {
    "group": "unreachable_after_i25",
@@ -1566,7 +1544,25 @@
    "lastCrawlTime": "2026-09-07T07:17:30Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001267843.html",
-   "inspectedAt": "2026-10-14T11:42:42.400Z"
+   "inspectedAt": "2026-10-14T11:57:46.238Z"
+  },
+  "https://nagoya-bites.com/stores/J003737287.html": {
+   "group": "control_store",
+   "verdict": "NEUTRAL",
+   "coverageState": "クロール済み - インデックス未登録",
+   "lastCrawlTime": "2026-06-10T05:03:58Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J003737287.html",
+   "inspectedAt": "2026-10-14T11:57:46.047Z"
+  },
+  "https://nagoya-bites.com/stores/J003366291.html": {
+   "group": "unreachable_after_i25",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-11T13:11:35Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J003366291.html",
+   "inspectedAt": "2026-10-14T11:57:45.857Z"
   },
   "https://nagoya-bites.com/stores/J003473868.html": {
    "group": "control_store",
@@ -1575,7 +1571,7 @@
    "lastCrawlTime": "2026-06-11T05:08:18Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003473868.html",
-   "inspectedAt": "2026-10-14T11:42:45.811Z"
+   "inspectedAt": "2026-10-14T11:57:50.844Z"
   },
   "https://nagoya-bites.com/stores/J001203084.html": {
    "group": "unreachable_after_i25",
@@ -1584,16 +1580,7 @@
    "lastCrawlTime": "2026-10-04T13:17:04Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001203084.html",
-   "inspectedAt": "2026-10-14T11:42:45.959Z"
-  },
-  "https://nagoya-bites.com/stores/J004090514.html": {
-   "group": "unreachable_after_i25",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-10T05:03:58Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J004090514.html",
-   "inspectedAt": "2026-10-14T11:42:46.475Z"
+   "inspectedAt": "2026-10-14T11:57:51.465Z"
   },
   "https://nagoya-bites.com/stores/J000861688.html": {
    "group": "control_store",
@@ -1602,16 +1589,16 @@
    "lastCrawlTime": "2026-06-11T05:27:56Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000861688.html",
-   "inspectedAt": "2026-10-14T11:42:46.456Z"
+   "inspectedAt": "2026-10-14T11:57:51.949Z"
   },
-  "https://nagoya-bites.com/stores/J003672495.html": {
-   "group": "control_store",
+  "https://nagoya-bites.com/stores/J004090514.html": {
+   "group": "unreachable_after_i25",
    "verdict": "PASS",
    "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-10-03T00:46:06Z",
+   "lastCrawlTime": "2026-06-10T05:03:58Z",
    "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J003672495.html",
-   "inspectedAt": "2026-10-14T11:42:46.539Z"
+   "googleCanonical": "https://nagoya-bites.com/stores/J004090514.html",
+   "inspectedAt": "2026-10-14T11:57:52.730Z"
   },
   "https://nagoya-bites.com/stores/J001140569.html": {
    "group": "unreachable_after_i25",
@@ -1620,7 +1607,16 @@
    "lastCrawlTime": "2026-10-05T05:18:33Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001140569.html",
-   "inspectedAt": "2026-10-14T11:42:48.809Z"
+   "inspectedAt": "2026-10-14T11:57:55.572Z"
+  },
+  "https://nagoya-bites.com/stores/J003672495.html": {
+   "group": "control_store",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-10-03T00:46:06Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J003672495.html",
+   "inspectedAt": "2026-10-14T11:57:52.762Z"
   },
   "https://nagoya-bites.com/stores/J001279299.html": {
    "group": "control_store",
@@ -1629,7 +1625,7 @@
    "lastCrawlTime": "2026-07-19T02:01:41Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001279299.html",
-   "inspectedAt": "2026-10-14T11:42:52.327Z"
+   "inspectedAt": "2026-10-14T11:57:57.334Z"
   },
   "https://nagoya-bites.com/stores/J003451053.html": {
    "group": "unreachable_after_i25",
@@ -1638,16 +1634,7 @@
    "lastCrawlTime": "2026-06-10T13:04:20Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003451053.html",
-   "inspectedAt": "2026-10-14T11:42:52.468Z"
-  },
-  "https://nagoya-bites.com/stores/J001118246.html": {
-   "group": "unreachable_after_i25",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-10-07T23:42:04Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J001118246.html",
-   "inspectedAt": "2026-10-14T11:42:52.957Z"
+   "inspectedAt": "2026-10-14T11:57:58.172Z"
   },
   "https://nagoya-bites.com/stores/J000994240.html": {
    "group": "control_store",
@@ -1656,7 +1643,16 @@
    "lastCrawlTime": "2026-07-23T13:56:44Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000994240.html",
-   "inspectedAt": "2026-10-14T11:42:52.953Z"
+   "inspectedAt": "2026-10-14T11:57:58.434Z"
+  },
+  "https://nagoya-bites.com/stores/J001118246.html": {
+   "group": "unreachable_after_i25",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-10-07T23:42:04Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J001118246.html",
+   "inspectedAt": "2026-10-14T11:57:59.281Z"
   },
   "https://nagoya-bites.com/stores/J000727015.html": {
    "group": "control_store",
@@ -1665,7 +1661,7 @@
    "lastCrawlTime": "2026-06-11T13:11:35Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000727015.html",
-   "inspectedAt": "2026-10-14T11:42:53.082Z"
+   "inspectedAt": "2026-10-14T11:58:01.919Z"
   },
   "https://nagoya-bites.com/stores/J004421043.html": {
    "group": "unreachable_after_i25",
@@ -1674,7 +1670,7 @@
    "lastCrawlTime": "2026-08-17T17:17:19Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004421043.html",
-   "inspectedAt": "2026-10-14T11:42:55.338Z"
+   "inspectedAt": "2026-10-14T11:58:02.493Z"
   },
   "https://nagoya-bites.com/stores/J004577258.html": {
    "group": "control_store",
@@ -1683,7 +1679,7 @@
    "lastCrawlTime": "2026-10-04T00:20:37Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004577258.html",
-   "inspectedAt": "2026-10-14T11:42:58.856Z"
+   "inspectedAt": "2026-10-14T11:58:03.590Z"
   },
   "https://nagoya-bites.com/stores/J000401171.html": {
    "group": "unreachable_after_i25",
@@ -1692,7 +1688,7 @@
    "lastCrawlTime": "2026-08-27T08:36:16Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000401171.html",
-   "inspectedAt": "2026-10-14T11:42:58.966Z"
+   "inspectedAt": "2026-10-14T11:58:04.731Z"
   },
   "https://nagoya-bites.com/stores/J000957915.html": {
    "group": "control_store",
@@ -1701,7 +1697,7 @@
    "lastCrawlTime": "2026-10-06T14:29:45Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000957915.html",
-   "inspectedAt": "2026-10-14T11:42:59.473Z"
+   "inspectedAt": "2026-10-14T11:58:05.146Z"
   },
   "https://nagoya-bites.com/stores/J001052557.html": {
    "group": "unreachable_after_i25",
@@ -1710,7 +1706,7 @@
    "lastCrawlTime": "2026-06-10T05:07:07Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001052557.html",
-   "inspectedAt": "2026-10-14T11:42:59.505Z"
+   "inspectedAt": "2026-10-14T11:58:05.778Z"
   },
   "https://nagoya-bites.com/stores/J001202808.html": {
    "group": "control_store",
@@ -1719,7 +1715,7 @@
    "lastCrawlTime": "2026-06-11T13:11:35Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001202808.html",
-   "inspectedAt": "2026-10-14T11:42:59.740Z"
+   "inspectedAt": "2026-10-14T11:58:08.540Z"
   },
   "https://nagoya-bites.com/stores/J001265105.html": {
    "group": "unreachable_after_i25",
@@ -1728,7 +1724,7 @@
    "lastCrawlTime": "2026-10-14T06:53:31Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001265105.html",
-   "inspectedAt": "2026-10-14T11:43:01.868Z"
+   "inspectedAt": "2026-10-14T11:58:08.976Z"
   },
   "https://nagoya-bites.com/stores/J001058970.html": {
    "group": "control_store",
@@ -1737,7 +1733,7 @@
    "lastCrawlTime": "2026-09-07T17:10:42Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001058970.html",
-   "inspectedAt": "2026-10-14T11:43:05.364Z"
+   "inspectedAt": "2026-10-14T11:58:10.115Z"
   },
   "https://nagoya-bites.com/stores/J004402649.html": {
    "group": "unreachable_after_i25",
@@ -1746,7 +1742,7 @@
    "lastCrawlTime": "2026-06-12T21:14:18Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004402649.html",
-   "inspectedAt": "2026-10-14T11:43:05.490Z"
+   "inspectedAt": "2026-10-14T11:58:11.221Z"
   },
   "https://nagoya-bites.com/stores/J001054040.html": {
    "group": "control_store",
@@ -1755,7 +1751,7 @@
    "lastCrawlTime": "2026-10-04T00:19:37Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001054040.html",
-   "inspectedAt": "2026-10-14T11:43:06.021Z"
+   "inspectedAt": "2026-10-14T11:58:11.661Z"
   },
   "https://nagoya-bites.com/stores/J001234326.html": {
    "group": "unreachable_after_i25",
@@ -1764,7 +1760,7 @@
    "lastCrawlTime": "2026-06-13T07:42:38Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001234326.html",
-   "inspectedAt": "2026-10-14T11:43:06.023Z"
+   "inspectedAt": "2026-10-14T11:58:12.276Z"
   },
   "https://nagoya-bites.com/stores/J001185192.html": {
    "group": "control_store",
@@ -1773,7 +1769,7 @@
    "lastCrawlTime": "2026-06-11T15:11:55Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001185192.html",
-   "inspectedAt": "2026-10-14T11:43:06.242Z"
+   "inspectedAt": "2026-10-14T11:58:15.103Z"
   },
   "https://nagoya-bites.com/stores/J000025642.html": {
    "group": "unreachable_after_i25",
@@ -1782,7 +1778,7 @@
    "lastCrawlTime": "2026-10-04T02:51:40Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000025642.html",
-   "inspectedAt": "2026-10-14T11:43:08.421Z"
+   "inspectedAt": "2026-10-14T11:58:15.473Z"
   },
   "https://nagoya-bites.com/stores/J001274787.html": {
    "group": "control_store",
@@ -1791,7 +1787,7 @@
    "lastCrawlTime": "2026-09-19T00:12:54Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001274787.html",
-   "inspectedAt": "2026-10-14T11:43:11.905Z"
+   "inspectedAt": "2026-10-14T11:58:16.385Z"
   },
   "https://nagoya-bites.com/stores/J003895000.html": {
    "group": "unreachable_after_i25",
@@ -1800,7 +1796,7 @@
    "lastCrawlTime": "2026-06-11T05:24:05Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003895000.html",
-   "inspectedAt": "2026-10-14T11:43:12.116Z"
+   "inspectedAt": "2026-10-14T11:58:17.622Z"
   },
   "https://nagoya-bites.com/stores/J003942363.html": {
    "group": "control_store",
@@ -1809,7 +1805,7 @@
    "lastCrawlTime": "2026-06-10T05:03:57Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003942363.html",
-   "inspectedAt": "2026-10-14T11:43:12.517Z"
+   "inspectedAt": "2026-10-14T11:58:18.395Z"
   },
   "https://nagoya-bites.com/stores/J000391253.html": {
    "group": "unreachable_after_i25",
@@ -1818,16 +1814,7 @@
    "lastCrawlTime": "2026-08-15T20:13:15Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000391253.html",
-   "inspectedAt": "2026-10-14T11:43:12.551Z"
-  },
-  "https://nagoya-bites.com/stores/J000107597.html": {
-   "group": "control_store",
-   "verdict": "NEUTRAL",
-   "coverageState": "クロール済み - インデックス未登録",
-   "lastCrawlTime": "2026-05-14T03:24:50Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J000107597.html",
-   "inspectedAt": "2026-10-14T11:43:12.767Z"
+   "inspectedAt": "2026-10-14T11:58:18.793Z"
   },
   "https://nagoya-bites.com/stores/J000390990.html": {
    "group": "unreachable_after_i25",
@@ -1836,7 +1823,16 @@
    "lastCrawlTime": "2026-06-11T05:34:55Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000390990.html",
-   "inspectedAt": "2026-10-14T11:43:14.953Z"
+   "inspectedAt": "2026-10-14T11:58:21.950Z"
+  },
+  "https://nagoya-bites.com/stores/J000107597.html": {
+   "group": "control_store",
+   "verdict": "NEUTRAL",
+   "coverageState": "クロール済み - インデックス未登録",
+   "lastCrawlTime": "2026-05-14T03:24:50Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J000107597.html",
+   "inspectedAt": "2026-10-14T11:58:21.801Z"
   },
   "https://nagoya-bites.com/stores/J004576054.html": {
    "group": "control_store",
@@ -1845,7 +1841,7 @@
    "lastCrawlTime": "2026-06-11T18:36:19Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004576054.html",
-   "inspectedAt": "2026-10-14T11:43:18.393Z"
+   "inspectedAt": "2026-10-14T11:58:23.170Z"
   },
   "https://nagoya-bites.com/stores/J003694094.html": {
    "group": "unreachable_after_i25",
@@ -1854,7 +1850,7 @@
    "lastCrawlTime": "2026-06-11T05:28:28Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003694094.html",
-   "inspectedAt": "2026-10-14T11:43:18.635Z"
+   "inspectedAt": "2026-10-14T11:58:24.125Z"
   },
   "https://nagoya-bites.com/stores/J001201499.html": {
    "group": "control_store",
@@ -1863,7 +1859,7 @@
    "lastCrawlTime": "2026-09-19T21:46:31Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001201499.html",
-   "inspectedAt": "2026-10-14T11:43:19.035Z"
+   "inspectedAt": "2026-10-14T11:58:24.657Z"
   },
   "https://nagoya-bites.com/stores/J003298198.html": {
    "group": "unreachable_after_i25",
@@ -1872,7 +1868,7 @@
    "lastCrawlTime": "2026-07-24T11:16:24Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003298198.html",
-   "inspectedAt": "2026-10-14T11:43:19.110Z"
+   "inspectedAt": "2026-10-14T11:58:25.929Z"
   },
   "https://nagoya-bites.com/stores/J003473331.html": {
    "group": "control_store",
@@ -1881,7 +1877,7 @@
    "lastCrawlTime": "2026-10-07T05:14:47Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003473331.html",
-   "inspectedAt": "2026-10-14T11:43:19.179Z"
+   "inspectedAt": "2026-10-14T11:58:28.438Z"
   },
   "https://nagoya-bites.com/stores/J004576250.html": {
    "group": "unreachable_after_i25",
@@ -1890,7 +1886,7 @@
    "lastCrawlTime": "2026-06-12T13:10:09Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004576250.html",
-   "inspectedAt": "2026-10-14T11:43:21.473Z"
+   "inspectedAt": "2026-10-14T11:58:28.545Z"
   },
   "https://nagoya-bites.com/stores/J001224811.html": {
    "group": "control_store",
@@ -1899,7 +1895,7 @@
    "lastCrawlTime": "2026-06-11T05:08:18Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001224811.html",
-   "inspectedAt": "2026-10-14T11:43:24.882Z"
+   "inspectedAt": "2026-10-14T11:58:29.462Z"
   },
   "https://nagoya-bites.com/stores/J001140579.html": {
    "group": "unreachable_after_i25",
@@ -1908,7 +1904,7 @@
    "lastCrawlTime": "2026-06-14T05:25:01Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001140579.html",
-   "inspectedAt": "2026-10-14T11:43:25.160Z"
+   "inspectedAt": "2026-10-14T11:58:30.623Z"
   },
   "https://nagoya-bites.com/stores/J000107620.html": {
    "group": "control_store",
@@ -1917,7 +1913,7 @@
    "lastCrawlTime": "2026-10-04T00:20:41Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000107620.html",
-   "inspectedAt": "2026-10-14T11:43:25.516Z"
+   "inspectedAt": "2026-10-14T11:58:31.442Z"
   },
   "https://nagoya-bites.com/stores/J001282498.html": {
    "group": "unreachable_after_i25",
@@ -1926,7 +1922,7 @@
    "lastCrawlTime": "2026-06-09T19:07:26Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001282498.html",
-   "inspectedAt": "2026-10-14T11:43:25.602Z"
+   "inspectedAt": "2026-10-14T11:58:32.648Z"
   },
   "https://nagoya-bites.com/stores/J003785077.html": {
    "group": "control_store",
@@ -1935,7 +1931,7 @@
    "lastCrawlTime": "2026-10-05T14:06:01Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003785077.html",
-   "inspectedAt": "2026-10-14T11:43:25.819Z"
+   "inspectedAt": "2026-10-14T11:58:35.132Z"
   },
   "https://nagoya-bites.com/stores/J001278676.html": {
    "group": "unreachable_after_i25",
@@ -1944,7 +1940,7 @@
    "lastCrawlTime": "2026-09-07T17:42:41Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001278676.html",
-   "inspectedAt": "2026-10-14T11:43:28.113Z"
+   "inspectedAt": "2026-10-14T11:58:35.143Z"
   },
   "https://nagoya-bites.com/stores/J003410554.html": {
    "group": "control_store",
@@ -1953,7 +1949,7 @@
    "lastCrawlTime": "2026-06-10T05:07:06Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003410554.html",
-   "inspectedAt": "2026-10-14T11:43:31.417Z"
+   "inspectedAt": "2026-10-14T11:58:36.008Z"
   },
   "https://nagoya-bites.com/stores/J000107953.html": {
    "group": "unreachable_after_i25",
@@ -1962,16 +1958,7 @@
    "lastCrawlTime": "2026-07-06T01:47:10Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000107953.html",
-   "inspectedAt": "2026-10-14T11:43:31.790Z"
-  },
-  "https://nagoya-bites.com/stores/J003828115.html": {
-   "group": "unreachable_after_i25",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-06-11T05:24:16Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J003828115.html",
-   "inspectedAt": "2026-10-14T11:43:32.105Z"
+   "inspectedAt": "2026-10-14T11:58:37.405Z"
   },
   "https://nagoya-bites.com/stores/J004612833.html": {
    "group": "control_store",
@@ -1980,7 +1967,16 @@
    "lastCrawlTime": "2026-10-04T08:57:01Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004612833.html",
-   "inspectedAt": "2026-10-14T11:43:32.051Z"
+   "inspectedAt": "2026-10-14T11:58:38.008Z"
+  },
+  "https://nagoya-bites.com/stores/J003828115.html": {
+   "group": "unreachable_after_i25",
+   "verdict": "PASS",
+   "coverageState": "送信して登録されました",
+   "lastCrawlTime": "2026-06-11T05:24:16Z",
+   "pageFetchState": "SUCCESSFUL",
+   "googleCanonical": "https://nagoya-bites.com/stores/J003828115.html",
+   "inspectedAt": "2026-10-14T11:58:39.909Z"
   },
   "https://nagoya-bites.com/stores/J001052315.html": {
    "group": "control_store",
@@ -1989,7 +1985,7 @@
    "lastCrawlTime": "2026-06-22T22:23:43Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001052315.html",
-   "inspectedAt": "2026-10-14T11:43:32.347Z"
+   "inspectedAt": "2026-10-14T11:58:41.384Z"
   },
   "https://nagoya-bites.com/stores/J001262544.html": {
    "group": "unreachable_after_i25",
@@ -1998,7 +1994,7 @@
    "lastCrawlTime": "2026-06-11T13:11:35Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001262544.html",
-   "inspectedAt": "2026-10-14T11:43:34.622Z"
+   "inspectedAt": "2026-10-14T11:58:41.698Z"
   },
   "https://nagoya-bites.com/stores/J000015254.html": {
    "group": "control_store",
@@ -2007,7 +2003,7 @@
    "lastCrawlTime": "2026-07-17T14:22:19Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000015254.html",
-   "inspectedAt": "2026-10-14T11:43:37.964Z"
+   "inspectedAt": "2026-10-14T11:58:42.260Z"
   },
   "https://nagoya-bites.com/stores/J000394987.html": {
    "group": "unreachable_after_i25",
@@ -2016,7 +2012,7 @@
    "lastCrawlTime": "2026-06-12T13:10:09Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000394987.html",
-   "inspectedAt": "2026-10-14T11:43:38.408Z"
+   "inspectedAt": "2026-10-14T11:58:43.906Z"
   },
   "https://nagoya-bites.com/stores/J001211010.html": {
    "group": "control_store",
@@ -2025,7 +2021,7 @@
    "lastCrawlTime": "2026-06-10T05:07:06Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001211010.html",
-   "inspectedAt": "2026-10-14T11:43:38.614Z"
+   "inspectedAt": "2026-10-14T11:58:44.269Z"
   },
   "https://nagoya-bites.com/stores/J004004518.html": {
    "group": "unreachable_after_i25",
@@ -2034,7 +2030,7 @@
    "lastCrawlTime": "2026-06-11T05:08:18Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004004518.html",
-   "inspectedAt": "2026-10-14T11:43:38.720Z"
+   "inspectedAt": "2026-10-14T11:58:46.457Z"
   },
   "https://nagoya-bites.com/stores/J000398288.html": {
    "group": "control_store",
@@ -2043,7 +2039,7 @@
    "lastCrawlTime": "2026-06-11T21:11:54Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000398288.html",
-   "inspectedAt": "2026-10-14T11:43:38.834Z"
+   "inspectedAt": "2026-10-14T11:58:47.919Z"
   },
   "https://nagoya-bites.com/stores/J004469942.html": {
    "group": "unreachable_after_i25",
@@ -2052,7 +2048,7 @@
    "lastCrawlTime": "2026-06-12T05:10:52Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004469942.html",
-   "inspectedAt": "2026-10-14T11:43:41.146Z"
+   "inspectedAt": "2026-10-14T11:58:48.293Z"
   },
   "https://nagoya-bites.com/stores/J003341386.html": {
    "group": "control_store",
@@ -2061,7 +2057,7 @@
    "lastCrawlTime": "2026-06-10T05:03:58Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003341386.html",
-   "inspectedAt": "2026-10-14T11:43:44.444Z"
+   "inspectedAt": "2026-10-14T11:58:48.879Z"
   },
   "https://nagoya-bites.com/stores/J000428760.html": {
    "group": "unreachable_after_i25",
@@ -2070,7 +2066,7 @@
    "lastCrawlTime": "2026-07-09T07:22:43Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000428760.html",
-   "inspectedAt": "2026-10-14T11:43:44.930Z"
+   "inspectedAt": "2026-10-14T11:58:50.625Z"
   },
   "https://nagoya-bites.com/stores/J000027541.html": {
    "group": "control_store",
@@ -2079,7 +2075,7 @@
    "lastCrawlTime": "2026-05-14T03:20:36Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000027541.html",
-   "inspectedAt": "2026-10-14T11:43:45.121Z"
+   "inspectedAt": "2026-10-14T11:58:50.756Z"
   },
   "https://nagoya-bites.com/stores/J000637658.html": {
    "group": "unreachable_after_i25",
@@ -2088,7 +2084,7 @@
    "lastCrawlTime": "2026-06-28T15:41:04Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000637658.html",
-   "inspectedAt": "2026-10-14T11:43:45.205Z"
+   "inspectedAt": "2026-10-14T11:58:53.004Z"
   },
   "https://nagoya-bites.com/stores/J000681389.html": {
    "group": "control_store",
@@ -2097,7 +2093,7 @@
    "lastCrawlTime": "2026-09-16T19:59:43Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000681389.html",
-   "inspectedAt": "2026-10-14T11:43:45.348Z"
+   "inspectedAt": "2026-10-14T11:58:54.402Z"
   },
   "https://nagoya-bites.com/stores/J001293490.html": {
    "group": "unreachable_after_i25",
@@ -2106,7 +2102,7 @@
    "lastCrawlTime": "2026-06-10T05:03:58Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J001293490.html",
-   "inspectedAt": "2026-10-14T11:43:47.682Z"
+   "inspectedAt": "2026-10-14T11:58:54.992Z"
   },
   "https://nagoya-bites.com/stores/J004470644.html": {
    "group": "control_store",
@@ -2115,7 +2111,7 @@
    "lastCrawlTime": "2026-06-11T05:39:24Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004470644.html",
-   "inspectedAt": "2026-10-14T11:43:50.955Z"
+   "inspectedAt": "2026-10-14T11:58:55.354Z"
   },
   "https://nagoya-bites.com/stores/J004576931.html": {
    "group": "unreachable_after_i25",
@@ -2124,7 +2120,7 @@
    "lastCrawlTime": "2026-06-11T06:03:33Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004576931.html",
-   "inspectedAt": "2026-10-14T11:43:51.449Z"
+   "inspectedAt": "2026-10-14T11:58:57.109Z"
   },
   "https://nagoya-bites.com/stores/J000742938.html": {
    "group": "control_store",
@@ -2133,7 +2129,7 @@
    "lastCrawlTime": "2026-06-10T05:03:58Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000742938.html",
-   "inspectedAt": "2026-10-14T11:43:51.748Z"
+   "inspectedAt": "2026-10-14T11:58:57.259Z"
   },
   "https://nagoya-bites.com/stores/J000742750.html": {
    "group": "unreachable_after_i25",
@@ -2142,7 +2138,7 @@
    "lastCrawlTime": "2026-08-02T12:01:59Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000742750.html",
-   "inspectedAt": "2026-10-14T11:43:51.755Z"
+   "inspectedAt": "2026-10-14T11:58:59.743Z"
   },
   "https://nagoya-bites.com/stores/J003432180.html": {
    "group": "control_store",
@@ -2151,7 +2147,7 @@
    "lastCrawlTime": "2026-06-11T01:37:34Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003432180.html",
-   "inspectedAt": "2026-10-14T11:43:51.917Z"
+   "inspectedAt": "2026-10-14T11:59:00.885Z"
   },
   "https://nagoya-bites.com/stores/J003924002.html": {
    "group": "unreachable_after_i25",
@@ -2160,7 +2156,7 @@
    "lastCrawlTime": "2026-09-22T03:43:53Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003924002.html",
-   "inspectedAt": "2026-10-14T11:43:54.211Z"
+   "inspectedAt": "2026-10-14T11:59:01.651Z"
   },
   "https://nagoya-bites.com/stores/J003341340.html": {
    "group": "control_store",
@@ -2169,7 +2165,7 @@
    "lastCrawlTime": "2026-06-14T05:25:01Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003341340.html",
-   "inspectedAt": "2026-10-14T11:43:57.483Z"
+   "inspectedAt": "2026-10-14T11:59:01.832Z"
   },
   "https://nagoya-bites.com/stores/J003599288.html": {
    "group": "unreachable_after_i25",
@@ -2178,16 +2174,7 @@
    "lastCrawlTime": "2026-06-11T12:33:46Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003599288.html",
-   "inspectedAt": "2026-10-14T11:43:57.966Z"
-  },
-  "https://nagoya-bites.com/stores/J000391292.html": {
-   "group": "unreachable_after_i25",
-   "verdict": "PASS",
-   "coverageState": "送信して登録されました",
-   "lastCrawlTime": "2026-09-15T15:26:34Z",
-   "pageFetchState": "SUCCESSFUL",
-   "googleCanonical": "https://nagoya-bites.com/stores/J000391292.html",
-   "inspectedAt": "2026-10-14T11:43:58.269Z"
+   "inspectedAt": "2026-10-14T11:59:03.379Z"
   },
   "https://nagoya-bites.com/stores/J003498413.html": {
    "group": "control_store",
@@ -2196,7 +2183,7 @@
    "lastCrawlTime": "2026-06-12T21:14:18Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003498413.html",
-   "inspectedAt": "2026-10-14T11:43:58.237Z"
+   "inspectedAt": "2026-10-14T11:59:03.745Z"
   },
   "https://nagoya-bites.com/stores/J004661256.html": {
    "group": "control_store",
@@ -2205,7 +2192,7 @@
    "lastCrawlTime": "2026-08-01T19:57:48Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004661256.html",
-   "inspectedAt": "2026-10-14T11:43:58.445Z"
+   "inspectedAt": "2026-10-14T11:59:07.380Z"
   },
   "https://nagoya-bites.com/stores/J003516142.html": {
    "group": "unreachable_after_i25",
@@ -2214,7 +2201,7 @@
    "lastCrawlTime": "2026-06-12T05:10:52Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003516142.html",
-   "inspectedAt": "2026-10-14T11:44:00.710Z"
+   "inspectedAt": "2026-10-14T11:59:08.298Z"
   },
   "https://nagoya-bites.com/stores/J000661764.html": {
    "group": "control_store",
@@ -2223,7 +2210,7 @@
    "lastCrawlTime": "2026-06-10T21:07:05Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000661764.html",
-   "inspectedAt": "2026-10-14T11:44:04.038Z"
+   "inspectedAt": "2026-10-14T11:59:08.331Z"
   },
   "https://nagoya-bites.com/stores/J000395291.html": {
    "group": "unreachable_after_i25",
@@ -2232,7 +2219,7 @@
    "lastCrawlTime": "2026-06-10T05:03:57Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000395291.html",
-   "inspectedAt": "2026-10-14T11:44:04.452Z"
+   "inspectedAt": "2026-10-14T11:59:10.093Z"
   },
   "https://nagoya-bites.com/stores/J004493412.html": {
    "group": "control_store",
@@ -2241,7 +2228,7 @@
    "lastCrawlTime": "2026-06-10T21:07:05Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J004493412.html",
-   "inspectedAt": "2026-10-14T11:44:04.733Z"
+   "inspectedAt": "2026-10-14T11:59:10.258Z"
   },
   "https://nagoya-bites.com/stores/J000391821.html": {
    "group": "unreachable_after_i25",
@@ -2250,7 +2237,7 @@
    "lastCrawlTime": "2026-08-24T03:43:03Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J000391821.html",
-   "inspectedAt": "2026-10-14T11:44:04.736Z"
+   "inspectedAt": "2026-10-14T11:59:13.871Z"
   },
   "https://nagoya-bites.com/stores/J003942489.html": {
    "group": "control_store",
@@ -2259,13 +2246,46 @@
    "lastCrawlTime": "2026-06-10T05:03:58Z",
    "pageFetchState": "SUCCESSFUL",
    "googleCanonical": "https://nagoya-bites.com/stores/J003942489.html",
-   "inspectedAt": "2026-10-14T11:44:04.970Z"
+   "inspectedAt": "2026-10-14T11:59:14.791Z"
+  },
+  "https://nagoya-bites.com/stores/J000391292.html": {
+   "group": "unreachable_after_i25",
+   "error": "応答が 20000ms で返らない",
+   "inspectedAt": "2026-10-14T11:59:06.297Z"
   }
  },
  "history": [
   {
    "date": "2026-10-14",
    "groups": {
+    "unreachable_after_i25": {
+     "inspected": 99,
+     "errors": 1,
+     "indexed": 96,
+     "crawledRecently": 5,
+     "byState": {
+      "送信して登録されました": 96,
+      "クロール済み - インデックス未登録": 3
+     }
+    },
+    "area_hub": {
+     "inspected": 29,
+     "errors": 1,
+     "indexed": 0,
+     "crawledRecently": 0,
+     "byState": {
+      "URL が Google に認識されていません": 29
+     }
+    },
+    "home": {
+     "inspected": 1,
+     "errors": 0,
+     "indexed": 1,
+     "crawledRecently": 1,
+     "byState": {
+      "送信して登録されました": 1
+     }
+    },
     "journal": {
      "inspected": 20,
      "errors": 0,
@@ -2273,25 +2293,6 @@
      "crawledRecently": 4,
      "byState": {
       "送信して登録されました": 17,
-      "クロール済み - インデックス未登録": 3
-     }
-    },
-    "area_hub": {
-     "inspected": 30,
-     "errors": 0,
-     "indexed": 0,
-     "crawledRecently": 0,
-     "byState": {
-      "URL が Google に認識されていません": 30
-     }
-    },
-    "unreachable_after_i25": {
-     "inspected": 100,
-     "errors": 0,
-     "indexed": 97,
-     "crawledRecently": 5,
-     "byState": {
-      "送信して登録されました": 97,
       "クロール済み - インデックス未登録": 3
      }
     },
@@ -2303,15 +2304,6 @@
      "byState": {
       "送信して登録されました": 96,
       "クロール済み - インデックス未登録": 4
-     }
-    },
-    "home": {
-     "inspected": 1,
-     "errors": 0,
-     "indexed": 1,
-     "crawledRecently": 1,
-     "byState": {
-      "送信して登録されました": 1
      }
     }
    }
