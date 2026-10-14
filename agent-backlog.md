@@ -3328,7 +3328,7 @@
   2. 共通クローム（ヘッダー/ナビ/パンくず/フッター）は全ページに統一 — 4ページ種別＋about/faq/contact/privacy＋stores 5,610ページ（gen-store-pages.js テンプレート更新＋CI再生成）
   3. 全画面ロゴスプラッシュは初回訪問のみ・約0.8秒に短縮（sessionStorage）
 - **brand-filter**: ✅ 適合 — DSN-001/002 と同じ Moat（可読性・一貫性は自動化でしか維持できない）の延長。装飾ではなくタイポグラフィ・構造の一貫性を優先する Designer 哲学に沿う
-- **実装計画**: `/Users/katagirijakutou/.claude/plans/pure-brewing-kettle.md` に確定（Context・制約・デザイン仕様・Phase 0〜7・リスク・検証手順）。要点:
+- **実装計画**: `~/.claude/plans/pure-brewing-kettle.md` に確定（Context・制約・デザイン仕様・Phase 0〜7・リスク・検証手順）。要点:
   - Phase 1: `assets/css/nb.css` に共通クローム/セクション見出し/ボタン/記事システム/topcta/季節バナーのトークン化ルールを追加のみで拡張
   - Phase 2: `scripts/lib/site_chrome.js`（ナビ5+2項目・フッター3群の正本）＋ `scripts/apply_site_chrome.js`（冪等スイープ・--check）を新設し、root/features/journal/stores(管理下)全ページへ適用。生成器3本（gen-store-pages.js / gen_industry_features.js / recreate_fabricated_features.js）も同期
   - Phase 3: index.html を表紙型ヒーローに再構成（FEATURED領域はデスクトップ静的グリッド・モバイルはレール、既存カルーセルJSにmatchMediaガード）、セクション見出し統一、スプラッシュ短縮
@@ -3757,7 +3757,7 @@
   | Noto Sans JPは300/400/500のみ読み込みなのに、CSSは600/700/800を64箇所で指定(擬似ボールド) | index.html:264 |
   | CSSの正本が5系統に分裂、全ページインラインで.cssファイルはリポジトリに0本、`:root`トークンが4変種・フォントURLが4変種に分裂 | 全5,800 HTMLファイルを走査 |
 
-- **acceptance**（実装計画: `/Users/katagirijakutou/.claude/plans/web-web-sequential-journal.md` 参照）:
+- **acceptance**（実装計画: `~/.claude/plans/web-web-sequential-journal.md` 参照）:
   - 可視文字が12px未満になる箇所: 0件
   - トップページの可視文字のうち12px以下の割合: 76%→10%以下
   - モバイル1画面目の文字量: 888文字→500文字以下
@@ -4413,7 +4413,7 @@
   | それでも旧ミラーは**削除されず repo 直下に残っている**。SEO-047 / SEO-057 / SEO-062 / SEO-063 の4修正がいずれも入っておらず、`判別不能` の出現数は root=**0** / `.gas-deploy/Code.js`=**9** | `grep -c 判別不能` 両ファイル |
   | 実は複製は**3本**あった: `gas_line_report.js`（2026-06-01・1,091行）/ `Google分析オートLINE送信.js`（2026-06-02）/ `.gas-deploy/Code.js`（2026-08-20・本番）。前2本は本番と**32個のトップレベル関数名を共有**し、`.gas-deploy/Code.js:2` のヘッダコメントは今も `gas_line_report.js` を名乗っている＝同一スクリプトの世代違い | `comm -12` で関数名を突合 |
   | `.gas-auto-deploy-hook.sh` が監視しているのは**旧ミラーの方**（`*"Google分析オートLINE送信.js"*`）。**本番ソース `.gas-deploy/Code.js` を編集しても自動デプロイは発火しない**（逆向きに配線されている） | `.gas-auto-deploy-hook.sh:20` |
-  | 同フックの参照パスは `/Users/katagirijakutou/Desktop/nagoya-bites/`。リポジトリは `~/nagoya-bites` へ移転済みで**このパスは存在しない**。`.clasp.json` 存在チェックが必ず失敗し、フックは毎回**何もせず exit 0** する | `.gas-auto-deploy-hook.sh:25-27` ／ `ls -d` で不在を確認 |
+  | 同フックの参照パスは `~/Desktop/nagoya-bites/`。リポジトリは `~/nagoya-bites` へ移転済みで**このパスは存在しない**。`.clasp.json` 存在チェックが必ず失敗し、フックは毎回**何もせず exit 0** する | `.gas-auto-deploy-hook.sh:25-27` ／ `ls -d` で不在を確認 |
   | そもそもこのフックは `.claude/settings.json` / `settings.local.json` の**どちらにも登録されていない**（grep ヒット0件）。＝ファイルは存在するが呼ばれる経路が無い | `grep -n gas-auto-deploy .claude/settings*.json` |
 - **実害（推測ではなく発生済み）**:
   1. 2026-08-25 の日次トリアージで、root の旧ミラーを本番コードと誤認したまま「日次レポートの直帰率94%は壊れている」とオーナーへ報告した。**実際には `.gas-deploy/Code.js` に SEO-062 の修正が入っており、08-24 のレポートには SEO-063 の新文言が出ている＝新コードで動いている**。誤診の直接原因が本課題
@@ -5072,7 +5072,7 @@
 - **recorded**: 2026-08-19
 - **owner**: Strategist
 - **category**: KPI / monitoring / trust-score-business
-- **背景**: 事業化ロードマップ（`nagoya-bites-trust-score-business-plan` メモ / `/Users/katagirijakutou/.claude/plans/memoized-launching-corbato.md`）で「STR-MONTHLY が2026-05以降途絶＝事業判断の計器が止まっている」と指摘されていた穴。`data/site_metrics.json` / `data/gsc_metrics.json` / `data/search_channel_metrics.json` は日次自動更新が継続していたため、記録が滞っていたのは backlog への転記のみだった
+- **背景**: 事業化ロードマップ（`nagoya-bites-trust-score-business-plan` メモ / `~/.claude/plans/memoized-launching-corbato.md`）で「STR-MONTHLY が2026-05以降途絶＝事業判断の計器が止まっている」と指摘されていた穴。`data/site_metrics.json` / `data/gsc_metrics.json` / `data/search_channel_metrics.json` は日次自動更新が継続していたため、記録が滞っていたのは backlog への転記のみだった
 
 #### フロー指標（直近30日・2026-08-19 生成データより）
 - 月間アクティブユーザー: **739**（[[STR-MONTHLY-2026-05-BASELINE]] 215 → **+244%**。Phase1目標5,000の14.8%）
@@ -7577,7 +7577,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **detected**: 2026-06-22
 - **owner**: Editor + Builder
 - **description**: `journal/` の最新日付つき記事は `2026-06-17-shinya-eigyo-jorei-to-genba.html` で、origin/main 上でも 6/18〜6/22 の5本が欠番。日次ジャーナル（毎日1本公開）が 6/18 以降停止。
-- **真因（確定）**: ジャーナル生成の実体は launchd `com.nagoyabites.journal`（毎朝9:00）→ `scripts/run_journal_local.sh`（サブスク認証 claude --print・API課金ゼロ・作業ディレクトリ=メインrepo `/Users/katagirijakutou/nagoya-bites`）。これが毎朝 `LastExitStatus=256`（exit 1）で失敗していた。`.local-logs/journal-2026-06-22.log` の git 生出力：
+- **真因（確定）**: ジャーナル生成の実体は launchd `com.nagoyabites.journal`（毎朝9:00）→ `scripts/run_journal_local.sh`（サブスク認証 claude --print・API課金ゼロ・作業ディレクトリ=メインrepo `~/nagoya-bites`）。これが毎朝 `LastExitStatus=256`（exit 1）で失敗していた。`.local-logs/journal-2026-06-22.log` の git 生出力：
   `error: The following untracked working tree files would be overwritten by merge: journal/2026-06-08〜17*.html ... Aborting`。
   → journal-today SKILL.md **Step10 が worktree→メインrepo へ記事を `cp`** し、メインrepo に**未追跡のまま**残留。同名記事が後で origin/main にコミットされると `git pull --rebase` が「untracked を上書きする」と判断し Aborting → スクリプト die → 生成に到達せず**サイレント空振り**。6/18〜22 全日が同一失敗（ログ同サイズ7949B）。
   → Desktopパス → feed.atom dirty rebase → 今回の untracked衝突 と、すべて「**メインrepo作業ツリー汚染で pull が死ぬ**」同一クラスの再発。
@@ -8255,7 +8255,7 @@ GitHub Secret への登録が必要で、これはクレデンシャル操作に
 - **resolved**: 2026-05-11
 - **category**: trust / proof / differentiation
 - **owner**: DataKeeper + Builder + Editor + Strategist + Inspector
-- **plan file**: `/Users/katagirijakutou/.claude/plans/https-sakura-checker-jp-article-shinraid-cheerful-willow.md`
+- **plan file**: `~/.claude/plans/https-sakura-checker-jp-article-shinraid-cheerful-willow.md`
 - **rationale**:
   ユーザー要望「飲食媒体のサクラを排除して信頼できる評価を反映したい」（参考: sakura-checker.jp）。
   食べログ・Retty 等の本文スクレイピングは TOS 違反リスクと Strategic Skip 宣言と矛盾するため実施せず、
