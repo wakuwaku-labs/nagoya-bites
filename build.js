@@ -1973,6 +1973,11 @@ async function main() {
     v += (parseFloat(s['Google評価']) || 0);
     return v;
   }
+  // P-246（I-21c）: ホットペッパーIDの無い店に共有リンク用の安定 ID（店舗ID）を付ける（判断の記録 0041）
+  {
+    const r = require('./scripts/lib/store_ids').assignStoreShareIds(slimStores);
+    console.log(`店舗ID（共有リンク用）: ${r.assigned}店に付与${r.collisions ? `（同名同エリアの区別 ${r.collisions}件）` : ''}`);
+  }
   slimStores.sort((a, b) => _p2PriorityScore(b) - _p2PriorityScore(a));
   const TOP_N_INLINE = 50;
   const top50 = slimStores.slice(0, TOP_N_INLINE);

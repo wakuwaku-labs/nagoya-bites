@@ -58,7 +58,7 @@ test('生成器は hub_store_click を残していない', () => {
 test('modal_open は store_id を送り、source も残っている', () => {
   const line = read('index.html').split('\n').find(l => l.includes("trackEvent('modal_open'"));
   assert.ok(line, "trackEvent('modal_open'… が1行ある");
-  assert.ok(/store_id: *r\['ホットペッパーID'\] *\|\| *''/.test(line), 'store_id はホットペッパーID（無い店は空）');
+  assert.ok(/store_id: *nbStoreKey\(r\)/.test(line), 'store_id はホットペッパーID（無い店は店舗ID）');
   assert.ok(/source: *source *\|\| *'unknown'/.test(line), 'source は今のまま');
   assert.ok(line.includes('store_name'), 'store_name も今のまま（名前は変えない）');
 });
