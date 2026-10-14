@@ -43,3 +43,4 @@ status: in_progress
 # 関連ファイル
 - 棚卸しの表: scratchpad の triage.tsv（理由は Linear コメントにも）
 - P-368 の残り: run_journal_local.sh / backfill_journal.sh の個人名入りパス各3件は直さない（env -i の手動実行で $HOME が空になりジャーナルを壊す恐れ・名前は履歴にも残る）。editor_picks/manual_stores の「業界でも高く評価」等は店の評判の記述で、選び手の主語ではないので P-367 の対象外
+- P-142: draft PR #590（Places の別店への紐付け 43 件を外す・口コミ信頼度 SS207→205 / A536→530 / B2119→2100 / C1052→1045 / D722→715 / —369→410）。オーナー承認待ち。build.js の「外した店の places_history を使わない」は同じ理由の直しなので同じ PR に含める判断
