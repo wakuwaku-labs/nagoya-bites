@@ -64,6 +64,11 @@ const CLEAN_SOURCES = [
   // データの文の「業界基準・標準・水準・評価・的」（P-367）。stores.json は build.js が作る（題に P-334 の語が残る）ので足さない
   'data/pending_stores.json',
   'data/editorreason_drafts/manual_麺屋まつり名古屋店.json',
+  // エージェントの手引き（P-320・判断の記録 0041）: 語が 1 件も無い手引きだけ足す。
+  //   editor.md・orchestrator.md・marketer.md・strategist.md は、検索で狙う語（業界人 推薦 など）の台帳や、
+  //   「語を使わない」と書くための引用が残るので足さない（理由は 0041）。
+  'agents/builder.md',
+  'agents/inspector.md',
 ];
 
 function hits(text) {
@@ -206,6 +211,13 @@ test('FAQ: 選び方・サイトの説明・掲載料の答えは、構造化デ
     assert.ok(v, `画面に「${name}」がある（画面に無い質問と答えを構造化データだけに書かない）`);
     assert.ok(v.a.startsWith(stripTags(q.acceptedAnswer.text)), `「${name}」の答えが、構造化データと画面で食い違う`);
     assert.deepEqual(hits(q.acceptedAnswer.text), []);
+  }
+  // FAQPage の答えは画面と同じ文（タグを除いた文字列が完全一致）。全問を見る（P-336・判断の記録 0029）
+  assert.equal(faq.mainEntity.length, 9, 'FAQPage の問数');
+  for (const q of faq.mainEntity) {
+    const v = visible.find((x) => x.q === q.name);
+    assert.ok(v, `画面に「${q.name}」がある`);
+    assert.equal(stripTags(q.acceptedAnswer.text), v.a, `「${q.name}」の答えが、構造化データと画面で食い違う`);
   }
   const how = visible.find((x) => x.q === '掲載店舗の選定基準は？').a;
   assert.ok(how.startsWith(OWNER_SENTENCE), '選定基準の答えはオーナーの文から始める');

@@ -125,8 +125,18 @@ function credentialStatus(env) {
   for (const name of CREDENTIAL_NAMES) {
     const v = env[name] == null ? '' : String(env[name]).trim();
     if (!v) st[name] = 'empty';
-    else if (name === 'X_ACCESS_TOKEN' && !/^\d+-[A-Za-z0-9]+$/.test(v)) st[name] = 'bad_format';
+    else if (name === 'X_ACCESS_TOKEN') st[name] = /^\d+-[A-Za-z0-9]+$/.test(v) ? 'set' : 'bad_format';
+    // OAuth 1.0a の残りの3つは英数字だけ。「数字-英数字」は Access Token を別の名前に貼った印
+    else if (/^\d+-[A-Za-z0-9]+$/.test(v)) st[name] = 'looks_access_token';
+    else if (!/^[A-Za-z0-9]+$/.test(v)) st[name] = 'bad_format';
     else st[name] = 'set';
+  }
+  // 同じ値を2つの名前に貼ったときも、値を出さずに知らせる
+  const seen = new Map();
+  for (const name of CREDENTIAL_NAMES) {
+    const v = env[name] == null ? '' : String(env[name]).trim();
+    if (!v) continue;
+    if (seen.has(v)) { st[name] = 'duplicate'; st[seen.get(v)] = 'duplicate'; } else seen.set(v, name);
   }
   return st;
 }
@@ -285,7 +295,7 @@ function summaryMarkdown(r) {
   if (r.ogImage) lines.push(`- リンクカードの画像: ${r.ogImage.ok ? 'OK' : `出ない見込み（${r.ogImage.reason}）`}`);
   if (r.tweetUrl) lines.push(`- 投稿: ${r.tweetUrl}`);
   if (r.credentials) {
-    const ja = { set: '登録済み', empty: '空（未登録）', bad_format: '形が違う（別の欄の値の疑い）' };
+    const ja = { set: '登録済み', empty: '空（未登録）', bad_format: '形が違う（別の欄の値の疑い）', looks_access_token: 'Access Token の値が入っている疑い', duplicate: 'ほかの名前と同じ値' };
     lines.push(`- 鍵（値は出さない）: ${CREDENTIAL_NAMES.map((n) => `${n}=${ja[r.credentials[n]]}`).join('・')}`);
   }
   if (r.text) lines.push('', '### 文面', '', '```', r.text, '```');

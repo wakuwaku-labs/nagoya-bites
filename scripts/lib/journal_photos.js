@@ -98,7 +98,9 @@ function findStoreRecord(store) {
  * 「枠の内側にいるつもりで超える」状態を作ってしまう（CLAUDE.md 制約10 の趣旨）。
  * ──────────────────────────────────────────────────────────────── */
 const HEALTH_PATH = path.join(ROOT, 'data', 'photo_pipeline_health.json');
-const SKU_ZERO = { textsearch: 0, details: 0, photo: 0 };
+// ローカル実行分は別ファイル（書き手を分ける。CI が書く HEALTH_PATH を汚さない・P-436）
+const localUsage = require('./places_usage_local');
+const SKU_ZERO = localUsage.SKU_ZERO;
 
 /** 無料枠のリセット境界は太平洋時間（JST 16:00） */
 function ptMonth() {
@@ -113,13 +115,15 @@ function readLedger() {
   let root = {};
   try { root = JSON.parse(fs.readFileSync(HEALTH_PATH, 'utf8')); } catch (_) { root = {}; }
   const places = root.places || {};
-  const journal = root.journal_photos || {};
   const month = ptMonth();
+  // 共有の使用量 = CI 分（places）＋ローカル分。本文写真の取り分 = ローカル分＋旧形式（journal_photos・移行前の分）
+  const legacy = root.journal_photos || {};
+  const legacyMine = legacy.sku_month === month ? { ...SKU_ZERO, ...(legacy.sku_calls_month || {}) } : { ...SKU_ZERO };
   _skuLedger = {
     month,
-    shared: places.sku_month === month ? { ...SKU_ZERO, ...(places.sku_calls_month || {}) } : { ...SKU_ZERO },
+    shared: localUsage.totalMonth(root, month),
     sharedBudget: places.sku_monthly_budget || { textsearch: 4000, details: 4000, photo: 800 },
-    mine: journal.sku_month === month ? { ...SKU_ZERO, ...(journal.sku_calls_month || {}) } : { ...SKU_ZERO },
+    mine: localUsage.add(localUsage.readLocalMonth(month), legacyMine),
   };
   return _skuLedger;
 }
@@ -149,32 +153,9 @@ function noteSku(kind) { _skuUsed[kind]++; }
 function flushSkuUsage() {
   const total = _skuUsed.textsearch + _skuUsed.details + _skuUsed.photo;
   if (!total) return null;
-  let root = {};
-  try { root = JSON.parse(fs.readFileSync(HEALTH_PATH, 'utf8')); } catch (_) { root = {}; }
   const led = readLedger();
-  const month = led.month;
-  const places = root.places || {};
-  const sharedNow = places.sku_month === month ? { ...SKU_ZERO, ...(places.sku_calls_month || {}) } : { ...SKU_ZERO };
-  root.places = {
-    ...places,
-    sku_month: month,
-    sku_calls_month: {
-      textsearch: sharedNow.textsearch + _skuUsed.textsearch,
-      details: sharedNow.details + _skuUsed.details,
-      photo: sharedNow.photo + _skuUsed.photo,
-    },
-  };
-  root.journal_photos = {
-    sku_month: month,
-    sku_calls_month: {
-      textsearch: led.mine.textsearch + _skuUsed.textsearch,
-      details: led.mine.details + _skuUsed.details,
-      photo: led.mine.photo + _skuUsed.photo,
-    },
-    sku_monthly_budget: bodyPolicy().skuBudget,
-    last_run: new Date().toISOString(),
-  };
-  fs.writeFileSync(HEALTH_PATH, JSON.stringify(root, null, 2) + '\n', 'utf8');
+  // photo_pipeline_health.json（CI が書く）には触らない。ローカル台帳へ足すだけ（P-436）
+  localUsage.addLocalUsage(_skuUsed, led.month, { sku_monthly_budget: bodyPolicy().skuBudget });
   const used = { ..._skuUsed };
   _skuUsed = { ...SKU_ZERO };
   _skuLedger = null;

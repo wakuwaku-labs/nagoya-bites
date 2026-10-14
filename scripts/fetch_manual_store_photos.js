@@ -687,9 +687,8 @@ function readSpentMonth() {
   const zero = { textsearch: 0, details: 0, photo: 0 };
   try {
     const j = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'photo_pipeline_health.json'), 'utf8'));
-    const p = j.places || {};
-    if (p.sku_month !== ptMonth()) return zero;
-    return { ...zero, ...(p.sku_calls_month || {}) };
+    // CI 分（places）＋ローカル分（日次ジャーナル・P-436）
+    return require('./lib/places_usage_local').totalMonth(j, ptMonth(), ROOT);
   } catch { return zero; }
 }
 

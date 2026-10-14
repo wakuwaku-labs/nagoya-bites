@@ -121,6 +121,13 @@ function classifyPageType(url) {
   return 'other';
 }
 
+// SEO-125: エリア×ジャンル×条件ページ（area_hub）は 1 本ずつの表示の有無が要る（SEO-126 の
+// 「公開 60 日で表示 0」の判定）。上位 PAGE_STORE_LIMIT 行には 1〜2 本しか入らないため、
+// 種別に当たる行だけを全件残す（表示が出たページだけなので数百行に収まる）。
+function pagesOfType(pages, type) {
+  return (pages || []).filter(r => classifyPageType(r.page) === type);
+}
+
 function summarizePageTypes(pages) {
   const byType = {};
   for (const r of pages || []) {
@@ -330,6 +337,7 @@ async function main() {
     pages: allPages.slice(0, PAGE_STORE_LIMIT),
     pagesFetched: allPages.length,
     pageTypes,
+    hubPages: pagesOfType(allPages, 'area_hub'),
     pageQueries,
     homeQueries,
     intent,
@@ -364,4 +372,4 @@ if (require.main === module) main().catch(err => {
   process.exit(0);
 });
 
-module.exports = { groupPageQueries, classifyPageType, summarizePageTypes };
+module.exports = { groupPageQueries, classifyPageType, summarizePageTypes, pagesOfType };
