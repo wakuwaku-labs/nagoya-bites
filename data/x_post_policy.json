@@ -1,9 +1,9 @@
 {
   "_comment": "X 自動投稿（SNS-001）の運用ルールの正本。scripts/post_journal_to_x.js と scripts/check_x_post_health.js が読む。挙動の変更はこのファイルで行い、スクリプトは触らない。計画書は docs/x-auto-posting-plan-2026-10.md",
   "version": 1,
-  "mode": "dry-run",
+  "mode": "live",
   "modeHelp": "off = 何もしない / dry-run = 送る予定の文面を作って検査し、Actions の要約に出すだけ（X には送らない・台帳も書かない）/ live = X に送り、台帳と心拍を書く。live に変えるのは SNS-002（鍵の登録）と試運転のあと、オーナーの OK を得てから",
-  "liveSince": null,
+  "liveSince": "2026-10-15",
   "liveSinceHelp": "mode を live に変えた日（YYYY-MM-DD）。見張り役はこの日より前の記事を数えない（試運転の間の記事を「投稿が無い」と鳴らさないため）。live に変えるときに一緒に書く。空なら今日から数える",
   "siteBase": "https://nagoya-bites.com",
   "utm": {
