@@ -27,8 +27,10 @@ async function newPage(browser, mobile) {
       await page.waitForSelector('#si', { timeout: 30000 });
       const payload = '<b id="nb-test">x</b>';
       await page.type('#si', payload);
-      // 検索語のチップは入力から 0.7〜3 秒ほどで出る（固定の 1.5 秒だと端で外れる）。出るまで最大 8 秒待つ
-      await page.waitForFunction(() => { const c = document.getElementById('active-chips'); return !!c && c.textContent.indexOf('nb-test') >= 0; }, { timeout: 8000 }).catch(() => {});
+      // トップの検索欄（#si）は入力では絞り込まず、Enter で確定する作り（FB-001 以来）。確定してからチップを確かめる
+      // （確定しないと、チップは全店データの到着後の再描画でたまたま出るだけで、3〜9 秒とばらつく）
+      await page.keyboard.press('Enter');
+      await page.waitForFunction(() => { const c = document.getElementById('active-chips'); return !!c && c.textContent.indexOf('nb-test') >= 0; }, { timeout: 15000 }).catch(() => {});
       await new Promise(r => setTimeout(r, 300));
       const res = await page.evaluate((p) => {
         const injected = !!document.getElementById('nb-test');
