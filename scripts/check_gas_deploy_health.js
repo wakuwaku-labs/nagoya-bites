@@ -30,7 +30,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { loadPolicy, analyzeReport, jstDate, daysBetween } = require('./lib/gas_deploy_trace');
+const { loadPolicy, analyzeReport, jstDate, daysBetween, pickLastRun } = require('./lib/gas_deploy_trace');
 
 const REPO = path.resolve(__dirname, '..');
 const HEALTH = path.join(REPO, 'data', 'gas_deploy_health.json');
@@ -66,13 +66,13 @@ function record() {
 
   if (has('--no-report')) {
     // レポートが Gmail に無かった日。心拍だけ残す（0件と「引けなかった」を区別できるように）
-    health.last_run = {
+    health.last_run = pickLastRun(health.last_run, {
       date,
       recorded_at: new Date().toISOString(),
       status: val('--status', 'no_report'),
       reason: val('--reason', 'この日は対象レポートが Gmail に見つからなかった'),
       verdict: null,
-    };
+    });
   } else {
     const file = val('--report-file');
     if (!file || !fs.existsSync(file)) {
@@ -126,14 +126,14 @@ function record() {
     // 直近90件だけ保持（ファイルを無限に太らせない）
     if (health.observations.length > 90) health.observations = health.observations.slice(-90);
 
-    health.last_run = {
+    health.last_run = pickLastRun(health.last_run, {
       date,
       recorded_at: new Date().toISOString(),
       status: 'ok',
       reason: null,
       verdict: r.verdict,
       missing_fixes: r.missing_fixes,
-    };
+    });
   }
 
   fs.writeFileSync(HEALTH, JSON.stringify(health, null, 2) + '\n');

@@ -193,4 +193,14 @@ function daysBetween(fromYmd, toYmd) {
   return Math.round((b - a) / 86400000);
 }
 
-module.exports = { loadPolicy, analyzeReport, analyzeNumeric, extractSourceLines, jstDate, daysBetween, POLICY_PATH };
+// 心拍（last_run）は「記録した中でいちばん新しい対象日」を指す。
+// 週次レポートの対象日（週の終わり）は日次より古いので、日次の後に週次を記録すると
+// 心拍が過去へ戻り、動いているのに stale_heartbeat が鳴っていた（2026-10-15 実測）。
+// 対象日が今の心拍より古い記録は観測にだけ残し、心拍は動かさない。
+function pickLastRun(prev, next) {
+  if (!prev || !prev.date) return next;
+  if (!next || !next.date) return prev;
+  return next.date >= prev.date ? next : prev;
+}
+
+module.exports = { loadPolicy, analyzeReport, analyzeNumeric, extractSourceLines, jstDate, daysBetween, pickLastRun, POLICY_PATH };
