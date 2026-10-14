@@ -56,6 +56,13 @@
       "affects": ["ga4"],
       "summary": "店のモーダルをクイックビューに置き換えた。画面の下に行動バー（予約・電話・地図）が常に見えるようになったので、cta_click（location=modal）は使われ方の変化ではなく計測の段差として増えうる。予約ボタンの文言は「この店を予約する」から「HotPepperで予約」に変わった。前の店・次の店へ移ると modal_open が新しい source=modal_nav で 1 回ごとに届く（グリッドなど他の source の件数とは別に数える）。クイックビュー内の「この店のページを見る」「ほかの情報」のリンクは internal_link_click（block=quick_view）として新しく届く",
       "evidence": "PR #563・docs/decisions/0038-quick-view.md・tests（クイックビュー関連）・Linear P-402 のコメント（本番での確認結果）"
+    },
+    {
+      "date": "2026-10-14",
+      "id": "I-25",
+      "affects": ["ga4"],
+      "summary": "トップの「エリア別 全店舗一覧」（全店の索引）を、エリア×ジャンルの一覧ページ 101 本へのリンクに置き換えた。旧索引のエリアを開くと出ていたカード（modal_open、cta_click の location=card・card_media）は出なくなるため、これらの件数は使われ方の変化ではなく構造の段差として減る（イベント名とパラメータは変えていない）。トップの HTML は約 1.3MB から約 0.65MB に軽くなる。トップから店舗ページへのリンクが無くなる店が 245 店（掲載の約 5%）あり、サイトマップには全店が残る。検索エンジンへの登録の変化は data/index_probe.json（P-437）で見る",
+      "evidence": "PR #560・docs/decisions/0039（トップの全店の索引の置き換え）・scripts/audit_store_reachability.js・data/index_probe.json（観測の履歴）・Linear P-403 のコメント（本番での確認結果）"
     }
   ]
 }

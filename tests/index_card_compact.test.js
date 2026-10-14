@@ -8,7 +8,7 @@
  *   ・動き: index.html から実物の関数を取り出し、偽の DOM の上で動かす
  *     （カードの HTML・最寄駅の徒歩・店舗ページの href・クリックの振り分け・表示の切り替えと保存・壊れた写真の差し替え）
  *
- * 区画（STORE-INDEX など CI が書き直す所）の中身そのものは読まない: 店舗ページの href は、テスト用の索引を偽の DOM に置いて引く。
+ * 区画（STORE-INDEX など CI が書き直す所）の中身そのものは読まない: 店舗ページの href は、店の ID と、テスト用の例外の表（NB_STORE_PAGES）で確かめる。
  */
 
 const test = require('node:test');
@@ -69,11 +69,13 @@ test('カードに「写真準備中」の暗い図と「ポイント紹介」�
   assert.ok(CARD_CODE.includes("leadKicker = 'ポイント：'"), '紹介文の見出し「ポイント：」は残す');
 });
 
-test('ファイル全体の組み立て: ♡ の差し込み口 <div class="ci"> が 1 つ・ラッパーが ctx を渡す・索引のカードは index', () => {
+test('ファイル全体の組み立て: ♡ の差し込み口 <div class="ci"> が 1 つ・ラッパーが ctx を渡す・索引でカードを描く呼び出しは無い', () => {
   assert.strictEqual(CARD_FN.split("'<div class=\"ci\">'").length - 1, 1, '<div class="ci"> のリテラルは 1 か所（♡ のラッパーが html.replace で差し込む）');
   assert.ok(INDEX.includes("html = html.replace('<div class=\"ci\">', favBtn + '<div class=\"ci\">');"), '♡ のラッパーが ci の手前に差し込む');
   assert.ok(INDEX.includes('buildCardHtml = function(r, ctx) {\n  var html = _origBuildCardHtml(r, ctx);'), 'ラッパーが ctx を元の関数へ渡す');
-  assert.ok(INDEX.includes("buildCardHtml(s, 'index')"), 'エリア別の索引のカードは ctx=index');
+  // ctx=index は、エリア別の索引の中でカードを描いていた呼び出しの印だった。索引をエリア別の一覧ページへの入口に置き換えて（I-25・0039）
+  // 呼び出しは無くなった。nbCardSizes('index') の枝は後始末として残してある（下のテストが見る）。索引にカードを戻すなら、この行も決め直す
+  assert.ok(!INDEX.includes("buildCardHtml(s, 'index')"), '索引でカードを描く呼び出しは無い（0039）');
   assert.ok(fnSource('renderPage').includes('html += buildCardHtml(RENDER_DATA[i]);'), '一覧の描画は buildCardHtml(RENDER_DATA[i]) のまま（ctx 無し＝一覧の写真の幅）');
 });
 
@@ -180,12 +182,11 @@ const TRUST = {
 function load(opts) {
   opts = opts || {};
   const grid = makeEl('div', 'grid' + (opts.listMode ? ' list-mode' : ''));
-  const anchors = (opts.indexLinks || []).map((l) => ({ textContent: l[0], getAttribute: (k) => (k === 'href' ? l[1] : null) }));
   const calls = { queries: 0, openM: [], storage: {}, setItem: [] };
   const elements = { grid, 'vt-grid': makeEl('button', 'active'), 'vt-list': makeEl('button') };
   const document = {
     getElementById: (id) => (opts.noGrid && id === 'grid' ? null : elements[id] || null),
-    querySelectorAll: (sel) => { calls.queries++; return sel === '#store-index .store-index-list a[href]' ? anchors : []; },
+    querySelectorAll: () => { calls.queries++; return []; },
     createElement: (tag) => makeEl(tag),
   };
   const storage = {
@@ -217,19 +218,20 @@ function load(opts) {
   vm.createContext(ctx);
   const names = ['nbEscHtml', 'mWalkFromAccess', 'nbStationKey', 'nbNearText', 'nbCardSizes', 'nbCardClick', 'nbPhotoCredit', 'nbPhotoCreditLine',
     'nbStoreHref', 'nbImgFallback', 'nbSavedView', 'nbDefaultView', 'applyViewMode', 'setViewMode', 'restoreViewMode', 'buildCardHtml'];
-  vm.runInContext('var NB_STORE_HREFS = null;\n' + names.map(fnSource).join('\n'), ctx);
+  // 例外の表（NB_STORE_PAGES）は、生成器が STORE-INDEX の区画に書く。渡さなければ「表が無い」状態（例外なし）で動かす
+  vm.runInContext((opts.pages ? 'var NB_STORE_PAGES = ' + JSON.stringify(opts.pages) + ';\n' : '') + names.map(fnSource).join('\n'), ctx);
   return ctx;
 }
-assert.ok(INDEX.includes('\nvar NB_STORE_HREFS = null;\n'), 'テストが前提にしている NB_STORE_HREFS の宣言');
 
 const STORE = {
   '店名': '焼肉 福 錦通り店', 'エリア': '栄', 'ジャンル': '焼肉・ホルモン', '都道府県': '愛知県', '最寄駅': '栄', 'アクセス': '地下鉄栄駅 徒歩5分',
   '写真URL': 'https://example.com/photo.jpg', 'Google評価': '4.8', '口コミ数': 901, '価格帯': '4001〜5000円', 'ホットペッパーID': 'J001', reviewTrust: { t: 'A' },
 };
-const LINKS = [['焼肉 福 錦通り店（栄・焼肉・ホルモン）', 'stores/J001.html']];
+// 店舗ページが無い店（ID はあるが現役のページが無い）。リンクを付けず、従来どおりボタンにする
+const NO_PAGE = { none: { J001: 1 }, to: {} };
 
 test('カード（実物の関数）: 写真・題名のリンク・最寄駅の徒歩・評価と口コミ件数・価格帯・信頼度・予約が出る', () => {
-  const c = load({ indexLinks: LINKS, stores: [STORE] });
+  const c = load({ stores: [STORE] });
   const html = c.buildCardHtml(STORE);
   assert.ok(html.startsWith('<div class="card has-link" onclick="nbCardClick(event,0)">'), 'リンクのある店はボタンの属性を持たない');
   assert.ok(!/role="button"/.test(html), 'リンクのある店に role=button は付けない（題名の a が入り口・二重に読み上げない）');
@@ -252,7 +254,7 @@ test('カード（実物の関数）: 写真・題名のリンク・最寄駅の
 });
 
 test('カード: 食べログ・Instagram の媒体リンクは card_media の計測のまま・クリックはカードに伝えない', () => {
-  const c = load({ indexLinks: LINKS, stores: [STORE], tabelogPage: true });
+  const c = load({ stores: [STORE], tabelogPage: true });
   const html = c.buildCardHtml(STORE);
   const mrow = (html.match(/<div class="mrow">([\s\S]*?)<\/div><\/div>/) || [])[1] || '';
   assert.ok(/class="ml tb"[^>]*onclick="event\.stopPropagation\(\);nbReserveExit\('cta_click',\{store_name:'焼肉 福 錦通り店',store_id:'J001',link_domain:'tabelog\.com',location:'card_media'\}\);"/.test(mrow), '食べログ');
@@ -262,7 +264,7 @@ test('カード: 食べログ・Instagram の媒体リンクは card_media の�
 
 test('カード: 写真が無い店は <img> を出さず、ジャンルの印を置く（「写真準備中」の暗い図は出さない）', () => {
   const r = Object.assign({}, STORE, { '写真URL': '', '写真出所': 'places-user', '写真クレジット': '誰か' });
-  const c = load({ indexLinks: LINKS, stores: [r] });
+  const c = load({ stores: [r] });
   const html = c.buildCardHtml(r);
   assert.ok(html.startsWith('<div class="card is-nophoto has-link"'), 'is-nophoto');
   assert.ok(!/<img src=/.test(html), '写真の <img> は無い');
@@ -272,7 +274,7 @@ test('カード: 写真が無い店は <img> を出さず、ジャンルの印�
 });
 
 test('カード: 店舗ページへのリンクが無い店は、従来どおりボタン（role=button・tabindex・aria-label）', () => {
-  const c = load({ indexLinks: [], stores: [STORE] });
+  const c = load({ pages: NO_PAGE, stores: [STORE] });
   const html = c.buildCardHtml(STORE);
   assert.ok(html.startsWith('<div class="card" onclick="nbCardClick(event,0)" role="button" tabindex="0" aria-label="焼肉 福 錦通り店の詳細を見る">'), html.slice(0, 160));
   assert.ok(html.includes('<h3 class="cn">焼肉 福 錦通り店</h3>') && !html.includes('cn-link'), '題名はリンクにしない');
@@ -280,7 +282,7 @@ test('カード: 店舗ページへのリンクが無い店は、従来どおり
 
 test('カード: 客が投稿した写真の撮影者は、写真の帯と文字の行の両方に同じ文字で出す（逃がす）', () => {
   const r = Object.assign({}, STORE, { '写真出所': 'places-user', '写真クレジット': '村上 <b>&"\'' });
-  const c = load({ indexLinks: LINKS, stores: [r] });
+  const c = load({ stores: [r] });
   const html = c.buildCardHtml(r);
   const credit = '📷 村上 &lt;b&gt;&amp;&quot;&#39;';
   assert.ok(html.includes('<span class="photo-credit" title="Google マップの利用者が投稿した写真です">' + credit + '</span>'), '帯');
@@ -290,14 +292,14 @@ test('カード: 客が投稿した写真の撮影者は、写真の帯と文字
   assert.ok(!html.includes('<b>'), '撮影者の中の < は逃がしてある（タグとして出ない）');
   for (const src of ['places-owner', 'hotpepper', '']) {
     const o = Object.assign({}, STORE, { '写真出所': src, '写真クレジット': '店' });
-    assert.ok(!/photo-credit|cm-credit/.test(load({ indexLinks: LINKS, stores: [o] }).buildCardHtml(o)), `客の写真でなければ撮影者を出さない: ${src || '(無し)'}`);
+    assert.ok(!/photo-credit|cm-credit/.test(load({ stores: [o] }).buildCardHtml(o)), `客の写真でなければ撮影者を出さない: ${src || '(無し)'}`);
   }
   const noName = Object.assign({}, STORE, { '写真出所': 'places-user', '写真クレジット': '  ' });
-  assert.ok(!/photo-credit|cm-credit/.test(load({ indexLinks: LINKS, stores: [noName] }).buildCardHtml(noName)), '撮影者名が空なら出さない');
+  assert.ok(!/photo-credit|cm-credit/.test(load({ stores: [noName] }).buildCardHtml(noName)), '撮影者名が空なら出さない');
 });
 
 test('カードの札と紹介文: 話題・編集部推薦・経験者レビューは残し、「ポイント紹介」は出さない', () => {
-  const c = load({ indexLinks: LINKS, stores: [] });
+  const c = load({ stores: [] });
   const make = (extra) => { const r = Object.assign({}, STORE, extra); c.ALL_STORES.length = 0; c.ALL_STORES.push(r); return c.buildCardHtml(r); };
   assert.ok(make({ 'トレンドラベル': '話題沸騰' }).includes('<span class="card-flag trend-hot">話題沸騰</span>'));
   assert.ok(make({ '編集部推薦': true }).includes('<span class="card-flag flag-editor">編集部推薦</span>'));
@@ -310,7 +312,7 @@ test('カードの札と紹介文: 話題・編集部推薦・経験者レビュ
 });
 
 test('カードの 2 行目と評価: 駅が分からない店は地域名・県外は県名・口コミ件数は 3 桁区切り・無ければ出さない', () => {
-  const c = load({ indexLinks: [], stores: [] });
+  const c = load({ pages: NO_PAGE, stores: [] });
   const make = (extra) => { const r = Object.assign({}, STORE, extra); c.ALL_STORES.length = 0; c.ALL_STORES.push(r); return c.buildCardHtml(r); };
   assert.ok(make({ '最寄駅': '', 'アクセス': '' }).includes('<span class="cm-near">栄・焼肉</span>'), '駅が分からない店は 地域・ジャンル');
   assert.ok(make({ '最寄駅': '', 'アクセス': '', '都道府県': '岐阜県', 'エリア': '多治見' }).includes('<span class="cm-near">岐阜県 多治見・焼肉</span>'), '県外は県名を付ける');
@@ -318,17 +320,17 @@ test('カードの 2 行目と評価: 駅が分からない店は地域名・県
   assert.ok(!make({ '口コミ数': 0 }).includes('card-rating-n') && !make({ '口コミ数': undefined }).includes('card-rating-n'), '件数が無ければ出さない');
   assert.ok(!make({ 'Google評価': '' }).includes('card-rating'), '評価が無ければ評価の行ごと出さない');
   assert.ok(!make({ reviewTrust: null }).includes('cc-cell'), '口コミ信頼度が無ければ出さない');
-  assert.ok(!load({ indexLinks: [], stores: [STORE], noTrust: true }).buildCardHtml(STORE).includes('cc-cell'), '表示基準が注入されていなければ出さない');
+  assert.ok(!load({ pages: NO_PAGE, stores: [STORE], noTrust: true }).buildCardHtml(STORE).includes('cc-cell'), '表示基準が注入されていなければ出さない');
   assert.ok(!make({ '価格帯': '' }).includes('cm-price'), '価格帯が無ければ出さない');
   const gmapOnly = make({ 'ホットペッパーID': '' });
   assert.ok(gmapOnly.includes('card-cta-map-only') && /class="ml hp"/.test(gmapOnly), 'ホットペッパーの無い店は地図ボタンだけ・媒体リンクにホットペッパーを出す');
 });
 
 test('カードの写真の幅の目安（sizes）: 一覧の既定・リスト（96px）・エリア別の索引', () => {
-  const grid = load({ indexLinks: LINKS, stores: [STORE] });
+  const grid = load({ stores: [STORE] });
   assert.strictEqual(grid.nbCardSizes(), '(max-width:900px) 50vw, (max-width:1024px) 33vw, 25vw');
   assert.strictEqual(grid.nbCardSizes('index'), '(max-width:640px) 100vw, (max-width:900px) 50vw, 25vw');
-  const list = load({ indexLinks: LINKS, stores: [STORE], listMode: true });
+  const list = load({ stores: [STORE], listMode: true });
   assert.strictEqual(list.nbCardSizes(), '96px');
   assert.ok(list.buildCardHtml(STORE).includes('sizes="96px"'), 'リストのカードは 96px を目安にする');
   assert.ok(list.buildCardHtml(STORE, 'index').includes('sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 25vw"'), '索引のカードはリストの設定に引きずられない');
@@ -337,7 +339,7 @@ test('カードの写真の幅の目安（sizes）: 一覧の既定・リスト�
 
 test('カードに入れる文字の逃がし方: 店名・ジャンルの < > & " \' が属性や本文を破らない', () => {
   const r = Object.assign({}, STORE, { '店名': 'A&B "C" <D> \'E\'', 'ジャンル': '"焼肉"<x>' });
-  const c = load({ indexLinks: [], stores: [r] });
+  const c = load({ pages: NO_PAGE, stores: [r] });
   const html = c.buildCardHtml(r);
   assert.ok(html.includes('aria-label="A&amp;B &quot;C&quot; &lt;D&gt; &#39;E&#39;の詳細を見る"'), 'aria-label');
   assert.ok(html.includes('alt="A&amp;B &quot;C&quot; &lt;D&gt; &#39;E&#39;"'), 'alt');
@@ -346,40 +348,57 @@ test('カードに入れる文字の逃がし方: 店名・ジャンルの < > &
   assert.ok(html.includes('<span class="cm-near">栄駅 徒歩5分・&quot;焼肉&quot;&lt;x&gt;</span>'), '2 行目（最寄駅・ジャンル）');
   assert.ok(html.includes('<span class="ci-mark"') === false, '写真がある店に印は出ない');
   const noPhoto = Object.assign({}, r, { '写真URL': '' });
-  assert.ok(load({ indexLinks: [], stores: [noPhoto] }).buildCardHtml(noPhoto).includes('<span class="ci-mark" aria-hidden="true">&quot;焼肉&quot;&lt;x&gt;</span>'), '印の文字');
+  assert.ok(load({ pages: NO_PAGE, stores: [noPhoto] }).buildCardHtml(noPhoto).includes('<span class="ci-mark" aria-hidden="true">&quot;焼肉&quot;&lt;x&gt;</span>'), '印の文字');
 });
 
 test('カードのリール: 動画のある店は再生ボタンを写真の中に置く', () => {
-  const c = load({ indexLinks: LINKS, stores: [STORE], reel: true });
+  const c = load({ stores: [STORE], reel: true });
   const html = c.buildCardHtml(STORE);
   assert.ok(/<div class="ci">[\s\S]*<button class="reel-play" onclick="nbPlayReel\(event,this,'REELCODE'\)"[\s\S]*<span class="reel-tag">リール<\/span><\/div>/.test(html));
 });
 
-test('店舗ページの href: 索引の「店名（エリア・ジャンル）」から引く。同じ表記が 2 件・検索へのリンク・不正な形は出さない', () => {
-  const c = load({
-    indexLinks: [
-      ['A店（栄・焼肉）', 'stores/a.html'],
-      ['B店（栄・焼肉）', 'stores/b1.html'], ['B店（栄・焼肉）', 'stores/b2.html'],
-      ['C店（栄・焼肉）', 'index.html#q=C%E5%BA%97'],
-      ['D店（栄・焼肉）', 'javascript:alert(1)'],
-      ['E店（栄・焼肉）', 'stores/e"x.html'],
-      ['F店（その他）', 'stores/f.html'],
-      ['G店（名古屋（名古屋駅/西区/中村区）・ラーメン）', 'stores/g.html'],
-      ['H店（栄・焼肉）', 'stores/h.html?x=1'],
-    ],
-  });
-  const href = (name, area, genre) => c.nbStoreHref({ '店名': name, 'エリア': area, 'ジャンル': genre });
-  assert.strictEqual(href('A店', '栄', '焼肉'), 'stores/a.html');
-  assert.strictEqual(href('B店', '栄', '焼肉'), '', '同じ表記が 2 件ある店は、どちらか決められないのでリンクにしない');
-  assert.strictEqual(href('C店', '栄', '焼肉'), '', '検索へのリンクだけの店は、店舗ページが無いのでリンクにしない');
-  assert.strictEqual(href('D店', '栄', '焼肉'), '', 'javascript: は使わない');
-  assert.strictEqual(href('E店', '栄', '焼肉'), '', '属性を破れる文字を含む href は使わない');
-  assert.strictEqual(href('H店', '栄', '焼肉'), '', '店舗ページの形（stores/….html）でなければ使わない');
-  assert.strictEqual(href('F店', '', ''), 'stores/f.html', 'エリアが空は「その他」・ジャンルが空なら「・」を付けない');
-  assert.strictEqual(href('G店', '名古屋（名古屋駅/西区/中村区）', 'ラーメン'), 'stores/g.html', 'エリア名に括弧があってもそのまま比べる');
-  assert.strictEqual(href('知らない店', '栄', '焼肉'), '');
-  assert.strictEqual(c.nbStoreHref({}), '', '店名が無い記録でも例外を出さない');
-  assert.strictEqual(c.calls.queries, 1, '索引は 1 回だけ読み、あとは覚えておく');
+test('店舗ページの href: 店のホットペッパーID から stores/<ID>.html と組み立てる。ID が無い・不正な形の店は出さない（I-25・0039）', () => {
+  const c = load();
+  const href = (r) => c.nbStoreHref(r);
+  assert.strictEqual(href({ 'ホットペッパーID': 'J000017111' }), 'stores/J000017111.html');
+  assert.strictEqual(href({ 'ホットペッパーID': 'J001', '店名': 'どの店名でも', 'エリア': '栄' }), 'stores/J001.html', '店名・エリア・ジャンルは見ない（ID だけ）');
+  // 同じ店名・エリア・ジャンルの 2 件でも、ID が違えばそれぞれの店のページへ着く（以前は同じ表記の 2 件はボタンにしていた）
+  const twin = { '店名': 'A店', 'エリア': '栄', 'ジャンル': '焼肉' };
+  assert.strictEqual(href(Object.assign({ 'ホットペッパーID': 'J010' }, twin)), 'stores/J010.html');
+  assert.strictEqual(href(Object.assign({ 'ホットペッパーID': 'J011' }, twin)), 'stores/J011.html');
+  // ID の無い店（手動で載せた店）は、店舗ページへの対応を店のデータから引けないのでリンクにしない（カードはボタン）
+  assert.strictEqual(href({ '店名': 'B店', 'エリア': '栄', 'ジャンル': '焼肉' }), '');
+  assert.strictEqual(href({ 'ホットペッパーID': '' }), '');
+  assert.strictEqual(href({ 'ホットペッパーID': null }), '');
+  assert.strictEqual(href({}), '', '空の記録でも例外を出さない');
+  assert.strictEqual(href(undefined), '', 'undefined でも例外を出さない');
+  assert.strictEqual(href(null), '', 'null でも例外を出さない');
+  // 属性や URL を破れる文字・パスの区切り・別のスキームは使わない
+  for (const bad of ['javascript:alert(1)', 'a"b', "a'b", 'a<b', 'a b', 'a/b', '../x', 'a.b', 'a?x=1', 'a#b', 'a%2Fb', 'ＪＯ１']) {
+    assert.strictEqual(href({ 'ホットペッパーID': bad }), '', `不正な形の ID は使わない: ${bad}`);
+  }
+  assert.strictEqual(c.calls.queries, 0, 'DOM は読まない（以前は全店の索引を読んでいた）');
+});
+
+test('店舗ページの href: 例外の表（NB_STORE_PAGES）の none はリンクにせず、to は移り先のページへ。表の形が壊れていても例外を出さない（I-25・0039）', () => {
+  const pages = { none: { J020: 1 }, to: { J021: 'J099', J022: 'bad/slug', J023: '' } };
+  const c = load({ pages });
+  const href = (id) => c.nbStoreHref({ 'ホットペッパーID': id });
+  assert.strictEqual(href('J020'), '', 'ID はあるが現役の店舗ページが無い店は、リンクにしない（検索へのリンクだけの店）');
+  assert.strictEqual(href('J021'), 'stores/J099.html', '古い ID の誘導ページを経て移った店は、移り先の現役ページへ');
+  assert.strictEqual(href('J022'), '', '移り先のスラグが不正な形なら使わない');
+  assert.strictEqual(href('J023'), 'stores/J023.html', '移り先が空なら自分の ID のページ');
+  assert.strictEqual(href('J024'), 'stores/J024.html', '表に無い ID は、自分の ID のページ（既定でリンクを付ける）');
+  // オブジェクトに元からある名前（constructor・toString・__proto__ など）は、表の項目として扱わない
+  for (const id of ['constructor', 'toString', 'hasOwnProperty', '__proto__', 'valueOf']) {
+    assert.strictEqual(href(id), `stores/${id}.html`, `表に無い名前は例外にならない: ${id}`);
+  }
+  // 表の形が壊れている・空・片方だけでも動く
+  for (const broken of [{}, { none: {} }, { to: {} }, { none: null, to: null }, { none: 'x', to: 'y' }, null]) {
+    assert.strictEqual(load({ pages: broken }).nbStoreHref({ 'ホットペッパーID': 'J030' }), 'stores/J030.html', JSON.stringify(broken));
+  }
+  // 表そのものが無い（STORE-INDEX の区画が書かれなかった）ときも、ID から組み立てる
+  assert.strictEqual(load().nbStoreHref({ 'ホットペッパーID': 'J031' }), 'stores/J031.html');
 });
 
 test('最寄駅 徒歩N分: 同じ駅だと確かめられたときだけ分数を付ける（アクセスの文は複数の駅を並べる）', () => {

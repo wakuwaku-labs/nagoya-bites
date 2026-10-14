@@ -126,8 +126,11 @@ test('トップの構造化データ: 人が選んだと読める言い方が無
   const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const blocks = jsonLdBlocks(html);
   const types = blocks.map((b) => b['@type']).sort();
-  assert.deepEqual(types, ['Organization', 'WebPage', 'WebSite'], '構造化データの型');
-  const text = JSON.stringify(blocks);
+  // ItemList は 1 本だけ（I-25・判断の記録 0039）。以前は静的な about と、読み込み後に JS が足す 2 本が重なって最大 3 本出ていた
+  assert.deepEqual(types, ['ItemList', 'Organization', 'WebPage', 'WebSite'], '構造化データの型');
+  // 言い方の検査は、こちらが書く部分に対して行う。ItemList は掲載店の名前の並び（店名はそのまま出す）なので外す
+  const own = blocks.filter((b) => b['@type'] !== 'ItemList');
+  const text = JSON.stringify(own);
   assert.deepEqual(hits(text), [], 'トップの JSON-LD に、人が選んだ・書いたと読める言い方が戻っている');
   assert.ok(!/FAQPage|"Question"/.test(text), 'トップに画面の FAQ は無い。画面に無い質問と答えを構造化データだけに書かない（判断の記録 0029）');
   assert.ok(!/"founder"|"jobTitle"|"Person"/.test(text), '運営者の氏名・肩書・経歴は構造化データに載せない（判断の記録 0029）');
@@ -238,9 +241,10 @@ const audit = require('../scripts/audit_selection_wording');
 //     ・var LOCAL_STORES の行 … 店の紹介文と特集の題
 //     ・FEATURED … 特集の題
 //     ・LATEST_JOURNAL … ジャーナルの題と説明
-//     ・STORE-INDEX … 掲載店の名前の一覧（店名はそのまま出す）
+//     ・STORE-ITEMLIST … 構造化データの掲載店の名前の並び（店名はそのまま出す）
 //   除かない（元を直したので、ビルド後も語が出ないことを見る）:
 //     ・SCENE-INDEX（目的から探す）… scripts/inject_store_links.js が data/journal_seo_keywords.json から作る
+//     ・STORE-INDEX（エリア別 店舗一覧）… 以前は掲載全店の名前の一覧だったが、エリア・ジャンルの名前だけの入口になった（I-25・0039）
 function indexWithoutGeneratedRegions() {
   let s = readRel('index.html').split('\n').filter((l) => !l.startsWith('var LOCAL_STORES')).join('\n');
   const cut = (from, to) => {
@@ -251,11 +255,11 @@ function indexWithoutGeneratedRegions() {
   };
   cut('<!-- FEATURED_START -->', '<!-- FEATURED_END -->');
   cut('<!-- LATEST_JOURNAL_START -->', '<!-- LATEST_JOURNAL_END -->');
-  cut('<!-- STORE-INDEX:START', '<!-- STORE-INDEX:END -->'); // 始まりの印には日付が付く
+  cut('<!-- STORE-ITEMLIST:START -->', '<!-- STORE-ITEMLIST:END -->');
   return s;
 }
 
-test('トップ: 店のデータ・特集・ジャーナル・全店一覧の区画を除いた部分（手書きと「目的から探す」）に、人が選んだと読める言い方が無い。例外は検索の辞書の 1 件だけ（P-330）', () => {
+test('トップ: 店のデータ・特集・ジャーナル・構造化データの店名の区画を除いた部分（手書きと「目的から探す」「エリア別 店舗一覧」）に、人が選んだと読める言い方が無い。例外は検索の辞書の 1 件だけ（P-330）', () => {
   const html = indexWithoutGeneratedRegions();
   const compiled = audit.compilePolicy(audit.loadPolicy(ROOT));
   const r = audit.scanHtml(html, compiled, { rel: 'index.html', keepScripts: true });
