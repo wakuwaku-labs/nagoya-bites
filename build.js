@@ -1973,7 +1973,7 @@ async function main() {
     v += (parseFloat(s['Google評価']) || 0);
     return v;
   }
-  // P-246（I-21c）: ホットペッパーIDの無い店に共有リンク用の安定 ID（店舗ID）を付ける（判断の記録 0041）
+  // P-246（I-21c）: ホットペッパーIDの無い店に共有リンク用の安定 ID（店舗ID）を付ける（判断の記録 0043）
   {
     const r = require('./scripts/lib/store_ids').assignStoreShareIds(slimStores);
     console.log(`店舗ID（共有リンク用）: ${r.assigned}店に付与${r.collisions ? `（同名同エリアの区別 ${r.collisions}件）` : ''}`);

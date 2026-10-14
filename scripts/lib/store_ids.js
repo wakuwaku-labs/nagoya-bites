@@ -4,7 +4,7 @@
  * scripts/lib/store_ids.js
  *
  * ホットペッパーIDの無い店（編集部の手動キュレーション店ほか・約150店）に載せる共有用の安定 ID。
- * 判断の記録: docs/decisions/0041-store-share-id.md（P-246・I-21c）
+ * 判断の記録: docs/decisions/0043-store-share-id.md（P-246・I-21c）
  *
  * - 形式は `E` + 英小文字と数字の 10 文字（例: E3fa91c2b7d）。ホットペッパーID（`J` + 数字）とも、
  *   凍結した古い店舗ページの `M` + 6 桁とも重ならない。

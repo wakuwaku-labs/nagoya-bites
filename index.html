@@ -3776,7 +3776,7 @@ var NB_PENDING_SOURCE = '';  // 待っている店を開くときの source。�
 var NB_OPEN_STORE_ID = '';   // いまモーダルで開いている店の ID（ID が無い店は ''）
 var NB_SWAP = 0;             // 「似たお店」へ切り替える間だけ、その時刻（履歴を足さず置き換える）
 
-// URL の store= と計測の store_id に使う店の ID。ホットペッパーIDがあればそれ、無い店（編集部の手動キュレーション店）は build.js が付ける 店舗ID（判断の記録 0041）
+// URL の store= と計測の store_id に使う店の ID。ホットペッパーIDがあればそれ、無い店（編集部の手動キュレーション店）は build.js が付ける 店舗ID（判断の記録 0043）
 function nbStoreKey(r) {
   return String((r && (r['ホットペッパーID'] || r['店舗ID'])) || '');
 }

@@ -1,7 +1,7 @@
 'use strict';
 /**
  * tests/store_ids.test.js — P-246（I-21c）。ホットペッパーIDの無い店の共有用 ID（店舗ID）。
- * 判断の記録: docs/decisions/0041-store-share-id.md
+ * 判断の記録: docs/decisions/0043-store-share-id.md
  * 生成済みページや data/stores.json の件数には縛らない（npm test は再生成より前に走る）。
  */
 const test = require('node:test');
