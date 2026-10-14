@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-14T09:06:55.775Z",
+  "generatedAt": "2026-10-14T10:47:30.706Z",
   "lookbackDays": 30,
   "totals": {
-    "activeUsers": 1538,
-    "pageViews": 2178,
-    "sessions": 1739,
-    "avgSessionDuration": 125.8,
-    "bounceRate": 0.285,
+    "activeUsers": 1549,
+    "pageViews": 2190,
+    "sessions": 1754,
+    "avgSessionDuration": 124.9,
+    "bounceRate": 0.286,
     "pagesPerSession": 1.25
   },
   "dailyReference": {
@@ -17,17 +17,17 @@
   },
   "channels": {
     "sessions": {
-      "organic": 1248,
+      "organic": 1261,
       "direct": 355,
       "social": 5,
-      "ai_assistant": 106,
+      "ai_assistant": 107,
       "referral": 33,
       "paid": 0,
       "other": 0
     },
     "pct": {
-      "organic": 71.4,
-      "direct": 20.3,
+      "organic": 71.6,
+      "direct": 20.2,
       "social": 0.3,
       "ai_assistant": 6.1,
       "referral": 1.9,
@@ -39,12 +39,12 @@
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 555
+      "sessions": 560
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 470
+      "sessions": 476
     },
     {
       "source": "(direct)",
@@ -54,12 +54,12 @@
     {
       "source": "yahoo",
       "medium": "organic",
-      "sessions": 203
+      "sessions": 205
     },
     {
       "source": "chatgpt.com",
       "medium": "ai-assistant",
-      "sessions": 78
+      "sessions": 79
     },
     {
       "source": "unknown",
@@ -190,13 +190,13 @@
   "topPages": [
     {
       "path": "/features/nagoya-solo-dining.html",
-      "pageViews": 330,
-      "sessions": 315
+      "pageViews": 331,
+      "sessions": 316
     },
     {
       "path": "/",
       "pageViews": 121,
-      "sessions": 107
+      "sessions": 108
     },
     {
       "path": "/index.html",
@@ -216,7 +216,7 @@
   ],
   "cta": {
     "outboundClicks": 167,
-    "ctaClickRate": 9.6,
+    "ctaClickRate": 9.5,
     "byDomain": [
       {
         "domain": "www.hotpepper.jp",
@@ -972,7 +972,7 @@
   },
   "stageAssessment": {
     "metric": "activeUsers",
-    "value": 1538,
+    "value": 1549,
     "stage": "takeoff",
     "thresholds": {
       "phase0": 500,
